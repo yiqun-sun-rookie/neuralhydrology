@@ -1,0 +1,14 @@
+discharge_files:
+  - data/haihe/glofas/work/river_discharge_in_the_last_24_hours_2024_clip.nc
+  - data/haihe/glofas/work/river_discharge_in_the_last_24_hours_2025_clip.nc
+upstream_file: data/haihe/glofas/work/upstream_area_static_clip.nc
+subbasin_file: data/haihe/hydrobasins/lev9/haihe_hydrobasins_lev9.gpkg
+subbasin_id_field: PFAF_ID
+output_geojson: data/haihe/glofas/outputs/subbasin_outlets.geojson
+timeseries_dir: data/haihe/glofas/outputs/timeseries
+ua_threshold_km2: 150.0
+mean_dis_threshold_m3s: 0.3
+search_buffer_deg: 0.1
+allow_empty_threshold: true
+append_mean_to_geojson: true
+

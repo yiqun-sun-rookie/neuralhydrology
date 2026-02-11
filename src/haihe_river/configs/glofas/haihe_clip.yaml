@@ -1,0 +1,15 @@
+input_dir: data/haihe/glofas/raw
+input_glob: "*.nc"
+output_dir: data/haihe/glofas/work
+basin_boundary: data/haihe/boundary/haihe_basin.shp
+logs_dir: data/haihe/glofas/logs
+lon_name: lon
+lat_name: lat
+convert_longitudes: true
+buffer_deg: 0.0
+drop_history: true
+overwrite: false
+dry_run: false
+metadata:
+  clipped_to: haihe_basin
+
