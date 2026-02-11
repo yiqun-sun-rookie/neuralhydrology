@@ -1,0 +1,99 @@
+# CAMELSH Hourly LSTM Configuration
+# 小时步长大样本水文模型训练配置
+# 基于CAMELS-US配置修改，适配小时尺度数据
+
+experiment_name: camelsh_hourly_lstm
+
+# 使用GenericDataset
+dataset: generic
+data_dir: data/camelsh
+
+# 模型配置
+model: cudalstm
+head: regression
+hidden_size: 128
+initial_forget_bias: 3
+output_dropout: 0.0
+output_activation: linear
+
+# 训练配置
+epochs: 30
+batch_size: 256
+optimizer: AdamW
+loss: NSE
+
+# 学习率调度
+learning_rate:
+  0: 0.001
+  10: 0.0005
+  20: 0.0001
+
+# 流域划分
+train_basin_file: data/camelsh/train_basins.txt
+validation_basin_file: data/camelsh/val_basins.txt
+test_basin_file: data/camelsh/test_basins.txt
+
+# 时间范围 (使用较短时间段进行初步测试)
+train_start_date: "01/01/2010"
+train_end_date: "31/12/2018"
+validation_start_date: "01/01/2019"
+validation_end_date: "31/12/2020"
+test_start_date: "01/01/2021"
+test_end_date: "31/12/2023"
+
+# 动态输入变量 (NLDAS-2气象forcing)
+dynamic_inputs:
+  - Rainf        # 降雨 [kg/m2/s]
+  - Tair         # 气温 [K]
+  - Qair         # 比湿 [kg/kg]
+  - PSurf        # 地表气压 [Pa]
+  - SWdown       # 短波辐射 [W/m2]
+  - LWdown       # 长波辐射 [W/m2]
+  - Wind_E       # 东向风速 [m/s]
+  - Wind_N       # 北向风速 [m/s]
+  - PotEvap      # 潜在蒸发 [W/m2]
+
+# 静态属性
+static_attributes:
+  - area           # 流域面积 [km2]
+  - elev_mean      # 平均高程 [m]
+  - slope_mean     # 平均坡度 [%]
+  - p_mean         # 平均降水 [mm/day]
+  - pet_mean       # 平均潜在蒸发 [mm/day]
+  - aridity_index  # 干旱指数
+  - frac_snow      # 降雪比例
+  - SANDAVE        # 砂土比例
+  - CLAYAVE        # 黏土比例
+
+# 目标变量
+target_variables:
+  - Streamflow     # 流量
+
+# 序列长度 (168小时 = 7天)
+seq_length: 168
+predict_last_n: 1
+
+# 训练参数
+num_workers: 4
+validate_every: 2
+validate_n_random_basins: 30
+clip_gradient_norm: 1.0
+
+# 日志和保存
+log_interval: 50
+log_tensorboard: true
+log_n_figures: 3
+save_weights_every: 5
+
+# 评估指标
+metrics:
+  - NSE
+  - KGE
+  - RMSE
+
+# 随机种子
+seed: 2025
+
+# 设备
+device: cuda
+

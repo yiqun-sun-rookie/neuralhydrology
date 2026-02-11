@@ -1,0 +1,67 @@
+# CAMELSH Small-scale Test Configuration
+# 100 basins for quick validation
+
+experiment_name: camelsh_test_100
+
+dataset: generic
+data_dir: data/camelsh
+
+model: cudalstm
+head: regression
+hidden_size: 64
+initial_forget_bias: 3
+output_dropout: 0.0
+output_activation: linear
+
+epochs: 5
+batch_size: 128
+optimizer: AdamW
+loss: NSE
+
+learning_rate:
+  0: 0.001
+
+train_basin_file: data/camelsh/test_100_basins.txt
+validation_basin_file: data/camelsh/test_100_basins.txt
+test_basin_file: data/camelsh/test_100_basins.txt
+
+train_start_date: "01/01/2015"
+train_end_date: "31/12/2017"
+validation_start_date: "01/01/2018"
+validation_end_date: "31/12/2018"
+test_start_date: "01/01/2019"
+test_end_date: "31/12/2019"
+
+dynamic_inputs:
+  - Rainf
+  - Tair
+  - SWdown
+  - PotEvap
+
+static_attributes:
+  - elev_mean
+  - slope_mean
+  - p_mean
+  - aridity_index
+
+target_variables:
+  - Streamflow
+
+seq_length: 72
+predict_last_n: 1
+
+num_workers: 0
+validate_every: 1
+validate_n_random_basins: 10
+clip_gradient_norm: 1.0
+
+log_interval: 20
+log_tensorboard: true
+log_n_figures: 2
+save_weights_every: 2
+
+metrics:
+  - NSE
+
+seed: 2025
+device: cuda:0

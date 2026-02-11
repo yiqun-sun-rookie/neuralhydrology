@@ -1,0 +1,100 @@
+# CAMELSH Hourly Mamba - Long Sequence Test (HPC)
+# 50 Basins, 10 Epochs, seq_length=3000+ (125 days)
+# Purpose: Demonstrate Mamba's advantage in ultra-long sequences
+
+experiment_name: camelsh_mamba_longseq
+
+# Dataset
+dataset: generic
+data_dir: data/camelsh
+
+# 50 Basins Subset (same as mini for comparison)
+train_basin_file: src/mamba_camelsh/data/test_50_basins.txt
+validation_basin_file: src/mamba_camelsh/data/test_50_basins.txt
+test_basin_file: src/mamba_camelsh/data/test_50_basins.txt
+
+# Time periods
+train_start_date: "01/01/2010"
+train_end_date: "31/12/2014"
+validation_start_date: "01/01/2015"
+validation_end_date: "31/12/2017"
+test_start_date: "01/01/2018"
+test_end_date: "31/12/2020"
+
+# Model: Mamba (Ours)
+model: mamba
+head: regression
+hidden_size: 128
+output_dropout: 0.1
+output_activation: linear
+
+# Mamba params
+mamba_d_state: 16
+mamba_d_conv: 4
+mamba_expand: 2
+mamba_n_layers: 2
+
+# Training
+epochs: 10
+batch_size: 64             # Reduced for long sequences (memory constraint)
+optimizer: AdamW
+loss: NSE
+learning_rate:
+  0: 0.003
+  5: 0.001
+
+# Dynamic inputs
+dynamic_inputs:
+  - Rainf
+  - Tair
+  - SWdown
+  - LWdown
+  - Qair
+  - PSurf
+  - Wind_E
+  - Wind_N
+  - PotEvap
+
+# Static attributes
+static_attributes:
+  - elev_mean
+  - slope_mean
+  - area
+  - clay_frac
+  - sand_frac
+  - soil_porosity
+  - permeability
+  - frac_forest
+  - p_mean
+  - pet_mean
+  - aridity
+  - frac_snow
+  - high_prec_freq
+
+target_variables:
+  - Streamflow
+
+# ============================================
+# ULTRA-LONG SEQUENCE - MAMBA'S KEY ADVANTAGE
+# ============================================
+# 3000 hours = 125 days (vs 168 hours = 7 days for LSTM)
+# This demonstrates Mamba's O(N) complexity advantage
+seq_length: 3000
+predict_last_n: 1
+
+# HPC optimized
+num_workers: 4             # Multi-core data loading
+validate_every: 2
+validate_n_random_basins: 50
+clip_gradient_norm: 1.0
+log_interval: 20
+log_tensorboard: true
+save_weights_every: 5
+metrics:
+  - NSE
+  - KGE
+seed: 123
+device: cuda:0              # GPU on HPC
+
+# Results directory (HPC standard - follows 01_, 02_, 03_ naming convention)
+run_dir: results/03_mamba_camelsh

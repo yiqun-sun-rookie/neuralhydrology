@@ -1,0 +1,84 @@
+# CAMELSH Hourly Mamba - Quick Test Configuration
+# Purpose: Verify Mamba model works end-to-end before full training
+
+experiment_name: camelsh_mamba_test
+
+# Dataset
+dataset: generic
+data_dir: data/camelsh
+
+# Use only 5 basins for quick test
+train_basin_file: src/mamba_camelsh/data/test_5_basins.txt
+validation_basin_file: src/mamba_camelsh/data/test_5_basins.txt
+test_basin_file: src/mamba_camelsh/data/test_5_basins.txt
+
+# Short time period for quick test
+train_start_date: "01/01/2010"
+train_end_date: "31/12/2010"
+validation_start_date: "01/01/2011"
+validation_end_date: "30/06/2011"
+test_start_date: "01/07/2011"
+test_end_date: "31/12/2011"
+
+# Model configuration - MAMBA
+model: mamba
+head: regression
+hidden_size: 64            # Smaller for quick test
+output_dropout: 0.0
+output_activation: linear
+
+# Mamba-specific hyperparameters
+mamba_d_state: 16
+mamba_d_conv: 4
+mamba_expand: 2
+mamba_n_layers: 2
+
+# Quick training
+epochs: 2
+batch_size: 64
+optimizer: AdamW
+loss: NSE
+learning_rate:
+  0: 0.001
+
+# Dynamic inputs (minimal set for quick test)
+dynamic_inputs:
+  - Rainf
+  - Tair
+  - SWdown
+  - Qair
+
+# Static attributes (minimal set)
+static_attributes:
+  - elev_mean
+  - slope_mean
+  - area
+
+# Target
+target_variables:
+  - Streamflow
+
+# Short sequence for quick test
+seq_length: 72  # 3 days
+predict_last_n: 1
+
+# Training parameters
+num_workers: 0
+validate_every: 1
+validate_n_random_basins: 5
+clip_gradient_norm: 1.0
+
+# Logging
+log_interval: 10
+log_tensorboard: true
+
+# Metrics
+metrics:
+  - NSE
+
+# Random seed
+seed: 42
+
+# Device
+device: cuda:0
+

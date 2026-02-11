@@ -1,0 +1,122 @@
+# CAMELSH Hourly Mamba - Conservative Configuration
+# Reduced batch_size and seq_length to avoid memory issues
+
+experiment_name: camelsh_mamba_conservative
+
+# Dataset (same as before)
+dataset: generic
+data_dir: data/camelsh
+
+# Basin files
+train_basin_file: data/camelsh/available_basins.txt
+validation_basin_file: data/camelsh/available_basins.txt
+test_basin_file: data/camelsh/available_basins.txt
+
+# Time periods
+train_start_date: "01/01/2010"
+train_end_date: "31/12/2014"
+validation_start_date: "01/01/2015"
+validation_end_date: "31/12/2017"
+test_start_date: "01/01/2018"
+test_end_date: "31/12/2020"
+
+# ============================================
+# Model configuration - MAMBA SSM
+# ============================================
+model: mamba
+head: regression
+hidden_size: 128
+output_dropout: 0.1
+output_activation: linear
+
+# Mamba-specific hyperparameters
+mamba_d_state: 16
+mamba_d_conv: 4
+mamba_expand: 2
+mamba_n_layers: 2
+
+# ============================================
+# Training configuration - CONSERVATIVE
+# ============================================
+epochs: 30
+batch_size: 128           # Reduced from 256 to avoid OOM
+optimizer: AdamW
+loss: NSE
+
+# Learning rate schedule
+learning_rate:
+  0: 0.003
+  10: 0.001
+  20: 0.0005
+
+# ============================================
+# Dynamic inputs
+# ============================================
+dynamic_inputs:
+  - Rainf
+  - Tair
+  - SWdown
+  - LWdown
+  - Qair
+  - PSurf
+  - Wind_E
+  - Wind_N
+  - PotEvap
+
+# ============================================
+# Static attributes
+# ============================================
+static_attributes:
+  - elev_mean
+  - slope_mean
+  - area
+  - clay_frac
+  - sand_frac
+  - soil_porosity
+  - permeability
+  - frac_forest
+  - p_mean
+  - pet_mean
+  - aridity
+  - frac_snow
+  - high_prec_freq
+
+# Target
+target_variables:
+  - Streamflow
+
+# ============================================
+# Sequence length - CONSERVATIVE
+# ============================================
+# Reduced from 336 to 168 (7 days) to reduce memory and speed up training
+seq_length: 168
+predict_last_n: 1
+
+# ============================================
+# Training parameters
+# ============================================
+num_workers: 0
+validate_every: 2
+validate_n_random_basins: 50
+clip_gradient_norm: 1.0
+
+# Logging
+log_interval: 50
+log_tensorboard: true
+log_n_figures: 3
+save_weights_every: 5
+
+# Metrics
+metrics:
+  - NSE
+  - KGE
+
+# Random seed
+seed: 159193
+
+# Device
+device: cuda:0
+
+
+
+

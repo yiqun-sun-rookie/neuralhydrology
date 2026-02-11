@@ -1,0 +1,67 @@
+# CAMELS-H Mamba - Tiny config for CPU validation
+
+experiment_name: camelsh_mamba_tiny_test
+
+# Dataset
+dataset: generic
+data_dir: data\camelsh
+train_basin_file: experiments\camelsh\test_50_basins.txt
+validation_basin_file: experiments\camelsh\test_50_basins.txt
+test_basin_file: experiments\camelsh\test_50_basins.txt
+
+# Time periods (1 year training for quick validation)
+train_start_date: 2010-01-01 00:00:00
+train_end_date: 2010-12-31 00:00:00
+validation_start_date: 2011-01-01 00:00:00
+validation_end_date: 2011-06-30 00:00:00
+test_start_date: 2011-07-01 00:00:00
+test_end_date: 2011-12-31 00:00:00
+
+# Model - Mamba (minimal config)
+model: mamba
+head: regression
+hidden_size: 32
+output_dropout: 0.1
+output_activation: linear
+
+# Mamba specific (minimal)
+mamba_d_state: 8
+mamba_d_conv: 4
+mamba_expand: 1
+mamba_n_layers: 1
+
+# Training (minimal)
+epochs: 1
+batch_size: 4
+optimizer: AdamW
+loss: NSE
+learning_rate:
+  0: 0.001
+
+# Minimal inputs
+dynamic_inputs:
+  - Rainf
+  - Tair
+  - PotEvap
+
+static_attributes:
+  - elev_mean
+  - area
+
+target_variables:
+  - Streamflow
+
+seq_length: 48
+
+predict_last_n: 1
+num_workers: 0
+validate_every: 1
+validate_n_random_basins: 10
+clip_gradient_norm: 1.0
+log_interval: 5
+
+metrics:
+  - NSE
+
+seed: 123
+device: cpu

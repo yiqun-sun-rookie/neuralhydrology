@@ -1,0 +1,91 @@
+# CAMELSH Hourly Mamba - Mini Benchmark
+# 50 Basins, 10 Epochs
+
+experiment_name: camelsh_mamba_mini_benchmark
+
+# Dataset
+dataset: generic
+data_dir: data/camelsh
+
+# 50 Basins Subset
+train_basin_file: src/mamba_camelsh/data/test_50_basins.txt
+validation_basin_file: src/mamba_camelsh/data/test_50_basins.txt
+test_basin_file: src/mamba_camelsh/data/test_50_basins.txt
+
+# Time periods
+train_start_date: "01/01/2010"
+train_end_date: "31/12/2014"
+validation_start_date: "01/01/2015"
+validation_end_date: "31/12/2017"
+test_start_date: "01/01/2018"
+test_end_date: "31/12/2020"
+
+# Model: Mamba (Ours)
+model: mamba
+head: regression
+hidden_size: 128
+output_dropout: 0.1
+output_activation: linear
+
+# Mamba params
+mamba_d_state: 16
+mamba_d_conv: 4
+mamba_expand: 2
+mamba_n_layers: 2
+
+# Training
+epochs: 10
+batch_size: 16
+optimizer: AdamW
+loss: NSE
+learning_rate:
+  0: 0.003
+  5: 0.001
+
+# Dynamic inputs
+dynamic_inputs:
+  - Rainf
+  - Tair
+  - SWdown
+  - LWdown
+  - Qair
+  - PSurf
+  - Wind_E
+  - Wind_N
+  - PotEvap
+
+# Static attributes
+static_attributes:
+  - elev_mean
+  - slope_mean
+  - area
+  - clay_frac
+  - sand_frac
+  - soil_porosity
+  - permeability
+  - frac_forest
+  - p_mean
+  - pet_mean
+  - aridity
+  - frac_snow
+  - high_prec_freq
+
+target_variables:
+  - Streamflow
+
+seq_length: 168
+predict_last_n: 1
+
+num_workers: 0
+validate_every: 2
+validate_n_random_basins: 50
+clip_gradient_norm: 1.0
+log_interval: 20
+log_tensorboard: true
+save_weights_every: 5
+metrics:
+  - NSE
+  - KGE
+seed: 123
+device: cpu
+

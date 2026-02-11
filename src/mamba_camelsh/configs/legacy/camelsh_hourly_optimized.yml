@@ -1,0 +1,108 @@
+# CAMELSH Hourly LSTM - Optimized Configuration
+# Based on successful CAMELS-US NSE 0.74 configuration
+# Adapted for hourly timescale
+
+experiment_name: camelsh_hourly_optimized
+
+# Dataset
+dataset: generic
+data_dir: data/camelsh
+
+# Basin files (777 basins with complete data)
+train_basin_file: data/camelsh/available_basins.txt
+validation_basin_file: data/camelsh/available_basins.txt
+test_basin_file: data/camelsh/available_basins.txt
+
+# Time periods (temporal split like CAMELS-US)
+# Train: 5 years, Val: 3 years, Test: 3 years
+train_start_date: "01/01/2010"
+train_end_date: "31/12/2014"
+validation_start_date: "01/01/2015"
+validation_end_date: "31/12/2017"
+test_start_date: "01/01/2018"
+test_end_date: "31/12/2020"
+
+# Model configuration (same as CAMELS-US NSE 0.74)
+model: cudalstm
+head: regression
+hidden_size: 128
+initial_forget_bias: 3
+output_dropout: 0.0
+output_activation: linear
+
+# Training configuration (same as CAMELS-US NSE 0.74)
+epochs: 30
+batch_size: 256
+optimizer: AdamW
+loss: NSE
+
+# Learning rate schedule (same as CAMELS-US NSE 0.74)
+learning_rate:
+  0: 0.003
+  10: 0.001
+  20: 0.0005
+
+# Dynamic inputs - NLDAS-2 hourly forcing (analogous to daymet daily)
+dynamic_inputs:
+  - Rainf        # Precipitation [kg/m2/s] ~ prcp
+  - Tair         # Air temperature [K] ~ tmax/tmin
+  - SWdown       # Shortwave radiation [W/m2] ~ srad
+  - LWdown       # Longwave radiation [W/m2]
+  - Qair         # Specific humidity [kg/kg] ~ vp
+  - PSurf        # Surface pressure [Pa]
+  - Wind_E       # Eastward wind [m/s]
+  - Wind_N       # Northward wind [m/s]
+  - PotEvap      # Potential evaporation [W/m2]
+
+# Static attributes (13 attributes, similar to CAMELS-US 14)
+static_attributes:
+  # Topography
+  - elev_mean
+  - slope_mean
+  - area
+  # Soil
+  - clay_frac
+  - sand_frac
+  - soil_porosity
+  - permeability
+  # Vegetation
+  - frac_forest
+  # Climate
+  - p_mean
+  - pet_mean
+  - aridity
+  - frac_snow
+  - high_prec_freq
+
+# Target
+target_variables:
+  - Streamflow
+
+# Sequence length: 168 hours = 7 days (analogous to 365 days for daily)
+# This captures weekly patterns while being memory-efficient
+seq_length: 168
+predict_last_n: 1
+
+# Training parameters (same as CAMELS-US NSE 0.74)
+num_workers: 0
+validate_every: 2
+validate_n_random_basins: 50
+clip_gradient_norm: 1.0
+
+# Logging
+log_interval: 50
+log_tensorboard: true
+log_n_figures: 3
+save_weights_every: 5
+
+# Metrics
+metrics:
+  - NSE
+  - KGE
+
+# Random seed (same as CAMELS-US)
+seed: 159193
+
+# Device
+device: cuda:0
+
