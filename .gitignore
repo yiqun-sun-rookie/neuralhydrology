@@ -17,3 +17,20 @@ configs/*
 .ipynb_checkpoints/
 data/*
 docs/build/*
+
+# Security - credentials
+hpc密码.txt
+.cdsapirc
+
+# Temporary files
+temp_*.txt
+move_log.txt
+sync.ffs_db
+tmpclaude-*
+module_a_validation/
+
+# Root-level logs (project logs are in logs/<ID>/)
+/*.log
+
+# HPC distribution artifacts
+dist_hpc/
