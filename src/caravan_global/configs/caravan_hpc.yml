@@ -1,0 +1,97 @@
+# Caravan Global Daily Model Configuration (HPC Optimized)
+# Dataset: Caravan (Valid basins only - filtered for 1981-2005 data availability)
+# Location: src/caravan_global/configs/
+# 
+# IMPORTANT:
+# This task uses an isolated basin list inside src/caravan_global/data/.
+# Keep training inputs independent from data/Caravan temporary analysis files.
+
+experiment_name: caravan_global_pretrain_hpc
+
+# Output directory (按 Rules 规范)
+run_dir: results/01_caravan_global
+
+# Dataset configuration
+dataset: caravan
+data_dir: data/Caravan
+
+# Use isolated filtered basin list for this idea
+# Current valid basins: 5281 (strict: train/val/test all pass)
+train_basin_file: src/caravan_global/data/valid_basins.txt
+validation_basin_file: src/caravan_global/data/valid_basins.txt
+test_basin_file: src/caravan_global/data/valid_basins.txt
+
+# Time periods
+train_start_date: 01/01/1981
+train_end_date: 31/12/2005
+validation_start_date: 01/01/2006
+validation_end_date: 31/12/2010
+test_start_date: 01/01/2011
+test_end_date: 31/12/2020
+
+# Model configuration
+model: cudalstm
+head: regression
+hidden_size: 128
+initial_forget_bias: 3
+output_dropout: 0.4
+
+# Training configuration
+epochs: 30
+# Batch size for HPC GPU (A100/V100/3090)
+batch_size: 128  # Reduced from 256 to save memory
+optimizer: AdamW
+learning_rate:
+  0: 0.001
+  10: 0.0005
+  20: 0.0001
+loss: NSE
+
+# Data loading optimization
+num_workers: 4
+cache_validation_data: False  # Save memory by not caching validation data
+
+# Validation optimization - don't validate on all basins every epoch
+validate_n_random_basins: 500  # Randomly sample 500 basins for validation each epoch
+
+# Input features (Standard Caravan feature set)
+forcings:
+  - caravan
+
+dynamic_inputs:
+  - total_precipitation_sum
+  - surface_net_solar_radiation_mean
+  - temperature_2m_max
+  - temperature_2m_min
+  - dewpoint_temperature_2m_mean
+
+static_attributes:
+  - ele_mt_sav          # elev_mean
+  - slp_dg_sav          # slope_mean
+  - area                # area_gages2
+  - sgr_dk_sav          # soil_depth_pelletier
+  - snd_pc_sav          # sand_frac
+  - cly_pc_sav          # clay_frac
+  - slt_pc_sav          # silt
+  - for_pc_sse          # frac_forest
+  - p_mean              # p_mean
+  - aridity_ERA5_LAND   # aridity
+  - frac_snow           # frac_snow
+  - high_prec_freq      # high_prec_freq
+
+target_variables:
+  - streamflow
+
+seq_length: 365
+predict_last_n: 1
+device: cuda:0
+validate_every: 1
+save_weights_every: 5  # Save less frequently to reduce I/O
+metrics:
+  - NSE
+  - KGE
+  - Alpha-NSE
+  - Beta-NSE
+
+# Log the training loss every n steps (Reduced verbosity for HPC)
+log_interval: 500
