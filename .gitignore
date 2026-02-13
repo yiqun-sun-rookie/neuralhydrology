@@ -45,3 +45,6 @@ results/**
 
 # HPC distribution artifacts
 dist_hpc/
+
+# Local vendored repos (keep local, do not track)
+external/
