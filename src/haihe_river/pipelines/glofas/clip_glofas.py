@@ -1,7 +1,7 @@
 """Clip GloFAS NetCDF files to a basin polygon, with bbox fallback.
 
 Example:
-    python pipelines/glofas/clip_glofas.py \
+    python src/haihe_river/pipelines/glofas/clip_glofas.py \
         --config configs/glofas/haihe_clip.yaml
 """
 

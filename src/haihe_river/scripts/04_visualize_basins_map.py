@@ -3,9 +3,9 @@
 脚本4: 预览海河 2471 个小流域在交互地图上（Folium），输出 HTML�?
 
 用法�?
-  conda run -n neuralhydrology_gpu python projects/haihe/scripts/04_visualize_basins_map.py \
+  conda run -n neuralhydrology_gpu python src/haihe_river/scripts/04_visualize_basins_map.py \
     --basins-dir data/haihe/basins_individual \
-    --out-html outputs/haihe/basins_map.html
+    --out-html results/06_haihe_river/figures/basins_map.html
 """
 
 import os
@@ -44,7 +44,7 @@ def load_first_center(basins_dir: Path):
 def main():
     parser = argparse.ArgumentParser(description="Visualize Haihe sub-basins on a Folium map")
     parser.add_argument("--basins-dir", default="data/haihe/basins_individual", help="Directory with per-basin GeoJSON files")
-    parser.add_argument('--out-html', default='outputs/haihe/basins_map.html', help='输出 HTML 路径')
+    parser.add_argument('--out-html', default='results/06_haihe_river/figures/basins_map.html', help='输出 HTML 路径')
     args = parser.parse_args()
 
     basins_dir = Path(args.basins_dir)

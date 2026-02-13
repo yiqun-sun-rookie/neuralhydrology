@@ -7,7 +7,7 @@ grid cells by thresholds, and writes the selected outlet points as GeoJSON.
 It also exports the discharge time series for each selected grid cell.
 
 Example usage:
-    python pipelines/glofas/select_subbasin_outlets.py \
+    python src/haihe_river/pipelines/glofas/select_subbasin_outlets.py \
         --config configs/glofas/haihe_outlets.yaml
 """
 

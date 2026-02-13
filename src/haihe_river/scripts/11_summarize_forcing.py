@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """汇�?NH forcing 文本的基础质量信息并导出报告�?
 
-输出：`reports/forcing_summary_lev9.csv`（可通过参数调整），包含每个流域�?
+输出：`results/06_haihe_river/reports/forcing_summary_lev9.csv`（可通过参数调整），包含每个流域�?
 - 起止日期、总天�?
 - 任意缺失值数量（按列�?
 - 负值计数（按列�?
@@ -11,9 +11,9 @@
 
 示例�?
 ```
-python projects/haihe/scripts/11_summarize_forcing.py \
+python src/haihe_river/scripts/11_summarize_forcing.py \
   --dir data/haihe/forcing \
-  --out reports/forcing_summary_lev9.csv \
+  --out results/06_haihe_river/reports/forcing_summary_lev9.csv \
   --check-negative total_precipitation_sum,potential_evaporation_sum,snow_depth_water_equivalent
 ```
 """
@@ -215,5 +215,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 

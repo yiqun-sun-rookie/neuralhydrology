@@ -4,7 +4,7 @@
 
 功能摘要
 --------
-- 读取 `outputs/haihe/per_basin_timeseries_lev9/<basin_id>.csv`
+- 读取 `results/06_haihe_river/per_basin_timeseries_lev9/<basin_id>.csv`
 - 按日期升序整理，并根据需要对指定列做非负截断
 - 可选地从对�?GeoJSON 估算质心经纬度与面积（m²），写入 forcing 文件前三�?
 - 产出 `data/haihe/forcing/<basin_id>.txt`
@@ -12,8 +12,8 @@
 使用示例
 --------
 ```
-python projects/haihe/scripts/10_write_forcing_from_timeseries_lev9.py \
-  --src outputs/haihe/per_basin_timeseries_lev9 \
+python src/haihe_river/scripts/10_write_forcing_from_timeseries_lev9.py \
+  --src results/06_haihe_river/per_basin_timeseries_lev9 \
   --dst data/haihe/forcing \
   --geojson-dir data/haihe/basins_individual \
   --clamp-nonnegative total_precipitation_sum,potential_evaporation_sum,snow_depth_water_equivalent \

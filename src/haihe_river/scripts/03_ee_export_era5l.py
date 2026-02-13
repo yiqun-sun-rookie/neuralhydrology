@@ -4,7 +4,7 @@
 注意�?1) 你需要已完成 `earthengine authenticate` 认证�?2) 本脚本将分批（每�?~100 个流域）+ 分时段（默认�?5 年）创建多个导出任务，避免单任务过大�?3) 数据源支持两种模式：
    - 日聚合：`ECMWF/ERA5_LAND/DAILY_AGGR`
    - 逐小时：`ECMWF/ERA5_LAND/HOURLY`（便于后续聚合为 CAMELS 变量�?
-用法示例�?  conda run -n neuralhydrology_gpu python projects/haihe/scripts/03_ee_export_era5l.py \
+用法示例�?  conda run -n neuralhydrology_gpu python src/haihe_river/scripts/03_ee_export_era5l.py \
     --basins-dir data/haihe/basins_individual \
     --drive-folder Caravan_Haihe_ERA5L \
     --start 1981-01-01 --end 2020-12-31 \

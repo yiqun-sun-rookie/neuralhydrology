@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
 # Mamba CAMELS-US 全量训练作业 (531 basins, 30 epochs)
-# 用法: sbatch hpc/submit_mamba_camels_us.slurm
+# 用法: sbatch src/mamba_camels_us/hpc/submit_mamba_camels_us.slurm
 #       或: ./hpc/submit.sh mamba_camels_us
 # =============================================================================
 #SBATCH -J nh_mamba_camels_us
@@ -20,7 +20,7 @@ set -eo pipefail
 # 配置变量（可按需修改）
 # =============================================================================
 CONDA_ENV="${CONDA_ENV:-nh_clean}"
-CONFIG_FILE="experiments/camels_us/configs/mamba_daily.yml"
+CONFIG_FILE="src/mamba_camels_us/configs/mamba_daily.yml"
 TASK_NAME="Mamba CAMELS-US Full (531 basins, 30 epochs)"
 
 # =============================================================================

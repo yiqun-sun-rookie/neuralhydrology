@@ -7,7 +7,7 @@
 3. 生成 basin_list.txt 和文件映�?CSV
 
 使用方法�?
-    python projects/haihe/scripts/02_export_individual_basins.py \
+    python src/haihe_river/scripts/02_export_individual_basins.py \
         --input-gpkg data/haihe/hydrobasins/lev12/haihe_hydrobasins_lev12.gpkg \
         --output-dir data/haihe/basins_individual
 

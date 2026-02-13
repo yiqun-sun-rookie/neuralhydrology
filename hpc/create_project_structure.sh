@@ -22,30 +22,24 @@ cd "${PROJECT_ROOT}"
 # 创建核心目录结构
 echo "[INFO] 创建目录结构..."
 
-# 配置目录
-mkdir -p configs/archive
-mkdir -p configs/camels_us
-mkdir -p configs/caravan
-mkdir -p configs/full_training
-
-# 数据目录 (Caravan 将在这里下载)
-mkdir -p data/Caravan
-
-# 文档目录
+# 研究索引与文档
+mkdir -p draft/ideas
 mkdir -p docs
 
-# 环境配置
-mkdir -p environments
+# 统一项目目录
+mkdir -p src/templates
+mkdir -p results
+mkdir -p logs
 
-# 示例和实验
+# 数据目录
+mkdir -p data/Caravan
+
+# 环境与示例
+mkdir -p environments
 mkdir -p examples
-mkdir -p experiments/templates
 
 # HPC 脚本
 mkdir -p hpc
-
-# 日志目录
-mkdir -p logs
 
 # 核心代码 (需要从本地上传)
 mkdir -p neuralhydrology/datasetzoo
@@ -55,19 +49,12 @@ mkdir -p neuralhydrology/modelzoo
 mkdir -p neuralhydrology/training
 mkdir -p neuralhydrology/utils
 
-# 管道和项目
-mkdir -p pipelines
-mkdir -p projects
-
 # 运行结果目录
 mkdir -p runs
 
 # 脚本和工具
 mkdir -p scripts
 mkdir -p tools
-
-# SLURM 作业目录
-mkdir -p slurm_jobs
 
 # 测试目录
 mkdir -p test
@@ -84,7 +71,7 @@ echo "========================================"
 echo ""
 echo "1. 上传代码文件:"
 echo "   scp -r neuralhydrology/*.py user@hpc:${PROJECT_ROOT}/neuralhydrology/"
-echo "   scp -r configs/* user@hpc:${PROJECT_ROOT}/configs/"
+echo "   scp -r src/* user@hpc:${PROJECT_ROOT}/src/"
 echo "   scp -r hpc/* user@hpc:${PROJECT_ROOT}/hpc/"
 echo ""
 echo "2. 下载 Caravan 数据集:"

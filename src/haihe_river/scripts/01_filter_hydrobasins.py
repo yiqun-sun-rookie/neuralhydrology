@@ -19,7 +19,7 @@ if 'PROJ_LIB' not in os.environ:
 4. 生成筛选后的小流域集合文件
 
 使用方法�?
-    python projects/haihe/scripts/01_filter_hydrobasins.py \
+    python src/haihe_river/scripts/01_filter_hydrobasins.py \
         --haihe-shp data/haihe/boundary/haihe_basin.shp \
         --hydrobasins-shp <你的HydroBASINS文件路径> \
         --output-dir data/haihe/hydrobasins/lev12

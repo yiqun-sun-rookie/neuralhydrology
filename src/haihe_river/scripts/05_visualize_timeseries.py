@@ -7,10 +7,10 @@
   - CSV 列包含 reduceRegions 的均值后缀：*_mean，以及 system_index（yyyyMMdd）。
 
 用法：
-  conda run -n neuralhydrology_gpu python projects/haihe/scripts/05_visualize_timeseries.py \
+  conda run -n neuralhydrology_gpu python src/haihe_river/scripts/05_visualize_timeseries.py \
     --csv-dir downloads/Caravan_Haihe_ERA5L \
     --basin-id HB4120006920 \
-    --out-png outputs/haihe/ts_HB4120006920.png
+    --out-png results/06_haihe_river/figures/ts_HB4120006920.png
 """
 
 import argparse
@@ -38,7 +38,7 @@ def main():
     parser = argparse.ArgumentParser(description='可视化已下载的 ERA5L CSV 时序（单一 basin）')
     parser.add_argument('--csv-dir', required=True, help='本地 CSV 目录（从 Google Drive 下载）')
     parser.add_argument('--basin-id', required=True, help='目标 basin_id，例如 HB4120006920')
-    parser.add_argument('--out-png', default='outputs/haihe/ts.png', help='输出图片路径')
+    parser.add_argument('--out-png', default='results/06_haihe_river/figures/ts.png', help='输出图片路径')
     args = parser.parse_args()
 
     csv_dir = Path(args.csv_dir)

@@ -23,6 +23,6 @@ echo "Running on host: $(hostname)"
 nvidia-smi
 
 # 3. 运行训练
-# 注意：确保 configs/caravan/caravan_daily_basemodel.yml 中的 data_dir 指向了 HPC 上的正确路径
-python -m neuralhydrology.nh_run train --config-file configs/caravan/caravan_daily_basemodel.yml
+# 注意：确保 src/caravan_global/configs/caravan_daily_basemodel.yml 中的 data_dir 指向了 HPC 上的正确路径
+python -m neuralhydrology.nh_run train --config-file src/caravan_global/configs/caravan_daily_basemodel.yml
 

@@ -33,10 +33,10 @@ NC='\033[0m' # No Color
 
 # 任务名称到 SLURM 脚本的映射
 declare -A TASK_SCRIPTS=(
-    ["mamba_camels_us"]="hpc/submit_mamba_camels_us.slurm"
-    ["mamba_quick"]="hpc/submit_mamba_quick.slurm"
+    ["mamba_camels_us"]="src/mamba_camels_us/hpc/submit_mamba_camels_us.slurm"
+    ["mamba_quick"]="src/mamba_camels_us/hpc/submit_mamba_quick.slurm"
     ["caravan"]="hpc/submit_caravan.slurm"
-    ["caravan_global"]="hpc/slurm_caravan_global.sh"
+    ["caravan_global"]="src/caravan_global/hpc/slurm_caravan_global.sh"
 )
 
 # 任务名称到描述的映射

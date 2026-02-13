@@ -16,7 +16,7 @@
 
 依赖�?
 - 在执行本脚本前，应先运行 `10_write_forcing_from_timeseries_lev9.py` �?
-  `11_summarize_forcing.py`，保�?`reports/forcing_summary_lev9.csv` 为最新�?
+  `11_summarize_forcing.py`，保�?`results/06_haihe_river/reports/forcing_summary_lev9.csv` 为最新�?
 """
 
 from __future__ import annotations
@@ -38,7 +38,7 @@ def collect_missing_columns(row: pd.Series, na_prefix: str = "na_") -> List[str]
 
 def main():
     ap = argparse.ArgumentParser(description="生成海河 lev9 静态属性表")
-    ap.add_argument("--summary", default="reports/forcing_summary_lev9.csv", help="forcing 汇�?CSV 路径")
+    ap.add_argument("--summary", default="results/06_haihe_river/reports/forcing_summary_lev9.csv", help="forcing 汇�?CSV 路径")
     ap.add_argument("--hybas", default="data/haihe/hydrobasins/lev9/haihe_hybas_lev9_list.csv", help="HydroBASINS 列表")
     ap.add_argument("--out-dir", default="data/haihe/attributes", help="输出目录")
     args = ap.parse_args()

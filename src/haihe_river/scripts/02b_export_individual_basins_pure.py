@@ -3,7 +3,7 @@
 �?pyshp 导出：根据筛选清单（CSV，含 HYBAS_ID、basin_id）从 HydroBASINS 原始 shp 导出单体 GeoJSON�?
 
 用法�?
-  conda run -n neuralhydrology_gpu python projects/haihe/scripts/02b_export_individual_basins_pure.py \
+  conda run -n neuralhydrology_gpu python src/haihe_river/scripts/02b_export_individual_basins_pure.py \
     --hybas-shp data/haihe/hydrobasins/source/hybas_as_lev09_v1c.shp \
     --list-csv data/haihe/hydrobasins/lev9/haihe_hybas_lev9_list.csv \
     --out-dir data/haihe/basins_individual

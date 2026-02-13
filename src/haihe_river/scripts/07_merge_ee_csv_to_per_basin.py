@@ -3,7 +3,7 @@
 将多个时间片（目录）下的 GEE 导出 CSV 分片合并为“每个流域一个时间序列 CSV”。
 
 输入：若干目录（每个目录内含 era5l_daily_*.csv 若干分片）
-输出：outputs/haihe/per_basin_timeseries/<basin_id>.csv
+输出：results/06_haihe_river/per_basin_timeseries/<basin_id>.csv
 
 列名自适配：既支持 'temperature_2m' / 'temperature_2m_mean'，也支持 'total_precipitation_sum' / 'total_precipitation_sum_mean' 等。
 """
@@ -121,7 +121,7 @@ def merge_directories(dirs, out_dir: Path):
 def main():
     ap = argparse.ArgumentParser(description='合并 GEE ERA5L 导出 CSV 为每流域一个时间序列')
     ap.add_argument('--dirs', nargs='+', required=True, help='若干时间片目录')
-    ap.add_argument('--out', default='outputs/haihe/per_basin_timeseries', help='输出目录')
+    ap.add_argument('--out', default='results/06_haihe_river/per_basin_timeseries', help='输出目录')
     args = ap.parse_args()
 
     merge_directories(args.dirs, Path(args.out))

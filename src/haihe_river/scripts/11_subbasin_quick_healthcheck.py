@@ -23,12 +23,12 @@ Outputs
 
 Example
 -------
-python projects/haihe/scripts/11_subbasin_quick_healthcheck.py ^
+python src/haihe_river/scripts/11_subbasin_quick_healthcheck.py ^
   --basins data/haihe/hydrobasins/lev12/haihe_hydrobasins_lev12.gpkg ^
   --layer basins ^
   --dem data/haihe/dem/haihe_srtm_dem.tif ^
   --slope data/haihe/dem/haihe_srtm_slope.tif ^
-  --outdir outputs/haihe_healthcheck
+  --outdir results/06_haihe_river/haihe_healthcheck
 """
 from __future__ import annotations
 
@@ -68,7 +68,7 @@ DEFAULT_LAYER = "basins"
 DEFAULT_ID_FIELD = "basin_id"
 DEFAULT_DEM = Path("data/haihe/dem/haihe_srtm_dem.tif")
 DEFAULT_SLOPE = Path("data/haihe/dem/haihe_srtm_slope.tif")
-DEFAULT_OUTDIR = Path("outputs/haihe_healthcheck")
+DEFAULT_OUTDIR = Path("results/06_haihe_river/haihe_healthcheck")
 
 COLUMN_METADATA: Dict[str, Dict[str, Optional[str]]] = {
     "area_km2": {"label": "Area", "unit": "km^2"},
@@ -472,11 +472,11 @@ def main():
 
     if not dem_path.exists():
         raise FileNotFoundError(
-            f"DEM not found: {dem_path}. Run projects/haihe/scripts/00_prepare_haihe_srtm.py first."
+            f"DEM not found: {dem_path}. Run src/haihe_river/scripts/00_prepare_haihe_srtm.py first."
         )
     if not slope_path.exists():
         raise FileNotFoundError(
-            f"Slope raster not found: {slope_path}. Run projects/haihe/scripts/00_prepare_haihe_srtm.py first."
+            f"Slope raster not found: {slope_path}. Run src/haihe_river/scripts/00_prepare_haihe_srtm.py first."
         )
 
     gdf = read_basins(basins_path, layer=args.layer)

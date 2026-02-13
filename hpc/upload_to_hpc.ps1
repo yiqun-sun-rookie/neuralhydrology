@@ -22,8 +22,8 @@ if ($LASTEXITCODE -ne 0) {
 
 # 2. Upload Code
 Write-Host ""
-Write-Host "[Step 2/3] Uploading Code (neuralhydrology, configs, hpc, setup.py)..." -ForegroundColor Green
-scp -r neuralhydrology configs hpc setup.py ${User}@${HostName}:${RemoteProjectPath}
+Write-Host "[Step 2/3] Uploading Code (neuralhydrology, src, hpc, setup.py)..." -ForegroundColor Green
+scp -r neuralhydrology src hpc setup.py ${User}@${HostName}:${RemoteProjectPath}
 
 # 3. Upload Data
 Write-Host ""
@@ -41,5 +41,5 @@ Write-Host "  1. ssh ${User}@${HostName}"
 Write-Host "  2. cd ~/data"
 Write-Host "  3. tar -xzvf Caravan.tar.gz"
 Write-Host "  4. cd ~/neuralhydrology"
-Write-Host "  5. sbatch hpc/slurm_caravan_global.sh"
+Write-Host "  5. sbatch src/caravan_global/hpc/slurm_caravan_global.sh"
 Read-Host "Press Enter to exit"

@@ -14,9 +14,9 @@ import seaborn as sns
 
 def main():
     ap = argparse.ArgumentParser(description="绘制 forcing 与静态属性概览图")
-    ap.add_argument("--summary", default="reports/forcing_summary_lev9.csv")
+    ap.add_argument("--summary", default="results/06_haihe_river/reports/forcing_summary_lev9.csv")
     ap.add_argument("--attributes", default="data/haihe/attributes/attributes.csv")
-    ap.add_argument("--out", default="reports/forcing_attributes_overview.png")
+    ap.add_argument("--out", default="results/06_haihe_river/reports/forcing_attributes_overview.png")
     args = ap.parse_args()
 
     df_summary = pd.read_csv(args.summary)
@@ -50,5 +50,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 

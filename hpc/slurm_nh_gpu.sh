@@ -21,7 +21,7 @@
 #===============================================================================
 CONDA_ENV="${CONDA_ENV:-neuralhydrology}"
 WORKDIR="${WORKDIR:-/data1/home/${USER}/neuralhydrology}"
-CONFIG_FILE="${CONFIG_FILE:-configs/caravan/caravan_daily_basemodel.yml}"
+CONFIG_FILE="${CONFIG_FILE:-src/caravan_global/configs/caravan_daily_basemodel.yml}"
 
 # 日志控制 (从 kalmannet 借鉴)
 LOG_LEVEL="${LOG_LEVEL:-minimal}"  # ultra_quiet, minimal, normal, verbose

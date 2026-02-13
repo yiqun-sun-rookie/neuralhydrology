@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
 # Mamba CAMELS-US 快速验证作业 (100 basins, 5 epochs)
-# 用法: sbatch hpc/submit_mamba_quick.slurm
+# 用法: sbatch src/mamba_camels_us/hpc/submit_mamba_quick.slurm
 #       或: ./hpc/submit.sh mamba_quick
 # =============================================================================
 #SBATCH -J nh_mamba_quick
@@ -19,7 +19,7 @@ set -eo pipefail
 # 配置变量
 # =============================================================================
 CONDA_ENV="${CONDA_ENV:-nh_clean}"
-CONFIG_FILE="experiments/camels_us/configs/mamba_daily_quick.yml"
+CONFIG_FILE="src/mamba_camels_us/configs/mamba_daily_quick.yml"
 TASK_NAME="Mamba Quick Validation (100 basins, 5 epochs)"
 
 # =============================================================================

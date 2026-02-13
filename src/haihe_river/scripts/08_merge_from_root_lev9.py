@@ -11,7 +11,7 @@ from pathlib import Path
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--root', required=True, help='lev9 根目录，内含各时间片CSV或扁平CSV')
-    ap.add_argument('--out', default='outputs/haihe/per_basin_timeseries_lev9', help='输出目录')
+    ap.add_argument('--out', default='results/06_haihe_river/per_basin_timeseries_lev9', help='输出目录')
     args = ap.parse_args()
 
     root = Path(args.root)
@@ -30,7 +30,9 @@ def main():
 
     # 延迟导入避免路径问题
     import importlib.util
-    mod_path = Path('projects/haihe/scripts/07_merge_ee_csv_to_per_basin.py')
+    mod_path = Path(__file__).resolve().parent / '07_merge_ee_csv_to_per_basin.py'
+    if not mod_path.exists():
+        raise FileNotFoundError(f'缺少依赖脚本: {mod_path}')
     spec = importlib.util.spec_from_file_location('merge_mod', mod_path)
     merge_mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(merge_mod)

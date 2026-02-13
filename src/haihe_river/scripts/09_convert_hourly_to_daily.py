@@ -9,10 +9,10 @@
 - 生成包含日总量/日均/日最�?日最�?水汽压等列的 CSV
 
 使用示例�?
-    python projects/haihe/scripts/09_convert_hourly_to_daily.py \
+    python src/haihe_river/scripts/09_convert_hourly_to_daily.py \
         --hourly-dir data/Caravan_Haihe_ERA5L_lev9_hourly \
         --basins-dir data/haihe/basins_individual \
-        --out outputs/haihe/per_basin_timeseries_era5l_hourly
+        --out results/06_haihe_river/per_basin_timeseries_era5l_hourly
 """
 
 from __future__ import annotations

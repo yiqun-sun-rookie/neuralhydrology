@@ -2,13 +2,13 @@
 #===============================================================================
 # NeuralHydrology 快速提交脚本
 # 用法: ./submit_nh.sh [config_file] [partition] [time]
-# 示例: ./submit_nh.sh configs/caravan/caravan_daily_basemodel.yml hgpu2p 48:00:00
+# 示例: ./submit_nh.sh src/caravan_global/configs/caravan_daily_basemodel.yml hgpu2p 48:00:00
 #===============================================================================
 
 set -e
 
 # 默认值
-CONFIG_FILE="${1:-configs/caravan/caravan_daily_basemodel.yml}"
+CONFIG_FILE="${1:-src/caravan_global/configs/caravan_daily_basemodel.yml}"
 PARTITION="${2:-hgpu2p}"
 WALLTIME="${3:-72:00:00}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"

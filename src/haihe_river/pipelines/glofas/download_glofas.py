@@ -5,7 +5,7 @@ computes the basin bounding box (with optional buffer), and downloads yearly
 NetCDF files for the requested variables.
 
 Example usage:
-    python pipelines/glofas/download_glofas.py \
+    python src/haihe_river/pipelines/glofas/download_glofas.py \
         --config configs/glofas/haihe_download.yaml
 """
 

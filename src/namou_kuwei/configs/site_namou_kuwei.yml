@@ -6,9 +6,9 @@ data_dir: data/namou_kuwei_hourly
 run_dir: results/04_namou_kuwei
 
 # Basin files
-train_basin_file: F:/github/pycharm/projects/neuralhydrology/data/namou_kuwei_hourly/train_basins.txt
-validation_basin_file: F:/github/pycharm/projects/neuralhydrology/data/namou_kuwei_hourly/validation_basins.txt
-test_basin_file: F:/github/pycharm/projects/neuralhydrology/data/namou_kuwei_hourly/test_basins.txt
+train_basin_file: data/namou_kuwei_hourly/train_basins.txt
+validation_basin_file: data/namou_kuwei_hourly/validation_basins.txt
+test_basin_file: data/namou_kuwei_hourly/test_basins.txt
 
 # Time split (must be non-overlapping)
 train_start_date: "01/01/2020"

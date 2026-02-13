@@ -28,7 +28,18 @@ except ImportError:
     import select_subbasin_outlets
 
 LOG_FORMAT = "%(asctime)s | %(levelname)s | %(message)s"
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _find_project_root() -> Path:
+    current = Path(__file__).resolve()
+    for parent in current.parents:
+        if (parent / "setup.py").exists() or (parent / ".git").exists():
+            return parent
+    # Fallback for unusual environments
+    return current.parents[4]
+
+
+PROJECT_ROOT = _find_project_root()
 
 
 def configure_logging(verbose: bool = False) -> None:

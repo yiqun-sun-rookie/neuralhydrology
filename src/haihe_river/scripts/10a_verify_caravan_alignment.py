@@ -10,7 +10,7 @@
 4. 对比两者输出，检查误差是否低于给定阈值�?
 
 用法示例�?
-    python projects/haihe/scripts/10a_verify_caravan_alignment.py \
+    python src/haihe_river/scripts/10a_verify_caravan_alignment.py \
         --hourly-dir data/Caravan_Haihe_ERA5L_lev9_hourly \
         --basins-dir data/haihe/basins_individual \
         --basin-id HB4090006920
