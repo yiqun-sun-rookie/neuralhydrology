@@ -8,15 +8,15 @@
 
 - **目录结构**（以海河为例）：
   ```
-  projects/
-  └─ haihe/
-     ├─ data/        # 数据目录（边界、DEM、子流域、forcing 等）
-     ├─ glofas/      # GloFAS 相关输出
-     │  ├─ raw/      # GloFAS 原始 NetCDF
-     │  ├─ work/     # 裁剪后的 NetCDF
-     │  ├─ outputs/  # 出口点、时间序列、QC 结果
-     │  └─ logs/     # 下载/裁剪日志
-     └─ scripts/     # 处理脚本
+  src/haihe_river/
+  ├─ configs/glofas/     # 管线 YAML 配置
+  └─ pipelines/glofas/   # 管线脚本
+
+  data/haihe/glofas/
+  ├─ raw/                # GloFAS 原始 NetCDF
+  ├─ work/               # 裁剪后的 NetCDF
+  ├─ outputs/            # 出口点、时间序列、QC 结果
+  └─ logs/               # 下载/裁剪日志
   ```
 - **海河示例输入**：  
   - 大流域边界：`data/haihe/boundary/haihe_basin.shp`（WGS84）。  
@@ -65,9 +65,9 @@ qc_plots:
 | 子流域 `subbasins` | `src/haihe_river/pipelines/glofas/prep_subbasins.py` + `src/haihe_river/configs/glofas/haihe_subbasins.yaml` | 大流域边界、HydroBASINS 源文件 | `artifacts/glofas/<basin>/inputs/haihe_hydrobasins_lev9.gpkg` 及列表 CSV |
 | 下载 `download` | `src/haihe_river/pipelines/glofas/download_glofas.py` + `src/haihe_river/configs/glofas/haihe_download.yaml` | 流域边界（用于 bbox）、CDS 凭据 | `artifacts/glofas/<basin>/raw/*.nc`，日志在 `logs/download_*.log` |
 | 裁剪 `clip` | `src/haihe_river/pipelines/glofas/clip_glofas.py` + `src/haihe_river/configs/glofas/haihe_clip.yaml` | `raw/*.nc`、流域边界 | `work/*_clip.nc`，日志 `logs/clip.log` |
-| 出口 `outlets` | `src/haihe_river/pipelines/glofas/select_subbasin_outlets.py` + `src/haihe_river/configs/glofas/haihe_outlets.yaml` | 裁剪流量、上游面积、子流域矢量 | `outputs/subbasin_outlets.{geojson,csv}`、`outputs/timeseries/sub_<SUB_ID>_discharge.csv` |
-| QC 统计 `qc_summary` | `src/haihe_river/pipelines/glofas/qc_summary.py` | `outputs/subbasin_outlets.*`、`outputs/timeseries/` | `outputs/qc/summary.json`、`subbasin_outlets_checks.csv`、`timeseries_stats.csv` |
-| QC 图 `qc_plots` | `src/haihe_river/pipelines/glofas/plot_qc.py` | 上述 QC 结果和子流域矢量 | `outputs/qc/figures/*.png`（地图、分布、样例曲线） |
+| 出口 `outlets` | `src/haihe_river/pipelines/glofas/select_subbasin_outlets.py` + `src/haihe_river/configs/glofas/haihe_outlets.yaml` | 裁剪流量、上游面积、子流域矢量 | `data/haihe/glofas/outputs/subbasin_outlets.{geojson,csv}`、`data/haihe/glofas/outputs/timeseries/sub_<SUB_ID>_discharge.csv` |
+| QC 统计 `qc_summary` | `src/haihe_river/pipelines/glofas/qc_summary.py` | `data/haihe/glofas/outputs/subbasin_outlets.*`、`data/haihe/glofas/outputs/timeseries/` | `data/haihe/glofas/outputs/qc/summary.json`、`subbasin_outlets_checks.csv`、`timeseries_stats.csv` |
+| QC 图 `qc_plots` | `src/haihe_river/pipelines/glofas/plot_qc.py` | 上述 QC 结果和子流域矢量 | `data/haihe/glofas/outputs/qc/figures/*.png`（地图、分布、样例曲线） |
 
 ---
 
@@ -128,5 +128,4 @@ python src/haihe_river/pipelines/glofas/run_pipeline.py \
 ---
 
 如需进一步定制（例如添加新的后处理或可视化阶段），可在 `src/haihe_river/pipelines/glofas/run_pipeline.py` 中新增阶段函数，并在配置文件中补充对应段落，即可继续复用同一套入口。
-
 

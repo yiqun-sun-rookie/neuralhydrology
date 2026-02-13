@@ -1,4 +1,4 @@
-﻿# Nam Ou Kuwei - No Leak Configurations
+# Nam Ou Kuwei - No Leak Configurations
 
 ## Experiment Hierarchy (Progressive Complexity)
 
@@ -17,13 +17,13 @@
 
 ## Run Commands
 
-L1: python -m neuralhydrology.nh_run train --config-file experiments/namou_kuwei/configs/no_leak/01_baseline/rain_only_LT1h.yml
+L1: python -m neuralhydrology.nh_run train --config-file src/namou_kuwei/configs/no_leak/01_baseline/rain_only_LT1h.yml
 
-L2: python -m neuralhydrology.nh_run train --config-file experiments/namou_kuwei/configs/no_leak/02_with_static/rain_static_LT1h.yml
+L2: python -m neuralhydrology.nh_run train --config-file src/namou_kuwei/configs/no_leak/02_with_static/rain_static_LT1h.yml
 
-L3: python -m neuralhydrology.nh_run train --config-file experiments/namou_kuwei/configs/no_leak/03_with_ar/rain_ar_LT1h.yml
+L3: python -m neuralhydrology.nh_run train --config-file src/namou_kuwei/configs/no_leak/03_with_ar/rain_ar_LT1h.yml
 
-L4: python -m neuralhydrology.nh_run train --config-file experiments/namou_kuwei/configs/no_leak/04_full/rain_ar_static_LT1h.yml
+L4: python -m neuralhydrology.nh_run train --config-file src/namou_kuwei/configs/no_leak/04_full/rain_ar_static_LT1h.yml
 
 ## Expected Results
 

@@ -48,7 +48,7 @@ LSTM (Long Short-Term Memory，长短期记忆网络) 是一种擅长处理**时
 
 | 目录用途 | 路径 | 说明 |
 | :--- | :--- | :--- |
-| **配置文件** | `experiments/namou_kuwei/configs/no_leak/` | **最重要！** 这里存放了所有的模型参数设置（如 S1, S4 等实验）。 |
+| **配置文件** | `src/namou_kuwei/configs/no_leak/` | **最重要！** 这里存放了所有的模型参数设置（如 S1, S4 等实验）。 |
 | **数据文件** | `data/namou_kuwei_hourly/` | 存放处理好的 CSV 和 NetCDF 格式的水文数据。 |
 | **运行结果** | `runs/` | 模型训练后的日志、权重文件和预测结果都会自动生成在这里。 |
 
@@ -76,14 +76,14 @@ LSTM (Long Short-Term Memory，长短期记忆网络) 是一种擅长处理**时
 
 ### 步骤 1: 找到配置文件
 该模型的配置文件位于：
-`experiments/namou_kuwei/configs/no_leak/04_full/rain_ar_static_LT1h.yml`
+`src/namou_kuwei/configs/no_leak/04_full/rain_ar_static_LT1h.yml`
 
 ### 步骤 2: 运行训练命令
 在项目根目录下，执行以下命令：
 
 ```bash
 # 建议先复制并在终端运行
-nh-run train --config-file experiments/namou_kuwei/configs/no_leak/04_full/rain_ar_static_LT1h.yml
+nh-run train --config-file src/namou_kuwei/configs/no_leak/04_full/rain_ar_static_LT1h.yml
 ```
 
 ### 步骤 3: 观察输出
@@ -95,7 +95,7 @@ nh-run train --config-file experiments/namou_kuwei/configs/no_leak/04_full/rain_
 
 ## 6. 实验结构解析：为什么有这么多文件夹？
 
-在 `experiments/namou_kuwei/configs/no_leak/` 下，你看到的一系列文件夹其实是一个**“闯关”式的实验设计**：
+在 `src/namou_kuwei/configs/no_leak/` 下，你看到的一系列文件夹其实是一个**“闯关”式的实验设计**：
 
 *   **01_baseline (只用降雨)**:
     *   **就像**: 看了天气预报猜水位。

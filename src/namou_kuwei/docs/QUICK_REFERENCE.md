@@ -6,17 +6,17 @@
 
 ### 1小时预报 (NSE=0.975)
 ```bash
-python -m neuralhydrology.nh_run train --config-file experiments/namou_kuwei/configs/no_leak/03_with_ar/rain_ar_LT1h.yml
+python -m neuralhydrology.nh_run train --config-file src/namou_kuwei/configs/no_leak/03_with_ar/rain_ar_LT1h.yml
 ```
 
 ### 24小时预报 (NSE=0.735)
 ```bash
-python -m neuralhydrology.nh_run train --config-file experiments/namou_kuwei/configs/no_leak/05_leadtime/rain_ar_LT24h.yml
+python -m neuralhydrology.nh_run train --config-file src/namou_kuwei/configs/no_leak/05_leadtime/rain_ar_LT24h.yml
 ```
 
 ### 一次预测24小时 Seq-to-Seq (NSE=0.730)
 ```bash
-python -m neuralhydrology.nh_run train --config-file experiments/namou_kuwei/configs/no_leak/06_seq2seq/seq2seq_ar24lag_24h.yml
+python -m neuralhydrology.nh_run train --config-file src/namou_kuwei/configs/no_leak/06_seq2seq/seq2seq_ar24lag_24h.yml
 ```
 
 ---

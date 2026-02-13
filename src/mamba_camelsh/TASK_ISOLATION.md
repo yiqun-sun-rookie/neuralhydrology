@@ -7,7 +7,7 @@ This file defines isolation boundaries for the CAMELS-H hourly Mamba task in thi
 - All task-specific code/config/scripts live under `src/mamba_camelsh/`.
 - LSTM baseline config for this task is isolated at:
   - `src/mamba_camelsh/configs/camelsh_lstm_mini.yml`
-- Do not depend on `experiments/camelsh/configs/camelsh_lstm_mini.yml` for this task anymore.
+- Do not depend on `src/mamba_camelsh/configs/camelsh_lstm_mini.yml` for this task anymore.
 
 ## 2) Result and Log Isolation
 

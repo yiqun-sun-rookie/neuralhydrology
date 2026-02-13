@@ -32,7 +32,7 @@ bash hpc/install_mamba_ssm.sh
 先运行快速验证，确认一切正常：
 
 ```bash
-sbatch hpc/submit_mamba_quick.slurm
+sbatch src/mamba_camels_us/hpc/submit_mamba_quick.slurm
 ```
 
 **预计时间**: 1-2 天（100 流域，5 epochs）
@@ -42,7 +42,7 @@ sbatch hpc/submit_mamba_quick.slurm
 快速验证成功后，提交全量训练：
 
 ```bash
-sbatch hpc/submit_mamba_camels_us.slurm
+sbatch src/mamba_camels_us/hpc/submit_mamba_camels_us.slurm
 ```
 
 **预计时间**: 
@@ -85,7 +85,7 @@ except ImportError:
 
 ### 修改 SLURM 参数
 
-编辑 `hpc/submit_mamba_camels_us.slurm`:
+编辑 `src/mamba_camels_us/hpc/submit_mamba_camels_us.slurm`:
 
 ```bash
 #SBATCH -p hgpu8          # 修改为你的 GPU 分区

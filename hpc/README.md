@@ -82,8 +82,8 @@ logs/
 
 ```bash
 sbatch hpc/submit_caravan.slurm
-sbatch hpc/submit_mamba_quick.slurm
-sbatch hpc/submit_mamba_camels_us.slurm
+sbatch src/mamba_camels_us/hpc/submit_mamba_quick.slurm
+sbatch src/mamba_camels_us/hpc/submit_mamba_camels_us.slurm
 ```
 
 ## 监控作业

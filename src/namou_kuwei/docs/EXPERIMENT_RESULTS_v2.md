@@ -109,7 +109,7 @@ Note: 12h performs better than 6h, possibly due to catchment concentration time 
 ## 7. Generalized Workflow
 
 ### Step 1: Prepare Site Configuration
-Create `experiments/templates/site_<name>.yml` with:
+Create `src/templates/site_<name>.yml` with:
 - Data paths
 - Rainfall station list
 - Time split (non-overlapping)
@@ -129,7 +129,7 @@ python tools/gen_config.py --site namou_kuwei --type seq2seq_ar --lead 24 --pred
 
 ### Step 3: Validate (Leakage Check)
 ```bash
-python tools/validate_config.py experiments/namou_kuwei/configs/generated/
+python tools/validate_config.py src/namou_kuwei/configs/generated/
 ```
 
 ### Step 4: Train
@@ -147,7 +147,7 @@ python tools/run_experiment.py compare --results-dir results/namou_kuwei
 
 All validated configs are in:
 ```
-experiments/namou_kuwei/configs/no_leak/
+src/namou_kuwei/configs/no_leak/
 ├── 01_baseline/          # Pure rainfall models
 ├── 02_with_static/       # Rain + static attributes
 ├── 03_with_ar/           # Rain + AR (correctly lagged)

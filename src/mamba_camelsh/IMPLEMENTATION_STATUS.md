@@ -23,7 +23,7 @@
   - 结果统一在 `results/03_mamba_camelsh/`
   - 日志统一在 `logs/03_mamba_camelsh/`
   - 隔离规则文档：`src/mamba_camelsh/TASK_ISOLATION.md`
-- **LSTM baseline 已隔离**（不再依赖 `experiments/camelsh/...`）：
+- **LSTM baseline 已隔离**（已统一使用 `src/mamba_camelsh/...`）：
   - 新增 `src/mamba_camelsh/configs/camelsh_lstm_mini.yml`
   - `submit_lstm_mini.slurm` 已切到该配置
 - **HPC 提交链路已打通**：

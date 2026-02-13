@@ -122,7 +122,7 @@ The **Full** config already uses these filtered train/val/test lists.
 | `batch_size` | `16` | `128` (mini) / `256` (full) |
 | `num_workers` | `0` | `4` |
 | `data_dir` | `data\camelsh` | `data/camelsh` |
-| `train_basin_file` | `experiments/camelsh/...` | `src/mamba_camelsh/data/...` |
+| `train_basin_file` | `src/mamba_camelsh/data/...` | `src/mamba_camelsh/data/...` |
 
 ## Mamba Backend
 
@@ -175,5 +175,5 @@ All results will be saved to:
 
 - Task Isolation Rules: `src/mamba_camelsh/TASK_ISOLATION.md`
 - HPC Workflow Guide: `HPC_WORKFLOW_FINAL.md`
-- Mamba Research: `docs/projects/project_c_camelsh/MAMBA_RESEARCH.md`
+- Mamba Research: `src/mamba_camelsh/docs/MAMBA_RESEARCH.md`
 - Mamba HPC Setup: `hpc/README_MAMBA.md`

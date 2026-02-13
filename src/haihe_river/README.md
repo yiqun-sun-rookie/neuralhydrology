@@ -138,11 +138,11 @@ cd src/haihe_river
 # 1. 合并 GEE CSV（如有新数据）
 python scripts/08_merge_from_root_lev9.py \
   --root <GEE_CSV_DIR> \
-  --out outputs/per_basin_timeseries
+  --out results/06_haihe_river/per_basin_timeseries
 
 # 2. 生成 forcing 文件
 python scripts/10_write_forcing_from_timeseries_lev9.py \
-  --src outputs/per_basin_timeseries \
+  --src results/06_haihe_river/per_basin_timeseries \
   --dst data/forcing \
   --geojson-dir data/basins_individual \
   --basin-list data/basins_individual/basin_list.txt \
@@ -151,18 +151,18 @@ python scripts/10_write_forcing_from_timeseries_lev9.py \
 # 3. 质量汇总
 python scripts/11_summarize_forcing.py \
   --dir data/forcing \
-  --out reports/forcing_summary.csv
+  --out results/06_haihe_river/reports/forcing_summary.csv
 
 # 4. 构建静态属性
 python scripts/12_build_static_attributes.py \
-  --summary reports/forcing_summary.csv \
+  --summary results/06_haihe_river/reports/forcing_summary.csv \
   --hybas data/hydrobasins/lev9/haihe_hybas_lev9_list.csv \
   --out-dir data/attributes
 
 # 5. 子流域体检
 python scripts/11_subbasin_quick_healthcheck.py \
   --basins data/hydrobasins/lev9/haihe_hydrobasins_lev9.gpkg \
-  --outdir reports/healthcheck
+  --outdir results/06_haihe_river/haihe_healthcheck
 ```
 
 ---
@@ -229,5 +229,4 @@ A: 从 `basin_list.txt` 剔除该流域，后续补齐数据后重新处理。
 - **2024-11**: 完成 lev9 子流域 ERA5-Land forcing 准备
 - **2024-11**: 完成 GloFAS 流量数据处理
 - **2024-11**: 项目目录整合到 `src/haihe_river/`
-
 
