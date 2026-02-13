@@ -1,0 +1,94 @@
+# GEE数据集成配置示例
+# 用于将Google Earth Engine数据集成到NeuralHydrology
+
+# 实验配置
+experiment_name: gee_integration_test
+dataset: camels_us  # 或使用 generic 数据集
+
+# 数据目录 - 包含GEE提取的数据
+data_dir: F:\github\pycharm\projects\neuralhydrology\data\gee_extracted
+
+# 流域文件
+train_basin_file: F:\github\pycharm\projects\neuralhydrology\examples\01-Introduction\1_basin.txt
+validation_basin_file: F:\github\pycharm\projects\neuralhydrology\examples\01-Introduction\1_basin.txt
+test_basin_file: F:\github\pycharm\projects\neuralhydrology\examples\01-Introduction\1_basin.txt
+
+# 时间范围
+train_start_date: 01/01/2020
+train_end_date: 31/12/2020
+validation_start_date: 01/01/2019
+validation_end_date: 31/12/2019
+test_start_date: 01/01/2021
+test_end_date: 31/12/2021
+
+# 模型配置
+model: cudalstm
+head: regression
+hidden_size: 128
+initial_forget_bias: 3
+output_dropout: 0.4
+output_activation: linear
+
+# 训练配置
+epochs: 50
+batch_size: 256
+optimizer: Adam
+loss: MSE
+
+# 学习率调度
+learning_rate:
+  0: 0.001
+  20: 0.0005
+  40: 0.0001
+
+# GEE数据输入特征
+# 注意: 这些变量名需要与GEE提取器输出的列名匹配
+forcings:
+  - gee_era5  # 自定义forcing名称
+
+dynamic_inputs:
+  - prcp(mm/day)      # ERA5降水
+  - tmean(C)          # ERA5平均温度
+  - srad(W/m2)        # ERA5太阳辐射
+  - tdew(C)           # ERA5露点温度
+  - wind_u(m/s)       # ERA5风速U分量
+  - wind_v(m/s)       # ERA5风速V分量
+  - lst_day(K)        # MODIS日间地表温度
+  - lst_night(K)      # MODIS夜间地表温度
+
+# 目标变量 (如果有观测径流数据)
+target_variables:
+  - QObs(mm/d)
+
+# 数据预处理
+clip_targets_to_zero:
+  - QObs(mm/d)
+
+# 训练参数
+seq_length: 365
+predict_last_n: 1
+num_workers: 8
+validate_every: 5
+validate_n_random_basins: 1
+
+# 正则化
+clip_gradient_norm: 1.0
+
+# 日志和保存
+log_interval: 10
+log_tensorboard: true
+log_n_figures: 1
+save_weights_every: 10
+
+# 评估指标
+metrics:
+  - NSE
+  - KGE
+  - Alpha-NSE
+
+# 随机种子
+seed: 42
+
+# 设备配置
+device: cuda:0
+

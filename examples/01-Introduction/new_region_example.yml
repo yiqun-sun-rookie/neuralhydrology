@@ -1,0 +1,46 @@
+# 新区域应用示例配置
+experiment_name: new_region_prediction
+
+# 使用通用数据集格式
+dataset: generic
+data_dir: F:/github/pycharm/projects/neuralhydrology/data/new_region
+
+# 指定要预测的流域
+basin: new_basin_001
+
+# 时间范围
+train_start_date: "01/01/1990"
+train_end_date: "31/12/2020"
+validation_start_date: "01/01/1990"
+validation_end_date: "31/12/2020"
+test_start_date: "01/01/1990"
+test_end_date: "31/12/2020"
+
+device: cpu
+metrics:
+  - NSE
+  - KGE
+  - RMSE
+
+# 使用与训练时相同的模型配置
+model: cudalstm
+head: regression
+output_activation: linear
+hidden_size: 64
+initial_forget_bias: 3
+output_dropout: 0.4
+
+# 动态输入变量（需要与训练时一致）
+dynamic_inputs:
+  - precipitation
+  - temperature_max
+  - temperature_min
+  - radiation
+  - humidity
+
+# 目标变量
+target_variables:
+  - streamflow
+
+clip_targets_to_zero:
+  - streamflow
