@@ -499,6 +499,28 @@ class Config(object):
     def initial_forget_bias(self) -> float:
         return self._cfg.get("initial_forget_bias", None)
 
+    # ==================== Mamba SSM Configuration ====================
+    @property
+    def mamba_d_state(self) -> int:
+        """SSM state expansion factor for Mamba model."""
+        return self._cfg.get("mamba_d_state", 16)
+
+    @property
+    def mamba_d_conv(self) -> int:
+        """Local convolution width for Mamba model."""
+        return self._cfg.get("mamba_d_conv", 4)
+
+    @property
+    def mamba_expand(self) -> int:
+        """Block expansion factor for Mamba model."""
+        return self._cfg.get("mamba_expand", 2)
+
+    @property
+    def mamba_n_layers(self) -> int:
+        """Number of Mamba layers (for HuggingFace backend)."""
+        return self._cfg.get("mamba_n_layers", 2)
+    # ==================================================================
+
     @property
     def is_continue_training(self) -> bool:
         return self._cfg.get("is_continue_training", False)

@@ -165,7 +165,7 @@ def load_camels_us_forcings(data_dir: Path, basin: str, forcings: str) -> Tuple[
     int
         Catchment area (m2), specified in the header of the forcing file.
     """
-    forcing_path = data_dir / 'basin_mean_forcing' / forcings
+    forcing_path = Path(data_dir) / 'basin_mean_forcing' / forcings
     if not forcing_path.is_dir():
         raise OSError(f"{forcing_path} does not exist")
 
@@ -177,13 +177,37 @@ def load_camels_us_forcings(data_dir: Path, basin: str, forcings: str) -> Tuple[
 
     with open(file_path, 'r') as fp:
         # load area from header
-        fp.readline()
-        fp.readline()
-        area = int(fp.readline())
+        fp.readline()  # latitude
+        fp.readline()  # longitude
+        area = int(fp.readline())  # area
         # load the dataframe from the rest of the stream
         df = pd.read_csv(fp, sep='\s+')
-        df["date"] = pd.to_datetime(df.Year.map(str) + "/" + df.Mnth.map(str) + "/" + df.Day.map(str),
-                                    format="%Y/%m/%d")
+        
+        # Handle different file formats for different forcing datasets
+        if 'Year' in df.columns:
+            # Standard format (daymet, nldas) with Year, Mnth, Day columns
+            df["date"] = pd.to_datetime(df.Year.astype(str) + "/" + df.Mnth.astype(str) + "/" + df.Day.astype(str),
+                                        format="%Y/%m/%d")
+        else:
+            # Alternative format (maurer) where date info is in the index
+            # The index format is like "1980 1 1 12" (Year Month Day Hour) as MultiIndex
+            if isinstance(df.index, pd.MultiIndex):
+                # Extract year, month, day from MultiIndex levels
+                df["Year"] = df.index.get_level_values(0).astype(int)
+                df["Mnth"] = df.index.get_level_values(1).astype(int) 
+                df["Day"] = df.index.get_level_values(2).astype(int)
+            else:
+                # If it's a regular Index with space-separated values
+                date_parts = df.index.str.split()
+                df["Year"] = date_parts.str[0].astype(int)
+                df["Mnth"] = date_parts.str[1].astype(int) 
+                df["Day"] = date_parts.str[2].astype(int)
+            
+            df["date"] = pd.to_datetime(df.Year.astype(str) + "/" + df.Mnth.astype(str) + "/" + df.Day.astype(str),
+                                        format="%Y/%m/%d")
+            # Remove the temporary columns
+            df = df.drop(['Year', 'Mnth', 'Day'], axis=1)
+        
         df = df.set_index("date")
 
     return df, area
@@ -218,7 +242,7 @@ def load_camels_us_discharge(data_dir: Path, basin: str, area: int) -> pd.Series
 
     col_names = ['basin', 'Year', 'Mnth', 'Day', 'QObs', 'flag']
     df = pd.read_csv(file_path, sep='\s+', header=None, names=col_names)
-    df["date"] = pd.to_datetime(df.Year.map(str) + "/" + df.Mnth.map(str) + "/" + df.Day.map(str), format="%Y/%m/%d")
+    df["date"] = pd.to_datetime(df.Year.astype(str) + "/" + df.Mnth.astype(str) + "/" + df.Day.astype(str), format="%Y/%m/%d")
     df = df.set_index("date")
 
     # normalize discharge from cubic feet per second to mm per day

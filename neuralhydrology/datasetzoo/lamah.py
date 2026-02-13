@@ -267,7 +267,7 @@ def load_lamah_attributes(data_dir: Path, sub_dataset: str, basins: List[str] = 
 def _load_lamah_timeseries_csv_file(filepath: Path, temporal_resolution: str) -> pd.DataFrame:
     """Helper function to load lamah data into time indexed dataframe."""
     df = pd.read_csv(filepath, sep=';', dtype={'YYYY': str, 'MM': str, 'DD': str})
-    df["date"] = pd.to_datetime(df.YYYY.map(str) + "/" + df.MM.map(str) + "/" + df.DD.map(str), format="%Y/%m/%d")
+    df["date"] = pd.to_datetime(df.YYYY.astype(str) + "/" + df.MM.astype(str) + "/" + df.DD.astype(str), format="%Y/%m/%d")
     if temporal_resolution == "1D":
         df = df.drop(['YYYY', 'MM', 'DD'], axis=1)
     else:

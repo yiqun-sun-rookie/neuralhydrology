@@ -383,12 +383,39 @@ class BaseDataset(Dataset):
                 try:
                     df = df[keep_cols]
                 except KeyError:
-                    not_available_columns = [x for x in keep_cols if x not in df.columns]
-                    msg = [
-                        f"The following features are not available in the data: {not_available_columns}. ",
-                        f"These are the available features: {df.columns.tolist()}"
-                    ]
-                    raise KeyError("".join(msg))
+                    # Attempt a case-insensitive fallback mapping. This is useful when forcing products
+                    # differ in naming conventions (e.g., maurer lower-case vs nldas mixed-case) and the
+                    # config used a different case than present in the raw data columns.
+                    available_lower_map = {c.lower(): c for c in df.columns}
+                    remapped = False
+                    new_keep_cols = []
+                    missing_after_fallback = []
+                    for col in keep_cols:
+                        if col in df.columns:
+                            new_keep_cols.append(col)
+                        else:
+                            lower = col.lower()
+                            if lower in available_lower_map:
+                                actual = available_lower_map[lower]
+                                new_keep_cols.append(actual)
+                                remapped = True
+                            else:
+                                missing_after_fallback.append(col)
+
+                    if remapped and not missing_after_fallback:
+                        LOGGER.warning(
+                            "Some requested feature names differed only by case. Applied case-insensitive "
+                            "mapping to existing columns. Consider normalizing casing in configuration. "
+                            f"Remapped features: {[k for k in keep_cols if k not in df.columns and k.lower() in available_lower_map]}"
+                        )
+                        df = df[new_keep_cols]
+                    else:
+                        not_available_columns = missing_after_fallback if missing_after_fallback else [x for x in keep_cols if x not in df.columns]
+                        msg = [
+                            f"The following features are not available in the data: {not_available_columns}. ",
+                            f"These are the available features: {df.columns.tolist()}"
+                        ]
+                        raise KeyError("".join(msg))
 
                 # remove random portions of the timeseries of dynamic features
                 for holdout_variable, holdout_dict in self.cfg.random_holdout_from_dynamic_features.items():
@@ -445,9 +472,6 @@ class BaseDataset(Dataset):
                     # keep in sync. In training, the introduced NaNs will be discarded, so this only affects evaluation.
                     full_range = pd.date_range(start=warmup_start_date, end=end_date, freq=native_frequency)
                     df_sub = df_sub.reindex(pd.DatetimeIndex(full_range, name=df_sub.index.name))
-
-                    # as double check, set all targets before period start to NaN
-                    df_sub.loc[df_sub.index < start_date, self.cfg.target_variables] = np.nan
 
                     basin_data_list.append(df_sub)
 
@@ -586,7 +610,19 @@ class BaseDataset(Dataset):
 
                 # pull all of the data that needs to be validated
                 x_d[freq] = {col: df_resampled[[col]].values for col in dynamic_cols}
-                y[freq] = df_resampled[self.cfg.target_variables].values
+
+                if self.is_train:
+                    y[freq] = df_resampled[self.cfg.target_variables].values
+                else:
+                    valid_mask = pd.Series(False, index=df_resampled.index)
+                    for start_date, end_date in zip(self.start_and_end_dates[basin]['start_dates'],
+                                                    self.start_and_end_dates[basin]['end_dates']):
+                        period_mask = (df_resampled.index >= start_date) & (df_resampled.index <= end_date)
+                        valid_mask |= pd.Series(period_mask, index=df_resampled.index)
+
+                    target_frame = df_resampled[self.cfg.target_variables].copy()
+                    target_frame.loc[~valid_mask] = np.nan
+                    y[freq] = target_frame.values
                 if self.cfg.evolving_attributes:
                     x_s[freq] = df_resampled[self.cfg.evolving_attributes].values
 
@@ -680,7 +716,8 @@ class BaseDataset(Dataset):
 
         if self.is_train:
             # sanity check attributes for NaN in per-feature standard deviation
-            utils.attributes_sanity_check(df=df)
+            allow_constant_attrs = df.index.nunique() <= 1
+            utils.attributes_sanity_check(df=df, allow_constant=allow_constant_attrs)
 
         return df
 
@@ -700,7 +737,8 @@ class BaseDataset(Dataset):
 
             # in case of training (not finetuning) check for NaNs in feature std.
             if self._compute_scaler:
-                utils.attributes_sanity_check(df=df)
+                allow_constant_attrs = df.index.nunique() <= 1
+                utils.attributes_sanity_check(df=df, allow_constant=allow_constant_attrs)
 
             dfs.append(df)
 
@@ -723,8 +761,17 @@ class BaseDataset(Dataset):
 
             # calculate statistics and normalize features
             if self._compute_scaler:
-                self.scaler["attribute_means"] = df.mean()
-                self.scaler["attribute_stds"] = df.std()
+                attribute_means = df.mean()
+                attribute_stds = df.std()
+                if attribute_stds.isnull().any() or (attribute_stds == 0).any():
+                    run_name = getattr(self.cfg, "experiment_name", "current run")
+                    LOGGER.warning(
+                        "Static attributes for %s have zero/NaN std; values will be set to zero after normalization.",
+                        run_name
+                    )
+                    attribute_stds = attribute_stds.replace(0.0, np.float32(1.0)).fillna(np.float32(1.0))
+                self.scaler["attribute_means"] = attribute_means
+                self.scaler["attribute_stds"] = attribute_stds
 
             if any([k.startswith("camels_attr") for k in self.scaler.keys()]):
                 LOGGER.warning(
@@ -745,6 +792,20 @@ class BaseDataset(Dataset):
         self._load_combined_attributes()
 
         xr = self._load_or_create_xarray_dataset()
+
+        # apply possible feature-wise transforms (e.g., log1p) before calculating statistics / normalization
+        # note: transformations are applied consistently for train/validation/test via the shared config
+        for feature, feature_specs in self.cfg.custom_normalization.items():
+            transform = feature_specs.get("transform", None)
+            if transform is None:
+                continue
+            if feature not in xr.data_vars:
+                continue
+            if transform.lower() == "log1p":
+                xr[feature] = np.log1p(xr[feature])
+            else:
+                raise ValueError(f"Unknown transform '{transform}' for feature '{feature}'. "
+                                 "Supported: 'log1p'.")
 
         if self.cfg.loss.lower() in ['nse', 'weightednse']:
             # get the std of the discharge for each basin, which is needed for the (weighted) NSE loss.
@@ -767,6 +828,9 @@ class BaseDataset(Dataset):
         # check for feature-wise custom normalization
         for feature, feature_specs in self.cfg.custom_normalization.items():
             for key, val in feature_specs.items():
+                # transforms are handled in _load_data; ignore here
+                if key == "transform":
+                    continue
                 # check for custom treatment of the feature center
                 if key == "centering":
                     if (val is None) or (val.lower() == "none"):

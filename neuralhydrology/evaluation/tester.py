@@ -205,8 +205,14 @@ class BaseTester(object):
         results = defaultdict(dict)
         all_output = {basin: None for basin in basins}
 
-        pbar = tqdm(basins, file=sys.stdout, disable=self._disable_pbar)
-        pbar.set_description('# Validation' if self.period == "validation" else "# Evaluation")
+        # Fix Windows tqdm compatibility: use file=None or catch OSError
+        try:
+            pbar = tqdm(basins, file=sys.stdout, disable=self._disable_pbar)
+            pbar.set_description('# Validation' if self.period == "validation" else "# Evaluation")
+        except OSError:
+            # Windows compatibility: if stdout is not available, disable progress bar
+            pbar = tqdm(basins, file=None, disable=True)
+            pbar.set_description('# Validation' if self.period == "validation" else "# Evaluation")
 
         for basin in pbar:
 

@@ -174,7 +174,7 @@ def preprocess_camels_aus_dataset(data_dir: Path):
     dfs = {}
     for f in tqdm(files, desc="Read meteorological forcing data into memory"):
         df = pd.read_csv(f)
-        df["date"] = pd.to_datetime(df.year.map(str) + "/" + df.month.map(str) + "/" + df.day.map(str),
+        df["date"] = pd.to_datetime(df.year.astype(str) + "/" + df.month.astype(str) + "/" + df.day.astype(str),
                                     format="%Y/%m/%d")
         df = df.set_index('date')
         dfs[f.stem] = df
@@ -182,7 +182,7 @@ def preprocess_camels_aus_dataset(data_dir: Path):
     # Load streamflow data into memory and replace invalid measurements (-99) with NaNs
     print("Read streamflow data into memory.")
     df = pd.read_csv(data_dir / "03_streamflow" / "streamflow_mmd.csv")
-    df["date"] = pd.to_datetime(df.year.map(str) + "/" + df.month.map(str) + "/" + df.day.map(str), format="%Y/%m/%d")
+    df["date"] = pd.to_datetime(df.year.astype(str) + "/" + df.month.astype(str) + "/" + df.day.astype(str), format="%Y/%m/%d")
     df = df.set_index('date')
     df[df < 0] = np.nan
     dfs["streamflow_mmd"] = df

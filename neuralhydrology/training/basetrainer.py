@@ -1,4 +1,5 @@
 import logging
+import os
 import pickle
 import random
 import sys
@@ -301,36 +302,41 @@ class BaseTrainer(object):
 
         # process bar handle
         n_iter = min(self._max_updates_per_epoch, len(self.loader)) if self._max_updates_per_epoch is not None else None
-        pbar = tqdm(self.loader, file=sys.stdout, disable=self._disable_pbar, total=n_iter)
-        pbar.set_description(f'# Epoch {epoch}')
+
+        # tqdm can crash on Windows/IDE redirected output with:
+        # OSError: [Errno 22] Invalid argument (during refresh/flush).
+        # Make progress bars best-effort: auto-disable when stdout isn't a tty, allow env override,
+        # and fall back to plain iteration if tqdm still fails.
+        env_disable = str(os.environ.get("TQDM_DISABLE", "")).strip().lower() in {"1", "true", "yes", "y"}
+        auto_disable = (os.name == "nt") and (not sys.stdout.isatty())
+        disable_pbar = self._disable_pbar or env_disable or auto_disable
+
+        pbar = tqdm(self.loader, file=sys.stdout, disable=disable_pbar, total=n_iter, ascii=True, dynamic_ncols=False)
+        if not disable_pbar:
+            pbar.set_description(f'# Epoch {epoch}')
 
         # Iterate in batches over training set
         nan_count = 0
-        for i, data in enumerate(pbar):
-            if self._max_updates_per_epoch is not None and i >= self._max_updates_per_epoch:
-                break
 
-            for key in data.keys():
+        def _train_step(batch: dict):
+            nonlocal nan_count
+
+            for key in batch.keys():
                 if key.startswith('x_d'):
-                    data[key] = {k: v.to(self.device) for k, v in data[key].items()}
+                    batch[key] = {k: v.to(self.device) for k, v in batch[key].items()}
                 elif not key.startswith('date'):
-                    data[key] = data[key].to(self.device)
+                    batch[key] = batch[key].to(self.device)
 
-            # apply possible pre-processing to the batch before the forward pass
-            data = self.model.pre_model_hook(data, is_train=True)
-
-            # get predictions
-            predictions = self.model(data)
+            batch = self.model.pre_model_hook(batch, is_train=True)
+            predictions = self.model(batch)
 
             if self.noise_sampler_y is not None:
-                for key in filter(lambda k: 'y' in k, data.keys()):
-                    noise = self.noise_sampler_y.sample(data[key].shape)
-                    # make sure we add near-zero noise to originally near-zero targets
-                    data[key] += (data[key] + self._target_mean / self._target_std) * noise.to(self.device)
+                for key in filter(lambda k: 'y' in k, batch.keys()):
+                    noise = self.noise_sampler_y.sample(batch[key].shape)
+                    batch[key] += (batch[key] + self._target_mean / self._target_std) * noise.to(self.device)
 
-            loss, all_losses = self.loss_obj(predictions, data)
+            loss, all_losses = self.loss_obj(predictions, batch)
 
-            # early stop training if loss is NaN
             if torch.isnan(loss):
                 nan_count += 1
                 if nan_count > self._allow_subsequent_nan_losses:
@@ -338,22 +344,40 @@ class BaseTrainer(object):
                 LOGGER.warning(f"Loss is Nan; ignoring step. (#{nan_count}/{self._allow_subsequent_nan_losses})")
             else:
                 nan_count = 0
-
-                # delete old gradients
                 self.optimizer.zero_grad()
-
-                # get gradients
                 loss.backward()
-
                 if self.cfg.clip_gradient_norm is not None:
                     torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.cfg.clip_gradient_norm)
-
-                # update weights
                 self.optimizer.step()
 
-            pbar.set_postfix_str(f"Loss: {loss.item():.4f}")
+            # Best-effort progress bar update (never crash training)
+            try:
+                if not disable_pbar:
+                    pbar.set_postfix_str(f"Loss: {loss.item():.4f}")
+            except OSError:
+                pass
 
             self.experiment_logger.log_step(**{k: v.item() for k, v in all_losses.items()})
+
+        last_i = -1
+        try:
+            for last_i, data in enumerate(pbar):
+                if self._max_updates_per_epoch is not None and last_i >= self._max_updates_per_epoch:
+                    break
+                _train_step(data)
+        except OSError:
+            # tqdm failed mid-epoch; continue without it from the next batch index
+            LOGGER.warning("tqdm progress bar crashed (OSError 22). Continuing without progress bar.")
+            try:
+                pbar.close()
+            except OSError:
+                pass
+            for j, data in enumerate(self.loader):
+                if j <= last_i:
+                    continue
+                if self._max_updates_per_epoch is not None and j >= self._max_updates_per_epoch:
+                    break
+                _train_step(data)
     def _set_random_seeds(self):
         if self.cfg.seed is None:
             self.cfg.seed = int(np.random.uniform(low=0, high=1e6))
@@ -400,12 +424,18 @@ class BaseTrainer(object):
         # create as new folder structure
         else:
             now = datetime.now()
+            year = f"{now.year}"
             day = f"{now.day}".zfill(2)
             month = f"{now.month}".zfill(2)
             hour = f"{now.hour}".zfill(2)
             minute = f"{now.minute}".zfill(2)
-            second = f"{now.second}".zfill(2)
-            run_name = f'{self.cfg.experiment_name}_{day}{month}_{hour}{minute}{second}'
+            
+            # 新的命名格式: {experiment_name}_{YYYY}_{MMDD}_{HHMM}
+            run_name = f'{self.cfg.experiment_name}_{year}_{month}{day}_{hour}{minute}'
+            
+            # 如果配置中有epochs信息，可以添加到名称中
+            if hasattr(self.cfg, 'epochs') and self.cfg.epochs:
+                run_name += f'_ep{self.cfg.epochs}'
 
             # if no directory for the runs is specified, a 'runs' folder will be created in the current working dir
             if self.cfg.run_dir is None:

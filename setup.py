@@ -4,11 +4,11 @@ from setuptools import setup
 
 # read the description from the README.md
 readme_file = Path(__file__).absolute().parent / "README.md"
-with readme_file.open("r") as fp:
+with readme_file.open("r", encoding="utf-8") as fp:
     long_description = fp.read()
 
 about = {}
-with open("neuralhydrology/__about__.py", "r") as fp:
+with open("neuralhydrology/__about__.py", "r", encoding="utf-8") as fp:
     exec(fp.read(), about)
 
 setup(name='neuralhydrology',

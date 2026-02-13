@@ -142,7 +142,7 @@ def load_basin_file(basin_file: Path) -> List[str]:
     return basins
 
 
-def attributes_sanity_check(df: pd.DataFrame):
+def attributes_sanity_check(df: pd.DataFrame, allow_constant: bool = False):
     """Utility function to check the suitability of the attributes for model training.
     
     This utility function can be used to check if any attribute has a standard deviation of zero. This would lead to 
@@ -153,6 +153,9 @@ def attributes_sanity_check(df: pd.DataFrame):
     ----------
     df : pd.DataFrame
         DataFrame of catchment attributes as columns.
+    allow_constant : bool, optional
+        If True, attributes with zero/NaN standard deviation are tolerated (e.g., single-basin
+        experiments) and the function returns without raising for that specific check.
 
     Raises
     ------
@@ -166,6 +169,8 @@ def attributes_sanity_check(df: pd.DataFrame):
             if (v == 0) or (np.isnan(v)):
                 attributes.append(k)
     if attributes:
+        if allow_constant:
+            return
         msg = [
             "The following attributes have a std of zero or NaN, which results in NaN's ",
             "when normalizing the features. Remove the attributes from the attribute feature list ",

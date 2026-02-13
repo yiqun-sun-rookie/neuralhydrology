@@ -208,7 +208,7 @@ def preprocess_camels_br_dataset(data_dir: Path):
             basin_file = list(timeseries_folder.glob(f'{basin}_*'))
             if basin_file:
                 df = pd.read_csv(basin_file[0], sep=' ')
-                df["date"] = pd.to_datetime(df.year.map(str) + "/" + df.month.map(str) + "/" + df.day.map(str),
+                df["date"] = pd.to_datetime(df.year.astype(str) + "/" + df.month.astype(str) + "/" + df.day.astype(str),
                                             format="%Y/%m/%d")
                 df = df.set_index('date')
                 feat_col = [c for c in df.columns if c not in ['year', 'month', 'day']][0]
