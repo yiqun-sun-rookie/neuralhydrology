@@ -32,5 +32,16 @@ module_a_validation/
 # Root-level logs (project logs are in logs/<ID>/)
 /*.log
 
+# Keep per-idea directory structure, but do not track run artifacts
+logs/**
+!logs/.gitkeep
+!logs/*/
+!logs/*/.gitkeep
+
+results/**
+!results/.gitkeep
+!results/*/
+!results/*/.gitkeep
+
 # HPC distribution artifacts
 dist_hpc/
