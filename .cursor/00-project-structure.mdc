@@ -1,0 +1,70 @@
+---
+description: Always applied project structure rules. Defines where code, results, and docs must go.
+globs: *
+---
+# Project Structure & Research Workflow Protocol
+
+This repository manages multiple parallel research ideas (e.g., Regge Hourly, Global Daily).
+Follow these strict rules when adding new features, running experiments, or refactoring.
+
+## 1. Directory Mandates (The "Map")
+
+| Component | Path Pattern | Policy |
+| :--- | :--- | :--- |
+| **Index** | `draft/RESEARCH_INDEX.md` | **Master Entry Point.** All active ideas must be linked here. |
+| **Docs** | `draft/ideas/<id>_<name>.md` | Specific research plan, logs, and context for one idea. |
+| **Code (New)** | `src/<project_name>/` | **Modular packages.** e.g., `src/global_hydrology/`. |
+| **Code (Shared)**| `src/shared/` | **Common utils.** Metrics, plotting, generic models. |
+| **Code (Legacy)**| `knet/`, `hydrologic/` | **READ-ONLY.** Do not modify unless fixing critical bugs for the old paper. |
+| **Results** | `results/<id>_<name>/` | **Outputs.** All plots, checkpoints (.pt), and logs go here. |
+| **Data** | `data/` | **Raw Inputs only.** Do not store experiment results here. |
+
+## 2. Workflow for New Ideas
+
+When the User asks to "start a new idea" or "experiment":
+
+1.  **Register**: Add entry to `draft/RESEARCH_INDEX.md`.
+2.  **Document**: Create `draft/ideas/<id>_<slug>.md` (Copy structure from `02_GLOBAL_DA_CARAVAN.md`).
+3.  **Scaffold**:
+    *   Create code dir: `src/<slug>/__init__.py`
+    *   Create results dir: `results/<id>_<slug>/`
+4.  **Implement**:
+    *   Import shared tools from `src/shared`.
+    *   Keep logic isolated in `src/<slug>`.
+
+## 3. Experiment Safety
+
+- **Checkpoints**: All long-running scripts (>5min) MUST implement `last.pt` autosaving and `--resume` logic.
+- **Paths**: Scripts must use `pathlib`. Output paths should default to `results/<id>_...` or be configurable.
+- **Logging**: Console output should be tee'd to a `.log` file in the results directory.
+
+## 4. Progress Logging
+
+When updating progress in `draft/ideas/<id>_xxx.md`:
+- **Code Index**: List relevant source files in `src/<name>/`.
+- **Results Index**: Link to outputs in `results/<id>_xxx/` (checkpoints, figures, logs).
+- **Log Table**: Use a table with columns: `Date | Event | Details`.
+
+Example structure for idea docs:
+```markdown
+## Code Index
+| Component | Path | Description |
+| :--- | :--- | :--- |
+| Model | `src/my_idea/model.py` | Core model implementation |
+
+## Results Index
+| Run ID | Date | Output Path | Notes |
+| :--- | :--- | :--- | :--- |
+| run_001 | 2026-01-17 | `results/03_my_idea/run_001/` | Baseline |
+
+## Progress Log
+| Date | Event | Details |
+| :--- | :--- | :--- |
+| 2026-01-17 | Project Start | Initial setup complete |
+```
+
+## 5. Anti-Patterns (Strictly Forbidden)
+
+- ❌ **Do not** mix new code into `knet/` or `experiments/` (Legacy zones).
+- ❌ **Do not** hardcode absolute paths (e.g., `C:/Users/...`).
+- ❌ **Do not** modify `src/shared/` without verifying it doesn't break other active ideas.

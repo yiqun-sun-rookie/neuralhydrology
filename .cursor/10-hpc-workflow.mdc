@@ -1,0 +1,40 @@
+---
+description: Standard workflow for deploying NeuralHydrology experiments to HPC.
+globs: *.slurm, *.sh, src/**/hpc/*
+---
+# HPC Deployment Workflow & Rules
+
+## 1. Idea Isolation Rule (Strict)
+Every research idea MUST have its own isolated directory structure. NEVER mix experiments.
+
+| Component | Local Path | HPC Path |
+| :--- | :--- | :--- |
+| **Code/Config** | `src/<idea_id>_<name>/` | `~/neuralhydrology/src/<idea_id>_<name>/` |
+| **Results** | `results/<idea_id>_<name>/` | `~/neuralhydrology/results/<idea_id>_<name>/` |
+| **Logs** | `logs/<idea_id>_<name>/` | `~/neuralhydrology/logs/<idea_id>_<name>/` |
+
+## 2. Deployment Cycle (The Loop)
+
+### Phase 1: Preparation (Local)
+1.  **Create**: Copy `src/templates/hpc/submit_template.slurm` to `src/<idea>/hpc/`.
+2.  **Config**: Ensure `config.yml` uses relative paths (`src/...`) and Linux-style casing (`data/camels_us`).
+3.  **Sanity Check**: `run_dir` must point to `results/<idea>`.
+
+### Phase 2: Synchronization
+1.  **Sync**: Use WinSCP to upload `src/<idea>` (Code) and `src/<idea>/configs` (Config).
+2.  **Data Check**: Verify dataset exists on HPC (`ls data/camels_us`). If missing, upload via WinSCP.
+
+### Phase 3: Execution (HPC)
+1.  **Format Fix (Crucial)**: ALWAYS run `sed -i 's/\r$//' src/<idea>/hpc/*.slurm`.
+2.  **Environment**: Use `nh_final`.
+3.  **Submit**: `sbatch src/<idea>/hpc/submit_template.slurm`.
+
+### Phase 4: Monitoring & Feedback
+1.  **Check**: `tail -f logs/<idea>/*.out` or `squeue -u $USER`.
+2.  **Sync Back**: Download `logs/` and `results/` to local machine for analysis.
+
+## 3. Common Pitfalls (AI Auto-Check)
+- ❌ **Windows Line Endings**: Check if `sed -i` was run.
+- ❌ **Case Sensitivity**: Check `CAMELS_US` vs `camels_us` in config.
+- ❌ **MKL Error**: Ensure `export MKL_THREADING_LAYER=GNU` is in the SLURM script.
+- ❌ **OOM**: Ensure `cache_validation_data: False` for large datasets (Caravan).

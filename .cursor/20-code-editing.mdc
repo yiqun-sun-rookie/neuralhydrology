@@ -1,0 +1,31 @@
+---
+description: Coding standards, testing requirements, and engineering philosophy.
+globs: *
+---
+# Code Editing & Engineering Standards
+
+## 1. Philosophy & Mindset
+- **Simplicity**: Choose the "boring" solution. Code is read more than written.
+- **Incremental**: Make small, compilable changes. **Red -> Green -> Refactor**.
+- **Evidence-Based**: Don't guess. Verify assumptions with code/tests.
+- **Stop Rule**: If you fail **5 times** on the same task, STOP. Ask the user for help or re-evaluate the approach.
+
+## 2. Technical Rules
+- **Testing**: NEVER disable tests to make a build pass. Add tests for new features.
+- **Safety**: NEVER use `--no-verify`. Fail fast with descriptive error messages.
+- **Style**:
+    - **Language**: Reply in **Chinese** (Simplified). Code identifiers in **English**.
+    - **Format**: Follow existing patterns (black/isort).
+    - **Paths**: Use relative paths or `pathlib`. No hardcoded absolute paths.
+
+## 3. Workflow for Complex Tasks
+For tasks > 3 steps:
+1.  **Plan**: Create/Update `IMPLEMENTATION_PLAN.md`.
+2.  **Breakdown**: Split into stages (Goal, Criteria, Status).
+3.  **Execute**: One stage at a time. Update status after success.
+
+## 4. Decision Framework
+When choosing between options, prioritize:
+1.  **Simplicity** (Can I explain it in 1 sentence?)
+2.  **Testability** (Can I verify it automatically?)
+3.  **Reversibility** (Can I undo it easily?)

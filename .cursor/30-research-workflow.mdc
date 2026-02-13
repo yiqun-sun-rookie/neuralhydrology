@@ -1,0 +1,35 @@
+---
+description: Research workflow (PDD), paper writing, and artifact management guidelines.
+globs: *
+---
+# Research Workflow & Paper Editing (PDD)
+
+## Core Philosophy: Paper-Driven Development (PDD)
+- The ultimate deliverable is the **Paper**.
+- Workflow: **Data -> Code -> Artifacts -> Paper**.
+- **Single Source of Truth**: All numbers/figures in the paper MUST come from `draft/artifacts/`. NEVER hardcode numbers in markdown.
+
+## 1. Directory Structure Mandates
+- `src/`: Core algorithms and models.
+- `experiments/`: Scripts to run experiments and generate raw data.
+- `draft/md/`: Paper sections (Markdown).
+- `draft/artifacts/`: **READ-ONLY** output for plots (SVG/PNG) and tables (CSV).
+- `draft/out/`: Final compiled PDF/Docx.
+
+## 2. The Loop (AI Agent Protocol)
+1.  **Code**: Run experiment scripts to generate metrics/data -> save to `draft/artifacts/*.csv`.
+2.  **Vis**: Run plotting scripts -> save to `draft/artifacts/*.svg`.
+3.  **Drafting**: Edit `draft/md/*.md`.
+    - **Citations**: Use `[@key]` format.
+    - **Figures**: `![Caption](artifacts/fig.svg){#fig:id}`.
+    - **Tables**: Use CSV imports or strict markdown tables with `{#tbl:id}`.
+    - **Cross-refs**: Use `@fig:id`, `@tbl:id`, `@eq:id`.
+
+## 3. Editing Constraints
+- **Protection**: DO NOT modify blocks marked `<!-- PROTECT START -->` ... `<!-- PROTECT END -->`.
+- **Autogen**: Blocks marked `<!-- AUTOGEN -->` are free to overwrite based on new data.
+- **Consistency**: If data changes, ask to re-run experiments/plots. Do not "fix" numbers in text manually.
+
+## 4. Tools & Env
+- **Pandoc**: Used for compilation. Keep markdown compatible with Pandoc syntax.
+- **Python**: `matplotlib`/`seaborn` for plots (save as SVG/PDF for vectors, or 300dpi+ PNG).
