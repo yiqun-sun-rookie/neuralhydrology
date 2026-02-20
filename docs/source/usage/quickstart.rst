@@ -3,20 +3,13 @@ Quick Start
 
 Prerequisites
 -------------
-As a first step you need a Python environment with all required dependencies. The recommended way is to use Mini-/Anaconda
-and to create a new environment using one of our predefined environment files in `environments/ <https://github.com/neuralhydrology/neuralhydrology/tree/master/environments>`__.
-Make sure to select the correct file, depending on your system.
-
-If you don't have a CUDA-capable GPU, or if you want to train on MacOS with Metal support, use:
+As a first step you need a Python environment with all required dependencies.
+Use Python >= 3.10 and install dependencies with:
 
 .. code-block::
 
-    conda env create -f environments/environment_cpu.yml
+    pip install -r requirements.txt
 
-If you do have a CUDA-capable GPU, use ``environment_cuda11_8.yml``, depending on your hardware.
-
-If you prefer to not use Mini-/Anaconda, make sure you have a Python environment with Python >= 3.10 with all packages installed that are listed in 
-these environment files. 
 The next steps should be executed from within this Python environment.
 
 Installation

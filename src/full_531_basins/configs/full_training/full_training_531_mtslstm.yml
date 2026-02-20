@@ -1,0 +1,82 @@
+# WARNING: MTS-LSTM requires multi-frequency data (e.g., 1D + 1H)
+# CAMELS-US only has daily data, so this config is NOT applicable!
+# To use MTS-LSTM, switch to CAMELS-H (hourly data)
+# 
+# Error: ValueError: MTS-LSTM expects more than one input frequency
+
+experiment_name: full_531_mtslstm
+dataset: camels_us
+data_dir: data/CAMELS_US
+train_basin_file: src/full_531_basins/data/531_basin_list.txt
+validation_basin_file: src/full_531_basins/data/531_basin_list.txt
+test_basin_file: src/full_531_basins/data/531_basin_list.txt
+forcings:
+  - daymet
+clip_targets_to_zero:
+  - QObs(mm/d)
+metrics:
+  - NSE
+validate_every: 2
+validate_n_random_basins: 50
+save_weights_every: 10
+log_interval: 10
+log_tensorboard: False
+log_n_figures: 0
+model: mtslstm
+head: regression
+output_activation: linear
+hidden_size: 128
+epochs: 30
+batch_size: 256
+optimizer: AdamW
+loss: NSE
+
+use_frequencies:
+  - 1D
+
+learning_rate:
+  0: 0.003
+  10: 0.001
+  20: 0.0005
+
+train_start_date: 01/10/1990
+train_end_date: 30/09/1995
+validation_start_date: 01/10/1995
+validation_end_date: 30/09/2000
+test_start_date: 01/10/2000
+test_end_date: 30/09/2005
+
+dynamic_inputs:
+  - prcp(mm/day)
+  - srad(W/m2)
+  - tmax(C)
+  - tmin(C)
+  - vp(Pa)
+
+static_attributes:
+  - elev_mean
+  - slope_mean
+  - area_gages2
+  - soil_depth_pelletier
+  - soil_porosity
+  - sand_frac
+  - clay_frac
+  - frac_forest
+  - lai_max
+  - gvf_max
+  - p_mean
+  - aridity
+  - frac_snow
+  - high_prec_freq
+
+target_variables:
+  - QObs(mm/d)
+
+seq_length:
+  1D: 365
+predict_last_n:
+  1D: 1
+seed: 159193
+output_dropout: 0.0
+
+

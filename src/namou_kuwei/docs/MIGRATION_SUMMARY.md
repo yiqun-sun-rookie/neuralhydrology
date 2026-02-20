@@ -2,7 +2,7 @@
 
 > **迁移日期**: 2025-11-28  
 > **来源**: `laos_forecast/_archive/experiments/namou_kuwei_dl/`  
-> **目标**: `neuralhydrology/configs/namou_kuwei/` + `neuralhydrology/docs/namou_kuwei/`
+> **目标**: `neuralhydrology/src/namou_kuwei/configs/archive_legacy/` + `neuralhydrology/docs/namou_kuwei/`
 
 ---
 
@@ -18,9 +18,9 @@
 
 | 类型 | 数量 | 来源 | 目标 |
 |------|------|------|------|
-| 配置文件 | 33个 | `laos_forecast/_archive/experiments/` | `neuralhydrology/configs/namou_kuwei/` |
+| 配置文件 | 33个 | `laos_forecast/_archive/experiments/` | `neuralhydrology/src/namou_kuwei/configs/archive_legacy/` |
 | 文档 | 3个 | 整理自 `laos_forecast/_archive/docs/` | `neuralhydrology/docs/namou_kuwei/` |
-| 数据 | 已存在 | - | `neuralhydrology/data/namou_kuwei_hourly/` |
+| 数据 | 已存在 | - | `neuralhydrology/data/namou_kuwei/hourly/` |
 | 训练结果 | 已存在 | - | `neuralhydrology/runs/namou_kuwei/` |
 
 ---
@@ -73,7 +73,7 @@
 ### 2.3 数据（已存在，无需迁移）
 
 ```
-data/namou_kuwei_hourly/
+data/namou_kuwei/hourly/
 ├── basins.txt
 ├── train_basins.txt
 ├── validation_basins.txt
@@ -83,7 +83,7 @@ data/namou_kuwei_hourly/
 ├── time_series/namou_kuwei.nc
 └── manifest.json
 
-data/namou_kuwei_hourly_downstream/
+data/namou_kuwei/hourly_downstream/
 └── (类似结构，包含下游数据)
 ```
 
@@ -171,7 +171,7 @@ cd F:\github\pycharm\projects\neuralhydrology
 
 # 使用最佳配置
 python -m neuralhydrology.nh_run train \
-    --config-file configs/namou_kuwei/hierarchy/S4_Rain_AR_Static.yml
+    --config-file src/namou_kuwei/configs/archive_legacy/hierarchy/S4_Rain_AR_Static.yml
 ```
 
 ### 5.2 评估已有模型
@@ -228,4 +228,6 @@ python -m neuralhydrology.nh_run evaluate \
 
 > **迁移完成** ✅  
 > 更新日期: 2025-11-28
+
+
 

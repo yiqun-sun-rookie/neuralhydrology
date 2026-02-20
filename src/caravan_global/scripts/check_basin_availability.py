@@ -178,6 +178,10 @@ def main():
     subdatasets = get_subdatasets(data_dir)
     print(f"[INFO] Found {len(subdatasets)} subdatasets: {subdatasets}")
     print()
+    if not subdatasets:
+        print("[ERROR] No Caravan subdatasets found under data_dir/timeseries/csv.")
+        print("[HINT] Verify dataset layout or update the expected path in this script.")
+        return 2
     
     # Check all basins
     all_results = []
@@ -202,7 +206,10 @@ def main():
                 valid_basins.append(basin_id)
                 subdataset_valid += 1
         
-        print(f"       Valid: {subdataset_valid}/{len(csv_files)} ({subdataset_valid/len(csv_files)*100:.1f}%)")
+        if len(csv_files) > 0:
+            print(f"       Valid: {subdataset_valid}/{len(csv_files)} ({subdataset_valid/len(csv_files)*100:.1f}%)")
+        else:
+            print("       Valid: 0/0 (no CSV files found)")
     
     print()
     print("=" * 60)
@@ -211,6 +218,9 @@ def main():
     
     # Summary by subdataset
     df_results = pd.DataFrame(all_results)
+    if df_results.empty:
+        print("[ERROR] No basin results collected. Nothing to summarize.")
+        return 3
     
     summary = df_results.groupby('subdataset').agg({
         'valid': ['sum', 'count'],

@@ -28,7 +28,7 @@
 
 ### HPC 配置已完成
 - [x] 迁移计划文档: `docs/HPC_MIGRATION_PLAN.md`
-- [x] 环境配置脚本: `hpc/setup_hpc_env.sh`
+- [x] 环境配置脚本: `scripts/setup_hpc_environment.sh`
 - [x] Slurm 作业脚本: `hpc/slurm_caravan_global.sh`
 - [x] HPC 专用配置: `configs/caravan/caravan_daily_basemodel_hpc.yml`
 
@@ -68,7 +68,7 @@
 
 2. **运行环境配置**
    ```bash
-   bash hpc/setup_hpc_env.sh
+   bash scripts/setup_hpc_environment.sh
    ```
 
 3. **上传 Caravan 数据** (本地执行)
@@ -98,3 +98,4 @@
 
 **最后更新**: 2026-01-06
 **下一次检查**: HPC 作业提交后
+

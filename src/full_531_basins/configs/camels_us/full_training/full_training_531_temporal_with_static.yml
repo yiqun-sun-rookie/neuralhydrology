@@ -1,0 +1,101 @@
+# 531 basins, temporal split, with STATIC ATTRIBUTES
+# This is the RECOMMENDED configuration for best performance
+
+experiment_name: full_531_temporal_with_static
+dataset: camels_us
+data_dir: F:\github\pycharm\projects\neuralhydrology\data\CAMELS_US
+
+model: cudalstm
+head: regression
+hidden_size: 128
+initial_forget_bias: 3
+output_dropout: 0.0
+output_activation: linear
+
+epochs: 30
+batch_size: 256
+optimizer: AdamW
+loss: NSE
+
+learning_rate:
+  0: 0.003
+  10: 0.001
+  20: 0.0005
+
+# 531 basins, same basin set for train/val/test, temporal split only
+train_basin_file: src/full_531_basins/data/531_basin_list.txt
+validation_basin_file: src/full_531_basins/data/531_basin_list.txt
+test_basin_file: src/full_531_basins/data/531_basin_list.txt
+
+# Shorter temporal split for quicker experiments
+train_start_date: 01/10/1990
+train_end_date:   30/09/1995
+validation_start_date: 01/10/1995
+validation_end_date:   30/09/2000
+test_start_date:       01/10/2000
+test_end_date:         30/09/2005
+
+forcings:
+  - daymet
+
+dynamic_inputs:
+  - prcp(mm/day)
+  - srad(W/m2)
+  - tmax(C)
+  - tmin(C)
+  - vp(Pa)
+
+# ========== STATIC ATTRIBUTES (CRITICAL FOR PERFORMANCE) ==========
+# These attributes provide basin-specific information that helps the model
+# adapt to different catchment characteristics. Expected improvement: +5-15% NSE
+static_attributes:
+  # Topography (camels_topo.txt)
+  - elev_mean          # Mean elevation [m]
+  - slope_mean         # Mean slope [m/km]
+  - area_gages2        # Catchment area [km²]
+  
+  # Soil (camels_soil.txt)
+  - soil_depth_pelletier  # Depth to bedrock [m]
+  - soil_porosity         # Volumetric porosity [-]
+  - sand_frac             # Sand fraction [%]
+  - clay_frac             # Clay fraction [%]
+  
+  # Vegetation (camels_vege.txt)
+  - frac_forest        # Forest fraction [-]
+  - lai_max            # Maximum leaf area index [-]
+  - gvf_max            # Maximum green vegetation fraction [-]
+  
+  # Climate (camels_clim.txt)
+  - p_mean             # Mean daily precipitation [mm/day]
+  - aridity            # Aridity index (PET/P) [-]
+  - frac_snow          # Fraction of precipitation falling as snow [-]
+  - high_prec_freq     # Frequency of high precipitation days [days/year]
+
+target_variables:
+  - QObs(mm/d)
+
+clip_targets_to_zero:
+  - QObs(mm/d)
+
+seq_length: 365
+predict_last_n: 1
+num_workers: 0
+
+validate_every: 2
+validate_n_random_basins: 50
+
+clip_gradient_norm: 1.0
+
+log_interval: 10
+log_tensorboard: true
+log_n_figures: 3
+save_weights_every: 5
+
+metrics:
+  - NSE
+
+seed: 159193
+
+
+
+

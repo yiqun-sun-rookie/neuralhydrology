@@ -13,7 +13,7 @@
 | 05 Full 531 Basins | `src/full_531_basins/` | `results/05_full_531_basins/` | `logs/05_full_531_basins/` |
 | 06 Haihe River | `src/haihe_river/` | `results/06_haihe_river/` | `logs/06_haihe_river/` |
 | 07 HydroAgent | `src/hydroagent/` | `results/07_hydroagent/` | `logs/07_hydroagent/` |
-| 41 MTS-Mamba Transfer | `src/41_mts_mamba_global_transfer/` | `results/41_mts_mamba_global_transfer/` | `logs/41_mts_mamba_global_transfer/` |
+| 41 MTS-Mamba Transfer | `src/mts_mamba_global_transfer/` | `results/mts_mamba_global_transfer/` | `logs/mts_mamba_global_transfer/` |
 
 ## 常用脚本
 

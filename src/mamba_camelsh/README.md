@@ -174,6 +174,6 @@ All results will be saved to:
 ## Related Documentation
 
 - Task Isolation Rules: `src/mamba_camelsh/TASK_ISOLATION.md`
-- HPC Workflow Guide: `HPC_WORKFLOW_FINAL.md`
+- HPC Workflow Guide: `docs/hpc/HPC_WORKFLOW_FINAL.md`
 - Mamba Research: `src/mamba_camelsh/docs/MAMBA_RESEARCH.md`
-- Mamba HPC Setup: `hpc/README_MAMBA.md`
+- Mamba HPC Setup: `src/mamba_camelsh/HPC_DEPLOYMENT_CHECKLIST.md`

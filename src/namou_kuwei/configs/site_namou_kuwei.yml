@@ -2,13 +2,13 @@
 # This file defines site-specific settings that rarely change
 
 site_name: namou_kuwei
-data_dir: data/namou_kuwei_hourly
+data_dir: data/namou_kuwei/hourly
 run_dir: results/04_namou_kuwei
 
 # Basin files
-train_basin_file: data/namou_kuwei_hourly/train_basins.txt
-validation_basin_file: data/namou_kuwei_hourly/validation_basins.txt
-test_basin_file: data/namou_kuwei_hourly/test_basins.txt
+train_basin_file: data/namou_kuwei/hourly/train_basins.txt
+validation_basin_file: data/namou_kuwei/hourly/validation_basins.txt
+test_basin_file: data/namou_kuwei/hourly/test_basins.txt
 
 # Time split (must be non-overlapping)
 train_start_date: "01/01/2020"
@@ -71,6 +71,7 @@ custom_normalization:
   p_xiaolishu: {centering: none, scaling: std}
   p_xinzai: {centering: none, scaling: std}
   qobs: {centering: none, scaling: std}
+
 
 
 

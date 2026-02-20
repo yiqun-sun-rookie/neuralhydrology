@@ -2,7 +2,7 @@
 
 **状态**: data_prep
 **创建日期**: 2024-11-01
-**最后更新**: 2026-02-10
+**最后更新**: 2026-02-18
 
 ---
 
@@ -56,6 +56,7 @@
 | QC Summary | `src/haihe_river/scripts/11_summarize_forcing.py` | 强迫质量汇总 |
 | Static Attrs | `src/haihe_river/scripts/12_build_static_attributes.py` | 静态属性表 |
 | Visualization | `src/haihe_river/scripts/13_plot_forcing_overview.py` | 概览可视化 |
+| GEE Toolkit | `src/haihe_river/scripts/gee/` | GEE 预览、提取与转换工具集 |
 | GloFAS Pipeline | `src/haihe_river/pipelines/glofas/` | GloFAS 流量数据管线 |
 | Basin Clip | `src/haihe_river/scripts/clip_hydro_subbasins.py` | 子流域裁剪 |
 | Config (basin list) | `src/haihe_river/configs/basin_list.txt` | 流域列表 |
@@ -70,6 +71,8 @@
 | Healthcheck (lev9) | `results/06_haihe_river/haihe_healthcheck_lev9/` | 质量检查结果 |
 | Healthcheck (latest) | `results/06_haihe_river/haihe_healthcheck_lev9_latest/` | 最新检查 |
 | Archive (lev12) | `results/06_haihe_river/archive/haihe_healthcheck_lev12/` | 历史检查 |
+| Legacy Outputs (migrated) | `results/06_haihe_river/outputs/haihe/` | 已从历史根目录输出桶迁移（旧根目录已删除） |
+| Legacy Reports (migrated) | `results/06_haihe_river/reports/` | 已从历史根目录报告桶迁移（旧根目录已删除） |
 
 ---
 
@@ -82,6 +85,7 @@
 | 2024-11 | 目录整合 | 项目目录整合到 projects/haihe/ |
 | 2025-12-10 | 质检完成 | Level 9 healthcheck 运行完成 |
 | 2026-02-10 | 目录迁移 | 从 projects/haihe/ 迁移到 src/haihe_river/ |
+| 2026-02-18 | 脚本入口统一 | 旧 `src/haihe_river/tools/gee/` 已迁移到 `src/haihe_river/scripts/gee/`，并增加 Windows UTF-8 输出兼容 |
 
 ---
 

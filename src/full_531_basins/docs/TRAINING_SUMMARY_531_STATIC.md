@@ -42,7 +42,7 @@
 
 - **数据集**: CAMELS US
 - **流域数量**: 531 个（Kratzert et al., 2019 基准流域）
-- **数据来源**: `examples/06-Finetuning/531_basin_list.txt`
+- **数据来源**: `src/full_531_basins/data/531_basin_list.txt`
 
 ### 2.2 动态输入（5 个变量）
 
@@ -243,7 +243,7 @@ NSE = 1 - Σ(obs - pred)² / Σ(obs - mean(obs))²
 ## 8. 配置文件
 
 ```yaml
-# configs/full_training/full_training_531_temporal_with_static.yml
+# src/full_531_basins/configs/camels_us/full_training/full_training_531_temporal_with_static.yml
 
 experiment_name: full_531_temporal_with_static
 dataset: camels_us
@@ -317,4 +317,5 @@ runs/full_531_temporal_with_static_2025_1127_2057_ep30/
 ---
 
 **报告生成时间**: 2025-11-28
+
 

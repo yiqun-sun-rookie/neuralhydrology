@@ -7,13 +7,10 @@ run_dir: results/04_namou_kuwei
 train_basin_file: basins.txt
 validation_basin_file: basins.txt
 test_basin_file: basins.txt
-basics:
-  logging_level: INFO
 
 # --- Data Settings ---
-data_dir: data/namou_kuwei_hourly
+data_dir: data/namou_kuwei/hourly
 dataset: custom
-time_step: 1h
 
 # Features
 dynamic_inputs:
@@ -74,3 +71,4 @@ metrics:
   - KGE
   - RMSE
   - FHV  # Flow Volume Error
+

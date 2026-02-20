@@ -2,7 +2,7 @@
 
 **状态**: dev
 **创建日期**: 2026-01-01
-**最后更新**: 2026-02-10
+**最后更新**: 2026-02-18
 
 ---
 
@@ -74,6 +74,7 @@
 
 | Date | Event | Details |
 | :--- | :--- | :--- |
+| 2026-02-18 | 兼容层下线 | 删除 `neuralhydrology/hydroagent/{agent,diagnosis,environment}.py` 转发模块；旧入口改为明确 ImportError，统一只保留 `src/hydroagent/` |
 | 2026-01-01 | 项目启动 | 架构设计与接口定义 |
 | 2026-01-15 | Module A 完成 | V1.1 Enhanced 诊断系统 |
 | 2026-02-01 | Module B 完成 | NetworkX DAG 引擎 + 自动率定 |

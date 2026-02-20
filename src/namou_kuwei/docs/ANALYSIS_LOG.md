@@ -57,7 +57,7 @@
    - `temp.csv`: 占位气候态温度
    - `pet.csv`: Hargreaves PET
 
-2. **NeuralHydrology 输入**（`data/namou_kuwei_hourly/`）：
+2. **NeuralHydrology 输入**（`data/namou_kuwei/hourly/`）：
    - `time_series/namou_kuwei.nc`: 主时间序列
    - `attributes/attributes.csv`: 静态属性
    - `*_basins.txt`: 流域划分
@@ -208,4 +208,5 @@
 ---
 
 > 更新日期: 2025-11-28
+
 

@@ -40,7 +40,7 @@ The project is **partially unified** and the current architecture is **suitable*
 - `src/full_531_basins/`
 - `src/haihe_river/`
 - `src/hydroagent/`
-- `src/41_mts_mamba_global_transfer/`
+- `src/mts_mamba_global_transfer/`
 
 ### Shared utility (keep in place)
 

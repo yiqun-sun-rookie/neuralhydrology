@@ -311,7 +311,7 @@ target_variables:
 | 项目 | 配置值 |
 |------|--------|
 | **数据集类型** | `generic` |
-| **数据路径** | `data/namou_kuwei_hourly` |
+| **数据路径** | `data/namou_kuwei/hourly` |
 | **流域数量** | 1 (单站点预报) |
 | **时间分辨率** | 小时级 |
 
@@ -444,9 +444,9 @@ forcings:
   - daymet
 
 # 流域文件
-train_basin_file: examples/06-Finetuning/531_basin_list.txt
-validation_basin_file: examples/06-Finetuning/531_basin_list.txt
-test_basin_file: examples/06-Finetuning/531_basin_list.txt
+train_basin_file: src/full_531_basins/data/531_basin_list.txt
+validation_basin_file: src/full_531_basins/data/531_basin_list.txt
+test_basin_file: src/full_531_basins/data/531_basin_list.txt
 
 # 时间划分
 train_start_date: "01/10/1990"
@@ -519,5 +519,6 @@ metrics:
 
 ---
 
-[返回项目总览](PROJECTS_OVERVIEW.md)
+[返回研究索引](../../draft/RESEARCH_INDEX.md)
+
 

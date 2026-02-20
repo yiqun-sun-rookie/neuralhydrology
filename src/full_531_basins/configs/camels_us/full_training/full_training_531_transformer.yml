@@ -1,0 +1,113 @@
+# 531 basins, Transformer model
+# Uses self-attention mechanism for sequence modeling
+
+experiment_name: full_531_transformer
+dataset: camels_us
+data_dir: F:\github\pycharm\projects\neuralhydrology\data\CAMELS_US
+
+model: transformer
+head: regression
+output_dropout: 0.0
+output_activation: linear
+
+# Transformer-specific parameters
+transformer_nheads: 4
+transformer_nlayers: 2
+transformer_dim_feedforward: 256
+transformer_dropout: 0.1
+transformer_positional_encoding_type: sum
+transformer_positional_dropout: 0.1
+
+# Embedding to make input divisible by nheads (4)
+# 5 dynamic + 14 static = 19 features -> embed to 64 (divisible by 4)
+statics_embedding:
+  type: fc
+  hiddens: [32]
+  activation: tanh
+  dropout: 0.0
+
+dynamics_embedding:
+  type: fc
+  hiddens: [32]
+  activation: tanh
+  dropout: 0.0
+
+epochs: 30
+batch_size: 256
+optimizer: AdamW
+loss: NSE
+
+learning_rate:
+  0: 0.001
+  10: 0.0005
+  20: 0.0002
+
+# 531 basins, same basin set for train/val/test, temporal split only
+train_basin_file: src/full_531_basins/data/531_basin_list.txt
+validation_basin_file: src/full_531_basins/data/531_basin_list.txt
+test_basin_file: src/full_531_basins/data/531_basin_list.txt
+
+# Shorter temporal split for quicker experiments
+train_start_date: 01/10/1990
+train_end_date:   30/09/1995
+validation_start_date: 01/10/1995
+validation_end_date:   30/09/2000
+test_start_date:       01/10/2000
+test_end_date:         30/09/2005
+
+forcings:
+  - daymet
+
+dynamic_inputs:
+  - prcp(mm/day)
+  - srad(W/m2)
+  - tmax(C)
+  - tmin(C)
+  - vp(Pa)
+
+# STATIC ATTRIBUTES
+static_attributes:
+  # Topography
+  - elev_mean
+  - slope_mean
+  - area_gages2
+  # Soil
+  - soil_depth_pelletier
+  - soil_porosity
+  - sand_frac
+  - clay_frac
+  # Vegetation
+  - frac_forest
+  - lai_max
+  - gvf_max
+  # Climate
+  - p_mean
+  - aridity
+  - frac_snow
+  - high_prec_freq
+
+target_variables:
+  - QObs(mm/d)
+
+clip_targets_to_zero:
+  - QObs(mm/d)
+
+seq_length: 365
+predict_last_n: 1
+num_workers: 0
+
+validate_every: 2
+validate_n_random_basins: 50
+
+clip_gradient_norm: 1.0
+
+log_interval: 10
+log_tensorboard: true
+log_n_figures: 3
+save_weights_every: 5
+
+metrics:
+  - NSE
+
+seed: 159193
+

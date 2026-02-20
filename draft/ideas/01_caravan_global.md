@@ -2,7 +2,7 @@
 
 **状态**: 🔄 进行中  
 **创建日期**: 2026-01-21  
-**最后更新**: 2026-01-31
+**最后更新**: 2026-02-18
 
 ---
 
@@ -48,6 +48,10 @@
 | Component | Path | Description |
 | :--- | :--- | :--- |
 | Config | `src/caravan_global/configs/caravan_hpc.yml` | HPC 训练配置（隔离 basin 路径） |
+| Smoke Config | `src/caravan_global/configs/caravan_daily_smoke_2basins_ep1.yml` | 本地最小训练验证（2 basins, 1 epoch） |
+| Smoke Basins | `src/caravan_global/data/smoke_2_basins.txt` | smoke 配置用 basin 列表 |
+| Smoke Config (10x3) | `src/caravan_global/configs/caravan_daily_smoke_10basins_ep3.yml` | 本地增强 smoke 验证（10 basins, 3 epochs） |
+| Smoke Basins (10) | `src/caravan_global/data/smoke_10_basins.txt` | 10-basin smoke 配置用 basin 列表 |
 | SLURM | `src/caravan_global/hpc/submit_caravan.slurm` | 作业提交脚本（预检与节点排除） |
 | Basin List | `src/caravan_global/data/valid_basins.txt` | 训练使用的纯 basin 列表（5281） |
 | Analysis | `src/caravan_global/scripts/run_local_analysis.py` | 本地数据对齐分析 |
@@ -60,8 +64,10 @@
 
 | Run ID | Date | Output Path | Notes |
 | :--- | :--- | :--- | :--- |
-| 155573 | 2026-01-29 | `logs/01_caravan_global/155573.*` | 失败：basin 文件注释行被解析为 basin ID |
-| 155808 | 2026-01-31 | `logs/01_caravan_global/155808.*` | 失败：xarray NetCDF backend 缺失 (`netcdf4`) |
+| caravan_daily_smoke_10basins_ep3_2026_0218_1802_ep3 | 2026-02-18 | `results/01_caravan_global/caravan_daily_smoke_10basins_ep3_2026_0218_1802_ep3/` | 本地 CPU smoke 完成（10 basins, 3 epochs）: NSE=0.57383, KGE=0.52536 |
+| caravan_daily_smoke_2basins_ep1_2026_0218_1255_ep1 | 2026-02-18 | `results/01_caravan_global/caravan_daily_smoke_2basins_ep1_2026_0218_1255_ep1/` | 本地 CPU smoke 训练完成（2 basins, 1 epoch） |
+| 155573 | 2026-01-29 | 历史作业 ID | 失败：basin 文件注释行被解析为 basin ID |
+| 155808 | 2026-01-31 | 历史作业 ID | 失败：xarray NetCDF backend 缺失 (`netcdf4`) |
 | caravan_global_pretrain_hpc_2026_0131_2305_ep30 | 2026-01-31 | `results/01_caravan_global/` | 已创建 run 目录，训练中断待续跑 |
 
 ---
@@ -70,6 +76,8 @@
 
 | Date | Event | Details |
 | :--- | :--- | :--- |
+| 2026-02-18 | 本地增强 smoke 验证通过 | 使用 `src/caravan_global/configs/caravan_daily_smoke_10basins_ep3.yml` 在 CPU 上完成 10 basins/3 epochs，验证指标 NSE=0.57383, KGE=0.52536 |
+| 2026-02-18 | 本地 smoke 验证通过 | 使用 `src/caravan_global/configs/caravan_daily_smoke_2basins_ep1.yml` 在 CPU 上完成 2 basins/1 epoch，验证指标 NSE=0.44622, KGE=0.50352 |
 | 2026-01-21 | 项目结构创建 | 按 rules 初始化 `src/caravan_global` 与 `results/01_caravan_global` |
 | 2026-01-27 | 流域筛选完成 | 基于输入-目标对齐与样本阈值筛出 5281 个有效流域 |
 | 2026-01-29 | 任务失败复盘 | 发现 `valid_basins.txt` 含注释行触发 dataset 解析错误 |
@@ -82,13 +90,20 @@
 
 ```bash
 # 1) 同步本任务
-# 使用 hpc/winscp_sync.txt（仅同步 src/caravan_global + 本任务 idea 文档）
+# 使用 src/caravan_global/hpc/winscp_sync.txt（仅同步 src/caravan_global + 本任务 idea 文档）
 
 # 2) 提交训练
 sbatch src/caravan_global/hpc/submit_caravan.slurm
 
 # 3) 监控日志
 tail -f logs/01_caravan_global/<job_id>.out
+```
+
+### 本地最小 smoke（可复现）
+
+```bash
+python -m neuralhydrology.nh_run train --config-file src/caravan_global/configs/caravan_daily_smoke_2basins_ep1.yml --gpu -1
+python -m neuralhydrology.nh_run train --config-file src/caravan_global/configs/caravan_daily_smoke_10basins_ep3.yml --gpu -1
 ```
 
 ---
@@ -139,7 +154,7 @@ tail -f logs/01_caravan_global/<job_id>.out
      - Results: `results/01_caravan_global/`
      - Logs: `logs/01_caravan_global/`
      - Docs: `draft/ideas/01_caravan_global.md`
-   - WinSCP 同步脚本改为仅同步本任务：`hpc/winscp_sync.txt`
+   - WinSCP 同步脚本改为仅同步本任务：`src/caravan_global/hpc/winscp_sync.txt`
 
 4. **脚本与文档更新**
    - `src/caravan_global/configs/caravan_hpc.yml`
@@ -155,9 +170,7 @@ tail -f logs/01_caravan_global/<job_id>.out
 最新作业日志（`155808`）显示：训练可启动、GPU 可见，但在读取 `.nc` 时崩溃：
 
 - 报错：`xarray ... backends ['netcdf4', 'h5netcdf'] ... dependencies may not be installed`
-- 结论：HPC 的 `nh_final` 环境缺 `netcdf4`（或等效后端）
-
-### 4) 下一步计划（执行顺序）
+- 结论：HPC 的 `nh_final` 环境缺 `netcdf4`（或等效后端）### 4) 下一步计划（执行顺序）
 
 1. 在 HPC 安装依赖（一次性）：
    - `conda activate nh_final`
@@ -165,7 +178,7 @@ tail -f logs/01_caravan_global/<job_id>.out
    - 验证：`python -c "import xarray, netcdf4; print('OK')"`
 
 2. 同步本任务代码：
-   - 执行 `hpc/winscp_sync.txt`（仅同步 `src/caravan_global` + 任务文档）
+   - 执行 `src/caravan_global/hpc/winscp_sync.txt`（仅同步 `src/caravan_global` + 任务文档）
 
 3. 重新提交训练：
    - `sbatch src/caravan_global/hpc/submit_caravan.slurm`
@@ -184,8 +197,16 @@ tail -f logs/01_caravan_global/<job_id>.out
 - `draft/ideas/01_caravan_global.md` 的 Results Index 与 Progress Log 完整更新
 - 关键坑位与修复流程可被他人按文档复现
 
-### 6) 新对话启动提示（可直接粘贴）
-
-> 我在做 `01_caravan_global` 任务。当前代码已隔离到 `src/caravan_global`，训练入口是 `src/caravan_global/hpc/submit_caravan.slurm`，流域列表是 `src/caravan_global/data/valid_basins.txt`（5281 行纯列表）。  
+### 6) 新对话启动提示（可直接粘贴）> 我在做 `01_caravan_global` 任务。当前代码已隔离到 `src/caravan_global`，训练入口是 `src/caravan_global/hpc/submit_caravan.slurm`，流域列表是 `src/caravan_global/data/valid_basins.txt`（5281 行纯列表）。  
 > 最新失败是 HPC 环境缺 `netcdf4`，请先帮我检查 `nh_final` 依赖并给出最短路径把训练跑起来，然后继续监控并更新 `draft/ideas/01_caravan_global.md` 的 Results Index/Progress Log。
 
+---
+
+## 2026-02-19 本地 Smoke 复验
+
+- 已执行真实训练命令：  
+  `python -m neuralhydrology.nh_run train --config-file src/caravan_global/configs/caravan_daily_smoke_2basins_ep1.yml`
+- 训练结果：2 basins / 1 epoch / CPU 跑通。
+- 输出目录：  
+  `results/01_caravan_global/caravan_daily_smoke_2basins_ep1_2026_0219_1642_ep1/`
+- 验证指标（epoch 1）：NSE=0.44622，KGE=0.50352。

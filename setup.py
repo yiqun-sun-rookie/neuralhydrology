@@ -2,10 +2,23 @@ from pathlib import Path
 
 from setuptools import setup
 
+def _load_requirements(path: Path):
+    reqs = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith(("-", "--")):
+            # Skip include/index directives; install_requires should contain package specs only.
+            continue
+        reqs.append(line)
+    return reqs
+
 # read the description from the README.md
 readme_file = Path(__file__).absolute().parent / "README.md"
 with readme_file.open("r", encoding="utf-8") as fp:
     long_description = fp.read()
+install_requires = _load_requirements(Path(__file__).absolute().parent / "requirements.txt") + ["torch"]
 
 about = {}
 with open("neuralhydrology/__about__.py", "r", encoding="utf-8") as fp:
@@ -35,18 +48,7 @@ setup(name='neuralhydrology',
           ]
       },
       python_requires='>=3.8',
-      install_requires=[
-          'matplotlib',
-          'numba',
-          'numpy',
-          'pandas',
-          'ruamel.yaml',
-          'torch',
-          'scipy',
-          'tensorboard',
-          'tqdm',
-          'xarray',
-      ],
+      install_requires=install_requires,
       classifiers=[
           'Programming Language :: Python :: 3',
           'Operating System :: OS Independent',

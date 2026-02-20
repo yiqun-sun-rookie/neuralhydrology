@@ -59,10 +59,10 @@ python -m neuralhydrology.nh_run train --config-file src/namou_kuwei/configs/no_
 
 ```bash
 # 评估已训练模型
-python -m neuralhydrology.nh_run evaluate --run-dir results/namou_kuwei/L3_Rain_AR_LT1h_2025_1201_1632_ep60
+python -m neuralhydrology.nh_run evaluate --run-dir results/04_namou_kuwei/L3_Rain_AR_LT1h_2025_1201_1632_ep60
 
 # 结果位置
-results/namou_kuwei/<实验名>/test/model_epoch060/test_metrics.csv
+results/04_namou_kuwei/<实验名>/test/model_epoch060/test_metrics.csv
 ```
 
 ---

@@ -1,0 +1,99 @@
+# Reproduce NSE 0.74 training configuration
+# Based on: full_531_temporal_with_static_2025_1127_2057_ep30
+# Reference: Kratzert et al. (2019) - 531 basins from CAMELS-US
+
+experiment_name: reproduce_531_nse074
+
+# Dataset
+dataset: camels_us
+data_dir: data/camels_us/full
+
+# Basin files - 531 basins from Kratzert et al. (2019)
+train_basin_file: src/full_531_basins/data/531_basin_list.txt
+validation_basin_file: src/full_531_basins/data/531_basin_list.txt
+test_basin_file: src/full_531_basins/data/531_basin_list.txt
+
+# Time periods (same as original)
+train_start_date: 01/10/1990
+train_end_date: 30/09/1995
+validation_start_date: 01/10/1995
+validation_end_date: 30/09/2000
+test_start_date: 01/10/2000
+test_end_date: 30/09/2005
+
+# Model configuration (same as original)
+model: cudalstm
+head: regression
+hidden_size: 128
+initial_forget_bias: 3
+output_dropout: 0.0
+output_activation: linear
+
+# Training configuration (same as original)
+epochs: 30
+batch_size: 256
+optimizer: AdamW
+loss: NSE
+
+# Learning rate schedule (same as original)
+learning_rate:
+  0: 0.003
+  10: 0.001
+  20: 0.0005
+
+# Input features (same as original)
+forcings:
+  - daymet
+
+dynamic_inputs:
+  - prcp(mm/day)
+  - srad(W/m2)
+  - tmax(C)
+  - tmin(C)
+  - vp(Pa)
+
+# Static attributes (same as original - 14 attributes)
+static_attributes:
+  - elev_mean
+  - slope_mean
+  - area_gages2
+  - soil_depth_pelletier
+  - soil_porosity
+  - sand_frac
+  - clay_frac
+  - frac_forest
+  - lai_max
+  - gvf_max
+  - p_mean
+  - aridity
+  - frac_snow
+  - high_prec_freq
+
+# Target
+target_variables:
+  - QObs(mm/d)
+
+clip_targets_to_zero:
+  - QObs(mm/d)
+
+# Training parameters (same as original)
+seq_length: 365
+predict_last_n: 1
+num_workers: 0
+validate_every: 2
+validate_n_random_basins: 50
+clip_gradient_norm: 1.0
+
+# Logging
+log_interval: 10
+log_tensorboard: true
+log_n_figures: 3
+save_weights_every: 5
+
+# Metrics
+metrics:
+  - NSE
+
+# Random seed (same as original)
+seed: 159193
+

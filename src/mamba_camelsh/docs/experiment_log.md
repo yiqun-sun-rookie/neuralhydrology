@@ -8,7 +8,7 @@ Reference: CAMELS-US daily model (NSE=0.74)
 ---
 
 ## Experiment 1: Baseline (v1)
-**Config**: `configs/camelsh/camelsh_hourly_optimized.yml`
+**Config**: `src/mamba_camelsh/configs/legacy/camelsh_hourly_optimized.yml`
 **Run Dir**: `runs/camelsh_hourly_optimized_2025_1201_1339_ep30`
 **Date**: 2025-12-01
 
@@ -53,7 +53,7 @@ Epoch  NSE     KGE
 ---
 
 ## Experiment 2: More Training Data (v2)
-**Config**: `configs/camelsh/camelsh_v2_more_data.yml`
+**Config**: `src/mamba_camelsh/configs/legacy/camelsh_v2_more_data.yml`
 **Run Dir**: `runs/camelsh_v2_more_data_2025_1204_2011_ep30`
 **Date**: 2025-12-04
 **Status**: 🔄 训练中
@@ -107,5 +107,6 @@ Epoch  NSE     KGE
 | v1 | camelsh_hourly_optimized | 2010-2014 | 168h | 0.587 | 0.558 | 0.610 |
 | v2 | camelsh_v2_more_data | 2002-2014 | 336h | TBD | TBD | TBD |
 | v3 | TBD | - | - | - | - | - |
+
 
 

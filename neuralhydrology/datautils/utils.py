@@ -127,8 +127,19 @@ def load_basin_file(basin_file: Path) -> List[str]:
     ValueError
         In case of invalid basin names that would cause problems internally.
     """
-    with basin_file.open('r') as fp:
-        basins = sorted(basin.strip() for basin in fp if basin.strip())
+    # Prefer UTF-8 (with/without BOM) to avoid locale-dependent decoding failures on Windows.
+    basins = None
+    for encoding in ("utf-8-sig", "utf-8", "gb18030"):
+        try:
+            with basin_file.open('r', encoding=encoding) as fp:
+                basins = sorted(basin.strip().lstrip("\ufeff") for basin in fp if basin.strip())
+            break
+        except UnicodeDecodeError:
+            continue
+    if basins is None:
+        # Re-raise with the default behavior so callers get a clear decoding error.
+        with basin_file.open('r') as fp:
+            basins = sorted(basin.strip() for basin in fp if basin.strip())
 
     # sanity check basin names
     problematic_basins = [basin for basin in basins if basin.split('_')[-1].startswith('period')]

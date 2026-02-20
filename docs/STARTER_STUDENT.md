@@ -4,9 +4,9 @@
 
 NeuralHydrology 是一个用于水文建模的深度学习库，核心目标是用神经网络预测径流（流量）。项目包含：
 - 训练和评估入口：统一使用 `neuralhydrology/nh_run.py`（命令行 `python -m neuralhydrology.nh_run`）。
-- 配置驱动：训练流程由 YAML 配置文件控制，存放在 `configs/`。
-- 数据和结果：原始数据放在 `data/`，训练输出放在 `runs/`。
-- 文档体系：主要在 `docs/`，其中 `docs/guides/` 是面向用户的使用指南。
+- 配置驱动：训练流程由 YAML 配置文件控制，存放在 `src/<idea>/configs/`。
+- 数据和结果：原始数据放在 `data/`，训练输出建议按 idea 归档到 `results/<ID>_<idea>/`。
+- 文档体系：主要在 `docs/`，其中 `guides/` 是面向用户的使用指南。
 
 如果你是新手，建议先理解“配置驱动训练 + 小数据集验证”的流程，再进入 531 流域的大规模基准测试。
 
@@ -27,8 +27,8 @@ NeuralHydrology 是一个用于水文建模的深度学习库，核心目标是�
 - 可选快速验证：`src/mamba_camels_us/configs/mamba_daily_quick.yml`（100 流域）或 `mamba_daily_mini.yml`（50 流域）
 
 参考资料：
-- 安装与运行：docs/guides/INSTALLATION_GUIDE.md
-- 快速开始：docs/guides/QUICK_START.md
+- 安装与运行：`guides/INSTALLATION_GUIDE.md`
+- 快速开始：`guides/QUICK_START.md`
 
 注意：项目中旧的 `simple_train.py` 说明属于历史文档，当前推荐入口是 `nh_run`（见根目录 README 的说明）。
 
@@ -36,19 +36,19 @@ NeuralHydrology 是一个用于水文建模的深度学习库，核心目标是�
 
 ### 1. 安装与环境
 
-按照 [docs/guides/INSTALLATION_GUIDE.md](docs/guides/INSTALLATION_GUIDE.md) 完成环境安装。
+按照 [guides/INSTALLATION_GUIDE.md](guides/INSTALLATION_GUIDE.md) 完成环境安装。
 建议优先使用 Conda + GPU 版本（如果没有 GPU 则使用 CPU 版本）。
 
 ### 2. 确认可用（先跑最小验证）
 
 ```bash
-python scripts/create_test_data.py
+python src/test_data/scripts/create_test_data.py
 ```
 
 如果想一键完成环境检查 + 数据生成 + 快速验证，可以使用：
 
 ```bash
-python scripts/setup_test_environment.py
+python src/test_data/scripts/setup_test_environment.py
 ```
 
 ### 3. 运行 531 Basins 主线训练
@@ -69,21 +69,21 @@ python -m neuralhydrology.nh_run train --config-file src/mamba_camels_us/configs
 如果没有 GPU，可在配置文件中把 `device` 改为 `cpu`。
 
 ```bash
-python -m neuralhydrology.nh_run train --config-file configs/test_data/quick_test.yml --gpu 0
+python -m neuralhydrology.nh_run train --config-file src/test_data/configs/quick_test.yml --gpu 0
 ```
 
 如果没有 GPU：
 
 ```bash
-python -m neuralhydrology.nh_run train --config-file configs/test_data/quick_test.yml --gpu -1
+python -m neuralhydrology.nh_run train --config-file src/test_data/configs/quick_test.yml --gpu -1
 ```
 
 ### 4. 查看结果
 
-训练完成后，结果会出现在 `runs/` 目录下：
-- 日志：`runs/<run_name>/output.log`
-- 模型权重：`runs/<run_name>/model_epoch_*.pt`
-- TensorBoard：`tensorboard --logdir runs/`
+训练完成后，结果通常会归档到 `results/<ID>_<idea>/`（或配置中的 `run_dir`）：
+- 日志：`logs/<ID>_<idea>/` 或 `results/<ID>_<idea>/.../output.log`
+- 模型权重：`results/<ID>_<idea>/.../model_epoch_*.pt`
+- TensorBoard：`tensorboard --logdir results/`
 
 ### 5. 下一步扩展
 
@@ -91,9 +91,9 @@ python -m neuralhydrology.nh_run train --config-file configs/test_data/quick_tes
 
 ## 建议的阅读顺序
 
-1. [docs/guides/INSTALLATION_GUIDE.md](docs/guides/INSTALLATION_GUIDE.md)
-2. [docs/guides/QUICK_START.md](docs/guides/QUICK_START.md)
-3. 根目录 [README.md](README.md) 了解整体结构与入口
+1. [guides/INSTALLATION_GUIDE.md](guides/INSTALLATION_GUIDE.md)
+2. [guides/QUICK_START.md](guides/QUICK_START.md)
+3. 根目录 [README.md](../README.md) 了解整体结构与入口
 
 ## 常见问题（新手版）
 
@@ -131,4 +131,5 @@ python -m neuralhydrology.nh_run train --config-file configs/test_data/quick_tes
 3. 如果做小时级研究,阅读 **Gauch 2021**
 
 ---
-如果你需要进一步加入项目实验或研究任务，可以再阅读 docs/PROJECTS_OVERVIEW.md 了解各项目板块。
+如果你需要进一步加入项目实验或研究任务，建议阅读 `draft/RESEARCH_INDEX.md` 了解各 idea 的最新状态与入口。
+

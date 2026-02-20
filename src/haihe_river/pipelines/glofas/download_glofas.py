@@ -6,7 +6,7 @@ NetCDF files for the requested variables.
 
 Example usage:
     python src/haihe_river/pipelines/glofas/download_glofas.py \
-        --config configs/glofas/haihe_download.yaml
+        --config src/haihe_river/configs/glofas/haihe_download.yaml
 """
 
 from __future__ import annotations
@@ -228,4 +228,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 

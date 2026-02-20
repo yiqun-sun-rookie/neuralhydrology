@@ -2,7 +2,7 @@
 
 **状态**: active
 **创建日期**: 2025-11-01
-**最后更新**: 2026-02-10
+**最后更新**: 2026-02-18
 
 ---
 
@@ -48,10 +48,13 @@
 | :--- | :--- | :--- |
 | Plot (baseline) | `src/full_531_basins/scripts/plot_531_baseline.py` | 基线结果可视化 |
 | Plot (spatial) | `src/full_531_basins/scripts/plot_531_spatial.py` | 空间分布可视化 |
+| Data Audit | `src/full_531_basins/scripts/data_availability.py` | 流域可用性审计（缺测/零方差） |
+| Backup Manager | `src/full_531_basins/scripts/manage_backups.py` | 结果备份清理与管理 |
 | Problematic Basins | `src/full_531_basins/data/problematic_basins.txt` | 问题流域列表 |
 | Figures | `results/05_full_531_basins/figures/` | 所有实验图表 |
 | Reports | `results/05_full_531_basins/reports/` | 训练状态报告 |
 | Models | `results/05_full_531_basins/models/` | 预训练模型 |
+| Backups | `results/05_full_531_basins/backups/` | 历史配置与流域划分备份 |
 
 ---
 
@@ -63,6 +66,7 @@
 | full_531_gru_ep30 | 2025-12 | `results/05_full_531_basins/` | GRU 对比 |
 | full_531_multihead | 2025-12-21 | `results/05_full_531_basins/` | Multihead 对比 |
 | camels_us_674_basins_2025_1025 | 2025-10-25 | `results/05_full_531_basins/models/` | 预训练模型 |
+| legacy_backups_2025 | 2025-10 | `results/05_full_531_basins/backups/` | 已从历史根目录备份桶迁移（旧根目录已删除） |
 
 ---
 
@@ -77,6 +81,7 @@
 | 2025-12-16 | 配置修复 | MTS-LSTM 不适用; Multihead 缺配置已修复 |
 | 2025-12-21 | Multihead 完成 | NSE=0.679, 测试完成 |
 | 2026-02-10 | 目录迁移 | 整理到 src/full_531_basins/ |
+| 2026-02-18 | 脚本入口统一 | 旧 `src/full_531_basins/tools/` 下脚本已迁移到 `src/full_531_basins/scripts/`，统一执行入口 |
 
 ---
 

@@ -49,10 +49,10 @@
 ### 2.1 数据路径
 
 ```yaml
-data_dir: F:/github/pycharm/projects/neuralhydrology/data/namou_kuwei_hourly
-train_basin_file: F:/github/pycharm/projects/neuralhydrology/data/namou_kuwei_hourly/train_basins.txt
-validation_basin_file: F:/github/pycharm/projects/neuralhydrology/data/namou_kuwei_hourly/validation_basins.txt
-test_basin_file: F:/github/pycharm/projects/neuralhydrology/data/namou_kuwei_hourly/test_basins.txt
+data_dir: F:/github/pycharm/projects/neuralhydrology/data/namou_kuwei/hourly
+train_basin_file: F:/github/pycharm/projects/neuralhydrology/data/namou_kuwei/hourly/train_basins.txt
+validation_basin_file: F:/github/pycharm/projects/neuralhydrology/data/namou_kuwei/hourly/validation_basins.txt
+test_basin_file: F:/github/pycharm/projects/neuralhydrology/data/namou_kuwei/hourly/test_basins.txt
 ```
 
 ### 2.2 时间划分
@@ -253,9 +253,10 @@ device: cuda:0
 
 ### 6.3 下游数据
 
-S5/S6 实验使用 `data/namou_kuwei_hourly_downstream/` 数据集，包含坝前水位。
+S5/S6 实验使用 `data/namou_kuwei/hourly_downstream/` 数据集，包含坝前水位。
 
 ---
 
 > 更新日期: 2025-11-28
+
 

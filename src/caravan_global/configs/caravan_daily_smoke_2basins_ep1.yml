@@ -1,0 +1,73 @@
+# ID 01 smoke test: 2 basins, 1 epoch, CPU
+experiment_name: caravan_daily_smoke_2basins_ep1
+
+dataset: caravan
+data_dir: data/Caravan
+
+train_basin_file: src/caravan_global/data/smoke_2_basins.txt
+validation_basin_file: src/caravan_global/data/smoke_2_basins.txt
+test_basin_file: src/caravan_global/data/smoke_2_basins.txt
+
+train_start_date: "01/01/1981"
+train_end_date: "31/12/1983"
+validation_start_date: "01/01/1984"
+validation_end_date: "31/12/1985"
+test_start_date: "01/01/1986"
+test_end_date: "31/12/1987"
+
+model: cudalstm
+head: regression
+hidden_size: 64
+initial_forget_bias: 3
+output_dropout: 0.1
+
+epochs: 1
+batch_size: 16
+optimizer: AdamW
+learning_rate:
+  0: 0.001
+loss: NSE
+
+forcings:
+  - caravan
+
+dynamic_inputs:
+  - total_precipitation_sum
+  - surface_net_solar_radiation_mean
+  - temperature_2m_max
+  - temperature_2m_min
+  - dewpoint_temperature_2m_mean
+
+static_attributes:
+  - ele_mt_sav
+  - slp_dg_sav
+  - area
+  - sgr_dk_sav
+  - snd_pc_sav
+  - cly_pc_sav
+  - slt_pc_sav
+  - for_pc_sse
+  - p_mean
+  - aridity_ERA5_LAND
+  - frac_snow
+  - high_prec_freq
+
+target_variables:
+  - streamflow
+
+seq_length: 30
+predict_last_n: 1
+
+num_workers: 0
+validate_every: 1
+validate_n_random_basins: 2
+save_weights_every: 1
+log_interval: 1
+log_tensorboard: false
+metrics:
+  - NSE
+  - KGE
+seed: 123
+device: cpu
+
+run_dir: results/01_caravan_global

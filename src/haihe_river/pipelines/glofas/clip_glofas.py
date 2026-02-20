@@ -2,7 +2,7 @@
 
 Example:
     python src/haihe_river/pipelines/glofas/clip_glofas.py \
-        --config configs/glofas/haihe_clip.yaml
+        --config src/haihe_river/configs/glofas/haihe_clip.yaml
 """
 
 from __future__ import annotations
@@ -213,4 +213,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 

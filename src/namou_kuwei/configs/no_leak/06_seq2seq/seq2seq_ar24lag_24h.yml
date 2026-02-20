@@ -8,11 +8,11 @@
 experiment_name: L6_Seq2Seq_AR24lag_24h
 run_dir: results/04_namou_kuwei
 
-data_dir: data/namou_kuwei_hourly
+data_dir: data/namou_kuwei/hourly
 dataset: generic
-train_basin_file: data/namou_kuwei_hourly/train_basins.txt
-validation_basin_file: data/namou_kuwei_hourly/validation_basins.txt
-test_basin_file: data/namou_kuwei_hourly/test_basins.txt
+train_basin_file: data/namou_kuwei/hourly/train_basins.txt
+validation_basin_file: data/namou_kuwei/hourly/validation_basins.txt
+test_basin_file: data/namou_kuwei/hourly/test_basins.txt
 
 train_start_date: "01/01/2020"
 train_end_date: "30/06/2021"
@@ -79,3 +79,4 @@ metrics:
   - KGE
   - RMSE
   - Peak-MAPE
+

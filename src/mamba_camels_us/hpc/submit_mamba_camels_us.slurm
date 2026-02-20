@@ -2,7 +2,7 @@
 # =============================================================================
 # Mamba CAMELS-US 全量训练作业 (531 basins, 30 epochs)
 # 用法: sbatch src/mamba_camels_us/hpc/submit_mamba_camels_us.slurm
-#       或: ./hpc/submit.sh mamba_camels_us
+#       或: ./common/submit.sh mamba_camels_us
 # =============================================================================
 #SBATCH -J nh_mamba_camels_us
 #SBATCH -p hgpu8

@@ -105,7 +105,7 @@ class Config(object):
         """
         yml_path = folder / filename
         if not yml_path.exists():
-            with yml_path.open('w') as fp:
+            with yml_path.open('w', encoding='utf-8') as fp:
                 temp_cfg = {}
                 for key, val in self._cfg.items():
                     if any([key.endswith(x) for x in ['_dir', '_path', '_file', '_files']]):
@@ -251,9 +251,17 @@ class Config(object):
     @staticmethod
     def _read_and_parse_config(yml_path: Path):
         if yml_path.exists():
-            with yml_path.open('r') as fp:
-                yaml = YAML(typ="safe")
-                cfg = yaml.load(fp)
+            yaml = YAML(typ="safe")
+            last_decode_error = None
+            for encoding in ('utf-8', 'utf-8-sig', 'gbk'):
+                try:
+                    with yml_path.open('r', encoding=encoding) as fp:
+                        cfg = yaml.load(fp)
+                    break
+                except UnicodeDecodeError as ex:
+                    last_decode_error = ex
+            else:
+                raise ValueError(f'Could not decode config file: {yml_path}') from last_decode_error
         else:
             raise FileNotFoundError(yml_path)
         cfg = Config._parse_config(cfg)

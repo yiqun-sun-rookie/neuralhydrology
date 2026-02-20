@@ -34,7 +34,7 @@ conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvi
 
 ```bash
 # 使用CUDA 11.8环境
-conda env create -f environments/environment_cuda11_8.yml
+pip install -r requirements.txt
 conda activate neuralhydrology_cuda11_8
 ```
 
@@ -55,32 +55,23 @@ python -c "import torch; print('PyTorch版本:', torch.__version__); print('CUDA
 
 安装GPU版本后，您可以使用以下脚本：
 
-### 使用批处理脚本 (Windows)
+### 使用统一训练入口（推荐）
 ```bash
-# 运行GPU训练
-run_training_gpu.bat
+# 快速验证（GPU 0）
+python -m neuralhydrology.nh_run train --config-file src/test_data/configs/quick_test.yml --gpu 0
 
-# 或者使用PowerShell
-.\run_training_gpu.ps1
-```
+# 强制CPU（对照）
+python -m neuralhydrology.nh_run train --config-file src/test_data/configs/quick_test.yml --gpu -1
 
-### 使用Python脚本
-```bash
-# 自动检测GPU
-python run_training.py --config examples/01-Introduction/1_basin_gpu.yml
-
-# 强制使用GPU
-python run_training.py --config examples/01-Introduction/1_basin_gpu.yml --device cuda
-
-# 指定特定GPU
-python run_training.py --config examples/01-Introduction/1_basin_gpu.yml --gpu 0
+# 正式训练示例（全量配置）
+python -m neuralhydrology.nh_run train --config-file src/full_531_basins/configs/camels_us/full_training/full_training_531_temporal_with_static.yml --gpu 0
 ```
 
 ## 配置文件说明
 
-### GPU优化配置
-- `1_basin_gpu.yml`: 单流域GPU训练配置
-- `full_training_gpu.yml`: 全数据集GPU训练配置
+### GPU配置建议
+- 快速冒烟：`src/test_data/configs/quick_test.yml`
+- 正式训练：使用各 idea 自己目录下的配置（例如 `src/full_531_basins/configs/...`）
 
 ### 主要GPU优化参数
 - `device: cuda:0`: 使用第一个GPU
@@ -131,3 +122,4 @@ nvidia-smi -l 1
 - CUDA 11.8 或 12.1
 - cuDNN (通常随CUDA一起安装)
 - 足够的GPU内存 (建议8GB+)
+

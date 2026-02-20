@@ -4,8 +4,8 @@ import pandas as pd
 import sys
 import os
 
-# Add project root
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
+# Add src root so `import hydroagent` works after package migration
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 try:
     from hydroagent.environment import SuperflexEnv

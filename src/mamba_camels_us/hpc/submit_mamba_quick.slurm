@@ -2,7 +2,7 @@
 # =============================================================================
 # Mamba CAMELS-US 快速验证作业 (100 basins, 5 epochs)
 # 用法: sbatch src/mamba_camels_us/hpc/submit_mamba_quick.slurm
-#       或: ./hpc/submit.sh mamba_quick
+#       或: ./common/submit.sh mamba_quick
 # =============================================================================
 #SBATCH -J nh_mamba_quick
 #SBATCH -p hgpu8

@@ -49,7 +49,7 @@ LSTM (Long Short-Term Memory，长短期记忆网络) 是一种擅长处理**时
 | 目录用途 | 路径 | 说明 |
 | :--- | :--- | :--- |
 | **配置文件** | `src/namou_kuwei/configs/no_leak/` | **最重要！** 这里存放了所有的模型参数设置（如 S1, S4 等实验）。 |
-| **数据文件** | `data/namou_kuwei_hourly/` | 存放处理好的 CSV 和 NetCDF 格式的水文数据。 |
+| **数据文件** | `data/namou_kuwei/hourly/` | 存放处理好的 CSV 和 NetCDF 格式的水文数据。 |
 | **运行结果** | `runs/` | 模型训练后的日志、权重文件和预测结果都会自动生成在这里。 |
 
 ---
@@ -144,3 +144,4 @@ nh-run train --config-file src/namou_kuwei/configs/no_leak/04_full/rain_ar_stati
 
 ---
 *文档编写日期: 2026-01-20*
+

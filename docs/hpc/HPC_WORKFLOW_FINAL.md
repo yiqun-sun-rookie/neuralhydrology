@@ -94,7 +94,7 @@ sbatch src/<idea>/hpc/submit_<idea>.slurm
 squeue -u $USER
 
 # 查看日志 (自动找最新)
-./hpc/logs.sh tail <idea_name>
+./common/logs.sh tail <idea_name>
 
 # 取消作业
 scancel <job_id>

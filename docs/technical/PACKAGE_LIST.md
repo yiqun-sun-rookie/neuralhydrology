@@ -41,7 +41,7 @@
 
 ## 安装命令
 
-### GPU版本（推荐）
+### Torch 轮子选项（GPU示例）
 ```bash
 # 安装PyTorch GPU版本
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
@@ -53,7 +53,7 @@ pip install ruamel.yaml>=0.17.0 tqdm>=4.64.0 tensorboard>=2.8.0
 pip install numba>=0.56.0
 ```
 
-### CPU版本
+### Torch 轮子选项（CPU示例）
 ```bash
 # 安装PyTorch CPU版本
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
@@ -67,14 +67,9 @@ pip install numba>=0.56.0
 
 ### 使用requirements文件
 ```bash
-# GPU版本
-pip install -r requirements-gpu.txt
-
-# CPU版本
-pip install -r requirements-cpu.txt
-
-# 通用版本
+# 统一依赖入口
 pip install -r requirements.txt
+
 ```
 
 ## 版本兼容性
@@ -143,3 +138,4 @@ print("所有依赖包安装成功！")
 print(f"PyTorch版本: {torch.__version__}")
 print(f"CUDA可用: {torch.cuda.is_available()}")
 ```
+

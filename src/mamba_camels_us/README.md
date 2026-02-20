@@ -31,7 +31,7 @@ nh-run train --config-file src/mamba_camels_us/configs/mamba_daily.yml
 
 ## 📊 实验结果
 
-详细实验结果请参考主文档：`docs/experiments/MAMBA_CAMELS_US_EXPERIMENT.md`
+详细实验结果请参考主文档：`src/mamba_camels_us/docs/MAMBA_CAMELS_US_EXPERIMENT.md`
 
 ## ⚠️ 注意事项
 
@@ -41,5 +41,5 @@ nh-run train --config-file src/mamba_camels_us/configs/mamba_daily.yml
 
 ## 📝 相关文档
 
-- 主实验文档: `docs/experiments/MAMBA_CAMELS_US_EXPERIMENT.md`
+- 主实验文档: `src/mamba_camels_us/docs/MAMBA_CAMELS_US_EXPERIMENT.md`
 - 数据使用指南: `docs/DATA_USAGE_GUIDE.md`

@@ -31,10 +31,10 @@
 
 ## 2. 配置文件结构
 
-所有配置文件位于 `configs/namou_kuwei/`：
+所有配置文件位于 `src/namou_kuwei/configs/archive_legacy/`：
 
 ```
-configs/namou_kuwei/
+src/namou_kuwei/configs/archive_legacy/
 ├── hierarchy/              # 特征层级实验（9个配置）
 │   ├── S1_Rain.yml         # 仅雨量（基准）
 │   ├── S2_Rain_AR.yml      # 雨量 + 历史流量
@@ -109,7 +109,7 @@ configs/namou_kuwei/
 ### 4.1 数据位置
 
 ```
-data/namou_kuwei_hourly/
+data/namou_kuwei/hourly/
 ├── basins.txt                  # 流域列表
 ├── train_basins.txt            # 训练流域
 ├── validation_basins.txt       # 验证流域
@@ -195,11 +195,11 @@ cd F:\github\pycharm\projects\neuralhydrology
 
 # 使用最佳配置 S4
 python -m neuralhydrology.nh_run train \
-    --config-file configs/namou_kuwei/hierarchy/S4_Rain_AR_Static.yml
+    --config-file src/namou_kuwei/configs/archive_legacy/hierarchy/S4_Rain_AR_Static.yml
 
 # 多提前量实验
 python -m neuralhydrology.nh_run train \
-    --config-file configs/namou_kuwei/leadtime/S4_LT12h.yml
+    --config-file src/namou_kuwei/configs/archive_legacy/leadtime/S4_LT12h.yml
 ```
 
 ### 6.2 评估已有模型
@@ -222,7 +222,7 @@ python -m neuralhydrology.nh_run evaluate \
 
 ```bash
 # 批量运行 leadtime 实验
-for config in configs/namou_kuwei/leadtime/*.yml; do
+for config in src/namou_kuwei/configs/archive_legacy/leadtime/*.yml; do
     python -m neuralhydrology.nh_run train --config-file $config
 done
 ```
@@ -379,7 +379,7 @@ custom_normalization:
 本项目从 `laos_forecast/_archive/experiments/namou_kuwei_dl/` 迁移而来，包含：
 
 - 配置文件（33个）
-- 数据集（已在 `data/namou_kuwei_hourly/`）
+- 数据集（已在 `data/namou_kuwei/hourly/`）
 - 训练结果（已在 `runs/namou_kuwei/`）
 
 迁移日期：2025-11-28
@@ -389,4 +389,6 @@ custom_normalization:
 > 更多详细信息请参阅：
 > - `docs/namou_kuwei/ANALYSIS_LOG.md` - 实验分析日志
 > - `cursor_.md` - CAMELS 日步长训练经验（含静态属性问题修复）
+
+
 

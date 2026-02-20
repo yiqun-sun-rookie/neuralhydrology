@@ -8,7 +8,7 @@ It also exports the discharge time series for each selected grid cell.
 
 Example usage:
     python src/haihe_river/pipelines/glofas/select_subbasin_outlets.py \
-        --config configs/glofas/haihe_outlets.yaml
+        --config src/haihe_river/configs/glofas/haihe_outlets.yaml
 """
 
 from __future__ import annotations
@@ -283,4 +283,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 

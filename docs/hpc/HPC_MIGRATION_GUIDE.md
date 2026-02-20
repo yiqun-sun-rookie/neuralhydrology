@@ -54,7 +54,7 @@ pip install -e .      # 以开发模式安装项目
 
 不要再手动修改脚本，请使用这个模板。它解决了路径、环境激活和文件格式的所有潜在问题。
 
-**保存为：** `hpc/submit_caravan.slurm`
+**保存为：** `src/caravan_global/hpc/submit_caravan.slurm`
 
 ```bash
 #!/usr/bin/env bash
@@ -86,7 +86,7 @@ python -c "import torch; print(f'Torch: {torch.__version__}, Device: {torch.cuda
 # 3. 运行训练 (关键：使用 -m 模块调用方式)
 export PYTHONPATH=$(pwd):$PYTHONPATH
 # 注意：不要用 python neuralhydrology/nh_run.py，这会导致模块引用错误
-srun python -m neuralhydrology.nh_run train --config hpc/caravan_hpc.yml
+srun python -m neuralhydrology.nh_run train --config src/caravan_global/configs/caravan_hpc.yml
 
 echo "[INFO] Job finished at $(date)"
 ```
@@ -103,8 +103,8 @@ echo "[INFO] Job finished at $(date)"
 3.  **任务管理**：
     *   登录 Xshell。
     *   输入 `tmux` 进入虚拟会话 (防断网神器)。
-    *   **每次提交前必做**：`sed -i 's/\r$//' hpc/submit_caravan.slurm` (修复 Windows 换行符)。
-    *   提交：`sbatch hpc/submit_caravan.slurm`。
+    *   **每次提交前必做**：`sed -i 's/\r$//' src/caravan_global/hpc/submit_caravan.slurm` (修复 Windows 换行符)。
+    *   提交：`sbatch src/caravan_global/hpc/submit_caravan.slurm`。
 4.  **监控**：
     *   看状态：`squeue -u <user_name>`
     *   看日志：`tail -f logs/slurm-XXXXXX.out`
@@ -120,3 +120,4 @@ echo "[INFO] Job finished at $(date)"
 
 ---
 *Document created on 2026-01-24 based on successful deployment experience.*
+

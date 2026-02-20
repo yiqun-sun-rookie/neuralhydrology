@@ -33,23 +33,14 @@ NeuralHydrology 是一个用于水文建模的深度学习库，支持多种神�
    conda activate neuralhydrology
    ```
 
-3. **安装依赖包**
-   
-   **GPU版本（推荐）：**
+3. **安装依赖包（依赖套件）**
+
+   推荐直接使用套件入口：
    ```bash
-   # 安装PyTorch GPU版本
-   conda install pytorch pytorch-cuda=11.8 -c pytorch -c nvidia
-   
-   # 安装其他依赖
+   # GPU（推荐）
    pip install -r requirements-gpu.txt
-   ```
-   
-   **CPU版本：**
-   ```bash
-   # 安装PyTorch CPU版本
-   conda install pytorch cpuonly -c pytorch
-   
-   # 安装其他依赖
+
+   # 或 CPU
    pip install -r requirements-cpu.txt
    ```
 
@@ -67,23 +58,14 @@ NeuralHydrology 是一个用于水文建模的深度学习库，支持多种神�
    source neuralhydrology_env/bin/activate
    ```
 
-2. **安装依赖包**
-   
-   **GPU版本：**
+2. **安装依赖包（依赖套件）**
+
+   推荐直接使用套件入口：
    ```bash
-   # 安装PyTorch GPU版本
-   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-   
-   # 安装其他依赖
+   # GPU（推荐）
    pip install -r requirements-gpu.txt
-   ```
-   
-   **CPU版本：**
-   ```bash
-   # 安装PyTorch CPU版本
-   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-   
-   # 安装其他依赖
+
+   # 或 CPU
    pip install -r requirements-cpu.txt
    ```
 
@@ -112,16 +94,16 @@ print("所有依赖包安装成功！")
 
 ```bash
 # 使用默认配置运行训练
-python -m neuralhydrology.nh_run train --config-file configs/test_data/quick_test.yml --gpu 0
+python -m neuralhydrology.nh_run train --config-file src/test_data/configs/quick_test.yml --gpu 0
 
 # 指定配置文件
-python -m neuralhydrology.nh_run train --config-file configs/full_training/full_training.yml --gpu 0
+python -m neuralhydrology.nh_run train --config-file src/full_531_basins/configs/camels_us/full_training/full_training_531_temporal_with_static.yml --gpu 0
 
 # 指定 GPU（如果有多个 GPU）
-python -m neuralhydrology.nh_run train --config-file configs/full_training/full_training.yml --gpu 1
+python -m neuralhydrology.nh_run train --config-file src/full_531_basins/configs/camels_us/full_training/full_training_531_temporal_with_static.yml --gpu 1
 
 # 使用 CPU 训练
-python -m neuralhydrology.nh_run train --config-file configs/test_data/quick_test.yml --gpu -1
+python -m neuralhydrology.nh_run train --config-file src/test_data/configs/quick_test.yml --gpu -1
 
 # 断点续训（需要指定 run_dir）
 python -m neuralhydrology.nh_run continue_training --run-dir runs/your_run_directory --gpu 0
@@ -133,10 +115,10 @@ python -m neuralhydrology.nh_run continue_training --run-dir runs/your_run_direc
 
 项目包含多个预配置的训练配置文件：
 
-- `configs/full_training/full_training.yml`: 完整训练配置（674个流域）
-- `configs/single_basin/1_basin.yml`: 单流域训练配置
-- `configs/multi_basin/3_basins.yml`: 多流域训练配置
-- `configs/quick_demo.yml`: 快速演示配置
+- `src/full_531_basins/configs/camels_us/full_training/full_training_531_temporal_with_static.yml`: 完整训练配置（531个基准流域）
+- `src/caravan_global/configs/`: Caravan 相关配置
+- `src/mamba_camels_us/configs/`: Mamba CAMELS-US 配置
+- `src/mamba_camelsh/configs/`: Mamba CAMELSH 配置
 
 ### 训练输出
 
@@ -190,3 +172,6 @@ MemoryError
 ## 许可证
 
 本项目基于BSD许可证开源。详见LICENSE文件。
+
+
+

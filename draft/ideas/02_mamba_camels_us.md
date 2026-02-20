@@ -2,7 +2,7 @@
 
 **状态**: in_progress
 **创建日期**: 2025-12-29
-**最后更新**: 2026-02-10
+**最后更新**: 2026-02-18
 
 ---
 
@@ -47,9 +47,13 @@
 | Config (full) | `src/mamba_camels_us/configs/mamba_daily.yml` | 全量 531 流域配置 |
 | Config (quick) | `src/mamba_camels_us/configs/mamba_daily_quick.yml` | 快速验证 100 流域配置 |
 | Config (mini) | `src/mamba_camels_us/configs/mamba_daily_mini.yml` | Mini benchmark 50 流域配置 |
+| Config (smoke) | `src/mamba_camels_us/configs/mamba_daily_smoke_2basins_ep1.yml` | 本地最小训练验证（2 basins, 1 epoch） |
+| Config (smoke 10x3) | `src/mamba_camels_us/configs/mamba_daily_smoke_10basins_ep3.yml` | 本地增强 smoke 验证（10 basins, 3 epochs） |
 | Basin List (531) | `src/mamba_camels_us/data/531_basin_list.txt` | 全量流域列表 |
 | Basin List (100) | `src/mamba_camels_us/data/100_basin_list.txt` | 快速验证流域列表 |
 | Basin List (50) | `src/mamba_camels_us/data/50_basin_list.txt` | Mini 流域列表 |
+| Basin List (smoke) | `src/mamba_camels_us/data/smoke_2_basins.txt` | smoke 配置用 basin 列表 |
+| Basin List (smoke 10) | `src/mamba_camels_us/data/smoke_10_basins.txt` | 10-basin smoke 配置用 basin 列表 |
 
 ---
 
@@ -57,8 +61,11 @@
 
 | Run ID | Date | Output Path | Notes |
 | :--- | :--- | :--- | :--- |
-| mamba_daily_mini_2026_0103 | 2026-01-03 | `runs/mamba_daily_mini_2026_0103_1750_ep2/` | Mini 成功: NSE=0.396 (2 epochs) |
-| mamba_daily_benchmark_2026_0105 | 2026-01-05 | `runs/mamba_daily_benchmark_2026_0105_2150_ep30/` | Epoch 1 完成 (loss=0.031), 验证失败 (tqdm) |
+| mamba_daily_smoke_2basins_ep1_2026_0219_1649_ep1 | 2026-02-19 | `results/02_mamba_camels_us/mamba_daily_smoke_2basins_ep1_2026_0219_1649_ep1/` | 本地 CPU smoke 复验通过: NSE=0.05126, KGE=0.15290（Mamba fallback backend） |
+| mamba_daily_smoke_10basins_ep3_2026_0218_1747_ep3 | 2026-02-18 | `results/02_mamba_camels_us/mamba_daily_smoke_10basins_ep3_2026_0218_1747_ep3/` | 本地 CPU smoke 完成: 10 basins/3 epochs, NSE=0.45637, KGE=0.48290 |
+| mamba_daily_smoke_2basins_ep1_2026_0218_1142_ep1 | 2026-02-18 | `results/02_mamba_camels_us/mamba_daily_smoke_2basins_ep1_2026_0218_1142_ep1/` | 本地 CPU smoke 完成: NSE=0.05126, KGE=0.15290 |
+| mamba_daily_mini_2026_0103 | 2026-01-03 | `results/02_mamba_camels_us/runs/mamba_daily_mini_2026_0103_1750_ep2/` | Mini 成功: NSE=0.396 (2 epochs) |
+| mamba_daily_benchmark_2026_0105 | 2026-01-05 | `results/02_mamba_camels_us/runs/mamba_daily_benchmark_2026_0105_2150_ep30/` | Epoch 1 完成 (loss=0.031), 验证失败 (tqdm) |
 
 ---
 
@@ -66,6 +73,9 @@
 
 | Date | Event | Details |
 | :--- | :--- | :--- |
+| 2026-02-19 | 本地 smoke 复验通过 | 2 basins / 1 epoch / CPU 训练再次跑通，结果写入 `results/02_mamba_camels_us/mamba_daily_smoke_2basins_ep1_2026_0219_1649_ep1/` |
+| 2026-02-18 | 本地增强 smoke 验证通过 | 10 basins / 3 epochs / CPU 训练完成，验证指标 NSE=0.45637, KGE=0.48290 |
+| 2026-02-18 | 本地 smoke 验证通过 | 2 basins / 1 epoch / CPU 训练完成，确认路径与编码修复有效 |
 | 2025-12-29 | 项目启动 | 创建实验配置和文档 |
 | 2026-01-03 | Mini Benchmark 成功 | 50 流域 2 epochs, NSE=0.396，代码通路验证通过 |
 | 2026-01-05 | 全量训练启动 | 531 流域 30 epochs, 但每 epoch 需 4+ 天 (HF sequential) |
@@ -89,3 +99,10 @@
 2. 运行快速验证 (100 流域, 5 epochs) 确认性能趋势
 3. 完成全量对比: Mamba vs LSTM (531 流域, 30 epochs)
 4. 成功后衔接 ID 01 (Caravan 全球推广)
+
+### 本地最小 smoke（可复现）
+
+```bash
+python -m neuralhydrology.nh_run train --config-file src/mamba_camels_us/configs/mamba_daily_smoke_2basins_ep1.yml --gpu -1
+python -m neuralhydrology.nh_run train --config-file src/mamba_camels_us/configs/mamba_daily_smoke_10basins_ep3.yml --gpu -1
+```

@@ -1,6 +1,6 @@
 # Repository Instructions for Copilot
 
-- Always follow `DEVELOPMENT_GUIDELINES.md` in the repo root.
+- Always follow `docs/contributing/DEVELOPMENT_GUIDELINES.md`.
 - Never suggest `--no-verify` or disabling tests.
 - Prefer incremental, compilable changes with tests (red→green→refactor).
 - For complex tasks, require `IMPLEMENTATION_PLAN.md` with 3–5 stages and keep status updated.

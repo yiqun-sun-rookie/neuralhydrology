@@ -3,7 +3,7 @@
 
 This script downloads hourly ERA5-Land reanalysis fields for a target basin, clips the
 covering grid to the basin polygon, performs areal averaging, derives the daily CAMELS
-forcing variables required by ``simple_train.py`` and stores them in the expected
+forcing variables required by NeuralHydrology training config and stores them in the expected
 ``_forcing_leap.txt`` format.
 
 Prerequisites
@@ -31,7 +31,7 @@ Usage
 
 The resulting forcing file will live at
 ``<output-root>/basin_mean_forcing/era5land/<basin_id>_lump_era5land_forcing_leap.txt``
-and can be picked up by ``simple_train.py`` once you set ``DATA_DIR`` to the same root.
+and can be picked up by ``nh_run`` once you set ``data_dir`` to the same root.
 """
 from __future__ import annotations
 
@@ -395,7 +395,7 @@ def main() -> None:
     if not args.keep_downloads:
         cleanup(download_paths)
 
-    LOGGER.info("Done. Update simple_train.py with DATA_DIR=%s and forcings=['era5land'].", args.output_root)
+    LOGGER.info("Done. Update your config with data_dir=%s and forcings=['era5land'].", args.output_root)
 
 
 if __name__ == "__main__":

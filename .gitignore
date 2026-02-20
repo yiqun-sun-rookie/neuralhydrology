@@ -45,6 +45,18 @@ results/**
 
 # HPC distribution artifacts
 dist_hpc/
+!dist_hpc/
+dist_hpc/*
+!dist_hpc/README.md
 
 # Local vendored repos (keep local, do not track)
 external/
+
+# Generated test configs (created by src/test_data/scripts/create_test_data.py)
+src/test_data/configs/*.yml
+src/test_data/configs/*.txt
+!src/test_data/configs/README.md
+
+!runs/README.md
+!results/README.md
+

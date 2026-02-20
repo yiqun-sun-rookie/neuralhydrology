@@ -87,8 +87,8 @@ predict_last_n: 24
 - AR contribution is far more significant than static attributes
 
 ### 6.2 Static Attributes Have Limited Value (Single-Basin)
-- L2 vs L1: Minimal improvement (-0.25 → -0.21)
-- L4 vs L3: Slight degradation (0.975 → 0.969)
+- L2 vs L1: Minimal improvement (-0.25 �?-0.21)
+- L4 vs L3: Slight degradation (0.975 �?0.969)
 - Static attributes are constant for a single basin, providing little discriminative power
 
 ### 6.3 Accuracy Degrades with Lead Time
@@ -109,7 +109,7 @@ Note: 12h performs better than 6h, possibly due to catchment concentration time 
 ## 7. Generalized Workflow
 
 ### Step 1: Prepare Site Configuration
-Create `src/templates/site_<name>.yml` with:
+Create `src/namou_kuwei/configs/templates/site_<name>.yml` with:
 - Data paths
 - Rainfall station list
 - Time split (non-overlapping)
@@ -118,29 +118,29 @@ Create `src/templates/site_<name>.yml` with:
 ### Step 2: Generate Experiment Configs
 ```bash
 # Rain only baseline
-python tools/gen_config.py --site namou_kuwei --type rain --lead 1
+python src/namou_kuwei/scripts/gen_config.py --site namou_kuwei --type rain --lead 1
 
 # Rain + AR with 6h lead time
-python tools/gen_config.py --site namou_kuwei --type ar --lead 6
+python src/namou_kuwei/scripts/gen_config.py --site namou_kuwei --type ar --lead 6
 
 # Seq-to-Seq 24h
-python tools/gen_config.py --site namou_kuwei --type seq2seq_ar --lead 24 --predict-steps 24
+python src/namou_kuwei/scripts/gen_config.py --site namou_kuwei --type seq2seq_ar --lead 24 --predict-steps 24
 ```
 
 ### Step 3: Validate (Leakage Check)
 ```bash
-python tools/validate_config.py src/namou_kuwei/configs/generated/
+python src/namou_kuwei/scripts/validate_config.py src/namou_kuwei/configs/generated/
 ```
 
 ### Step 4: Train
 ```bash
-python tools/run_experiment.py train --config <config.yml>
+python src/namou_kuwei/scripts/run_experiment.py train --config <config.yml>
 ```
 
 ### Step 5: Evaluate and Compare
 ```bash
-python tools/run_experiment.py evaluate --run-dir results/namou_kuwei/<run_dir>
-python tools/run_experiment.py compare --results-dir results/namou_kuwei
+python src/namou_kuwei/scripts/run_experiment.py evaluate --run-dir results/04_namou_kuwei/<run_dir>
+python src/namou_kuwei/scripts/run_experiment.py compare --results-dir results/04_namou_kuwei
 ```
 
 ## 8. Config Locations
@@ -160,10 +160,11 @@ src/namou_kuwei/configs/no_leak/
 
 | Tool | Purpose |
 |------|---------|
-| `tools/gen_config.py` | Generate configs from site template |
-| `tools/validate_config.py` | Check for data leakage |
-| `tools/run_experiment.py` | Train, evaluate, compare results |
+| `src/namou_kuwei/scripts/gen_config.py` | Generate configs from site template |
+| `src/namou_kuwei/scripts/validate_config.py` | Check for data leakage |
+| `src/namou_kuwei/scripts/run_experiment.py` | Train, evaluate, compare results |
 
 ---
 
 > All experiments have been verified for data leakage using `validate_config.py`
+
