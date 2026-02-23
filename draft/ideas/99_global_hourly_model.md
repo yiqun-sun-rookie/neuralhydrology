@@ -1,8 +1,10 @@
 # 99 - Global Hourly Model (Candidate Idea)
 
-**状态**: concept_draft  
-**创建日期**: 2026-01-13  
-**最后更新**: 2026-02-14
+**状态**: merged_to_41
+**创建日期**: 2026-01-13
+**最后更新**: 2026-02-23
+
+> **合并说明（2026-02-23）**: 经 idea 重新评估，本概念与 ID 41（MTS-Mamba Global Transfer）高度重叠，已合并到 ID 41。占位目录 `src/global_hourly_model/` 保留但不再活跃。详见 `draft/IDEA_EVALUATION_2026_02.md`。
 
 ---
 

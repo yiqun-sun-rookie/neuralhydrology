@@ -6,8 +6,8 @@
 
 - `configs/`: 本任务专用配置
 - `hpc/`: 本任务专用 HPC 脚本
-- `results/mts_mamba_global_transfer/`: 本任务结果目录
-- `logs/mts_mamba_global_transfer/`: 本任务日志目录
+- `results/41_mts_mamba_global_transfer/`: 本任务结果目录
+- `logs/41_mts_mamba_global_transfer/`: 本任务日志目录
 
 ## Smoke 测试配置
 
@@ -16,8 +16,8 @@
 ## 使用原则
 
 1. 本任务新增脚本/配置只放在 `src/mts_mamba_global_transfer/`。
-2. 运行输出只写入 `results/mts_mamba_global_transfer/`。
-3. 日志只写入 `logs/mts_mamba_global_transfer/`。
+2. 运行输出只写入 `results/41_mts_mamba_global_transfer/`。
+3. 日志只写入 `logs/41_mts_mamba_global_transfer/`。
 4. 历史根目录 `hpc/`、`configs/` 中同名文件视为参考，不再作为本任务主入口。
 
 ## 执行入口

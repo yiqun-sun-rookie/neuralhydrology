@@ -1,8 +1,10 @@
 # 05 - Full 531 Basins Multi-Architecture Benchmark
 
-**状态**: active
+**状态**: archived
 **创建日期**: 2025-11-01
-**最后更新**: 2026-02-18
+**最后更新**: 2026-02-23
+
+> **归档说明（2026-02-23）**: 经 idea 重新评估，多架构 benchmark（LSTM/GRU/Transformer）在 CAMELS-US 上的对比已被充分研究，结果（LSTM NSE=0.725）未超出已知范围，无新颖性。LSTM 基线数据可供其他 idea 参考，但不再单独投稿。详见 `draft/IDEA_EVALUATION_2026_02.md`。
 
 ---
 

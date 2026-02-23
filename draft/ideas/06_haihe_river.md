@@ -1,8 +1,10 @@
 # 06 - Haihe River Basin Data Pipeline
 
-**状态**: data_prep
+**状态**: subsumed_by_41
 **创建日期**: 2024-11-01
-**最后更新**: 2026-02-18
+**最后更新**: 2026-02-23
+
+> **降格说明（2026-02-23）**: 经 idea 重新评估，数据管线本身不构成独立论文。但"全球预训练 → 中国数据稀缺流域迁移"是好故事，降格为 ID 41（MTS-Mamba Global Transfer）的 data-scarce transfer case study。数据管线和处理脚本保留，后续作为 ID 41 论文的迁移验证组件使用。详见 `draft/IDEA_EVALUATION_2026_02.md`。
 
 ---
 

@@ -13,7 +13,7 @@ This file provides quick, reproducible smoke-test commands for core ideas.
 - `01_caravan_global`: `results/01_caravan_global/caravan_daily_smoke_2basins_ep1_2026_0219_1642_ep1/` (NSE=0.44622, KGE=0.50352)
 - `02_mamba_camels_us`: `results/02_mamba_camels_us/mamba_daily_smoke_2basins_ep1_2026_0219_1649_ep1/` (NSE=0.05126, KGE=0.15290)
 - `03_mamba_camelsh`: `results/03_mamba_camelsh/camelsh_lstm_smoke_2basins_ep1_2026_0219_1652_ep1/` (NSE=0.29982, KGE=0.41511)
-- `mts_mamba_global_transfer`: `results/mts_mamba_global_transfer/41_caravan_daily_smoke_2basins_ep1_2026_0219_1716_ep1/` (NSE=0.44622, KGE=0.50352)
+- `mts_mamba_global_transfer`: `results/41_mts_mamba_global_transfer/41_caravan_daily_smoke_2basins_ep1_2026_0219_1716_ep1/` (NSE=0.44622, KGE=0.50352)
 
 ## 01 caravan_global
 
@@ -65,7 +65,7 @@ python -m neuralhydrology.nh_run train --config-file src/mts_mamba_global_transf
 - Basins: `src/mts_mamba_global_transfer/data/smoke_2_basins.txt`
 - Config (10x3): `src/mts_mamba_global_transfer/configs/caravan_daily_smoke_10basins_ep3.yml`
 - Basins (10): `src/mts_mamba_global_transfer/data/smoke_10_basins.txt`
-- Output root: `results/mts_mamba_global_transfer/`
+- Output root: `results/41_mts_mamba_global_transfer/`
 
 ## Quick Non-Training Checks
 

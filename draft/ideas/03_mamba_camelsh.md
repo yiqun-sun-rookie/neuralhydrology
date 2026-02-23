@@ -1,8 +1,10 @@
 # 03 - Mamba CAMELSH Hourly
 
-**状态**: in_progress
+**状态**: subsumed_by_41
 **创建日期**: 2026-01-05
-**最后更新**: 2026-02-18
+**最后更新**: 2026-02-23
+
+> **降格说明（2026-02-23）**: 经 idea 重新评估，"首个大规模小时级 Mamba 验证"已被 Demiray & Demir (2025) 和 RiverMamba (2025) 抢占，单纯 Mamba vs LSTM 小时级 benchmark 不够新。本 idea 降格为 ID 41（MTS-Mamba Global Transfer）的对照实验——提供小时级 LSTM baseline 和 Mamba fine-tuning target。代码和实验资产保留，后续作为 ID 41 论文的 baseline 组件使用。详见 `draft/IDEA_EVALUATION_2026_02.md`。
 
 ---
 

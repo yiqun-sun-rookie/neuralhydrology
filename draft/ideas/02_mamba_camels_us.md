@@ -1,8 +1,10 @@
 # 02 - Mamba CAMELS-US Daily
 
-**状态**: in_progress
+**状态**: archived
 **创建日期**: 2025-12-29
-**最后更新**: 2026-02-18
+**最后更新**: 2026-02-23
+
+> **归档说明（2026-02-23）**: 经 idea 重新评估，Mamba 在 CAMELS-US 日尺度的 benchmark 已被多篇文献覆盖（Demiray & Demir 2025、LightMamba 2024 等），无独立发表价值。工作量和实验资产已被 ID 41（MTS-Mamba Global Transfer）吸收。详见 `draft/IDEA_EVALUATION_2026_02.md`。
 
 ---
 

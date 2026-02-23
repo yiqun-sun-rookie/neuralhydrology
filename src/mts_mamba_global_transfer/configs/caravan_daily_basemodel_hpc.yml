@@ -69,6 +69,6 @@ target_variables:
 seq_length: 365
 predict_last_n: 1
 
-run_dir: results/mts_mamba_global_transfer
+run_dir: results/41_mts_mamba_global_transfer
 log_tensorboard: true
 log_n_figures: 3
