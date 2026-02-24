@@ -504,126 +504,369 @@ git commit -m "feat(41): complete Phase 0 comparison experiment (MTS-Mamba vs MT
 ## Phase 2: CAMELS-H 扩展验证（10 basin）
 
 > **前提条件：** Phase 1 通过（MTS-Mamba NSE ratio >= 0.95）。
+>
+> **数据说明（实测）：**
+> - `data/camelsh/timeseries/Data/CAMELSH/timeseries/{basin}.nc`：3166 个流域，含 `Tair`（℃）/ `Rainf`（mm/hr）/ `Streamflow`（m³/s）等，`DateTime` 维，1980-2024 hourly
+> - `data/camelsh/attributes/attributes.csv`：777 个流域，含 `elev_mean`、`slope_mean`、`area`（km²）等
+> - `data/camelsh/filtered/filtered_basins_2010_2020_95pct_good.txt`：113 个优质流域，全部同时有 timeseries NC 和 attributes
+> - **无需额外下载**；需实现 `HourlyCamelsH` dataset class
 
-### Task 8: 编写 CAMELS-H 合并脚本
+### Task 8: 实现 HourlyCamelsH dataset class
 
 **Files:**
-- Create: `src/mts_mamba_global_transfer/scripts/merge_camelsh_hourly.py`
+- Create: `neuralhydrology/datasetzoo/hourlycamelsh.py`
+- Modify: `neuralhydrology/datasetzoo/__init__.py`
 
-**目的：** 将 `data/camelsh/hourly2/Hourly2/{basin}_hourly.nc`（per-basin 文件）合并为 `hourly_camels_us` 兼容的单文件 `data/camelsh/hourly/usgs-streamflow-nldas_hourly.nc`。
+**Step 1: 实现 HourlyCamelsH**
 
-**关键步骤：**
-1. 读取 `data/camelsh/good_basins.txt`，取前 N 个 basin（默认 10）
-2. 逐一打开 `hourly2/Hourly2/{basin}_hourly.nc`，检查变量名
-3. 对齐变量名（确认 `qobs_mm_per_hour`、`total_precipitation`、`temperature` 等是否存在或需重命名）
-4. 沿 `basin` 维度合并为单个 `xr.Dataset`
-5. 写出到 `data/camelsh/hourly/usgs-streamflow-nldas_hourly.nc`
-
-**Usage:**
-```bash
-python src/mts_mamba_global_transfer/scripts/merge_camelsh_hourly.py \
-    --n-basins 10 \
-    --output-dir data/camelsh/hourly
-```
-
-**验证：**
 ```python
+"""CAMELS-H hourly dataset class for NeuralHydrology.
+
+Data layout expected at data_dir (= data/camelsh/):
+  timeseries/Data/CAMELSH/timeseries/{basin}.nc  # Tair, Rainf, Streamflow, DateTime dim
+  attributes/attributes.csv                       # basin_id (int), elev_mean, slope_mean, area(km²)...
+"""
+import logging
+from pathlib import Path
+from typing import Dict, List, Optional, Union
+
+import numpy as np
+import pandas as pd
 import xarray as xr
-ds = xr.open_dataset("data/camelsh/hourly/usgs-streamflow-nldas_hourly.nc")
-print(ds.dims, ds.data_vars)  # 应有 basin=10, time=...
+
+from neuralhydrology.datasetzoo.basedataset import BaseDataset
+from neuralhydrology.utils.config import Config
+
+LOGGER = logging.getLogger(__name__)
+
+_TIMESERIES_SUBPATH = Path("timeseries/Data/CAMELSH/timeseries")
+_ATTRIBUTES_FILE = Path("attributes/attributes.csv")
+
+
+class HourlyCamelsH(BaseDataset):
+    """Hourly CAMELS-H dataset class.
+
+    Reads per-basin hourly NetCDF files containing NLDAS-2 forcings and USGS streamflow.
+    Streamflow is converted from m³/s to mm/hr using the basin area from the attributes file.
+
+    Parameters
+    ----------
+    cfg : Config
+        Run configuration. Key fields:
+        - ``data_dir``: path to ``data/camelsh/``
+        - ``dynamic_inputs``: subset of ``['Rainf', 'Tair', 'PSurf', 'SWdown', ...]``
+        - ``target_variables``: should include ``'qobs_mm_per_hour'``
+        - ``static_attributes``: subset of columns in ``attributes/attributes.csv``
+    """
+
+    def __init__(self, cfg: Config, is_train: bool, period: str, basin: str = None,
+                 additional_features: list = [], id_to_int: dict = {}, scaler: dict = {}):
+        self._attrs_cache: Optional[pd.DataFrame] = None
+        super().__init__(cfg=cfg, is_train=is_train, period=period, basin=basin,
+                         additional_features=additional_features, id_to_int=id_to_int, scaler=scaler)
+
+    def _load_basin_data(self, basin: str) -> pd.DataFrame:
+        """Load hourly timeseries for one basin."""
+        nc_path = self.cfg.data_dir / _TIMESERIES_SUBPATH / f"{basin}.nc"
+        if not nc_path.is_file():
+            raise FileNotFoundError(f"No CAMELS-H timeseries NC for basin {basin} at {nc_path}")
+
+        ds = xr.open_dataset(nc_path)
+        df = ds.to_dataframe()
+        df.index.name = "date"
+
+        # Convert Streamflow m³/s → qobs_mm_per_hour
+        if "Streamflow" in df.columns:
+            area_km2 = self._get_basin_area(basin)
+            area_m2 = area_km2 * 1e6
+            df["qobs_mm_per_hour"] = df["Streamflow"] * 3600.0 * 1000.0 / area_m2
+            df.loc[df["qobs_mm_per_hour"] < 0, "qobs_mm_per_hour"] = np.nan
+
+        return df
+
+    def _get_basin_area(self, basin: str) -> float:
+        """Return basin area in km² from attributes file."""
+        attrs = self._get_attrs()
+        return float(attrs.loc[basin, "area"])
+
+    def _get_attrs(self) -> pd.DataFrame:
+        if self._attrs_cache is None:
+            self._attrs_cache = _load_camelsh_attributes(self.cfg.data_dir)
+        return self._attrs_cache
+
+    def _load_attributes(self) -> pd.DataFrame:
+        """Return attributes DataFrame indexed by basin id (zero-padded 8-digit string)."""
+        attrs = _load_camelsh_attributes(self.cfg.data_dir)
+        return attrs
+
+
+def _load_camelsh_attributes(data_dir: Path) -> pd.DataFrame:
+    """Load CAMELS-H attributes CSV, return DataFrame indexed by 8-digit basin id strings."""
+    attrs_path = data_dir / _ATTRIBUTES_FILE
+    if not attrs_path.is_file():
+        raise FileNotFoundError(f"CAMELS-H attributes not found at {attrs_path}")
+    attrs = pd.read_csv(attrs_path, index_col="basin_id")
+    attrs.index = attrs.index.astype(str).str.zfill(8)
+    return attrs
 ```
 
-**Step 2: Commit**
+**Step 2: 注册到 datasetzoo factory**
+
+在 `neuralhydrology/datasetzoo/__init__.py` 中，找到 `get_dataset` 函数，添加 `hourly_camelsh` 分支（参考其他 dataset 的注册方式）：
+
+```python
+from neuralhydrology.datasetzoo.hourlycamelsh import HourlyCamelsH
+
+# 在 get_dataset() 的 if/elif 链中添加：
+elif cfg.dataset == "hourly_camelsh":
+    ds = HourlyCamelsH(cfg=cfg, is_train=is_train, period=period, basin=basin,
+                       additional_features=additional_features, id_to_int=id_to_int, scaler=scaler)
+```
+
+**Step 3: 验证注册**
+
 ```bash
-git add src/mts_mamba_global_transfer/scripts/merge_camelsh_hourly.py
-git commit -m "feat(41): add CAMELS-H hourly merge script for Phase 2"
+python -c "
+from neuralhydrology.datasetzoo import get_dataset
+print('OK: hourly_camelsh registered')
+"
+```
+
+Expected: 无 ImportError
+
+**Step 4: Commit**
+
+```bash
+git add neuralhydrology/datasetzoo/hourlycamelsh.py neuralhydrology/datasetzoo/__init__.py
+git commit -m "feat: add HourlyCamelsH dataset class for Phase 2 comparison"
 ```
 
 ---
 
-### Task 9: 创建 Phase 2 basin 列表
+### Task 9: 创建 Phase 2 basin 列表与配置
 
 **Files:**
 - Create: `src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt`
-
-取 `data/camelsh/good_basins.txt` 前 10 个（与合并脚本选取的一致）。
-
-**Step 2: Commit**
-```bash
-git add src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
-git commit -m "feat(41): add Phase 2 CAMELS-H 10-basin list"
-```
-
----
-
-### Task 10: 创建 Phase 2 实验配置
-
-**Files:**
 - Create: `src/mts_mamba_global_transfer/configs/phase2_mtslstm_camelsh_10b_ep3.yml`
 - Create: `src/mts_mamba_global_transfer/configs/phase2_mtsmamba_camelsh_10b_ep3.yml`
 
-**关键差异（相对 Phase 1 配置）：**
+**Step 1: 创建 basin 列表**
 
-| 参数 | Phase 1 | Phase 2 |
-|------|---------|---------|
-| `data_dir` | `./test/test_data/camels_us` | `./data/camelsh` |
-| `basin_files` | `test/test_data/4_basins_test_set.txt` | `src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt` |
-| `experiment_name` | `41_mtslstm_camels_hourly_4basins_ep3` | `41_mtslstm_camelsh_10basins_ep3` |
-| `validate_n_random_basins` | 4 | 10 |
-| 时间范围 | 2000-2002 | 根据 CAMELS-H 实际覆盖范围调整 |
+取 `data/camelsh/filtered/filtered_basins_2010_2020_95pct_good.txt` 前 10 个（已验证这 113 个流域全部有 timeseries NC + attributes）：
 
-**注意：** `forcings: nldas_hourly` 和 `dynamic_inputs` / `target_variables` 需与合并后 NC 文件的实际变量名一致。
+```
+01081000
+01098530
+01108000
+01109403
+01110000
+01118300
+01119500
+01121000
+01123000
+01125500
+```
 
-**Step 2: Commit**
+**Step 2: 创建 MTS-LSTM Phase 2 配置**
+
+```yaml
+# Phase 2 baseline: MTS-LSTM, CAMELS-H 10 basins (1980-2024 hourly, NLDAS-2 forcings)
+experiment_name: 41_phase2_mtslstm_camelsh_10b_ep3
+
+dataset: hourly_camelsh
+data_dir: ./data/camelsh
+
+train_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+validation_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+test_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+
+train_start_date: "01/01/2000"
+train_end_date: "31/12/2015"
+validation_start_date: "01/01/2016"
+validation_end_date: "31/12/2018"
+test_start_date: "01/01/2019"
+test_end_date: "31/12/2020"
+
+dynamic_inputs:
+  - Rainf
+  - Tair
+target_variables:
+  - qobs_mm_per_hour
+static_attributes:
+  - elev_mean
+  - slope_mean
+
+use_frequencies:
+  - 1D
+  - 1h
+seq_length:
+  1D: 30
+  1h: 336
+predict_last_n:
+  1D: 1
+  1h: 24
+
+model: mtslstm
+head: regression
+output_activation: linear
+hidden_size: 32
+initial_forget_bias: 3
+output_dropout: 0.4
+transfer_mtslstm_states:
+  h: linear
+  c: linear
+shared_mtslstm: false
+
+epochs: 3
+batch_size: 32
+optimizer: Adam
+loss: MSE
+learning_rate:
+  0: 1e-3
+clip_gradient_norm: 1
+
+validate_every: 1
+validate_n_random_basins: 10
+save_weights_every: 1
+log_interval: 5
+log_tensorboard: true
+log_n_figures: 2
+metrics:
+  - NSE
+  - KGE
+  - Alpha-NSE
+  - Beta-NSE
+
+num_workers: 0
+seed: 111
+device: cpu
+run_dir: results/41_mts_mamba_global_transfer
+```
+
+**Step 3: 创建 MTS-Mamba Phase 2 配置**（仅 model 字段不同）
+
+```yaml
+# Phase 2 experimental: MTS-Mamba, CAMELS-H 10 basins
+experiment_name: 41_phase2_mtsmamba_camelsh_10b_ep3
+# --- 所有 Data / Multi-timescale / Training / Logging 字段与 MTS-LSTM Phase 2 config 相同 ---
+dataset: hourly_camelsh
+data_dir: ./data/camelsh
+train_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+validation_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+test_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+train_start_date: "01/01/2000"
+train_end_date: "31/12/2015"
+validation_start_date: "01/01/2016"
+validation_end_date: "31/12/2018"
+test_start_date: "01/01/2019"
+test_end_date: "31/12/2020"
+dynamic_inputs: [Rainf, Tair]
+target_variables: [qobs_mm_per_hour]
+static_attributes: [elev_mean, slope_mean]
+use_frequencies: [1D, 1h]
+seq_length: {1D: 30, 1h: 336}
+predict_last_n: {1D: 1, 1h: 24}
+epochs: 3
+batch_size: 32
+optimizer: Adam
+loss: MSE
+learning_rate: {0: 1e-3}
+clip_gradient_norm: 1
+validate_every: 1
+validate_n_random_basins: 10
+save_weights_every: 1
+log_interval: 5
+log_tensorboard: true
+metrics: [NSE, KGE, Alpha-NSE, Beta-NSE]
+num_workers: 0
+seed: 111
+device: cpu
+run_dir: results/41_mts_mamba_global_transfer
+# --- Model: MTS-Mamba ---
+model: mtsmamba
+head: regression
+output_activation: linear
+hidden_size: 32
+output_dropout: 0.4
+transfer_mtsmamba_states: linear
+mamba_d_state: 16
+mamba_d_conv: 4
+mamba_expand: 2
+mamba_n_layers: 2
+```
+
+**Step 4: 验证配置与 dataset 联动**
+
 ```bash
-git add src/mts_mamba_global_transfer/configs/phase2_*.yml
-git commit -m "feat(41): add Phase 2 CAMELS-H comparison configs"
+python -c "
+from neuralhydrology.utils.config import Config
+c = Config('src/mts_mamba_global_transfer/configs/phase2_mtslstm_camelsh_10b_ep3.yml')
+print('dataset:', c.dataset, '| model:', c.model)
+c2 = Config('src/mts_mamba_global_transfer/configs/phase2_mtsmamba_camelsh_10b_ep3.yml')
+print('dataset:', c2.dataset, '| model:', c2.model)
+"
+```
+
+Expected: `dataset: hourly_camelsh | model: mtslstm` 和 `dataset: hourly_camelsh | model: mtsmamba`
+
+**Step 5: Commit**
+
+```bash
+git add src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt \
+        src/mts_mamba_global_transfer/configs/phase2_mtslstm_camelsh_10b_ep3.yml \
+        src/mts_mamba_global_transfer/configs/phase2_mtsmamba_camelsh_10b_ep3.yml
+git commit -m "feat(41): add Phase 2 basin list and configs for CAMELS-H comparison"
 ```
 
 ---
 
-### Task 11: 运行 Phase 2 训练与评估
+### Task 10: 运行 Phase 2 训练与评估
 
-**Step 1: 运行 MTS-LSTM baseline**
+**Step 1: 运行 MTS-LSTM Phase 2**
+
 ```bash
 python -m neuralhydrology.nh_run train \
     --config-file src/mts_mamba_global_transfer/configs/phase2_mtslstm_camelsh_10b_ep3.yml \
     --gpu -1
+
 python -m neuralhydrology.nh_run evaluate \
-    --run-dir results/41_mts_mamba_global_transfer/41_mtslstm_camelsh_10basins_ep3_<timestamp> \
+    --run-dir results/41_mts_mamba_global_transfer/41_phase2_mtslstm_camelsh_10b_ep3_<timestamp> \
     --period test --epoch 3
 ```
 
-**Step 2: 运行 MTS-Mamba**
+**Step 2: 运行 MTS-Mamba Phase 2**
+
 ```bash
 python -m neuralhydrology.nh_run train \
     --config-file src/mts_mamba_global_transfer/configs/phase2_mtsmamba_camelsh_10b_ep3.yml \
     --gpu -1
+
 python -m neuralhydrology.nh_run evaluate \
-    --run-dir results/41_mts_mamba_global_transfer/41_mtsmamba_camelsh_10basins_ep3_<timestamp> \
+    --run-dir results/41_mts_mamba_global_transfer/41_phase2_mtsmamba_camelsh_10b_ep3_<timestamp> \
     --period test --epoch 3
 ```
 
 ---
 
-### Task 12: Phase 2 结果提取与文档更新
+### Task 11: Phase 2 结果提取与文档更新
 
-**Step 1: 运行对比脚本**（复用 Task 3 的 `compare_phase0.py`，适配 Phase 2 路径）
+**Step 1: 运行对比脚本**
+
 ```bash
 python src/mts_mamba_global_transfer/scripts/compare_phase0.py \
-    --lstm-dir results/41_mts_mamba_global_transfer/41_mtslstm_camelsh_10basins_ep3_<timestamp> \
-    --mamba-dir results/41_mts_mamba_global_transfer/41_mtsmamba_camelsh_10basins_ep3_<timestamp>
+    --lstm-dir results/41_mts_mamba_global_transfer/41_phase2_mtslstm_camelsh_10b_ep3_<timestamp> \
+    --mamba-dir results/41_mts_mamba_global_transfer/41_phase2_mtsmamba_camelsh_10b_ep3_<timestamp>
 ```
 
 **Step 2: 更新 `draft/ideas/41_mts_mamba_global_transfer.md`**
-- Results Index 添加两条 Phase 2 记录
-- Progress Log 添加 Phase 2 条目
-- 将 `## 下一步计划` 阶段 0 剩余项标记完成，更新阶段 1 状态
+
+Results Index 添加两条 Phase 2 记录；Progress Log 添加 Phase 2 条目；更新 Phase 1 checklist。
 
 **Step 3: Commit**
+
 ```bash
 git add draft/ideas/41_mts_mamba_global_transfer.md
-git commit -m "feat(41): complete Phase 2 CAMELS-H comparison (10 basins)"
+git commit -m "feat(41): complete Phase 2 CAMELS-H 10-basin comparison"
 ```
 
 ---
