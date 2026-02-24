@@ -4,7 +4,7 @@ experiment_name: 41_mtslstm_camels_hourly_4basins_ep3
 
 # --- Data ---
 dataset: hourly_camels_us
-data_dir: ./test/test_data/camels_us
+data_dir: ./test/test_data/camels_us  # Phase 0 only; use real CAMELS-US path for Phase 1+
 forcings: nldas_hourly
 
 train_basin_file: ./test/test_data/4_basins_test_set.txt

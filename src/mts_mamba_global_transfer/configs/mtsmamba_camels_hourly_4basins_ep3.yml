@@ -4,7 +4,7 @@ experiment_name: 41_mtsmamba_camels_hourly_4basins_ep3
 
 # --- Data --- (与 MTS-LSTM baseline 完全相同)
 dataset: hourly_camels_us
-data_dir: ./test/test_data/camels_us
+data_dir: ./test/test_data/camels_us  # Phase 0 only; use real CAMELS-US path for Phase 1+
 forcings: nldas_hourly
 
 train_basin_file: ./test/test_data/4_basins_test_set.txt
@@ -39,6 +39,8 @@ predict_last_n:
   1h: 24
 
 # --- Model: MTS-Mamba ---
+# NOTE: initial_forget_bias is intentionally omitted. Mamba uses SSM state-space
+# dynamics without LSTM-style forget gates, so forget bias init does not apply.
 model: mtsmamba
 head: regression
 output_activation: linear
