@@ -1,0 +1,79 @@
+# Phase 2 MTS-Mamba: CAMELS-H 10 basins (1980-2024 hourly)
+experiment_name: 41_phase2_mtsmamba_camelsh_10b_ep3
+
+# --- Data ---
+dataset: hourly_camelsh
+data_dir: ./data/camelsh
+
+train_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+validation_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+test_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+
+train_start_date: "01/01/2000"
+train_end_date: "31/12/2015"
+validation_start_date: "01/01/2016"
+validation_end_date: "31/12/2018"
+test_start_date: "01/01/2019"
+test_end_date: "31/12/2020"
+
+dynamic_inputs:
+  - Rainf
+  - Tair
+target_variables:
+  - qobs_mm_per_hour
+static_attributes:
+  - elev_mean
+  - slope_mean
+
+# --- Multi-timescale ---
+use_frequencies:
+  - 1D
+  - 1h
+seq_length:
+  1D: 30
+  1h: 336
+predict_last_n:
+  1D: 1
+  1h: 24
+
+# --- Model: MTS-Mamba ---
+# NOTE: initial_forget_bias intentionally omitted; Mamba uses SSM state-space,
+# no LSTM-style forget gates.
+model: mtsmamba
+head: regression
+output_activation: linear
+hidden_size: 32
+output_dropout: 0.4
+transfer_mtsmamba_states: linear
+mamba_d_state: 16
+mamba_d_conv: 4
+mamba_expand: 2
+mamba_n_layers: 2
+
+# --- Training ---
+epochs: 3
+batch_size: 32
+optimizer: Adam
+loss: MSE
+learning_rate:
+  0: 1e-3
+clip_gradient_norm: 1
+
+# --- Logging & Validation ---
+validate_every: 1
+validate_n_random_basins: 10
+save_weights_every: 1
+log_interval: 5
+log_tensorboard: true
+log_n_figures: 2
+metrics:
+  - NSE
+  - KGE
+  - Alpha-NSE
+  - Beta-NSE
+
+# --- Misc ---
+num_workers: 0
+seed: 111
+device: cpu
+run_dir: results/41_mts_mamba_global_transfer
