@@ -94,12 +94,11 @@ class HourlyCamelsH(BaseDataset):
         if not nc_path.is_file():
             raise FileNotFoundError(f"No CAMELS-H timeseries NC for basin {basin} at {nc_path}")
 
-        ds = xr.open_dataset(nc_path)
-        # The time dimension in CAMELS-H NetCDF files is named 'DateTime'
-        if "DateTime" in ds.dims:
-            df = ds.to_dataframe()
-        else:
-            df = ds.to_dataframe()
+        # CAMELS-H NC 文件的时间维度名为 'DateTime'；to_dataframe() 返回的
+        # DatetimeIndex.name 为 'DateTime'，但 BaseDataset 在重复索引处理时依赖
+        # 字面字符串 'date'（basedataset.py groupby('date')），必须重命名。
+        with xr.open_dataset(nc_path) as ds:
+            df = ds.load().to_dataframe()
         df.index.name = "date"
 
         # Convert Streamflow m³/s → qobs_mm_per_hour mm/hr
@@ -142,14 +141,8 @@ class HourlyCamelsH(BaseDataset):
         return self._attrs_cache
 
     def _load_attributes(self) -> pd.DataFrame:
-        """Return attributes DataFrame indexed by 8-digit basin id strings.
-
-        Returns
-        -------
-        pd.DataFrame
-            Static attributes for all basins, indexed by 8-digit basin id strings.
-        """
-        return _load_camelsh_attributes(self.cfg.data_dir)
+        """Return attributes DataFrame indexed by 8-digit basin id strings."""
+        return self._get_attrs_cached()
 
 
 def _load_camelsh_attributes(data_dir: Path) -> pd.DataFrame:
