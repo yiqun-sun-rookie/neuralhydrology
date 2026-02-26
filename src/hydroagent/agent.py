@@ -25,30 +25,53 @@ from .environment import SuperflexEnv
 # ---------------------------------------------------------------------------
 
 AVAILABLE_COMPONENTS = """
-Available SuperflexPy Components:
-1. UnsaturatedReservoir
+Available SuperflexPy Components (6 types):
+
+== Runoff Generation ==
+1. UnsaturatedReservoir (HBV-style)
    - Role: Soil moisture accounting (partitions precipitation into runoff vs storage)
-   - Parameters: Smax (max storage capacity, mm), beta (nonlinearity exponent)
-   - Inputs: prcp (precipitation), ep (potential evapotranspiration)
-   - Outputs: runoff, actual_et
+   - Parameters: Smax (max storage, mm), Ce, m, beta (nonlinearity)
+   - Inputs: prcp, ep (precipitation + potential evapotranspiration)
+   - Best for: General-purpose soil moisture partitioning
 
-2. PowerReservoir
+2. ProductionStore (GR4J-style)
+   - Role: Alternative runoff generation with different saturation curve
+   - Parameters: x1 (max capacity, mm), alpha, beta, ni
+   - Inputs: ep, prcp (NOTE: PET first, then precipitation — reversed order)
+   - Best for: Basins where UnsaturatedReservoir underperforms; provides structural diversity
+
+3. SnowReservoir (Thur-model)
+   - Role: Snow accumulation and melt driven by temperature threshold
+   - Parameters: t0 (melt threshold, °C), k (melt rate), m
+   - Inputs: prcp, temperature (requires temp data in forcing)
+   - Best for: Snow-dominated or cold-region basins with seasonal snowpack
+
+== Flow Routing ==
+4. PowerReservoir (HBV-style)
    - Role: Fast/nonlinear flow routing (surface runoff, interflow)
-   - Parameters: k (residence time, days), alpha (nonlinearity exponent)
+   - Parameters: k (residence time), alpha (nonlinearity exponent)
    - Inputs: inflow from upstream element
-   - Outputs: outflow
+   - Best for: Quick-response flow paths
 
-3. LinearReservoir
+5. LinearReservoir (Hymod-style)
    - Role: Slow/linear flow routing (baseflow, groundwater)
-   - Parameters: k (residence time, days)
+   - Parameters: k (residence time)
    - Inputs: inflow from upstream element
-   - Outputs: outflow
+   - Best for: Baseflow, slow groundwater discharge
+
+6. RoutingStore (GR4J-style)
+   - Role: Nonlinear routing with groundwater exchange term
+   - Parameters: x2 (exchange coeff), x3 (capacity, mm), gamma, omega
+   - Inputs: inflow from upstream element
+   - Best for: Complex routing with gaining/losing stream interactions
 
 Connection Rules:
 - Layers are connected sequentially; each layer's input references upstream outputs.
 - Parallel pathways can be defined by having multiple layers receive the same upstream output.
 - system_output lists which layer outputs are summed as total discharge.
 - lag_functions (optional): list of {"target": "<layer_id>", "lag_steps": N} for channel routing delay.
+- SnowReservoir MUST be a root layer (receives forcing directly) and needs temperature data.
+- ProductionStore input order is [ep, prcp], NOT [prcp, ep].
 """
 
 SYSTEM_PROMPT = """You are a senior hydrologist with deep expertise in conceptual rainfall-runoff modeling.
@@ -57,11 +80,13 @@ Your task: Given diagnostic metrics from a hydrological model, suggest structura
 to the model architecture to improve NSE (Nash-Sutcliffe Efficiency).
 
 Key principles for structure → operation mapping:
-- Poor baseflow (Low_Flow_Bias < -0.3): Add a parallel LinearReservoir as a slow groundwater pathway.
+- Poor baseflow (Low_Flow_Bias < -0.3): Add a parallel LinearReservoir or RoutingStore as slow groundwater pathway.
 - Peak timing lag (Peak_Lag > 3h): Remove or reduce lag_functions; decrease routing parameters.
-- Recession too fast (Recession_K_Ratio > 1.3): Add a slow reservoir with large k to sustain flow.
+- Recession too fast (Recession_K_Ratio > 1.3): Add a slow reservoir (LinearReservoir or RoutingStore) with large k.
 - Over-smoothed signal (Energy_Ratio < 0.6): Replace LinearReservoir with PowerReservoir for nonlinearity.
 - NSE very low (< 0.3): Add parallel flow paths to capture multiple flow regimes.
+- Snow-dominated basin (large seasonal bias, winter underestimate): Add SnowReservoir as root layer (needs temperature).
+- UnsaturatedReservoir underperforms: Try ProductionStore (GR4J) as alternative runoff generation.
 
 You MUST respond with ONLY a valid JSON object representing the improved structure.
 No explanations, no markdown formatting — just the raw JSON.
@@ -201,14 +226,22 @@ class MockLLMClient(BaseLLMClient):
 
         new_structure = deepcopy(structure)
         layer_ids = {layer['id'] for layer in new_structure.get('layers', [])}
+        layer_types = {layer['type'] for layer in new_structure.get('layers', [])}
+
+        # Find first root layer id for upstream reference
+        root_id = next(
+            (l['id'] for l in new_structure.get('layers', [])
+             if any(inp.lower() in ('prcp', 'ep', 'pet', 'precipitation') for inp in l.get('inputs', []))),
+            'soil',
+        )
 
         # Rule chain (priority order)
         if nse < 0.3 and 'baseflow' not in layer_ids:
             new_structure['layers'].append({
                 "id": "baseflow",
-                "type": "LinearReservoir",
-                "parameters": ["k"],
-                "inputs": ["soil.runoff"],
+                "type": "RoutingStore",
+                "parameters": ["x2", "x3", "gamma", "omega"],
+                "inputs": [f"{root_id}.runoff"],
             })
             if 'baseflow' not in new_structure.get('system_output', []):
                 new_structure.setdefault('system_output', []).append('baseflow')
@@ -223,7 +256,7 @@ class MockLLMClient(BaseLLMClient):
                 "id": "slow_gw",
                 "type": "LinearReservoir",
                 "parameters": ["k"],
-                "inputs": ["soil.runoff"],
+                "inputs": [f"{root_id}.runoff"],
             })
             if 'slow_gw' not in new_structure.get('system_output', []):
                 new_structure.setdefault('system_output', []).append('slow_gw')
@@ -234,7 +267,7 @@ class MockLLMClient(BaseLLMClient):
                 "id": "slow_reservoir",
                 "type": "LinearReservoir",
                 "parameters": ["k"],
-                "inputs": ["soil.runoff"],
+                "inputs": [f"{root_id}.runoff"],
             })
             if 'slow_reservoir' not in new_structure.get('system_output', []):
                 new_structure.setdefault('system_output', []).append('slow_reservoir')
@@ -253,6 +286,17 @@ class MockLLMClient(BaseLLMClient):
                 new_structure['model_name'] = self._next_name(structure, 'linear_to_power')
             else:
                 new_structure['model_name'] = self._next_name(structure, 'no_change')
+
+        elif nse < 0.5 and 'UnsaturatedReservoir' in layer_types and 'ProductionStore' not in layer_types:
+            # Try replacing UnsaturatedReservoir with ProductionStore for structural diversity
+            for layer in new_structure['layers']:
+                if layer['type'] == 'UnsaturatedReservoir':
+                    layer['type'] = 'ProductionStore'
+                    layer['parameters'] = ['x1', 'alpha', 'beta', 'ni']
+                    layer['inputs'] = ['ep', 'prcp']
+                    break
+            new_structure['model_name'] = self._next_name(structure, 'try_production_store')
+
         else:
             # No actionable diagnostic signal — converged or no change needed
             new_structure['model_name'] = self._next_name(structure, 'no_change')
