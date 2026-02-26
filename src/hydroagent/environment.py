@@ -22,14 +22,15 @@ from superflexpy.implementation.root_finders.pegasus import PegasusPython
 from superflexpy.implementation.numerical_approximators.implicit_euler import ImplicitEulerPython
 from superflexpy.implementation.elements.hbv import PowerReservoir, UnsaturatedReservoir
 from superflexpy.implementation.elements.hymod import LinearReservoir
-from superflexpy.implementation.elements.thur_model_hess import HalfTriangularLag
-from superflexpy.implementation.elements.gr4j import UnitHydrograph1, UnitHydrograph2
+from superflexpy.implementation.elements.thur_model_hess import SnowReservoir, HalfTriangularLag
+from superflexpy.implementation.elements.gr4j import ProductionStore, RoutingStore, UnitHydrograph1, UnitHydrograph2
 
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
 _FORCING_NAMES = frozenset({
     'prcp', 'ep', 'pet', 'evap', 'evaporation', 'precipitation', 'rainfall',
+    'temp', 'temperature', 'tmax', 'tmin', 'tmean', 'tavg',
 })
 
 # ---------------------------------------------------------------------------
@@ -46,18 +47,42 @@ _REGISTRY: Dict[str, Dict[str, Any]] = {
             'beta': (0.5, 5.0),
         },
         'states': {'S0': 50.0, 'PET': None},
+        'input_map': 'P_PET',
     },
     'PowerReservoir': {
         'cls': PowerReservoir,
         'params': {'k': 0.1, 'alpha': 1.5},
         'bounds': {'k': (0.001, 0.5), 'alpha': (1.0, 3.0)},
         'states': {'S0': 5.0},
+        'input_map': 'P',
     },
     'LinearReservoir': {
         'cls': LinearReservoir,
         'params': {'k': 0.02},
         'bounds': {'k': (0.001, 0.1)},
         'states': {'S0': 5.0},
+        'input_map': 'P',
+    },
+    'SnowReservoir': {
+        'cls': SnowReservoir,
+        'params': {'t0': 0.0, 'k': 2.0, 'm': 2.0},
+        'bounds': {'t0': (-3.0, 3.0), 'k': (0.5, 10.0), 'm': (0.5, 10.0)},
+        'states': {'S0': 0.0},
+        'input_map': 'P_T',
+    },
+    'ProductionStore': {
+        'cls': ProductionStore,
+        'params': {'x1': 350.0, 'alpha': 2.0, 'beta': 5.0, 'ni': 4.0 / 9.0},
+        'bounds': {'x1': (100.0, 1500.0), 'alpha': (1.5, 2.5), 'beta': (3.0, 7.0), 'ni': (0.1, 0.9)},
+        'states': {'S0': 100.0},
+        'input_map': 'PET_P',
+    },
+    'RoutingStore': {
+        'cls': RoutingStore,
+        'params': {'x2': -1.0, 'x3': 100.0, 'gamma': 5.0, 'omega': 3.5},
+        'bounds': {'x2': (-5.0, 3.0), 'x3': (20.0, 500.0), 'gamma': (3.0, 7.0), 'omega': (2.0, 5.0)},
+        'states': {'S0': 50.0},
+        'input_map': 'P',
     },
 }
 
@@ -247,9 +272,10 @@ class SuperflexEnv:
 
     def _run_sfpy(self, forcing_data, params=None):
         """Execute the SuperflexPy element graph in topological order."""
-        prcp, ep = self._pick_forcing_columns(forcing_data)
+        prcp, ep, temp = self._pick_forcing_columns(forcing_data)
         p_arr = prcp.values.astype(np.float64)
         e_arr = ep.values.astype(np.float64)
+        t_arr = temp.values.astype(np.float64) if temp is not None else None
         params = params or {}
 
         lag_els = self._topo.get('lag_els', {})
@@ -279,10 +305,8 @@ class SuperflexEnv:
             ltype = self._topo['types'][lid]
 
             if dep['root']:
-                if ltype == 'UnsaturatedReservoir':
-                    el.set_input([p_arr, e_arr])
-                else:
-                    el.set_input([p_arr])
+                input_map = _REGISTRY[ltype].get('input_map', 'P')
+                el.set_input(self._build_root_input(input_map, p_arr, e_arr, t_arr))
             else:
                 src = dep['sources'][0]
                 src_q = outputs[src]
@@ -366,7 +390,10 @@ class SuperflexEnv:
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _pick_forcing_columns(forcing_data: pd.DataFrame) -> Tuple[pd.Series, pd.Series]:
+    def _pick_forcing_columns(
+        forcing_data: pd.DataFrame,
+    ) -> Tuple[pd.Series, pd.Series, Optional[pd.Series]]:
+        """Return (prcp, ep, temp).  temp is None when no temperature column exists."""
         prcp_col = 'prcp' if 'prcp' in forcing_data.columns else forcing_data.columns[0]
         ep_col: Optional[str] = None
         for c in ('ep', 'pet', 'evap', 'evaporation'):
@@ -378,7 +405,32 @@ class SuperflexEnv:
             ep = pd.Series(0.0, index=forcing_data.index)
         else:
             ep = forcing_data[ep_col].astype(float).fillna(0.0)
-        return prcp, ep
+
+        # Temperature: tmean > tavg > temp > temperature > synthesise from tmax+tmin
+        temp: Optional[pd.Series] = None
+        for c in ('tmean', 'tavg', 'temp', 'temperature'):
+            if c in forcing_data.columns:
+                temp = forcing_data[c].astype(float).fillna(0.0)
+                break
+        if temp is None and 'tmax' in forcing_data.columns and 'tmin' in forcing_data.columns:
+            temp = ((forcing_data['tmax'] + forcing_data['tmin']) / 2.0).astype(float).fillna(0.0)
+
+        return prcp, ep, temp
+
+    @staticmethod
+    def _build_root_input(input_map: str, p_arr, e_arr, t_arr) -> list:
+        """Build the input list for a root element based on its input_map spec."""
+        if input_map == 'P':
+            return [p_arr]
+        if input_map == 'P_PET':
+            return [p_arr, e_arr]
+        if input_map == 'PET_P':
+            return [e_arr, p_arr]
+        if input_map == 'P_T':
+            if t_arr is None:
+                raise ValueError('SnowReservoir requires temperature data but none found in forcing.')
+            return [p_arr, t_arr]
+        raise ValueError(f'Unknown input_map: {input_map}')
 
     @staticmethod
     def _nse(obs: pd.Series, sim: pd.Series) -> float:
