@@ -6,7 +6,7 @@ from typing import Dict, Tuple, Any, Optional
 
 import pandas as pd
 import numpy as np
-from scipy.optimize import differential_evolution as _de
+import optuna
 
 # ---------------------------------------------------------------------------
 # Dynamically add external/superflexpy to sys.path so the vendored copy works
@@ -333,14 +333,20 @@ class SuperflexEnv:
 
         return pinfo
 
-    def _calibrate_sfpy(self, forcing_data, obs_data):
-        """Global optimisation via scipy.optimize.differential_evolution."""
+    def _calibrate_sfpy(self, forcing_data, obs_data, n_trials=200):
+        """Global optimisation via Optuna TPE (Tree-structured Parzen Estimator)."""
         pinfo = self._collect_calib_params()
         names = [n for n, _, _ in pinfo]
         bounds = [(lo, hi) for _, lo, hi in pinfo]
 
-        def objective(x):
-            p = dict(zip(names, x))
+        optuna.logging.set_verbosity(optuna.logging.WARNING)
+        sampler = optuna.samplers.TPESampler(seed=42)
+        study = optuna.create_study(direction='minimize', sampler=sampler)
+
+        def objective(trial):
+            p = {}
+            for name, (lo, hi) in zip(names, bounds):
+                p[name] = trial.suggest_float(name, lo, hi)
             try:
                 q = self._run_sfpy(forcing_data, p)
                 nse = self._nse(obs_data, q)
@@ -348,9 +354,9 @@ class SuperflexEnv:
             except Exception:
                 return 2.0
 
-        res = _de(objective, bounds, maxiter=50, tol=0.01, seed=42, workers=1, polish=False)
+        study.optimize(objective, n_trials=n_trials)
 
-        best_p = dict(zip(names, res.x))
+        best_p = {n: study.best_params[n] for n in names}
         best_q = self._run_sfpy(forcing_data, best_p)
         best_nse = self._nse(obs_data, best_q)
         return {'nse': float(best_nse), 'optimized_params': best_p, 'qsim': best_q}
