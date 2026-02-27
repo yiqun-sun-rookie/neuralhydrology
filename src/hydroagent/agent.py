@@ -178,7 +178,7 @@ def build_refinement_prompt(structure: dict, report: dict, iteration: int, targe
 {json.dumps(structure, indent=2)}
 ```
 
-### Diagnostic Metrics (13 indicators)
+### Diagnostic Metrics (24 indicators)
 {metrics_str}
 
 ### Semantic Feedback from Diagnostician
@@ -223,6 +223,7 @@ class MockLLMClient(BaseLLMClient):
         low_flow_bias = metrics.get('Low_Flow_Bias', 0.0)
         recession_k = metrics.get('Recession_K_Ratio', 1.0)
         energy_ratio = metrics.get('High_Freq_Energy_Ratio', 1.0)
+        winter_bias = metrics.get('Winter_Bias', 0.0)
 
         new_structure = deepcopy(structure)
         layer_ids = {layer['id'] for layer in new_structure.get('layers', [])}
@@ -250,6 +251,21 @@ class MockLLMClient(BaseLLMClient):
         elif peak_lag > 3.0 and new_structure.get('lag_functions'):
             new_structure['lag_functions'] = []
             new_structure['model_name'] = self._next_name(structure, 'remove_lag')
+
+        elif winter_bias < -0.3 and 'SnowReservoir' not in layer_types:
+            # Insert SnowReservoir as root layer (index 0) and rewire soil input
+            new_structure['layers'].insert(0, {
+                "id": "snow",
+                "type": "SnowReservoir",
+                "parameters": ["t0", "k", "m"],
+                "inputs": ["prcp", "temperature"],
+            })
+            # Rewire soil layer: replace 'prcp' with 'snow.outflow'
+            for layer in new_structure['layers']:
+                if layer['type'] == 'UnsaturatedReservoir' and 'prcp' in layer.get('inputs', []):
+                    layer['inputs'] = ['snow.outflow' if inp == 'prcp' else inp for inp in layer['inputs']]
+                    break
+            new_structure['model_name'] = self._next_name(structure, 'add_snow')
 
         elif low_flow_bias < -0.3 and 'slow_gw' not in layer_ids:
             new_structure['layers'].append({
@@ -332,6 +348,7 @@ class MockLLMClient(BaseLLMClient):
             'Low_Flow_Bias': r'Low_Flow_Bias:\s*([-\d.]+)',
             'Recession_K_Ratio': r'Recession_K_Ratio:\s*([-\d.]+)',
             'High_Freq_Energy_Ratio': r'High_Freq_Energy_Ratio:\s*([-\d.]+)',
+            'Winter_Bias': r'Winter_Bias:\s*([-\d.]+)',
         }
         for key, pattern in patterns.items():
             match = re.search(pattern, prompt)
