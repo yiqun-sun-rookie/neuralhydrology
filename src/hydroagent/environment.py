@@ -66,7 +66,7 @@ _REGISTRY: Dict[str, Dict[str, Any]] = {
     'SnowReservoir': {
         'cls': SnowReservoir,
         'params': {'t0': 0.0, 'k': 2.0, 'm': 2.0},
-        'bounds': {'t0': (-3.0, 3.0), 'k': (0.5, 10.0), 'm': (0.5, 10.0)},
+        'bounds': {'t0': (-3.0, 3.0), 'k': (0.5, 5.0), 'm': (0.5, 5.0)},
         'states': {'S0': 0.0},
         'input_map': 'P_T',
     },
@@ -209,6 +209,7 @@ class SuperflexEnv:
         els: Dict[str, Any] = {}
         types: Dict[str, str] = {}
         deps: Dict[str, Dict[str, Any]] = {}
+        raw_inputs: Dict[str, list] = {}
 
         for lyr in layers:
             lid, ltype = lyr['id'], lyr['type']
@@ -219,19 +220,22 @@ class SuperflexEnv:
             types[lid] = ltype
 
             inputs = lyr.get('inputs', [])
+            raw_inputs[lid] = inputs
             is_root = any(inp.lower() in _FORCING_NAMES for inp in inputs)
             sources = [
                 inp.split('.')[0]
                 for inp in inputs
                 if '.' in inp and inp.split('.')[0] in all_ids
             ]
-            deps[lid] = {'root': is_root, 'sources': sources}
+            is_hybrid = is_root and len(sources) > 0
+            deps[lid] = {'root': is_root, 'sources': sources, 'hybrid': is_hybrid}
 
-        roots = [lid for lid, d in deps.items() if d['root']]
+        pure_roots = [lid for lid, d in deps.items() if d['root'] and not d['hybrid']]
+        hybrid_roots = [lid for lid, d in deps.items() if d['hybrid']]
         downstream = [lid for lid, d in deps.items() if not d['root'] and d['sources']]
 
         fan_out: Dict[str, list] = {}
-        for lid in downstream:
+        for lid in hybrid_roots + downstream:
             for src in deps[lid]['sources']:
                 fan_out.setdefault(src, []).append(lid)
 
@@ -255,8 +259,8 @@ class SuperflexEnv:
 
         self._sfpy_els = els
         self._topo = {
-            'roots': roots,
-            'order': roots + downstream,
+            'roots': pure_roots,
+            'order': pure_roots + hybrid_roots + downstream,
             'deps': deps,
             'types': types,
             'fan_out': fan_out,
@@ -264,6 +268,7 @@ class SuperflexEnv:
             'id_map': id_map,
             'lag_els': lag_els,
             'lag_types': lag_types,
+            'raw_inputs': raw_inputs,
         }
 
     # ------------------------------------------------------------------
@@ -304,7 +309,15 @@ class SuperflexEnv:
             dep = self._topo['deps'][lid]
             ltype = self._topo['types'][lid]
 
-            if dep['root']:
+            if dep.get('hybrid'):
+                inp_arrays = []
+                for inp in self._topo['raw_inputs'][lid]:
+                    if '.' in inp and inp.split('.')[0] in outputs:
+                        inp_arrays.append(outputs[inp.split('.')[0]])
+                    else:
+                        inp_arrays.append(self._resolve_forcing(inp.lower(), p_arr, e_arr, t_arr))
+                el.set_input(inp_arrays)
+            elif dep['root']:
                 input_map = _REGISTRY[ltype].get('input_map', 'P')
                 el.set_input(self._build_root_input(input_map, p_arr, e_arr, t_arr))
             else:
@@ -320,12 +333,18 @@ class SuperflexEnv:
                 else:
                     el.set_input([src_q])
 
-            out = el.get_output(solve=True)
-            raw = out[0]
+            try:
+                out = el.get_output(solve=True)
+                raw = out[0]
+            except RuntimeError:
+                raw = np.full_like(p_arr, np.nan)
 
             if lid in lag_els:
                 lag_els[lid].set_input([raw])
-                raw = lag_els[lid].get_output(solve=True)[0]
+                try:
+                    raw = lag_els[lid].get_output(solve=True)[0]
+                except RuntimeError:
+                    raw = np.full_like(p_arr, np.nan)
 
             outputs[lid] = raw
 
@@ -381,8 +400,12 @@ class SuperflexEnv:
         study.optimize(objective, n_trials=n_trials)
 
         best_p = {n: study.best_params[n] for n in names}
-        best_q = self._run_sfpy(forcing_data, best_p)
-        best_nse = self._nse(obs_data, best_q)
+        try:
+            best_q = self._run_sfpy(forcing_data, best_p)
+            best_nse = self._nse(obs_data, best_q)
+        except Exception:
+            best_q = pd.Series(np.zeros(len(obs_data)), index=obs_data.index, name='qsim')
+            best_nse = -999.0
         return {'nse': float(best_nse), 'optimized_params': best_p, 'qsim': best_q}
 
     # ------------------------------------------------------------------
@@ -431,6 +454,19 @@ class SuperflexEnv:
                 raise ValueError('SnowReservoir requires temperature data but none found in forcing.')
             return [p_arr, t_arr]
         raise ValueError(f'Unknown input_map: {input_map}')
+
+    @staticmethod
+    def _resolve_forcing(name, p_arr, e_arr, t_arr):
+        """Map a single forcing input name to its numpy array."""
+        if name in ('prcp', 'precipitation', 'rainfall', 'p'):
+            return p_arr
+        if name in ('ep', 'pet', 'evap', 'evaporation'):
+            return e_arr
+        if name in ('temp', 'temperature', 'tmean', 'tavg'):
+            if t_arr is None:
+                raise ValueError(f'Forcing "{name}" required but no temperature column found.')
+            return t_arr
+        raise ValueError(f'Unknown forcing name: {name}')
 
     @staticmethod
     def _nse(obs: pd.Series, sim: pd.Series) -> float:

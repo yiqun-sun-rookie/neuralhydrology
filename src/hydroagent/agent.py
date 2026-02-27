@@ -85,7 +85,7 @@ Key principles for structure → operation mapping:
 - Recession too fast (Recession_K_Ratio > 1.3): Add a slow reservoir (LinearReservoir or RoutingStore) with large k.
 - Over-smoothed signal (Energy_Ratio < 0.6): Replace LinearReservoir with PowerReservoir for nonlinearity.
 - NSE very low (< 0.3): Add parallel flow paths to capture multiple flow regimes.
-- Snow-dominated basin (large seasonal bias, winter underestimate): Add SnowReservoir as root layer (needs temperature).
+- Snow-dominated basin (winter overestimate, Winter_Bias > 0.3): Add SnowReservoir as root layer to store precipitation as snow (needs temperature).
 - UnsaturatedReservoir underperforms: Try ProductionStore (GR4J) as alternative runoff generation.
 
 You MUST respond with ONLY a valid JSON object representing the improved structure.
@@ -252,7 +252,7 @@ class MockLLMClient(BaseLLMClient):
             new_structure['lag_functions'] = []
             new_structure['model_name'] = self._next_name(structure, 'remove_lag')
 
-        elif winter_bias < -0.3 and 'SnowReservoir' not in layer_types:
+        elif winter_bias > 0.3 and 'SnowReservoir' not in layer_types:
             # Insert SnowReservoir as root layer (index 0) and rewire soil input
             new_structure['layers'].insert(0, {
                 "id": "snow",

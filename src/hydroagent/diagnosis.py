@@ -759,18 +759,18 @@ class HydroDiagnostician:
 
         # --- 季节性指标 ---
         winter_bias = metrics.get('Winter_Bias', 0.0)
-        if winter_bias < -0.3:
+        if winter_bias > 0.3:
             feedback.append(
-                "Critical [季节]: 冬季流量严重低估(Winter_Bias={:.2f})。添加 SnowReservoir 作为根层(需温度数据)。".format(
+                "Critical [季节]: 冬季流量严重高估(Winter_Bias={:.2f})。添加 SnowReservoir 将降水存为积雪，减少冬季直接径流(需温度数据)。".format(
                     winter_bias)
             )
-        elif winter_bias < -0.15:
+        elif winter_bias > 0.15:
             feedback.append(
-                "Warning [季节]: 可能存在融雪过程未被模拟(Winter_Bias={:.2f})。".format(winter_bias)
+                "Warning [季节]: 冬季流量偏高(Winter_Bias={:.2f})，可能缺少积雪过程。".format(winter_bias)
             )
-        elif winter_bias > 0.3:
+        elif winter_bias < -0.3:
             feedback.append(
-                "Warning [季节]: 冬季流量被高估(Winter_Bias={:.2f})。".format(winter_bias)
+                "Warning [季节]: 冬季流量严重低估(Winter_Bias={:.2f})。".format(winter_bias)
             )
 
         snow_nse = metrics.get('Snow_Season_NSE', float('nan'))
