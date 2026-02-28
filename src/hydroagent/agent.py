@@ -422,10 +422,51 @@ class DeepSeekClient(BaseLLMClient):
         return response.choices[0].message.content
 
 
-class ClaudeClient(BaseLLMClient):
-    """LLM client using the Anthropic Claude API."""
+_STRUCTURE_SCHEMA = {
+    "type": "json_schema",
+    "schema": {
+        "type": "object",
+        "properties": {
+            "model_name": {"type": "string"},
+            "layers": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {"type": "string"},
+                        "type": {"type": "string"},
+                        "parameters": {"type": "array", "items": {"type": "string"}},
+                        "inputs": {"type": "array", "items": {"type": "string"}},
+                    },
+                    "required": ["id", "type", "parameters", "inputs"],
+                    "additionalProperties": False,
+                }
+            },
+            "lag_functions": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "type": {"type": "string"},
+                        "target": {"type": "string"},
+                        "lag_steps": {"type": "integer"},
+                    },
+                    "required": ["type", "target", "lag_steps"],
+                    "additionalProperties": False,
+                }
+            },
+            "system_output": {"type": "array", "items": {"type": "string"}},
+        },
+        "required": ["model_name", "layers", "lag_functions", "system_output"],
+        "additionalProperties": False,
+    }
+}
 
-    def __init__(self, api_key: Optional[str] = None, model: str = 'claude-sonnet-4-20250514'):
+
+class ClaudeClient(BaseLLMClient):
+    """LLM client using the Anthropic Claude API with adaptive thinking and structured outputs."""
+
+    def __init__(self, api_key: Optional[str] = None, model: str = 'claude-opus-4-6'):
         try:
             import anthropic  # noqa: F401
         except ImportError:
@@ -440,15 +481,17 @@ class ClaudeClient(BaseLLMClient):
 
     def chat(self, system_prompt: str, user_message: str) -> str:
         client = self._anthropic.Anthropic(api_key=self.api_key)
-        response = client.messages.create(
+        with client.messages.stream(
             model=self.model,
-            max_tokens=2048,
+            max_tokens=16000,
+            thinking={"type": "adaptive"},
+            temperature=1.0,
             system=system_prompt,
-            messages=[
-                {"role": "user", "content": user_message},
-            ],
-        )
-        return response.content[0].text
+            output_config={"format": _STRUCTURE_SCHEMA},
+            messages=[{"role": "user", "content": user_message}],
+        ) as stream:
+            response = stream.get_final_message()
+        return response.content[-1].text
 
 
 class OllamaClient(BaseLLMClient):
