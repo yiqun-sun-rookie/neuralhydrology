@@ -83,7 +83,8 @@ def load_camels_basin(basin_id, data_root, start_date='1990-10-01', end_date='19
     delta_t = np.maximum(tmax - tmin, 0.1)
     pet = 0.0023 * (srad * 0.0864) * np.sqrt(delta_t) * (tmean + 17.8)
     forcing_out['ep'] = np.maximum(pet, 0)
-    
+    forcing_out['tmean'] = tmean
+
     # Align
     common_idx = forcing_out.index.intersection(streamflow.index)
     forcing_out = forcing_out.loc[common_idx]
