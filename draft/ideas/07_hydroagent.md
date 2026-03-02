@@ -1,8 +1,8 @@
 # 07 - HydroAgent: LLM-based Hydrological Model Structure Discovery
 
-**状态**: dev
+**状态**: dev (Phase 2 agent loop validated — 4/4 CAMELS basins reach NSE target with DeepSeek)
 **创建日期**: 2026-01-01
-**最后更新**: 2026-02-18
+**最后更新**: 2026-03-02
 
 ---
 
@@ -30,15 +30,23 @@
 
 | Module | 文件 | 职责 | 状态 |
 |--------|------|------|------|
-| **A: Diagnostics** | `src/hydroagent/diagnosis.py` | 多维诊断评价 (NSE + 语义反馈) | completed |
-| **B: Environment** | `src/hydroagent/environment.py` | 自动化 SuperflexPy 建模+率定 | completed |
-| **C: Agent** | `src/hydroagent/agent.py` | LLM 交互与推理循环 | pending |
+| **A: Diagnostics** | `src/hydroagent/diagnosis.py` | 多维诊断评价 (NSE + 语义反馈) | **complete** — 21 指标 + 22 条反馈规则 (含 5 个跨领域指标) |
+| **B: Environment** | `src/hydroagent/environment.py` | 自动化 SuperflexPy 建模+率定 | **simplified** — 未接入 SuperflexPy |
+| **C: Agent** | `src/hydroagent/agent.py` | LLM 交互与推理循环 | **complete** — 5 backends (Claude/DeepSeek/OpenAI/Ollama/Mock), 27 tests, 4-basin validation |
 
 ### Module A 核心算法
 - Windowed Peak Matching (抗双峰干扰)
 - 谱分析 (抗过平滑)
 - 最优传输 / Wasserstein (时空错位检测)
 - 起涨点检测
+- 退水分析 (Recession Analysis)
+- 流量历时曲线特征 (FDC Slope Error)
+- **跨领域指标** (Cross-Domain Metrics):
+  - Hjorth Parameters (脑电信号分析 → 变异性/闪急性/复杂度)
+  - 1D-SSIM (图像质量评估 → 局部结构相似度)
+  - ITAE (控制工程 → 时间加权误差分布)
+  - TF Misfit (地震学 Kristekova → 振幅vs时间误差分离)
+  - Perkins Skill Score (气候科学 → 流量分布重叠度)
 
 ### Module B 核心技术
 - 基于 NetworkX 的自定义 DAG 拓扑引擎
@@ -67,6 +75,7 @@
 | Output | Path | Notes |
 | :--- | :--- | :--- |
 | Module A Validation | `results/07_hydroagent/module_a_validation/` | 诊断系统验证结果 |
+| Multi-Basin DeepSeek | `results/07_hydroagent/multi_basin_deepseek/` | 4 basin × DeepSeek 结构发现实验 (2026-03-02) |
 
 ---
 
@@ -80,6 +89,11 @@
 | 2026-02-01 | Module B 完成 | NetworkX DAG 引擎 + 自动率定 |
 | 2026-02-10 | Phase 1 闭环 | 集成验证通过 (hydroagent_demo.py) |
 | 2026-02-10 | 目录迁移 | 从 neuralhydrology/hydroagent/ 迁移到 src/hydroagent/ |
+| 2026-02-24 | Module A 重写 | 完整重写 diagnosis.py：13 指标 + 14 条反馈 + NaN 防护 + 退水/FDC 分析 |
+| 2026-02-25 | 跨领域指标 | 新增 5 个跨领域指标 (Hjorth/SSIM/ITAE/TF-Misfit/Perkins)，总计 21 指标 + 22 反馈规则，21/21 测试通过 |
+| 2026-03-02 | Module C 完成 | Agent loop + 5 LLM backends + MockLLMClient 27 tests |
+| 2026-03-02 | ClaudeClient 升级 | claude-opus-4-6 + adaptive thinking + structured outputs + streaming |
+| 2026-03-02 | 多流域验证 | DeepSeek × 4 basins: 全部达到 NSE≥0.6，寒冷流域自动发现 SnowReservoir (NSE 0.15→0.84) |
 
 ---
 
@@ -93,11 +107,20 @@
 
 ---
 
-## 下一步 (Phase 2: Agent Development)
+## Phase 2: Agent Development ✅ COMPLETE
 
-1. 设计 System Prompt (角色: 资深水文学家)
-2. 实现 `reasoning_loop`: 观察 -> 思考 -> 行动
-3. 集成 LLM API (OpenAI/DeepSeek)
-4. 可选: RAG 知识库 (SuperflexPy 组件文档)
-5. 实验验证: CAMELS-US 4 个典型流域
-6. 基准对比: LSTM vs Human Expert vs HydroAgent
+1. ✅ 设计 System Prompt (角色: 资深水文学家)
+2. ✅ 实现 `reasoning_loop`: 观察 -> 思考 -> 行动
+3. ✅ 集成 LLM API (OpenAI/DeepSeek/Claude/Ollama + MockLLM)
+4. ⬜ 可选: RAG 知识库 (SuperflexPy 组件文档)
+5. ✅ 实验验证: CAMELS-US 4 个典型流域 (全部 NSE≥0.6)
+6. ⬜ 基准对比: LSTM vs Human Expert vs HydroAgent
+
+## 下一步 (Phase 3: Paper-Ready Experiments)
+
+1. **多 LLM 对比**: 同 4 basin 跑 DeepSeek vs Claude vs Gemini，对比结构发现质量和收敛速度
+2. **扩展流域数**: 10-20 个 CAMELS basins 覆盖更多气候类型 (干旱/岩溶/城市化)
+3. **基准对比**: 同流域同时段的 CudaLSTM/EALSTM 结果 vs HydroAgent
+4. **消融实验**: 去掉诊断反馈/去掉 thinking/用随机结构 → 量化各模块贡献
+5. **实验日志系统**: 自动保存每轮 LLM 响应、结构 JSON、参数、NSE 到 CSV
+6. **论文写作**: Paper 3 (Agentic Discovery) 初稿
