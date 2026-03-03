@@ -11,6 +11,7 @@ from .agent import (
 )
 from .diagnosis import HydroDiagnostician
 from .environment import SuperflexEnv
+from .experiment_logger import ExperimentLogger
 
 __all__ = [
     "HydroAgent",
@@ -22,5 +23,6 @@ __all__ = [
     "OllamaClient",
     "HydroDiagnostician",
     "SuperflexEnv",
+    "ExperimentLogger",
 ]
 

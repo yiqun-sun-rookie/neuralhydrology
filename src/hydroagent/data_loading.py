@@ -1,0 +1,90 @@
+"""Shared data loading utilities for HydroAgent experiments.
+
+Provides load_camels_basin() used by both test scripts and the batch runner.
+"""
+from __future__ import annotations
+
+import os
+from pathlib import Path
+from typing import Tuple, Union
+
+import numpy as np
+import pandas as pd
+
+# Default CAMELS-US data root: <project_root>/data/camels_us
+_DEFAULT_DATA_ROOT = Path(__file__).resolve().parents[2] / 'data' / 'camels_us'
+
+
+def load_camels_basin(
+    basin_id: str,
+    data_root: Union[str, Path, None] = None,
+    start_date: str = '1990-10-01',
+    end_date: str = '1993-09-30',
+) -> Tuple[pd.DataFrame, pd.Series, float]:
+    """Load CAMELS-US basin forcing and observed streamflow.
+
+    Returns:
+        (forcing_df[prcp, ep, tmean], obs_mm, area_km2)
+    """
+    data_root = str(data_root or _DEFAULT_DATA_ROOT)
+    huc = basin_id[:2]
+
+    # -- Forcing --
+    forcing_path = os.path.join(
+        data_root, 'basin_mean_forcing', 'daymet', huc,
+        basin_id + '_lump_cida_forcing_leap.txt'
+    )
+    df_forcing = pd.read_csv(forcing_path, skiprows=3, sep=r'\s+')
+    df_forcing['date'] = pd.to_datetime(
+        df_forcing[['Year', 'Mnth', 'Day']].rename(
+            columns={'Year': 'year', 'Mnth': 'month', 'Day': 'day'}
+        )
+    )
+    df_forcing.set_index('date', inplace=True)
+
+    # -- Streamflow --
+    streamflow_path = os.path.join(
+        data_root, 'usgs_streamflow', huc,
+        basin_id + '_streamflow_qc.txt'
+    )
+    df_sf = pd.read_csv(streamflow_path, sep=r'\s+', header=None,
+                        names=['gauge_id', 'year', 'month', 'day', 'discharge_cfs', 'qc_flag'])
+    df_sf['date'] = pd.to_datetime(df_sf[['year', 'month', 'day']])
+    df_sf.set_index('date', inplace=True)
+
+    forcing = df_forcing.loc[start_date:end_date].copy()
+    streamflow = df_sf.loc[start_date:end_date].copy()
+
+    # -- Area --
+    topo_file = os.path.join(data_root, 'camels_attributes_v2.0', 'camels_topo.txt')
+    df_topo = pd.read_csv(topo_file, sep=';')
+    df_topo['gauge_id'] = df_topo['gauge_id'].astype(str).str.zfill(8)
+    area_km2 = df_topo[df_topo['gauge_id'] == basin_id]['area_gages2'].values[0]
+
+    # -- Convert cfs → mm/day --
+    conversion_factor = 2.4466 / area_km2
+    streamflow['qobs_mm'] = streamflow['discharge_cfs'] * conversion_factor
+    streamflow.loc[streamflow['discharge_cfs'] < 0, 'qobs_mm'] = np.nan
+
+    # -- Prepare forcing --
+    forcing_out = pd.DataFrame(index=forcing.index)
+    forcing_out['prcp'] = forcing['prcp(mm/day)'].values
+
+    tmax = forcing['tmax(C)'].values
+    tmin = forcing['tmin(C)'].values
+    srad = forcing['srad(W/m2)'].values
+    tmean = (tmax + tmin) / 2
+    delta_t = np.maximum(tmax - tmin, 0.1)
+    pet = 0.0023 * (srad * 0.0864) * np.sqrt(delta_t) * (tmean + 17.8)
+    forcing_out['ep'] = np.maximum(pet, 0)
+    forcing_out['tmean'] = tmean
+
+    # -- Align and filter NaN --
+    common_idx = forcing_out.index.intersection(streamflow.index)
+    forcing_out = forcing_out.loc[common_idx]
+    obs = streamflow.loc[common_idx, 'qobs_mm']
+    valid_mask = ~obs.isna()
+    forcing_out = forcing_out.loc[valid_mask]
+    obs = obs.loc[valid_mask]
+
+    return forcing_out, obs, area_km2

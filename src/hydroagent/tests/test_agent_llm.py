@@ -15,85 +15,21 @@ Usage:
 import os
 import sys
 import argparse
-import numpy as np
-import pandas as pd
+from datetime import datetime
+from pathlib import Path
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 from hydroagent.agent import (
-    HydroAgent, 
-    OpenAIClient, 
-    OllamaClient, 
+    HydroAgent,
+    OpenAIClient,
+    OllamaClient,
     DeepSeekClient,
     ClaudeClient,
     MockLLMClient
 )
-
-
-def load_camels_basin(basin_id, data_root, start_date='1990-10-01', end_date='1993-09-30'):
-    """Load CAMELS-US basin data"""
-    huc = basin_id[:2]
-    
-    forcing_path = os.path.join(
-        data_root, 'basin_mean_forcing', 'daymet', huc,
-        basin_id + '_lump_cida_forcing_leap.txt'
-    )
-    
-    df_forcing = pd.read_csv(forcing_path, skiprows=3, sep=r'\s+')
-    df_forcing['date'] = pd.to_datetime(
-        df_forcing[['Year', 'Mnth', 'Day']].rename(
-            columns={'Year': 'year', 'Mnth': 'month', 'Day': 'day'}
-        )
-    )
-    df_forcing.set_index('date', inplace=True)
-    
-    streamflow_path = os.path.join(
-        data_root, 'usgs_streamflow', huc,
-        basin_id + '_streamflow_qc.txt'
-    )
-    
-    df_sf = pd.read_csv(streamflow_path, sep=r'\s+', header=None,
-        names=['gauge_id', 'year', 'month', 'day', 'discharge_cfs', 'qc_flag'])
-    df_sf['date'] = pd.to_datetime(df_sf[['year', 'month', 'day']])
-    df_sf.set_index('date', inplace=True)
-    
-    forcing = df_forcing.loc[start_date:end_date].copy()
-    streamflow = df_sf.loc[start_date:end_date].copy()
-    
-    # Get area
-    topo_file = os.path.join(data_root, 'camels_attributes_v2.0', 'camels_topo.txt')
-    df_topo = pd.read_csv(topo_file, sep=';')
-    df_topo['gauge_id'] = df_topo['gauge_id'].astype(str).str.zfill(8)
-    area_km2 = df_topo[df_topo['gauge_id'] == basin_id]['area_gages2'].values[0]
-    
-    # Convert cfs to mm/day
-    conversion_factor = 2.4466 / area_km2
-    streamflow['qobs_mm'] = streamflow['discharge_cfs'] * conversion_factor
-    streamflow.loc[streamflow['discharge_cfs'] < 0, 'qobs_mm'] = np.nan
-    
-    # Prepare forcing
-    forcing_out = pd.DataFrame(index=forcing.index)
-    forcing_out['prcp'] = forcing['prcp(mm/day)'].values
-    
-    # Estimate PET
-    tmax = forcing['tmax(C)'].values
-    tmin = forcing['tmin(C)'].values
-    srad = forcing['srad(W/m2)'].values
-    tmean = (tmax + tmin) / 2
-    delta_t = np.maximum(tmax - tmin, 0.1)
-    pet = 0.0023 * (srad * 0.0864) * np.sqrt(delta_t) * (tmean + 17.8)
-    forcing_out['ep'] = np.maximum(pet, 0)
-    forcing_out['tmean'] = tmean
-
-    # Align
-    common_idx = forcing_out.index.intersection(streamflow.index)
-    forcing_out = forcing_out.loc[common_idx]
-    obs = streamflow.loc[common_idx, 'qobs_mm']
-    valid_mask = ~obs.isna()
-    forcing_out = forcing_out.loc[valid_mask]
-    obs = obs.loc[valid_mask]
-    
-    return forcing_out, obs, area_km2
+from hydroagent.data_loading import load_camels_basin
+from hydroagent.experiment_logger import ExperimentLogger
 
 
 def main():
@@ -154,10 +90,15 @@ def main():
         print("\n    Falling back to Mock LLM mode")
         client = MockLLMClient()
     
+    # Create experiment logger
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    exp_dir = Path(f"results/07_hydroagent/{args.basin}_{args.backend}_{timestamp}")
+    logger = ExperimentLogger(exp_dir, args.basin, args.backend, target_nse=0.6, max_iterations=args.max_iter)
+    print(f"\n[3] Experiment log: {exp_dir}")
+
     # Create agent
-    print("\n[3] Creating HydroAgent...")
-    agent = HydroAgent(llm_client=client, max_iterations=args.max_iter)
-    
+    agent = HydroAgent(llm_client=client, max_iterations=args.max_iter, logger=logger)
+
     # Run optimization
     print("\n[4] Starting optimization loop...\n")
     result = agent.solve(forcing, obs, target_nse=0.6)
@@ -173,7 +114,8 @@ def main():
         print(json.dumps(result['best_structure'], indent=2))
     print("\nOptimized Parameters:")
     print(result['best_params'])
-    
+    print(f"\nResults saved to: {exp_dir}")
+
     return result
 
 
