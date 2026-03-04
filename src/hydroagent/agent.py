@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import time
 from abc import ABC, abstractmethod
 from copy import deepcopy
 from typing import Any, Dict, List, Optional
@@ -85,7 +86,7 @@ Key principles for structure → operation mapping:
 - Recession too fast (Recession_K_Ratio > 1.3): Add a slow reservoir (LinearReservoir or RoutingStore) with large k.
 - Over-smoothed signal (Energy_Ratio < 0.6): Replace LinearReservoir with PowerReservoir for nonlinearity.
 - NSE very low (< 0.3): Add parallel flow paths to capture multiple flow regimes.
-- Snow-dominated basin (winter overestimate, Winter_Bias > 0.3): Add SnowReservoir as root layer to store precipitation as snow (needs temperature).
+- Snow-dominated basin (winter overestimate, Winter_Bias >= 0.3): Add SnowReservoir as root layer to store precipitation as snow (needs temperature).
 - UnsaturatedReservoir underperforms: Try ProductionStore (GR4J) as alternative runoff generation.
 
 You MUST respond with ONLY a valid JSON object representing the improved structure.
@@ -252,7 +253,7 @@ class MockLLMClient(BaseLLMClient):
             new_structure['lag_functions'] = []
             new_structure['model_name'] = self._next_name(structure, 'remove_lag')
 
-        elif winter_bias > 0.3 and 'SnowReservoir' not in layer_types:
+        elif winter_bias >= 0.3 and 'SnowReservoir' not in layer_types:
             # Insert SnowReservoir as root layer (index 0) and rewire soil input
             new_structure['layers'].insert(0, {
                 "id": "snow",
@@ -536,12 +537,13 @@ class HydroAgent:
     Loop: calibrate → diagnose → record → check convergence → refine structure
     """
 
-    def __init__(self, llm_client: BaseLLMClient, max_iterations: int = 4):
+    def __init__(self, llm_client: BaseLLMClient, max_iterations: int = 4, logger=None):
         self.llm = llm_client
         self.env = SuperflexEnv()
         self.doctor = HydroDiagnostician()
         self.max_iterations = max_iterations
         self.history: List[Dict[str, Any]] = []
+        self.logger = logger  # Optional[ExperimentLogger]
 
     def solve(
         self,
@@ -567,6 +569,7 @@ class HydroAgent:
         best_params: Dict[str, float] = {}
 
         for iteration in range(1, self.max_iterations + 1):
+            t_iter_start = time.time()
             print(f"\n--- Iteration {iteration}/{self.max_iterations} ---")
             print(f"  Structure: {structure.get('model_name', 'unknown')}")
 
@@ -593,6 +596,11 @@ class HydroAgent:
             }
             self.history.append(entry)
 
+            # Log iteration
+            if self.logger:
+                duration_s = time.time() - t_iter_start
+                self.logger.log_iteration(iteration, structure, cal_result, report, duration_s)
+
             # 4. Update best
             if nse > best_nse:
                 best_nse = nse
@@ -616,6 +624,9 @@ class HydroAgent:
                 print(f"  -> Refined to: {structure.get('model_name', 'unknown')}")
             else:
                 print("  -> LLM refinement failed, retrying with current structure.")
+
+        if self.logger:
+            self.logger.finalize(best_nse, iteration, best_nse >= target_nse)
 
         return {
             'best_nse': best_nse,
@@ -658,7 +669,12 @@ class HydroAgent:
             new_structure = extract_json_from_response(response_text)
         except Exception as e:
             print(f"  [WARN] LLM refinement failed: {e}")
+            if self.logger:
+                self.logger.log_llm_response(iteration, prompt[:500], str(e), False)
             return None
+
+        if self.logger:
+            self.logger.log_llm_response(iteration, prompt[:500], response_text, new_structure is not None)
 
         # Basic validation
         if not isinstance(new_structure, dict):
