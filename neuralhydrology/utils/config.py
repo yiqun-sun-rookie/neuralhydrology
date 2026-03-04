@@ -891,6 +891,11 @@ class Config(object):
         return self._cfg.get("transfer_mtslstm_states", {'h': 'linear', 'c': 'linear'})
 
     @property
+    def transfer_mtsmamba_states(self) -> str:
+        """Transfer mode for MTS-Mamba context prepend. One of 'linear', 'identity', 'None'."""
+        return self._cfg.get("transfer_mtsmamba_states", "linear")
+
+    @property
     def umal_extend_batch(self) -> bool:
         return self._cfg.get("umal_extend_batch", False)
 

@@ -13,6 +13,7 @@ from neuralhydrology.modelzoo.hybridmodel import HybridModel
 from neuralhydrology.modelzoo.gru import GRU
 from neuralhydrology.modelzoo.mclstm import MCLSTM
 from neuralhydrology.modelzoo.mtslstm import MTSLSTM
+from neuralhydrology.modelzoo.mtsmamba import MTSMamba
 from neuralhydrology.modelzoo.multihead_forecast_lstm import MultiHeadForecastLSTM
 from neuralhydrology.modelzoo.odelstm import ODELSTM
 from neuralhydrology.modelzoo.sequential_forecast_lstm import SequentialForecastLSTM
@@ -79,6 +80,8 @@ def get_model(cfg: Config) -> nn.Module:
         model = EmbCudaLSTM(cfg=cfg)
     elif cfg.model.lower() == "mtslstm":
         model = MTSLSTM(cfg=cfg)
+    elif cfg.model.lower() == "mtsmamba":
+        model = MTSMamba(cfg=cfg)
     elif cfg.model.lower() == "odelstm":
         model = ODELSTM(cfg=cfg)
     elif cfg.model.lower() == "mclstm":

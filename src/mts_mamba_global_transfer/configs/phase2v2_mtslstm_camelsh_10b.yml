@@ -1,0 +1,106 @@
+# Phase 2v2: MTS-LSTM — full forcing, CAMELS-H 10 basins
+# Q2: CudaLSTM vs MTSLSTM → does multi-timescale help?
+experiment_name: 41_phase2v2_mtslstm_camelsh_10b
+
+# --- Data ---
+dataset: hourly_camelsh
+data_dir: ./data/camelsh
+
+train_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+validation_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+test_basin_file: src/mts_mamba_global_transfer/data/phase2_camelsh_10basins.txt
+
+train_start_date: "01/01/2000"
+train_end_date: "31/12/2015"
+validation_start_date: "01/01/2016"
+validation_end_date: "31/12/2018"
+test_start_date: "01/01/2019"
+test_end_date: "31/12/2020"
+
+# Full NLDAS-2 forcing (11 variables)
+dynamic_inputs:
+  - Rainf
+  - Tair
+  - Qair
+  - PSurf
+  - Wind_E
+  - Wind_N
+  - LWdown
+  - SWdown
+  - CRainf_frac
+  - CAPE
+  - PotEvap
+target_variables:
+  - qobs_mm_per_hour
+clip_targets_to_zero:
+  - qobs_mm_per_hour
+
+# Full static attributes (13 variables)
+static_attributes:
+  - elev_mean
+  - slope_mean
+  - area
+  - clay_frac
+  - sand_frac
+  - soil_porosity
+  - permeability
+  - frac_forest
+  - p_mean
+  - pet_mean
+  - aridity
+  - frac_snow
+  - high_prec_freq
+
+# --- Multi-timescale (daily + hourly) ---
+use_frequencies:
+  - 1D
+  - 1h
+seq_length:
+  1D: 365
+  1h: 336
+predict_last_n:
+  1D: 1
+  1h: 24
+
+# --- Model: MTS-LSTM ---
+model: mtslstm
+head: regression
+output_activation: linear
+hidden_size: 64
+initial_forget_bias: 3
+output_dropout: 0.4
+transfer_mtslstm_states:
+  h: linear
+  c: linear
+shared_mtslstm: false
+
+# --- Training ---
+epochs: 10
+batch_size: 256
+optimizer: Adam
+loss: MSE
+learning_rate:
+  0: 1e-2
+  5: 1e-3
+clip_gradient_norm: 1
+regularization:
+  - tie_frequencies
+
+# --- Logging & Validation ---
+validate_every: 5
+validate_n_random_basins: 10
+save_weights_every: 5
+log_interval: 5
+log_tensorboard: false
+log_n_figures: 0
+metrics:
+  - NSE
+  - KGE
+  - Alpha-NSE
+  - Beta-NSE
+
+# --- Misc ---
+num_workers: 0
+seed: 111
+device: cpu
+run_dir: results/41_mts_mamba_global_transfer
