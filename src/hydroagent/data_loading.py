@@ -4,6 +4,7 @@ Provides load_camels_basin() used by both test scripts and the batch runner.
 """
 from __future__ import annotations
 
+import glob
 import os
 from pathlib import Path
 from typing import Tuple, Union
@@ -13,6 +14,26 @@ import pandas as pd
 
 # Default CAMELS-US data root: <project_root>/data/camels_us
 _DEFAULT_DATA_ROOT = Path(__file__).resolve().parents[2] / 'data' / 'camels_us'
+
+
+def _find_file(data_root: str, subdir: str, filename: str) -> str:
+    """Find a basin file by searching all HUC subdirectories.
+
+    CAMELS-US stores files under HUC subdirectories, but the HUC code
+    doesn't always match basin_id[:2]. Search all subdirs as fallback.
+    """
+    # Fast path: try basin_id[:2] first
+    basin_id_prefix = filename[:2]
+    direct = os.path.join(data_root, subdir, basin_id_prefix, filename)
+    if os.path.exists(direct):
+        return direct
+
+    # Fallback: glob across all HUC dirs
+    matches = glob.glob(os.path.join(data_root, subdir, '*', filename))
+    if matches:
+        return matches[0]
+
+    raise FileNotFoundError(f"Cannot find {filename} under {os.path.join(data_root, subdir)}/*/")
 
 
 def load_camels_basin(
@@ -27,11 +48,10 @@ def load_camels_basin(
         (forcing_df[prcp, ep, tmean], obs_mm, area_km2)
     """
     data_root = str(data_root or _DEFAULT_DATA_ROOT)
-    huc = basin_id[:2]
 
     # -- Forcing --
-    forcing_path = os.path.join(
-        data_root, 'basin_mean_forcing', 'daymet', huc,
+    forcing_path = _find_file(
+        data_root, os.path.join('basin_mean_forcing', 'daymet'),
         basin_id + '_lump_cida_forcing_leap.txt'
     )
     df_forcing = pd.read_csv(forcing_path, skiprows=3, sep=r'\s+')
@@ -43,8 +63,8 @@ def load_camels_basin(
     df_forcing.set_index('date', inplace=True)
 
     # -- Streamflow --
-    streamflow_path = os.path.join(
-        data_root, 'usgs_streamflow', huc,
+    streamflow_path = _find_file(
+        data_root, 'usgs_streamflow',
         basin_id + '_streamflow_qc.txt'
     )
     df_sf = pd.read_csv(streamflow_path, sep=r'\s+', header=None,
@@ -61,7 +81,7 @@ def load_camels_basin(
     df_topo['gauge_id'] = df_topo['gauge_id'].astype(str).str.zfill(8)
     area_km2 = df_topo[df_topo['gauge_id'] == basin_id]['area_gages2'].values[0]
 
-    # -- Convert cfs → mm/day --
+    # -- Convert cfs -> mm/day --
     conversion_factor = 2.4466 / area_km2
     streamflow['qobs_mm'] = streamflow['discharge_cfs'] * conversion_factor
     streamflow.loc[streamflow['discharge_cfs'] < 0, 'qobs_mm'] = np.nan
