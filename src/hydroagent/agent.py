@@ -164,13 +164,23 @@ def extract_json_from_response(text: str) -> dict:
     raise ValueError("Could not extract valid JSON from LLM response.")
 
 
-def build_refinement_prompt(structure: dict, report: dict, iteration: int, target_nse: float) -> str:
+def build_refinement_prompt(structure: dict, report: dict, iteration: int, target_nse: float,
+                            failed_attempts: Optional[List[Dict[str, Any]]] = None) -> str:
     """Build the user-message prompt sent to the LLM for structure refinement."""
     metrics = report.get('metrics', {})
     feedback = report.get('semantic_feedback', [])
 
     metrics_str = '\n'.join(f"  - {k}: {v}" for k, v in metrics.items())
     feedback_str = '\n'.join(f"  - {fb}" for fb in feedback) if feedback else "  (No specific issues detected)"
+
+    # Failed attempts section (rollback memory)
+    failed_str = ""
+    if failed_attempts:
+        lines = [f"  - {fa['model_name']} → NSE={fa['nse']}" for fa in failed_attempts]
+        failed_str = f"""
+
+### Failed Attempts (do NOT repeat these)
+{chr(10).join(lines)}"""
 
     return f"""## Iteration {iteration} — Current Model Performance
 
@@ -183,7 +193,7 @@ def build_refinement_prompt(structure: dict, report: dict, iteration: int, targe
 {metrics_str}
 
 ### Semantic Feedback from Diagnostician
-{feedback_str}
+{feedback_str}{failed_str}
 
 ### Target
 Improve NSE to >= {target_nse:.2f}. Current NSE = {metrics.get('NSE', -999):.4f}.
@@ -602,11 +612,13 @@ class HydroAgent:
     Loop: calibrate → diagnose → record → check convergence → refine structure
     """
 
-    def __init__(self, llm_client: BaseLLMClient, max_iterations: int = 4, logger=None):
+    def __init__(self, llm_client: BaseLLMClient, max_iterations: int = 4,
+                 logger=None, enable_rollback: bool = True):
         self.llm = llm_client
         self.env = SuperflexEnv()
         self.doctor = HydroDiagnostician()
         self.max_iterations = max_iterations
+        self.enable_rollback = enable_rollback
         self.history: List[Dict[str, Any]] = []
         self.logger = logger  # Optional[ExperimentLogger]
 
@@ -632,6 +644,7 @@ class HydroAgent:
         best_nse = -999.0
         best_structure: Optional[dict] = None
         best_params: Dict[str, float] = {}
+        failed_attempts: List[Dict[str, Any]] = []  # track failed refinements for rollback
 
         for iteration in range(1, self.max_iterations + 1):
             t_iter_start = time.time()
@@ -671,7 +684,18 @@ class HydroAgent:
                 best_nse = nse
                 best_structure = deepcopy(structure)
                 best_params = params
+                failed_attempts.clear()  # reset failures on improvement
                 print(f"  *** New best! NSE={best_nse:.4f} ***")
+            elif self.enable_rollback and best_structure is not None:
+                # Record failed attempt and rollback to best
+                failed_attempts.append({
+                    'model_name': structure.get('model_name', ''),
+                    'nse': round(nse, 4),
+                })
+                structure = deepcopy(best_structure)
+                report = self.doctor.generate_report(obs, self._calibrate(best_structure, forcing, obs)['qsim']) \
+                    if best_nse > -900 else report
+                print(f"  Rollback to {best_structure.get('model_name', '')} (best NSE={best_nse:.4f})")
 
             # 5. Check convergence
             if best_nse >= target_nse:
@@ -683,7 +707,8 @@ class HydroAgent:
                 break
 
             # 6. Refine structure via LLM
-            new_structure = self._reason_and_refine(structure, report, iteration, target_nse)
+            new_structure = self._reason_and_refine(
+                structure, report, iteration, target_nse, failed_attempts=failed_attempts)
             if new_structure is not None:
                 structure = new_structure
                 print(f"  -> Refined to: {structure.get('model_name', 'unknown')}")
@@ -725,9 +750,11 @@ class HydroAgent:
         report: dict,
         iteration: int,
         target_nse: float,
+        failed_attempts: Optional[List[Dict[str, Any]]] = None,
     ) -> Optional[dict]:
         """Ask the LLM to analyze diagnostics and propose a refined structure."""
-        prompt = build_refinement_prompt(structure, report, iteration, target_nse)
+        prompt = build_refinement_prompt(structure, report, iteration, target_nse,
+                                         failed_attempts=failed_attempts)
 
         try:
             response_text = self.llm.chat(SYSTEM_PROMPT, prompt)

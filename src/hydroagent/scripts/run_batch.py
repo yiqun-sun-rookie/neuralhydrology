@@ -83,13 +83,18 @@ BASIN_PRESETS = {
 # ---------------------------------------------------------------------------
 
 ABLATION_CONFIGS = {
-    'full':            {'enabled_groups': None,  'strip_feedback': False, 'backend_override': None},
-    'no_feedback':     {'enabled_groups': None,  'strip_feedback': True,  'backend_override': None},
+    'full':            {'enabled_groups': None,  'strip_feedback': False, 'backend_override': None,
+                        'enable_rollback': True},
+    'no_rollback':     {'enabled_groups': None,  'strip_feedback': False, 'backend_override': None,
+                        'enable_rollback': False},
+    'no_feedback':     {'enabled_groups': None,  'strip_feedback': True,  'backend_override': None,
+                        'enable_rollback': True},
     'no_cross_domain': {'enabled_groups': ['hydro_basic', 'peak_timing', 'flow_regime', 'seasonal'],
-                        'strip_feedback': False, 'backend_override': None},
+                        'strip_feedback': False, 'backend_override': None, 'enable_rollback': True},
     'no_seasonal':     {'enabled_groups': ['hydro_basic', 'peak_timing', 'flow_regime', 'cross_domain'],
-                        'strip_feedback': False, 'backend_override': None},
-    'random':          {'enabled_groups': [],    'strip_feedback': False, 'backend_override': 'random'},
+                        'strip_feedback': False, 'backend_override': None, 'enable_rollback': True},
+    'random':          {'enabled_groups': [],    'strip_feedback': False, 'backend_override': 'random',
+                        'enable_rollback': True},
 }
 
 # ---------------------------------------------------------------------------
@@ -162,6 +167,7 @@ def run_single_experiment(
     enabled_groups = abl_cfg.get('enabled_groups')
     strip_feedback = abl_cfg.get('strip_feedback', False)
     backend_override = abl_cfg.get('backend_override')
+    enable_rollback = abl_cfg.get('enable_rollback', True)
 
     effective_backend = backend_override or backend
 
@@ -171,7 +177,8 @@ def run_single_experiment(
         logger = ExperimentLogger(exp_dir, basin_id, effective_backend,
                                   target_nse=target_nse, max_iterations=max_iter,
                                   ablation_variant=ablation)
-        agent = HydroAgent(llm_client=client, max_iterations=max_iter, logger=logger)
+        agent = HydroAgent(llm_client=client, max_iterations=max_iter, logger=logger,
+                           enable_rollback=enable_rollback)
 
         # Ablation: custom diagnostician with filtered metric groups
         if ablation:
