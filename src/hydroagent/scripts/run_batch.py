@@ -34,8 +34,10 @@ from hydroagent.agent import (
     DeepSeekClient,
     ClaudeClient,
     MockLLMClient,
+    RandomLLMClient,
 )
 from hydroagent.data_loading import load_camels_basin
+from hydroagent.diagnosis import HydroDiagnostician
 from hydroagent.experiment_logger import ExperimentLogger
 
 # ---------------------------------------------------------------------------
@@ -45,6 +47,49 @@ from hydroagent.experiment_logger import ExperimentLogger
 BASIN_PRESETS = {
     'phase2': ['01022500', '01013500', '08013000', '07014500'],
     'benchmark': ['01022500', '01547700', '02064000', '03015500', '01169000', '04056500'],
+    'paper': [
+        # 东部湿润（6 existing benchmark）
+        '01022500',  # Maine, snow=0.25, arid=0.59, 574km2
+        '01547700',  # Pennsylvania, 114km2
+        '02064000',  # Virginia, 428km2
+        '03015500',  # NY/PA, 785km2
+        '01169000',  # Massachusetts, 231km2
+        '04056500',  # Michigan, 2946km2
+        # 积雪主导（3 basins）
+        '11264500',  # Sierra Nevada, snow=0.91, arid=1.15, 468km2 [HUCdir=18]
+        '06623800',  # Wyoming, snow=0.75, arid=1.06, 188km2
+        '07083000',  # Colorado Rockies, snow=0.71, elev=3457m, 61km2
+        # 干旱/半干旱（3 basins）
+        '10259200',  # SoCal/Mojave, snow=0.00, arid=4.76, 79km2 [HUCdir=18]
+        '09447800',  # Arizona, snow=0.04, arid=3.04, 782km2 [HUCdir=15]
+        '08271000',  # New Mexico, snow=0.48, arid=2.38, 44km2
+        # 湿润亚热带（1）
+        '02177000',  # South Carolina, snow=0.03, arid=0.52, 527km2
+        # 中西部（1）
+        '05393500',  # Wisconsin, snow=0.20, arid=0.87, 220km2
+        # 大流域（1）
+        '06452000',  # Missouri/Great Plains, arid=1.74, 25791km2 [HUCdir=10]
+        # 太平洋西北（1）
+        '12010000',  # Washington, snow=0.02, arid=0.25, 142km2 [HUCdir=17]
+        # 大盆地/高山（1）
+        '10348850',  # Great Basin/NV, snow=0.83, arid=1.18, 19km2 [HUCdir=16]
+        # 太平洋北部山地（1）
+        '13313000',  # Idaho, snow=0.74, arid=0.79, 562km2 [HUCdir=17]
+    ],
+}
+
+# ---------------------------------------------------------------------------
+# Ablation configurations
+# ---------------------------------------------------------------------------
+
+ABLATION_CONFIGS = {
+    'full':            {'enabled_groups': None,  'strip_feedback': False, 'backend_override': None},
+    'no_feedback':     {'enabled_groups': None,  'strip_feedback': True,  'backend_override': None},
+    'no_cross_domain': {'enabled_groups': ['hydro_basic', 'peak_timing', 'flow_regime', 'seasonal'],
+                        'strip_feedback': False, 'backend_override': None},
+    'no_seasonal':     {'enabled_groups': ['hydro_basic', 'peak_timing', 'flow_regime', 'cross_domain'],
+                        'strip_feedback': False, 'backend_override': None},
+    'random':          {'enabled_groups': [],    'strip_feedback': False, 'backend_override': 'random'},
 }
 
 # ---------------------------------------------------------------------------
@@ -68,6 +113,8 @@ def create_llm_client(
         return ClaudeClient(api_key=api_key, model=model or 'claude-opus-4-6')
     elif backend == 'ollama':
         return OllamaClient(model=model or 'llama3.2')
+    elif backend == 'random':
+        return RandomLLMClient(seed=42)
     else:
         raise ValueError(f"Unknown backend: {backend}")
 
@@ -87,17 +134,20 @@ def run_single_experiment(
     target_nse: float = 0.6,
     api_key: Optional[str] = None,
     model: Optional[str] = None,
+    ablation: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Run one (basin, backend) experiment. Returns a summary row dict.
 
     Wrapped in try/except so failures don't kill the batch.
     """
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    exp_dir = output_dir / f"{basin_id}_{backend}_{timestamp}"
+    ablation_tag = ablation or 'default'
+    exp_dir = output_dir / f"{basin_id}_{backend}_{ablation_tag}_{timestamp}"
 
     summary = {
         'basin_id': basin_id,
         'backend': backend,
+        'ablation': ablation or '',
         'best_nse': None,
         'converged': False,
         'total_iterations': 0,
@@ -107,12 +157,34 @@ def run_single_experiment(
         'error': '',
     }
 
+    # Resolve ablation config
+    abl_cfg = ABLATION_CONFIGS.get(ablation, ABLATION_CONFIGS['full']) if ablation else {}
+    enabled_groups = abl_cfg.get('enabled_groups')
+    strip_feedback = abl_cfg.get('strip_feedback', False)
+    backend_override = abl_cfg.get('backend_override')
+
+    effective_backend = backend_override or backend
+
     t_start = time.time()
     try:
-        client = create_llm_client(backend, api_key=api_key, model=model)
-        logger = ExperimentLogger(exp_dir, basin_id, backend,
-                                  target_nse=target_nse, max_iterations=max_iter)
+        client = create_llm_client(effective_backend, api_key=api_key, model=model)
+        logger = ExperimentLogger(exp_dir, basin_id, effective_backend,
+                                  target_nse=target_nse, max_iterations=max_iter,
+                                  ablation_variant=ablation)
         agent = HydroAgent(llm_client=client, max_iterations=max_iter, logger=logger)
+
+        # Ablation: custom diagnostician with filtered metric groups
+        if ablation:
+            doctor = HydroDiagnostician(enabled_groups=enabled_groups)
+            if strip_feedback:
+                _orig_report = doctor.generate_report
+                def _stripped_report(o, s, _orig=_orig_report):
+                    result = _orig(o, s)
+                    result['semantic_feedback'] = []
+                    return result
+                doctor.generate_report = _stripped_report
+            agent.doctor = doctor
+
         result = agent.solve(forcing, obs, target_nse=target_nse)
 
         summary['best_nse'] = round(result['best_nse'], 4)
@@ -133,7 +205,7 @@ def run_single_experiment(
 # ---------------------------------------------------------------------------
 
 SUMMARY_FIELDS = [
-    'basin_id', 'backend', 'best_nse', 'converged', 'total_iterations',
+    'basin_id', 'backend', 'ablation', 'best_nse', 'converged', 'total_iterations',
     'model_name', 'duration_s', 'experiment_dir', 'error',
 ]
 
@@ -215,6 +287,9 @@ def main():
                         help='Model name override')
     parser.add_argument('--data-root', type=str, default=None,
                         help='CAMELS-US data root (default: auto-detect)')
+    parser.add_argument('--ablation', type=str, default=None,
+                        choices=list(ABLATION_CONFIGS.keys()),
+                        help='Ablation variant (default: None = full pipeline)')
 
     args = parser.parse_args()
 
@@ -227,6 +302,7 @@ def main():
     print("=" * 60)
     print(f"Basins ({len(basins)}):   {', '.join(basins)}")
     print(f"Backends ({len(backends)}): {', '.join(backends)}")
+    print(f"Ablation:    {args.ablation or '(none)'}")
     print(f"Max iter:    {args.max_iter}")
     print(f"Target NSE:  {args.target_nse}")
     print(f"Output:      {output_dir}")
@@ -271,6 +347,7 @@ def main():
                 target_nse=args.target_nse,
                 api_key=args.api_key,
                 model=args.model,
+                ablation=args.ablation,
             )
             summaries.append(row)
             nse_str = f"{row['best_nse']:.4f}" if row['best_nse'] is not None else 'FAIL'

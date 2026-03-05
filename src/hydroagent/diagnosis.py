@@ -7,6 +7,20 @@ from scipy.signal import find_peaks, periodogram, hilbert
 from scipy.stats import wasserstein_distance
 
 
+METRIC_GROUPS = {
+    'hydro_basic':  ['NSE', 'KGE', 'KGE_r', 'KGE_alpha', 'KGE_beta'],
+    'peak_timing':  ['Peak_Lag_Hours', 'Peak_MAPE', 'Onset_Lag_Hours'],
+    'flow_regime':  ['Low_Flow_Bias', 'High_Freq_Energy_Ratio', 'Temporal_Wasserstein_Dist',
+                     'Recession_K_Ratio', 'FDC_Slope_Error'],
+    'seasonal':     ['Winter_Bias', 'Snow_Season_NSE', 'Seasonal_Amplitude_Ratio'],
+    'cross_domain': ['Hjorth_Activity_Ratio', 'Hjorth_Mobility_Ratio', 'Hjorth_Complexity_Ratio',
+                     'SSIM_1D', 'ITAE_Ratio', 'TF_Envelope_Misfit', 'TF_Phase_Misfit',
+                     'Perkins_Skill_Score'],
+}
+
+_METRIC_TO_GROUP = {m: g for g, ms in METRIC_GROUPS.items() for m in ms}
+
+
 class HydroDiagnostician:
     """
     Module A: 诊断评价系统
@@ -19,10 +33,11 @@ class HydroDiagnostician:
     - 最优传输 (Temporal Wasserstein Distance)
     """
 
-    def __init__(self, cfg: Dict[str, Any] = None):
+    def __init__(self, cfg: Dict[str, Any] = None, enabled_groups=None):
         cfg = cfg or {}
         self.window_hours = cfg.get('window_hours', 12)
         self.min_prominence_factor = cfg.get('min_prominence_factor', 0.05)
+        self.enabled_groups = frozenset(enabled_groups) if enabled_groups is not None else None
 
     def generate_report(self, obs: pd.Series, sim: pd.Series) -> Dict[str, Any]:
         """核心入口：计算指标并生成报告。"""
@@ -81,6 +96,11 @@ class HydroDiagnostician:
             'TF_Phase_Misfit': round(tf_phase, 4),
             'Perkins_Skill_Score': round(perkins_ss, 4),
         }
+
+        # --- Ablation: filter metrics by enabled groups ---
+        if self.enabled_groups is not None:
+            metrics = {k: v for k, v in metrics.items()
+                       if _METRIC_TO_GROUP.get(k, 'hydro_basic') in self.enabled_groups}
 
         feedback = self._generate_feedback(metrics)
         return {'metrics': metrics, 'semantic_feedback': feedback}

@@ -525,6 +525,71 @@ class OllamaClient(BaseLLMClient):
         return data.get("message", {}).get("content", "")
 
 
+class RandomLLMClient(BaseLLMClient):
+    """Ablation lower bound: random structure mutations, ignores diagnostics."""
+
+    def __init__(self, seed=42):
+        self._rng = np.random.RandomState(seed)
+
+    def chat(self, system_prompt: str, user_message: str) -> str:
+        structure = MockLLMClient._extract_structure(user_message)
+        new_structure = deepcopy(structure)
+        layer_ids = [l['id'] for l in new_structure.get('layers', [])]
+        root_id = layer_ids[0] if layer_ids else 'soil'
+
+        mutations = ['add_linear', 'add_power', 'remove_layer', 'swap_soil']
+        choice = mutations[self._rng.randint(0, len(mutations))]
+
+        if choice == 'add_linear':
+            new_id = f'rand_lin_{self._rng.randint(0, 100)}'
+            new_structure['layers'].append({
+                'id': new_id,
+                'type': 'LinearReservoir',
+                'parameters': ['k'],
+                'inputs': [f'{root_id}.runoff'],
+            })
+            new_structure.setdefault('system_output', []).append(new_id)
+
+        elif choice == 'add_power':
+            new_id = f'rand_pow_{self._rng.randint(0, 100)}'
+            new_structure['layers'].append({
+                'id': new_id,
+                'type': 'PowerReservoir',
+                'parameters': ['k', 'alpha'],
+                'inputs': [f'{root_id}.runoff'],
+            })
+            new_structure.setdefault('system_output', []).append(new_id)
+
+        elif choice == 'remove_layer' and len(new_structure.get('layers', [])) > 2:
+            # Remove a random non-root layer
+            removable = [i for i, l in enumerate(new_structure['layers'])
+                         if i > 0]
+            if removable:
+                idx = removable[self._rng.randint(0, len(removable))]
+                removed = new_structure['layers'].pop(idx)
+                sys_out = new_structure.get('system_output', [])
+                if removed['id'] in sys_out:
+                    sys_out.remove(removed['id'])
+                if not sys_out and new_structure['layers']:
+                    sys_out.append(new_structure['layers'][-1]['id'])
+
+        elif choice == 'swap_soil':
+            for layer in new_structure['layers']:
+                if layer['type'] == 'UnsaturatedReservoir':
+                    layer['type'] = 'ProductionStore'
+                    layer['parameters'] = ['x1', 'alpha', 'beta', 'ni']
+                    layer['inputs'] = ['ep', 'prcp']
+                    break
+                elif layer['type'] == 'ProductionStore':
+                    layer['type'] = 'UnsaturatedReservoir'
+                    layer['parameters'] = ['Smax', 'beta']
+                    layer['inputs'] = ['prcp', 'ep']
+                    break
+
+        new_structure['model_name'] = f'random_{choice}_v{self._rng.randint(1, 99)}'
+        return json.dumps(new_structure)
+
+
 # ---------------------------------------------------------------------------
 # Step 4: HydroAgent main class
 # ---------------------------------------------------------------------------
