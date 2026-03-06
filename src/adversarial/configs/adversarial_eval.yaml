@@ -1,0 +1,35 @@
+model:
+  run_dir: "G:/github/pycharm/projects/neuralhydrology/runs/05_full_531_basins_smoke_v2_2026_0217_1632_ep1"
+  device: "cpu"
+
+data:
+  n_basins: 15
+  attr_file: null  # Set to path of attributes CSV
+  period: "test"
+
+attacks:
+  auto_pgd:
+    n_iter: 50
+    n_restarts: 1
+  cw_regression:
+    n_iter: 200
+    target_nse: 0.0
+    lr: 0.01
+    binary_search_steps: 5
+  sparse_temporal:
+    max_steps_fraction: 0.05  # 5% of timesteps
+    n_iter: 100
+  causal_trigger:
+    pre_windows: [1, 3, 7, 14]
+    n_iter: 100
+  spectral:
+    freq_bands: ["all", "low", "mid", "high"]
+    n_iter: 100
+  uap:
+    n_iter: 50
+
+epsilons: [0.01, 0.02, 0.05, 0.1, 0.2, 0.5]
+constraint_levels: ["lp", "physical", "statistical"]
+targets: ["untargeted", "flood", "lowflow"]
+
+output_dir: "results/adversarial_eval"
