@@ -21,9 +21,12 @@ if os.path.isdir(_SFPY_DIR) and _SFPY_DIR not in sys.path:
 from superflexpy.implementation.root_finders.pegasus import PegasusPython
 from superflexpy.implementation.numerical_approximators.implicit_euler import ImplicitEulerPython
 from superflexpy.implementation.elements.hbv import PowerReservoir, UnsaturatedReservoir
-from superflexpy.implementation.elements.hymod import LinearReservoir
+from superflexpy.implementation.elements.hymod import LinearReservoir, UpperZone
 from superflexpy.implementation.elements.thur_model_hess import SnowReservoir, HalfTriangularLag
-from superflexpy.implementation.elements.gr4j import ProductionStore, RoutingStore, UnitHydrograph1, UnitHydrograph2
+from superflexpy.implementation.elements.gr4j import (
+    InterceptionFilter, ProductionStore, RoutingStore, UnitHydrograph1, UnitHydrograph2,
+)
+from .custom_elements import DeepGroundwater, ConveyanceLoss
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -47,6 +50,17 @@ _REGISTRY: Dict[str, Dict[str, Any]] = {
             'beta': (0.5, 5.0),
         },
         'states': {'S0': 50.0, 'PET': None},
+        'input_map': 'P_PET',
+    },
+    'UpperZone': {
+        'cls': UpperZone,
+        'params': {'Smax': 200.0, 'm': 0.01, 'beta': 2.0},
+        'bounds': {
+            'Smax': (50.0, 500.0),
+            'm': (0.001, 0.1),
+            'beta': (0.5, 5.0),
+        },
+        'states': {'S0': 50.0},
         'input_map': 'P_PET',
     },
     'PowerReservoir': {
@@ -84,8 +98,34 @@ _REGISTRY: Dict[str, Dict[str, Any]] = {
         'states': {'S0': 50.0},
         'input_map': 'P',
     },
+    'DeepGroundwater': {
+        'cls': DeepGroundwater,
+        'params': {'k': 0.002, 'f_loss': 0.01},
+        'bounds': {'k': (0.0001, 0.02), 'f_loss': (0.0, 0.3)},
+        'states': {'S0': 20.0},
+        'input_map': 'P',
+    },
+    'ConveyanceLoss': {
+        'cls': ConveyanceLoss,
+        'params': {'k': 0.1, 'f_loss': 0.05},
+        'bounds': {'k': (0.01, 0.5), 'f_loss': (0.0, 0.5)},
+        'states': {'S0': 5.0},
+        'input_map': 'P',
+    },
 }
 
+
+# Elements without ODE solver (BaseElement subclasses)
+_BASEELEM_REGISTRY: Dict[str, Dict[str, Any]] = {
+    'InterceptionFilter': {
+        'cls': InterceptionFilter,
+        'params': {},
+        'bounds': {},
+        'states': {},
+        'input_map': 'PET_P',
+        'output_index': 1,  # net_P (throughfall), index 0 is net_PET
+    },
+}
 
 _LAG_REGISTRY: Dict[str, Dict[str, Any]] = {
     'HalfTriangularLag': {'cls': HalfTriangularLag, 'default': 2.0, 'bounds': (1.0, 10.0)},
@@ -105,8 +145,14 @@ def _make_lag_element(type_name: str, eid: str, lag_time=None):
 
 def _make_element(type_name: str, eid: str):
     """Create a SuperflexPy element with defaults and a fresh ODE solver."""
-    reg = _REGISTRY[type_name]
     safe = eid.replace('_', '')  # SuperflexPy ids must not contain '_'
+
+    # BaseElement (no solver) — e.g. InterceptionFilter
+    if type_name in _BASEELEM_REGISTRY:
+        reg = _BASEELEM_REGISTRY[type_name]
+        return reg['cls'](id=safe)
+
+    reg = _REGISTRY[type_name]
     solver = ImplicitEulerPython(root_finder=PegasusPython())
     return reg['cls'](
         parameters=dict(reg['params']),
@@ -213,7 +259,7 @@ class SuperflexEnv:
 
         for lyr in layers:
             lid, ltype = lyr['id'], lyr['type']
-            if ltype not in _REGISTRY:
+            if ltype not in _REGISTRY and ltype not in _BASEELEM_REGISTRY:
                 raise ValueError(f'Unknown component: {ltype}')
 
             els[lid] = _make_element(ltype, lid)
@@ -286,16 +332,19 @@ class SuperflexEnv:
         lag_els = self._topo.get('lag_els', {})
 
         for el in self._sfpy_els.values():
-            el.reset_states()
-            el.set_timestep(1.0)
+            if hasattr(el, 'reset_states'):
+                el.reset_states()
+            if hasattr(el, 'set_timestep'):
+                el.set_timestep(1.0)
         for lag_el in lag_els.values():
             lag_el.reset_states()
 
         for lid in self._topo['order']:
             el = self._sfpy_els[lid]
-            el_p = {k: v for k, v in params.items() if k in el.get_parameters_name()}
-            if el_p:
-                el.set_parameters(el_p)
+            if hasattr(el, 'get_parameters_name'):
+                el_p = {k: v for k, v in params.items() if k in el.get_parameters_name()}
+                if el_p:
+                    el.set_parameters(el_p)
         for lag_el in lag_els.values():
             lag_p = {k: v for k, v in params.items() if k in lag_el.get_parameters_name()}
             if lag_p:
@@ -318,7 +367,8 @@ class SuperflexEnv:
                         inp_arrays.append(self._resolve_forcing(inp.lower(), p_arr, e_arr, t_arr))
                 el.set_input(inp_arrays)
             elif dep['root']:
-                input_map = _REGISTRY[ltype].get('input_map', 'P')
+                reg = _REGISTRY.get(ltype) or _BASEELEM_REGISTRY.get(ltype, {})
+                input_map = reg.get('input_map', 'P')
                 el.set_input(self._build_root_input(input_map, p_arr, e_arr, t_arr))
             else:
                 src = dep['sources'][0]
@@ -335,7 +385,10 @@ class SuperflexEnv:
 
             try:
                 out = el.get_output(solve=True)
-                raw = out[0]
+                # BaseElement (e.g. InterceptionFilter) may use a specific output index
+                base_reg = _BASEELEM_REGISTRY.get(ltype)
+                out_idx = base_reg['output_index'] if base_reg else 0
+                raw = out[out_idx]
             except RuntimeError:
                 raw = np.full_like(p_arr, np.nan)
 
@@ -359,9 +412,10 @@ class SuperflexEnv:
         """Return [(param_name, lo, hi), ...] for all calibratable parameters."""
         pinfo = []
         for lid in self._topo['order']:
-            reg = _REGISTRY[self._topo['types'][lid]]
+            ltype = self._topo['types'][lid]
+            reg = _REGISTRY.get(ltype) or _BASEELEM_REGISTRY.get(ltype, {})
             safe = self._topo['id_map'][lid]
-            for pn, (lo, hi) in reg['bounds'].items():
+            for pn, (lo, hi) in reg.get('bounds', {}).items():
                 pinfo.append((f'{safe}_{pn}', lo, hi))
 
         for src, consumers in self._topo['fan_out'].items():

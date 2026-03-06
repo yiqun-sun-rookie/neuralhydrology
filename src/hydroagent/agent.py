@@ -26,45 +26,71 @@ from .environment import SuperflexEnv
 # ---------------------------------------------------------------------------
 
 AVAILABLE_COMPONENTS = """
-Available SuperflexPy Components (6 types):
+Available SuperflexPy Components (10 types):
+
+== Preprocessing ==
+1. InterceptionFilter (GR4J-style)
+   - Role: Canopy interception — removes min(PET, P) from precipitation before it reaches soil
+   - Parameters: NONE (zero-parameter filter)
+   - Inputs: ep, prcp (PET first, then precipitation)
+   - Output: net precipitation (throughfall) after interception loss
+   - Best for: Forested basins where canopy intercepts significant rainfall
 
 == Runoff Generation ==
-1. UnsaturatedReservoir (HBV-style)
+2. UnsaturatedReservoir (HBV-style)
    - Role: Soil moisture accounting (partitions precipitation into runoff vs storage)
    - Parameters: Smax (max storage, mm), Ce, m, beta (nonlinearity)
    - Inputs: prcp, ep (precipitation + potential evapotranspiration)
    - Best for: General-purpose soil moisture partitioning
 
-2. ProductionStore (GR4J-style)
+3. UpperZone (Hymod-style)
+   - Role: Alternative soil moisture reservoir with different ET smoothing
+   - Parameters: Smax (max storage, mm), m (ET smoothing), beta (runoff exponent)
+   - Inputs: prcp, ep (precipitation + potential evapotranspiration)
+   - Best for: Basins where UnsaturatedReservoir underperforms; 3 params vs 4 (simpler)
+
+4. ProductionStore (GR4J-style)
    - Role: Alternative runoff generation with different saturation curve
    - Parameters: x1 (max capacity, mm), alpha, beta, ni
    - Inputs: ep, prcp (NOTE: PET first, then precipitation — reversed order)
    - Best for: Basins where UnsaturatedReservoir underperforms; provides structural diversity
 
-3. SnowReservoir (Thur-model)
+5. SnowReservoir (Thur-model)
    - Role: Snow accumulation and melt driven by temperature threshold
    - Parameters: t0 (melt threshold, °C), k (melt rate), m
    - Inputs: prcp, temperature (requires temp data in forcing)
    - Best for: Snow-dominated or cold-region basins with seasonal snowpack
 
 == Flow Routing ==
-4. PowerReservoir (HBV-style)
+6. PowerReservoir (HBV-style)
    - Role: Fast/nonlinear flow routing (surface runoff, interflow)
    - Parameters: k (residence time), alpha (nonlinearity exponent)
    - Inputs: inflow from upstream element
    - Best for: Quick-response flow paths
 
-5. LinearReservoir (Hymod-style)
+7. LinearReservoir (Hymod-style)
    - Role: Slow/linear flow routing (baseflow, groundwater)
    - Parameters: k (residence time)
    - Inputs: inflow from upstream element
    - Best for: Baseflow, slow groundwater discharge
 
-6. RoutingStore (GR4J-style)
+8. RoutingStore (GR4J-style)
    - Role: Nonlinear routing with groundwater exchange term
    - Parameters: x2 (exchange coeff), x3 (capacity, mm), gamma, omega
    - Inputs: inflow from upstream element
    - Best for: Complex routing with gaining/losing stream interactions
+
+9. DeepGroundwater (custom)
+   - Role: Very slow deep aquifer with leakage loss to deep percolation
+   - Parameters: k (very slow drainage, 0.0001-0.02), f_loss (deep leakage fraction, 0-0.3)
+   - Inputs: inflow from upstream element (recharge)
+   - Best for: Basins with significant deep baseflow, long recession tails, or losing streams
+
+10. ConveyanceLoss (custom)
+    - Role: Channel routing with transmission losses to alluvium
+    - Parameters: k (routing rate), f_loss (transmission loss fraction, water lost to ground)
+    - Inputs: inflow from upstream element
+    - Best for: Arid/semi-arid basins with ephemeral streams and channel transmission losses
 
 Connection Rules:
 - Layers are connected sequentially; each layer's input references upstream outputs.
@@ -72,6 +98,7 @@ Connection Rules:
 - system_output lists which layer outputs are summed as total discharge.
 - lag_functions (optional): list of {"target": "<layer_id>", "lag_steps": N} for channel routing delay.
 - SnowReservoir MUST be a root layer (receives forcing directly) and needs temperature data.
+- InterceptionFilter MUST be a root layer (receives forcing directly); its output is net precipitation.
 - ProductionStore input order is [ep, prcp], NOT [prcp, ep].
 """
 
