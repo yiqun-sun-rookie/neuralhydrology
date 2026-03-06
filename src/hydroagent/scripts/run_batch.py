@@ -84,16 +84,16 @@ BASIN_PRESETS = {
 
 ABLATION_CONFIGS = {
     'full':            {'enabled_groups': None,  'strip_feedback': False, 'backend_override': None,
-                        'enable_rollback': True},
-    'no_rollback':     {'enabled_groups': None,  'strip_feedback': False, 'backend_override': None,
                         'enable_rollback': False},
     'no_feedback':     {'enabled_groups': None,  'strip_feedback': True,  'backend_override': None,
-                        'enable_rollback': True},
+                        'enable_rollback': False},
     'no_cross_domain': {'enabled_groups': ['hydro_basic', 'peak_timing', 'flow_regime', 'seasonal'],
-                        'strip_feedback': False, 'backend_override': None, 'enable_rollback': True},
+                        'strip_feedback': False, 'backend_override': None, 'enable_rollback': False},
     'no_seasonal':     {'enabled_groups': ['hydro_basic', 'peak_timing', 'flow_regime', 'cross_domain'],
-                        'strip_feedback': False, 'backend_override': None, 'enable_rollback': True},
+                        'strip_feedback': False, 'backend_override': None, 'enable_rollback': False},
     'random':          {'enabled_groups': [],    'strip_feedback': False, 'backend_override': 'random',
+                        'enable_rollback': False},
+    'with_rollback':   {'enabled_groups': None,  'strip_feedback': False, 'backend_override': None,
                         'enable_rollback': True},
 }
 
