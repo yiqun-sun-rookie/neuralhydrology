@@ -613,12 +613,13 @@ class HydroAgent:
     """
 
     def __init__(self, llm_client: BaseLLMClient, max_iterations: int = 4,
-                 logger=None, enable_rollback: bool = True):
+                 logger=None, enable_rollback: bool = True, rollback_patience: int = 2):
         self.llm = llm_client
         self.env = SuperflexEnv()
         self.doctor = HydroDiagnostician()
         self.max_iterations = max_iterations
         self.enable_rollback = enable_rollback
+        self.rollback_patience = rollback_patience
         self.history: List[Dict[str, Any]] = []
         self.logger = logger  # Optional[ExperimentLogger]
 
@@ -645,6 +646,7 @@ class HydroAgent:
         best_structure: Optional[dict] = None
         best_params: Dict[str, float] = {}
         failed_attempts: List[Dict[str, Any]] = []  # track failed refinements for rollback
+        steps_since_improve = 0  # patience counter for rollback
 
         for iteration in range(1, self.max_iterations + 1):
             t_iter_start = time.time()
@@ -679,23 +681,33 @@ class HydroAgent:
                 duration_s = time.time() - t_iter_start
                 self.logger.log_iteration(iteration, structure, cal_result, report, duration_s)
 
-            # 4. Update best
+            # 4. Update best (patience-based rollback)
             if nse > best_nse:
                 best_nse = nse
                 best_structure = deepcopy(structure)
                 best_params = params
-                failed_attempts.clear()  # reset failures on improvement
+                failed_attempts.clear()
+                steps_since_improve = 0
                 print(f"  *** New best! NSE={best_nse:.4f} ***")
             elif self.enable_rollback and best_structure is not None:
-                # Record failed attempt and rollback to best
+                steps_since_improve += 1
                 failed_attempts.append({
                     'model_name': structure.get('model_name', ''),
                     'nse': round(nse, 4),
                 })
-                structure = deepcopy(best_structure)
-                report = self.doctor.generate_report(obs, self._calibrate(best_structure, forcing, obs)['qsim']) \
-                    if best_nse > -900 else report
-                print(f"  Rollback to {best_structure.get('model_name', '')} (best NSE={best_nse:.4f})")
+                if steps_since_improve >= self.rollback_patience:
+                    # Patience exhausted — rollback to best known structure
+                    structure = deepcopy(best_structure)
+                    report = self.doctor.generate_report(
+                        obs, self._calibrate(best_structure, forcing, obs)['qsim']
+                    ) if best_nse > -900 else report
+                    steps_since_improve = 0
+                    print(f"  Rollback to {best_structure.get('model_name', '')} "
+                          f"(best NSE={best_nse:.4f}) after {self.rollback_patience} failed steps")
+                else:
+                    # Still within patience — keep exploring from current structure
+                    print(f"  NSE declined ({nse:.4f} < {best_nse:.4f}), "
+                          f"patience {steps_since_improve}/{self.rollback_patience}")
 
             # 5. Check convergence
             if best_nse >= target_nse:
