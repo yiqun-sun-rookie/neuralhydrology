@@ -75,7 +75,9 @@ class CudaLSTMWrapper(nn.Module):
         for i, feat in enumerate(self.dynamic_features):
             x_d_dict[feat] = x_d[:, :, i:i + 1]  # [B, T, 1]
 
-        data = {"x_d": x_d_dict, "x_s": x_s}
+        data = {"x_d": x_d_dict}
+        if self.n_static > 0:
+            data["x_s"] = x_s
 
         predictions = self.model(data)
         return predictions["y_hat"]  # [B, T, 1]

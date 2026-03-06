@@ -19,7 +19,8 @@ class StatisticalConstraint(PhysicalConstraint):
         # First apply physical projection
         x_proj = super().project(x_clean, x_adv)
 
-        # Then adjust to match mean and std of original per feature
+        # Then adjust to match mean and std of original per feature (autograd-safe)
+        channels = []
         for f in range(x_proj.shape[-1]):
             orig = x_clean[:, :, f]  # [B, T]
             proj = x_proj[:, :, f]  # [B, T]
@@ -32,9 +33,9 @@ class StatisticalConstraint(PhysicalConstraint):
             # Standardize then rescale to match original moments
             proj_normed = (proj - proj_mean) / proj_std
             proj_matched = proj_normed * orig_std + orig_mean
+            channels.append(proj_matched.unsqueeze(-1))
 
-            x_proj = x_proj.clone()
-            x_proj[:, :, f] = proj_matched
+        x_proj = torch.cat(channels, dim=-1)
 
         # Re-apply Lp bounds (moment matching may violate epsilon)
         x_proj = super(PhysicalConstraint, self).project(x_clean, x_proj)

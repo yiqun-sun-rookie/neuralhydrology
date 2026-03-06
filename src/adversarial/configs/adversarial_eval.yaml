@@ -1,11 +1,27 @@
 model:
-  run_dir: "G:/github/pycharm/projects/neuralhydrology/runs/05_full_531_basins_smoke_v2_2026_0217_1632_ep1"
+  run_dir: "results/05_full_531_basins/full_training_nse_2025_1025_1821_ep50"
   device: "cpu"
 
 data:
-  n_basins: 15
-  attr_file: null  # Set to path of attributes CSV
+  data_dir: "data/CAMELS_US"
   period: "test"
+  # 15 basins sampled from the 67 test basins (diverse HUC regions)
+  basins:
+    - "01055000"   # HUC-01 New England
+    - "01544500"   # HUC-01
+    - "02198100"   # HUC-02 Mid-Atlantic
+    - "02372250"   # HUC-03 Southeast
+    - "03281500"   # HUC-03
+    - "04059500"   # HUC-04 Great Lakes
+    - "05495000"   # HUC-05 Ohio
+    - "06311000"   # HUC-06 Missouri
+    - "07375000"   # HUC-07 Lower Mississippi
+    - "08101000"   # HUC-08 Texas-Gulf
+    - "09430500"   # HUC-09 Colorado
+    - "10023000"   # HUC-10 Great Basin
+    - "11124500"   # HUC-11 Pacific (CA)
+    - "12054000"   # HUC-12 Pacific Northwest
+    - "13310700"   # HUC-13 Snake/Columbia
 
 attacks:
   auto_pgd:

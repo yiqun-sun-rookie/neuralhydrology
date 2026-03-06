@@ -32,17 +32,18 @@ class PhysicalConstraint(LpConstraint):
         # First apply Lp projection
         x_proj = super().project(x_clean, x_adv)
 
-        # Then clip to physical bounds in real space
+        # Then clip to physical bounds in real space (autograd-safe, no inplace ops)
         center = self._scaler_center.to(x_proj.device)
         scale = self._scaler_scale.to(x_proj.device)
 
+        channels = []
         for i, feat in enumerate(self.feature_names):
+            ch = x_proj[:, :, i:i+1]
             if feat in _PHYSICAL_BOUNDS:
                 lo, hi = _PHYSICAL_BOUNDS[feat]
-                # Convert bounds to normalized space
                 lo_norm = (lo - center[i]) / scale[i].clamp(min=1e-8)
                 hi_norm = (hi - center[i]) / scale[i].clamp(min=1e-8)
-                x_proj = x_proj.clone()
-                x_proj[:, :, i] = x_proj[:, :, i].clamp(lo_norm.item(), hi_norm.item())
+                ch = ch.clamp(lo_norm.item(), hi_norm.item())
+            channels.append(ch)
 
-        return x_proj
+        return torch.cat(channels, dim=-1)
