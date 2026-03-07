@@ -14,9 +14,25 @@ def compute_nse(y_obs: torch.Tensor, y_pred: torch.Tensor) -> float:
 
 def compute_kge(y_obs: torch.Tensor, y_pred: torch.Tensor) -> float:
     """Kling-Gupta Efficiency."""
-    r = float(torch.corrcoef(torch.stack([y_obs.flatten(), y_pred.flatten()]))[0, 1])
-    alpha = float(y_pred.std() / y_obs.std().clamp(min=1e-10))
-    beta = float(y_pred.mean() / y_obs.mean().clamp(min=1e-10))
+    obs_flat = y_obs.flatten()
+    pred_flat = y_pred.flatten()
+
+    # Correlation
+    r = float(torch.corrcoef(torch.stack([obs_flat, pred_flat]))[0, 1])
+    if not torch.isfinite(torch.tensor(r)):
+        r = 0.0
+
+    # Variability ratio
+    obs_std = obs_flat.std()
+    alpha = float(pred_flat.std() / obs_std) if obs_std > 1e-8 else 1.0
+
+    # Bias ratio — guard against near-zero observed mean
+    obs_mean = obs_flat.mean()
+    if obs_mean.abs() < 1e-8:
+        beta = 1.0
+    else:
+        beta = float(pred_flat.mean() / obs_mean)
+
     return float(1.0 - ((r - 1) ** 2 + (alpha - 1) ** 2 + (beta - 1) ** 2) ** 0.5)
 
 

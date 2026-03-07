@@ -29,13 +29,20 @@ class CWRegression(BaseAttack):
                y_obs: torch.Tensor) -> torch.Tensor:
         best_adv = x_d.clone()
         best_l2 = torch.tensor(float("inf"))
+        # Track best-effort (lowest NSE achieved) in case no step succeeds
+        best_effort_adv = x_d.clone()
+        best_effort_nse = torch.tensor(float("inf"))
 
         c_lo, c_hi = 0.0, self.c_init * 10.0
         c = self.c_init
 
         for _ in range(self.binary_search_steps):
-            x_adv, success = self._optimize(x_d, x_s, y_obs, c)
+            x_adv, success, final_nse = self._optimize(x_d, x_s, y_obs, c)
             l2 = (x_adv - x_d).reshape(x_d.shape[0], -1).norm(dim=1).mean()
+
+            if final_nse < best_effort_nse:
+                best_effort_nse = final_nse
+                best_effort_adv = x_adv.clone()
 
             if success and l2 < best_l2:
                 best_l2 = l2
@@ -46,6 +53,9 @@ class CWRegression(BaseAttack):
 
             c = (c_lo + c_hi) / 2.0
 
+        # If no step achieved target, return best-effort (most damage)
+        if best_l2 == float("inf"):
+            return best_effort_adv
         return best_adv
 
     def _optimize(self, x_d, x_s, y_obs, c):
@@ -77,4 +87,4 @@ class CWRegression(BaseAttack):
             final_nse = self.compute_loss(y_pred, y_obs)
             success = final_nse.item() <= self.target_nse
 
-        return x_adv.detach(), success
+        return x_adv.detach(), success, final_nse.item()
