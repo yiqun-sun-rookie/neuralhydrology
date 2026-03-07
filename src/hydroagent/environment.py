@@ -27,6 +27,7 @@ from superflexpy.implementation.elements.gr4j import (
     InterceptionFilter, ProductionStore, RoutingStore, UnitHydrograph1, UnitHydrograph2,
 )
 from .custom_elements import DeepGroundwater, ConveyanceLoss
+from .marrmot_elements import InterceptionBucket, ThresholdReservoir, PercolationStore, SaturationAreaStore
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -111,6 +112,34 @@ _REGISTRY: Dict[str, Dict[str, Any]] = {
         'bounds': {'k': (0.01, 0.5), 'f_loss': (0.0, 0.5)},
         'states': {'S0': 5.0},
         'input_map': 'P',
+    },
+    'InterceptionBucket': {
+        'cls': InterceptionBucket,
+        'params': {'Smax': 3.0, 'Ce': 1.0},
+        'bounds': {'Smax': (0.5, 10.0), 'Ce': (0.3, 1.5)},
+        'states': {'S0': 0.0},
+        'input_map': 'P_PET',
+    },
+    'ThresholdReservoir': {
+        'cls': ThresholdReservoir,
+        'params': {'k': 0.05, 'Sth': 20.0},
+        'bounds': {'k': (0.001, 0.3), 'Sth': (0.0, 100.0)},
+        'states': {'S0': 10.0},
+        'input_map': 'P',
+    },
+    'PercolationStore': {
+        'cls': PercolationStore,
+        'params': {'Smax': 100.0, 'Pmax': 5.0, 'alpha': 2.0},
+        'bounds': {'Smax': (20.0, 500.0), 'Pmax': (0.5, 20.0), 'alpha': (1.0, 4.0)},
+        'states': {'S0': 30.0},
+        'input_map': 'P',
+    },
+    'SaturationAreaStore': {
+        'cls': SaturationAreaStore,
+        'params': {'Smax': 200.0, 'b': 3.0},
+        'bounds': {'Smax': (50.0, 500.0), 'b': (0.5, 10.0)},
+        'states': {'S0': 50.0},
+        'input_map': 'P_PET',
     },
 }
 

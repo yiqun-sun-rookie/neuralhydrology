@@ -26,7 +26,7 @@ from .environment import SuperflexEnv
 # ---------------------------------------------------------------------------
 
 AVAILABLE_COMPONENTS = """
-Available SuperflexPy Components (10 types):
+Available SuperflexPy Components (14 types):
 
 == Preprocessing ==
 1. InterceptionFilter (GR4J-style)
@@ -36,57 +36,83 @@ Available SuperflexPy Components (10 types):
    - Output: net precipitation (throughfall) after interception loss
    - Best for: Forested basins where canopy intercepts significant rainfall
 
+2. InterceptionBucket (MARRMoT-style)
+   - Role: Parametric canopy interception with storage state
+   - Parameters: Smax (canopy capacity 0.5-10 mm), Ce (evap coefficient 0.3-1.5)
+   - Inputs: prcp, ep (precipitation + PET)
+   - Output: throughfall (increases as canopy fills)
+   - Best for: Forested basins needing tunable interception; replaces InterceptionFilter when calibration matters
+
 == Runoff Generation ==
-2. UnsaturatedReservoir (HBV-style)
+3. UnsaturatedReservoir (HBV-style)
    - Role: Soil moisture accounting (partitions precipitation into runoff vs storage)
    - Parameters: Smax (max storage, mm), Ce, m, beta (nonlinearity)
    - Inputs: prcp, ep (precipitation + potential evapotranspiration)
    - Best for: General-purpose soil moisture partitioning
 
-3. UpperZone (Hymod-style)
+4. UpperZone (Hymod-style)
    - Role: Alternative soil moisture reservoir with different ET smoothing
    - Parameters: Smax (max storage, mm), m (ET smoothing), beta (runoff exponent)
    - Inputs: prcp, ep (precipitation + potential evapotranspiration)
    - Best for: Basins where UnsaturatedReservoir underperforms; 3 params vs 4 (simpler)
 
-4. ProductionStore (GR4J-style)
+5. ProductionStore (GR4J-style)
    - Role: Alternative runoff generation with different saturation curve
    - Parameters: x1 (max capacity, mm), alpha, beta, ni
    - Inputs: ep, prcp (NOTE: PET first, then precipitation — reversed order)
    - Best for: Basins where UnsaturatedReservoir underperforms; provides structural diversity
 
-5. SnowReservoir (Thur-model)
+6. SaturationAreaStore (TOPMODEL-style)
+   - Role: Saturation excess runoff using exponential saturated area fraction
+   - Parameters: Smax (capacity, mm), b (saturation shape 0.5-10)
+   - Inputs: prcp, ep (precipitation + PET)
+   - Output: saturation excess runoff (fraction of rain that runs off increases exponentially with wetness)
+   - Best for: Basins with variable source area runoff; different curve shape from UpperZone (Xinanjiang) and UnsaturatedReservoir (HBV)
+
+7. SnowReservoir (Thur-model)
    - Role: Snow accumulation and melt driven by temperature threshold
    - Parameters: t0 (melt threshold, °C), k (melt rate), m
    - Inputs: prcp, temperature (requires temp data in forcing)
    - Best for: Snow-dominated or cold-region basins with seasonal snowpack
 
 == Flow Routing ==
-6. PowerReservoir (HBV-style)
+8. PowerReservoir (HBV-style)
    - Role: Fast/nonlinear flow routing (surface runoff, interflow)
    - Parameters: k (residence time), alpha (nonlinearity exponent)
    - Inputs: inflow from upstream element
    - Best for: Quick-response flow paths
 
-7. LinearReservoir (Hymod-style)
+9. LinearReservoir (Hymod-style)
    - Role: Slow/linear flow routing (baseflow, groundwater)
    - Parameters: k (residence time)
    - Inputs: inflow from upstream element
    - Best for: Baseflow, slow groundwater discharge
 
-8. RoutingStore (GR4J-style)
-   - Role: Nonlinear routing with groundwater exchange term
-   - Parameters: x2 (exchange coeff), x3 (capacity, mm), gamma, omega
-   - Inputs: inflow from upstream element
-   - Best for: Complex routing with gaining/losing stream interactions
+10. RoutingStore (GR4J-style)
+    - Role: Nonlinear routing with groundwater exchange term
+    - Parameters: x2 (exchange coeff), x3 (capacity, mm), gamma, omega
+    - Inputs: inflow from upstream element
+    - Best for: Complex routing with gaining/losing stream interactions
 
-9. DeepGroundwater (custom)
-   - Role: Very slow deep aquifer with leakage loss to deep percolation
-   - Parameters: k (very slow drainage, 0.0001-0.02), f_loss (deep leakage fraction, 0-0.3)
-   - Inputs: inflow from upstream element (recharge)
-   - Best for: Basins with significant deep baseflow, long recession tails, or losing streams
+11. ThresholdReservoir (MARRMoT-style)
+    - Role: Groundwater with threshold — no outflow until storage exceeds minimum level
+    - Parameters: k (drainage rate 0.001-0.3), Sth (threshold storage 0-100 mm)
+    - Inputs: inflow from upstream element
+    - Best for: Basins with delayed baseflow onset; storage must build up before discharge starts
 
-10. ConveyanceLoss (custom)
+12. PercolationStore (MARRMoT-style)
+    - Role: Normalized nonlinear percolation using S/Smax ratio
+    - Parameters: Smax (capacity 20-500 mm), Pmax (max perc rate 0.5-20 mm/d), alpha (exponent 1-4)
+    - Inputs: inflow from upstream element
+    - Best for: Gravity drainage between soil layers; percolation rate depends on relative fullness
+
+13. DeepGroundwater (custom)
+    - Role: Very slow deep aquifer with leakage loss to deep percolation
+    - Parameters: k (very slow drainage, 0.0001-0.02), f_loss (deep leakage fraction, 0-0.3)
+    - Inputs: inflow from upstream element (recharge)
+    - Best for: Basins with significant deep baseflow, long recession tails, or losing streams
+
+14. ConveyanceLoss (custom)
     - Role: Channel routing with transmission losses to alluvium
     - Parameters: k (routing rate), f_loss (transmission loss fraction, water lost to ground)
     - Inputs: inflow from upstream element
@@ -98,7 +124,7 @@ Connection Rules:
 - system_output lists which layer outputs are summed as total discharge.
 - lag_functions (optional): list of {"target": "<layer_id>", "lag_steps": N} for channel routing delay.
 - SnowReservoir MUST be a root layer (receives forcing directly) and needs temperature data.
-- InterceptionFilter MUST be a root layer (receives forcing directly); its output is net precipitation.
+- InterceptionFilter/InterceptionBucket MUST be root layers (receive forcing directly); output is net precipitation.
 - ProductionStore input order is [ep, prcp], NOT [prcp, ep].
 """
 
