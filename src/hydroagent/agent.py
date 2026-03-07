@@ -140,7 +140,13 @@ Key principles for structure → operation mapping:
 - Over-smoothed signal (Energy_Ratio < 0.6): Replace LinearReservoir with PowerReservoir for nonlinearity.
 - NSE very low (< 0.3): Add parallel flow paths to capture multiple flow regimes.
 - Snow-dominated basin (winter overestimate, Winter_Bias >= 0.3): Add SnowReservoir as root layer to store precipitation as snow (needs temperature).
-- UnsaturatedReservoir underperforms: Try ProductionStore (GR4J) as alternative runoff generation.
+- UnsaturatedReservoir underperforms: Try ProductionStore (GR4J) or SaturationAreaStore (TOPMODEL) as alternative runoff generation — they use different saturation curves.
+- Delayed baseflow onset: Use ThresholdReservoir instead of LinearReservoir — storage must exceed a threshold before discharge begins.
+- Multi-layer soil: Use PercolationStore between soil and groundwater — percolation rate depends on relative fullness (S/Smax).
+- Forested basin with high interception: Add InterceptionBucket as root layer for tunable canopy interception (replaces InterceptionFilter when calibration matters).
+
+IMPORTANT: When NSE is very low (< 0.3) after multiple iterations, do NOT keep rearranging the same components.
+Try component TYPES you haven't used yet — the "Untried Components" section lists what's available.
 
 You MUST respond with ONLY a valid JSON object representing the improved structure.
 No explanations, no markdown formatting — just the raw JSON.
@@ -217,8 +223,19 @@ def extract_json_from_response(text: str) -> dict:
     raise ValueError("Could not extract valid JSON from LLM response.")
 
 
+ALL_COMPONENT_TYPES = {
+    'InterceptionFilter', 'InterceptionBucket',
+    'UnsaturatedReservoir', 'UpperZone', 'ProductionStore', 'SaturationAreaStore',
+    'SnowReservoir',
+    'PowerReservoir', 'LinearReservoir', 'RoutingStore',
+    'ThresholdReservoir', 'PercolationStore',
+    'DeepGroundwater', 'ConveyanceLoss',
+}
+
+
 def build_refinement_prompt(structure: dict, report: dict, iteration: int, target_nse: float,
-                            failed_attempts: Optional[List[Dict[str, Any]]] = None) -> str:
+                            failed_attempts: Optional[List[Dict[str, Any]]] = None,
+                            tried_types: Optional[set] = None) -> str:
     """Build the user-message prompt sent to the LLM for structure refinement."""
     metrics = report.get('metrics', {})
     feedback = report.get('semantic_feedback', [])
@@ -229,11 +246,26 @@ def build_refinement_prompt(structure: dict, report: dict, iteration: int, targe
     # Failed attempts section (rollback memory)
     failed_str = ""
     if failed_attempts:
-        lines = [f"  - {fa['model_name']} → NSE={fa['nse']}" for fa in failed_attempts]
+        lines = []
+        for fa in failed_attempts:
+            types_str = f" (components: {', '.join(fa['types'])})" if fa.get('types') else ""
+            lines.append(f"  - {fa['model_name']} → NSE={fa['nse']}{types_str}")
         failed_str = f"""
 
 ### Failed Attempts (do NOT repeat these)
 {chr(10).join(lines)}"""
+
+    # Diversity nudge: show untried components when stuck
+    diversity_str = ""
+    if tried_types is not None:
+        untried = sorted(ALL_COMPONENT_TYPES - tried_types)
+        if untried and metrics.get('NSE', 0) < target_nse:
+            diversity_str = f"""
+
+### Untried Components (consider using these for structural diversity)
+  Already tried: {', '.join(sorted(tried_types))}
+  NOT yet tried: {', '.join(untried)}
+  Hint: Replacing or adding an untried component type often breaks out of local optima."""
 
     return f"""## Iteration {iteration} — Current Model Performance
 
@@ -249,7 +281,7 @@ def build_refinement_prompt(structure: dict, report: dict, iteration: int, targe
 {feedback_str}{failed_str}
 
 ### Target
-Improve NSE to >= {target_nse:.2f}. Current NSE = {metrics.get('NSE', -999):.4f}.
+Improve NSE to >= {target_nse:.2f}. Current NSE = {metrics.get('NSE', -999):.4f}.{diversity_str}
 
 ### Available Components
 {AVAILABLE_COMPONENTS}
@@ -257,6 +289,7 @@ Improve NSE to >= {target_nse:.2f}. Current NSE = {metrics.get('NSE', -999):.4f}
 ### Instructions
 Analyze the diagnostic feedback and return an improved structure JSON.
 Focus on the most critical issue first. Make ONE structural change per iteration.
+If previous attempts with the same component types failed, try a DIFFERENT component type.
 Return ONLY the JSON object — no explanation."""
 
 
@@ -700,6 +733,7 @@ class HydroAgent:
         best_params: Dict[str, float] = {}
         failed_attempts: List[Dict[str, Any]] = []  # track failed refinements for rollback
         steps_since_improve = 0  # patience counter for rollback
+        tried_types: set = set()  # track all component types tried across iterations
 
         for iteration in range(1, self.max_iterations + 1):
             t_iter_start = time.time()
@@ -712,6 +746,10 @@ class HydroAgent:
             params = cal_result['optimized_params']
             qsim = cal_result['qsim']
             print(f"  NSE: {nse:.4f}")
+
+            # Track component types used in this iteration
+            for layer in structure.get('layers', []):
+                tried_types.add(layer.get('type', ''))
 
             # 2. Diagnose
             if nse > -900:
@@ -747,6 +785,7 @@ class HydroAgent:
                 failed_attempts.append({
                     'model_name': structure.get('model_name', ''),
                     'nse': round(nse, 4),
+                    'types': [l.get('type', '') for l in structure.get('layers', [])],
                 })
                 if steps_since_improve >= self.rollback_patience:
                     # Patience exhausted — rollback to best known structure
@@ -773,7 +812,8 @@ class HydroAgent:
 
             # 6. Refine structure via LLM
             new_structure = self._reason_and_refine(
-                structure, report, iteration, target_nse, failed_attempts=failed_attempts)
+                structure, report, iteration, target_nse,
+                failed_attempts=failed_attempts, tried_types=tried_types)
             if new_structure is not None:
                 structure = new_structure
                 print(f"  -> Refined to: {structure.get('model_name', 'unknown')}")
@@ -816,10 +856,12 @@ class HydroAgent:
         iteration: int,
         target_nse: float,
         failed_attempts: Optional[List[Dict[str, Any]]] = None,
+        tried_types: Optional[set] = None,
     ) -> Optional[dict]:
         """Ask the LLM to analyze diagnostics and propose a refined structure."""
         prompt = build_refinement_prompt(structure, report, iteration, target_nse,
-                                         failed_attempts=failed_attempts)
+                                         failed_attempts=failed_attempts,
+                                         tried_types=tried_types)
 
         try:
             response_text = self.llm.chat(SYSTEM_PROMPT, prompt)
