@@ -134,16 +134,30 @@ Your task: Given diagnostic metrics from a hydrological model, suggest structura
 to the model architecture to improve NSE (Nash-Sutcliffe Efficiency).
 
 Key principles for structure → operation mapping:
-- Poor baseflow (Low_Flow_Bias < -0.3): Add a parallel LinearReservoir or RoutingStore as slow groundwater pathway.
-- Peak timing lag (Peak_Lag > 3h): Remove or reduce lag_functions; decrease routing parameters.
+
+== Diagnosing runoff generation problems ==
+- NSE very low (< 0.3) with High_Freq_Energy_Ratio far from 1.0: The soil/runoff generation module is wrong. Try a DIFFERENT runoff generation type:
+  * UnsaturatedReservoir (HBV power-law) — default, good for humid basins
+  * ProductionStore (GR4J) — better for basins with strong seasonality
+  * SaturationAreaStore (TOPMODEL exponential) — better for basins with variable source area, wet conditions, or when UnsaturatedReservoir AND ProductionStore both fail
+  * UpperZone (Xinanjiang) — simplest (3 params), good for small basins
+
+== Diagnosing flow routing problems ==
+- Poor baseflow (Low_Flow_Bias < -0.3): Add a slow pathway. Choose based on recession shape:
+  * LinearReservoir — simple exponential recession (most common)
+  * ThresholdReservoir — if baseflow only appears after wet periods (Low_Flow_Bias < -0.3 AND Recession_K_Ratio < 0.7, meaning recession is too slow to start)
+  * DeepGroundwater — if recession tail is very long (Recession_K_Ratio < 0.5)
 - Recession too fast (Recession_K_Ratio > 1.3): Add a slow reservoir (LinearReservoir or RoutingStore) with large k.
 - Over-smoothed signal (Energy_Ratio < 0.6): Replace LinearReservoir with PowerReservoir for nonlinearity.
-- NSE very low (< 0.3): Add parallel flow paths to capture multiple flow regimes.
-- Snow-dominated basin (winter overestimate, Winter_Bias >= 0.3): Add SnowReservoir as root layer to store precipitation as snow (needs temperature).
-- UnsaturatedReservoir underperforms: Try ProductionStore (GR4J) or SaturationAreaStore (TOPMODEL) as alternative runoff generation — they use different saturation curves.
-- Delayed baseflow onset: Use ThresholdReservoir instead of LinearReservoir — storage must exceed a threshold before discharge begins.
-- Multi-layer soil: Use PercolationStore between soil and groundwater — percolation rate depends on relative fullness (S/Smax).
-- Forested basin with high interception: Add InterceptionBucket as root layer for tunable canopy interception (replaces InterceptionFilter when calibration matters).
+- Peak timing lag (Peak_Lag > 3h): Remove or reduce lag_functions; decrease routing parameters.
+
+== Diagnosing vertical flux problems ==
+- Soil drains too fast (Low_Flow_Bias > 0.3 AND Energy_Ratio > 1.5): Add PercolationStore between soil and baseflow — it throttles drainage based on relative fullness (S/Smax), preventing soil from emptying too quickly.
+- Runoff ratio too high (simulated flow >> observed, KGE_beta > 1.2): Add InterceptionBucket as root layer — canopy storage removes rainfall before it reaches the soil, reducing total runoff.
+
+== Diagnosing seasonal/snow problems ==
+- Snow-dominated basin (Winter_Bias >= 0.3): Add SnowReservoir as root layer (needs temperature data).
+- Seasonal amplitude wrong (Seasonal_Amplitude_Ratio far from 1.0): Often caused by wrong runoff generation — try a different soil module type.
 
 IMPORTANT: When NSE is very low (< 0.3) after multiple iterations, do NOT keep rearranging the same components.
 Try component TYPES you haven't used yet — the "Untried Components" section lists what's available.
@@ -235,7 +249,8 @@ ALL_COMPONENT_TYPES = {
 
 def build_refinement_prompt(structure: dict, report: dict, iteration: int, target_nse: float,
                             failed_attempts: Optional[List[Dict[str, Any]]] = None,
-                            tried_types: Optional[set] = None) -> str:
+                            tried_types: Optional[set] = None,
+                            steps_since_improve: int = 0) -> str:
     """Build the user-message prompt sent to the LLM for structure refinement."""
     metrics = report.get('metrics', {})
     feedback = report.get('semantic_feedback', [])
@@ -255,9 +270,10 @@ def build_refinement_prompt(structure: dict, report: dict, iteration: int, targe
 ### Failed Attempts (do NOT repeat these)
 {chr(10).join(lines)}"""
 
-    # Diversity nudge: show untried components when stuck
+    # Diversity nudge: show untried components only when truly stuck
+    # (at least 2 failed attempts — let diagnostic-driven fixes go first)
     diversity_str = ""
-    if tried_types is not None:
+    if tried_types is not None and steps_since_improve >= 2:
         untried = sorted(ALL_COMPONENT_TYPES - tried_types)
         if untried and metrics.get('NSE', 0) < target_nse:
             diversity_str = f"""
@@ -813,7 +829,8 @@ class HydroAgent:
             # 6. Refine structure via LLM
             new_structure = self._reason_and_refine(
                 structure, report, iteration, target_nse,
-                failed_attempts=failed_attempts, tried_types=tried_types)
+                failed_attempts=failed_attempts, tried_types=tried_types,
+                steps_since_improve=steps_since_improve)
             if new_structure is not None:
                 structure = new_structure
                 print(f"  -> Refined to: {structure.get('model_name', 'unknown')}")
@@ -857,11 +874,13 @@ class HydroAgent:
         target_nse: float,
         failed_attempts: Optional[List[Dict[str, Any]]] = None,
         tried_types: Optional[set] = None,
+        steps_since_improve: int = 0,
     ) -> Optional[dict]:
         """Ask the LLM to analyze diagnostics and propose a refined structure."""
         prompt = build_refinement_prompt(structure, report, iteration, target_nse,
                                          failed_attempts=failed_attempts,
-                                         tried_types=tried_types)
+                                         tried_types=tried_types,
+                                         steps_since_improve=steps_since_improve)
 
         try:
             response_text = self.llm.chat(SYSTEM_PROMPT, prompt)
