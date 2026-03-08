@@ -134,33 +134,13 @@ Your task: Given diagnostic metrics from a hydrological model, suggest structura
 to the model architecture to improve NSE (Nash-Sutcliffe Efficiency).
 
 Key principles for structure → operation mapping:
-
-== Diagnosing runoff generation problems ==
-- NSE very low (< 0.3) with High_Freq_Energy_Ratio far from 1.0: The soil/runoff generation module is wrong. Try a DIFFERENT runoff generation type:
-  * UnsaturatedReservoir (HBV power-law) — default, good for humid basins
-  * ProductionStore (GR4J) — better for basins with strong seasonality
-  * SaturationAreaStore (TOPMODEL exponential) — better for basins with variable source area, wet conditions, or when UnsaturatedReservoir AND ProductionStore both fail
-  * UpperZone (Xinanjiang) — simplest (3 params), good for small basins
-
-== Diagnosing flow routing problems ==
-- Poor baseflow (Low_Flow_Bias < -0.3): Add a slow pathway. Choose based on recession shape:
-  * LinearReservoir — simple exponential recession (most common)
-  * ThresholdReservoir — if baseflow only appears after wet periods (Low_Flow_Bias < -0.3 AND Recession_K_Ratio < 0.7, meaning recession is too slow to start)
-  * DeepGroundwater — if recession tail is very long (Recession_K_Ratio < 0.5)
+- Poor baseflow (Low_Flow_Bias < -0.3): Add a parallel LinearReservoir or RoutingStore as slow groundwater pathway.
+- Peak timing lag (Peak_Lag > 3h): Remove or reduce lag_functions; decrease routing parameters.
 - Recession too fast (Recession_K_Ratio > 1.3): Add a slow reservoir (LinearReservoir or RoutingStore) with large k.
 - Over-smoothed signal (Energy_Ratio < 0.6): Replace LinearReservoir with PowerReservoir for nonlinearity.
-- Peak timing lag (Peak_Lag > 3h): Remove or reduce lag_functions; decrease routing parameters.
-
-== Diagnosing vertical flux problems ==
-- Soil drains too fast (Low_Flow_Bias > 0.3 AND Energy_Ratio > 1.5): Add PercolationStore between soil and baseflow — it throttles drainage based on relative fullness (S/Smax), preventing soil from emptying too quickly.
-- Runoff ratio too high (simulated flow >> observed, KGE_beta > 1.2): Add InterceptionBucket as root layer — canopy storage removes rainfall before it reaches the soil, reducing total runoff.
-
-== Diagnosing seasonal/snow problems ==
-- Snow-dominated basin (Winter_Bias >= 0.3): Add SnowReservoir as root layer (needs temperature data).
-- Seasonal amplitude wrong (Seasonal_Amplitude_Ratio far from 1.0): Often caused by wrong runoff generation — try a different soil module type.
-
-IMPORTANT: When NSE is very low (< 0.3) after multiple iterations, do NOT keep rearranging the same components.
-Try component TYPES you haven't used yet — the "Untried Components" section lists what's available.
+- NSE very low (< 0.3): Add parallel flow paths to capture multiple flow regimes.
+- Snow-dominated basin (winter overestimate, Winter_Bias >= 0.3): Add SnowReservoir as root layer to store precipitation as snow (needs temperature).
+- UnsaturatedReservoir underperforms: Try ProductionStore (GR4J) as alternative runoff generation.
 
 You MUST respond with ONLY a valid JSON object representing the improved structure.
 No explanations, no markdown formatting — just the raw JSON.
