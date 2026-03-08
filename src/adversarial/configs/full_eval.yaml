@@ -1,0 +1,66 @@
+model:
+  run_dir: "results/05_full_531_basins/full_training_nse_2025_1025_1821_ep50"
+  device: "cuda:0"
+
+data:
+  data_dir: "data/CAMELS_US"
+  period: "test"
+  # Basin list loaded via --basin-file CLI arg (540 train basins)
+  # Fallback: inline list not used for full experiment
+  basins: []
+
+# --- Experiment blocks ---
+# Exp 1: Core attack comparison (Table 1 + Figure 1-2)
+#   attacks: auto_pgd, fgsm, gaussian_noise, multiplicative_bias, temporal_correlated_noise
+#   epsilons: [0.01, 0.05, 0.1, 0.2]
+#   constraint: lp only
+#   target: untargeted only
+#
+# Exp 2: Constraint ablation (Table 2)
+#   attacks: auto_pgd only
+#   epsilons: [0.05, 0.1, 0.2]
+#   constraints: [lp, physical, statistical]
+#   target: untargeted
+#
+# Exp 3: Targeted attacks (Table 3)
+#   attacks: auto_pgd only
+#   epsilons: [0.1]
+#   constraint: lp
+#   targets: [untargeted, flood, lowflow]
+#
+# Exp 4: Causal trigger window (Figure 3)
+#   attacks: causal_trigger
+#   epsilons: [0.1]
+#   constraint: lp
+#   target: untargeted
+#   pre_windows: [1, 3, 7, 14]
+#
+# Exp 5: C&W minimum perturbation (Figure 4)
+#   attacks: cw_regression
+#   epsilons: [0.1]
+#   constraint: lp
+#   target: untargeted
+
+# Default experiment matrix (used when no --attack/--epsilon/--constraint/--target overrides)
+attacks:
+  auto_pgd:
+    n_iter: 50
+    n_restarts: 1
+  fgsm: {}
+  gaussian_noise: {}
+  multiplicative_bias: {}
+  temporal_correlated_noise: {}
+  causal_trigger:
+    pre_windows: [1, 3, 7, 14]
+    n_iter: 100
+  cw_regression:
+    n_iter: 200
+    target_nse: 0.0
+    lr: 0.01
+    binary_search_steps: 5
+
+epsilons: [0.01, 0.05, 0.1, 0.2]
+constraint_levels: ["lp"]
+targets: ["untargeted"]
+
+output_dir: "results/adversarial_eval/full"
