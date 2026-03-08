@@ -1,0 +1,11 @@
+from pathlib import Path
+
+
+TRAIN_START_DATE = "1990-10-01"
+TRAIN_END_DATE = "1995-09-30"
+VALIDATION_START_DATE = "1995-10-01"
+VALIDATION_END_DATE = "2000-09-30"
+TEST_START_DATE = "2000-10-01"
+TEST_END_DATE = "2005-09-30"
+
+BASIN_LIST_FILE = Path("src/full_531_basins/data/531_basin_list.txt")
