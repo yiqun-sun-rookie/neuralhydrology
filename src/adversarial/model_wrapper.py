@@ -79,7 +79,14 @@ class CudaLSTMWrapper(nn.Module):
         if self.n_static > 0:
             data["x_s"] = x_s
 
-        predictions = self.model(data)
+        # Disable cuDNN for forward pass when gradients are needed (adversarial attacks).
+        # cuDNN RNN does not support backward in eval mode.
+        needs_grad = x_d.requires_grad
+        if needs_grad and torch.cuda.is_available():
+            with torch.backends.cudnn.flags(enabled=False):
+                predictions = self.model(data)
+        else:
+            predictions = self.model(data)
         return predictions["y_hat"]  # [B, T, 1]
 
     def get_scaler(self) -> dict:
