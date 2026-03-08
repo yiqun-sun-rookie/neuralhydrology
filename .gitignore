@@ -1,5 +1,7 @@
 # file extensions
 **/*.pyc
+**/*.pyc.*
+**/__pycache__/
 **/*.h5
 **/*.p
 !test/test_data/*.p
