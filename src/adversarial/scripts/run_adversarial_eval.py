@@ -5,6 +5,7 @@ import argparse
 import json
 import logging
 import sys
+import time
 from pathlib import Path
 
 import torch
@@ -112,6 +113,43 @@ def select_basin_samples(x_d, x_s, y_obs, n_samples: int = 5, seed: int = 42):
     return selected
 
 
+def _prepare_attack_sweep(cfg, attack_name):
+    """Extract sweep parameters and base kwargs for an attack.
+
+    Returns (base_kwargs, pre_windows, freq_bands_list, frac).
+    """
+    attack_cfg = dict(cfg["attacks"].get(attack_name, {}))
+
+    # Handle special sweep parameters
+    if attack_name == "causal_trigger":
+        pre_windows = attack_cfg.pop("pre_windows", [7])
+    else:
+        pre_windows = [None]
+
+    if attack_name == "spectral":
+        freq_bands_list = attack_cfg.pop("freq_bands", ["all"])
+    else:
+        freq_bands_list = [None]
+
+    if attack_name == "sparse_temporal":
+        frac = attack_cfg.pop("max_steps_fraction", 0.05)
+    else:
+        frac = None
+
+    # Remove non-constructor keys
+    for key in ("pre_windows", "freq_bands", "max_steps_fraction"):
+        attack_cfg.pop(key, None)
+
+    return attack_cfg, pre_windows, freq_bands_list, frac
+
+
+def _save_results(all_results, results_file):
+    """Write results list to JSON file."""
+    with open(results_file, "w") as f:
+        json.dump(all_results, f, indent=2)
+    logger.info(f"Saved {len(all_results)} results to {results_file}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Adversarial evaluation of CudaLSTM")
     parser.add_argument("--config", default="src/adversarial/configs/adversarial_eval.yaml")
@@ -120,7 +158,10 @@ def main():
     parser.add_argument("--constraint", default=None, help="Single constraint level")
     parser.add_argument("--target", default=None, help="Single attack target")
     parser.add_argument("--basin", default=None, help="Single basin ID")
-    parser.add_argument("--n-samples", type=int, default=5, help="Samples per basin")
+    parser.add_argument("--basin-file", default=None, help="Text file with basin IDs (one per line)")
+    parser.add_argument("--basin-range", default=None, help="START:END index range for chunked execution")
+    parser.add_argument("--output-suffix", default=None, help="Custom suffix for output filename")
+    parser.add_argument("--n-samples", type=int, default=1, help="Samples per basin")
     parser.add_argument("--dry-run", action="store_true", help="Print config and exit")
     args = parser.parse_args()
 
@@ -136,7 +177,20 @@ def main():
     epsilons = [args.epsilon] if args.epsilon else cfg["epsilons"]
     constraints = [args.constraint] if args.constraint else cfg["constraint_levels"]
     targets = [args.target] if args.target else cfg["targets"]
-    basins = [args.basin] if args.basin else cfg["data"]["basins"]
+
+    # Basin resolution: --basin > --basin-file > config YAML list
+    if args.basin:
+        basins = [args.basin]
+    elif args.basin_file:
+        with open(args.basin_file) as f:
+            basins = [line.strip() for line in f if line.strip()]
+    else:
+        basins = cfg["data"]["basins"]
+
+    # Apply range filter for chunked execution
+    if args.basin_range:
+        start, end = map(int, args.basin_range.split(":"))
+        basins = basins[start:end]
 
     n_experiments = len(attacks_to_run) * len(epsilons) * len(constraints) * len(targets) * len(basins)
     logger.info(f"Experiment matrix: {len(attacks_to_run)} attacks x {len(epsilons)} eps x "
@@ -147,72 +201,60 @@ def main():
         logger.info("Dry run — exiting.")
         return
 
+    # Determine output file path
+    if args.output_suffix:
+        results_file = output_dir / f"results_{args.output_suffix}.json"
+    else:
+        results_file = output_dir / "results.json"
+
     logger.info("Loading CudaLSTM model...")
     wrapper = CudaLSTMWrapper(run_dir=run_dir, device=device)
 
-    # Pre-load basin data (cache per basin)
-    basin_cache = {}
-    for basin_id in basins:
-        logger.info(f"Loading basin {basin_id}...")
+    # Pre-compute attack sweep parameters (shared across basins)
+    attack_sweeps = {}
+    for attack_name in attacks_to_run:
+        attack_sweeps[attack_name] = _prepare_attack_sweep(cfg, attack_name)
+
+    all_results = []
+    n_done = 0
+
+    # Outer loop: iterate over basins (load one at a time to save memory)
+    for basin_idx, basin_id in enumerate(basins):
+        logger.info(f"Loading basin {basin_id} ({basin_idx + 1}/{len(basins)})...")
         x_d, x_s, y_obs = load_basin_data(
             run_dir=run_dir, basin_id=basin_id, period="test",
             device=device, data_dir=data_dir,
         )
         sample_indices = select_basin_samples(x_d, x_s, y_obs, n_samples=args.n_samples)
-        # Pre-compute clean predictions
+
+        # Pre-compute clean predictions for this basin
         with torch.no_grad():
             y_cleans = {i: wrapper.forward(x_d[i:i+1], x_s[i:i+1]) for i in sample_indices}
-        basin_cache[basin_id] = (x_d, x_s, y_obs, sample_indices, y_cleans)
         logger.info(f"  {basin_id}: {len(sample_indices)} samples selected")
 
-    all_results = []
-    n_done = 0
+        # Inner loop: iterate over attacks x epsilons x constraints x targets
+        for attack_name in attacks_to_run:
+            attack_cfg, pre_windows, freq_bands_list, frac = attack_sweeps[attack_name]
 
-    for attack_name in attacks_to_run:
-        attack_cfg = dict(cfg["attacks"].get(attack_name, {}))
+            for epsilon in epsilons:
+                for constraint_level in constraints:
+                    constraint = build_constraint(constraint_level, epsilon, wrapper)
 
-        # Handle special sweep parameters
-        if attack_name == "causal_trigger":
-            pre_windows = attack_cfg.pop("pre_windows", [7])
-        else:
-            pre_windows = [None]
+                    for target_name in targets:
+                        for pre_w in pre_windows:
+                            for freq_band in freq_bands_list:
+                                # Build attack
+                                kwargs = dict(attack_cfg)
+                                kwargs.update(model=wrapper, constraint=constraint,
+                                              target=target_name, epsilon=epsilon)
+                                if attack_name == "causal_trigger" and pre_w is not None:
+                                    kwargs["pre_window"] = pre_w
+                                if attack_name == "spectral" and freq_band is not None:
+                                    kwargs["freq_bands"] = freq_band
+                                if attack_name == "sparse_temporal" and frac is not None:
+                                    kwargs["max_steps"] = max(1, int(365 * frac))
 
-        if attack_name == "spectral":
-            freq_bands_list = attack_cfg.pop("freq_bands", ["all"])
-        else:
-            freq_bands_list = [None]
-
-        if attack_name == "sparse_temporal":
-            frac = attack_cfg.pop("max_steps_fraction", 0.05)
-        else:
-            frac = None
-
-        # Remove non-constructor keys
-        for key in ("pre_windows", "freq_bands", "max_steps_fraction"):
-            attack_cfg.pop(key, None)
-
-        for epsilon in epsilons:
-            for constraint_level in constraints:
-                constraint = build_constraint(constraint_level, epsilon, wrapper)
-
-                for target_name in targets:
-                    for pre_w in pre_windows:
-                        for freq_band in freq_bands_list:
-                            # Build attack
-                            kwargs = dict(attack_cfg)
-                            kwargs.update(model=wrapper, constraint=constraint,
-                                          target=target_name, epsilon=epsilon)
-                            if attack_name == "causal_trigger" and pre_w is not None:
-                                kwargs["pre_window"] = pre_w
-                            if attack_name == "spectral" and freq_band is not None:
-                                kwargs["freq_bands"] = freq_band
-                            if attack_name == "sparse_temporal" and frac is not None:
-                                kwargs["max_steps"] = max(1, int(365 * frac))
-
-                            attack = ATTACK_REGISTRY[attack_name](**kwargs)
-
-                            for basin_id in basins:
-                                x_d, x_s, y_obs, sample_indices, y_cleans = basin_cache[basin_id]
+                                attack = ATTACK_REGISTRY[attack_name](**kwargs)
 
                                 for sample_idx in sample_indices:
                                     x_d1 = x_d[sample_idx:sample_idx+1]
@@ -220,9 +262,11 @@ def main():
                                     y_obs1 = y_obs[sample_idx:sample_idx+1]
                                     y_clean1 = y_cleans[sample_idx]
 
+                                    t0 = time.time()
                                     result = run_single_experiment(
                                         attack, wrapper, x_d1, x_s1, y_obs1, y_clean1,
                                     )
+                                    elapsed = time.time() - t0
 
                                     record = {
                                         "attack": attack_name,
@@ -231,6 +275,7 @@ def main():
                                         "target": target_name,
                                         "basin": basin_id,
                                         "sample_idx": sample_idx,
+                                        "time_s": round(elapsed, 3),
                                     }
                                     if pre_w is not None:
                                         record["pre_window"] = pre_w
@@ -243,11 +288,16 @@ def main():
                                 if n_done % 10 == 0:
                                     logger.info(f"Progress: {n_done}/{n_experiments}")
 
-    # Save results
-    results_file = output_dir / "results.json"
-    with open(results_file, "w") as f:
-        json.dump(all_results, f, indent=2)
-    logger.info(f"Saved {len(all_results)} results to {results_file}")
+        # Free basin data after processing
+        del x_d, x_s, y_obs, sample_indices, y_cleans
+
+        # Incremental checkpoint: save every 10 basins
+        if (basin_idx + 1) % 10 == 0:
+            _save_results(all_results, results_file)
+            logger.info(f"Checkpoint saved after {basin_idx + 1} basins")
+
+    # Final save
+    _save_results(all_results, results_file)
 
 
 if __name__ == "__main__":
