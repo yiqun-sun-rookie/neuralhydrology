@@ -192,10 +192,14 @@ def main():
         start, end = map(int, args.basin_range.split(":"))
         basins = basins[start:end]
 
-    n_experiments = len(attacks_to_run) * len(epsilons) * len(constraints) * len(targets) * len(basins)
+    # Count experiments accounting for sweep parameters (pre_windows, freq_bands)
+    n_experiments = 0
+    for atk in attacks_to_run:
+        _, pre_w, fb, _ = _prepare_attack_sweep(cfg, atk)
+        n_experiments += len(pre_w) * len(fb) * len(epsilons) * len(constraints) * len(targets) * len(basins)
     logger.info(f"Experiment matrix: {len(attacks_to_run)} attacks x {len(epsilons)} eps x "
                 f"{len(constraints)} constraints x {len(targets)} targets x {len(basins)} basins "
-                f"= {n_experiments} experiments")
+                f"= {n_experiments} experiments (incl. sweep params)")
 
     if args.dry_run:
         logger.info("Dry run — exiting.")

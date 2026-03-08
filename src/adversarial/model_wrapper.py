@@ -82,7 +82,7 @@ class CudaLSTMWrapper(nn.Module):
         # Disable cuDNN for forward pass when gradients are needed (adversarial attacks).
         # cuDNN RNN does not support backward in eval mode.
         needs_grad = x_d.requires_grad
-        if needs_grad and torch.cuda.is_available():
+        if needs_grad and x_d.is_cuda:
             with torch.backends.cudnn.flags(enabled=False):
                 predictions = self.model(data)
         else:

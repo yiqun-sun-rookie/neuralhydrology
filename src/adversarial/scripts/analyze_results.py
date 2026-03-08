@@ -424,7 +424,7 @@ def fig_detectability(df: pd.DataFrame, out: Path) -> None:
 
     ax.axhline(0.05, color="red", linestyle="--", linewidth=1, label="p = 0.05")
     ax.set_xlabel("|delta-NSE|")
-    ax.set_ylabel("KS statistic (detectability)")
+    ax.set_ylabel("KS test p-value")
     ax.set_title("Attack Effectiveness vs. Detectability")
     ax.legend(frameon=False, fontsize=8, ncol=2, loc="upper right")
     fig.tight_layout()
