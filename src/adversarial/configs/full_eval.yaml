@@ -3,7 +3,7 @@ model:
   device: "cuda:0"
 
 data:
-  data_dir: "data/CAMELS_US"
+  data_dir: "data/camels_us"
   period: "test"
   # Basin list loaded via --basin-file CLI arg (540 train basins)
   # Fallback: inline list not used for full experiment
