@@ -1,31 +1,41 @@
-#!/bin/bash
-#SBATCH --job-name=adv-cw
-#SBATCH --partition=hgpu8
-#SBATCH --gres=gpu:1
+#!/usr/bin/env bash
+#SBATCH -J adv-cw
+#SBATCH -p hgpu8
+#SBATCH -N 1
+#SBATCH -n 1
 #SBATCH --cpus-per-task=4
-#SBATCH --exclude=ngu001,ngu201,ngu202
-#SBATCH --time=04:00:00
+#SBATCH --gres=gpu:1
+#SBATCH -t 04:00:00
 #SBATCH --array=0-19
-#SBATCH --output=logs/05_adversarial/cw_%a.out
-#SBATCH --error=logs/05_adversarial/cw_%a.err
+#SBATCH -o logs/05_adversarial/cw_%a.out
+#SBATCH -e logs/05_adversarial/cw_%a.err
+#SBATCH --exclude=ngu001,ngu201,ngu202
 
-# Exp 5: C&W minimum perturbation (slow: ~74s/basin on CPU, ~15s on GPU)
-# 540 basins / 20 chunks = 27 basins/chunk ≈ 33 min/chunk (CPU) or 7 min (GPU)
+# Exp 5: C&W minimum perturbation (slow: ~15s/basin on GPU)
+# 540 basins / 20 chunks = 27 basins/chunk
+
+set -eo pipefail
+
+source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+
+cd ${SLURM_SUBMIT_DIR}
+export PYTHONPATH=$(pwd):$PYTHONPATH
 
 CHUNK_SIZE=27
 START=$((SLURM_ARRAY_TASK_ID * CHUNK_SIZE))
 END=$((START + CHUNK_SIZE))
 CHUNK_ID=$(printf '%02d' $SLURM_ARRAY_TASK_ID)
 
-cd ~/neuralhydrology
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
+CFG=src/adversarial/configs/full_eval.yaml
+BF=src/adversarial/data/train_540_basins.txt
 
 echo "=== Exp 5 C&W chunk ${CHUNK_ID}: basins ${START}:${END} ==="
+echo "Node: $(hostname), Job: $SLURM_JOB_ID, Start: $(date)"
 
 python -u src/adversarial/scripts/run_adversarial_eval.py \
-    --config src/adversarial/configs/full_eval.yaml \
-    --basin-file src/adversarial/data/train_540_basins.txt \
+    --config $CFG \
+    --basin-file $BF \
     --basin-range ${START}:${END} \
     --attack cw_regression \
     --epsilon 0.1 \

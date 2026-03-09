@@ -1,22 +1,30 @@
-#!/bin/bash
-#SBATCH --job-name=adv-smoke
-#SBATCH --partition=hgpu8
-#SBATCH --gres=gpu:1
+#!/usr/bin/env bash
+#SBATCH -J adv-smoke
+#SBATCH -p hgpu8
+#SBATCH -N 1
+#SBATCH -n 1
 #SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1
+#SBATCH -t 00:10:00
+#SBATCH -o logs/05_adversarial/smoke-%j.out
+#SBATCH -e logs/05_adversarial/smoke-%j.err
 #SBATCH --exclude=ngu001,ngu201,ngu202
-#SBATCH --time=00:10:00
-#SBATCH --output=logs/05_adversarial/smoke.out
-#SBATCH --error=logs/05_adversarial/smoke.err
 
-cd ~/neuralhydrology
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+set -eo pipefail
+
+source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
+
+cd ${SLURM_SUBMIT_DIR}
+export PYTHONPATH=$(pwd):$PYTHONPATH
 
 CFG=src/adversarial/configs/full_eval.yaml
 BF=src/adversarial/data/train_540_basins.txt
 
 echo "=== Smoke test start: $(date) ==="
-nvidia-smi
+echo "Node: $(hostname), Job: $SLURM_JOB_ID"
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+python -c "import torch; print(f'PyTorch {torch.__version__}, CUDA: {torch.cuda.is_available()}')"
 
 python -u src/adversarial/scripts/run_adversarial_eval.py \
     --config $CFG \
