@@ -250,6 +250,117 @@ ALL_COMPONENT_TYPES = {
     'DeepGroundwater', 'ConveyanceLoss',
 }
 
+# Default parameters per component type (used to fill missing 'parameters' field)
+_DEFAULT_PARAMS = {
+    'InterceptionFilter': [],
+    'InterceptionBucket': ['Smax', 'Ce'],
+    'UnsaturatedReservoir': ['Smax', 'beta'],
+    'UpperZone': ['Smax', 'm', 'beta'],
+    'ProductionStore': ['x1', 'alpha', 'beta', 'ni'],
+    'SaturationAreaStore': ['Smax', 'b'],
+    'SnowReservoir': ['t0', 'k', 'm'],
+    'PowerReservoir': ['k', 'alpha'],
+    'LinearReservoir': ['k'],
+    'RoutingStore': ['x2', 'x3', 'gamma', 'omega'],
+    'ThresholdReservoir': ['k', 'Sth'],
+    'PercolationStore': ['Smax', 'Pmax', 'alpha'],
+    'DeepGroundwater': ['k', 'f_loss'],
+    'ConveyanceLoss': ['k', 'f_loss'],
+}
+
+# Default root inputs per component type
+_DEFAULT_ROOT_INPUTS = {
+    'InterceptionFilter': ['ep', 'prcp'],
+    'InterceptionBucket': ['prcp', 'ep'],
+    'UnsaturatedReservoir': ['prcp', 'ep'],
+    'UpperZone': ['prcp', 'ep'],
+    'ProductionStore': ['ep', 'prcp'],
+    'SaturationAreaStore': ['prcp', 'ep'],
+    'SnowReservoir': ['prcp', 'temperature'],
+}
+
+# Forcing names that indicate a root layer
+_FORCING_NAMES_SET = frozenset({
+    'prcp', 'ep', 'pet', 'evap', 'evaporation', 'precipitation', 'rainfall',
+    'temp', 'temperature', 'tmax', 'tmin', 'tmean', 'tavg',
+})
+
+
+def sanitize_structure(structure: dict) -> dict:
+    """Fix common LLM output issues in a structure JSON.
+
+    Fixes:
+    - Missing 'parameters' field → filled from _DEFAULT_PARAMS
+    - Invalid 'inputs' on root layers → replaced with correct forcing names
+    - Invalid 'inputs' on downstream layers → rewired to upstream_id.runoff
+    - Extra fields (description, upstream, etc.) → stripped
+    - Unknown component types → structure rejected (returns None)
+    """
+    layers = structure.get('layers', [])
+    if not layers:
+        return structure
+
+    # Check all types are valid
+    for layer in layers:
+        if layer.get('type') not in ALL_COMPONENT_TYPES:
+            raise ValueError(f"Unknown component type: {layer.get('type')}")
+
+    all_ids = {layer['id'] for layer in layers}
+    sanitized_layers = []
+
+    for i, layer in enumerate(layers):
+        ltype = layer['type']
+        lid = layer['id']
+
+        clean = {
+            'id': lid,
+            'type': ltype,
+            'parameters': layer.get('parameters') or _DEFAULT_PARAMS.get(ltype, []),
+            'inputs': layer.get('inputs', []),
+        }
+
+        # Determine if this should be a root layer (receives forcing)
+        is_root_type = ltype in _DEFAULT_ROOT_INPUTS
+
+        # Check if inputs reference any valid upstream layer
+        has_valid_upstream = any(
+            inp.split('.')[0] in all_ids for inp in clean['inputs'] if '.' in inp
+        )
+        has_forcing_input = any(inp.lower() in _FORCING_NAMES_SET for inp in clean['inputs'])
+
+        # Fix inputs
+        if is_root_type and not has_valid_upstream:
+            # Root layer: ensure correct forcing inputs
+            clean['inputs'] = _DEFAULT_ROOT_INPUTS[ltype]
+        elif not is_root_type and not has_valid_upstream:
+            # Downstream layer with broken inputs: find a plausible upstream
+            # Look for the first root/soil-type layer before this one
+            upstream_id = None
+            for prev in sanitized_layers:
+                if prev['type'] in _DEFAULT_ROOT_INPUTS:
+                    upstream_id = prev['id']
+            if upstream_id:
+                clean['inputs'] = [f'{upstream_id}.runoff']
+            else:
+                # Fallback: first layer
+                clean['inputs'] = [f'{sanitized_layers[0]["id"]}.runoff'] if sanitized_layers else ['prcp']
+
+        sanitized_layers.append(clean)
+
+    structure['layers'] = sanitized_layers
+
+    # Ensure system_output references valid layer IDs
+    sys_out = structure.get('system_output', [])
+    sys_out = [oid for oid in sys_out if oid in {l['id'] for l in sanitized_layers}]
+    if not sys_out:
+        # Default: all non-root layers that aren't feeding another layer
+        downstream_ids = [l['id'] for l in sanitized_layers if l['type'] not in _DEFAULT_ROOT_INPUTS]
+        structure['system_output'] = downstream_ids if downstream_ids else [sanitized_layers[-1]['id']]
+    else:
+        structure['system_output'] = sys_out
+
+    return structure
+
 
 def build_diagnostician_prompt(structure: dict, report: dict, iteration: int, target_nse: float,
                                failed_attempts: Optional[List[Dict[str, Any]]] = None,
@@ -860,6 +971,13 @@ class HydroAgent:
             structure.setdefault('system_output',
                                  [structure['layers'][-1]['id']] if structure['layers'] else ['fast'])
 
+            # Sanitize: fix missing params, broken inputs, extra fields
+            try:
+                structure = sanitize_structure(structure)
+            except ValueError as ve:
+                print(f"  [WARN] Init agent structure invalid: {ve}, using default.")
+                return deepcopy(DEFAULT_INITIAL_STRUCTURE)
+
             print(f"  [Init Agent] Chose: {structure.get('model_name')} "
                   f"({len(structure['layers'])} layers)")
 
@@ -1093,6 +1211,13 @@ class HydroAgent:
         new_structure.setdefault('lag_functions', [])
         new_structure.setdefault('system_output', [new_structure['layers'][-1]['id']]
                                  if new_structure['layers'] else ['fast'])
+
+        # Sanitize: fix missing params, broken inputs, extra fields
+        try:
+            new_structure = sanitize_structure(new_structure)
+        except ValueError as ve:
+            print(f"  [WARN] Sanitize failed: {ve}")
+            return None
 
         return new_structure
 
