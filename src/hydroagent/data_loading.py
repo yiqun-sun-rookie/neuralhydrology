@@ -108,3 +108,45 @@ def load_camels_basin(
     obs = obs.loc[valid_mask]
 
     return forcing_out, obs, area_km2
+
+
+def load_basin_metadata(
+    basin_id: str,
+    data_root: Union[str, Path, None] = None,
+) -> dict:
+    """Load CAMELS-US basin attributes for LLM context.
+
+    Returns a flat dict with key physical/climatic properties that help
+    an LLM choose an appropriate initial model structure.
+
+    Raises ValueError if basin not found.
+    """
+    data_root = str(data_root or _DEFAULT_DATA_ROOT)
+    attr_dir = os.path.join(data_root, 'camels_attributes_v2.0')
+
+    def _read_attr(filename, columns):
+        df = pd.read_csv(os.path.join(attr_dir, filename), sep=';')
+        df['gauge_id'] = df['gauge_id'].astype(str).str.zfill(8)
+        row = df[df['gauge_id'] == basin_id]
+        if row.empty:
+            raise ValueError(f"Basin {basin_id} not found in {filename}")
+        result = {}
+        for col in columns:
+            if col in row.columns:
+                val = row.iloc[0][col]
+                # Strip whitespace from string values
+                if isinstance(val, str):
+                    val = val.strip()
+                result[col] = val
+        return result
+
+    meta = {}
+    meta.update(_read_attr('camels_topo.txt', ['elev_mean', 'slope_mean', 'area_gages2']))
+    meta.update(_read_attr('camels_clim.txt', ['p_mean', 'pet_mean', 'aridity', 'frac_snow', 'p_seasonality']))
+    meta.update(_read_attr('camels_vege.txt', ['frac_forest', 'dom_land_cover']))
+
+    # Rename for clarity
+    if 'area_gages2' in meta:
+        meta['area_km2'] = meta.pop('area_gages2')
+
+    return meta

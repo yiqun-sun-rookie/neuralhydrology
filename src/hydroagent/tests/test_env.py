@@ -66,6 +66,80 @@ class TestSuperflexEnv(unittest.TestCase):
         print(f"\n[Test] Calibrated NSE: {result['nse']:.4f}")
         self.assertTrue(result['nse'] > -999.0)
 
+    def test_two_way_split_params(self):
+        """2 consumers of one source should produce 1 split param (backward compat)."""
+        env = SuperflexEnv()
+        structure = {
+            'model_name': 'test_2way',
+            'layers': [
+                {'id': 'soil', 'type': 'UnsaturatedReservoir',
+                 'parameters': ['Smax', 'beta'], 'inputs': ['prcp', 'ep']},
+                {'id': 'fast', 'type': 'PowerReservoir',
+                 'parameters': ['k', 'alpha'], 'inputs': ['soil.runoff']},
+                {'id': 'slow', 'type': 'LinearReservoir',
+                 'parameters': ['k'], 'inputs': ['soil.runoff']},
+            ],
+            'lag_functions': [],
+            'system_output': ['fast', 'slow'],
+        }
+        env.parse_structure(structure)
+        pinfo = env._collect_calib_params()
+        split_params = [name for name, _, _ in pinfo if name.startswith('__split_')]
+        # N=2 consumers -> N-1=1 split param
+        self.assertEqual(len(split_params), 1)
+        self.assertIn('__split_soil_0', split_params)
+
+    def test_three_way_split_params(self):
+        """3 consumers of one source should produce 2 independent split params."""
+        env = SuperflexEnv()
+        structure = {
+            'model_name': 'test_3way',
+            'layers': [
+                {'id': 'soil', 'type': 'UnsaturatedReservoir',
+                 'parameters': ['Smax', 'beta'], 'inputs': ['prcp', 'ep']},
+                {'id': 'fast', 'type': 'PowerReservoir',
+                 'parameters': ['k', 'alpha'], 'inputs': ['soil.runoff']},
+                {'id': 'inter', 'type': 'LinearReservoir',
+                 'parameters': ['k'], 'inputs': ['soil.runoff']},
+                {'id': 'slow', 'type': 'LinearReservoir',
+                 'parameters': ['k'], 'inputs': ['soil.runoff']},
+            ],
+            'lag_functions': [],
+            'system_output': ['fast', 'inter', 'slow'],
+        }
+        env.parse_structure(structure)
+        pinfo = env._collect_calib_params()
+        split_params = [name for name, _, _ in pinfo if name.startswith('__split_')]
+        # N=3 consumers -> N-1=2 independent split params
+        self.assertEqual(len(split_params), 2)
+        self.assertIn('__split_soil_0', split_params)
+        self.assertIn('__split_soil_1', split_params)
+
+    def test_three_way_split_calibration(self):
+        """3-way parallel structure should calibrate without error."""
+        env = SuperflexEnv()
+        structure = {
+            'model_name': 'test_3way_calib',
+            'layers': [
+                {'id': 'soil', 'type': 'UnsaturatedReservoir',
+                 'parameters': ['Smax', 'beta'], 'inputs': ['prcp', 'ep']},
+                {'id': 'fast', 'type': 'PowerReservoir',
+                 'parameters': ['k', 'alpha'], 'inputs': ['soil.runoff']},
+                {'id': 'inter', 'type': 'LinearReservoir',
+                 'parameters': ['k'], 'inputs': ['soil.runoff']},
+                {'id': 'slow', 'type': 'LinearReservoir',
+                 'parameters': ['k'], 'inputs': ['soil.runoff']},
+            ],
+            'lag_functions': [],
+            'system_output': ['fast', 'inter', 'slow'],
+        }
+        env.parse_structure(structure)
+        result = env.auto_calibrate(self.forcing, self.obs)
+        self.assertTrue(result['nse'] > -999.0)
+        # Verify all split-related params are in the result
+        split_params = [k for k in result['optimized_params'] if '__split_' in k]
+        self.assertEqual(len(split_params), 2)
+
 if __name__ == '__main__':
     unittest.main()
 

@@ -406,9 +406,18 @@ class SuperflexEnv:
                 consumers = fan_out.get(src, [lid])
                 if len(consumers) >= 2:
                     idx = consumers.index(lid)
-                    s = float(params.get(f'__split_{src}', 0.5))
-                    frac = s if idx == 0 else (1.0 - s) / max(len(consumers) - 1, 1)
-                    el.set_input([src_q * frac])
+                    n = len(consumers)
+                    # Collect N-1 raw split values; last fraction = 1 - sum(others)
+                    raw = [float(params.get(f'__split_{src}_{i}', 0.5))
+                           for i in range(n - 1)]
+                    raw_sum = sum(raw)
+                    if raw_sum > 0.99:
+                        # Normalize to prevent negative remainder
+                        scale = 0.99 / raw_sum
+                        fracs = [r * scale for r in raw] + [0.01]
+                    else:
+                        fracs = raw + [1.0 - raw_sum]
+                    el.set_input([src_q * fracs[idx]])
                 else:
                     el.set_input([src_q])
 
@@ -448,8 +457,10 @@ class SuperflexEnv:
                 pinfo.append((f'{safe}_{pn}', lo, hi))
 
         for src, consumers in self._topo['fan_out'].items():
-            if len(consumers) >= 2:
-                pinfo.append((f'__split_{src}', 0.1, 0.9))
+            n = len(consumers)
+            if n >= 2:
+                for i in range(n - 1):
+                    pinfo.append((f'__split_{src}_{i}', 0.01, 0.99))
 
         for target, lag_el in self._topo.get('lag_els', {}).items():
             ltype = self._topo['lag_types'][target]

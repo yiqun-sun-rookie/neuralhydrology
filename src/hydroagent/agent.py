@@ -128,19 +128,28 @@ Connection Rules:
 - ProductionStore input order is [ep, prcp], NOT [prcp, ep].
 """
 
-SYSTEM_PROMPT = """You are a senior hydrologist with deep expertise in conceptual rainfall-runoff modeling.
+DIAGNOSTICIAN_PROMPT = """You are a senior hydrologist specializing in model diagnostics.
 
-Your task: Given diagnostic metrics from a hydrological model, suggest structural improvements
-to the model architecture to improve NSE (Nash-Sutcliffe Efficiency).
+Your task: Analyze the diagnostic metrics of a conceptual rainfall-runoff model and produce
+a concise diagnosis. Identify what hydrological processes are missing or poorly represented.
 
-Key principles for structure → operation mapping:
-- Poor baseflow (Low_Flow_Bias < -0.3): Add a parallel LinearReservoir or RoutingStore as slow groundwater pathway.
-- Peak timing lag (Peak_Lag > 3h): Remove or reduce lag_functions; decrease routing parameters.
-- Recession too fast (Recession_K_Ratio > 1.3): Add a slow reservoir (LinearReservoir or RoutingStore) with large k.
-- Over-smoothed signal (Energy_Ratio < 0.6): Replace LinearReservoir with PowerReservoir for nonlinearity.
-- NSE very low (< 0.3): Add parallel flow paths to capture multiple flow regimes.
-- Snow-dominated basin (winter overestimate, Winter_Bias >= 0.3): Add SnowReservoir as root layer to store precipitation as snow (needs temperature).
-- UnsaturatedReservoir underperforms: Try ProductionStore (GR4J) as alternative runoff generation.
+Rules:
+- Describe PROBLEMS, not solutions. Do NOT name specific components or suggest specific fixes.
+- Consider interactions between metrics (e.g., fast recession + low baseflow = same root cause).
+- Consider the iteration history — if a previous fix didn't help, the diagnosis should reflect that.
+- Be concise: 2-4 sentences maximum.
+
+Respond with ONLY the diagnosis text, no JSON, no markdown."""
+
+STRUCTURE_PROMPT = """You are a senior hydrologist with deep expertise in conceptual rainfall-runoff modeling.
+
+Your task: Given a diagnostic analysis of a hydrological model, propose a structural improvement.
+
+Rules:
+1. PARSIMONY FIRST: Prefer 2-4 layers. Only add a component when the diagnosis clearly indicates
+   a missing process. Removing an unhelpful component is a valid improvement.
+2. Make ONE structural change per iteration.
+3. If previous attempts failed, try a DIFFERENT component type.
 
 You MUST respond with ONLY a valid JSON object representing the improved structure.
 No explanations, no markdown formatting — just the raw JSON.
@@ -151,6 +160,21 @@ The JSON must have these keys:
 - "lag_functions": list (can be empty)
 - "system_output": list of layer IDs whose outputs are summed
 """
+
+INIT_PROMPT = """You are a senior hydrologist. Given a basin's physical and climatic characteristics,
+choose an appropriate INITIAL model structure for a conceptual rainfall-runoff model.
+
+Rules:
+1. Start simple: 2-3 layers maximum. The structure will be iteratively refined later.
+2. Match the basin: snow-dominated basins need SnowReservoir, arid basins may need ConveyanceLoss,
+   forested basins may benefit from InterceptionFilter.
+3. Every structure MUST include at least one runoff generation layer and one routing layer.
+
+You MUST respond with ONLY a valid JSON object. No explanations.
+The JSON must have keys: "model_name", "layers", "lag_functions", "system_output"."""
+
+# Keep SYSTEM_PROMPT as alias for backward compatibility (used by MockLLMClient)
+SYSTEM_PROMPT = STRUCTURE_PROMPT
 
 DEFAULT_INITIAL_STRUCTURE = {
     "model_name": "initial_v0",
@@ -227,18 +251,53 @@ ALL_COMPONENT_TYPES = {
 }
 
 
-def build_refinement_prompt(structure: dict, report: dict, iteration: int, target_nse: float,
-                            failed_attempts: Optional[List[Dict[str, Any]]] = None,
-                            tried_types: Optional[set] = None,
-                            steps_since_improve: int = 0) -> str:
-    """Build the user-message prompt sent to the LLM for structure refinement."""
+def build_diagnostician_prompt(structure: dict, report: dict, iteration: int, target_nse: float,
+                               failed_attempts: Optional[List[Dict[str, Any]]] = None,
+                               basin_meta: Optional[dict] = None) -> str:
+    """Build the prompt for the diagnostician agent (step 1: what's wrong?)."""
     metrics = report.get('metrics', {})
-    feedback = report.get('semantic_feedback', [])
-
     metrics_str = '\n'.join(f"  - {k}: {v}" for k, v in metrics.items())
-    feedback_str = '\n'.join(f"  - {fb}" for fb in feedback) if feedback else "  (No specific issues detected)"
 
-    # Failed attempts section (rollback memory)
+    failed_str = ""
+    if failed_attempts:
+        lines = []
+        for fa in failed_attempts:
+            types_str = f" (components: {', '.join(fa['types'])})" if fa.get('types') else ""
+            lines.append(f"  - {fa['model_name']} → NSE={fa['nse']}{types_str}")
+        failed_str = f"""
+
+### Previous Attempts (these did NOT help)
+{chr(10).join(lines)}"""
+
+    basin_str = _format_basin_meta_section(basin_meta) if basin_meta else ""
+
+    return f"""## Iteration {iteration} — Model Diagnostic Analysis
+
+### Current Structure
+```json
+{json.dumps(structure, indent=2)}
+```
+
+### Diagnostic Metrics (24 indicators)
+{metrics_str}{failed_str}{basin_str}
+
+### Target
+NSE >= {target_nse:.2f}. Current NSE = {metrics.get('NSE', -999):.4f}.
+
+### Task
+Analyze the metrics and identify what hydrological processes are missing or poorly represented.
+Describe the PROBLEMS only — do not suggest specific components or fixes."""
+
+
+def build_structure_prompt(structure: dict, diagnosis: str, report: dict, iteration: int,
+                           target_nse: float,
+                           failed_attempts: Optional[List[Dict[str, Any]]] = None,
+                           tried_types: Optional[set] = None,
+                           steps_since_improve: int = 0,
+                           basin_meta: Optional[dict] = None) -> str:
+    """Build the prompt for the structure agent (step 2: how to fix it?)."""
+    metrics = report.get('metrics', {})
+
     failed_str = ""
     if failed_attempts:
         lines = []
@@ -250,8 +309,60 @@ def build_refinement_prompt(structure: dict, report: dict, iteration: int, targe
 ### Failed Attempts (do NOT repeat these)
 {chr(10).join(lines)}"""
 
-    # Diversity nudge: show untried components only when truly stuck
-    # (at least 2 failed attempts — let diagnostic-driven fixes go first)
+    diversity_str = ""
+    if tried_types is not None and steps_since_improve >= 2:
+        untried = sorted(ALL_COMPONENT_TYPES - tried_types)
+        if untried and metrics.get('NSE', 0) < target_nse:
+            diversity_str = f"""
+
+### Untried Components (consider using these for structural diversity)
+  Already tried: {', '.join(sorted(tried_types))}
+  NOT yet tried: {', '.join(untried)}"""
+
+    basin_str = _format_basin_meta_section(basin_meta) if basin_meta else ""
+
+    return f"""## Iteration {iteration} — Structure Improvement
+
+### Current Structure
+```json
+{json.dumps(structure, indent=2)}
+```
+
+### Diagnostic Analysis (from hydrologist)
+{diagnosis}{basin_str}
+
+### Current NSE = {metrics.get('NSE', -999):.4f}. Target >= {target_nse:.2f}.{failed_str}{diversity_str}
+
+### Available Components
+{AVAILABLE_COMPONENTS}
+
+### Instructions
+Based on the diagnostic analysis above, return an improved structure JSON.
+Make ONE structural change. Return ONLY the JSON object — no explanation."""
+
+
+def build_refinement_prompt(structure: dict, report: dict, iteration: int, target_nse: float,
+                            failed_attempts: Optional[List[Dict[str, Any]]] = None,
+                            tried_types: Optional[set] = None,
+                            steps_since_improve: int = 0) -> str:
+    """Legacy single-prompt builder. Used by MockLLMClient."""
+    metrics = report.get('metrics', {})
+    feedback = report.get('semantic_feedback', [])
+
+    metrics_str = '\n'.join(f"  - {k}: {v}" for k, v in metrics.items())
+    feedback_str = '\n'.join(f"  - {fb}" for fb in feedback) if feedback else "  (No specific issues detected)"
+
+    failed_str = ""
+    if failed_attempts:
+        lines = []
+        for fa in failed_attempts:
+            types_str = f" (components: {', '.join(fa['types'])})" if fa.get('types') else ""
+            lines.append(f"  - {fa['model_name']} → NSE={fa['nse']}{types_str}")
+        failed_str = f"""
+
+### Failed Attempts (do NOT repeat these)
+{chr(10).join(lines)}"""
+
     diversity_str = ""
     if tried_types is not None and steps_since_improve >= 2:
         untried = sorted(ALL_COMPONENT_TYPES - tried_types)
@@ -287,6 +398,28 @@ Analyze the diagnostic feedback and return an improved structure JSON.
 Focus on the most critical issue first. Make ONE structural change per iteration.
 If previous attempts with the same component types failed, try a DIFFERENT component type.
 Return ONLY the JSON object — no explanation."""
+
+
+def build_init_prompt(basin_meta: dict) -> str:
+    """Build the prompt for the initialization agent (step 0: choose starting structure)."""
+    meta_lines = '\n'.join(f"  - {k}: {v}" for k, v in basin_meta.items())
+    return f"""## Basin Characteristics
+{meta_lines}
+
+## Available Components
+{AVAILABLE_COMPONENTS}
+
+## Task
+Based on the basin characteristics above, propose an initial model structure.
+Return ONLY the JSON object."""
+
+
+def _format_basin_meta_section(basin_meta: dict) -> str:
+    """Format basin metadata as a prompt section for LLM context."""
+    meta_lines = '\n'.join(f"  - {k}: {v}" for k, v in basin_meta.items())
+    return f"""
+### Basin Physical/Climatic Characteristics
+{meta_lines}"""
 
 
 # ---------------------------------------------------------------------------
@@ -705,25 +838,70 @@ class HydroAgent:
         self.history: List[Dict[str, Any]] = []
         self.logger = logger  # Optional[ExperimentLogger]
 
+    def _choose_initial_structure(self, basin_meta: dict) -> dict:
+        """Use LLM to select an initial structure based on basin characteristics.
+
+        Falls back to DEFAULT_INITIAL_STRUCTURE if LLM call fails or client is MockLLMClient.
+        """
+        if isinstance(self.llm, MockLLMClient):
+            return deepcopy(DEFAULT_INITIAL_STRUCTURE)
+
+        try:
+            prompt = build_init_prompt(basin_meta)
+            response_text = self.llm.chat(INIT_PROMPT, prompt)
+            structure = extract_json_from_response(response_text)
+
+            if not isinstance(structure, dict) or 'layers' not in structure:
+                print("  [WARN] Init agent returned invalid structure, using default.")
+                return deepcopy(DEFAULT_INITIAL_STRUCTURE)
+
+            structure.setdefault('model_name', 'init_from_meta')
+            structure.setdefault('lag_functions', [])
+            structure.setdefault('system_output',
+                                 [structure['layers'][-1]['id']] if structure['layers'] else ['fast'])
+
+            print(f"  [Init Agent] Chose: {structure.get('model_name')} "
+                  f"({len(structure['layers'])} layers)")
+
+            if self.logger:
+                self.logger.log_llm_response(0, prompt[:300], response_text, True)
+
+            return structure
+        except Exception as e:
+            print(f"  [WARN] Init agent failed: {e}, using default.")
+            return deepcopy(DEFAULT_INITIAL_STRUCTURE)
+
     def solve(
         self,
         forcing: pd.DataFrame,
         obs: pd.Series,
         target_nse: float = 0.6,
         initial_structure: Optional[dict] = None,
+        basin_meta: Optional[dict] = None,
+        floor_nse: float = 0.0,
+        floor_patience: int = 2,
     ) -> Dict[str, Any]:
         """Run the agent reasoning loop to discover optimal model structure.
 
         Args:
             forcing: Meteorological forcing data (must have 'prcp' and 'ep' columns).
             obs: Observed streamflow series (mm/day).
-            target_nse: NSE threshold to stop optimization.
-            initial_structure: Starting structure JSON. Uses DEFAULT_INITIAL_STRUCTURE if None.
+            target_nse: Aspiration NSE target (used in LLM prompts, no longer triggers early stopping).
+            initial_structure: Starting structure JSON. Highest priority if provided.
+            basin_meta: Basin physical/climatic attributes dict. If provided (and initial_structure
+                is None), the LLM initialization agent chooses a starting structure.
+            floor_nse: If best_nse stays below this after floor_patience iterations, stop early.
+            floor_patience: Number of iterations to wait before applying floor check.
 
         Returns:
             Dict with 'best_nse', 'best_structure', 'best_params'.
         """
-        structure = deepcopy(initial_structure or DEFAULT_INITIAL_STRUCTURE)
+        if initial_structure is not None:
+            structure = deepcopy(initial_structure)
+        elif basin_meta is not None:
+            structure = self._choose_initial_structure(basin_meta)
+        else:
+            structure = deepcopy(DEFAULT_INITIAL_STRUCTURE)
         best_nse = -999.0
         best_structure: Optional[dict] = None
         best_params: Dict[str, float] = {}
@@ -797,9 +975,10 @@ class HydroAgent:
                     print(f"  NSE declined ({nse:.4f} < {best_nse:.4f}), "
                           f"patience {steps_since_improve}/{self.rollback_patience}")
 
-            # 5. Check convergence
-            if best_nse >= target_nse:
-                print(f"\n  Target NSE ({target_nse}) reached at iteration {iteration}!")
+            # 5. Check termination
+            if iteration >= floor_patience and best_nse < floor_nse:
+                print(f"\n  Floor protection: best NSE ({best_nse:.4f}) < {floor_nse} "
+                      f"after {iteration} iterations. Stopping.")
                 break
 
             if iteration >= self.max_iterations:
@@ -810,7 +989,8 @@ class HydroAgent:
             new_structure = self._reason_and_refine(
                 structure, report, iteration, target_nse,
                 failed_attempts=failed_attempts, tried_types=tried_types,
-                steps_since_improve=steps_since_improve)
+                steps_since_improve=steps_since_improve,
+                basin_meta=basin_meta)
             if new_structure is not None:
                 structure = new_structure
                 print(f"  -> Refined to: {structure.get('model_name', 'unknown')}")
@@ -855,8 +1035,78 @@ class HydroAgent:
         failed_attempts: Optional[List[Dict[str, Any]]] = None,
         tried_types: Optional[set] = None,
         steps_since_improve: int = 0,
+        basin_meta: Optional[dict] = None,
     ) -> Optional[dict]:
-        """Ask the LLM to analyze diagnostics and propose a refined structure."""
+        """Two-agent refinement: diagnostician → structure designer."""
+
+        # For MockLLMClient, use legacy single-prompt path
+        if isinstance(self.llm, MockLLMClient):
+            return self._reason_and_refine_legacy(
+                structure, report, iteration, target_nse,
+                failed_attempts, tried_types, steps_since_improve)
+
+        # --- Step 1: Diagnostician Agent ---
+        diag_prompt = build_diagnostician_prompt(
+            structure, report, iteration, target_nse, failed_attempts,
+            basin_meta=basin_meta)
+
+        try:
+            diagnosis = self.llm.chat(DIAGNOSTICIAN_PROMPT, diag_prompt)
+            print(f"  [Diagnosis]: {diagnosis[:150]}...")
+        except Exception as e:
+            print(f"  [WARN] Diagnostician failed: {e}, falling back to legacy")
+            return self._reason_and_refine_legacy(
+                structure, report, iteration, target_nse,
+                failed_attempts, tried_types, steps_since_improve)
+
+        # --- Step 2: Structure Agent ---
+        struct_prompt = build_structure_prompt(
+            structure, diagnosis, report, iteration, target_nse,
+            failed_attempts, tried_types, steps_since_improve,
+            basin_meta=basin_meta)
+
+        try:
+            response_text = self.llm.chat(STRUCTURE_PROMPT, struct_prompt)
+            new_structure = extract_json_from_response(response_text)
+        except Exception as e:
+            print(f"  [WARN] Structure agent failed: {e}")
+            if self.logger:
+                self.logger.log_llm_response(iteration, diag_prompt[:300], str(e), False)
+            return None
+
+        if self.logger:
+            # Log both diagnosis and structure response
+            combined_log = f"[DIAGNOSIS]\n{diagnosis}\n\n[STRUCTURE]\n{response_text}"
+            self.logger.log_llm_response(iteration, diag_prompt[:300], combined_log,
+                                          new_structure is not None)
+
+        # Basic validation
+        if not isinstance(new_structure, dict):
+            print("  [WARN] LLM returned non-dict response.")
+            return None
+        if 'layers' not in new_structure:
+            print("  [WARN] LLM response missing 'layers' key.")
+            return None
+
+        # Ensure required keys exist
+        new_structure.setdefault('model_name', f'llm_v{iteration + 1}')
+        new_structure.setdefault('lag_functions', [])
+        new_structure.setdefault('system_output', [new_structure['layers'][-1]['id']]
+                                 if new_structure['layers'] else ['fast'])
+
+        return new_structure
+
+    def _reason_and_refine_legacy(
+        self,
+        structure: dict,
+        report: dict,
+        iteration: int,
+        target_nse: float,
+        failed_attempts: Optional[List[Dict[str, Any]]] = None,
+        tried_types: Optional[set] = None,
+        steps_since_improve: int = 0,
+    ) -> Optional[dict]:
+        """Legacy single-prompt refinement for MockLLMClient."""
         prompt = build_refinement_prompt(structure, report, iteration, target_nse,
                                          failed_attempts=failed_attempts,
                                          tried_types=tried_types,
@@ -874,7 +1124,6 @@ class HydroAgent:
         if self.logger:
             self.logger.log_llm_response(iteration, prompt[:500], response_text, new_structure is not None)
 
-        # Basic validation
         if not isinstance(new_structure, dict):
             print("  [WARN] LLM returned non-dict response.")
             return None
@@ -882,7 +1131,6 @@ class HydroAgent:
             print("  [WARN] LLM response missing 'layers' key.")
             return None
 
-        # Ensure required keys exist
         new_structure.setdefault('model_name', f'llm_v{iteration + 1}')
         new_structure.setdefault('lag_functions', [])
         new_structure.setdefault('system_output', [new_structure['layers'][-1]['id']]

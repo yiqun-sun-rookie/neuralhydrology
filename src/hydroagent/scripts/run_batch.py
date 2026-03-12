@@ -36,8 +36,9 @@ from hydroagent.agent import (
     MockLLMClient,
     RandomLLMClient,
 )
-from hydroagent.data_loading import load_camels_basin
+from hydroagent.data_loading import load_camels_basin, load_basin_metadata
 from hydroagent.diagnosis import HydroDiagnostician
+from hydroagent.environment import SuperflexEnv
 from hydroagent.experiment_logger import ExperimentLogger
 
 # ---------------------------------------------------------------------------
@@ -140,14 +141,23 @@ def run_single_experiment(
     api_key: Optional[str] = None,
     model: Optional[str] = None,
     ablation: Optional[str] = None,
+    eval_forcing=None,
+    eval_obs=None,
+    basin_meta: Optional[dict] = None,
 ) -> Dict[str, Any]:
     """Run one (basin, backend) experiment. Returns a summary row dict.
+
+    When eval_forcing/eval_obs are provided, the agent calibrates on
+    forcing/obs (calib period) and then evaluates the best model on the
+    eval period (post-hoc, out-of-sample).
 
     Wrapped in try/except so failures don't kill the batch.
     """
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     ablation_tag = ablation or 'default'
     exp_dir = output_dir / f"{basin_id}_{backend}_{ablation_tag}_{timestamp}"
+
+    has_eval = eval_forcing is not None and eval_obs is not None
 
     summary = {
         'basin_id': basin_id,
@@ -161,6 +171,9 @@ def run_single_experiment(
         'experiment_dir': str(exp_dir),
         'error': '',
     }
+    if has_eval:
+        summary['calib_nse'] = None
+        summary['eval_nse'] = None
 
     # Resolve ablation config
     abl_cfg = ABLATION_CONFIGS.get(ablation, ABLATION_CONFIGS['full']) if ablation else {}
@@ -192,13 +205,28 @@ def run_single_experiment(
                 doctor.generate_report = _stripped_report
             agent.doctor = doctor
 
-        result = agent.solve(forcing, obs, target_nse=target_nse)
+        result = agent.solve(forcing, obs, target_nse=target_nse, basin_meta=basin_meta)
 
-        summary['best_nse'] = round(result['best_nse'], 4)
-        summary['converged'] = result['best_nse'] >= target_nse
+        calib_nse = result['best_nse']
+        summary['best_nse'] = round(calib_nse, 4)
+        summary['converged'] = calib_nse >= target_nse
         summary['total_iterations'] = len(agent.history)
         if result['best_structure']:
             summary['model_name'] = result['best_structure'].get('model_name', '')
+
+        if has_eval:
+            summary['calib_nse'] = round(calib_nse, 4)
+            # Post-hoc evaluation: forward-run best model on eval period
+            if result['best_structure'] and result['best_params']:
+                eval_env = SuperflexEnv()
+                eval_env.parse_structure(result['best_structure'])
+                eval_qsim = eval_env.run_simulation(eval_forcing, params=result['best_params'])
+                eval_nse = float(SuperflexEnv._nse(eval_obs, eval_qsim))
+                summary['eval_nse'] = round(eval_nse, 4)
+                summary['best_nse'] = round(eval_nse, 4)  # report eval as primary metric
+                print(f"  Post-hoc eval: calib_NSE={calib_nse:.4f}, eval_NSE={eval_nse:.4f}")
+            else:
+                summary['eval_nse'] = None
     except Exception as e:
         summary['error'] = str(e)
         print(f"  [ERROR] {basin_id} x {backend}: {e}")
@@ -212,8 +240,8 @@ def run_single_experiment(
 # ---------------------------------------------------------------------------
 
 SUMMARY_FIELDS = [
-    'basin_id', 'backend', 'ablation', 'best_nse', 'converged', 'total_iterations',
-    'model_name', 'duration_s', 'experiment_dir', 'error',
+    'basin_id', 'backend', 'ablation', 'best_nse', 'calib_nse', 'eval_nse',
+    'converged', 'total_iterations', 'model_name', 'duration_s', 'experiment_dir', 'error',
 ]
 
 
@@ -223,10 +251,10 @@ def write_summary(summaries: List[Dict[str, Any]], output_dir: Path) -> Path:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     with open(csv_path, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=SUMMARY_FIELDS)
+        writer = csv.DictWriter(f, fieldnames=SUMMARY_FIELDS, extrasaction='ignore')
         writer.writeheader()
         for row in summaries:
-            writer.writerow(row)
+            writer.writerow({k: row.get(k, '') for k in SUMMARY_FIELDS})
 
     # ASCII table
     print("\n" + "=" * 90)
@@ -297,12 +325,27 @@ def main():
     parser.add_argument('--ablation', type=str, default=None,
                         choices=list(ABLATION_CONFIGS.keys()),
                         help='Ablation variant (default: None = full pipeline)')
+    parser.add_argument('--calib-start', type=str, default=None,
+                        help='Calibration period start (e.g. 1980-10-01). Enables train/test split.')
+    parser.add_argument('--calib-end', type=str, default=None,
+                        help='Calibration period end (e.g. 1990-09-30)')
+    parser.add_argument('--eval-start', type=str, default=None,
+                        help='Evaluation period start (e.g. 1990-10-01)')
+    parser.add_argument('--eval-end', type=str, default=None,
+                        help='Evaluation period end (e.g. 1993-09-30)')
 
     args = parser.parse_args()
+
+    # Validate split args: all or none
+    split_args = [args.calib_start, args.calib_end, args.eval_start, args.eval_end]
+    if any(split_args) and not all(split_args):
+        parser.error('--calib-start/end and --eval-start/end must all be specified together.')
 
     basins = resolve_basins(args.basins)
     backends = [b.strip() for b in args.backends.split(',') if b.strip()]
     output_dir = Path(args.output_dir)
+
+    split_mode = all([args.calib_start, args.calib_end, args.eval_start, args.eval_end])
 
     print("=" * 60)
     print("HydroAgent Batch Runner")
@@ -313,6 +356,9 @@ def main():
     print(f"Max iter:    {args.max_iter}")
     print(f"Target NSE:  {args.target_nse}")
     print(f"Output:      {output_dir}")
+    if split_mode:
+        print(f"Calib:       {args.calib_start} -> {args.calib_end}")
+        print(f"Eval:        {args.eval_start} -> {args.eval_end}")
     print(f"Total experiments: {len(basins) * len(backends)}")
 
     # Phase 1: Load data (cache per basin)
@@ -320,9 +366,25 @@ def main():
     basin_data = {}
     for basin_id in basins:
         try:
-            forcing, obs, area = load_camels_basin(basin_id, data_root=args.data_root)
-            basin_data[basin_id] = (forcing, obs, area)
-            print(f"  {basin_id}: {len(forcing)} days, area={area:.1f} km2")
+            # Load metadata for LLM initialization agent
+            try:
+                meta = load_basin_metadata(basin_id, data_root=args.data_root)
+            except Exception:
+                meta = None
+
+            if split_mode:
+                calib_forcing, calib_obs, area = load_camels_basin(
+                    basin_id, data_root=args.data_root,
+                    start_date=args.calib_start, end_date=args.calib_end)
+                eval_forcing, eval_obs, _ = load_camels_basin(
+                    basin_id, data_root=args.data_root,
+                    start_date=args.eval_start, end_date=args.eval_end)
+                basin_data[basin_id] = (calib_forcing, calib_obs, area, eval_forcing, eval_obs, meta)
+                print(f"  {basin_id}: calib={len(calib_forcing)}d, eval={len(eval_forcing)}d, area={area:.1f} km2")
+            else:
+                forcing, obs, area = load_camels_basin(basin_id, data_root=args.data_root)
+                basin_data[basin_id] = (forcing, obs, area, None, None, meta)
+                print(f"  {basin_id}: {len(forcing)} days, area={area:.1f} km2")
         except Exception as e:
             print(f"  {basin_id}: LOAD FAILED - {e}")
 
@@ -339,7 +401,7 @@ def main():
     for basin_id in basins:
         if basin_id not in basin_data:
             continue
-        forcing, obs, _area = basin_data[basin_id]
+        forcing, obs, _area, eval_forcing, eval_obs, meta = basin_data[basin_id]
 
         for backend in backends:
             exp_idx += 1
@@ -355,11 +417,17 @@ def main():
                 api_key=args.api_key,
                 model=args.model,
                 ablation=args.ablation,
+                eval_forcing=eval_forcing,
+                eval_obs=eval_obs,
+                basin_meta=meta,
             )
             summaries.append(row)
             nse_str = f"{row['best_nse']:.4f}" if row['best_nse'] is not None else 'FAIL'
+            extra = ''
+            if row.get('eval_nse') is not None:
+                extra = f", calib_NSE={row['calib_nse']:.4f}, eval_NSE={row['eval_nse']:.4f}"
             print(f"  Result: NSE={nse_str}, converged={row['converged']}, "
-                  f"iters={row['total_iterations']}, time={row['duration_s']}s")
+                  f"iters={row['total_iterations']}, time={row['duration_s']}s{extra}")
 
     # Phase 3: Summary
     write_summary(summaries, output_dir)
