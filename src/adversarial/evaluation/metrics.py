@@ -7,8 +7,12 @@ from scipy import stats
 
 def compute_nse(y_obs: torch.Tensor, y_pred: torch.Tensor) -> float:
     """Nash-Sutcliffe Efficiency."""
-    ss_res = ((y_obs - y_pred) ** 2).sum()
-    ss_tot = ((y_obs - y_obs.mean()) ** 2).sum()
+    valid = torch.isfinite(y_obs) & torch.isfinite(y_pred)
+    if valid.sum() < 2:
+        return float("nan")
+    obs, pred = y_obs[valid], y_pred[valid]
+    ss_res = ((obs - pred) ** 2).sum()
+    ss_tot = ((obs - obs.mean()) ** 2).sum()
     return float(1.0 - ss_res / ss_tot.clamp(min=1e-10))
 
 
@@ -59,7 +63,10 @@ def detectability_ks(x_clean: torch.Tensor, x_adv: torch.Tensor) -> float:
 def peak_error(y_obs: torch.Tensor, y_pred: torch.Tensor,
                quantile: float = 0.9) -> float:
     """Mean relative error on peaks above given quantile."""
-    threshold = torch.quantile(y_obs, quantile)
+    valid = y_obs[torch.isfinite(y_obs)]
+    if valid.numel() == 0:
+        return float("nan")
+    threshold = torch.quantile(valid, quantile)
     mask = y_obs >= threshold
     if mask.sum() == 0:
         return 0.0
