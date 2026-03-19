@@ -42,8 +42,10 @@ h_0^(k), c_0^(k) = Proj(LSTM_enc([P, T, Q_obs]_{context_k}))
 h_0^(k+1), c_0^(k+1) = Proj(LSTM_enc([P, T, Q_obs]_{context_k+1}))
 ```
 
-- Encoder input includes **observed streamflow Q_obs** (not available to main model)
-- Proj: Linear(enc_hidden_size → main_hidden_size) for both h and c
+- Encoder input includes **all dynamic forcings + observed streamflow Q_obs** (Q_obs not available to main model)
+- Encoder also receives static attributes (same as main model) via concatenation to each timestep
+- Proj: two separate Linear layers — `Proj_h(enc_hidden_size → main_hidden_size)` and `Proj_c(enc_hidden_size → main_hidden_size)`
+- Gradients flow from both L_pred and L_cont back through the encoder via h_0/c_0
 
 **Main model** (standard CudaLSTM, unmodified architecture):
 
@@ -52,13 +54,15 @@ Q_pred^(k), h^(k)(t), c^(k)(t) = LSTM_main(forcing_{predict_k}, h_0^(k), c_0^(k)
 Q_pred^(k+1), h^(k+1)(t), c^(k+1)(t) = LSTM_main(forcing_{predict_k+1}, h_0^(k+1), c_0^(k+1))
 ```
 
-**Loss function**:
+**Loss function** (averaged over the overlap window):
 
 ```
-L = L_pred^(k) + L_pred^(k+1) + λ * (||h^(k)(t*) - h^(k+1)(t*)||² + ||c^(k)(t*) - c^(k+1)(t*)||²)
+L_cont = (1/T_ov) * Σ_{t ∈ overlap} (||h^(k)(t) - h^(k+1)(t)||² + ||c^(k)(t) - c^(k+1)(t)||²)
+
+L = L_pred^(k) + L_pred^(k+1) + λ * L_cont
 ```
 
-Where `t*` is a time point within the overlap region.
+Where the sum runs over all `T_ov` timesteps in the overlap region (default 30 days). Both h and c terms are equally weighted; cell states may have larger magnitudes but the L2 penalty naturally scales with magnitude.
 
 ### 2.3 Key Design Decisions
 
@@ -67,7 +71,7 @@ Where `t*` is a time point within the overlap region.
 | Encoder architecture | Independent small LSTM | Modular, clean ablation, no training coupling |
 | State passing | None (soft constraint via loss) | Enables parallel training, novel formulation |
 | Segment sampling | Pair sampling (adjacent overlapping) | Guarantees fresh SCL signal every step |
-| Main model | Unmodified CudaLSTM | Isolates contribution of training paradigm |
+| Main model | CudaLSTM with h_0/c_0 injection (see 3.5) | Isolates contribution of training paradigm |
 | Encoder input | [P, T, Q_obs] | Q_obs provides direct state information (learned DA) |
 | Main model input | [P, T, ...] (no Q_obs) | Standard, no data leakage |
 
@@ -93,42 +97,74 @@ Where `t*` is a time point within the overlap region.
 | Loss | `StateContinuityLoss` | ||h_k(t*) - h_{k+1}(t*)||² + ||c_k(t*) - c_{k+1}(t*)||² |
 | Config | `SCLConfig` | Extends NH Config with SCL-specific parameters |
 
-### 3.2 Data Flow (Single Training Step)
+### 3.2 SCLDataset Sampling Algorithm
+
+**Constraint**: all pairs use fixed geometry (`seg_length`, `context_length`, `overlap_length` are constants), so `overlap_idx = seg_length - overlap_length` is the same for every sample.
+
+**Constraint**: `seg_length > overlap_length` (enforced in config validation).
+
+**Lookup table construction** (at init):
+
+```
+For each basin b:
+  Load full time series [t_start, t_end]
+  For each valid pair start index i:
+    seg_k predict window:   [i, i + seg_length)
+    seg_k+1 predict window: [i + seg_length - overlap_length, i + 2*seg_length - overlap_length)
+    seg_k context window:   [i - context_length, i)
+    seg_k+1 context window: [i + seg_length - overlap_length - context_length, i + seg_length - overlap_length)
+
+    Validate: no NaN in targets for both segments, all windows within data range
+    If valid: add (basin_id, i) to lookup_table
+```
+
+**`__getitem__(idx)`** returns a dict with fixed-shape tensors. `overlap_idx` is NOT stored per-sample — it is a dataset-level constant computed as `seg_length - overlap_length`.
+
+### 3.3 Data Flow (Single Training Step)
 
 ```
 1. SCLDataset.__getitem__() returns:
    {
-     'context_k':   [context_len, n_enc_features],    # includes Q_obs
-     'predict_k':   [seg_len, n_main_features],        # no Q_obs
+     'context_k':   [context_len, n_enc_features],    # all forcings + Q_obs + static
+     'predict_k':   [seg_len, n_main_features],        # forcings only (no Q_obs)
      'context_k1':  [context_len, n_enc_features],
      'predict_k1':  [seg_len, n_main_features],
-     'y_k':         [seg_len, n_targets],               # ground truth
-     'y_k1':        [seg_len, n_targets],
-     'overlap_idx':  int,                                # index in predict where overlap starts
+     'y_k':         [seg_len, n_targets],               # ground truth seg k
+     'y_k1':        [seg_len, n_targets],               # ground truth seg k+1
+     'x_s':         [n_static_features],                # static attributes (shared)
+     'per_basin_target_stds': [n_targets],              # for NSE loss
    }
 
-2. Collate into batch: all tensors get batch dimension [B, ...]
+2. Collate into batch: all tensors get batch dim [B, ...]
 
 3. Encoder forward (batched, 2B contexts):
-   all_contexts = concat(context_k, context_k1)         # [2B, context_len, n_enc_feat]
-   all_h0, all_c0 = encoder(all_contexts)               # [2B, 1, main_hidden_size]
-   h0_k, h0_k1 = split(all_h0)                          # [B, ...] each
+   all_contexts = cat(context_k, context_k1, dim=0)      # [2B, context_len, n_enc_feat]
+   enc_h, enc_c = encoder_lstm(all_contexts)              # [1, 2B, enc_hidden]
+   h0 = proj_h(enc_h.squeeze(0))                          # [2B, main_hidden]
+   c0 = proj_c(enc_c.squeeze(0))                          # [2B, main_hidden]
+   h0 = h0.unsqueeze(0)                                   # [1, 2B, main_hidden] (PyTorch LSTM format)
+   c0 = c0.unsqueeze(0)                                   # [1, 2B, main_hidden]
 
 4. Main LSTM forward (batched, 2B segments):
-   all_pred_input = concat(predict_k, predict_k1)       # [2B, seg_len, n_main_feat]
-   all_h0 = concat(h0_k, h0_k1)                         # [2B, 1, hidden]
-   all_output = main_lstm(all_pred_input, all_h0, all_c0)
-   output_k, output_k1 = split(all_output)
+   all_x = cat(predict_k, predict_k1, dim=0)              # [2B, seg_len, n_main_feat]
+   x_embedded = embedding_net(all_x)                       # [seg_len, 2B, embed_size]
+   lstm_output, _ = main_lstm(x_embedded, (h0, c0))        # [seg_len, 2B, hidden]
+   lstm_output = lstm_output.transpose(0, 1)               # [2B, seg_len, hidden]
+   output_k, output_k1 = lstm_output.chunk(2, dim=0)       # [B, seg_len, hidden] each
+   y_hat = head(dropout(lstm_output))                       # [2B, seg_len, output_size]
 
 5. Loss computation:
-   L_pred = NSE_loss(output_k, y_k) + NSE_loss(output_k1, y_k1)
-   h_k_overlap = output_k['lstm_output'][:, overlap_idx:, :]
-   h_k1_overlap = output_k1['lstm_output'][:, :overlap_len, :]
-   L_cont = mean(||h_k_overlap - h_k1_overlap||²)       # compare at overlap
+   overlap_start = seg_length - overlap_length             # constant, e.g., 150
+   h_k_ov  = output_k[:, overlap_start:, :]               # [B, overlap_len, hidden]
+   h_k1_ov = output_k1[:, :overlap_length, :]             # [B, overlap_len, hidden]
+   L_cont = mean((h_k_ov - h_k1_ov)²)                    # scalar, averaged over B × overlap_len × hidden
+   # (same for cell states if accessible; see Section 3.5)
+
+   L_pred = NSE_loss(y_hat_k, y_k) + NSE_loss(y_hat_k1, y_k1)
    L_total = L_pred + λ * L_cont
 ```
 
-### 3.3 Temporal Layout (daily, default config)
+### 3.4 Temporal Layout (daily, default config)
 
 ```
 Seg k:
@@ -146,7 +182,49 @@ Overlap in predict space: seg_k [t=150..180] ↔ seg_k+1 [t=0..30]
   → SCL computed on these 30 hidden state pairs
 ```
 
-### 3.4 Hyperparameters
+### 3.5 Main LSTM h_0/c_0 Injection
+
+`CudaLSTM.forward()` does not accept initial states — it calls `self.lstm(input=x_d)` which defaults to zeros. `SCLCudaLSTM` solves this by **wrapping** (not modifying) CudaLSTM:
+
+```python
+class SCLCudaLSTM(nn.Module):
+    def __init__(self, cfg):
+        self.encoder = ObsEncoder(cfg)
+        self.embedding_net = InputLayer(cfg)    # reuse NH InputLayer
+        self.lstm = nn.LSTM(...)                # same config as CudaLSTM
+        self.dropout = nn.Dropout(cfg.output_dropout)
+        self.head = get_head(cfg, ...)
+
+    def forward(self, predict_data, context_data):
+        h0, c0 = self.encoder(context_data)     # [1, B, hidden]
+        x = self.embedding_net(predict_data)     # [seq, B, embed]
+        lstm_out, (h_n, c_n) = self.lstm(x, (h0, c0))  # inject h0/c0
+        pred = self.head(self.dropout(lstm_out.transpose(0,1)))
+        return {'y_hat': pred, 'lstm_output': lstm_out.transpose(0,1),
+                'h_n': h_n, 'c_n': c_n}
+```
+
+This duplicates CudaLSTM's plumbing but keeps the NH package untouched. The LSTM/head/embedding configs are identical to CudaLSTM, ensuring fair comparison with E1.
+
+**Note on cell state SCL**: PyTorch `nn.LSTM` returns `lstm_output` (hidden states at all timesteps) but NOT cell states at all timesteps. To compute SCL on cell states, either: (a) use only hidden states in L_cont (simpler, recommended for v1), or (b) unroll the LSTM manually step-by-step like ARLSTM to capture cell states. **We use option (a) for v1.**
+
+### 3.6 Inference Protocol
+
+At test time:
+
+1. For each basin, the encoder processes the last `context_length` days of **observed Q + forcings** before the evaluation period start
+2. This produces `(h_0, c_0)` for the main LSTM
+3. The main LSTM runs forward on the evaluation period with this initial state
+4. No SCL computed, no pairs needed — single segment evaluation
+5. Prediction loss (NSE/KGE) computed on the evaluation period only
+
+**For fair comparison with E1 (365d warm-up)**:
+- E1 uses 365 days of **forcing-only** warm-up (no Q_obs)
+- E3 uses 30 days of **forcing + Q_obs** context via the encoder
+- This is NOT a confound — it reflects the real advantage of the method: using observations for state initialization is more efficient than long warm-up. The paper should discuss this as a feature, not a limitation.
+- E5 (encoder-only, no SCL) isolates the encoder's contribution from the SCL's contribution.
+
+### 3.7 Hyperparameters
 
 | Parameter | Config key | Default | Range for ablation |
 |-----------|------------|---------|-------------------|
@@ -197,6 +275,7 @@ src/scl_hydro/
 | E4 | SCL-no-encoder | CudaLSTM | pair sampling, h_0=0, SCL | Ablation: encoder contribution |
 | E5 | Encoder-no-SCL | SCLCudaLSTM | pair sampling, encoder, no SCL | Ablation: SCL contribution |
 | E6 | AR Baseline | ARLSTM | stateless, Q_obs as input | Compare with Nearing 2022 |
+| E7 | Encoder-only (single) | SCLCudaLSTM | single segment, encoder, no pairs, no SCL | Ablation: isolate encoder from pair/SCL effect |
 
 ### 5.2 Evaluation
 
@@ -216,6 +295,8 @@ src/scl_hydro/
 | E3 vs E1 | Does SCL-LSTM match/beat standard training? |
 | E3 vs E2 | How much better than no warm-up? |
 | E3 vs E6 | How does it compare to autoregression? |
+| E3 vs E7 | Does pair sampling + SCL add value beyond the encoder alone? |
+| E5 vs E7 | Does pair sampling help even without SCL? |
 
 ### 5.4 Hyperparameter Sensitivity
 
@@ -237,7 +318,7 @@ Sweep seg_length × scl_weight (4×4 = 16 runs), report as heatmap.
 | Fig 4 | Time series comparison on representative basin | Case study |
 | Fig 5 | Hidden state vs soil moisture/SWE correlation | Interpretability |
 | Fig 6 | seg_length × λ ablation heatmap | Sensitivity |
-| Table 1 | Median NSE/KGE + training time (all methods) | Main results |
+| Table 1 | Median NSE/KGE + GPU-hours + effective samples/sec (all methods) | Main results |
 | Table 2 | Ablation results (E3-E5) | Component contribution |
 
 ## 7. Related Work
