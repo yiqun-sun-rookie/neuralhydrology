@@ -1,4 +1,11 @@
 def build_fixed_hbv_structure() -> dict:
+    lag_config = [
+        {
+            "type": "HalfTriangularLag",
+            "target": "fast",
+            "lag_steps": 2.0,
+        }
+    ]
     return {
         "model_name": "hbv_camels_us_531_fixed_v1",
         "layers": [
@@ -31,12 +38,7 @@ def build_fixed_hbv_structure() -> dict:
                 "outputs": ["q_slow"],
             },
         ],
-        "lags": [
-            {
-                "type": "HalfTriangularLag",
-                "target": "fast",
-                "lag_steps": 2.0,
-            }
-        ],
+        "lags": lag_config,
+        "lag_functions": lag_config,
         "system_output": ["fast", "slow"],
     }

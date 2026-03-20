@@ -29,3 +29,9 @@ def test_fixed_structure_has_expected_components():
         "LinearReservoir",
     ]
     assert structure["lags"] == [{"type": "HalfTriangularLag", "target": "fast", "lag_steps": 2.0}]
+
+
+def test_fixed_structure_exposes_environment_compatible_lag_functions():
+    structure = build_fixed_hbv_structure()
+
+    assert structure["lag_functions"] == structure["lags"]

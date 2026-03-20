@@ -6,7 +6,7 @@ from typing import Dict, Tuple, Any, Optional
 
 import pandas as pd
 import numpy as np
-import optuna
+import cma
 
 # ---------------------------------------------------------------------------
 # Dynamically add external/superflexpy to sys.path so the vendored copy works
@@ -470,20 +470,23 @@ class SuperflexEnv:
 
         return pinfo
 
-    def _calibrate_sfpy(self, forcing_data, obs_data, n_trials=200):
-        """Global optimisation via Optuna TPE (Tree-structured Parzen Estimator)."""
+    def _calibrate_sfpy(self, forcing_data, obs_data, n_trials=2000):
+        """Global optimisation via CMA-ES (Covariance Matrix Adaptation Evolution Strategy)."""
         pinfo = self._collect_calib_params()
         names = [n for n, _, _ in pinfo]
-        bounds = [(lo, hi) for _, lo, hi in pinfo]
+        lo = np.array([l for _, l, _ in pinfo])
+        hi = np.array([h for _, _, h in pinfo])
 
-        optuna.logging.set_verbosity(optuna.logging.WARNING)
-        sampler = optuna.samplers.TPESampler(seed=42)
-        study = optuna.create_study(direction='minimize', sampler=sampler)
+        ndim = len(names)
+        if ndim == 0:
+            q = self._run_sfpy(forcing_data, {})
+            nse_val = self._nse(obs_data, q)
+            return {'nse': float(nse_val), 'optimized_params': {}, 'qsim': q}
 
-        def objective(trial):
-            p = {}
-            for name, (lo, hi) in zip(names, bounds):
-                p[name] = trial.suggest_float(name, lo, hi)
+        # Work in normalised [0, 1] space so CMA-ES treats all dimensions equally.
+        def objective(x_norm):
+            x = lo + np.clip(x_norm, 0.0, 1.0) * (hi - lo)
+            p = dict(zip(names, x.tolist()))
             try:
                 q = self._run_sfpy(forcing_data, p)
                 nse = self._nse(obs_data, q)
@@ -491,9 +494,17 @@ class SuperflexEnv:
             except Exception:
                 return 2.0
 
-        study.optimize(objective, n_trials=n_trials)
+        x0 = [0.5] * ndim
+        es = cma.CMAEvolutionStrategy(x0, 0.3, {
+            'bounds': [[0.0] * ndim, [1.0] * ndim],
+            'maxfevals': n_trials,
+            'seed': 42,
+            'verbose': -9,
+        })
+        es.optimize(objective)
 
-        best_p = {n: study.best_params[n] for n in names}
+        best_x = lo + np.clip(es.result.xbest, 0.0, 1.0) * (hi - lo)
+        best_p = dict(zip(names, best_x.tolist()))
         try:
             best_q = self._run_sfpy(forcing_data, best_p)
             best_nse = self._nse(obs_data, best_q)
