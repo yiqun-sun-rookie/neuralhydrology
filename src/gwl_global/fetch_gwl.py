@@ -150,7 +150,10 @@ def run_gwl_download(
         Number of successfully downloaded series.
     """
     output_dir = output_dir or data_dir()
-    gld_index_path = gld_index_path or (output_dir / "gld_index.csv")
+    if gld_index_path is None:
+        # Prefer pre-filtered index (date span >= 10yr) if available
+        filtered = output_dir / "gld_index_filtered.csv"
+        gld_index_path = filtered if filtered.exists() else (output_dir / "gld_index.csv")
 
     gld_df = pd.read_csv(gld_index_path)
     completed = _load_progress(output_dir)

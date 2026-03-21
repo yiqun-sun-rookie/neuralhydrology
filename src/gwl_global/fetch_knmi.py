@@ -29,7 +29,7 @@ def download_knmi_station(
     """
     payload = {
         "stns": str(stn),
-        "vars": "RH:EV24",
+        "vars": "RH:EV24:TG",
         "start": start,
         "end": end,
         "fmt": "json",
@@ -62,7 +62,10 @@ def download_knmi_station(
     # Convert EV24: 0.1mm -> mm
     df["ET_mm"] = pd.to_numeric(df.get("EV24"), errors="coerce") / 10.0
 
-    result = df[["date", "P_mm", "ET_mm"]].copy()
+    # Convert TG: 0.1°C -> °C
+    df["T_degC"] = pd.to_numeric(df.get("TG"), errors="coerce") / 10.0
+
+    result = df[["date", "P_mm", "ET_mm", "T_degC"]].copy()
     result = result.set_index("date").sort_index()
 
     return result

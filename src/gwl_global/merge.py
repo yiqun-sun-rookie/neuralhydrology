@@ -67,7 +67,8 @@ def merge_single_well(
 
     # Inner join
     merged = pd.DataFrame({"gwl_m_nap": gwl_daily})
-    merged = merged.join(knmi[["P_mm", "ET_mm"]], how="inner")
+    knmi_cols = [c for c in ["P_mm", "ET_mm", "T_degC"] if c in knmi.columns]
+    merged = merged.join(knmi[knmi_cols], how="inner")
 
     # Require at least 365 days of overlap
     if len(merged) < 365:

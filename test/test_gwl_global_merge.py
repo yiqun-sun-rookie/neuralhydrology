@@ -27,12 +27,13 @@ def test_merge_single_well(tmp_path):
     gwl_path.parent.mkdir(parents=True)
     gwl.to_csv(gwl_path, index_label="date")
 
-    # Create fake KNMI
+    # Create fake KNMI (with T_degC)
     dates_knmi = pd.date_range("2020-01-01", "2020-12-31", freq="D")
     knmi = pd.DataFrame(
         {
             "P_mm": np.random.rand(len(dates_knmi)) * 5,
             "ET_mm": np.random.rand(len(dates_knmi)) * 3,
+            "T_degC": np.random.rand(len(dates_knmi)) * 20 + 5,
         },
         index=dates_knmi,
     )
@@ -45,6 +46,7 @@ def test_merge_single_well(tmp_path):
     assert "gwl_m_nap" in result.columns
     assert "P_mm" in result.columns
     assert "ET_mm" in result.columns
+    assert "T_degC" in result.columns
     assert len(result) == 366  # 2020 is leap year
 
 

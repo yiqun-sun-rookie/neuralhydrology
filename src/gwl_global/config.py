@@ -12,6 +12,9 @@ KNMI_DAG_URL = "https://www.daggegevens.knmi.nl/klimatologie/daggegevens"
 # Netherlands bounding box (WGS84: min_lon, min_lat, max_lon, max_lat)
 NL_BBOX = (3.3, 50.7, 7.3, 53.6)
 
+# PDOK API tile size (degrees) — API rejects bbox wider than ~0.5°
+TILE_SIZE_DEG = 0.5
+
 # Request pacing (seconds)
 BRO_REQUEST_DELAY = 0.2
 KNMI_REQUEST_DELAY = 1.0
@@ -19,6 +22,7 @@ KNMI_REQUEST_DELAY = 1.0
 # QC thresholds
 MIN_SERIES_YEARS = 10
 MIN_OBS_COUNT = 200  # at least ~14 years of biweekly data
+MIN_OBS_PER_YEAR = 50  # density filter: at least ~weekly frequency
 MAX_GAP_DAYS = 730  # longest allowed data gap (2 years)
 MAX_JUMP_FRACTION = 0.01
 JUMP_ABS_THRESHOLD_M = 1.0  # absolute threshold for single-step GWL change (meters)

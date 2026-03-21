@@ -5,6 +5,7 @@ import pandas as pd
 from src.gwl_global.config import (
     MIN_SERIES_YEARS,
     MIN_OBS_COUNT,
+    MIN_OBS_PER_YEAR,
     MAX_GAP_DAYS,
     MAX_JUMP_FRACTION,
     JUMP_ABS_THRESHOLD_M,
@@ -56,6 +57,13 @@ def check_series_quality(df: pd.DataFrame) -> dict:
     if result["n_obs"] < MIN_OBS_COUNT:
         result["passed"] = False
         result["fail_reasons"].append("too_few_obs")
+
+    # 2b. Observation density (obs per year)
+    if result["n_years"] > 0:
+        obs_per_year = result["n_obs"] / result["n_years"]
+        if obs_per_year < MIN_OBS_PER_YEAR:
+            result["passed"] = False
+            result["fail_reasons"].append("too_sparse")
 
     # 3. Maximum consecutive gap
     intervals = pd.Series(gwl.index).diff().dt.days.dropna()

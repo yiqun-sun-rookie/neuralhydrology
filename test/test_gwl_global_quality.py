@@ -72,11 +72,20 @@ def test_jumpy_series_fails():
     assert "too_many_jumps" in result["fail_reasons"]
 
 
-def test_biweekly_series_passes():
-    # Biweekly observations over 15 years, no gaps > 2 years
+def test_biweekly_series_fails_density():
+    # Biweekly observations over 15 years: 365 obs / 15 yr ≈ 24 obs/yr < 50
     dates = pd.date_range("2000-01-01", periods=365, freq="15D")
     values = np.sin(np.arange(365) * 2 * np.pi / 24) * 0.5 - 2.0
     df = pd.DataFrame({"gwl_m_nap": values}, index=dates)
     result = check_series_quality(df)
+    assert not result["passed"]
+    assert "too_sparse" in result["fail_reasons"]
+
+
+def test_weekly_series_passes():
+    # Weekly observations over 12 years: 624 obs / 12 yr = 52 obs/yr >= 50
+    dates = pd.date_range("2000-01-01", periods=624, freq="7D")
+    values = np.sin(np.arange(624) * 2 * np.pi / 52) * 0.5 - 2.0
+    df = pd.DataFrame({"gwl_m_nap": values}, index=dates)
+    result = check_series_quality(df)
     assert result["passed"]
-    assert result["n_obs"] >= 200
