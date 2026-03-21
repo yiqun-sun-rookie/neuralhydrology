@@ -6,8 +6,7 @@
 
 - **主力 1（精力 70%）**: ID 07 HydroAgent → 3 篇论文（诊断框架 / 自动建模环境 / Agent 旗舰）
 - **主力 2（精力 30%）**: ID 41 MTS-Mamba Global Transfer → 1 篇 WRR 级论文
-  - 依赖 ID 01（全球预训练权重）
-  - 吸收 ID 02（CAMELS-US 日尺度对比）、ID 03（小时级 baseline）、ID 06（海河迁移 case study）、ID 99（全球小时模型概念）
+  - 吸收 ID 01（全球预训练，降格为 41 的预训练阶段）、ID 02（CAMELS-US 日尺度对比）、ID 03（小时级 baseline）、ID 06（海河迁移 case study）、ID 99（全球小时模型概念）
 
 详见 `draft/IDEA_EVALUATION_2026_02.md`。
 
@@ -15,13 +14,14 @@
 
 | ID | Name | Status | Idea Doc | Code Root | Results Root | Logs Root |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 01 | caravan_global | in_progress | `draft/ideas/01_caravan_global.md` | `src/caravan_global/` | `results/01_caravan_global/` | `logs/01_caravan_global/` |
+| 01 | caravan_global | **subsumed_by_41** | `draft/ideas/01_caravan_global.md` | `src/caravan_global/` | `results/01_caravan_global/` | `logs/01_caravan_global/` |
 | 02 | mamba_camels_us | **archived** | `draft/ideas/02_mamba_camels_us.md` | `src/mamba_camels_us/` | `results/02_mamba_camels_us/` | `logs/02_mamba_camels_us/` |
 | 03 | mamba_camelsh | **subsumed_by_41** | `draft/ideas/03_mamba_camelsh.md` | `src/mamba_camelsh/` | `results/03_mamba_camelsh/` | `logs/03_mamba_camelsh/` |
 | 04 | namou_kuwei | done | `draft/ideas/04_namou_kuwei.md` | `src/namou_kuwei/` | `results/04_namou_kuwei/` | `logs/04_namou_kuwei/` |
 | 05 | full_531_basins | **archived** | `draft/ideas/05_full_531_basins.md` | `src/full_531_basins/` | `results/05_full_531_basins/` | `logs/05_full_531_basins/` |
 | 06 | haihe_river | **subsumed_by_41** | `draft/ideas/06_haihe_river.md` | `src/haihe_river/` | `results/06_haihe_river/` | `logs/06_haihe_river/` |
 | 07 | hydroagent | dev | `draft/ideas/07_hydroagent.md` | `src/hydroagent/` | `results/07_hydroagent/` | `logs/07_hydroagent/` |
+| 08 | gwl_global | dev | `draft/ideas/08_gwl_global.md` | `src/gwl_global/` | `results/08_gwl_global/` | `logs/08_gwl_global/` |
 | 41 | mts_mamba_global_transfer | in_progress | `draft/ideas/41_mts_mamba_global_transfer.md` | `src/mts_mamba_global_transfer/` | `results/41_mts_mamba_global_transfer/` | `logs/41_mts_mamba_global_transfer/` |
 
 ## 候选想法（未立项）
