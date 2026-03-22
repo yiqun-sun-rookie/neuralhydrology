@@ -63,7 +63,7 @@ def merge_single_well(
     gwl_daily = gwl["gwl_m_nap"].resample("D").mean()
 
     # Interpolate short gaps
-    gwl_daily = interpolate_short_gaps(gwl_daily, max_gap=5)
+    gwl_daily = interpolate_short_gaps(gwl_daily, max_gap=14)
 
     # Inner join
     merged = pd.DataFrame({"gwl_m_nap": gwl_daily})
