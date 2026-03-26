@@ -98,3 +98,70 @@ class SCLDataset(Dataset):
             "y_k": torch.from_numpy(arrays["target"][pred_k_start:pred_k_end]),
             "y_k1": torch.from_numpy(arrays["target"][pred_k1_start:pred_k1_end]),
         }
+
+
+class SingleSegDataset(Dataset):
+    """Dataset that returns single segments for standard LSTM / encoder-only training.
+
+    Each sample is one segment with optional encoder context window.
+
+    Parameters
+    ----------
+    data : dict
+        Mapping basin_id -> DataFrame with features + target columns.
+    seg_length : int
+        Prediction segment length in timesteps.
+    main_features : list
+        Feature columns for the main LSTM.
+    target : str
+        Target column name.
+    context_length : int, optional
+        If > 0, each sample also includes a context window for the encoder.
+    enc_features : list, optional
+        Feature columns for the encoder (required if context_length > 0).
+    """
+
+    def __init__(self, data: Dict[str, pd.DataFrame], seg_length: int,
+                 main_features: List[str], target: str,
+                 context_length: int = 0, enc_features: Optional[List[str]] = None):
+        super().__init__()
+        self.seg_length = seg_length
+        self.context_length = context_length
+        self.main_features = main_features
+        self.target = target
+        self.enc_features = enc_features
+        self._has_context = context_length > 0 and enc_features is not None
+
+        self._basin_data: Dict[str, Dict[str, np.ndarray]] = {}
+        for basin_id, df in data.items():
+            entry = {
+                "main": df[main_features].values.astype(np.float32),
+                "target": df[[target]].values.astype(np.float32),
+            }
+            if self._has_context:
+                entry["enc"] = df[enc_features].values.astype(np.float32)
+            self._basin_data[basin_id] = entry
+
+        self._lookup: List[tuple] = []
+        for basin_id, arrays in self._basin_data.items():
+            n = len(arrays["target"])
+            min_start = max(context_length, 0)
+            for i in range(min_start, n - seg_length):
+                y = arrays["target"][i:i + seg_length]
+                if not np.any(np.isnan(y)):
+                    self._lookup.append((basin_id, i))
+
+    def __len__(self) -> int:
+        return len(self._lookup)
+
+    def __getitem__(self, idx: int) -> Dict[str, torch.Tensor]:
+        basin_id, start = self._lookup[idx]
+        arrays = self._basin_data[basin_id]
+        sample = {
+            "x": torch.from_numpy(arrays["main"][start:start + self.seg_length]),
+            "y": torch.from_numpy(arrays["target"][start:start + self.seg_length]),
+        }
+        if self._has_context:
+            ctx_start = start - self.context_length
+            sample["context"] = torch.from_numpy(arrays["enc"][ctx_start:start])
+        return sample
