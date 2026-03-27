@@ -75,15 +75,18 @@ class GatedStateEncoder(nn.Module):
 class StateDecoder(nn.Module):
     """Decode LSTM hidden state → physical state [4] + Q [1].
 
-    Uses mean + softplus(raw) * std so initial output ≈ mean (physically reasonable).
+    2-layer MLP for more expressivity. Output: mean + softplus(raw) * std.
     """
 
     def __init__(self, hidden_size: int, n_state: int,
                  state_mean: torch.Tensor, state_std: torch.Tensor,
                  q_mean: float = 1.5, q_std: float = 2.5):
         super().__init__()
-        self.state_head = nn.Linear(hidden_size, n_state)
-        self.q_head = nn.Linear(hidden_size, 1)
+        mid = hidden_size // 2
+        self.state_head = nn.Sequential(
+            nn.Linear(hidden_size, mid), nn.ReLU(), nn.Linear(mid, n_state))
+        self.q_head = nn.Sequential(
+            nn.Linear(hidden_size, mid), nn.ReLU(), nn.Linear(mid, 1))
         self.register_buffer("state_mean", state_mean)
         self.register_buffer("state_std", state_std)
         self.register_buffer("q_mean", torch.tensor(q_mean))

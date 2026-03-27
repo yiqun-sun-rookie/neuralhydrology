@@ -75,7 +75,8 @@ class TestGradientFlow:
         q_lstm = out["y_hat"][:, lstm_mask, :]
         q_lstm.mean().backward()
         assert model.lstm.weight_ih_l0.grad is not None
-        assert model.decoder.q_head.weight.grad is not None
+        # q_head is Sequential; check last Linear layer
+        assert model.decoder.q_head[-1].weight.grad is not None
 
     def test_grad_flows_through_encoder(self):
         model = _make_model()
