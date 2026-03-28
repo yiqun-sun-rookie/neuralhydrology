@@ -138,6 +138,50 @@ t=2 (HBV):  HBV(state'', forcing) → ...          物理方程继续
 - Kratzert et al. 2019 (HESS) — LSTM hydrology baseline
 - Ehret et al. 2020 (HESS) — SHM model (NH's HybridModel uses it)
 
+## TANGO 的独特应用方向
+
+TANGO 的 decoder 输出**物理状态**（不是 LSTM 隐状态），这是 pure LSTM 架构上做不到的。由此衍生 4 个研究方向：
+
+### 方向 A: 多变量约束学习 ⭐ 最高优先级
+
+TANGO 输出 S_snow, S_soil, S_fast, S_slow，可用多源遥感观测约束：
+
+```
+Loss = L_Q(Q_hat, Q_obs)
+     + λ₁ · L_soil(S_soil_hat, SMAP_obs)      ← 卫星土壤湿度
+     + λ₂ · L_snow(S_snow_hat, SNODAS_obs)     ← 雪水当量
+     + λ₃ · L_et(ET_hat, MODIS_ET_obs)         ← 蒸散发
+```
+
+**Pure LSTM 无法做到** — 隐状态无物理含义，无法与遥感数据对齐。
+
+论文叙事："TANGO 不只预测流量，而是在物理状态空间中学习——多源遥感观测约束让模型同时预测流量、土壤湿度和雪水当量"
+
+数据源：SMAP L3 (36km, daily)、SNODAS (1km, daily)、MODIS ET (500m, 8-day)
+
+### 方向 B: 物理模型诊断
+
+比较 LSTM 步 vs HBV 步输出的物理状态差异：
+- LSTM 总是调高 S_soil → HBV 蒸发参数 Ce 偏大
+- LSTM 总是调低 S_snow → HBV 融雪参数 k_snow 偏小
+- 直接定量诊断 HBV 的结构缺陷
+
+**应用**：指导概念模型改进，而不是盲目加 DL 补丁
+
+### 方向 C: 气候变化 / 非平稳外推
+
+- HBV 步：物理方程在新气候下仍成立（质量守恒不变）
+- LSTM 步：只在训练分布内有效
+- TANGO 的 HBV 步作为"物理安全网"，可能在非平稳条件下更鲁棒
+- 验证：Split-sample test (train on dry period, test on wet period) 或 CAMELS 的 climate shift basins
+
+### 方向 D: 数据稀缺 / 无资料流域
+
+- HBV 只需率定 10 参数 → 少量数据即可
+- Pure LSTM 需要大量数据
+- TANGO：HBV 提供物理结构先验 + LSTM 补充细节
+- 验证：减少训练数据量（1年/3年/5年），对比 TANGO vs LSTM 的退化曲线
+
 ## 风险
 
 | 风险 | 严重性 | 缓解 |
@@ -146,3 +190,4 @@ t=2 (HBV):  HBV(state'', forcing) → ...          物理方程继续
 | 训练不稳定（大规模） | 中 | 已验证 CPU 稳定，需验证 GPU |
 | 审稿人认为是"工程贡献"不够理论 | 中 | 建立 operator splitting 理论联系 |
 | Encoder/decoder 信息瓶颈限制上限 | 低 | 过拟合测试 0.933 > HBV 天花板 0.893 |
+| 多变量数据获取/对齐复杂 | 中 | 先用 CAMELS 扩展数据集（已含部分变量） |
