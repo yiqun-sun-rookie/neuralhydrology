@@ -12,7 +12,7 @@ def generate_all_configs(base_yml: Path, data_dir: Path, out_dir: Path, n_folds:
     E3: shuffled static (shuffle injection happens at dataset level, not config)
     E4: no static attributes (constant zero = remove from config)
     """
-    with open(base_yml) as f:
+    with open(base_yml, encoding="utf-8") as f:
         base = yaml.safe_load(f)
 
     out_dir.mkdir(parents=True, exist_ok=True)
