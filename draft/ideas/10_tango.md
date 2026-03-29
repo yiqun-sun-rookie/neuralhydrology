@@ -1,61 +1,101 @@
 # Idea 10: TANGO — Time-Alternating Neural-Geophysical Operator
 
-**状态**: `dev` — 架构验证完成，单流域 positive signal
-**优先级**: 高 — 新颖性确认，有初步正面结果
-**目标期刊**: WRR / HESS
+**状态**: `paused` — 架构验证完成，empirical 优势不足，暂停
 **代码路径**: `src/scl_hydro/`
+**文献新颖性**: 确认（24 篇对比，无先例）
 
 ---
 
-## 一句话
+## 一、演化历程
 
-物理模型（HBV）和神经网络（LSTM）在同一物理状态空间中**严格交替执行**，通过 encoder/decoder 桥接两个状态空间，以可学习的频率融合物理约束与数据驱动能力。
+本 idea 经历了 5 个阶段的演化，最终形成 TANGO 架构。
 
-## 核心创新
+### 阶段 1: SCL-LSTM (State Continuity Loss)
 
-已有的 hybrid 方法都是**同时作用**（加和 APHYNITY、参数化 δHBV、残差修正）。TANGO 是**交替执行**：
+**想法**: 用 L2 loss 惩罚两个重叠时间段在相同时间点的 LSTM 隐状态差异，迫使模型学到一致的流域状态。
 
+**组件**:
+- ObsEncoder: 小 LSTM 编码 [P,T,Q_obs] → LSTM 初始状态 (h_0, c_0)
+- Overlapping Segment Pairs: 两段时间有重叠的训练数据
+- StateContinuityLoss: `λ * mean(||h_k(t) - h_{k+1}(t)||²)`
+
+**Phase 1 实现**: 完成（17 tests pass）。`config.py`, `model.py`, `loss.py`, `dataset.py`, `trainer.py`
+
+**结论**: ❌ **SCL loss 不提升 NSE**
+- 3-way pilot (8 basins): Vanilla LSTM 0.714, Encoder-only 0.710, SCL-LSTM 0.692
+- SCL 反而拖后腿（Encoder 有效但不新颖，SCL loss 无正面效果）
+- **根本原因**: SCL 约束隐状态一致性 ≠ 更好的预测。LSTM 训练已直接优化预测 loss，加 SCL 是多余约束。
+
+### 阶段 2: LSTM 参数化 HBV (NH HybridModel 思路)
+
+**想法**: LSTM 逐时间步输出 HBV 的 10 个参数，HBV 用这些参数跑物理方程。
+
+**结论**: ❌ **LSTM 没学会生成好参数**
+- 3-basin pilot: Coupled 0.466 vs Pure LSTM 0.714 vs Pure HBV 0.674
+- 诊断发现 LSTM 输出的参数几乎不随时间变化（std < 3% of range）
+- 等于一个"很差的固定参数 HBV 率定"
+- **根本原因**: 105 个训练 segment 对参数化任务完全不够。MLP（不需 LSTM）在全序列上到 NSE=0.94，证明动态参数化本身可行，但 LSTM 分段训练信息不足。
+
+### 阶段 3: LSTM 修正 HBV 状态 / 输出残差
+
+**想法**: HBV 用固定参数跑，LSTM 修正物理状态或输出 Q 残差。
+
+**结论**: ⚠️ **接近但不如 pure baseline**
+- 状态修正版: 3-basin mean 0.692 (vs LSTM 0.714, HBV 0.674)
+- 改善了 HBV (+0.019) 但不如 LSTM (-0.021)
+- **根本原因**: 架构不是用户想要的"交替执行"
+
+### 阶段 4: 真正交替执行 + Encoder/Decoder 桥 (TANGO)
+
+**想法**: HBV 和 LSTM 严格交替执行，每个时间步只有一个模型运行。GatedEncoder 在 HBV 步后更新 LSTM 的 h/c，Decoder 在 LSTM 步后输出物理状态。
+
+**架构**:
 ```
-t=0 (HBV):  HBV(state, forcing) → state', Q     物理方程推进状态
-            GatedEncoder(state', forcing, Q, h, c) → h', c'   桥接到 LSTM 空间
-
-t=1 (LSTM): LSTM(forcing, (h', c')) → h'', c''   神经网络推进隐状态
-            Decoder(h'') → state'', Q              桥接回物理空间
-
-t=2 (HBV):  HBV(state'', forcing) → ...          物理方程继续
-...交替进行
+t=0 (HBV):  HBV(state, forcing, fixed_params) → state', Q
+            GatedEncoder([state', forcing, Q], h, c) → h', c'
+t=1 (LSTM): LSTM(forcing, (h', c')) → lstm_out
+            Decoder(lstm_out) → state'', Q
+...交替
 ```
 
-**三个独有特征的组合（经文献检索确认无先例）**：
-1. 真正交替执行（不是加和、不是参数化、不是修正）
-2. Encoder/decoder 桥接不同维度的状态空间（物理 4 维 ↔ LSTM 64 维）
-3. 两者作为独立的状态转移系统（各自完整地推进状态）
+**组件**:
+- `DifferentiableHBV`: PyTorch HBV，与 NumPy 版数值一致（8 tests, max err 2.3e-6）
+- `GatedStateEncoder`: GRU-like 门控更新 h/c（不覆盖，保留记忆）
+- `StateDecoder`: 2-layer MLP, softplus × std + mean
+- `CoupledHydroModel`: 交替循环 + configurable stride（15 tests）
 
-## 方法论定位
+**文献检索**: 24 篇相关工作对比，确认三个独有特征组合无先例:
+1. 真正交替执行（不是加和/参数化/修正）
+2. Encoder/decoder 桥接不同维度状态空间
+3. 两者作为独立状态转移系统
 
-| 已有方法 | 耦合方式 | 与 TANGO 区别 |
-|---------|---------|--------------|
-| APHYNITY (Yin 2021 ICLR) | dx/dt = F_phys + F_nn（加和） | 同时作用 ≠ 交替 |
-| δHBV (Feng 2022 WRR) | LSTM → HBV 参数（参数化） | NN 不直接推进状态 |
-| NeuralGCM (Kochkov 2024 Nature) | 物理+NN 趋势加和 | 加和 ≠ 交替 |
-| UDE (Rackauckas 2020) | NN 替换 ODE 未知项 | 嵌入式 ≠ 独立交替 |
-| H2M (Kraft 2022 HESS) | NN 生成水平衡系数 | 参数化 ≠ 交替 |
-| ANCHOR (arXiv 2025) | 自适应切换 NN/数值求解器 | 无 encoder/decoder 桥 |
-| SS-DNN (2024) | Strang splitting | 解析+PINN，无物理模型 |
-| **TANGO (ours)** | **严格交替 + encoder/decoder 桥** | **独有组合** |
+### 阶段 5: 多变量约束学习 (方向探索)
 
-数学类比：**operator splitting**（Lie-Trotter splitting），但一个算子是物理模型，另一个是神经网络，用学习的 encoder/decoder 连接。
+**想法**: TANGO 输出物理状态，用 SWE/SM 遥感数据约束。
 
-## 关键发现
+**结论**: ❌ **跑题了**
+- 多变量约束不是 TANGO 独有——纯 LSTM + 多输出头同样可做
+- Kratzert/Frame/Feng 已有大量相关工作
+- 用 SAC-SMA 模型输出当"真值"不合理
 
-### Stride 是可调的超参数
+---
 
-`stride` 控制 HBV 介入频率：stride=2 → 每 2 步 1 次 HBV，stride=10 → 每 10 步 1 次。
+## 二、实验结果汇总
 
-单流域（01013500）stride sweep **test NSE**：
+### 过拟合诊断 (单流域 01013500, 2 segments, 500 epochs)
 
-| Stride | HBV 比例 | test NSE |
-|--------|---------|----------|
+| 模型 | train NSE | 结论 |
+|------|-----------|------|
+| Pure LSTM | 0.999 | 完美过拟合 |
+| TANGO (各种 encoder 变体) | 0.933 | 有容量瓶颈 |
+| HBV 步理论天花板 | 0.893 | TANGO > 天花板 → 状态传递有效 |
+
+**LSTM 步 NSE=0.9999, HBV 步 NSE=0.867** → 瓶颈 100% 在 HBV 步
+
+### Stride sweep (单流域 01013500, test NSE)
+
+| Stride | HBV% | test NSE |
+|--------|------|----------|
 | Pure HBV | 100% | 0.723 |
 | 2 | 50% | 0.695 |
 | 3 | 33% | 0.744 |
@@ -64,130 +104,113 @@ t=2 (HBV):  HBV(state'', forcing) → ...          物理方程继续
 | 30 | 3.3% | 0.783 |
 | Pure LSTM | 0% | 0.734 |
 
-**存在最优点 stride=10（NSE=0.820），超过 pure HBV 和 pure LSTM。**
+**存在最优 stride=10 超过两个 pure baseline。** 单流域证据最强。
 
-### 过拟合诊断
+### Per-basin 验证 (8 CAMELS basins, stride=10)
 
-| 步类型 | train NSE |
-|--------|-----------|
-| LSTM 步 | 0.9999（完美） |
-| HBV 步 | 0.8669（固定参数上限） |
-| 整体 | 0.9331 |
-| 理论天花板（HBV步完美+LSTM步完美） | 0.893 |
+| Basin | HBV | LSTM | TANGO | T>H? | T>L? |
+|-------|-----|------|-------|------|------|
+| 01013500 | 0.723 | 0.774 | **0.789** | ✓ | ✓ |
+| 01022500 | 0.541 | **0.668** | 0.619 | ✓ | ✗ |
+| 02051500 | 0.573 | **0.677** | 0.508 | ✗ | ✗ |
+| 03450000 | 0.210 | **0.623** | 0.474 | ✓ | ✗ |
+| 07056000 | 0.198 | 0.672 | **0.761** | ✓ | ✓ |
+| 07291000 | 0.140 | **0.477** | 0.178 | ✓ | ✗ |
+| 09035900 | 0.756 | 0.684 | **0.749** | ✗ | ✓ |
+| 12010000 | 0.609 | **0.869** | 0.800 | ✓ | ✗ |
+| **Mean** | 0.469 | **0.681** | 0.610 | 6/8 | 3/8 |
+| **Median** | 0.557 | 0.675 | **0.684** | — | — |
 
-0.933 > 0.893 → LSTM 通过改善状态间接提升了 HBV 步的输出，证明**状态传递确实在起作用**。
+**TANGO 6/8 胜 HBV (+0.141)，但只 3/8 胜 LSTM (-0.071 mean)**
 
-## 架构组件
+### Multi-basin pooled (8 basins, avg HBV params)
 
-| 组件 | 文件 | 作用 |
-|------|------|------|
-| `DifferentiableHBV` | `hbv_torch.py` | PyTorch HBV，与 NumPy 版数值一致（8 tests） |
-| `GatedStateEncoder` | `coupled_model.py` | [state+forcing+Q, h, c] → 门控更新 h, c |
-| `StateDecoder` | `coupled_model.py` | LSTM hidden → 物理状态 + Q（2 层 MLP + softplus） |
-| `CoupledHydroModel` | `coupled_model.py` | 交替循环 + encoder/decoder 桥接（15 tests） |
+| | HBV | LSTM | T-2 | T-5 | T-10 |
+|---|---|---|---|---|---|
+| Mean | 0.469 | **0.647** | -0.303 | 0.289 | 0.479 |
 
-## 论文叙事
+**Multi-basin 训练时 TANGO 远不如 LSTM** — avg params + 统一 encoder 统计不适用。
 
-**问题**：现有 hybrid 模型要么让 NN 参数化物理模型（δHBV），要么加和两者贡献（APHYNITY/UDE）。这些方法中 NN 无法独立推进系统状态——它被嵌入物理框架内，无法充分发挥数据驱动的灵活性。
+### 多变量约束 (01013500)
 
-**方法**：TANGO 让物理模型和 NN 作为对等的状态转移算子交替执行。物理模型提供周期性的物理约束（防止非物理状态），NN 提供灵活的数据驱动补偿（捕捉物理模型遗漏的过程）。交替频率（stride）是可调超参数。
+| 模型 | Q NSE | SWE NSE |
+|------|-------|---------|
+| TANGO (Q only) | **0.789** | -0.196 |
+| TANGO (Q+SWE) | 0.758 | **0.635** |
 
-**假设**：
-1. 存在最优 stride：物理模型太频繁是累赘，太稀疏失去约束
-2. TANGO 在 test 上优于 pure LSTM（物理约束改善泛化）和 pure HBV（NN 补偿物理不足）
-3. 物理状态的可解释性保留（HBV 步产出的状态有明确物理含义）
+SWE 约束改善雪状态估计但不是 TANGO 独有能力。
 
-**贡献**：
-1. 首次提出物理模型与 NN 在共享状态空间中交替执行的框架
-2. 通过 encoder/decoder 桥接不同维度的状态空间
-3. 发现 stride 作为超参数的最优性质（最优 stride > 2）
-4. 在 CAMELS-US 上验证泛化优势
+---
 
-## 实验计划
+## 三、关键发现与教训
 
-### Phase 1: 小规模验证 ✅ 已完成
-- 3 basins, CPU, hidden=64
-- Stride sweep 发现最优 stride=10
+1. **SCL loss 无正面效果**: 约束隐状态一致性 ≠ 更好的预测
+2. **LSTM 参数化 HBV 需要大量数据**: 小数据下 LSTM 学不会生成好参数
+3. **交替架构在单流域 work**: stride=10 超过 pure LSTM 和 pure HBV
+4. **Multi-basin 是关键难题**: 需要 per-basin HBV params + basin identifier
+5. **HBV 质量决定 TANGO 上下限**: HBV 好的流域 TANGO 赢 LSTM，HBV 差的流域 TANGO 输
+6. **多变量约束不是独有优势**: 任何 DL + 多输出头都能做
 
-### Phase 2: 中规模验证（待做）
-- 30-50 basins, CPU/GPU, hidden=128
-- 多 stride 对比 + 消融实验
-- 对比 E1(HBV) / E2(LSTM) / E3(TANGO stride=10) / E4(TANGO stride=2) / E5(δHBV)
+---
 
-### Phase 3: 全规模实验（待做）
-- 531 CAMELS-US basins, HPC
-- 最优 stride 选择策略（per-basin 还是 global）
-- 极端事件 / PUB / 数据稀缺场景分析
-- 物理状态可解释性分析
+## 四、未验证的方向（后续可捡起）
 
-### Phase 4: 论文（待做）
-- 标题：*"TANGO: Learning Hydrological Dynamics through Alternating Physical and Neural State Transitions"*
-- Figure 1: 架构图（交替执行 + encoder/decoder）
-- Figure 2: Stride sweep 曲线（存在最优点）
-- Figure 3: 531-basin CDF 对比
-- Figure 4: 物理状态轨迹 vs 观测（可解释性）
-- Table 1: 多方法对比（HBV / LSTM / δHBV / TANGO）
+| 方向 | 核心假设 | 验证方式 | 优先级 |
+|------|---------|---------|--------|
+| A. PUB (无资料流域) | 物理约束改善泛化 | Leave-N-basins-out，需 multi-basin 先解决 | 中 |
+| B. 物理模型诊断 | LSTM 步 vs HBV 步状态差异揭示 HBV 缺陷 | 可视化分析 | 低 |
+| C. 气候变化外推 | HBV 做物理安全网 | Split-sample (dry→wet) | 低 |
+| D. 数据稀缺 | 少量数据时物理结构正则化 | 训练数据量消融 | 中 |
 
-## 相关文献（必引）
+---
 
-- Yin et al. 2021 (ICLR) — APHYNITY, additive decomposition
-- Feng et al. 2022 (WRR) — δHBV, differentiable parameter learning
-- Rackauckas et al. 2020 — Universal Differential Equations
-- Kochkov et al. 2024 (Nature) — NeuralGCM
-- Kraft et al. 2022 (HESS) — H2M hybrid
-- Kratzert et al. 2019 (HESS) — LSTM hydrology baseline
-- Ehret et al. 2020 (HESS) — SHM model (NH's HybridModel uses it)
+## 五、代码清单
 
-## TANGO 的独特应用方向
+| 文件 | 内容 | Tests |
+|------|------|-------|
+| `src/scl_hydro/config.py` | SCLConfig (Phase 1 遗留) | 3 |
+| `src/scl_hydro/model.py` | ObsEncoder + SCLCudaLSTM (Phase 1) | 4 |
+| `src/scl_hydro/loss.py` | StateContinuityLoss (Phase 1) | 4 |
+| `src/scl_hydro/dataset.py` | SCLDataset + SingleSegDataset | 3 |
+| `src/scl_hydro/trainer.py` | SCLTrainer (Phase 1) | 2 |
+| `src/scl_hydro/hbv_torch.py` | **DifferentiableHBV** | 8 |
+| `src/scl_hydro/coupled_model.py` | **CoupledHydroModel + GatedEncoder + Decoder** | 15 |
+| `src/scl_hydro/data_utils.py` | CAMELS 加载 + 归一化 | — |
+| `src/scl_hydro/evaluation.py` | 评估工具 | — |
+| `src/scl_hydro/scripts/pilot_experiment.py` | SCL pilot | — |
+| `src/scl_hydro/scripts/pilot_coupled.py` | Coupled pilot | — |
+| `src/scl_hydro/scripts/tango_perbasin.py` | **Per-basin 验证** | — |
+| `src/scl_hydro/scripts/tango_8basin_sweep.py` | Multi-basin stride sweep | — |
+| `src/scl_hydro/scripts/tango_multivar.py` | 多变量约束实验 | — |
+| `test/test_scl_hydro_e2e.py` | E2E smoke test | 1 |
+| `test/test_scl_hydro_hbv_torch.py` | HBV NumPy/PyTorch 一致性 | 8 |
+| `test/test_scl_hydro_coupled_model.py` | TANGO 架构测试 | 15 |
+| **总计** | | **63 tests** |
 
-TANGO 的 decoder 输出**物理状态**（不是 LSTM 隐状态），这是 pure LSTM 架构上做不到的。由此衍生 4 个研究方向：
+---
 
-### 方向 A: 多变量约束学习 ⭐ 最高优先级
+## 六、可复用资产
 
-TANGO 输出 S_snow, S_soil, S_fast, S_slow，可用多源遥感观测约束：
+即使 TANGO 本身暂停，以下组件对其他项目有价值：
 
-```
-Loss = L_Q(Q_hat, Q_obs)
-     + λ₁ · L_soil(S_soil_hat, SMAP_obs)      ← 卫星土壤湿度
-     + λ₂ · L_snow(S_snow_hat, SNODAS_obs)     ← 雪水当量
-     + λ₃ · L_et(ET_hat, MODIS_ET_obs)         ← 蒸散发
-```
+1. **DifferentiableHBV** (`hbv_torch.py`): 完整可微 HBV，梯度率定比 CMA-ES 快 10-20 倍。可用于任何需要可微概念模型的项目。
+2. **CAMELS 数据工具** (`data_utils.py`): 加载 + PET 计算 + z-score 归一化，可复用。
+3. **GatedStateEncoder**: 门控状态桥接，可用于任何物理-ML 耦合场景。
+4. **Overfit 诊断方法**: 先验证过拟合能力 → 再扩大数据，是通用的 ML 诊断流程。
 
-**Pure LSTM 无法做到** — 隐状态无物理含义，无法与遥感数据对齐。
+---
 
-论文叙事："TANGO 不只预测流量，而是在物理状态空间中学习——多源遥感观测约束让模型同时预测流量、土壤湿度和雪水当量"
+## 七、Git 历史
 
-数据源：SMAP L3 (36km, daily)、SNODAS (1km, daily)、MODIS ET (500m, 8-day)
-
-### 方向 B: 物理模型诊断
-
-比较 LSTM 步 vs HBV 步输出的物理状态差异：
-- LSTM 总是调高 S_soil → HBV 蒸发参数 Ce 偏大
-- LSTM 总是调低 S_snow → HBV 融雪参数 k_snow 偏小
-- 直接定量诊断 HBV 的结构缺陷
-
-**应用**：指导概念模型改进，而不是盲目加 DL 补丁
-
-### 方向 C: 气候变化 / 非平稳外推
-
-- HBV 步：物理方程在新气候下仍成立（质量守恒不变）
-- LSTM 步：只在训练分布内有效
-- TANGO 的 HBV 步作为"物理安全网"，可能在非平稳条件下更鲁棒
-- 验证：Split-sample test (train on dry period, test on wet period) 或 CAMELS 的 climate shift basins
-
-### 方向 D: 数据稀缺 / 无资料流域
-
-- HBV 只需率定 10 参数 → 少量数据即可
-- Pure LSTM 需要大量数据
-- TANGO：HBV 提供物理结构先验 + LSTM 补充细节
-- 验证：减少训练数据量（1年/3年/5年），对比 TANGO vs LSTM 的退化曲线
-
-## 风险
-
-| 风险 | 严重性 | 缓解 |
-|------|--------|------|
-| 更多流域上 stride 最优点不存在 | 高 | Phase 2 中规模验证 |
-| 训练不稳定（大规模） | 中 | 已验证 CPU 稳定，需验证 GPU |
-| 审稿人认为是"工程贡献"不够理论 | 中 | 建立 operator splitting 理论联系 |
-| Encoder/decoder 信息瓶颈限制上限 | 低 | 过拟合测试 0.933 > HBV 天花板 0.893 |
-| 多变量数据获取/对齐复杂 | 中 | 先用 CAMELS 扩展数据集（已含部分变量） |
+| Commit | 内容 |
+|--------|------|
+| `a9cdf89` | SCLConfig (Phase 1 Task 1) |
+| `2120bb0` | ObsEncoder |
+| `4421285` | SCLCudaLSTM |
+| `38bb623` | E2E smoke test |
+| `4fab8a5` | Training script + config |
+| `6aba24b` | **DifferentiableHBV + CoupledHydroModel** |
+| `1d354b7` | TANGO idea doc |
+| `da41543` | Per-basin validation + MLP decoder |
+| `8f7be48` | 4 application directions |
+| `0c9d599` | Multi-variable constraint experiment |
