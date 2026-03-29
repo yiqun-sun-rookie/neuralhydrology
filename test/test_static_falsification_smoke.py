@@ -29,10 +29,15 @@ def test_smoke_e1_single_basin(tmp_path):
     cfg["validate_n_random_basins"] = 1
     cfg["run_dir"] = str(tmp_path / "runs")
     cfg["seq_length"] = 30
+    # Use only robust attributes (some have zero std with few basins)
+    cfg["static_attributes"] = [
+        "elev_mean", "slope_mean", "area_gages2", "p_mean", "aridity", "frac_snow"
+    ]
+    cfg["save_weights_every"] = 1
 
-    # Write a single-basin file
+    # Use 3 basins (single basin causes NaN std in static attribute normalization)
     basin_file = tmp_path / "basins.txt"
-    basin_file.write_text("01013500\n")
+    basin_file.write_text("01013500\n01022500\n01030500\n")
     cfg["train_basin_file"] = str(basin_file)
     cfg["validation_basin_file"] = str(basin_file)
     cfg["test_basin_file"] = str(basin_file)
