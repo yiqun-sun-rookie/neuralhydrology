@@ -104,3 +104,34 @@ def test_filmlstm_gradient_flow(get_config: Fixture[Callable[[str], dict]]):
 
     missing_grads = [n for n, p in model.named_parameters() if p.requires_grad and p.grad is None]
     assert not missing_grads, f"Parameters without gradients: {missing_grads}"
+
+
+def test_analyze_film_poc_verdict_on_synthetic_data(tmp_path: Fixture):
+    """Analysis script must apply threshold B correctly on synthetic NSE tables."""
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src' / 'static_falsification' / 'scripts'))
+    from analyze_film_poc import compute_verdict
+
+    # Simulate a clear PASS: FiLM real = 0.72, EA real = 0.68, shuffle cases much lower
+    per_run_nse = {
+        ('ealstm',   'real',    0): 0.68, ('ealstm',   'real',    1): 0.68,
+        ('filmlstm', 'real',    0): 0.72, ('filmlstm', 'real',    1): 0.72,
+        ('ealstm',   'shuffle', 0): 0.60, ('ealstm',   'shuffle', 1): 0.60,
+        ('filmlstm', 'shuffle', 0): 0.62, ('filmlstm', 'shuffle', 1): 0.62,
+    }
+    verdict = compute_verdict(per_run_nse, threshold='B')
+    assert verdict['go'] is True
+    assert verdict['delta_arch'] == pytest.approx(0.04, abs=1e-6)
+    assert verdict['delta_phys_film'] == pytest.approx(0.10, abs=1e-6)
+    assert verdict['delta_phys_ea'] == pytest.approx(0.08, abs=1e-6)
+
+    # Simulate a clear FAIL: FiLM slightly worse than EA
+    per_run_nse_fail = {
+        ('ealstm',   'real',    0): 0.68, ('ealstm',   'real',    1): 0.68,
+        ('filmlstm', 'real',    0): 0.67, ('filmlstm', 'real',    1): 0.67,
+        ('ealstm',   'shuffle', 0): 0.60, ('ealstm',   'shuffle', 1): 0.60,
+        ('filmlstm', 'shuffle', 0): 0.60, ('filmlstm', 'shuffle', 1): 0.60,
+    }
+    verdict_fail = compute_verdict(per_run_nse_fail, threshold='B')
+    assert verdict_fail['go'] is False
