@@ -63,7 +63,7 @@ class FiLMLSTM(BaseModel):
 
     Identity initialization (gamma=1, beta=0) makes the model behave as a vanilla LSTM at init.
     """
-    module_parts = ['embedding_net', 'film_generator', 'cell', 'head']
+    module_parts = ['embedding_net', 'film_generator', 'head']
 
     def __init__(self, cfg: Config):
         super().__init__(cfg=cfg)
