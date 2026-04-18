@@ -23,21 +23,26 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 SHUFFLE_MAPS_PATH = REPO_ROOT / 'src/static_falsification/data/shuffle_maps.json'
 
 
-def _parse_fold_from_experiment_name(experiment_name: str) -> int:
+def _parse_experiment_name(experiment_name: str) -> tuple[str, int]:
     # experiment_name format: {model}_poc_{condition}_fold{F}_seed{S}
-    for part in experiment_name.split('_'):
-        if part.startswith('fold'):
-            return int(part[len('fold'):])
-    raise ValueError(f"Cannot parse fold from experiment_name: {experiment_name}")
+    parts = experiment_name.split('_')
+    condition, fold_idx = None, None
+    for part in parts:
+        if part in ('real', 'shuffle'):
+            condition = part
+        elif part.startswith('fold'):
+            fold_idx = int(part[len('fold'):])
+    if condition is None or fold_idx is None:
+        raise ValueError(f"Cannot parse condition/fold from experiment_name: {experiment_name}")
+    return condition, fold_idx
 
 
 def run(config_file: Path, gpu: int):
     with open(config_file, 'r', encoding='utf-8') as f:
         cfg_dict = yaml.safe_load(f)
 
-    static_condition = cfg_dict.get('static_condition', 'real')
     experiment_name = cfg_dict.get('experiment_name', '')
-    fold_idx = _parse_fold_from_experiment_name(experiment_name)
+    static_condition, fold_idx = _parse_experiment_name(experiment_name)
 
     # Reset class state before setup
     ModifiedCamelsUS._shuffle_map = None

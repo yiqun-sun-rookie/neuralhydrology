@@ -3,9 +3,9 @@
 Matrix: 2 models (ealstm, filmlstm) x 2 static conditions (real, shuffle)
 x 2 folds (0, 1) x 3 seeds (0, 1, 2) = 24 configs.
 
-Each config carries a `static_condition: real|shuffle` metadata key.
-The runner script (run_film_poc.py) reads this key and injects shuffle
-via ModifiedCamelsUS class-level attributes before calling start_run.
+Condition is encoded in experiment_name as `{model}_poc_{real|shuffle}_fold{F}_seed{S}`.
+The runner script (run_film_poc.py) parses it and injects shuffle via
+ModifiedCamelsUS class-level attributes before calling start_run.
 """
 from pathlib import Path
 
@@ -22,14 +22,11 @@ def build_config(model: str, fold: int, seed: int, shuffle: bool) -> dict:
     with open(base_path, 'r', encoding='utf-8') as f:
         cfg = yaml.safe_load(f)
 
-    condition = 'shuffle' if shuffle else 'real'
-    cfg['experiment_name'] = f'{model}_poc_{condition}_fold{fold}_seed{seed}'
+    cfg['experiment_name'] = f"{model}_poc_{'shuffle' if shuffle else 'real'}_fold{fold}_seed{seed}"
     cfg['seed'] = seed
     cfg['train_basin_file'] = f'src/static_falsification/data/fold{fold}_train.txt'
     cfg['validation_basin_file'] = f'src/static_falsification/data/fold{fold}_validation.txt'
     cfg['test_basin_file'] = f'src/static_falsification/data/fold{fold}_test.txt'
-    # Metadata -- read by run_film_poc.py to inject shuffle
-    cfg['static_condition'] = condition
 
     return cfg
 
