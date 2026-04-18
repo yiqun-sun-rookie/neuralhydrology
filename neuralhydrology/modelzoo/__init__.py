@@ -7,6 +7,7 @@ from neuralhydrology.modelzoo.cudalstm import CudaLSTM
 from neuralhydrology.modelzoo.mamba import Mamba
 from neuralhydrology.modelzoo.customlstm import CustomLSTM
 from neuralhydrology.modelzoo.ealstm import EALSTM
+from neuralhydrology.modelzoo.filmlstm import FiLMLSTM
 from neuralhydrology.modelzoo.embcudalstm import EmbCudaLSTM
 from neuralhydrology.modelzoo.handoff_forecast_lstm import HandoffForecastLSTM
 from neuralhydrology.modelzoo.hybridmodel import HybridModel
@@ -23,8 +24,9 @@ from neuralhydrology.utils.config import Config
 
 SINGLE_FREQ_MODELS = [
     "cudalstm",
-    "ealstm", 
-    "customlstm", 
+    "ealstm",
+    "filmlstm",
+    "customlstm",
     "embcudalstm", 
     "gru", 
     "transformer",
@@ -67,6 +69,8 @@ def get_model(cfg: Config) -> nn.Module:
         model = CudaLSTM(cfg=cfg)
     elif cfg.model.lower() == "ealstm":
         model = EALSTM(cfg=cfg)
+    elif cfg.model.lower() == "filmlstm":
+        model = FiLMLSTM(cfg=cfg)
     elif cfg.model.lower() == "customlstm":
         model = CustomLSTM(cfg=cfg)
     elif cfg.model.lower() == "lstm":

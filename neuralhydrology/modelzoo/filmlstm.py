@@ -50,3 +50,81 @@ class _FiLMGenerator(nn.Module):
 
     def forward(self, s: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         return self.mlp_gamma(s), self.mlp_beta(s)
+
+
+class FiLMLSTM(BaseModel):
+    """LSTM with FiLM-modulated gate pre-activations by static attributes.
+
+    Differences vs. EA-LSTM:
+      - EA-LSTM: input gate uses static-only path `sigma(W_s * s + b_s)`, kept constant over time.
+        Other 3 gates (f, o, g) are dynamic.
+      - FiLMLSTM: all 4 gates (i, f, g, o) are dynamic. Static attributes generate per-gate
+        (gamma, beta) vectors that affinely modulate pre-activations before sigmoid/tanh.
+
+    Identity initialization (gamma=1, beta=0) makes the model behave as a vanilla LSTM at init.
+    """
+    module_parts = ['embedding_net', 'film_generator', 'cell', 'head']
+
+    def __init__(self, cfg: Config):
+        super().__init__(cfg=cfg)
+        self._hidden_size = cfg.hidden_size
+        self.embedding_net = InputLayer(cfg)
+
+        if self.embedding_net.statics_output_size == 0:
+            raise ValueError('FiLMLSTM requires static inputs.')
+
+        self.film_generator = _FiLMGenerator(cfg, static_size=self.embedding_net.statics_output_size)
+
+        # 4-gate LSTM parameters: order is (i, f, g, o) along the 4H axis
+        input_size = self.embedding_net.dynamics_output_size
+        H = cfg.hidden_size
+        self.weight_ih = nn.Parameter(torch.empty(input_size, 4 * H))
+        self.weight_hh = nn.Parameter(torch.empty(H, 4 * H))
+        self.bias = nn.Parameter(torch.empty(4 * H))
+        self._reset_parameters()
+
+        self.dropout = nn.Dropout(p=cfg.output_dropout)
+        self.head = get_head(cfg=cfg, n_in=H, n_out=self.output_size)
+
+    def _reset_parameters(self):
+        nn.init.orthogonal_(self.weight_ih)
+        # hh: identity-block repeated 4 times (standard LSTM initialization)
+        eye = torch.eye(self._hidden_size)
+        self.weight_hh.data = eye.repeat(1, 4)
+        nn.init.zeros_(self.bias)
+        if self.cfg.initial_forget_bias is not None:
+            # f gate is the 2nd chunk (index H:2H) under (i, f, g, o) ordering
+            self.bias.data[self._hidden_size:2 * self._hidden_size] = self.cfg.initial_forget_bias
+
+    def forward(self, data: dict) -> Dict[str, torch.Tensor]:
+        x_d, x_s = self.embedding_net(data, concatenate_output=False)
+        if x_s is None:
+            raise ValueError('FiLMLSTM requires static inputs (x_s or x_one_hot).')
+
+        # Compute gamma, beta ONCE per sample (time-constant modulation)
+        gamma, beta = self.film_generator(x_s)  # each [B, 4H]
+
+        B = x_d.shape[1]
+        h_t = x_d.new_zeros(B, self._hidden_size)
+        c_t = x_d.new_zeros(B, self._hidden_size)
+        h_n, c_n = [], []
+
+        for x_dt in x_d:
+            pre_act = x_dt @ self.weight_ih + h_t @ self.weight_hh + self.bias  # [B, 4H]
+            pre_act = gamma * pre_act + beta  # FiLM modulation
+            i, f, g, o = pre_act.chunk(4, dim=-1)
+            i = torch.sigmoid(i)
+            f = torch.sigmoid(f)
+            g = torch.tanh(g)
+            o = torch.sigmoid(o)
+            c_t = f * c_t + i * g
+            h_t = o * torch.tanh(c_t)
+            h_n.append(h_t)
+            c_n.append(c_t)
+
+        h_n = torch.stack(h_n, 0).transpose(0, 1)
+        c_n = torch.stack(c_n, 0).transpose(0, 1)
+
+        pred = {'h_n': h_n, 'c_n': c_n}
+        pred.update(self.head(self.dropout(h_n)))
+        return pred
