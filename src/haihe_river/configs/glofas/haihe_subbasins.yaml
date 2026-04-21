@@ -1,9 +1,0 @@
-macro_basin: data/haihe/boundary/haihe_basin.shp
-hydrobasins: data/haihe/hydrobasins/source/hybas_as_lev09_v1c.shp
-output_file: data/haihe/hydrobasins/lev9/haihe_hydrobasins_lev9.gpkg
-output_layer: basins
-list_csv: data/haihe/hydrobasins/lev9/haihe_hydrobasins_lev9_list.csv
-id_field: HYBAS_ID
-sub_id_field: PFAF_ID
-min_overlap_ratio: 0.05
-
