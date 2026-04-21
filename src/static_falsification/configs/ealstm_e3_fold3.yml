@@ -8,7 +8,7 @@ initial_forget_bias: 3
 output_dropout: 0.0
 output_activation: linear
 epochs: 30
-batch_size: 256
+batch_size: 128
 optimizer: Adam
 loss: NSE
 learning_rate:

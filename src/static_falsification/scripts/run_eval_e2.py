@@ -44,7 +44,8 @@ def eval_e2_single(results_dir: Path, fold_idx: int, gpu: int = 0):
         config.device = "cpu"
 
     # Override experiment name so results are saved separately
-    config.experiment_name = f"sf_e2_fold{fold_idx}"
+    # (experiment_name is a read-only property, modify via _cfg dict)
+    config._cfg["experiment_name"] = f"sf_e2_fold{fold_idx}"
 
     start_evaluation(cfg=config, run_dir=run_dir, period="test")
 
