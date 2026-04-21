@@ -148,43 +148,59 @@ def _nse(obs: np.ndarray, sim: np.ndarray) -> float:
     return float(1.0 - np.sum((o - s) ** 2) / denom)
 
 
+WARMUP_DAYS = 365
+
+
 def calibrate_hbv(
     rain: np.ndarray,
     pet: np.ndarray,
     temp: np.ndarray,
     obs: np.ndarray,
     n_trials: int = 2000,
+    n_restarts: int = 3,
 ) -> dict:
-    """Calibrate HBV with CMA-ES. Returns dict with nse, optimized_params, qsim."""
+    """CMA-ES 多重启率定 HBV。Returns dict with nse, optimized_params, qsim, final_state."""
     lo = np.array([PARAM_BOUNDS[n][0] for n in PARAM_NAMES])
     hi = np.array([PARAM_BOUNDS[n][1] for n in PARAM_NAMES])
     ndim = len(PARAM_NAMES)
+    warmup = min(WARMUP_DAYS, len(obs) // 4)
+    obs_eval = obs[warmup:]
 
     def objective(x_norm):
         x = lo + np.clip(x_norm, 0.0, 1.0) * (hi - lo)
         params = dict(zip(PARAM_NAMES, x.tolist()))
         try:
             q, _ = simulate_hbv(rain, pet, temp, params)
-            nse = _nse(obs, q)
+            q_eval = q[warmup:]
+            nse = _nse(obs_eval, q_eval)
             return 1.0 - nse if np.isfinite(nse) else 2.0
         except Exception:
             return 2.0
 
-    es = cma.CMAEvolutionStrategy([0.5] * ndim, 0.3, {
-        'bounds': [[0.0] * ndim, [1.0] * ndim],
-        'maxfevals': n_trials,
-        'seed': 42,
-        'verbose': -9,
-    })
-    es.optimize(objective)
+    best_overall = None
+    for restart in range(n_restarts):
+        seed = 42 + restart * 1000
+        es = cma.CMAEvolutionStrategy([0.5] * ndim, 0.3, {
+            'bounds': [[0.0] * ndim, [1.0] * ndim],
+            'maxfevals': n_trials,
+            'seed': seed,
+            'verbose': -9,
+        })
+        es.optimize(objective)
 
-    best_x = lo + np.clip(es.result.xbest, 0.0, 1.0) * (hi - lo)
+        if best_overall is None or es.result.fbest < best_overall[1]:
+            best_overall = (es.result.xbest.copy(), es.result.fbest)
+
+    best_x = lo + np.clip(best_overall[0], 0.0, 1.0) * (hi - lo)
     best_params = dict(zip(PARAM_NAMES, best_x.tolist()))
     try:
-        best_q, _ = simulate_hbv(rain, pet, temp, best_params)
-        best_nse = _nse(obs, best_q)
+        best_q, final_state = simulate_hbv(rain, pet, temp, best_params)
+        q_eval = best_q[warmup:]
+        best_nse = _nse(obs_eval, q_eval)
     except Exception:
         best_q = np.zeros(len(obs))
+        final_state = None
         best_nse = -999.0
 
-    return {'nse': float(best_nse), 'optimized_params': best_params, 'qsim': best_q}
+    return {'nse': float(best_nse), 'optimized_params': best_params,
+            'qsim': best_q, 'final_state': final_state}

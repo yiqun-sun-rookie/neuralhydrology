@@ -18,9 +18,10 @@ from src.xaj_global_pilot.xaj_numba_smooth_et import simulate_xaj_smooth_et
 
 
 def run_single_model_basin(basin_id: str, model: str, data_root=None, calibration_trials: int = 2000) -> dict:
-    specs = get_model_specs()
+    specs = _flatten_model_specs()
     if model not in specs:
         raise ValueError(f"Unknown pilot model '{model}'")
+    spec = specs[model]
 
     periods = split_periods()
     try:
@@ -42,6 +43,9 @@ def run_single_model_basin(basin_id: str, model: str, data_root=None, calibratio
             "model": model,
             "period": "test",
             **metrics,
+            "parameter_count": spec["parameter_count"],
+            "solver_name": spec["solver_name"],
+            "family": spec["family"],
             "run_status": "success",
             "error_message": "",
         }
@@ -55,9 +59,20 @@ def run_single_model_basin(basin_id: str, model: str, data_root=None, calibratio
             "bias": pd.NA,
             "peak_bias": pd.NA,
             "lowflow_bias": pd.NA,
+            "parameter_count": spec["parameter_count"],
+            "solver_name": spec["solver_name"],
+            "family": spec["family"],
             "run_status": "failed",
             "error_message": str(exc),
         }
+
+
+def _flatten_model_specs() -> dict:
+    grouped = get_model_specs()
+    flat = {}
+    for group in grouped.values():
+        flat.update(group)
+    return flat
 
 
 # ---------------------------------------------------------------------------
@@ -183,9 +198,22 @@ def _run_test_simulation(env: SuperflexEnv, test_forcing: pd.DataFrame, best_par
         return env.run_simulation(test_forcing)
 
     try:
-        return env.run_simulation(test_forcing, params=best_params)
+        sim = env.run_simulation(test_forcing, params=best_params)
+        if isinstance(sim, pd.Series):
+            sim_values = sim.to_numpy(dtype=float, copy=False)
+            if not np.isfinite(sim_values).any():
+                return _run_default_test_simulation(env, test_forcing)
+        return sim
     except Exception:
-        return env.run_simulation(test_forcing)
+        return _run_default_test_simulation(env, test_forcing)
+
+
+def _run_default_test_simulation(env: SuperflexEnv, test_forcing: pd.DataFrame) -> pd.Series:
+    structure = getattr(env, "structure_json", None)
+    if structure:
+        fallback_env = _build_env(structure)
+        return fallback_env.run_simulation(test_forcing)
+    return env.run_simulation(test_forcing)
 
 
 # ---------------------------------------------------------------------------
@@ -194,7 +222,7 @@ def _run_test_simulation(env: SuperflexEnv, test_forcing: pd.DataFrame, best_par
 
 def _load_period(basin_id: str, data_root, start_date: str, end_date: str) -> tuple[pd.DataFrame, pd.Series]:
     root = Path(data_root) if data_root is not None else None
-    if root is not None and (root / "timeseries").exists():
+    if root is not None and ((root / "timeseries").exists() or "caravan" in str(root).lower()):
         return _load_caravan_period(basin_id, root, start_date, end_date)
 
     forcing, obs, _ = load_camels_basin(basin_id, data_root=data_root, start_date=start_date, end_date=end_date)

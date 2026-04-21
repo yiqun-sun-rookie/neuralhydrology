@@ -7,18 +7,28 @@ from src.xaj_global_pilot.reporting import summarize_by_regime
 from src.xaj_global_pilot.runner import run_single_model_basin
 
 
-def run_pilot_batch(selected_basins_csv, output_dir, data_root=None, calibration_trials: int = 2000):
+def run_pilot_batch(
+    selected_basins_csv,
+    output_dir,
+    data_root=None,
+    calibration_trials: int = 2000,
+    include_ablations: bool = True,
+):
     selected_path = Path(selected_basins_csv)
     output_path = Path(output_dir)
     summary_dir = output_path / "summary"
     summary_dir.mkdir(parents=True, exist_ok=True)
 
-    selected = pd.read_csv(selected_path)
+    selected = pd.read_csv(selected_path, dtype={"basin_id": str})
     all_rows = []
+    model_specs = get_model_specs()
+    model_names = tuple(model_specs["primary"].keys())
+    if include_ablations:
+        model_names += tuple(model_specs["ablations"].keys())
     for basin in selected.to_dict(orient="records"):
         basin_id = basin["basin_id"]
         regime = basin["regime"]
-        for model in get_model_specs().keys():
+        for model in model_names:
             result = run_single_model_basin(
                 basin_id,
                 model,
