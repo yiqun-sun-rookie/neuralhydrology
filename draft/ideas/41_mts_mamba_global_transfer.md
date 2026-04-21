@@ -2,9 +2,10 @@
 
 **状态**: in_progress
 **创建日期**: 2026-01-06
-**最后更新**: 2026-02-23
+**最后更新**: 2026-03-03
 
-> **整合说明（2026-02-23）**: 经 idea 重新评估，本 idea 成为 Mamba 研究主线的核心论文（WRR 级别）。已吸收以下 idea：
+> **整合说明（2026-03-03 更新）**: 经 idea 重新评估，本 idea 成为 Mamba 研究主线的核心论文（WRR 级别）。已吸收以下 idea：
+> - **ID 01（caravan_global）→ 降格为本 idea 的"全球预训练"阶段**（2026-03-03 新增）。代码资产保留在 `src/caravan_global/` 原位，由本 idea 引用。预训练产出的权重将用于论文的 pretraining → fine-tuning 实验。
 > - ID 02（mamba_camels_us）→ 归档，CAMELS-US 日尺度对比实验资产并入
 > - ID 03（mamba_camelsh）→ 降格为本 idea 的小时级 LSTM baseline / Mamba fine-tuning target
 > - ID 06（haihe_river）→ 降格为本 idea 的 data-scarce transfer case study
@@ -49,6 +50,11 @@
 | Smoke Config (10x3) | `src/mts_mamba_global_transfer/configs/caravan_daily_smoke_10basins_ep3.yml` | 本地增强 smoke 验证（10 basins, 3 epochs） |
 | Smoke Basins (10) | `src/mts_mamba_global_transfer/data/smoke_10_basins.txt` | 10-basin smoke 配置用 basin 列表 |
 | **MTS-Mamba Model** | `neuralhydrology/modelzoo/mtsmamba.py` | **核心模型**：MTSMamba 类，Context Prepend 跨频率传递（218 行） |
+| Phase2v2 CudaLSTM Config | `src/mts_mamba_global_transfer/configs/phase2v2_cudalstm_camelsh_10b.yml` | 单频 baseline，11 forcings + 13 static，10 basins，10 epochs |
+| Phase2v2 EALSTM Config | `src/mts_mamba_global_transfer/configs/phase2v2_ealstm_camelsh_10b.yml` | 单频 entity-aware baseline |
+| Phase2v2 MTSLSTM Config | `src/mts_mamba_global_transfer/configs/phase2v2_mtslstm_camelsh_10b.yml` | 多频 MTS-LSTM，1D+1h |
+| Phase2v2 MTSMamba Config | `src/mts_mamba_global_transfer/configs/phase2v2_mtsmamba_camelsh_10b.yml` | 多频 MTS-Mamba（HPC only） |
+| Phase2v2 Compare Script | `src/mts_mamba_global_transfer/scripts/compare_phase2v2.py` | 多模型对比脚本 |
 
 ---
 
@@ -61,6 +67,9 @@
 | caravan_global_hpc_v1 | 2026-01-06 | `results/41_mts_mamba_global_transfer/` | 本任务独立结果目录（待写入） |
 | 41_mtslstm_camels_hourly_4basins_ep3_2026_0224_2110_ep3 | 2026-02-24 | `results/41_mts_mamba_global_transfer/` | Phase 0 baseline: 4 basins 3ep CPU; hourly NSE=0.1486, KGE=0.1236 |
 | 41_mtsmamba_camels_hourly_4basins_ep3_2026_0224_2128_ep3 | 2026-02-24 | `results/41_mts_mamba_global_transfer/` | Phase 0 experimental: 4 basins 3ep CPU; hourly NSE=0.1802, KGE=0.1144, ratio=1.21 PASSED |
+| 41_phase2v2_cudalstm_camelsh_10b_2026_0227_2119_ep10 | 2026-02-28 | `results/41_mts_mamba_global_transfer/` | Phase 2v2 CudaLSTM: 10 basins 10ep CPU; **test NSE=0.472, KGE=0.646** |
+| 41_phase2v2_ealstm_camelsh_10b_2026_0228_0016_ep10 | 2026-02-28 | `results/41_mts_mamba_global_transfer/` | Phase 2v2 EALSTM: 10 basins 10ep CPU; **test NSE=0.505, KGE=0.652** |
+| 41_phase2v2_mtslstm_camelsh_10b_2026_0228_0844_ep10 | 2026-02-28 | `results/41_mts_mamba_global_transfer/` | Phase 2v2 MTSLSTM: 10 basins 10ep CPU; **test NSE=0.768, KGE=0.785** |
 
 ---
 
@@ -68,6 +77,8 @@
 
 | Date | Event | Details |
 | :--- | :--- | :--- |
+| 2026-02-28 | **Phase 2v2 全 forcing 对比完成** | CAMELS-H 10 basins, 10ep, 11 forcings + 13 static attrs。**MTSLSTM 大幅领先**：NSE=0.768 vs CudaLSTM 0.472 (+0.296), EALSTM 0.505 (+0.263)。Q1: 静态属性微弱改善 (+0.033 NSE); Q2: 多时间尺度巨大提升 (+0.296 NSE)。详见下方 Phase 2v2 Results。 |
+| 2026-02-28 | Phase 2v2 训练完成 | 3 模型 CPU 训练：CudaLSTM ~19min/ep, EALSTM ~50min/ep, MTSLSTM ~1.7min/ep。修复 segfault（禁用 TensorBoard/matplotlib logging）。 |
 | 2026-02-24 | Phase 0 对比实验完成 | MTS-Mamba vs MTS-LSTM (4 basins, 3ep, 1D+1h, CPU): hourly NSE ratio=1.21, 结论 PASSED（Mamba 略优） |
 | 2026-02-24 | mtsmamba.py 实现并测试通过 | 实现方案 A (Context Prepend) 218 行，注册到 modelzoo factory。`test_multi_timescale_regression[mtsmamba]` PASSED，未破坏 mtslstm/odelstm。 |
 | 2026-02-23 | 状态传递方案设计完成 | 调研 Mamba SSM 状态接口（mamba_ssm 不支持注入，HF transformers 通过 MambaCache 可注入）。设计 3 候选方案：A-Context Prepend / B-SSM State Injection / C-Cross-Attention Bridge。推荐先验证方案 A。 |
@@ -232,6 +243,56 @@ Bridge: MultiheadAttention(Q=hourly_hidden, K=daily_output, V=daily_output) → 
 
 - 小时分支 seq_length=3000，Mamba 并行扫描可能比 LSTM 串行更快（训练效率）
 - 选择性机制可能更好地捕获长程依赖（如数月前积雪对洪水的影响），但这是经验性假设
+
+---
+
+## Phase 2v2 Results — 全 Forcing 多模型对比（2026-02-28）
+
+### 实验设计
+
+- **数据集**: CAMELS-H (hourly_camelsh)，10 basins
+- **Forcing**: 11 NLDAS-2 变量（Rainf, Tair, Qair, PSurf, Wind_E, Wind_N, LWdown, SWdown, CRainf_frac, CAPE, PotEvap）
+- **Static**: 13 属性（elev_mean, slope_mean, area, clay_frac, sand_frac, soil_porosity, permeability, frac_forest, p_mean, pet_mean, aridity, frac_snow, high_prec_freq）
+- **训练**: 2000–2015, 验证: 2016–2018, 测试: 2019–2020
+- **共同超参**: hidden_size=64, batch_size=256, epochs=10, LR={0: 0.01, 5: 0.001}, output_dropout=0.4, initial_forget_bias=3
+- **单频模型** (CudaLSTM, EALSTM): seq_length=336, predict_last_n=24
+- **多频模型** (MTSLSTM): use_frequencies=[1D, 1h], seq_length={1D: 365, 1h: 336}, predict_last_n={1D: 1, 1h: 24}
+
+### 测试集结果（hourly, epoch 10）
+
+| Model | Mean NSE | Mean KGE | Alpha-NSE | Beta-NSE | Time/epoch |
+|-------|----------|----------|-----------|----------|------------|
+| CudaLSTM | 0.472 | 0.646 | 0.850 | -0.012 | ~19 min |
+| EALSTM | 0.505 | 0.652 | 0.859 | 0.040 | ~50 min |
+| **MTSLSTM** | **0.768** | **0.785** | 0.858 | 0.059 | **~1.7 min** |
+
+### Per-Basin NSE (hourly)
+
+| Basin | CudaLSTM | EALSTM | MTSLSTM |
+|-------|----------|--------|---------|
+| 01081000 | 0.107 | -0.126 | **0.717** |
+| 01098530 | 0.527 | 0.602 | **0.772** |
+| 01108000 | 0.676 | 0.685 | **0.908** |
+| 01109403 | 0.619 | 0.727 | **0.836** |
+| 01127000 | 0.608 | 0.697 | **0.914** |
+| 01129200 | 0.379 | 0.498 | **0.658** |
+| 01184000 | 0.681 | 0.726 | **0.867** |
+| 01186000 | -0.172 | -0.049 | **0.490** |
+| 01196500 | 0.755 | 0.770 | **0.885** |
+| 01449800 | 0.535 | 0.518 | **0.631** |
+
+### 研究问题回答
+
+- **Q1**: 静态属性有帮助吗？EALSTM − CudaLSTM = **+0.033 NSE** → 微弱改善。10-basin 规模上 entity-aware gating 增益有限。
+- **Q2**: 多时间尺度有帮助吗？MTSLSTM − CudaLSTM = **+0.296 NSE** → 巨大提升。每个 basin 都显著改善。多时间尺度是核心架构优势。
+- **Q3**: Mamba 能否替代 LSTM？待 HPC 完成 MTSMamba 实验后回答。
+
+### 关键发现
+
+1. MTSLSTM 在**所有 10 个 basin** 上都大幅优于单频模型（NSE 最小提升 +0.097 on 01449800, 最大 +0.662 on 01186000）
+2. MTSLSTM 训练速度反而最快（CuDNN LSTM + 多频并行），1.7 min/epoch vs CudaLSTM 19 min
+3. 单频模型在 01081000 和 01186000 表现极差（NSE < 0.1 或负），MTSLSTM 仍能达到 ~0.5-0.7
+4. CPU 训练存在 segfault 风险：TensorBoard/matplotlib logging 导致内存错误。修复：`log_tensorboard: false`, `log_n_figures: 0`
 
 ---
 

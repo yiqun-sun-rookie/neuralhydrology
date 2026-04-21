@@ -6,7 +6,7 @@
 
 - **主力 1（精力 70%）**: ID 07 HydroAgent → 3 篇论文（诊断框架 / 自动建模环境 / Agent 旗舰）
 - **主力 2（精力 30%）**: ID 41 MTS-Mamba Global Transfer → 1 篇 WRR 级论文
-  - 吸收 ID 01（全球预训练，降格为 41 的预训练阶段）、ID 02（CAMELS-US 日尺度对比）、ID 03（小时级 baseline）、ID 06（海河迁移 case study）、ID 99（全球小时模型概念）
+  - 吸收 ID 02（CAMELS-US 日尺度对比）、ID 03（小时级 baseline）、ID 99（全球小时模型概念）；ID 01 全球预训练代码已于 2026-04-17 删除（git 历史可取回）；ID 06 海河相关内容已于 2026-04-17 迁出到独立 repo `G:\github\pycharm\projects\haihe\lstm_training\`
 
 详见 `draft/IDEA_EVALUATION_2026_02.md`。
 
@@ -14,21 +14,26 @@
 
 | ID | Name | Status | Idea Doc | Code Root | Results Root | Logs Root |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 01 | caravan_global | **subsumed_by_41** | `draft/ideas/01_caravan_global.md` | `src/caravan_global/` | `results/01_caravan_global/` | `logs/01_caravan_global/` |
-| 02 | mamba_camels_us | **archived** | `draft/ideas/02_mamba_camels_us.md` | `src/mamba_camels_us/` | `results/02_mamba_camels_us/` | `logs/02_mamba_camels_us/` |
-| 03 | mamba_camelsh | **subsumed_by_41** | `draft/ideas/03_mamba_camelsh.md` | `src/mamba_camelsh/` | `results/03_mamba_camelsh/` | `logs/03_mamba_camelsh/` |
+| 02 | mamba_camels_us | **archived** | `draft/ideas/02_mamba_camels_us.md` | `src/_archive/02_mamba_camels_us/` | `results/_archive/02_mamba_camels_us/` | `logs/_archive/02_mamba_camels_us/` |
+| 03 | mamba_camelsh | **subsumed_by_41** | `draft/ideas/03_mamba_camelsh.md` | `src/_archive/03_mamba_camelsh/` | `results/_archive/03_mamba_camelsh/` | `logs/_archive/03_mamba_camelsh/` |
 | 04 | namou_kuwei | done | `draft/ideas/04_namou_kuwei.md` | `src/namou_kuwei/` | `results/04_namou_kuwei/` | `logs/04_namou_kuwei/` |
-| 05 | full_531_basins | **archived** | `draft/ideas/05_full_531_basins.md` | `src/full_531_basins/` | `results/05_full_531_basins/` | `logs/05_full_531_basins/` |
-| 06 | haihe_river | **subsumed_by_41** | `draft/ideas/06_haihe_river.md` | `src/haihe_river/` | `results/06_haihe_river/` | `logs/06_haihe_river/` |
+| 05 | adversarial_robustness | active | `draft/ideas/05_adversarial_robustness.md` | `src/adversarial/` | `results/05_adversarial_robustness/` | `logs/05_adversarial_robustness/` |
 | 07 | hydroagent | dev | `draft/ideas/07_hydroagent.md` | `src/hydroagent/` | `results/07_hydroagent/` | `logs/07_hydroagent/` |
 | 08 | gwl_global | dev | `draft/ideas/08_gwl_global.md` | `src/gwl_global/` | `results/08_gwl_global/` | `logs/08_gwl_global/` |
+| 10 | global_conceptual_model_benchmark | in_progress | `draft/ideas/10_global_conceptual_model_benchmark.md` | `src/xaj_global_pilot/`、`src/hbv_camels_us_531/` | `results/10_global_conceptual_model_benchmark/`、`results/10_xaj_global_pilot/`、`results/10_hbv_camels_us_531/` | `logs/10_hbv_camels_us_531/` |
+| 11 | static_falsification | in_progress | `draft/ideas/11_static_falsification.md` | `src/static_falsification/` | `results/11_static_falsification/` (待生成) | `logs/11_static_falsification/` (待生成) |
+| 14 | method_dml | poc | `draft/ideas/14_method_dml.md` | `src/method_dml/` | `results/14_method_dml/` (待生成) | `logs/14_method_dml/` (待生成) |
+| 15 | spatial_routing_discovery | paused | `draft/ideas/15_spatial_routing_discovery.md` | `src/spatial_routing_discovery/` | `results/15_spatial_routing_discovery/` | — |
 | 41 | mts_mamba_global_transfer | in_progress | `draft/ideas/41_mts_mamba_global_transfer.md` | `src/mts_mamba_global_transfer/` | `results/41_mts_mamba_global_transfer/` | `logs/41_mts_mamba_global_transfer/` |
 
 ## 候选想法（未立项）
 
 | ID | Name | Status | Idea Doc | 说明 |
 | :--- | :--- | :--- | :--- | :--- |
-| 99 | global_hourly_model | **merged_to_41** | `draft/ideas/99_global_hourly_model.md` | 已合并到 ID 41（MTS-Mamba），占位目录 `src/global_hourly_model/` 保留但不再活跃 |
+| 12 | fsoi_driven_da | **brainstorm_done** | `draft/ideas/12_fsoi_driven_da.md` | FSOI 驱动的自适应 DA：Q 调优 + IMM + 在线质控，20 个子 idea，4 篇论文规划 |
+| 13 | tango | **paused** | `draft/ideas/13_tango.md` | TANGO (Time-Alternating Neural-Geophysical Operator)，架构验证完成但 empirical 优势不足，代码在 `src/scl_hydro/` |
+| 16 | pretrained_lstm_knowledge_separation | **design** | `draft/ideas/16_pretrained_lstm_knowledge_separation.md` | Pretrained LSTM 知识可分离性实验（头/嵌入/LSTM/全 finetune × 低/高分布偏移），复用 ID 05 的 531 basin 预训练权重。代码 `src/pretrained_lstm_knowledge_separation/`、结果 `results/16_pretrained_lstm_knowledge_separation/` |
+| 99 | global_hourly_model | **merged_to_41** | `draft/ideas/99_global_hourly_model.md` | 已合并到 ID 41（MTS-Mamba），占位目录 `src/global_hourly_model/` 已于 2026-04-19 删除（git 历史可取回） |
 
 ## 共享目录（非单一 Idea）
 
