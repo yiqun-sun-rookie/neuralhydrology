@@ -1,0 +1,66 @@
+# GWL Global — CudaLSTM Baseline
+# Target: daily groundwater level prediction (gwl_m_nap)
+# Inputs: P_mm, ET_mm, T_degC
+# 133 wells in Central Netherlands, >=50% daily coverage
+
+experiment_name: gwl_cudalstm_baseline
+
+# --- Data ---
+dataset: generic
+data_dir: data/gwl_nl
+
+train_basin_file: data/gwl_nl/train_basins.txt
+validation_basin_file: data/gwl_nl/val_basins.txt
+test_basin_file: data/gwl_nl/test_basins.txt
+
+# Date splits: ~70% train, ~15% val, ~15% test
+train_start_date: 01/01/2001
+train_end_date: 31/12/2017
+validation_start_date: 01/01/2018
+validation_end_date: 31/12/2020
+test_start_date: 01/01/2021
+test_end_date: 01/01/2025
+
+# --- Features ---
+dynamic_inputs:
+  - P_mm
+  - ET_mm
+  - T_degC
+
+target_variables:
+  - gwl_m_nap
+
+static_attributes:
+  - lat
+  - lon
+
+# --- Model ---
+model: cudalstm
+head: regression
+hidden_size: 128
+# --- Training ---
+epochs: 30
+batch_size: 256
+learning_rate:
+  0: 0.001
+  10: 0.0005
+  20: 0.00025
+optimizer: Adam
+seq_length: 365
+predict_last_n: 1
+clip_gradient_norm: 1.0
+
+# --- Loss ---
+loss: MSE
+
+# --- Metrics ---
+metrics:
+  - NSE
+  - KGE
+  - RMSE
+
+# --- Output ---
+log_interval: 5
+save_weights_every: 5
+log_tensorboard: true
+log_n_figures: 5

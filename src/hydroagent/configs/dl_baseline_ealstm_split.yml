@@ -1,0 +1,100 @@
+# DL Baseline: EALSTM with proper train/test split
+# Train on 10 years, test on the same 3-year period as HydroAgent calibration.
+
+experiment_name: hydroagent_baseline_ealstm_split
+
+run_dir: results/07_hydroagent/dl_baseline_split
+
+train_basin_file: src/hydroagent/configs/paper_18_basins.txt
+validation_basin_file: src/hydroagent/configs/paper_18_basins.txt
+test_basin_file: src/hydroagent/configs/paper_18_basins.txt
+
+# Train on 10 years BEFORE HydroAgent's calibration period
+train_start_date: '01/10/1980'
+train_end_date: '30/09/1990'
+
+# Validation = test period
+validation_start_date: '01/10/1990'
+validation_end_date: '30/09/1993'
+
+# Test = same 3-year period as HydroAgent calibration
+test_start_date: '01/10/1990'
+test_end_date: '30/09/1993'
+
+seed: 42
+device: cpu
+
+# --- Validation ---
+validate_every: 5
+validate_n_random_basins: 18
+cache_validation_data: True
+metrics:
+- NSE
+- KGE
+
+# --- Model ---
+model: ealstm
+head: regression
+output_activation: linear
+
+hidden_size: 128
+initial_forget_bias: 3
+output_dropout: 0.4
+
+# --- Training ---
+optimizer: Adam
+loss: NSE
+learning_rate:
+  0: 1e-3
+  10: 5e-4
+  25: 1e-4
+batch_size: 256
+epochs: 50
+clip_gradient_norm: 1
+
+predict_last_n: 1
+seq_length: 365
+
+num_workers: 0
+log_interval: 5
+log_tensorboard: False
+log_n_figures: 0
+save_weights_every: 10
+save_validation_results: True
+
+# --- Data ---
+dataset: camels_us
+data_dir: data/camels_us
+
+forcings:
+- daymet
+
+dynamic_inputs:
+- prcp(mm/day)
+- srad(W/m2)
+- tmax(C)
+- tmin(C)
+- vp(Pa)
+
+target_variables:
+- QObs(mm/d)
+
+static_attributes:
+- elev_mean
+- slope_mean
+- area_gages2
+- frac_forest
+- lai_max
+- lai_diff
+- soil_depth_pelletier
+- soil_depth_statsgo
+- soil_porosity
+- soil_conductivity
+- max_water_content
+- sand_frac
+- silt_frac
+- clay_frac
+- p_mean
+- pet_mean
+- aridity
+- frac_snow

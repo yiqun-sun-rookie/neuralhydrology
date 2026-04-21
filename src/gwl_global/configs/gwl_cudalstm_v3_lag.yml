@@ -1,0 +1,71 @@
+# GWL Global — CudaLSTM v3 (manual lag, no leakage, fast)
+# gwl_lag1[t] = gwl_m_nap[t-1]: model sees yesterday's GWL, predicts today's.
+# CudaLSTM with CuDNN acceleration (much faster than ARLSTM on CPU too).
+
+experiment_name: gwl_cudalstm_v3_lag
+
+# --- Data ---
+dataset: generic
+data_dir: data/gwl_nl
+
+train_basin_file: data/gwl_nl/train_basins.txt
+validation_basin_file: data/gwl_nl/val_basins.txt
+test_basin_file: data/gwl_nl/test_basins.txt
+
+# Date splits
+train_start_date: 01/01/2001
+train_end_date: 31/12/2017
+validation_start_date: 01/01/2018
+validation_end_date: 31/12/2020
+test_start_date: 01/01/2021
+test_end_date: 01/01/2025
+
+# --- Features ---
+dynamic_inputs:
+  - P_mm
+  - ET_mm
+  - T_degC
+  - gwl_lag1
+
+target_variables:
+  - gwl_m_nap
+
+static_attributes:
+  - lat
+  - lon
+  - gwl_mean
+  - gwl_std
+  - seasonal_amp
+  - autocorr_30d
+
+# --- Model ---
+model: cudalstm
+head: regression
+hidden_size: 128
+
+# --- Training ---
+epochs: 30
+batch_size: 256
+learning_rate:
+  0: 0.001
+  10: 0.0005
+  20: 0.00025
+optimizer: Adam
+seq_length: 365
+predict_last_n: 1
+clip_gradient_norm: 1.0
+
+# --- Loss ---
+loss: MSE
+
+# --- Metrics ---
+metrics:
+  - NSE
+  - KGE
+  - RMSE
+
+# --- Output ---
+log_interval: 5
+save_weights_every: 5
+log_tensorboard: true
+log_n_figures: 5

@@ -95,7 +95,8 @@ def load_camels_basin(
     srad = forcing['srad(W/m2)'].values
     tmean = (tmax + tmin) / 2
     delta_t = np.maximum(tmax - tmin, 0.1)
-    pet = 0.0023 * (srad * 0.0864) * np.sqrt(delta_t) * (tmean + 17.8)
+    ra_mm = srad * 0.0864 / 2.45  # W/m2 → MJ/m2/d → mm/d equivalent
+    pet = 0.0023 * ra_mm * np.sqrt(delta_t) * (tmean + 17.8)
     forcing_out['ep'] = np.maximum(pet, 0)
     forcing_out['tmean'] = tmean
 

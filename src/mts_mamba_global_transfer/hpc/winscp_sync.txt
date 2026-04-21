@@ -1,0 +1,34 @@
+# WinSCP script: sync neuralhydrology project to HPC
+
+option batch continue
+option confirm off
+
+# 连接 HPC
+open sftp://sunyiq@hpcbh.hhu.edu.cn/ -hostkey=*
+
+# SFTP 落在 /，需要先 cd 到 home
+cd /data1/home/sunyiq
+pwd
+
+# 创建远程目录（现在相对于 home）
+mkdir neuralhydrology/logs/41_mts_mamba_global_transfer
+mkdir neuralhydrology/results/41_mts_mamba_global_transfer
+mkdir neuralhydrology/src/mts_mamba_global_transfer/configs
+mkdir neuralhydrology/src/mts_mamba_global_transfer/data
+mkdir neuralhydrology/src/mts_mamba_global_transfer/hpc
+mkdir neuralhydrology/src/mts_mamba_global_transfer/scripts
+
+# 切回严格模式
+option batch abort
+
+# Step 1: 同步 neuralhydrology/ 包
+synchronize remote -filemask="|__pycache__;*.pyc;*.egg-info" G:\github\pycharm\projects\neuralhydrology\neuralhydrology neuralhydrology/neuralhydrology
+
+# Step 2: 同步任务文件
+synchronize remote -filemask="|__pycache__;*.pyc" G:\github\pycharm\projects\neuralhydrology\src\mts_mamba_global_transfer neuralhydrology/src/mts_mamba_global_transfer
+
+# Step 3: 上传 setup 文件
+put G:\github\pycharm\projects\neuralhydrology\setup.py neuralhydrology/
+put G:\github\pycharm\projects\neuralhydrology\setup.cfg neuralhydrology/
+
+exit
