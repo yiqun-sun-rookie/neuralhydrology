@@ -26,7 +26,7 @@ class _FiLMGenerator(nn.Module):
     def __init__(self, cfg, static_size: int):
         super().__init__()
         H = cfg.hidden_size
-        mid = getattr(cfg, 'film_generator_hidden_size', 64)
+        mid = cfg.film_generator_hidden_size
 
         self.mlp_gamma = nn.Sequential(
             nn.Linear(static_size, mid),

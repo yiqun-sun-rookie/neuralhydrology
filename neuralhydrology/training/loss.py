@@ -388,6 +388,93 @@ class MaskedUMALLoss(BaseLoss):
         return result
 
 
+class MaskedEVTLoss(BaseLoss):
+    """Negative log-likelihood for a GEV (Generalized Extreme Value) distribution.
+
+    Used with the EVT output head for extreme-value-aware flood forecasting. The GEV distribution
+    adapts its tail behavior via the learned shape parameter xi, enabling better extrapolation
+    to unseen flood magnitudes. Always operates in Frechet regime (xi > 0).
+
+    Parameters
+    ----------
+    cfg : Config
+        The run configuration.
+    eps : float, optional
+        Small constant for numerical stability.
+    """
+
+    def __init__(self, cfg: Config, eps: float = 1e-6):
+        super(MaskedEVTLoss, self).__init__(cfg,
+                                            prediction_keys=['mu', 'sigma', 'xi', 'y_hat'],
+                                            ground_truth_keys=['y'],
+                                            output_size_per_target=1)
+        self.eps = eps
+        self.nll_weight = cfg.evt_nll_weight
+
+    def _get_loss(self, prediction: Dict[str, torch.Tensor], ground_truth: Dict[str, torch.Tensor], **kwargs):
+        mask = ~torch.isnan(ground_truth['y']).any(1).any(1)
+        y = ground_truth['y'][mask]
+        mu = prediction['mu'][mask]
+        sigma = prediction['sigma'][mask]
+        xi = prediction['xi'][mask]
+        y_hat = prediction['y_hat'][mask]
+
+        # === MSE on point prediction (keeps predictions accurate) ===
+        mse = 0.5 * torch.mean((y_hat - y) ** 2)
+
+        # === GEV NLL (shapes the distribution, learns tail behavior) ===
+        z = (y - mu) / sigma
+        w_raw = 1.0 + xi * z
+        w = torch.nn.functional.softplus(w_raw, beta=5.0) + self.eps
+        log_w = torch.log(w)
+        neg_log_w_over_xi = torch.clamp(-log_w / xi, max=50.0)
+        nll = torch.log(sigma) + (1.0 + 1.0 / xi) * log_w + torch.exp(neg_log_w_over_xi)
+        nll = torch.mean(nll)
+
+        return mse + self.nll_weight * nll
+
+
+class MaskedGaussianNLLLoss(BaseLoss):
+    """MSE + Gaussian NLL auxiliary loss for distributional ablation.
+
+    Uses the EVT head architecture but computes Gaussian NLL instead of GEV NLL.
+    Tests whether peak improvement comes from GEV tail modeling (xi) or from
+    any distributional auxiliary gradient signal (sigma alone).
+
+    Parameters
+    ----------
+    cfg : Config
+        The run configuration.
+    eps : float, optional
+        Small constant for numerical stability.
+    """
+
+    def __init__(self, cfg: Config, eps: float = 1e-6):
+        super(MaskedGaussianNLLLoss, self).__init__(cfg,
+                                                     prediction_keys=['mu', 'sigma', 'xi', 'y_hat'],
+                                                     ground_truth_keys=['y'],
+                                                     output_size_per_target=1)
+        self.eps = eps
+        self.nll_weight = cfg.evt_nll_weight
+
+    def _get_loss(self, prediction: Dict[str, torch.Tensor], ground_truth: Dict[str, torch.Tensor], **kwargs):
+        mask = ~torch.isnan(ground_truth['y']).any(1).any(1)
+        y = ground_truth['y'][mask]
+        mu = prediction['mu'][mask]
+        sigma = prediction['sigma'][mask]
+        y_hat = prediction['y_hat'][mask]
+
+        # === MSE on point prediction ===
+        mse = 0.5 * torch.mean((y_hat - y) ** 2)
+
+        # === Gaussian NLL: log(sigma) + 0.5 * ((y - mu) / sigma)^2 ===
+        z = (y - mu) / sigma
+        nll = torch.log(sigma) + 0.5 * z ** 2
+        nll = torch.mean(nll)
+
+        return mse + self.nll_weight * nll
+
+
 def _get_predict_last_n(cfg: Config) -> dict:
     predict_last_n = cfg.predict_last_n
     if isinstance(predict_last_n, int):

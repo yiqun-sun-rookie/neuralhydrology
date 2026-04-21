@@ -34,6 +34,8 @@ def get_head(cfg: Config, n_in: int, n_out: int) -> nn.Module:
         head = UMAL(n_in=n_in, n_out=n_out)
     elif cfg.head.lower() == "cmal":
         head = CMAL(n_in=n_in, n_out=n_out)
+    elif cfg.head.lower() == "evt":
+        head = EVT(n_in=n_in, n_out=n_out)
     elif cfg.head.lower() == "":
         raise ValueError(f"No 'head' specified in the config but is required for {cfg.model}")
     else:
@@ -254,3 +256,64 @@ class UMAL(nn.Module):
         m = m_latent  # no restrictions (depending on setting m>0 might be useful)
         b = self._upper_bound_scale * torch.sigmoid(b_latent) + self._eps  # bind scale from two sides.
         return {'mu': m, 'b': b}
+
+
+class EVT(nn.Module):
+    """GEV-parameterized output head for extreme value modeling.
+
+    Outputs Generalized Extreme Value distribution parameters (mu, sigma, xi) conditioned on
+    the LSTM hidden state. Also provides a point prediction (y_hat) as the GEV mean for
+    compatibility with standard evaluation metrics (NSE, KGE, RMSE).
+
+    The GEV distribution naturally handles heavy-tailed phenomena like flood peaks, where the
+    shape parameter xi > 0 enables extrapolation beyond training-observed extremes.
+
+    Parameters
+    ----------
+    n_in : int
+        Number of input neurons (LSTM hidden size).
+    n_out : int
+        Number of output neurons. Must be 3 * n_targets (mu, sigma, xi per target).
+    n_hidden : int
+        Size of the hidden layer.
+    """
+
+    def __init__(self, n_in: int, n_out: int, n_hidden: int = 64):
+        super(EVT, self).__init__()
+        n_targets = n_out // 3
+        # Point prediction: single linear layer, identical capacity to regression head
+        self.regression = nn.Linear(n_in, n_targets)
+        # Distribution parameters: separate branch with hidden layer
+        self.fc1 = nn.Linear(n_in, n_hidden)
+        self.fc2 = nn.Linear(n_hidden, 2 * n_targets)  # sigma + xi
+        self._sigma_min = 0.01
+
+    def forward(self, x: torch.Tensor) -> Dict[str, torch.Tensor]:
+        """Perform an EVT head forward pass.
+
+        Parameters
+        ----------
+        x : torch.Tensor
+            Output of the LSTM (after dropout). Shape: [batch_size, seq_length, hidden_size].
+
+        Returns
+        -------
+        Dict[str, torch.Tensor]
+            Dictionary containing GEV parameters ('mu', 'sigma', 'xi') and point prediction ('y_hat').
+            mu = y_hat (shared), sigma and xi from separate branch.
+        """
+        # Point prediction: clean linear path, same as regression head
+        mu = self.regression(x)
+
+        # Distribution parameters: separate branch
+        h = torch.relu(self.fc1(x))
+        h = self.fc2(h)
+        sigma_raw, xi_raw = h.chunk(2, dim=-1)
+
+        # Scale: strictly positive, with minimum floor to prevent collapse
+        sigma = torch.nn.functional.softplus(sigma_raw) + self._sigma_min
+
+        # Shape: bounded to [0.02, 0.30] — always Frechet (heavy right tail)
+        xi = 0.28 * torch.sigmoid(xi_raw) + 0.02
+
+        return {'y_hat': mu, 'mu': mu, 'sigma': sigma, 'xi': xi}

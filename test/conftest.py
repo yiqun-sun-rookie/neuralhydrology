@@ -75,7 +75,7 @@ def single_timescale_forcings(request) -> Dict[str, Union[str, List[str]]]:
     return {'forcings': request.param[0], 'variables': request.param[1]}
 
 
-@pytest.fixture(params=['mtslstm', 'odelstm'])
+@pytest.fixture(params=['mtslstm', 'odelstm', 'mtsmamba'])
 def multi_timescale_model(request) -> str:
     """Fixture that provides multi-timescale models.
 

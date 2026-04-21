@@ -484,6 +484,10 @@ class Config(object):
             return hindcast_inputs
 
     @property
+    def film_generator_hidden_size(self) -> int:
+        return self._cfg.get("film_generator_hidden_size", 64)
+
+    @property
     def hidden_size(self) -> Union[int, Dict[str, int]]:
         return self._get_value_verbose("hidden_size")
 
@@ -583,6 +587,10 @@ class Config(object):
     @loss.setter
     def loss(self, loss: str):
         self._cfg["loss"] = loss
+
+    @property
+    def evt_nll_weight(self) -> float:
+        return self._cfg.get("evt_nll_weight", 0.01)
 
     @property
     def mamba_d_conv(self) -> int:

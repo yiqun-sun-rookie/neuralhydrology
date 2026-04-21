@@ -33,6 +33,8 @@ class BaseModel(nn.Module):
             self.output_size *= 4 * cfg.n_distributions
         elif cfg.head.lower() == 'umal':
             self.output_size *= 2
+        elif cfg.head.lower() == 'evt':
+            self.output_size *= 3  # mu, sigma, xi per target
 
     def sample(self, data: Dict[str, torch.Tensor], n_samples: int) -> Dict[str, torch.Tensor]:
         """Provides point prediction samples from a probabilistic model.
