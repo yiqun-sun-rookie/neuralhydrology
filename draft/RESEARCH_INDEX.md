@@ -23,7 +23,7 @@
 | 10 | global_conceptual_model_benchmark | in_progress | `draft/ideas/10_global_conceptual_model_benchmark.md` | `src/xaj_global_pilot/`、`src/hbv_camels_us_531/` | `results/10_global_conceptual_model_benchmark/`、`results/10_xaj_global_pilot/`、`results/10_hbv_camels_us_531/` | `logs/10_hbv_camels_us_531/` |
 | 11 | static_falsification | in_progress | `draft/ideas/11_static_falsification.md` | `src/static_falsification/` | `results/11_static_falsification/` (待生成) | `logs/11_static_falsification/` (待生成) |
 | 14 | method_dml | poc | `draft/ideas/14_method_dml.md` | `src/method_dml/` | `results/14_method_dml/` (待生成) | `logs/14_method_dml/` (待生成) |
-| 15 | spatial_routing_discovery | paused | `draft/ideas/15_spatial_routing_discovery.md` | `src/spatial_routing_discovery/` | `results/15_spatial_routing_discovery/` | — |
+| 15 | spatial_routing_discovery | **archived** | `draft/ideas/15_spatial_routing_discovery.md` | `src/_archive/15_spatial_routing_discovery/` | — | — |
 | 41 | mts_mamba_global_transfer | in_progress | `draft/ideas/41_mts_mamba_global_transfer.md` | `src/mts_mamba_global_transfer/` | `results/41_mts_mamba_global_transfer/` | `logs/41_mts_mamba_global_transfer/` |
 
 ## 候选想法（未立项）
