@@ -1,15 +1,12 @@
-# Source pretrain config for knowledge separation experiment.
-# CudaLSTM with embedding networks so all module_parts have learnable params.
-# Without statics_embedding, embedding_net has no learnable params and
-# "embedding-only" finetune becomes a degenerate no-op.
-experiment_name: ks_source_pretrain
+# EALSTM train from scratch on low-shift basins ONLY.
+experiment_name: ks_ealstm_scratch_low_shift
 
 dataset: camels_us
 data_dir: data/camels_us/full
 
-train_basin_file: examples/06-Finetuning/531_basin_list.txt
-validation_basin_file: examples/06-Finetuning/531_basin_list.txt
-test_basin_file: examples/06-Finetuning/531_basin_list.txt
+train_basin_file: src/pretrained_lstm_knowledge_separation/data/low_shift_basins.txt
+validation_basin_file: src/pretrained_lstm_knowledge_separation/data/low_shift_basins.txt
+test_basin_file: src/pretrained_lstm_knowledge_separation/data/low_shift_basins.txt
 
 train_start_date: 01/10/1999
 train_end_date: 30/09/2008
@@ -18,14 +15,13 @@ validation_end_date: 30/09/1989
 test_start_date: 01/10/1989
 test_end_date: 30/09/1999
 
-model: cudalstm
+model: ealstm
 head: regression
 hidden_size: 128
 initial_forget_bias: 3
 output_dropout: 0.0
 output_activation: linear
 
-# Embedding networks: gives embedding_net learnable parameters
 statics_embedding:
   type: fc
   hiddens: [32]
@@ -76,7 +72,7 @@ seq_length: 365
 predict_last_n: 1
 num_workers: 0
 validate_every: 2
-validate_n_random_basins: 50
+validate_n_random_basins: 20
 save_weights_every: 5
 log_interval: 10
 log_tensorboard: false

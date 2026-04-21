@@ -6,7 +6,7 @@ structure in large-sample pretrained hydrological LSTMs?
 ## Source Model
 
 One CudaLSTM pretrained on CAMELS-US (531 basins, Kratzert 2019 split).
-Existing checkpoint in `results/05_full_531_basins/`.
+Existing checkpoint in `results/05_adversarial_robustness/` (baseline 531 LSTM, merged from former ID 05 full_531_basins).
 
 ## Adaptation Groups
 

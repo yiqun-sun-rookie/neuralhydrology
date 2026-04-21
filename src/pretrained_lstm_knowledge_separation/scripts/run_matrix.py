@@ -67,7 +67,10 @@ def materialize_run_matrix(
     for entry in matrix:
         src_config = CONFIGS_DIR / entry.config_name
         dst_config = output_dir / entry.config_name
-        shutil.copy2(src_config, dst_config)
+        # Inject base_run_dir into the materialized config
+        config_text = src_config.read_text(encoding="utf-8")
+        config_text += f"\nbase_run_dir: {source_run_dir.resolve()}\n"
+        dst_config.write_text(config_text, encoding="utf-8")
 
         command = (
             f"python -m neuralhydrology.nh_run finetune "

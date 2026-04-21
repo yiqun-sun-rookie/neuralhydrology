@@ -1,0 +1,29 @@
+# EALSTM Adaptation config: high_shift, embedding
+experiment_name: ks_ealstm_high_shift_embedding
+
+train_basin_file: src/pretrained_lstm_knowledge_separation/data/high_shift_basins.txt
+validation_basin_file: src/pretrained_lstm_knowledge_separation/data/high_shift_basins.txt
+test_basin_file: src/pretrained_lstm_knowledge_separation/data/high_shift_basins.txt
+
+epochs: 10
+batch_size: 256
+optimizer: AdamW
+loss: NSE
+learning_rate:
+  0: 0.0005
+  5: 0.0001
+
+finetune_modules:
+  - embedding_net
+
+validate_every: 2
+validate_n_random_basins: 20
+save_weights_every: 5
+log_interval: 10
+log_tensorboard: false
+log_n_figures: 0
+
+metrics:
+  - NSE
+
+seed: 159193

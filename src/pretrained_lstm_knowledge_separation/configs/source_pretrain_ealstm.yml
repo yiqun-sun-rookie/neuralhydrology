@@ -1,8 +1,7 @@
-# Source pretrain config for knowledge separation experiment.
-# CudaLSTM with embedding networks so all module_parts have learnable params.
-# Without statics_embedding, embedding_net has no learnable params and
-# "embedding-only" finetune becomes a degenerate no-op.
-experiment_name: ks_source_pretrain
+# Source pretrain config for EALSTM knowledge separation experiment.
+# Same setup as CudaLSTM source, but with EALSTM architecture.
+# EALSTM module_parts: ['embedding_net', 'input_gate', 'dynamic_gates', 'head']
+experiment_name: ks_source_pretrain_ealstm
 
 dataset: camels_us
 data_dir: data/camels_us/full
@@ -18,14 +17,13 @@ validation_end_date: 30/09/1989
 test_start_date: 01/10/1989
 test_end_date: 30/09/1999
 
-model: cudalstm
+model: ealstm
 head: regression
 hidden_size: 128
 initial_forget_bias: 3
 output_dropout: 0.0
 output_activation: linear
 
-# Embedding networks: gives embedding_net learnable parameters
 statics_embedding:
   type: fc
   hiddens: [32]
