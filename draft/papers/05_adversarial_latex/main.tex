@@ -1,0 +1,372 @@
+\documentclass[draft]{agujournal2019}
+\usepackage{apacite}
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+\journalname{Water Resources Research}
+
+\begin{document}
+
+\title{How Fragile Are LSTM Rainfall-Runoff Models? A Multi-Level Adversarial Robustness Assessment}
+
+\authors{
+Y.~Sun\affil{1}
+}
+\affiliation{1}{College of Hydrology and Water Resources, Hohai University, Nanjing, China}
+
+\correspondingauthor{Y.~Sun}{sunyiq@hhu.edu.cn}
+
+\begin{keypoints}
+\item Adversarial perturbations (Auto-PGD) reveal 14$\times$ greater LSTM vulnerability than random noise at observation-error-scale budgets ($\varepsilon = 0.1$); FGSM captures 92\% of worst-case degradation.
+\item Static catchment attributes halve the catastrophic failure rate under adversarial attack (from 37\% to 17\%, $p < 10^{-15}$), identifying catchment information as a robustness mechanism.
+\item Statistically undetectable perturbations---preserving input feature means and standard deviations---still cause operationally significant degradation (median $\Delta$NSE $= -0.21$).
+\end{keypoints}
+
+\begin{abstract}
+Deep learning models, particularly Long Short-Term Memory (LSTM) networks, have demonstrated remarkable predictive skill in rainfall-runoff modeling. As these models move toward operational deployment, their robustness to input uncertainty becomes a critical concern. Yet existing assessments rely on random noise or single-step adversarial methods (FGSM), which may underestimate worst-case vulnerability. Here we present a multi-level adversarial stress test of a CudaLSTM model with 27 static catchment attributes across 531 CAMELS-US catchments, employing a spectrum of perturbation methods from random noise through iterative optimization (Auto-PGD), three constraint levels of increasing plausibility, and targeted attacks on flood and pre-event windows. We find that adversarial perturbations reveal substantially greater vulnerability than conventional testing: at observation-error-scale perturbation budgets ($\varepsilon = 0.1$), Auto-PGD causes a median NSE degradation of 0.41, compared to 0.03 for random noise---an adversarial-to-random ratio of 14:1. Approximately 17\% of catchments experience catastrophic performance loss ($\Delta$NSE $< -1$) under iterative attack. Furthermore, perturbations preserving input feature means and standard deviations still cause operationally significant degradation (median $\Delta$NSE $= -0.21$). A static-attribute ablation experiment reveals that incorporating catchment attributes halves the catastrophic failure rate (from 37\% to 17\%, Wilcoxon $p < 10^{-15}$), identifying catchment information as a robustness mechanism beyond its known role in predictive accuracy. These results demonstrate that robustness assessment for deployment-critical hydrological models requires multi-level stress testing beyond random noise.
+\end{abstract}
+
+\section*{Plain Language Summary}
+LSTM neural networks are increasingly used for streamflow prediction and are being considered for operational flood forecasting. We tested how sensitive a widely used LSTM model is to small errors in its weather inputs---the kind of errors that routinely occur in real-world data from rain gauges and weather stations. Using an optimization technique called Auto-PGD, we found the ``worst-case'' input errors within realistic bounds. Across 531 U.S.\ catchments, these worst-case errors were 14 times more damaging than random noise of the same magnitude, and caused catastrophic model failure in about one in six cases. We also found that incorporating physical catchment characteristics (such as area, slope, and soil type) into the model halves this failure rate, suggesting that models with richer inputs are not only more accurate but also more robust. Some harmful error patterns cannot be detected by standard data quality checks. Our results do not mean LSTM models should not be used---they remain the most accurate available---but they highlight the need for thorough stress testing before deployment in safety-critical applications like flood early warning.
+
+%% ====================================================================
+\section{Introduction}
+%% ====================================================================
+
+Long Short-Term Memory (LSTM; \citeNP{Hochreiter1997}) networks have transformed hydrological prediction over the past decade. Beginning with the pioneering work of \citeA{Kratzert2018}, deep learning models have consistently matched or exceeded the performance of process-based hydrological models on standardized benchmarks such as CAMELS \cite{Addor2017}, achieving median Nash-Sutcliffe Efficiency (NSE) values above 0.7 across hundreds of catchments \cite{Kratzert2019, Gauch2021, Feng2020}. These advances have catalyzed growing interest in deploying LSTM-based models in operational forecasting systems \cite{Nearing2021, Frame2022, Shen2018}.
+
+As deployment moves forward, a fundamental question demands attention: how reliable are these models when confronted with imperfect input data? In practice, meteorological forcings are never exactly known. Rain gauge measurements carry systematic biases of 5--15\% \cite{Sevruk1982, Groisman1994}. Gridded products such as Daymet, ERA5, and CHIRPS introduce additional uncertainty through spatial interpolation, with temperature errors of 1--2~$^\circ$C and precipitation errors that can exceed 2~mm/day in complex terrain \cite{Thornton2021, Hersbach2020}. The propagation of input uncertainty through hydrological models has been extensively studied in the process-based modeling literature \cite{Kavetski2006, Renard2010, McMillan2012}, revealing that input errors can dominate total predictive uncertainty \cite{Beven2006, Clark2008}. If deep learning predictions are similarly sensitive to such perturbations, then predictive accuracy on clean benchmarks may overstate operational reliability.
+
+The conventional approach to testing input sensitivity---adding random Gaussian noise---provides a measure of average-case robustness. However, random perturbations explore the input space isotropically and are unlikely to find the directions of maximum sensitivity. Adversarial robustness analysis, originally developed in the machine learning security literature \cite{Szegedy2014, Goodfellow2015, Madry2018} and since applied across domains \cite{Akhtar2018}, offers a more systematic alternative: by using gradient information to identify the input perturbation that maximizes prediction error within a given budget, adversarial methods provide a lower bound on worst-case performance.
+
+\citeA{Yang2026} applied adversarial robustness analysis to hydrological models using the Fast Gradient Sign Method (FGSM; \citeNP{Goodfellow2015}), evaluating LSTM and HBV models across 1,347 German catchments from the CAMELS-DE dataset. Their findings were encouraging: LSTMs demonstrated greater robustness than HBV models (median $\Delta$KGE of $-0.105$ vs.\ $-0.164$ at $\varepsilon = 0.2$), catastrophic failure was rare, and model responses scaled approximately linearly with perturbation magnitude.
+
+However, FGSM is a single-step attack that computes the perturbation direction from a single gradient evaluation and takes a maximally sized step in the sign direction \cite{Kurakin2017}. While computationally efficient, it is well established in the adversarial machine learning literature that single-step methods systematically overestimate model robustness. Iterative methods such as Projected Gradient Descent (PGD; \citeNP{Madry2018}) and Auto-PGD \cite{Croce2020} refine the perturbation over multiple optimization steps, consistently finding more effective adversarial examples. The gap between single-step and iterative attacks is not merely quantitative---it can qualitatively change conclusions about whether a model is ``robust'' or ``vulnerable'' \cite{Carlini2019}. \citeA{Yang2026} themselves acknowledged this limitation, noting the need for ``additional test scenarios and perturbation methods.''
+
+This raises a fundamental question: \textbf{how fragile are LSTM rainfall-runoff models when subjected to systematic, multi-level adversarial stress testing?}
+
+To answer this question, we construct a multi-level adversarial stress-testing framework and apply it to a CudaLSTM model with 27 static catchment attributes across 531 CAMELS-US catchments. The framework comprises three components: (i)~a \textit{perturbation spectrum} spanning five methods of increasing optimization strength---from random noise through single-step FGSM to iterative Auto-PGD; (ii)~a \textit{constraint hierarchy} controlling perturbation plausibility, including a statistical constraint that preserves input feature means and standard deviations; and (iii)~\textit{operationally motivated analyses}---a Carlini-Wagner (C\&W) attack quantifying the minimum perturbation to break the model, targeted flood/low-flow attacks, and a causal trigger analysis restricting perturbations to pre-event windows.
+
+While \citeA{Yang2026} focused on comparing model architectures (LSTM vs.\ HBV) under a single attack method, our study takes a complementary perspective: we fix the model and systematically vary the attack, asking how much the strength and structure of the stress test affect the conclusions drawn about model robustness.
+
+%% ====================================================================
+\section{Methods}
+%% ====================================================================
+
+\subsection{Study Area and Target Model}
+
+We evaluate a CudaLSTM model \cite{Kratzert2018} implemented in the neuralhydrology framework \cite{Kratzert2022}. The model uses a single-layer LSTM with 128 hidden units, trained for 30 epochs with the AdamW optimizer and a stepped learning-rate schedule ($3 \times 10^{-3}$, reduced to $1 \times 10^{-3}$ at epoch~10 and $5 \times 10^{-4}$ at epoch~20). The model is trained on all 531 CAMELS-US catchments \cite{Newman2015, Addor2017} with five dynamic input features from the Daymet forcing product---precipitation (mm/day), shortwave radiation (W/m$^2$), maximum temperature ($^\circ$C), minimum temperature ($^\circ$C), and vapor pressure (Pa)---and 27 static catchment attributes describing topography, soil, vegetation, and climate characteristics \cite{Addor2017}.
+
+We follow the temporal evaluation protocol of \citeA{Kratzert2019}: training period 1~October 1999 to 30~September 2008, validation period 1~October 1980 to 30~September 1989, and test period 1~October 1989 to 30~September 1999. All 531 catchments appear in every period (temporal split). The model achieves a test-period median NSE of 0.599 ($N = 531$; 33.5\% with NSE $> 0.7$). This performance is lower than the $\sim$0.74 reported by \citeA{Kratzert2019}, primarily because the 1989--1999 test period is more challenging than the 2000--2005 period used in that study. Adversarial evaluation is conducted on the test period; 524 catchments yield valid adversarial results (7 excluded due to numerical instability). We deliberately evaluate a single model architecture to isolate the effect of attack method and constraint level on robustness conclusions.
+
+\subsection{Perturbation Methods}
+
+We employ five perturbation methods that span a spectrum of increasing optimization strength (Table~\ref{tab:methods}). All methods operate on the standardized (zero-mean, unit-variance) input tensor and are constrained to an $L_\infty$ ball of radius $\varepsilon$ around the clean input. Because features are standardized, a uniform $\varepsilon$ bound in standardized space translates to feature-specific physical perturbation magnitudes proportional to each feature's training-period standard deviation (see Section~2.4, Table~\ref{tab:epsilon}).
+
+\begin{table}[ht]
+\caption{Perturbation methods used in this study, ordered by optimization strength.}
+\label{tab:methods}
+\centering
+\small
+\begin{tabular}{llcrl}
+\toprule
+Method & Type & Gradient & Iter. & Role \\
+\midrule
+Gaussian noise & Random baseline & None & 0 & Traditional noise sensitivity \\
+Mult.\ bias & Random baseline & None & 0 & Systematic sensor bias \\
+Temp.\ corr.\ noise & Random baseline & None & 0 & Realistic temporal error \\
+FGSM & Single-step adv. & Single & 1 & Bridge; used by \citeA{Yang2026} \\
+Auto-PGD & Iterative adv. & Iterative & 50 & Worst-case lower bound \\
+C\&W regression & Min.\ perturbation & Iterative & 200 & Safety margin quantification \\
+Causal trigger & Temporally constr. & Iterative & 100 & Pre-event vulnerability \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Random Noise Baselines}
+
+Three random perturbation methods serve as baselines, representing the traditional noise sensitivity analysis approach: (1)~\textit{Gaussian noise}---independent samples from $\mathcal{N}(0, \varepsilon^2)$ clipped to $[-\varepsilon, \varepsilon]$, applied elementwise; (2)~\textit{Multiplicative bias}---each feature scaled by a random factor from $\mathcal{U}(1-\varepsilon, 1+\varepsilon)$, simulating systematic measurement bias; (3)~\textit{Temporally correlated noise}---an AR(1) process with lag-1 autocorrelation of 0.7, scaled to respect the $\varepsilon$ bound. These methods use no gradient information and provide the ``average-case'' robustness baseline. For each method, 10 independent realizations are generated per catchment, and the worst-case (minimum $\Delta$NSE) is reported. We verified stability by repeating all three methods with 10 different random seeds: the per-seed median $\Delta$NSE varies by less than $\pm 0.005$ (std across seeds), confirming that random baseline results are not sensitive to seed selection.
+
+\subsubsection{FGSM (Single-Step Adversarial)}
+
+The Fast Gradient Sign Method \cite{Goodfellow2015} computes the gradient of the loss function with respect to the input and takes a single step of size $\varepsilon$ in the sign direction:
+\begin{equation}
+\mathbf{x}_{\mathrm{adv}} = \mathbf{x} + \varepsilon \cdot \mathrm{sign}\!\left(\nabla_{\mathbf{x}} \mathcal{L}(f(\mathbf{x}), \mathbf{y})\right)
+\end{equation}
+where $\mathcal{L}$ is the negative NSE loss, $f$ is the model, and $\mathbf{y}$ is the observed streamflow. This is the method used by \citeA{Yang2026} and serves as a bridge between random baselines and iterative attacks.
+
+\subsubsection{Auto-PGD (Iterative Adversarial)}
+
+Auto-PGD \cite{Croce2020} iteratively refines the perturbation:
+\begin{equation}
+\mathbf{x}_{t+1} = \Pi_{\mathcal{B}(\mathbf{x}, \varepsilon)} \left[ \mathbf{x}_t + \alpha_t \cdot \mathrm{sign}\!\left(\nabla_{\mathbf{x}} \mathcal{L}(f(\mathbf{x}_t), \mathbf{y})\right) \right]
+\end{equation}
+where $\Pi$ denotes projection onto the $\varepsilon$-ball and $\alpha_t$ is an adaptive step size. We use 50 iterations with 1 restart. Auto-PGD is the recommended standard evaluation tool in the adversarial ML literature \cite{Croce2020}.
+
+\subsubsection{C\&W Regression Attack}
+
+The Carlini-Wagner attack \cite{Carlini2017}, adapted for regression, searches for the minimum $L_2$-norm perturbation that degrades NSE below a target threshold (NSE $< 0$). We use 200 iterations with binary search over the regularization parameter (5 steps, learning rate 0.01).
+
+\subsubsection{Causal Trigger Attack}
+
+The causal trigger attack restricts perturbations to a temporal window preceding flood peak events (local maxima exceeding the 90th percentile of observed discharge). We test pre-event windows of 1, 3, 7, and 14 days with iterative optimization (100 steps).
+
+\subsection{Constraint Hierarchy}
+
+To control the plausibility of perturbations, we define three levels of increasingly restrictive constraints:
+\begin{enumerate}
+\item \textbf{$L_p$ constraint}: Perturbations bounded by $\|\boldsymbol{\delta}\|_\infty \leq \varepsilon$.
+\item \textbf{Physical constraint}: Additionally, precipitation is clipped to non-negative values and temperatures constrained to climatologically reasonable ranges, following \citeA{Yang2026}.
+\item \textbf{Statistical constraint}: Additionally, perturbations preserve the mean and standard deviation of each input feature over the evaluation period, simulating input data that passes standard quality-control checks. This constraint preserves marginal statistics but does not enforce preservation of cross-feature correlations or higher-order temporal structure; real QC systems may use additional checks.
+\end{enumerate}
+
+\subsection{Mapping $\varepsilon$ to Physical Units}
+
+Table~\ref{tab:epsilon} maps $\varepsilon$ values to physical units using training-period standard deviations. At $\varepsilon = 0.1$, perturbations correspond to approximately $\pm 0.8$~mm/day for precipitation and $\pm 1.1$~$^\circ$C for temperature---within the typical error range of gridded products such as Daymet \cite{Thornton2021}. Our primary analyses focus on $\varepsilon = 0.1$. We note that the uniform $\varepsilon$ budget produces uneven physical plausibility across features: the vapor pressure perturbation ($\pm$65~Pa) exceeds typical hygrometer uncertainty (20--50~Pa), while temperature perturbations are well within observational error bounds. Results at $\varepsilon = 0.05$ provide a more conservative estimate where all features remain within realistic error ranges.
+
+\begin{table}[ht]
+\caption{Mapping between $\varepsilon$ and physical units for each input feature. Training-period standard deviations ($\sigma$) are used for conversion.}
+\label{tab:epsilon}
+\centering
+\small
+\begin{tabular}{lrrrrl}
+\toprule
+Feature & $\sigma$ & $\varepsilon{=}0.05$ & $\varepsilon{=}0.1$ & $\varepsilon{=}0.2$ & Typical obs.\ error \\
+\midrule
+Precip.\ (mm/day) & 7.73 & $\pm$0.4 & $\pm$0.8 & $\pm$1.5 & Gauge: 0.2--0.5 \\
+$T_{\max}$ ($^\circ$C) & 11.21 & $\pm$0.6 & $\pm$1.1 & $\pm$2.2 & Station: 0.2--0.5 \\
+$T_{\min}$ ($^\circ$C) & 10.27 & $\pm$0.5 & $\pm$1.0 & $\pm$2.1 & Station: 0.2--0.5 \\
+Radiation (W/m$^2$) & 132.34 & $\pm$6.6 & $\pm$13.2 & $\pm$26.5 & Pyranometer: 5--10 \\
+Vap.\ pres.\ (Pa) & 652.05 & $\pm$32.6 & $\pm$65.2 & $\pm$130 & Hygrometer: 20--50 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Evaluation Metrics}
+
+Our primary robustness metric is $\Delta$NSE $=$ NSE$_{\mathrm{adv}} -$ NSE$_{\mathrm{clean}}$, where negative values indicate degradation. We report medians and interquartile ranges (IQR) across catchments, as the distribution is heavy-tailed. Supplementary metrics include $\Delta$KGE, peak error, and a Kolmogorov-Smirnov (KS) test $p$-value measuring perturbation detectability.
+
+\subsection{Experimental Design}
+
+We organize experiments into five blocks: (1)~Attack comparison: 5 methods $\times$ up to 4 $\varepsilon$ values, $L_p$ constraint, untargeted, 531 catchments; (2)~Constraint ablation: Auto-PGD $\times$ 3 constraints $\times$ 3 $\varepsilon$ values, 531 catchments; (3)~Targeted attacks: Auto-PGD $\times$ 3 targets, $\varepsilon = 0.1$, 531 catchments; (4)~Causal trigger: 4 windows, $\varepsilon = 0.1$, 531 catchments; (5)~C\&W minimum perturbation, 531 catchments. A sixth experiment ablates the effect of static catchment attributes on adversarial robustness by comparing the primary model (27 static attributes) with an otherwise identical model trained without static attributes. All experiments were executed on GPU nodes via SLURM array jobs, yielding 12,744 individual records across 531 catchments (524 with valid $\Delta$NSE results after excluding 7 catchments with numerical failures during gradient computation). Throughout the Results section, $N$ refers to catchments with valid results for the specific experiment; C\&W (Experiment~5) uses all 531 catchments because it reports $L_2$ norms rather than $\Delta$NSE.
+
+%% ====================================================================
+\section{Results}
+%% ====================================================================
+
+\subsection{Attack Method Strongly Affects Robustness Conclusions}
+
+Table~\ref{tab:attack} presents the median $\Delta$NSE for each attack method and $\varepsilon$ value. Figure~\ref{fig:epsilon} visualizes these results.
+
+\begin{table}[ht]
+\caption{Median $\Delta$NSE [Q25, Q75] for each attack method ($L_p$ constraint, untargeted). Random baselines were evaluated only at $\varepsilon = 0.1$. The amplification ratio quantifies how much more effective adversarial perturbations are compared to random noise.}
+\label{tab:attack}
+\centering
+\small
+\begin{tabular}{lrllll}
+\toprule
+Method & $N$ & $\varepsilon{=}0.01$ & $\varepsilon{=}0.05$ & $\varepsilon{=}0.1$ & $\varepsilon{=}0.2$ \\
+\midrule
+Auto-PGD & 524 & $-$0.032 & $-$0.182 & $-$0.414 & $-$1.094 \\
+FGSM & 524 & $-$0.032 & $-$0.176 & $-$0.380 & $-$0.781 \\
+Gaussian & 524 & --- & --- & $-$0.030 & --- \\
+Mult.\ Bias & 524 & --- & --- & $-$0.025 & --- \\
+Temp.\ Corr. & 524 & --- & --- & $-$0.026 & --- \\
+\midrule
+APGD/Gauss & & --- & --- & 13.6$\times$ & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/fig1_epsilon_curve.pdf}
+\caption{Median $\Delta$NSE as a function of $\varepsilon$ for five perturbation methods, with IQR shown as shaded bands. (a)~Adversarial attacks: Auto-PGD and FGSM. (b)~Random noise baselines. Note different $y$-axis scales.}
+\label{fig:epsilon}
+\end{figure}
+
+At $\varepsilon = 0.1$, the median $\Delta$NSE under Auto-PGD is $-0.414$, compared to $-0.380$ for FGSM (ratio 1.09) and $-0.030$ for Gaussian noise (ratio 13.6). The dominant gap is between adversarial and random methods: gradient-based attacks are an order of magnitude more effective than random perturbations of the same magnitude.
+
+The gap between FGSM and Auto-PGD is small (1.09$\times$): FGSM captures 92\% of worst-case vulnerability. The practical implication is that even single-step adversarial methods are far more informative than random noise, though iterative refinement remains the gold standard. The three random baselines produce remarkably similar results ($\Delta$NSE from $-0.025$ to $-0.030$) despite their different temporal structures, confirming that the use of gradient information---not the perturbation's temporal structure---is the dominant factor.
+
+\subsection{Vulnerability Is Widespread}
+
+Figure~\ref{fig:vulnerability} shows the distribution of per-catchment $\Delta$NSE under Auto-PGD at $\varepsilon = 0.1$. The median is $-0.414$, with 16.8\% of catchments experiencing catastrophic loss ($\Delta$NSE $< -1$). The corresponding proportion under FGSM is 13.4\%, and under Gaussian noise 0.0\%. While the median APGD/FGSM gap is modest (1.09$\times$), the tail difference is larger: 16.8\% vs.\ 13.4\% catastrophic failure, a 25\% relative increase. In contrast, the adversarial-to-random gap is qualitatively different: no catchment experiences catastrophic loss under random noise, whereas nearly one in six does under adversarial attack.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/fig2_basin_vulnerability.pdf}
+\caption{Distribution of per-catchment $\Delta$NSE under Auto-PGD at $\varepsilon = 0.1$ ($N = 524$). Dashed lines mark the 10th percentile ($-1.49$), median ($-0.41$), and 90th percentile ($-0.16$).}
+\label{fig:vulnerability}
+\end{figure}
+
+Having established that iterative attacks reveal substantially greater vulnerability than single-step or random methods, we now characterize the \textit{nature} of this vulnerability along three dimensions: perturbation plausibility (Section~3.3), temporal and target structure (Section~3.4), and minimum perturbation budget (Section~3.5).
+
+\subsection{Statistically Undetectable Perturbations Remain Effective}
+
+Table~\ref{tab:constraint} presents the constraint ablation results. Physical constraints reduce median degradation by only 2\% (from $-0.414$ to $-0.406$), indicating that the most effective adversarial perturbations are already physically plausible. Statistical constraints reduce median degradation by 50\% (to $-0.208$), but the residual is still operationally significant: input data that passes standard QC checks can still contain error patterns that substantially degrade performance.
+
+\begin{table}[ht]
+\caption{Constraint ablation (Auto-PGD, untargeted). Values: median (mean) $\Delta$NSE.}
+\label{tab:constraint}
+\centering
+\small
+\begin{tabular}{lrlll}
+\toprule
+Constraint & $N$ & $\varepsilon{=}0.05$ & $\varepsilon{=}0.1$ & $\varepsilon{=}0.2$ \\
+\midrule
+$L_p$ & 524 & $-$0.182 ($-$0.272) & $-$0.414 ($-$0.711) & $-$1.094 ($-$2.436) \\
+Physical & 524 & $-$0.186 ($-$0.265) & $-$0.406 ($-$0.690) & $-$1.077 ($-$2.483) \\
+Statistical & 524 & $-$0.093 ($-$0.124) & $-$0.208 ($-$0.284) & $-$0.483 ($-$0.697) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Targeted Attacks and Pre-Event Vulnerability}
+
+Table~\ref{tab:targeted} shows that flood-targeted attacks produce degradation comparable to, though slightly less than, untargeted attacks ($-0.340$ vs.\ $-0.414$), while low-flow-targeted attacks are largely ineffective ($-0.016$). The fact that flood-targeted $\Delta$NSE is slightly smaller than untargeted is expected: the untargeted attack optimizes over all timesteps, while flood targeting concentrates on high-flow periods, a minority of the time series. The contrast with low-flow targeting is striking (ratio $>$21:1), indicating that vulnerability is overwhelmingly concentrated in high-flow regimes.
+
+\begin{table}[ht]
+\caption{Targeted attack results (Auto-PGD, $\varepsilon = 0.1$, $L_p$). Median [Q25, Q75].}
+\label{tab:targeted}
+\centering
+\small
+\begin{tabular}{lrll}
+\toprule
+Target & $N$ & Median $\Delta$NSE [IQR] & Median $\Delta$KGE [IQR] \\
+\midrule
+Untargeted & 524 & $-$0.414 [$-$0.740, $-$0.238] & $-$0.341 [$-$0.721, $-$0.164] \\
+Flood & 524 & $-$0.340 [$-$0.636, $-$0.209] & $-$0.337 [$-$0.734, $-$0.173] \\
+Low-flow & 524 & $-$0.016 [$-$0.100, 0.026] & $-$0.018 [$-$0.204, 0.077] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:causal} shows the causal trigger results. Perturbations restricted to the 14 days preceding flood peaks cause a median $\Delta$NSE of $-0.100$---a non-trivial degradation concentrated precisely in the period most critical for flood early warning.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/fig3_causal_window.pdf}
+\caption{Causal trigger: pre-event window length vs.\ $\Delta$NSE ($\varepsilon = 0.1$). Box plots with jittered dots. Medians annotated.}
+\label{fig:causal}
+\end{figure}
+
+\subsection{Safety Margins}
+
+The C\&W attack identifies the minimum $L_2$ perturbation to push NSE below zero (Figure~\ref{fig:cw}). Of 531 catchments, 393 (74\%) yielded converged solutions with median minimum $L_2 = 1.066$. The remaining 138 (26\%) returned near-zero values; investigation reveals that 58 of 138 (42\%) have clean NSE below zero and 62 (45\%) below 0.3---these are catchments with poor baseline performance, not adversarial vulnerability per se. For the 393 converged catchments (median clean NSE $= 0.603$), the minimum perturbation of 1.066 provides a quantitative safety margin.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/fig4_cw_perturbation.pdf}
+\caption{C\&W minimum $L_2$ perturbation distribution ($N = 531$). Only converged solutions shown; 138 near-zero cases annotated.}
+\label{fig:cw}
+\end{figure}
+
+\subsection{Detectability}
+
+Figure~\ref{fig:detect} shows that adversarial methods achieve large degradation across a wide range of detectability levels. Many effective perturbations have KS $p > 0.05$, meaning they would not be flagged as statistically anomalous.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/fig5_detectability.pdf}
+\caption{Attack effectiveness ($|\Delta\text{NSE}|$) vs.\ statistical detectability (KS $p$-value). Red dashed line: $p = 0.05$.}
+\label{fig:detect}
+\end{figure}
+
+\subsection{Which Catchments Are Most Vulnerable?}
+
+Figure~\ref{fig:attribution} shows the relationship between baseline performance and adversarial vulnerability. Even among well-modeled catchments (clean NSE $> 0.7$), 3.9\% exhibit catastrophic failure ($\Delta$NSE $< -1$). Low-performance catchments are more vulnerable (23.4\% catastrophic), with a moderate positive correlation ($r = 0.27$), indicating that better baseline performance is associated with somewhat greater robustness---though individual catchment outcomes vary widely.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/fig6_attribution.pdf}
+\caption{Clean NSE vs.\ $\Delta$NSE (Auto-PGD, $\varepsilon = 0.1$) for 524 catchments. Annotations show median $\Delta$NSE and catastrophic failure rate per performance tier.}
+\label{fig:attribution}
+\end{figure}
+
+To identify which physical catchment characteristics predict adversarial vulnerability, we fit a Random Forest model \cite{Breiman2001} ($N_{\text{trees}} = 500$) using 50 CAMELS attributes \cite{Addor2017, Addor2018} as predictors of $\Delta$NSE. The model explains 50\% of the variance in adversarial degradation ($R^2 = 0.50$), indicating that catchment properties substantially influence robustness. Figure~\ref{fig:rf_importance} shows the top~15 attributes by importance. Vegetation seasonality (GVF difference, LAI difference) and precipitation regime characteristics (low/high precipitation duration, precipitation seasonality) dominate, while soil and topographic attributes play secondary roles.
+
+Spearman correlation analysis reveals that catchments with high vegetation seasonality (GVF difference: $\rho = -0.35$, $p < 10^{-15}$) and strong precipitation seasonality ($\rho = -0.24$, $p < 10^{-7}$) are more vulnerable. Conversely, catchments with longer dry spells (low precipitation duration: $\rho = 0.27$, $p < 10^{-9}$) are more robust, possibly because model predictions in arid catchments are less sensitive to forcing perturbations.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{figures/fig7_attribution_rf.pdf}
+\caption{Random Forest feature importance for predicting $\Delta$NSE from CAMELS catchment attributes ($N = 524$, $R^2 = 0.50$). Vegetation seasonality and precipitation regime characteristics are the strongest predictors.}
+\label{fig:rf_importance}
+\end{figure}
+
+\subsection{Static Catchment Attributes Reduce Adversarial Vulnerability}
+
+To investigate whether catchment-specific physical information enhances robustness, we trained an otherwise identical CudaLSTM model without static attributes (same architecture, optimizer, schedule, and split; test median NSE $= 0.421$). Table~\ref{tab:ablation} compares adversarial vulnerability between the two models at $\varepsilon = 0.1$.
+
+\begin{table}[ht]
+\caption{Static attribute ablation ($\varepsilon = 0.1$, $L_p$ constraint, $N = 524$ matched catchments). Catastrophic: $\Delta$NSE $< -1$.}
+\label{tab:ablation}
+\centering
+\small
+\begin{tabular}{llll}
+\toprule
+& With static (27 attrs) & Without static & $p$-value \\
+\midrule
+Clean median NSE & 0.599 & 0.421 & --- \\
+Auto-PGD median $\Delta$NSE & $-$0.414 & $-$0.651 & $1.8 \times 10^{-30}$ \\
+\quad Catastrophic rate & 16.8\% & 37.0\% & --- \\
+FGSM median $\Delta$NSE & $-$0.380 & $-$0.443 & --- \\
+\quad Catastrophic rate & 13.4\% & 22.1\% & --- \\
+Gaussian median $\Delta$NSE & $-$0.030 & $-$0.032 & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The model with static attributes shows 36\% less median degradation under Auto-PGD and, critically, more than halves the catastrophic failure rate (37.0\% $\to$ 16.8\%). The effect is highly significant (Wilcoxon signed-rank $p = 1.8 \times 10^{-30}$, $N = 524$ paired catchments). Notably, the robustness improvement is proportionally larger than the accuracy improvement: catastrophic failure drops by 55\%, while median clean NSE improves by 42\%. This suggests that static attributes provide the model with physical constraints that help anchor predictions even when dynamic inputs are adversarially perturbed.
+
+%% ====================================================================
+\section{Discussion}
+%% ====================================================================
+
+\subsection{Adversarial vs.\ Random: The Dominant Gap}
+
+The central finding of this study is the 14$\times$ gap between adversarial and random perturbations at $\varepsilon = 0.1$. This gap is qualitatively different from the modest 1.09$\times$ difference between FGSM and Auto-PGD: the single-step method captures 92\% of worst-case vulnerability, whereas random noise captures only 7\%. The practical implication is that \textit{any} gradient-based adversarial method---even computationally cheap FGSM---reveals vulnerability that random noise testing fundamentally cannot access. We recommend adversarial evaluation as a standard component of deployment checklists, with iterative methods as the gold standard.
+
+\subsection{Static Catchment Attributes as a Robustness Mechanism}
+
+Our ablation experiment reveals that static catchment attributes serve a dual role: they improve predictive accuracy (median NSE from 0.421 to 0.599) \textit{and} enhance adversarial robustness (catastrophic failure rate from 37.0\% to 16.8\%, Wilcoxon $p = 1.8 \times 10^{-30}$). The robustness improvement (36\% reduction in median $|\Delta\text{NSE}|$) is not merely a byproduct of better baseline performance---it reflects the model's ability to leverage catchment-specific physical context to constrain its predictions under perturbation. This suggests that entity-aware architectures, which condition predictions on static catchment properties, are inherently more robust than purely dynamic models. From a deployment perspective, ensuring high-quality static attribute data may be as important for robustness as improving dynamic input quality control.
+
+\subsection{Implications for Operational Deployment}
+
+Our results should not be interpreted as evidence against LSTM deployment. However, three considerations emerge:
+
+First, \textbf{robustness should be evaluated alongside accuracy}. We suggest reporting adversarial $\Delta$NSE at $\varepsilon = 0.1$ as a standard supplementary metric.
+
+Second, \textbf{standard QC is insufficient}. Statistical-constraint perturbations (preserving feature means and standard deviations) still cause $\Delta$NSE $= -0.21$. Higher-order input validation may be needed.
+
+Third, \textbf{the pre-event period is disproportionately vulnerable}. Data errors in the 14 days preceding flood peaks cause $\Delta$NSE $= -0.10$---precisely when data quality matters most.
+
+\subsection{Limitations and Future Work}
+
+We evaluate CudaLSTM with 128 hidden units and 27 static attributes; other architectures (Transformers, Mamba) and training configurations may differ. Ensemble-based uncertainty estimation approaches \cite{Klotz2022, Lees2021} may exhibit different vulnerability profiles. Our analysis is limited to CAMELS-US at daily resolution. We do not evaluate defense strategies such as adversarial training or input denoising. While we anchor $\varepsilon$ to observation uncertainty, adversarial perturbations are optimized to maximize error, which is not how real-world errors arise---the adversarial framework provides a worst-case bound, not a prediction of typical performance. The vapor pressure perturbation at $\varepsilon = 0.1$ ($\pm$65~Pa) exceeds typical hygrometer uncertainty (20--50~Pa); results at $\varepsilon = 0.05$ may better represent realistic VP errors for this feature.
+
+%% ====================================================================
+\section{Conclusions}
+%% ====================================================================
+
+We conducted a multi-level adversarial robustness assessment of an LSTM rainfall-runoff model across 531 CAMELS-US catchments. Our principal findings are:
+
+\begin{enumerate}
+\item \textbf{Adversarial perturbations are an order of magnitude more damaging than random noise.} Auto-PGD causes 14$\times$ greater degradation than Gaussian noise at $\varepsilon = 0.1$. FGSM captures 92\% of worst-case vulnerability.
+\item \textbf{Static catchment attributes enhance robustness.} Incorporating 27 static attributes halves the catastrophic failure rate (37\% $\to$ 17\%, $p < 10^{-15}$), reducing median degradation by 36\%.
+\item \textbf{Statistically undetectable perturbations remain harmful.} Perturbations preserving feature means and standard deviations still cause median $\Delta$NSE $= -0.21$.
+\item \textbf{Pre-event data quality is disproportionately important.} Perturbations restricted to 14 days before flood peaks cause $\Delta$NSE $= -0.10$.
+\end{enumerate}
+
+Our results establish that hydrological model robustness assessment requires adversarial stress testing beyond random noise. The finding that static catchment attributes serve as a robustness mechanism suggests that entity-aware model architectures offer advantages not only in accuracy but also in resilience to input uncertainty.
+
+\section*{Open Research}
+All code for adversarial attacks, evaluation, and analysis is available at \url{https://github.com/[repository]}. The CudaLSTM model was trained using the open-source neuralhydrology framework \cite{Kratzert2022}. CAMELS-US data are publicly available from the USGS \cite{Newman2015, Addor2017}.
+
+\acknowledgments
+[Acknowledgments to be added.]
+
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,151 @@
+\documentclass[draft]{agujournal2019}
+\usepackage{apacite}
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+\journalname{Water Resources Research}
+
+\begin{document}
+
+\title{Supporting Information for ``How Fragile Are LSTM Rainfall-Runoff Models? A Multi-Level Adversarial Robustness Assessment''}
+
+\authors{
+Y.~Sun\affil{1}
+}
+\affiliation{1}{College of Hydrology and Water Resources, Hohai University, Nanjing, China}
+
+\section*{Contents}
+\begin{enumerate}
+\item Text S1: Model Training Configuration
+\item Text S2: Basin Coverage and Missing Data
+\item Text S3: Baseline Model Performance
+\item Text S4: Static Attribute Ablation Details
+\item Table S1: Model Training Hyperparameters
+\item Table S2: Per-Experiment Basin Counts and Coverage
+\item Table S3: Baseline (Clean) NSE Distribution Statistics
+\item Table S4: Static Attribute Ablation Model Configuration
+\end{enumerate}
+
+%% ====================================================================
+\section*{Text S1. Model Training Configuration}
+%% ====================================================================
+
+The CudaLSTM model was trained using the neuralhydrology framework (v1.12.0) with the configuration summarized in Table~S1. We follow the temporal evaluation protocol of \citeA{Kratzert2019}: training period 1~October 1999 to 30~September 2008, validation period 1~October 1980 to 30~September 1989, and test period 1~October 1989 to 30~September 1999. All 531 CAMELS-US catchments are used in every period (temporal split). The model incorporates 27 static catchment attributes from the CAMELS dataset \cite{Addor2017}, covering topography (e.g., mean elevation, slope), soil (e.g., sand/clay fraction, depth to bedrock), vegetation (e.g., LAI, forest fraction), and climate characteristics (e.g., aridity, precipitation seasonality).
+
+The model was trained with the AdamW optimizer using a stepped learning-rate schedule: $3 \times 10^{-3}$ for epochs 1--9, $1 \times 10^{-3}$ for epochs 10--19, and $5 \times 10^{-4}$ for epochs 20--30. No dropout was applied. The best model was selected based on validation-period NSE (epoch~26, validation median NSE $= 0.757$).
+
+\begin{table}[ht]
+\caption{Model training hyperparameters.}
+\label{tab:s1_hyperparams}
+\centering
+\small
+\begin{tabular}{ll}
+\toprule
+Parameter & Value \\
+\midrule
+Architecture & CudaLSTM (single-layer) \\
+Hidden units & 128 \\
+Training epochs & 30 \\
+Batch size & 256 \\
+Sequence length & 365 days \\
+Loss function & NSE \\
+Optimizer & AdamW \\
+Learning rate & $3 \times 10^{-3} \to 1 \times 10^{-3} \to 5 \times 10^{-4}$ \\
+Dropout & 0.0 \\
+Dynamic inputs & Precipitation, $T_{\max}$, $T_{\min}$, shortwave radiation, vapor pressure \\
+Static attributes & 27 CAMELS attributes (topography, soil, vegetation, climate) \\
+Training period & 01/10/1999--30/09/2008 \\
+Validation period & 01/10/1980--30/09/1989 \\
+Test period & 01/10/1989--30/09/1999 \\
+Random seed & 159193 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ====================================================================
+\section*{Text S2. Basin Coverage and Missing Data}
+%% ====================================================================
+
+The adversarial evaluation was conducted on all 531 CAMELS-US catchments. Of these, 524 yielded valid adversarial results; 7 catchments produced numerical failures (NaN in $\Delta$NSE) attributed to numerical instability during gradient computation. These 7 catchments are excluded from analyses that involve $\Delta$NSE statistics but included in counts of total experiment records.
+
+Table~S2 summarizes basin counts per experiment block.
+
+\begin{table}[ht]
+\caption{Basin counts and coverage per experiment block.}
+\label{tab:s2_coverage}
+\centering
+\small
+\begin{tabular}{llrrl}
+\toprule
+Block & Description & Targeted & Valid & Coverage \\
+\midrule
+Exp.~1 & Attack comparison (5 methods, up to 4 $\varepsilon$) & 531 & 524 & 98.7\% \\
+Exp.~2 & Constraint ablation (3 constraints $\times$ 3 $\varepsilon$) & 531 & 524 & 98.7\% \\
+Exp.~3 & Targeted attacks (3 targets) & 531 & 524 & 98.7\% \\
+Exp.~4 & Causal trigger (4 windows) & 531 & 524 & 98.7\% \\
+Exp.~5 & C\&W minimum perturbation & 531 & 531 & 100\% \\
+Exp.~6 & Static attribute ablation & 531 & 524 & 98.7\% \\
+\midrule
+\multicolumn{2}{l}{Total unique records (Exp.~1--5)} & & 12,744 & \\
+\multicolumn{2}{l}{Total unique catchments} & & 531 & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Because we use a temporal split (all 531 catchments appear in every period), there is no basin-level in-sample vs.\ out-of-sample distinction. The adversarial evaluation is conducted on the held-out test \textit{time period} (1989--1999), which is not seen during training.
+
+%% ====================================================================
+\section*{Text S3. Baseline Model Performance}
+%% ====================================================================
+
+Table~S3 reports the distribution of baseline (clean, unperturbed) NSE values across the 531 evaluation catchments. The model achieves a median clean NSE of 0.599, which is lower than the $\sim$0.74 reported by \citeA{Kratzert2019}. The discrepancy is primarily attributable to the different test period: our 1989--1999 period is climatically more challenging than the 2000--2005 period used in the original study.
+
+\begin{table}[ht]
+\caption{Distribution of baseline (clean) NSE across 531 evaluation catchments.}
+\label{tab:s3_baseline}
+\centering
+\small
+\begin{tabular}{lr}
+\toprule
+Statistic & Value \\
+\midrule
+Median NSE & 0.599 \\
+Mean NSE & 0.414 \\
+Q25 (25th percentile) & 0.353 \\
+Q75 (75th percentile) & 0.757 \\
+Fraction NSE $> 0.5$ & 61.8\% \\
+Fraction NSE $> 0.7$ & 33.5\% \\
+Fraction NSE $< 0$ & 10.9\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The adversarial vulnerability analysis in the main text (Section~3.7, Figure~6) explicitly accounts for baseline performance differences by stratifying results into performance tiers. The key finding---that even well-modeled catchments (clean NSE $> 0.7$) exhibit a 3.9\% catastrophic failure rate---demonstrates that adversarial vulnerability is not merely a consequence of poor baseline model performance.
+
+%% ====================================================================
+\section*{Text S4. Static Attribute Ablation Details}
+%% ====================================================================
+
+The static attribute ablation experiment (Section~3.8 of the main text) compares two models that differ only in their use of static catchment attributes. The ablation model configuration is shown in Table~S4.
+
+\begin{table}[ht]
+\caption{Static attribute ablation: model configurations. All parameters except static attributes are identical between the two models.}
+\label{tab:s4_ablation}
+\centering
+\small
+\begin{tabular}{lll}
+\toprule
+Parameter & Primary model & Ablation model \\
+\midrule
+Static attributes & 27 CAMELS attributes & None \\
+Test median NSE & 0.599 & 0.421 \\
+Config file & \texttt{train\_final\_with\_static.yml} & \texttt{train\_final\_no\_static.yml} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The ablation model was evaluated under three attack methods at $\varepsilon = 0.1$ ($L_p$ constraint, untargeted): Auto-PGD, FGSM, and Gaussian noise. Results for 524 matched catchments (same 7 excluded due to NaN) are compared using the Wilcoxon signed-rank test (paired, non-parametric). The primary model shows significantly less adversarial degradation across all gradient-based attacks (Auto-PGD: $p = 1.8 \times 10^{-30}$; FGSM: $p < 10^{-10}$). The Gaussian noise baseline shows no significant difference between models ($\Delta$NSE of $-0.030$ vs.\ $-0.032$), confirming that the robustness improvement is specific to adversarial (gradient-exploiting) perturbations, not a general reduction in sensitivity.
+
+\bibliography{references}
+
+\end{document}
