@@ -26,7 +26,7 @@ done
 echo ""
 
 echo "=== 2. 模型权重 ==="
-MODEL_DIR=~/neuralhydrology/results/05_full_531_basins/full_training_nse_2025_1025_1821_ep50
+MODEL_DIR=~/neuralhydrology/results/05_adversarial_robustness/full_training_nse_2025_1025_1821_ep50
 if [ -d "$MODEL_DIR" ]; then
     echo "  FOUND: $MODEL_DIR"
     ls -lh "$MODEL_DIR"/model_epoch050.pt "$MODEL_DIR"/config.yml "$MODEL_DIR"/train_data/train_data_scaler.yml 2>/dev/null

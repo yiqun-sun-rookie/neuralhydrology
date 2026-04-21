@@ -24,14 +24,22 @@ logger = logging.getLogger(__name__)
 # Publication-quality defaults
 # ---------------------------------------------------------------------------
 plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["Times New Roman", "DejaVu Serif"],
     "font.size": 11,
-    "axes.labelsize": 12,
+    "axes.labelsize": 13,
+    "axes.titlesize": 13,
+    "xtick.labelsize": 11,
+    "ytick.labelsize": 11,
+    "legend.fontsize": 10,
     "figure.figsize": (7, 5),
     "figure.dpi": 150,
     "savefig.dpi": 300,
-    "savefig.bbox_inches": "tight",
     "axes.spines.top": False,
     "axes.spines.right": False,
+    "axes.linewidth": 0.8,
+    "xtick.major.width": 0.8,
+    "ytick.major.width": 0.8,
 })
 
 # Display names for attack methods
@@ -117,7 +125,7 @@ def _print_md_table(headers: list[str], rows: list[list[str]]) -> None:
 # ===================================================================
 
 def table_attack_comparison(df: pd.DataFrame) -> None:
-    """Print Table 1: attack methods x epsilon values, mean DELTA-NSE +/- std."""
+    """Print Table 1: attack methods x epsilon values, median (IQR) DELTA-NSE."""
     mask = (df["constraint"] == "lp") & (df["target"] == "untargeted")
     sub = df.loc[mask & df["attack"].isin(TABLE1_ATTACKS)]
     if sub.empty:
@@ -125,33 +133,35 @@ def table_attack_comparison(df: pd.DataFrame) -> None:
         return
 
     epsilons = sorted(sub["epsilon"].unique())
-    eps_strs = [str(e) for e in epsilons]
-    headers = ["Attack"] + [f"eps={e}" for e in eps_strs]
+    headers = ["Attack", "N"] + [f"eps={e}" for e in epsilons]
 
-    # Pre-compute Gaussian mean per epsilon for amplification ratio
+    # Pre-compute Gaussian median per epsilon for amplification ratio
     gauss = sub[sub["attack"] == "gaussian_noise"]
-    gauss_mean = gauss.groupby("epsilon")["delta_nse"].mean().to_dict()
+    gauss_med = gauss.groupby("epsilon")["delta_nse"].median().to_dict()
 
     rows: list[list[str]] = []
     for atk in TABLE1_ATTACKS:
         atk_df = sub[sub["attack"] == atk]
-        row = [ATTACK_DISPLAY.get(atk, atk)]
+        n_basins = atk_df["basin"].nunique()
+        row = [ATTACK_DISPLAY.get(atk, atk), str(n_basins)]
         for eps in epsilons:
             cell = atk_df[atk_df["epsilon"] == eps]["delta_nse"]
             if cell.empty:
                 row.append("--")
             else:
-                row.append(f"{cell.mean():.3f} +/- {cell.std():.3f}")
+                med = cell.median()
+                q25, q75 = cell.quantile(0.25), cell.quantile(0.75)
+                row.append(f"{med:.3f} [{q25:.3f}, {q75:.3f}]")
         rows.append(row)
 
-    # Amplification ratio row
-    ratio_row = ["Ampl. ratio (APGD/Gauss)"]
+    # Amplification ratio row (median-based)
+    ratio_row = ["Ampl. ratio (APGD/Gauss)", ""]
     apgd = sub[sub["attack"] == "auto_pgd"]
     for eps in epsilons:
-        apgd_mean = apgd[apgd["epsilon"] == eps]["delta_nse"].mean()
-        g_mean = gauss_mean.get(eps, None)
-        if g_mean is not None and g_mean != 0 and not np.isnan(apgd_mean):
-            ratio_row.append(f"{apgd_mean / g_mean:.2f}x")
+        apgd_med = apgd[apgd["epsilon"] == eps]["delta_nse"].median()
+        g_med = gauss_med.get(eps, None)
+        if g_med is not None and g_med != 0 and not np.isnan(apgd_med):
+            ratio_row.append(f"{apgd_med / g_med:.1f}x")
         else:
             ratio_row.append("--")
     rows.append(ratio_row)
@@ -164,7 +174,7 @@ def table_attack_comparison(df: pd.DataFrame) -> None:
 # ===================================================================
 
 def table_constraint_ablation(df: pd.DataFrame) -> None:
-    """Print Table 2: constraint levels x epsilon values, mean DELTA-NSE."""
+    """Print Table 2: constraint levels x epsilon values, median DELTA-NSE."""
     mask = (df["attack"] == "auto_pgd") & (df["target"] == "untargeted")
     sub = df.loc[mask]
     if sub.empty:
@@ -173,17 +183,19 @@ def table_constraint_ablation(df: pd.DataFrame) -> None:
 
     constraints = sorted(sub["constraint"].unique())
     epsilons = sorted(sub["epsilon"].unique())
-    headers = ["Constraint"] + [f"eps={e}" for e in epsilons]
+    headers = ["Constraint", "N"] + [f"eps={e}" for e in epsilons]
 
     rows: list[list[str]] = []
     for con in constraints:
-        row = [str(con)]
+        con_df = sub[sub["constraint"] == con]
+        n_basins = con_df["basin"].nunique()
+        row = [str(con), str(n_basins)]
         for eps in epsilons:
-            cell = sub[(sub["constraint"] == con) & (sub["epsilon"] == eps)]["delta_nse"]
+            cell = con_df[con_df["epsilon"] == eps]["delta_nse"]
             if cell.empty:
                 row.append("--")
             else:
-                row.append(f"{cell.mean():.3f}")
+                row.append(f"{cell.median():.3f} ({cell.mean():.3f})")
         rows.append(row)
 
     _print_md_table(headers, rows)
@@ -200,38 +212,47 @@ def table_targeted_attacks(df: pd.DataFrame) -> None:
         & (df["epsilon"] == 0.1)
         & (df["constraint"] == "lp")
     )
-    sub = df.loc[mask]
+    sub = df.loc[mask].copy()
     if sub.empty:
         warnings.warn("Table 3: no data after filtering (APGD, eps=0.1, lp).")
         return
 
-    targets = sorted(sub["target"].unique())
-    metrics = ["delta_nse", "delta_kge", "peak_error"]
-    metric_labels = ["delta-NSE", "delta-KGE", "peak_error"]
-
     # Compute delta_kge if not present
     if "delta_kge" not in sub.columns:
         if "kge_clean" in sub.columns and "kge_adv" in sub.columns:
-            sub = sub.copy()
             sub["delta_kge"] = sub["kge_adv"] - sub["kge_clean"]
-        else:
-            warnings.warn("Table 3: cannot compute delta_kge — missing columns.")
-            metrics = ["delta_nse", "peak_error"]
-            metric_labels = ["delta-NSE", "peak_error"]
 
-    headers = ["Target"] + metric_labels
+    # Cap peak_error at 10 (1000%) to remove exploded values from near-zero obs
+    if "peak_error" in sub.columns:
+        sub["peak_error"] = sub["peak_error"].clip(upper=10.0)
+
+    targets = sorted(sub["target"].unique())
+    metrics = ["delta_nse", "delta_kge", "peak_error"]
+    metric_labels = ["delta-NSE", "delta-KGE", "peak_error (%)"]
+
+    if "delta_kge" not in sub.columns:
+        metrics = ["delta_nse", "peak_error"]
+        metric_labels = ["delta-NSE", "peak_error (%)"]
+
+    headers = ["Target", "N"] + metric_labels
 
     rows: list[list[str]] = []
     for tgt in targets:
         tgt_df = sub[sub["target"] == tgt]
-        row = [str(tgt)]
+        n_basins = tgt_df["basin"].nunique()
+        row = [str(tgt), str(n_basins)]
         for m in metrics:
             if m in tgt_df.columns:
                 vals = tgt_df[m].dropna()
                 if vals.empty:
                     row.append("--")
                 else:
-                    row.append(f"{vals.mean():.3f} +/- {vals.std():.3f}")
+                    med = vals.median()
+                    q25, q75 = vals.quantile(0.25), vals.quantile(0.75)
+                    if m == "peak_error":
+                        row.append(f"{med * 100:.0f}% [{q25 * 100:.0f}%, {q75 * 100:.0f}%]")
+                    else:
+                        row.append(f"{med:.3f} [{q25:.3f}, {q75:.3f}]")
             else:
                 row.append("--")
         rows.append(row)
@@ -244,32 +265,48 @@ def table_targeted_attacks(df: pd.DataFrame) -> None:
 # ===================================================================
 
 def fig_epsilon_curve(df: pd.DataFrame, out: Path) -> None:
-    """Line plot: epsilon (log) vs mean DELTA-NSE, one line per attack."""
+    """Line plot: epsilon (log) vs median DELTA-NSE with IQR band, one line per attack."""
     mask = (df["constraint"] == "lp") & (df["target"] == "untargeted")
     sub = df.loc[mask & df["attack"].isin(TABLE1_ATTACKS)]
     if sub.empty:
         warnings.warn("fig1: no data — skipping epsilon curve.")
         return
 
-    fig, ax = plt.subplots()
+    fig, (ax_top, ax_bot) = plt.subplots(2, 1, figsize=(7, 8),
+                                          sharex=True, gridspec_kw={"hspace": 0.15})
+
     for atk in TABLE1_ATTACKS:
         atk_df = sub[sub["attack"] == atk]
         if atk_df.empty:
             continue
         grp = atk_df.groupby("epsilon")["delta_nse"]
-        means = grp.mean().sort_index()
-        stds = grp.std().sort_index().fillna(0)
-        eps_vals = means.index.values
+        medians = grp.median().sort_index()
+        q25 = grp.quantile(0.25).sort_index()
+        q75 = grp.quantile(0.75).sort_index()
+        eps_vals = medians.index.values
         color = ATTACK_COLORS.get(atk, None)
-        ax.plot(eps_vals, means.values, marker="o", label=ATTACK_DISPLAY.get(atk, atk), color=color)
-        ax.fill_between(eps_vals, (means - stds).values, (means + stds).values, alpha=0.15, color=color)
+        label = ATTACK_DISPLAY.get(atk, atk)
 
-    ax.set_xscale("log")
-    ax.set_xlabel("Perturbation budget (epsilon)")
-    ax.set_ylabel("Mean delta-NSE")
-    ax.set_title("Attack Strength vs. NSE Degradation")
-    ax.legend(frameon=False)
-    ax.axhline(0, color="grey", linewidth=0.5, linestyle="--")
+        # Top panel: adversarial attacks (Auto-PGD, FGSM)
+        if atk in ("auto_pgd", "fgsm"):
+            ax_top.plot(eps_vals, medians.values, marker="o", label=label, color=color,
+                        linewidth=2, markersize=6)
+            ax_top.fill_between(eps_vals, q25.values, q75.values, alpha=0.2, color=color)
+        # Bottom panel: random baselines
+        else:
+            ax_bot.plot(eps_vals, medians.values, marker="s", label=label, color=color,
+                        linewidth=2, markersize=6)
+            ax_bot.fill_between(eps_vals, q25.values, q75.values, alpha=0.2, color=color)
+
+    for ax in (ax_top, ax_bot):
+        ax.set_xscale("log")
+        ax.axhline(0, color="grey", linewidth=0.5, linestyle="--")
+        ax.legend(frameon=False, loc="lower left")
+        ax.set_ylabel("Median $\\Delta$NSE")
+
+    ax_top.set_title("(a) Adversarial attacks")
+    ax_bot.set_title("(b) Random noise baselines")
+    ax_bot.set_xlabel("Perturbation budget ($\\varepsilon$)")
     fig.tight_layout()
     _save_fig(fig, out, "fig1_epsilon_curve")
 
@@ -292,32 +329,50 @@ def fig_basin_vulnerability(df: pd.DataFrame, out: Path) -> None:
         return
 
     basin_dnse = sub.groupby("basin")["delta_nse"].mean()
+    vals = basin_dnse.values
 
-    fig, ax1 = plt.subplots()
-    # Histogram
-    n_bins = min(30, max(10, len(basin_dnse) // 3))
-    ax1.hist(basin_dnse.values, bins=n_bins, color="#1f77b4", alpha=0.7, edgecolor="white", label="Histogram")
-    ax1.set_xlabel("Mean delta-NSE per basin")
-    ax1.set_ylabel("Count")
-    ax1.set_title("Basin Vulnerability Distribution (Auto-PGD, eps=0.1)")
+    # Key statistics
+    med = np.median(vals)
+    p10 = np.percentile(vals, 10)
+    p90 = np.percentile(vals, 90)
+    n_total = len(vals)
+    n_below_neg1 = (vals < -1).sum()
 
-    # CDF on twin axis
+    # Clip to [-20, 1] for readability; note outliers in annotation
+    clip_lo = -20
+    vals_clipped = np.clip(vals, clip_lo, None)
+    n_clipped = (vals < clip_lo).sum()
+
+    fig, ax1 = plt.subplots(figsize=(8, 5))
+    bins = np.linspace(clip_lo, 0.5, 40)
+    ax1.hist(vals_clipped, bins=bins, color="#4878CF", alpha=0.8, edgecolor="white", linewidth=0.5)
+    ax1.set_xlabel("$\\Delta$NSE per basin")
+    ax1.set_ylabel("Number of basins")
+    ax1.set_title(f"Basin Vulnerability Distribution (Auto-PGD, $\\varepsilon$=0.1, N={n_total})")
+
+    # CDF on twin axis (use unclipped for accurate CDF)
     ax2 = ax1.twinx()
-    sorted_vals = np.sort(basin_dnse.values)
-    cdf = np.arange(1, len(sorted_vals) + 1) / len(sorted_vals)
-    ax2.plot(sorted_vals, cdf, color="#d62728", linewidth=2, label="CDF")
-    ax2.set_ylabel("CDF")
+    sorted_all = np.sort(vals)
+    cdf = np.arange(1, len(sorted_all) + 1) / len(sorted_all)
+    ax2.plot(sorted_all, cdf, color="#d62728", linewidth=2, label="CDF", zorder=5)
+    ax2.set_ylabel("Cumulative fraction")
+    ax2.set_xlim(clip_lo, 0.5)
+    ax2.set_ylim(0, 1.05)
 
-    # Percentile markers
-    med = np.median(basin_dnse.values)
-    p10 = np.percentile(basin_dnse.values, 10)
-    p90 = np.percentile(basin_dnse.values, 90)
-    for val, lbl, ls in [(med, "Median", "--"), (p10, "10th pctl", ":"), (p90, "90th pctl", ":")]:
-        ax1.axvline(val, color="black", linestyle=ls, linewidth=1)
-        ax1.annotate(f"{lbl}: {val:.2f}", xy=(val, ax1.get_ylim()[1] * 0.9),
-                     fontsize=8, ha="center", backgroundcolor="white")
+    # Percentile markers with offset labels
+    for val, lbl, yoff in [(med, f"Median: {med:.2f}", 0.85), (p10, f"10th: {p10:.2f}", 0.15),
+                           (p90, f"90th: {p90:.2f}", 0.95)]:
+        ax1.axvline(val, color="black", linestyle=":", linewidth=1, alpha=0.7)
+        ax1.annotate(lbl, xy=(val, ax1.get_ylim()[1] * yoff), fontsize=9, ha="right",
+                     backgroundcolor="white", alpha=0.9,
+                     xytext=(-5, 0), textcoords="offset points")
 
-    # Combined legend
+    # Annotate clipped outliers
+    if n_clipped > 0:
+        ax1.annotate(f"{n_clipped} basins below {clip_lo}\n({n_below_neg1} below -1)",
+                     xy=(clip_lo, ax1.get_ylim()[1] * 0.7), fontsize=9, ha="left",
+                     color="#d62728", fontstyle="italic")
+
     lines1, labels1 = ax1.get_legend_handles_labels()
     lines2, labels2 = ax2.get_legend_handles_labels()
     ax1.legend(lines1 + lines2, labels1 + labels2, frameon=False, loc="upper left")
@@ -331,7 +386,7 @@ def fig_basin_vulnerability(df: pd.DataFrame, out: Path) -> None:
 # ===================================================================
 
 def fig_causal_window(df: pd.DataFrame, out: Path) -> None:
-    """Bar chart: pre_window vs mean DELTA-NSE for causal_trigger, eps=0.1."""
+    """Box plot with jittered dots: pre_window vs DELTA-NSE for causal_trigger, eps=0.1."""
     mask = (df["attack"] == "causal_trigger") & (df["epsilon"] == 0.1)
     sub = df.loc[mask]
     if sub.empty:
@@ -341,20 +396,40 @@ def fig_causal_window(df: pd.DataFrame, out: Path) -> None:
         warnings.warn("fig3: 'pre_window' column missing — skipping.")
         return
 
-    grp = sub.groupby("pre_window")["delta_nse"]
-    means = grp.mean().sort_index()
-    stds = grp.std().sort_index().fillna(0)
+    windows = sorted(sub["pre_window"].unique())
+    data_groups = [sub[sub["pre_window"] == w]["delta_nse"].values for w in windows]
 
-    fig, ax = plt.subplots()
-    windows = means.index.values
-    x_pos = np.arange(len(windows))
-    ax.bar(x_pos, means.values, yerr=stds.values, capsize=5,
-           color="#8c564b", alpha=0.8, edgecolor="white")
-    ax.set_xticks(x_pos)
+    # Clip to [-5, 0.5] for readability
+    data_clipped = [np.clip(d, -5, 0.5) for d in data_groups]
+
+    fig, ax = plt.subplots(figsize=(7, 5))
+
+    bp = ax.boxplot(data_clipped, positions=range(len(windows)), widths=0.5,
+                    patch_artist=True, showfliers=False,
+                    medianprops=dict(color="black", linewidth=1.5))
+    for patch in bp["boxes"]:
+        patch.set_facecolor("#8c564b")
+        patch.set_alpha(0.6)
+
+    # Jittered dots (subsample if too many)
+    rng = np.random.default_rng(42)
+    for i, d in enumerate(data_clipped):
+        n = len(d)
+        sample = d if n <= 200 else rng.choice(d, 200, replace=False)
+        jitter = rng.uniform(-0.15, 0.15, len(sample))
+        ax.scatter(i + jitter, sample, s=8, alpha=0.3, color="#8c564b", edgecolors="none", zorder=3)
+
+    # Annotate medians
+    for i, d in enumerate(data_groups):
+        med = np.median(d)
+        ax.annotate(f"{med:.3f}", xy=(i, med), xytext=(0.3, 0),
+                    textcoords="offset fontsize", fontsize=9, color="#333333")
+
+    ax.set_xticks(range(len(windows)))
     ax.set_xticklabels([f"{int(w)}d" for w in windows])
-    ax.set_xlabel("Pre-event window (days)")
-    ax.set_ylabel("Mean delta-NSE")
-    ax.set_title("Causal Trigger: Effect of Perturbation Window")
+    ax.set_xlabel("Pre-event perturbation window")
+    ax.set_ylabel("$\\Delta$NSE")
+    ax.set_title("Causal Trigger: Perturbation Window Effect ($\\varepsilon$=0.1)")
     ax.axhline(0, color="grey", linewidth=0.5, linestyle="--")
     fig.tight_layout()
     _save_fig(fig, out, "fig3_causal_window")
@@ -365,7 +440,7 @@ def fig_causal_window(df: pd.DataFrame, out: Path) -> None:
 # ===================================================================
 
 def fig_cw_perturbation(df: pd.DataFrame, out: Path) -> None:
-    """Histogram of L2 norms from C&W results."""
+    """Histogram of L2 norms from C&W results, filtering failed convergences."""
     mask = df["attack"] == "cw_regression"
     sub = df.loc[mask]
     if sub.empty:
@@ -380,14 +455,30 @@ def fig_cw_perturbation(df: pd.DataFrame, out: Path) -> None:
         warnings.warn("fig4: all L2 values are NaN — skipping.")
         return
 
-    fig, ax = plt.subplots()
-    n_bins = min(30, max(10, len(l2_vals) // 3))
-    ax.hist(l2_vals.values, bins=n_bins, color="#e377c2", alpha=0.8, edgecolor="white")
-    ax.set_xlabel("L2 perturbation norm")
-    ax.set_ylabel("Count")
-    ax.set_title("C&W Attack: Perturbation Magnitude Distribution")
-    ax.axvline(l2_vals.median(), color="black", linestyle="--", linewidth=1,
-               label=f"Median: {l2_vals.median():.4f}")
+    # Separate converged (l2 > threshold) from failed (l2 ~ 0)
+    converge_threshold = 0.01
+    converged = l2_vals[l2_vals > converge_threshold]
+    n_failed = (l2_vals <= converge_threshold).sum()
+    n_total = len(l2_vals)
+
+    fig, ax = plt.subplots(figsize=(7, 5))
+    if len(converged) > 0:
+        bins = np.linspace(0, converged.quantile(0.98), 30)
+        ax.hist(converged.values, bins=bins, color="#e377c2", alpha=0.8, edgecolor="white")
+        med = converged.median()
+        ax.axvline(med, color="black", linestyle="--", linewidth=1.5,
+                   label=f"Median: {med:.3f} (converged)")
+    ax.set_xlabel("L$_2$ perturbation norm")
+    ax.set_ylabel("Number of basins")
+    ax.set_title(f"C&W: Minimum Perturbation to Reach NSE<0 (N={n_total})")
+
+    # Annotate failed count
+    if n_failed > 0:
+        ax.annotate(f"{n_failed}/{n_total} basins: L$_2$ $\\approx$ 0\n(already NSE<0 or failed)",
+                    xy=(0.97, 0.95), xycoords="axes fraction", fontsize=9,
+                    ha="right", va="top", fontstyle="italic", color="#888888",
+                    bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="#cccccc"))
+
     ax.legend(frameon=False)
     fig.tight_layout()
     _save_fig(fig, out, "fig4_cw_perturbation")
@@ -398,35 +489,47 @@ def fig_cw_perturbation(df: pd.DataFrame, out: Path) -> None:
 # ===================================================================
 
 def fig_detectability(df: pd.DataFrame, out: Path) -> None:
-    """Scatter: |DELTA-NSE| vs KS statistic, colored by attack method."""
+    """Scatter: |DELTA-NSE| vs KS p-value, colored by attack method. Log x-axis."""
     if "detectability_ks" not in df.columns:
         warnings.warn("fig5: 'detectability_ks' column missing — skipping.")
         return
 
-    sub = df.dropna(subset=["delta_nse", "detectability_ks"])
+    sub = df.dropna(subset=["delta_nse", "detectability_ks"]).copy()
     if sub.empty:
         warnings.warn("fig5: no data with both delta_nse and detectability_ks — skipping.")
         return
 
-    fig, ax = plt.subplots()
-    for atk in sub["attack"].unique():
+    sub["abs_dnse"] = sub["delta_nse"].abs()
+    # Filter out zero/near-zero for log scale
+    sub = sub[sub["abs_dnse"] > 1e-4]
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    # Plot in consistent order
+    plot_order = ["auto_pgd", "fgsm", "gaussian_noise", "multiplicative_bias",
+                  "temporal_correlated_noise", "causal_trigger", "cw_regression"]
+    for atk in plot_order:
         atk_df = sub[sub["attack"] == atk]
+        if atk_df.empty:
+            continue
         color = ATTACK_COLORS.get(atk, None)
         ax.scatter(
-            atk_df["delta_nse"].abs(),
+            atk_df["abs_dnse"],
             atk_df["detectability_ks"],
             label=ATTACK_DISPLAY.get(atk, atk),
             color=color,
-            alpha=0.6,
-            s=20,
+            alpha=0.4,
+            s=15,
             edgecolors="none",
         )
 
-    ax.axhline(0.05, color="red", linestyle="--", linewidth=1, label="p = 0.05")
-    ax.set_xlabel("|delta-NSE|")
+    ax.axhline(0.05, color="red", linestyle="--", linewidth=1, alpha=0.8, label="p = 0.05")
+    ax.set_xscale("log")
+    ax.set_xlabel("|$\\Delta$NSE|")
     ax.set_ylabel("KS test p-value")
-    ax.set_title("Attack Effectiveness vs. Detectability")
-    ax.legend(frameon=False, fontsize=8, ncol=2, loc="upper right")
+    ax.set_title("Attack Effectiveness vs. Statistical Detectability")
+    ax.legend(frameon=False, fontsize=9, ncol=2, loc="upper right",
+              markerscale=2)
     fig.tight_layout()
     _save_fig(fig, out, "fig5_detectability")
 

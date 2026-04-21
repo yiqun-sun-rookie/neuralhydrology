@@ -1,0 +1,62 @@
+experiment_name: ablation_531_no_static
+dataset: camels_us
+data_dir: data/camels_us/full
+model: cudalstm
+hidden_size: 128
+epochs: 30
+batch_size: 256
+optimizer: AdamW
+loss: NSE
+device: cuda:0
+
+learning_rate:
+  0: 0.003
+  10: 0.001
+  20: 0.0005
+
+clip_gradient_norm: 1.0
+initial_forget_bias: 3
+head: regression
+output_activation: linear
+output_dropout: 0.0
+seq_length: 365
+predict_last_n: 1
+seed: 159193
+
+forcings:
+  - daymet
+
+dynamic_inputs:
+  - prcp(mm/day)
+  - srad(W/m2)
+  - tmax(C)
+  - tmin(C)
+  - vp(Pa)
+
+# NO static_attributes — this is the ablation control
+
+target_variables:
+  - QObs(mm/d)
+
+clip_targets_to_zero:
+  - QObs(mm/d)
+
+train_basin_file: examples/06-Finetuning/531_basin_list.txt
+validation_basin_file: examples/06-Finetuning/531_basin_list.txt
+test_basin_file: examples/06-Finetuning/531_basin_list.txt
+
+train_start_date: 01/10/1990
+train_end_date: 30/09/1995
+validation_start_date: 01/10/1995
+validation_end_date: 30/09/2000
+test_start_date: 01/10/2000
+test_end_date: 30/09/2005
+
+validate_every: 2
+validate_n_random_basins: 50
+save_weights_every: 5
+log_interval: 10
+log_n_figures: 3
+log_tensorboard: false
+metrics:
+  - NSE

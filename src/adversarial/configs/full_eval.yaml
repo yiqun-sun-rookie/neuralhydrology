@@ -1,5 +1,5 @@
 model:
-  run_dir: "results/05_full_531_basins/full_training_nse_2025_1025_1821_ep50"
+  run_dir: "results/05_adversarial_robustness/full_training_nse_2025_1025_1821_ep50"
   device: "cuda:0"
 
 data:

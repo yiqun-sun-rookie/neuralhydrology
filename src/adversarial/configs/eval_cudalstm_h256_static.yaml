@@ -1,0 +1,31 @@
+model:
+  run_dir: "runs/adv_final_with_static_h256_2026_0329_2104_ep30"
+  device: "cuda:0"
+
+data:
+  data_dir: "data/camels_us/full"
+  period: "test"
+  basins: []  # use --basin-file CLI arg
+
+attacks:
+  auto_pgd:
+    n_iter: 50
+    n_restarts: 1
+  fgsm: {}
+  gaussian_noise: {}
+  multiplicative_bias: {}
+  temporal_correlated_noise: {}
+  causal_trigger:
+    pre_windows: [1, 3, 7, 14]
+    n_iter: 100
+  cw_regression:
+    n_iter: 200
+    target_nse: 0.0
+    lr: 0.01
+    binary_search_steps: 5
+
+epsilons: [0.01, 0.05, 0.1, 0.2]
+constraint_levels: ["lp"]
+targets: ["untargeted"]
+
+output_dir: "results/adversarial_eval/h256_with_static"

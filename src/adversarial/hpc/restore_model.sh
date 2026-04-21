@@ -3,7 +3,7 @@
 set -e
 cd ~/neuralhydrology
 
-DIR=results/05_full_531_basins/full_training_nse_2025_1025_1821_ep50
+DIR=results/05_adversarial_robustness/full_training_nse_2025_1025_1821_ep50
 mkdir -p $DIR/train_data
 
 git show 62ce1ab:$DIR/model_epoch050.pt > $DIR/model_epoch050.pt

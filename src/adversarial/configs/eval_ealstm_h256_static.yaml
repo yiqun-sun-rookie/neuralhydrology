@@ -1,0 +1,21 @@
+model:
+  run_dir: "runs/adv_ealstm_h256_2026_0330_1916_ep30"
+  device: "cuda:0"
+
+data:
+  data_dir: "data/camels_us/full"
+  period: "test"
+  basins: []  # use --basin-file CLI arg
+
+attacks:
+  auto_pgd:
+    n_iter: 50
+    n_restarts: 1
+  fgsm: {}
+  gaussian_noise: {}
+
+epsilons: [0.1]
+constraint_levels: ["lp"]
+targets: ["untargeted"]
+
+output_dir: "results/adversarial_eval/h256_ealstm"

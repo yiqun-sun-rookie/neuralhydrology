@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #SBATCH -J adv-exp2
-#SBATCH -p hgpu8
+#SBATCH -p hgpu2p
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH --cpus-per-task=4
@@ -9,7 +9,6 @@
 #SBATCH --array=0-10
 #SBATCH -o logs/05_adversarial/exp2_%a.out
 #SBATCH -e logs/05_adversarial/exp2_%a.err
-#SBATCH --exclude=ngu001,ngu201,ngu202
 
 # Exp 2: Constraint ablation (APGD x 3 eps x 3 constraints)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #SBATCH -J adv-exp3
-#SBATCH -p hgpu8
+#SBATCH -p hgpu2p
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH --cpus-per-task=4
@@ -9,7 +9,6 @@
 #SBATCH --array=0-10
 #SBATCH -o logs/05_adversarial/exp3_%a.out
 #SBATCH -e logs/05_adversarial/exp3_%a.err
-#SBATCH --exclude=ngu001,ngu201,ngu202
 
 # Exp 3: Targeted attacks (APGD x eps=0.1 x 3 targets)
 

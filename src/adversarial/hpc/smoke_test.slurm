@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #SBATCH -J adv-smoke
-#SBATCH -p hgpu8
+#SBATCH -p hgpu2p
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH --cpus-per-task=4
@@ -8,7 +8,6 @@
 #SBATCH -t 00:10:00
 #SBATCH -o logs/05_adversarial/smoke-%j.out
 #SBATCH -e logs/05_adversarial/smoke-%j.err
-#SBATCH --exclude=ngu001,ngu201,ngu202
 
 set -eo pipefail
 

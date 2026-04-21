@@ -1,0 +1,21 @@
+model:
+  run_dir: "runs/ablation_531_no_static_2026_0322_1958_ep30"
+  device: "cuda:0"
+
+data:
+  data_dir: "data/camels_us"
+  period: "test"
+  basins: []
+
+attacks:
+  auto_pgd:
+    n_iter: 50
+    n_restarts: 1
+  fgsm: {}
+  gaussian_noise: {}
+
+epsilons: [0.1]
+constraint_levels: ["lp"]
+targets: ["untargeted"]
+
+output_dir: "results/adversarial_eval/v1_531_nostatic"
