@@ -55,6 +55,23 @@ dist_hpc/*
 # Local vendored repos (keep local, do not track)
 external/
 
+# Claude Code / local session state
+.claude/
+resume_sessions.bat
+
+# LaTeX build artifacts in paper drafts (keep .tex/.bib/figures)
+draft/papers/**/*.aux
+draft/papers/**/*.bbl
+draft/papers/**/*.blg
+draft/papers/**/*.log
+draft/papers/**/*.out
+draft/papers/**/*.synctex.gz
+draft/papers/**/*.fdb_latexmk
+draft/papers/**/*.fls
+draft/papers/**/*.toc
+# Redundant paper zip snapshots
+draft/papers/**/*.zip
+
 # Generated test configs (created by src/test_data/scripts/create_test_data.py)
 src/test_data/configs/*.yml
 src/test_data/configs/*.txt
