@@ -1,15 +1,22 @@
 # 41 - MTS-Mamba Global Transfer
 
-**状态**: in_progress
+**状态**: archived
 **创建日期**: 2026-01-06
-**最后更新**: 2026-03-03
+**最后更新**: 2026-04-22
 
-> **整合说明（2026-03-03 更新）**: 经 idea 重新评估，本 idea 成为 Mamba 研究主线的核心论文（WRR 级别）。已吸收以下 idea：
-> - **ID 01（caravan_global）→ 降格为本 idea 的"全球预训练"阶段**（2026-03-03 新增）。代码资产保留在 `src/caravan_global/` 原位，由本 idea 引用。预训练产出的权重将用于论文的 pretraining → fine-tuning 实验。
-> - ID 02（mamba_camels_us）→ 归档，CAMELS-US 日尺度对比实验资产并入
-> - ID 03（mamba_camelsh）→ 降格为本 idea 的小时级 LSTM baseline / Mamba fine-tuning target
-> - ID 06（haihe_river）→ 降格为本 idea 的 data-scarce transfer case study
-> - ID 99（global_hourly_model）→ 概念合并，不再独立推进
+> **归档说明（2026-04-22）**: Phase 2v2 (CAMELS-H 10 basins) 结果显示 **MTSMamba NSE=0.740 低于 MTSLSTM 0.768**（主指标 NSE 输 0.028，仅 KGE 小赢 0.018）。叠加竞品 Demiray 2025 / RiverMamba 2025 / LightMamba 2024 已占位，"Mamba 用于水文"本身无新意。Plan B（Mamba 降格为消融 backbone、论文主轴改为 global pretrain + multi-timescale transfer）也判定投入产出比低于主线 A/B1/C，决定整体归档。
+>
+> - 代码: `src/mts_mamba_global_transfer/` → `src/_archive/41_mts_mamba_global_transfer/`
+> - 结果/日志: 本地 132MB gitignored artifacts 清空，.gitkeep 移入 `results/_archive/41_mts_mamba_global_transfer/` 与 `logs/_archive/41_mts_mamba_global_transfer/`
+> - 核心模型 `neuralhydrology/modelzoo/mtsmamba.py` **保留**在包里（测试仍过，后续任何 idea 都可作为 backbone 复用）
+> - Phase 2v3 seq-length scaling 的 10 个 HPC job（157838-157847）结果未拉回检查；若未来需要救回叙事，需先检查这批结果
+>
+> 历史 idea 吸收关系（保留供参考）：
+> - **ID 01（caravan_global）** 原为本 idea 的全球预训练阶段
+> - **ID 02（mamba_camels_us）** CAMELS-US 日尺度对比实验资产并入
+> - **ID 03（mamba_camelsh）** 小时级 LSTM baseline / Mamba fine-tuning target
+> - **ID 06（haihe_river）** data-scarce transfer case study
+> - **ID 99（global_hourly_model）** 概念合并
 >
 > 详见 `draft/IDEA_EVALUATION_2026_02.md`。
 

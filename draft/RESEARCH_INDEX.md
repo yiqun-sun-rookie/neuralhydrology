@@ -2,11 +2,13 @@
 
 本文件是当前所有研究任务的统一入口，按任务编号隔离维护。
 
-## 论文主线（2026-02 评估后）
+## 论文主线（2026-04-22 更新）
 
 - **主力 1（精力 70%）**: ID 07 HydroAgent → 3 篇论文（诊断框架 / 自动建模环境 / Agent 旗舰）
-- **主力 2（精力 30%）**: ID 41 MTS-Mamba Global Transfer → 1 篇 WRR 级论文
-  - 吸收 ID 02（CAMELS-US 日尺度对比）、ID 03（小时级 baseline）、ID 99（全球小时模型概念）；ID 01 全球预训练代码已于 2026-04-17 删除（git 历史可取回）；ID 06 海河相关内容已于 2026-04-17 迁出到独立 repo `G:\github\pycharm\projects\haihe\lstm_training\`
+- **主力 2**: 由战略主线 A/B1/C 承担（详见 memory `MEMORY.md`）：主线 A = ID 08 GWL Global；主线 B1 = ID 14 DML + Hypernetwork；主线 C = ID 11 Static Falsification。
+  - ~~原主力 2 = ID 41 MTS-Mamba Global Transfer~~：2026-04-22 归档（Phase 2v2 empirical 输 MTSLSTM，且竞品已占位，详见 `draft/ideas/41_mts_mamba_global_transfer.md` 归档说明）。
+  - ID 41 吸收过的 ID 01/02/03/06/99 也随之停滞：ID 01 已删除、ID 02/03 已归档、ID 06 已迁出 haihe 独立 repo、ID 99 已合并不再独立推进。
+  - 核心模型 `neuralhydrology/modelzoo/mtsmamba.py` 保留在包里供后续任何 idea 作为 backbone 复用。
 
 详见 `draft/IDEA_EVALUATION_2026_02.md`。
 
@@ -24,7 +26,7 @@
 | 11 | static_falsification | in_progress | `draft/ideas/11_static_falsification.md` | `src/static_falsification/` | `results/11_static_falsification/` (待生成) | `logs/11_static_falsification/` (待生成) |
 | 14 | method_dml | poc | `draft/ideas/14_method_dml.md` | `src/method_dml/` | `results/14_method_dml/` (待生成) | `logs/14_method_dml/` (待生成) |
 | 15 | spatial_routing_discovery | **archived** | `draft/ideas/15_spatial_routing_discovery.md` | `src/_archive/15_spatial_routing_discovery/` | — | — |
-| 41 | mts_mamba_global_transfer | in_progress | `draft/ideas/41_mts_mamba_global_transfer.md` | `src/mts_mamba_global_transfer/` | `results/41_mts_mamba_global_transfer/` | `logs/41_mts_mamba_global_transfer/` |
+| 41 | mts_mamba_global_transfer | **archived** | `draft/ideas/41_mts_mamba_global_transfer.md` | `src/_archive/41_mts_mamba_global_transfer/` | `results/_archive/41_mts_mamba_global_transfer/` | `logs/_archive/41_mts_mamba_global_transfer/` |
 
 ## 候选想法（未立项）
 
