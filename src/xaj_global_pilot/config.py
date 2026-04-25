@@ -5,6 +5,7 @@ from collections import OrderedDict
 BENCHMARK_NAME = "global_conceptual_model_benchmark"
 SCREENING_VERSION = "screening_v02"
 FULL_VERSION = "camels_us_531_v02"
+REPRO_VERSION = "camels_us_531_repro_v01"
 DEFAULT_CALIBRATION_TRIALS = 5000
 DEFAULT_RESTARTS = 3
 WARMUP_DAYS = 365
@@ -47,6 +48,21 @@ VALIDATION_END_DATE = "2000-09-30"
 TEST_START_DATE = "2000-10-01"
 TEST_END_DATE = "2005-09-30"
 
+# ---------------------------------------------------------------------------
+# repro_v01 protocol (benchmark-aligned track).
+#
+# The two-segment design is intentional: it eliminates the unused validation
+# split that confused the v02 protocol. Date values below are placeholders
+# inherited from v02 pending source-PDF verification of Newman 2015 §3 and
+# Kratzert 2019 SAC-SMA reporting; see docs/technical/camels_us_531_published_target.md
+# §2.1. Update only the constants when verification completes; the protocol
+# structure does not need to change.
+# ---------------------------------------------------------------------------
+REPRO_CALIBRATION_START_DATE = "1990-10-01"
+REPRO_CALIBRATION_END_DATE = "1995-09-30"
+REPRO_EVALUATION_START_DATE = "2000-10-01"
+REPRO_EVALUATION_END_DATE = "2005-09-30"
+
 
 def benchmark_results_dir(version: str = SCREENING_VERSION) -> Path:
     return Path("results") / "10_global_conceptual_model_benchmark" / version
@@ -82,5 +98,15 @@ def split_periods() -> OrderedDict[str, tuple[str, str]]:
             ("train", (TRAIN_START_DATE, TRAIN_END_DATE)),
             ("validation", (VALIDATION_START_DATE, VALIDATION_END_DATE)),
             ("test", (TEST_START_DATE, TEST_END_DATE)),
+        ]
+    )
+
+
+def repro_split_periods() -> OrderedDict[str, tuple[str, str]]:
+    """Benchmark-aligned two-segment split used by repro_v01 protocol."""
+    return OrderedDict(
+        [
+            ("calibration", (REPRO_CALIBRATION_START_DATE, REPRO_CALIBRATION_END_DATE)),
+            ("evaluation", (REPRO_EVALUATION_START_DATE, REPRO_EVALUATION_END_DATE)),
         ]
     )
