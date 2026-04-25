@@ -7,7 +7,7 @@ import pandas as pd
 from neuralhydrology.datasetzoo.caravan import load_caravan_timeseries
 from src.hydroagent.data_loading import load_camels_basin
 from src.hydroagent.environment import SuperflexEnv
-from src.xaj_global_pilot.config import split_periods
+from src.xaj_global_pilot.config import split_periods, repro_split_periods
 from src.xaj_global_pilot.metrics import compute_metrics
 from src.xaj_global_pilot.model_catalog import get_model_specs
 from src.xaj_global_pilot.xaj_model import (
@@ -17,31 +17,56 @@ from src.xaj_global_pilot.xaj_model import (
 from src.xaj_global_pilot.xaj_numba_smooth_et import simulate_xaj_smooth_et
 
 
-def run_single_model_basin(basin_id: str, model: str, data_root=None, calibration_trials: int = 2000) -> dict:
+# Map protocol name -> (periods_fn, calibration_segment_key, evaluation_segment_key, period_label).
+# `period_label` is the value written to the result row's `period` column.
+_PROTOCOLS = {
+    "v02": (split_periods, "train", "test", "test"),
+    "repro_v01": (repro_split_periods, "calibration", "evaluation", "evaluation"),
+}
+
+
+def run_single_model_basin(
+    basin_id: str,
+    model: str,
+    data_root=None,
+    calibration_trials: int = 2000,
+    n_restarts: int = 3,
+    protocol: str = "v02",
+) -> dict:
     specs = _flatten_model_specs()
     if model not in specs:
         raise ValueError(f"Unknown pilot model '{model}'")
     spec = specs[model]
 
-    periods = split_periods()
+    if protocol not in _PROTOCOLS:
+        raise ValueError(f"Unknown protocol '{protocol}'. Expected one of {list(_PROTOCOLS)}.")
+    periods_fn, calib_key, eval_key, period_label = _PROTOCOLS[protocol]
+    periods = periods_fn()
+
     try:
-        train_forcing, train_obs = _load_period(basin_id, data_root, *periods["train"])
-        test_forcing, test_obs = _load_period(basin_id, data_root, *periods["test"])
+        train_forcing, train_obs = _load_period(basin_id, data_root, *periods[calib_key])
+        test_forcing, test_obs = _load_period(basin_id, data_root, *periods[eval_key])
 
         if model == "xaj":
-            metrics = _run_numpy_xaj(train_forcing, train_obs, test_forcing, test_obs, calibration_trials)
+            metrics = _run_numpy_xaj(train_forcing, train_obs, test_forcing, test_obs, calibration_trials, n_restarts)
         elif model == "xaj_smooth_et":
-            metrics = _run_numpy_xaj_smooth_et(train_forcing, train_obs, test_forcing, test_obs, calibration_trials)
+            metrics = _run_numpy_xaj_smooth_et(
+                train_forcing, train_obs, test_forcing, test_obs, calibration_trials, n_restarts
+            )
         elif model == "xaj_pdd":
-            metrics = _run_numpy_pdd_xaj(train_forcing, train_obs, test_forcing, test_obs, calibration_trials)
+            metrics = _run_numpy_pdd_xaj(
+                train_forcing, train_obs, test_forcing, test_obs, calibration_trials, n_restarts
+            )
         else:
             structure = specs[model]["structure_builder"]()
-            metrics = _run_superflexpy(structure, train_forcing, train_obs, test_forcing, test_obs, calibration_trials)
+            metrics = _run_superflexpy(
+                structure, train_forcing, train_obs, test_forcing, test_obs, calibration_trials, n_restarts
+            )
 
         return {
             "basin_id": basin_id,
             "model": model,
-            "period": "test",
+            "period": period_label,
             **metrics,
             "parameter_count": spec["parameter_count"],
             "solver_name": spec["solver_name"],
@@ -53,7 +78,7 @@ def run_single_model_basin(basin_id: str, model: str, data_root=None, calibratio
         return {
             "basin_id": basin_id,
             "model": model,
-            "period": "test",
+            "period": period_label,
             "nse": pd.NA,
             "kge": pd.NA,
             "bias": pd.NA,
@@ -79,14 +104,16 @@ def _flatten_model_specs() -> dict:
 # 经典新安江模型 (NumPy)
 # ---------------------------------------------------------------------------
 
-def _run_numpy_xaj(train_forcing, train_obs, test_forcing, test_obs, calibration_trials):
+def _run_numpy_xaj(train_forcing, train_obs, test_forcing, test_obs, calibration_trials, n_restarts):
     """使用从 forecast_system_lite 移植的经典新安江模型。"""
     train_rain, train_pet = _extract_rain_pet(train_forcing)
     test_rain, test_pet = _extract_rain_pet(test_forcing)
     train_obs_arr = train_obs.values.astype(np.float64)
 
     # 率定
-    result = calibrate_xaj(train_rain, train_pet, train_obs_arr, n_trials=calibration_trials)
+    result = calibrate_xaj(
+        train_rain, train_pet, train_obs_arr, n_trials=calibration_trials, n_restarts=n_restarts
+    )
     best_params = result.get('optimized_params')
     if best_params is None:
         raise RuntimeError("XAJ calibration returned no parameters")
@@ -101,13 +128,15 @@ def _run_numpy_xaj(train_forcing, train_obs, test_forcing, test_obs, calibration
     return compute_metrics(test_obs, test_sim)
 
 
-def _run_numpy_xaj_smooth_et(train_forcing, train_obs, test_forcing, test_obs, calibration_trials):
+def _run_numpy_xaj_smooth_et(train_forcing, train_obs, test_forcing, test_obs, calibration_trials, n_restarts):
     """消融实验：XAJ + HBV式平滑蒸发。"""
     train_rain, train_pet = _extract_rain_pet(train_forcing)
     test_rain, test_pet = _extract_rain_pet(test_forcing)
     train_obs_arr = train_obs.values.astype(np.float64)
 
-    result = calibrate_xaj_smooth_et(train_rain, train_pet, train_obs_arr, n_trials=calibration_trials)
+    result = calibrate_xaj_smooth_et(
+        train_rain, train_pet, train_obs_arr, n_trials=calibration_trials, n_restarts=n_restarts
+    )
     best_params = result.get('optimized_params')
     if best_params is None:
         raise RuntimeError("XAJ-SmoothET calibration returned no parameters")
@@ -119,13 +148,16 @@ def _run_numpy_xaj_smooth_et(train_forcing, train_obs, test_forcing, test_obs, c
     return compute_metrics(test_obs, test_sim)
 
 
-def _run_numpy_pdd_xaj(train_forcing, train_obs, test_forcing, test_obs, calibration_trials):
+def _run_numpy_pdd_xaj(train_forcing, train_obs, test_forcing, test_obs, calibration_trials, n_restarts):
     """PDD 融雪 + 经典新安江耦合模型。"""
     train_rain, train_pet, train_temp = _extract_rain_pet_temp(train_forcing)
     test_rain, test_pet, test_temp = _extract_rain_pet_temp(test_forcing)
     train_obs_arr = train_obs.values.astype(np.float64)
 
-    result = calibrate_pdd_xaj(train_rain, train_pet, train_temp, train_obs_arr, n_trials=calibration_trials)
+    result = calibrate_pdd_xaj(
+        train_rain, train_pet, train_temp, train_obs_arr,
+        n_trials=calibration_trials, n_restarts=n_restarts,
+    )
     best_params = result.get('optimized_params')
     if best_params is None:
         raise RuntimeError("PDD+XAJ calibration returned no parameters")
@@ -159,12 +191,16 @@ def _extract_rain_pet(forcing: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
 # SuperflexPy 路径 (xaj_pdd, hbv)
 # ---------------------------------------------------------------------------
 
-def _run_superflexpy(structure, train_forcing, train_obs, test_forcing, test_obs, calibration_trials):
+def _run_superflexpy(structure, train_forcing, train_obs, test_forcing, test_obs, calibration_trials, n_restarts):
     calibration_env = _build_env(structure)
     if hasattr(calibration_env, "_calibrate_sfpy"):
-        train_result = calibration_env._calibrate_sfpy(train_forcing, train_obs, n_trials=calibration_trials)
+        train_result = calibration_env._calibrate_sfpy(
+            train_forcing, train_obs, n_trials=calibration_trials, n_restarts=n_restarts
+        )
     else:
-        train_result = calibration_env.auto_calibrate(train_forcing, train_obs)
+        train_result = calibration_env.auto_calibrate(
+            train_forcing, train_obs, n_trials=calibration_trials, n_restarts=n_restarts
+        )
     best_params = _select_best_params(train_result)
     test_env = _build_env(structure)
     test_sim = _run_test_simulation(test_env, test_forcing, best_params)

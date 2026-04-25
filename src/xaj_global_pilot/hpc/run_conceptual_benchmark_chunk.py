@@ -4,16 +4,40 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.xaj_global_pilot.config import DEFAULT_CALIBRATION_TRIALS, DEFAULT_RESTARTS, FULL_VERSION, benchmark_results_dir
+from src.xaj_global_pilot.config import (
+    DEFAULT_CALIBRATION_TRIALS,
+    DEFAULT_RESTARTS,
+    FULL_VERSION,
+    REPRO_VERSION,
+    benchmark_results_dir,
+    repro_split_periods,
+    split_periods,
+)
 from src.xaj_global_pilot.model_catalog import get_model_specs
 from src.xaj_global_pilot.runner import run_single_model_basin
+
+
+_PROTOCOL_TO_VERSION = {
+    "v02": FULL_VERSION,
+    "repro_v01": REPRO_VERSION,
+}
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run one model on one CAMELS-US chunk manifest.")
     parser.add_argument("--model", choices=tuple(get_model_specs()["primary"].keys()), required=True)
     parser.add_argument("--chunk-file", required=True)
-    parser.add_argument("--output-dir", default=str(benchmark_results_dir(FULL_VERSION)))
+    parser.add_argument(
+        "--protocol",
+        choices=tuple(_PROTOCOL_TO_VERSION.keys()),
+        default="v02",
+        help="Protocol version. Default: v02 (frozen exploratory). Use repro_v01 for the benchmark-aligned track.",
+    )
+    parser.add_argument(
+        "--output-dir",
+        default=None,
+        help="If omitted, derived from --protocol (v02 -> camels_us_531_v02, repro_v01 -> camels_us_531_repro_v01).",
+    )
     parser.add_argument("--data-root", default="data/camels_us")
     parser.add_argument("--trials", type=int, default=DEFAULT_CALIBRATION_TRIALS)
     parser.add_argument("--restarts", type=int, default=DEFAULT_RESTARTS)
@@ -27,6 +51,18 @@ def read_chunk_file(path: str | Path) -> list[str]:
 
 def main(argv=None) -> int:
     args = build_parser().parse_args(argv)
+
+    if args.output_dir is None:
+        args.output_dir = str(benchmark_results_dir(_PROTOCOL_TO_VERSION[args.protocol]))
+
+    if args.protocol == "repro_v01":
+        periods = repro_split_periods()
+        calib_segment, eval_segment = "calibration", "evaluation"
+    else:
+        periods = split_periods()
+        calib_segment, eval_segment = "train", "test"
+    calibration_start, calibration_end = periods[calib_segment]
+    evaluation_start, evaluation_end = periods[eval_segment]
 
     basin_ids = read_chunk_file(args.chunk_file)
     output_dir = Path(args.output_dir)
@@ -49,6 +85,8 @@ def main(argv=None) -> int:
                 args.model,
                 data_root=args.data_root,
                 calibration_trials=args.trials,
+                n_restarts=args.restarts,
+                protocol=args.protocol,
             )
             n_executed += 1
         rows.append(result)
@@ -62,7 +100,14 @@ def main(argv=None) -> int:
     chunk_stem = Path(args.chunk_file).stem
     rows_df.to_csv(summary_dir / f"{args.model}_{chunk_stem}.csv", index=False)
     metadata = {
+        "protocol": args.protocol,
+        "protocol_version": _PROTOCOL_TO_VERSION[args.protocol],
         "model": args.model,
+        "forcing": "daymet",
+        "calibration_start": calibration_start,
+        "calibration_end": calibration_end,
+        "evaluation_start": evaluation_start,
+        "evaluation_end": evaluation_end,
         "chunk_file": str(Path(args.chunk_file)),
         "trials": args.trials,
         "restarts": args.restarts,

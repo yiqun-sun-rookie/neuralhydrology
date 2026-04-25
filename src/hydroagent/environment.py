@@ -268,11 +268,13 @@ class SuperflexEnv:
         self,
         forcing_data: pd.DataFrame,
         obs_data: pd.Series,
+        n_trials: int = 2000,
+        n_restarts: int = 1,
     ) -> Dict[str, Any]:
         """Calibrate the model against observations."""
         if obs_data.empty:
             raise ValueError('obs_data is empty.')
-        return self._calibrate_sfpy(forcing_data, obs_data)
+        return self._calibrate_sfpy(forcing_data, obs_data, n_trials=n_trials, n_restarts=n_restarts)
 
     # ------------------------------------------------------------------
     # Topology builder
@@ -470,8 +472,17 @@ class SuperflexEnv:
 
         return pinfo
 
-    def _calibrate_sfpy(self, forcing_data, obs_data, n_trials=2000):
-        """Global optimisation via CMA-ES (Covariance Matrix Adaptation Evolution Strategy)."""
+    def _calibrate_sfpy(self, forcing_data, obs_data, n_trials=2000, n_restarts=1):
+        """Global optimisation via CMA-ES with optional multi-restart.
+
+        Restart i uses seed `42 + i * 1000`, matching the convention in
+        src/xaj_global_pilot/xaj_model.py::_cmaes_multi_restart so XAJ and
+        Superflex calibration share a comparable restart schedule. The
+        best NSE across restarts is returned.
+        """
+        if n_restarts < 1:
+            raise ValueError(f'n_restarts must be >= 1, got {n_restarts}')
+
         pinfo = self._collect_calib_params()
         names = [n for n, _, _ in pinfo]
         lo = np.array([l for _, l, _ in pinfo])
@@ -495,23 +506,31 @@ class SuperflexEnv:
                 return 2.0
 
         x0 = [0.5] * ndim
-        es = cma.CMAEvolutionStrategy(x0, 0.3, {
-            'bounds': [[0.0] * ndim, [1.0] * ndim],
-            'maxfevals': n_trials,
-            'seed': 42,
-            'verbose': -9,
-        })
-        es.optimize(objective)
+        best_overall: Optional[Dict[str, Any]] = None
+        for restart in range(n_restarts):
+            seed = 42 + restart * 1000
+            es = cma.CMAEvolutionStrategy(x0, 0.3, {
+                'bounds': [[0.0] * ndim, [1.0] * ndim],
+                'maxfevals': n_trials,
+                'seed': seed,
+                'verbose': -9,
+            })
+            es.optimize(objective)
 
-        best_x = lo + np.clip(es.result.xbest, 0.0, 1.0) * (hi - lo)
-        best_p = dict(zip(names, best_x.tolist()))
-        try:
-            best_q = self._run_sfpy(forcing_data, best_p)
-            best_nse = self._nse(obs_data, best_q)
-        except Exception:
-            best_q = pd.Series(np.zeros(len(obs_data)), index=obs_data.index, name='qsim')
-            best_nse = -999.0
-        return {'nse': float(best_nse), 'optimized_params': best_p, 'qsim': best_q}
+            best_x = lo + np.clip(es.result.xbest, 0.0, 1.0) * (hi - lo)
+            best_p = dict(zip(names, best_x.tolist()))
+            try:
+                best_q = self._run_sfpy(forcing_data, best_p)
+                best_nse = self._nse(obs_data, best_q)
+            except Exception:
+                best_q = pd.Series(np.zeros(len(obs_data)), index=obs_data.index, name='qsim')
+                best_nse = -999.0
+
+            candidate = {'nse': float(best_nse), 'optimized_params': best_p, 'qsim': best_q}
+            if best_overall is None or candidate['nse'] > best_overall['nse']:
+                best_overall = candidate
+
+        return best_overall
 
     # ------------------------------------------------------------------
     # Utilities
