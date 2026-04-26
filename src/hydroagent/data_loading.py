@@ -36,23 +36,59 @@ def _find_file(data_root: str, subdir: str, filename: str) -> str:
     raise FileNotFoundError(f"Cannot find {filename} under {os.path.join(data_root, subdir)}/*/")
 
 
+# Map forcing name -> (subdir, filename_marker) used to locate forcing files.
+# Daymet files are named *_lump_cida_forcing_leap.txt; Maurer / NLDAS variants
+# follow *_lump_<forcing>_forcing_leap.txt.
+_FORCING_MAP = {
+    'daymet': ('daymet', 'cida'),
+    'maurer': ('maurer', 'maurer'),
+    'maurer_extended': ('maurer_extended', 'maurer'),
+    'nldas': ('nldas', 'nldas'),
+    'nldas_extended': ('nldas_extended', 'nldas'),
+}
+
+
+def _find_forcing_col(df: pd.DataFrame, prefix: str) -> str:
+    """Case-insensitive forcing column lookup.
+
+    Daymet uses lowercase ('prcp(mm/day)', 'tmax(C)') while Maurer uses
+    uppercase ('PRCP(mm/day)', 'Tmax(C)'). Match on lowercase prefix.
+    """
+    target = prefix.lower()
+    for col in df.columns:
+        if str(col).lower().startswith(target):
+            return col
+    raise KeyError(f'No forcing column starts with {prefix!r} (have: {list(df.columns)})')
+
+
 def load_camels_basin(
     basin_id: str,
     data_root: Union[str, Path, None] = None,
     start_date: str = '1990-10-01',
     end_date: str = '1993-09-30',
+    forcing: str = 'daymet',
 ) -> Tuple[pd.DataFrame, pd.Series, float]:
     """Load CAMELS-US basin forcing and observed streamflow.
+
+    Args:
+        forcing: One of 'daymet', 'maurer', 'maurer_extended', 'nldas',
+            'nldas_extended'. Default 'daymet' preserves prior behaviour.
+            'maurer_extended' is required to align with the published
+            CAMELS benchmark on HydroShare (Newman/Kratzert 2019).
 
     Returns:
         (forcing_df[prcp, ep, tmean], obs_mm, area_km2)
     """
     data_root = str(data_root or _DEFAULT_DATA_ROOT)
 
+    if forcing not in _FORCING_MAP:
+        raise ValueError(f'Unknown forcing {forcing!r}; expected one of {list(_FORCING_MAP)}')
+    subdir, marker = _FORCING_MAP[forcing]
+
     # -- Forcing --
     forcing_path = _find_file(
-        data_root, os.path.join('basin_mean_forcing', 'daymet'),
-        basin_id + '_lump_cida_forcing_leap.txt'
+        data_root, os.path.join('basin_mean_forcing', subdir),
+        f'{basin_id}_lump_{marker}_forcing_leap.txt'
     )
     df_forcing = pd.read_csv(forcing_path, skiprows=3, sep=r'\s+')
     df_forcing['date'] = pd.to_datetime(
@@ -86,13 +122,13 @@ def load_camels_basin(
     streamflow['qobs_mm'] = streamflow['discharge_cfs'] * conversion_factor
     streamflow.loc[streamflow['discharge_cfs'] < 0, 'qobs_mm'] = np.nan
 
-    # -- Prepare forcing --
+    # -- Prepare forcing (case-insensitive — Daymet uses lowercase, Maurer uppercase) --
     forcing_out = pd.DataFrame(index=forcing.index)
-    forcing_out['prcp'] = forcing['prcp(mm/day)'].values
+    forcing_out['prcp'] = forcing[_find_forcing_col(forcing, 'prcp')].values
 
-    tmax = forcing['tmax(C)'].values
-    tmin = forcing['tmin(C)'].values
-    srad = forcing['srad(W/m2)'].values
+    tmax = forcing[_find_forcing_col(forcing, 'tmax')].values
+    tmin = forcing[_find_forcing_col(forcing, 'tmin')].values
+    srad = forcing[_find_forcing_col(forcing, 'srad')].values
     tmean = (tmax + tmin) / 2
     delta_t = np.maximum(tmax - tmin, 0.1)
     ra_mm = srad * 0.0864 / 2.45  # W/m2 → MJ/m2/d → mm/d equivalent

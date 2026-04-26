@@ -7,7 +7,12 @@ import pandas as pd
 from neuralhydrology.datasetzoo.caravan import load_caravan_timeseries
 from src.hydroagent.data_loading import load_camels_basin
 from src.hydroagent.environment import SuperflexEnv
-from src.xaj_global_pilot.config import split_periods, repro_split_periods
+from src.xaj_global_pilot.config import (
+    REPRO_FORCING,
+    V02_FORCING,
+    repro_split_periods,
+    split_periods,
+)
 from src.xaj_global_pilot.metrics import compute_metrics
 from src.xaj_global_pilot.model_catalog import get_model_specs
 from src.xaj_global_pilot.xaj_model import (
@@ -17,11 +22,13 @@ from src.xaj_global_pilot.xaj_model import (
 from src.xaj_global_pilot.xaj_numba_smooth_et import simulate_xaj_smooth_et
 
 
-# Map protocol name -> (periods_fn, calibration_segment_key, evaluation_segment_key, period_label).
+# Map protocol name -> (periods_fn, calibration_key, evaluation_key, period_label, default_forcing).
 # `period_label` is the value written to the result row's `period` column.
+# `default_forcing` is the CAMELS-US forcing dataset that the protocol expects;
+# the chunk runner can override it via --forcing.
 _PROTOCOLS = {
-    "v02": (split_periods, "train", "test", "test"),
-    "repro_v01": (repro_split_periods, "calibration", "evaluation", "evaluation"),
+    "v02": (split_periods, "train", "test", "test", V02_FORCING),
+    "repro_v01": (repro_split_periods, "calibration", "evaluation", "evaluation", REPRO_FORCING),
 }
 
 
@@ -32,6 +39,7 @@ def run_single_model_basin(
     calibration_trials: int = 2000,
     n_restarts: int = 3,
     protocol: str = "v02",
+    forcing: str | None = None,
 ) -> dict:
     specs = _flatten_model_specs()
     if model not in specs:
@@ -40,12 +48,17 @@ def run_single_model_basin(
 
     if protocol not in _PROTOCOLS:
         raise ValueError(f"Unknown protocol '{protocol}'. Expected one of {list(_PROTOCOLS)}.")
-    periods_fn, calib_key, eval_key, period_label = _PROTOCOLS[protocol]
+    periods_fn, calib_key, eval_key, period_label, default_forcing = _PROTOCOLS[protocol]
     periods = periods_fn()
+    forcing_to_use = forcing if forcing is not None else default_forcing
 
     try:
-        train_forcing, train_obs = _load_period(basin_id, data_root, *periods[calib_key])
-        test_forcing, test_obs = _load_period(basin_id, data_root, *periods[eval_key])
+        train_forcing, train_obs = _load_period(
+            basin_id, data_root, *periods[calib_key], forcing=forcing_to_use
+        )
+        test_forcing, test_obs = _load_period(
+            basin_id, data_root, *periods[eval_key], forcing=forcing_to_use
+        )
 
         if model == "xaj":
             metrics = _run_numpy_xaj(train_forcing, train_obs, test_forcing, test_obs, calibration_trials, n_restarts)
@@ -256,13 +269,25 @@ def _run_default_test_simulation(env: SuperflexEnv, test_forcing: pd.DataFrame) 
 # 数据加载
 # ---------------------------------------------------------------------------
 
-def _load_period(basin_id: str, data_root, start_date: str, end_date: str) -> tuple[pd.DataFrame, pd.Series]:
+def _load_period(
+    basin_id: str,
+    data_root,
+    start_date: str,
+    end_date: str,
+    forcing: str = "daymet",
+) -> tuple[pd.DataFrame, pd.Series]:
     root = Path(data_root) if data_root is not None else None
     if root is not None and ((root / "timeseries").exists() or "caravan" in str(root).lower()):
+        # Caravan path uses its own bundled forcing (ERA5 / FAO P-M); the
+        # `forcing` arg is ignored here since Caravan does not offer the
+        # daymet / maurer choice.
         return _load_caravan_period(basin_id, root, start_date, end_date)
 
-    forcing, obs, _ = load_camels_basin(basin_id, data_root=data_root, start_date=start_date, end_date=end_date)
-    return forcing, obs
+    forcing_df, obs, _ = load_camels_basin(
+        basin_id, data_root=data_root, start_date=start_date, end_date=end_date,
+        forcing=forcing,
+    )
+    return forcing_df, obs
 
 
 def _load_caravan_period(basin_id: str, data_root: Path, start_date: str, end_date: str) -> tuple[pd.DataFrame, pd.Series]:

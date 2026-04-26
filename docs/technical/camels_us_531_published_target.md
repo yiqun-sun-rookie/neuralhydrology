@@ -1,107 +1,89 @@
 # CAMELS-US 531 Published Benchmark — Alignment Target
 
-**Status:** Defines the published benchmark we are trying to align against. Companion doc to `camels_us_531_current_protocol.md`. Implementation work happens under `camels_us_531_repro_v01`.
+**Status:** Verified against CUAHSI HydroShare resource and Kratzert 2019 supplementary code (2026-04-25). Companion doc to `camels_us_531_current_protocol.md` and `camels_us_531_repro_protocol.md`. Implementation under `repro_v01`.
 
-**Target sources:**
-- Newman, A. J., et al. (2015). Development of a large-sample watershed-scale hydrometeorological data set for the contiguous USA. *Hydrol. Earth Syst. Sci.*, 19, 209–223.
-- Kratzert, F., et al. (2019). Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets. *Hydrol. Earth Syst. Sci.*, 23, 5089–5110.
-- (Cross-check) Kratzert, F., et al. (2019). NeuralHydrology — interpreting LSTMs in hydrology. arXiv:1903.07903 / WRR.
-
-**Key alignment number:** Published median SAC-SMA + Snow-17 NSE on the 531-basin subset is reported by Kratzert et al. 2019 at **≈ 0.64** (median over basins, Daymet forcing, per-basin calibration). This is the single number the aligned-protocol rerun is benchmarked against.
-
----
-
-## 1. Confidently Known Targets
-
-These items are stated in the published sources and must be matched verbatim.
-
-### 1.1 Basin list
-- The canonical 531-basin subset of CAMELS-US, as filtered from Newman et al. 2015's 671-basin set (Kratzert 2019 documents the 531 sub-selection criteria).
-- Source: Kratzert 2019 supplementary lists / NeuralHydrology repo `531_basin_list.txt`.
-- **Action:** Bit-for-bit reuse the existing `src/xaj_global_pilot/configs/conceptual_benchmark_camels_us_531.txt` only after diff-verifying it against the canonical NeuralHydrology 531 basin list. If a diff is found, rebuild the manifest from the canonical source.
-
-### 1.2 Hydrological model
-- SAC-SMA coupled with Snow-17.
-- Per-basin calibration (one parameter set per basin).
-- Newman 2015 used Shuffled Complex Evolution (SCE-UA) for SAC-SMA + Snow-17 calibration.
-
-### 1.3 Forcing
-- Daymet (the version actually used by Newman 2015 for the published SAC-SMA numbers; Maurer and NLDAS are alternatives reported in the same paper).
-- For alignment: use the Daymet forcing already shipped with the CAMELS-US v1.2 dataset and currently consumed by `runner._load_period`.
-
-### 1.4 Metric
-- Nash–Sutcliffe Efficiency (NSE) per basin, then median over basins.
-- NSE definition: standard `1 - sum((obs - sim)^2) / sum((obs - obs_mean)^2)` over the evaluation window.
-- Compare medians at the basin level, not aggregated over time.
-
-### 1.5 Failed-basin handling
-- Newman 2015 / Kratzert 2019 keep all 531 basins in the median; failed/degenerate basins are not silently dropped.
-- For alignment: any failed basin counts as a basin in the median — do not exclude failures from `median(NSE)`.
+**Target sources (verified):**
+- Newman, A. J., et al. (2015). *Hydrol. Earth Syst. Sci.* 19, 209–223. CAMELS-US dataset.
+- Kratzert, F., et al. (2019). Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets. *Hydrol. Earth Syst. Sci.* 23, 5089–5110.
+- CUAHSI HydroShare resource `474ecc37e7db45baa425cdb4fc1b61e1`: "CAMELS benchmark models" — official SAC-SMA / VIC / FUSE / HBV / mHM benchmark outputs.
+- `kratzert/ealstm_regional_modeling` GitHub repo: `main.py` `GLOBAL_SETTINGS`, `papercode/utils.py::load_forcing`.
 
 ---
 
-## 2. Items Requiring Source-PDF Verification Before Locking
+## 1. Verified Alignment Target (locked)
 
-These items are described qualitatively in the published sources but the numeric details I do not have at hand. They must be verified against the source PDFs before `repro_v01` can claim "strict reproduction." Until verified, this protocol is "closest feasible alignment" only.
+### 1.1 Basin list — 531 basins (verified)
+- File on our side: `src/xaj_global_pilot/configs/conceptual_benchmark_camels_us_531_repro.txt`.
+- Cross-checked against `kratzert/ealstm_regional_modeling/data/basin_list.txt`: **set-difference = 0 (bit-equivalent)**, verified 2026-04-25.
 
-### 2.1 Calibration / evaluation periods
-- Newman 2015 split-sample structure (calibration vs evaluation windows, including warm-up).
-- Kratzert 2019 uses a different period for LSTM training vs the SAC-SMA benchmark numbers it cites; the SAC-SMA NSE = 0.64 number must be paired with its corresponding evaluation window.
-- **Open question:** Whether the published 0.64 number is computed on calibration-period flow, evaluation-period flow, or full-record flow.
-- **Action:** Read Newman 2015 §3 and Kratzert 2019 Table 2 / §4 to confirm exact `(calibration_start, calibration_end, evaluation_start, evaluation_end)`.
+### 1.2 Calibration period — 1 Oct 1999 → 30 Sep 2008 (9 water years)
+- HydroShare README: "calibrated using the same forcing data (Maurer)".
+- Kratzert 2019 §3 / `ealstm_regional_modeling/main.py` `GLOBAL_SETTINGS`: `train_start = "01101999"`, `train_end = "30092008"`.
+- Both LSTM training and conceptual-benchmark calibration use this same 9-year window — that is the deliberate design of Kratzert 2019.
 
-### 2.2 Warm-up handling
-- How many years of warm-up are dropped before computing NSE in the published benchmark.
-- **Action:** Verify against Newman 2015.
+### 1.3 Evaluation period — 1 Oct 1989 → 30 Sep 1999 (10 water years)
+- HydroShare README: "model outputs of the validation period (1 Oct 1989 until 30 Sep 1999) only".
+- `main.py` `GLOBAL_SETTINGS`: `val_start = "01101989"`, `val_end = "30091999"`.
 
----
+### 1.4 Forcing — `maurer_extended` (NOT Daymet)
+- HydroShare README: "the same forcing data (Maurer)".
+- `papercode/utils.py::load_forcing` reads from `basin_mean_forcing/maurer_extended`.
+- Daymet is the published *dataset* in Newman 2015 but the **published benchmark NSE numbers we are aligning against are computed on Maurer**.
+
+### 1.5 Metric — NSE per basin, then median / mean over basins
+- Standard `1 - sum((obs - sim)^2) / sum((obs - obs_mean)^2)`, evaluated on the evaluation segment.
+- Kratzert 2019 reports both **median** and **mean** across the basin set; the published comparison ladder uses both.
+
+### 1.6 Failed-basin handling — 447 common basins (Kratzert 2019 Table 3)
+- The published Table 3 statistics are computed over the **447 basins where all benchmark models successfully calibrated**, not over the full 531.
+- For strict head-to-head, our XAJ / HBV / GR4J results must be evaluated on the **same 447-basin intersection**.
+- For protocol-aligned but superset evaluation, we can also report the median over our successful 531 — but that is a different number from Kratzert's Table 3.
+
+## 2. The Comparison Ladder (Kratzert 2019 Table 3, 447 basins)
+
+| Model | Mean NSE | Median NSE | Notes |
+|-------|----------|------------|-------|
+| **SAC-SMA + Snow-17** | **0.564** | **0.603** | Primary conceptual baseline |
+| mHM (basin) | 0.627 | — | Regional conceptual benchmark |
+| HBV (upper bound) | 0.631 | — | Conceptual benchmark |
+| FUSE 902 | — | 0.650 | One of three FUSE structures |
+| EA-LSTM | (higher) | (higher) | ML reference, not in our head-to-head scope |
+
+This ladder replaces the earlier ≈ 0.64 single-number target. Use the **0.603 SAC-SMA median** as the primary alignment number for any "comparable to / numerically above SAC-SMA" claim.
 
 ## 3. Must-Align vs Nice-to-Align
 
-### Must align (otherwise the comparison is not defensible)
-- Basin list (§1.1)
-- Hydrological model class (§1.2)
-- Forcing version (§1.3)
-- Metric definition (§1.4)
-- Failed-basin handling (§1.5)
-- Calibration/evaluation period boundaries (§2.1, after verification)
-- Warm-up window (§2.2, after verification)
+### Must align (verified locked)
+- Basin list (§1.1) ✅
+- Calibration period (§1.2) ✅
+- Evaluation period (§1.3) ✅
+- Forcing (§1.4) ✅
+- Metric definition (§1.5) ✅
+- Failed-basin treatment / 447 common basins (§1.6) — **action: derive intersection list before final comparison table**
 
-### Nice to align (differences here are tolerable but must be disclosed)
-- **Exact optimizer family.** Newman 2015 uses SCE-UA; our protocol uses CMA-ES. This is a documented difference, not a defect.
-- **Exact per-basin restart count.** We will run a uniform `n_restarts` for all three model families in `repro_v01`; the published SAC-SMA may use a different schedule.
-- **Internal snow-routine structure.** Snow-17 vs PDD differ in formulation. This is precisely the model-family comparison we want, so the difference is a feature, not a bug — but it must be described in any comparison table.
-- **Trial budget per restart.** We use 5000 CMA-ES evaluations; the published SAC-SMA SCE-UA budget is not directly comparable in evaluation count.
+### Nice to align (documented gaps, disclosed in paper)
+- **Optimizer family.** Newman/HydroShare benchmark used SCE-UA; ours uses CMA-ES. Disclose in methods.
+- **Per-basin restart count.** We run uniform `n_restarts = DEFAULT_RESTARTS` for fairness across XAJ / HBV / GR4J; the published benchmark may use a different restart schedule.
+- **Snow-routine.** Snow-17 vs PDD differ in formulation. Document as a known structural difference.
+- **Trial budget.** 5000 CMA-ES evaluations vs the published SCE-UA budget — not directly comparable in evaluation count.
 
----
+## 4. Claim Language
 
-## 4. Hard Decision On Claim Language
+Allowed (after `repro_v01` rerun completes):
 
-If after verification (§2) the calibration/evaluation periods or forcing version cannot be matched exactly, all paper text must use **"cross-study comparison"** language — not "strict benchmark reproduction." Allowed:
+- `numerically above the published SAC-SMA NSE median of 0.603 on the 447-basin common subset`
+- `comparable to mHM / HBV / FUSE within the published conceptual ladder`
+- `cross-study comparison against the Kratzert 2019 LSTM benchmark`
 
-- `numerically above the published SAC-SMA benchmark`
-- `comparable to the published SAC-SMA benchmark`
+Disallowed (regardless of result):
 
-Disallowed unless every must-align item in §3 is matched:
-
-- `outperforms the SAC-SMA benchmark`
+- `outperforms the SAC-SMA benchmark` (without disclosing optimizer / snow-routine / 447-vs-531 distinction)
 - `beats the Kratzert baseline`
 - `surpasses Newman et al. 2015`
+- Any single-number "0.64" claim — that number was a misremembered approximation; the verified target is 0.603 (median) or 0.564 (mean).
 
----
+## 5. Open Action Items (post-rerun)
 
-## 5. What `repro_v01` Will And Will Not Solve
-
-`repro_v01` (defined in `camels_us_531_repro_protocol.md`, to be written in Task 3) will:
-
-- collapse the unused validation split into a clean `calibration` / `evaluation` two-segment design
-- enforce the same `n_restarts` across XAJ / HBV / GR4J so internal comparison is fair
-- record forcing, period boundaries, trials, restarts in metadata for every basin run
-
-`repro_v01` will not:
-
-- match SCE-UA optimizer behavior bit-for-bit
-- replace PDD with Snow-17 inside our XAJ/HBV implementations
-- reproduce Newman 2015's exact numerical output
-
-Therefore even after `repro_v01` reruns, the comparison against the published 0.64 is still a "cross-study with aligned protocol" comparison, not a strict reproduction.
+- Pull the 447 common-basin list from the HydroShare benchmark NetCDF outputs (intersection of basins where all 5 published models report finite NSE).
+- Compute our XAJ / HBV / GR4J medians on the 447 intersection; report alongside the 531-superset numbers.
+- Verify whether HydroShare benchmark uses a warm-up year inside 1999-2008 or treats the full 9 years as calibration. If a 1-yr warm-up is used (1999-10 → 2000-09 as warm-up, 2000-10 → 2008-09 as calibration), our setup must match.

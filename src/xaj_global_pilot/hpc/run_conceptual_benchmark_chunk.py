@@ -8,7 +8,9 @@ from src.xaj_global_pilot.config import (
     DEFAULT_CALIBRATION_TRIALS,
     DEFAULT_RESTARTS,
     FULL_VERSION,
+    REPRO_FORCING,
     REPRO_VERSION,
+    V02_FORCING,
     benchmark_results_dir,
     repro_split_periods,
     split_periods,
@@ -20,6 +22,11 @@ from src.xaj_global_pilot.runner import run_single_model_basin
 _PROTOCOL_TO_VERSION = {
     "v02": FULL_VERSION,
     "repro_v01": REPRO_VERSION,
+}
+
+_PROTOCOL_DEFAULT_FORCING = {
+    "v02": V02_FORCING,
+    "repro_v01": REPRO_FORCING,
 }
 
 
@@ -39,6 +46,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="If omitted, derived from --protocol (v02 -> camels_us_531_v02, repro_v01 -> camels_us_531_repro_v01).",
     )
     parser.add_argument("--data-root", default="data/camels_us")
+    parser.add_argument(
+        "--forcing",
+        default=None,
+        help="CAMELS-US forcing (daymet / maurer / maurer_extended / nldas / nldas_extended). "
+             "If omitted, derived from --protocol (v02->daymet, repro_v01->maurer_extended).",
+    )
     parser.add_argument("--trials", type=int, default=DEFAULT_CALIBRATION_TRIALS)
     parser.add_argument("--restarts", type=int, default=DEFAULT_RESTARTS)
     parser.add_argument("--skip-existing", action="store_true")
@@ -54,6 +67,8 @@ def main(argv=None) -> int:
 
     if args.output_dir is None:
         args.output_dir = str(benchmark_results_dir(_PROTOCOL_TO_VERSION[args.protocol]))
+    if args.forcing is None:
+        args.forcing = _PROTOCOL_DEFAULT_FORCING[args.protocol]
 
     if args.protocol == "repro_v01":
         periods = repro_split_periods()
@@ -87,6 +102,7 @@ def main(argv=None) -> int:
                 calibration_trials=args.trials,
                 n_restarts=args.restarts,
                 protocol=args.protocol,
+                forcing=args.forcing,
             )
             n_executed += 1
         rows.append(result)
@@ -103,7 +119,7 @@ def main(argv=None) -> int:
         "protocol": args.protocol,
         "protocol_version": _PROTOCOL_TO_VERSION[args.protocol],
         "model": args.model,
-        "forcing": "daymet",
+        "forcing": args.forcing,
         "calibration_start": calibration_start,
         "calibration_end": calibration_end,
         "evaluation_start": evaluation_start,

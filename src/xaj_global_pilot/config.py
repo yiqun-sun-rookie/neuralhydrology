@@ -51,17 +51,29 @@ TEST_END_DATE = "2005-09-30"
 # ---------------------------------------------------------------------------
 # repro_v01 protocol (benchmark-aligned track).
 #
-# The two-segment design is intentional: it eliminates the unused validation
-# split that confused the v02 protocol. Date values below are placeholders
-# inherited from v02 pending source-PDF verification of Newman 2015 §3 and
-# Kratzert 2019 SAC-SMA reporting; see docs/technical/camels_us_531_published_target.md
-# §2.1. Update only the constants when verification completes; the protocol
-# structure does not need to change.
+# Calibration / evaluation periods and forcing match the published CAMELS
+# benchmark used by the SAC-SMA / VIC / FUSE / HBV / mHM ensemble on
+# CUAHSI HydroShare (resource 474ecc37e7db45baa425cdb4fc1b61e1) and adopted
+# verbatim by Kratzert et al. 2019 (HESS 23, 5089-5110). Verified against
+# kratzert/ealstm_regional_modeling main.py GLOBAL_SETTINGS and
+# papercode/utils.py::load_forcing.
+#
+# Calibration: 1 Oct 1999 -> 30 Sep 2008  (9 water years)
+# Evaluation:  1 Oct 1989 -> 30 Sep 1999  (10 water years)
+# Forcing:     maurer_extended (NOT daymet)
+#
+# These are LOCKED per the alignment plan; do not change without re-anchoring
+# the comparison ladder in docs/technical/camels_us_531_published_target.md.
 # ---------------------------------------------------------------------------
-REPRO_CALIBRATION_START_DATE = "1990-10-01"
-REPRO_CALIBRATION_END_DATE = "1995-09-30"
-REPRO_EVALUATION_START_DATE = "2000-10-01"
-REPRO_EVALUATION_END_DATE = "2005-09-30"
+REPRO_CALIBRATION_START_DATE = "1999-10-01"
+REPRO_CALIBRATION_END_DATE = "2008-09-30"
+REPRO_EVALUATION_START_DATE = "1989-10-01"
+REPRO_EVALUATION_END_DATE = "1999-09-30"
+REPRO_FORCING = "maurer_extended"
+
+# v02 forcing label (daymet) — keeps protocol-dispatch consistent and
+# documents that the exploratory baseline used a different forcing dataset.
+V02_FORCING = "daymet"
 
 
 def benchmark_results_dir(version: str = SCREENING_VERSION) -> Path:

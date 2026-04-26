@@ -27,7 +27,12 @@ for _p in (_REPO_ROOT, _SRC_ROOT):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
-from src.xaj_global_pilot.config import repro_split_periods, split_periods
+from src.xaj_global_pilot.config import (
+    REPRO_FORCING,
+    V02_FORCING,
+    repro_split_periods,
+    split_periods,
+)
 
 # SuperflexEnv pulls in superflexpy; that dependency is bundled under
 # external/superflexpy on HPC but may be absent in local dev. Tests that
@@ -50,6 +55,23 @@ class TestProtocolSegments(unittest.TestCase):
     def test_v02_split_periods_unchanged(self):
         periods = split_periods()
         self.assertEqual(list(periods.keys()), ['train', 'validation', 'test'])
+
+
+class TestProtocolForcingAndDates(unittest.TestCase):
+    """The aligned protocol must point at maurer_extended + Newman/Kratzert dates."""
+
+    def test_repro_forcing_is_maurer_extended(self):
+        # Aligning with the published CAMELS benchmark requires Maurer (extended).
+        self.assertEqual(REPRO_FORCING, 'maurer_extended')
+
+    def test_v02_forcing_is_daymet(self):
+        self.assertEqual(V02_FORCING, 'daymet')
+
+    def test_repro_dates_match_kratzert_2019(self):
+        # 1 Oct 1999 -> 30 Sep 2008 calibration; 1 Oct 1989 -> 30 Sep 1999 evaluation.
+        periods = repro_split_periods()
+        self.assertEqual(periods['calibration'], ('1999-10-01', '2008-09-30'))
+        self.assertEqual(periods['evaluation'], ('1989-10-01', '1999-09-30'))
 
 
 @unittest.skipUnless(_HAS_SUPERFLEX, 'runner imports SuperflexEnv; superflexpy not importable here')

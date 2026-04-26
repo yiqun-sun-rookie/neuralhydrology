@@ -26,26 +26,29 @@
 - Bit-identical copy of `conceptual_benchmark_camels_us_531.txt` (verified by `diff` at creation time, 2026-04-25).
 - The duplicate file exists so that the aligned-track config never has to point at the v02 manifest and so that any future divergence (after canonical 531-list verification) can be made independently.
 
-## 3. Splits — Two Segments Only
+## 3. Splits — Two Segments Only (LOCKED 2026-04-25)
 
 | Segment       | Start         | End           | Role                                |
 |---------------|---------------|---------------|-------------------------------------|
-| `calibration` | 1990-10-01    | 1995-09-30    | Parameter calibration window        |
-| `evaluation`  | 2000-10-01    | 2005-09-30    | Out-of-sample metric computation    |
+| `calibration` | 1999-10-01    | 2008-09-30    | Parameter calibration window (9 WY) |
+| `evaluation`  | 1989-10-01    | 1999-09-30    | Out-of-sample metric computation (10 WY) |
 
 Constants: `REPRO_CALIBRATION_START_DATE` / `REPRO_CALIBRATION_END_DATE` / `REPRO_EVALUATION_START_DATE` / `REPRO_EVALUATION_END_DATE` in `config.py`.
 
 Function: `repro_split_periods()` in `config.py` — returns `OrderedDict` with only `calibration` and `evaluation`. **No `validation` entry.**
 
-### Open issue (placeholder dates)
+These windows come from the published CAMELS benchmark on CUAHSI HydroShare (resource `474ecc37e7db45baa425cdb4fc1b61e1`) and are confirmed bit-for-bit by `kratzert/ealstm_regional_modeling/main.py` `GLOBAL_SETTINGS`. They are **the same windows Kratzert 2019 used for both LSTM training and conceptual-benchmark comparison**. See `camels_us_531_published_target.md` §1.2–§1.3 for source citations.
 
-The four date constants above are **inherited from the v02 train/test windows pending source-PDF verification** of Newman 2015 §3 and Kratzert 2019 §4 / Table 2 (see `camels_us_531_published_target.md` §2.1). When verification completes, only the four constants need updating; no protocol structure or runner change is required. Until then, `repro_v01` is "closest feasible alignment," not "strict reproduction."
+Note: the calibration window (1999–2008) is LATER than the evaluation window (1989–1999). This reverse split-sample is deliberate in Kratzert 2019 — we preserve it because re-anchoring would break the published-benchmark comparison.
 
-## 4. Forcing
+## 4. Forcing — `maurer_extended` (LOCKED 2026-04-25)
 
-- CAMELS-US `daymet`, loaded via `src.hydroagent.data_loading.load_camels_basin`.
-- Same column resolution as v02 (`prcp`, `ep|pet|evap`, `tmean`).
-- Forcing version is part of the must-align set (`camels_us_531_published_target.md` §1.3); any future change here breaks alignment and must be re-justified.
+- CAMELS-US `maurer_extended` (NOT `daymet`), loaded via `src.hydroagent.data_loading.load_camels_basin(forcing="maurer_extended")`.
+- Constant: `REPRO_FORCING = "maurer_extended"` in `config.py`.
+- File path: `data/camels_us/basin_mean_forcing/maurer_extended/<huc>/<basin>_lump_maurer_forcing_leap.txt`.
+- Column-name handling is case-insensitive in `load_camels_basin` (Daymet uses lowercase column headers like `prcp(mm/day)`, Maurer uses uppercase `PRCP(mm/day)`); the loader resolves both.
+- Required because the published SAC-SMA / VIC / FUSE / HBV / mHM benchmark NSE numbers we are aligning against were computed on Maurer (HydroShare README explicit). Switching to Daymet would break the head-to-head comparison.
+- **HPC pre-flight note:** `data/camels_us/basin_mean_forcing/maurer_extended/` must exist on the cluster. Local dev currently has only `maurer/` (without the extended-time-coverage variant); HPC must populate `maurer_extended/` before sbatch.
 
 ## 5. Models In Scope
 
@@ -69,18 +72,22 @@ Optimizer family (CMA-ES) and trial budget intentionally differ from Newman 2015
 ## 7. Metric
 
 - NSE per basin on the `evaluation` segment.
-- Median across all 531 basins; failed basins counted into the median (no silent drop), per `camels_us_531_published_target.md` §1.5.
+- Median **and mean** NSE across the basin set, per Kratzert 2019 Table 3.
+- Two basin sets are reported:
+  - **531 superset:** our full successful basin set (failed basins counted into median, no silent drop).
+  - **447 common subset (strict head-to-head):** intersection with the basins where all 5 published benchmark models report finite NSE; this is the basin set Kratzert 2019 Table 3 statistics use. The 447 list must be derived from the HydroShare benchmark NetCDF outputs before the final comparison table is built (see `camels_us_531_published_target.md` §5).
 - Auxiliary metrics (KGE, bias, peak bias, low-flow bias) are still computed and logged but are not the alignment-target metric.
 
 ## 8. Required Metadata Per Run
 
 Every chunk's metadata.json (written by the HPC runner) must include, at minimum:
 
-- `protocol`: `"camels_us_531_repro_v01"`
+- `protocol`: `"repro_v01"`
+- `protocol_version`: `"camels_us_531_repro_v01"`
 - `model`
-- `forcing`: `"daymet"`
-- `calibration_start` / `calibration_end`
-- `evaluation_start` / `evaluation_end`
+- `forcing`: `"maurer_extended"` (the runner derives this from the protocol when `--forcing` is not explicitly passed)
+- `calibration_start` / `calibration_end` (must be `1999-10-01` / `2008-09-30`)
+- `evaluation_start` / `evaluation_end` (must be `1989-10-01` / `1999-09-30`)
 - `trials`: actual value forwarded to the calibration call
 - `restarts`: actual value forwarded to the calibration call
 - `n_basins`, `n_executed`, `n_skipped_existing`
@@ -92,15 +99,16 @@ If any of these are missing or numerically inconsistent with the protocol consta
 
 `repro_v01` claims:
 
-- protocol-internal fairness across XAJ / HBV / GR4J (uniform restart budget)
+- protocol-internal fairness across XAJ / HBV / GR4J (uniform restart budget, same forcing, same calibration/evaluation windows)
 - two-segment calibration/evaluation semantics with no unused split
-- defensible "cross-study comparison" against the published 0.64 median NSE
+- alignment with the published CAMELS benchmark on the must-align dimensions (basin list, periods, forcing, metric)
+- defensible head-to-head comparison against the published SAC-SMA + Snow-17 ladder (median NSE 0.603, mean 0.564 on the 447 common subset) — once the 447-basin intersection is derived
 
 `repro_v01` does NOT claim:
 
-- bit-for-bit reproduction of Newman 2015 numbers
-- equivalence between PDD and Snow-17
-- equivalence between CMA-ES and SCE-UA
-- that strict head-to-head against the published SAC-SMA result is established
+- equivalence between PDD and Snow-17 (structural difference, disclosed)
+- equivalence between CMA-ES and SCE-UA (optimizer difference, disclosed)
+- alignment with Kratzert 2019 LSTM numbers (cross-study reference only — different model class)
+- that any single basin's NSE matches the published per-basin number bit-for-bit
 
 Allowed claim language remains as defined in `camels_us_531_published_target.md` §4.

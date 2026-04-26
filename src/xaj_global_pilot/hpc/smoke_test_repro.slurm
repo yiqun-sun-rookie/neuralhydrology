@@ -53,6 +53,7 @@ echo "[INFO] Job: $SLURM_JOB_ID, Node: $(hostname)"
 echo "[INFO] Python: $(python --version 2>&1)"
 echo "[INFO] Protocol: ${PROTOCOL}"
 echo "[INFO] Trials: ${TRIALS}, Restarts: ${RESTARTS}, Data: ${DATA_ROOT}"
+echo "[INFO] (Forcing is derived from --protocol; repro_v01 expects maurer_extended)"
 
 [ -d "$DATA_ROOT" ]   || { echo "[FATAL] Data not found: $DATA_ROOT";   exit 1; }
 [ -f "$CHUNK_FILE" ]  || { echo "[FATAL] Smoke chunk not found: $CHUNK_FILE"; exit 1; }
@@ -99,7 +100,14 @@ if m['protocol'] != '${PROTOCOL}':
     sys.exit(f'[FAIL] protocol mismatch: {m[\"protocol\"]}')
 if m['restarts'] != ${RESTARTS}:
     sys.exit(f'[FAIL] restarts mismatch: {m[\"restarts\"]}')
-print(f'[OK] protocol={m[\"protocol\"]} cal={m[\"calibration_start\"]}..{m[\"calibration_end\"]} '
+if m['forcing'] != 'maurer_extended':
+    sys.exit(f'[FAIL] forcing mismatch (expected maurer_extended for repro_v01): {m[\"forcing\"]}')
+if (m['calibration_start'], m['calibration_end']) != ('1999-10-01', '2008-09-30'):
+    sys.exit(f'[FAIL] calibration window: {m[\"calibration_start\"]}..{m[\"calibration_end\"]}')
+if (m['evaluation_start'], m['evaluation_end']) != ('1989-10-01', '1999-09-30'):
+    sys.exit(f'[FAIL] evaluation window: {m[\"evaluation_start\"]}..{m[\"evaluation_end\"]}')
+print(f'[OK] protocol={m[\"protocol\"]} forcing={m[\"forcing\"]} '
+      f'cal={m[\"calibration_start\"]}..{m[\"calibration_end\"]} '
       f'eval={m[\"evaluation_start\"]}..{m[\"evaluation_end\"]} trials={m[\"trials\"]} restarts={m[\"restarts\"]}')
 " || exit 1
 done
