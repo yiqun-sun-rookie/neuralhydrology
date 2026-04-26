@@ -56,8 +56,8 @@ echo "[INFO] Trials: ${TRIALS}, Restarts: ${RESTARTS}, Data: ${DATA_ROOT}"
 echo "[INFO] (Forcing is derived from --protocol; repro_v01 expects maurer_extended)"
 
 [ -d "$DATA_ROOT" ]   || { echo "[FATAL] Data not found: $DATA_ROOT";   exit 1; }
-[ -d "${DATA_ROOT}/basin_mean_forcing/maurer_extended" ] \
-    || { echo "[FATAL] Forcing dir missing: ${DATA_ROOT}/basin_mean_forcing/maurer_extended/ — populate before sbatch"; exit 1; }
+[ -d "${DATA_ROOT}/basin_mean_forcing/maurer" ] \
+    || { echo "[FATAL] Forcing dir missing: ${DATA_ROOT}/basin_mean_forcing/maurer/ — populate before sbatch"; exit 1; }
 [ -f "$CHUNK_FILE" ]  || { echo "[FATAL] Smoke chunk not found: $CHUNK_FILE"; exit 1; }
 
 python -c "from src.xaj_global_pilot.runner import run_single_model_basin; print('[INFO] Import OK')" \
@@ -102,8 +102,8 @@ if m['protocol'] != '${PROTOCOL}':
     sys.exit(f'[FAIL] protocol mismatch: {m[\"protocol\"]}')
 if m['restarts'] != ${RESTARTS}:
     sys.exit(f'[FAIL] restarts mismatch: {m[\"restarts\"]}')
-if m['forcing'] != 'maurer_extended':
-    sys.exit(f'[FAIL] forcing mismatch (expected maurer_extended for repro_v01): {m[\"forcing\"]}')
+if m['forcing'] != 'maurer':
+    sys.exit(f'[FAIL] forcing mismatch (expected maurer for repro_v01): {m[\"forcing\"]}')
 if (m['calibration_start'], m['calibration_end']) != ('1999-10-01', '2008-09-30'):
     sys.exit(f'[FAIL] calibration window: {m[\"calibration_start\"]}..{m[\"calibration_end\"]}')
 if (m['evaluation_start'], m['evaluation_end']) != ('1989-10-01', '1999-09-30'):

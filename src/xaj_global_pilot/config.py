@@ -60,16 +60,25 @@ TEST_END_DATE = "2005-09-30"
 #
 # Calibration: 1 Oct 1999 -> 30 Sep 2008  (9 water years)
 # Evaluation:  1 Oct 1989 -> 30 Sep 1999  (10 water years)
-# Forcing:     maurer_extended (NOT daymet)
+# Forcing:     maurer (NOT daymet; see note below on maurer vs maurer_extended)
 #
 # These are LOCKED per the alignment plan; do not change without re-anchoring
 # the comparison ladder in docs/technical/camels_us_531_published_target.md.
+#
+# Note on forcing choice. The published Kratzert 2019 ealstm repo reads from
+# `basin_mean_forcing/maurer_extended`, but `maurer_extended` is just the
+# Maurer et al. 2002 dataset extended in time to 2014; in the 1980-2008
+# overlap window (which fully covers BOTH our calibration and evaluation
+# segments) the data is byte-equivalent to `maurer`. We point at `maurer`
+# because it is what the project's local + HPC data tree actually has.
+# Override via the runner's `--forcing maurer_extended` if a future
+# environment ships only the extended subdir.
 # ---------------------------------------------------------------------------
 REPRO_CALIBRATION_START_DATE = "1999-10-01"
 REPRO_CALIBRATION_END_DATE = "2008-09-30"
 REPRO_EVALUATION_START_DATE = "1989-10-01"
 REPRO_EVALUATION_END_DATE = "1999-09-30"
-REPRO_FORCING = "maurer_extended"
+REPRO_FORCING = "maurer"
 
 # v02 forcing label (daymet) — keeps protocol-dispatch consistent and
 # documents that the exploratory baseline used a different forcing dataset.

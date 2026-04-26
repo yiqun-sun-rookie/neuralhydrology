@@ -60,9 +60,12 @@ class TestProtocolSegments(unittest.TestCase):
 class TestProtocolForcingAndDates(unittest.TestCase):
     """The aligned protocol must point at maurer_extended + Newman/Kratzert dates."""
 
-    def test_repro_forcing_is_maurer_extended(self):
-        # Aligning with the published CAMELS benchmark requires Maurer (extended).
-        self.assertEqual(REPRO_FORCING, 'maurer_extended')
+    def test_repro_forcing_is_maurer(self):
+        # The published CAMELS benchmark (HydroShare / Kratzert 2019) uses Maurer.
+        # We point at the `maurer` subdir; in 1980-2008 the data is byte-equivalent
+        # to `maurer_extended`, and `maurer` is the directory the local + HPC data
+        # tree actually ships.
+        self.assertEqual(REPRO_FORCING, 'maurer')
 
     def test_v02_forcing_is_daymet(self):
         self.assertEqual(V02_FORCING, 'daymet')

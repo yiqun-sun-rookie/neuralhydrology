@@ -41,14 +41,17 @@ These windows come from the published CAMELS benchmark on CUAHSI HydroShare (res
 
 Note: the calibration window (1999–2008) is LATER than the evaluation window (1989–1999). This reverse split-sample is deliberate in Kratzert 2019 — we preserve it because re-anchoring would break the published-benchmark comparison.
 
-## 4. Forcing — `maurer_extended` (LOCKED 2026-04-25)
+## 4. Forcing — Maurer (LOCKED 2026-04-25)
 
-- CAMELS-US `maurer_extended` (NOT `daymet`), loaded via `src.hydroagent.data_loading.load_camels_basin(forcing="maurer_extended")`.
-- Constant: `REPRO_FORCING = "maurer_extended"` in `config.py`.
-- File path: `data/camels_us/basin_mean_forcing/maurer_extended/<huc>/<basin>_lump_maurer_forcing_leap.txt`.
+- CAMELS-US `maurer` (NOT `daymet`), loaded via `src.hydroagent.data_loading.load_camels_basin(forcing="maurer")`.
+- Constant: `REPRO_FORCING = "maurer"` in `config.py`.
+- File path: `data/camels_us/basin_mean_forcing/maurer/<huc>/<basin>_lump_maurer_forcing_leap.txt`.
 - Column-name handling is case-insensitive in `load_camels_basin` (Daymet uses lowercase column headers like `prcp(mm/day)`, Maurer uses uppercase `PRCP(mm/day)`); the loader resolves both.
 - Required because the published SAC-SMA / VIC / FUSE / HBV / mHM benchmark NSE numbers we are aligning against were computed on Maurer (HydroShare README explicit). Switching to Daymet would break the head-to-head comparison.
-- **HPC pre-flight note:** `data/camels_us/basin_mean_forcing/maurer_extended/` must exist on the cluster. Local dev currently has only `maurer/` (without the extended-time-coverage variant); HPC must populate `maurer_extended/` before sbatch.
+
+**Note on `maurer` vs `maurer_extended`.** Kratzert 2019 ealstm code (`papercode/utils.py::load_forcing`) reads from `basin_mean_forcing/maurer_extended`. `maurer_extended` is the same Maurer et al. 2002 dataset extended in time to 2014. In the 1980-2008 overlap window — which fully covers BOTH our calibration (1999-2008) and evaluation (1989-1999) — the two subdirs are byte-equivalent. We point at `maurer` because the project's local + HPC data tree ships `maurer/` (verified locally: 1980-01-01 to 2008-12-31, 18 HUC subdirs). Override via `--forcing maurer_extended` if a future env ships only the extended variant.
+
+**HPC pre-flight:** `data/camels_us/basin_mean_forcing/maurer/` must exist with the 531-basin set. The smoke / full SLURM scripts assert this directory before launching.
 
 ## 5. Models In Scope
 

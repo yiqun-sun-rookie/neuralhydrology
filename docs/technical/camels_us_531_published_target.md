@@ -25,9 +25,10 @@
 - HydroShare README: "model outputs of the validation period (1 Oct 1989 until 30 Sep 1999) only".
 - `main.py` `GLOBAL_SETTINGS`: `val_start = "01101989"`, `val_end = "30091999"`.
 
-### 1.4 Forcing — `maurer_extended` (NOT Daymet)
+### 1.4 Forcing — Maurer (NOT Daymet)
 - HydroShare README: "the same forcing data (Maurer)".
-- `papercode/utils.py::load_forcing` reads from `basin_mean_forcing/maurer_extended`.
+- Kratzert 2019 `papercode/utils.py::load_forcing` reads from `basin_mean_forcing/maurer_extended`.
+- We point at `basin_mean_forcing/maurer`. `maurer_extended` is the same Maurer et al. 2002 data extended in time to 2014; in the 1980-2008 overlap window — which fully covers BOTH our calibration (1999-2008) and evaluation (1989-1999) segments — `maurer` and `maurer_extended` are byte-equivalent. We use `maurer` because it is what the local + HPC data tree actually has.
 - Daymet is the published *dataset* in Newman 2015 but the **published benchmark NSE numbers we are aligning against are computed on Maurer**.
 
 ### 1.5 Metric — NSE per basin, then median / mean over basins
