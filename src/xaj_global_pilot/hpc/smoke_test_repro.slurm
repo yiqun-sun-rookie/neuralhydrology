@@ -56,6 +56,8 @@ echo "[INFO] Trials: ${TRIALS}, Restarts: ${RESTARTS}, Data: ${DATA_ROOT}"
 echo "[INFO] (Forcing is derived from --protocol; repro_v01 expects maurer_extended)"
 
 [ -d "$DATA_ROOT" ]   || { echo "[FATAL] Data not found: $DATA_ROOT";   exit 1; }
+[ -d "${DATA_ROOT}/basin_mean_forcing/maurer_extended" ] \
+    || { echo "[FATAL] Forcing dir missing: ${DATA_ROOT}/basin_mean_forcing/maurer_extended/ — populate before sbatch"; exit 1; }
 [ -f "$CHUNK_FILE" ]  || { echo "[FATAL] Smoke chunk not found: $CHUNK_FILE"; exit 1; }
 
 python -c "from src.xaj_global_pilot.runner import run_single_model_basin; print('[INFO] Import OK')" \
