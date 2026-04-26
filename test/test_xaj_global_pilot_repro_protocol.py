@@ -36,12 +36,21 @@ from src.xaj_global_pilot.config import (
 
 # SuperflexEnv pulls in superflexpy; that dependency is bundled under
 # external/superflexpy on HPC but may be absent in local dev. Tests that
-# need it are skipped if the import fails.
+# need SuperflexEnv directly are skipped if the import fails. Runner
+# protocol-dispatch tests do NOT need SuperflexEnv (they mock _load_period)
+# and run unconditionally as long as hydroagent's package init does not
+# hard-fail on the missing dependency.
 try:
     from hydroagent.environment import SuperflexEnv  # noqa: F401
     _HAS_SUPERFLEX = True
 except Exception:  # ImportError, ModuleNotFoundError, or anything raised by environment.py imports
     _HAS_SUPERFLEX = False
+
+try:
+    from src.xaj_global_pilot.runner import run_single_model_basin  # noqa: F401
+    _RUNNER_IMPORTS = True
+except Exception:
+    _RUNNER_IMPORTS = False
 
 
 class TestProtocolSegments(unittest.TestCase):
@@ -77,9 +86,14 @@ class TestProtocolForcingAndDates(unittest.TestCase):
         self.assertEqual(periods['evaluation'], ('1989-10-01', '1999-09-30'))
 
 
-@unittest.skipUnless(_HAS_SUPERFLEX, 'runner imports SuperflexEnv; superflexpy not importable here')
+@unittest.skipUnless(_RUNNER_IMPORTS, 'runner module failed to import (e.g. superflexpy chain-import broke)')
 class TestRunnerProtocolDispatch(unittest.TestCase):
-    """Runner protocol dispatch — uses _load_period failure to short-circuit."""
+    """Runner protocol dispatch — uses _load_period failure to short-circuit.
+
+    Mocks `_load_period` to raise so we never actually touch CAMELS data;
+    the test just confirms the protocol dispatch table maps the right
+    period-label to v02 / repro_v01.
+    """
 
     def test_unknown_protocol_raises_value_error(self):
         from src.xaj_global_pilot.runner import run_single_model_basin
