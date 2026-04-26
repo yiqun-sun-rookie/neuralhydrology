@@ -6,7 +6,15 @@ import pandas as pd
 
 from neuralhydrology.datasetzoo.caravan import load_caravan_timeseries
 from src.hydroagent.data_loading import load_camels_basin
-from src.hydroagent.environment import SuperflexEnv
+# SuperflexEnv pulls in superflexpy, which is required for HBV / GR4J only.
+# Tolerate the import failure so xaj / xaj_pdd / xaj_smooth_et can still run
+# in superflexpy-less environments (e.g. local dev).
+try:
+    from src.hydroagent.environment import SuperflexEnv
+    _HAS_SUPERFLEXPY = True
+except (ImportError, ModuleNotFoundError):
+    SuperflexEnv = None  # type: ignore[assignment,misc]
+    _HAS_SUPERFLEXPY = False
 from src.xaj_global_pilot.config import (
     REPRO_FORCING,
     V02_FORCING,
@@ -205,6 +213,10 @@ def _extract_rain_pet(forcing: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
 # ---------------------------------------------------------------------------
 
 def _run_superflexpy(structure, train_forcing, train_obs, test_forcing, test_obs, calibration_trials, n_restarts):
+    if not _HAS_SUPERFLEXPY:
+        raise ImportError(
+            "superflexpy is required for HBV / GR4J runs but is not importable in this environment."
+        )
     calibration_env = _build_env(structure)
     if hasattr(calibration_env, "_calibrate_sfpy"):
         train_result = calibration_env._calibrate_sfpy(
@@ -220,7 +232,8 @@ def _run_superflexpy(structure, train_forcing, train_obs, test_forcing, test_obs
     return compute_metrics(test_obs, test_sim)
 
 
-def _build_env(structure: dict) -> SuperflexEnv:
+def _build_env(structure: dict):
+    """Construct a SuperflexEnv around `structure`. Requires superflexpy."""
     env = SuperflexEnv()
     env.parse_structure(structure)
     return env
