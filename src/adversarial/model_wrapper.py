@@ -40,6 +40,7 @@ class CudaLSTMWrapper(nn.Module):
         else:
             weight_file = self.run_dir / f"model_epoch{epoch:03d}.pt"
 
+        self.weight_file = weight_file
         state = torch.load(weight_file, map_location=self.device, weights_only=True)
         self.model.load_state_dict(state)
         self.model.eval()

@@ -172,6 +172,7 @@ def main():
     run_dir = _project_root / cfg["model"]["run_dir"]
     data_dir = _project_root / cfg["data"]["data_dir"] if cfg["data"].get("data_dir") else None
     device = cfg["model"]["device"]
+    epoch = cfg["model"].get("epoch")
 
     attacks_to_run = [args.attack] if args.attack else list(cfg["attacks"].keys())
     epsilons = [args.epsilon] if args.epsilon else cfg["epsilons"]
@@ -212,7 +213,7 @@ def main():
         results_file = output_dir / "results.json"
 
     logger.info("Loading CudaLSTM model...")
-    wrapper = CudaLSTMWrapper(run_dir=run_dir, device=device)
+    wrapper = CudaLSTMWrapper(run_dir=run_dir, device=device, epoch=epoch)
 
     # Pre-compute attack sweep parameters (shared across basins)
     attack_sweeps = {}

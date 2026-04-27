@@ -1,0 +1,32 @@
+model:
+  run_dir: "results/05_adversarial_robustness/runs/reproduce_531_nse074_2025_1129_2145_ep30"
+  device: "cuda:0"
+  epoch: 20
+
+data:
+  data_dir: "data/camels_us/full"
+  period: "test"
+  basins: []
+
+attacks:
+  auto_pgd:
+    n_iter: 50
+    n_restarts: 1
+  fgsm: {}
+  gaussian_noise: {}
+  multiplicative_bias: {}
+  temporal_correlated_noise: {}
+  causal_trigger:
+    pre_windows: [1, 3, 7, 14]
+    n_iter: 100
+  cw_regression:
+    n_iter: 200
+    target_nse: 0.0
+    lr: 0.01
+    binary_search_steps: 5
+
+epsilons: [0.01, 0.05, 0.1, 0.2]
+constraint_levels: ["lp"]
+targets: ["untargeted"]
+
+output_dir: "results/adversarial_eval/531_epoch020"
