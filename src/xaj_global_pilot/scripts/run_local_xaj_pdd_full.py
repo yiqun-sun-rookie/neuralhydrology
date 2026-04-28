@@ -181,11 +181,19 @@ def main(argv=None) -> int:
                   f"wall={elapsed/60:.1f}m ETA={eta_s/60:.0f}m",
                   flush=True)
 
-    # Final summary
-    df = pd.DataFrame(rows)
-    if not df.empty:
+    # Final summary — union everything that lives under model_dir, not just
+    # this batch. Otherwise a resume / repair run with --skip-existing would
+    # truncate the summary csv to just the few basins it executed.
+    all_files = sorted(model_dir.glob("*.csv"))
+    if all_files:
+        df = pd.concat(
+            [pd.read_csv(f, dtype={"basin_id": str}, keep_default_na=False) for f in all_files],
+            ignore_index=True,
+        )
         df["basin_id"] = df["basin_id"].astype(str).str.zfill(8)
         df = df.sort_values("basin_id").reset_index(drop=True)
+    else:
+        df = pd.DataFrame(rows)
     summary_csv = summary_dir / "xaj_pdd_local_full.csv"
     df.to_csv(summary_csv, index=False)
 
@@ -204,6 +212,7 @@ def main(argv=None) -> int:
         "n_basins_total": len(basins),
         "n_skipped_existing": skipped,
         "n_executed": len(todo),
+        "n_in_summary": len(df),
         "wall_clock_s": round(time.time() - t_start, 1),
         "data_root": args.data_root,
         "manifest": str(manifest),
@@ -216,11 +225,12 @@ def main(argv=None) -> int:
     success = df[df["run_status"] == "success"] if not df.empty else pd.DataFrame()
     failed = df[df["run_status"] == "failed"] if not df.empty else pd.DataFrame()
     print()
-    print(f"=== DONE - {len(success)} success / {len(failed)} failed (this batch) ===")
-    print(f"Wall: {(time.time() - t_start)/3600:.2f} h")
+    print(f"=== DONE - this batch executed {len(todo)} basins ===")
+    print(f"Wall (this batch): {(time.time() - t_start)/3600:.2f} h")
+    print(f"Summary spans     : {len(df)} basin rows ({len(success)} success / {len(failed)} failed total)")
     if not success.empty and pd.notna(success["nse"]).any():
         s = pd.to_numeric(success["nse"], errors="coerce").dropna()
-        print(f"NSE   median={s.median():.4f}  mean={s.mean():.4f}  n={len(s)}")
+        print(f"NSE (all in summary) median={s.median():.4f}  mean={s.mean():.4f}  n={len(s)}")
     print(f"Summary CSV : {summary_csv}")
     print(f"Metadata    : {summary_dir / 'xaj_pdd_local_full.metadata.json'}")
     return 0
