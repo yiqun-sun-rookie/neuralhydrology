@@ -91,6 +91,17 @@ def load_camels_basin(
         f'{basin_id}_lump_{marker}_forcing_leap.txt'
     )
     df_forcing = pd.read_csv(forcing_path, skiprows=3, sep=r'\s+')
+    # A small number of CAMELS-US maurer files have a defective header line
+    # missing the leading Year/Mnth/Day/Hr column names (data rows still
+    # contain those columns). Detect and patch by re-reading with
+    # header=None and prepending the four missing date columns.
+    if 'Year' not in df_forcing.columns:
+        df_forcing = pd.read_csv(forcing_path, skiprows=4, sep=r'\s+', header=None)
+        with open(forcing_path, 'r', encoding='utf-8') as fh:
+            for _ in range(3):
+                fh.readline()
+            var_names = fh.readline().strip().split()
+        df_forcing.columns = ['Year', 'Mnth', 'Day', 'Hr'] + var_names
     df_forcing['date'] = pd.to_datetime(
         df_forcing[['Year', 'Mnth', 'Day']].rename(
             columns={'Year': 'year', 'Mnth': 'month', 'Day': 'day'}
