@@ -38,11 +38,11 @@ Long Short-Term Memory (LSTM) networks have transformed hydrological prediction 
 
 As deployment moves forward, a fundamental question demands attention: how reliable are these models when confronted with imperfect input data? In practice, meteorological forcings are never exactly known. Rain gauge measurements carry systematic biases of 5--15\% \cite{Sevruk1982, Groisman1994}. Gridded products such as Daymet, ERA5, and CHIRPS introduce additional uncertainty through spatial interpolation, with temperature errors of 1--2~$^\circ$C and precipitation errors that can exceed 2~mm/day in complex terrain \cite{Thornton2021, Hersbach2020}. If model predictions are highly sensitive to such perturbations, then predictive accuracy on clean benchmarks may overstate operational reliability.
 
-The conventional approach to testing input sensitivity, adding random Gaussian noise, provides a measure of average-case robustness. However, random perturbations explore the input space isotropically and are unlikely to find the directions of maximum sensitivity. Adversarial robustness analysis, borrowed from the machine-learning security literature \cite{Goodfellow2015, Madry2018}, offers a more systematic alternative: by using gradient information to identify the input perturbation that maximizes prediction error within a given budget, adversarial methods provide a lower bound on worst-case performance. In this study, such perturbations are not treated as literal samples from the empirical forcing-error distribution. Instead, they are used as constrained stress tests to determine whether harmful error patterns exist within plausible uncertainty budgets.
+The conventional approach to testing input sensitivity, adding random Gaussian noise to the forcings, provides a measure of average-case robustness. However, random perturbations distribute their probe equally in all directions and are unlikely to land on the particular forcing-error pattern to which the trained model is most sensitive. Adversarial robustness analysis, borrowed from the machine-learning security literature \cite{Goodfellow2015, Madry2018}, offers a more systematic alternative: it uses gradient information from the trained model itself to identify, within a given uncertainty budget, the forcing perturbation that would most damage the streamflow prediction, and so provides a lower bound on worst-case performance. In this study, such perturbations are not treated as literal samples from the empirical forcing-error distribution. They are constrained stress tests that ask whether harmful error patterns exist at all within plausible uncertainty budgets, not whether such patterns dominate observed forcing errors.
 
 \citeA{Yang2026} applied adversarial robustness analysis to hydrological models using the Fast Gradient Sign Method (FGSM; \citeNP{Goodfellow2015}), evaluating LSTM and HBV models across 1,347 German catchments from the CAMELS-DE dataset. Their findings were encouraging: LSTMs demonstrated greater robustness than HBV models, catastrophic failure was rare, and model responses scaled approximately linearly with perturbation magnitude.
 
-However, FGSM is a single-step attack that computes the perturbation direction from a single gradient evaluation and takes a maximally sized step in the sign direction. While computationally efficient, it is well established in the adversarial machine-learning literature that single-step methods systematically overestimate model robustness. Iterative methods such as Projected Gradient Descent (PGD; \citeNP{Madry2018}) and Auto-PGD \cite{Croce2020} refine the perturbation over multiple optimization steps, consistently finding more effective adversarial examples. The gap between single-step and iterative attacks is not merely quantitative; it can qualitatively change conclusions about whether a model is ``robust'' or ``vulnerable'' \cite{Carlini2019}. \citeA{Yang2026} themselves acknowledged this limitation, noting the need for ``additional test scenarios and perturbation methods.''
+However, FGSM is a single-step attack: it evaluates the model's gradient once at the clean forcing and takes one maximum-sized push along the resulting sign direction. While computationally efficient, single-step methods are known in the adversarial machine-learning literature to systematically overestimate model robustness, because they implicitly linearize the model's response to forcing perturbations around the clean operating point. Iterative methods such as Projected Gradient Descent (PGD; \citeNP{Madry2018}) and Auto-PGD \cite{Croce2020} refine the perturbation over many smaller steps and so capture the nonlinearities in the model's response, consistently finding more harmful forcing patterns than single-step probes. The gap between single-step and iterative methods is not merely quantitative; it can qualitatively change conclusions about whether a model is ``robust'' or ``vulnerable'' \cite{Carlini2019}. \citeA{Yang2026} themselves acknowledged this limitation, noting the need for ``additional test scenarios and perturbation methods.''
 
 This raises a fundamental question: \textbf{how fragile is a standard LSTM rainfall-runoff configuration when subjected to systematic, multi-level adversarial stress testing?}
 
@@ -62,9 +62,9 @@ The target model is a local reproduction of the Kratzert et al.\ 531-basin tempo
 
 \subsection{Perturbation Methods}
 
-We employ five perturbation methods that span a spectrum of increasing optimization strength (Table~\ref{tab:methods}). All methods operate on the standardized (zero-mean, unit-variance) input tensor and are constrained to an $L_\infty$ ball of radius $\varepsilon$ around the clean input.
+We employ five perturbation methods that span a spectrum of increasing optimization strength (Table~\ref{tab:methods}). All methods operate on the standardized forcing time series (each variable rescaled to zero mean and unit variance over the training period). The perturbation budget $\varepsilon$ is the maximum amount, in those standardized units, by which any single timestep of any forcing variable may be shifted relative to its clean value; Table~\ref{tab:epsilon} translates $\varepsilon$ back into physical units such as mm/day and $^\circ$C.
 
-This design should be interpreted diagnostically rather than predictively. The random and adversarial perturbations in this study do not claim to reproduce how operational forcing errors are most likely to occur. Instead, they ask whether, within a specified uncertainty budget and plausibility constraints, there exist structured input errors that can materially degrade model performance.
+This design should be interpreted diagnostically rather than predictively. The random and adversarial perturbations here do not claim to reproduce how operational forcing errors are most likely to occur. They ask, instead, whether---within a specified uncertainty budget and plausibility constraints---structured input errors can be \emph{constructed} that materially degrade model performance. Their role is therefore analogous to that of a stress test on a hydraulic structure: they certify the absence of harmful failure modes within a budget, rather than predict the typical loading.
 
 \begin{table}[ht]
 \caption{Perturbation methods used in this study, ordered by optimization strength.}
@@ -88,40 +88,43 @@ Causal trigger & Temporally constr. & Iterative & 100 & Pre-event vulnerability 
 
 \subsubsection{Random Noise Baselines}
 
-Three random perturbation methods serve as baselines: (1)~\textit{Gaussian noise}, independent samples from $\mathcal{N}(0,\varepsilon^2)$ clipped to $[-\varepsilon,\varepsilon]$; (2)~\textit{Multiplicative bias}, each feature scaled by a random factor from $\mathcal{U}(1-\varepsilon,1+\varepsilon)$; and (3)~\textit{Temporally correlated noise}, an AR(1) process with lag-1 autocorrelation of 0.7, scaled to respect the $\varepsilon$ bound. These methods use no gradient information and provide the average-case robustness baseline.
+Three random perturbation methods serve as baselines, each representing an idealized form of forcing error. \textit{Gaussian noise} draws independent samples from $\mathcal{N}(0,\varepsilon^2)$ clipped to $[-\varepsilon,\varepsilon]$ and represents white sensor noise that varies independently from one timestep and variable to the next. \textit{Multiplicative bias} scales each feature by a random factor drawn from $\mathcal{U}(1-\varepsilon,1+\varepsilon)$ and represents persistent calibration error, such as a miscalibrated rain gauge or radiation sensor whose reading is uniformly off by a small fraction throughout the period. \textit{Temporally correlated noise} draws from an AR(1) process with lag-1 autocorrelation of 0.7, rescaled to respect the $\varepsilon$ bound, and represents errors that propagate across consecutive days---for example, a gridded forcing product that systematically misrepresents the same weather system over its lifetime. None of the three uses gradient information from the model; together they characterize the average-case sensitivity of the trained model to perturbations of the corresponding statistical structure.
 
 \subsubsection{FGSM (Single-Step Adversarial)}
 
-The Fast Gradient Sign Method computes the gradient of the loss with respect to the input and takes a single step of size $\varepsilon$ in the sign direction:
+The Fast Gradient Sign Method asks a single question: ``in which direction would each component of the forcing tensor have to move to make the predicted streamflow worse, if I am only allowed one shot of size $\varepsilon$?'' Backpropagation through the trained model returns, at every timestep and for every input variable, the partial derivative of the loss with respect to that input value. The sign of this derivative indicates whether nudging the value upward or downward worsens the prediction; FGSM applies a single push of magnitude $\varepsilon$ in the unfavorable direction at every component simultaneously,
 \begin{equation}
-\mathbf{x}_{\mathrm{adv}} = \mathbf{x} + \varepsilon \cdot \mathrm{sign}\!\left(\nabla_{\mathbf{x}} \mathcal{L}(f(\mathbf{x}), \mathbf{y})\right)
+\mathbf{x}_{\mathrm{adv}} = \mathbf{x} + \varepsilon \cdot \mathrm{sign}\!\left(\nabla_{\mathbf{x}} \mathcal{L}(f(\mathbf{x}), \mathbf{y})\right),
 \end{equation}
-where $\mathcal{L}$ is the negative NSE loss, $f$ is the model, and $\mathbf{y}$ is the observed streamflow.
+where $\mathcal{L}$ is the negative NSE loss, $f$ is the trained model, and $\mathbf{y}$ is the observed streamflow. FGSM is the cheapest possible gradient-based attack---one forward pass to evaluate the loss and one backward pass to obtain the gradient---and yields a deterministic perturbation per input sequence. In hydrological terms, FGSM constructs the worst forcing-error pattern that a linear model would predict at the clean operating point.
 
 \subsubsection{Auto-PGD (Iterative Adversarial)}
 
-Auto-PGD \cite{Croce2020} iteratively refines the perturbation:
+FGSM implicitly linearizes the model around the clean forcing. For small budgets this linearization is accurate, and a single sign step nearly saturates the achievable damage; for larger budgets the model's response to forcing perturbations curves away from the linear approximation within the $\varepsilon$ neighborhood, and the worst direction picked at the clean input is no longer the worst direction within the budget. Auto-PGD \cite{Croce2020} addresses this by iterating: rather than one step of size $\varepsilon$, it takes many smaller steps, recomputes the gradient at each new candidate forcing tensor, and projects the result back into the budget whenever a component would otherwise leave it:
 \begin{equation}
-\mathbf{x}_{t+1} = \Pi_{\mathcal{B}(\mathbf{x}, \varepsilon)} \left[ \mathbf{x}_{t} + \alpha_t \cdot \mathrm{sign}\!\left(\nabla_{\mathbf{x}} \mathcal{L}(f(\mathbf{x}_{t}), \mathbf{y})\right) \right]
+\mathbf{x}_{t+1} = \Pi_{\mathcal{B}(\mathbf{x}, \varepsilon)} \left[ \mathbf{x}_{t} + \alpha_t \cdot \mathrm{sign}\!\left(\nabla_{\mathbf{x}} \mathcal{L}(f(\mathbf{x}_{t}), \mathbf{y})\right) \right].
 \end{equation}
-where $\Pi$ denotes projection onto the $\varepsilon$-ball and $\alpha_t$ is an adaptive step size. We use 50 iterations with 1 restart.
+Here $\Pi_{\mathcal{B}(\mathbf{x},\varepsilon)}$ denotes projection onto the $\varepsilon$-ball around the clean input---operationally, clipping any timestep/variable component that would exceed the budget back to the boundary---and $\alpha_t$ is an adaptive step size that starts at a fraction of $\varepsilon$ and shrinks as the attack converges. We use 50 iterations and one restart from a random initialization within the $\varepsilon$-ball; the restart protects against poor local optima at modest additional cost. In hydrological terms, Auto-PGD constructs the worst forcing-error pattern that the actual nonlinear model can be coaxed into producing within the uncertainty budget, rather than the worst pattern that a linearization of the model would predict.
 
 \subsubsection{C\&W Regression Attack}
 
-The Carlini-Wagner attack \cite{Carlini2017}, adapted for regression, searches for the minimum $L_2$ perturbation that degrades NSE below a target threshold (NSE $< 0$). We use 200 iterations with binary search over the regularization parameter (5 steps, learning rate 0.01).
+FGSM and Auto-PGD ask: ``how much can the model fail under a fixed perturbation budget?'' The Carlini-Wagner (C\&W) attack \cite{Carlini2017}, adapted here for regression, asks the dual question: ``what is the smallest forcing perturbation that suffices to push the model below an acceptable performance threshold?'' This shifts the analysis from an attack-magnitude axis to a per-catchment safety-margin axis. A catchment that requires a large $L_2$ perturbation before its NSE drops below zero has a comfortable margin against forcing error of any structure; a catchment that can be broken by a tiny $L_2$ perturbation is operationally fragile.
+
+We minimize $\|\boldsymbol{\delta}\|_2$ subject to $\mathrm{NSE}\bigl(f(\mathbf{x}+\boldsymbol{\delta}),\mathbf{y}\bigr) < 0$ using a Lagrangian relaxation with a weight that trades perturbation size against constraint satisfaction, solved by 200 iterations of gradient descent and a 5-step binary search over the weight (learning rate 0.01). The output is, for each catchment, the smallest $L_2$ forcing perturbation in standardized units that drives the test-period NSE below zero.
 
 \subsubsection{Causal Trigger Attack}
 
-The causal trigger attack restricts perturbations to a temporal window preceding flood peak events, identified as local maxima exceeding the 90th percentile of observed discharge. We test pre-event windows of 1, 3, 7, and 14 days with iterative optimization (100 steps).
+The causal trigger attack isolates a hydrologically motivated question: of the damage achievable under unrestricted iterative attack, how much can a perturbation extract while confining itself to the period most relevant for flood early warning? Operationally, the days immediately preceding a flood peak are when forecast skill matters most and when input data are most often degraded by sensor failure or telemetry latency. We identify flood peaks as local maxima of observed discharge that exceed the 90th percentile of the test-period flow, and restrict perturbations to a temporal window of 1, 3, 7, or 14 days before each identified peak. Within the window, perturbations are optimized iteratively for 100 steps using the same gradient-projection scheme as Auto-PGD; outside the window, the forcing remains clean. Comparing the four window lengths quantifies how much of the catchment's vulnerability is concentrated in the immediate pre-event period.
 
 \subsection{Constraint Hierarchy}
 
-To control perturbation plausibility, we define three levels of increasingly restrictive constraints:
-\begin{enumerate}
-\item \textbf{$L_p$ constraint}: perturbations bounded by $\|\boldsymbol{\delta}\|_\infty \leq \varepsilon$.
-\item \textbf{Physical constraint}: precipitation clipped to non-negative values and temperatures constrained to climatologically reasonable ranges, following \citeA{Yang2026}.
-\item \textbf{Statistical constraint}: perturbations preserve the mean and standard deviation of each input feature over the evaluation period, representing data that passes standard quality-control checks.
-\end{enumerate}
+The same $\varepsilon$ budget can describe forcing-error patterns of very different physical realism. To make this explicit, we evaluate Auto-PGD under three nested constraints, ordered from the most permissive to the most restrictive.
+
+The first level, the \textit{magnitude constraint}, only requires that no single timestep--variable component be perturbed by more than $\varepsilon$ in standardized units. This is the default constraint used throughout the perturbation literature; it admits forcing patterns that may be physically implausible (negative precipitation, unrealistically extreme temperatures) so long as each individual deviation stays within the budget.
+
+The second level, the \textit{physical constraint}, additionally clips precipitation to non-negative values and constrains temperatures to climatologically reasonable ranges, following \citeA{Yang2026}. This rules out patently unphysical forcing patterns while leaving the magnitude budget unchanged.
+
+The third level, the \textit{statistical constraint}, additionally requires the perturbed forcing series to preserve, for each variable, the same mean and standard deviation as the clean series over the evaluation period. This is intended as a proxy for input data that has already passed routine quality-control checks comparing summary statistics to climatology: any QC pipeline based on per-variable means and standard deviations would, by construction, fail to flag perturbations satisfying this constraint.
 
 \subsection{Mapping $\varepsilon$ to Physical Units}
 
@@ -147,22 +150,15 @@ Vap.\ pres.\ (Pa) & 652.05 & $\pm$32.6 & $\pm$65.2 & $\pm$130 & Hygrometer: 20--
 
 \subsection{Evaluation Metrics}
 
-Our primary robustness metric is $\Delta$NSE $=$ NSE$_{\mathrm{adv}} -$ NSE$_{\mathrm{clean}}$, where negative values indicate degradation. We report medians and interquartile ranges (IQR) across catchments because the distribution is heavy-tailed. Supplementary metrics include $\Delta$KGE, peak error, and a Kolmogorov-Smirnov (KS) test $p$-value measuring perturbation detectability.
+Our primary robustness metric is $\Delta$NSE $=$ NSE$_{\mathrm{adv}} -$ NSE$_{\mathrm{clean}}$, where negative values indicate degradation caused by the perturbation. Because the per-basin distribution of $\Delta$NSE is heavy-tailed toward harm, we report medians and interquartile ranges across catchments rather than means. Supplementary metrics include $\Delta$KGE, peak-flow error, and a Kolmogorov--Smirnov (KS) two-sample $p$-value comparing the clean and perturbed marginal distributions of each forcing variable, used as a measure of how statistically detectable the perturbation would be under a routine distributional QC check.
 
-All adversarial experiment blocks cover the 531 benchmark basin IDs. NSE is undefined for near-constant observed-flow windows, so NSE-based medians and IQRs are computed over the 514 basins with finite NSE and $\Delta$NSE values. The 17 non-finite cases have complete raw streamflow and forcing data but do not satisfy the evaluation-window variance requirement used to avoid degenerate NSE calculations.
+All adversarial experiment blocks cover the same 531 benchmark basin IDs. The Nash--Sutcliffe Efficiency is, by construction, undefined when the observed-streamflow variance in an evaluation window is near zero, because NSE divides by that variance; 17 of the 531 basins fall into this degenerate regime in the test period and yield non-finite NSE and $\Delta$NSE values. The raw streamflow and forcing data for these basins are complete; the metric simply cannot be computed stably on their evaluation windows. NSE-based headline statistics are therefore reported over the 514 basins with finite NSE and $\Delta$NSE, while basin-coverage statements retain the full 531 wherever experiment provenance is documented.
 
 \subsection{Experimental Design}
 
-We organize experiments into five blocks:
-\begin{enumerate}
-\item \textbf{Attack comparison}: five methods $\times$ four $\varepsilon$ values $\{0.01, 0.05, 0.1, 0.2\}$, $L_p$ constraint, untargeted, 531 basin IDs.
-\item \textbf{Constraint ablation}: Auto-PGD $\times$ three constraints $\times$ three $\varepsilon$ values $\{0.05, 0.1, 0.2\}$, 531 basin IDs.
-\item \textbf{Targeted attacks}: Auto-PGD $\times$ three targets $\{$untargeted, flood, low-flow$\}$ at $\varepsilon = 0.1$, 531 basin IDs.
-\item \textbf{Causal trigger}: four pre-event windows at $\varepsilon = 0.1$, 531 basin IDs.
-\item \textbf{C\&W minimum perturbation}: 531 basin IDs.
-\end{enumerate}
+Experiments are organized into five blocks, each addressing a distinct robustness question across all 531 benchmark basins. The \textit{attack-comparison} block applies the five perturbation methods of Section~2.2 at four budget levels ($\varepsilon \in \{0.01, 0.05, 0.1, 0.2\}$) under the magnitude constraint and an untargeted loss that aggregates over all timesteps; this block isolates the effect of attack method choice. The \textit{constraint-ablation} block holds the attack fixed at Auto-PGD and varies the constraint level (magnitude, physical, statistical) across three budgets ($\varepsilon \in \{0.05, 0.1, 0.2\}$) to isolate how plausibility constraints reduce achievable damage. The \textit{targeted-attack} block applies Auto-PGD at $\varepsilon = 0.1$ under three loss targets: an untargeted aggregate loss, a flood-targeted loss that concentrates the optimization on high-flow periods, and a low-flow-targeted loss that concentrates on dry periods, allowing a direct comparison of high-flow versus low-flow vulnerability. The \textit{causal-trigger} block restricts perturbations to pre-flood windows of 1, 3, 7, and 14 days at $\varepsilon = 0.1$ to quantify how much vulnerability is concentrated in the operational forecasting window. Finally, the \textit{minimum-perturbation} block runs the C\&W attack on each basin to estimate per-basin safety margins.
 
-All experiments were executed as chunked GPU jobs and written to an isolated 531 output tree. Results were merged and deduplicated, yielding 17,523 individual experiment records across 531 unique basin IDs.
+All experiments were executed as chunked GPU jobs and written to an isolated 531-basin output tree. Results were merged and deduplicated, yielding 17{,}523 individual experiment records across 531 unique basin IDs.
 
 %% ====================================================================
 \section{Results}
@@ -170,10 +166,10 @@ All experiments were executed as chunked GPU jobs and written to an isolated 531
 
 \subsection{Attack-Method Comparison and Vulnerability Distribution}
 
-Table~\ref{tab:attack} reports median $\Delta$NSE across the 514 finite basin metrics for each attack method at four perturbation budgets. Three observations structure the rest of this subsection: (i)~the dominant gap is between gradient-based and gradient-free methods, not between iterative and single-step adversarial attacks; (ii)~the gap between FGSM and Auto-PGD grows monotonically with $\varepsilon$; and (iii)~the underlying $\Delta$NSE distribution is heavy-tailed, with the at-risk tail also widening with $\varepsilon$.
+Table~\ref{tab:attack} reports median $\Delta$NSE across the 514 finite basin metrics for each attack method at four perturbation budgets. Three observations structure the rest of this subsection: (i)~the dominant gap is between methods that exploit the trained model's gradient (FGSM, Auto-PGD) and methods that perturb the forcing without consulting the model (the three random baselines), not between iterative and single-step gradient methods; (ii)~the gap between single-step FGSM and iterative Auto-PGD grows monotonically with $\varepsilon$; and (iii)~the underlying $\Delta$NSE distribution is heavy-tailed, with the at-risk tail also widening with $\varepsilon$.
 
 \begin{table*}[ht]
-\caption{Median $\Delta$NSE [Q25, Q75] across finite basin metrics for each attack method ($L_p$ constraint, untargeted). All rows cover 531 basin IDs; $N=514$ denotes basins with finite NSE and $\Delta$NSE.}
+\caption{Median $\Delta$NSE [Q25, Q75] across finite basin metrics for each attack method (magnitude constraint, untargeted). All rows cover 531 basin IDs; $N=514$ denotes basins with finite NSE and $\Delta$NSE.}
 \label{tab:attack}
 \centering
 \small
@@ -202,7 +198,7 @@ APGD/Gauss & & 13.0$\times$ & 15.6$\times$ & 17.5$\times$ & 21.6$\times$ \\
 
 At $\varepsilon = 0.1$, the median $\Delta$NSE under Auto-PGD is $-0.408$, compared to $-0.358$ for FGSM and $-0.023$ for Gaussian noise. All three random baselines cluster within a narrow band around $-0.02$ regardless of their temporal structure (Gaussian $-0.023$, multiplicative bias $-0.015$, temporally correlated noise $-0.016$), confirming that the dominant factor distinguishing methods is the use of gradient information rather than the temporal correlation of the perturbation. The Auto-PGD-to-Gaussian ratio at $\varepsilon = 0.1$ is 17.5$\times$, more than an order of magnitude larger than the Auto-PGD-to-FGSM ratio of 1.14$\times$.
 
-The Auto-PGD-to-FGSM ratio grows monotonically with $\varepsilon$: 1.00$\times$ at $\varepsilon = 0.01$, 1.06$\times$ at $\varepsilon = 0.05$, 1.14$\times$ at $\varepsilon = 0.1$, and 1.41$\times$ at $\varepsilon = 0.2$ (Figure~\ref{fig:epsilon}). At small budgets the loss surface within the $\varepsilon$-ball is approximately linear, so a single gradient step nearly saturates the achievable damage; at larger budgets the local linear approximation breaks down and iterative refinement uncovers worse perturbations. The Auto-PGD-to-Gaussian ratio also grows with $\varepsilon$ (13.0$\times$, 15.6$\times$, 17.5$\times$, 21.6$\times$), so random-noise sensitivity analysis underestimates worst-case vulnerability most severely at the perturbation budgets that matter most for stress testing.
+The Auto-PGD-to-FGSM ratio grows monotonically with $\varepsilon$: 1.00$\times$ at $\varepsilon = 0.01$, 1.06$\times$ at $\varepsilon = 0.05$, 1.14$\times$ at $\varepsilon = 0.1$, and 1.41$\times$ at $\varepsilon = 0.2$ (Figure~\ref{fig:epsilon}). At small budgets the model's response to forcing perturbations is approximately linear within the $\varepsilon$ neighborhood, so a single gradient step nearly saturates the achievable damage; at larger budgets the model's response curves away from this linear approximation, and iterative refinement uncovers worse forcing-error patterns that the single-step probe cannot reach. The Auto-PGD-to-Gaussian ratio also grows with $\varepsilon$ (13.0$\times$, 15.6$\times$, 17.5$\times$, 21.6$\times$), so random-noise sensitivity analysis underestimates worst-case vulnerability most severely at the perturbation budgets that matter most for stress testing.
 
 \subsubsection{Distribution-Level View at $\varepsilon = 0.1$}
 
@@ -219,9 +215,9 @@ The size of this tail differs sharply across attack types. The fraction of basin
 
 \subsection{Statistically Undetectable Perturbations Remain Effective}
 
-Table~\ref{tab:constraint} presents the constraint-ablation results for Auto-PGD under three plausibility levels. Physical constraints (clipping precipitation to non-negative values and bounding temperatures to climatologically reasonable ranges) reduce median degradation by only 9\% relative to the $L_p$ baseline at $\varepsilon = 0.1$ (from $-0.408$ to $-0.370$), indicating that the most effective adversarial perturbations are often already physically plausible without explicit enforcement: the gradient direction does not require non-physical inputs to inflict near-worst-case damage.
+Table~\ref{tab:constraint} presents the constraint-ablation results for Auto-PGD under the three plausibility levels. The physical constraint (clipping precipitation to non-negative values and bounding temperatures to climatologically reasonable ranges) reduces median degradation by only 9\% relative to the magnitude-only baseline at $\varepsilon = 0.1$ (from $-0.408$ to $-0.370$), indicating that the most damaging adversarial forcing patterns are often already physically plausible without explicit enforcement: forcing the model into worst-case behavior does not require negative precipitation or unrealistic temperatures.
 
-Statistical constraints, which require the perturbed inputs to preserve the per-feature mean and standard deviation over the evaluation period, reduce median degradation by 53\% (to $-0.193$ at $\varepsilon = 0.1$). The reduction is larger than under physical constraints because preserving moments removes degrees of freedom along which the gradient most aggressively pushes the inputs, in particular the systematic shifts that bias the model's recurrent state.
+The statistical constraint, which additionally requires the perturbed forcing to preserve the per-variable mean and standard deviation of the clean series, reduces median degradation by 53\% (to $-0.193$ at $\varepsilon = 0.1$). The larger reduction is intuitive: pinning the moments removes precisely the systematic shifts that adversarial perturbations would otherwise use to bias the LSTM's recurrent state.
 
 \begin{table*}[ht]
 \caption{Constraint ablation results for Auto-PGD (untargeted). Values are median (mean) $\Delta$NSE over the 514 finite basin metrics.}
@@ -232,21 +228,21 @@ Statistical constraints, which require the perturbed inputs to preserve the per-
 \toprule
 Constraint & $N$ & $\varepsilon{=}0.05$ & $\varepsilon{=}0.1$ & $\varepsilon{=}0.2$ \\
 \midrule
-$L_p$ & 514 & $-$0.163 ($-$0.278) & $-$0.408 ($-$0.713) & $-$1.162 ($-$2.169) \\
+Magnitude & 514 & $-$0.163 ($-$0.278) & $-$0.408 ($-$0.713) & $-$1.162 ($-$2.169) \\
 Physical & 514 & $-$0.148 ($-$0.226) & $-$0.370 ($-$0.622) & $-$1.083 ($-$1.991) \\
 Statistical & 514 & $-$0.083 ($-$0.113) & $-$0.193 ($-$0.258) & $-$0.459 ($-$0.633) \\
 \bottomrule
 \end{tabular}
 \end{table*}
 
-Crucially, the residual degradation under statistical constraints is operationally significant and grows with $\varepsilon$: from $-0.083$ at $\varepsilon = 0.05$ to $-0.193$ at $\varepsilon = 0.1$ to $-0.459$ at $\varepsilon = 0.2$. The ratio of statistical-constraint to $L_p$ degradation stays near $0.4$--$0.5$ across budgets, so moment-preserving perturbations recover roughly half of the unconstrained adversarial damage at every scale. The practical implication is direct: input data that passes standard quality-control checks by preserving feature-level means and standard deviations can still contain structured errors that substantially degrade model performance, and routine moment-based QC cannot rule out the existence of harmful input-error patterns within an observation-error-scale budget.
+Crucially, the residual degradation under the statistical constraint is operationally significant and grows with $\varepsilon$: from $-0.083$ at $\varepsilon = 0.05$ to $-0.193$ at $\varepsilon = 0.1$ to $-0.459$ at $\varepsilon = 0.2$. The ratio of statistical-constraint to magnitude-only degradation stays near $0.4$--$0.5$ across budgets, so moment-preserving perturbations recover roughly half of the unconstrained adversarial damage at every scale. The practical implication is direct: forcing data that passes routine QC by reproducing the climatological mean and standard deviation of each variable can still contain structured errors that substantially degrade model performance, and moment-based QC alone cannot rule out the existence of harmful forcing-error patterns within an observation-error-scale budget.
 
 \subsection{Targeted Attacks and Pre-Event Vulnerability}
 
 Table~\ref{tab:targeted} presents the results of targeted attacks. Flood-targeted attacks produce degradation comparable to, though slightly less than, untargeted attacks, while low-flow-targeted attacks are much weaker. The flood/low-flow contrast is approximately 16:1 by median $\Delta$NSE, indicating that vulnerability is concentrated in high-flow regimes.
 
 \begin{table*}[ht]
-\caption{Targeted attack results (Auto-PGD, $\varepsilon = 0.1$, $L_p$). Median [Q25, Q75] across finite basin metrics. $\Delta$NSE uses $N=514$; $\Delta$KGE uses all 531 basin IDs.}
+\caption{Targeted attack results (Auto-PGD, $\varepsilon = 0.1$, magnitude constraint). Median [Q25, Q75] across finite basin metrics. $\Delta$NSE uses $N=514$; $\Delta$KGE uses all 531 basin IDs.}
 \label{tab:targeted}
 \centering
 \small
@@ -292,7 +288,7 @@ Detectability is assessed by computing a Kolmogorov--Smirnov (KS) two-sample tes
 \label{fig:detect}
 \end{figure}
 
-Combining the two analyses, harmful perturbations exist whose $L_2$ magnitude is on the order of one standardized unit and whose marginal distributions remain statistically indistinguishable from the clean inputs. This is the worst case for input-side defenses based on summary-statistic monitoring and motivates the use of model-side detection or adversarial training rather than purely input-distribution checks.
+Combining the two analyses, harmful perturbations exist whose $L_2$ magnitude is on the order of one standardized unit and whose marginal distributions remain statistically indistinguishable from the clean forcings. This is the worst case for any QC strategy that monitors only the forcing data, because both the magnitude and the marginal-distribution signatures of these perturbations fall within the range that routine input checks would consider acceptable. Detecting them would require diagnostics that consult the trained model itself---for example, residual checks on the predicted streamflow against an independent reference, or training-time defenses such as adversarial training---rather than forcing-side distribution tests alone.
 
 %% ====================================================================
 \section{Discussion}
@@ -308,11 +304,11 @@ The methodological complement is consistent with the broader adversarial machine
 
 \subsection{Mechanisms Underlying the Attack-Method Hierarchy}
 
-The hierarchy among the five methods at $\varepsilon = 0.1$---Auto-PGD followed by FGSM, with the three random baselines clustered near zero---admits a unified explanation. Random methods explore the input space isotropically and are exponentially unlikely to align with the directions of maximum sensitivity in the high-dimensional standardized input tensor. FGSM uses the local gradient at the clean input but takes a single step, so in regions where the loss surface has curvature within the $\varepsilon$-ball the sign of the clean-input gradient is not the direction of the worst attainable perturbation. Auto-PGD iteratively follows the surface, exploiting nonlinearities that FGSM cannot reach.
+The hierarchy among the five methods at $\varepsilon = 0.1$---Auto-PGD followed by FGSM, with the three random baselines clustered near zero---admits a unified explanation. Random methods perturb each timestep and forcing variable independently and are exponentially unlikely to align, by chance, with the particular forcing-error pattern to which the trained model is most sensitive. FGSM consults the model's gradient at the clean operating point and so finds an aligned direction, but takes only one step; whenever the model's response to forcing perturbations bends within the $\varepsilon$ neighborhood, the direction picked at the clean input is no longer the direction of the worst attainable perturbation. Auto-PGD iteratively follows the bending response, exploiting nonlinearities that FGSM cannot reach.
 
 The adversarial-to-random gap (17.5$\times$ at $\varepsilon = 0.1$) far exceeds the FGSM-to-Auto-PGD gap (1.14$\times$), revealing the relative importance of the two methodological refinements: using gradient information at all matters far more than refining how that gradient is followed. The corresponding methodological recommendation is asymmetric: a single-step gradient-based attack should be a minimum requirement for any future hydrological robustness assessment, whereas iterative refinement is the natural gold standard for deployment-grade evaluations.
 
-The constraint-ablation experiment provides a further mechanistic clue. Statistical constraints---which require the perturbed input to preserve per-feature mean and standard deviation---halve the median damage relative to the unconstrained $L_p$ baseline, but more than half of the damage remains. The residual damage therefore cannot be carried by changes in the marginal moments of the inputs; it must be carried by perturbations of temporal sequencing and cross-feature correlations to which the recurrent state is sensitive. Adversarial perturbations exploit the model's gradient structure rather than its absolute input scale, which explains why moment-based detectability tests (Section~3.4) cannot reliably flag them.
+The constraint-ablation experiment provides a further mechanistic clue. Statistical constraints---which require the perturbed forcing to preserve per-variable mean and standard deviation---halve the median damage relative to the unconstrained magnitude baseline, but more than half of the damage remains. The residual damage cannot be carried by changes in the marginal moments of the inputs, since those moments are pinned by construction; it must instead be carried by changes in \emph{temporal sequencing} (the order in which dry and wet days follow one another) and \emph{cross-variable correlations} (the joint pattern of precipitation, temperature, and radiation) to which the LSTM's recurrent state is sensitive. Adversarial perturbations exploit this temporal and cross-variable structure rather than the absolute scale of the inputs, which explains why moment-based detectability checks (Section~3.4) cannot reliably flag them.
 
 \subsection{Implications for Operational Hydrological Deployment}
 
@@ -338,15 +334,9 @@ A final interpretive caveat is the diagnostic-not-predictive framing noted above
 
 We investigated how the choice of perturbation method affects adversarial robustness conclusions for a standard LSTM rainfall-runoff configuration, evaluating five methods spanning the spectrum from random noise to iterative gradient-based optimization across the 531-basin CAMELS-US temporal benchmark.
 
-Our principal findings are:
-\begin{enumerate}
-\item \textbf{Attack-method choice has a decisive influence on robustness assessment.} Iterative adversarial perturbations reveal 17.5 times greater median vulnerability than Gaussian random noise at $\varepsilon = 0.1$; FGSM is closer but still weaker than Auto-PGD.
-\item \textbf{Vulnerability is widespread under iterative attack.} At $\varepsilon = 0.1$, 167 of 514 finite basins (32.5\%) have adversarial NSE below zero under Auto-PGD.
-\item \textbf{Statistically undetectable perturbations remain harmful.} Perturbations that preserve input-feature means and standard deviations still cause median $\Delta$NSE of $-0.193$ under Auto-PGD.
-\item \textbf{Pre-event data quality is disproportionately important.} Perturbations restricted to the 14 days preceding flood peaks still cause median $\Delta$NSE of $-0.085$.
-\end{enumerate}
+Four findings emerge from this study. First, the choice of attack method exerts a decisive influence on the robustness conclusions one draws about a standard LSTM rainfall-runoff configuration: iterative adversarial perturbations reveal a median vulnerability 17.5 times greater than Gaussian random noise at $\varepsilon = 0.1$, and FGSM, although closer to Auto-PGD than the random baselines are, still systematically underestimates the worst case at larger budgets. Second, vulnerability is not a tail phenomenon---under Auto-PGD at $\varepsilon = 0.1$, 32.5\% of finite basins fall below NSE $= 0$ and 17.5\% experience severe degradation with $\Delta$NSE $< -1$. Third, statistically undetectable perturbations, those preserving the per-variable mean and standard deviation of the forcing, retain roughly half of the unconstrained adversarial damage at every budget tested, indicating that routine moment-based quality control cannot rule out harmful forcing patterns. Fourth, pre-event data quality matters disproportionately: perturbations confined to the fourteen days preceding a flood peak still produce a median $\Delta$NSE of $-0.085$, precisely in the operational forecasting window in which input data are most consequential and most often degraded.
 
-Our results establish that robustness assessment for standard hydrological deep-learning configurations benefits from multi-level stress testing that goes beyond random noise and single-step adversarial methods. We recommend iterative adversarial evaluation at observation-error-scale budgets as a standard diagnostic component of hydrological stress-testing workflows, while broader architectural generalization remains future work.
+Taken together, these findings establish that robustness assessment for standard hydrological deep-learning configurations benefits from multi-level stress testing that goes beyond random noise and single-step adversarial probes. We recommend iterative adversarial evaluation at observation-error-scale budgets as a standard diagnostic component of hydrological stress-testing workflows; broader architectural generalization, defense-strategy evaluation, and coupling adversarial bounds to calibrated forcing-error models remain natural follow-ups.
 
 \section*{Open Research}
 All code for adversarial attacks, evaluation, and analysis is available at \url{https://github.com/[repository]}. The LSTM model was trained using the open-source neuralhydrology framework \cite{Kratzert2022}. CAMELS-US data are publicly available from the USGS \cite{Newman2015, Addor2017}.
