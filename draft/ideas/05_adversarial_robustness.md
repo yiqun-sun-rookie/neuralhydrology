@@ -2,6 +2,29 @@
 
 > **合并说明（2026-04-17）**: 原 ID 05 `full_531_basins`（531 流域多架构 benchmark，已归档无独立论文价值）已并入本 idea。其作为 CudaLSTM 基线预训练基础设施，代码迁到 `src/adversarial/baseline_531/`，模型 checkpoint 迁到 `results/05_adversarial_robustness/full_training_nse_2025_1025_1821_ep50/`（对抗实验的受害者模型）。
 
+## 2026-05-10 深度同步（覆盖 2026-04-23 旧记录）
+
+- **阶段**: 收尾阶段（写作已基本完成，无新实验计划）
+- **正稿路线已敲定**: 2026-04-27 commit `3a8b7e0`（"Phase: switch adversarial paper to 531 benchmark"）确定唯一正稿走 **531 basins / 14 static / h=128 / Kratzert 标准时间分割** 路线，由 `draft/papers/05_adversarial_latex/main.tex` 承载。`05_adversarial_robustness_wrr.md` 在该 commit 中从 414 行收缩到 158 行作为存档，不再是平行候选。Pivot 之后 4 个 commit（`6b1e501` → `0e12b8f` → `8c476a2` → `90e7783`）全部只在 LaTeX 正稿上做 prose 级修润，再无人改 `.md` 草稿。配套计划文档：`docs/plans/2026-04-25-adversarial-531-rerun.md`。
+- **正稿事实**（来自 `main.tex` abstract + Table `tab:attack`）：
+  - **标题**（已定）：*Attack-Method Choice Changes Robustness Conclusions for a Standard LSTM Rainfall-Runoff Model*
+  - **期刊**：Water Resources Research（已定）
+  - **Victim**：单一 LSTM h=128，14 static + 5 daymet 动态特征，Kratzert 2018 标准时间分割（Train 1990-10-01 ~ 1995-09-30、Val 1995-10-01 ~ 2000-09-30、Test 2000-10-01 ~ 2005-09-30），epoch 20 checkpoint
+  - **数据规模**：17,523 个实验记录、531 个 basin ID，其中 514 个 finite-NSE basin 用于 headline 统计（17 个流域因评估期 streamflow 方差近零导致 NSE 退化为非有限值）
+  - **关键数字 @ ε=0.1**：
+    - Auto-PGD median ΔNSE = **−0.408** [Q25, Q75 = −0.731, −0.225]
+    - FGSM median ΔNSE = −0.358
+    - Gaussian median ΔNSE = −0.023
+    - **APGD / Gaussian = 17.5×**（@ ε=0.2 扩大到 21.6×）
+    - 167 / 514 (**32.5%**) finite-NSE basins 跌破 NSE = 0
+    - Statistical 约束下 median ΔNSE = **−0.19**（QC 不可检测的扰动仍显著有害）
+- **故事重定位**：旧的"Auto-PGD 比 FGSM 揭示 1.5× 脆弱性"已被弱化（在 531/with-static 配置下 APGD/FGSM @ ε=0.1 仅 ≈1.14×，差距随 ε 增大而扩大）。新主信息是"**梯度类攻击 vs 随机噪声 = 17.5×**"——dominant gap 在 gradient-based 与 random 之间，而不在 iterative 与 single-step 之间。`Statistical` 约束与 `Causal Trigger` 分析均超出 Yang et al. (2026) 设置，构成与其工作的互补维度（他们变模型固定 attack，本文固定模型变 attack）。
+- **剩余工作**：内部审阅 → cover letter → 投稿。
+
+> ⚠ 本文件下文"全量结果 (520 basins)"、"核心发现"、"论文结构"、"目标期刊" 等章节是 pivot 前的探索版本（APGD/Gauss = 21.4×、APGD/FGSM = 1.5×、暂拟标题等），与当前正稿不一致，仅作历史保留。**LaTeX 正稿（`draft/papers/05_adversarial_latex/main.tex`）为唯一权威来源。**
+
+---
+
 ## Baseline Infrastructure (合并自原 full_531_basins)
 
 - **基线模型**: CudaLSTM hidden=128, ep50, **Median NSE=0.725** (531 basins, CAMELS-US, daymet)
@@ -85,7 +108,7 @@ Yang et al. 的工作开创性地建立了对抗鲁棒性分析在水文领域�
 
 ---
 
-## 全量结果 (520 basins)
+## 全量结果 (520 basins, **pivot 前的探索版 — 已被 531/with-static 正稿替代**)
 
 ### 实验 1：攻击方法对比 (Table 1)
 
@@ -248,8 +271,10 @@ Causal Trigger 实验表明，仅扰动洪峰前 14 天的气象输入就能造�
 ## 当前状态
 
 - [x] 代码框架：10 种攻击、3 层约束
-- [x] HPC 全量实验：520 basins × 16,563 records
+- [x] HPC 全量实验（探索版）：520 basins × 16,563 records（已被正稿数据覆盖）
+- [x] HPC 全量实验（正稿）：531 basins × 17,523 records（2026-04-27 pivot 后）
 - [x] 分析出图：3 表 5 图（已修订为 publication quality）
-- [ ] 论文撰写
+- [x] 正式主线收束：2026-04-27 `3a8b7e0` 切到 `531/with-static`，`.md` 草稿不再维护
+- [x] 论文撰写：LaTeX 正稿在 prose-级修润阶段（`main.tex/pdf` + `supporting_information.tex/pdf` 齐全，已编译）
 - [ ] 内部审阅
 - [ ] 投稿
