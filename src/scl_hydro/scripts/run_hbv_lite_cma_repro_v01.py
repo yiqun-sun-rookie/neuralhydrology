@@ -53,7 +53,7 @@ SOLVER_NAME = "explicit_euler_dt1"
 def _run_one(args_tuple):
     (basin_id, data_root, n_trials, n_restarts, forcing,
      cal_period, eval_period, loss, kge_weight, pet_method,
-     init_mean, init_sigma) = args_tuple
+     init_mean, init_sigma, warmup_year) = args_tuple
 
     # Worker must use same import path as Numba cache (no `src.` prefix).
     import sys as _sys
@@ -92,6 +92,36 @@ def _run_one(args_tuple):
             init_mean_norm=init_mean, init_sigma=init_sigma,
         )
 
+        # Determine eval-period init state. Two conventions:
+        # (a) cal_result["final_state"] — fast, but uses 2008 end-state for
+        #     1989 init (time-reversed: NSE penalty 0.005-0.015 from SLZ
+        #     mismatch in slow basins).
+        # (b) Kratzert-style 1988-89 warmup: run forward over the year
+        #     PRECEDING eval_start from default init, use end-of-warmup state
+        #     as eval init. Matches the published CAMELS benchmark protocol.
+        if warmup_year:
+            warmup_start = (pd.Timestamp(eval_start)
+                            - pd.DateOffset(years=1)).strftime("%Y-%m-%d")
+            warmup_end = (pd.Timestamp(eval_start)
+                          - pd.DateOffset(days=1)).strftime("%Y-%m-%d")
+            forcing_w, _, _ = load_camels_basin(
+                basin_id, data_root=data_root,
+                start_date=warmup_start, end_date=warmup_end, forcing=forcing,
+                pet_method=pet_method,
+            )
+            rain_w = forcing_w["prcp"].values.astype(np.float64)
+            pet_w = forcing_w[pet_col].values.astype(np.float64)
+            temp_w = (forcing_w["tmean"].values.astype(np.float64)
+                      if "tmean" in forcing_w.columns
+                      else np.zeros_like(rain_w))
+            _, eval_init_state = simulate_hbv_lite(
+                rain_w, pet_w, temp_w,
+                cal_result["optimized_params"],
+                initial_state=None,  # default init at start of warmup
+            )
+        else:
+            eval_init_state = cal_result["final_state"]
+
         forcing_eval, obs_eval, _ = load_camels_basin(
             basin_id, data_root=data_root,
             start_date=eval_start, end_date=eval_end, forcing=forcing,
@@ -106,7 +136,7 @@ def _run_one(args_tuple):
         q_eval_np, _ = simulate_hbv_lite(
             rain_eval, pet_eval, temp_eval,
             cal_result["optimized_params"],
-            initial_state=cal_result["final_state"],
+            initial_state=eval_init_state,
         )
         sim_series = pd.Series(q_eval_np, index=obs_eval.index, name="qsim")
         metrics = compute_metrics(obs_eval, sim_series)
@@ -124,12 +154,14 @@ def _run_one(args_tuple):
         # without re-running CMA-ES.
         for pname, pval in cal_result["optimized_params"].items():
             out[f"p_{pname}"] = float(pval)
-        # Persist final state at end of calibration period — required to
-        # reproducibly initialize the eval-period simulation. Without these,
-        # downstream replays would start from default init and diverge.
-        final_state = cal_result.get("final_state") or {}
+        # Persist the state actually used to initialize the eval period —
+        # required for reproducible replay. Semantics depend on warmup_year:
+        #   warmup_year=True  -> state at end of 1988-10-01..1989-09-30
+        #                        warmup (Kratzert-style)
+        #   warmup_year=False -> state at end of calibration period (2008-09-30)
+        final_state_for_dump = eval_init_state or {}
         for sname in ("SNOWPACK", "MELTWATER", "SM", "SUZ", "SLZ"):
-            out[f"state_{sname}"] = float(final_state.get(sname, 0.0))
+            out[f"state_{sname}"] = float(final_state_for_dump.get(sname, 0.0))
         return out
     except Exception as exc:  # noqa: BLE001
         return {
@@ -168,6 +200,10 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--skip-existing", dest="skip_existing", action="store_true", default=True)
     p.add_argument("--no-skip-existing", dest="skip_existing", action="store_false")
     p.add_argument("--limit", type=int, default=None)
+    p.add_argument("--warmup-year", dest="warmup_year", action="store_true",
+                   default=False,
+                   help="Use 1-year warmup before eval period (Kratzert-style). "
+                        "Default uses cal final state as eval init.")
     return p
 
 
@@ -209,7 +245,7 @@ def main(argv=None) -> int:
         (b, args.data_root, args.trials, args.restarts,
          args.forcing, cal_period, eval_period,
          args.loss, args.kge_weight, args.pet_method,
-         args.init_mean, args.init_sigma)
+         args.init_mean, args.init_sigma, args.warmup_year)
         for b in todo
     ]
 
