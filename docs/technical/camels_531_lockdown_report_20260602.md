@@ -1,17 +1,31 @@
 # CAMELS-US 531 HBV-lite Lockdown Report
 
-**Date**: 2026-06-02
+**Date**: 2026-06-02 (v1), 2026-06-04 (v2 warmup addendum)
 **Purpose**: Close 6 loose ends identified pre-publication, lock down 0.6227 ensemble
-result for paper-grade reproducibility.
+result for paper-grade reproducibility. v2 adds Kratzert-style 1988-89 warmup
+addressing eval init time-reversal bias, lifting headline to 0.6276.
 
 ---
 
-## Headline result (pre-fix)
+## Headline results
+
+### v1 (no warmup, eval init = cal_final_state)
 
 - **9-way ensemble median NSE = 0.6227** (CAMELS-US 531 basins, repro_v01 protocol)
 - Selection rule: `ens_cal_best` (per-basin, pick variant with highest cal NSE,
   report its eval NSE), NOT `ens_top3_median` as previously documented.
 - Beats Kratzert 2019 published SAC-SMA baseline (0.603) by +0.020.
+
+### v2 (Kratzert-style 1988-89 warmup, eval init = warmup_final_state)
+
+- **9-way ensemble median NSE = 0.6276** (post-R2-fix)
+- Same protocol but eval init uses 1-year warmup ending 1989-09-30 instead
+  of cal_final_state at 2008-09-30. Removes time-reversed init bias on
+  slow-baseflow basins.
+- Beats SAC-SMA 0.603 by **+0.0246** (margin +0.005 wider than v1).
+- Per-basin honesty: 332/531 (63%) gain; median(per-basin dNSE) = +0.0008.
+  Ensemble median shift +0.0049 concentrates in outlier basins where
+  2008-end SLZ/SM is far from 1989-start truth. P95 dNSE = +0.044, P5 = −0.009.
 
 ---
 
@@ -271,3 +285,141 @@ After paper writing:
   cost.
 
 These are paper-strengthening additions, not lock-down requirements.
+
+---
+
+# ADDENDUM (2026-06-04): Lockdown v2 — Kratzert-style warmup
+
+## Why a v2 was needed
+
+The original lockdown initialized the eval period (1989-10-01 .. 1999-09-30)
+with `cal_result["final_state"]` — the state at the END of the calibration
+period (2008-09-30). Because eval precedes cal in the repro_v01 protocol,
+this is a time-reversed init: the model starts the 1989 simulation with a
+state evolved from a decade AFTER eval.
+
+Diagnostic on basin 01022500 (humid):
+- cal_final_state SLZ = 35.2 (2008-09-30 conditions)
+- true warmup_state SLZ = 19.2 (1989-09-30 conditions from 1988-89 forcing)
+- Ratio 1.83× — the 2008-end SLZ is nearly twice the 1989-start truth
+
+For SLZ-dominated humid basins with slow K2 (lower-zone reservoir time
+constant), the eval window (10 years) is too short for the model to relax
+from the wrong init, biasing NSE down 0.005-0.015 (median) and much worse
+in outlier basins (basin 06847900 jumps from NSE −14.55 to −7.93 with
+warmup; basin 12048000 flips from −0.016 to +0.21).
+
+## v2 implementation
+
+`run_hbv_lite_cma_repro_v01.py` gains a `--warmup-year` flag (default False
+preserves v1 behaviour). When set:
+
+1. Load 1988-10-01 .. 1989-09-30 forcing via
+   `load_camels_basin(..., keep_obs_nan_days=True)` (R2 fix).
+2. Run `simulate_hbv_lite` from default init through the warmup year.
+3. Use the end-of-warmup state to initialize eval period simulation.
+
+Output dirs use `_warmup` suffix on each variant's original dir name
+(`camels_us_531_repro_v01_warmup/`, `..._BEST_warmup/`, etc.). The v1 lockdown
+ensemble dirs are untouched.
+
+## v2 per-variant medians
+
+| Variant | v1 (no-warmup) | v2 (warmup) | Δ |
+|---|---|---|---|
+| v1 (Oudin tight) | 0.5564 | **0.5737** | **+0.0173** |
+| v5 (Oudin wider) | 0.5995 | 0.6041 | +0.0046 |
+| v6 (PT wider) | 0.6107 | 0.6183 | +0.0076 |
+| v7 (PT tight) | 0.6138 | 0.6170 | +0.0032 |
+| v8 (PT init=0.3) | 0.6159 | 0.6175 | +0.0016 |
+| v9 (PT init=0.7) | 0.6180 | 0.6210 | +0.0030 |
+| v10 (PT init=0.9) | 0.6153 | 0.6183 | +0.0030 |
+| v11 (PT KGE 0.1) | 0.6164 | 0.6215 | +0.0051 |
+| v12 (PT sigma 0.5) | 0.6167 | 0.6216 | +0.0049 |
+
+All variants improve. v1 benefits most (Oudin+tight = weakest configuration
+absorbs the correct init most directly). Variants that compensate for poor
+PET/bounds via flexibility (v5 Oudin+wider, v6 PT+wider) gain less because
+the calibration already absorbs more error.
+
+## R2 fix: NaN obs warmup window edge case
+
+Two basins (02427250, 09484600) have USGS streamflow records that do not
+extend back to 1988-10-01. Original `load_camels_basin` filters days where
+obs is NaN AND intersects with the streamflow file's date index — these
+basins' warmup load returned 0 days → `simulate_hbv_lite` ran on empty
+arrays → state stayed at default init (SM=parFC*0.3, SLZ=10) → eval init
+was the worst possible. Basin 09484600 went from NSE 0.218 (no-warmup) to
+−3.119 (broken warmup) — a 3.34 NSE catastrophe silently introduced.
+
+Fix:
+1. `hydroagent/data_loading.py::load_camels_basin` gains `keep_obs_nan_days`
+   parameter (default False preserves backward compat). When True, obs is
+   reindexed to forcing index (NaN where streamflow is missing) instead of
+   intersected + NaN-filtered.
+2. Runner warmup branch passes `keep_obs_nan_days=True`.
+
+Post-fix: basin 09484600 NSE = +0.222 (warmup forward runs through all 365
+forcing days even with missing obs). Across the 9 warmup variants, 2 basins
+are detected with default-init state signatures pre-fix (re-running both ×9
+took ~10 min). Ensemble median 0.6276 is unchanged (median robust to 2-basin
+outliers) but the 2 polluted points no longer skew distribution metrics.
+
+## R7 fix: state_* column same-name-different-meaning
+
+In v1 runs `state_*` holds cal_final_state (2008-09-30). In v2 runs the same
+columns hold warmup_final_state (1989-09-30). Disambiguation:
+
+- New column `state_init_mode` added by patched runner. Values:
+  - `"cal_final_2008-09-30"` (v1 runs)
+  - `"warmup_year_end_1989-09-30"` (v2 runs)
+
+CSVs written before this patch lack the column; dir suffix is the
+disambiguation fallback (`*_warmup/` → v2 semantics, else v1).
+
+## R6 fix: verify script covers both ensembles
+
+`verify_rerun_matches_original.py` gains `--ensemble {lockdown,warmup}`:
+- `lockdown` (default): targets 0.6227, exact match (1e-4 tol) against
+  `backups/pre_dump_2026-06-02/`.
+- `warmup`: targets 0.6276, schema-only check (5e-4 tol; no backup baseline).
+
+Both ensembles currently PASS verification.
+
+## R3 narrative honesty
+
+The +0.0049 ensemble median improvement is NOT uniform across basins:
+- median(per-basin dNSE) = **+0.0008** (most basins barely change)
+- 332/531 (63%) gain; 199 (37%) tie or lose
+- P5 per-basin dNSE = −0.009, P95 = +0.044
+- 3 largest gains: 06847900 (+6.6), 08194200 (+0.30), 12048000 (+0.22) —
+  all basins with horrible v1 NSE, freed from time-reversed init bias
+
+Reporting "+0.005 NSE for all basins" would mislead. The honest version:
+"warmup fixes ~63% of basins, gains concentrate in long-memory baseflow
+basins where time-reversed init was most harmful".
+
+## R4 fix: runner docstring updated
+
+`run_hbv_lite_cma_repro_v01.py` module docstring now documents the
+`--warmup-year` flag and the two state-init semantics.
+
+## R5: commit message scope
+
+Commit `df10754` only cites the smoke-test (500×1 trials) +0.005 NSE; the
+full-run (5000×3 trials) showed +0.019 on basin 01022500 (better calibrated
+params can exploit the corrected init more fully). Future commits should
+cite full-run numbers when available.
+
+## Cross-link to v2 artifacts
+
+- Warmup dirs: `results/.../camels_us_531_repro_v01_*_warmup/`
+- Aggregated: `results/.../camels_us_531_repro_v01_FINAL_MEGA_warmup/summary/mega_ensemble_warmup_R2fix.csv`
+- Launcher: `src/scl_hydro/scripts/rerun_all_9_warmup.sh`
+- Verify: `python -X utf8 -m src.scl_hydro.scripts.verify_rerun_matches_original --ensemble warmup` → PASS
+
+## v2 commit history
+
+- `df10754` — initial `--warmup-year` patch + launcher (pre R2/R6/R7 fixes)
+- (pending) — R2 fix (`load_camels_basin keep_obs_nan_days`), R6 verify
+  ensemble flag, R7 state_init_mode column, R4 docstring, this addendum

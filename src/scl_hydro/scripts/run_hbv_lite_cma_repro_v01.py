@@ -4,9 +4,30 @@ Uses NumPy + Numba HBV-lite (33 s/basin with 5000 × 3 evals) and pycma
 for derivative-free calibration. Total expected wall time: ~1-2 hours
 with 6 workers on i9-13900K (vs ~30h for the failed Adam version).
 
+Per-basin CSV schema (post-lockdown):
+- 15 metric/metadata columns: basin_id, model, period, nse, kge, bias,
+  peak_bias, lowflow_bias, parameter_count, solver_name, family,
+  run_status, error_message, _elapsed_s, _cal_nse
+- 13 ``p_*`` parameter columns dumped from CMA-ES optimum
+- 5 ``state_*`` columns holding eval-period init state (see state_init_mode)
+- 1 ``state_init_mode`` column with values
+    "cal_final_2008-09-30"  (no warmup)
+    "warmup_year_end_1989-09-30"  (with --warmup-year)
+
+Eval init state has two modes:
+- DEFAULT (no flag): ``cal_result["final_state"]`` (2008-09-30) is used as
+  eval init. Fast but time-reversed because eval (1989-1999) precedes cal
+  (1999-2008); biases NSE down 0.005-0.015 on slow-SLZ basins.
+- ``--warmup-year``: Load 1988-10-01..1989-09-30 forcing via
+  ``load_camels_basin(..., keep_obs_nan_days=True)``, run forward from
+  default init, use end-of-warmup state to init eval. Matches Kratzert
+  2019 CAMELS-US benchmark convention. Lifts headline median NSE from
+  0.6227 → 0.6276 across the 9-variant ensemble.
+
 Usage::
 
     python -X utf8 -m src.scl_hydro.scripts.run_hbv_lite_cma_repro_v01 --workers 6
+    python -X utf8 -m src.scl_hydro.scripts.run_hbv_lite_cma_repro_v01 --workers 6 --warmup-year
 """
 from __future__ import annotations
 
@@ -108,6 +129,12 @@ def _run_one(args_tuple):
                 basin_id, data_root=data_root,
                 start_date=warmup_start, end_date=warmup_end, forcing=forcing,
                 pet_method=pet_method,
+                # Warmup needs CONTIGUOUS forcing through every day regardless
+                # of obs availability — some basins' streamflow records do not
+                # extend back to the 1988-89 warmup window (e.g., 09484600),
+                # which previously silently produced a 0-day warmup → default
+                # init → catastrophic eval NSE.
+                keep_obs_nan_days=True,
             )
             rain_w = forcing_w["prcp"].values.astype(np.float64)
             pet_w = forcing_w[pet_col].values.astype(np.float64)
@@ -159,9 +186,14 @@ def _run_one(args_tuple):
         #   warmup_year=True  -> state at end of 1988-10-01..1989-09-30
         #                        warmup (Kratzert-style)
         #   warmup_year=False -> state at end of calibration period (2008-09-30)
+        # The state_init_mode column makes the semantics self-documenting
+        # so downstream consumers do not have to infer from output dir name.
         final_state_for_dump = eval_init_state or {}
         for sname in ("SNOWPACK", "MELTWATER", "SM", "SUZ", "SLZ"):
             out[f"state_{sname}"] = float(final_state_for_dump.get(sname, 0.0))
+        out["state_init_mode"] = ("warmup_year_end_1989-09-30"
+                                  if warmup_year
+                                  else "cal_final_2008-09-30")
         return out
     except Exception as exc:  # noqa: BLE001
         return {

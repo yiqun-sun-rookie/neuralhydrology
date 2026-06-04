@@ -170,6 +170,7 @@ def load_camels_basin(
     end_date: str = '1993-09-30',
     forcing: str = 'daymet',
     pet_method: str = 'oudin',
+    keep_obs_nan_days: bool = False,
 ) -> Tuple[pd.DataFrame, pd.Series, float]:
     """Load CAMELS-US basin forcing and observed streamflow.
 
@@ -178,6 +179,15 @@ def load_camels_basin(
             'nldas_extended'. Default 'daymet' preserves prior behaviour.
             'maurer_extended' is required to align with the published
             CAMELS benchmark on HydroShare (Newman/Kratzert 2019).
+        keep_obs_nan_days: If False (default), drop days where observed
+            streamflow is NaN or missing from the streamflow file
+            (original behaviour, preserves backward compat with calibration
+            and evaluation paths). If True, keep all forcing days within
+            [start_date, end_date] and align obs by reindex (NaN where
+            streamflow is missing or unavailable). Required for warmup
+            loads where state should evolve through every forcing day
+            regardless of obs availability (e.g., basins whose streamflow
+            record does not extend back to the warmup window).
 
     Returns:
         (forcing_df[prcp, ep, tmean], obs_mm, area_km2)
@@ -265,13 +275,20 @@ def load_camels_basin(
     forcing_out['ep'] = np.maximum(pet, 0)
     forcing_out['tmean'] = tmean
 
-    # -- Align and filter NaN --
-    common_idx = forcing_out.index.intersection(streamflow.index)
-    forcing_out = forcing_out.loc[common_idx]
-    obs = streamflow.loc[common_idx, 'qobs_mm']
-    valid_mask = ~obs.isna()
-    forcing_out = forcing_out.loc[valid_mask]
-    obs = obs.loc[valid_mask]
+    # -- Align forcing and obs --
+    if keep_obs_nan_days:
+        # Reindex obs to forcing index — keeps all forcing days, fills NaN
+        # where streamflow file lacks data or has NaN. Required when caller
+        # needs contiguous forcing for state-evolution warmup over a period
+        # whose streamflow record may be incomplete.
+        obs = streamflow['qobs_mm'].reindex(forcing_out.index)
+    else:
+        common_idx = forcing_out.index.intersection(streamflow.index)
+        forcing_out = forcing_out.loc[common_idx]
+        obs = streamflow.loc[common_idx, 'qobs_mm']
+        valid_mask = ~obs.isna()
+        forcing_out = forcing_out.loc[valid_mask]
+        obs = obs.loc[valid_mask]
 
     return forcing_out, obs, area_km2
 

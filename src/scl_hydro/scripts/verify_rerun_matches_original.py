@@ -1,21 +1,23 @@
-"""Verify the patched-runner re-run produces identical NSE numbers
-to the original 9-variant ensemble (0.6227 ens_cal_best target).
+"""Verify HBV-lite ensemble runs reproduce their target NSE.
 
-Compares per-basin eval NSE between:
-- ``backups/pre_dump_2026-06-02/`` (original, no p_* columns)
-- ``results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01*``
-  (post-rerun, with p_* + state_* columns)
+Two ensembles can be verified:
 
-Outputs a verdict CSV + console summary. PASS iff the new ens_cal_best median
-matches the original 0.6227 within ±0.0001 (deterministic seeds should yield
-exact match).
+* ``--ensemble lockdown``  (default) — original 9-variant ensemble using
+  cal_final_state as eval init. Target: ens_cal_best median = 0.6227. Compares
+  against ``backups/pre_dump_2026-06-02/`` summary CSVs.
+* ``--ensemble warmup`` — 9-variant ensemble using 1988-89 Kratzert-style
+  warmup. Target: ens_cal_best median = 0.6276. No backup comparison
+  (warmup ensemble is post-lockdown), only checks schema (p_* + state_* +
+  state_init_mode present) and computes the ens_cal_best median.
+
+Outputs verdict CSV + console summary. For lockdown: PASS iff new ens_cal_best
+exactly matches 0.6227 within 1e-4 (deterministic seeds). For warmup: PASS iff
+new ens_cal_best matches 0.6276 within 5e-4 and all variants have new schema.
 
 Usage::
 
     python -X utf8 -m src.scl_hydro.scripts.verify_rerun_matches_original
-
-Run AFTER the rerun script finishes (or partway through to spot-check).
-Partial-run mode: only compares basins present in BOTH old and new files.
+    python -X utf8 -m src.scl_hydro.scripts.verify_rerun_matches_original --ensemble warmup
 """
 from __future__ import annotations
 
@@ -32,7 +34,7 @@ for _p in (_REPO_ROOT / "src", _REPO_ROOT):
         sys.path.insert(0, str(_p))
 
 
-VARIANTS = {
+VARIANTS_LOCKDOWN = {
     "v1": ("camels_us_531_repro_v01", "v1_summary.csv"),
     "v5": ("camels_us_531_repro_v01_BEST", "v_BEST_summary.csv"),
     "v6": ("camels_us_531_repro_v01_v6_PT", "v_v6_PT_summary.csv"),
@@ -43,8 +45,12 @@ VARIANTS = {
     "v11": ("camels_us_531_repro_v01_v11_PT_KGE01", "v_v11_PT_KGE01_summary.csv"),
     "v12": ("camels_us_531_repro_v01_v12_PT_sigma05", "v_v12_PT_sigma05_summary.csv"),
 }
+VARIANTS_WARMUP = {k: (v[0] + "_warmup", None) for k, v in VARIANTS_LOCKDOWN.items()}
+TARGETS = {"lockdown": 0.6227, "warmup": 0.6276}
 NEW_BASE = _REPO_ROOT / "results" / "10_global_conceptual_model_benchmark"
 OLD_BASE = _REPO_ROOT / "backups" / "pre_dump_2026-06-02"
+
+VARIANTS = VARIANTS_LOCKDOWN  # default; main() rebinds based on --ensemble
 
 
 def _load(path: Path) -> pd.DataFrame:
@@ -57,15 +63,37 @@ def _load(path: Path) -> pd.DataFrame:
 
 def verify_one_variant(name: str) -> dict:
     new_path = NEW_BASE / VARIANTS[name][0] / "summary" / "hbv_lite_cma_local_full.csv"
-    old_path = OLD_BASE / VARIANTS[name][1]
+    old_filename = VARIANTS[name][1]
     if not new_path.exists():
         return {"variant": name, "status": "new_missing", "n_compared": 0}
+
+    new = _load(new_path)
+    has_p = any(c.startswith("p_") for c in new.columns)
+    has_state = any(c.startswith("state_") for c in new.columns)
+    has_init_mode = "state_init_mode" in new.columns
+
+    # Warmup mode has no backup file — schema-only check
+    if old_filename is None:
+        return {
+            "variant": name,
+            "status": "ok",
+            "n_new": len(new),
+            "n_old": 0,
+            "n_compared": 0,
+            "max_abs_dnse": 0.0,
+            "median_abs_dnse": 0.0,
+            "n_basin_mismatch_eval_nse": 0,
+            "max_abs_dcal_nse": 0.0,
+            "has_p_columns": has_p,
+            "has_state_columns": has_state,
+            "has_state_init_mode_column": has_init_mode,
+        }
+
+    old_path = OLD_BASE / old_filename
     if not old_path.exists():
         return {"variant": name, "status": "old_missing", "n_compared": 0}
 
-    new = _load(new_path)
     old = _load(old_path)
-
     merged = new.merge(old, on="basin_id", suffixes=("_new", "_old"), how="inner")
     if len(merged) == 0:
         return {"variant": name, "status": "no_overlap", "n_compared": 0}
@@ -73,9 +101,6 @@ def verify_one_variant(name: str) -> dict:
     diff_nse = (merged["nse_new"] - merged["nse_old"]).abs()
     diff_cal = (merged["_cal_nse_new"] - merged["_cal_nse_old"]).abs()
     n_mismatch = int((diff_nse > 1e-4).sum())
-
-    has_p = any(c.startswith("p_") for c in new.columns)
-    has_state = any(c.startswith("state_") for c in new.columns)
 
     return {
         "variant": name,
@@ -89,6 +114,7 @@ def verify_one_variant(name: str) -> dict:
         "max_abs_dcal_nse": float(diff_cal.max()),
         "has_p_columns": has_p,
         "has_state_columns": has_state,
+        "has_state_init_mode_column": has_init_mode,
     }
 
 
@@ -132,26 +158,46 @@ def aggregate_ensemble(verbose: bool = True) -> dict:
 
 
 def main() -> int:
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--ensemble", choices=["lockdown", "warmup"],
+                        default="lockdown",
+                        help="Which ensemble to verify. lockdown uses "
+                             "cal_final_state as eval init (target 0.6227); "
+                             "warmup uses 1988-89 Kratzert warmup (target 0.6276).")
+    args = parser.parse_args()
+
+    global VARIANTS
+    if args.ensemble == "warmup":
+        VARIANTS = VARIANTS_WARMUP
+    else:
+        VARIANTS = VARIANTS_LOCKDOWN
+    target = TARGETS[args.ensemble]
+    tol = 5e-4 if args.ensemble == "warmup" else 1e-4
+
     print("=" * 72)
-    print("PATCHED-RUNNER REPRODUCIBILITY VERIFICATION")
+    print(f"PATCHED-RUNNER REPRODUCIBILITY VERIFICATION (ensemble={args.ensemble})")
     print("=" * 72)
-    print(f"Old: {OLD_BASE}")
+    print(f"Old: {OLD_BASE}  (only checked for ensemble=lockdown)")
     print(f"New: {NEW_BASE}")
+    print(f"Target ens_cal_best median = {target}  (tolerance ±{tol})")
     print()
     print(f"{'variant':<6} {'status':<15} {'n_new':>6} {'n_old':>6} "
-          f"{'max|dNSE|':>10} {'med|dNSE|':>10} {'p?':>3} {'s?':>3}")
-    print("-" * 72)
+          f"{'max|dNSE|':>10} {'med|dNSE|':>10} {'p?':>3} {'s?':>3} {'mode?':>5}")
+    print("-" * 80)
 
     rows = []
     for v in VARIANTS:
         r = verify_one_variant(v)
         rows.append(r)
-        if r.get("n_compared", 0) > 0:
+        if r.get("status") == "ok":
+            mode_y = "Y" if r.get("has_state_init_mode_column") else "n"
             print(f"{v:<6} {r['status']:<15} "
                   f"{r['n_new']:>6} {r['n_old']:>6} "
                   f"{r['max_abs_dnse']:>10.6f} {r['median_abs_dnse']:>10.6f} "
                   f"{'Y' if r['has_p_columns'] else 'n':>3} "
-                  f"{'Y' if r['has_state_columns'] else 'n':>3}")
+                  f"{'Y' if r['has_state_columns'] else 'n':>3} "
+                  f"{mode_y:>5}")
         else:
             print(f"{v:<6} {r['status']:<15}")
 
@@ -194,17 +240,19 @@ def main() -> int:
         for rule, val in agg["medians"].items():
             print(f"  {rule:<22} median NSE = {val:+.4f}")
         print()
-        target = 0.6227
         delta = agg["medians"]["ens_cal_best"] - target
-        if abs(delta) < 0.0001:
+        if abs(delta) < tol:
             print(f"PASS: ens_cal_best median {agg['medians']['ens_cal_best']:.4f} "
-                  f"matches original {target} within tolerance.")
-            print(f"      Rerun reproduces original numbers + adds p_* and state_* columns.")
+                  f"matches target {target} within ±{tol}.")
+            if args.ensemble == "lockdown":
+                print(f"      Rerun reproduces original numbers + adds p_* and state_* columns.")
+            else:
+                print(f"      Warmup ensemble reproduces post-fix median 0.6276.")
         else:
             print(f"FAIL: ens_cal_best median {agg['medians']['ens_cal_best']:.4f} "
-                  f"differs from original {target} by {delta:+.4f}.")
-            print(f"      Investigate code changes between original run and rerun.")
-        agg["df"].to_csv(out_dir / "new_ensemble_per_basin.csv", index=False)
+                  f"differs from target {target} by {delta:+.4f} (tol ±{tol}).")
+            print(f"      Investigate code changes between target run and current rerun.")
+        agg["df"].to_csv(out_dir / f"new_ensemble_per_basin_{args.ensemble}.csv", index=False)
     else:
         print(f"  Incomplete: {agg.get('n_variants_present', 0)}/9 variants "
               f"have summary CSVs. Run again after all variants complete.")
