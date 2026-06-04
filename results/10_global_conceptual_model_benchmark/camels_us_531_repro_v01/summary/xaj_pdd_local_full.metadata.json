@@ -1,0 +1,52 @@
+{
+  "protocol": "repro_v01",
+  "protocol_version": "camels_us_531_repro_v01",
+  "model": "xaj_pdd",
+  "forcing": "maurer",
+  "calibration_start": "1999-10-01",
+  "calibration_end": "2008-09-30",
+  "evaluation_start": "1989-10-01",
+  "evaluation_end": "1999-09-30",
+  "trials": 5000,
+  "restarts": 3,
+  "workers": 12,
+  "n_basins_total": 531,
+  "n_in_summary": 531,
+  "batches": [
+    {
+      "id": 1,
+      "started": "2026-04-25 10:34",
+      "wall_clock_h": 16.28,
+      "n_executed": 531,
+      "n_success": 528,
+      "n_failed": 3,
+      "failed_basin_ids": [
+        "02108000",
+        "05120500",
+        "09492400"
+      ],
+      "failure_reason": "defective maurer file header (missing Year/Mnth/Day/Hr cols)"
+    },
+    {
+      "id": 2,
+      "started": "2026-04-28 14:28",
+      "wall_clock_h": 0.29,
+      "n_executed": 3,
+      "n_success": 3,
+      "n_failed": 0,
+      "loader_fix_commit": "36a337b",
+      "note": "rerun of the 3 batch-1 failures after the data_loading.py header-patch fix"
+    }
+  ],
+  "data_root": "data/camels_us",
+  "manifest": "src/xaj_global_pilot/configs/conceptual_benchmark_camels_us_531_repro.txt",
+  "host_cpu_count": 32,
+  "host_cpu": "i9-13900KF (24 physical / 32 logical)",
+  "summary_csv": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/xaj_pdd_local_full.csv",
+  "nse_median": 0.4458,
+  "nse_mean": -0.0113,
+  "nse_p25": 0.328,
+  "nse_p75": 0.558,
+  "n_nse_below_zero": 49,
+  "n_nse_below_neg1": 17
+}

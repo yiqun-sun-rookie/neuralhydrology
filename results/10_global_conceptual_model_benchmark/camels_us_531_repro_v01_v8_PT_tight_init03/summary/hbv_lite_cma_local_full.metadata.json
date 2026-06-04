@@ -1,0 +1,23 @@
+{
+  "protocol": "repro_v01",
+  "protocol_version": "camels_us_531_repro_v01",
+  "model": "hbv_lite_cma",
+  "forcing": "maurer",
+  "calibration_start": "1999-10-01",
+  "calibration_end": "2008-09-30",
+  "evaluation_start": "1989-10-01",
+  "evaluation_end": "1999-09-30",
+  "calibrator": "CMA-ES (pycma) multi-restart",
+  "trials": 5000,
+  "restarts": 3,
+  "workers": 6,
+  "n_basins_total": 531,
+  "n_skipped_existing": 0,
+  "n_executed": 531,
+  "n_in_summary": 531,
+  "wall_clock_s": 3024.7,
+  "data_root": "data/camels_us",
+  "manifest": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\xaj_global_pilot\\configs\\conceptual_benchmark_camels_us_531_repro.txt",
+  "host_cpu_count": 32,
+  "model_source": "ported from mhpi/hydroDL2 (Feng et al. 2022 WRR), NumPy+Numba"
+}
