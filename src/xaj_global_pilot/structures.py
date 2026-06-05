@@ -1,4 +1,5 @@
-from src.hbv_camels_us_531.structure import build_fixed_hbv_structure
+# HBV removed 2026-06-05: old hbv_camels_us_531 SuperflexPy HBV archived (superseded by
+# scl_hydro/hbv_lite). See src/scl_hydro/README_HBV_MODELS.md.
 
 
 def build_xaj_structure() -> dict:
@@ -70,10 +71,6 @@ def build_xaj_pdd_structure() -> dict:
         "lag_functions": lag_config,
         "system_output": ["fast", "slow"],
     }
-
-
-def build_hbv_structure() -> dict:
-    return build_fixed_hbv_structure()
 
 
 def build_gr4j_structure() -> dict:

@@ -17,7 +17,9 @@ This note exists so future work (esp. the kalmannet DA migration) does not grab 
   the numpy production uses RECESSION-half — fix the torch `_triangular_lag_batch` before relying on it.
 
 ## ⚠️ DifferentiableHBV (`hbv_torch.py`) — the OLD HBV, kept ONLY for SCL-LSTM
-- **PyTorch:** `hbv_torch.py` → `class DifferentiableHBV`; **NumPy twin:** the separate package `src/hbv_camels_us_531/`.
+- **PyTorch:** `hbv_torch.py` → `class DifferentiableHBV`; **NumPy twin:** the package `hbv_camels_us_531`,
+  archived 2026-06-05 to `src/_archive/hbv_camels_us_531_20260605/hbv_camels_us_531/` but **kept on disk** as
+  the equivalence reference for `test/test_scl_hydro_hbv_torch.py` (which now imports it from the archive path).
 - **Calibrator:** `hbv_calibrate_torch.py`. Scripts: `scripts/pilot_coupled.py`, `scripts/tango_*.py`.
 - **Structure:** older Snow→Soil→Fast(power)+Slow(linear)→Lag model. **4 states** `[S_snow, S_soil, S_fast, S_slow]`,
   **10 params** `t0, k_snow, Smax, Ce, beta, split, k_fast, alpha, k_slow, lag_time`.
@@ -30,9 +32,15 @@ This note exists so future work (esp. the kalmannet DA migration) does not grab 
 - Intermediate "upgrade over DifferentiableHBV" experiment; **did not win the 531 benchmark** (no summary CSV, no results).
 - Moved to `src/_archive/scl_hydro_hbv96_20260605/` to avoid confusion with HBV-lite. Self-contained (no other code imported it).
 
-## Separate package: `src/hbv_camels_us_531/`
+## 🗄️ hbv_camels_us_531 — ARCHIVED 2026-06-05
 - The NumPy old-HBV (10-param, same lineage as `hbv_torch.py`), from the Idea-10 15-basin conceptual benchmark era.
-- Has its own tests (`test/test_hbv_camels_us_531_*`). **Not archived** here — it's a separate Idea-10 line, decide separately.
+- It was the **SuperflexPy "hbv" model** of the OLD xaj_global_pilot benchmark (`model_catalog` → `runner.py` /
+  HPC conceptual-benchmark pipeline), superseded by the standalone NumPy+Numba `hbv_lite` repro_v01 runner.
+- Archived (package + its 4 tests + `benchmark_conceptual_models.py` + results/logs) to
+  `src/_archive/hbv_camels_us_531_20260605/`. Removed the `"hbv"` entry from `model_catalog.py` and
+  `build_hbv_structure` from `structures.py`; catalog now = xaj_pdd / gr4j_pdd / xaj / gr4j.
+- Still imported (from the archive path) by `test/test_scl_hydro_hbv_torch.py` as the equivalence reference for
+  the KEPT `DifferentiableHBV` (SCL-LSTM). That is intentional.
 
 ---
 *One-line rule: for the conceptual benchmark and the DA process model, use **HBV-lite** (`hbv_lite*.py`).

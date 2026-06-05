@@ -3,10 +3,11 @@ from collections import OrderedDict
 from src.xaj_global_pilot.structures import (
     build_gr4j_pdd_structure,
     build_gr4j_structure,
-    build_hbv_structure,
     build_xaj_pdd_structure,
     build_xaj_structure,
 )
+# NOTE: "hbv" model removed 2026-06-05 (old hbv_camels_us_531 SuperflexPy HBV archived,
+# superseded by scl_hydro/hbv_lite). See src/scl_hydro/README_HBV_MODELS.md.
 
 
 def get_model_specs() -> OrderedDict:
@@ -24,16 +25,6 @@ def get_model_specs() -> OrderedDict:
                                 "solver_name": "explicit_euler",
                                 "family": "xaj",
                                 "structure_builder": build_xaj_pdd_structure,
-                            },
-                        ),
-                        (
-                            "hbv",
-                            {
-                                "uses_snow_module": True,
-                                "parameter_count": 12,
-                                "solver_name": "implicit_euler",
-                                "family": "hbv",
-                                "structure_builder": build_hbv_structure,
                             },
                         ),
                         (

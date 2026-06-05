@@ -10,8 +10,9 @@ import torch
 
 from scl_hydro.hbv_torch import DifferentiableHBV, PARAM_NAMES, PARAM_BOUNDS
 
-# Import NumPy reference
-sys.path.insert(0, str(Path(__file__).parent.parent / "src" / "hbv_camels_us_531"))
+# Import NumPy reference (hbv_camels_us_531 was archived 2026-06-05 but is kept as the
+# equivalence reference for DifferentiableHBV / SCL-LSTM — see src/scl_hydro/README_HBV_MODELS.md)
+sys.path.insert(0, str(Path(__file__).parent.parent / "src" / "_archive" / "hbv_camels_us_531_20260605" / "hbv_camels_us_531"))
 from hbv_model import simulate_hbv as simulate_hbv_numpy
 
 
