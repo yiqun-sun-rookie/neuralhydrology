@@ -15,7 +15,7 @@ Follow these strict rules when adding new features, running experiments, or refa
 | **Docs** | `draft/ideas/<id>_<name>.md` | Specific research plan, logs, and context for one idea. |
 | **Code (New)** | `src/<project_name>/` | **Modular packages.** e.g., `src/global_hydrology/`. |
 | **Code (Shared)**| `src/shared/` | **Common utils.** Metrics, plotting, generic models. |
-| **Code (Legacy)**| `knet/`, `hydrologic/` | **READ-ONLY.** Do not modify unless fixing critical bugs for the old paper. |
+| **Code (DA, other repo)**| sibling `kalmannet/` + `filters/` | KalmanNet(`knet`) & trainable-kf live there, **NOT in this repo**. No `knet/`/`hydrologic/` dir exists here (stale template ref). |
 | **Results** | `results/<id>_<name>/` | **Outputs.** All plots, checkpoints (.pt), and logs go here. |
 | **Data** | `data/` | **Raw Inputs only.** Do not store experiment results here. |
 
@@ -65,6 +65,6 @@ Example structure for idea docs:
 
 ## 5. Anti-Patterns (Strictly Forbidden)
 
-- ❌ **Do not** mix new code into `knet/` or `experiments/` (Legacy zones).
+- ❌ **Do not** look for `knet/` / KalmanNet / trainable-kf in this repo — that code is in the sibling `kalmannet` + `filters` repos.
 - ❌ **Do not** hardcode absolute paths (e.g., `C:/Users/...`).
 - ❌ **Do not** modify `src/shared/` without verifying it doesn't break other active ideas.

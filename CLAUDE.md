@@ -84,7 +84,7 @@ Tests live in `test/` with configs in `test/test_configs/` and data in `test/tes
 - **Stop rule**: If stuck on the same problem 5 times, stop and re-evaluate the approach.
 - **Complex tasks**: Create `IMPLEMENTATION_PLAN.md` with 3-5 stages (Goal, Success Criteria, Tests, Status).
 - **New ideas**: Register in `draft/RESEARCH_INDEX.md`, create `draft/ideas/<id>_<slug>.md`, scaffold `src/<slug>/` and `results/<id>_<slug>/`.
-- **Legacy code**: `knet/` and `experiments/` are read-only. Do not modify.
+- **No `knet/` here**: this repo has NO `knet/`/`experiments/`/`hydrologic/` legacy dir (a stale template ref; never in git history). KalmanNet (`knet`) and trainable-kf (learned-noise UKF) code live in the **sibling `kalmannet` + `filters` repos**, not here. The neuralhydrology HBV that scores ~0.6 NSE is `src/scl_hydro/` HBV-lite (0.5995 single / 0.6227 ensemble), distinct from kalmannet's weaker regionalized HBV.
 - **Scripts**: Place runnable scripts in `src/<idea>/scripts/`, not as root-level wrappers.
 - **Configs**: Production configs go in `src/<idea>/configs/`, not `examples/`.
 - **src/ packages**: `src/` 下的独立包（如 `hydroagent`）不在默认 Python path 中。脚本中需 `sys.path.insert(0, '.../src')` 或从 `src/` 目录运行 `python -m <pkg>.module`。
