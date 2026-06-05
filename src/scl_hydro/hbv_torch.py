@@ -7,6 +7,11 @@ Structure: Snow → Soil → Fast (power) + Slow (linear) → Lag → Q
 
 States (4): S_snow, S_soil, S_fast, S_slow
 Parameters (10): t0, k_snow, Smax, Ce, beta, split, k_fast, alpha, k_slow, lag_time
+
+⚠️ DISAMBIGUATION (see README_HBV_MODELS.md): this is the OLD 4-state/10-param HBV,
+kept ONLY because the SCL-LSTM project (coupled_model.py CoupledHydroModel) uses it.
+It is NOT the 531 benchmark / DA model — for those use HBV-lite (hbv_lite.py /
+hbv_lite_numpy.py, 5 states / 13 params, median NSE 0.5995/0.6227). Do not confuse them.
 """
 from typing import Dict, Optional, Tuple
 
