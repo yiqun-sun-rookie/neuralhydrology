@@ -7,6 +7,21 @@
 
 ---
 
+> **⚠️ 2026-06-04 更新（XAJ-PDD 531 结果修正）**
+> 本文档及 `cross_method_per_basin_nse.csv` 中记录的 **XAJ-PDD (ours) 531 中位
+> NSE = 0.4458 是 PET 数据 bug 的产物**，不代表 XAJ 真实性能。原 531 run（2026-04-25）
+> 跑在 commit `81a7c2f`（PET 大修）之前，吃了偏低 5-10× 的坏 PET。用修复 PET 的
+> playbook runner（`run_xaj_pdd_cma_repro_v01.py`，Oudin + warmup-year，repro_v01，
+> 与 HBV-lite 字节级一致协议）重跑，**XAJ-PDD 531 中位 = 0.6372**：
+> - 超过 SAC-SMA+Snow-17（Kratzert 基准 0.6071）+0.030、自研 HBV-lite ensemble（0.6227）+0.015；
+> - 低于 mHM(0.665)/HBV-upper(0.678)/FUSE(0.654)；
+> - 与 2026-03-27 的 15-basin pilot（0.637）吻合，逐 basin 对 HBV 胜率 58%。
+> 诚实归因：+0.19 主要是 **PET bug 修复**（playbook 的 PET 审计暴露了它），非新方法；
+> Oudin>PT（XAJ 的 kc 自补偿 PET）。详见 `docs/technical/xaj_playbook_iteration_log.md`。
+> **行动项**：4.1 表中"531 basin XAJ 率定 ❌"已可标 ✅（本地完成）。
+
+---
+
 ## 1. 动机与背景
 
 ### 1.1 研究空白

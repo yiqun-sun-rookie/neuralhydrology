@@ -83,6 +83,30 @@ if _BOUNDS_PRESET == "v1":
 else:
     PARAM_BOUNDS = _BOUNDS_V5
 
+# Named presets so bounds can be selected at RUNTIME (passed to the calibrator
+# via ``param_bounds=``) instead of relying on the import-time HBV_BOUNDS env
+# var. The env mechanism above is a reproducibility footgun: the repro_v01
+# headline used 'v1' but the module default is 'v5', so a run's bounds could not
+# be recovered from a CLI flag. Mirrors xaj_global_pilot.bounds_presets and
+# gr4j_model.resolve_gr4j_bounds so all three runners share one CLI shape.
+BOUNDS_PRESETS = {"v1": _BOUNDS_V1, "v5": _BOUNDS_V5}
+
+
+def resolve_hbv_bounds(preset: str) -> dict:
+    """Return the 13-parameter HBV-lite bounds dict for ``preset``.
+
+    'v1' = hydroDL2 literature-tight (Feng et al. 2022 WRR).
+    'v5' = wider bounds (extra headroom for some basins).
+
+    The returned dict is a fresh copy (tuple values) so callers cannot mutate
+    the module presets. Raises ``ValueError`` on an unknown preset.
+    """
+    key = preset.lower()
+    if key not in BOUNDS_PRESETS:
+        raise ValueError(
+            f"Unknown HBV bounds preset {preset!r}. Known: {sorted(BOUNDS_PRESETS)}")
+    return {name: tuple(rng) for name, rng in BOUNDS_PRESETS[key].items()}
+
 
 @njit(cache=True, fastmath=True)
 def _simulate_loop(

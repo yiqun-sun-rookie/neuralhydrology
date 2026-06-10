@@ -74,7 +74,7 @@ SOLVER_NAME = "explicit_euler_dt1"
 def _run_one(args_tuple):
     (basin_id, data_root, n_trials, n_restarts, forcing,
      cal_period, eval_period, loss, kge_weight, pet_method,
-     init_mean, init_sigma, warmup_year) = args_tuple
+     init_mean, init_sigma, warmup_year, bounds_preset) = args_tuple
 
     # Worker must use same import path as Numba cache (no `src.` prefix).
     import sys as _sys
@@ -82,7 +82,7 @@ def _run_one(args_tuple):
         _sys.path.insert(0, str(_REPO_ROOT / "src"))
     from hydroagent.data_loading import load_camels_basin
     from scl_hydro.hbv_lite_cma_calibrate import calibrate_hbv_lite_cma
-    from scl_hydro.hbv_lite_numpy import simulate_hbv_lite
+    from scl_hydro.hbv_lite_numpy import resolve_hbv_bounds, simulate_hbv_lite
     from xaj_global_pilot.metrics import compute_metrics
 
     t0 = time.time()
@@ -90,10 +90,17 @@ def _run_one(args_tuple):
     eval_start, eval_end = eval_period
 
     try:
+        # keep_obs_nan_days=True keeps the forcing series CONTIGUOUS even when
+        # obs has missing days, matching the GR4J/XAJ runners exactly (the
+        # calibrator masks NaN obs in its objective). Verified 0/531 missing
+        # days in the repro_v01 cal/eval windows so this is bit-identical to the
+        # historical default-False path here, but removes a cross-model code-
+        # path asymmetry (2026-06-08 fairness audit) and a latent footgun for
+        # other windows/datasets.
         forcing_cal, obs_cal, _ = load_camels_basin(
             basin_id, data_root=data_root,
             start_date=cal_start, end_date=cal_end, forcing=forcing,
-            pet_method=pet_method,
+            pet_method=pet_method, keep_obs_nan_days=True,
         )
         rain_cal = forcing_cal["prcp"].values.astype(np.float64)
         pet_col = "ep" if "ep" in forcing_cal.columns else (
@@ -111,6 +118,7 @@ def _run_one(args_tuple):
             n_trials=n_trials, n_restarts=n_restarts,
             loss=loss, kge_weight=kge_weight,
             init_mean_norm=init_mean, init_sigma=init_sigma,
+            param_bounds=resolve_hbv_bounds(bounds_preset),
         )
 
         # Determine eval-period init state. Two conventions:
@@ -149,10 +157,13 @@ def _run_one(args_tuple):
         else:
             eval_init_state = cal_result["final_state"]
 
+        # keep_obs_nan_days=True for contiguous eval forcing (see cal-load note);
+        # compute_metrics drops NaN-obs days so the score is unaffected. Matches
+        # GR4J/XAJ runners.
         forcing_eval, obs_eval, _ = load_camels_basin(
             basin_id, data_root=data_root,
             start_date=eval_start, end_date=eval_end, forcing=forcing,
-            pet_method=pet_method,
+            pet_method=pet_method, keep_obs_nan_days=True,
         )
         rain_eval = forcing_eval["prcp"].values.astype(np.float64)
         pet_eval = forcing_eval[pet_col].values.astype(np.float64)
@@ -228,6 +239,14 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--pet-method", choices=["oudin", "priestley_taylor"], default="oudin")
     p.add_argument("--init-mean", type=float, default=0.5)
     p.add_argument("--init-sigma", type=float, default=0.3)
+    p.add_argument("--bounds-preset", default="v1",
+                   help="HBV bounds preset key (see hbv_lite_numpy.BOUNDS_PRESETS). "
+                        "v1 = hydroDL2 literature-tight (repro_v01 headline); v5 = wide. "
+                        "Authoritative — overrides the import-time HBV_BOUNDS env var.")
+    p.add_argument("--output-subdir", default=MODEL_NAME,
+                   help="Subdir under the repro_v01 results root to write per-basin csvs "
+                        "(and the summary filename prefix). Defaults to the model name so "
+                        "existing behaviour is unchanged.")
     p.add_argument("--output-root", default=None)
     p.add_argument("--skip-existing", dest="skip_existing", action="store_true", default=True)
     p.add_argument("--no-skip-existing", dest="skip_existing", action="store_false")
@@ -251,7 +270,7 @@ def main(argv=None) -> int:
         basins = basins[: args.limit]
 
     output_root = Path(args.output_root) if args.output_root else benchmark_results_dir(REPRO_VERSION)
-    model_dir = output_root / MODEL_NAME
+    model_dir = output_root / args.output_subdir
     summary_dir = output_root / "summary"
     model_dir.mkdir(parents=True, exist_ok=True)
     summary_dir.mkdir(parents=True, exist_ok=True)
@@ -265,7 +284,10 @@ def main(argv=None) -> int:
 
     print(f"[{time.strftime('%H:%M:%S')}] {MODEL_NAME} 531 full (CMA-ES)")
     print(f"  protocol      = repro_v01 ({args.trials} trials × {args.restarts} restarts)")
-    print(f"  forcing       = {args.forcing}")
+    print(f"  forcing       = {args.forcing}  pet = {args.pet_method}  bounds = {args.bounds_preset}")
+    print(f"  loss          = {args.loss} (kge_w={args.kge_weight})  init_mean={args.init_mean} sigma={args.init_sigma}")
+    print(f"  warmup_year   = {args.warmup_year}")
+    print(f"  out subdir    = {model_dir}")
     print(f"  workers       = {args.workers}")
     print(f"  basins total  = {len(basins)}, skipped = {skipped}, todo = {len(todo)}")
 
@@ -277,7 +299,7 @@ def main(argv=None) -> int:
         (b, args.data_root, args.trials, args.restarts,
          args.forcing, cal_period, eval_period,
          args.loss, args.kge_weight, args.pet_method,
-         args.init_mean, args.init_sigma, args.warmup_year)
+         args.init_mean, args.init_sigma, args.warmup_year, args.bounds_preset)
         for b in todo
     ]
 
@@ -325,14 +347,27 @@ def main(argv=None) -> int:
     else:
         df = pd.DataFrame(rows)
 
-    summary_csv = summary_dir / f"{MODEL_NAME}_local_full.csv"
+    summary_csv = summary_dir / f"{args.output_subdir}_local_full.csv"
     df.to_csv(summary_csv, index=False)
 
     metadata = {
         "protocol": "repro_v01",
         "protocol_version": REPRO_VERSION,
         "model": MODEL_NAME,
+        "output_subdir": args.output_subdir,
         "forcing": args.forcing,
+        # 2026-06-08 audit (Finding C/E): record PET/warmup/init/loss + the
+        # bounds preset so a run is reproducible from metadata alone. As of S2
+        # the bounds are selected at RUNTIME via --bounds-preset (threaded into
+        # calibrate_hbv_lite_cma) and recorded below as "bounds_preset"; this is
+        # authoritative and overrides the legacy import-time HBV_BOUNDS env var.
+        "pet_method": args.pet_method,
+        "warmup_year": args.warmup_year,
+        "init_mean": args.init_mean,
+        "init_sigma": args.init_sigma,
+        "loss": args.loss,
+        "kge_weight": args.kge_weight,
+        "bounds_preset": args.bounds_preset,
         "calibration_start": cal_period[0],
         "calibration_end": cal_period[1],
         "evaluation_start": eval_period[0],
@@ -351,7 +386,7 @@ def main(argv=None) -> int:
         "host_cpu_count": os.cpu_count(),
         "model_source": "ported from mhpi/hydroDL2 (Feng et al. 2022 WRR), NumPy+Numba",
     }
-    (summary_dir / f"{MODEL_NAME}_local_full.metadata.json").write_text(
+    (summary_dir / f"{args.output_subdir}_local_full.metadata.json").write_text(
         json.dumps(metadata, indent=2), encoding="utf-8",
     )
 

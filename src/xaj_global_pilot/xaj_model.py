@@ -149,6 +149,27 @@ def _nse(obs: np.ndarray, sim: np.ndarray) -> float:
     return 1.0 - float(((o - s) ** 2).sum()) / denom
 
 
+def _kge(obs: np.ndarray, sim: np.ndarray) -> float:
+    """Kling-Gupta efficiency (same formulation as scl_hydro HBV-lite calibrator)."""
+    mask = np.isfinite(obs) & np.isfinite(sim)
+    if mask.sum() < 10:
+        return float('-inf')
+    o = obs[mask]
+    s = sim[mask]
+    o_mean, s_mean = o.mean(), s.mean()
+    o_std, s_std = o.std(), s.std()
+    if o_std == 0 or o_mean == 0:
+        return float('-inf')
+    r_num = float(((o - o_mean) * (s - s_mean)).sum())
+    r_den = float(np.sqrt(((o - o_mean) ** 2).sum() * ((s - s_mean) ** 2).sum()))
+    if r_den == 0:
+        return float('-inf')
+    r = r_num / r_den
+    alpha = s_std / o_std
+    beta = s_mean / o_mean
+    return 1.0 - float(np.sqrt((r - 1) ** 2 + (alpha - 1) ** 2 + (beta - 1) ** 2))
+
+
 # ===========================================================================
 # PDD + XAJ 耦合模型
 # ===========================================================================
@@ -266,13 +287,22 @@ def calibrate_xaj_power_runoff(rain: np.ndarray, pet: np.ndarray, obs: np.ndarra
 
 
 def calibrate_pdd_xaj(rain: np.ndarray, pet: np.ndarray, temp: np.ndarray,
-                      obs: np.ndarray, n_trials: int = 5000, n_restarts: int = 3) -> dict:
-    """CMA-ES 多重启率定 PDD+XAJ 耦合模型 (20 参数)。"""
-    all_bounds = {**PDD_PARAM_BOUNDS, **PARAM_BOUNDS}
+                      obs: np.ndarray, n_trials: int = 5000, n_restarts: int = 3,
+                      init_mean: float = 0.5, init_sigma: float = 0.3,
+                      loss: str = 'nse', kge_weight: float = 0.5,
+                      param_bounds: dict | None = None) -> dict:
+    """CMA-ES 多重启率定 PDD+XAJ 耦合模型 (20 参数)。
+
+    playbook knobs forwarded to ``_cmaes_multi_restart``. ``param_bounds`` lets a
+    caller override the default bounds (for the bounds-widening lever) while
+    keeping the 20-parameter ordering of ``PDD_XAJ_PARAM_NAMES``.
+    """
+    all_bounds = param_bounds if param_bounds is not None else {**PDD_PARAM_BOUNDS, **PARAM_BOUNDS}
     return _cmaes_multi_restart(
         lambda rpt_p: simulate_pdd_xaj(rpt_p[0], rpt_p[1], rpt_p[2], rpt_p[3]),
         (rain, pet, temp), obs, PDD_XAJ_PARAM_NAMES, all_bounds,
         n_trials=n_trials, n_restarts=n_restarts,
+        init_mean=init_mean, init_sigma=init_sigma, loss=loss, kge_weight=kge_weight,
     )
 
 
@@ -317,10 +347,20 @@ def calibrate_pdd_xaj_power_runoff(rain: np.ndarray, pet: np.ndarray, temp: np.n
 # ---------------------------------------------------------------------------
 
 def _cmaes_multi_restart(sim_fn, forcing_tuple, obs, param_names, param_bounds,
-                         n_trials=2000, n_restarts=3):
+                         n_trials=2000, n_restarts=3,
+                         init_mean=0.5, init_sigma=0.3,
+                         loss='nse', kge_weight=0.5,
+                         constraint_fn=_enforce_ki_kg):
     """多重启 CMA-ES 率定，取最优结果。
 
     sim_fn: callable((*forcing_tuple, params_dict)) -> (q, state)
+
+    Playbook knobs (default-preserving, so existing callers are unchanged):
+    - init_mean / init_sigma : CMA-ES starting mean / step-size in [0,1] norm space.
+    - loss : 'nse' | 'kge' | 'hybrid'. hybrid = (1-w)*(1-nse) + w*(1-kge).
+    - constraint_fn : post-decode parameter constraint applied in-place to the
+      param dict. Defaults to ``_enforce_ki_kg`` so all existing XAJ callers are
+      byte-identical. GR4J (no ki/kg) passes ``constraint_fn=None``.
     """
     lo = np.array([param_bounds[n][0] for n in param_names])
     hi = np.array([param_bounds[n][1] for n in param_names])
@@ -331,19 +371,31 @@ def _cmaes_multi_restart(sim_fn, forcing_tuple, obs, param_names, param_bounds,
     def objective(x_norm):
         x = lo + np.clip(x_norm, 0.0, 1.0) * (hi - lo)
         p = dict(zip(param_names, x.tolist()))
-        _enforce_ki_kg(p)
+        if constraint_fn is not None:
+            constraint_fn(p)
         try:
             q, _ = sim_fn((*forcing_tuple, p))
             q_eval = q[warmup:]
-            nse = _nse(obs_eval, q_eval)
-            return 1.0 - nse if np.isfinite(nse) else 2.0
+            if loss == 'nse':
+                v = _nse(obs_eval, q_eval)
+                return 1.0 - v if np.isfinite(v) else 2.0
+            if loss == 'kge':
+                v = _kge(obs_eval, q_eval)
+                return 1.0 - v if np.isfinite(v) else 2.0
+            if loss == 'hybrid':
+                nse = _nse(obs_eval, q_eval)
+                kge = _kge(obs_eval, q_eval)
+                if not (np.isfinite(nse) and np.isfinite(kge)):
+                    return 2.0
+                return (1.0 - kge_weight) * (1.0 - nse) + kge_weight * (1.0 - kge)
+            raise ValueError(f"Unknown loss: {loss}")
         except Exception:
             return 2.0
 
     best_overall = None
     for restart in range(n_restarts):
         seed = 42 + restart * 1000
-        es = cma.CMAEvolutionStrategy([0.5] * ndim, 0.3, {
+        es = cma.CMAEvolutionStrategy([init_mean] * ndim, init_sigma, {
             'bounds': [[0.0] * ndim, [1.0] * ndim],
             'maxfevals': n_trials,
             'seed': seed,
@@ -356,7 +408,8 @@ def _cmaes_multi_restart(sim_fn, forcing_tuple, obs, param_names, param_bounds,
 
     best_x = lo + np.clip(best_overall[0], 0.0, 1.0) * (hi - lo)
     best_params = dict(zip(param_names, best_x.tolist()))
-    _enforce_ki_kg(best_params)
+    if constraint_fn is not None:
+        constraint_fn(best_params)
 
     try:
         best_q, final_state = sim_fn((*forcing_tuple, best_params))

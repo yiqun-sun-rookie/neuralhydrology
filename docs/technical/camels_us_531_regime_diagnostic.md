@@ -1,9 +1,11 @@
 # XAJ-PDD on CAMELS-US 531: Hydroclimatic-Regime Diagnostic
 
 **Source data:** `results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/xaj_pdd_local_full.csv`
-**Figure:** `results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/diagnostic/xaj_pdd_regime_breakdown.png`
-**Per-basin attributes table:** `results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/diagnostic/xaj_pdd_per_basin_with_attrs.csv`
-**Generated:** 2026-04-29 (after 531-basin local run, post loader-fix)
+**Per-basin (ours + 5 published):** `results/.../diagnostic/cross_method_per_basin_nse.csv`
+**Figures:**
+- `xaj_pdd_regime_breakdown.png` — XAJ-PDD self-diagnostic (regime, aridity, snow, seasonality)
+- `cross_method_regime_comparison.png` — XAJ-PDD vs 5 published benchmarks × regime (heatmap + grouped bar)
+**Generated:** 2026-04-29 (regime self-diagnostic), updated 2026-04-30 (cross-method comparison after pulling Kratzert 2019 ealstm `all_metrics.p` per-basin NSE)
 
 This document is the regime-stratified diagnostic of XAJ-PDD on the protocol-aligned CAMELS-US 531 benchmark, replacing the misleading 15-basin median 0.637 narrative with an honest, mechanistically grounded picture.
 
@@ -96,9 +98,76 @@ The 0.4458 → -0.029 collapse from humid to arid is therefore **not a calibrati
 - *"XAJ-PDD outperforms / is comparable to SAC-SMA + Snow-17."* — Even on humid + snow regimes the gap to published 0.68 median is ~0.15–0.25 NSE.
 - *"XAJ-PDD is suitable for global conceptual benchmarking without regime stratification."* — Counter-evidence here.
 
-## 7. Open follow-ups
+## 7. Cross-method comparison (XAJ-PDD vs 5 published benchmarks)
 
-1. **447 common-basin restriction.** Recompute our median on the 447 subset Kratzert 2019 Table 3 uses, so the gap statement is apples-to-apples. (See `camels_us_531_published_target.md` §1.6.)
-2. **Snow-dominated blow-ups.** Inspect the 6 snow-regime catastrophic failures — likely high-elevation arid basins where the snow-fraction threshold misclassifies them.
-3. **HBV / GR4J under same protocol.** When the HPC sbatch returns HBV / GR4J results, repeat this regime breakdown for both. The hypothesis is that the regime gradient is a property of saturation-excess conceptual models in general, not just XAJ — and HBV / GR4J should show a similar pattern (HBV uses a similar storage-capacity formulation; GR4J similarly).
-4. **Comparison against SAC-SMA on a per-regime basis.** When the HydroShare benchmark NetCDFs are accessible, derive per-basin SAC-SMA NSE and recreate this table for SAC-SMA — does SAC-SMA also collapse in semi-arid/arid? If not, the gap is concentrated in arid regions and provides a sharper diagnostic.
+Per-basin NSE for SAC-SMA / VIC / FUSE / HBV / mHM was extracted from
+`kratzert/ealstm_regional_modeling/notebooks/all_metrics.p` (the same
+NSE values published in Kratzert 2019), filtered to our 531 set, and
+merged with our regime classification.
+
+### 7.1 Median NSE: model × regime (our 531 set)
+
+| Model | snow-dominated | humid | semi-humid | semi-arid/arid | ALL 531 |
+|-------|---------------:|------:|-----------:|---------------:|--------:|
+| **XAJ-PDD (ours)**     | 0.509 | 0.444 | 0.406 | **-0.029** | **0.446** |
+| SAC-SMA + Snow-17      | 0.607 | 0.627 | 0.573 | 0.385 | 0.607 |
+| VIC (basin-cal)        | 0.574 | 0.578 | 0.471 | 0.225 | 0.554 |
+| mHM (basin-cal)        | 0.676 | 0.681 | 0.610 | 0.354 | 0.665 |
+| **HBV (upper)** — best in every regime | **0.715** | **0.684** | **0.610** | **0.377** | **0.678** |
+| FUSE-902               | 0.690 | 0.662 | 0.593 | 0.311 | 0.654 |
+
+### 7.2 Strict head-to-head on the 447 common subset
+
+The 6-way intersection (XAJ-PDD + 5 published, all with finite NSE) on
+our 531 set yields **exactly 447 basins** — independently reproducing
+the 447 figure quoted in Kratzert 2019.
+
+| Model | Median NSE on 447 |
+|-------|-------------------|
+| **XAJ-PDD (ours)** | **0.4382** |
+| SAC-SMA + Snow-17 | 0.6028 |
+| VIC (basin-cal) | 0.5513 |
+| mHM (basin-cal) | 0.6659 |
+| HBV (upper) | 0.6756 |
+| FUSE-902 | 0.6505 |
+
+**Gap on the strict 447 subset:**
+- XAJ-PDD vs SAC-SMA: **-0.16 NSE units** (apples-to-apples, same basins, same protocol)
+- XAJ-PDD vs HBV upper: -0.24
+- XAJ-PDD is the lowest of all six tested benchmarks in every regime.
+
+Our median almost does not change between 531 and 447 (0.4458 → 0.4382, drop of 0.008). The 84 basins removed by the intersection filter are NOT a subset where XAJ-PDD is uniquely bad — they are basins where some published model also failed.
+
+### 7.3 The "regime gradient" is shared across the conceptual family
+
+All conceptual benchmarks lose ~0.24-0.35 NSE going from humid to semi-arid/arid:
+
+| Model | Humid median | Arid median | Drop |
+|-------|-------------:|------------:|-----:|
+| SAC-SMA + Snow-17 | 0.627 | 0.385 | -0.24 |
+| VIC | 0.578 | 0.225 | -0.35 |
+| mHM | 0.681 | 0.354 | -0.33 |
+| HBV upper | 0.684 | 0.377 | -0.31 |
+| FUSE-902 | 0.662 | 0.311 | -0.35 |
+| **XAJ-PDD (ours)** | **0.444** | **-0.029** | **-0.47** |
+
+**This reframes the §5 mechanistic interpretation.** The saturation-excess regime collapse is a property of the *whole conceptual family*, not a XAJ-specific defect. XAJ-PDD's collapse is **degree, not kind** — but it is the most severe (-0.47 vs the -0.24 to -0.35 of the published five). XAJ-PDD's storage-capacity formulation has less flexibility than HBV's lower-zone or SAC-SMA's lower-zone tension storage to absorb the structural mismatch in arid basins.
+
+## 8. Updated paper claims
+
+### Newly supported (after cross-method analysis)
+
+1. *"On the protocol-aligned 531-basin benchmark, XAJ-PDD reaches median NSE 0.45, the lowest of six tested conceptual benchmarks (SAC-SMA 0.61, VIC 0.55, mHM 0.67, HBV upper 0.68, FUSE-902 0.65)."*
+2. *"All six conceptual benchmarks show a strong regime gradient (humid → arid drop of 0.24–0.47 NSE units), confirming that saturation-excess collapse in arid basins is a property of the conceptual family rather than an XAJ-specific deficiency."*
+3. *"XAJ-PDD's collapse is the most severe of the six (-0.47 humid → arid), pointing to lower flexibility in its storage-capacity formulation compared with SAC-SMA / mHM / HBV."*
+4. *"Strict head-to-head on the 447 basins where all six models converge: XAJ-PDD median NSE 0.438 vs SAC-SMA 0.603, gap -0.16 NSE units."*
+
+### Reframed (after cross-method analysis)
+
+The earlier framing "*XAJ structural assumption violated in arid regimes*" was correct but incomplete — **all** these models share that limitation. The honest framing is: "*XAJ-PDD ranks below the published conceptual family across every hydroclimatic regime, with the gap widest in arid regimes where the saturation-excess assumption is violated by all family members*."
+
+## 9. Open follow-ups
+
+1. **Snow-dominated blow-ups.** Inspect the 6 snow-regime catastrophic failures — likely high-elevation arid basins where the snow-fraction threshold misclassifies them.
+2. **HBV / GR4J ours under same protocol.** When the HPC sbatch returns our own HBV / GR4J results, compare them against the published HBV / GR4J on the regime grid. Do our implementations recover comparable performance? This is the test of whether the gap is "model class" vs "implementation".
+3. **Per-basin paired comparison.** For each basin, compute (XAJ-PDD - SAC-SMA), and map the spatial pattern. Are the worst gaps concentrated in particular HUC2 regions or attribute combinations? This could identify a structural amendment direction (e.g., add an infiltration-excess fast-runoff component for arid basins).

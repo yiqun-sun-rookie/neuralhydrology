@@ -75,6 +75,7 @@ def calibrate_hbv_lite_cma(
     kge_weight: float = 0.5,
     init_mean_norm: float | None = None,
     init_sigma: float = 0.3,
+    param_bounds: dict | None = None,
 ) -> dict:
     """CMA-ES multi-restart calibration of HBV-light.
 
@@ -86,13 +87,20 @@ def calibrate_hbv_lite_cma(
         Max CMA-ES function evaluations per restart.
     n_restarts : int
         Independent CMA-ES runs (different seeds), best retained.
+    param_bounds : dict | None
+        Per-parameter ``(lo, hi)`` bounds keyed by ``PARAM_NAMES``. When
+        ``None`` (default) the module-level ``PARAM_BOUNDS`` is used, which
+        preserves the historical import-time / ``HBV_BOUNDS``-env behaviour
+        bit-for-bit. Pass ``resolve_hbv_bounds(preset)`` to select bounds at
+        runtime (used by the ``--bounds-preset`` CLI).
 
     Returns
     -------
     dict with: nse, optimized_params, qsim, final_state.
     """
-    lo = np.array([PARAM_BOUNDS[n][0] for n in PARAM_NAMES])
-    hi = np.array([PARAM_BOUNDS[n][1] for n in PARAM_NAMES])
+    bounds = PARAM_BOUNDS if param_bounds is None else param_bounds
+    lo = np.array([bounds[n][0] for n in PARAM_NAMES])
+    hi = np.array([bounds[n][1] for n in PARAM_NAMES])
     ndim = len(PARAM_NAMES)
     warmup = min(WARMUP_DAYS, len(obs) // 4)
     obs_eval = obs[warmup:]
