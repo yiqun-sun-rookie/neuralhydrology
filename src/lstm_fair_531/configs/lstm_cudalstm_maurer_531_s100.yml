@@ -1,0 +1,87 @@
+# Iteration 1 — faithful Kratzert 2019 CudaLSTM(=LSTM+static), full 531, single seed.
+# 与三学派同协议(531 / reverse split / Maurer / NSE), 超参逐字对齐 Kratzert main.py GLOBAL_SETTINGS.
+experiment_name: lstm_cudalstm_maurer_s100
+run_dir: results/18_lstm_fair_531
+dataset: camels_us
+data_dir: data/camels_us
+
+train_basin_file: src/xaj_global_pilot/configs/conceptual_benchmark_camels_us_531_repro.txt
+validation_basin_file: src/xaj_global_pilot/configs/conceptual_benchmark_camels_us_531_repro.txt
+test_basin_file: src/xaj_global_pilot/configs/conceptual_benchmark_camels_us_531_repro.txt
+
+train_start_date: '01/10/1999'
+train_end_date: '30/09/2008'
+test_start_date: '01/10/1989'
+test_end_date: '30/09/1999'
+
+device: cuda:0
+
+# --- model: Kratzert 2019 (= LSTM + concatenated static attrs) ---
+model: cudalstm
+head: regression
+hidden_size: 256
+initial_forget_bias: 5
+output_dropout: 0.4
+output_activation: linear
+
+# --- training: Kratzert main.py GLOBAL_SETTINGS ---
+optimizer: Adam
+loss: NSE                  # MaskedNSELoss(eps=0.1) = Kratzert NSE*
+learning_rate:
+  0: 1e-3
+  11: 5e-4
+  21: 1e-4
+batch_size: 256
+epochs: 30
+seq_length: 270
+predict_last_n: 1
+clip_gradient_norm: 1.0
+seed: 100
+
+# --- data ---
+forcings:
+  - maurer
+dynamic_inputs:
+  - PRCP(mm/day)
+  - Tmin(C)
+  - Tmax(C)
+  - SRAD(W/m2)
+  - Vp(Pa)
+target_variables:
+  - QObs(mm/d)
+static_attributes:
+  - p_mean
+  - pet_mean
+  - aridity
+  - p_seasonality
+  - frac_snow
+  - high_prec_freq
+  - high_prec_dur
+  - low_prec_freq
+  - low_prec_dur
+  - elev_mean
+  - slope_mean
+  - area_gages2
+  - frac_forest
+  - lai_max
+  - lai_diff
+  - gvf_max
+  - gvf_diff
+  - soil_depth_pelletier
+  - soil_depth_statsgo
+  - soil_porosity
+  - soil_conductivity
+  - max_water_content
+  - sand_frac
+  - silt_frac
+  - clay_frac
+  - carbonate_rocks_frac
+  - geol_permeability
+
+# --- eval / logging: validation OFF (Kratzert 固定 30 epoch 无早停) ---
+metrics:
+  - NSE
+num_workers: 4
+log_tensorboard: false
+log_n_figures: 0
+save_weights_every: 10
