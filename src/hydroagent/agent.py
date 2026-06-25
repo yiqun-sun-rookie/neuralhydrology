@@ -812,7 +812,7 @@ _STRUCTURE_SCHEMA = {
 class ClaudeClient(BaseLLMClient):
     """LLM client using the Anthropic Claude API with adaptive thinking and structured outputs."""
 
-    def __init__(self, api_key: Optional[str] = None, model: str = 'claude-opus-4-6'):
+    def __init__(self, api_key: Optional[str] = None, model: str = 'claude-opus-4-8'):
         try:
             import anthropic  # noqa: F401
         except ImportError:

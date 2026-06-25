@@ -116,7 +116,7 @@ def create_llm_client(
     elif backend == 'deepseek':
         return DeepSeekClient(api_key=api_key, model=model or 'deepseek-chat')
     elif backend == 'claude':
-        return ClaudeClient(api_key=api_key, model=model or 'claude-opus-4-6')
+        return ClaudeClient(api_key=api_key, model=model or 'claude-opus-4-8')
     elif backend == 'ollama':
         return OllamaClient(model=model or 'llama3.2')
     elif backend == 'random':

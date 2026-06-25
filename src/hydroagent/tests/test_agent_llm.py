@@ -75,7 +75,7 @@ def main():
             client = DeepSeekClient(api_key=args.api_key)
             print("    Using DeepSeek")
         elif args.backend == 'claude':
-            model = args.model or 'claude-opus-4-6'
+            model = args.model or 'claude-opus-4-8'
             client = ClaudeClient(api_key=args.api_key, model=model)
             print("    Using Claude: %s" % model)
         elif args.backend == 'mock':
