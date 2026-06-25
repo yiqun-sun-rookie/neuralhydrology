@@ -53,6 +53,43 @@ _EXAMPLE_STRUCTURE = {
 }
 
 
+def _validate_structure(structure):
+    """Lightweight pre-calibration validation. Returns a list of error strings."""
+    errors = []
+    if not isinstance(structure, dict):
+        return ['structure must be a JSON object']
+    layers = structure.get('layers')
+    if not isinstance(layers, list) or not layers:
+        return ["'layers' must be a non-empty list"]
+    known = set(_REGISTRY) | set(_BASEELEM_REGISTRY)
+    ids = set()
+    for i, lyr in enumerate(layers):
+        if not isinstance(lyr, dict):
+            errors.append(f'layer[{i}] is not an object')
+            continue
+        lid, ltype = lyr.get('id'), lyr.get('type')
+        if not lid:
+            errors.append(f'layer[{i}] missing "id"')
+        else:
+            ids.add(lid)
+        if ltype not in known:
+            errors.append(f"layer '{lid}' has unknown component type {ltype!r}")
+    for lyr in layers if isinstance(layers, list) else []:
+        if not isinstance(lyr, dict):
+            continue
+        for inp in lyr.get('inputs', []) or []:
+            if isinstance(inp, str) and '.' in inp:
+                src = inp.split('.')[0]
+                if src not in ids:
+                    errors.append(
+                        f"layer '{lyr.get('id')}' input {inp!r} references undefined id {src!r}")
+    for lc in structure.get('lag_functions', []) or []:
+        lt = lc.get('type', 'HalfTriangularLag')
+        if lt not in _LAG_REGISTRY:
+            errors.append(f"unknown lag type {lt!r}")
+    return errors
+
+
 def _emit(obj, code=0):
     """Write the JSON result to the REAL stdout and exit. Call OUTSIDE _quiet()."""
     json.dump(obj, sys.stdout, indent=2, default=str)
@@ -123,6 +160,16 @@ def cmd_basin_info(args):
     })
 
 
+def cmd_evaluate(args):
+    structure = json.loads(Path(args.structure).read_text(encoding='utf-8'))
+    errors = _validate_structure(structure)
+    if errors:
+        _emit({'valid': False, 'basin_id': args.basin_id, 'protocol': args.protocol,
+               'errors': errors, 'nse': None, 'eval_nse': None}, code=2)
+    # (valid path implemented in Task 4)
+    _emit({'valid': True, 'basin_id': args.basin_id, 'note': 'calibration not yet implemented'})
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog='hydro_cli', description='HydroAgent discovery CLI')
     sub = p.add_subparsers(dest='cmd', required=True)
@@ -131,6 +178,13 @@ def build_parser():
     bi = sub.add_parser('basin-info', help='Print basin attributes + protocol windows')
     bi.add_argument('basin_id')
     bi.add_argument('--protocol', choices=list(PROTOCOLS), default='fast')
+
+    ev = sub.add_parser('evaluate', help='Validate, calibrate, diagnose a structure')
+    ev.add_argument('basin_id')
+    ev.add_argument('--structure', required=True, help='Path to structure JSON')
+    ev.add_argument('--protocol', choices=list(PROTOCOLS), default='fast')
+    ev.add_argument('--trials', type=int, default=2000, help='CMA-ES n_trials')
+    ev.add_argument('--out', default=None, help='Session output dir')
     return p
 
 
@@ -141,6 +195,8 @@ def main():
         cmd_components(args)
     elif args.cmd == 'basin-info':
         cmd_basin_info(args)
+    elif args.cmd == 'evaluate':
+        cmd_evaluate(args)
 
 
 if __name__ == '__main__':

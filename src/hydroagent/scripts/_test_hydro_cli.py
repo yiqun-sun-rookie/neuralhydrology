@@ -47,9 +47,24 @@ def test_basin_info():
     print('test_basin_info OK')
 
 
+def test_evaluate_invalid():
+    bad = {'model_name': 'bad', 'layers': [
+        {'id': 'x', 'type': 'NotAComponent', 'parameters': {}, 'inputs': ['prcp']}]}
+    with tempfile.NamedTemporaryFile('w', suffix='.json', delete=False) as fh:
+        json.dump(bad, fh)
+        path = fh.name
+    r = _run('evaluate', BASIN, '--structure', path, '--protocol', 'fast')
+    assert r.returncode == 2, f'exit={r.returncode} stdout={r.stdout[:300]}'
+    data = json.loads(r.stdout)
+    assert data['valid'] is False
+    assert any('NotAComponent' in e for e in data['errors']), data['errors']
+    print('test_evaluate_invalid OK')
+
+
 TESTS = {
     'components': test_components,
     'basin_info': test_basin_info,
+    'evaluate_invalid': test_evaluate_invalid,
 }
 
 
