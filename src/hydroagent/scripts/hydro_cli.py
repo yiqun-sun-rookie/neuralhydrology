@@ -28,6 +28,7 @@ from hydroagent.environment import (  # noqa: E402
 from hydroagent.data_loading import load_camels_basin, load_basin_metadata  # noqa: E402
 from hydroagent.diagnosis import HydroDiagnostician  # noqa: E402
 
+
 class _Done(Exception):
     """Internal control-flow signal to break out of the _quiet() block early."""
 
@@ -176,13 +177,17 @@ def cmd_evaluate(args):
     out_dir = Path(args.out) if args.out else (
         Path('results/07_hydroagent/cc_discover')
         / f"{args.basin_id}_{datetime.now():%Y%m%d_%H%M%S}")
-    out_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        out_dir.mkdir(parents=True, exist_ok=True)
+    except OSError as e:
+        _emit({'valid': False, 'basin_id': args.basin_id, 'protocol': args.protocol,
+               'errors': [f'cannot create out_dir: {e}'], 'nse': None, 'eval_nse': None}, code=1)
     hist_path = out_dir / 'history.jsonl'
 
     payload, code = None, 0
     with _quiet():
         try:
-            forcing, obs, area = load_camels_basin(
+            forcing, obs, _ = load_camels_basin(
                 args.basin_id, start_date=cs, end_date=ce,
                 forcing=proto['forcing'], pet_method=proto['pet_method'])
             env = SuperflexEnv()
@@ -202,7 +207,7 @@ def cmd_evaluate(args):
             if nse > -900:
                 diag = doctor.generate_report(obs, qsim)
             else:
-                diag = {'metrics': doctor._empty_metrics(),
+                diag = {'metrics': HydroDiagnostician._empty_metrics(),
                         'semantic_feedback': ['Calibration failed (no valid fit).']}
             eval_nse = None
             if proto['eval']:
@@ -213,7 +218,11 @@ def cmd_evaluate(args):
                 eq = env.run_simulation(ef, params=params)
                 eval_nse = float(SuperflexEnv._nse(eo, eq))
 
-            n = sum(1 for _ in hist_path.open()) + 1 if hist_path.exists() else 1
+            if hist_path.exists():
+                with hist_path.open(encoding='utf-8') as fh:
+                    n = sum(1 for _ in fh) + 1
+            else:
+                n = 1
             qpath = out_dir / f'qsim_{n:03d}.csv'
             qsim.to_csv(qpath, header=True)
             payload = {
