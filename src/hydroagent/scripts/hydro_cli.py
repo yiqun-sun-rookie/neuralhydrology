@@ -25,6 +25,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 from hydroagent.environment import (  # noqa: E402
     SuperflexEnv, _REGISTRY, _BASEELEM_REGISTRY, _LAG_REGISTRY,
 )
+from hydroagent.data_loading import load_camels_basin, load_basin_metadata  # noqa: E402
 
 # Protocol -> data-loading config. 'fast' mirrors the v12 in-sample default;
 # 'repro_v01' aligns with the 531 benchmark (Maurer + Priestley-Taylor + split).
@@ -100,10 +101,36 @@ def cmd_components(args):
            'example': _EXAMPLE_STRUCTURE})
 
 
+def cmd_basin_info(args):
+    proto = PROTOCOLS[args.protocol]
+    cs, ce = proto['calib']
+    with _quiet():
+        try:
+            meta = load_basin_metadata(args.basin_id)
+        except Exception:
+            meta = None
+        forcing, obs, area = load_camels_basin(
+            args.basin_id, start_date=cs, end_date=ce,
+            forcing=proto['forcing'], pet_method=proto['pet_method'])
+    _emit({
+        'basin_id': args.basin_id,
+        'protocol': args.protocol,
+        'area_km2': float(area),
+        'n_days': int(len(forcing)),
+        'calib_window': list(proto['calib']),
+        'eval_window': list(proto['eval']) if proto['eval'] else None,
+        'attributes': meta,
+    })
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog='hydro_cli', description='HydroAgent discovery CLI')
     sub = p.add_subparsers(dest='cmd', required=True)
     sub.add_parser('components', help='Print component library + schema + example')
+
+    bi = sub.add_parser('basin-info', help='Print basin attributes + protocol windows')
+    bi.add_argument('basin_id')
+    bi.add_argument('--protocol', choices=list(PROTOCOLS), default='fast')
     return p
 
 
@@ -112,6 +139,8 @@ def main():
     args = parser.parse_args()
     if args.cmd == 'components':
         cmd_components(args)
+    elif args.cmd == 'basin-info':
+        cmd_basin_info(args)
 
 
 if __name__ == '__main__':

@@ -35,8 +35,21 @@ def test_components():
     print('test_components OK')
 
 
+def test_basin_info():
+    r = _run('basin-info', BASIN, '--protocol', 'fast')
+    assert r.returncode == 0, f'exit={r.returncode} stderr_tail={r.stderr[-500:]}'
+    data = json.loads(r.stdout)
+    assert data['basin_id'] == BASIN
+    assert data['area_km2'] > 0, data
+    assert data['n_days'] > 300, data
+    assert data['protocol'] == 'fast'
+    assert data['calib_window'][0] == '1990-10-01'
+    print('test_basin_info OK')
+
+
 TESTS = {
     'components': test_components,
+    'basin_info': test_basin_info,
 }
 
 
