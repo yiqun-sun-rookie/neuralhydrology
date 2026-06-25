@@ -26,6 +26,11 @@ from hydroagent.environment import (  # noqa: E402
     SuperflexEnv, _REGISTRY, _BASEELEM_REGISTRY, _LAG_REGISTRY,
 )
 from hydroagent.data_loading import load_camels_basin, load_basin_metadata  # noqa: E402
+from hydroagent.diagnosis import HydroDiagnostician  # noqa: E402
+
+class _Done(Exception):
+    """Internal control-flow signal to break out of the _quiet() block early."""
+
 
 # Protocol -> data-loading config. 'fast' mirrors the v12 in-sample default;
 # 'repro_v01' aligns with the 531 benchmark (Maurer + Priestley-Taylor + split).
@@ -166,8 +171,79 @@ def cmd_evaluate(args):
     if errors:
         _emit({'valid': False, 'basin_id': args.basin_id, 'protocol': args.protocol,
                'errors': errors, 'nse': None, 'eval_nse': None}, code=2)
-    # (valid path implemented in Task 4)
-    _emit({'valid': True, 'basin_id': args.basin_id, 'note': 'calibration not yet implemented'})
+    proto = PROTOCOLS[args.protocol]
+    cs, ce = proto['calib']
+    out_dir = Path(args.out) if args.out else (
+        Path('results/07_hydroagent/cc_discover')
+        / f"{args.basin_id}_{datetime.now():%Y%m%d_%H%M%S}")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    hist_path = out_dir / 'history.jsonl'
+
+    payload, code = None, 0
+    with _quiet():
+        try:
+            forcing, obs, area = load_camels_basin(
+                args.basin_id, start_date=cs, end_date=ce,
+                forcing=proto['forcing'], pet_method=proto['pet_method'])
+            env = SuperflexEnv()
+            try:
+                env.parse_structure(structure)
+            except Exception as e:
+                payload, code = ({'valid': False, 'basin_id': args.basin_id,
+                                  'protocol': args.protocol,
+                                  'errors': [f'{type(e).__name__}: {e}'],
+                                  'nse': None, 'eval_nse': None}, 2)
+                raise _Done
+            result = env.auto_calibrate(forcing, obs, n_trials=args.trials)
+            nse = float(result['nse'])
+            params = result['optimized_params']
+            qsim = result['qsim']
+            doctor = HydroDiagnostician()
+            if nse > -900:
+                diag = doctor.generate_report(obs, qsim)
+            else:
+                diag = {'metrics': doctor._empty_metrics(),
+                        'semantic_feedback': ['Calibration failed (no valid fit).']}
+            eval_nse = None
+            if proto['eval']:
+                es, ee = proto['eval']
+                ef, eo, _ = load_camels_basin(
+                    args.basin_id, start_date=es, end_date=ee,
+                    forcing=proto['forcing'], pet_method=proto['pet_method'])
+                eq = env.run_simulation(ef, params=params)
+                eval_nse = float(SuperflexEnv._nse(eo, eq))
+
+            n = sum(1 for _ in hist_path.open()) + 1 if hist_path.exists() else 1
+            qpath = out_dir / f'qsim_{n:03d}.csv'
+            qsim.to_csv(qpath, header=True)
+            payload = {
+                'valid': True,
+                'basin_id': args.basin_id,
+                'protocol': args.protocol,
+                'model_name': structure.get('model_name', ''),
+                'nse': nse,
+                'eval_nse': eval_nse,
+                'n_params': len(params),
+                'params': params,
+                'diagnosis': diag,
+                'qsim_path': str(qpath),
+                'history_path': str(hist_path),
+                'warnings': [] if nse > -900 else ['calibration returned -999 sentinel'],
+                'errors': [],
+            }
+            with hist_path.open('a', encoding='utf-8') as fh:
+                rec = {k: payload[k] for k in
+                       ('model_name', 'protocol', 'nse', 'eval_nse', 'params')}
+                rec['metrics'] = diag['metrics']
+                fh.write(json.dumps(rec, default=str) + '\n')
+        except _Done:
+            pass
+        except Exception as e:  # unexpected internal error
+            payload, code = ({'valid': False, 'basin_id': args.basin_id,
+                              'protocol': args.protocol,
+                              'errors': [f'internal: {type(e).__name__}: {e}'],
+                              'nse': None, 'eval_nse': None}, 1)
+    _emit(payload, code)
 
 
 def build_parser():
