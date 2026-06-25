@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import contextlib
 import json
+import math
 import os
 import sys
 import warnings
@@ -50,7 +51,7 @@ _EXAMPLE_STRUCTURE = {
     'model_name': 'HBV_light_parallel',
     'layers': [
         {'id': 'snow', 'type': 'SnowReservoir', 'parameters': {}, 'inputs': ['prcp', 'temperature']},
-        {'id': 'soil', 'type': 'UnsaturatedReservoir', 'parameters': {}, 'inputs': ['prcp', 'ep']},
+        {'id': 'soil', 'type': 'UnsaturatedReservoir', 'parameters': {}, 'inputs': ['snow.outflow', 'ep']},
         {'id': 'fast', 'type': 'PowerReservoir', 'parameters': {}, 'inputs': ['soil.runoff']},
         {'id': 'slow', 'type': 'LinearReservoir', 'parameters': {}, 'inputs': ['soil.runoff']},
     ],
@@ -90,15 +91,29 @@ def _validate_structure(structure):
                     errors.append(
                         f"layer '{lyr.get('id')}' input {inp!r} references undefined id {src!r}")
     for lc in structure.get('lag_functions', []) or []:
+        if not isinstance(lc, dict):
+            errors.append(f'lag_functions entry is not an object: {lc!r}')
+            continue
         lt = lc.get('type', 'HalfTriangularLag')
         if lt not in _LAG_REGISTRY:
             errors.append(f"unknown lag type {lt!r}")
     return errors
 
 
+def _json_safe(obj):
+    """Recursively replace non-finite floats (NaN/inf) with None for strict JSON."""
+    if isinstance(obj, float):
+        return obj if math.isfinite(obj) else None
+    if isinstance(obj, dict):
+        return {k: _json_safe(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_json_safe(v) for v in obj]
+    return obj
+
+
 def _emit(obj, code=0):
     """Write the JSON result to the REAL stdout and exit. Call OUTSIDE _quiet()."""
-    json.dump(obj, sys.stdout, indent=2, default=str)
+    json.dump(_json_safe(obj), sys.stdout, indent=2, default=str)
     sys.stdout.write('\n')
     sys.stdout.flush()
     sys.exit(code)
@@ -147,27 +162,38 @@ def cmd_components(args):
 def cmd_basin_info(args):
     proto = PROTOCOLS[args.protocol]
     cs, ce = proto['calib']
+    payload, code = None, 0
     with _quiet():
         try:
-            meta = load_basin_metadata(args.basin_id)
-        except Exception:
-            meta = None
-        forcing, obs, area = load_camels_basin(
-            args.basin_id, start_date=cs, end_date=ce,
-            forcing=proto['forcing'], pet_method=proto['pet_method'])
-    _emit({
-        'basin_id': args.basin_id,
-        'protocol': args.protocol,
-        'area_km2': float(area),
-        'n_days': int(len(forcing)),
-        'calib_window': list(proto['calib']),
-        'eval_window': list(proto['eval']) if proto['eval'] else None,
-        'attributes': meta,
-    })
+            try:
+                meta = load_basin_metadata(args.basin_id)
+            except Exception:
+                meta = None
+            forcing, obs, area = load_camels_basin(
+                args.basin_id, start_date=cs, end_date=ce,
+                forcing=proto['forcing'], pet_method=proto['pet_method'])
+            payload = {
+                'basin_id': args.basin_id,
+                'protocol': args.protocol,
+                'area_km2': float(area),
+                'n_days': int(len(forcing)),
+                'calib_window': list(proto['calib']),
+                'eval_window': list(proto['eval']) if proto['eval'] else None,
+                'attributes': meta,
+            }
+        except Exception as e:
+            payload, code = ({'basin_id': args.basin_id, 'protocol': args.protocol,
+                              'error': f'{type(e).__name__}: {e}'}, 1)
+    _emit(payload, code)
 
 
 def cmd_evaluate(args):
-    structure = json.loads(Path(args.structure).read_text(encoding='utf-8'))
+    try:
+        structure = json.loads(Path(args.structure).read_text(encoding='utf-8'))
+    except (OSError, ValueError) as e:
+        _emit({'valid': False, 'basin_id': args.basin_id, 'protocol': args.protocol,
+               'errors': [f'could not read/parse structure: {e}'],
+               'nse': None, 'eval_nse': None}, code=2)
     errors = _validate_structure(structure)
     if errors:
         _emit({'valid': False, 'basin_id': args.basin_id, 'protocol': args.protocol,
@@ -243,8 +269,9 @@ def cmd_evaluate(args):
             with hist_path.open('a', encoding='utf-8') as fh:
                 rec = {k: payload[k] for k in
                        ('model_name', 'protocol', 'nse', 'eval_nse', 'params')}
+                rec['structure'] = structure
                 rec['metrics'] = diag['metrics']
-                fh.write(json.dumps(rec, default=str) + '\n')
+                fh.write(json.dumps(_json_safe(rec), default=str) + '\n')
         except _Done:
             pass
         except Exception as e:  # unexpected internal error
