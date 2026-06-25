@@ -92,11 +92,27 @@ def test_evaluate_fast():
     print(f'test_evaluate_fast OK (nse={data["nse"]:.3f})')
 
 
+def test_evaluate_repro():
+    out = tempfile.mkdtemp(prefix='hydrocli_repro_')
+    with tempfile.NamedTemporaryFile('w', suffix='.json', delete=False) as fh:
+        json.dump(GOOD_STRUCTURE, fh)
+        path = fh.name
+    r = _run('evaluate', BASIN, '--structure', path, '--protocol', 'repro_v01',
+             '--trials', '300', '--out', out)
+    assert r.returncode == 0, f'exit={r.returncode} stderr_tail={r.stderr[-800:]}'
+    data = json.loads(r.stdout)
+    assert data['valid'] is True, data
+    assert isinstance(data['eval_nse'], float), data['eval_nse']
+    assert data['eval_nse'] > -900, data['eval_nse']
+    print(f'test_evaluate_repro OK (eval_nse={data["eval_nse"]:.3f})')
+
+
 TESTS = {
     'components': test_components,
     'basin_info': test_basin_info,
     'evaluate_invalid': test_evaluate_invalid,
     'evaluate_fast': test_evaluate_fast,
+    'evaluate_repro': test_evaluate_repro,
 }
 
 

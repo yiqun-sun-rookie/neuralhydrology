@@ -41,7 +41,7 @@ PROTOCOLS = {
         'calib': ('1990-10-01', '1993-09-30'), 'eval': None,
     },
     'repro_v01': {
-        'forcing': 'maurer_extended', 'pet_method': 'priestley_taylor',
+        'forcing': 'maurer', 'pet_method': 'priestley_taylor',
         'calib': ('1999-10-01', '2008-09-30'), 'eval': ('1989-10-01', '1999-09-30'),
     },
 }
