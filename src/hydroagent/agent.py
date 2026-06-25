@@ -150,6 +150,9 @@ Rules:
    a missing process. Removing an unhelpful component is a valid improvement.
 2. Make ONE structural change per iteration.
 3. If previous attempts failed, try a DIFFERENT component type.
+4. TOPOLOGY IS A DEGREE OF FREEDOM: do not restrict yourself to a single soil->(fast+slow) parallel
+   template. Series/cascade arrangements (one store percolating into another), alternative production
+   or routing stores, and rerouting existing connections are all valid single changes worth exploring.
 
 You MUST respond with ONLY a valid JSON object representing the improved structure.
 No explanations, no markdown formatting — just the raw JSON.
@@ -167,7 +170,9 @@ choose an appropriate INITIAL model structure for a conceptual rainfall-runoff m
 Rules:
 1. Start simple: 2-3 layers maximum. The structure will be iteratively refined later.
 2. Match the basin: snow-dominated basins need SnowReservoir, arid basins may need ConveyanceLoss,
-   forested basins may benefit from InterceptionFilter.
+   forested basins may benefit from InterceptionFilter. Pick the minimal skeleton genuinely justified
+   by THIS basin; the refinement stage will explore alternative components and topologies, so do not
+   default to a single canonical template.
 3. Every structure MUST include at least one runoff generation layer and one routing layer.
 
 You MUST respond with ONLY a valid JSON object. No explanations.
@@ -421,14 +426,18 @@ def build_structure_prompt(structure: dict, diagnosis: str, report: dict, iterat
 {chr(10).join(lines)}"""
 
     diversity_str = ""
-    if tried_types is not None and steps_since_improve >= 2:
+    if tried_types is not None and iteration >= 2:
         untried = sorted(ALL_COMPONENT_TYPES - tried_types)
-        if untried and metrics.get('NSE', 0) < target_nse:
+        if untried:
             diversity_str = f"""
 
-### Untried Components (consider using these for structural diversity)
-  Already tried: {', '.join(sorted(tried_types))}
-  NOT yet tried: {', '.join(untried)}"""
+### Structural exploration (you have many iterations — spend some exploring, not just tuning)
+  Component families already tried: {', '.join(sorted(tried_types))}
+  NOT yet tried: {', '.join(untried)}
+  This search has so far stayed within one topology. For THIS iteration, deliberately TRIAL a
+  structurally different option — either an untried component family above, OR a non-parallel
+  topology (cascade/series, percolation from one store into another, an explicit routing or
+  production store). The best structure so far is always kept, so exploring a worse one is safe."""
 
     basin_str = _format_basin_meta_section(basin_meta) if basin_meta else ""
 
@@ -996,7 +1005,7 @@ class HydroAgent:
         target_nse: float = 0.6,
         initial_structure: Optional[dict] = None,
         basin_meta: Optional[dict] = None,
-        floor_nse: float = 0.0,
+        floor_nse: float = -900.0,
         floor_patience: int = 2,
     ) -> Dict[str, Any]:
         """Run the agent reasoning loop to discover optimal model structure.
@@ -1008,7 +1017,9 @@ class HydroAgent:
             initial_structure: Starting structure JSON. Highest priority if provided.
             basin_meta: Basin physical/climatic attributes dict. If provided (and initial_structure
                 is None), the LLM initialization agent chooses a starting structure.
-            floor_nse: If best_nse stays below this after floor_patience iterations, stop early.
+            floor_nse: If best_nse stays below this after floor_patience iterations, stop
+                early. Default -900 only triggers on genuine calibration crashes (the -999
+                sentinel); a valid-but-poor structure (e.g. NSE -0.01) keeps refining.
             floor_patience: Number of iterations to wait before applying floor check.
 
         Returns:

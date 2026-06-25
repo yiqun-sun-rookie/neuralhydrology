@@ -429,14 +429,18 @@ class SuperflexEnv:
                 base_reg = _BASEELEM_REGISTRY.get(ltype)
                 out_idx = base_reg['output_index'] if base_reg else 0
                 raw = out[out_idx]
-            except RuntimeError:
+            except (RuntimeError, ValueError):
+                # SuperflexPy's Pegasus root-finder raises ValueError
+                # ('fa and fb have the same sign') when implicit-Euler bracketing
+                # fails for a parameter set. Treat as a failed element (NaN) so the
+                # failure never bubbles out of the simulation.
                 raw = np.full_like(p_arr, np.nan)
 
             if lid in lag_els:
                 lag_els[lid].set_input([raw])
                 try:
                     raw = lag_els[lid].get_output(solve=True)[0]
-                except RuntimeError:
+                except (RuntimeError, ValueError):
                     raw = np.full_like(p_arr, np.nan)
 
             outputs[lid] = raw
@@ -494,6 +498,12 @@ class SuperflexEnv:
             nse_val = self._nse(obs_data, q)
             return {'nse': float(nse_val), 'optimized_params': {}, 'qsim': q}
 
+        # Penalty cost for a crashed / non-finite evaluation. Must exceed the cost
+        # of any plausible *valid* fit (cost = 1 - NSE can reach ~7 for NSE ~= -6),
+        # otherwise CMA-ES is attracted toward the crash region and converges to
+        # parameters whose final re-simulation crashes (-> NSE = -999).
+        crash_cost = 1e6
+
         # Work in normalised [0, 1] space so CMA-ES treats all dimensions equally.
         def objective(x_norm):
             x = lo + np.clip(x_norm, 0.0, 1.0) * (hi - lo)
@@ -501,9 +511,9 @@ class SuperflexEnv:
             try:
                 q = self._run_sfpy(forcing_data, p)
                 nse = self._nse(obs_data, q)
-                return 1.0 - nse if np.isfinite(nse) else 2.0
+                return 1.0 - nse if np.isfinite(nse) else crash_cost
             except Exception:
-                return 2.0
+                return crash_cost
 
         x0 = [0.5] * ndim
         best_overall: Optional[Dict[str, Any]] = None
@@ -522,6 +532,8 @@ class SuperflexEnv:
             try:
                 best_q = self._run_sfpy(forcing_data, best_p)
                 best_nse = self._nse(obs_data, best_q)
+                if not np.isfinite(best_nse):
+                    best_nse = -999.0
             except Exception:
                 best_q = pd.Series(np.zeros(len(obs_data)), index=obs_data.index, name='qsim')
                 best_nse = -999.0
