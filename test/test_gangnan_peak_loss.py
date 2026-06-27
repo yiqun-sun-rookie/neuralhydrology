@@ -3,6 +3,7 @@ import pytest
 import torch
 
 from neuralhydrology.utils.config import Config
+from neuralhydrology.training.loss import MaskedMSELoss, MaskedPeakWeightedMSELoss
 
 
 def _cfg(**overrides):
@@ -23,9 +24,6 @@ def test_peak_loss_config_overrides():
     assert cfg.peak_loss_alpha == 2.0
     assert cfg.peak_loss_threshold == 1.0
     assert cfg.peak_loss_weight_cap == 5.0
-
-
-from neuralhydrology.training.loss import MaskedMSELoss, MaskedPeakWeightedMSELoss
 
 
 def test_alpha_zero_equals_plain_mse():
@@ -80,10 +78,16 @@ def test_gradient_finite_under_extreme_peak():
     assert torch.isfinite(y_hat.grad).all()
 
 
-def test_weight_cap_limits_single_timestep():
+def test_weight_cap_limits_peak_weight():
+    # With >1 timestep the denominator changes under capping, so this actually
+    # exercises the weight_cap branch (a single timestep would cancel w/w).
     cfg = _cfg()
     capped = MaskedPeakWeightedMSELoss(cfg, alpha=2.0, threshold=1.5, weight_cap=5.0)
-    y = torch.tensor([50.0]).reshape(-1, 1, 1)            # uncapped w = 1+2*48.5 = 98
-    y_hat = torch.tensor([0.0]).reshape(-1, 1, 1)
-    expected = 0.5 * 5.0 * (0.0 - 50.0) ** 2 / 5.0        # cap -> 0.5*2500
-    assert capped._get_loss({"y_hat": y_hat}, {"y": y}).item() == pytest.approx(expected, rel=1e-6)
+    uncapped = MaskedPeakWeightedMSELoss(cfg, alpha=2.0, threshold=1.5)
+    y = torch.tensor([50.0, 0.0]).reshape(-1, 1, 1)        # uncapped w=[98,1]; capped w=[5,1]
+    y_hat = torch.tensor([0.0, 1.0]).reshape(-1, 1, 1)
+    expected_capped = 0.5 * (5.0 * 2500.0 + 1.0 * 1.0) / (5.0 + 1.0)
+    assert capped._get_loss({"y_hat": y_hat}, {"y": y}).item() == pytest.approx(expected_capped, rel=1e-6)
+    # the cap must actually change the result vs uncapped
+    assert capped._get_loss({"y_hat": y_hat}, {"y": y}).item() != pytest.approx(
+        uncapped._get_loss({"y_hat": y_hat}, {"y": y}).item(), rel=0.01)
