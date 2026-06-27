@@ -1,0 +1,4 @@
+# The obs answer key is large (~1.9M rows) and reproducible via
+# `python -m fair_benchmark.build_frozen_obs`. Do not bloat git with it;
+# its integrity is pinned by MANIFEST.sha256 instead.
+*.parquet

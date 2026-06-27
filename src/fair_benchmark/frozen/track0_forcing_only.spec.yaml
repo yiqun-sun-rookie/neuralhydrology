@@ -1,0 +1,63 @@
+# Track-0 data card / contract. Read by the agent (to know rules) AND the
+# scoring service (to score). The engine stays data-agnostic; all specifics live
+# here. MUST be human-confirmed before use (set confirmed: true).
+track: track0_forcing_only
+confirmed: true           # human-confirmed: fields checked & contract locked
+confirmed_by: "yiqun.sun"
+confirmed_date: "2026-06-26"
+
+# --- entities + time ---
+entities:
+  kind: basin
+  count: 531
+  list_file: src/fair_benchmark/frozen/track0_forcing_only_basins.txt  # de-coupled copy (was xaj_global_pilot)
+periods:                   # reverse split (Kratzert 2019); NO validation segment
+  train: ["1999-10-01", "2008-09-30"]
+  eval:  ["1989-10-01", "1999-09-30"]
+forcing_product: maurer
+
+# --- information budget (the same-information rule) ---
+allowed_inputs:
+  dynamic:                 # 5 Maurer forcings
+    - {name: prcp,  unit: mm/day}
+    - {name: tmin,  unit: degC}
+    - {name: tmax,  unit: degC}
+    - {name: srad,  unit: W/m2}
+    - {name: vp,    unit: Pa}
+  static:                  # 27 CAMELS catchment attributes
+    count: 27
+    note: "p_mean, pet_mean, aridity, p_seasonality, frac_snow, high/low_prec_*, elev/slope/area, frac_forest, lai/gvf, soil_*, sand/silt/clay_frac, carbonate, geol_permeability"
+forbidden_inputs:          # using any of these = not same-information
+    - observed discharge / QObs / usgs_streamflow (target; held out)
+    - hydro signatures derived from obs (runoff_ratio, baseflow_index, q_mean, q5/q95, ...)
+    - future forcing/obs beyond the causal window
+    - extra remote sensing / extra met products / other-model output / manual corrections
+    - test-period or full-dataset statistics
+
+# --- target + metric ---
+target: {name: QObs, unit: mm/day}
+answer_key_held: src/fair_benchmark/frozen/track0_forcing_only_obs_eval.parquet  # DO NOT read in a submission
+metric:
+  name: NSE
+  authoritative_impl: "neuralhydrology/evaluation/metrics.py::nse"
+  aggregate: median_over_basins
+  direction: maximize
+  min_meaningful_effect: 0.01
+
+# --- baseline ladder + the number to beat ---
+baselines:                 # median NSE, full 531 unless noted
+  lstm_ensemble: {value: 0.7592, note: "8-seed; 447-subset 0.7589 — THE TARGET TO BEAT"}
+  lstm_single:   {value: 0.7332}
+  gr4j_pdd:      {value: 0.6533}
+  xaj_pdd:       {value: 0.6196}
+  hbv_lite:      {value: 0.6170}
+target_to_beat: lstm_ensemble
+
+# --- rigor wiring (engine reads these) ---
+secret_holdout_file: src/fair_benchmark/frozen/track0_forcing_only_secret_holdout_basins.txt  # 107 basins
+baseline_nse_vector: src/fair_benchmark/frozen/track0_forcing_only_baseline_per_basin_nse.csv
+allowed_data_bundle: src/fair_benchmark/frozen/bundle/  # track0_forcing.parquet + track0_statics.csv; NO obs — agent explores this
+
+# --- submission ---
+submission_format: "long table: basin, date, qsim (mm/day) over the eval period, all 531 basins"
+victory_rule: "paired per-basin vs lstm_ensemble: median delta >= min_effect, Wilcoxon p<0.05, bootstrap CI>0, holdout retains the win"

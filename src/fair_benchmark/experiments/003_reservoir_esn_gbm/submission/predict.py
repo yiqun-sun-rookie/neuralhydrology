@@ -1,0 +1,75 @@
+"""003 Echo-State reservoir + GBM readout -- SUBMISSION side (scanned for leakage).
+
+Reads ONLY the allowed bundle (5 Maurer forcings + 27 statics) and the trained
+artifacts in ../../model/: the global LightGBM booster, the frozen reservoir
+weights (reservoir.npz), and the feature spec (features.json, which carries the
+input standardization stats). For each of the 531 basins it builds the reservoir
+input over the FULL bundle window (incl. the warmup year so the zero-init
+transient decays), normalizes it with the saved stats, runs the GLOBAL FROZEN
+reservoir to get the recurrent-memory state trajectory, attaches statics, runs
+the readout booster, inverts the log1p target (expm1), clips negatives to 0, and
+writes a long CSV (basin,date,qsim in mm/day) over the eval window.
+
+The reservoir is a deterministic, observation-free function of the allowed
+forcings; NO observed discharge / answer key / signature file is read here.
+"""
+import argparse
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import lightgbm as lgb
+
+_HERE = Path(__file__).resolve()
+sys.path.insert(0, str(_HERE.parent))
+import features as F  # noqa: E402
+
+_BUNDLE = _HERE.parents[3] / "frozen" / "bundle"
+_MODEL_DIR = _HERE.parents[1] / "model"
+_EVAL_START, _EVAL_END = "1989-10-01", "1999-09-30"
+
+
+def predict(out_csv):
+    booster = lgb.Booster(model_file=str(_MODEL_DIR / "lgbm.txt"))
+    spec = json.loads((_MODEL_DIR / "features.json").read_text(encoding="utf-8"))
+    feat_cols = spec["feature_columns"]
+    mean = np.asarray(spec["input_mean"], dtype=np.float64)
+    std = np.asarray(spec["input_std"], dtype=np.float64)
+    res = F.load_reservoir(_MODEL_DIR / "reservoir.npz")
+
+    forcing = pd.read_parquet(_BUNDLE / "track0_forcing.parquet")
+    forcing["basin"] = forcing["basin"].astype(str).str.zfill(8)
+    forcing["date"] = pd.to_datetime(forcing["date"])
+    statics = F.load_statics(_BUNDLE / "track0_statics.csv")
+
+    eval_start = pd.Timestamp(_EVAL_START)
+    eval_end = pd.Timestamp(_EVAL_END)
+
+    out_frames = []
+    for basin, g in forcing.groupby("basin", sort=True):
+        frame = F.build_basin_frame(g[["date"] + F.DYN_COLS], statics.loc[basin],
+                                    res, mean, std)
+        dates = pd.to_datetime(frame["date"])
+        mask = (dates >= eval_start) & (dates <= eval_end)
+        frame = frame[mask]
+        X = frame[feat_cols].to_numpy(dtype=np.float32)
+        qsim = np.expm1(booster.predict(X))
+        qsim = np.clip(qsim, 0.0, None)
+        out_frames.append(pd.DataFrame({
+            "basin": basin,
+            "date": dates[mask].dt.strftime("%Y-%m-%d").to_numpy(),
+            "qsim": qsim,
+        }))
+
+    out = pd.concat(out_frames, ignore_index=True)
+    Path(out_csv).parent.mkdir(parents=True, exist_ok=True)
+    out.to_csv(out_csv, index=False)
+    print(f"wrote {len(out):,} rows / {out['basin'].nunique()} basins -> {out_csv}")
+
+
+if __name__ == "__main__":
+    p = argparse.ArgumentParser()
+    p.add_argument("--out", default="predictions.csv")
+    predict(p.parse_args().out)

@@ -1,0 +1,25 @@
+# Submission declaration. This is a CLAIM, not evidence: the scoring service
+# verifies everything independently (recomputes NSE from held obs, scans this
+# dir for forbidden reads). Fill it in honestly; the auditor reads it.
+experiment_id: TEMPLATE
+track: track0_forcing_only
+mode: explore                # explore | claim
+
+method:
+  name: "<your method, e.g. TFT / Chronos-finetune / TiDE / TCN-hypernet>"
+  family: "<deep-learning | foundation-model | hybrid-physics-ml | other>"
+  one_line: "<the core idea in one sentence>"
+
+information_budget:
+  used_only_allowed_inputs: true   # 5 Maurer forcings + 27 statics; NO observed Q
+  attestation: >
+    I read only ../frozen/bundle/* (forcing + statics). I did NOT read the held
+    answer key, observed streamflow, obs-derived hydro signatures (runoff_ratio,
+    baseflow_index, q_mean, ...), future windows, or any extra data product.
+
+artifacts:
+  predictions: predictions.csv     # basin,date,qsim (mm/day), all 531 basins, eval window
+  code_entrypoint: predict.py
+  training: "<how/where the model was trained; weights location; seeds>"
+
+notes: ""

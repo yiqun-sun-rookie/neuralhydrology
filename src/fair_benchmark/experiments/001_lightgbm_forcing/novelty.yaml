@@ -1,0 +1,4 @@
+novelty_class: reproduction
+prior_art:
+  - "Tree-ensemble / gradient-boosting as ML streamflow baselines is established, not novel (e.g. Tyralis & Papacharalampous 2017; Gauch et al. 2021)."
+note: "Global LightGBM on engineered rolling forcing features + 27 statics. Standard tabular-ML baseline; establishes the memoryless-model tier (~0.65 median NSE, HOLD)."

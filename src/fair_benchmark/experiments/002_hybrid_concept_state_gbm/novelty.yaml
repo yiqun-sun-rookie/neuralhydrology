@@ -1,0 +1,6 @@
+novelty_class: reproduction
+prior_art:
+  - "Frame et al. 2021 — LSTM/ML post-processing of a conceptual model (SAC-SMA) for streamflow."
+  - "Konapala et al. 2020 — hybrid conceptual + deep-learning streamflow modelling."
+  - "Feng & Shen 2022/2023 (dPL / delta-HBV) — differentiable conceptual-ML, the GPU cousin."
+note: "Feeding a calibrated conceptual model's coupled storage states into a GBM (residual correction). Established approach class; reached 0.727 median NSE (HOLD)."

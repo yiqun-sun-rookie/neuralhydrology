@@ -1,0 +1,12 @@
+# Challenger outputs are large — keep code + provenance + small specs, not big binaries.
+**/submission/predictions.csv
+**/submission/predictions.parquet
+**/report.json
+**/__pycache__/
+# model weights / cached states are large and regenerable by re-running train.py;
+# keep only the small feature spec.
+**/model/*
+!**/model/features.json
+# keep the committed provenance sidecar + the template
+!**/submission/predictions.sha256
+!TEMPLATE/

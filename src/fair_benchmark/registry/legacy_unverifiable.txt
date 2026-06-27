@@ -1,0 +1,7 @@
+# Ledger rows recorded BEFORE the predictions-retention policy existed, so their
+# predictions can no longer be re-hashed (verify_provenance -> 'unlocatable').
+# The self-audit treats these as an acknowledged WARN (not a FAIL), so a clean
+# go-forward state passes while any NEW unverifiable row still fails loudly.
+# Do not add rows here to silence real failures — only genuine pre-retention rows.
+gr4j_pdd_FINAL_full531
+002_b

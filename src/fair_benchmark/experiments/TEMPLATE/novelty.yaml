@@ -1,0 +1,8 @@
+# NOVELTY FIREWALL — every candidate declares its novelty, grounded in literature
+# (not self-asserted). run_candidate validates this before scoring: an assessed
+# class with empty prior_art is REJECTED; absent file => 'unassessed' + a warning.
+novelty_class: unassessed   # reproduction | incremental | new-to-hydrology | genuinely-novel | unassessed
+# REQUIRED for any assessed class: citations of the closest prior work you actually
+# checked against (do a literature search; do not fabricate or hand-wave).
+prior_art: []
+note: ""

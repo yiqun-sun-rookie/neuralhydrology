@@ -1,0 +1,2 @@
+- [evidence-based] Every executed non-LSTM candidate HOLDs below the LSTM ensemble 0.759 (LightGBM 0.652, conceptual-state GBM 0.727, reservoir 0.568); none has beaten the baseline under fair rules.  (evidence: 001_lightgbm_forcing, 002_hybrid_concept_state_gbm, 003_reservoir_esn_gbm)
+- [hypothesis] A GPU heterogeneous deep ensemble (e.g. Mamba+LSTM) might beat 0.759.  (evidence: -; settle by: build via run_candidate on GPU and score through the gate)

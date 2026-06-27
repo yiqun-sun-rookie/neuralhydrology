@@ -1,0 +1,60 @@
+# AUTONOMY FIREWALL — the complete, auditable list of constraints the framework
+# imposes on the candidate search. Each constraint is exactly one of:
+#   invariant : a fairness or physical/stewardship necessity that MUST stay
+#               (removing it makes results meaningless or is irresponsible).
+#   cage      : an orchestrator convenience that narrows the search and must be
+#               removed or explicitly re-justified. A healthy framework has NONE.
+# This file is the single place to answer "what are we restricting, and why?".
+# The point: the system may PROPOSE/INVENT anything; only these declared
+# invariants bound it. Anything else that narrows the search is a bug.
+constraints:
+  - id: information_budget
+    kind: invariant
+    description: >
+      Predict-side inputs are limited to the allowed bundle (meteorological
+      forcing + static attributes). No observed discharge, obs-derived
+      signatures, future windows, or extra data products.
+    justification: Defines "same information"; relaxing it makes any win meaningless.
+  - id: authoritative_metric
+    kind: invariant
+    description: Score is NSE (neuralhydrology.evaluation.metrics.nse), median over basins.
+    justification: One fixed, scale-invariant, reproducible metric for comparability.
+  - id: held_eval_observations
+    kind: invariant
+    description: Eval-period observations are held by the scorer; a submission never reads them.
+    justification: Prevents target leakage (the quantity being predicted).
+  - id: multiple_testing_ledger
+    kind: invariant
+    description: Every scored attempt is appended to the append-only ledger.
+    justification: Honest denominator for selection / multiple testing.
+  - id: secret_holdout
+    kind: invariant
+    description: A secret basin holdout must retain the win.
+    justification: Catches overfitting / selection to the public set.
+  - id: train_period_obs_allowed
+    kind: invariant
+    description: Training may use train-period observations; only eval-period obs are held.
+    justification: Standard supervised setup; not a leak.
+  - id: operator_consent_for_heavy_compute
+    kind: invariant
+    description: >
+      Heavy/long GPU runs (hours on the operator's physical machine) require the
+      operator's explicit go-ahead before launch.
+    justification: >
+      Stewardship of someone else's hardware/time — NOT a limit on what may be
+      proposed or eventually run. GPU methods are first-class; they are launchable
+      (background) once the operator consents.
+
+# TOMBSTONES — cages imposed during development and now REMOVED. Recorded so any
+# re-introduction is visible and must be re-justified or deleted. The cage scanner
+# (governance.scan_orchestration_for_cages) exists to catch these creeping back.
+removed_cages:
+  - id: cpu_only_search
+    description: The autonomous loop's strategist was restricted to a "CPU-fast" class.
+    why_removed: Compute is an execution boundary, not a limit on what may be PROPOSED; it silently capped the research frontier.
+  - id: seeded_technique_menu
+    description: The strategist prompt listed example techniques ("e.g. per-basin models, quantile loss, ...").
+    why_removed: A menu is a smuggled human prior masquerading as the system's own choice.
+  - id: gpu_execution_blocked
+    description: GPU candidates were scaffolded-and-queued but never actually trained, even with consent.
+    why_removed: Execution caution must not become a research ceiling; GPU runs are launchable in the background once the operator consents.
