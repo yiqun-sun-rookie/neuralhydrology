@@ -73,6 +73,11 @@ def get_loss_obj(cfg: Config) -> loss.BaseLoss:
         loss_obj = loss.MaskedEVTLoss(cfg)
     elif cfg.loss.lower() == "gaussiannllloss":
         loss_obj = loss.MaskedGaussianNLLLoss(cfg)
+    elif cfg.loss.lower() == "maskedpeakweightedmse":
+        loss_obj = loss.MaskedPeakWeightedMSELoss(cfg,
+                                                  alpha=cfg.peak_loss_alpha,
+                                                  threshold=cfg.peak_loss_threshold,
+                                                  weight_cap=cfg.peak_loss_weight_cap)
     else:
         raise NotImplementedError(f"{cfg.loss} not implemented or not linked in `get_loss()`")
 

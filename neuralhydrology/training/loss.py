@@ -214,6 +214,58 @@ class MaskedRMSELoss(BaseLoss):
         return loss
 
 
+
+class MaskedPeakWeightedMSELoss(BaseLoss):
+    """Peak-weighted masked MSE to push the model toward flood-peak accuracy.
+
+    Plain masked MSE weights every (non-NaN) timestep equally. This loss multiplies
+    each timestep's squared error by a peak weight that grows with the *observed*
+    magnitude in standardized (z-scored) space, which is what the model trains on:
+
+        w_i = 1 + alpha * relu(y_i - threshold)
+        L   = 0.5 * sum_i( w_i * (y_hat_i - y_i)^2 ) / sum_i( w_i )
+
+    Timesteps with standardized target <= ``threshold`` keep weight 1 (treated exactly
+    like plain MSE); higher flows are up-weighted with strength ``alpha``. The weight
+    depends on the observed value only (not the residual sign), so over- and
+    under-prediction at peaks are penalized equally -> no over-prediction gaming. The
+    0.5 factor and the division by sum(w) make this reduce EXACTLY to ``MaskedMSELoss``
+    when ``alpha == 0``, so alpha=0 is a clean control identical to the plain MSE
+    baseline.
+
+    Standalone MSE-family loss: it does not import, subclass, or reference any other
+    specialized loss in this module.
+
+    Parameters
+    ----------
+    cfg : Config
+        The run configuration.
+    alpha : float, optional
+        Peak up-weighting strength (>= 0). alpha=0 reduces to MaskedMSELoss. Default 0.0.
+    threshold : float, optional
+        Standardized-space threshold above which up-weighting starts. Default 1.5.
+    weight_cap : float, optional
+        If not None, the per-timestep weight is clamped to at most this value, capping a
+        single extreme timestep's influence. Default None (no cap).
+    """
+
+    def __init__(self, cfg: Config, alpha: float = 0.0, threshold: float = 1.5, weight_cap: float = None):
+        super(MaskedPeakWeightedMSELoss, self).__init__(cfg, prediction_keys=['y_hat'], ground_truth_keys=['y'])
+        self.alpha = alpha
+        self.threshold = threshold
+        self.weight_cap = weight_cap
+
+    def _get_loss(self, prediction: Dict[str, torch.Tensor], ground_truth: Dict[str, torch.Tensor], **kwargs):
+        mask = ~torch.isnan(ground_truth['y'])
+        y_hat = prediction['y_hat'][mask]
+        y = ground_truth['y'][mask]
+        weights = 1.0 + self.alpha * torch.clamp(y - self.threshold, min=0.0)
+        if self.weight_cap is not None:
+            weights = torch.clamp(weights, max=self.weight_cap)
+        squared_error = (y_hat - y)**2
+        return 0.5 * torch.sum(weights * squared_error) / torch.sum(weights)
+
+
 class MaskedNSELoss(BaseLoss):
     """Basin-averaged Nash--Sutcliffe Model Efficiency Coefficient loss.
 
