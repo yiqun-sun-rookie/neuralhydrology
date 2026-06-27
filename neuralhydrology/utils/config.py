@@ -676,6 +676,18 @@ class Config(object):
         return self._as_default_list(self._cfg.get("no_loss_frequencies", []))
 
     @property
+    def peak_loss_alpha(self) -> float:
+        return self._cfg.get("peak_loss_alpha", 0.0)
+
+    @property
+    def peak_loss_threshold(self) -> float:
+        return self._cfg.get("peak_loss_threshold", 1.5)
+
+    @property
+    def peak_loss_weight_cap(self) -> float:
+        return self._cfg.get("peak_loss_weight_cap", None)
+
+    @property
     def num_workers(self) -> int:
         return self._cfg.get("num_workers", 0)
 
