@@ -37,7 +37,8 @@ class StatisticalConstraint(PhysicalConstraint):
 
         x_proj = torch.cat(channels, dim=-1)
 
-        # Re-apply Lp bounds (moment matching may violate epsilon)
-        x_proj = super(PhysicalConstraint, self).project(x_clean, x_proj)
+        # Re-apply physical feasibility AND Lp bounds (moment matching may push precip<0
+        # or exceed epsilon). PhysicalConstraint.project = lp -> physical clip -> lp re-enforce.
+        x_proj = super().project(x_clean, x_proj)
 
         return x_proj
