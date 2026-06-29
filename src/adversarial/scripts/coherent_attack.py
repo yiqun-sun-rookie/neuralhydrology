@@ -205,22 +205,30 @@ class CoherentBasin:
                 (ss / self.ss_tot).backward()
         return delta.grad.detach() if delta.grad is not None else torch.zeros_like(delta)
 
-    def apgd_targeted(self, eps: float, target: str, n_iter: int = 50, seed: int = 0) -> float:
-        """APGD optimizing damage on the target-day subset; reports OVERALL damage D=nse_clean-nse_adv."""
+    def apgd_targeted(self, eps: float, target: str, n_iter: int = 50, seed: int = 0,
+                      return_kge: bool = False):
+        """APGD optimizing damage on the target-day subset; reports OVERALL damage D=nse_clean-nse_adv.
+        If return_kge, also reports physical-space ΔKGE on the same adversary (KGE over all valid
+        days, like Exp6) as dict(D_nse, kge_clean, kge_adv, dkge)."""
         tmask = self._flow_mask(target)
         g0 = torch.Generator(device=self.device).manual_seed(seed)
         delta = _clamp(_tie_copy(torch.empty(self.T_cal, self.F, device=self.device).uniform_(-eps, eps, generator=g0)), eps)
-        best = self.nse(delta)
+        best, best_delta = self.nse(delta), delta
         alpha = 2 * eps
         for t in range(n_iter):
             g = _tie_grad(self._grad_masked(delta, tmask))
             delta = _clamp(delta + alpha * g.sign(), eps)
             cur = self.nse(delta)            # OVERALL nse (untargeted metric), so flood vs lowflow is comparable
             if cur < best:
-                best = cur
+                best, best_delta = cur, delta
             if t in (int(n_iter * 0.22), int(n_iter * 0.5), int(n_iter * 0.75)):
                 alpha *= 0.5
-        return self.nse_clean - best
+        d_nse = self.nse_clean - best
+        if not return_kge:
+            return d_nse
+        kge_c = self._kge_phys(self._preds(self.zero))
+        kge_a = self._kge_phys(self._preds(best_delta))
+        return dict(D_nse=d_nse, kge_clean=kge_c, kge_adv=kge_a, dkge=kge_a - kge_c)
 
     # --- constraint-ablation (Exp2): lp / physical / statistical on the full series ---
     def _constraint(self, level: str, eps: float):
@@ -253,3 +261,127 @@ class CoherentBasin:
             if t in (int(n_iter * 0.22), int(n_iter * 0.5), int(n_iter * 0.75)):
                 alpha *= 0.5
         return self.nse_clean - best
+
+    # --- detectability (KS): untargeted APGD adversary, per-feature KS 2-sample p ---
+    def apgd_detect(self, eps: float, n_iter: int = 50, seed: int = 0) -> dict:
+        """Untargeted APGD at eps; returns ΔNSE and a per-feature KS 2-sample p-value between
+        the clean and perturbed WHOLE-period marginal of each forcing feature (detectability)."""
+        from scipy.stats import ks_2samp
+        g0 = torch.Generator(device=self.device).manual_seed(seed)
+        delta = _clamp(_tie_copy(torch.empty(self.T_cal, self.F, device=self.device).uniform_(-eps, eps, generator=g0)), eps)
+        best, best_delta = self.nse(delta), delta
+        alpha = 2 * eps
+        for t in range(n_iter):
+            g = _tie_grad(self.grad(delta))
+            delta = _clamp(delta + alpha * g.sign(), eps)
+            cur = self.nse(delta)
+            if cur < best:
+                best, best_delta = cur, delta
+            if t in (int(n_iter * 0.22), int(n_iter * 0.5), int(n_iter * 0.75)):
+                alpha *= 0.5
+        clean = self.clean_cal.detach().cpu().numpy()
+        adv = (self.clean_cal + best_delta).detach().cpu().numpy()
+        ks_p = [float(ks_2samp(clean[:, f], adv[:, f]).pvalue) for f in range(self.F)]
+        return dict(D_nse=self.nse_clean - best, nse_adv=best, ks_p=ks_p, ks_p_min=min(ks_p))
+
+    # --- causal-trigger (Exp4): perturb only pre-event days, damage the flood-peak prediction ---
+    def _find_peaks(self, p_quantile: float = 0.95, distance: int = 14) -> list:
+        """Flood-peak window indices p (0..N-1) on the valid last-step obs series."""
+        import numpy as np
+        from scipy.signal import find_peaks
+        y = self.y_last.detach().cpu().numpy().copy().astype(float)
+        y[~self.mask.cpu().numpy()] = -np.inf
+        finite = y[np.isfinite(y)]
+        if finite.size == 0:
+            return []
+        thr = float(np.quantile(finite, p_quantile))
+        peaks, _ = find_peaks(np.nan_to_num(y, neginf=-1e30), height=thr, distance=distance)
+        return peaks.tolist()
+
+    def _pre_event_mask(self, peaks: list, pre_window: int) -> torch.Tensor:
+        """[T_cal, F] bool: True on the pre_window calendar days before each peak day."""
+        m = torch.zeros(self.T_cal, self.F, dtype=torch.bool, device=self.device)
+        for p in peaks:
+            cp = p + self.T - 1                       # peak calendar day
+            lo = max(0, cp - pre_window)
+            m[lo:cp, :] = True
+        return m
+
+    def _peak_nse(self, preds: torch.Tensor, peaks: torch.Tensor) -> float:
+        yt = self.y_last[peaks]
+        yp = preds[peaks]
+        sst = ((yt - yt.mean()) ** 2).sum().clamp(min=1e-10)
+        return float(1.0 - ((yt - yp) ** 2).sum() / sst)
+
+    def apgd_causal(self, eps: float, pre_window: int, n_iter: int = 50, seed: int = 0) -> dict:
+        """APGD with delta restricted to pre-event calendar days, optimizing the peak windows'
+        squared error. best starts from the clean (zero) adversary so reported damage is >= 0
+        (the attacker can always do nothing). Reports peak-only and overall last-step ΔNSE."""
+        peaks_list = [p for p in self._find_peaks() if self.mask[p]]
+        if not peaks_list:
+            return dict(D_peak=float("nan"), D_overall=float("nan"), n_peaks=0)
+        peaks = torch.tensor(peaks_list, device=self.device)
+        pmask = self._pre_event_mask(peaks_list, pre_window).float()   # [T_cal,F]
+        tmask = torch.zeros(self.N, dtype=torch.bool, device=self.device)
+        tmask[peaks] = True                                            # damage measured on peak windows
+        peak_nse_clean = self._peak_nse(self._preds(self.zero), peaks)
+        g0 = torch.Generator(device=self.device).manual_seed(seed)
+        init = torch.empty(self.T_cal, self.F, device=self.device).uniform_(-eps, eps, generator=g0)
+        delta = _clamp(_tie_copy(init) * pmask, eps)                   # zero outside pre-event set
+        best_pn, best_delta = peak_nse_clean, self.zero               # include "do nothing" baseline
+        pn0 = self._peak_nse(self._preds(delta), peaks)
+        if pn0 < best_pn:
+            best_pn, best_delta = pn0, delta
+        alpha = 2 * eps
+        for t in range(n_iter):
+            g = _tie_grad(self._grad_masked(delta, tmask)) * pmask     # restrict gradient to pre-event
+            delta = _clamp(delta + alpha * g.sign() * pmask, eps)
+            pn = self._peak_nse(self._preds(delta), peaks)
+            if pn < best_pn:
+                best_pn, best_delta = pn, delta
+            if t in (int(n_iter * 0.22), int(n_iter * 0.5), int(n_iter * 0.75)):
+                alpha *= 0.5
+        return dict(D_peak=peak_nse_clean - best_pn,
+                    D_overall=self.nse_clean - self.nse(best_delta),
+                    n_peaks=len(peaks_list))
+
+    # --- C&W (Exp5): minimum L2 perturbation to drive last-step NSE below target ---
+    def _max_damage_within(self, r: float, radius_iters: int, step_frac: float) -> tuple:
+        """L2-PGD: maximize damage (ss_res, i.e. minimize NSE) within ‖delta_cal‖₂ <= r.
+        Ascends the chunked ss_res gradient, projects onto the L2 ball, temp-ties. Returns
+        (nse_at_best, l2_at_best). Memory-bounded (reuses self.grad / self.nse)."""
+        delta = torch.zeros(self.T_cal, self.F, device=self.device)
+        step = step_frac * r
+        best_nse, best_delta = self.nse_clean, delta
+        for _ in range(radius_iters):
+            g = _tie_grad(self.grad(delta))                # ∂(ss_res/ss_tot)/∂δ; ascend to add damage
+            delta = delta + step * g / g.norm().clamp(min=1e-12)
+            dn = delta.norm()
+            if dn > r:
+                delta = delta * (r / dn)                   # project onto the L2 ball
+            delta = _tie_copy(delta)
+            cur = self.nse(delta)
+            if cur < best_nse:
+                best_nse, best_delta = cur, delta
+        return best_nse, float(best_delta.norm())
+
+    def cw_min_l2(self, target_nse: float = 0.0, radius_iters: int = 20, bisect_steps: int = 7,
+                  r_hi: float = 10.0, step_frac: float = 0.25, seed: int = 0) -> dict:
+        """Minimum ‖delta_cal‖₂ (standardized) to drive last-step NSE < target_nse, via bisection
+        on the L2 radius r: for each r, maximize damage within ‖delta‖₂<=r (L2-PGD) and test
+        whether NSE crosses the target. The smallest breaking r is the per-basin safety margin.
+        Well-conditioned and memory-bounded; temperature-tied (Maurer)."""
+        nse_hi, _ = self._max_damage_within(r_hi, radius_iters, step_frac)
+        if nse_hi > target_nse:                            # not breakable within the search budget
+            return dict(l2=float("nan"), success=False, nse_adv=nse_hi)
+        r_lo, r_cur = 0.0, r_hi
+        best_r, best_nse = r_hi, nse_hi
+        for _ in range(bisect_steps):
+            r_mid = 0.5 * (r_lo + r_cur)
+            nse_mid, _ = self._max_damage_within(r_mid, radius_iters, step_frac)
+            if nse_mid <= target_nse:                      # breaks -> try a smaller radius
+                best_r, best_nse = r_mid, nse_mid
+                r_cur = r_mid
+            else:                                          # doesn't break -> need a larger radius
+                r_lo = r_mid
+        return dict(l2=best_r, success=True, nse_adv=best_nse)
