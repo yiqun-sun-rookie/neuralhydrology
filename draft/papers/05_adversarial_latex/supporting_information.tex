@@ -18,20 +18,20 @@ Y.~Sun\affil{1}
 \section*{Contents}
 \begin{enumerate}
 \item Text S1: Model Training Configuration
-\item Text S2: Basin Coverage and Experiment Counts
-\item Text S3: Finite NSE Metric Handling
+\item Text S2: Basin Coverage and Subsets
+\item Text S3: Metric Fidelity, Reproducibility, and Random-Search Scaling
 \item Table S1: Model Training Hyperparameters
 \item Table S2: Basin Counts per Experiment Block
-\item Table S3: Rerun Provenance Artifacts
+\item Table S3: Reproducibility Artifacts
 \end{enumerate}
 
 %% ====================================================================
 \section*{Text S1. Model Training Configuration}
 %% ====================================================================
 
-The LSTM model was trained using the neuralhydrology framework with the configuration summarized in Table~S1. The model uses five dynamic Daymet forcing variables and 14 static catchment attributes. Training was conducted for 30 epochs with a single-layer LSTM (128 hidden units), AdamW optimization, and NSE loss.
+The victim model was trained with the neuralhydrology framework \cite{Kratzert2022} using the configuration in Table~S1. It is a single-layer LSTM with 256 hidden units and a regression head, taking five dynamic Maurer forcing variables and 27 static CAMELS-US catchment attributes. In the Maurer product the daily minimum and maximum temperature inputs are identical, so the five raw channels carry four independent dynamic degrees of freedom. Training used the NSE loss, the Adam optimizer with an initial learning rate of $10^{-3}$ decayed to $5\times10^{-4}$ at epoch 11 and $10^{-4}$ at epoch 21, a batch size of 256, gradient-norm clipping at 1.0, and an output dropout of 0.4, for 30 epochs.
 
-The adversarial study uses the local 531-basin temporal benchmark run stored under \path{results/05_adversarial_robustness/runs/reproduce_531_nse074_2025_1129_2145_ep30/}. The checkpoint is pinned to \path{model_epoch020.pt}; later saved checkpoints were not used for adversarial evaluation.
+The model reproduces the 531-basin temporal benchmark of \citeA{Kratzert2019} under the dataset's reverse split: training spans 1 October 1999--30 September 2008 and testing spans 1 October 1989--30 September 1999, over a 270-day input sequence with a single-step (last-day) prediction target. The trained model attains a test-period median NSE of 0.733 across the 531 basins. Adversarial evaluation pins the epoch-30 checkpoint stored under \path{results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/} (random seed 100); the per-basin official test metrics used as a reference are read from \path{test/model_epoch030/test_results.p} within that run directory (Table~S3).
 
 \begin{table}[ht]
 \caption{Model training hyperparameters.}
@@ -42,30 +42,32 @@ The adversarial study uses the local 531-basin temporal benchmark run stored und
 \toprule
 Parameter & Value \\
 \midrule
-Architecture & LSTM (single-layer) \\
-Hidden units & 128 \\
+Architecture & CudaLSTM (single-layer) \\
+Hidden units & 256 \\
+Output head & Regression \\
 Training epochs & 30 \\
 Batch size & 256 \\
-Sequence length & 365 days \\
-Optimizer & AdamW \\
+Sequence length & 270 days \\
+Prediction target & Last day (predict\_last\_n $=1$) \\
+Optimizer & Adam (LR $10^{-3}\!\to\!5\times10^{-4}\!\to\!10^{-4}$) \\
+Gradient clipping & 1.0 (norm) \\
+Output dropout & 0.4 \\
 Loss function & NSE \\
-Dynamic inputs & Precipitation, $T_{\max}$, $T_{\min}$, shortwave radiation, vapor pressure \\
-Static attributes & 14 CAMELS attributes \\
-Training period & 01/10/1990--30/09/1995 \\
-Validation period & 01/10/1995--30/09/2000 \\
-Test period & 01/10/2000--30/09/2005 \\
-Random seed & 159193 \\
+Forcing product & Maurer \\
+Dynamic inputs & Precipitation, $T_{\max}{=}T_{\min}$, shortwave radiation, vapor pressure \\
+Static attributes & 27 CAMELS-US attributes \\
+Training period & 01/10/1999--30/09/2008 \\
+Test period & 01/10/1989--30/09/1999 \\
+Random seed & 100 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 %% ====================================================================
-\section*{Text S2. Basin Coverage and Experiment Counts}
+\section*{Text S2. Basin Coverage and Subsets}
 %% ====================================================================
 
-The adversarial rerun uses the same 531 basin IDs as the temporal benchmark model. The same basin list is used for all adversarial experiment blocks; there is no separate basin-list merge from the previous result line.
-
-After merging and deduplication, the full evaluation contains 17,523 individual experiment records across 531 unique basin IDs. Table~S2 summarizes basin counts by experiment block.
+All adversarial experiments use the 531 benchmark basin IDs in \path{src/adversarial/data/531_basins.txt}. The attack-comparison block (Table~1 of the main text) and its random-search scaling analysis are run on the full 531 basins. The constraint-ablation, targeted-attack, causal-trigger, detectability, and Kling--Gupta reconciliation blocks are run on a 107-basin subset (every fifth benchmark basin) to bound computational cost; the minimum-perturbation analysis, which requires an inner bisection over the perturbation radius per basin, uses a 76-basin subset (every seventh benchmark basin). Table~S2 lists the basin count per block. All 531 basins yield finite NSE and $\Delta$NSE over the test period, so no basins are dropped from any headline statistic.
 
 \begin{table}[ht]
 \caption{Basin counts per experiment block.}
@@ -76,43 +78,47 @@ After merging and deduplication, the full evaluation contains 17,523 individual 
 \toprule
 Experiment block & Description & Catchments \\
 \midrule
-Exp.~1 & Attack comparison (5 methods $\times$ 4 $\varepsilon$ values) & 531 \\
-Exp.~2 & Constraint ablation (3 constraints $\times$ 3 $\varepsilon$ values) & 531 \\
-Exp.~3 & Targeted attacks (3 targets at $\varepsilon = 0.1$) & 531 \\
-Exp.~4 & Causal trigger (4 pre-event windows) & 531 \\
-Exp.~5 & C\&W minimum perturbation & 531 \\
-\midrule
-Merged total & Unique basin IDs across all experiment records & 531 \\
-Merged total & Individual experiment records & 17,523 \\
+Attack comparison & 4 methods $\times$ 4 $\varepsilon$ values & 531 \\
+Random-search scaling & best-of-$K$ sweep at $\varepsilon = 0.1$ & 531 \\
+Constraint ablation & 3 constraints $\times$ 3 $\varepsilon$ values & 107 \\
+Targeted attacks & 3 targets at $\varepsilon = 0.1$ (NSE + KGE) & 107 \\
+Causal trigger & 4 pre-event windows at $\varepsilon = 0.1$ & 107 \\
+Detectability & KS test at $\varepsilon = 0.1$ & 107 \\
+KGE reconciliation & untargeted attack at $\varepsilon = 0.1$ & 107 \\
+Minimum perturbation & per-basin $L_2$ safety margin & 76 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 %% ====================================================================
-\section*{Text S3. Finite NSE Metric Handling}
+\section*{Text S3. Metric Fidelity, Reproducibility, and Random-Search Scaling}
 %% ====================================================================
 
-All experiment cells cover the 531 benchmark basin IDs. However, the Nash--Sutcliffe Efficiency is undefined or numerically unstable for evaluation windows that contain too few valid observations or have near-constant observed discharge, because NSE divides by the variance of the observed flow over the window: as that variance approaches zero, the metric becomes arbitrarily sensitive to even sub-millimetre changes in modelled flow. To avoid these degenerate cases, the adversarial runner selects evaluation windows that contain more than 100 valid daily observations and whose observed-flow standard deviation, normalized to the basin's clean-flow scale, exceeds 0.1; this rules out windows that are essentially flat or that contain only a single short discharge event. Seventeen of the 531 basin IDs did not satisfy this variability requirement in any candidate window, and therefore yield NaN values for NSE$_{\mathrm{clean}}$, NSE$_{\mathrm{adv}}$, and $\Delta$NSE rather than meaningful robustness numbers.
+\textbf{Metric fidelity.} The attack operates on a single shared per-basin forcing perturbation applied to every overlapping input window, and evaluates the NSE on the concatenated last-day predictions. This metric is constructed to match the official benchmark per-basin NSE that the neuralhydrology tester reports. Across all 531 basins and four budgets, the attack's clean NSE agrees with the official tester's per-basin NSE to within a maximum absolute difference of $2.65\times10^{-7}$, confirming that the adversarial degradations are measured on the same metric used to report clean skill.
 
-The affected basin IDs are: 04127997, 05120500, 06350000, 06404000, 06406000, 06409000, 06431500, 06447500, 06847900, 07142300, 07299670, 07301410, 08324000, 09306242, 09386900, 09447800, and 09484600. Raw streamflow and Daymet forcing files exist for these basins, and the test-period raw streamflow records are complete; the NaN values arise from the variance-based finite-metric guard rather than from missing data, and these basins remain part of the 531-basin coverage statement everywhere experiment provenance is documented. Main-text NSE headline statistics use only the 514 basins with finite metrics so that medians and IQRs are not contaminated by undefined values.
+\textbf{Random-search scaling.} The main text states that a best-of-$K$ random search cannot close the gradient-versus-random gap even when extrapolated to very large sample budgets. We verify this on the 21-basin scaling subset by sweeping the number of random-sign draws $K \in \{1, 3, 10, 30, 100, 300, 1000, 2000\}$ and recording the median best-of-$K$ degradation. The median random degradation grows approximately as $a\sqrt{\ln K} + b$ with $a = 0.0117$ and $b = -0.0031$ (coefficient of determination above 0.99). Extrapolating this fit to $K = 10^9$ gives a median random degradation of about 0.050, against a median scheduled-step-PGD degradation of 0.342 on the same basins---so even a billion-sample random search would remain roughly seven times weaker than the gradient attack. The gradient-versus-random gap is therefore not an artifact of an under-resourced random baseline.
+
+\textbf{Reproducibility.} Table~S3 lists the artifacts needed to reproduce the analysis. The attack driver and per-experiment runners are tracked in the repository; the per-basin result records are written as JSON under the output directory and aggregated by a single script that prints every number reported in the main text.
 
 \begin{table}[ht]
-\caption{Rerun provenance artifacts.}
-\label{tab:s3_splits}
+\caption{Reproducibility artifacts.}
+\label{tab:s3_artifacts}
 \centering
 \small
 \begin{tabular}{ll}
 \toprule
 Artifact & Path or value \\
 \midrule
-Victim run & \path{results/05_adversarial_robustness/runs/reproduce_531_nse074_2025_1129_2145_ep30/} \\
-Pinned checkpoint & \path{model_epoch020.pt} \\
-Adversarial config & \path{src/adversarial/configs/full_eval_531_epoch020.yaml} \\
+Victim run & \path{results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/} \\
+Pinned checkpoint & \path{test/model_epoch030/} (epoch 30) \\
+Reference test metrics & \path{test/model_epoch030/test_results.p} \\
 Basin list & \path{src/adversarial/data/531_basins.txt} \\
-Output root & \path{results/adversarial_eval/531_epoch020/} \\
-Merged result file & \path{results/adversarial_eval/531_epoch020/merged_all.json} \\
-Coverage audit & 17,523 records; 531 unique basin IDs; no missing basin IDs \\
-Finite NSE metrics & 514 basins; 17 low-variance-window NaN basins \\
+Attack driver & \path{src/adversarial/scripts/coherent_attack.py} \\
+Experiment runners & \path{src/adversarial/scripts/run_exp{1..6}.py}, \path{run_exp_detect.py} \\
+Output records & \path{results/05_adversarial_robustness/id18_s100/exp*.json} \\
+Aggregator & \path{src/adversarial/scripts/aggregate_id18.py} \\
+Metric-fidelity check & $\max|\mathrm{NSE}_{\mathrm{clean}} - \mathrm{NSE}_{\mathrm{official}}| = 2.65\times10^{-7}$ (531 basins) \\
+Finite NSE metrics & 531 of 531 basins \\
 \bottomrule
 \end{tabular}
 \end{table}
