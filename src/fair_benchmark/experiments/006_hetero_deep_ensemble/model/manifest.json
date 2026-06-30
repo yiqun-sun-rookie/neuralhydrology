@@ -1,0 +1,20 @@
+{
+  "arch": "transformer",
+  "seeds": [
+    100,
+    200,
+    300,
+    400
+  ],
+  "epochs": 30,
+  "n_deep": 4,
+  "n_lstm": 8,
+  "blend": "equal-weight mean over all members (n_lstm LSTM + n_deep deep)",
+  "member_run_dirs": {
+    "100": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\19_hetero_deep_ensemble\\hde_transformer_s100_2026_0629_1612_ep30",
+    "200": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\19_hetero_deep_ensemble\\hde_transformer_s200_2026_0629_2039_ep30",
+    "300": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\19_hetero_deep_ensemble\\hde_transformer_s300_2026_0630_0230_ep30",
+    "400": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\19_hetero_deep_ensemble\\hde_transformer_s400_2026_0630_0822_ep30"
+  },
+  "basin_file": "src/fair_benchmark/frozen/track0_forcing_only_basins.txt"
+}

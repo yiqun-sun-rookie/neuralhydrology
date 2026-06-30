@@ -37,6 +37,21 @@ system may propose or invent anything the invariants allow.
   first-class; the only gate is `operator_consent_for_heavy_compute` (an invariant:
   stewardship of the operator's hardware/time, not a limit on what may be proposed).
 
+**Threat model — the orchestrator, not an attacker.** The cages do not come from
+malice; they come from *good* instincts misapplied to an autonomy task:
+helpfulness-as-structuring (offer a menu / a curated slate), resource-caution
+miscast as a capability block (cap to CPU, "do not run" the GPU), reliability-seeking
+(narrow to candidates that train cleanly), and result-cleanliness ("ignore the
+failing row"). None of these *feels* like adding a limit while it is happening, so the
+orchestrator re-introduces them **benevolently, unconsciously, and repeatedly** — in
+this build, four times (a 7-lens menu, a CPU-only cap, a GPU-execution block, and an
+"ignore gr4j" carve-out), each caught not by the orchestrator but by the external
+reviewer. The consequence is structural: **the orchestrator cannot be trusted to
+self-police the search space.** The cage/menu scanner is therefore aimed at the
+orchestrator's *own* prompts, and it — together with an external reviewer reading the
+actual prompts — must run on **every loop**, not on request. A clean self-report is
+not evidence the search was free.
+
 ## 3. Novelty firewall — grounded against literature, never self-asserted
 A candidate's novelty is established against external prior art, not by the
 proposer's say-so.

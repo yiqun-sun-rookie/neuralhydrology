@@ -1,0 +1,24 @@
+novelty_class: incremental
+prior_art:
+  - "Kratzert et al. (2019, HESS) — LSTM rainfall-runoff with seed ensembling; the 8-seed CudaLSTM ensemble IS this benchmark's baseline."
+  - "Lakshminarayanan et al. (2017, NeurIPS) — deep ensembles: an equal-weight average of independently trained members improves accuracy/calibration. Our blend is exactly this."
+  - "Klotz et al. (2021, HESS) — ensembles of hydrological DL models (incl. across model types) for uncertainty; cross-model/architecture combination is established in hydrology."
+  - "Li, Liu et al. — multi-model / multi-architecture streamflow ensembling shows decorrelation gains; combining heterogeneous predictors is not new."
+  - "Gu/Dao (2023) Mamba; Vaswani et al. (2017) Transformer — the alternative function classes used as the decorrelated member; novel as architectures, NOT as ensemble members here."
+note: >
+  Candidate = heterogeneous deep ensemble. A new decorrelated deep member (a
+  distinct function class — Mamba/SSM preferred, EA-LSTM as the trainability
+  fallback) is trained under the EXACT baseline protocol (reverse split, 5 Maurer
+  forcings, 27 statics, NSE loss, hidden 256, seq 270, 30 epochs) and blended by
+  equal-weight averaging with the existing CudaLSTM seeds. The MECHANISM under
+  test is error decorrelation from a different architecture, which is largely
+  published (above) — hence 'incremental', not novel. A genuinely-novel delta
+  would require a trained EXPLICIT-decorrelation objective (e.g. negative-
+  correlation learning) rather than relying on architectural diversity alone;
+  that is NOT done here. HONEST COMPUTE DISCLOSURE: the scored blend mixes the
+  full 8-seed LSTM ensemble with the new deep members (n_lstm + n_deep > 8
+  members), i.e. MORE members than the 8-seed baseline; any win therefore
+  includes a compute component. The strict iso-compute variant (4 LSTM + 4 deep
+  = 8 members total) is the harder fairness test and is one manifest edit away
+  (set n_lstm via a 4-seed lstm_ens_sim). The verdict is whatever run_candidate
+  measures — not asserted here.
