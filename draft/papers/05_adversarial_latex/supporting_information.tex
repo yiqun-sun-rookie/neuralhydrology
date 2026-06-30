@@ -67,7 +67,7 @@ Random seed & 100 \\
 \section*{Text S2. Basin Coverage and Subsets}
 %% ====================================================================
 
-All adversarial experiments use the 531 benchmark basin IDs in \path{src/adversarial/data/531_basins.txt}. The attack-comparison block (Table~1 of the main text) and its random-search scaling analysis are run on the full 531 basins. The constraint-ablation, targeted-attack, causal-trigger, detectability, and Kling--Gupta reconciliation blocks are run on a 107-basin subset (every fifth benchmark basin) to bound computational cost; the minimum-perturbation analysis, which requires an inner bisection over the perturbation radius per basin, uses a 76-basin subset (every seventh benchmark basin). Table~S2 lists the basin count per block. All 531 basins yield finite NSE and $\Delta$NSE over the test period, so no basins are dropped from any headline statistic.
+All adversarial experiments use the 531 benchmark basin IDs in \path{src/adversarial/data/531_basins.txt}. The attack-comparison block (Table~3 of the main text), including the best-of-100 random baselines, is run on the full 531 basins; the random-search \emph{scaling} sweep over $K \in \{1, \dots, 2000\}$ (Text~S3) uses a 21-basin subset. The constraint-ablation, targeted-attack, causal-trigger, detectability, and Kling--Gupta reconciliation blocks are run on a 107-basin subset (every fifth benchmark basin) to bound computational cost; the minimum-perturbation analysis, which requires an inner bisection over the perturbation radius per basin, uses a 76-basin subset (every seventh benchmark basin). Table~S2 lists the basin count per block. All 531 basins yield finite NSE and $\Delta$NSE over the test period, so no basins are dropped from any headline statistic.
 
 \begin{table}[ht]
 \caption{Basin counts per experiment block.}
@@ -79,7 +79,7 @@ All adversarial experiments use the 531 benchmark basin IDs in \path{src/adversa
 Experiment block & Description & Catchments \\
 \midrule
 Attack comparison & 4 methods $\times$ 4 $\varepsilon$ values & 531 \\
-Random-search scaling & best-of-$K$ sweep at $\varepsilon = 0.1$ & 531 \\
+Random-search scaling & best-of-$K$ sweep at $\varepsilon = 0.1$ & 21 \\
 Constraint ablation & 3 constraints $\times$ 3 $\varepsilon$ values & 107 \\
 Targeted attacks & 3 targets at $\varepsilon = 0.1$ (NSE + KGE) & 107 \\
 Causal trigger & 4 pre-event windows at $\varepsilon = 0.1$ & 107 \\
@@ -96,7 +96,7 @@ Minimum perturbation & per-basin $L_2$ safety margin & 76 \\
 
 \textbf{Metric fidelity.} The attack operates on a single shared per-basin forcing perturbation applied to every overlapping input window, and evaluates the NSE on the concatenated last-day predictions. This metric is constructed to match the official benchmark per-basin NSE that the neuralhydrology tester reports. Across all 531 basins and four budgets, the attack's clean NSE agrees with the official tester's per-basin NSE to within a maximum absolute difference of $2.65\times10^{-7}$, confirming that the adversarial degradations are measured on the same metric used to report clean skill.
 
-\textbf{Random-search scaling.} The main text states that a best-of-$K$ random search cannot close the gradient-versus-random gap even when extrapolated to very large sample budgets. We verify this on the 21-basin scaling subset by sweeping the number of random-sign draws $K \in \{1, 3, 10, 30, 100, 300, 1000, 2000\}$ and recording the median best-of-$K$ degradation. The median random degradation grows approximately as $a\sqrt{\ln K} + b$ with $a = 0.0117$ and $b = -0.0031$ (coefficient of determination above 0.99). Extrapolating this fit to $K = 10^9$ gives a median random degradation of about 0.050, against a median scheduled-step-PGD degradation of 0.342 on the same basins---so even a billion-sample random search would remain roughly seven times weaker than the gradient attack. The gradient-versus-random gap is therefore not an artifact of an under-resourced random baseline.
+\textbf{Random-search scaling.} The main text states that a best-of-$K$ random search cannot close the gradient-versus-random gap even when extrapolated to very large sample budgets. We verify this on the 21-basin scaling subset by sweeping the number of random-sign draws $K \in \{1, 3, 10, 30, 100, 300, 1000, 2000\}$ and recording the median best-of-$K$ degradation. The median random degradation grows approximately as $a\sqrt{\ln K} + b$ (least-squares fit over $K \ge 10$, giving $a = 0.0117$, $b = -0.0031$, coefficient of determination above 0.99). Extrapolating this fit to $K = 10^9$ gives a median random degradation of about 0.050, against a median scheduled-step-PGD degradation of 0.342 on the same basins---so even a billion-sample random search would remain roughly seven times weaker than the gradient attack. The gradient-versus-random gap is therefore not an artifact of an under-resourced random baseline.
 
 \textbf{Reproducibility.} Table~S3 lists the artifacts needed to reproduce the analysis. The attack driver and per-experiment runners are tracked in the repository; the per-basin result records are written as JSON under the output directory and aggregated by a single script that prints every number reported in the main text.
 
