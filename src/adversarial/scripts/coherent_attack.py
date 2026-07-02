@@ -131,6 +131,51 @@ class CoherentBasin:
                 alpha *= 0.5
         return self.nse_clean - best_nse
 
+    def apgd_record(self, eps: float, n_iter: int = 50, seed: int = 0) -> dict:
+        """Untargeted APGD (identical attack to apgd) that RECORDS the best perturbation
+        and the denormalized daily hydrographs, for L1 (per-forcing-variable / temporal
+        attribution of the perturbation) and L2 (hydrological-signature + water-balance)
+        analysis. The attack itself is unchanged; only extra tensors are returned."""
+        import numpy as np
+        g0 = torch.Generator(device=self.device).manual_seed(seed)
+        delta = _clamp(_tie_copy(torch.empty(self.T_cal, self.F, device=self.device).uniform_(-eps, eps, generator=g0)), eps)
+        best_nse, best_delta = self.nse(delta), delta
+        alpha = 2 * eps
+        for t in range(n_iter):
+            g = _tie_grad(self.grad(delta))
+            delta = _clamp(delta + alpha * g.sign(), eps)
+            cur = self.nse(delta)
+            if cur < best_nse:
+                best_nse, best_delta = cur, delta
+            if t in (int(n_iter * 0.22), int(n_iter * 0.5), int(n_iter * 0.75)):
+                alpha *= 0.5
+        # denormalized daily series (physical units) at the last day of each window
+        q_obs = self.y_last * self.q_scale + self.q_center                       # [N] mm/d
+        q_clean = self._preds(self.zero) * self.q_scale + self.q_center          # [N] mm/d
+        q_adv = self._preds(best_delta) * self.q_scale + self.q_center           # [N] mm/d
+        p_idx = torch.arange(self.T - 1, self.T_cal, device=self.device)         # last-day cal idx per window
+        p_clean = self.clean_cal[p_idx, 0] * self.scale[0] + self.center[0]      # [N] mm/d (clean precip)
+        # L1 channel attribution: leave-one-out damage drop on the ACHIEVED attack.
+        # Energy per channel is uninformative here (L-inf saturates every channel to +/-eps);
+        # attrib[c] = how much adversarial damage is lost when channel c cannot be perturbed.
+        _groups = {"precip": [0], "temp": list(TEMP_IDX), "srad": [3], "vp": [4]}
+        attrib = {}
+        for _name, _chs in _groups.items():
+            d2 = best_delta.clone()
+            d2[:, _chs] = 0.0
+            attrib[_name] = float(self.nse(d2) - best_nse)                       # >= 0, damage lost
+        return dict(
+            D_nse=self.nse_clean - best_nse, nse_adv=best_nse, nse_clean=self.nse_clean,
+            attrib=attrib,
+            delta=best_delta.detach().cpu().numpy().astype(np.float32),          # [T_cal, F] standardized
+            q_obs=q_obs.detach().cpu().numpy().astype(np.float32),
+            q_clean=q_clean.detach().cpu().numpy().astype(np.float32),
+            q_adv=q_adv.detach().cpu().numpy().astype(np.float32),
+            p_clean=p_clean.detach().cpu().numpy().astype(np.float32),
+            mask=self.mask.detach().cpu().numpy(),
+            feat=list(self.feat),
+        )
+
     def random_sign(self, eps: float, k: int, gen: torch.Generator) -> float:
         best_nse = self.nse_clean
         for _ in range(k):
