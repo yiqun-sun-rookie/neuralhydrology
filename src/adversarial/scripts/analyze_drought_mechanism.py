@@ -157,6 +157,19 @@ print(f"amp medians by regime (raw group contrast REVERSES the conditional +0.23
 ns = l1[g1 != "snow"]
 report(ns, "precip_share", "aridity", CTRL, "precip_share vs aridity, NON-SNOW basins only")
 
+# p_mean attenuation from adding the snow control (sources the -0.37 -> -0.26 note in the text)
+report(df, "D_APGD", "p_mean", ["nse_clean"], "D_APGD vs p_mean (skill-only control)")
+report(df, "D_APGD", "p_mean", CTRL, "D_APGD vs p_mean (skill + snow control)")
+
+# dry-end flood-peak / low-flow signature tests, scoped to the NON-SNOW population (n=71)
+print("\n-- dry-end signature nulls, evaluated WITHIN non-snow basins --")
+cns = c[gc != "snow"]
+report(cns, "peak_mag_rel", "aridity", CTRL, "peak_mag_rel vs aridity, NON-SNOW only (n=71)")
+dfns = df[df["basin"].isin(l1["basin"]) & (df["frac_snow"] <= SNOW_THR)].copy()  # non-snow of the 107 subset
+report(dfns, "lowflow_share", "aridity", CTRL, "lowflow_share vs aridity, NON-SNOW only (n=71)")
+print(f"full-107 (snow-leakage) peak_mag_rel~aridity partial and D_lowflow/D_APGD~aridity partial "
+      f"are the SIGNIFICANT ones already printed above; scope the manuscript null to non-snow.")
+
 out = RES / "drought_mechanism_summary.csv"
 c["regime"] = gc
 c.to_csv(out, index=False)
