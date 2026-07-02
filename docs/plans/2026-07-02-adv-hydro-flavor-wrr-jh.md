@@ -97,3 +97,8 @@
   hierarchy 句+一句无机制解读声明；全部数字溯源 analyze_drought_mechanism.py（新增 Section D:
   互相关矩阵/q_mean 翻转/非雪内部 +0.361）。⑤编译 exit 0，21 页。⑥独立审查+复核：见下轮报告。
   待办→Round 2：SI panel+稳健性注、PLS、标题候选、独立审稿终检。
+- **Round 2（2026-07-02）**：PLS 补雪脊柱句（`5259ede`）；SI 新增 Text S4 + Table S4（湿-干梯度全部偏相关/q_mean 翻转/p_mean 衰减/非雪 null）；复现表补 hydro-attribution 脚本。主 21pp、SI 4pp exit 0。
+- **Round 3（2026-07-02）= 收敛闸门**：独立 `wrr-paper-review` agent（新 context 读 PDF + 实跑 analyze_drought_mechanism.py）返回。**无科学 blocker**；数字溯源评 A（headline + SI S4 全部逐条复现）。
+  - 已做（路线无关，`9f4e419`）：M5 织入已存在却未引的文献（Intro: Beven2006/Kavetski2006/Renard2010/Clark2008/McMillan2012；Discussion: Klotz2022/Frame2022/Lees2021）；软化 over-claim（"reflects"→"consistent with"、"distributed across accumulation season compound"→"spread over many timesteps can compound"、结论"exposing"→"pointing to"）；m1 "equal"→"comparable sampling budget"。exit 0。
+  - **待用户拍（全部用户门控，故 loop 停）**：①期刊路线 JH（1–2 周小修可投）vs WRR（3–6 周：reframe+M2 全雪区机制+M3 多 seed）②B1 repo Zenodo DOI（占位符 line 358，需用户建 archive）③B2 致谢文本（line 361 占位）④标题 reframe（WRR 必需/JH 可选，候选已在报告给出）。
+  - 未做（用户门控/需 GPU）：M1 reframe、M2（全 152 雪区重跑温度归因/峰值/timing，~GPU）、M3（2–3 seed 复核）、M4 季节能量归因图（WRR 加分）。
