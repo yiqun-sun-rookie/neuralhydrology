@@ -115,10 +115,46 @@ Reference test metrics & \path{test/model_epoch030/test_results.p} \\
 Basin list & \path{src/adversarial/data/531_basins.txt} \\
 Attack driver & \path{src/adversarial/scripts/coherent_attack.py} \\
 Experiment runners & \path{src/adversarial/scripts/run_exp{1..6}.py}, \path{run_exp_detect.py} \\
-Output records & \path{results/05_adversarial_robustness/id18_s100/exp*.json} \\
+Output records & \path{results/05_adversarial_robustness/id18_s100/exp*.json}, \path{*_summary.csv} \\
 Aggregator & \path{src/adversarial/scripts/aggregate_id18.py} \\
+Hydrological attribution & \path{analyze_hydro_vulnerability.py}, \path{analyze_l1_attribution.py}, \\
+ & \path{analyze_l2_signatures.py}, \path{analyze_drought_mechanism.py} (in \path{src/adversarial/scripts/}) \\
 Metric-fidelity check & $\max|\mathrm{NSE}_{\mathrm{clean}} - \mathrm{NSE}_{\mathrm{official}}| = 2.65\times10^{-7}$ (531 basins) \\
 Finite NSE metrics & 531 of 531 basins \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ====================================================================
+\section*{Text S4. Hydrological Attribution and the Wet--Dry Gradient}
+%% ====================================================================
+
+This section gives the full statistics behind the catchment-attribute analysis (Section~3.2 of the main text) and its identifiability checks. All partial Spearman correlations rank-transform each variable, regress the rank-transformed controls out of both the response and the predictor by ordinary least squares, and report the Pearson correlation of the residuals; $p$-values use $df = N - 2$. Regime labels follow the main text: a basin is \emph{snow} if its snow fraction exceeds 0.2, and among the remaining basins \emph{dry} if its aridity (potential evapotranspiration over precipitation) exceeds 1.5 and \emph{humid} otherwise. Every value below is printed by \path{analyze_drought_mechanism.py}.
+
+The damage gradient with catchment character (Table~\ref{tab:s4_grad}) is real but not separable into a distinct drought mechanism. The climate and flow-magnitude descriptors are mutually correlated at $|\rho| = 0.60$--$0.94$, and additionally controlling for mean specific discharge flips the aridity partial from $+0.18$ to $-0.13$ ($p = 3.4\times10^{-3}$) and collapses the gradient-to-random damage ratio's aridity partial from $+0.23$ to $-0.02$ ($p = 0.70$). The mean-precipitation partial itself weakens from $-0.37$ under clean-skill control alone to $-0.26$ once snow fraction is also held fixed, showing that part of the precipitation gradient is snow-mediated. Consistent with the absence of a distinct dry-end mechanism, the attack does not re-aim its perturbation toward the dry end: within the non-snow population the precipitation share of the damage tends to rise only weakly with aridity ($+0.36$, $N = 71$), and neither the flood-peak signature ($-0.20$, $p = 0.09$) nor the low-flow-share signature ($-0.10$, $p = 0.40$) is significant there. The two significant full-subset dry-end partials (peak magnitude $-0.28$; low-flow share $-0.23$) are driven by snow leakage---within the snow basins alone the peak-magnitude--aridity Spearman correlation is $-0.55$ ($p = 5\times10^{-4}$)---which is why the main-text nulls are scoped to the non-snow population. Only seven dry non-snow basins fall in the 107-basin subset, so these nulls exclude only large effects.
+
+\begin{table}[ht]
+\caption{Wet--dry damage gradient and identifiability checks. Damage is $-\Delta$NSE under scheduled-step PGD at $\varepsilon = 0.1$; $D_{\mathrm{APGD}}/D_{\mathrm{rand}}$ is the per-basin ratio of gradient to best-of-100 random-sign damage. Partial Spearman correlations control for snow fraction and clean NSE unless noted.}
+\label{tab:s4_grad}
+\centering
+\small
+\begin{tabular}{llr}
+\toprule
+Quantity & Predictor / control & Partial $\rho$ ($p$) \\
+\midrule
+Damage & aridity & $+0.18$ ($2.9\times10^{-5}$) \\
+Damage & mean precipitation & $-0.26$ ($1.5\times10^{-9}$) \\
+Damage & runoff ratio & $-0.25$ ($4.5\times10^{-9}$) \\
+Damage & mean specific discharge & $-0.28$ ($7.7\times10^{-11}$) \\
+Damage & baseflow index & $+0.13$ ($2.4\times10^{-3}$) \\
+\midrule
+Damage & mean precip.\ (clean skill only) & $-0.37$ ($6.3\times10^{-19}$) \\
+Damage & aridity (+ mean sp.\ discharge) & $-0.13$ ($3.4\times10^{-3}$) \\
+$D_{\mathrm{APGD}}/D_{\mathrm{rand}}$ & aridity (+ mean sp.\ discharge) & $-0.02$ ($0.70$) \\
+\midrule
+Precip.\ damage share & aridity (non-snow, $N=71$) & $+0.36$ ($2.0\times10^{-3}$) \\
+Peak-magnitude change & aridity (non-snow, $N=71$) & $-0.20$ ($0.09$) \\
+Low-flow damage share & aridity (non-snow, $N=71$) & $-0.10$ ($0.40$) \\
 \bottomrule
 \end{tabular}
 \end{table}
