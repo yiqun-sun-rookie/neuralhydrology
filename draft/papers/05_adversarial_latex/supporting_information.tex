@@ -8,7 +8,10 @@
 
 \begin{document}
 
-\title{Supporting Information for ``Attack-Method Choice Changes Robustness Conclusions for a Standard LSTM Rainfall-Runoff Model''}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+
+\title{Supporting Information for ``Constrained Adversarial Stress Testing Reveals a Moment-Based Quality-Control Blind Spot and Hydrologically Structured Failure Modes in an LSTM Rainfall-Runoff Model''}
 
 \authors{
 Y.~Sun\affil{1}
@@ -20,9 +23,11 @@ Y.~Sun\affil{1}
 \item Text S1: Model Training Configuration
 \item Text S2: Basin Coverage and Subsets
 \item Text S3: Metric Fidelity, Reproducibility, and Random-Search Scaling
+\item Text S4: Hydrological Attribution and the Wet--Dry Gradient
 \item Table S1: Model Training Hyperparameters
 \item Table S2: Basin Counts per Experiment Block
 \item Table S3: Reproducibility Artifacts
+\item Table S4: Wet--Dry Damage Gradient and Identifiability Checks
 \end{enumerate}
 
 %% ====================================================================
@@ -119,6 +124,8 @@ Output records & \path{results/05_adversarial_robustness/id18_s100/exp*.json}, \
 Aggregator & \path{src/adversarial/scripts/aggregate_id18.py} \\
 Hydrological attribution & \path{analyze_hydro_vulnerability.py}, \path{analyze_l1_attribution.py}, \\
  & \path{analyze_l2_signatures.py}, \path{analyze_drought_mechanism.py} (in \path{src/adversarial/scripts/}) \\
+Occlusion dependence & \path{run_occlusion_importance.py} (\texttt{-{}-mode shuffle -{}-k 3}), \path{analyze_occlusion_channel.py}; \\
+ & source \path{results/05_adversarial_robustness/id18_s100/occlusion_importance_shuffle.csv} \\
 Metric-fidelity check & $\max|\mathrm{NSE}_{\mathrm{clean}} - \mathrm{NSE}_{\mathrm{official}}| = 2.65\times10^{-7}$ (531 basins) \\
 Finite NSE metrics & 531 of 531 basins \\
 \bottomrule

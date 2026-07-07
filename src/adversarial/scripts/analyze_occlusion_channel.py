@@ -21,7 +21,9 @@ def partial(x, y, Z):
     return pearsonr(res(rx), res(ry))
 
 
-occ = pd.read_csv(RES / "occlusion_importance.csv", dtype={"basin": str})
+# shuffle-mode occlusion is the manuscript's method (temporal permutation, in-distribution);
+# occlusion_importance.csv is the deprecated set-to-mean variant kept only for comparison.
+occ = pd.read_csv(RES / "occlusion_importance_shuffle.csv", dtype={"basin": str})
 occ["basin"] = occ["basin"].str.zfill(8)
 vul = pd.read_csv(RES / "hydro_vulnerability_summary.csv", dtype={"basin": str})
 vul["basin"] = vul["basin"].str.zfill(8)
