@@ -1,0 +1,1414 @@
+{
+  "snapshot_id": "conceptual_lstm_531_minimal_snapshot_20260713",
+  "external_archive_bundle": {
+    "path": "results/paper_snapshot_archives/conceptual_lstm_531_external_inputs_20260713.zip",
+    "format": "zip_stored",
+    "member_count": 19,
+    "bytes": 1402435,
+    "sha256": "e24e42d4ae96b30351a52be81f76d6f3ac1a7ff46fe6da02aaea8b70a09b332c",
+    "source_command": "python -X utf8 -m src.lstm_fair_531.scripts.build_manuscript_evidence_package --build-external-archive results/paper_snapshot_archives/conceptual_lstm_531_external_inputs_20260713.zip"
+  },
+  "baseline_package_root": "draft/papers/10_18_conceptual_lstm_package",
+  "baseline_file_count": 162,
+  "baseline_total_bytes": 356424245,
+  "classification_definitions": {
+    "version_control": "Canonical top-level manuscript artifacts retained for direct review in a clean checkout.",
+    "external_archive": "Immutable evidence inputs read directly by the package generator and pinned by content digest.",
+    "regenerate": "Files produced deterministically by the single package-build command.",
+    "exclude": "Working analyses, duplicate renderings, and intermediate artifacts outside the minimal top-level rebuild."
+  },
+  "classification_counts": {
+    "exclude": 110,
+    "regenerate": 27,
+    "version_control": 14,
+    "external_archive": 11
+  },
+  "classification_byte_totals": {
+    "exclude": 355734820,
+    "regenerate": 453833,
+    "version_control": 107793,
+    "external_archive": 127799
+  },
+  "top_level_outputs": [
+    "claims_limitations.md",
+    "fairness_audit_memo.md",
+    "figure_table_captions.md",
+    "final_submission_readiness_memo.md",
+    "independent_audit_conclusion.md",
+    "key_points.md",
+    "MANIFEST.json",
+    "manuscript_full_draft.md",
+    "manuscript_ready_claim_map.md",
+    "manuscript_sections.md",
+    "manuscript_skeleton.md",
+    "provenance_ledger.csv",
+    "provenance_ledger.md",
+    "reviewer_risk_checklist.md"
+  ],
+  "proposed_version_control_files": [
+    "src/xaj_global_pilot/gr4j_core.py",
+    "src/xaj_global_pilot/pdd_core.py",
+    "src/xaj_global_pilot/scripts/replay_conceptual_saved_params.py",
+    "src/lstm_fair_531/configs/manuscript_snapshot_policy.json",
+    "src/lstm_fair_531/scripts/build_manuscript_evidence_package.py",
+    "src/lstm_fair_531/scripts/deep_dive_structure_diagnostics.py",
+    "src/lstm_fair_531/scripts/joint_advantage_decomposition.py",
+    "src/lstm_fair_531/scripts/lstm_advantage_decomposition.py",
+    "src/lstm_fair_531/scripts/population_residual_attribute_review.py",
+    "src/lstm_fair_531/scripts/seasonal_residual_deep_dive.py",
+    "test/test_id10_joint_advantage_decomposition.py",
+    "test/test_id10_lstm_advantage_decomposition.py",
+    "test/test_id10_manuscript_evidence_package.py",
+    "test/test_id10_pdd_fairness.py",
+    "test/test_id10_population_residual_review.py",
+    "test/test_id10_saved_parameter_replay.py",
+    "test/test_id10_seasonal_residuals.py",
+    "test/test_id10_structure_diagnostics.py",
+    "draft/papers/10_18_conceptual_lstm_package/claims_limitations.md",
+    "draft/papers/10_18_conceptual_lstm_package/fairness_audit_memo.md",
+    "draft/papers/10_18_conceptual_lstm_package/figure_table_captions.md",
+    "draft/papers/10_18_conceptual_lstm_package/final_submission_readiness_memo.md",
+    "draft/papers/10_18_conceptual_lstm_package/independent_audit_conclusion.md",
+    "draft/papers/10_18_conceptual_lstm_package/key_points.md",
+    "draft/papers/10_18_conceptual_lstm_package/MANIFEST.json",
+    "draft/papers/10_18_conceptual_lstm_package/manuscript_full_draft.md",
+    "draft/papers/10_18_conceptual_lstm_package/manuscript_ready_claim_map.md",
+    "draft/papers/10_18_conceptual_lstm_package/manuscript_sections.md",
+    "draft/papers/10_18_conceptual_lstm_package/manuscript_skeleton.md",
+    "draft/papers/10_18_conceptual_lstm_package/provenance_ledger.csv",
+    "draft/papers/10_18_conceptual_lstm_package/provenance_ledger.md",
+    "draft/papers/10_18_conceptual_lstm_package/reviewer_risk_checklist.md"
+  ],
+  "code_inputs": [
+    {
+      "input_id": "C01",
+      "path": "src/xaj_global_pilot/gr4j_core.py",
+      "bytes": 8053,
+      "sha256": "985307dde1331544ee051ec8d7c61504726e916680fe0b1ab339a801315abf23",
+      "digest_mode": "text_lf",
+      "role": "GR4J and shared no-ice degree-day parameter definitions."
+    },
+    {
+      "input_id": "C02",
+      "path": "src/xaj_global_pilot/pdd_core.py",
+      "bytes": 4919,
+      "sha256": "f547701c75e0dbf8504ba9c1b42bc1a9b868276fdbe2efb754e0354d69b02d31",
+      "digest_mode": "text_lf",
+      "role": "Shared degree-day snow parameter definitions and active-path implementation."
+    },
+    {
+      "input_id": "C03",
+      "path": "src/xaj_global_pilot/xaj_model.py",
+      "bytes": 16443,
+      "sha256": "38a60445f699acad123a832df4c648124233713517f13a8e3b3835c0b74634f7",
+      "digest_mode": "text_lf",
+      "role": "Xinanjiang model and six-parameter degree-day wrapper definitions."
+    },
+    {
+      "input_id": "C04",
+      "path": "src/scl_hydro/hbv_lite_numpy.py",
+      "bytes": 9715,
+      "sha256": "8c6356926fd6b4bdef672c4ea56bc7941291ee05298dd461100e919beb590103",
+      "digest_mode": "text_lf",
+      "role": "HBV-lite thirteen-parameter definition including four intrinsic snow parameters."
+    },
+    {
+      "input_id": "C05",
+      "path": "test/test_id10_pdd_fairness.py",
+      "bytes": 5649,
+      "sha256": "704ecdae5817f499ba34686b0155922a268cc7e75437fc4d3b5766b035f40fe1",
+      "digest_mode": "text_lf",
+      "role": "Executable check that two Xinanjiang ice parameters are inactive from zero initial ice."
+    }
+  ],
+  "baseline_files": [
+    {
+      "path": "audit/R01_saved_parameter_replay_current_code/MANIFEST.json",
+      "bytes": 10087,
+      "sha256": "0c635773eebd76c6fd09891c4b31dd43d2687ed1075fda79845ea7b2cbe08a06",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "audit/R01_saved_parameter_replay_current_code/saved_parameter_replay_audit.md",
+      "bytes": 1189,
+      "sha256": "c3f88ffea6655ac8e0eadc927d0b95d876305372bd52d745089089601155718a",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "audit/R01_saved_parameter_replay_current_code/saved_parameter_replay_rows.csv",
+      "bytes": 376438,
+      "sha256": "73197c1c8cf9898876d4ea6a6fb23456f57bcb1a381eeaea3a9b8621d94b656b",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "audit/R01_saved_parameter_replay_current_code/saved_parameter_replay_summary.csv",
+      "bytes": 510,
+      "sha256": "935045d130589b9076fbf758f3e53c1a89ab986f5be77358fd980947fa608053",
+      "classification": "external_archive",
+      "reason": "Small immutable replay evidence referenced by the top-level provenance ledger."
+    },
+    {
+      "path": "audit/R01_saved_parameter_replay_smoke_limit3/MANIFEST.json",
+      "bytes": 1109,
+      "sha256": "316928998c7b7f0fae754fc7fa007c246bbc0e46184c6983f336de627144c105",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "audit/R01_saved_parameter_replay_smoke_limit3/saved_parameter_replay_audit.md",
+      "bytes": 1177,
+      "sha256": "62a8cf47369c8f9547729f057b77d5e44c735c73bd6e98ed9c886dfcdafcf3b6",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "audit/R01_saved_parameter_replay_smoke_limit3/saved_parameter_replay_rows.csv",
+      "bytes": 2304,
+      "sha256": "62c1f630956d7171f5ef09c87ed836a024bbe0a22391191bb03ea04f86f232b8",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "audit/R01_saved_parameter_replay_smoke_limit3/saved_parameter_replay_summary.csv",
+      "bytes": 486,
+      "sha256": "4c1641a7abaa975fafa64e7394f087bbf1467b0caee7d7a01afca14c29db3587",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "audit/stale_reference_audit.csv",
+      "bytes": 14966,
+      "sha256": "3f2185d8bf1666c49793d8967bc46a9b1c503f5e5d9b06607f4cd0e5d8f1c623",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "audit/stale_reference_audit.md",
+      "bytes": 15835,
+      "sha256": "8aa118687da37013be1ba4acc3f374707ebf9bc16eb9fea41d0f1201915dbc28",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "claims_limitations.md",
+      "bytes": 3095,
+      "sha256": "55c4b913086a87209c5adb12fa757cde2a7701a49df82d4bfde1dd43077d514a",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/claim_map.md",
+      "bytes": 1203,
+      "sha256": "ca5878012e2f5c265626e1dcd35005707cf8853108415fde05db028a2ff3d51f",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/figures/top_diagnostic_relationships.png",
+      "bytes": 178570,
+      "sha256": "7afd2c508f17aa1a34d2b4941c55e21ce7e864b6915d22cb15382144162c624d",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/independent_review_memo.md",
+      "bytes": 4989,
+      "sha256": "c42a5087fd0a5fdee89056317bae16c624d701cc777473519ef2c30cdbbf16f5",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/MANIFEST.json",
+      "bytes": 1267,
+      "sha256": "f435559c5e0350a2fbdc3b7385a846a2e8f3ffc388c9a5454b67257177ba1c99",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/README.md",
+      "bytes": 2388,
+      "sha256": "b6e32f6805ed8a7f3f343b00c47bd5d04f48f36beeea34570a347bdee92c2ed7",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/basin_attribute_panel.csv",
+      "bytes": 545321,
+      "sha256": "711ecbfc4db2832440d95411ae1f5c85c86ebf9877f6f69f6ead0a586f9062a4",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/basin_attribute_panel.md",
+      "bytes": 31357,
+      "sha256": "096b65f9fa389f0f012376871c61a6eb936009b4be2a8b40642c1c369dc2a542",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/case_basin_list.csv",
+      "bytes": 7790,
+      "sha256": "4861c77f67008a2bd4da2417c9f1f2bb755ed8fadebd5d2d9cefd4ededa2ecd7",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/case_basin_list.md",
+      "bytes": 9019,
+      "sha256": "a0df71018d72c1b31645ef57d1aef6c9f11e57c59dd077129a4e407eeabae2f4",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/claim_map.csv",
+      "bytes": 1112,
+      "sha256": "167cb698b1ad92f548e4a7a858f4e1a4f49dd04b46672120aa0e8129c5a40b65",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/literature_gap_table.csv",
+      "bytes": 2175,
+      "sha256": "72a8b8d53fc84a4e91cda4abcbdb1da0a027d3814e0f3047466ab22722771609",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/literature_gap_table.md",
+      "bytes": 2274,
+      "sha256": "1b5be6d346719cb670a73f55fd43d9c585d5065f17534f08367f07a4e9f42210",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/predictability_checks.csv",
+      "bytes": 831,
+      "sha256": "4c9312138ba0c283579a141aab20b695cbd06eaa5e223fc08cd05d5f5ffee0d5",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/predictability_checks.md",
+      "bytes": 1026,
+      "sha256": "18a22bad5dd593ec46c4f57d23dfbf0ac382fa764728f2feec4ea4c5691efd99",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/primary_static_spearman.csv",
+      "bytes": 52049,
+      "sha256": "4bee2723e9bd0551d7e1a2d3c30b65685f68dd4fe17f3584952d63e20f591513",
+      "classification": "external_archive",
+      "reason": "Direct package-build evidence input preserved in the immutable external archive."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/primary_static_spearman.md",
+      "bytes": 13116,
+      "sha256": "ad36ff0a74152e98f5e3deb51363805f56f18b5396d4254acb060d0e9067ab63",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/supplemental_hydro_spearman.csv",
+      "bytes": 17122,
+      "sha256": "3c6b9a993b14e7cc213403a22582c1125e9138e05e3e4ae738ecef1a23d14e5b",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/supplemental_hydro_spearman.md",
+      "bytes": 12562,
+      "sha256": "69bf4c5b0882db2df74bb053da3596d63d54eb8930912baf2842d1e167a5d29c",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/target_summary.csv",
+      "bytes": 695,
+      "sha256": "29cf05bf271402ae58f90b61c9a3246e21445f0deb3bc89321576c94bb09fb19",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D01_structure_diagnostic_20260709/tables/target_summary.md",
+      "bytes": 846,
+      "sha256": "9287af166efba5204696380aba564d927b7e8098d7cd38a2131665c4d2aad051",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/MANIFEST.json",
+      "bytes": 1707,
+      "sha256": "e8178f07565cca3f3497182481c404617b13f304cb2e1c7f39b1551c4a738b4a",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/README.md",
+      "bytes": 8849,
+      "sha256": "84128a7793ca345176309e577ab9a4f9345e12de4781ae78e1eb827d2243dd74",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_flow_group.csv",
+      "bytes": 36144,
+      "sha256": "77b9c6dd5fdd47ac9275f27aa2f4d832a5ecb1b1336d53e27b730e0dfdecca28",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_flow_group.md",
+      "bytes": 15691,
+      "sha256": "a8ecc13e7d9cc46a0b5ba731a0e8632305cd7a7d689689f93f5b9af11217e81b",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_season.csv",
+      "bytes": 48812,
+      "sha256": "5fc87b89a2fc5de4dc74a83da6eccbe4ec1042013d380245a27cb9e55bc349e1",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_season.md",
+      "bytes": 15483,
+      "sha256": "ac3e2c5ec17369924fa75d899b5fabb9fe2f3c39b82e9775691d424d54ae95ce",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/daily_residuals_selected_cases.csv.gz",
+      "bytes": 11017748,
+      "sha256": "265d73905350bd19d6a41922dc380672ca98896a42b928ad6748eeaa86757def",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/flow_delta_aggregate.csv",
+      "bytes": 3639,
+      "sha256": "11efce2956bb755ead59a841c05c163c30fedea5d100aa8d242c13abe760f417",
+      "classification": "external_archive",
+      "reason": "Small immutable selected-case flow evidence referenced by the top-level provenance ledger."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/flow_delta_aggregate.md",
+      "bytes": 4356,
+      "sha256": "1669644fc4f9969b6060e6f02a8597e2a565567397e3f228378ca4beed709ecc",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/flow_group_model_metrics.csv",
+      "bytes": 56338,
+      "sha256": "c1ec33f10e045306ed02ad8ab2491b07ab409a919deefd08a7c6565f6ece7810",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/flow_group_model_metrics.md",
+      "bytes": 17977,
+      "sha256": "fe11e350f7a2329c0203c79ae75bb78530196afa49ca7057afa098798386d71f",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/seasonal_delta_aggregate.csv",
+      "bytes": 4700,
+      "sha256": "13027fad7fd294046cfacd619b96f4ec14bc869baecf6120a3fe8a79eb25bba8",
+      "classification": "external_archive",
+      "reason": "Small immutable selected-case seasonal evidence referenced by the top-level provenance ledger."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/seasonal_delta_aggregate.md",
+      "bytes": 5633,
+      "sha256": "33d59a75f64c87ce6c3a4d3f531cd2a8f7addc5d1790943717324a203d761032",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/seasonal_model_metrics.csv",
+      "bytes": 75287,
+      "sha256": "5f287c677bcdf0b7d8971964bffe5e1cc179e4658e8cacd2562a8e1d8276b7b8",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/seasonal_model_metrics.md",
+      "bytes": 17501,
+      "sha256": "6419b428890e6fa26d37fd17808d61436a534e7ee41c0a1193ac1b6c13863b72",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/selected_cases.csv",
+      "bytes": 4662,
+      "sha256": "885c9466c498dbfe46307c995a8ef1ed889fa024d1b2900b5e2a497c0b0efd7c",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D02_seasonal_residual_20260709/tables/selected_cases.md",
+      "bytes": 5443,
+      "sha256": "a42785d7a5b8fe64abd82d2c745aeaeec09f7fc240059fd000bf7259b87cd97a",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/MANIFEST.json",
+      "bytes": 1962,
+      "sha256": "59c878b5e346e136ac7150ce6230c93d7477d1c041961223c51ea656852934aa",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/README.md",
+      "bytes": 9482,
+      "sha256": "e7cc036dc08d6cb7ba28b0821bf41f22659b5e376088104e231321cc79d743a5",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_flow_group.csv",
+      "bytes": 228062,
+      "sha256": "7fa3142d24704a83468abb64471a5935ec795d27b25a4cfbaf3388cd565ec0af",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_flow_group.md",
+      "bytes": 15437,
+      "sha256": "e7204c9920dc3e709b8d16144c29c047e45dd7aff1283ce8866885708b7485d1",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_season.csv",
+      "bytes": 303500,
+      "sha256": "daffa5e3db6e1bee50ab7348a920d08418e268437808a8e145dd98b9043f65f0",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_season.md",
+      "bytes": 15388,
+      "sha256": "a9b36bcd79d38a8063829c196cf548118a8c402b8e1e7334efed68bc2fd538a1",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/daily_nse_reaggregation_check.csv",
+      "bytes": 46275,
+      "sha256": "32d7a6c67baac078f941bc21f15761d137e28799a0663fecbd3a0c0480025c12",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/daily_residuals_selected_cases.csv.gz",
+      "bytes": 72939152,
+      "sha256": "bc67602c47131e94aab2882f18a5e8d5dd4b1a8ad3bcec08fbe83969ea3350c7",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/flow_delta_aggregate.csv",
+      "bytes": 2527,
+      "sha256": "8aa04a19c612310d2baecab415dec2094fd3c14985685e919b062ab9673bf235",
+      "classification": "external_archive",
+      "reason": "Small immutable snow-population flow evidence referenced by the top-level provenance ledger."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/flow_delta_aggregate.md",
+      "bytes": 2966,
+      "sha256": "1f7cbd52947e9d1120674628af0ca4c37054937591a5089f7a5822c96bbbae21",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/flow_group_model_metrics.csv",
+      "bytes": 351909,
+      "sha256": "530c2a0eec7ba0aa6594945a626c7df05fd9d691dbdb88bc6163bdf19fc46d6a",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/flow_group_model_metrics.md",
+      "bytes": 17806,
+      "sha256": "b5bdb9507840f82917ec49b4f1c67422a6661a9ba12393724c487bc6c609fa88",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/seasonal_delta_aggregate.csv",
+      "bytes": 3280,
+      "sha256": "ac47917ab8222d522313ea0d43475b9102d7f042a49b76c882b53cebf4f342fd",
+      "classification": "external_archive",
+      "reason": "Small immutable snow-population seasonal evidence referenced by the top-level provenance ledger."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/seasonal_delta_aggregate.md",
+      "bytes": 3821,
+      "sha256": "16c3f588a38e0ee24ac8c7807491c492083de7f46e30a5ff8c40b14b3772c1cf",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/seasonal_model_metrics.csv",
+      "bytes": 466925,
+      "sha256": "53b3b07b9c85f4d501d360720f38c7e5cd036ea3623deefee9612d861ef806ef",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/seasonal_model_metrics.md",
+      "bytes": 17693,
+      "sha256": "244758b14efaec475b06e927081d273d83fb130a32722248cdc8d3bde695a0f0",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/selected_cases.csv",
+      "bytes": 32653,
+      "sha256": "33a25a300b4b6cc3948dbf6d99ebd2da06978d9d13438c24866d55d7a34e8f5d",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D03_population_seasonal_residual_20260709/tables/selected_cases.md",
+      "bytes": 37018,
+      "sha256": "66e49d277d927b8c0f160c06f03255629c28eb6663459e2aa3f49cf4516d23d5",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/MANIFEST.json",
+      "bytes": 1923,
+      "sha256": "d326237fef53f790fcfd1b0847f712ec8641360826ce9b3fa949529be5553b45",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/population_residual_attribute_review_manifest.json",
+      "bytes": 1019,
+      "sha256": "875e2443223469a62768156d991c2907915adef1ee72a9f40df12b6740fb3694",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/population_residual_attribute_review.md",
+      "bytes": 7341,
+      "sha256": "787909bc128bbbf72072e76dc979e982f63d2577edea0cae50c1c9bb5fbec712",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/README.md",
+      "bytes": 14970,
+      "sha256": "c7ec84b81199fa312b3a0074bd4db5646bc7a8f0bfd4b1568dc17b2377d3483d",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_flow_group.csv",
+      "bytes": 762702,
+      "sha256": "74b65bd524955a44ce01dca20a7425cdc3f483976c3abd5aeb1df6078091fe6c",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_flow_group.md",
+      "bytes": 15288,
+      "sha256": "d842e4db12b8fee1eccea17837c605d391306819fc46f0037f54e60d92efc9cc",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_season.csv",
+      "bytes": 1022135,
+      "sha256": "03a7869999c8930ead7ccbf97318fac557ac5208b5824e8290aadc73ea4b712c",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/conceptual_vs_lstm_by_case_season.md",
+      "bytes": 15308,
+      "sha256": "3a0aba6b56a50f98826906b3f8b0ee3bae008371afdb3c42b93480723a852abe",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/daily_nse_reaggregation_check.csv",
+      "bytes": 161585,
+      "sha256": "add72fe12bb06808ff4bc5a79c8ba96f31e8433c1b036422d98099d9e9ababa9",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/daily_residuals_selected_cases.csv.gz",
+      "bytes": 253591831,
+      "sha256": "7373ad79122af8876ba0e0573c99dbb7fe9a7203f3ce0c2a7ff53e7de6540cc1",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/flow_attribute_link_checks.csv",
+      "bytes": 16792,
+      "sha256": "8183f95d282b8e7e3ac77c3a6e9bad8f6b3f811cc758504d81fd8a13855ed25a",
+      "classification": "external_archive",
+      "reason": "Direct package-build evidence input preserved in the immutable external archive."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/flow_attribute_link_checks.md",
+      "bytes": 14288,
+      "sha256": "b182501989c2927ce2bc45e5831d348ac6528e49689c330db42093fb76eb33d3",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/flow_delta_aggregate.csv",
+      "bytes": 8856,
+      "sha256": "293d67ed060db70dbdedb081dd419fd0d1c046e86c4aa04b438965fdece29284",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/flow_delta_aggregate.md",
+      "bytes": 10213,
+      "sha256": "4d6f6565e5558a2af4b65bd4613914375e619c365376b30f6bd0d095062debba",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/flow_group_model_metrics.csv",
+      "bytes": 1187553,
+      "sha256": "86db3dcf08f30fa513a3d15b97e3ef58ebcb42f79c119fff1ed1b2d8f52ce350",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/flow_group_model_metrics.md",
+      "bytes": 17726,
+      "sha256": "531e32dfa4dfa3aa5a2eae5d2b8892d2b3b1f434ccfe80c4b9c94f56a201dd32",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/flow_population_residual_targets.csv",
+      "bytes": 284565,
+      "sha256": "8a9ce2a3e95f937f554eefc21503c2e34ba6be6d3d70d7d3f621ffa5df676a1c",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/flow_population_residual_targets.md",
+      "bytes": 17222,
+      "sha256": "64c2f5c50b3fcb950eb56fa7dcecdb5f745cc68d724d18e5faeb98670a11021b",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/seasonal_attribute_link_checks.csv",
+      "bytes": 21741,
+      "sha256": "4907cf9f339e166fad60bee65fe9b7115328e35db118c4dfdc8ed3efe50aaaa3",
+      "classification": "external_archive",
+      "reason": "Direct package-build evidence input preserved in the immutable external archive."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/seasonal_attribute_link_checks.md",
+      "bytes": 14002,
+      "sha256": "6198a65fe573dcf8610e6bbb7d61f7e74fb547ef93e3c9ce3e2a071610da067e",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/seasonal_delta_aggregate.csv",
+      "bytes": 11806,
+      "sha256": "696a62a8e17c7860a9f080a6c570a2021f76a11b60233cb49f0c63a669f0a624",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/seasonal_delta_aggregate.md",
+      "bytes": 13571,
+      "sha256": "b6c84a48c04ba4be7fc3643ac7a6e640cb3a99c01085a24d438152f6382f5f52",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/seasonal_model_metrics.csv",
+      "bytes": 1580707,
+      "sha256": "a0f03c0760ecb2dfdd4ba8e5a06928154cb9ccc6e29c84b9f5897d41ee35a843",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/seasonal_model_metrics.md",
+      "bytes": 17613,
+      "sha256": "0cc09fb7c9d4fef911fed3d8180316717edf469d0796b10b30f37523f9dc2dd7",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/seasonal_population_residual_targets.csv",
+      "bytes": 383955,
+      "sha256": "fd5a14f25345c262b3deee71b12bdf564ffe999667332a15aafff99e5429cea8",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/seasonal_population_residual_targets.md",
+      "bytes": 17302,
+      "sha256": "8fcba940acd815402e6661db8a4f9b4beada8a5e91045ec70f201a97d29a2970",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/selected_cases.csv",
+      "bytes": 107509,
+      "sha256": "8f1b2ef17667abd1c97d7167626e2b73a597fb92590ab72d3baefb963aa6a409",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D04_full_population_seasonal_residual_20260709/tables/selected_cases.md",
+      "bytes": 122486,
+      "sha256": "570f00a5abe30a3cdb1c08e44d4277f3c835de33704fe0b4f647228d2251f7e4",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/D05_iteration_review.md",
+      "bytes": 2874,
+      "sha256": "c1467de9eaa84d74451bda939fc1df95c3fc6fc9a29151497fbd0ce8b2ea328c",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/D05_lstm_advantage_decomposition_manifest.json",
+      "bytes": 1382,
+      "sha256": "db639313150e2517aa55ac5518e0e4c8c0b7bb6a2e2891521a22f037191b0752",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/D05_lstm_advantage_decomposition_memo.md",
+      "bytes": 4268,
+      "sha256": "0ad9aa276a5c2d0725c92be35f8a66d855dc998dc29fc80e750167208ece40b2",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/flow_advantage_targets.csv",
+      "bytes": 310448,
+      "sha256": "96583f26be66a67204c1a28f5f07399c08a7b7d1cc85d50a57ad24ff43215e65",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/flow_advantage_targets.md",
+      "bytes": 19084,
+      "sha256": "131d977ab4351485470172bae0fbef61638b106b23499427ea67b948817b14e7",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/flow_regime_advantage_concentration.csv",
+      "bytes": 3695,
+      "sha256": "89f1d4b6263a4806dccf1997b9e4c0867d990bc812b89ed1c02b91b54b84c250",
+      "classification": "external_archive",
+      "reason": "Direct package-build evidence input preserved in the immutable external archive."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/flow_regime_advantage_concentration.md",
+      "bytes": 4236,
+      "sha256": "f37e9dfffd33f8902c279d8481dd00d91ce21430ef4cf647cfb72c5326569141",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/season_advantage_targets.csv",
+      "bytes": 418543,
+      "sha256": "9827189ef7ddbd262f1ffd50c1e22b94bafec86228862246adb8da3096d24207",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/season_advantage_targets.md",
+      "bytes": 19166,
+      "sha256": "9aa1a0c851e61dca0f8e3d5b6921e3841e935b5484d2f71daae13f119c8132e8",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/season_regime_advantage_concentration.csv",
+      "bytes": 4796,
+      "sha256": "c3a9a6aa64ab64df44f89ac44bc636357c54ca6250cda72e8ad29f75f6347ef6",
+      "classification": "external_archive",
+      "reason": "Direct package-build evidence input preserved in the immutable external archive."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/season_regime_advantage_concentration.md",
+      "bytes": 5473,
+      "sha256": "7dfe4a0cb88f77e4733d1f8b80b726b8a42ab64c6b0af8be7974b34274b77d36",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/top_advantage_contexts.csv",
+      "bytes": 4865,
+      "sha256": "68f57a24c2d4d32f0a30af98cc44a789c3c8bfac2bd8475ccdd4e41ed94ebcea",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/top_advantage_contexts.md",
+      "bytes": 5630,
+      "sha256": "1b585e05d4f62816e5fbfa90e85375d9a99465960adb0e7f53cdfaf6a2e38fe7",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/D06_iteration_review.md",
+      "bytes": 3077,
+      "sha256": "27b584374441a57206f9cbd146aa6546dfb4bcbdcc1af2cc0495b55dd4aa3364",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/D06_joint_season_flow_advantage_manifest.json",
+      "bytes": 1237,
+      "sha256": "1979f3ff2b2b774da545a9298bda22147deb2aef22dbea857c368bca9dac1d14",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/D06_joint_season_flow_advantage_memo.md",
+      "bytes": 4251,
+      "sha256": "3d18d8c6784cc0d45c8d0d4530cfec4842e97e24fa2d7f338dc962e9facea905",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/tables/joint_advantage_targets.csv",
+      "bytes": 1163789,
+      "sha256": "6541a87e3649c6d3a03ab2e63b3f0669e81dea2ab52f38200ca8004aacedc117",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/tables/joint_advantage_targets.md",
+      "bytes": 20805,
+      "sha256": "ef5448293b826b16a2fd87822e66220134707c88bc86d23620b91cf7f2592e00",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/tables/joint_conceptual_vs_lstm_delta.csv",
+      "bytes": 2844509,
+      "sha256": "ea82efa83e8c9b02e0c3514b6b5fc75202c6450ad7ff503c8a97007cf3010a9e",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/tables/joint_conceptual_vs_lstm_delta.md",
+      "bytes": 16780,
+      "sha256": "a03dcde9d07ea81a9f1114c27b2109503cd9fe98d7ff9be8d8777e682673e811",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/tables/joint_regime_advantage_concentration.csv",
+      "bytes": 14070,
+      "sha256": "1b35a6c8c57219d8378a9dac329f2b9ebe05f7b53d12a552df87e9715122f576",
+      "classification": "external_archive",
+      "reason": "Direct package-build evidence input preserved in the immutable external archive."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/tables/joint_regime_advantage_concentration.md",
+      "bytes": 16043,
+      "sha256": "7f8892fa5fc7aeadfe4288a73c66c669e59edc829b42c45d5349f226832a0c9b",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/tables/joint_season_flow_model_metrics.csv",
+      "bytes": 4359973,
+      "sha256": "8bc5a4de7deda1ae2d4ca5cec39c935588d65ee3473b2cc819a8ce8b32a50b80",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/tables/joint_season_flow_model_metrics.md",
+      "bytes": 19077,
+      "sha256": "285566c22ebb3c6d9530d15049f284a29be4981b23b228c30bc58c38255350e2",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/tables/top_joint_advantage_contexts.csv",
+      "bytes": 4950,
+      "sha256": "005738e78f71db30d6e8db3353a18914f896b93f5a741f67b42d8c83617a5a38",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/D06_joint_season_flow_advantage_20260709/tables/top_joint_advantage_contexts.md",
+      "bytes": 5707,
+      "sha256": "7e08635da11cfdd9c4bb7a145ec78d0e3197488ffc6ecb31fa64511111add46c",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/DIAGNOSTIC_VERDICT.md",
+      "bytes": 5902,
+      "sha256": "30970829254c0e69d4410a547c812ef512272fa95dcc0e7a798b893c961b832c",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/FINAL_INNOVATION_AUDIT_20260709.md",
+      "bytes": 9663,
+      "sha256": "93c5b9b1a26c6106af786a636a436cf0ad2e92ad34697d462186f6ff6a4d576b",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/INNOVATION_VERDICT_20260709.md",
+      "bytes": 8183,
+      "sha256": "4bc96b4637b8c7ceb4694289a342d95d778d9cc641e7e5039d110449ec4f4204",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "deep_dive/LITERATURE_GAP_RECHECK_20260709.md",
+      "bytes": 3296,
+      "sha256": "3f45f7f2decf0bbdfc4e3d1f2bdac1b544bf9a42fcd1bfd217b95d4f861b51f5",
+      "classification": "exclude",
+      "reason": "Not required to rebuild or audit the 14 top-level manuscript artifacts in the minimal snapshot."
+    },
+    {
+      "path": "fairness_audit_memo.md",
+      "bytes": 2455,
+      "sha256": "7b618c282d58d35611fa615da4c66f1640550cd2aec5105ca9155acca8fb656c",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "figure_table_captions.md",
+      "bytes": 2673,
+      "sha256": "d84cae961cc86ca7ab676a89cb144e79fd89d4034891b814b6dba231aff67fea",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "figures/fig1_nse_cdf.png",
+      "bytes": 113331,
+      "sha256": "43fdb80c381e2e03b5d0bc514f66264479daf2d0ed964615b6088bcf973cec94",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "figures/fig2_regime_median_nse.png",
+      "bytes": 81256,
+      "sha256": "5f03a46b59f06f4726092793779c9c4dc04067a18d0a9685475b7243d860568f",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "figures/fig3_conceptual_diagnostic_tradeoffs.png",
+      "bytes": 84997,
+      "sha256": "083ad24ebc4279e67756ffaa5eba3053bfc8ffd304330d7ed47ad1da31a5d7c6",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "figures/fig4_lstm_minus_best_conceptual_by_regime.png",
+      "bytes": 64176,
+      "sha256": "1e051948e7212d91b0f556c052482eb5f455ba036cb09217d9c04d98cb4e9f0c",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "final_submission_readiness_memo.md",
+      "bytes": 4591,
+      "sha256": "50f8997d75f3f8044adf9b1b5c7215d78c31b145edcb74a308ebfcd6bf6e3b87",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "independent_audit_conclusion.md",
+      "bytes": 4580,
+      "sha256": "5798b8922bd67c6386d854316f35abbab65703d22d7c5ef82d9468560fef40ce",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "key_points.md",
+      "bytes": 2405,
+      "sha256": "0dec9cab7254c7f4969e4ab91f4177b86ecc746294d5de9d740bfcda6c52c6fc",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "MANIFEST.json",
+      "bytes": 4234,
+      "sha256": "0dd486c6e350d8f8b6586ada3ab292c6067ec466773be26f1bc4a7ab6575f229",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "manuscript_full_draft.md",
+      "bytes": 36342,
+      "sha256": "50318f3dd9df8e47dc1f11b23ec34886b0c2f0f35a24b4c000ae00e18e83cd19",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "manuscript_ready_claim_map.md",
+      "bytes": 5249,
+      "sha256": "d8daee3ffc72025c9fe44138608dd641c095ff083e14f1f074d26f0a70186491",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "manuscript_sections.md",
+      "bytes": 5703,
+      "sha256": "c1d29675d9883083fa5549c7c378dd2ecb225cd675ea60f72eafeb3704b6f1d8",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "manuscript_skeleton.md",
+      "bytes": 5919,
+      "sha256": "703b0e21b59fbc4c5f81e23617d0249a2cbdabbea6b1d8c0cf9d7bebac014925",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "provenance_ledger.csv",
+      "bytes": 13353,
+      "sha256": "049802ff8b3e7581feecf7a71b7f9fc48029905d5ee186d2840313ab078c234b",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "provenance_ledger.md",
+      "bytes": 13792,
+      "sha256": "1a06352cfa5c8a19e737723f7acec62be388ec819edb4b5474241b3e0ca141ac",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "reviewer_risk_checklist.md",
+      "bytes": 3402,
+      "sha256": "f8abf66b8acb4333285f9019286feae99bb3effe5fd6d2696fba00f08dbfa74c",
+      "classification": "version_control",
+      "reason": "Canonical top-level manuscript artifact retained for direct review."
+    },
+    {
+      "path": "tables/conceptual_diagnostics.csv",
+      "bytes": 341,
+      "sha256": "84936a00955be0046562388127c6e93f95262a3ceb1be7f7bce0844f749a0cb2",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/conceptual_diagnostics.md",
+      "bytes": 464,
+      "sha256": "a923cd93a12b00dc369bb000cac760d22095811c26eb935ab9fef2f29f1b5f59",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/conceptual_winners.csv",
+      "bytes": 738,
+      "sha256": "3c5c754bc5084d7a1e474b78f64a528880f2787c2ddd991d8221880d12e66d19",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/conceptual_winners.md",
+      "bytes": 955,
+      "sha256": "c4d80651b7dbc1b7317c53f75203f626d79f7ac12eaeaad26e7c25e5d2eff68d",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/fairness_audit.csv",
+      "bytes": 2834,
+      "sha256": "59ebdafce87c1a267f53a9c82e1995589f7c5597725c1fda6850828fffa96ccc",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/fairness_audit.md",
+      "bytes": 2961,
+      "sha256": "4f3bb015e1187fd12d039a082250fe841b471563a6b2e2101dae5f34bd808970",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/lstm_advantage_concentration.csv",
+      "bytes": 467,
+      "sha256": "f6574f279965d6f62e22dbde794394ec4eaf546977f3c8260f5730158bb99711",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/lstm_advantage_concentration.md",
+      "bytes": 562,
+      "sha256": "24f27155d6f0ae4a809c38d6da475a34441c99eb4c0ec0d07e088facb0248dfc",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/main_benchmark.csv",
+      "bytes": 466,
+      "sha256": "4e6d832ace6c7601db4dae5005ca8ea30ef6389644c250f7f4e61d8e5a298bf6",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/main_benchmark.md",
+      "bytes": 589,
+      "sha256": "e056254bc622c87210102e6ab064b7e905dfd459b78952a05fab02f0205cff87",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/oracle.csv",
+      "bytes": 378,
+      "sha256": "2a8c1c16a8931b1666009f9b63ddd2450ced20fd5504e306d6f42e72ed69edae",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/oracle.md",
+      "bytes": 459,
+      "sha256": "959d89445df17197b4ce753f2b85d1acf3df54eb77fb4fe3aefecc0489f00c3a",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/paired.csv",
+      "bytes": 595,
+      "sha256": "ae1cc3d39b334233277d45d133050daefba1755ba6e6d17d0deac698de2adc08",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/paired.md",
+      "bytes": 732,
+      "sha256": "867bee1cbc0fae81324a705071aa5261d40300545766348e7ebf5ccec4007d03",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/parameter_accounting.csv",
+      "bytes": 564,
+      "sha256": "7ed561a954254a26908f526573b407daa0d3b91b360baa753c0981ce7e45a329",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/parameter_accounting.md",
+      "bytes": 683,
+      "sha256": "ae8a825a462924b05d7b49fa175c8038b40e47bab020dfa4d1064c9fe8802887",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/per_basin_combined_nse.csv",
+      "bytes": 62706,
+      "sha256": "128e4d5f26a1e6ad0a7cdcda7951dbc92e180d3e93dbfc27862ca3251c5f4ecc",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/protocol.csv",
+      "bytes": 767,
+      "sha256": "58de0ac03236da35ef45f39529b0c24d1529c93fe338b01dba95ed5e371bf7b0",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/protocol.md",
+      "bytes": 890,
+      "sha256": "5f1973ae21561385ab71d08b95a33327a7f63004d9562afe9664f636dc1112d0",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/regime_summary.csv",
+      "bytes": 490,
+      "sha256": "c80b0ac7476013eef9b85a2d58e4462d4d7ef984e45b695a36217e859426e842",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    },
+    {
+      "path": "tables/regime_summary.md",
+      "bytes": 631,
+      "sha256": "77f03895855250de731e9f6f6a00262dbc83a52becb7bf20a87c79a972d51466",
+      "classification": "regenerate",
+      "reason": "Deterministically generated by the single package-build command from registered inputs."
+    }
+  ],
+  "external_inputs": [
+    {
+      "input_id": "I01",
+      "path": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/gr4j_pdd_cma_FINAL_pt_v1_local_full.csv",
+      "bytes": 349131,
+      "sha256": "904207d5e83aea539c8cbb77c9bd5643d48eee4cd2e96c48f80ce055367f9d9c",
+      "role": "GR4J basin-wise conceptual metrics and saved parameters.",
+      "source_command": "python -X utf8 -m src.xaj_global_pilot.scripts.run_gr4j_pdd_cma_repro_v01"
+    },
+    {
+      "input_id": "I02",
+      "path": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/xaj_pdd_cma_FINAL_pt_v1_5k3_local_full.csv",
+      "bytes": 367321,
+      "sha256": "a9030fec4817f9d5468c79144f938f033f3800870bf1d1c9f54deb84bc91c3e6",
+      "role": "Xinanjiang basin-wise conceptual metrics and saved parameters.",
+      "source_command": "python -X utf8 -m src.xaj_global_pilot.scripts.run_xaj_pdd_cma_repro_v01"
+    },
+    {
+      "input_id": "I03",
+      "path": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_FINAL_pt_v1_warmup_local_full.csv",
+      "bytes": 239955,
+      "sha256": "9fad3981a2593450fe02e9b7cd35e8830745a8d2dc3ed89f897f2fa3a083642c",
+      "role": "HBV-lite basin-wise conceptual metrics and saved parameters.",
+      "source_command": "archived output of the registered HBV-lite calibration workflow; no recalibration in snapshot rebuild"
+    },
+    {
+      "input_id": "I04",
+      "path": "results/18_lstm_fair_531/_reports/compare_iter1_cudalstm_s100.json",
+      "bytes": 2689,
+      "sha256": "4352669e720d62082e4b77ad2b59ea93bc42fbd0d10194945aa03d3c238b847a",
+      "role": "Single-model comparison report and metric-file pointer.",
+      "source_command": "archived comparison report; no neural-network retraining in snapshot rebuild"
+    },
+    {
+      "input_id": "I05",
+      "path": "results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/test/model_epoch030/test_metrics.csv",
+      "bytes": 15380,
+      "sha256": "2bc4f9e80e2502511d37ab12f7ec8ca295b275cec288e7833acad1dc607ac71e",
+      "role": "Single long short-term memory network basin-wise metrics.",
+      "source_command": "archived model-epoch-030 evaluation metrics; no neural-network retraining in snapshot rebuild"
+    },
+    {
+      "input_id": "I06",
+      "path": "results/18_lstm_fair_531/_reports/compare_iter2_cudalstm_8seed_ens.json",
+      "bytes": 2663,
+      "sha256": "6eca27b7ea393d0a23a7f5bc7c6b197ea5665d633eea5c6b812385c40f142c6d",
+      "role": "Eight-model ensemble paired-comparison statistics.",
+      "source_command": "archived ensemble comparison report; no neural-network retraining in snapshot rebuild"
+    },
+    {
+      "input_id": "I07",
+      "path": "results/18_lstm_fair_531/_reports/ensemble_cudalstm_maurer_8seed_per_basin.csv",
+      "bytes": 15356,
+      "sha256": "63d989d155f6806d52f996e28f734afb9ec7cecbdcc797ac414d3cd2ff8670d6",
+      "role": "Eight-model ensemble basin-wise metrics.",
+      "source_command": "archived arithmetic-mean ensemble metrics; no neural-network retraining in snapshot rebuild"
+    },
+    {
+      "input_id": "I08",
+      "path": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/diagnostic/cross_method_per_basin_nse.csv",
+      "bytes": 276221,
+      "sha256": "88d05df2d6b38ec77ae8d6c31a83762137d72d4b67f9582e87d24f7a51c231df",
+      "role": "Fixed hydrological regime labels for 531 basins.",
+      "source_command": "archived cross-method diagnostic export"
+    },
+    {
+      "input_id": "I09",
+      "path": "draft/papers/10_18_conceptual_lstm_package/deep_dive/D01_structure_diagnostic_20260709/tables/primary_static_spearman.csv",
+      "bytes": 52049,
+      "sha256": "4bee2723e9bd0551d7e1a2d3c30b65685f68dd4fe17f3584952d63e20f591513",
+      "role": "Full-population static-attribute correlation evidence.",
+      "source_command": "python -X utf8 -m src.lstm_fair_531.scripts.deep_dive_structure_diagnostics"
+    },
+    {
+      "input_id": "I10",
+      "path": "draft/papers/10_18_conceptual_lstm_package/deep_dive/D04_full_population_seasonal_residual_20260709/tables/seasonal_attribute_link_checks.csv",
+      "bytes": 21741,
+      "sha256": "4907cf9f339e166fad60bee65fe9b7115328e35db118c4dfdc8ed3efe50aaaa3",
+      "role": "Spring residual-gap population correlation evidence.",
+      "source_command": "python -X utf8 -m src.lstm_fair_531.scripts.population_residual_attribute_review"
+    },
+    {
+      "input_id": "I11",
+      "path": "draft/papers/10_18_conceptual_lstm_package/deep_dive/D04_full_population_seasonal_residual_20260709/tables/flow_attribute_link_checks.csv",
+      "bytes": 16792,
+      "sha256": "8183f95d282b8e7e3ac77c3a6e9bad8f6b3f811cc758504d81fd8a13855ed25a",
+      "role": "High-flow residual-gap population correlation evidence.",
+      "source_command": "python -X utf8 -m src.lstm_fair_531.scripts.population_residual_attribute_review"
+    },
+    {
+      "input_id": "I12",
+      "path": "draft/papers/10_18_conceptual_lstm_package/deep_dive/D05_lstm_advantage_decomposition_20260709/tables/season_regime_advantage_concentration.csv",
+      "bytes": 4796,
+      "sha256": "c3a9a6aa64ab64df44f89ac44bc636357c54ca6250cda72e8ad29f75f6347ef6",
+      "role": "Regime-season advantage-concentration evidence.",
+      "source_command": "python -X utf8 -m src.lstm_fair_531.scripts.lstm_advantage_decomposition"
+    },
+    {
+      "input_id": "I13",
+      "path": "draft/papers/10_18_conceptual_lstm_package/deep_dive/D05_lstm_advantage_decomposition_20260709/tables/flow_regime_advantage_concentration.csv",
+      "bytes": 3695,
+      "sha256": "89f1d4b6263a4806dccf1997b9e4c0867d990bc812b89ed1c02b91b54b84c250",
+      "role": "Regime-flow advantage-concentration evidence.",
+      "source_command": "python -X utf8 -m src.lstm_fair_531.scripts.lstm_advantage_decomposition"
+    },
+    {
+      "input_id": "I14",
+      "path": "draft/papers/10_18_conceptual_lstm_package/deep_dive/D06_joint_season_flow_advantage_20260709/tables/joint_regime_advantage_concentration.csv",
+      "bytes": 14070,
+      "sha256": "1b35a6c8c57219d8378a9dac329f2b9ebe05f7b53d12a552df87e9715122f576",
+      "role": "Joint regime-season-flow advantage-concentration evidence.",
+      "source_command": "python -X utf8 -m src.lstm_fair_531.scripts.joint_advantage_decomposition"
+    },
+    {
+      "input_id": "I15",
+      "path": "draft/papers/10_18_conceptual_lstm_package/audit/R01_saved_parameter_replay_current_code/saved_parameter_replay_summary.csv",
+      "bytes": 510,
+      "sha256": "935045d130589b9076fbf758f3e53c1a89ab986f5be77358fd980947fa608053",
+      "role": "Saved-parameter replay summary referenced by the top-level provenance ledger.",
+      "source_command": "python -X utf8 -m src.xaj_global_pilot.scripts.replay_conceptual_saved_params --out-dir draft/papers/10_18_conceptual_lstm_package/audit/R01_saved_parameter_replay_current_code"
+    },
+    {
+      "input_id": "I16",
+      "path": "draft/papers/10_18_conceptual_lstm_package/deep_dive/D02_seasonal_residual_20260709/tables/seasonal_delta_aggregate.csv",
+      "bytes": 4700,
+      "sha256": "13027fad7fd294046cfacd619b96f4ec14bc869baecf6120a3fe8a79eb25bba8",
+      "role": "Selected-case seasonal residual evidence referenced by the top-level provenance ledger.",
+      "source_command": "python -X utf8 -m src.lstm_fair_531.scripts.seasonal_residual_deep_dive --out-dir draft/papers/10_18_conceptual_lstm_package/deep_dive/D02_seasonal_residual_20260709"
+    },
+    {
+      "input_id": "I17",
+      "path": "draft/papers/10_18_conceptual_lstm_package/deep_dive/D02_seasonal_residual_20260709/tables/flow_delta_aggregate.csv",
+      "bytes": 3639,
+      "sha256": "11efce2956bb755ead59a841c05c163c30fedea5d100aa8d242c13abe760f417",
+      "role": "Selected-case flow-group residual evidence referenced by the top-level provenance ledger.",
+      "source_command": "python -X utf8 -m src.lstm_fair_531.scripts.seasonal_residual_deep_dive --out-dir draft/papers/10_18_conceptual_lstm_package/deep_dive/D02_seasonal_residual_20260709"
+    },
+    {
+      "input_id": "I18",
+      "path": "draft/papers/10_18_conceptual_lstm_package/deep_dive/D03_population_seasonal_residual_20260709/tables/seasonal_delta_aggregate.csv",
+      "bytes": 3280,
+      "sha256": "ac47917ab8222d522313ea0d43475b9102d7f042a49b76c882b53cebf4f342fd",
+      "role": "Snow-population seasonal residual evidence referenced by the top-level provenance ledger.",
+      "source_command": "python -X utf8 -m src.lstm_fair_531.scripts.seasonal_residual_deep_dive --population snow --max-basins 0 --out-dir draft/papers/10_18_conceptual_lstm_package/deep_dive/D03_population_seasonal_residual_20260709"
+    },
+    {
+      "input_id": "I19",
+      "path": "draft/papers/10_18_conceptual_lstm_package/deep_dive/D03_population_seasonal_residual_20260709/tables/flow_delta_aggregate.csv",
+      "bytes": 2527,
+      "sha256": "8aa04a19c612310d2baecab415dec2094fd3c14985685e919b062ab9673bf235",
+      "role": "Snow-population flow-group residual evidence referenced by the top-level provenance ledger.",
+      "source_command": "python -X utf8 -m src.lstm_fair_531.scripts.seasonal_residual_deep_dive --population snow --max-basins 0 --out-dir draft/papers/10_18_conceptual_lstm_package/deep_dive/D03_population_seasonal_residual_20260709"
+    }
+  ]
+}

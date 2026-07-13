@@ -1,0 +1,99 @@
+{
+  "package": "ID10/ID18 manuscript evidence package",
+  "out_dir": "draft\\papers\\10_18_conceptual_lstm_package",
+  "source_artifacts": {
+    "conceptual": {
+      "GR4J": "results\\10_global_conceptual_model_benchmark\\camels_us_531_repro_v01\\summary\\gr4j_pdd_cma_FINAL_pt_v1_local_full.csv",
+      "XAJ": "results\\10_global_conceptual_model_benchmark\\camels_us_531_repro_v01\\summary\\xaj_pdd_cma_FINAL_pt_v1_5k3_local_full.csv",
+      "HBV": "results\\10_global_conceptual_model_benchmark\\camels_us_531_repro_v01\\summary\\hbv_lite_cma_FINAL_pt_v1_warmup_local_full.csv"
+    },
+    "lstm_single_report": "results\\18_lstm_fair_531\\_reports\\compare_iter1_cudalstm_s100.json",
+    "lstm_ensemble_report": "results\\18_lstm_fair_531\\_reports\\compare_iter2_cudalstm_8seed_ens.json",
+    "lstm_ensemble_metrics": "results\\18_lstm_fair_531\\_reports\\ensemble_cudalstm_maurer_8seed_per_basin.csv",
+    "regime_source": "results\\10_global_conceptual_model_benchmark\\camels_us_531_repro_v01\\diagnostic\\cross_method_per_basin_nse.csv",
+    "saved_parameter_replay": "draft\\papers\\10_18_conceptual_lstm_package\\audit\\R01_saved_parameter_replay_current_code",
+    "deep_dive_d01": "draft\\papers\\10_18_conceptual_lstm_package\\deep_dive\\D01_structure_diagnostic_20260709",
+    "deep_dive_d02": "draft\\papers\\10_18_conceptual_lstm_package\\deep_dive\\D02_seasonal_residual_20260709",
+    "deep_dive_d03": "draft\\papers\\10_18_conceptual_lstm_package\\deep_dive\\D03_population_seasonal_residual_20260709",
+    "deep_dive_d04": "draft\\papers\\10_18_conceptual_lstm_package\\deep_dive\\D04_full_population_seasonal_residual_20260709",
+    "deep_dive_d05": "draft\\papers\\10_18_conceptual_lstm_package\\deep_dive\\D05_lstm_advantage_decomposition_20260709",
+    "deep_dive_d06": "draft\\papers\\10_18_conceptual_lstm_package\\deep_dive\\D06_joint_season_flow_advantage_20260709"
+  },
+  "outputs": {
+    "tables": [
+      "conceptual_diagnostics.csv",
+      "conceptual_winners.csv",
+      "fairness_audit.csv",
+      "lstm_advantage_concentration.csv",
+      "main_benchmark.csv",
+      "oracle.csv",
+      "paired.csv",
+      "parameter_accounting.csv",
+      "per_basin_combined_nse.csv",
+      "protocol.csv",
+      "regime_summary.csv"
+    ],
+    "figures": [
+      "fig1_nse_cdf.png",
+      "fig2_regime_median_nse.png",
+      "fig3_conceptual_diagnostic_tradeoffs.png",
+      "fig4_lstm_minus_best_conceptual_by_regime.png"
+    ],
+    "audit": [
+      "R01_saved_parameter_replay_current_code/saved_parameter_replay_summary.csv",
+      "stale_reference_audit.csv",
+      "stale_reference_audit.md"
+    ],
+    "deep_dive": [
+      "D01_structure_diagnostic_20260709/tables/primary_static_spearman.csv",
+      "D02_seasonal_residual_20260709/tables/flow_delta_aggregate.csv",
+      "D02_seasonal_residual_20260709/tables/seasonal_delta_aggregate.csv",
+      "D03_population_seasonal_residual_20260709/tables/flow_delta_aggregate.csv",
+      "D03_population_seasonal_residual_20260709/tables/seasonal_delta_aggregate.csv",
+      "D04_full_population_seasonal_residual_20260709/tables/flow_attribute_link_checks.csv",
+      "D04_full_population_seasonal_residual_20260709/tables/seasonal_attribute_link_checks.csv",
+      "D05_lstm_advantage_decomposition_20260709/tables/flow_regime_advantage_concentration.csv",
+      "D05_lstm_advantage_decomposition_20260709/tables/season_regime_advantage_concentration.csv",
+      "D06_joint_season_flow_advantage_20260709/tables/joint_regime_advantage_concentration.csv"
+    ],
+    "archived_evidence_inputs": [
+      "audit/R01_saved_parameter_replay_current_code/saved_parameter_replay_summary.csv",
+      "deep_dive/D01_structure_diagnostic_20260709/tables/primary_static_spearman.csv",
+      "deep_dive/D02_seasonal_residual_20260709/tables/flow_delta_aggregate.csv",
+      "deep_dive/D02_seasonal_residual_20260709/tables/seasonal_delta_aggregate.csv",
+      "deep_dive/D03_population_seasonal_residual_20260709/tables/flow_delta_aggregate.csv",
+      "deep_dive/D03_population_seasonal_residual_20260709/tables/seasonal_delta_aggregate.csv",
+      "deep_dive/D04_full_population_seasonal_residual_20260709/tables/flow_attribute_link_checks.csv",
+      "deep_dive/D04_full_population_seasonal_residual_20260709/tables/seasonal_attribute_link_checks.csv",
+      "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/flow_regime_advantage_concentration.csv",
+      "deep_dive/D05_lstm_advantage_decomposition_20260709/tables/season_regime_advantage_concentration.csv",
+      "deep_dive/D06_joint_season_flow_advantage_20260709/tables/joint_regime_advantage_concentration.csv"
+    ],
+    "ledger": [
+      "provenance_ledger.csv",
+      "provenance_ledger.md"
+    ],
+    "skeleton": "manuscript_skeleton.md",
+    "claims_limitations": "claims_limitations.md",
+    "fairness_audit_memo": "fairness_audit_memo.md",
+    "manuscript_ready_claim_map": "manuscript_ready_claim_map.md",
+    "manuscript_sections": "manuscript_sections.md",
+    "key_points": "key_points.md",
+    "full_manuscript": "manuscript_full_draft.md",
+    "figure_table_captions": "figure_table_captions.md",
+    "reviewer_risk_checklist": "reviewer_risk_checklist.md",
+    "final_submission_readiness_memo": "final_submission_readiness_memo.md",
+    "independent_audit_conclusion": "independent_audit_conclusion.md"
+  },
+  "stale_reference_blockers": [],
+  "reproducibility": {
+    "status": "registered_snapshot_rebuildable",
+    "current_worktree_artifacts_auditable": true,
+    "registered_external_inputs_verified": true,
+    "single_external_archive_verified": true,
+    "external_archive_path": "results/paper_snapshot_archives/conceptual_lstm_531_external_inputs_20260713.zip",
+    "proposed_overlay_rebuild_verified": true,
+    "committed_clean_checkout_rebuild_verified": true,
+    "notes": "The committed snapshot rebuild is verified from a clean checkout using one content-pinned local external archive; archive publication remains unverified."
+  }
+}

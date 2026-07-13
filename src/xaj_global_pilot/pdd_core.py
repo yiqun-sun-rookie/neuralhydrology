@@ -10,12 +10,79 @@
 import numpy as np
 
 
+PDD_NOICE_PARAM_BOUNDS = {
+    "pdd_factor_snow": (0.5, 10.0),
+    "refreeze_snow": (0.0, 0.5),
+    "temp_snow": (-3.0, 1.0),
+    "temp_rain": (0.5, 4.0),
+}
+PDD_NOICE_PARAM_NAMES = list(PDD_NOICE_PARAM_BOUNDS.keys())
+
+
 def _get_param(v):
     if isinstance(v, np.ndarray):
         return v
     elif hasattr(v, "to_numpy"):
         return v.to_numpy()
     return np.array(v)
+
+
+def pdd_noice_step_mm(
+    snow_depth_mm: float,
+    temp_c: float,
+    prec_mm: float,
+    pdd_factor_snow: float,
+    refreeze_snow: float,
+    temp_snow: float,
+    temp_rain: float,
+) -> tuple[float, float]:
+    """PDD-noice scalar step in mm.
+
+    This is the shared reference snow front end for CAMELS-US conceptual
+    comparisons where glacier ice storage is not initialized. It matches the
+    zero-ice behavior of ``pdd_step`` and the GR4J no-ice PDD wrapper.
+    """
+    snow_frac = (temp_rain - temp_c) / (temp_rain - temp_snow + 1e-12)
+    snow_frac = min(1.0, max(0.0, snow_frac))
+    snowfall = prec_mm * snow_frac
+    rainfall = prec_mm - snowfall
+
+    snow_depth_mm = snow_depth_mm + snowfall
+    pdd = temp_c if temp_c > 0.0 else 0.0
+    pot_melt = pdd_factor_snow * pdd
+    actual_melt = min(snow_depth_mm, pot_melt)
+    refrozen = actual_melt * refreeze_snow
+    snow_depth_mm = snow_depth_mm - actual_melt + refrozen
+    if snow_depth_mm < 0.0:
+        snow_depth_mm = 0.0
+    liquid_mm = actual_melt - refrozen + rainfall
+    return float(snow_depth_mm), float(liquid_mm)
+
+
+def simulate_pdd_noice_mm(
+    prec_mm: np.ndarray,
+    temp_c: np.ndarray,
+    param_dict: dict,
+    initial_snow_mm: float = 0.0,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Run the shared no-ice PDD reference over a series in mm."""
+    prec_mm = np.asarray(prec_mm, dtype=np.float64)
+    temp_c = np.asarray(temp_c, dtype=np.float64)
+    snow = float(initial_snow_mm)
+    runoff = np.zeros_like(prec_mm, dtype=np.float64)
+    snow_store = np.zeros_like(prec_mm, dtype=np.float64)
+    for i in range(prec_mm.size):
+        snow, runoff[i] = pdd_noice_step_mm(
+            snow,
+            float(temp_c[i]),
+            float(prec_mm[i]),
+            float(param_dict["pdd_factor_snow"]),
+            float(param_dict["refreeze_snow"]),
+            float(param_dict["temp_snow"]),
+            float(param_dict["temp_rain"]),
+        )
+        snow_store[i] = snow
+    return runoff, snow_store
 
 
 def pdd_step(

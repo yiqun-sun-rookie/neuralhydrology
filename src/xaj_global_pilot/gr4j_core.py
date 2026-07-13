@@ -22,6 +22,8 @@ from __future__ import annotations
 
 import numpy as np
 
+from .pdd_core import PDD_NOICE_PARAM_BOUNDS, PDD_NOICE_PARAM_NAMES, pdd_noice_step_mm
+
 # ---------------------------------------------------------------------------
 # 参数边界 (airGR / Perrin 2003 文献范围)
 # ---------------------------------------------------------------------------
@@ -32,15 +34,6 @@ GR4J_PARAM_BOUNDS = {
     'x4': (0.5, 10.0),     # unit hydrograph time base (day)
 }
 GR4J_PARAM_NAMES = list(GR4J_PARAM_BOUNDS.keys())
-
-# PDD-noice 雪参 (从 PDD_PARAM_BOUNDS 取保留的 4 个，砍掉 ice 两参)
-PDD_NOICE_PARAM_BOUNDS = {
-    'pdd_factor_snow': (0.5, 10.0),   # mm/°C/day
-    'refreeze_snow':   (0.0, 0.5),    # 重冻结比例
-    'temp_snow':       (-3.0, 1.0),   # 全雪温度阈值 (°C)
-    'temp_rain':       (0.5, 4.0),    # 全雨温度阈值 (°C)
-}
-PDD_NOICE_PARAM_NAMES = list(PDD_NOICE_PARAM_BOUNDS.keys())
 
 # PDD+GR4J 联合参数 (雪在前，与 PDD+XAJ 的 PDD-first 约定一致)
 PDD_GR4J_PARAM_NAMES = PDD_NOICE_PARAM_NAMES + GR4J_PARAM_NAMES  # 8 参
@@ -103,21 +96,7 @@ def uh2_ordinates(x4: float, n_max: int = NUH2_MAX) -> np.ndarray:
 # ---------------------------------------------------------------------------
 def _snow_noice_step(snow_depth, temp, prec, fsnow, rfsnow, temp_snow, temp_rain):
     """PDD-noice 单步 (标量)。返回 (new_snow_depth, liquid_input_mm)。"""
-    snow_frac = (temp_rain - temp) / (temp_rain - temp_snow + 1e-12)
-    snow_frac = min(1.0, max(0.0, snow_frac))
-    snowfall = prec * snow_frac
-    rainfall = prec - snowfall
-
-    snow_depth = snow_depth + snowfall
-    pdd = temp if temp > 0.0 else 0.0
-    pot_melt = fsnow * pdd
-    act_melt = min(snow_depth, pot_melt)
-    refrozen = act_melt * rfsnow
-    snow_depth = snow_depth - act_melt + refrozen
-    if snow_depth < 0.0:
-        snow_depth = 0.0
-    liquid = act_melt - refrozen + rainfall
-    return snow_depth, liquid
+    return pdd_noice_step_mm(snow_depth, temp, prec, fsnow, rfsnow, temp_snow, temp_rain)
 
 
 def _gr4j_step(S, R, stuh1, stuh2, uh1, uh2, nuh1, nuh2, P, E, x1, x2, x3):
