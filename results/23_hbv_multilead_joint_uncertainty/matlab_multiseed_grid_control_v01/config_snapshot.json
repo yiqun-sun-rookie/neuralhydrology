@@ -1,0 +1,27 @@
+{
+  "experiment": "matlab_multiseed_grid_control_v01",
+  "created": "2026-07-22",
+  "purpose": "对照实验：检验'发表工作区的均匀网格候选（含真值近邻）摊薄真滤波器概率'这一机制假说（multiseed Level B 第一层审查的待验证推断）",
+  "trigger": "layer-1 review of matlab_multiseed_params_v01 discovered the published workspace candidates are exact linspace grids, invalidating the same-design-point reading of the rng(1) reference",
+  "settings": {
+    "identical_to": "matlab_multiseed_params_v01 driver in every respect EXCEPT candidate generation",
+    "candidates": "deterministic linspace(lower, upper, 10) per parameter (exact published-workspace grid) + truth phase-1 and phase-2 rows; no lhsdesign calls, no burned draws (RNG stream = noise draws only)",
+    "noise": "1e-6*diag([140,1000,4,1200,0]) truth draws and all 12 filter ProcessNoise; r=1.5e-5",
+    "driver": "src/hbv_multilead_joint_uncertainty/matlab/multiseed_grid_control_driver.m"
+  },
+  "seeds": {
+    "formal": "3002001-3002012 (12 seeds)",
+    "smoke_discard": 3001999
+  },
+  "frozen_prediction": {
+    "mechanism": "网格含真值近邻（cw 611.1↔600 / 388.9↔400；cq 3.11↔3 / 5.89↔6），近重复候选摊薄真滤波器概率",
+    "if_mechanism_true": "网格对照的阶段 1/2 真滤波器平均概率分布应明显低于 LHS 24 种子分布（其 min 0.349/0.462），并把发表参考值 0.333/0.365 覆盖在自身分布之内或近旁",
+    "if_mechanism_false": "网格对照分布与 LHS 分布相近，发表参考仍然离群——则参考异常另有原因，如实报告",
+    "no_pass_fail_gate": "描述性对照，无通过/失败门；结论按上述两支路径如实归类，不新增中间档"
+  },
+  "summary": "same anchor implementation and quantile rules as matlab_multiseed_params_v01 (matlab_multiseed_summary.py); published reference anchors listed alongside both distributions",
+  "outputs": {
+    "directory": "results/23_hbv_multilead_joint_uncertainty/matlab_multiseed_grid_control_v01/",
+    "sealing": ".incomplete staging + checksums + atomic rename"
+  }
+}
