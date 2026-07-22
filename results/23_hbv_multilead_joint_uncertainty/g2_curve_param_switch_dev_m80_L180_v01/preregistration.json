@@ -1,0 +1,26 @@
+{
+  "adaptation_days_excluded_per_stage": 5,
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 3150020,
+    "unit": "synthetic_block"
+  },
+  "config_sha256": "48764d60edf4fead7b81b304b84a9c5f96521f17bb63166967e9b9383631b38e",
+  "dataset_role": "development",
+  "decision_rules": {
+    "median_final_margin_strict_minimum": 0,
+    "stable_fraction_block_bootstrap_lower_strict_minimum": 0.5,
+    "stable_identifiable_fraction_minimum": 0.6666666666666666,
+    "stage_one_decides_scientific_status": false,
+    "switching_stage_numbers": [
+      2,
+      3
+    ]
+  },
+  "experiment_id": "g2_curve_param_switch_dev_m80_L180_v01",
+  "frozen_before_execution": true,
+  "output_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\g2_curve_param_switch_dev_m80_L180_v01",
+  "scenario": "parameter_switch",
+  "stable_final_scoring_days": 5,
+  "started_at_utc": "2026-07-22T13:32:47.773917+00:00"
+}

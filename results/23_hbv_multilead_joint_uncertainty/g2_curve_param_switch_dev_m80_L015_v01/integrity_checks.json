@@ -1,0 +1,20 @@
+{
+  "candidate_filter_update_mode": "independent_filter_step",
+  "configured_gates": {
+    "innovation_reconstruction_maximum_absolute_error": 1e-12,
+    "log_likelihood_reconstruction_maximum_absolute_error": 1e-12,
+    "observation_reconstruction_maximum_absolute_error": 0,
+    "score_reconstruction_maximum_absolute_error": 1e-12,
+    "truth_process_perturbation_reconstruction_maximum_absolute_error": 0
+  },
+  "innovation_reconstruction_maximum_absolute_error": 0.0,
+  "integer_and_boolean_score_arrays_match": true,
+  "integrity_passed": true,
+  "interacting_multiple_model_step_called": false,
+  "log_likelihood_reconstruction_maximum_absolute_error": 5.684341886080802e-14,
+  "minimum_innovation_variance": 0.8956129199129291,
+  "nonfinite_numeric_array_names": [],
+  "observation_reconstruction_maximum_absolute_error": 0.0,
+  "score_reconstruction_maximum_absolute_error": 0.0,
+  "truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0
+}
