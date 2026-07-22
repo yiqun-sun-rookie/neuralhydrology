@@ -22,12 +22,14 @@
 | 05 | full_531_basins | **archived** | `draft/ideas/05_full_531_basins.md` | `src/full_531_basins/` | `results/05_full_531_basins/` | `logs/05_full_531_basins/` |
 | 06 | haihe_river | **subsumed_by_41** | `draft/ideas/06_haihe_river.md` | `src/haihe_river/` | `results/06_haihe_river/` | `logs/06_haihe_river/` |
 | 07 | hydroagent | dev | `draft/ideas/07_hydroagent.md` | `src/hydroagent/` | `results/07_hydroagent/` | `logs/07_hydroagent/` |
+| 09 | regime_switching | **scoping** | `draft/ideas/09_regime_switching.md` | `src/regime_switching/` | `results/09_regime_switching/` | `logs/09_regime_switching/` |
 | 41 | mts_mamba_global_transfer | in_progress | `draft/ideas/41_mts_mamba_global_transfer.md` | `src/mts_mamba_global_transfer/` | `results/41_mts_mamba_global_transfer/` | `logs/41_mts_mamba_global_transfer/` |
 
 ## 候选想法（未立项）
 
 | ID | Name | Status | Idea Doc | 说明 |
 | :--- | :--- | :--- | :--- | :--- |
+| 08 | tieling_da_failure_boundary | **parked** | *(待建)* | 铁岭三河 DL+数据同化"失效边界"复盘。查新后新颖性偏窄且红海（~60%），暂缓；应用/报奖价值高。查新见 `draft/LIT_REVIEW_2026_07_A/C/D_*.md`。若复活，须先人工核实 Saint-Fleur 2026、h-Diffusion 全文 |
 | 99 | global_hourly_model | **merged_to_41** | `draft/ideas/99_global_hourly_model.md` | 已合并到 ID 41（MTS-Mamba），占位目录 `src/global_hourly_model/` 保留但不再活跃 |
 
 ## 共享目录（非单一 Idea）
