@@ -1,0 +1,108 @@
+{
+  "bridge_fraction_stable_top_within_10": {
+    "phase1": 0.0,
+    "phase2": 0.0
+  },
+  "config_sha256": "3a34a7c28e7893c571993d6f08174a823dd887693c84ebfba59d7ad07c53f26b",
+  "ended_at": "2026-07-22T09:03:56.142213+00:00",
+  "experiment": "matlab_multiseed_params_v01",
+  "issues": [],
+  "metric_summaries": {
+    "phase1_first_top_cycle": {
+      "censored_fraction": 0.0,
+      "max": 177.0,
+      "median": 9.5,
+      "min": 3.0,
+      "n_censored": 0,
+      "n_observed": 24,
+      "n_total": 24,
+      "q25": 5.75,
+      "q75": 24.0,
+      "reference": 6,
+      "reference_call": "\u975e\u5f02\u5e38",
+      "reference_quantile_note": null
+    },
+    "phase1_stable_top_cycle": {
+      "censored_fraction": 0.041666666666666664,
+      "max": 1207.0,
+      "median": 1030.0,
+      "min": 682.0,
+      "n_censored": 1,
+      "n_observed": 23,
+      "n_total": 24,
+      "q25": 719.0,
+      "q75": 1143.5,
+      "reference": 724,
+      "reference_call": "\u975e\u5f02\u5e38",
+      "reference_quantile_note": null
+    },
+    "phase1_true_filter_mean_prob": {
+      "censored_fraction": 0.0,
+      "max": 0.581242672920214,
+      "median": 0.4705901115816699,
+      "min": 0.34875963184064684,
+      "n_censored": 0,
+      "n_observed": 24,
+      "n_total": 24,
+      "q25": 0.4276634387544646,
+      "q75": 0.5063145647554786,
+      "reference": 0.33259149687632206,
+      "reference_call": "\u5f02\u5e38\uff0c\u5355\u5b9e\u73b0\u7ed3\u8bba\u4f9d\u8d56\u79cd\u5b50",
+      "reference_quantile_note": null
+    },
+    "phase2_first_top_cycle": {
+      "censored_fraction": 0.0,
+      "max": 113.0,
+      "median": 93.0,
+      "min": 89.0,
+      "n_censored": 0,
+      "n_observed": 24,
+      "n_total": 24,
+      "q25": 91.75,
+      "q75": 102.25,
+      "reference": 120,
+      "reference_call": "\u5f02\u5e38\uff0c\u5355\u5b9e\u73b0\u7ed3\u8bba\u4f9d\u8d56\u79cd\u5b50",
+      "reference_quantile_note": null
+    },
+    "phase2_stable_top_cycle": {
+      "censored_fraction": 0.041666666666666664,
+      "max": 1217.0,
+      "median": 1072.0,
+      "min": 93.0,
+      "n_censored": 1,
+      "n_observed": 23,
+      "n_total": 24,
+      "q25": 997.5,
+      "q75": 1177.0,
+      "reference": 560,
+      "reference_call": "\u975e\u5f02\u5e38",
+      "reference_quantile_note": "\u4f4d\u4e8e\u56db\u5206\u4f4d\u8ddd\u5916\uff0c\u7ecf\u9a8c\u5206\u4f4d\u4f4d\u7f6e 0.04"
+    },
+    "phase2_true_filter_mean_prob": {
+      "censored_fraction": 0.0,
+      "max": 0.6044174155063986,
+      "median": 0.5531775655265438,
+      "min": 0.46236589516639987,
+      "n_censored": 0,
+      "n_observed": 24,
+      "n_total": 24,
+      "q25": 0.4988056571527023,
+      "q75": 0.5827777757967562,
+      "reference": 0.3650905271830478,
+      "reference_call": "\u5f02\u5e38\uff0c\u5355\u5b9e\u73b0\u7ed3\u8bba\u4f9d\u8d56\u79cd\u5b50",
+      "reference_quantile_note": null
+    }
+  },
+  "n_divergent": 0,
+  "n_formal_seeds_expected": 24,
+  "n_seed_files": 24,
+  "reference_anchors_rng1": {
+    "phase1_first_top_cycle": 6,
+    "phase1_stable_top_cycle": 724,
+    "phase1_true_filter_mean_prob": 0.33259149687632206,
+    "phase2_first_top_cycle": 120,
+    "phase2_stable_top_cycle": 560,
+    "phase2_true_filter_mean_prob": 0.3650905271830478
+  },
+  "started_at": "2026-07-22T09:03:56.046396+00:00"
+}

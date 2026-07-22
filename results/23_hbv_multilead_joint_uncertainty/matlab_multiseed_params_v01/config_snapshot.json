@@ -1,0 +1,46 @@
+{
+  "experiment": "matlab_multiseed_params_v01",
+  "created": "2026-07-22",
+  "design_document": "docs/plans/2026-07-22-matlab-multiseed-params-design.md",
+  "question": "已发表 MATLAB 参数实验的可认出结论是否依赖 rng(1)；同设计点上认出时间与阶段平均概率的跨种子分布",
+  "settings": {
+    "design_point": "published-workspace values, NOT the drifted script text",
+    "process_noise_covariance": "1e-6 * diag([140,1000,4,1200,0]) for truth draws and all 12 filter ProcessNoise",
+    "observation_noise_variance": 1.5e-05,
+    "truth_switching": {"cw": [600, 400, 500], "cv": [50, 30, 40], "cg": [18000000.0, 16000000.0, 17000000.0], "cq": [6, 3, 5]},
+    "candidates": "per-parameter lhsdesign(10,1) in cw[300,700]/cv[20,60]/cg[1.5e7,1.9e7]/cq[2,7] + truth phase-1 and phase-2 rows",
+    "filters": "trackingUKF alpha=0.6874 beta=2 kappa=-2; trackingIMM TransitionProbabilities=0.99, uniform initial",
+    "draw_order": "mirrors published main_params.m including the four unused dv/dg/hq/hs lhsdesign draws",
+    "reduction": "IMM loop only; the independent 12-filter ensemble of the published script is not run",
+    "driver": "src/hbv_multilead_joint_uncertainty/matlab/multiseed_params_driver.m",
+    "matlab": "R2023b, matlab -batch, serial over seeds"
+  },
+  "seeds": {
+    "formal": "3001001-3001024 (24 seeds, MATLAB rng twister namespace)",
+    "smoke_discard": 3000999,
+    "reference": "rng(1) not rerun; its anchors come from the published .mat (verified in walrus_imm_alignment_v02)"
+  },
+  "inputs": {
+    "peq_sha256": "64e9b1b3d47655e2008dd4dbb380d7a198811dd79b0094f1632467c0e6f605fa",
+    "toolbox_snapshot": "paper-imm-variable-params/tmp/external/nutstore_func_public_snapshot_20260722 (63-file SHA-256 manifest)",
+    "subfunctions": "paper-imm-variable-params/for_submit/synthetic/scripts/subfunctions (statetran_fcn/measure_fcn/switch_mdl, hash-identical to repo copies)"
+  },
+  "summary_rules": {
+    "anchor_code": "same implementation as walrus_imm_alignment (_anchor_metrics, git 73916fc): phase1 rows 1-1216 true filter 11, phase2 rows 1217-2433 true filter 12 (1-based); stable-top = argmax stays true until phase end",
+    "per_metric_quantiles": "min / q25 / median / q75 / max, numpy linear interpolation",
+    "censoring": "count and fraction of seeds with no stable-top in a phase must be reported alongside quantiles",
+    "rng1_position_rule": "within [min,max] -> 非异常; outside IQR -> report quantile position; outside [min,max] -> 异常，单实现结论依赖种子. No other tiers may be added post hoc.",
+    "id23_bridge": "report fraction of seeds with stable-top cycle <= 10 per phase",
+    "divergence": "seeds with NaN/Inf in imm_probs are reported as-is, never redrawn"
+  },
+  "outputs": {
+    "directory": "results/23_hbv_multilead_joint_uncertainty/matlab_multiseed_params_v01/",
+    "per_seed": "seeds/seed_<seed>.mat with imm_probs, cw/cv/cg/cq, seed, qobs, t1_2, t2_3",
+    "sealing": ".incomplete staging + checksums + atomic rename",
+    "artifacts": ["per_seed_anchors.csv", "anchor_distribution_summary.csv", "final_report.md", "config_snapshot.json", "environment.json", "checksums.json"]
+  },
+  "review": {
+    "layer_1": "design fidelity (driver vs published workspace) + results",
+    "layer_2": "independent anchor recomputation from seed .mat files"
+  }
+}

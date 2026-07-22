@@ -1,0 +1,26 @@
+{
+  "hypothesis_1_mirror_current_order": {
+    "cg": 2946912.758196391,
+    "cq": 3.5942200008849214,
+    "cv": 26.19438964094209,
+    "cw_max_abs_diff": 340.7121896695367,
+    "imm_probs_max_abs_diff": 0.886685850727616,
+    "qobs_max_abs_diff": 0.02171978950223065,
+    "verdict": "not reproduced"
+  },
+  "hypothesis_2_candidates_before_noise": {
+    "cg": 3383952.1063267216,
+    "cq": 2.093929436492842,
+    "cv": 27.29021621784179,
+    "cw_max_abs_diff": 288.1639316442196,
+    "imm_probs_max_abs_diff": 0.8427643456799567,
+    "qobs_max_abs_diff": 0.02143953855812785,
+    "verdict": "not reproduced"
+  },
+  "hypothesis_3_rng1_first_randn_block_vs_published_noise": {
+    "elementwise_ratio_pattern": "non-constant, sign-flipping -- not the same stream at any scale",
+    "max_abs_diff_scaled": 0.173,
+    "verdict": "published noise_q_truth_s1 is NOT the first randn block under rng(1,'twister')"
+  },
+  "stopped_after": "3 hypotheses per stop rule"
+}
