@@ -1,0 +1,16 @@
+{
+  "candidate_state_interaction_used": false,
+  "candidate_weight_transition_or_update_used": false,
+  "config_sha256": "76618ca2dc1eb5a55796e4188e279491245f6c2e6561fc2f48c16b1cf014cdec",
+  "dataset_role": "development",
+  "experiment_id": "g2_curve_param_switch_dev_m20_L045_v01",
+  "integrity_status": "passed",
+  "observation_snapshot_sha256": "5bc0adc216ced6c6b0d281ed5c9cd3a158d65e2f3a369d657afaaccb67a1c678",
+  "parameter_snapshot_sha256": "1fe37ab2ea7c3008bf55be04b88cb9bce59d57ebee9f71911db13f5bcd4957ae",
+  "process_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+  "protected_artifacts_unchanged": true,
+  "scenario": "parameter_switch",
+  "scientific_status": "not_passed",
+  "scope_limit": "Development evidence only, one G2 grid cell. Three complete parameter candidates at one spacing multiplier are compared with process covariance fixed at process_2; candidate filters assimilate the same observations independently with no state interaction, probability transition, or probability update. The spacing multiplier also rescales the truth trajectory, and longer budgets stretch the seasonal forcing cycle (declared interpretation boundaries in the design doc).",
+  "switching_stages_passed": false
+}

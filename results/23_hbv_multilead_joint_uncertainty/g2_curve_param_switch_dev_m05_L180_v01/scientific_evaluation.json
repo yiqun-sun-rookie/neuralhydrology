@@ -1,0 +1,65 @@
+{
+  "decision_rules": {
+    "bootstrap_replicates": 20000,
+    "bootstrap_seed": 3150016,
+    "bootstrap_unit": "synthetic_block",
+    "median_final_margin_strict_minimum": 0.0,
+    "stable_fraction_block_bootstrap_lower_strict_minimum": 0.5,
+    "stable_fraction_minimum": 0.6666666666666666,
+    "stage_one_decides_scientific_status": false
+  },
+  "scenario": "parameter_switch",
+  "scientific_status": "not_passed",
+  "stage_results": [
+    {
+      "block_count": 12,
+      "daily_true_candidate_strict_rank_one_fraction": 0.3592063492063492,
+      "final_cumulative_true_candidate_strict_rank_one_fraction": 0.5277777777777778,
+      "is_switching_stage": false,
+      "median_final_true_vs_best_wrong_cumulative_log_likelihood_margin": 0.42398233817039,
+      "median_first_stable_cumulative_rank_one_day_among_successes": 35.0,
+      "scoring_day_count": 175,
+      "stable_fraction_block_bootstrap_lower": 0.44444444444444436,
+      "stable_fraction_block_bootstrap_upper": 0.6111111111111112,
+      "stable_identifiable_fraction": 0.5277777777777778,
+      "stage_number": 1,
+      "stage_passed": false,
+      "truth_trial_count_per_block": 3
+    },
+    {
+      "block_count": 12,
+      "daily_true_candidate_strict_rank_one_fraction": 0.3477777777777778,
+      "final_cumulative_true_candidate_strict_rank_one_fraction": 0.5277777777777778,
+      "is_switching_stage": true,
+      "median_final_true_vs_best_wrong_cumulative_log_likelihood_margin": 0.047433578738036886,
+      "median_first_stable_cumulative_rank_one_day_among_successes": 73.0,
+      "scoring_day_count": 175,
+      "stable_fraction_block_bootstrap_lower": 0.38888888888888884,
+      "stable_fraction_block_bootstrap_upper": 0.6388888888888888,
+      "stable_identifiable_fraction": 0.5,
+      "stage_number": 2,
+      "stage_passed": false,
+      "truth_trial_count_per_block": 3
+    },
+    {
+      "block_count": 12,
+      "daily_true_candidate_strict_rank_one_fraction": 0.36063492063492064,
+      "final_cumulative_true_candidate_strict_rank_one_fraction": 0.5277777777777778,
+      "is_switching_stage": true,
+      "median_final_true_vs_best_wrong_cumulative_log_likelihood_margin": 0.1793623500332444,
+      "median_first_stable_cumulative_rank_one_day_among_successes": 55.0,
+      "scoring_day_count": 175,
+      "stable_fraction_block_bootstrap_lower": 0.4166666666666666,
+      "stable_fraction_block_bootstrap_upper": 0.6666666666666666,
+      "stable_identifiable_fraction": 0.5277777777777778,
+      "stage_number": 3,
+      "stage_passed": false,
+      "truth_trial_count_per_block": 3
+    }
+  ],
+  "switching_stage_numbers": [
+    2,
+    3
+  ],
+  "switching_stages_passed": false
+}

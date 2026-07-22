@@ -1,0 +1,227 @@
+{
+  "all_confirmations_match_development": false,
+  "artifact": "g2_identification_time_curve_conf_v01",
+  "confirmation_cells": [
+    {
+      "confirms_development": true,
+      "development_verdict": false,
+      "evidence_sha256": "c7e13272cf5581c9b1512192106eb8e690a1dde3a55a5f66981b8f8e81ecdfb4",
+      "experiment_id": "g2_curve_param_switch_conf_m80_L015_v01",
+      "identification_time_pooled": {
+        "censored_fraction": 0.3055555555555556,
+        "max": 15.0,
+        "median": 8.0,
+        "min": 6.0,
+        "n_censored": 22,
+        "n_total": 72,
+        "q25": 6.0,
+        "q75": 11.0
+      },
+      "multiplier": 8.0,
+      "passed": false,
+      "selection_rule": "largest_failing_multiplier",
+      "stage_length": 15
+    },
+    {
+      "confirms_development": true,
+      "development_verdict": true,
+      "evidence_sha256": "0c63eface2e510592551bcc4613048bd5d735c18461f2f39493fa03a9f214c24",
+      "experiment_id": "g2_curve_param_switch_conf_m40_L045_v01",
+      "identification_time_pooled": {
+        "censored_fraction": 0.1388888888888889,
+        "max": 44.0,
+        "median": 12.0,
+        "min": 6.0,
+        "n_censored": 10,
+        "n_total": 72,
+        "q25": 7.0,
+        "q75": 24.5
+      },
+      "multiplier": 4.0,
+      "passed": true,
+      "selection_rule": "smallest_passing_multiplier",
+      "stage_length": 45
+    },
+    {
+      "confirms_development": true,
+      "development_verdict": false,
+      "evidence_sha256": "76307db4f654fc10ccd6adcd8ce23ce27d6203c9b8722b4d2516e146034e0ae6",
+      "experiment_id": "g2_curve_param_switch_conf_m20_L045_v01",
+      "identification_time_pooled": {
+        "censored_fraction": 0.2638888888888889,
+        "max": 44.0,
+        "median": 17.0,
+        "min": 6.0,
+        "n_censored": 19,
+        "n_total": 72,
+        "q25": 8.0,
+        "q75": 26.0
+      },
+      "multiplier": 2.0,
+      "passed": false,
+      "selection_rule": "largest_failing_multiplier",
+      "stage_length": 45
+    },
+    {
+      "confirms_development": true,
+      "development_verdict": true,
+      "evidence_sha256": "a4ba2ac25ba63fb400ac978df01e154ff0744c8a59ec09ac12046b8b606b224e",
+      "experiment_id": "g2_curve_param_switch_conf_m20_L090_v01",
+      "identification_time_pooled": {
+        "censored_fraction": 0.20833333333333334,
+        "max": 89.0,
+        "median": 25.0,
+        "min": 6.0,
+        "n_censored": 15,
+        "n_total": 72,
+        "q25": 13.0,
+        "q75": 47.0
+      },
+      "multiplier": 2.0,
+      "passed": true,
+      "selection_rule": "smallest_passing_multiplier",
+      "stage_length": 90
+    },
+    {
+      "confirms_development": true,
+      "development_verdict": false,
+      "evidence_sha256": "d7f504447e9710d6ad3e86231faf8b7522b798ff15fb714af196dce0531f4225",
+      "experiment_id": "g2_curve_param_switch_conf_m10_L090_v01",
+      "identification_time_pooled": {
+        "censored_fraction": 0.3888888888888889,
+        "max": 90.0,
+        "median": 35.5,
+        "min": 6.0,
+        "n_censored": 28,
+        "n_total": 72,
+        "q25": 17.0,
+        "q75": 48.5
+      },
+      "multiplier": 1.0,
+      "passed": false,
+      "selection_rule": "largest_failing_multiplier",
+      "stage_length": 90
+    },
+    {
+      "confirms_development": true,
+      "development_verdict": true,
+      "evidence_sha256": "b1d712189ad72e577f11a4004627b177d54d919fec9c3638e20c168ec7a09717",
+      "experiment_id": "g2_curve_param_switch_conf_m20_L180_v01",
+      "identification_time_pooled": {
+        "censored_fraction": 0.06944444444444445,
+        "max": 175.0,
+        "median": 36.0,
+        "min": 6.0,
+        "n_censored": 5,
+        "n_total": 72,
+        "q25": 16.5,
+        "q75": 82.0
+      },
+      "multiplier": 2.0,
+      "passed": true,
+      "selection_rule": "smallest_passing_multiplier",
+      "stage_length": 180
+    },
+    {
+      "confirms_development": false,
+      "development_verdict": false,
+      "evidence_sha256": "903c651cc00ed298ce42f67d8aee00410a55d57a921a53c0172cf3bbe02f482f",
+      "experiment_id": "g2_curve_param_switch_conf_m10_L180_v01",
+      "identification_time_pooled": {
+        "censored_fraction": 0.2638888888888889,
+        "max": 180.0,
+        "median": 39.0,
+        "min": 6.0,
+        "n_censored": 19,
+        "n_total": 72,
+        "q25": 17.0,
+        "q75": 114.0
+      },
+      "multiplier": 1.0,
+      "passed": true,
+      "selection_rule": "largest_failing_multiplier",
+      "stage_length": 180
+    }
+  ],
+  "design_doc": "docs/plans/2026-07-22-g2-identification-time-curve-design.md",
+  "development_curve_sha256": "f5f6338b516848b9b67e89444c955e3378a0831bc516a4080adf7e83c610fcf8",
+  "ended_at_utc": "2026-07-22T14:05:31.597053+00:00",
+  "row_conclusions": {
+    "15": {
+      "conclusion": "\u8be5\u884c\u7f51\u683c\u5185\u5168\u5931\u8d25\u5df2\u786e\u8ba4\uff1a\u6700\u5927\u500d\u7387 m=8.0 \u4ecd\u5931\u8d25\uff0c\u901a\u8fc7\u8fb9\u754c\uff08\u82e5\u5b58\u5728\uff09\u5728 m>8.0\uff0c\u7f51\u683c\u5916",
+      "confirmations": {
+        "largest_failing_multiplier": {
+          "confirms_development": true,
+          "experiment_id": "g2_curve_param_switch_conf_m80_L015_v01",
+          "passed": false
+        }
+      },
+      "development_boundary_cells": {
+        "largest_failing_multiplier": 8.0,
+        "smallest_passing_multiplier": null
+      },
+      "status": "confirmed_all_fail_within_grid"
+    },
+    "180": {
+      "conclusion": "\u76ee\u524d\u65e0\u6cd5\u786e\u5b9a\uff08\u786e\u8ba4\u4e0e\u5f00\u53d1\u77db\u76fe\uff0c\u6309\u51bb\u7ed3\u89c4\u5219\u53ea\u7ed9\u533a\u95f4\uff0c\u7981\u6b62\u91cd\u8dd1\uff09\uff1a\u77db\u76fe\u683c = ['g2_curve_param_switch_conf_m10_L180_v01']",
+      "confirmations": {
+        "largest_failing_multiplier": {
+          "confirms_development": false,
+          "experiment_id": "g2_curve_param_switch_conf_m10_L180_v01",
+          "passed": true
+        },
+        "smallest_passing_multiplier": {
+          "confirms_development": true,
+          "experiment_id": "g2_curve_param_switch_conf_m20_L180_v01",
+          "passed": true
+        }
+      },
+      "development_boundary_cells": {
+        "largest_failing_multiplier": 1.0,
+        "smallest_passing_multiplier": 2.0
+      },
+      "status": "undetermined_interval_only"
+    },
+    "45": {
+      "conclusion": "\u8fb9\u754c\u5df2\u786e\u8ba4\uff1a\u6700\u5c0f\u901a\u8fc7 m=4.0\uff0c\u6700\u5927\u5931\u8d25 m=2.0\uff1b\u901a\u8fc7\u8fb9\u754c\u4f4d\u4e8e (2.0, 4.0] \u533a\u95f4",
+      "confirmations": {
+        "largest_failing_multiplier": {
+          "confirms_development": true,
+          "experiment_id": "g2_curve_param_switch_conf_m20_L045_v01",
+          "passed": false
+        },
+        "smallest_passing_multiplier": {
+          "confirms_development": true,
+          "experiment_id": "g2_curve_param_switch_conf_m40_L045_v01",
+          "passed": true
+        }
+      },
+      "development_boundary_cells": {
+        "largest_failing_multiplier": 2.0,
+        "smallest_passing_multiplier": 4.0
+      },
+      "status": "confirmed"
+    },
+    "90": {
+      "conclusion": "\u8fb9\u754c\u5df2\u786e\u8ba4\uff1a\u6700\u5c0f\u901a\u8fc7 m=2.0\uff0c\u6700\u5927\u5931\u8d25 m=1.0\uff1b\u901a\u8fc7\u8fb9\u754c\u4f4d\u4e8e (1.0, 2.0] \u533a\u95f4",
+      "confirmations": {
+        "largest_failing_multiplier": {
+          "confirms_development": true,
+          "experiment_id": "g2_curve_param_switch_conf_m10_L090_v01",
+          "passed": false
+        },
+        "smallest_passing_multiplier": {
+          "confirms_development": true,
+          "experiment_id": "g2_curve_param_switch_conf_m20_L090_v01",
+          "passed": true
+        }
+      },
+      "development_boundary_cells": {
+        "largest_failing_multiplier": 1.0,
+        "smallest_passing_multiplier": 2.0
+      },
+      "status": "confirmed"
+    }
+  },
+  "started_at_utc": "2026-07-22T14:05:31.558919+00:00"
+}

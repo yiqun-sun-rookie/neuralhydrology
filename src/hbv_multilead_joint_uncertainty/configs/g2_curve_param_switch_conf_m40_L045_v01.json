@@ -1,0 +1,214 @@
+{
+  "experiment_id": "g2_curve_param_switch_conf_m40_L045_v01",
+  "dataset_role": "confirmation",
+  "scenario": "parameter_switch",
+  "purpose": "G2 boundary-cell confirmation (frozen rule: smallest_passing_multiplier in the L=45 row); single run on fresh confirmation seeds, final whatever the direction.",
+  "g2_grid": {
+    "design_doc": "docs/plans/2026-07-22-g2-identification-time-curve-design.md",
+    "cell_number": 9,
+    "spacing_multiplier": 4.0,
+    "stage_length_days": 45,
+    "budget_row_index": 1,
+    "selection_rule": "smallest_passing_multiplier",
+    "confirms_development_experiment": "g2_curve_param_switch_dev_m40_L045_v01"
+  },
+  "diagnostic_contract": {
+    "candidate_filters_assimilate_observations_independently": true,
+    "candidate_state_interaction_used": false,
+    "candidate_probability_transition_used": false,
+    "candidate_probability_update_used": false,
+    "daily_likelihood_definition": "Scalar Gaussian predictive observation log likelihood before the same-day observation update.",
+    "cumulative_likelihood_definition": "Sum of daily log likelihoods reset at the first scored day of each stage.",
+    "strict_ranking_rule": "Every wrong candidate with likelihood greater than or equal to the true candidate ranks ahead of the true candidate."
+  },
+  "parameter_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g2_spacing_inputs_v01/parameter_vectors_m40.csv",
+    "sha256": "3357a6c3e9f2dbd24943d0c82367566531c35eb8342f5d018c1d70f419d77920",
+    "source_basin_id": "12143600",
+    "parameter_ids": [
+      "equifinal_diverse_1",
+      "trained_center",
+      "equifinal_diverse_2"
+    ]
+  },
+  "process_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/process_noise_covariances.csv",
+    "sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+    "source_basin_id": "12143600",
+    "process_ids": [
+      "process_0",
+      "process_1",
+      "process_2"
+    ],
+    "selected_process_id": "process_2"
+  },
+  "observation_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/observation_noise.csv",
+    "sha256": "f358c77b655285b348604266af43dfcd7b875ea756145f6d9b33c8853a5d8955",
+    "source_basin_id": "12143600"
+  },
+  "matched_blocks": [
+    {
+      "block_id": "g2_curve_block_01",
+      "forcing_seed": 3211001,
+      "process_noise_seed": 3221001,
+      "observation_noise_seed": 3231001
+    },
+    {
+      "block_id": "g2_curve_block_02",
+      "forcing_seed": 3211002,
+      "process_noise_seed": 3221002,
+      "observation_noise_seed": 3231002
+    },
+    {
+      "block_id": "g2_curve_block_03",
+      "forcing_seed": 3211003,
+      "process_noise_seed": 3221003,
+      "observation_noise_seed": 3231003
+    },
+    {
+      "block_id": "g2_curve_block_04",
+      "forcing_seed": 3211004,
+      "process_noise_seed": 3221004,
+      "observation_noise_seed": 3231004
+    },
+    {
+      "block_id": "g2_curve_block_05",
+      "forcing_seed": 3211005,
+      "process_noise_seed": 3221005,
+      "observation_noise_seed": 3231005
+    },
+    {
+      "block_id": "g2_curve_block_06",
+      "forcing_seed": 3211006,
+      "process_noise_seed": 3221006,
+      "observation_noise_seed": 3231006
+    },
+    {
+      "block_id": "g2_curve_block_07",
+      "forcing_seed": 3211007,
+      "process_noise_seed": 3221007,
+      "observation_noise_seed": 3231007
+    },
+    {
+      "block_id": "g2_curve_block_08",
+      "forcing_seed": 3211008,
+      "process_noise_seed": 3221008,
+      "observation_noise_seed": 3231008
+    },
+    {
+      "block_id": "g2_curve_block_09",
+      "forcing_seed": 3211009,
+      "process_noise_seed": 3221009,
+      "observation_noise_seed": 3231009
+    },
+    {
+      "block_id": "g2_curve_block_10",
+      "forcing_seed": 3211010,
+      "process_noise_seed": 3221010,
+      "observation_noise_seed": 3231010
+    },
+    {
+      "block_id": "g2_curve_block_11",
+      "forcing_seed": 3211011,
+      "process_noise_seed": 3221011,
+      "observation_noise_seed": 3231011
+    },
+    {
+      "block_id": "g2_curve_block_12",
+      "forcing_seed": 3211012,
+      "process_noise_seed": 3221012,
+      "observation_noise_seed": 3231012
+    }
+  ],
+  "forcing": {
+    "warmup_days": 45,
+    "reference_total_days": 187,
+    "rain_shape": 0.8,
+    "rain_scale": 4
+  },
+  "stage_lengths": [
+    45,
+    45,
+    45
+  ],
+  "adaptation_days_excluded_per_stage": 5,
+  "stable_final_scoring_days": 5,
+  "initial_covariance_fraction": 0.001,
+  "bootstrap": {
+    "unit": "synthetic_block",
+    "replicates": 20000,
+    "seed": 3250009
+  },
+  "decision_rules": {
+    "stable_identifiable_fraction_minimum": 0.6666666666666666,
+    "stable_fraction_block_bootstrap_lower_strict_minimum": 0.5,
+    "median_final_margin_strict_minimum": 0,
+    "switching_stage_numbers": [
+      2,
+      3
+    ],
+    "stage_one_decides_scientific_status": false
+  },
+  "integrity_gates": {
+    "truth_process_perturbation_reconstruction_maximum_absolute_error": 0,
+    "observation_reconstruction_maximum_absolute_error": 0,
+    "innovation_reconstruction_maximum_absolute_error": 1e-12,
+    "log_likelihood_reconstruction_maximum_absolute_error": 1e-12,
+    "score_reconstruction_maximum_absolute_error": 1e-12
+  },
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "results/23_hbv_multilead_joint_uncertainty/g2_spacing_inputs_v01",
+    "docs/plans/2026-07-22-g2-identification-time-curve-design.md",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m05_L015_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m10_L015_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m20_L015_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m40_L015_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m80_L015_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m05_L045_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m10_L045_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m20_L045_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m40_L045_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m80_L045_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m05_L090_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m10_L090_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m20_L090_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m40_L090_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m80_L090_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m05_L180_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m10_L180_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m20_L180_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m40_L180_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_dev_m80_L180_v01.json",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m05_L015_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m10_L015_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m20_L015_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m40_L015_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m80_L015_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m05_L045_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m10_L045_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m20_L045_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m40_L045_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m80_L045_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m05_L090_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m10_L090_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m20_L090_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m40_L090_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m80_L090_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m05_L180_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m10_L180_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m20_L180_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m40_L180_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_curve_param_switch_dev_m80_L180_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_identification_time_curve_dev_v01",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_conf_m80_L015_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_conf_m20_L180_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_conf_m10_L180_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_conf_m40_L045_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_conf_m20_L045_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_conf_m20_L090_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g2_curve_param_switch_conf_m10_L090_v01.json"
+  ],
+  "scope_limit": "Development evidence only, one G2 grid cell. Three complete parameter candidates at one spacing multiplier are compared with process covariance fixed at process_2; candidate filters assimilate the same observations independently with no state interaction, probability transition, or probability update. The spacing multiplier also rescales the truth trajectory, and longer budgets stretch the seasonal forcing cycle (declared interpretation boundaries in the design doc)."
+}

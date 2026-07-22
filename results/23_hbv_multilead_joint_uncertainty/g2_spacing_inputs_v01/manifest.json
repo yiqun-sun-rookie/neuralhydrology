@@ -1,0 +1,38 @@
+{
+  "artifact": "g2_spacing_inputs_v01",
+  "design_doc": "docs/plans/2026-07-22-g2-identification-time-curve-design.md",
+  "files": {
+    "parameter_vectors_m05.csv": {
+      "multiplier": 0.5,
+      "sha256": "6f83055a1c7fca3e60be2dbe0be9297c18e8b40d02936cdbf34e2b80b2b56eb1"
+    },
+    "parameter_vectors_m10.csv": {
+      "multiplier": 1.0,
+      "sha256": "03a4a60bc8fa8e8abe65d17401ab0f140a1d6ccab1fcb265439fa259ada57da7"
+    },
+    "parameter_vectors_m20.csv": {
+      "multiplier": 2.0,
+      "sha256": "a8c2c78b19ff0bd3cf308022b6cd538a2dc842a7398d8fa100139e4fcaca94b6"
+    },
+    "parameter_vectors_m40.csv": {
+      "multiplier": 4.0,
+      "sha256": "3357a6c3e9f2dbd24943d0c82367566531c35eb8342f5d018c1d70f419d77920"
+    },
+    "parameter_vectors_m80.csv": {
+      "multiplier": 8.0,
+      "sha256": "845d5bbd70e9f5dc373de1d01303a33d9c59932ec05901eb8c2c901ca505a292"
+    }
+  },
+  "generated_at_utc": "2026-07-22T12:33:45.094039+00:00",
+  "multipliers": [
+    0.5,
+    1.0,
+    2.0,
+    4.0,
+    8.0
+  ],
+  "rule": "trained_center unchanged; equifinal candidates scaled as center + multiplier * (vector - center); any explicit v1 bound violation rejects the whole multiplier (no truncation)",
+  "source_basin_id": "12143600",
+  "source_csv": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/parameter_vectors.csv",
+  "source_sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f"
+}
