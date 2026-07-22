@@ -1,0 +1,33 @@
+{
+  "audit_id": "state_correction_gate_default_fix_audit_v01",
+  "audit_mode": "independent read-only post-fix audit",
+  "result": "PASS",
+  "findings": [],
+  "red_test": {
+    "result": "expected failure",
+    "tests_failed": 1,
+    "exit_code": 1,
+    "pre_fix_source_sha256": "0bc53a0e1d228cbc51353753f476085089da7075abcba093663792686a48cd48",
+    "failure_reason": "the obsolete default control name was absent from the current frozen rows"
+  },
+  "fix": {
+    "production_source_line_changes": 1,
+    "new_default_control": "hydrologic_five_states_only",
+    "current_source_sha256": "bfd4bb2d64cf85a21b0ba9e71fe01d541e50c913d25a3fbdaf15df0ef4ced221"
+  },
+  "green_test": {
+    "tests_passed": 61,
+    "tests_failed": 0,
+    "exit_code": 0
+  },
+  "formal_result": {
+    "rerun_required": false,
+    "reason": "the formal runner explicitly passed hydrologic_five_states_only from the frozen configuration",
+    "checksums_file_sha256": "935e05cba187efd5dab788a19f20e09585783595a94ed180e1d5043dba1992b2",
+    "output_hashes_matched": 120
+  },
+  "frozen_hashes_matched": 279,
+  "files_modified_by_auditor": false,
+  "ran_531": false,
+  "commit_or_push": false
+}

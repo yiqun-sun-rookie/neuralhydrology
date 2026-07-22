@@ -1,0 +1,156 @@
+{
+  "actual_candidate_probability_row_count": 816,
+  "actual_cross_basin_row_count": 15,
+  "actual_joint_factor_probability_row_count": 288,
+  "actual_metric_row_count": 240,
+  "actual_paired_comparison_row_count": 18,
+  "array_count_per_basin": 36,
+  "basin_count": 16,
+  "calendar_days_per_basin": 365,
+  "evaluation_input_audit_failures": [],
+  "expected_candidate_probability_row_count": 816,
+  "expected_cross_basin_row_count": 15,
+  "expected_joint_factor_probability_row_count": 288,
+  "expected_metric_row_count": 240,
+  "expected_paired_comparison_row_count": 18,
+  "failed_basin_array_audits": [],
+  "lead_days": [
+    1,
+    3,
+    7
+  ],
+  "maximum_probability_sum_error": 4.440892098500626e-16,
+  "maximum_weighted_prediction_error": 1.4210854715202004e-14,
+  "method_candidate_counts": {
+    "fixed_filter": 1,
+    "joint": 9,
+    "noise_only": 3,
+    "open_loop": 1,
+    "parameter_only": 3
+  },
+  "origins_per_basin": 358,
+  "passed": true,
+  "table_comparisons": {
+    "candidate_probability_summary": {
+      "columns_equal": true,
+      "key_index_equal": true,
+      "maximum_numeric_absolute_difference": 0.0,
+      "nonnumeric_mismatch_counts": {},
+      "numeric_maximum_absolute_differences": {
+        "dominant_origin_count": 0.0,
+        "mean_normalized_entropy": 0.0,
+        "mean_probability": 0.0,
+        "median_probability": 0.0,
+        "origin_count": 0.0
+      },
+      "passed": true,
+      "recomputed_shape": [
+        816,
+        9
+      ],
+      "saved_shape": [
+        816,
+        9
+      ]
+    },
+    "cross_basin_summary": {
+      "columns_equal": true,
+      "key_index_equal": true,
+      "maximum_numeric_absolute_difference": 0.0,
+      "nonnumeric_mismatch_counts": {},
+      "numeric_maximum_absolute_differences": {
+        "basin_count": 0.0,
+        "median_mae": 0.0,
+        "median_mae_change_percent_vs_fixed_filter": 0.0,
+        "median_nse": 0.0,
+        "median_nse_change_vs_fixed_filter": 0.0,
+        "median_rmse": 0.0,
+        "median_rmse_change_percent_vs_fixed_filter": 0.0,
+        "strict_rmse_win_count_vs_fixed_filter": 0.0
+      },
+      "passed": true,
+      "recomputed_shape": [
+        15,
+        10
+      ],
+      "saved_shape": [
+        15,
+        10
+      ]
+    },
+    "joint_factor_probability_summary": {
+      "columns_equal": true,
+      "key_index_equal": true,
+      "maximum_numeric_absolute_difference": 0.0,
+      "nonnumeric_mismatch_counts": {},
+      "numeric_maximum_absolute_differences": {
+        "mean_marginal_probability": 0.0,
+        "median_marginal_probability": 0.0
+      },
+      "passed": true,
+      "recomputed_shape": [
+        288,
+        6
+      ],
+      "saved_shape": [
+        288,
+        6
+      ]
+    },
+    "metrics": {
+      "columns_equal": true,
+      "key_index_equal": true,
+      "maximum_numeric_absolute_difference": 0.0,
+      "nonnumeric_mismatch_counts": {},
+      "numeric_maximum_absolute_differences": {
+        "mae": 0.0,
+        "mae_change_percent_vs_fixed_filter": 0.0,
+        "n_origins": 0.0,
+        "nse": 0.0,
+        "nse_change_vs_fixed_filter": 0.0,
+        "rmse": 0.0,
+        "rmse_change_percent_vs_fixed_filter": 0.0,
+        "strict_rmse_win_vs_fixed_filter": 0.0
+      },
+      "passed": true,
+      "recomputed_shape": [
+        240,
+        11
+      ],
+      "saved_shape": [
+        240,
+        11
+      ]
+    },
+    "paired_method_comparisons": {
+      "columns_equal": true,
+      "key_index_equal": true,
+      "maximum_numeric_absolute_difference": 0.0,
+      "nonnumeric_mismatch_counts": {
+        "challenger_method": 0,
+        "reference_method": 0
+      },
+      "numeric_maximum_absolute_differences": {
+        "basin_count": 0.0,
+        "mae_win_count": 0.0,
+        "median_mae_difference": 0.0,
+        "median_nse_difference": 0.0,
+        "median_rmse_change_percent": 0.0,
+        "median_rmse_difference": 0.0,
+        "nse_win_count": 0.0,
+        "rmse_tie_count": 0.0,
+        "rmse_win_count": 0.0
+      },
+      "passed": true,
+      "recomputed_shape": [
+        18,
+        13
+      ],
+      "saved_shape": [
+        18,
+        13
+      ]
+    }
+  },
+  "total_array_count": 576
+}

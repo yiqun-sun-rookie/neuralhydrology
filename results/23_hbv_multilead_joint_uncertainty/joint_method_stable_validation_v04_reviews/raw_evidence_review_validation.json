@@ -1,0 +1,289 @@
+{
+  "verdict": "PASS",
+  "validated_review_verdict": "CONFIRMED",
+  "verdict_detail": {
+    "numerical_integrity": "PASS",
+    "scientific_result": "NEGATIVE_OVERALL_WITH_LIMITED_POSITIVE_RESULTS",
+    "conclusion": "The first independent review is confirmed from the formal raw evidence. The evidence is hash-complete, finite, internally reconstructable, source-bound, and reproducible under the frozen configuration. The preregistered result does not establish overall joint-method effectiveness: joint identification fails because parameter-label argmax accuracy is below its fixed threshold; the one-day and three-day forecasts fail the rule against the fixed filter; and no forecast lead or origin-state result adds value beyond both single-factor methods. Only the seven-day forecast and the origin hydrologic state pass the narrower rule against the fixed filter.",
+    "scope": "Eight matched synthetic blocks, nine fixed complete thirteen-parameter and pre-projection process-covariance labels per block, seventy-two trials, forty-five assimilation days, and one-, three-, and seven-day forecast leads."
+  },
+  "must_fix_count": 0,
+  "must_fix": [],
+  "claim_validation": {
+    "formal_file_hashes_and_exact_file_set": {
+      "status": "CONFIRMED",
+      "checksummed_file_count": 34,
+      "formal_file_count_excluding_checksums_manifest": 34,
+      "hash_mismatch_count": 0,
+      "missing_manifest_entry_count": 0,
+      "unexpected_formal_file_count": 0,
+      "exact_file_set": true
+    },
+    "saved_arrays_and_finiteness": {
+      "status": "CONFIRMED",
+      "total_array_count": 37,
+      "numeric_array_count": 30,
+      "string_array_count": 7,
+      "nonfinite_numeric_array_count": 0,
+      "loaded_with_allow_pickle_false": true
+    },
+    "physical_projection": {
+      "status": "CONFIRMED",
+      "projection_event_count": 3527,
+      "projection_event_total": 3744,
+      "projection_event_fraction": 0.9420405982905983,
+      "maximum_absolute_projection_adjustment": 126.81090722162921
+    },
+    "probabilities_and_mixture_reconstruction": {
+      "status": "CONFIRMED",
+      "probability_sum_maximum_absolute_error": 2.220446049250313e-16,
+      "minimum_active_probability": 0.0011879473654812383,
+      "inactive_probability_and_prediction_maximum_absolute_value": 0.0,
+      "mixture_prediction_reconstruction_maximum_absolute_error": 1.7763568394002505e-15
+    },
+    "six_method_origin_state_and_forecast_metrics": {
+      "status": "CONFIRMED",
+      "recomputed_row_count": 24,
+      "saved_csv_row_count": 24,
+      "all_rows_match": true
+    },
+    "twenty_paired_comparisons_and_scientific_decisions": {
+      "status": "CONFIRMED",
+      "recomputed_row_count": 20,
+      "saved_csv_row_count": 20,
+      "bootstrap_replicates_per_comparison": 20000,
+      "all_rows_match": true,
+      "maximum_numeric_difference_from_saved_csv": 0.0
+    },
+    "candidate_grid_complete_parameter_labels_and_process_scale_identification": {
+      "status": "CONFIRMED",
+      "complete_parameter_vector_count": 3,
+      "parameters_per_vector": 13,
+      "process_covariance_candidate_count": 3,
+      "process_variance_scales": [0.0001, 0.001, 0.01],
+      "joint_candidate_count": 9,
+      "joint_candidate_grid_is_exact_three_by_three_cross_product": true,
+      "truth_candidate_identifiers_equal_parameter_and_process_factor_labels": true,
+      "complete_parameter_label_is_fixed_within_each_trial": true,
+      "pre_projection_process_scale_is_fixed_within_each_trial": true
+    },
+    "assimilation_and_forecast_indices": {
+      "status": "CONFIRMED",
+      "assimilation_days": 45,
+      "origin_zero_based_index": 44,
+      "lead_days": [1, 3, 7],
+      "target_zero_based_indices": [45, 47, 51],
+      "target_reconstruction_maximum_absolute_error": 0.0
+    },
+    "future_observations_do_not_affect_forecast": {
+      "status": "CONFIRMED",
+      "dynamic_negative_control_trial": "stable_block_01 with equifinal_diverse_1__process_0 truth",
+      "mutated_zero_based_observation_indices": [45, 46, 47, 48, 49, 50, 51],
+      "mutation_minimum": -1000000000000.0,
+      "mutation_maximum": 1000000000000.0,
+      "maximum_forecast_change_across_all_five_observation_driven_methods": 0.0,
+      "maximum_unmodified_rerun_error_against_saved_predictions": 0.0,
+      "shared_source_path_check": "Assimilation reads observations only for day indices zero through forty-four, then forecast_from_posterior receives future forcing and no future discharge observations."
+    },
+    "resource_safety": {
+      "status": "CONFIRMED",
+      "execution_parallelism": 1,
+      "expected_and_actual_saved_numeric_array_bytes": 2223432,
+      "estimated_additional_peak_memory_bytes": 220108064,
+      "task_specific_reserve_bytes": 268435456,
+      "task_specific_required_available_bytes": 488543520,
+      "historical_available_physical_memory_bytes": 13695946752,
+      "estimated_runtime_seconds_from_pilot": 192.6849014518472,
+      "safe_to_run_recalculated": true,
+      "universal_memory_threshold_used": false
+    },
+    "four_public_documents_state_the_fixed_boundary": {
+      "status": "CONFIRMED",
+      "documents": {
+        "condition_decisions.json": {
+          "fixed_complete_parameter_label": true,
+          "pre_projection_covariance_scope": true,
+          "post_projection_not_exact_additive_gaussian_candidate_model": true
+        },
+        "joint_method_certificate.json": {
+          "fixed_complete_parameter_label": true,
+          "pre_projection_covariance_scope": true,
+          "post_projection_not_exact_additive_gaussian_candidate_model": true
+        },
+        "summary.json": {
+          "fixed_complete_parameter_label": true,
+          "pre_projection_covariance_scope": true,
+          "post_projection_not_exact_additive_gaussian_candidate_model": true
+        },
+        "registry_entry.json": {
+          "fixed_complete_parameter_label": true,
+          "pre_projection_covariance_scope": true,
+          "post_projection_not_exact_additive_gaussian_candidate_model": true
+        }
+      }
+    }
+  },
+  "raw_recalculations": {
+    "provenance": {
+      "config_snapshot_sha256": "c1ee629f969bb70b5f735f908001dc3419b1231d6c3db1be71550efaaa188140",
+      "current_config_sha256": "c1ee629f969bb70b5f735f908001dc3419b1231d6c3db1be71550efaaa188140",
+      "preregistered_config_sha256": "c1ee629f969bb70b5f735f908001dc3419b1231d6c3db1be71550efaaa188140",
+      "parameter_source_sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+      "process_noise_source_sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+      "observation_noise_source_sha256": "f358c77b655285b348604266af43dfcd7b875ea756145f6d9b33c8853a5d8955",
+      "selected_parameter_snapshot_sha256": "624ba1ab3e6fc9e60c8cf15bc287f1a0a3cec177d6307e6d83d5215625199905",
+      "selected_process_noise_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+      "selected_observation_noise_snapshot_sha256": "5bc0adc216ced6c6b0d281ed5c9cd3a158d65e2f3a369d657afaaccb67a1c678",
+      "selected_snapshot_array_maximum_absolute_errors": {
+        "parameter_vectors": 0.0,
+        "process_covariances": 0.0,
+        "observation_standard_deviation": 0.0
+      },
+      "seed_reconstruction_maximum_absolute_errors": {
+        "forcing": 0.0,
+        "process_standard_normals": 0.0,
+        "observation_standard_normals": 0.0
+      },
+      "source_snapshot_file_count": 15,
+      "source_snapshot_current_source_mismatch_count": 0,
+      "protected_file_count": 568,
+      "protected_recorded_before_equals_after": true,
+      "protected_current_missing_or_changed_count": 0
+    },
+    "array_reconstruction": {
+      "truth_state_equals_deterministic_plus_perturbation_plus_projection_adjustment_maximum_absolute_error": 3.785779876435205e-16,
+      "observation_reconstruction_maximum_absolute_error": 0.0,
+      "method_absolute_error_reconstruction_maximum_absolute_error": 0.0,
+      "origin_state_error_reconstruction_maximum_absolute_error": 0.0
+    },
+    "parameter_names": [
+      "parTT",
+      "parCFMAX",
+      "parCFR",
+      "parCWH",
+      "parFC",
+      "parBETA",
+      "parLP",
+      "parK0",
+      "parK1",
+      "parUZL",
+      "parPERC",
+      "parK2",
+      "lag_time"
+    ],
+    "method_candidate_counts": {
+      "deterministic_trained_center_open_loop": 1,
+      "trained_center_fixed_filter": 1,
+      "parameter_only_filter_bank": 3,
+      "process_noise_only_filter_bank": 3,
+      "complete_joint_filter_bank": 9,
+      "truth_informed_single_filter_diagnostic": 1
+    },
+    "method_metrics": {
+      "open_loop": {
+        "origin_hydrologic_state_root_mean_square_error": 0.567987844050988,
+        "forecast_discharge_root_mean_square_error_by_lead_days": {"1": 3.240188375642521, "3": 3.8660018111314445, "7": 3.2097085145413295}
+      },
+      "fixed_filter": {
+        "origin_hydrologic_state_root_mean_square_error": 0.31611435063754806,
+        "forecast_discharge_root_mean_square_error_by_lead_days": {"1": 0.9633662709883698, "3": 1.406734116550975, "7": 1.482384586136291}
+      },
+      "parameter_only": {
+        "origin_hydrologic_state_root_mean_square_error": 0.2759631865670417,
+        "forecast_discharge_root_mean_square_error_by_lead_days": {"1": 0.9115461078156001, "3": 1.4252236201359052, "7": 1.5856514468753897}
+      },
+      "noise_only": {
+        "origin_hydrologic_state_root_mean_square_error": 0.30206301643109745,
+        "forecast_discharge_root_mean_square_error_by_lead_days": {"1": 0.9181033635373708, "3": 1.3317351571642178, "7": 1.1174795131072284}
+      },
+      "joint": {
+        "origin_hydrologic_state_root_mean_square_error": 0.26586634153813155,
+        "forecast_discharge_root_mean_square_error_by_lead_days": {"1": 0.8614678738612609, "3": 1.3588597056268628, "7": 1.2040603024466145}
+      },
+      "oracle_filter": {
+        "origin_hydrologic_state_root_mean_square_error": 0.20809996829333915,
+        "forecast_discharge_root_mean_square_error_by_lead_days": {"1": 0.8583092325387198, "3": 1.3501392961940966, "7": 1.2189243433046746}
+      }
+    },
+    "paired_comparisons": [
+      {"metric": "forecast_discharge", "lead_days": 1, "control_method": "open_loop", "relative_improvement_percent": 73.41303115778156, "mean_difference": -1.6452899186654066, "bootstrap_lower": -3.1027656257042056, "bootstrap_upper": -0.5205610388515383, "joint_better_block_count": 8},
+      {"metric": "forecast_discharge", "lead_days": 1, "control_method": "fixed_filter", "relative_improvement_percent": 10.577326630147203, "mean_difference": -0.10970418420596934, "bootstrap_lower": -0.24187356933138796, "bootstrap_upper": 0.009474832244185435, "joint_better_block_count": 4},
+      {"metric": "forecast_discharge", "lead_days": 1, "control_method": "parameter_only", "relative_improvement_percent": 5.4937686119186075, "mean_difference": -0.055183986603714645, "bootstrap_lower": -0.2178196604905556, "bootstrap_upper": 0.10121804625968064, "joint_better_block_count": 5},
+      {"metric": "forecast_discharge", "lead_days": 1, "control_method": "noise_only", "relative_improvement_percent": 6.168748740653597, "mean_difference": -0.047799763660042904, "bootstrap_lower": -0.1051109236715466, "bootstrap_upper": 0.002349826856051229, "joint_better_block_count": 4},
+      {"metric": "forecast_discharge", "lead_days": 1, "control_method": "oracle_filter", "relative_improvement_percent": -0.36800738041677483, "mean_difference": 0.014289441777341545, "bootstrap_lower": -0.02556630449844399, "bootstrap_upper": 0.054887760451786345, "joint_better_block_count": 2},
+      {"metric": "forecast_discharge", "lead_days": 3, "control_method": "open_loop", "relative_improvement_percent": 64.85103287550785, "mean_difference": -1.748638605062815, "bootstrap_lower": -3.2030814557392113, "bootstrap_upper": -0.483582588267317, "joint_better_block_count": 6},
+      {"metric": "forecast_discharge", "lead_days": 3, "control_method": "fixed_filter", "relative_improvement_percent": 3.4032309560736715, "mean_difference": -0.11697472950782357, "bootstrap_lower": -0.30473984602890425, "bootstrap_upper": 0.05708838344093704, "joint_better_block_count": 4},
+      {"metric": "forecast_discharge", "lead_days": 3, "control_method": "parameter_only", "relative_improvement_percent": 4.656386097692808, "mean_difference": -0.1485458604109406, "bootstrap_lower": -0.3420157766432868, "bootstrap_upper": 0.03765413311567968, "joint_better_block_count": 5},
+      {"metric": "forecast_discharge", "lead_days": 3, "control_method": "noise_only", "relative_improvement_percent": -2.036782487623419, "mean_difference": 0.03763606248552655, "bootstrap_lower": -0.014965223159079777, "bootstrap_upper": 0.10869935864823534, "joint_better_block_count": 3},
+      {"metric": "forecast_discharge", "lead_days": 3, "control_method": "oracle_filter", "relative_improvement_percent": -0.6458896098608589, "mean_difference": 0.042902054024580014, "bootstrap_lower": -0.007501793382096465, "bootstrap_upper": 0.09766358864697067, "joint_better_block_count": 3},
+      {"metric": "forecast_discharge", "lead_days": 7, "control_method": "open_loop", "relative_improvement_percent": 62.486926866046716, "mean_difference": -1.3590489593428994, "bootstrap_lower": -2.7637067122130388, "bootstrap_upper": -0.07661220698541156, "joint_better_block_count": 5},
+      {"metric": "forecast_discharge", "lead_days": 7, "control_method": "fixed_filter", "relative_improvement_percent": 18.775443720384665, "mean_difference": -0.26899807636780365, "bootstrap_lower": -0.5091445442541547, "bootstrap_upper": -0.009488976995592702, "joint_better_block_count": 5},
+      {"metric": "forecast_discharge", "lead_days": 7, "control_method": "parameter_only", "relative_improvement_percent": 24.065260065868873, "mean_difference": -0.3694350081106329, "bootstrap_lower": -0.609430300509012, "bootstrap_upper": -0.1190583308719826, "joint_better_block_count": 6},
+      {"metric": "forecast_discharge", "lead_days": 7, "control_method": "noise_only", "relative_improvement_percent": -7.7478636810658275, "mean_difference": 0.07663202596673885, "bootstrap_lower": 0.021442102228855224, "bootstrap_upper": 0.13284096956727737, "joint_better_block_count": 1},
+      {"metric": "forecast_discharge", "lead_days": 7, "control_method": "oracle_filter", "relative_improvement_percent": 1.2194391669758222, "mean_difference": 0.027598788256924398, "bootstrap_lower": -0.062270073083888995, "bootstrap_upper": 0.137046181438101, "joint_better_block_count": 4},
+      {"metric": "origin_hydrologic_state", "lead_days": 0, "control_method": "open_loop", "relative_improvement_percent": 53.19154374116062, "mean_difference": -0.20934877230647692, "bootstrap_lower": -0.3983070120124626, "bootstrap_upper": -0.0648793602953809, "joint_better_block_count": 7},
+      {"metric": "origin_hydrologic_state", "lead_days": 0, "control_method": "fixed_filter", "relative_improvement_percent": 15.895516605960774, "mean_difference": -0.05923373675389833, "bootstrap_lower": -0.1142312473466623, "bootstrap_upper": -0.009037998923162004, "joint_better_block_count": 6},
+      {"metric": "origin_hydrologic_state", "lead_days": 0, "control_method": "parameter_only", "relative_improvement_percent": 3.658765197820063, "mean_difference": -0.022678089513168596, "bootstrap_lower": -0.056440539799000704, "bootstrap_upper": 0.010255776063483334, "joint_better_block_count": 4},
+      {"metric": "origin_hydrologic_state", "lead_days": 0, "control_method": "noise_only", "relative_improvement_percent": 11.983153489173542, "mean_difference": -0.0382976689687505, "bootstrap_lower": -0.09330593656188249, "bootstrap_upper": 0.009169110675395283, "joint_better_block_count": 5},
+      {"metric": "origin_hydrologic_state", "lead_days": 0, "control_method": "oracle_filter", "relative_improvement_percent": -27.75895341000942, "mean_difference": 0.04699076741409425, "bootstrap_lower": 0.019736331588621484, "bootstrap_upper": 0.081596263796598, "joint_better_block_count": 0}
+    ],
+    "identification": {
+      "joint_candidate_argmax_accuracy": 0.5138888888888888,
+      "joint_parameter_argmax_accuracy": 0.5972222222222222,
+      "joint_process_argmax_accuracy": 0.8472222222222222,
+      "median_joint_true_candidate_probability": 0.24446729489293278,
+      "median_joint_true_parameter_probability": 0.371444919664944,
+      "median_joint_true_process_probability": 0.587072813153685,
+      "joint_candidate_argmax_accuracy_minimum": 0.5,
+      "joint_parameter_argmax_accuracy_minimum": 0.6666666666666666,
+      "joint_process_argmax_accuracy_minimum": 0.6666666666666666,
+      "median_joint_true_candidate_probability_minimum": 0.2,
+      "joint_identification_effective": false,
+      "failed_component": "joint_parameter_argmax_accuracy"
+    },
+    "scientific_decisions": {
+      "one_day_forecast": {"effective_against_fixed_filter": false, "added_value_beyond_both_single_factor_methods": false},
+      "three_day_forecast": {"effective_against_fixed_filter": false, "added_value_beyond_both_single_factor_methods": false},
+      "seven_day_forecast": {"effective_against_fixed_filter": true, "added_value_beyond_both_single_factor_methods": false},
+      "origin_hydrologic_state": {"effective_against_fixed_filter": true, "added_value_beyond_both_single_factor_methods": false},
+      "overall_joint_method_effective": false
+    },
+    "future_observation_dynamic_negative_control": {
+      "fixed_filter_maximum_forecast_change": 0.0,
+      "parameter_only_maximum_forecast_change": 0.0,
+      "noise_only_maximum_forecast_change": 0.0,
+      "joint_maximum_forecast_change": 0.0,
+      "oracle_filter_maximum_forecast_change": 0.0,
+      "all_baseline_reruns_maximum_saved_prediction_error": 0.0
+    }
+  },
+  "disagreements": [],
+  "reviewer_independence": {
+    "review_layer": "second independent raw-evidence validation",
+    "reviewer_role": "raw-evidence validator independent of the first code, method, and result reviewer",
+    "first_review_used_only_as_claim_checklist": true,
+    "first_review_summary_values_used_as_computational_inputs": false,
+    "formal_raw_files_read_directly": [
+      "checksums.json",
+      "evidence.npz",
+      "condition_decisions.json",
+      "joint_method_certificate.json",
+      "summary.json",
+      "registry_entry.json",
+      "method_metrics.csv",
+      "paired_comparisons.csv",
+      "config_snapshot.json",
+      "parameter_vectors.csv",
+      "process_noise_covariances.csv",
+      "observation_noise.csv",
+      "resource_preflight.json",
+      "protected_artifact_integrity.json",
+      "all fifteen source_snapshot Python files"
+    ],
+    "raw_values_recalculated": true,
+    "dynamic_future_observation_negative_control_rerun": true,
+    "formal_evidence_directory_modified": false,
+    "code_modified": false,
+    "only_written_artifact": "results/23_hbv_multilead_joint_uncertainty/joint_method_stable_validation_v04_reviews/raw_evidence_review_validation.json"
+  }
+}

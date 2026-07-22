@@ -1,0 +1,25 @@
+{
+  "experiment_id": "parameter_identification_validation_v01",
+  "role": "independent_raw_evidence_validation_of_review",
+  "raw_evidence_sha256": "5e32277e2e82ba99efc3cfe86f40e5b3c4c09b82faf7a48fa3b205259c328aea",
+  "review_verdict": "confirmed_with_one_wording_correction",
+  "confirmed_items": [
+    "separate truth and candidate propagation paths",
+    "causal warmup and daily observation order",
+    "zero process covariance and no additional candidate",
+    "no switching and no interaction",
+    "cumulative likelihood probability calculation",
+    "24 of 24 classifications and 8 of 8 per parameter",
+    "double-precision probability saturation",
+    "registration, resource, checksum, and protected-artifact records"
+  ],
+  "wording_correction": {
+    "rejected_wording": "all thirty-nine parameter values are bitwise identical to independently reparsed raw decimal text",
+    "accepted_wording": "all thirty-nine loaded parameter values match after the frozen source is interpreted by the recorded pandas reader",
+    "raw_decimal_last_bit_difference_count": 9,
+    "minimum_absolute_difference": 2.61e-17,
+    "maximum_absolute_difference": 2.22e-16,
+    "impact_on_run": "none; the source file hash, reader code, selected snapshot, and loaded parameter matrix are preserved"
+  },
+  "contradictions_to_the_limited_scientific_conclusion": 0
+}

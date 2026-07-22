@@ -1,0 +1,24 @@
+{
+  "basin_count": 1,
+  "basin_reports_passed": true,
+  "basins": [
+    "12143600"
+  ],
+  "common_origin_count": 358,
+  "controls": [
+    "current_joint_all_fifteen_states",
+    "hydrologic_five_states_only",
+    "runoff_two_states_only",
+    "origin_mean_correction_removed",
+    "three_day_half_life_additional_mean_taper_sensitivity"
+  ],
+  "experiment_id": "state_correction_smoke_v06",
+  "formal_artifacts_modified": false,
+  "lead_days": [
+    1,
+    3,
+    7
+  ],
+  "run_531": false,
+  "status": "verified"
+}

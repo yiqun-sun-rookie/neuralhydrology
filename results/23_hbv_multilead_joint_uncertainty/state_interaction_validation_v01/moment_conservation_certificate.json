@@ -1,0 +1,53 @@
+{
+  "check_type": "frozen full-bank conditional mixture-moment conservation certificate",
+  "diagnostic_modes": [
+    "parameter_grouped",
+    "none"
+  ],
+  "experiment_id": "state_interaction_validation_v01",
+  "gate_values": {
+    "all_saved_numeric_results_finite": true,
+    "candidate_covariance_symmetry_maximum_absolute_error": 0.0,
+    "causal_prefix_maximum_absolute_error": 0.0,
+    "conditional_weight_sum_maximum_absolute_error": 4.440892098500626e-16,
+    "counterexample_full_covariance_drift_maximum_absolute_error": 4.440892098500626e-15,
+    "counterexample_full_mean_drift_maximum_absolute_error": 2.6645352591003757e-15,
+    "counterexample_grouped_mean_drift_absolute_error": 2.246223492963162,
+    "counterexample_none_mean_drift_absolute_error": 2.2462234929631597,
+    "factorial_transition_contract_maximum_absolute_error": 0.0,
+    "full_combined_covariance_conservation_maximum_absolute_error": 1.1823431123048067e-11,
+    "full_combined_mean_conservation_maximum_absolute_error": 1.9895196601282805e-13,
+    "minimum_candidate_covariance_eigenvalue": 0.0006308681416783975,
+    "production_reference_combined_covariance_maximum_absolute_error": 2.7284841053187847e-12,
+    "production_reference_combined_mean_maximum_absolute_error": 1.4210854715202004e-13,
+    "production_reference_covariance_maximum_absolute_error": 5.002220859751105e-12,
+    "production_reference_probability_maximum_absolute_error": 1.1102230246251565e-16,
+    "production_reference_state_maximum_absolute_error": 1.7053025658242404e-13,
+    "production_reference_weight_maximum_absolute_error": 4.440892098500626e-16
+  },
+  "gates": {
+    "candidate_covariance_symmetry_maximum_absolute_error": 1e-12,
+    "causal_prefix_maximum_absolute_error": 0.0,
+    "conditional_weight_sum_maximum_absolute_error": 1e-15,
+    "counterexample_full_covariance_drift_maximum_absolute_error": 1e-07,
+    "counterexample_full_mean_drift_maximum_absolute_error": 1e-10,
+    "counterexample_grouped_mean_drift_minimum_absolute_error": 1.0,
+    "counterexample_none_mean_drift_minimum_absolute_error": 1.0,
+    "factorial_transition_contract_maximum_absolute_error": 1e-14,
+    "full_combined_covariance_conservation_maximum_absolute_error": 1e-07,
+    "full_combined_mean_conservation_maximum_absolute_error": 1e-10,
+    "minimum_candidate_covariance_eigenvalue": -1e-09,
+    "production_reference_combined_covariance_maximum_absolute_error": 1e-09,
+    "production_reference_combined_mean_maximum_absolute_error": 1e-12,
+    "production_reference_covariance_maximum_absolute_error": 1e-09,
+    "production_reference_probability_maximum_absolute_error": 1e-15,
+    "production_reference_state_maximum_absolute_error": 1e-12,
+    "production_reference_weight_maximum_absolute_error": 1e-15
+  },
+  "passed": true,
+  "production_mode": "full",
+  "scope_limit": "This certificate tests state and covariance mixture algebra under identity dynamics. It does not test hydrologic propagation, observation likelihoods, filtering or forecasts.",
+  "tested_candidate_count": 9,
+  "tested_interaction_steps": 30,
+  "tested_state_dimension": 15
+}

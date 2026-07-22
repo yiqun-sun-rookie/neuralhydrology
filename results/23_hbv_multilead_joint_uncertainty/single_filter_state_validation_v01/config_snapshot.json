@@ -1,0 +1,77 @@
+{
+  "bootstrap": {
+    "replicates": 10000,
+    "seed": 424242
+  },
+  "duration_days": 30,
+  "experiment_id": "single_filter_state_validation_v01",
+  "fixed_boundaries": {
+    "known_true_parameter_vector": true,
+    "model_interaction": false,
+    "modifies_frozen_formal_results": false,
+    "parameter_candidates": 1,
+    "process_noise_candidates": 1,
+    "reads_real_basin_observations": false,
+    "runs_531_real_basins": false
+  },
+  "forcing": {
+    "angle_formula": "linearly spaced from 0 through 2*pi, including both endpoints",
+    "days": 365,
+    "potential_evaporation_formula": "maximum(0, 2 + sin(angle))",
+    "rain_scale": 4.0,
+    "rain_shape": 0.8,
+    "seed": 314159,
+    "temperature_formula": "4 + 12 * sin(angle - pi / 2)"
+  },
+  "gates": {
+    "flow_bootstrap_upper_percent_maximum": 0.0,
+    "flow_median_change_percent_maximum": -5.0,
+    "state_bootstrap_upper_percent_maximum": 0.0,
+    "state_median_change_percent_maximum": -5.0
+  },
+  "observation_standard_deviation": 0.05,
+  "parameters": {
+    "lag_time": 10.0,
+    "parBETA": 2.1,
+    "parCFMAX": 3.2,
+    "parCFR": 0.04,
+    "parCWH": 0.1,
+    "parFC": 250.0,
+    "parK0": 0.2,
+    "parK1": 0.06,
+    "parK2": 0.015,
+    "parLP": 0.7,
+    "parPERC": 1.2,
+    "parTT": 0.0,
+    "parUZL": 18.0
+  },
+  "perturbation_scales": [
+    20.0,
+    5.0,
+    25.0,
+    10.0,
+    10.0
+  ],
+  "perturbation_seed": 20260717,
+  "process_covariance": "zero to isolate correction of the initial state perturbation",
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01"
+  ],
+  "purpose": "Test whether one correctly parameterized modified unscented filter corrects controlled hydrologic-state perturbations and improves one-day discharge forecasts.",
+  "start_days": [
+    60,
+    75,
+    90,
+    105,
+    120,
+    135,
+    150,
+    165,
+    180,
+    195,
+    210,
+    225
+  ],
+  "truth_contract": "synthetic_truth_propagation_v04"
+}

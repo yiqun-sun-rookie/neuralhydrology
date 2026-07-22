@@ -1,0 +1,24 @@
+{
+  "experiment_family": "2026-07-16-hbv-state-correction-propagation-v6",
+  "inherits": "state_correction_propagation_v02.json",
+  "inherited_config_sha256": "db2d74d956f2246eefc6975441084461fd35bf75994daf5bff285c90569c38d7",
+  "revision_scope": "resource thresholds only",
+  "scientific_controls_unchanged": true,
+  "revision_reason": "A separate user Python process was using 8.55 GiB and the ChatGPT application was using 5.81 GiB, leaving about 4.01 GiB free. No user process may be terminated. The 12% start floor retains 3.8040280151367188 GiB; after the preregistered 0.75 GiB smoke peak, 3.0540280151367188 GiB remains. The 7.5% running floor retains 2.3775175094604492 GiB; after that same peak, 1.6275175094604492 GiB remains. The estimated-peak cap is tightened to 40% of start-available memory.",
+  "supersedes_resource_config": "state_correction_propagation_v05.json",
+  "resource": {
+    "minimum_start_available_fraction": 0.12,
+    "minimum_running_available_fraction": 0.075,
+    "maximum_estimated_peak_fraction_of_available": 0.40,
+    "minimum_free_disk_gib": 50.0,
+    "minimum_output_space_multiplier": 3.0,
+    "monitor_interval_seconds": 15.0,
+    "maximum_resource_probe_seconds": 5.0,
+    "reserved_logical_processors": 2,
+    "numerical_thread_limit": 1,
+    "smoke_estimated_peak_gib": 0.75,
+    "smoke_estimated_output_gib": 0.25,
+    "formal_estimated_peak_gib": 1.0,
+    "formal_estimated_output_gib": 0.5
+  }
+}

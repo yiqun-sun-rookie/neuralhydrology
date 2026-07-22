@@ -1,0 +1,140 @@
+{
+  "experiment_family": "2026-07-16-hbv-state-correction-propagation-v1",
+  "random_seed": 1,
+  "formal_contract": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "contract_id": "formal_contract_sixteen_v05",
+    "checksums_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357"
+  },
+  "formal_result": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01",
+    "experiment_id": "formal_result_sixteen_v01",
+    "checksums_sha256": "88ab2297e02179cc0e3e432c958871e1d6e7985358b9394970154a65f2348bd0"
+  },
+  "frozen_basins": [
+    "12143600",
+    "04127918",
+    "09066000",
+    "06431500",
+    "03479000",
+    "02296500",
+    "02015700",
+    "06892000",
+    "05507600",
+    "06477500",
+    "08158700",
+    "11148900",
+    "06404000",
+    "08189500",
+    "09505350",
+    "09447800"
+  ],
+  "smoke_basin": "12143600",
+  "evaluation_start": "1989-10-01",
+  "evaluation_end": "1990-09-30",
+  "evaluation_day_count": 365,
+  "common_origin_count": 358,
+  "lead_days": [1, 3, 7],
+  "state_names": [
+    "SNOWPACK",
+    "MELTWATER",
+    "SM",
+    "SUZ",
+    "SLZ",
+    "qraw_t_minus_0",
+    "qraw_t_minus_1",
+    "qraw_t_minus_2",
+    "qraw_t_minus_3",
+    "qraw_t_minus_4",
+    "qraw_t_minus_5",
+    "qraw_t_minus_6",
+    "qraw_t_minus_7",
+    "qraw_t_minus_8",
+    "qraw_t_minus_9"
+  ],
+  "formal_methods": [
+    "open_loop",
+    "fixed_filter",
+    "parameter_only",
+    "noise_only",
+    "joint"
+  ],
+  "controls": [
+    {
+      "control_id": "current_joint_all_fifteen_states",
+      "allowed_state_names": [
+        "SNOWPACK",
+        "MELTWATER",
+        "SM",
+        "SUZ",
+        "SLZ",
+        "qraw_t_minus_0",
+        "qraw_t_minus_1",
+        "qraw_t_minus_2",
+        "qraw_t_minus_3",
+        "qraw_t_minus_4",
+        "qraw_t_minus_5",
+        "qraw_t_minus_6",
+        "qraw_t_minus_7",
+        "qraw_t_minus_8",
+        "qraw_t_minus_9"
+      ],
+      "role": "frozen_reference"
+    },
+    {
+      "control_id": "hydrologic_five_states_only",
+      "allowed_state_names": ["SNOWPACK", "MELTWATER", "SM", "SUZ", "SLZ"],
+      "role": "state_group_diagnostic"
+    },
+    {
+      "control_id": "runoff_two_states_only",
+      "allowed_state_names": ["SUZ", "SLZ"],
+      "role": "state_group_diagnostic"
+    },
+    {
+      "control_id": "origin_update_removed",
+      "allowed_state_names": [],
+      "role": "origin_counterfactual_only"
+    },
+    {
+      "control_id": "three_day_half_life_state_decay",
+      "source_reference": "current_joint_all_fifteen_states",
+      "source_removed": "origin_update_removed",
+      "half_life_days": 3.0,
+      "retention_formula": "2 ** (-(lead_days - 1) / half_life_days)",
+      "retention_by_lead": {
+        "1": 1.0,
+        "3": 0.6299605249474366,
+        "7": 0.25
+      },
+      "role": "primary_continuation_gate_control"
+    }
+  ],
+  "future_meteorology_description": "historical observed meteorology used for retrospective diagnosis; not an operational forecast",
+  "future_discharge_after_origin_allowed": false,
+  "results_root": "results/23_hbv_multilead_joint_uncertainty",
+  "logs_root": "logs/23_hbv_multilead_joint_uncertainty",
+  "resource": {
+    "minimum_start_available_fraction": 0.25,
+    "minimum_running_available_fraction": 0.20,
+    "maximum_estimated_peak_fraction_of_available": 0.60,
+    "minimum_free_disk_gib": 50.0,
+    "minimum_output_space_multiplier": 3.0,
+    "monitor_interval_seconds": 15.0,
+    "maximum_resource_probe_seconds": 5.0,
+    "reserved_logical_processors": 2,
+    "numerical_thread_limit": 1,
+    "smoke_estimated_peak_gib": 0.75,
+    "smoke_estimated_output_gib": 0.25,
+    "formal_estimated_peak_gib": 1.0,
+    "formal_estimated_output_gib": 0.5
+  },
+  "continuation_gate": {
+    "control_id": "three_day_half_life_state_decay",
+    "seven_day_median_rmse_change_percent_vs_open_loop_maximum": 0.0,
+    "seven_day_strict_rmse_win_count_vs_open_loop_minimum": 9,
+    "one_day_rmse_increase_percent_vs_current_joint_maximum": 1.0,
+    "larger_sample_basin_count_if_all_pass": 531,
+    "run_larger_sample_automatically": false
+  }
+}

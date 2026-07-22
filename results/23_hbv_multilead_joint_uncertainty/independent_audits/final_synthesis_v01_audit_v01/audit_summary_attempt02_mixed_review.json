@@ -1,0 +1,200 @@
+{
+  "arrays": {
+    "array_count": 576,
+    "basin_count": 16,
+    "maximum_absolute_difference": 0.0,
+    "numeric_element_count": 5871360,
+    "three_way_byte_identical_basin_count": 16
+  },
+  "blocking_issue_count": 3,
+  "blocking_issues": [
+    {
+      "check": "both stopped-run package records exactly match logs, files, and failed registries",
+      "evidence": {
+        "records": [
+          {
+            "completed_basin_file_count": 4,
+            "completed_basin_file_pass_count": 4,
+            "experiment_id": "formal_result_sixteen_reproduction_v01",
+            "passed": true,
+            "registry_status": "failed",
+            "statistics": {
+              "below_twenty_percent_count": 1,
+              "first_event": "start",
+              "last_event": "background_monitor",
+              "maximum_gap_seconds": 9.94331,
+              "maximum_process_peak_working_set_gib": 0.1500091552734375,
+              "maximum_process_rss_gib": 0.14493942260742188,
+              "minimum_available_fraction": 0.17916237566525062,
+              "minimum_disk_free_gib": 2166.5203285217285,
+              "numerical_thread_limit": 1,
+              "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\logs\\23_hbv_multilead_joint_uncertainty\\.formal_result_sixteen_reproduction_v01.incomplete\\resource_history.json",
+              "sample_count": 291
+            }
+          },
+          {
+            "completed_basin_file_count": 5,
+            "completed_basin_file_pass_count": 5,
+            "experiment_id": "formal_result_sixteen_reproduction_v02",
+            "passed": false,
+            "registry_status": "failed",
+            "statistics": {
+              "below_twenty_percent_count": 1,
+              "first_event": "start",
+              "last_event": "background_monitor",
+              "maximum_gap_seconds": 11.54805,
+              "maximum_process_peak_working_set_gib": 0.1536407470703125,
+              "maximum_process_rss_gib": 0.14885330200195312,
+              "minimum_available_fraction": 0.19962392416100744,
+              "minimum_disk_free_gib": 2166.307548522949,
+              "numerical_thread_limit": 1,
+              "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\logs\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_reproduction_v02.failed\\resource_history.json",
+              "sample_count": 1110
+            }
+          }
+        ]
+      },
+      "section": "resources"
+    },
+    {
+      "check": "all twenty-two evidence-ledger claims close semantically",
+      "evidence": {
+        "claim_count": 22,
+        "passed_count": 21
+      },
+      "section": "traceability"
+    },
+    {
+      "check": "report has no unexplained abbreviation, internal identifier, or vague probability judgment",
+      "evidence": {
+        "internal_identifiers": [],
+        "uppercase_tokens": [],
+        "vague_terms": [
+          "大概率"
+        ]
+      },
+      "section": "writing"
+    }
+  ],
+  "check_count": 30,
+  "decision": "BLOCK",
+  "factor_functionality": {
+    "coupling_above_0_05_count": 723,
+    "coupling_above_0_05_fraction": 0.12622206703910616,
+    "factor_basin_check_count": 32,
+    "factor_basin_switch_pass_count": 32,
+    "origin_count": 5728,
+    "posterior_reconstruction_maximum_absolute_difference": 7.771561172376096e-16
+  },
+  "language": {
+    "conclusion_order_passed": true,
+    "one_model_structure_explicit": true,
+    "overclaim_passed": true,
+    "terminology_passed": false,
+    "two_uncertainties_explicit": true,
+    "unexplained_uppercase_tokens": [],
+    "vague_probability_terms": [
+      "大概率"
+    ],
+    "visible_internal_identifiers": []
+  },
+  "manifest": {
+    "declared_file_count": 6,
+    "passed": true
+  },
+  "metrics": {
+    "formal_maximum_absolute_difference": 3.552713678800501e-15,
+    "lead_time_rows": [
+      {
+        "joint_median_mae": 0.11431704828101813,
+        "joint_median_nse": 0.46295060031421875,
+        "joint_median_rmse": 0.37146553421684636,
+        "joint_vs_fixed_filter_median_rmse_change_percent": -10.17189495693546,
+        "joint_vs_fixed_filter_rmse_win_count": 10,
+        "joint_vs_noise_only_median_rmse_change_percent": -0.26121976722687146,
+        "joint_vs_noise_only_rmse_win_count": 11,
+        "joint_vs_open_loop_median_rmse_change_percent": 0.17518034201015453,
+        "joint_vs_open_loop_rmse_win_count": 8,
+        "joint_vs_parameter_only_median_rmse_change_percent": -3.6545034599201314,
+        "joint_vs_parameter_only_rmse_win_count": 9,
+        "lead_days": 1
+      },
+      {
+        "joint_median_mae": 0.22854922526703497,
+        "joint_median_nse": 0.030866376416582297,
+        "joint_median_rmse": 0.6912451234655684,
+        "joint_vs_fixed_filter_median_rmse_change_percent": -2.560778471380311,
+        "joint_vs_fixed_filter_rmse_win_count": 10,
+        "joint_vs_noise_only_median_rmse_change_percent": 0.141942160740812,
+        "joint_vs_noise_only_rmse_win_count": 8,
+        "joint_vs_open_loop_median_rmse_change_percent": 40.612664956443226,
+        "joint_vs_open_loop_rmse_win_count": 5,
+        "joint_vs_parameter_only_median_rmse_change_percent": -4.401634431230294,
+        "joint_vs_parameter_only_rmse_win_count": 11,
+        "lead_days": 3
+      },
+      {
+        "joint_median_mae": 0.33935832906848573,
+        "joint_median_nse": -0.1220009977225095,
+        "joint_median_rmse": 0.9626869578716726,
+        "joint_vs_fixed_filter_median_rmse_change_percent": -4.542489566451767,
+        "joint_vs_fixed_filter_rmse_win_count": 9,
+        "joint_vs_noise_only_median_rmse_change_percent": 0.8889964570293377,
+        "joint_vs_noise_only_rmse_win_count": 8,
+        "joint_vs_open_loop_median_rmse_change_percent": 88.52999562470454,
+        "joint_vs_open_loop_rmse_win_count": 4,
+        "joint_vs_parameter_only_median_rmse_change_percent": -6.219162343404548,
+        "joint_vs_parameter_only_rmse_win_count": 11,
+        "lead_days": 7
+      }
+    ],
+    "reproduction_maximum_absolute_difference": 3.552713678800501e-15,
+    "row_count": 240
+  },
+  "noise": {
+    "process_formula_maximum_absolute_difference": 1.1368683772161603e-13,
+    "selected_observation_candidate_position_distribution": {
+      "0": 9,
+      "1": 5,
+      "2": 2
+    },
+    "selected_process_scale_distribution": {
+      "0.0001": 1,
+      "0.001": 8,
+      "0.01": 6,
+      "1e-06": 1
+    }
+  },
+  "parameters": {
+    "noncenter_better_count": 9,
+    "noncenter_worse_count": 23,
+    "parameter_count": 13,
+    "pool_candidate_count": 16384,
+    "selection_reconstruction_pass_count": 16,
+    "vector_count": 48
+  },
+  "passed_check_count": 27,
+  "resources": {
+    "aborted_run_count": 2,
+    "aborted_run_pass_count": 1,
+    "failed_path_reference_count": 0,
+    "successful_maximum_gap_seconds": 9.93487,
+    "successful_maximum_process_rss_gib": 0.17947769165039062,
+    "successful_minimum_available_memory_fraction": 0.21666502607813742,
+    "successful_minimum_disk_free_gib": 2166.1255378723145,
+    "successful_run_count": 18,
+    "successful_sample_count": 1203
+  },
+  "target": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\final_synthesis_v01",
+  "target_file_count": 7,
+  "target_total_bytes": 47962,
+  "target_unchanged": true,
+  "traceability": {
+    "ledger_claim_count": 22,
+    "ledger_claim_pass_count": 21,
+    "ledger_evidence_path_count": 34,
+    "ledger_evidence_path_pass_count": 34,
+    "markdown_relative_link_count": 37,
+    "markdown_relative_link_pass_count": 37
+  }
+}

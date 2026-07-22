@@ -1,0 +1,23 @@
+{
+  "experiment_family": "2026-07-16-hbv-state-correction-propagation-v3",
+  "inherits": "state_correction_propagation_v02.json",
+  "inherited_config_sha256": "db2d74d956f2246eefc6975441084461fd35bf75994daf5bff285c90569c38d7",
+  "revision_scope": "resource thresholds only",
+  "scientific_controls_unchanged": true,
+  "revision_reason": "The user authorized lower resource thresholds provided the run retains enough headroom to avoid operating-system or process memory failure.",
+  "resource": {
+    "minimum_start_available_fraction": 0.16,
+    "minimum_running_available_fraction": 0.125,
+    "maximum_estimated_peak_fraction_of_available": 0.60,
+    "minimum_free_disk_gib": 50.0,
+    "minimum_output_space_multiplier": 3.0,
+    "monitor_interval_seconds": 15.0,
+    "maximum_resource_probe_seconds": 5.0,
+    "reserved_logical_processors": 2,
+    "numerical_thread_limit": 1,
+    "smoke_estimated_peak_gib": 0.75,
+    "smoke_estimated_output_gib": 0.25,
+    "formal_estimated_peak_gib": 1.0,
+    "formal_estimated_output_gib": 0.5
+  }
+}

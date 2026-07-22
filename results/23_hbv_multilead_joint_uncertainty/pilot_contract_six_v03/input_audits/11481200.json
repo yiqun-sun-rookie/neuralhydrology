@@ -1,0 +1,3758 @@
+{
+  "area_gages2_km2": 105.4,
+  "area_relative_difference": 0.005221252371916501,
+  "basin_id": "11481200",
+  "calibration_discharge_qc_flag_counts": {
+    "A": 728,
+    "A:e": 3
+  },
+  "calibration_discharge_records": [
+    {
+      "date": "2006-10-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10909886148007591
+    },
+    {
+      "date": "2006-10-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12070512333965845
+    },
+    {
+      "date": "2006-10-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12070512333965845
+    },
+    {
+      "date": "2006-10-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.13463263757115748
+    },
+    {
+      "date": "2006-10-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.14391764705882354
+    },
+    {
+      "date": "2006-10-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.14623889943074003
+    },
+    {
+      "date": "2006-10-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.13463263757115748
+    },
+    {
+      "date": "2006-10-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12999013282732447
+    },
+    {
+      "date": "2006-10-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12070512333965845
+    },
+    {
+      "date": "2006-10-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1067776091081594
+    },
+    {
+      "date": "2006-10-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09517134724857684
+    },
+    {
+      "date": "2006-10-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08820759013282731
+    },
+    {
+      "date": "2006-10-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08820759013282731
+    },
+    {
+      "date": "2006-10-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09981385199240986
+    },
+    {
+      "date": "2006-10-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12070512333965845
+    },
+    {
+      "date": "2006-10-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.2019489563567362
+    },
+    {
+      "date": "2006-10-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.22748273244781783
+    },
+    {
+      "date": "2006-10-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17641518026565461
+    },
+    {
+      "date": "2006-10-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.15320265654648954
+    },
+    {
+      "date": "2006-10-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.13463263757115748
+    },
+    {
+      "date": "2006-10-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12302637571157495
+    },
+    {
+      "date": "2006-10-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1114201138519924
+    },
+    {
+      "date": "2006-10-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10909886148007591
+    },
+    {
+      "date": "2006-10-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10909886148007591
+    },
+    {
+      "date": "2006-10-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10909886148007591
+    },
+    {
+      "date": "2006-10-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10909886148007591
+    },
+    {
+      "date": "2006-10-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1067776091081594
+    },
+    {
+      "date": "2006-10-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09981385199240986
+    },
+    {
+      "date": "2006-10-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09981385199240986
+    },
+    {
+      "date": "2006-10-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10213510436432638
+    },
+    {
+      "date": "2006-10-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09981385199240986
+    },
+    {
+      "date": "2006-11-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10445635673624289
+    },
+    {
+      "date": "2006-11-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17409392789373812
+    },
+    {
+      "date": "2006-11-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1606261859582543
+    },
+    {
+      "date": "2006-11-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2302637571157495
+    },
+    {
+      "date": "2006-11-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3946129032258065
+    },
+    {
+      "date": "2006-11-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.27855028462998105
+    },
+    {
+      "date": "2006-11-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6963757115749525
+    },
+    {
+      "date": "2006-11-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.2284022770398484
+    },
+    {
+      "date": "2006-11-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8124383301707779
+    },
+    {
+      "date": "2006-11-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5106755218216319
+    },
+    {
+      "date": "2006-11-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.903426944971537
+    },
+    {
+      "date": "2006-11-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9517134724857685
+    },
+    {
+      "date": "2006-11-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.0157666034155595
+    },
+    {
+      "date": "2006-11-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.199605313092979
+    },
+    {
+      "date": "2006-11-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.6713017077798862
+    },
+    {
+      "date": "2006-11-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.43173055028463
+    },
+    {
+      "date": "2006-11-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.506952561669829
+    },
+    {
+      "date": "2006-11-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.3231138519924097
+    },
+    {
+      "date": "2006-11-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8588633776091081
+    },
+    {
+      "date": "2006-11-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.9693415559772296
+    },
+    {
+      "date": "2006-11-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.3426034155597724
+    },
+    {
+      "date": "2006-11-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 8.936821631878558
+    },
+    {
+      "date": "2006-11-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 9.052884250474383
+    },
+    {
+      "date": "2006-11-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.317529411764706
+    },
+    {
+      "date": "2006-11-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.017628083491461
+    },
+    {
+      "date": "2006-11-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.872768500948767
+    },
+    {
+      "date": "2006-11-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 8.751121442125237
+    },
+    {
+      "date": "2006-11-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 6.290593927893737
+    },
+    {
+      "date": "2006-11-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.5728671726755215
+    },
+    {
+      "date": "2006-11-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.3658159392789373
+    },
+    {
+      "date": "2006-12-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.6462277039848194
+    },
+    {
+      "date": "2006-12-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.158764705882353
+    },
+    {
+      "date": "2006-12-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.7409392789373814
+    },
+    {
+      "date": "2006-12-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.4623889943074004
+    },
+    {
+      "date": "2006-12-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2534762808349145
+    },
+    {
+      "date": "2006-12-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1142011385199242
+    },
+    {
+      "date": "2006-12-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9749259962049337
+    },
+    {
+      "date": "2006-12-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9052884250474383
+    },
+    {
+      "date": "2006-12-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.7641518026565464
+    },
+    {
+      "date": "2006-12-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 11.420561669829222
+    },
+    {
+      "date": "2006-12-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 8.008320683111954
+    },
+    {
+      "date": "2006-12-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 19.544944971537003
+    },
+    {
+      "date": "2006-12-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 38.300664136622395
+    },
+    {
+      "date": "2006-12-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 24.60527514231499
+    },
+    {
+      "date": "2006-12-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 18.593231499051235
+    },
+    {
+      "date": "2006-12-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 9.331434535104364
+    },
+    {
+      "date": "2006-12-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 6.128106261859583
+    },
+    {
+      "date": "2006-12-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.5728671726755215
+    },
+    {
+      "date": "2006-12-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.7140037950664135
+    },
+    {
+      "date": "2006-12-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.1104781783681212
+    },
+    {
+      "date": "2006-12-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 6.66199430740038
+    },
+    {
+      "date": "2006-12-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 6.7548444022770395
+    },
+    {
+      "date": "2006-12-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.8514174573055024
+    },
+    {
+      "date": "2006-12-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.06219165085389
+    },
+    {
+      "date": "2006-12-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 11.652686907020874
+    },
+    {
+      "date": "2006-12-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 26.230151802656543
+    },
+    {
+      "date": "2006-12-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 22.95718595825427
+    },
+    {
+      "date": "2006-12-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 11.04916129032258
+    },
+    {
+      "date": "2006-12-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 6.963757115749526
+    },
+    {
+      "date": "2006-12-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.292455407969639
+    },
+    {
+      "date": "2006-12-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.2711043643263755
+    },
+    {
+      "date": "2007-01-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.574728652751423
+    },
+    {
+      "date": "2007-01-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.0872656546489563
+    },
+    {
+      "date": "2007-01-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 25.765901328273245
+    },
+    {
+      "date": "2007-01-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 23.212523719165084
+    },
+    {
+      "date": "2007-01-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 12.720462998102468
+    },
+    {
+      "date": "2007-01-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 8.704696394686907
+    },
+    {
+      "date": "2007-01-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 7.103032258064516
+    },
+    {
+      "date": "2007-01-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.733493358633776
+    },
+    {
+      "date": "2007-01-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.8514174573055024
+    },
+    {
+      "date": "2007-01-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.178254269449716
+    },
+    {
+      "date": "2007-01-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.6675787476280837
+    },
+    {
+      "date": "2007-01-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.226540796963947
+    },
+    {
+      "date": "2007-01-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.8783529411764706
+    },
+    {
+      "date": "2007-01-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.6230151802656545
+    },
+    {
+      "date": "2007-01-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.3676774193548384
+    },
+    {
+      "date": "2007-01-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.2284022770398484
+    },
+    {
+      "date": "2007-01-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.112339658444023
+    },
+    {
+      "date": "2007-01-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.926639468690702
+    },
+    {
+      "date": "2007-01-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.8105768500948767
+    },
+    {
+      "date": "2007-01-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.7177267552182163
+    },
+    {
+      "date": "2007-01-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.601664136622391
+    },
+    {
+      "date": "2007-01-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.5088140417457305
+    },
+    {
+      "date": "2007-01-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.4391764705882353
+    },
+    {
+      "date": "2007-01-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.392751423149905
+    },
+    {
+      "date": "2007-01-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.3231138519924097
+    },
+    {
+      "date": "2007-01-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2766888045540798
+    },
+    {
+      "date": "2007-01-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2302637571157495
+    },
+    {
+      "date": "2007-01-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1838387096774192
+    },
+    {
+      "date": "2007-01-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1142011385199242
+    },
+    {
+      "date": "2007-01-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.0677760910815939
+    },
+    {
+      "date": "2007-01-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.044563567362429
+    },
+    {
+      "date": "2007-02-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9981385199240986
+    },
+    {
+      "date": "2007-02-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9749259962049337
+    },
+    {
+      "date": "2007-02-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9285009487666034
+    },
+    {
+      "date": "2007-02-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8820759013282732
+    },
+    {
+      "date": "2007-02-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8588633776091081
+    },
+    {
+      "date": "2007-02-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8356508538899431
+    },
+    {
+      "date": "2007-02-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.4159639468690701
+    },
+    {
+      "date": "2007-02-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.483740037950664
+    },
+    {
+      "date": "2007-02-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.665717267552182
+    },
+    {
+      "date": "2007-02-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 7.706557874762808
+    },
+    {
+      "date": "2007-02-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 18.175406072106263
+    },
+    {
+      "date": "2007-02-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 7.428007590132827
+    },
+    {
+      "date": "2007-02-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.33888045540797
+    },
+    {
+      "date": "2007-02-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.131829222011385
+    },
+    {
+      "date": "2007-02-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 9.67962239089184
+    },
+    {
+      "date": "2007-02-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 6.89411954459203
+    },
+    {
+      "date": "2007-02-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.106755218216319
+    },
+    {
+      "date": "2007-02-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.155041745730551
+    },
+    {
+      "date": "2007-02-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.481878557874763
+    },
+    {
+      "date": "2007-02-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.853278937381404
+    },
+    {
+      "date": "2007-02-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 26.4622770398482
+    },
+    {
+      "date": "2007-02-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 29.944155597722958
+    },
+    {
+      "date": "2007-02-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 14.298914611005692
+    },
+    {
+      "date": "2007-02-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 10.86346110056926
+    },
+    {
+      "date": "2007-02-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 23.676774193548386
+    },
+    {
+      "date": "2007-02-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 17.98970588235294
+    },
+    {
+      "date": "2007-02-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 24.60527514231499
+    },
+    {
+      "date": "2007-02-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 18.709294117647058
+    },
+    {
+      "date": "2007-03-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 18.128981024667933
+    },
+    {
+      "date": "2007-03-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 18.732506641366225
+    },
+    {
+      "date": "2007-03-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 13.579326375711574
+    },
+    {
+      "date": "2007-03-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 9.377859582542694
+    },
+    {
+      "date": "2007-03-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 7.149457305502846
+    },
+    {
+      "date": "2007-03-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.965618595825426
+    },
+    {
+      "date": "2007-03-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.547793168880455
+    },
+    {
+      "date": "2007-03-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.153180265654649
+    },
+    {
+      "date": "2007-03-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.5728671726755215
+    },
+    {
+      "date": "2007-03-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.131829222011385
+    },
+    {
+      "date": "2007-03-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.7372163187855785
+    },
+    {
+      "date": "2007-03-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.458666034155598
+    },
+    {
+      "date": "2007-03-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.226540796963947
+    },
+    {
+      "date": "2007-03-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.017628083491461
+    },
+    {
+      "date": "2007-03-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.762290322580645
+    },
+    {
+      "date": "2007-03-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.5765901328273246
+    },
+    {
+      "date": "2007-03-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.4141024667931688
+    },
+    {
+      "date": "2007-03-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.2748273244781783
+    },
+    {
+      "date": "2007-03-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.3676774193548384
+    },
+    {
+      "date": "2007-03-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.038979127134725
+    },
+    {
+      "date": "2007-03-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.947990512333966
+    },
+    {
+      "date": "2007-03-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.5533776091081597
+    },
+    {
+      "date": "2007-03-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.3212523719165086
+    },
+    {
+      "date": "2007-03-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.158764705882353
+    },
+    {
+      "date": "2007-03-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.6230151802656545
+    },
+    {
+      "date": "2007-03-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.0872656546489563
+    },
+    {
+      "date": "2007-03-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 9.934960151802656
+    },
+    {
+      "date": "2007-03-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 6.824481973434535
+    },
+    {
+      "date": "2007-03-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.526442125237192
+    },
+    {
+      "date": "2007-03-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.551516129032258
+    },
+    {
+      "date": "2007-03-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.0640531309297914
+    },
+    {
+      "date": "2007-04-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.762290322580645
+    },
+    {
+      "date": "2007-04-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.437314990512334
+    },
+    {
+      "date": "2007-04-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.205189753320683
+    },
+    {
+      "date": "2007-04-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.9962770398481973
+    },
+    {
+      "date": "2007-04-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.8337893738140418
+    },
+    {
+      "date": "2007-04-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.7177267552182163
+    },
+    {
+      "date": "2007-04-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.9730645161290323
+    },
+    {
+      "date": "2007-04-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.8337893738140418
+    },
+    {
+      "date": "2007-04-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.1355521821631878
+    },
+    {
+      "date": "2007-04-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.8337893738140418
+    },
+    {
+      "date": "2007-04-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.8551404174573056
+    },
+    {
+      "date": "2007-04-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.642504743833017
+    },
+    {
+      "date": "2007-04-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.3658159392789373
+    },
+    {
+      "date": "2007-04-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.292455407969639
+    },
+    {
+      "date": "2007-04-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.619292220113852
+    },
+    {
+      "date": "2007-04-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.481878557874763
+    },
+    {
+      "date": "2007-04-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.9944155597722957
+    },
+    {
+      "date": "2007-04-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.6907912713472486
+    },
+    {
+      "date": "2007-04-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.2497533206831117
+    },
+    {
+      "date": "2007-04-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.8783529411764706
+    },
+    {
+      "date": "2007-04-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.9712030360531307
+    },
+    {
+      "date": "2007-04-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 7.520857685009487
+    },
+    {
+      "date": "2007-04-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.52458064516129
+    },
+    {
+      "date": "2007-04-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.224679316888046
+    },
+    {
+      "date": "2007-04-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.505091081593928
+    },
+    {
+      "date": "2007-04-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.0408406072106264
+    },
+    {
+      "date": "2007-04-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.69265275142315
+    },
+    {
+      "date": "2007-04-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.390889943074004
+    },
+    {
+      "date": "2007-04-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.181977229601518
+    },
+    {
+      "date": "2007-04-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.0194895635673626
+    },
+    {
+      "date": "2007-05-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.926639468690702
+    },
+    {
+      "date": "2007-05-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.2284022770398484
+    },
+    {
+      "date": "2007-05-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.0427020872865276
+    },
+    {
+      "date": "2007-05-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.0427020872865276
+    },
+    {
+      "date": "2007-05-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.7409392789373814
+    },
+    {
+      "date": "2007-05-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.578451612903226
+    },
+    {
+      "date": "2007-05-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.4623889943074004
+    },
+    {
+      "date": "2007-05-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.36953889943074
+    },
+    {
+      "date": "2007-05-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2999013282732448
+    },
+    {
+      "date": "2007-05-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2534762808349145
+    },
+    {
+      "date": "2007-05-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2070512333965844
+    },
+    {
+      "date": "2007-05-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1838387096774192
+    },
+    {
+      "date": "2007-05-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1374136622390891
+    },
+    {
+      "date": "2007-05-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.0677760910815939
+    },
+    {
+      "date": "2007-05-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.0213510436432638
+    },
+    {
+      "date": "2007-05-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9981385199240986
+    },
+    {
+      "date": "2007-05-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9517134724857685
+    },
+    {
+      "date": "2007-05-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9052884250474383
+    },
+    {
+      "date": "2007-05-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8820759013282732
+    },
+    {
+      "date": "2007-05-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8588633776091081
+    },
+    {
+      "date": "2007-05-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8588633776091081
+    },
+    {
+      "date": "2007-05-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8124383301707779
+    },
+    {
+      "date": "2007-05-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.7660132827324478
+    },
+    {
+      "date": "2007-05-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.7428007590132827
+    },
+    {
+      "date": "2007-05-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.7195882352941176
+    },
+    {
+      "date": "2007-05-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.7195882352941176
+    },
+    {
+      "date": "2007-05-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6963757115749525
+    },
+    {
+      "date": "2007-05-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6731631878557875
+    },
+    {
+      "date": "2007-05-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6499506641366224
+    },
+    {
+      "date": "2007-05-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6267381404174572
+    },
+    {
+      "date": "2007-05-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6267381404174572
+    },
+    {
+      "date": "2007-06-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6035256166982922
+    },
+    {
+      "date": "2007-06-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6035256166982922
+    },
+    {
+      "date": "2007-06-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5803130929791271
+    },
+    {
+      "date": "2007-06-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5803130929791271
+    },
+    {
+      "date": "2007-06-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6499506641366224
+    },
+    {
+      "date": "2007-06-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6267381404174572
+    },
+    {
+      "date": "2007-06-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5571005692599621
+    },
+    {
+      "date": "2007-06-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5338880455407969
+    },
+    {
+      "date": "2007-06-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5106755218216319
+    },
+    {
+      "date": "2007-06-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5338880455407969
+    },
+    {
+      "date": "2007-06-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5106755218216319
+    },
+    {
+      "date": "2007-06-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4642504743833017
+    },
+    {
+      "date": "2007-06-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4410379506641366
+    },
+    {
+      "date": "2007-06-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4410379506641366
+    },
+    {
+      "date": "2007-06-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.41782542694497155
+    },
+    {
+      "date": "2007-06-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.41782542694497155
+    },
+    {
+      "date": "2007-06-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.41782542694497155
+    },
+    {
+      "date": "2007-06-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3946129032258065
+    },
+    {
+      "date": "2007-06-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.37140037950664134
+    },
+    {
+      "date": "2007-06-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.37140037950664134
+    },
+    {
+      "date": "2007-06-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3946129032258065
+    },
+    {
+      "date": "2007-06-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.37140037950664134
+    },
+    {
+      "date": "2007-06-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.34818785578747624
+    },
+    {
+      "date": "2007-06-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3249753320683112
+    },
+    {
+      "date": "2007-06-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3249753320683112
+    },
+    {
+      "date": "2007-06-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3249753320683112
+    },
+    {
+      "date": "2007-06-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3249753320683112
+    },
+    {
+      "date": "2007-06-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3017628083491461
+    },
+    {
+      "date": "2007-06-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3946129032258065
+    },
+    {
+      "date": "2007-06-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.34818785578747624
+    },
+    {
+      "date": "2007-07-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3249753320683112
+    },
+    {
+      "date": "2007-07-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3017628083491461
+    },
+    {
+      "date": "2007-07-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.27855028462998105
+    },
+    {
+      "date": "2007-07-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.27855028462998105
+    },
+    {
+      "date": "2007-07-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.27855028462998105
+    },
+    {
+      "date": "2007-07-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2007-07-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2007-07-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2007-07-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2007-07-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.23212523719165085
+    },
+    {
+      "date": "2007-07-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.23212523719165085
+    },
+    {
+      "date": "2007-07-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2007-07-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.23212523719165085
+    },
+    {
+      "date": "2007-07-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.22748273244781783
+    },
+    {
+      "date": "2007-07-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.2205189753320683
+    },
+    {
+      "date": "2007-07-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.2205189753320683
+    },
+    {
+      "date": "2007-07-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.22748273244781783
+    },
+    {
+      "date": "2007-07-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.48746299810246685
+    },
+    {
+      "date": "2007-07-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.34818785578747624
+    },
+    {
+      "date": "2007-07-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.27855028462998105
+    },
+    {
+      "date": "2007-07-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2007-07-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.23212523719165085
+    },
+    {
+      "date": "2007-07-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.2205189753320683
+    },
+    {
+      "date": "2007-07-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.20891271347248577
+    },
+    {
+      "date": "2007-07-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.2158764705882353
+    },
+    {
+      "date": "2007-07-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.2251614800759013
+    },
+    {
+      "date": "2007-07-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.23212523719165085
+    },
+    {
+      "date": "2007-07-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.2205189753320683
+    },
+    {
+      "date": "2007-07-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.2019489563567362
+    },
+    {
+      "date": "2007-07-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.19730645161290325
+    },
+    {
+      "date": "2007-07-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.19034269449715369
+    },
+    {
+      "date": "2007-08-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17873643263757116
+    },
+    {
+      "date": "2007-08-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1671301707779886
+    },
+    {
+      "date": "2007-08-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.15784516129032258
+    },
+    {
+      "date": "2007-08-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.15784516129032258
+    },
+    {
+      "date": "2007-08-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1555239089184061
+    },
+    {
+      "date": "2007-08-06",
+      "quality_flag": "A:e",
+      "streamflow_mm_day": 0.1648089184060721
+    },
+    {
+      "date": "2007-08-07",
+      "quality_flag": "A:e",
+      "streamflow_mm_day": 0.1624876660341556
+    },
+    {
+      "date": "2007-08-08",
+      "quality_flag": "A:e",
+      "streamflow_mm_day": 0.1601664136622391
+    },
+    {
+      "date": "2007-08-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.15784516129032258
+    },
+    {
+      "date": "2007-08-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.15088140417457305
+    },
+    {
+      "date": "2007-08-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.14623889943074003
+    },
+    {
+      "date": "2007-08-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.14159639468690702
+    },
+    {
+      "date": "2007-08-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.13927514231499052
+    },
+    {
+      "date": "2007-08-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.136953889943074
+    },
+    {
+      "date": "2007-08-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.136953889943074
+    },
+    {
+      "date": "2007-08-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.13463263757115748
+    },
+    {
+      "date": "2007-08-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12999013282732447
+    },
+    {
+      "date": "2007-08-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12766888045540797
+    },
+    {
+      "date": "2007-08-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.136953889943074
+    },
+    {
+      "date": "2007-08-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.14159639468690702
+    },
+    {
+      "date": "2007-08-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.14159639468690702
+    },
+    {
+      "date": "2007-08-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.13927514231499052
+    },
+    {
+      "date": "2007-08-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.132311385199241
+    },
+    {
+      "date": "2007-08-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12766888045540797
+    },
+    {
+      "date": "2007-08-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12534762808349145
+    },
+    {
+      "date": "2007-08-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.11838387096774193
+    },
+    {
+      "date": "2007-08-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.11838387096774193
+    },
+    {
+      "date": "2007-08-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1114201138519924
+    },
+    {
+      "date": "2007-08-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10445635673624289
+    },
+    {
+      "date": "2007-08-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09749259962049336
+    },
+    {
+      "date": "2007-08-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09517134724857684
+    },
+    {
+      "date": "2007-09-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09285009487666034
+    },
+    {
+      "date": "2007-09-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09285009487666034
+    },
+    {
+      "date": "2007-09-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09052884250474384
+    },
+    {
+      "date": "2007-09-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1114201138519924
+    },
+    {
+      "date": "2007-09-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1114201138519924
+    },
+    {
+      "date": "2007-09-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10213510436432638
+    },
+    {
+      "date": "2007-09-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09517134724857684
+    },
+    {
+      "date": "2007-09-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09052884250474384
+    },
+    {
+      "date": "2007-09-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09285009487666034
+    },
+    {
+      "date": "2007-09-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09517134724857684
+    },
+    {
+      "date": "2007-09-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09981385199240986
+    },
+    {
+      "date": "2007-09-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1067776091081594
+    },
+    {
+      "date": "2007-09-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.11374136622390892
+    },
+    {
+      "date": "2007-09-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10909886148007591
+    },
+    {
+      "date": "2007-09-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10445635673624289
+    },
+    {
+      "date": "2007-09-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09749259962049336
+    },
+    {
+      "date": "2007-09-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09517134724857684
+    },
+    {
+      "date": "2007-09-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09052884250474384
+    },
+    {
+      "date": "2007-09-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08820759013282731
+    },
+    {
+      "date": "2007-09-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08820759013282731
+    },
+    {
+      "date": "2007-09-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08820759013282731
+    },
+    {
+      "date": "2007-09-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2007-09-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2007-09-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08820759013282731
+    },
+    {
+      "date": "2007-09-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2007-09-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2007-09-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.0812438330170778
+    },
+    {
+      "date": "2007-09-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09285009487666034
+    },
+    {
+      "date": "2007-09-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10445635673624289
+    },
+    {
+      "date": "2007-09-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12070512333965845
+    },
+    {
+      "date": "2007-10-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.22748273244781783
+    },
+    {
+      "date": "2007-10-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1694514231499051
+    },
+    {
+      "date": "2007-10-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12534762808349145
+    },
+    {
+      "date": "2007-10-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.14856015180265655
+    },
+    {
+      "date": "2007-10-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1694514231499051
+    },
+    {
+      "date": "2007-10-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.132311385199241
+    },
+    {
+      "date": "2007-10-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.11374136622390892
+    },
+    {
+      "date": "2007-10-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10445635673624289
+    },
+    {
+      "date": "2007-10-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17641518026565461
+    },
+    {
+      "date": "2007-10-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.044563567362429
+    },
+    {
+      "date": "2007-10-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.48746299810246685
+    },
+    {
+      "date": "2007-10-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.27855028462998105
+    },
+    {
+      "date": "2007-10-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.19962770398481972
+    },
+    {
+      "date": "2007-10-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1671301707779886
+    },
+    {
+      "date": "2007-10-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.19266394686907024
+    },
+    {
+      "date": "2007-10-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.37140037950664134
+    },
+    {
+      "date": "2007-10-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6963757115749525
+    },
+    {
+      "date": "2007-10-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5571005692599621
+    },
+    {
+      "date": "2007-10-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 26.9265275142315
+    },
+    {
+      "date": "2007-10-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.9424060721062615
+    },
+    {
+      "date": "2007-10-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.8783529411764706
+    },
+    {
+      "date": "2007-10-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.6713017077798862
+    },
+    {
+      "date": "2007-10-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1374136622390891
+    },
+    {
+      "date": "2007-10-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8820759013282732
+    },
+    {
+      "date": "2007-10-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.7428007590132827
+    },
+    {
+      "date": "2007-10-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6499506641366224
+    },
+    {
+      "date": "2007-10-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5571005692599621
+    },
+    {
+      "date": "2007-10-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.48746299810246685
+    },
+    {
+      "date": "2007-10-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4642504743833017
+    },
+    {
+      "date": "2007-10-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5106755218216319
+    },
+    {
+      "date": "2007-10-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4410379506641366
+    },
+    {
+      "date": "2007-11-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.41782542694497155
+    },
+    {
+      "date": "2007-11-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3946129032258065
+    },
+    {
+      "date": "2007-11-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.37140037950664134
+    },
+    {
+      "date": "2007-11-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.34818785578747624
+    },
+    {
+      "date": "2007-11-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3249753320683112
+    },
+    {
+      "date": "2007-11-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3017628083491461
+    },
+    {
+      "date": "2007-11-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3017628083491461
+    },
+    {
+      "date": "2007-11-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3017628083491461
+    },
+    {
+      "date": "2007-11-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3017628083491461
+    },
+    {
+      "date": "2007-11-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.34818785578747624
+    },
+    {
+      "date": "2007-11-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6499506641366224
+    },
+    {
+      "date": "2007-11-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.090988614800759
+    },
+    {
+      "date": "2007-11-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.6211537001897534
+    },
+    {
+      "date": "2007-11-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.089127134724858
+    },
+    {
+      "date": "2007-11-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.4391764705882353
+    },
+    {
+      "date": "2007-11-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.5088140417457305
+    },
+    {
+      "date": "2007-11-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.669440227703985
+    },
+    {
+      "date": "2007-11-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.7372163187855785
+    },
+    {
+      "date": "2007-11-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 9.958172675521821
+    },
+    {
+      "date": "2007-11-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.688929791271347
+    },
+    {
+      "date": "2007-11-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.8551404174573056
+    },
+    {
+      "date": "2007-11-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.0659146110056925
+    },
+    {
+      "date": "2007-11-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.601664136622391
+    },
+    {
+      "date": "2007-11-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.3231138519924097
+    },
+    {
+      "date": "2007-11-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1606261859582543
+    },
+    {
+      "date": "2007-11-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.0213510436432638
+    },
+    {
+      "date": "2007-11-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2070512333965844
+    },
+    {
+      "date": "2007-11-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.0213510436432638
+    },
+    {
+      "date": "2007-11-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9052884250474383
+    },
+    {
+      "date": "2007-11-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8588633776091081
+    },
+    {
+      "date": "2007-12-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8124383301707779
+    },
+    {
+      "date": "2007-12-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.7660132827324478
+    },
+    {
+      "date": "2007-12-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.506952561669829
+    },
+    {
+      "date": "2007-12-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.733493358633776
+    },
+    {
+      "date": "2007-12-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.017628083491461
+    },
+    {
+      "date": "2007-12-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.085404174573055
+    },
+    {
+      "date": "2007-12-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 6.313806451612904
+    },
+    {
+      "date": "2007-12-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.6443662239089183
+    },
+    {
+      "date": "2007-12-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.6462277039848194
+    },
+    {
+      "date": "2007-12-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.112339658444023
+    },
+    {
+      "date": "2007-12-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.7641518026565464
+    },
+    {
+      "date": "2007-12-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.4856015180265654
+    },
+    {
+      "date": "2007-12-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.3231138519924097
+    },
+    {
+      "date": "2007-12-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2070512333965844
+    },
+    {
+      "date": "2007-12-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2766888045540798
+    },
+    {
+      "date": "2007-12-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2999013282732448
+    },
+    {
+      "date": "2007-12-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.9944155597722957
+    },
+    {
+      "date": "2007-12-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.642504743833017
+    },
+    {
+      "date": "2007-12-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 8.820759013282732
+    },
+    {
+      "date": "2007-12-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 20.68235863377609
+    },
+    {
+      "date": "2007-12-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 8.054745730550286
+    },
+    {
+      "date": "2007-12-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.617430740037951
+    },
+    {
+      "date": "2007-12-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 8.379721062618597
+    },
+    {
+      "date": "2007-12-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 16.736229601518026
+    },
+    {
+      "date": "2007-12-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 7.892258064516129
+    },
+    {
+      "date": "2007-12-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.756705882352941
+    },
+    {
+      "date": "2007-12-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.921055028462998
+    },
+    {
+      "date": "2007-12-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.199605313092979
+    },
+    {
+      "date": "2007-12-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 8.286870967741935
+    },
+    {
+      "date": "2007-12-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 8.356508538899432
+    },
+    {
+      "date": "2007-12-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.872768500948767
+    },
+    {
+      "date": "2008-01-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.596079696394686
+    },
+    {
+      "date": "2008-01-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.7836413662239092
+    },
+    {
+      "date": "2008-01-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.131829222011385
+    },
+    {
+      "date": "2008-01-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 12.859738140417457
+    },
+    {
+      "date": "2008-01-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 21.262671726755215
+    },
+    {
+      "date": "2008-01-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 20.77520872865275
+    },
+    {
+      "date": "2008-01-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 19.057481973434534
+    },
+    {
+      "date": "2008-01-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 16.782654648956356
+    },
+    {
+      "date": "2008-01-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 13.997151802656546
+    },
+    {
+      "date": "2008-01-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 13.27756356736243
+    },
+    {
+      "date": "2008-01-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 9.168946869070208
+    },
+    {
+      "date": "2008-01-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 7.0566072106261855
+    },
+    {
+      "date": "2008-01-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.988831119544591
+    },
+    {
+      "date": "2008-01-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.990692599620493
+    },
+    {
+      "date": "2008-01-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.317529411764706
+    },
+    {
+      "date": "2008-01-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.7604288425047434
+    },
+    {
+      "date": "2008-01-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.2961783681214425
+    },
+    {
+      "date": "2008-01-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.947990512333966
+    },
+    {
+      "date": "2008-01-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.6462277039848194
+    },
+    {
+      "date": "2008-01-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.506952561669829
+    },
+    {
+      "date": "2008-01-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.3676774193548384
+    },
+    {
+      "date": "2008-01-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.1355521821631878
+    },
+    {
+      "date": "2008-01-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.9498519924098674
+    },
+    {
+      "date": "2008-01-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.8570018975332068
+    },
+    {
+      "date": "2008-01-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.7409392789373814
+    },
+    {
+      "date": "2008-01-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.9962770398481973
+    },
+    {
+      "date": "2008-01-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.9461290322580647
+    },
+    {
+      "date": "2008-01-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.6638557874762805
+    },
+    {
+      "date": "2008-01-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 10.213510436432639
+    },
+    {
+      "date": "2008-01-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 9.099309297912713
+    },
+    {
+      "date": "2008-01-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 43.871669829222014
+    },
+    {
+      "date": "2008-02-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 20.821633776091083
+    },
+    {
+      "date": "2008-02-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 25.998026565464894
+    },
+    {
+      "date": "2008-02-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 34.12240986717267
+    },
+    {
+      "date": "2008-02-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 17.10762998102467
+    },
+    {
+      "date": "2008-02-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 10.492060721062618
+    },
+    {
+      "date": "2008-02-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 8.054745730550286
+    },
+    {
+      "date": "2008-02-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 6.522719165085388
+    },
+    {
+      "date": "2008-02-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.687068311195446
+    },
+    {
+      "date": "2008-02-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.8514174573055024
+    },
+    {
+      "date": "2008-02-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.224679316888046
+    },
+    {
+      "date": "2008-02-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.7372163187855785
+    },
+    {
+      "date": "2008-02-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.4122409867172676
+    },
+    {
+      "date": "2008-02-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.133690702087286
+    },
+    {
+      "date": "2008-02-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.8783529411764706
+    },
+    {
+      "date": "2008-02-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.6230151802656545
+    },
+    {
+      "date": "2008-02-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.4141024667931688
+    },
+    {
+      "date": "2008-02-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.2748273244781783
+    },
+    {
+      "date": "2008-02-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.158764705882353
+    },
+    {
+      "date": "2008-02-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.3212523719165086
+    },
+    {
+      "date": "2008-02-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.205189753320683
+    },
+    {
+      "date": "2008-02-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.0194895635673626
+    },
+    {
+      "date": "2008-02-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.1355521821631878
+    },
+    {
+      "date": "2008-02-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.2748273244781783
+    },
+    {
+      "date": "2008-02-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.872768500948767
+    },
+    {
+      "date": "2008-02-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 13.022225806451612
+    },
+    {
+      "date": "2008-02-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.9424060721062615
+    },
+    {
+      "date": "2008-02-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.2711043643263755
+    },
+    {
+      "date": "2008-02-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.481878557874763
+    },
+    {
+      "date": "2008-02-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.0872656546489563
+    },
+    {
+      "date": "2008-03-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.481878557874763
+    },
+    {
+      "date": "2008-03-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.017628083491461
+    },
+    {
+      "date": "2008-03-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.5998026565464896
+    },
+    {
+      "date": "2008-03-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.3676774193548384
+    },
+    {
+      "date": "2008-03-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.181977229601518
+    },
+    {
+      "date": "2008-03-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.9730645161290323
+    },
+    {
+      "date": "2008-03-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.8105768500948767
+    },
+    {
+      "date": "2008-03-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.7873643263757115
+    },
+    {
+      "date": "2008-03-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.6480891840607212
+    },
+    {
+      "date": "2008-03-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.5320265654648957
+    },
+    {
+      "date": "2008-03-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.6248766603415559
+    },
+    {
+      "date": "2008-03-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.5088140417457305
+    },
+    {
+      "date": "2008-03-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.990692599620493
+    },
+    {
+      "date": "2008-03-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.315667931688804
+    },
+    {
+      "date": "2008-03-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 9.331434535104364
+    },
+    {
+      "date": "2008-03-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 6.267381404174572
+    },
+    {
+      "date": "2008-03-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.317529411764706
+    },
+    {
+      "date": "2008-03-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.505091081593928
+    },
+    {
+      "date": "2008-03-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.33888045540797
+    },
+    {
+      "date": "2008-03-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.269242884250474
+    },
+    {
+      "date": "2008-03-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.038979127134725
+    },
+    {
+      "date": "2008-03-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.4122409867172676
+    },
+    {
+      "date": "2008-03-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.9712030360531307
+    },
+    {
+      "date": "2008-03-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.78550284629981
+    },
+    {
+      "date": "2008-03-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.483740037950664
+    },
+    {
+      "date": "2008-03-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.688929791271347
+    },
+    {
+      "date": "2008-03-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.060330170777988
+    },
+    {
+      "date": "2008-03-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.781779886148008
+    },
+    {
+      "date": "2008-03-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.3853055028463
+    },
+    {
+      "date": "2008-03-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 4.155041745730551
+    },
+    {
+      "date": "2008-03-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.4354535104364325
+    },
+    {
+      "date": "2008-04-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.9712030360531307
+    },
+    {
+      "date": "2008-04-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.5533776091081597
+    },
+    {
+      "date": "2008-04-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.2516148007590133
+    },
+    {
+      "date": "2008-04-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.0659146110056925
+    },
+    {
+      "date": "2008-04-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.926639468690702
+    },
+    {
+      "date": "2008-04-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.9498519924098674
+    },
+    {
+      "date": "2008-04-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.8105768500948767
+    },
+    {
+      "date": "2008-04-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.6480891840607212
+    },
+    {
+      "date": "2008-04-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.5552390891840606
+    },
+    {
+      "date": "2008-04-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.4391764705882353
+    },
+    {
+      "date": "2008-04-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.3231138519924097
+    },
+    {
+      "date": "2008-04-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2302637571157495
+    },
+    {
+      "date": "2008-04-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1606261859582543
+    },
+    {
+      "date": "2008-04-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1374136622390891
+    },
+    {
+      "date": "2008-04-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1838387096774192
+    },
+    {
+      "date": "2008-04-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.0677760910815939
+    },
+    {
+      "date": "2008-04-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.0213510436432638
+    },
+    {
+      "date": "2008-04-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9749259962049337
+    },
+    {
+      "date": "2008-04-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9517134724857685
+    },
+    {
+      "date": "2008-04-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.0213510436432638
+    },
+    {
+      "date": "2008-04-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9981385199240986
+    },
+    {
+      "date": "2008-04-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.9015654648956355
+    },
+    {
+      "date": "2008-04-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 5.895981024667932
+    },
+    {
+      "date": "2008-04-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 3.6211537001897534
+    },
+    {
+      "date": "2008-04-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.5765901328273246
+    },
+    {
+      "date": "2008-04-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 2.0427020872865276
+    },
+    {
+      "date": "2008-04-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.7641518026565464
+    },
+    {
+      "date": "2008-04-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.601664136622391
+    },
+    {
+      "date": "2008-04-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.5552390891840606
+    },
+    {
+      "date": "2008-04-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.4856015180265654
+    },
+    {
+      "date": "2008-05-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2999013282732448
+    },
+    {
+      "date": "2008-05-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.2070512333965844
+    },
+    {
+      "date": "2008-05-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.1374136622390891
+    },
+    {
+      "date": "2008-05-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.0677760910815939
+    },
+    {
+      "date": "2008-05-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 1.0213510436432638
+    },
+    {
+      "date": "2008-05-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9749259962049337
+    },
+    {
+      "date": "2008-05-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9285009487666034
+    },
+    {
+      "date": "2008-05-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.9052884250474383
+    },
+    {
+      "date": "2008-05-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8588633776091081
+    },
+    {
+      "date": "2008-05-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.8124383301707779
+    },
+    {
+      "date": "2008-05-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.789225806451613
+    },
+    {
+      "date": "2008-05-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.7428007590132827
+    },
+    {
+      "date": "2008-05-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.7195882352941176
+    },
+    {
+      "date": "2008-05-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6963757115749525
+    },
+    {
+      "date": "2008-05-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6499506641366224
+    },
+    {
+      "date": "2008-05-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.6035256166982922
+    },
+    {
+      "date": "2008-05-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5571005692599621
+    },
+    {
+      "date": "2008-05-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5338880455407969
+    },
+    {
+      "date": "2008-05-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5338880455407969
+    },
+    {
+      "date": "2008-05-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5106755218216319
+    },
+    {
+      "date": "2008-05-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5338880455407969
+    },
+    {
+      "date": "2008-05-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5106755218216319
+    },
+    {
+      "date": "2008-05-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5106755218216319
+    },
+    {
+      "date": "2008-05-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5106755218216319
+    },
+    {
+      "date": "2008-05-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5106755218216319
+    },
+    {
+      "date": "2008-05-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.48746299810246685
+    },
+    {
+      "date": "2008-05-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5106755218216319
+    },
+    {
+      "date": "2008-05-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.48746299810246685
+    },
+    {
+      "date": "2008-05-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4642504743833017
+    },
+    {
+      "date": "2008-05-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4410379506641366
+    },
+    {
+      "date": "2008-05-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4410379506641366
+    },
+    {
+      "date": "2008-06-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4410379506641366
+    },
+    {
+      "date": "2008-06-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.41782542694497155
+    },
+    {
+      "date": "2008-06-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5803130929791271
+    },
+    {
+      "date": "2008-06-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.5571005692599621
+    },
+    {
+      "date": "2008-06-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4642504743833017
+    },
+    {
+      "date": "2008-06-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4642504743833017
+    },
+    {
+      "date": "2008-06-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.4410379506641366
+    },
+    {
+      "date": "2008-06-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.41782542694497155
+    },
+    {
+      "date": "2008-06-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3946129032258065
+    },
+    {
+      "date": "2008-06-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.37140037950664134
+    },
+    {
+      "date": "2008-06-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.37140037950664134
+    },
+    {
+      "date": "2008-06-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.34818785578747624
+    },
+    {
+      "date": "2008-06-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.34818785578747624
+    },
+    {
+      "date": "2008-06-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.34818785578747624
+    },
+    {
+      "date": "2008-06-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.34818785578747624
+    },
+    {
+      "date": "2008-06-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.34818785578747624
+    },
+    {
+      "date": "2008-06-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.34818785578747624
+    },
+    {
+      "date": "2008-06-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3249753320683112
+    },
+    {
+      "date": "2008-06-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3017628083491461
+    },
+    {
+      "date": "2008-06-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3017628083491461
+    },
+    {
+      "date": "2008-06-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.27855028462998105
+    },
+    {
+      "date": "2008-06-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.27855028462998105
+    },
+    {
+      "date": "2008-06-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.27855028462998105
+    },
+    {
+      "date": "2008-06-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.27855028462998105
+    },
+    {
+      "date": "2008-06-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2008-06-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2008-06-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2008-06-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.23212523719165085
+    },
+    {
+      "date": "2008-06-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2008-06-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2008-07-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2008-07-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.25533776091081595
+    },
+    {
+      "date": "2008-07-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.23212523719165085
+    },
+    {
+      "date": "2008-07-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.23212523719165085
+    },
+    {
+      "date": "2008-07-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.22748273244781783
+    },
+    {
+      "date": "2008-07-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.2205189753320683
+    },
+    {
+      "date": "2008-07-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.2135552182163188
+    },
+    {
+      "date": "2008-07-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.2019489563567362
+    },
+    {
+      "date": "2008-07-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.18105768500948768
+    },
+    {
+      "date": "2008-07-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1671301707779886
+    },
+    {
+      "date": "2008-07-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1601664136622391
+    },
+    {
+      "date": "2008-07-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1624876660341556
+    },
+    {
+      "date": "2008-07-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17177267552182165
+    },
+    {
+      "date": "2008-07-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1694514231499051
+    },
+    {
+      "date": "2008-07-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1671301707779886
+    },
+    {
+      "date": "2008-07-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17873643263757116
+    },
+    {
+      "date": "2008-07-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17873643263757116
+    },
+    {
+      "date": "2008-07-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17873643263757116
+    },
+    {
+      "date": "2008-07-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17641518026565461
+    },
+    {
+      "date": "2008-07-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17177267552182165
+    },
+    {
+      "date": "2008-07-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17177267552182165
+    },
+    {
+      "date": "2008-07-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17177267552182165
+    },
+    {
+      "date": "2008-07-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1694514231499051
+    },
+    {
+      "date": "2008-07-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.15784516129032258
+    },
+    {
+      "date": "2008-07-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.15320265654648954
+    },
+    {
+      "date": "2008-07-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.14856015180265655
+    },
+    {
+      "date": "2008-07-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.14391764705882354
+    },
+    {
+      "date": "2008-07-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.15320265654648954
+    },
+    {
+      "date": "2008-07-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.14856015180265655
+    },
+    {
+      "date": "2008-07-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.13927514231499052
+    },
+    {
+      "date": "2008-07-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.136953889943074
+    },
+    {
+      "date": "2008-08-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.132311385199241
+    },
+    {
+      "date": "2008-08-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12766888045540797
+    },
+    {
+      "date": "2008-08-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12766888045540797
+    },
+    {
+      "date": "2008-08-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12999013282732447
+    },
+    {
+      "date": "2008-08-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12999013282732447
+    },
+    {
+      "date": "2008-08-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12766888045540797
+    },
+    {
+      "date": "2008-08-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12534762808349145
+    },
+    {
+      "date": "2008-08-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.132311385199241
+    },
+    {
+      "date": "2008-08-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12999013282732447
+    },
+    {
+      "date": "2008-08-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12766888045540797
+    },
+    {
+      "date": "2008-08-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12070512333965845
+    },
+    {
+      "date": "2008-08-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.11838387096774193
+    },
+    {
+      "date": "2008-08-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12070512333965845
+    },
+    {
+      "date": "2008-08-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.11606261859582542
+    },
+    {
+      "date": "2008-08-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1114201138519924
+    },
+    {
+      "date": "2008-08-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10909886148007591
+    },
+    {
+      "date": "2008-08-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10909886148007591
+    },
+    {
+      "date": "2008-08-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10909886148007591
+    },
+    {
+      "date": "2008-08-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12766888045540797
+    },
+    {
+      "date": "2008-08-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1601664136622391
+    },
+    {
+      "date": "2008-08-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.3946129032258065
+    },
+    {
+      "date": "2008-08-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.23212523719165085
+    },
+    {
+      "date": "2008-08-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.17641518026565461
+    },
+    {
+      "date": "2008-08-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.14856015180265655
+    },
+    {
+      "date": "2008-08-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.136953889943074
+    },
+    {
+      "date": "2008-08-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.12766888045540797
+    },
+    {
+      "date": "2008-08-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.11838387096774193
+    },
+    {
+      "date": "2008-08-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.11374136622390892
+    },
+    {
+      "date": "2008-08-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1067776091081594
+    },
+    {
+      "date": "2008-08-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10445635673624289
+    },
+    {
+      "date": "2008-08-31",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.1067776091081594
+    },
+    {
+      "date": "2008-09-01",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10445635673624289
+    },
+    {
+      "date": "2008-09-02",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09749259962049336
+    },
+    {
+      "date": "2008-09-03",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09517134724857684
+    },
+    {
+      "date": "2008-09-04",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09517134724857684
+    },
+    {
+      "date": "2008-09-05",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09052884250474384
+    },
+    {
+      "date": "2008-09-06",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2008-09-07",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.0835650853889943
+    },
+    {
+      "date": "2008-09-08",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.07892258064516129
+    },
+    {
+      "date": "2008-09-09",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2008-09-10",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2008-09-11",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09052884250474384
+    },
+    {
+      "date": "2008-09-12",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2008-09-13",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2008-09-14",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2008-09-15",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2008-09-16",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2008-09-17",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08820759013282731
+    },
+    {
+      "date": "2008-09-18",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09517134724857684
+    },
+    {
+      "date": "2008-09-19",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09981385199240986
+    },
+    {
+      "date": "2008-09-20",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.10445635673624289
+    },
+    {
+      "date": "2008-09-21",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09749259962049336
+    },
+    {
+      "date": "2008-09-22",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.09285009487666034
+    },
+    {
+      "date": "2008-09-23",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2008-09-24",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.08588633776091083
+    },
+    {
+      "date": "2008-09-25",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.07892258064516129
+    },
+    {
+      "date": "2008-09-26",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.07660132827324477
+    },
+    {
+      "date": "2008-09-27",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.07660132827324477
+    },
+    {
+      "date": "2008-09-28",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.07892258064516129
+    },
+    {
+      "date": "2008-09-29",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.07892258064516129
+    },
+    {
+      "date": "2008-09-30",
+      "quality_flag": "A",
+      "streamflow_mm_day": 0.07660132827324477
+    }
+  ],
+  "checks": {
+    "area_consistency": true,
+    "complete_calibration_selection_discharge": true,
+    "continuous_calendar": true,
+    "finite_forcing": true,
+    "nonnegative_precipitation_and_pet": true,
+    "temperature_quality": true
+  },
+  "daymet_audit_path": "data/camels_us/basin_mean_forcing/daymet/18/11481200_lump_cida_forcing_leap.txt",
+  "daymet_audit_sha256": "fbfab0b6e40db486056f9f320ad43afb1883b1c205e146bf1075756a25a1cd22",
+  "evaluation_discharge_values_parsed": false,
+  "failed_checks": [],
+  "forcing_area_km2": 104.84968,
+  "maurer_tmax_equals_tmin_fraction": 1.0,
+  "passed": true,
+  "periods": {
+    "calibration_selection_days": 731,
+    "calibration_warmup_days": 365,
+    "common_forecast_origins": 358,
+    "evaluation_days": 365,
+    "evaluation_warmup_days": 365
+  },
+  "temperature_quality": {
+    "failed_checks": [],
+    "fraction_absolute_product_difference_above_15_c": 0.0,
+    "maximum_maurer_temperature_c": 21.16,
+    "mean_maurer_temperature_c": 10.735344284736483,
+    "mean_product_bias_c": 0.024488706365503123,
+    "median_absolute_product_difference_c": 0.7749999999999995,
+    "minimum_maurer_temperature_c": -4.89,
+    "p95_absolute_product_difference_c": 2.470000000000002,
+    "passed": true
+  },
+  "variables": [
+    {
+      "derivation": "identity",
+      "future_availability": "historical_hindsight_only",
+      "missing_days": 0,
+      "model_unit": "mm/day",
+      "modeled_date_end": "2008-09-30",
+      "modeled_date_start": "1988-10-01",
+      "raw_field": "PRCP(mm/day)",
+      "raw_unit": "mm/day",
+      "source_path": "data/camels_us/basin_mean_forcing/maurer/18/11481200_lump_maurer_forcing_leap.txt",
+      "source_sha256": "9f226f9b55991fc2fcb979a506bd1f7f5312d25bcc402133a642bb054c322bc5",
+      "variable_id": "precipitation"
+    },
+    {
+      "derivation": "(Tmax + Tmin) / 2",
+      "future_availability": "historical_hindsight_only",
+      "missing_days": 0,
+      "model_unit": "degree_Celsius",
+      "modeled_date_end": "2008-09-30",
+      "modeled_date_start": "1988-10-01",
+      "raw_field": "Tmax(C), Tmin(C)",
+      "raw_unit": "degree_Celsius",
+      "source_path": "data/camels_us/basin_mean_forcing/maurer/18/11481200_lump_maurer_forcing_leap.txt",
+      "source_sha256": "9f226f9b55991fc2fcb979a506bd1f7f5312d25bcc402133a642bb054c322bc5",
+      "variable_id": "mean_temperature"
+    },
+    {
+      "derivation": "Priestley-Taylor",
+      "future_availability": "historical_hindsight_only",
+      "missing_days": 0,
+      "model_unit": "mm/day",
+      "modeled_date_end": "2008-09-30",
+      "modeled_date_start": "1988-10-01",
+      "raw_field": "SRAD(W/m2), Dayl(s), Tmax(C), Tmin(C), Vp(Pa)",
+      "raw_unit": "mixed",
+      "source_path": "data/camels_us/basin_mean_forcing/maurer/18/11481200_lump_maurer_forcing_leap.txt",
+      "source_sha256": "9f226f9b55991fc2fcb979a506bd1f7f5312d25bcc402133a642bb054c322bc5",
+      "variable_id": "potential_evapotranspiration"
+    },
+    {
+      "area_source_path": "data/camels_us/camels_attributes_v2.0/camels_topo.txt",
+      "area_source_sha256": "b64ca9923bcaccf21dde33137903797919e8d6732edd7849f8534e0ddcbec8e8",
+      "derivation": "cubic_feet_per_second * 2.4466 / basin_area_km2",
+      "future_availability": "forbidden_after_origin",
+      "missing_calibration_selection_days": 0,
+      "model_unit": "mm/day",
+      "modeled_date_end": "2008-09-30",
+      "modeled_date_start": "2006-10-01",
+      "raw_field": "discharge_cfs, area_gages2",
+      "raw_selected_source_lines_sha256": "ff09229ba0e794ef64987ee86c7c68658985d1e41a3068c3b66c60e4c4d7f93b",
+      "raw_source_path": "data/camels_us/usgs_streamflow/18/11481200_streamflow_qc.txt",
+      "raw_unit": "cubic_feet_per_second",
+      "source_path": "src/hbv_multilead_joint_uncertainty/configs/calibration_discharge_22_basins_v01.csv",
+      "source_sha256": "d6ce8a0bed32f6958b905d057574ecad41978d6f6e6ceafa274bfd151d16daae",
+      "source_sha256_scope": "entire frozen calibration-only twenty-two-basin table",
+      "variable_id": "streamflow"
+    }
+  ]
+}

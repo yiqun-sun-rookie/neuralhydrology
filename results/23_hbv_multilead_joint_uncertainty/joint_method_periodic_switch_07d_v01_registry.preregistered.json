@@ -1,0 +1,94 @@
+{
+  "assimilation_days": 45,
+  "config_sha256": "834fa0cfac2461eb80e6bab54902cdb71f84e7f57a3d72ad7e07cf0caef5dd8f",
+  "decision_rules": {
+    "added_value_beyond_single_factor_methods": "The effective-against-fixed-filter rule holds and the matched-block bootstrap upper bounds for joint minus both parameter-only and process-noise-only methods are below zero.",
+    "decision_rules_do_not_control_integrity_status": true,
+    "effective_against_fixed_filter": "Both the global root mean square error improvement is at least five percent and the 95 percent matched-block bootstrap upper bound for joint minus fixed-filter block root mean square error is below zero.",
+    "joint_candidate_argmax_accuracy_minimum": 0.5,
+    "joint_parameter_argmax_accuracy_minimum": 0.6666666666666666,
+    "joint_process_argmax_accuracy_minimum": 0.6666666666666666,
+    "median_joint_true_candidate_probability_minimum": 0.2,
+    "paired_block_root_mean_square_error_difference_upper_maximum": 0.0,
+    "practical_relative_root_mean_square_error_improvement_percent_minimum": 5.0
+  },
+  "experiment_id": "joint_method_periodic_switch_07d_v01",
+  "integrity_gates": {
+    "all_saved_numeric_arrays_finite": true,
+    "independent_truth_observation_maximum_absolute_error": 1e-10,
+    "independent_truth_transition_maximum_absolute_error": 1e-10,
+    "method_mixture_reconstruction_maximum_absolute_error": 1e-10,
+    "method_probability_sum_maximum_absolute_error": 1e-12,
+    "minimum_method_probability": 0.0,
+    "observation_reconstruction_maximum_absolute_error": 0.0,
+    "truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0
+  },
+  "lead_days": [
+    1,
+    3,
+    7
+  ],
+  "matched_blocks": [
+    {
+      "block_id": "switch_block_01",
+      "forcing_seed": 980001,
+      "observation_noise_seed": 982001,
+      "process_noise_seed": 981001
+    },
+    {
+      "block_id": "switch_block_02",
+      "forcing_seed": 980002,
+      "observation_noise_seed": 982002,
+      "process_noise_seed": 981002
+    },
+    {
+      "block_id": "switch_block_03",
+      "forcing_seed": 980003,
+      "observation_noise_seed": 982003,
+      "process_noise_seed": 981003
+    },
+    {
+      "block_id": "switch_block_04",
+      "forcing_seed": 980004,
+      "observation_noise_seed": 982004,
+      "process_noise_seed": 981004
+    },
+    {
+      "block_id": "switch_block_05",
+      "forcing_seed": 980005,
+      "observation_noise_seed": 982005,
+      "process_noise_seed": 981005
+    },
+    {
+      "block_id": "switch_block_06",
+      "forcing_seed": 980006,
+      "observation_noise_seed": 982006,
+      "process_noise_seed": 981006
+    },
+    {
+      "block_id": "switch_block_07",
+      "forcing_seed": 980007,
+      "observation_noise_seed": 982007,
+      "process_noise_seed": 981007
+    },
+    {
+      "block_id": "switch_block_08",
+      "forcing_seed": 980008,
+      "observation_noise_seed": 982008,
+      "process_noise_seed": 981008
+    }
+  ],
+  "method_names": [
+    "open_loop",
+    "fixed_filter",
+    "parameter_only",
+    "noise_only",
+    "joint",
+    "oracle_filter"
+  ],
+  "registered_at": "2026-07-18T10:38:03.472639+00:00",
+  "status": "preregistered",
+  "truth_candidate_count_per_block": 9,
+  "truth_switch_candidate_step": 4,
+  "truth_switch_period_days": 7
+}

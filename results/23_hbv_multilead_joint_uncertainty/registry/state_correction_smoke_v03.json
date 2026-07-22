@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-07-16T20:49:55.917187+08:00",
+  "history": [
+    {
+      "basin_count": 1,
+      "config": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\configs\\state_correction_propagation_v07.json",
+      "status": "running",
+      "timestamp": "2026-07-16T20:49:55.917187+08:00"
+    },
+    {
+      "error_type": "ResourceGateError",
+      "message": "available memory is below the 12% start threshold",
+      "status": "failed",
+      "timestamp": "2026-07-16T20:49:56.113070+08:00"
+    }
+  ],
+  "run_id": "state_correction_smoke_v03",
+  "run_type": "state_correction_diagnostic",
+  "status": "failed",
+  "updated_at": "2026-07-16T20:49:56.113070+08:00"
+}

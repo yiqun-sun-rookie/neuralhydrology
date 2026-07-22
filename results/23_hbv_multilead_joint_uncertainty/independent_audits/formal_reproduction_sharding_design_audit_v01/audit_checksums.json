@@ -1,0 +1,18 @@
+{
+  "algorithm": "SHA-256",
+  "excluded_files": [
+    "audit_checksums.json",
+    "self_verification.json"
+  ],
+  "files": {
+    "audit_summary.json": "9fdeb7b31c4dcdb6b3319ee0317bb12a1bd2a754dba97391704f25cd2c791360",
+    "evidence_snapshot.json": "0c5837d67e640effb09debc7a5751228032b2fdc7f67e94d95059bad512fc974",
+    "feasibility_status.json": "a9a58934d6d9895f021eb229ff4e08418e48405ad0b450a61f78618bb8302987",
+    "independent_design_audit_report.md": "08a671c00e5f46bbfae4daccfc5f6c603e31f8a1e32ea582373bfa72f0c2e98c",
+    "independent_resource_history.json": "c4304747e95bed8d48f035f98e8c8aa9341c48292412d8b9ff3026c3b0479c6c",
+    "independent_sharding_design_audit.py": "91e1f6a73958dd02e4038fb2561c5398da4722f96540f1ef619b0c5f2f8d0be3",
+    "necessary_conditions.csv": "0646c22256ce99dcf99f5331420e161f7ceeb49716c4c3dcf191a159aafff226",
+    "protected_evidence_integrity.json": "d14498bd544bd03bb52a6acc9eb23984095a058fc0d96d10c8d2e998421bb590",
+    "verify_sharding_design_audit.py": "816d227d481194a1bd9efa5e02d3d49c82455e31e60707b65f2ec2060a1fe48a"
+  }
+}

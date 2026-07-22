@@ -1,0 +1,34 @@
+{
+  "conditions": [
+    {
+      "all_manifest_files_verified": true,
+      "assimilation_days": 7,
+      "config_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\configs\\joint_method_assimilation_07d_v01.json",
+      "config_sha256": "b24fadcd05a79ad8a4f24cb6f2fcc70975341467d9c7e66e5d5ff0a769caa8ec",
+      "evidence_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\joint_method_assimilation_07d_v01",
+      "experiment_id": "joint_method_assimilation_07d_v01",
+      "manifest_file_count": 34,
+      "manifest_sha256": "69b6a9d5eca94754d5edc52d16ecac2f25a3187223761c59cc30583a5363c022"
+    },
+    {
+      "all_manifest_files_verified": true,
+      "assimilation_days": 21,
+      "config_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\configs\\joint_method_assimilation_21d_v01.json",
+      "config_sha256": "9788d7a312c85e0f87fdb2415cda2179333c33a6b58a8f18a9c0ddd43989f8b5",
+      "evidence_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\joint_method_assimilation_21d_v01",
+      "experiment_id": "joint_method_assimilation_21d_v01",
+      "manifest_file_count": 34,
+      "manifest_sha256": "7df380dfc32b0a77a1cc61c716385378975fb2a03c671ff84b93bc4484505aa7"
+    },
+    {
+      "all_manifest_files_verified": true,
+      "assimilation_days": 45,
+      "config_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\configs\\joint_method_stable_validation_v04.json",
+      "config_sha256": "c1ee629f969bb70b5f735f908001dc3419b1231d6c3db1be71550efaaa188140",
+      "evidence_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\joint_method_stable_validation_v04",
+      "experiment_id": "joint_method_stable_validation_v04",
+      "manifest_file_count": 34,
+      "manifest_sha256": "ad99e8574a1026b292e57c2838b0c01274b9b5e4fcff0f4f16e9808183c74b66"
+    }
+  ]
+}

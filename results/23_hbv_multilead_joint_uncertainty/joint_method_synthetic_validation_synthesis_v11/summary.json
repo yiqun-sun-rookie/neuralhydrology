@@ -1,0 +1,14 @@
+{
+  "broad_scientific_claim_authorized": false,
+  "component_evidence_count": 12,
+  "experiment_id": "joint_method_synthetic_validation_synthesis_v11",
+  "independent_review_chain_count": 9,
+  "joint_added_value_supported": false,
+  "joint_identification_supported": false,
+  "numerical_chain_validated": true,
+  "scientific_status": "HOLD",
+  "scope_limit": "The synthesis covers the frozen fifteen-state hydrological model, three complete thirteen-parameter vectors, three pre-projection process-scale candidates, eight matched blocks, fixed-label assimilation of seven, twenty-one and forty-five days, and one seven-day simultaneous parameter/process switching pressure condition. It does not validate real-basin performance, untested assimilation durations above forty-five days, other switch periods or transition priors, other observation uncertainty, forcing error, or an exact post-projection additive Gaussian process model.",
+  "status": "passed",
+  "tested_final_condition_count": 4,
+  "validation_goal_complete": true
+}

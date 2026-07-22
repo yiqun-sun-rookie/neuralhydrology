@@ -1,0 +1,128 @@
+{
+  "check_type": "complete nine-filter joint-method validation under fixed complete parameter label with projected candidate-scale process truth",
+  "experiment_id": "joint_method_stable_validation_v04",
+  "gate_values": {
+    "all_saved_numeric_arrays_finite": true,
+    "independent_truth_observation_maximum_absolute_error": 0.0,
+    "independent_truth_transition_maximum_absolute_error": 2.842170943040401e-14,
+    "method_mixture_reconstruction_maximum_absolute_error": 1.7763568394002505e-15,
+    "method_probability_sum_maximum_absolute_error": 2.220446049250313e-16,
+    "minimum_method_probability": 0.0011879473654812383,
+    "observation_reconstruction_maximum_absolute_error": 0.0,
+    "truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0
+  },
+  "integrity_gate_pass": true,
+  "integrity_gates": {
+    "all_saved_numeric_arrays_finite": true,
+    "independent_truth_observation_maximum_absolute_error": 1e-10,
+    "independent_truth_transition_maximum_absolute_error": 1e-10,
+    "method_mixture_reconstruction_maximum_absolute_error": 1e-10,
+    "method_probability_sum_maximum_absolute_error": 1e-12,
+    "minimum_method_probability": 0.0,
+    "observation_reconstruction_maximum_absolute_error": 0.0,
+    "truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0
+  },
+  "lead_days": [
+    1,
+    3,
+    7
+  ],
+  "matched_block_count": 8,
+  "method_names": [
+    "open_loop",
+    "fixed_filter",
+    "parameter_only",
+    "noise_only",
+    "joint",
+    "oracle_filter"
+  ],
+  "nonfinite_saved_numeric_array_names": [],
+  "saved_numeric_array_names": [
+    "process_noise_seeds",
+    "observation_noise_seeds",
+    "forcing_blocks",
+    "parameter_vectors",
+    "process_covariances",
+    "observation_standard_deviation",
+    "forecast_lead_days",
+    "method_candidate_counts",
+    "initial_parameter_states",
+    "initial_covariances",
+    "process_standard_normals",
+    "observation_standard_normals",
+    "truth_deterministic_states",
+    "truth_process_perturbations",
+    "truth_projection_adjustments",
+    "truth_states",
+    "truth_discharge",
+    "observed_discharge",
+    "truth_forecast_discharge",
+    "method_predictions",
+    "method_candidate_predictions",
+    "method_probabilities",
+    "method_origin_states",
+    "method_origin_state_normalized_root_mean_square_errors",
+    "method_absolute_errors",
+    "joint_origin_probabilities",
+    "joint_origin_true_probabilities",
+    "joint_origin_true_parameter_probabilities",
+    "joint_origin_true_process_probabilities",
+    "state_normalization_scales"
+  ],
+  "scientific_decisions": {
+    "condition": "fixed complete parameter label with projected candidate-scale process truth",
+    "decision_rules": {
+      "added_value_beyond_single_factor_methods": "The effective-against-fixed-filter rule holds and the matched-block bootstrap upper bounds for joint minus both parameter-only and process-noise-only methods are below zero.",
+      "decision_rules_do_not_control_integrity_status": true,
+      "effective_against_fixed_filter": "Both the global root mean square error improvement is at least five percent and the 95 percent matched-block bootstrap upper bound for joint minus fixed-filter block root mean square error is below zero.",
+      "joint_candidate_argmax_accuracy_minimum": 0.5,
+      "joint_parameter_argmax_accuracy_minimum": 0.6666666666666666,
+      "joint_process_argmax_accuracy_minimum": 0.6666666666666666,
+      "median_joint_true_candidate_probability_minimum": 0.2,
+      "paired_block_root_mean_square_error_difference_upper_maximum": 0.0,
+      "practical_relative_root_mean_square_error_improvement_percent_minimum": 5.0
+    },
+    "identification": {
+      "joint_candidate_argmax_accuracy": 0.5138888888888888,
+      "joint_parameter_argmax_accuracy": 0.5972222222222222,
+      "joint_process_argmax_accuracy": 0.8472222222222222,
+      "median_joint_true_candidate_probability": 0.24446729489293278,
+      "median_joint_true_parameter_probability": 0.371444919664944,
+      "median_joint_true_process_probability": 0.587072813153685
+    },
+    "interpretation_rule": "These scientific decisions are reported whether positive or negative and do not determine the numerical-integrity status of the experiment.",
+    "joint_identification_effective": false,
+    "lead_decisions": [
+      {
+        "added_value_beyond_both_single_factor_methods": false,
+        "effective_against_fixed_filter": false,
+        "lead_days": 1
+      },
+      {
+        "added_value_beyond_both_single_factor_methods": false,
+        "effective_against_fixed_filter": false,
+        "lead_days": 3
+      },
+      {
+        "added_value_beyond_both_single_factor_methods": false,
+        "effective_against_fixed_filter": true,
+        "lead_days": 7
+      }
+    ],
+    "origin_state_decision": {
+      "added_value_beyond_both_single_factor_methods": false,
+      "effective_against_fixed_filter": true
+    },
+    "truth_process_interpretation": {
+      "interpretation": "The frozen candidate covariance controls only the pre-projection perturbation scale; the post-projection truth is not an exact additive Gaussian candidate model.",
+      "post_projection_distribution_matches_additive_gaussian_candidate": false,
+      "pre_projection_covariance_uses_frozen_candidate": true,
+      "projection_event_count": 3527,
+      "projection_event_fraction": 0.9420405982905983,
+      "projection_event_total": 3744
+    }
+  },
+  "scope_limit": "This favorable-condition experiment determines identification, origin-state error and one-, three-, and seven-day forecast error for a fixed complete thirteen-parameter label relative to fair controls. The frozen candidate covariance controls only the pre-projection perturbation scale; the post-projection truth is not an exact additive Gaussian candidate model. It does not establish behavior under switching truth, weak observations, shorter assimilation, forcing error or real basins; those are separate failure-boundary questions.",
+  "truth_candidate_count_per_block": 9,
+  "truth_process_scope": "The frozen candidate covariance controls only the pre-projection perturbation scale; the post-projection truth is not an exact additive Gaussian candidate model."
+}

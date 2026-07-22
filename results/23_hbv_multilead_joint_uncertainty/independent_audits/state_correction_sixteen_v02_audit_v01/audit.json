@@ -1,0 +1,43 @@
+{
+  "audit_id": "state_correction_sixteen_v02_audit_v01",
+  "audit_mode": "independent read-only code and result audit",
+  "result": "PASS",
+  "blocking_findings": [],
+  "scientific_conclusion": "The tested direct correction to candidate state means at the forecast origin is not the main cause of persistent day-3 and day-7 degradation. Slow storage propagation exists, but removal and additional taper do not improve day 7; model-probability reweighting remains in the counterfactual.",
+  "continuation_gate": {
+    "result": "FAIL_STOP",
+    "seven_day_median_rmse_change_percent_vs_open_loop": 88.52999562470454,
+    "seven_day_strict_win_count": 4,
+    "one_day_median_rmse_increase_percent_vs_current_joint": 13.258351532085342,
+    "recommend_larger_sample": false
+  },
+  "key_recalculations": {
+    "hydrologic_five_states_three_day_percent_vs_open_loop": 41.999182709355296,
+    "origin_mean_removed_three_day_percent_vs_current_joint": 3.41353178384463,
+    "origin_mean_removed_seven_day_percent_vs_current_joint": 1.3467663976739352,
+    "additional_taper_three_day_percent_vs_current_joint": -0.4139751340334854,
+    "additional_taper_seven_day_percent_vs_current_joint": 0.6745733714704126,
+    "numerically_equivalent_basin_count_for_five_vs_all_at_day_7": 15,
+    "maximum_equivalent_prediction_absolute_difference": 1.1546319456101628e-14
+  },
+  "integrity": {
+    "output_hashes_matched": 120,
+    "source_snapshot_hashes_matched": 45,
+    "input_hashes_matched": 80,
+    "frozen_contract_hashes_matched": 127,
+    "frozen_result_hashes_matched": 152,
+    "formal_replay_maximum_difference": 0.0,
+    "shared_prior_maximum_difference": 0.0,
+    "future_discharge_perturbation_forecast_difference": 0.0,
+    "physical_boundary_violation_count": 0
+  },
+  "resource": {
+    "sample_count": 595,
+    "minimum_available_memory_fraction": 0.08222308811067498,
+    "maximum_monitor_gap_seconds": 9.749040842056274
+  },
+  "nonblocking_finding": "The continuation-gate function default named an obsolete control. The formal runner explicitly passed the correct frozen control, so the result was unaffected.",
+  "files_modified_by_auditor": false,
+  "ran_531": false,
+  "commit_or_push": false
+}

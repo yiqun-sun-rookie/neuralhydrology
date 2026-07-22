@@ -1,0 +1,139 @@
+{
+  "experiment": "walrus_imm_alignment_v02",
+  "created": "2026-07-22",
+  "design_document": "docs/plans/2026-07-22-walrus-imm-alignment-design.md",
+  "question": "在投稿 MATLAB 参数实验的精确设计点上，本仓 ModifiedUnscentedFilter + InteractingMultipleModel(full) 能否复现 trackingUKF/trackingIMM 的状态轨迹与模型概率轨迹",
+  "inputs": {
+    "reference_mat": {
+      "path": "G:/github/pycharm/projects/paper-imm-variable-params/synthetic/outputs/mukf/params/10/updated_results_params_10.mat",
+      "sha256": "fd080ce0fa0f4b53ca61e19060dfba6995f94f9b53fd62cb0f8681169bec609f",
+      "input_variables": [
+        "p",
+        "etpot",
+        "qobs",
+        "noise_q_truth",
+        "noise_r_truth",
+        "state0",
+        "p0",
+        "cw",
+        "cv",
+        "cg",
+        "cq",
+        "cd",
+        "cs",
+        "r",
+        "q_s_all",
+        "t1_2",
+        "t2_3",
+        "cw_truth",
+        "cv_truth",
+        "cg_truth",
+        "cq_truth"
+      ],
+      "reference_variables": [
+        "states_obs",
+        "states_upd_filters",
+        "states_pred_filters",
+        "imm_probs",
+        "states_upd_imm"
+      ]
+    },
+    "walrus_source_snapshot": "G:/github/pycharm/projects/paper-imm-variable-params/tmp/external/nutstore_func_public_snapshot_20260722/",
+    "walrus_source_manifest": "MANIFEST_SHA256.txt"
+  },
+  "filter_settings": {
+    "ut_alpha": 0.6874,
+    "ut_beta": 2.0,
+    "ut_kappa": -2.0,
+    "interaction_mode": "full",
+    "initial_probabilities": "uniform 1/12",
+    "transition_matrix": "diagonal 0.99, off-diagonal 0.01/11 (trackingIMM scalar semantics)",
+    "n_candidates": 12,
+    "n_state": 5,
+    "assimilation_steps": "k = 2..3649 (1-based): predict with p[k-1], etpot[k-1]; correct with qobs[k]"
+  },
+  "gates": {
+    "g0_input_consistency": {
+      "qobs_equals_states_obs_last_column": "bitwise",
+      "t1_2": 1216,
+      "t2_3": 2433,
+      "total_length": 3649,
+      "candidate_rows_11_12_equal_truth_phase_1_2": true,
+      "r": 1.5e-05,
+      "p0_rule": "diag((0.001*state0)^2)",
+      "q_s_all_rule": "all twelve equal q_s_truth cell 1 = 1e-6*diag([140,1000,4,1200,0]) (actual workspace value; script text drifted)",
+      "on_fail": "abort and report gap",
+      "noise_std_consistency": "per-column empirical std of noise_q_truth within 5% of sqrt(diag(1e-6*diag([140,1000,4,1200,0]))) for nonzero columns; column 5 exactly zero"
+    },
+    "g1_walrus_open_loop": {
+      "comparison": "python replay with phase-switched truth params + noise_q_truth, obs noise added to last column, vs states_obs",
+      "pass_threshold_max_abs_diff": 1e-08,
+      "on_fail": "fix port until pass or document semantic mismatch as finding; do not proceed to G2 while failing"
+    },
+    "g2_single_filter": {
+      "comparison": "12 independent ModifiedUnscentedFilter runs vs states_upd_filters cells",
+      "metric": "first_exceed(y) = first step where max abs state diff > 1e-6 * max(1, abs(reference))",
+      "strong_pass": "no exceedance in any of 12 filters over 3649 steps",
+      "on_exceed": "report first_exceed distribution + step-level diagnostics (sigma points, prior, gain); tolerance may not be relaxed post hoc"
+    },
+    "g3_imm": {
+      "strong_pass_max_abs_prob_diff": 1e-06,
+      "anchor_metrics": {
+        "true_filter_phase_mean_prob": [
+          0.333,
+          0.365
+        ],
+        "first_top_cycle": [
+          6,
+          120
+        ],
+        "stable_top_cycle": [
+          724,
+          560
+        ],
+        "stable_definition": "prob argmax stays rank-1 from that cycle until phase end",
+        "anchor_pass_tolerances": {
+          "mean_prob": 0.01,
+          "cycles": 5
+        }
+      }
+    }
+  },
+  "verdict_tiers": [
+    "数值一致: G1 pass AND G2 strong AND G3 strong",
+    "结构等价: G1 pass AND all four G3 anchors reproduced within tolerances",
+    "部分等价: G1 pass AND anchors partially reproduced (itemize, no aggregate claim)",
+    "不等价: G1 unfixable or majority anchors fail (report first divergence step and located cause)"
+  ],
+  "outputs": {
+    "directory": "results/23_hbv_multilead_joint_uncertainty/walrus_imm_alignment_v02/",
+    "sealing": ".incomplete staging + atomic rename + full-directory checksums",
+    "artifacts": [
+      "alignment_report.md",
+      "gate_results.json",
+      "g1_replay_diff.npz",
+      "g2_first_exceed.csv",
+      "g3_prob_diff.npz",
+      "g3_anchor_comparison.csv",
+      "config_snapshot.json",
+      "environment.json",
+      "checksums.json"
+    ]
+  },
+  "review": {
+    "layer_1": "independent context reviews method + results",
+    "layer_2": "independent context recomputes comparison metrics from the .mat and sealed outputs"
+  },
+  "scope_exclusions": [
+    "noise experiment alignment",
+    "params_noises experiment alignment",
+    "MATLAB re-execution",
+    "any modification of frozen ID23 evidence or seeds"
+  ],
+  "amendment": {
+    "date": "2026-07-22",
+    "supersedes": "walrus_imm_alignment_v01 (sha256 34f6d9db1ffdfacbaf0cab6b43a01d8d7267cb4d942cdafbf467a238e374a604, never executed past dev precheck of G0/G1)",
+    "reason": "v01 G0 expected q_s_all = 1e-3*diag was derived from the drifted script text; the saved workspace shows the published run used q_s_truth cell 1 = 1e-6*diag for both truth noise and filter process noise. Input-fact correction only; G1-G3 comparison criteria, tolerances, and verdict tiers are unchanged and no G2/G3 comparison had been executed at amendment time.",
+    "reproducibility_finding": "both the submission and repo script texts (q_s_truth={1e-5,1e-3,1e-4}*diag, draws from cell 2) cannot reproduce the published .mat (workspace q_s_truth={1e-6,1e-3,1e-4}*diag, draws from cell 1); empirical noise_q_truth std matches sqrt(1e-6*diag) exactly."
+  }
+}

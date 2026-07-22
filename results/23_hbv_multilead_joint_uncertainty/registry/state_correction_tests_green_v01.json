@@ -1,0 +1,13 @@
+{
+  "run_id": "state_correction_tests_green_v01",
+  "type": "implementation_check",
+  "status": "failed",
+  "run_dir": "results/23_hbv_multilead_joint_uncertainty/state_correction_tests_green_v01.failed",
+  "config": "src/hbv_multilead_joint_uncertainty/configs/state_correction_propagation_v02.json",
+  "changed_factor": "minimal diagnostic implementation",
+  "fixed_factors": "frozen formal artifacts and hydrologic design version 2",
+  "formal_artifacts_modified": false,
+  "tests_passed": 24,
+  "tests_failed": 1,
+  "failure_issue": "decomposition_total_rounding_identity"
+}

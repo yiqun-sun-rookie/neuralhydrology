@@ -1,0 +1,32 @@
+{
+  "artifact_type": "formal_reproduction_session",
+  "basin_count": 16,
+  "basins": [
+    "12143600",
+    "04127918",
+    "09066000",
+    "06431500",
+    "03479000",
+    "02296500",
+    "02015700",
+    "06892000",
+    "05507600",
+    "06477500",
+    "08158700",
+    "11148900",
+    "06404000",
+    "08189500",
+    "09505350",
+    "09447800"
+  ],
+  "contract_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+  "control_file_count": 3,
+  "frozen_input_file_count": 62,
+  "frozen_numerical_source_file_count": 37,
+  "reference_array_values_opened_during_session_preparation": false,
+  "reference_arrays_are_comparison_only": true,
+  "reference_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01",
+  "registry_record_repo_relative": "results/23_hbv_multilead_joint_uncertainty/registry/formal_reproduction_session_v01.json",
+  "session_id": "formal_reproduction_session_v01",
+  "status": "verified"
+}

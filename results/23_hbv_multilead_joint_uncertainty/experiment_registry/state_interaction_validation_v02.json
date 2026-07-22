@@ -1,0 +1,31 @@
+{
+  "base_config": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\configs\\state_interaction_validation_v02.json",
+  "changed_factor": "full interaction versus parameter-grouped and no-interaction diagnostics",
+  "experiment_id": "state_interaction_validation_v02",
+  "fixed_factors": "three parameter labels by three process-noise labels, fifteen state coordinates, identity dynamics",
+  "hypothesis": "full interaction preserves first and second mixture moments under identity dynamics",
+  "metrics_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\state_interaction_validation_v02\\summary.json",
+  "notes": "This certificate tests state and covariance mixture algebra under identity dynamics. It does not test hydrologic propagation, observation likelihoods, filtering or forecasts.",
+  "paper_name": "synthetic state-interaction component",
+  "run_dir": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\state_interaction_validation_v02",
+  "seeds": [
+    950001,
+    950002,
+    950003,
+    950004,
+    950005,
+    950006,
+    950007,
+    950008,
+    950009,
+    950010,
+    950011,
+    950012,
+    950013,
+    950014,
+    950015,
+    950016
+  ],
+  "status": "passed",
+  "type": "closed_truth_nine_candidate_state_interaction"
+}

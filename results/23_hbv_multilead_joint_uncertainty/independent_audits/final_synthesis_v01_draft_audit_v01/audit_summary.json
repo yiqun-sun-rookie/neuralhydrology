@@ -1,0 +1,202 @@
+{
+  "audit_id": "final_synthesis_v01_draft_audit_v01",
+  "audited_at_utc": "2026-07-15T05:26:27.669882+00:00",
+  "overall_decision": "BLOCK",
+  "formal_reproduction_status": "PENDING",
+  "formal_reproduction_is_not_marked_passed": true,
+  "blocking_issue_count": 2,
+  "total_issue_count": 3,
+  "known_issue_row_count": 13,
+  "scientific_checks": {
+    "package_checks": true,
+    "formal_metrics": true,
+    "formal_paired": true,
+    "pilot_metrics": true,
+    "pilot_paired": true,
+    "parameter_rule": true,
+    "process_noise": true,
+    "observation_noise": true,
+    "origin_posterior": true,
+    "kalmannet_sources": true,
+    "all_relative_links_exist": true,
+    "report_numeric_statements": true,
+    "pilot_reproduction": true,
+    "known_issues": true,
+    "formal_reproduction_passed": false,
+    "protected_sources_unchanged": true
+  },
+  "package_checks": {
+    "formal_contract": {
+      "directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_contract_sixteen_v05",
+      "manifest": "checksums.json",
+      "manifest_format": "direct_files_mapping",
+      "recorded_file_count": 127,
+      "actual_file_count_excluding_manifest": 127,
+      "missing": [],
+      "mismatched": [],
+      "unlisted": [],
+      "manifest_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+      "passed": true
+    },
+    "formal_result": {
+      "directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01",
+      "manifest": "checksums.json",
+      "manifest_format": "direct_files_mapping",
+      "recorded_file_count": 152,
+      "actual_file_count_excluding_manifest": 152,
+      "missing": [],
+      "mismatched": [],
+      "unlisted": [],
+      "manifest_sha256": "88ab2297e02179cc0e3e432c958871e1d6e7985358b9394970154a65f2348bd0",
+      "passed": true
+    },
+    "pilot_result": {
+      "directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\pilot_result_six_v02",
+      "manifest": "checksums.json",
+      "manifest_format": "direct_files_mapping",
+      "recorded_file_count": 102,
+      "actual_file_count_excluding_manifest": 102,
+      "missing": [],
+      "mismatched": [],
+      "unlisted": [],
+      "manifest_sha256": "141752eec07c49778a30e192c637c3c6f4cb9fdd5b5c5b655cb9c0e287b930f6",
+      "passed": true
+    },
+    "formal_result_array_audit": {
+      "directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_result_sixteen_v01_v02",
+      "manifest": "audit_checksums.json",
+      "manifest_format": "direct_files_mapping",
+      "recorded_file_count": 28,
+      "actual_file_count_excluding_manifest": 28,
+      "missing": [],
+      "mismatched": [],
+      "unlisted": [],
+      "manifest_sha256": "590bd927cc84d988762b32d17d3b05a4b428ef987d081f0ef31b8c197f7f9296",
+      "passed": true
+    },
+    "open_loop_audit": {
+      "directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_result_sixteen_v01_open_loop_comparison_v01",
+      "manifest": "audit_checksums.json",
+      "manifest_format": "structured_files_mapping",
+      "recorded_file_count": 10,
+      "actual_file_count_excluding_manifest": 10,
+      "missing": [],
+      "mismatched": [],
+      "unlisted": [],
+      "manifest_sha256": "52b717c5f99c041327c627cf9a0c325c5db982e19008affb776ce0eaae21591e",
+      "passed": true
+    },
+    "origin_posterior_audit": {
+      "directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_result_sixteen_v01_origin_posterior_factors_v01",
+      "manifest": "audit_checksums.json",
+      "manifest_format": "structured_files_mapping",
+      "recorded_file_count": 17,
+      "actual_file_count_excluding_manifest": 17,
+      "missing": [],
+      "mismatched": [],
+      "unlisted": [],
+      "manifest_sha256": "d8b3c3fd8fc4b27d1a0c0cd9584cd259c42c43f09f5337977ed4e1005b98755a",
+      "passed": true
+    },
+    "kalmannet_audit": {
+      "directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\kalmannet_readonly_audit_v01",
+      "manifest": "MANIFEST.sha256",
+      "recorded_file_count": 6,
+      "actual_file_count_excluding_manifest": 6,
+      "malformed": [],
+      "missing": [],
+      "mismatched": [],
+      "unlisted": [],
+      "passed": true
+    }
+  },
+  "table_checks": {
+    "formal_metrics": {
+      "saved_row_count": 240,
+      "recomputed_row_count": 240,
+      "key_mismatches": [],
+      "maximum_absolute_differences": {
+        "rmse": 0.0,
+        "mae": 0.0,
+        "nse": 0.0,
+        "n_origins": 0.0
+      },
+      "passed": true
+    },
+    "formal_paired": {
+      "saved_row_count": 18,
+      "recomputed_row_count": 18,
+      "key_mismatches": [],
+      "maximum_absolute_differences": {
+        "basin_count": 0.0,
+        "median_rmse_difference": 0.0,
+        "median_rmse_change_percent": 0.0,
+        "rmse_win_count": 0.0,
+        "rmse_tie_count": 0.0,
+        "median_mae_difference": 0.0,
+        "mae_win_count": 0.0,
+        "median_nse_difference": 0.0,
+        "nse_win_count": 0.0
+      },
+      "passed": true
+    },
+    "pilot_metrics": {
+      "saved_row_count": 90,
+      "recomputed_row_count": 90,
+      "key_mismatches": [],
+      "maximum_absolute_differences": {
+        "rmse": 0.0,
+        "mae": 0.0,
+        "nse": 0.0,
+        "n_origins": 0.0
+      },
+      "passed": true
+    },
+    "pilot_paired": {
+      "saved_row_count": 18,
+      "recomputed_row_count": 18,
+      "key_mismatches": [],
+      "maximum_absolute_differences": {
+        "basin_count": 0.0,
+        "median_rmse_difference": 0.0,
+        "median_rmse_change_percent": 0.0,
+        "rmse_win_count": 0.0,
+        "rmse_tie_count": 0.0,
+        "median_mae_difference": 0.0,
+        "mae_win_count": 0.0,
+        "median_nse_difference": 0.0,
+        "nse_win_count": 0.0
+      },
+      "passed": true
+    }
+  },
+  "key_recomputed_values": {
+    "joint_vs_noise_only_paired_median_rmse_change_percent": {
+      "1": -0.26121976722687146,
+      "3": 0.141942160740812,
+      "7": 0.8889964570293377
+    },
+    "joint_vs_open_loop_paired_median_rmse_change_percent": {
+      "1": 0.17518034201015453,
+      "3": 40.612664956443226,
+      "7": 88.52999562470454
+    },
+    "origin_coupling": {
+      "minimum": 8.274417930182371e-20,
+      "median": 0.0020347472914564206,
+      "mean": 0.020799327708934615,
+      "percentile_95": 0.10965153013345029,
+      "maximum": 0.47515372138055934,
+      "above_0_05_count": 723,
+      "above_0_05_fraction": 0.12622206703910616
+    }
+  },
+  "resource_summary": {
+    "sampling_interval_seconds": 0.2,
+    "sample_count": 12,
+    "maximum_sampling_gap_seconds": 0.21900000001187436,
+    "minimum_available_memory_fraction": 0.2980580325500787,
+    "maximum_process_resident_memory_gibibytes": 0.05902099609375,
+    "minimum_disk_free_gibibytes": 2166.527660369873
+  }
+}

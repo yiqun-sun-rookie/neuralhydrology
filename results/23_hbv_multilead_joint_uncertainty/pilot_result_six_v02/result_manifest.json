@@ -1,0 +1,24 @@
+{
+  "artifact_type": "diagnostic_hindcast_result",
+  "basin_count": 6,
+  "basins": [
+    "12375900",
+    "09035800",
+    "01580000",
+    "11481200",
+    "08109700",
+    "04015330"
+  ],
+  "contract_id": "pilot_contract_six_v03",
+  "evaluation_input_audit_count": 6,
+  "experiment_id": "pilot_result_six_v02",
+  "future_meteorology": "observed hindsight meteorology; not an operational forecast",
+  "has_verified_execution_signature": true,
+  "methods": [
+    "open_loop",
+    "fixed_filter",
+    "parameter_only",
+    "noise_only",
+    "joint"
+  ]
+}

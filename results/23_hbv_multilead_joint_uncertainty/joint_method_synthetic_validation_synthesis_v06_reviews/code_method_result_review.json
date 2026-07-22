@@ -1,0 +1,112 @@
+{
+  "verdict": "HOLD_PENDING_MUST_FIX",
+  "verdict_detail": "第六版已修复第一版至第五版登记的治理反例，三十三项正式测试也全部通过；但 confirmed_items 为列表的兼容分支没有绑定到唯一冻结的完整参数识别旧审查。任意其他审查目录只要伪装成 review_verdict、受限科学结论矛盾计数和 evidence-list 结构，仍会返回 passed=true。治理实现因此不能接受。",
+  "must_fix_count": 1,
+  "must_fix": [
+    {
+      "id": "legacy_confirmed_items_list_must_be_bound_to_frozen_parameter_review",
+      "severity": "conclusion_changing_governance_defect",
+      "location": "src/hbv_multilead_joint_uncertainty/scripts/run_joint_method_synthesis.py::_validate_review_fix_fields lines 157-170",
+      "finding": "legacy_evidence_list 只检查第二层 confirmed_items 是列表、存在 review_verdict 和 contradictions_to_the_limited_scientific_conclusion，并排除 must_fix_count、must_fix 和 conclusion；它不检查审查目录、文件、experiment_id、role 或冻结身份。因此，在任意临时审查目录中，第一层 {must_fix_count: 0, verdict: PASS} 配合第二层 {review_verdict: confirmed_with_one_wording_correction, contradictions_to_the_limited_scientific_conclusion: 0, confirmed_items: [evidence]} 被 _review_status 判为 passed=true。按正式规则，非对象 confirmed_items 只能用于冻结的 parameter_identification_validation_v01_reviews/independent_review_validation.json 旧结构，其他位置必须拒绝。",
+      "impact": "该失效开放允许新的或伪造的第二层审查绕过 confirmed_items 必须为对象的类型门，并被计入 numerical_chain_validated=true，属于可改变治理结论的缺陷。当前九条冻结审查链中只有完整参数识别旧审查使用 evidence-list，且其清单哈希已冻结，所以该缺陷不改变当前四个测试条件的科学结论。",
+      "required_repair": "把 evidence-list 例外绑定到唯一冻结的完整参数识别旧审查身份：至少同时核对规范化目录和文件、experiment_id=parameter_identification_validation_v01、原始证据复核角色、review_verdict、contradictions_to_the_limited_scientific_conclusion、允许的顶层字段集合以及冻结清单身份；所有其他第一层或第二层非对象 confirmed_items 一律抛出 ValueError。不得把目录名相同视为充分身份。",
+      "required_tests": [
+        "冻结的 parameter_identification_validation_v01_reviews/independent_review_validation.json 旧 evidence-list 结构继续通过",
+        "完全相同的 review_verdict、受限科学结论矛盾计数和 evidence-list 结构放在任意其他审查目录时必须拒绝",
+        "伪造相同目录名但不具备冻结路径或清单身份时必须拒绝",
+        "第一层 confirmed_items 为列表必须拒绝",
+        "第二层 conclusion、review_verdict 或计数结构中的非对象 confirmed_items，除唯一冻结旧审查外，必须拒绝",
+        "现有三十三项正式测试继续通过"
+      ]
+    }
+  ],
+  "governance_adversarial_audit": {
+    "historical_must_fix_replay": {
+      "version_one_to_five_counterexample_count": 33,
+      "expected_behavior_count": 33,
+      "unexpected_behavior_count": 0,
+      "coverage": [
+        "旧 must_fix 列表、旧 conclusion、未知结构和第一版主张追踪修复",
+        "bypass、unconfirmed、passenger 和 not_confirmed 精确裁决",
+        "自造矛盾字段、并存矛盾、重复修复信号、布尔计数和非零登记矛盾",
+        "第二层 required_fixes、required_code_fixes、非法计数和并存否定裁决",
+        "第五版审查列出的十个 status、decision、单独 conclusion_changing_defect 和嵌套 new_must_fix_issue_found 补充反例"
+      ]
+    },
+    "proactive_mutation": {
+      "additional_case_count": 36,
+      "expected_behavior_count": 35,
+      "unexpected_passed_count": 1,
+      "unexpected_passed_case": "legacy_parameter_schema_at_arbitrary_path",
+      "field_name_tokens_mutated_in_both_layers": [
+        "conclusion",
+        "contradict",
+        "decision",
+        "defect",
+        "fix",
+        "status",
+        "unverified",
+        "verdict"
+      ],
+      "registered_fix_signals_checked_standalone_and_concurrently": [
+        "must_fix_count",
+        "must_fix",
+        "required_code_fixes",
+        "required_fixes",
+        "conclusion_changing_defect",
+        "confirmed_items.new_must_fix_issue_found"
+      ],
+      "decision_structures_checked": [
+        "conclusion",
+        "review_verdict",
+        "count schema"
+      ],
+      "type_checks": "布尔值、字符串、负数、confirmed_items 非对象和嵌套 new_must_fix_issue_found 非布尔值均纳入重放或正式测试。"
+    }
+  },
+  "formal_test_audit": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python -m pytest -q -p no:cacheprovider test/test_hbv_joint_method_synthesis.py",
+    "collected_test_count": 33,
+    "result": "33 passed, 1 existing PytestConfigWarning",
+    "exit_code": 0,
+    "runner_source_snapshot_byte_equal": true,
+    "formal_test_snapshot_byte_equal": true,
+    "runner_sha256": "f0c2738f12db09f9fb540a6db0e2dfccc63b65ab56e17ab43a1a7ade04df655e",
+    "test_sha256": "fcc3d608f9467ce00f876c7f5d3ee893d1fd23e801ff5d819b39f527900dca4a",
+    "assessment": "正式测试通过证明已登记的三十三个用例工作，但没有覆盖旧 evidence-list 例外必须绑定到唯一冻结审查身份的负例。"
+  },
+  "minimal_frozen_evidence_check": {
+    "component_evidence_count": 12,
+    "independent_double_review_chain_count": 9,
+    "frozen_review_chain_with_nonobject_confirmed_items_count": 1,
+    "frozen_review_chain_with_nonobject_confirmed_items": "parameter_identification_validation_v01_reviews/independent_review_validation.json",
+    "claim_row_count": 17,
+    "unknown_claim_count": 5,
+    "joint_identification_supported": false,
+    "joint_added_value_supported": false,
+    "broad_scientific_claim_authorized": false,
+    "scientific_status": "HOLD",
+    "scientific_effect_of_governance_defect": "不改变当前冻结科学结论。现有证据仍只支持：在已测试的固定标签七天、二十一天、四十五天和七天同时切换条件内，联合识别为零比四；一日、三日、七日共十二个目标均未建立同时超过两个单因素方法的预报增值。超过四十五天、其他切换条件、真实流域、其他观测或强迫误差以及投影后精确加性高斯过程模型仍无法确定。",
+    "full_scientific_recalculation_skipped_reason": "按审查指令，治理对抗审查发现必须修复问题后立即做最小复核并落盘返回，不继续把治理缺陷后的正式包签署为通过。"
+  },
+  "resource_gate_audit": {
+    "maximum_input_file_bytes": 12270573,
+    "estimated_additional_peak_memory_bytes": 82636724,
+    "task_specific_reserve_bytes": 67108864,
+    "task_specific_required_available_bytes": 149745588,
+    "available_physical_memory_bytes_at_formal_run": 837840896,
+    "headroom_after_requirement_bytes_at_formal_run": 688095308,
+    "safe_to_run": true,
+    "execution_parallelism": 1,
+    "universal_memory_threshold_used": false,
+    "resource_gate_bypassed": false
+  },
+  "reviewer_independence": {
+    "review_layer": "第一层独立代码、方法和结果审查",
+    "formal_synthesis_directory_modified": false,
+    "component_or_existing_review_evidence_modified": false,
+    "version_one_to_five_synthesis_or_reviews_modified": false,
+    "only_written_artifact": "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v06_reviews/code_method_result_review.json",
+    "historical_memory_use": "仅用于保持状态交互代数不得外推为水文识别或预报优越的范围边界；治理反例、正式测试、资源和当前冻结主张均从当前工作树重新取得。"
+  }
+}

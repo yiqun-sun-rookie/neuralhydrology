@@ -1,0 +1,112 @@
+{
+  "experiment_id": "parameter_identification_validation_v01",
+  "truth_contract": "synthetic_truth_propagation_v04",
+  "purpose": "Test whether daily likelihood accumulation identifies which of the three frozen complete thirteen-parameter vectors generated deterministic synthetic discharge.",
+  "parameter_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/parameter_vectors.csv",
+    "sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+    "source_basin_id": "12143600",
+    "source_basin_description": "the first frozen formal basin; a small snow-influenced storage-and-infiltration basin used only as the source of the already frozen parameter triplet",
+    "parameter_ids": [
+      "trained_center",
+      "equifinal_diverse_1",
+      "equifinal_diverse_2"
+    ]
+  },
+  "forcing": {
+    "days": 240,
+    "seeds": [
+      510001,
+      510002,
+      510003,
+      510004,
+      510005,
+      510006,
+      510007,
+      510008,
+      510009,
+      510010,
+      510011,
+      510012,
+      510013,
+      510014,
+      510015,
+      510016,
+      510017,
+      510018,
+      510019,
+      510020,
+      510021,
+      510022,
+      510023,
+      510024
+    ],
+    "true_parameter_ids": [
+      "trained_center",
+      "equifinal_diverse_1",
+      "equifinal_diverse_2",
+      "trained_center",
+      "equifinal_diverse_1",
+      "equifinal_diverse_2",
+      "trained_center",
+      "equifinal_diverse_1",
+      "equifinal_diverse_2",
+      "trained_center",
+      "equifinal_diverse_1",
+      "equifinal_diverse_2",
+      "trained_center",
+      "equifinal_diverse_1",
+      "equifinal_diverse_2",
+      "trained_center",
+      "equifinal_diverse_1",
+      "equifinal_diverse_2",
+      "trained_center",
+      "equifinal_diverse_1",
+      "equifinal_diverse_2",
+      "trained_center",
+      "equifinal_diverse_1",
+      "equifinal_diverse_2"
+    ],
+    "rain_shape": 0.8,
+    "rain_scale": 4.0,
+    "potential_evaporation_formula": "maximum(0, 2 + sin(angle))",
+    "temperature_formula": "4 + 12 * sin(angle - pi / 2)",
+    "angle_formula": "linearly spaced from 0 through 2*pi, including both endpoints"
+  },
+  "start_day": 90,
+  "duration_days": 120,
+  "terminal_window_days": 10,
+  "initial_covariance_fraction": 0.001,
+  "observation_standard_deviation": 0.05,
+  "generated_observation_noise": "none",
+  "process_covariance": "zero; this is absence of the process-noise factor for component isolation, not a fourth process-noise candidate",
+  "parameter_switching": false,
+  "state_interaction": false,
+  "probability_rule": "equal initial weights followed by cumulative candidate log-likelihood normalization",
+  "bootstrap": {
+    "trial_unit": "independent rainfall realization",
+    "replicates": 20000,
+    "seed": 424242
+  },
+  "gates": {
+    "correct_classification_count_minimum": 20,
+    "correct_classification_count_per_parameter_minimum": 6,
+    "median_terminal_true_probability_minimum": 0.6,
+    "terminal_true_probability_bootstrap_lower_minimum": 0.3333333333333333
+  },
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01"
+  ],
+  "fixed_boundaries": {
+    "complete_parameter_vectors": 3,
+    "parameter_names_per_vector": 13,
+    "process_noise_candidates_active": 0,
+    "process_covariance_zero_only_for_component_isolation": true,
+    "model_interaction": false,
+    "parameter_switching": false,
+    "reads_real_basin_observations": false,
+    "modifies_frozen_formal_results": false,
+    "runs_531_real_basins": false
+  }
+}

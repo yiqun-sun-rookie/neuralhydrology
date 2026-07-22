@@ -1,0 +1,33 @@
+{
+  "check_count": 22,
+  "checks": {
+    "arrays_and_basin_archives_exact": true,
+    "attempt_history_honest_and_complete": true,
+    "attempt_three_files_not_misrepresented_as_block": true,
+    "audit_manifest_file_count_exact": true,
+    "audit_manifest_file_set_exact": true,
+    "audit_manifest_hashes_and_sizes_exact": true,
+    "audit_manifest_total_bytes_exact": true,
+    "audit_resource_wrapper_passed": true,
+    "checklist_thirty_of_thirty": true,
+    "current_target_matches_frozen_identity": true,
+    "final_decision_release_thirty_of_thirty": true,
+    "historical_gap_issue_reconstruction_exact": true,
+    "language_and_claim_boundaries_pass": true,
+    "metrics_and_lead_time_values_exact": true,
+    "no_project_computation_or_verification_imports": true,
+    "parameters_noise_and_factor_functionality_exact": true,
+    "resource_evidence_exact": true,
+    "target_identity_unchanged_and_seven_files": true,
+    "target_manifest_six_of_six": true,
+    "traceability_counts_exact": true,
+    "traceability_rows_all_pass": true,
+    "zero_open_findings": true
+  },
+  "decision": "PASS",
+  "failed_checks": [],
+  "manifest_file_count": 47,
+  "passed": true,
+  "passed_check_count": 22,
+  "project_module_imports": []
+}

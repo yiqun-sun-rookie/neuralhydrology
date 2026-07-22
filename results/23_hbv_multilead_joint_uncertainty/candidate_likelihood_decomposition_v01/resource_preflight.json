@@ -1,0 +1,67 @@
+{
+  "analysis_id": "candidate_likelihood_decomposition_v01",
+  "available_commit_memory_bytes": 46941700096,
+  "available_physical_memory_bytes": 8454631424,
+  "checked_at_utc": "2026-07-21T01:17:09.349180+00:00",
+  "commit_limit_bytes": 96314892288,
+  "committed_bytes": 49373192192,
+  "current_process_resident_memory_bytes": 120291328,
+  "estimated_peak_memory_bytes": 37188544,
+  "estimation_basis": "Exact npz header shapes for every loaded array, derived component and cumulative arrays, one generous per-row table buffer, a factor of two for transient copies, and a reserve equal to the larger of half the peak or one quarter of current process memory. Runs are processed one at a time.",
+  "execution_parallelism": 1,
+  "per_run_estimates": [
+    {
+      "daily_table_rows": 4860,
+      "derived_array_bytes": 241920,
+      "estimated_run_peak_bytes": 4195168,
+      "estimated_table_bytes": 3402000,
+      "loaded_array_bytes": 154664,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v05"
+    },
+    {
+      "daily_table_rows": 4860,
+      "derived_array_bytes": 241920,
+      "estimated_run_peak_bytes": 4195048,
+      "estimated_table_bytes": 3402000,
+      "loaded_array_bytes": 154604,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v05"
+    },
+    {
+      "daily_table_rows": 43740,
+      "derived_array_bytes": 1969920,
+      "estimated_run_peak_bytes": 37188448,
+      "estimated_table_bytes": 30618000,
+      "loaded_array_bytes": 1315304,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v05"
+    },
+    {
+      "daily_table_rows": 4860,
+      "derived_array_bytes": 241920,
+      "estimated_run_peak_bytes": 4195264,
+      "estimated_table_bytes": 3402000,
+      "loaded_array_bytes": 154712,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_confirmation_v01"
+    },
+    {
+      "daily_table_rows": 4860,
+      "derived_array_bytes": 241920,
+      "estimated_run_peak_bytes": 4195144,
+      "estimated_table_bytes": 3402000,
+      "loaded_array_bytes": 154652,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_confirmation_v01"
+    },
+    {
+      "daily_table_rows": 43740,
+      "derived_array_bytes": 1969920,
+      "estimated_run_peak_bytes": 37188544,
+      "estimated_table_bytes": 30618000,
+      "loaded_array_bytes": 1315352,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_confirmation_v01"
+    }
+  ],
+  "runs_processed_sequentially": true,
+  "safe_to_run": true,
+  "task_specific_required_available_bytes": 67261376,
+  "task_specific_reserve_bytes": 30072832,
+  "universal_memory_threshold_used": false
+}

@@ -1,0 +1,53 @@
+{
+  "artifact_type": "frozen_trained_parameter_projection",
+  "artifact_version": "trained_parameter_projection_531_v01",
+  "row_count": 531,
+  "column_count": 20,
+  "columns": [
+    "basin_id",
+    "run_status",
+    "p_parTT",
+    "p_parCFMAX",
+    "p_parCFR",
+    "p_parCWH",
+    "p_parFC",
+    "p_parBETA",
+    "p_parLP",
+    "p_parK0",
+    "p_parK1",
+    "p_parUZL",
+    "p_parPERC",
+    "p_parK2",
+    "p_lag_time",
+    "state_SNOWPACK",
+    "state_MELTWATER",
+    "state_SM",
+    "state_SUZ",
+    "state_SLZ"
+  ],
+  "performance_columns_included": false,
+  "projection_table_sha256": "9ef206779d94ffa1f11ab72b4528fd633861486f0a3b49b0ee1b40f52b3010a4",
+  "projection_content_sha256": "6c98022953bc28c705d81e973deea09005650daa27517765f33e8f496bd3891a",
+  "source": {
+    "table_path": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_FINAL_pt_v1_warmup_local_full.csv",
+    "table_sha256": "9fad3981a2593450fe02e9b7cd35e8830745a8d2dc3ed89f897f2fa3a083642c",
+    "metadata_path": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_FINAL_pt_v1_warmup_local_full.metadata.json",
+    "metadata_sha256": "4bb16c34f6461ddb5d9d6b4ab2c9685d8f7b390d5ff778f708b4ba11891983af"
+  },
+  "training_protocol": {
+    "protocol": "repro_v01",
+    "protocol_version": "camels_us_531_repro_v01",
+    "model": "HBV-lite conceptual rainfall-runoff model",
+    "forcing": "Maurer daily basin forcing",
+    "potential_evapotranspiration_method": "Priestley-Taylor",
+    "parameter_bounds": "version 1",
+    "calibration_start": "1999-10-01",
+    "calibration_end": "2008-09-30",
+    "objective": "Nash-Sutcliffe efficiency",
+    "optimizer": "Covariance Matrix Adaptation Evolution Strategy with three restarts",
+    "trials_per_restart": 5000,
+    "warmup_year_used": true
+  },
+  "creation_rule": "Copy the twenty named non-performance fields as text from each of the 531 source rows; preserve source row order; reject missing, duplicate, or extra selected fields.",
+  "evaluation_metrics_used_for_projection": false
+}

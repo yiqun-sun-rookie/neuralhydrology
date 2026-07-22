@@ -1,0 +1,14 @@
+{
+  "command": "python -B - (verify_contract_package followed by verify_result_package)",
+  "formal_artifacts_modified": false,
+  "message": "The read-only semantic package verification was stopped immediately after available memory was measured below the 20 percent running threshold.",
+  "observed_available_memory_fraction": 0.18589388288315825,
+  "observed_available_memory_gib": 5.892879486083984,
+  "observed_disk_free_gib": 2165.9776344299316,
+  "resource_monitoring_gap_seconds": null,
+  "resource_monitoring_started_before_command": false,
+  "status": "failed",
+  "stopped_safely": true,
+  "timestamp": "2026-07-16T10:08:36.4136159+08:00",
+  "type": "readonly_semantic_verification"
+}

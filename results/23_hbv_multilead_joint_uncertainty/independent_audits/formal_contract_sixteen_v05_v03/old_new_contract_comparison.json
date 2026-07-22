@@ -1,0 +1,56 @@
+{
+  "old_file_count": 128,
+  "new_file_count": 128,
+  "changed_paths": [
+    "checksums.json",
+    "contract_manifest.json",
+    "execution_signature.json",
+    "resource_history.json",
+    "snapshot_manifest.json",
+    "source_snapshot/src/hbv_multilead_joint_uncertainty/README.md",
+    "source_snapshot/test/test_hbv_multilead_contracts.py"
+  ],
+  "allowed_changed_paths": [
+    "checksums.json",
+    "contract_manifest.json",
+    "execution_signature.json",
+    "resource_history.json",
+    "snapshot_manifest.json",
+    "source_snapshot/src/hbv_multilead_joint_uncertainty/README.md",
+    "source_snapshot/test/test_hbv_multilead_contracts.py"
+  ],
+  "unexpected_changed_paths": [],
+  "passed": true,
+  "expected_changed_paths": [
+    "checksums.json",
+    "contract_manifest.json",
+    "execution_signature.json",
+    "resource_history.json",
+    "snapshot_manifest.json",
+    "source_snapshot/src/hbv_multilead_joint_uncertainty/README.md",
+    "source_snapshot/test/test_hbv_multilead_contracts.py"
+  ],
+  "exact_changed_path_set": true,
+  "manifest_contract_identity_only": true,
+  "execution_identity_document_test_only": true,
+  "snapshot_document_test_chain_only": true,
+  "changed_checksum_entries": [
+    "contract_manifest.json",
+    "execution_signature.json",
+    "resource_history.json",
+    "snapshot_manifest.json",
+    "source_snapshot/src/hbv_multilead_joint_uncertainty/README.md",
+    "source_snapshot/test/test_hbv_multilead_contracts.py"
+  ],
+  "checksum_chain_only": true,
+  "strengthened_test_is_additive": true,
+  "scientific_categories": {
+    "parameter_vectors": true,
+    "candidate_audits_and_noise_grids": true,
+    "process_noise": true,
+    "observation_noise": true,
+    "input_table": true,
+    "interaction_audit": true
+  },
+  "all_unchanged_files_byte_identical": true
+}

@@ -1,0 +1,321 @@
+{
+  "input_files": [
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/daymet/02/01580000_lump_cida_forcing_leap.txt",
+      "sha256": "9f5027ec8043816ac15e9f86c2bbec8fd935e2f248456b5f35e6bf44c8ed0324",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/daymet/02/01580000_lump_cida_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/daymet/04/04015330_lump_cida_forcing_leap.txt",
+      "sha256": "a0de6e04758dba951bc9263c0576deee3ba01f6a7ef9f38de9e2a7be4dbf21a0",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/daymet/04/04015330_lump_cida_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/daymet/12/08109700_lump_cida_forcing_leap.txt",
+      "sha256": "a64a9c92726736e5fbca9e724d731c174af674085a2578268bc7b780c4613a2d",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/daymet/12/08109700_lump_cida_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/daymet/14/09035800_lump_cida_forcing_leap.txt",
+      "sha256": "0d02988ddc36f003370f01e6eaa9988591884861b6020569988904e02f4472ce",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/daymet/14/09035800_lump_cida_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/daymet/17/12375900_lump_cida_forcing_leap.txt",
+      "sha256": "731c9b9f9abce6ff6d88e15bba3355e04c540bc0b71c4a5d4300a78cf6418f48",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/daymet/17/12375900_lump_cida_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/daymet/18/11481200_lump_cida_forcing_leap.txt",
+      "sha256": "fbfab0b6e40db486056f9f320ad43afb1883b1c205e146bf1075756a25a1cd22",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/daymet/18/11481200_lump_cida_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/maurer/02/01580000_lump_maurer_forcing_leap.txt",
+      "sha256": "227306d3bb95c5f3876a49c69370eea4fc86bfc29f2dd78e516b3dea1e405c37",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/maurer/02/01580000_lump_maurer_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/maurer/04/04015330_lump_maurer_forcing_leap.txt",
+      "sha256": "c34d7aeac0ad40dd5b64481061bd5eddbb8847eab924a86e7ee9ec9ae5ef00b7",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/maurer/04/04015330_lump_maurer_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/maurer/12/08109700_lump_maurer_forcing_leap.txt",
+      "sha256": "4460d73353b6211f6198c2ab53d49331188eb6bf885cbffcaad5ec1259c74511",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/maurer/12/08109700_lump_maurer_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/maurer/14/09035800_lump_maurer_forcing_leap.txt",
+      "sha256": "690a62c7cf16789c56831df3a64aa411df7bdd971a3a2661dbf7d6b9c1c0b3ed",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/maurer/14/09035800_lump_maurer_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/maurer/17/12375900_lump_maurer_forcing_leap.txt",
+      "sha256": "48b74e2c3f8b0bc49b17120cd2a481c6f7abb199e329bbc1e539fa1022974bb3",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/maurer/17/12375900_lump_maurer_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/basin_mean_forcing/maurer/18/11481200_lump_maurer_forcing_leap.txt",
+      "sha256": "9f226f9b55991fc2fcb979a506bd1f7f5312d25bcc402133a642bb054c322bc5",
+      "snapshot_path": "input_snapshot/data/camels_us/basin_mean_forcing/maurer/18/11481200_lump_maurer_forcing_leap.txt"
+    },
+    {
+      "original_path": "data/camels_us/camels_attributes_v2.0/camels_clim.txt",
+      "sha256": "6a3a80256afbaea13f59f279c174d3c010156b826ffb53a4cfb5508814404f5f",
+      "snapshot_path": "input_snapshot/data/camels_us/camels_attributes_v2.0/camels_clim.txt"
+    },
+    {
+      "original_path": "data/camels_us/camels_attributes_v2.0/camels_name.txt",
+      "sha256": "f3a85272cd934c6e12386db5f21979675fc891844250a335135786ad9a2de445",
+      "snapshot_path": "input_snapshot/data/camels_us/camels_attributes_v2.0/camels_name.txt"
+    },
+    {
+      "original_path": "data/camels_us/camels_attributes_v2.0/camels_soil.txt",
+      "sha256": "2acabec448fda2d7d93c2182a8a148e0f6a2dfc40f6f0944ec09eda6eeea0a6d",
+      "snapshot_path": "input_snapshot/data/camels_us/camels_attributes_v2.0/camels_soil.txt"
+    },
+    {
+      "original_path": "data/camels_us/camels_attributes_v2.0/camels_topo.txt",
+      "sha256": "b64ca9923bcaccf21dde33137903797919e8d6732edd7849f8534e0ddcbec8e8",
+      "snapshot_path": "input_snapshot/data/camels_us/camels_attributes_v2.0/camels_topo.txt"
+    },
+    {
+      "original_path": "data/camels_us/camels_attributes_v2.0/camels_vege.txt",
+      "sha256": "ea97f5d91a2f5acccef21df08417729aade51afe9a2651ab30c2990e7ad63d74",
+      "snapshot_path": "input_snapshot/data/camels_us/camels_attributes_v2.0/camels_vege.txt"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/configs/base_v02.json",
+      "sha256": "e1e9a6a6f089681e68bd59922f6b908ed4dd534a5f63d3c109bc118a2a9bf599",
+      "snapshot_path": "input_snapshot/src/hbv_multilead_joint_uncertainty/configs/base_v02.json"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/configs/calibration_discharge_22_basins_v01.csv",
+      "sha256": "d6ce8a0bed32f6958b905d057574ecad41978d6f6e6ceafa274bfd151d16daae",
+      "snapshot_path": "input_snapshot/src/hbv_multilead_joint_uncertainty/configs/calibration_discharge_22_basins_v01.csv"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/configs/calibration_discharge_22_basins_v01.metadata.json",
+      "sha256": "d913e06000f8f421ced961a8128cdeb595e266858be6a56f7a64cf3e853e47e0",
+      "snapshot_path": "input_snapshot/src/hbv_multilead_joint_uncertainty/configs/calibration_discharge_22_basins_v01.metadata.json"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/configs/formal_sixteen_basins_v01.csv",
+      "sha256": "52bed5679fe9403223f5070c202cbcc01ef05c909574895db2cfac80341fbc94",
+      "snapshot_path": "input_snapshot/src/hbv_multilead_joint_uncertainty/configs/formal_sixteen_basins_v01.csv"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/configs/pilot_six_basins.csv",
+      "sha256": "c889794c3487b9747a8cfdbca1ec59465689792e074f61ad5609dde34ce246ea",
+      "snapshot_path": "input_snapshot/src/hbv_multilead_joint_uncertainty/configs/pilot_six_basins.csv"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/configs/trained_parameter_projection_531_v01.csv",
+      "sha256": "9ef206779d94ffa1f11ab72b4528fd633861486f0a3b49b0ee1b40f52b3010a4",
+      "snapshot_path": "input_snapshot/src/hbv_multilead_joint_uncertainty/configs/trained_parameter_projection_531_v01.csv"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/configs/trained_parameter_projection_531_v01.metadata.json",
+      "sha256": "463d065d6b5690e54baae23cb93e03aa9bb06100675ceb3b86932bf40723293e",
+      "snapshot_path": "input_snapshot/src/hbv_multilead_joint_uncertainty/configs/trained_parameter_projection_531_v01.metadata.json"
+    },
+    {
+      "original_path": "src/xaj_global_pilot/configs/conceptual_benchmark_15_basins.csv",
+      "sha256": "aab3a06977461bbd066426ad6828a33e6df261f2d2fdc0dd4791030346ead8ce",
+      "snapshot_path": "input_snapshot/src/xaj_global_pilot/configs/conceptual_benchmark_15_basins.csv"
+    },
+    {
+      "original_path": "src/xaj_global_pilot/configs/conceptual_benchmark_camels_us_531_repro.txt",
+      "sha256": "cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85",
+      "snapshot_path": "input_snapshot/src/xaj_global_pilot/configs/conceptual_benchmark_camels_us_531_repro.txt"
+    }
+  ],
+  "source_files": [
+    {
+      "original_path": "src/hbv_joint_uncertainty/__init__.py",
+      "sha256": "8ec28f22cdd2ec5a462b3f7cf0bac5b7c467aa62bb32b0ac0548c5705eabc87c",
+      "snapshot_path": "source_snapshot/src/hbv_joint_uncertainty/__init__.py"
+    },
+    {
+      "original_path": "src/hbv_joint_uncertainty/candidates.py",
+      "sha256": "155fa53569bc71c8c89cf46be8735df4535b6612e424fe82aaedbff39d81e00e",
+      "snapshot_path": "source_snapshot/src/hbv_joint_uncertainty/candidates.py"
+    },
+    {
+      "original_path": "src/hbv_joint_uncertainty/hbv_adapter.py",
+      "sha256": "01a4840a001b810095f7bcc19b9e887103d69a821f7830b841c3f3d101e4ee00",
+      "snapshot_path": "source_snapshot/src/hbv_joint_uncertainty/hbv_adapter.py"
+    },
+    {
+      "original_path": "src/hbv_joint_uncertainty/imm.py",
+      "sha256": "97449bbd2b1d6b7a835860521ac75e6ca6a2bfeeec8490e439ad43a1299ddcea",
+      "snapshot_path": "source_snapshot/src/hbv_joint_uncertainty/imm.py"
+    },
+    {
+      "original_path": "src/hbv_joint_uncertainty/preflight.py",
+      "sha256": "4034ade56d97950429bf8645fce4361bc8a3dceafb82120415f6a433d0625bc2",
+      "snapshot_path": "source_snapshot/src/hbv_joint_uncertainty/preflight.py"
+    },
+    {
+      "original_path": "src/hbv_joint_uncertainty/resource_monitor.py",
+      "sha256": "1bed8b2ba5cd263759bcbe7fa724acdf20679c8364d701b94cba5a699c7dd382",
+      "snapshot_path": "source_snapshot/src/hbv_joint_uncertainty/resource_monitor.py"
+    },
+    {
+      "original_path": "src/hbv_joint_uncertainty/sigma_filter.py",
+      "sha256": "f3a5a69e13a706ecb50bcf4855bdfe416247b4199a2adef352c7ebccbc5eb10b",
+      "snapshot_path": "source_snapshot/src/hbv_joint_uncertainty/sigma_filter.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/__init__.py",
+      "sha256": "ba96117900edf94ae8c2ad0eb66aca271a8a7f7b171ac9f09f8979bae2370fa6",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/__init__.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/basins.py",
+      "sha256": "b858db5b153148c81651eb0056b2f4d0c7f2e53e0ada04328318f9f7468f3a80",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/basins.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/contracts.py",
+      "sha256": "347f1c85871bd8884209ce2af2eb583cb8d65808e6ddb5063d6a84facd9e28c0",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/contracts.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/experiment.py",
+      "sha256": "9e6dfadb575092c1b8a6ddbbd2c82d2f8e3353245f4f8ddd4b4dc0578bd9fbcd",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/experiment.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/forecast.py",
+      "sha256": "3ea3cb27888aea406ec5437dbdb966e4474a33e9ba0f15ada514ddf376db9558",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/forecast.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/input_audit.py",
+      "sha256": "971dfa9cc9a39ca78a06a82369caf4b924f1f8aaea48525a5d019f360e906ede",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/input_audit.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/methods.py",
+      "sha256": "8845cb19425e4fd8140248dba97263b6189d187191a9a4195df42f8aa7681e37",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/methods.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/orchestrator.py",
+      "sha256": "aa6b28e0b47eda498eb46a23d2215085d1d91fe38caa46055ee54b7668f43067",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/orchestrator.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/preparation.py",
+      "sha256": "786e529ab5249219424a29cb756c0bdbbbb815d28ed0c5816710280f97a7d5c5",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/preparation.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/README.md",
+      "sha256": "0215b844531aaa74bb2b2f5b942f645bec145d876da9438474d21575fdee5f75",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/README.md"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/registry.py",
+      "sha256": "cd58b311bad5d1d97cf1c6d6cb4d91b68ef74dafab28da1dedd0ef25bc3d3a92",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/registry.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/reporting.py",
+      "sha256": "77584c563c0d54701b96c15c884871cf6b3f1fb8605dec31b5903546270ed29d",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/reporting.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/resource_monitor.py",
+      "sha256": "fbacb06541ff68264581572c1da9ad939967cba40135ea7fd769697d4f324187",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/resource_monitor.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/runner.py",
+      "sha256": "f1532d35c624c3ea7b5baa78c64b60097c78b726f92650721d7118d2aff331c3",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/runner.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/scripts/__init__.py",
+      "sha256": "a9d0cf4aa4e7b49f1667335d2bb94cd9c4f06df4ce73bb2597e528ccbc5db606",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/scripts/__init__.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/scripts/freeze_calibration_discharge.py",
+      "sha256": "9fec53250e66b7a765ba581a8309277002e13db0501ce12a3129e57cff4b9e9c",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/scripts/freeze_calibration_discharge.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/scripts/freeze_parameter_projection.py",
+      "sha256": "22cdb6c35c739e08ee8ac4295c509ee32fa2d00f116725149f7a30b4b46cbb32",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/scripts/freeze_parameter_projection.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/scripts/run_multilead.py",
+      "sha256": "189747db24010fa2798e60fc81b88c91de55a31b8005f36f355a1d1759bfda8e",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/scripts/run_multilead.py"
+    },
+    {
+      "original_path": "src/hbv_multilead_joint_uncertainty/selection.py",
+      "sha256": "228cd5dd2c75dbbe410286b891546b04d2c899b86a1281c37151e43d7d02e382",
+      "snapshot_path": "source_snapshot/src/hbv_multilead_joint_uncertainty/selection.py"
+    },
+    {
+      "original_path": "test/test_hbv_multilead_basin_selection.py",
+      "sha256": "39723b9dd40355a0a4377ed9f6d660ab2e29350bb76814acff6e62801659bdf6",
+      "snapshot_path": "source_snapshot/test/test_hbv_multilead_basin_selection.py"
+    },
+    {
+      "original_path": "test/test_hbv_multilead_contracts.py",
+      "sha256": "71177020043e334e131876d4d9ab13c8c57d96328332c7cb14d21471e44760aa",
+      "snapshot_path": "source_snapshot/test/test_hbv_multilead_contracts.py"
+    },
+    {
+      "original_path": "test/test_hbv_multilead_experiment.py",
+      "sha256": "6050f93cbd53170922371d1d604ab400dc60aaeaf983d613ae64e484dae8e202",
+      "snapshot_path": "source_snapshot/test/test_hbv_multilead_experiment.py"
+    },
+    {
+      "original_path": "test/test_hbv_multilead_forecast.py",
+      "sha256": "4aa965988125106854723811d5e576c9faccf7610837baae8ce9068fde52607b",
+      "snapshot_path": "source_snapshot/test/test_hbv_multilead_forecast.py"
+    },
+    {
+      "original_path": "test/test_hbv_multilead_input_audit.py",
+      "sha256": "0cf7bfde9d2ef0f29cb08bd23811f41aee9e876905f01bc47b4f88491424e2fd",
+      "snapshot_path": "source_snapshot/test/test_hbv_multilead_input_audit.py"
+    },
+    {
+      "original_path": "test/test_hbv_multilead_methods.py",
+      "sha256": "1c6c3876d54cb98d330c61f7cfec4c479c9193d84795cb33ec587870750b59be",
+      "snapshot_path": "source_snapshot/test/test_hbv_multilead_methods.py"
+    },
+    {
+      "original_path": "test/test_hbv_multilead_preparation.py",
+      "sha256": "750c3df55225b58b50bccf9e8b73afe040b0a3647fb64cd1055ee7ab4f29733f",
+      "snapshot_path": "source_snapshot/test/test_hbv_multilead_preparation.py"
+    },
+    {
+      "original_path": "test/test_hbv_multilead_registry.py",
+      "sha256": "4f84c720c5c09de944da38482f2daa328a14e9ed0af3b5d0152475170a0b9075",
+      "snapshot_path": "source_snapshot/test/test_hbv_multilead_registry.py"
+    },
+    {
+      "original_path": "test/test_hbv_multilead_reporting.py",
+      "sha256": "f34ec444b0997e4e612c26bbc50e7fba372ca7ebd5ba72d5818ea7a53c19488a",
+      "snapshot_path": "source_snapshot/test/test_hbv_multilead_reporting.py"
+    },
+    {
+      "original_path": "test/test_hbv_multilead_resources.py",
+      "sha256": "850d388f7270d42e4fa9981237c65a85c6cdd3118fd62ea9fc5c2838d75f4636",
+      "snapshot_path": "source_snapshot/test/test_hbv_multilead_resources.py"
+    },
+    {
+      "original_path": "test/test_hbv_multilead_runner.py",
+      "sha256": "5d25067e216088e1a265fa6086cb1ae4be8c5ce7026f4236d9c66a75cf217d96",
+      "snapshot_path": "source_snapshot/test/test_hbv_multilead_runner.py"
+    }
+  ]
+}

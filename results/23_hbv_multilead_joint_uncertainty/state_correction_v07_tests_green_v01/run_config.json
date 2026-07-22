@@ -1,0 +1,22 @@
+{
+  "run_id": "state_correction_v07_tests_green_v01",
+  "run_type": "post_fix_full_relevant_test_suite",
+  "command": "python -m pytest -q --tb=short test\\test_hbv_state_correction_diagnostic.py test\\test_hbv_multilead_resources.py",
+  "started_at": "2026-07-16T23:20:20.3943910+08:00",
+  "finished_at": "2026-07-16T23:20:27.3673067+08:00",
+  "expected_exit_code": 0,
+  "expected_tests_passed": 61,
+  "expected_tests_failed": 0,
+  "configuration": "src/hbv_multilead_joint_uncertainty/configs/state_correction_propagation_v07.json",
+  "numerical_thread_limit": 1,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "BLIS_NUM_THREADS": "1",
+    "PYTHONPATH": "src"
+  },
+  "formal_artifacts_modified": false
+}

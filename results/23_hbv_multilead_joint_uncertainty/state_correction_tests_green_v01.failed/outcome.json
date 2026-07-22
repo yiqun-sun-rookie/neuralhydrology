@@ -1,0 +1,12 @@
+{
+  "run_id": "state_correction_tests_green_v01",
+  "status": "failed",
+  "exit_code": 1,
+  "tests_passed": 24,
+  "tests_failed": 1,
+  "warning_count": 1,
+  "root_cause": "total_correction was evaluated by subtracting two combined states, producing 1.3322676295501878e-15 more rounding error than summing the two returned decomposition terms",
+  "next_action": "Use the already failing decomposition identity as the regression check, then compute total_correction from the returned terms in a new run identifier.",
+  "pytest_output_sha256": "850ff75ec8c38ebccccfcc9c65497af0aa254fa8cc66b2b34664aa7390e41808",
+  "formal_artifacts_modified": false
+}

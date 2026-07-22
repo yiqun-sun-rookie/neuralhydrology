@@ -1,0 +1,109 @@
+{
+  "analysis_id": "candidate_likelihood_reidentification_v01",
+  "analysis_kind": "read_only_reidentification_timing_of_frozen_evidence",
+  "frozen_before_reading_results": true,
+  "goal_document": "docs/plans/2026-07-21-hbv-ideal-test-goal.md",
+  "goal_item": "G1",
+  "purpose": "Characterize, from frozen evidence only, how fast the true candidate's cumulative observation-log-likelihood rank reaches and holds first place after each truth switch, and which failure mode dominates (never first / first then lost / stable too late), and whether the dominant failure mode agrees between development v05 and confirmation v01.",
+  "input_runs": [
+    {
+      "dataset_role": "development",
+      "scenario": "parameter_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v05",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_development_v05.json",
+      "config_sha256": "56fea0145e12ee486d71fa456a0fdee7386d5b5de304b105fd234a02ccf6314c"
+    },
+    {
+      "dataset_role": "development",
+      "scenario": "process_noise_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v05",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_process_noise_switch_development_v05.json",
+      "config_sha256": "623b29635b84e31048e2188f71fe28a2ad68d0709690be92e515c9481eafe33b"
+    },
+    {
+      "dataset_role": "development",
+      "scenario": "parameter_process_noise_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v05",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_process_noise_switch_development_v05.json",
+      "config_sha256": "cf55e09a60a3d61e16f39f15a7782f1215d1f688186a4e0419801e94b36f9926"
+    },
+    {
+      "dataset_role": "confirmation",
+      "scenario": "parameter_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_confirmation_v01",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_confirmation_v01.json",
+      "config_sha256": "b733e3c420803533e79bb1ce8c76cb17e1c3d9c4524104a6ace9881e666df758"
+    },
+    {
+      "dataset_role": "confirmation",
+      "scenario": "process_noise_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_confirmation_v01",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_process_noise_switch_confirmation_v01.json",
+      "config_sha256": "17dadfa137d27efa7b02a7e3cc6cfec215e095218eba700179ab6b43a4c4a2c8"
+    },
+    {
+      "dataset_role": "confirmation",
+      "scenario": "parameter_process_noise_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_confirmation_v01",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_process_noise_switch_confirmation_v01.json",
+      "config_sha256": "35f30842dbf87d8c0868ed9d384d0846cae2d61d6e80284a38fc9404baa294cd"
+    }
+  ],
+  "read_only_inputs": true,
+  "no_random_seeds_required": true,
+  "input_integrity_rule": "Before and after the analysis, rehash every file in every input results_dir through Windows extended-length paths and require exact agreement with that directory's checksums.json; also require each input config file's SHA-256 to equal config_sha256 above. Any mismatch stops the analysis with status deferred.",
+  "evidence_keys_used": [
+    "first_cumulative_rank_one_day",
+    "first_stable_cumulative_rank_one_day",
+    "stable_cumulative_identifiable",
+    "true_candidate_cumulative_ranks",
+    "true_candidate_cumulative_margins",
+    "block_ids"
+  ],
+  "scoring_day_count": 10,
+  "stable_final_days": 5,
+  "latest_qualifying_first_stable_day": 6,
+  "category_rules": {
+    "never_first": "first_cumulative_rank_one_day == -1 (true candidate never reaches cumulative rank one on any scoring day)",
+    "first_then_lost": "first_cumulative_rank_one_day >= 1 and first_stable_cumulative_rank_one_day == -1 (reached rank one but is not rank one on the final scoring day)",
+    "stable_too_late": "first_stable_cumulative_rank_one_day > 6 (holds rank one through day 10 but the held window is shorter than 5 days)",
+    "stable": "first_stable_cumulative_rank_one_day in [1, 6] (must equal the frozen stable_cumulative_identifiable flag exactly)",
+    "partition": "The four categories are disjoint and exhaustive over all (block, truth_trial, stage) cells."
+  },
+  "integrity_gates": {
+    "recomputed_first_day_mismatches": 0,
+    "recomputed_first_stable_day_mismatches": 0,
+    "stable_category_vs_frozen_flag_mismatches": 0,
+    "partition_violations": 0
+  },
+  "statistics_rules": {
+    "per_stage": "For each (dataset_role, scenario, stage): counts and fractions of the four categories; median and quartiles of first_cumulative_rank_one_day among trials that ever reach rank one; median of first_stable_cumulative_rank_one_day among stable trials; per-block category counts.",
+    "daily": "For each (dataset_role, scenario, stage, scoring_day): fraction of trials with cumulative rank one and the median cumulative rank. Descriptive only.",
+    "dominant_failure_mode": "Among the three failure categories (never_first, first_then_lost, stable_too_late), the one with the strictly largest count. Ties produce the label 'tie:' plus the tied category names sorted alphabetically and joined with '+'. Zero failures produce 'no_failures'.",
+    "decision_stages": [2, 3],
+    "stage_one_reported_only": true
+  },
+  "consistency_rules": {
+    "agreement": "For each (scenario, stage in {2,3}): the development dominant-failure label and the confirmation dominant-failure label must be identical strings (including tie labels).",
+    "otherwise": "Report exactly: 目前无法确定主导失败模式.",
+    "no_extrapolation": "No cross-stage or cross-scenario extrapolation; interpretation of horizon-rescue potential is inference for G2/G3 design, never a conclusion of this round."
+  },
+  "output_directory": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_reidentification_v01",
+  "outputs": [
+    "analysis_config_snapshot.json",
+    "trial_reidentification__<run>.csv",
+    "stage_reidentification_summary.csv",
+    "daily_rank_summary.csv",
+    "dominant_failure_consistency.csv",
+    "input_integrity_before.json",
+    "input_integrity_after.json",
+    "integrity_checks.json",
+    "resource_preflight.json",
+    "environment.json",
+    "summary.json",
+    "final_reidentification_report.md",
+    "checksums.json"
+  ],
+  "resource_rule": "Estimate peak memory from the actual npz header shapes of the arrays listed in evidence_keys_used plus derived category and table buffers; require both available physical and commit memory to exceed the estimate with a task-derived reserve; no universal fixed threshold.",
+  "scope_limit": "This analysis only characterizes re-identification timing and failure modes of the frozen likelihood-rank evidence. It does not modify the identifiability conclusion, does not evaluate any weight mechanism, does not claim that longer horizons would rescue identification, and does not rerun any frozen experiment."
+}

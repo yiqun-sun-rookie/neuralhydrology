@@ -1,0 +1,26 @@
+{
+  "review_context": "model_probability_audit",
+  "reviewed_at": "2026-07-17T14:00:59.6896944Z",
+  "mode": "read_only_independent_code_method_and_result_audit",
+  "result_evidence_sha256": "29f098340378a3a5e8bf2a9e9acb3282a098df3afbd0498a679dab786eb6bcbf",
+  "must_fix": [
+    "The resource estimate counts 43 rather than 50 floating-point values per trial-day and omits the Boolean and static arrays.",
+    "The stated numerical-stability claim has no frozen extreme-likelihood execution evidence or explicit gate."
+  ],
+  "confirmed_results": {
+    "trial_count": 32,
+    "days_per_trial": 365,
+    "joint_prior_accuracy": 0.8948630136986301,
+    "joint_posterior_accuracy": 0.9318493150684931,
+    "parameter_posterior_accuracy": 0.9636986301369863,
+    "process_posterior_accuracy": 0.9670376712328768,
+    "switch_count": 451,
+    "switch_day_joint_posterior_accuracy": 0.37028824833702884,
+    "non_switch_or_initial_day_joint_posterior_accuracy": 0.9544037759373052,
+    "joint_log_loss_improved_trial_count": 32,
+    "joint_brier_improved_trial_count": 32,
+    "result_checksum_count": 23,
+    "protected_file_count": 374
+  },
+  "scope_limit": "The result validates probability algebra under synthetic Gaussian label diagnostics, not hydrologic likelihoods, state interaction, joint filtering or forecasting."
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "completed_basin_file_count": 4,
+    "completed_basin_file_pass_count": 4,
+    "core_ledger_claim_passed": true,
+    "experiment_id": "formal_result_sixteen_reproduction_v01",
+    "maximum_gap_absolute_difference": 0.0,
+    "passed": true,
+    "registry_status": "failed",
+    "statistics": {
+      "below_twenty_percent_count": 1,
+      "first_event": "start",
+      "last_event": "background_monitor",
+      "maximum_gap_seconds": 9.94331,
+      "maximum_process_peak_working_set_gib": 0.1500091552734375,
+      "maximum_process_rss_gib": 0.14493942260742188,
+      "minimum_available_fraction": 0.17916237566525062,
+      "minimum_disk_free_gib": 2166.5203285217285,
+      "numerical_thread_limit": 1,
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\logs\\23_hbv_multilead_joint_uncertainty\\.formal_result_sixteen_reproduction_v01.incomplete\\resource_history.json",
+      "sample_count": 291
+    }
+  },
+  {
+    "completed_basin_file_count": 5,
+    "completed_basin_file_pass_count": 5,
+    "core_ledger_claim_passed": true,
+    "experiment_id": "formal_result_sixteen_reproduction_v02",
+    "maximum_gap_absolute_difference": 0.0,
+    "passed": true,
+    "registry_status": "failed",
+    "statistics": {
+      "below_twenty_percent_count": 1,
+      "first_event": "start",
+      "last_event": "background_monitor",
+      "maximum_gap_seconds": 11.54805,
+      "maximum_process_peak_working_set_gib": 0.1536407470703125,
+      "maximum_process_rss_gib": 0.14885330200195312,
+      "minimum_available_fraction": 0.19962392416100744,
+      "minimum_disk_free_gib": 2166.307548522949,
+      "numerical_thread_limit": 1,
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\logs\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_reproduction_v02.failed\\resource_history.json",
+      "sample_count": 1110
+    }
+  }
+]

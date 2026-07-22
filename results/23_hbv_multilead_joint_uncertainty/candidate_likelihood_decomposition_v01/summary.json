@@ -1,0 +1,17 @@
+{
+  "analysis_id": "candidate_likelihood_decomposition_v01",
+  "conclusions": {
+    "parameter_process_noise_switch__stage_2": "innovation",
+    "parameter_process_noise_switch__stage_3": "\u76ee\u524d\u65e0\u6cd5\u786e\u5b9a\u4e3b\u8981\u6765\u6e90",
+    "parameter_switch__stage_2": "\u76ee\u524d\u65e0\u6cd5\u786e\u5b9a\u4e3b\u8981\u6765\u6e90",
+    "parameter_switch__stage_3": "variance",
+    "process_noise_switch__stage_2": "variance",
+    "process_noise_switch__stage_3": "\u76ee\u524d\u65e0\u6cd5\u786e\u5b9a\u4e3b\u8981\u6765\u6e90"
+  },
+  "config_sha256": "1be03485528649d31c576cf5db9cab12276bb5558b175eeaa193612e96a92f58",
+  "frozen_experiments_rerun": false,
+  "input_integrity_status": "verified_before_and_after_unchanged",
+  "integrity_status": "passed",
+  "read_only_inputs": true,
+  "scope_limit": "This analysis only attributes the best wrong candidate's day-10 cumulative log-likelihood advantage to its two Gaussian components. It does not modify the identifiability conclusion, does not evaluate any weight mechanism, and does not address whether candidate filters converge to similar states."
+}

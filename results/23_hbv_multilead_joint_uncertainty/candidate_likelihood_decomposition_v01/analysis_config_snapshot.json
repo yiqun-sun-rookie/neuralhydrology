@@ -1,0 +1,113 @@
+{
+  "analysis_id": "candidate_likelihood_decomposition_v01",
+  "analysis_kind": "read_only_decomposition_of_frozen_evidence",
+  "frozen_before_reading_results": true,
+  "design_document": "docs/plans/2026-07-21-hbv-candidate-likelihood-decomposition-design.md",
+  "purpose": "Decompose the frozen scalar-Gaussian daily observation log likelihood into the predicted-variance penalty -0.5*log(2*pi*innovation_variance) and the normalized squared innovation penalty -0.5*innovation^2/innovation_variance, and decide which component drives the best wrong candidate's day-10 cumulative advantage, and whether that direction is consistent between development v05 and confirmation v01.",
+  "input_runs": [
+    {
+      "dataset_role": "development",
+      "scenario": "parameter_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v05",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_development_v05.json",
+      "config_sha256": "56fea0145e12ee486d71fa456a0fdee7386d5b5de304b105fd234a02ccf6314c"
+    },
+    {
+      "dataset_role": "development",
+      "scenario": "process_noise_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v05",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_process_noise_switch_development_v05.json",
+      "config_sha256": "623b29635b84e31048e2188f71fe28a2ad68d0709690be92e515c9481eafe33b"
+    },
+    {
+      "dataset_role": "development",
+      "scenario": "parameter_process_noise_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v05",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_process_noise_switch_development_v05.json",
+      "config_sha256": "cf55e09a60a3d61e16f39f15a7782f1215d1f688186a4e0419801e94b36f9926"
+    },
+    {
+      "dataset_role": "confirmation",
+      "scenario": "parameter_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_confirmation_v01",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_confirmation_v01.json",
+      "config_sha256": "b733e3c420803533e79bb1ce8c76cb17e1c3d9c4524104a6ace9881e666df758"
+    },
+    {
+      "dataset_role": "confirmation",
+      "scenario": "process_noise_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_confirmation_v01",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_process_noise_switch_confirmation_v01.json",
+      "config_sha256": "17dadfa137d27efa7b02a7e3cc6cfec215e095218eba700179ab6b43a4c4a2c8"
+    },
+    {
+      "dataset_role": "confirmation",
+      "scenario": "parameter_process_noise_switch",
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_confirmation_v01",
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_process_noise_switch_confirmation_v01.json",
+      "config_sha256": "35f30842dbf87d8c0868ed9d384d0846cae2d61d6e80284a38fc9404baa294cd"
+    }
+  ],
+  "read_only_inputs": true,
+  "no_random_seeds_required": true,
+  "input_integrity_rule": "Before and after the analysis, rehash every file in every input results_dir through Windows extended-length paths and require exact agreement with that directory's checksums.json (which covers all files except itself); also require each input config file's SHA-256 to equal config_sha256 above. Any mismatch stops the analysis with status deferred.",
+  "component_definitions": {
+    "variance_penalty": "-0.5 * log(2 * pi * innovation_variance)",
+    "innovation_penalty": "-0.5 * innovation^2 / innovation_variance"
+  },
+  "scoring_window_rule": "Per stage, exclude the first adaptation_days (5) days; scoring days 1..10 run from stage_start+adaptation_days to stage_end, identical to the frozen identifiability scoring.",
+  "comparator_rule": "Best wrong candidate per (block, truth_trial, stage) is the wrong candidate with the maximum TOTAL cumulative log likelihood at final scoring day 10, identical to the frozen day-10 margin comparator. Ties take the lowest candidate index and are counted.",
+  "integrity_gates": {
+    "daily_component_identity_maximum_absolute_error": 1e-12,
+    "stage_cumulative_identity_maximum_absolute_error": 1e-11,
+    "final_margin_decomposition_maximum_absolute_error": 1e-11,
+    "all_components_finite": true
+  },
+  "aggregation_rules": {
+    "primary_statistic": "median over all block x truth trials of the day-10 cumulative component differences delta_variance, delta_innovation, delta_total",
+    "secondary_statistics": [
+      "mean over trials (exactly additive decomposition)",
+      "fraction of trials with delta_variance < 0 and with delta_innovation < 0",
+      "per-block medians and the count of blocks with negative block-median"
+    ],
+    "decision_day": "final scoring day 10 only; daily curves are descriptive and never decide"
+  },
+  "attribution_rules": {
+    "no_median_advantage": "median(delta_total) >= 0",
+    "variance_penalty_dominant": "median(delta_total) < 0 and median(delta_variance) < 0 <= median(delta_innovation)",
+    "innovation_penalty_dominant": "median(delta_total) < 0 and median(delta_innovation) < 0 <= median(delta_variance)",
+    "both_negative": "median(delta_total) < 0 and both medians < 0: strictly larger absolute median wins with suffix _both_negative; equal absolute medians -> both_negative_equal (no attribution)",
+    "median_decomposition_inconsistent": "median(delta_total) < 0 while both component medians >= 0 (medians are not additive); no attribution",
+    "robustness_flag": "repeat attribution with means; robust=true only if the mean-based family equals the median-based family; the median rule always decides the primary label"
+  },
+  "consistency_rules": {
+    "family_map": {
+      "variance_penalty_dominant": "variance",
+      "variance_penalty_dominant_both_negative": "variance",
+      "innovation_penalty_dominant": "innovation",
+      "innovation_penalty_dominant_both_negative": "innovation"
+    },
+    "stable_direction": "For each (scenario, stage in {2,3}): development family and confirmation family are both non-empty and equal.",
+    "otherwise": "Report exactly: 目前无法确定主要来源. No cross-stage or cross-scenario extrapolation."
+  },
+  "stages_that_decide": [2, 3],
+  "stage_one_reported_only": true,
+  "output_directory": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_decomposition_v01",
+  "outputs": [
+    "analysis_config_snapshot.json",
+    "daily_components__<run>.csv",
+    "trial_stage_components__<run>.csv",
+    "stage_component_summary.csv",
+    "development_confirmation_consistency.csv",
+    "input_integrity_before.json",
+    "input_integrity_after.json",
+    "integrity_checks.json",
+    "resource_preflight.json",
+    "environment.json",
+    "summary.json",
+    "final_decomposition_report.md",
+    "checksums.json"
+  ],
+  "resource_rule": "Estimate peak memory from the actual array shapes of the six evidence.npz inputs (array bytes times a safety factor plus table buffers) and require both available physical memory and available commit memory to exceed the estimate; no universal fixed threshold.",
+  "scope_limit": "This analysis only attributes the best wrong candidate's day-10 cumulative log-likelihood advantage to its two Gaussian components. It does not modify the identifiability conclusion, does not evaluate any weight mechanism, and does not address whether candidate filters converge to similar states."
+}

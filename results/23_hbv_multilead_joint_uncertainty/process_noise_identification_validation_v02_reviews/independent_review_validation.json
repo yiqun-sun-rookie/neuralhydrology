@@ -1,0 +1,23 @@
+{
+  "validation_context": "process_noise_review_validation",
+  "validated_at": "2026-07-17T13:11:16.5714473Z",
+  "mode": "read_only_raw_evidence_validation_of_independent_review",
+  "result_evidence_sha256": "cf1935881f700437d923e1c9658d94e7869780d77384cd8764e3af465c93946d",
+  "conclusion": "confirmed_with_wording_correction",
+  "wording_correction": "the no-op candidate projection of the independent initial reference state occurs once per trial, 24 times total, rather than once for the whole run",
+  "confirmed_items": {
+    "grouped_terminal_probability_interval": [0.9985835879695351, 0.9999954976157994],
+    "independent_random_truth_loop": true,
+    "independent_transition_maximum_adapter_difference": 5.684341886080802e-14,
+    "independent_observation_maximum_adapter_difference": 0.0,
+    "classification_23_of_24_and_by_process_7_8_8": true,
+    "predicted_classes_identical_to_v01": true,
+    "maximum_v01_v02_dynamic_array_difference": 1.9895196601282805e-12,
+    "projection_event_days": 2880,
+    "projection_count_by_hydrologic_state": [1247, 2880, 99, 1430, 71],
+    "negative_observation_count": 106,
+    "evidence_checksum_count": 26,
+    "protected_file_count": 281,
+    "new_must_fix_issue_found": false
+  }
+}

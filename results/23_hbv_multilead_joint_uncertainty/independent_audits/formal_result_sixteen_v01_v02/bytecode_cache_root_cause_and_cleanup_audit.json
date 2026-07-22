@@ -1,0 +1,31 @@
+{
+  "cleanup_scope": "only the two detected __pycache__ directories, containing 6 and 4 files respectively, after absolute-path containment and exact-total-count checks",
+  "current_contract_actual_file_count_before_blackbox": 128,
+  "current_contract_checksums_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+  "current_contract_unlisted_files_before_blackbox": [],
+  "formal_contract_finish_timestamp": "2026-07-15T08:32:21.618336+08:00",
+  "formal_result_finish_timestamp": "2026-07-15T11:41:16.536348+08:00",
+  "passed": true,
+  "previous_audit_decision": "BLOCK",
+  "previous_block_audit_finish_timestamp": "2026-07-15T11:55:56.169239+08:00",
+  "previous_block_audit_start_timestamp": "2026-07-15T11:55:51.629202+08:00",
+  "previous_contract_checksums_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+  "previous_detected_cache_file_count": 10,
+  "previous_detected_cache_files": [
+    "source_snapshot/src/hbv_joint_uncertainty/__pycache__/__init__.cpython-311.pyc",
+    "source_snapshot/src/hbv_joint_uncertainty/__pycache__/candidates.cpython-311.pyc",
+    "source_snapshot/src/hbv_joint_uncertainty/__pycache__/hbv_adapter.cpython-311.pyc",
+    "source_snapshot/src/hbv_joint_uncertainty/__pycache__/imm.cpython-311.pyc",
+    "source_snapshot/src/hbv_joint_uncertainty/__pycache__/preflight.cpython-311.pyc",
+    "source_snapshot/src/hbv_joint_uncertainty/__pycache__/sigma_filter.cpython-311.pyc",
+    "source_snapshot/src/hbv_multilead_joint_uncertainty/__pycache__/__init__.cpython-311.pyc",
+    "source_snapshot/src/hbv_multilead_joint_uncertainty/__pycache__/forecast.cpython-311.pyc",
+    "source_snapshot/src/hbv_multilead_joint_uncertainty/__pycache__/methods.cpython-311.pyc",
+    "source_snapshot/src/hbv_multilead_joint_uncertainty/__pycache__/runner.cpython-311.pyc"
+  ],
+  "previous_detected_cache_roots": [
+    "source_snapshot/src/hbv_joint_uncertainty/__pycache__",
+    "source_snapshot/src/hbv_multilead_joint_uncertainty/__pycache__"
+  ],
+  "root_cause": "the first independent black-box import loaded modules directly from the frozen source snapshot without disabling Python bytecode writes"
+}

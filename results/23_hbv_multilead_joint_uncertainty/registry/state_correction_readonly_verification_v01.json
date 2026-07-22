@@ -1,0 +1,15 @@
+{
+  "created_at": "2026-07-16T10:08:36.4136159+08:00",
+  "history": [
+    {
+      "formal_artifacts_modified": false,
+      "message": "Stopped at 18.589388288315825 percent available memory, below the 20 percent running threshold.",
+      "status": "failed",
+      "timestamp": "2026-07-16T10:08:36.4136159+08:00"
+    }
+  ],
+  "run_id": "state_correction_readonly_verification_v01",
+  "run_type": "readonly_semantic_verification",
+  "status": "failed",
+  "updated_at": "2026-07-16T10:08:36.4136159+08:00"
+}

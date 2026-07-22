@@ -1,0 +1,33 @@
+{
+  "review_context": "model_probability_v02_audit",
+  "reviewed_at": "2026-07-17T14:00:59.6896944Z",
+  "mode": "read_only_independent_code_method_and_result_audit",
+  "result_evidence_sha256": "9ffdb202ced4b6542dbcc2f6dddfa5e96051d0c84bf246cb909c7d6032b816e1",
+  "must_fix": [],
+  "repairs_confirmed": {
+    "all_saved_arrays_counted_by_resource_preflight": true,
+    "uncompressed_saved_array_bytes": 4788344,
+    "estimated_peak_memory_bytes": 52707808,
+    "required_available_memory_bytes": 225232288,
+    "available_memory_bytes": 12262371328,
+    "frozen_extreme_likelihood_execution_certificate": true,
+    "all_gated_values_in_gate_values": true,
+    "stratified_switch_and_non_switch_metrics_frozen": true
+  },
+  "confirmed_results": {
+    "joint_prior_accuracy": 0.8948630136986301,
+    "joint_posterior_accuracy": 0.9318493150684931,
+    "parameter_posterior_accuracy": 0.9636986301369863,
+    "process_posterior_accuracy": 0.9670376712328768,
+    "switch_count": 451,
+    "switch_day_joint_prior_accuracy": 0.017738359201773836,
+    "switch_day_joint_posterior_accuracy": 0.37028824833702884,
+    "non_switch_or_initial_day_joint_posterior_accuracy": 0.9544037759373052,
+    "joint_log_loss_improvement_bootstrap_interval": [0.17171518593843943, 0.20247500698815252],
+    "joint_brier_improvement_bootstrap_interval": [0.05946327658429408, 0.07225812845141724],
+    "result_checksum_count": 24,
+    "protected_file_count": 398,
+    "v01_v02_common_arrays_bitwise_equal_count": 30
+  },
+  "scope_limit": "The result validates stable probability algebra and records weak switch-day identification under synthetic Gaussian label diagnostics; it does not validate hydrologic likelihoods, state interaction or forecasts."
+}

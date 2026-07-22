@@ -1,0 +1,27 @@
+{
+  "base_config": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\configs\\observation_free_forecast_validation_v01.json",
+  "changed_factor": "forecast lead from one through seven days",
+  "experiment_id": "observation_free_forecast_validation_v01",
+  "fixed_factors": "three complete parameter vectors, three process covariances, fifteen states and full interaction",
+  "hypothesis": "production one-through-seven-day propagation matches the independent observation-free recursion",
+  "metrics_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\observation_free_forecast_validation_v01\\summary.json",
+  "notes": "This component validates causal observation-free forecast propagation and numerical agreement with an independent recursion. It does not establish forecast skill, parameter or process-noise identification, observation-update benefit, or real-basin performance.",
+  "paper_name": "synthetic observation-free forecast component",
+  "run_dir": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\observation_free_forecast_validation_v01",
+  "seeds": [
+    960001,
+    960002,
+    960003,
+    960004,
+    960005,
+    960006,
+    960007,
+    960008,
+    960009,
+    960010,
+    960011,
+    960012
+  ],
+  "status": "passed",
+  "type": "closed_truth_observation_free_forecast_propagation"
+}

@@ -1,0 +1,52 @@
+{
+  "verdict": "HOLD_PENDING_MUST_FIX",
+  "must_fix_count": 1,
+  "scientific_conclusion_changed": false,
+  "verdict_detail": "第三十八项正式测试全部通过，且当前受审模块实例已经拒绝伪造仓库根下的同名逐字节旧审查副本；但是，唯一旧式 confirmed_items 列表例外仍未绑定到当前模块实例下的正式第九版配置文件和完整冻结摘要身份。把第九版配置逐字节复制到仓库外后，run() 仍返回 status=passed 和 numerical_chain_validated=true，因此治理结论必须保持待修复。该缺陷不改变四个冻结测试条件的科学结果。",
+  "must_fix": [
+    {
+      "id": "legacy_review_exception_must_bind_source_derived_config_and_complete_frozen_identity",
+      "severity": "conclusion_changing_governance_defect",
+      "location": "src/hbv_multilead_joint_uncertainty/scripts/run_joint_method_synthesis.py::_review_status lines 247-390 and run lines 481-553",
+      "finding": "第九版只在 _review_status 中要求调用者提供的 repo_root 等于当前受审模块 __file__ 推导的仓库根，并要求登记相对路径和 resolved 审查目录相符；run() 读取任意 config_path，却没有要求该配置文件位于当前模块实例推导的正式配置根，也没有把旧列表授权限制为经该正式配置驱动的调用。最小反例把 joint_method_synthetic_validation_synthesis_v09.json 逐字节复制到系统临时目录，随后以当前真实仓库根调用 run()；结果仍为 status=passed、numerical_chain_validated=true。另一个直接调用 _review_status 的反例只提供真实仓库根和登记相对路径，也能启用旧列表。旧例外还只硬编码第二审查文件摘要；第一审查文件摘要和 checksums.json 的冻结摘要身份没有作为授权条件固定。",
+      "root_cause": "版本八到版本九的实现差异只新增 _SOURCE_DERIVED_REPO_ROOT，并在目录比较中替换调用者仓库根；配置文件身份、配置驱动调用上下文、两个登记文件摘要和登记清单摘要没有进入 legacy_parameter_review_bound 判据。",
+      "impact": "外部伪仓库根逐字节副本已被拒绝，但仓库外配置副本或缺少正式配置来源证明的直接调用仍可把旧式非对象 confirmed_items 列表计为通过，并支持 numerical_chain_validated=true。该缺陷改变治理裁决，不改变现有四条件原始数值、联合识别零比四、预报增值零比十二或广泛科学结论 HOLD。",
+      "required_repair": "从当前受审模块 __file__ 推导仓库根和正式配置根；只有配置文件 resolved 路径、实验标识、登记相对路径、resolved 证据目录、两个精确登记文件名、两个冻结文件摘要和冻结 checksums.json 摘要全部匹配时，才向旧列表解析器传入不可由普通直接调用伪造的授权上下文。不得硬编码当前机器的绝对仓库路径。整个模块、配置和经过哈希验证的仓库被等价复制后，应以复制模块自身 __file__ 推导的新根进行同样验证；这种完整等价复制不属于当前模块实例信任外部伪根。",
+      "acceptance_tests": [
+        "当前受审模块实例必须拒绝伪 repo_root 下同名逐字节旧审查副本。",
+        "当前受审模块实例必须拒绝仓库外逐字节第九版配置副本，即使 repo_root 指向当前真实仓库且所有真实输入清单通过。",
+        "没有正式配置驱动授权上下文的 _review_status 直接调用不得启用旧列表例外。",
+        "正式第九版配置驱动的真实冻结旧审查只有在登记相对路径、resolved 目录、两个文件名、两个文件摘要和冻结清单摘要全部匹配时通过。",
+        "完整等价复制且由复制模块自身 __file__ 推导根的经过哈希验证仓库允许按同一规则复现。",
+        "版本一至版本八全部必须修复反例和至少新增的配置根反例均通过，正式测试数不少于三十九项。"
+      ]
+    }
+  ],
+  "governance_adversarial_audit": {
+    "formal_test_command": "python -m pytest -q test/test_hbv_joint_method_synthesis.py",
+    "formal_test_result": "38 passed, 1 pre-existing Pytest configuration warning",
+    "forged_repository_root_byte_identical_copy": "rejected",
+    "external_byte_identical_config_copy": "accepted_incorrectly",
+    "external_config_observed_status": "passed",
+    "external_config_observed_numerical_chain_validated": true,
+    "historical_counterexample_replay": "completed",
+    "adversarial_case_count": 80,
+    "expected_behavior_count": 78,
+    "unexpected_behavior_count": 2,
+    "version_one_through_version_eight_counterexamples_all_blocked_or_expected": true,
+    "unexpected_cases": [
+      "v09_direct_real_path_without_config_context returned passed=true",
+      "v09_external_byte_identical_config_copy returned status=passed and numerical_chain_validated=true"
+    ]
+  },
+  "scientific_conclusion": {
+    "changed_by_this_review": false,
+    "current_frozen_boundary": "联合识别在四个测试条件中为零比四，超过参数单因素和过程尺度单因素方法的预报增值在十二个条件与预见期组合中为零比十二；广泛科学结论仍为 HOLD。",
+    "full_raw_recalculation_status": "not_required_after_governance_must_fix"
+  },
+  "reviewer_independence": {
+    "layer": "first_independent_code_method_result_review",
+    "code_or_evidence_modified": false,
+    "only_review_file_written": "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v09_reviews/code_method_result_review.json"
+  }
+}

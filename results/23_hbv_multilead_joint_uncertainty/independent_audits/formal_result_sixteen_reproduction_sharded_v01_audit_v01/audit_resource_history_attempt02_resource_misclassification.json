@@ -1,0 +1,62 @@
+[
+  {
+    "available_memory_fraction": 0.2643960440075639,
+    "available_memory_gib": 8.381416320800781,
+    "cpu_load_percent": 0.0,
+    "disk_free_gib": 2166.103530883789,
+    "event": "start",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.0,
+    "timestamp": "2026-07-15T20:57:13.225203+08:00"
+  },
+  {
+    "available_memory_fraction": 0.26431602019055056,
+    "available_memory_gib": 8.37887954711914,
+    "cpu_load_percent": 22.6,
+    "disk_free_gib": 2166.1035346984863,
+    "event": "running",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.003520965576171875,
+    "timestamp": "2026-07-15T20:57:13.247432+08:00"
+  },
+  {
+    "available_memory_fraction": 0.25790039646085344,
+    "available_memory_gib": 8.17550277709961,
+    "cpu_load_percent": 43.2,
+    "disk_free_gib": 2166.1084632873535,
+    "event": "running",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.0824432373046875,
+    "timestamp": "2026-07-15T20:57:14.264309+08:00"
+  },
+  {
+    "available_memory_fraction": 0.26020821114157766,
+    "available_memory_gib": 8.248661041259766,
+    "cpu_load_percent": 40.6,
+    "disk_free_gib": 2166.1079750061035,
+    "event": "running",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.0854949951171875,
+    "timestamp": "2026-07-15T20:57:15.277445+08:00"
+  },
+  {
+    "available_memory_fraction": 0.26343587853997086,
+    "available_memory_gib": 8.35097885131836,
+    "cpu_load_percent": 36.1,
+    "disk_free_gib": 2166.124183654785,
+    "event": "running",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.08678054809570312,
+    "timestamp": "2026-07-15T20:57:16.291258+08:00"
+  },
+  {
+    "available_memory_fraction": 0.26454766808190494,
+    "available_memory_gib": 8.386222839355469,
+    "cpu_load_percent": 31.3,
+    "disk_free_gib": 2166.1238136291504,
+    "event": "finish",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.0,
+    "timestamp": "2026-07-15T20:57:17.293436+08:00"
+  }
+]

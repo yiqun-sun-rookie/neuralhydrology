@@ -1,0 +1,243 @@
+{
+  "verdict": "PASS",
+  "verdict_detail": {
+    "numerical_integrity": "PASS",
+    "scientific_validity": "SUPPORTED_ONLY_FOR_THE_PREREGISTERED_SYNTHETIC_CONDITION_WITH_A_NEGATIVE_OVERALL_JOINT_METHOD_RESULT",
+    "conclusion": "The saved evidence is internally complete, source-bound, finite, reconstructable, and statistically reproducible. The preregistered scientific result does not support overall joint-method effectiveness: joint identification fails, one- and three-day forecasts fail the fixed-filter effectiveness rule, and no forecast lead or origin-state result demonstrates added value beyond both single-factor methods. Only the seven-day forecast and origin hydrologic state pass the narrower rule against the fixed filter.",
+    "numerical_and_scientific_status_are_separate": true
+  },
+  "must_fix_count": 0,
+  "must_fix": [],
+  "confirmed_numbers": {
+    "evidence_manifest": {
+      "checksummed_file_count": 34,
+      "source_snapshot_file_count": 15,
+      "checksum_mismatch_count": 0,
+      "exact_manifest_file_set": true,
+      "current_source_snapshot_mismatch_count": 0
+    },
+    "frozen_inputs": {
+      "config_sha256": "c1ee629f969bb70b5f735f908001dc3419b1231d6c3db1be71550efaaa188140",
+      "parameter_source_sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+      "process_noise_source_sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+      "observation_noise_source_sha256": "f358c77b655285b348604266af43dfcd7b875ea756145f6d9b33c8853a5d8955",
+      "selected_parameter_snapshot_sha256": "624ba1ab3e6fc9e60c8cf15bc287f1a0a3cec177d6307e6d83d5215625199905",
+      "selected_process_noise_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+      "selected_observation_noise_snapshot_sha256": "5bc0adc216ced6c6b0d281ed5c9cd3a158d65e2f3a369d657afaaccb67a1c678",
+      "config_snapshot_current_and_preregistration_hashes_equal": true,
+      "three_configured_source_hashes_match_current_sources": true,
+      "selected_snapshot_arrays_match_evidence_maximum_absolute_error": 0.0,
+      "forcing_seed_reconstruction_maximum_absolute_error": 0.0,
+      "process_standard_normal_seed_reconstruction_maximum_absolute_error": 0.0,
+      "observation_standard_normal_seed_reconstruction_maximum_absolute_error": 0.0
+    },
+    "protected_artifacts": {
+      "protected_file_count": 568,
+      "recorded_before_equals_recorded_after": true,
+      "current_equals_recorded_after": true,
+      "missing_or_changed_file_count": 0,
+      "unexpected_file_count": 0
+    },
+    "resource_preflight": {
+      "execution_parallelism": 1,
+      "expected_and_actual_saved_numeric_array_bytes": 2223432,
+      "estimated_additional_peak_memory_bytes": 220108064,
+      "task_specific_reserve_bytes": 268435456,
+      "task_specific_required_available_bytes": 488543520,
+      "historical_available_physical_memory_bytes": 13695946752,
+      "estimated_runtime_seconds_from_pilot": 192.6849014518472,
+      "safe_to_run_recalculated": true,
+      "universal_memory_threshold_used": false
+    },
+    "saved_arrays": {
+      "total_array_count": 37,
+      "numeric_array_count": 30,
+      "string_array_count": 7,
+      "nonfinite_numeric_array_count": 0,
+      "all_string_arrays_loaded_without_pickle": true
+    },
+    "integrity_gates": {
+      "authoritative_truth_transition_replay_maximum_absolute_error": 0.0,
+      "cross_implementation_truth_transition_maximum_absolute_error": 2.842170943040401e-14,
+      "cross_implementation_truth_observation_maximum_absolute_error": 0.0,
+      "truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0,
+      "truth_state_equals_deterministic_plus_perturbation_plus_projection_adjustment_maximum_absolute_error": 3.785779876435205e-16,
+      "cross_implementation_physical_projection_maximum_absolute_error": 0.0,
+      "observation_reconstruction_maximum_absolute_error": 0.0,
+      "method_mixture_reconstruction_maximum_absolute_error": 1.7763568394002505e-15,
+      "method_probability_sum_maximum_absolute_error": 2.220446049250313e-16,
+      "minimum_method_probability": 0.0011879473654812383,
+      "inactive_candidate_probability_maximum_absolute_value": 0.0,
+      "method_absolute_error_array_reconstruction_maximum_absolute_error": 0.0,
+      "origin_state_error_array_reconstruction_maximum_absolute_error": 0.0
+    },
+    "projection_events": {
+      "event_count": 3527,
+      "event_total": 3744,
+      "event_fraction": 0.9420405982905983,
+      "maximum_absolute_projection_adjustment": 126.81090722162921
+    },
+    "forecast_target_indexing": {
+      "assimilation_days": 45,
+      "origin_zero_based_index": 44,
+      "lead_days": [1, 3, 7],
+      "target_zero_based_indices": [45, 47, 51],
+      "target_reconstruction_maximum_absolute_error": 0.0
+    },
+    "identification": {
+      "joint_candidate_argmax_accuracy": 0.5138888888888888,
+      "joint_parameter_argmax_accuracy": 0.5972222222222222,
+      "joint_process_argmax_accuracy": 0.8472222222222222,
+      "median_joint_true_candidate_probability": 0.24446729489293278,
+      "median_joint_true_parameter_probability": 0.371444919664944,
+      "median_joint_true_process_probability": 0.587072813153685,
+      "true_candidate_probability_reconstruction_maximum_absolute_error": 0.0,
+      "true_factor_marginal_probability_reconstruction_maximum_absolute_error": 0.0,
+      "joint_identification_effective": false,
+      "failed_preregistered_component": "joint_parameter_argmax_accuracy is 0.5972222222222222, below the preregistered minimum 0.6666666666666666"
+    },
+    "scientific_decisions": {
+      "lead_1_days": {
+        "effective_against_fixed_filter": false,
+        "added_value_beyond_both_single_factor_methods": false
+      },
+      "lead_3_days": {
+        "effective_against_fixed_filter": false,
+        "added_value_beyond_both_single_factor_methods": false
+      },
+      "lead_7_days": {
+        "effective_against_fixed_filter": true,
+        "added_value_beyond_both_single_factor_methods": false
+      },
+      "origin_hydrologic_state": {
+        "effective_against_fixed_filter": true,
+        "added_value_beyond_both_single_factor_methods": false
+      },
+      "joint_identification_effective": false
+    },
+    "method_metrics": [
+      {"metric": "forecast_discharge", "method": "open_loop", "lead_days": 1, "root_mean_square_error": 3.240188375642521, "median_absolute_error": 0.7962919456576054},
+      {"metric": "forecast_discharge", "method": "open_loop", "lead_days": 3, "root_mean_square_error": 3.8660018111314445, "median_absolute_error": 0.7392019288282501},
+      {"metric": "forecast_discharge", "method": "open_loop", "lead_days": 7, "root_mean_square_error": 3.2097085145413295, "median_absolute_error": 0.6782993421662464},
+      {"metric": "origin_hydrologic_state", "method": "open_loop", "lead_days": 0, "root_mean_square_error": 0.567987844050988, "median_absolute_error": 0.17791026252546532},
+      {"metric": "forecast_discharge", "method": "fixed_filter", "lead_days": 1, "root_mean_square_error": 0.9633662709883698, "median_absolute_error": 0.7238443155733081},
+      {"metric": "forecast_discharge", "method": "fixed_filter", "lead_days": 3, "root_mean_square_error": 1.406734116550975, "median_absolute_error": 0.8029653840866098},
+      {"metric": "forecast_discharge", "method": "fixed_filter", "lead_days": 7, "root_mean_square_error": 1.482384586136291, "median_absolute_error": 1.3697735412717742},
+      {"metric": "origin_hydrologic_state", "method": "fixed_filter", "lead_days": 0, "root_mean_square_error": 0.31611435063754806, "median_absolute_error": 0.21824564676548847},
+      {"metric": "forecast_discharge", "method": "parameter_only", "lead_days": 1, "root_mean_square_error": 0.9115461078156001, "median_absolute_error": 0.7107227930042684},
+      {"metric": "forecast_discharge", "method": "parameter_only", "lead_days": 3, "root_mean_square_error": 1.4252236201359052, "median_absolute_error": 0.7960089046296536},
+      {"metric": "forecast_discharge", "method": "parameter_only", "lead_days": 7, "root_mean_square_error": 1.5856514468753897, "median_absolute_error": 1.4626435760041525},
+      {"metric": "origin_hydrologic_state", "method": "parameter_only", "lead_days": 0, "root_mean_square_error": 0.2759631865670417, "median_absolute_error": 0.19822807791985997},
+      {"metric": "forecast_discharge", "method": "noise_only", "lead_days": 1, "root_mean_square_error": 0.9181033635373708, "median_absolute_error": 0.5945545663023399},
+      {"metric": "forecast_discharge", "method": "noise_only", "lead_days": 3, "root_mean_square_error": 1.3317351571642178, "median_absolute_error": 0.634973162384493},
+      {"metric": "forecast_discharge", "method": "noise_only", "lead_days": 7, "root_mean_square_error": 1.1174795131072284, "median_absolute_error": 0.7400493277597964},
+      {"metric": "origin_hydrologic_state", "method": "noise_only", "lead_days": 0, "root_mean_square_error": 0.30206301643109745, "median_absolute_error": 0.17766640228712732},
+      {"metric": "forecast_discharge", "method": "joint", "lead_days": 1, "root_mean_square_error": 0.8614678738612609, "median_absolute_error": 0.6220117089932163},
+      {"metric": "forecast_discharge", "method": "joint", "lead_days": 3, "root_mean_square_error": 1.3588597056268628, "median_absolute_error": 0.6859796076989735},
+      {"metric": "forecast_discharge", "method": "joint", "lead_days": 7, "root_mean_square_error": 1.2040603024466145, "median_absolute_error": 0.7597114046669458},
+      {"metric": "origin_hydrologic_state", "method": "joint", "lead_days": 0, "root_mean_square_error": 0.26586634153813155, "median_absolute_error": 0.14373285839595806},
+      {"metric": "forecast_discharge", "method": "oracle_filter", "lead_days": 1, "root_mean_square_error": 0.8583092325387198, "median_absolute_error": 0.5809465953909386},
+      {"metric": "forecast_discharge", "method": "oracle_filter", "lead_days": 3, "root_mean_square_error": 1.3501392961940966, "median_absolute_error": 0.571503901275423},
+      {"metric": "forecast_discharge", "method": "oracle_filter", "lead_days": 7, "root_mean_square_error": 1.2189243433046746, "median_absolute_error": 0.6246505553196653},
+      {"metric": "origin_hydrologic_state", "method": "oracle_filter", "lead_days": 0, "root_mean_square_error": 0.20809996829333915, "median_absolute_error": 0.12545358669981677}
+    ],
+    "paired_block_comparisons": [
+      {"metric": "forecast_discharge", "lead_days": 1, "control": "open_loop", "relative_improvement_percent": 73.41303115778156, "mean_difference": -1.6452899186654066, "bootstrap_lower": -3.1027656257042056, "bootstrap_upper": -0.5205610388515383, "joint_better_blocks": 8},
+      {"metric": "forecast_discharge", "lead_days": 1, "control": "fixed_filter", "relative_improvement_percent": 10.577326630147203, "mean_difference": -0.10970418420596934, "bootstrap_lower": -0.24187356933138796, "bootstrap_upper": 0.009474832244185435, "joint_better_blocks": 4},
+      {"metric": "forecast_discharge", "lead_days": 1, "control": "parameter_only", "relative_improvement_percent": 5.4937686119186075, "mean_difference": -0.055183986603714645, "bootstrap_lower": -0.2178196604905556, "bootstrap_upper": 0.10121804625968064, "joint_better_blocks": 5},
+      {"metric": "forecast_discharge", "lead_days": 1, "control": "noise_only", "relative_improvement_percent": 6.168748740653597, "mean_difference": -0.047799763660042904, "bootstrap_lower": -0.1051109236715466, "bootstrap_upper": 0.002349826856051229, "joint_better_blocks": 4},
+      {"metric": "forecast_discharge", "lead_days": 1, "control": "oracle_filter", "relative_improvement_percent": -0.36800738041677483, "mean_difference": 0.014289441777341545, "bootstrap_lower": -0.02556630449844399, "bootstrap_upper": 0.054887760451786345, "joint_better_blocks": 2},
+      {"metric": "forecast_discharge", "lead_days": 3, "control": "open_loop", "relative_improvement_percent": 64.85103287550785, "mean_difference": -1.748638605062815, "bootstrap_lower": -3.2030814557392113, "bootstrap_upper": -0.483582588267317, "joint_better_blocks": 6},
+      {"metric": "forecast_discharge", "lead_days": 3, "control": "fixed_filter", "relative_improvement_percent": 3.4032309560736715, "mean_difference": -0.11697472950782357, "bootstrap_lower": -0.30473984602890425, "bootstrap_upper": 0.05708838344093704, "joint_better_blocks": 4},
+      {"metric": "forecast_discharge", "lead_days": 3, "control": "parameter_only", "relative_improvement_percent": 4.656386097692808, "mean_difference": -0.1485458604109406, "bootstrap_lower": -0.3420157766432868, "bootstrap_upper": 0.03765413311567968, "joint_better_blocks": 5},
+      {"metric": "forecast_discharge", "lead_days": 3, "control": "noise_only", "relative_improvement_percent": -2.036782487623419, "mean_difference": 0.03763606248552655, "bootstrap_lower": -0.014965223159079777, "bootstrap_upper": 0.10869935864823534, "joint_better_blocks": 3},
+      {"metric": "forecast_discharge", "lead_days": 3, "control": "oracle_filter", "relative_improvement_percent": -0.6458896098608589, "mean_difference": 0.042902054024580014, "bootstrap_lower": -0.007501793382096465, "bootstrap_upper": 0.09766358864697067, "joint_better_blocks": 3},
+      {"metric": "forecast_discharge", "lead_days": 7, "control": "open_loop", "relative_improvement_percent": 62.486926866046716, "mean_difference": -1.3590489593428994, "bootstrap_lower": -2.7637067122130388, "bootstrap_upper": -0.07661220698541156, "joint_better_blocks": 5},
+      {"metric": "forecast_discharge", "lead_days": 7, "control": "fixed_filter", "relative_improvement_percent": 18.775443720384665, "mean_difference": -0.26899807636780365, "bootstrap_lower": -0.5091445442541547, "bootstrap_upper": -0.009488976995592702, "joint_better_blocks": 5},
+      {"metric": "forecast_discharge", "lead_days": 7, "control": "parameter_only", "relative_improvement_percent": 24.065260065868873, "mean_difference": -0.3694350081106329, "bootstrap_lower": -0.609430300509012, "bootstrap_upper": -0.1190583308719826, "joint_better_blocks": 6},
+      {"metric": "forecast_discharge", "lead_days": 7, "control": "noise_only", "relative_improvement_percent": -7.7478636810658275, "mean_difference": 0.07663202596673885, "bootstrap_lower": 0.021442102228855224, "bootstrap_upper": 0.13284096956727737, "joint_better_blocks": 1},
+      {"metric": "forecast_discharge", "lead_days": 7, "control": "oracle_filter", "relative_improvement_percent": 1.2194391669758222, "mean_difference": 0.027598788256924398, "bootstrap_lower": -0.062270073083888995, "bootstrap_upper": 0.137046181438101, "joint_better_blocks": 4},
+      {"metric": "origin_hydrologic_state", "lead_days": 0, "control": "open_loop", "relative_improvement_percent": 53.19154374116062, "mean_difference": -0.20934877230647692, "bootstrap_lower": -0.3983070120124626, "bootstrap_upper": -0.0648793602953809, "joint_better_blocks": 7},
+      {"metric": "origin_hydrologic_state", "lead_days": 0, "control": "fixed_filter", "relative_improvement_percent": 15.895516605960774, "mean_difference": -0.05923373675389833, "bootstrap_lower": -0.1142312473466623, "bootstrap_upper": -0.009037998923162004, "joint_better_blocks": 6},
+      {"metric": "origin_hydrologic_state", "lead_days": 0, "control": "parameter_only", "relative_improvement_percent": 3.658765197820063, "mean_difference": -0.022678089513168596, "bootstrap_lower": -0.056440539799000704, "bootstrap_upper": 0.010255776063483334, "joint_better_blocks": 4},
+      {"metric": "origin_hydrologic_state", "lead_days": 0, "control": "noise_only", "relative_improvement_percent": 11.983153489173542, "mean_difference": -0.0382976689687505, "bootstrap_lower": -0.09330593656188249, "bootstrap_upper": 0.009169110675395283, "joint_better_blocks": 5},
+      {"metric": "origin_hydrologic_state", "lead_days": 0, "control": "oracle_filter", "relative_improvement_percent": -27.75895341000942, "mean_difference": 0.04699076741409425, "bootstrap_lower": 0.019736331588621484, "bootstrap_upper": 0.081596263796598, "joint_better_blocks": 0}
+    ],
+    "method_metric_row_count": 24,
+    "method_metric_csv_maximum_numeric_difference": 4.440892098500626e-16,
+    "paired_comparison_row_count": 20,
+    "paired_bootstrap_replicates_per_comparison": 20000,
+    "paired_comparison_csv_maximum_numeric_difference": 7.105427357601002e-15
+  },
+  "independent_recalculations": {
+    "basis": "Raw evidence.npz arrays, the frozen configuration snapshot, selected input snapshots, the 15 saved source snapshots, and source files with byte-identical hashes were used. Reported summary values were comparison targets, not computational inputs.",
+    "checks_performed": [
+      "Recomputed all 34 evidence hashes and the exact evidence file set.",
+      "Recomputed all 15 source snapshot hashes and bound them byte-for-byte to current source files.",
+      "Recomputed the configuration, frozen parameter, frozen process covariance, and frozen observation-noise source hashes.",
+      "Recomputed all 568 protected file hashes against the recorded before and after maps.",
+      "Recomputed the resource byte count, peak estimate, reserve, required memory, pilot-scaled runtime, and historical safety decision.",
+      "Loaded all 37 arrays without pickle; checked all 30 numeric arrays for finite values and validated the seven string arrays structurally.",
+      "Regenerated forcing, process standard normals, and observation standard normals from the frozen seeds with zero maximum error.",
+      "Rebuilt warmed initial states and initial covariances with zero maximum error.",
+      "Replayed every truth transition and independently cross-checked the transition, routed observation, pre-projection perturbation, and physical projection paths.",
+      "Reconstructed every active method probability sum, minimum probability, inactive probability, and mixture prediction.",
+      "Recomputed all 24 method metrics and all 20 paired matched-block comparisons, including every 20000-replicate bootstrap interval and every preregistered decision.",
+      "Recomputed candidate and factor identification metrics and all projection events.",
+      "Confirmed that 45 assimilation days imply origin index 44 and one-, three-, and seven-day target indices 45, 47, and 51.",
+      "Performed a dynamic future-observation negative control by replacing observations at indices 45 through 51 with values spanning minus one trillion to plus one trillion for one representative complete truth trial and rerunning fixed-filter, parameter-only, process-noise-only, joint, and oracle methods; every forecast change was exactly zero and every unmodified rerun matched its saved prediction exactly. The forecast implementation also accepts future forcing only, so the same causal path applies to all trials."
+    ],
+    "future_observation_dynamic_negative_control": {
+      "trial": "stable_block_01 and equifinal_diverse_1__process_0",
+      "mutated_zero_based_indices": [45, 46, 47, 48, 49, 50, 51],
+      "mutation_minimum": -1000000000000.0,
+      "mutation_maximum": 1000000000000.0,
+      "fixed_filter_maximum_forecast_change": 0.0,
+      "parameter_only_maximum_forecast_change": 0.0,
+      "noise_only_maximum_forecast_change": 0.0,
+      "joint_maximum_forecast_change": 0.0,
+      "oracle_filter_maximum_forecast_change": 0.0,
+      "all_baseline_reruns_maximum_saved_prediction_error": 0.0
+    },
+    "public_boundary_audit": {
+      "condition_decisions.json": {
+        "contains_fixed_complete_parameter_label": true,
+        "contains_pre_projection_covariance_scope": true,
+        "contains_post_projection_not_exact_additive_gaussian_boundary": true
+      },
+      "joint_method_certificate.json": {
+        "contains_fixed_complete_parameter_label": true,
+        "contains_pre_projection_covariance_scope": true,
+        "contains_post_projection_not_exact_additive_gaussian_boundary": true
+      },
+      "summary.json": {
+        "contains_fixed_complete_parameter_label": true,
+        "contains_pre_projection_covariance_scope": true,
+        "contains_post_projection_not_exact_additive_gaussian_boundary": true
+      },
+      "registry_entry.json": {
+        "contains_fixed_complete_parameter_label": true,
+        "contains_pre_projection_covariance_scope": true,
+        "contains_post_projection_not_exact_additive_gaussian_boundary": true
+      }
+    }
+  },
+  "scope_limits": [
+    "This review confirms numerical integrity and the preregistered decisions for eight matched synthetic blocks, nine fixed complete parameter and pre-projection covariance labels per block, 72 trials, 45 assimilation days, and one-, three-, and seven-day leads.",
+    "The complete thirteen-parameter truth label is fixed within each trial; parameter switching and process-noise switching are not tested.",
+    "The frozen covariance controls only the perturbation scale before physical projection. Physical projection occurs in 3527 of 3744 truth transitions, so the post-projection truth is not an exact additive Gaussian candidate model.",
+    "The evidence does not determine behavior under weak observations, shorter assimilation, forcing error, or real basins and does not establish general superiority of the joint method.",
+    "The dynamic future-observation negative control reruns one representative truth trial across every observation-driven method. Full-trial causal coverage is additionally supported by the single shared source path, which slices observations at the fixed 45-day assimilation boundary and passes only future forcing to forecasting.",
+    "A PASS verdict here means the negative and limited scientific decisions are faithfully supported; it does not convert those decisions into a positive joint-method claim."
+  ],
+  "reviewer_independence": {
+    "review_layer": "first independent code, method, and result review",
+    "reviewer_role": "independent reviewer, not the experiment implementer",
+    "prior_review_outputs_used": false,
+    "formal_summary_values_used_as_computational_inputs": false,
+    "raw_evidence_recalculated": true,
+    "source_and_configuration_reviewed": true,
+    "formal_evidence_directory_modified": false,
+    "only_written_artifact": "results/23_hbv_multilead_joint_uncertainty/joint_method_stable_validation_v04_reviews/code_method_result_review.json"
+  }
+}

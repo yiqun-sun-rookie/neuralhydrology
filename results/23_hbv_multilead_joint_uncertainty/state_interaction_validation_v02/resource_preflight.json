@@ -1,0 +1,17 @@
+{
+  "available_after_estimated_peak_bytes": 12573315152,
+  "available_physical_memory_bytes": 12726591488,
+  "candidate_count": 9,
+  "checked_at": "2026-07-17T14:40:55.509082+00:00",
+  "estimated_additional_peak_memory_bytes": 153276336,
+  "estimation_basis": "four copies of every array saved in evidence.npz, including full production and independent-reference covariance trajectories and the three-mode counterexample, plus a 64 MiB packaging allowance and a task-specific two-estimate and 64 MiB reserve",
+  "execution_parallelism": 1,
+  "expected_evidence_array_bytes": 21541868,
+  "interaction_steps": 30,
+  "safe_to_run": true,
+  "state_dimension": 15,
+  "task_specific_required_available_bytes": 526937872,
+  "task_specific_reserve_bytes": 373661536,
+  "trial_count": 16,
+  "universal_memory_threshold_used": false
+}

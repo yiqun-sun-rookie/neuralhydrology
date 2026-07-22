@@ -1,0 +1,21 @@
+{
+  "run_id": "state_correction_final_checkpoint_boundary_red_v01",
+  "run_type": "pre_fix_expected_failure_check",
+  "command": "python -m pytest -q --tb=short results\\23_hbv_multilead_joint_uncertainty\\state_correction_final_checkpoint_boundary_red_v01.failed\\test_final_checkpoint_boundary.py",
+  "started_at": "2026-07-16T23:17:53.4043969+08:00",
+  "finished_at": "2026-07-16T23:17:55.6485469+08:00",
+  "expected_exit_code": 1,
+  "source_variant": "state_correction_smoke_v06/source_snapshot pre-fix source",
+  "configuration": "src/hbv_multilead_joint_uncertainty/configs/state_correction_propagation_v07.json",
+  "numerical_thread_limit": 1,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "BLIS_NUM_THREADS": "1",
+    "PYTHONPATH": ""
+  },
+  "formal_artifacts_modified": false
+}

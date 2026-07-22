@@ -1,0 +1,27 @@
+{
+  "basin_id": "12375900",
+  "checks": {
+    "complete_evaluation_discharge": true
+  },
+  "evaluation_qc_flag_counts": {
+    "A": 352,
+    "A:e": 13
+  },
+  "failed_checks": [],
+  "missing_evaluation_days": 0,
+  "passed": true,
+  "performed_after_verified_contract": true,
+  "source": {
+    "area_gages2_km2": 19.72,
+    "area_source_path": "data/camels_us/camels_attributes_v2.0/camels_topo.txt",
+    "area_source_sha256": "b64ca9923bcaccf21dde33137903797919e8d6732edd7849f8534e0ddcbec8e8",
+    "conversion": "discharge_cfs * 2.4466 / area_gages2_km2",
+    "selected_date_end": "1990-09-30",
+    "selected_date_start": "1989-10-01",
+    "selected_line_count": 365,
+    "selected_source_lines_sha256": "6177d3ce008acee8c8ec5b9b69faddb766493dcde811c029ec41fdaebff3c411",
+    "source_path": "data/camels_us/usgs_streamflow/17/12375900_streamflow_qc.txt"
+  },
+  "verified_contract_checksums_sha256": "6dbb402646e0e9ae9283965f2ed9d4f0aacd9868bd55103f335997f8c6aac20a",
+  "verified_contract_id": "pilot_contract_six_v03"
+}

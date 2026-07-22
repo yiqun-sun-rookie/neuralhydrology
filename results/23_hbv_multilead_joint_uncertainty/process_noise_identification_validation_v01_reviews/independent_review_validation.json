@@ -1,0 +1,24 @@
+{
+  "validation_context": "process_noise_review_validation",
+  "validated_at": "2026-07-17T13:11:16.5714473Z",
+  "mode": "read_only_raw_evidence_validation_of_independent_review",
+  "result_evidence_sha256": "893b264400512a5b51741c2608de581a3d23df4b4f2bca9dc018220da8a91efd",
+  "conclusion": "confirmed",
+  "confirmed_items": {
+    "one_complete_thirteen_parameter_vector_and_three_covariances": true,
+    "classification_23_of_24_and_by_process_7_8_8": true,
+    "probability_reconstruction_maximum_absolute_error": 2.220446049250313e-16,
+    "matched_arrays_maximum_within_block_difference": 0.0,
+    "classification_interval_uses_matched_blocks": true,
+    "terminal_probability_interval_violates_matched_block_unit": true,
+    "correct_grouped_terminal_probability_interval": [0.9985835879695351, 0.9999954976157994],
+    "projection_event_days": 2880,
+    "meltwater_projection_days": 2880,
+    "negative_observation_count": 106,
+    "evidence_checksum_count": 26,
+    "protected_file_count": 281,
+    "random_truth_and_candidates_share_transition_implementation": true
+  },
+  "required_repair_confirmed": "grouped terminal-probability bootstrap",
+  "claim_limit_confirmed": "nominal pre-projection covariance scale identification only under the saved projected synthetic rule"
+}

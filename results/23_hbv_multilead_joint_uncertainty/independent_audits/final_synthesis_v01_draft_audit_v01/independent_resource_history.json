@@ -1,0 +1,130 @@
+{
+  "sampling_interval_seconds": 0.2,
+  "sample_count": 12,
+  "maximum_sampling_gap_seconds": 0.21900000001187436,
+  "minimum_available_memory_fraction": 0.2980580325500787,
+  "maximum_process_resident_memory_gibibytes": 0.05902099609375,
+  "minimum_disk_free_gibibytes": 2166.527660369873,
+  "samples": [
+    {
+      "timestamp_utc": "2026-07-15T05:26:25.955142+00:00",
+      "event": "start",
+      "available_memory_gibibytes": 9.484172821044922,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.2991830591143758,
+      "process_resident_memory_gibibytes": 0.040164947509765625,
+      "disk_free_gibibytes": 2166.528148651123,
+      "logical_processor_count": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:26:26.165886+00:00",
+      "event": "periodic",
+      "available_memory_gibibytes": 9.458904266357422,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.2983859496949829,
+      "process_resident_memory_gibibytes": 0.041385650634765625,
+      "disk_free_gibibytes": 2166.528148651123,
+      "logical_processor_count": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:26:26.371834+00:00",
+      "event": "periodic",
+      "available_memory_gibibytes": 9.545036315917969,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.301103029039861,
+      "process_resident_memory_gibibytes": 0.04145050048828125,
+      "disk_free_gibibytes": 2166.528148651123,
+      "logical_processor_count": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:26:26.574086+00:00",
+      "event": "periodic",
+      "available_memory_gibibytes": 9.472030639648438,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.29880002782181425,
+      "process_resident_memory_gibibytes": 0.0405426025390625,
+      "disk_free_gibibytes": 2166.528148651123,
+      "logical_processor_count": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:26:26.776117+00:00",
+      "event": "periodic",
+      "available_memory_gibibytes": 9.472175598144531,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.2988046006113579,
+      "process_resident_memory_gibibytes": 0.05266571044921875,
+      "disk_free_gibibytes": 2166.528148651123,
+      "logical_processor_count": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:26:26.980448+00:00",
+      "event": "periodic",
+      "available_memory_gibibytes": 9.469741821289062,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.29872782588165187,
+      "process_resident_memory_gibibytes": 0.04575347900390625,
+      "disk_free_gibibytes": 2166.528148651123,
+      "logical_processor_count": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:26:27.197630+00:00",
+      "event": "periodic",
+      "available_memory_gibibytes": 9.448509216308594,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.2980580325500787,
+      "process_resident_memory_gibibytes": 0.05902099609375,
+      "disk_free_gibibytes": 2166.528148651123,
+      "logical_processor_count": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:26:27.404606+00:00",
+      "event": "periodic",
+      "available_memory_gibibytes": 9.454826354980469,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.2982573099049269,
+      "process_resident_memory_gibibytes": 0.047542572021484375,
+      "disk_free_gibibytes": 2166.528148651123,
+      "logical_processor_count": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:26:27.617650+00:00",
+      "event": "periodic",
+      "available_memory_gibibytes": 9.523101806640625,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.3004110937799713,
+      "process_resident_memory_gibibytes": 0.04921722412109375,
+      "disk_free_gibibytes": 2166.528148651123,
+      "logical_processor_count": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:26:27.825130+00:00",
+      "event": "periodic",
+      "available_memory_gibibytes": 9.488128662109375,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.29930784813428984,
+      "process_resident_memory_gibibytes": 0.049327850341796875,
+      "disk_free_gibibytes": 2166.527660369873,
+      "logical_processor_count": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:26:28.028314+00:00",
+      "event": "periodic",
+      "available_memory_gibibytes": 9.459880828857422,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.2984167558561189,
+      "process_resident_memory_gibibytes": 0.048648834228515625,
+      "disk_free_gibibytes": 2166.527660369873,
+      "logical_processor_count": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:26:28.117624+00:00",
+      "event": "finish",
+      "available_memory_gibibytes": 9.452457427978516,
+      "total_memory_gibibytes": 31.700233459472656,
+      "available_memory_fraction": 0.2981825808968588,
+      "process_resident_memory_gibibytes": 0.04764556884765625,
+      "disk_free_gibibytes": 2166.527660369873,
+      "logical_processor_count": 32
+    }
+  ]
+}

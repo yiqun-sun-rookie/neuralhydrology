@@ -1,0 +1,1 @@
+{"run_id":"state_correction_callback_tests_green_v01","command":"python -m pytest -q test/test_hbv_state_correction_diagnostic.py::test_diagnostic_replay_reports_each_completed_origin_for_resource_checks","expected_status":"passed","resource_config":"state_correction_propagation_v03.json"}

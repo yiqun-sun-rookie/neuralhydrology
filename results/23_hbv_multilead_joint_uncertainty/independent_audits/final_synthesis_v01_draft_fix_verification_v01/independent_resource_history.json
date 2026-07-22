@@ -1,0 +1,26 @@
+{
+  "sampling_interval_seconds": 0.2,
+  "sample_count": 2,
+  "maximum_sampling_gap_seconds": 0.046999999991385266,
+  "minimum_available_memory_fraction": 0.3045866523161299,
+  "maximum_process_resident_memory_gibibytes": 0.038585662841796875,
+  "minimum_disk_free_gibibytes": 2166.5068435668945,
+  "samples": [
+    {
+      "timestamp_utc": "2026-07-15T05:39:16.428717+00:00",
+      "event": "start",
+      "available_memory_fraction": 0.3045866523161299,
+      "available_memory_gibibytes": 9.655467987060547,
+      "process_resident_memory_gibibytes": 0.036590576171875,
+      "disk_free_gibibytes": 2166.5068435668945
+    },
+    {
+      "timestamp_utc": "2026-07-15T05:39:16.472934+00:00",
+      "event": "finish",
+      "available_memory_fraction": 0.3045986859728237,
+      "available_memory_gibibytes": 9.65584945678711,
+      "process_resident_memory_gibibytes": 0.038585662841796875,
+      "disk_free_gibibytes": 2166.5068435668945
+    }
+  ]
+}

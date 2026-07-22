@@ -1,0 +1,17 @@
+{
+  "assimilation_days_per_trial": 120,
+  "available_after_estimated_peak_bytes": 10755466368,
+  "available_physical_memory_bytes": 10800005120,
+  "checked_at": "2026-07-17T13:03:58.045209+00:00",
+  "estimated_additional_peak_memory_bytes": 44538752,
+  "estimation_basis": "three in-memory copies of forcing, truth, candidate and packaging arrays; three sequential filters; plus a task-specific two-estimate and 64 MiB reserve",
+  "execution_parallelism": 1,
+  "forcing_days_per_trial": 240,
+  "matched_block_count": 8,
+  "process_noise_candidate_count": 3,
+  "safe_to_run": true,
+  "task_specific_required_available_bytes": 200725120,
+  "task_specific_reserve_bytes": 156186368,
+  "trial_count": 24,
+  "universal_memory_threshold_used": false
+}

@@ -1,0 +1,278 @@
+{
+  "candidate_prior_discharge_root_mean_square_error_by_trial": [
+    [
+      0.2759544625744273,
+      0.40718898228396566,
+      0.631790951781541
+    ],
+    [
+      0.6648585003047448,
+      0.5732680835833446,
+      0.7300523530780333
+    ],
+    [
+      1.8520815026101551,
+      1.358713324191507,
+      1.2610398847430944
+    ],
+    [
+      0.28103092469075003,
+      0.44636433398694797,
+      0.642928708125475
+    ],
+    [
+      0.6067248353444643,
+      0.5672903690399164,
+      0.722648970883498
+    ],
+    [
+      2.1178836100271656,
+      1.5613661855572043,
+      1.3551405939190795
+    ],
+    [
+      0.2559740312465466,
+      0.30867099385285457,
+      0.5803202229375729
+    ],
+    [
+      0.7081270949210022,
+      0.5325976248427904,
+      0.6966864195890894
+    ],
+    [
+      1.8518104517801293,
+      1.2239901707740568,
+      1.0345471076041073
+    ],
+    [
+      0.28513819710691546,
+      0.3888437846585177,
+      0.6539756389246372
+    ],
+    [
+      0.7792238243314983,
+      0.5923673393671739,
+      0.7613409699572145
+    ],
+    [
+      2.203469415557042,
+      1.5155525616401024,
+      1.2360955379213967
+    ],
+    [
+      0.29950433966774354,
+      0.3613256115362001,
+      0.5791041808341638
+    ],
+    [
+      0.9560186940034018,
+      0.6449334606559394,
+      0.6750771406754927
+    ],
+    [
+      3.12887336924697,
+      2.059239617294095,
+      1.5162954322724982
+    ],
+    [
+      0.3952495528534977,
+      0.4517620624568684,
+      0.6384060518527632
+    ],
+    [
+      1.0328679707804533,
+      0.6803699784107334,
+      0.8081721446278382
+    ],
+    [
+      3.030507706321088,
+      2.0154620655083595,
+      1.7178713493809554
+    ],
+    [
+      0.17069082521561474,
+      0.34814597782350487,
+      0.6157099085816083
+    ],
+    [
+      0.5029458480043562,
+      0.42933674625648255,
+      0.6597755569868136
+    ],
+    [
+      2.3235633801584257,
+      1.692025623715755,
+      1.528607309240277
+    ],
+    [
+      0.32083479061817555,
+      0.40677093855392576,
+      0.6058486930178838
+    ],
+    [
+      0.7758772011770247,
+      0.5850483503176883,
+      0.6914075750862434
+    ],
+    [
+      2.6030579606537323,
+      1.7701295412335212,
+      1.4293193557141393
+    ]
+  ],
+  "experiment_id": "process_noise_identification_validation_v01",
+  "finished_at": "2026-07-17T12:38:31.260611+00:00",
+  "gate_pass": true,
+  "gate_values": {
+    "correct_classification_count": 23,
+    "correct_classification_count_by_process": {
+      "process_0": 7,
+      "process_1": 8,
+      "process_2": 8
+    },
+    "matched_block_accuracy_bootstrap_lower": 0.875,
+    "median_terminal_true_probability": 0.9997753875986753
+  },
+  "gates": {
+    "correct_classification_count_minimum": 20,
+    "correct_classification_count_per_process_minimum": 6,
+    "matched_block_accuracy_bootstrap_lower_minimum": 0.6666666666666666,
+    "median_terminal_true_probability_minimum": 0.6
+  },
+  "generated_observation_noise": "Gaussian with frozen common standard deviation",
+  "interaction_mode": "none",
+  "matched_block_accuracy": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.6666666666666666,
+    1.0,
+    1.0
+  ],
+  "matched_block_accuracy_bootstrap_interval": [
+    0.875,
+    1.0
+  ],
+  "matched_block_count": 8,
+  "observation_noise_source_sha256": "f358c77b655285b348604266af43dfcd7b875ea756145f6d9b33c8853a5d8955",
+  "observation_standard_deviation": 0.9463681992025424,
+  "parameter_id": "trained_center",
+  "parameter_source_sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+  "parameter_switching": false,
+  "predicted_process_noise_ids": [
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_1",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2"
+  ],
+  "process_noise_candidate_count": 3,
+  "process_noise_ids": [
+    "process_0",
+    "process_1",
+    "process_2"
+  ],
+  "process_noise_source_sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+  "process_noise_switching": false,
+  "protected_artifacts_unchanged": true,
+  "scope_limit": "This component isolates three fixed process-noise covariances under one fixed complete parameter vector, matched synthetic forcing and random draws, no switching and no interaction.",
+  "selected_observation_noise_snapshot_sha256": "5bc0adc216ced6c6b0d281ed5c9cd3a158d65e2f3a369d657afaaccb67a1c678",
+  "selected_parameter_snapshot_sha256": "3c258993f23c779dbafd04d6d70de8616d75b2b9cfcaf6e15d36be1e879a2286",
+  "selected_process_noise_snapshot_sha256": "99af375c711c382b50d4fe42b3d1802466cef03d7e2f62f9c5d23171e886ef96",
+  "started_at": "2026-07-17T12:38:03.929879+00:00",
+  "status": "passed",
+  "terminal_true_probability_bootstrap_interval": [
+    0.997738258380064,
+    0.9999999946080764
+  ],
+  "terminal_true_probability_by_trial": [
+    0.9985196296036293,
+    0.9184664454309782,
+    0.9999999826915407,
+    0.9572110545965946,
+    0.9996901407226501,
+    1.0,
+    0.9917041747223928,
+    0.9998480058414175,
+    0.9999999999999976,
+    0.8519934590882429,
+    0.9999951423051782,
+    1.0,
+    0.998647546335441,
+    0.9999999946080764,
+    1.0,
+    0.25399874037656267,
+    0.9997027693559332,
+    1.0,
+    0.9977739557217085,
+    0.9912562675934579,
+    1.0,
+    0.995786376037478,
+    0.9999954976157994,
+    1.0
+  ],
+  "terminal_window_days": 10,
+  "trial_count": 24,
+  "trial_count_by_process": {
+    "process_0": 8,
+    "process_1": 8,
+    "process_2": 8
+  },
+  "true_candidate_lowest_discharge_error_count": 24,
+  "true_process_noise_ids": [
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2",
+    "process_0",
+    "process_1",
+    "process_2"
+  ],
+  "truth_projection_event_count": 2880,
+  "truth_projection_event_count_by_process": {
+    "process_0": 960,
+    "process_1": 960,
+    "process_2": 960
+  },
+  "truth_projection_event_total": 2880,
+  "truth_projection_maximum_absolute_adjustment": 108.57584930119693
+}

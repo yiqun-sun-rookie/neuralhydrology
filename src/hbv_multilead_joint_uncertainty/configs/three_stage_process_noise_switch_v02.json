@@ -1,0 +1,29 @@
+{
+  "experiment_id": "three_stage_process_noise_switch_v02",
+  "scenario": "process_noise_switch",
+  "purpose": "Test whether the three-process-covariance interacting multiple model transfers weight to the current pre-projection process-noise truth scale after two known switch boundaries and improves one-, three-, and seven-day observation-free forecasts.",
+  "parameter_source": {"path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/parameter_vectors.csv", "sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f", "source_basin_id": "12143600", "parameter_ids": ["equifinal_diverse_1", "trained_center", "equifinal_diverse_2"]},
+  "process_noise_source": {"path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/process_noise_covariances.csv", "sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2", "source_basin_id": "12143600", "process_ids": ["process_0", "process_1", "process_2"], "selected_process_id": "process_2"},
+  "observation_noise_source": {"path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/observation_noise.csv", "sha256": "f358c77b655285b348604266af43dfcd7b875ea756145f6d9b33c8853a5d8955", "source_basin_id": "12143600"},
+  "matched_blocks": [
+    {"block_id": "three_stage_block_01", "forcing_seed": 990001, "process_noise_seed": 991001, "observation_noise_seed": 992001},
+    {"block_id": "three_stage_block_02", "forcing_seed": 990002, "process_noise_seed": 991002, "observation_noise_seed": 992002},
+    {"block_id": "three_stage_block_03", "forcing_seed": 990003, "process_noise_seed": 991003, "observation_noise_seed": 992003},
+    {"block_id": "three_stage_block_04", "forcing_seed": 990004, "process_noise_seed": 991004, "observation_noise_seed": 992004},
+    {"block_id": "three_stage_block_05", "forcing_seed": 990005, "process_noise_seed": 991005, "observation_noise_seed": 992005},
+    {"block_id": "three_stage_block_06", "forcing_seed": 990006, "process_noise_seed": 991006, "observation_noise_seed": 992006},
+    {"block_id": "three_stage_block_07", "forcing_seed": 990007, "process_noise_seed": 991007, "observation_noise_seed": 992007},
+    {"block_id": "three_stage_block_08", "forcing_seed": 990008, "process_noise_seed": 991008, "observation_noise_seed": 992008}
+  ],
+  "forcing": {"warmup_days": 45, "reference_total_days": 97, "rain_shape": 0.8, "rain_scale": 4.0},
+  "stage_lengths": [15, 15, 15],
+  "lead_days": [1, 3, 7],
+  "initial_covariance_fraction": 0.001,
+  "factor_transition_stay_probability": 0.98,
+  "bootstrap": {"unit": "matched_block", "replicates": 20000, "seed": 575757},
+  "decision_rules": {"adaptation_days_excluded_per_stage": 5, "candidate_argmax_accuracy_minimum": 0.5, "factor_argmax_accuracy_minimum": 0.6666666666666666, "median_true_candidate_probability_minimum": 0.2, "relative_root_mean_square_error_improvement_percent_minimum": 5.0, "paired_block_difference_upper_maximum": 0.0},
+  "integrity_gates": {"truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0, "observation_reconstruction_maximum_absolute_error": 0.0, "forecast_target_reconstruction_maximum_absolute_error": 0.0, "method_mixture_reconstruction_maximum_absolute_error": 1e-10, "method_probability_sum_maximum_absolute_error": 1e-12, "minimum_method_probability": 0.0},
+  "resource_pilot": {"source": "results/23_hbv_multilead_joint_uncertainty/three_stage_switching_resource_pilot_v01/resource_pilot_measurements.json", "sha256": "38e2d86f5989b897540515515c7b5a8774fb5fa854f957c28b3fbe53d18d409c", "block_count": 1, "truth_trial_count": 3, "elapsed_seconds": 9.443416699999943, "observed_peak_resident_memory_growth_bytes": 38658048},
+  "protected_paths": ["results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05", "results/23_hbv_multilead_joint_uncertainty/joint_method_stable_validation_v04", "results/23_hbv_multilead_joint_uncertainty/joint_method_periodic_switch_07d_v01", "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v11", "results/23_hbv_multilead_joint_uncertainty/three_stage_switching_resource_pilot_v01", "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_switch_v01", "results/23_hbv_multilead_joint_uncertainty/three_stage_process_noise_switch_v01", "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_process_noise_switch_v01"],
+  "scope_limit": "The exact current pre-projection process covariance is always present among three candidates. The complete trained-center parameter vector stays fixed. Each fifteen-day stage excludes its first five days from identification scoring. Physical state projection means the post-projection perturbation distribution is not exactly additive Gaussian. Results do not establish behavior for absent candidates, other switch intervals, transition probabilities, forcing errors, observation strengths, or real basins."
+}

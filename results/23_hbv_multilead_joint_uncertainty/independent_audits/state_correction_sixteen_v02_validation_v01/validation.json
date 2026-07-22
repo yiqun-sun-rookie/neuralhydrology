@@ -1,0 +1,38 @@
+{
+  "validation_id": "state_correction_sixteen_v02_validation_v01",
+  "validation_mode": "second independent read-only validation of the audit",
+  "result": "PASS",
+  "blocking_findings": [],
+  "validated_conclusion": "The single direct correction to candidate state means at the forecast origin is not the main cause of persistent day-3 and day-7 degradation. The unresolved residual combines shared pre-origin update history, posterior covariance, and model probabilities; this design cannot separate their individual contributions.",
+  "validated_gate": {
+    "result": "FAIL_STOP",
+    "seven_day_median_rmse_change_percent_vs_open_loop": 88.52999562470454,
+    "seven_day_strict_win_count": 4,
+    "one_day_median_rmse_increase_percent_vs_current_joint": 13.258351532085342,
+    "run_531": false
+  },
+  "validated_counterfactuals": {
+    "origin_mean_removed_three_day_percent_vs_current_joint": 3.41353178384463,
+    "origin_mean_removed_seven_day_percent_vs_current_joint": 1.3467663976739352,
+    "origin_mean_removed_three_day_percent_vs_open_loop": 48.687871776264004,
+    "origin_mean_removed_seven_day_percent_vs_open_loop": 85.42147420137817,
+    "additional_taper_three_day_percent_vs_current_joint": -0.4139751340334854,
+    "additional_taper_seven_day_percent_vs_current_joint": 0.6745733714704126
+  },
+  "validated_integrity": {
+    "output_hashes_matched": 120,
+    "source_snapshot_hashes_matched": 45,
+    "input_hashes_matched": 80,
+    "frozen_hashes_matched": 279,
+    "checkpoint_count_with_358_completed_origins": 16,
+    "maximum_monitor_gap_seconds": 9.749040842056274,
+    "minimum_available_memory_fraction": 0.08222308811067498,
+    "causality_difference": 0.0,
+    "shared_prior_difference": 0.0,
+    "physical_boundary_violation_count": 0
+  },
+  "validated_nonblocking_finding": "The obsolete continuation-gate default was real, did not affect the formal result, and required no rerun of 16 basins.",
+  "files_modified_by_validator": false,
+  "ran_531": false,
+  "commit_or_push": false
+}

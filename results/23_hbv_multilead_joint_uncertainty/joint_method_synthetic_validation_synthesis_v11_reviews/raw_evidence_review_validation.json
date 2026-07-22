@@ -1,0 +1,306 @@
+{
+  "verdict": "PASS",
+  "validated_review_verdict": "CONFIRMED",
+  "must_fix_count": 0,
+  "must_fix": [],
+  "conclusion_changing_defect": false,
+  "confirmed_first_review": true,
+  "verdict_detail": "第二层独立原始证据复核确认第一层代码、方法和结果审查。版本十一正式包的十一项清单、二十一条输入清单、九条双审链、四条件原始数组重算、声明边界、任务特定资源估算和四十一条保护路径均匹配；关键历史治理反例均按预期失败关闭。未发现结论改变问题或新的必须修复问题。审查通过只表示受限验证链完整，不表示联合方法具有广泛优越性；科学状态仍为 HOLD。",
+  "disagreements": [],
+  "artifact_chain_validation": {
+    "canonical_configuration_relative_path": "src/hbv_multilead_joint_uncertainty/configs/joint_method_synthetic_validation_synthesis_v11.json",
+    "canonical_configuration_sha256": "91b20ec5db8b9ca9462b3d19a48b03f6ec9132804c34b3e837db2907f55fbccc",
+    "configuration_snapshot_structurally_equal": true,
+    "source_snapshot_byte_equal_to_live_source": true,
+    "source_snapshot_sha256": "83fd582fe086458d18ea3a2d04b8772b69dd013f4c52dd8ce58b0ece33a4ac48",
+    "formal_test_snapshot_byte_equal_to_live_test": true,
+    "formal_test_snapshot_sha256": "d3078fca7c62a1a37b175d17b93f23eb0cd4007dc700f65da817359cc1271b9e",
+    "synthesis_manifest_sha256": "bcdbbf31c65bf0a2f1dddb8628ea97e63b18e16c70edbd4f81f970579ba59802",
+    "synthesis_manifest_entry_count": 11,
+    "synthesis_actual_file_count_including_manifest": 12,
+    "synthesis_file_set_mismatch_count": 0,
+    "synthesis_checksum_mismatch_count": 0,
+    "synthesis_required_items": [
+      "claim_evidence.csv",
+      "component_summary.json",
+      "config_snapshot.json",
+      "final_conditions.csv",
+      "final_synthesis.md",
+      "input_evidence_integrity.json",
+      "protected_artifact_integrity.json",
+      "resource_preflight.json",
+      "source_snapshot/run_joint_method_synthesis.py",
+      "source_snapshot/test_hbv_joint_method_synthesis.py",
+      "summary.json"
+    ],
+    "component_evidence_count": 12,
+    "component_status_passed_count": 12,
+    "component_evidence": [
+      "synthetic_truth_propagation_v04",
+      "single_filter_state_validation_v02",
+      "parameter_identification_validation_v01",
+      "process_noise_identification_validation_v02",
+      "model_probability_validation_v02",
+      "state_interaction_validation_v02",
+      "observation_free_forecast_validation_v02",
+      "joint_method_assimilation_07d_v01",
+      "joint_method_assimilation_21d_v01",
+      "joint_method_stable_validation_v04",
+      "joint_method_assimilation_duration_boundary_v01",
+      "joint_method_periodic_switch_07d_v01"
+    ],
+    "configured_component_and_review_path_count": 21,
+    "input_manifest_entry_count": 336,
+    "input_file_count_including_manifests": 357,
+    "input_file_set_mismatch_count": 0,
+    "input_checksum_mismatch_count": 0
+  },
+  "double_review_chain_validation": {
+    "chain_count": 9,
+    "review_file_count": 18,
+    "two_nonempty_review_files_count": 9,
+    "exact_positive_first_decision_count": 9,
+    "exact_positive_second_decision_count": 9,
+    "zero_first_required_fix_count": 9,
+    "zero_second_required_fix_count": 9,
+    "zero_contradiction_count": 9,
+    "zero_unverified_item_count": 9,
+    "passed_chain_count_for_current_frozen_files": 9,
+    "covered_components": [
+      "single_filter_state_validation_v02",
+      "parameter_identification_validation_v01",
+      "process_noise_identification_validation_v02",
+      "model_probability_validation_v02",
+      "state_interaction_validation_v02",
+      "observation_free_forecast_validation_v02",
+      "joint_method_stable_validation_v04",
+      "joint_method_assimilation_duration_boundary_v01",
+      "joint_method_periodic_switch_07d_v01"
+    ],
+    "scope_note": "七天和二十一天固定标签条件由同化长度边界双审链覆盖；十二个组件不是每个都具有同名审查目录。"
+  },
+  "governance_adversarial_replay": {
+    "first_review_historical_must_fix_count": 11,
+    "first_review_historical_must_fix_ids": [
+      "review_chain_schema_must_fail_closed",
+      "claim_evidence_must_be_complete_and_traceable",
+      "review_decision_values_must_fail_closed",
+      "review_schema_must_be_exact_and_non_contradictory",
+      "second_review_decision_schema_must_fail_closed",
+      "all_registered_and_suspicious_decision_signals_must_fail_closed",
+      "legacy_confirmed_items_list_must_be_bound_to_frozen_parameter_review",
+      "legacy_confirmed_items_list_must_bind_unique_frozen_directory_path",
+      "legacy_review_exception_must_reject_forged_repository_root",
+      "legacy_review_exception_must_bind_source_derived_config_and_complete_frozen_identity",
+      "existing_output_verification_must_validate_canonical_root_and_config_first"
+    ],
+    "key_historical_counterexamples_replayed": true,
+    "external_byte_identical_configuration_copy_against_existing_v11_output": "rejected with ValueError before existing-output return",
+    "external_one_byte_appended_configuration_against_existing_v11_output": "rejected with ValueError before existing-output return",
+    "forged_repository_root_against_existing_v11_output": "rejected with ValueError before existing-output return",
+    "direct_review_entry_on_real_legacy_list": "rejected with ValueError because the direct entry does not authorize the legacy list",
+    "direct_review_entry_with_forged_repository_context_argument": "rejected with TypeError because the direct entry accepts no repository-root authorization argument",
+    "registered_legacy_entry_passed": true,
+    "registered_legacy_first_review_sha256": "c95ffa6ca124e8ceb4b45d8faae7962a356a888dd8b7491ccce799dce466d84a",
+    "registered_legacy_second_review_sha256": "b512dace4e24cc7e091ef322c589c116241876d44f84e738a04b5091f5f73b3b",
+    "registered_legacy_manifest_sha256": "0f6c63405803c850b03129d2f4dca5b59e22b196bd763a99be5686b8a7733a31",
+    "registered_legacy_first_review_verdict": "valid_only_for_the_registered_ideal_closed_conditions",
+    "registered_legacy_second_review_verdict": "confirmed_with_one_wording_correction",
+    "canonical_existing_output_returned_passed_summary": true,
+    "formal_output_file_count_before_and_after": 12,
+    "formal_output_tree_sha256_before": "1381e9cd974bba69253462bf93e930d5a0acff37948600cacba4fc37d54154c2",
+    "formal_output_tree_sha256_after": "1381e9cd974bba69253462bf93e930d5a0acff37948600cacba4fc37d54154c2",
+    "formal_output_unchanged": true
+  },
+  "formal_test_replay": {
+    "command": "python -m pytest -q test/test_hbv_joint_method_synthesis.py with bytecode writing and pytest cache disabled",
+    "exit_code": 0,
+    "passed_count": 42,
+    "failed_count": 0,
+    "pre_existing_pytest_configuration_warning_count": 1,
+    "note": "进程退出阶段另有一条与本任务无关的临时测试目录清理权限警告；它指向临时目录中的 unified_autoresearch 垃圾路径，不指向版本十一正式证据，测试退出码仍为零。"
+  },
+  "independent_raw_component_recalculations": {
+    "state_propagation": {
+      "state_maximum_absolute_error": 5.684341886080802e-14,
+      "discharge_maximum_absolute_error": 2.220446049250313e-15
+    },
+    "single_filter": {
+      "state_improvement_trials_relative_to_same_filter_without_observations": 20,
+      "one_day_flow_improvement_trials_relative_to_same_filter_without_observations": 24,
+      "trial_count": 24
+    },
+    "isolated_complete_parameter_identification": {
+      "correct_trials": 24,
+      "trial_count": 24
+    },
+    "isolated_projected_process_scale_identification": {
+      "correct_trials": 23,
+      "trial_count": 24
+    },
+    "joint_probability_update": {
+      "prior_correct": 10452,
+      "posterior_correct": 10884,
+      "total": 11680,
+      "prior_accuracy": 0.8948630136986301,
+      "posterior_accuracy": 0.9318493150684931
+    },
+    "state_interaction": {
+      "combined_mean_maximum_absolute_error": 1.4210854715202004e-13,
+      "combined_covariance_maximum_absolute_error": 2.7284841053187847e-12,
+      "candidate_state_maximum_absolute_error": 1.7053025658242404e-13
+    },
+    "observation_free_forecast": {
+      "combined_prediction_maximum_absolute_error": 4.440892098500626e-16,
+      "candidate_prediction_maximum_absolute_error": 2.6645352591003757e-15,
+      "probability_maximum_absolute_error": 0.0,
+      "combined_state_maximum_absolute_error": 2.842170943040401e-14
+    },
+    "assimilation_duration_prefix_integrity": {
+      "comparison_count": 18,
+      "all_exact": true,
+      "non_exact_count": 0
+    }
+  },
+  "four_condition_raw_recalculation": {
+    "method": "逐个串行读取四个 evidence.npz，只从保存的概率、预报、真实流量、起报状态和冻结配置重算识别率、全局均方根误差、八个匹配块的配对自助法区间及全部布尔门，然后才与正式表格比较。",
+    "derived_array_identity_maximum_absolute_difference": 0.0,
+    "maximum_absolute_difference_from_saved_metric_or_bootstrap_tables": 7.105427357601002e-15,
+    "identification_thresholds": {
+      "joint_candidate_argmax_accuracy_minimum": 0.5,
+      "joint_parameter_argmax_accuracy_minimum": 0.6666666666666666,
+      "joint_process_argmax_accuracy_minimum": 0.6666666666666666,
+      "median_joint_true_candidate_probability_minimum": 0.2
+    },
+    "forecast_thresholds": {
+      "minimum_relative_root_mean_square_error_improvement_percent_against_fixed_filter": 5.0,
+      "paired_block_root_mean_square_error_difference_upper_must_be_strictly_below": 0.0,
+      "added_value_requires_negative_upper_bound_against_parameter_only_and_process_scale_only": true
+    },
+    "conditions": [
+      {
+        "condition_id": "fixed_07_days",
+        "joint_candidate_correct": "21/72",
+        "joint_parameter_correct": "34/72",
+        "joint_process_correct": "40/72",
+        "median_joint_true_candidate_probability": 0.14982094370470275,
+        "joint_forecast_root_mean_square_error_days_1_3_7": [0.8164715687017786, 1.6747953754534604, 1.9427505324939291],
+        "joint_origin_state_root_mean_square_error": 0.16758942405862112,
+        "joint_identification_effective": false,
+        "forecast_effective_against_fixed_days_1_3_7": [true, true, true],
+        "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+        "origin_state_effective_against_fixed": true,
+        "origin_state_added_value_beyond_both": true
+      },
+      {
+        "condition_id": "fixed_21_days",
+        "joint_candidate_correct": "25/72",
+        "joint_parameter_correct": "33/72",
+        "joint_process_correct": "45/72",
+        "median_joint_true_candidate_probability": 0.18039874096670724,
+        "joint_forecast_root_mean_square_error_days_1_3_7": [0.8441853761039364, 1.142397744284536, 2.2940148032730705],
+        "joint_origin_state_root_mean_square_error": 0.2129194392400516,
+        "joint_identification_effective": false,
+        "forecast_effective_against_fixed_days_1_3_7": [true, true, true],
+        "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+        "origin_state_effective_against_fixed": true,
+        "origin_state_added_value_beyond_both": true
+      },
+      {
+        "condition_id": "fixed_45_days",
+        "joint_candidate_correct": "37/72",
+        "joint_parameter_correct": "43/72",
+        "joint_process_correct": "61/72",
+        "median_joint_true_candidate_probability": 0.24446729489293278,
+        "joint_forecast_root_mean_square_error_days_1_3_7": [0.8614678738612609, 1.3588597056268628, 1.2040603024466145],
+        "joint_origin_state_root_mean_square_error": 0.26586634153813155,
+        "joint_identification_effective": false,
+        "failed_identification_gate": "完整参数标签正确数为 43/72，低于 48/72 阈值。",
+        "forecast_effective_against_fixed_days_1_3_7": [false, false, true],
+        "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+        "origin_state_effective_against_fixed": true,
+        "origin_state_added_value_beyond_both": false
+      },
+      {
+        "condition_id": "periodic_switch_07_days",
+        "joint_candidate_correct": "10/72",
+        "joint_parameter_correct": "26/72",
+        "joint_process_correct": "28/72",
+        "median_joint_true_candidate_probability": 0.08205526412068902,
+        "joint_forecast_root_mean_square_error_days_1_3_7": [0.9258281399866716, 1.3641628543870818, 2.1017156824407444],
+        "joint_origin_state_root_mean_square_error": 0.28648501712528235,
+        "joint_identification_effective": false,
+        "forecast_effective_against_fixed_days_1_3_7": [false, false, false],
+        "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+        "origin_state_effective_against_fixed": true,
+        "origin_state_added_value_beyond_both": false
+      }
+    ],
+    "maximum_absolute_numeric_difference_from_final_conditions_csv": 4.440892098500626e-16,
+    "boolean_decision_mismatch_count": 0,
+    "joint_identification_passed_conditions": "0/4",
+    "forecast_added_value_beyond_both_single_factor_methods": "0/12 condition-by-lead targets"
+  },
+  "claim_boundary_validation": {
+    "row_count": 17,
+    "duplicate_claim_id_count": 0,
+    "empty_cell_count": 0,
+    "fact_claim_count": 11,
+    "inference_claim_count": 1,
+    "unknown_claim_count": 5,
+    "unknown_claim_ids": [
+      "longer_assimilation",
+      "other_switch_conditions",
+      "real_basin_performance",
+      "other_observation_or_forcing_error",
+      "post_projection_gaussian_model"
+    ],
+    "joint_identification_fact": "0/4 tested conditions",
+    "joint_forecast_added_value_fact": "0/12 condition-by-lead targets",
+    "broad_method_claim_classification": "inference",
+    "broad_method_claim_authorization": "not_authorized",
+    "scope_assessment": "负面事实只适用于冻结的十五状态模型、三个完整十三参数向量、三个投影前过程尺度候选、八个匹配块、七天、二十一天和四十五天固定标签同化以及一个七天同步切换压力条件。真实流域、超过四十五天同化、其他切换周期或转移先验、其他观测不确定性、强迫误差和精确投影后加性高斯过程模型目前无法确定。"
+  },
+  "resource_preflight_validation": {
+    "maximum_input_file_bytes": 12270573,
+    "formula": "4 * 12270573 + 33554432 + 67108864",
+    "estimated_additional_peak_memory_bytes": 82636724,
+    "task_specific_reserve_bytes": 67108864,
+    "task_specific_required_available_bytes": 149745588,
+    "available_physical_memory_bytes_at_second_review_preflight": 550297600,
+    "headroom_after_requirement_bytes_at_second_review_preflight": 400552012,
+    "execution_parallelism": 1,
+    "universal_memory_threshold_used": false,
+    "safe_to_run": true,
+    "resource_gate_bypassed": false,
+    "assessment": "按最大输入文件、串行哈希、逐条件原始数组和小型表格重算估算；实际按条件串行执行，并行度为一，具有正安全余量。"
+  },
+  "protected_history_validation": {
+    "configured_path_count": 41,
+    "current_file_count": 487,
+    "recorded_before_sha256": "97f817ec180c78df083d4684a73908ea55f0ef7f3ae9de93f9d1ce092560e0f0",
+    "recorded_after_sha256": "97f817ec180c78df083d4684a73908ea55f0ef7f3ae9de93f9d1ce092560e0f0",
+    "independently_recalculated_current_sha256": "97f817ec180c78df083d4684a73908ea55f0ef7f3ae9de93f9d1ce092560e0f0",
+    "matches_version_eleven_record": true,
+    "unchanged": true
+  },
+  "scientific_assessment": {
+    "changed_by_second_review": false,
+    "validation_goal_complete_within_registered_scope": true,
+    "numerical_chain_validated": true,
+    "joint_identification_supported": false,
+    "joint_added_value_supported": false,
+    "broad_scientific_claim_authorized": false,
+    "scientific_status": "HOLD",
+    "current_frozen_boundary": "联合识别在四个已测试条件中为零比四；超过参数单因素和过程尺度单因素方法的预报增值在十二个条件与预见期组合中为零比十二。真实流域、超过四十五天的同化、其他切换条件、其他观测或强迫误差以及精确投影后加性高斯过程模型均未得到验证，目前无法确定。"
+  },
+  "reviewer_independence": {
+    "layer": "second_independent_raw_evidence_validation",
+    "first_review_read_before_raw_validation": true,
+    "raw_arrays_and_manifests_recalculated_independently": true,
+    "code_or_formal_evidence_modified": false,
+    "first_review_modified": false,
+    "resource_gate_bypassed": false,
+    "only_persistent_file_written": "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v11_reviews/raw_evidence_review_validation.json"
+  }
+}

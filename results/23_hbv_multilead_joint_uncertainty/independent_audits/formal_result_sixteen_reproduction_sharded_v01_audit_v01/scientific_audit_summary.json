@@ -1,0 +1,103 @@
+{
+  "aggregate_manifest_independent_binding_passed": true,
+  "arrays": {
+    "all_basin_archives_byte_identical_to_reference": true,
+    "array_level_row_count": 576,
+    "arrays_per_basin": 36,
+    "basin_count": 16,
+    "maximum_absolute_difference": 0.0,
+    "numeric_elements_per_basin": 366960,
+    "total_array_count": 576,
+    "total_numeric_element_count": 5871360
+  },
+  "artifact_chain": {
+    "artifact_checksum_pass_count": 36,
+    "artifact_count": 36,
+    "evaluation_input_audit_pass_count": 16,
+    "failure_or_incomplete_declared_intersection_count": 0,
+    "registry_count": 18,
+    "registry_pass_count": 18
+  },
+  "basin_identity": {
+    "basin_count": 16,
+    "basins": [
+      "12143600",
+      "04127918",
+      "09066000",
+      "06431500",
+      "03479000",
+      "02296500",
+      "02015700",
+      "06892000",
+      "05507600",
+      "06477500",
+      "08158700",
+      "11148900",
+      "06404000",
+      "08189500",
+      "09505350",
+      "09447800"
+    ],
+    "passed": true,
+    "unique_basin_count": 16
+  },
+  "decision": "RELEASE",
+  "frozen_binding": {
+    "contract_checksums_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+    "control_file_count": 3,
+    "input_file_count": 62,
+    "mismatch_count": 0,
+    "reference_checksums_sha256": "88ab2297e02179cc0e3e432c958871e1d6e7985358b9394970154a65f2348bd0",
+    "session_checksums_sha256": "86c3232fca046b10cfcc269c96b08a8d5ed2a59d80bf91f6b37c2892f089734b",
+    "source_file_count": 37
+  },
+  "issue_count": 0,
+  "issues": [],
+  "recomputed_outputs": {
+    "candidate_probability_row_count": 816,
+    "cross_basin_summary_row_count": 15,
+    "figure_comparisons_passed": 2,
+    "joint_factor_probability_row_count": 288,
+    "joint_vs_fixed_filter_effects": [
+      {
+        "basin_count": 16,
+        "lead_days": 1,
+        "median_nse_difference": 0.022635420309362053,
+        "median_rmse_change_percent": -10.17189495693546,
+        "rmse_win_count": 10
+      },
+      {
+        "basin_count": 16,
+        "lead_days": 3,
+        "median_nse_difference": 0.020485694739211247,
+        "median_rmse_change_percent": -2.560778471380311,
+        "rmse_win_count": 10
+      },
+      {
+        "basin_count": 16,
+        "lead_days": 7,
+        "median_nse_difference": 0.0437261883261541,
+        "median_rmse_change_percent": -4.542489566451767,
+        "rmse_win_count": 9
+      }
+    ],
+    "metric_row_count": 240,
+    "paired_comparison_row_count": 18,
+    "probability_simplex_check_count": 240,
+    "report_comparisons_passed": 2,
+    "table_comparison_count": 11,
+    "table_comparisons_passed": 11
+  },
+  "resources": {
+    "all_numerical_thread_limits_equal_one": true,
+    "canonical_external_log_binding_count": 2,
+    "canonical_external_log_binding_pass_count": 2,
+    "maximum_monitoring_gap_seconds": 9.93487,
+    "maximum_process_rss_gib": 0.18020248413085938,
+    "minimum_disk_free_gib": 2165.8046112060547,
+    "minimum_running_available_memory_fraction": 0.21485107266812403,
+    "passed_run_count": 20,
+    "run_count": 20,
+    "total_sample_count": 2497
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "sampling_interval_seconds": 0.2,
+  "sample_count": 8,
+  "maximum_sampling_gap_seconds": 0.213628,
+  "minimum_available_memory_fraction": 0.29547019467809127,
+  "maximum_process_resident_memory_gibibytes": 0.0396881103515625,
+  "minimum_disk_free_gibibytes": 2166.303871154785,
+  "samples": [
+    {
+      "timestamp_utc": "2026-07-15T08:42:48.954022+00:00",
+      "event": "start",
+      "available_memory_fraction": 0.29869268760410617,
+      "available_memory_gibibytes": 9.4686279296875,
+      "process_resident_memory_gibibytes": 0.035808563232421875,
+      "disk_free_gibibytes": 2166.303871154785
+    },
+    {
+      "timestamp_utc": "2026-07-15T08:42:49.160137+00:00",
+      "event": "background_monitor",
+      "available_memory_fraction": 0.29547019467809127,
+      "available_memory_gibibytes": 9.366474151611328,
+      "process_resident_memory_gibibytes": 0.036617279052734375,
+      "disk_free_gibibytes": 2166.303871154785
+    },
+    {
+      "timestamp_utc": "2026-07-15T08:42:49.373765+00:00",
+      "event": "background_monitor",
+      "available_memory_fraction": 0.29617632965287954,
+      "available_memory_gibibytes": 9.388858795166016,
+      "process_resident_memory_gibibytes": 0.03838348388671875,
+      "disk_free_gibibytes": 2166.303871154785
+    },
+    {
+      "timestamp_utc": "2026-07-15T08:42:49.578714+00:00",
+      "event": "background_monitor",
+      "available_memory_fraction": 0.29652578704326554,
+      "available_memory_gibibytes": 9.39993667602539,
+      "process_resident_memory_gibibytes": 0.0390777587890625,
+      "disk_free_gibibytes": 2166.303871154785
+    },
+    {
+      "timestamp_utc": "2026-07-15T08:42:49.788050+00:00",
+      "event": "background_monitor",
+      "available_memory_fraction": 0.2966303595199341,
+      "available_memory_gibibytes": 9.403251647949219,
+      "process_resident_memory_gibibytes": 0.0396881103515625,
+      "disk_free_gibibytes": 2166.303871154785
+    },
+    {
+      "timestamp_utc": "2026-07-15T08:42:49.999337+00:00",
+      "event": "background_monitor",
+      "available_memory_fraction": 0.2981889587349065,
+      "available_memory_gibibytes": 9.452659606933594,
+      "process_resident_memory_gibibytes": 0.038433074951171875,
+      "disk_free_gibibytes": 2166.303871154785
+    },
+    {
+      "timestamp_utc": "2026-07-15T08:42:50.208497+00:00",
+      "event": "background_monitor",
+      "available_memory_fraction": 0.2984108593643389,
+      "available_memory_gibibytes": 9.459693908691406,
+      "process_resident_memory_gibibytes": 0.038806915283203125,
+      "disk_free_gibibytes": 2166.303871154785
+    },
+    {
+      "timestamp_utc": "2026-07-15T08:42:50.369504+00:00",
+      "event": "finish",
+      "available_memory_fraction": 0.2998357646534439,
+      "available_memory_gibibytes": 9.504863739013672,
+      "process_resident_memory_gibibytes": 0.038471221923828125,
+      "disk_free_gibibytes": 2166.303871154785
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "changed_factor": "independent reference implementation",
+  "experiment_id": "synthetic_truth_propagation_v01",
+  "fixed_factors": "forcing, initial stores, complete thirteen-parameter vector, and routing lag",
+  "hypothesis": "the fifteen-state adapter and routed discharge match an independent HBV-lite replay",
+  "metrics_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\synthetic_truth_propagation_v01\\summary.json",
+  "notes": "No real-basin observations or frozen formal results were read or modified.",
+  "run_dir": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\synthetic_truth_propagation_v01",
+  "seed": 314159,
+  "status": "failed",
+  "type": "closed_truth_component_validation"
+}

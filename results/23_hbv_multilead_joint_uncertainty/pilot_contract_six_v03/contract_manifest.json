@@ -1,0 +1,17 @@
+{
+  "artifact_type": "calibration_only_uncertainty_contract",
+  "basin_count": 6,
+  "basins": [
+    "12375900",
+    "09035800",
+    "01580000",
+    "11481200",
+    "08109700",
+    "04015330"
+  ],
+  "contract_id": "pilot_contract_six_v03",
+  "evaluation_discharge_parsed_before_freeze": false,
+  "has_verified_execution_signature": true,
+  "selected_interaction_mode": "full",
+  "uses_evaluation_discharge_for_selection": false
+}

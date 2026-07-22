@@ -1,0 +1,29 @@
+{
+  "synthesis_id": "state_correction_final_synthesis_v01",
+  "created_at": "2026-07-17T01:42:48.1671682+08:00",
+  "status": "verified_stop",
+  "primary_report": "final_report.md",
+  "hydrologic_methods": "methods_hydrologic.md",
+  "reproduction": "reproduction.json",
+  "audit_closure": "audit_closure.json",
+  "formal_diagnostic_result": "../state_correction_sixteen_v02",
+  "per_basin_metrics": "../state_correction_sixteen_v02/control_metrics.csv",
+  "per_basin_gate_details": "../state_correction_sixteen_v02/continuation_decision.json",
+  "state_level_details": "../state_correction_sixteen_v02/state_diagnostics.csv",
+  "basin_arrays": "../state_correction_sixteen_v02/basins",
+  "basin_reports": "../state_correction_sixteen_v02/basin_reports",
+  "independent_audit": "../independent_audits/state_correction_sixteen_v02_audit_v01/audit.json",
+  "independent_validation": "../independent_audits/state_correction_sixteen_v02_validation_v01/validation.json",
+  "post_fix_independent_audit": "../independent_audits/state_correction_gate_default_fix_audit_v01/audit.json",
+  "post_fix_independent_validation": "../independent_audits/state_correction_gate_default_fix_validation_v01/validation.json",
+  "red_green_checkpoint_evidence": [
+    "../state_correction_final_checkpoint_boundary_red_v01.failed",
+    "../state_correction_final_checkpoint_boundary_green_v01",
+    "../state_correction_v07_tests_green_v01"
+  ],
+  "red_green_post_audit_fix_evidence": [
+    "../state_correction_gate_default_tests_red_v01.failed",
+    "../state_correction_gate_default_tests_green_v01"
+  ],
+  "final_decision": "STOP_DO_NOT_RUN_531"
+}

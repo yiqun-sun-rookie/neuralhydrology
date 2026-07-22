@@ -1,0 +1,223 @@
+{
+  "verdict": "HOLD_PENDING_MUST_FIX",
+  "verdict_detail": "数值证据链、四个最终条件的原始重算以及受限科学裁决均成立：验证目标已经完成，但广泛优越性仍为 HOLD。正式综合在最终接受前仍有两项必须修复：既有评审格式的读取是失效开放，且 claim_evidence.csv 的未知范围和负面事实追踪不完整。",
+  "must_fix_count": 2,
+  "must_fix": [
+    {
+      "id": "review_chain_schema_must_fail_closed",
+      "severity": "conclusion_changing_governance_defect",
+      "location": "src/hbv_multilead_joint_uncertainty/scripts/run_joint_method_synthesis.py::_review_status",
+      "finding": "评审读取只统计 must_fix_count、required_code_fixes 或 required_fixes，不读取旧格式第一审查中的 must_fix 列表；第二审查只读取 verdict 或 review_verdict，不读取旧格式的 conclusion。process_noise_identification_validation_v02_reviews、model_probability_validation_v02_reviews 和 state_interaction_validation_v02_reviews 因而在 component_summary.json 中第一、第二裁决均为 null，却仍被判为 passed。当前三个目录经本审查直接读取后确实都是零必须修复且第二审查确认，但综合程序本身没有执行这一确认。",
+      "required_repair": "显式支持当前存在的全部评审格式：非空 must_fix 列表必须失败；conclusion 必须被识别并要求为明确确认；缺失或无法识别的必须修复字段或裁决字段必须失败。增加至少四个测试：非空旧格式 must_fix、失败旧格式 conclusion、缺失裁决、当前九条正式评审链全部通过。",
+      "acceptance_test": "对九条正式评审链返回九个明确的第一审查裁决、九个明确的第二审查裁决和九个 passed=true；任一注入的非空 must_fix 或非确认 conclusion 均使综合拒绝运行。"
+    },
+    {
+      "id": "claim_evidence_must_be_complete_and_traceable",
+      "severity": "claim_boundary_defect",
+      "location": "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v01/claim_evidence.csv",
+      "finding": "表中只有三条 unknown，缺少必须单列的“其他观测误差或强迫误差”和“物理投影后的过程扰动不是精确加性高斯分布”两类未知；这两项只出现在 scope_limit 或 final_synthesis.md 中，未进入逐条主张证据表。此外，joint_identification 和 joint_forecast_added_value 两行写的是已由四条件表支持的负面事实，却标为 not_supported，且 evidence_path 只指向四十五天条件，不能单独追踪四个条件。",
+      "required_repair": "在 claim_evidence.csv 中新增两条 unknown；把两条跨四条件负面事实的状态改成明确的受支持受限负面事实，并把证据路径指向 final_conditions.csv 或列出全部四个条件证据。保持 broad_method_claim 为 inference，且不得把起报状态改善转写成预报优越。",
+      "acceptance_test": "逐条主张表至少明确覆盖超过四十五天、其他切换周期或转移先验、真实流域、其他观测误差或强迫误差、投影后非精确高斯五类未知；跨条件的 0/4 和 0/12 可从所列证据路径完整重算。"
+    }
+  ],
+  "confirmed_numbers": {
+    "artifact_chain": {
+      "component_evidence_count": 12,
+      "independent_double_review_chain_count": 9,
+      "configured_input_path_count": 21,
+      "configured_input_file_count_including_manifests": 357,
+      "synthesis_checklist_file_count_excluding_manifest": 11,
+      "synthesis_manifest_mismatch_count": 0,
+      "input_manifest_mismatch_count": 0,
+      "component_status_passed_count": 12
+    },
+    "resource_preflight": {
+      "maximum_input_file_bytes": 12270573,
+      "formula": "4 * maximum_input_file_bytes + 33554432 + 67108864",
+      "estimated_additional_peak_memory_bytes": 82636724,
+      "task_specific_reserve_bytes": 67108864,
+      "task_specific_required_available_bytes": 149745588,
+      "available_physical_memory_bytes": 679702528,
+      "headroom_after_requirement_bytes": 529956940,
+      "safe_to_run": true,
+      "execution_parallelism": 1,
+      "universal_memory_threshold_used": false
+    },
+    "numerical_components_from_raw_arrays": {
+      "state_propagation_maximum_absolute_error": 5.684341886080802e-14,
+      "single_filter_state_improvement_trials": "20/24",
+      "single_filter_one_day_flow_improvement_trials": "24/24",
+      "ideal_complete_parameter_identification_trials": "24/24",
+      "projected_process_scale_identification_trials": "23/24",
+      "joint_probability_prior_accuracy": 0.8948630136986301,
+      "joint_probability_posterior_accuracy": 0.9318493150684931,
+      "state_interaction_combined_mean_maximum_absolute_error": 1.4210854715202004e-13,
+      "state_interaction_combined_covariance_maximum_absolute_error": 2.7284841053187847e-12,
+      "observation_free_combined_prediction_maximum_absolute_error": 4.440892098500626e-16
+    },
+    "final_scientific_counts": {
+      "joint_identification_passed_conditions": "0/4",
+      "added_value_beyond_both_single_factor_methods": "0/12 condition-by-lead targets",
+      "validation_goal_complete": true,
+      "numerical_chain_validated_from_current_artifacts": true,
+      "broad_scientific_claim_authorized": false,
+      "scientific_status": "HOLD"
+    }
+  },
+  "independent_recalculations": {
+    "input_integrity": {
+      "method": "对配置列出的十二个组件目录和九个评审目录重新枚举文件，并逐文件重新计算 SHA-256；未使用 input_evidence_integrity.json 的布尔值作为计算输入。",
+      "result": "二十一个目录的文件集合均严格等于 checksums.json 条目加清单文件本身；三百三十六个清单条目全部匹配，零缺失、零多余、零哈希不符。"
+    },
+    "synthesis_integrity": {
+      "method": "重新枚举正式综合目录并计算十一项清单文件哈希。",
+      "result": "十一项均存在且无额外正式文件；全部哈希匹配。配置快照与当前配置结构相等，脚本和测试源码快照分别与当前文件逐字节一致。"
+    },
+    "protected_inputs": {
+      "configured_path_count": 21,
+      "file_count": 357,
+      "before_mapping_sha256": "9984f82935e6c4d15f2f561f2473bf1ffc8eb0a6f4a9d09d1bc648a0ef8ba67c",
+      "after_mapping_sha256": "9984f82935e6c4d15f2f561f2473bf1ffc8eb0a6f4a9d09d1bc648a0ef8ba67c",
+      "status": "unchanged"
+    },
+    "review_chains": {
+      "method": "直接读取九条链的第一审查和第二审查，不采用 component_summary.json 的 passed 字段作为依据，并按各自实际格式检查零必须修复和第二审查确认。",
+      "zero_must_fix_first_review_count": 9,
+      "confirmed_second_review_count": 9,
+      "wording_corrections_without_conclusion_change": [
+        "parameter_identification_validation_v01_reviews: 原始十进制文本与 pandas 读取值的逐位措辞修正，运行与受限结论不变",
+        "process_noise_identification_validation_v02_reviews: 初始参考状态无操作投影为每试验一次，共二十四次，受限结论不变"
+      ],
+      "contradiction_count": 0,
+      "current_artifact_chain_result": "passed"
+    },
+    "final_conditions_from_raw_arrays": {
+      "method": "从四个 evidence.npz 重算绝对误差、全局均方根误差、五个水文状态的归一化起报误差、九候选及两个三分类边际识别率、真实候选概率中位数；再按各自配置的重复次数和种子重做配对块自助法上限与百分之五实用改善门。summary.json、method_metrics.csv、paired_comparisons.csv、condition_decisions.json 和 final_conditions.csv 均未作为计算输入。",
+      "maximum_absolute_numeric_difference_from_final_conditions_csv": 4.440892098500626e-16,
+      "boolean_decision_mismatch_count": 0,
+      "conditions": {
+        "fixed_07_days": {
+          "joint_candidate_accuracy": 0.2916666666666667,
+          "joint_parameter_accuracy": 0.4722222222222222,
+          "joint_process_accuracy": 0.5555555555555556,
+          "median_true_candidate_probability": 0.14982094370470275,
+          "joint_forecast_root_mean_square_errors_days_1_3_7": [0.8164715687017786, 1.6747953754534604, 1.9427505324939291],
+          "joint_origin_state_root_mean_square_error": 0.16758942405862112,
+          "joint_identification_effective": false,
+          "forecast_effective_against_fixed_days_1_3_7": [true, true, true],
+          "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+          "origin_state_effective_against_fixed": true,
+          "origin_state_added_value_beyond_both": true
+        },
+        "fixed_21_days": {
+          "joint_candidate_accuracy": 0.3472222222222222,
+          "joint_parameter_accuracy": 0.4583333333333333,
+          "joint_process_accuracy": 0.625,
+          "median_true_candidate_probability": 0.18039874096670724,
+          "joint_forecast_root_mean_square_errors_days_1_3_7": [0.8441853761039364, 1.142397744284536, 2.2940148032730705],
+          "joint_origin_state_root_mean_square_error": 0.2129194392400516,
+          "joint_identification_effective": false,
+          "forecast_effective_against_fixed_days_1_3_7": [true, true, true],
+          "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+          "origin_state_effective_against_fixed": true,
+          "origin_state_added_value_beyond_both": true
+        },
+        "fixed_45_days": {
+          "joint_candidate_accuracy": 0.5138888888888888,
+          "joint_parameter_accuracy": 0.5972222222222222,
+          "joint_process_accuracy": 0.8472222222222222,
+          "median_true_candidate_probability": 0.24446729489293278,
+          "joint_forecast_root_mean_square_errors_days_1_3_7": [0.8614678738612609, 1.3588597056268628, 1.2040603024466145],
+          "joint_origin_state_root_mean_square_error": 0.26586634153813155,
+          "joint_identification_effective": false,
+          "forecast_effective_against_fixed_days_1_3_7": [false, false, true],
+          "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+          "origin_state_effective_against_fixed": true,
+          "origin_state_added_value_beyond_both": false
+        },
+        "periodic_switch_07_days": {
+          "joint_candidate_accuracy": 0.1388888888888889,
+          "joint_parameter_accuracy": 0.3611111111111111,
+          "joint_process_accuracy": 0.3888888888888889,
+          "median_true_candidate_probability": 0.08205526412068902,
+          "joint_forecast_root_mean_square_errors_days_1_3_7": [0.9258281399866716, 1.3641628543870818, 2.1017156824407444],
+          "joint_origin_state_root_mean_square_error": 0.28648501712528235,
+          "joint_identification_effective": false,
+          "forecast_effective_against_fixed_days_1_3_7": [false, false, false],
+          "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+          "origin_state_effective_against_fixed": true,
+          "origin_state_added_value_beyond_both": false
+        }
+      }
+    },
+    "resource_arithmetic": {
+      "four_times_maximum_input_file_bytes": 49082292,
+      "plus_32_mebibytes": 82636724,
+      "plus_64_mebibytes_reserve": 149745588,
+      "available_minus_required": 529956940,
+      "comparison": "149745588 < 679702528"
+    }
+  },
+  "claim_audit": {
+    "facts": {
+      "classification_assessment": "十一条 fact 的事实或受限失败内容均可由正式原始证据支持。数值组件事实已从 evidence.npz 重算；四条件识别和预报事实已从四个原始数组包重算。",
+      "status_and_traceability_issue": "joint_identification 与 joint_forecast_added_value 的文字是受支持的负面事实，但 status=not_supported，且单一 evidence_path 不能覆盖四条件；这是第二项必须修复的一部分。"
+    },
+    "inference": {
+      "classification_assessment": "broad_method_claim 正确标为 inference。由四条件识别 0/4 和十二个条件乘提前期目标 0/12，可推出现有证据不授权广泛优越性；不能推出该方法在所有未测试条件下无效。",
+      "scientific_status": "HOLD"
+    },
+    "unknown": {
+      "currently_listed_count": 3,
+      "correctly_listed": [
+        "超过四十五天的匹配同化",
+        "其他切换周期或转移先验",
+        "真实流域表现"
+      ],
+      "required_but_missing_from_claim_evidence_csv": [
+        "其他观测误差或强迫误差",
+        "物理投影后的过程扰动不是精确加性高斯分布"
+      ],
+      "note": "缺失项已出现在综合范围说明和 final_synthesis.md，但逐条主张证据表仍不完整。"
+    },
+    "overall_logic": {
+      "numerical_chain_completed_and_current_artifacts_pass": true,
+      "all_four_final_conditions_failed_joint_identification": true,
+      "no_condition_by_lead_target_better_than_both_single_factor_methods": true,
+      "broad_superiority_remains_hold": true,
+      "validation_goal_itself_complete": true,
+      "logic_assessment": "该总裁决逻辑成立；两项必须修复影响综合程序的治理可靠性和主张表完整性，不改变本次原始数据重算得到的受限科学结论。"
+    }
+  },
+  "scope_limits": {
+    "positive_results_that_must_not_be_overstated": [
+      "固定七天和二十一天条件的起报水文状态满足相对固定滤波器及超过两个单因素方法的规则；三个预报提前期只满足相对固定滤波器规则，均未同时超过两个单因素方法，因此不能写成联合预报优越。",
+      "固定四十五天条件只有起报水文状态和七日预报相对固定滤波器有效；二者均未同时超过两个单因素方法。",
+      "七天同时切换条件的起报水文状态相对固定滤波器有效，但一日、三日和七日预报均不相对固定滤波器有效。"
+    ],
+    "unknown_or_unvalidated": [
+      "超过四十五天的匹配同化",
+      "其他参数与过程尺度切换周期",
+      "其他转移先验",
+      "真实流域表现",
+      "其他观测误差模型",
+      "强迫资料误差",
+      "物理投影后是否可由精确加性高斯过程表示"
+    ],
+    "fixed_experimental_scope": "十五状态水文模型、三个完整十三参数向量、三个投影前过程尺度候选、八个匹配块、固定标签七天/二十一天/四十五天，以及一个七天参数和过程尺度同时切换压力条件。"
+  },
+  "reviewer_independence": {
+    "review_layer": "第一层独立代码、方法和结果审查",
+    "reviewer_role": "独立审查者，不是正式综合实施者，也不是九条既有评审链的签署者",
+    "formal_synthesis_directory_modified": false,
+    "component_or_existing_review_evidence_modified": false,
+    "only_written_artifact": "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v01_reviews/code_method_result_review.json",
+    "formal_summary_values_used_as_computational_inputs": false,
+    "final_conditions_values_used_as_computational_inputs": false,
+    "prior_review_values_used_as_computational_inputs": false,
+    "raw_component_arrays_recalculated": true,
+    "four_condition_metrics_and_decisions_recalculated": true,
+    "source_configuration_and_test_reviewed": true,
+    "historical_memory_used_only_for_scope_warning": "早期状态交互代数验证不能外推为水文预报优越；历史数值未作为本审查计算输入。"
+  }
+}

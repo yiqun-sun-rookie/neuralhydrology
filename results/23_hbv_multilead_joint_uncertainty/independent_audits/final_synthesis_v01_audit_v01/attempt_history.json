@@ -1,0 +1,76 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "classification": "independent_auditor_script_error",
+      "decision_valid": false,
+      "exit_code": 1,
+      "evidence_files": [
+        "audit_execution_attempt01_script_error.json",
+        "audit_resource_history_attempt01_script_error.json",
+        "audit_stdout_attempt01_script_error.txt"
+      ],
+      "reason": "The audit script addressed a resource-history column by the wrong name and stopped before a valid target decision."
+    },
+    {
+      "attempt": 2,
+      "classification": "mixed_review_with_one_verified_target_issue",
+      "decision": "BLOCK",
+      "decision_valid": true,
+      "exit_code": 1,
+      "reported_finding_count": 3,
+      "validated_finding_count": 1,
+      "invalidated_finding_count": 2,
+      "evidence_files": [
+        "audit_execution_attempt02_mixed_review.json",
+        "audit_resource_history_attempt02_mixed_review.json",
+        "audit_stdout_attempt02_mixed_review.txt",
+        "audit_summary_attempt02_mixed_review.json",
+        "audit_checklist_attempt02_mixed_review.csv",
+        "historical_resource_gap_reconstruction.json"
+      ],
+      "reason": "Independent review rejected the language detector finding and the derivative ledger finding. It retained one target issue: the second stopped-run record declared a 12.0-second maximum gap, whereas all 1,110 canonical timestamps give 11.54805 seconds."
+    },
+    {
+      "attempt": 3,
+      "classification": "post_correction_preliminary_release",
+      "decision": "RELEASE",
+      "decision_valid": true,
+      "exit_code": 0,
+      "evidence_files": [
+        "audit_execution_attempt03_verified_target_issue.json",
+        "audit_resource_history_attempt03_verified_target_issue.json",
+        "audit_stdout_attempt03_verified_target_issue.txt",
+        "audit_summary_attempt03_verified_target_issue.json",
+        "audit_checklist_attempt03_verified_target_issue.csv",
+        "independent_audit_report_attempt03_verified_target_issue.md",
+        "manifest_audit_attempt03_verified_target_issue.json",
+        "target_identity_start_attempt03_verified_target_issue.json",
+        "target_identity_end_attempt03_verified_target_issue.json"
+      ],
+      "reason": "Despite their historical filenames, the preserved files contain the corrected target hash and a 30-of-30 RELEASE result. They are not represented as a pre-correction BLOCK snapshot."
+    },
+    {
+      "attempt": 4,
+      "classification": "final_newly_frozen_independent_audit",
+      "decision": "RELEASE",
+      "decision_valid": true,
+      "exit_code": 0,
+      "evidence_files": [
+        "audit_execution.json",
+        "audit_resource_history.json",
+        "audit_stdout.txt",
+        "audit_summary.json",
+        "audit_checklist.csv",
+        "independent_audit_report.md",
+        "manifest_audit.json",
+        "target_identity_start.json",
+        "target_identity_end.json"
+      ],
+      "reason": "A new frozen seven-file target was audited from source evidence. All 30 checks passed, the target was unchanged, and the resource wrapper completed without a resource stop."
+    }
+  ],
+  "final_attempt": 4,
+  "final_decision": "RELEASE",
+  "history_limitation": "No original pre-correction attempt-3 BLOCK snapshot remains on disk. The exact historical target issue is retained by attempt 2 and by an explicitly labelled reconstruction; no RELEASE file is presented as BLOCK evidence."
+}

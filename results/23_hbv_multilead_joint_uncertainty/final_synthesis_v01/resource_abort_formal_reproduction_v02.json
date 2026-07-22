@@ -1,0 +1,78 @@
+{
+  "status": "safely_stopped_before_completion",
+  "experiment_id": "formal_result_sixteen_reproduction_v02",
+  "reason": "available memory crossed the frozen running threshold",
+  "frozen_minimum_running_available_fraction": 0.2,
+  "start": {
+    "timestamp": "2026-07-15T13:26:53.706787+08:00",
+    "available_memory_fraction": 0.29409715444933626,
+    "available_memory_gib": 9.322948455810547,
+    "estimated_peak_gib": 1.0,
+    "estimated_output_gib": 1.5,
+    "numerical_thread_limit": 1,
+    "reserved_logical_processors": 2
+  },
+  "threshold_crossing": {
+    "timestamp": "2026-07-15T16:26:02.281687+08:00",
+    "event": "background_monitor",
+    "available_memory_fraction": 0.19962392416100744,
+    "available_memory_gib": 6.328125,
+    "process_rss_gib": 0.147247314453125,
+    "process_peak_working_set_gib": 0.1536407470703125,
+    "cpu_load_percent": 54.2,
+    "disk_free_gib": 2166.307548522949
+  },
+  "resource_history": {
+    "path": "../../../logs/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_reproduction_v02.failed/resource_history.json",
+    "sample_count": 1110,
+    "maximum_gap_seconds": 11.54805,
+    "samples_below_running_threshold": 1,
+    "minimum_available_fraction": 0.19962392416100744,
+    "peak_process_working_set_gib": 0.1536407470703125,
+    "last_event": "background_monitor",
+    "has_finish_event": false
+  },
+  "preserved_failed_result": {
+    "path": "../formal_result_sixteen_reproduction_v02.failed",
+    "completed_basin_file_count": 5,
+    "total_file_count": 11,
+    "completed_basin_files": [
+      {
+        "name": "03479000.npz",
+        "bytes": 2612760,
+        "sha256": "a7cde0976212dfe7937c5b7c3d31acc56d5ee753805621faf03471b6df290483"
+      },
+      {
+        "name": "04127918.npz",
+        "bytes": 2566950,
+        "sha256": "96876b27f275cfd6784be6d659c28b6e6c7f6060a58ba2d98e751bf7149d9a86"
+      },
+      {
+        "name": "06431500.npz",
+        "bytes": 2662944,
+        "sha256": "844a31d527c3f24c1ec7124eeff4dcc41ca662e40e879982e1008389834c28e3"
+      },
+      {
+        "name": "09066000.npz",
+        "bytes": 2400794,
+        "sha256": "5cef9fa1e4e3d61f416a2b6395af35c66657d2988cbda216c0e8aeb87fe69db5"
+      },
+      {
+        "name": "12143600.npz",
+        "bytes": 2506422,
+        "sha256": "358e3e2766abfd0f341b2aab22c944840381adf550954f87dbaf57ce9915ab07"
+      }
+    ]
+  },
+  "safety_actions": [
+    "the process stopped after the resource monitor recorded the threshold crossing",
+    "the failed result and resource history were preserved without reuse as a successful result",
+    "the successful replacement used immutable one-basin shards and a separate session identifier"
+  ],
+  "registry": {
+    "path": "../registry/formal_result_sixteen_reproduction_v02.json",
+    "final_status": "failed",
+    "failed_timestamp": "2026-07-15T16:27:42.067855+08:00"
+  },
+  "scientific_result_status": "not usable as a completed reproduction"
+}

@@ -1,0 +1,74 @@
+{
+  "status": "safely_stopped_before_completion",
+  "experiment_id": "formal_result_sixteen_reproduction_v01",
+  "reason": "available memory crossed the frozen running threshold",
+  "frozen_minimum_running_available_fraction": 0.2,
+  "start": {
+    "timestamp": "2026-07-15T12:06:31.904098+08:00",
+    "available_memory_fraction": 0.2972675416418673,
+    "available_memory_gib": 9.423450469970703,
+    "estimated_peak_gib": 1.0,
+    "estimated_output_gib": 1.5,
+    "numerical_thread_limit": 1,
+    "reserved_logical_processors": 2
+  },
+  "threshold_crossing": {
+    "timestamp": "2026-07-15T12:52:50.495067+08:00",
+    "event": "background_monitor",
+    "available_memory_fraction": 0.17916237566525062,
+    "available_memory_gib": 5.6794891357421875,
+    "process_rss_gib": 0.14316940307617188,
+    "process_peak_working_set_gib": 0.1500091552734375,
+    "cpu_load_percent": 45.9,
+    "disk_free_gib": 2166.536552429199
+  },
+  "resource_history": {
+    "path": "../../../logs/23_hbv_multilead_joint_uncertainty/.formal_result_sixteen_reproduction_v01.incomplete/resource_history.json",
+    "sample_count": 291,
+    "maximum_gap_seconds": 9.94331,
+    "samples_below_running_threshold": 1,
+    "minimum_available_fraction": 0.17916237566525062,
+    "peak_process_working_set_gib": 0.1500091552734375,
+    "last_event": "background_monitor",
+    "has_finish_event": false
+  },
+  "preserved_incomplete_result": {
+    "path": "../.formal_result_sixteen_reproduction_v01.incomplete",
+    "completed_basin_file_count": 4,
+    "total_file_count": 8,
+    "completed_basin_files": [
+      {
+        "name": "04127918.npz",
+        "bytes": 2566950,
+        "sha256": "96876b27f275cfd6784be6d659c28b6e6c7f6060a58ba2d98e751bf7149d9a86"
+      },
+      {
+        "name": "06431500.npz",
+        "bytes": 2662944,
+        "sha256": "844a31d527c3f24c1ec7124eeff4dcc41ca662e40e879982e1008389834c28e3"
+      },
+      {
+        "name": "09066000.npz",
+        "bytes": 2400794,
+        "sha256": "5cef9fa1e4e3d61f416a2b6395af35c66657d2988cbda216c0e8aeb87fe69db5"
+      },
+      {
+        "name": "12143600.npz",
+        "bytes": 2506422,
+        "sha256": "358e3e2766abfd0f341b2aab22c944840381adf550954f87dbaf57ce9915ab07"
+      }
+    ]
+  },
+  "safety_actions": [
+    "no new calculation was started below the 25 percent start threshold",
+    "the exact reproduction process was stopped after the monitor recorded the threshold crossing",
+    "the incomplete result and resource history were preserved without reuse as a successful result",
+    "the next attempt must use a new experiment identifier and pass the start gate"
+  ],
+  "registry": {
+    "path": "../registry/formal_result_sixteen_reproduction_v01.json",
+    "final_status": "failed",
+    "failed_timestamp": "2026-07-15T13:00:04.958295+08:00"
+  },
+  "scientific_result_status": "not usable as a completed reproduction"
+}

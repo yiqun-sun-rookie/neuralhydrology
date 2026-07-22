@@ -1,0 +1,21 @@
+{
+  "record_id": "state_correction_resource_wait_v01",
+  "status": "waiting_for_resources",
+  "stage": "pre_start_resource_gate",
+  "timestamp": "2026-07-16T13:48:57.5741207+08:00",
+  "reason": "available_memory_fraction_below_start_threshold",
+  "available_memory_gib": 6.823402,
+  "total_memory_gib": 31.700233,
+  "available_memory_fraction": 0.215247702,
+  "required_start_fraction": 0.25,
+  "required_start_memory_gib": 7.925058,
+  "shortfall_memory_gib": 1.101656,
+  "running_floor_fraction": 0.20,
+  "disk_free_gib": 2165.789684,
+  "disk_required_gib": 50.0,
+  "logical_processors": 32,
+  "logical_processors_reserved": 2,
+  "computation_started": false,
+  "formal_artifacts_modified": false,
+  "resume_policy": "recheck on the next automatic goal continuation; resume only when every start gate passes"
+}

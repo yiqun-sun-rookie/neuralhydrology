@@ -1,0 +1,52 @@
+{
+  "additional_protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v01",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v01_reviews",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v02",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v02_reviews",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v03",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v03_reviews"
+  ],
+  "component_evidence": [
+    "results/23_hbv_multilead_joint_uncertainty/synthetic_truth_propagation_v04",
+    "results/23_hbv_multilead_joint_uncertainty/single_filter_state_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/parameter_identification_validation_v01",
+    "results/23_hbv_multilead_joint_uncertainty/process_noise_identification_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/model_probability_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/state_interaction_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/observation_free_forecast_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_assimilation_07d_v01",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_assimilation_21d_v01",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_stable_validation_v04",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_assimilation_duration_boundary_v01",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_periodic_switch_07d_v01"
+  ],
+  "decision_rules": {
+    "broad_scientific_claim": "A broad claim is authorized only if numerical-chain, joint-identification and joint-added-value rules all pass without unresolved scope-changing uncertainty.",
+    "joint_added_value_supported": "At least one final one-, three-, or seven-day target must meet the preregistered added-value rule beyond both parameter-only and process-scale-only methods.",
+    "joint_identification_supported": "The complete nine-filter method must pass its preregistered joint-identification rule in at least one final condition.",
+    "numerical_chain_validated": "Every component evidence summary passes, every evidence manifest verifies, every available first review passes with zero must-fix items, and every available second raw-evidence validation confirms it with zero must-fix items. Review verdicts are accepted only by exact normalized allowlists; only registered contradiction counters are accepted; duplicate fix fields must agree; unrecognized or inconsistent review decisions fail closed.",
+    "validation_goal_complete": "The validation goal is complete when every planned component, fixed-label condition, assimilation-length boundary and seven-day switching pressure condition has reproducible evidence and two independent review layers; scientific outcomes may be negative."
+  },
+  "experiment_id": "joint_method_synthetic_validation_synthesis_v04",
+  "independent_review_evidence": [
+    "results/23_hbv_multilead_joint_uncertainty/single_filter_state_validation_v02_reviews",
+    "results/23_hbv_multilead_joint_uncertainty/parameter_identification_validation_v01_reviews",
+    "results/23_hbv_multilead_joint_uncertainty/process_noise_identification_validation_v02_reviews",
+    "results/23_hbv_multilead_joint_uncertainty/model_probability_validation_v02_reviews",
+    "results/23_hbv_multilead_joint_uncertainty/state_interaction_validation_v02_reviews",
+    "results/23_hbv_multilead_joint_uncertainty/observation_free_forecast_validation_v02_reviews",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_stable_validation_v04_reviews",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_assimilation_duration_boundary_v01_reviews",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_periodic_switch_07d_v01_reviews"
+  ],
+  "purpose": "Synthesize the complete closed synthetic-truth validation chain and state exactly which numerical, identification and forecast claims are supported, rejected or still unknown.",
+  "resource_rule": {
+    "execution_parallelism": 1,
+    "task_specific_reserve_bytes": 67108864,
+    "universal_memory_threshold_used": false
+  },
+  "scope_limit": "The synthesis covers the frozen fifteen-state hydrological model, three complete thirteen-parameter vectors, three pre-projection process-scale candidates, eight matched blocks, fixed-label assimilation of seven, twenty-one and forty-five days, and one seven-day simultaneous parameter/process switching pressure condition. It does not validate real-basin performance, untested assimilation durations above forty-five days, other switch periods or transition priors, other observation uncertainty, forcing error, or an exact post-projection additive Gaussian process model.",
+  "supersedes": "joint_method_synthetic_validation_synthesis_v03",
+  "supersession_reason": "The first independent version-three review found that invented contradiction counters and inconsistent duplicate fix fields could still pass. Version four accepts only registered contradiction counters, requires nonnegative integer counts, and rejects inconsistent duplicate decision fields. It preserves all component evidence and scientific results."
+}

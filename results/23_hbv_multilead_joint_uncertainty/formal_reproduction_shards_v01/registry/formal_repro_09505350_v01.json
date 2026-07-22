@@ -1,0 +1,24 @@
+{
+  "created_at": "2026-07-15T20:23:03.372233+08:00",
+  "history": [
+    {
+      "basin_id": "09505350",
+      "session_id": "formal_reproduction_session_v01",
+      "status": "running",
+      "timestamp": "2026-07-15T20:23:03.372233+08:00"
+    },
+    {
+      "basin_id": "09505350",
+      "log_checksums_sha256": "b1b5e2679f811b0d1b5f61b36fe0263255c1a15c535ec244622b01e67c30534e",
+      "log_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\logs\\23_hbv_multilead_joint_uncertainty\\formal_reproduction_shards_v01\\formal_repro_09505350_v01",
+      "output_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_reproduction_shards_v01\\formal_repro_09505350_v01",
+      "result_checksums_sha256": "28e6b4f18a555240d8702e10d68bb1d06a53df7e50aec5749836663531054bd5",
+      "status": "verified",
+      "timestamp": "2026-07-15T20:33:00.338959+08:00"
+    }
+  ],
+  "run_id": "formal_repro_09505350_v01",
+  "run_type": "formal_reproduction_basin_shard",
+  "status": "verified",
+  "updated_at": "2026-07-15T20:33:00.338959+08:00"
+}

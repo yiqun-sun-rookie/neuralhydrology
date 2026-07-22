@@ -1,0 +1,26 @@
+{
+  "command": [
+    "C:\\Users\\yiqun\\anaconda3\\python.exe",
+    "-B",
+    "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\final_synthesis_v01_audit_v01\\independent_final_synthesis_audit.py"
+  ],
+  "duration_seconds": 3.047000000005937,
+  "estimated_output_gib": 0.25,
+  "estimated_peak_gib": 1.0,
+  "exit_code": 0,
+  "logical_processors": 32,
+  "maximum_cpu_load_percent": 30.9,
+  "maximum_process_tree_rss_gib": 0.1326141357421875,
+  "maximum_sample_gap_seconds": 1.022883,
+  "minimum_available_memory_fraction": 0.2905670812582295,
+  "minimum_available_memory_gib": 9.211044311523438,
+  "minimum_disk_free_gib": 2166.0793800354004,
+  "numerical_thread_limit": 1,
+  "required_disk_gib": 50.0,
+  "reserved_logical_processors": 2,
+  "sample_count": 5,
+  "start_gate_passed": true,
+  "status": "passed",
+  "stdout_file": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\final_synthesis_v01_audit_v01\\audit_stdout.txt",
+  "stopped_for_resource_gate": false
+}

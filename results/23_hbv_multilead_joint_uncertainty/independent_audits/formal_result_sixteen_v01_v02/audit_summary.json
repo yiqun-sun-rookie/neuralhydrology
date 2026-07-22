@@ -1,0 +1,658 @@
+{
+  "array_and_table_summary": {
+    "actual_candidate_probability_row_count": 816,
+    "actual_cross_basin_row_count": 15,
+    "actual_joint_factor_probability_row_count": 288,
+    "actual_metric_row_count": 240,
+    "actual_paired_comparison_row_count": 18,
+    "array_count_per_basin": 36,
+    "basin_count": 16,
+    "calendar_days_per_basin": 365,
+    "evaluation_input_audit_failures": [],
+    "expected_candidate_probability_row_count": 816,
+    "expected_cross_basin_row_count": 15,
+    "expected_joint_factor_probability_row_count": 288,
+    "expected_metric_row_count": 240,
+    "expected_paired_comparison_row_count": 18,
+    "failed_basin_array_audits": [],
+    "lead_days": [
+      1,
+      3,
+      7
+    ],
+    "maximum_probability_sum_error": 4.440892098500626e-16,
+    "maximum_weighted_prediction_error": 1.4210854715202004e-14,
+    "method_candidate_counts": {
+      "fixed_filter": 1,
+      "joint": 9,
+      "noise_only": 3,
+      "open_loop": 1,
+      "parameter_only": 3
+    },
+    "origins_per_basin": 358,
+    "passed": true,
+    "total_array_count": 576
+  },
+  "audit_type": "independent_formal_result_audit",
+  "blackbox_future_discharge": {
+    "candidate_counts": {
+      "fixed_filter": 1,
+      "joint": 9,
+      "noise_only": 3,
+      "open_loop": 1,
+      "parameter_only": 3
+    },
+    "contract_package_after_blackbox": {
+      "actual_file_count": 128,
+      "passed": true,
+      "recorded_file_count": 127,
+      "unlisted_files": []
+    },
+    "contract_package_before_blackbox": {
+      "actual_file_count": 128,
+      "passed": true,
+      "recorded_file_count": 127,
+      "unlisted_files": []
+    },
+    "frozen_runner_sha256": "f1532d35c624c3ea7b5baa78c64b60097c78b726f92650721d7118d2aff331c3",
+    "frozen_source_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_contract_sixteen_v05\\source_snapshot\\src",
+    "lead_count": 3,
+    "maximum_absolute_prediction_change": 0.0,
+    "method_count": 5,
+    "origin_count": 3,
+    "passed": true,
+    "per_method_lead": [
+      {
+        "lead_days": 1,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "open_loop"
+      },
+      {
+        "lead_days": 3,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "open_loop"
+      },
+      {
+        "lead_days": 7,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "open_loop"
+      },
+      {
+        "lead_days": 1,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "fixed_filter"
+      },
+      {
+        "lead_days": 3,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "fixed_filter"
+      },
+      {
+        "lead_days": 7,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "fixed_filter"
+      },
+      {
+        "lead_days": 1,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "parameter_only"
+      },
+      {
+        "lead_days": 3,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "parameter_only"
+      },
+      {
+        "lead_days": 7,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "parameter_only"
+      },
+      {
+        "lead_days": 1,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "noise_only"
+      },
+      {
+        "lead_days": 3,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "noise_only"
+      },
+      {
+        "lead_days": 7,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "noise_only"
+      },
+      {
+        "lead_days": 1,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "joint"
+      },
+      {
+        "lead_days": 3,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "joint"
+      },
+      {
+        "lead_days": 7,
+        "maximum_absolute_prediction_change": 0.0,
+        "method": "joint"
+      }
+    ],
+    "perturbation_added_after_each_origin_mm_day": 1000.0,
+    "prediction_cell_count": 45
+  },
+  "bytecode_cache_root_cause_and_cleanup": {
+    "cleanup_scope": "only the two detected __pycache__ directories, containing 6 and 4 files respectively, after absolute-path containment and exact-total-count checks",
+    "current_contract_actual_file_count_before_blackbox": 128,
+    "current_contract_checksums_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+    "current_contract_unlisted_files_before_blackbox": [],
+    "formal_contract_finish_timestamp": "2026-07-15T08:32:21.618336+08:00",
+    "formal_result_finish_timestamp": "2026-07-15T11:41:16.536348+08:00",
+    "passed": true,
+    "previous_audit_decision": "BLOCK",
+    "previous_block_audit_finish_timestamp": "2026-07-15T11:55:56.169239+08:00",
+    "previous_block_audit_start_timestamp": "2026-07-15T11:55:51.629202+08:00",
+    "previous_contract_checksums_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+    "previous_detected_cache_file_count": 10,
+    "previous_detected_cache_files": [
+      "source_snapshot/src/hbv_joint_uncertainty/__pycache__/__init__.cpython-311.pyc",
+      "source_snapshot/src/hbv_joint_uncertainty/__pycache__/candidates.cpython-311.pyc",
+      "source_snapshot/src/hbv_joint_uncertainty/__pycache__/hbv_adapter.cpython-311.pyc",
+      "source_snapshot/src/hbv_joint_uncertainty/__pycache__/imm.cpython-311.pyc",
+      "source_snapshot/src/hbv_joint_uncertainty/__pycache__/preflight.cpython-311.pyc",
+      "source_snapshot/src/hbv_joint_uncertainty/__pycache__/sigma_filter.cpython-311.pyc",
+      "source_snapshot/src/hbv_multilead_joint_uncertainty/__pycache__/__init__.cpython-311.pyc",
+      "source_snapshot/src/hbv_multilead_joint_uncertainty/__pycache__/forecast.cpython-311.pyc",
+      "source_snapshot/src/hbv_multilead_joint_uncertainty/__pycache__/methods.cpython-311.pyc",
+      "source_snapshot/src/hbv_multilead_joint_uncertainty/__pycache__/runner.cpython-311.pyc"
+    ],
+    "previous_detected_cache_roots": [
+      "source_snapshot/src/hbv_joint_uncertainty/__pycache__",
+      "source_snapshot/src/hbv_multilead_joint_uncertainty/__pycache__"
+    ],
+    "root_cause": "the first independent black-box import loaded modules directly from the frozen source snapshot without disabling Python bytecode writes"
+  },
+  "contract_id": "formal_contract_sixteen_v05",
+  "critical_checks": [
+    {
+      "check": "artifact_chain",
+      "passed": true
+    },
+    {
+      "check": "bytecode_cache_root_cause_and_cleanup",
+      "passed": true
+    },
+    {
+      "check": "arrays_and_tables",
+      "passed": true
+    },
+    {
+      "check": "joint_factor_marginals_and_coupling",
+      "passed": true
+    },
+    {
+      "check": "report_and_plot_reconstruction",
+      "passed": true
+    },
+    {
+      "check": "resource_logs",
+      "passed": true
+    },
+    {
+      "check": "blackbox_future_discharge",
+      "passed": true
+    }
+  ],
+  "decision": "RELEASE",
+  "diagnostic_boundary": "observed hindsight meteorology after origin; not an operational forecast",
+  "joint_factor_marginals_and_coupling": {
+    "collapsed_parameter_origin_count": 0,
+    "collapsed_process_noise_origin_count": 0,
+    "coupling_by_lead": [
+      {
+        "basin_origin_count": 5728,
+        "fraction_above_0_01": 0.27321927374301674,
+        "fraction_above_0_05": 0.1206354748603352,
+        "lead_days": 1,
+        "maximum_total_variation_distance": 0.4470721364469683,
+        "mean_total_variation_distance": 0.01957008744133658,
+        "median_total_variation_distance": 0.0019144937265313429,
+        "p05_total_variation_distance": 7.49780916394078e-05,
+        "p95_total_variation_distance": 0.10317112470256339
+      },
+      {
+        "basin_origin_count": 5728,
+        "fraction_above_0_01": 0.26239525139664804,
+        "fraction_above_0_05": 0.10771648044692737,
+        "lead_days": 3,
+        "maximum_total_variation_distance": 0.3957897479478399,
+        "mean_total_variation_distance": 0.017325257702886572,
+        "median_total_variation_distance": 0.0016948875308883025,
+        "p05_total_variation_distance": 6.637756543593675e-05,
+        "p95_total_variation_distance": 0.09133665489879272
+      },
+      {
+        "basin_origin_count": 5728,
+        "fraction_above_0_01": 0.24162011173184358,
+        "fraction_above_0_05": 0.08449720670391062,
+        "lead_days": 7,
+        "maximum_total_variation_distance": 0.3101975866876389,
+        "mean_total_variation_distance": 0.01357855567518414,
+        "median_total_variation_distance": 0.0013283568473274924,
+        "p05_total_variation_distance": 5.202297612600486e-05,
+        "p95_total_variation_distance": 0.07158449675018136
+      }
+    ],
+    "expected_point_count": 17184,
+    "formula": {
+      "candidate_order": "contract parameter order outer, contract process-noise order inner; independently mapped from each candidate identifier",
+      "marginal_product": "parameter marginal outer product process-noise marginal",
+      "nondegenerate_rule": "at least two marginal probabilities exceed 1e-12 and no candidate has probability at least 1 - 1e-12",
+      "parameter_marginal": "sum the 3-by-3 joint candidate distribution over process-noise index",
+      "process_noise_marginal": "sum the 3-by-3 joint candidate distribution over parameter index",
+      "total_variation_distance": "0.5 * sum over all 9 cells of abs(joint probability - marginal product)"
+    },
+    "marginal_diagnostics_by_lead": [
+      {
+        "basin_origin_count": 5728,
+        "collapsed_origin_count": 0,
+        "factor_type": "parameter",
+        "lead_days": 1,
+        "maximum_dominant_marginal_probability": 0.98,
+        "mean_normalized_entropy": 0.6659310040430724,
+        "median_normalized_entropy": 0.7453418522024413,
+        "minimum_normalized_entropy": 0.10185764172235336,
+        "minimum_second_largest_marginal_probability": 0.010000000000000009,
+        "minimum_support_count_above_1e_minus_12": 3
+      },
+      {
+        "basin_origin_count": 5728,
+        "collapsed_origin_count": 0,
+        "factor_type": "process_noise",
+        "lead_days": 1,
+        "maximum_dominant_marginal_probability": 0.9800000000000001,
+        "mean_normalized_entropy": 0.3851757742454784,
+        "median_normalized_entropy": 0.26790960937196573,
+        "minimum_normalized_entropy": 0.10185764172235327,
+        "minimum_second_largest_marginal_probability": 0.010000000000000005,
+        "minimum_support_count_above_1e_minus_12": 3
+      },
+      {
+        "basin_origin_count": 5728,
+        "collapsed_origin_count": 0,
+        "factor_type": "parameter",
+        "lead_days": 3,
+        "maximum_dominant_marginal_probability": 0.941782,
+        "mean_normalized_entropy": 0.7116295248824789,
+        "median_normalized_entropy": 0.7769067655414945,
+        "minimum_normalized_entropy": 0.2388372268843686,
+        "minimum_second_largest_marginal_probability": 0.029109000000000024,
+        "minimum_support_count_above_1e_minus_12": 3
+      },
+      {
+        "basin_origin_count": 5728,
+        "collapsed_origin_count": 0,
+        "factor_type": "process_noise",
+        "lead_days": 3,
+        "maximum_dominant_marginal_probability": 0.9417820000000001,
+        "mean_normalized_entropy": 0.47125174910243145,
+        "median_normalized_entropy": 0.3681431227048162,
+        "minimum_normalized_entropy": 0.23883722688436854,
+        "minimum_second_largest_marginal_probability": 0.029109000000000024,
+        "minimum_support_count_above_1e_minus_12": 3
+      },
+      {
+        "basin_origin_count": 5728,
+        "collapsed_origin_count": 0,
+        "factor_type": "parameter",
+        "lead_days": 7,
+        "maximum_dominant_marginal_probability": 0.8719885631874199,
+        "mean_normalized_entropy": 0.7802620174225403,
+        "median_normalized_entropy": 0.8293908064362541,
+        "minimum_normalized_entropy": 0.4290137137754357,
+        "minimum_second_largest_marginal_probability": 0.06400571840629005,
+        "minimum_support_count_above_1e_minus_12": 3
+      },
+      {
+        "basin_origin_count": 5728,
+        "collapsed_origin_count": 0,
+        "factor_type": "process_noise",
+        "lead_days": 7,
+        "maximum_dominant_marginal_probability": 0.8719885631874199,
+        "mean_normalized_entropy": 0.5987285604630328,
+        "median_normalized_entropy": 0.5189541457004975,
+        "minimum_normalized_entropy": 0.42901371377543573,
+        "minimum_second_largest_marginal_probability": 0.06400571840629005,
+        "minimum_support_count_above_1e_minus_12": 3
+      }
+    ],
+    "maximum_joint_probability_sum_error": 4.440892098500626e-16,
+    "maximum_parameter_marginal_sum_error": 4.440892098500626e-16,
+    "maximum_process_marginal_sum_error": 4.440892098500626e-16,
+    "maximum_total_variation_distance": 0.4470721364469683,
+    "minimum_parameter_second_largest_probability": 0.010000000000000009,
+    "minimum_process_noise_second_largest_probability": 0.010000000000000005,
+    "minimum_total_variation_distance": 0.0,
+    "passed": true,
+    "point_count": 17184,
+    "saved_factor_summary_maximum_absolute_difference": 0.0
+  },
+  "joint_method_comparison_summary": [
+    {
+      "basin_count": 16,
+      "lead_days": 1,
+      "median_mean_absolute_error_change_percent": -17.862968723802187,
+      "median_nash_sutcliffe_efficiency_difference": 0.022635420309362053,
+      "median_root_mean_square_error_change_percent": -10.17189495693546,
+      "reference_method": "fixed_filter",
+      "root_mean_square_error_loss_count": 6,
+      "root_mean_square_error_tie_count": 0,
+      "root_mean_square_error_win_count": 10
+    },
+    {
+      "basin_count": 16,
+      "lead_days": 3,
+      "median_mean_absolute_error_change_percent": -13.28116092669102,
+      "median_nash_sutcliffe_efficiency_difference": 0.020485694739211247,
+      "median_root_mean_square_error_change_percent": -2.560778471380311,
+      "reference_method": "fixed_filter",
+      "root_mean_square_error_loss_count": 6,
+      "root_mean_square_error_tie_count": 0,
+      "root_mean_square_error_win_count": 10
+    },
+    {
+      "basin_count": 16,
+      "lead_days": 7,
+      "median_mean_absolute_error_change_percent": -19.313406425452705,
+      "median_nash_sutcliffe_efficiency_difference": 0.0437261883261541,
+      "median_root_mean_square_error_change_percent": -4.542489566451767,
+      "reference_method": "fixed_filter",
+      "root_mean_square_error_loss_count": 7,
+      "root_mean_square_error_tie_count": 0,
+      "root_mean_square_error_win_count": 9
+    },
+    {
+      "basin_count": 16,
+      "lead_days": 1,
+      "median_mean_absolute_error_change_percent": -11.653931411347731,
+      "median_nash_sutcliffe_efficiency_difference": 0.001769626078212183,
+      "median_root_mean_square_error_change_percent": -3.6545034599201314,
+      "reference_method": "parameter_only",
+      "root_mean_square_error_loss_count": 7,
+      "root_mean_square_error_tie_count": 0,
+      "root_mean_square_error_win_count": 9
+    },
+    {
+      "basin_count": 16,
+      "lead_days": 3,
+      "median_mean_absolute_error_change_percent": -13.836350241834316,
+      "median_nash_sutcliffe_efficiency_difference": 0.04250265769854267,
+      "median_root_mean_square_error_change_percent": -4.401634431230294,
+      "reference_method": "parameter_only",
+      "root_mean_square_error_loss_count": 5,
+      "root_mean_square_error_tie_count": 0,
+      "root_mean_square_error_win_count": 11
+    },
+    {
+      "basin_count": 16,
+      "lead_days": 7,
+      "median_mean_absolute_error_change_percent": -27.29072173067658,
+      "median_nash_sutcliffe_efficiency_difference": 0.08844433372978039,
+      "median_root_mean_square_error_change_percent": -6.219162343404548,
+      "reference_method": "parameter_only",
+      "root_mean_square_error_loss_count": 5,
+      "root_mean_square_error_tie_count": 0,
+      "root_mean_square_error_win_count": 11
+    },
+    {
+      "basin_count": 16,
+      "lead_days": 1,
+      "median_mean_absolute_error_change_percent": -2.8701356251119634,
+      "median_nash_sutcliffe_efficiency_difference": 0.0041650061878031885,
+      "median_root_mean_square_error_change_percent": -0.26121976722687146,
+      "reference_method": "noise_only",
+      "root_mean_square_error_loss_count": 5,
+      "root_mean_square_error_tie_count": 0,
+      "root_mean_square_error_win_count": 11
+    },
+    {
+      "basin_count": 16,
+      "lead_days": 3,
+      "median_mean_absolute_error_change_percent": -1.4039529366573573,
+      "median_nash_sutcliffe_efficiency_difference": -0.004347787839589501,
+      "median_root_mean_square_error_change_percent": 0.141942160740812,
+      "reference_method": "noise_only",
+      "root_mean_square_error_loss_count": 8,
+      "root_mean_square_error_tie_count": 0,
+      "root_mean_square_error_win_count": 8
+    },
+    {
+      "basin_count": 16,
+      "lead_days": 7,
+      "median_mean_absolute_error_change_percent": -0.45520243037470515,
+      "median_nash_sutcliffe_efficiency_difference": -0.0051989015883855405,
+      "median_root_mean_square_error_change_percent": 0.8889964570293377,
+      "reference_method": "noise_only",
+      "root_mean_square_error_loss_count": 8,
+      "root_mean_square_error_tie_count": 0,
+      "root_mean_square_error_win_count": 8
+    }
+  ],
+  "report_and_plot_reconstruction": {
+    "original_plot_sha256": "f51a09d7cff7661af2cc275e6b32a77f508a6fd44e8092116ea58588f0e51789",
+    "original_report_sha256": "a11c9e8ab4532e78ccea58ecf63e7339b001b512ef39a84b17434c5d0e2cd6ec",
+    "passed": true,
+    "plot_maximum_channel_difference": 0,
+    "plot_mismatched_channel_count": 0,
+    "plot_pixel_shape_equal": true,
+    "reconstructed_plot_sha256": "f51a09d7cff7661af2cc275e6b32a77f508a6fd44e8092116ea58588f0e51789",
+    "reconstructed_report_sha256": "a11c9e8ab4532e78ccea58ecf63e7339b001b512ef39a84b17434c5d0e2cd6ec",
+    "report_exact_text_match": true
+  },
+  "resource_log_summary": {
+    "contract_run": {
+      "artifact_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_contract_sixteen_v05",
+      "basin_completion_event_count": 0,
+      "conditions": {
+        "disk_gate": true,
+        "embedded_history_exact_prefix": true,
+        "estimated_peak_gate": true,
+        "first_event_start": true,
+        "history_hash_matches_summary": true,
+        "history_nonempty": true,
+        "last_event_finish": true,
+        "maximum_gap_within_limit": true,
+        "processor_gate": true,
+        "registry_history_running_then_verified": true,
+        "registry_verified": true,
+        "required_events_present": true,
+        "running_memory_gate": true,
+        "sample_count_matches_summary": true,
+        "single_numerical_thread": true,
+        "start_finish_signature_hashes_equal": true,
+        "start_memory_gate": true,
+        "timestamps_monotonic": true
+      },
+      "duration_seconds": 2036.9212,
+      "embedded_last_event": "before_contract_write",
+      "embedded_sample_count": 137,
+      "estimated_peak_fraction_of_start_available": 0.0832843362347523,
+      "log_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\logs\\23_hbv_multilead_joint_uncertainty\\formal_contract_sixteen_v05",
+      "maximum_sampling_gap_seconds": 9.889129,
+      "minimum_available_memory_fraction": 0.24567937573239843,
+      "minimum_available_memory_gib": 7.788093566894531,
+      "minimum_disk_free_gib": 2167.0288581848145,
+      "passed": true,
+      "peak_process_rss_gib": 0.16829299926757812,
+      "peak_process_working_set_gib": 0.1733245849609375,
+      "required_disk_free_gib": 50.0,
+      "run_kind": "contract",
+      "sample_count": 232,
+      "start_available_memory_fraction": 0.2840766081838974
+    },
+    "result_run": {
+      "artifact_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01",
+      "basin_completion_event_count": 16,
+      "conditions": {
+        "all_basin_completion_events_once": true,
+        "disk_gate": true,
+        "embedded_history_exact_prefix": true,
+        "estimated_peak_gate": true,
+        "first_event_start": true,
+        "history_hash_matches_summary": true,
+        "history_nonempty": true,
+        "last_event_finish": true,
+        "maximum_gap_within_limit": true,
+        "processor_gate": true,
+        "registry_history_running_then_verified": true,
+        "registry_verified": true,
+        "required_events_present": true,
+        "running_memory_gate": true,
+        "sample_count_matches_summary": true,
+        "single_numerical_thread": true,
+        "start_finish_signature_hashes_equal": true,
+        "start_memory_gate": true,
+        "timestamps_monotonic": true
+      },
+      "duration_seconds": 10169.846309,
+      "embedded_last_event": "before_result_write",
+      "embedded_sample_count": 968,
+      "estimated_peak_fraction_of_start_available": 0.10335946654806571,
+      "log_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\logs\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01",
+      "maximum_sampling_gap_seconds": 9.928395,
+      "minimum_available_memory_fraction": 0.21485107266812403,
+      "minimum_available_memory_gib": 6.810829162597656,
+      "minimum_disk_free_gib": 2165.8046112060547,
+      "passed": true,
+      "peak_process_rss_gib": 0.18020248413085938,
+      "peak_process_working_set_gib": 0.22518157958984375,
+      "required_disk_free_gib": 50.0,
+      "run_kind": "result",
+      "sample_count": 1062,
+      "start_available_memory_fraction": 0.3052019331828805
+    }
+  },
+  "result_id": "formal_result_sixteen_v01",
+  "table_comparisons": {
+    "candidate_probability_summary": {
+      "columns_equal": true,
+      "key_index_equal": true,
+      "maximum_numeric_absolute_difference": 0.0,
+      "nonnumeric_mismatch_counts": {},
+      "numeric_maximum_absolute_differences": {
+        "dominant_origin_count": 0.0,
+        "mean_normalized_entropy": 0.0,
+        "mean_probability": 0.0,
+        "median_probability": 0.0,
+        "origin_count": 0.0
+      },
+      "passed": true,
+      "recomputed_shape": [
+        816,
+        9
+      ],
+      "saved_shape": [
+        816,
+        9
+      ]
+    },
+    "cross_basin_summary": {
+      "columns_equal": true,
+      "key_index_equal": true,
+      "maximum_numeric_absolute_difference": 0.0,
+      "nonnumeric_mismatch_counts": {},
+      "numeric_maximum_absolute_differences": {
+        "basin_count": 0.0,
+        "median_mae": 0.0,
+        "median_mae_change_percent_vs_fixed_filter": 0.0,
+        "median_nse": 0.0,
+        "median_nse_change_vs_fixed_filter": 0.0,
+        "median_rmse": 0.0,
+        "median_rmse_change_percent_vs_fixed_filter": 0.0,
+        "strict_rmse_win_count_vs_fixed_filter": 0.0
+      },
+      "passed": true,
+      "recomputed_shape": [
+        15,
+        10
+      ],
+      "saved_shape": [
+        15,
+        10
+      ]
+    },
+    "joint_factor_probability_summary": {
+      "columns_equal": true,
+      "key_index_equal": true,
+      "maximum_numeric_absolute_difference": 0.0,
+      "nonnumeric_mismatch_counts": {},
+      "numeric_maximum_absolute_differences": {
+        "mean_marginal_probability": 0.0,
+        "median_marginal_probability": 0.0
+      },
+      "passed": true,
+      "recomputed_shape": [
+        288,
+        6
+      ],
+      "saved_shape": [
+        288,
+        6
+      ]
+    },
+    "metrics": {
+      "columns_equal": true,
+      "key_index_equal": true,
+      "maximum_numeric_absolute_difference": 0.0,
+      "nonnumeric_mismatch_counts": {},
+      "numeric_maximum_absolute_differences": {
+        "mae": 0.0,
+        "mae_change_percent_vs_fixed_filter": 0.0,
+        "n_origins": 0.0,
+        "nse": 0.0,
+        "nse_change_vs_fixed_filter": 0.0,
+        "rmse": 0.0,
+        "rmse_change_percent_vs_fixed_filter": 0.0,
+        "strict_rmse_win_vs_fixed_filter": 0.0
+      },
+      "passed": true,
+      "recomputed_shape": [
+        240,
+        11
+      ],
+      "saved_shape": [
+        240,
+        11
+      ]
+    },
+    "paired_method_comparisons": {
+      "columns_equal": true,
+      "key_index_equal": true,
+      "maximum_numeric_absolute_difference": 0.0,
+      "nonnumeric_mismatch_counts": {
+        "challenger_method": 0,
+        "reference_method": 0
+      },
+      "numeric_maximum_absolute_differences": {
+        "basin_count": 0.0,
+        "mae_win_count": 0.0,
+        "median_mae_difference": 0.0,
+        "median_nse_difference": 0.0,
+        "median_rmse_change_percent": 0.0,
+        "median_rmse_difference": 0.0,
+        "nse_win_count": 0.0,
+        "rmse_tie_count": 0.0,
+        "rmse_win_count": 0.0
+      },
+      "passed": true,
+      "recomputed_shape": [
+        18,
+        13
+      ],
+      "saved_shape": [
+        18,
+        13
+      ]
+    }
+  }
+}

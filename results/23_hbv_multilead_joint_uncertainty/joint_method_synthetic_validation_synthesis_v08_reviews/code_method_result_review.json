@@ -1,0 +1,75 @@
+{
+  "verdict": "HOLD_PENDING_MUST_FIX",
+  "must_fix_count": 1,
+  "scientific_conclusion_changed": false,
+  "verdict_detail": "The version-eight synthesis governance cannot be accepted. All 37 formal tests passed, including the registered version-one through version-seven regression cases, but a direct adversarial call still accepted a byte-identical frozen legacy review pair placed under a forged temporary repository root. The frozen negative scientific conclusion is unchanged and remains HOLD; the full scientific evidence audit was stopped immediately after this conclusion-changing governance defect was reproduced.",
+  "must_fix": [
+    {
+      "id": "legacy_review_exception_must_reject_forged_repository_root",
+      "severity": "conclusion_changing_governance_defect",
+      "location": "src/hbv_multilead_joint_uncertainty/scripts/run_joint_method_synthesis.py::_review_status lines 246-281",
+      "finding": "The legacy confirmed-items list exception trusts the caller-supplied repo_root and registered_relative_path. The complete frozen parameter_identification_validation_v01_reviews pair was copied byte-for-byte to a system temporary directory under a fabricated repository layout. Calling _review_status with repo_root set to that fabricated root and registered_relative_path set to the canonical registered path satisfied the current resolved-path equality and returned passed=true. Therefore the implementation proves only internal consistency of caller-controlled path arguments; it does not prove that the review was reached from the version-eight configuration under the real repository root.",
+      "impact": "A copied legacy review can be counted as a passing independent double-review chain and can contribute to numerical_chain_validated=true. This changes the governance decision but does not change the frozen four-condition scientific results.",
+      "required_repair": "Bind the legacy exception to a trusted repository-root identity derived independently of caller-supplied arguments and activate it only through the configuration-driven synthesis path. Require the resolved directory to equal that trusted repository root joined to the registered relative path, require the exact two registered review filenames, and verify both frozen file digests and the registered manifest identity. Raw direct calls with a fabricated repo_root or fabricated registered_relative_path must not authorize the exception.",
+      "acceptance_tests": [
+        "A byte-identical copy of the complete frozen legacy review pair under a system temporary directory is rejected even when repo_root and registered_relative_path are forged to make the resolved-path equality true.",
+        "The real frozen legacy review is accepted only when reached from the version-eight configuration and its resolved directory, registered relative path, filenames, both file digests, and manifest identity all match.",
+        "A wrong relative path, wrong repository root, same-name directory with false content, same-structure content, or one-byte mutation is rejected.",
+        "All 37 existing formal tests and the new forged-root counterexamples pass."
+      ]
+    }
+  ],
+  "formal_regression_audit": {
+    "command": "python -m pytest -q test/test_hbv_joint_method_synthesis.py",
+    "collected_test_count": 37,
+    "passed_test_count": 37,
+    "failed_test_count": 0,
+    "exit_code": 0,
+    "historical_version_one_through_version_seven_must_fix_replay": "passed for every registered regression case in the formal suite",
+    "warning": "One existing PytestConfigWarning reported the unknown collect_ignore_glob option; it did not change the zero exit code."
+  },
+  "adversarial_counterexample": {
+    "attack": "byte-identical frozen legacy review pair under a fabricated system-temporary repository root with the canonical registered relative path",
+    "resolved_directory_equaled_forged_root_plus_registered_path": true,
+    "first_review_file": "independent_review.json",
+    "first_review_sha256": "c95ffa6ca124e8ceb4b45d8faae7962a356a888dd8b7491ccce799dce466d84a",
+    "second_review_file": "independent_review_validation.json",
+    "second_review_sha256": "b512dace4e24cc7e091ef322c589c116241876d44f84e738a04b5091f5f73b3b",
+    "both_copies_byte_equal_to_frozen_sources": true,
+    "expected": "ValueError or passed=false",
+    "observed": "passed=true",
+    "returned_required_fix_count": 0,
+    "returned_second_review_must_fix_count": 0,
+    "returned_contradictions_found": 0,
+    "returned_unverified_items": 0
+  },
+  "resource_gate_audit": {
+    "task_specific_required_available_bytes": 149745588,
+    "available_physical_memory_bytes_before_adversarial_replay": 372146176,
+    "safe_to_run": true,
+    "resource_gate_bypassed": false,
+    "execution_parallelism": 1
+  },
+  "scientific_conclusion": {
+    "changed": false,
+    "status": "HOLD",
+    "detail": "The parser defect does not alter the frozen negative results: joint identification remains unsupported in all four tested conditions and forecast added value beyond both single-factor methods remains unsupported for all twelve tested condition-by-lead targets. Version-eight numerical-chain validation is not signed off."
+  },
+  "remaining_audit": {
+    "status": "not_executed_after_immediate_must_fix_stop",
+    "reason": "The review instruction requires immediate minimal persistence and return after any must-fix issue.",
+    "not_signed_off": [
+      "complete twelve-component evidence audit",
+      "complete nine-double-review-chain audit",
+      "complete twenty-one-input-directory and version-eight eleven-file manifest audit",
+      "independent four-condition raw-array recalculation",
+      "claim unknown-boundary audit",
+      "version-one through version-seven synthesis and review protection-hash audit"
+    ]
+  },
+  "reviewer_independence": {
+    "review_layer": "first independent code, method, and result review",
+    "code_or_formal_evidence_modified": false,
+    "only_written_artifact": "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v08_reviews/code_method_result_review.json"
+  }
+}

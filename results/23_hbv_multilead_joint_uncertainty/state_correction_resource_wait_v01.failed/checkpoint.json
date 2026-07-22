@@ -1,0 +1,11 @@
+{
+  "record_id": "state_correction_resource_wait_v01",
+  "status": "blocked_waiting_for_resources",
+  "last_verified_stage": "frozen_artifact_read_only_audit",
+  "next_stage": "run_existing_state_correction_failing_checks",
+  "resume_requires_available_memory_fraction_at_least": 0.25,
+  "tests_started": false,
+  "experiments_started": false,
+  "consecutive_failed_resource_checks": 3,
+  "latest_check_timestamp": "2026-07-16T13:51:04.5856393+08:00"
+}

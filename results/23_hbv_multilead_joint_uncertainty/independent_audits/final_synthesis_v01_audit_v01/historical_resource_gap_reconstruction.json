@@ -1,0 +1,24 @@
+{
+  "classification": "historical_reconstruction_not_original_snapshot",
+  "historical_target_total_bytes": 47962,
+  "current_target_total_bytes": 47966,
+  "target_total_byte_change": 4,
+  "historical_declared_maximum_gap_seconds": 12.0,
+  "independently_recomputed_maximum_gap_seconds": 11.54805,
+  "absolute_difference_seconds": 0.45195,
+  "canonical_timestamp_count": 1110,
+  "gap_start": "2026-07-15T16:19:50.500176+08:00",
+  "gap_end": "2026-07-15T16:20:02.048226+08:00",
+  "current_record_bytes": 2928,
+  "reconstructed_historical_record_bytes": 2924,
+  "current_record_sha256": "57778c38ae3fde57adbc8bc371ed8eae67cfc84b267f7c0856bd01a02f45bae9",
+  "reconstructed_historical_record_sha256": "ef0d4e24b5884f2d3f29a1ef9cdf8fa77894f6171e18cbb7454606efc4d4ece1",
+  "reconstruction_method": "The corrected record contains exactly one byte sequence 11.54805. Replacing that sequence with 12.0 produces a file four bytes shorter and reproduces the 47,962-byte target size recorded by attempt 2. This reconstruction supports chronology but is not labelled as an original archived file.",
+  "source_files": [
+    "audit_summary_attempt02_mixed_review.json",
+    "audit_checklist_attempt02_mixed_review.csv",
+    "audit_stdout_attempt02_mixed_review.txt",
+    "../../final_synthesis_v01/resource_abort_formal_reproduction_v02.json",
+    "../../final_synthesis_v01/MANIFEST.sha256"
+  ]
+}

@@ -1,0 +1,418 @@
+{
+  "array_count": 36,
+  "arrays": [
+    {
+      "array_name": "dates",
+      "dtype": "<U10",
+      "exact_equal": true,
+      "maximum_absolute_difference": null,
+      "numeric_element_count": 0,
+      "shape": [
+        365
+      ]
+    },
+    {
+      "array_name": "observations",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 365,
+      "shape": [
+        365
+      ]
+    },
+    {
+      "array_name": "lead_days",
+      "dtype": "int64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 3,
+      "shape": [
+        3
+      ]
+    },
+    {
+      "array_name": "origin_indices",
+      "dtype": "int64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 358,
+      "shape": [
+        358
+      ]
+    },
+    {
+      "array_name": "target_indices",
+      "dtype": "int64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 1074,
+      "shape": [
+        358,
+        3
+      ]
+    },
+    {
+      "array_name": "origin_dates",
+      "dtype": "<U10",
+      "exact_equal": true,
+      "maximum_absolute_difference": null,
+      "numeric_element_count": 0,
+      "shape": [
+        358
+      ]
+    },
+    {
+      "array_name": "target_dates",
+      "dtype": "<U10",
+      "exact_equal": true,
+      "maximum_absolute_difference": null,
+      "numeric_element_count": 0,
+      "shape": [
+        358,
+        3
+      ]
+    },
+    {
+      "array_name": "target_observations",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 1074,
+      "shape": [
+        358,
+        3
+      ]
+    },
+    {
+      "array_name": "open_loop__predictions",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 1074,
+      "shape": [
+        358,
+        3
+      ]
+    },
+    {
+      "array_name": "open_loop__candidate_ids",
+      "dtype": "<U128",
+      "exact_equal": true,
+      "maximum_absolute_difference": null,
+      "numeric_element_count": 0,
+      "shape": [
+        1
+      ]
+    },
+    {
+      "array_name": "open_loop__candidate_predictions",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 1074,
+      "shape": [
+        358,
+        3,
+        1
+      ]
+    },
+    {
+      "array_name": "open_loop__probabilities",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 1074,
+      "shape": [
+        358,
+        3,
+        1
+      ]
+    },
+    {
+      "array_name": "fixed_filter__predictions",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 1074,
+      "shape": [
+        358,
+        3
+      ]
+    },
+    {
+      "array_name": "fixed_filter__candidate_ids",
+      "dtype": "<U128",
+      "exact_equal": true,
+      "maximum_absolute_difference": null,
+      "numeric_element_count": 0,
+      "shape": [
+        1
+      ]
+    },
+    {
+      "array_name": "fixed_filter__candidate_predictions",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 1074,
+      "shape": [
+        358,
+        3,
+        1
+      ]
+    },
+    {
+      "array_name": "fixed_filter__probabilities",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 1074,
+      "shape": [
+        358,
+        3,
+        1
+      ]
+    },
+    {
+      "array_name": "fixed_filter__candidate_covariance_diagonals",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 16110,
+      "shape": [
+        358,
+        3,
+        1,
+        15
+      ]
+    },
+    {
+      "array_name": "fixed_filter__combined_covariance_diagonals",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 16110,
+      "shape": [
+        358,
+        3,
+        15
+      ]
+    },
+    {
+      "array_name": "parameter_only__predictions",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 1074,
+      "shape": [
+        358,
+        3
+      ]
+    },
+    {
+      "array_name": "parameter_only__candidate_ids",
+      "dtype": "<U128",
+      "exact_equal": true,
+      "maximum_absolute_difference": null,
+      "numeric_element_count": 0,
+      "shape": [
+        3
+      ]
+    },
+    {
+      "array_name": "parameter_only__candidate_predictions",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 3222,
+      "shape": [
+        358,
+        3,
+        3
+      ]
+    },
+    {
+      "array_name": "parameter_only__probabilities",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 3222,
+      "shape": [
+        358,
+        3,
+        3
+      ]
+    },
+    {
+      "array_name": "parameter_only__candidate_covariance_diagonals",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 48330,
+      "shape": [
+        358,
+        3,
+        3,
+        15
+      ]
+    },
+    {
+      "array_name": "parameter_only__combined_covariance_diagonals",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 16110,
+      "shape": [
+        358,
+        3,
+        15
+      ]
+    },
+    {
+      "array_name": "noise_only__predictions",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 1074,
+      "shape": [
+        358,
+        3
+      ]
+    },
+    {
+      "array_name": "noise_only__candidate_ids",
+      "dtype": "<U128",
+      "exact_equal": true,
+      "maximum_absolute_difference": null,
+      "numeric_element_count": 0,
+      "shape": [
+        3
+      ]
+    },
+    {
+      "array_name": "noise_only__candidate_predictions",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 3222,
+      "shape": [
+        358,
+        3,
+        3
+      ]
+    },
+    {
+      "array_name": "noise_only__probabilities",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 3222,
+      "shape": [
+        358,
+        3,
+        3
+      ]
+    },
+    {
+      "array_name": "noise_only__candidate_covariance_diagonals",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 48330,
+      "shape": [
+        358,
+        3,
+        3,
+        15
+      ]
+    },
+    {
+      "array_name": "noise_only__combined_covariance_diagonals",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 16110,
+      "shape": [
+        358,
+        3,
+        15
+      ]
+    },
+    {
+      "array_name": "joint__predictions",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 1074,
+      "shape": [
+        358,
+        3
+      ]
+    },
+    {
+      "array_name": "joint__candidate_ids",
+      "dtype": "<U128",
+      "exact_equal": true,
+      "maximum_absolute_difference": null,
+      "numeric_element_count": 0,
+      "shape": [
+        9
+      ]
+    },
+    {
+      "array_name": "joint__candidate_predictions",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 9666,
+      "shape": [
+        358,
+        3,
+        9
+      ]
+    },
+    {
+      "array_name": "joint__probabilities",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 9666,
+      "shape": [
+        358,
+        3,
+        9
+      ]
+    },
+    {
+      "array_name": "joint__candidate_covariance_diagonals",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 144990,
+      "shape": [
+        358,
+        3,
+        9,
+        15
+      ]
+    },
+    {
+      "array_name": "joint__combined_covariance_diagonals",
+      "dtype": "float64",
+      "exact_equal": true,
+      "maximum_absolute_difference": 0.0,
+      "numeric_element_count": 16110,
+      "shape": [
+        358,
+        3,
+        15
+      ]
+    }
+  ],
+  "exact_equal": true,
+  "maximum_absolute_difference": 0.0,
+  "numeric_element_count": 366960,
+  "reference_npz_sha256": "24de42eec2b1618aa79da8caf15e1a35eca0c845669e9f7255eaf5cb1d47147d",
+  "reproduced_npz_sha256": "24de42eec2b1618aa79da8caf15e1a35eca0c845669e9f7255eaf5cb1d47147d"
+}

@@ -1,0 +1,53 @@
+{
+  "condition": "fixed complete parameter label with projected candidate-scale process truth",
+  "decision_rules": {
+    "added_value_beyond_single_factor_methods": "The effective-against-fixed-filter rule holds and the matched-block bootstrap upper bounds for joint minus both parameter-only and process-noise-only methods are below zero.",
+    "decision_rules_do_not_control_integrity_status": true,
+    "effective_against_fixed_filter": "Both the global root mean square error improvement is at least five percent and the 95 percent matched-block bootstrap upper bound for joint minus fixed-filter block root mean square error is below zero.",
+    "joint_candidate_argmax_accuracy_minimum": 0.5,
+    "joint_parameter_argmax_accuracy_minimum": 0.6666666666666666,
+    "joint_process_argmax_accuracy_minimum": 0.6666666666666666,
+    "median_joint_true_candidate_probability_minimum": 0.2,
+    "paired_block_root_mean_square_error_difference_upper_maximum": 0.0,
+    "practical_relative_root_mean_square_error_improvement_percent_minimum": 5.0
+  },
+  "identification": {
+    "joint_candidate_argmax_accuracy": 0.5138888888888888,
+    "joint_parameter_argmax_accuracy": 0.5972222222222222,
+    "joint_process_argmax_accuracy": 0.8472222222222222,
+    "median_joint_true_candidate_probability": 0.24446729489293278,
+    "median_joint_true_parameter_probability": 0.371444919664944,
+    "median_joint_true_process_probability": 0.587072813153685
+  },
+  "interpretation_rule": "These scientific decisions are reported whether positive or negative and do not determine the numerical-integrity status of the experiment.",
+  "joint_identification_effective": false,
+  "lead_decisions": [
+    {
+      "added_value_beyond_both_single_factor_methods": false,
+      "effective_against_fixed_filter": false,
+      "lead_days": 1
+    },
+    {
+      "added_value_beyond_both_single_factor_methods": false,
+      "effective_against_fixed_filter": false,
+      "lead_days": 3
+    },
+    {
+      "added_value_beyond_both_single_factor_methods": false,
+      "effective_against_fixed_filter": true,
+      "lead_days": 7
+    }
+  ],
+  "origin_state_decision": {
+    "added_value_beyond_both_single_factor_methods": false,
+    "effective_against_fixed_filter": true
+  },
+  "truth_process_interpretation": {
+    "interpretation": "The frozen candidate covariance controls only the pre-projection perturbation scale; the post-projection truth is not an exact additive Gaussian candidate model.",
+    "post_projection_distribution_matches_additive_gaussian_candidate": false,
+    "pre_projection_covariance_uses_frozen_candidate": true,
+    "projection_event_count": 3527,
+    "projection_event_fraction": 0.9420405982905983,
+    "projection_event_total": 3744
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "components": [
+    {
+      "experiment_id": "synthetic_truth_propagation_v04",
+      "status": "passed"
+    },
+    {
+      "experiment_id": "single_filter_state_validation_v02",
+      "status": "passed"
+    },
+    {
+      "experiment_id": "parameter_identification_validation_v01",
+      "status": "passed"
+    },
+    {
+      "experiment_id": "process_noise_identification_validation_v02",
+      "status": "passed"
+    },
+    {
+      "experiment_id": "model_probability_validation_v02",
+      "status": "passed"
+    },
+    {
+      "experiment_id": "state_interaction_validation_v02",
+      "status": "passed"
+    },
+    {
+      "experiment_id": "observation_free_forecast_validation_v02",
+      "status": "passed"
+    },
+    {
+      "experiment_id": "joint_method_assimilation_07d_v01",
+      "status": "passed"
+    },
+    {
+      "experiment_id": "joint_method_assimilation_21d_v01",
+      "status": "passed"
+    },
+    {
+      "experiment_id": "joint_method_stable_validation_v04",
+      "status": "passed"
+    },
+    {
+      "experiment_id": "joint_method_assimilation_duration_boundary_v01",
+      "status": "passed"
+    },
+    {
+      "experiment_id": "joint_method_periodic_switch_07d_v01",
+      "status": "passed"
+    }
+  ],
+  "key_numbers": {
+    "joint_probability_posterior_accuracy": 0.9318493150684931,
+    "joint_probability_prior_accuracy": 0.8948630136986301,
+    "parameter_identification_correct_trials": 24,
+    "process_scale_identification_correct_trials": 23,
+    "single_filter_flow_improvement_trials": 24,
+    "single_filter_state_improvement_trials": 20,
+    "state_propagation_maximum_absolute_error": 5.684341886080802e-14
+  },
+  "reviews": [
+    {
+      "contradictions_found": 0,
+      "first_review_file": "independent_review.json",
+      "first_review_verdict": "no_required_fix_for_the_registered_claim",
+      "passed": true,
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\single_filter_state_validation_v02_reviews",
+      "required_fix_count": 0,
+      "second_review_file": "independent_review_validation.json",
+      "second_review_must_fix_count": 0,
+      "second_review_verdict": "confirmed",
+      "unverified_items": 0
+    },
+    {
+      "contradictions_found": 0,
+      "first_review_file": "independent_review.json",
+      "first_review_verdict": "valid_only_for_the_registered_ideal_closed_conditions",
+      "passed": true,
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\parameter_identification_validation_v01_reviews",
+      "required_fix_count": 0,
+      "second_review_file": "independent_review_validation.json",
+      "second_review_must_fix_count": 0,
+      "second_review_verdict": "confirmed_with_one_wording_correction",
+      "unverified_items": 0
+    },
+    {
+      "contradictions_found": 0,
+      "first_review_file": "independent_review.json",
+      "first_review_verdict": null,
+      "passed": true,
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\process_noise_identification_validation_v02_reviews",
+      "required_fix_count": 0,
+      "second_review_file": "independent_review_validation.json",
+      "second_review_must_fix_count": 0,
+      "second_review_verdict": null,
+      "unverified_items": 0
+    },
+    {
+      "contradictions_found": 0,
+      "first_review_file": "independent_review.json",
+      "first_review_verdict": null,
+      "passed": true,
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\model_probability_validation_v02_reviews",
+      "required_fix_count": 0,
+      "second_review_file": "independent_review_validation.json",
+      "second_review_must_fix_count": 0,
+      "second_review_verdict": null,
+      "unverified_items": 0
+    },
+    {
+      "contradictions_found": 0,
+      "first_review_file": "independent_review.json",
+      "first_review_verdict": null,
+      "passed": true,
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\state_interaction_validation_v02_reviews",
+      "required_fix_count": 0,
+      "second_review_file": "independent_review_validation.json",
+      "second_review_must_fix_count": 0,
+      "second_review_verdict": null,
+      "unverified_items": 0
+    },
+    {
+      "contradictions_found": 0,
+      "first_review_file": "code_method_result_review.json",
+      "first_review_verdict": "passed",
+      "passed": true,
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\observation_free_forecast_validation_v02_reviews",
+      "required_fix_count": 0,
+      "second_review_file": "raw_evidence_review_validation.json",
+      "second_review_must_fix_count": 0,
+      "second_review_verdict": "confirmed",
+      "unverified_items": 0
+    },
+    {
+      "contradictions_found": 0,
+      "first_review_file": "code_method_result_review.json",
+      "first_review_verdict": "PASS",
+      "passed": true,
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\joint_method_stable_validation_v04_reviews",
+      "required_fix_count": 0,
+      "second_review_file": "raw_evidence_review_validation.json",
+      "second_review_must_fix_count": 0,
+      "second_review_verdict": "PASS",
+      "unverified_items": 0
+    },
+    {
+      "contradictions_found": 0,
+      "first_review_file": "code_method_result_review.json",
+      "first_review_verdict": "\u901a\u8fc7\uff1a\u6b63\u5f0f\u8bc1\u636e\u5b8c\u6574\u4e14\u805a\u5408\u65b9\u6cd5\u6b63\u786e\uff1b\u9884\u6ce8\u518c\u7684\u4e5d\u5019\u9009\u8054\u5408\u8bc6\u522b\u6807\u51c6\u5728\u6700\u957f\u56db\u5341\u4e94\u5929\u5339\u914d\u540c\u5316\u8d44\u6599\u5185\u4ecd\u672a\u8fbe\u5230",
+      "passed": true,
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\joint_method_assimilation_duration_boundary_v01_reviews",
+      "required_fix_count": 0,
+      "second_review_file": "raw_evidence_review_validation.json",
+      "second_review_must_fix_count": 0,
+      "second_review_verdict": "\u901a\u8fc7\u539f\u59cb\u8bc1\u636e\u9a8c\u8bc1\uff1a\u7b2c\u4e00\u5ba1\u67e5\u4e2d\u53ef\u7531\u6b63\u5f0f\u4fdd\u5b58\u8bc1\u636e\u9a8c\u8bc1\u7684\u6570\u503c\u3001\u9608\u503c\u3001\u5b8c\u6574\u6027\u548c\u53d7\u9650\u79d1\u5b66\u7ed3\u8bba\u5747\u83b7\u72ec\u7acb\u786e\u8ba4\u3002\u9884\u6ce8\u518c\u8054\u5408\u8bc6\u522b\u6807\u51c6\u622a\u81f3\u56db\u5341\u4e94\u5929\u4ecd\u672a\u8fbe\u5230\uff1b\u56db\u5341\u4e94\u5929\u4e4b\u540e\u672a\u6d4b\u8bd5\uff0c\u76ee\u524d\u65e0\u6cd5\u786e\u5b9a\u3002",
+      "unverified_items": 0
+    },
+    {
+      "contradictions_found": 0,
+      "first_review_file": "code_method_result_review.json",
+      "first_review_verdict": "PASS",
+      "passed": true,
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\joint_method_periodic_switch_07d_v01_reviews",
+      "required_fix_count": 0,
+      "second_review_file": "raw_evidence_review_validation.json",
+      "second_review_must_fix_count": 0,
+      "second_review_verdict": "PASS",
+      "unverified_items": 0
+    }
+  ]
+}

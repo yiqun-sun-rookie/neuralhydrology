@@ -1,0 +1,113 @@
+{
+  "verification_id": "final_synthesis_v01_draft_audit_v01_self_verification",
+  "verified_at_utc": "2026-07-15T05:26:33.854046+00:00",
+  "audit_package_verification": "PASS",
+  "synthesis_release_decision_remains": "BLOCK",
+  "formal_reproduction_status_remains": "PENDING",
+  "checks": {
+    "audit_checksum_manifest": {
+      "recorded_file_count": 21,
+      "missing": [],
+      "mismatched": [],
+      "unlisted": [],
+      "passed": true
+    },
+    "decision_and_reproduction": {
+      "overall_decision": "BLOCK",
+      "formal_reproduction_status": "PENDING",
+      "formal_reproduction_passed_check": false,
+      "passed": true
+    },
+    "structured_issues": {
+      "issue_count": 3,
+      "blocking_issue_count": 2,
+      "issue_ids": [
+        "I001",
+        "I002",
+        "I003"
+      ],
+      "passed": true
+    },
+    "direct_numeric_recomputation": {
+      "joint_vs_noise_only": {
+        "1": {
+          "median_change_percent": -0.26121976722687146,
+          "win_count": 11
+        },
+        "3": {
+          "median_change_percent": 0.141942160740812,
+          "win_count": 8
+        },
+        "7": {
+          "median_change_percent": 0.8889964570293377,
+          "win_count": 8
+        }
+      },
+      "joint_vs_open_loop": {
+        "1": {
+          "median_change_percent": 0.17518034201015453,
+          "win_count": 8
+        },
+        "3": {
+          "median_change_percent": 40.612664956443226,
+          "win_count": 5
+        },
+        "7": {
+          "median_change_percent": 88.52999562470454,
+          "win_count": 4
+        }
+      },
+      "maximum_absolute_difference": 0.0,
+      "passed": true
+    },
+    "paired_unpaired_separation": {
+      "comparison_count": 12,
+      "sign_disagreement_count": 4,
+      "all_report_method_judgments_use_paired": true,
+      "passed": true
+    },
+    "claim_ledger": {
+      "claim_count": 20,
+      "missing_evidence_path_count": 0,
+      "c20_status": "PENDING",
+      "c20_verified": "False",
+      "passed": true
+    },
+    "known_issues": {
+      "row_count": 13,
+      "failed_count": 0,
+      "passed": true
+    },
+    "documents": {
+      "relative_link_count": 59,
+      "missing_link_count": 0,
+      "statement_check_count": 12,
+      "failed_statement_count": 0,
+      "passed": true
+    },
+    "definitions_and_origin": {
+      "parameter_rule_passed": true,
+      "process_noise_passed": true,
+      "observation_noise_passed": true,
+      "origin_passed": true,
+      "origin_point_count": 5728,
+      "passed": true
+    },
+    "protected_sources_current": {
+      "protected_directory_count": 13,
+      "current_mismatches": [],
+      "external_kalmannet_sources_passed": true,
+      "passed": true
+    },
+    "resource_monitor": {
+      "sample_count": 12,
+      "maximum_sampling_gap_seconds": 0.21900000001187436,
+      "maximum_process_resident_memory_gibibytes": 0.05902099609375,
+      "passed": true
+    },
+    "no_bytecode": {
+      "files": [],
+      "passed": true
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "bootstrap_replicates": 20000,
+  "bootstrap_unit": "trial",
+  "candidate_factors": [
+    [
+      "equifinal_diverse_1",
+      "process_0"
+    ],
+    [
+      "equifinal_diverse_1",
+      "process_1"
+    ],
+    [
+      "equifinal_diverse_1",
+      "process_2"
+    ],
+    [
+      "trained_center",
+      "process_0"
+    ],
+    [
+      "trained_center",
+      "process_1"
+    ],
+    [
+      "trained_center",
+      "process_2"
+    ],
+    [
+      "equifinal_diverse_2",
+      "process_0"
+    ],
+    [
+      "equifinal_diverse_2",
+      "process_1"
+    ],
+    [
+      "equifinal_diverse_2",
+      "process_2"
+    ]
+  ],
+  "candidate_ids": [
+    "equifinal_diverse_1__process_0",
+    "equifinal_diverse_1__process_1",
+    "equifinal_diverse_1__process_2",
+    "trained_center__process_0",
+    "trained_center__process_1",
+    "trained_center__process_2",
+    "equifinal_diverse_2__process_0",
+    "equifinal_diverse_2__process_1",
+    "equifinal_diverse_2__process_2"
+  ],
+  "config_sha256": "bbbb691d8a01fa4ff37ffc562d270d1faf959f9c40a29ce2120d89702727a951",
+  "emission_model": "two independent synthetic Gaussian factor diagnostics",
+  "experiment_id": "model_probability_validation_v01",
+  "factor_stay_probability": 0.98,
+  "gates": {
+    "causal_prefix_maximum_absolute_error": 0.0,
+    "factor_marginal_transition_maximum_absolute_error": 1e-14,
+    "factorial_transition_contract_maximum_absolute_error": 1e-14,
+    "joint_brier_improved_trial_count_minimum": 30,
+    "joint_brier_improvement_bootstrap_lower_minimum": 0.02,
+    "joint_log_loss_improved_trial_count_minimum": 30,
+    "joint_log_loss_improvement_bootstrap_lower_minimum": 0.05,
+    "joint_posterior_accuracy_minimum": 0.65,
+    "parameter_posterior_accuracy_minimum": 0.8,
+    "posterior_factorization_maximum_absolute_error": 1e-14,
+    "posterior_reconstruction_maximum_absolute_error": 1e-14,
+    "process_posterior_accuracy_minimum": 0.8,
+    "recursion_maximum_absolute_error": 1e-14
+  },
+  "hydrologic_state_propagation": false,
+  "registered_at": "2026-07-17T13:24:04.520367+00:00",
+  "state_interaction": false,
+  "status": "preregistered",
+  "trial_seeds": [
+    830001,
+    830002,
+    830003,
+    830004,
+    830005,
+    830006,
+    830007,
+    830008,
+    830009,
+    830010,
+    830011,
+    830012,
+    830013,
+    830014,
+    830015,
+    830016,
+    830017,
+    830018,
+    830019,
+    830020,
+    830021,
+    830022,
+    830023,
+    830024,
+    830025,
+    830026,
+    830027,
+    830028,
+    830029,
+    830030,
+    830031,
+    830032
+  ]
+}

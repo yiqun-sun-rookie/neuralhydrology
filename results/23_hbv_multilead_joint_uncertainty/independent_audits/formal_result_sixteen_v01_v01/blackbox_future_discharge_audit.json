@@ -1,0 +1,95 @@
+{
+  "candidate_counts": {
+    "fixed_filter": 1,
+    "joint": 9,
+    "noise_only": 3,
+    "open_loop": 1,
+    "parameter_only": 3
+  },
+  "frozen_runner_sha256": "f1532d35c624c3ea7b5baa78c64b60097c78b726f92650721d7118d2aff331c3",
+  "frozen_source_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_contract_sixteen_v05\\source_snapshot\\src",
+  "lead_count": 3,
+  "maximum_absolute_prediction_change": 0.0,
+  "method_count": 5,
+  "origin_count": 3,
+  "passed": true,
+  "per_method_lead": [
+    {
+      "lead_days": 1,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "open_loop"
+    },
+    {
+      "lead_days": 3,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "open_loop"
+    },
+    {
+      "lead_days": 7,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "open_loop"
+    },
+    {
+      "lead_days": 1,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "fixed_filter"
+    },
+    {
+      "lead_days": 3,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "fixed_filter"
+    },
+    {
+      "lead_days": 7,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "fixed_filter"
+    },
+    {
+      "lead_days": 1,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "parameter_only"
+    },
+    {
+      "lead_days": 3,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "parameter_only"
+    },
+    {
+      "lead_days": 7,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "parameter_only"
+    },
+    {
+      "lead_days": 1,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "noise_only"
+    },
+    {
+      "lead_days": 3,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "noise_only"
+    },
+    {
+      "lead_days": 7,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "noise_only"
+    },
+    {
+      "lead_days": 1,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "joint"
+    },
+    {
+      "lead_days": 3,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "joint"
+    },
+    {
+      "lead_days": 7,
+      "maximum_absolute_prediction_change": 0.0,
+      "method": "joint"
+    }
+  ],
+  "perturbation_added_after_each_origin_mm_day": 1000.0,
+  "prediction_cell_count": 45
+}

@@ -1,0 +1,186 @@
+{
+  "reviewer_role": "独立增量代码、方法和原始结果审查者；未参与版本 2 的实现或正式结果生成",
+  "review_type": "observation_free_forecast_validation_v02 relative to observation_free_forecast_validation_v01",
+  "reviewed_paths": [
+    "src/hbv_multilead_joint_uncertainty/observation_free_forecast_validation.py",
+    "src/hbv_multilead_joint_uncertainty/forecast.py",
+    "src/hbv_multilead_joint_uncertainty/methods.py",
+    "src/hbv_multilead_joint_uncertainty/synthetic_truth.py",
+    "src/hbv_multilead_joint_uncertainty/scripts/run_observation_free_forecast_validation.py",
+    "src/hbv_multilead_joint_uncertainty/configs/observation_free_forecast_validation_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/observation_free_forecast_validation_v02.json",
+    "test/test_hbv_observation_free_forecast_validation.py",
+    "results/23_hbv_multilead_joint_uncertainty/observation_free_forecast_validation_v01",
+    "results/23_hbv_multilead_joint_uncertainty/observation_free_forecast_validation_v01_reviews/code_method_result_review.json",
+    "results/23_hbv_multilead_joint_uncertainty/observation_free_forecast_validation_v02"
+  ],
+  "expected_change": "只把三次生产预报调用后的源候选状态、协方差和概率保存到 evidence.npz，并从这些原始数组计算源后验不变门槛；其余配置语义和数值结果保持不变。",
+  "independent_commands": [
+    {
+      "command": "git diff --no-index 对比版本 1 冻结源代码与当前 observation_free_forecast_validation.py、run_observation_free_forecast_validation.py 和目标测试，并对比版本 1 与版本 2 配置",
+      "result": "实现差异只包括新增三个结果字段、分配和保存三个源后验数组、把三类数组纳入数值字节估算、从新增数组重算源后验变更门槛，以及相应数组相等测试。配置的科学参数、强迫、种子、门槛和范围声明不变；只新增版本说明并保护版本 1 证据和审查。"
+    },
+    {
+      "command": "PowerShell 逐文件重算版本 2 checksums.json 中全部 Secure Hash Algorithm 256-bit 校验和，并比较实际文件集合",
+      "result": "清单条目 30 个，实际受检证据文件 30 个，缺失 0 个，额外 0 个，校验和不一致 0 个。"
+    },
+    {
+      "command": "PowerShell 比较当前目标源、测试和版本 2 source_snapshot 的 Secure Hash Algorithm 256-bit 校验和，并比较当前版本 2 配置与 config_snapshot.json",
+      "result": "observation_free_forecast_validation.py、forecast.py、methods.py、synthetic_truth.py、run_observation_free_forecast_validation.py、目标测试和版本 2 配置均与正式结果中的冻结快照逐字节一致。"
+    },
+    {
+      "command": "Python 只读加载版本 1 和版本 2 evidence.npz，比较数组集合、所有共有数组和配置语义",
+      "result": "版本 1 有 40 个数组，版本 2 有 43 个数组；版本 2 只新增 source_candidate_states_after_forecasts、source_candidate_covariances_after_forecasts 和 source_probabilities_after_forecasts。40 个共有数组的形状、数据类型和每个元素全部一致。排除版本标识、版本原因和保护路径后，两版配置语义完全一致；两版全部门槛报告值完全一致。"
+    },
+    {
+      "command": "Python 从版本 2 evidence.npz 直接重算三个源后验变更量和全部其他数值门槛",
+      "result": "源候选状态、协方差和概率相对预报前值的最大绝对变更均为 0.0；全部可计算门槛通过，且每个重算值与 summary.json 完全一致。版本 2 有 40 个数值数组，共 2461416 字节。"
+    },
+    {
+      "command": "python -m pytest -p no:cacheprovider test/test_hbv_observation_free_forecast_validation.py -q",
+      "result": "退出码为零；4 个测试全部通过；运行时间 15.30 秒。另有一个未知 pytest 配置项警告和一个临时目录清理警告，均未影响目标测试结果。"
+    }
+  ],
+  "incremental_code_assessment": {
+    "status": "passed",
+    "only_expected_production_change": true,
+    "details": [
+      "ObservationFreeForecastValidationResult 新增三类源后验快照字段。",
+      "每个试验在完整七日、1/3/7 日和三日前缀三次生产预报调用结束后，从未推进的源候选库复制状态、协方差和概率。",
+      "正式打包将三个数组写入 evidence.npz，并把它们纳入精确数值字节估算。",
+      "源后验不变门槛改为直接比较归档后的源候选状态与初始状态、归档后的源候选协方差与初始协方差、归档后的源概率与逐试验复制的初始概率。",
+      "生产预报算法、独立参考递推、候选构造、水文状态转移、完整交互、过程协方差添加和概率转移实现均未改变。"
+    ]
+  },
+  "artifact_integrity": {
+    "manifest_entry_count": 30,
+    "actual_evidence_file_count": 30,
+    "missing_file_count": 0,
+    "extra_file_count": 0,
+    "checksum_mismatch_count": 0,
+    "current_sources_match_frozen_snapshot": true,
+    "current_config_matches_frozen_snapshot": true,
+    "protected_artifacts_unchanged": true
+  },
+  "v01_v02_invariance": {
+    "v01_total_array_count": 40,
+    "v02_total_array_count": 43,
+    "common_array_count": 40,
+    "common_array_mismatch_count": 0,
+    "v02_only_arrays": [
+      "source_candidate_covariances_after_forecasts",
+      "source_candidate_states_after_forecasts",
+      "source_probabilities_after_forecasts"
+    ],
+    "v02_missing_v01_arrays": [],
+    "v01_numeric_array_bytes": 2253192,
+    "v02_numeric_array_bytes": 2461416,
+    "gate_values_identical": true,
+    "gate_thresholds_identical": true,
+    "semantic_config_identical_excluding_version_metadata_and_protected_paths": true,
+    "assessment": "除三类新增源后验数组外，版本 2 的全部归档数组与版本 1 逐元素完全相同，没有数值漂移。"
+  },
+  "gate_recalculation": {
+    "source_gate_recalculable_from_raw_arrays": true,
+    "source_candidate_state_maximum_absolute_mutation": 0.0,
+    "source_candidate_covariance_maximum_absolute_mutation": 0.0,
+    "source_probability_maximum_absolute_mutation": 0.0,
+    "source_bank_mutation_maximum_absolute_error": {
+      "observed": 0.0,
+      "threshold": 0.0,
+      "passed": true
+    },
+    "transition_matrix_maximum_absolute_error": {
+      "observed": 0.0,
+      "threshold": 1e-14,
+      "passed": true
+    },
+    "probability_maximum_absolute_error": {
+      "observed": 0.0,
+      "threshold": 2e-15,
+      "passed": true
+    },
+    "candidate_state_maximum_absolute_error": {
+      "observed": 1.5631940186722204e-13,
+      "threshold": 1e-9,
+      "passed": true
+    },
+    "candidate_covariance_diagonal_maximum_absolute_error": {
+      "observed": 8.185452315956354e-12,
+      "threshold": 1e-7,
+      "passed": true
+    },
+    "candidate_prediction_maximum_absolute_error": {
+      "observed": 2.6645352591003757e-15,
+      "threshold": 1e-9,
+      "passed": true
+    },
+    "combined_prediction_maximum_absolute_error": {
+      "observed": 4.440892098500626e-16,
+      "threshold": 1e-9,
+      "passed": true
+    },
+    "combined_state_maximum_absolute_error": {
+      "observed": 2.842170943040401e-14,
+      "threshold": 1e-9,
+      "passed": true
+    },
+    "combined_covariance_diagonal_maximum_absolute_error": {
+      "observed": 2.7284841053187847e-12,
+      "threshold": 1e-7,
+      "passed": true
+    },
+    "selected_lead_maximum_absolute_error": {
+      "observed": 0.0,
+      "threshold": 0.0,
+      "passed": true
+    },
+    "causal_prefix_maximum_absolute_error": {
+      "observed": 0.0,
+      "threshold": 0.0,
+      "passed": true
+    },
+    "probability_sum_maximum_absolute_error": {
+      "observed": 2.220446049250313e-16,
+      "threshold": 1e-12,
+      "passed": true
+    },
+    "minimum_reference_covariance_eigenvalue": {
+      "observed": 9.999999985970315e-5,
+      "threshold": -1e-8,
+      "passed": true
+    },
+    "reference_covariance_symmetry_maximum_absolute_error": {
+      "observed": 0.0,
+      "threshold": 1e-12,
+      "passed": true
+    },
+    "reported_values_exactly_match_recalculation": true,
+    "all_numeric_gates_passed": true
+  },
+  "resource_assessment": {
+    "status": "passed",
+    "expected_saved_numeric_array_bytes": 2461416,
+    "actual_saved_numeric_array_bytes": 2461416,
+    "estimated_additional_peak_memory_bytes": 110508960,
+    "task_specific_required_available_bytes": 244726688,
+    "available_physical_memory_bytes": 15048736768,
+    "available_to_required_ratio": 61.49,
+    "execution_parallelism": 1,
+    "universal_memory_threshold_used": false,
+    "assessment": "新增数组已进入按任务形状计算的精确保存字节估算；预运行可用内存是任务所需量的 61.49 倍。"
+  },
+  "archive_limitation_closure": {
+    "v01_limitation": "版本 1 的源后验不变门槛不能仅凭 evidence.npz 独立重算。",
+    "v02_status": "closed",
+    "evidence": "版本 2 evidence.npz 保存三类预报后源候选快照；审查者直接从这些数组重算状态、协方差和概率最大变更，三者均严格等于 0.0。"
+  },
+  "scope_assessment": {
+    "status": "unchanged_and_supported",
+    "assessment": "版本 2 仍只支持冻结的 12 个合成强迫试验、9 个候选、15 个状态和 1 至 7 日无观测预报传播的代码与数值一致性结论，不支持预报技巧、参数识别、过程噪声识别、观测更新收益或真实流域表现。"
+  },
+  "findings": [],
+  "conclusion_changing_defect": false,
+  "verdict": "passed",
+  "must_fix_count": 0
+}

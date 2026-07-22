@@ -1,0 +1,34 @@
+{
+  "artifact_type": "diagnostic_hindcast_result",
+  "basin_count": 16,
+  "basins": [
+    "12143600",
+    "04127918",
+    "09066000",
+    "06431500",
+    "03479000",
+    "02296500",
+    "02015700",
+    "06892000",
+    "05507600",
+    "06477500",
+    "08158700",
+    "11148900",
+    "06404000",
+    "08189500",
+    "09505350",
+    "09447800"
+  ],
+  "contract_id": "formal_contract_sixteen_v05",
+  "evaluation_input_audit_count": 16,
+  "experiment_id": "formal_result_sixteen_v01",
+  "future_meteorology": "observed hindsight meteorology; not an operational forecast",
+  "has_verified_execution_signature": true,
+  "methods": [
+    "open_loop",
+    "fixed_filter",
+    "parameter_only",
+    "noise_only",
+    "joint"
+  ]
+}

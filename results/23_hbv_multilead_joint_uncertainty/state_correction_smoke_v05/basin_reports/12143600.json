@@ -1,0 +1,90 @@
+{
+  "basin_id": "12143600",
+  "causal_perturbation_check": {
+    "future_discharge_after_origin_read": false,
+    "future_discharge_perturbation_mm_day": 1000.0,
+    "maximum_issued_prediction_difference": 0.0,
+    "passed": true
+  },
+  "historical_meteorology_description": "historical observed meteorology used for retrospective diagnosis; not an operational forecast",
+  "lead_days": [
+    1,
+    3,
+    7
+  ],
+  "origin_count": 358,
+  "physical_checks": {
+    "maximum_deterministic_water_balance_residual_mm": 3.1441516057384433e-13,
+    "maximum_meltwater_holding_excess_mm": 1.5987211554602254e-14,
+    "maximum_soil_capacity_excess_mm": 0.0,
+    "minimum_saved_state_value": 0.0,
+    "passed": true,
+    "physical_boundary_violation_count": 0,
+    "water_storage_and_routing_memory_summed": false
+  },
+  "replay_validation": {
+    "arrays": {
+      "joint_candidate_covariance_diagonals": {
+        "maximum_absolute_error": 0.0,
+        "maximum_relative_error": 0.0,
+        "passed": true,
+        "shape": [
+          358,
+          3,
+          9,
+          15
+        ]
+      },
+      "joint_candidate_predictions": {
+        "maximum_absolute_error": 0.0,
+        "maximum_relative_error": 0.0,
+        "passed": true,
+        "shape": [
+          358,
+          3,
+          9
+        ]
+      },
+      "joint_combined_covariance_diagonals": {
+        "maximum_absolute_error": 0.0,
+        "maximum_relative_error": 0.0,
+        "passed": true,
+        "shape": [
+          358,
+          3,
+          15
+        ]
+      },
+      "joint_predictions": {
+        "maximum_absolute_error": 0.0,
+        "maximum_relative_error": 0.0,
+        "passed": true,
+        "shape": [
+          358,
+          3
+        ]
+      },
+      "joint_probabilities": {
+        "maximum_absolute_error": 0.0,
+        "maximum_relative_error": 0.0,
+        "passed": true,
+        "shape": [
+          358,
+          3,
+          9
+        ]
+      }
+    },
+    "common_indices": {
+      "lead_days_equal": true,
+      "origin_indices_equal": true,
+      "target_indices_equal": true
+    },
+    "maximum_absolute_error": 0.0,
+    "maximum_absolute_error_allowed": 1e-12,
+    "maximum_relative_error": 0.0,
+    "maximum_relative_error_allowed": 1e-10,
+    "passed": true,
+    "relative_error_denominator_floor": 1e-12
+  }
+}

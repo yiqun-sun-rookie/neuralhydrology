@@ -1,0 +1,211 @@
+{
+  "audit_id": "kalmannet_readonly_audit_v01",
+  "collected_at_utc": "2026-07-15T04:34:56.582648+00:00",
+  "hash_algorithm": "SHA-256",
+  "hash_purpose": "确认审查所引用文件在采集时的字节内容；任何一位变化都会改变校验和。",
+  "schema_version": "kalmannet_readonly_audit_evidence_v01",
+  "source_count": 20,
+  "source_root": "G:\\github\\pycharm\\projects\\kalmannet",
+  "sources": [
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\run_aligned_gr4j_da.py",
+      "bytes": 95582,
+      "kind": "source",
+      "last_modified_utc": "2026-07-13T08:40:01.382427+00:00",
+      "line_count": 2100,
+      "relative_path": "scripts/run_aligned_gr4j_da.py",
+      "role": "逐日状态更新、输入核验、开发期尺度、逐流域落盘和输入清单",
+      "sha256": "02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\verify_aligned_gr4j_causality.py",
+      "bytes": 21995,
+      "kind": "source",
+      "last_modified_utc": "2026-07-13T09:50:38.016113+00:00",
+      "line_count": 532,
+      "relative_path": "scripts/verify_aligned_gr4j_causality.py",
+      "role": "未来实测流量替换测试",
+      "sha256": "7e672e98c839f8def003106c14534bc830607113f8cc5bcd3b7f1c01f0b96a31"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\gap_survival_precheck.py",
+      "bytes": 13225,
+      "kind": "source",
+      "last_modified_utc": "2026-06-15T13:08:42.520393+00:00",
+      "line_count": 240,
+      "relative_path": "scripts/gap_survival_precheck.py",
+      "role": "多预见期分支、未来实测气象和流域筛选",
+      "sha256": "131bb0020e29e26129b97ae7689bc6ca8ee9d1f2d8cf741d462e27bbbbf12dd7"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\build_aligned_gr4j_80x32_protocol.py",
+      "bytes": 14461,
+      "kind": "source",
+      "last_modified_utc": "2026-07-14T12:00:11.214900+00:00",
+      "line_count": 370,
+      "relative_path": "scripts/build_aligned_gr4j_80x32_protocol.py",
+      "role": "仅按流域标识符生成静态划分",
+      "sha256": "e75d412686b60b6775fd9651a261c89a254e7ae10dc2ecfffa44abf5205d1ab6"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\aligned_gr4j_checkpoint_io_v2.py",
+      "bytes": 6622,
+      "kind": "source",
+      "last_modified_utc": "2026-07-14T11:54:34.988806+00:00",
+      "line_count": 162,
+      "relative_path": "scripts/aligned_gr4j_checkpoint_io_v2.py",
+      "role": "原子检查点和身份散列",
+      "sha256": "deb5ab259931057f716d94b473134c0b72287e5ed593fc3e8398cc5ce7891ec7"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\run_aligned_gr4j_diagonal_noise.py",
+      "bytes": 58081,
+      "kind": "source",
+      "last_modified_utc": "2026-07-14T11:05:10.194834+00:00",
+      "line_count": 1320,
+      "relative_path": "scripts/run_aligned_gr4j_diagonal_noise.py",
+      "role": "资源采样和停止标记",
+      "sha256": "a6322657dca82362457fa35ac9bec0a2eab91639e9ea9e21afb0eed54ffeca90"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\run_aligned_gr4j_diagonal_holdout.py",
+      "bytes": 27736,
+      "kind": "source",
+      "last_modified_utc": "2026-07-14T11:05:20.284911+00:00",
+      "line_count": 650,
+      "relative_path": "scripts/run_aligned_gr4j_diagonal_holdout.py",
+      "role": "缺失检查点身份的恢复逻辑",
+      "sha256": "c3e1cae9ae2e0d2b4b421640d2281a12e245bad8d820661f67833a6e0a68a3d0"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\smoke_ukf_hbvlite_da.py",
+      "bytes": 29061,
+      "kind": "source",
+      "last_modified_utc": "2026-06-15T12:46:47.973639+00:00",
+      "line_count": 487,
+      "relative_path": "scripts/smoke_ukf_hbvlite_da.py",
+      "role": "旧简化水文模型初态、筛选和噪声给定",
+      "sha256": "43ae5675304e1cd2e5509328d7e0f9eda67b9bd12cbe2c8b3a454313944e0d07"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\src\\global_hydrology\\data\\hbvlite_prior.py",
+      "bytes": 5409,
+      "kind": "source",
+      "last_modified_utc": "2026-06-05T13:19:50.282062+00:00",
+      "line_count": 124,
+      "relative_path": "src/global_hydrology/data/hbvlite_prior.py",
+      "role": "旧简化水文模型参数、初态及评价分数读取",
+      "sha256": "9e723dfb0f5431afb70bda1aca9b25ad57340f44b05bc4db4b9f57f8de0747ad"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\src\\global_hydrology\\data\\caravan_dataset.py",
+      "bytes": 21441,
+      "kind": "source",
+      "last_modified_utc": "2026-01-22T08:54:42.369770+00:00",
+      "line_count": 600,
+      "relative_path": "src/global_hydrology/data/caravan_dataset.py",
+      "role": "旧通用数据集标准化和缺失值处理",
+      "sha256": "84dc03fa2856ec0c6505fb1a0128a8e6f86568590ccfda29f84f46a2bb0d3638"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\src\\observable_hydrology\\data\\normalize.py",
+      "bytes": 7173,
+      "kind": "source",
+      "last_modified_utc": "2026-05-28T11:56:28.318043+00:00",
+      "line_count": 179,
+      "relative_path": "src/observable_hydrology/data/normalize.py",
+      "role": "仅用训练流域和训练年份计算尺度",
+      "sha256": "cef76009036a3a9e3ccc927e477c82661a9081c64319e0127348d58f7c1ef094"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\configs\\aligned_gr4j_diagonal_noise_v2_80x32.json",
+      "bytes": 3627,
+      "kind": "config",
+      "last_modified_utc": "2026-07-14T12:01:22.441207+00:00",
+      "line_count": 115,
+      "relative_path": "configs/aligned_gr4j_diagonal_noise_v2_80x32.json",
+      "role": "旧资源门槛",
+      "sha256": "93fcabbdee4e7394b93e352f8ca2a11d77222098d8c00e6080124e64c67c5abf"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\configs\\aligned_gr4j_da_v2_80x32.json",
+      "bytes": 9853,
+      "kind": "config",
+      "last_modified_utc": "2026-07-14T12:01:07.277123+00:00",
+      "line_count": 333,
+      "relative_path": "configs/aligned_gr4j_da_v2_80x32.json",
+      "role": "气象输入、时期和发布时序",
+      "sha256": "2e1bd547ac35dad3d4cf14225be0169813e57be3db29f0d08a972dda91167e52"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\configs\\aligned_gr4j_80x32_split_v2.json",
+      "bytes": 4495,
+      "kind": "config",
+      "last_modified_utc": "2026-07-14T12:01:34.982161+00:00",
+      "line_count": 232,
+      "relative_path": "configs/aligned_gr4j_80x32_split_v2.json",
+      "role": "冻结的80个开发流域和32个留出流域划分",
+      "sha256": "ea12babf19bd882dc542b13c95eef84d5bfd5f2341f1623205d2d2cc7334f2b1"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\data\\observable_hydrology\\stats\\pilot_train_stats.json",
+      "bytes": 3764,
+      "kind": "data",
+      "last_modified_utc": "2026-05-28T09:26:12.651285+00:00",
+      "line_count": 116,
+      "relative_path": "data/observable_hydrology/stats/pilot_train_stats.json",
+      "role": "训练期尺度产物",
+      "sha256": "11946c57903838d53882ad46e512df47b5a179aa5232af4556eb2c77668a1124"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\results\\gap_survival_precheck\\precheck_A.json",
+      "bytes": 29428,
+      "kind": "result",
+      "last_modified_utc": "2026-06-15T13:06:14.485652+00:00",
+      "line_count": 1000,
+      "relative_path": "results/gap_survival_precheck/precheck_A.json",
+      "role": "多预见期预检摘要之一",
+      "sha256": "f0d7377378f806ab805895115a3efd1646fc0e808d6c086e9f443174650fbad2"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\results\\gap_survival_precheck\\precheck.json",
+      "bytes": 29416,
+      "kind": "result",
+      "last_modified_utc": "2026-06-15T12:55:45.740853+00:00",
+      "line_count": 1000,
+      "relative_path": "results/gap_survival_precheck/precheck.json",
+      "role": "多预见期预检摘要",
+      "sha256": "22a440e66ce11ab035ef38bf05872bb2b046126c02deac70302092d8a0ddc722"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\results\\aligned_da_v1\\independent_verification.json",
+      "bytes": 22989,
+      "kind": "result",
+      "last_modified_utc": "2026-07-13T10:10:27.870445+00:00",
+      "line_count": 662,
+      "relative_path": "results/aligned_da_v1/independent_verification.json",
+      "role": "旧正式结果的独立产物审查",
+      "sha256": "e0fe1a3704f984210371e6a5375697255f183ff33eb0c0edb3fea227683e66bb"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\results\\aligned_da_v1\\independent_causality_verification.json",
+      "bytes": 7379,
+      "kind": "result",
+      "last_modified_utc": "2026-07-13T10:10:06.971178+00:00",
+      "line_count": 149,
+      "relative_path": "results/aligned_da_v1/independent_causality_verification.json",
+      "role": "旧方法的未来实测流量替换结果",
+      "sha256": "1dba919b802b261871d7110baa8c528ccdcc69bb1f6f222cf30371c18e1844be"
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\results\\aligned_gr4j_diagq_80x32_v2_retry1\\resource_log.jsonl",
+      "bytes": 66436,
+      "kind": "result",
+      "last_modified_utc": "2026-07-14T12:31:36.918332+00:00",
+      "line_count": 85,
+      "relative_path": "results/aligned_gr4j_diagq_80x32_v2_retry1/resource_log.jsonl",
+      "role": "资源监测实测记录",
+      "sha256": "f72a7d8abb3994d8d10617560aa9766acaa38c1b3654a1eaa8b5cbfe851f4906"
+    }
+  ]
+}

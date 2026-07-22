@@ -1,0 +1,88 @@
+{
+  "experiment_id": "single_filter_state_validation_v02",
+  "supersedes": "single_filter_state_validation_v01",
+  "reason_for_new_version": "Version 1 used overlapping windows as independent bootstrap units and compared a deterministic trajectory with an unscented filter. Version 2 uses independent rainfall realizations and the same filter without observation updates as the primary control.",
+  "truth_contract": "synthetic_truth_propagation_v04",
+  "purpose": "Test whether daily discharge observation updates improve five hydrologic states and one-day discharge forecasts when the complete true parameter vector is known.",
+  "forcing": {
+    "days": 180,
+    "seeds": [
+      314159,
+      314160,
+      314161,
+      314162,
+      314163,
+      314164,
+      314165,
+      314166,
+      314167,
+      314168,
+      314169,
+      314170,
+      314171,
+      314172,
+      314173,
+      314174,
+      314175,
+      314176,
+      314177,
+      314178,
+      314179,
+      314180,
+      314181,
+      314182
+    ],
+    "rain_shape": 0.8,
+    "rain_scale": 4.0,
+    "potential_evaporation_formula": "maximum(0, 2 + sin(angle))",
+    "temperature_formula": "4 + 12 * sin(angle - pi / 2)",
+    "angle_formula": "linearly spaced from 0 through 2*pi, including both endpoints"
+  },
+  "parameters": {
+    "parTT": 0.0,
+    "parCFMAX": 3.2,
+    "parCFR": 0.04,
+    "parCWH": 0.1,
+    "parFC": 250.0,
+    "parBETA": 2.1,
+    "parLP": 0.7,
+    "parK0": 0.2,
+    "parK1": 0.06,
+    "parUZL": 18.0,
+    "parPERC": 1.2,
+    "parK2": 0.015,
+    "lag_time": 10.0
+  },
+  "start_day": 90,
+  "duration_days": 30,
+  "perturbation_scales": [20.0, 5.0, 25.0, 10.0, 10.0],
+  "perturbation_seed": 20260717,
+  "observation_standard_deviation": 0.05,
+  "process_covariance": "zero to isolate correction of the initial state perturbation",
+  "primary_control": "same filter, same initial state and covariance, same forcing, and zero process covariance, with observation updates skipped",
+  "secondary_control": "deterministic open-loop state trajectory",
+  "bootstrap": {
+    "trial_unit": "independent rainfall realization",
+    "replicates": 20000,
+    "seed": 424242
+  },
+  "gates": {
+    "state_median_change_percent_maximum": -5.0,
+    "flow_median_change_percent_maximum": -5.0,
+    "state_bootstrap_upper_percent_maximum": 0.0,
+    "flow_bootstrap_upper_percent_maximum": 0.0
+  },
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01"
+  ],
+  "fixed_boundaries": {
+    "known_true_parameter_vector": true,
+    "parameter_candidates": 1,
+    "process_noise_candidates": 1,
+    "model_interaction": false,
+    "reads_real_basin_observations": false,
+    "modifies_frozen_formal_results": false,
+    "runs_531_real_basins": false
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "assimilation_days": 45,
+  "experiment_id": "joint_method_periodic_switch_07d_v01",
+  "finished_at": "2026-07-18T10:41:19.716612+00:00",
+  "gate_values": {
+    "all_saved_numeric_arrays_finite": true,
+    "independent_truth_observation_maximum_absolute_error": 0.0,
+    "independent_truth_transition_maximum_absolute_error": 5.684341886080802e-14,
+    "method_mixture_reconstruction_maximum_absolute_error": 1.7763568394002505e-15,
+    "method_probability_sum_maximum_absolute_error": 2.220446049250313e-16,
+    "minimum_method_probability": 0.000286648368449638,
+    "observation_reconstruction_maximum_absolute_error": 0.0,
+    "truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0
+  },
+  "integrity_gate_pass": true,
+  "integrity_gates": {
+    "all_saved_numeric_arrays_finite": true,
+    "independent_truth_observation_maximum_absolute_error": 1e-10,
+    "independent_truth_transition_maximum_absolute_error": 1e-10,
+    "method_mixture_reconstruction_maximum_absolute_error": 1e-10,
+    "method_probability_sum_maximum_absolute_error": 1e-12,
+    "minimum_method_probability": 0.0,
+    "observation_reconstruction_maximum_absolute_error": 0.0,
+    "truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0
+  },
+  "lead_days": [
+    1,
+    3,
+    7
+  ],
+  "matched_block_count": 8,
+  "method_candidate_counts": [
+    1,
+    1,
+    3,
+    3,
+    9,
+    1
+  ],
+  "method_count": 6,
+  "method_names": [
+    "open_loop",
+    "fixed_filter",
+    "parameter_only",
+    "noise_only",
+    "joint",
+    "oracle_filter"
+  ],
+  "nonfinite_saved_numeric_array_names": [],
+  "observation_noise_source_sha256": "f358c77b655285b348604266af43dfcd7b875ea756145f6d9b33c8853a5d8955",
+  "parameter_source_sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+  "process_noise_source_sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+  "projection_event_count": 3530,
+  "projection_event_total": 3744,
+  "protected_artifacts_unchanged": true,
+  "saved_numeric_array_count": 31,
+  "scientific_decisions": {
+    "condition": "periodically switching complete parameter and process-scale labels with projected candidate-scale process truth",
+    "decision_rules": {
+      "added_value_beyond_single_factor_methods": "The effective-against-fixed-filter rule holds and the matched-block bootstrap upper bounds for joint minus both parameter-only and process-noise-only methods are below zero.",
+      "decision_rules_do_not_control_integrity_status": true,
+      "effective_against_fixed_filter": "Both the global root mean square error improvement is at least five percent and the 95 percent matched-block bootstrap upper bound for joint minus fixed-filter block root mean square error is below zero.",
+      "joint_candidate_argmax_accuracy_minimum": 0.5,
+      "joint_parameter_argmax_accuracy_minimum": 0.6666666666666666,
+      "joint_process_argmax_accuracy_minimum": 0.6666666666666666,
+      "median_joint_true_candidate_probability_minimum": 0.2,
+      "paired_block_root_mean_square_error_difference_upper_maximum": 0.0,
+      "practical_relative_root_mean_square_error_improvement_percent_minimum": 5.0
+    },
+    "identification": {
+      "joint_candidate_argmax_accuracy": 0.1388888888888889,
+      "joint_parameter_argmax_accuracy": 0.3611111111111111,
+      "joint_process_argmax_accuracy": 0.3888888888888889,
+      "median_joint_true_candidate_probability": 0.08205526412068902,
+      "median_joint_true_parameter_probability": 0.33580640850541527,
+      "median_joint_true_process_probability": 0.3006234037109806
+    },
+    "interpretation_rule": "These scientific decisions are reported whether positive or negative and do not determine the numerical-integrity status of the experiment.",
+    "joint_identification_effective": false,
+    "lead_decisions": [
+      {
+        "added_value_beyond_both_single_factor_methods": false,
+        "effective_against_fixed_filter": false,
+        "lead_days": 1
+      },
+      {
+        "added_value_beyond_both_single_factor_methods": false,
+        "effective_against_fixed_filter": false,
+        "lead_days": 3
+      },
+      {
+        "added_value_beyond_both_single_factor_methods": false,
+        "effective_against_fixed_filter": false,
+        "lead_days": 7
+      }
+    ],
+    "oracle_filter_interpretation": {
+      "dynamic_oracle": false,
+      "interpretation": "For switching truth, this diagnostic uses the candidate that is true at the forecast origin for the entire assimilation history; it is not a dynamically switching oracle and is excluded from scientific control decisions."
+    },
+    "origin_state_decision": {
+      "added_value_beyond_both_single_factor_methods": false,
+      "effective_against_fixed_filter": true
+    },
+    "truth_process_interpretation": {
+      "interpretation": "The frozen candidate covariance controls only the pre-projection perturbation scale; the post-projection truth is not an exact additive Gaussian candidate model.",
+      "post_projection_distribution_matches_additive_gaussian_candidate": false,
+      "pre_projection_covariance_uses_frozen_candidate": true,
+      "projection_event_count": 3530,
+      "projection_event_fraction": 0.9428418803418803,
+      "projection_event_total": 3744
+    }
+  },
+  "scope_limit": "This is a bounded rapid-switch stress condition: both complete parameter and process-scale labels change every seven days, while the filter keeps a factor-level stay probability of 0.98. At the forecast origin the current label has three assimilated observations, and the next truth switch occurs at lead day five, between the evaluated three- and seven-day targets. It does not establish behavior for other switch periods, matched transition priors, weak observations, forcing error or real basins. The covariance controls only pre-projection scale; post-projection truth is not an exact additive Gaussian candidate model.",
+  "selected_observation_noise_snapshot_sha256": "5bc0adc216ced6c6b0d281ed5c9cd3a158d65e2f3a369d657afaaccb67a1c678",
+  "selected_parameter_snapshot_sha256": "624ba1ab3e6fc9e60c8cf15bc287f1a0a3cec177d6307e6d83d5215625199905",
+  "selected_process_noise_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+  "started_at": "2026-07-18T10:38:03.474644+00:00",
+  "state_dimension": 15,
+  "status": "passed",
+  "trial_count": 72,
+  "truth_candidate_count_per_block": 9,
+  "truth_condition": "periodically switching complete parameter and process-scale labels with projected candidate-scale process truth",
+  "truth_process_scope": "The frozen candidate covariance controls only the pre-projection perturbation scale; the post-projection truth is not an exact additive Gaussian candidate model.",
+  "truth_switch_candidate_step": 4,
+  "truth_switch_period_days": 7
+}

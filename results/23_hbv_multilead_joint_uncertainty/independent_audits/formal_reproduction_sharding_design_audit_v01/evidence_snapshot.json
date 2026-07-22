@@ -1,0 +1,155 @@
+{
+  "audit_id": "formal_reproduction_sharding_design_audit_v01",
+  "captured_at_utc": "2026-07-15T08:42:50.351757+00:00",
+  "decision": "RELEASE",
+  "release_scope": "逐流域原子复现恢复设计，不是正式复现科学结论",
+  "formal_reproduction_status": "PENDING",
+  "contract": {
+    "contract_id": "formal_contract_sixteen_v05",
+    "basin_count": 16,
+    "basins": [
+      "12143600",
+      "04127918",
+      "09066000",
+      "06431500",
+      "03479000",
+      "02296500",
+      "02015700",
+      "06892000",
+      "05507600",
+      "06477500",
+      "08158700",
+      "11148900",
+      "06404000",
+      "08189500",
+      "09505350",
+      "09447800"
+    ],
+    "checksums_file_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+    "manifest_sha256": "681d587faa0ccbeb7623b67ffdb54ecc7b4b1b0fe92cc3d4d931b583636e0f43",
+    "config_sha256": "fc5c5bb3a0a22978b13e5323870d75ed423b12f3c7f8ecb506d7c8e5d4eff85a",
+    "manifest_verification": {
+      "entry_count": 127,
+      "failure_count": 0,
+      "failures": []
+    },
+    "lead_days": [
+      1,
+      3,
+      7
+    ],
+    "evaluation_period": [
+      "1989-10-01",
+      "1990-09-30"
+    ],
+    "interaction_mode": "full",
+    "random_seed": 1
+  },
+  "main_reference": {
+    "experiment_id": "formal_result_sixteen_v01",
+    "contract_id": "formal_contract_sixteen_v05",
+    "methods": [
+      "open_loop",
+      "fixed_filter",
+      "parameter_only",
+      "noise_only",
+      "joint"
+    ],
+    "checksums_file_sha256": "88ab2297e02179cc0e3e432c958871e1d6e7985358b9394970154a65f2348bd0",
+    "manifest_sha256": "ec8a2049f82736fd144cf568c73a33b1a19194bb5608571bf55f019c0bd0fd95",
+    "snapshot_manifest_sha256": "844f92aaa15bf91179ab4092d4106914846be21c66e2535c5708e0562c8ef949",
+    "execution_signature_sha256": "b997572b6fcea6b1cdbe71a77f5be94af213c30f652d5ec4db5127392c20887d",
+    "manifest_verification": {
+      "entry_count": 152,
+      "failure_count": 0,
+      "failures": []
+    },
+    "source_snapshot_file_count": 37,
+    "input_snapshot_file_count": 62,
+    "snapshot_hash_failure_count": 0,
+    "execution_signature_file_count": 99
+  },
+  "array_contract": {
+    "basin_file_count": 16,
+    "uniform_schema_count": 1,
+    "arrays_per_basin": 36,
+    "numeric_elements_per_basin": [
+      366960
+    ],
+    "all_elements_per_basin": [
+      368774
+    ],
+    "total_numeric_elements": 5871360,
+    "total_all_elements": 5900384,
+    "required_methods": [
+      "open_loop",
+      "fixed_filter",
+      "parameter_only",
+      "noise_only",
+      "joint"
+    ],
+    "required_lead_days": [
+      1,
+      3,
+      7
+    ]
+  },
+  "failed_runs": {
+    "first": {
+      "registry_status": "failed",
+      "completed_basin_file_count": 4,
+      "completed_basin_ids": [
+        "04127918",
+        "06431500",
+        "09066000",
+        "12143600"
+      ],
+      "resource_sample_count": 291,
+      "start_available_memory_fraction": 0.2972675416418673,
+      "minimum_available_memory_fraction": 0.17916237566525062,
+      "maximum_process_resident_memory_gibibytes": 0.14493942260742188,
+      "scientific_use": "FORBIDDEN"
+    },
+    "second": {
+      "registry_status": "failed",
+      "completed_basin_file_count": 5,
+      "completed_basin_ids": [
+        "03479000",
+        "04127918",
+        "06431500",
+        "09066000",
+        "12143600"
+      ],
+      "resource_sample_count": 1110,
+      "start_available_memory_fraction": 0.29409715444933626,
+      "minimum_available_memory_fraction": 0.19962392416100744,
+      "maximum_process_resident_memory_gibibytes": 0.14885330200195312,
+      "scientific_use": "FORBIDDEN"
+    },
+    "start_signatures_equal_main_files": {
+      "first": true,
+      "second": true
+    },
+    "prohibition": "失败目录中的数组、输入审计、执行签名和资源记录只能说明失败原因；任何一项都不得复制、晋级或计入成功分片。"
+  },
+  "isolation_evidence": {
+    "serial_basin_loop": true,
+    "basin_contract_loaded_inside_loop": true,
+    "fresh_initial_state_mapping_inside_loop": true,
+    "five_methods_called_inside_loop": true,
+    "completed_basin_arrays_released": true,
+    "evaluation_numerics_have_no_random_generator": true,
+    "current_writer_requires_full_contract_order": true,
+    "current_writer_publishes_with_atomic_replace": true
+  },
+  "resource_contract": {
+    "maximum_estimated_peak_fraction_of_available": 0.6,
+    "maximum_resource_probe_seconds": 5.0,
+    "minimum_free_disk_gib": 50.0,
+    "minimum_output_space_multiplier": 3.0,
+    "minimum_running_available_fraction": 0.2,
+    "minimum_start_available_fraction": 0.25,
+    "monitor_interval_seconds": 15.0,
+    "reserved_logical_processors": 2
+  }
+}

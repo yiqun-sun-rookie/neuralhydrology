@@ -1,0 +1,88 @@
+{
+  "audit_id": "final_synthesis_v01_draft_fix_verification_v01",
+  "verified_at_utc": "2026-07-15T05:39:16.471934+00:00",
+  "overall_decision": "RELEASE",
+  "release_scope": "第一次综合审查三项修正以及新增边界证据",
+  "formal_reproduction_status": "PENDING",
+  "formal_reproduction_passed": false,
+  "resolved_original_issue_count": 3,
+  "new_boundary_check_count": 2,
+  "blocking_issue_count": 0,
+  "relative_link_count": 61,
+  "missing_relative_link_count": 0,
+  "protected_files_unchanged": true,
+  "live_status_documentation_note": {
+    "item_id": "D001",
+    "item_type": "LIVE_STATUS_DOCUMENTATION",
+    "status": "NONBLOCKING_STALE_PENDING_DETAIL",
+    "blocking": false,
+    "evidence": "复现说明仍列第一次失败运行的v01命令，证据表仍写等待新尝试；v02已运行，但两处均未把复现写成完成。",
+    "passed": true
+  },
+  "checks": [
+    {
+      "item_id": "I001",
+      "item_type": "FIRST_AUDIT_BLOCKER",
+      "status": "RESOLVED",
+      "blocking": false,
+      "evidence": "错误短语计数为0；正式与六流域集合交集0；训练投影覆盖16/16。",
+      "passed": true
+    },
+    {
+      "item_id": "I002",
+      "item_type": "FIRST_AUDIT_BLOCKER",
+      "status": "RESOLVED",
+      "blocking": false,
+      "evidence": "报告明确限定四种状态更新方法；冻结运行器单独运行不更新状态原模型，并仅为其余四种方法构造观测噪声滤波器。",
+      "passed": true
+    },
+    {
+      "item_id": "I003",
+      "item_type": "FIRST_AUDIT_TRACEABILITY",
+      "status": "RESOLVED",
+      "blocking": false,
+      "evidence": "第一项证据路径共5条且全部存在；16/16压缩数组的九候选完整三乘三标识映射一致。",
+      "passed": true
+    },
+    {
+      "item_id": "N014",
+      "item_type": "NEW_KNOWN_ISSUE",
+      "status": "VERIFIED",
+      "blocking": false,
+      "evidence": "冻结训练投影共531行，覆盖正式流域16/16；六流域交集0。",
+      "passed": true
+    },
+    {
+      "item_id": "C021",
+      "item_type": "NEW_EVIDENCE_LEDGER_CLAIM",
+      "status": "VERIFIED_BOUNDARY",
+      "blocking": false,
+      "evidence": "正式与六流域交集0；训练投影覆盖16/16；16条中心参数来源校验和均等于冻结531行投影。",
+      "passed": true
+    },
+    {
+      "item_id": "R002",
+      "item_type": "ACTIVE_REPRODUCTION_BOUNDARY",
+      "status": "PENDING_NOT_COMPLETE",
+      "blocking": false,
+      "evidence": "v02登记状态为running；启动资源样本78条；综合包复现状态仍为PENDING。 复核结束时登记状态为running，科学状态仍保持PENDING。",
+      "passed": true
+    },
+    {
+      "item_id": "D001",
+      "item_type": "LIVE_STATUS_DOCUMENTATION",
+      "status": "NONBLOCKING_STALE_PENDING_DETAIL",
+      "blocking": false,
+      "evidence": "复现说明仍列第一次失败运行的v01命令，证据表仍写等待新尝试；v02已运行，但两处均未把复现写成完成。",
+      "passed": true
+    }
+  ],
+  "resource_summary": {
+    "sampling_interval_seconds": 0.2,
+    "sample_count": 2,
+    "maximum_sampling_gap_seconds": 0.046999999991385266,
+    "minimum_available_memory_fraction": 0.3045866523161299,
+    "maximum_process_resident_memory_gibibytes": 0.038585662841796875,
+    "minimum_disk_free_gibibytes": 2166.5068435668945
+  }
+}

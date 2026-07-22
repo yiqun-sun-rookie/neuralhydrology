@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-07-15T00:29:03.967225+08:00",
+  "history": [
+    {
+      "basin_count": 6,
+      "status": "running",
+      "timestamp": "2026-07-15T00:29:03.967225+08:00"
+    },
+    {
+      "error_type": "ValueError",
+      "message": "eligible parameter candidates must bracket the center mean discharge",
+      "status": "failed",
+      "timestamp": "2026-07-15T00:29:16.442775+08:00"
+    }
+  ],
+  "run_id": "pilot_contract_six_v01",
+  "run_type": "calibration_contract",
+  "status": "failed",
+  "updated_at": "2026-07-15T00:29:16.442775+08:00"
+}

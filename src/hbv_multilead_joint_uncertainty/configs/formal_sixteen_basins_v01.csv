@@ -1,0 +1,17 @@
+gauge_id,climate_stratum,response_stratum,area_stratum,huc_02,area_gages2,aridity,frac_snow,selection_source
+12143600,snow,storage_infiltration,small,17,165.01,0.273055298374046,0.311622046373118,static_only_salted_hash_v1
+04127918,snow,storage_infiltration,large,04,548.29,0.773171041918918,0.290254060373262,static_only_salted_hash_v1
+09066000,snow,fast_response,small,14,32.41,1.53003691051899,0.682272756610747,static_only_salted_hash_v1
+06431500,snow,fast_response,large,10,427.1,1.47892722452329,0.36993144167527,static_only_salted_hash_v1
+03479000,humid,storage_infiltration,small,06,235.6,0.670428982707011,0.0904171237520879,static_only_salted_hash_v1
+02296500,humid,storage_infiltration,large,03,886.4,0.953196371846661,0.0,static_only_salted_hash_v1
+02015700,humid,fast_response,small,02,285.41,0.794159061691014,0.128567248718796,static_only_salted_hash_v1
+06892000,humid,fast_response,large,10,1092.72,0.944174283753739,0.0715178249456991,static_only_salted_hash_v1
+05507600,semihumid,storage_infiltration,small,07,275.38,1.22248563339614,0.0742633892998097,static_only_salted_hash_v1
+06477500,semihumid,storage_infiltration,large,10,1512.44,1.3900588387715,0.132381124658994,static_only_salted_hash_v1
+08158700,semihumid,fast_response,small,12,320.34,1.31655223457378,0.0064753537654614,static_only_salted_hash_v1
+11148900,semihumid,fast_response,large,18,403.45,1.20442415926086,0.003526794606684,static_only_salted_hash_v1
+06404000,arid,storage_infiltration,small,10,151.83,1.56319969721981,0.191294358675479,static_only_salted_hash_v1
+08189500,arid,storage_infiltration,large,12,1808.29,1.99499278745536,0.0016287321026845,static_only_salted_hash_v1
+09505350,arid,fast_response,small,15,365.66,2.0688973747877,0.198936492502152,static_only_salted_hash_v1
+09447800,arid,fast_response,large,15,781.96,3.0393345221577,0.0394826699276366,static_only_salted_hash_v1

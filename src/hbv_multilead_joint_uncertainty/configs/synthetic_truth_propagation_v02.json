@@ -1,0 +1,40 @@
+{
+  "experiment_id": "synthetic_truth_propagation_v02",
+  "supersedes_failed_experiment": "synthetic_truth_propagation_v01",
+  "corrected_criterion": "Check exact routing-memory shifts within each implementation and apply the frozen numerical tolerance only across independent implementations.",
+  "purpose": "Independently replay deterministic fifteen-state HBV-lite truth propagation and routed discharge before any filtering experiment.",
+  "forcing": {
+    "days": 365,
+    "seed": 314159,
+    "rain_shape": 0.8,
+    "rain_scale": 4.0,
+    "potential_evaporation_formula": "maximum(0, 2 + sin(angle))",
+    "temperature_formula": "4 + 12 * sin(angle - pi / 2)",
+    "angle_formula": "linearly spaced from 0 through 2*pi, including both endpoints"
+  },
+  "parameters": {
+    "parTT": 0.0,
+    "parCFMAX": 3.2,
+    "parCFR": 0.04,
+    "parCWH": 0.1,
+    "parFC": 250.0,
+    "parBETA": 2.1,
+    "parLP": 0.7,
+    "parK0": 0.2,
+    "parK1": 0.06,
+    "parUZL": 18.0,
+    "parPERC": 1.2,
+    "parK2": 0.015,
+    "lag_time": 10.0
+  },
+  "thresholds": {
+    "state_maximum_absolute_error": 1e-8,
+    "discharge_maximum_absolute_error": 1e-8
+  },
+  "fixed_boundaries": {
+    "reads_real_basin_observations": false,
+    "modifies_frozen_formal_results": false,
+    "runs_531_real_basins": false,
+    "adds_filtering_or_model_interaction": false
+  }
+}

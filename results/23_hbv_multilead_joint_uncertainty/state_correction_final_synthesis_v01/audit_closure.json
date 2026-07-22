@@ -1,0 +1,16 @@
+{
+  "formal_result_audit": "PASS",
+  "formal_result_second_validation": "PASS",
+  "confirmed_nonblocking_issue": "obsolete default continuation-gate control name",
+  "issue_red_test": "state_correction_gate_default_tests_red_v01.failed: 1 failed, exit code 1",
+  "issue_fix": "default changed to hydrologic_five_states_only",
+  "issue_green_test": "state_correction_gate_default_tests_green_v01: 61 passed, 0 failed",
+  "fix_independent_audit": "PASS",
+  "fix_independent_audit_artifact": "../independent_audits/state_correction_gate_default_fix_audit_v01/audit.json",
+  "fix_second_independent_validation": "PASS",
+  "fix_second_independent_validation_artifact": "../independent_audits/state_correction_gate_default_fix_validation_v01/validation.json",
+  "formal_sixteen_rerun_required": false,
+  "formal_sixteen_checksums_file_sha256_before_and_after_fix": "935e05cba187efd5dab788a19f20e09585783595a94ed180e1d5043dba1992b2",
+  "remaining_blocking_findings": [],
+  "final_decision": "STOP_DO_NOT_RUN_531"
+}

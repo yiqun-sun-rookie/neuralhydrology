@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-07-15T03:35:26.497038+08:00",
+  "history": [
+    {
+      "basin_count": 16,
+      "status": "running",
+      "timestamp": "2026-07-15T03:35:26.497038+08:00"
+    },
+    {
+      "error_type": "ValueError",
+      "message": "parameter pool must contain two distinct eligible candidates",
+      "status": "failed",
+      "timestamp": "2026-07-15T03:43:55.998874+08:00"
+    }
+  ],
+  "run_id": "formal_contract_sixteen_v01",
+  "run_type": "calibration_contract",
+  "status": "failed",
+  "updated_at": "2026-07-15T03:43:55.998874+08:00"
+}

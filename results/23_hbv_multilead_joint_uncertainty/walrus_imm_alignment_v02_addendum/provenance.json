@@ -1,0 +1,9 @@
+{
+  "config_sha256": "2b2251989e62ef1fd45ea14bfc320943cb6abd1c9b31d022a9ab3fbec3621775",
+  "ended_at": "2026-07-22T07:41:20.783045+00:00",
+  "purpose": "review remediation items 2-3 for walrus_imm_alignment_v02",
+  "reference_mat_sha256": "fd080ce0fa0f4b53ca61e19060dfba6995f94f9b53fd62cb0f8681169bec609f",
+  "regenerated_with": "same tested functions as the sealed run (deterministic)",
+  "regeneration_consistency": "per-filter first_exceed identical to sealed gate_results.json",
+  "started_at": "2026-07-22T07:40:29.881781+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "condition_passes": [
+    {
+      "assimilation_days": 7,
+      "identification_effective": false
+    },
+    {
+      "assimilation_days": 21,
+      "identification_effective": false
+    },
+    {
+      "assimilation_days": 45,
+      "identification_effective": false
+    }
+  ],
+  "decision_rule": {
+    "boundary": "The boundary is the shortest tested duration that passes and for which every longer tested duration also passes. If none passes, report only that sufficiency was not reached through the longest tested duration; do not infer failure at untested longer durations.",
+    "sufficient_at_duration": "All four preregistered joint-identification thresholds in that condition must pass: joint candidate argmax accuracy, complete-parameter-label argmax accuracy, process-scale argmax accuracy and median true joint-candidate probability.",
+    "thresholds_are_frozen_in_each_condition": true
+  },
+  "identification_sufficient_within_tested_range": false,
+  "interpretation": "The preregistered joint-identification rule was not reached through forty-five matched assimilation days; this is a bounded failure result, not evidence that longer untested durations cannot succeed.",
+  "longest_tested_assimilation_days": 45,
+  "not_sufficient_through_assimilation_days": 45,
+  "shortest_consistently_sufficient_assimilation_days": null,
+  "untested_longer_durations_remain_unknown": true
+}

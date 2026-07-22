@@ -1,0 +1,114 @@
+{
+  "all_conditions_passed": false,
+  "conditions": {
+    "one_day_median_increase_not_above_one_percent": false,
+    "seven_day_at_least_nine_strict_wins": false,
+    "seven_day_median_not_above_zero": false
+  },
+  "expected_basin_count": 16,
+  "gate_control_id": "hydrologic_five_states_only",
+  "one_day_median_rmse_increase_percent_vs_current_joint": 13.258351532085342,
+  "per_basin": [
+    {
+      "basin_id": "02015700",
+      "one_day_rmse_increase_percent_vs_current_joint": -5.429855932816955,
+      "seven_day_rmse_change_percent_vs_open_loop": 48.251272598076135,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "02296500",
+      "one_day_rmse_increase_percent_vs_current_joint": 34.761842309564955,
+      "seven_day_rmse_change_percent_vs_open_loop": -16.127910700282076,
+      "seven_day_strict_win_vs_open_loop": true
+    },
+    {
+      "basin_id": "03479000",
+      "one_day_rmse_increase_percent_vs_current_joint": 5.369398318252711,
+      "seven_day_rmse_change_percent_vs_open_loop": 82.88611006056094,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "04127918",
+      "one_day_rmse_increase_percent_vs_current_joint": 16.778371233786437,
+      "seven_day_rmse_change_percent_vs_open_loop": 154.41318135357292,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "05507600",
+      "one_day_rmse_increase_percent_vs_current_joint": 10.427558791778688,
+      "seven_day_rmse_change_percent_vs_open_loop": 94.17388118884814,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "06404000",
+      "one_day_rmse_increase_percent_vs_current_joint": -3.8928724465230347,
+      "seven_day_rmse_change_percent_vs_open_loop": 205.95765366232231,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "06431500",
+      "one_day_rmse_increase_percent_vs_current_joint": 32.716555113540494,
+      "seven_day_rmse_change_percent_vs_open_loop": 102.71634708862688,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "06477500",
+      "one_day_rmse_increase_percent_vs_current_joint": 17.791259557737764,
+      "seven_day_rmse_change_percent_vs_open_loop": 211.51740874992296,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "06892000",
+      "one_day_rmse_increase_percent_vs_current_joint": 13.850647606388147,
+      "seven_day_rmse_change_percent_vs_open_loop": 73.06336547761454,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "08158700",
+      "one_day_rmse_increase_percent_vs_current_joint": 17.24647146814915,
+      "seven_day_rmse_change_percent_vs_open_loop": 171.47645888036067,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "08189500",
+      "one_day_rmse_increase_percent_vs_current_joint": 10.952895259788047,
+      "seven_day_rmse_change_percent_vs_open_loop": 1.570318059306417,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "09066000",
+      "one_day_rmse_increase_percent_vs_current_joint": 22.479894636925664,
+      "seven_day_rmse_change_percent_vs_open_loop": -34.0490028979649,
+      "seven_day_strict_win_vs_open_loop": true
+    },
+    {
+      "basin_id": "09447800",
+      "one_day_rmse_increase_percent_vs_current_joint": 0.5893113696085458,
+      "seven_day_rmse_change_percent_vs_open_loop": -4.242671316633561,
+      "seven_day_strict_win_vs_open_loop": true
+    },
+    {
+      "basin_id": "09505350",
+      "one_day_rmse_increase_percent_vs_current_joint": 25.184380579112954,
+      "seven_day_rmse_change_percent_vs_open_loop": 130.95831756835628,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "11148900",
+      "one_day_rmse_increase_percent_vs_current_joint": 12.666055457782537,
+      "seven_day_rmse_change_percent_vs_open_loop": 96.91871130037998,
+      "seven_day_strict_win_vs_open_loop": false
+    },
+    {
+      "basin_id": "12143600",
+      "one_day_rmse_increase_percent_vs_current_joint": -12.718897758706234,
+      "seven_day_rmse_change_percent_vs_open_loop": -1.2320647742005364,
+      "seven_day_strict_win_vs_open_loop": true
+    }
+  ],
+  "percentages_computed_per_basin_before_median": true,
+  "recommend_larger_sample": false,
+  "run_531_automatically": false,
+  "seven_day_median_rmse_change_percent_vs_open_loop": 88.52999562470454,
+  "seven_day_strict_win_count_vs_open_loop": 4
+}

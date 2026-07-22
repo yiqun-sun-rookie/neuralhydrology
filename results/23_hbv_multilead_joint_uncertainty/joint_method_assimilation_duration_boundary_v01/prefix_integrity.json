@@ -1,0 +1,97 @@
+{
+  "all_exact": true,
+  "baseline_assimilation_days": 45,
+  "comparisons": [
+    {
+      "array": "forcing_blocks",
+      "assimilation_days": 7,
+      "exact": true
+    },
+    {
+      "array": "process_standard_normals",
+      "assimilation_days": 7,
+      "exact": true
+    },
+    {
+      "array": "observation_standard_normals",
+      "assimilation_days": 7,
+      "exact": true
+    },
+    {
+      "array": "truth_deterministic_states",
+      "assimilation_days": 7,
+      "exact": true
+    },
+    {
+      "array": "truth_process_perturbations",
+      "assimilation_days": 7,
+      "exact": true
+    },
+    {
+      "array": "truth_projection_adjustments",
+      "assimilation_days": 7,
+      "exact": true
+    },
+    {
+      "array": "truth_states",
+      "assimilation_days": 7,
+      "exact": true
+    },
+    {
+      "array": "truth_discharge",
+      "assimilation_days": 7,
+      "exact": true
+    },
+    {
+      "array": "observed_discharge",
+      "assimilation_days": 7,
+      "exact": true
+    },
+    {
+      "array": "forcing_blocks",
+      "assimilation_days": 21,
+      "exact": true
+    },
+    {
+      "array": "process_standard_normals",
+      "assimilation_days": 21,
+      "exact": true
+    },
+    {
+      "array": "observation_standard_normals",
+      "assimilation_days": 21,
+      "exact": true
+    },
+    {
+      "array": "truth_deterministic_states",
+      "assimilation_days": 21,
+      "exact": true
+    },
+    {
+      "array": "truth_process_perturbations",
+      "assimilation_days": 21,
+      "exact": true
+    },
+    {
+      "array": "truth_projection_adjustments",
+      "assimilation_days": 21,
+      "exact": true
+    },
+    {
+      "array": "truth_states",
+      "assimilation_days": 21,
+      "exact": true
+    },
+    {
+      "array": "truth_discharge",
+      "assimilation_days": 21,
+      "exact": true
+    },
+    {
+      "array": "observed_discharge",
+      "assimilation_days": 21,
+      "exact": true
+    }
+  ],
+  "comparisons_checked": 18
+}

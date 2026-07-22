@@ -1,0 +1,3845 @@
+{
+  "audit_id": "kalmannet_readonly_audit_v01",
+  "collected_at_utc": "2026-07-15T04:34:56.582648+00:00",
+  "evidence_count": 21,
+  "items": [
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\run_aligned_gr4j_da.py",
+      "finding": "先发布当天预测，再读取当天实测流量；当天实测流量最早影响下一天预测。",
+      "id": "causal_issue_order",
+      "relative_path": "scripts/run_aligned_gr4j_da.py",
+      "source_sha256": "02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926",
+      "spans": [
+        {
+          "end_line": 1030,
+          "lines": [
+            {
+              "line_number": 1028,
+              "text": "    ``prediction[t]`` is stored before ``observations[t]`` is inspected.  The"
+            },
+            {
+              "line_number": 1029,
+              "text": "    same-day observation updates ``posterior_state[t]`` and can first affect"
+            },
+            {
+              "line_number": 1030,
+              "text": "    ``prediction[t + 1]``."
+            }
+          ],
+          "start_line": 1028
+        },
+        {
+          "end_line": 1125,
+          "lines": [
+            {
+              "line_number": 1116,
+              "text": "        prediction[day] = float(discharge_mean.detach().cpu())"
+            },
+            {
+              "line_number": 1117,
+              "text": "        prior_state[day] = projected_prior_mean.detach().cpu().numpy()"
+            },
+            {
+              "line_number": 1118,
+              "text": "        prior_covariance_values[day] = propagated_covariance.detach().cpu().numpy()"
+            },
+            {
+              "line_number": 1119,
+              "text": "        cross_values[day] = cross_covariance.detach().cpu().numpy()"
+            },
+            {
+              "line_number": 1120,
+              "text": ""
+            },
+            {
+              "line_number": 1121,
+              "text": "        if np.isfinite(observation_values[day]):"
+            },
+            {
+              "line_number": 1122,
+              "text": "            gain = cross_covariance / innovation_variance"
+            },
+            {
+              "line_number": 1123,
+              "text": "            gain = torch.where(allowed, gain, torch.zeros_like(gain))"
+            },
+            {
+              "line_number": 1124,
+              "text": "            raw_posterior_mean = projected_prior_mean + gain * ("
+            },
+            {
+              "line_number": 1125,
+              "text": "                float(observation_values[day]) - discharge_mean)"
+            }
+          ],
+          "start_line": 1116
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\run_aligned_gr4j_da.py",
+      "finding": "当天实测流量缺失时，后验等于先验且修正量为零。",
+      "id": "missing_observation_no_update",
+      "relative_path": "scripts/run_aligned_gr4j_da.py",
+      "source_sha256": "02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926",
+      "spans": [
+        {
+          "end_line": 1145,
+          "lines": [
+            {
+              "line_number": 1139,
+              "text": "        else:"
+            },
+            {
+              "line_number": 1140,
+              "text": "            gain = torch.zeros(dimension, dtype=torch.float64, device=device)"
+            },
+            {
+              "line_number": 1141,
+              "text": "            projected_posterior_mean = projected_prior_mean"
+            },
+            {
+              "line_number": 1142,
+              "text": "            posterior_covariance = propagated_covariance"
+            },
+            {
+              "line_number": 1143,
+              "text": "            posterior_projection_hits = torch.zeros("
+            },
+            {
+              "line_number": 1144,
+              "text": "                dimension, dtype=torch.bool, device=device)"
+            },
+            {
+              "line_number": 1145,
+              "text": "            day_correction = torch.zeros_like(projected_prior_mean)"
+            }
+          ],
+          "start_line": 1139
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\run_aligned_gr4j_da.py",
+      "finding": "输入固定为逐日降水、平均气温和潜在蒸散发，并核对日期完整性、有限值和非负约束。",
+      "id": "exact_raw_forcing_validation",
+      "relative_path": "scripts/run_aligned_gr4j_da.py",
+      "source_sha256": "02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926",
+      "spans": [
+        {
+          "end_line": 305,
+          "lines": [
+            {
+              "line_number": 247,
+              "text": "def load_basin_arrays(load_camels_basin, basin_id: str, protocol: Mapping) -> dict:"
+            },
+            {
+              "line_number": 248,
+              "text": "    \"\"\"Load exact raw daily forcing and observations without snow preprocessing.\"\"\""
+            },
+            {
+              "line_number": 249,
+              "text": "    import pandas as pd"
+            },
+            {
+              "line_number": 250,
+              "text": "    periods = protocol[\"periods\"]"
+            },
+            {
+              "line_number": 251,
+              "text": "    data = protocol[\"data\"]"
+            },
+            {
+              "line_number": 252,
+              "text": "    normalized = str(basin_id).zfill(8)"
+            },
+            {
+              "line_number": 253,
+              "text": "    common = {"
+            },
+            {
+              "line_number": 254,
+              "text": "        \"data_root\": str(data[\"camels_us_root\"]),"
+            },
+            {
+              "line_number": 255,
+              "text": "        \"forcing\": str(data[\"forcing_product\"]),"
+            },
+            {
+              "line_number": 256,
+              "text": "        \"pet_method\": str(data[\"potential_evapotranspiration\"]),"
+            },
+            {
+              "line_number": 257,
+              "text": "        \"keep_obs_nan_days\": True,"
+            },
+            {
+              "line_number": 258,
+              "text": "    }"
+            },
+            {
+              "line_number": 259,
+              "text": "    evaluation_all, evaluation_observations_all, evaluation_area = load_camels_basin("
+            },
+            {
+              "line_number": 260,
+              "text": "        normalized,"
+            },
+            {
+              "line_number": 261,
+              "text": "        start_date=periods[\"evaluation_warmup\"][\"start\"],"
+            },
+            {
+              "line_number": 262,
+              "text": "        end_date=periods[\"evaluation\"][\"end\"],"
+            },
+            {
+              "line_number": 263,
+              "text": "        **common,"
+            },
+            {
+              "line_number": 264,
+              "text": "    )"
+            },
+            {
+              "line_number": 265,
+              "text": "    calibration, calibration_observations, calibration_area = load_camels_basin("
+            },
+            {
+              "line_number": 266,
+              "text": "        normalized,"
+            },
+            {
+              "line_number": 267,
+              "text": "        start_date=periods[\"calibration\"][\"start\"],"
+            },
+            {
+              "line_number": 268,
+              "text": "        end_date=periods[\"calibration\"][\"end\"],"
+            },
+            {
+              "line_number": 269,
+              "text": "        **common,"
+            },
+            {
+              "line_number": 270,
+              "text": "    )"
+            },
+            {
+              "line_number": 271,
+              "text": "    expected_warmup = pd.date_range("
+            },
+            {
+              "line_number": 272,
+              "text": "        periods[\"evaluation_warmup\"][\"start\"], periods[\"evaluation_warmup\"][\"end\"], freq=\"D\")"
+            },
+            {
+              "line_number": 273,
+              "text": "    expected_evaluation = pd.date_range("
+            },
+            {
+              "line_number": 274,
+              "text": "        periods[\"evaluation\"][\"start\"], periods[\"evaluation\"][\"end\"], freq=\"D\")"
+            },
+            {
+              "line_number": 275,
+              "text": "    expected_all = expected_warmup.append(expected_evaluation)"
+            },
+            {
+              "line_number": 276,
+              "text": "    expected_calibration = pd.date_range("
+            },
+            {
+              "line_number": 277,
+              "text": "        periods[\"calibration\"][\"start\"], periods[\"calibration\"][\"end\"], freq=\"D\")"
+            },
+            {
+              "line_number": 278,
+              "text": "    if not evaluation_all.index.equals(expected_all) or not evaluation_observations_all.index.equals("
+            },
+            {
+              "line_number": 279,
+              "text": "            expected_all):"
+            },
+            {
+              "line_number": 280,
+              "text": "        raise ValueError(\"evaluation warmup and evaluation must form the exact daily index\")"
+            },
+            {
+              "line_number": 281,
+              "text": "    if not calibration.index.equals(expected_calibration) or not calibration_observations.index.equals("
+            },
+            {
+              "line_number": 282,
+              "text": "            expected_calibration):"
+            },
+            {
+              "line_number": 283,
+              "text": "        raise ValueError(\"calibration must form the exact daily index\")"
+            },
+            {
+              "line_number": 284,
+              "text": "    if len(expected_warmup) != int(periods[\"evaluation_warmup\"][\"days\"]):"
+            },
+            {
+              "line_number": 285,
+              "text": "        raise ValueError(\"evaluation warmup day count changed\")"
+            },
+            {
+              "line_number": 286,
+              "text": "    if len(expected_evaluation) != int(periods[\"evaluation\"][\"days\"]):"
+            },
+            {
+              "line_number": 287,
+              "text": "        raise ValueError(\"evaluation day count changed\")"
+            },
+            {
+              "line_number": 288,
+              "text": "    if len(expected_calibration) != int(periods[\"calibration\"][\"days\"]):"
+            },
+            {
+              "line_number": 289,
+              "text": "        raise ValueError(\"calibration day count changed\")"
+            },
+            {
+              "line_number": 290,
+              "text": "    if not math.isclose(float(evaluation_area), float(calibration_area), rel_tol=0.0, abs_tol=1e-9):"
+            },
+            {
+              "line_number": 291,
+              "text": "        raise ValueError(\"basin area changed between evaluation and calibration loads\")"
+            },
+            {
+              "line_number": 292,
+              "text": "    area = float(evaluation_area)"
+            },
+            {
+              "line_number": 293,
+              "text": "    if not math.isfinite(area) or area <= 0.0:"
+            },
+            {
+              "line_number": 294,
+              "text": "        raise ValueError(\"basin area must be positive and finite\")"
+            },
+            {
+              "line_number": 295,
+              "text": ""
+            },
+            {
+              "line_number": 296,
+              "text": "    def raw_forcing(frame, label: str) -> np.ndarray:"
+            },
+            {
+              "line_number": 297,
+              "text": "        missing = [column for column in (\"prcp\", \"tmean\", \"ep\") if column not in frame]"
+            },
+            {
+              "line_number": 298,
+              "text": "        if missing:"
+            },
+            {
+              "line_number": 299,
+              "text": "            raise KeyError(f\"{label} forcing is missing raw columns {missing}\")"
+            },
+            {
+              "line_number": 300,
+              "text": "        values = frame.loc[:, [\"prcp\", \"tmean\", \"ep\"]].to_numpy(dtype=np.float64)"
+            },
+            {
+              "line_number": 301,
+              "text": "        if not np.isfinite(values).all():"
+            },
+            {
+              "line_number": 302,
+              "text": "            raise ValueError(f\"{label} raw precipitation, temperature, or PET is non-finite\")"
+            },
+            {
+              "line_number": 303,
+              "text": "        if np.any(values[:, 0] < 0.0) or np.any(values[:, 2] < 0.0):"
+            },
+            {
+              "line_number": 304,
+              "text": "            raise ValueError(f\"{label} precipitation and PET must be nonnegative\")"
+            },
+            {
+              "line_number": 305,
+              "text": "        return values"
+            }
+          ],
+          "start_line": 247
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\run_aligned_gr4j_da.py",
+      "finding": "状态和观测尺度由开发期训练日的相邻日差绝对值第95百分位数给定。",
+      "id": "development_only_scale",
+      "relative_path": "scripts/run_aligned_gr4j_da.py",
+      "source_sha256": "02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926",
+      "spans": [
+        {
+          "end_line": 555,
+          "lines": [
+            {
+              "line_number": 498,
+              "text": "def strict_calibration_masks(dates: Sequence) -> dict[str, np.ndarray]:"
+            },
+            {
+              "line_number": 499,
+              "text": "    \"\"\"Return exact calibration/train/validation masks for a daily date axis.\"\"\""
+            },
+            {
+              "line_number": 500,
+              "text": "    values = np.asarray(dates)"
+            },
+            {
+              "line_number": 501,
+              "text": "    if values.ndim != 1 or values.size == 0:"
+            },
+            {
+              "line_number": 502,
+              "text": "        raise ValueError(\"dates must be a non-empty one-dimensional daily axis\")"
+            },
+            {
+              "line_number": 503,
+              "text": "    try:"
+            },
+            {
+              "line_number": 504,
+              "text": "        daily = values.astype(\"datetime64[D]\")"
+            },
+            {
+              "line_number": 505,
+              "text": "    except (TypeError, ValueError) as error:"
+            },
+            {
+              "line_number": 506,
+              "text": "        raise ValueError(\"dates must be convertible to calendar dates\") from error"
+            },
+            {
+              "line_number": 507,
+              "text": "    if np.isnat(daily).any():"
+            },
+            {
+              "line_number": 508,
+              "text": "        raise ValueError(\"dates must not contain missing values\")"
+            },
+            {
+              "line_number": 509,
+              "text": "    if daily.size > 1 and not np.all(np.diff(daily) == np.timedelta64(1, \"D\")):"
+            },
+            {
+              "line_number": 510,
+              "text": "        raise ValueError(\"dates must be strictly consecutive daily values\")"
+            },
+            {
+              "line_number": 511,
+              "text": "    if daily[0] > CALIBRATION_START or daily[-1] < CALIBRATION_END:"
+            },
+            {
+              "line_number": 512,
+              "text": "        raise ValueError("
+            },
+            {
+              "line_number": 513,
+              "text": "            \"dates must cover 1999-10-01 through 2008-09-30\")"
+            },
+            {
+              "line_number": 514,
+              "text": ""
+            },
+            {
+              "line_number": 515,
+              "text": "    calibration = (daily >= CALIBRATION_START) & (daily <= CALIBRATION_END)"
+            },
+            {
+              "line_number": 516,
+              "text": "    validation = (daily >= VALIDATION_START) & (daily <= VALIDATION_END)"
+            },
+            {
+              "line_number": 517,
+              "text": "    train = calibration & ~validation"
+            },
+            {
+              "line_number": 518,
+              "text": "    if int(validation.sum()) != 730:"
+            },
+            {
+              "line_number": 519,
+              "text": "        raise ValueError(\"validation must contain exactly the final 730 calibration days\")"
+            },
+            {
+              "line_number": 520,
+              "text": "    return {"
+            },
+            {
+              "line_number": 521,
+              "text": "        \"calibration\": calibration,"
+            },
+            {
+              "line_number": 522,
+              "text": "        \"train\": train,"
+            },
+            {
+              "line_number": 523,
+              "text": "        \"validation\": validation,"
+            },
+            {
+              "line_number": 524,
+              "text": "    }"
+            },
+            {
+              "line_number": 525,
+              "text": ""
+            },
+            {
+              "line_number": 526,
+              "text": ""
+            },
+            {
+              "line_number": 527,
+              "text": "def difference_p95_scale("
+            },
+            {
+              "line_number": 528,
+              "text": "    values: np.ndarray | Sequence,"
+            },
+            {
+              "line_number": 529,
+              "text": "    mask: np.ndarray | Sequence[bool],"
+            },
+            {
+              "line_number": 530,
+              "text": "    floor: float = 1e-6,"
+            },
+            {
+              "line_number": 531,
+              "text": ") -> np.ndarray:"
+            },
+            {
+              "line_number": 532,
+              "text": "    \"\"\"Compute a per-channel 95th percentile absolute daily-difference scale.\"\"\""
+            },
+            {
+              "line_number": 533,
+              "text": "    data = np.asarray(values, dtype=np.float64)"
+            },
+            {
+              "line_number": 534,
+              "text": "    if data.ndim == 1:"
+            },
+            {
+              "line_number": 535,
+              "text": "        data = data[:, None]"
+            },
+            {
+              "line_number": 536,
+              "text": "    if data.ndim != 2:"
+            },
+            {
+              "line_number": 537,
+              "text": "        raise ValueError(\"values must have shape [time] or [time, channel]\")"
+            },
+            {
+              "line_number": 538,
+              "text": "    selected = np.asarray(mask, dtype=bool)"
+            },
+            {
+              "line_number": 539,
+              "text": "    if selected.ndim != 1 or selected.shape[0] != data.shape[0]:"
+            },
+            {
+              "line_number": 540,
+              "text": "        raise ValueError(\"mask must have one entry per day\")"
+            },
+            {
+              "line_number": 541,
+              "text": "    if not np.isfinite(floor) or floor <= 0.0:"
+            },
+            {
+              "line_number": 542,
+              "text": "        raise ValueError(\"floor must be a positive finite number\")"
+            },
+            {
+              "line_number": 543,
+              "text": ""
+            },
+            {
+              "line_number": 544,
+              "text": "    scales = np.full(data.shape[1], float(floor), dtype=np.float64)"
+            },
+            {
+              "line_number": 545,
+              "text": "    adjacent_in_mask = selected[:-1] & selected[1:]"
+            },
+            {
+              "line_number": 546,
+              "text": "    differences = np.abs(np.diff(data, axis=0))"
+            },
+            {
+              "line_number": 547,
+              "text": "    for channel in range(data.shape[1]):"
+            },
+            {
+              "line_number": 548,
+              "text": "        valid = adjacent_in_mask & np.isfinite(data[:-1, channel]) & np.isfinite("
+            },
+            {
+              "line_number": 549,
+              "text": "            data[1:, channel])"
+            },
+            {
+              "line_number": 550,
+              "text": "        if valid.any():"
+            },
+            {
+              "line_number": 551,
+              "text": "            scales[channel] = max("
+            },
+            {
+              "line_number": 552,
+              "text": "                float(np.percentile(differences[valid, channel], 95.0)),"
+            },
+            {
+              "line_number": 553,
+              "text": "                float(floor),"
+            },
+            {
+              "line_number": 554,
+              "text": "            )"
+            },
+            {
+              "line_number": 555,
+              "text": "    return scales"
+            }
+          ],
+          "start_line": 498
+        },
+        {
+          "end_line": 1407,
+          "lines": [
+            {
+              "line_number": 1387,
+              "text": "    calibration_openloop = simulate_openloop(model, calibration_forcing)"
+            },
+            {
+              "line_number": 1388,
+              "text": "    masks = strict_calibration_masks(calibration_dates)"
+            },
+            {
+              "line_number": 1389,
+              "text": "    after_warmup = np.arange(calibration_dates.size) >= int("
+            },
+            {
+              "line_number": 1390,
+              "text": "        protocol[\"periods\"][\"calibration_warmup_days\"])"
+            },
+            {
+              "line_number": 1391,
+              "text": "    scale_mask = masks[\"train\"] & after_warmup"
+            },
+            {
+              "line_number": 1392,
+              "text": "    state_scale = difference_p95_scale("
+            },
+            {
+              "line_number": 1393,
+              "text": "        calibration_openloop[\"state\"], scale_mask,"
+            },
+            {
+              "line_number": 1394,
+              "text": "        floor=float(protocol[\"scales\"][\"numeric_floor\"]))"
+            },
+            {
+              "line_number": 1395,
+              "text": "    observation_scale = float(difference_p95_scale("
+            },
+            {
+              "line_number": 1396,
+              "text": "        calibration_observations, scale_mask,"
+            },
+            {
+              "line_number": 1397,
+              "text": "        floor=float(protocol[\"scales\"][\"numeric_floor\"]))[0])"
+            },
+            {
+              "line_number": 1398,
+              "text": "    selection_ar2_coefficients = fit_ar2("
+            },
+            {
+              "line_number": 1399,
+              "text": "        calibration_observations,"
+            },
+            {
+              "line_number": 1400,
+              "text": "        calibration_openloop[\"prediction\"],"
+            },
+            {
+              "line_number": 1401,
+              "text": "        scale_mask,"
+            },
+            {
+              "line_number": 1402,
+              "text": "    )"
+            },
+            {
+              "line_number": 1403,
+              "text": "    final_fit_mask = masks[\"calibration\"] & after_warmup"
+            },
+            {
+              "line_number": 1404,
+              "text": "    final_ar2_coefficients = fit_ar2("
+            },
+            {
+              "line_number": 1405,
+              "text": "        calibration_observations,"
+            },
+            {
+              "line_number": 1406,
+              "text": "        calibration_openloop[\"prediction\"],"
+            },
+            {
+              "line_number": 1407,
+              "text": "        final_fit_mask,"
+            }
+          ],
+          "start_line": 1387
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\run_aligned_gr4j_da.py",
+      "finding": "运行前核对冻结输入散列，并保存模型、数据加载器、强迫和流量文件清单。",
+      "id": "input_hash_chain",
+      "relative_path": "scripts/run_aligned_gr4j_da.py",
+      "source_sha256": "02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926",
+      "spans": [
+        {
+          "end_line": 1781,
+          "lines": [
+            {
+              "line_number": 1732,
+              "text": "def _basin_input_files(data_root: str | Path, basin_id: str) -> tuple[Path, ...]:"
+            },
+            {
+              "line_number": 1733,
+              "text": "    root = Path(data_root)"
+            },
+            {
+              "line_number": 1734,
+              "text": "    normalized = str(basin_id).zfill(8)"
+            },
+            {
+              "line_number": 1735,
+              "text": "    forcing = list((root / \"basin_mean_forcing\" / \"maurer\").glob("
+            },
+            {
+              "line_number": 1736,
+              "text": "        f\"*/{normalized}_lump_maurer_forcing_leap.txt\"))"
+            },
+            {
+              "line_number": 1737,
+              "text": "    streamflow = list((root / \"usgs_streamflow\").glob("
+            },
+            {
+              "line_number": 1738,
+              "text": "        f\"*/{normalized}_streamflow_qc.txt\"))"
+            },
+            {
+              "line_number": 1739,
+              "text": "    if len(forcing) != 1 or len(streamflow) != 1:"
+            },
+            {
+              "line_number": 1740,
+              "text": "        raise FileNotFoundError("
+            },
+            {
+              "line_number": 1741,
+              "text": "            f\"expected exactly one forcing and streamflow file for basin {normalized}\")"
+            },
+            {
+              "line_number": 1742,
+              "text": "    area = root / \"camels_attributes_v2.0\" / \"camels_topo.txt\""
+            },
+            {
+              "line_number": 1743,
+              "text": "    if not area.is_file():"
+            },
+            {
+              "line_number": 1744,
+              "text": "        raise FileNotFoundError(f\"missing basin-area file {area}\")"
+            },
+            {
+              "line_number": 1745,
+              "text": "    return forcing[0], streamflow[0], area"
+            },
+            {
+              "line_number": 1746,
+              "text": ""
+            },
+            {
+              "line_number": 1747,
+              "text": ""
+            },
+            {
+              "line_number": 1748,
+              "text": "def _verify_source_hashes(protocol: Mapping) -> list[dict[str, str]]:"
+            },
+            {
+              "line_number": 1749,
+              "text": "    pairs = ("
+            },
+            {
+              "line_number": 1750,
+              "text": "        (\"parameter_csv\", Path(protocol[\"data\"][\"parameter_csv\"])),"
+            },
+            {
+              "line_number": 1751,
+              "text": "        (\"canonical_basin_list\", Path(protocol[\"data\"][\"canonical_basin_list\"])),"
+            },
+            {
+              "line_number": 1752,
+              "text": "        (\"loader_source\", Path(protocol[\"data\"][\"loader_source\"])),"
+            },
+            {
+              "line_number": 1753,
+              "text": "    )"
+            },
+            {
+              "line_number": 1754,
+              "text": "    rows = []"
+            },
+            {
+              "line_number": 1755,
+              "text": "    for key, path in pairs:"
+            },
+            {
+              "line_number": 1756,
+              "text": "        actual = _sha256(path)"
+            },
+            {
+              "line_number": 1757,
+              "text": "        expected = str(protocol[\"hashing\"][key])"
+            },
+            {
+              "line_number": 1758,
+              "text": "        if actual != expected:"
+            },
+            {
+              "line_number": 1759,
+              "text": "            raise ValueError(f\"frozen source hash changed for {key}: {actual} != {expected}\")"
+            },
+            {
+              "line_number": 1760,
+              "text": "        rows.append({\"role\": key, \"path\": str(path), \"sha256\": actual})"
+            },
+            {
+              "line_number": 1761,
+              "text": "    return rows"
+            },
+            {
+              "line_number": 1762,
+              "text": ""
+            },
+            {
+              "line_number": 1763,
+              "text": ""
+            },
+            {
+              "line_number": 1764,
+              "text": "def runtime_code_paths(protocol: Mapping, project_root: str | Path) -> tuple[Path, ...]:"
+            },
+            {
+              "line_number": 1765,
+              "text": "    \"\"\"Return the complete directly imported model and data-loader code chain.\"\"\""
+            },
+            {
+              "line_number": 1766,
+              "text": "    root = Path(project_root).resolve()"
+            },
+            {
+              "line_number": 1767,
+              "text": "    external_source = Path(protocol[\"data\"][\"neuralhydrology_root\"]).resolve() / \"src\""
+            },
+            {
+              "line_number": 1768,
+              "text": "    paths = ("
+            },
+            {
+              "line_number": 1769,
+              "text": "        Path(__file__).resolve(),"
+            },
+            {
+              "line_number": 1770,
+              "text": "        root / \"src\" / \"global_hydrology\" / \"models\" / \"aligned_gr4j_pdd.py\","
+            },
+            {
+              "line_number": 1771,
+              "text": "        root / \"src\" / \"global_hydrology\" / \"models\" / \"differentiable_gr4j_pdd.py\","
+            },
+            {
+              "line_number": 1772,
+              "text": "        external_source / \"xaj_global_pilot\" / \"gr4j_core.py\","
+            },
+            {
+              "line_number": 1773,
+              "text": "        external_source / \"xaj_global_pilot\" / \"pdd_core.py\","
+            },
+            {
+              "line_number": 1774,
+              "text": "        Path(protocol[\"data\"][\"loader_source\"]).resolve(),"
+            },
+            {
+              "line_number": 1775,
+              "text": "    )"
+            },
+            {
+              "line_number": 1776,
+              "text": "    missing = [path for path in paths if not path.is_file()]"
+            },
+            {
+              "line_number": 1777,
+              "text": "    if missing:"
+            },
+            {
+              "line_number": 1778,
+              "text": "        raise FileNotFoundError(f\"runtime code manifest is missing {missing}\")"
+            },
+            {
+              "line_number": 1779,
+              "text": "    if len(set(paths)) != len(paths):"
+            },
+            {
+              "line_number": 1780,
+              "text": "        raise ValueError(\"runtime code manifest contains duplicate paths\")"
+            },
+            {
+              "line_number": 1781,
+              "text": "    return paths"
+            }
+          ],
+          "start_line": 1732
+        },
+        {
+          "end_line": 2042,
+          "lines": [
+            {
+              "line_number": 2008,
+              "text": "    project_inputs = [Path(config_path).resolve(), *runtime_code_paths(protocol, project_root)]"
+            },
+            {
+              "line_number": 2009,
+              "text": "    input_manifest_by_path = {"
+            },
+            {
+              "line_number": 2010,
+              "text": "        Path(row[\"path\"]).resolve(): dict(row) for row in source_rows"
+            },
+            {
+              "line_number": 2011,
+              "text": "    }"
+            },
+            {
+              "line_number": 2012,
+              "text": "    for path in sorted(set(project_inputs) | input_paths, key=lambda value: str(value)):"
+            },
+            {
+              "line_number": 2013,
+              "text": "        resolved = Path(path).resolve()"
+            },
+            {
+              "line_number": 2014,
+              "text": "        if resolved not in input_manifest_by_path:"
+            },
+            {
+              "line_number": 2015,
+              "text": "            input_manifest_by_path[resolved] = {"
+            },
+            {
+              "line_number": 2016,
+              "text": "                \"role\": \"runtime_input_or_code\","
+            },
+            {
+              "line_number": 2017,
+              "text": "                \"path\": str(resolved),"
+            },
+            {
+              "line_number": 2018,
+              "text": "                \"sha256\": _sha256(resolved),"
+            },
+            {
+              "line_number": 2019,
+              "text": "            }"
+            },
+            {
+              "line_number": 2020,
+              "text": "    input_manifest_rows = ["
+            },
+            {
+              "line_number": 2021,
+              "text": "        input_manifest_by_path[path] for path in sorted("
+            },
+            {
+              "line_number": 2022,
+              "text": "            input_manifest_by_path, key=lambda value: str(value))"
+            },
+            {
+              "line_number": 2023,
+              "text": "    ]"
+            },
+            {
+              "line_number": 2024,
+              "text": "    _write_json(output_root / \"input_manifest.json\", {"
+            },
+            {
+              "line_number": 2025,
+              "text": "        \"hash_algorithm\": \"sha256\","
+            },
+            {
+              "line_number": 2026,
+              "text": "        \"parameter_columns_read\": protocol[\"data\"][\"parameter_projection\"],"
+            },
+            {
+              "line_number": 2027,
+              "text": "        \"forbidden_parameter_columns_read\": [],"
+            },
+            {
+              "line_number": 2028,
+              "text": "        \"raw_forcing_columns\": [\"prcp\", \"tmean\", \"ep\"],"
+            },
+            {
+              "line_number": 2029,
+              "text": "        \"snow_liquid_preprocessing_called\": False,"
+            },
+            {
+              "line_number": 2030,
+              "text": "        \"files\": input_manifest_rows,"
+            },
+            {
+              "line_number": 2031,
+              "text": "    })"
+            },
+            {
+              "line_number": 2032,
+              "text": "    _write_json(output_root / \"environment.json\", {"
+            },
+            {
+              "line_number": 2033,
+              "text": "        \"python\": sys.version,"
+            },
+            {
+              "line_number": 2034,
+              "text": "        \"platform\": platform.platform(),"
+            },
+            {
+              "line_number": 2035,
+              "text": "        \"numpy\": np.__version__,"
+            },
+            {
+              "line_number": 2036,
+              "text": "        \"torch\": torch.__version__,"
+            },
+            {
+              "line_number": 2037,
+              "text": "        \"command\": protocol[\"reproduction\"][\"smoke_command\" if smoke else \"formal_command\"],"
+            },
+            {
+              "line_number": 2038,
+              "text": "        \"output_root\": str(output_root),"
+            },
+            {
+              "line_number": 2039,
+              "text": "        \"write_and_release_per_basin\": True,"
+            },
+            {
+              "line_number": 2040,
+              "text": "    })"
+            },
+            {
+              "line_number": 2041,
+              "text": "    _write_json(output_root / \"daily_artifacts.json\", daily_artifacts)"
+            },
+            {
+              "line_number": 2042,
+              "text": "    manifest_path = _write_output_manifest(output_root)"
+            }
+          ],
+          "start_line": 2008
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\run_aligned_gr4j_da.py",
+      "finding": "逐流域计算、立即写盘并释放大数组，限制峰值内存。",
+      "id": "serial_basin_write_release",
+      "relative_path": "scripts/run_aligned_gr4j_da.py",
+      "source_sha256": "02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926",
+      "spans": [
+        {
+          "end_line": 1895,
+          "lines": [
+            {
+              "line_number": 1873,
+              "text": "    for basin_id in training_basins:"
+            },
+            {
+              "line_number": 1874,
+              "text": "        loaded = load_basin_arrays(load_camels_basin, basin_id, protocol)"
+            },
+            {
+              "line_number": 1875,
+              "text": "        model = model_class(prior.params_for_basin(basin_id))"
+            },
+            {
+              "line_number": 1876,
+              "text": "        context = prepare_basin_context(model, loaded, protocol, prepare_evaluation=False)"
+            },
+            {
+              "line_number": 1877,
+              "text": "        grid = run_training_candidate_grid("
+            },
+            {
+              "line_number": 1878,
+              "text": "            model, context, protocol, max_validation_days=max_validation_days)"
+            },
+            {
+              "line_number": 1879,
+              "text": "        payload = {"
+            },
+            {
+              "line_number": 1880,
+              "text": "            \"dates\": grid[\"dates\"],"
+            },
+            {
+              "line_number": 1881,
+              "text": "            \"forcing\": grid[\"forcing\"],"
+            },
+            {
+              "line_number": 1882,
+              "text": "            \"area_km2\": context[\"area_km2\"],"
+            },
+            {
+              "line_number": 1883,
+              "text": "            \"observed_mm_per_day\": grid[\"observations\"],"
+            },
+            {
+              "line_number": 1884,
+              "text": "            \"state_names\": context[\"state_names\"],"
+            },
+            {
+              "line_number": 1885,
+              "text": "            \"state_scale\": context[\"state_scale\"],"
+            },
+            {
+              "line_number": 1886,
+              "text": "            \"observation_scale\": context[\"observation_scale\"],"
+            },
+            {
+              "line_number": 1887,
+              "text": "            **grid[\"predictions\"],"
+            },
+            {
+              "line_number": 1888,
+              "text": "        }"
+            },
+            {
+              "line_number": 1889,
+              "text": "        daily_artifacts.append(write_daily_npz("
+            },
+            {
+              "line_number": 1890,
+              "text": "            output_root / \"validation\" / f\"{basin_id}.npz\", payload,"
+            },
+            {
+              "line_number": 1891,
+              "text": "            loader_cfs_factor=protocol[\"data\"][\"loader_cfs_to_mm_day_km2_factor\"]))"
+            },
+            {
+              "line_number": 1892,
+              "text": "        for mode in protocol[\"ukf\"][\"modes\"]:"
+            },
+            {
+              "line_number": 1893,
+              "text": "            losses_by_mode[mode][basin_id] = grid[\"losses\"][mode]"
+            },
+            {
+              "line_number": 1894,
+              "text": "        input_paths.update(_basin_input_files(protocol[\"data\"][\"camels_us_root\"], basin_id))"
+            },
+            {
+              "line_number": 1895,
+              "text": "        del grid, context, model, loaded"
+            }
+          ],
+          "start_line": 1873
+        },
+        {
+          "end_line": 1973,
+          "lines": [
+            {
+              "line_number": 1918,
+              "text": "    for basin_id in holdout_basins:"
+            },
+            {
+              "line_number": 1919,
+              "text": "        loaded = load_basin_arrays(load_camels_basin, basin_id, protocol)"
+            },
+            {
+              "line_number": 1920,
+              "text": "        model = model_class(prior.params_for_basin(basin_id))"
+            },
+            {
+              "line_number": 1921,
+              "text": "        context = prepare_basin_context(model, loaded, protocol, prepare_evaluation=True)"
+            },
+            {
+              "line_number": 1922,
+              "text": "        calibration_payload = {"
+            },
+            {
+              "line_number": 1923,
+              "text": "            \"dates\": context[\"calibration_dates\"],"
+            },
+            {
+              "line_number": 1924,
+              "text": "            \"forcing\": context[\"calibration_forcing\"],"
+            },
+            {
+              "line_number": 1925,
+              "text": "            \"area_km2\": context[\"area_km2\"],"
+            },
+            {
+              "line_number": 1926,
+              "text": "            \"observed_mm_per_day\": context[\"calibration_observations\"],"
+            },
+            {
+              "line_number": 1927,
+              "text": "            \"openloop\": context[\"calibration_openloop\"],"
+            },
+            {
+              "line_number": 1928,
+              "text": "            \"openloop_state\": context[\"calibration_state\"],"
+            },
+            {
+              "line_number": 1929,
+              "text": "            \"state_names\": context[\"state_names\"],"
+            },
+            {
+              "line_number": 1930,
+              "text": "            \"state_scale\": context[\"state_scale\"],"
+            },
+            {
+              "line_number": 1931,
+              "text": "            \"observation_scale\": context[\"observation_scale\"],"
+            },
+            {
+              "line_number": 1932,
+              "text": "            \"ar2_coefficients\": context[\"final_ar2_coefficients\"],"
+            },
+            {
+              "line_number": 1933,
+              "text": "            \"training_scale_mask\": context[\"calibration_scale_mask\"],"
+            },
+            {
+              "line_number": 1934,
+              "text": "        }"
+            },
+            {
+              "line_number": 1935,
+              "text": "        daily_artifacts.append(write_daily_npz("
+            },
+            {
+              "line_number": 1936,
+              "text": "            output_root / \"calibration\" / f\"{basin_id}.npz\", calibration_payload,"
+            },
+            {
+              "line_number": 1937,
+              "text": "            loader_cfs_factor=protocol[\"data\"][\"loader_cfs_to_mm_day_km2_factor\"]))"
+            },
+            {
+              "line_number": 1938,
+              "text": ""
+            },
+            {
+              "line_number": 1939,
+              "text": "        evaluation = evaluate_holdout_basin("
+            },
+            {
+              "line_number": 1940,
+              "text": "            model, context, protocol, selected, max_eval_days=max_eval_days)"
+            },
+            {
+              "line_number": 1941,
+              "text": "        evaluation_payload = {"
+            },
+            {
+              "line_number": 1942,
+              "text": "            \"dates\": evaluation[\"dates\"],"
+            },
+            {
+              "line_number": 1943,
+              "text": "            \"forcing\": evaluation[\"forcing\"],"
+            },
+            {
+              "line_number": 1944,
+              "text": "            \"area_km2\": context[\"area_km2\"],"
+            },
+            {
+              "line_number": 1945,
+              "text": "            \"observed_mm_per_day\": evaluation[\"observations\"],"
+            },
+            {
+              "line_number": 1946,
+              "text": "            \"common_mask\": evaluation[\"common_mask\"],"
+            },
+            {
+              "line_number": 1947,
+              "text": "            \"state_names\": context[\"state_names\"],"
+            },
+            {
+              "line_number": 1948,
+              "text": "            \"state_scale\": context[\"state_scale\"],"
+            },
+            {
+              "line_number": 1949,
+              "text": "            \"observation_scale\": context[\"observation_scale\"],"
+            },
+            {
+              "line_number": 1950,
+              "text": "            \"ar2_coefficients\": context[\"final_ar2_coefficients\"],"
+            },
+            {
+              "line_number": 1951,
+              "text": "        }"
+            },
+            {
+              "line_number": 1952,
+              "text": "        for name, prediction in evaluation[\"predictions\"].items():"
+            },
+            {
+              "line_number": 1953,
+              "text": "            evaluation_payload[f\"prediction_{name}\"] = prediction"
+            },
+            {
+              "line_number": 1954,
+              "text": "        for name, result in evaluation[\"method_results\"].items():"
+            },
+            {
+              "line_number": 1955,
+              "text": "            for field, values in result.items():"
+            },
+            {
+              "line_number": 1956,
+              "text": "                evaluation_payload[f\"{name}_{field}\"] = values"
+            },
+            {
+              "line_number": 1957,
+              "text": "        daily_artifacts.append(write_daily_npz("
+            },
+            {
+              "line_number": 1958,
+              "text": "            output_root / \"evaluation\" / f\"{basin_id}.npz\", evaluation_payload,"
+            },
+            {
+              "line_number": 1959,
+              "text": "            loader_cfs_factor=protocol[\"data\"][\"loader_cfs_to_mm_day_km2_factor\"]))"
+            },
+            {
+              "line_number": 1960,
+              "text": "        row = {"
+            },
+            {
+              "line_number": 1961,
+              "text": "            \"basin_id\": basin_id,"
+            },
+            {
+              "line_number": 1962,
+              "text": "            \"area_km2\": context[\"area_km2\"],"
+            },
+            {
+              "line_number": 1963,
+              "text": "            \"common_days\": evaluation[\"score_days\"],"
+            },
+            {
+              "line_number": 1964,
+              "text": "            \"common_nse_denominator\": evaluation[\"score_denominator\"],"
+            },
+            {
+              "line_number": 1965,
+              "text": "            **{f\"nse_{name}\": score for name, score in evaluation[\"scores\"].items()},"
+            },
+            {
+              "line_number": 1966,
+              "text": "        }"
+            },
+            {
+              "line_number": 1967,
+              "text": "        for name, score in evaluation[\"scores\"].items():"
+            },
+            {
+              "line_number": 1968,
+              "text": "            if name != \"ar2\":"
+            },
+            {
+              "line_number": 1969,
+              "text": "                row[f\"paired_difference_{name}_minus_ar2\"] = score - evaluation[\"scores\"][\"ar2\"]"
+            },
+            {
+              "line_number": 1970,
+              "text": "        basin_rows.append(row)"
+            },
+            {
+              "line_number": 1971,
+              "text": "        all_state_rows.extend(evaluation[\"state_rows\"])"
+            },
+            {
+              "line_number": 1972,
+              "text": "        input_paths.update(_basin_input_files(protocol[\"data\"][\"camels_us_root\"], basin_id))"
+            },
+            {
+              "line_number": 1973,
+              "text": "        del evaluation, context, model, loaded"
+            }
+          ],
+          "start_line": 1918
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\verify_aligned_gr4j_causality.py",
+      "finding": "从指定日期起替换所有有限实测流量，并重放短窗口以检查已发布预测是否变化。",
+      "id": "future_observation_mutation_harness",
+      "relative_path": "scripts/verify_aligned_gr4j_causality.py",
+      "source_sha256": "7e672e98c839f8def003106c14534bc830607113f8cc5bcd3b7f1c01f0b96a31",
+      "spans": [
+        {
+          "end_line": 186,
+          "lines": [
+            {
+              "line_number": 168,
+              "text": "def replace_observations_from("
+            },
+            {
+              "line_number": 169,
+              "text": "    observations: np.ndarray | Sequence[float],"
+            },
+            {
+              "line_number": 170,
+              "text": "    *,"
+            },
+            {
+              "line_number": 171,
+              "text": "    mutation_index: int,"
+            },
+            {
+              "line_number": 172,
+              "text": "    offset: float,"
+            },
+            {
+              "line_number": 173,
+              "text": ") -> tuple[np.ndarray, int]:"
+            },
+            {
+              "line_number": 174,
+              "text": "    \"\"\"Add a fixed offset only to finite observations from one day onward.\"\"\""
+            },
+            {
+              "line_number": 175,
+              "text": "    values = np.asarray(observations, dtype=np.float64)"
+            },
+            {
+              "line_number": 176,
+              "text": "    if values.ndim != 1:"
+            },
+            {
+              "line_number": 177,
+              "text": "        raise ValueError(\"observations must be a daily vector\")"
+            },
+            {
+              "line_number": 178,
+              "text": "    mutation_index = int(mutation_index)"
+            },
+            {
+              "line_number": 179,
+              "text": "    if not 0 <= mutation_index < values.size:"
+            },
+            {
+              "line_number": 180,
+              "text": "        raise ValueError(\"mutation_index is outside the observation vector\")"
+            },
+            {
+              "line_number": 181,
+              "text": "    offset = float(offset)"
+            },
+            {
+              "line_number": 182,
+              "text": "    if not math.isfinite(offset) or offset == 0.0:"
+            },
+            {
+              "line_number": 183,
+              "text": "        raise ValueError(\"replacement offset must be finite and nonzero\")"
+            },
+            {
+              "line_number": 184,
+              "text": "    mutated = values.copy()"
+            },
+            {
+              "line_number": 185,
+              "text": "    finite_suffix = np.isfinite(mutated[mutation_index:])"
+            },
+            {
+              "line_number": 186,
+              "text": "    mutated[mutation_index:][finite_suffix] += offset"
+            }
+          ],
+          "start_line": 168
+        },
+        {
+          "end_line": 327,
+          "lines": [
+            {
+              "line_number": 300,
+              "text": "    \"\"\"Replay all five causal methods against one observation replacement.\"\"\""
+            },
+            {
+              "line_number": 301,
+              "text": "    window_days = int(window_days)"
+            },
+            {
+              "line_number": 302,
+              "text": "    mutation_index = int(mutation_index)"
+            },
+            {
+              "line_number": 303,
+              "text": "    if window_days < 4 or not 2 <= mutation_index < window_days - 1:"
+            },
+            {
+              "line_number": 304,
+              "text": "        raise ValueError(\"short window must contain two AR lags and a day after mutation\")"
+            },
+            {
+              "line_number": 305,
+              "text": "    dates = np.asarray(context[\"evaluation_dates\"]).astype(\"datetime64[D]\")[:window_days]"
+            },
+            {
+              "line_number": 306,
+              "text": "    forcing = np.asarray(context[\"evaluation_forcing\"], dtype=np.float64)[:window_days]"
+            },
+            {
+              "line_number": 307,
+              "text": "    observations = np.asarray("
+            },
+            {
+              "line_number": 308,
+              "text": "        context[\"evaluation_observations\"], dtype=np.float64)[:window_days]"
+            },
+            {
+              "line_number": 309,
+              "text": "    openloop = np.asarray(context[\"evaluation_openloop\"], dtype=np.float64)[:window_days]"
+            },
+            {
+              "line_number": 310,
+              "text": "    if ("
+            },
+            {
+              "line_number": 311,
+              "text": "        dates.size != window_days"
+            },
+            {
+              "line_number": 312,
+              "text": "        or forcing.shape != (window_days, 3)"
+            },
+            {
+              "line_number": 313,
+              "text": "        or observations.shape != (window_days,)"
+            },
+            {
+              "line_number": 314,
+              "text": "        or openloop.shape != (window_days,)"
+            },
+            {
+              "line_number": 315,
+              "text": "    ):"
+            },
+            {
+              "line_number": 316,
+              "text": "        raise ValueError(\"evaluation context does not cover the requested aligned short window\")"
+            },
+            {
+              "line_number": 317,
+              "text": "    observation_scale = float(context[\"observation_scale\"])"
+            },
+            {
+              "line_number": 318,
+              "text": "    multiplier = float(replacement_scale_multiplier)"
+            },
+            {
+              "line_number": 319,
+              "text": "    if not math.isfinite(multiplier) or multiplier <= 0.0:"
+            },
+            {
+              "line_number": 320,
+              "text": "        raise ValueError(\"replacement_scale_multiplier must be positive and finite\")"
+            },
+            {
+              "line_number": 321,
+              "text": "    replacement_offset = max(observation_scale * multiplier, 1e-6)"
+            },
+            {
+              "line_number": 322,
+              "text": "    mutated_observations, mutated_count = replace_observations_from("
+            },
+            {
+              "line_number": 323,
+              "text": "        observations,"
+            },
+            {
+              "line_number": 324,
+              "text": "        mutation_index=mutation_index,"
+            },
+            {
+              "line_number": 325,
+              "text": "        offset=replacement_offset,"
+            },
+            {
+              "line_number": 326,
+              "text": "    )"
+            },
+            {
+              "line_number": 327,
+              "text": "    if mutated_count == 0 or not np.isfinite(observations[mutation_index]):"
+            }
+          ],
+          "start_line": 300
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\gap_survival_precheck.py",
+      "finding": "从每个起报时刻的更新后状态分支推进多个预见期，并检查一步分支和生产预测一致。",
+      "id": "multilead_branch_and_fidelity",
+      "relative_path": "scripts/gap_survival_precheck.py",
+      "source_sha256": "131bb0020e29e26129b97ae7689bc6ca8ee9d1f2d8cf741d462e27bbbbf12dd7",
+      "spans": [
+        {
+          "end_line": 174,
+          "lines": [
+            {
+              "line_number": 146,
+              "text": "        # gap-starts: assimilated (valid) days with GMAX room and finite last-obs"
+            },
+            {
+              "line_number": 147,
+              "text": "        starts = np.array([g for g in range(args.warmup, n - GMAX) if valid[g]], dtype=int)"
+            },
+            {
+              "line_number": 148,
+              "text": "        x = torch.tensor(x_post[starts], dtype=torch.float32)        # [N, m_phys]"
+            },
+            {
+              "line_number": 149,
+              "text": "        N = len(starts)"
+            },
+            {
+              "line_number": 150,
+              "text": "        q_da = np.empty((GMAX + 1, N))                               # tau index 1..GMAX"
+            },
+            {
+              "line_number": 151,
+              "text": "        with torch.no_grad():"
+            },
+            {
+              "line_number": 152,
+              "text": "            for tau in range(1, GMAX + 1):"
+            },
+            {
+              "line_number": 153,
+              "text": "                u = torch.tensor(forcing[starts + tau], dtype=torch.float32)  # [N,3]"
+            },
+            {
+              "line_number": 154,
+              "text": "                x = sm.f(x, u)"
+            },
+            {
+              "line_number": 155,
+              "text": "                x[:, :5] = x[:, :5].clamp(min=0.0)                   # det-mean mean-clamp"
+            },
+            {
+              "line_number": 156,
+              "text": "                q_da[tau] = sm.h(x)[:, 0].numpy()"
+            },
+            {
+              "line_number": 157,
+              "text": ""
+            },
+            {
+              "line_number": 158,
+              "text": "        # fidelity gate: coast tau=1 == production q_fcst[g0+1]"
+            },
+            {
+              "line_number": 159,
+              "text": "        fid = float(np.nanmax(np.abs(q_da[1] - q_fcst[starts + 1])))"
+            },
+            {
+              "line_number": 160,
+              "text": ""
+            },
+            {
+              "line_number": 161,
+              "text": "        # baseflow / autocorrelation diagnostics"
+            },
+            {
+              "line_number": 162,
+              "text": "        k2 = float(params_b[0, PARAM_NAMES.index(\"parK2\")])"
+            },
+            {
+              "line_number": 163,
+              "text": "        ov = obs[valid]"
+            },
+            {
+              "line_number": 164,
+              "text": "        ac1 = float(np.corrcoef(ov[:-1], ov[1:])[0, 1]) if len(ov) > 10 else float(\"nan\")"
+            },
+            {
+              "line_number": 165,
+              "text": ""
+            },
+            {
+              "line_number": 166,
+              "text": "        # per-lead NSE for the three methods"
+            },
+            {
+              "line_number": 167,
+              "text": "        nse_da, nse_ol, nse_pers = {}, {}, {}"
+            },
+            {
+              "line_number": 168,
+              "text": "        for tau in leads:"
+            },
+            {
+              "line_number": 169,
+              "text": "            truth = obs[starts + tau]"
+            },
+            {
+              "line_number": 170,
+              "text": "            persist = obs[starts]                                   # last seen obs (flat)"
+            },
+            {
+              "line_number": 171,
+              "text": "            olf = q_ol[starts + tau]"
+            },
+            {
+              "line_number": 172,
+              "text": "            nse_da[tau] = _nse(truth, q_da[tau])"
+            },
+            {
+              "line_number": 173,
+              "text": "            nse_ol[tau] = _nse(truth, olf)"
+            },
+            {
+              "line_number": 174,
+              "text": "            nse_pers[tau] = _nse(truth, persist)"
+            }
+          ],
+          "start_line": 146
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\gap_survival_precheck.py",
+      "finding": "该预检直接读取起报时刻之后的实测气象，因此只能解释为诊断性回报，不能解释为实时预报。",
+      "id": "future_observed_weather",
+      "relative_path": "scripts/gap_survival_precheck.py",
+      "source_sha256": "131bb0020e29e26129b97ae7689bc6ca8ee9d1f2d8cf741d462e27bbbbf12dd7",
+      "spans": [
+        {
+          "end_line": 160,
+          "lines": [
+            {
+              "line_number": 146,
+              "text": "        # gap-starts: assimilated (valid) days with GMAX room and finite last-obs"
+            },
+            {
+              "line_number": 147,
+              "text": "        starts = np.array([g for g in range(args.warmup, n - GMAX) if valid[g]], dtype=int)"
+            },
+            {
+              "line_number": 148,
+              "text": "        x = torch.tensor(x_post[starts], dtype=torch.float32)        # [N, m_phys]"
+            },
+            {
+              "line_number": 149,
+              "text": "        N = len(starts)"
+            },
+            {
+              "line_number": 150,
+              "text": "        q_da = np.empty((GMAX + 1, N))                               # tau index 1..GMAX"
+            },
+            {
+              "line_number": 151,
+              "text": "        with torch.no_grad():"
+            },
+            {
+              "line_number": 152,
+              "text": "            for tau in range(1, GMAX + 1):"
+            },
+            {
+              "line_number": 153,
+              "text": "                u = torch.tensor(forcing[starts + tau], dtype=torch.float32)  # [N,3]"
+            },
+            {
+              "line_number": 154,
+              "text": "                x = sm.f(x, u)"
+            },
+            {
+              "line_number": 155,
+              "text": "                x[:, :5] = x[:, :5].clamp(min=0.0)                   # det-mean mean-clamp"
+            },
+            {
+              "line_number": 156,
+              "text": "                q_da[tau] = sm.h(x)[:, 0].numpy()"
+            },
+            {
+              "line_number": 157,
+              "text": ""
+            },
+            {
+              "line_number": 158,
+              "text": "        # fidelity gate: coast tau=1 == production q_fcst[g0+1]"
+            },
+            {
+              "line_number": 159,
+              "text": "        fid = float(np.nanmax(np.abs(q_da[1] - q_fcst[starts + 1])))"
+            },
+            {
+              "line_number": 160,
+              "text": ""
+            }
+          ],
+          "start_line": 146
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\gap_survival_precheck.py",
+      "finding": "该预检按评价期实测流量的一阶自相关和既有评价分数选流域，不能用于正式留出集。",
+      "id": "evaluation_period_basin_selection",
+      "relative_path": "scripts/gap_survival_precheck.py",
+      "source_sha256": "131bb0020e29e26129b97ae7689bc6ca8ee9d1f2d8cf741d462e27bbbbf12dd7",
+      "spans": [
+        {
+          "end_line": 95,
+          "lines": [
+            {
+              "line_number": 77,
+              "text": "def select_basins(smoke, prior, n, n_cand=120):"
+            },
+            {
+              "line_number": 78,
+              "text": "    \"\"\"Stratify by OBSERVED lag-1 streamflow autocorrelation (ac1) — the direct 'memory' /"
+            },
+            {
+              "line_number": 79,
+              "text": "    persistence-strength variable the thesis is about. Pre-pass loads a strided candidate pool"
+            },
+            {
+              "line_number": 80,
+              "text": "    (csv_nse>0.3, meaningful model), computes ac1, then picks n basins spanning ac1 evenly so"
+            },
+            {
+              "line_number": 81,
+              "text": "    BOTH flashy (low ac1, persistence weak) and slow/high-baseflow (high ac1, persistence"
+            },
+            {
+              "line_number": 82,
+              "text": "    strong) ends are covered. parK2 alone mis-ranks memory (K2=0 == no baseflow == flashy).\"\"\""
+            },
+            {
+              "line_number": 83,
+              "text": "    idx_keep = np.where((prior.csv_nse > 0.3).numpy())[0]"
+            },
+            {
+              "line_number": 84,
+              "text": "    cand = idx_keep[np.linspace(0, len(idx_keep) - 1, min(n_cand, len(idx_keep))).round().astype(int)]"
+            },
+            {
+              "line_number": 85,
+              "text": "    cand = sorted(set(int(i) for i in cand))"
+            },
+            {
+              "line_number": 86,
+              "text": "    acs = []"
+            },
+            {
+              "line_number": 87,
+              "text": "    for i in cand:"
+            },
+            {
+              "line_number": 88,
+              "text": "        bid = prior.basin_ids[i]"
+            },
+            {
+              "line_number": 89,
+              "text": "        _, obs, _ = smoke.load_camels_basin("
+            },
+            {
+              "line_number": 90,
+              "text": "            bid, data_root=str(smoke.NH_DATA), start_date=smoke.EVAL_START,"
+            },
+            {
+              "line_number": 91,
+              "text": "            end_date=smoke.EVAL_END, forcing=\"maurer\", pet_method=\"oudin\", keep_obs_nan_days=True)"
+            },
+            {
+              "line_number": 92,
+              "text": "        acs.append((_lag1_autocorr(obs.to_numpy(dtype=float)), i))"
+            },
+            {
+              "line_number": 93,
+              "text": "    acs = sorted((a, i) for a, i in acs if np.isfinite(a))"
+            },
+            {
+              "line_number": 94,
+              "text": "    pick = [acs[j][1] for j in np.linspace(0, len(acs) - 1, n).round().astype(int)]"
+            },
+            {
+              "line_number": 95,
+              "text": "    return pick"
+            }
+          ],
+          "start_line": 77
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\build_aligned_gr4j_80x32_protocol.py",
+      "finding": "仅使用冻结源中存在的流域标识符和盐值生成可重现划分，不读取流量、气象、评价分数或状态。",
+      "id": "identifier_only_static_split",
+      "relative_path": "scripts/build_aligned_gr4j_80x32_protocol.py",
+      "source_sha256": "e75d412686b60b6775fd9651a261c89a254e7ae10dc2ecfffa44abf5205d1ab6",
+      "spans": [
+        {
+          "end_line": 77,
+          "lines": [
+            {
+              "line_number": 37,
+              "text": "def _rank(values: Iterable[str], salt: str) -> tuple[str, ...]:"
+            },
+            {
+              "line_number": 38,
+              "text": "    return tuple(sorted("
+            },
+            {
+              "line_number": 39,
+              "text": "        values,"
+            },
+            {
+              "line_number": 40,
+              "text": "        key=lambda basin: ("
+            },
+            {
+              "line_number": 41,
+              "text": "            hashlib.sha256(f\"{salt}|{basin}\".encode(\"utf-8\")).hexdigest(),"
+            },
+            {
+              "line_number": 42,
+              "text": "            basin,"
+            },
+            {
+              "line_number": 43,
+              "text": "        ),"
+            },
+            {
+              "line_number": 44,
+              "text": "    ))"
+            },
+            {
+              "line_number": 45,
+              "text": ""
+            },
+            {
+              "line_number": 46,
+              "text": ""
+            },
+            {
+              "line_number": 47,
+              "text": "def select_basin_split("
+            },
+            {
+              "line_number": 48,
+              "text": "    canonical_ids: Sequence[str],"
+            },
+            {
+              "line_number": 49,
+              "text": "    parameter_ids: Sequence[str],"
+            },
+            {
+              "line_number": 50,
+              "text": "    original_training_ids: Sequence[str],"
+            },
+            {
+              "line_number": 51,
+              "text": "    original_holdout_ids: Sequence[str],"
+            },
+            {
+              "line_number": 52,
+              "text": "    *,"
+            },
+            {
+              "line_number": 53,
+              "text": "    training_count: int = 80,"
+            },
+            {
+              "line_number": 54,
+              "text": "    holdout_count: int = 32,"
+            },
+            {
+              "line_number": 55,
+              "text": "    selection_salt: str = SELECTION_SALT,"
+            },
+            {
+              "line_number": 56,
+              "text": "    holdout_salt: str = HOLDOUT_SALT,"
+            },
+            {
+              "line_number": 57,
+              "text": ") -> dict[str, list[str]]:"
+            },
+            {
+              "line_number": 58,
+              "text": "    \"\"\"Select basins without reading forcing, flow, scores, or saved states.\"\"\""
+            },
+            {
+              "line_number": 59,
+              "text": "    canonical = _normalize(canonical_ids)"
+            },
+            {
+              "line_number": 60,
+              "text": "    parameters = _normalize(parameter_ids)"
+            },
+            {
+              "line_number": 61,
+              "text": "    original_training = _normalize(original_training_ids)"
+            },
+            {
+              "line_number": 62,
+              "text": "    original_holdout = _normalize(original_holdout_ids)"
+            },
+            {
+              "line_number": 63,
+              "text": "    if set(original_training) & set(original_holdout):"
+            },
+            {
+              "line_number": 64,
+              "text": "        raise ValueError(\"original training and holdout basin sets overlap\")"
+            },
+            {
+              "line_number": 65,
+              "text": "    eligible = set(canonical) & set(parameters)"
+            },
+            {
+              "line_number": 66,
+              "text": "    if not set(original_training) <= eligible or not set(original_holdout) <= eligible:"
+            },
+            {
+              "line_number": 67,
+              "text": "        raise ValueError(\"the original split is not contained in both frozen basin sources\")"
+            },
+            {
+              "line_number": 68,
+              "text": "    added_count = int(training_count) - len(original_training)"
+            },
+            {
+              "line_number": 69,
+              "text": "    if added_count < 0 or holdout_count < 1:"
+            },
+            {
+              "line_number": 70,
+              "text": "        raise ValueError(\"requested split sizes are invalid\")"
+            },
+            {
+              "line_number": 71,
+              "text": "    unused = eligible - set(original_training) - set(original_holdout)"
+            },
+            {
+              "line_number": 72,
+              "text": "    holdout = _rank(unused, holdout_salt)[:int(holdout_count)]"
+            },
+            {
+              "line_number": 73,
+              "text": "    added_training = _rank(unused - set(holdout), selection_salt)[:added_count]"
+            },
+            {
+              "line_number": 74,
+              "text": "    if len(holdout) != int(holdout_count) or len(added_training) != added_count:"
+            },
+            {
+              "line_number": 75,
+              "text": "        raise ValueError(\"frozen basin sources do not contain enough unused basins\")"
+            },
+            {
+              "line_number": 76,
+              "text": "    training = original_training + added_training"
+            },
+            {
+              "line_number": 77,
+              "text": "    if set(training) & set(holdout) or set(original_holdout) & (set(training) | set(holdout)):"
+            }
+          ],
+          "start_line": 37
+        },
+        {
+          "end_line": 185,
+          "lines": [
+            {
+              "line_number": 182,
+              "text": "        \"selection_inputs\": \"basin identifiers present in both frozen canonical and parameter sources\","
+            },
+            {
+              "line_number": 183,
+              "text": "        \"forbidden_selection_inputs\": ["
+            },
+            {
+              "line_number": 184,
+              "text": "            \"streamflow\", \"forcing\", \"Nash-Sutcliffe efficiency\", \"saved state\","
+            },
+            {
+              "line_number": 185,
+              "text": "        ],"
+            }
+          ],
+          "start_line": 182
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\aligned_gr4j_checkpoint_io_v2.py",
+      "finding": "新检查点拒绝覆盖，先写临时文件再原子替换，并记录日结果、写入器和入口文件散列。",
+      "id": "atomic_fail_closed_checkpoint",
+      "relative_path": "scripts/aligned_gr4j_checkpoint_io_v2.py",
+      "source_sha256": "deb5ab259931057f716d94b473134c0b72287e5ed593fc3e8398cc5ce7891ec7",
+      "spans": [
+        {
+          "end_line": 152,
+          "lines": [
+            {
+              "line_number": 113,
+              "text": "def write_basin_checkpoint_v2("
+            },
+            {
+              "line_number": 114,
+              "text": "    daily_path: str | Path,"
+            },
+            {
+              "line_number": 115,
+              "text": "    payload: Mapping,"
+            },
+            {
+              "line_number": 116,
+              "text": "    loader_cfs_factor: float,"
+            },
+            {
+              "line_number": 117,
+              "text": "    evaluation_id: str = \"unit-test\","
+            },
+            {
+              "line_number": 118,
+              "text": "    frozen_selection_sha256: str = \"unit-test\","
+            },
+            {
+              "line_number": 119,
+              "text": "    *,"
+            },
+            {
+              "line_number": 120,
+              "text": "    entrypoint_path: str | Path,"
+            },
+            {
+              "line_number": 121,
+              "text": ") -> dict:"
+            },
+            {
+              "line_number": 122,
+              "text": "    destination = Path(daily_path)"
+            },
+            {
+              "line_number": 123,
+              "text": "    entrypoint = Path(entrypoint_path)"
+            },
+            {
+              "line_number": 124,
+              "text": "    if destination.exists() or destination.with_suffix(\".checkpoint.json\").exists():"
+            },
+            {
+              "line_number": 125,
+              "text": "        raise FileExistsError(f\"checkpoint destination already exists: {destination}\")"
+            },
+            {
+              "line_number": 126,
+              "text": "    if not entrypoint.is_file():"
+            },
+            {
+              "line_number": 127,
+              "text": "        raise FileNotFoundError(f\"sealed holdout entrypoint is missing: {entrypoint}\")"
+            },
+            {
+              "line_number": 128,
+              "text": "    arrays, days = _validate_payload(payload, loader_cfs_factor)"
+            },
+            {
+              "line_number": 129,
+              "text": "    destination.parent.mkdir(parents=True, exist_ok=True)"
+            },
+            {
+              "line_number": 130,
+              "text": "    temporary = destination.with_name(f\"{destination.stem}.partial.npz\")"
+            },
+            {
+              "line_number": 131,
+              "text": "    try:"
+            },
+            {
+              "line_number": 132,
+              "text": "        np.savez_compressed(temporary, **arrays)"
+            },
+            {
+              "line_number": 133,
+              "text": "        temporary.replace(destination)"
+            },
+            {
+              "line_number": 134,
+              "text": "    finally:"
+            },
+            {
+              "line_number": 135,
+              "text": "        if temporary.exists():"
+            },
+            {
+              "line_number": 136,
+              "text": "            temporary.unlink()"
+            },
+            {
+              "line_number": 137,
+              "text": "    writer_path = Path(__file__).resolve()"
+            },
+            {
+              "line_number": 138,
+              "text": "    record = {"
+            },
+            {
+              "line_number": 139,
+              "text": "        \"schema_version\": \"aligned_gr4j_diagonal_holdout_basin_checkpoint_v1\","
+            },
+            {
+              "line_number": 140,
+              "text": "        \"status\": \"complete\","
+            },
+            {
+              "line_number": 141,
+              "text": "        \"basin_id\": destination.stem.zfill(8),"
+            },
+            {
+              "line_number": 142,
+              "text": "        \"daily_path\": destination.name,"
+            },
+            {
+              "line_number": 143,
+              "text": "        \"daily_sha256\": _sha256(destination),"
+            },
+            {
+              "line_number": 144,
+              "text": "        \"days\": days,"
+            },
+            {
+              "line_number": 145,
+              "text": "        \"evaluation_id\": str(evaluation_id),"
+            },
+            {
+              "line_number": 146,
+              "text": "        \"frozen_selection_sha256\": str(frozen_selection_sha256),"
+            },
+            {
+              "line_number": 147,
+              "text": "        \"checkpoint_writer_path\": str(writer_path),"
+            },
+            {
+              "line_number": 148,
+              "text": "        \"checkpoint_writer_sha256\": _sha256(writer_path),"
+            },
+            {
+              "line_number": 149,
+              "text": "        \"holdout_entrypoint_path\": str(entrypoint.resolve()),"
+            },
+            {
+              "line_number": 150,
+              "text": "        \"holdout_entrypoint_sha256\": _sha256(entrypoint),"
+            },
+            {
+              "line_number": 151,
+              "text": "    }"
+            },
+            {
+              "line_number": 152,
+              "text": "    _write_json_atomic(destination.with_suffix(\".checkpoint.json\"), record)"
+            }
+          ],
+          "start_line": 113
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\run_aligned_gr4j_diagonal_holdout.py",
+      "finding": "另一条旧路径可在身份信息缺失时用unknown重建检查点；当前项目必须拒绝这种恢复。",
+      "id": "checkpoint_identity_reconstruction",
+      "relative_path": "scripts/run_aligned_gr4j_diagonal_holdout.py",
+      "source_sha256": "c3e1cae9ae2e0d2b4b421640d2281a12e245bad8d820661f67833a6e0a68a3d0",
+      "spans": [
+        {
+          "end_line": 293,
+          "lines": [
+            {
+              "line_number": 280,
+              "text": "    else:"
+            },
+            {
+              "line_number": 281,
+              "text": "        checkpoint = {"
+            },
+            {
+              "line_number": 282,
+              "text": "            \"schema_version\": \"aligned_gr4j_diagonal_holdout_basin_checkpoint_v1\","
+            },
+            {
+              "line_number": 283,
+              "text": "            \"status\": \"complete\","
+            },
+            {
+              "line_number": 284,
+              "text": "            \"basin_id\": destination.stem.zfill(8),"
+            },
+            {
+              "line_number": 285,
+              "text": "            \"daily_path\": destination.name,"
+            },
+            {
+              "line_number": 286,
+              "text": "            \"daily_sha256\": digest,"
+            },
+            {
+              "line_number": 287,
+              "text": "            \"days\": int(dates.size),"
+            },
+            {
+              "line_number": 288,
+              "text": "            \"recovered_after_atomic_daily_write\": True,"
+            },
+            {
+              "line_number": 289,
+              "text": "            \"evaluation_id\": str(expected_evaluation_id or \"unknown\"),"
+            },
+            {
+              "line_number": 290,
+              "text": "            \"frozen_selection_sha256\": str("
+            },
+            {
+              "line_number": 291,
+              "text": "                expected_frozen_selection_sha256 or \"unknown\"),"
+            },
+            {
+              "line_number": 292,
+              "text": "        }"
+            },
+            {
+              "line_number": 293,
+              "text": "        _write_json_atomic(checkpoint_path, checkpoint)"
+            }
+          ],
+          "start_line": 280
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\run_aligned_gr4j_diagonal_noise.py",
+      "finding": "监测图形处理器内存、系统可用内存、进程常驻内存、处理器占用和磁盘，并按固定间隔写日志。",
+      "id": "resource_monitor_dimensions",
+      "relative_path": "scripts/run_aligned_gr4j_diagonal_noise.py",
+      "source_sha256": "a6322657dca82362457fa35ac9bec0a2eab91639e9ea9e21afb0eed54ffeca90",
+      "spans": [
+        {
+          "end_line": 552,
+          "lines": [
+            {
+              "line_number": 508,
+              "text": "def _graphics_processor_snapshot() -> dict:"
+            },
+            {
+              "line_number": 509,
+              "text": "    try:"
+            },
+            {
+              "line_number": 510,
+              "text": "        completed = subprocess.run("
+            },
+            {
+              "line_number": 511,
+              "text": "            ["
+            },
+            {
+              "line_number": 512,
+              "text": "                \"nvidia-smi\","
+            },
+            {
+              "line_number": 513,
+              "text": "                \"--query-gpu=index,memory.free,memory.total,utilization.gpu\","
+            },
+            {
+              "line_number": 514,
+              "text": "                \"--format=csv,noheader,nounits\","
+            },
+            {
+              "line_number": 515,
+              "text": "            ],"
+            },
+            {
+              "line_number": 516,
+              "text": "            check=True,"
+            },
+            {
+              "line_number": 517,
+              "text": "            capture_output=True,"
+            },
+            {
+              "line_number": 518,
+              "text": "            text=True,"
+            },
+            {
+              "line_number": 519,
+              "text": "            timeout=3,"
+            },
+            {
+              "line_number": 520,
+              "text": "        )"
+            },
+            {
+              "line_number": 521,
+              "text": "        devices = []"
+            },
+            {
+              "line_number": 522,
+              "text": "        for line in completed.stdout.splitlines():"
+            },
+            {
+              "line_number": 523,
+              "text": "            if not line.strip():"
+            },
+            {
+              "line_number": 524,
+              "text": "                continue"
+            },
+            {
+              "line_number": 525,
+              "text": "            index, free_mib, total_mib, utilization = [part.strip() for part in line.split(\",\")]"
+            },
+            {
+              "line_number": 526,
+              "text": "            devices.append({"
+            },
+            {
+              "line_number": 527,
+              "text": "                \"index\": int(index),"
+            },
+            {
+              "line_number": 528,
+              "text": "                \"free_memory_mib\": float(free_mib),"
+            },
+            {
+              "line_number": 529,
+              "text": "                \"total_memory_mib\": float(total_mib),"
+            },
+            {
+              "line_number": 530,
+              "text": "                \"utilization_percent\": float(utilization),"
+            },
+            {
+              "line_number": 531,
+              "text": "            })"
+            },
+            {
+              "line_number": 532,
+              "text": "        return {\"available\": bool(devices), \"devices\": devices}"
+            },
+            {
+              "line_number": 533,
+              "text": "    except (FileNotFoundError, subprocess.SubprocessError, ValueError):"
+            },
+            {
+              "line_number": 534,
+              "text": "        return {\"available\": False, \"devices\": []}"
+            },
+            {
+              "line_number": 535,
+              "text": ""
+            },
+            {
+              "line_number": 536,
+              "text": ""
+            },
+            {
+              "line_number": 537,
+              "text": "def resource_snapshot(output_path: str | Path, workers: int) -> dict:"
+            },
+            {
+              "line_number": 538,
+              "text": "    memory = psutil.virtual_memory()"
+            },
+            {
+              "line_number": 539,
+              "text": "    with warnings.catch_warnings():"
+            },
+            {
+              "line_number": 540,
+              "text": "        warnings.filterwarnings(\"ignore\", category=DeprecationWarning, module=r\"psutil\\..*\")"
+            },
+            {
+              "line_number": 541,
+              "text": "        disk = psutil.disk_usage(str(Path(output_path).resolve()))"
+            },
+            {
+              "line_number": 542,
+              "text": "    process = psutil.Process()"
+            },
+            {
+              "line_number": 543,
+              "text": "    return {"
+            },
+            {
+              "line_number": 544,
+              "text": "        \"timestamp_utc\": datetime.now(timezone.utc).isoformat(),"
+            },
+            {
+              "line_number": 545,
+              "text": "        \"process_memory_bytes\": int(process.memory_info().rss),"
+            },
+            {
+              "line_number": 546,
+              "text": "        \"available_memory_bytes\": int(memory.available),"
+            },
+            {
+              "line_number": 547,
+              "text": "        \"total_memory_bytes\": int(memory.total),"
+            },
+            {
+              "line_number": 548,
+              "text": "        \"processor_percent\": float(psutil.cpu_percent(interval=None)),"
+            },
+            {
+              "line_number": 549,
+              "text": "        \"free_disk_bytes\": int(disk.free),"
+            },
+            {
+              "line_number": 550,
+              "text": "        \"workers\": int(workers),"
+            },
+            {
+              "line_number": 551,
+              "text": "        \"graphics_processor\": _graphics_processor_snapshot(),"
+            },
+            {
+              "line_number": 552,
+              "text": "    }"
+            }
+          ],
+          "start_line": 508
+        },
+        {
+          "end_line": 629,
+          "lines": [
+            {
+              "line_number": 580,
+              "text": "    def record_once("
+            },
+            {
+              "line_number": 581,
+              "text": "        self,"
+            },
+            {
+              "line_number": 582,
+              "text": "        phase: str | None = None,"
+            },
+            {
+              "line_number": 583,
+              "text": "        candidate_id: str | None = None,"
+            },
+            {
+              "line_number": 584,
+              "text": "        basin_id: str | None = None,"
+            },
+            {
+              "line_number": 585,
+              "text": "        run_event: str | None = None,"
+            },
+            {
+              "line_number": 586,
+              "text": "    ) -> dict:"
+            },
+            {
+              "line_number": 587,
+              "text": "        with self._record_lock:"
+            },
+            {
+              "line_number": 588,
+              "text": "            if phase is not None:"
+            },
+            {
+              "line_number": 589,
+              "text": "                self.update(phase, candidate_id, basin_id)"
+            },
+            {
+              "line_number": 590,
+              "text": "            with self._lock:"
+            },
+            {
+              "line_number": 591,
+              "text": "                context = dict(self._context)"
+            },
+            {
+              "line_number": 592,
+              "text": "            snapshot = resource_snapshot(self.result_root, self.workers)"
+            },
+            {
+              "line_number": 593,
+              "text": "            limits = resource_limits_bytes("
+            },
+            {
+              "line_number": 594,
+              "text": "                snapshot[\"total_memory_bytes\"], self.added_peak_bytes, self.protocol)"
+            },
+            {
+              "line_number": 595,
+              "text": "            snapshot.update(context)"
+            },
+            {
+              "line_number": 596,
+              "text": "            snapshot[\"run_id\"] = self.run_id"
+            },
+            {
+              "line_number": 597,
+              "text": "            snapshot[\"run_event\"] = run_event or ("
+            },
+            {
+              "line_number": 598,
+              "text": "                \"start\" if self._record_count == 0 else \"sample\")"
+            },
+            {
+              "line_number": 599,
+              "text": "            if snapshot[\"run_event\"] not in {\"start\", \"sample\", \"stop\"}:"
+            },
+            {
+              "line_number": 600,
+              "text": "                raise ValueError(\"resource monitor run event is invalid\")"
+            },
+            {
+              "line_number": 601,
+              "text": "            snapshot[\"resource_limits_bytes\"] = limits"
+            },
+            {
+              "line_number": 602,
+              "text": "            snapshot[\"below_start_requirement\"] = ("
+            },
+            {
+              "line_number": 603,
+              "text": "                snapshot[\"available_memory_bytes\"] < limits[\"required_to_start\"])"
+            },
+            {
+              "line_number": 604,
+              "text": "            snapshot[\"stop_required\"] = ("
+            },
+            {
+              "line_number": 605,
+              "text": "                snapshot[\"available_memory_bytes\"] < limits[\"stop_floor\"]"
+            },
+            {
+              "line_number": 606,
+              "text": "                or snapshot[\"free_disk_bytes\"] < limits[\"minimum_free_disk\"]"
+            },
+            {
+              "line_number": 607,
+              "text": "            )"
+            },
+            {
+              "line_number": 608,
+              "text": "            if snapshot[\"available_memory_bytes\"] < limits[\"stop_floor\"]:"
+            },
+            {
+              "line_number": 609,
+              "text": "                self.stop_reason = \"available_memory_below_stop_floor\""
+            },
+            {
+              "line_number": 610,
+              "text": "            elif snapshot[\"free_disk_bytes\"] < limits[\"minimum_free_disk\"]:"
+            },
+            {
+              "line_number": 611,
+              "text": "                self.stop_reason = \"free_disk_below_stop_floor\""
+            },
+            {
+              "line_number": 612,
+              "text": "            with self.log_path.open(\"a\", encoding=\"utf-8\") as handle:"
+            },
+            {
+              "line_number": 613,
+              "text": "                handle.write(json.dumps(snapshot, sort_keys=True) + \"\\n\")"
+            },
+            {
+              "line_number": 614,
+              "text": "            self._record_count += 1"
+            },
+            {
+              "line_number": 615,
+              "text": "            return snapshot"
+            },
+            {
+              "line_number": 616,
+              "text": ""
+            },
+            {
+              "line_number": 617,
+              "text": "    def assert_can_start(self) -> dict:"
+            },
+            {
+              "line_number": 618,
+              "text": "        snapshot = self.record_once()"
+            },
+            {
+              "line_number": 619,
+              "text": "        if snapshot[\"below_start_requirement\"]:"
+            },
+            {
+              "line_number": 620,
+              "text": "            raise RuntimeError(\"available memory is below the frozen start requirement\")"
+            },
+            {
+              "line_number": 621,
+              "text": "        if snapshot[\"stop_required\"]:"
+            },
+            {
+              "line_number": 622,
+              "text": "            raise RuntimeError(f\"resource stop required: {self.stop_reason}\")"
+            },
+            {
+              "line_number": 623,
+              "text": "        return snapshot"
+            },
+            {
+              "line_number": 624,
+              "text": ""
+            },
+            {
+              "line_number": 625,
+              "text": "    def _run(self) -> None:"
+            },
+            {
+              "line_number": 626,
+              "text": "        interval = float(self.protocol[\"resource_monitor\"][\"sample_seconds\"])"
+            },
+            {
+              "line_number": 627,
+              "text": "        while not self._stop_event.is_set():"
+            },
+            {
+              "line_number": 628,
+              "text": "            self.record_once()"
+            },
+            {
+              "line_number": 629,
+              "text": "            self._stop_event.wait(interval)"
+            }
+          ],
+          "start_line": 580
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\configs\\aligned_gr4j_diagonal_noise_v2_80x32.json",
+      "finding": "旧门槛为磁盘20吉字节、启动可用内存20%、停止可用内存10%、15秒采样和单工作进程。",
+      "id": "old_resource_thresholds",
+      "relative_path": "configs/aligned_gr4j_diagonal_noise_v2_80x32.json",
+      "source_sha256": "93fcabbdee4e7394b93e352f8ca2a11d77222098d8c00e6080124e64c67c5abf",
+      "spans": [
+        {
+          "end_line": 61,
+          "lines": [
+            {
+              "line_number": 53,
+              "text": "  \"resource_monitor\": {"
+            },
+            {
+              "line_number": 54,
+              "text": "    \"minimum_free_disk_gib\": 20.0,"
+            },
+            {
+              "line_number": 55,
+              "text": "    \"peak_multiplier\": 1.5,"
+            },
+            {
+              "line_number": 56,
+              "text": "    \"sample_seconds\": 15,"
+            },
+            {
+              "line_number": 57,
+              "text": "    \"start_available_fraction\": 0.2,"
+            },
+            {
+              "line_number": 58,
+              "text": "    \"start_available_gib\": 8.0,"
+            },
+            {
+              "line_number": 59,
+              "text": "    \"stop_available_fraction\": 0.1,"
+            },
+            {
+              "line_number": 60,
+              "text": "    \"stop_available_gib\": 4.0,"
+            },
+            {
+              "line_number": 61,
+              "text": "    \"workers\": 1"
+            }
+          ],
+          "start_line": 53
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\configs\\aligned_gr4j_da_v2_80x32.json",
+      "finding": "配置使用逐日Maurer气象和Priestley–Taylor潜在蒸散发；校准期晚于评价期，属于时间倒序诊断。",
+      "id": "chronology_and_prediction_protocol",
+      "relative_path": "configs/aligned_gr4j_da_v2_80x32.json",
+      "source_sha256": "2e1bd547ac35dad3d4cf14225be0169813e57be3db29f0d08a972dda91167e52",
+      "spans": [
+        {
+          "end_line": 152,
+          "lines": [
+            {
+              "line_number": 135,
+              "text": "    \"forcing_product\": \"maurer\","
+            },
+            {
+              "line_number": 136,
+              "text": "    \"loader_cfs_to_mm_day_km2_factor\": 2.4466,"
+            },
+            {
+              "line_number": 137,
+              "text": "    \"loader_source\": \"G:/github/pycharm/projects/neuralhydrology/src/hydroagent/data_loading.py\","
+            },
+            {
+              "line_number": 138,
+              "text": "    \"neuralhydrology_root\": \"G:/github/pycharm/projects/neuralhydrology\","
+            },
+            {
+              "line_number": 139,
+              "text": "    \"original_cfs_reconstruction\": \"observed_mm_per_day * area_km2 / 2.4466\","
+            },
+            {
+              "line_number": 140,
+              "text": "    \"parameter_csv\": \"G:/github/pycharm/projects/neuralhydrology/results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/gr4j_pdd_cma_FINAL_pt_v1_local_full.csv\","
+            },
+            {
+              "line_number": 141,
+              "text": "    \"parameter_projection\": ["
+            },
+            {
+              "line_number": 142,
+              "text": "      \"basin_id\","
+            },
+            {
+              "line_number": 143,
+              "text": "      \"p_pdd_factor_snow\","
+            },
+            {
+              "line_number": 144,
+              "text": "      \"p_refreeze_snow\","
+            },
+            {
+              "line_number": 145,
+              "text": "      \"p_temp_snow\","
+            },
+            {
+              "line_number": 146,
+              "text": "      \"p_temp_rain\","
+            },
+            {
+              "line_number": 147,
+              "text": "      \"p_x1\","
+            },
+            {
+              "line_number": 148,
+              "text": "      \"p_x2\","
+            },
+            {
+              "line_number": 149,
+              "text": "      \"p_x3\","
+            },
+            {
+              "line_number": 150,
+              "text": "      \"p_x4\""
+            },
+            {
+              "line_number": 151,
+              "text": "    ],"
+            },
+            {
+              "line_number": 152,
+              "text": "    \"potential_evapotranspiration\": \"priestley_taylor\""
+            }
+          ],
+          "start_line": 135
+        },
+        {
+          "end_line": 200,
+          "lines": [
+            {
+              "line_number": 173,
+              "text": "  \"periods\": {"
+            },
+            {
+              "line_number": 174,
+              "text": "    \"calibration\": {"
+            },
+            {
+              "line_number": 175,
+              "text": "      \"days\": 3288,"
+            },
+            {
+              "line_number": 176,
+              "text": "      \"end\": \"2008-09-30\","
+            },
+            {
+              "line_number": 177,
+              "text": "      \"start\": \"1999-10-01\""
+            },
+            {
+              "line_number": 178,
+              "text": "    },"
+            },
+            {
+              "line_number": 179,
+              "text": "    \"calibration_warmup_days\": 365,"
+            },
+            {
+              "line_number": 180,
+              "text": "    \"evaluation\": {"
+            },
+            {
+              "line_number": 181,
+              "text": "      \"days\": 3652,"
+            },
+            {
+              "line_number": 182,
+              "text": "      \"end\": \"1999-09-30\","
+            },
+            {
+              "line_number": 183,
+              "text": "      \"start\": \"1989-10-01\""
+            },
+            {
+              "line_number": 184,
+              "text": "    },"
+            },
+            {
+              "line_number": 185,
+              "text": "    \"evaluation_warmup\": {"
+            },
+            {
+              "line_number": 186,
+              "text": "      \"days\": 3287,"
+            },
+            {
+              "line_number": 187,
+              "text": "      \"end\": \"1989-09-30\","
+            },
+            {
+              "line_number": 188,
+              "text": "      \"start\": \"1980-10-01\""
+            },
+            {
+              "line_number": 189,
+              "text": "    },"
+            },
+            {
+              "line_number": 190,
+              "text": "    \"validation\": {"
+            },
+            {
+              "line_number": 191,
+              "text": "      \"days\": 730,"
+            },
+            {
+              "line_number": 192,
+              "text": "      \"end\": \"2008-09-30\","
+            },
+            {
+              "line_number": 193,
+              "text": "      \"start\": \"2006-10-02\""
+            },
+            {
+              "line_number": 194,
+              "text": "    }"
+            },
+            {
+              "line_number": 195,
+              "text": "  },"
+            },
+            {
+              "line_number": 196,
+              "text": "  \"prediction_protocol\": {"
+            },
+            {
+              "line_number": 197,
+              "text": "    \"evaluation_initial_state\": \"model default state advanced only by 1980-10-01 through 1989-09-30 forcing\","
+            },
+            {
+              "line_number": 198,
+              "text": "    \"forbidden_initial_state\": \"no state from 2008 and no frozen state_* column\","
+            },
+            {
+              "line_number": 199,
+              "text": "    \"issue_order\": \"emit prediction[t], then permit obs[t] to update the persistent state; forcing[t+1] produces prediction[t+1]\","
+            },
+            {
+              "line_number": 200,
+              "text": "    \"lead_days\": 1"
+            }
+          ],
+          "start_line": 173
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\src\\global_hydrology\\data\\hbvlite_prior.py",
+      "finding": "旧先验把2008年9月30日校准结束状态读入初态表，同时读入既有评价分数。",
+      "id": "old_hbv_state_date",
+      "relative_path": "src/global_hydrology/data/hbvlite_prior.py",
+      "source_sha256": "9e723dfb0f5431afb70bda1aca9b25ad57340f44b05bc4db4b9f57f8de0747ad",
+      "spans": [
+        {
+          "end_line": 12,
+          "lines": [
+            {
+              "line_number": 1,
+              "text": "\"\"\"Frozen per-basin HBV-lite prior (v5) for large-scale DA."
+            },
+            {
+              "line_number": 2,
+              "text": ""
+            },
+            {
+              "line_number": 3,
+              "text": "Loads the neuralhydrology CMA-ES-calibrated **v5** (Oudin PET, median eval"
+            },
+            {
+              "line_number": 4,
+              "text": "NSE 0.5995) per-basin parameters + eval-init states from the benchmark summary"
+            },
+            {
+              "line_number": 5,
+              "text": "CSV, into frozen lookup tables indexed by ``basin_idx`` (order = the canonical"
+            },
+            {
+              "line_number": 6,
+              "text": "531-basin list). This REPLACES a learnable ``basin_embedding`` — params/states"
+            },
+            {
+              "line_number": 7,
+              "text": "are injected directly as physical values (no sigmoid/constrain)."
+            },
+            {
+              "line_number": 8,
+              "text": ""
+            },
+            {
+              "line_number": 9,
+              "text": "CSV: ``camels_us_531_repro_v01_BEST/summary/hbv_lite_cma_local_full.csv``"
+            },
+            {
+              "line_number": 10,
+              "text": "  - 13 ``p_*`` columns  -> physical params (strip ``p_`` -> model keys)"
+            },
+            {
+              "line_number": 11,
+              "text": "  - 5  ``state_*`` cols -> eval-init state x0 (cal_final_2008-09-30)"
+            },
+            {
+              "line_number": 12,
+              "text": "  - ``nse`` column      -> published eval NSE (kept for the T4 cross-check)"
+            }
+          ],
+          "start_line": 1
+        },
+        {
+          "end_line": 95,
+          "lines": [
+            {
+              "line_number": 86,
+              "text": "    params = torch.empty(len(ids), len(PARAM_NAMES), dtype=dtype)"
+            },
+            {
+              "line_number": 87,
+              "text": "    x0 = torch.empty(len(ids), len(STATE_NAMES), dtype=dtype)"
+            },
+            {
+              "line_number": 88,
+              "text": "    nse = torch.empty(len(ids), dtype=dtype)"
+            },
+            {
+              "line_number": 89,
+              "text": "    for i, b in enumerate(ids):"
+            },
+            {
+              "line_number": 90,
+              "text": "        row = by_id[b]"
+            },
+            {
+              "line_number": 91,
+              "text": "        for j, name in enumerate(PARAM_NAMES):"
+            },
+            {
+              "line_number": 92,
+              "text": "            params[i, j] = float(row[\"p_\" + name])"
+            },
+            {
+              "line_number": 93,
+              "text": "        for j, name in enumerate(STATE_NAMES):"
+            },
+            {
+              "line_number": 94,
+              "text": "            x0[i, j] = float(row[\"state_\" + name])"
+            },
+            {
+              "line_number": 95,
+              "text": "        nse[i] = float(row[\"nse\"])"
+            }
+          ],
+          "start_line": 86
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\smoke_ukf_hbvlite_da.py",
+      "finding": "旧试验把2008年结束状态用于1989年开始的评价，初态时间倒置约19年。",
+      "id": "old_hbv_evaluation_start_and_x0",
+      "relative_path": "scripts/smoke_ukf_hbvlite_da.py",
+      "source_sha256": "43ae5675304e1cd2e5509328d7e0f9eda67b9bd12cbe2c8b3a454313944e0d07",
+      "spans": [
+        {
+          "end_line": 53,
+          "lines": [
+            {
+              "line_number": 53,
+              "text": "EVAL_START, EVAL_END = \"1989-10-01\", \"1999-09-30\""
+            }
+          ],
+          "start_line": 53
+        },
+        {
+          "end_line": 128,
+          "lines": [
+            {
+              "line_number": 127,
+              "text": "    params_b = prior.param_table[idx:idx + 1]            # [1,13]"
+            },
+            {
+              "line_number": 128,
+              "text": "    x0_b = prior.x0_table[idx:idx + 1]                   # [1,5]"
+            }
+          ],
+          "start_line": 127
+        },
+        {
+          "end_line": 164,
+          "lines": [
+            {
+              "line_number": 161,
+              "text": "    # init: cal-final storages + empty FIFO (+ zero bias state if --bias)"
+            },
+            {
+              "line_number": 162,
+              "text": "    x0 = torch.cat([x0_b.to(dtype),"
+            },
+            {
+              "line_number": 163,
+              "text": "                    torch.zeros(1, dim_x - 5, dtype=dtype)], dim=-1)  # [1,dim_x]"
+            },
+            {
+              "line_number": 164,
+              "text": "    ukf.x = x0.clone()"
+            }
+          ],
+          "start_line": 161
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\scripts\\smoke_ukf_hbvlite_da.py",
+      "finding": "旧试验用既有评价分数挑流域，并用整个评价期实测流量与开环残差给定观测噪声。",
+      "id": "evaluation_period_noise_tuning",
+      "relative_path": "scripts/smoke_ukf_hbvlite_da.py",
+      "source_sha256": "43ae5675304e1cd2e5509328d7e0f9eda67b9bd12cbe2c8b3a454313944e0d07",
+      "spans": [
+        {
+          "end_line": 81,
+          "lines": [
+            {
+              "line_number": 78,
+              "text": "def difficulty_spread(prior, n):"
+            },
+            {
+              "line_number": 79,
+              "text": "    order = torch.argsort(prior.csv_nse)"
+            },
+            {
+              "line_number": 80,
+              "text": "    pick = torch.linspace(0, len(order) - 1, n).round().long()"
+            },
+            {
+              "line_number": 81,
+              "text": "    return [int(order[p]) for p in pick]"
+            }
+          ],
+          "start_line": 78
+        },
+        {
+          "end_line": 216,
+          "lines": [
+            {
+              "line_number": 206,
+              "text": "    # R: 'residual' (default) sets the measurement variance from the OL forecast residual"
+            },
+            {
+              "line_number": 207,
+              "text": "    # std (= sqrt(model+obs error)), so high-mismatch basins self-gentle (fixes finding #5"
+            },
+            {
+              "line_number": 208,
+              "text": "    # over-correction). 'std' = legacy (r_frac * std(obs))^2. Both fixed (not online-adaptive)."
+            },
+            {
+              "line_number": 209,
+              "text": "    if args.r_mode == \"residual\":"
+            },
+            {
+              "line_number": 210,
+              "text": "        resid = obs_np[valid] - ol[valid]"
+            },
+            {
+              "line_number": 211,
+              "text": "        r_std = float(np.std(resid))"
+            },
+            {
+              "line_number": 212,
+              "text": "        r_var = max((args.r_resid_frac * r_std) ** 2, args.r_floor)"
+            },
+            {
+              "line_number": 213,
+              "text": "    else:"
+            },
+            {
+              "line_number": 214,
+              "text": "        r_var = max((args.r_frac * float(np.nanstd(obs_np))) ** 2, args.r_floor)"
+            },
+            {
+              "line_number": 215,
+              "text": "    ukf.R = torch.full((1, 1, 1), r_var, dtype=dtype)"
+            },
+            {
+              "line_number": 216,
+              "text": "    resid_std = float(np.std(obs_np[valid] - ol[valid]))   # robust scale for innovation gate"
+            }
+          ],
+          "start_line": 206
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\src\\observable_hydrology\\data\\normalize.py",
+      "finding": "另一路数据处理只汇总明确给定的训练年份和训练流域，并把来源年份和流域数写入产物。",
+      "id": "training_only_normalization_pattern",
+      "relative_path": "src/observable_hydrology/data/normalize.py",
+      "source_sha256": "cef76009036a3a9e3ccc927e477c82661a9081c64319e0127348d58f7c1ef094",
+      "spans": [
+        {
+          "end_line": 93,
+          "lines": [
+            {
+              "line_number": 27,
+              "text": "def compute_train_stats(cube_dir: Path,"
+            },
+            {
+              "line_number": 28,
+              "text": "                        basin_ids: list[str],"
+            },
+            {
+              "line_number": 29,
+              "text": "                        train_years: list[int],"
+            },
+            {
+              "line_number": 30,
+              "text": "                        extra_target_vars: list[str] | None = None,"
+            },
+            {
+              "line_number": 31,
+              "text": "                        save_path: Path | None = None) -> dict:"
+            },
+            {
+              "line_number": 32,
+              "text": "    \"\"\"Compute per-variable mean/std using only train-period gauged basins."
+            },
+            {
+              "line_number": 33,
+              "text": ""
+            },
+            {
+              "line_number": 34,
+              "text": "    Args:"
+            },
+            {
+              "line_number": 35,
+              "text": "        cube_dir:          path to cubes/ directory"
+            },
+            {
+              "line_number": 36,
+              "text": "        basin_ids:         gauged basins to pool over (PUB basins excluded by caller)"
+            },
+            {
+              "line_number": 37,
+              "text": "        train_years:       integer years to include"
+            },
+            {
+              "line_number": 38,
+              "text": "        extra_target_vars: extra cube vars to z-score (e.g. ['Snow', 'ET', 'SM']);"
+            },
+            {
+              "line_number": 39,
+              "text": "                           writes `<var>_mean` / `<var>_std` keys. Q is always"
+            },
+            {
+              "line_number": 40,
+              "text": "                           handled separately (log1p + z-score)."
+            },
+            {
+              "line_number": 41,
+              "text": "        save_path:         override for stats JSON destination"
+            },
+            {
+              "line_number": 42,
+              "text": "    \"\"\""
+            },
+            {
+              "line_number": 43,
+              "text": "    train_set = set(train_years)"
+            },
+            {
+              "line_number": 44,
+              "text": "    pools: dict[str, list[np.ndarray]] = {v: [] for v in FORCING_VARS}"
+            },
+            {
+              "line_number": 45,
+              "text": "    q_log_pool: list[np.ndarray] = []"
+            },
+            {
+              "line_number": 46,
+              "text": "    extra_pools: dict[str, list[np.ndarray]] = {"
+            },
+            {
+              "line_number": 47,
+              "text": "        v: [] for v in (extra_target_vars or [])"
+            },
+            {
+              "line_number": 48,
+              "text": "    }"
+            },
+            {
+              "line_number": 49,
+              "text": ""
+            },
+            {
+              "line_number": 50,
+              "text": "    for bid in basin_ids:"
+            },
+            {
+              "line_number": 51,
+              "text": "        path = Path(cube_dir) / f\"{bid}.nc\""
+            },
+            {
+              "line_number": 52,
+              "text": "        if not path.exists():"
+            },
+            {
+              "line_number": 53,
+              "text": "            raise FileNotFoundError(f\"cube not found: {path}\")"
+            },
+            {
+              "line_number": 54,
+              "text": "        with xr.open_dataset(path) as ds:"
+            },
+            {
+              "line_number": 55,
+              "text": "            yr = ds.time.dt.year.to_numpy()"
+            },
+            {
+              "line_number": 56,
+              "text": "            mask = np.isin(yr, list(train_set))"
+            },
+            {
+              "line_number": 57,
+              "text": "            for v in FORCING_VARS:"
+            },
+            {
+              "line_number": 58,
+              "text": "                pools[v].append(ds[v].to_numpy()[mask])"
+            },
+            {
+              "line_number": 59,
+              "text": "            q = ds[\"Q\"].to_numpy()[mask]"
+            },
+            {
+              "line_number": 60,
+              "text": "            q_valid = q[~np.isnan(q) & (q >= 0.0)]"
+            },
+            {
+              "line_number": 61,
+              "text": "            if q_valid.size:"
+            },
+            {
+              "line_number": 62,
+              "text": "                q_log_pool.append(np.log1p(q_valid))"
+            },
+            {
+              "line_number": 63,
+              "text": "            for v in (extra_target_vars or []):"
+            },
+            {
+              "line_number": 64,
+              "text": "                if v in ds.data_vars:"
+            },
+            {
+              "line_number": 65,
+              "text": "                    arr = ds[v].to_numpy()[mask]"
+            },
+            {
+              "line_number": 66,
+              "text": "                    extra_pools[v].append(arr)"
+            },
+            {
+              "line_number": 67,
+              "text": ""
+            },
+            {
+              "line_number": 68,
+              "text": "    stats: dict[str, object] = {}"
+            },
+            {
+              "line_number": 69,
+              "text": "    for v in FORCING_VARS:"
+            },
+            {
+              "line_number": 70,
+              "text": "        arr = _drop_nan(pools[v])"
+            },
+            {
+              "line_number": 71,
+              "text": "        stats[f\"{v}_mean\"] = float(arr.mean())"
+            },
+            {
+              "line_number": 72,
+              "text": "        stats[f\"{v}_std\"] = float(arr.std())"
+            },
+            {
+              "line_number": 73,
+              "text": ""
+            },
+            {
+              "line_number": 74,
+              "text": "    q_log = np.concatenate(q_log_pool) if q_log_pool else np.array([])"
+            },
+            {
+              "line_number": 75,
+              "text": "    stats[\"Q_log_mean\"] = float(q_log.mean()) if q_log.size else 0.0"
+            },
+            {
+              "line_number": 76,
+              "text": "    stats[\"Q_log_std\"] = float(q_log.std()) if q_log.size else 1.0"
+            },
+            {
+              "line_number": 77,
+              "text": ""
+            },
+            {
+              "line_number": 78,
+              "text": "    for v in (extra_target_vars or []):"
+            },
+            {
+              "line_number": 79,
+              "text": "        arr = _drop_nan(extra_pools[v])"
+            },
+            {
+              "line_number": 80,
+              "text": "        stats[f\"{v}_mean\"] = float(arr.mean()) if arr.size else 0.0"
+            },
+            {
+              "line_number": 81,
+              "text": "        std = float(arr.std()) if arr.size > 1 else 0.0"
+            },
+            {
+              "line_number": 82,
+              "text": "        stats[f\"{v}_std\"] = std if std > 0 else 1.0"
+            },
+            {
+              "line_number": 83,
+              "text": ""
+            },
+            {
+              "line_number": 84,
+              "text": "    stats[\"source_years\"] = sorted(train_set)"
+            },
+            {
+              "line_number": 85,
+              "text": "    stats[\"n_basins\"] = len(basin_ids)"
+            },
+            {
+              "line_number": 86,
+              "text": ""
+            },
+            {
+              "line_number": 87,
+              "text": "    # Merge static-attribute z-score stats (Kratzert 27) from same train pool"
+            },
+            {
+              "line_number": 88,
+              "text": "    stats.update(compute_attr_stats(basin_ids))"
+            },
+            {
+              "line_number": 89,
+              "text": ""
+            },
+            {
+              "line_number": 90,
+              "text": "    save_path = Path(save_path or (STATS_ROOT / \"pilot_train_stats.json\"))"
+            },
+            {
+              "line_number": 91,
+              "text": "    save_path.parent.mkdir(parents=True, exist_ok=True)"
+            },
+            {
+              "line_number": 92,
+              "text": "    save_path.write_text(json.dumps(stats, indent=2), encoding=\"utf-8\")"
+            },
+            {
+              "line_number": 93,
+              "text": "    return stats"
+            }
+          ],
+          "start_line": 27
+        }
+      ]
+    },
+    {
+      "absolute_path": "G:\\github\\pycharm\\projects\\kalmannet\\src\\global_hydrology\\data\\caravan_dataset.py",
+      "finding": "旧通用数据集在全部已载入静态数据上计算尺度，动态尺度硬编码，缺失变量和缺失目标可被静默填零。",
+      "id": "generic_dataset_zero_fill",
+      "relative_path": "src/global_hydrology/data/caravan_dataset.py",
+      "source_sha256": "84dc03fa2856ec0c6505fb1a0128a8e6f86568590ccfda29f84f46a2bb0d3638",
+      "spans": [
+        {
+          "end_line": 335,
+          "lines": [
+            {
+              "line_number": 319,
+              "text": "    def _compute_normalization_stats(self):"
+            },
+            {
+              "line_number": 320,
+              "text": "        \"\"\"计算标准化统计量\"\"\""
+            },
+            {
+              "line_number": 321,
+              "text": "        # 静态属性标准化"
+            },
+            {
+              "line_number": 322,
+              "text": "        self.static_mean = self.static_data.mean()"
+            },
+            {
+              "line_number": 323,
+              "text": "        self.static_std = self.static_data.std().replace(0, 1)"
+            },
+            {
+              "line_number": 324,
+              "text": "        "
+            },
+            {
+              "line_number": 325,
+              "text": "        # 动态变量的先验统计量（来自 Caravan 文档）"
+            },
+            {
+              "line_number": 326,
+              "text": "        # 这些是全球范围的大致统计量"
+            },
+            {
+              "line_number": 327,
+              "text": "        self.dynamic_stats = {"
+            },
+            {
+              "line_number": 328,
+              "text": "            'total_precipitation_sum': {'mean': 3.0, 'std': 8.0},  # mm/day"
+            },
+            {
+              "line_number": 329,
+              "text": "            'temperature_2m_mean': {'mean': 283, 'std': 15},       # K"
+            },
+            {
+              "line_number": 330,
+              "text": "            'temperature_2m_max': {'mean': 290, 'std': 15},"
+            },
+            {
+              "line_number": 331,
+              "text": "            'temperature_2m_min': {'mean': 278, 'std': 15},"
+            },
+            {
+              "line_number": 332,
+              "text": "            'potential_evaporation_sum': {'mean': 3.0, 'std': 2.0},"
+            },
+            {
+              "line_number": 333,
+              "text": "            'surface_net_solar_radiation_mean': {'mean': 1e7, 'std': 8e6},"
+            },
+            {
+              "line_number": 334,
+              "text": "            'snow_depth_water_equivalent_mean': {'mean': 0.05, 'std': 0.1},"
+            },
+            {
+              "line_number": 335,
+              "text": "            'streamflow': {'mean': 1.5, 'std': 3.0},  # mm/day"
+            }
+          ],
+          "start_line": 319
+        },
+        {
+          "end_line": 470,
+          "lines": [
+            {
+              "line_number": 419,
+              "text": "        forcing_data = []"
+            },
+            {
+              "line_number": 420,
+              "text": "        for var in self.dynamic_inputs:"
+            },
+            {
+              "line_number": 421,
+              "text": "            if var in ts_slice.columns:"
+            },
+            {
+              "line_number": 422,
+              "text": "                values = ts_slice[var].values.astype(np.float32)"
+            },
+            {
+              "line_number": 423,
+              "text": "            else:"
+            },
+            {
+              "line_number": 424,
+              "text": "                # 如果变量缺失，用 0 填充"
+            },
+            {
+              "line_number": 425,
+              "text": "                values = np.zeros(self.seq_length, dtype=np.float32)"
+            },
+            {
+              "line_number": 426,
+              "text": "            "
+            },
+            {
+              "line_number": 427,
+              "text": "            # 温度转换 (K -> °C)"
+            },
+            {
+              "line_number": 428,
+              "text": "            if 'temperature' in var and values.mean() > 100:"
+            },
+            {
+              "line_number": 429,
+              "text": "                values = values - 273.15"
+            },
+            {
+              "line_number": 430,
+              "text": "            "
+            },
+            {
+              "line_number": 431,
+              "text": "            # 标准化"
+            },
+            {
+              "line_number": 432,
+              "text": "            if self.normalize_dynamic and var in self.dynamic_stats:"
+            },
+            {
+              "line_number": 433,
+              "text": "                mean = self.dynamic_stats[var]['mean']"
+            },
+            {
+              "line_number": 434,
+              "text": "                std = self.dynamic_stats[var]['std']"
+            },
+            {
+              "line_number": 435,
+              "text": "                # 温度转换后需要调整统计量"
+            },
+            {
+              "line_number": 436,
+              "text": "                if 'temperature' in var and mean > 100:"
+            },
+            {
+              "line_number": 437,
+              "text": "                    mean = mean - 273.15"
+            },
+            {
+              "line_number": 438,
+              "text": "                values = (values - mean) / std"
+            },
+            {
+              "line_number": 439,
+              "text": "                values = values.astype(np.float32)"
+            },
+            {
+              "line_number": 440,
+              "text": "            "
+            },
+            {
+              "line_number": 441,
+              "text": "            forcing_data.append(values)"
+            },
+            {
+              "line_number": 442,
+              "text": "        "
+            },
+            {
+              "line_number": 443,
+              "text": "        forcing = np.stack(forcing_data, axis=-1)  # [seq_length, n_features]"
+            },
+            {
+              "line_number": 444,
+              "text": "        "
+            },
+            {
+              "line_number": 445,
+              "text": "        # 提取目标变量"
+            },
+            {
+              "line_number": 446,
+              "text": "        if TARGET_VARIABLE in ts_slice.columns:"
+            },
+            {
+              "line_number": 447,
+              "text": "            target = ts_slice[TARGET_VARIABLE].values.astype(np.float32)"
+            },
+            {
+              "line_number": 448,
+              "text": "        else:"
+            },
+            {
+              "line_number": 449,
+              "text": "            target = np.zeros(self.seq_length, dtype=np.float32)"
+            },
+            {
+              "line_number": 450,
+              "text": "        "
+            },
+            {
+              "line_number": 451,
+              "text": "        if self.normalize_dynamic and TARGET_VARIABLE in self.dynamic_stats:"
+            },
+            {
+              "line_number": 452,
+              "text": "            mean = self.dynamic_stats[TARGET_VARIABLE]['mean']"
+            },
+            {
+              "line_number": 453,
+              "text": "            std = self.dynamic_stats[TARGET_VARIABLE]['std']"
+            },
+            {
+              "line_number": 454,
+              "text": "            target = (target - mean) / std"
+            },
+            {
+              "line_number": 455,
+              "text": "            target = target.astype(np.float32)"
+            },
+            {
+              "line_number": 456,
+              "text": "        "
+            },
+            {
+              "line_number": 457,
+              "text": "        target = target.reshape(-1, 1)  # [seq_length, 1]"
+            },
+            {
+              "line_number": 458,
+              "text": "        "
+            },
+            {
+              "line_number": 459,
+              "text": "        # 提取静态属性"
+            },
+            {
+              "line_number": 460,
+              "text": "        if basin_id in self.static_data.index:"
+            },
+            {
+              "line_number": 461,
+              "text": "            static = self.static_data.loc[basin_id].values.astype(np.float32)"
+            },
+            {
+              "line_number": 462,
+              "text": "            if self.normalize_static:"
+            },
+            {
+              "line_number": 463,
+              "text": "                static = (static - self.static_mean.values) / self.static_std.values"
+            },
+            {
+              "line_number": 464,
+              "text": "                static = static.astype(np.float32)"
+            },
+            {
+              "line_number": 465,
+              "text": "        else:"
+            },
+            {
+              "line_number": 466,
+              "text": "            static = np.zeros(len(self.static_attributes), dtype=np.float32)"
+            },
+            {
+              "line_number": 467,
+              "text": "        "
+            },
+            {
+              "line_number": 468,
+              "text": "        # 处理 NaN"
+            },
+            {
+              "line_number": 469,
+              "text": "        forcing = np.nan_to_num(forcing, nan=0.0)"
+            },
+            {
+              "line_number": 470,
+              "text": "        target = np.nan_to_num(target, nan=0.0)"
+            }
+          ],
+          "start_line": 419
+        }
+      ]
+    }
+  ],
+  "schema_version": "kalmannet_readonly_audit_evidence_v01"
+}

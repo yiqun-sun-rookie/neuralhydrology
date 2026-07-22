@@ -1,0 +1,193 @@
+{
+  "validator_role": "第二个独立上下文的原始归档证据核验者；未参与实现、结果生成或第一审查",
+  "review_sha256": "37dc8aa9dde58dc5b54e67d0fe57f84fd8ca03e57c57a777aab26f72acd899f7",
+  "raw_commands": [
+    {
+      "command": "PowerShell Get-FileHash -Algorithm SHA256 与 Python hashlib.sha256 逐文件重算 checksums.json、第一审查和受保护归档文件的 Secure Hash Algorithm 256-bit 校验和",
+      "exit_code": 0
+    },
+    {
+      "command": "Python 以 numpy.load(..., allow_pickle=False) 只读加载 evidence.npz，重算形状、生产与参考误差、1/3/7 日选择、三日因果前缀、概率传播、协方差性质和组合矩",
+      "exit_code": 0
+    },
+    {
+      "command": "Python 逐项重算 resource_preflight.json 的内存估算、任务特定所需内存、预报后可用内存和安全倍数",
+      "exit_code": 0
+    },
+    {
+      "command": "PowerShell 与 Python 只读核对 source_snapshot、当前对应源文件、config_snapshot.json、summary.json、forecast_propagation_certificate.json 和 protected_artifact_integrity.json",
+      "exit_code": 0
+    }
+  ],
+  "recalculated_values": {
+    "archive_integrity": {
+      "checksum_manifest_entries": 30,
+      "actual_files_excluding_checksum_manifest": 30,
+      "missing_files": [],
+      "extra_files": [],
+      "checksum_mismatch_count": 0,
+      "protected_artifact_before_count": 427,
+      "protected_artifact_after_count": 427,
+      "protected_artifact_before_after_mismatch_count": 0,
+      "protected_artifact_current_missing_count": 0,
+      "protected_artifact_current_hash_mismatch_count": 0,
+      "protected_artifact_status": "unchanged",
+      "config_snapshot_matches_current_config": true,
+      "source_snapshot_file_count": 15,
+      "source_snapshot_current_mismatch_count": 0
+    },
+    "evidence_arrays": {
+      "all_array_count": 40,
+      "numeric_array_count": 37,
+      "numeric_array_bytes": 2253192,
+      "nonfinite_numeric_array_names": [],
+      "production_candidate_state_shape": [12, 7, 9, 15],
+      "reference_candidate_state_shape": [12, 7, 9, 15],
+      "reference_candidate_covariance_shape": [12, 7, 9, 15, 15],
+      "production_probability_shape": [12, 7, 9],
+      "production_candidate_flow_shape": [12, 7, 9],
+      "production_combined_flow_shape": [12, 7]
+    },
+    "production_reference_maximum_absolute_errors": {
+      "transition_matrix": 0.0,
+      "probability": 0.0,
+      "candidate_state": 1.5631940186722204e-13,
+      "candidate_covariance_diagonal": 8.185452315956354e-12,
+      "candidate_flow": 2.6645352591003757e-15,
+      "combined_flow": 4.440892098500626e-16,
+      "combined_state": 2.842170943040401e-14,
+      "combined_covariance_diagonal": 2.7284841053187847e-12
+    },
+    "one_three_seven_day_selection_maximum_absolute_errors": {
+      "probability": 0.0,
+      "candidate_state": 0.0,
+      "candidate_covariance_diagonal": 0.0,
+      "candidate_flow": 0.0,
+      "combined_state": 0.0,
+      "combined_covariance_diagonal": 0.0,
+      "combined_flow": 0.0
+    },
+    "three_day_causal_prefix_maximum_absolute_errors": {
+      "probability": 0.0,
+      "candidate_state": 0.0,
+      "candidate_covariance_diagonal": 0.0,
+      "candidate_flow": 0.0,
+      "combined_state": 0.0,
+      "combined_covariance_diagonal": 0.0,
+      "combined_flow": 0.0
+    },
+    "probability_checks": {
+      "minimum_probability": 0.031236999999999997,
+      "maximum_probability": 0.300994,
+      "probability_sum_maximum_absolute_error": 2.220446049250313e-16,
+      "transition_only_probability_maximum_absolute_error": 0.0,
+      "transition_matrix_row_sum_maximum_absolute_error": 0.0
+    },
+    "covariance_checks": {
+      "process_covariance": {
+        "finite": true,
+        "symmetry_maximum_absolute_error": 0.0,
+        "minimum_eigenvalue": 0.0
+      },
+      "initial_candidate_covariance": {
+        "finite": true,
+        "symmetry_maximum_absolute_error": 0.0,
+        "minimum_eigenvalue": 0.010000000000000002
+      },
+      "reference_candidate_covariance": {
+        "finite": true,
+        "symmetry_maximum_absolute_error": 0.0,
+        "minimum_eigenvalue": 9.999999985970315e-05
+      },
+      "reference_combined_covariance": {
+        "finite": true,
+        "symmetry_maximum_absolute_error": 0.0,
+        "minimum_eigenvalue": 0.0043181068751114455
+      },
+      "production_candidate_covariance_diagonal": {
+        "finite": true,
+        "minimum": 0.0001
+      },
+      "production_combined_covariance_diagonal": {
+        "finite": true,
+        "minimum": 0.004318106876257563
+      }
+    },
+    "internal_combination_maximum_absolute_errors": {
+      "production_combined_flow_from_candidate_flows_and_probabilities": 2.220446049250313e-16,
+      "production_combined_state_from_candidate_states_and_probabilities": 0.0
+    },
+    "resource_safety": {
+      "expected_saved_numeric_array_bytes": 2253192,
+      "recalculated_estimated_additional_peak_memory_bytes": 109676064,
+      "recalculated_task_specific_required_available_bytes": 243893792,
+      "recalculated_available_after_estimated_peak_bytes": 12554742240,
+      "available_to_required_multiple": 51.9259559669317,
+      "available_after_peak_to_reserve_multiple": 93.540118932724,
+      "execution_parallelism": 1,
+      "safe_to_run": true,
+      "universal_memory_threshold_used": false
+    },
+    "reported_value_cross_checks": {
+      "summary_gate_value_mismatch_count": 0,
+      "forecast_propagation_certificate_gate_value_mismatch_count": 0,
+      "first_review_recalculable_gate_value_mismatch_count": 0
+    }
+  },
+  "claim_checks": {
+    "evidence_file_and_checksum_integrity": {
+      "supported": true,
+      "basis": "校验和清单与实际受检文件均为 30 个，缺失、额外和校验和不一致均为 0。"
+    },
+    "twelve_trials_seven_days_nine_candidates_fifteen_states": {
+      "supported": true,
+      "basis": "生产与参考候选状态数组形状均为 [12, 7, 9, 15]，参考候选协方差形状为 [12, 7, 9, 15, 15]。"
+    },
+    "production_matches_independent_reference": {
+      "supported": true,
+      "basis": "概率、状态、协方差对角、候选流量和组合流量的重算最大绝对误差均低于 config_snapshot.json 中对应门槛。"
+    },
+    "one_three_seven_day_selection": {
+      "supported": true,
+      "basis": "七类保存字段与完整七日路径第 1、3、7 日的最大绝对误差均为 0。"
+    },
+    "three_day_causal_prefix": {
+      "supported": true,
+      "basis": "七类保存字段与完整七日路径前三日的最大绝对误差均为 0。"
+    },
+    "probabilities_sum_to_one_and_use_transition_only": {
+      "supported": true,
+      "basis": "概率和最大绝对误差为 2.220446049250313e-16；从初始概率仅按转移矩阵连续传播七日的最大绝对误差为 0。"
+    },
+    "covariances_are_finite_symmetric_and_positive_semidefinite": {
+      "supported": true,
+      "basis": "保存的完整过程、初始、参考候选和参考组合协方差均有限且严格对称；最小特征值分别为 0、0.010000000000000002、9.999999985970315e-05 和 0.0043181068751114455。生产归档只保存协方差对角，全部有限且最小值为正。"
+    },
+    "resource_safety_multiple": {
+      "supported": true,
+      "basis": "运行前可用物理内存除以任务特定所需内存为 51.9259559669317 倍；估算公式、顺序单路执行和未使用统一固定阈值均与 resource_preflight.json 一致。"
+    },
+    "protected_artifacts_unchanged": {
+      "supported": true,
+      "basis": "427 个运行前后校验和逐项相同，当前复核仍无缺失或校验和变化。"
+    },
+    "first_review_low_severity_finding": {
+      "supported": true,
+      "basis": "evidence.npz 只保存预报前候选状态、协方差和概率，没有保存三次调用后的源候选库快照，也没有保存三个源后验变更量数组；零变更仅记录在 summary.json 和 forecast_propagation_certificate.json。冻结源代码确实计算这三个量并对候选库使用深复制，因此第一审查把该项定为不影响结论的低级别归档限制有原始证据支持。"
+    },
+    "first_review_must_fix_count": {
+      "supported": true,
+      "reported": 0,
+      "recounted_from_findings": 0,
+      "basis": "第一审查仅列出一个 must_fix 为 false 的低级别发现；原始证据未发现新增的结论改变缺陷。"
+    },
+    "first_review_verdict": {
+      "supported": true,
+      "reported": "passed",
+      "basis": "全部可由原始归档数组复算的数值门槛通过，归档完整且第一审查唯一限制得到确认。"
+    }
+  },
+  "disagreements": [],
+  "verdict": "confirmed",
+  "must_fix_count": 0
+}

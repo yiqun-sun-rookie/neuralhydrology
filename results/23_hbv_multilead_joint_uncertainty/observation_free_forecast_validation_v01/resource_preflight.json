@@ -1,0 +1,18 @@
+{
+  "available_after_estimated_peak_bytes": 12554742240,
+  "available_physical_memory_bytes": 12664418304,
+  "candidate_count": 9,
+  "checked_at": "2026-07-18T07:34:04.544297+00:00",
+  "estimated_additional_peak_memory_bytes": 109676064,
+  "estimation_basis": "four copies of all saved numeric arrays plus 96 MiB for one sequential nine-filter bank, independent 31-point transitions and compressed packaging; the reserve is the larger of half that estimate and 128 MiB",
+  "execution_parallelism": 1,
+  "expected_saved_numeric_array_bytes": 2253192,
+  "forecast_days": 7,
+  "safe_to_run": true,
+  "state_dimension": 15,
+  "task_specific_required_available_bytes": 243893792,
+  "task_specific_reserve_bytes": 134217728,
+  "trial_count": 12,
+  "universal_memory_threshold_used": false,
+  "warmup_days": 45
+}

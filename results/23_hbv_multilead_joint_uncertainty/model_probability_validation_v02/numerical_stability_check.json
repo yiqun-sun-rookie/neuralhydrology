@@ -1,0 +1,61 @@
+{
+  "all_finite": true,
+  "all_nonnegative": true,
+  "argmax": 8,
+  "check_type": "frozen extreme-log-likelihood execution certificate",
+  "executed_during_experiment": true,
+  "gates": {
+    "all_finite_required": true,
+    "all_nonnegative_required": true,
+    "expected_argmax": 8,
+    "normalization_absolute_error_maximum": 1e-15,
+    "reconstruction_maximum_absolute_error": 1e-15
+  },
+  "independent_output_probabilities": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.7199070925001135e-44,
+    4.5397868702434395e-05,
+    0.9999546021312976
+  ],
+  "input_log_likelihoods": [
+    -1e+300,
+    -1e+250,
+    -1e+200,
+    -1e+150,
+    -1e+100,
+    -1e+50,
+    -100.0,
+    -10.0,
+    0.0
+  ],
+  "input_prior_probabilities": [
+    0.1111111111111111,
+    0.1111111111111111,
+    0.1111111111111111,
+    0.1111111111111111,
+    0.1111111111111111,
+    0.1111111111111111,
+    0.1111111111111111,
+    0.1111111111111111,
+    0.1111111111111111
+  ],
+  "normalization_absolute_error": 0.0,
+  "passed": true,
+  "production_output_probabilities": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.7199070925001135e-44,
+    4.5397868702434395e-05,
+    0.9999546021312976
+  ],
+  "reconstruction_maximum_absolute_error": 0.0
+}

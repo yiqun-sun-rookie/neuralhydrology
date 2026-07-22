@@ -1,0 +1,71 @@
+{
+  "per_run": [
+    {
+      "daily_component_identity_maximum_absolute_error": 1.7763568394002505e-15,
+      "dataset_role": "development",
+      "final_margin_decomposition_maximum_absolute_error": 1.0658141036401503e-14,
+      "integrity_passed": true,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v05",
+      "scenario": "parameter_switch",
+      "stage_cumulative_identity_maximum_absolute_error": 7.105427357601002e-15,
+      "total_best_wrong_tie_count": 0
+    },
+    {
+      "daily_component_identity_maximum_absolute_error": 7.105427357601002e-15,
+      "dataset_role": "development",
+      "final_margin_decomposition_maximum_absolute_error": 2.4868995751603507e-14,
+      "integrity_passed": true,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v05",
+      "scenario": "process_noise_switch",
+      "stage_cumulative_identity_maximum_absolute_error": 2.842170943040401e-14,
+      "total_best_wrong_tie_count": 0
+    },
+    {
+      "daily_component_identity_maximum_absolute_error": 2.1316282072803006e-14,
+      "dataset_role": "development",
+      "final_margin_decomposition_maximum_absolute_error": 1.0658141036401503e-14,
+      "integrity_passed": true,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v05",
+      "scenario": "parameter_process_noise_switch",
+      "stage_cumulative_identity_maximum_absolute_error": 1.1368683772161603e-13,
+      "total_best_wrong_tie_count": 0
+    },
+    {
+      "daily_component_identity_maximum_absolute_error": 3.552713678800501e-15,
+      "dataset_role": "confirmation",
+      "final_margin_decomposition_maximum_absolute_error": 7.105427357601002e-15,
+      "integrity_passed": true,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_confirmation_v01",
+      "scenario": "parameter_switch",
+      "stage_cumulative_identity_maximum_absolute_error": 7.105427357601002e-15,
+      "total_best_wrong_tie_count": 0
+    },
+    {
+      "daily_component_identity_maximum_absolute_error": 3.552713678800501e-15,
+      "dataset_role": "confirmation",
+      "final_margin_decomposition_maximum_absolute_error": 1.0658141036401503e-14,
+      "integrity_passed": true,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_confirmation_v01",
+      "scenario": "process_noise_switch",
+      "stage_cumulative_identity_maximum_absolute_error": 1.4210854715202004e-14,
+      "total_best_wrong_tie_count": 0
+    },
+    {
+      "daily_component_identity_maximum_absolute_error": 7.105427357601002e-15,
+      "dataset_role": "confirmation",
+      "final_margin_decomposition_maximum_absolute_error": 1.0658141036401503e-14,
+      "integrity_passed": true,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_confirmation_v01",
+      "scenario": "parameter_process_noise_switch",
+      "stage_cumulative_identity_maximum_absolute_error": 4.263256414560601e-14,
+      "total_best_wrong_tie_count": 0
+    }
+  ],
+  "summary": {
+    "all_passed": true,
+    "max_cumulative_identity_error": 1.1368683772161603e-13,
+    "max_daily_identity_error": 2.1316282072803006e-14,
+    "max_margin_error": 2.4868995751603507e-14,
+    "total_tie_count": 0
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "config_sha256": "429fc8f3f984704c697c9f5f50d0a17466b6e6b6a76bb388b166b4219aa6b01d",
+  "experiment_id": "three_stage_parameter_process_noise_switch_v01",
+  "forecast_passed_all_leads": false,
+  "future_discharge_used_by_forecast": false,
+  "identification_passed_all_three_stages": false,
+  "integrity_status": "passed",
+  "observation_snapshot_sha256": "5bc0adc216ced6c6b0d281ed5c9cd3a158d65e2f3a369d657afaaccb67a1c678",
+  "parameter_snapshot_sha256": "624ba1ab3e6fc9e60c8cf15bc287f1a0a3cec177d6307e6d83d5215625199905",
+  "process_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+  "protected_artifacts_unchanged": true,
+  "scenario": "parameter_process_noise_switch",
+  "scientific_status": "not_passed",
+  "scope_limit": "The exact current complete parameter-vector and pre-projection process-covariance pair is always present among nine candidates. Both labels switch together at days sixteen and thirty-one, and all nine trials end with a different origin pair. Each fifteen-day stage excludes its first five days from identification scoring. The seven-day forecast remains in the third stage. Results do not establish behavior for absent candidates, unsynchronized switches, other switch intervals, transition probabilities, forcing errors, observation strengths, or real basins."
+}

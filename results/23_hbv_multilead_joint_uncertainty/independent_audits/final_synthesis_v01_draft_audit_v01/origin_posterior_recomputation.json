@@ -1,0 +1,48 @@
+{
+  "factor_transition_matrix": [
+    [
+      0.98,
+      0.01,
+      0.01
+    ],
+    [
+      0.01,
+      0.98,
+      0.01
+    ],
+    [
+      0.01,
+      0.01,
+      0.98
+    ]
+  ],
+  "joint_transition_diagonal": 0.9603999999999999,
+  "origin_point_count": 5728,
+  "minimum_reconstructed_origin_weight": -6.140988867593677e-20,
+  "maximum_origin_probability_sum_error": 6.661338147750939e-16,
+  "maximum_forward_reconstruction_error": 7.771561172376096e-16,
+  "parameter_factor": {
+    "basins_with_at_least_one_resolved_switch": 16,
+    "minimum_switch_count": 1,
+    "maximum_switch_count": 35,
+    "minimum_unique_top_candidate_count": 2,
+    "maximum_unique_top_candidate_count": 3
+  },
+  "process_noise_factor": {
+    "basins_with_at_least_one_resolved_switch": 16,
+    "minimum_switch_count": 1,
+    "maximum_switch_count": 28,
+    "minimum_unique_top_candidate_count": 2,
+    "maximum_unique_top_candidate_count": 3
+  },
+  "coupling_total_variation": {
+    "minimum": 8.274417930182371e-20,
+    "median": 0.0020347472914564206,
+    "mean": 0.020799327708934615,
+    "percentile_95": 0.10965153013345029,
+    "maximum": 0.47515372138055934,
+    "above_0_05_count": 723,
+    "above_0_05_fraction": 0.12622206703910616
+  },
+  "passed": true
+}

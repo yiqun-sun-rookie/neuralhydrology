@@ -1,0 +1,18 @@
+{
+  "analysis_id": "candidate_likelihood_reidentification_v01",
+  "conclusions": {
+    "parameter_process_noise_switch__stage_2": "never_first",
+    "parameter_process_noise_switch__stage_3": "never_first",
+    "parameter_switch__stage_2": "\u76ee\u524d\u65e0\u6cd5\u786e\u5b9a\u4e3b\u5bfc\u5931\u8d25\u6a21\u5f0f",
+    "parameter_switch__stage_3": "\u76ee\u524d\u65e0\u6cd5\u786e\u5b9a\u4e3b\u5bfc\u5931\u8d25\u6a21\u5f0f",
+    "process_noise_switch__stage_2": "never_first",
+    "process_noise_switch__stage_3": "never_first"
+  },
+  "config_sha256": "10ab27e32137db742a032c1e0b77b7bb3a0ff7cb26cfb0da21a6194918e3e201",
+  "frozen_experiments_rerun": false,
+  "goal_item": "G1",
+  "input_integrity_status": "verified_before_and_after_unchanged",
+  "integrity_status": "passed",
+  "read_only_inputs": true,
+  "scope_limit": "This analysis only characterizes re-identification timing and failure modes of the frozen likelihood-rank evidence. It does not modify the identifiability conclusion, does not evaluate any weight mechanism, does not claim that longer horizons would rescue identification, and does not rerun any frozen experiment."
+}

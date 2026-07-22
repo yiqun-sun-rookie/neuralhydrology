@@ -1,0 +1,18 @@
+{
+  "audit_id": "formal_reproduction_sharding_design_audit_v01",
+  "decision": "RELEASE",
+  "decision_scope": "逐流域原子复现恢复设计",
+  "formal_reproduction_status": "PENDING",
+  "formal_reproduction_passed": false,
+  "necessary_condition_count": 15,
+  "failed_package_arrays_reusable": false,
+  "first_failed_completed_basin_count": 4,
+  "second_failed_completed_basin_count": 5,
+  "contract_manifest_verified": true,
+  "main_result_manifest_verified": true,
+  "snapshot_hash_failures": 0,
+  "per_basin_arrays": 36,
+  "per_basin_numeric_elements": 366960,
+  "total_numeric_elements": 5871360,
+  "protected_evidence_unchanged": true
+}

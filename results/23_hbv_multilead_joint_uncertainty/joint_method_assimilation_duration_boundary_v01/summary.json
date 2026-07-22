@@ -1,0 +1,16 @@
+{
+  "all_input_evidence_verified": true,
+  "all_matched_prefixes_exact": true,
+  "assimilation_days_tested": [
+    7,
+    21,
+    45
+  ],
+  "experiment_id": "joint_method_assimilation_duration_boundary_v01",
+  "identification_sufficient_within_tested_range": false,
+  "input_condition_count": 3,
+  "longest_tested_assimilation_days": 45,
+  "protected_artifacts_unchanged": true,
+  "scope_limit": "This boundary addresses only the amount of matched discharge-assimilation evidence from seven through forty-five days. The frozen covariance controls only the physical-projection-before perturbation scale, and the projected truth is not an exact additive Gaussian candidate model. Failure through forty-five days does not establish failure at longer untested durations or under switching, other observation uncertainty, forcing error or real basins.",
+  "status": "passed"
+}

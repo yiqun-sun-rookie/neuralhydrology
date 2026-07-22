@@ -1,0 +1,250 @@
+{
+  "review_id": "joint_method_stable_validation_v02_independent_code_method_result_review",
+  "reviewed_at_utc": "2026-07-18T09:02:50.2156266Z",
+  "reviewed_experiment": "joint_method_stable_validation_v02",
+  "verdict": "HOLD",
+  "verdict_reason": "The saved arrays independently pass every preregistered numerical-integrity gate and reproduce every reported metric and decision. Scientific effectiveness is limited: the joint method satisfies the rule against the fixed filter only for the origin state and seven-day forecast, adds no value beyond both single-factor methods at any evaluated target, and fails the preregistered identification rule. One confirmed evidence-metadata defect remains: registry_entry.json and joint_method_certificate.json still describe the experiment as stable in-grid truth even though physical projection occurred on 3527 of 3744 truth steps and only the complete parameter label and pre-projection covariance scale are in the frozen candidate set.",
+  "must_fix_count": 1,
+  "must_fix": [
+    {
+      "id": "residual_in_grid_truth_wording",
+      "severity": "scientific_scope",
+      "status": "confirmed",
+      "evidence": [
+        "registry_entry.json states that the hypothesis concerns fixed truth inside the frozen candidate grid and names the result stable in-grid joint-method condition.",
+        "joint_method_certificate.json labels the check stable in-grid complete nine-filter joint-method validation.",
+        "The raw truth_projection_adjustments array independently gives 3527 projection events among 3744 truth steps, a fraction of 0.9420405982905983.",
+        "The corrected config_snapshot.json, condition_decisions.json and summary.json accurately say that the frozen covariance only scales pre-projection draws and that the post-projection truth is not an exact additive Gaussian filter model."
+      ],
+      "required_repair": "Supersede rather than overwrite this formal evidence and make every public metadata field use the same bounded description: fixed complete parameter label with physically projected candidate-scale pre-projection perturbations. Do not call the realized process truth in-grid or an exact additive Gaussian process-covariance candidate. The numerical arrays, frozen candidates, seeds, methods and preregistered decision rules do not need to change for this wording repair."
+    }
+  ],
+  "confirmed_numbers": {
+    "design": {
+      "matched_blocks": 8,
+      "truth_conditions_per_block": 9,
+      "trials": 72,
+      "assimilation_days": 45,
+      "forecast_lead_days": [
+        1,
+        3,
+        7
+      ],
+      "methods": [
+        "open_loop",
+        "fixed_filter",
+        "parameter_only",
+        "noise_only",
+        "joint",
+        "oracle_filter"
+      ],
+      "candidate_counts": [
+        1,
+        1,
+        3,
+        3,
+        9,
+        1
+      ],
+      "state_dimension": 15
+    },
+    "artifact_integrity": {
+      "evidence_manifest_files_checked": 34,
+      "evidence_checksum_matches": 34,
+      "evidence_checksum_mismatches": 0,
+      "source_snapshots_checked": 15,
+      "source_snapshot_matches": 15,
+      "frozen_source_hashes_checked": 3,
+      "frozen_source_hash_matches": 3,
+      "protected_paths": 11,
+      "protected_files_checked": 496,
+      "protected_file_hash_mismatches": 0,
+      "config_snapshot_matches_current_v02_config": true,
+      "saved_arrays": 37,
+      "saved_numeric_arrays": 30,
+      "saved_numeric_bytes": 2223432,
+      "nonfinite_numeric_arrays": []
+    },
+    "resource_preflight": {
+      "expected_saved_numeric_array_bytes": 2223432,
+      "estimated_additional_peak_memory_bytes": 220108064,
+      "task_specific_reserve_bytes": 268435456,
+      "task_specific_required_available_bytes": 488543520,
+      "recorded_available_physical_memory_bytes": 15041396736,
+      "recorded_headroom_after_requirement_bytes": 14552853216,
+      "available_to_required_ratio": 30.78824325824647,
+      "execution_parallelism": 1,
+      "safe_to_run": true,
+      "universal_memory_threshold_used": false
+    },
+    "numerical_integrity": {
+      "independent_truth_transition_maximum_absolute_error": 2.842170943040401e-14,
+      "independent_truth_observation_maximum_absolute_error": 0.0,
+      "truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0,
+      "truth_state_identity_maximum_absolute_error": 3.785779876435205e-16,
+      "observation_reconstruction_maximum_absolute_error": 0.0,
+      "method_mixture_reconstruction_maximum_absolute_error": 1.7763568394002505e-15,
+      "method_probability_sum_maximum_absolute_error": 2.220446049250313e-16,
+      "minimum_active_method_probability": 0.0011879473654812383,
+      "inactive_candidate_storage_maximum_absolute_value": 0.0,
+      "all_saved_numeric_arrays_finite": true,
+      "integrity_gate_pass": true
+    },
+    "root_mean_square_errors": {
+      "open_loop": {
+        "one_day_discharge": 3.240188375642521,
+        "three_day_discharge": 3.8660018111314445,
+        "seven_day_discharge": 3.2097085145413295,
+        "origin_normalized_hydrologic_state": 0.567987844050988
+      },
+      "fixed_filter": {
+        "one_day_discharge": 0.9633662709883698,
+        "three_day_discharge": 1.406734116550975,
+        "seven_day_discharge": 1.482384586136291,
+        "origin_normalized_hydrologic_state": 0.31611435063754806
+      },
+      "parameter_only": {
+        "one_day_discharge": 0.9115461078156001,
+        "three_day_discharge": 1.4252236201359052,
+        "seven_day_discharge": 1.5856514468753897,
+        "origin_normalized_hydrologic_state": 0.2759631865670417
+      },
+      "process_noise_only": {
+        "one_day_discharge": 0.9181033635373708,
+        "three_day_discharge": 1.3317351571642178,
+        "seven_day_discharge": 1.1174795131072284,
+        "origin_normalized_hydrologic_state": 0.30206301643109745
+      },
+      "joint": {
+        "one_day_discharge": 0.8614678738612609,
+        "three_day_discharge": 1.3588597056268628,
+        "seven_day_discharge": 1.2040603024466145,
+        "origin_normalized_hydrologic_state": 0.26586634153813155
+      },
+      "truth_informed_single_filter_diagnostic": {
+        "one_day_discharge": 0.8583092325387198,
+        "three_day_discharge": 1.3501392961940966,
+        "seven_day_discharge": 1.2189243433046746,
+        "origin_normalized_hydrologic_state": 0.20809996829333915
+      }
+    },
+    "joint_against_preregistered_controls": {
+      "one_day_discharge": {
+        "against_fixed_filter_relative_improvement_percent": 10.577326630147203,
+        "against_fixed_filter_bootstrap_interval": [
+          -0.24187356933138796,
+          0.009474832244185435
+        ],
+        "against_parameter_only_bootstrap_upper": 0.10121804625968064,
+        "against_process_noise_only_bootstrap_upper": 0.002349826856051229,
+        "effective_against_fixed_filter": false,
+        "added_value_beyond_both_single_factor_methods": false
+      },
+      "three_day_discharge": {
+        "against_fixed_filter_relative_improvement_percent": 3.4032309560736715,
+        "against_fixed_filter_bootstrap_interval": [
+          -0.30473984602890425,
+          0.05708838344093704
+        ],
+        "against_parameter_only_bootstrap_upper": 0.03765413311567968,
+        "against_process_noise_only_bootstrap_upper": 0.10869935864823534,
+        "effective_against_fixed_filter": false,
+        "added_value_beyond_both_single_factor_methods": false
+      },
+      "seven_day_discharge": {
+        "against_fixed_filter_relative_improvement_percent": 18.775443720384665,
+        "against_fixed_filter_bootstrap_interval": [
+          -0.5091445442541547,
+          -0.009488976995592702
+        ],
+        "against_parameter_only_bootstrap_upper": -0.1190583308719826,
+        "against_process_noise_only_bootstrap_upper": 0.13284096956727737,
+        "effective_against_fixed_filter": true,
+        "added_value_beyond_both_single_factor_methods": false
+      },
+      "origin_normalized_hydrologic_state": {
+        "against_fixed_filter_relative_improvement_percent": 15.895516605960774,
+        "against_fixed_filter_bootstrap_interval": [
+          -0.1142312473466623,
+          -0.009037998923162004
+        ],
+        "against_parameter_only_bootstrap_upper": 0.010255776063483334,
+        "against_process_noise_only_bootstrap_upper": 0.009169110675395283,
+        "effective_against_fixed_filter": true,
+        "added_value_beyond_both_single_factor_methods": false
+      }
+    },
+    "identification": {
+      "joint_candidate_argmax_accuracy": 0.5138888888888888,
+      "joint_parameter_argmax_accuracy": 0.5972222222222222,
+      "joint_process_scale_argmax_accuracy": 0.8472222222222222,
+      "median_true_joint_candidate_probability": 0.24446729489293278,
+      "median_true_parameter_probability": 0.371444919664944,
+      "median_true_process_scale_probability": 0.587072813153685,
+      "joint_identification_effective": false,
+      "failed_preregistered_component": "joint_parameter_argmax_accuracy is 0.5972222222222222, below 0.6666666666666666"
+    },
+    "truth_projection": {
+      "projection_event_count": 3527,
+      "projection_event_total": 3744,
+      "projection_event_fraction": 0.9420405982905983,
+      "pre_projection_covariance_uses_frozen_candidate": true,
+      "post_projection_distribution_matches_exact_additive_gaussian_candidate": false
+    },
+    "forecast_index_and_causality": {
+      "origin_active_day_zero_based_index": 44,
+      "target_active_day_zero_based_indices": [
+        45,
+        47,
+        51
+      ],
+      "truth_forecast_index_reconstruction_maximum_absolute_error": 0.0,
+      "future_observation_values_perturbed_in_dynamic_negative_control": 7,
+      "origin_state_bitwise_unchanged": true,
+      "origin_probability_bitwise_unchanged": true,
+      "forecast_prediction_bitwise_unchanged": true,
+      "future_discharge_used_by_forecast": false
+    }
+  },
+  "independent_recalculations": {
+    "artifact_chain": "Computed Secure Hash Algorithm 256 digests directly for all 34 manifest entries, all 15 source snapshots against current source files, all three frozen source files, and all 496 files recorded beneath the 11 protected paths. No mismatch or missing file was found.",
+    "frozen_candidate_content": "Loaded the frozen basin 12143600 rows independently. The three by thirteen parameter array, three 15 by 15 process covariance arrays and scalar observation standard deviation match both the selected snapshots and evidence.npz with maximum absolute error 0.0.",
+    "random_inputs": "Regenerated all eight forcing blocks and all standard-normal process and observation draws from the preregistered seeds. Every maximum absolute error is 0.0.",
+    "truth_and_observation": "Replayed all 3744 deterministic state transitions with the separate production transition implementation and all routed-discharge observations. Transition and observation maximum absolute errors are 2.842170943040401e-14 and 0.0. Process perturbations and noisy observations reconstruct exactly from saved standard normals and frozen scales.",
+    "probabilities_and_mixtures": "Reconstructed every saved method mixture from active candidate predictions and probabilities. Maximum mixture error is 1.7763568394002505e-15, maximum probability-sum error is 2.220446049250313e-16, and the minimum active probability is 0.0011879473654812383.",
+    "metrics": "Recomputed all 24 method-metric rows directly from evidence.npz. The largest absolute differences from method_metrics.csv are 4.440892098500626e-16 for root mean square error and 2.220446049250313e-16 for median absolute error.",
+    "paired_block_bootstrap": "Recomputed all 20 paired comparison rows with eight matched blocks, 20000 bootstrap resamples and the preregistered row-specific seeds. The largest absolute difference from paired_comparisons.csv is 7.105427357601002e-15 for relative improvement and at most 4.440892098500626e-16 for a bootstrap endpoint.",
+    "identification": "Recomputed candidate, parameter and process-scale marginal argmax accuracies and all three true-label median probabilities from joint_origin_probabilities. The saved true-probability arrays reconstruct with maximum absolute error 0.0.",
+    "forecast_indexing": "Confirmed that 45 assimilation days place the posterior origin after active index 44 and that one-, three- and seven-day truth targets are active indices 45, 47 and 51. Saved truth targets reproduce exactly.",
+    "future_observation_exclusion": "Static data-flow review shows every filtered method reads observations only in range zero through 44 and passes only forcing for forecast days. A dynamic negative control replaced all seven future observation values by values shifted by 1000000 through 2000000; the origin state, origin probabilities and forecasts were bitwise unchanged.",
+    "resource_safety": "Recomputed saved numeric bytes and the documented task-specific formula. The required available memory was 488543520 bytes versus 15041396736 bytes recorded before execution, leaving 14552853216 bytes beyond the requirement. This verifies the preflight arithmetic, not the unrecorded actual formal-run peak."
+  },
+  "scientific_effectiveness": {
+    "numerical_integrity_status": "passed",
+    "joint_method_effectiveness_status": "not established as general added value",
+    "basis": [
+      "The joint method is effective against the fixed filter under the preregistered rule for the origin state and seven-day discharge forecast only.",
+      "At no evaluated state or forecast lead is the joint method better than both the parameter-only and process-noise-only controls under the preregistered paired-block rule.",
+      "The complete joint identification rule fails because parameter-label argmax accuracy is below its threshold.",
+      "The seven-day joint forecast is significantly worse than the process-noise-only control: the paired-block interval for joint minus process-noise-only root mean square error is [0.021442102228855224, 0.13284096956727737]."
+    ],
+    "integrity_decision_separation_confirmed": true
+  },
+  "scope_limits": [
+    "The frozen complete parameter vector and the covariance that scales each pre-projection perturbation are candidate labels; the realized post-projection stochastic transition is physically truncated and is not an exact additive Gaussian candidate model.",
+    "The experiment covers eight synthetic matched blocks, nine fixed truth labels, 45 assimilation days and one-, three- and seven-day forecasts. It does not test label switching, weak observation information, shorter assimilation, forcing error or real basins.",
+    "The paired bootstrap has eight independent block units. Its intervals are reproducible under the preregistered 20000-resample procedure but do not add independent blocks beyond those eight.",
+    "The truth-informed single-filter method is a diagnostic upper-reference control, not a deployable method because it receives the true candidate label.",
+    "Resource safety is supported by a one-block pilot estimate and recorded pre-run available memory. The formal peak resident memory was not directly sampled and therefore remains unknown."
+  ],
+  "reviewer_independence": {
+    "context": "fresh independent subagent context",
+    "implementation_changes_made": false,
+    "formal_evidence_changes_made": false,
+    "only_written_artifact": "results/23_hbv_multilead_joint_uncertainty/joint_method_stable_validation_v02_reviews/code_method_result_review.json",
+    "raw_evidence_used": true,
+    "summary_values_trusted_without_recalculation": false,
+    "formal_experiment_rerun": false,
+    "review_method": "Independent source and method inspection plus direct array-level recalculation from the frozen manifest, source snapshots, evidence.npz, comma-separated metric files and registered decision rules."
+  }
+}

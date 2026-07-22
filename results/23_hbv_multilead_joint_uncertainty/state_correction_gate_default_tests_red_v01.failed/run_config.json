@@ -1,0 +1,14 @@
+{
+  "run_id": "state_correction_gate_default_tests_red_v01",
+  "run_type": "independently_validated_audit_finding_expected_failure_check",
+  "command": "python -m pytest -q --tb=short test\\test_hbv_state_correction_diagnostic.py -k continuation_gate_uses_per_basin",
+  "started_at": "2026-07-17T01:29:42.6333107+08:00",
+  "finished_at": "2026-07-17T01:29:44.7197173+08:00",
+  "expected_exit_code": 1,
+  "configuration": "src/hbv_multilead_joint_uncertainty/configs/state_correction_propagation_v07.json",
+  "audit_finding": "the continuation-gate default names a control that is absent from the frozen version 7 design",
+  "formal_sixteen_result_requires_rerun": false,
+  "reason_no_rerun": "the formal runner explicitly passed hydrologic_five_states_only from the frozen configuration",
+  "numerical_thread_limit": 1,
+  "formal_artifacts_modified": false
+}

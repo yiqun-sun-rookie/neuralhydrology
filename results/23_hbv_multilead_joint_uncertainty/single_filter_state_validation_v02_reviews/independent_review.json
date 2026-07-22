@@ -1,0 +1,26 @@
+{
+  "experiment_id": "single_filter_state_validation_v02",
+  "role": "independent_code_method_result_review",
+  "raw_evidence_sha256": "9c65be14e21fd0a8211d3b50c7c1ddd6565b80ab2a01fb9ced6b5acf08861300",
+  "checksums_file_sha256": "cee7d40f9e716cee641e0b92644e9da8e0d50e737a8d539a3987310b7aefcb72",
+  "verdict": "no_required_fix_for_the_registered_claim",
+  "confirmed": {
+    "independent_trial_unit": "24 distinct seeded rainfall realizations; one paired result per realization",
+    "primary_control": "the same modified unscented filter with observation updates skipped",
+    "state_improvement_trials": "20/24",
+    "state_median_change_percent": -32.92852109358695,
+    "state_bootstrap_interval_percent": [-46.13174037464442, -20.502949221402734],
+    "one_day_flow_improvement_trials": "24/24",
+    "one_day_flow_median_change_percent": -95.45313730166721,
+    "one_day_flow_bootstrap_interval_percent": [-96.08031711579781, -92.8423925237332],
+    "future_flow_isolation": true,
+    "checksum_entries_verified": 23,
+    "result_directory_file_count": 24,
+    "protected_files_unchanged": 281
+  },
+  "scope_limits": [
+    "The assimilated synthetic discharge is noise-free; 0.05 is the assumed observation-error standard deviation used by the filter, not generated observation noise.",
+    "The statistical interval supports the registered synthetic rainfall-generating process and does not establish performance for real basins.",
+    "The preregistration is internally consistent and precedes execution by about two milliseconds, but it has no external tamper-resistant timestamp."
+  ]
+}

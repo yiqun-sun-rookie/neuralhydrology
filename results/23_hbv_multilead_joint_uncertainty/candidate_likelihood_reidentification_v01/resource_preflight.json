@@ -1,0 +1,66 @@
+{
+  "analysis_id": "candidate_likelihood_reidentification_v01",
+  "available_commit_memory_bytes": 28142305280,
+  "available_physical_memory_bytes": 2649800704,
+  "checked_at_utc": "2026-07-21T12:24:20.314682+00:00",
+  "commit_limit_bytes": 96314892288,
+  "committed_bytes": 68172587008,
+  "current_process_resident_memory_bytes": 120815616,
+  "estimated_peak_memory_bytes": 624168,
+  "estimation_basis": "Exact npz header shapes for every loaded array, six derived rank-shaped work arrays, a generous per-row table buffer, a factor of two for transient copies, and a task-derived reserve.",
+  "execution_parallelism": 1,
+  "per_run_estimates": [
+    {
+      "derived_array_bytes": 51840,
+      "estimated_run_peak_bytes": 210648,
+      "estimated_table_bytes": 64800,
+      "loaded_array_bytes": 21084,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v05",
+      "trial_table_rows": 108
+    },
+    {
+      "derived_array_bytes": 51840,
+      "estimated_run_peak_bytes": 210648,
+      "estimated_table_bytes": 64800,
+      "loaded_array_bytes": 21084,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v05",
+      "trial_table_rows": 108
+    },
+    {
+      "derived_array_bytes": 155520,
+      "estimated_run_peak_bytes": 624072,
+      "estimated_table_bytes": 194400,
+      "loaded_array_bytes": 59316,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v05",
+      "trial_table_rows": 324
+    },
+    {
+      "derived_array_bytes": 51840,
+      "estimated_run_peak_bytes": 210744,
+      "estimated_table_bytes": 64800,
+      "loaded_array_bytes": 21132,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_confirmation_v01",
+      "trial_table_rows": 108
+    },
+    {
+      "derived_array_bytes": 51840,
+      "estimated_run_peak_bytes": 210744,
+      "estimated_table_bytes": 64800,
+      "loaded_array_bytes": 21132,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_confirmation_v01",
+      "trial_table_rows": 108
+    },
+    {
+      "derived_array_bytes": 155520,
+      "estimated_run_peak_bytes": 624168,
+      "estimated_table_bytes": 194400,
+      "loaded_array_bytes": 59364,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_confirmation_v01",
+      "trial_table_rows": 324
+    }
+  ],
+  "safe_to_run": true,
+  "task_specific_required_available_bytes": 30828072,
+  "task_specific_reserve_bytes": 30203904,
+  "universal_memory_threshold_used": false
+}

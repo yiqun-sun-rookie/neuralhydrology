@@ -1,0 +1,150 @@
+{
+  "config_sha256": "2b2251989e62ef1fd45ea14bfc320943cb6abd1c9b31d022a9ab3fbec3621775",
+  "ended_at": "2026-07-22T07:24:34.802542+00:00",
+  "experiment": "walrus_imm_alignment_v02",
+  "gate0": {
+    "checks": {
+      "candidate_rows_11_12_equal_truth_phase_1_2": true,
+      "noise_std_consistency": true,
+      "p0_rule": true,
+      "q_s_all_rule": true,
+      "qobs_equals_states_obs_last_column": true,
+      "r": {
+        "actual": 1.5e-05,
+        "expected": 1.5e-05
+      },
+      "t1_2": {
+        "actual": 1216,
+        "expected": 1216
+      },
+      "t2_3": {
+        "actual": 2433,
+        "expected": 2433
+      },
+      "total_length": {
+        "actual": 3649,
+        "expected": 3649
+      }
+    },
+    "passed": true
+  },
+  "gate1": {
+    "first_exceed_step_one_based": null,
+    "max_abs_diff": 4.547473508864641e-13,
+    "passed": true,
+    "per_state_max_abs_diff": [
+      2.842170943040401e-14,
+      2.2737367544323206e-13,
+      8.881784197001252e-16,
+      4.547473508864641e-13,
+      8.326672684688674e-17
+    ],
+    "threshold": 1e-08
+  },
+  "gate2": {
+    "per_filter": [
+      {
+        "candidate_one_based": 1,
+        "first_exceed_step_one_based": 20,
+        "max_abs_diff": 0.5032514236968382
+      },
+      {
+        "candidate_one_based": 2,
+        "first_exceed_step_one_based": 24,
+        "max_abs_diff": 0.2950118973045619
+      },
+      {
+        "candidate_one_based": 3,
+        "first_exceed_step_one_based": 27,
+        "max_abs_diff": 0.20500606870086813
+      },
+      {
+        "candidate_one_based": 4,
+        "first_exceed_step_one_based": 54,
+        "max_abs_diff": 0.1719674226060306
+      },
+      {
+        "candidate_one_based": 5,
+        "first_exceed_step_one_based": 122,
+        "max_abs_diff": 0.16265298613006962
+      },
+      {
+        "candidate_one_based": 6,
+        "first_exceed_step_one_based": 126,
+        "max_abs_diff": 0.15659886193941475
+      },
+      {
+        "candidate_one_based": 7,
+        "first_exceed_step_one_based": 130,
+        "max_abs_diff": 0.14733671675651294
+      },
+      {
+        "candidate_one_based": 8,
+        "first_exceed_step_one_based": 134,
+        "max_abs_diff": 0.7714678084389561
+      },
+      {
+        "candidate_one_based": 9,
+        "first_exceed_step_one_based": 216,
+        "max_abs_diff": 0.14257306498871003
+      },
+      {
+        "candidate_one_based": 10,
+        "first_exceed_step_one_based": 219,
+        "max_abs_diff": 0.13987114203951023
+      },
+      {
+        "candidate_one_based": 11,
+        "first_exceed_step_one_based": 176,
+        "max_abs_diff": 0.1366006160294546
+      },
+      {
+        "candidate_one_based": 12,
+        "first_exceed_step_one_based": 27,
+        "max_abs_diff": 0.20809712433401728
+      }
+    ],
+    "strong_pass": false
+  },
+  "gate3": {
+    "anchors_pass": true,
+    "max_abs_prob_diff": 0.015840744290978554,
+    "reference_anchors_vs_config": {
+      "config_recorded": {
+        "anchor_pass_tolerances": {
+          "cycles": 5,
+          "mean_prob": 0.01
+        },
+        "first_top_cycle": [
+          6,
+          120
+        ],
+        "stable_definition": "prob argmax stays rank-1 from that cycle until phase end",
+        "stable_top_cycle": [
+          724,
+          560
+        ],
+        "true_filter_phase_mean_prob": [
+          0.333,
+          0.365
+        ]
+      },
+      "recomputed_from_reference": {
+        "phase1": {
+          "first_top_cycle": 6,
+          "stable_top_cycle": 724,
+          "true_filter_mean_prob": 0.33259149687632206
+        },
+        "phase2": {
+          "first_top_cycle": 120,
+          "stable_top_cycle": 560,
+          "true_filter_mean_prob": 0.3650905271830478
+        }
+      }
+    },
+    "strong_pass": false
+  },
+  "reference_mat_sha256": "fd080ce0fa0f4b53ca61e19060dfba6995f94f9b53fd62cb0f8681169bec609f",
+  "started_at": "2026-07-22T07:21:41.363042+00:00",
+  "verdict_tier": "\u7ed3\u6784\u7b49\u4ef7"
+}

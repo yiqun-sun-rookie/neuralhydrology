@@ -1,0 +1,369 @@
+{
+  "common_origin_count": 358,
+  "continuation_gate": {
+    "control_id": "physical_recession_routing_mean_decay",
+    "larger_sample_basin_count_if_all_pass": 531,
+    "one_day_median_rmse_increase_percent_vs_current_joint_maximum": 1.0,
+    "percent_computed_per_basin_before_median": true,
+    "run_larger_sample_automatically": false,
+    "seven_day_median_rmse_change_percent_vs_open_loop_maximum": 0.0,
+    "seven_day_strict_rmse_win_count_vs_open_loop_minimum": 9
+  },
+  "controls": [
+    {
+      "allowed_state_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "control_id": "current_joint_all_fifteen_states",
+      "role": "frozen_reference"
+    },
+    {
+      "allowed_state_indices": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "control_id": "hydrologic_five_states_only",
+      "role": "state_group_diagnostic"
+    },
+    {
+      "allowed_state_indices": [
+        3,
+        4
+      ],
+      "control_id": "runoff_two_states_only",
+      "role": "state_group_diagnostic"
+    },
+    {
+      "candidate_covariance": "origin posterior covariance",
+      "candidate_mean": "origin prior mean",
+      "candidate_probabilities": "origin posterior probabilities",
+      "control_id": "origin_mean_correction_removed",
+      "role": "matched mean-correction counterfactual"
+    },
+    {
+      "application": "For each target lead, scale the origin posterior-minus-prior candidate mean correction before hydrologic propagation; keep posterior covariance and posterior probabilities unchanged.",
+      "control_id": "physical_recession_routing_mean_decay",
+      "lower_storage_daily_multiplier": "1 - parK2",
+      "retention_at_lead_one": 1.0,
+      "role": "primary_continuation_gate_control",
+      "routing_retention": "At lead 1 retain 1. For later leads and routing index j, use half-triangular weight[j + lead_days - 1] / weight[j] when both weights exist and weight[j] is positive; otherwise retain 0.",
+      "selection_uses_evaluation_metrics": false,
+      "snowpack_meltwater_soil_retention": 1.0,
+      "source_reference": "current_joint_all_fifteen_states",
+      "source_removed": "origin_mean_correction_removed",
+      "storage_retention_exponent": "lead_days - 1",
+      "upper_storage_daily_multiplier_above_threshold": "(1 - parK0) * (1 - parK1)",
+      "upper_storage_daily_multiplier_below_threshold": "1 - parK1",
+      "upper_threshold_test_state": "reference posterior SUZ compared with parUZL"
+    },
+    {
+      "candidate_covariance": "origin posterior covariance",
+      "candidate_probabilities": "origin posterior probabilities",
+      "control_id": "three_day_half_life_mean_decay_sensitivity",
+      "half_life_days": 3.0,
+      "retention_by_lead": {
+        "1": 1.0,
+        "3": 0.6299605249474366,
+        "7": 0.25
+      },
+      "retention_formula": "2 ** (-(lead_days - 1) / half_life_days)",
+      "role": "sensitivity_only_not_eligible_for_continuation_gate",
+      "source_reference": "current_joint_all_fifteen_states",
+      "source_removed": "origin_mean_correction_removed"
+    }
+  ],
+  "design_change_reason": "The unrun version 1 made a fixed three-day half-life the primary control without support from the frozen HBV-lite equations. Version 2 makes recession- and routing-derived attenuation primary and retains the fixed half-life only as a sensitivity check. No control result was read before this version was frozen.",
+  "evaluation_day_count": 365,
+  "evaluation_end": "1990-09-30",
+  "evaluation_start": "1989-10-01",
+  "experiment_family": "2026-07-16-hbv-state-correction-propagation-v3",
+  "formal_contract": {
+    "checksums_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+    "contract_id": "formal_contract_sixteen_v05",
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05"
+  },
+  "formal_methods": [
+    "open_loop",
+    "fixed_filter",
+    "parameter_only",
+    "noise_only",
+    "joint"
+  ],
+  "formal_replay_validation": {
+    "arrays": [
+      "joint_predictions",
+      "joint_candidate_predictions",
+      "joint_probabilities",
+      "joint_candidate_covariance_diagonals",
+      "joint_combined_covariance_diagonals"
+    ],
+    "maximum_absolute_error": 1e-12,
+    "maximum_relative_error": 1e-10,
+    "relative_error_denominator_floor": 1e-12,
+    "report_maximum_absolute_and_relative_error": true
+  },
+  "formal_result": {
+    "checksums_sha256": "88ab2297e02179cc0e3e432c958871e1d6e7985358b9394970154a65f2348bd0",
+    "experiment_id": "formal_result_sixteen_v01",
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01"
+  },
+  "frozen_basins": [
+    "12143600",
+    "04127918",
+    "09066000",
+    "06431500",
+    "03479000",
+    "02296500",
+    "02015700",
+    "06892000",
+    "05507600",
+    "06477500",
+    "08158700",
+    "11148900",
+    "06404000",
+    "08189500",
+    "09505350",
+    "09447800"
+  ],
+  "future_discharge_after_origin_allowed": false,
+  "future_meteorology_description": "historical observed meteorology used for retrospective diagnosis; not an operational forecast",
+  "hydrologic_diagnostics": {
+    "checks": [
+      "mass_balance_residual",
+      "physical_bounds",
+      "recession_timescale",
+      "routing_weight_propagation",
+      "state_correction_to_discharge_effect"
+    ],
+    "never_sum_water_storage_and_routing_memory": true,
+    "routing_memory_states": [
+      "qraw_t_minus_0",
+      "qraw_t_minus_1",
+      "qraw_t_minus_2",
+      "qraw_t_minus_3",
+      "qraw_t_minus_4",
+      "qraw_t_minus_5",
+      "qraw_t_minus_6",
+      "qraw_t_minus_7",
+      "qraw_t_minus_8",
+      "qraw_t_minus_9"
+    ],
+    "water_storage_states": [
+      "SNOWPACK",
+      "MELTWATER",
+      "SM",
+      "SUZ",
+      "SLZ"
+    ]
+  },
+  "lead_days": [
+    1,
+    3,
+    7
+  ],
+  "logs_root": "logs/23_hbv_multilead_joint_uncertainty",
+  "random_seed": 1,
+  "resource": {
+    "formal_estimated_output_gib": 0.5,
+    "formal_estimated_peak_gib": 1.0,
+    "maximum_estimated_peak_fraction_of_available": 0.6,
+    "maximum_resource_probe_seconds": 5.0,
+    "minimum_free_disk_gib": 50.0,
+    "minimum_output_space_multiplier": 3.0,
+    "minimum_running_available_fraction": 0.125,
+    "minimum_start_available_fraction": 0.16,
+    "monitor_interval_seconds": 15.0,
+    "numerical_thread_limit": 1,
+    "reserved_logical_processors": 2,
+    "smoke_estimated_output_gib": 0.25,
+    "smoke_estimated_peak_gib": 0.75
+  },
+  "resource_revision": {
+    "experiment_family": "2026-07-16-hbv-state-correction-propagation-v3",
+    "inherited_config_sha256": "db2d74d956f2246eefc6975441084461fd35bf75994daf5bff285c90569c38d7",
+    "inherits": "state_correction_propagation_v02.json",
+    "revision_reason": "The user authorized lower resource thresholds provided the run retains enough headroom to avoid operating-system or process memory failure.",
+    "revision_scope": "resource thresholds only",
+    "scientific_controls_unchanged": true
+  },
+  "results_root": "results/23_hbv_multilead_joint_uncertainty",
+  "saved_array_shapes_per_basin": {
+    "origin_candidate_posterior_covariance_diagonals": [
+      358,
+      9,
+      15
+    ],
+    "origin_candidate_posterior_states": [
+      358,
+      9,
+      15
+    ],
+    "origin_candidate_prior_covariance_diagonals": [
+      358,
+      9,
+      15
+    ],
+    "origin_candidate_prior_states": [
+      358,
+      9,
+      15
+    ],
+    "origin_candidate_state_corrections": [
+      358,
+      9,
+      15
+    ],
+    "origin_posterior_probabilities": [
+      358,
+      9
+    ],
+    "origin_prior_probabilities": [
+      358,
+      9
+    ],
+    "target_candidate_states": [
+      358,
+      3,
+      9,
+      15
+    ],
+    "target_combined_states": [
+      358,
+      3,
+      15
+    ]
+  },
+  "smoke_basin": "12143600",
+  "state_contract": [
+    {
+      "capacity_normalization": "none",
+      "index": 0,
+      "name": "SNOWPACK",
+      "physical_reference": "nonnegative snow water storage",
+      "unit": "mm"
+    },
+    {
+      "capacity_normalization": "parCWH * SNOWPACK when positive",
+      "index": 1,
+      "name": "MELTWATER",
+      "physical_reference": "nonnegative liquid water held in snow",
+      "unit": "mm"
+    },
+    {
+      "capacity_normalization": "parFC",
+      "index": 2,
+      "name": "SM",
+      "physical_reference": "soil water storage",
+      "unit": "mm"
+    },
+    {
+      "capacity_normalization": "parUZL reported as threshold, not capacity",
+      "index": 3,
+      "name": "SUZ",
+      "physical_reference": "upper-zone water storage",
+      "unit": "mm"
+    },
+    {
+      "capacity_normalization": "none",
+      "index": 4,
+      "name": "SLZ",
+      "physical_reference": "lower-zone water storage",
+      "unit": "mm"
+    },
+    {
+      "capacity_normalization": "none",
+      "index": 5,
+      "name": "qraw_t_minus_0",
+      "physical_reference": "newest raw-runoff routing memory",
+      "unit": "mm/day"
+    },
+    {
+      "capacity_normalization": "none",
+      "index": 6,
+      "name": "qraw_t_minus_1",
+      "physical_reference": "raw-runoff routing memory lag 1",
+      "unit": "mm/day"
+    },
+    {
+      "capacity_normalization": "none",
+      "index": 7,
+      "name": "qraw_t_minus_2",
+      "physical_reference": "raw-runoff routing memory lag 2",
+      "unit": "mm/day"
+    },
+    {
+      "capacity_normalization": "none",
+      "index": 8,
+      "name": "qraw_t_minus_3",
+      "physical_reference": "raw-runoff routing memory lag 3",
+      "unit": "mm/day"
+    },
+    {
+      "capacity_normalization": "none",
+      "index": 9,
+      "name": "qraw_t_minus_4",
+      "physical_reference": "raw-runoff routing memory lag 4",
+      "unit": "mm/day"
+    },
+    {
+      "capacity_normalization": "none",
+      "index": 10,
+      "name": "qraw_t_minus_5",
+      "physical_reference": "raw-runoff routing memory lag 5",
+      "unit": "mm/day"
+    },
+    {
+      "capacity_normalization": "none",
+      "index": 11,
+      "name": "qraw_t_minus_6",
+      "physical_reference": "raw-runoff routing memory lag 6",
+      "unit": "mm/day"
+    },
+    {
+      "capacity_normalization": "none",
+      "index": 12,
+      "name": "qraw_t_minus_7",
+      "physical_reference": "raw-runoff routing memory lag 7",
+      "unit": "mm/day"
+    },
+    {
+      "capacity_normalization": "none",
+      "index": 13,
+      "name": "qraw_t_minus_8",
+      "physical_reference": "raw-runoff routing memory lag 8",
+      "unit": "mm/day"
+    },
+    {
+      "capacity_normalization": "none",
+      "index": 14,
+      "name": "qraw_t_minus_9",
+      "physical_reference": "oldest raw-runoff routing memory lag 9",
+      "unit": "mm/day"
+    }
+  ],
+  "supersedes_unrun_design": "state_correction_propagation_v01.json",
+  "time_index_contract": {
+    "future_discharge_after_origin_allowed": false,
+    "future_forcing_indices": "origin + 1 through origin + lead",
+    "origin_assimilation": "assimilate discharge only at origin index",
+    "state_timing": "post-transition state on each dated day",
+    "target_index": "origin + lead"
+  }
+}

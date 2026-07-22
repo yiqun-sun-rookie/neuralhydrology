@@ -1,0 +1,18 @@
+{
+  "algorithm": "SHA-256",
+  "excluded_files": [
+    "audit_checksums.json"
+  ],
+  "files": {
+    "audit_summary.json": "a36b98ad3f734d0ea08f42422c203e55b3e6743a27db0b83c844b6e7e30376eb",
+    "independent_audit_report.md": "ac287667e1672f1760a8659976fa8a3ce77c9cb580262bc3f6ad1875ac35467c",
+    "independent_open_loop_comparison.py": "8b48b2e8084083bdcfa64269cf887ed81f72cda57a15819ca3e792431c8676f4",
+    "independent_resource_history.json": "73ca33f13c6d7ecbb67cafd294bc5d9316e6184e1c1b22d73ebe6eb8060c9fc3",
+    "joint_vs_open_loop_detailed.csv": "6ad68158cb40ddeabc851676192a21669f9e32ad60352bd2748f5d10b415c4c1",
+    "joint_vs_open_loop_stratum_summary.csv": "5b6a5122bb1155b7c330efcb8f68e94179c20b3c5fe985301e86136d2a4f0de6",
+    "lead_time_degradation_summary.csv": "7ebb2613cb930b25a8ab369b14d3ee9c584e77bf6f89f560b4cd416de197f208",
+    "method_vs_open_loop_summary.csv": "f6db136a0b5b0593ce31f4eaf30650f6bf08929ea2b684dd328a778931f05392",
+    "package_integrity_before_after.json": "c7b769eeb42a8851d2bab9070cc6f88643f7227f225d4023fdd499920dd7de8c",
+    "per_basin_method_vs_open_loop.csv": "2dd879d5840d25e98f1ff8669d4545112afb369bc06db1b7da27e2c138e09933"
+  }
+}

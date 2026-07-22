@@ -1,0 +1,26 @@
+{
+  "command": [
+    "C:\\Users\\yiqun\\anaconda3\\python.exe",
+    "-B",
+    "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_result_sixteen_reproduction_sharded_v01_audit_v01\\independent_scientific_audit.py"
+  ],
+  "duration_seconds": 4.062999999994645,
+  "estimated_output_gib": 0.25,
+  "estimated_peak_gib": 1.0,
+  "exit_code": 0,
+  "logical_processors": 32,
+  "maximum_cpu_load_percent": 38.4,
+  "maximum_process_tree_rss_gib": 0.0946044921875,
+  "maximum_sample_gap_seconds": 1.01275,
+  "minimum_available_memory_fraction": 0.2574271127430889,
+  "minimum_available_memory_gib": 8.160499572753906,
+  "minimum_disk_free_gib": 2166.1219024658203,
+  "numerical_thread_limit": 1,
+  "required_disk_gib": 50.0,
+  "reserved_logical_processors": 2,
+  "sample_count": 6,
+  "start_gate_passed": true,
+  "status": "passed",
+  "stdout_file": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_result_sixteen_reproduction_sharded_v01_audit_v01\\audit_stdout.txt",
+  "stopped_for_resource_gate": false
+}

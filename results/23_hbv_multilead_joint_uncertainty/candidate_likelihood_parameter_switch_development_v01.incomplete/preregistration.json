@@ -1,0 +1,26 @@
+{
+  "adaptation_days_excluded_per_stage": 5,
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 676701,
+    "unit": "synthetic_block"
+  },
+  "config_sha256": "19a4ed989023fdaca197eec850146979e38074f97cbf628bb13e82ea12063786",
+  "dataset_role": "development",
+  "decision_rules": {
+    "median_final_margin_strict_minimum": 0,
+    "stable_fraction_block_bootstrap_lower_strict_minimum": 0.5,
+    "stable_identifiable_fraction_minimum": 0.6666666666666666,
+    "stage_one_decides_scientific_status": false,
+    "switching_stage_numbers": [
+      2,
+      3
+    ]
+  },
+  "experiment_id": "candidate_likelihood_parameter_switch_development_v01",
+  "frozen_before_execution": true,
+  "output_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\candidate_likelihood_parameter_switch_development_v01",
+  "scenario": "parameter_switch",
+  "stable_final_scoring_days": 5,
+  "started_at_utc": "2026-07-20T07:34:58.036965+00:00"
+}

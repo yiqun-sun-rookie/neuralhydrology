@@ -1,0 +1,11 @@
+{
+  "changed_factor": "daily discharge state updating versus no state updating",
+  "experiment_id": "single_filter_state_validation_v01",
+  "fixed_factors": "forcing, truth, complete parameter vector, initial perturbations, and zero process covariance",
+  "hypothesis": "one correctly parameterized filter reduces controlled state and one-day flow error",
+  "metrics_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\single_filter_state_validation_v01\\summary.json",
+  "run_dir": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\single_filter_state_validation_v01",
+  "seed": 20260717,
+  "status": "passed",
+  "type": "closed_truth_single_filter_validation"
+}

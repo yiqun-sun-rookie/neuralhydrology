@@ -1,0 +1,102 @@
+{
+  "candidate_factors": [
+    [
+      "equifinal_diverse_1",
+      "process_0"
+    ],
+    [
+      "equifinal_diverse_1",
+      "process_1"
+    ],
+    [
+      "equifinal_diverse_1",
+      "process_2"
+    ],
+    [
+      "trained_center",
+      "process_0"
+    ],
+    [
+      "trained_center",
+      "process_1"
+    ],
+    [
+      "trained_center",
+      "process_2"
+    ],
+    [
+      "equifinal_diverse_2",
+      "process_0"
+    ],
+    [
+      "equifinal_diverse_2",
+      "process_1"
+    ],
+    [
+      "equifinal_diverse_2",
+      "process_2"
+    ]
+  ],
+  "candidate_ids": [
+    "equifinal_diverse_1__process_0",
+    "equifinal_diverse_1__process_1",
+    "equifinal_diverse_1__process_2",
+    "trained_center__process_0",
+    "trained_center__process_1",
+    "trained_center__process_2",
+    "equifinal_diverse_2__process_0",
+    "equifinal_diverse_2__process_1",
+    "equifinal_diverse_2__process_2"
+  ],
+  "config_sha256": "83c45cefef6b1f1f36b30d9561b09125a529a593a46bc1840dee3ea435eb09ce",
+  "diagnostic_modes": [
+    "parameter_grouped",
+    "none"
+  ],
+  "experiment_id": "state_interaction_validation_v01",
+  "factor_stay_probability": 0.98,
+  "filter_update": false,
+  "gates": {
+    "candidate_covariance_symmetry_maximum_absolute_error": 1e-12,
+    "causal_prefix_maximum_absolute_error": 0.0,
+    "conditional_weight_sum_maximum_absolute_error": 1e-15,
+    "counterexample_full_covariance_drift_maximum_absolute_error": 1e-07,
+    "counterexample_full_mean_drift_maximum_absolute_error": 1e-10,
+    "counterexample_grouped_mean_drift_minimum_absolute_error": 1.0,
+    "counterexample_none_mean_drift_minimum_absolute_error": 1.0,
+    "factorial_transition_contract_maximum_absolute_error": 1e-14,
+    "full_combined_covariance_conservation_maximum_absolute_error": 1e-07,
+    "full_combined_mean_conservation_maximum_absolute_error": 1e-10,
+    "minimum_candidate_covariance_eigenvalue": -1e-09,
+    "production_reference_combined_covariance_maximum_absolute_error": 1e-09,
+    "production_reference_combined_mean_maximum_absolute_error": 1e-12,
+    "production_reference_covariance_maximum_absolute_error": 1e-09,
+    "production_reference_probability_maximum_absolute_error": 1e-15,
+    "production_reference_state_maximum_absolute_error": 1e-12,
+    "production_reference_weight_maximum_absolute_error": 1e-15
+  },
+  "hydrologic_state_propagation": false,
+  "interaction_steps": 30,
+  "registered_at": "2026-07-17T14:19:17.363472+00:00",
+  "state_dimension": 15,
+  "status": "preregistered",
+  "tested_formal_mode": "full",
+  "trial_seeds": [
+    950001,
+    950002,
+    950003,
+    950004,
+    950005,
+    950006,
+    950007,
+    950008,
+    950009,
+    950010,
+    950011,
+    950012,
+    950013,
+    950014,
+    950015,
+    950016
+  ]
+}

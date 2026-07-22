@@ -1,0 +1,39 @@
+{
+  "basin_count": 16,
+  "basin_reports_passed": true,
+  "basins": [
+    "12143600",
+    "04127918",
+    "09066000",
+    "06431500",
+    "03479000",
+    "02296500",
+    "02015700",
+    "06892000",
+    "05507600",
+    "06477500",
+    "08158700",
+    "11148900",
+    "06404000",
+    "08189500",
+    "09505350",
+    "09447800"
+  ],
+  "common_origin_count": 358,
+  "controls": [
+    "current_joint_all_fifteen_states",
+    "hydrologic_five_states_only",
+    "runoff_two_states_only",
+    "origin_mean_correction_removed",
+    "three_day_half_life_additional_mean_taper_sensitivity"
+  ],
+  "experiment_id": "state_correction_sixteen_v02",
+  "formal_artifacts_modified": false,
+  "lead_days": [
+    1,
+    3,
+    7
+  ],
+  "run_531": false,
+  "status": "verified"
+}

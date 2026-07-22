@@ -1,0 +1,115 @@
+{
+  "experiment_id": "state_interaction_validation_v01",
+  "purpose": "Isolate the nine-candidate state-interaction operation and test whether full interaction reproduces independent conditional mixture moments and conserves the combined fifteen-state mean and covariance under identity dynamics.",
+  "parameter_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/parameter_vectors.csv",
+    "sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+    "source_basin_id": "12143600",
+    "source_basin_description": "the first frozen formal basin, used only to freeze the existing three complete parameter labels",
+    "parameter_ids": [
+      "equifinal_diverse_1",
+      "trained_center",
+      "equifinal_diverse_2"
+    ]
+  },
+  "process_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/process_noise_covariances.csv",
+    "sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+    "source_basin_id": "12143600",
+    "process_ids": [
+      "process_0",
+      "process_1",
+      "process_2"
+    ]
+  },
+  "factor_stay_probability": 0.98,
+  "trial_seeds": [
+    950001,
+    950002,
+    950003,
+    950004,
+    950005,
+    950006,
+    950007,
+    950008,
+    950009,
+    950010,
+    950011,
+    950012,
+    950013,
+    950014,
+    950015,
+    950016
+  ],
+  "steps": 30,
+  "causal_prefix_steps": 5,
+  "state_scales": [
+    100.0,
+    5.0,
+    200.0,
+    20.0,
+    100.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0,
+    5.0
+  ],
+  "state_scale_interpretation": "positive synthetic coordinate scales in the common physical units of the five storage states and ten routing-memory states; they do not represent a hydrologic trajectory or a parameter-specific state",
+  "random_initialization_rule": "independent seed streams generate strictly positive candidate probabilities, positive synthetic state coordinates and positive-definite candidate covariances before identity-dynamics interaction",
+  "independent_reference_rule": "direct destination-by-destination loops recompute conditional source weights, means and full covariances without calling the production interaction helper",
+  "counterexample_rule": "the parameter-factor marginal starts at 0.80, 0.15 and 0.05; the first state coordinate is 0, 5 and 10 by parameter group; full, parameter-grouped and no-interaction modes receive the same thirty probability transitions and identity dynamics",
+  "gates": {
+    "production_reference_probability_maximum_absolute_error": 1e-15,
+    "production_reference_weight_maximum_absolute_error": 1e-15,
+    "production_reference_state_maximum_absolute_error": 1e-12,
+    "production_reference_covariance_maximum_absolute_error": 1e-9,
+    "production_reference_combined_mean_maximum_absolute_error": 1e-12,
+    "production_reference_combined_covariance_maximum_absolute_error": 1e-9,
+    "full_combined_mean_conservation_maximum_absolute_error": 1e-10,
+    "full_combined_covariance_conservation_maximum_absolute_error": 1e-7,
+    "minimum_candidate_covariance_eigenvalue": -1e-9,
+    "candidate_covariance_symmetry_maximum_absolute_error": 1e-12,
+    "conditional_weight_sum_maximum_absolute_error": 1e-15,
+    "causal_prefix_maximum_absolute_error": 0.0,
+    "factorial_transition_contract_maximum_absolute_error": 1e-14,
+    "counterexample_full_mean_drift_maximum_absolute_error": 1e-10,
+    "counterexample_full_covariance_drift_maximum_absolute_error": 1e-7,
+    "counterexample_grouped_mean_drift_minimum_absolute_error": 1.0,
+    "counterexample_none_mean_drift_minimum_absolute_error": 1.0
+  },
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01",
+    "results/23_hbv_multilead_joint_uncertainty/synthetic_truth_propagation_v04",
+    "results/23_hbv_multilead_joint_uncertainty/single_filter_state_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/parameter_identification_validation_v01",
+    "results/23_hbv_multilead_joint_uncertainty/process_noise_identification_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/model_probability_validation_v02"
+  ],
+  "fixed_boundaries": {
+    "complete_parameter_vectors": 3,
+    "parameter_names_per_vector": 13,
+    "process_noise_candidates": 3,
+    "joint_candidates": 9,
+    "state_dimension": 15,
+    "formal_interaction_mode": "full",
+    "diagnostic_interaction_modes": [
+      "parameter_grouped",
+      "none"
+    ],
+    "hydrologic_state_propagation": false,
+    "observation_likelihood": false,
+    "filter_update": false,
+    "forecast_propagation": false,
+    "reads_real_basin_observations": false,
+    "modifies_frozen_formal_results": false,
+    "runs_531_real_basins": false
+  },
+  "scope_limit": "This component validates conditional state and covariance mixture algebra under identity dynamics. The frozen parameter vectors and process-noise matrices define the nine labels but do not generate the synthetic states. It cannot establish hydrologic propagation accuracy, filtering benefit, likelihood calibration or forecast improvement."
+}

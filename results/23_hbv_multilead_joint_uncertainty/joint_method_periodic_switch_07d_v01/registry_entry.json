@@ -1,0 +1,67 @@
+{
+  "base_config": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\configs\\joint_method_periodic_switch_07d_v01.json",
+  "changed_factor": "the periodically switching complete parameter and process-scale truth schedule",
+  "experiment_id": "joint_method_periodic_switch_07d_v01",
+  "fixed_factors": "matched forcing and random draws, 45 assimilation days, full interaction and one-, three-, seven-day leads",
+  "hypothesis": "the complete joint method retains identification and forecast value when complete parameter and process-scale labels switch periodically",
+  "metrics_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\joint_method_periodic_switch_07d_v01\\method_metrics.csv",
+  "notes": "This is a bounded rapid-switch stress condition: both complete parameter and process-scale labels change every seven days, while the filter keeps a factor-level stay probability of 0.98. At the forecast origin the current label has three assimilated observations, and the next truth switch occurs at lead day five, between the evaluated three- and seven-day targets. It does not establish behavior for other switch periods, matched transition priors, weak observations, forcing error or real basins. The covariance controls only pre-projection scale; post-projection truth is not an exact additive Gaussian candidate model.",
+  "paper_name": "periodically switching complete parameter and process-scale labels with projected candidate-scale process truth condition",
+  "run_dir": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\joint_method_periodic_switch_07d_v01",
+  "seeds": [
+    {
+      "block_id": "switch_block_01",
+      "forcing_seed": 980001,
+      "observation_noise_seed": 982001,
+      "process_noise_seed": 981001
+    },
+    {
+      "block_id": "switch_block_02",
+      "forcing_seed": 980002,
+      "observation_noise_seed": 982002,
+      "process_noise_seed": 981002
+    },
+    {
+      "block_id": "switch_block_03",
+      "forcing_seed": 980003,
+      "observation_noise_seed": 982003,
+      "process_noise_seed": 981003
+    },
+    {
+      "block_id": "switch_block_04",
+      "forcing_seed": 980004,
+      "observation_noise_seed": 982004,
+      "process_noise_seed": 981004
+    },
+    {
+      "block_id": "switch_block_05",
+      "forcing_seed": 980005,
+      "observation_noise_seed": 982005,
+      "process_noise_seed": 981005
+    },
+    {
+      "block_id": "switch_block_06",
+      "forcing_seed": 980006,
+      "observation_noise_seed": 982006,
+      "process_noise_seed": 981006
+    },
+    {
+      "block_id": "switch_block_07",
+      "forcing_seed": 980007,
+      "observation_noise_seed": 982007,
+      "process_noise_seed": 981007
+    },
+    {
+      "block_id": "switch_block_08",
+      "forcing_seed": 980008,
+      "observation_noise_seed": 982008,
+      "process_noise_seed": 981008
+    }
+  ],
+  "status": "passed",
+  "truth_condition": "periodically switching complete parameter and process-scale labels with projected candidate-scale process truth",
+  "truth_process_scope": "The frozen candidate covariance controls only the pre-projection perturbation scale; the post-projection truth is not an exact additive Gaussian candidate model.",
+  "truth_switch_candidate_step": 4,
+  "truth_switch_period_days": 7,
+  "type": "closed_truth_periodic_switching_nine_filter_joint_method"
+}

@@ -1,0 +1,21 @@
+{
+  "environment_variables": {
+    "DISABLE_NUMBA": null,
+    "HBV_BOUNDS": null
+  },
+  "execution_command": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\scripts\\run_joint_method_validation.py --repo-root . --config src/hbv_multilead_joint_uncertainty/configs/joint_method_periodic_switch_07d_v01.json --output-dir results/23_hbv_multilead_joint_uncertainty/joint_method_periodic_switch_07d_v01 --registry-path results/23_hbv_multilead_joint_uncertainty/joint_method_periodic_switch_07d_v01_registry.json",
+  "finished_at_utc": "2026-07-18T10:41:24.012167+00:00",
+  "git_commit": "ffbde6d9091df08363ff5b7ab0492bdd02873c42",
+  "git_worktree_dirty": true,
+  "llvmlite_version": "0.44.0",
+  "numba_version": "0.61.2",
+  "numpy_version": "1.26.4",
+  "operating_system": "Windows-10-10.0.26200-SP0",
+  "pip_freeze_error": "ERROR: Exception:\nTraceback (most recent call last):\n  File \"C:\\Users\\yiqun\\anaconda3\\Lib\\site-packages\\pip\\_internal\\cli\\base_command.py\", line 180, in exc_logging_wrapper\n    status = run_func(*args)\n             ^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yiqun\\anaconda3\\Lib\\site-packages\\pip\\_internal\\commands\\freeze.py\", line 98, in run\n    for line in freeze(\n  File \"C:\\Users\\yiqun\\anaconda3\\Lib\\site-packages\\pip\\_internal\\operations\\freeze.py\", line 43, in freeze\n    req = FrozenRequirement.from_dist(dist)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yiqun\\anaconda3\\Lib\\site-packages\\pip\\_internal\\operations\\freeze.py\", line 238, in from_dist\n    req, comments = _get_editable_info(dist)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yiqun\\anaconda3\\Lib\\site-packages\\pip\\_internal\\operations\\freeze.py\", line 165, in _get_editable_info\n    vcs_backend = vcs.get_backend_for_dir(location)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yiqun\\anaconda3\\Lib\\site-packages\\pip\\_internal\\vcs\\versioncontrol.py\", line 238, in get_backend_for_dir\n    repo_path = vcs_backend.get_repository_root(location)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yiqun\\anaconda3\\Lib\\site-packages\\pip\\_internal\\vcs\\git.py\", line 501, in get_repository_root\n    r = cls.run_command(\n        ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yiqun\\anaconda3\\Lib\\site-packages\\pip\\_internal\\vcs\\versioncontrol.py\", line 650, in run_command\n    return call_subprocess(\n           ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yiqun\\anaconda3\\Lib\\site-packages\\pip\\_internal\\utils\\subprocess.py\", line 141, in call_subprocess\n    proc = subprocess.Popen(\n           ^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\yiqun\\anaconda3\\Lib\\subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"C:\\Users\\yiqun\\anaconda3\\Lib\\subprocess.py\", line 1538, in _execute_child\n    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nNotADirectoryError: [WinError 267] \u76ee\u5f55\u540d\u79f0\u65e0\u6548\u3002",
+  "pip_freeze_method": "installed distribution metadata",
+  "python_executable": "C:\\Users\\yiqun\\anaconda3\\python.exe",
+  "python_version": "3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]",
+  "reference_numba_enabled": true,
+  "started_at_utc": "2026-07-18T10:38:03.474644+00:00",
+  "working_directory": "G:\\github\\pycharm\\projects\\neuralhydrology"
+}

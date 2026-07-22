@@ -1,0 +1,28 @@
+{
+  "review_context": "state_interaction_audit",
+  "reviewed_at": "2026-07-17T14:56:55.8476364Z",
+  "mode": "read_only_independent_code_method_and_result_audit",
+  "result_evidence_sha256": "abca6a1d40adf8481e885a7a9b1a98b526a31f145c70de78f9783ee679a58bd0",
+  "must_fix": [
+    "The all-saved-numeric-results finite gate checks only ten of the twenty-four saved numeric arrays.",
+    "The core estimator class documentation still describes only parameter-grouped interaction."
+  ],
+  "confirmed_results": {
+    "production_reference_probability_maximum_absolute_error": 1.1102230246251565e-16,
+    "production_reference_weight_maximum_absolute_error": 4.440892098500626e-16,
+    "production_reference_state_maximum_absolute_error": 1.7053025658242404e-13,
+    "production_reference_covariance_maximum_absolute_error": 5.002220859751105e-12,
+    "full_combined_mean_conservation_maximum_absolute_error": 1.9895196601282805e-13,
+    "full_combined_covariance_conservation_maximum_absolute_error": 1.1823431123048067e-11,
+    "minimum_candidate_covariance_eigenvalue": 0.0006308681416783975,
+    "counterexample_full_final_first_state_mean": 1.2500000000000004,
+    "counterexample_grouped_final_first_state_mean": 3.496223492963162,
+    "counterexample_none_final_first_state_mean": 3.4962234929631597,
+    "causal_prefix_maximum_absolute_error": 0.0,
+    "evidence_array_count": 29,
+    "evidence_array_bytes": 21541868,
+    "result_checksum_count": 27,
+    "protected_file_count": 399
+  },
+  "scope_limit": "The evidence validates mixture-moment algebra under identity dynamics, not hydrologic propagation, filter benefit, likelihood calibration or forecasts."
+}

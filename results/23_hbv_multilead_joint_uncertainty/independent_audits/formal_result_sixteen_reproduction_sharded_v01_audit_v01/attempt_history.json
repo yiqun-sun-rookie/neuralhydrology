@@ -1,0 +1,49 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "classification": "independent_auditor_script_error",
+      "decision_valid": false,
+      "exit_code": 1,
+      "evidence_files": [
+        "audit_execution_attempt01_script_error.json",
+        "audit_resource_history_attempt01_script_error.json",
+        "audit_stdout_attempt01_script_error.txt"
+      ],
+      "reason": "The independent auditor used equal_nan=True on a Unicode array. The target artifacts were not changed."
+    },
+    {
+      "attempt": 2,
+      "classification": "resource_snapshot_misclassification",
+      "decision": "BLOCK",
+      "decision_valid": false,
+      "exit_code": 1,
+      "evidence_files": [
+        "audit_execution_attempt02_resource_misclassification.json",
+        "audit_resource_history_attempt02_resource_misclassification.json",
+        "audit_stdout_attempt02_resource_misclassification.txt",
+        "resource_history_audit_attempt02_resource_misclassification.csv",
+        "scientific_audit_summary_attempt02_resource_misclassification.json"
+      ],
+      "reason": "The auditor treated two artifact-directory pre-write snapshots as canonical complete logs. Independent rechecking proved that each snapshot is an exact prefix of its bound start-to-finish log."
+    },
+    {
+      "attempt": 3,
+      "classification": "final_independent_audit",
+      "decision": "RELEASE",
+      "decision_valid": true,
+      "exit_code": 0,
+      "evidence_files": [
+        "audit_execution.json",
+        "audit_resource_history.json",
+        "audit_stdout.txt",
+        "canonical_resource_log_binding_audit.json",
+        "scientific_audit_summary.json"
+      ],
+      "reason": "All scientific, numerical, identity, registry, resource, log-binding, exclusion, and package checks passed."
+    }
+  ],
+  "final_attempt": 3,
+  "final_decision": "RELEASE"
+}
+

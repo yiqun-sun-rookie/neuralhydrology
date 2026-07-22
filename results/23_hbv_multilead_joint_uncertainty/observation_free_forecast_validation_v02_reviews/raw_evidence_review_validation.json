@@ -1,0 +1,112 @@
+{
+  "validator_role": "第二个独立上下文的原始归档证据核验者；未参与第二版实现、结果生成或第一审查",
+  "raw_evidence_basis": [
+    "evidence.npz",
+    "config_snapshot.json",
+    "summary.json",
+    "forecast_propagation_certificate.json",
+    "resource_preflight.json",
+    "protected_artifact_integrity.json",
+    "checksums.json",
+    "source_snapshot",
+    "observation_free_forecast_validation_v02_reviews/code_method_result_review.json"
+  ],
+  "recalculated_values": {
+    "archive_integrity": {
+      "checksum_manifest_entries": 30,
+      "actual_files_excluding_checksum_manifest": 30,
+      "missing_file_count": 0,
+      "extra_file_count": 0,
+      "checksum_mismatch_count": 0,
+      "protected_artifact_before_after_mismatch_count": 0,
+      "protected_artifact_current_missing_count": 0,
+      "protected_artifact_current_hash_mismatch_count": 0
+    },
+    "evidence_arrays": {
+      "all_array_count": 43,
+      "numeric_array_count": 40,
+      "numeric_array_bytes": 2461416,
+      "nonfinite_numeric_array_count": 0,
+      "production_candidate_state_shape": [12, 7, 9, 15],
+      "reference_candidate_covariance_shape": [12, 7, 9, 15, 15],
+      "source_candidate_states_after_forecasts_shape": [12, 9, 15],
+      "source_candidate_covariances_after_forecasts_shape": [12, 9, 15, 15],
+      "source_probabilities_after_forecasts_shape": [12, 9]
+    },
+    "source_posterior_mutation_maximum_absolute_errors": {
+      "candidate_state": 0.0,
+      "candidate_covariance": 0.0,
+      "probability": 0.0,
+      "source_bank_overall": 0.0
+    },
+    "production_reference_maximum_absolute_errors": {
+      "transition_matrix": 0.0,
+      "probability": 0.0,
+      "candidate_state": 1.5631940186722204e-13,
+      "candidate_covariance_diagonal": 8.185452315956354e-12,
+      "candidate_flow": 2.6645352591003757e-15,
+      "combined_flow": 4.440892098500626e-16,
+      "combined_state": 2.842170943040401e-14,
+      "combined_covariance_diagonal": 2.7284841053187847e-12
+    },
+    "selection_and_causality": {
+      "one_three_seven_day_selection_maximum_absolute_error": 0.0,
+      "three_day_causal_prefix_maximum_absolute_error": 0.0
+    },
+    "probability_and_covariance": {
+      "probability_sum_maximum_absolute_error": 2.220446049250313e-16,
+      "transition_only_probability_maximum_absolute_error": 0.0,
+      "reference_covariance_symmetry_maximum_absolute_error": 0.0,
+      "minimum_reference_covariance_eigenvalue": 9.999999985970315e-05,
+      "all_saved_numeric_arrays_finite": true
+    },
+    "v01_v02_array_comparison": {
+      "common_array_count": 40,
+      "changed_common_array_count": 0,
+      "v01_only_array_count": 0,
+      "v02_only_arrays": [
+        "source_candidate_states_after_forecasts",
+        "source_candidate_covariances_after_forecasts",
+        "source_probabilities_after_forecasts"
+      ]
+    },
+    "resource_arithmetic": {
+      "recalculated_estimated_additional_peak_memory_bytes": 110508960,
+      "task_specific_reserve_bytes": 134217728,
+      "recalculated_task_specific_required_available_bytes": 244726688,
+      "execution_parallelism": 1,
+      "safe_to_run": true,
+      "universal_memory_threshold_used": false
+    },
+    "reported_value_cross_checks": {
+      "summary_gate_value_mismatch_count": 0,
+      "forecast_propagation_certificate_gate_value_mismatch_count": 0,
+      "first_review_recalculable_gate_value_mismatch_count": 0
+    }
+  },
+  "claim_checks": {
+    "v01_archive_limitation_closed": {
+      "supported": true,
+      "basis": "第二版 evidence.npz 新增三类预报后源候选库数组；它们分别与初始候选状态、初始候选协方差和广播后的初始概率逐元素相同，三个最大绝对变更量及总体变更量均为 0。源后验不变门槛现可只凭归档原始数组独立重算。"
+    },
+    "v01_v02_common_arrays_unchanged": {
+      "supported": true,
+      "basis": "两版共有的 40 个数组在名称、数据类型、形状和值上均完全相同；第二版只新增三类预报后源候选库数组。"
+    },
+    "other_numeric_gates": {
+      "supported": true,
+      "basis": "生产与独立参考误差、1/3/7 日选择、三日因果前缀、仅转移矩阵概率传播、概率和、有限性、协方差对称性与半正定性均通过冻结配置门槛，且重算值与摘要和证书一致。"
+    },
+    "archive_and_resource_safety": {
+      "supported": true,
+      "basis": "证据校验和与文件集合完整，受保护结果未变化；按 2461416 字节保存数值数组、四份工作副本和 96 MiB 顺序候选库重算的额外峰值为 110508960 字节，任务特定所需内存为 244726688 字节。"
+    },
+    "first_review_verdict_and_must_fix_count": {
+      "supported": true,
+      "basis": "原始证据未发现与第一审查结论冲突的数值、完整性或归档覆盖问题；第一版唯一低级别归档限制已由第二版新增数组关闭。"
+    }
+  },
+  "disagreements": [],
+  "verdict": "confirmed",
+  "must_fix_count": 0
+}

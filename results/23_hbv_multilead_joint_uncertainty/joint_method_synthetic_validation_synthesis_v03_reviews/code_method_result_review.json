@@ -1,0 +1,328 @@
+{
+  "verdict": "HOLD_PENDING_MUST_FIX",
+  "verdict_detail": "十二个组件、九条双重独立审查链、全部输入清单、第三版综合包十一项清单、四个最终条件的原始数值、资源预检和历史版本保护哈希均通过独立复核。第二版审查指出的 bypass 与 unconfirmed 子串误判已由精确归一化允许列表修复，正式测试也直接覆盖这两个反例。但是审查结构仍未严格失效关闭：任意自造的 contradictions_* 零值字段会被当作已注册矛盾计数，显式 contradictions_found=0 还会遮蔽其他非零矛盾字段，零 must_fix_count 也会遮蔽同时存在的非空 must_fix 列表。因此第三版治理实现尚不能最终签署。该缺陷不改变当前固定证据的原始数值，也不改变广泛联合方法优越性仍为 HOLD 的科学结论。",
+  "must_fix_count": 1,
+  "must_fix": [
+    {
+      "id": "review_schema_must_be_exact_and_non_contradictory",
+      "severity": "conclusion_changing_governance_defect",
+      "location": "src/hbv_multilead_joint_uncertainty/scripts/run_joint_method_synthesis.py::_review_status and test/test_hbv_joint_method_synthesis.py",
+      "finding": "裁决文字已使用精确允许列表，不再把 bypass、unconfirmed、passenger 或 not_confirmed 当作通过；但第二审查的旧格式仍以字段名前缀 startswith('contradictions') 接受任意自造字段。注入 review_verdict='confirmed' 与 contradictions_passenger=0 返回 passed=true；注入 contradictions_found=0 与 contradictions_science=1 也返回 passed=true。第一审查同时含 must_fix_count=0、非空 must_fix 列表和 verdict='pass' 时同样返回 passed=true；布尔值 must_fix_count=false 也被 int 转换为零。",
+      "impact": "当前九条正式审查链的清单哈希固定，实际裁决均为注册正面值，实际必须修复数、矛盾数和未验证数均为零，所以本缺陷不改变当前原始数值、零比四联合识别、零比十二预报增值或广泛科学结论 HOLD。它会允许未来伪造、冲突或类型错误的审查结构被综合程序接受，因此 numerical_chain_validated 的治理实现不能最终签署。",
+      "required_repair": "为每种历史和当前审查格式定义精确字段集合、精确互斥结构、严格整数类型和精确正面裁决枚举。只接受实际注册的矛盾计数字段，拒绝任意 contradictions_* 字段；若同一文件同时出现多种决策结构，必须验证它们一致或直接拒绝；布尔值不得冒充整数计数。",
+      "required_tests": [
+        "保留 bypass 第一审查裁决和 unconfirmed 第二审查裁决两个正式负例",
+        "新增 passenger 与 not_confirmed 裁决负例",
+        "新增自造 contradictions_passenger=0 字段负例",
+        "新增 contradictions_found=0 与其他非零矛盾字段并存的冲突负例",
+        "新增 must_fix_count=0 与非空 must_fix 列表并存的冲突负例",
+        "新增布尔计数、未知第一结构、未知第二结构、非空旧 must_fix、失败 conclusion 和非零注册矛盾数负例",
+        "九条当前正式链仍须逐条返回两个非空裁决、零必须修复、零矛盾、零未验证和 passed=true"
+      ]
+    }
+  ],
+  "artifact_chain_audit": {
+    "component_evidence_count": 12,
+    "component_status_passed_count": 12,
+    "independent_double_review_chain_count": 9,
+    "review_file_count": 18,
+    "configured_component_and_review_path_count": 21,
+    "input_manifest_entry_count": 336,
+    "input_file_count_including_manifests": 357,
+    "input_file_set_mismatch_count": 0,
+    "input_checksum_mismatch_count": 0,
+    "synthesis_manifest_entry_count": 11,
+    "synthesis_actual_file_count_including_manifest": 12,
+    "synthesis_file_set_mismatch_count": 0,
+    "synthesis_checksum_mismatch_count": 0,
+    "config_snapshot_structurally_equal": true,
+    "source_snapshot_byte_equal": true,
+    "formal_test_snapshot_byte_equal": true,
+    "synthesis_required_items": [
+      "claim_evidence.csv",
+      "component_summary.json",
+      "config_snapshot.json",
+      "final_conditions.csv",
+      "final_synthesis.md",
+      "input_evidence_integrity.json",
+      "protected_artifact_integrity.json",
+      "resource_preflight.json",
+      "source_snapshot/run_joint_method_synthesis.py",
+      "source_snapshot/test_hbv_joint_method_synthesis.py",
+      "summary.json"
+    ]
+  },
+  "double_review_chain_audit": {
+    "chain_count": 9,
+    "two_nonempty_review_files_count": 9,
+    "exact_positive_first_decision_count": 9,
+    "exact_positive_second_decision_count": 9,
+    "zero_first_required_fix_count": 9,
+    "zero_second_required_fix_count": 9,
+    "zero_contradiction_count": 9,
+    "zero_unverified_item_count": 9,
+    "passed_chain_count_for_current_frozen_files": 9,
+    "scope_note": "九条链覆盖单滤波、完整参数识别、过程尺度识别、模型概率、状态交互、无观测预报、四十五天联合条件、七至四十五天同化长度边界和七天同时切换条件。七天与二十一天联合条件由同化长度边界链审查；十二个组件并非每个都有独立的一对同名审查目录。"
+  },
+  "review_parser_audit": {
+    "exact_verdict_allowlist_present": true,
+    "substring_matching_present": false,
+    "formal_negative_tests": {
+      "bypass_first_review": "covered and rejected by ValueError",
+      "unconfirmed_second_review": "covered and returned passed=false",
+      "covers_both_version_two_reproduced_counterexamples": true,
+      "other_version_two_requested_negative_classes_formally_covered": false
+    },
+    "independent_injected_probe_count": 17,
+    "correctly_rejected_probe_count": 13,
+    "unexpectedly_accepted_probe_count": 4,
+    "correctly_rejected_examples": {
+      "first_verdict_only_bypass": "ValueError",
+      "first_verdict_only_passenger": "ValueError",
+      "first_count_zero_passenger": false,
+      "first_count_zero_not_confirmed": false,
+      "second_unconfirmed": false,
+      "second_not_confirmed": false,
+      "second_passenger": false,
+      "second_bypass": false,
+      "nonempty_old_must_fix": false,
+      "failed_old_conclusion": false,
+      "unknown_first_schema": "ValueError",
+      "unknown_second_schema": "ValueError",
+      "nonzero_registered_contradiction": false
+    },
+    "fail_open_examples": {
+      "invented_zero_contradiction_field": {
+        "input": "review_verdict=confirmed; contradictions_passenger=0",
+        "observed_passed": true
+      },
+      "registered_zero_plus_other_nonzero": {
+        "input": "review_verdict=confirmed; contradictions_found=0; contradictions_science=1",
+        "observed_passed": true
+      },
+      "conflicting_first_count_and_list": {
+        "input": "must_fix_count=0; must_fix=[one item]; verdict=pass",
+        "observed_passed": true
+      },
+      "boolean_first_count": {
+        "input": "must_fix_count=false; verdict=pass",
+        "observed_passed": true
+      }
+    }
+  },
+  "independent_raw_component_recalculations": {
+    "state_propagation": {
+      "state_maximum_absolute_error": 5.684341886080802e-14,
+      "discharge_maximum_absolute_error": 2.220446049250313e-15
+    },
+    "single_filter": {
+      "state_improvement_trials_relative_to_same_filter_without_observations": 20,
+      "one_day_flow_improvement_trials_relative_to_same_filter_without_observations": 24,
+      "trial_count": 24
+    },
+    "isolated_complete_parameter_identification": {
+      "correct_trials": 24,
+      "trial_count": 24
+    },
+    "isolated_projected_process_scale_identification": {
+      "correct_trials": 23,
+      "trial_count": 24
+    },
+    "joint_probability_update": {
+      "prior_correct": 10452,
+      "posterior_correct": 10884,
+      "total": 11680,
+      "prior_accuracy": 0.8948630136986301,
+      "posterior_accuracy": 0.9318493150684931
+    },
+    "state_interaction": {
+      "combined_mean_maximum_absolute_error": 1.4210854715202004e-13,
+      "combined_covariance_maximum_absolute_error": 2.7284841053187847e-12,
+      "candidate_state_maximum_absolute_error": 1.7053025658242404e-13
+    },
+    "observation_free_forecast": {
+      "combined_prediction_maximum_absolute_error": 4.440892098500626e-16,
+      "candidate_prediction_maximum_absolute_error": 2.6645352591003757e-15,
+      "probability_maximum_absolute_error": 0.0,
+      "combined_state_maximum_absolute_error": 2.842170943040401e-14
+    },
+    "assimilation_duration_prefix_integrity": {
+      "comparison_count": 18,
+      "all_exact": true,
+      "non_exact_count": 0
+    }
+  },
+  "four_condition_raw_recalculation": {
+    "method": "仅从四个 evidence.npz 和各自冻结配置重算九候选、参数边际、过程尺度边际识别率，真实候选概率中位数，联合流量均方根误差，起报状态误差，配对块自助法区间及布尔门。final_conditions.csv、method_metrics.csv、paired_comparisons.csv 和 condition_decisions.json 只在计算完成后用于对照。",
+    "common_identification_thresholds": {
+      "joint_candidate_argmax_accuracy_minimum": 0.5,
+      "joint_parameter_argmax_accuracy_minimum": 0.6666666666666666,
+      "joint_process_argmax_accuracy_minimum": 0.6666666666666666,
+      "median_joint_true_candidate_probability_minimum": 0.2
+    },
+    "common_forecast_thresholds": {
+      "minimum_relative_root_mean_square_error_improvement_percent_against_fixed_filter": 5.0,
+      "paired_block_bootstrap_upper_must_be_strictly_below": 0.0,
+      "added_value_requires_negative_upper_bound_against_parameter_only_and_process_scale_only": true
+    },
+    "conditions": [
+      {
+        "condition_id": "fixed_07_days",
+        "joint_candidate_correct": "21/72",
+        "joint_parameter_correct": "34/72",
+        "joint_process_correct": "40/72",
+        "joint_candidate_parameter_process_accuracy": [0.2916666666666667, 0.4722222222222222, 0.5555555555555556],
+        "median_joint_true_candidate_probability": 0.14982094370470275,
+        "joint_forecast_root_mean_square_error_days_1_3_7": [0.8164715687017786, 1.6747953754534604, 1.9427505324939291],
+        "joint_origin_state_root_mean_square_error": 0.16758942405862112,
+        "joint_identification_effective": false,
+        "forecast_effective_against_fixed_days_1_3_7": [true, true, true],
+        "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+        "origin_state_effective_against_fixed": true,
+        "origin_state_added_value_beyond_both": true
+      },
+      {
+        "condition_id": "fixed_21_days",
+        "joint_candidate_correct": "25/72",
+        "joint_parameter_correct": "33/72",
+        "joint_process_correct": "45/72",
+        "joint_candidate_parameter_process_accuracy": [0.3472222222222222, 0.4583333333333333, 0.625],
+        "median_joint_true_candidate_probability": 0.18039874096670724,
+        "joint_forecast_root_mean_square_error_days_1_3_7": [0.8441853761039364, 1.142397744284536, 2.2940148032730705],
+        "joint_origin_state_root_mean_square_error": 0.2129194392400516,
+        "joint_identification_effective": false,
+        "forecast_effective_against_fixed_days_1_3_7": [true, true, true],
+        "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+        "origin_state_effective_against_fixed": true,
+        "origin_state_added_value_beyond_both": true
+      },
+      {
+        "condition_id": "fixed_45_days",
+        "joint_candidate_correct": "37/72",
+        "joint_parameter_correct": "43/72",
+        "joint_process_correct": "61/72",
+        "joint_candidate_parameter_process_accuracy": [0.5138888888888888, 0.5972222222222222, 0.8472222222222222],
+        "median_joint_true_candidate_probability": 0.24446729489293278,
+        "joint_forecast_root_mean_square_error_days_1_3_7": [0.8614678738612609, 1.3588597056268628, 1.2040603024466145],
+        "joint_origin_state_root_mean_square_error": 0.26586634153813155,
+        "joint_identification_effective": false,
+        "failed_identification_gate": "complete-parameter-label accuracy 43/72 is below the 48/72 threshold",
+        "forecast_effective_against_fixed_days_1_3_7": [false, false, true],
+        "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+        "origin_state_effective_against_fixed": true,
+        "origin_state_added_value_beyond_both": false
+      },
+      {
+        "condition_id": "periodic_switch_07_days",
+        "joint_candidate_correct": "10/72",
+        "joint_parameter_correct": "26/72",
+        "joint_process_correct": "28/72",
+        "joint_candidate_parameter_process_accuracy": [0.1388888888888889, 0.3611111111111111, 0.3888888888888889],
+        "median_joint_true_candidate_probability": 0.08205526412068902,
+        "joint_forecast_root_mean_square_error_days_1_3_7": [0.9258281399866716, 1.3641628543870818, 2.1017156824407444],
+        "joint_origin_state_root_mean_square_error": 0.28648501712528235,
+        "joint_identification_effective": false,
+        "forecast_effective_against_fixed_days_1_3_7": [false, false, false],
+        "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+        "origin_state_effective_against_fixed": true,
+        "origin_state_added_value_beyond_both": false
+      }
+    ],
+    "maximum_absolute_numeric_difference_from_final_conditions_csv": 4.440892098500626e-16,
+    "boolean_decision_mismatch_count": 0,
+    "joint_identification_passed_conditions": "0/4",
+    "forecast_added_value_beyond_both_single_factor_methods": "0/12 condition-by-lead targets"
+  },
+  "claim_table_audit": {
+    "row_count": 17,
+    "duplicate_claim_id_count": 0,
+    "empty_cell_count": 0,
+    "classifications": ["fact", "inference", "unknown"],
+    "unknown_claim_count": 5,
+    "unknown_claims": [
+      "是否超过四十五天的匹配同化能够达到联合识别",
+      "其他切换周期或转移先验下的表现",
+      "真实流域表现",
+      "其他观测不确定性或强迫资料误差下的表现",
+      "物理投影后的真值是否可由精确加性高斯过程候选表示"
+    ],
+    "joint_identification_status": "rejected_in_tested_conditions",
+    "joint_identification_value": "0/4 tested conditions",
+    "joint_forecast_added_value_status": "rejected_in_tested_conditions",
+    "joint_forecast_added_value_value": "0/12 condition-by-lead targets",
+    "broad_method_claim_classification": "inference",
+    "broad_method_claim_status": "not_authorized",
+    "assessment": "表中负面事实均限定于已测试条件，没有把零比四或零比十二外推为未测试条件下的普遍失败。"
+  },
+  "resource_preflight_audit": {
+    "maximum_input_file_bytes": 12270573,
+    "formula": "4 * 12270573 + 33554432 + 67108864",
+    "estimated_additional_peak_memory_bytes": 82636724,
+    "task_specific_reserve_bytes": 67108864,
+    "task_specific_required_available_bytes": 149745588,
+    "available_physical_memory_bytes_at_formal_run": 1258569728,
+    "headroom_after_requirement_bytes_at_formal_run": 1108824140,
+    "execution_parallelism": 1,
+    "universal_memory_threshold_used": false,
+    "safe_to_run": true,
+    "method_assessment": "综合程序逐文件以一兆字节块计算哈希，逐目录串行验证，并只读取小型 JSON 和逗号分隔值表；四倍最大输入文件加三十二兆字节工作估算和六十四兆字节任务余量与该工作负载相称。"
+  },
+  "protected_history_audit": {
+    "configured_path_count": 25,
+    "current_file_count": 383,
+    "recorded_before_sha256": "6549f90ca5f9e5c5f7b7d743589a687d7938f9026111bb899e249a3cbfb6b2f5",
+    "recorded_after_sha256": "6549f90ca5f9e5c5f7b7d743589a687d7938f9026111bb899e249a3cbfb6b2f5",
+    "independently_recalculated_current_sha256": "6549f90ca5f9e5c5f7b7d743589a687d7938f9026111bb899e249a3cbfb6b2f5",
+    "matches_version_three_record": true,
+    "historical_directories": {
+      "joint_method_synthetic_validation_synthesis_v01": {"file_count": 12, "current_mapping_sha256": "a3aa2cab190ab6bdc32176b2c66e5e96ae9a5faa58277e1677936b97cd848b8f"},
+      "joint_method_synthetic_validation_synthesis_v01_reviews": {"file_count": 1, "current_mapping_sha256": "23bacb4c7e7a252fc271f1db89b1c4efe07aff3c17f37fba7326793b90ee6825"},
+      "joint_method_synthetic_validation_synthesis_v02": {"file_count": 12, "current_mapping_sha256": "c443dd1dc1f44c47e95fbd3f1c76613ab87e9672ea39d039696002ccebe9e624"},
+      "joint_method_synthetic_validation_synthesis_v02_reviews": {"file_count": 1, "current_mapping_sha256": "91ceae32a6d35410c16b310fcb565ec504fde035223c52b3269a6094c0b27f6d"}
+    },
+    "status": "unchanged"
+  },
+  "focused_test_run": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python -m pytest -q -p no:cacheprovider test/test_hbv_joint_method_synthesis.py",
+    "result": "3 passed",
+    "exit_code": 0,
+    "duration_seconds": 2.16,
+    "warnings": [
+      "one existing PytestConfigWarning for unknown collect_ignore_glob",
+      "one unrelated Windows temporary-directory cleanup PermissionError warning after successful completion"
+    ],
+    "limitation": "测试证明正式综合正例及 bypass 和 unconfirmed 两个回归负例；它没有覆盖本审查发现的精确结构冲突和自造矛盾字段。"
+  },
+  "scientific_scope_and_status": {
+    "validation_goal_complete_as_registered": true,
+    "current_frozen_numerical_artifacts_consistent": true,
+    "joint_identification_supported": false,
+    "joint_added_value_supported": false,
+    "broad_scientific_claim_authorized": false,
+    "scientific_status": "HOLD",
+    "scope": "十五状态水文模型、三个完整十三参数向量、三个投影前过程尺度候选、八个匹配块、固定标签七天、二十一天和四十五天同化，以及一个七天参数与过程尺度同时切换压力条件。",
+    "not_established": [
+      "超过四十五天的匹配同化",
+      "其他切换周期或转移先验",
+      "真实流域表现",
+      "其他观测不确定性",
+      "强迫资料误差",
+      "物理投影后的精确加性高斯过程模型",
+      "已冻结三个参数向量和三个过程尺度之外的候选范围"
+    ],
+    "overreach_prohibited": "状态传播、状态交互代数、无观测预报数值一致性、固定七天和二十一天起报状态的正面结果，都不能单独写成联合方法识别成功或一日、三日、七日预报优越。"
+  },
+  "reviewer_independence": {
+    "review_layer": "第一层独立代码、方法和结果审查",
+    "formal_synthesis_directory_modified": false,
+    "component_evidence_modified": false,
+    "existing_review_evidence_modified": false,
+    "version_one_synthesis_or_reviews_modified": false,
+    "version_two_synthesis_or_reviews_modified": false,
+    "only_repository_artifact_written": "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v03_reviews/code_method_result_review.json",
+    "formal_summary_values_used_as_raw_computational_inputs": false,
+    "formal_final_conditions_values_used_as_raw_computational_inputs": false,
+    "prior_review_values_used_as_raw_computational_inputs": false,
+    "historical_memory_use": "仅用于保持状态交互代数不得外推为水文预报优越的范围边界；所有本轮数值和哈希均从当前正式文件重新计算。"
+  }
+}

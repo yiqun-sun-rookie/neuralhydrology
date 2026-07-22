@@ -1,0 +1,18 @@
+{
+  "environment_variables": {
+    "DISABLE_NUMBA": null,
+    "HBV_BOUNDS": null
+  },
+  "execution_command": "src\\hbv_multilead_joint_uncertainty\\scripts\\run_synthetic_truth_validation.py --repo-root . --config src\\hbv_multilead_joint_uncertainty\\configs\\synthetic_truth_propagation_v03.json --output-dir results\\23_hbv_multilead_joint_uncertainty\\synthetic_truth_propagation_v03 --registry-path results\\23_hbv_multilead_joint_uncertainty\\registry\\synthetic_truth_propagation_v03.json",
+  "finished_at_utc": "2026-07-17T10:51:24.534965+00:00",
+  "git_commit": "ffbde6d9091df08363ff5b7ab0492bdd02873c42",
+  "git_worktree_dirty": true,
+  "numba_version": "0.61.2",
+  "numpy_version": "1.26.4",
+  "operating_system": "Windows-10-10.0.26200-SP0",
+  "python_executable": "C:\\Users\\yiqun\\anaconda3\\python.exe",
+  "python_version": "3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]",
+  "reference_numba_enabled": true,
+  "started_at_utc": "2026-07-17T10:51:23.458611+00:00",
+  "working_directory": "G:\\github\\pycharm\\projects\\neuralhydrology"
+}

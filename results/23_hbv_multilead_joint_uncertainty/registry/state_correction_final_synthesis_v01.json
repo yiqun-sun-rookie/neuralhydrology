@@ -1,0 +1,15 @@
+{
+  "created_at": "2026-07-17T01:42:48.1671682+08:00",
+  "updated_at": "2026-07-17T01:42:48.1671682+08:00",
+  "run_id": "state_correction_final_synthesis_v01",
+  "run_type": "state_correction_final_synthesis",
+  "status": "verified_stop",
+  "run_directory": "results/23_hbv_multilead_joint_uncertainty/state_correction_final_synthesis_v01",
+  "source_experiment_id": "state_correction_sixteen_v02",
+  "independent_audit": "PASS",
+  "second_independent_validation": "PASS",
+  "continuation_gate": "FAIL_STOP",
+  "run_531": false,
+  "formal_artifacts_modified": false,
+  "commit_or_push": false
+}

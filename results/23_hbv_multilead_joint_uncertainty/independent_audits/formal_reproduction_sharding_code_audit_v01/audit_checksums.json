@@ -1,0 +1,23 @@
+{
+  "algorithm": "Secure Hash Algorithm 256-bit",
+  "excluded_files": [
+    "audit_checksums.json",
+    "self_verification.json"
+  ],
+  "files_sha256": {
+    "adversarial_code_checks.py": "d6a6da1258980ab42b046dbcc9a41cfcf4b85b44f59ebd396f14007ec8b7bfa8",
+    "adversarial_test_results.json": "d1991d279042784f06a62dc7f7e0366170a2d3f67d6fe9fa18f92ed57eac01b3",
+    "audit_summary.json": "b4958b03062680b72588efc9c62bbc692be72353b873b3a52436416b8009084d",
+    "independent_code_audit_report.md": "2739a8f33970c27be71ce6fb83283f125238332f521037df8750f5ca7b700a8c",
+    "independent_resource_history.json": "218c5034dd9b67a81184b1b12301a4320c06eeed32c3daacc489b72c18ed2d45",
+    "independent_resource_history_attempt01_stopped_resource_gate.json": "ad1d74c5aa5a566c70ca6a8f34d1a723447b20ae6c3ce80ba5f657991774f23b",
+    "pytest_output.txt": "5f631c55808888e76a4d00b7d87eddd22be048b138ae58d5a9c2a29b34edda91",
+    "pytest_output_attempt01_stopped_resource_gate.txt": "0157d225d53441ff819c581e79a97d704b5ca662f0322a7a73629e78d73ff52d",
+    "run_independent_tests.py": "82e98e48c2bacbffbacf322df17be9dcf207bc62a3559cd1dd209fe347877596",
+    "source_integrity_before_after.json": "f76c59e61c4dbde4d5d86255df1025407ed0b8f8b89b2df053b4ac716b739522",
+    "structured_findings.csv": "a7e264ed5a05c1ab5e903c86c7c3970a0864dd2db7d1306441ab0cb417f22e73",
+    "test_results.json": "8d519c73d8e5cddf9ff2447b62fa668ee869363bd3277df7717d6e03c8207f4e",
+    "test_results_attempt01_stopped_resource_gate.json": "0333a60bd792d79c5fcd6b7cd45e5e913fafb913dbb2eaf884255130a75a24b1",
+    "verify_audit_package.py": "223e229a0b01fa6ae5dc9a41f7c7f67d98d3ac80ec49a64c01fa93ef66b2ee97"
+  }
+}

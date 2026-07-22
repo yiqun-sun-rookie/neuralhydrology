@@ -1,0 +1,62 @@
+[
+  {
+    "available_memory_fraction": 0.26389604557193924,
+    "available_memory_gib": 8.36556625366211,
+    "cpu_load_percent": 0.0,
+    "disk_free_gib": 2166.1219062805176,
+    "event": "start",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.0,
+    "timestamp": "2026-07-15T21:01:38.374531+08:00"
+  },
+  {
+    "available_memory_fraction": 0.26358894665311516,
+    "available_memory_gib": 8.355831146240234,
+    "cpu_load_percent": 27.2,
+    "disk_free_gib": 2166.121910095215,
+    "event": "running",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.007999420166015625,
+    "timestamp": "2026-07-15T21:01:38.405890+08:00"
+  },
+  {
+    "available_memory_fraction": 0.26045766884483873,
+    "available_memory_gib": 8.256568908691406,
+    "cpu_load_percent": 36.3,
+    "disk_free_gib": 2166.121910095215,
+    "event": "running",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.08172225952148438,
+    "timestamp": "2026-07-15T21:01:39.417449+08:00"
+  },
+  {
+    "available_memory_fraction": 0.2574271127430889,
+    "available_memory_gib": 8.160499572753906,
+    "cpu_load_percent": 36.6,
+    "disk_free_gib": 2166.121910095215,
+    "event": "running",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.0862274169921875,
+    "timestamp": "2026-07-15T21:01:40.430199+08:00"
+  },
+  {
+    "available_memory_fraction": 0.2610976187078115,
+    "available_memory_gib": 8.27685546875,
+    "cpu_load_percent": 38.4,
+    "disk_free_gib": 2166.121910095215,
+    "event": "running",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.0946044921875,
+    "timestamp": "2026-07-15T21:01:41.440511+08:00"
+  },
+  {
+    "available_memory_fraction": 0.2640451425783746,
+    "available_memory_gib": 8.370292663574219,
+    "cpu_load_percent": 35.4,
+    "disk_free_gib": 2166.1219024658203,
+    "event": "finish",
+    "logical_processors": 32,
+    "process_tree_rss_gib": 0.0,
+    "timestamp": "2026-07-15T21:01:42.442735+08:00"
+  }
+]

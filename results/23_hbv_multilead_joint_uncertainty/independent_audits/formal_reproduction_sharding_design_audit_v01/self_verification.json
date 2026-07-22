@@ -1,0 +1,97 @@
+{
+  "verified_at_utc": "2026-07-15T08:42:52.248487+00:00",
+  "independent_from_main_audit_module": true,
+  "overall_passed": true,
+  "decision": "RELEASE",
+  "formal_reproduction_status": "PENDING",
+  "formal_reproduction_passed": false,
+  "check_count": 17,
+  "failed_check_count": 0,
+  "checks": [
+    {
+      "check": "审查包校验和",
+      "passed": true,
+      "detail": "清单文件9个，不一致0个。"
+    },
+    {
+      "check": "设计与科学状态分离",
+      "passed": true,
+      "detail": "设计=RELEASE，正式复现=PENDING。"
+    },
+    {
+      "check": "失败数组禁止复用",
+      "passed": true,
+      "detail": "审查结论明确禁止复用两次失败包数组。"
+    },
+    {
+      "check": "原合同身份",
+      "passed": true,
+      "detail": "合同流域=16。"
+    },
+    {
+      "check": "主结果参考身份",
+      "passed": true,
+      "detail": "主结果与原合同的流域集合和顺序一致。"
+    },
+    {
+      "check": "原证据完整性",
+      "passed": true,
+      "detail": "校验失败文件=0。"
+    },
+    {
+      "check": "冻结源码与输入",
+      "passed": true,
+      "detail": "源码37个，输入62个，校验失败0个。"
+    },
+    {
+      "check": "两次失败事实",
+      "passed": true,
+      "detail": "第一次保存4个，第二次保存5个，状态均为failed。"
+    },
+    {
+      "check": "外部资源压力证据",
+      "passed": true,
+      "detail": "两次系统内存低于20%，复现进程自身最大常驻内存均低于0.15吉字节。"
+    },
+    {
+      "check": "数组验收基线",
+      "passed": true,
+      "detail": "流域16个，每流域36数组，总数值元素5871360。"
+    },
+    {
+      "check": "计算隔离依据",
+      "passed": true,
+      "detail": "每个流域重新建立计算对象，评价数值源码没有随机数调用。"
+    },
+    {
+      "check": "现有写入器限制",
+      "passed": true,
+      "detail": "现有写入器必须完整覆盖原合同，审查报告正确要求新增分片层。"
+    },
+    {
+      "check": "必要条件完整",
+      "passed": true,
+      "detail": "必要条件=15项。"
+    },
+    {
+      "check": "只读审查",
+      "passed": true,
+      "detail": "受保护文件15个，变化0个。"
+    },
+    {
+      "check": "审查资源记录",
+      "passed": true,
+      "detail": "样本8条，最大间隔0.214秒。"
+    },
+    {
+      "check": "报告结论边界",
+      "passed": true,
+      "detail": "报告没有把设计放行写成正式复现完成。"
+    },
+    {
+      "check": "无字节码副产物",
+      "passed": true,
+      "detail": "字节码文件0个。"
+    }
+  ]
+}

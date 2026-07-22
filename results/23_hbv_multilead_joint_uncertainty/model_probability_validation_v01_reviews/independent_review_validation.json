@@ -1,0 +1,22 @@
+{
+  "validation_context": "model_probability_review_validation",
+  "validated_at": "2026-07-17T14:00:59.6896944Z",
+  "mode": "read_only_raw_evidence_validation_of_independent_review",
+  "result_evidence_sha256": "29f098340378a3a5e8bf2a9e9acb3282a098df3afbd0498a679dab786eb6bcbf",
+  "conclusion": "confirmed_with_two_additional_auditability_repairs",
+  "confirmed_items": {
+    "saved_float_values_per_trial_day": 50,
+    "counted_float_values_per_trial_day": 43,
+    "uncompressed_saved_array_bytes": 4788128,
+    "corrected_estimated_peak_memory_bytes": 52706944,
+    "original_run_remained_memory_safe": true,
+    "frozen_extreme_likelihood_execution_evidence_present": false,
+    "probability_recursion_and_scores_reproduced": true,
+    "result_checksum_count": 23,
+    "protected_file_count": 374
+  },
+  "additional_must_fix": [
+    "Put the factorial-transition and posterior-factorization values used by the pass decision into gate_values.",
+    "Freeze switch-day and non-switch-day joint and marginal accuracy diagnostics in the formal summary."
+  ]
+}

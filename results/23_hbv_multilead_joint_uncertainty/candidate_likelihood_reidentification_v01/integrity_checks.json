@@ -1,0 +1,65 @@
+{
+  "all_passed": true,
+  "per_run": [
+    {
+      "dataset_role": "development",
+      "integrity_passed": true,
+      "partition_violations": 0,
+      "recomputed_first_day_mismatches": 0,
+      "recomputed_first_stable_day_mismatches": 0,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v05",
+      "scenario": "parameter_switch",
+      "stable_category_vs_frozen_flag_mismatches": 0
+    },
+    {
+      "dataset_role": "development",
+      "integrity_passed": true,
+      "partition_violations": 0,
+      "recomputed_first_day_mismatches": 0,
+      "recomputed_first_stable_day_mismatches": 0,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v05",
+      "scenario": "process_noise_switch",
+      "stable_category_vs_frozen_flag_mismatches": 0
+    },
+    {
+      "dataset_role": "development",
+      "integrity_passed": true,
+      "partition_violations": 0,
+      "recomputed_first_day_mismatches": 0,
+      "recomputed_first_stable_day_mismatches": 0,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v05",
+      "scenario": "parameter_process_noise_switch",
+      "stable_category_vs_frozen_flag_mismatches": 0
+    },
+    {
+      "dataset_role": "confirmation",
+      "integrity_passed": true,
+      "partition_violations": 0,
+      "recomputed_first_day_mismatches": 0,
+      "recomputed_first_stable_day_mismatches": 0,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_confirmation_v01",
+      "scenario": "parameter_switch",
+      "stable_category_vs_frozen_flag_mismatches": 0
+    },
+    {
+      "dataset_role": "confirmation",
+      "integrity_passed": true,
+      "partition_violations": 0,
+      "recomputed_first_day_mismatches": 0,
+      "recomputed_first_stable_day_mismatches": 0,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_confirmation_v01",
+      "scenario": "process_noise_switch",
+      "stable_category_vs_frozen_flag_mismatches": 0
+    },
+    {
+      "dataset_role": "confirmation",
+      "integrity_passed": true,
+      "partition_violations": 0,
+      "recomputed_first_day_mismatches": 0,
+      "recomputed_first_stable_day_mismatches": 0,
+      "results_dir": "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_confirmation_v01",
+      "scenario": "parameter_process_noise_switch",
+      "stable_category_vs_frozen_flag_mismatches": 0
+    }
+  ]
+}

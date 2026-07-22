@@ -1,0 +1,34 @@
+{
+  "review_context": "process_noise_audit_fast",
+  "reviewed_at": "2026-07-17T13:11:16.5714473Z",
+  "mode": "read_only_independent_code_method_and_result_audit",
+  "result_evidence_sha256": "893b264400512a5b51741c2608de581a3d23df4b4f2bca9dc018220da8a91efd",
+  "must_fix": [
+    {
+      "issue": "terminal true-candidate probability interval resampled 24 correlated trials instead of eight whole matched blocks",
+      "stored_interval": [0.997738258380064, 0.9999999946080764],
+      "correct_grouped_interval": [0.9985835879695351, 0.9999954976157994],
+      "effect_on_gate": "none because this interval was not used by the pass gate",
+      "required_action": "resample complete matched blocks or remove the interval"
+    }
+  ],
+  "confirmed_results": {
+    "correct_classification_count": 23,
+    "trial_count": 24,
+    "correct_by_process": [7, 8, 8],
+    "true_candidate_lowest_prior_flow_error_count": 24,
+    "probability_reconstruction_maximum_absolute_error": 2.220446049250313e-16,
+    "matched_block_accuracy_interval": [0.875, 1.0],
+    "evidence_checksum_count": 26,
+    "protected_file_count": 281
+  },
+  "scope_limits": {
+    "projection_event_days": 2880,
+    "projection_total_days": 2880,
+    "meltwater_projection_days": 2880,
+    "negative_observation_count": 106,
+    "observation_count": 2880,
+    "shared_truth_candidate_transition_implementation": true,
+    "defensible_claim": "the three pre-projection nominal covariance scales are distinguishable under the frozen projected synthetic generation rule and exact model-structure match"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "experiment_family": "2026-07-16-hbv-state-correction-propagation-v7",
+  "inherits": "state_correction_propagation_v02.json",
+  "inherited_config_sha256": "db2d74d956f2246eefc6975441084461fd35bf75994daf5bff285c90569c38d7",
+  "revision_scope": "independently validated smoke-audit corrections plus version 6 resource thresholds",
+  "supersedes_resource_config": "state_correction_propagation_v06.json",
+  "invalid_smoke_result": "results/23_hbv_multilead_joint_uncertainty/state_correction_smoke_v02",
+  "invalid_smoke_result_use": "implementation audit evidence only; no scientific metric may be used for configuration selection or claims",
+  "override_keys": [
+    "controls",
+    "continuation_gate",
+    "natural_state_correction_propagation",
+    "state_mask_branching",
+    "checkpoint"
+  ],
+  "controls": [
+    {
+      "control_id": "current_joint_all_fifteen_states",
+      "allowed_state_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+      "role": "frozen_reference"
+    },
+    {
+      "control_id": "hydrologic_five_states_only",
+      "allowed_state_indices": [0, 1, 2, 3, 4],
+      "role": "primary_continuation_gate_control",
+      "hydrologic_reason": "update only the five water-storage states and do not directly update routing memory"
+    },
+    {
+      "control_id": "runoff_two_states_only",
+      "allowed_state_indices": [3, 4],
+      "role": "state_group_diagnostic",
+      "hydrologic_reason": "update only the upper and lower runoff-generating storages"
+    },
+    {
+      "control_id": "origin_mean_correction_removed",
+      "candidate_mean": "origin prior mean",
+      "candidate_covariance": "origin posterior covariance",
+      "candidate_probabilities": "origin posterior probabilities",
+      "role": "matched_mean_correction_counterfactual"
+    },
+    {
+      "control_id": "three_day_half_life_additional_mean_taper_sensitivity",
+      "source_reference": "current_joint_all_fifteen_states",
+      "source_removed": "origin_mean_correction_removed",
+      "half_life_days": 3.0,
+      "retention_formula": "2 ** (-(lead_days - 1) / half_life_days)",
+      "retention_by_lead": {"1": 1.0, "3": 0.6299605249474366, "7": 0.25},
+      "interpretation": "additional pre-propagation taper applied on top of model dynamics",
+      "role": "sensitivity_only_not_eligible_for_continuation_gate"
+    }
+  ],
+  "state_mask_branching": {
+    "shared_prior_each_origin": true,
+    "shared_prior_fields": ["candidate states", "candidate covariances", "model probabilities"],
+    "branch_enters_next_origin": false,
+    "persistent_history": "current_joint_all_fifteen_states only"
+  },
+  "natural_state_correction_propagation": {
+    "corrected_branch": "current_joint_all_fifteen_states",
+    "removed_branch": "origin_mean_correction_removed",
+    "diagnostic": "corrected target state and flow minus removed target state and flow after one ordinary HBV propagation per branch",
+    "uses_model_propagation_count": 1,
+    "produces_separate_tapered_forecast": false,
+    "eligible_for_continuation_gate": false
+  },
+  "checkpoint": {
+    "atomic": true,
+    "interval_completed_origins": 10,
+    "save_on_resource_gate_failure": true,
+    "resume_identity_fields": ["experiment family", "configuration checksum", "input checksum", "source checksum"],
+    "resume_exact_array_requirement": true
+  },
+  "continuation_gate": {
+    "control_id": "hydrologic_five_states_only",
+    "selection_basis": "prespecified hydrologic separation: water storages may update; routing memory may not update directly",
+    "selection_uses_invalid_smoke_metrics": false,
+    "seven_day_median_rmse_change_percent_vs_open_loop_maximum": 0.0,
+    "seven_day_strict_rmse_win_count_vs_open_loop_minimum": 9,
+    "one_day_median_rmse_increase_percent_vs_current_joint_maximum": 1.0,
+    "percent_computed_per_basin_before_median": true,
+    "larger_sample_basin_count_if_all_pass": 531,
+    "run_larger_sample_automatically": false
+  },
+  "resource": {
+    "minimum_start_available_fraction": 0.12,
+    "minimum_running_available_fraction": 0.075,
+    "maximum_estimated_peak_fraction_of_available": 0.40,
+    "minimum_free_disk_gib": 50.0,
+    "minimum_output_space_multiplier": 3.0,
+    "monitor_interval_seconds": 15.0,
+    "maximum_resource_probe_seconds": 5.0,
+    "reserved_logical_processors": 2,
+    "numerical_thread_limit": 1,
+    "smoke_estimated_peak_gib": 0.75,
+    "smoke_estimated_output_gib": 0.25,
+    "formal_estimated_peak_gib": 1.0,
+    "formal_estimated_output_gib": 0.5
+  }
+}

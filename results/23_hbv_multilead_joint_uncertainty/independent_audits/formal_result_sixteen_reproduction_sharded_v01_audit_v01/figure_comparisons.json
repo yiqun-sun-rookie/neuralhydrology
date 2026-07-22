@@ -1,0 +1,34 @@
+[
+  {
+    "actual_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_reproduction_sharded_v01\\lead_time_effects.png",
+    "actual_sha256": "f51a09d7cff7661af2cc275e6b32a77f508a6fd44e8092116ea58588f0e51789",
+    "differing_pixel_count": 0,
+    "expected_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_result_sixteen_reproduction_sharded_v01_audit_v01\\recomputed_lead_time_effects.png",
+    "expected_sha256": "f51a09d7cff7661af2cc275e6b32a77f508a6fd44e8092116ea58588f0e51789",
+    "label": "aggregate_figure",
+    "maximum_channel_difference": 0,
+    "passed": true,
+    "pixel_shape": [
+      924,
+      2310,
+      4
+    ],
+    "shape_match": true
+  },
+  {
+    "actual_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01\\lead_time_effects.png",
+    "actual_sha256": "f51a09d7cff7661af2cc275e6b32a77f508a6fd44e8092116ea58588f0e51789",
+    "differing_pixel_count": 0,
+    "expected_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_result_sixteen_reproduction_sharded_v01_audit_v01\\recomputed_lead_time_effects.png",
+    "expected_sha256": "f51a09d7cff7661af2cc275e6b32a77f508a6fd44e8092116ea58588f0e51789",
+    "label": "reference_figure",
+    "maximum_channel_difference": 0,
+    "passed": true,
+    "pixel_shape": [
+      924,
+      2310,
+      4
+    ],
+    "shape_match": true
+  }
+]

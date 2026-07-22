@@ -1,0 +1,65 @@
+{
+  "base_config": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\configs\\joint_method_stable_validation_v04.json",
+  "changed_factor": "which frozen complete parameter label and pre-projection covariance scale generate physically projected truth",
+  "experiment_id": "joint_method_stable_validation_v04",
+  "fixed_factors": "matched forcing and random draws, forty-five assimilation days, full interaction and one-, three-, seven-day leads",
+  "hypothesis": "the complete joint method adds value under a fixed complete parameter label and physically projected candidate-scale pre-projection perturbations",
+  "metrics_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\joint_method_stable_validation_v04\\method_metrics.csv",
+  "notes": "This favorable-condition experiment determines identification, origin-state error and one-, three-, and seven-day forecast error for a fixed complete thirteen-parameter label relative to fair controls. The frozen candidate covariance controls only the pre-projection perturbation scale; the post-projection truth is not an exact additive Gaussian candidate model. It does not establish behavior under switching truth, weak observations, shorter assimilation, forcing error or real basins; those are separate failure-boundary questions.",
+  "paper_name": "fixed complete parameter label with projected candidate-scale process truth condition",
+  "run_dir": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\joint_method_stable_validation_v04",
+  "seeds": [
+    {
+      "block_id": "stable_block_01",
+      "forcing_seed": 980001,
+      "observation_noise_seed": 982001,
+      "process_noise_seed": 981001
+    },
+    {
+      "block_id": "stable_block_02",
+      "forcing_seed": 980002,
+      "observation_noise_seed": 982002,
+      "process_noise_seed": 981002
+    },
+    {
+      "block_id": "stable_block_03",
+      "forcing_seed": 980003,
+      "observation_noise_seed": 982003,
+      "process_noise_seed": 981003
+    },
+    {
+      "block_id": "stable_block_04",
+      "forcing_seed": 980004,
+      "observation_noise_seed": 982004,
+      "process_noise_seed": 981004
+    },
+    {
+      "block_id": "stable_block_05",
+      "forcing_seed": 980005,
+      "observation_noise_seed": 982005,
+      "process_noise_seed": 981005
+    },
+    {
+      "block_id": "stable_block_06",
+      "forcing_seed": 980006,
+      "observation_noise_seed": 982006,
+      "process_noise_seed": 981006
+    },
+    {
+      "block_id": "stable_block_07",
+      "forcing_seed": 980007,
+      "observation_noise_seed": 982007,
+      "process_noise_seed": 981007
+    },
+    {
+      "block_id": "stable_block_08",
+      "forcing_seed": 980008,
+      "observation_noise_seed": 982008,
+      "process_noise_seed": 981008
+    }
+  ],
+  "status": "passed",
+  "truth_condition": "fixed complete parameter label with projected candidate-scale process truth",
+  "truth_process_scope": "The frozen candidate covariance controls only the pre-projection perturbation scale; the post-projection truth is not an exact additive Gaussian candidate model.",
+  "type": "closed_truth_stable_nine_filter_joint_method"
+}

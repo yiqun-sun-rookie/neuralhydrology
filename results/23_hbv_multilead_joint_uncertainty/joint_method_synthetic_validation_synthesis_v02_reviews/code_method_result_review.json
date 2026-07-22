@@ -1,0 +1,250 @@
+{
+  "verdict": "HOLD_PENDING_MUST_FIX",
+  "verdict_detail": "十二个组件、九条现有双重独立审查链、四个最终条件、资源门槛和主张证据表的当前正式数值均通过独立复核；验证目标完成，广泛联合方法优越性仍为 HOLD。修订版尚不能最终接受，因为审查裁决文本采用子串匹配，可把未知或否定裁决误判为明确通过，而且正式测试没有覆盖第一版审查明确要求的注入式负例。",
+  "must_fix_count": 1,
+  "must_fix": [
+    {
+      "id": "review_decision_values_must_fail_closed",
+      "severity": "conclusion_changing_governance_defect",
+      "location": "src/hbv_multilead_joint_uncertainty/scripts/run_joint_method_synthesis.py::_review_status and test/test_hbv_joint_method_synthesis.py",
+      "finding": "未知字段结构会抛出异常，旧格式非空 must_fix 列表和失败 conclusion 也会使链不通过；但裁决值本身仍是失效开放。第一审查 verdict='bypass' 因包含 pass 子串被标记为 explicit_positive_verdict 并通过，第二审查 verdict='unconfirmed' 因包含 confirm 子串也通过。两项均由临时目录注入式调用直接复现。正式测试文件只有一个综合正例，没有第一版审查要求的非空旧格式 must_fix、失败旧格式 conclusion、缺失或未知裁决以及否定裁决负例。",
+      "impact": "当前九条正式链的文件内容均为零必须修复且第二审查明确确认，因此本缺陷不改变当前原始数值和受限科学结论；但它允许未来未知或否定审查裁决被综合程序错误接受，故数值链的治理实现尚不能最终签署。",
+      "required_repair": "对每一种已注册审查格式使用精确字段组合和精确允许值或明确的规范化枚举，不得用 pass 或 confirm 子串判断；显式拒绝否定、未知和含糊裁决，并只接受注册的矛盾计数字段。向正式测试文件加入独立负例，至少覆盖非空旧格式 must_fix、失败 conclusion、缺失或未知第一审查结构、缺失或未知第二审查结构、bypass 第一审查裁决、unconfirmed 第二审查裁决和非零参数审查矛盾数。",
+      "acceptance_test": "全部九条当前正式链仍返回非空第一和第二裁决、零必须修复和 passed=true；上述每一个注入负例均抛出异常或返回 passed=false；pytest test/test_hbv_joint_method_synthesis.py 显示所有正例和负例通过。"
+    }
+  ],
+  "confirmed_numbers": {
+    "artifact_chain": {
+      "component_evidence_count": 12,
+      "independent_double_review_chain_count": 9,
+      "configured_component_and_review_path_count": 21,
+      "configured_protected_path_count_including_version_one": 23,
+      "input_manifest_entry_count": 336,
+      "input_file_count_including_manifests": 357,
+      "protected_file_count_including_version_one": 370,
+      "synthesis_manifest_entry_count": 11,
+      "synthesis_actual_file_count_including_manifest": 12,
+      "input_manifest_mismatch_count": 0,
+      "synthesis_manifest_mismatch_count": 0,
+      "component_status_passed_count": 12
+    },
+    "resource_preflight": {
+      "maximum_input_file_bytes": 12270573,
+      "formula": "4 * 12270573 + 33554432 + 67108864",
+      "estimated_additional_peak_memory_bytes": 82636724,
+      "task_specific_reserve_bytes": 67108864,
+      "task_specific_required_available_bytes": 149745588,
+      "available_physical_memory_bytes": 340484096,
+      "headroom_after_requirement_bytes": 190738508,
+      "comparison": "149745588 < 340484096",
+      "safe_to_run": true,
+      "execution_parallelism": 1,
+      "universal_memory_threshold_used": false
+    },
+    "numerical_components_from_raw_arrays": {
+      "state_propagation_maximum_absolute_error": 5.684341886080802e-14,
+      "single_filter_state_improvement_trials": "20/24",
+      "single_filter_one_day_flow_improvement_trials": "24/24",
+      "ideal_complete_parameter_identification_trials": "24/24",
+      "projected_process_scale_identification_trials": "23/24",
+      "joint_probability_prior_accuracy": 0.8948630136986301,
+      "joint_probability_posterior_accuracy": 0.9318493150684931,
+      "state_interaction_combined_mean_maximum_absolute_error": 1.4210854715202004e-13,
+      "state_interaction_combined_covariance_maximum_absolute_error": 2.7284841053187847e-12,
+      "observation_free_combined_prediction_maximum_absolute_error": 4.440892098500626e-16
+    },
+    "final_scientific_counts": {
+      "joint_identification_passed_conditions": "0/4",
+      "forecast_added_value_beyond_both_single_factor_methods": "0/12 condition-by-lead targets",
+      "validation_goal_complete": true,
+      "current_artifact_numerical_chain_validated": true,
+      "broad_scientific_claim_authorized": false,
+      "scientific_status": "HOLD"
+    }
+  },
+  "independent_recalculations": {
+    "input_integrity": {
+      "method": "独立枚举配置列出的十二个组件目录和九个审查目录，逐文件重算安全哈希算法第二百五十六位摘要；没有使用 input_evidence_integrity.json 的 all_verified 布尔值作为判断输入。",
+      "result": "二十一个目录的文件集合均严格等于 checksums.json 条目加清单文件本身；三百三十六个清单条目全部匹配，零缺失、零额外、零哈希不符。"
+    },
+    "synthesis_integrity": {
+      "method": "独立枚举正式第二版综合目录并重算十一项清单哈希，同时逐字节比较配置、脚本和测试快照。",
+      "result": "十一项清单哈希全部匹配，正式目录除 checksums.json 外恰有十一项；配置快照结构相等，脚本和测试源码快照分别与当前文件逐字节一致。"
+    },
+    "protected_inputs": {
+      "configured_path_count": 23,
+      "file_count": 370,
+      "recalculated_mapping_sha256": "c491fb99f35985df2f4c036597f69178fe133da8766f6f504011980b940d29b1",
+      "recorded_before_sha256": "c491fb99f35985df2f4c036597f69178fe133da8766f6f504011980b940d29b1",
+      "recorded_after_sha256": "c491fb99f35985df2f4c036597f69178fe133da8766f6f504011980b940d29b1",
+      "version_one_synthesis_file_count": 12,
+      "version_one_synthesis_mapping_sha256_before_review": "a3aa2cab190ab6bdc32176b2c66e5e96ae9a5faa58277e1677936b97cd848b8f",
+      "version_one_synthesis_mapping_sha256_after_review": "a3aa2cab190ab6bdc32176b2c66e5e96ae9a5faa58277e1677936b97cd848b8f",
+      "version_one_review_file_count": 1,
+      "version_one_review_mapping_sha256_before_review": "23bacb4c7e7a252fc271f1db89b1c4efe07aff3c17f37fba7326793b90ee6825",
+      "version_one_review_mapping_sha256_after_review": "23bacb4c7e7a252fc271f1db89b1c4efe07aff3c17f37fba7326793b90ee6825",
+      "status": "unchanged"
+    },
+    "four_conditions_from_raw_arrays": {
+      "method": "从四个 evidence.npz 直接重算九候选识别率、参数和过程尺度边际识别率、真实候选概率中位数、三个提前期流量均方根误差、五个水文状态归一化起报误差、配对块自助法上限和百分之五实用改善门；final_conditions.csv、method_metrics.csv、paired_comparisons.csv 和 condition_decisions.json 不作为计算输入。",
+      "maximum_absolute_numeric_difference_from_final_conditions_csv": 4.440892098500626e-16,
+      "boolean_decision_mismatch_count": 0,
+      "conditions": {
+        "fixed_07_days": {
+          "joint_candidate_parameter_process_accuracy": [0.2916666666666667, 0.4722222222222222, 0.5555555555555556],
+          "median_joint_true_candidate_probability": 0.14982094370470275,
+          "joint_forecast_root_mean_square_error_days_1_3_7": [0.8164715687017786, 1.6747953754534604, 1.9427505324939291],
+          "joint_origin_state_root_mean_square_error": 0.16758942405862112,
+          "joint_identification_effective": false,
+          "forecast_effective_against_fixed_days_1_3_7": [true, true, true],
+          "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+          "origin_state_effective_against_fixed": true,
+          "origin_state_added_value_beyond_both": true
+        },
+        "fixed_21_days": {
+          "joint_candidate_parameter_process_accuracy": [0.3472222222222222, 0.4583333333333333, 0.625],
+          "median_joint_true_candidate_probability": 0.18039874096670724,
+          "joint_forecast_root_mean_square_error_days_1_3_7": [0.8441853761039364, 1.142397744284536, 2.2940148032730705],
+          "joint_origin_state_root_mean_square_error": 0.2129194392400516,
+          "joint_identification_effective": false,
+          "forecast_effective_against_fixed_days_1_3_7": [true, true, true],
+          "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+          "origin_state_effective_against_fixed": true,
+          "origin_state_added_value_beyond_both": true
+        },
+        "fixed_45_days": {
+          "joint_candidate_parameter_process_accuracy": [0.5138888888888888, 0.5972222222222222, 0.8472222222222222],
+          "median_joint_true_candidate_probability": 0.24446729489293278,
+          "joint_forecast_root_mean_square_error_days_1_3_7": [0.8614678738612609, 1.3588597056268628, 1.2040603024466145],
+          "joint_origin_state_root_mean_square_error": 0.26586634153813155,
+          "joint_identification_effective": false,
+          "forecast_effective_against_fixed_days_1_3_7": [false, false, true],
+          "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+          "origin_state_effective_against_fixed": true,
+          "origin_state_added_value_beyond_both": false
+        },
+        "periodic_switch_07_days": {
+          "joint_candidate_parameter_process_accuracy": [0.1388888888888889, 0.3611111111111111, 0.3888888888888889],
+          "median_joint_true_candidate_probability": 0.08205526412068902,
+          "joint_forecast_root_mean_square_error_days_1_3_7": [0.9258281399866716, 1.3641628543870818, 2.1017156824407444],
+          "joint_origin_state_root_mean_square_error": 0.28648501712528235,
+          "joint_identification_effective": false,
+          "forecast_effective_against_fixed_days_1_3_7": [false, false, false],
+          "forecast_added_value_beyond_both_days_1_3_7": [false, false, false],
+          "origin_state_effective_against_fixed": true,
+          "origin_state_added_value_beyond_both": false
+        }
+      }
+    },
+    "resource_arithmetic": {
+      "four_times_maximum_input_file_bytes": 49082292,
+      "plus_32_mebibytes": 82636724,
+      "plus_64_mebibytes_reserve": 149745588,
+      "available_minus_required": 190738508,
+      "comparison": "149745588 < 340484096"
+    },
+    "formal_test_run": {
+      "command": "pytest -q test/test_hbv_joint_method_synthesis.py",
+      "result": "1 passed, 1 configuration warning, exit code 0",
+      "limitation": "该文件只有一个综合正例，不能证明未知或否定裁决失效关闭。"
+    }
+  },
+  "review_schema_audit": {
+    "current_formal_chain_result": {
+      "double_review_chain_count": 9,
+      "two_nonempty_review_files_count": 9,
+      "non_null_first_decision_count": 9,
+      "non_null_second_decision_count": 9,
+      "zero_first_must_fix_count": 9,
+      "zero_second_must_fix_count": 9,
+      "confirmed_second_review_count": 9,
+      "passed_chain_count": 9
+    },
+    "recognized_formats": {
+      "single_filter_state_validation_v02_reviews": "第一审查为明确正面 verdict；第二审查为 review_verdict 加 contradictions_found 和 unverified_items。",
+      "parameter_identification_validation_v01_reviews": "第一审查为 required_code_fixes=0；第二审查为 review_verdict 加 contradictions_to_the_limited_scientific_conclusion=0，正确归类为 review_verdict_with_contradiction_count。",
+      "process_noise_identification_validation_v02_reviews": "第一审查为空 must_fix 列表；第二审查 conclusion=confirmed_with_wording_correction。",
+      "model_probability_validation_v02_reviews": "第一审查为空 must_fix 列表；第二审查 conclusion=confirmed_without_new_must_fix_issue。",
+      "state_interaction_validation_v02_reviews": "第一审查为空 must_fix 列表；第二审查 conclusion=confirmed_without_new_must_fix_issue。",
+      "remaining_four_review_chains": "第一和第二审查均使用 must_fix_count=0，并具有明确通过或确认裁决。"
+    },
+    "adversarial_probes": {
+      "unknown_first_schema": "raised ValueError as required",
+      "unknown_second_schema": "raised ValueError as required",
+      "nonempty_old_must_fix": "returned passed=false as required",
+      "failed_old_conclusion": "returned passed=false as required",
+      "bypass_first_verdict": "incorrectly returned passed=true",
+      "unconfirmed_second_verdict": "incorrectly returned passed=true"
+    },
+    "assessment": "当前九条正式链的实际内容被正确识别，第一版的旧格式读取缺陷已修复；但所有未知或否定裁决必须失效关闭这一要求未完全达到。"
+  },
+  "claim_audit": {
+    "table_structure": {
+      "row_count": 17,
+      "duplicate_claim_id_count": 0,
+      "null_cell_count": 0,
+      "unknown_claim_count": 5
+    },
+    "version_one_repairs": {
+      "other_observation_or_forcing_error_present": true,
+      "post_projection_non_exact_gaussian_present": true,
+      "joint_identification_status": "rejected_in_tested_conditions",
+      "joint_identification_value": "0/4 tested conditions",
+      "joint_forecast_added_value_status": "rejected_in_tested_conditions",
+      "joint_forecast_added_value_value": "0/12 condition-by-lead targets",
+      "both_cross_condition_rows_reference_final_conditions_csv": true,
+      "both_cross_condition_rows_reference_all_four_source_directories": true
+    },
+    "facts": "十一条事实均能追踪到冻结组件或四条件综合；跨四条件的零比四识别和零比十二预报增值是受支持的受限负面事实，不表示未测试条件下普遍失败。",
+    "inference": "广泛联合方法优越性未获授权，正确标为推断且状态为 HOLD。",
+    "unknown": [
+      "超过四十五天的匹配同化",
+      "其他参数或过程尺度切换周期以及其他转移先验",
+      "真实流域表现",
+      "其他观测不确定性或强迫资料误差",
+      "物理投影后的过程扰动是否可由精确加性高斯候选模型表示"
+    ],
+    "overall_logic": {
+      "validation_goal_complete": true,
+      "current_numerical_artifacts_pass": true,
+      "all_four_conditions_reject_joint_identification": true,
+      "all_twelve_forecast_targets_reject_added_value_beyond_both_single_factor_methods": true,
+      "broad_superiority_remains_hold": true,
+      "review_package_final_acceptance": "HOLD pending fail-closed parser repair"
+    }
+  },
+  "scope_limits": {
+    "fixed_experimental_scope": "十五状态水文模型、三个完整十三参数向量、三个投影前过程尺度候选、八个匹配块、固定标签七天、二十一天和四十五天，以及一个七天参数与过程尺度同时切换压力条件。",
+    "positive_state_results_that_must_not_be_overstated": [
+      "固定七天和二十一天条件的起报水文状态满足相对固定滤波器并超过两个单因素方法的规则；三个预报提前期只满足相对固定滤波器规则，均未同时超过两个单因素方法，不能写成联合预报优越。",
+      "固定四十五天条件只有起报水文状态和七日预报相对固定滤波器有效；二者均未同时超过两个单因素方法。",
+      "七天同时切换条件的起报水文状态相对固定滤波器有效，但一日、三日和七日预报均不相对固定滤波器有效。"
+    ],
+    "unknown_or_unvalidated": [
+      "超过四十五天的匹配同化",
+      "其他切换周期或转移先验",
+      "真实流域表现",
+      "其他观测误差模型",
+      "强迫资料误差",
+      "物理投影后精确加性高斯过程表示"
+    ],
+    "prohibited_overreach": "状态传播、状态交互代数和无观测预报数值一致性只证明注册数值链；它们不单独证明联合方法水文识别成功或预报优越。"
+  },
+  "reviewer_independence": {
+    "review_layer": "第一层独立代码、方法和结果审查",
+    "reviewer_role": "独立审查者，不是第二版正式综合实施者，也不是九条既有审查链的签署者",
+    "formal_synthesis_directory_modified": false,
+    "component_evidence_modified": false,
+    "existing_review_evidence_modified": false,
+    "version_one_synthesis_modified": false,
+    "version_one_reviews_modified": false,
+    "only_written_artifact": "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v02_reviews/code_method_result_review.json",
+    "formal_summary_values_used_as_computational_inputs": false,
+    "formal_final_conditions_values_used_as_computational_inputs": false,
+    "prior_review_values_used_as_computational_inputs": false,
+    "raw_component_arrays_recalculated": true,
+    "four_condition_metrics_and_decisions_recalculated": true,
+    "source_configuration_and_test_reviewed": true,
+    "historical_memory_use": "仅用于提醒状态交互代数不能外推为水文预报优越；历史数值未作为本审查计算输入。"
+  }
+}

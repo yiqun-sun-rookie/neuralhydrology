@@ -1,0 +1,16 @@
+{
+  "candidate_state_interaction_used": false,
+  "candidate_weight_transition_or_update_used": false,
+  "config_sha256": "f79dc27749dbd0478471a62e56b0e9720609568f7f3fce577bfc299adf9969bf",
+  "dataset_role": "development",
+  "experiment_id": "candidate_likelihood_process_noise_switch_development_v03",
+  "integrity_status": "passed",
+  "observation_snapshot_sha256": "5bc0adc216ced6c6b0d281ed5c9cd3a158d65e2f3a369d657afaaccb67a1c678",
+  "parameter_snapshot_sha256": "624ba1ab3e6fc9e60c8cf15bc287f1a0a3cec177d6307e6d83d5215625199905",
+  "process_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+  "protected_artifacts_unchanged": true,
+  "scenario": "process_noise_switch",
+  "scientific_status": "not_passed",
+  "scope_limit": "Development evidence only. Three pre-projection process-covariance candidates are compared with the complete trained-center parameter vector fixed. Physical projection means post-projection perturbations are not exact additive Gaussian draws. No state interaction, probability transition, or probability update is used.",
+  "switching_stages_passed": false
+}

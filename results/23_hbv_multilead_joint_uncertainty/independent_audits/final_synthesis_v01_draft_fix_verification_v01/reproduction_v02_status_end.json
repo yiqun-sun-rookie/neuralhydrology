@@ -1,0 +1,25 @@
+{
+  "captured_at_utc": "2026-07-15T05:39:16.461568+00:00",
+  "registry_exists": true,
+  "registry_status": "running",
+  "registry_history": [
+    {
+      "basin_count": 16,
+      "contract_id": "formal_contract_sixteen_v05",
+      "status": "running",
+      "timestamp": "2026-07-15T13:26:53.656942+08:00"
+    }
+  ],
+  "resource_log_exists": true,
+  "resource_sample_count": 78,
+  "resource_start_available_memory_fraction": 0.29409715444933626,
+  "resource_minimum_available_memory_fraction": 0.26396475775166045,
+  "resource_last_event": "background_monitor",
+  "resource_last_timestamp": "2026-07-15T13:39:11.046662+08:00",
+  "final_result_directory_exists": false,
+  "incomplete_result_directory_exists": false,
+  "independent_reproduction_audit_directories": [],
+  "scientific_reproduction_status_for_this_verification": "PENDING",
+  "scientific_reproduction_passed": false,
+  "reason": "运行中结果不是冻结科学证据；完整结果即使在本审查期间产生，也需另行逐数组比较和独立审查。"
+}

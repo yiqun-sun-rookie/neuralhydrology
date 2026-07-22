@@ -1,0 +1,71 @@
+{
+  "verdict": "HOLD_PENDING_MUST_FIX",
+  "verdict_detail": "第五版正式综合的现有冻结数值仍支持受限负面科学结论，但审查治理实现仍会把明确的否定信号误判为通过：名称中包含 status 或 decision 的未登记顶层字段不会被拒绝；单独出现的 conclusion_changing_defect=true 或 confirmed_items.new_must_fix_issue_found=true 也可被当前分支忽略。治理实现因此不能接受。",
+  "must_fix_count": 1,
+  "must_fix": [
+    {
+      "id": "all_registered_and_suspicious_decision_signals_must_fail_closed",
+      "severity": "conclusion_changing_governance_defect",
+      "location": "src/hbv_multilead_joint_uncertainty/scripts/run_joint_method_synthesis.py::_validate_registered_decision_fields, _validate_review_fix_fields and _review_status",
+      "finding": "第一，未登记顶层字段的扫描只对完全等于 status 或 decision 的名称生效，而不是对名称中包含这两个词的字段生效；status_passenger、decision_passenger、review_status 和 scientific_decision 在第一层或第二层审查中均可与否定值并存并返回 passed=true。第二，修复信号一致性检查只比较已出现信号之间是否相等，却没有把所有非零信号汇总到最终通过判据；第一层单独的 conclusion_changing_defect=true、第一层单独的 confirmed_items.new_must_fix_issue_found=true、第二层配合 conclusion 结构的 conclusion_changing_defect=true，以及第二层配合 review_verdict 结构的 confirmed_items.new_must_fix_issue_found=true 均返回 passed=true。",
+      "impact": "这些反例允许明确否定审查被综合程序写成 numerical_chain_validated=true，属于可改变治理结论的失效开放。九条当前冻结审查链没有上述恶意结构，因此该缺陷不改变现有四个测试条件的负面科学结果。",
+      "required_repair": "对第一层和第二层使用明确的顶层字段白名单；任何未登记且名称中包含 conclusion、contradict、defect、fix、unverified、verdict、status 或 decision 的字段都必须拒绝。将 must_fix_count、must_fix、required_fixes、required_code_fixes、conclusion_changing_defect 和 confirmed_items.new_must_fix_issue_found 统一转换为一个严格校验的非负修复计数；所有并存信号必须一致，任何单独或并存的非零信号都必须阻止通过。confirmed_items 存在时还必须是对象，new_must_fix_issue_found 必须是布尔值。",
+      "required_tests": [
+        "第一层和第二层分别注入 status_passenger、decision_passenger、review_status 或 scientific_decision，必须拒绝",
+        "第一层和第二层分别仅注入 conclusion_changing_defect=true，必须不通过",
+        "第一层和第二层分别仅注入 confirmed_items.new_must_fix_issue_found=true，并覆盖 conclusion、review_verdict 和计数型结构，必须不通过",
+        "confirmed_items 为非对象或 new_must_fix_issue_found 为非布尔值，必须拒绝",
+        "现有十六个测试继续通过，并新增上述未覆盖反例"
+      ]
+    }
+  ],
+  "review_parser_adversarial_audit": {
+    "formal_test_command": "PYTHONDONTWRITEBYTECODE=1 python -m pytest -q -p no:cacheprovider test/test_hbv_joint_method_synthesis.py",
+    "formal_test_result": "16 passed, 1 existing PytestConfigWarning",
+    "formal_test_exit_code": 0,
+    "formal_test_assessment": "现有十六个测试全部通过，但没有覆盖本审查发现的单独非零修复信号和包含 status 或 decision 的未登记字段，因此测试通过不能证明治理失效关闭。",
+    "additional_counterexample_count": 10,
+    "unexpected_passed_count": 10,
+    "unexpected_passed_cases": [
+      "first_status_passenger",
+      "first_decision_passenger",
+      "second_status_passenger",
+      "second_decision_passenger",
+      "first_review_status",
+      "second_scientific_decision",
+      "first_sole_conclusion_changing_defect",
+      "first_sole_nested_new_must_fix",
+      "second_sole_conclusion_changing_defect",
+      "second_nested_new_must_fix_review_verdict_schema"
+    ],
+    "confirmed_working_controls": "精确裁决白名单、两个登记矛盾字段、已覆盖的重复计数冲突、并存裁决文本全部为正面、未验证计数以及已登记计数的布尔值、字符串和负数校验均由现有代码或十六个正式测试覆盖；本次必须修复问题是其余失效开放面。"
+  },
+  "minimal_scientific_review": {
+    "component_evidence_count": 12,
+    "independent_double_review_chain_count": 9,
+    "formal_synthesis_reexecuted_in_temporary_directory": true,
+    "resource_gate_bypassed": false,
+    "joint_identification_passed_conditions": "0/4",
+    "forecast_added_value_beyond_both_single_factor_methods": "0/12 condition-by-lead targets",
+    "joint_identification_supported": false,
+    "joint_added_value_supported": false,
+    "broad_scientific_claim_authorized": false,
+    "scientific_status": "HOLD",
+    "scientific_effect_of_governance_defect": "不改变当前冻结科学结论。现有证据只支持：在冻结的十五状态水文模型、三个完整十三参数向量、三个投影前过程尺度候选、八个匹配块、固定标签七天、二十一天、四十五天以及七天同时切换条件内，联合识别未建立，且一日、三日、七日共十二个目标均未建立同时超过两个单因素方法的预报增值。超过四十五天、其他切换条件、真实流域、其他观测或强迫误差以及投影后精确加性高斯过程模型仍无法确定。"
+  },
+  "resource_gate_audit": {
+    "available_physical_memory_bytes_before_formal_tests": 878047232,
+    "task_specific_required_available_bytes": 149745588,
+    "safe_to_run": true,
+    "execution_parallelism": 1,
+    "universal_memory_threshold_used": false
+  },
+  "reviewer_independence": {
+    "review_layer": "第一层独立代码、方法和结果审查",
+    "formal_synthesis_directory_modified": false,
+    "component_or_existing_review_evidence_modified": false,
+    "version_one_to_four_synthesis_or_reviews_modified": false,
+    "only_written_artifact": "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v05_reviews/code_method_result_review.json",
+    "historical_memory_use": "仅用于保持状态交互代数不得外推为水文识别或预报优越的范围边界；治理反例、正式测试和资源数值均从当前工作树重新取得。"
+  }
+}

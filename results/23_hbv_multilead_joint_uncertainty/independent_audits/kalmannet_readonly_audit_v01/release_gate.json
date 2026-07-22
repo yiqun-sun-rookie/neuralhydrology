@@ -1,0 +1,31 @@
+{
+  "audit_id": "kalmannet_readonly_audit_v01",
+  "blocked_scope": [
+    "旧简化水文模型数值结论",
+    "旧初态、完整参数、过程噪声和观测噪声",
+    "按评价期流量或分数得到的流域筛选",
+    "把使用未来实测气象的诊断性回报解释为操作性预报"
+  ],
+  "checks": {
+    "adopted_rejected_and_independent_validation_are_separate": true,
+    "all_referenced_files_have_current_sha256": true,
+    "bytecode_writes_disabled": true,
+    "collector_is_standard_library_and_read_only_outside_audit_dir": true,
+    "conclusion_first_chinese_report_present": true,
+    "evaluation_period_noise_tuning_evidence_present": true,
+    "future_observed_weather_evidence_present": true,
+    "line_numbered_evidence_present": true,
+    "resource_threshold_evidence_present": true,
+    "self_manifest_present_after_collection": true,
+    "state_time_inversion_evidence_present": true,
+    "static_split_evidence_present": true,
+    "structured_summary_present": true
+  },
+  "collected_at_utc": "2026-07-15T04:34:56.582648+00:00",
+  "overall_decision": "RELEASE",
+  "release_scope": [
+    "本审查证据包",
+    "已采纳工程做法作为当前项目的设计和验证要求"
+  ],
+  "schema_version": "kalmannet_readonly_audit_evidence_v01"
+}

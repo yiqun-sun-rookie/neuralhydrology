@@ -1,0 +1,16 @@
+{
+  "candidate_state_interaction_used": false,
+  "candidate_weight_transition_or_update_used": false,
+  "config_sha256": "35f30842dbf87d8c0868ed9d384d0846cae2d61d6e80284a38fc9404baa294cd",
+  "dataset_role": "confirmation",
+  "experiment_id": "candidate_likelihood_parameter_process_noise_switch_confirmation_v01",
+  "integrity_status": "passed",
+  "observation_snapshot_sha256": "5bc0adc216ced6c6b0d281ed5c9cd3a158d65e2f3a369d657afaaccb67a1c678",
+  "parameter_snapshot_sha256": "624ba1ab3e6fc9e60c8cf15bc287f1a0a3cec177d6307e6d83d5215625199905",
+  "process_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+  "protected_artifacts_unchanged": true,
+  "scenario": "parameter_process_noise_switch",
+  "scientific_status": "not_passed",
+  "scope_limit": "Independent confirmation evidence only. Nine complete parameter-by-process candidates are compared. Physical projection limits the process-noise interpretation. No state interaction, probability transition, or probability update is used.",
+  "switching_stages_passed": false
+}

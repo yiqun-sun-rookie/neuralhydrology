@@ -1,0 +1,85 @@
+{
+  "experiment_id": "observation_free_forecast_validation_v02",
+  "supersedes": "observation_free_forecast_validation_v01",
+  "reason_for_new_version": "The first independent review confirmed that source-posterior immutability passed in a live rerun but could not be recalculated from evidence.npz because post-call source snapshots were not archived. Version 2 adds those state, covariance and probability snapshots and calculates the immutability gate from them.",
+  "purpose": "Validate that the frozen nine-candidate, fifteen-state forecast branch advances only with future meteorological forcing, applies one full state interaction and one process-covariance addition per day, evolves probabilities only through the frozen transition matrix, and reproduces an independent authoritative-simulator and moment recursion for one through seven days.",
+  "parameter_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/parameter_vectors.csv",
+    "sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+    "source_basin_id": "12143600",
+    "parameter_ids": ["equifinal_diverse_1", "trained_center", "equifinal_diverse_2"]
+  },
+  "process_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/process_noise_covariances.csv",
+    "sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+    "source_basin_id": "12143600",
+    "process_ids": ["process_0", "process_1", "process_2"]
+  },
+  "trial_seeds": [
+    960001, 960002, 960003, 960004, 960005, 960006,
+    960007, 960008, 960009, 960010, 960011, 960012
+  ],
+  "forcing": {
+    "warmup_days": 45,
+    "forecast_days": 7,
+    "rain_shape": 0.8,
+    "rain_scale": 4.0,
+    "potential_evaporation_formula": "maximum(0, 2 + sin(angle))",
+    "temperature_formula": "4 + 12 * sin(angle - pi / 2)",
+    "angle_formula": "linearly spaced from 0 through 2*pi, including both endpoints"
+  },
+  "initial_covariance_standard_deviations": [
+    2.0, 0.2, 5.0, 1.0, 2.0,
+    0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1
+  ],
+  "initial_probabilities": [0.03, 0.04, 0.08, 0.07, 0.31, 0.12, 0.05, 0.10, 0.20],
+  "observation_standard_deviation": 0.05,
+  "factor_stay_probability": 0.98,
+  "interaction_mode": "full",
+  "formal_lead_days": [1, 3, 7],
+  "causal_prefix_days": 3,
+  "independent_reference_rule": "A separate implementation computes the literal product transition matrix, destination-conditioned full mixture moments, scaled sigma points, authoritative one-day HBV-lite state transitions, routed discharge, process-covariance addition and combined moments without calling the production forecast or production interaction helpers.",
+  "gates": {
+    "transition_matrix_maximum_absolute_error": 1e-14,
+    "probability_maximum_absolute_error": 2e-15,
+    "candidate_state_maximum_absolute_error": 1e-9,
+    "candidate_covariance_diagonal_maximum_absolute_error": 1e-7,
+    "candidate_prediction_maximum_absolute_error": 1e-9,
+    "combined_prediction_maximum_absolute_error": 1e-9,
+    "combined_state_maximum_absolute_error": 1e-9,
+    "combined_covariance_diagonal_maximum_absolute_error": 1e-7,
+    "selected_lead_maximum_absolute_error": 0.0,
+    "causal_prefix_maximum_absolute_error": 0.0,
+    "source_bank_mutation_maximum_absolute_error": 0.0,
+    "probability_sum_maximum_absolute_error": 1e-12,
+    "minimum_reference_covariance_eigenvalue": -1e-8,
+    "reference_covariance_symmetry_maximum_absolute_error": 1e-12
+  },
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01",
+    "results/23_hbv_multilead_joint_uncertainty/synthetic_truth_propagation_v04",
+    "results/23_hbv_multilead_joint_uncertainty/single_filter_state_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/parameter_identification_validation_v01",
+    "results/23_hbv_multilead_joint_uncertainty/process_noise_identification_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/model_probability_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/state_interaction_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/observation_free_forecast_validation_v01",
+    "results/23_hbv_multilead_joint_uncertainty/observation_free_forecast_validation_v01_reviews"
+  ],
+  "fixed_boundaries": {
+    "complete_parameter_vectors": 3,
+    "parameter_names_per_vector": 13,
+    "process_noise_candidates": 3,
+    "joint_candidates": 9,
+    "state_dimension": 15,
+    "forecast_days": 7,
+    "future_discharge_argument": false,
+    "observation_likelihood": false,
+    "filter_update": false,
+    "reads_real_basin_observations": false,
+    "modifies_frozen_formal_results": false,
+    "runs_531_real_basins": false
+  },
+  "scope_limit": "This component validates causal observation-free forecast propagation and numerical agreement with an independent recursion. It does not establish forecast skill, parameter or process-noise identification, observation-update benefit, or real-basin performance."
+}

@@ -1,0 +1,223 @@
+{
+  "experiment_id": "candidate_likelihood_parameter_switch_confirmation_v01",
+  "dataset_role": "confirmation",
+  "scenario": "parameter_switch",
+  "purpose": "Independently confirm whether the current complete thirteen-parameter truth candidate has a stable observation-log-likelihood advantage over the other two parameter candidates when all candidate filters update independently and process covariance stays fixed at process_2.",
+  "diagnostic_contract": {
+    "candidate_filters_assimilate_observations_independently": true,
+    "candidate_state_interaction_used": false,
+    "candidate_probability_transition_used": false,
+    "candidate_probability_update_used": false,
+    "daily_likelihood_definition": "Scalar Gaussian predictive observation log likelihood before the same-day observation update.",
+    "cumulative_likelihood_definition": "Sum of daily log likelihoods reset at the first scored day of each stage.",
+    "strict_ranking_rule": "Every wrong candidate with likelihood greater than or equal to the true candidate ranks ahead of the true candidate."
+  },
+  "parameter_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/parameter_vectors.csv",
+    "sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+    "source_basin_id": "12143600",
+    "parameter_ids": [
+      "equifinal_diverse_1",
+      "trained_center",
+      "equifinal_diverse_2"
+    ]
+  },
+  "process_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/process_noise_covariances.csv",
+    "sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+    "source_basin_id": "12143600",
+    "process_ids": [
+      "process_0",
+      "process_1",
+      "process_2"
+    ],
+    "selected_process_id": "process_2"
+  },
+  "observation_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/observation_noise.csv",
+    "sha256": "f358c77b655285b348604266af43dfcd7b875ea756145f6d9b33c8853a5d8955",
+    "source_basin_id": "12143600"
+  },
+  "matched_blocks": [
+    {
+      "block_id": "candidate_likelihood_confirmation_block_01",
+      "forcing_seed": 996001,
+      "process_noise_seed": 997001,
+      "observation_noise_seed": 998001
+    },
+    {
+      "block_id": "candidate_likelihood_confirmation_block_02",
+      "forcing_seed": 996002,
+      "process_noise_seed": 997002,
+      "observation_noise_seed": 998002
+    },
+    {
+      "block_id": "candidate_likelihood_confirmation_block_03",
+      "forcing_seed": 996003,
+      "process_noise_seed": 997003,
+      "observation_noise_seed": 998003
+    },
+    {
+      "block_id": "candidate_likelihood_confirmation_block_04",
+      "forcing_seed": 996004,
+      "process_noise_seed": 997004,
+      "observation_noise_seed": 998004
+    },
+    {
+      "block_id": "candidate_likelihood_confirmation_block_05",
+      "forcing_seed": 996005,
+      "process_noise_seed": 997005,
+      "observation_noise_seed": 998005
+    },
+    {
+      "block_id": "candidate_likelihood_confirmation_block_06",
+      "forcing_seed": 996006,
+      "process_noise_seed": 997006,
+      "observation_noise_seed": 998006
+    },
+    {
+      "block_id": "candidate_likelihood_confirmation_block_07",
+      "forcing_seed": 996007,
+      "process_noise_seed": 997007,
+      "observation_noise_seed": 998007
+    },
+    {
+      "block_id": "candidate_likelihood_confirmation_block_08",
+      "forcing_seed": 996008,
+      "process_noise_seed": 997008,
+      "observation_noise_seed": 998008
+    },
+    {
+      "block_id": "candidate_likelihood_confirmation_block_09",
+      "forcing_seed": 996009,
+      "process_noise_seed": 997009,
+      "observation_noise_seed": 998009
+    },
+    {
+      "block_id": "candidate_likelihood_confirmation_block_10",
+      "forcing_seed": 996010,
+      "process_noise_seed": 997010,
+      "observation_noise_seed": 998010
+    },
+    {
+      "block_id": "candidate_likelihood_confirmation_block_11",
+      "forcing_seed": 996011,
+      "process_noise_seed": 997011,
+      "observation_noise_seed": 998011
+    },
+    {
+      "block_id": "candidate_likelihood_confirmation_block_12",
+      "forcing_seed": 996012,
+      "process_noise_seed": 997012,
+      "observation_noise_seed": 998012
+    }
+  ],
+  "forcing": {
+    "warmup_days": 45,
+    "reference_total_days": 97,
+    "rain_shape": 0.8,
+    "rain_scale": 4
+  },
+  "stage_lengths": [
+    15,
+    15,
+    15
+  ],
+  "adaptation_days_excluded_per_stage": 5,
+  "stable_final_scoring_days": 5,
+  "initial_covariance_fraction": 0.001,
+  "bootstrap": {
+    "unit": "synthetic_block",
+    "replicates": 20000,
+    "seed": 676701
+  },
+  "decision_rules": {
+    "stable_identifiable_fraction_minimum": 0.6666666666666666,
+    "stable_fraction_block_bootstrap_lower_strict_minimum": 0.5,
+    "median_final_margin_strict_minimum": 0,
+    "switching_stage_numbers": [
+      2,
+      3
+    ],
+    "stage_one_decides_scientific_status": false
+  },
+  "integrity_gates": {
+    "truth_process_perturbation_reconstruction_maximum_absolute_error": 0,
+    "observation_reconstruction_maximum_absolute_error": 0,
+    "innovation_reconstruction_maximum_absolute_error": 1e-12,
+    "log_likelihood_reconstruction_maximum_absolute_error": 1e-12,
+    "score_reconstruction_maximum_absolute_error": 1e-12
+  },
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_switching_resource_pilot_v01",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_switch_v01",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_process_noise_switch_v01",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_process_noise_switch_v01",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_switch_v02",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_process_noise_switch_v02",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_process_noise_switch_v02",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_switch_v02.preregistered.json",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_process_noise_switch_v02.preregistered.json",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_process_noise_switch_v02.preregistered.json",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_switching_validation_synthesis_v01",
+    "src/hbv_multilead_joint_uncertainty/configs/three_stage_parameter_switch_v02.json",
+    "src/hbv_multilead_joint_uncertainty/configs/three_stage_process_noise_switch_v02.json",
+    "src/hbv_multilead_joint_uncertainty/configs/three_stage_parameter_process_noise_switch_v02.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_development_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_development_v02.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v02",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v02.preregistered.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_process_noise_switch_development_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_process_noise_switch_development_v02.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v02",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v02.preregistered.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_process_noise_switch_development_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_process_noise_switch_development_v02.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v02",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v02.preregistered.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v01.incomplete",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v01.preregistered.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_development_v03.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v03",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v03.preregistered.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_process_noise_switch_development_v03.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v03",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v03.preregistered.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_process_noise_switch_development_v03.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v03",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v03.preregistered.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_development_v04.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_process_noise_switch_development_v04.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_process_noise_switch_development_v04.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v04",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v04.preregistered.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v04",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v04.preregistered.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v04",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v04.preregistered.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_development_v05.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_process_noise_switch_development_v05.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_process_noise_switch_development_v05.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v05",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v05.preregistered.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v05",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_process_noise_switch_development_v05.preregistered.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v05",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_process_noise_switch_development_v05.preregistered.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_confirmation_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_process_noise_switch_confirmation_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_process_noise_switch_confirmation_v01.json"
+  ],
+  "scope_limit": "Independent confirmation evidence only. Three complete parameter candidates are compared with process covariance fixed at process_2. Candidate filters assimilate the same observations independently; no state interaction, probability transition, or probability update is used.",
+  "development_config_source": "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_development_v05.json",
+  "development_config_sha256": "56fea0145e12ee486d71fa456a0fdee7386d5b5de304b105fd234a02ccf6314c",
+  "confirmation_contract": {
+    "all_three_confirmation_configs_frozen_before_any_confirmation_run": true,
+    "scientific_settings_copied_from_development": true,
+    "only_dataset_role_experiment_identity_block_ids_random_seeds_purpose_scope_and_protection_metadata_changed": true,
+    "confirmation_seeds_disjoint_from_development_and_formal_seeds": true,
+    "no_setting_selection_after_confirmation_results": true
+  }
+}
+

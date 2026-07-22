@@ -1,0 +1,124 @@
+{
+  "contract_package": {
+    "actual_file_count": 128,
+    "checksum_mismatches": [],
+    "checksums_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+    "directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_contract_sixteen_v05",
+    "extra_checksum_records": [],
+    "missing_files": [],
+    "passed": true,
+    "recorded_file_count": 127,
+    "unlisted_files": []
+  },
+  "contract_reference": {
+    "contract_checksums_hash_matches": true,
+    "contract_directory_matches": true,
+    "contract_id_matches": true,
+    "recorded": {
+      "contract_checksums_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+      "contract_directory": "../formal_contract_sixteen_v05",
+      "contract_id": "formal_contract_sixteen_v05"
+    },
+    "resolved_contract_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_contract_sixteen_v05"
+  },
+  "contract_snapshot": {
+    "frozen_snapshot_failures": [],
+    "input_file_count": 46,
+    "live_drift": [],
+    "live_drift_count": 0,
+    "manifest_signature_hashes_equal": true,
+    "manifest_signature_path_set_equal": true,
+    "passed": true,
+    "signature_file_count": 83,
+    "source_file_count": 37
+  },
+  "copied_contract_tables": {
+    "mismatches": [],
+    "passed": true,
+    "table_count": 8
+  },
+  "execution_signature_file_counts": {
+    "contract": 83,
+    "result": 99
+  },
+  "input_snapshot_chain": {
+    "contract_input_count": 46,
+    "contract_inputs_are_exact_subset": true,
+    "extra_inputs_are_exact_evaluation_streamflow_files": true,
+    "extra_result_input_count": 16,
+    "extra_result_inputs": [
+      "data/camels_us/usgs_streamflow/02/02015700_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/03/02296500_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/04/04127918_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/06/03479000_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/07/05507600_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/10/06404000_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/10/06431500_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/10/06477500_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/10/06892000_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/12/08158700_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/12/08189500_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/14/09066000_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/15/09447800_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/15/09505350_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/17/12143600_streamflow_qc.txt",
+      "data/camels_us/usgs_streamflow/18/11148900_streamflow_qc.txt"
+    ],
+    "result_input_count": 62
+  },
+  "passed": true,
+  "pilot_prerequisite": {
+    "actual_checksums_sha256": "6dbb402646e0e9ae9283965f2ed9d4f0aacd9868bd55103f335997f8c6aac20a",
+    "contract_id": "pilot_contract_six_v03",
+    "expected_checksums_sha256": "6dbb402646e0e9ae9283965f2ed9d4f0aacd9868bd55103f335997f8c6aac20a",
+    "passed": true
+  },
+  "prior_independent_contract_audit": {
+    "contract_id": "formal_contract_sixteen_v05",
+    "documentation_decision": "RELEASE",
+    "passed": true,
+    "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_contract_sixteen_v05_v03\\audit_summary.json",
+    "scientific_contract_decision": "RELEASE",
+    "sha256": "3e8427a9bbe0ae530e25ba936dd493a3c7e70541ba9eb39b0eab56ea2ae51eea"
+  },
+  "result_manifest_boundary": {
+    "artifact_type": "diagnostic_hindcast_result",
+    "basin_count": 16,
+    "future_meteorology": "observed hindsight meteorology; not an operational forecast",
+    "methods": [
+      "open_loop",
+      "fixed_filter",
+      "parameter_only",
+      "noise_only",
+      "joint"
+    ],
+    "passed": true
+  },
+  "result_package": {
+    "actual_file_count": 153,
+    "checksum_mismatches": [],
+    "checksums_sha256": "88ab2297e02179cc0e3e432c958871e1d6e7985358b9394970154a65f2348bd0",
+    "directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01",
+    "extra_checksum_records": [],
+    "missing_files": [],
+    "passed": true,
+    "recorded_file_count": 152,
+    "unlisted_files": []
+  },
+  "result_snapshot": {
+    "frozen_snapshot_failures": [],
+    "input_file_count": 62,
+    "live_drift": [],
+    "live_drift_count": 0,
+    "manifest_signature_hashes_equal": true,
+    "manifest_signature_path_set_equal": true,
+    "passed": true,
+    "signature_file_count": 99,
+    "source_file_count": 37
+  },
+  "source_snapshot_identity": {
+    "contract_source_count": 37,
+    "exactly_equal": true,
+    "result_source_count": 37
+  }
+}

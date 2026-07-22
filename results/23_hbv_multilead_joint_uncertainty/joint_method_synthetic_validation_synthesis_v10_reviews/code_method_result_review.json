@@ -1,0 +1,73 @@
+{
+  "verdict": "HOLD_PENDING_MUST_FIX",
+  "must_fix_count": 1,
+  "scientific_conclusion_changed": false,
+  "verdict_detail": "第十版的八十项历史治理对抗均按预期失效关闭，三十九项正式测试全部通过，且外部逐字节配置副本在创建新输出时会在资源检查和输出写入前被拒绝。但是 run() 在规范配置身份校验之前处理已存在输出；因此，同一外部逐字节配置副本、增加一个空白字节的配置以及伪造仓库根都能针对正式已存在输出返回 status=passed 和 numerical_chain_validated=true。该入口仍未把所有返回路径绑定到源码推导仓库根、规范第十版配置路径和配置摘要，治理结论必须保持待修复。正式证据文件在反例前后逐字节树摘要不变。该缺陷不改变冻结的四条件科学结果。",
+  "must_fix": [
+    {
+      "id": "existing_output_verification_must_validate_canonical_root_and_config_first",
+      "severity": "conclusion_changing_governance_defect",
+      "location": "src/hbv_multilead_joint_uncertainty/scripts/run_joint_method_synthesis.py::run lines 531-545",
+      "finding": "run() 在第539至542行遇到已存在输出时直接调用 _verify_existing() 并返回；源码推导仓库根、规范配置路径和配置 SHA-256 的 _validate_canonical_synthesis_config() 直到第545行才执行。最小反例把规范第十版配置逐字节复制到系统临时目录，并把 output_dir 指向正式已存在输出，run() 返回 status=passed、numerical_chain_validated=true。把该外部副本增加一个空白字节仍返回同样结果；传入伪造 repo_root 与规范配置、正式已存在输出也返回同样结果。三种反例均绕过第十版要求的完整入口身份绑定。",
+      "root_cause": "规范配置校验只保护新建综合证据的分支，没有支配已存在输出的验证返回分支。_verify_existing() 只比较解析后的配置对象和输出清单；它既不验证配置文件逐字节摘要，也不验证源码推导仓库根。增加空白字节不会改变解析后的配置对象，因此能够绕过文件身份要求。",
+      "impact": "非规范配置路径、配置一字节变更或伪造仓库根可被正式入口接受，并返回已冻结的 numerical_chain_validated=true。原始数值和正式文件没有被修改，但第十版声明的入口治理条件并未覆盖所有成功返回路径，故第一层独立审查不能签署通过。",
+      "required_repair": "在 run() 解析出 repo_root、config_path 和 output_dir 后，任何 output.exists()、资源估算、输入读取或输出写入分支之前，无条件调用 _validate_canonical_synthesis_config()。规范校验必须支配新输出和已有输出两条路径；已有输出随后仍可调用 _verify_existing()。不得仅用解析后的配置对象相等代替配置文件路径和 SHA-256 身份。",
+      "acceptance_tests": [
+        "外部逐字节第十版配置副本配合不存在输出时，在资源检查和输出写入前拒绝，且不创建 output 或 incomplete 目录。",
+        "外部逐字节第十版配置副本配合正式已存在输出时也必须拒绝。",
+        "第十版配置增加一个空白字节后，即使解析对象相同且正式输出已存在，也必须拒绝。",
+        "错误仓库根、错误配置路径和伪造仓库根配合正式已存在输出时必须拒绝。",
+        "源码推导真实仓库根、规范第十版配置路径和 SHA-256 87c459c279cdb6135a4b16119c1ca18f211917c5c582fb4ceeee5afb712502b4 配合正式已存在输出仍可完成清单验证。",
+        "版本一至版本九全部必须修复反例、八十项治理对抗和三十九项正式测试继续通过，并新增上述已有输出分支反例。"
+      ]
+    }
+  ],
+  "governance_adversarial_audit": {
+    "historical_counterexample_replay": "completed",
+    "version_one_through_version_nine_counterexamples_all_blocked_or_expected": true,
+    "adversarial_case_count": 80,
+    "expected_behavior_count": 80,
+    "unexpected_behavior_count": 0,
+    "formal_test_command": "python -m pytest -q test/test_hbv_joint_method_synthesis.py",
+    "formal_test_result": "39 passed, 1 pre-existing Pytest configuration warning",
+    "direct_review_status_real_legacy_path": "rejected because the direct entry has no legacy authorization context",
+    "direct_review_status_forged_repo_root_argument": "rejected with TypeError because the direct entry accepts no repo_root argument",
+    "external_byte_identical_config_new_output": {
+      "accepted": false,
+      "exception": "ValueError",
+      "output_created": false,
+      "incomplete_output_created": false
+    },
+    "new_existing_output_counterexamples": {
+      "external_byte_identical_config_existing_output": "accepted_incorrectly_with_status_passed_and_numerical_chain_validated_true",
+      "external_one_byte_whitespace_config_existing_output": "accepted_incorrectly_with_status_passed_and_numerical_chain_validated_true",
+      "wrong_repo_root_existing_output": "accepted_incorrectly_with_status_passed_and_numerical_chain_validated_true"
+    },
+    "formal_output_file_count_before_and_after": 12,
+    "formal_output_tree_sha256_before": "bee3bbd261e1edb1e2f0e0df82771d61ab2605d29b54dbdcfbafbbf8d91bff9c",
+    "formal_output_tree_sha256_after": "bee3bbd261e1edb1e2f0e0df82771d61ab2605d29b54dbdcfbafbbf8d91bff9c",
+    "formal_output_unchanged": true
+  },
+  "registered_legacy_identity_static_audit": {
+    "source_derived_repository_root_required": true,
+    "registered_v10_config_relative_path_required": "src/hbv_multilead_joint_uncertainty/configs/joint_method_synthetic_validation_synthesis_v10.json",
+    "registered_v10_config_sha256": "87c459c279cdb6135a4b16119c1ca18f211917c5c582fb4ceeee5afb712502b4",
+    "legacy_review_relative_path_required": "results/23_hbv_multilead_joint_uncertainty/parameter_identification_validation_v01_reviews",
+    "legacy_first_review_sha256": "c95ffa6ca124e8ceb4b45d8faae7962a356a888dd8b7491ccce799dce466d84a",
+    "legacy_second_review_sha256": "b512dace4e24cc7e091ef322c589c116241876d44f84e738a04b5091f5f73b3b",
+    "legacy_checksums_sha256": "0f6c63405803c850b03129d2f4dca5b59e22b196bd763a99be5686b8a7733a31",
+    "observed_live_hashes_match_registered_constants": true,
+    "limitation": "该内部登记入口的绑定实现存在且八十项历史反例通过；但 run() 的已有输出提前返回绕过了规范入口校验，因此总体治理仍失败。"
+  },
+  "scientific_conclusion": {
+    "changed_by_this_review": false,
+    "current_frozen_boundary": "联合识别在四个测试条件中为零比四，超过参数单因素和过程尺度单因素方法的预报增值在十二个条件与预见期组合中为零比十二；广泛科学结论仍为 HOLD。",
+    "full_raw_recalculation_status": "not_performed_after_immediate_governance_must_fix",
+    "reason": "用户要求治理反例出现必须修复项时立即落盘；完整十二组件、九条双审链、二十一个输入目录三百三十六项清单和四条件原始证据重算只在治理通过后执行。"
+  },
+  "reviewer_independence": {
+    "layer": "first_independent_code_method_result_review",
+    "code_or_formal_evidence_modified": false,
+    "only_review_file_written": "results/23_hbv_multilead_joint_uncertainty/joint_method_synthetic_validation_synthesis_v10_reviews/code_method_result_review.json"
+  }
+}

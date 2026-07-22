@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-07-15T13:26:53.656942+08:00",
+  "history": [
+    {
+      "basin_count": 16,
+      "contract_id": "formal_contract_sixteen_v05",
+      "status": "running",
+      "timestamp": "2026-07-15T13:26:53.656942+08:00"
+    },
+    {
+      "error_type": "ResourceGateError",
+      "message": "available memory is below the 20% running threshold; stop safely",
+      "status": "failed",
+      "timestamp": "2026-07-15T16:27:42.067855+08:00"
+    }
+  ],
+  "run_id": "formal_result_sixteen_reproduction_v02",
+  "run_type": "frozen_evaluation",
+  "status": "failed",
+  "updated_at": "2026-07-15T16:27:42.067855+08:00"
+}

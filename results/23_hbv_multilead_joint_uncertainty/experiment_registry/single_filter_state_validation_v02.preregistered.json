@@ -1,0 +1,41 @@
+{
+  "bootstrap_replicates": 20000,
+  "config_sha256": "b12df61f4d8f647a8486e3dcc51df5b6c723c61faa5bf38dd7a43766731e32a3",
+  "experiment_id": "single_filter_state_validation_v02",
+  "forcing_realization_ids": [
+    314159,
+    314160,
+    314161,
+    314162,
+    314163,
+    314164,
+    314165,
+    314166,
+    314167,
+    314168,
+    314169,
+    314170,
+    314171,
+    314172,
+    314173,
+    314174,
+    314175,
+    314176,
+    314177,
+    314178,
+    314179,
+    314180,
+    314181,
+    314182
+  ],
+  "gates": {
+    "flow_bootstrap_upper_percent_maximum": 0.0,
+    "flow_median_change_percent_maximum": -5.0,
+    "state_bootstrap_upper_percent_maximum": 0.0,
+    "state_median_change_percent_maximum": -5.0
+  },
+  "primary_control": "same_filter_without_observation_updates",
+  "registered_at": "2026-07-17T11:41:55.342690+00:00",
+  "status": "preregistered",
+  "trial_unit": "independent_forcing_realization"
+}

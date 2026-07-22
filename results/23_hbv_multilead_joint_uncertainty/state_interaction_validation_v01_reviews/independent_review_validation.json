@@ -1,0 +1,17 @@
+{
+  "validation_context": "state_interaction_review_validation",
+  "validated_at": "2026-07-17T14:56:55.8476364Z",
+  "mode": "read_only_raw_evidence_validation_of_independent_review",
+  "result_evidence_sha256": "abca6a1d40adf8481e885a7a9b1a98b526a31f145c70de78f9783ee679a58bd0",
+  "conclusion": "confirmed_requires_second_version",
+  "confirmed_items": {
+    "saved_array_count": 29,
+    "saved_numeric_array_count": 24,
+    "numeric_arrays_checked_by_v01_gate": 10,
+    "numeric_arrays_omitted_by_v01_gate": 14,
+    "all_twenty_four_numeric_arrays_actually_finite": true,
+    "class_documentation_outdated": true,
+    "main_numerical_conclusions_reproduced": true,
+    "new_additional_must_fix_issue_found": false
+  }
+}

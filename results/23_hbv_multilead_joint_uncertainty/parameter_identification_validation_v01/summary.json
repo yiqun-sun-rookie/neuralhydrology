@@ -1,0 +1,249 @@
+{
+  "candidate_prior_discharge_root_mean_square_error_by_trial": [
+    [
+      3.4692972209718933e-06,
+      0.2736355987707874,
+      0.20470916536685344
+    ],
+    [
+      0.2750514872908635,
+      3.132973609164292e-06,
+      0.19622640247006623
+    ],
+    [
+      0.2642406891513288,
+      0.2304108863929133,
+      4.412048919494134e-06
+    ],
+    [
+      3.35455424723405e-06,
+      0.2641432372840078,
+      0.22062943102172475
+    ],
+    [
+      0.25156615313025754,
+      3.236412367899137e-06,
+      0.1886913026933633
+    ],
+    [
+      0.22209179827764522,
+      0.19038152152454024,
+      4.36687413837882e-06
+    ],
+    [
+      3.4694193365092472e-06,
+      0.2731990723491395,
+      0.2844311603547077
+    ],
+    [
+      0.27101261983504155,
+      3.3068636678733215e-06,
+      0.22865336993465485
+    ],
+    [
+      0.21411031146668677,
+      0.15952757379115118,
+      4.3087095823961e-06
+    ],
+    [
+      3.5098760057884447e-06,
+      0.2761312876308755,
+      0.23715909309507752
+    ],
+    [
+      0.303637021129809,
+      3.3463151068660937e-06,
+      0.2979168792128224
+    ],
+    [
+      0.2490474400619687,
+      0.22067621709030524,
+      4.341384731910161e-06
+    ],
+    [
+      3.5110237813195386e-06,
+      0.2829067543089453,
+      0.2235144045266694
+    ],
+    [
+      0.26582597733925173,
+      3.3083335866458006e-06,
+      0.21220269519854518
+    ],
+    [
+      0.20204324822831654,
+      0.1460271591421548,
+      4.349338196922999e-06
+    ],
+    [
+      3.527380296942349e-06,
+      0.2694700931371,
+      0.2243251789021621
+    ],
+    [
+      0.2691583672217245,
+      3.2658209163171073e-06,
+      0.18102885185021958
+    ],
+    [
+      0.23648714341054963,
+      0.18513670923836817,
+      4.34663455315282e-06
+    ],
+    [
+      3.4635087304688154e-06,
+      0.2730579953381133,
+      0.2193853541681404
+    ],
+    [
+      0.281578647973996,
+      3.308428944388696e-06,
+      0.22690389045397782
+    ],
+    [
+      0.2282226790059391,
+      0.1981852246360158,
+      4.432754011678361e-06
+    ],
+    [
+      3.6190482162854827e-06,
+      0.2758657634393383,
+      0.26001359412323993
+    ],
+    [
+      0.29535650337782193,
+      3.329105468861347e-06,
+      0.2480446616836908
+    ],
+    [
+      0.22083511569773934,
+      0.3436541136132554,
+      4.492072291877531e-06
+    ]
+  ],
+  "experiment_id": "parameter_identification_validation_v01",
+  "finished_at": "2026-07-17T12:12:22.166749+00:00",
+  "gate_pass": true,
+  "gate_values": {
+    "correct_classification_count": 24,
+    "correct_classification_count_by_parameter": {
+      "equifinal_diverse_1": 8,
+      "equifinal_diverse_2": 8,
+      "trained_center": 8
+    },
+    "median_terminal_true_probability": 1.0,
+    "terminal_true_probability_bootstrap_lower": 1.0
+  },
+  "gates": {
+    "correct_classification_count_minimum": 20,
+    "correct_classification_count_per_parameter_minimum": 6,
+    "median_terminal_true_probability_minimum": 0.6,
+    "terminal_true_probability_bootstrap_lower_minimum": 0.3333333333333333
+  },
+  "generated_observation_noise": "none",
+  "interaction_mode": "none",
+  "parameter_count": 3,
+  "parameter_ids": [
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2"
+  ],
+  "parameter_source_sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+  "parameter_switching": false,
+  "predicted_parameter_ids": [
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2"
+  ],
+  "process_covariance": "zero",
+  "protected_artifacts_unchanged": true,
+  "scope_limit": "This component isolates fixed-vector identification with deterministic truth, zero process covariance, no generated observation noise, no switching, and no interaction.",
+  "selected_parameter_snapshot_sha256": "6ee0843c37488f6a674869af2f8b50c917111ac0156540318896730f4b6db74d",
+  "started_at": "2026-07-17T12:11:40.086945+00:00",
+  "status": "passed",
+  "terminal_true_probability_bootstrap_interval": [
+    1.0,
+    1.0
+  ],
+  "terminal_true_probability_by_trial": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "terminal_window_days": 10,
+  "trial_count": 24,
+  "trial_count_by_parameter": {
+    "equifinal_diverse_1": 8,
+    "equifinal_diverse_2": 8,
+    "trained_center": 8
+  },
+  "true_candidate_lowest_discharge_error_count": 24,
+  "true_parameter_ids": [
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2",
+    "trained_center",
+    "equifinal_diverse_1",
+    "equifinal_diverse_2"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "review_type": "independent_scalar_recalculation_of_two_tolerance_exceedances",
+  "hypothesis": "The two exceedances are roundoff from vectorized transition arithmetic, not a contract mismatch.",
+  "rows": [
+    {
+      "basin_id": "05507600",
+      "cell_indices": [
+        1,
+        0
+      ],
+      "process_variance_scale": 1e-07,
+      "observation_standard_deviation": 0.0314946793655013,
+      "contract_value": -1833.1419507628548,
+      "vectorized_independent_value": -1833.1419507627536,
+      "scalar_independent_value": -1833.1419507627536,
+      "vectorized_absolute_difference": 1.0118128557223827e-10,
+      "scalar_absolute_difference": 1.0118128557223827e-10,
+      "vectorized_relative_difference": 5.519555402140684e-14,
+      "scalar_relative_difference": 5.519555402140684e-14,
+      "contract_and_vectorized_argmax_equal": true,
+      "elapsed_seconds": 0.6764397621154785
+    },
+    {
+      "basin_id": "11148900",
+      "cell_indices": [
+        0,
+        0
+      ],
+      "process_variance_scale": 1e-08,
+      "observation_standard_deviation": 0.0125,
+      "contract_value": -5007.474033362829,
+      "vectorized_independent_value": -5007.474033361122,
+      "scalar_independent_value": -5007.474033361122,
+      "vectorized_absolute_difference": 1.7071215552277863e-09,
+      "scalar_absolute_difference": 1.7071215552277863e-09,
+      "vectorized_relative_difference": 3.4091470946307606e-13,
+      "scalar_relative_difference": 3.4091470946307606e-13,
+      "contract_and_vectorized_argmax_equal": true,
+      "elapsed_seconds": 0.6838045120239258
+    }
+  ],
+  "hypothesis_confirmed": false,
+  "recommended_noise_grid_acceptance_rule": "absolute_difference <= 1e-10 OR relative_difference <= 1e-12, while requiring identical selected grid cell and formal three-scale contract",
+  "auditor_script_sha256": "9c18988c272a86aa02e15c1aa4c640f7ba1187a4eb9c18ba2df122be1d8021bb",
+  "second_hypothesis": "The remaining discrepancy originates in the batch warm-up state; a scalar warm-up followed by the scalar filter should reproduce the contract.",
+  "scalar_warmup_review_rows": [
+    {
+      "basin_id": "05507600",
+      "cell_indices": [
+        1,
+        0
+      ],
+      "maximum_warm_state_difference_batch_vs_scalar": 0.0,
+      "contract_value": -1833.1419507628548,
+      "scalar_with_scalar_warmup_value": -1833.1419507627536,
+      "absolute_difference": 1.0118128557223827e-10,
+      "relative_difference": 5.519555402140684e-14
+    },
+    {
+      "basin_id": "11148900",
+      "cell_indices": [
+        0,
+        0
+      ],
+      "maximum_warm_state_difference_batch_vs_scalar": 0.0,
+      "contract_value": -5007.474033362829,
+      "scalar_with_scalar_warmup_value": -5007.474033361122,
+      "absolute_difference": 1.7071215552277863e-09,
+      "relative_difference": 3.4091470946307606e-13
+    }
+  ],
+  "second_hypothesis_confirmed": false
+}

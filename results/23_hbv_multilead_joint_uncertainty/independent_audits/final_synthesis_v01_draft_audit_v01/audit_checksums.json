@@ -1,0 +1,30 @@
+{
+  "algorithm": "SHA-256",
+  "excluded_files": [
+    "audit_checksums.json",
+    "self_verification.json"
+  ],
+  "files": {
+    "audit_summary.json": "068c72144fb36d8c35ed6c0240d2388ea5a90a291bc441b7f3596b989b4ccc37",
+    "claim_verification.csv": "36bde27158ef250e4a2b2ec3cff958e1938b399bbeebf7719a7e57360800abe0",
+    "contract_definition_checks.json": "9755ef53e11b16ff19e24243e8bc5515313c8c73242a46c6d98f71e897c99620",
+    "evaluation_and_reproduction_checks.json": "231be280e6cf5fe23bcca60f95b8d5c4eba024f944465baeffe597d90e782c69",
+    "independent_audit_report.md": "f434f6441ae83a439e7c32b77e9f46dea76650f9222dd2fae93a3f88655a8481",
+    "independent_final_synthesis_audit.py": "2ddd093a73a315df0a702418b8d6b57cbc158b3dddb71a17b04242aaca958c6e",
+    "independent_resource_history.json": "ba6d0366a86a2de7394b868e38f9af8d03a4d40867088261f4bacbaaa0c7835a",
+    "kalmannet_source_verification.json": "b38b80753c54c1162547c675d4953b1aef3af61fb20cbe24ba3c4cba90d8ec6c",
+    "known_issue_verification.csv": "11635c859fa1d3d1ade8015cceda85f77ec408c6b5c42e52af6d2c67cf1fbabd",
+    "origin_posterior_recomputation.json": "178a5c8fa898dbf41d073533327b37fea20ba454677e86a08b34c73045352b46",
+    "package_integrity_before_after.json": "eea019626a196a50ef050217ccf90c52909b2f91c799e94a145961721a914e82",
+    "paired_vs_unpaired_cross_basin.csv": "32f606b1827fbdb9cd1d84e677bfdee4ea05604bd3d1be8902bd1164cc21b568",
+    "recomputed_climate_comparisons.csv": "4ce7102790e7de1847438db1ef68bec5a80a2e790a7f46cec0e1be40e2addafd",
+    "recomputed_formal_metrics.csv": "4050de653166ed61f03bf502b6377b71821e43c6c32e53b58860d33c8c67b7c0",
+    "recomputed_formal_open_loop_comparisons.csv": "653c090cbfab1312b1c5467e581634376ab8f6faf25ffe0d6d35d7fdd7f03bfd",
+    "recomputed_formal_paired_comparisons.csv": "6b9e3088e49b821677596f23c678ed6e10f3eef0dfa9441347fbbc2c729a20e8",
+    "recomputed_pilot_paired_comparisons.csv": "d22930868ad737b51246acc5110c4f0b84121ea090b2146e4f27e7a8ff6197b0",
+    "relative_link_audit.csv": "ed86c7fa0843171dbc0836d7c597e1cb2cbff8c15db51b3537cbe7054554580a",
+    "statement_verification.csv": "d5dd2682d3e5453116f4a81182827377b354833ff400f447647476bd14d20a32",
+    "structured_issues.csv": "14edcdfc8a63645f0b7d178e2c671b0b2fcd5334b6bde3aadd5afa9368942c9e",
+    "verify_independent_final_synthesis_audit.py": "f58e13e2104eebe293f901301596784d57bd120bd2ad804f07fb015d4bf6e78f"
+  }
+}

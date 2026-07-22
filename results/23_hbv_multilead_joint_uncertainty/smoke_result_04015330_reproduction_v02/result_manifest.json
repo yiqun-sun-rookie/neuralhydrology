@@ -1,0 +1,19 @@
+{
+  "artifact_type": "diagnostic_hindcast_result",
+  "basin_count": 1,
+  "basins": [
+    "04015330"
+  ],
+  "contract_id": "smoke_contract_04015330_v06",
+  "evaluation_input_audit_count": 1,
+  "experiment_id": "smoke_result_04015330_reproduction_v02",
+  "future_meteorology": "observed hindsight meteorology; not an operational forecast",
+  "has_verified_execution_signature": true,
+  "methods": [
+    "open_loop",
+    "fixed_filter",
+    "parameter_only",
+    "noise_only",
+    "joint"
+  ]
+}

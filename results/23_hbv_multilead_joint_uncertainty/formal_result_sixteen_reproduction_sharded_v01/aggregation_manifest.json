@@ -1,0 +1,149 @@
+{
+  "aggregation_id": "formal_result_sixteen_reproduction_sharded_v01",
+  "array_count": 576,
+  "artifact_type": "formal_reproduction_aggregation",
+  "basin_count": 16,
+  "basins": [
+    "12143600",
+    "04127918",
+    "09066000",
+    "06431500",
+    "03479000",
+    "02296500",
+    "02015700",
+    "06892000",
+    "05507600",
+    "06477500",
+    "08158700",
+    "11148900",
+    "06404000",
+    "08189500",
+    "09505350",
+    "09447800"
+  ],
+  "cross_basin_summary_row_count": 15,
+  "failed_shard_directories_used": false,
+  "maximum_absolute_difference": 0.0,
+  "metric_row_count": 240,
+  "numeric_element_count": 5871360,
+  "registry_record_repo_relative": "results/23_hbv_multilead_joint_uncertainty/registry/formal_result_sixteen_reproduction_sharded_v01.json",
+  "session_checksums_sha256": "86c3232fca046b10cfcc269c96b08a8d5ed2a59d80bf91f6b37c2892f089734b",
+  "session_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_session_v01",
+  "shard_count": 16,
+  "shard_root_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01",
+  "shards": [
+    {
+      "basin_id": "12143600",
+      "reproduced_npz_sha256": "358e3e2766abfd0f341b2aab22c944840381adf550954f87dbaf57ce9915ab07",
+      "shard_checksums_sha256": "524f6059b0134402539e24aa285e008ca71d26f0d3d9381699074f878b68d20f",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_12143600_v01",
+      "shard_id": "formal_repro_12143600_v01"
+    },
+    {
+      "basin_id": "04127918",
+      "reproduced_npz_sha256": "96876b27f275cfd6784be6d659c28b6e6c7f6060a58ba2d98e751bf7149d9a86",
+      "shard_checksums_sha256": "e536efbbc6ef243886518915950f5265a34e6d7598b2223505c3e4436daf4bd9",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_04127918_v01",
+      "shard_id": "formal_repro_04127918_v01"
+    },
+    {
+      "basin_id": "09066000",
+      "reproduced_npz_sha256": "5cef9fa1e4e3d61f416a2b6395af35c66657d2988cbda216c0e8aeb87fe69db5",
+      "shard_checksums_sha256": "5b5efc9c241fece145183d48b0a8fa50383d3fdde47415423a4764f6dcc72fa7",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_09066000_v01",
+      "shard_id": "formal_repro_09066000_v01"
+    },
+    {
+      "basin_id": "06431500",
+      "reproduced_npz_sha256": "844a31d527c3f24c1ec7124eeff4dcc41ca662e40e879982e1008389834c28e3",
+      "shard_checksums_sha256": "9deff3009f9f79e29ff83b8d6fa5f369e6d4430ad9c8a1aaebf4e7a91078b3f2",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_06431500_v01",
+      "shard_id": "formal_repro_06431500_v01"
+    },
+    {
+      "basin_id": "03479000",
+      "reproduced_npz_sha256": "a7cde0976212dfe7937c5b7c3d31acc56d5ee753805621faf03471b6df290483",
+      "shard_checksums_sha256": "ca258c10802b0f189ac08a8ec217fd5670ca633d9764e09f95990b838e9074f5",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_03479000_v01",
+      "shard_id": "formal_repro_03479000_v01"
+    },
+    {
+      "basin_id": "02296500",
+      "reproduced_npz_sha256": "24de42eec2b1618aa79da8caf15e1a35eca0c845669e9f7255eaf5cb1d47147d",
+      "shard_checksums_sha256": "7d1d1a0f813ed1e7b0c9f85a690c5053bc47916ceb778d6c08e0e8d61fa4b998",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_02296500_v01",
+      "shard_id": "formal_repro_02296500_v01"
+    },
+    {
+      "basin_id": "02015700",
+      "reproduced_npz_sha256": "254edbed6d72c3eaabe4fb4c6465bd8625eed006a5f48f4fa08fe7048af6d4ee",
+      "shard_checksums_sha256": "62d8a5170f40e3ea3132c41ff517ec91823acb39c209296124a0e080bf4532c2",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_02015700_v01",
+      "shard_id": "formal_repro_02015700_v01"
+    },
+    {
+      "basin_id": "06892000",
+      "reproduced_npz_sha256": "7a3804b77b5c811fb8314f3c97f78416698a1a75184c43cb149502077b1c37f7",
+      "shard_checksums_sha256": "d617b1e935a2eb0397a75d8a7f95cc349a9e9661b42cacfdb7490589091af20a",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_06892000_v01",
+      "shard_id": "formal_repro_06892000_v01"
+    },
+    {
+      "basin_id": "05507600",
+      "reproduced_npz_sha256": "598620b1067ce750f192a9cb4979fae3e3d4ae08e0d10382b9c30ffafdc8c50d",
+      "shard_checksums_sha256": "e319ab96cf02cfd57511337d6901204c456add204871cd57690a0c0542dbb62c",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_05507600_v01",
+      "shard_id": "formal_repro_05507600_v01"
+    },
+    {
+      "basin_id": "06477500",
+      "reproduced_npz_sha256": "ea6d03284d77d69b26ecb89cd1c99fe527f909d848890699c6100075d97df44e",
+      "shard_checksums_sha256": "aecf8167dfe66dcb453317b1c223ef25af2285acaaa2cdcc194f818b29288775",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_06477500_v01",
+      "shard_id": "formal_repro_06477500_v01"
+    },
+    {
+      "basin_id": "08158700",
+      "reproduced_npz_sha256": "2db13f327aa04051bd80f4ef04588de8000baaf65405e90f12924ec45eb08875",
+      "shard_checksums_sha256": "4a1953ace43fdc3873a8bdbfca3acaebffbd38f0fe2575e5bd2509bfd5ffbfb7",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_08158700_v01",
+      "shard_id": "formal_repro_08158700_v01"
+    },
+    {
+      "basin_id": "11148900",
+      "reproduced_npz_sha256": "3e2543bbde09967d81b4a25795917ae9cef01fd06c8bd0db9d4172589486e29d",
+      "shard_checksums_sha256": "b828dceb2de97e4e4fdb4c12f766da76c9007af9efb15982a72b84deff7af5ba",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_11148900_v01",
+      "shard_id": "formal_repro_11148900_v01"
+    },
+    {
+      "basin_id": "06404000",
+      "reproduced_npz_sha256": "f0f133a72fa22170f9cfb8e2738bd1b0f79e055b4327864aaed5e6dc6612323d",
+      "shard_checksums_sha256": "6d57bfb756592bd6b320528736e6e204f8086d8a874c6db66b61254e76342fa6",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_06404000_v01",
+      "shard_id": "formal_repro_06404000_v01"
+    },
+    {
+      "basin_id": "08189500",
+      "reproduced_npz_sha256": "57128ded27bb5ffaf1c47132885aa2b3732d5e48937e1735993ee1b25a52ce9b",
+      "shard_checksums_sha256": "adebb7fc15fcc35ac441d2ef3ee8f490a02d2dfcdb3f842664b9cb579447a3cb",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_08189500_v01",
+      "shard_id": "formal_repro_08189500_v01"
+    },
+    {
+      "basin_id": "09505350",
+      "reproduced_npz_sha256": "d5715391edbe4c23939e0e77339339fb1b4fd1a0eb1abc171fb3d3d582876e7b",
+      "shard_checksums_sha256": "28e6b4f18a555240d8702e10d68bb1d06a53df7e50aec5749836663531054bd5",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_09505350_v01",
+      "shard_id": "formal_repro_09505350_v01"
+    },
+    {
+      "basin_id": "09447800",
+      "reproduced_npz_sha256": "fa32d6b1fc1b6a158ab1a00b75dfa08b3ab4075c7536404e2b7c3963a34a8392",
+      "shard_checksums_sha256": "5ce387a1339d4dfeb1aa67c7b2dd6ee5809119c3b33b4d3505a9c22d3b94b44d",
+      "shard_directory_repo_relative": "results/23_hbv_multilead_joint_uncertainty/formal_reproduction_shards_v01/formal_repro_09447800_v01",
+      "shard_id": "formal_repro_09447800_v01"
+    }
+  ],
+  "status": "verified"
+}

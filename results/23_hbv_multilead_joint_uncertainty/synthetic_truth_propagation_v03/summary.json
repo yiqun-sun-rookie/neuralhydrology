@@ -1,0 +1,19 @@
+{
+  "adapter_routing_shift_exact": true,
+  "days": 365,
+  "discharge_maximum_absolute_error": 2.220446049250313e-15,
+  "experiment_id": "synthetic_truth_propagation_v03",
+  "finite": true,
+  "protected_artifacts_unchanged": true,
+  "raw_discharge_maximum_absolute_error": 3.9968028886505635e-15,
+  "reference_path": "src/scl_hydro/hbv_lite_numpy.py",
+  "reference_routing_shift_exact": true,
+  "routing_memory_cross_path_maximum_absolute_error": 3.9968028886505635e-15,
+  "state_maximum_absolute_error": 5.684341886080802e-14,
+  "status": "passed",
+  "tested_path": "src/hbv_joint_uncertainty/hbv_adapter.py",
+  "thresholds": {
+    "discharge_maximum_absolute_error": 1e-08,
+    "state_maximum_absolute_error": 1e-08
+  }
+}

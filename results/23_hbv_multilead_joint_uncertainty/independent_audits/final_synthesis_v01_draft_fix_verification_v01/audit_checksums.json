@@ -1,0 +1,19 @@
+{
+  "algorithm": "SHA-256",
+  "excluded_files": [
+    "audit_checksums.json",
+    "self_verification.json"
+  ],
+  "files": {
+    "audit_summary.json": "ca860c5aa056980216bf5f660e179937281f797ca3b949964f11d6b38c845595",
+    "independent_fix_verification.py": "da90fd56789a12a1815e8417edbdd01a52da2800e66e332d46b8c7aba90050a9",
+    "independent_resource_history.json": "d886c63fd57c180389f86a8271a3a36b39455a584fbd15aea69492daa452447b",
+    "independent_verification_report.md": "655fed030c8ee03b0177f1bf318fd534137d1359bff94d2b6dad0ed97710da38",
+    "package_integrity_before_after.json": "8416abe0d7ce9a14e98972fb95ca756794e7f26f053adb9509f0130bdd9714e3",
+    "relative_link_audit.csv": "43037adf842a12ecd4f8bbf36c7f02acf5ef15e62ab0203b47870f2e91eb607c",
+    "reproduction_v02_status_end.json": "e1503107d6cda1394482d7da604a306d52eb88dd1b8a57c0c494dcaf1953ee07",
+    "reproduction_v02_status_start.json": "a8252da8ae8fe83191e4076d205c1b88be619dd4d9f57db3d718d9d163387659",
+    "structured_status.csv": "c6bec73d371028551c74a6457b521b1b4b3ed6f114e4f495fd133f04fb22f585",
+    "verify_fix_verification.py": "6942a66ea035ae9aff9453c228e48f3f89f12215bd4be47685b2098c313a82b4"
+  }
+}

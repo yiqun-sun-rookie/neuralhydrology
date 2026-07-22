@@ -1,0 +1,13 @@
+{
+  "assimilation_days_per_trial": 30,
+  "available_after_estimated_peak_bytes": 12274181248,
+  "available_physical_memory_bytes": 12310855680,
+  "checked_at": "2026-07-17T11:41:55.344690+00:00",
+  "estimated_additional_peak_memory_bytes": 36674432,
+  "estimation_basis": "three copies of persisted forcing, truth, state, and prediction arrays; one sequential filter working set; and 32 MiB packaging/runtime allowance",
+  "execution_parallelism": 1,
+  "forcing_days_per_trial": 180,
+  "safe_to_run": true,
+  "task_specific_required_available_bytes": 146697728,
+  "trial_count": 24
+}

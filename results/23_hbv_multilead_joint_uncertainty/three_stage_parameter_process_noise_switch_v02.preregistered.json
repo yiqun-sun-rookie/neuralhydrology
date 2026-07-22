@@ -1,0 +1,21 @@
+{
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 575757,
+    "unit": "matched_block"
+  },
+  "config_sha256": "95cd27525a2bff3e29be35cea221f0db59f5cadcd8c48a5b0168313cd8323b72",
+  "decision_rules": {
+    "adaptation_days_excluded_per_stage": 5,
+    "candidate_argmax_accuracy_minimum": 0.5,
+    "factor_argmax_accuracy_minimum": 0.6666666666666666,
+    "median_true_candidate_probability_minimum": 0.2,
+    "paired_block_difference_upper_maximum": 0.0,
+    "relative_root_mean_square_error_improvement_percent_minimum": 5.0
+  },
+  "experiment_id": "three_stage_parameter_process_noise_switch_v02",
+  "frozen_before_execution": true,
+  "output_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\three_stage_parameter_process_noise_switch_v02",
+  "scenario": "parameter_process_noise_switch",
+  "started_at_utc": "2026-07-20T03:01:29.047213+00:00"
+}

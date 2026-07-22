@@ -1,0 +1,58 @@
+{
+  "identity_dynamics_conservation_audit": {
+    "full_combined_mean_error_after_three_days": 0.0,
+    "parameter_grouped_combined_mean_error_after_three_days": 0.876,
+    "test_reference": "test_full_interaction_preserves_mixture_mean_under_identity_dynamics"
+  },
+  "per_basin": [
+    {
+      "basin_id": "04015330",
+      "development_mean_log_likelihood": -0.14949523274529017,
+      "development_one_day_nse": 0.44367259092205724,
+      "finite": true,
+      "interaction_mode": "full"
+    },
+    {
+      "basin_id": "04015330",
+      "development_mean_log_likelihood": -0.14197926490103366,
+      "development_one_day_nse": 0.44719271366919766,
+      "finite": true,
+      "interaction_mode": "parameter_grouped"
+    },
+    {
+      "basin_id": "04015330",
+      "development_mean_log_likelihood": -0.13986213751166385,
+      "development_one_day_nse": 0.45113253242232665,
+      "finite": true,
+      "interaction_mode": "none"
+    }
+  ],
+  "selected_mode": "full",
+  "selection_period_end": "2008-09-30",
+  "selection_period_start": "2006-10-01",
+  "selection_rule": "full interaction is the only standard interacting-multiple-model state-transfer mode; parameter-grouped and no-interaction modes are retained as development diagnostics",
+  "summary": [
+    {
+      "basin_count": 1,
+      "finite_basin_count": 1,
+      "interaction_mode": "full",
+      "median_development_mean_log_likelihood": -0.14949523274529017,
+      "median_development_one_day_nse": 0.44367259092205724
+    },
+    {
+      "basin_count": 1,
+      "finite_basin_count": 1,
+      "interaction_mode": "parameter_grouped",
+      "median_development_mean_log_likelihood": -0.14197926490103366,
+      "median_development_one_day_nse": 0.44719271366919766
+    },
+    {
+      "basin_count": 1,
+      "finite_basin_count": 1,
+      "interaction_mode": "none",
+      "median_development_mean_log_likelihood": -0.13986213751166385,
+      "median_development_one_day_nse": 0.45113253242232665
+    }
+  ],
+  "uses_evaluation_discharge": false
+}

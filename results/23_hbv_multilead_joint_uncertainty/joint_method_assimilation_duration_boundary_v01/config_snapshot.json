@@ -1,0 +1,76 @@
+{
+  "conditions": [
+    {
+      "assimilation_days": 7,
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/joint_method_assimilation_07d_v01.json",
+      "evidence_path": "results/23_hbv_multilead_joint_uncertainty/joint_method_assimilation_07d_v01",
+      "experiment_id": "joint_method_assimilation_07d_v01"
+    },
+    {
+      "assimilation_days": 21,
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/joint_method_assimilation_21d_v01.json",
+      "evidence_path": "results/23_hbv_multilead_joint_uncertainty/joint_method_assimilation_21d_v01",
+      "experiment_id": "joint_method_assimilation_21d_v01"
+    },
+    {
+      "assimilation_days": 45,
+      "config_path": "src/hbv_multilead_joint_uncertainty/configs/joint_method_stable_validation_v04.json",
+      "evidence_path": "results/23_hbv_multilead_joint_uncertainty/joint_method_stable_validation_v04",
+      "experiment_id": "joint_method_stable_validation_v04"
+    }
+  ],
+  "decision_rule": {
+    "boundary": "The boundary is the shortest tested duration that passes and for which every longer tested duration also passes. If none passes, report only that sufficiency was not reached through the longest tested duration; do not infer failure at untested longer durations.",
+    "sufficient_at_duration": "All four preregistered joint-identification thresholds in that condition must pass: joint candidate argmax accuracy, complete-parameter-label argmax accuracy, process-scale argmax accuracy and median true joint-candidate probability.",
+    "thresholds_are_frozen_in_each_condition": true
+  },
+  "experiment_id": "joint_method_assimilation_duration_boundary_v01",
+  "fixed_boundaries": {
+    "assimilation_days_tested": [
+      7,
+      21,
+      45
+    ],
+    "complete_parameter_vectors": 3,
+    "joint_candidates": 9,
+    "lead_days": [
+      1,
+      3,
+      7
+    ],
+    "matched_blocks": 8,
+    "parameters_per_vector": 13,
+    "post_projection_process_distribution_exactly_in_filter_model": false,
+    "process_scale_candidates": 3,
+    "real_basin_observations": false,
+    "switching_truth": false,
+    "truth_conditions_per_block": 9,
+    "truth_labels_fixed": true,
+    "weak_observation_condition": false
+  },
+  "matched_prefix_arrays": [
+    "forcing_blocks",
+    "process_standard_normals",
+    "observation_standard_normals",
+    "truth_deterministic_states",
+    "truth_process_perturbations",
+    "truth_projection_adjustments",
+    "truth_states",
+    "truth_discharge",
+    "observed_discharge"
+  ],
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_assimilation_07d_v01",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_assimilation_21d_v01",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_stable_validation_v04",
+    "results/23_hbv_multilead_joint_uncertainty/joint_method_stable_validation_v04_reviews"
+  ],
+  "purpose": "Determine whether seven, twenty-one or forty-five matched assimilation days are sufficient for preregistered nine-candidate joint identification under fixed complete parameter labels and physically projected candidate-scale process truth.",
+  "resource_rule": {
+    "estimated_peak_formula": "three times the sum of saved numeric-array bytes across the three input conditions plus the task-specific reserve",
+    "execution_parallelism": 1,
+    "task_specific_reserve_bytes": 67108864,
+    "universal_memory_threshold_used": false
+  },
+  "scope_limit": "This boundary addresses only the amount of matched discharge-assimilation evidence from seven through forty-five days. The frozen covariance controls only the physical-projection-before perturbation scale, and the projected truth is not an exact additive Gaussian candidate model. Failure through forty-five days does not establish failure at longer untested durations or under switching, other observation uncertainty, forcing error or real basins."
+}

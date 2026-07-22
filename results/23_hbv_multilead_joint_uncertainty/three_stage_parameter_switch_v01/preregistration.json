@@ -1,0 +1,20 @@
+{
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 575757,
+    "unit": "matched_block"
+  },
+  "config_sha256": "0cdb05dff0fec345291432e31e5f94389d24e20ad82390a2603237e9637bea36",
+  "decision_rules": {
+    "adaptation_days_excluded_per_stage": 5,
+    "candidate_argmax_accuracy_minimum": 0.5,
+    "factor_argmax_accuracy_minimum": 0.6666666666666666,
+    "median_true_candidate_probability_minimum": 0.2,
+    "paired_block_difference_upper_maximum": 0.0,
+    "relative_root_mean_square_error_improvement_percent_minimum": 5.0
+  },
+  "experiment_id": "three_stage_parameter_switch_v01",
+  "frozen_before_execution": true,
+  "scenario": "parameter_switch",
+  "started_at_utc": "2026-07-20T02:37:58.330469+00:00"
+}

@@ -1,0 +1,93 @@
+{
+  "verified_at_utc": "2026-07-15T05:39:16.780027+00:00",
+  "verifier": "verify_fix_verification.py",
+  "independent_of_main_audit_module": true,
+  "overall_passed": true,
+  "expected_release_decision": "RELEASE",
+  "formal_reproduction_status": "PENDING",
+  "formal_reproduction_passed": false,
+  "check_count": 16,
+  "failed_check_count": 0,
+  "checks": [
+    {
+      "check_id": "S001_CHECKSUM_MANIFEST",
+      "passed": true,
+      "detail": "清单文件10个；不一致0个。"
+    },
+    {
+      "check_id": "S002_RELEASE_SCOPE",
+      "passed": true,
+      "detail": "决定=RELEASE；阻断项=0。"
+    },
+    {
+      "check_id": "S003_REPRODUCTION_PENDING",
+      "passed": true,
+      "detail": "科学状态=PENDING；通过=False。"
+    },
+    {
+      "check_id": "S004_STRUCTURED_STATUS",
+      "passed": true,
+      "detail": "状态行=7。"
+    },
+    {
+      "check_id": "S005_BOUNDARY_RECOMPUTATION",
+      "passed": true,
+      "detail": "正式流域=16；开发流域=6；训练投影=531；正式与开发交集=0；训练投影覆盖=16/16。"
+    },
+    {
+      "check_id": "S006_I001_TEXT",
+      "passed": true,
+      "detail": "错误未见流域表述已移除，开发留出与训练非留出均明确。"
+    },
+    {
+      "check_id": "S007_I002_CODE_AND_TEXT",
+      "passed": true,
+      "detail": "报告和冻结运行器均限定为四种状态更新方法。"
+    },
+    {
+      "check_id": "S008_I003_EVIDENCE_AND_ARRAYS",
+      "passed": true,
+      "detail": "第一项证据路径=5；压缩数组=16；候选映射失败=0。"
+    },
+    {
+      "check_id": "S009_KNOWN_ISSUE_14",
+      "passed": true,
+      "detail": "第14项否定参数训练未见，并给出16/16训练覆盖。"
+    },
+    {
+      "check_id": "S010_LEDGER_C21",
+      "passed": true,
+      "detail": "第二十一项状态=BOUNDARY；证据路径=3。"
+    },
+    {
+      "check_id": "S011_RELATIVE_LINKS",
+      "passed": true,
+      "detail": "相对链接=61；缺失=0。"
+    },
+    {
+      "check_id": "S012_PROTECTED_INTEGRITY",
+      "passed": true,
+      "detail": "受保护文件=16；变化文件=0；活动运行目录不作为静态证据。"
+    },
+    {
+      "check_id": "S013_RESOURCE_RECORD",
+      "passed": true,
+      "detail": "样本=2；最大间隔=0.047秒；最低可用内存比例=0.305。"
+    },
+    {
+      "check_id": "S014_ACTIVE_REPRODUCTION_BOUNDARY",
+      "passed": true,
+      "detail": "开始登记=running；结束登记=running；科学状态=PENDING。"
+    },
+    {
+      "check_id": "S015_REPORT_CONCLUSION",
+      "passed": true,
+      "detail": "报告同时给出修正释放和复现未完成边界。"
+    },
+    {
+      "check_id": "S016_NO_BYTECODE",
+      "passed": true,
+      "detail": "字节码文件=0。"
+    }
+  ]
+}

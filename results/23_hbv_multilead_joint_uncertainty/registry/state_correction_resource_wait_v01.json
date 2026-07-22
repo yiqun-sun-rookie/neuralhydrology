@@ -1,0 +1,14 @@
+{
+  "record_id": "state_correction_resource_wait_v01",
+  "type": "resource_wait",
+  "status": "blocked_waiting_for_resources",
+  "run_dir": "results/23_hbv_multilead_joint_uncertainty/state_correction_resource_wait_v01.failed",
+  "failure_record": "results/23_hbv_multilead_joint_uncertainty/state_correction_resource_wait_v01.failed/failure.json",
+  "resource_history": "results/23_hbv_multilead_joint_uncertainty/state_correction_resource_wait_v01.failed/resource_history.jsonl",
+  "checkpoint": "results/23_hbv_multilead_joint_uncertainty/state_correction_resource_wait_v01.failed/checkpoint.json",
+  "formal_contract": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+  "formal_result": "results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01",
+  "formal_artifacts_modified": false,
+  "consecutive_failed_resource_checks": 3,
+  "latest_check_timestamp": "2026-07-16T13:51:04.5856393+08:00"
+}

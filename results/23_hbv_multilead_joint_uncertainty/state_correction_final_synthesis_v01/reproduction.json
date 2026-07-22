@@ -1,0 +1,30 @@
+{
+  "synthesis_id": "state_correction_final_synthesis_v01",
+  "formal_diagnostic_experiment_id": "state_correction_sixteen_v02",
+  "working_directory": "G:\\github\\pycharm\\projects\\neuralhydrology",
+  "command": "python -m hbv_multilead_joint_uncertainty.scripts.run_state_correction_diagnostic --repo-root . --config src\\hbv_multilead_joint_uncertainty\\configs\\state_correction_propagation_v07.json --experiment-id state_correction_sixteen_v02 --basins 12143600,04127918,09066000,06431500,03479000,02296500,02015700,06892000,05507600,06477500,08158700,11148900,06404000,08189500,09505350,09447800",
+  "configuration_sha256": "740cb46df5b2604f985c9a4f850bd1d8e3c7882c8c82e3542355685ee14aa59a",
+  "formal_run_source_sha256": "0bc53a0e1d228cbc51353753f476085089da7075abcba093663792686a48cd48",
+  "current_source_after_nonblocking_default_fix_sha256": "bfd4bb2d64cf85a21b0ba9e71fe01d541e50c913d25a3fbdaf15df0ef4ced221",
+  "formal_diagnostic_checksums_file_sha256": "935e05cba187efd5dab788a19f20e09585783595a94ed180e1d5043dba1992b2",
+  "frozen_contract_checksums_file_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+  "frozen_formal_result_checksums_file_sha256": "88ab2297e02179cc0e3e432c958871e1d6e7985358b9394970154a65f2348bd0",
+  "basin_count": 16,
+  "common_origin_count_per_basin": 358,
+  "lead_days": [1, 3, 7],
+  "resource": {
+    "sample_count": 595,
+    "maximum_monitor_gap_seconds": 9.749040842056274,
+    "minimum_available_memory_fraction": 0.08222308811067498,
+    "process_peak_working_set_gib": 0.18924713134765625,
+    "minimum_disk_free_gib": 2165.0529823303223,
+    "actual_output_gib": 0.58560786023736,
+    "numerical_threads": 1,
+    "reserved_logical_processors": 2
+  },
+  "registered_status": "verified",
+  "formal_artifacts_modified": false,
+  "run_531": false,
+  "git_commit_created": false,
+  "git_push_performed": false
+}

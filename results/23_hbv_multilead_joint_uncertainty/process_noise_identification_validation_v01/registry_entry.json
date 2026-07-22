@@ -1,0 +1,63 @@
+{
+  "base_config": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\configs\\process_noise_identification_validation_v01.json",
+  "changed_factor": "which of the three fixed process covariances generates truth",
+  "experiment_id": "process_noise_identification_validation_v01",
+  "fixed_factors": "one complete parameter vector, matched forcing and draws, no switching or interaction",
+  "hypothesis": "fixed-model likelihood identifies which frozen process covariance generated truth",
+  "metrics_path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\process_noise_identification_validation_v01\\summary.json",
+  "notes": "This component isolates three fixed process-noise covariances under one fixed complete parameter vector, matched synthetic forcing and random draws, no switching and no interaction.",
+  "paper_name": "synthetic process-noise identification component",
+  "run_dir": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\process_noise_identification_validation_v01",
+  "seeds": [
+    {
+      "block_id": "matched_block_01",
+      "forcing_seed": 520001,
+      "observation_noise_seed": 720001,
+      "process_noise_seed": 620001
+    },
+    {
+      "block_id": "matched_block_02",
+      "forcing_seed": 520002,
+      "observation_noise_seed": 720002,
+      "process_noise_seed": 620002
+    },
+    {
+      "block_id": "matched_block_03",
+      "forcing_seed": 520003,
+      "observation_noise_seed": 720003,
+      "process_noise_seed": 620003
+    },
+    {
+      "block_id": "matched_block_04",
+      "forcing_seed": 520004,
+      "observation_noise_seed": 720004,
+      "process_noise_seed": 620004
+    },
+    {
+      "block_id": "matched_block_05",
+      "forcing_seed": 520005,
+      "observation_noise_seed": 720005,
+      "process_noise_seed": 620005
+    },
+    {
+      "block_id": "matched_block_06",
+      "forcing_seed": 520006,
+      "observation_noise_seed": 720006,
+      "process_noise_seed": 620006
+    },
+    {
+      "block_id": "matched_block_07",
+      "forcing_seed": 520007,
+      "observation_noise_seed": 720007,
+      "process_noise_seed": 620007
+    },
+    {
+      "block_id": "matched_block_08",
+      "forcing_seed": 520008,
+      "observation_noise_seed": 720008,
+      "process_noise_seed": 620008
+    }
+  ],
+  "status": "passed",
+  "type": "closed_truth_three_process_noise_identification"
+}

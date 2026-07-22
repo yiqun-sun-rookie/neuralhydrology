@@ -1,0 +1,15 @@
+{
+  "both_factors_below_0_99_origin_count": 4981,
+  "both_factors_noncollapsed_origin_count": 5714,
+  "corrected_conclusion_chinese": "两个因素在整个评估期内都确实参与并发生最高权重候选切换；但不能声称每个起报日两个因素都同时保持非塌缩竞争。",
+  "coupling_dilution_identity": "The total variation distance from the joint distribution to the product of its two marginals is multiplied by 0.97**2 = 0.9409 for each no-observation forecast transition.",
+  "lead_day_forced_floor_formula": "(1 - 0.97**lead_days) / 3",
+  "maximum_observed_difference_between_saved_second_largest_minimum_and_forced_floor": 1.3877787807814457e-17,
+  "one_day_marginal_identity": "saved_one_day_marginal = 0.97 * origin_posterior_marginal + 0.01",
+  "pointwise_both_factors_noncollapsed_at_every_origin_supported": false,
+  "previous_saved_weight_evidence_sufficient_for_origin_activity": false,
+  "saved_forecast_weight_statement": "The saved 1-, 3-, and 7-day marginal weights are noncollapsed, but their positive support and second-largest lower bounds are mathematically forced by the no-observation transition.",
+  "technical_challenge_valid": true,
+  "temporal_activity_across_all_basins_supported": true,
+  "total_origin_count": 5728
+}

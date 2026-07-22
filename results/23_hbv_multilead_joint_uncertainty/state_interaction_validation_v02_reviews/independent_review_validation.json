@@ -1,0 +1,24 @@
+{
+  "validation_context": "state_interaction_v02_review_validation",
+  "validated_at": "2026-07-17T14:56:55.8476364Z",
+  "mode": "read_only_raw_evidence_validation_of_independent_review",
+  "result_evidence_sha256": "abca6a1d40adf8481e885a7a9b1a98b526a31f145c70de78f9783ee679a58bd0",
+  "conclusion": "confirmed_without_new_must_fix_issue",
+  "confirmed_items": {
+    "saved_array_count": 29,
+    "saved_numeric_array_count": 24,
+    "all_saved_numeric_arrays_finite": true,
+    "finite_gate_and_saved_evidence_use_same_dictionary": true,
+    "class_documentation_matches_three_modes_and_legacy_default": true,
+    "literal_factorial_transition_contract_maximum_absolute_error": 8.673617379884035e-18,
+    "v01_v02_common_arrays_bitwise_equal_count": 29,
+    "production_and_reference_results_reproduced": true,
+    "thirty_step_moment_conservation_reproduced": true,
+    "counterexample_reproduced": true,
+    "causal_prefix_maximum_absolute_error": 0.0,
+    "evidence_array_bytes": 21541868,
+    "result_checksum_count": 27,
+    "protected_file_count": 427,
+    "new_must_fix_issue_found": false
+  }
+}

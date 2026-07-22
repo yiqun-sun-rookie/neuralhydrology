@@ -1,0 +1,65 @@
+{
+  "audit_id": "formal_reproduction_sharding_code_audit_v01",
+  "completed_at": "2026-07-15T17:33:14.6790846+08:00",
+  "decision": "release_code_path_only",
+  "decision_in_plain_language": "放行逐流域复现代码路径，但不得宣称16个流域的科学复现已经完成。",
+  "blocking_finding_count": 0,
+  "informational_limitation_count": 1,
+  "scientific_reproduction_status": "pending_not_executed_in_this_audit",
+  "audit_target_sha256": {
+    "src/hbv_multilead_joint_uncertainty/reproduction.py": "de3c18e21de68d9a7aad61ac6f4587f9d0d6c67fab3e10bb4b86b1aa6c08e1a5",
+    "src/hbv_multilead_joint_uncertainty/scripts/run_reproduction.py": "1fa8c6ce1051f17034d6d59bac8d1666e9d8942074f2f59214421d09727f1cc8",
+    "test/test_hbv_multilead_reproduction.py": "e904dad6ca5f594d926c6f4f36d3f89f99c522618921a8075c14b30ba56517c1"
+  },
+  "frozen_binding": {
+    "numerical_source_file_count": 37,
+    "input_file_count": 62,
+    "mismatch_count": 0,
+    "reference_checksums_sha256": "88ab2297e02179cc0e3e432c958871e1d6e7985358b9394970154a65f2348bd0"
+  },
+  "required_output_counts": {
+    "formal_basin_count": 16,
+    "arrays_per_basin": 36,
+    "numeric_elements_per_basin": 366960,
+    "total_arrays": 576,
+    "total_numeric_elements": 5871360
+  },
+  "adversarial_checks": {
+    "overall_pass": true,
+    "resource_attack_count": 4,
+    "resource_attacks_rejected": 4,
+    "shard_set_attack_count": 6,
+    "shard_set_attacks_rejected": 6,
+    "post_finish_prohibited_content_call_count": 0
+  },
+  "tests": {
+    "test_file_count": 20,
+    "passed": 184,
+    "failed": 0,
+    "warnings": 1,
+    "duration_seconds_reported_by_test_runner": 31.54
+  },
+  "resource_monitoring": {
+    "stopped_attempt": {
+      "status": "stopped_resource_gate",
+      "minimum_available_memory_fraction": 0.19221865250481768,
+      "maximum_process_tree_rss_gib": 0.2743873596191406,
+      "sample_count": 33
+    },
+    "successful_retry": {
+      "minimum_available_memory_fraction": 0.2782518369978626,
+      "minimum_available_memory_gib": 8.820648193359375,
+      "maximum_process_tree_rss_gib": 0.2723960876464844,
+      "maximum_sample_gap_seconds": 1.018011,
+      "sample_count": 36,
+      "numerical_thread_limit": 1,
+      "reserved_logical_processors": 2
+    }
+  },
+  "scope": {
+    "source_code_modified_by_auditor": false,
+    "formal_basin_recomputation_performed": false,
+    "formal_aggregation_performed": false,
+    "operating_system_power_loss_injected": false
+  }
+}

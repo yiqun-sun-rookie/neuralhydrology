@@ -1,0 +1,22 @@
+{
+  "available_after_estimated_peak_bytes": 12209663520,
+  "available_physical_memory_bytes": 12262371328,
+  "candidate_count": 9,
+  "checked_at": "2026-07-17T13:44:57.226074+00:00",
+  "days_per_trial": 365,
+  "dynamic_array_bytes": 4777120,
+  "dynamic_boolean_values_per_trial_day": 1,
+  "dynamic_float_values_per_trial_day": 50,
+  "dynamic_integer_values_per_trial_day": 1,
+  "estimated_additional_peak_memory_bytes": 52707808,
+  "estimation_basis": "four copies of every array saved in evidence.npz, including labels, the frozen extreme-likelihood check, probabilities, likelihoods, truth and random arrays, plus a 32 MiB packaging allowance and a task-specific two-estimate and 64 MiB reserve",
+  "execution_parallelism": 1,
+  "per_trial_score_array_bytes": 1536,
+  "raw_numeric_array_bytes": 4788344,
+  "safe_to_run": true,
+  "static_array_bytes": 9688,
+  "task_specific_required_available_bytes": 225232288,
+  "task_specific_reserve_bytes": 172524480,
+  "trial_count": 32,
+  "universal_memory_threshold_used": false
+}

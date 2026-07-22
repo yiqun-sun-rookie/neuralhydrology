@@ -1,0 +1,216 @@
+{
+  "verdict": "通过：正式证据完整且聚合方法正确；预注册的九候选联合识别标准在最长四十五天匹配同化资料内仍未达到",
+  "must_fix_count": 0,
+  "must_fix": [],
+  "confirmed_numbers": {
+    "assimilation_days_tested": [7, 21, 45],
+    "matched_block_count": 8,
+    "truth_conditions_per_block": 9,
+    "trials_per_duration": 72,
+    "complete_parameter_vector_count": 3,
+    "parameters_per_vector": 13,
+    "process_scale_candidate_count": 3,
+    "joint_candidate_count": 9,
+    "identification_thresholds": {
+      "joint_candidate_argmax_accuracy_minimum": 0.5,
+      "complete_parameter_label_argmax_accuracy_minimum": 0.6666666666666666,
+      "process_scale_argmax_accuracy_minimum": 0.6666666666666666,
+      "median_true_joint_candidate_probability_minimum": 0.2
+    },
+    "duration_results": [
+      {
+        "assimilation_days": 7,
+        "joint_candidate_argmax_correct_count": 21,
+        "joint_candidate_argmax_accuracy": 0.2916666666666667,
+        "complete_parameter_label_argmax_correct_count": 34,
+        "complete_parameter_label_argmax_accuracy": 0.4722222222222222,
+        "process_scale_argmax_correct_count": 40,
+        "process_scale_argmax_accuracy": 0.5555555555555556,
+        "median_true_joint_candidate_probability": 0.14982094370470275,
+        "threshold_passes": {
+          "joint_candidate_argmax_accuracy": false,
+          "complete_parameter_label_argmax_accuracy": false,
+          "process_scale_argmax_accuracy": false,
+          "median_true_joint_candidate_probability": false
+        },
+        "all_four_thresholds_pass": false
+      },
+      {
+        "assimilation_days": 21,
+        "joint_candidate_argmax_correct_count": 25,
+        "joint_candidate_argmax_accuracy": 0.3472222222222222,
+        "complete_parameter_label_argmax_correct_count": 33,
+        "complete_parameter_label_argmax_accuracy": 0.4583333333333333,
+        "process_scale_argmax_correct_count": 45,
+        "process_scale_argmax_accuracy": 0.625,
+        "median_true_joint_candidate_probability": 0.18039874096670724,
+        "threshold_passes": {
+          "joint_candidate_argmax_accuracy": false,
+          "complete_parameter_label_argmax_accuracy": false,
+          "process_scale_argmax_accuracy": false,
+          "median_true_joint_candidate_probability": false
+        },
+        "all_four_thresholds_pass": false
+      },
+      {
+        "assimilation_days": 45,
+        "joint_candidate_argmax_correct_count": 37,
+        "joint_candidate_argmax_accuracy": 0.5138888888888888,
+        "complete_parameter_label_argmax_correct_count": 43,
+        "complete_parameter_label_argmax_accuracy": 0.5972222222222222,
+        "process_scale_argmax_correct_count": 61,
+        "process_scale_argmax_accuracy": 0.8472222222222222,
+        "median_true_joint_candidate_probability": 0.24446729489293278,
+        "threshold_passes": {
+          "joint_candidate_argmax_accuracy": true,
+          "complete_parameter_label_argmax_accuracy": false,
+          "process_scale_argmax_accuracy": true,
+          "median_true_joint_candidate_probability": true
+        },
+        "all_four_thresholds_pass": false,
+        "specific_failed_threshold": "完整参数标签最大概率准确率为 43/72，即 0.5972222222222222，低于预注册下限 48/72，即 0.6666666666666666"
+      }
+    ],
+    "identification_sufficient_within_tested_range": false,
+    "not_sufficient_through_assimilation_days": 45,
+    "shortest_consistently_sufficient_assimilation_days": null,
+    "untested_longer_durations_remain_unknown": true
+  },
+  "independent_recalculations": {
+    "input_evidence_integrity": {
+      "total_manifest_entries_rehashed": 102,
+      "total_hash_matches": 102,
+      "conditions": [
+        {
+          "experiment_id": "joint_method_assimilation_07d_v01",
+          "assimilation_days": 7,
+          "manifest_file_count": 34,
+          "matching_file_count": 34,
+          "mismatches": [],
+          "manifest_sha256": "69b6a9d5eca94754d5edc52d16ecac2f25a3187223761c59cc30583a5363c022",
+          "config_sha256": "b24fadcd05a79ad8a4f24cb6f2fcc70975341467d9c7e66e5d5ff0a769caa8ec"
+        },
+        {
+          "experiment_id": "joint_method_assimilation_21d_v01",
+          "assimilation_days": 21,
+          "manifest_file_count": 34,
+          "matching_file_count": 34,
+          "mismatches": [],
+          "manifest_sha256": "7df380dfc32b0a77a1cc61c716385378975fb2a03c671ff84b93bc4484505aa7",
+          "config_sha256": "9788d7a312c85e0f87fdb2415cda2179333c33a6b58a8f18a9c0ddd43989f8b5"
+        },
+        {
+          "experiment_id": "joint_method_stable_validation_v04",
+          "assimilation_days": 45,
+          "manifest_file_count": 34,
+          "matching_file_count": 34,
+          "mismatches": [],
+          "manifest_sha256": "ad99e8574a1026b292e57c2838b0c01274b9b5e4fcff0f4f16e9808183c74b66",
+          "config_sha256": "c1ee629f969bb70b5f735f908001dc3419b1231d6c3db1be71550efaaa188140"
+        }
+      ]
+    },
+    "candidate_contract": {
+      "verified_from_each_evidence_npz": true,
+      "parameter_vector_shape_each_condition": [3, 13],
+      "process_covariance_shape_each_condition": [3, 15, 15],
+      "truth_candidate_labels_are_unique": true,
+      "truth_candidate_factors_equal_complete_three_by_three_cartesian_product": true
+    },
+    "matched_prefix_integrity": {
+      "baseline_assimilation_days": 45,
+      "short_conditions_checked": [7, 21],
+      "arrays_checked_per_short_condition": 9,
+      "comparisons_checked": 18,
+      "exact_comparisons": 18,
+      "maximum_absolute_difference": 0.0,
+      "arrays": [
+        "forcing_blocks",
+        "process_standard_normals",
+        "observation_standard_normals",
+        "truth_deterministic_states",
+        "truth_process_perturbations",
+        "truth_projection_adjustments",
+        "truth_states",
+        "truth_discharge",
+        "observed_discharge"
+      ]
+    },
+    "identification_recalculation": {
+      "source": "只从三个 evidence.npz 的 joint_origin_probabilities、truth_candidate_factors、parameter_ids 和 process_ids 重算",
+      "used_saved_convenience_probability_arrays_for_primary_result": false,
+      "derived_true_candidate_probability_matches_saved_array_maximum_absolute_difference": 0.0,
+      "derived_true_parameter_probability_matches_saved_array_maximum_absolute_difference": 0.0,
+      "derived_true_process_probability_matches_saved_array_maximum_absolute_difference": 0.0,
+      "aggregate_duration_identification_csv_maximum_absolute_difference_after_csv_parsing": 8.326672684688674e-17
+    },
+    "aggregate_evidence_integrity": {
+      "manifest_entry_count": 12,
+      "manifest_hash_matches": 12,
+      "mismatches": [],
+      "total_file_count_including_checksums_json": 13,
+      "file_set_exact": true,
+      "manifest_entries": [
+        "config_snapshot.json",
+        "decision.json",
+        "duration_identification.csv",
+        "duration_method_metrics.csv",
+        "input_evidence_integrity.json",
+        "prefix_integrity.json",
+        "preregistration.json",
+        "protected_artifact_integrity.json",
+        "resource_preflight.json",
+        "source_snapshot/run_assimilation_duration_boundary.py",
+        "source_snapshot/test_hbv_assimilation_duration_boundary.py",
+        "summary.json"
+      ],
+      "duration_method_metrics_row_count": 72,
+      "duration_method_metrics_maximum_absolute_difference_from_input_concatenation_after_csv_parsing": 4.440892098500626e-16,
+      "protected_file_count": 108,
+      "current_protected_mapping_digest_matches_recorded_after_digest": true,
+      "protected_mapping_sha256": "d916d53ca0197ae6b5e131dcf1e07fb674e0b97ea529567d7c07e9f93da04c5e"
+    },
+    "resource_preflight": {
+      "input_saved_numeric_array_bytes_independently_summed": 4380760,
+      "recorded_input_saved_numeric_array_bytes": 4380760,
+      "estimated_additional_peak_memory_bytes": 13142280,
+      "task_specific_reserve_bytes": 67108864,
+      "task_specific_required_available_bytes": 80251144,
+      "available_physical_memory_bytes_at_preflight": 5149810688,
+      "headroom_after_requirement_bytes": 5069559544,
+      "available_to_required_ratio": 64.17118101145076,
+      "execution_parallelism": 1,
+      "universal_memory_threshold_used": false,
+      "safe_to_run_at_recorded_time": true,
+      "estimation_is_task_scale_only": true
+    }
+  },
+  "method_and_statement_review": {
+    "joint_identification_method": "每个时段均在八个匹配区组和每区组九个固定真值标签上，使用同化终点九候选概率计算联合候选最大概率准确率；再按完整十三参数标签和过程尺度分别求边缘概率与最大概率准确率，并计算真实联合候选概率中位数。",
+    "threshold_logic": "一个时段只有四项预注册阈值全部达到才算识别充分；边界还要求该时段及所有更长已测试时段均通过。三个时段均未全部通过，因此没有已测试的充分边界。",
+    "matched_design": "七天和二十一天条件共享四十五天条件的气象驱动、过程标准正态数、观测标准正态数以及由其产生的真值数组精确前缀，逐元素核验为零差异。",
+    "future_observation_leakage": "同化循环只读取同化天数内的流量观测；之后的预报只读取未来气象驱动。",
+    "integrity_science_separation": "聚合 summary.json 的 status 为 passed，含义是输入清单、精确前缀和受保护产物完整性通过；同一文件明确记录 identification_sufficient_within_tested_range 为 false。该表述没有把完整性通过误写成识别成功。",
+    "scientific_statement": "证据只支持预注册联合识别标准在七、二十一和四十五天三个已测试匹配同化时段均未达到。最长四十五天仅完整参数标签最大概率准确率失败；不能据此外推未测试的更长时段也会失败。",
+    "source_provenance": "聚合脚本及测试的正式快照与当前源码逐字节相同。七天和二十一天联合验证脚本快照与当前源码相同；四十五天历史快照与当前源码有两个后续差异，但对四十五天的九十七日气象序列和固定四十五天登记文字均无数值或语义影响，且历史快照已由正式清单绑定。"
+  },
+  "scope_limits": [
+    "结论只覆盖七、二十一和四十五天三个离散时段；四十五天之后目前无法确定。",
+    "真值使用固定完整十三参数标签和固定候选协方差控制的投影前扰动尺度；物理投影后的真值不是精确的加性高斯候选模型。",
+    "未检验参数或过程尺度切换、弱观测、其他观测不确定性、气象驱动误差或真实流域观测表现。",
+    "本审查是保存证据的独立重算与方法审计，不是重新执行三次科学模拟。"
+  ],
+  "reviewer_independence": {
+    "review_layer": "第一层独立代码、方法和结果审查",
+    "prior_review_outputs_used": false,
+    "raw_evidence_used": [
+      "joint_method_assimilation_07d_v01/evidence.npz",
+      "joint_method_assimilation_21d_v01/evidence.npz",
+      "joint_method_stable_validation_v04/evidence.npz"
+    ],
+    "primary_metrics_recomputed_independently": true,
+    "candidate_mapping_derived_from_saved_labels_instead_of_assuming_candidate_order": true,
+    "formal_evidence_modified": false,
+    "only_written_artifact": "results/23_hbv_multilead_joint_uncertainty/joint_method_assimilation_duration_boundary_v01_reviews/code_method_result_review.json"
+  }
+}

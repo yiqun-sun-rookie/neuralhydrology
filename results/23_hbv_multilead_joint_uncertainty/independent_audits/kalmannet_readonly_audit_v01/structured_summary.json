@@ -1,0 +1,531 @@
+{
+  "adopted_practices": [
+    {
+      "evidence_ids": [
+        "causal_issue_order",
+        "missing_observation_no_update"
+      ],
+      "id": "causal_issue_order",
+      "requirement": "先发布起报日预测，再允许起报日实测流量更新状态；该流量最早影响下一时刻。",
+      "status": "adopted_as_current_project_requirement_not_yet_proven_by_this_audit"
+    },
+    {
+      "evidence_ids": [
+        "future_observation_mutation_harness"
+      ],
+      "id": "black_box_future_flow_mutation",
+      "requirement": "保留从指定日期起替换未来实测流量并完整重放的黑箱测试。",
+      "status": "adopted_as_current_project_requirement_not_yet_proven_by_this_audit"
+    },
+    {
+      "evidence_ids": [
+        "multilead_branch_and_fidelity"
+      ],
+      "id": "origin_branch_and_one_day_fidelity",
+      "requirement": "从起报时刻更新后状态分别推进1天、3天和7天，并核对一步分支与生产一步预测完全一致。",
+      "status": "adopted_as_current_project_requirement_not_yet_proven_by_this_audit"
+    },
+    {
+      "evidence_ids": [
+        "exact_raw_forcing_validation"
+      ],
+      "id": "exact_input_validation",
+      "requirement": "逐日核对降水、平均气温、潜在蒸散发、流量掩码、日期和单位。",
+      "status": "adopted_as_current_project_requirement_not_yet_proven_by_this_audit"
+    },
+    {
+      "evidence_ids": [
+        "development_only_scale",
+        "training_only_normalization_pattern"
+      ],
+      "id": "development_only_scales",
+      "requirement": "所有尺度、参数候选和噪声候选只用开发期资料给定；物理模型强迫仍保留物理单位。",
+      "status": "adopted_as_current_project_requirement_not_yet_proven_by_this_audit"
+    },
+    {
+      "evidence_ids": [
+        "input_hash_chain"
+      ],
+      "id": "frozen_input_and_code_hashes",
+      "requirement": "冻结配置、源代码、流域名单、气象和流量输入的安全散列算法256位校验和。",
+      "status": "adopted_as_current_project_requirement_not_yet_proven_by_this_audit"
+    },
+    {
+      "evidence_ids": [
+        "serial_basin_write_release"
+      ],
+      "id": "serial_basin_persistence",
+      "requirement": "逐流域写盘、校验后释放数组；不得把全部流域逐日状态同时常驻内存。",
+      "status": "adopted_as_current_project_requirement_not_yet_proven_by_this_audit"
+    },
+    {
+      "evidence_ids": [
+        "atomic_fail_closed_checkpoint"
+      ],
+      "id": "atomic_checkpoint",
+      "requirement": "检查点不得覆盖，临时文件写完后原子替换，并绑定输入、入口和结果散列。",
+      "status": "adopted_as_current_project_requirement_not_yet_proven_by_this_audit"
+    },
+    {
+      "evidence_ids": [
+        "resource_monitor_dimensions"
+      ],
+      "id": "resource_dimensions",
+      "requirement": "同时记录系统可用内存、进程常驻内存、图形处理器内存、处理器占用、磁盘和工作进程数。",
+      "status": "adopted_as_current_project_requirement_not_yet_proven_by_this_audit"
+    },
+    {
+      "evidence_ids": [
+        "identifier_only_static_split"
+      ],
+      "id": "selection_without_evaluation_outcomes",
+      "requirement": "正式流域划分不得读取评价期流量、评价分数或保存状态；安全散列仅用于分层内稳定排序。",
+      "status": "adopted_as_current_project_requirement_not_yet_proven_by_this_audit"
+    }
+  ],
+  "audit_id": "kalmannet_readonly_audit_v01",
+  "collected_at_utc": "2026-07-15T04:34:56.582648+00:00",
+  "conclusion": {
+    "basis": "证据均绑定绝对路径、行号和采集时安全散列算法256位校验和；审查目录另有自校验清单。",
+    "blocked_scope": "禁止继承Kalmannet旧简化水文模型的数值结论、初态、完整参数、过程噪声、观测噪声、流域筛选结果和操作性解释。",
+    "overall_decision": "RELEASE",
+    "release_scope": "释放本审查证据包，并将已采纳做法作为当前项目的设计和验证要求。"
+  },
+  "current_project_independent_checks": [
+    {
+      "criterion": "对1天、3天和7天预见期分别替换起报日之后的实测流量并全流程重放；替换不得改变替换前已发布预测，且任何预测变化不得早于该实测流量按合同允许进入状态之后。",
+      "id": "flow_causality_at_all_leads",
+      "required_artifacts": [
+        "原始和替换后的逐日起报预测",
+        "首次变化日期",
+        "逐预见期布尔判定",
+        "输入散列"
+      ]
+    },
+    {
+      "criterion": "诊断性回报可使用起报后实测气象，但必须单列；操作性预报只能使用起报时可获得的气象预报。两种模式的指标、表格和文件名不得混合。",
+      "id": "weather_availability_modes",
+      "required_artifacts": [
+        "每个起报时刻的气象来源",
+        "气象发布日期或可用性说明",
+        "模式标签"
+      ]
+    },
+    {
+      "criterion": "多预见期分支的1天预测与生产1天预测逐元素绝对差不超过1e-10；超出即停止正式试验。",
+      "id": "one_day_branch_fidelity",
+      "required_artifacts": [
+        "最大绝对差",
+        "比较样本数",
+        "通过或失败"
+      ]
+    },
+    {
+      "criterion": "每个交互多模型成员必须保存完整参数向量、过程噪声协方差和观测噪声；候选生成、筛选和冻结只读开发期，不读取正式评价期。",
+      "id": "parameter_and_noise_provenance",
+      "required_artifacts": [
+        "成员表",
+        "候选来源日期",
+        "选择脚本散列",
+        "评价期读取计数为0"
+      ]
+    },
+    {
+      "criterion": "正式使用12至20个流域；先按开发期气候和静态属性分层，再在层内用流域标识符散列稳定排序。已经查看过结果的6个流域只算开发流域，不算未见留出流域。",
+      "id": "basin_split",
+      "required_artifacts": [
+        "分层变量及来源日期",
+        "冻结流域名单",
+        "开发和留出交集为0",
+        "评价期流量读取计数为0"
+      ]
+    },
+    {
+      "criterion": "每15秒或更短采样一次；可用内存低于25%不得启动，运行中低于20%停止；空闲磁盘至少50吉字节且至少为预计输出的3倍；长计算块至少每60秒检查停止标记。",
+      "id": "resource_gate",
+      "required_artifacts": [
+        "资源日志",
+        "启动快照",
+        "停止原因",
+        "最长同次运行采样间隔"
+      ]
+    },
+    {
+      "criterion": "恢复前逐项核对配置、代码、输入、流域划分、随机种子和日结果散列；缺任一身份字段或不一致时不得恢复。",
+      "id": "checkpoint_identity",
+      "required_artifacts": [
+        "检查点身份文件",
+        "日结果散列",
+        "核对结果"
+      ]
+    },
+    {
+      "criterion": "保存每个流域、起报日、预见期、方法的预测、实测流量掩码、输入、状态摘要、模型概率和成员定义；独立审查器从逐日数组重算所有表格指标。",
+      "id": "daily_result_recomputation",
+      "required_artifacts": [
+        "逐日数组",
+        "指标重算报告",
+        "结果目录自校验和"
+      ]
+    },
+    {
+      "criterion": "每次迭代先独立审查代码和结果，再由另一条只读验证复核审查指出的问题；仅当复核重现问题时进入下一轮修复。",
+      "id": "review_verify_iterate",
+      "required_artifacts": [
+        "审查报告",
+        "复核报告",
+        "问题成立与否",
+        "下一轮处置"
+      ]
+    }
+  ],
+  "derived_facts": {
+    "chronology": {
+      "calibration_end": "2008-09-30",
+      "calibration_start": "1999-10-01",
+      "evaluation_end": "1999-09-30",
+      "evaluation_ends_before_calibration_starts": true,
+      "evaluation_start": "1989-10-01",
+      "forcing_product": "maurer",
+      "interpretation": "retrospective_reverse_chronology_diagnostic_not_operational",
+      "potential_evapotranspiration_method": "priestley_taylor"
+    },
+    "current_project_required_resource_gate": {
+      "long_chunk_stop_poll_seconds_maximum": 60,
+      "minimum_free_disk_gib": 50,
+      "minimum_free_disk_output_multiplier": 3,
+      "sample_seconds_maximum": 15,
+      "start_available_memory_fraction_minimum": 0.25,
+      "stop_available_memory_fraction_threshold": 0.2
+    },
+    "gap_precheck_artifact_shape": {
+      "assessment": "摘要存在，但不足以冻结全部逐日起报输入、预测和状态。",
+      "contains_complete_daily_arrays": false,
+      "precheck_A_top_level_keys": [
+        "config",
+        "gmax",
+        "leads",
+        "rows",
+        "summary"
+      ],
+      "precheck_top_level_keys": [
+        "config",
+        "gmax",
+        "leads",
+        "rows",
+        "summary"
+      ]
+    },
+    "old_hbv_run_inventory": {
+      "directory": "G:\\github\\pycharm\\projects\\kalmannet\\results\\smoke_ukf_hbvlite_da",
+      "directory_names": [
+        "20260606_162112_n5",
+        "20260606_162309_n5",
+        "20260606_162338_n5",
+        "20260606_162406_n5",
+        "20260606_162434_n5",
+        "20260606_162521_n5",
+        "20260606_163532_n5",
+        "20260606_163640_n5",
+        "20260606_163709_n5",
+        "20260606_163738_n5",
+        "20260606_163807_n5",
+        "20260606_163836_n5",
+        "20260606_165558_n20",
+        "20260607_135055_n20",
+        "20260607_135235_n20",
+        "20260607_135558_n20",
+        "20260607_140003_n20",
+        "20260607_140145_n20",
+        "20260607_140842_n20",
+        "20260607_140945_n20",
+        "20260607_141133_n20",
+        "20260607_141616_n20",
+        "20260607_141802_n20",
+        "20260607_142216_n20",
+        "20260607_142521_n20",
+        "20260607_142712_n20",
+        "20260607_143005_n20",
+        "20260607_143126_n20",
+        "20260607_143200_n20",
+        "20260607_143308_n20",
+        "20260607_143646_n20",
+        "20260607_143840_n20",
+        "20260607_144035_n20",
+        "20260607_144358_n20",
+        "20260607_144553_n20",
+        "20260607_144748_n20",
+        "20260607_145010_n20",
+        "20260607_145204_n20",
+        "20260607_145359_n20",
+        "20260607_145804_n20",
+        "20260607_145959_n20",
+        "20260607_150303_n20",
+        "20260607_150458_n20",
+        "20260607_150854_n20",
+        "20260607_151055_n20",
+        "20260607_151219_n20",
+        "20260607_151415_n20",
+        "20260607_151720_n20",
+        "20260607_152009_n20",
+        "20260607_152206_n20",
+        "20260608_143312_n20",
+        "20260608_143509_n20",
+        "20260608_143708_n20",
+        "20260608_144028_n20",
+        "20260608_144805_n20",
+        "20260608_145123_n20",
+        "20260608_153603_n20",
+        "20260608_154254_n20",
+        "20260608_154500_n20",
+        "20260608_154659_n20",
+        "20260608_160329_n20",
+        "20260608_160537_n20",
+        "20260608_160743_n20",
+        "20260608_160950_n20",
+        "20260608_162121_n20",
+        "20260608_162325_n20",
+        "20260608_162529_n20",
+        "20260608_162732_n20",
+        "20260608_173907_n50",
+        "20260609_144520_n531",
+        "20260610_105753_n50",
+        "20260610_110257_n50",
+        "20260610_110807_n50",
+        "20260610_111311_n50",
+        "20260610_111820_n50",
+        "20260610_112321_n50",
+        "20260610_121229_n531",
+        "20260610_135820_n5",
+        "20260610_135842_n5",
+        "20260610_140518_n50",
+        "20260610_141209_n50",
+        "20260610_141923_n50",
+        "20260611_072349_n20",
+        "20260611_072736_n20",
+        "20260611_072934_n20",
+        "20260611_073129_n20",
+        "20260611_073325_n20",
+        "20260611_074045_n50",
+        "20260611_074705_n50",
+        "20260611_075417_n50",
+        "20260611_080302_n50",
+        "20260611_100532_n531",
+        "20260611_100834_n5",
+        "20260611_102405_n50",
+        "20260611_103611_n50",
+        "20260611_104944_n50",
+        "20260611_110458_n50",
+        "20260611_111707_n50",
+        "20260611_112916_n50",
+        "20260611_114129_n50",
+        "20260611_115436_n50",
+        "20260611_120643_n50",
+        "20260611_121850_n50",
+        "20260611_123050_n50",
+        "20260611_143239_n531",
+        "20260611_144752_n50",
+        "20260611_150007_n50",
+        "20260611_151221_n50",
+        "20260611_171336_n531",
+        "20260611_171636_n5",
+        "20260611_174422_n100",
+        "20260611_180808_n100",
+        "20260611_183155_n100",
+        "20260611_183857_n5",
+        "20260611_190220_n100",
+        "20260611_192618_n100",
+        "20260629_205107_n3"
+      ],
+      "interpretation": "存在重复试跑痕迹；旧数值不作为当前项目证据。",
+      "run_directory_count": 117
+    },
+    "recorded_causality_result": {
+      "all_method_statuses": {
+        "causal_inverse_full_state": "pass",
+        "causal_inverse_storage_only": "pass",
+        "second_order_autoregressive_residual_correction": "pass",
+        "unscented_kalman_filter_full_state": "pass",
+        "unscented_kalman_filter_storage_only": "pass"
+      },
+      "expected_first_changed_prediction_index": 11,
+      "method_count": 5,
+      "mutation_index": 10,
+      "note": "这是Kalmannet已有结果，不替代当前项目对1天、3天和7天预见期的独立重放。",
+      "status": "pass",
+      "window_days": 30
+    },
+    "recorded_independent_verification": {
+      "not_proven_codes": [
+        "state_update_future_observation_causality",
+        "evaluation_warmup_provenance",
+        "isolated_next_day_effect_semantics",
+        "training_basin_p95_provenance",
+        "reachable_set_dynamics_proof",
+        "sigma_point_boundary_enforcement",
+        "forcing_and_pet_source_replay",
+        "certificate_future_observation_causality"
+      ],
+      "overall_status": "partial"
+    },
+    "resource_config": {
+      "minimum_free_disk_gib": 20.0,
+      "sample_seconds": 15,
+      "start_available_fraction": 0.2,
+      "stop_available_fraction": 0.1,
+      "workers": 1
+    },
+    "resource_log": {
+      "final_graphics_processor_snapshot": {
+        "available": true,
+        "devices": [
+          {
+            "free_memory_mib": 10561.0,
+            "index": 0,
+            "total_memory_mib": 12282.0,
+            "utilization_percent": 0.0
+          }
+        ]
+      },
+      "maximum_process_memory_gib": 0.50433349609375,
+      "maximum_process_memory_line": 54,
+      "maximum_within_run_sample_gap_lines": [
+        78,
+        79
+      ],
+      "maximum_within_run_sample_gap_seconds": 15.070136,
+      "minimum_available_memory_fraction": 0.1725913974276374,
+      "minimum_available_memory_line": 78,
+      "minimum_available_memory_percent": 17.25913974276374,
+      "minimum_available_memory_timestamp_utc": "2026-07-14T12:30:11.771904+00:00",
+      "minimum_free_disk_gib": 2179.2920837402344,
+      "minimum_free_disk_line": 83,
+      "record_count": 85,
+      "run_id_count": 5
+    },
+    "static_split": {
+      "added_training_count": 40,
+      "excluded_prior_holdout_count": 16,
+      "holdout_count": 32,
+      "raw_forcing_read_count": 0,
+      "raw_streamflow_read_count": 0,
+      "training_count": 80,
+      "training_holdout_overlap_count": 0
+    },
+    "training_scale_artifact": {
+      "n_basins": 5,
+      "source_years": [
+        1990,
+        1991,
+        1992,
+        1993,
+        1994,
+        1995,
+        1996,
+        1997,
+        1998,
+        1999,
+        2000,
+        2001,
+        2002,
+        2003,
+        2004,
+        2005
+      ]
+    }
+  },
+  "rejected_practices": [
+    {
+      "decision": "rejected",
+      "evidence_ids": [
+        "future_observed_weather"
+      ],
+      "id": "future_observed_weather_as_operational",
+      "reason": "起报后实测气象属于未来信息；只允许标记为诊断性回报。"
+    },
+    {
+      "decision": "rejected",
+      "evidence_ids": [
+        "evaluation_period_basin_selection"
+      ],
+      "id": "evaluation_based_basin_selection",
+      "reason": "评价期实测流量自相关和既有评价分数参与选流域，破坏正式留出。"
+    },
+    {
+      "decision": "rejected",
+      "evidence_ids": [
+        "old_hbv_state_date",
+        "old_hbv_evaluation_start_and_x0"
+      ],
+      "id": "old_hbv_initial_state",
+      "reason": "2008年9月30日状态初始化1989年10月1日评价，时间倒置约19年。"
+    },
+    {
+      "decision": "rejected",
+      "evidence_ids": [
+        "evaluation_period_noise_tuning"
+      ],
+      "id": "evaluation_period_noise_setting",
+      "reason": "观测噪声由整个评价期实测流量和开环残差给定；旧参数、过程噪声和观测噪声均不得继承。"
+    },
+    {
+      "decision": "rejected",
+      "evidence_ids": [
+        "identifier_only_static_split"
+      ],
+      "id": "identifier_hash_as_only_small_sample_design",
+      "reason": "对12至20个流域，仅按标识符散列不能保证水文和气候覆盖；必须先用开发期气候与静态属性分层。"
+    },
+    {
+      "decision": "rejected",
+      "evidence_ids": [
+        "checkpoint_identity_reconstruction"
+      ],
+      "id": "checkpoint_identity_recovery",
+      "reason": "身份字段缺失时写入unknown不能证明运行身份；必须封闭失败并重新计算。"
+    },
+    {
+      "decision": "rejected",
+      "evidence_ids": [
+        "old_resource_thresholds",
+        "resource_monitor_dimensions"
+      ],
+      "id": "old_resource_thresholds",
+      "reason": "旧门槛允许可用内存降至10%才停止且磁盘门槛仅20吉字节，不满足当前项目25%启动、低于20%停止、至少50吉字节且至少预计输出3倍空间。"
+    },
+    {
+      "decision": "rejected",
+      "evidence_ids": [
+        "generic_dataset_zero_fill"
+      ],
+      "id": "silent_zero_fill_and_global_stats",
+      "reason": "缺失气象、缺失目标和非数值被静默填零会混淆缺测与真实零值；全载入流域尺度和硬编码尺度也不允许。"
+    },
+    {
+      "decision": "rejected",
+      "evidence_ids": [
+        "chronology_and_prediction_protocol"
+      ],
+      "id": "reverse_chronology_as_operational",
+      "reason": "校准期1999年10月1日至2008年9月30日晚于评价期1989年10月1日至1999年9月30日，只能称时间倒序诊断。"
+    },
+    {
+      "decision": "rejected",
+      "evidence_ids": [
+        "old_hbv_state_date",
+        "evaluation_period_noise_tuning"
+      ],
+      "id": "inherit_old_numerical_results",
+      "reason": "旧独立审查状态为partial，且旧简化水文模型存在初态和评价期调噪问题；数值结论必须重算。"
+    }
+  ],
+  "schema_version": "kalmannet_readonly_audit_evidence_v01",
+  "scope": {
+    "bytecode_writes_disabled": true,
+    "current_project_source_contract_or_formal_result_modified": false,
+    "destination_repository": "G:\\github\\pycharm\\projects\\neuralhydrology",
+    "mode": "read_only_external_audit",
+    "source_repository": "G:\\github\\pycharm\\projects\\kalmannet",
+    "writes_outside_audit_directory": false
+  }
+}

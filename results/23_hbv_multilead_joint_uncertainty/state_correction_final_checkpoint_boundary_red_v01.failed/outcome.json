@@ -1,0 +1,13 @@
+{
+  "run_id": "state_correction_final_checkpoint_boundary_red_v01",
+  "status": "expected_failure",
+  "started_at": "2026-07-16T23:17:53.4043969+08:00",
+  "finished_at": "2026-07-16T23:17:55.6485469+08:00",
+  "exit_code": 1,
+  "tests_passed": 0,
+  "tests_failed": 1,
+  "warnings": 1,
+  "verified_pre_fix_problem": "a checkpoint containing all 3 of 3 completed origins is rejected as outside the resumable range",
+  "pytest_output_sha256": "e30df64dae9074ed30c59ca98bd5495445a81a2ed87d937aa0b87cda769b64a3",
+  "formal_artifacts_modified": false
+}

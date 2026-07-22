@@ -1,0 +1,18 @@
+{
+  "validation_id": "state_correction_gate_default_fix_validation_v01",
+  "validation_mode": "second independent read-only post-fix validation",
+  "result": "PASS",
+  "findings": [],
+  "validated_red_test": "one expected failure caused by the obsolete default name",
+  "validated_source_change": "one production line changed the default to hydrologic_five_states_only",
+  "validated_green_test": "61 passed, 0 failed",
+  "formal_result_rerun_required": false,
+  "formal_result_checksums_file_sha256": "935e05cba187efd5dab788a19f20e09585783595a94ed180e1d5043dba1992b2",
+  "formal_output_hashes_matched": 120,
+  "frozen_hashes_matched": 279,
+  "red_test_start_available_memory_fraction": 0.13392701779753757,
+  "green_test_start_available_memory_fraction": 0.13787044709607407,
+  "files_modified_by_validator": false,
+  "ran_531": false,
+  "commit_or_push": false
+}

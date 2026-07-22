@@ -1,0 +1,27 @@
+{
+  "validation_context": "model_probability_v02_review_validation",
+  "validated_at": "2026-07-17T14:00:59.6896944Z",
+  "mode": "read_only_raw_evidence_validation_of_independent_review",
+  "result_evidence_sha256": "9ffdb202ced4b6542dbcc2f6dddfa5e96051d0c84bf246cb909c7d6032b816e1",
+  "conclusion": "confirmed_without_new_must_fix_issue",
+  "confirmed_items": {
+    "saved_array_count": 33,
+    "uncompressed_saved_array_bytes": 4788344,
+    "resource_components_sum_exactly": true,
+    "extreme_probability_reconstruction_maximum_absolute_error": 0.0,
+    "extreme_probability_normalization_absolute_error": 0.0,
+    "extreme_probability_argmax": 8,
+    "configured_gate_count": 16,
+    "hard_condition_count": 2,
+    "all_gates_passed": true,
+    "causal_prefix_maximum_absolute_error": 0.0,
+    "joint_log_loss_improved_trial_count": 32,
+    "joint_brier_improved_trial_count": 32,
+    "switch_day_joint_posterior_accuracy": 0.37028824833702884,
+    "non_switch_or_initial_day_joint_posterior_accuracy": 0.9544037759373052,
+    "result_checksum_count": 24,
+    "protected_file_count": 398,
+    "v01_v02_common_arrays_bitwise_equal_count": 30,
+    "new_must_fix_issue_found": false
+  }
+}

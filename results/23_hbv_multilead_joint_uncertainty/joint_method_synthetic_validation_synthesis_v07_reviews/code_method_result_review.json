@@ -1,0 +1,59 @@
+{
+  "verdict": "HOLD_PENDING_MUST_FIX",
+  "verdict_detail": "Version seven still does not bind the legacy confirmed-items list exception to the unique frozen review directory path. An exact byte-for-byte copy of the frozen review pair placed in a different temporary directory with the same final directory name was accepted as passed. The requested fail-closed governance condition is therefore not satisfied.",
+  "must_fix_count": 1,
+  "must_fix": [
+    {
+      "id": "legacy_confirmed_items_list_must_bind_unique_frozen_directory_path",
+      "severity": "conclusion_changing_governance_defect",
+      "location": "src/hbv_multilead_joint_uncertainty/scripts/run_joint_method_synthesis.py::_validate_review_fix_fields lines 165-170",
+      "finding": "The exception checks only path.parent.name, path.name and the SHA-256 digest. It does not compare the normalized parent directory path with the unique frozen results/23_hbv_multilead_joint_uncertainty/parameter_identification_validation_v01_reviews directory. In a direct replay, independent_review.json and independent_review_validation.json were copied byte-for-byte into C:/Users/yiqun/AppData/Local/Temp/v07_same_name_exact_copy_mg83_t1s/parameter_identification_validation_v01_reviews. The copied independent_review_validation.json retained SHA-256 b512dace4e24cc7e091ef322c589c116241876d44f84e738a04b5091f5f73b3b, and _review_status returned passed=true, required_fix_count=0, second_review_must_fix_count=0, contradictions_found=0 and unverified_items=0.",
+      "impact": "A copied legacy review outside the frozen evidence directory can still activate the only non-object confirmed-items exception and be counted as a passing independent review chain. This can incorrectly support numerical_chain_validated=true, so the governance conclusion cannot be signed off. The frozen numerical results inspected here are not changed by this parser defect.",
+      "required_repair": "Pass the unique authorized frozen review directory identity into the parser and require the resolved review directory to equal the canonical repository path results/23_hbv_multilead_joint_uncertainty/parameter_identification_validation_v01_reviews, while also retaining the exact independent_review_validation.json filename and SHA-256 b512dace4e24cc7e091ef322c589c116241876d44f84e738a04b5091f5f73b3b checks. Do not authorize the exception from a basename match alone.",
+      "acceptance_tests": [
+        "The frozen parameter_identification_validation_v01_reviews/independent_review_validation.json evidence-list structure passes.",
+        "An exact byte-for-byte copy of the complete frozen review directory at any other path, including a directory with the same final name, is rejected.",
+        "A different directory, same-name directory with fake content, same-structure content, and one-byte mutation are each rejected.",
+        "All earlier version-one through version-six governance counterexamples, the version-five ten active mutations, the version-six thirty-six active mutations, and all thirty-five formal tests pass after repair."
+      ]
+    }
+  ],
+  "governance_adversarial_audit": {
+    "status": "failed_on_first_conclusion_changing_counterexample",
+    "counterexample": "exact frozen review copy in a non-frozen same-name directory",
+    "expected": "ValueError or passed=false",
+    "observed": "passed=true",
+    "frozen_second_review_sha256": "b512dace4e24cc7e091ef322c589c116241876d44f84e738a04b5091f5f73b3b",
+    "copied_second_review_sha256": "b512dace4e24cc7e091ef322c589c116241876d44f84e738a04b5091f5f73b3b"
+  },
+  "remaining_audit": {
+    "status": "not_executed_after_immediate_must_fix_stop",
+    "reason": "The review instruction requires immediate persistence and return when any must-fix issue is found.",
+    "not_signed_off": [
+      "complete replay of all earlier must-fix counterexamples",
+      "version-five ten active mutations",
+      "version-six thirty-six active mutations",
+      "thirty-five formal tests",
+      "twelve component packages",
+      "nine double-review chains",
+      "twenty-one input directories and 336 manifest entries",
+      "version-seven eleven-file manifest",
+      "four-condition recalculation",
+      "joint identification zero of four",
+      "forecast added value zero of twelve",
+      "claim unknown boundaries",
+      "resource preflight",
+      "version-one through version-six and review protection hashes"
+    ]
+  },
+  "scientific_conclusion": {
+    "changed": false,
+    "status": "HOLD",
+    "detail": "This governance defect does not alter the frozen negative scientific results, but the version-seven numerical-chain validation claim remains unsigned until the must-fix issue is repaired and the full audit is rerun."
+  },
+  "reviewer_independence": {
+    "layer": "first independent code, method and result review",
+    "review_scope": "version-seven synthesis governance before full scientific evidence sign-off",
+    "code_or_formal_evidence_modified": false
+  }
+}

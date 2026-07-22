@@ -1,0 +1,25 @@
+{
+  "run_id": "state_correction_final_checkpoint_boundary_green_v01",
+  "run_type": "post_fix_target_check",
+  "command": "python -m pytest -q --tb=short test\\test_hbv_state_correction_diagnostic.py -k complete_final_origin_checkpoint",
+  "started_at": "2026-07-16T23:19:15.3754503+08:00",
+  "finished_at": "2026-07-16T23:19:17.3090886+08:00",
+  "expected_exit_code": 0,
+  "verified_behaviors": [
+    "all diagnostic arrays from a complete checkpoint equal the uninterrupted arrays element by element",
+    "completed origin count 0 is rejected",
+    "completed origin count 4 when the total is 3 is rejected"
+  ],
+  "configuration": "src/hbv_multilead_joint_uncertainty/configs/state_correction_propagation_v07.json",
+  "numerical_thread_limit": 1,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "BLIS_NUM_THREADS": "1",
+    "PYTHONPATH": "src"
+  },
+  "formal_artifacts_modified": false
+}

@@ -1,0 +1,1 @@
+{"run_id":"state_correction_callback_tests_red_v01","purpose":"Confirm origin progress callbacks fail before implementation.","command":"python -m pytest -q test/test_hbv_state_correction_diagnostic.py","expected_status":"failed","numerical_thread_limit":1,"resource_config":"state_correction_propagation_v03.json"}

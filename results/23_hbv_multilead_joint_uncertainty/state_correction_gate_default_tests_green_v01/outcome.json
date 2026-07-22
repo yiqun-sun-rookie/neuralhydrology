@@ -1,0 +1,14 @@
+{
+  "run_id": "state_correction_gate_default_tests_green_v01",
+  "status": "passed",
+  "started_at": "2026-07-17T01:30:58.4070607+08:00",
+  "finished_at": "2026-07-17T01:31:05.1597680+08:00",
+  "exit_code": 0,
+  "tests_passed": 61,
+  "tests_failed": 0,
+  "warnings": 1,
+  "verified_fix": "the default continuation gate evaluates hydrologic_five_states_only rows",
+  "pytest_output_sha256": "d39d81965ff61d03ae54d824d6d51f486ae4c92ea6c9190452244317823676c0",
+  "formal_artifacts_modified": false,
+  "formal_sixteen_result_modified": false
+}

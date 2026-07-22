@@ -1,0 +1,193 @@
+{
+  "reviewer_role": "独立代码、方法与原始结果审查者；未参与本阶段实现或结果生成",
+  "reviewed_paths": [
+    "src/hbv_multilead_joint_uncertainty/observation_free_forecast_validation.py",
+    "src/hbv_multilead_joint_uncertainty/forecast.py",
+    "src/hbv_multilead_joint_uncertainty/methods.py",
+    "src/hbv_multilead_joint_uncertainty/synthetic_truth.py",
+    "src/hbv_multilead_joint_uncertainty/scripts/run_observation_free_forecast_validation.py",
+    "src/hbv_multilead_joint_uncertainty/configs/observation_free_forecast_validation_v01.json",
+    "test/test_hbv_observation_free_forecast_validation.py",
+    "src/hbv_joint_uncertainty/hbv_adapter.py",
+    "src/hbv_joint_uncertainty/preflight.py",
+    "src/hbv_joint_uncertainty/imm.py",
+    "src/hbv_joint_uncertainty/sigma_filter.py",
+    "results/23_hbv_multilead_joint_uncertainty/observation_free_forecast_validation_v01"
+  ],
+  "independent_commands": [
+    {
+      "command": "python -m pytest -p no:cacheprovider test/test_hbv_observation_free_forecast_validation.py -q",
+      "result": "退出码为零；4 个测试全部通过；运行时间 9.31 秒；另有一个与本阶段无关的未知 pytest 配置项警告。"
+    },
+    {
+      "command": "PowerShell 逐文件重算 results/23_hbv_multilead_joint_uncertainty/observation_free_forecast_validation_v01/checksums.json 中全部 Secure Hash Algorithm 256-bit 校验和，并比较实际文件集合",
+      "result": "清单条目 30 个，实际受检证据文件 30 个，缺失 0 个，额外 0 个，校验和不一致 0 个。"
+    },
+    {
+      "command": "PowerShell 重算当前目标源文件与结果 source_snapshot 中对应文件的 Secure Hash Algorithm 256-bit 校验和",
+      "result": "observation_free_forecast_validation.py、forecast.py、methods.py、synthetic_truth.py、run_observation_free_forecast_validation.py 和目标测试文件均逐字节一致；当前配置与 config_snapshot.json 也逐字节一致。"
+    },
+    {
+      "command": "Python 只读加载 evidence.npz，直接重算生产路径与参考路径误差、概率转移、概率和、协方差特征值、对称性、1/3/7 日抽取和三日因果前缀",
+      "result": "37 个数值数组共 2253192 字节，非有限值数组 0 个；所有可由原始数组重算的门槛均通过，且重算值与 summary.json 逐值完全一致。"
+    },
+    {
+      "command": "Python 将生产 forecast_from_posterior、_forecast_one_day、_interact_for_forecast、interact_model_states、ForcingTransition.__call__ 和 ModifiedUnscentedFilter.predict 替换为立即报错函数后，单独调用 _reference_forecast",
+      "result": "独立参考仍成功完成；其 7 类输出与归档第一试验的参考数组逐元素完全一致，最大绝对误差全部为 0.0，证明参考递推没有调用生产预报、生产交互、生产滤波预测或生产状态转移路径。"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "low",
+      "title": "源后验不变门槛不能仅凭 evidence.npz 独立重算",
+      "evidence": "evidence.npz 保存了预报前的 initial_candidate_states、initial_candidate_covariances 和 initial_probabilities，但没有保存三次生产预报调用后的源候选库快照，也没有把三个源后验变更量作为数组写入。summary.json 和 forecast_propagation_certificate.json 保存的 source_bank_mutation_maximum_absolute_error 为 0.0；目标测试同时现场验证三个变更量均严格等于 0.0。",
+      "impact": "历史归档中的该单项需要依赖冻结源代码重跑，不能只用原始数组重新计算。由于当前源代码与冻结快照逐字节一致、目标测试通过，而且 forecast_from_posterior 在任何推进前对整个候选库执行深复制，此证据限制不改变本阶段结论。",
+      "must_fix": false
+    }
+  ],
+  "gate_recalculation": {
+    "archive_manifest_valid": true,
+    "config_snapshot_matches_current_config": true,
+    "reviewed_source_snapshots_match_current_sources": true,
+    "numeric_array_count": 37,
+    "numeric_array_bytes": 2253192,
+    "nonfinite_numeric_array_count": 0,
+    "values": {
+      "transition_matrix_maximum_absolute_error": {
+        "observed": 0.0,
+        "threshold": 1e-14,
+        "passed": true
+      },
+      "probability_maximum_absolute_error": {
+        "observed": 0.0,
+        "threshold": 2e-15,
+        "passed": true
+      },
+      "candidate_state_maximum_absolute_error": {
+        "observed": 1.5631940186722204e-13,
+        "threshold": 1e-9,
+        "passed": true
+      },
+      "candidate_covariance_diagonal_maximum_absolute_error": {
+        "observed": 8.185452315956354e-12,
+        "threshold": 1e-7,
+        "passed": true
+      },
+      "candidate_prediction_maximum_absolute_error": {
+        "observed": 2.6645352591003757e-15,
+        "threshold": 1e-9,
+        "passed": true
+      },
+      "combined_prediction_maximum_absolute_error": {
+        "observed": 4.440892098500626e-16,
+        "threshold": 1e-9,
+        "passed": true
+      },
+      "combined_state_maximum_absolute_error": {
+        "observed": 2.842170943040401e-14,
+        "threshold": 1e-9,
+        "passed": true
+      },
+      "combined_covariance_diagonal_maximum_absolute_error": {
+        "observed": 2.7284841053187847e-12,
+        "threshold": 1e-7,
+        "passed": true
+      },
+      "selected_lead_maximum_absolute_error": {
+        "observed": 0.0,
+        "threshold": 0.0,
+        "passed": true
+      },
+      "causal_prefix_maximum_absolute_error": {
+        "observed": 0.0,
+        "threshold": 0.0,
+        "passed": true
+      },
+      "source_bank_mutation_maximum_absolute_error": {
+        "observed": 0.0,
+        "threshold": 0.0,
+        "passed": true,
+        "raw_array_recalculable": false,
+        "verification": "归档证书记录为零，并由现场目标测试验证。"
+      },
+      "probability_sum_maximum_absolute_error": {
+        "observed": 2.220446049250313e-16,
+        "threshold": 1e-12,
+        "passed": true
+      },
+      "minimum_reference_covariance_eigenvalue": {
+        "observed": 9.999999985970315e-5,
+        "threshold": -1e-8,
+        "passed": true
+      },
+      "reference_covariance_symmetry_maximum_absolute_error": {
+        "observed": 0.0,
+        "threshold": 1e-12,
+        "passed": true
+      },
+      "probability_transition_only_maximum_absolute_error": {
+        "observed": 0.0,
+        "threshold": 2e-15,
+        "passed": true
+      },
+      "future_discharge_argument_absent": {
+        "observed": true,
+        "required": true,
+        "passed": true
+      },
+      "all_saved_numeric_arrays_finite": {
+        "observed": true,
+        "required": true,
+        "passed": true
+      }
+    },
+    "all_recalculable_numeric_gates_passed": true,
+    "reported_gate_pass_consistent_with_evidence": true
+  },
+  "scope_assessment": {
+    "independent_reference": {
+      "status": "passed",
+      "assessment": "参考递推自建九乘九乘积转移矩阵、完整目的候选条件混合、十五维缩放采样点、矩递推和组合矩；水文单步调用独立权威模拟器。禁止全部生产预报、交互、滤波预测和生产状态转移入口后仍能逐元素复现归档参考数组。"
+    },
+    "fifteen_state_nine_candidate_contract": {
+      "status": "passed",
+      "assessment": "原始数组形状为 12 个试验乘 7 日乘 9 个候选乘 15 个状态；参考协方差形状为 12 乘 7 乘 9 乘 15 乘 15。候选按 3 个完整参数向量和 3 个过程协方差的笛卡尔积构造。"
+    },
+    "full_daily_interaction": {
+      "status": "passed",
+      "assessment": "配置和运行入口都强制 interaction_mode 为 full；生产每个预报日先调用完整交互，参考路径逐目的候选使用所有九个源候选的条件权重混合状态和协方差。"
+    },
+    "process_covariance_once_per_day": {
+      "status": "passed",
+      "assessment": "生产 ModifiedUnscentedFilter.predict 在一次状态变换矩计算后只添加一次 candidate.process_covariance；每个候选每日只调用一次 predict。参考路径同样在每日每候选的 _reference_moments 中只添加一次过程协方差，生产与参考协方差对角线最大误差为 8.185452315956354e-12。"
+    },
+    "transition_only_probabilities": {
+      "status": "passed",
+      "assessment": "无观测预报分支没有似然更新；每天仅以 transition_matrix 转移概率。直接从初始概率连续乘转移矩阵七次与全部归档生产概率完全一致，最大绝对误差为 0.0。"
+    },
+    "lead_selection_and_causal_prefix": {
+      "status": "passed",
+      "assessment": "1、3、7 日结果与完整七日路径的第 1、3、7 日逐字段逐位一致；仅提供前三日气象强迫的三日分支与七日分支前三日逐字段逐位一致。"
+    },
+    "source_posterior_immutability": {
+      "status": "passed_with_archive_limitation",
+      "assessment": "forecast_from_posterior 在推进前深复制候选库；连续执行完整七日、1/3/7 日和三日前缀后，现场目标测试记录源状态、协方差和概率的最大变更均为 0.0。归档数组未保存调用后的源库快照，因此该单项只凭 evidence.npz 不能重算。"
+    },
+    "no_future_discharge_input": {
+      "status": "passed",
+      "assessment": "forecast_from_posterior 的参数只有候选库、未来气象强迫、预报日和交互模式；预报循环只设置降水、潜在蒸散和温度并执行预测，不调用观测更新、似然或同化步骤。"
+    },
+    "thresholds_and_claim_scope": {
+      "status": "passed",
+      "assessment": "预注册门槛与配置、摘要和证书一致，全部可重算数值逐值一致并通过。范围声明只支持合成气象强迫下的一至七日无观测数值传播，不声称预报技巧、参数识别、过程噪声识别、观测更新收益或真实流域表现，与证据覆盖一致。"
+    },
+    "resource_safety": {
+      "status": "passed",
+      "assessment": "估算明确按 12 个试验、45 日预热、7 日预报、9 个候选、15 个状态、单路顺序执行和 31 个采样点计算。预计额外峰值 109676064 字节，任务特定预留 134217728 字节，所需可用内存 243893792 字节；运行前实际可用内存 12664418304 字节，是所需量的 51.93 倍。未使用统一固定内存阈值。"
+    },
+    "conclusion_changing_defect": false,
+    "supported_conclusion": "在冻结的 12 个合成强迫试验、9 个候选、15 个状态和 1 至 7 日范围内，生产无观测预报传播与独立参考递推在预注册容差内一致，并满足完整交互、每日一次过程协方差、仅转移矩阵概率传播、1/3/7 日抽取、三日因果前缀、源后验不变和无未来流量输入。"
+  },
+  "verdict": "passed",
+  "must_fix_count": 0
+}

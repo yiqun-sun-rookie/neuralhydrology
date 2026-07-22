@@ -1,0 +1,109 @@
+{
+  "_loaded_config_path": "src/hbv_multilead_joint_uncertainty/configs/base_v02.json",
+  "calibration_discharge_source": {
+    "basin_count": 22,
+    "date_end": "2008-09-30",
+    "date_start": "2006-10-01",
+    "metadata_path": "src/hbv_multilead_joint_uncertainty/configs/calibration_discharge_22_basins_v01.metadata.json",
+    "metadata_sha256": "d913e06000f8f421ced961a8128cdeb595e266858be6a56f7a64cf3e853e47e0",
+    "table_path": "src/hbv_multilead_joint_uncertainty/configs/calibration_discharge_22_basins_v01.csv",
+    "table_sha256": "d6ce8a0bed32f6958b905d057574ecad41978d6f6e6ceafa274bfd151d16daae"
+  },
+  "calibration_selection_end": "2008-09-30",
+  "calibration_selection_start": "2006-10-01",
+  "calibration_warmup_end": "2006-09-30",
+  "calibration_warmup_start": "2005-10-01",
+  "data_root": "data/camels_us",
+  "evaluation_end": "1990-09-30",
+  "evaluation_start": "1989-10-01",
+  "evaluation_warmup_end": "1989-09-30",
+  "evaluation_warmup_start": "1988-10-01",
+  "experiment_family": "2026-07-14-hbv-multilead-joint-uncertainty-v2",
+  "factor_transition_stay_probability": 0.98,
+  "formal_basin_file": "src/hbv_multilead_joint_uncertainty/configs/formal_sixteen_basins_v01.csv",
+  "formal_interaction_mode": "full",
+  "initial_covariance_fraction": 0.001,
+  "input_quality": {
+    "maximum_absolute_mean_maurer_daymet_bias_c": 5.0,
+    "maximum_area_relative_difference": 0.05,
+    "maximum_fraction_absolute_difference_above_15_c": 0.01,
+    "maximum_maurer_temperature_c": 50.0,
+    "maximum_mean_maurer_temperature_c": 30.0,
+    "maximum_median_absolute_maurer_daymet_difference_c": 5.0,
+    "maximum_p95_absolute_maurer_daymet_difference_c": 12.0,
+    "minimum_maurer_temperature_c": -55.0,
+    "minimum_mean_maurer_temperature_c": -20.0
+  },
+  "interaction_mode_candidates": [
+    "full",
+    "parameter_grouped",
+    "none"
+  ],
+  "lead_days": [
+    1,
+    3,
+    7
+  ],
+  "logs_root": "logs/23_hbv_multilead_joint_uncertainty",
+  "methods": [
+    "open_loop",
+    "fixed_filter",
+    "parameter_only",
+    "noise_only",
+    "joint"
+  ],
+  "noise_selection": {
+    "minimum_robust_residual_scale_mm_day": 0.05,
+    "observation_scale_multipliers": [
+      0.25,
+      0.5,
+      1.0
+    ],
+    "process_variance_scales": [
+      1e-08,
+      1e-07,
+      1e-06,
+      1e-05,
+      0.0001,
+      0.001,
+      0.01
+    ]
+  },
+  "parameter_selection": {
+    "distance": "euclidean",
+    "local_fraction": 0.1,
+    "maximum_nse_drop": 0.03,
+    "normalization": "frozen_physical_bound_span",
+    "objective": "maximize_the_minimum_of_both_center_distances_and_the_pair_distance",
+    "pool_generator": "scrambled_sobol",
+    "pool_size": 256,
+    "schema_version": 2,
+    "strategy": "global_maximin_normalized_parameter_distance",
+    "tie_break": "candidate_index_ascending_lexicographic"
+  },
+  "parameter_source": {
+    "bounds_preset": "v1",
+    "calibration_end": "2008-09-30",
+    "calibration_start": "1999-10-01",
+    "forcing": "maurer",
+    "metadata_path": "src/hbv_multilead_joint_uncertainty/configs/trained_parameter_projection_531_v01.metadata.json",
+    "metadata_sha256": "463d065d6b5690e54baae23cb93e03aa9bb06100675ceb3b86932bf40723293e",
+    "pet_method": "priestley_taylor",
+    "projection_content_sha256": "6c98022953bc28c705d81e973deea09005650daa27517765f33e8f496bd3891a",
+    "table_path": "src/hbv_multilead_joint_uncertainty/configs/trained_parameter_projection_531_v01.csv",
+    "table_sha256": "9ef206779d94ffa1f11ab72b4528fd633861486f0a3b49b0ee1b40f52b3010a4"
+  },
+  "pilot_basin_file": "src/hbv_multilead_joint_uncertainty/configs/pilot_six_basins.csv",
+  "random_seed": 1,
+  "resource": {
+    "maximum_estimated_peak_fraction_of_available": 0.6,
+    "maximum_resource_probe_seconds": 5.0,
+    "minimum_free_disk_gib": 50.0,
+    "minimum_output_space_multiplier": 3.0,
+    "minimum_running_available_fraction": 0.2,
+    "minimum_start_available_fraction": 0.25,
+    "monitor_interval_seconds": 15.0,
+    "reserved_logical_processors": 2
+  },
+  "results_root": "results/23_hbv_multilead_joint_uncertainty"
+}

@@ -1,0 +1,34 @@
+{
+  "experiment_id": "parameter_identification_validation_v01",
+  "role": "independent_code_method_result_review",
+  "raw_evidence_sha256": "5e32277e2e82ba99efc3cfe86f40e5b3c4c09b82faf7a48fa3b205259c328aea",
+  "checksums_file_sha256": "8c8ddca018399430339a92fd49137dd1f33e196bbde3382d57fc73e0a03971d6",
+  "verdict": "valid_only_for_the_registered_ideal_closed_conditions",
+  "required_code_fixes": 0,
+  "confirmed": {
+    "complete_parameter_vectors": "three vectors with thirteen parameters each",
+    "parameter_source": "frozen formal-contract rows for source basin 12143600",
+    "truth_and_candidate_paths_are_separate": true,
+    "future_discharge_isolation": true,
+    "process_covariance_nonzero_entries": 0,
+    "parameter_switching": false,
+    "state_interaction": false,
+    "correct_classifications": "24/24",
+    "correct_classifications_per_parameter": "8/8 for each of three vectors",
+    "true_candidate_lowest_prior_discharge_error": "24/24",
+    "evidence_checksums_verified": 24,
+    "protected_files_unchanged": 281
+  },
+  "probability_saturation": {
+    "exact_one_true_probabilities": 2622,
+    "daily_true_probability_count": 2880,
+    "final_true_minus_best_wrong_log_likelihood_gap_minimum": 511.52868601663045,
+    "final_true_minus_best_wrong_log_likelihood_gap_median": 1168.1930720799019,
+    "final_true_minus_best_wrong_log_likelihood_gap_maximum": 2129.02596896708,
+    "interpretation": "The terminal interval [1, 1] is numerical saturation and does not establish probability calibration."
+  },
+  "scope_limits": [
+    "The result proves correct ranking only for deterministic same-model truth, zero process covariance, no generated observation noise, no switching, and no interaction.",
+    "It does not prove probability calibration, noisy identification, real-basin identification, process-noise identification, interaction, or the nine-filter joint method."
+  ]
+}

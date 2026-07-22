@@ -1,0 +1,132 @@
+{
+  "collapsed_parameter_origin_count": 0,
+  "collapsed_process_noise_origin_count": 0,
+  "coupling_by_lead": [
+    {
+      "basin_origin_count": 5728,
+      "fraction_above_0_01": 0.27321927374301674,
+      "fraction_above_0_05": 0.1206354748603352,
+      "lead_days": 1,
+      "maximum_total_variation_distance": 0.4470721364469683,
+      "mean_total_variation_distance": 0.01957008744133658,
+      "median_total_variation_distance": 0.0019144937265313429,
+      "p05_total_variation_distance": 7.49780916394078e-05,
+      "p95_total_variation_distance": 0.10317112470256339
+    },
+    {
+      "basin_origin_count": 5728,
+      "fraction_above_0_01": 0.26239525139664804,
+      "fraction_above_0_05": 0.10771648044692737,
+      "lead_days": 3,
+      "maximum_total_variation_distance": 0.3957897479478399,
+      "mean_total_variation_distance": 0.017325257702886572,
+      "median_total_variation_distance": 0.0016948875308883025,
+      "p05_total_variation_distance": 6.637756543593675e-05,
+      "p95_total_variation_distance": 0.09133665489879272
+    },
+    {
+      "basin_origin_count": 5728,
+      "fraction_above_0_01": 0.24162011173184358,
+      "fraction_above_0_05": 0.08449720670391062,
+      "lead_days": 7,
+      "maximum_total_variation_distance": 0.3101975866876389,
+      "mean_total_variation_distance": 0.01357855567518414,
+      "median_total_variation_distance": 0.0013283568473274924,
+      "p05_total_variation_distance": 5.202297612600486e-05,
+      "p95_total_variation_distance": 0.07158449675018136
+    }
+  ],
+  "expected_point_count": 17184,
+  "formula": {
+    "candidate_order": "contract parameter order outer, contract process-noise order inner; independently mapped from each candidate identifier",
+    "marginal_product": "parameter marginal outer product process-noise marginal",
+    "nondegenerate_rule": "at least two marginal probabilities exceed 1e-12 and no candidate has probability at least 1 - 1e-12",
+    "parameter_marginal": "sum the 3-by-3 joint candidate distribution over process-noise index",
+    "process_noise_marginal": "sum the 3-by-3 joint candidate distribution over parameter index",
+    "total_variation_distance": "0.5 * sum over all 9 cells of abs(joint probability - marginal product)"
+  },
+  "marginal_diagnostics_by_lead": [
+    {
+      "basin_origin_count": 5728,
+      "collapsed_origin_count": 0,
+      "factor_type": "parameter",
+      "lead_days": 1,
+      "maximum_dominant_marginal_probability": 0.98,
+      "mean_normalized_entropy": 0.6659310040430724,
+      "median_normalized_entropy": 0.7453418522024413,
+      "minimum_normalized_entropy": 0.10185764172235336,
+      "minimum_second_largest_marginal_probability": 0.010000000000000009,
+      "minimum_support_count_above_1e_minus_12": 3
+    },
+    {
+      "basin_origin_count": 5728,
+      "collapsed_origin_count": 0,
+      "factor_type": "process_noise",
+      "lead_days": 1,
+      "maximum_dominant_marginal_probability": 0.9800000000000001,
+      "mean_normalized_entropy": 0.3851757742454784,
+      "median_normalized_entropy": 0.26790960937196573,
+      "minimum_normalized_entropy": 0.10185764172235327,
+      "minimum_second_largest_marginal_probability": 0.010000000000000005,
+      "minimum_support_count_above_1e_minus_12": 3
+    },
+    {
+      "basin_origin_count": 5728,
+      "collapsed_origin_count": 0,
+      "factor_type": "parameter",
+      "lead_days": 3,
+      "maximum_dominant_marginal_probability": 0.941782,
+      "mean_normalized_entropy": 0.7116295248824789,
+      "median_normalized_entropy": 0.7769067655414945,
+      "minimum_normalized_entropy": 0.2388372268843686,
+      "minimum_second_largest_marginal_probability": 0.029109000000000024,
+      "minimum_support_count_above_1e_minus_12": 3
+    },
+    {
+      "basin_origin_count": 5728,
+      "collapsed_origin_count": 0,
+      "factor_type": "process_noise",
+      "lead_days": 3,
+      "maximum_dominant_marginal_probability": 0.9417820000000001,
+      "mean_normalized_entropy": 0.47125174910243145,
+      "median_normalized_entropy": 0.3681431227048162,
+      "minimum_normalized_entropy": 0.23883722688436854,
+      "minimum_second_largest_marginal_probability": 0.029109000000000024,
+      "minimum_support_count_above_1e_minus_12": 3
+    },
+    {
+      "basin_origin_count": 5728,
+      "collapsed_origin_count": 0,
+      "factor_type": "parameter",
+      "lead_days": 7,
+      "maximum_dominant_marginal_probability": 0.8719885631874199,
+      "mean_normalized_entropy": 0.7802620174225403,
+      "median_normalized_entropy": 0.8293908064362541,
+      "minimum_normalized_entropy": 0.4290137137754357,
+      "minimum_second_largest_marginal_probability": 0.06400571840629005,
+      "minimum_support_count_above_1e_minus_12": 3
+    },
+    {
+      "basin_origin_count": 5728,
+      "collapsed_origin_count": 0,
+      "factor_type": "process_noise",
+      "lead_days": 7,
+      "maximum_dominant_marginal_probability": 0.8719885631874199,
+      "mean_normalized_entropy": 0.5987285604630328,
+      "median_normalized_entropy": 0.5189541457004975,
+      "minimum_normalized_entropy": 0.42901371377543573,
+      "minimum_second_largest_marginal_probability": 0.06400571840629005,
+      "minimum_support_count_above_1e_minus_12": 3
+    }
+  ],
+  "maximum_joint_probability_sum_error": 4.440892098500626e-16,
+  "maximum_parameter_marginal_sum_error": 4.440892098500626e-16,
+  "maximum_process_marginal_sum_error": 4.440892098500626e-16,
+  "maximum_total_variation_distance": 0.4470721364469683,
+  "minimum_parameter_second_largest_probability": 0.010000000000000009,
+  "minimum_process_noise_second_largest_probability": 0.010000000000000005,
+  "minimum_total_variation_distance": 0.0,
+  "passed": true,
+  "point_count": 17184,
+  "saved_factor_summary_maximum_absolute_difference": 0.0
+}

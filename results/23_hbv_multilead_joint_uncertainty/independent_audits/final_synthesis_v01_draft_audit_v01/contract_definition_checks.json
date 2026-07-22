@@ -1,0 +1,70 @@
+{
+  "parameter_rule": {
+    "config": {
+      "candidate_order": "local_fraction_config_order_then_scale_candidate_index",
+      "candidates_per_scale": 256,
+      "distance": "euclidean",
+      "local_fractions": [
+        0.1,
+        0.05,
+        0.025,
+        0.0125
+      ],
+      "maximum_nse_drop": 0.03,
+      "normalization": "frozen_physical_bound_span",
+      "objective": "maximize_the_minimum_of_both_center_distances_and_the_pair_distance",
+      "pool_generator": "scrambled_sobol_restarted_per_scale",
+      "pool_size": 1024,
+      "schema_version": 3,
+      "strategy": "multiscale_global_maximin_normalized_parameter_distance",
+      "tie_break": "candidate_index_ascending_lexicographic"
+    },
+    "basin_contract_count": 16,
+    "pool_simulation_record_count": 16384,
+    "candidate_selection_failures": [],
+    "selected_index_mismatches": [],
+    "selected_pair_maximum_absolute_difference": 5.551115123125783e-17,
+    "noncenter_vector_count": 32,
+    "worse_than_center_count": 23,
+    "better_than_center_count": 9,
+    "minimum_center_minus_candidate_efficiency": -0.25600144446211637,
+    "maximum_center_minus_candidate_efficiency": 0.0292222337037763,
+    "passed": true
+  },
+  "process_noise": {
+    "row_count": 48,
+    "maximum_formula_absolute_difference": 0.0,
+    "selected_scale_distribution": {
+      "1e-06": 1,
+      "1e-04": 1,
+      "1e-03": 8,
+      "1e-02": 6
+    },
+    "upper_grid_boundary_count": 6,
+    "failures": [],
+    "absolute_covariance_reference_values": [
+      "trained center parameter vector; reused unchanged across parameters"
+    ],
+    "passed": true
+  },
+  "observation_noise": {
+    "row_count": 16,
+    "selected_candidate_position_distribution_zero_based": {
+      "0": 9,
+      "1": 5,
+      "2": 2
+    },
+    "failures": [],
+    "passed": true
+  },
+  "formal_basin_training_projection": {
+    "frozen_projection_row_count": 531,
+    "formal_basin_count": 16,
+    "formal_basins_present_in_projection_count": 16,
+    "all_formal_basins_present": true,
+    "training_start": "1999-10-01",
+    "training_end": "2008-09-30",
+    "evaluation_start": "1989-10-01",
+    "evaluation_end": "1990-09-30"
+  }
+}

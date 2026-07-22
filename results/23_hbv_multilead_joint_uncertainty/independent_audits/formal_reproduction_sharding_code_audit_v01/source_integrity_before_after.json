@@ -1,0 +1,30 @@
+{
+  "status": "verified_unchanged",
+  "checked_at": "2026-07-15T17:33:14.6790846+08:00",
+  "files": [
+    {
+      "path": "src/hbv_multilead_joint_uncertainty/reproduction.py",
+      "bytes": 91172,
+      "sha256_before_audit": "de3c18e21de68d9a7aad61ac6f4587f9d0d6c67fab3e10bb4b86b1aa6c08e1a5",
+      "sha256_after_audit": "de3c18e21de68d9a7aad61ac6f4587f9d0d6c67fab3e10bb4b86b1aa6c08e1a5",
+      "unchanged": true
+    },
+    {
+      "path": "src/hbv_multilead_joint_uncertainty/scripts/run_reproduction.py",
+      "bytes": 3633,
+      "sha256_before_audit": "1fa8c6ce1051f17034d6d59bac8d1666e9d8942074f2f59214421d09727f1cc8",
+      "sha256_after_audit": "1fa8c6ce1051f17034d6d59bac8d1666e9d8942074f2f59214421d09727f1cc8",
+      "unchanged": true
+    },
+    {
+      "path": "test/test_hbv_multilead_reproduction.py",
+      "bytes": 9035,
+      "sha256_before_audit": "e904dad6ca5f594d926c6f4f36d3f89f99c522618921a8075c14b30ba56517c1",
+      "sha256_after_audit": "e904dad6ca5f594d926c6f4f36d3f89f99c522618921a8075c14b30ba56517c1",
+      "unchanged": true
+    }
+  ],
+  "frozen_numerical_source_file_count": 37,
+  "frozen_input_file_count": 62,
+  "source_and_input_mismatch_count": 0
+}

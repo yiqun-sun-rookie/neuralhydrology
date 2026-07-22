@@ -1,0 +1,18 @@
+{
+  "configured_gates": {
+    "forecast_target_reconstruction_maximum_absolute_error": 0.0,
+    "method_mixture_reconstruction_maximum_absolute_error": 1e-10,
+    "method_probability_sum_maximum_absolute_error": 1e-12,
+    "minimum_method_probability": 0.0,
+    "observation_reconstruction_maximum_absolute_error": 0.0,
+    "truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0
+  },
+  "forecast_target_reconstruction_maximum_absolute_error": 0.0,
+  "integrity_passed": true,
+  "method_mixture_reconstruction_maximum_absolute_error": 8.881784197001252e-16,
+  "method_probability_sum_maximum_absolute_error": 3.3306690738754696e-16,
+  "minimum_method_probability": 1.2856587518318412e-06,
+  "nonfinite_numeric_array_names": [],
+  "observation_reconstruction_maximum_absolute_error": 0.0,
+  "truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0
+}

@@ -1,0 +1,10 @@
+{
+  "run_id": "state_correction_tests_red_v01",
+  "purpose": "Confirm the preregistered state-correction checks fail because the diagnostic implementation is absent.",
+  "command": "python -m pytest -q test/test_hbv_state_correction_diagnostic.py",
+  "expected_status": "failed",
+  "expected_failure": "WeightedStateUpdateFilter, lead_decay_retention, physical_lead_retention, decomposition, and blending functions are absent",
+  "numerical_thread_limit": 1,
+  "reserved_logical_processors": 2,
+  "config": "src/hbv_multilead_joint_uncertainty/configs/state_correction_propagation_v02.json"
+}

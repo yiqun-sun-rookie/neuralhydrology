@@ -1,0 +1,24 @@
+{
+  "experiment_family": "2026-07-16-hbv-state-correction-propagation-v4",
+  "inherits": "state_correction_propagation_v02.json",
+  "inherited_config_sha256": "db2d74d956f2246eefc6975441084461fd35bf75994daf5bff285c90569c38d7",
+  "revision_scope": "resource thresholds only",
+  "scientific_controls_unchanged": true,
+  "revision_reason": "Version 3 stopped safely at 11.580818158691682% available memory while the diagnostic process peak working set was 0.14606857299804688 GiB. A 10% running floor retains 3.1700233459472656 GiB on this machine, leaving 2.4200233459472656 GiB after the preregistered 0.75 GiB smoke peak; the 14% start floor retains 4.438032684326172 GiB. The estimated-peak fraction is tightened from 60% to 50% of start-available memory.",
+  "supersedes_resource_config": "state_correction_propagation_v03.json",
+  "resource": {
+    "minimum_start_available_fraction": 0.14,
+    "minimum_running_available_fraction": 0.10,
+    "maximum_estimated_peak_fraction_of_available": 0.50,
+    "minimum_free_disk_gib": 50.0,
+    "minimum_output_space_multiplier": 3.0,
+    "monitor_interval_seconds": 15.0,
+    "maximum_resource_probe_seconds": 5.0,
+    "reserved_logical_processors": 2,
+    "numerical_thread_limit": 1,
+    "smoke_estimated_peak_gib": 0.75,
+    "smoke_estimated_output_gib": 0.25,
+    "formal_estimated_peak_gib": 1.0,
+    "formal_estimated_output_gib": 0.5
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "review_context": "state_interaction_v02_audit",
+  "reviewed_at": "2026-07-17T14:56:55.8476364Z",
+  "mode": "read_only_independent_code_method_and_result_audit",
+  "result_evidence_sha256": "abca6a1d40adf8481e885a7a9b1a98b526a31f145c70de78f9783ee679a58bd0",
+  "must_fix": [],
+  "repairs_confirmed": {
+    "saved_array_count": 29,
+    "saved_numeric_array_count": 24,
+    "all_saved_numeric_arrays_checked": true,
+    "nonfinite_saved_numeric_array_count": 0,
+    "finite_gate_and_saved_evidence_use_same_dictionary": true,
+    "three_mode_class_documentation_corrected": true,
+    "literal_factorial_transition_contract_maximum_absolute_error": 8.673617379884035e-18,
+    "v01_v02_common_arrays_bitwise_equal_count": 29
+  },
+  "confirmed_results": {
+    "production_reference_probability_maximum_absolute_error": 1.1102230246251565e-16,
+    "production_reference_weight_maximum_absolute_error": 4.440892098500626e-16,
+    "production_reference_state_maximum_absolute_error": 1.7053025658242404e-13,
+    "production_reference_covariance_maximum_absolute_error": 5.002220859751105e-12,
+    "full_combined_mean_conservation_maximum_absolute_error": 1.9895196601282805e-13,
+    "full_combined_covariance_conservation_maximum_absolute_error": 1.1823431123048067e-11,
+    "minimum_candidate_covariance_eigenvalue": 0.0006308681416783975,
+    "counterexample_full_final_first_state_mean": 1.2500000000000004,
+    "counterexample_grouped_final_first_state_mean": 3.496223492963162,
+    "counterexample_none_final_first_state_mean": 3.4962234929631597,
+    "causal_prefix_maximum_absolute_error": 0.0,
+    "evidence_array_bytes": 21541868,
+    "result_checksum_count": 27,
+    "protected_file_count": 427
+  },
+  "scope_limit": "The result validates fifteen-coordinate, nine-candidate mixture algebra under identity dynamics only."
+}

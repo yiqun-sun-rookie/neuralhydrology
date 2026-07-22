@@ -1,0 +1,1 @@
+{"run_id":"state_correction_packaging_tests_green_v01","purpose":"Verify package checksum, metrics, resource callback, and all diagnostic checks.","command":"python -m pytest -q test/test_hbv_state_correction_diagnostic.py","expected_status":"passed","resource_config":"state_correction_propagation_v03.json"}

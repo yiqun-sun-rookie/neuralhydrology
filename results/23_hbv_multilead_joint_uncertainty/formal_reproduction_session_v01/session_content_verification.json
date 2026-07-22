@@ -1,0 +1,32 @@
+{
+  "basin_count": 16,
+  "basins": [
+    "12143600",
+    "04127918",
+    "09066000",
+    "06431500",
+    "03479000",
+    "02296500",
+    "02015700",
+    "06892000",
+    "05507600",
+    "06477500",
+    "08158700",
+    "11148900",
+    "06404000",
+    "08189500",
+    "09505350",
+    "09447800"
+  ],
+  "bound_control_file_count": 3,
+  "bound_input_file_count": 62,
+  "bound_numerical_source_file_count": 37,
+  "contract_checksums_sha256": "c7615c868b747d1b633eb5d32432376b5648087846d97d0ff5fa507ecdf4c357",
+  "contract_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_contract_sixteen_v05",
+  "contract_id": "formal_contract_sixteen_v05",
+  "reference_checksums_sha256": "88ab2297e02179cc0e3e432c958871e1d6e7985358b9394970154a65f2348bd0",
+  "reference_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01",
+  "reference_experiment_id": "formal_result_sixteen_v01",
+  "session_id": "formal_reproduction_session_v01",
+  "status": "verified"
+}

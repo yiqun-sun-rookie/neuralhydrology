@@ -1,0 +1,38 @@
+{
+  "experiment_family": "2026-07-14-hbv-joint-uncertainty-preflight-v1",
+  "random_seed": 1,
+  "parameter_source": {
+    "table_path": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_FINAL_pt_v1_warmup_local_full.csv",
+    "table_sha256": "9fad3981a2593450fe02e9b7cd35e8830745a8d2dc3ed89f897f2fa3a083642c",
+    "metadata_path": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_FINAL_pt_v1_warmup_local_full.metadata.json",
+    "metadata_sha256": "4bb16c34f6461ddb5d9d6b4ab2c9685d8f7b390d5ff778f708b4ba11891983af",
+    "forcing": "maurer",
+    "pet_method": "priestley_taylor",
+    "bounds_preset": "v1",
+    "warmup_year": true,
+    "calibration_start": "1999-10-01",
+    "calibration_end": "2008-09-30"
+  },
+  "basin_file": "src/hbv_joint_uncertainty/configs/preflight_v01_basins.csv",
+  "data_root": "data/camels_us",
+  "warmup_start": "1988-10-01",
+  "warmup_end": "1989-09-30",
+  "evaluation_start": "1989-10-01",
+  "evaluation_end": "1990-09-30",
+  "parameter_stress_fraction": 0.1,
+  "noise_variance_scales": [1e-5, 1e-4, 1e-3],
+  "observation_standard_deviation_mm_day": 0.5,
+  "transition_diagonal": 0.98,
+  "initial_covariance_fraction": 0.001,
+  "results_root": "results/22_hbv_joint_uncertainty",
+  "logs_root": "logs/22_hbv_joint_uncertainty",
+  "resource": {
+    "maximum_peak_fraction_of_available": 0.7,
+    "minimum_available_fraction_of_total": 0.15,
+    "minimum_free_disk_gib": 20.0,
+    "minimum_output_space_multiplier": 2.0,
+    "monitor_interval_seconds": 60.0,
+    "reserved_logical_processors": 1
+  }
+}
+

@@ -1,0 +1,171 @@
+{
+  "protected_file_count": 16,
+  "changed_files": [],
+  "passed": true,
+  "before": {
+    "final_report": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\final_synthesis_v01\\final_report.md",
+      "bytes": 22745,
+      "sha256": "cd370e6edf0f6855d491cfb37a69e0878013f6fa8e47e647ea7564aebead5fec"
+    },
+    "evidence_ledger": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\final_synthesis_v01\\evidence_ledger.csv",
+      "bytes": 5879,
+      "sha256": "55478263703b1982a4885ca123b689199bf947cbf08e262cc9cde38d4ab95a00"
+    },
+    "known_issues": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\final_synthesis_v01\\known_issues.md",
+      "bytes": 2928,
+      "sha256": "7df412c927c2342ff4e66a7033cebcbdaf0ef1e3397c02ce235dadb9e5d0da01"
+    },
+    "reproduction_commands": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\final_synthesis_v01\\reproduction_commands.md",
+      "bytes": 2186,
+      "sha256": "d0dbab10cd4f56c20755bde07ba7f912eaa22202ea6a41c4ad862224f033daf1"
+    },
+    "resource_abort_v01": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\final_synthesis_v01\\resource_abort_formal_reproduction_v01.json",
+      "bytes": 2868,
+      "sha256": "fab7797f5347106b31068a78b274dd8d70ad4d089df4da367aafc78ae072eb36"
+    },
+    "formal_basins": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01\\contract_tables\\basins.csv",
+      "bytes": 1895,
+      "sha256": "4f19198c2b44455c0c9f0473850e95b6a683e3cf1f02df3768b58b3986bb4671"
+    },
+    "formal_parameter_vectors": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01\\contract_tables\\parameter_vectors.csv",
+      "bytes": 31278,
+      "sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f"
+    },
+    "formal_config": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01\\config_snapshot.json",
+      "bytes": 4992,
+      "sha256": "fc5c5bb3a0a22978b13e5323870d75ed423b12f3c7f8ecb506d7c8e5d4eff85a"
+    },
+    "pilot_basins": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\pilot_result_six_v02\\contract_tables\\basins.csv",
+      "bytes": 382,
+      "sha256": "efab665c8a7da4ebb479c46b6df98ba88b7ec1b075e3b71ff93af7c3b034d346"
+    },
+    "frozen_training_projection": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_contract_sixteen_v05\\input_snapshot\\src\\hbv_multilead_joint_uncertainty\\configs\\trained_parameter_projection_531_v01.csv",
+      "bytes": 166604,
+      "sha256": "9ef206779d94ffa1f11ab72b4528fd633861486f0a3b49b0ee1b40f52b3010a4"
+    },
+    "frozen_runner": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01\\source_snapshot\\src\\hbv_multilead_joint_uncertainty\\runner.py",
+      "bytes": 5833,
+      "sha256": "f1532d35c624c3ea7b5baa78c64b60097c78b726f92650721d7118d2aff331c3"
+    },
+    "first_audit_issues": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\final_synthesis_v01_draft_audit_v01\\structured_issues.csv",
+      "bytes": 1635,
+      "sha256": "14edcdfc8a63645f0b7d178e2c671b0b2fcd5334b6bde3aadd5afa9368942c9e"
+    },
+    "first_audit_report": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\final_synthesis_v01_draft_audit_v01\\independent_audit_report.md",
+      "bytes": 4161,
+      "sha256": "f434f6441ae83a439e7c32b77e9f46dea76650f9222dd2fae93a3f88655a8481"
+    },
+    "first_audit_summary": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\final_synthesis_v01_draft_audit_v01\\audit_summary.json",
+      "bytes": 7368,
+      "sha256": "068c72144fb36d8c35ed6c0240d2388ea5a90a291bc441b7f3596b989b4ccc37"
+    },
+    "result_audit_summary": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_result_sixteen_v01_v02\\array_and_table_audit_summary.json",
+      "bytes": 4330,
+      "sha256": "3f02236c30281572abafddb4787058a86157da4d47d297720090a4dac8340c79"
+    },
+    "result_audit_report": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_result_sixteen_v01_v02\\independent_audit_report.md",
+      "bytes": 33500,
+      "sha256": "bcc80fc17873ee03365162cf4b66f30bae1167f9dd9b5ab49f86e9803c419f4b"
+    }
+  },
+  "after": {
+    "final_report": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\final_synthesis_v01\\final_report.md",
+      "bytes": 22745,
+      "sha256": "cd370e6edf0f6855d491cfb37a69e0878013f6fa8e47e647ea7564aebead5fec"
+    },
+    "evidence_ledger": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\final_synthesis_v01\\evidence_ledger.csv",
+      "bytes": 5879,
+      "sha256": "55478263703b1982a4885ca123b689199bf947cbf08e262cc9cde38d4ab95a00"
+    },
+    "known_issues": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\final_synthesis_v01\\known_issues.md",
+      "bytes": 2928,
+      "sha256": "7df412c927c2342ff4e66a7033cebcbdaf0ef1e3397c02ce235dadb9e5d0da01"
+    },
+    "reproduction_commands": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\final_synthesis_v01\\reproduction_commands.md",
+      "bytes": 2186,
+      "sha256": "d0dbab10cd4f56c20755bde07ba7f912eaa22202ea6a41c4ad862224f033daf1"
+    },
+    "resource_abort_v01": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\final_synthesis_v01\\resource_abort_formal_reproduction_v01.json",
+      "bytes": 2868,
+      "sha256": "fab7797f5347106b31068a78b274dd8d70ad4d089df4da367aafc78ae072eb36"
+    },
+    "formal_basins": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01\\contract_tables\\basins.csv",
+      "bytes": 1895,
+      "sha256": "4f19198c2b44455c0c9f0473850e95b6a683e3cf1f02df3768b58b3986bb4671"
+    },
+    "formal_parameter_vectors": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01\\contract_tables\\parameter_vectors.csv",
+      "bytes": 31278,
+      "sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f"
+    },
+    "formal_config": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01\\config_snapshot.json",
+      "bytes": 4992,
+      "sha256": "fc5c5bb3a0a22978b13e5323870d75ed423b12f3c7f8ecb506d7c8e5d4eff85a"
+    },
+    "pilot_basins": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\pilot_result_six_v02\\contract_tables\\basins.csv",
+      "bytes": 382,
+      "sha256": "efab665c8a7da4ebb479c46b6df98ba88b7ec1b075e3b71ff93af7c3b034d346"
+    },
+    "frozen_training_projection": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_contract_sixteen_v05\\input_snapshot\\src\\hbv_multilead_joint_uncertainty\\configs\\trained_parameter_projection_531_v01.csv",
+      "bytes": 166604,
+      "sha256": "9ef206779d94ffa1f11ab72b4528fd633861486f0a3b49b0ee1b40f52b3010a4"
+    },
+    "frozen_runner": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\formal_result_sixteen_v01\\source_snapshot\\src\\hbv_multilead_joint_uncertainty\\runner.py",
+      "bytes": 5833,
+      "sha256": "f1532d35c624c3ea7b5baa78c64b60097c78b726f92650721d7118d2aff331c3"
+    },
+    "first_audit_issues": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\final_synthesis_v01_draft_audit_v01\\structured_issues.csv",
+      "bytes": 1635,
+      "sha256": "14edcdfc8a63645f0b7d178e2c671b0b2fcd5334b6bde3aadd5afa9368942c9e"
+    },
+    "first_audit_report": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\final_synthesis_v01_draft_audit_v01\\independent_audit_report.md",
+      "bytes": 4161,
+      "sha256": "f434f6441ae83a439e7c32b77e9f46dea76650f9222dd2fae93a3f88655a8481"
+    },
+    "first_audit_summary": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\final_synthesis_v01_draft_audit_v01\\audit_summary.json",
+      "bytes": 7368,
+      "sha256": "068c72144fb36d8c35ed6c0240d2388ea5a90a291bc441b7f3596b989b4ccc37"
+    },
+    "result_audit_summary": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_result_sixteen_v01_v02\\array_and_table_audit_summary.json",
+      "bytes": 4330,
+      "sha256": "3f02236c30281572abafddb4787058a86157da4d47d297720090a4dac8340c79"
+    },
+    "result_audit_report": {
+      "path": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\independent_audits\\formal_result_sixteen_v01_v02\\independent_audit_report.md",
+      "bytes": 33500,
+      "sha256": "bcc80fc17873ee03365162cf4b66f30bae1167f9dd9b5ab49f86e9803c419f4b"
+    }
+  },
+  "active_v02_artifacts_excluded_from_immutability_gate": true,
+  "reason": "v02正在由外部进程写入；只记录开始和结束状态，不要求活动目录字节不变。"
+}

@@ -1,0 +1,12 @@
+{
+  "run_id": "state_correction_tests_red_v01",
+  "status": "expected_failure",
+  "exit_code": 1,
+  "tests_passed": 1,
+  "tests_failed": 24,
+  "warning_count": 1,
+  "failure_reason": "The preregistered diagnostic interfaces are absent.",
+  "failure_matches_expectation": true,
+  "pytest_output_sha256": "12401afa82a941d0ad49859bcbd89b630ddcd8b2363bd54400a4203130c6b5ceb",
+  "formal_artifacts_modified": false
+}

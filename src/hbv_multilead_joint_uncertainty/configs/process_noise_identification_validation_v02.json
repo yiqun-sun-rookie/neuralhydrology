@@ -1,0 +1,137 @@
+{
+  "experiment_id": "process_noise_identification_validation_v02",
+  "truth_contract": "synthetic_truth_propagation_v04",
+  "purpose": "Retest identification of the three frozen process-noise covariance matrices after replacing the shared stochastic-truth transition with an independent reference transition and correcting all uncertainty intervals to resample whole matched blocks.",
+  "repairs_from_v01": {
+    "independent_truth_transition": "the stochastic truth now advances through the separate authoritative one-day simulator, independent physical projection and independent routed-discharge calculation",
+    "grouped_probability_bootstrap": "the terminal true-candidate probability interval now resamples eight complete matched blocks and retains all three covariance conditions in each sampled block",
+    "v01_result_preserved": "results/23_hbv_multilead_joint_uncertainty/process_noise_identification_validation_v01"
+  },
+  "parameter_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/parameter_vectors.csv",
+    "sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+    "source_basin_id": "12143600",
+    "source_basin_description": "the first frozen formal basin; a small snow-influenced storage-and-infiltration basin used only as the source of already frozen contracts",
+    "parameter_id": "trained_center"
+  },
+  "process_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/process_noise_covariances.csv",
+    "sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+    "source_basin_id": "12143600",
+    "process_ids": [
+      "process_0",
+      "process_1",
+      "process_2"
+    ],
+    "variance_scales": [
+      0.0001,
+      0.001,
+      0.01
+    ],
+    "routing_memory_variances": "all ten are exactly zero"
+  },
+  "observation_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/observation_noise.csv",
+    "sha256": "f358c77b655285b348604266af43dfcd7b875ea756145f6d9b33c8853a5d8955",
+    "source_basin_id": "12143600",
+    "standard_deviation_mm_day": 0.9463681992025423,
+    "meaning": "frozen effective observation error including measurement and unrepresented model error"
+  },
+  "forcing": {
+    "days": 240,
+    "rain_shape": 0.8,
+    "rain_scale": 4.0,
+    "potential_evaporation_formula": "maximum(0, 2 + sin(angle))",
+    "temperature_formula": "4 + 12 * sin(angle - pi / 2)",
+    "angle_formula": "linearly spaced from 0 through 2*pi, including both endpoints"
+  },
+  "matched_blocks": [
+    {
+      "block_id": "matched_block_01",
+      "forcing_seed": 520001,
+      "process_noise_seed": 620001,
+      "observation_noise_seed": 720001
+    },
+    {
+      "block_id": "matched_block_02",
+      "forcing_seed": 520002,
+      "process_noise_seed": 620002,
+      "observation_noise_seed": 720002
+    },
+    {
+      "block_id": "matched_block_03",
+      "forcing_seed": 520003,
+      "process_noise_seed": 620003,
+      "observation_noise_seed": 720003
+    },
+    {
+      "block_id": "matched_block_04",
+      "forcing_seed": 520004,
+      "process_noise_seed": 620004,
+      "observation_noise_seed": 720004
+    },
+    {
+      "block_id": "matched_block_05",
+      "forcing_seed": 520005,
+      "process_noise_seed": 620005,
+      "observation_noise_seed": 720005
+    },
+    {
+      "block_id": "matched_block_06",
+      "forcing_seed": 520006,
+      "process_noise_seed": 620006,
+      "observation_noise_seed": 720006
+    },
+    {
+      "block_id": "matched_block_07",
+      "forcing_seed": 520007,
+      "process_noise_seed": 620007,
+      "observation_noise_seed": 720007
+    },
+    {
+      "block_id": "matched_block_08",
+      "forcing_seed": 520008,
+      "process_noise_seed": 620008,
+      "observation_noise_seed": 720008
+    }
+  ],
+  "matched_design": "within each of eight independent blocks, all three true covariance conditions share forcing, standard-normal process draws and standard-normal observation draws; only the covariance used to scale process draws changes",
+  "start_day": 90,
+  "duration_days": 120,
+  "terminal_window_days": 10,
+  "initial_covariance_fraction": 0.001,
+  "probability_rule": "equal initial weights followed by cumulative candidate log-likelihood normalization",
+  "truth_process_rule": "independent authoritative transition plus a diagonal Gaussian process draw, followed by an independent physical state projection and independent routed-discharge observation",
+  "generated_observation_noise": "Gaussian with the frozen common standard deviation",
+  "parameter_switching": false,
+  "process_noise_switching": false,
+  "state_interaction": false,
+  "bootstrap": {
+    "unit": "matched_block",
+    "replicates": 20000,
+    "seed": 434343
+  },
+  "gates": {
+    "correct_classification_count_minimum": 20,
+    "correct_classification_count_per_process_minimum": 6,
+    "median_terminal_true_probability_minimum": 0.6,
+    "matched_block_accuracy_bootstrap_lower_minimum": 0.6666666666666666
+  },
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01"
+  ],
+  "fixed_boundaries": {
+    "complete_parameter_vectors_active": 1,
+    "parameter_names_per_vector": 13,
+    "process_noise_candidates": 3,
+    "hydrologic_states_with_process_variance": 5,
+    "routing_memory_states_with_process_variance": 0,
+    "model_interaction": false,
+    "parameter_switching": false,
+    "process_noise_switching": false,
+    "reads_real_basin_observations": false,
+    "modifies_frozen_formal_results": false,
+    "runs_531_real_basins": false
+  }
+}

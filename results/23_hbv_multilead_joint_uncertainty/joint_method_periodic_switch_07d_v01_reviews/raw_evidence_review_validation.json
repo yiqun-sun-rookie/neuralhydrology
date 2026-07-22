@@ -1,0 +1,173 @@
+{
+  "verdict": "PASS",
+  "validated_review_verdict": "PASS_WITH_NON_MATERIAL_DISAGREEMENTS",
+  "must_fix_count": 0,
+  "must_fix": [],
+  "claim_validation": {
+    "scientific_scope": {
+      "status": "CONFIRMED",
+      "claim": "All scientific decisions are limited to the configured seven-day periodic switching stress condition: eight matched synthetic blocks, nine cyclically shifted truth trials per block, forty-five assimilation days, and one-, three-, and seven-day forecast targets. They do not establish behavior for other switching periods, matched transition priors, forcing error, weak observations, real basin observations, or 531-basin evaluation."
+    },
+    "formal_file_set_and_hashes": {
+      "status": "CONFIRMED",
+      "manifest_entry_count": 34,
+      "checksum_mismatch_count": 0,
+      "exact_manifest_file_set": true,
+      "evidence_sha256": "52d3cc8ea9a87bdfd0ab3ca7febc618fee89f01526ae81c85f6ca6b14352f9ee",
+      "config_sha256": "834fa0cfac2461eb80e6bab54902cdb71f84e7f57a3d72ad7e07cf0caef5dd8f",
+      "source_snapshot_file_count": 15,
+      "current_source_snapshot_mismatch_count": 0,
+      "protected_configured_path_count": 16,
+      "protected_file_count": 585,
+      "protected_before_after_mismatch_count": 0,
+      "protected_current_mismatch_count": 0
+    },
+    "truth_candidate_schedule": {
+      "status": "CONFIRMED",
+      "shape": [9, 52],
+      "formula_reconstruction_exact": true,
+      "zero_based_switch_days": [7, 14, 21, 28, 35, 42, 49],
+      "zero_based_origin_index": 44,
+      "origin_labels": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      "next_switch_forecast_lead_day": 5,
+      "candidate_step": 4,
+      "step_four_full_cycle": [0, 4, 8, 3, 7, 2, 6, 1, 5],
+      "every_switch_changes_complete_parameter_and_process_scale": true,
+      "distinct_candidates_within_each_fifty_two_day_trajectory": 8,
+      "all_nine_candidates_covered_by_the_nine_shifted_trials_on_every_day": true
+    },
+    "external_drivers": {
+      "status": "CONFIRMED",
+      "forcing_seed_regeneration_bitwise_equal": true,
+      "process_standard_normal_seed_regeneration_bitwise_equal": true,
+      "observation_standard_normal_seed_regeneration_bitwise_equal": true,
+      "forcing_equal_to_joint_method_stable_validation_version_04_bitwise": true,
+      "process_standard_normals_equal_to_joint_method_stable_validation_version_04_bitwise": true,
+      "observation_standard_normals_equal_to_joint_method_stable_validation_version_04_bitwise": true
+    },
+    "truth_observation_perturbation_and_projection": {
+      "status": "CONFIRMED",
+      "model": "Hydrologiska Byrans Vattenbalansavdelning model, a conceptual rainfall-runoff model",
+      "replayed_transition_count": 3744,
+      "daily_active_parameter_transition_maximum_absolute_error": 2.842170943040401e-14,
+      "active_process_scale_perturbation_maximum_absolute_error": 0.0,
+      "physical_projection_adjustment_maximum_absolute_error": 2.842170943040401e-14,
+      "projected_truth_state_maximum_absolute_error": 2.842170943040401e-14,
+      "routed_discharge_maximum_absolute_error": 7.105427357601002e-15,
+      "observation_maximum_absolute_error": 7.105427357601002e-15,
+      "projection_event_count": 3530,
+      "projection_event_total": 3744,
+      "maximum_absolute_projection_adjustment": 127.2348379645953,
+      "zero_based_forecast_target_indices": [45, 47, 51],
+      "forecast_target_reconstruction_maximum_absolute_error": 0.0
+    },
+    "probability_and_mixture": {
+      "status": "CONFIRMED",
+      "method_mixture_maximum_absolute_error": 1.7763568394002505e-15,
+      "method_probability_sum_maximum_absolute_error": 2.220446049250313e-16,
+      "minimum_active_method_probability": 0.000286648368449638,
+      "inactive_candidate_probability_or_prediction_nonzero_count": 0
+    },
+    "metrics_comparisons_identification_and_rules": {
+      "status": "CONFIRMED",
+      "recomputed_root_mean_square_error_metric_count": 24,
+      "method_metrics_csv_maximum_numeric_difference": 0.0,
+      "recomputed_paired_comparison_count": 20,
+      "paired_comparisons_csv_maximum_numeric_difference": 0.0,
+      "paired_better_block_count_mismatch_count": 0,
+      "bootstrap_replicates_per_comparison": 20000,
+      "joint_current_candidate_argmax_accuracy": 0.1388888888888889,
+      "joint_complete_parameter_argmax_accuracy": 0.3611111111111111,
+      "joint_process_scale_argmax_accuracy": 0.3888888888888889,
+      "median_joint_true_current_candidate_probability": 0.08205526412068902,
+      "median_joint_true_complete_parameter_probability": 0.33580640850541527,
+      "median_joint_true_process_scale_probability": 0.3006234037109806,
+      "joint_identification_effective": false,
+      "one_day_effective_against_fixed_filter": false,
+      "three_day_effective_against_fixed_filter": false,
+      "seven_day_effective_against_fixed_filter": false,
+      "origin_state_effective_against_fixed_filter": true,
+      "origin_state_added_value_beyond_both_single_factor_methods": false,
+      "forecast_added_value_beyond_both_single_factor_methods_at_all_three_leads": false
+    },
+    "future_observation_negative_control": {
+      "status": "CONFIRMED",
+      "block_index": 0,
+      "truth_trial_index": 0,
+      "mutated_zero_based_observation_indices": [45, 46, 47, 48, 49, 50, 51],
+      "replacement_magnitude": "approximately one trillion",
+      "observation_driven_path_count": 5,
+      "paths": ["fixed filter", "three-parameter filter bank", "three-process-covariance filter bank", "complete nine-filter joint method", "origin-candidate single-filter diagnostic"],
+      "all_origin_states_probabilities_and_forecasts_bitwise_equal": true,
+      "maximum_change": 0.0,
+      "static_source_confirmation": "The shared implementation consumes observations only for zero-based assimilation indices zero through forty-four; forecasting receives future meteorological forcing and no future discharge observations."
+    },
+    "origin_candidate_diagnostic": {
+      "status": "CONFIRMED",
+      "dynamic_oracle": false,
+      "implementation": "For each truth trial, the candidate that is true at the forecast origin is selected once and held fixed throughout the full assimilation history and forecast. It does not follow the daily switching truth schedule.",
+      "representative_trial_origin_label": 0,
+      "representative_fixed_candidate": "equifinal_diverse_1 with process_0",
+      "representative_origin_state_saved_maximum_absolute_error": 0.0,
+      "representative_forecast_saved_maximum_absolute_error": 0.0,
+      "used_by_effectiveness_or_added_value_decisions": false
+    },
+    "resource_safety": {
+      "status": "CONFIRMED_FOR_THE_ARCHIVED_ADMISSION",
+      "execution_parallelism": 1,
+      "saved_numeric_array_bytes": 2227176,
+      "recomputed_estimated_additional_peak_memory_bytes": 220123040,
+      "recomputed_task_specific_reserve_bytes": 268435456,
+      "recomputed_task_specific_required_available_bytes": 488558496,
+      "archived_available_physical_memory_bytes": 1110384640,
+      "archived_available_margin_bytes": 621826144,
+      "archived_safe_to_run": true,
+      "recomputed_estimated_runtime_seconds": 192.6849014518472,
+      "universal_memory_threshold_used": false
+    }
+  },
+  "raw_recalculations": {
+    "basis": "The calculations used evidence.npz, the archived comma-separated-value tables, configuration and preregistration, checksums, protected-file hashes, the fifteen source snapshots, and the three frozen authoritative source tables. The first review, summary, certificate, and condition-decision documents were comparison targets rather than computational inputs.",
+    "saved_array_count": 38,
+    "saved_numeric_array_count": 31,
+    "nonfinite_saved_numeric_array_count": 0,
+    "saved_absolute_error_reconstruction_maximum_absolute_error": 0.0,
+    "origin_state_error_reconstruction_maximum_absolute_error": 0.0,
+    "saved_true_probability_reconstruction_maximum_absolute_error": 0.0,
+    "source_table_hashes_match_configuration": true,
+    "formal_parameter_source_sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+    "formal_process_noise_source_sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+    "formal_observation_noise_source_sha256": "f358c77b655285b348604266af43dfcd7b875ea756145f6d9b33c8853a5d8955"
+  },
+  "disagreements": [
+    {
+      "severity": "NON_MATERIAL",
+      "first_review_statement": "The selected parameter, process covariance, and observation standard deviation maximum absolute errors against their frozen source values are all exactly zero.",
+      "raw_validation_result": "A lexical-faithful Python comma-separated-value parse gives maximum absolute differences of 2.220446049250313e-16 for parameters, 2.220446049250313e-16 for process values, and 1.1102230246251565e-16 for observation standard deviation. The archived pandas loader maps these decimal strings to the saved binary floating-point values and the configured observation check allows 1e-15.",
+      "effect_on_archived_computation_or_decisions": "None. The evidence arrays, regenerated observations, metrics, comparisons, and decisions are internally exact under the archived loading path."
+    },
+    {
+      "severity": "NON_MATERIAL_RUNTIME_CONDITION",
+      "first_review_statement": "The related seven-test command passed seven tests.",
+      "raw_validation_result": "A current rerun passed five tests and stopped two packaging tests at their explicit task-specific memory admission gate. The failures were MemoryError admissions, not numerical or assertion mismatches. The archived formal admission independently recomputes as safe with 1,110,384,640 available bytes against 488,558,496 required bytes.",
+      "effect_on_archived_computation_or_decisions": "None. This current resource fluctuation does not change the frozen raw evidence or the archived admission decision."
+    },
+    {
+      "severity": "NON_MATERIAL_REPLAY_LIMITATION",
+      "first_review_statement": "The source-bound evidence is independently reconstructable.",
+      "raw_validation_result": "The archived source_snapshot package initializer imports auxiliary modules that are not among the fifteen archived files, so direct package import is not standalone. Every one of the fifteen archived source files is byte-identical to its current repository source; the raw equations were independently reimplemented, and the dynamic negative control used only the byte-identical current modules after this hash check.",
+      "effect_on_archived_computation_or_decisions": "None for auditability or the scientific decisions; it limits standalone package replay from the snapshot directory alone."
+    }
+  ],
+  "reviewer_independence": {
+    "review_layer": "second independent raw-evidence validation",
+    "reviewer_role": "independent raw-evidence verifier, not the experiment implementer and not the first code-method-result reviewer",
+    "first_review_used_as": "claim checklist only",
+    "first_review_values_used_as_computational_inputs": false,
+    "summary_certificate_or_decision_values_used_as_computational_inputs": false,
+    "truth_transition_reimplemented_from_archived_equations": true,
+    "metrics_comparisons_bootstrap_and_decisions_recomputed_from_saved_arrays": true,
+    "formal_evidence_directory_modified": false,
+    "only_written_artifact": "results/23_hbv_multilead_joint_uncertainty/joint_method_periodic_switch_07d_v01_reviews/raw_evidence_review_validation.json"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "experiment_id": "model_probability_validation_v01",
+  "purpose": "Isolate and test the nine-candidate probability mechanism: factorial transition prior, likelihood update, parameter and process-noise marginals, numerical stability and causal prefix invariance.",
+  "parameter_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/parameter_vectors.csv",
+    "sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+    "source_basin_id": "12143600",
+    "source_basin_description": "the first frozen formal basin; a small snow-influenced storage-and-infiltration basin used only to freeze the existing three complete parameter labels",
+    "parameter_ids": [
+      "equifinal_diverse_1",
+      "trained_center",
+      "equifinal_diverse_2"
+    ]
+  },
+  "process_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/process_noise_covariances.csv",
+    "sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+    "source_basin_id": "12143600",
+    "process_ids": [
+      "process_0",
+      "process_1",
+      "process_2"
+    ]
+  },
+  "factor_stay_probability": 0.98,
+  "expected_joint_candidate_stay_probability": 0.9604,
+  "trial_seeds": [
+    830001,
+    830002,
+    830003,
+    830004,
+    830005,
+    830006,
+    830007,
+    830008,
+    830009,
+    830010,
+    830011,
+    830012,
+    830013,
+    830014,
+    830015,
+    830016,
+    830017,
+    830018,
+    830019,
+    830020,
+    830021,
+    830022,
+    830023,
+    830024,
+    830025,
+    830026,
+    830027,
+    830028,
+    830029,
+    830030,
+    830031,
+    830032
+  ],
+  "days": 365,
+  "causal_prefix_days": 60,
+  "factor_emission_means": [
+    -2.0,
+    0.0,
+    2.0
+  ],
+  "emission_standard_deviation": 1.0,
+  "emission_mean_interpretation": "dimensionless ordered synthetic diagnostics assigned to the three frozen labels; they have no hydrologic state or parameter-value interpretation",
+  "emission_rule": "two conditionally independent Gaussian diagnostics, one for the true parameter label and one for the true process-noise label",
+  "truth_mode_rule": "uniform initial joint candidate followed by the frozen three-by-three factorial transition matrix",
+  "initial_candidate_probabilities": "uniform one ninth",
+  "bootstrap": {
+    "unit": "trial",
+    "replicates": 20000,
+    "seed": 818181
+  },
+  "gates": {
+    "joint_log_loss_improved_trial_count_minimum": 30,
+    "joint_brier_improved_trial_count_minimum": 30,
+    "joint_log_loss_improvement_bootstrap_lower_minimum": 0.05,
+    "joint_brier_improvement_bootstrap_lower_minimum": 0.02,
+    "joint_posterior_accuracy_minimum": 0.65,
+    "parameter_posterior_accuracy_minimum": 0.8,
+    "process_posterior_accuracy_minimum": 0.8,
+    "recursion_maximum_absolute_error": 1e-14,
+    "posterior_reconstruction_maximum_absolute_error": 1e-14,
+    "factor_marginal_transition_maximum_absolute_error": 1e-14,
+    "factorial_transition_contract_maximum_absolute_error": 1e-14,
+    "posterior_factorization_maximum_absolute_error": 1e-14,
+    "causal_prefix_maximum_absolute_error": 0.0
+  },
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01",
+    "results/23_hbv_multilead_joint_uncertainty/synthetic_truth_propagation_v04",
+    "results/23_hbv_multilead_joint_uncertainty/single_filter_state_validation_v02",
+    "results/23_hbv_multilead_joint_uncertainty/parameter_identification_validation_v01",
+    "results/23_hbv_multilead_joint_uncertainty/process_noise_identification_validation_v02"
+  ],
+  "fixed_boundaries": {
+    "complete_parameter_vectors": 3,
+    "parameter_names_per_vector": 13,
+    "process_noise_candidates": 3,
+    "joint_candidates": 9,
+    "hydrologic_state_dimension_in_contract": 15,
+    "hydrologic_state_propagation_in_this_component": false,
+    "state_interaction": false,
+    "forecast_propagation": false,
+    "reads_real_basin_observations": false,
+    "modifies_frozen_formal_results": false,
+    "runs_531_real_basins": false
+  },
+  "scope_limit": "This is a probability-algebra validation with synthetic Gaussian label diagnostics. It does not test whether hydrologic filter likelihoods are calibrated, whether states should interact or whether forecasts improve."
+}

@@ -1,0 +1,18 @@
+{
+  "experiment_id": "single_filter_state_validation_v02",
+  "role": "independent_raw_evidence_validation_of_review",
+  "raw_evidence_sha256": "9c65be14e21fd0a8211d3b50c7c1ddd6565b80ab2a01fb9ced6b5acf08861300",
+  "review_verdict": "confirmed",
+  "items": {
+    "noise_free_synthetic_discharge_and_assumed_error_covariance": "confirmed",
+    "independent_rainfall_trial_units_and_trial_level_bootstrap": "confirmed",
+    "same_filter_no_observation_primary_control": "confirmed",
+    "reported_counts_medians_and_intervals": "confirmed",
+    "future_discharge_isolation": "confirmed",
+    "internal_preregistration_without_external_timestamp": "confirmed",
+    "memory_estimate_and_serial_execution": "confirmed",
+    "evidence_checksums_and_protected_artifacts": "confirmed"
+  },
+  "contradictions_found": 0,
+  "unverified_items": 0
+}

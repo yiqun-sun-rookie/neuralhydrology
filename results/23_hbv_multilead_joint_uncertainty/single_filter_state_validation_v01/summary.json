@@ -1,0 +1,57 @@
+{
+  "duration_days": 30,
+  "experiment_id": "single_filter_state_validation_v01",
+  "flow_bootstrap_percentile_interval": [
+    -95.49814452287595,
+    -90.09296363245761
+  ],
+  "flow_change_percent_by_trial": [
+    -83.49353374703014,
+    -93.48480533668547,
+    -86.08810809848018,
+    -95.9319164533041,
+    -96.6637467452873,
+    -95.8445054572394,
+    -94.04447237955209,
+    -92.67776793854478,
+    -93.60511159339907,
+    -87.50815932637045,
+    -95.11622507983704,
+    -95.15178358851247
+  ],
+  "gate_pass": true,
+  "gate_values": {
+    "flow_bootstrap_upper_percent": -90.09296363245761,
+    "flow_median_change_percent": -93.82479198647559,
+    "state_bootstrap_upper_percent": -9.666994919807104,
+    "state_median_change_percent": -19.84544445480228
+  },
+  "gates": {
+    "flow_bootstrap_upper_percent_maximum": 0.0,
+    "flow_median_change_percent_maximum": -5.0,
+    "state_bootstrap_upper_percent_maximum": 0.0,
+    "state_median_change_percent_maximum": -5.0
+  },
+  "interpretation": "The single filter corrected the controlled state perturbations.",
+  "protected_artifacts_unchanged": true,
+  "state_bootstrap_percentile_interval": [
+    -51.92955879641092,
+    -9.666994919807104
+  ],
+  "state_change_percent_by_trial": [
+    -18.34324582329433,
+    -12.980501229636465,
+    -21.34764308631023,
+    -26.313670145049393,
+    -69.5495859152174,
+    -7.699166780785238,
+    -1.7646229500233201,
+    -42.13755996775992,
+    -68.82811354646212,
+    -11.63482305882897,
+    18.186142854324693,
+    -61.721557625061926
+  ],
+  "status": "passed",
+  "trial_count": 12
+}

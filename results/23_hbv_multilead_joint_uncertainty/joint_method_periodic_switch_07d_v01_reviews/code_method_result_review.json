@@ -1,0 +1,205 @@
+{
+  "verdict": "PASS",
+  "verdict_detail": {
+    "numerical_integrity": "PASS",
+    "scientific_result": "NEGATIVE_FOR_IDENTIFICATION_AND_FORECAST_VALUE_UNDER_THE_PREREGISTERED_PERIODIC_SWITCHING_STRESS_CONDITION",
+    "conclusion": "The archived numbers are complete, source-bound, finite, independently reconstructable, and consistent with the preregistered rules. The complete nine-filter joint method does not meet the identification rule, does not meet the effectiveness rule against the fixed filter at one, three, or seven days, and does not add value beyond both single-factor methods. The origin hydrologic state meets only the narrower effectiveness rule against the fixed filter.",
+    "numerical_and_scientific_status_are_separate": true
+  },
+  "must_fix_count": 0,
+  "must_fix": [],
+  "confirmed_numbers": {
+    "evidence_chain": {
+      "checksummed_file_count": 34,
+      "checksum_mismatch_count": 0,
+      "exact_manifest_file_set": true,
+      "source_snapshot_file_count": 15,
+      "current_source_snapshot_mismatch_count": 0,
+      "evidence_sha256": "52d3cc8ea9a87bdfd0ab3ca7febc618fee89f01526ae81c85f6ca6b14352f9ee",
+      "config_sha256": "834fa0cfac2461eb80e6bab54902cdb71f84e7f57a3d72ad7e07cf0caef5dd8f"
+    },
+    "frozen_inputs": {
+      "parameter_source_sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+      "process_noise_source_sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+      "observation_noise_source_sha256": "f358c77b655285b348604266af43dfcd7b875ea756145f6d9b33c8853a5d8955",
+      "all_three_source_hashes_match": true,
+      "selected_parameters_maximum_absolute_error": 0.0,
+      "selected_process_covariances_maximum_absolute_error": 0.0,
+      "selected_observation_standard_deviation_absolute_error": 0.0,
+      "forcing_seed_regeneration_bitwise_equal": true,
+      "process_standard_normal_seed_regeneration_bitwise_equal": true,
+      "observation_standard_normal_seed_regeneration_bitwise_equal": true,
+      "forcing_equals_fixed_condition_version_04_bitwise": true,
+      "process_standard_normals_equal_fixed_condition_version_04_bitwise": true,
+      "observation_standard_normals_equal_fixed_condition_version_04_bitwise": true
+    },
+    "protected_artifacts": {
+      "configured_path_count": 16,
+      "protected_file_count": 585,
+      "recorded_before_equals_recorded_after": true,
+      "current_equals_recorded_after": true,
+      "missing_or_changed_file_count": 0
+    },
+    "resource_preflight": {
+      "execution_parallelism": 1,
+      "expected_and_actual_saved_numeric_array_bytes": 2227176,
+      "estimated_additional_peak_memory_bytes": 220123040,
+      "task_specific_reserve_bytes": 268435456,
+      "task_specific_required_available_bytes": 488558496,
+      "historical_available_physical_memory_bytes": 1110384640,
+      "estimated_runtime_seconds_from_pilot": 192.6849014518472,
+      "safe_to_run_recalculated": true,
+      "universal_memory_threshold_used": false
+    },
+    "saved_arrays": {
+      "total_array_count": 38,
+      "numeric_array_count": 31,
+      "string_array_count": 7,
+      "nonfinite_numeric_array_count": 0
+    },
+    "truth_candidate_schedule": {
+      "shape": [9, 52],
+      "formula_reconstruction_exact": true,
+      "zero_based_switch_days": [7, 14, 21, 28, 35, 42, 49],
+      "zero_based_origin_index": 44,
+      "origin_labels": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      "next_switch_forecast_lead_day": 5,
+      "candidate_step": 4,
+      "step_four_full_cycle": [0, 4, 8, 3, 7, 2, 6, 1, 5],
+      "step_four_full_cycle_unique_candidate_count": 9,
+      "every_switch_changes_complete_parameter_and_process_scale": true,
+      "all_nine_candidates_are_covered_across_the_nine_trials_on_every_day": true,
+      "distinct_candidates_within_each_fifty_two_day_trial": 8
+    },
+    "truth_and_observation_recalculation": {
+      "daily_active_parameter_transition_maximum_absolute_error": 1.1368683772161603e-13,
+      "active_process_scale_perturbation_maximum_absolute_error": 0.0,
+      "physical_projection_adjustment_maximum_absolute_error": 5.684341886080802e-14,
+      "projected_truth_state_maximum_absolute_error": 1.1368683772161603e-13,
+      "routed_discharge_maximum_absolute_error": 7.105427357601002e-15,
+      "observation_maximum_absolute_error": 7.105427357601002e-15,
+      "projection_event_count": 3530,
+      "projection_event_total": 3744,
+      "projection_event_fraction": 0.9428418803418803,
+      "maximum_absolute_projection_adjustment": 127.2348379645953
+    },
+    "probability_and_mixture": {
+      "method_mixture_maximum_absolute_error": 1.7763568394002505e-15,
+      "method_probability_sum_maximum_absolute_error": 2.220446049250313e-16,
+      "minimum_active_method_probability": 0.000286648368449638,
+      "inactive_candidate_slot_nonzero_count": 0
+    },
+    "forecast_target_indexing": {
+      "assimilation_days": 45,
+      "lead_days": [1, 3, 7],
+      "zero_based_target_indices": [45, 47, 51],
+      "target_reconstruction_maximum_absolute_error": 0.0,
+      "saved_absolute_error_reconstruction_maximum_absolute_error": 0.0
+    },
+    "root_mean_square_errors": {
+      "value_order": ["origin_hydrologic_state", "one_day_discharge", "three_day_discharge", "seven_day_discharge"],
+      "deterministic_trained_center_open_loop": [0.4708795142759687, 3.05228940030944, 3.532239525688715, 3.1245245610066013],
+      "trained_center_single_filter_with_selected_process_covariance": [0.3224352910759806, 0.9726404773745088, 1.3923713165987535, 2.196434035492142],
+      "three_parameter_filter_bank_with_selected_process_covariance": [0.3069592887454921, 0.933897018688503, 1.3803425925887298, 2.227212319692345],
+      "three_process_covariance_filter_bank_with_trained_center_parameters": [0.3137091474845465, 0.966861085898388, 1.3824659309737002, 2.1088232137591922],
+      "complete_nine_filter_joint_method": [0.28648501712528235, 0.9258281399866716, 1.3641628543870818, 2.1017156824407444],
+      "origin_candidate_single_filter_diagnostic": [0.25434332969616624, 1.2600223885937853, 1.5796385110658406, 2.0469307383226893],
+      "recomputed_value_count": 24,
+      "saved_value_count": 24,
+      "maximum_saved_numeric_difference": 4.440892098500626e-16
+    },
+    "paired_comparisons": {
+      "recomputed_comparison_count": 20,
+      "saved_comparison_count": 20,
+      "bootstrap_replicates_per_comparison": 20000,
+      "maximum_saved_numeric_difference": 1.7763568394002505e-15,
+      "better_block_count_mismatch_count": 0,
+      "joint_versus_fixed_filter": {
+        "one_day_relative_improvement_percent": 4.812912733613533,
+        "one_day_bootstrap_upper": 0.027180426709974604,
+        "three_day_relative_improvement_percent": 2.0259295688867303,
+        "three_day_bootstrap_upper": 0.060753719029722555,
+        "seven_day_relative_improvement_percent": 4.312369573629137,
+        "seven_day_bootstrap_upper": -0.006756348266563943,
+        "origin_state_relative_improvement_percent": 11.14960891245206,
+        "origin_state_bootstrap_upper": -0.0036223877298725803
+      },
+      "origin_state_parameter_only_bootstrap_upper": 0.01124163767838519,
+      "origin_state_process_noise_only_bootstrap_upper": -0.0016506503676566031
+    },
+    "identification": {
+      "joint_current_candidate_argmax_accuracy": 0.1388888888888889,
+      "joint_complete_parameter_argmax_accuracy": 0.3611111111111111,
+      "joint_process_scale_argmax_accuracy": 0.3888888888888889,
+      "median_joint_true_current_candidate_probability": 0.08205526412068902,
+      "median_joint_true_complete_parameter_probability": 0.33580640850541527,
+      "median_joint_true_process_scale_probability": 0.3006234037109806,
+      "saved_true_probability_reconstruction_maximum_absolute_error": 0.0,
+      "joint_identification_effective": false
+    },
+    "scientific_decisions": {
+      "one_day_forecast": {"effective_against_fixed_filter": false, "added_value_beyond_both_single_factor_methods": false},
+      "three_day_forecast": {"effective_against_fixed_filter": false, "added_value_beyond_both_single_factor_methods": false},
+      "seven_day_forecast": {"effective_against_fixed_filter": false, "added_value_beyond_both_single_factor_methods": false},
+      "origin_hydrologic_state": {"effective_against_fixed_filter": true, "added_value_beyond_both_single_factor_methods": false},
+      "joint_identification_effective": false
+    },
+    "related_tests": {
+      "command": "python -m pytest -q -p no:cacheprovider test/test_hbv_joint_method_validation.py",
+      "passed": 7,
+      "failed": 0,
+      "warning_count": 1,
+      "warning": "The repository contains an existing unknown Pytest configuration option named collect_ignore_glob."
+    }
+  },
+  "independent_recalculations": {
+    "basis": "The computations used evidence.npz, the frozen configuration, frozen source tables, the 15 archived source snapshots, and byte-identical current source files. Summary and certificate values were comparison targets, not computational inputs.",
+    "checks_performed": [
+      "Recomputed the 34 archived file hashes, the exact manifest file set, the 15 source snapshot hashes, and all 585 protected file hashes.",
+      "Recomputed the resource byte total, peak estimate, reserve, required memory, pilot-scaled runtime, and historical admission decision.",
+      "Regenerated forcing, process standard normals, and observation standard normals from seeds and compared the three arrays bitwise with the fixed-label version 04 condition.",
+      "Rebuilt the nine by fifty-two truth-label schedules and verified switch days, origin labels, the lead-five next switch, factor changes, and the step-four nine-label cycle.",
+      "Reimplemented the daily Hydrologiska Byrans Vattenbalansavdelning model transition, routed observation, pre-projection perturbation, and physical projection directly from the archived equations and replayed all 3744 truth transitions.",
+      "Reconstructed active method probability sums, the minimum probability, inactive candidate slots, and all mixture predictions.",
+      "Recomputed all 24 root mean square errors and all 20 matched-block comparisons, including each twenty-thousand-replicate bootstrap interval and each decision rule.",
+      "Recomputed current-candidate, complete-parameter, and process-scale identification and the one-, three-, and seven-day target indices.",
+      "Performed a dynamic future-observation negative control for one matched block and one truth trial across the fixed filter, parameter-only bank, process-noise-only bank, joint bank, and origin-candidate diagnostic. Replacing all seven future observations with approximately one trillion changed no origin or forecast array."
+    ],
+    "future_observation_dynamic_negative_control": {
+      "block_index": 0,
+      "truth_trial_index": 0,
+      "mutated_zero_based_observation_indices": [45, 46, 47, 48, 49, 50, 51],
+      "observation_driven_method_path_count": 5,
+      "maximum_origin_or_forecast_change": 0.0,
+      "all_compared_arrays_bitwise_equal": true,
+      "shared_code_path_static_confirmation": "Observations are consumed only in the loop over the first 45 assimilation days; forecasting receives future forcing and no future discharge observation."
+    },
+    "origin_candidate_diagnostic_review": {
+      "dynamic_oracle": false,
+      "implementation": "The diagnostic selects the candidate that is true at origin and holds that one candidate fixed for the entire assimilation history and forecast. It does not follow the daily truth schedule.",
+      "included_in_twenty_descriptive_paired_comparisons": true,
+      "used_by_effectiveness_or_added_value_decisions": false,
+      "decision_controls": ["fixed filter", "three-parameter filter bank", "three-process-covariance filter bank"]
+    }
+  },
+  "scope_limits": [
+    "The supported condition contains eight matched synthetic blocks and nine origin-label trials per block, for 72 trials. It does not read real basin observations and does not test 531 basins.",
+    "Both the complete thirteen-parameter label and the pre-projection process-scale label switch every seven days. The filter retains a factor-level stay probability of 0.98 rather than a transition prior matched to truth.",
+    "The origin is zero-based day 44. The current label has only the observations at zero-based days 42, 43, and 44 after its latest switch, and the next truth switch is forecast lead day five.",
+    "A step of four is coprime with nine and therefore defines a nine-candidate cycle, but the finite 52-day window contains only eight distinct candidates within any one trajectory. Coverage of all nine candidates in the saved experiment comes from the nine cyclically shifted trials at every day.",
+    "The process covariance controls Gaussian scale before physical projection. Projection occurs in 3530 of 3744 transitions, so post-projection truth is not an exact additive Gaussian candidate model.",
+    "The evidence does not determine behavior for other switch periods, different transition priors, longer time since the latest switch, weak observations, forcing error, or real basins.",
+    "The future-observation dynamic negative control reruns one representative trial across every observation-driven method path. Full-trial causal coverage is additionally supported by the one shared implementation path.",
+    "PASS means that the archived negative and limited scientific decisions are faithfully supported. It does not establish general effectiveness or superiority of the complete joint method."
+  ],
+  "reviewer_independence": {
+    "review_layer": "first independent code, method, and result review",
+    "reviewer_role": "independent reviewer, not the experiment implementer",
+    "prior_review_outputs_used": false,
+    "formal_summary_values_used_as_computational_inputs": false,
+    "raw_evidence_recalculated": true,
+    "source_and_configuration_reviewed": true,
+    "formal_evidence_directory_modified": false,
+    "only_written_artifact": "results/23_hbv_multilead_joint_uncertainty/joint_method_periodic_switch_07d_v01_reviews/code_method_result_review.json"
+  }
+}

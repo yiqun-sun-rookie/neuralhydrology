@@ -1,0 +1,27 @@
+{
+  "artifact_type": "calibration_only_uncertainty_contract",
+  "basin_count": 16,
+  "basins": [
+    "12143600",
+    "04127918",
+    "09066000",
+    "06431500",
+    "03479000",
+    "02296500",
+    "02015700",
+    "06892000",
+    "05507600",
+    "06477500",
+    "08158700",
+    "11148900",
+    "06404000",
+    "08189500",
+    "09505350",
+    "09447800"
+  ],
+  "contract_id": "formal_contract_sixteen_v02",
+  "evaluation_discharge_parsed_before_freeze": false,
+  "has_verified_execution_signature": true,
+  "selected_interaction_mode": "full",
+  "uses_evaluation_discharge_for_selection": false
+}

@@ -1,0 +1,1170 @@
+{
+  "access_and_finish_order": {
+    "all_closures_avoid_prohibited_content_calls": true,
+    "all_runners_full_verify_before_finish_and_close_after": true,
+    "post_finish_closure_call_audit": {
+      "verify_reproduction_aggregation_closure": {
+        "all_calls": [
+          {
+            "line": 1673,
+            "name": "Path"
+          },
+          {
+            "line": 1673,
+            "name": "resolve"
+          },
+          {
+            "line": 1675,
+            "name": "_verify_not_failed_or_incomplete"
+          },
+          {
+            "line": 1676,
+            "name": "directory.name.endswith"
+          },
+          {
+            "line": 1676,
+            "name": "exists"
+          },
+          {
+            "line": 1677,
+            "name": "ValueError"
+          },
+          {
+            "line": 1678,
+            "name": "_verify_artifact_checksums"
+          },
+          {
+            "line": 1679,
+            "name": "Path"
+          },
+          {
+            "line": 1679,
+            "name": "resolve"
+          },
+          {
+            "line": 1680,
+            "name": "json.loads"
+          },
+          {
+            "line": 1680,
+            "name": "read_text"
+          },
+          {
+            "line": 1681,
+            "name": "json.loads"
+          },
+          {
+            "line": 1682,
+            "name": "read_text"
+          },
+          {
+            "line": 1684,
+            "name": "_resolve_repo_relative"
+          },
+          {
+            "line": 1685,
+            "name": "verify_reproduction_session_closure"
+          },
+          {
+            "line": 1687,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1688,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1689,
+            "name": "content.get"
+          },
+          {
+            "line": 1690,
+            "name": "content.get"
+          },
+          {
+            "line": 1690,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1691,
+            "name": "content.get"
+          },
+          {
+            "line": 1691,
+            "name": "int"
+          },
+          {
+            "line": 1692,
+            "name": "content.get"
+          },
+          {
+            "line": 1692,
+            "name": "int"
+          },
+          {
+            "line": 1693,
+            "name": "content.get"
+          },
+          {
+            "line": 1693,
+            "name": "int"
+          },
+          {
+            "line": 1694,
+            "name": "content.get"
+          },
+          {
+            "line": 1694,
+            "name": "int"
+          },
+          {
+            "line": 1696,
+            "name": "content.get"
+          },
+          {
+            "line": 1696,
+            "name": "float"
+          },
+          {
+            "line": 1696,
+            "name": "float"
+          },
+          {
+            "line": 1697,
+            "name": "content.get"
+          },
+          {
+            "line": 1697,
+            "name": "int"
+          },
+          {
+            "line": 1698,
+            "name": "content.get"
+          },
+          {
+            "line": 1698,
+            "name": "int"
+          },
+          {
+            "line": 1699,
+            "name": "content.get"
+          },
+          {
+            "line": 1700,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1700,
+            "name": "str"
+          },
+          {
+            "line": 1700,
+            "name": "zfill"
+          },
+          {
+            "line": 1702,
+            "name": "int"
+          },
+          {
+            "line": 1702,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1703,
+            "name": "int"
+          },
+          {
+            "line": 1703,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1704,
+            "name": "int"
+          },
+          {
+            "line": 1704,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1705,
+            "name": "int"
+          },
+          {
+            "line": 1705,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1707,
+            "name": "float"
+          },
+          {
+            "line": 1707,
+            "name": "float"
+          },
+          {
+            "line": 1707,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1708,
+            "name": "int"
+          },
+          {
+            "line": 1708,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1709,
+            "name": "int"
+          },
+          {
+            "line": 1709,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1710,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1712,
+            "name": "ValueError"
+          },
+          {
+            "line": 1713,
+            "name": "json.loads"
+          },
+          {
+            "line": 1713,
+            "name": "read_text"
+          },
+          {
+            "line": 1714,
+            "name": "json.loads"
+          },
+          {
+            "line": 1714,
+            "name": "read_text"
+          },
+          {
+            "line": 1715,
+            "name": "_verify_resource_history"
+          },
+          {
+            "line": 1717,
+            "name": "_registry_status"
+          },
+          {
+            "line": 1720,
+            "name": "str"
+          },
+          {
+            "line": 1725,
+            "name": "Path"
+          },
+          {
+            "line": 1725,
+            "name": "resolve"
+          },
+          {
+            "line": 1725,
+            "name": "terminal.get"
+          },
+          {
+            "line": 1726,
+            "name": "sha256_file"
+          },
+          {
+            "line": 1726,
+            "name": "terminal.get"
+          },
+          {
+            "line": 1728,
+            "name": "ValueError"
+          },
+          {
+            "line": 1731,
+            "name": "sha256_file"
+          }
+        ],
+        "only_closure_and_checksum_work": true,
+        "prohibited_content_calls": []
+      },
+      "verify_reproduction_session_closure": {
+        "all_calls": [
+          {
+            "line": 651,
+            "name": "Path"
+          },
+          {
+            "line": 651,
+            "name": "resolve"
+          },
+          {
+            "line": 653,
+            "name": "_verify_not_failed_or_incomplete"
+          },
+          {
+            "line": 654,
+            "name": "directory.name.endswith"
+          },
+          {
+            "line": 654,
+            "name": "exists"
+          },
+          {
+            "line": 655,
+            "name": "ValueError"
+          },
+          {
+            "line": 656,
+            "name": "_verify_artifact_checksums"
+          },
+          {
+            "line": 657,
+            "name": "Path"
+          },
+          {
+            "line": 657,
+            "name": "resolve"
+          },
+          {
+            "line": 658,
+            "name": "json.loads"
+          },
+          {
+            "line": 658,
+            "name": "read_text"
+          },
+          {
+            "line": 659,
+            "name": "json.loads"
+          },
+          {
+            "line": 660,
+            "name": "read_text"
+          },
+          {
+            "line": 663,
+            "name": "manifest.get"
+          },
+          {
+            "line": 664,
+            "name": "manifest.get"
+          },
+          {
+            "line": 665,
+            "name": "content.get"
+          },
+          {
+            "line": 666,
+            "name": "content.get"
+          },
+          {
+            "line": 666,
+            "name": "manifest.get"
+          },
+          {
+            "line": 667,
+            "name": "content.get"
+          },
+          {
+            "line": 667,
+            "name": "int"
+          },
+          {
+            "line": 668,
+            "name": "content.get"
+          },
+          {
+            "line": 668,
+            "name": "len"
+          },
+          {
+            "line": 669,
+            "name": "int"
+          },
+          {
+            "line": 669,
+            "name": "manifest.get"
+          },
+          {
+            "line": 670,
+            "name": "content.get"
+          },
+          {
+            "line": 670,
+            "name": "manifest.get"
+          },
+          {
+            "line": 670,
+            "name": "str"
+          },
+          {
+            "line": 670,
+            "name": "zfill"
+          },
+          {
+            "line": 671,
+            "name": "int"
+          },
+          {
+            "line": 671,
+            "name": "manifest.get"
+          },
+          {
+            "line": 673,
+            "name": "int"
+          },
+          {
+            "line": 673,
+            "name": "manifest.get"
+          },
+          {
+            "line": 674,
+            "name": "int"
+          },
+          {
+            "line": 674,
+            "name": "len"
+          },
+          {
+            "line": 674,
+            "name": "manifest.get"
+          },
+          {
+            "line": 675,
+            "name": "manifest.get"
+          },
+          {
+            "line": 676,
+            "name": "manifest.get"
+          },
+          {
+            "line": 677,
+            "name": "content.get"
+          },
+          {
+            "line": 678,
+            "name": "content.get"
+          },
+          {
+            "line": 679,
+            "name": "content.get"
+          },
+          {
+            "line": 680,
+            "name": "content.get"
+          },
+          {
+            "line": 682,
+            "name": "Path"
+          },
+          {
+            "line": 682,
+            "name": "content.get"
+          },
+          {
+            "line": 682,
+            "name": "resolve"
+          },
+          {
+            "line": 683,
+            "name": "_resolve_repo_relative"
+          },
+          {
+            "line": 684,
+            "name": "Path"
+          },
+          {
+            "line": 684,
+            "name": "content.get"
+          },
+          {
+            "line": 684,
+            "name": "resolve"
+          },
+          {
+            "line": 685,
+            "name": "_resolve_repo_relative"
+          },
+          {
+            "line": 687,
+            "name": "ValueError"
+          },
+          {
+            "line": 688,
+            "name": "json.loads"
+          },
+          {
+            "line": 688,
+            "name": "read_text"
+          },
+          {
+            "line": 689,
+            "name": "json.loads"
+          },
+          {
+            "line": 689,
+            "name": "read_text"
+          },
+          {
+            "line": 690,
+            "name": "_verify_resource_history"
+          },
+          {
+            "line": 692,
+            "name": "_registry_status"
+          },
+          {
+            "line": 695,
+            "name": "str"
+          },
+          {
+            "line": 700,
+            "name": "Path"
+          },
+          {
+            "line": 700,
+            "name": "resolve"
+          },
+          {
+            "line": 700,
+            "name": "terminal.get"
+          },
+          {
+            "line": 701,
+            "name": "sha256_file"
+          },
+          {
+            "line": 701,
+            "name": "terminal.get"
+          },
+          {
+            "line": 703,
+            "name": "ValueError"
+          },
+          {
+            "line": 707,
+            "name": "sha256_file"
+          }
+        ],
+        "only_closure_and_checksum_work": true,
+        "prohibited_content_calls": []
+      },
+      "verify_reproduction_shard_closure": {
+        "all_calls": [
+          {
+            "line": 1065,
+            "name": "Path"
+          },
+          {
+            "line": 1065,
+            "name": "resolve"
+          },
+          {
+            "line": 1067,
+            "name": "_verify_not_failed_or_incomplete"
+          },
+          {
+            "line": 1068,
+            "name": "directory.name.endswith"
+          },
+          {
+            "line": 1068,
+            "name": "exists"
+          },
+          {
+            "line": 1069,
+            "name": "ValueError"
+          },
+          {
+            "line": 1070,
+            "name": "_verify_artifact_checksums"
+          },
+          {
+            "line": 1071,
+            "name": "Path"
+          },
+          {
+            "line": 1071,
+            "name": "resolve"
+          },
+          {
+            "line": 1072,
+            "name": "Path"
+          },
+          {
+            "line": 1072,
+            "name": "resolve"
+          },
+          {
+            "line": 1073,
+            "name": "verify_reproduction_session_closure"
+          },
+          {
+            "line": 1074,
+            "name": "json.loads"
+          },
+          {
+            "line": 1074,
+            "name": "read_text"
+          },
+          {
+            "line": 1075,
+            "name": "json.loads"
+          },
+          {
+            "line": 1076,
+            "name": "read_text"
+          },
+          {
+            "line": 1078,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1078,
+            "name": "str"
+          },
+          {
+            "line": 1078,
+            "name": "zfill"
+          },
+          {
+            "line": 1079,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1079,
+            "name": "str"
+          },
+          {
+            "line": 1081,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1082,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1083,
+            "name": "content.get"
+          },
+          {
+            "line": 1084,
+            "name": "content.get"
+          },
+          {
+            "line": 1085,
+            "name": "content.get"
+          },
+          {
+            "line": 1085,
+            "name": "str"
+          },
+          {
+            "line": 1085,
+            "name": "zfill"
+          },
+          {
+            "line": 1087,
+            "name": "content.get"
+          },
+          {
+            "line": 1087,
+            "name": "int"
+          },
+          {
+            "line": 1088,
+            "name": "content.get"
+          },
+          {
+            "line": 1088,
+            "name": "int"
+          },
+          {
+            "line": 1090,
+            "name": "content.get"
+          },
+          {
+            "line": 1090,
+            "name": "float"
+          },
+          {
+            "line": 1090,
+            "name": "float"
+          },
+          {
+            "line": 1091,
+            "name": "content.get"
+          },
+          {
+            "line": 1092,
+            "name": "content.get"
+          },
+          {
+            "line": 1093,
+            "name": "content.get"
+          },
+          {
+            "line": 1094,
+            "name": "_resolve_repo_relative"
+          },
+          {
+            "line": 1095,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1095,
+            "name": "tuple"
+          },
+          {
+            "line": 1096,
+            "name": "list"
+          },
+          {
+            "line": 1096,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1097,
+            "name": "int"
+          },
+          {
+            "line": 1097,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1098,
+            "name": "int"
+          },
+          {
+            "line": 1098,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1100,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1101,
+            "name": "manifest.get"
+          },
+          {
+            "line": 1103,
+            "name": "ValueError"
+          },
+          {
+            "line": 1105,
+            "name": "content.get"
+          },
+          {
+            "line": 1105,
+            "name": "sha256_file"
+          },
+          {
+            "line": 1106,
+            "name": "ValueError"
+          },
+          {
+            "line": 1107,
+            "name": "json.loads"
+          },
+          {
+            "line": 1107,
+            "name": "read_text"
+          },
+          {
+            "line": 1109,
+            "name": "Path"
+          },
+          {
+            "line": 1109,
+            "name": "resolve"
+          },
+          {
+            "line": 1111,
+            "name": "_resolve_repo_relative"
+          },
+          {
+            "line": 1113,
+            "name": "_verify_shard_log"
+          },
+          {
+            "line": 1122,
+            "name": "json.loads"
+          },
+          {
+            "line": 1122,
+            "name": "read_text"
+          },
+          {
+            "line": 1124,
+            "name": "_resolve_repo_relative"
+          },
+          {
+            "line": 1125,
+            "name": "_resolve_repo_relative"
+          },
+          {
+            "line": 1126,
+            "name": "log_reference.get"
+          },
+          {
+            "line": 1127,
+            "name": "sha256_file"
+          },
+          {
+            "line": 1129,
+            "name": "ValueError"
+          },
+          {
+            "line": 1131,
+            "name": "_registry_status"
+          },
+          {
+            "line": 1139,
+            "name": "str"
+          },
+          {
+            "line": 1139,
+            "name": "terminal.get"
+          },
+          {
+            "line": 1139,
+            "name": "zfill"
+          },
+          {
+            "line": 1140,
+            "name": "Path"
+          },
+          {
+            "line": 1140,
+            "name": "resolve"
+          },
+          {
+            "line": 1140,
+            "name": "terminal.get"
+          },
+          {
+            "line": 1141,
+            "name": "Path"
+          },
+          {
+            "line": 1141,
+            "name": "resolve"
+          },
+          {
+            "line": 1141,
+            "name": "terminal.get"
+          },
+          {
+            "line": 1142,
+            "name": "terminal.get"
+          },
+          {
+            "line": 1143,
+            "name": "sha256_file"
+          },
+          {
+            "line": 1144,
+            "name": "terminal.get"
+          },
+          {
+            "line": 1145,
+            "name": "sha256_file"
+          },
+          {
+            "line": 1147,
+            "name": "ValueError"
+          },
+          {
+            "line": 1150,
+            "name": "sha256_file"
+          },
+          {
+            "line": 1151,
+            "name": "str"
+          },
+          {
+            "line": 1152,
+            "name": "str"
+          }
+        ],
+        "only_closure_and_checksum_work": true,
+        "prohibited_content_calls": []
+      }
+    },
+    "reference_numeric_access_order": {
+      "capture_reference_identity_np_load_lines": [],
+      "direct_np_load_lines_in_shard_runner": [],
+      "note": "Reference archive bytes and manifests are hashed before recomputation; numerical arrays are decoded by compare_npz_exact only after the reproduced archive is saved.",
+      "recompute_basin_np_load_lines": [],
+      "recomputed_save_lines": [
+        1235
+      ],
+      "reference_comparison_lines": [
+        1239
+      ],
+      "save_precedes_reference_numeric_comparison": true,
+      "verify_session_np_load_lines": []
+    },
+    "resource_finish_order": {
+      "aggregate_reproduction_shards": {
+        "closure_verification_after_finish": true,
+        "closure_verification_lines": [
+          1873,
+          1885
+        ],
+        "content_checkpoint_lines": [
+          1771,
+          1870
+        ],
+        "finish_lines": [
+          1871
+        ],
+        "full_verification_before_finish": true,
+        "full_verification_lines": [
+          1859
+        ],
+        "no_full_verification_after_finish": true,
+        "required_resource_event": "after_aggregation_content_verification"
+      },
+      "prepare_reproduction_session": {
+        "closure_verification_after_finish": true,
+        "closure_verification_lines": [
+          832,
+          844
+        ],
+        "content_checkpoint_lines": [
+          769,
+          771,
+          829
+        ],
+        "finish_lines": [
+          830
+        ],
+        "full_verification_before_finish": true,
+        "full_verification_lines": [
+          821
+        ],
+        "no_full_verification_after_finish": true,
+        "required_resource_event": "after_session_content_verification"
+      },
+      "run_reproduction_shard": {
+        "closure_verification_after_finish": true,
+        "closure_verification_lines": [
+          1330,
+          1352
+        ],
+        "content_checkpoint_lines": [
+          1226,
+          1238,
+          1245,
+          1300
+        ],
+        "finish_lines": [
+          1305
+        ],
+        "full_verification_before_finish": true,
+        "full_verification_lines": [
+          1291
+        ],
+        "no_full_verification_after_finish": true,
+        "required_resource_event": "after_shard_content_verification"
+      }
+    }
+  },
+  "audit_target": {
+    "cli": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\scripts\\run_reproduction.py",
+    "repository": "G:\\github\\pycharm\\projects\\neuralhydrology",
+    "source": "G:\\github\\pycharm\\projects\\neuralhydrology\\src\\hbv_multilead_joint_uncertainty\\reproduction.py",
+    "test": "G:\\github\\pycharm\\projects\\neuralhydrology\\test\\test_hbv_multilead_reproduction.py"
+  },
+  "failure_and_count_attacks": {
+    "all_shard_set_attacks_rejected": true,
+    "directory_filter": {
+      "failed_suffix_excluded": true,
+      "failure_marker_excluded": true,
+      "incomplete_prefix_excluded": true,
+      "selected": [
+        "valid_shard"
+      ]
+    },
+    "fixed_constants": {
+      "arrays_per_basin": 36,
+      "basin_count": 16,
+      "numeric_elements_per_basin": 366960,
+      "total_arrays": 576,
+      "total_numeric_elements": 5871360
+    },
+    "shard_set_attacks": {
+      "duplicate_basin": {
+        "error": "ValueError: aggregation requires 16 unique shard basins",
+        "rejected": true
+      },
+      "missing_shard": {
+        "error": "ValueError: aggregation requires exactly 16 formal basins and 16 successful shards",
+        "rejected": true
+      },
+      "one_failed_status": {
+        "error": "ValueError: every aggregation input shard must be verified",
+        "rejected": true
+      },
+      "one_nonzero_difference": {
+        "error": "ValueError: aggregation shard is not exactly equal to the reference",
+        "rejected": true
+      },
+      "one_wrong_array_count": {
+        "error": "ValueError: aggregation shard array count differs",
+        "rejected": true
+      },
+      "one_wrong_numeric_count": {
+        "error": "ValueError: aggregation shard numeric element count differs",
+        "rejected": true
+      }
+    },
+    "small_exact_archive_check": {
+      "array_count": 36,
+      "changed_value": {
+        "error": "array array_11 differs from the reference",
+        "rejected": true
+      },
+      "numeric_element_count": 72
+    },
+    "valid_shard_set": {
+      "array_count": 576,
+      "numeric_element_count": 5871360,
+      "shard_count": 16
+    }
+  },
+  "frozen_binding": {
+    "control_files_equal_frozen_audit_target": true,
+    "control_files_sha256": {
+      "src/hbv_multilead_joint_uncertainty/reproduction.py": "de3c18e21de68d9a7aad61ac6f4587f9d0d6c67fab3e10bb4b86b1aa6c08e1a5",
+      "src/hbv_multilead_joint_uncertainty/scripts/run_reproduction.py": "1fa8c6ce1051f17034d6d59bac8d1666e9d8942074f2f59214421d09727f1cc8",
+      "test/test_hbv_multilead_reproduction.py": "e904dad6ca5f594d926c6f4f36d3f89f99c522618921a8075c14b30ba56517c1"
+    },
+    "input_file_count": 62,
+    "reference_checksums_sha256": "88ab2297e02179cc0e3e432c958871e1d6e7985358b9394970154a65f2348bd0",
+    "reference_equals_required_checksum": true,
+    "source_and_input_mismatch_count": 0,
+    "source_and_input_mismatches": [],
+    "source_file_count": 37
+  },
+  "overall_static_and_adversarial_pass": true,
+  "publication_and_registry_order": {
+    "all_closures_bind_terminal_fields": true,
+    "all_full_and_closure_verifiers_require_verified_manifest": true,
+    "closure_terminal_fields_present": {
+      "aggregation": true,
+      "session": true,
+      "shard": true
+    },
+    "manifest_verified_status_checks": {
+      "verify_reproduction_aggregation": true,
+      "verify_reproduction_aggregation_closure": true,
+      "verify_reproduction_session": true,
+      "verify_reproduction_session_closure": true,
+      "verify_reproduction_shard": true,
+      "verify_reproduction_shard_closure": true
+    },
+    "runner_order": {
+      "aggregate_reproduction_shards": {
+        "atomic_publication_precedes_first_registry_update": true,
+        "atomic_replace_lines": [
+          1879,
+          1894
+        ],
+        "contains_post_publish_failure_quarantine": true,
+        "finish_lines": [
+          1871
+        ],
+        "registry_update_lines": [
+          1880,
+          1899
+        ]
+      },
+      "prepare_reproduction_session": {
+        "atomic_publication_precedes_first_registry_update": true,
+        "atomic_replace_lines": [
+          838,
+          853
+        ],
+        "contains_post_publish_failure_quarantine": true,
+        "finish_lines": [
+          830
+        ],
+        "registry_update_lines": [
+          839,
+          858
+        ]
+      },
+      "run_reproduction_shard": {
+        "atomic_replace_lines": [
+          1339,
+          1341,
+          1361,
+          1366
+        ],
+        "contains_post_publish_failure_quarantine": true,
+        "finish_lines": [
+          1305
+        ],
+        "registry_update_lines": [
+          1344,
+          1371
+        ],
+        "two_atomic_publications_precede_first_registry_update": true
+      }
+    }
+  },
+  "reference_gate_scope": {
+    "fake_checksum_equals_required_checksum": false,
+    "fake_package_checksum": "aaecb2e64c16b95b59937de952c157d012c407a5a996bd46fbca47ac15a6adc3",
+    "full_session_gate_names_pinned_checksum_constant": true,
+    "full_session_gate_would_reject_fake_checksum": true,
+    "generic_identity_helper_accepts_self_consistent_fake_package": true,
+    "interpretation": "capture_reference_identity is a generic byte-integrity helper, not the acceptance gate; verify_reproduction_session pins the required checksum."
+  },
+  "resource_history_attacks": {
+    "all_attacks_rejected": true,
+    "attacks": {
+      "content_event_after_finish": {
+        "error": "ValueError: resource history does not end with a finish sample",
+        "rejected": true
+      },
+      "missing_content_event": {
+        "error": "ValueError: resource history does not cover shard content verification before finish",
+        "rejected": true
+      },
+      "monitoring_gap_above_fifteen_point_five_seconds": {
+        "error": "ValueError: resource monitoring gap exceeds 15.5 seconds",
+        "rejected": true
+      },
+      "running_memory_below_twenty_percent": {
+        "error": "ValueError: resource history violates the running-memory gate",
+        "rejected": true
+      }
+    },
+    "configured_monitor_interval_seconds": 15.0,
+    "configured_running_memory_fraction": 0.2,
+    "configured_start_memory_fraction": 0.25,
+    "fixed_estimates_gib": {
+      "aggregation": {
+        "estimated_output_gib": 0.1,
+        "estimated_peak_gib": 0.5
+      },
+      "session": {
+        "estimated_output_gib": 0.1,
+        "estimated_peak_gib": 1.0
+      },
+      "shard": {
+        "estimated_output_gib": 0.05,
+        "estimated_peak_gib": 0.5
+      }
+    },
+    "valid_history_accepted": true,
+    "valid_maximum_gap_seconds": 10.0,
+    "valid_sample_count": 3
+  }
+}

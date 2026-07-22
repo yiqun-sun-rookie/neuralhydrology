@@ -1,0 +1,176 @@
+{
+  "experiment_id": "candidate_likelihood_parameter_switch_development_v02",
+  "dataset_role": "development",
+  "scenario": "parameter_switch",
+  "supersedes_development_config": "candidate_likelihood_parameter_switch_development_v01",
+  "supersession_reason": "Version 01 exposed a Windows ordinary-path source-snapshot failure at a 260-character target before evidence finalization. Version 02 uses extended-length source-snapshot I/O; scientific blocks, likelihood definitions, and decision rules are unchanged.",
+  "purpose": "Determine whether the current complete thirteen-parameter truth candidate has a stable observation-log-likelihood advantage over the other two parameter candidates when all candidate filters update independently and process covariance stays fixed at process_2.",
+  "diagnostic_contract": {
+    "candidate_filters_assimilate_observations_independently": true,
+    "candidate_state_interaction_used": false,
+    "candidate_probability_transition_used": false,
+    "candidate_probability_update_used": false,
+    "daily_likelihood_definition": "Scalar Gaussian predictive observation log likelihood before the same-day observation update.",
+    "cumulative_likelihood_definition": "Sum of daily log likelihoods reset at the first scored day of each stage.",
+    "strict_ranking_rule": "Every wrong candidate with likelihood greater than or equal to the true candidate ranks ahead of the true candidate."
+  },
+  "parameter_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/parameter_vectors.csv",
+    "sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+    "source_basin_id": "12143600",
+    "parameter_ids": [
+      "equifinal_diverse_1",
+      "trained_center",
+      "equifinal_diverse_2"
+    ]
+  },
+  "process_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/process_noise_covariances.csv",
+    "sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+    "source_basin_id": "12143600",
+    "process_ids": [
+      "process_0",
+      "process_1",
+      "process_2"
+    ],
+    "selected_process_id": "process_2"
+  },
+  "observation_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/observation_noise.csv",
+    "sha256": "f358c77b655285b348604266af43dfcd7b875ea756145f6d9b33c8853a5d8955",
+    "source_basin_id": "12143600"
+  },
+  "matched_blocks": [
+    {
+      "block_id": "candidate_likelihood_development_block_01",
+      "forcing_seed": 993001,
+      "process_noise_seed": 994001,
+      "observation_noise_seed": 995001
+    },
+    {
+      "block_id": "candidate_likelihood_development_block_02",
+      "forcing_seed": 993002,
+      "process_noise_seed": 994002,
+      "observation_noise_seed": 995002
+    },
+    {
+      "block_id": "candidate_likelihood_development_block_03",
+      "forcing_seed": 993003,
+      "process_noise_seed": 994003,
+      "observation_noise_seed": 995003
+    },
+    {
+      "block_id": "candidate_likelihood_development_block_04",
+      "forcing_seed": 993004,
+      "process_noise_seed": 994004,
+      "observation_noise_seed": 995004
+    },
+    {
+      "block_id": "candidate_likelihood_development_block_05",
+      "forcing_seed": 993005,
+      "process_noise_seed": 994005,
+      "observation_noise_seed": 995005
+    },
+    {
+      "block_id": "candidate_likelihood_development_block_06",
+      "forcing_seed": 993006,
+      "process_noise_seed": 994006,
+      "observation_noise_seed": 995006
+    },
+    {
+      "block_id": "candidate_likelihood_development_block_07",
+      "forcing_seed": 993007,
+      "process_noise_seed": 994007,
+      "observation_noise_seed": 995007
+    },
+    {
+      "block_id": "candidate_likelihood_development_block_08",
+      "forcing_seed": 993008,
+      "process_noise_seed": 994008,
+      "observation_noise_seed": 995008
+    },
+    {
+      "block_id": "candidate_likelihood_development_block_09",
+      "forcing_seed": 993009,
+      "process_noise_seed": 994009,
+      "observation_noise_seed": 995009
+    },
+    {
+      "block_id": "candidate_likelihood_development_block_10",
+      "forcing_seed": 993010,
+      "process_noise_seed": 994010,
+      "observation_noise_seed": 995010
+    },
+    {
+      "block_id": "candidate_likelihood_development_block_11",
+      "forcing_seed": 993011,
+      "process_noise_seed": 994011,
+      "observation_noise_seed": 995011
+    },
+    {
+      "block_id": "candidate_likelihood_development_block_12",
+      "forcing_seed": 993012,
+      "process_noise_seed": 994012,
+      "observation_noise_seed": 995012
+    }
+  ],
+  "forcing": {
+    "warmup_days": 45,
+    "reference_total_days": 97,
+    "rain_shape": 0.8,
+    "rain_scale": 4
+  },
+  "stage_lengths": [
+    15,
+    15,
+    15
+  ],
+  "adaptation_days_excluded_per_stage": 5,
+  "stable_final_scoring_days": 5,
+  "initial_covariance_fraction": 0.001,
+  "bootstrap": {
+    "unit": "synthetic_block",
+    "replicates": 20000,
+    "seed": 676701
+  },
+  "decision_rules": {
+    "stable_identifiable_fraction_minimum": 0.6666666666666666,
+    "stable_fraction_block_bootstrap_lower_strict_minimum": 0.5,
+    "median_final_margin_strict_minimum": 0,
+    "switching_stage_numbers": [
+      2,
+      3
+    ],
+    "stage_one_decides_scientific_status": false
+  },
+  "integrity_gates": {
+    "truth_process_perturbation_reconstruction_maximum_absolute_error": 0,
+    "observation_reconstruction_maximum_absolute_error": 0,
+    "innovation_reconstruction_maximum_absolute_error": 1e-12,
+    "log_likelihood_reconstruction_maximum_absolute_error": 1e-12,
+    "score_reconstruction_maximum_absolute_error": 1e-12
+  },
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_switching_resource_pilot_v01",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_switch_v01",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_process_noise_switch_v01",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_process_noise_switch_v01",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_switch_v02",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_process_noise_switch_v02",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_process_noise_switch_v02",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_switch_v02.preregistered.json",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_process_noise_switch_v02.preregistered.json",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_parameter_process_noise_switch_v02.preregistered.json",
+    "results/23_hbv_multilead_joint_uncertainty/three_stage_switching_validation_synthesis_v01",
+    "src/hbv_multilead_joint_uncertainty/configs/three_stage_parameter_switch_v02.json",
+    "src/hbv_multilead_joint_uncertainty/configs/three_stage_process_noise_switch_v02.json",
+    "src/hbv_multilead_joint_uncertainty/configs/three_stage_parameter_process_noise_switch_v02.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_switch_development_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_process_noise_switch_development_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/candidate_likelihood_parameter_process_noise_switch_development_v01.json",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v01.incomplete",
+    "results/23_hbv_multilead_joint_uncertainty/candidate_likelihood_parameter_switch_development_v01.preregistered.json"
+  ],
+  "scope_limit": "Development evidence only. Three complete parameter candidates are compared with process covariance fixed at process_2. Candidate filters assimilate the same observations independently; no state interaction, probability transition, or probability update is used. Only new development blocks may define the confirmation setting."
+}

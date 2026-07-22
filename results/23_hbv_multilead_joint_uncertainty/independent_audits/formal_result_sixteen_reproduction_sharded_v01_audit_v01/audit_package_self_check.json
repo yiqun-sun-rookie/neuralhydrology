@@ -1,0 +1,30 @@
+{
+  "check_count": 19,
+  "checks": {
+    "all_resource_runs_pass": true,
+    "array_totals_and_zero_difference": true,
+    "artifact_and_registry_chain_closed": true,
+    "artifact_csv_thirty_six_of_thirty_six": true,
+    "attempt_history_preserved_and_finalized": true,
+    "audit_resource_wrapper_passed": true,
+    "canonical_log_bindings_exact": true,
+    "manifest_file_count_exact": true,
+    "manifest_file_set_exact": true,
+    "manifest_hashes_and_sizes_exact": true,
+    "manifest_total_bytes_exact": true,
+    "no_project_computation_or_verification_imports": true,
+    "per_basin_csv_sixteen_exact": true,
+    "recomputed_output_counts_exact": true,
+    "registry_csv_eighteen_of_eighteen": true,
+    "resource_csv_twenty_of_twenty": true,
+    "scientific_decision_release": true,
+    "sixteen_unique_basins": true,
+    "zero_open_findings": true
+  },
+  "decision": "PASS",
+  "failed_checks": [],
+  "manifest_file_count": 44,
+  "passed": true,
+  "passed_check_count": 19,
+  "project_module_imports": []
+}
