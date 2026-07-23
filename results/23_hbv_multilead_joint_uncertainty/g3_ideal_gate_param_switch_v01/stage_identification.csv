@@ -1,0 +1,4 @@
+stage_number,stage_start_day_one_based,stage_end_day_one_based,adaptation_days_excluded,evaluated_day_count_per_truth,evaluated_value_count,primary_candidate_argmax_accuracy,joint_parameter_marginal_argmax_accuracy,joint_process_marginal_argmax_accuracy,median_primary_true_candidate_probability,identification_passed
+1,1,180,5,175,4200,0.929047619047619,0.7804761904761904,0.7623809523809524,0.9983917331963583,True
+2,181,360,5,175,4200,0.8635714285714285,0.8183333333333334,0.8792857142857143,0.9983435268645875,False
+3,361,540,5,175,4200,0.9040476190476191,0.8404761904761905,0.830952380952381,0.9999895149384417,True

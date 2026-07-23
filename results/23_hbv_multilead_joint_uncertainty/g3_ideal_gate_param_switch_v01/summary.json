@@ -1,0 +1,15 @@
+{
+  "config_sha256": "ee712253d5647ca35a547154f7682686852762efe8b90219610f6d460b4aeeda",
+  "experiment_id": "g3_ideal_gate_param_switch_v01",
+  "forecast_passed_all_leads": false,
+  "future_discharge_used_by_forecast": false,
+  "identification_passed_all_three_stages": false,
+  "integrity_status": "passed",
+  "observation_snapshot_sha256": "9f8471e9e6a172e2563ffd903b5a6a8d21042c47cd385a2800a322379dbc2852",
+  "parameter_snapshot_sha256": "841eeceab3ce71110c523de27655a7826dbb4281fd8be07e932a1d98052f27c8",
+  "process_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+  "protected_artifacts_unchanged": true,
+  "scenario": "parameter_switch",
+  "scientific_status": "not_passed",
+  "scope_limit": "Ideal-experiment admission gate only, one favorable condition (spacing multiplier 8, stage length 180, observation noise 2.6% of mean discharge). The exact current complete parameter vector is always present among three candidates; process covariance fixed at process_2; each stage excludes its first five days from identification scoring. The spacing multiplier also rescales the truth trajectory and low noise lowers both generated and assumed observation error (well-specified), by design of the best-case condition. Results establish only whether the full IMM can identify a known truth under ideal conditions; they do not establish behavior at other spacings, budgets, noise levels, scenarios, or real basins."
+}

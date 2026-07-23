@@ -1,0 +1,37 @@
+{
+  "experiment_id": "g3_ideal_gate_param_switch_v01",
+  "scenario": "parameter_switch",
+  "purpose": "G3 admission gate: does the full interacting multiple model (state interaction + weight recursion) with fifteen-state HBV stably identify a known truth under the ideal experiment (widest validated spacing m=8, longest budget L=180, MATLAB-favorable low observation noise), with the true candidate always present? Pass validates the pipeline and lets the G1/G2 'cannot identify' boundary stand; fail stops for pipeline diagnosis and reports no boundary as valid.",
+  "g3_ideal_gate": {
+    "design_doc": "docs/plans/2026-07-23-g3-ideal-experiment-gate-design.md",
+    "spacing_multiplier": 8.0,
+    "stage_length_days": 180,
+    "observation_noise_relative_to_mean_discharge": 0.026,
+    "changed_from_three_stage_v02": ["spacing_multiplier", "stage_length_days", "observation_noise", "identification_thresholds", "seeds"],
+    "gate_semantics": "PASS = identification_passed for all three stages; FAIL = stop and diagnose, report no boundary as valid, do not retune or reseed"
+  },
+  "parameter_source": {"path": "results/23_hbv_multilead_joint_uncertainty/g2_spacing_inputs_v01/parameter_vectors_m80.csv", "sha256": "845d5bbd70e9f5dc373de1d01303a33d9c59932ec05901eb8c2c901ca505a292", "source_basin_id": "12143600", "parameter_ids": ["equifinal_diverse_1", "trained_center", "equifinal_diverse_2"]},
+  "process_noise_source": {"path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/process_noise_covariances.csv", "sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2", "source_basin_id": "12143600", "process_ids": ["process_0", "process_1", "process_2"], "selected_process_id": "process_2"},
+  "observation_noise_source": {"path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_inputs_v01/observation_noise_low.csv", "sha256": "0ff9a34b0dd863e99e40038b0876d781561a0a1e9d371a81ee3b8fafff6ef3c8", "source_basin_id": "12143600"},
+  "matched_blocks": [
+    {"block_id": "g3_ideal_block_01", "forcing_seed": 3301001, "process_noise_seed": 3302001, "observation_noise_seed": 3303001},
+    {"block_id": "g3_ideal_block_02", "forcing_seed": 3301002, "process_noise_seed": 3302002, "observation_noise_seed": 3303002},
+    {"block_id": "g3_ideal_block_03", "forcing_seed": 3301003, "process_noise_seed": 3302003, "observation_noise_seed": 3303003},
+    {"block_id": "g3_ideal_block_04", "forcing_seed": 3301004, "process_noise_seed": 3302004, "observation_noise_seed": 3303004},
+    {"block_id": "g3_ideal_block_05", "forcing_seed": 3301005, "process_noise_seed": 3302005, "observation_noise_seed": 3303005},
+    {"block_id": "g3_ideal_block_06", "forcing_seed": 3301006, "process_noise_seed": 3302006, "observation_noise_seed": 3303006},
+    {"block_id": "g3_ideal_block_07", "forcing_seed": 3301007, "process_noise_seed": 3302007, "observation_noise_seed": 3303007},
+    {"block_id": "g3_ideal_block_08", "forcing_seed": 3301008, "process_noise_seed": 3302008, "observation_noise_seed": 3303008}
+  ],
+  "forcing": {"warmup_days": 45, "reference_total_days": 592, "rain_shape": 0.8, "rain_scale": 4.0},
+  "stage_lengths": [180, 180, 180],
+  "lead_days": [1, 3, 7],
+  "initial_covariance_fraction": 0.001,
+  "factor_transition_stay_probability": 0.98,
+  "bootstrap": {"unit": "matched_block", "replicates": 20000, "seed": 3305757},
+  "decision_rules": {"adaptation_days_excluded_per_stage": 5, "candidate_argmax_accuracy_minimum": 0.9, "factor_argmax_accuracy_minimum": 0.9, "median_true_candidate_probability_minimum": 0.5, "relative_root_mean_square_error_improvement_percent_minimum": 5.0, "paired_block_difference_upper_maximum": 0.0},
+  "integrity_gates": {"truth_process_perturbation_reconstruction_maximum_absolute_error": 0.0, "observation_reconstruction_maximum_absolute_error": 0.0, "forecast_target_reconstruction_maximum_absolute_error": 0.0, "method_mixture_reconstruction_maximum_absolute_error": 1e-10, "method_probability_sum_maximum_absolute_error": 1e-12, "minimum_method_probability": 0.0},
+  "resource_pilot": {"source": "results/23_hbv_multilead_joint_uncertainty/three_stage_switching_resource_pilot_v01/resource_pilot_measurements.json", "sha256": "38e2d86f5989b897540515515c7b5a8774fb5fa854f957c28b3fbe53d18d409c", "block_count": 1, "truth_trial_count": 3, "elapsed_seconds": 11.424556999991182, "observed_peak_resident_memory_growth_bytes": 38359040},
+  "protected_paths": ["results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05", "results/23_hbv_multilead_joint_uncertainty/g2_spacing_inputs_v01", "results/23_hbv_multilead_joint_uncertainty/g3_ideal_inputs_v01", "results/23_hbv_multilead_joint_uncertainty/three_stage_switching_resource_pilot_v01", "docs/plans/2026-07-23-g3-ideal-experiment-gate-design.md", "src/hbv_multilead_joint_uncertainty/configs/g3_ideal_gate_param_switch_v01.json"],
+  "scope_limit": "Ideal-experiment admission gate only, one favorable condition (spacing multiplier 8, stage length 180, observation noise 2.6% of mean discharge). The exact current complete parameter vector is always present among three candidates; process covariance fixed at process_2; each stage excludes its first five days from identification scoring. The spacing multiplier also rescales the truth trajectory and low noise lowers both generated and assumed observation error (well-specified), by design of the best-case condition. Results establish only whether the full IMM can identify a known truth under ideal conditions; they do not establish behavior at other spacings, budgets, noise levels, scenarios, or real basins."
+}

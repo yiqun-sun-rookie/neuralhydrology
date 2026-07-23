@@ -1,0 +1,21 @@
+{
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 3305757,
+    "unit": "matched_block"
+  },
+  "config_sha256": "ee712253d5647ca35a547154f7682686852762efe8b90219610f6d460b4aeeda",
+  "decision_rules": {
+    "adaptation_days_excluded_per_stage": 5,
+    "candidate_argmax_accuracy_minimum": 0.9,
+    "factor_argmax_accuracy_minimum": 0.9,
+    "median_true_candidate_probability_minimum": 0.5,
+    "paired_block_difference_upper_maximum": 0.0,
+    "relative_root_mean_square_error_improvement_percent_minimum": 5.0
+  },
+  "experiment_id": "g3_ideal_gate_param_switch_v01",
+  "frozen_before_execution": true,
+  "output_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\g3_ideal_gate_param_switch_v01",
+  "scenario": "parameter_switch",
+  "started_at_utc": "2026-07-23T03:27:28.379843+00:00"
+}

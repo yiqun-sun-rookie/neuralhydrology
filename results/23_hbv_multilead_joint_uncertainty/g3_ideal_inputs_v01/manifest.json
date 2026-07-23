@@ -1,0 +1,15 @@
+{
+  "artifact": "g3_ideal_inputs_v01",
+  "design_doc": "docs/plans/2026-07-23-g3-ideal-experiment-gate-design.md",
+  "files": {
+    "observation_noise_low.csv": "0ff9a34b0dd863e99e40038b0876d781561a0a1e9d371a81ee3b8fafff6ef3c8"
+  },
+  "generated_at_utc": "2026-07-23T03:25:53.102332+00:00",
+  "matlab_favorable_relative_noise": 0.026,
+  "rule": "std = 0.026 * trained_center_mean_discharge_mm_day (bitwise recomputable)",
+  "source_basin_id": "12143600",
+  "source_parameter_csv": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/parameter_vectors.csv",
+  "source_parameter_sha256": "f75d746e32f233f658676f8e15894cd7c3d5d415595f0839335d92caeb8ce46f",
+  "standard_deviation_mm_day": 0.1779767450200294,
+  "trained_center_mean_discharge_mm_day": 6.845259423847285
+}

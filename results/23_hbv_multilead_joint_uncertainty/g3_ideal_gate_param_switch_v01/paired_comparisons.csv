@@ -1,0 +1,4 @@
+scenario,lead_days,primary_method,control_method,primary_root_mean_square_error,control_root_mean_square_error,relative_improvement_percent,mean_paired_block_root_mean_square_error_difference,paired_block_difference_bootstrap_lower,paired_block_difference_bootstrap_upper,primary_better_block_count,matched_block_count
+parameter_switch,1,parameter_only,fixed_filter,1.5290234417468003,1.7802786794820462,14.113253201928256,-0.06188116852140141,-0.5984357705210347,0.4051373464611836,4,8
+parameter_switch,3,parameter_only,fixed_filter,3.0819239281354087,2.8860070885405316,-6.788508606676823,0.30602615889917223,-0.5353877401880436,1.2247907668714249,5,8
+parameter_switch,7,parameter_only,fixed_filter,7.201290006565281,7.286598979913671,1.1707653129196982,0.6670923570059029,-0.6758654767019658,1.982578337339942,2,8

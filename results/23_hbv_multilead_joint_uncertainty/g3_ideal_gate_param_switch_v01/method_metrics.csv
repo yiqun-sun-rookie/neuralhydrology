@@ -1,0 +1,16 @@
+scenario,method,lead_days,root_mean_square_error,median_absolute_error,matched_block_count,truth_trial_count_per_block
+parameter_switch,open_loop,1,4.89365368102564,3.507599371980034,8,3
+parameter_switch,fixed_filter,1,1.7802786794820462,0.4712830234470635,8,3
+parameter_switch,parameter_only,1,1.5290234417468003,0.918591561512025,8,3
+parameter_switch,noise_only,1,1.7783002350568267,0.4721016777420797,8,3
+parameter_switch,joint,1,1.4780432491179212,0.766730787916019,8,3
+parameter_switch,open_loop,3,5.313846433272126,3.4989209172523594,8,3
+parameter_switch,fixed_filter,3,2.8860070885405316,0.9225526134652435,8,3
+parameter_switch,parameter_only,3,3.0819239281354087,2.362205240893202,8,3
+parameter_switch,noise_only,3,2.8831014795977676,0.9222031154134276,8,3
+parameter_switch,joint,3,2.917457614673069,2.1270422720684166,8,3
+parameter_switch,open_loop,7,9.511015833349758,3.342589644315212,8,3
+parameter_switch,fixed_filter,7,7.286598979913671,1.9733566071044608,8,3
+parameter_switch,parameter_only,7,7.201290006565281,3.568939894126762,8,3
+parameter_switch,noise_only,7,7.291621306388469,1.6858260406790975,8,3
+parameter_switch,joint,7,7.268139698809455,2.809550126071314,8,3
