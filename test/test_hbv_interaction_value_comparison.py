@@ -247,3 +247,102 @@ def test_oracle_two_stages_same_candidate_equals_continuous_filter(switching_res
         factor_transition_stay_probability=STAY,
     )
     np.testing.assert_allclose(two_stage, single_stage, rtol=0.0, atol=1e-9)
+
+
+# --------------------------------------------------------------------------- #
+# Driver + summarizer (four-arm value comparison over the same truths)
+# --------------------------------------------------------------------------- #
+
+
+def _driver_output(switching_result):
+    arms = importlib.import_module(ARMS_MODULE)
+    return arms.compare_interaction_arms(
+        result=switching_result,
+        definitions=_definitions(),
+        observation_standard_deviation=OBS_STD,
+        factor_transition_stay_probability=STAY,
+    )
+
+
+def test_driver_full_arm_matches_stored_and_shapes(switching_result):
+    result = switching_result
+    out = _driver_output(result)
+    pidx = list(result.method_names).index(result.schedule.primary_method_name)
+    n_blocks = len(result.block_ids)
+    n_truth = result.method_assimilation_probabilities.shape[1]
+    n_leads = len(result.forecast_lead_days)
+
+    assert out["arms"] == ("full", "none", "static", "oracle")
+    np.testing.assert_array_equal(
+        out["forecasts"]["full"], result.method_predictions[:, :, pidx]
+    )
+    for arm in ("none", "static", "oracle"):
+        assert out["forecasts"][arm].shape == (n_blocks, n_truth, n_leads)
+        assert np.all(np.isfinite(out["forecasts"][arm]))
+    np.testing.assert_array_equal(
+        out["truth_forecasts"], result.truth_forecast_discharge
+    )
+
+
+def test_driver_squared_errors_are_consistent(switching_result):
+    out = _driver_output(switching_result)
+    for arm in out["arms"]:
+        expected = (out["forecasts"][arm] - out["truth_forecasts"]) ** 2
+        np.testing.assert_allclose(out["squared_errors"][arm], expected, rtol=0.0, atol=0.0)
+
+
+def test_summary_rmse_and_self_paired_difference_is_zero(switching_result):
+    arms = importlib.import_module(ARMS_MODULE)
+    out = _driver_output(switching_result)
+    summary = arms.summarize_interaction_value(
+        out, bootstrap_replicates=200, bootstrap_seed=3306757, adaptation_days=1
+    )
+    # RMSE equals sqrt of mean squared error per lead
+    for arm in out["arms"]:
+        expected_rmse = np.sqrt(out["squared_errors"][arm].mean(axis=(0, 1)))
+        np.testing.assert_allclose(summary["rmse"][arm], expected_rmse, rtol=0.0, atol=1e-12)
+    # a paired difference of an arm against itself is identically zero
+    self_paired = arms.paired_block_difference(out, "full", "full")
+    np.testing.assert_array_equal(self_paired, np.zeros_like(self_paired))
+
+
+def test_summary_is_deterministic(switching_result):
+    arms = importlib.import_module(ARMS_MODULE)
+    out = _driver_output(switching_result)
+    a = arms.summarize_interaction_value(
+        out, bootstrap_replicates=200, bootstrap_seed=3306757, adaptation_days=1
+    )
+    b = arms.summarize_interaction_value(
+        out, bootstrap_replicates=200, bootstrap_seed=3306757, adaptation_days=1
+    )
+    for arm in out["arms"]:
+        np.testing.assert_array_equal(a["rmse"][arm], b["rmse"][arm])
+    np.testing.assert_array_equal(
+        a["paired_full_minus_none"]["ci_high"],
+        b["paired_full_minus_none"]["ci_high"],
+    )
+
+
+def test_summary_reports_identification_and_hypotheses(switching_result):
+    arms = importlib.import_module(ARMS_MODULE)
+    out = _driver_output(switching_result)
+    summary = arms.summarize_interaction_value(
+        out, bootstrap_replicates=200, bootstrap_seed=3306757, adaptation_days=1
+    )
+    n_stages = len(out["stage_boundaries"])
+    ident = summary["identification"]
+    assert len(ident["full_stage_median_true_probability"]) == n_stages
+    assert len(ident["none_stage_median_true_probability"]) == n_stages
+    # identification medians are valid probabilities
+    for value in ident["full_stage_median_true_probability"]:
+        assert 0.0 <= value <= 1.0
+    assert isinstance(ident["h1_full_ge_none_all_stages"], bool)
+    assert isinstance(summary["h2_full_le_none_le_static"], bool)
+    assert isinstance(summary["h3_full_closer_to_oracle_than_static"], bool)
+    # oracle ratio of oracle against itself is one
+    np.testing.assert_allclose(
+        summary["oracle_ratio"]["oracle"],
+        np.ones(len(out["leads"])),
+        rtol=0.0,
+        atol=1e-12,
+    )

@@ -177,3 +177,214 @@ def oracle_arm(
         interaction_mode="full",
     )
     return forecast.combined_predictions
+
+
+# --------------------------------------------------------------------------- #
+# Driver: run all four arms on the SAME truths from a frozen switching result
+# --------------------------------------------------------------------------- #
+
+_ARMS = ("full", "none", "static", "oracle")
+
+
+def compare_interaction_arms(
+    result,
+    definitions: Mapping[str, Sequence[MethodCandidate]],
+    observation_standard_deviation: float,
+    factor_transition_stay_probability: float,
+) -> dict:
+    """Run full/none/static/oracle on the primary family of a switching result.
+
+    ``result`` is a ``ThreeStageSwitchingValidationResult`` (the full IMM run whose
+    truths, observations, forcing and initial states are reused bit-for-bit). The
+    ``full`` arm reuses the result's stored per-family outputs (already proven
+    bit-identical to ``assimilate_family_arm``); none/static/oracle are computed on
+    the same reconstructed inputs. Returns forecasts, squared errors against the
+    noise-free forecast target, and per-arm identification probabilities.
+    """
+    primary = result.schedule.primary_method_name
+    candidates = tuple(definitions[primary])
+    candidate_count = len(candidates)
+    primary_index = list(result.method_names).index(primary)
+    block_ids = tuple(result.block_ids)
+    block_count = len(block_ids)
+    truth_count = int(result.method_assimilation_probabilities.shape[1])
+    assimilation_days = int(result.assimilation_days)
+    leads = np.asarray(result.forecast_lead_days, dtype=np.int64)
+    lead_count = len(leads)
+    obs_std = float(observation_standard_deviation)
+    stay = float(factor_transition_stay_probability)
+    stage_boundaries = [
+        (int(start), int(end))
+        for start, end in zip(
+            result.schedule.stage_start_days, result.schedule.stage_end_days
+        )
+    ]
+    labels = np.asarray(result.schedule.primary_candidate_indices)[:, :assimilation_days]
+
+    forecasts = {
+        arm: np.empty((block_count, truth_count, lead_count), dtype=np.float64)
+        for arm in _ARMS
+    }
+    probabilities = {
+        arm: np.empty(
+            (block_count, truth_count, assimilation_days, candidate_count),
+            dtype=np.float64,
+        )
+        for arm in ("full", "none")
+    }
+    truth_forecasts = np.asarray(result.truth_forecast_discharge, dtype=np.float64)
+
+    for block in range(block_count):
+        initial_states = {
+            pid: result.initial_parameter_states[block, index]
+            for index, pid in enumerate(result.parameter_ids)
+        }
+        active_forcing = result.forcing_blocks[block][int(result.warmup_days) :]
+        covariance = result.initial_covariances[block]
+        for truth in range(truth_count):
+            observations = result.observed_discharge[block, truth]
+            forecasts["full"][block, truth] = result.method_predictions[
+                block, truth, primary_index
+            ]
+            probabilities["full"][block, truth] = result.method_assimilation_probabilities[
+                block, truth, primary_index, :, :candidate_count
+            ]
+            probs_none, forecast_none = assimilate_family_arm(
+                candidates, initial_states, covariance, active_forcing, observations,
+                assimilation_days, leads, obs_std, stay, "none",
+            )
+            forecasts["none"][block, truth] = forecast_none
+            probabilities["none"][block, truth] = probs_none
+            _, forecast_static = static_mixing_arm(
+                candidates, initial_states, covariance, active_forcing, observations,
+                assimilation_days, leads, obs_std, stay,
+            )
+            forecasts["static"][block, truth] = forecast_static
+            stage_true = [int(labels[truth, start]) for start, _ in stage_boundaries]
+            forecasts["oracle"][block, truth] = oracle_arm(
+                candidates, stage_true, stage_boundaries, initial_states, covariance,
+                active_forcing, observations, leads, obs_std, stay,
+            )
+
+    squared_errors = {
+        arm: (forecasts[arm] - truth_forecasts) ** 2 for arm in _ARMS
+    }
+    return {
+        "arms": _ARMS,
+        "leads": leads,
+        "block_ids": block_ids,
+        "truth_count": truth_count,
+        "assimilation_days": assimilation_days,
+        "stage_boundaries": stage_boundaries,
+        "primary_method_name": primary,
+        "candidate_count": candidate_count,
+        "forecasts": forecasts,
+        "truth_forecasts": truth_forecasts,
+        "squared_errors": squared_errors,
+        "probabilities": probabilities,
+        "true_candidate_labels": labels,
+    }
+
+
+# --------------------------------------------------------------------------- #
+# Summarizer: RMSE, paired block-bootstrap, identification, H1/H2/H3
+# --------------------------------------------------------------------------- #
+
+
+def paired_block_difference(driver_output: dict, arm_a: str, arm_b: str) -> np.ndarray:
+    """Per-block mean-over-truths squared-error difference (arm_a - arm_b), shape [B, L]."""
+    difference = driver_output["squared_errors"][arm_a] - driver_output["squared_errors"][arm_b]
+    return difference.mean(axis=1)
+
+
+def _block_bootstrap_ci(per_block: np.ndarray, replicates: int, seed: int):
+    """Paired block bootstrap: resample blocks (rows), keep all leads together."""
+    per_block = np.asarray(per_block, dtype=np.float64)
+    block_count = per_block.shape[0]
+    rng = np.random.default_rng(int(seed))
+    indices = rng.integers(0, block_count, size=(int(replicates), block_count))
+    statistics = per_block[indices].mean(axis=1)
+    low = np.quantile(statistics, 0.025, axis=0)
+    high = np.quantile(statistics, 0.975, axis=0)
+    return per_block.mean(axis=0), low, high
+
+
+def _stage_median_true_probability(
+    probabilities: np.ndarray, labels: np.ndarray, stage_boundaries, adaptation_days: int
+):
+    adaptation = int(adaptation_days)
+    truth_count = probabilities.shape[1]
+    medians = []
+    for start, end in stage_boundaries:
+        evaluated_start = int(start) + adaptation
+        evaluated_end = int(end)
+        collected = []
+        for truth in range(truth_count):
+            for day in range(evaluated_start, evaluated_end):
+                candidate = int(labels[truth, day])
+                collected.append(probabilities[:, truth, day, candidate])
+        medians.append(float(np.median(np.concatenate(collected))))
+    return medians
+
+
+def summarize_interaction_value(
+    driver_output: dict,
+    bootstrap_replicates: int,
+    bootstrap_seed: int,
+    adaptation_days: int,
+) -> dict:
+    """RMSE, paired block-bootstrap CIs, identification medians and H1/H2/H3 verdicts.
+
+    H1 (interaction adds identification) uses the PRIMARY identification metric,
+    posterior probability mass (median true-candidate probability) per the gate
+    criterion lesson. H2 (full <= none <= static forecast RMSE) uses paired block
+    bootstrap. H3 measures the gap to oracle.
+    """
+    arms = driver_output["arms"]
+    squared_errors = driver_output["squared_errors"]
+    rmse = {arm: np.sqrt(squared_errors[arm].mean(axis=(0, 1))) for arm in arms}
+
+    full_minus_none = paired_block_difference(driver_output, "full", "none")
+    none_minus_static = paired_block_difference(driver_output, "none", "static")
+    fn_mean, fn_low, fn_high = _block_bootstrap_ci(
+        full_minus_none, bootstrap_replicates, bootstrap_seed
+    )
+    ns_mean, ns_low, ns_high = _block_bootstrap_ci(
+        none_minus_static, bootstrap_replicates, bootstrap_seed
+    )
+
+    oracle_ratio = {arm: rmse[arm] / rmse["oracle"] for arm in arms}
+
+    full_medians = _stage_median_true_probability(
+        driver_output["probabilities"]["full"],
+        driver_output["true_candidate_labels"],
+        driver_output["stage_boundaries"],
+        adaptation_days,
+    )
+    none_medians = _stage_median_true_probability(
+        driver_output["probabilities"]["none"],
+        driver_output["true_candidate_labels"],
+        driver_output["stage_boundaries"],
+        adaptation_days,
+    )
+    h1 = bool(all(f >= n for f, n in zip(full_medians, none_medians)))
+    h2 = bool(np.all(fn_high < 0.0) and np.all(ns_high < 0.0))
+    h3 = bool(
+        np.all(
+            np.abs(rmse["full"] - rmse["oracle"]) < np.abs(rmse["static"] - rmse["oracle"])
+        )
+    )
+
+    return {
+        "rmse": rmse,
+        "paired_full_minus_none": {"mean": fn_mean, "ci_low": fn_low, "ci_high": fn_high},
+        "paired_none_minus_static": {"mean": ns_mean, "ci_low": ns_low, "ci_high": ns_high},
+        "oracle_ratio": oracle_ratio,
+        "identification": {
+            "full_stage_median_true_probability": full_medians,
+            "none_stage_median_true_probability": none_medians,
+            "h1_full_ge_none_all_stages": h1,
+        },
+        "h2_full_le_none_le_static": h2,
+        "h3_full_closer_to_oracle_than_static": h3,
+    }
