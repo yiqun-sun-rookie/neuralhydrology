@@ -1,0 +1,21 @@
+{
+  "adaptation_days_excluded_per_stage": 5,
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 3306757,
+    "unit": "matched_block"
+  },
+  "config_sha256": "6b0c4ab18eb4eaa04a0d79ca5f7c0893317717d4238d05ff0adc4321cfcde981",
+  "experiment_id": "g3_phase2_interaction_value_param_switch_v01",
+  "frozen_before_execution": true,
+  "hypotheses": {
+    "H1_interaction_adds_identification": "per stage, full median true-candidate probability >= none median true-candidate probability",
+    "H2_interaction_adds_forecast_skill": "per lead, paired forecast RMSE satisfies full <= none <= static (paired matched-block bootstrap 95% CI on the difference excludes zero in the hypothesized direction)",
+    "H3_gap_to_oracle": "per lead, report full RMSE / oracle RMSE, and full should be closer to oracle than static is",
+    "negative_results_reported": "if full does not beat none/static, report that interaction adds no value at ideal conditions; verdicts are frozen and not adjusted post hoc",
+    "primary_identification_metric": "median true-candidate posterior probability (probability mass); per the G3 gate criterion lesson, per-day argmax is not used for any verdict"
+  },
+  "output_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\g3_phase2_interaction_value_param_switch_v01",
+  "scenario": "parameter_switch",
+  "started_at_utc": "2026-07-23T11:37:04.028614+00:00"
+}

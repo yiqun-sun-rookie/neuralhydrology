@@ -1,0 +1,113 @@
+{
+  "config_sha256": "6b0c4ab18eb4eaa04a0d79ca5f7c0893317717d4238d05ff0adc4321cfcde981",
+  "cross_check_passed": true,
+  "cross_check_performed": true,
+  "experiment_id": "g3_phase2_interaction_value_param_switch_v01",
+  "integrity_status": "passed",
+  "observation_snapshot_sha256": "9f8471e9e6a172e2563ffd903b5a6a8d21042c47cd385a2800a322379dbc2852",
+  "parameter_snapshot_sha256": "841eeceab3ce71110c523de27655a7826dbb4281fd8be07e932a1d98052f27c8",
+  "process_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+  "protected_artifacts_unchanged": true,
+  "result": {
+    "h2_full_le_none_le_static": false,
+    "h3_full_closer_to_oracle_than_static": false,
+    "identification": {
+      "full_stage_median_true_probability": [
+        0.9983917331963583,
+        0.9983435268645875,
+        0.9999895149384417
+      ],
+      "h1_full_ge_none_all_stages": true,
+      "none_stage_median_true_probability": [
+        0.9625754626365579,
+        0.9478990048505977,
+        0.9591210852961916
+      ]
+    },
+    "leads": [
+      1,
+      3,
+      7
+    ],
+    "oracle_ratio": {
+      "full": [
+        0.9244413851046281,
+        1.1238135373474645,
+        1.0969925928842104
+      ],
+      "none": [
+        0.9980288894699625,
+        0.9972224025735555,
+        1.0089822701394815
+      ],
+      "oracle": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "static": [
+        1.063857608222468,
+        1.042405589423304,
+        1.0681290826797039
+      ]
+    },
+    "paired_full_minus_none": {
+      "ci_high": [
+        0.17809595164147868,
+        3.4571976031501706,
+        12.366946495588248
+      ],
+      "ci_low": [
+        -1.2718129129950468,
+        0.6589849282816752,
+        4.0346906912146
+      ],
+      "mean": [
+        -0.38701984639208226,
+        2.019326903144891,
+        7.987300214843673
+      ]
+    },
+    "paired_none_minus_static": {
+      "ci_high": [
+        0.5362174138328,
+        1.9319380824818366,
+        2.9818372712316035
+      ],
+      "ci_low": [
+        -1.6322090072872606,
+        -3.623084085036602,
+        -17.723520611641167
+      ],
+      "mean": [
+        -0.3713211486382265,
+        -0.6930796282288842,
+        -5.294248670918391
+      ]
+    },
+    "rmse": {
+      "full": [
+        1.5290234417468003,
+        3.081923928135409,
+        7.201290006565282
+      ],
+      "none": [
+        1.6507369662678888,
+        2.7347629139778635,
+        6.623539653675617
+      ],
+      "oracle": [
+        1.653997177521153,
+        2.7423801420026224,
+        6.564574868852731
+      ],
+      "static": [
+        1.7596174812843668,
+        2.8586723883470073,
+        7.011813332849905
+      ]
+    }
+  },
+  "scenario": "parameter_switch",
+  "scope_limit": "Phase-2 value comparison on one favorable condition (spacing multiplier 8, stage length 180, observation noise 2.6% of mean discharge), the same truths as the G3 ideal gate reused bit-for-bit. Establishes only how much the full interaction machinery adds over no-interaction, static mixing, and an oracle at ideal conditions; does not establish behavior at other spacings, budgets, noise levels, scenarios, or real basins."
+}
