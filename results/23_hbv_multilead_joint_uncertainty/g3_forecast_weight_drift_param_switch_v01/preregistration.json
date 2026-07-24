@@ -1,0 +1,22 @@
+{
+  "adaptation_days_excluded_per_stage": 5,
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 3307001,
+    "unit": "matched_block"
+  },
+  "config_sha256": "aabcd17d49f0725f313a799137342ed68169145739ed9bdeb1ee7cd97e617b19",
+  "experiment_id": "g3_forecast_weight_drift_param_switch_v01",
+  "frozen_before_execution": true,
+  "hypotheses": {
+    "H1_primary_no_interaction": "per lead, paired matched-block bootstrap 95% CI of (frozen minus drifting) squared error for the NO-INTERACTION method; entirely below zero means drift is significantly harmful, entirely above zero means drift is significantly helpful, spanning zero means not significant. This comparison is single-factor: no-interaction candidate forecast paths are provably independent of the weights",
+    "H2_secondary_full_interaction": "same comparison for the FULL-INTERACTION method, reported only and explicitly flagged as confounded because its state mixing still uses the drifting weights",
+    "H3_reported_gap_to_oracle": "report the frozen-weight no-interaction RMSE against the oracle RMSE at each lead, to see how much of the phase-2 0.9 percent gap the drift accounted for",
+    "drift_magnitude_reported": "median true-candidate weight at the final assimilation day and at leads 1, 3 and 7",
+    "frozen_weight_definition": "forecast combination weights held at the final assimilation-day posterior instead of being propagated by the transition matrix on each forecast day; assimilation is completely unchanged",
+    "negative_results_reported": "if drift turns out harmless or beneficial, that is reported as-is; verdicts are frozen and not adjusted post hoc"
+  },
+  "output_directory": "G:\\github\\pycharm\\projects\\neuralhydrology\\results\\23_hbv_multilead_joint_uncertainty\\g3_forecast_weight_drift_param_switch_v01",
+  "scenario": "parameter_switch",
+  "started_at_utc": "2026-07-24T14:06:29.710332+00:00"
+}

@@ -1,0 +1,139 @@
+{
+  "config_sha256": "aabcd17d49f0725f313a799137342ed68169145739ed9bdeb1ee7cd97e617b19",
+  "cross_check_passed": true,
+  "cross_check_performed": true,
+  "experiment_id": "g3_forecast_weight_drift_param_switch_v01",
+  "full_drifting_matches_frozen_runner": true,
+  "integrity_status": "passed",
+  "observation_snapshot_sha256": "9f8471e9e6a172e2563ffd903b5a6a8d21042c47cd385a2800a322379dbc2852",
+  "parameter_snapshot_sha256": "841eeceab3ce71110c523de27655a7826dbb4281fd8be07e932a1d98052f27c8",
+  "process_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+  "protected_artifacts_unchanged": true,
+  "result": {
+    "drifting_minus_oracle_rmse": {
+      "full": [
+        -0.12497373577435278,
+        0.3395437861327868,
+        0.6367151377125513
+      ],
+      "none": [
+        -0.0032602112532642558,
+        -0.0076172280247588375,
+        0.05896478482288625
+      ]
+    },
+    "frozen_minus_oracle_rmse": {
+      "full": [
+        -0.1657075372901149,
+        0.001991320177284539,
+        0.1310624843263435
+      ],
+      "none": [
+        -0.0040858095223781365,
+        0.009889131166125331,
+        0.031137810677470235
+      ]
+    },
+    "full_drifting_matches_frozen_runner": true,
+    "leads": [
+      1,
+      3,
+      7
+    ],
+    "oracle_rmse": [
+      1.653997177521153,
+      2.7423801420026224,
+      6.564574868852731
+    ],
+    "paired_frozen_minus_drifting": {
+      "full": {
+        "ci_high": [
+          0.02237088549293031,
+          -0.8923721943557306,
+          -4.089847517966674
+        ],
+        "ci_low": [
+          -0.26458345526633265,
+          -2.9962633300992425,
+          -9.912015703487187
+        ],
+        "mean": [
+          -0.1229066321921976,
+          -1.9666803763861092,
+          -7.027018193370098
+        ]
+      },
+      "none": {
+        "ci_high": [
+          0.021920536261178285,
+          0.3420939567039935,
+          1.6541611511393128
+        ],
+        "ci_low": [
+          -0.032458970509275646,
+          -0.17548033173249944,
+          -3.2408224033682673
+        ],
+        "mean": [
+          -0.0027250095517241824,
+          0.0960579563601281,
+          -0.3678517928978449
+        ]
+      }
+    },
+    "rmse": {
+      "full_drifting": [
+        1.5290234417468003,
+        3.081923928135409,
+        7.201290006565282
+      ],
+      "full_frozen": [
+        1.4882896402310382,
+        2.744371462179907,
+        6.695637353179074
+      ],
+      "none_drifting": [
+        1.6507369662678888,
+        2.7347629139778635,
+        6.623539653675617
+      ],
+      "none_frozen": [
+        1.649911367998775,
+        2.7522692731687477,
+        6.595712679530201
+      ]
+    },
+    "true_candidate_weight_medians": {
+      "full": {
+        "final_assimilation_day": 0.999977494023101,
+        "per_lead": [
+          0.9799781692024079,
+          0.9417614594025456,
+          0.8719703787441804
+        ]
+      },
+      "none": {
+        "final_assimilation_day": 0.9739525140541729,
+        "per_lead": [
+          0.9547339386325477,
+          0.9180091628593641,
+          0.8509426413935139
+        ]
+      }
+    },
+    "verdict": {
+      "full": [
+        "not_significant",
+        "drift_harmful",
+        "drift_harmful"
+      ],
+      "none": [
+        "not_significant",
+        "not_significant",
+        "not_significant"
+      ]
+    }
+  },
+  "scenario": "parameter_switch",
+  "scope_limit": "One favorable condition (spacing multiplier 8, stage length 180, observation noise 2.6 percent of mean discharge, three parameter candidates, stay probability 0.98 against a true switching period of 180 days), the same truths as the G3 ideal gate and phase 2 reused bit-for-bit. Establishes only the net effect of forecast-phase weight drift at that point; does not establish behavior at other spacings, budgets, noise levels, scenarios or real basins, and does not revise the gate or phase-2 verdicts."
+}

@@ -1,0 +1,21 @@
+{
+  "all_bit_exact": false,
+  "checks": {
+    "candidate_paths_equal_independent_single_candidate_runs_bit_exact": true,
+    "candidate_paths_versus_independent_max_absolute_difference": 0.0,
+    "drift_round_none_equals_phase_two_none_bit_exact": true,
+    "drift_round_oracle_equals_phase_two_oracle_bit_exact": true,
+    "drifting_combination_identity_bit_exact": false,
+    "drifting_combination_identity_max_absolute_difference": 8.881784197001252e-16,
+    "frozen_combination_identity_bit_exact": true,
+    "frozen_combination_identity_max_absolute_difference": 0.0
+  },
+  "config_sha256": "544593fdfffba05e466c47ea0ffbdc20f41be9c650986cb6ea7d36264d2dbb86",
+  "observation_snapshot_sha256": "9f8471e9e6a172e2563ffd903b5a6a8d21042c47cd385a2800a322379dbc2852",
+  "parameter_snapshot_sha256": "841eeceab3ce71110c523de27655a7826dbb4281fd8be07e932a1d98052f27c8",
+  "process_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+  "protected_artifacts_unchanged": true,
+  "purpose": "seal the no-interaction candidate forecast paths behind the drift round and verify the round's defining combination identities bit-for-bit",
+  "sealed_drift_evidence_path": "results/23_hbv_multilead_joint_uncertainty/g3_forecast_weight_drift_param_switch_v01/evidence.npz",
+  "sealed_drift_evidence_sha256": "24c872e3e66f3611936a942d59ff7b9004d40d93c7ee7a86b839944fc1cf6ce8"
+}
