@@ -36,12 +36,14 @@ def assimilate_family_arm(
     observation_standard_deviation: float,
     factor_transition_stay_probability: float,
     interaction_mode: str,
+    forecast_transition: str = "markov",
 ) -> tuple[np.ndarray, np.ndarray]:
     """Assimilate a candidate family under ``interaction_mode`` then forecast.
 
     Returns ``(daily_probabilities[days, n], combined_forecast[n_leads])``. With
-    ``interaction_mode="full"`` this is bit-identical to the frozen runner's
-    ``_assimilate_record_then_forecast`` for the same family.
+    ``interaction_mode="full"`` and ``forecast_transition="markov"`` this is
+    bit-identical to the frozen runner's ``_assimilate_record_then_forecast`` for the
+    same family. ``forecast_transition="frozen"`` applies no forecast-phase matrix P.
     """
     candidates = tuple(candidates)
     active_forcing = np.asarray(active_forcing, dtype=np.float64)
@@ -68,6 +70,7 @@ def assimilate_family_arm(
         future,
         lead_days=tuple(int(value) for value in leads),
         interaction_mode=interaction_mode,
+        forecast_transition=forecast_transition,
     )
     return probabilities, forecast.combined_predictions
 
@@ -82,12 +85,14 @@ def static_mixing_arm(
     leads: Sequence[int],
     observation_standard_deviation: float,
     factor_transition_stay_probability: float,
+    forecast_transition: str = "markov",
 ) -> tuple[np.ndarray, np.ndarray]:
     """Static mixing: independent single-candidate filters, frozen uniform weights.
 
     Each candidate is assimilated independently (frozen single-candidate path) and the
     combined forecast is the uniform (1/n) average of the candidate forecasts. Weights
-    never update, so the reported per-day probabilities are uniform.
+    never update, so the reported per-day probabilities are uniform. ``forecast_transition``
+    is forwarded to each single-candidate forecast.
     """
     candidates = tuple(candidates)
     assimilation_days = int(assimilation_days)
@@ -104,6 +109,7 @@ def static_mixing_arm(
             leads=np.asarray(tuple(int(value) for value in leads), dtype=np.int64),
             observation_standard_deviation=float(observation_standard_deviation),
             factor_transition_stay_probability=float(factor_transition_stay_probability),
+            forecast_transition=forecast_transition,
         )
         per_candidate.append(forecast.combined_predictions)
     combined_forecast = np.mean(per_candidate, axis=0)
@@ -124,6 +130,7 @@ def oracle_arm(
     leads: Sequence[int],
     observation_standard_deviation: float,
     factor_transition_stay_probability: float,
+    forecast_transition: str = "markov",
 ) -> np.ndarray:
     """Oracle: the known-true candidate at every stage, state carried across switches.
 
@@ -175,6 +182,7 @@ def oracle_arm(
         future,
         lead_days=tuple(int(value) for value in leads),
         interaction_mode="full",
+        forecast_transition=forecast_transition,
     )
     return forecast.combined_predictions
 
@@ -191,16 +199,24 @@ def compare_interaction_arms(
     definitions: Mapping[str, Sequence[MethodCandidate]],
     observation_standard_deviation: float,
     factor_transition_stay_probability: float,
+    forecast_transition: str = "markov",
 ) -> dict:
     """Run full/none/static/oracle on the primary family of a switching result.
 
     ``result`` is a ``ThreeStageSwitchingValidationResult`` (the full IMM run whose
     truths, observations, forcing and initial states are reused bit-for-bit). The
-    ``full`` arm reuses the result's stored per-family outputs (already proven
-    bit-identical to ``assimilate_family_arm``); none/static/oracle are computed on
-    the same reconstructed inputs. Returns forecasts, squared errors against the
-    noise-free forecast target, and per-arm identification probabilities.
+    ``full`` arm reuses the result's stored per-family outputs; none/static/oracle are
+    computed on the same reconstructed inputs. Returns forecasts, squared errors against
+    the noise-free forecast target, and per-arm identification probabilities.
+
+    ``forecast_transition`` is forwarded to the none/static/oracle forecasts. It MUST
+    match the mode used to produce ``result`` (which supplies the reused ``full`` arm):
+    pass ``"frozen"`` only together with a ``result`` from a frozen
+    ``run_three_stage_switching_validation`` run, otherwise the full arm would drift
+    while the others are frozen.
     """
+    if forecast_transition not in {"markov", "frozen"}:
+        raise ValueError("forecast_transition must be 'markov' or 'frozen'")
     primary = result.schedule.primary_method_name
     candidates = tuple(definitions[primary])
     candidate_count = len(candidates)
@@ -252,18 +268,21 @@ def compare_interaction_arms(
             probs_none, forecast_none = assimilate_family_arm(
                 candidates, initial_states, covariance, active_forcing, observations,
                 assimilation_days, leads, obs_std, stay, "none",
+                forecast_transition=forecast_transition,
             )
             forecasts["none"][block, truth] = forecast_none
             probabilities["none"][block, truth] = probs_none
             _, forecast_static = static_mixing_arm(
                 candidates, initial_states, covariance, active_forcing, observations,
                 assimilation_days, leads, obs_std, stay,
+                forecast_transition=forecast_transition,
             )
             forecasts["static"][block, truth] = forecast_static
             stage_true = [int(labels[truth, start]) for start, _ in stage_boundaries]
             forecasts["oracle"][block, truth] = oracle_arm(
                 candidates, stage_true, stage_boundaries, initial_states, covariance,
                 active_forcing, observations, leads, obs_std, stay,
+                forecast_transition=forecast_transition,
             )
 
     squared_errors = {

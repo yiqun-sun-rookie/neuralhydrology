@@ -273,6 +273,7 @@ def _assimilate_record_then_forecast(
     leads: np.ndarray,
     observation_standard_deviation: float,
     factor_transition_stay_probability: float,
+    forecast_transition: str = "markov",
 ):
     bank = build_method_bank(
         candidates=candidates,
@@ -297,6 +298,7 @@ def _assimilate_record_then_forecast(
         future,
         lead_days=tuple(int(value) for value in leads),
         interaction_mode="full",
+        forecast_transition=forecast_transition,
     )
     return probabilities, states, bank.estimator.state.copy(), forecast
 
@@ -318,8 +320,15 @@ def run_three_stage_switching_validation(
     observation_standard_deviation: float,
     factor_transition_stay_probability: float,
     future_observation_replacement: float | None = None,
+    forecast_transition: str = "markov",
 ) -> ThreeStageSwitchingValidationResult:
-    """Run one exact-candidate three-stage switching truth through matched methods."""
+    """Run one exact-candidate three-stage switching truth through matched methods.
+
+    ``forecast_transition`` is forwarded to every per-family forecast: ``"markov"``
+    (default) keeps the historical drifting behaviour bit-for-bit; ``"frozen"`` holds
+    the forecast weights at the assimilation posterior and applies no forecast-phase
+    model-switching matrix P (see ``forecast_from_posterior``).
+    """
 
     forcing_values = np.asarray(forcing_blocks, dtype=np.float64)
     if forcing_values.ndim != 3 or forcing_values.shape[2] != 3:
@@ -541,6 +550,7 @@ def run_three_stage_switching_validation(
                         leads=leads,
                         observation_standard_deviation=observation_std,
                         factor_transition_stay_probability=stay_probability,
+                        forecast_transition=forecast_transition,
                     )
                 )
                 count = len(definitions[method_name])

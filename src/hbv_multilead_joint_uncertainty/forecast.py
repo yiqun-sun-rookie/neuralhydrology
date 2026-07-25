@@ -184,8 +184,20 @@ def forecast_from_posterior(
     future_forcing,
     lead_days: Sequence[int] = (1, 3, 7),
     interaction_mode: str | None = None,
+    forecast_transition: str = "markov",
 ) -> PosteriorForecast:
-    """Forecast from a posterior bank copy without reading or updating future discharge."""
+    """Forecast from a posterior bank copy without reading or updating future discharge.
+
+    ``forecast_transition`` controls whether the model-switching matrix P acts during
+    the forecast horizon. ``"markov"`` (default) propagates the model probabilities and
+    conditional state mixing through P each forecast day, reproducing the historical
+    drifting behaviour. ``"frozen"`` holds the forecast transition at the identity
+    matrix, which freezes the model probabilities at the final assimilation posterior
+    and removes forecast-phase state mixing for every interaction mode -- i.e. P is not
+    applied during the forecast. The assimilation state carried in ``bank`` is untouched.
+    """
+    if forecast_transition not in {"markov", "frozen"}:
+        raise ValueError("forecast_transition must be 'markov' or 'frozen'")
     forcing = np.asarray(future_forcing, dtype=np.float64)
     if forcing.ndim != 2 or forcing.shape[1] != 3 or not np.all(np.isfinite(forcing)):
         raise ValueError("future_forcing must be a finite array with shape (days, 3)")
@@ -197,6 +209,8 @@ def forecast_from_posterior(
     n_candidates = len(branch.estimator.filters)
     if len(branch.transitions) != n_candidates or len(branch.definitions) != n_candidates:
         raise ValueError("candidate bank components must have identical candidate counts")
+    if forecast_transition == "frozen":
+        branch.estimator.transition_matrix = np.eye(n_candidates, dtype=np.float64)
     mode = interaction_mode or getattr(branch.estimator, "interaction_mode", "full")
 
     combined = np.empty(len(leads), dtype=np.float64)
