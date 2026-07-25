@@ -1,29 +1,14 @@
-"""Forecast-phase weight drift comparison (ID23 G3 follow-up, 2026-07-24).
+"""Historical forecast-phase weight-drift diagnostic from 2026-07-24.
 
-Design freeze: ``docs/plans/2026-07-24-g3-forecast-weight-drift-design.md``.
+Current forecasts always keep candidate probabilities at the final assimilation
+posterior and never apply the model-switching transition matrix after the
+forecast origin. Therefore current code has no drifting production forecast.
 
-In the frozen pipeline the model-probability vector is propagated through the
-transition matrix on every forecast day, so over a seven-day horizon roughly
-``1 - stay**7`` of the probability mass leaks to candidates the filter has
-already identified as wrong. That propagation is Bayes-consistent with the
-switching prior used during assimilation, but in this experiment the assumed
-switching rate (2 percent per day) is about 3.6 times the true one (one switch
-per 180 days). Phase 2 could only bound the cost of that mismatch; this module
-measures it.
-
-The measurement holds the *combination* weights at the final assimilation
-posterior while leaving assimilation completely untouched:
-
-    frozen_forecast[lead] = w_posterior . candidate_predictions[lead, :]
-
-For the no-interaction method this is an exact ablation of the drift: without
-state mixing each candidate propagates on its own, so ``candidate_predictions``
-does not depend on the weights at all (anchored by test against independent
-single-candidate runs). For the full-interaction method the candidate paths do
-depend on the weights through state mixing, so freezing only the combination
-weights is a partial ablation and is reported as such.
+This module remains only to interpret the sealed historical comparison and its
+stored arrays. Reproducing the original drifting calculation requires checking
+out its pinned historical commit. Do not launch a new drift experiment from the
+current code.
 """
-
 from __future__ import annotations
 
 from typing import Mapping, Sequence

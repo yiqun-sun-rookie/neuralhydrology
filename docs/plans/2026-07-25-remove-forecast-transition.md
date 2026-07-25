@@ -82,9 +82,9 @@ Expected: all focused tests pass.
 **Step 2: Prove obsolete configuration text is gone**
 
 Run:
-`rg -n --hidden -g '!results/**' -g '!logs/**' -g '!.git/**' "forecast_transition|forecast_transition=.markov.|forecast_transition=.frozen." src/hbv_multilead_joint_uncertainty test docs/plans`
+`rg -n "forecast_transition" src/hbv_multilead_joint_uncertainty -g '*.py'`
 
-Expected: no live code, test, plan, or handoff matches.
+Expected: no production-code matches. Tests and historical plans may name the removed keyword to verify or document its removal.
 
 ### Task 5: Run regression verification
 

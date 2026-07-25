@@ -236,18 +236,17 @@ def test_uniform_frozen_weights_reproduce_static_mixing_arm(switching_result):
 
 
 # --------------------------------------------------------------------------- #
-# Anchor 4: the drift being removed is actually present
+# Anchor 4: current production forecasts keep posterior weights fixed
 # --------------------------------------------------------------------------- #
 
 
-def test_forecast_weights_drift_away_from_the_final_posterior(switching_result):
+def test_forecast_weights_stay_at_the_final_posterior(switching_result):
     paths = _run_paths(switching_result, "none")
     frozen = paths["final_posterior_weights"]
     forecast_weights = paths["forecast_weights"]
     assert forecast_weights.shape == (len(LEADS), len(frozen))
-    assert not np.array_equal(forecast_weights[-1], frozen)
-    leading = int(np.argmax(frozen))
-    assert forecast_weights[-1][leading] < frozen[leading]
+    expected = np.broadcast_to(frozen, forecast_weights.shape)
+    np.testing.assert_allclose(forecast_weights, expected, rtol=0.0, atol=1e-12)
     np.testing.assert_allclose(forecast_weights.sum(axis=1), 1.0, rtol=0.0, atol=1e-12)
 
 
