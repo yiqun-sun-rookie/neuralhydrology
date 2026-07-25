@@ -1,3 +1,7 @@
 # Force LF for scripts that run on Linux/HPC (avoid DOS line breaks)
 *.slurm text eol=lf
 *.sh    text eol=lf
+
+# Preserve sealed experiment bytes and their checksum manifest on every checkout.
+/results/23_hbv_multilead_joint_uncertainty/g3_corrected_forecast_param_switch_v01/** binary
+/results/23_hbv_multilead_joint_uncertainty/g3_corrected_forecast_param_switch_v01.preregistered.json binary

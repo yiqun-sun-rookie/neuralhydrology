@@ -1,0 +1,119 @@
+{
+  "config_sha256": "d314e29c2cb7653f1e4ea8651738633673d4796dcdb3e2be98b8eb4d2962ac50",
+  "experiment_id": "g3_corrected_forecast_param_switch_v01",
+  "forecast_contract": {
+    "candidate_probabilities_during_forecast": "fixed_at_final_assimilation_posterior",
+    "cross_candidate_state_mixing_during_forecast": false,
+    "model_transition_during_forecast": "identity"
+  },
+  "integrity_status": "passed",
+  "observation_snapshot_sha256": "9f8471e9e6a172e2563ffd903b5a6a8d21042c47cd385a2800a322379dbc2852",
+  "parameter_snapshot_sha256": "841eeceab3ce71110c523de27655a7826dbb4281fd8be07e932a1d98052f27c8",
+  "process_snapshot_sha256": "342a4c2436a9bfae8def8a7a05425dd1526b40c9d4e52c1acb3b3841be7fd8ca",
+  "protected_artifacts_unchanged": true,
+  "replay_check_passed": true,
+  "result": {
+    "full_minus_none_classification": [
+      "no_detectable_difference",
+      "no_detectable_difference",
+      "no_detectable_difference"
+    ],
+    "identification": {
+      "full_stage_median_true_probability": [
+        0.9983917331963583,
+        0.9983435268645875,
+        0.9999895149384417
+      ],
+      "none_stage_median_true_probability": [
+        0.9625754626365579,
+        0.9478990048505977,
+        0.9591210852961916
+      ]
+    },
+    "leads": [
+      1,
+      3,
+      7
+    ],
+    "oracle_ratio": {
+      "full": [
+        0.89565858301719,
+        1.001397036779281,
+        1.020307895942992
+      ],
+      "none": [
+        0.9975297360975539,
+        1.00360603951825,
+        1.0047433095515768
+      ],
+      "oracle": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "static": [
+        1.063857608222468,
+        1.042405589423304,
+        1.0681290826797039
+      ]
+    },
+    "paired_full_minus_none": {
+      "ci_high": [
+        0.034093234452424535,
+        0.9827084462118406,
+        6.624667875996801
+      ],
+      "ci_low": [
+        -1.3817100406465883,
+        -1.0272540953672613,
+        -1.980912577961294
+      ],
+      "mean": [
+        -0.5276118807533172,
+        -0.033309384563536645,
+        1.3582721789073329
+      ]
+    },
+    "paired_none_minus_static": {
+      "ci_high": [
+        0.5406172996240572,
+        2.279786250589102,
+        4.629420366968668
+      ],
+      "ci_low": [
+        -1.6641639173705522,
+        -3.7233974228531874,
+        -20.960886307019514
+      ],
+      "mean": [
+        -0.3740461581899506,
+        -0.5970216718687562,
+        -5.662100463816235
+      ]
+    },
+    "rmse": {
+      "full": [
+        1.4814167683330277,
+        2.74621134792377,
+        6.697887572199373
+      ],
+      "none": [
+        1.649911367998775,
+        2.7522692731687477,
+        6.595712679530201
+      ],
+      "oracle": [
+        1.653997177521153,
+        2.7423801420026224,
+        6.564574868852731
+      ],
+      "static": [
+        1.7596174812843668,
+        2.8586723883470073,
+        7.011813332849905
+      ]
+    }
+  },
+  "scenario": "parameter_switch",
+  "scope_limit": "One favorable synthetic parameter-switch condition using the exact sealed truth and assimilation process. The result does not establish behavior for other candidate spacings, assimilation lengths, noise levels, switching scenarios, or real basins."
+}
