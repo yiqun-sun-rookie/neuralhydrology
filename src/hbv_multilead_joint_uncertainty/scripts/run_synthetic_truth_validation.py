@@ -136,6 +136,8 @@ def _dependency_manifests() -> tuple[list[dict], list[dict], str, str | None]:
         capture_output=True,
         text=True,
         check=False,
+        encoding="utf-8",
+        errors="replace",
     )
     if completed.returncode == 0:
         pip_freeze = completed.stdout.rstrip() + "\n"
@@ -149,7 +151,7 @@ def _dependency_manifests() -> tuple[list[dict], list[dict], str, str | None]:
             + "\n".join(requirements)
             + "\n"
         )
-        pip_freeze_error = completed.stderr.strip()
+        pip_freeze_error = (completed.stderr or "").strip()
     return installed, conda_packages, pip_freeze, pip_freeze_error
 
 

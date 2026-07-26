@@ -32,8 +32,6 @@ class ObservationFreeForecastValidationResult:
     source_candidate_states_after_forecasts: np.ndarray
     source_candidate_covariances_after_forecasts: np.ndarray
     source_probabilities_after_forecasts: np.ndarray
-    production_transition_matrix: np.ndarray
-    reference_transition_matrix: np.ndarray
     production_combined_predictions: np.ndarray
     production_candidate_predictions: np.ndarray
     production_probabilities: np.ndarray
@@ -67,37 +65,6 @@ class ObservationFreeForecastValidationResult:
     maximum_source_probability_mutation: float
 
 
-def _reference_transition_matrix(
-    candidates: tuple[MethodCandidate, ...], stay_probability: float
-) -> np.ndarray:
-    parameter_ids = tuple(dict.fromkeys(candidate.parameter_id for candidate in candidates))
-    process_ids = tuple(dict.fromkeys(candidate.process_id for candidate in candidates))
-    expected = tuple(
-        (parameter_id, process_id)
-        for parameter_id in parameter_ids
-        for process_id in process_ids
-    )
-    actual = tuple((candidate.parameter_id, candidate.process_id) for candidate in candidates)
-    if len(parameter_ids) != 3 or len(process_ids) != 3 or actual != expected:
-        raise ValueError("candidates must be one parameter-major complete three by three grid")
-    stay = float(stay_probability)
-    if not np.isfinite(stay) or stay < 0.0 or stay > 1.0:
-        raise ValueError("factor_stay_probability must be finite and between zero and one")
-    switch = (1.0 - stay) / 2.0
-    parameter_transition = np.full((3, 3), switch, dtype=np.float64)
-    process_transition = np.full((3, 3), switch, dtype=np.float64)
-    np.fill_diagonal(parameter_transition, stay)
-    np.fill_diagonal(process_transition, stay)
-    matrix = np.empty((9, 9), dtype=np.float64)
-    for source in range(9):
-        source_parameter, source_process = divmod(source, 3)
-        for destination in range(9):
-            destination_parameter, destination_process = divmod(destination, 3)
-            matrix[source, destination] = (
-                parameter_transition[source_parameter, destination_parameter]
-                * process_transition[source_process, destination_process]
-            )
-    return matrix
 
 
 def _reference_sigma_points(
@@ -163,32 +130,6 @@ def _reference_moments(
     return mean, 0.5 * (covariance + covariance.T)
 
 
-def _reference_interaction(
-    states: np.ndarray,
-    covariances: np.ndarray,
-    probabilities: np.ndarray,
-    transition: np.ndarray,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    candidate_count, state_count = states.shape
-    predicted_probabilities = transition.T @ probabilities
-    predicted_probabilities /= predicted_probabilities.sum()
-    mixed_states = np.empty_like(states)
-    mixed_covariances = np.empty_like(covariances)
-    for destination in range(candidate_count):
-        incoming = transition[:, destination] * probabilities
-        weights = incoming / incoming.sum()
-        mean = np.zeros(state_count, dtype=np.float64)
-        for source in range(candidate_count):
-            mean += weights[source] * states[source]
-        covariance = np.zeros((state_count, state_count), dtype=np.float64)
-        for source in range(candidate_count):
-            difference = states[source] - mean
-            covariance += weights[source] * (
-                covariances[source] + np.outer(difference, difference)
-            )
-        mixed_states[destination] = mean
-        mixed_covariances[destination] = 0.5 * (covariance + covariance.T)
-    return predicted_probabilities, mixed_states, mixed_covariances
 
 
 def _reference_predict_candidate(
@@ -240,7 +181,6 @@ def _reference_forecast(
     initial_states: np.ndarray,
     initial_covariances: np.ndarray,
     initial_probabilities: np.ndarray,
-    transition: np.ndarray,
     forcing: np.ndarray,
 ):
     day_count = len(forcing)
@@ -258,15 +198,12 @@ def _reference_forecast(
     combined_states = np.empty((day_count, state_count), dtype=np.float64)
     combined_covariances = np.empty((day_count, state_count, state_count), dtype=np.float64)
     for day in range(day_count):
-        probabilities, mixed_states, mixed_covariances = _reference_interaction(
-            states, covariances, probabilities, transition
-        )
         for candidate_index, candidate in enumerate(candidates):
             states[candidate_index], covariances[candidate_index], candidate_predictions[
                 day, candidate_index
             ] = _reference_predict_candidate(
-                mixed_states[candidate_index],
-                mixed_covariances[candidate_index],
+                states[candidate_index],
+                covariances[candidate_index],
                 forcing[day],
                 candidate,
             )
@@ -309,7 +246,6 @@ def run_observation_free_forecast_validation(
     initial_covariance,
     initial_probabilities,
     observation_standard_deviation: float,
-    factor_stay_probability: float,
 ) -> ObservationFreeForecastValidationResult:
     """Compare production forecasts with a separate simulator and moment recursion."""
     definitions = tuple(candidates)
@@ -342,7 +278,6 @@ def run_observation_free_forecast_validation(
     if not np.isclose(probabilities.sum(), 1.0, rtol=0.0, atol=1e-12):
         raise ValueError("initial_probabilities must sum to one")
     probabilities = probabilities / probabilities.sum()
-    reference_transition = _reference_transition_matrix(definitions, factor_stay_probability)
 
     trial_count = len(seeds)
     production_combined = np.empty((trial_count, forecast_count), dtype=np.float64)
@@ -383,7 +318,6 @@ def run_observation_free_forecast_validation(
     short_covariance_diagonals = np.empty_like(short_states)
     short_combined_states = np.empty((trial_count, 3, 15), dtype=np.float64)
     short_combined_covariance_diagonals = np.empty_like(short_combined_states)
-    production_transition = None
     state_mutation = 0.0
     covariance_mutation = 0.0
     probability_mutation = 0.0
@@ -407,12 +341,11 @@ def run_observation_free_forecast_validation(
             initial_states=state_by_parameter,
             initial_covariance=covariance,
             observation_standard_deviation=observation_standard_deviation,
-            factor_transition_stay_probability=factor_stay_probability,
+            # A non-identity assimilation matrix must still be ignored by the forecast.
+            factor_transition_stay_probability=0.98,
             interaction_mode="full",
         )
         bank.estimator.probabilities = probabilities.copy()
-        if production_transition is None:
-            production_transition = bank.estimator.transition_matrix.copy()
         before_states = np.asarray([candidate.state.copy() for candidate in bank.estimator.filters])
         before_covariances = np.asarray(
             [candidate.covariance.copy() for candidate in bank.estimator.filters]
@@ -470,7 +403,6 @@ def run_observation_free_forecast_validation(
             before_states,
             before_covariances,
             probabilities,
-            reference_transition,
             future,
         )
         state_mutation = max(
@@ -499,7 +431,6 @@ def run_observation_free_forecast_validation(
         )
         source_probabilities_after[trial] = bank.estimator.probabilities
 
-    assert production_transition is not None
     return ObservationFreeForecastValidationResult(
         trial_seeds=seeds.copy(),
         forcing_realizations=forcing_values.copy(),
@@ -514,8 +445,6 @@ def run_observation_free_forecast_validation(
         source_candidate_states_after_forecasts=source_states_after,
         source_candidate_covariances_after_forecasts=source_covariances_after,
         source_probabilities_after_forecasts=source_probabilities_after,
-        production_transition_matrix=production_transition,
-        reference_transition_matrix=reference_transition,
         production_combined_predictions=production_combined,
         production_candidate_predictions=production_candidates,
         production_probabilities=production_probabilities,

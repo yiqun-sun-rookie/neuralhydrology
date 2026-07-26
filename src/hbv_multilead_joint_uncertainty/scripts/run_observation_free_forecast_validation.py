@@ -37,6 +37,13 @@ from hbv_multilead_joint_uncertainty.scripts.run_synthetic_truth_validation impo
 )
 
 
+IDENTITY_FORECAST_CONTRACT = {
+    "candidate_probabilities": "fixed_at_final_assimilation_posterior",
+    "model_transition": "identity",
+    "cross_candidate_state_mixing": False,
+}
+
+
 REQUIRED_EVIDENCE_FILES = frozenset(
     {
         "conda_packages.json",
@@ -108,8 +115,6 @@ def _numeric_array_byte_estimate(config: dict) -> int:
         (trials, candidates, states),
         (trials, candidates, states, states),
         (trials, candidates),
-        (candidates, candidates),
-        (candidates, candidates),
         (trials, days),
         (trials, days, candidates),
         (trials, days, candidates),
@@ -235,6 +240,8 @@ def run(repo_root: Path, config_path: Path, output_dir: Path, registry_path: Pat
     config = json.loads(config_file.read_text(encoding="utf-8"))
     if output.name != str(config["experiment_id"]):
         raise ValueError("output directory name must equal experiment_id")
+    if config.get("forecast_contract") != IDENTITY_FORECAST_CONTRACT:
+        raise ValueError("current validation requires the exact identity forecast contract")
     if output.exists():
         if registry.exists() or incomplete.exists():
             raise FileExistsError(f"refusing to overwrite completed evidence {output}")
@@ -267,8 +274,6 @@ def run(repo_root: Path, config_path: Path, output_dir: Path, registry_path: Pat
     seeds = tuple(int(value) for value in config["trial_seeds"])
     if not seeds or len(set(seeds)) != len(seeds):
         raise ValueError("trial_seeds must be nonempty and unique")
-    if config.get("interaction_mode") != "full":
-        raise ValueError("formal forecast validation requires full interaction")
     formal_leads = tuple(int(value) for value in config["formal_lead_days"])
     if formal_leads != (1, 3, 7) or int(config["causal_prefix_days"]) != 3:
         raise ValueError("formal leads and causal prefix must be one, three and seven days")
@@ -292,7 +297,8 @@ def run(repo_root: Path, config_path: Path, output_dir: Path, registry_path: Pat
         "state_dimension": 15,
         "forecast_days": int(config["forcing"]["forecast_days"]),
         "formal_lead_days": list(formal_leads),
-        "interaction_mode": "full",
+        "forecast_contract": IDENTITY_FORECAST_CONTRACT.copy(),
+        "source_bank_assimilation_transition": "non_identity_validation_fixture",
         "future_discharge_argument": False,
         "gates": config["gates"],
     }
@@ -309,7 +315,6 @@ def run(repo_root: Path, config_path: Path, output_dir: Path, registry_path: Pat
         initial_covariance=initial_covariance,
         initial_probabilities=initial_probabilities,
         observation_standard_deviation=float(config["observation_standard_deviation"]),
-        factor_stay_probability=float(config["factor_stay_probability"]),
     )
     parameter_vectors = np.asarray(
         [[vectors[key][name] for name in PARAMETER_NAMES] for key in parameter_ids],
@@ -330,8 +335,6 @@ def run(repo_root: Path, config_path: Path, output_dir: Path, registry_path: Pat
         "source_candidate_states_after_forecasts": result.source_candidate_states_after_forecasts,
         "source_candidate_covariances_after_forecasts": result.source_candidate_covariances_after_forecasts,
         "source_probabilities_after_forecasts": result.source_probabilities_after_forecasts,
-        "production_transition_matrix": result.production_transition_matrix,
-        "reference_transition_matrix": result.reference_transition_matrix,
         "production_combined_predictions": result.production_combined_predictions,
         "production_candidate_predictions": result.production_candidate_predictions,
         "production_probabilities": result.production_probabilities,
@@ -368,11 +371,15 @@ def run(repo_root: Path, config_path: Path, output_dir: Path, registry_path: Pat
     reference_combined_covariance_diagonals = np.diagonal(
         result.reference_combined_covariances, axis1=-2, axis2=-1
     )
-    transition_error = _maximum_error(
-        result.production_transition_matrix, result.reference_transition_matrix
-    )
-    probability_error = _maximum_error(
+    production_reference_probability_error = _maximum_error(
         result.production_probabilities, result.reference_probabilities
+    )
+    forecast_probability_change_error = _maximum_error(
+        result.production_probabilities,
+        np.broadcast_to(
+            result.initial_probabilities,
+            result.production_probabilities.shape,
+        ),
     )
     state_error = _maximum_error(
         result.production_candidate_states, result.reference_candidate_states
@@ -447,8 +454,8 @@ def run(repo_root: Path, config_path: Path, output_dir: Path, registry_path: Pat
         forecast_from_posterior
     ).parameters
     gate_values = {
-        "transition_matrix_maximum_absolute_error": transition_error,
-        "probability_maximum_absolute_error": probability_error,
+        "forecast_probability_change_maximum_absolute_error": forecast_probability_change_error,
+        "production_reference_probability_maximum_absolute_error": production_reference_probability_error,
         "candidate_state_maximum_absolute_error": state_error,
         "candidate_covariance_diagonal_maximum_absolute_error": covariance_diagonal_error,
         "candidate_prediction_maximum_absolute_error": candidate_prediction_error,
@@ -466,8 +473,8 @@ def run(repo_root: Path, config_path: Path, output_dir: Path, registry_path: Pat
     }
     gates = config["gates"]
     gate_pass = bool(
-        transition_error <= float(gates["transition_matrix_maximum_absolute_error"])
-        and probability_error <= float(gates["probability_maximum_absolute_error"])
+        forecast_probability_change_error <= float(gates["forecast_probability_change_maximum_absolute_error"])
+        and production_reference_probability_error <= float(gates["production_reference_probability_maximum_absolute_error"])
         and state_error <= float(gates["candidate_state_maximum_absolute_error"])
         and covariance_diagonal_error <= float(gates["candidate_covariance_diagonal_maximum_absolute_error"])
         and candidate_prediction_error <= float(gates["candidate_prediction_maximum_absolute_error"])
@@ -495,7 +502,8 @@ def run(repo_root: Path, config_path: Path, output_dir: Path, registry_path: Pat
         "tested_state_dimension": 15,
         "tested_lead_days": list(formal_leads),
         "tested_daily_prefix": list(range(1, int(config["forcing"]["forecast_days"]) + 1)),
-        "interaction_mode": "full",
+        "forecast_contract": IDENTITY_FORECAST_CONTRACT.copy(),
+        "candidate_propagation": "independent_without_cross_candidate_mixing",
         "gate_values": gate_values,
         "gates": gates,
         "saved_numeric_array_names": finiteness["numeric_array_names"],
@@ -518,6 +526,7 @@ def run(repo_root: Path, config_path: Path, output_dir: Path, registry_path: Pat
         "candidate_ids": list(result.candidate_ids),
         "formal_lead_days": list(formal_leads),
         "saved_numeric_array_count": len(finiteness["numeric_array_names"]),
+        "forecast_contract": IDENTITY_FORECAST_CONTRACT.copy(),
         "nonfinite_saved_numeric_array_names": finiteness["nonfinite_numeric_array_names"],
         "gate_values": gate_values,
         "gates": gates,
@@ -535,7 +544,7 @@ def run(repo_root: Path, config_path: Path, output_dir: Path, registry_path: Pat
         "hypothesis": "production one-through-seven-day propagation matches the independent observation-free recursion",
         "base_config": str(config_file),
         "changed_factor": "forecast lead from one through seven days",
-        "fixed_factors": "three complete parameter vectors, three process covariances, fifteen states and full interaction",
+        "fixed_factors": "three complete parameter vectors, three process covariances, fifteen states and fixed posterior weights",
         "seeds": list(seeds),
         "status": summary["status"],
         "run_dir": str(output),
