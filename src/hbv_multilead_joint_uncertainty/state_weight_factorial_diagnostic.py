@@ -5,13 +5,27 @@ from __future__ import annotations
 import numpy as np
 
 
+def _as_real_float_array(value: object, name: str) -> np.ndarray:
+    """Convert a real-valued input while normalizing public validation errors."""
+    try:
+        untyped = np.asarray(value)
+    except (TypeError, ValueError) as error:
+        raise ValueError(f"{name} must be convertible to a real float array") from error
+    if np.iscomplexobj(untyped):
+        raise ValueError(f"{name} must be real-valued")
+    try:
+        return np.asarray(value, dtype=np.float64)
+    except (TypeError, ValueError) as error:
+        raise ValueError(f"{name} must be convertible to a real float array") from error
+
+
 def combine_candidate_forecasts(
     candidate_forecasts: np.ndarray,
     final_probabilities: np.ndarray,
 ) -> np.ndarray:
     """Combine candidate forecasts using one fixed final probability vector."""
-    forecasts = np.asarray(candidate_forecasts, dtype=np.float64)
-    probabilities = np.asarray(final_probabilities, dtype=np.float64)
+    forecasts = _as_real_float_array(candidate_forecasts, "candidate_forecasts")
+    probabilities = _as_real_float_array(final_probabilities, "final_probabilities")
     if forecasts.ndim != 2 or not np.all(np.isfinite(forecasts)):
         raise ValueError("candidate_forecasts must be a finite (lead, candidate) array")
     if probabilities.ndim != 1 or probabilities.shape[0] != forecasts.shape[1]:
@@ -30,8 +44,14 @@ def state_weight_factorial_forecasts(
     none_final_probabilities: np.ndarray,
 ) -> dict[str, np.ndarray]:
     """Cross two candidate-forecast paths with two final probability vectors."""
-    full_forecasts = np.asarray(full_candidate_forecasts, dtype=np.float64)
-    none_forecasts = np.asarray(none_candidate_forecasts, dtype=np.float64)
+    full_forecasts = _as_real_float_array(
+        full_candidate_forecasts,
+        "full_candidate_forecasts",
+    )
+    none_forecasts = _as_real_float_array(
+        none_candidate_forecasts,
+        "none_candidate_forecasts",
+    )
     if full_forecasts.shape != none_forecasts.shape:
         raise ValueError("full and none candidate forecasts must have identical shapes")
 

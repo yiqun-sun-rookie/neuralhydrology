@@ -123,6 +123,72 @@ def test_combine_candidate_forecasts_accepts_probability_sum_at_tolerance():
 
 
 @pytest.mark.parametrize(
+    ("candidate_forecasts", "probabilities"),
+    [
+        (
+            np.asarray([[1.0 + 2.0j, 3.0 + 0.0j]], dtype=np.complex128),
+            np.asarray([0.5, 0.5]),
+        ),
+        (
+            np.asarray([[1.0, 3.0]]),
+            np.asarray([0.5 + 0.25j, 0.5 - 0.25j], dtype=np.complex128),
+        ),
+    ],
+)
+def test_combine_candidate_forecasts_rejects_complex_inputs(
+    candidate_forecasts,
+    probabilities,
+):
+    with pytest.raises(ValueError):
+        combine_candidate_forecasts(candidate_forecasts, probabilities)
+
+
+@pytest.mark.parametrize(
+    ("candidate_forecasts", "probabilities"),
+    [
+        (np.asarray([[object()]], dtype=object), np.asarray([1.0])),
+        (np.asarray([[1.0]]), np.asarray([object()], dtype=object)),
+    ],
+)
+def test_combine_candidate_forecasts_normalizes_conversion_type_error(
+    candidate_forecasts,
+    probabilities,
+):
+    with pytest.raises(ValueError):
+        combine_candidate_forecasts(candidate_forecasts, probabilities)
+
+
+@pytest.mark.parametrize(
+    ("full_candidate_forecasts", "full_probabilities"),
+    [
+        (
+            np.asarray([[1.0 + 2.0j]], dtype=np.complex128),
+            np.asarray([1.0]),
+        ),
+        (
+            np.asarray([[1.0]]),
+            np.asarray([1.0 + 2.0j], dtype=np.complex128),
+        ),
+        (
+            np.asarray([[object()]], dtype=object),
+            np.asarray([1.0]),
+        ),
+    ],
+)
+def test_state_weight_factorial_forecasts_rejects_invalid_dtypes_as_value_error(
+    full_candidate_forecasts,
+    full_probabilities,
+):
+    with pytest.raises(ValueError):
+        state_weight_factorial_forecasts(
+            full_candidate_forecasts,
+            np.asarray([[1.0]]),
+            full_probabilities,
+            np.asarray([1.0]),
+        )
+
+
+@pytest.mark.parametrize(
     ("full_candidate_forecasts", "none_candidate_forecasts"),
     [
         (
