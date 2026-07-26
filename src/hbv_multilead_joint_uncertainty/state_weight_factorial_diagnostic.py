@@ -101,6 +101,7 @@ class TerminalAssimilationForecast:
     final_candidate_covariances: np.ndarray
     candidate_forecasts: np.ndarray
     combined_forecast: np.ndarray
+    forecast_probability_maximum_absolute_error: float = 0.0
 
 
 def _validated_positive_integer(value: object, name: str) -> int:
@@ -314,8 +315,17 @@ def assimilate_terminal_forecast(
     frozen_probabilities = np.broadcast_to(
         daily_probabilities[-1], forecast_probabilities.shape
     )
-    if not np.array_equal(forecast_probabilities, frozen_probabilities):
-        raise RuntimeError("forecast probabilities must equal the final posterior")
+    maximum_probability_error = float(
+        np.max(
+            np.abs(forecast_probabilities - frozen_probabilities),
+            initial=0.0,
+        )
+    )
+    if maximum_probability_error > 1e-12:
+        raise RuntimeError(
+            "forecast probabilities must equal the final posterior within 1e-12; "
+            f"maximum absolute error={maximum_probability_error}"
+        )
     expected_combined = candidate_forecasts @ daily_probabilities[-1]
     maximum_combination_error = float(
         np.max(np.abs(combined_forecast - expected_combined))
@@ -332,6 +342,9 @@ def assimilate_terminal_forecast(
         final_candidate_covariances=_readonly_copy(terminal_covariances),
         candidate_forecasts=_readonly_copy(candidate_forecasts),
         combined_forecast=_readonly_copy(combined_forecast),
+        forecast_probability_maximum_absolute_error=(
+            maximum_probability_error
+        ),
     )
 
 
@@ -384,7 +397,7 @@ def _validated_terminal_result(
     lead_count: int,
     candidate_count: int,
     interaction_mode: str,
-) -> dict[str, np.ndarray]:
+) -> dict[str, object]:
     expected_shapes = {
         "daily_probabilities": (assimilation_days, candidate_count),
         "final_candidate_states": (candidate_count, 15),
@@ -418,6 +431,20 @@ def _validated_terminal_result(
         raise ValueError(
             f"{interaction_mode} daily probabilities must be non-negative and sum to one"
         )
+    field_name = "forecast_probability_maximum_absolute_error"
+    if not hasattr(result, field_name):
+        raise ValueError(
+            f"{interaction_mode} terminal forecast is missing {field_name}"
+        )
+    probability_error = _validated_scalar(
+        getattr(result, field_name),
+        f"{interaction_mode} {field_name}",
+    )
+    if probability_error < 0.0 or probability_error > 1e-12:
+        raise ValueError(
+            f"{interaction_mode} {field_name} must be between zero and 1e-12"
+        )
+    arrays[field_name] = probability_error
     return arrays
 
 
@@ -618,6 +645,12 @@ def compare_state_weight_factorial(
         "probabilities_none": np.empty(
             (block_count, truth_count, assimilation_days, candidate_count)
         ),
+        "forecast_probability_maximum_absolute_error_full": np.empty(
+            (block_count, truth_count)
+        ),
+        "forecast_probability_maximum_absolute_error_none": np.empty(
+            (block_count, truth_count)
+        ),
         "final_candidate_states_full": np.empty(
             (block_count, truth_count, candidate_count, 15)
         ),
@@ -684,6 +717,11 @@ def compare_state_weight_factorial(
                 )
                 path_arrays[f"probabilities_{mode}"][block, truth] = terminal[mode][
                     "daily_probabilities"
+                ]
+                path_arrays[
+                    f"forecast_probability_maximum_absolute_error_{mode}"
+                ][block, truth] = terminal[mode][
+                    "forecast_probability_maximum_absolute_error"
                 ]
                 path_arrays[f"final_candidate_states_{mode}"][block, truth] = terminal[
                     mode

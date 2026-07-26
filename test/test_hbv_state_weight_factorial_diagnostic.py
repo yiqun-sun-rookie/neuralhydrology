@@ -360,6 +360,7 @@ def test_assimilate_terminal_forecast_captures_terminal_bank_before_one_frozen_f
     assert result.final_candidate_covariances.shape == (2, 15, 15)
     assert result.candidate_forecasts.shape == (2, 2)
     assert result.combined_forecast.shape == (2,)
+    assert result.forecast_probability_maximum_absolute_error == 0.0
     np.testing.assert_array_equal(result.daily_probabilities, daily_probabilities)
     np.testing.assert_array_equal(
         result.final_candidate_states,
@@ -398,6 +399,50 @@ def test_assimilate_terminal_forecast_captures_terminal_bank_before_one_frozen_f
     np.testing.assert_array_equal(inputs["initial_covariance"], covariance_copy)
     np.testing.assert_array_equal(inputs["active_forcing"], forcing_copy)
     np.testing.assert_array_equal(inputs["observations"], observation_copy)
+
+
+def test_assimilate_terminal_forecast_accepts_and_records_probability_roundoff(
+    monkeypatch,
+):
+    inputs = _terminal_inputs()
+    daily_probabilities = np.asarray(
+        [[0.6, 0.4], [0.25, 0.7499999999999999]],
+        dtype=np.float64,
+    )
+    filters = [
+        SimpleNamespace(state=np.full(15, index), covariance=np.eye(15))
+        for index in range(2)
+    ]
+    bank = SimpleNamespace(
+        transitions=tuple(
+            SimpleNamespace(set_forcing=lambda *forcing: None) for _ in range(2)
+        ),
+        estimator=_RecordingEstimator(filters, daily_probabilities, []),
+    )
+    monkeypatch.setattr(diagnostic, "build_method_bank", lambda **kwargs: bank)
+
+    def rounded_forecast(*args, **kwargs):
+        candidate_predictions = np.asarray([[2.0, 6.0], [10.0, 14.0]])
+        normalized = daily_probabilities[-1] / daily_probabilities[-1].sum()
+        probabilities = np.broadcast_to(normalized, (2, 2)).copy()
+        return SimpleNamespace(
+            probabilities=probabilities,
+            candidate_predictions=candidate_predictions,
+            combined_predictions=candidate_predictions @ normalized,
+        )
+
+    monkeypatch.setattr(
+        diagnostic,
+        "forecast_from_posterior",
+        rounded_forecast,
+    )
+
+    result = diagnostic.assimilate_terminal_forecast(**inputs)
+
+    assert (
+        result.forecast_probability_maximum_absolute_error
+        == 1.1102230246251565e-16
+    )
 
 
 @pytest.mark.parametrize(
@@ -454,6 +499,7 @@ def test_assimilate_terminal_forecast_rejects_invalid_inputs(
     ("forecast_change", "expected_error"),
     [
         ("probabilities", RuntimeError),
+        ("probabilities_threshold", RuntimeError),
         ("candidate_shape", ValueError),
         ("combined_weight", RuntimeError),
     ],
@@ -481,6 +527,8 @@ def test_assimilate_terminal_forecast_rejects_broken_frozen_forecast_contract(
         combined_predictions = candidate_predictions @ daily_probabilities[-1]
         if forecast_change == "probabilities":
             probabilities[1] = np.asarray([0.5, 0.5])
+        elif forecast_change == "probabilities_threshold":
+            probabilities[1] += np.asarray([2e-12, -2e-12])
         elif forecast_change == "candidate_shape":
             candidate_predictions = candidate_predictions[:, :1]
         else:
@@ -707,6 +755,8 @@ def test_compare_state_weight_factorial_uses_sealed_slices_and_only_two_paths(
     ]
     assert set(result) == {
         "probabilities_full", "probabilities_none",
+        "forecast_probability_maximum_absolute_error_full",
+        "forecast_probability_maximum_absolute_error_none",
         "final_candidate_states_full", "final_candidate_states_none",
         "final_candidate_covariances_full", "final_candidate_covariances_none",
         "candidate_forecasts_full", "candidate_forecasts_none",
@@ -719,6 +769,12 @@ def test_compare_state_weight_factorial_uses_sealed_slices_and_only_two_paths(
     }
     assert result["probabilities_full"].shape == (2, 2, 3, 3)
     assert result["probabilities_none"].shape == (2, 2, 3, 3)
+    for mode in ("full", "none"):
+        errors = result[
+            f"forecast_probability_maximum_absolute_error_{mode}"
+        ]
+        assert errors.shape == (2, 2)
+        np.testing.assert_array_equal(errors, 0.0)
     assert result["final_candidate_states_full"].shape == (2, 2, 3, 15)
     assert result["final_candidate_states_none"].shape == (2, 2, 3, 15)
     assert result["final_candidate_covariances_full"].shape == (2, 2, 3, 15, 15)
@@ -1873,6 +1929,12 @@ def _state_weight_runner_case(tmp_path, monkeypatch):
     driver = {
         "probabilities_full": probabilities_full,
         "probabilities_none": probabilities_none,
+        "forecast_probability_maximum_absolute_error_full": np.zeros(
+            (block_count, truth_count), dtype=np.float64
+        ),
+        "forecast_probability_maximum_absolute_error_none": np.full(
+            (block_count, truth_count), 1.1102230246251565e-16, dtype=np.float64
+        ),
         "final_candidate_states_full": np.ones(
             (block_count, truth_count, candidate_count, 15), dtype=np.float64
         ),
@@ -2062,6 +2124,10 @@ def test_state_weight_runner_packages_auditable_evidence_and_refuses_second_run(
     assert summary["candidate_ids"] == case.candidate_ids.tolist()
     assert summary["candidate_parameter_ids"] == ["parameter_a", "parameter_b"]
     assert summary["result"]["forecast_lead_days"] == [1, 2]
+    assert summary["forecast_probability_maximum_absolute_error"] == {
+        "full": 0.0,
+        "none": 1.1102230246251565e-16,
+    }
     assert case.output.is_dir()
     assert case.output.with_name(case.output.name + ".preregistered.json").is_file()
     cross_checks = json.loads((case.output / "cross_checks.json").read_text(encoding="utf-8"))
@@ -2069,12 +2135,20 @@ def test_state_weight_runner_packages_auditable_evidence_and_refuses_second_run(
     assert cross_checks["historical_full_combination"]["maximum_absolute_error"] <= 1e-12
     assert cross_checks["historical_none_combination"]["maximum_absolute_error"] <= 1e-12
     assert cross_checks["parameter_vectors_direct"]["maximum_absolute_error"] == 0.0
+    assert cross_checks["forecast_probability_freezing_full"] == {
+        "contract": "maximum_absolute_error<=1e-12",
+        "maximum_absolute_error": 0.0,
+        "passed": True,
+    }
+    assert cross_checks["forecast_probability_freezing_none"]["passed"] is True
     with np.load(case.output / "evidence.npz", allow_pickle=False) as evidence:
         required_keys = {
             "driver__candidate_forecasts_full",
             "driver__candidate_forecasts_none",
             "driver__final_probabilities_full",
             "driver__final_probabilities_none",
+            "driver__forecast_probability_maximum_absolute_error_full",
+            "driver__forecast_probability_maximum_absolute_error_none",
             "driver__final_candidate_states_full",
             "driver__final_candidate_covariances_none",
             "driver__full_states_full_weights",
@@ -2289,6 +2363,24 @@ def test_state_weight_runner_binds_execution_config_before_preregistration(
 
     assert case.calls["compare"] == 0
     assert not case.output.with_name(case.output.name + ".preregistered.json").exists()
+
+
+def test_state_weight_runner_rejects_probability_freezing_error_above_tolerance(
+    tmp_path,
+    monkeypatch,
+):
+    case = _state_weight_runner_case(tmp_path, monkeypatch)
+    case.driver["forecast_probability_maximum_absolute_error_none"].fill(2e-12)
+
+    with pytest.raises(RuntimeError, match="frozen-probability contract"):
+        case.runner.run(case.root, case.config_path, case.output)
+
+    assert case.calls["compare"] == 1
+    assert not case.output.exists()
+    assert not case.output.with_name(case.output.name + ".incomplete").exists()
+    assert case.output.with_name(
+        case.output.name + ".preregistered.json"
+    ).exists()
 
 
 def test_state_weight_runner_rejects_nonfinite_statistics_before_package(

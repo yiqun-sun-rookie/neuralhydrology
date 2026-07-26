@@ -324,6 +324,28 @@ def _computed_cross_checks(driver, reference, candidate_ids, candidate_parameter
     checks["historical_none_combination"] = _tolerance_check(
         "historical none combination", driver["none_states_none_weights"], reference["forecast_none"]
     )
+    expected_probability_error_shape = np.asarray(
+        reference["probabilities_full"]
+    ).shape[:2]
+    for mode in ("full", "none"):
+        field = f"forecast_probability_maximum_absolute_error_{mode}"
+        values = np.asarray(driver[field], dtype=np.float64)
+        maximum_error = float(np.max(values, initial=0.0))
+        passed = bool(
+            values.shape == expected_probability_error_shape
+            and np.all(np.isfinite(values))
+            and np.all(values >= 0.0)
+            and maximum_error <= 1e-12
+        )
+        checks[f"forecast_probability_freezing_{mode}"] = {
+            "contract": "maximum_absolute_error<=1e-12",
+            "maximum_absolute_error": maximum_error,
+            "passed": passed,
+        }
+        if not passed:
+            raise RuntimeError(
+                f"{field} violates the frozen-probability contract"
+            )
     checks["candidate_parameter_mapping"] = {
         "contract": "explicit_saved_mapping", "maximum_absolute_error": 0.0,
         "passed": bool(len(candidate_ids) == len(candidate_parameter_ids)),
@@ -691,6 +713,13 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
         "sealed_ideal_input_evidence_sha256": _sha256(ideal_path),
         "sealed_forecast_reference_evidence_sha256": _sha256(reference_path),
         "config_sha256": config_hash,
+        "forecast_probability_maximum_absolute_error": {
+            mode: float(
+                cross_checks[f"forecast_probability_freezing_{mode}"][
+                    "maximum_absolute_error"
+                ]
+            ) for mode in ("full", "none")
+        },
         "result": _statistics_summary(
             statistics, ideal["forecast_lead_days"]
         ),
