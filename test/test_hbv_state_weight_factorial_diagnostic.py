@@ -924,3 +924,134 @@ def test_compare_state_weight_factorial_rejects_invalid_terminal_results(
             observation_standard_deviation=0.05,
             factor_transition_stay_probability=0.98,
         )
+
+
+def _valid_driver_terminal_result(interaction_mode):
+    probabilities = np.vstack(
+        [
+            np.full(3, 1.0 / 3.0),
+            np.full(3, 1.0 / 3.0),
+            [0.6, 0.3, 0.1],
+        ]
+    )
+    offset = 10.0 if interaction_mode == "full" else 0.0
+    candidate_forecasts = offset + np.asarray(
+        [[1.0, 2.0, 4.0], [10.0, 20.0, 40.0]],
+        dtype=np.float64,
+    )
+    return diagnostic.TerminalAssimilationForecast(
+        daily_probabilities=probabilities,
+        final_candidate_states=np.zeros((3, 15), dtype=np.float64),
+        final_candidate_covariances=np.broadcast_to(
+            np.eye(15),
+            (3, 15, 15),
+        ).copy(),
+        candidate_forecasts=candidate_forecasts,
+        combined_forecast=candidate_forecasts @ probabilities[-1],
+    )
+
+
+def test_compare_state_weight_factorial_allows_nonfinite_unused_segments(
+    monkeypatch,
+):
+    sealed_inputs, candidates = _sealed_driver_inputs()
+    block_count = len(sealed_inputs["block_ids"])
+    unused_forcing_tail = np.full((block_count, 2, 3), np.nan)
+    sealed_inputs["forcing_blocks"] = np.concatenate(
+        [sealed_inputs["forcing_blocks"], unused_forcing_tail],
+        axis=1,
+    )
+    sealed_inputs["forcing_blocks"][:, :2, :] = np.nan
+    sealed_inputs["observed_discharge"][:, :, 3:] = np.nan
+    sealed_inputs["truth_primary_candidate_indices"] = sealed_inputs[
+        "truth_primary_candidate_indices"
+    ].astype(np.float64)
+    sealed_inputs["truth_primary_candidate_indices"][:, 3:] = np.nan
+    calls = []
+
+    def fake_assimilation(**kwargs):
+        calls.append(kwargs)
+        assert np.all(np.isfinite(kwargs["active_forcing"]))
+        assert np.all(np.isfinite(kwargs["observations"]))
+        return _valid_driver_terminal_result(kwargs["interaction_mode"])
+
+    monkeypatch.setattr(diagnostic, "assimilate_terminal_forecast", fake_assimilation)
+
+    result = diagnostic.compare_state_weight_factorial(
+        sealed_inputs,
+        candidates,
+        observation_standard_deviation=0.05,
+        factor_transition_stay_probability=0.98,
+    )
+
+    assert len(calls) == 8
+    assert result["truth_forecasts"].shape == (2, 2, 2)
+    for call in calls:
+        assert call["active_forcing"].shape == (5, 3)
+        assert call["observations"].shape == (3,)
+
+
+@pytest.mark.parametrize(
+    "invalid_consumed_value",
+    [
+        "forcing",
+        "observation",
+        "label_nonfinite",
+        "label_fractional",
+        "label_out_of_range",
+    ],
+)
+def test_compare_state_weight_factorial_rejects_invalid_consumed_values(
+    monkeypatch,
+    invalid_consumed_value,
+):
+    sealed_inputs, candidates = _sealed_driver_inputs()
+    if invalid_consumed_value == "forcing":
+        sealed_inputs["forcing_blocks"][0, 2, 0] = np.nan
+    elif invalid_consumed_value == "observation":
+        sealed_inputs["observed_discharge"][0, 0, 2] = np.nan
+    else:
+        labels = sealed_inputs["truth_primary_candidate_indices"].astype(np.float64)
+        labels[0, 2] = {
+            "label_nonfinite": np.nan,
+            "label_fractional": 1.5,
+            "label_out_of_range": 3.0,
+        }[invalid_consumed_value]
+        sealed_inputs["truth_primary_candidate_indices"] = labels
+    monkeypatch.setattr(
+        diagnostic,
+        "assimilate_terminal_forecast",
+        lambda **kwargs: pytest.fail("invalid consumed input reached assimilation"),
+    )
+
+    with pytest.raises(ValueError):
+        diagnostic.compare_state_weight_factorial(
+            sealed_inputs,
+            candidates,
+            observation_standard_deviation=0.05,
+            factor_transition_stay_probability=0.98,
+        )
+
+
+def test_compare_state_weight_factorial_rejects_zero_truth_trials(monkeypatch):
+    sealed_inputs, candidates = _sealed_driver_inputs()
+    sealed_inputs["observed_discharge"] = sealed_inputs["observed_discharge"][:, :0]
+    sealed_inputs["truth_forecast_discharge"] = sealed_inputs[
+        "truth_forecast_discharge"
+    ][:, :0]
+    sealed_inputs["truth_primary_candidate_indices"] = sealed_inputs[
+        "truth_primary_candidate_indices"
+    ][:0]
+    monkeypatch.setattr(
+        diagnostic,
+        "assimilate_terminal_forecast",
+        lambda **kwargs: pytest.fail("zero truth trials reached assimilation"),
+    )
+
+    with pytest.raises(ValueError):
+        diagnostic.compare_state_weight_factorial(
+            sealed_inputs,
+            candidates,
+            observation_standard_deviation=0.05,
+            factor_transition_stay_probability=0.98,
+        )

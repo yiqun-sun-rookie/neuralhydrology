@@ -511,11 +511,13 @@ def compare_state_weight_factorial(
         or forcing_blocks.shape[0] != block_count
         or forcing_blocks.shape[2] != 3
         or forcing_blocks.shape[1] < active_end
-        or not np.all(np.isfinite(forcing_blocks))
     ):
         raise ValueError(
-            "forcing_blocks must be finite and cover warmup, assimilation, and forecast"
+            "forcing_blocks must cover warmup, assimilation, and forecast"
         )
+    consumed_forcing = forcing_blocks[:, warmup_days:active_end]
+    if not np.all(np.isfinite(consumed_forcing)):
+        raise ValueError("consumed forcing values must be finite")
     initial_parameter_states = _as_real_float_array(
         _sealed_driver_value(sealed_inputs, "initial_parameter_states"),
         "initial_parameter_states",
@@ -551,12 +553,21 @@ def compare_state_weight_factorial(
         raise ValueError(
             "truth_primary_candidate_indices must cover every assimilation day"
         )
-    if not np.issubdtype(truth_labels_raw.dtype, np.integer):
-        raise ValueError("truth_primary_candidate_indices must contain integers")
-    truth_labels = np.asarray(truth_labels_raw, dtype=np.int64)
-    truth_count = truth_labels.shape[0]
-    if np.any(truth_labels < 0) or np.any(truth_labels >= candidate_count):
-        raise ValueError("truth_primary_candidate_indices is outside parameter_ids")
+    truth_count = truth_labels_raw.shape[0]
+    if truth_count == 0:
+        raise ValueError("truth_primary_candidate_indices must contain a truth trial")
+    final_truth_labels_float = _as_real_float_array(
+        truth_labels_raw[:, assimilation_days - 1],
+        "final truth candidate indices",
+    )
+    if (
+        not np.all(np.isfinite(final_truth_labels_float))
+        or np.any(final_truth_labels_float != np.trunc(final_truth_labels_float))
+        or np.any(final_truth_labels_float < 0)
+        or np.any(final_truth_labels_float >= candidate_count)
+    ):
+        raise ValueError("final truth candidate indices must be valid integers")
+    final_truth_labels = np.asarray(final_truth_labels_float, dtype=np.int64)
 
     observations = _as_real_float_array(
         _sealed_driver_value(sealed_inputs, "observed_discharge"),
@@ -566,11 +577,13 @@ def compare_state_weight_factorial(
         observations.ndim != 3
         or observations.shape[:2] != (block_count, truth_count)
         or observations.shape[2] < assimilation_days
-        or not np.all(np.isfinite(observations))
     ):
         raise ValueError(
-            "observed_discharge must be finite and cover each block, truth, and assimilation day"
+            "observed_discharge must cover each block, truth, and assimilation day"
         )
+    consumed_observations = observations[:, :, :assimilation_days]
+    if not np.all(np.isfinite(consumed_observations)):
+        raise ValueError("consumed observed discharge must be finite")
     truth_forecasts = _as_real_float_array(
         _sealed_driver_value(sealed_inputs, "truth_forecast_discharge"),
         "truth_forecast_discharge",
@@ -590,7 +603,7 @@ def compare_state_weight_factorial(
         for index, parameter_id in enumerate(definition_parameter_ids)
     }
     final_truth_parameter_ids = tuple(
-        str(parameter_ids[label]) for label in truth_labels[:, assimilation_days - 1]
+        str(parameter_ids[label]) for label in final_truth_labels
     )
     final_true_candidate_indices = np.asarray(
         [candidate_axis[parameter_id] for parameter_id in final_truth_parameter_ids],
