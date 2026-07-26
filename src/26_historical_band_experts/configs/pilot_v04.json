@@ -1,0 +1,28 @@
+{
+  "experiment_family": "persistent_historical_context_v04",
+  "mode": "pilot",
+  "basin_file": "src/26_historical_band_experts/configs/pilot_basins_60.txt",
+  "basin_file_sha256": "3160dad3b22200fdb596164c9f69e4fbe19cc156cfad768beb193efea7b26b65",
+  "target_bundle_sha256": "d4c93675eefd433515d6f7e10943caea31c6eb7e30533d4c387cf9325886e05c",
+  "reference_results_root": "results/26_historical_band_experts/classic_lstm_historical_context_v03",
+  "reference_summary_sha256": "8b5d2469fb36c074ccc5d621095571d1099092eb46179022829632b8ca49f4d0",
+  "design_commit": "cff213e7d052030783367c4b875936ca4c33ef9b",
+  "results_root": "results/26_historical_band_experts/persistent_historical_context_v04",
+  "epochs": 30,
+  "batch_size": 256,
+  "validation_batch_size": 512,
+  "learning_rate_schedule": {
+    "1": 0.001,
+    "12": 0.0005,
+    "22": 0.0001
+  },
+  "gradient_clip": 1.0,
+  "recent_hidden_size": 256,
+  "history_hidden_size": 24,
+  "context_size": 8,
+  "residual_size": 32,
+  "initial_forget_bias": 5.0,
+  "output_dropout": 0.4,
+  "limit_batches": 0,
+  "limit_validation_samples": 0
+}

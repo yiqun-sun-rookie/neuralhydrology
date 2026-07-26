@@ -241,3 +241,14 @@ def test_v04_config_snapshot_records_variant_and_seed(tmp_path):
     snapshot = json.loads((output_dir / "config.json").read_text(encoding="utf-8"))
     assert snapshot["variant"] == "classic_lstm_256"
     assert snapshot["seed"] == 100
+
+
+@pytest.mark.parametrize(("name", "mode"), [("smoke_v04.json", "smoke"), ("pilot_v04.json", "pilot")])
+def test_v04_tracked_configs_are_valid_and_bound(name, mode):
+    config_path = Path(__file__).resolve().parents[1] / "configs" / name
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    train_v04.validate_frozen_config_v04(config)
+    assert config["mode"] == mode
+    assert config["reference_summary_sha256"] == (
+        "8b5d2469fb36c074ccc5d621095571d1099092eb46179022829632b8ca49f4d0"
+    )

@@ -1,0 +1,28 @@
+{
+  "experiment_family": "persistent_historical_context_v04",
+  "mode": "smoke",
+  "basin_file": "src/26_historical_band_experts/configs/smoke_basins_6.txt",
+  "basin_file_sha256": "ac8b7fd27817352ce028cdcb5c41d6f39ed8eddaca3d0abefbaccebca012fa31",
+  "target_bundle_sha256": "7990b59e9460a3af00a96646de565e1fd60c00b7659de690ce5b47e13d5d41aa",
+  "reference_results_root": "results/26_historical_band_experts/classic_lstm_historical_context_v03",
+  "reference_summary_sha256": "8b5d2469fb36c074ccc5d621095571d1099092eb46179022829632b8ca49f4d0",
+  "design_commit": "cff213e7d052030783367c4b875936ca4c33ef9b",
+  "results_root": "results/26_historical_band_experts/persistent_historical_context_v04_smoke",
+  "epochs": 2,
+  "batch_size": 256,
+  "validation_batch_size": 128,
+  "learning_rate_schedule": {
+    "1": 0.001,
+    "12": 0.0005,
+    "22": 0.0001
+  },
+  "gradient_clip": 1.0,
+  "recent_hidden_size": 256,
+  "history_hidden_size": 24,
+  "context_size": 8,
+  "residual_size": 32,
+  "initial_forget_bias": 5.0,
+  "output_dropout": 0.4,
+  "limit_batches": 2,
+  "limit_validation_samples": 120
+}
