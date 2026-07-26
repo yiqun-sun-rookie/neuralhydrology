@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -15,6 +16,13 @@ from hbv_multilead_joint_uncertainty.observation_free_forecast_validation import
 from hbv_multilead_joint_uncertainty.scripts.run_observation_free_forecast_validation import (  # noqa: E402
     run as run_packaged_validation,
 )
+
+
+IDENTITY_FORECAST_CONTRACT = {
+    "candidate_probabilities": "fixed_at_final_assimilation_posterior",
+    "model_transition": "identity",
+    "cross_candidate_state_mixing": False,
+}
 
 
 BASE_PARAMETERS = {
@@ -92,7 +100,6 @@ def _run():
             dtype=np.float64,
         ),
         observation_standard_deviation=0.05,
-        factor_stay_probability=0.98,
     )
 
 
@@ -133,16 +140,19 @@ def test_nine_candidate_forecast_matches_independent_seven_day_reference():
     )
 
 
-def test_forecast_probabilities_use_transition_only_and_source_bank_is_immutable():
+def test_forecast_probabilities_stay_fixed_and_source_bank_is_immutable():
     result = _run()
 
-    expected = np.empty_like(result.production_probabilities)
-    probabilities = result.initial_probabilities.copy()
-    for day in range(7):
-        probabilities = result.reference_transition_matrix.T @ probabilities
-        probabilities /= probabilities.sum()
-        expected[:, day] = probabilities
-    np.testing.assert_allclose(result.production_probabilities, expected, rtol=0.0, atol=2e-15)
+    expected = np.broadcast_to(
+        result.initial_probabilities,
+        result.production_probabilities.shape,
+    )
+    np.testing.assert_allclose(
+        result.production_probabilities,
+        expected,
+        rtol=0.0,
+        atol=2e-15,
+    )
     assert result.maximum_source_state_mutation == 0.0
     assert result.maximum_source_covariance_mutation == 0.0
     assert result.maximum_source_probability_mutation == 0.0
@@ -182,13 +192,39 @@ def test_one_three_seven_day_selection_and_three_day_prefix_are_bitwise_exact():
     )
 
 
+@pytest.mark.parametrize("version", ("v01", "v02"))
+def test_packaged_validation_rejects_historical_forecast_contract_before_work(
+    tmp_path,
+    version,
+):
+    source = (
+        REPO_ROOT
+        / "src"
+        / "hbv_multilead_joint_uncertainty"
+        / "configs"
+        / f"observation_free_forecast_validation_{version}.json"
+    )
+    config = json.loads(source.read_text(encoding="utf-8"))
+    config["experiment_id"] = f"obsolete_forecast_contract_{version}"
+    config_path = tmp_path / "config.json"
+    config_path.write_text(json.dumps(config), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="identity forecast contract"):
+        run_packaged_validation(
+            REPO_ROOT,
+            config_path,
+            tmp_path / config["experiment_id"],
+            tmp_path / f"registry_{version}.json",
+        )
+
+
 def test_packaged_validation_records_exact_resource_and_evidence_manifests(tmp_path):
     source = (
         REPO_ROOT
         / "src"
         / "hbv_multilead_joint_uncertainty"
         / "configs"
-        / "observation_free_forecast_validation_v01.json"
+        / "observation_free_forecast_validation_v03.json"
     )
     config = json.loads(source.read_text(encoding="utf-8"))
     config["experiment_id"] = "observation_free_forecast_validation_test"
@@ -203,6 +239,7 @@ def test_packaged_validation_records_exact_resource_and_evidence_manifests(tmp_p
 
     assert summary["status"] == "passed"
     resource = json.loads((output / "resource_preflight.json").read_text(encoding="utf-8"))
+    assert summary["forecast_contract"] == IDENTITY_FORECAST_CONTRACT
     checksums = json.loads((output / "checksums.json").read_text(encoding="utf-8"))
     with np.load(output / "evidence.npz") as arrays:
         numeric_bytes = sum(

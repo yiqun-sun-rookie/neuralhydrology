@@ -3,6 +3,7 @@ import json
 import hashlib
 import subprocess
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 
@@ -11,6 +12,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 import hbv_multilead_joint_uncertainty as multilead  # noqa: E402
 from hbv_joint_uncertainty.hbv_adapter import simulate_adapter  # noqa: E402
+from hbv_multilead_joint_uncertainty.scripts import (  # noqa: E402
+    run_synthetic_truth_validation as synthetic_truth_runner,
+)
 
 
 PARAMETERS = {
@@ -86,6 +90,25 @@ def test_reference_truth_does_not_call_adapter_transition_or_observation(monkeyp
     assert truth.discharge.shape == (30,)
 
 
+def test_dependency_manifest_handles_unreadable_pip_stderr(monkeypatch):
+    captured = {}
+
+    def failed_pip_freeze(*args, **kwargs):
+        captured.update(kwargs)
+        return SimpleNamespace(returncode=1, stdout=None, stderr=None)
+
+    monkeypatch.setattr(synthetic_truth_runner.subprocess, "run", failed_pip_freeze)
+
+    _, _, pip_freeze, pip_freeze_error = synthetic_truth_runner._dependency_manifests()
+
+    assert pip_freeze.startswith(
+        "# Generated from installed distribution metadata because pip freeze failed."
+    )
+    assert pip_freeze_error == ""
+    assert captured["encoding"] == "utf-8"
+    assert captured["errors"] == "replace"
+
+
 def test_validation_runner_writes_atomic_reproducible_evidence(tmp_path):
     repo_root = Path(__file__).resolve().parents[1]
     config = {
@@ -124,6 +147,8 @@ def test_validation_runner_writes_atomic_reproducible_evidence(tmp_path):
         capture_output=True,
         text=True,
         check=False,
+        encoding="utf-8",
+        errors="replace",
     )
     assert completed.returncode == 0, completed.stderr
     assert not output_dir.with_name(output_dir.name + ".incomplete").exists()
@@ -213,13 +238,29 @@ def test_validation_runner_recovers_missing_external_registry_without_recompute(
         str(registry_path),
     ]
 
-    first = subprocess.run(command, cwd=repo_root, capture_output=True, text=True, check=False)
+    first = subprocess.run(
+        command,
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        check=False,
+        encoding="utf-8",
+        errors="replace",
+    )
     assert first.returncode != 0
     assert output_dir.exists()
     evidence_hash = hashlib.sha256((output_dir / "evidence.npz").read_bytes()).hexdigest()
 
     blocker.unlink()
-    second = subprocess.run(command, cwd=repo_root, capture_output=True, text=True, check=False)
+    second = subprocess.run(
+        command,
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        check=False,
+        encoding="utf-8",
+        errors="replace",
+    )
     assert second.returncode == 0, second.stderr
     assert registry_path.exists()
     assert not registry_path.with_name(registry_path.name + ".incomplete").exists()
@@ -261,7 +302,15 @@ def test_registry_recovery_rejects_a_checksum_manifest_with_a_missing_required_e
         "--registry-path",
         str(registry_path),
     ]
-    first = subprocess.run(command, cwd=repo_root, capture_output=True, text=True, check=False)
+    first = subprocess.run(
+        command,
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        check=False,
+        encoding="utf-8",
+        errors="replace",
+    )
     assert first.returncode == 0, first.stderr
 
     registry_path.unlink()
@@ -271,7 +320,15 @@ def test_registry_recovery_rejects_a_checksum_manifest_with_a_missing_required_e
     checksums_path.write_text(json.dumps(checksums), encoding="utf-8")
     (output_dir / "evidence.npz").unlink()
 
-    recovered = subprocess.run(command, cwd=repo_root, capture_output=True, text=True, check=False)
+    recovered = subprocess.run(
+        command,
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        check=False,
+        encoding="utf-8",
+        errors="replace",
+    )
     assert recovered.returncode != 0
     assert "required evidence manifest" in recovered.stderr
     assert not registry_path.exists()
@@ -522,6 +579,8 @@ def test_single_filter_runner_saves_a_complete_component_evidence_package(tmp_pa
         capture_output=True,
         text=True,
         check=False,
+        encoding="utf-8",
+        errors="replace",
     )
     assert completed.returncode == 0, completed.stderr
     summary = json.loads((output_dir / "summary.json").read_text(encoding="utf-8"))
