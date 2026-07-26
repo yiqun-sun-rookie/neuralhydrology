@@ -1,0 +1,36 @@
+{
+  "experiment_family": "hierarchical_rich_historical_context_v05",
+  "mode": "smoke",
+  "basin_file": "src/26_historical_band_experts/configs/smoke_basins_6.txt",
+  "basin_file_sha256": "ac8b7fd27817352ce028cdcb5c41d6f39ed8eddaca3d0abefbaccebca012fa31",
+  "target_bundle_sha256": "7990b59e9460a3af00a96646de565e1fd60c00b7659de690ce5b47e13d5d41aa",
+  "reference_v03_results_root": "results/26_historical_band_experts/classic_lstm_historical_context_v03",
+  "reference_v03_summary_sha256": "8b5d2469fb36c074ccc5d621095571d1099092eb46179022829632b8ca49f4d0",
+  "reference_v04_results_root": "results/26_historical_band_experts/persistent_historical_context_v04",
+  "reference_v04_summary_sha256": "fb1999a18e3c30c0b34bbe79e8eff5c4fd2b41f077bc878725a6cbe6e62494ac",
+  "design_commit": "f73ee95281da2b78ecefddaeb819f3e40c751eed",
+  "results_root": "results/26_historical_band_experts/hierarchical_rich_historical_context_v05_smoke",
+  "epochs": 2,
+  "batch_size": 256,
+  "validation_batch_size": 128,
+  "learning_rate_schedule": {
+    "1": 0.001,
+    "12": 0.0005,
+    "22": 0.0001
+  },
+  "gradient_clip": 1.0,
+  "recent_hidden_size": 256,
+  "medium_hidden_size": 64,
+  "old_within_hidden_size": 64,
+  "old_across_hidden_size": 128,
+  "history_statistics": [
+    "mean",
+    "population_std",
+    "minimum",
+    "maximum"
+  ],
+  "initial_forget_bias": 5.0,
+  "output_dropout": 0.4,
+  "limit_batches": 1,
+  "limit_validation_samples": 8
+}
