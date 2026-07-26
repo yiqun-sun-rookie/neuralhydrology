@@ -113,6 +113,81 @@ def test_arms_module_is_importable():
     assert importlib.util.find_spec(ARMS_MODULE) is not None
 
 
+def test_highest_posterior_forecast_uses_final_posterior_for_all_leads():
+    arms = importlib.import_module(ARMS_MODULE)
+    daily_probabilities = np.asarray(
+        [[0.90, 0.05, 0.05], [0.05, 0.90, 0.05], [0.10, 0.20, 0.70]],
+        dtype=np.float64,
+    )
+    candidate_forecasts = np.asarray(
+        [[10.0, 11.0, 12.0], [20.0, 21.0, 22.0], [30.0, 31.0, 32.0]],
+        dtype=np.float64,
+    )
+
+    selected_index, selected_forecast = arms.highest_posterior_forecast(
+        daily_probabilities, candidate_forecasts
+    )
+
+    assert selected_index == 2
+    np.testing.assert_array_equal(selected_forecast, candidate_forecasts[:, 2])
+
+
+def test_highest_posterior_forecast_tie_selects_lowest_candidate_index():
+    arms = importlib.import_module(ARMS_MODULE)
+    daily_probabilities = np.asarray(
+        [[0.10, 0.80, 0.10], [0.05, 0.475, 0.475]], dtype=np.float64
+    )
+    candidate_forecasts = np.asarray(
+        [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], dtype=np.float64
+    )
+
+    selected_index, selected_forecast = arms.highest_posterior_forecast(
+        daily_probabilities, candidate_forecasts
+    )
+
+    assert selected_index == 1
+    np.testing.assert_array_equal(selected_forecast, candidate_forecasts[:, 1])
+
+
+@pytest.mark.parametrize(
+    "daily_probabilities,candidate_forecasts",
+    [
+        (np.asarray([0.4, 0.6]), np.asarray([[1.0, 2.0]])),
+        (np.empty((0, 2)), np.asarray([[1.0, 2.0]])),
+        (np.empty((2, 0)), np.empty((1, 0))),
+        (np.asarray([[0.4, 0.6]]), np.asarray([1.0, 2.0])),
+        (np.asarray([[0.4, 0.6]]), np.empty((0, 2))),
+        (np.asarray([[0.4, 0.6]]), np.asarray([[1.0, 2.0, 3.0]])),
+    ],
+)
+def test_highest_posterior_forecast_rejects_invalid_shapes(
+    daily_probabilities, candidate_forecasts
+):
+    arms = importlib.import_module(ARMS_MODULE)
+    with pytest.raises(ValueError):
+        arms.highest_posterior_forecast(daily_probabilities, candidate_forecasts)
+
+
+def test_highest_posterior_forecast_does_not_mutate_inputs():
+    arms = importlib.import_module(ARMS_MODULE)
+    daily_probabilities = np.asarray(
+        [[0.70, 0.30], [0.25, 0.75]], dtype=np.float64
+    )
+    candidate_forecasts = np.asarray(
+        [[1.0, 2.0], [3.0, 4.0], [5.0, 6.0]], dtype=np.float64
+    )
+    expected_probabilities = daily_probabilities.copy()
+    expected_forecasts = candidate_forecasts.copy()
+
+    _, selected_forecast = arms.highest_posterior_forecast(
+        daily_probabilities, candidate_forecasts
+    )
+    selected_forecast[0] = -999.0
+
+    np.testing.assert_array_equal(daily_probabilities, expected_probabilities)
+    np.testing.assert_array_equal(candidate_forecasts, expected_forecasts)
+
+
 def test_full_arm_reproduces_frozen_runner_bit_for_bit(switching_result):
     """The parameterized full arm must equal the frozen runner's parameter_only output."""
     arms = importlib.import_module(ARMS_MODULE)

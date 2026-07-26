@@ -25,6 +25,30 @@ from .methods import MethodCandidate, build_method_bank
 from .three_stage_switching_validation import _assimilate_record_then_forecast
 
 
+def highest_posterior_forecast(
+    daily_probabilities: np.ndarray,
+    candidate_forecasts: np.ndarray,
+) -> tuple[int, np.ndarray]:
+    """Select one candidate from the final assimilation posterior for all leads."""
+    probabilities = np.asarray(daily_probabilities)
+    forecasts = np.asarray(candidate_forecasts)
+    if probabilities.ndim != 2 or 0 in probabilities.shape:
+        raise ValueError(
+            "daily_probabilities must have shape [assimilation_days, candidates]"
+        )
+    if forecasts.ndim != 2 or 0 in forecasts.shape:
+        raise ValueError(
+            "candidate_forecasts must have shape [lead_times, candidates]"
+        )
+    if forecasts.shape[1] != probabilities.shape[1]:
+        raise ValueError(
+            "daily_probabilities and candidate_forecasts must have the same "
+            "candidate count"
+        )
+    selected_index = int(np.argmax(probabilities[-1]))
+    return selected_index, forecasts[:, selected_index].copy()
+
+
 def assimilate_family_arm(
     candidates: Sequence[MethodCandidate],
     initial_states: Mapping[str, np.ndarray],
