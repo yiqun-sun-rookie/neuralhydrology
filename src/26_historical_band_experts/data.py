@@ -214,7 +214,7 @@ def load_target_bundle(
 
     expected_dates = pd.date_range(periods.train_start, periods.validation_end, freq="D")
     expected_index = pd.MultiIndex.from_product(
-        [basin_ids, expected_dates], names=["basin", "date"]
+        [tuple(sorted(basin_ids)), expected_dates], names=["basin", "date"]
     )
     ordered = frame.sort_values(["basin", "date"]).reset_index(drop=True)
     actual_index = pd.MultiIndex.from_frame(ordered[["basin", "date"]])

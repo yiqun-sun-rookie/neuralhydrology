@@ -130,6 +130,15 @@ def test_target_bundle_accepts_only_complete_frozen_basin_dates(tmp_path):
     assert frame["date"].min() == pd.Timestamp("1999-10-01")
     assert frame["date"].max() == pd.Timestamp("2008-09-30")
 
+def test_target_bundle_accepts_frozen_basin_list_in_selection_order(tmp_path):
+    basins = ("00000002", "00000001")
+    path, digest, dates = _write_complete_target_bundle(tmp_path, basins=basins)
+
+    frame = data.load_target_bundle(path, digest, basins)
+
+    assert len(frame) == 2 * len(dates)
+    assert tuple(frame["basin"].drop_duplicates()) == ("00000001", "00000002")
+
 
 def test_target_bundle_rejects_hash_mismatch(tmp_path):
     path, _digest, _dates = _write_complete_target_bundle(tmp_path)
