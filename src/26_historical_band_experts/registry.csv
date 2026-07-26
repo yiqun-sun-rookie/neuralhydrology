@@ -1,0 +1,2 @@
+exp_id,type,hypothesis,base_config,changed_factor,fixed_factors,seeds,status,run_dir,best_checkpoint,metrics_path,paper_name,notes
+historical_band_pilot_v01,ablation,Explicit disjoint lag-band experts improve validation NSE over equal-input multiscale fusion,configs/pilot_v01.json,Prediction-level expert heads plus dynamic gate,"data split; basin list; lag bands; parameter budget; optimizer; epochs","100;200;300",planned,results/26_historical_band_experts/pilot_v01,,results/26_historical_band_experts/pilot_v01/summary.json,,Formal evaluation period remains sealed
