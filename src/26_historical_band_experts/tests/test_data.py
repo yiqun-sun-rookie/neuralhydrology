@@ -202,3 +202,21 @@ def test_candidate_loader_source_has_no_raw_discharge_reference():
 
     assert "load_camels_us_discharge" not in source
     assert "usgs_streamflow" not in source
+
+def test_trusted_preparation_refuses_to_overwrite_existing_bundle(tmp_path):
+    from prepare_targets import prepare_target_bundle
+
+    basin_file = tmp_path / "basins.txt"
+    basin_file.write_text("00000001\n", encoding="utf-8")
+    output = tmp_path / "targets.csv"
+    output.write_text("preserve", encoding="utf-8")
+
+    with pytest.raises(FileExistsError, match="already exists"):
+        prepare_target_bundle(
+            basins=("00000001",),
+            basin_file=basin_file,
+            output_path=output,
+            load_one=lambda _basin: pd.Series(dtype=float),
+        )
+
+    assert output.read_text(encoding="utf-8") == "preserve"

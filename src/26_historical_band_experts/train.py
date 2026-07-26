@@ -54,6 +54,15 @@ def _sha256(path: Path) -> str:
             digest.update(chunk)
     return digest.hexdigest()
 
+def validate_frozen_file_hash(path: str | Path, expected_sha256: str, label: str) -> str:
+    """Reject a frozen input file whose bytes do not match its configured hash."""
+    actual_sha256 = _sha256(Path(path))
+    if actual_sha256.lower() != str(expected_sha256).lower():
+        raise ValueError(
+            f"{label} SHA-256 mismatch: expected {expected_sha256}, got {actual_sha256}"
+        )
+    return actual_sha256
+
 
 def _build_model(variant: str) -> torch.nn.Module:
     if variant == "mainstream_lstm":
@@ -294,6 +303,10 @@ def main() -> None:
     if str(expected_targets_sha256).lower() != args.targets_sha256.lower():
         raise ValueError("command target SHA-256 does not match the frozen configuration")
     basin_file = _REPO / config["basin_file"]
+    expected_basin_sha256 = config.get("basin_file_sha256")
+    if not expected_basin_sha256:
+        raise ValueError("configuration is missing basin_file_sha256")
+    validate_frozen_file_hash(basin_file, expected_basin_sha256, "basin list")
     basins = load_basin_ids(basin_file)
     pack = load_data_pack(
         args.data_dir,

@@ -46,6 +46,10 @@ def prepare_target_bundle(
     load_one: Callable[[str], pd.Series],
 ) -> dict:
     """Write only allowed target dates; never return or print protected observations."""
+    output_path = Path(output_path)
+    manifest_path = output_path.with_suffix(".manifest.json")
+    if output_path.exists() or manifest_path.exists():
+        raise FileExistsError(f"target bundle or manifest already exists: {output_path}")
     basin_ids = tuple(str(basin).zfill(8) for basin in basins)
     if not basin_ids or len(set(basin_ids)) != len(basin_ids):
         raise ValueError("basin identifiers must be nonempty and unique")

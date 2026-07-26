@@ -1,4 +1,5 @@
 from pathlib import Path
+import hashlib
 import json
 import sys
 
@@ -8,6 +9,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import train
 from data import DataPack, default_periods
 from metrics import per_basin_nse
 from train import run_experiment
@@ -135,3 +137,13 @@ def test_metric_csv_round_trip_is_exact(tmp_path):
     reloaded = pd.read_csv(path, dtype={"basin": str})
 
     pd.testing.assert_frame_equal(metrics, reloaded, check_exact=True)
+
+def test_frozen_file_hash_validation_rejects_changed_basin_list(tmp_path):
+    path = tmp_path / "basins.txt"
+    path.write_text("00000001\n", encoding="utf-8")
+    expected = hashlib.sha256(path.read_bytes()).hexdigest()
+
+    assert train.validate_frozen_file_hash(path, expected, "basin list") == expected
+    path.write_text("00000002\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="basin list SHA-256"):
+        train.validate_frozen_file_hash(path, expected, "basin list")
