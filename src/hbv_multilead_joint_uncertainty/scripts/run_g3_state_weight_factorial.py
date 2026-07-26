@@ -22,7 +22,6 @@ from hbv_multilead_joint_uncertainty.methods import build_method_definitions  # 
 from hbv_multilead_joint_uncertainty.scripts.run_three_stage_switching_validation import (  # noqa: E402
     _atomic_json_write,
     _environment,
-    _json_write,
     _load_observation_noise,
     _load_parameter_vectors,
     _load_process_covariances,
@@ -55,6 +54,7 @@ _SOURCE_FILES = (
     "src/hbv_multilead_joint_uncertainty/state_weight_factorial_diagnostic.py",
     "src/hbv_multilead_joint_uncertainty/scripts/run_g3_state_weight_factorial.py",
     "test/test_hbv_state_weight_factorial_diagnostic.py",
+    "test/test_hbv_state_weight_factorial_config_contract.py",
     "src/hbv_multilead_joint_uncertainty/methods.py",
     "src/hbv_multilead_joint_uncertainty/forecast.py",
     "src/hbv_joint_uncertainty/candidates.py",
@@ -93,6 +93,7 @@ def _load_sealed_archive(root, reference, required_arrays, label):
         if missing:
             raise ValueError(f"{label} is missing arrays: {missing}")
         arrays = {name: archive[name].copy() for name in archive.files}
+    _assert_finite_tree(arrays, label)
     return path, arrays
 
 
@@ -136,6 +137,35 @@ def _exact_check(name, actual, expected):
     }
     if not result["passed"]:
         raise ValueError(f"{name} identity mismatch")
+    return result
+
+
+def _bit_exact_check(name, actual, expected):
+    actual_array = np.asarray(actual)
+    expected_array = np.asarray(expected)
+    shape_matches = actual_array.shape == expected_array.shape
+    dtype_matches = actual_array.dtype == expected_array.dtype
+    bytes_match = bool(
+        shape_matches
+        and dtype_matches
+        and actual_array.tobytes(order="C") == expected_array.tobytes(order="C")
+    )
+    result = {
+        "contract": "shape,dtype,and-C-order-bytes",
+        "maximum_absolute_error": _maximum_absolute_error(
+            actual_array, expected_array
+        ),
+        "passed": bytes_match,
+    }
+    if not bytes_match:
+        reasons = []
+        if not shape_matches:
+            reasons.append("shape")
+        if not dtype_matches:
+            reasons.append("dtype")
+        if shape_matches and dtype_matches:
+            reasons.append("bytes")
+        raise ValueError(f"{name} bit-exact mismatch: {', '.join(reasons)}")
     return result
 
 
@@ -220,15 +250,15 @@ def _sealed_driver_inputs(ideal, candidate_ids):
 def _validate_reference_identity(ideal, reference):
     checks = {
         "block_ids": _exact_check("block_ids", reference["block_ids"], ideal["block_ids"]),
-        "forecast_lead_days": _exact_check("forecast_lead_days", reference["leads"], ideal["forecast_lead_days"]),
-        "assimilation_days": _exact_check("assimilation_days", reference["assimilation_days"], ideal["assimilation_days"]),
-        "truth_forecasts": _exact_check("truth_forecasts", reference["truth_forecasts"], ideal["truth_forecast_discharge"]),
+        "forecast_lead_days": _bit_exact_check("forecast_lead_days", reference["leads"], ideal["forecast_lead_days"]),
+        "assimilation_days": _bit_exact_check("assimilation_days", reference["assimilation_days"], ideal["assimilation_days"]),
+        "truth_forecasts": _bit_exact_check("truth_forecasts", reference["truth_forecasts"], ideal["truth_forecast_discharge"]),
     }
     days = _scalar_integer(ideal["assimilation_days"], "assimilation_days")
     labels = np.asarray(ideal["truth_primary_candidate_indices"])
     if labels.ndim != 2 or labels.shape[1] < days:
         raise ValueError("truth_primary_candidate_indices do not cover assimilation")
-    checks["true_candidate_labels"] = _exact_check(
+    checks["true_candidate_labels"] = _bit_exact_check(
         "true_candidate_labels", reference["true_candidate_labels"], labels[:, :days]
     )
     return checks
@@ -255,18 +285,18 @@ def _validate_reference_shapes(ideal, reference, candidate_count):
 
 def _computed_cross_checks(driver, reference, candidate_ids, candidate_parameter_ids, ideal):
     checks = {
-        "new_truth_forecasts": _exact_check("new truth_forecasts", driver["truth_forecasts"], reference["truth_forecasts"]),
-        "new_probabilities_full": _exact_check("new probabilities_full", driver["probabilities_full"], reference["probabilities_full"]),
-        "new_probabilities_none": _exact_check("new probabilities_none", driver["probabilities_none"], reference["probabilities_none"]),
-        "new_none_candidate_forecasts": _exact_check("new forecast_none_candidates", driver["candidate_forecasts_none"], reference["forecast_none_candidates"]),
+        "new_truth_forecasts": _bit_exact_check("new truth_forecasts", driver["truth_forecasts"], reference["truth_forecasts"]),
+        "new_probabilities_full": _bit_exact_check("new probabilities_full", driver["probabilities_full"], reference["probabilities_full"]),
+        "new_probabilities_none": _bit_exact_check("new probabilities_none", driver["probabilities_none"], reference["probabilities_none"]),
+        "new_none_candidate_forecasts": _bit_exact_check("new forecast_none_candidates", driver["candidate_forecasts_none"], reference["forecast_none_candidates"]),
         "new_candidate_ids": _exact_check("new candidate_ids", driver["candidate_ids"], candidate_ids),
         "new_parameter_ids": _exact_check("new parameter_ids", driver["parameter_ids"], ideal["parameter_ids"]),
         "new_block_ids": _exact_check("new block_ids", driver["block_ids"], ideal["block_ids"]),
-        "new_forecast_lead_days": _exact_check("new forecast_lead_days", driver["forecast_lead_days"], ideal["forecast_lead_days"]),
+        "new_forecast_lead_days": _bit_exact_check("new forecast_lead_days", driver["forecast_lead_days"], ideal["forecast_lead_days"]),
     }
     days = _scalar_integer(ideal["assimilation_days"], "assimilation_days")
     labels = np.asarray(reference["true_candidate_labels"])
-    checks["new_final_true_candidate_indices"] = _exact_check(
+    checks["new_final_true_candidate_indices"] = _bit_exact_check(
         "new final_true_candidate_indices", driver["final_true_candidate_indices"], labels[:, days - 1]
     )
     checks["new_final_true_candidate_ids"] = _exact_check(
@@ -346,8 +376,34 @@ def _json_compatible(value):
     return value
 
 
-def _statistics_summary(statistics):
-    result = {}
+def _assert_finite_tree(value, name):
+    if isinstance(value, Mapping):
+        for key, item in value.items():
+            _assert_finite_tree(item, f"{name}.{key}")
+        return
+    if isinstance(value, (tuple, list)):
+        for index, item in enumerate(value):
+            _assert_finite_tree(item, f"{name}[{index}]")
+        return
+    if value is None:
+        return
+    array = np.asarray(value)
+    if np.issubdtype(array.dtype, np.number) and not np.all(np.isfinite(array)):
+        raise ValueError(f"{name} contains non-finite numeric values")
+
+
+def _json_write_strict(path, value):
+    _assert_finite_tree(value, str(path))
+    path.write_text(
+        json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+
+
+def _statistics_summary(statistics, forecast_lead_days):
+    result = {
+        "forecast_lead_days": [int(value) for value in forecast_lead_days]
+    }
     if "combination_rmse" in statistics:
         result["combination_rmse"] = _json_compatible(statistics["combination_rmse"])
     if "effects" in statistics:
@@ -358,10 +414,21 @@ def _statistics_summary(statistics):
         }
     if "wrong_candidate" in statistics:
         fields = ("displacement_ratio", "displacement_ratio_ci_low", "displacement_ratio_ci_high", "equivalent")
+        wrong_candidate = statistics["wrong_candidate"]
         result["wrong_candidate"] = {
-            field: _json_compatible(statistics["wrong_candidate"][field])
-            for field in fields if field in statistics["wrong_candidate"]
+            field: _json_compatible(wrong_candidate[field])
+            for field in fields if field in wrong_candidate
         }
+        if "error_difference" in wrong_candidate:
+            error_fields = (
+                "mean", "ci_low", "ci_high", "baseline_mse",
+                "equivalence_lower", "equivalence_upper", "classification",
+            )
+            result["wrong_candidate"]["error_difference"] = {
+                field: _json_compatible(wrong_candidate["error_difference"][field])
+                for field in error_fields
+                if field in wrong_candidate["error_difference"]
+            }
     if "nonadditivity" in statistics:
         result["nonadditivity"] = {}
         for name in ("prediction", "squared_error"):
@@ -381,17 +448,27 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
     output = output_dir.resolve()
     incomplete = output.with_name(output.name + ".incomplete")
     preregistration_path = output.with_name(output.name + ".preregistered.json")
-    if output.exists() or incomplete.exists() or preregistration_path.exists():
+    preregistration_incomplete = preregistration_path.with_name(
+        preregistration_path.name + ".incomplete"
+    )
+    if any(
+        path.exists()
+        for path in (
+            output, incomplete, preregistration_path, preregistration_incomplete
+        )
+    ):
         raise FileExistsError("refusing to overwrite existing evidence")
 
     config_bytes = config_file.read_bytes()
     config_hash = hashlib.sha256(config_bytes).hexdigest()
     config = json.loads(config_bytes.decode("utf-8"))
+    _assert_finite_tree(config, "configuration")
     if output.name != str(config.get("experiment_id", "")):
         raise ValueError("output directory name must equal experiment_id")
     required_config = {
         "sealed_ideal_input_evidence", "sealed_forecast_reference_evidence",
-        "primary_candidate_method_name", "parameter_source", "process_noise_source",
+        "primary_candidate_method_name", "candidate_order", "matched_blocks",
+        "lead_days", "stage_lengths", "parameter_source", "process_noise_source",
         "observation_noise_source", "factor_transition_stay_probability",
         "bootstrap", "resource_pilot", "protected_paths", "forecast_contract",
         "scope_limit",
@@ -401,7 +478,9 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
         raise ValueError(f"configuration is missing fields: {missing_config}")
 
     protected_paths = tuple((root / str(value)).resolve() for value in config["protected_paths"])
-    for candidate_output in (output, incomplete, preregistration_path):
+    for candidate_output in (
+        output, incomplete, preregistration_path, preregistration_incomplete
+    ):
         _validate_output_is_disjoint_from_protected_paths(candidate_output, protected_paths)
 
     ideal_path, ideal = _load_sealed_archive(
@@ -416,9 +495,49 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
     candidate_ids = _primary_candidate_ids(ideal, primary_method_name)
     parameter_ids = _as_unique_strings(ideal["parameter_ids"], "parameter_ids")
     process_ids = _as_unique_strings(ideal["process_ids"], "process_ids")
+    try:
+        configured_block_ids = np.asarray(
+            [str(block["block_id"]) for block in config["matched_blocks"]],
+            dtype=str,
+        )
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("matched_blocks must define block_ids") from error
+    stage_lengths = config["stage_lengths"]
+    if (
+        not isinstance(stage_lengths, list)
+        or not stage_lengths
+        or any(
+            isinstance(value, bool)
+            or not isinstance(value, int)
+            or value <= 0
+            for value in stage_lengths
+        )
+    ):
+        raise ValueError("stage_lengths must be positive integers")
+    config_binding_checks = {
+        "configured_candidate_order": _exact_check(
+            "configured candidate_order",
+            np.asarray(config["candidate_order"]).astype(str),
+            candidate_ids,
+        ),
+        "configured_block_ids": _exact_check(
+            "configured block_ids", configured_block_ids, ideal["block_ids"]
+        ),
+        "configured_lead_days": _exact_check(
+            "configured lead_days",
+            np.asarray(config["lead_days"]),
+            ideal["forecast_lead_days"],
+        ),
+        "configured_stage_lengths_sum": _exact_check(
+            "configured stage_lengths sum",
+            np.asarray(sum(stage_lengths)),
+            ideal["assimilation_days"],
+        ),
+    }
     _validate_reference_shapes(ideal, reference, len(candidate_ids))
 
     identity_checks = _validate_reference_identity(ideal, reference)
+    identity_checks.update(config_binding_checks)
     identity_checks["configured_parameter_ids"] = _exact_check(
         "configured parameter_ids",
         np.asarray(config["parameter_source"]["parameter_ids"]).astype(str),
@@ -433,13 +552,13 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
     parameter_vectors, parameter_csv, parameter_hash = _load_parameter_vectors(root, config)
     process_covariances, process_scales, process_csv, process_hash = _load_process_covariances(root, config)
     observation_std, observation_csv, observation_hash = _load_observation_noise(root, config)
-    identity_checks["parameter_vectors_direct"] = _exact_check(
+    identity_checks["parameter_vectors_direct"] = _bit_exact_check(
         "parameter_vectors", _parameter_array(parameter_vectors, parameter_ids), ideal["parameter_vectors"]
     )
-    identity_checks["process_covariances_direct"] = _exact_check(
+    identity_checks["process_covariances_direct"] = _bit_exact_check(
         "process_covariances", _process_covariance_array(process_covariances, process_ids), ideal["process_covariances"]
     )
-    identity_checks["observation_standard_deviation_direct"] = _exact_check(
+    identity_checks["observation_standard_deviation_direct"] = _bit_exact_check(
         "observation_standard_deviation", np.asarray(observation_std, dtype=np.float64), ideal["observation_standard_deviation"]
     )
 
@@ -468,6 +587,7 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
         "started_at_utc": started_at,
         "output_directory": str(output),
     }
+    _assert_finite_tree(preregistration, "preregistration")
     _atomic_json_write(preregistration_path, preregistration)
 
     resource = _resource_preflight(config, root)
@@ -489,6 +609,8 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
         int(bootstrap["seed"]),
         float(bootstrap["minimum_rmse_fraction"]),
     )
+    _assert_finite_tree(driver, "driver")
+    _assert_finite_tree(statistics, "statistics")
     computed_checks = _computed_cross_checks(
         driver, reference, candidate_ids, candidate_parameter_ids, ideal
     )
@@ -502,7 +624,15 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
         raise RuntimeError("one or more evidence cross-checks failed")
 
     evidence = {}
-    _flatten_arrays("driver", driver, evidence)
+    driver_evidence = dict(driver)
+    driver_evidence["final_probabilities_full"] = np.asarray(
+        driver["probabilities_full"]
+    )[:, :, -1, :].copy()
+    driver_evidence["final_probabilities_none"] = np.asarray(
+        driver["probabilities_none"]
+    )[:, :, -1, :].copy()
+    _assert_finite_tree(driver_evidence, "driver_evidence")
+    _flatten_arrays("driver", driver_evidence, evidence)
     _flatten_arrays("statistics", statistics, evidence)
     _flatten_arrays("identity", {
         "candidate_ids": candidate_ids,
@@ -527,12 +657,15 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
     }, evidence)
     _flatten_arrays("cross_checks", cross_checks, evidence)
 
+    _assert_finite_tree(cross_checks, "cross_checks")
+    _assert_finite_tree(evidence, "evidence")
+
     incomplete.mkdir(parents=True, exist_ok=False)
     (incomplete / "config_snapshot.json").write_bytes(config_bytes)
     (incomplete / "preregistration.json").write_bytes(preregistration_path.read_bytes())
-    _json_write(incomplete / "resource_preflight.json", resource)
-    _json_write(incomplete / "cross_checks.json", cross_checks)
-    _json_write(incomplete / "environment.json", _environment(root, started_at))
+    _json_write_strict(incomplete / "resource_preflight.json", resource)
+    _json_write_strict(incomplete / "cross_checks.json", cross_checks)
+    _json_write_strict(incomplete / "environment.json", _environment(root, started_at))
     (incomplete / "parameter_vectors.csv").write_bytes(parameter_csv)
     (incomplete / "process_noise_covariances.csv").write_bytes(process_csv)
     (incomplete / "observation_noise.csv").write_bytes(observation_csv)
@@ -558,10 +691,12 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
         "sealed_ideal_input_evidence_sha256": _sha256(ideal_path),
         "sealed_forecast_reference_evidence_sha256": _sha256(reference_path),
         "config_sha256": config_hash,
-        "result": _statistics_summary(statistics),
+        "result": _statistics_summary(
+            statistics, ideal["forecast_lead_days"]
+        ),
     }
-    _json_write(incomplete / "summary.json", summary)
-    _json_write(incomplete / "protected_artifact_integrity.json", {
+    _json_write_strict(incomplete / "summary.json", summary)
+    _json_write_strict(incomplete / "protected_artifact_integrity.json", {
         "configured_paths": config["protected_paths"],
         "before": protected_before,
         "after_evidence_writes": protected_after,
@@ -572,7 +707,7 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
         for path in sorted(incomplete.rglob("*"))
         if path.is_file() and path.name != "checksums.json"
     }
-    _json_write(incomplete / "checksums.json", checksums)
+    _json_write_strict(incomplete / "checksums.json", checksums)
     if not integrity_passed:
         raise RuntimeError("protected-artifact or cross-check integrity gate failed")
     _replace_directory_with_retries(incomplete, output)

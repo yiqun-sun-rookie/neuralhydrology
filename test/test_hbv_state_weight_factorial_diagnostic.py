@@ -1543,7 +1543,10 @@ def test_summarize_state_weight_factorial_keys_do_not_claim_a_pure_state_effect(
     assert not any("pure_state" in key or "state_effect" in key for key in keys)
 
 
-@pytest.mark.parametrize("existing_kind", ["final", "incomplete", "preregistered"])
+@pytest.mark.parametrize(
+    "existing_kind",
+    ["final", "incomplete", "preregistered", "preregistered_incomplete"],
+)
 def test_state_weight_runner_refuses_existing_artifact_before_reading_config(
     tmp_path,
     existing_kind,
@@ -1557,8 +1560,11 @@ def test_state_weight_runner_refuses_existing_artifact_before_reading_config(
         "final": output,
         "incomplete": output.with_name(output.name + ".incomplete"),
         "preregistered": output.with_name(output.name + ".preregistered.json"),
+        "preregistered_incomplete": output.with_name(
+            output.name + ".preregistered.json.incomplete"
+        ),
     }[existing_kind]
-    if existing_kind == "preregistered":
+    if existing_kind in {"preregistered", "preregistered_incomplete"}:
         existing.parent.mkdir(parents=True)
         existing.write_text("frozen", encoding="utf-8")
     else:
@@ -1756,6 +1762,12 @@ def _state_weight_runner_case(tmp_path, monkeypatch):
             "sha256": sha256(reference_path),
         },
         "primary_candidate_method_name": "parameter_only",
+        "candidate_order": candidate_ids.tolist(),
+        "matched_blocks": [
+            {"block_id": str(block_id)} for block_id in block_ids
+        ],
+        "lead_days": leads.tolist(),
+        "stage_lengths": [1, 1],
         "parameter_source": {"parameter_ids": parameter_ids.tolist()},
         "process_noise_source": {
             "process_ids": process_ids.tolist(),
@@ -2003,6 +2015,7 @@ def test_state_weight_runner_source_snapshot_contract_is_complete_and_not_flatte
         "src/hbv_multilead_joint_uncertainty/state_weight_factorial_diagnostic.py",
         "src/hbv_multilead_joint_uncertainty/scripts/run_g3_state_weight_factorial.py",
         "test/test_hbv_state_weight_factorial_diagnostic.py",
+        "test/test_hbv_state_weight_factorial_config_contract.py",
         "src/hbv_multilead_joint_uncertainty/methods.py",
         "src/hbv_multilead_joint_uncertainty/forecast.py",
         "src/hbv_joint_uncertainty/candidates.py",
@@ -2048,6 +2061,7 @@ def test_state_weight_runner_packages_auditable_evidence_and_refuses_second_run(
     assert summary["integrity_status"] == "passed"
     assert summary["candidate_ids"] == case.candidate_ids.tolist()
     assert summary["candidate_parameter_ids"] == ["parameter_a", "parameter_b"]
+    assert summary["result"]["forecast_lead_days"] == [1, 2]
     assert case.output.is_dir()
     assert case.output.with_name(case.output.name + ".preregistered.json").is_file()
     cross_checks = json.loads((case.output / "cross_checks.json").read_text(encoding="utf-8"))
@@ -2059,6 +2073,8 @@ def test_state_weight_runner_packages_auditable_evidence_and_refuses_second_run(
         required_keys = {
             "driver__candidate_forecasts_full",
             "driver__candidate_forecasts_none",
+            "driver__final_probabilities_full",
+            "driver__final_probabilities_none",
             "driver__final_candidate_states_full",
             "driver__final_candidate_covariances_none",
             "driver__full_states_full_weights",
@@ -2082,6 +2098,14 @@ def test_state_weight_runner_packages_auditable_evidence_and_refuses_second_run(
         assert required_keys <= set(evidence.files)
         np.testing.assert_array_equal(
             evidence["identity__candidate_ids"], case.candidate_ids
+        )
+        np.testing.assert_array_equal(
+            evidence["driver__final_probabilities_full"],
+            case.driver["probabilities_full"][:, :, -1, :],
+        )
+        np.testing.assert_array_equal(
+            evidence["driver__final_probabilities_none"],
+            case.driver["probabilities_none"][:, :, -1, :],
         )
     snapshot = (
         case.output
@@ -2192,3 +2216,104 @@ def test_state_weight_runner_locates_primary_method_by_name_and_rejects_identity
 
     with pytest.raises(ValueError, match="block_ids"):
         case.runner.run(case.root, case.config_path, case.output)
+
+
+def test_state_weight_runner_summary_saves_leads_and_complete_wrong_candidate_effect():
+    from hbv_multilead_joint_uncertainty.scripts import (
+        run_g3_state_weight_factorial as runner,
+    )
+
+    error_difference = {
+        "mean": np.asarray([0.4, 0.5]),
+        "ci_low": np.asarray([0.1, 0.2]),
+        "ci_high": np.asarray([0.7, 0.8]),
+        "baseline_mse": np.asarray([2.5, 3.5]),
+        "equivalence_lower": np.asarray([-0.04975, -0.06965]),
+        "equivalence_upper": np.asarray([0.05025, 0.07035]),
+        "classification": np.asarray(["material_harm", "material_harm"]),
+    }
+    statistics = {"wrong_candidate": {"error_difference": error_difference}}
+
+    result = runner._statistics_summary(
+        statistics,
+        forecast_lead_days=np.asarray([1, 3]),
+    )
+
+    assert result["forecast_lead_days"] == [1, 3]
+    assert result["wrong_candidate"]["error_difference"] == {
+        key: value.tolist() for key, value in error_difference.items()
+    }
+
+
+def test_state_weight_runner_numeric_direct_check_rejects_equal_values_across_dtypes():
+    from hbv_multilead_joint_uncertainty.scripts import (
+        run_g3_state_weight_factorial as runner,
+    )
+
+    with pytest.raises(ValueError, match="dtype"):
+        runner._bit_exact_check(
+            "numeric dtype",
+            np.asarray([1.0, 2.0], dtype=np.float32),
+            np.asarray([1.0, 2.0], dtype=np.float64),
+        )
+
+
+@pytest.mark.parametrize(
+    ("changed_field", "expected_error"),
+    [
+        ("candidate_order", "candidate_order"),
+        ("matched_blocks", "block_ids"),
+        ("lead_days", "lead_days"),
+        ("stage_lengths", "stage_lengths"),
+    ],
+)
+def test_state_weight_runner_binds_execution_config_before_preregistration(
+    tmp_path,
+    monkeypatch,
+    changed_field,
+    expected_error,
+):
+    case = _state_weight_runner_case(tmp_path, monkeypatch)
+    if changed_field == "candidate_order":
+        case.config[changed_field] = list(reversed(case.config[changed_field]))
+    elif changed_field == "matched_blocks":
+        case.config[changed_field][0]["block_id"] = "wrong_block"
+    elif changed_field == "lead_days":
+        case.config[changed_field] = [1, 7]
+    else:
+        case.config[changed_field] = [1, 2]
+    case.write_config()
+
+    with pytest.raises(ValueError, match=expected_error):
+        case.runner.run(case.root, case.config_path, case.output)
+
+    assert case.calls["compare"] == 0
+    assert not case.output.with_name(case.output.name + ".preregistered.json").exists()
+
+
+def test_state_weight_runner_rejects_nonfinite_statistics_before_package(
+    tmp_path,
+    monkeypatch,
+):
+    case = _state_weight_runner_case(tmp_path, monkeypatch)
+    original_summarize = case.runner.summarize_state_weight_factorial
+
+    def nonfinite_summarize(*args, **kwargs):
+        result = original_summarize(*args, **kwargs)
+        result["effects"]["complete_full_minus_none"]["mean"] = np.asarray(
+            [np.nan, 0.2]
+        )
+        return result
+
+    monkeypatch.setattr(
+        case.runner,
+        "summarize_state_weight_factorial",
+        nonfinite_summarize,
+    )
+
+    with pytest.raises(ValueError, match="non-finite"):
+        case.runner.run(case.root, case.config_path, case.output)
+
+    assert case.calls["compare"] == 1
+    assert not case.output.exists()
+    assert not case.output.with_name(case.output.name + ".incomplete").exists()
