@@ -20,7 +20,7 @@ from typing import Mapping, Sequence
 
 import numpy as np
 
-from .forecast import forecast_from_posterior
+from .forecast import PosteriorForecast, forecast_from_posterior
 from .methods import MethodCandidate, build_method_bank
 from .three_stage_switching_validation import _assimilate_record_then_forecast
 
@@ -49,7 +49,7 @@ def highest_posterior_forecast(
     return selected_index, forecasts[:, selected_index].copy()
 
 
-def assimilate_family_arm(
+def _assimilate_family_forecast(
     candidates: Sequence[MethodCandidate],
     initial_states: Mapping[str, np.ndarray],
     initial_covariance: np.ndarray,
@@ -60,13 +60,8 @@ def assimilate_family_arm(
     observation_standard_deviation: float,
     factor_transition_stay_probability: float,
     interaction_mode: str,
-) -> tuple[np.ndarray, np.ndarray]:
-    """Assimilate a candidate family under ``interaction_mode`` then forecast.
-
-    Returns ``(daily_probabilities[days, n], combined_forecast[n_leads])``.
-    Forecast probabilities stay fixed at the final assimilation posterior, and the
-    model-switching transition matrix is not used during the forecast.
-    """
+) -> tuple[np.ndarray, PosteriorForecast]:
+    """Assimilate once and retain both combined and per-candidate forecasts."""
     candidates = tuple(candidates)
     active_forcing = np.asarray(active_forcing, dtype=np.float64)
     leads = np.asarray(tuple(int(value) for value in leads), dtype=np.int64)
@@ -92,6 +87,39 @@ def assimilate_family_arm(
         future,
         lead_days=tuple(int(value) for value in leads),
         interaction_mode=interaction_mode,
+    )
+    return probabilities, forecast
+
+
+def assimilate_family_arm(
+    candidates: Sequence[MethodCandidate],
+    initial_states: Mapping[str, np.ndarray],
+    initial_covariance: np.ndarray,
+    active_forcing: np.ndarray,
+    observations: np.ndarray,
+    assimilation_days: int,
+    leads: Sequence[int],
+    observation_standard_deviation: float,
+    factor_transition_stay_probability: float,
+    interaction_mode: str,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Assimilate a candidate family under ``interaction_mode`` then forecast.
+
+    Returns ``(daily_probabilities[days, n], combined_forecast[n_leads])``.
+    Forecast probabilities stay fixed at the final assimilation posterior, and the
+    model-switching transition matrix is not used during the forecast.
+    """
+    probabilities, forecast = _assimilate_family_forecast(
+        candidates,
+        initial_states,
+        initial_covariance,
+        active_forcing,
+        observations,
+        assimilation_days,
+        leads,
+        observation_standard_deviation,
+        factor_transition_stay_probability,
+        interaction_mode,
     )
     return probabilities, forecast.combined_predictions
 
@@ -215,8 +243,10 @@ def compare_interaction_arms(
     definitions: Mapping[str, Sequence[MethodCandidate]],
     observation_standard_deviation: float,
     factor_transition_stay_probability: float,
+    *,
+    include_highest_posterior: bool = False,
 ) -> dict:
-    """Run full/none/static/oracle on the primary family of a switching result.
+    """Run the historical methods and optionally select the highest posterior.
 
     ``result`` is a ``ThreeStageSwitchingValidationResult`` (the full IMM run whose
     truths, observations, forcing and initial states are reused bit-for-bit). The
@@ -225,8 +255,15 @@ def compare_interaction_arms(
     the noise-free forecast target, and per-arm identification probabilities.
 
     Every method uses the same forecast contract: candidate probabilities stay at the
-    final assimilation posterior and the model-switching matrix is not applied.
+    final assimilation posterior and the model-switching matrix is not applied. When
+    requested, the highest-posterior forecast is derived from the exact no-interaction
+    assimilation and candidate forecast paths without a second filter run.
     """
+    arms = (
+        ("full", "none", "highest_posterior", "static", "oracle")
+        if include_highest_posterior
+        else _ARMS
+    )
     primary = result.schedule.primary_method_name
     candidates = tuple(definitions[primary])
     candidate_count = len(candidates)
@@ -249,7 +286,7 @@ def compare_interaction_arms(
 
     forecasts = {
         arm: np.empty((block_count, truth_count, lead_count), dtype=np.float64)
-        for arm in _ARMS
+        for arm in arms
     }
     probabilities = {
         arm: np.empty(
@@ -258,6 +295,16 @@ def compare_interaction_arms(
         )
         for arm in ("full", "none")
     }
+    none_candidate_forecasts = None
+    highest_posterior_candidate_indices = None
+    if include_highest_posterior:
+        none_candidate_forecasts = np.empty(
+            (block_count, truth_count, lead_count, candidate_count),
+            dtype=np.float64,
+        )
+        highest_posterior_candidate_indices = np.empty(
+            (block_count, truth_count), dtype=np.int64
+        )
     truth_forecasts = np.asarray(result.truth_forecast_discharge, dtype=np.float64)
 
     for block in range(block_count):
@@ -275,28 +322,60 @@ def compare_interaction_arms(
             probabilities["full"][block, truth] = result.method_assimilation_probabilities[
                 block, truth, primary_index, :, :candidate_count
             ]
-            probs_none, forecast_none = assimilate_family_arm(
-                candidates, initial_states, covariance, active_forcing, observations,
-                assimilation_days, leads, obs_std, stay, "none",
+            probs_none, forecast_none = _assimilate_family_forecast(
+                candidates,
+                initial_states,
+                covariance,
+                active_forcing,
+                observations,
+                assimilation_days,
+                leads,
+                obs_std,
+                stay,
+                "none",
             )
-            forecasts["none"][block, truth] = forecast_none
+            forecasts["none"][block, truth] = forecast_none.combined_predictions
             probabilities["none"][block, truth] = probs_none
+            if include_highest_posterior:
+                none_candidate_forecasts[block, truth] = (
+                    forecast_none.candidate_predictions
+                )
+                selected_index, selected_forecast = highest_posterior_forecast(
+                    probs_none, forecast_none.candidate_predictions
+                )
+                highest_posterior_candidate_indices[block, truth] = selected_index
+                forecasts["highest_posterior"][block, truth] = selected_forecast
             _, forecast_static = static_mixing_arm(
-                candidates, initial_states, covariance, active_forcing, observations,
-                assimilation_days, leads, obs_std, stay,
+                candidates,
+                initial_states,
+                covariance,
+                active_forcing,
+                observations,
+                assimilation_days,
+                leads,
+                obs_std,
+                stay,
             )
             forecasts["static"][block, truth] = forecast_static
             stage_true = [int(labels[truth, start]) for start, _ in stage_boundaries]
             forecasts["oracle"][block, truth] = oracle_arm(
-                candidates, stage_true, stage_boundaries, initial_states, covariance,
-                active_forcing, observations, leads, obs_std, stay,
+                candidates,
+                stage_true,
+                stage_boundaries,
+                initial_states,
+                covariance,
+                active_forcing,
+                observations,
+                leads,
+                obs_std,
+                stay,
             )
 
     squared_errors = {
-        arm: (forecasts[arm] - truth_forecasts) ** 2 for arm in _ARMS
+        arm: (forecasts[arm] - truth_forecasts) ** 2 for arm in arms
     }
-    return {
-        "arms": _ARMS,
+    output = {
+        "arms": arms,
         "leads": leads,
         "block_ids": block_ids,
         "truth_count": truth_count,
@@ -310,6 +389,12 @@ def compare_interaction_arms(
         "probabilities": probabilities,
         "true_candidate_labels": labels,
     }
+    if include_highest_posterior:
+        output["none_candidate_forecasts"] = none_candidate_forecasts
+        output["highest_posterior_candidate_indices"] = (
+            highest_posterior_candidate_indices
+        )
+    return output
 
 
 # --------------------------------------------------------------------------- #

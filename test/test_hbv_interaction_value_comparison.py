@@ -329,13 +329,19 @@ def test_oracle_two_stages_same_candidate_equals_continuous_filter(switching_res
 # --------------------------------------------------------------------------- #
 
 
-def _driver_output(switching_result):
+def _driver_output(switching_result, *, include_highest_posterior=False):
     arms = importlib.import_module(ARMS_MODULE)
+    optional = (
+        {"include_highest_posterior": True}
+        if include_highest_posterior
+        else {}
+    )
     return arms.compare_interaction_arms(
         result=switching_result,
         definitions=_definitions(),
         observation_standard_deviation=OBS_STD,
         factor_transition_stay_probability=STAY,
+        **optional,
     )
 
 
@@ -356,6 +362,152 @@ def test_driver_full_arm_matches_stored_and_shapes(switching_result):
         assert np.all(np.isfinite(out["forecasts"][arm]))
     np.testing.assert_array_equal(
         out["truth_forecasts"], result.truth_forecast_discharge
+    )
+
+
+def test_opt_in_highest_posterior_reuses_none_candidates_and_preserves_history(
+    switching_result,
+):
+    historical = _driver_output(switching_result)
+    enabled = _driver_output(
+        switching_result, include_highest_posterior=True
+    )
+
+    assert enabled["arms"] == (
+        "full",
+        "none",
+        "highest_posterior",
+        "static",
+        "oracle",
+    )
+    for method in historical["arms"]:
+        np.testing.assert_array_equal(
+            enabled["forecasts"][method], historical["forecasts"][method]
+        )
+        np.testing.assert_array_equal(
+            enabled["squared_errors"][method],
+            historical["squared_errors"][method],
+        )
+    for interaction_mode in ("full", "none"):
+        np.testing.assert_array_equal(
+            enabled["probabilities"][interaction_mode],
+            historical["probabilities"][interaction_mode],
+        )
+    assert "none_candidate_forecasts" not in historical
+    assert "highest_posterior_candidate_indices" not in historical
+
+    candidate_forecasts = enabled["none_candidate_forecasts"]
+    selected_indices = enabled["highest_posterior_candidate_indices"]
+    final_probabilities = enabled["probabilities"]["none"][:, :, -1, :]
+    assert candidate_forecasts.shape == (
+        len(switching_result.block_ids),
+        enabled["truth_count"],
+        len(enabled["leads"]),
+        enabled["candidate_count"],
+    )
+    assert selected_indices.shape == candidate_forecasts.shape[:2]
+    np.testing.assert_array_equal(
+        selected_indices, np.argmax(final_probabilities, axis=-1)
+    )
+
+    selected_forecasts = np.empty_like(
+        enabled["forecasts"]["highest_posterior"]
+    )
+    for block in range(selected_forecasts.shape[0]):
+        for truth in range(selected_forecasts.shape[1]):
+            selected_forecasts[block, truth] = candidate_forecasts[
+                block, truth, :, selected_indices[block, truth]
+            ]
+    np.testing.assert_array_equal(
+        enabled["forecasts"]["highest_posterior"], selected_forecasts
+    )
+
+    reconstructed_none = np.einsum(
+        "btc,btlc->btl", final_probabilities, candidate_forecasts
+    )
+    np.testing.assert_allclose(
+        enabled["forecasts"]["none"],
+        reconstructed_none,
+        rtol=0.0,
+        atol=1e-12,
+    )
+
+
+def test_opt_in_highest_posterior_runs_no_interaction_assimilation_once(
+    switching_result, monkeypatch
+):
+    arms = importlib.import_module(ARMS_MODULE)
+    imm_module = importlib.import_module("hbv_joint_uncertainty.imm")
+    original_build = arms.build_method_bank
+    original_forecast = arms.forecast_from_posterior
+    original_step = imm_module.InteractingMultipleModel.step
+    none_bank_count = 0
+    none_step_count = 0
+    none_forecast_count = 0
+
+    def counted_build(*args, **kwargs):
+        nonlocal none_bank_count
+        if kwargs.get("interaction_mode") == "none":
+            none_bank_count += 1
+        return original_build(*args, **kwargs)
+
+    def counted_step(estimator, observation):
+        nonlocal none_step_count
+        if estimator.interaction_mode == "none":
+            none_step_count += 1
+        return original_step(estimator, observation)
+
+    def counted_forecast(*args, **kwargs):
+        nonlocal none_forecast_count
+        if kwargs.get("interaction_mode") == "none":
+            none_forecast_count += 1
+        return original_forecast(*args, **kwargs)
+
+    monkeypatch.setattr(arms, "build_method_bank", counted_build)
+    monkeypatch.setattr(
+        imm_module.InteractingMultipleModel, "step", counted_step
+    )
+    monkeypatch.setattr(arms, "forecast_from_posterior", counted_forecast)
+    output = arms.compare_interaction_arms(
+        result=switching_result,
+        definitions=_definitions(),
+        observation_standard_deviation=OBS_STD,
+        factor_transition_stay_probability=STAY,
+        include_highest_posterior=True,
+    )
+
+    expected_calls = len(switching_result.block_ids) * output["truth_count"]
+    assert none_bank_count == expected_calls
+    assert none_step_count == expected_calls * output["assimilation_days"]
+    assert none_forecast_count == expected_calls
+
+
+def test_highest_posterior_evidence_arrays_are_conditional(switching_result):
+    phase2 = importlib.import_module(
+        "hbv_multilead_joint_uncertainty.scripts."
+        "run_g3_phase2_interaction_value"
+    )
+    historical = _driver_output(switching_result)
+    enabled = _driver_output(
+        switching_result, include_highest_posterior=True
+    )
+
+    historical_arrays = phase2._evidence_arrays(historical)
+    enabled_arrays = phase2._evidence_arrays(enabled)
+
+    assert "forecast_none_candidates" not in historical_arrays
+    assert "highest_posterior_candidate_indices" not in historical_arrays
+    np.testing.assert_array_equal(
+        enabled_arrays["forecast_none_candidates"],
+        enabled["none_candidate_forecasts"],
+    )
+    np.testing.assert_array_equal(
+        enabled_arrays["highest_posterior_candidate_indices"],
+        enabled["highest_posterior_candidate_indices"],
+    )
+    np.testing.assert_array_equal(
+        enabled_arrays["forecast_highest_posterior"],
+        enabled["forecasts"]["highest_posterior"],
     )
 
 
