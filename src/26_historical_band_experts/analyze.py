@@ -20,7 +20,10 @@ MIN_WIN_FRACTION = 0.55
 MAX_MEAN_EXPERT_WEIGHT = 0.95
 BOOTSTRAP_SEED = 260726
 BOOTSTRAP_RESAMPLES = 10_000
-
+VALIDATION_START = pd.Timestamp("2006-10-01")
+VALIDATION_END = pd.Timestamp("2008-09-30")
+EXPECTED_VALIDATION_DATES = pd.date_range(VALIDATION_START, VALIDATION_END, freq="D")
+EXPECTED_BASIN_COUNT = 60
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -97,6 +100,62 @@ def _expected_runs() -> list[str]:
     return [f"{variant}_s{seed}" for variant in VARIANTS for seed in SEEDS]
 
 
+def validate_prediction_frame(
+    predictions: pd.DataFrame,
+    expected_basins: tuple[str, ...] | None = None,
+    expected_dates: pd.DatetimeIndex = EXPECTED_VALIDATION_DATES,
+) -> pd.DataFrame:
+    """Reject incomplete, duplicate, or non-finite daily prediction evidence."""
+    required = {"basin", "date", "qobs", "qsim"}
+    missing = required - set(predictions.columns)
+    if missing:
+        raise ValueError(f"prediction table is missing columns: {sorted(missing)}")
+    frame = predictions.copy()
+    frame["basin"] = frame["basin"].astype(str).str.zfill(8)
+    frame["date"] = pd.to_datetime(frame["date"], errors="raise")
+    if frame.duplicated(["basin", "date"]).any():
+        raise ValueError("prediction table contains a duplicate basin-date key")
+    values = frame[["qobs", "qsim"]].to_numpy(dtype=np.float64)
+    if not np.isfinite(values).all():
+        raise ValueError("prediction table contains non-finite observed or simulated discharge")
+
+    actual_basins = tuple(sorted(frame["basin"].unique()))
+    if expected_basins is None:
+        if len(actual_basins) != EXPECTED_BASIN_COUNT:
+            raise ValueError(
+                f"prediction basin count must be {EXPECTED_BASIN_COUNT}, got {len(actual_basins)}"
+            )
+        basin_ids = actual_basins
+    else:
+        basin_ids = tuple(str(basin).zfill(8) for basin in expected_basins)
+        if set(actual_basins) != set(basin_ids):
+            raise ValueError("prediction basin set does not match the expected basins")
+
+    expected_dates = pd.DatetimeIndex(expected_dates)
+    ordered = frame.sort_values(["basin", "date"]).reset_index(drop=True)
+    expected_index = pd.MultiIndex.from_product(
+        [basin_ids, expected_dates], names=["basin", "date"]
+    )
+    actual_index = pd.MultiIndex.from_frame(ordered[["basin", "date"]])
+    if not actual_index.equals(expected_index):
+        raise ValueError("prediction basin-date keys are incomplete or unexpected")
+    return ordered
+
+
+def assert_matching_daily_targets(predictions_by_variant: dict[str, pd.DataFrame]) -> None:
+    """Require identical daily keys and observed discharge across comparison arms."""
+    reference_name = next(iter(predictions_by_variant))
+    reference = predictions_by_variant[reference_name].sort_values(["basin", "date"])
+    reference_keys = reference[["basin", "date"]].reset_index(drop=True)
+    reference_qobs = reference["qobs"].to_numpy(dtype=np.float64)
+    for name, frame in predictions_by_variant.items():
+        ordered = frame.sort_values(["basin", "date"]).reset_index(drop=True)
+        if not ordered[["basin", "date"]].equals(reference_keys):
+            raise ValueError(f"daily prediction keys differ between {reference_name} and {name}")
+        if not np.array_equal(ordered["qobs"].to_numpy(dtype=np.float64), reference_qobs):
+            raise ValueError(f"observed discharge differs between {reference_name} and {name}")
+
+
 def _validated_predictions(run_dir: Path, variant: str, seed: int) -> pd.DataFrame:
     manifest_path = run_dir / "manifest.json"
     predictions_path = run_dir / "predictions.csv"
@@ -107,11 +166,21 @@ def _validated_predictions(run_dir: Path, variant: str, seed: int) -> pd.DataFra
         raise ValueError(f"run is not complete: {run_dir}")
     if manifest.get("variant") != variant or int(manifest.get("seed", -1)) != seed:
         raise ValueError(f"manifest identity mismatch: {run_dir}")
-    expected_hash = manifest.get("artifacts", {}).get("predictions.csv")
-    if not expected_hash or _sha256(predictions_path) != expected_hash:
-        raise ValueError(f"prediction hash mismatch: {run_dir}")
-    return pd.read_csv(predictions_path, dtype={"basin": str})
-
+    required_artifacts = {
+        "config.json", "checkpoint.pt", "predictions.csv", "per_basin_metrics.csv"
+    }
+    artifacts = manifest.get("artifacts", {})
+    if not required_artifacts.issubset(artifacts):
+        raise ValueError(f"manifest artifact list is incomplete: {run_dir}")
+    for name, expected_hash in artifacts.items():
+        artifact_path = run_dir / name
+        if not artifact_path.exists() or _sha256(artifact_path) != expected_hash:
+            raise ValueError(f"artifact hash mismatch for {name}: {run_dir}")
+    predictions = pd.read_csv(predictions_path, dtype={"basin": str})
+    expected_rows = EXPECTED_BASIN_COUNT * len(EXPECTED_VALIDATION_DATES)
+    if int(manifest.get("n_validation_predictions", -1)) != expected_rows:
+        raise ValueError(f"manifest validation row count is not {expected_rows}: {run_dir}")
+    return validate_prediction_frame(predictions)
 
 def analyze_results(results_root: str | Path) -> dict:
     """Recompute all metrics from daily predictions and write the frozen decision."""
@@ -134,18 +203,22 @@ def analyze_results(results_root: str | Path) -> dict:
     seed_pairs = []
     expert_prediction_frames = []
     for seed in SEEDS:
-        metric_frames = {}
-        for variant in VARIANTS:
-            predictions = _validated_predictions(
+        predictions_by_variant = {
+            variant: _validated_predictions(
                 results_root / f"{variant}_s{seed}",
                 variant,
                 seed,
             )
-            metric_frames[variant] = per_basin_nse(predictions).rename(
+            for variant in VARIANTS
+        }
+        assert_matching_daily_targets(predictions_by_variant)
+        metric_frames = {
+            variant: per_basin_nse(predictions).rename(
                 columns={"nse": f"nse_{variant}", "n_days": f"n_days_{variant}"}
             )
-            if variant == "historical_band_experts":
-                expert_prediction_frames.append(predictions)
+            for variant, predictions in predictions_by_variant.items()
+        }
+        expert_prediction_frames.append(predictions_by_variant["historical_band_experts"])
 
         paired = metric_frames["historical_band_experts"]
         for variant in ("multiscale_fusion", "mainstream_lstm"):

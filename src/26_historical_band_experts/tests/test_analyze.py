@@ -10,6 +10,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import analyze
 from analyze import (
     analyze_results,
     evaluate_continuation,
@@ -98,13 +99,15 @@ def _sha256(path: Path) -> str:
 def _write_run(root: Path, variant: str, seed: int, qsim_offset: float):
     run_dir = root / f"{variant}_s{seed}"
     run_dir.mkdir(parents=True)
+    dates = pd.date_range("2006-10-01", "2008-09-30", freq="D")
     rows = []
-    for basin_index in range(3):
+    for basin_index in range(60):
         basin = f"{basin_index + 1:08d}"
-        for day, observed in enumerate([0.0, 1.0, 2.0, 3.0]):
+        for day, date in enumerate(dates):
+            observed = float(1.0 + basin_index / 10 + (day % 31) / 5)
             row = {
                 "basin": basin,
-                "date": f"2007-01-{day + 1:02d}",
+                "date": date.strftime("%Y-%m-%d"),
                 "qobs": observed,
                 "qsim": observed + qsim_offset,
             }
@@ -117,14 +120,90 @@ def _write_run(root: Path, variant: str, seed: int, qsim_offset: float):
             rows.append(row)
     predictions_path = run_dir / "predictions.csv"
     pd.DataFrame(rows).to_csv(predictions_path, index=False)
+    (run_dir / "config.json").write_text("{}", encoding="utf-8")
+    (run_dir / "checkpoint.pt").write_bytes(b"test checkpoint")
+    (run_dir / "per_basin_metrics.csv").write_text("basin,nse,n_days\n", encoding="utf-8")
+    artifacts = {
+        name: _sha256(run_dir / name)
+        for name in ("predictions.csv", "config.json", "checkpoint.pt", "per_basin_metrics.csv")
+    }
     manifest = {
         "status": "complete",
         "variant": variant,
         "seed": seed,
-        "artifacts": {"predictions.csv": _sha256(predictions_path)},
+        "n_validation_predictions": len(rows),
+        "artifacts": artifacts,
     }
     (run_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
 
+
+def _small_integrity_frame():
+    return pd.DataFrame({
+        "basin": ["00000001", "00000001", "00000002", "00000002"],
+        "date": ["2007-01-01", "2007-01-02", "2007-01-01", "2007-01-02"],
+        "qobs": [1.0, 2.0, 1.5, 2.5],
+        "qsim": [1.1, 2.1, 1.6, 2.6],
+    })
+
+
+def test_prediction_integrity_rejects_duplicate_daily_key():
+    frame = pd.concat([_small_integrity_frame(), _small_integrity_frame().iloc[[0]]], ignore_index=True)
+
+    with pytest.raises(ValueError, match="duplicate"):
+        analyze.validate_prediction_frame(
+            frame, expected_basins=("00000001", "00000002"),
+            expected_dates=pd.date_range("2007-01-01", "2007-01-02"),
+        )
+
+
+def test_prediction_integrity_rejects_missing_day():
+    frame = _small_integrity_frame().iloc[:-1]
+
+    with pytest.raises(ValueError, match="basin-date"):
+        analyze.validate_prediction_frame(
+            frame, expected_basins=("00000001", "00000002"),
+            expected_dates=pd.date_range("2007-01-01", "2007-01-02"),
+        )
+
+
+def test_prediction_integrity_rejects_extra_basin():
+    frame = _small_integrity_frame().copy()
+    frame.loc[len(frame)] = ["00000003", "2007-01-01", 3.0, 3.0]
+
+    with pytest.raises(ValueError, match="basin"):
+        analyze.validate_prediction_frame(
+            frame, expected_basins=("00000001", "00000002"),
+            expected_dates=pd.date_range("2007-01-01", "2007-01-02"),
+        )
+
+
+def test_prediction_integrity_rejects_nonfinite_simulation():
+    frame = _small_integrity_frame().copy()
+    frame.loc[0, "qsim"] = np.nan
+
+    with pytest.raises(ValueError, match="non-finite"):
+        analyze.validate_prediction_frame(
+            frame, expected_basins=("00000001", "00000002"),
+            expected_dates=pd.date_range("2007-01-01", "2007-01-02"),
+        )
+
+
+def test_prediction_integrity_rejects_changed_observation_between_variants():
+    first = _small_integrity_frame()
+    second = first.copy()
+    second.loc[0, "qobs"] = 99.0
+
+    with pytest.raises(ValueError, match="observed"):
+        analyze.assert_matching_daily_targets({"first": first, "second": second})
+
+
+def test_validated_predictions_rejects_any_artifact_hash_mismatch(tmp_path):
+    _write_run(tmp_path, "mainstream_lstm", 100, qsim_offset=0.6)
+    run_dir = tmp_path / "mainstream_lstm_s100"
+    (run_dir / "checkpoint.pt").write_bytes(b"corrupted")
+
+    with pytest.raises(ValueError, match="artifact hash"):
+        analyze._validated_predictions(run_dir, "mainstream_lstm", 100)
 
 def test_end_to_end_analysis_recomputes_predictions_and_writes_go(tmp_path):
     for seed in (100, 200, 300):
