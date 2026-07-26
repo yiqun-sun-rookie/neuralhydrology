@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 from pathlib import Path
 from typing import Mapping, Sequence
 
@@ -171,33 +172,81 @@ def load_basin_ids(path: str | Path) -> tuple[str, ...]:
     )
 
 
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def load_target_bundle(
+    targets_file: str | Path,
+    expected_sha256: str,
+    basins: Sequence[str],
+) -> pd.DataFrame:
+    """Validate and return the target-only bundle for the frozen allowed dates."""
+    targets_file = Path(targets_file)
+    actual_sha256 = _sha256(targets_file)
+    if actual_sha256.lower() != str(expected_sha256).lower():
+        raise ValueError(
+            f"target bundle SHA-256 mismatch: expected {expected_sha256}, got {actual_sha256}"
+        )
+    frame = pd.read_csv(targets_file, dtype={"basin": str})
+    required = {"basin", "date", "qobs"}
+    if set(frame.columns) != required:
+        raise ValueError(f"target bundle columns must be exactly {sorted(required)}")
+    frame["basin"] = frame["basin"].str.zfill(8)
+    frame["date"] = pd.to_datetime(frame["date"], errors="raise")
+    frame["qobs"] = pd.to_numeric(frame["qobs"], errors="raise")
+    if frame.duplicated(["basin", "date"]).any():
+        raise ValueError("target bundle contains a duplicate basin-date key")
+
+    basin_ids = tuple(str(basin).zfill(8) for basin in basins)
+    if set(frame["basin"]) != set(basin_ids):
+        raise ValueError("target bundle basin set does not match the frozen basin list")
+    periods = default_periods()
+    if frame["date"].min() != periods.train_start or frame["date"].max() != periods.validation_end:
+        raise ValueError("target bundle date range does not match the frozen allowed period")
+    values = frame["qobs"].to_numpy(dtype=np.float64)
+    if not np.isfinite(values).all() or np.any(values < 0):
+        raise ValueError("target bundle contains non-finite or negative discharge")
+
+    expected_dates = pd.date_range(periods.train_start, periods.validation_end, freq="D")
+    expected_index = pd.MultiIndex.from_product(
+        [basin_ids, expected_dates], names=["basin", "date"]
+    )
+    ordered = frame.sort_values(["basin", "date"]).reset_index(drop=True)
+    actual_index = pd.MultiIndex.from_frame(ordered[["basin", "date"]])
+    if not actual_index.equals(expected_index):
+        raise ValueError("target bundle is missing or contains unexpected basin-date keys")
+    return ordered
+
+
 def load_data_pack(
     data_dir: str | Path,
     basins: Sequence[str],
+    targets_file: str | Path,
+    expected_targets_sha256: str,
     statics_file: str | Path = DEFAULT_STATICS_FILE,
 ) -> DataPack:
-    """Load Maurer forcings and supervised targets, retaining targets only from 1999-10-01."""
-    from neuralhydrology.datasetzoo.camelsus import (
-        load_camels_us_discharge,
-        load_camels_us_forcings,
-    )
+    """Load allowed forcing, static attributes, and the target-only bundle."""
+    from neuralhydrology.datasetzoo.camelsus import load_camels_us_forcings
 
     periods = default_periods()
     dates = pd.date_range(periods.history_start, periods.validation_end, freq="D")
     basin_ids = tuple(str(basin).zfill(8) for basin in basins)
+    target_frame = load_target_bundle(targets_file, expected_targets_sha256, basin_ids)
     forcing = np.full((len(basin_ids), len(dates), len(DYNAMIC_COLUMNS)), np.nan, dtype=np.float32)
     discharge = np.full((len(basin_ids), len(dates)), np.nan, dtype=np.float32)
-    target_mask = np.asarray(dates >= periods.train_start)
     data_dir = Path(data_dir)
 
     for basin_index, basin in enumerate(basin_ids):
-        basin_forcing, area = load_camels_us_forcings(data_dir, basin, "maurer")
+        basin_forcing, _area = load_camels_us_forcings(data_dir, basin, "maurer")
         basin_forcing = basin_forcing.reindex(dates)
         forcing[basin_index] = basin_forcing[list(DYNAMIC_COLUMNS)].to_numpy(dtype=np.float32)
-        basin_discharge = load_camels_us_discharge(data_dir, basin, area).reindex(dates)
-        values = basin_discharge.to_numpy(dtype=np.float32)
-        values[values < 0] = np.nan
-        discharge[basin_index, target_mask] = values[target_mask]
+        basin_targets = target_frame.loc[target_frame["basin"] == basin].set_index("date")["qobs"]
+        discharge[basin_index] = basin_targets.reindex(dates).to_numpy(dtype=np.float32)
 
     static_frame = pd.read_csv(statics_file, dtype={"gauge_id": str})
     static_frame["gauge_id"] = static_frame["gauge_id"].str.zfill(8)

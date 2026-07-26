@@ -282,13 +282,25 @@ def main() -> None:
     parser.add_argument("--variant", choices=VARIANTS, required=True)
     parser.add_argument("--seed", type=int, required=True)
     parser.add_argument("--data-dir", type=Path, required=True)
+    parser.add_argument("--targets-file", type=Path, required=True)
+    parser.add_argument("--targets-sha256", required=True)
     parser.add_argument("--device", default="cpu")
     args = parser.parse_args()
 
     config = json.loads(args.config.read_text(encoding="utf-8"))
+    expected_targets_sha256 = config.get("target_bundle_sha256")
+    if not expected_targets_sha256:
+        raise ValueError("configuration is missing target_bundle_sha256")
+    if str(expected_targets_sha256).lower() != args.targets_sha256.lower():
+        raise ValueError("command target SHA-256 does not match the frozen configuration")
     basin_file = _REPO / config["basin_file"]
     basins = load_basin_ids(basin_file)
-    pack = load_data_pack(args.data_dir, basins)
+    pack = load_data_pack(
+        args.data_dir,
+        basins,
+        targets_file=args.targets_file,
+        expected_targets_sha256=args.targets_sha256,
+    )
     output_dir = _REPO / config["results_root"] / f"{args.variant}_s{args.seed}"
     manifest = run_experiment(
         pack=pack,
