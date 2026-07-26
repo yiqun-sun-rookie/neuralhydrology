@@ -147,3 +147,22 @@ def test_frozen_file_hash_validation_rejects_changed_basin_list(tmp_path):
     path.write_text("00000002\n", encoding="utf-8")
     with pytest.raises(ValueError, match="basin list SHA-256"):
         train.validate_frozen_file_hash(path, expected, "basin list")
+
+@pytest.mark.parametrize("stem", ["pilot", "smoke"])
+def test_v02_config_changes_only_protocol_repair_fields(stem):
+    config_dir = Path(__file__).resolve().parents[1] / "configs"
+    v01 = json.loads((config_dir / f"{stem}_v01.json").read_text(encoding="utf-8"))
+    v02 = json.loads((config_dir / f"{stem}_v02.json").read_text(encoding="utf-8"))
+
+    allowed_changes = {
+        "experiment_family",
+        "results_root",
+        "target_bundle_sha256",
+        "repaired_code_base_commit",
+    }
+    shared_v01 = {key: value for key, value in v01.items() if key not in allowed_changes}
+    shared_v02 = {key: value for key, value in v02.items() if key not in allowed_changes}
+    assert shared_v02 == shared_v01
+    assert v02["results_root"].endswith(f"{stem}_v02")
+    assert len(v02["target_bundle_sha256"]) == 64
+    assert len(v02["repaired_code_base_commit"]) == 40

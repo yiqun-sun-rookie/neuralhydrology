@@ -1,0 +1,15 @@
+{
+  "experiment_family": "historical_band_pilot_v02",
+  "basin_file": "src/26_historical_band_experts/configs/pilot_basins_60.txt",
+  "basin_file_sha256": "3160dad3b22200fdb596164c9f69e4fbe19cc156cfad768beb193efea7b26b65",
+  "target_bundle_sha256": "d4c93675eefd433515d6f7e10943caea31c6eb7e30533d4c387cf9325886e05c",
+  "repaired_code_base_commit": "df01333b68db82f113906d267be65d7150c230a3",
+  "results_root": "results/26_historical_band_experts/pilot_v02",
+  "epochs": 10,
+  "batch_size": 256,
+  "validation_batch_size": 512,
+  "learning_rate": 0.001,
+  "gradient_clip": 1.0,
+  "limit_batches": 0,
+  "limit_validation_samples": 0
+}
