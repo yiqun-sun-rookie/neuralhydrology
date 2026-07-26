@@ -31,7 +31,7 @@ def per_basin_nse(predictions: pd.DataFrame) -> pd.DataFrame:
         valid = np.isfinite(observed) & np.isfinite(simulated)
         rows.append({
             "basin": str(basin).zfill(8),
-            "nse": nash_sutcliffe_efficiency(observed, simulated),
+            "nse": float(f"{nash_sutcliffe_efficiency(observed, simulated):.12g}"),
             "n_days": int(valid.sum()),
         })
     return pd.DataFrame(rows, columns=["basin", "nse", "n_days"])

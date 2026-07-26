@@ -119,3 +119,19 @@ def test_per_basin_nse_matches_manual_value():
     assert result.loc[0, "basin"] == "00000001"
     assert result.loc[0, "nse"] == 0.5
     assert result.loc[0, "n_days"] == 3
+
+def test_metric_csv_round_trip_is_exact(tmp_path):
+    predictions = pd.DataFrame(
+        {
+            "basin": ["01644000"] * 3,
+            "date": ["2006-10-01", "2006-10-02", "2006-10-03"],
+            "qobs": [0.14801706, 0.1280917, 0.11955225],
+            "qsim": [1.8289721, 1.9013839, 2.0032046],
+        }
+    )
+    metrics = per_basin_nse(predictions)
+    path = tmp_path / "metrics.csv"
+    metrics.to_csv(path, index=False)
+    reloaded = pd.read_csv(path, dtype={"basin": str})
+
+    pd.testing.assert_frame_equal(metrics, reloaded, check_exact=True)
