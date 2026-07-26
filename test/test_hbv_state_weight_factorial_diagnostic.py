@@ -1055,3 +1055,489 @@ def test_compare_state_weight_factorial_rejects_zero_truth_trials(monkeypatch):
             observation_standard_deviation=0.05,
             factor_transition_stay_probability=0.98,
         )
+
+
+@pytest.mark.parametrize(
+    ("lower", "upper", "expected"),
+    [
+        (-0.2, 0.2, "practically_equivalent"),
+        (-0.5, -0.21, "material_improvement"),
+        (0.21, 0.5, "material_harm"),
+        (-0.3, 0.1, "unresolved"),
+        (-0.5, -0.2, "unresolved"),
+        (0.2, 0.5, "unresolved"),
+    ],
+)
+def test_classify_effect_interval_uses_equivalence_first_and_strict_material_bounds(
+    lower,
+    upper,
+    expected,
+):
+    assert (
+        diagnostic.classify_effect_interval(
+            lower=lower,
+            upper=upper,
+            equivalence_lower=-0.2,
+            equivalence_upper=0.2,
+        )
+        == expected
+    )
+
+
+@pytest.mark.parametrize(
+    ("lower", "upper", "equivalence_lower", "equivalence_upper"),
+    [
+        (np.nan, 0.0, -0.1, 0.1),
+        (0.1, 0.0, -0.1, 0.1),
+        (0.0, 0.1, 0.2, 0.1),
+    ],
+)
+def test_classify_effect_interval_rejects_invalid_intervals(
+    lower,
+    upper,
+    equivalence_lower,
+    equivalence_upper,
+):
+    with pytest.raises(ValueError):
+        diagnostic.classify_effect_interval(
+            lower,
+            upper,
+            equivalence_lower,
+            equivalence_upper,
+        )
+
+
+def _summary_driver_output():
+    truth = np.zeros((2, 2, 1), dtype=np.float64)
+    full_states_full_weights = np.asarray(
+        [[[1.0], [5.0]], [[4.0], [2.0]]], dtype=np.float64
+    )
+    full_states_none_weights = np.asarray(
+        [[[0.0], [4.0]], [[3.0], [3.0]]], dtype=np.float64
+    )
+    none_states_full_weights = np.asarray(
+        [[[2.0], [3.0]], [[1.0], [5.0]]], dtype=np.float64
+    )
+    none_states_none_weights = np.asarray(
+        [[[1.0], [3.0]], [[2.0], [4.0]]], dtype=np.float64
+    )
+    candidate_forecasts_none = np.asarray(
+        [
+            [[[1.0, 2.0, 4.0]], [[2.0, 3.0, 6.0]]],
+            [[[2.0, 1.0, 4.0]], [[3.0, 4.0, 8.0]]],
+        ],
+        dtype=np.float64,
+    )
+    prediction_nonadditivity = (
+        full_states_full_weights
+        - full_states_none_weights
+        - none_states_full_weights
+        + none_states_none_weights
+    )
+    return {
+        "full_states_full_weights": full_states_full_weights,
+        "full_states_none_weights": full_states_none_weights,
+        "none_states_full_weights": none_states_full_weights,
+        "none_states_none_weights": none_states_none_weights,
+        "truth_forecasts": truth,
+        "candidate_forecasts_none": candidate_forecasts_none,
+        "final_true_candidate_indices": np.asarray([0, 1], dtype=np.int64),
+        "prediction_nonadditivity": prediction_nonadditivity,
+    }
+
+
+def test_summarize_state_weight_factorial_uses_named_differences_and_comparison_baselines():
+    driver_output = _summary_driver_output()
+
+    summary = diagnostic.summarize_state_weight_factorial(
+        driver_output,
+        bootstrap_replicates=20,
+        bootstrap_seed=123,
+        minimum_rmse_fraction=0.01,
+    )
+
+    assert {
+        "combination_rmse",
+        "squared_errors",
+        "block_statistics",
+        "effects",
+        "wrong_candidate",
+        "nonadditivity",
+        "bootstrap",
+    } <= set(summary)
+    expected_rmse = {
+        name: np.sqrt(np.mean(np.square(driver_output[name]), axis=(0, 1)))
+        for name in (
+            "full_states_full_weights",
+            "full_states_none_weights",
+            "none_states_full_weights",
+            "none_states_none_weights",
+        )
+    }
+    for name, expected in expected_rmse.items():
+        np.testing.assert_allclose(summary["combination_rmse"][name], expected)
+        np.testing.assert_array_equal(
+            summary["squared_errors"][name], np.square(driver_output[name])
+        )
+
+    expected_effects = {
+        "main_final_weight_replacement": {
+            "per_block_difference": np.asarray([[1.5], [3.0]]),
+            "baseline_per_block_mse": np.asarray([[5.0], [10.0]]),
+            "baseline_mse": np.asarray([7.5]),
+        },
+        "final_weight_replacement_review": {
+            "per_block_difference": np.asarray([[5.0], [1.0]]),
+            "baseline_per_block_mse": np.asarray([[8.0], [9.0]]),
+            "baseline_mse": np.asarray([8.5]),
+        },
+        "main_candidate_forecast_distribution_replacement": {
+            "per_block_difference": np.asarray([[3.0], [-1.0]]),
+            "baseline_per_block_mse": np.asarray([[5.0], [10.0]]),
+            "baseline_mse": np.asarray([7.5]),
+        },
+        "candidate_forecast_distribution_replacement_review": {
+            "per_block_difference": np.asarray([[6.5], [-3.0]]),
+            "baseline_per_block_mse": np.asarray([[6.5], [13.0]]),
+            "baseline_mse": np.asarray([9.75]),
+        },
+        "complete_full_minus_none": {
+            "per_block_difference": np.asarray([[8.0], [0.0]]),
+            "baseline_per_block_mse": np.asarray([[5.0], [10.0]]),
+            "baseline_mse": np.asarray([7.5]),
+        },
+    }
+    assert set(summary["effects"]) == set(expected_effects)
+    for name, expected_fields in expected_effects.items():
+        effect = summary["effects"][name]
+        for field, expected in expected_fields.items():
+            np.testing.assert_allclose(effect[field], expected)
+        np.testing.assert_allclose(
+            effect["mean"], expected_fields["per_block_difference"].mean(axis=0)
+        )
+        np.testing.assert_array_equal(
+            summary["block_statistics"][name]["per_block_difference"],
+            effect["per_block_difference"],
+        )
+        np.testing.assert_array_equal(
+            summary["block_statistics"][name]["baseline_per_block_mse"],
+            effect["baseline_per_block_mse"],
+        )
+        np.testing.assert_allclose(
+            effect["equivalence_lower"],
+            -0.0199 * expected_fields["baseline_mse"],
+        )
+        np.testing.assert_allclose(
+            effect["equivalence_upper"],
+            0.0201 * expected_fields["baseline_mse"],
+        )
+
+
+def test_summarize_state_weight_factorial_reuses_one_matched_block_bootstrap():
+    driver_output = _summary_driver_output()
+    replicates = 12
+    seed = 8301
+
+    summary = diagnostic.summarize_state_weight_factorial(
+        driver_output,
+        bootstrap_replicates=replicates,
+        bootstrap_seed=seed,
+        minimum_rmse_fraction=0.01,
+    )
+
+    expected_indices = np.random.default_rng(seed).integers(
+        0, 2, size=(replicates, 2)
+    )
+    np.testing.assert_array_equal(summary["bootstrap"]["indices"], expected_indices)
+    assert summary["bootstrap"]["replicates"] == replicates
+    assert summary["bootstrap"]["seed"] == seed
+    for effect in summary["effects"].values():
+        expected_bootstrap = effect["per_block_difference"][expected_indices].mean(axis=1)
+        np.testing.assert_allclose(effect["bootstrap_mean"], expected_bootstrap)
+        np.testing.assert_allclose(
+            effect["ci_low"], np.percentile(expected_bootstrap, 2.5, axis=0)
+        )
+        np.testing.assert_allclose(
+            effect["ci_high"], np.percentile(expected_bootstrap, 97.5, axis=0)
+        )
+
+
+def _ratio_driver_output(true_predictions):
+    true_predictions = np.asarray(true_predictions, dtype=np.float64)
+    block_count = true_predictions.size
+    truth = np.zeros((block_count, 1, 1), dtype=np.float64)
+    candidate_forecasts_none = np.empty((block_count, 1, 1, 2), dtype=np.float64)
+    candidate_forecasts_none[:, 0, 0, 0] = true_predictions
+    candidate_forecasts_none[:, 0, 0, 1] = np.asarray(
+        [2.0, 4.0][:block_count], dtype=np.float64
+    )
+    diagonal = true_predictions[:, None, None]
+    return {
+        "full_states_full_weights": diagonal + 0.1,
+        "full_states_none_weights": diagonal + 0.2,
+        "none_states_full_weights": diagonal + 0.3,
+        "none_states_none_weights": diagonal.copy(),
+        "truth_forecasts": truth,
+        "candidate_forecasts_none": candidate_forecasts_none,
+        "final_true_candidate_indices": np.asarray([0], dtype=np.int64),
+    }
+
+
+def test_wrong_candidate_ratio_is_ratio_of_resampled_root_mean_squares():
+    driver_output = _ratio_driver_output([1.0, 1.0])
+
+    summary = diagnostic.summarize_state_weight_factorial(
+        driver_output,
+        bootstrap_replicates=5,
+        bootstrap_seed=7,
+        minimum_rmse_fraction=0.01,
+    )
+
+    wrong = summary["wrong_candidate"]
+    np.testing.assert_array_equal(wrong["wrong_candidate_indices"], [[1]])
+    np.testing.assert_array_equal(wrong["num_sq_per_block"], [[1.0], [9.0]])
+    np.testing.assert_array_equal(wrong["den_sq_per_block"], [[1.0], [1.0]])
+    np.testing.assert_allclose(wrong["displacement_ratio"], [np.sqrt(5.0)])
+    expected_bootstrap_ratios = np.asarray(
+        [[3.0], [3.0], [3.0], [np.sqrt(5.0)], [1.0]]
+    )
+    np.testing.assert_allclose(
+        wrong["displacement_ratio_bootstrap"], expected_bootstrap_ratios
+    )
+    np.testing.assert_allclose(
+        wrong["displacement_ratio_ci_low"],
+        np.percentile(expected_bootstrap_ratios, 2.5, axis=0),
+    )
+    np.testing.assert_allclose(
+        wrong["displacement_ratio_ci_high"],
+        np.percentile(expected_bootstrap_ratios, 97.5, axis=0),
+    )
+    np.testing.assert_array_equal(
+        wrong["error_difference"]["baseline_per_block_mse"], [[1.0], [1.0]]
+    )
+    np.testing.assert_array_equal(
+        wrong["error_difference"]["per_block_difference"], [[3.0], [15.0]]
+    )
+    np.testing.assert_allclose(
+        wrong["error_difference"]["equivalence_lower"], [-0.0199]
+    )
+    np.testing.assert_allclose(
+        wrong["error_difference"]["equivalence_upper"], [0.0201]
+    )
+    np.testing.assert_array_equal(wrong["equivalent"], [False])
+
+
+def test_wrong_candidate_equivalence_requires_displacement_strictly_below_fraction():
+    truth = np.zeros((2, 1, 1), dtype=np.float64)
+    candidate_forecasts = np.broadcast_to(
+        np.asarray([1.0, 1.125], dtype=np.float64), (2, 1, 1, 2)
+    ).copy()
+    diagonal = np.ones((2, 1, 1), dtype=np.float64)
+    driver_output = {
+        "full_states_full_weights": diagonal,
+        "full_states_none_weights": diagonal,
+        "none_states_full_weights": diagonal,
+        "none_states_none_weights": diagonal,
+        "truth_forecasts": truth,
+        "candidate_forecasts_none": candidate_forecasts,
+        "final_true_candidate_indices": np.asarray([0], dtype=np.int64),
+    }
+
+    summary = diagnostic.summarize_state_weight_factorial(
+        driver_output,
+        bootstrap_replicates=4,
+        bootstrap_seed=3,
+        minimum_rmse_fraction=0.125,
+    )
+
+    wrong = summary["wrong_candidate"]
+    np.testing.assert_allclose(wrong["displacement_ratio_ci_high"], [0.125])
+    np.testing.assert_array_equal(
+        wrong["error_difference"]["classification"], ["practically_equivalent"]
+    )
+    np.testing.assert_array_equal(wrong["equivalent"], [False])
+
+
+def test_summarize_state_weight_factorial_saves_both_nonadditivity_terms():
+    driver_output = _summary_driver_output()
+
+    summary = diagnostic.summarize_state_weight_factorial(
+        driver_output,
+        bootstrap_replicates=8,
+        bootstrap_seed=14,
+        minimum_rmse_fraction=0.01,
+    )
+
+    ff = driver_output["full_states_full_weights"]
+    fn = driver_output["full_states_none_weights"]
+    nf = driver_output["none_states_full_weights"]
+    nn = driver_output["none_states_none_weights"]
+    truth = driver_output["truth_forecasts"]
+    expected_prediction = ff - fn - nf + nn
+    expected_squared_error = (
+        np.square(ff - truth)
+        - np.square(fn - truth)
+        - np.square(nf - truth)
+        + np.square(nn - truth)
+    )
+    for name, expected in (
+        ("prediction", expected_prediction),
+        ("squared_error", expected_squared_error),
+    ):
+        term = summary["nonadditivity"][name]
+        np.testing.assert_array_equal(term["raw"], expected)
+        np.testing.assert_allclose(term["per_block"], expected.mean(axis=1))
+        np.testing.assert_allclose(term["mean"], expected.mean(axis=(0, 1)))
+        assert "classification" not in term
+    assert summary["nonadditivity"]["squared_error_algebra_maximum_absolute_error"] == 0.0
+
+
+def test_summarize_state_weight_factorial_rejects_mismatched_nonadditivity():
+    driver_output = _summary_driver_output()
+    driver_output["prediction_nonadditivity"] = driver_output[
+        "prediction_nonadditivity"
+    ].copy()
+    driver_output["prediction_nonadditivity"][0, 0, 0] += 1e-12
+
+    with pytest.raises(ValueError):
+        diagnostic.summarize_state_weight_factorial(
+            driver_output,
+            bootstrap_replicates=8,
+            bootstrap_seed=14,
+            minimum_rmse_fraction=0.01,
+        )
+
+
+@pytest.mark.parametrize("zero_case", ["point", "bootstrap"])
+def test_summarize_state_weight_factorial_rejects_zero_true_candidate_denominator(
+    zero_case,
+):
+    true_predictions = [0.0, 0.0] if zero_case == "point" else [0.0, 1.0]
+    driver_output = _ratio_driver_output(true_predictions)
+
+    with pytest.raises(ValueError, match="denominator"):
+        diagnostic.summarize_state_weight_factorial(
+            driver_output,
+            bootstrap_replicates=5,
+            bootstrap_seed=7,
+            minimum_rmse_fraction=0.01,
+        )
+
+
+@pytest.mark.parametrize(
+    "invalid_case",
+    [
+        "missing_combination",
+        "combination_shape",
+        "nonfinite_truth",
+        "candidate_shape",
+        "one_candidate",
+        "truth_index_shape",
+        "truth_index_fractional",
+        "truth_index_boolean",
+        "truth_index_out_of_range",
+        "zero_blocks",
+        "zero_truths",
+        "zero_leads",
+    ],
+)
+def test_summarize_state_weight_factorial_rejects_invalid_driver_arrays(invalid_case):
+    driver_output = _summary_driver_output()
+    if invalid_case == "missing_combination":
+        driver_output.pop("full_states_full_weights")
+    elif invalid_case == "combination_shape":
+        driver_output["full_states_full_weights"] = np.zeros((2, 2, 2))
+    elif invalid_case == "nonfinite_truth":
+        driver_output["truth_forecasts"][0, 0, 0] = np.nan
+    elif invalid_case == "candidate_shape":
+        driver_output["candidate_forecasts_none"] = np.zeros((2, 2, 1))
+    elif invalid_case == "one_candidate":
+        driver_output["candidate_forecasts_none"] = driver_output[
+            "candidate_forecasts_none"
+        ][..., :1]
+    elif invalid_case == "truth_index_shape":
+        driver_output["final_true_candidate_indices"] = np.asarray([[0, 1]])
+    elif invalid_case == "truth_index_fractional":
+        driver_output["final_true_candidate_indices"] = np.asarray([0.0, 1.5])
+    elif invalid_case == "truth_index_boolean":
+        driver_output["final_true_candidate_indices"] = np.asarray([False, True])
+    elif invalid_case == "truth_index_out_of_range":
+        driver_output["final_true_candidate_indices"] = np.asarray([0, 3])
+    else:
+        axis = {"zero_blocks": 0, "zero_truths": 1, "zero_leads": 2}[invalid_case]
+        slicer = [slice(None), slice(None), slice(None)]
+        slicer[axis] = slice(0, 0)
+        for name in (
+            "full_states_full_weights",
+            "full_states_none_weights",
+            "none_states_full_weights",
+            "none_states_none_weights",
+            "truth_forecasts",
+            "prediction_nonadditivity",
+        ):
+            driver_output[name] = driver_output[name][tuple(slicer)]
+        candidate_slicer = slicer + [slice(None)]
+        driver_output["candidate_forecasts_none"] = driver_output[
+            "candidate_forecasts_none"
+        ][tuple(candidate_slicer)]
+        if invalid_case == "zero_truths":
+            driver_output["final_true_candidate_indices"] = np.asarray([], dtype=np.int64)
+
+    with pytest.raises(ValueError):
+        diagnostic.summarize_state_weight_factorial(
+            driver_output,
+            bootstrap_replicates=8,
+            bootstrap_seed=14,
+            minimum_rmse_fraction=0.01,
+        )
+
+
+@pytest.mark.parametrize(
+    ("control", "invalid_value"),
+    [
+        ("bootstrap_replicates", 0),
+        ("bootstrap_replicates", 1.5),
+        ("bootstrap_replicates", True),
+        ("bootstrap_seed", -1),
+        ("bootstrap_seed", 1.5),
+        ("bootstrap_seed", True),
+        ("minimum_rmse_fraction", 0.0),
+        ("minimum_rmse_fraction", 1.0),
+        ("minimum_rmse_fraction", np.nan),
+        ("minimum_rmse_fraction", True),
+    ],
+)
+def test_summarize_state_weight_factorial_rejects_invalid_controls(
+    control,
+    invalid_value,
+):
+    controls = {
+        "bootstrap_replicates": 8,
+        "bootstrap_seed": 14,
+        "minimum_rmse_fraction": 0.01,
+    }
+    controls[control] = invalid_value
+
+    with pytest.raises(ValueError):
+        diagnostic.summarize_state_weight_factorial(
+            _summary_driver_output(),
+            **controls,
+        )
+
+
+def test_summarize_state_weight_factorial_keys_do_not_claim_a_pure_state_effect():
+    summary = diagnostic.summarize_state_weight_factorial(
+        _summary_driver_output(),
+        bootstrap_replicates=8,
+        bootstrap_seed=14,
+        minimum_rmse_fraction=0.01,
+    )
+    pending = [summary]
+    keys = []
+    while pending:
+        current = pending.pop()
+        if isinstance(current, dict):
+            keys.extend(str(key) for key in current)
+            pending.extend(current.values())
+
+    assert not any("pure_state" in key or "state_effect" in key for key in keys)

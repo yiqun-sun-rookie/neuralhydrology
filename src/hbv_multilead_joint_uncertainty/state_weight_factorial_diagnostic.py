@@ -735,3 +735,452 @@ def compare_state_weight_factorial(
         "forecast_lead_days": np.asarray(lead_days, dtype=np.int64),
         "assimilation_days": assimilation_days,
     }
+
+
+def classify_effect_interval(
+    lower: float,
+    upper: float,
+    equivalence_lower: float,
+    equivalence_upper: float,
+) -> str:
+    """Classify one confidence interval against fixed equivalence limits."""
+    values = tuple(
+        _validated_scalar(value, name)
+        for value, name in (
+            (lower, "lower"),
+            (upper, "upper"),
+            (equivalence_lower, "equivalence_lower"),
+            (equivalence_upper, "equivalence_upper"),
+        )
+    )
+    lower_value, upper_value, equivalent_low, equivalent_high = values
+    if lower_value > upper_value:
+        raise ValueError("lower must not exceed upper")
+    if equivalent_low > equivalent_high:
+        raise ValueError("equivalence_lower must not exceed equivalence_upper")
+    if lower_value >= equivalent_low and upper_value <= equivalent_high:
+        return "practically_equivalent"
+    if upper_value < equivalent_low:
+        return "material_improvement"
+    if lower_value > equivalent_high:
+        return "material_harm"
+    return "unresolved"
+
+
+_SUMMARY_COMBINATION_NAMES = (
+    "full_states_full_weights",
+    "full_states_none_weights",
+    "none_states_full_weights",
+    "none_states_none_weights",
+)
+
+_SUMMARY_EFFECT_DEFINITIONS = {
+    "main_final_weight_replacement": (
+        "none_states_full_weights",
+        "none_states_none_weights",
+    ),
+    "final_weight_replacement_review": (
+        "full_states_full_weights",
+        "full_states_none_weights",
+    ),
+    "main_candidate_forecast_distribution_replacement": (
+        "full_states_none_weights",
+        "none_states_none_weights",
+    ),
+    "candidate_forecast_distribution_replacement_review": (
+        "full_states_full_weights",
+        "none_states_full_weights",
+    ),
+    "complete_full_minus_none": (
+        "full_states_full_weights",
+        "none_states_none_weights",
+    ),
+}
+
+
+def _summary_driver_array(
+    driver_output: Mapping[str, object],
+    name: str,
+    expected_shape: tuple[int, ...] | None = None,
+) -> np.ndarray:
+    if not isinstance(driver_output, Mapping):
+        raise ValueError("driver_output must be a mapping")
+    if name not in driver_output:
+        raise ValueError(f"driver_output is missing {name}")
+    values = _as_real_float_array(driver_output[name], name).copy()
+    if expected_shape is not None and values.shape != expected_shape:
+        raise ValueError(f"{name} must have shape {expected_shape}")
+    if not np.all(np.isfinite(values)):
+        raise ValueError(f"{name} must be finite")
+    return values
+
+
+def _bootstrap_block_means(
+    per_block_values: np.ndarray,
+    bootstrap_indices: np.ndarray,
+) -> np.ndarray:
+    return per_block_values[bootstrap_indices].mean(axis=1)
+
+
+def _equivalence_limits(
+    baseline_mse: np.ndarray,
+    minimum_rmse_fraction: float,
+) -> tuple[np.ndarray, np.ndarray]:
+    lower_multiplier = (1.0 - minimum_rmse_fraction) ** 2 - 1.0
+    upper_multiplier = (1.0 + minimum_rmse_fraction) ** 2 - 1.0
+    return lower_multiplier * baseline_mse, upper_multiplier * baseline_mse
+
+
+def _summarize_error_difference(
+    raw_difference: np.ndarray,
+    baseline_squared_error: np.ndarray,
+    bootstrap_indices: np.ndarray,
+    minimum_rmse_fraction: float,
+) -> dict[str, np.ndarray]:
+    per_block_difference = raw_difference.mean(axis=1)
+    baseline_per_block_mse = baseline_squared_error.mean(axis=1)
+    bootstrap_mean = _bootstrap_block_means(
+        per_block_difference,
+        bootstrap_indices,
+    )
+    ci_low = np.percentile(bootstrap_mean, 2.5, axis=0)
+    ci_high = np.percentile(bootstrap_mean, 97.5, axis=0)
+    baseline_mse = baseline_per_block_mse.mean(axis=0)
+    equivalence_lower, equivalence_upper = _equivalence_limits(
+        baseline_mse,
+        minimum_rmse_fraction,
+    )
+    classification = np.asarray(
+        [
+            classify_effect_interval(low, high, equivalent_low, equivalent_high)
+            for low, high, equivalent_low, equivalent_high in zip(
+                ci_low,
+                ci_high,
+                equivalence_lower,
+                equivalence_upper,
+            )
+        ],
+        dtype=str,
+    )
+    return {
+        "raw_difference": raw_difference.copy(),
+        "per_block_difference": per_block_difference,
+        "baseline_per_block_mse": baseline_per_block_mse,
+        "mean": per_block_difference.mean(axis=0),
+        "bootstrap_mean": bootstrap_mean,
+        "ci_low": ci_low,
+        "ci_high": ci_high,
+        "baseline_mse": baseline_mse,
+        "equivalence_lower": equivalence_lower,
+        "equivalence_upper": equivalence_upper,
+        "classification": classification,
+    }
+
+
+def _summarize_nonadditivity(
+    raw_values: np.ndarray,
+    bootstrap_indices: np.ndarray,
+) -> dict[str, np.ndarray]:
+    per_block = raw_values.mean(axis=1)
+    bootstrap_mean = _bootstrap_block_means(per_block, bootstrap_indices)
+    return {
+        "raw": raw_values.copy(),
+        "per_block": per_block,
+        "mean": per_block.mean(axis=0),
+        "bootstrap_mean": bootstrap_mean,
+        "ci_low": np.percentile(bootstrap_mean, 2.5, axis=0),
+        "ci_high": np.percentile(bootstrap_mean, 97.5, axis=0),
+    }
+
+
+def _validated_true_candidate_indices(
+    value: object,
+    truth_count: int,
+    candidate_count: int,
+) -> np.ndarray:
+    try:
+        raw = np.asarray(value)
+    except (TypeError, ValueError) as error:
+        raise ValueError("final_true_candidate_indices must be an integer vector") from error
+    if (
+        raw.shape != (truth_count,)
+        or np.iscomplexobj(raw)
+        or np.issubdtype(raw.dtype, np.bool_)
+    ):
+        raise ValueError("final_true_candidate_indices must contain one index per truth")
+    try:
+        numeric = np.asarray(raw, dtype=np.float64)
+    except (TypeError, ValueError) as error:
+        raise ValueError("final_true_candidate_indices must be an integer vector") from error
+    if not np.all(np.isfinite(numeric)) or not np.all(numeric == np.floor(numeric)):
+        raise ValueError("final_true_candidate_indices must be finite integers")
+    indices = numeric.astype(np.int64)
+    if np.any(indices < 0) or np.any(indices >= candidate_count):
+        raise ValueError("final_true_candidate_indices contains an out-of-range index")
+    return indices
+
+
+def summarize_state_weight_factorial(
+    driver_output: dict,
+    bootstrap_replicates: int,
+    bootstrap_seed: int,
+    minimum_rmse_fraction: float,
+) -> dict:
+    """Summarize the crossed forecast paths with one matched-block bootstrap."""
+    replicates = _validated_positive_integer(
+        bootstrap_replicates,
+        "bootstrap_replicates",
+    )
+    seed = _validated_nonnegative_integer(bootstrap_seed, "bootstrap_seed")
+    fraction = _validated_scalar(
+        minimum_rmse_fraction,
+        "minimum_rmse_fraction",
+    )
+    if fraction <= 0.0 or fraction >= 1.0:
+        raise ValueError("minimum_rmse_fraction must be strictly between zero and one")
+
+    truth_forecasts = _summary_driver_array(driver_output, "truth_forecasts")
+    if truth_forecasts.ndim != 3 or any(size <= 0 for size in truth_forecasts.shape):
+        raise ValueError("truth_forecasts must be a nonempty (block, truth, lead) array")
+    block_count, truth_count, lead_count = truth_forecasts.shape
+    combinations = {
+        name: _summary_driver_array(driver_output, name, truth_forecasts.shape)
+        for name in _SUMMARY_COMBINATION_NAMES
+    }
+    candidate_forecasts_none = _summary_driver_array(
+        driver_output,
+        "candidate_forecasts_none",
+    )
+    if (
+        candidate_forecasts_none.ndim != 4
+        or candidate_forecasts_none.shape[:3] != truth_forecasts.shape
+        or candidate_forecasts_none.shape[3] < 2
+    ):
+        raise ValueError(
+            "candidate_forecasts_none must have shape (block, truth, lead, candidate) "
+            "with at least two candidates"
+        )
+    candidate_count = candidate_forecasts_none.shape[3]
+    if "final_true_candidate_indices" not in driver_output:
+        raise ValueError("driver_output is missing final_true_candidate_indices")
+    true_candidate_indices = _validated_true_candidate_indices(
+        driver_output["final_true_candidate_indices"],
+        truth_count,
+        candidate_count,
+    )
+
+    try:
+        bootstrap_indices = np.random.default_rng(seed).integers(
+            0,
+            block_count,
+            size=(replicates, block_count),
+        )
+    except ValueError as error:
+        raise ValueError("bootstrap_seed is outside the supported range") from error
+
+    squared_errors = {
+        name: np.square(values - truth_forecasts)
+        for name, values in combinations.items()
+    }
+    combination_rmse = {
+        name: np.sqrt(values.mean(axis=(0, 1)))
+        for name, values in squared_errors.items()
+    }
+    effects = {}
+    for effect_name, (left_name, right_name) in _SUMMARY_EFFECT_DEFINITIONS.items():
+        effects[effect_name] = _summarize_error_difference(
+            squared_errors[left_name] - squared_errors[right_name],
+            squared_errors[right_name],
+            bootstrap_indices,
+            fraction,
+        )
+    block_statistics = {
+        name: {
+            "per_block_difference": values["per_block_difference"].copy(),
+            "baseline_per_block_mse": values["baseline_per_block_mse"].copy(),
+        }
+        for name, values in effects.items()
+    }
+
+    true_index_grid = np.broadcast_to(
+        true_candidate_indices[None, :, None, None],
+        (block_count, truth_count, lead_count, 1),
+    )
+    true_candidate_predictions = np.take_along_axis(
+        candidate_forecasts_none,
+        true_index_grid,
+        axis=3,
+    )[..., 0]
+    all_candidate_indices = np.arange(candidate_count, dtype=np.int64)
+    wrong_candidate_indices = np.asarray(
+        [
+            all_candidate_indices[all_candidate_indices != true_index]
+            for true_index in true_candidate_indices
+        ],
+        dtype=np.int64,
+    )
+    wrong_index_grid = np.broadcast_to(
+        wrong_candidate_indices[None, :, None, :],
+        (block_count, truth_count, lead_count, candidate_count - 1),
+    )
+    wrong_candidate_predictions = np.take_along_axis(
+        candidate_forecasts_none,
+        wrong_index_grid,
+        axis=3,
+    )
+    true_candidate_squared_errors = np.square(
+        true_candidate_predictions - truth_forecasts
+    )
+    wrong_candidate_squared_errors = np.square(
+        wrong_candidate_predictions - truth_forecasts[..., None]
+    )
+    prediction_displacement_squared = np.square(
+        wrong_candidate_predictions - true_candidate_predictions[..., None]
+    )
+    wrong_minus_true_squared_error = (
+        wrong_candidate_squared_errors - true_candidate_squared_errors[..., None]
+    )
+    num_sq_per_block = prediction_displacement_squared.mean(axis=(1, 3))
+    den_sq_per_block = true_candidate_squared_errors.mean(axis=1)
+    wrong_error_difference_per_block = wrong_minus_true_squared_error.mean(
+        axis=(1, 3)
+    )
+    point_denominator = den_sq_per_block.mean(axis=0)
+    if np.any(point_denominator == 0.0):
+        raise ValueError("wrong-candidate displacement ratio has a zero denominator")
+    bootstrap_num = num_sq_per_block[bootstrap_indices].mean(axis=1)
+    bootstrap_den = den_sq_per_block[bootstrap_indices].mean(axis=1)
+    if np.any(bootstrap_den == 0.0):
+        raise ValueError(
+            "wrong-candidate displacement ratio bootstrap has a zero denominator"
+        )
+    displacement_ratio = np.sqrt(num_sq_per_block.mean(axis=0)) / np.sqrt(
+        point_denominator
+    )
+    displacement_ratio_bootstrap = np.sqrt(bootstrap_num) / np.sqrt(bootstrap_den)
+    displacement_ratio_ci_low = np.percentile(
+        displacement_ratio_bootstrap,
+        2.5,
+        axis=0,
+    )
+    displacement_ratio_ci_high = np.percentile(
+        displacement_ratio_bootstrap,
+        97.5,
+        axis=0,
+    )
+    wrong_error_difference = _summarize_error_difference(
+        wrong_minus_true_squared_error.mean(axis=3),
+        true_candidate_squared_errors,
+        bootstrap_indices,
+        fraction,
+    )
+    if not np.array_equal(
+        wrong_error_difference["per_block_difference"],
+        wrong_error_difference_per_block,
+    ):
+        raise RuntimeError("wrong-candidate error block reduction is inconsistent")
+    equivalent = np.asarray(
+        [
+            ratio_high < fraction and classification == "practically_equivalent"
+            for ratio_high, classification in zip(
+                displacement_ratio_ci_high,
+                wrong_error_difference["classification"],
+            )
+        ],
+        dtype=bool,
+    )
+
+    prediction_nonadditivity = (
+        combinations["full_states_full_weights"]
+        - combinations["full_states_none_weights"]
+        - combinations["none_states_full_weights"]
+        + combinations["none_states_none_weights"]
+    )
+    if "prediction_nonadditivity" in driver_output:
+        supplied_prediction_nonadditivity = _summary_driver_array(
+            driver_output,
+            "prediction_nonadditivity",
+            truth_forecasts.shape,
+        )
+        if not np.array_equal(
+            supplied_prediction_nonadditivity,
+            prediction_nonadditivity,
+        ):
+            raise ValueError(
+                "prediction_nonadditivity does not match the four forecast combinations"
+            )
+    squared_error_nonadditivity = (
+        squared_errors["full_states_full_weights"]
+        - squared_errors["full_states_none_weights"]
+        - squared_errors["none_states_full_weights"]
+        + squared_errors["none_states_none_weights"]
+    )
+    squared_error_identity = (
+        (
+            combinations["full_states_full_weights"]
+            - combinations["full_states_none_weights"]
+        )
+        * (
+            combinations["full_states_full_weights"]
+            + combinations["full_states_none_weights"]
+            - 2.0 * truth_forecasts
+        )
+        - (
+            combinations["none_states_full_weights"]
+            - combinations["none_states_none_weights"]
+        )
+        * (
+            combinations["none_states_full_weights"]
+            + combinations["none_states_none_weights"]
+            - 2.0 * truth_forecasts
+        )
+    )
+    algebra_maximum_absolute_error = float(
+        np.max(np.abs(squared_error_nonadditivity - squared_error_identity))
+    )
+    if algebra_maximum_absolute_error > 1e-12:
+        raise RuntimeError("squared-error nonadditivity failed its algebra identity")
+
+    return {
+        "combination_rmse": combination_rmse,
+        "squared_errors": squared_errors,
+        "block_statistics": block_statistics,
+        "effects": effects,
+        "wrong_candidate": {
+            "wrong_candidate_indices": wrong_candidate_indices,
+            "true_candidate_predictions": true_candidate_predictions,
+            "wrong_candidate_predictions": wrong_candidate_predictions,
+            "prediction_displacement_squared": prediction_displacement_squared,
+            "true_candidate_squared_errors": true_candidate_squared_errors,
+            "wrong_candidate_squared_errors": wrong_candidate_squared_errors,
+            "wrong_minus_true_squared_error": wrong_minus_true_squared_error,
+            "num_sq_per_block": num_sq_per_block,
+            "den_sq_per_block": den_sq_per_block,
+            "wrong_error_difference_per_block": wrong_error_difference_per_block,
+            "displacement_ratio": displacement_ratio,
+            "displacement_ratio_bootstrap": displacement_ratio_bootstrap,
+            "displacement_ratio_ci_low": displacement_ratio_ci_low,
+            "displacement_ratio_ci_high": displacement_ratio_ci_high,
+            "error_difference": wrong_error_difference,
+            "equivalent": equivalent,
+        },
+        "nonadditivity": {
+            "prediction": _summarize_nonadditivity(
+                prediction_nonadditivity,
+                bootstrap_indices,
+            ),
+            "squared_error": _summarize_nonadditivity(
+                squared_error_nonadditivity,
+                bootstrap_indices,
+            ),
+            "squared_error_algebra_maximum_absolute_error": (
+                algebra_maximum_absolute_error
+            ),
+        },
+        "bootstrap": {
+            "replicates": replicates,
+            "seed": seed,
+            "indices": bootstrap_indices,
+            "minimum_rmse_fraction": fraction,
+        },
+    }
