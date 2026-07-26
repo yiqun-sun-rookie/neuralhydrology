@@ -1,0 +1,13 @@
+{
+  "experiment_family": "historical_band_pilot_v01",
+  "basin_file": "src/26_historical_band_experts/configs/pilot_basins_60.txt",
+  "basin_file_sha256": "3160dad3b22200fdb596164c9f69e4fbe19cc156cfad768beb193efea7b26b65",
+  "results_root": "results/26_historical_band_experts/pilot_v01",
+  "epochs": 10,
+  "batch_size": 256,
+  "validation_batch_size": 512,
+  "learning_rate": 0.001,
+  "gradient_clip": 1.0,
+  "limit_batches": 0,
+  "limit_validation_samples": 0
+}

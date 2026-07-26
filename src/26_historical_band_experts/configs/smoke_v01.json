@@ -1,0 +1,13 @@
+{
+  "experiment_family": "historical_band_smoke_v01",
+  "basin_file": "src/26_historical_band_experts/configs/smoke_basins_6.txt",
+  "basin_file_sha256": "ac8b7fd27817352ce028cdcb5c41d6f39ed8eddaca3d0abefbaccebca012fa31",
+  "results_root": "results/26_historical_band_experts/smoke_v01",
+  "epochs": 2,
+  "batch_size": 64,
+  "validation_batch_size": 128,
+  "learning_rate": 0.001,
+  "gradient_clip": 1.0,
+  "limit_batches": 2,
+  "limit_validation_samples": 120
+}

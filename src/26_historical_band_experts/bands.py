@@ -93,19 +93,29 @@ def _gather_pooled(
         pooled.append(total / float(high_lag_exclusive - low_lag))
     return torch.stack(pooled, dim=1)
 
+def forcing_prefix(x: torch.Tensor) -> torch.Tensor:
+    """Build one reusable cumulative forcing tensor."""
+    if x.ndim != 3:
+        raise ValueError(f"x must have shape [basin,time,feature], got {tuple(x.shape)}")
+    return torch.cat(
+        (x.new_zeros((x.shape[0], 1, x.shape[2])), torch.cumsum(x, dim=1)),
+        dim=1,
+    )
+
 
 def gather_fixed_bands(
     x: torch.Tensor,
     basin_indices: torch.Tensor,
     target_indices: torch.Tensor,
+    prefix: torch.Tensor | None = None,
 ) -> dict[str, torch.Tensor]:
     """Extract causal recent daily and older pooled inputs in chronological order."""
     basin_indices, target_indices = _validate_indices(x, basin_indices, target_indices)
     specs = fixed_band_specs()
-    prefix = torch.cat(
-        (x.new_zeros((x.shape[0], 1, x.shape[2])), torch.cumsum(x, dim=1)),
-        dim=1,
-    )
+    if prefix is None:
+        prefix = forcing_prefix(x)
+    if prefix.shape != (x.shape[0], x.shape[1] + 1, x.shape[2]):
+        raise ValueError("prefix shape is not aligned with x")
     return {
         specs[0].name: _gather_daily(x, basin_indices, target_indices, specs[0]),
         specs[1].name: _gather_pooled(prefix, basin_indices, target_indices, specs[1]),

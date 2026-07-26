@@ -6,7 +6,7 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from bands import fixed_band_specs, gather_fixed_bands, lag_bin_edges
+from bands import fixed_band_specs, forcing_prefix, gather_fixed_bands, lag_bin_edges
 
 
 def test_fixed_bands_are_disjoint_complete_and_causal():
@@ -84,6 +84,23 @@ def test_future_values_cannot_change_extracted_bands():
 
     for name in before:
         torch.testing.assert_close(before[name], after[name])
+
+def test_precomputed_prefix_matches_direct_extraction():
+    generator = torch.Generator().manual_seed(19)
+    x = torch.randn(2, 4000, 4, generator=generator)
+    basin_indices = torch.tensor([0, 1, 0])
+    target_indices = torch.tensor([3649, 3650, 3700])
+
+    direct = gather_fixed_bands(x, basin_indices, target_indices)
+    reused = gather_fixed_bands(
+        x,
+        basin_indices,
+        target_indices,
+        prefix=forcing_prefix(x),
+    )
+
+    for name in direct:
+        torch.testing.assert_close(direct[name], reused[name])
 
 
 def test_target_without_full_history_is_rejected():
