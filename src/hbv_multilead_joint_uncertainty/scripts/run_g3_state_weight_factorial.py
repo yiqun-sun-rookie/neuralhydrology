@@ -6,6 +6,7 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import os
 import shutil
 import sys
 from collections.abc import Mapping
@@ -75,6 +76,7 @@ _SOURCE_FILES = (
 
 
 def _sha256(path: Path) -> str:
+    path = _windows_extended_length_path(path)
     digest = hashlib.sha256()
     with path.open("rb") as handle:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
@@ -355,20 +357,48 @@ def _computed_cross_checks(driver, reference, candidate_ids, candidate_parameter
     return checks
 
 
+def _windows_extended_length_path(path):
+    """Return an absolute path with Windows extended-length I/O semantics."""
+
+    candidate = Path(path)
+    if os.name != "nt":
+        return candidate
+    raw = str(candidate)
+    if raw.startswith("\\\\?\\"):
+        return candidate
+    if not candidate.is_absolute():
+        raw = str(candidate.absolute())
+    if raw.startswith("\\\\"):
+        return Path("\\\\?\\UNC\\" + raw[2:])
+    return Path("\\\\?\\" + raw)
+
+
 def _source_snapshot(root, destination):
-    destination.mkdir(parents=True, exist_ok=False)
+    destination_for_io = _windows_extended_length_path(destination)
+    destination_for_io.mkdir(parents=True, exist_ok=False)
     if len(_SOURCE_FILES) != len(set(_SOURCE_FILES)):
         raise ValueError("source snapshot manifest contains duplicate paths")
     for configured in _SOURCE_FILES:
         relative = Path(configured)
         if relative.is_absolute() or ".." in relative.parts:
             raise ValueError(f"source snapshot path is not repository-relative: {configured}")
-        source = (root / relative).resolve()
+        source = _windows_extended_length_path(root / relative)
         if not source.is_file():
             raise FileNotFoundError(f"source snapshot file is missing: {configured}")
-        target = destination / relative
+        target = destination_for_io / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
+
+
+def _checksums_for_directory(directory):
+    """Hash every file through the same extended-length path namespace."""
+
+    canonical = _windows_extended_length_path(directory)
+    return {
+        path.relative_to(canonical).as_posix(): _sha256(path)
+        for path in sorted(canonical.rglob("*"), key=lambda value: value.as_posix())
+        if path.is_file() and path.name != "checksums.json"
+    }
 
 
 def _flatten_arrays(prefix, value, output):
@@ -731,15 +761,14 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
         "after_evidence_writes": protected_after,
         "status": "unchanged" if protected_unchanged else "changed",
     })
-    checksums = {
-        path.relative_to(incomplete).as_posix(): _sha256(path)
-        for path in sorted(incomplete.rglob("*"))
-        if path.is_file() and path.name != "checksums.json"
-    }
+    checksums = _checksums_for_directory(incomplete)
     _json_write_strict(incomplete / "checksums.json", checksums)
     if not integrity_passed:
         raise RuntimeError("protected-artifact or cross-check integrity gate failed")
-    _replace_directory_with_retries(incomplete, output)
+    _replace_directory_with_retries(
+        _windows_extended_length_path(incomplete),
+        _windows_extended_length_path(output),
+    )
     return summary
 
 

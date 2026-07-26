@@ -2199,6 +2199,129 @@ def test_state_weight_runner_packages_auditable_evidence_and_refuses_second_run(
     assert case.calls["compare"] == 1
 
 
+@pytest.mark.skipif(
+    __import__("sys").platform != "win32",
+    reason="Windows extended-length path regression",
+)
+def test_state_weight_runner_packages_long_windows_output_path(
+    tmp_path,
+    monkeypatch,
+):
+    import hashlib
+    import json
+    import shutil
+    from pathlib import Path
+
+    case = _state_weight_runner_case(tmp_path, monkeypatch)
+    experiment_id = "factorial_" + "x" * 96
+    case.config["experiment_id"] = experiment_id
+    case.output = case.root / "results" / experiment_id
+    case.write_config()
+    longest_source = max(case.runner._SOURCE_FILES, key=len)
+    longest_target = (
+        case.output.with_name(case.output.name + ".incomplete")
+        / "source_snapshot"
+        / longest_source
+    )
+    assert len(str(longest_target.absolute())) >= 260
+
+    def extended(path):
+        value = str(Path(path).absolute())
+        return Path(value if value.startswith("\\\\?\\") else "\\\\?\\" + value)
+
+    preregistration = case.output.with_name(
+        case.output.name + ".preregistered.json"
+    )
+    incomplete = case.output.with_name(case.output.name + ".incomplete")
+    try:
+        summary = case.runner.run(case.root, case.config_path, case.output)
+
+        assert summary["integrity_status"] == "passed"
+        checksums = json.loads(
+            (case.output / "checksums.json").read_text(encoding="utf-8")
+        )
+        for relative, expected in checksums.items():
+            actual = hashlib.sha256(
+                extended(case.output / relative).read_bytes()
+            ).hexdigest()
+            assert actual == expected
+    finally:
+        for directory in (case.output, incomplete):
+            extended_directory = extended(directory)
+            if extended_directory.exists():
+                shutil.rmtree(extended_directory)
+        extended_preregistration = extended(preregistration)
+        if extended_preregistration.exists():
+            extended_preregistration.unlink()
+
+
+@pytest.mark.skipif(
+    __import__("sys").platform != "win32",
+    reason="Windows extended-length path regression",
+)
+def test_state_weight_source_snapshot_reads_long_windows_source_path(
+    tmp_path,
+    monkeypatch,
+):
+    import shutil
+    from pathlib import Path
+
+    from hbv_multilead_joint_uncertainty.scripts import (
+        run_g3_state_weight_factorial as runner,
+    )
+
+    relative = Path(
+        "src/hbv_multilead_joint_uncertainty/"
+        "state_weight_factorial_diagnostic.py"
+    )
+    root = tmp_path / ("repository_" + "r" * 150)
+    source = root / relative
+    destination = tmp_path / "snapshot"
+
+    def extended(path):
+        value = str(Path(path).absolute())
+        return Path(value if value.startswith("\\\\?\\") else "\\\\?\\" + value)
+
+    extended_source = extended(source)
+    assert len(str(source.absolute())) >= 260
+    try:
+        extended_source.parent.mkdir(parents=True, exist_ok=False)
+        extended_source.write_text("long source\n", encoding="utf-8")
+        monkeypatch.setattr(runner, "_SOURCE_FILES", (relative.as_posix(),))
+
+        runner._source_snapshot(root, destination)
+
+        copied = destination / relative
+        assert copied.read_text(encoding="utf-8") == "long source\n"
+    finally:
+        extended_root = extended(root)
+        if extended_root.exists():
+            shutil.rmtree(extended_root)
+        extended_destination = extended(destination)
+        if extended_destination.exists():
+            shutil.rmtree(extended_destination)
+
+
+@pytest.mark.skipif(
+    __import__("sys").platform != "win32",
+    reason="Windows extended-length path regression",
+)
+def test_state_weight_runner_extended_length_path_handles_unc_share():
+    from hbv_multilead_joint_uncertainty.scripts import (
+        run_g3_state_weight_factorial as runner,
+    )
+
+    converted = runner._windows_extended_length_path(
+        r"\\server\share\folder\file.txt"
+    )
+    already_extended = runner._windows_extended_length_path(
+        r"\\?\UNC\server\share\folder\file.txt"
+    )
+
+    assert str(converted) == r"\\?\UNC\server\share\folder\file.txt"
+    assert str(already_extended) == str(converted)
+
+
 def test_state_weight_runner_rejects_bad_sealed_hash_before_scientific_work(
     tmp_path,
     monkeypatch,

@@ -9,6 +9,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 V01_EXPERIMENT_ID = "g3_state_weight_factorial_param_switch_v01"
 V02_EXPERIMENT_ID = "g3_state_weight_factorial_param_switch_v02"
+V03_EXPERIMENT_ID = "g3_state_weight_factorial_param_switch_v03"
 V01_CONFIG_PATH = (
     REPO_ROOT
     / "src"
@@ -22,6 +23,13 @@ V02_CONFIG_PATH = (
     / "hbv_multilead_joint_uncertainty"
     / "configs"
     / f"{V02_EXPERIMENT_ID}.json"
+)
+V03_CONFIG_PATH = (
+    REPO_ROOT
+    / "src"
+    / "hbv_multilead_joint_uncertainty"
+    / "configs"
+    / f"{V03_EXPERIMENT_ID}.json"
 )
 REGISTRY_PATH = (
     REPO_ROOT
@@ -102,6 +110,33 @@ EXPECTED_RECOVERY_PROTECTED_PATHS = [
     (
         "src/hbv_multilead_joint_uncertainty/configs/"
         "g3_state_weight_factorial_param_switch_v02.json"
+    ),
+]
+EXPECTED_PACKAGING_RECOVERY_PROTECTED_PATHS = [
+    (
+        "results/23_hbv_multilead_joint_uncertainty/"
+        "g3_state_weight_factorial_param_switch_v02.preregistered.json"
+    ),
+    (
+        "results/23_hbv_multilead_joint_uncertainty/"
+        "g3_state_weight_factorial_param_switch_v02.formal.stdout.log"
+    ),
+    (
+        "results/23_hbv_multilead_joint_uncertainty/"
+        "g3_state_weight_factorial_param_switch_v02.formal.stderr.log"
+    ),
+    (
+        "results/23_hbv_multilead_joint_uncertainty/"
+        "g3_state_weight_factorial_param_switch_v02.incomplete"
+    ),
+    (
+        "results/23_hbv_multilead_joint_uncertainty/"
+        "g3_state_weight_factorial_param_switch_v02.failed.json"
+    ),
+    "docs/plans/2026-07-26-g3-state-weight-factorial-v02-failure.md",
+    (
+        "src/hbv_multilead_joint_uncertainty/configs/"
+        "g3_state_weight_factorial_param_switch_v03.json"
     ),
 ]
 
@@ -360,6 +395,69 @@ def test_recovery_config_protects_failed_attempt_and_itself():
         assert (REPO_ROOT / relative_path).exists(), relative_path
 
 
+def test_packaging_recovery_changes_only_identity_and_governance():
+    v02 = _load_config(V02_CONFIG_PATH)
+    v03 = _load_config(V03_CONFIG_PATH)
+    unchanged_v02 = {
+        key: value
+        for key, value in v02.items()
+        if key
+        not in {
+            "experiment_id",
+            "protected_paths",
+            "recovery_from_failed_attempt",
+        }
+    }
+    unchanged_v03 = {
+        key: value
+        for key, value in v03.items()
+        if key
+        not in {
+            "experiment_id",
+            "protected_paths",
+            "recovery_from_failed_attempt",
+        }
+    }
+
+    assert unchanged_v03 == unchanged_v02
+    assert v03["experiment_id"] == V03_EXPERIMENT_ID
+    assert v03["recovery_from_failed_attempt"] == {
+        "experiment_id": V02_EXPERIMENT_ID,
+        "failure_record": {
+            "path": (
+                "results/23_hbv_multilead_joint_uncertainty/"
+                "g3_state_weight_factorial_param_switch_v02.failed.json"
+            ),
+            "sha256": (
+                "6b6814cdd7d87fb9238c8d49cee90055"
+                "83c63d2bc1c21973ec4131adb102cb3e"
+            ),
+        },
+        "scientific_contract_changed": False,
+        "numerical_validation_changed": False,
+        "packaging_implementation_changed": True,
+        "failed_target_absolute_length": 267,
+        "windows_extended_length_paths": True,
+    }
+    failure_record = v03["recovery_from_failed_attempt"]["failure_record"]
+    actual_digest = hashlib.sha256(
+        (REPO_ROOT / failure_record["path"]).read_bytes()
+    ).hexdigest()
+    assert actual_digest == failure_record["sha256"]
+
+
+def test_packaging_recovery_protects_v02_failure_and_itself():
+    v02 = _load_config(V02_CONFIG_PATH)
+    v03 = _load_config(V03_CONFIG_PATH)
+    expected = v02["protected_paths"] + EXPECTED_PACKAGING_RECOVERY_PROTECTED_PATHS
+
+    assert v03["protected_paths"] == expected
+    assert len(v03["protected_paths"]) == 47
+    assert len(set(v03["protected_paths"])) == 47
+    for relative_path in v03["protected_paths"]:
+        assert (REPO_ROOT / relative_path).exists(), relative_path
+
+
 def _registry_rows(experiment_id: str) -> list[dict[str, str]]:
     with REGISTRY_PATH.open("r", encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle)
@@ -419,7 +517,7 @@ def test_failed_attempt_registry_row_is_permanent_and_exact():
     ]
 
 
-def test_recovery_registry_has_one_exact_preregistered_row():
+def test_v02_packaging_failure_registry_row_is_permanent_and_exact():
     assert _registry_rows(V02_EXPERIMENT_ID) == [
         {
             "exp_id": V02_EXPERIMENT_ID,
@@ -439,18 +537,55 @@ def test_recovery_registry_has_one_exact_preregistered_row():
                 "and frozen forecast contract"
             ),
             "seeds": "3301001-3310757",
-            "status": "preregistered",
+            "status": "failed",
             "run_dir": (
                 "results/23_hbv_multilead_joint_uncertainty/"
                 "g3_state_weight_factorial_param_switch_v02"
             ),
             "best_checkpoint": "not applicable",
+            "metrics_path": "not produced",
+            "paper_name": "G3 state-weight factorial forecast diagnostic",
+            "notes": (
+                "Formal attempt completed calculations but failed during a "
+                "267-character source-snapshot copy; incomplete evidence retained "
+                "and is not a formal result; recovered as "
+                "g3_state_weight_factorial_param_switch_v03"
+            ),
+        }
+    ]
+
+
+def test_v03_packaging_recovery_registry_has_one_exact_preregistered_row():
+    assert _registry_rows(V03_EXPERIMENT_ID) == [
+        {
+            "exp_id": V03_EXPERIMENT_ID,
+            "type": "mechanism diagnostic",
+            "hypothesis": (
+                "Final candidate-weight concentration and assimilation-interaction "
+                "candidate forecast distributions jointly explain the absent "
+                "forecast advantage"
+            ),
+            "base_config": f"{V03_EXPERIMENT_ID}.json",
+            "changed_factor": (
+                "final candidate weights crossed with assimilation-interaction "
+                "candidate forecast distributions"
+            ),
+            "fixed_factors": (
+                "exact sealed truth observations candidates assimilation setup "
+                "and frozen forecast contract"
+            ),
+            "seeds": "3301001-3310757",
+            "status": "preregistered",
+            "run_dir": (
+                "results/23_hbv_multilead_joint_uncertainty/"
+                "g3_state_weight_factorial_param_switch_v03"
+            ),
+            "best_checkpoint": "not applicable",
             "metrics_path": "summary.json",
             "paper_name": "G3 state-weight factorial forecast diagnostic",
             "notes": (
-                "Recovery of failed v01 with unchanged scientific contract; "
-                "only the frozen-probability validation uses the preregistered "
-                "1e-12 absolute tolerance"
+                "Recovery of failed v02 with unchanged scientific contract; "
+                "only evidence packaging adds Windows extended-length paths"
             ),
         }
     ]
