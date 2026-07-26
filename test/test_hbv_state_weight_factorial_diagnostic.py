@@ -2306,6 +2306,50 @@ def test_state_weight_source_snapshot_reads_long_windows_source_path(
     __import__("sys").platform != "win32",
     reason="Windows extended-length path regression",
 )
+def test_state_weight_protected_hashes_include_long_nested_file(tmp_path):
+    import hashlib
+    import shutil
+    from pathlib import Path
+
+    from hbv_multilead_joint_uncertainty.scripts import (
+        run_g3_state_weight_factorial as runner,
+    )
+
+    root = tmp_path / "repo"
+    protected = root / "protected"
+    relative_file = (
+        Path("nested_" + "a" * 90)
+        / ("nested_" + "b" * 90)
+        / ("evidence_" + "c" * 60 + ".json")
+    )
+    long_file = protected / relative_file
+
+    def extended(path):
+        value = str(Path(path).absolute())
+        return Path(value if value.startswith("\\\\?\\") else "\\\\?\\" + value)
+
+    extended_file = extended(long_file)
+    assert len(str(long_file.absolute())) >= 260
+    try:
+        extended_file.parent.mkdir(parents=True, exist_ok=False)
+        extended_file.write_bytes(b"protected long path\n")
+
+        hashes = runner._protected_hashes(root, ["protected"])
+
+        expected_key = (Path("protected") / relative_file).as_posix()
+        assert hashes == {
+            expected_key: hashlib.sha256(b"protected long path\n").hexdigest()
+        }
+    finally:
+        extended_root = extended(root)
+        if extended_root.exists():
+            shutil.rmtree(extended_root)
+
+
+@pytest.mark.skipif(
+    __import__("sys").platform != "win32",
+    reason="Windows extended-length path regression",
+)
 def test_state_weight_runner_extended_length_path_handles_unc_share():
     from hbv_multilead_joint_uncertainty.scripts import (
         run_g3_state_weight_factorial as runner,

@@ -26,7 +26,6 @@ from hbv_multilead_joint_uncertainty.scripts.run_three_stage_switching_validatio
     _load_observation_noise,
     _load_parameter_vectors,
     _load_process_covariances,
-    _protected_hashes,
     _replace_directory_with_retries,
     _resource_preflight,
     _validate_output_is_disjoint_from_protected_paths,
@@ -371,6 +370,36 @@ def _windows_extended_length_path(path):
     if raw.startswith("\\\\"):
         return Path("\\\\?\\UNC\\" + raw[2:])
     return Path("\\\\?\\" + raw)
+
+
+def _protected_hashes(root, configured_paths):
+    """Hash every protected file, including files beyond the Windows limit."""
+
+    resolved_root = Path(root).resolve()
+    canonical_root = _windows_extended_length_path(resolved_root)
+    hashes = {}
+    for configured in configured_paths:
+        resolved = (resolved_root / str(configured)).resolve()
+        try:
+            resolved.relative_to(resolved_root)
+        except ValueError as error:
+            raise ValueError(
+                f"protected path is outside the repository: {configured}"
+            ) from error
+        canonical = _windows_extended_length_path(resolved)
+        if not canonical.exists():
+            raise FileNotFoundError(
+                f"protected path does not exist: {configured}"
+            )
+        files = (
+            [canonical]
+            if canonical.is_file()
+            else sorted(canonical.rglob("*"), key=lambda value: value.as_posix())
+        )
+        for item in files:
+            if item.is_file():
+                hashes[item.relative_to(canonical_root).as_posix()] = _sha256(item)
+    return hashes
 
 
 def _source_snapshot(root, destination):
