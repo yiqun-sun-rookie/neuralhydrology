@@ -1,0 +1,38 @@
+{
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 3308757,
+    "unit": "matched_block"
+  },
+  "comparison_methods": [
+    "full",
+    "none",
+    "highest_posterior",
+    "static",
+    "oracle"
+  ],
+  "config_sha256": "68b02724d7fcca74548c961f190c784e58865db393186a95b32c61ef62126bbf",
+  "decision_rules": {
+    "adaptation_days_excluded_per_stage": 5,
+    "highest_posterior_harms_forecast": "paired highest-posterior-minus-posterior-weighted squared-error 95% interval lower bound is above zero",
+    "highest_posterior_improves_forecast": "paired highest-posterior-minus-posterior-weighted squared-error 95% interval upper bound is below zero",
+    "no_detectable_difference": "paired highest-posterior-minus-posterior-weighted squared-error 95% interval contains zero",
+    "retain_as_method_candidate": "at least one lead improves and no other lead harms"
+  },
+  "experiment_id": "g3_highest_posterior_forecast_param_switch_v01",
+  "forecast_contract": {
+    "candidate_probabilities_during_forecast": "fixed_at_final_assimilation_posterior",
+    "cross_candidate_state_mixing_during_forecast": false,
+    "model_transition_during_forecast": "identity"
+  },
+  "frozen_before_execution": true,
+  "hypotheses": {
+    "context_methods": "Full-interaction updating, uniform independent-candidate averaging, and the known-true candidate are descriptive references.",
+    "negative_results_reported": "Report improvement, harm, or no detectable difference separately at 1, 3, and 7 days; retain the selection rule only if at least one lead improves and no lead harms.",
+    "primary_question": "At each lead, does selecting the highest final posterior candidate after no-state-interaction assimilation improve forecast accuracy relative to posterior-weighted averaging?",
+    "shared_computation": "Highest-posterior selection and posterior-weighted averaging use the exact same no-state-interaction assimilation and candidate forecasts; only the final combination rule differs."
+  },
+  "output_directory": "G:\\github\\pycharm\\projects\\paper-imm-variable-params\\.claude\\m\\results\\23_hbv_multilead_joint_uncertainty\\g3_highest_posterior_forecast_param_switch_v01",
+  "scenario": "parameter_switch",
+  "started_at_utc": "2026-07-26T04:32:10.337274+00:00"
+}
