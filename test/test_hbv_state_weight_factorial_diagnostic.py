@@ -275,10 +275,13 @@ def _terminal_inputs():
     }
 
 
+@pytest.mark.parametrize("interaction_mode", ["full", "none"])
 def test_assimilate_terminal_forecast_captures_terminal_bank_before_one_frozen_forecast(
     monkeypatch,
+    interaction_mode,
 ):
     inputs = _terminal_inputs()
+    inputs["interaction_mode"] = interaction_mode
     events = []
     build_calls = []
     forecast_calls = []
@@ -333,6 +336,15 @@ def test_assimilate_terminal_forecast_captures_terminal_bank_before_one_frozen_f
 
     assert len(build_calls) == 1
     assert len(forecast_calls) == 1
+    build_call = build_calls[0]
+    assert build_call["interaction_mode"] == interaction_mode
+    assert (
+        build_call["observation_standard_deviation"]
+        == inputs["observation_standard_deviation"]
+    )
+    assert build_call["factor_transition_stay_probability"] == inputs[
+        "factor_transition_stay_probability"
+    ]
     assert events == [
         ("forcing", 0, (1.0, 2.0, 3.0)),
         ("forcing", 1, (1.0, 2.0, 3.0)),
@@ -342,7 +354,7 @@ def test_assimilate_terminal_forecast_captures_terminal_bank_before_one_frozen_f
         ("step", 0.75),
     ]
     np.testing.assert_array_equal(forecast_calls[0][0], inputs["active_forcing"][2:5])
-    assert forecast_calls[0][1:] == ((1, 3), "full")
+    assert forecast_calls[0][1:] == ((1, 3), interaction_mode)
     assert result.daily_probabilities.shape == (2, 2)
     assert result.final_candidate_states.shape == (2, 15)
     assert result.final_candidate_covariances.shape == (2, 15, 15)
