@@ -1,0 +1,29 @@
+{
+  "available_after_estimated_peak_bytes": 9974498208,
+  "available_physical_memory_bytes": 10264535040,
+  "checked_at_utc": "2026-07-26T04:32:10.364597+00:00",
+  "estimated_additional_peak_memory_bytes": 290036832,
+  "estimated_runtime_seconds_from_pilot": 91.39645599992946,
+  "estimation_basis": "Four copies of all saved numeric arrays, twice the measured one-block peak resident-memory growth, 128 mebibytes for filter and compressed-output work, plus a reserve equal to the larger of half the peak estimate and 256 mebibytes.",
+  "execution_adjustment_if_unsafe": "Run one matched block at a time and merge only after verifying identical frozen configuration.",
+  "execution_parallelism": 1,
+  "expected_saved_numeric_array_bytes": 19775256,
+  "matched_block_count": 8,
+  "pilot_observed_peak_resident_memory_growth_bytes": 38359040,
+  "resource_pilot": {
+    "block_count": 1,
+    "elapsed_seconds": 11.424556999991182,
+    "observed_peak_resident_memory_growth_bytes": 38359040,
+    "sha256": "38e2d86f5989b897540515515c7b5a8774fb5fa854f957c28b3fbe53d18d409c",
+    "source": "results/23_hbv_multilead_joint_uncertainty/three_stage_switching_resource_pilot_v01/resource_pilot_measurements.json",
+    "truth_trial_count": 3
+  },
+  "resource_pilot_source_checksum_verified": true,
+  "safe_to_run": true,
+  "scenario": "parameter_switch",
+  "state_dimension": 15,
+  "task_specific_required_available_bytes": 558472288,
+  "task_specific_reserve_bytes": 268435456,
+  "truth_trial_count_per_block": 3,
+  "universal_memory_threshold_used": false
+}

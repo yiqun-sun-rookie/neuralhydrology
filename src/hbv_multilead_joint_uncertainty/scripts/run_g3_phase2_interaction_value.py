@@ -126,6 +126,19 @@ def _evidence_arrays(driver: dict) -> dict:
         arrays[f"squared_error_{arm}"] = driver["squared_errors"][arm]
     for arm in ("full", "none"):
         arrays[f"probabilities_{arm}"] = driver["probabilities"][arm]
+    has_candidate_forecasts = "none_candidate_forecasts" in driver
+    has_selected_indices = "highest_posterior_candidate_indices" in driver
+    if has_candidate_forecasts != has_selected_indices:
+        raise ValueError(
+            "highest-posterior evidence requires candidates and selected indices"
+        )
+    if has_candidate_forecasts:
+        arrays["forecast_none_candidates"] = np.asarray(
+            driver["none_candidate_forecasts"], dtype=np.float64
+        )
+        arrays["highest_posterior_candidate_indices"] = np.asarray(
+            driver["highest_posterior_candidate_indices"], dtype=np.int64
+        )
     return arrays
 
 
