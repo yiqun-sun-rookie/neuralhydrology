@@ -333,3 +333,392 @@ def assimilate_terminal_forecast(
         candidate_forecasts=_readonly_copy(candidate_forecasts),
         combined_forecast=_readonly_copy(combined_forecast),
     )
+
+
+_SEALED_DRIVER_FIELDS = (
+    "block_ids",
+    "forcing_blocks",
+    "warmup_days",
+    "assimilation_days",
+    "forecast_lead_days",
+    "initial_parameter_states",
+    "initial_covariances",
+    "observed_discharge",
+    "truth_forecast_discharge",
+    "truth_primary_candidate_indices",
+    "parameter_ids",
+    "candidate_ids",
+)
+
+
+def _validated_nonnegative_integer(value: object, name: str) -> int:
+    if isinstance(value, (bool, np.bool_)) or not isinstance(value, (int, np.integer)):
+        raise ValueError(f"{name} must be a non-negative integer")
+    result = int(value)
+    if result < 0:
+        raise ValueError(f"{name} must be a non-negative integer")
+    return result
+
+
+def _sealed_driver_value(sealed_inputs: Mapping[str, object], name: str) -> object:
+    if not isinstance(sealed_inputs, Mapping):
+        raise ValueError("sealed_inputs must be a mapping")
+    if name not in sealed_inputs:
+        raise ValueError(f"sealed_inputs is missing {name}")
+    return sealed_inputs[name]
+
+
+def _validated_identifier_vector(value: object, name: str) -> np.ndarray:
+    raw = np.asarray(value)
+    if raw.ndim != 1 or raw.size == 0:
+        raise ValueError(f"{name} must be a nonempty identifier vector")
+    identifiers = np.asarray([str(item) for item in raw], dtype=str)
+    if any(not item for item in identifiers) or len(set(identifiers)) != len(identifiers):
+        raise ValueError(f"{name} must contain unique nonempty identifiers")
+    return identifiers
+
+
+def _validated_terminal_result(
+    result: TerminalAssimilationForecast,
+    assimilation_days: int,
+    lead_count: int,
+    candidate_count: int,
+    interaction_mode: str,
+) -> dict[str, np.ndarray]:
+    expected_shapes = {
+        "daily_probabilities": (assimilation_days, candidate_count),
+        "final_candidate_states": (candidate_count, 15),
+        "final_candidate_covariances": (candidate_count, 15, 15),
+        "candidate_forecasts": (lead_count, candidate_count),
+        "combined_forecast": (lead_count,),
+    }
+    arrays = {}
+    for field_name, expected_shape in expected_shapes.items():
+        if not hasattr(result, field_name):
+            raise ValueError(
+                f"{interaction_mode} terminal forecast is missing {field_name}"
+            )
+        values = _as_real_float_array(
+            getattr(result, field_name),
+            f"{interaction_mode} {field_name}",
+        ).copy()
+        if values.shape != expected_shape or not np.all(np.isfinite(values)):
+            raise ValueError(
+                f"{interaction_mode} {field_name} must be finite with shape "
+                f"{expected_shape}"
+            )
+        arrays[field_name] = values
+    probabilities = arrays["daily_probabilities"]
+    if np.any(probabilities < 0.0) or not np.allclose(
+        probabilities.sum(axis=1),
+        1.0,
+        rtol=0.0,
+        atol=1e-12,
+    ):
+        raise ValueError(
+            f"{interaction_mode} daily probabilities must be non-negative and sum to one"
+        )
+    return arrays
+
+
+def compare_state_weight_factorial(
+    sealed_inputs: Mapping[str, object],
+    candidates: Sequence[MethodCandidate],
+    observation_standard_deviation: float,
+    factor_transition_stay_probability: float,
+) -> dict[str, object]:
+    """Cross final weights over candidate forecast distributions from two paths."""
+    for field_name in _SEALED_DRIVER_FIELDS:
+        _sealed_driver_value(sealed_inputs, field_name)
+    observation_std = _validated_scalar(
+        observation_standard_deviation,
+        "observation_standard_deviation",
+    )
+    if observation_std <= 0.0:
+        raise ValueError("observation_standard_deviation must be positive")
+    stay_probability = _validated_scalar(
+        factor_transition_stay_probability,
+        "factor_transition_stay_probability",
+    )
+    if stay_probability < 0.0 or stay_probability > 1.0:
+        raise ValueError(
+            "factor_transition_stay_probability must be between zero and one"
+        )
+
+
+    block_ids = _validated_identifier_vector(
+        _sealed_driver_value(sealed_inputs, "block_ids"),
+        "block_ids",
+    )
+    parameter_ids = _validated_identifier_vector(
+        _sealed_driver_value(sealed_inputs, "parameter_ids"),
+        "parameter_ids",
+    )
+    candidate_ids = _validated_identifier_vector(
+        _sealed_driver_value(sealed_inputs, "candidate_ids"),
+        "candidate_ids",
+    )
+    block_count = len(block_ids)
+    candidate_count = len(candidate_ids)
+    if len(parameter_ids) != candidate_count:
+        raise ValueError("parameter_ids and candidate_ids must have equal length")
+
+    try:
+        definitions = tuple(candidates)
+    except TypeError as error:
+        raise ValueError("candidates must be a nonempty sequence") from error
+    if len(definitions) != candidate_count:
+        raise ValueError("candidates must contain one definition per candidate_id")
+    if any(
+        not hasattr(candidate, "candidate_id")
+        or not hasattr(candidate, "parameter_id")
+        for candidate in definitions
+    ):
+        raise ValueError("each candidate must define candidate_id and parameter_id")
+    definition_candidate_ids = tuple(str(candidate.candidate_id) for candidate in definitions)
+    definition_parameter_ids = tuple(str(candidate.parameter_id) for candidate in definitions)
+    if definition_candidate_ids != tuple(candidate_ids):
+        raise ValueError("candidate order must exactly match sealed candidate_ids")
+    if len(set(definition_candidate_ids)) != candidate_count:
+        raise ValueError("candidate candidate_ids must be unique")
+    if len(set(definition_parameter_ids)) != candidate_count:
+        raise ValueError("each parameter_id must map to exactly one candidate")
+    if set(definition_parameter_ids) != set(parameter_ids):
+        raise ValueError("candidate parameter_ids must exactly match sealed parameter_ids")
+
+    warmup_raw = np.asarray(_sealed_driver_value(sealed_inputs, "warmup_days"))
+    assimilation_raw = np.asarray(
+        _sealed_driver_value(sealed_inputs, "assimilation_days")
+    )
+    if warmup_raw.ndim != 0 or assimilation_raw.ndim != 0:
+        raise ValueError("warmup_days and assimilation_days must be scalars")
+    warmup_days = _validated_nonnegative_integer(warmup_raw.item(), "warmup_days")
+    assimilation_days = _validated_positive_integer(
+        assimilation_raw.item(), "assimilation_days"
+    )
+    lead_days = _validated_lead_days(
+        _sealed_driver_value(sealed_inputs, "forecast_lead_days")
+    )
+    lead_count = len(lead_days)
+    active_end = warmup_days + assimilation_days + lead_days[-1]
+
+    forcing_blocks = _as_real_float_array(
+        _sealed_driver_value(sealed_inputs, "forcing_blocks"),
+        "forcing_blocks",
+    )
+    if (
+        forcing_blocks.ndim != 3
+        or forcing_blocks.shape[0] != block_count
+        or forcing_blocks.shape[2] != 3
+        or forcing_blocks.shape[1] < active_end
+        or not np.all(np.isfinite(forcing_blocks))
+    ):
+        raise ValueError(
+            "forcing_blocks must be finite and cover warmup, assimilation, and forecast"
+        )
+    initial_parameter_states = _as_real_float_array(
+        _sealed_driver_value(sealed_inputs, "initial_parameter_states"),
+        "initial_parameter_states",
+    )
+    if initial_parameter_states.shape != (block_count, candidate_count, 15) or not np.all(
+        np.isfinite(initial_parameter_states)
+    ):
+        raise ValueError(
+            "initial_parameter_states must be finite with shape (block, parameter, 15)"
+        )
+    initial_covariances = _as_real_float_array(
+        _sealed_driver_value(sealed_inputs, "initial_covariances"),
+        "initial_covariances",
+    )
+    if initial_covariances.shape != (block_count, 15, 15) or not np.all(
+        np.isfinite(initial_covariances)
+    ):
+        raise ValueError(
+            "initial_covariances must be finite with shape (block, 15, 15)"
+        )
+    if not np.allclose(
+        initial_covariances,
+        np.swapaxes(initial_covariances, -1, -2),
+        rtol=0.0,
+        atol=1e-12,
+    ):
+        raise ValueError("initial_covariances must be symmetric")
+
+    truth_labels_raw = np.asarray(
+        _sealed_driver_value(sealed_inputs, "truth_primary_candidate_indices")
+    )
+    if truth_labels_raw.ndim != 2 or truth_labels_raw.shape[1] < assimilation_days:
+        raise ValueError(
+            "truth_primary_candidate_indices must cover every assimilation day"
+        )
+    if not np.issubdtype(truth_labels_raw.dtype, np.integer):
+        raise ValueError("truth_primary_candidate_indices must contain integers")
+    truth_labels = np.asarray(truth_labels_raw, dtype=np.int64)
+    truth_count = truth_labels.shape[0]
+    if np.any(truth_labels < 0) or np.any(truth_labels >= candidate_count):
+        raise ValueError("truth_primary_candidate_indices is outside parameter_ids")
+
+    observations = _as_real_float_array(
+        _sealed_driver_value(sealed_inputs, "observed_discharge"),
+        "observed_discharge",
+    )
+    if (
+        observations.ndim != 3
+        or observations.shape[:2] != (block_count, truth_count)
+        or observations.shape[2] < assimilation_days
+        or not np.all(np.isfinite(observations))
+    ):
+        raise ValueError(
+            "observed_discharge must be finite and cover each block, truth, and assimilation day"
+        )
+    truth_forecasts = _as_real_float_array(
+        _sealed_driver_value(sealed_inputs, "truth_forecast_discharge"),
+        "truth_forecast_discharge",
+    ).copy()
+    if truth_forecasts.shape != (block_count, truth_count, lead_count) or not np.all(
+        np.isfinite(truth_forecasts)
+    ):
+        raise ValueError(
+            "truth_forecast_discharge must be finite with shape (block, truth, lead)"
+        )
+
+    parameter_axis = {
+        parameter_id: index for index, parameter_id in enumerate(parameter_ids)
+    }
+    candidate_axis = {
+        parameter_id: index
+        for index, parameter_id in enumerate(definition_parameter_ids)
+    }
+    final_truth_parameter_ids = tuple(
+        str(parameter_ids[label]) for label in truth_labels[:, assimilation_days - 1]
+    )
+    final_true_candidate_indices = np.asarray(
+        [candidate_axis[parameter_id] for parameter_id in final_truth_parameter_ids],
+        dtype=np.int64,
+    )
+    final_true_candidate_ids = candidate_ids[final_true_candidate_indices].copy()
+
+    path_arrays = {
+        "probabilities_full": np.empty(
+            (block_count, truth_count, assimilation_days, candidate_count)
+        ),
+        "probabilities_none": np.empty(
+            (block_count, truth_count, assimilation_days, candidate_count)
+        ),
+        "final_candidate_states_full": np.empty(
+            (block_count, truth_count, candidate_count, 15)
+        ),
+        "final_candidate_states_none": np.empty(
+            (block_count, truth_count, candidate_count, 15)
+        ),
+        "final_candidate_covariances_full": np.empty(
+            (block_count, truth_count, candidate_count, 15, 15)
+        ),
+        "final_candidate_covariances_none": np.empty(
+            (block_count, truth_count, candidate_count, 15, 15)
+        ),
+        "candidate_forecasts_full": np.empty(
+            (block_count, truth_count, lead_count, candidate_count)
+        ),
+        "candidate_forecasts_none": np.empty(
+            (block_count, truth_count, lead_count, candidate_count)
+        ),
+    }
+    combination_names = (
+        "full_states_full_weights",
+        "full_states_none_weights",
+        "none_states_full_weights",
+        "none_states_none_weights",
+        "prediction_nonadditivity",
+    )
+    combination_arrays = {
+        name: np.empty((block_count, truth_count, lead_count))
+        for name in combination_names
+    }
+
+    for block in range(block_count):
+        initial_state_template = {
+            parameter_id: initial_parameter_states[
+                block, parameter_axis[parameter_id]
+            ].copy()
+            for parameter_id in definition_parameter_ids
+        }
+        forcing_slice = forcing_blocks[block, warmup_days:active_end].copy()
+        for truth in range(truth_count):
+            terminal = {}
+            for mode in ("full", "none"):
+                raw_result = assimilate_terminal_forecast(
+                    candidates=copy.deepcopy(definitions),
+                    initial_states={
+                        parameter_id: state.copy()
+                        for parameter_id, state in initial_state_template.items()
+                    },
+                    initial_covariance=initial_covariances[block].copy(),
+                    active_forcing=forcing_slice.copy(),
+                    observations=observations[block, truth, :assimilation_days].copy(),
+                    assimilation_days=assimilation_days,
+                    leads=lead_days,
+                    observation_standard_deviation=observation_std,
+                    factor_transition_stay_probability=stay_probability,
+                    interaction_mode=mode,
+                )
+                terminal[mode] = _validated_terminal_result(
+                    raw_result,
+                    assimilation_days,
+                    lead_count,
+                    candidate_count,
+                    mode,
+                )
+                path_arrays[f"probabilities_{mode}"][block, truth] = terminal[mode][
+                    "daily_probabilities"
+                ]
+                path_arrays[f"final_candidate_states_{mode}"][block, truth] = terminal[
+                    mode
+                ]["final_candidate_states"]
+                path_arrays[f"final_candidate_covariances_{mode}"][block, truth] = terminal[
+                    mode
+                ]["final_candidate_covariances"]
+                path_arrays[f"candidate_forecasts_{mode}"][block, truth] = terminal[mode][
+                    "candidate_forecasts"
+                ]
+
+            combinations = state_weight_factorial_forecasts(
+                terminal["full"]["candidate_forecasts"],
+                terminal["none"]["candidate_forecasts"],
+                terminal["full"]["daily_probabilities"][-1],
+                terminal["none"]["daily_probabilities"][-1],
+            )
+            if set(combinations) != set(combination_names):
+                raise ValueError("factorial compositor returned unexpected fields")
+            for name in combination_names:
+                values = _as_real_float_array(combinations[name], name)
+                if values.shape != (lead_count,) or not np.all(np.isfinite(values)):
+                    raise ValueError(f"{name} must be a finite lead vector")
+                combination_arrays[name][block, truth] = values
+            if not np.allclose(
+                terminal["full"]["combined_forecast"],
+                combinations["full_states_full_weights"],
+                rtol=0.0,
+                atol=1e-12,
+            ):
+                raise RuntimeError("full path combined forecast violates the diagonal contract")
+            if not np.allclose(
+                terminal["none"]["combined_forecast"],
+                combinations["none_states_none_weights"],
+                rtol=0.0,
+                atol=1e-12,
+            ):
+                raise RuntimeError("none path combined forecast violates the diagonal contract")
+
+    return {
+        **path_arrays,
+        **combination_arrays,
+        "truth_forecasts": truth_forecasts,
+        "final_true_candidate_indices": final_true_candidate_indices,
+        "final_true_candidate_ids": final_true_candidate_ids,
+        "candidate_ids": candidate_ids.copy(),
+        "parameter_ids": parameter_ids.copy(),
+        "block_ids": block_ids.copy(),
+        "forecast_lead_days": np.asarray(lead_days, dtype=np.int64),
+        "assimilation_days": assimilation_days,
+    }

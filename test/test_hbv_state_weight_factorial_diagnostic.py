@@ -495,3 +495,432 @@ def test_assimilate_terminal_forecast_rejects_broken_frozen_forecast_contract(
 
     with pytest.raises(expected_error):
         diagnostic.assimilate_terminal_forecast(**inputs)
+
+
+def _sealed_driver_inputs():
+    block_count = 2
+    truth_count = 2
+    parameter_count = 3
+    assimilation_days = 3
+    warmup_days = 2
+    forecast_lead_days = np.asarray([1, 2], dtype=np.int64)
+    total_days = warmup_days + assimilation_days + int(forecast_lead_days[-1])
+    parameter_ids = np.asarray(
+        ["parameter_b", "parameter_c", "parameter_a"],
+        dtype=str,
+    )
+    candidates = (
+        SimpleNamespace(
+            candidate_id="candidate_a",
+            parameter_id="parameter_a",
+            payload=np.asarray([1.0]),
+        ),
+        SimpleNamespace(
+            candidate_id="candidate_b",
+            parameter_id="parameter_b",
+            payload=np.asarray([2.0]),
+        ),
+        SimpleNamespace(
+            candidate_id="candidate_c",
+            parameter_id="parameter_c",
+            payload=np.asarray([3.0]),
+        ),
+    )
+    forcing_blocks = np.empty((block_count, total_days, 3), dtype=np.float64)
+    for block in range(block_count):
+        forcing_blocks[block] = (
+            np.arange(total_days * 3, dtype=np.float64).reshape(total_days, 3)
+            + 1000.0 * block
+        )
+    initial_parameter_states = np.empty(
+        (block_count, parameter_count, 15),
+        dtype=np.float64,
+    )
+    for block in range(block_count):
+        for parameter_index in range(parameter_count):
+            initial_parameter_states[block, parameter_index] = (
+                100.0 * block + 10.0 * parameter_index + np.arange(15)
+            )
+    initial_covariances = np.asarray(
+        [
+            np.eye(15, dtype=np.float64) * (block + 1.0)
+            for block in range(block_count)
+        ]
+    )
+    observed_discharge = np.empty(
+        (block_count, truth_count, assimilation_days + 1),
+        dtype=np.float64,
+    )
+    for block in range(block_count):
+        for truth in range(truth_count):
+            observed_discharge[block, truth] = (
+                1000.0 * block
+                + 100.0 * truth
+                + np.arange(assimilation_days + 1, dtype=np.float64)
+            )
+    truth_forecasts = np.asarray(
+        [
+            [[10.0, 11.0], [20.0, 21.0]],
+            [[30.0, 31.0], [40.0, 41.0]],
+        ],
+        dtype=np.float64,
+    )
+    sealed_inputs = {
+        "block_ids": np.asarray(["block_1", "block_2"], dtype=str),
+        "forcing_blocks": forcing_blocks,
+        "warmup_days": np.asarray(warmup_days, dtype=np.int64),
+        "assimilation_days": np.asarray(assimilation_days, dtype=np.int64),
+        "forecast_lead_days": forecast_lead_days,
+        "initial_parameter_states": initial_parameter_states,
+        "initial_covariances": initial_covariances,
+        "observed_discharge": observed_discharge,
+        "truth_forecast_discharge": truth_forecasts,
+        "truth_primary_candidate_indices": np.asarray(
+            [[0, 1, 2, 1], [1, 2, 0, 2]],
+            dtype=np.int64,
+        ),
+        "parameter_ids": parameter_ids,
+        "candidate_ids": np.asarray(
+            ["candidate_a", "candidate_b", "candidate_c"],
+            dtype=str,
+        ),
+    }
+    return sealed_inputs, candidates
+
+
+def test_compare_state_weight_factorial_uses_sealed_slices_and_only_two_paths(
+    monkeypatch,
+):
+    sealed_inputs, candidates = _sealed_driver_inputs()
+    sealed_copies = {
+        key: np.asarray(value).copy()
+        for key, value in sealed_inputs.items()
+    }
+    candidate_payloads = tuple(candidate.payload.copy() for candidate in candidates)
+    assimilation_calls = []
+    compositor_calls = []
+    real_compositor = diagnostic.state_weight_factorial_forecasts
+
+    def fake_assimilate_terminal_forecast(**kwargs):
+        call_index = len(assimilation_calls)
+        pair_index = call_index // 2
+        block = pair_index // 2
+        truth = pair_index % 2
+        mode = ("full", "none")[call_index % 2]
+        assert kwargs["interaction_mode"] == mode
+        snapshot = {
+            "candidate_ids": tuple(candidate.candidate_id for candidate in kwargs["candidates"]),
+            "candidate_parameter_ids": tuple(
+                candidate.parameter_id for candidate in kwargs["candidates"]
+            ),
+            "initial_states": {
+                key: value.copy() for key, value in kwargs["initial_states"].items()
+            },
+            "active_forcing": kwargs["active_forcing"].copy(),
+            "observations": kwargs["observations"].copy(),
+            "assimilation_days": kwargs["assimilation_days"],
+            "leads": tuple(kwargs["leads"]),
+            "observation_standard_deviation": kwargs[
+                "observation_standard_deviation"
+            ],
+            "factor_transition_stay_probability": kwargs[
+                "factor_transition_stay_probability"
+            ],
+            "interaction_mode": mode,
+        }
+        assimilation_calls.append((kwargs, snapshot))
+
+        mode_offset = 20.0 if mode == "full" else 0.0
+        base = 100.0 * block + 10.0 * truth + mode_offset
+        candidate_forecasts = (
+            base
+            + np.asarray(
+                [[1.0, 2.0, 4.0], [10.0, 20.0, 40.0]],
+                dtype=np.float64,
+            )
+        )
+        final_probabilities = (
+            np.asarray([0.6, 0.3, 0.1])
+            if mode == "full"
+            else np.asarray([0.2, 0.3, 0.5])
+        )
+        daily_probabilities = np.vstack(
+            (
+                np.full(3, 1.0 / 3.0),
+                np.asarray([0.4, 0.35, 0.25]),
+                final_probabilities,
+            )
+        )
+        states = np.asarray(
+            [
+                np.full(15, base + candidate_index)
+                for candidate_index in range(3)
+            ]
+        )
+        covariances = np.asarray(
+            [
+                np.eye(15) * (base + candidate_index + 1.0)
+                for candidate_index in range(3)
+            ]
+        )
+        result = diagnostic.TerminalAssimilationForecast(
+            daily_probabilities=daily_probabilities,
+            final_candidate_states=states,
+            final_candidate_covariances=covariances,
+            candidate_forecasts=candidate_forecasts,
+            combined_forecast=candidate_forecasts @ final_probabilities,
+        )
+
+        kwargs["candidates"][0].payload.fill(-1.0)
+        next(iter(kwargs["initial_states"].values())).fill(-2.0)
+        kwargs["initial_covariance"].fill(-3.0)
+        kwargs["active_forcing"].fill(-4.0)
+        kwargs["observations"].fill(-5.0)
+        return result
+
+    def recording_compositor(*args):
+        compositor_calls.append(tuple(np.asarray(value).copy() for value in args))
+        return real_compositor(*args)
+
+    monkeypatch.setattr(
+        diagnostic,
+        "assimilate_terminal_forecast",
+        fake_assimilate_terminal_forecast,
+    )
+    monkeypatch.setattr(
+        diagnostic,
+        "state_weight_factorial_forecasts",
+        recording_compositor,
+    )
+
+    result = diagnostic.compare_state_weight_factorial(
+        sealed_inputs=sealed_inputs,
+        candidates=candidates,
+        observation_standard_deviation=0.05,
+        factor_transition_stay_probability=0.98,
+    )
+
+    assert len(assimilation_calls) == 8
+    assert len(compositor_calls) == 4
+    assert [call[1]["interaction_mode"] for call in assimilation_calls] == [
+        "full", "none", "full", "none", "full", "none", "full", "none",
+    ]
+    assert set(result) == {
+        "probabilities_full", "probabilities_none",
+        "final_candidate_states_full", "final_candidate_states_none",
+        "final_candidate_covariances_full", "final_candidate_covariances_none",
+        "candidate_forecasts_full", "candidate_forecasts_none",
+        "full_states_full_weights", "full_states_none_weights",
+        "none_states_full_weights", "none_states_none_weights",
+        "prediction_nonadditivity", "truth_forecasts",
+        "final_true_candidate_indices", "final_true_candidate_ids",
+        "candidate_ids", "parameter_ids", "block_ids", "forecast_lead_days",
+        "assimilation_days",
+    }
+    assert result["probabilities_full"].shape == (2, 2, 3, 3)
+    assert result["probabilities_none"].shape == (2, 2, 3, 3)
+    assert result["final_candidate_states_full"].shape == (2, 2, 3, 15)
+    assert result["final_candidate_states_none"].shape == (2, 2, 3, 15)
+    assert result["final_candidate_covariances_full"].shape == (2, 2, 3, 15, 15)
+    assert result["final_candidate_covariances_none"].shape == (2, 2, 3, 15, 15)
+    assert result["candidate_forecasts_full"].shape == (2, 2, 2, 3)
+    assert result["candidate_forecasts_none"].shape == (2, 2, 2, 3)
+    for key in (
+        "full_states_full_weights", "full_states_none_weights",
+        "none_states_full_weights", "none_states_none_weights",
+        "prediction_nonadditivity", "truth_forecasts",
+    ):
+        assert result[key].shape == (2, 2, 2)
+        assert np.all(np.isfinite(result[key]))
+    np.testing.assert_array_equal(result["final_true_candidate_indices"], [0, 1])
+    np.testing.assert_array_equal(
+        result["final_true_candidate_ids"], ["candidate_a", "candidate_b"]
+    )
+    for key in ("parameter_ids", "candidate_ids", "block_ids", "forecast_lead_days"):
+        np.testing.assert_array_equal(result[key], sealed_inputs[key])
+    assert result["assimilation_days"] == 3
+    np.testing.assert_array_equal(
+        result["truth_forecasts"], sealed_inputs["truth_forecast_discharge"]
+    )
+
+    parameter_axis = {
+        parameter_id: index
+        for index, parameter_id in enumerate(sealed_inputs["parameter_ids"])
+    }
+    for call_index, (objects, snapshot) in enumerate(assimilation_calls):
+        pair_index = call_index // 2
+        block = pair_index // 2
+        truth = pair_index % 2
+        np.testing.assert_array_equal(
+            snapshot["active_forcing"], sealed_inputs["forcing_blocks"][block, 2:7]
+        )
+        np.testing.assert_array_equal(
+            snapshot["observations"],
+            sealed_inputs["observed_discharge"][block, truth, :3],
+        )
+        for candidate in candidates:
+            np.testing.assert_array_equal(
+                snapshot["initial_states"][candidate.parameter_id],
+                sealed_inputs["initial_parameter_states"][
+                    block, parameter_axis[candidate.parameter_id]
+                ],
+            )
+        assert snapshot["candidate_ids"] == (
+            "candidate_a", "candidate_b", "candidate_c"
+        )
+        assert snapshot["candidate_parameter_ids"] == (
+            "parameter_a", "parameter_b", "parameter_c"
+        )
+        assert snapshot["assimilation_days"] == 3
+        assert snapshot["leads"] == (1, 2)
+        assert snapshot["observation_standard_deviation"] == 0.05
+        assert snapshot["factor_transition_stay_probability"] == 0.98
+        for original, copied in zip(candidates, objects["candidates"]):
+            assert copied is not original
+
+    for previous, current in zip(assimilation_calls, assimilation_calls[1:]):
+        previous_objects = previous[0]
+        current_objects = current[0]
+        assert previous_objects["candidates"] is not current_objects["candidates"]
+        assert previous_objects["initial_covariance"] is not current_objects["initial_covariance"]
+        assert previous_objects["active_forcing"] is not current_objects["active_forcing"]
+        assert previous_objects["observations"] is not current_objects["observations"]
+        for parameter_id in ("parameter_a", "parameter_b", "parameter_c"):
+            assert previous_objects["initial_states"][parameter_id] is not current_objects["initial_states"][parameter_id]
+
+    for pair_index, compositor_call in enumerate(compositor_calls):
+        block = pair_index // 2
+        truth = pair_index % 2
+        expected = real_compositor(*compositor_call)
+        for key in (
+            "full_states_full_weights", "full_states_none_weights",
+            "none_states_full_weights", "none_states_none_weights",
+            "prediction_nonadditivity",
+        ):
+            np.testing.assert_array_equal(result[key][block, truth], expected[key])
+
+    for key, expected in sealed_copies.items():
+        np.testing.assert_array_equal(sealed_inputs[key], expected)
+    for candidate, expected in zip(candidates, candidate_payloads):
+        np.testing.assert_array_equal(candidate.payload, expected)
+
+
+@pytest.mark.parametrize(
+    "case",
+    ["missing_field", "candidate_order", "duplicate_parameter", "invalid_truth_label"],
+)
+def test_compare_state_weight_factorial_rejects_invalid_sealed_contract_before_work(
+    monkeypatch,
+    case,
+):
+    sealed_inputs, original_candidates = _sealed_driver_inputs()
+    candidates = list(original_candidates)
+    if case == "missing_field":
+        sealed_inputs.pop("candidate_ids")
+    elif case == "candidate_order":
+        candidates[0], candidates[1] = candidates[1], candidates[0]
+    elif case == "duplicate_parameter":
+        candidates[1] = SimpleNamespace(
+            candidate_id="candidate_b",
+            parameter_id="parameter_a",
+            payload=np.asarray([2.0]),
+        )
+    else:
+        sealed_inputs["truth_primary_candidate_indices"][0, 2] = 3
+    monkeypatch.setattr(
+        diagnostic,
+        "assimilate_terminal_forecast",
+        lambda **kwargs: pytest.fail("invalid contract reached assimilation"),
+    )
+
+    with pytest.raises(ValueError):
+        diagnostic.compare_state_weight_factorial(
+            sealed_inputs,
+            tuple(candidates),
+            observation_standard_deviation=0.05,
+            factor_transition_stay_probability=0.98,
+        )
+
+
+@pytest.mark.parametrize(
+    ("argument", "invalid_value"),
+    [
+        ("observation_standard_deviation", np.nan),
+        ("observation_standard_deviation", 0.0),
+        ("factor_transition_stay_probability", np.inf),
+        ("factor_transition_stay_probability", 1.1),
+    ],
+)
+def test_compare_state_weight_factorial_rejects_invalid_controls_before_work(
+    monkeypatch,
+    argument,
+    invalid_value,
+):
+    sealed_inputs, candidates = _sealed_driver_inputs()
+    monkeypatch.setattr(
+        diagnostic,
+        "assimilate_terminal_forecast",
+        lambda **kwargs: pytest.fail("invalid controls reached assimilation"),
+    )
+    controls = {
+        "observation_standard_deviation": 0.05,
+        "factor_transition_stay_probability": 0.98,
+    }
+    controls[argument] = invalid_value
+
+    with pytest.raises(ValueError):
+        diagnostic.compare_state_weight_factorial(
+            sealed_inputs,
+            candidates,
+            **controls,
+        )
+
+
+@pytest.mark.parametrize(
+    ("broken_field", "expected_error"),
+    [
+        ("states_shape", ValueError),
+        ("candidate_forecasts_finite", ValueError),
+        ("full_diagonal", RuntimeError),
+        ("none_diagonal", RuntimeError),
+    ],
+)
+def test_compare_state_weight_factorial_rejects_invalid_terminal_results(
+    monkeypatch,
+    broken_field,
+    expected_error,
+):
+    sealed_inputs, candidates = _sealed_driver_inputs()
+
+    def fake_assimilation(**kwargs):
+        mode = kwargs["interaction_mode"]
+        probabilities = np.vstack(
+            [np.full(3, 1.0 / 3.0), np.full(3, 1.0 / 3.0), [0.6, 0.3, 0.1]]
+        )
+        candidate_forecasts = np.asarray([[1.0, 2.0, 4.0], [10.0, 20.0, 40.0]])
+        states = np.zeros((3, 15))
+        combined = candidate_forecasts @ probabilities[-1]
+        if broken_field == "states_shape" and mode == "full":
+            states = states[:, :14]
+        if broken_field == "candidate_forecasts_finite" and mode == "full":
+            candidate_forecasts[0, 0] = np.nan
+        if broken_field == f"{mode}_diagonal":
+            combined = combined.copy()
+            combined[0] += 1e-6
+        return diagnostic.TerminalAssimilationForecast(
+            daily_probabilities=probabilities,
+            final_candidate_states=states,
+            final_candidate_covariances=np.broadcast_to(np.eye(15), (3, 15, 15)).copy(),
+            candidate_forecasts=candidate_forecasts,
+            combined_forecast=combined,
+        )
+
+    monkeypatch.setattr(diagnostic, "assimilate_terminal_forecast", fake_assimilation)
+
+    with pytest.raises(expected_error):
+        diagnostic.compare_state_weight_factorial(
+            sealed_inputs,
+            candidates,
+            observation_standard_deviation=0.05,
+            factor_transition_stay_probability=0.98,
+        )
