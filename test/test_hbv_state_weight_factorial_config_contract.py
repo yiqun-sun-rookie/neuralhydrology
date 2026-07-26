@@ -555,7 +555,7 @@ def test_v02_packaging_failure_registry_row_is_permanent_and_exact():
     ]
 
 
-def test_v03_packaging_recovery_registry_has_one_exact_preregistered_row():
+def test_v03_registry_has_one_exact_completed_row():
     assert _registry_rows(V03_EXPERIMENT_ID) == [
         {
             "exp_id": V03_EXPERIMENT_ID,
@@ -575,7 +575,7 @@ def test_v03_packaging_recovery_registry_has_one_exact_preregistered_row():
                 "and frozen forecast contract"
             ),
             "seeds": "3301001-3310757",
-            "status": "preregistered",
+            "status": "completed",
             "run_dir": (
                 "results/23_hbv_multilead_joint_uncertainty/"
                 "g3_state_weight_factorial_param_switch_v03"
@@ -584,8 +584,11 @@ def test_v03_packaging_recovery_registry_has_one_exact_preregistered_row():
             "metrics_path": "summary.json",
             "paper_name": "G3 state-weight factorial forecast diagnostic",
             "notes": (
-                "Recovery of failed v02 with unchanged scientific contract; "
-                "only evidence packaging adds Windows extended-length paths"
+                "Formal v03 completed; wrong-candidate joint trajectories were not "
+                "practically equivalent; neither final-weight replacement nor "
+                "assimilation-path candidate-forecast replacement produced a stable "
+                "practically meaningful advantage; mechanism remains unresolved; "
+                "package and independent audits passed"
             ),
         }
     ]
