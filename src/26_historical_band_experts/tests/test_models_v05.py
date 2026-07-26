@@ -6,7 +6,7 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from models_v05 import build_model_v05, count_trainable_parameters
+from models_v05 import _state_from_statics, build_model_v05, count_trainable_parameters
 
 
 EXPECTED_PARAMETERS = {
@@ -113,3 +113,9 @@ def test_v05_history_encoders_receive_gradient_after_head_update():
 def test_v05_model_factory_rejects_unknown_variant():
     with pytest.raises(ValueError, match="unknown variant"):
         build_model_v05("not_a_model", seed=100)
+
+def test_v05_static_initial_states_are_contiguous_for_cuda_recurrent_kernels():
+    projection = torch.nn.Linear(27, 128)
+    hidden, cell = _state_from_statics(projection, torch.randn(4, 27))
+    assert hidden.is_contiguous()
+    assert cell.is_contiguous()

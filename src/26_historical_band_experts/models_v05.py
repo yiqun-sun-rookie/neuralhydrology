@@ -27,7 +27,7 @@ def _state_from_statics(
     statics: torch.Tensor,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     hidden, cell = projection(statics).chunk(2, dim=-1)
-    return hidden.unsqueeze(0), cell.unsqueeze(0)
+    return hidden.unsqueeze(0).contiguous(), cell.unsqueeze(0).contiguous()
 
 
 class HierarchicalRichHistoryLSTM(nn.Module):
