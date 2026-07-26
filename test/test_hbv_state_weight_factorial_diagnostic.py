@@ -1541,3 +1541,654 @@ def test_summarize_state_weight_factorial_keys_do_not_claim_a_pure_state_effect(
             pending.extend(current.values())
 
     assert not any("pure_state" in key or "state_effect" in key for key in keys)
+
+
+@pytest.mark.parametrize("existing_kind", ["final", "incomplete", "preregistered"])
+def test_state_weight_runner_refuses_existing_artifact_before_reading_config(
+    tmp_path,
+    existing_kind,
+):
+    from hbv_multilead_joint_uncertainty.scripts.run_g3_state_weight_factorial import (
+        run,
+    )
+
+    output = tmp_path / "results" / "experiment"
+    existing = {
+        "final": output,
+        "incomplete": output.with_name(output.name + ".incomplete"),
+        "preregistered": output.with_name(output.name + ".preregistered.json"),
+    }[existing_kind]
+    if existing_kind == "preregistered":
+        existing.parent.mkdir(parents=True)
+        existing.write_text("frozen", encoding="utf-8")
+    else:
+        existing.mkdir(parents=True)
+
+    with pytest.raises(FileExistsError):
+        run(
+            repo_root=tmp_path,
+            config_path=tmp_path / "missing-config.json",
+            output_dir=output,
+        )
+
+
+def _state_weight_runner_case(tmp_path, monkeypatch):
+    import hashlib
+    import json
+
+    from hbv_joint_uncertainty.hbv_adapter import PARAMETER_NAMES
+    from hbv_multilead_joint_uncertainty.scripts import (
+        run_g3_state_weight_factorial as runner,
+    )
+
+    root = tmp_path / "repo"
+    root.mkdir()
+    experiment_id = "state_weight_test"
+    output = root / "results" / experiment_id
+    block_ids = np.asarray(["block_b", "block_a"])
+    parameter_ids = np.asarray(["parameter_a", "parameter_b"])
+    process_ids = np.asarray(["process_a", "process_b"])
+    candidate_ids = np.asarray(["parameter_a__process_a", "parameter_b__process_a"])
+    method_names = np.asarray(["joint", "parameter_only", "fixed_filter"])
+    method_candidate_ids = np.asarray(
+        [
+            ["unused_joint_0", "unused_joint_1"],
+            candidate_ids,
+            ["unused_fixed", ""],
+        ]
+    )
+    method_candidate_counts = np.asarray([2, 2, 1], dtype=np.int64)
+    parameter_array = np.asarray(
+        [
+            np.arange(1.0, len(PARAMETER_NAMES) + 1.0),
+            np.arange(101.0, 101.0 + len(PARAMETER_NAMES)),
+        ],
+        dtype=np.float64,
+    )
+    process_covariance_array = np.asarray(
+        [np.eye(15, dtype=np.float64), np.eye(15, dtype=np.float64) * 2.0]
+    )
+    observation_standard_deviation = 0.25
+    warmup_days = 1
+    assimilation_days = 2
+    leads = np.asarray([1, 2], dtype=np.int64)
+    active_days = assimilation_days + int(leads[-1])
+    block_count = len(block_ids)
+    truth_count = 2
+    candidate_count = len(candidate_ids)
+    forcing_blocks = np.arange(
+        block_count * (warmup_days + active_days) * 3, dtype=np.float64
+    ).reshape(block_count, warmup_days + active_days, 3)
+    observed_discharge = (
+        np.arange(block_count * truth_count * active_days, dtype=np.float64)
+        .reshape(block_count, truth_count, active_days)
+        + 10.0
+    )
+    truth_forecasts = np.asarray(
+        [
+            [[2.0, 4.0], [3.0, 6.0]],
+            [[5.0, 7.0], [6.0, 9.0]],
+        ],
+        dtype=np.float64,
+    )
+    true_candidate_labels = np.asarray([[0, 0], [1, 1]], dtype=np.int64)
+    truth_primary_candidate_indices = np.asarray(
+        [[0, 0, 0, 0], [1, 1, 1, 1]], dtype=np.int64
+    )
+    initial_parameter_states = np.arange(
+        block_count * len(parameter_ids) * 15, dtype=np.float64
+    ).reshape(block_count, len(parameter_ids), 15)
+    initial_covariances = np.broadcast_to(
+        np.eye(15, dtype=np.float64), (block_count, 15, 15)
+    ).copy()
+
+    ideal_path = root / "sealed" / "ideal.npz"
+    ideal_path.parent.mkdir(parents=True)
+    np.savez_compressed(
+        ideal_path,
+        block_ids=block_ids,
+        forcing_blocks=forcing_blocks,
+        warmup_days=np.asarray(warmup_days, dtype=np.int64),
+        assimilation_days=np.asarray(assimilation_days, dtype=np.int64),
+        forecast_lead_days=leads,
+        initial_parameter_states=initial_parameter_states,
+        initial_covariances=initial_covariances,
+        observed_discharge=observed_discharge,
+        truth_forecast_discharge=truth_forecasts,
+        truth_primary_candidate_indices=truth_primary_candidate_indices,
+        method_names=method_names,
+        method_candidate_ids=method_candidate_ids,
+        method_candidate_counts=method_candidate_counts,
+        parameter_ids=parameter_ids,
+        process_ids=process_ids,
+        parameter_vectors=parameter_array,
+        process_covariances=process_covariance_array,
+        observation_standard_deviation=np.asarray(
+            observation_standard_deviation, dtype=np.float64
+        ),
+    )
+
+    probabilities_full = np.asarray(
+        [
+            [
+                [[0.6, 0.4], [0.8, 0.2]],
+                [[0.3, 0.7], [0.1, 0.9]],
+            ],
+            [
+                [[0.55, 0.45], [0.7, 0.3]],
+                [[0.4, 0.6], [0.2, 0.8]],
+            ],
+        ],
+        dtype=np.float64,
+    )
+    probabilities_none = np.asarray(
+        [
+            [
+                [[0.5, 0.5], [0.65, 0.35]],
+                [[0.45, 0.55], [0.25, 0.75]],
+            ],
+            [
+                [[0.6, 0.4], [0.6, 0.4]],
+                [[0.35, 0.65], [0.3, 0.7]],
+            ],
+        ],
+        dtype=np.float64,
+    )
+    candidate_forecasts_none = np.asarray(
+        [
+            [
+                [[1.0, 3.0], [3.0, 5.0]],
+                [[2.0, 4.0], [5.0, 7.0]],
+            ],
+            [
+                [[4.0, 6.0], [6.0, 8.0]],
+                [[5.0, 7.0], [8.0, 10.0]],
+            ],
+        ],
+        dtype=np.float64,
+    )
+    candidate_forecasts_full = candidate_forecasts_none + np.asarray(
+        [0.25, -0.15], dtype=np.float64
+    )
+    full_combination = np.einsum(
+        "btlc,btc->btl", candidate_forecasts_full, probabilities_full[:, :, -1]
+    )
+    none_combination = np.einsum(
+        "btlc,btc->btl", candidate_forecasts_none, probabilities_none[:, :, -1]
+    )
+    full_none_combination = np.einsum(
+        "btlc,btc->btl", candidate_forecasts_full, probabilities_none[:, :, -1]
+    )
+    none_full_combination = np.einsum(
+        "btlc,btc->btl", candidate_forecasts_none, probabilities_full[:, :, -1]
+    )
+
+    reference_path = root / "sealed" / "reference.npz"
+    np.savez_compressed(
+        reference_path,
+        block_ids=block_ids,
+        leads=leads,
+        assimilation_days=np.asarray(assimilation_days, dtype=np.int64),
+        true_candidate_labels=true_candidate_labels,
+        truth_forecasts=truth_forecasts,
+        probabilities_full=probabilities_full,
+        probabilities_none=probabilities_none,
+        forecast_none_candidates=candidate_forecasts_none,
+        forecast_full=full_combination + 5e-13,
+        forecast_none=none_combination - 5e-13,
+    )
+
+    def sha256(path):
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+
+    protected = root / "frozen" / "artifact.txt"
+    protected.parent.mkdir()
+    protected.write_text("immutable", encoding="utf-8")
+    config = {
+        "experiment_id": experiment_id,
+        "scenario": "parameter_switch",
+        "sealed_ideal_input_evidence": {
+            "path": ideal_path.relative_to(root).as_posix(),
+            "sha256": sha256(ideal_path),
+        },
+        "sealed_forecast_reference_evidence": {
+            "path": reference_path.relative_to(root).as_posix(),
+            "sha256": sha256(reference_path),
+        },
+        "primary_candidate_method_name": "parameter_only",
+        "parameter_source": {"parameter_ids": parameter_ids.tolist()},
+        "process_noise_source": {
+            "process_ids": process_ids.tolist(),
+            "selected_process_id": "process_a",
+        },
+        "observation_noise_source": {"source": "synthetic"},
+        "factor_transition_stay_probability": 0.98,
+        "bootstrap": {
+            "replicates": 7,
+            "seed": 77,
+            "minimum_rmse_fraction": 0.01,
+        },
+        "resource_pilot": {"source": "synthetic"},
+        "protected_paths": [protected.relative_to(root).as_posix()],
+        "forecast_contract": {
+            "transition": "identity",
+            "probabilities": "fixed_final",
+            "state_mixing": "none",
+        },
+        "scope_limit": "synthetic runner test",
+    }
+    config_path = root / "config.json"
+
+    def write_config():
+        config_path.write_text(
+            json.dumps(config, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+
+    write_config()
+    parameter_vectors = {
+        parameter_id: {
+            name: float(parameter_array[index, column])
+            for column, name in enumerate(PARAMETER_NAMES)
+        }
+        for index, parameter_id in enumerate(parameter_ids)
+    }
+    process_covariances = {
+        process_id: process_covariance_array[index].copy()
+        for index, process_id in enumerate(process_ids)
+    }
+    process_scales = {"process_a": 1.0, "process_b": 2.0}
+    parameter_csv = b"parameter csv\n"
+    process_csv = b"process csv\n"
+    observation_csv = b"observation csv\n"
+    monkeypatch.setattr(
+        runner,
+        "_load_parameter_vectors",
+        lambda root_arg, config_arg: (
+            parameter_vectors,
+            parameter_csv,
+            sha256_bytes(parameter_csv),
+        ),
+    )
+    monkeypatch.setattr(
+        runner,
+        "_load_process_covariances",
+        lambda root_arg, config_arg: (
+            process_covariances,
+            process_scales,
+            process_csv,
+            sha256_bytes(process_csv),
+        ),
+    )
+    monkeypatch.setattr(
+        runner,
+        "_load_observation_noise",
+        lambda root_arg, config_arg: (
+            observation_standard_deviation,
+            observation_csv,
+            sha256_bytes(observation_csv),
+        ),
+    )
+    monkeypatch.setattr(
+        runner,
+        "_resource_preflight",
+        lambda config_arg, root_arg: {"safe_to_run": True, "test": True},
+    )
+    monkeypatch.setattr(
+        runner,
+        "_environment",
+        lambda root_arg, started: {"started_at_utc": started, "test": True},
+    )
+
+    candidates = tuple(
+        SimpleNamespace(
+            candidate_id=candidate_id,
+            parameter_id=parameter_id,
+            process_id="process_a",
+        )
+        for candidate_id, parameter_id in zip(candidate_ids[::-1], parameter_ids[::-1])
+    )
+    methods = {
+        "fixed_filter": (SimpleNamespace(candidate_id="unused_fixed"),),
+        "parameter_only": candidates,
+        "joint": (SimpleNamespace(candidate_id="unused_joint_0"),),
+    }
+    monkeypatch.setattr(
+        runner,
+        "build_method_definitions",
+        lambda *args, **kwargs: methods,
+    )
+    calls = {"compare": 0, "summarize": 0, "candidate_order": None}
+    driver = {
+        "probabilities_full": probabilities_full,
+        "probabilities_none": probabilities_none,
+        "final_candidate_states_full": np.ones(
+            (block_count, truth_count, candidate_count, 15), dtype=np.float64
+        ),
+        "final_candidate_states_none": np.ones(
+            (block_count, truth_count, candidate_count, 15), dtype=np.float64
+        )
+        * 2.0,
+        "final_candidate_covariances_full": np.broadcast_to(
+            np.eye(15), (block_count, truth_count, candidate_count, 15, 15)
+        ).copy(),
+        "final_candidate_covariances_none": np.broadcast_to(
+            np.eye(15) * 2.0,
+            (block_count, truth_count, candidate_count, 15, 15),
+        ).copy(),
+        "candidate_forecasts_full": candidate_forecasts_full,
+        "candidate_forecasts_none": candidate_forecasts_none,
+        "full_states_full_weights": full_combination,
+        "full_states_none_weights": full_none_combination,
+        "none_states_full_weights": none_full_combination,
+        "none_states_none_weights": none_combination,
+        "prediction_nonadditivity": (
+            full_combination
+            - full_none_combination
+            - none_full_combination
+            + none_combination
+        ),
+        "truth_forecasts": truth_forecasts,
+        "final_true_candidate_indices": true_candidate_labels[:, -1],
+        "final_true_candidate_ids": candidate_ids[true_candidate_labels[:, -1]],
+        "candidate_ids": candidate_ids,
+        "parameter_ids": parameter_ids,
+        "block_ids": block_ids,
+        "forecast_lead_days": leads,
+        "assimilation_days": assimilation_days,
+    }
+
+    def fake_compare(sealed_inputs, ordered_candidates, observation_std, stay):
+        calls["compare"] += 1
+        calls["candidate_order"] = tuple(
+            candidate.candidate_id for candidate in ordered_candidates
+        )
+        assert observation_std == observation_standard_deviation
+        assert stay == 0.98
+        np.testing.assert_array_equal(sealed_inputs["block_ids"], block_ids)
+        return {key: np.asarray(value).copy() for key, value in driver.items()}
+
+    statistics = {
+        "combination_rmse": {
+            "full_states_full_weights": np.asarray([1.0, 2.0]),
+            "none_states_none_weights": np.asarray([1.1, 2.1]),
+        },
+        "squared_errors": {
+            name: np.square(driver[name] - truth_forecasts)
+            for name in (
+                "full_states_full_weights",
+                "full_states_none_weights",
+                "none_states_full_weights",
+                "none_states_none_weights",
+            )
+        },
+        "block_statistics": {
+            "complete_full_minus_none": {
+                "per_block_difference": np.ones((block_count, len(leads))),
+                "baseline_per_block_mse": np.ones((block_count, len(leads))) * 2.0,
+            }
+        },
+        "effects": {
+            "complete_full_minus_none": {
+                "mean": np.asarray([0.1, 0.2]),
+                "ci_low": np.asarray([-0.1, -0.2]),
+                "ci_high": np.asarray([0.2, 0.3]),
+                "baseline_mse": np.asarray([2.0, 3.0]),
+                "equivalence_lower": np.asarray([-0.0398, -0.0597]),
+                "equivalence_upper": np.asarray([0.0402, 0.0603]),
+                "classification": np.asarray(["unresolved", "unresolved"]),
+            }
+        },
+        "wrong_candidate": {
+            "num_sq_per_block": np.ones((block_count, len(leads))),
+            "den_sq_per_block": np.ones((block_count, len(leads))) * 2.0,
+            "wrong_minus_true_squared_error": np.ones(
+                (block_count, truth_count, len(leads), 1)
+            ),
+        },
+        "nonadditivity": {
+            "prediction": {"raw": driver["prediction_nonadditivity"]},
+            "squared_error": {"raw": np.zeros_like(truth_forecasts)},
+        },
+        "bootstrap": {
+            "indices": np.zeros((7, block_count), dtype=np.int64),
+            "replicates": 7,
+            "seed": 77,
+            "minimum_rmse_fraction": 0.01,
+        },
+    }
+
+    def fake_summarize(driver_arg, bootstrap_replicates, bootstrap_seed, minimum_rmse_fraction):
+        calls["summarize"] += 1
+        assert bootstrap_replicates == 7
+        assert bootstrap_seed == 77
+        assert minimum_rmse_fraction == 0.01
+        return statistics
+
+    monkeypatch.setattr(runner, "compare_state_weight_factorial", fake_compare)
+    monkeypatch.setattr(runner, "summarize_state_weight_factorial", fake_summarize)
+    for relative in runner._SOURCE_FILES:
+        source = root / relative
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text(f"snapshot: {relative}\n", encoding="utf-8")
+    return SimpleNamespace(
+        runner=runner,
+        root=root,
+        output=output,
+        config=config,
+        config_path=config_path,
+        write_config=write_config,
+        ideal_path=ideal_path,
+        reference_path=reference_path,
+        calls=calls,
+        candidate_ids=candidate_ids,
+        parameter_vectors=parameter_vectors,
+        parameter_array=parameter_array,
+        driver=driver,
+        statistics=statistics,
+    )
+
+
+def sha256_bytes(value):
+    import hashlib
+
+    return hashlib.sha256(value).hexdigest()
+
+
+def test_state_weight_runner_source_snapshot_contract_is_complete_and_not_flattened():
+    from hbv_multilead_joint_uncertainty.scripts import (
+        run_g3_state_weight_factorial as runner,
+    )
+
+    required = {
+        "src/hbv_multilead_joint_uncertainty/state_weight_factorial_diagnostic.py",
+        "src/hbv_multilead_joint_uncertainty/scripts/run_g3_state_weight_factorial.py",
+        "test/test_hbv_state_weight_factorial_diagnostic.py",
+        "src/hbv_multilead_joint_uncertainty/methods.py",
+        "src/hbv_multilead_joint_uncertainty/forecast.py",
+        "src/hbv_joint_uncertainty/candidates.py",
+        "src/hbv_joint_uncertainty/hbv_adapter.py",
+        "src/hbv_joint_uncertainty/preflight.py",
+        "src/hbv_joint_uncertainty/imm.py",
+        "src/hbv_joint_uncertainty/sigma_filter.py",
+        "src/scl_hydro/hbv_lite_numpy.py",
+    }
+    assert required <= set(runner._SOURCE_FILES)
+    assert len(runner._SOURCE_FILES) == len(set(runner._SOURCE_FILES))
+
+
+def test_state_weight_runner_rejects_output_name_before_preregistration(tmp_path):
+    import json
+
+    from hbv_multilead_joint_uncertainty.scripts.run_g3_state_weight_factorial import run
+
+    config_path = tmp_path / "config.json"
+    config_path.write_text(json.dumps({"experiment_id": "expected"}), encoding="utf-8")
+    output = tmp_path / "wrong"
+
+    with pytest.raises(ValueError, match="experiment_id"):
+        run(tmp_path, config_path, output)
+
+    assert not output.with_name(output.name + ".preregistered.json").exists()
+
+
+def test_state_weight_runner_packages_auditable_evidence_and_refuses_second_run(
+    tmp_path,
+    monkeypatch,
+):
+    import hashlib
+    import json
+
+    case = _state_weight_runner_case(tmp_path, monkeypatch)
+
+    summary = case.runner.run(case.root, case.config_path, case.output)
+
+    assert case.calls["compare"] == 1
+    assert case.calls["summarize"] == 1
+    assert case.calls["candidate_order"] == tuple(case.candidate_ids)
+    assert summary["integrity_status"] == "passed"
+    assert summary["candidate_ids"] == case.candidate_ids.tolist()
+    assert summary["candidate_parameter_ids"] == ["parameter_a", "parameter_b"]
+    assert case.output.is_dir()
+    assert case.output.with_name(case.output.name + ".preregistered.json").is_file()
+    cross_checks = json.loads((case.output / "cross_checks.json").read_text(encoding="utf-8"))
+    assert cross_checks["passed"] is True
+    assert cross_checks["historical_full_combination"]["maximum_absolute_error"] <= 1e-12
+    assert cross_checks["historical_none_combination"]["maximum_absolute_error"] <= 1e-12
+    assert cross_checks["parameter_vectors_direct"]["maximum_absolute_error"] == 0.0
+    with np.load(case.output / "evidence.npz", allow_pickle=False) as evidence:
+        required_keys = {
+            "driver__candidate_forecasts_full",
+            "driver__candidate_forecasts_none",
+            "driver__final_candidate_states_full",
+            "driver__final_candidate_covariances_none",
+            "driver__full_states_full_weights",
+            "driver__none_states_none_weights",
+            "driver__prediction_nonadditivity",
+            "driver__truth_forecasts",
+            "statistics__squared_errors__full_states_full_weights",
+            "statistics__block_statistics__complete_full_minus_none__per_block_difference",
+            "statistics__effects__complete_full_minus_none__baseline_mse",
+            "statistics__effects__complete_full_minus_none__equivalence_lower",
+            "statistics__wrong_candidate__num_sq_per_block",
+            "statistics__wrong_candidate__den_sq_per_block",
+            "statistics__nonadditivity__squared_error__raw",
+            "statistics__bootstrap__indices",
+            "identity__candidate_ids",
+            "identity__candidate_parameter_ids",
+            "input_identity__sealed_ideal_input_evidence_sha256",
+            "input_identity__sealed_forecast_reference_evidence_sha256",
+            "cross_checks__historical_full_combination__maximum_absolute_error",
+        }
+        assert required_keys <= set(evidence.files)
+        np.testing.assert_array_equal(
+            evidence["identity__candidate_ids"], case.candidate_ids
+        )
+    snapshot = (
+        case.output
+        / "source_snapshot"
+        / "src"
+        / "hbv_multilead_joint_uncertainty"
+        / "state_weight_factorial_diagnostic.py"
+    )
+    assert snapshot.is_file()
+    checksums = json.loads((case.output / "checksums.json").read_text(encoding="utf-8"))
+    for relative, expected in checksums.items():
+        actual = hashlib.sha256((case.output / relative).read_bytes()).hexdigest()
+        assert actual == expected
+
+    with pytest.raises(FileExistsError):
+        case.runner.run(case.root, case.config_path, case.output)
+    assert case.calls["compare"] == 1
+
+
+def test_state_weight_runner_rejects_bad_sealed_hash_before_scientific_work(
+    tmp_path,
+    monkeypatch,
+):
+    case = _state_weight_runner_case(tmp_path, monkeypatch)
+    case.config["sealed_ideal_input_evidence"]["sha256"] = "0" * 64
+    case.write_config()
+
+    with pytest.raises(ValueError, match="checksum"):
+        case.runner.run(case.root, case.config_path, case.output)
+
+    assert case.calls["compare"] == 0
+
+
+def test_state_weight_runner_rejects_protected_overlap_before_preregistration(
+    tmp_path,
+    monkeypatch,
+):
+    case = _state_weight_runner_case(tmp_path, monkeypatch)
+    case.config["protected_paths"] = [case.output.parent.relative_to(case.root).as_posix()]
+    case.write_config()
+
+    with pytest.raises(ValueError, match="overlap"):
+        case.runner.run(case.root, case.config_path, case.output)
+
+    assert not case.output.with_name(case.output.name + ".preregistered.json").exists()
+    assert case.calls["compare"] == 0
+
+
+def test_state_weight_runner_stops_when_resource_preflight_is_unsafe(
+    tmp_path,
+    monkeypatch,
+):
+    case = _state_weight_runner_case(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        case.runner,
+        "_resource_preflight",
+        lambda config_arg, root_arg: {"safe_to_run": False},
+    )
+
+    with pytest.raises(MemoryError):
+        case.runner.run(case.root, case.config_path, case.output)
+
+    assert case.calls["compare"] == 0
+    assert case.output.with_name(case.output.name + ".preregistered.json").is_file()
+
+
+def test_state_weight_runner_direct_array_gate_is_bit_exact(
+    tmp_path,
+    monkeypatch,
+):
+    case = _state_weight_runner_case(tmp_path, monkeypatch)
+    changed = {
+        key: dict(value) for key, value in case.parameter_vectors.items()
+    }
+    first_name = next(iter(changed["parameter_a"]))
+    changed["parameter_a"][first_name] += 1e-15
+    monkeypatch.setattr(
+        case.runner,
+        "_load_parameter_vectors",
+        lambda root_arg, config_arg: (
+            changed,
+            b"changed parameter csv\n",
+            sha256_bytes(b"changed parameter csv\n"),
+        ),
+    )
+
+    with pytest.raises(ValueError, match="parameter_vectors"):
+        case.runner.run(case.root, case.config_path, case.output)
+
+    assert case.calls["compare"] == 0
+
+
+def test_state_weight_runner_locates_primary_method_by_name_and_rejects_identity_shift(
+    tmp_path,
+    monkeypatch,
+):
+    import hashlib
+
+    case = _state_weight_runner_case(tmp_path, monkeypatch)
+    with np.load(case.reference_path, allow_pickle=False) as sealed:
+        values = {name: sealed[name].copy() for name in sealed.files}
+    values["block_ids"] = values["block_ids"][::-1]
+    np.savez_compressed(case.reference_path, **values)
+    case.config["sealed_forecast_reference_evidence"]["sha256"] = hashlib.sha256(
+        case.reference_path.read_bytes()
+    ).hexdigest()
+    case.write_config()
+
+    with pytest.raises(ValueError, match="block_ids"):
+        case.runner.run(case.root, case.config_path, case.output)
