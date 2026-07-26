@@ -160,6 +160,12 @@ def _validated_probability_vector(value: object, candidate_count: int) -> np.nda
     return probabilities
 
 
+def _readonly_copy(value: np.ndarray) -> np.ndarray:
+    result = np.asarray(value, dtype=np.float64).copy()
+    result.setflags(write=False)
+    return result
+
+
 def assimilate_terminal_forecast(
     candidates: Sequence[MethodCandidate],
     initial_states: Mapping[str, np.ndarray],
@@ -309,20 +315,21 @@ def assimilate_terminal_forecast(
         daily_probabilities[-1], forecast_probabilities.shape
     )
     if not np.array_equal(forecast_probabilities, frozen_probabilities):
-        raise AssertionError("forecast probabilities must equal the final posterior")
+        raise RuntimeError("forecast probabilities must equal the final posterior")
     expected_combined = candidate_forecasts @ daily_probabilities[-1]
-    np.testing.assert_allclose(
-        combined_forecast,
-        expected_combined,
-        rtol=0.0,
-        atol=1e-12,
-        err_msg="combined forecast must use the final posterior probabilities",
+    maximum_combination_error = float(
+        np.max(np.abs(combined_forecast - expected_combined))
     )
+    if maximum_combination_error > 1e-12:
+        raise RuntimeError(
+            "combined forecast must use the final posterior probabilities; "
+            f"maximum absolute error={maximum_combination_error}"
+        )
 
     return TerminalAssimilationForecast(
-        daily_probabilities=daily_probabilities.copy(),
-        final_candidate_states=terminal_states.copy(),
-        final_candidate_covariances=terminal_covariances.copy(),
-        candidate_forecasts=candidate_forecasts.copy(),
-        combined_forecast=combined_forecast.copy(),
+        daily_probabilities=_readonly_copy(daily_probabilities),
+        final_candidate_states=_readonly_copy(terminal_states),
+        final_candidate_covariances=_readonly_copy(terminal_covariances),
+        candidate_forecasts=_readonly_copy(candidate_forecasts),
+        combined_forecast=_readonly_copy(combined_forecast),
     )

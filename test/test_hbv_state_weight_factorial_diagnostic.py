@@ -373,6 +373,17 @@ def test_assimilate_terminal_forecast_captures_terminal_bank_before_one_frozen_f
     np.testing.assert_array_equal(result.combined_forecast, [5.0, 13.0])
     with pytest.raises(FrozenInstanceError):
         result.daily_probabilities = np.zeros((2, 2))
+    for field_name in (
+        "daily_probabilities",
+        "final_candidate_states",
+        "final_candidate_covariances",
+        "candidate_forecasts",
+        "combined_forecast",
+    ):
+        snapshot = getattr(result, field_name)
+        assert not snapshot.flags.writeable
+        with pytest.raises(ValueError, match="read-only"):
+            snapshot.flat[0] = -123.0
 
     forecast_outputs[0].probabilities.fill(-1.0)
     forecast_outputs[0].candidate_predictions.fill(-2.0)
@@ -440,10 +451,15 @@ def test_assimilate_terminal_forecast_rejects_invalid_inputs(
 
 
 @pytest.mark.parametrize(
-    "forecast_change", ["probabilities", "candidate_shape", "combined_weight"]
+    ("forecast_change", "expected_error"),
+    [
+        ("probabilities", RuntimeError),
+        ("candidate_shape", ValueError),
+        ("combined_weight", RuntimeError),
+    ],
 )
 def test_assimilate_terminal_forecast_rejects_broken_frozen_forecast_contract(
-    monkeypatch, forecast_change
+    monkeypatch, forecast_change, expected_error
 ):
     inputs = _terminal_inputs()
     daily_probabilities = np.asarray([[0.6, 0.4], [0.25, 0.75]], dtype=np.float64)
@@ -477,5 +493,5 @@ def test_assimilate_terminal_forecast_rejects_broken_frozen_forecast_contract(
 
     monkeypatch.setattr(diagnostic, "forecast_from_posterior", broken_forecast)
 
-    with pytest.raises((AssertionError, ValueError)):
+    with pytest.raises(expected_error):
         diagnostic.assimilate_terminal_forecast(**inputs)
