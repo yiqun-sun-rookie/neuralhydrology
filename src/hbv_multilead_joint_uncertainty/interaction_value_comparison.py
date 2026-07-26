@@ -486,10 +486,18 @@ def summarize_interaction_value(
         )
     )
 
-    return {
+    output = {
         "rmse": rmse,
-        "paired_full_minus_none": {"mean": fn_mean, "ci_low": fn_low, "ci_high": fn_high},
-        "paired_none_minus_static": {"mean": ns_mean, "ci_low": ns_low, "ci_high": ns_high},
+        "paired_full_minus_none": {
+            "mean": fn_mean,
+            "ci_low": fn_low,
+            "ci_high": fn_high,
+        },
+        "paired_none_minus_static": {
+            "mean": ns_mean,
+            "ci_low": ns_low,
+            "ci_high": ns_high,
+        },
         "oracle_ratio": oracle_ratio,
         "identification": {
             "full_stage_median_true_probability": full_medians,
@@ -499,3 +507,16 @@ def summarize_interaction_value(
         "h2_full_le_none_le_static": h2,
         "h3_full_closer_to_oracle_than_static": h3,
     }
+    if "highest_posterior" in arms:
+        highest_minus_none = paired_block_difference(
+            driver_output, "highest_posterior", "none"
+        )
+        hp_mean, hp_low, hp_high = _block_bootstrap_ci(
+            highest_minus_none, bootstrap_replicates, bootstrap_seed
+        )
+        output["paired_highest_posterior_minus_none"] = {
+            "mean": hp_mean,
+            "ci_low": hp_low,
+            "ci_high": hp_high,
+        }
+    return output

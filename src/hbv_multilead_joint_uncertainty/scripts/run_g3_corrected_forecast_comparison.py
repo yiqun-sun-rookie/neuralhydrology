@@ -58,6 +58,35 @@ _FORECAST_DERIVED_ARRAYS = frozenset(
     }
 )
 
+_HISTORICAL_COMPARISON_METHODS = ("full", "none", "static", "oracle")
+_HIGHEST_POSTERIOR_COMPARISON_METHODS = (
+    "full",
+    "none",
+    "highest_posterior",
+    "static",
+    "oracle",
+)
+
+
+def _highest_posterior_enabled(config: dict) -> bool:
+    """Validate the frozen comparison-method order and return the opt-in flag."""
+    if "comparison_methods" not in config:
+        return False
+    configured = config["comparison_methods"]
+    if not isinstance(configured, list) or any(
+        not isinstance(method, str) for method in configured
+    ):
+        raise ValueError("comparison_methods must be a list of method names")
+    methods = tuple(configured)
+    if methods == _HISTORICAL_COMPARISON_METHODS:
+        return False
+    if methods == _HIGHEST_POSTERIOR_COMPARISON_METHODS:
+        return True
+    raise ValueError(
+        "comparison_methods must equal the frozen historical or "
+        "highest-posterior method order"
+    )
+
 
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
@@ -175,6 +204,14 @@ def _classify_paired_interval(lower: float, upper: float) -> str:
     return "no_detectable_difference"
 
 
+def _classify_highest_posterior_interval(lower: float, upper: float) -> str:
+    if upper < 0.0:
+        return "improves"
+    if lower > 0.0:
+        return "harms"
+    return "no_detectable_difference"
+
+
 _SOURCE_FILES = (
     "src/hbv_multilead_joint_uncertainty/interaction_value_comparison.py",
     "src/hbv_multilead_joint_uncertainty/scripts/run_g3_corrected_forecast_comparison.py",
@@ -185,6 +222,7 @@ _SOURCE_FILES = (
     "src/hbv_joint_uncertainty/imm.py",
     "src/hbv_joint_uncertainty/sigma_filter.py",
     "test/test_hbv_corrected_forecast_comparison.py",
+    "test/test_hbv_highest_posterior_forecast.py",
     "test/test_hbv_interaction_value_comparison.py",
     "test/test_hbv_forecast_frozen_transition.py",
 )
@@ -218,7 +256,7 @@ def _result_summary(driver: dict, statistics: dict) -> dict:
             full_minus_none["ci_low"], full_minus_none["ci_high"]
         )
     ]
-    return {
+    result = {
         "leads": [int(value) for value in driver["leads"]],
         "rmse": {
             method: [float(value) for value in statistics["rmse"][method]]
@@ -250,6 +288,20 @@ def _result_summary(driver: dict, statistics: dict) -> dict:
             ],
         },
     }
+    if "paired_highest_posterior_minus_none" in statistics:
+        highest_minus_none = statistics[
+            "paired_highest_posterior_minus_none"
+        ]
+        result["paired_highest_posterior_minus_none"] = paired(
+            highest_minus_none
+        )
+        result["highest_posterior_minus_none_classification"] = [
+            _classify_highest_posterior_interval(float(lower), float(upper))
+            for lower, upper in zip(
+                highest_minus_none["ci_low"], highest_minus_none["ci_high"]
+            )
+        ]
+    return result
 
 
 def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
@@ -266,6 +318,7 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
     config = json.loads(config_bytes.decode("utf-8"))
     if output.name != str(config["experiment_id"]):
         raise ValueError("output directory name must equal experiment_id")
+    highest_posterior_enabled = _highest_posterior_enabled(config)
 
     blocks = _validated_blocks(config)
     started_at = dt.datetime.now(dt.timezone.utc).isoformat()
@@ -290,6 +343,10 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
         "started_at_utc": started_at,
         "output_directory": str(output),
     }
+    if highest_posterior_enabled:
+        preregistration["comparison_methods"] = list(
+            config["comparison_methods"]
+        )
     _atomic_json_write(preregistration_path, preregistration)
 
     parameter_vectors, parameter_csv, parameter_hash = _load_parameter_vectors(
@@ -340,7 +397,14 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
             + ", ".join(replay_check["mismatches"])
         )
 
-    driver = compare_interaction_arms(result, definitions, observation_std, stay)
+    comparison_options = (
+        {"include_highest_posterior": True}
+        if highest_posterior_enabled
+        else {}
+    )
+    driver = compare_interaction_arms(
+        result, definitions, observation_std, stay, **comparison_options
+    )
     statistics = summarize_interaction_value(
         driver,
         bootstrap_replicates=int(config["bootstrap"]["replicates"]),
@@ -383,6 +447,8 @@ def run(repo_root: Path, config_path: Path, output_dir: Path) -> dict:
         "scope_limit": config["scope_limit"],
         "result": result_summary,
     }
+    if highest_posterior_enabled:
+        summary["comparison_methods"] = list(config["comparison_methods"])
     _json_write(incomplete / "summary.json", summary)
     _json_write(
         incomplete / "protected_artifact_integrity.json",

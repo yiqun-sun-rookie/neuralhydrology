@@ -239,6 +239,7 @@ def test_packaged_corrected_run_replays_assimilation_and_seals_new_evidence(tmp_
 
     config = copy.deepcopy(base)
     config["experiment_id"] = "g3_corrected_forecast_packaging_test"
+    config["comparison_methods"] = ["full", "none", "static", "oracle"]
     config["sealed_evidence_for_replay_check"] = {
         "path": str(reference_evidence),
         "sha256": hashlib.sha256(reference_evidence.read_bytes()).hexdigest(),
@@ -253,6 +254,33 @@ def test_packaged_corrected_run_replays_assimilation_and_seals_new_evidence(tmp_
     assert summary["replay_check_passed"] is True
     assert summary["forecast_contract"] == base["forecast_contract"]
     assert len(summary["result"]["full_minus_none_classification"]) == 2
+    assert "comparison_methods" not in summary
+    assert set(summary["result"]) == {
+        "leads",
+        "rmse",
+        "oracle_ratio",
+        "paired_full_minus_none",
+        "paired_none_minus_static",
+        "full_minus_none_classification",
+        "identification",
+    }
+    preregistration = json.loads(
+        (output / "preregistration.json").read_text(encoding="utf-8")
+    )
+    assert "comparison_methods" not in preregistration
+    with np.load(output / "evidence.npz", allow_pickle=False) as evidence:
+        assert tuple(str(value) for value in evidence["arms"]) == (
+            "full",
+            "none",
+            "static",
+            "oracle",
+        )
+        assert not {
+            "forecast_highest_posterior",
+            "squared_error_highest_posterior",
+            "forecast_none_candidates",
+            "highest_posterior_candidate_indices",
+        } & set(evidence.files)
     assert (output / "evidence.npz").is_file()
     assert (output / "checksums.json").is_file()
     assert (output / "replay_check.json").is_file()
