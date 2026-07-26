@@ -137,9 +137,9 @@ class MultiscaleFusion(_ThreeBandBase):
         dynamic: Mapping[str, torch.Tensor],
         statics: torch.Tensor,
     ) -> ModelOutput:
-        states = self._encode(dynamic, statics)
+        states = tuple(self.dropout(state) for state in self._encode(dynamic, statics))
         features = self._fusion_features(dynamic, statics, states)
-        prediction = self.head(self.dropout(features))[:, 0]
+        prediction = self.head(features)[:, 0]
         return ModelOutput(prediction=prediction)
 
 
@@ -168,9 +168,9 @@ class HistoricalBandExperts(_ThreeBandBase):
         dynamic: Mapping[str, torch.Tensor],
         statics: torch.Tensor,
     ) -> ModelOutput:
-        states = self._encode(dynamic, statics)
+        states = tuple(self.dropout(state) for state in self._encode(dynamic, statics))
         expert_predictions = torch.cat([
-            head(self.dropout(state))
+            head(state)
             for head, state in zip(self.expert_heads, states)
         ], dim=1)
         features = self._fusion_features(dynamic, statics, states)

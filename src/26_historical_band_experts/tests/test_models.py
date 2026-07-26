@@ -107,3 +107,51 @@ def test_forget_gate_bias_matches_mainstream_baseline():
                 lstm.bias_hh_l0[hidden_size:2 * hidden_size],
                 expected,
             )
+
+class _RecordingOffsetDropout(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.outputs = []
+
+    def forward(self, value):
+        output = value + 100.0
+        self.outputs.append(output.detach().clone())
+        return output
+
+
+def test_multiscale_arms_apply_dropout_only_to_the_same_three_encoder_states():
+    dynamic, statics = _inputs()
+    for model in (MultiscaleFusion(5, 27), HistoricalBandExperts(5, 27)):
+        recorder = _RecordingOffsetDropout()
+        model.dropout = recorder
+        captured = {}
+        handles = []
+        if isinstance(model, MultiscaleFusion):
+            handles.append(model.head[0].register_forward_pre_hook(
+                lambda _module, inputs: captured.setdefault("features", inputs[0].detach().clone())
+            ))
+        else:
+            for index, head in enumerate(model.expert_heads):
+                handles.append(head.register_forward_pre_hook(
+                    lambda _module, inputs, index=index: captured.setdefault(
+                        f"head_{index}", inputs[0].detach().clone()
+                    )
+                ))
+            handles.append(model.gate[0].register_forward_pre_hook(
+                lambda _module, inputs: captured.setdefault("features", inputs[0].detach().clone())
+            ))
+
+        model(dynamic, statics)
+        for handle in handles:
+            handle.remove()
+
+        assert len(recorder.outputs) == 3
+        assert [tuple(value.shape) for value in recorder.outputs] == [(4, 64)] * 3
+        features = captured["features"]
+        for index, dropped_state in enumerate(recorder.outputs):
+            start = index * 64
+            torch.testing.assert_close(features[:, start:start + 64], dropped_state)
+            if isinstance(model, HistoricalBandExperts):
+                torch.testing.assert_close(captured[f"head_{index}"], dropped_state)
+        torch.testing.assert_close(features[:, 192:197], dynamic["recent"][:, -1])
+        torch.testing.assert_close(features[:, 197:], statics)
