@@ -83,9 +83,17 @@ def _write_package(directory: Path) -> Path:
         np.asarray([0.1, 0.2, 0.7]),
         (block_count, truth_count, 30, candidate_count),
     ).copy()
-    history[..., -1, :] = np.asarray([0.8, 0.15, 0.05])
+    history[..., -1, :] = np.asarray(
+        [0.8, 0.15, 0.0500000000000002]
+    )
+    normalized_history = history / np.sum(
+        history,
+        axis=-1,
+        keepdims=True,
+    )
     final = history[..., -1, :]
-    temporal_mean = np.mean(history, axis=2)
+    temporal_mean = np.mean(normalized_history, axis=2)
+    temporal_mean /= np.sum(temporal_mean, axis=-1, keepdims=True)
     selected = np.argmax(temporal_mean, axis=-1)
     candidates = np.empty(
         (block_count, truth_count, lead_count, candidate_count)
@@ -107,7 +115,7 @@ def _write_package(directory: Path) -> Path:
         )
     )
     weights = np.zeros_like(candidates)
-    weights[..., 0, :] = final
+    weights[..., 0, :] = normalized_history[..., -1, :]
     weights[..., 1:, 2] = 1.0
     temporal = np.sum(weights * candidates, axis=-1)
     full = np.einsum("btc,btlc->btl", final, candidates)
@@ -149,7 +157,9 @@ def _write_package(directory: Path) -> Path:
         "selected_candidate_indices": selected,
         "true_candidate_indices": np.full_like(selected, 2),
         "bootstrap_indices": bootstrap,
-        "one_day_maximum_absolute_difference": np.asarray(0.0),
+        "one_day_maximum_absolute_difference": np.asarray(
+            np.max(np.abs(temporal[..., 0] - full[..., 0]))
+        ),
     }
     for method in METHODS:
         arrays[f"squared_error_{method}"] = squared[method]

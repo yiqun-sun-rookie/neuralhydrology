@@ -189,7 +189,15 @@ def verify(output_directory: Path) -> dict:
         evidence["full_final_probabilities"],
         atol=0.0,
     )
-    temporal_mean = np.mean(history[..., -window:, :], axis=2)
+    normalized_history = history / np.sum(
+        history,
+        axis=-1,
+        keepdims=True,
+    )
+    temporal_mean = np.mean(
+        normalized_history[..., -window:, :],
+        axis=2,
+    )
     temporal_mean /= np.sum(temporal_mean, axis=-1, keepdims=True)
     _assert_close(
         "temporal_mean_probabilities",
@@ -204,7 +212,7 @@ def verify(output_directory: Path) -> dict:
     )
 
     weights = np.zeros_like(candidates)
-    weights[..., 0, :] = final_probabilities
+    weights[..., 0, :] = normalized_history[..., -1, :]
     for block, truth_index in np.ndindex(selected.shape):
         weights[block, truth_index, 1:, selected[block, truth_index]] = 1.0
     _assert_close(

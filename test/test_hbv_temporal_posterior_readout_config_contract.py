@@ -121,20 +121,34 @@ def test_contract_documents_and_protected_paths_exist():
         assert (REPO_ROOT / relative_path).exists(), relative_path
 
 
-def test_formal_output_is_absent_before_execution():
+def test_formal_output_is_complete_and_records_the_frozen_rejection():
     result_root = (
         REPO_ROOT / "results" / "23_hbv_multilead_joint_uncertainty"
     )
-    targets = (
-        result_root / EXPERIMENT_ID,
-        result_root / f"{EXPERIMENT_ID}.incomplete",
-        result_root / f"{EXPERIMENT_ID}.preregistered.json",
-        result_root / f"{EXPERIMENT_ID}.preregistered.json.incomplete",
+    output = result_root / EXPERIMENT_ID
+    summary = json.loads(
+        (output / "summary.json").read_text(encoding="utf-8")
     )
-    assert not any(path.exists() for path in targets)
+    assert output.is_dir()
+    assert not (result_root / f"{EXPERIMENT_ID}.incomplete").exists()
+    assert (
+        result_root / f"{EXPERIMENT_ID}.preregistered.json"
+    ).is_file()
+    assert summary["integrity_status"] == "passed"
+    assert summary["retention_decision"] == "reject"
+    assert summary["result"]["selection_accuracy"] == 282 / 288
+    assert summary["result"]["retention_gates"] == {
+        "one_day_exact": True,
+        "selection_accuracy": True,
+        "three_day_no_material_harm_vs_full": False,
+        "seven_day_material_improvement_vs_full": False,
+        "three_day_no_material_harm_vs_none": False,
+        "seven_day_material_improvement_vs_none": False,
+        "retain": False,
+    }
 
 
-def test_registry_has_one_exact_preregistered_row():
+def test_registry_has_one_exact_completed_row():
     with REGISTRY_PATH.open("r", encoding="utf-8", newline="") as handle:
         rows = list(csv.DictReader(handle))
     matching = [row for row in rows if row["exp_id"] == EXPERIMENT_ID]
@@ -157,7 +171,7 @@ def test_registry_has_one_exact_preregistered_row():
             "noise levels and frozen forecast contract"
         ),
         "seeds": "7411001-7414001",
-        "status": "preregistered",
+        "status": "completed",
         "run_dir": (
             "results/23_hbv_multilead_joint_uncertainty/"
             f"{EXPERIMENT_ID}"
@@ -166,7 +180,8 @@ def test_registry_has_one_exact_preregistered_row():
         "metrics_path": "summary.json",
         "paper_name": "G3 temporal posterior readout confirmation",
         "notes": (
-            "Frozen before execution; retain only if all seven gates pass; "
-            "no post-confirmation tuning"
+            "Formal package and independent recomputation passed; selection "
+            "accuracy was 97.92 percent but four forecast gates failed; "
+            "rule rejected; no post-confirmation tuning"
         ),
     }
