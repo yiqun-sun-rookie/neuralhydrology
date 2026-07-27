@@ -17,6 +17,7 @@ from models_v03 import count_trainable_parameters
 from analyze_frozen_residual_v06 import evaluate_stage1_frozen_residual_v06
 from train_frozen_residual_v06 import (
     _align_recent_reference_v06,
+    _compare_recent_reference_v06,
     build_frozen_recent_candidate_v06,
     frozen_recent_prediction_v06,
     history_residual_prediction_v06,
@@ -89,6 +90,7 @@ def _config() -> dict:
         "dropout_stream": "seed_epoch_batch_branch_sha256",
         "recent_training": "frozen",
         "recent_training_dropout": False,
+        "observation_csv_max_abs_tolerance": 1e-6,
         "recent_prediction_csv_max_abs_tolerance": 2e-6,
         "history_training": "residual",
         "history_head_initialization": "zero",
@@ -226,6 +228,35 @@ def test_v06_smoke_recent_check_selects_keys_from_full_reference():
     pd.testing.assert_frame_equal(aligned, actual)
 
 
+def test_v06_recent_reference_check_allows_only_frozen_text_tolerances():
+    actual = pd.DataFrame({
+        "basin": ["a"],
+        "date": ["2007-01-01"],
+        "qobs": [1.0],
+        "qsim": [2.0],
+    })
+    reference = actual.copy()
+    reference.loc[0, "qobs"] += 7e-7
+    reference.loc[0, "qsim"] += 1.8e-6
+
+    differences = _compare_recent_reference_v06(
+        actual,
+        reference,
+        observation_tolerance=1e-6,
+        prediction_tolerance=2e-6,
+    )
+
+    assert differences["observation_max_abs"] == pytest.approx(7e-7)
+    assert differences["prediction_max_abs"] == pytest.approx(1.8e-6)
+    with pytest.raises(ValueError, match="observation"):
+        _compare_recent_reference_v06(
+            actual,
+            reference,
+            observation_tolerance=6e-7,
+            prediction_tolerance=2e-6,
+        )
+
+
 def test_v06_frozen_residual_stage_gate_uses_paired_basin_differences():
     paired = pd.DataFrame({
         "basin": ["a", "b", "c", "d"],
@@ -275,6 +306,7 @@ def test_v06_real_frozen_residual_configs_are_valid_and_frozen_inputs_match():
         ("candidate_iteration", 1),
         ("recent_training", "joint"),
         ("recent_training_dropout", True),
+        ("observation_csv_max_abs_tolerance", 1.1e-6),
         ("recent_prediction_csv_max_abs_tolerance", 2.1e-6),
         ("history_training", "joint"),
         ("history_head_initialization", "random"),

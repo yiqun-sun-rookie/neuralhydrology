@@ -32,6 +32,7 @@
   "dropout_stream": "seed_epoch_batch_branch_sha256",
   "recent_training": "frozen",
   "recent_training_dropout": false,
+  "observation_csv_max_abs_tolerance": 0.000001,
   "recent_prediction_csv_max_abs_tolerance": 0.000002,
   "history_training": "residual",
   "history_head_initialization": "zero",
@@ -58,4 +59,3 @@
   "limit_validation_samples": 1024,
   "formal_evaluation_access": false
 }
-

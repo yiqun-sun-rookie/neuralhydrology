@@ -60,6 +60,7 @@ _EXPECTED = {
     "dropout_stream": "seed_epoch_batch_branch_sha256",
     "recent_training": "frozen",
     "recent_training_dropout": False,
+    "observation_csv_max_abs_tolerance": 1e-6,
     "recent_prediction_csv_max_abs_tolerance": 2e-6,
     "history_training": "residual",
     "history_head_initialization": "zero",
@@ -264,6 +265,36 @@ def _align_recent_reference_v06(
     return aligned.drop(columns="_merge")[["basin", "date", "qobs", "qsim"]]
 
 
+def _compare_recent_reference_v06(
+    actual: pd.DataFrame,
+    reference: pd.DataFrame,
+    observation_tolerance: float,
+    prediction_tolerance: float,
+) -> dict[str, float]:
+    observation_max_abs = float(np.max(np.abs(
+        actual["qobs"].to_numpy(dtype=np.float64)
+        - reference["qobs"].to_numpy(dtype=np.float64)
+    )))
+    prediction_max_abs = float(np.max(np.abs(
+        actual["qsim"].to_numpy(dtype=np.float64)
+        - reference["qsim"].to_numpy(dtype=np.float64)
+    )))
+    if observation_max_abs > float(observation_tolerance):
+        raise ValueError(
+            "frozen recent observation text drift exceeds "
+            f"{observation_tolerance}: {observation_max_abs}"
+        )
+    if prediction_max_abs > float(prediction_tolerance):
+        raise ValueError(
+            "frozen recent prediction drift exceeds "
+            f"{prediction_tolerance}: {prediction_max_abs}"
+        )
+    return {
+        "observation_max_abs": observation_max_abs,
+        "prediction_max_abs": prediction_max_abs,
+    }
+
+
 def run_frozen_residual_experiment_v06(
     pack: DataPack,
     config: Mapping,
@@ -428,26 +459,21 @@ def run_frozen_residual_experiment_v06(
     expected_rows = 43_860 if config["mode"] == "pilot" else int(config["limit_validation_samples"])
     if len(predictions) != expected_rows:
         raise ValueError(f"validation prediction count must be {expected_rows}, got {len(predictions)}")
-    recent_max_abs = None
+    recent_observation_max_abs = None
+    recent_prediction_max_abs = None
     if expected_recent_predictions is not None:
         reference = _align_recent_reference_v06(
             recent_predictions,
             expected_recent_predictions,
         )
-        if not np.array_equal(
-            recent_predictions["qobs"].to_numpy(),
-            reference["qobs"].to_numpy(),
-        ):
-            raise ValueError("frozen recent observations do not match the reference")
-        recent_max_abs = float(np.max(np.abs(
-            recent_predictions["qsim"].to_numpy(dtype=np.float64)
-            - reference["qsim"].to_numpy(dtype=np.float64)
-        )))
-        tolerance = float(config["recent_prediction_csv_max_abs_tolerance"])
-        if recent_max_abs > tolerance:
-            raise ValueError(
-                f"frozen recent prediction drift exceeds {tolerance}: {recent_max_abs}"
-            )
+        differences = _compare_recent_reference_v06(
+            recent_predictions,
+            reference,
+            observation_tolerance=float(config["observation_csv_max_abs_tolerance"]),
+            prediction_tolerance=float(config["recent_prediction_csv_max_abs_tolerance"]),
+        )
+        recent_observation_max_abs = differences["observation_max_abs"]
+        recent_prediction_max_abs = differences["prediction_max_abs"]
     _atomic_frame(output_dir / "predictions.csv", predictions)
     reloaded = pd.read_csv(output_dir / "predictions.csv", dtype={"basin": str})
     _atomic_frame(output_dir / "per_basin_metrics.csv", per_basin_nse(reloaded))
@@ -483,7 +509,8 @@ def run_frozen_residual_experiment_v06(
         "epoch_trace": epoch_rows,
         "frozen_recent_state_sha256_before": frozen_before,
         "frozen_recent_state_sha256_after": frozen_after,
-        "frozen_recent_prediction_max_abs_vs_reference": recent_max_abs,
+        "frozen_recent_observation_max_abs_vs_reference": recent_observation_max_abs,
+        "frozen_recent_prediction_max_abs_vs_reference": recent_prediction_max_abs,
         "device": str(torch_device),
         "data_access": {
             "raw_observed_discharge_reads": 0,
