@@ -242,6 +242,28 @@ def _validate_base_checkpoint(base_checkpoint: Mapping, seed: int) -> None:
         raise ValueError("base checkpoint must contain model state and scaler")
 
 
+def _align_recent_reference_v06(
+    actual: pd.DataFrame,
+    full_reference: pd.DataFrame,
+) -> pd.DataFrame:
+    keys = ["basin", "date"]
+    if actual.duplicated(keys).any():
+        raise ValueError("actual recent predictions contain duplicate keys")
+    if full_reference.duplicated(keys).any():
+        raise ValueError("reference recent predictions contain duplicate keys")
+    aligned = actual[keys].merge(
+        full_reference,
+        on=keys,
+        how="left",
+        sort=False,
+        validate="one_to_one",
+        indicator=True,
+    )
+    if not bool((aligned["_merge"] == "both").all()):
+        raise ValueError("frozen recent prediction keys do not match the reference")
+    return aligned.drop(columns="_merge")[["basin", "date", "qobs", "qsim"]]
+
+
 def run_frozen_residual_experiment_v06(
     pack: DataPack,
     config: Mapping,
@@ -408,9 +430,10 @@ def run_frozen_residual_experiment_v06(
         raise ValueError(f"validation prediction count must be {expected_rows}, got {len(predictions)}")
     recent_max_abs = None
     if expected_recent_predictions is not None:
-        reference = expected_recent_predictions.sort_values(["basin", "date"]).reset_index(drop=True)
-        if not recent_predictions[["basin", "date"]].equals(reference[["basin", "date"]]):
-            raise ValueError("frozen recent prediction keys do not match the reference")
+        reference = _align_recent_reference_v06(
+            recent_predictions,
+            expected_recent_predictions,
+        )
         if not np.array_equal(
             recent_predictions["qobs"].to_numpy(),
             reference["qobs"].to_numpy(),

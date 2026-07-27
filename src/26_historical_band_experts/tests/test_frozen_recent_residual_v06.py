@@ -16,6 +16,7 @@ from models_equal_experts_v06 import build_equal_experts_model_v06
 from models_v03 import count_trainable_parameters
 from analyze_frozen_residual_v06 import evaluate_stage1_frozen_residual_v06
 from train_frozen_residual_v06 import (
+    _align_recent_reference_v06,
     build_frozen_recent_candidate_v06,
     frozen_recent_prediction_v06,
     history_residual_prediction_v06,
@@ -204,6 +205,25 @@ def test_v06_tiny_frozen_residual_run_is_recomputable_and_preserves_recent(tmp_p
     pd.testing.assert_frame_equal(metrics, per_basin_nse(predictions), check_exact=True)
     for name, expected in manifest["artifacts"].items():
         assert _sha256(output / name) == expected
+
+
+def test_v06_smoke_recent_check_selects_keys_from_full_reference():
+    actual = pd.DataFrame({
+        "basin": ["a", "b"],
+        "date": ["2007-01-01", "2007-01-01"],
+        "qobs": [1.0, 2.0],
+        "qsim": [1.1, 2.1],
+    })
+    full_reference = pd.DataFrame({
+        "basin": ["a", "a", "b", "b"],
+        "date": ["2006-12-31", "2007-01-01", "2006-12-31", "2007-01-01"],
+        "qobs": [0.9, 1.0, 1.9, 2.0],
+        "qsim": [1.0, 1.1, 2.0, 2.1],
+    })
+
+    aligned = _align_recent_reference_v06(actual, full_reference)
+
+    pd.testing.assert_frame_equal(aligned, actual)
 
 
 def test_v06_frozen_residual_stage_gate_uses_paired_basin_differences():
