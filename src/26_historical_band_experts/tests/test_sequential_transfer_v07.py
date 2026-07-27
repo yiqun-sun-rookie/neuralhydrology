@@ -4,6 +4,9 @@ import json
 from pathlib import Path
 import sys
 
+import numpy as np
+import pandas as pd
+import pytest
 import torch
 
 IDEA_ROOT = Path(__file__).resolve().parents[1]
@@ -12,6 +15,8 @@ REPO_ROOT = IDEA_ROOT.parents[1]
 sys.path.insert(0, str(IDEA_ROOT))
 
 from models_v03 import count_trainable_parameters
+from data import DataPack, default_periods
+from metrics import per_basin_nse
 
 
 def _load(name: str) -> dict:
@@ -207,3 +212,139 @@ def test_v07_reset_modes_cut_only_the_specified_state_boundaries():
     assert not torch.equal(normal, no_old)
     assert not torch.equal(normal, no_medium)
     assert torch.equal(recent_only, classic_prediction)
+
+
+def _synthetic_pack() -> DataPack:
+    periods = default_periods()
+    dates = pd.date_range(periods.history_start, periods.validation_end, freq="D")
+    generator = np.random.default_rng(727)
+    forcing = generator.normal(size=(1, len(dates), 5)).astype(np.float32)
+    time = np.arange(len(dates), dtype=np.float32)
+    discharge = (
+        2.0
+        + 0.4 * np.sin(time / 23.0)
+        + 0.1 * forcing[0, :, 0]
+    )[None, :].astype(np.float32)
+    statics = generator.normal(size=(1, 27)).astype(np.float32)
+    return DataPack(
+        basins=("00000001",),
+        dates=dates,
+        forcing=forcing,
+        discharge=discharge,
+        statics=statics,
+    )
+
+
+def _training_config() -> dict:
+    config = _load("sequential_transfer_s01_smoke_v07.json")
+    config["batch_size"] = 4
+    config["validation_batch_size"] = 4
+    config["limit_batches"] = 1
+    config["limit_validation_samples"] = 8
+    return config
+
+
+def test_v07_dynamic_batches_give_controls_recent_only_and_candidate_all_bands():
+    from bands_v03 import forcing_prefix
+    from train_sequential_v07 import dynamic_batch_sequential_v07
+
+    forcing = torch.arange(4000 * 5, dtype=torch.float32).reshape(1, 4000, 5)
+    prefix = forcing_prefix(forcing)
+    basins = torch.tensor([0])
+    targets = torch.tensor([3649])
+
+    classic = dynamic_batch_sequential_v07(
+        "classic_lstm_256_keyed", forcing, prefix, basins, targets
+    )
+    candidate = dynamic_batch_sequential_v07(
+        "sequential_transfer", forcing, prefix, basins, targets
+    )
+
+    assert tuple(classic) == ("recent",)
+    assert classic["recent"].shape == (1, 270, 5)
+    assert tuple(candidate) == ("recent", "medium", "old")
+    assert candidate["recent"].shape == (1, 270, 5)
+    assert candidate["medium"].shape == (1, 60, 5)
+    assert candidate["old"].shape == (1, 60, 5)
+
+
+@pytest.mark.parametrize(
+    ("key", "value"),
+    [
+        ("state_transfer", "independent"),
+        ("medium_hidden_size", 128),
+        ("old_lags", [1826, 3649]),
+        ("candidate_parameter_count", 891_138),
+        ("dropout_stream", "global"),
+        ("formal_evaluation_access", True),
+    ],
+)
+def test_v07_config_rejects_architecture_protocol_or_access_drift(key, value):
+    from train_sequential_v07 import validate_sequential_config_v07
+
+    config = _training_config()
+    config[key] = value
+    with pytest.raises(ValueError, match=key):
+        validate_sequential_config_v07(config)
+
+
+@pytest.mark.parametrize(
+    "variant",
+    (
+        "classic_lstm_256_keyed",
+        "classic_lstm_455_keyed",
+        "sequential_transfer",
+    ),
+)
+def test_v07_tiny_run_writes_recomputable_artifacts_and_gradient_evidence(tmp_path, variant):
+    from train_sequential_v07 import run_sequential_experiment_v07
+
+    output = tmp_path / variant
+    manifest = run_sequential_experiment_v07(
+        pack=_synthetic_pack(),
+        config=_training_config(),
+        variant=variant,
+        seed=100,
+        output_dir=output,
+        device="cpu",
+    )
+
+    assert manifest["status"] == "complete"
+    assert manifest["optimizer_steps_total"] == 2
+    assert manifest["n_validation_predictions"] == 8
+    assert manifest["data_access"] == {
+        "raw_observed_discharge_reads": 0,
+        "target_bundle_interface": True,
+        "formal_evaluation_access": False,
+    }
+    assert {path.name for path in output.iterdir()} == {
+        "config.json",
+        "checkpoint.pt",
+        "predictions.csv",
+        "per_basin_metrics.csv",
+        "state_diagnostics.json",
+        "manifest.json",
+    }
+    predictions = pd.read_csv(output / "predictions.csv", dtype={"basin": str})
+    metrics = pd.read_csv(output / "per_basin_metrics.csv", dtype={"basin": str})
+    pd.testing.assert_frame_equal(metrics, per_basin_nse(predictions), check_exact=True)
+    diagnostics = json.loads((output / "state_diagnostics.json").read_text(encoding="utf-8"))
+    if variant == "sequential_transfer":
+        assert diagnostics["gradient_reach"]["old_encoder"] > 0
+        assert diagnostics["gradient_reach"]["medium_encoder"] > 0
+        assert diagnostics["gradient_reach"]["recent_encoder"] > 0
+        assert diagnostics["state_transfer"] == "old_to_medium_to_recent_hidden_and_cell"
+    else:
+        assert diagnostics["state_transfer"] == "not_applicable_recent_only"
+    for name, expected in manifest["artifacts"].items():
+        assert _sha256(output / name) == expected
+
+    with pytest.raises(FileExistsError, match="not empty"):
+        run_sequential_experiment_v07(
+            pack=_synthetic_pack(),
+            config=_training_config(),
+            variant=variant,
+            seed=100,
+            output_dir=output,
+            device="cpu",
+        )
