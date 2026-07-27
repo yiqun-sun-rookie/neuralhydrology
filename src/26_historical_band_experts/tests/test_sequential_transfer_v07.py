@@ -82,14 +82,20 @@ def test_v07_configs_freeze_sequential_state_transfer_protocol():
     assert smoke["results_root"].endswith("sequential_coarse_to_fine_v07_smoke")
 
 
-def test_v07_registry_has_one_preregistered_sequential_transfer_row():
+def test_v07_registry_has_one_frozen_sequential_transfer_result_row():
     with (IDEA_ROOT / "registry.csv").open(encoding="utf-8", newline="") as handle:
         rows = [row for row in csv.DictReader(handle) if row["exp_id"] == "E07-S01"]
 
     assert len(rows) == 1
-    assert rows[0]["status"] == "preregistered"
+    assert rows[0]["status"] == "no_go_stage1"
     assert rows[0]["base_config"] == "configs/sequential_transfer_s01_v07.json"
     assert rows[0]["run_dir"].endswith("sequential_coarse_to_fine_v07")
+    assert rows[0]["best_checkpoint"].endswith(
+        "sequential_coarse_to_fine_v07/sequential_transfer_s100/checkpoint.pt"
+    )
+    assert rows[0]["metrics_path"].endswith(
+        "sequential_coarse_to_fine_v07/summary.json"
+    )
 
 
 def _dynamic_inputs(batch_size: int = 3) -> tuple[dict[str, torch.Tensor], torch.Tensor]:
