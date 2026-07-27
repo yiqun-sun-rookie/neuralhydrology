@@ -9,6 +9,8 @@
   "validation_end": "2008-09-30",
   "results_root": "results/26_historical_band_experts/strict_nesting_v06",
   "reference_run_dir": "results/26_historical_band_experts/classic_lstm_historical_context_v03/classic_lstm_256_s100",
+  "reference_checkpoint_sha256": "1dfc1b4675e8384d52ccb1a0fe645688987b332fe7e5a5c1bc39d0c8edbe7665",
+  "reference_predictions_sha256": "0c68121da40d9e9b6f4ffae40b82d07f5aee4bc0b6e170c140093be8fc425c77",
   "seed": 100,
   "epochs": 30,
   "batch_size": 256,

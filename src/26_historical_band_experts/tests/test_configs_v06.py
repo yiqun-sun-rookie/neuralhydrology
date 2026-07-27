@@ -41,6 +41,9 @@ def test_v06_diagnostic_configs_freeze_identity_inputs_dates_and_output_roots():
     source_run = REPO_ROOT / mask["source_run_dir"]
     assert _sha256(source_run / "checkpoint.pt") == mask["source_checkpoint_sha256"]
     assert _sha256(source_run / "predictions.csv") == mask["source_predictions_sha256"]
+    reference_run = REPO_ROOT / nesting["reference_run_dir"]
+    assert _sha256(reference_run / "checkpoint.pt") == nesting["reference_checkpoint_sha256"]
+    assert _sha256(reference_run / "predictions.csv") == nesting["reference_predictions_sha256"]
 
 
 def test_v06_registry_has_one_unique_row_for_each_diagnostic():
