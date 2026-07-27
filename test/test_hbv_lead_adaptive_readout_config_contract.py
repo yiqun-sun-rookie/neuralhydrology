@@ -223,6 +223,7 @@ def test_config_protects_every_existing_g3_artifact_and_its_own_contract():
             "formal_contract_sixteen_v05",
             "three_stage_switching_resource_pilot_v01",
         }
+        if not path.name.startswith(EXPERIMENT_ID)
     }
     protected_result_names = {
         Path(value).name
@@ -242,7 +243,7 @@ def test_config_protects_every_existing_g3_artifact_and_its_own_contract():
         assert (REPO_ROOT / relative_path).exists(), relative_path
 
 
-def test_registry_has_one_exact_preregistered_row():
+def test_registry_has_one_exact_completed_row():
     with REGISTRY_PATH.open("r", encoding="utf-8", newline="") as handle:
         rows = list(csv.DictReader(handle))
     matching = [row for row in rows if row["exp_id"] == EXPERIMENT_ID]
@@ -265,16 +266,16 @@ def test_registry_has_one_exact_preregistered_row():
             "noise levels and frozen forecast contract"
         ),
         "seeds": "7311001-7314001",
-        "status": "preregistered",
+        "status": "completed",
         "run_dir": (
             "results/23_hbv_multilead_joint_uncertainty/"
             f"{EXPERIMENT_ID}"
         ),
         "best_checkpoint": "not applicable",
-        "metrics_path": "not produced",
+        "metrics_path": "summary.json",
         "paper_name": "G3 lead-adaptive posterior readout confirmation",
         "notes": (
-            "Thirty-two new matched blocks; retain only if all five "
-            "preregistered gates pass; no tuning after confirmation"
+            "Formal package and independent recomputation passed; all "
+            "retention gates failed; rule rejected; no post-confirmation tuning"
         ),
     }
