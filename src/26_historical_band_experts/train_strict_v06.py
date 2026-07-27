@@ -381,6 +381,14 @@ def _paired_metrics(predictions: pd.DataFrame) -> pd.DataFrame:
     return pd.concat(rows, ignore_index=True)
 
 
+def median_nse_by_variant(metrics: pd.DataFrame) -> dict[str, float]:
+    """Return per-variant medians while ignoring undefined basin metrics."""
+    return {
+        variant: float(np.nanmedian(frame["nse"].to_numpy(dtype=np.float64)))
+        for variant, frame in metrics.groupby("variant", sort=True)
+    }
+
+
 def run_strict_reproduction_v06(
     pack: DataPack,
     config: dict,
@@ -608,10 +616,7 @@ def run_strict_reproduction_v06(
             classic_values.astype(np.float64) - nested_values.astype(np.float64)
         ))),
         "n_validation_predictions": int(len(predictions)),
-        "median_nse": {
-            variant: float(np.median(frame["nse"].to_numpy(dtype=np.float64)))
-            for variant, frame in metrics.groupby("variant", sort=True)
-        },
+        "median_nse": median_nse_by_variant(metrics),
     }
     _atomic_text(output_dir / "summary.json", json.dumps(summary, indent=2, sort_keys=True))
     artifact_names = (

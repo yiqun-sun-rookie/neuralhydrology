@@ -20,6 +20,7 @@ from train_strict_v06 import (
     assert_parameter_sequence_equal,
     exact_evaluation_predictions,
     lockstep_train_step,
+    median_nse_by_variant,
     run_strict_reproduction_v06,
     validate_strict_config_v06,
 )
@@ -288,3 +289,12 @@ def test_v06_strict_config_rejects_protocol_drift(key, value, message):
     config[key] = value
     with pytest.raises(ValueError, match=message):
         validate_strict_config_v06(config)
+
+
+def test_v06_median_summary_ignores_nonfinite_short_smoke_metrics():
+    metrics = pd.DataFrame({
+        "variant": ["classic", "classic", "nested", "nested"],
+        "nse": [np.nan, 0.5, np.nan, 0.5],
+    })
+
+    assert median_nse_by_variant(metrics) == {"classic": 0.5, "nested": 0.5}
