@@ -1,5 +1,6 @@
 from pathlib import Path
 import hashlib
+import io
 import json
 import sys
 
@@ -90,8 +91,8 @@ def _config() -> dict:
         "dropout_stream": "seed_epoch_batch_branch_sha256",
         "recent_training": "frozen",
         "recent_training_dropout": False,
-        "observation_csv_max_abs_tolerance": 1e-6,
-        "recent_prediction_csv_max_abs_tolerance": 2e-6,
+        "reference_text_roundtrip_dtype": "float32",
+        "reference_text_roundtrip_exact": True,
         "history_training": "residual",
         "history_head_initialization": "zero",
         "recent_hidden_size": 256,
@@ -228,32 +229,36 @@ def test_v06_smoke_recent_check_selects_keys_from_full_reference():
     pd.testing.assert_frame_equal(aligned, actual)
 
 
-def test_v06_recent_reference_check_allows_only_frozen_text_tolerances():
+def test_v06_recent_reference_check_requires_exact_float32_roundtrip():
     actual = pd.DataFrame({
         "basin": ["a"],
         "date": ["2007-01-01"],
-        "qobs": [1.0],
-        "qsim": [2.0],
+        "qobs": np.asarray([100.12345], dtype=np.float32),
+        "qsim": np.asarray([20.12345], dtype=np.float32),
     })
-    reference = actual.copy()
-    reference.loc[0, "qobs"] += 7e-7
-    reference.loc[0, "qsim"] += 1.8e-6
+    stream = io.StringIO()
+    actual.to_csv(stream, index=False)
+    reference = pd.read_csv(io.StringIO(stream.getvalue()), dtype={"basin": str})
 
     differences = _compare_recent_reference_v06(
         actual,
         reference,
-        observation_tolerance=1e-6,
-        prediction_tolerance=2e-6,
+        roundtrip_dtype="float32",
     )
 
-    assert differences["observation_max_abs"] == pytest.approx(7e-7)
-    assert differences["prediction_max_abs"] == pytest.approx(1.8e-6)
-    with pytest.raises(ValueError, match="observation"):
+    assert differences["observation_roundtrip_exact"] is True
+    assert differences["prediction_roundtrip_exact"] is True
+    changed = reference.copy()
+    changed.loc[0, "qobs"] = float(np.nextafter(
+        actual.loc[0, "qobs"],
+        np.float32(np.inf),
+        dtype=np.float32,
+    ))
+    with pytest.raises(ValueError, match="observation.*round-trip"):
         _compare_recent_reference_v06(
             actual,
-            reference,
-            observation_tolerance=6e-7,
-            prediction_tolerance=2e-6,
+            changed,
+            roundtrip_dtype="float32",
         )
 
 
@@ -306,8 +311,8 @@ def test_v06_real_frozen_residual_configs_are_valid_and_frozen_inputs_match():
         ("candidate_iteration", 1),
         ("recent_training", "joint"),
         ("recent_training_dropout", True),
-        ("observation_csv_max_abs_tolerance", 1.1e-6),
-        ("recent_prediction_csv_max_abs_tolerance", 2.1e-6),
+        ("reference_text_roundtrip_dtype", "float64"),
+        ("reference_text_roundtrip_exact", False),
         ("history_training", "joint"),
         ("history_head_initialization", "random"),
         ("trainable_history_parameter_count", 594_433),

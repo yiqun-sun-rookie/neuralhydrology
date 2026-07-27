@@ -60,8 +60,8 @@ _EXPECTED = {
     "dropout_stream": "seed_epoch_batch_branch_sha256",
     "recent_training": "frozen",
     "recent_training_dropout": False,
-    "observation_csv_max_abs_tolerance": 1e-6,
-    "recent_prediction_csv_max_abs_tolerance": 2e-6,
+    "reference_text_roundtrip_dtype": "float32",
+    "reference_text_roundtrip_exact": True,
     "history_training": "residual",
     "history_head_initialization": "zero",
     "recent_hidden_size": 256,
@@ -268,9 +268,10 @@ def _align_recent_reference_v06(
 def _compare_recent_reference_v06(
     actual: pd.DataFrame,
     reference: pd.DataFrame,
-    observation_tolerance: float,
-    prediction_tolerance: float,
-) -> dict[str, float]:
+    roundtrip_dtype: str,
+) -> dict[str, float | bool]:
+    if roundtrip_dtype != "float32":
+        raise ValueError("roundtrip_dtype must be float32")
     observation_max_abs = float(np.max(np.abs(
         actual["qobs"].to_numpy(dtype=np.float64)
         - reference["qobs"].to_numpy(dtype=np.float64)
@@ -279,19 +280,27 @@ def _compare_recent_reference_v06(
         actual["qsim"].to_numpy(dtype=np.float64)
         - reference["qsim"].to_numpy(dtype=np.float64)
     )))
-    if observation_max_abs > float(observation_tolerance):
+    observation_roundtrip_exact = bool(np.array_equal(
+        actual["qobs"].to_numpy(dtype=np.float32),
+        reference["qobs"].to_numpy(dtype=np.float32),
+    ))
+    prediction_roundtrip_exact = bool(np.array_equal(
+        actual["qsim"].to_numpy(dtype=np.float32),
+        reference["qsim"].to_numpy(dtype=np.float32),
+    ))
+    if not observation_roundtrip_exact:
         raise ValueError(
-            "frozen recent observation text drift exceeds "
-            f"{observation_tolerance}: {observation_max_abs}"
+            "frozen recent observation float32 round-trip is not exact"
         )
-    if prediction_max_abs > float(prediction_tolerance):
+    if not prediction_roundtrip_exact:
         raise ValueError(
-            "frozen recent prediction drift exceeds "
-            f"{prediction_tolerance}: {prediction_max_abs}"
+            "frozen recent prediction float32 round-trip is not exact"
         )
     return {
         "observation_max_abs": observation_max_abs,
         "prediction_max_abs": prediction_max_abs,
+        "observation_roundtrip_exact": observation_roundtrip_exact,
+        "prediction_roundtrip_exact": prediction_roundtrip_exact,
     }
 
 
@@ -461,6 +470,8 @@ def run_frozen_residual_experiment_v06(
         raise ValueError(f"validation prediction count must be {expected_rows}, got {len(predictions)}")
     recent_observation_max_abs = None
     recent_prediction_max_abs = None
+    recent_observation_roundtrip_exact = None
+    recent_prediction_roundtrip_exact = None
     if expected_recent_predictions is not None:
         reference = _align_recent_reference_v06(
             recent_predictions,
@@ -469,11 +480,12 @@ def run_frozen_residual_experiment_v06(
         differences = _compare_recent_reference_v06(
             recent_predictions,
             reference,
-            observation_tolerance=float(config["observation_csv_max_abs_tolerance"]),
-            prediction_tolerance=float(config["recent_prediction_csv_max_abs_tolerance"]),
+            roundtrip_dtype=str(config["reference_text_roundtrip_dtype"]),
         )
         recent_observation_max_abs = differences["observation_max_abs"]
         recent_prediction_max_abs = differences["prediction_max_abs"]
+        recent_observation_roundtrip_exact = differences["observation_roundtrip_exact"]
+        recent_prediction_roundtrip_exact = differences["prediction_roundtrip_exact"]
     _atomic_frame(output_dir / "predictions.csv", predictions)
     reloaded = pd.read_csv(output_dir / "predictions.csv", dtype={"basin": str})
     _atomic_frame(output_dir / "per_basin_metrics.csv", per_basin_nse(reloaded))
@@ -511,6 +523,8 @@ def run_frozen_residual_experiment_v06(
         "frozen_recent_state_sha256_after": frozen_after,
         "frozen_recent_observation_max_abs_vs_reference": recent_observation_max_abs,
         "frozen_recent_prediction_max_abs_vs_reference": recent_prediction_max_abs,
+        "frozen_recent_observation_float32_roundtrip_exact": recent_observation_roundtrip_exact,
+        "frozen_recent_prediction_float32_roundtrip_exact": recent_prediction_roundtrip_exact,
         "device": str(torch_device),
         "data_access": {
             "raw_observed_discharge_reads": 0,
