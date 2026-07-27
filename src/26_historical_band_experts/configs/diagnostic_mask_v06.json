@@ -1,0 +1,18 @@
+{
+  "experiment_id": "D06-MASK",
+  "experiment_family": "strict_branch_masking_v06",
+  "mode": "pilot",
+  "basin_file": "src/26_historical_band_experts/configs/pilot_basins_60.txt",
+  "basin_file_sha256": "3160dad3b22200fdb596164c9f69e4fbe19cc156cfad768beb193efea7b26b65",
+  "target_bundle_sha256": "d4c93675eefd433515d6f7e10943caea31c6eb7e30533d4c387cf9325886e05c",
+  "validation_start": "2006-10-01",
+  "validation_end": "2008-09-30",
+  "validation_batch_size": 512,
+  "source_variant": "hierarchical_rich_history",
+  "source_seed": 100,
+  "source_run_dir": "results/26_historical_band_experts/hierarchical_rich_historical_context_v05/hierarchical_rich_history_s100",
+  "source_checkpoint_sha256": "7c8cb69a71e2ec09a75a6edbd181f5c28bd2e089814707dd8af2d1723aa5130c",
+  "source_predictions_sha256": "cda2d2267d1a292a9bc322ca1037ee8e439d176d70b9a4543778dd4d10550648",
+  "results_root": "results/26_historical_band_experts/strict_branch_masking_v06",
+  "formal_evaluation_access": false
+}
