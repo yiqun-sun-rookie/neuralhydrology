@@ -7,6 +7,7 @@ import pytest
 
 from hbv_multilead_joint_uncertainty.lead_adaptive_readout import (
     lead_adaptive_posterior_readout,
+    summarize_lead_adaptive_readout,
 )
 
 
@@ -133,3 +134,212 @@ def test_readout_does_not_mutate_inputs_and_weights_reconstruct_predictions():
     assert not result.predictions.flags.writeable
     assert not result.weights.flags.writeable
     assert not result.lead_days.flags.writeable
+
+
+METHOD_NAMES = (
+    "lead_adaptive",
+    "full_posterior",
+    "none_posterior",
+    "uniform",
+    "oracle",
+)
+
+
+def _constant_summary_inputs(
+    lead_adaptive=(1.0, 2.0, 3.0),
+    full_posterior=(2.0, 3.0, 4.0),
+    none_posterior=(3.0, 4.0, 5.0),
+    selected_correct=True,
+):
+    blocks, truths, leads = 4, 3, 3
+
+    def tiled(values):
+        return np.broadcast_to(
+            np.asarray(values, dtype=np.float64),
+            (blocks, truths, leads),
+        ).copy()
+
+    forecasts = {
+        "lead_adaptive": tiled(lead_adaptive),
+        "full_posterior": tiled(full_posterior),
+        "none_posterior": tiled(none_posterior),
+        "uniform": tiled((4.0, 5.0, 6.0)),
+        "oracle": tiled((0.5, 1.0, 1.5)),
+    }
+    probabilities = np.zeros((blocks, truths, 3), dtype=np.float64)
+    probabilities[..., 0] = 0.98 if selected_correct else 0.01
+    probabilities[..., 1] = 0.01 if selected_correct else 0.98
+    probabilities[..., 2] = 0.01
+    return {
+        "forecasts": forecasts,
+        "truth_forecasts": np.zeros((blocks, truths, leads), dtype=np.float64),
+        "final_probabilities": probabilities,
+        "final_true_candidate_indices": np.zeros(
+            (blocks, truths), dtype=np.int64
+        ),
+        "lead_days": (1, 3, 7),
+        "bootstrap_replicates": 200,
+        "bootstrap_seed": 17027,
+        "minimum_meaningful_rmse_fraction": 0.01,
+    }
+
+
+def test_summary_computes_metrics_shared_bootstrap_and_preregistered_gates():
+    inputs = _constant_summary_inputs()
+
+    summary = summarize_lead_adaptive_readout(**inputs)
+
+    assert tuple(summary["methods"]) == METHOD_NAMES
+    np.testing.assert_allclose(summary["rmse"]["lead_adaptive"], [1.0, 2.0, 3.0])
+    np.testing.assert_allclose(summary["rmse"]["full_posterior"], [2.0, 3.0, 4.0])
+    np.testing.assert_allclose(summary["rmse"]["none_posterior"], [3.0, 4.0, 5.0])
+    np.testing.assert_allclose(summary["rmse"]["uniform"], [4.0, 5.0, 6.0])
+    np.testing.assert_allclose(summary["rmse"]["oracle"], [0.5, 1.0, 1.5])
+
+    paired_none = summary["paired"]["lead_adaptive_minus_none_posterior"]
+    np.testing.assert_allclose(paired_none["mean"], [-8.0, -12.0, -16.0])
+    np.testing.assert_allclose(paired_none["ci_low"], paired_none["mean"])
+    np.testing.assert_allclose(paired_none["ci_high"], paired_none["mean"])
+    np.testing.assert_allclose(
+        paired_none["meaningful_improvement_boundary"],
+        np.asarray([9.0, 16.0, 25.0]) * -0.0199,
+    )
+    np.testing.assert_allclose(
+        paired_none["meaningful_harm_boundary"],
+        np.asarray([9.0, 16.0, 25.0]) * 0.0201,
+    )
+    assert np.all(paired_none["materially_improves"])
+    assert np.all(paired_none["no_material_harm"])
+
+    composite = summary["multiday_normalized_mse_composite"]
+    np.testing.assert_allclose(composite["block_mean"], -0.695)
+    assert composite["mean"] == pytest.approx(-0.695)
+    assert composite["ci_low"] == pytest.approx(-0.695)
+    assert composite["ci_high"] == pytest.approx(-0.695)
+    np.testing.assert_array_equal(composite["lead_mask"], [False, True, True])
+
+    assert summary["selection_accuracy"] == 1.0
+    np.testing.assert_array_equal(summary["selected_candidate_indices"], 0)
+    assert summary["bootstrap_indices"].shape == (200, 4)
+    assert np.all(summary["bootstrap_indices"] >= 0)
+    assert np.all(summary["bootstrap_indices"] < 4)
+    assert summary["retention_gates"] == {
+        "none_at_least_one_material_improvement": True,
+        "none_all_leads_no_material_harm": True,
+        "multiday_composite_improves": True,
+        "highest_posterior_selection_accuracy": True,
+        "full_at_least_one_material_improvement": True,
+        "full_all_leads_no_material_harm": True,
+        "retain": True,
+    }
+
+
+@pytest.mark.parametrize(
+    ("changes", "failed_gate"),
+    [
+        (
+            {
+                "lead_adaptive": (2.985, 3.98, 4.975),
+                "full_posterior": (4.0, 5.0, 6.0),
+            },
+            "none_at_least_one_material_improvement",
+        ),
+        (
+            {"lead_adaptive": (3.06, 3.0, 4.0)},
+            "none_all_leads_no_material_harm",
+        ),
+        (
+            {"lead_adaptive": (1.0, 4.0, 5.0)},
+            "multiday_composite_improves",
+        ),
+        (
+            {"selected_correct": False},
+            "highest_posterior_selection_accuracy",
+        ),
+        (
+            {
+                "lead_adaptive": (1.0, 2.0, 3.0),
+                "full_posterior": (0.5, 1.0, 1.5),
+            },
+            "full_at_least_one_material_improvement",
+        ),
+        (
+            {
+                "lead_adaptive": (1.0, 2.0, 3.0),
+                "full_posterior": (0.99, 1.99, 2.99),
+            },
+            "full_all_leads_no_material_harm",
+        ),
+    ],
+)
+def test_each_retention_gate_can_reject_the_readout(changes, failed_gate):
+    inputs = _constant_summary_inputs(**changes)
+
+    summary = summarize_lead_adaptive_readout(**inputs)
+
+    assert summary["retention_gates"][failed_gate] is False
+    assert summary["retention_gates"]["retain"] is False
+
+
+def test_summary_averages_truths_within_block_before_shared_resampling():
+    inputs = _constant_summary_inputs()
+    lead_adaptive = inputs["forecasts"]["lead_adaptive"]
+    lead_adaptive[0, :, 0] = [0.0, 1.0, 2.0]
+
+    summary = summarize_lead_adaptive_readout(**inputs)
+
+    expected_squared_error_difference = (
+        np.square(lead_adaptive)
+        - np.square(inputs["forecasts"]["none_posterior"])
+    )
+    expected_block_mean = np.mean(expected_squared_error_difference, axis=1)
+    paired = summary["paired"]["lead_adaptive_minus_none_posterior"]
+    np.testing.assert_allclose(paired["block_mean"], expected_block_mean)
+    bootstrap_recomputed = np.mean(
+        expected_block_mean[summary["bootstrap_indices"]],
+        axis=1,
+    )
+    np.testing.assert_allclose(
+        paired["ci_low"],
+        np.percentile(bootstrap_recomputed, 2.5, axis=0),
+    )
+    np.testing.assert_allclose(
+        paired["ci_high"],
+        np.percentile(bootstrap_recomputed, 97.5, axis=0),
+    )
+
+
+@pytest.mark.parametrize(
+    ("mutation", "match"),
+    [
+        (lambda inputs: inputs["forecasts"].pop("oracle"), "methods"),
+        (
+            lambda inputs: inputs["forecasts"].__setitem__(
+                "oracle", np.zeros((4, 3, 2))
+            ),
+            "shape",
+        ),
+        (
+            lambda inputs: inputs["final_probabilities"].__setitem__(
+                (0, 0, 0), np.nan
+            ),
+            "finite",
+        ),
+        (
+            lambda inputs: inputs.__setitem__("lead_days", (1, 3, 3)),
+            "unique",
+        ),
+        (
+            lambda inputs: inputs.__setitem__(
+                "minimum_meaningful_rmse_fraction", 0.0
+            ),
+            "fraction",
+        ),
+    ],
+)
+def test_summary_rejects_invalid_contracts(mutation, match):
+    inputs = _constant_summary_inputs()
+    mutation(inputs)
+
+    with pytest.raises((TypeError, ValueError), match=match):
+        summarize_lead_adaptive_readout(**inputs)
