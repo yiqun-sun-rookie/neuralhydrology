@@ -79,6 +79,8 @@ _EXPECTED_COMMON = {
     ],
     "stage1_seed": 100,
     "conditional_seeds": [200, 300],
+    "bootstrap_resamples": 100_000,
+    "bootstrap_seed": 20_260_727,
     "stage1_gates": {
         "median_delta_classic_at_least": 0.01,
         "median_delta_capacity_above": 0.0,

@@ -51,6 +51,8 @@ def test_v07_configs_freeze_sequential_state_transfer_protocol():
         assert config["capacity_control_parameter_count"] == 890_436
         assert config["stage1_seed"] == 100
         assert config["conditional_seeds"] == [200, 300]
+        assert config["bootstrap_resamples"] == 100_000
+        assert config["bootstrap_seed"] == 20_260_727
         assert config["stage1_gates"] == {
             "median_delta_classic_at_least": 0.01,
             "median_delta_capacity_above": 0.0,
@@ -351,3 +353,135 @@ def test_v07_tiny_run_writes_recomputable_artifacts_and_gradient_evidence(tmp_pa
             output_dir=output,
             device="cpu",
         )
+
+
+def test_v07_stage1_analysis_applies_all_four_frozen_paired_gates():
+    from analyze_sequential_v07 import evaluate_stage1_sequential_v07
+
+    paired = pd.DataFrame({
+        "basin": ["a", "b", "c", "d"],
+        "nse_classic": [0.50, 0.60, 0.70, 0.80],
+        "nse_capacity": [0.50, 0.60, 0.70, 0.80],
+        "nse_late_concat": [0.50, 0.60, 0.70, 0.80],
+        "nse_candidate": [0.52, 0.62, 0.72, 0.82],
+    })
+
+    result = evaluate_stage1_sequential_v07(
+        paired,
+        _training_config()["stage1_gates"],
+    )
+
+    assert result["passed"] is True
+    assert result["criteria"] == {
+        "median_delta_classic_at_least": True,
+        "median_delta_capacity_above": True,
+        "median_delta_late_concat_above": True,
+        "win_fraction_classic_at_least": True,
+    }
+    assert result["median_delta_classic"] == pytest.approx(0.02)
+    assert result["win_fraction_classic"] == 1.0
+
+
+def test_v07_analysis_rejects_prediction_key_or_observation_mismatch():
+    from analyze_sequential_v07 import assert_same_targets_v07
+
+    reference = pd.DataFrame({
+        "basin": ["a", "a"],
+        "date": ["2000-01-01", "2000-01-02"],
+        "qobs": [1.0, 2.0],
+        "qsim": [1.1, 1.9],
+    })
+    wrong_key = reference.copy()
+    wrong_key.loc[1, "date"] = "2000-01-03"
+    wrong_observation = reference.copy()
+    wrong_observation.loc[1, "qobs"] = 2.5
+
+    with pytest.raises(ValueError, match="keys"):
+        assert_same_targets_v07(reference, wrong_key, "wrong_key")
+    with pytest.raises(ValueError, match="observations"):
+        assert_same_targets_v07(reference, wrong_observation, "wrong_observation")
+
+
+def test_v07_multiseed_confirmation_uses_seedwise_and_ensemble_gates():
+    from analyze_sequential_v07 import evaluate_multiseed_sequential_v07
+
+    seedwise = pd.DataFrame({
+        "seed": np.repeat([100, 200, 300], 4),
+        "basin": ["a", "b", "c", "d"] * 3,
+        "nse_classic": np.tile([0.50, 0.60, 0.70, 0.80], 3),
+        "nse_candidate": np.tile([0.52, 0.62, 0.72, 0.82], 3),
+    })
+    ensemble = pd.DataFrame({
+        "basin": ["a", "b", "c", "d"],
+        "nse_classic": [0.50, 0.60, 0.70, 0.80],
+        "nse_capacity": [0.50, 0.60, 0.70, 0.80],
+        "nse_late_concat": [0.50, 0.60, 0.70, 0.80],
+        "nse_candidate": [0.52, 0.62, 0.72, 0.82],
+    })
+
+    result = evaluate_multiseed_sequential_v07(
+        seedwise,
+        ensemble,
+        bootstrap_resamples=1000,
+        bootstrap_seed=727,
+    )
+
+    assert result["passed"] is True
+    assert result["positive_seed_count"] == 3
+    assert result["median_delta_classic"] == pytest.approx(0.02)
+    assert result["bootstrap_median_delta_ci95"][0] > 0
+    assert all(result["criteria"].values())
+
+
+def test_v07_reset_diagnostics_write_all_four_frozen_state_boundaries(tmp_path):
+    from analyze_sequential_v07 import run_reset_diagnostics_v07
+    from train_sequential_v07 import run_sequential_experiment_v07
+
+    pack = _synthetic_pack()
+    config = _training_config()
+    candidate_run = tmp_path / "candidate"
+    run_sequential_experiment_v07(
+        pack=pack,
+        config=config,
+        variant="sequential_transfer",
+        seed=100,
+        output_dir=candidate_run,
+        device="cpu",
+    )
+    output = tmp_path / "reset_diagnostics"
+
+    manifest = run_reset_diagnostics_v07(
+        pack=pack,
+        config=config,
+        seed=100,
+        candidate_run_dir=candidate_run,
+        output_dir=output,
+        device="cpu",
+    )
+
+    assert manifest["status"] == "complete"
+    assert manifest["causal_attribution_allowed"] is False
+    assert manifest["reset_modes"] == ["none", "old_to_medium", "medium_to_recent", "both"]
+    assert manifest["n_validation_predictions_per_mode"] == 8
+    assert {path.name for path in output.iterdir()} == {
+        "none_predictions.csv",
+        "none_per_basin_metrics.csv",
+        "old_to_medium_predictions.csv",
+        "old_to_medium_per_basin_metrics.csv",
+        "medium_to_recent_predictions.csv",
+        "medium_to_recent_per_basin_metrics.csv",
+        "both_predictions.csv",
+        "both_per_basin_metrics.csv",
+        "summary.json",
+        "manifest.json",
+    }
+    reference = pd.read_csv(output / "none_predictions.csv", dtype={"basin": str})
+    for mode in ("old_to_medium", "medium_to_recent", "both"):
+        candidate = pd.read_csv(output / f"{mode}_predictions.csv", dtype={"basin": str})
+        pd.testing.assert_frame_equal(
+            reference[["basin", "date", "qobs"]],
+            candidate[["basin", "date", "qobs"]],
+            check_exact=True,
+        )
+    for name, expected in manifest["artifacts"].items():
+        assert _sha256(output / name) == expected
