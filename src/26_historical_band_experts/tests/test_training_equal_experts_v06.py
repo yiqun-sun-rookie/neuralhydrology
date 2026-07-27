@@ -50,7 +50,7 @@ def _config() -> dict:
         "basin_file_sha256": "3160dad3b22200fdb596164c9f69e4fbe19cc156cfad768beb193efea7b26b65",
         "target_bundle_sha256": "d4c93675eefd433515d6f7e10943caea31c6eb7e30533d4c387cf9325886e05c",
         "strict_nesting_summary_sha256": "38cb81e24d575e8291fa04f0a530de2baf45ad9e32fcb8bdf524f9f61b780f2d",
-        "results_root": "results/26_historical_band_experts/equal_experts_i01_v06",
+        "results_root": "results/26_historical_band_experts/equal_experts_i01_v06_smoke",
         "epochs": 2,
         "batch_size": 4,
         "validation_batch_size": 4,
