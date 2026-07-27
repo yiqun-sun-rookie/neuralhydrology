@@ -1,0 +1,32 @@
+{
+  "experiment_id": "R06-NEST",
+  "experiment_family": "strict_nesting_v06",
+  "mode": "smoke",
+  "basin_file": "src/26_historical_band_experts/configs/pilot_basins_60.txt",
+  "basin_file_sha256": "3160dad3b22200fdb596164c9f69e4fbe19cc156cfad768beb193efea7b26b65",
+  "target_bundle_sha256": "d4c93675eefd433515d6f7e10943caea31c6eb7e30533d4c387cf9325886e05c",
+  "validation_start": "2006-10-01",
+  "validation_end": "2008-09-30",
+  "results_root": "results/26_historical_band_experts/strict_nesting_v06_smoke",
+  "seed": 100,
+  "epochs": 2,
+  "batch_size": 256,
+  "validation_batch_size": 512,
+  "learning_rate_schedule": {
+    "1": 0.001,
+    "12": 0.0005,
+    "22": 0.0001
+  },
+  "gradient_clip": 1.0,
+  "recent_hidden_size": 256,
+  "initial_forget_bias": 5.0,
+  "output_dropout": 0.4,
+  "reproduction_tolerance": {
+    "absolute": 0.0,
+    "relative": 0.0
+  },
+  "candidate_iteration_budget": 5,
+  "limit_batches": 2,
+  "limit_validation_samples": 1024,
+  "formal_evaluation_access": false
+}

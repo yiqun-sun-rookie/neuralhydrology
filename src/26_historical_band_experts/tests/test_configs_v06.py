@@ -57,3 +57,16 @@ def test_v06_registry_has_one_unique_row_for_each_diagnostic():
     assert len(by_id["R06-NEST"]) == 1
     assert by_id["D06-MASK"][0]["run_dir"].endswith("strict_branch_masking_v06")
     assert by_id["R06-NEST"][0]["run_dir"].endswith("strict_nesting_v06")
+
+
+def test_v06_strict_smoke_config_is_isolated_and_bounded():
+    smoke = _load("strict_nesting_smoke_v06.json")
+
+    assert smoke["experiment_id"] == "R06-NEST"
+    assert smoke["experiment_family"] == "strict_nesting_v06"
+    assert smoke["mode"] == "smoke"
+    assert smoke["epochs"] == 2
+    assert smoke["limit_batches"] == 2
+    assert smoke["limit_validation_samples"] == 1024
+    assert smoke["results_root"].endswith("strict_nesting_v06_smoke")
+    assert smoke["reproduction_tolerance"] == {"absolute": 0.0, "relative": 0.0}
