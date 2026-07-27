@@ -339,9 +339,10 @@ def run_reset_diagnostics_v07(
             frame = pd.concat(parts, ignore_index=True).sort_values(
                 ["basin", "date"]
             ).reset_index(drop=True)
-            predictions_by_mode[mode] = frame
-            metrics_by_mode[mode] = per_basin_nse(frame)
-            _atomic_frame(output_dir / f"{mode}_predictions.csv", frame)
+            predictions_path = output_dir / f"{mode}_predictions.csv"
+            _atomic_frame(predictions_path, frame)
+            predictions_by_mode[mode] = _load_predictions(predictions_path, len(frame))
+            metrics_by_mode[mode] = per_basin_nse(predictions_by_mode[mode])
             _atomic_frame(output_dir / f"{mode}_per_basin_metrics.csv", metrics_by_mode[mode])
 
     reference = predictions_by_mode["none"]

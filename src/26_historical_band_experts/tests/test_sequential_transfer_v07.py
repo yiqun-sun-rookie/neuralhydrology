@@ -482,6 +482,17 @@ def test_v07_reset_diagnostics_write_all_four_frozen_state_boundaries(tmp_path):
         "manifest.json",
     }
     reference = pd.read_csv(output / "none_predictions.csv", dtype={"basin": str})
+    for mode in ("none", "old_to_medium", "medium_to_recent", "both"):
+        predictions = pd.read_csv(output / f"{mode}_predictions.csv", dtype={"basin": str})
+        saved_metrics = pd.read_csv(
+            output / f"{mode}_per_basin_metrics.csv",
+            dtype={"basin": str},
+        )
+        pd.testing.assert_frame_equal(
+            saved_metrics,
+            per_basin_nse(predictions),
+            check_exact=True,
+        )
     for mode in ("old_to_medium", "medium_to_recent", "both"):
         candidate = pd.read_csv(output / f"{mode}_predictions.csv", dtype={"basin": str})
         pd.testing.assert_frame_equal(
