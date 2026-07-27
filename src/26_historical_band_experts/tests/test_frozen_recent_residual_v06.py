@@ -15,7 +15,10 @@ from data import DataPack, compute_scaler, default_periods
 from metrics import per_basin_nse
 from models_equal_experts_v06 import build_equal_experts_model_v06
 from models_v03 import count_trainable_parameters
-from analyze_frozen_residual_v06 import evaluate_stage1_frozen_residual_v06
+from analyze_frozen_residual_v06 import (
+    _named_nse_v06,
+    evaluate_stage1_frozen_residual_v06,
+)
 from train_frozen_residual_v06 import (
     _align_recent_reference_v06,
     _compare_recent_reference_v06,
@@ -281,6 +284,20 @@ def test_v06_frozen_residual_stage_gate_uses_paired_basin_differences():
     assert result["median_delta_capacity"] == pytest.approx(0.02)
     assert result["median_delta_late_concat"] == pytest.approx(0.02)
     assert result["win_fraction_classic"] == 1.0
+
+
+def test_v06_named_nse_drops_repeated_metric_metadata_before_merge():
+    predictions = pd.DataFrame({
+        "basin": ["a", "a", "b", "b"],
+        "date": ["2007-01-01", "2007-01-02"] * 2,
+        "qobs": [1.0, 2.0, 2.0, 4.0],
+        "qsim": [1.1, 1.9, 2.1, 3.9],
+    })
+
+    metrics = _named_nse_v06(predictions, "candidate")
+
+    assert list(metrics.columns) == ["basin", "nse_candidate"]
+    assert len(metrics) == 2
 
 
 def test_v06_real_frozen_residual_configs_are_valid_and_frozen_inputs_match():

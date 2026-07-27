@@ -66,6 +66,12 @@ def _assert_same_targets(reference: pd.DataFrame, candidate: pd.DataFrame, label
         raise ValueError(f"{label} observations differ")
 
 
+def _named_nse_v06(predictions: pd.DataFrame, name: str) -> pd.DataFrame:
+    return per_basin_nse(predictions)[["basin", "nse"]].rename(
+        columns={"nse": f"nse_{name}"}
+    )
+
+
 def analyze_frozen_residual_v06(config: Mapping) -> dict:
     validate_frozen_residual_config_v06(config)
     if config["mode"] != "pilot":
@@ -105,8 +111,7 @@ def analyze_frozen_residual_v06(config: Mapping) -> dict:
         _assert_same_targets(reference, frame, name)
     metrics = {}
     for name, frame in predictions.items():
-        basin_metrics = per_basin_nse(frame).rename(columns={"nse": f"nse_{name}"})
-        metrics[name] = basin_metrics
+        metrics[name] = _named_nse_v06(frame, name)
     paired = metrics["classic"]
     for name in ("capacity", "late_concat", "candidate"):
         paired = paired.merge(metrics[name], on="basin", how="inner", validate="one_to_one")
