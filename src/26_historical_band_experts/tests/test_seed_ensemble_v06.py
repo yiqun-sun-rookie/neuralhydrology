@@ -12,6 +12,7 @@ from compose_seed_ensemble_v06 import (
     compose_prediction_frames_v06,
     validate_seed_ensemble_config_v06,
 )
+from compose_three_seed_ensemble_v06 import validate_three_seed_ensemble_config_v06
 
 
 def _frame(first: float, second: float) -> pd.DataFrame:
@@ -75,6 +76,24 @@ def test_v06_real_seed_ensemble_config_is_valid_and_all_inputs_match_hashes():
     )
 
 
+def test_v06_real_three_seed_ensemble_config_is_valid_and_all_inputs_match_hashes():
+    idea = Path(__file__).resolve().parents[1]
+    repo = idea.parents[1]
+    config = json.loads(
+        (idea / "configs/late_concat_three_seed_ensemble_i05_v06.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    validate_three_seed_ensemble_config_v06(config)
+    assert _sha256(repo / config["iteration_four_summary"]) == (
+        config["iteration_four_summary_sha256"]
+    )
+    for group in ("candidate_members", "classic_members", "capacity_members"):
+        for member in config[group]:
+            assert _sha256(repo / member["predictions"]) == member["sha256"]
+
+
 @pytest.mark.parametrize(
     ("key", "value"),
     [
@@ -94,4 +113,3 @@ def test_v06_seed_ensemble_config_rejects_protocol_drift(key, value):
     config[key] = value
     with pytest.raises(ValueError, match=key):
         validate_seed_ensemble_config_v06(config)
-
