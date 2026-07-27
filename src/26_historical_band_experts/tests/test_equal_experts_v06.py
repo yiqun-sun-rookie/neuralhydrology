@@ -15,6 +15,7 @@ from models_equal_experts_v06 import (
     keyed_dropout,
 )
 from models_v03 import count_trainable_parameters
+from train_equal_experts_v06 import validate_equal_config_v06
 
 
 EXPECTED_PARAMETER_COUNTS = {
@@ -144,3 +145,4 @@ def test_v06_iteration_one_smoke_config_is_bounded_and_isolated():
     assert config["limit_batches"] == 2
     assert config["limit_validation_samples"] == 1024
     assert config["results_root"].endswith("equal_experts_i01_v06_smoke")
+    validate_equal_config_v06(config)

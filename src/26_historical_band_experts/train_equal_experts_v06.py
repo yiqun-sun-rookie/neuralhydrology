@@ -115,9 +115,14 @@ def validate_equal_config_v06(config: Mapping) -> None:
     if int(config.get("validation_batch_size", 0)) <= 0:
         raise ValueError("validation_batch_size must be positive")
     results_root = str(config.get("results_root", ""))
-    if not results_root.endswith("equal_experts_i01_v06"):
-        raise ValueError("results_root must be isolated for equal-experts iteration 1")
     mode = config.get("mode")
+    expected_suffix = (
+        "equal_experts_i01_v06_smoke"
+        if mode == "smoke"
+        else "equal_experts_i01_v06"
+    )
+    if not results_root.endswith(expected_suffix):
+        raise ValueError("results_root must be isolated for equal-experts iteration 1")
     limit_batches = int(config.get("limit_batches", 0))
     limit_validation = int(config.get("limit_validation_samples", 0))
     if mode == "pilot":
