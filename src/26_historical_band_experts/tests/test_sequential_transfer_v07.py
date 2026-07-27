@@ -64,6 +64,9 @@ def test_v07_configs_freeze_sequential_state_transfer_protocol():
         assert _sha256(
             REPO_ROOT / config["legacy_late_concat_predictions"]
         ) == config["legacy_late_concat_predictions_sha256"]
+        assert _sha256(
+            REPO_ROOT / config["legacy_late_concat_multiseed_predictions"]
+        ) == config["legacy_late_concat_multiseed_predictions_sha256"]
 
     assert pilot["mode"] == "pilot"
     assert pilot["epochs"] == 30

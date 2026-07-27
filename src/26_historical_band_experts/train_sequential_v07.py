@@ -52,6 +52,9 @@ _EXPECTED_COMMON = {
     "legacy_late_concat_predictions_sha256": (
         "dc67277dd9302e7fe5985728a87d82178de1029a9f2bab123a3cbe72d5807941"
     ),
+    "legacy_late_concat_multiseed_predictions_sha256": (
+        "1d597d7757ffbc3ea86f9345124483b524db665513f495e861c2dabb517b7d8d"
+    ),
     "gradient_clip": 1.0,
     "initial_forget_bias": 5.0,
     "output_dropout": 0.4,
@@ -475,6 +478,11 @@ def main() -> None:
         _REPO / config["legacy_late_concat_predictions"],
         config["legacy_late_concat_predictions_sha256"],
         "legacy late-concatenation predictions",
+    )
+    validate_frozen_file_hash(
+        _REPO / config["legacy_late_concat_multiseed_predictions"],
+        config["legacy_late_concat_multiseed_predictions_sha256"],
+        "legacy late-concatenation multiseed predictions",
     )
     basin_file = _REPO / config["basin_file"]
     validate_frozen_file_hash(basin_file, config["basin_file_sha256"], "basin list")

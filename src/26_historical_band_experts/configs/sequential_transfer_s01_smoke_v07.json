@@ -9,6 +9,8 @@
   "strict_nesting_summary_sha256": "38cb81e24d575e8291fa04f0a530de2baf45ad9e32fcb8bdf524f9f61b780f2d",
   "legacy_late_concat_predictions": "results/26_historical_band_experts/classic_lstm_historical_context_v03/late_concat_s100/predictions.csv",
   "legacy_late_concat_predictions_sha256": "dc67277dd9302e7fe5985728a87d82178de1029a9f2bab123a3cbe72d5807941",
+  "legacy_late_concat_multiseed_predictions": "results/26_historical_band_experts/late_concat_three_seed_ensemble_i05_v06/candidate_predictions.csv",
+  "legacy_late_concat_multiseed_predictions_sha256": "1d597d7757ffbc3ea86f9345124483b524db665513f495e861c2dabb517b7d8d",
   "results_root": "results/26_historical_band_experts/sequential_coarse_to_fine_v07_smoke",
   "epochs": 2,
   "batch_size": 256,
