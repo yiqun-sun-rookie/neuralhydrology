@@ -1,0 +1,49 @@
+{
+  "audit_id": "A06-COMPARABILITY",
+  "audit_type": "posthoc_sensitivity_not_preregistered_candidate_gate",
+  "practical_equivalence_margin": 0.01,
+  "bootstrap_resamples": 100000,
+  "bootstrap_seed": 20260727,
+  "bootstrap_unit": "basin",
+  "confidence_interval": [0.025, 0.975],
+  "inputs": [
+    {
+      "iteration": 1,
+      "label": "joint_equal_experts",
+      "paired_file": "results/26_historical_band_experts/equal_experts_i01_v06/paired_per_basin.csv",
+      "sha256": "c34f3c2b3d27aca05f2f42f0412a16f4d430bf6950a0c9d67e187c32d38e4a7a",
+      "candidate_training_seed_count": 1
+    },
+    {
+      "iteration": 2,
+      "label": "frozen_recent_output_residual",
+      "paired_file": "results/26_historical_band_experts/frozen_recent_residual_i02_v06/paired_per_basin.csv",
+      "sha256": "4080183785ce39e51db966568d5422fcb1f39211ec3b459bb749f85e13f2307e",
+      "candidate_training_seed_count": 1
+    },
+    {
+      "iteration": 3,
+      "label": "frozen_recent_history_state",
+      "paired_file": "results/26_historical_band_experts/history_state_i03_v06/paired_per_basin.csv",
+      "sha256": "c5aaae25f7fe9c4b13fe99676efd0e14361080ab4a75bd6c80ed285f11e0698b",
+      "candidate_training_seed_count": 1
+    },
+    {
+      "iteration": 4,
+      "label": "two_seed_late_concat_ensemble",
+      "paired_file": "results/26_historical_band_experts/late_concat_seed_ensemble_i04_v06/paired_per_basin.csv",
+      "sha256": "9469c28742ecfcf316e480249671dc6765bb6969ff311ef597f89589296976d9",
+      "candidate_training_seed_count": 2
+    },
+    {
+      "iteration": 5,
+      "label": "three_seed_late_concat_ensemble",
+      "paired_file": "results/26_historical_band_experts/late_concat_three_seed_ensemble_i05_v06/paired_per_basin.csv",
+      "sha256": "6c247441749f38df87bc15166629288a17199a6a84a9b08e99ab555439b6e834",
+      "candidate_training_seed_count": 3
+    }
+  ],
+  "results_root": "results/26_historical_band_experts/comparability_audit_v06",
+  "formal_evaluation_access": false
+}
+
