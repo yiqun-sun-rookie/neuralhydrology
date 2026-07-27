@@ -1,0 +1,66 @@
+{
+  "experiment_id": "E06-I04",
+  "experiment_family": "late_concat_seed_ensemble_i04_v06",
+  "candidate_iteration": 4,
+  "candidate_iteration_budget": 5,
+  "mode": "pilot",
+  "iteration_three_summary": "results/26_historical_band_experts/history_state_i03_v06/summary.json",
+  "iteration_three_summary_sha256": "0379dad25f085c447bf39503b1aeb4408f867c908cdd6ec9d6dc2ae7da7a146e",
+  "candidate_members": [
+    {
+      "seed": 200,
+      "weight": 0.5,
+      "predictions": "results/26_historical_band_experts/persistent_historical_context_v04/late_concat_s200/predictions.csv",
+      "sha256": "034b39bc6f376a15d1fcaee3cffdd00c3e2d15f1cdf18743fcf0a756ba4e16b0"
+    },
+    {
+      "seed": 300,
+      "weight": 0.5,
+      "predictions": "results/26_historical_band_experts/persistent_historical_context_v04/late_concat_s300/predictions.csv",
+      "sha256": "9389ea15cfd90fc000b7d7170ce2223c6475391e39314f66103c6c5057bf3a3e"
+    }
+  ],
+  "classic_members": [
+    {
+      "seed": 200,
+      "weight": 0.5,
+      "predictions": "results/26_historical_band_experts/persistent_historical_context_v04/classic_lstm_256_s200/predictions.csv",
+      "sha256": "dfd025110659d0b8df5684aa566a9a1a43013a704f73cf3cfeeb6c2e2429c6f9"
+    },
+    {
+      "seed": 300,
+      "weight": 0.5,
+      "predictions": "results/26_historical_band_experts/persistent_historical_context_v04/classic_lstm_256_s300/predictions.csv",
+      "sha256": "7558b1ca940168a60d5756e1154cf48c46603019970de7bde660c30fbad55591"
+    }
+  ],
+  "capacity_members": [
+    {
+      "seed": 200,
+      "weight": 0.5,
+      "predictions": "results/26_historical_band_experts/persistent_historical_context_v04/classic_lstm_261_s200/predictions.csv",
+      "sha256": "1183ee7b5bdf30596df00728d63e0141729b0cb820bcda205775bd14faa26def"
+    },
+    {
+      "seed": 300,
+      "weight": 0.5,
+      "predictions": "results/26_historical_band_experts/persistent_historical_context_v04/classic_lstm_261_s300/predictions.csv",
+      "sha256": "b40bc1048e2f275d0c50eaf51618c81bf25d95ca802d440bcafe30b12539d7ee"
+    }
+  ],
+  "legacy_late_concat_predictions": "results/26_historical_band_experts/classic_lstm_historical_context_v03/late_concat_s100/predictions.csv",
+  "legacy_late_concat_predictions_sha256": "dc67277dd9302e7fe5985728a87d82178de1029a9f2bab123a3cbe72d5807941",
+  "ensemble_operation": "rowwise_arithmetic_mean_qsim",
+  "member_seeds": [200, 300],
+  "member_weights": [0.5, 0.5],
+  "discovery_seed_excluded": 100,
+  "results_root": "results/26_historical_band_experts/late_concat_seed_ensemble_i04_v06",
+  "stage1_gates": {
+    "median_delta_classic_at_least": 0.01,
+    "median_delta_capacity_above": 0.0,
+    "median_delta_late_concat_above": 0.0,
+    "win_fraction_classic_at_least": 0.55
+  },
+  "formal_evaluation_access": false
+}
+
