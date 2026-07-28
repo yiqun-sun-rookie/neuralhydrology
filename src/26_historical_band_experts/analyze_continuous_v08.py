@@ -80,11 +80,15 @@ def evaluate_stage1_v08(
     numeric = paired[["nse_classic", "nse_capacity", "nse_candidate"]].to_numpy(
         dtype=np.float64
     )
-    if not np.isfinite(numeric).all():
-        raise ValueError("paired metrics must be finite")
-    delta_classic = paired["nse_candidate"].to_numpy() - paired["nse_classic"].to_numpy()
+    finite = np.isfinite(numeric).all(axis=1)
+    working = paired.loc[finite].reset_index(drop=True)
+    if working.empty:
+        raise ValueError("paired metrics contain no jointly finite basins")
+    delta_classic = (
+        working["nse_candidate"].to_numpy() - working["nse_classic"].to_numpy()
+    )
     delta_capacity = (
-        paired["nse_candidate"].to_numpy() - paired["nse_capacity"].to_numpy()
+        working["nse_candidate"].to_numpy() - working["nse_capacity"].to_numpy()
     )
     median_delta_classic = float(np.median(delta_classic))
     median_delta_capacity = float(np.median(delta_capacity))
@@ -107,10 +111,11 @@ def evaluate_stage1_v08(
     return {
         "passed": bool(all(criteria.values())),
         "criteria": criteria,
-        "n_basins": int(len(paired)),
-        "median_nse_classic": float(np.median(paired["nse_classic"])),
-        "median_nse_capacity": float(np.median(paired["nse_capacity"])),
-        "median_nse_candidate": float(np.median(paired["nse_candidate"])),
+        "n_basins": int(len(working)),
+        "n_excluded_nonfinite_basins": int(len(paired) - len(working)),
+        "median_nse_classic": float(np.median(working["nse_classic"])),
+        "median_nse_capacity": float(np.median(working["nse_capacity"])),
+        "median_nse_candidate": float(np.median(working["nse_candidate"])),
         "median_delta_classic": median_delta_classic,
         "median_delta_capacity": median_delta_capacity,
         "win_fraction_classic": win_fraction,
@@ -470,8 +475,13 @@ def analyze_results_v08(config: Mapping) -> dict:
         predictions["classic_lstm_369_keyed"],
         predictions["continuous_multiscale_history"],
     )
-    if config["mode"] == "pilot" and len(paired) != 60:
-        raise ValueError(f"pilot paired basin count must be 60, got {len(paired)}")
+    if config["mode"] == "pilot":
+        if len(paired) != 60:
+            raise ValueError(f"pilot paired basin count must be 60, got {len(paired)}")
+        if not np.isfinite(
+            paired[["nse_classic", "nse_capacity", "nse_candidate"]].to_numpy()
+        ).all():
+            raise ValueError("pilot paired metrics must be finite for all 60 basins")
     _atomic_frame(root / f"paired_per_basin_s{seed}.csv", paired)
     stage_result = evaluate_stage1_v08(
         paired,
