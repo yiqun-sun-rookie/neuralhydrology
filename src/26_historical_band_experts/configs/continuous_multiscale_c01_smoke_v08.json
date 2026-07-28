@@ -1,0 +1,94 @@
+{
+  "experiment_id": "E08-C01",
+  "strict_reproduction_id": "R08-NEST",
+  "experiment_family": "continuous_multiscale_history_v08",
+  "mode": "smoke",
+  "design_file": "docs/plans/2026-07-28-continuous-multiscale-history-design.md",
+  "design_file_sha256": "2ec149b51a2cefad68ef1e3936b64774755d9fa0024ee800ffa411254127f78f",
+  "prior_mask_summary": "results/26_historical_band_experts/strict_branch_masking_v06/summary.json",
+  "prior_mask_summary_sha256": "e324538713b6fd1419f141621184be3081b8728fcc562c56a0d59e9433c3ca62",
+  "prior_strict_nesting_summary": "results/26_historical_band_experts/strict_nesting_v06/summary.json",
+  "prior_strict_nesting_summary_sha256": "38cb81e24d575e8291fa04f0a530de2baf45ad9e32fcb8bdf524f9f61b780f2d",
+  "basin_file": "src/26_historical_band_experts/configs/pilot_basins_60.txt",
+  "basin_file_sha256": "3160dad3b22200fdb596164c9f69e4fbe19cc156cfad768beb193efea7b26b65",
+  "target_bundle_sha256": "d4c93675eefd433515d6f7e10943caea31c6eb7e30533d4c387cf9325886e05c",
+  "results_root": "results/26_historical_band_experts/continuous_multiscale_history_v08_smoke",
+  "train_period": [
+    "1999-10-01",
+    "2004-09-30"
+  ],
+  "confirmation_period": [
+    "2004-10-01",
+    "2006-09-30"
+  ],
+  "unused_previous_validation_period": [
+    "2006-10-01",
+    "2008-09-30"
+  ],
+  "expected_training_samples": 109620,
+  "expected_confirmation_predictions": 43800,
+  "earliest_forcing_date": "1989-10-04",
+  "epochs": 2,
+  "batch_size": 16,
+  "confirmation_batch_size": 128,
+  "learning_rate_schedule": {
+    "1": 0.001,
+    "2": 0.0005
+  },
+  "gradient_clip": 1.0,
+  "initial_forget_bias": 5.0,
+  "output_dropout": 0.4,
+  "dropout_stream": "seed_epoch_batch_branch_sha256",
+  "state_transfer": "zero_gated_history_to_recent_hidden_and_cell",
+  "gate_initialization": "exact_zero",
+  "recent_hidden_size": 256,
+  "history_hidden_size": 256,
+  "capacity_control_hidden_size": 369,
+  "recent_lags": [
+    0,
+    269
+  ],
+  "history_lags": [
+    270,
+    3649
+  ],
+  "history_bins": 120,
+  "history_edge_formula": "round(exp(linspace(log(270),log(3650),121)))",
+  "history_edges_sha256": "bae1f744feca9160181365545a07b445eab269d6afa8817a2e7c99e19f200d73",
+  "history_width_range_days": [
+    6,
+    78
+  ],
+  "history_features": [
+    "maurer_mean_5",
+    "log_duration_coordinate",
+    "log_midpoint_lag_coordinate"
+  ],
+  "candidate_parameter_count": 596737,
+  "capacity_control_parameter_count": 595198,
+  "variants": [
+    "classic_lstm_256_keyed",
+    "classic_lstm_369_keyed",
+    "continuous_multiscale_history"
+  ],
+  "stage1_seed": 100,
+  "conditional_seeds": [
+    200,
+    300
+  ],
+  "bootstrap_resamples": 100000,
+  "bootstrap_seed": 20260728,
+  "stage1_gates": {
+    "median_delta_classic_at_least": 0.01,
+    "median_delta_capacity_above": 0.0,
+    "win_fraction_classic_at_least": 0.55,
+    "bootstrap_ci_lower_above": 0.0
+  },
+  "diagnostic_modes": [
+    "normal",
+    "history_gates_zero"
+  ],
+  "limit_batches": 2,
+  "limit_confirmation_samples": 1024,
+  "formal_evaluation_target_access": false
+}
