@@ -113,10 +113,16 @@ def test_v08_registry_has_unique_reproduction_and_candidate_rows():
     candidate = [row for row in rows if row["exp_id"] == "E08-C01"]
 
     assert len(reproduction) == len(candidate) == 1
-    assert reproduction[0]["status"] == "planned"
-    assert candidate[0]["status"] == "blocked_pending_exact_nesting"
+    assert reproduction[0]["status"] == "complete_exact"
+    assert candidate[0]["status"] == "go_internal_multiseed"
     assert candidate[0]["base_config"] == "configs/continuous_multiscale_c01_v08.json"
     assert candidate[0]["run_dir"].endswith("continuous_multiscale_history_v08")
+    assert reproduction[0]["best_checkpoint"].endswith(
+        "continuous_multiscale_history_v08/strict_nesting_s100/checkpoint.pt"
+    )
+    assert candidate[0]["best_checkpoint"].endswith(
+        "continuous_multiscale_history_v08/continuous_multiscale_history_s100/checkpoint.pt"
+    )
 
 
 def test_v08_edges_cover_every_historical_lag_once():
