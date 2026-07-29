@@ -1,0 +1,20 @@
+{
+  "experiment_id": "B09-CAPACITY",
+  "type": "capacity_control",
+  "protocol_file": "configs/formal_v09_protocol.json",
+  "protocol_sha256": "6c465ccbce86d34f32062dd6a1a590919a28d33816e24de4cbc8075c4960be10",
+  "variant": "classic_lstm_369_capacity",
+  "seeds": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800
+  ],
+  "results_root": "results/26_historical_band_experts/formal_v09/capacity",
+  "status": "protocol_implemented_training_not_authorized",
+  "training_authorized": false
+}

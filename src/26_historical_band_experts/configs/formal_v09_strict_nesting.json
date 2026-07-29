@@ -1,0 +1,14 @@
+{
+  "experiment_id": "R09-NEST",
+  "type": "reproduction",
+  "protocol_file": "configs/formal_v09_protocol.json",
+  "protocol_sha256": "6c465ccbce86d34f32062dd6a1a590919a28d33816e24de4cbc8075c4960be10",
+  "reference_variant": "classic_lstm_256_clean",
+  "candidate_variant": "nested_history_disabled",
+  "seeds": [
+    100
+  ],
+  "results_root": "results/26_historical_band_experts/formal_v09/strict_nesting",
+  "status": "protocol_implemented_training_not_authorized",
+  "training_authorized": false
+}

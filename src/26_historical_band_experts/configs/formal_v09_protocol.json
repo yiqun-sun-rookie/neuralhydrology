@@ -1,0 +1,184 @@
+{
+  "protocol_id": "P09-FORMAL",
+  "protocol_family": "historical_multiscale_formal_v09",
+  "strict_reproduction_id": "R09-NEST",
+  "classic_control_id": "B09-CLASSIC",
+  "capacity_control_id": "B09-CAPACITY",
+  "candidate_id": "E09-CONTINUOUS",
+  "sealed_scoring_id": "S09-SEALED",
+  "track": "track0_forcing_only",
+  "basin_file": "src/fair_benchmark/frozen/track0_forcing_only_basins.txt",
+  "basin_file_sha256": "cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85",
+  "basin_count": 531,
+  "forcing_product": "maurer",
+  "dynamic_input_count": 5,
+  "dynamic_inputs": [
+    "prcp",
+    "tmin",
+    "tmax",
+    "srad",
+    "vp"
+  ],
+  "known_forcing_data_issue": {
+    "evidence_scope": "prior_read_only_audit_of_required_1980_2008_raw_maurer_rows",
+    "condition": "tmin_equals_tmax_elementwise",
+    "named_dynamic_columns": 5,
+    "independent_dynamic_value_columns": 4,
+    "handling": "preserve_frozen_named_columns_and_report_without_posthoc_repair"
+  },
+  "static_attribute_count": 27,
+  "static_file": "src/fair_benchmark/frozen/bundle/track0_statics.csv",
+  "static_file_sha256": "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2",
+  "training_target_interface": {
+    "period": [
+      "1999-10-01",
+      "2008-09-30"
+    ],
+    "bundle_generated": false,
+    "generation_authorized": false
+  },
+  "forbidden_inputs": [
+    "formal_evaluation_observed_discharge",
+    "usgs_streamflow",
+    "camels_hydro",
+    "observed_discharge_derived_hydrologic_signatures",
+    "future_forcing",
+    "other_forcing_products",
+    "other_model_outputs",
+    "test_period_or_full_dataset_statistics"
+  ],
+  "train_period": [
+    "1999-10-01",
+    "2008-09-30"
+  ],
+  "evaluation_period": [
+    "1989-10-01",
+    "1999-09-30"
+  ],
+  "forcing_period": [
+    "1980-01-01",
+    "2008-09-30"
+  ],
+  "expected_forcing_dates": 10501,
+  "expected_forcing_rows": 5576031,
+  "expected_training_dates_per_basin": 3288,
+  "expected_training_samples": 1745928,
+  "expected_evaluation_dates_per_basin": 3652,
+  "expected_evaluation_predictions": 1939212,
+  "normalization_scope": "training_target_dates_only",
+  "recent_lags": [
+    0,
+    269
+  ],
+  "history_lags": [
+    270,
+    3561
+  ],
+  "causal_window_days": 3562,
+  "history_bins": 120,
+  "history_edge_formula": "round(exp(linspace(log(270),log(3562),121)))",
+  "history_edges_sha256": "55bbdaf654e7ea2b8959cc5dd62de98e4631c272ffe9d7f4efeae9cb7240927b",
+  "history_width_range_days": [
+    6,
+    76
+  ],
+  "history_features": [
+    "maurer_mean_5",
+    "log_duration_coordinate",
+    "log_midpoint_lag_coordinate"
+  ],
+  "state_transfer": "zero_gated_history_to_recent_hidden_and_cell",
+  "classic_hidden_size": 256,
+  "capacity_control_hidden_size": 369,
+  "history_hidden_size": 256,
+  "classic_parameter_count": 297217,
+  "capacity_control_parameter_count": 595198,
+  "candidate_parameter_count": 596737,
+  "parameter_count_relative_difference": 0.002579,
+  "single_flow_output": true,
+  "epochs": 30,
+  "batch_size": 256,
+  "optimizer_steps_per_epoch": 6821,
+  "optimizer_steps_total": 204630,
+  "optimizer": "Adam",
+  "gradient_clip": 1.0,
+  "initial_forget_bias": 5.0,
+  "output_dropout": 0.4,
+  "dropout_stream": "seed_epoch_batch_branch_sha256",
+  "learning_rate_schedule": {
+    "1": 0.001,
+    "11": 0.0005,
+    "21": 0.0001
+  },
+  "seeds": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800
+  ],
+  "ensemble": {
+    "operation": "arithmetic_mean",
+    "accumulator_dtype": "float64",
+    "seed_order": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800
+    ]
+  },
+  "strict_nesting": {
+    "same_environment_absolute_tolerance": 0.0,
+    "same_environment_relative_tolerance": 0.0,
+    "independent_environment_prediction_absolute_tolerance": 1e-06,
+    "independent_environment_prediction_relative_tolerance": 0.0
+  },
+  "success_gates": {
+    "full_coverage_required": true,
+    "public_median_paired_delta_at_least": 0.01,
+    "wilcoxon_p_below": 0.05,
+    "bootstrap_ci_lower_above": 0.0,
+    "secret_holdout_median_delta_at_least": 0.005,
+    "secret_retained_public_fraction_at_least": 0.5
+  },
+  "memory_safety": {
+    "long_job_start_available_gib_min": 12.0,
+    "long_job_start_available_fraction": 0.4,
+    "runtime_reserve_gib_min": 8.0,
+    "runtime_reserve_fraction": 0.25,
+    "process_rss_gib_max": 6.0,
+    "process_rss_fraction_max": 0.2,
+    "single_allocation_mib_max": 512.0,
+    "single_allocation_fraction_max": 0.02,
+    "maximum_batch_size": 256,
+    "full_window_materialization_forbidden": true
+  },
+  "legacy_reference": {
+    "description": "frozen eight-seed classic LSTM ensemble; scoring reference only",
+    "median_nse": 0.759225,
+    "training_trajectory_reproduction_claimed": false
+  },
+  "legacy_frozen_manifest_issue": {
+    "file": "src/fair_benchmark/frozen/track0_forcing_only.spec.yaml",
+    "manifest_sha256": "1beb31af1e7d1131370ffe6c3f829b897869599cb75dbd42917265da0e1a9c00",
+    "windows_bytes_sha256": "8fb707cb5e2ec0f8edbf3f191f9ce836d259e8a31286466da63e6e62791388fb",
+    "lf_normalized_sha256": "0439eb55cd059300eca9c90c20aaed1901cd8be5e9b556bd4ae2e4609a2f5d5e",
+    "must_be_resolved_before_scoring_authorization": true
+  },
+  "authorization": {
+    "protocol_implementation": true,
+    "synthetic_tests": true,
+    "formal_target_bundle_generation": false,
+    "training": false,
+    "formal_prediction_generation": false,
+    "official_scoring": false
+  },
+  "formal_evaluation_target_access": false
+}
