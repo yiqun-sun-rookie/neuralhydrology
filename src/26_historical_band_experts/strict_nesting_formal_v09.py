@@ -39,7 +39,7 @@ def lockstep_train_step_v09(
     dropout_context: tuple[int, int, int],
     gradient_clip: float,
 ) -> dict:
-    """Apply one paired keyed-dropout update and fail at the first non-exact value."""
+    """Apply one paired core-compatible dropout update and fail at the first non-exact value."""
     assert_batch_indices_equal(basin_indices, target_indices)
     if tuple(dynamic) != ("recent",):
         raise StrictNestingMismatch("strict nesting dynamic input must contain only the recent path")
@@ -104,6 +104,7 @@ def lockstep_train_step_v09(
     )
     return {
         "lockstep_exact": True,
+        "random_number_state_equal": True,
         "prediction_equal": True,
         "loss_equal": True,
         "gradients_equal": True,

@@ -58,6 +58,22 @@ def test_formal_v09_protocol_freezes_geometry_schedule_and_authorization():
     assert config["expected_training_samples"] == 1_745_928
     assert config["expected_evaluation_predictions"] == 1_939_212
     assert config["causal_window_days"] == 3_562
+    assert config["dropout_stream"] == "core_torch_rng_full_recent_sequence"
+    assert config["core_classic_compatibility"]["reference_code_commit"] == (
+        "1f9804e359283f1963bcf0aa9ffab213538c16e8"
+    )
+    assert config["core_classic_compatibility"]["tracked_reference_config_added_commit"] == (
+        "49433803a6a598fde068f732834e6f918ee826f4"
+    )
+    assert config["core_classic_compatibility"]["actual_run_config_sha256"] == (
+        "e873fea95ee215179f284f14ec900068c5151f41b4622a342e59255aa642e4f9"
+    )
+    legacy_runs = config["legacy_reference"]["runs"]
+    assert [run["seed"] for run in legacy_runs] == list(range(100, 801, 100))
+    assert len({run["run_id"] for run in legacy_runs}) == 8
+    assert len({run["config_sha256"] for run in legacy_runs}) == 8
+    assert len({run["checkpoint_epoch030_sha256"] for run in legacy_runs}) == 8
+    assert config["core_classic_compatibility"]["same_process_tolerance"] == 0.0
     assert config["recent_lags"] == [0, 269]
     assert config["history_lags"] == [270, 3_561]
     assert edges[0] == 270

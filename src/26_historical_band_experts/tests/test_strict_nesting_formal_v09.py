@@ -40,6 +40,7 @@ def test_v09_one_lockstep_update_is_bitwise_exact():
     )
 
     assert report["lockstep_exact"] is True
+    assert report["random_number_state_equal"] is True
     assert report["prediction_equal"] is True
     assert report["loss_equal"] is True
     assert report["gradients_equal"] is True

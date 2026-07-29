@@ -32,6 +32,56 @@ _MEMORY_SAFETY = {
     "maximum_batch_size": 256,
     "full_window_materialization_forbidden": True,
 }
+_LEGACY_REFERENCE_RUNS = [
+    {
+        "seed": 100,
+        "run_id": "lstm_cudalstm_maurer_s100_2026_0616_1513_ep30",
+        "config_sha256": "e873fea95ee215179f284f14ec900068c5151f41b4622a342e59255aa642e4f9",
+        "checkpoint_epoch030_sha256": "f7a4242f233304a309f6e4b225e539ca5b4f76089dbe3b7a96c88ce5a18d5654",
+    },
+    {
+        "seed": 200,
+        "run_id": "lstm_cudalstm_maurer_s200_2026_0616_1831_ep30",
+        "config_sha256": "e8e0ba4a1d6ffb585d5d72171710e7034ecd750b34387c7408796bf41f0c3531",
+        "checkpoint_epoch030_sha256": "fcc4b7322173f156ee5f05b9377ac865ef7f16a96237097253d0f7f9936e5b61",
+    },
+    {
+        "seed": 300,
+        "run_id": "lstm_cudalstm_maurer_s300_2026_0616_2016_ep30",
+        "config_sha256": "cddcfc92d748c9149b276eb8529d01335bf56b85405508b01444617e720267e6",
+        "checkpoint_epoch030_sha256": "f2fc10468e1926507d2395f1f8f50bf8af5ecb04f5fc4c3cbff8d49482d579c9",
+    },
+    {
+        "seed": 400,
+        "run_id": "lstm_cudalstm_maurer_s400_2026_0616_2209_ep30",
+        "config_sha256": "d51c397da039e63e3f1709ecc351890d598d221c657785e9aacab9b4b5df32fe",
+        "checkpoint_epoch030_sha256": "536cb3f927983dfb261cbb0f83d2bfce3fb84900bf1967e0177a1d2ac9fa3fc5",
+    },
+    {
+        "seed": 500,
+        "run_id": "lstm_cudalstm_maurer_s500_2026_0616_2341_ep30",
+        "config_sha256": "ead6fd313f1815175bcafeebc4702e1e4a06cd651dde3a878a9c9421b7baf7eb",
+        "checkpoint_epoch030_sha256": "cd24cd14465d4e70b2a279026970ab65e6a22fb305414e6083164cae382a1966",
+    },
+    {
+        "seed": 600,
+        "run_id": "lstm_cudalstm_maurer_s600_2026_0617_0112_ep30",
+        "config_sha256": "e20065d979f6a358675213b63e9a6b61ef01851bf2a8406b6025305e7c588f88",
+        "checkpoint_epoch030_sha256": "daf3e05a264cb574736a1451ed7ecb53f8846975ad5bd359db6b021703c4e34b",
+    },
+    {
+        "seed": 700,
+        "run_id": "lstm_cudalstm_maurer_s700_2026_0617_0243_ep30",
+        "config_sha256": "33fb6f17537181ed29412cd5b8c868976e5e4e248c034ff9200b36dea8101960",
+        "checkpoint_epoch030_sha256": "aa922f3abe8aff6884d72f83e70ea2a1744bd38687c03ff095cc2846b0343424",
+    },
+    {
+        "seed": 800,
+        "run_id": "lstm_cudalstm_maurer_s800_2026_0617_0414_ep30",
+        "config_sha256": "e90a565f7b33ae8f785a17107835677649349d504509ca77955f84c9a30e0da6",
+        "checkpoint_epoch030_sha256": "80a30be47fe23a73d51e1d519a42c04d004cd7608959de1e004928a616cdf963",
+    },
+]
 _EXPECTED_SCALARS = {
     "protocol_id": _PROTOCOL_ID,
     "protocol_family": "historical_multiscale_formal_v09",
@@ -76,7 +126,7 @@ _EXPECTED_SCALARS = {
     "gradient_clip": 1.0,
     "initial_forget_bias": 5.0,
     "output_dropout": 0.4,
-    "dropout_stream": "seed_epoch_batch_branch_sha256",
+    "dropout_stream": "core_torch_rng_full_recent_sequence",
     "formal_evaluation_target_access": False,
 }
 
@@ -192,6 +242,39 @@ def validate_protocol_v09(config: Mapping) -> None:
     )
     _require_equal(
         config,
+        "core_classic_compatibility",
+        {
+            "reference_model": "neuralhydrology.modelzoo.cudalstm.CudaLSTM",
+            "reference_code_commit": "1f9804e359283f1963bcf0aa9ffab213538c16e8",
+            "actual_run_recorded_commit_prefix": "1f9804e",
+            "actual_run_id": "lstm_cudalstm_maurer_s100_2026_0616_1513_ep30",
+            "actual_run_config_sha256": (
+                "e873fea95ee215179f284f14ec900068c5151f41b4622a342e59255aa642e4f9"
+            ),
+            "tracked_reference_config": (
+                "src/lstm_fair_531/configs/lstm_cudalstm_maurer_531_s100.yml"
+            ),
+            "tracked_reference_config_added_commit": (
+                "49433803a6a598fde068f732834e6f918ee826f4"
+            ),
+            "tracked_reference_config_lf_sha256": (
+                "83b3acd908d44397de671d01b172e3e9b92cc0c6efa7bd539c7017449d2c102f"
+            ),
+            "cudalstm_lf_sha256": (
+                "27f2e17d3f388a9b7ef25a261ec33007c328985d8c2a879592794c3fb8dede01"
+            ),
+            "inputlayer_lf_sha256": (
+                "b89b8eadbebaebe4f01b1bffaf64513c89d69f5726576f32e5a6bd83f4cbcbcb"
+            ),
+            "head_lf_sha256": (
+                "93331b1bf913857bb6f34deba41dd608c720c862209b6c821dd940f3a7b1282b"
+            ),
+            "dropout_placement": "full_recent_sequence_before_regression_head",
+            "same_process_tolerance": 0.0,
+        },
+    )
+    _require_equal(
+        config,
         "success_gates",
         {
             "full_coverage_required": True,
@@ -211,6 +294,9 @@ def validate_protocol_v09(config: Mapping) -> None:
             "description": "frozen eight-seed classic LSTM ensemble; scoring reference only",
             "median_nse": 0.759225,
             "training_trajectory_reproduction_claimed": False,
+            "recorded_code_commit_prefix": "1f9804e",
+            "resolved_code_commit": "1f9804e359283f1963bcf0aa9ffab213538c16e8",
+            "runs": _LEGACY_REFERENCE_RUNS,
         },
     )
     _require_equal(
