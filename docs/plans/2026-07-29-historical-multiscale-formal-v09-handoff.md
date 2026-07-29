@@ -23,9 +23,10 @@
 1. `docs/plans/2026-07-29-historical-multiscale-formal-v09-protocol.md`
 2. `docs/technical/historical_multiscale_formal_v09_implementation_audit.md`
 3. `docs/technical/historical_multiscale_formal_v09_core_classic_repair.md`
-4. `src/26_historical_band_experts/configs/formal_v09_protocol.json`
-5. `src/26_historical_band_experts/launch_gate_v09.py`
-6. `src/26_historical_band_experts/memory_safety_v09.py`
+4. `docs/technical/historical_multiscale_formal_v09_goal_completion_audit.md`
+5. `src/26_historical_band_experts/configs/formal_v09_protocol.json`
+6. `src/26_historical_band_experts/launch_gate_v09.py`
+7. `src/26_historical_band_experts/memory_safety_v09.py`
 
 协议JSON SHA-256：
 
@@ -97,6 +98,7 @@ docs/plans/2026-07-29-historical-multiscale-formal-v09-handoff.md
 docs/plans/2026-07-29-historical-multiscale-formal-v09-protocol.md
 docs/technical/historical_multiscale_formal_v09_implementation_audit.md
 docs/technical/historical_multiscale_formal_v09_core_classic_repair.md
+docs/technical/historical_multiscale_formal_v09_goal_completion_audit.md
 
 只读确认分支、HEAD、工作区和协议JSON哈希。历史实施提交为
 ce27baaabd2d85ec05229ee93a275147ff020f6c，修复起点为
