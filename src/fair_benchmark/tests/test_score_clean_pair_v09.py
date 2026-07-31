@@ -38,7 +38,7 @@ PATHS = {
     "capacity_control": "predictions/ensembles/B09-CAPACITY_ensemble.csv",
     "challenger": "predictions/ensembles/E09-CONTINUOUS_ensemble.csv",
 }
-PROTOCOL_SHA = "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8"
+PROTOCOL_SHA = "20a37c4dfafebc7e49aec812a6fc27079081def55e78b4942df626e0bbd8bff1"
 
 
 def _sha256(path: Path) -> str:
@@ -332,13 +332,58 @@ def test_ledger_change_during_metric_computation_burns_no_clean_pair_row(tmp_pat
 def test_one_attempt_entry_has_one_existing_scorer_call_and_fail_closed_order():
     source = Path(score_clean_pair_v09.__file__).read_text(encoding="utf-8")
     assert source.count("score_" + "submission(") == 1
-    run_body = source.split("def run_clean_pair_score_once_v09(", 1)[1]
+    run_body = source.split("def _run_clean_pair_score_once_under_lease_v09(", 1)[1]
+    run_body = run_body.split("def run_clean_pair_score_once_v09(", 1)[0]
     consume = run_body.index("consume_clean_pair_score_authorization_v09(")
     draw = run_body.index("draw_holdout_nonce_once_v09(")
     score = run_body.index("report = score_clean_pair_core_v09(")
     persist = run_body.index("_exclusive_atomic_report(")
     assert consume < draw < score < persist
-    assert 'parser.add_argument("--execution-task-id", required=True)' in run_body
+    public_body = source.split("def run_clean_pair_score_once_v09(", 1)[1]
+    assert "with exclusive_high_load_lease_v09() as lease:" in public_body
+    assert 'parser.add_argument("--execution-task-id", required=True)' in public_body
+
+
+def test_score_start_memory_gate_uses_file_evidence_and_commit_headroom(
+    tmp_path,
+    monkeypatch,
+):
+    from fair_benchmark.task_memory_v09 import (
+        HostMemorySnapshot,
+        MemorySafetyError,
+        exclusive_high_load_lease_v09,
+    )
+
+    prediction_paths = {}
+    for role in ("baseline", "capacity_control", "challenger"):
+        path = tmp_path / f"{role}.csv"
+        path.write_bytes(b"x" * 1024)
+        prediction_paths[role] = path
+    answer_path = tmp_path / "answer.parquet"
+    answer_path.write_bytes(b"x" * 1024)
+    snapshot = HostMemorySnapshot(
+        total_bytes=32 * 2**30,
+        available_bytes=20 * 2**30,
+        process_rss_bytes=256 * 2**20,
+        commit_headroom_bytes=1 * 2**30,
+    )
+    monkeypatch.setattr(score_clean_pair_v09, "sample_host_memory", lambda: snapshot)
+    protocol = json.loads(
+        (
+            Path(__file__).resolve().parents[2]
+            / "26_historical_band_experts"
+            / "configs"
+            / "formal_v09_protocol.json"
+        ).read_text(encoding="utf-8")
+    )
+    with exclusive_high_load_lease_v09(lock_path=tmp_path / "v09.lock") as lease:
+        with pytest.raises(MemorySafetyError, match="committed-memory reserve"):
+            score_clean_pair_v09._assert_score_start_memory_safe(
+                policy_config=protocol["memory_safety"],
+                prediction_paths=prediction_paths,
+                answer_path=answer_path,
+                lease=lease,
+            )
 
 
 @pytest.mark.parametrize(

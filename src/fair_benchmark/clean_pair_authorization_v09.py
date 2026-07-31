@@ -57,6 +57,7 @@ _TRUSTED_SOURCE_FILES = (
     "fair_benchmark/clean_pair_authorization_v09.py",
     "fair_benchmark/clean_pair_contract_v09.py",
     "fair_benchmark/postseal_holdout_v09.py",
+    "fair_benchmark/task_memory_v09.py",
     "fair_benchmark/score.py",
     "fair_benchmark/gate.py",
     "fair_benchmark/stats.py",

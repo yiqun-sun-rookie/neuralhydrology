@@ -7,7 +7,14 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from memory_safety_v09 import HostMemorySnapshot, MemorySafetyGate, sample_host_memory
+from memory_safety_v09 import (
+    HostMemorySnapshot,
+    MemorySafetyGate,
+    TaskMemoryLease,
+    build_peak_estimate_v09,
+    exclusive_high_load_lease_v09,
+    sample_host_memory,
+)
 
 
 _COLUMNS = ["basin", "date", "qsim"]
@@ -149,13 +156,14 @@ def validate_exact_prediction_coverage_v09(
     }
 
 
-def compose_seed_mean_v09(
+def _compose_seed_mean_under_lease_v09(
     seed_paths: list[str | Path],
     output_path: str | Path,
     *,
     chunk_rows: int = 50_000,
     gate: MemorySafetyGate | None = None,
     snapshot: HostMemorySnapshot | None = None,
+    lease: TaskMemoryLease,
 ) -> dict:
     """Write the fixed-order eight-seed arithmetic mean with a float64 accumulator."""
     paths = [Path(path) for path in seed_paths]
@@ -180,10 +188,21 @@ def compose_seed_mean_v09(
     if gate is None:
         gate = MemorySafetyGate.from_snapshot(snapshot)
     estimated_chunk_peak = int(chunk_rows) * len(paths) * 256
+    peak_estimate = build_peak_estimate_v09(
+        method="analytical_chunk_working_set_v1",
+        estimated_peak_bytes=estimated_chunk_peak,
+        evidence_fields={
+            "formula": "chunk_rows * seed_count * 256",
+            "chunk_rows": int(chunk_rows),
+            "seed_count": len(paths),
+            "bytes_per_seed_row_upper_bound": 256,
+        },
+    )
     gate.assert_start_safe(
         snapshot,
-        estimated_peak_bytes=estimated_chunk_peak,
-        long_running=False,
+        peak_estimate,
+        long_running=True,
+        lease=lease,
     )
     readers = [
         pd.read_csv(
@@ -242,3 +261,23 @@ def compose_seed_mean_v09(
         "row_count": row_count,
         "output_sha256": _sha256(output_path),
     }
+
+
+def compose_seed_mean_v09(
+    seed_paths: list[str | Path],
+    output_path: str | Path,
+    *,
+    chunk_rows: int = 50_000,
+    gate: MemorySafetyGate | None = None,
+    snapshot: HostMemorySnapshot | None = None,
+) -> dict:
+    """Compose one ensemble while holding the current-user version-09 lease."""
+    with exclusive_high_load_lease_v09() as lease:
+        return _compose_seed_mean_under_lease_v09(
+            seed_paths,
+            output_path,
+            chunk_rows=chunk_rows,
+            gate=gate,
+            snapshot=snapshot,
+            lease=lease,
+        )

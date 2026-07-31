@@ -229,8 +229,9 @@ def test_clean_pair_authorization_consumes_exclusively_once(tmp_path):
 def test_authorization_helpers_bind_trusted_service_tree_and_empty_ledger(tmp_path):
     worktree_src = Path(__file__).resolve().parents[2]
     tree = trusted_source_tree_v09(worktree_src)
-    assert len(tree["files"]) == 12
+    assert len(tree["files"]) == 13
     assert "fair_benchmark/score_clean_pair_v09.py" in tree["files"]
+    assert "fair_benchmark/task_memory_v09.py" in tree["files"]
     assert len(tree["git_head"]) == 40
     assert len(tree["tree_sha256"]) == 64
     probe = trusted_module_import_probe_v09(worktree_src, verify_live_process=True)

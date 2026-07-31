@@ -244,6 +244,7 @@ def _audit(case: dict, **kwargs) -> dict:
         case["ledger"],
         case["trusted_root"],
         available_memory_bytes=20 * 2**30,
+        commit_headroom_bytes=40 * 2**30,
         require_clean_worktree=False,
         require_canonical_paths=False,
         **kwargs,
@@ -273,7 +274,10 @@ def test_preflight_recomputes_all_nonobservational_bindings(tmp_path, monkeypatc
     )
 
 
-@pytest.mark.parametrize("failure", ("bundle", "checkpoint", "low_memory", "existing_consumption"))
+@pytest.mark.parametrize(
+    "failure",
+    ("bundle", "checkpoint", "low_memory", "low_commit", "existing_consumption"),
+)
 def test_preflight_failure_is_not_ready(tmp_path, monkeypatch, failure):
     case = _case(tmp_path)
     monkeypatch.setattr(
@@ -291,12 +295,19 @@ def test_preflight_failure_is_not_ready(tmp_path, monkeypatch, failure):
         Path(payload["final_checkpoints"][0]["path"]).write_bytes(b"changed")
     elif failure == "low_memory":
         kwargs["available_memory_bytes"] = 2**30
+    elif failure == "low_commit":
+        kwargs["commit_headroom_bytes"] = 2**30
     else:
         (case["bundle_path"].parents[1] / "clean_pair_scoring_authorization_consumed.json").write_text(
             "{}",
             encoding="utf-8",
         )
-    if "available_memory_bytes" in kwargs:
+    if set(kwargs) & {"available_memory_bytes", "commit_headroom_bytes"}:
+        memory_kwargs = {
+            "available_memory_bytes": 20 * 2**30,
+            "commit_headroom_bytes": 40 * 2**30,
+        }
+        memory_kwargs.update(kwargs)
         report = preflight.audit_clean_pair_score_preflight_v09(
             case["contract_path"],
             case["bundle_path"],
@@ -306,7 +317,7 @@ def test_preflight_failure_is_not_ready(tmp_path, monkeypatch, failure):
             case["trusted_root"],
             require_clean_worktree=False,
             require_canonical_paths=False,
-            **kwargs,
+            **memory_kwargs,
         )
     else:
         report = _audit(case)

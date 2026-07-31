@@ -5,14 +5,10 @@ import argparse
 from collections.abc import Mapping
 import hashlib
 import json
-import math
 import os
 from pathlib import Path
 import subprocess
 import sys
-
-import psutil
-
 
 IDEA_ROOT = Path(__file__).resolve().parent
 REPO_ROOT = IDEA_ROOT.parents[1]
@@ -34,10 +30,17 @@ from fair_benchmark.clean_pair_contract_v09 import (  # noqa: E402
     load_clean_pair_contract_v09,
 )
 from fair_benchmark.leakage import scan_for_forbidden_access  # noqa: E402
+from fair_benchmark.task_memory_v09 import (  # noqa: E402
+    HostMemorySnapshot,
+    MemorySafetyGate,
+    TaskMemoryLease,
+    build_file_peak_estimate_v09,
+    exclusive_high_load_lease_v09,
+    sample_host_memory,
+)
 
 
 _EXPERIMENT_ID = "S09C-CLEAN-PAIR"
-_GIB = 2**30
 _SELECTION_KEYS = ("candidate_config", "analysis_manifest", "summary", "independent_audit")
 _UPSTREAM_REQUIREMENTS = {
     "input_seal_sha256": {"format": "json", "expected_status": "complete_input_seal"},
@@ -85,6 +88,19 @@ def _sha256(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _safe_child(root: Path, relative_path: object, name: str) -> Path:
+    if not isinstance(relative_path, str):
+        raise ValueError(f"{name} relative path is invalid")
+    relative = Path(relative_path)
+    if relative.is_absolute() or ".." in relative.parts:
+        raise ValueError(f"{name} must be a safe relative path")
+    resolved_root = root.resolve()
+    resolved = (resolved_root / relative).resolve()
+    if not resolved.is_relative_to(resolved_root):
+        raise ValueError(f"{name} escapes its trusted root")
+    return resolved
 
 
 def _load_json(path: Path) -> dict:
@@ -284,7 +300,7 @@ def verify_trusted_basin_identity_v09(
 
 def _verify_repository_frozen_boundary(contract: Mapping) -> dict:
     if contract.get("protocol_sha256") != (
-        "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8"
+        "20a37c4dfafebc7e49aec812a6fc27079081def55e78b4942df626e0bbd8bff1"
     ):
         return {"status": "synthetic_contract_not_applicable"}
     frozen_root = (WORKTREE_SRC / "fair_benchmark" / "frozen").resolve()
@@ -377,7 +393,7 @@ def _verify_canonical_preflight_paths(
     return {name: str(path.resolve()) for name, path in expected.items()}
 
 
-def audit_clean_pair_score_preflight_v09(
+def _audit_clean_pair_score_preflight_under_lease_v09(
     contract_path: str | Path,
     bundle_path: str | Path,
     prediction_seal_path: str | Path,
@@ -386,8 +402,10 @@ def audit_clean_pair_score_preflight_v09(
     trusted_frozen_root: str | Path,
     *,
     available_memory_bytes: int | None = None,
+    commit_headroom_bytes: int | None = None,
     require_clean_worktree: bool = True,
     require_canonical_paths: bool = True,
+    lease: TaskMemoryLease,
 ) -> dict:
     """Recompute every non-observational score binding and return a fail-closed report."""
     errors: list[str] = []
@@ -417,6 +435,7 @@ def audit_clean_pair_score_preflight_v09(
             else {"canonical_path_check_skipped": True}
         )
         protocol_path = IDEA_ROOT / "configs" / "formal_v09_protocol.json"
+        protocol = _load_json(protocol_path)
         contract = load_clean_pair_contract_v09(contract_path, protocol_path=protocol_path)
         bundle = _load_json(bundle_path)
         seal = _load_json(seal_path)
@@ -443,15 +462,47 @@ def audit_clean_pair_score_preflight_v09(
         if ledger["chain_breaks"] or ledger["experiment_id_count"]:
             raise ValueError("ledger chain is broken or the clean-pair experiment already exists")
 
-        total_memory = int(psutil.virtual_memory().total)
-        available = (
-            int(psutil.virtual_memory().available)
-            if available_memory_bytes is None
-            else int(available_memory_bytes)
+        live_snapshot = sample_host_memory()
+        snapshot = HostMemorySnapshot(
+            total_bytes=live_snapshot.total_bytes,
+            available_bytes=(
+                live_snapshot.available_bytes
+                if available_memory_bytes is None
+                else int(available_memory_bytes)
+            ),
+            process_rss_bytes=live_snapshot.process_rss_bytes,
+            commit_headroom_bytes=(
+                live_snapshot.commit_headroom_bytes
+                if commit_headroom_bytes is None
+                else int(commit_headroom_bytes)
+            ),
         )
-        required = max(12 * _GIB, math.ceil(0.40 * total_memory))
-        if available < required:
-            raise ValueError(f"available physical memory below scoring preflight threshold: {available} < {required}")
+        prediction_paths = {
+            role: _safe_child(
+                formal_root,
+                bundle["predictions"][role]["relative_path"],
+                f"{role} prediction",
+            )
+            for role in ("baseline", "capacity_control", "challenger")
+        }
+        answer_path = _safe_child(
+            trusted_root,
+            contract["trusted_frozen_inputs"]["answer_key"]["relative_path"],
+            "trusted answer key",
+        )
+        peak_estimate = build_file_peak_estimate_v09(
+            prediction_paths=prediction_paths,
+            answer_path=answer_path,
+        )
+        memory = MemorySafetyGate.from_snapshot(
+            snapshot,
+            protocol["memory_safety"],
+        ).assert_start_safe(
+            snapshot,
+            peak_estimate,
+            long_running=True,
+            lease=lease,
+        )
 
         output_root = formal_root
         forbidden_outputs = (
@@ -496,15 +547,55 @@ def audit_clean_pair_score_preflight_v09(
             "worktree": worktree,
             "canonical_paths": canonical_paths,
             "memory": {
-                "total_bytes": total_memory,
-                "available_bytes": available,
-                "required_available_bytes": required,
+                "total_bytes": snapshot.total_bytes,
+                "available_bytes": snapshot.available_bytes,
+                "commit_headroom_bytes": snapshot.commit_headroom_bytes,
+                "process_rss_bytes": snapshot.process_rss_bytes,
+                **memory,
             },
             "score_approval_text": render_clean_pair_score_approval_text(bundle["bundle_sha256"]),
         })
     except Exception as exc:  # fail closed and preserve all diagnostics in one report
         errors.append(f"{type(exc).__name__}: {exc}")
     return report
+
+
+def audit_clean_pair_score_preflight_v09(
+    contract_path: str | Path,
+    bundle_path: str | Path,
+    prediction_seal_path: str | Path,
+    source_bundle: str | Path,
+    ledger_path: str | Path,
+    trusted_frozen_root: str | Path,
+    *,
+    available_memory_bytes: int | None = None,
+    commit_headroom_bytes: int | None = None,
+    require_clean_worktree: bool = True,
+    require_canonical_paths: bool = True,
+) -> dict:
+    """Run the full preflight while holding the current-user version-09 lease."""
+    try:
+        with exclusive_high_load_lease_v09() as lease:
+            return _audit_clean_pair_score_preflight_under_lease_v09(
+                contract_path,
+                bundle_path,
+                prediction_seal_path,
+                source_bundle,
+                ledger_path,
+                trusted_frozen_root,
+                available_memory_bytes=available_memory_bytes,
+                commit_headroom_bytes=commit_headroom_bytes,
+                require_clean_worktree=require_clean_worktree,
+                require_canonical_paths=require_canonical_paths,
+                lease=lease,
+            )
+    except Exception as exc:
+        return {
+            "status": "not_ready_for_clean_pair_score_authorization",
+            "answer_content_parsed": False,
+            "official_score_called": False,
+            "errors": [f"{type(exc).__name__}: {exc}"],
+        }
 
 
 def _exclusive_write(path: Path, payload: Mapping) -> None:

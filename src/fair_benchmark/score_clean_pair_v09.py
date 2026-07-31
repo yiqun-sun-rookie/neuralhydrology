@@ -12,7 +12,6 @@ from pathlib import Path
 import sys
 
 import numpy as np
-import psutil
 
 from .clean_pair_authorization_v09 import (
     clean_pair_ledger_snapshot_v09,
@@ -32,6 +31,13 @@ from .metrics import nse, per_basin_score
 from .postseal_holdout_v09 import derive_postseal_holdout_v09
 from .score import score_submission
 from .stats import paired_comparison
+from .task_memory_v09 import (
+    MemorySafetyGate,
+    TaskMemoryLease,
+    build_file_peak_estimate_v09,
+    exclusive_high_load_lease_v09,
+    sample_host_memory,
+)
 from .tracks import Track
 
 
@@ -469,17 +475,33 @@ def _source_bundle_tree_sha256(root: Path) -> str:
     return _canonical_sha256(files)
 
 
-def _assert_score_start_memory_safe() -> dict:
-    memory = psutil.virtual_memory()
-    required = max(12 * 2**30, math.ceil(0.40 * int(memory.total)))
-    if int(memory.available) < required:
-        raise CleanPairScoreError(
-            f"available physical memory below scoring threshold: {memory.available} < {required}"
-        )
+def _assert_score_start_memory_safe(
+    *,
+    policy_config: Mapping,
+    prediction_paths: Mapping[str, Path],
+    answer_path: Path,
+    lease: TaskMemoryLease,
+) -> dict:
+    estimate = build_file_peak_estimate_v09(
+        prediction_paths=prediction_paths,
+        answer_path=answer_path,
+    )
+    snapshot = sample_host_memory()
+    report = MemorySafetyGate.from_snapshot(
+        snapshot,
+        policy_config,
+    ).assert_start_safe(
+        snapshot,
+        estimate,
+        long_running=True,
+        lease=lease,
+    )
     return {
-        "total_bytes": int(memory.total),
-        "available_bytes": int(memory.available),
-        "required_available_bytes": required,
+        "total_bytes": snapshot.total_bytes,
+        "available_bytes": snapshot.available_bytes,
+        "commit_headroom_bytes": snapshot.commit_headroom_bytes,
+        "process_rss_bytes": snapshot.process_rss_bytes,
+        **report,
     }
 
 
@@ -570,7 +592,7 @@ def _validate_authorized_score_paths_v09(
     return {name: str(path) for name, path in expected.items()}
 
 
-def run_clean_pair_score_once_v09(
+def _run_clean_pair_score_once_under_lease_v09(
     *,
     contract_path: str | Path,
     bundle_path: str | Path,
@@ -584,6 +606,7 @@ def run_clean_pair_score_once_v09(
     out_path: str | Path,
     execution_task_id: str,
     timestamp: str | None = None,
+    lease: TaskMemoryLease,
 ) -> dict:
     """Validate, consume, draw, score, and persist exactly one non-retryable attempt."""
     worktree_src = Path(__file__).resolve().parents[1]
@@ -608,6 +631,7 @@ def run_clean_pair_score_once_v09(
             raise CleanPairScoreError(f"one-attempt output already exists: {output}")
 
     protocol_path = contract_path.parent / "formal_v09_protocol.json"
+    protocol = _strict_json_load(protocol_path)
     contract = load_clean_pair_contract_v09(contract_path, protocol_path=protocol_path)
     bundle = _strict_json_load(bundle_path)
     authorization = _strict_json_load(authorization_path)
@@ -651,8 +675,7 @@ def run_clean_pair_score_once_v09(
     if validated_authorization["approval"]["task_id"] == execution_task_id:
         raise CleanPairScoreError("the scoring executor task must differ from the approval task")
 
-    memory = _assert_score_start_memory_safe()
-    prediction_sha256, _ = _prediction_hashes(bundle, prediction_root)
+    prediction_sha256, prediction_paths = _prediction_hashes(bundle, prediction_root)
     if prediction_sha256 != validated_authorization["prediction_sha256"]:
         raise CleanPairScoreError("live prediction hashes differ from the authorization")
     source_tree_sha256 = _source_bundle_tree_sha256(source_bundle)
@@ -668,6 +691,12 @@ def run_clean_pair_score_once_v09(
     basin_ids = _load_basin_ids(basin_path)
     answer_path = _safe_child(trusted_frozen_root, trusted["answer_key"]["relative_path"], "trusted answer key")
     _require_file_hash(answer_path, trusted["answer_key"]["sha256"], "trusted answer key")
+    memory = _assert_score_start_memory_safe(
+        policy_config=protocol["memory_safety"],
+        prediction_paths=prediction_paths,
+        answer_path=answer_path,
+        lease=lease,
+    )
     if clean_pair_ledger_snapshot_v09(ledger_path) != ledger_snapshot:
         raise CleanPairScoreError("ledger changed before authorization consumption")
 
@@ -720,6 +749,40 @@ def run_clean_pair_score_once_v09(
     json.dumps(report, allow_nan=False, sort_keys=True)
     _exclusive_atomic_report(out_path, report)
     return report
+
+
+def run_clean_pair_score_once_v09(
+    *,
+    contract_path: str | Path,
+    bundle_path: str | Path,
+    authorization_path: str | Path,
+    prediction_root: str | Path,
+    source_bundle: str | Path,
+    trusted_frozen_root: str | Path,
+    ledger_path: str | Path,
+    consumption_path: str | Path,
+    holdout_draw_receipt_path: str | Path,
+    out_path: str | Path,
+    execution_task_id: str,
+    timestamp: str | None = None,
+) -> dict:
+    """Hold the global serial lease for the entire one-attempt scoring transaction."""
+    with exclusive_high_load_lease_v09() as lease:
+        return _run_clean_pair_score_once_under_lease_v09(
+            contract_path=contract_path,
+            bundle_path=bundle_path,
+            authorization_path=authorization_path,
+            prediction_root=prediction_root,
+            source_bundle=source_bundle,
+            trusted_frozen_root=trusted_frozen_root,
+            ledger_path=ledger_path,
+            consumption_path=consumption_path,
+            holdout_draw_receipt_path=holdout_draw_receipt_path,
+            out_path=out_path,
+            execution_task_id=execution_task_id,
+            timestamp=timestamp,
+            lease=lease,
+        )
 
 
 def main(argv: list[str] | None = None) -> int:

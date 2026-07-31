@@ -2,6 +2,10 @@
 *.slurm text eol=lf
 *.sh    text eol=lf
 
+# Version-09 protocol hashes bind exact bytes and must remain platform-stable.
+/src/26_historical_band_experts/configs/formal_v09_protocol.json text eol=lf
+/src/26_historical_band_experts/configs/formal_v09_clean_pair_scoring_contract.json text eol=lf
+
 # Preserve sealed experiment bytes and their checksum manifest on every checkout.
 /results/23_hbv_multilead_joint_uncertainty/g3_corrected_forecast_param_switch_v01/** binary
 /results/23_hbv_multilead_joint_uncertainty/g3_corrected_forecast_param_switch_v01.preregistered.json binary

@@ -40,7 +40,12 @@ def test_v09_gather_reads_only_one_chronological_causal_batch():
     time = np.arange(4_000, dtype=np.float32)
     forcing = np.stack([time + 10_000 * feature for feature in range(5)], axis=-1)
     forcing = np.stack((forcing, forcing + np.float32(100_000)), axis=0)
-    snapshot = HostMemorySnapshot(32 * 2**30, 20 * 2**30, 256 * 2**20)
+    snapshot = HostMemorySnapshot(
+        32 * 2**30,
+        20 * 2**30,
+        256 * 2**20,
+        40 * 2**30,
+    )
     windows = gather_causal_windows_v09(
         forcing,
         np.array([0, 1]),

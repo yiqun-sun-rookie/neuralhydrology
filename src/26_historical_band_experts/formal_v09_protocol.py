@@ -21,14 +21,16 @@ _AUTHORIZATION = {
     "official_scoring": False,
 }
 _MEMORY_SAFETY = {
-    "long_job_start_available_gib_min": 12.0,
-    "long_job_start_available_fraction": 0.4,
-    "runtime_reserve_gib_min": 8.0,
-    "runtime_reserve_fraction": 0.25,
-    "process_rss_gib_max": 6.0,
-    "process_rss_fraction_max": 0.2,
-    "single_allocation_mib_max": 512.0,
-    "single_allocation_fraction_max": 0.02,
+    "policy": "task_specific_evidence_bound_v1",
+    "serial_execution_only": True,
+    "estimated_peak_safety_factor": 1.25,
+    "physical_reserve_gib": 2.0,
+    "commit_headroom_reserve_gib": 2.0,
+    "peak_estimate_evidence_required": True,
+    "allowed_long_task_estimate_methods": [
+        "analytical_file_working_set_v1",
+        "analytical_chunk_working_set_v1",
+    ],
     "maximum_batch_size": 256,
     "full_window_materialization_forbidden": True,
 }

@@ -13,7 +13,7 @@ _REPO_ROOT = Path(__file__).resolve().parents[3]
 FROZEN_BASIN_LIST = (
     _REPO_ROOT / "src" / "fair_benchmark" / "frozen" / "track0_forcing_only_basins.txt"
 )
-PROTOCOL_SHA = "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8"
+PROTOCOL_SHA = "20a37c4dfafebc7e49aec812a6fc27079081def55e78b4942df626e0bbd8bff1"
 PREDICTION_SHA = {
     "baseline": "a" * 64,
     "capacity_control": "b" * 64,
@@ -75,10 +75,10 @@ def test_postseal_holdout_matches_frozen_nonobservational_test_vector():
         holdout_count=107,
     )
     assert result["partition_salt_sha256"] == (
-        "ead35266f8e8063dd066339d88404bbd275610c5055250007f9913409b06a5b7"
+        "5a8e4306a5ec61491d9ebfbfd6f05b88bd505ce08ee6d9b21b50cb3031ccb162"
     )
     assert result["holdout_set_sha256"] == (
-        "370543e8b4f06b1ba7da6e7c047b83cd8023dba5e57c7ca6928adb120d3ff9e1"
+        "869a48d9d81ed1a9a86cc2aa5d365e9532a8429a37efdc538ca17aa674366d45"
     )
 
 
