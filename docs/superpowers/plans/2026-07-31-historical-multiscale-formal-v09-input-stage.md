@@ -26,6 +26,13 @@
 - 气象期为`1980-01-01`至`2008-09-30`，每个流域10,501天。
 - 训练目标期为`1999-10-01`至`2008-09-30`，每个流域3,288天；不得输出任何正式评估期流量。
 - 气象文件必须递归查找；不得根据测站编号前两位推导18个水文分区目录。
+- 正式气象根目录固定为
+  `G:/github/pycharm/projects/neuralhydrology/data/camels_us/basin_mean_forcing/maurer`；
+  不得从`data/camels_us`整体、`full/basin_mean_forcing/maurer`或
+  `_maurer_header_fix_backup_20260616`递归选文件。
+- 上述规范根目录中按冻结流域顺序组合的531个源文件SHA-256摘要树固定为
+  `59665c3f34a42b6c6ba7f6dd7696481ef56a9ac0d30eacad116b4fee6bcb83fa`。
+  `full`副本有3个旧文件头，与规范根目录不同，不能作为等价来源。
 - 531个已盘点气象文件均为10,597行，含4行文件头和10,593个逐日记录，覆盖`1980-01-01`至`2008-12-31`。
 - 所需531个原始气象文件合计约`0.309 GiB`；输出气象 float32 数组有效载荷为
   `111,520,620`字节，即`106.35 MiB`，`.npy`文件还包含版本相关的文件头。
@@ -54,6 +61,8 @@
 **Interfaces:**
 - Consumes: 冻结协议文件、协议 SHA-256、动作名称和单独的授权JSON。
 - Produces: `load_stage_authorization_v09(path, *, action) -> dict`。
+- Produces:
+  `consume_stage_authorization_v09(receipt, *, action, consumption_path, launch_evidence) -> dict`。
 - Produces: 扩展后的
   `assert_launch_allowed_v09(config, action, estimated_peak_bytes, snapshot=None, stage_authorization=None) -> dict`。
 
@@ -66,6 +75,14 @@ def _receipt():
         "attempt_id": "input_attempt_01",
         "output_root": "results/26_historical_band_experts/formal_v09/input_attempt_01",
         "maximum_attempts": 1,
+        "data_root": "G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+        "forcing_root": (
+            "G:/github/pycharm/projects/neuralhydrology/data/camels_us/"
+            "basin_mean_forcing/maurer"
+        ),
+        "forcing_source_digest_tree_sha256": (
+            "59665c3f34a42b6c6ba7f6dd7696481ef56a9ac0d30eacad116b4fee6bcb83fa"
+        ),
         "protocol_id": "P09-FORMAL",
         "protocol_sha256": (
             "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8"
@@ -93,6 +110,25 @@ def test_formal_input_action_requires_exact_external_receipt(tmp_path):
             receipt,
             action="formal_target_bundle_generation",
         )
+
+
+def test_formal_input_authorization_is_consumed_exactly_once(tmp_path):
+    from stage_authorization_v09 import consume_stage_authorization_v09
+
+    path = tmp_path / "input_authorization_consumed.json"
+    consume_stage_authorization_v09(
+        _receipt(),
+        action="formal_target_bundle_generation",
+        consumption_path=path,
+        launch_evidence={"preflight_sha256": "a" * 64},
+    )
+    with pytest.raises(FileExistsError):
+        consume_stage_authorization_v09(
+            _receipt(),
+            action="formal_target_bundle_generation",
+            consumption_path=path,
+            launch_evidence={"preflight_sha256": "a" * 64},
+        )
 ```
 
 - [ ] **Step 2: 运行授权测试并确认失败**
@@ -110,6 +146,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from collections.abc import Mapping
 from pathlib import Path
 
@@ -136,6 +173,14 @@ def validate_stage_authorization_v09(
         "attempt_id": "input_attempt_01",
         "output_root": "results/26_historical_band_experts/formal_v09/input_attempt_01",
         "maximum_attempts": 1,
+        "data_root": "G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+        "forcing_root": (
+            "G:/github/pycharm/projects/neuralhydrology/data/camels_us/"
+            "basin_mean_forcing/maurer"
+        ),
+        "forcing_source_digest_tree_sha256": (
+            "59665c3f34a42b6c6ba7f6dd7696481ef56a9ac0d30eacad116b4fee6bcb83fa"
+        ),
         "protocol_id": "P09-FORMAL",
         "protocol_sha256": PROTOCOL_SHA256,
         "action": AUTHORIZED_ACTION,
@@ -165,7 +210,37 @@ def load_stage_authorization_v09(
         receipt,
         action=action,
     )
+
+
+def consume_stage_authorization_v09(
+    receipt: Mapping,
+    *,
+    action: str,
+    consumption_path: str | Path,
+    launch_evidence: Mapping,
+) -> dict:
+    validated = validate_stage_authorization_v09(receipt, action=action)
+    path = Path(consumption_path)
+    record = {
+        "receipt_sha256": hashlib.sha256(
+            json.dumps(validated, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        ).hexdigest(),
+        "action": action,
+        "launch_evidence": dict(launch_evidence),
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("x", encoding="utf-8", newline="\n") as handle:
+        json.dump(record, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+    return record
 ```
+
+正式输入的只读预检不消费授权。只有规范气象根目录、源摘要树、静态属性、目标可信源、磁盘、
+内存、Git和所有输出不存在检查均通过后，构建器才在写第一个正式产物之前独占创建
+`results/26_historical_band_experts/formal_v09/input_authorization_consumed.json`。
+文件一旦出现，无论构建成功、失败、中断或机器重启，原授权都不得重用。
 
 - [ ] **Step 4: 将外部授权接入启动门**
 
@@ -552,6 +627,12 @@ def build_forcing_store_v09(
         Path(data_dir) / "basin_mean_forcing" / "maurer",
         basin_ids,
     )
+    resolved_forcing_root = (
+        Path(data_dir) / "basin_mean_forcing" / "maurer"
+    ).resolve()
+    expected_forcing_root = Path(stage_authorization["forcing_root"]).resolve()
+    if resolved_forcing_root != expected_forcing_root:
+        raise ForcingStoreError("formal Maurer root is not the authorized canonical root")
     building_root.mkdir(parents=True)
     forcing = np.lib.format.open_memmap(
         building_root / "forcing.npy",
@@ -571,6 +652,8 @@ def build_forcing_store_v09(
         source_hashes.append((basin, sha256_file(source_path)))
     forcing.flush()
     digest_tree = digest_pairs_v09(source_hashes)
+    if digest_tree != stage_authorization["forcing_source_digest_tree_sha256"]:
+        raise ForcingStoreError("formal Maurer source digest tree drift")
 
     static_frame = pd.read_csv(statics_file, dtype={"gauge_id": "string"})
     if list(static_frame.columns) != ["gauge_id", *STATIC_COLUMNS]:
@@ -1145,6 +1228,9 @@ git commit -m "Feat: Seal and audit formal v09 inputs"
   "attempt_id": "input_attempt_01",
   "output_root": "results/26_historical_band_experts/formal_v09/input_attempt_01",
   "maximum_attempts": 1,
+  "data_root": "G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+  "forcing_root": "G:/github/pycharm/projects/neuralhydrology/data/camels_us/basin_mean_forcing/maurer",
+  "forcing_source_digest_tree_sha256": "59665c3f34a42b6c6ba7f6dd7696481ef56a9ac0d30eacad116b4fee6bcb83fa",
   "protocol_id": "P09-FORMAL",
   "protocol_sha256": "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8",
   "action": "formal_target_bundle_generation",
@@ -1195,10 +1281,14 @@ Expected: 全部测试通过，准确数量写入输入审计记录。由于代�
 预检必须证明：
 
 - 531/531气象文件唯一存在；
+- 气象文件只来自授权的`basin_mean_forcing/maurer`规范根目录，不能来自`full`副本或头文件备份；
+- 531个规范源文件按冻结顺序的摘要树为
+  `59665c3f34a42b6c6ba7f6dd7696481ef56a9ac0d30eacad116b4fee6bcb83fa`；
 - 每个文件10,597行，日期`1980-01-01`至`2008-12-31`；
 - 冻结静态表531行、28列、531个唯一测站；
 - `G:`盘至少有`1 GiB`可用空间；
 - 最终目录与同父目录的`input_attempt_01.building`均不存在；
+- `input_authorization_consumed.json`不存在；
 - 工作区干净；
 - 协议、授权凭据和代码提交哈希一致；
 - 授权凭据只绑定`input_attempt_01`、固定输出根目录和最多一次尝试；
@@ -1215,6 +1305,10 @@ python src\26_historical_band_experts\build_formal_inputs_v09.py `
   --data-dir G:\github\pycharm\projects\neuralhydrology\data\camels_us `
   --output-root results/26_historical_band_experts/formal_v09/input_attempt_01
 ```
+
+构建器在全部只读预检通过后、创建`input_attempt_01.building`之前，独占写入
+`results/26_historical_band_experts/formal_v09/input_authorization_consumed.json`。
+该文件一旦创建即表示本次授权已消耗。
 
 运行中每个流域和每个50,000行目标块前检查内存。可用内存低于`8 GiB`、进程驻留内存超过
 `6 GiB`、单次分配超过`512 MiB`或任何数据边界失败时立即停止。
