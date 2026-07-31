@@ -18,6 +18,10 @@
   `track0_forcing_only_clean_v09`，评分尝试固定为`S09C-CLEAN-PAIR`。
 - 模型、训练期、Maurer五个命名气象变量、27项静态属性、3,561天最长滞后、270天近期路径、
   30轮和八个随机数均保持正式版本09协议不变。
+- 新合同只允许替代协议中的六项评分治理语义：旧评分标识、旧赛道标识、旧八随机数基准资格、旧赛道
+  冻结清单问题的适用范围，以及两项留出门槛从旧107流域到后封存107流域的集合绑定。门槛数值、
+  协议中的其他科学字段、四项正式动作授权和正式评估目标封存字段均不得覆盖；`S09-SEALED`保持
+  不可授权，新评分仍必须另取一次精确外部授权。
 - 候选选择来源固定为版本08的60流域三随机数内部确认及独立审核
   `complete_multiseed_go`；正式版本09不得重选候选、模型族、随机数、检查点或集合权重。
 - 主比较固定为连续历史候选`E09-CONTINUOUS`减清洁经典近期控制`B09-CLASSIC`。
@@ -82,8 +86,10 @@
 
 **Interfaces:**
 - Consumes: 正式版本09协议配置、现有评分模块字节和主仓库只读冻结文件身份。
-- Produces: `load_clean_pair_contract_v09(path) -> dict`。
-- Produces: `validate_clean_pair_contract_v09(contract) -> dict`。
+- Produces:
+  `load_clean_pair_contract_v09(path, *, protocol_path) -> dict`。
+- Produces:
+  `validate_clean_pair_contract_v09(contract, *, protocol, protocol_sha256) -> dict`。
 - Produces:
   `derive_postseal_holdout_v09(basins, *, protocol_sha256, prediction_sha256, nonce_hex, holdout_count) -> dict`。
 
@@ -117,9 +123,20 @@ from fair_benchmark.clean_pair_contract_v09 import (
 
 def test_clean_pair_contract_freezes_roles_gates_and_one_call():
     contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
-    validated = validate_clean_pair_contract_v09(contract)
+    validated = validate_clean_pair_contract_v09(
+        contract,
+        protocol=PROTOCOL,
+        protocol_sha256=PROTOCOL_SHA256,
+    )
     assert validated["contract_id"] == "S09C-CLEAN-PAIR"
     assert validated["track_id"] == "track0_forcing_only_clean_v09"
+    assert len(
+        validated["protocol_scoring_supersession"]["permitted_semantic_supersessions"]
+    ) == 6
+    assert validated["protocol_scoring_supersession"]["scientific_fields_overridden"] == []
+    assert validated["protocol_scoring_supersession"]["protocol_authorization_overridden"] is False
+    assert validated["protocol_scoring_supersession"]["external_authorization_required"] is True
+    assert validated["protocol_scoring_supersession"]["legacy_route_authorizable"] is False
     assert validated["roles"] == {
         "baseline": "B09-CLASSIC",
         "capacity_control": "B09-CAPACITY",
@@ -146,6 +163,14 @@ def test_clean_pair_contract_freezes_roles_gates_and_one_call():
         (("historical_reference", "qualifying"), True),
         (("postseal_holdout", "holdout_count"), 106),
         (("legacy_nonqualifying_inputs", "secret_holdout"), {}),
+        (
+            ("protocol_scoring_supersession", "scientific_fields_overridden"),
+            ["/forcing_product"],
+        ),
+        (
+            ("protocol_scoring_supersession", "permitted_semantic_supersessions"),
+            ["/track"],
+        ),
     ],
 )
 def test_clean_pair_contract_rejects_scientific_drift(path, value):
@@ -153,7 +178,11 @@ def test_clean_pair_contract_rejects_scientific_drift(path, value):
     changed = copy.deepcopy(contract)
     changed[path[0]][path[1]] = value
     with pytest.raises(CleanPairContractError):
-        validate_clean_pair_contract_v09(changed)
+        validate_clean_pair_contract_v09(
+            changed,
+            protocol=PROTOCOL,
+            protocol_sha256=PROTOCOL_SHA256,
+        )
 ```
 
 - [ ] **Step 3: 运行测试并确认失败**
@@ -177,6 +206,51 @@ Expected: FAIL，原因是可信合同模块和配置尚不存在。
   "track_id": "track0_forcing_only_clean_v09",
   "protocol_id": "P09-FORMAL",
   "protocol_sha256": "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8",
+  "protocol_scoring_supersession": {
+    "scope": "scoring_governance_semantics_only",
+    "permitted_semantic_supersessions": [
+      "/sealed_scoring_id",
+      "/track",
+      "/legacy_reference/description",
+      "/legacy_frozen_manifest_issue/must_be_resolved_before_scoring_authorization",
+      "/success_gates/secret_holdout_median_delta_at_least",
+      "/success_gates/secret_retained_public_fraction_at_least"
+    ],
+    "mapping": {
+      "/sealed_scoring_id": {
+        "protocol_value": "S09-SEALED",
+        "clean_route_value": "S09C-CLEAN-PAIR"
+      },
+      "/track": {
+        "protocol_value": "track0_forcing_only",
+        "clean_route_value": "track0_forcing_only_clean_v09"
+      },
+      "/legacy_reference/description": {
+        "protocol_value": "frozen eight-seed classic LSTM ensemble; scoring reference only",
+        "clean_route_interpretation": "historical_reference_nonqualifying"
+      },
+      "/legacy_frozen_manifest_issue/must_be_resolved_before_scoring_authorization": {
+        "protocol_value": true,
+        "legacy_route_status": "unresolved_and_blocks_S09-SEALED",
+        "clean_route_applicability": "not_applicable_direct_hash_bindings_required"
+      },
+      "/success_gates/secret_holdout_median_delta_at_least": {
+        "protocol_value": 0.005,
+        "clean_route_partition": "postseal_nonce_sha256_rank_v1_first_107",
+        "numeric_value_overridden": false
+      },
+      "/success_gates/secret_retained_public_fraction_at_least": {
+        "protocol_value": 0.5,
+        "clean_route_partition": "postseal_nonce_sha256_rank_v1_first_107",
+        "numeric_value_overridden": false
+      }
+    },
+    "scientific_fields_overridden": [],
+    "protocol_authorization_overridden": false,
+    "external_authorization_required": true,
+    "formal_evaluation_target_access_overridden": false,
+    "legacy_route_authorizable": false
+  },
   "roles": {
     "baseline": "B09-CLASSIC",
     "capacity_control": "B09-CAPACITY",
@@ -280,6 +354,11 @@ Expected: FAIL，原因是可信合同模块和配置尚不存在。
   }
 }
 ```
+
+验证器必须读取实际协议字节并核对协议SHA-256，逐项确认上述六个旧值仍与协议一致。允许的语义替代
+集合必须完整相等，不能用前缀、通配符或父对象替代；任何科学字段覆盖、正式动作授权覆盖、正式评估
+目标访问覆盖、未知指针或把旧路线改为可授权都拒绝。旧冻结清单问题仍阻断`S09-SEALED`，新路线只能
+依靠合同登记的答案、流域、评分模块和三组预测直接SHA-256绑定，不能把旧问题写成已经修复。
 
 可信模块把该对象逐字段与常量比较，拒绝未知键、缺失键、额外模型、门槛漂移、旧基准或旧留出集
 重新取得正式资格，或把同参数量比较用于选择。

@@ -15,6 +15,11 @@
   前，不执行本计划的任何代码或数据生成步骤。
 - 上述无换行 UTF-8 文本的 SHA-256 必须为
   `a9ba69f6ee0fcd17bcfc5313140c98bdd483ad6b9f7a3ef3d7d3bcdfe46a4c7d`。
+- 输入授权收据不得预填历史任务标识。它必须在未来收到上述逐字批准后，从该条批准所在任务的可信
+  元数据写入实际任务标识和批准时间；独立审核必须回查该任务中确实存在批准文本，不能把版本08
+  内部确认或任何更早消息推断为正式输入授权。
+- 输入授权必须绑定批准时的可执行源码树SHA-256。该树只包含正式输入实际运行的Python文件和科学
+  配置，不包含任何阶段授权收据、审计文档或结果目录；这样既避免自引用，又防止批准后替换代码。
 - 冻结协议文件保持
   `src/26_historical_band_experts/configs/formal_v09_protocol.json`，
   SHA-256 保持
@@ -80,11 +85,14 @@
 
 **Interfaces:**
 - Consumes: 冻结协议文件、协议 SHA-256、动作名称和单独的授权JSON。
-- Produces: `load_stage_authorization_v09(path, *, action) -> dict`。
+- Produces:
+  `create_input_authorization_receipt_v09(*, approval_source_thread_id, approval_recorded_at_utc, executable_tree_sha256) -> dict`。
+- Produces:
+  `load_stage_authorization_v09(path, *, action, executable_tree_sha256) -> dict`。
 - Produces:
   `consume_stage_authorization_v09(receipt, *, action, consumption_path, launch_evidence) -> dict`。
 - Produces: 扩展后的
-  `assert_launch_allowed_v09(config, action, estimated_peak_bytes, snapshot=None, stage_authorization=None) -> dict`。
+  `assert_launch_allowed_v09(config, action, estimated_peak_bytes, snapshot=None, stage_authorization=None, executable_tree_sha256=None) -> dict`。
 
 - [ ] **Step 1: 写授权凭据失败测试**
 
@@ -109,11 +117,13 @@ def _receipt():
         ),
         "action": "formal_target_bundle_generation",
         "authorized": True,
-        "approval_source_thread_id": "019fa26d-11a6-7812-86ec-3812823cb9a8",
+        "approval_source_thread_id": "00000000-0000-7000-8000-000000000009",
+        "approval_recorded_at_utc": "2026-08-01T00:00:00Z",
         "approval_text": "批准版本09正式输入生成阶段；不批准训练、正式预测或评分。",
         "approval_text_sha256": (
             "a9ba69f6ee0fcd17bcfc5313140c98bdd483ad6b9f7a3ef3d7d3bcdfe46a4c7d"
         ),
+        "executable_tree_sha256": "e" * 64,
         "training_authorized": False,
         "formal_prediction_generation_authorized": False,
         "official_scoring_authorized": False,
@@ -129,6 +139,28 @@ def test_formal_input_action_requires_exact_external_receipt(tmp_path):
         validate_stage_authorization_v09(
             receipt,
             action="formal_target_bundle_generation",
+            executable_tree_sha256="e" * 64,
+        )
+
+
+def test_formal_input_authorization_binds_actual_source_and_executable_tree():
+    from stage_authorization_v09 import StageAuthorizationError, validate_stage_authorization_v09
+
+    receipt = _receipt()
+    validated = validate_stage_authorization_v09(
+        receipt,
+        action="formal_target_bundle_generation",
+        executable_tree_sha256="e" * 64,
+    )
+    assert validated["approval_source_thread_id"] == (
+        "00000000-0000-7000-8000-000000000009"
+    )
+    changed = dict(receipt, executable_tree_sha256="f" * 64)
+    with pytest.raises(StageAuthorizationError, match="executable"):
+        validate_stage_authorization_v09(
+            changed,
+            action="formal_target_bundle_generation",
+            executable_tree_sha256="e" * 64,
         )
 
 
@@ -140,14 +172,20 @@ def test_formal_input_authorization_is_consumed_exactly_once(tmp_path):
         _receipt(),
         action="formal_target_bundle_generation",
         consumption_path=path,
-        launch_evidence={"preflight_sha256": "a" * 64},
+        launch_evidence={
+            "preflight_sha256": "a" * 64,
+            "executable_tree_sha256": "e" * 64,
+        },
     )
     with pytest.raises(FileExistsError):
         consume_stage_authorization_v09(
             _receipt(),
             action="formal_target_bundle_generation",
             consumption_path=path,
-            launch_evidence={"preflight_sha256": "a" * 64},
+            launch_evidence={
+                "preflight_sha256": "a" * 64,
+                "executable_tree_sha256": "e" * 64,
+            },
         )
 ```
 
@@ -167,7 +205,9 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 from collections.abc import Mapping
+from datetime import datetime
 from pathlib import Path
 
 
@@ -175,6 +215,10 @@ APPROVAL_TEXT = "批准版本09正式输入生成阶段；不批准训练、正�
 APPROVAL_SHA256 = "a9ba69f6ee0fcd17bcfc5313140c98bdd483ad6b9f7a3ef3d7d3bcdfe46a4c7d"
 PROTOCOL_SHA256 = "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8"
 AUTHORIZED_ACTION = "formal_target_bundle_generation"
+THREAD_ID_PATTERN = re.compile(
+    r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+)
+SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 
 
 class StageAuthorizationError(RuntimeError):
@@ -185,10 +229,11 @@ def validate_stage_authorization_v09(
     receipt: Mapping,
     *,
     action: str,
+    executable_tree_sha256: str,
 ) -> dict:
     if action != AUTHORIZED_ACTION:
         raise StageAuthorizationError(f"stage authorization does not allow action {action}")
-    expected = {
+    fixed_expected = {
         "receipt_id": "A09-INPUT-01",
         "attempt_id": "input_attempt_01",
         "output_root": "results/26_historical_band_experts/formal_v09/input_attempt_01",
@@ -205,15 +250,35 @@ def validate_stage_authorization_v09(
         "protocol_sha256": PROTOCOL_SHA256,
         "action": AUTHORIZED_ACTION,
         "authorized": True,
-        "approval_source_thread_id": "019fa26d-11a6-7812-86ec-3812823cb9a8",
         "approval_text": APPROVAL_TEXT,
         "approval_text_sha256": APPROVAL_SHA256,
         "training_authorized": False,
         "formal_prediction_generation_authorized": False,
         "official_scoring_authorized": False,
     }
-    if dict(receipt) != expected:
+    dynamic_keys = {
+        "approval_source_thread_id",
+        "approval_recorded_at_utc",
+        "executable_tree_sha256",
+    }
+    if set(receipt) != set(fixed_expected) | dynamic_keys:
         raise StageAuthorizationError("stage authorization receipt does not match the exact approved action")
+    if any(receipt[key] != value for key, value in fixed_expected.items()):
+        raise StageAuthorizationError("stage authorization receipt does not match the exact approved action")
+    if not THREAD_ID_PATTERN.fullmatch(str(receipt["approval_source_thread_id"])):
+        raise StageAuthorizationError("approval source thread id is malformed")
+    try:
+        recorded_at = datetime.fromisoformat(
+            str(receipt["approval_recorded_at_utc"]).replace("Z", "+00:00")
+        )
+    except ValueError as exc:
+        raise StageAuthorizationError("approval timestamp is malformed") from exc
+    if recorded_at.tzinfo is None:
+        raise StageAuthorizationError("approval timestamp must include timezone")
+    if not SHA256_PATTERN.fullmatch(str(executable_tree_sha256)):
+        raise StageAuthorizationError("current executable tree SHA-256 is malformed")
+    if receipt["executable_tree_sha256"] != executable_tree_sha256:
+        raise StageAuthorizationError("authorized executable tree SHA-256 drift")
     actual_text_hash = hashlib.sha256(APPROVAL_TEXT.encode("utf-8")).hexdigest()
     if actual_text_hash != APPROVAL_SHA256:
         raise StageAuthorizationError("approval text SHA-256 drift")
@@ -224,11 +289,13 @@ def load_stage_authorization_v09(
     path: str | Path,
     *,
     action: str,
+    executable_tree_sha256: str,
 ) -> dict:
     receipt = json.loads(Path(path).read_text(encoding="utf-8"))
     return validate_stage_authorization_v09(
         receipt,
         action=action,
+        executable_tree_sha256=executable_tree_sha256,
     )
 
 
@@ -239,7 +306,11 @@ def consume_stage_authorization_v09(
     consumption_path: str | Path,
     launch_evidence: Mapping,
 ) -> dict:
-    validated = validate_stage_authorization_v09(receipt, action=action)
+    validated = validate_stage_authorization_v09(
+        receipt,
+        action=action,
+        executable_tree_sha256=launch_evidence["executable_tree_sha256"],
+    )
     path = Path(consumption_path)
     record = {
         "receipt_sha256": hashlib.sha256(
@@ -258,7 +329,7 @@ def consume_stage_authorization_v09(
 ```
 
 正式输入的只读预检不消费授权。只有规范气象根目录、源摘要树、静态属性、目标可信源、磁盘、
-内存、Git和所有输出不存在检查均通过后，构建器才在写第一个正式产物之前独占创建
+内存、Git、可执行源码树和所有输出不存在检查均通过后，构建器才在写第一个正式产物之前独占创建
 `results/26_historical_band_experts/formal_v09/input_authorization_consumed.json`。
 文件一旦出现，无论构建成功、失败、中断或机器重启，原授权都不得重用。
 
@@ -273,12 +344,14 @@ if config["authorization"].get(authorization_key) is not True:
     validate_stage_authorization_v09(
         stage_authorization,
         action=action,
+        executable_tree_sha256=executable_tree_sha256,
     )
 ```
 
 `synthetic_test`继续使用协议内授权；四项正式动作没有外部凭据时继续拒绝。输入凭据只允许
 `formal_target_bundle_generation`，不能授权训练、预测或评分。真正构建器还必须对传入协议文件
-执行`sha256_file(protocol_path) == PROTOCOL_SHA256`，不能只信反序列化后的协议内容。
+执行`sha256_file(protocol_path) == PROTOCOL_SHA256`，并对授权收据登记的可执行源码树重新计算
+SHA-256；不能只信反序列化后的协议内容或Git提交。
 
 - [ ] **Step 5: 运行授权与启动门测试**
 
@@ -643,6 +716,7 @@ def build_forcing_store_v09(
     protocol: Mapping,
     protocol_path: str | Path,
     stage_authorization: Mapping,
+    executable_tree_sha256: str,
     basin_file: str | Path,
     data_dir: str | Path,
     statics_file: str | Path,
@@ -663,6 +737,7 @@ def build_forcing_store_v09(
         estimated_peak_bytes=256 * 2**20,
         snapshot=snapshot,
         stage_authorization=stage_authorization,
+        executable_tree_sha256=executable_tree_sha256,
     )
     gate = MemorySafetyGate.from_snapshot(snapshot)
     paths = discover_maurer_files_v09(
@@ -1534,29 +1609,16 @@ git commit -m "Feat: Seal and audit formal v09 inputs"
 
 - [ ] **Step 1: 创建精确授权凭据**
 
-只有收到Global Constraints中的逐字直接批准后，创建：
+只有收到Global Constraints中的逐字直接批准后，调用
+`create_input_authorization_receipt_v09()`创建收据。固定字段必须与Task 1的
+`fixed_expected`逐项相同；三个动态字段只能来自批准发生后的可信事实：
 
-```json
-{
-  "receipt_id": "A09-INPUT-01",
-  "attempt_id": "input_attempt_01",
-  "output_root": "results/26_historical_band_experts/formal_v09/input_attempt_01",
-  "maximum_attempts": 1,
-  "data_root": "G:/github/pycharm/projects/neuralhydrology/data/camels_us",
-  "forcing_root": "G:/github/pycharm/projects/neuralhydrology/data/camels_us/basin_mean_forcing/maurer",
-  "forcing_source_digest_tree_sha256": "59665c3f34a42b6c6ba7f6dd7696481ef56a9ac0d30eacad116b4fee6bcb83fa",
-  "protocol_id": "P09-FORMAL",
-  "protocol_sha256": "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8",
-  "action": "formal_target_bundle_generation",
-  "authorized": true,
-  "approval_source_thread_id": "019fa26d-11a6-7812-86ec-3812823cb9a8",
-  "approval_text": "批准版本09正式输入生成阶段；不批准训练、正式预测或评分。",
-  "approval_text_sha256": "a9ba69f6ee0fcd17bcfc5313140c98bdd483ad6b9f7a3ef3d7d3bcdfe46a4c7d",
-  "training_authorized": false,
-  "formal_prediction_generation_authorized": false,
-  "official_scoring_authorized": false
-}
-```
+- `approval_source_thread_id`：该条直接批准实际所在任务的标识；
+- `approval_recorded_at_utc`：该条批准被接收的带时区协调世界时；
+- `executable_tree_sha256`：批准后、提交收据前重算的正式输入可执行源码树SHA-256。
+
+禁止复制测试中的合成任务标识，禁止使用历史内部确认任务作为默认值，也禁止在用户直接批准前创建
+任何生产收据。独立审核必须把任务标识、时间和逐字批准文本回查到实际任务记录，并重算可执行源码树。
 
 - [ ] **Step 2: 新增输入登记行**
 
@@ -1606,7 +1668,7 @@ Expected: 全部测试通过，准确数量写入输入审计记录。由于代�
 - 最终目录与同父目录的`input_attempt_01.building`均不存在；
 - `input_authorization_consumed.json`不存在；
 - 工作区干净；
-- 协议、授权凭据和代码提交哈希一致；
+- 协议、授权凭据、代码提交和可执行源码树哈希一致；
 - 授权凭据只绑定`input_attempt_01`、固定输出根目录和最多一次尝试；
 - 可用物理内存至少`12.68 GiB`。
 
