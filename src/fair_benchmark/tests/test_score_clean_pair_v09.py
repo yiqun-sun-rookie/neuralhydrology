@@ -38,7 +38,7 @@ PATHS = {
     "capacity_control": "predictions/ensembles/B09-CAPACITY_ensemble.csv",
     "challenger": "predictions/ensembles/E09-CONTINUOUS_ensemble.csv",
 }
-PROTOCOL_SHA = "20a37c4dfafebc7e49aec812a6fc27079081def55e78b4942df626e0bbd8bff1"
+PROTOCOL_SHA = "2a018755422eb102259eba11558bc190ba11034d3390f64df7bbc54e8756a0f7"
 
 
 def _sha256(path: Path) -> str:

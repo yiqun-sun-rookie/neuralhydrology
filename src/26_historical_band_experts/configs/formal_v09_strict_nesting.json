@@ -2,7 +2,7 @@
   "experiment_id": "R09-NEST",
   "type": "reproduction",
   "protocol_file": "configs/formal_v09_protocol.json",
-  "protocol_sha256": "20a37c4dfafebc7e49aec812a6fc27079081def55e78b4942df626e0bbd8bff1",
+  "protocol_sha256": "2a018755422eb102259eba11558bc190ba11034d3390f64df7bbc54e8756a0f7",
   "reference_variant": "classic_lstm_256_clean",
   "candidate_variant": "nested_history_disabled",
   "seeds": [

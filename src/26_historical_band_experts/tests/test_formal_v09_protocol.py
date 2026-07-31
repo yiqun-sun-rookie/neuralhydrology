@@ -100,6 +100,29 @@ def test_formal_v09_protocol_freezes_geometry_schedule_and_authorization():
         "formal_prediction_generation": False,
         "official_scoring": False,
     }
+    resources = config["formal_action_resources"]
+    assert resources["target_bundle"]["writer"] == "stream_one_basin_v1"
+    assert resources["target_bundle"]["output_path"] == (
+        "results/26_historical_band_experts/formal_v09/inputs/training_targets.csv"
+    )
+    assert resources["target_bundle"]["data_root"] == "data/camels_us"
+    assert resources["target_bundle"]["source_hashes"] == (
+        "per_basin_maurer_and_streamflow_sha256_before_after_v1"
+    )
+    assert resources["target_bundle"]["evaluation_observation_handling"] == (
+        "parse_dates_only_skip_qobs_outside_training_validation_v1"
+    )
+    assert resources["target_bundle"]["source_tree_manifest"] == "git_clean_exact_files_v1"
+    assert resources["target_bundle"]["reparse_points_forbidden"] is True
+    assert resources["training"]["batch_size"] == 256
+    assert resources["training"]["accelerator_reserve_gib"] == 1.0
+    assert resources["prediction"]["batch_size"] == 256
+    assert resources["prediction"]["accelerator_reserve_gib"] == 1.0
+    assert config["memory_safety"]["allowed_long_task_estimate_methods"][-3:] == [
+        "analytical_target_bundle_working_set_v1",
+        "analytical_training_working_set_v1",
+        "analytical_prediction_working_set_v1",
+    ]
 
 
 @pytest.mark.parametrize(

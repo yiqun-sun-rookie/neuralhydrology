@@ -300,7 +300,7 @@ def verify_trusted_basin_identity_v09(
 
 def _verify_repository_frozen_boundary(contract: Mapping) -> dict:
     if contract.get("protocol_sha256") != (
-        "20a37c4dfafebc7e49aec812a6fc27079081def55e78b4942df626e0bbd8bff1"
+        "2a018755422eb102259eba11558bc190ba11034d3390f64df7bbc54e8756a0f7"
     ):
         return {"status": "synthetic_contract_not_applicable"}
     frozen_root = (WORKTREE_SRC / "fair_benchmark" / "frozen").resolve()

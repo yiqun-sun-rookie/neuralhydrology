@@ -14,6 +14,7 @@ if str(WORKTREE_SRC) not in sys.path:
     sys.path.insert(0, str(WORKTREE_SRC))
 
 from formal_v09_protocol import load_protocol_v09, validate_protocol_v09
+from formal_action_resources_v09 import validate_formal_action_peak_estimate_v09
 from memory_safety_v09 import (
     HostMemorySnapshot,
     MemorySafetyError,
@@ -33,9 +34,9 @@ _ACTION_AUTHORIZATION = {
 }
 _ACTION_PEAK_METHODS = {
     "synthetic_test": {"synthetic_bound_v1"},
-    "formal_target_bundle_generation": set(),
-    "training": set(),
-    "formal_prediction_generation": set(),
+    "formal_target_bundle_generation": {"analytical_target_bundle_working_set_v1"},
+    "training": {"analytical_training_working_set_v1"},
+    "formal_prediction_generation": {"analytical_prediction_working_set_v1"},
     "official_scoring": {"analytical_file_working_set_v1"},
 }
 
@@ -49,6 +50,7 @@ def assert_launch_allowed_v09(
     *,
     action: str,
     peak_estimate: Mapping,
+    variant: str | None = None,
     snapshot: HostMemorySnapshot | None = None,
     lease: TaskMemoryLease | None = None,
 ) -> dict:
@@ -70,6 +72,19 @@ def assert_launch_allowed_v09(
         raise MemorySafetyError(
             f"peak estimate method is not registered for action {action}"
         )
+    if action in {
+        "formal_target_bundle_generation",
+        "training",
+        "formal_prediction_generation",
+    }:
+        validate_formal_action_peak_estimate_v09(
+            config,
+            action,
+            peak_estimate,
+            variant=variant,
+        )
+    elif variant is not None:
+        raise ValueError(f"model variant is not accepted for action {action}")
     if snapshot is None:
         snapshot = sample_host_memory()
     gate = MemorySafetyGate.from_snapshot(snapshot, config["memory_safety"])
@@ -98,6 +113,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--action", choices=tuple(_ACTION_AUTHORIZATION), required=True)
+    parser.add_argument(
+        "--variant",
+        choices=(
+            "classic_lstm_256_clean",
+            "classic_lstm_369_capacity",
+            "continuous_multiscale_history",
+        ),
+    )
     parser.add_argument("--peak-estimate-evidence", type=Path, required=True)
     args = parser.parse_args()
     config = load_protocol_v09(args.config)
@@ -107,6 +130,7 @@ def main() -> None:
             config,
             action=args.action,
             peak_estimate=peak_estimate,
+            variant=args.variant,
         )
     else:
         with exclusive_high_load_lease_v09() as lease:
@@ -114,6 +138,7 @@ def main() -> None:
                 config,
                 action=args.action,
                 peak_estimate=peak_estimate,
+                variant=args.variant,
                 lease=lease,
             )
     print(json.dumps(report, indent=2, sort_keys=True))

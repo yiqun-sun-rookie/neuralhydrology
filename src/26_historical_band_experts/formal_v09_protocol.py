@@ -30,9 +30,73 @@ _MEMORY_SAFETY = {
     "allowed_long_task_estimate_methods": [
         "analytical_file_working_set_v1",
         "analytical_chunk_working_set_v1",
+        "analytical_target_bundle_working_set_v1",
+        "analytical_training_working_set_v1",
+        "analytical_prediction_working_set_v1",
     ],
     "maximum_batch_size": 256,
     "full_window_materialization_forbidden": True,
+}
+_FORMAL_ACTION_RESOURCES = {
+    "schema": "formal_action_resources_v1",
+    "target_bundle": {
+        "estimator_method": "analytical_target_bundle_working_set_v1",
+        "writer": "stream_one_basin_v1",
+        "output_path": (
+            "results/26_historical_band_experts/formal_v09/inputs/"
+            "training_targets.csv"
+        ),
+        "manifest_path": (
+            "results/26_historical_band_experts/formal_v09/inputs/"
+            "training_targets.manifest.json"
+        ),
+        "data_root": "data/camels_us",
+        "source_hashes": "per_basin_maurer_and_streamflow_sha256_before_after_v1",
+        "evaluation_observation_handling": (
+            "parse_dates_only_skip_qobs_outside_training_validation_v1"
+        ),
+        "source_tree_manifest": "git_clean_exact_files_v1",
+        "reparse_points_forbidden": True,
+        "fixed_overhead_mib": 384,
+        "source_rows_per_basin": 10_501,
+        "source_row_bytes_upper_bound": 1_024,
+        "target_rows_per_basin": 3_288,
+        "target_row_bytes_upper_bound": 512,
+        "serialization_buffer_mib": 64,
+    },
+    "training": {
+        "estimator_method": "analytical_training_working_set_v1",
+        "batch_size": 256,
+        "host_fixed_overhead_mib": 768,
+        "forcing_copy_count": 4,
+        "target_copy_count": 3,
+        "static_copy_count": 4,
+        "window_copy_count": 6,
+        "parameter_bytes_upper_bound": 32,
+        "accelerator_fixed_overhead_mib": 512,
+        "accelerator_input_copy_count": 2,
+        "accelerator_activation_multiplier": 24,
+        "accelerator_parameter_bytes_upper_bound": 24,
+        "accelerator_safety_factor": 1.25,
+        "accelerator_reserve_gib": 1.0,
+    },
+    "prediction": {
+        "estimator_method": "analytical_prediction_working_set_v1",
+        "batch_size": 256,
+        "host_fixed_overhead_mib": 512,
+        "forcing_copy_count": 3,
+        "static_copy_count": 2,
+        "window_copy_count": 4,
+        "prediction_row_bytes_upper_bound": 256,
+        "prediction_chunk_rows": 50_000,
+        "parameter_bytes_upper_bound": 8,
+        "accelerator_fixed_overhead_mib": 256,
+        "accelerator_input_copy_count": 2,
+        "accelerator_activation_multiplier": 8,
+        "accelerator_parameter_bytes_upper_bound": 8,
+        "accelerator_safety_factor": 1.25,
+        "accelerator_reserve_gib": 1.0,
+    },
 }
 _LEGACY_REFERENCE_RUNS = [
     {
@@ -288,6 +352,7 @@ def validate_protocol_v09(config: Mapping) -> None:
         },
     )
     _require_equal(config, "memory_safety", _MEMORY_SAFETY)
+    _require_equal(config, "formal_action_resources", _FORMAL_ACTION_RESOURCES)
     _require_equal(config, "authorization", _AUTHORIZATION)
     _require_equal(
         config,

@@ -120,3 +120,25 @@ def test_launch_gate_direct_cli_help_is_importable():
 
     assert completed.returncode == 0
     assert "--peak-estimate-evidence" in completed.stdout
+    assert "--variant" in completed.stdout
+
+
+def test_formal_action_methods_are_registered_but_authorization_stays_closed():
+    from formal_action_resources_v09 import build_formal_action_peak_estimate_v09
+    from launch_gate_v09 import LaunchAuthorizationError, assert_launch_allowed_v09
+    from memory_safety_v09 import HostMemorySnapshot
+
+    config = _config()
+    estimate = build_formal_action_peak_estimate_v09(
+        config,
+        "formal_target_bundle_generation",
+    )
+    snapshot = HostMemorySnapshot(32 * GIB, 24 * GIB, 256 * 2**20, 40 * GIB)
+
+    with pytest.raises(LaunchAuthorizationError, match="not authorized"):
+        assert_launch_allowed_v09(
+            config,
+            action="formal_target_bundle_generation",
+            peak_estimate=estimate,
+            snapshot=snapshot,
+        )

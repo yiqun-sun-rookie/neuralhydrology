@@ -24,6 +24,9 @@ _HEX64 = re.compile(r"^[0-9a-f]{64}$")
 _ESTIMATE_METHODS = {
     "analytical_file_working_set_v1",
     "analytical_chunk_working_set_v1",
+    "analytical_target_bundle_working_set_v1",
+    "analytical_training_working_set_v1",
+    "analytical_prediction_working_set_v1",
     "synthetic_bound_v1",
 }
 _GLOBAL_LOCK_PATH = (
@@ -107,6 +110,9 @@ class MemorySafetyPolicy:
                 "allowed_long_task_estimate_methods": [
                     "analytical_file_working_set_v1",
                     "analytical_chunk_working_set_v1",
+                    "analytical_target_bundle_working_set_v1",
+                    "analytical_training_working_set_v1",
+                    "analytical_prediction_working_set_v1",
                 ],
                 "maximum_batch_size": 256,
                 "full_window_materialization_forbidden": True,
@@ -121,6 +127,9 @@ class MemorySafetyPolicy:
         expected_methods = (
             "analytical_file_working_set_v1",
             "analytical_chunk_working_set_v1",
+            "analytical_target_bundle_working_set_v1",
+            "analytical_training_working_set_v1",
+            "analytical_prediction_working_set_v1",
         )
         if allowed_methods != expected_methods:
             raise ValueError("allowed long-task peak-estimate methods drift")
@@ -273,6 +282,20 @@ def validate_peak_estimate_v09(
         _validate_file_peak_evidence_v09(evidence, estimated_peak_bytes)
     elif method == "analytical_chunk_working_set_v1":
         _validate_chunk_peak_evidence_v09(evidence, estimated_peak_bytes)
+    elif method == "analytical_target_bundle_working_set_v1":
+        _validate_target_bundle_peak_evidence_v09(evidence, estimated_peak_bytes)
+    elif method == "analytical_training_working_set_v1":
+        _validate_model_action_peak_evidence_v09(
+            evidence,
+            estimated_peak_bytes,
+            action="training",
+        )
+    elif method == "analytical_prediction_working_set_v1":
+        _validate_model_action_peak_evidence_v09(
+            evidence,
+            estimated_peak_bytes,
+            action="formal_prediction_generation",
+        )
     if long_running and method == "synthetic_bound_v1":
         raise MemorySafetyError("synthetic bounds cannot authorize a long-running task")
     return {
@@ -379,6 +402,212 @@ def _validate_chunk_peak_evidence_v09(
         raise MemorySafetyError("analytical chunk byte bound drift")
     if chunk_rows * seed_count * 256 != estimated_peak_bytes:
         raise MemorySafetyError("analytical chunk peak estimate does not match its dimensions")
+
+
+def _validate_target_bundle_peak_evidence_v09(
+    evidence: Mapping,
+    estimated_peak_bytes: int,
+) -> None:
+    expected_keys = {
+        "method",
+        "estimated_peak_bytes",
+        "protocol_canonical_sha256",
+        "action",
+        "formula",
+        "writer",
+        "fixed_overhead_bytes",
+        "source_rows_per_basin",
+        "source_row_bytes_upper_bound",
+        "target_rows_per_basin",
+        "target_row_bytes_upper_bound",
+        "serialization_buffer_bytes",
+    }
+    if set(evidence) != expected_keys:
+        raise MemorySafetyError("analytical target-bundle evidence schema is invalid")
+    if evidence.get("action") != "formal_target_bundle_generation":
+        raise MemorySafetyError("analytical target-bundle action drift")
+    if evidence.get("writer") != "stream_one_basin_v1":
+        raise MemorySafetyError("analytical target-bundle writer drift")
+    if evidence.get("formula") != (
+        "fixed_overhead_bytes + source_rows_per_basin*source_row_bytes_upper_bound "
+        "+ target_rows_per_basin*target_row_bytes_upper_bound + serialization_buffer_bytes"
+    ):
+        raise MemorySafetyError("analytical target-bundle formula drift")
+    _require_hex64_evidence(evidence.get("protocol_canonical_sha256"), "protocol content")
+    values = {
+        key: _require_plain_nonnegative_int(evidence.get(key), field_name=key)
+        for key in (
+            "fixed_overhead_bytes",
+            "source_rows_per_basin",
+            "source_row_bytes_upper_bound",
+            "target_rows_per_basin",
+            "target_row_bytes_upper_bound",
+            "serialization_buffer_bytes",
+        )
+    }
+    if any(values[key] == 0 for key in values):
+        raise MemorySafetyError("analytical target-bundle dimensions must be positive")
+    recomputed = (
+        values["fixed_overhead_bytes"]
+        + values["source_rows_per_basin"] * values["source_row_bytes_upper_bound"]
+        + values["target_rows_per_basin"] * values["target_row_bytes_upper_bound"]
+        + values["serialization_buffer_bytes"]
+    )
+    if recomputed != estimated_peak_bytes:
+        raise MemorySafetyError("analytical target-bundle peak does not match its dimensions")
+
+
+def _require_hex64_evidence(value: object, label: str) -> str:
+    if not isinstance(value, str) or _HEX64.fullmatch(value) is None:
+        raise MemorySafetyError(f"{label} SHA-256 is invalid")
+    return value
+
+
+def _validate_model_action_peak_evidence_v09(
+    evidence: Mapping,
+    estimated_peak_bytes: int,
+    *,
+    action: str,
+) -> None:
+    common_keys = {
+        "method",
+        "estimated_peak_bytes",
+        "protocol_canonical_sha256",
+        "action",
+        "variant",
+        "formula",
+        "accelerator_formula",
+        "host_fixed_overhead_bytes",
+        "forcing_rows",
+        "dynamic_input_count",
+        "float_bytes",
+        "forcing_copy_count",
+        "basin_count",
+        "static_attribute_count",
+        "static_copy_count",
+        "batch_size",
+        "causal_window_days",
+        "window_copy_count",
+        "parameter_count",
+        "parameter_bytes_upper_bound",
+        "recent_steps",
+        "recent_hidden_size",
+        "history_steps",
+        "history_hidden_size",
+        "accelerator_fixed_overhead_bytes",
+        "accelerator_input_copy_count",
+        "accelerator_activation_multiplier",
+        "accelerator_parameter_bytes_upper_bound",
+        "accelerator_estimated_peak_bytes",
+    }
+    training_only = {"target_copy_count"}
+    prediction_only = {
+        "prediction_rows",
+        "prediction_chunk_rows",
+        "prediction_row_bytes_upper_bound",
+    }
+    expected_keys = common_keys | (training_only if action == "training" else prediction_only)
+    if set(evidence) != expected_keys:
+        raise MemorySafetyError(f"analytical {action} evidence schema is invalid")
+    if evidence.get("action") != action:
+        raise MemorySafetyError(f"analytical {action} action drift")
+    _require_hex64_evidence(evidence.get("protocol_canonical_sha256"), "protocol content")
+    variant = evidence.get("variant")
+    if variant not in {
+        "classic_lstm_256_clean",
+        "classic_lstm_369_capacity",
+        "continuous_multiscale_history",
+    }:
+        raise MemorySafetyError(f"analytical {action} variant is invalid")
+    integer_keys = expected_keys - {
+        "method",
+        "protocol_canonical_sha256",
+        "action",
+        "variant",
+        "formula",
+        "accelerator_formula",
+    }
+    values = {
+        key: _require_plain_nonnegative_int(evidence.get(key), field_name=key)
+        for key in integer_keys
+    }
+    if any(values[key] == 0 for key in integer_keys - {"history_steps", "history_hidden_size"}):
+        raise MemorySafetyError(f"analytical {action} dimensions must be positive")
+    if (values["history_steps"] == 0) != (values["history_hidden_size"] == 0):
+        raise MemorySafetyError(f"analytical {action} history geometry is inconsistent")
+
+    if action == "training":
+        expected_formula = (
+            "host_fixed_overhead_bytes + forcing_bytes*forcing_copy_count + "
+            "target_bytes*target_copy_count + static_bytes*static_copy_count + "
+            "window_bytes*window_copy_count + parameter_count*parameter_bytes_upper_bound"
+        )
+    else:
+        expected_formula = (
+            "host_fixed_overhead_bytes + forcing_bytes*forcing_copy_count + "
+            "static_bytes*static_copy_count + window_bytes*window_copy_count + "
+            "prediction_chunk_rows*prediction_row_bytes_upper_bound + "
+            "parameter_count*parameter_bytes_upper_bound"
+        )
+    if evidence.get("formula") != expected_formula:
+        raise MemorySafetyError(f"analytical {action} formula drift")
+    expected_accelerator_formula = (
+        "accelerator_fixed_overhead_bytes + window_bytes*accelerator_input_copy_count + "
+        "state_elements*float_bytes*accelerator_activation_multiplier + "
+        "parameter_count*accelerator_parameter_bytes_upper_bound"
+    )
+    if evidence.get("accelerator_formula") != expected_accelerator_formula:
+        raise MemorySafetyError(f"analytical {action} accelerator formula drift")
+
+    forcing_bytes = (
+        values["forcing_rows"] * values["dynamic_input_count"] * values["float_bytes"]
+    )
+    static_bytes = (
+        values["basin_count"]
+        * values["static_attribute_count"]
+        * values["float_bytes"]
+    )
+    window_bytes = (
+        values["batch_size"]
+        * values["causal_window_days"]
+        * values["dynamic_input_count"]
+        * values["float_bytes"]
+    )
+    recomputed = (
+        values["host_fixed_overhead_bytes"]
+        + forcing_bytes * values["forcing_copy_count"]
+        + static_bytes * values["static_copy_count"]
+        + window_bytes * values["window_copy_count"]
+        + values["parameter_count"] * values["parameter_bytes_upper_bound"]
+    )
+    if action == "training":
+        target_bytes = values["forcing_rows"] * values["float_bytes"]
+        recomputed += target_bytes * values["target_copy_count"]
+    else:
+        recomputed += (
+            values["prediction_chunk_rows"]
+            * values["prediction_row_bytes_upper_bound"]
+        )
+    if recomputed != estimated_peak_bytes:
+        raise MemorySafetyError(f"analytical {action} host peak does not match its dimensions")
+
+    state_elements = values["batch_size"] * (
+        values["recent_steps"] * values["recent_hidden_size"]
+        + values["history_steps"] * values["history_hidden_size"]
+    )
+    accelerator_peak = (
+        values["accelerator_fixed_overhead_bytes"]
+        + window_bytes * values["accelerator_input_copy_count"]
+        + state_elements
+        * values["float_bytes"]
+        * values["accelerator_activation_multiplier"]
+        + values["parameter_count"]
+        * values["accelerator_parameter_bytes_upper_bound"]
+    )
+    if accelerator_peak != values["accelerator_estimated_peak_bytes"]:
+        raise MemorySafetyError(
+            f"analytical {action} accelerator peak does not match its dimensions"
+        )
 
 
 def _sample_commit_headroom_bytes() -> int:
