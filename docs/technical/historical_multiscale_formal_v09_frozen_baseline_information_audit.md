@@ -142,5 +142,10 @@ git show 1f9804e359283f1963bcf0aa9ffab213538c16e8:neuralhydrology/training/loss.
 连续历史候选预测，使用同一答案、同一流域和同一门槛计算配对结果。该路线需要新的用户授权、新的赛道
 标识和新的独立审核设计；它不能伪装成现有冻结赛道的无变化延续。
 
+该路线现已完成精确设计，但尚未获实施批准。后续留出集合复用审计还要求废止原107流域留出集的
+新独立资格，并在三组预测封存及一次性授权消费后抽取一次256位随机数派生新留出集。见
+`docs/technical/historical_multiscale_formal_v09_holdout_reuse_audit.md`和
+`docs/superpowers/plans/2026-07-31-historical-multiscale-formal-v09-clean-pair-scoring.md`。
+
 备选路线是保留旧基准仅作历史参考，并明确放弃“相同信息正式胜负”主张。直接修改现有冻结基准或在
 现有评分服务上继续宣称公平胜负均不推荐。

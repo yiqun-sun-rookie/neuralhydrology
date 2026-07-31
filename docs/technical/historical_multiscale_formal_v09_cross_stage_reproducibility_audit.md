@@ -22,6 +22,13 @@
 而唯一评分的科学资格为`HOLD`；当前评分不能证明相同信息下的正式胜负。详细证据见
 `docs/technical/historical_multiscale_formal_v09_frozen_baseline_information_audit.md`。
 
+留出集合复用审核还确认：真实账本已有7次评分使用同一424/107划分，6份现存报告公开了107流域
+聚合结果，研究总结又把这些结果用于解释后续实验。原留出集因此不能继续承担新秘密留出门。清洁
+配对计划改为在三组预测封存且一次性评分授权消费后，由唯一评分进程抽取一次256位随机数并派生新
+107流域集合；该计划尚未获实施批准。详细证据见
+`docs/technical/historical_multiscale_formal_v09_holdout_reuse_audit.md`和
+`docs/superpowers/plans/2026-07-31-historical-multiscale-formal-v09-clean-pair-scoring.md`。
+
 ## 当前只读状态
 
 检查日期：2026-07-31。

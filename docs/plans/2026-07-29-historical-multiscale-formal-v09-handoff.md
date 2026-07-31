@@ -1,5 +1,23 @@
 # 历史连续多尺度气象模型正式版本09交接
 
+## 2026-07-31清洁配对评分路线设计
+
+推荐路线已经完成精确设计，但尚未获实施批准。新赛道不覆盖现有冻结文件，以同一干净训练合同下的
+八随机数经典近期模型`B09-CLASSIC`作为主基准，连续历史候选`E09-CONTINUOUS`作为挑战者，
+同参数量控制`B09-CAPACITY`只作预注册次要比较。旧`0.759225`基准降级为不具正式资格的历史参考。
+
+附加审计确认原107流域留出集已经被真实账本中的7次评分重复使用，且聚合结果进入了后续研究反馈，
+因此也不能继续承担未触碰的秘密留出声明。修复方案固定为：三组预测全部封存且一次性评分授权被
+独占消费后，唯一评分进程从操作系统密码学随机源只抽取一次256位随机数，与三组预测哈希共同派生
+新107流域留出集；其余424流域为公开比较集。任何中断均不得重抽或重试。
+
+完整证据和实施步骤见：
+
+- `docs/technical/historical_multiscale_formal_v09_holdout_reuse_audit.md`
+- `docs/superpowers/plans/2026-07-31-historical-multiscale-formal-v09-clean-pair-scoring.md`
+
+该路线当前状态为`PROPOSED-HOLD`。它不授权写评分代码、生成正式输入、训练、正式预测或评分。
+
 ## 2026-07-31冻结基准资格更正
 
 当前总体状态改为`HOLD`。旧八随机数经典基准训练把训练起点前269天
@@ -50,7 +68,7 @@
 - 有限实施阶段：**PASS**
 - 531流域输入构建：**NO-GO，未授权且产物不存在**
 - 模型训练：**NO-GO，未授权且本机可用内存不足**
-- 正式评分：**HOLD，冻结经典基准不满足相同信息条件，且冻结清单问题未处置**
+- 正式评分：**HOLD，旧经典基准不满足相同信息条件，旧107流域留出集也已被重复查询**
 
 ## 工作区状态
 
@@ -68,10 +86,12 @@
 3. `docs/technical/historical_multiscale_formal_v09_core_classic_repair.md`
 4. `docs/technical/historical_multiscale_formal_v09_classic_training_alignment_audit.md`
 5. `docs/technical/historical_multiscale_formal_v09_frozen_baseline_information_audit.md`
-6. `docs/technical/historical_multiscale_formal_v09_goal_completion_audit.md`
-7. `src/26_historical_band_experts/configs/formal_v09_protocol.json`
-8. `src/26_historical_band_experts/launch_gate_v09.py`
-9. `src/26_historical_band_experts/memory_safety_v09.py`
+6. `docs/technical/historical_multiscale_formal_v09_holdout_reuse_audit.md`
+7. `docs/superpowers/plans/2026-07-31-historical-multiscale-formal-v09-clean-pair-scoring.md`
+8. `docs/technical/historical_multiscale_formal_v09_goal_completion_audit.md`
+9. `src/26_historical_band_experts/configs/formal_v09_protocol.json`
+10. `src/26_historical_band_experts/launch_gate_v09.py`
+11. `src/26_historical_band_experts/memory_safety_v09.py`
 
 协议JSON SHA-256：
 
@@ -117,20 +137,22 @@
 4. 没有调用正式评分；
 5. 冻结规范文件与旧清单的哈希不一致尚未处置；
 6. 冻结经典基准不满足相同信息条件，现有正式评分目标没有合格比较对象；
-7. 当前代码的完整局部测试证据为`378 passed, 1 warning in 48.35s`；以后任何Python变化都必须
+7. 原107流域留出集合已至少被7次评分查询，不具新独立留出资格；
+8. 清洁配对评分路线尚未获得精确实施批准，相关Python模块均不存在；
+9. 当前代码的完整局部测试证据为`378 passed, 1 warning in 48.35s`；以后任何Python变化都必须
    在内存硬门通过后重新运行；
-8. 当前审核是提交后的对抗式自审，最终结果仍需新的干净上下文独立审核。
+10. 当前审核是提交后的对抗式自审，最终结果仍需新的干净上下文独立审核。
 
 ## 下一步
 
-下一步不是生成正式输入，而是由用户选择基准治理路线：
+下一步不是生成正式输入，而是由用户决定是否批准已经设计完成的清洁同信息配对路线：
 
-1. 推荐：新建不覆盖现有冻结文件的清洁同信息赛道，在一次封存服务调用中同时评分清洁经典集成和
-   连续历史候选；
+1. 推荐：批准新建不覆盖现有冻结文件的清洁同信息赛道及后封存随机留出规则；
 2. 备选：保留旧基准只作历史参考，明确放弃相同信息正式胜负主张；
-3. 不推荐：修改现有冻结基准或继续在现有评分服务上宣称公平胜负。
+3. 不推荐：修改现有冻结基准、复用旧107流域留出集，或继续在现有赛道宣称公平胜负。
 
-只有路线1得到明确批准并另行完成协议、服务和独立审核设计后，才重新判断是否值得生成正式输入。
+路线1的协议、服务和独立审核设计已经完成。只有用户逐字批准该设计后，才允许实现新评分入口和
+合成测试；该批准仍不授权生成正式输入、训练、正式预测或评分。
 
 ## 可直接粘贴到新上下文的提示词
 
@@ -147,19 +169,20 @@ docs/technical/historical_multiscale_formal_v09_implementation_audit.md
 docs/technical/historical_multiscale_formal_v09_core_classic_repair.md
 docs/technical/historical_multiscale_formal_v09_classic_training_alignment_audit.md
 docs/technical/historical_multiscale_formal_v09_frozen_baseline_information_audit.md
+docs/technical/historical_multiscale_formal_v09_holdout_reuse_audit.md
+docs/superpowers/plans/2026-07-31-historical-multiscale-formal-v09-clean-pair-scoring.md
 docs/technical/historical_multiscale_formal_v09_goal_completion_audit.md
 
 只读确认分支、HEAD、工作区和协议JSON哈希。历史实施提交为
 ce27baaabd2d85ec05229ee93a275147ff020f6c，修复起点为
 262c8eae785d226e1a51a7b0eaa40660d0bd8c7d；当前HEAD以包含核心兼容修复的提交为准。
 
-当前总体状态为HOLD。冻结经典基准的训练统计包含正式评估期最后269天的可用流量，现有正式评分
-不满足相同信息条件。不得生成531流域输入、训练、生成正式预测或调用评分；不得修改受保护冻结目录
-或评分代码。
+当前总体状态为HOLD。冻结经典基准的训练统计包含正式评估期最后269天的可用流量，原107流域
+留出集又已至少被7次评分查询，现有正式评分不满足相同信息和独立留出条件。不得生成531流域输入、
+训练、生成正式预测或调用评分；不得修改受保护冻结目录或评分代码。
 
 内存是硬门：本机31.70 GiB，长任务启动至少需要12.68 GiB可用，建议16 GiB；运行中保留8 GiB；进程不超过6 GiB；单次分配不超过512 MiB；禁止展开全部1,745,928个3562天气象窗口。若门槛不满足，直接NO-GO。
 
-先独立复核基准资格证据，然后比较三条治理路线：新建清洁同信息赛道、降级为历史参考、修改现有
-冻结基准。推荐方案必须保留Maurer气象和27项静态属性、正式评估答案封存、一次性评分和独立终审，
-并说明是否需要新的评分入口。等待我选择路线后再写代码或启动任何长任务。
+先独立复核基准和留出集合资格证据，再审核已拟定的清洁同信息配对计划。若我未逐字批准计划中的
+路线实施批准文本，不得写评分代码或启动任何长任务。
 ```

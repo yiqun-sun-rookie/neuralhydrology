@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 从24个已独立审核的第30轮检查点一次性生成531流域正式期逐随机数预测，按固定顺序组成三个八随机数均值集合，预先锁定连续历史候选为唯一评分提交，并把输入、检查点、源码、环境和预测封存为可独立重放的只读证据。
+**Goal:** 从24个已独立审核的第30轮检查点一次性生成531流域正式期逐随机数预测，按固定顺序组成三个八随机数均值集合，预先锁定连续历史模型为唯一挑战者，并把清洁经典基准、同参数量控制、输入、检查点、源码、环境和预测封存为可独立重放的只读证据。
 
-**Architecture:** 预测进程只读取正式输入封存和训练总封存，不读取任何正式评估观测。每个模型族的八个随机数分别生成严格的`basin,date,qsim`长表，再用固定随机数顺序和`float64`累加器组成均值集合。连续历史候选的八随机数均值在预测前已被预注册为唯一评分对象；经典近期和同参数量控制的预测仅作结构与产物审计，不调用评分服务。独立上下文从第30轮检查点重放全部24个预测并重建三个集合，随后封存一个不含可信目标导出工具、但包含候选实际运行源码的静态扫描包。
+**Architecture:** 预测进程只读取正式输入封存和训练总封存，不读取任何正式评估观测。每个模型族的八个随机数分别生成严格的`basin,date,qsim`长表，再用固定随机数顺序和`float64`累加器组成均值集合。连续历史集合在预测前已被预注册为唯一挑战者；清洁经典集合是清洁配对路线的唯一主基准，同参数量集合只作预注册次要比较。三个文件只能作为一个封存评分包进入`S09C-CLEAN-PAIR`，均不得单独进入旧赛道。独立上下文从第30轮检查点重放全部24个预测并重建三个集合，随后封存一个不含可信目标导出工具、但包含候选实际运行源码的静态扫描包。
 
 **Tech Stack:** Python 3.11、PyTorch、NumPy、pandas、只读 NumPy 内存映射、psutil、pytest、Git、SHA-256、正式基准静态泄漏扫描器。
 
@@ -25,8 +25,9 @@
   不根据任何正式结果改变检查点、权重或输出。
 - 每个集合固定使用随机数100、200、300、400、500、600、700、800的顺序，
   采用`float64`累加后除以8，并以`%.17g`写出。
-- 唯一允许进入正式评分服务的文件是
-  `E09-CONTINUOUS_ensemble.csv`；经典近期和同参数量控制不得评分。
+- 三个集合只能一起进入新清洁配对服务：`B09-CLASSIC`为主基准、`B09-CAPACITY`为不改变判定的
+  次要控制、`E09-CONTINUOUS`为唯一挑战者。任何集合都不得单独进入旧
+  `track0_forcing_only`或被交换角色。
 - 第10轮和第20轮检查点不得加载到正式预测入口。
 - 长任务启动和运行内存门与版本09训练阶段完全相同；预测批量最大256；一次只运行一个预测进程。
 - 预测授权在编排器首次启动时即消耗。成功、失败、中断或异常退出都不得复用；禁止自动重试。
@@ -38,9 +39,11 @@
 
 ---
 
-### Task 1: 预注册唯一评分提交和正式预测授权作用域
+### Task 1: 预注册清洁配对三集合角色和正式预测授权作用域
 
 **Files:**
+- Read after clean-pair route implementation:
+  `src/26_historical_band_experts/configs/formal_v09_clean_pair_scoring_contract.json`
 - Create after execution approval:
   `src/26_historical_band_experts/configs/formal_v09_submission.json`
 - Modify after execution approval: `src/26_historical_band_experts/stage_authorization_v09.py`
@@ -50,19 +53,23 @@
   `src/26_historical_band_experts/configs/formal_v09_prediction_authorization.json`
 
 **Interfaces:**
-- `validate_submission_config_v09(config, protocol) -> dict`
+- `validate_submission_config_v09(config, protocol, clean_pair_contract) -> dict`
 - `validate_stage_authorization_v09(receipt, *, action, scope=None, protocol_sha256=None, prerequisite_sha256=None, executable_tree_sha256=None) -> dict`
 
-- [ ] **Step 1: 写唯一提交和授权失败测试**
+- [ ] **Step 1: 写固定三角色评分包和授权失败测试**
 
 `formal_v09_submission.json`必须固定：
 
 ```json
 {
-  "submission_id": "S09-SEALED",
-  "track": "track0_forcing_only",
-  "source_experiment_id": "E09-CONTINUOUS",
-  "variant": "continuous_multiscale_history",
+  "submission_id": "S09C-CLEAN-PAIR-BUNDLE",
+  "track": "track0_forcing_only_clean_v09",
+  "roles": {
+    "baseline": "B09-CLASSIC",
+    "capacity_control": "B09-CAPACITY",
+    "challenger": "E09-CONTINUOUS"
+  },
+  "challenger_variant": "continuous_multiscale_history",
   "eligible_checkpoint_epoch": 30,
   "seeds": [100, 200, 300, 400, 500, 600, 700, 800],
   "ensemble_operation": "arithmetic_mean",
@@ -72,12 +79,13 @@
   "expected_rows": 1939212,
   "prediction_columns": ["basin", "date", "qsim"],
   "formal_score_calls_allowed": 1,
-  "classic_control_eligible_for_scoring": false,
-  "capacity_control_eligible_for_scoring": false
+  "standalone_scoring_allowed": false,
+  "capacity_control_may_affect_verdict": false
 }
 ```
 
-验证器必须拒绝改变来源模型、检查点轮次、随机数、集合运算、行数、列或可评分控制数量。
+验证器必须拒绝改变赛道、三角色、挑战者、检查点轮次、随机数、集合运算、行数、列、独立评分
+禁止项或同参数量控制的判定作用。
 
 正式预测直接批准文本固定为：
 
@@ -102,7 +110,8 @@ UTF-8、无末尾换行的SHA-256固定为：
 - `allowed_checkpoint_epoch=30`
 - `official_scoring_authorized=false`
 
-收据的`prerequisite_sha256`键集合必须恰好绑定输入封存、两个输入外部审核报告、旧参考函数桥接审核、
+收据的`prerequisite_sha256`键集合必须恰好绑定清洁配对合同、输入封存、两个输入外部审核报告、
+旧参考函数桥接审核、
 严格嵌套运行封存、严格嵌套外部审核报告、状态数值诊断预注册文件、状态数值诊断外部审核报告、
 训练总封存、训练外部审核报告、24个第30轮检查点和提交配置。
 收据还必须绑定可执行源码树和环境哈希。可执行源码树只包含实际运行的Python文件和科学配置，
@@ -303,9 +312,12 @@ predictions/ensembles/E09-CONTINUOUS_ensemble.csv
 调用`compose_seed_mean_v09()`逐块构建。三个集合完成后再次运行精确覆盖检查。
 集合清单明确：
 
-- `B09-CLASSIC_ensemble.csv`: `eligible_for_official_scoring=false`
-- `B09-CAPACITY_ensemble.csv`: `eligible_for_official_scoring=false`
-- `E09-CONTINUOUS_ensemble.csv`: `eligible_for_official_scoring=true`
+- `B09-CLASSIC_ensemble.csv`:
+  `clean_pair_role=baseline, standalone_scoring=false`
+- `B09-CAPACITY_ensemble.csv`:
+  `clean_pair_role=capacity_control_descriptive, standalone_scoring=false`
+- `E09-CONTINUOUS_ensemble.csv`:
+  `clean_pair_role=challenger, standalone_scoring=false`
 
 - [ ] **Step 5: 运行编排和集合测试**
 
@@ -601,9 +613,8 @@ python src\26_historical_band_experts\audit_formal_prediction_v09.py `
 - 24个逐随机数预测和三个集合的路径、行数、覆盖报告和SHA-256；
 - 候选源码包哈希树和扫描命中数0；
 - 独立重放报告SHA-256；
-- 唯一评分候选路径
-  `predictions/ensembles/E09-CONTINUOUS_ensemble.csv`及其SHA-256；
-- 两个控制集合`eligible_for_official_scoring=false`；
+- 清洁配对角色、三个集合路径及SHA-256，其中`E09-CONTINUOUS`是唯一挑战者；
+- 三个集合均为`standalone_scoring=false`，只允许固定组合`S09C-CLEAN-PAIR`；
 - `official_score_called=false`。
 
 封存写出后先只读重载并重算全部哈希，再把整个目录原子改名为最终`predictions`。
@@ -638,7 +649,7 @@ git commit -m "Phase: Record formal v09 prediction audit"
 - 独立重放最大绝对差超过`1e-6`；
 - 候选源码包不完整或正式静态扫描命中不为0；
 - 正式评估观测被读取、评分账本变化或评分入口被调用；
-- 唯一候选文件和预测总封存尚未通过只读重载。
+- 三个集合的固定角色、文件和预测总封存尚未通过只读重载。
 
 ## Self-Review
 
@@ -649,7 +660,7 @@ git commit -m "Phase: Record formal v09 prediction audit"
 - 独立重放：全部27个文件重建，最大绝对差`1e-6`，不能用抽样检查代替。
 - 扫描边界：评分显式扫描一个完整候选运行源码包；协议因自述禁用词导致的假阳性在包外用哈希绑定，
   不能借此排除实际运行代码。
-- 评分边界：本阶段没有正式评分调用，经典和同参数量控制不具备评分资格。
+- 评分边界：本阶段没有正式评分调用；三个集合只能按清洁配对固定角色一起交付，不能单独评分。
 
 ## Execution Handoff
 
@@ -660,4 +671,4 @@ git commit -m "Phase: Record formal v09 prediction audit"
 2. 用户批准实施预测代码和合成测试；
 3. 代码审核通过后，用户逐字批准一次正式预测；
 4. 24个逐随机数文件、三个集合、源码包和全量独立重放全部通过；
-5. 锁定连续历史集合的实际SHA-256后，才进入唯一一次评分计划。
+5. 锁定三个集合及其固定角色的实际SHA-256后，才进入清洁配对唯一一次评分计划。

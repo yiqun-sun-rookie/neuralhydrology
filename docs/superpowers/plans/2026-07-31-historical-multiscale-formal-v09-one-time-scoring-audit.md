@@ -9,9 +9,14 @@
 的相同信息条件。证据见
 `docs/technical/historical_multiscale_formal_v09_frozen_baseline_information_audit.md`。
 
-只有新的独立基准资格审核返回`eligible_same_information`，并且用户批准一条不修改受保护文件的
-明确修复路线后，本计划才可恢复。现有冻结基准资格状态为`ineligible_same_information`；候选预测
-哈希授权和冻结清单历史例外均不能覆盖该失败。
+后续审计又确认原107流域留出集已经被真实账本中的7次评分重复查询，并用于研究反馈，因此它也不
+具新独立留出资格。证据见
+`docs/technical/historical_multiscale_formal_v09_holdout_reuse_audit.md`。
+
+本计划不得恢复，已由不覆盖受保护文件的清洁配对路线取代：
+`docs/superpowers/plans/2026-07-31-historical-multiscale-formal-v09-clean-pair-scoring.md`。
+现有冻结基准资格状态为`ineligible_same_information`，原留出集状态为
+`legacy_reused_holdout_nonqualifying`；候选预测哈希授权和冻结清单历史例外均不能覆盖这两个失败。
 
 **Goal:** 在连续历史八随机数集合、完整候选源码包和全部前置证据封存后，由未参与实现的独立审查者执行唯一一次正式评分调用，并在不重复评分的前提下审核代码、结构、数据边界、产物、账本和最终结论。
 
