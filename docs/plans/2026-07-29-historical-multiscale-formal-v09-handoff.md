@@ -1,5 +1,16 @@
 # 历史连续多尺度气象模型正式版本09交接
 
+## 2026-07-31冻结基准资格更正
+
+当前总体状态改为`HOLD`。旧八随机数经典基准训练把训练起点前269天
+（`1999-01-05`至`1999-09-30`）的可用正式评估期流量纳入目标归一化和每流域损失尺度；
+正式评分冻结基准文件又与该旧集成逐字节相同。赛道规范明确禁止正式评估期观测和测试期统计，因此
+现有唯一评分不能证明相同信息下的正式胜负。影响方向和大小目前未知，不能称为保守基准。
+
+在用户选择新的清洁同信息赛道或明确降级为历史参考比较前，不再请求正式输入、训练、预测或评分授权。
+不得修改受保护冻结目录或评分代码。完整证据见
+`docs/technical/historical_multiscale_formal_v09_frozen_baseline_information_audit.md`。
+
 ## 2026-07-31经典训练对齐补充
 
 只读旧训练审查确认：旧核心数据集把269天预热区间纳入气象、流量和每流域损失尺度统计，
@@ -39,7 +50,7 @@
 - 有限实施阶段：**PASS**
 - 531流域输入构建：**NO-GO，未授权且产物不存在**
 - 模型训练：**NO-GO，未授权且本机可用内存不足**
-- 正式评分：**NO-GO，未授权且冻结清单问题未处置**
+- 正式评分：**HOLD，冻结经典基准不满足相同信息条件，且冻结清单问题未处置**
 
 ## 工作区状态
 
@@ -56,10 +67,11 @@
 2. `docs/technical/historical_multiscale_formal_v09_implementation_audit.md`
 3. `docs/technical/historical_multiscale_formal_v09_core_classic_repair.md`
 4. `docs/technical/historical_multiscale_formal_v09_classic_training_alignment_audit.md`
-5. `docs/technical/historical_multiscale_formal_v09_goal_completion_audit.md`
-6. `src/26_historical_band_experts/configs/formal_v09_protocol.json`
-7. `src/26_historical_band_experts/launch_gate_v09.py`
-8. `src/26_historical_band_experts/memory_safety_v09.py`
+5. `docs/technical/historical_multiscale_formal_v09_frozen_baseline_information_audit.md`
+6. `docs/technical/historical_multiscale_formal_v09_goal_completion_audit.md`
+7. `src/26_historical_band_experts/configs/formal_v09_protocol.json`
+8. `src/26_historical_band_experts/launch_gate_v09.py`
+9. `src/26_historical_band_experts/memory_safety_v09.py`
 
 协议JSON SHA-256：
 
@@ -104,26 +116,26 @@
 3. 没有训练代码入口、检查点、预测或指标；
 4. 没有调用正式评分；
 5. 冻结规范文件与旧清单的哈希不一致尚未处置；
-6. 当前环境没有YAPF；修复前已完成编译、行宽和371项测试检查，修复后完整复验因内存门尚未运行；
-7. 当前审核是提交后的对抗式自审，最终结果仍需新的干净上下文独立审核。
+6. 冻结经典基准不满足相同信息条件，现有正式评分目标没有合格比较对象；
+7. 当前代码的完整局部测试证据为`378 passed, 1 warning in 48.35s`；以后任何Python变化都必须
+   在内存硬门通过后重新运行；
+8. 当前审核是提交后的对抗式自审，最终结果仍需新的干净上下文独立审核。
 
 ## 下一步
 
-只有用户明确批准后，下一阶段才生成正式输入。该阶段仍不训练：
+下一步不是生成正式输入，而是由用户选择基准治理路线：
 
-1. 先运行启动门并确认可用内存至少12.68 GiB；
-2. 实现并测试流式输入构建器；
-3. 按流域逐个写入气象内存映射文件；
-4. 生成只含训练期观测的目标包；
-5. 重载产物，核对531流域、日期、5项 Maurer、27项静态属性的字母语义顺序与`ddof=1`尺度、
-   唯一性、有限性和所有哈希；
-6. 由独立上下文审核输入产物；
-7. 输入审核通过后，再单独申请严格嵌套和训练授权。
+1. 推荐：新建不覆盖现有冻结文件的清洁同信息赛道，在一次封存服务调用中同时评分清洁经典集成和
+   连续历史候选；
+2. 备选：保留旧基准只作历史参考，明确放弃相同信息正式胜负主张；
+3. 不推荐：修改现有冻结基准或继续在现有评分服务上宣称公平胜负。
+
+只有路线1得到明确批准并另行完成协议、服务和独立审核设计后，才重新判断是否值得生成正式输入。
 
 ## 可直接粘贴到新上下文的提示词
 
 ```text
-对话名称：历史连续多尺度气象模型正式版本09输入门
+对话名称：历史连续多尺度气象模型冻结基准治理
 
 继续以下隔离工作区：
 G:\github\pycharm\projects\neuralhydrology\.worktrees\historical-band-experts-pilot
@@ -134,21 +146,20 @@ docs/plans/2026-07-29-historical-multiscale-formal-v09-protocol.md
 docs/technical/historical_multiscale_formal_v09_implementation_audit.md
 docs/technical/historical_multiscale_formal_v09_core_classic_repair.md
 docs/technical/historical_multiscale_formal_v09_classic_training_alignment_audit.md
+docs/technical/historical_multiscale_formal_v09_frozen_baseline_information_audit.md
 docs/technical/historical_multiscale_formal_v09_goal_completion_audit.md
 
 只读确认分支、HEAD、工作区和协议JSON哈希。历史实施提交为
 ce27baaabd2d85ec05229ee93a275147ff020f6c，修复起点为
 262c8eae785d226e1a51a7b0eaa40660d0bd8c7d；当前HEAD以包含核心兼容修复的提交为准。
 
-当前只允许先做只读审核和内存启动检查。不得生成531流域输入、不得训练、不得生成正式预测、不得调用评分，除非我在新上下文再次明确批准相应阶段。
+当前总体状态为HOLD。冻结经典基准的训练统计包含正式评估期最后269天的可用流量，现有正式评分
+不满足相同信息条件。不得生成531流域输入、训练、生成正式预测或调用评分；不得修改受保护冻结目录
+或评分代码。
 
 内存是硬门：本机31.70 GiB，长任务启动至少需要12.68 GiB可用，建议16 GiB；运行中保留8 GiB；进程不超过6 GiB；单次分配不超过512 MiB；禁止展开全部1,745,928个3562天气象窗口。若门槛不满足，直接NO-GO。
 
-下一候选阶段不是训练，而是流式生成并独立审核两个正式输入产物：
-1. 531流域、1980-01-01至2008-09-30、5项Maurer的float32内存映射存储；
-2. 仅1999-10-01至2008-09-30训练观测的目标包。
-
-只使用Maurer气象和27项静态属性；正式评估观测、usgs_streamflow、camels_hydro和流量派生水文属性继续封存；不得修改src/fair_benchmark/frozen或正式评分代码。
-
-先报告当前可用内存、GO/NO-GO、拟生成文件格式、估计峰值内存、逐块停止条件和输入审核清单，等待我批准后再写输入构建代码或生成数据。
+先独立复核基准资格证据，然后比较三条治理路线：新建清洁同信息赛道、降级为历史参考、修改现有
+冻结基准。推荐方案必须保留Maurer气象和27项静态属性、正式评估答案封存、一次性评分和独立终审，
+并说明是否需要新的评分入口。等待我选择路线后再写代码或启动任何长任务。
 ```

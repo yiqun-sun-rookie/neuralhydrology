@@ -2,6 +2,17 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+## 当前停止状态
+
+本计划当前为`HOLD`，不得实施或执行。只读审核已证明正式评分冻结经典基准的训练统计包含
+`1999-01-05`至`1999-09-30`的可用正式评估期流量，违反冻结赛道禁止正式评估期观测和测试期统计
+的相同信息条件。证据见
+`docs/technical/historical_multiscale_formal_v09_frozen_baseline_information_audit.md`。
+
+只有新的独立基准资格审核返回`eligible_same_information`，并且用户批准一条不修改受保护文件的
+明确修复路线后，本计划才可恢复。现有冻结基准资格状态为`ineligible_same_information`；候选预测
+哈希授权和冻结清单历史例外均不能覆盖该失败。
+
 **Goal:** 在连续历史八随机数集合、完整候选源码包和全部前置证据封存后，由未参与实现的独立审查者执行唯一一次正式评分调用，并在不重复评分的前提下审核代码、结构、数据边界、产物、账本和最终结论。
 
 **Architecture:** 一个外层只读前置门验证预测哈希、531流域精确覆盖、源码扫描、冻结规范历史例外、评分代码、账本链和一次性授权。授权在正式评分函数启动前原子消费。独立审查者从固定工作区的干净提交调用现有`fair_benchmark.score`一次，显式把`--experiment-dir`指向候选源码包。评分后同一独立审查流程验证报告与账本的唯一追加、重新执行门槛逻辑但不再次读取观测或调用评分服务，并形成不依赖实现者自签名的终审结论。
@@ -11,6 +22,8 @@
 ## Global Constraints
 
 - 本计划不授权实现或评分。只有用户另行批准执行本计划后，才允许写外层前置门和合成测试。
+- 冻结基准资格审核必须为`eligible_same_information`；任何缺失、`HOLD`或
+  `ineligible_same_information`都在创建评分授权前停止。
 - 正式评分还需要在实际候选预测SHA-256已知后，由用户发送一条包含该具体哈希和冻结清单历史例外的
   逐字直接批准；预测授权、训练授权或“继续”均不能替代。
 - 不修改`src/fair_benchmark/frozen/`、`src/fair_benchmark/score.py`、
