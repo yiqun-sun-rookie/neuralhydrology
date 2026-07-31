@@ -24,30 +24,45 @@ from clean_pair_bundle_v09 import build_clean_pair_bundle_v09  # noqa: E402
 from fair_benchmark.clean_pair_authorization_v09 import (  # noqa: E402
     clean_pair_ledger_snapshot_v09,
     render_clean_pair_score_approval_text,
+    trusted_module_import_probe_v09,
     trusted_source_tree_v09,
 )
-from fair_benchmark.clean_pair_contract_v09 import load_clean_pair_contract_v09  # noqa: E402
+from fair_benchmark.clean_pair_contract_v09 import (  # noqa: E402
+    CLEAN_PAIR_FORBIDDEN_PATTERNS_V09,
+    LEGACY_FROZEN_MANIFEST_SHA256_V09,
+    LEGACY_TRACK_SPEC_SHA256_V09,
+    load_clean_pair_contract_v09,
+)
 from fair_benchmark.leakage import scan_for_forbidden_access  # noqa: E402
-from fair_benchmark.score_clean_pair_v09 import CLEAN_PAIR_FORBIDDEN_PATTERNS  # noqa: E402
 
 
 _EXPERIMENT_ID = "S09C-CLEAN-PAIR"
 _GIB = 2**30
 _SELECTION_KEYS = ("candidate_config", "analysis_manifest", "summary", "independent_audit")
-_TRUSTED_MODULES = (
-    "fair_benchmark.score_clean_pair_v09",
-    "fair_benchmark.clean_pair_authorization_v09",
-    "fair_benchmark.clean_pair_contract_v09",
-    "fair_benchmark.postseal_holdout_v09",
-    "fair_benchmark.score",
-    "fair_benchmark.gate",
-    "fair_benchmark.stats",
-    "fair_benchmark.metrics",
-    "fair_benchmark.ledger",
-    "fair_benchmark.io",
-    "fair_benchmark.leakage",
-    "fair_benchmark.tracks",
-)
+_UPSTREAM_REQUIREMENTS = {
+    "input_seal_sha256": {"format": "json", "expected_status": "complete_input_seal"},
+    "input_external_audit_sha256": {
+        "format": "json",
+        "expected_status": "complete_input_audit",
+    },
+    "trusted_target_source_audit_sha256": {"format": "json", "expected_status": None},
+    "legacy_reference_bridge_audit_sha256": {"format": "json", "expected_status": None},
+    "strict_nesting_seal_sha256": {"format": "json", "expected_status": None},
+    "strict_nesting_external_audit_sha256": {"format": "json", "expected_status": None},
+    "training_seal_sha256": {"format": "json", "expected_status": None},
+    "training_external_audit_sha256": {
+        "format": "json",
+        "expected_status": "complete_training_audit",
+    },
+    "state_diagnostics_preregistration_sha256": {
+        "format": "markdown",
+        "expected_status": None,
+    },
+    "state_diagnostics_external_audit_sha256": {"format": "json", "expected_status": None},
+    "prediction_external_audit_sha256": {"format": "json", "expected_status": None},
+    "source_bundle_manifest_sha256": {"format": "json", "expected_status": None},
+    "environment_sha256": {"format": "json", "expected_status": None},
+}
 
 
 def _canonical_bytes(value: Mapping) -> bytes:
@@ -102,30 +117,6 @@ def hash_tree_v09(root: str | Path) -> dict:
     }
 
 
-def _module_import_probe() -> dict:
-    script = (
-        "import importlib,json;"
-        f"names={list(_TRUSTED_MODULES)!r};"
-        "print(json.dumps({n:str(importlib.import_module(n).__file__) for n in names},sort_keys=True))"
-    )
-    environment = dict(os.environ)
-    environment["PYTHONPATH"] = str(WORKTREE_SRC)
-    completed = subprocess.run(
-        [sys.executable, "-c", script],
-        check=True,
-        capture_output=True,
-        text=True,
-        env=environment,
-        timeout=60,
-    )
-    paths = json.loads(completed.stdout.strip())
-    trusted_root = (WORKTREE_SRC / "fair_benchmark").resolve()
-    for name, raw_path in paths.items():
-        if not Path(raw_path).resolve().is_relative_to(trusted_root):
-            raise RuntimeError(f"trusted module imported outside this worktree: {name}")
-    return paths
-
-
 def _verify_artifacts(
     contract: Mapping,
     bundle: Mapping,
@@ -135,18 +126,36 @@ def _verify_artifacts(
     evidence = bundle.get("upstream_evidence")
     if not isinstance(upstream, Mapping) or not isinstance(evidence, Mapping):
         raise ValueError("upstream artifact declarations are missing")
-    if set(upstream) != set(evidence):
+    if set(upstream) != set(evidence) or set(upstream) != set(_UPSTREAM_REQUIREMENTS):
         raise ValueError("upstream artifact key set drift")
     for key, record in upstream.items():
-        if not isinstance(record, Mapping):
+        if not isinstance(record, Mapping) or set(record) != {
+            "path",
+            "sha256",
+            "required_status",
+        }:
             raise ValueError(f"upstream artifact declaration is invalid: {key}")
         path = Path(str(record.get("path", "")))
         digest = _sha256(path)
         if digest != record.get("sha256") or digest != evidence[key]:
             raise ValueError(f"upstream artifact SHA-256 drift: {key}")
+        requirement = _UPSTREAM_REQUIREMENTS[key]
+        expected_status = requirement["expected_status"]
+        if record.get("required_status") != expected_status:
+            raise ValueError(f"upstream artifact required-status declaration drift: {key}")
+        if requirement["format"] == "markdown":
+            if path.suffix.lower() != ".md" or not path.read_text(encoding="utf-8").strip():
+                raise ValueError(f"upstream Markdown artifact is empty or has the wrong type: {key}")
+            continue
         payload = _load_json(path)
-        if payload.get("status") != record.get("required_status"):
+        if expected_status is not None and payload.get("status") != expected_status:
             raise ValueError(f"upstream artifact status drift: {key}")
+        if _contains_explicit_failure(payload):
+            raise ValueError(f"upstream artifact contains an explicit failure marker: {key}")
+        if key == "prediction_external_audit_sha256" and payload.get("official_score_called") is not False:
+            raise ValueError("prediction external audit must prove official_score_called=false")
+        if key == "environment_sha256" and payload.get("git_clean") is not True:
+            raise ValueError("environment fingerprint must prove a clean Git worktree")
 
     selections = seal.get("selection_artifacts")
     provenance = contract.get("selection_provenance")
@@ -162,7 +171,7 @@ def _verify_artifacts(
         raise ValueError("selection provenance status or sealed-selection boundary drift")
     for key in _SELECTION_KEYS:
         record = selections[key]
-        if not isinstance(record, Mapping):
+        if not isinstance(record, Mapping) or set(record) != {"path", "sha256"}:
             raise ValueError(f"selection artifact declaration is invalid: {key}")
         digest = _sha256(Path(str(record.get("path", ""))))
         if digest != record.get("sha256") or digest != provenance.get(f"{key}_sha256"):
@@ -172,11 +181,46 @@ def _verify_artifacts(
     if not isinstance(checkpoints, list) or len(checkpoints) != 24:
         raise ValueError("exactly 24 final checkpoint declarations are required")
     for index, record in enumerate(checkpoints):
-        if not isinstance(record, Mapping):
+        if not isinstance(record, Mapping) or set(record) != {
+            "role",
+            "experiment_id",
+            "seed",
+            "epoch",
+            "path",
+            "sha256",
+        }:
             raise ValueError(f"checkpoint declaration is invalid: {index}")
         if _sha256(Path(str(record.get("path", "")))) != record.get("sha256"):
             raise ValueError(f"checkpoint SHA-256 drift: {index}")
     return len(upstream), len(selections), len(checkpoints)
+
+
+def _contains_explicit_failure(value: object) -> bool:
+    if isinstance(value, Mapping):
+        for key, item in value.items():
+            lowered = str(key).lower()
+            if lowered in {"errors", "failures"} and isinstance(item, list) and item:
+                return True
+            if lowered in {"ok", "passed", "complete"} and item is False:
+                return True
+            if lowered in {"status", "verdict"} and isinstance(item, str):
+                normalised = item.lower().replace("-", "_")
+                if normalised in {
+                    "fail",
+                    "failed",
+                    "failure",
+                    "incomplete",
+                    "hold",
+                    "reject",
+                    "no_go",
+                }:
+                    return True
+            if _contains_explicit_failure(item):
+                return True
+        return False
+    if isinstance(value, list):
+        return any(_contains_explicit_failure(item) for item in value)
+    return False
 
 
 def _verify_trusted_inputs(contract: Mapping, trusted_root: Path) -> dict:
@@ -211,6 +255,70 @@ def _verify_trusted_inputs(contract: Mapping, trusted_root: Path) -> dict:
     return verified
 
 
+def verify_trusted_basin_identity_v09(
+    contract: Mapping,
+    prediction_seal: Mapping,
+    trusted_root: str | Path,
+) -> dict:
+    """Prove that the sealed prediction basins equal the trusted frozen basin set."""
+    record = contract.get("trusted_frozen_inputs", {}).get("basins")
+    if not isinstance(record, Mapping):
+        raise ValueError("trusted basin declaration is missing")
+    path = (Path(trusted_root).resolve() / str(record.get("relative_path", ""))).resolve()
+    basin_ids = [value.strip() for value in path.read_text(encoding="utf-8").splitlines() if value.strip()]
+    expected_count = int(contract.get("prediction_contract", {}).get("basin_count", 0))
+    if len(basin_ids) != expected_count or len(set(basin_ids)) != expected_count:
+        raise ValueError("trusted basin file count or uniqueness drift")
+    sealed_ids = prediction_seal.get("coverage", {}).get("basin_ids")
+    if not isinstance(sealed_ids, list) or len(sealed_ids) != expected_count:
+        raise ValueError("prediction seal basin coverage is incomplete")
+    if [str(value) for value in sealed_ids] != basin_ids:
+        raise ValueError("prediction seal basin order differs from the trusted frozen basin order")
+    return {
+        "status": "exact_trusted_basin_order",
+        "basin_count": expected_count,
+        "basin_file_sha256": _sha256(path),
+        "order_required_to_match": True,
+    }
+
+
+def _verify_repository_frozen_boundary(contract: Mapping) -> dict:
+    if contract.get("protocol_sha256") != (
+        "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8"
+    ):
+        return {"status": "synthetic_contract_not_applicable"}
+    frozen_root = (WORKTREE_SRC / "fair_benchmark" / "frozen").resolve()
+    manifest_path = frozen_root / "MANIFEST.sha256"
+    spec_path = frozen_root / "track0_forcing_only.spec.yaml"
+    if _sha256(manifest_path) != LEGACY_FROZEN_MANIFEST_SHA256_V09:
+        raise ValueError("legacy frozen manifest SHA-256 drift")
+    if _sha256(spec_path) != LEGACY_TRACK_SPEC_SHA256_V09:
+        raise ValueError("legacy frozen track specification SHA-256 drift")
+    entries = {}
+    for line in manifest_path.read_text(encoding="utf-8").splitlines():
+        digest, relative_path = line.split(" *", 1)
+        entries[relative_path] = digest
+    declared = {
+        record["relative_path"]: record["sha256"]
+        for group in (
+            contract["trusted_frozen_inputs"],
+            contract["legacy_nonqualifying_inputs"],
+        )
+        for record in group.values()
+    }
+    if any(entries.get(relative_path) != digest for relative_path, digest in declared.items()):
+        raise ValueError("legacy frozen manifest entries differ from the clean-pair contract")
+    worktree_answer = frozen_root / contract["trusted_frozen_inputs"]["answer_key"]["relative_path"]
+    if worktree_answer.exists():
+        raise ValueError("formal answer must remain absent from the isolated worktree")
+    return {
+        "status": "legacy_frozen_boundary_verified",
+        "manifest_sha256": LEGACY_FROZEN_MANIFEST_SHA256_V09,
+        "track_spec_sha256": LEGACY_TRACK_SPEC_SHA256_V09,
+        "worktree_answer_absent": True,
+    }
+
+
 def _require_clean_worktree() -> dict:
     completed = subprocess.run(
         ["git", "status", "--porcelain"],
@@ -233,6 +341,42 @@ def _require_clean_worktree() -> dict:
     return {"clean": True, "head": head}
 
 
+def _verify_canonical_preflight_paths(
+    contract_path: Path,
+    bundle_path: Path,
+    seal_path: Path,
+    source_bundle: Path,
+    ledger_path: Path,
+    trusted_root: Path,
+) -> dict:
+    formal_root = REPO_ROOT / "results" / "26_historical_band_experts" / "formal_v09"
+    main_repo_root = REPO_ROOT.parents[1]
+    expected = {
+        "contract": IDEA_ROOT / "configs" / "formal_v09_clean_pair_scoring_contract.json",
+        "bundle": formal_root / "predictions" / "clean_pair_bundle.json",
+        "prediction_seal": formal_root / "predictions" / "seal.json",
+        "source_bundle": formal_root / "predictions" / "source_bundle",
+        "ledger": WORKTREE_SRC / "fair_benchmark" / "registry" / "portfolio_ledger.csv",
+        "trusted_frozen_root": main_repo_root / "src" / "fair_benchmark" / "frozen",
+    }
+    actual = {
+        "contract": contract_path,
+        "bundle": bundle_path,
+        "prediction_seal": seal_path,
+        "source_bundle": source_bundle,
+        "ledger": ledger_path,
+        "trusted_frozen_root": trusted_root,
+    }
+    drift = [
+        name
+        for name, expected_path in expected.items()
+        if actual[name].resolve() != expected_path.resolve()
+    ]
+    if drift:
+        raise ValueError(f"noncanonical preflight path(s): {drift}")
+    return {name: str(path.resolve()) for name, path in expected.items()}
+
+
 def audit_clean_pair_score_preflight_v09(
     contract_path: str | Path,
     bundle_path: str | Path,
@@ -243,6 +387,7 @@ def audit_clean_pair_score_preflight_v09(
     *,
     available_memory_bytes: int | None = None,
     require_clean_worktree: bool = True,
+    require_canonical_paths: bool = True,
 ) -> dict:
     """Recompute every non-observational score binding and return a fail-closed report."""
     errors: list[str] = []
@@ -259,6 +404,18 @@ def audit_clean_pair_score_preflight_v09(
         source_bundle = Path(source_bundle)
         ledger_path = Path(ledger_path)
         trusted_root = Path(trusted_frozen_root).resolve()
+        canonical_paths = (
+            _verify_canonical_preflight_paths(
+                contract_path,
+                bundle_path,
+                seal_path,
+                source_bundle,
+                ledger_path,
+                trusted_root,
+            )
+            if require_canonical_paths
+            else {"canonical_path_check_skipped": True}
+        )
         protocol_path = IDEA_ROOT / "configs" / "formal_v09_protocol.json"
         contract = load_clean_pair_contract_v09(contract_path, protocol_path=protocol_path)
         bundle = _load_json(bundle_path)
@@ -274,12 +431,14 @@ def audit_clean_pair_score_preflight_v09(
         candidate_source_tree = hash_tree_v09(source_bundle)
         if candidate_source_tree["tree_sha256"] != bundle.get("source_bundle", {}).get("tree_sha256"):
             raise ValueError("candidate source bundle tree SHA-256 drift")
-        hits = scan_for_forbidden_access(source_bundle, CLEAN_PAIR_FORBIDDEN_PATTERNS)
+        hits = scan_for_forbidden_access(source_bundle, CLEAN_PAIR_FORBIDDEN_PATTERNS_V09)
         if hits:
             raise ValueError(f"candidate source bundle has {len(hits)} forbidden-access scan hits")
 
         upstream_count, selection_count, checkpoint_count = _verify_artifacts(contract, bundle, seal)
         trusted_inputs = _verify_trusted_inputs(contract, trusted_root)
+        trusted_basin_identity = verify_trusted_basin_identity_v09(contract, seal, trusted_root)
+        frozen_boundary = _verify_repository_frozen_boundary(contract)
         ledger = clean_pair_ledger_snapshot_v09(ledger_path)
         if ledger["chain_breaks"] or ledger["experiment_id_count"]:
             raise ValueError("ledger chain is broken or the clean-pair experiment already exists")
@@ -306,7 +465,10 @@ def audit_clean_pair_score_preflight_v09(
             raise ValueError(f"score-attempt output already exists: {existing}")
 
         worktree = _require_clean_worktree() if require_clean_worktree else {"clean_check_skipped": True}
-        module_paths = _module_import_probe()
+        module_probe = trusted_module_import_probe_v09(
+            WORKTREE_SRC,
+            verify_live_process=False,
+        )
         source_tree = trusted_source_tree_v09(WORKTREE_SRC)
         runtime = {
             "python_executable": str(Path(sys.executable).resolve()),
@@ -326,10 +488,13 @@ def audit_clean_pair_score_preflight_v09(
             "candidate_source_tree": candidate_source_tree,
             "source_tree": source_tree,
             "trusted_inputs": trusted_inputs,
+            "trusted_basin_identity": trusted_basin_identity,
+            "repository_frozen_boundary": frozen_boundary,
             "ledger": ledger,
             "runtime": runtime,
-            "module_import_paths": module_paths,
+            "module_import_probe": module_probe,
             "worktree": worktree,
+            "canonical_paths": canonical_paths,
             "memory": {
                 "total_bytes": total_memory,
                 "available_bytes": available,
@@ -362,6 +527,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--ledger", required=True)
     parser.add_argument("--report", required=True)
     args = parser.parse_args(argv)
+    expected_report = (
+        REPO_ROOT
+        / "results"
+        / "26_historical_band_experts"
+        / "formal_v09"
+        / "clean_pair_score_preflight.external_audit.json"
+    ).resolve()
+    if Path(args.report).resolve() != expected_report:
+        raise ValueError("preflight report path is not canonical")
     report = audit_clean_pair_score_preflight_v09(
         args.contract,
         args.bundle,

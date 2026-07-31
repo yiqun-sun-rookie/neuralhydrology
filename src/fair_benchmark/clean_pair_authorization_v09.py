@@ -3,12 +3,14 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping, Sequence
 import hashlib
+import importlib
 import json
 import os
 from pathlib import Path
 import re
 import secrets
 import subprocess
+import sys
 
 from .postseal_holdout_v09 import derive_postseal_holdout_v09, public_partition_summary
 
@@ -102,6 +104,56 @@ def trusted_source_tree_v09(worktree_src: str | Path) -> dict:
         "tree_sha256": hashlib.sha256(_canonical_bytes(files)).hexdigest(),
         "files": files,
     }
+
+
+def trusted_module_import_probe_v09(
+    worktree_src: str | Path,
+    *,
+    verify_live_process: bool,
+) -> dict:
+    """Prove trusted module origins in a clean subprocess and optionally this process."""
+    worktree_src = Path(worktree_src).resolve()
+    expected = {
+        relative_path.removesuffix(".py").replace("/", "."): str(
+            (worktree_src / relative_path).resolve()
+        )
+        for relative_path in _TRUSTED_SOURCE_FILES
+    }
+    names = list(expected)
+    script = (
+        "import importlib,json;"
+        f"names={names!r};"
+        "print(json.dumps({n:str(importlib.import_module(n).__file__) for n in names},sort_keys=True))"
+    )
+    environment = dict(os.environ)
+    environment["PYTHONPATH"] = str(worktree_src)
+    environment["PYTHONNOUSERSITE"] = "1"
+    completed = subprocess.run(
+        [sys.executable, "-s", "-c", script],
+        cwd=worktree_src.parent,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=environment,
+        timeout=60,
+    )
+    clean_paths = json.loads(completed.stdout.strip())
+    normalised_clean = {name: str(Path(path).resolve()) for name, path in clean_paths.items()}
+    if normalised_clean != expected:
+        raise CleanPairAuthorizationError("clean subprocess imported a trusted module from the wrong path")
+    result = {
+        "clean_subprocess": normalised_clean,
+        "paths_sha256": hashlib.sha256(_canonical_bytes(normalised_clean)).hexdigest(),
+    }
+    if verify_live_process:
+        live_paths = {
+            name: str(Path(importlib.import_module(name).__file__).resolve())
+            for name in names
+        }
+        if live_paths != expected:
+            raise CleanPairAuthorizationError("live scorer imported a trusted module from the wrong path")
+        result["live_process"] = live_paths
+    return result
 
 
 def clean_pair_ledger_snapshot_v09(ledger_path: str | Path) -> dict:

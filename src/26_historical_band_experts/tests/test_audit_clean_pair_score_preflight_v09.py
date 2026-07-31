@@ -40,6 +40,11 @@ EVIDENCE_KEYS = (
     "source_bundle_manifest_sha256",
     "environment_sha256",
 )
+EXPECTED_STATUS = {
+    "input_seal_sha256": "complete_input_seal",
+    "input_external_audit_sha256": "complete_input_audit",
+    "training_external_audit_sha256": "complete_training_audit",
+}
 
 
 def _sha256(path: Path) -> str:
@@ -150,13 +155,25 @@ def _case(tmp_path: Path) -> dict:
     artifacts = {}
     evidence = {}
     for key in EVIDENCE_KEYS:
-        path = tmp_path / "evidence" / f"{key}.json"
-        _write_json(path, {"status": "complete", "name": key})
+        suffix = ".md" if key == "state_diagnostics_preregistration_sha256" else ".json"
+        path = tmp_path / "evidence" / f"{key}{suffix}"
+        if suffix == ".md":
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("# Synthetic state diagnostics preregistration\n", encoding="utf-8")
+        elif key == "prediction_external_audit_sha256":
+            _write_json(path, {"official_score_called": False, "name": key})
+        elif key == "environment_sha256":
+            _write_json(path, {"git_clean": True, "name": key})
+        else:
+            payload = {"name": key}
+            if key in EXPECTED_STATUS:
+                payload["status"] = EXPECTED_STATUS[key]
+            _write_json(path, payload)
         digest = _sha256(path)
         artifacts[key] = {
             "path": str(path),
             "sha256": digest,
-            "required_status": "complete",
+            "required_status": EXPECTED_STATUS.get(key),
         }
         evidence[key] = digest
 
@@ -228,6 +245,7 @@ def _audit(case: dict, **kwargs) -> dict:
         case["trusted_root"],
         available_memory_bytes=20 * 2**30,
         require_clean_worktree=False,
+        require_canonical_paths=False,
         **kwargs,
     )
 
@@ -287,6 +305,7 @@ def test_preflight_failure_is_not_ready(tmp_path, monkeypatch, failure):
             case["ledger"],
             case["trusted_root"],
             require_clean_worktree=False,
+            require_canonical_paths=False,
             **kwargs,
         )
     else:
@@ -299,3 +318,69 @@ def test_preflight_module_has_no_answer_loader_or_score_call():
     source = (IDEA_ROOT / "audit_clean_pair_score_preflight_v09.py").read_text(encoding="utf-8")
     assert "load_" + "obs_csv" not in source
     assert "score_" + "submission(" not in source
+
+
+def test_preflight_requires_sealed_basins_to_equal_trusted_frozen_set(tmp_path):
+    case = _case(tmp_path)
+    seal = json.loads(case["seal_path"].read_text(encoding="utf-8"))
+    matched = preflight.verify_trusted_basin_identity_v09(
+        case["contract"],
+        seal,
+        case["trusted_root"],
+    )
+    assert matched["status"] == "exact_trusted_basin_order"
+    seal["coverage"]["basin_ids"][-1] = "99999999"
+    with pytest.raises(ValueError, match="differs"):
+        preflight.verify_trusted_basin_identity_v09(
+            case["contract"],
+            seal,
+            case["trusted_root"],
+        )
+
+    seal = json.loads(case["seal_path"].read_text(encoding="utf-8"))
+    seal["coverage"]["basin_ids"].reverse()
+    with pytest.raises(ValueError, match="order differs"):
+        preflight.verify_trusted_basin_identity_v09(
+            case["contract"],
+            seal,
+            case["trusted_root"],
+        )
+
+
+def test_preflight_rejects_self_declared_failed_upstream_status(tmp_path):
+    case = _case(tmp_path)
+    seal = json.loads(case["seal_path"].read_text(encoding="utf-8"))
+    bundle = json.loads(case["bundle_path"].read_text(encoding="utf-8"))
+    key = EVIDENCE_KEYS[0]
+    record = seal["upstream_artifacts"][key]
+    _write_json(Path(record["path"]), {"status": "failed", "name": key})
+    digest = _sha256(Path(record["path"]))
+    record["sha256"] = digest
+    record["required_status"] = "failed"
+    bundle["upstream_evidence"][key] = digest
+    with pytest.raises(ValueError, match="status"):
+        preflight._verify_artifacts(case["contract"], bundle, seal)
+
+
+def test_preflight_verifies_legacy_manifest_spec_and_worktree_answer_absence():
+    contract = json.loads(
+        (IDEA_ROOT / "configs" / "formal_v09_clean_pair_scoring_contract.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    result = preflight._verify_repository_frozen_boundary(contract)
+    assert result["status"] == "legacy_frozen_boundary_verified"
+    assert result["worktree_answer_absent"] is True
+
+
+def test_preflight_rejects_cloned_noncanonical_artifact_paths(tmp_path):
+    case = _case(tmp_path)
+    with pytest.raises(ValueError, match="noncanonical"):
+        preflight._verify_canonical_preflight_paths(
+            case["contract_path"],
+            case["bundle_path"],
+            case["seal_path"],
+            case["source_bundle"],
+            case["ledger"],
+            case["trusted_root"],
+        )

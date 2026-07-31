@@ -18,13 +18,15 @@ from .clean_pair_authorization_v09 import (
     clean_pair_ledger_snapshot_v09,
     consume_clean_pair_score_authorization_v09,
     draw_holdout_nonce_once_v09,
+    trusted_module_import_probe_v09,
     trusted_source_tree_v09,
     validate_clean_pair_score_authorization_v09,
 )
 from .clean_pair_contract_v09 import load_clean_pair_contract_v09
+from .clean_pair_contract_v09 import CLEAN_PAIR_FORBIDDEN_PATTERNS_V09
 from .gate import GateConfig
 from .io import load_obs_csv, load_predictions
-from .leakage import DEFAULT_FORBIDDEN, scan_for_forbidden_access
+from .leakage import scan_for_forbidden_access
 from .ledger import count_attempts, read_rows
 from .metrics import nse, per_basin_score
 from .postseal_holdout_v09 import derive_postseal_holdout_v09
@@ -43,12 +45,7 @@ _TRACK_ID = "track0_forcing_only_clean_v09"
 _BASIN_COUNT = 531
 _HOLDOUT_COUNT = 107
 _PUBLIC_COUNT = 424
-CLEAN_PAIR_FORBIDDEN_PATTERNS = list(DEFAULT_FORBIDDEN) + [
-    r"track0_forcing_only_baseline_per_basin_nse",
-    r"track0_forcing_only_secret_holdout_basins",
-    r"portfolio_ledger",
-    r"fair_benchmark[/\\]experiments[/\\].*report\.json",
-]
+CLEAN_PAIR_FORBIDDEN_PATTERNS = list(CLEAN_PAIR_FORBIDDEN_PATTERNS_V09)
 
 
 def _canonical_sha256(value: Mapping) -> str:
@@ -211,11 +208,11 @@ def _strict_stats(stats: Mapping) -> dict:
 
 
 def _ledger_snapshot(path: Path) -> dict:
-    rows = read_rows(path)
+    snapshot = clean_pair_ledger_snapshot_v09(path)
     return {
-        "row_count": len(rows),
-        "sha256": _sha256(path) if path.is_file() else None,
-        "last_row_hash": rows[-1].get("row_hash") if rows else None,
+        "row_count": snapshot["row_count"],
+        "sha256": snapshot["sha256"],
+        "last_row_hash": snapshot["last_row_hash"],
     }
 
 
@@ -253,6 +250,7 @@ def score_clean_pair_core_v09(
     prediction_root: str | Path,
     source_bundle: str | Path,
     ledger_path: str | Path,
+    authorized_ledger_snapshot: Mapping,
     timestamp: str,
 ) -> dict:
     """Perform the one permitted existing-scorer call for a sealed clean comparison."""
@@ -265,6 +263,8 @@ def score_clean_pair_core_v09(
         raise CleanPairScoreError("candidate source bundle is missing")
     if any(row.get("experiment_id") == _EXPERIMENT_ID for row in read_rows(ledger_path)):
         raise CleanPairScoreError("clean-pair experiment already exists in the ledger")
+    if clean_pair_ledger_snapshot_v09(ledger_path) != dict(authorized_ledger_snapshot):
+        raise CleanPairScoreError("ledger differs from the authorized snapshot at score-core entry")
 
     prediction_sha256, prediction_paths = _prediction_hashes(bundle, prediction_root)
     trusted = contract.get("trusted_frozen_inputs")
@@ -315,8 +315,9 @@ def score_clean_pair_core_v09(
         role: _require_complete_finite_scores(scores[role], basin_ids, role) for role in _ROLES
     }
     contract_ok = all(finite_status.values())
-    public_ids = [basin for basin in basin_ids if basin not in partition["holdout_ids"]]
-    holdout_ids = [basin for basin in basin_ids if basin in partition["holdout_ids"]]
+    scoring_order = list(scores["baseline"])
+    public_ids = [basin for basin in scoring_order if basin not in partition["holdout_ids"]]
+    holdout_ids = [basin for basin in scoring_order if basin in partition["holdout_ids"]]
     if len(public_ids) != _PUBLIC_COUNT or len(holdout_ids) != _HOLDOUT_COUNT:
         raise CleanPairScoreError("derived public or holdout count drift")
 
@@ -366,6 +367,8 @@ def score_clean_pair_core_v09(
         metric=nse,
         spec={"confirmed": True, "contract_id": _EXPERIMENT_ID},
     )
+    if clean_pair_ledger_snapshot_v09(ledger_path) != dict(authorized_ledger_snapshot):
+        raise CleanPairScoreError("ledger changed during metric computation before the scorer call")
     ledger_before = _ledger_snapshot(ledger_path)
     primary = score_submission(
         predictions_path=prediction_paths["challenger"],
@@ -505,6 +508,68 @@ def _exclusive_atomic_report(path: Path, report: Mapping) -> None:
         raise CleanPairScoreError(f"score report building file already exists: {building}") from exc
 
 
+def _validate_authorized_score_paths_v09(
+    *,
+    worktree_src: Path,
+    authorized_output_root: str,
+    contract_path: Path,
+    bundle_path: Path,
+    authorization_path: Path,
+    prediction_root: Path,
+    source_bundle: Path,
+    ledger_path: Path,
+    consumption_path: Path,
+    draw_path: Path,
+    out_path: Path,
+) -> dict:
+    """Bind every mutable score path to one canonical repository location."""
+    worktree_root = worktree_src.resolve().parent
+    formal_root = (
+        worktree_root
+        / "results"
+        / "26_historical_band_experts"
+        / "formal_v09"
+    ).resolve()
+    expected = {
+        "contract": (
+            worktree_src
+            / "26_historical_band_experts"
+            / "configs"
+            / "formal_v09_clean_pair_scoring_contract.json"
+        ).resolve(),
+        "bundle": (formal_root / "predictions" / "clean_pair_bundle.json").resolve(),
+        "authorization": (
+            formal_root
+            / "authorizations"
+            / "clean_pair_scoring_authorization.json"
+        ).resolve(),
+        "prediction_root": formal_root,
+        "source_bundle": (formal_root / "predictions" / "source_bundle").resolve(),
+        "ledger": (worktree_src / "fair_benchmark" / "registry" / "portfolio_ledger.csv").resolve(),
+        "consumption": (formal_root / "clean_pair_scoring_authorization_consumed.json").resolve(),
+        "draw": (formal_root / "clean_pair_holdout_draw_receipt.json").resolve(),
+        "out": (formal_root / "clean_pair_score_attempt_01" / "report.json").resolve(),
+    }
+    declared_output = (worktree_root / authorized_output_root).resolve()
+    if declared_output != expected["out"].parent:
+        raise CleanPairScoreError("authorization output root is not the canonical score-attempt directory")
+    actual = {
+        "contract": contract_path.resolve(),
+        "bundle": bundle_path.resolve(),
+        "authorization": authorization_path.resolve(),
+        "prediction_root": prediction_root.resolve(),
+        "source_bundle": source_bundle.resolve(),
+        "ledger": ledger_path.resolve(),
+        "consumption": consumption_path.resolve(),
+        "draw": draw_path.resolve(),
+        "out": out_path.resolve(),
+    }
+    drift = [name for name in expected if actual[name] != expected[name]]
+    if drift:
+        raise CleanPairScoreError(f"noncanonical score path(s): {drift}")
+    return {name: str(path) for name, path in expected.items()}
+
+
 def run_clean_pair_score_once_v09(
     *,
     contract_path: str | Path,
@@ -549,6 +614,10 @@ def run_clean_pair_score_once_v09(
     _validate_contract_and_bundle(contract, bundle)
 
     source_tree = trusted_source_tree_v09(worktree_src)
+    module_probe = trusted_module_import_probe_v09(
+        worktree_src,
+        verify_live_process=True,
+    )
     ledger_snapshot = clean_pair_ledger_snapshot_v09(ledger_path)
     validated_authorization = validate_clean_pair_score_authorization_v09(
         authorization,
@@ -556,6 +625,19 @@ def run_clean_pair_score_once_v09(
         bundle=bundle,
         source_tree=source_tree,
         ledger_snapshot=ledger_snapshot,
+    )
+    canonical_paths = _validate_authorized_score_paths_v09(
+        worktree_src=worktree_src,
+        authorized_output_root=validated_authorization["output_root"],
+        contract_path=contract_path,
+        bundle_path=bundle_path,
+        authorization_path=authorization_path,
+        prediction_root=prediction_root,
+        source_bundle=source_bundle,
+        ledger_path=ledger_path,
+        consumption_path=consumption_path,
+        draw_path=draw_path,
+        out_path=out_path,
     )
     runtime = {
         "python_executable": str(Path(sys.executable).resolve()),
@@ -596,7 +678,9 @@ def run_clean_pair_score_once_v09(
         "runtime": runtime,
         "memory": memory,
         "source_tree": source_tree,
+        "module_import_probe": module_probe,
         "ledger_snapshot": ledger_snapshot,
+        "canonical_paths": canonical_paths,
     }
     consumption = consume_clean_pair_score_authorization_v09(
         validated_authorization,
@@ -621,6 +705,7 @@ def run_clean_pair_score_once_v09(
         prediction_root=prediction_root,
         source_bundle=source_bundle,
         ledger_path=ledger_path,
+        authorized_ledger_snapshot=ledger_snapshot,
         timestamp=timestamp,
     )
     report["provenance"].update({
@@ -629,6 +714,7 @@ def run_clean_pair_score_once_v09(
         "consumption_canonical_sha256": _canonical_sha256(consumption),
         "trusted_source_tree_sha256": source_tree["tree_sha256"],
         "candidate_source_tree_sha256": source_tree_sha256,
+        "module_import_paths_sha256": module_probe["paths_sha256"],
         "execution_task_id": execution_task_id,
     })
     json.dumps(report, allow_nan=False, sort_keys=True)

@@ -11,6 +11,7 @@ from fair_benchmark.clean_pair_authorization_v09 import (
     consume_clean_pair_score_authorization_v09,
     draw_holdout_nonce_once_v09,
     render_clean_pair_score_approval_text,
+    trusted_module_import_probe_v09,
     trusted_source_tree_v09,
     validate_clean_pair_score_authorization_v09,
 )
@@ -232,6 +233,9 @@ def test_authorization_helpers_bind_trusted_service_tree_and_empty_ledger(tmp_pa
     assert "fair_benchmark/score_clean_pair_v09.py" in tree["files"]
     assert len(tree["git_head"]) == 40
     assert len(tree["tree_sha256"]) == 64
+    probe = trusted_module_import_probe_v09(worktree_src, verify_live_process=True)
+    assert probe["clean_subprocess"] == probe["live_process"]
+    assert len(probe["paths_sha256"]) == 64
 
     snapshot = clean_pair_ledger_snapshot_v09(tmp_path / "missing.csv")
     assert snapshot == {

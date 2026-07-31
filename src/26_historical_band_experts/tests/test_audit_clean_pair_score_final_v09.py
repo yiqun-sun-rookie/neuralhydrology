@@ -67,7 +67,6 @@ def _case(tmp_path: Path) -> dict:
         "contract_id": "S09C-CLEAN-PAIR",
         "track_id": "track0_forcing_only_clean_v09",
         "contract_sha256": "e" * 64,
-        "bundle_sha256": "f" * 64,
         "protocol_sha256": PROTOCOL_SHA,
         "prediction_seal_sha256": "1" * 64,
         "source_bundle": {
@@ -85,19 +84,37 @@ def _case(tmp_path: Path) -> dict:
             "holdout_count": 107,
             "public_count": 424,
         },
+        "status": "complete_clean_pair_bundle",
+    }
+    bundle["bundle_sha256"] = _canonical_sha256(bundle)
+    empty_ledger_snapshot = {
+        "row_count": 0,
+        "sha256": hashlib.sha256(b"").hexdigest(),
+        "last_row_hash": "GENESIS",
+        "experiment_id_count": 0,
+        "chain_breaks": 0,
     }
     authorization = {
         "status": "authorized_clean_pair_score",
+        "approval": {
+            "text": "synthetic",
+            "utf8_sha256": hashlib.sha256(b"synthetic").hexdigest(),
+            "task_id": "approval-task",
+            "approved_at": "2026-07-31T00:00:00+08:00",
+        },
         "contract_sha256": bundle["contract_sha256"],
         "bundle_sha256": bundle["bundle_sha256"],
         "prediction_sha256": HASHES,
         "prediction_seal_sha256": bundle["prediction_seal_sha256"],
         "source_tree": {
             "git_head": "4" * 40,
-            "tree_sha256": "5" * 64,
             "files": {"fair_benchmark/score_clean_pair_v09.py": "6" * 64},
         },
         "trusted_frozen_inputs": {
+            "answer_key": {
+                "relative_path": "answer.parquet",
+                "sha256": "7" * 64,
+            },
             "basins": {
                 "relative_path": basin_path.name,
                 "sha256": _sha256(basin_path),
@@ -105,15 +122,32 @@ def _case(tmp_path: Path) -> dict:
         },
         "allowed_experiment_id": "S09C-CLEAN-PAIR",
         "allowed_track_id": "track0_forcing_only_clean_v09",
+        "ledger_snapshot": empty_ledger_snapshot,
         "maximum_attempts": 1,
     }
+    authorization["source_tree"]["tree_sha256"] = _canonical_sha256(
+        authorization["source_tree"]["files"]
+    )
     auth_path = tmp_path / "authorization.json"
     _write(auth_path, authorization)
+    module_paths = {
+        "fair_benchmark.score_clean_pair_v09": str(
+            (REPO_SRC / "fair_benchmark" / "score_clean_pair_v09.py").resolve()
+        )
+    }
     consumption = {
         "status": "consumed_no_retry",
         "authorization_sha256": _canonical_sha256(authorization),
         "maximum_attempts": 1,
         "retry_allowed": False,
+        "launch_snapshot": {
+            "task_id": "independent-score-task",
+            "module_import_probe": {
+                "clean_subprocess": module_paths,
+                "live_process": module_paths,
+                "paths_sha256": _canonical_sha256(module_paths),
+            },
+        },
     }
     consumption_path = tmp_path / "consumption.json"
     _write(consumption_path, consumption)
@@ -149,6 +183,7 @@ def _case(tmp_path: Path) -> dict:
         "ci_high": 0.03,
         "challenger_median": 0.78,
         "baseline_median": 0.76,
+        "win_rate": 0.7,
     }
     holdout = {
         "n": 107,
@@ -158,6 +193,7 @@ def _case(tmp_path: Path) -> dict:
         "ci_high": 0.025,
         "challenger_median": 0.775,
         "baseline_median": 0.76,
+        "win_rate": 0.65,
     }
     ledger_path = tmp_path / "ledger.csv"
     append_attempt(
@@ -191,6 +227,11 @@ def _case(tmp_path: Path) -> dict:
             "leakage_hits": 0,
             "leakage_detail": [],
             "contract_ok": True,
+            "finite_metric_coverage": {
+                "baseline": True,
+                "capacity_control": True,
+                "challenger": True,
+            },
         },
         "capacity_comparison": {
             "baseline_id": "B09-CAPACITY",
@@ -211,6 +252,7 @@ def _case(tmp_path: Path) -> dict:
             "bundle_sha256": bundle["bundle_sha256"],
             "prediction_seal_sha256": bundle["prediction_seal_sha256"],
             "prediction_sha256": HASHES,
+            "answer_key_sha256": authorization["trusted_frozen_inputs"]["answer_key"]["sha256"],
             "basin_file_sha256": _sha256(basin_path),
             "holdout_draw_receipt_sha256": _canonical_sha256(draw),
             "nonce_sha256": partition["nonce_sha256"],
@@ -221,9 +263,17 @@ def _case(tmp_path: Path) -> dict:
             "consumption_canonical_sha256": _canonical_sha256(consumption),
             "trusted_source_tree_sha256": authorization["source_tree"]["tree_sha256"],
             "candidate_source_tree_sha256": bundle["source_bundle"]["tree_sha256"],
+            "module_import_paths_sha256": (
+                consumption["launch_snapshot"]["module_import_probe"]["paths_sha256"]
+            ),
+            "execution_task_id": consumption["launch_snapshot"]["task_id"],
         },
         "ledger": {
-            "before": {"row_count": 0, "sha256": None, "last_row_hash": None},
+            "before": {
+                "row_count": empty_ledger_snapshot["row_count"],
+                "sha256": empty_ledger_snapshot["sha256"],
+                "last_row_hash": empty_ledger_snapshot["last_row_hash"],
+            },
             "after": {
                 "row_count": 1,
                 "sha256": _sha256(ledger_path),
@@ -257,6 +307,7 @@ def _audit(case: dict) -> dict:
         case["bundle"],
         case["basins"],
         case["ledger"],
+        require_canonical_paths=False,
     )
 
 
@@ -283,7 +334,33 @@ def test_final_audit_missing_report_is_incomplete_and_nonretryable(tmp_path):
     assert result["retry_allowed"] is False
 
 
-@pytest.mark.parametrize("tamper", ("ledger", "draw", "consumption_binding", "leak"))
+def test_final_audit_rejects_cloned_noncanonical_artifact_paths(tmp_path):
+    case = _case(tmp_path)
+    result = final_audit.audit_clean_pair_score_final_v09(
+        case["report"],
+        case["authorization"],
+        case["consumption"],
+        case["draw"],
+        case["bundle"],
+        case["basins"],
+        case["ledger"],
+    )
+    assert result["status"] == "REJECT"
+    assert "noncanonical" in result["errors"][0]
+
+
+@pytest.mark.parametrize(
+    "tamper",
+    (
+        "ledger",
+        "draw",
+        "consumption_binding",
+        "provenance",
+        "bundle_hash",
+        "gate",
+        "leak",
+    ),
+)
 def test_final_audit_rejects_integrity_drift_or_sensitive_output(tmp_path, tamper):
     case = _case(tmp_path)
     if tamper == "ledger":
@@ -296,9 +373,21 @@ def test_final_audit_rejects_integrity_drift_or_sensitive_output(tmp_path, tampe
         draw = json.loads(case["draw"].read_text(encoding="utf-8"))
         draw["consumption_file_sha256"] = "9" * 64
         _write(case["draw"], draw)
+    elif tamper == "provenance":
+        report = json.loads(case["report"].read_text(encoding="utf-8"))
+        report["provenance"]["answer_key_sha256"] = "9" * 64
+        _write(case["report"], report)
+    elif tamper == "bundle_hash":
+        bundle = json.loads(case["bundle"].read_text(encoding="utf-8"))
+        bundle["bundle_sha256"] = "9" * 64
+        _write(case["bundle"], bundle)
+    elif tamper == "gate":
+        report = json.loads(case["report"].read_text(encoding="utf-8"))
+        report["primary"]["gate"]["min_effect"] = -1.0
+        _write(case["report"], report)
     else:
         report = json.loads(case["report"].read_text(encoding="utf-8"))
-        report["holdout_ids"] = ["00000000"]
+        report["basin_metrics"] = [0.5] * 531
         _write(case["report"], report)
     result = _audit(case)
     assert result["status"] == "REJECT"

@@ -11,6 +11,35 @@ class CleanPairContractError(ValueError):
     """Raised when the clean-pair contract or its parent protocol drifts."""
 
 
+CLEAN_PAIR_FORBIDDEN_PATTERNS_V09 = [
+    r"usgs_streamflow",
+    r"streamflow_qc",
+    r"camels_hydro",
+    r"QObs",
+    r"_obs_eval\.parquet",
+    r"runoff_ratio",
+    r"baseflow_index",
+    r"\bq_mean\b",
+    r"\bq5\b",
+    r"\bq95\b",
+    r"high_q_freq",
+    r"low_q_freq",
+    r"zero_q_freq",
+    r"hfd_mean",
+    r"slope_fdc",
+    r"track0_forcing_only_baseline_per_basin_nse",
+    r"track0_forcing_only_secret_holdout_basins",
+    r"portfolio_ledger",
+    r"fair_benchmark[/\\]experiments[/\\].*report\.json",
+]
+LEGACY_FROZEN_MANIFEST_SHA256_V09 = (
+    "461eb70e53ed4067eb454a0d72cc198f05ab9797c24d093bf927be849288b44c"
+)
+LEGACY_TRACK_SPEC_SHA256_V09 = (
+    "8fb707cb5e2ec0f8edbf3f191f9ce836d259e8a31286466da63e6e62791388fb"
+)
+
+
 _CONTRACT_ID = "S09C-CLEAN-PAIR"
 _TRACK_ID = "track0_forcing_only_clean_v09"
 _PROTOCOL_ID = "P09-FORMAL"

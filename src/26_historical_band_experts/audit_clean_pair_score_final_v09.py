@@ -37,6 +37,185 @@ _FORBIDDEN_RESULT_KEYS = {
     "qobs",
     "qsim",
 }
+_STAT_KEYS = {
+    "n",
+    "challenger_median",
+    "baseline_median",
+    "median_paired_delta",
+    "win_rate",
+    "wilcoxon_p",
+    "ci_low",
+    "ci_high",
+}
+_PRIMARY_GATE = {
+    "min_effect": 0.01,
+    "max_wilcoxon_p": 0.05,
+    "bootstrap_samples": 10000,
+    "bootstrap_seed": 0,
+    "ci_low_must_exceed": 0.0,
+    "holdout_min_effect": 0.005,
+    "holdout_retention": 0.5,
+}
+
+
+def _require_exact_keys(value: object, expected: set[str], name: str) -> Mapping:
+    if not isinstance(value, Mapping) or set(value) != expected:
+        raise ValueError(f"{name} keys drift")
+    return value
+
+
+def _validate_stat_schema(value: object, name: str) -> None:
+    if not isinstance(value, Mapping):
+        raise ValueError(f"{name} must be an object")
+    keys = set(value)
+    if keys not in (_STAT_KEYS, _STAT_KEYS | {"wilcoxon_p_reason"}):
+        raise ValueError(f"{name} aggregate keys drift")
+    if not isinstance(value["n"], int) or value["n"] < 0:
+        raise ValueError(f"{name} count is invalid")
+    for key in _STAT_KEYS - {"n", "wilcoxon_p"}:
+        item = value[key]
+        if not isinstance(item, (int, float)) or not math.isfinite(float(item)):
+            raise ValueError(f"{name} statistic is nonnumeric or nonfinite: {key}")
+    p_value = value["wilcoxon_p"]
+    if p_value is None:
+        if value.get("wilcoxon_p_reason") != "all_paired_differences_zero":
+            raise ValueError(f"{name} null Wilcoxon value lacks its fixed reason")
+    elif not isinstance(p_value, (int, float)) or not math.isfinite(float(p_value)):
+        raise ValueError(f"{name} Wilcoxon value is nonnumeric or nonfinite")
+    elif "wilcoxon_p_reason" in value:
+        raise ValueError(f"{name} has a reason for a finite Wilcoxon value")
+
+
+def _validate_report_schema(report: Mapping) -> None:
+    _require_exact_keys(
+        report,
+        {
+            "contract_id",
+            "track",
+            "verdict",
+            "reasons",
+            "primary",
+            "capacity_comparison",
+            "historical_reference",
+            "provenance",
+            "ledger",
+            _CALL_COUNT_KEY,
+            "ledger_append_count",
+        },
+        "report",
+    )
+    primary = _require_exact_keys(
+        report["primary"],
+        {
+            "baseline_id",
+            "challenger_id",
+            "gate",
+            "public",
+            "holdout",
+            "coverage_ok",
+            "leakage_hits",
+            "leakage_detail",
+            "contract_ok",
+            "finite_metric_coverage",
+        },
+        "primary",
+    )
+    gate = _require_exact_keys(
+        primary["gate"],
+        set(_PRIMARY_GATE),
+        "primary gate",
+    )
+    if dict(gate) != _PRIMARY_GATE:
+        raise ValueError("primary gate values differ from the frozen contract")
+    _require_exact_keys(
+        primary["finite_metric_coverage"],
+        set(_ROLES),
+        "finite metric coverage",
+    )
+    finite = primary["finite_metric_coverage"]
+    if any(not isinstance(finite[role], bool) for role in _ROLES):
+        raise ValueError("finite metric coverage values must be booleans")
+    if primary["contract_ok"] is not all(finite.values()):
+        raise ValueError("primary contract status differs from finite metric coverage")
+    if (
+        primary["baseline_id"] != "B09-CLASSIC"
+        or primary["challenger_id"] != "E09-CONTINUOUS"
+        or not isinstance(primary["coverage_ok"], bool)
+        or not isinstance(primary["leakage_hits"], int)
+    ):
+        raise ValueError("primary identities or integrity values drift")
+    _validate_stat_schema(primary["public"], "primary public")
+    _validate_stat_schema(primary["holdout"], "primary holdout")
+    leakage_detail = primary["leakage_detail"]
+    if not isinstance(leakage_detail, list) or len(leakage_detail) > 20:
+        raise ValueError("leakage detail schema drift")
+    for index, hit in enumerate(leakage_detail):
+        _require_exact_keys(hit, {"file", "line", "pattern", "text"}, f"leakage hit {index}")
+    if primary["leakage_hits"] < len(leakage_detail):
+        raise ValueError("leakage hit count is smaller than its persisted detail")
+    capacity = _require_exact_keys(
+        report["capacity_comparison"],
+        {
+            "baseline_id",
+            "challenger_id",
+            "verdict_role",
+            "may_affect_primary_verdict",
+            "public",
+            "holdout",
+        },
+        "capacity comparison",
+    )
+    _validate_stat_schema(capacity["public"], "capacity public")
+    _validate_stat_schema(capacity["holdout"], "capacity holdout")
+    if (
+        capacity["baseline_id"] != "B09-CAPACITY"
+        or capacity["challenger_id"] != "E09-CONTINUOUS"
+    ):
+        raise ValueError("capacity comparison identities drift")
+    _require_exact_keys(
+        report["historical_reference"],
+        {"status", "median_nse", "qualifying", "may_affect_verdict"},
+        "historical reference",
+    )
+    if report["historical_reference"]["median_nse"] != 0.759225:
+        raise ValueError("historical nonqualifying reference value drift")
+    _require_exact_keys(
+        report["provenance"],
+        {
+            "contract_sha256",
+            "bundle_sha256",
+            "prediction_seal_sha256",
+            "prediction_sha256",
+            "answer_key_sha256",
+            "basin_file_sha256",
+            "holdout_draw_receipt_sha256",
+            "nonce_sha256",
+            "partition_salt_sha256",
+            "holdout_set_sha256",
+            "authorization_sha256",
+            "consumption_file_sha256",
+            "consumption_canonical_sha256",
+            "trusted_source_tree_sha256",
+            "candidate_source_tree_sha256",
+            "module_import_paths_sha256",
+            "execution_task_id",
+        },
+        "report provenance",
+    )
+    ledger = _require_exact_keys(report["ledger"], {"before", "after", "new_row_hash"}, "report ledger")
+    snapshot_keys = {"row_count", "sha256", "last_row_hash"}
+    _require_exact_keys(ledger["before"], snapshot_keys, "ledger before")
+    _require_exact_keys(ledger["after"], snapshot_keys, "ledger after")
+    if (
+        report["contract_id"] != _EXPERIMENT_ID
+        or report["track"] != _TRACK_ID
+        or report[_CALL_COUNT_KEY] != 1
+        or report["ledger_append_count"] != 1
+        or not isinstance(report["reasons"], list)
+        or not report["reasons"]
+        or any(not isinstance(reason, str) for reason in report["reasons"])
+    ):
+        raise ValueError("report identity, execution count, or reason schema drift")
 
 
 def _canonical_bytes(value: Mapping) -> bytes:
@@ -69,6 +248,36 @@ def _strict_json(path: Path) -> dict:
     if not isinstance(payload, dict):
         raise ValueError(f"JSON root must be an object: {path}")
     return payload
+
+
+def _verify_canonical_final_paths(paths: Mapping[str, Path]) -> dict:
+    formal_root = REPO_ROOT / "results" / "26_historical_band_experts" / "formal_v09"
+    main_repo_root = REPO_ROOT.parents[1]
+    expected = {
+        "report": formal_root / "clean_pair_score_attempt_01" / "report.json",
+        "authorization": (
+            formal_root / "authorizations" / "clean_pair_scoring_authorization.json"
+        ),
+        "consumption": formal_root / "clean_pair_scoring_authorization_consumed.json",
+        "holdout_draw": formal_root / "clean_pair_holdout_draw_receipt.json",
+        "bundle": formal_root / "predictions" / "clean_pair_bundle.json",
+        "basins": (
+            main_repo_root
+            / "src"
+            / "fair_benchmark"
+            / "frozen"
+            / "track0_forcing_only_basins.txt"
+        ),
+        "ledger": WORKTREE_SRC / "fair_benchmark" / "registry" / "portfolio_ledger.csv",
+    }
+    drift = [
+        name
+        for name, expected_path in expected.items()
+        if paths[name].resolve() != expected_path.resolve()
+    ]
+    if drift:
+        raise ValueError(f"noncanonical final-audit path(s): {drift}")
+    return {name: str(path.resolve()) for name, path in expected.items()}
 
 
 def _prediction_hashes(bundle: Mapping) -> dict:
@@ -206,8 +415,26 @@ def _verify_receipts_and_partition(
     bundle: Mapping,
     basin_ids: list[str],
     basin_file_sha256: str,
+    require_canonical_module_paths: bool,
 ) -> dict:
     prediction_hashes = _prediction_hashes(bundle)
+    bundle_payload = {key: value for key, value in bundle.items() if key != "bundle_sha256"}
+    if (
+        bundle.get("bundle_sha256") != _canonical_sha256(bundle_payload)
+        or bundle.get("status") != "complete_clean_pair_bundle"
+        or bundle.get("contract_id") != _EXPERIMENT_ID
+        or bundle.get("track_id") != _TRACK_ID
+        or report.get("contract_id") != _EXPERIMENT_ID
+        or report.get("track") != _TRACK_ID
+    ):
+        raise ValueError("bundle self-hash, contract, track, or report identity drift")
+    if bundle.get("postseal_holdout") != {
+        "method": "postseal_nonce_sha256_rank_v1",
+        "status": "awaiting_authorized_nonce_draw",
+        "holdout_count": 107,
+        "public_count": 424,
+    }:
+        raise ValueError("bundle post-seal holdout contract drift")
     if (
         authorization.get("status") != "authorized_clean_pair_score"
         or authorization.get("maximum_attempts") != 1
@@ -278,6 +505,13 @@ def _verify_receipts_and_partition(
     source_bundle = bundle.get("source_bundle")
     if not isinstance(source_tree, Mapping) or not isinstance(source_bundle, Mapping):
         raise ValueError("trusted or candidate source tree binding is missing")
+    source_files = source_tree.get("files")
+    if (
+        not isinstance(source_files, Mapping)
+        or not source_files
+        or source_tree.get("tree_sha256") != _canonical_sha256(source_files)
+    ):
+        raise ValueError("trusted source tree self-hash drift")
     expected_provenance.update({
         "authorization_sha256": _canonical_sha256(authorization),
         "consumption_file_sha256": consumption_file_sha256,
@@ -285,8 +519,56 @@ def _verify_receipts_and_partition(
         "trusted_source_tree_sha256": source_tree.get("tree_sha256"),
         "candidate_source_tree_sha256": source_bundle.get("tree_sha256"),
     })
+    trusted_answer = authorization.get("trusted_frozen_inputs", {}).get("answer_key", {})
+    launch_snapshot = consumption.get("launch_snapshot")
+    approval = authorization.get("approval")
+    if not isinstance(launch_snapshot, Mapping) or not isinstance(approval, Mapping):
+        raise ValueError("launch snapshot or approval provenance is missing")
+    module_probe = launch_snapshot.get("module_import_probe")
+    execution_task_id = launch_snapshot.get("task_id")
+    if (
+        not isinstance(module_probe, Mapping)
+        or not isinstance(execution_task_id, str)
+        or not execution_task_id
+        or execution_task_id == approval.get("task_id")
+    ):
+        raise ValueError("independent execution task or module import probe drift")
+    if set(module_probe) != {"clean_subprocess", "paths_sha256", "live_process"}:
+        raise ValueError("module import probe keys drift")
+    clean_paths = module_probe["clean_subprocess"]
+    live_paths = module_probe["live_process"]
+    if (
+        not isinstance(clean_paths, Mapping)
+        or not clean_paths
+        or clean_paths != live_paths
+        or module_probe["paths_sha256"] != _canonical_sha256(clean_paths)
+    ):
+        raise ValueError("clean-subprocess and live module import paths differ or have a bad hash")
+    if require_canonical_module_paths:
+        expected_module_paths = {
+            relative_path.removesuffix(".py").replace("/", "."): str(
+                (WORKTREE_SRC / relative_path).resolve()
+            )
+            for relative_path in source_files
+        }
+        if clean_paths != expected_module_paths:
+            raise ValueError("module import paths differ from the authorized trusted source files")
+    expected_provenance.update({
+        "answer_key_sha256": trusted_answer.get("sha256"),
+        "module_import_paths_sha256": module_probe.get("paths_sha256"),
+        "execution_task_id": execution_task_id,
+    })
     if any(provenance.get(key) != value for key, value in expected_provenance.items()):
         raise ValueError("report provenance binding drift")
+    authorized_ledger = authorization.get("ledger_snapshot")
+    if not isinstance(authorized_ledger, Mapping):
+        raise ValueError("authorized ledger snapshot is missing")
+    report_before = report.get("ledger", {}).get("before", {})
+    if any(
+        report_before.get(key) != authorized_ledger.get(key)
+        for key in ("row_count", "sha256", "last_row_hash")
+    ):
+        raise ValueError("report pre-score ledger snapshot differs from the authorization")
     return {
         "method": partition["method"],
         "holdout_count": partition["holdout_count"],
@@ -339,6 +621,8 @@ def audit_clean_pair_score_final_v09(
     bundle_path: str | Path,
     basin_file_path: str | Path,
     ledger_path: str | Path,
+    *,
+    require_canonical_paths: bool = True,
 ) -> dict:
     """Audit one persisted result without opening target or prediction values."""
     paths = {
@@ -362,11 +646,17 @@ def audit_clean_pair_score_final_v09(
         result["errors"].append(f"missing required final artifact(s): {missing}")
         return result
     try:
+        canonical_paths = (
+            _verify_canonical_final_paths(paths)
+            if require_canonical_paths
+            else {"canonical_path_check_skipped": True}
+        )
         report = _strict_json(paths["report"])
         authorization = _strict_json(paths["authorization"])
         consumption = _strict_json(paths["consumption"])
         draw = _strict_json(paths["holdout_draw"])
         bundle = _strict_json(paths["bundle"])
+        _validate_report_schema(report)
         basin_file_sha256 = _sha256(paths["basins"])
         basin_ids = [
             value.strip()
@@ -389,6 +679,7 @@ def audit_clean_pair_score_final_v09(
             bundle,
             basin_ids,
             basin_file_sha256,
+            require_canonical_paths,
         )
         gate = _verify_gate(report)
         ledger = _verify_ledger(report, paths["ledger"], _prediction_hashes(bundle))
@@ -400,6 +691,7 @@ def audit_clean_pair_score_final_v09(
             "ledger_rows_added": 1,
             "ledger": ledger,
             "postseal_holdout": partition,
+            "canonical_paths": canonical_paths,
             **descriptive,
         })
     except Exception as exc:

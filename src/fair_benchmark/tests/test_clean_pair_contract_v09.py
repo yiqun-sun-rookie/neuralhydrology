@@ -6,10 +6,12 @@ from pathlib import Path
 import pytest
 
 from fair_benchmark.clean_pair_contract_v09 import (
+    CLEAN_PAIR_FORBIDDEN_PATTERNS_V09,
     CleanPairContractError,
     load_clean_pair_contract_v09,
     validate_clean_pair_contract_v09,
 )
+from fair_benchmark.leakage import DEFAULT_FORBIDDEN
 
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -62,6 +64,15 @@ def test_clean_pair_contract_freezes_roles_gates_and_one_call():
     assert validated["postseal_holdout"]["holdout_count"] == 107
     assert validated["postseal_holdout"]["public_count"] == 424
     assert validated["legacy_nonqualifying_inputs"]["secret_holdout"]["qualifying"] is False
+
+
+def test_clean_pair_contract_freezes_complete_forbidden_pattern_order():
+    assert CLEAN_PAIR_FORBIDDEN_PATTERNS_V09 == list(DEFAULT_FORBIDDEN) + [
+        r"track0_forcing_only_baseline_per_basin_nse",
+        r"track0_forcing_only_secret_holdout_basins",
+        r"portfolio_ledger",
+        r"fair_benchmark[/\\]experiments[/\\].*report\.json",
+    ]
 
 
 @pytest.mark.parametrize(

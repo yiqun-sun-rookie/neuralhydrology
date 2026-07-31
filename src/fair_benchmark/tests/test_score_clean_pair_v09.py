@@ -8,7 +8,8 @@ import pandas as pd
 import pytest
 
 from fair_benchmark import score_clean_pair_v09
-from fair_benchmark.ledger import count_attempts
+from fair_benchmark.ledger import append_attempt, count_attempts, read_rows
+from fair_benchmark.clean_pair_authorization_v09 import clean_pair_ledger_snapshot_v09
 from fair_benchmark.postseal_holdout_v09 import (
     derive_postseal_holdout_v09,
     public_partition_summary,
@@ -55,8 +56,15 @@ def _canonical_sha256(value: dict) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
-def _case(tmp_path: Path, *, zero_delta: bool = False) -> dict:
+def _case(
+    tmp_path: Path,
+    *,
+    zero_delta: bool = False,
+    reverse_basin_file: bool = False,
+) -> dict:
     basin_ids = [f"{index:08d}" for index in range(531)]
+    if reverse_basin_file:
+        basin_ids.reverse()
     dates = pd.date_range("2000-01-01", periods=4, freq="D")
     frozen_root = tmp_path / "frozen"
     frozen_root.mkdir()
@@ -70,7 +78,11 @@ def _case(tmp_path: Path, *, zero_delta: bool = False) -> dict:
         simulations = {
             "baseline": obs + 0.40,
             "capacity_control": obs + 0.20,
-            "challenger": obs + (0.40 if zero_delta else 0.05),
+            "challenger": obs + (
+                0.40
+                if zero_delta
+                else 0.03 + (int(basin) % 17) * 0.004
+            ),
         }
         for date, value in zip(dates, obs):
             obs_rows.append({
@@ -208,6 +220,7 @@ def _run(case: dict, ledger_path: Path) -> dict:
         prediction_root=case["prediction_root"],
         source_bundle=case["source_bundle"],
         ledger_path=ledger_path,
+        authorized_ledger_snapshot=clean_pair_ledger_snapshot_v09(ledger_path),
         timestamp="2026-07-31T00:00:00",
     )
 
@@ -281,6 +294,41 @@ def test_source_bundle_forbidden_access_forces_hold(tmp_path):
     assert report["primary"]["leakage_hits"] >= 1
 
 
+def test_precomputed_bootstrap_uses_existing_scorer_basin_order(tmp_path):
+    case = _case(tmp_path, reverse_basin_file=True)
+    report = _run(case, tmp_path / "ledger.csv")
+    assert report["score_submission_call_count"] == 1
+    assert report["primary"]["public"]["n"] == 424
+    assert report["primary"]["holdout"]["n"] == 107
+
+
+def test_ledger_change_during_metric_computation_burns_no_clean_pair_row(tmp_path, monkeypatch):
+    case = _case(tmp_path)
+    ledger = tmp_path / "ledger.csv"
+    real_load = score_clean_pair_v09.load_predictions
+    calls = {"count": 0}
+
+    def mutate_ledger_after_read(path):
+        result = real_load(path)
+        calls["count"] += 1
+        if calls["count"] == 1:
+            append_attempt(
+                ledger,
+                {
+                    "timestamp": "2026-07-31T00:00:01+08:00",
+                    "experiment_id": "OTHER-SCORE",
+                    "track": "other",
+                    "verdict": "HOLD",
+                },
+            )
+        return result
+
+    monkeypatch.setattr(score_clean_pair_v09, "load_predictions", mutate_ledger_after_read)
+    with pytest.raises(CleanPairScoreError, match="ledger changed during metric"):
+        _run(case, ledger)
+    assert all(row.get("experiment_id") != "S09C-CLEAN-PAIR" for row in read_rows(ledger))
+
+
 def test_one_attempt_entry_has_one_existing_scorer_call_and_fail_closed_order():
     source = Path(score_clean_pair_v09.__file__).read_text(encoding="utf-8")
     assert source.count("score_" + "submission(") == 1
@@ -291,6 +339,44 @@ def test_one_attempt_entry_has_one_existing_scorer_call_and_fail_closed_order():
     persist = run_body.index("_exclusive_atomic_report(")
     assert consume < draw < score < persist
     assert 'parser.add_argument("--execution-task-id", required=True)' in run_body
+
+
+@pytest.mark.parametrize(
+    "field",
+    ("ledger_path", "consumption_path", "draw_path", "out_path"),
+)
+def test_one_attempt_entry_rejects_any_alternate_mutable_path(tmp_path, field):
+    worktree_src = Path(score_clean_pair_v09.__file__).resolve().parents[1]
+    worktree_root = worktree_src.parent
+    formal_root = worktree_root / "results" / "26_historical_band_experts" / "formal_v09"
+    paths = {
+        "worktree_src": worktree_src,
+        "authorized_output_root": (
+            "results/26_historical_band_experts/formal_v09/clean_pair_score_attempt_01"
+        ),
+        "contract_path": (
+            worktree_src
+            / "26_historical_band_experts"
+            / "configs"
+            / "formal_v09_clean_pair_scoring_contract.json"
+        ),
+        "bundle_path": formal_root / "predictions" / "clean_pair_bundle.json",
+        "authorization_path": (
+            formal_root / "authorizations" / "clean_pair_scoring_authorization.json"
+        ),
+        "prediction_root": formal_root,
+        "source_bundle": formal_root / "predictions" / "source_bundle",
+        "ledger_path": worktree_src / "fair_benchmark" / "registry" / "portfolio_ledger.csv",
+        "consumption_path": formal_root / "clean_pair_scoring_authorization_consumed.json",
+        "draw_path": formal_root / "clean_pair_holdout_draw_receipt.json",
+        "out_path": formal_root / "clean_pair_score_attempt_01" / "report.json",
+    }
+    canonical = score_clean_pair_v09._validate_authorized_score_paths_v09(**paths)
+    assert canonical["out"].endswith("clean_pair_score_attempt_01\\report.json")
+    with pytest.raises(CleanPairScoreError, match="noncanonical"):
+        score_clean_pair_v09._validate_authorized_score_paths_v09(
+            **dict(paths, **{field: tmp_path / f"alternate_{field}"})
+        )
 
 
 @pytest.mark.parametrize("role", ("baseline", "capacity_control", "challenger"))
