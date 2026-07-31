@@ -734,10 +734,17 @@ SHA-256；实际启动仍重新检查当前可用主机内存、图形处理器�
 它逐项启动子进程，等待退出并只做运行完整性审核。任一子进程非零退出、封存失败或资源门失败时，
 停止后续运行并写`training_attempt_01.failure.json`；不删除已完成运行，不自动重试。
 
-24个运行的共同父目录固定为
-`results/26_historical_band_experts/formal_v09/training`；每个最终目录为
-`training/<run_id>`，临时目录为`training/<run_id>.building`，失败目录为
-`training/<run_id>.failed`。运行标识必须来自冻结顺序文件，不能由目录扫描或已完成结果反推。
+24个运行不得另造统一`training/`父目录。父目录必须逐模型与三份已冻结配置的`results_root`
+完全相等：
+
+- `B09-CLASSIC`：`results/26_historical_band_experts/formal_v09/classic`；
+- `B09-CAPACITY`：`results/26_historical_band_experts/formal_v09/capacity`；
+- `E09-CONTINUOUS`：`results/26_historical_band_experts/formal_v09/continuous`。
+
+每个最终目录为`<results_root>/seed_<seed>`，临时目录为
+`<results_root>/seed_<seed>.building`，失败目录为`<results_root>/seed_<seed>.failed`。
+运行标识、模型族、随机数和父目录必须从冻结顺序文件与对应模型配置共同验证，不能由目录扫描、
+已完成结果或编排器默认值反推。
 
 每次子进程退出后必须释放模型、关闭内存映射并确认没有残留正式训练进程，才允许启动下一项。
 编排器不读取训练目标值、模型预测或性能指标。
@@ -789,8 +796,8 @@ git commit -m "Feat: Add serial formal v09 training suite"
 
 **Interfaces:**
 - `audit_training_run_v09(run_root, expected_spec, input_seal, source_seal) -> dict`
-- `write_history_state_diagnostics_v09(input_root, training_root, output_root, device) -> dict`
-- `audit_history_state_diagnostics_v09(input_root, training_root, diagnostic_root, report_path, device) -> dict`
+- `write_history_state_diagnostics_v09(input_root, formal_root, run_order, output_root, device) -> dict`
+- `audit_history_state_diagnostics_v09(input_root, formal_root, run_order, diagnostic_root, report_path, device) -> dict`
 - `audit_training_suite_v09(formal_root, run_order, report_path) -> dict`
 - `seal_training_suite_v09(formal_root, audit_report) -> dict`
 
@@ -1013,7 +1020,7 @@ python src\26_historical_band_experts\run_formal_training_v09.py `
 python src\26_historical_band_experts\state_diagnostics_formal_v09.py `
   --protocol src\26_historical_band_experts\configs\formal_v09_protocol.json `
   --input-root results\26_historical_band_experts\formal_v09\input_attempt_01 `
-  --training-root results\26_historical_band_experts\formal_v09\training `
+  --formal-root results\26_historical_band_experts\formal_v09 `
   --run-order src\26_historical_band_experts\configs\formal_v09_run_order.json `
   --output-root results\26_historical_band_experts\formal_v09\state_diagnostics `
   --device cuda:0
@@ -1025,14 +1032,16 @@ python src\26_historical_band_experts\state_diagnostics_formal_v09.py `
 python src\26_historical_band_experts\audit_state_diagnostics_formal_v09.py `
   --protocol src\26_historical_band_experts\configs\formal_v09_protocol.json `
   --input-root results\26_historical_band_experts\formal_v09\input_attempt_01 `
-  --training-root results\26_historical_band_experts\formal_v09\training `
+  --formal-root results\26_historical_band_experts\formal_v09 `
+  --run-order src\26_historical_band_experts\configs\formal_v09_run_order.json `
   --diagnostic-root results\26_historical_band_experts\formal_v09\state_diagnostics `
   --report results\26_historical_band_experts\formal_v09\state_diagnostics_external_audit.json `
   --device cuda:0
 ```
 
-状态诊断只接受24个已经各自封存的运行目录和冻结运行顺序；最终`training_seal.json`此时必须
-不存在。状态诊断及其外部审核通过后，才运行总训练审核并生成最终封存：
+状态诊断只接受三份模型配置所指目录中的24个已封存运行和冻结运行顺序；任何额外统一
+`training/`目录、父目录漂移或目录扫描推断都拒绝。最终`training_seal.json`此时必须不存在。
+状态诊断及其外部审核通过后，才运行总训练审核并生成最终封存：
 
 ```powershell
 python src\26_historical_band_experts\audit_formal_training_v09.py `
