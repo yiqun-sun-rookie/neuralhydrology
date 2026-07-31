@@ -145,13 +145,13 @@ UTF-8、无末尾换行的SHA-256固定为：
 主训练直接批准文本固定为：
 
 ```text
-批准版本09正式主训练阶段；仅授权B09-CLASSIC、B09-CAPACITY和E09-CONTINUOUS各八个固定随机数的一次训练，不批准正式预测或评分。
+批准版本09正式主训练阶段；仅授权B09-CLASSIC、B09-CAPACITY和E09-CONTINUOUS各八个固定随机数的一次训练，并授权训练完成后的预注册状态诊断和独立重放审核；不批准正式预测或评分。
 ```
 
 UTF-8、无末尾换行的SHA-256固定为：
 
 ```text
-ba2ad43c7e363729386b53e0ffaa65c39ad73fd6b82d5a92aa3e95a506a76623
+5c6037b557a6ae4bd6bcf0ce99eb78be70c0285a5589ca0707f88a4e92a73d8d
 ```
 
 - [ ] **Step 2: 运行授权测试并确认失败**
@@ -200,6 +200,8 @@ Expected: 新增严格嵌套和主训练作用域测试失败；既有输入收�
 - `scope="FORMAL-MAIN-24"`
 - `maximum_attempts=1`
 - `allowed_runs`与Task 5的24项顺序完全一致；
+- `post_training_state_diagnostics="preregistered_e09_continuous_8_seed_read_only"`；
+- `state_diagnostics_independent_replay_authorized=true`，但只有24项全部封存后才能执行；
 - `formal_prediction_generation_authorized=false`
 - `official_scoring_authorized=false`
 
@@ -689,6 +691,7 @@ Run:
 
 ```powershell
 pytest src/26_historical_band_experts/tests/test_train_formal_v09.py `
+  src/26_historical_band_experts/tests/test_resource_preflight_formal_v09.py `
   src/26_historical_band_experts/tests/test_run_formal_training_v09.py -q
 ```
 
@@ -731,6 +734,11 @@ SHA-256；实际启动仍重新检查当前可用主机内存、图形处理器�
 它逐项启动子进程，等待退出并只做运行完整性审核。任一子进程非零退出、封存失败或资源门失败时，
 停止后续运行并写`training_attempt_01.failure.json`；不删除已完成运行，不自动重试。
 
+24个运行的共同父目录固定为
+`results/26_historical_band_experts/formal_v09/training`；每个最终目录为
+`training/<run_id>`，临时目录为`training/<run_id>.building`，失败目录为
+`training/<run_id>.failed`。运行标识必须来自冻结顺序文件，不能由目录扫描或已完成结果反推。
+
 每次子进程退出后必须释放模型、关闭内存映射并确认没有残留正式训练进程，才允许启动下一项。
 编排器不读取训练目标值、模型预测或性能指标。
 
@@ -740,6 +748,7 @@ Run:
 
 ```powershell
 pytest src/26_historical_band_experts/tests/test_train_formal_v09.py `
+  src/26_historical_band_experts/tests/test_resource_preflight_formal_v09.py `
   src/26_historical_band_experts/tests/test_run_formal_training_v09.py -q
 ```
 
@@ -749,8 +758,10 @@ Expected: PASS。
 
 ```powershell
 git add src/26_historical_band_experts/configs/formal_v09_run_order.json `
+  src/26_historical_band_experts/resource_preflight_formal_v09.py `
   src/26_historical_band_experts/train_formal_v09.py `
   src/26_historical_band_experts/run_formal_training_v09.py `
+  src/26_historical_band_experts/tests/test_resource_preflight_formal_v09.py `
   src/26_historical_band_experts/tests/test_train_formal_v09.py `
   src/26_historical_band_experts/tests/test_run_formal_training_v09.py
 git commit -m "Feat: Add serial formal v09 training suite"
@@ -766,6 +777,7 @@ git commit -m "Feat: Add serial formal v09 training suite"
 - Create after execution approval: `src/26_historical_band_experts/audit_state_diagnostics_formal_v09.py`
 - Test: `src/26_historical_band_experts/tests/test_audit_formal_training_v09.py`
 - Test: `src/26_historical_band_experts/tests/test_state_diagnostics_formal_v09.py`
+- Test: `src/26_historical_band_experts/tests/test_audit_state_diagnostics_formal_v09.py`
 - Generated, not tracked:
   `results/26_historical_band_experts/formal_v09/state_diagnostics/`
 - Generated, not tracked:
@@ -807,10 +819,12 @@ git commit -m "Feat: Add serial formal v09 training suite"
 Run:
 
 ```powershell
-pytest src/26_historical_band_experts/tests/test_audit_formal_training_v09.py -q
+pytest src/26_historical_band_experts/tests/test_audit_formal_training_v09.py `
+  src/26_historical_band_experts/tests/test_state_diagnostics_formal_v09.py `
+  src/26_historical_band_experts/tests/test_audit_state_diagnostics_formal_v09.py -q
 ```
 
-Expected: FAIL，原因是总审核器尚不存在。
+Expected: FAIL，原因是总审核器、状态诊断器和独立重放审核器尚不存在。
 
 - [ ] **Step 3: 实现独立审核和总封存**
 
@@ -842,7 +856,9 @@ Expected: FAIL，原因是总审核器尚不存在。
 Run:
 
 ```powershell
-pytest src/26_historical_band_experts/tests/test_audit_formal_training_v09.py -q
+pytest src/26_historical_band_experts/tests/test_audit_formal_training_v09.py `
+  src/26_historical_band_experts/tests/test_state_diagnostics_formal_v09.py `
+  src/26_historical_band_experts/tests/test_audit_state_diagnostics_formal_v09.py -q
 ```
 
 Expected: PASS。
@@ -851,7 +867,11 @@ Expected: PASS。
 
 ```powershell
 git add src/26_historical_band_experts/audit_formal_training_v09.py `
-  src/26_historical_band_experts/tests/test_audit_formal_training_v09.py
+  src/26_historical_band_experts/state_diagnostics_formal_v09.py `
+  src/26_historical_band_experts/audit_state_diagnostics_formal_v09.py `
+  src/26_historical_band_experts/tests/test_audit_formal_training_v09.py `
+  src/26_historical_band_experts/tests/test_state_diagnostics_formal_v09.py `
+  src/26_historical_band_experts/tests/test_audit_state_diagnostics_formal_v09.py
 git commit -m "Feat: Add formal v09 training audit"
 ```
 
@@ -961,7 +981,9 @@ python src\26_historical_band_experts\audit_strict_formal_v09.py `
 - [ ] **Step 5: 请求并固化主训练授权**
 
 只有严格嵌套审计通过且用户逐字发送Task 1给出的主训练批准文本后，才创建主训练收据。收据必须
-继续绑定同一独立合成资源预检报告，并新增严格嵌套运行封存和外部审核哈希，然后提交：
+继续绑定同一独立合成资源预检报告，并新增严格嵌套运行封存、外部审核哈希和冻结状态诊断预注册
+文件哈希。该批准同时明确允许24项全部封存后的只读状态诊断和独立重放，不允许提前诊断或生成
+正式期流量预测。然后提交：
 
 ```powershell
 git add src/26_historical_band_experts/configs/formal_v09_training_authorization.json `
@@ -984,6 +1006,33 @@ python src\26_historical_band_experts\run_formal_training_v09.py `
 监控只报告运行标识、轮次、更新数、内存、显存、进程状态和哈希完整性，不报告候选优劣或性能。
 
 - [ ] **Step 7: 独立审核并封存全部训练**
+
+先在24项全部完成后执行预注册状态诊断：
+
+```powershell
+python src\26_historical_band_experts\state_diagnostics_formal_v09.py `
+  --protocol src\26_historical_band_experts\configs\formal_v09_protocol.json `
+  --input-root results\26_historical_band_experts\formal_v09\input_attempt_01 `
+  --training-root results\26_historical_band_experts\formal_v09\training `
+  --run-order src\26_historical_band_experts\configs\formal_v09_run_order.json `
+  --output-root results\26_historical_band_experts\formal_v09\state_diagnostics `
+  --device cuda:0
+```
+
+诊断进程不得读取训练目标、执行近期路径或生成流量输出。随后由另一个独立进程全量重放：
+
+```powershell
+python src\26_historical_band_experts\audit_state_diagnostics_formal_v09.py `
+  --protocol src\26_historical_band_experts\configs\formal_v09_protocol.json `
+  --input-root results\26_historical_band_experts\formal_v09\input_attempt_01 `
+  --training-root results\26_historical_band_experts\formal_v09\training `
+  --diagnostic-root results\26_historical_band_experts\formal_v09\state_diagnostics `
+  --report results\26_historical_band_experts\formal_v09\state_diagnostics_external_audit.json `
+  --device cuda:0
+```
+
+状态诊断只接受24个已经各自封存的运行目录和冻结运行顺序；最终`training_seal.json`此时必须
+不存在。状态诊断及其外部审核通过后，才运行总训练审核并生成最终封存：
 
 ```powershell
 python src\26_historical_band_experts\audit_formal_training_v09.py `

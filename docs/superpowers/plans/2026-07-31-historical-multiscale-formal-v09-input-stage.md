@@ -11,15 +11,23 @@
 ## Global Constraints
 
 - 未收到用户在当前对话中逐字回复
-  `批准版本09正式输入生成阶段；不批准训练、正式预测或评分。`
-  前，不执行本计划的任何代码或数据生成步骤。
+  `批准版本09正式输入代码实现与合成测试；不批准生成正式输入、训练、正式预测或评分。`
+  前，不实现本计划的代码，也不运行新增合成测试。
 - 上述无换行 UTF-8 文本的 SHA-256 必须为
+  `4cc15515f33ee2dc20ab09d4812fa566bc83bd41f5806d8e0e6faba25df6040a`。
+- 该实施批准只允许完成Task 1至Task 5的代码、合成测试、只读真实源预检和独立代码审核；不得创建
+  生产授权收据、消费授权或生成任何真实输入产物。
+- 全部实现、完整局部测试、只读预检和独立代码审核通过后，还必须另行收到用户逐字回复
+  `批准版本09正式输入生成阶段；不批准训练、正式预测或评分。`
+  才能创建一次性生产收据和执行Task 6的真实输入生成。该无换行 UTF-8 文本的 SHA-256 必须为
   `a9ba69f6ee0fcd17bcfc5313140c98bdd483ad6b9f7a3ef3d7d3bcdfe46a4c7d`。
 - 输入授权收据不得预填历史任务标识。它必须在未来收到上述逐字批准后，从该条批准所在任务的可信
   元数据写入实际任务标识和批准时间；独立审核必须回查该任务中确实存在批准文本，不能把版本08
   内部确认或任何更早消息推断为正式输入授权。
-- 输入授权必须绑定批准时的可执行源码树SHA-256。该树只包含正式输入实际运行的Python文件和科学
-  配置，不包含任何阶段授权收据、审计文档或结果目录；这样既避免自引用，又防止批准后替换代码。
+- 输入生产授权必须绑定收到生产批准时已经实现、测试、提交并审核通过的可执行源码树SHA-256。
+  该树只包含正式输入实际运行的Python文件和科学配置，不包含任何阶段授权收据、审计文档或结果
+  目录；这样既避免自引用，又防止批准后替换代码。生产批准后不得再修改该树；任何修改都使收据
+  无效并要求重新审核和重新批准。
 - 冻结协议文件保持
   `src/26_historical_band_experts/configs/formal_v09_protocol.json`，
   SHA-256 保持
@@ -77,8 +85,8 @@
 ### Task 1: 增加独立的阶段授权凭据
 
 **Files:**
-- Create: `src/26_historical_band_experts/stage_authorization_v09.py`
-- Modify: `src/26_historical_band_experts/launch_gate_v09.py`
+- Create after implementation approval: `src/26_historical_band_experts/stage_authorization_v09.py`
+- Modify after implementation approval: `src/26_historical_band_experts/launch_gate_v09.py`
 - Create after direct approval: `src/26_historical_band_experts/configs/formal_v09_input_authorization.json`
 - Test: `src/26_historical_band_experts/tests/test_stage_authorization_v09.py`
 - Modify: `src/26_historical_band_experts/tests/test_launch_gate_v09.py`
@@ -384,7 +392,10 @@ git commit -m "Feat: Add external formal v09 stage authorization"
 - Produces: `digest_pairs_v09(pairs) -> str`。
 - Produces: `atomic_json(path, payload) -> None`。
 - Produces: `environment_fingerprint_v09(repo_root) -> dict`。
-- Produces: `promote_complete_directory_v09(building_root, final_root) -> None`。
+- Produces:
+  `executable_tree_manifest_v09(repo_root, relative_paths) -> dict`。
+- Produces:
+  `promote_complete_directory_v09(building_root, final_root, expected_relative_files) -> None`。
 
 - [ ] **Step 1: 写原子性和指纹失败测试**
 
@@ -397,6 +408,30 @@ def test_atomic_json_refuses_existing_destination(tmp_path):
     with pytest.raises(FileExistsError):
         atomic_json(path, {"status": "complete"})
     assert path.read_text(encoding="utf-8") == "preserve"
+
+
+def test_atomic_json_rejects_nonfinite_values(tmp_path):
+    from artifact_v09 import atomic_json
+
+    with pytest.raises(ValueError):
+        atomic_json(tmp_path / "manifest.json", {"value": float("nan")})
+
+
+def test_executable_tree_is_path_set_and_order_bound(tmp_path):
+    from artifact_v09 import executable_tree_manifest_v09
+
+    (tmp_path / "a.py").write_text("a = 1\n", encoding="utf-8")
+    (tmp_path / "b.py").write_text("b = 1\n", encoding="utf-8")
+    first = executable_tree_manifest_v09(tmp_path, ("a.py", "b.py"))
+    with pytest.raises(ValueError):
+        executable_tree_manifest_v09(tmp_path, ("b.py", "a.py"))
+    assert first["relative_paths"] == ["a.py", "b.py"]
+    assert set(first) == {
+        "algorithm",
+        "relative_paths",
+        "file_sha256",
+        "tree_sha256",
+    }
 
 
 def test_environment_fingerprint_contains_reproducibility_keys(repo_root):
@@ -446,7 +481,15 @@ def test_directory_promotion_requires_complete_verified_seal(tmp_path):
     building.mkdir()
     (building / "manifest.json").write_text('{"status":"built_pending_audit"}\n', encoding="utf-8")
     with pytest.raises(FileNotFoundError):
-        promote_complete_directory_v09(building, tmp_path / "input_attempt_01")
+        promote_complete_directory_v09(
+            building,
+            tmp_path / "input_attempt_01",
+            expected_relative_files=(
+                "input_audit.json",
+                "manifest.json",
+                "seal.json",
+            ),
+        )
 
     (building / "input_audit.json").write_text(
         '{"status":"complete_input_audit"}\n',
@@ -459,7 +502,15 @@ def test_directory_promotion_requires_complete_verified_seal(tmp_path):
             "input_audit.json": sha256_file(building / "input_audit.json"),
         },
     })
-    promote_complete_directory_v09(building, tmp_path / "input_attempt_01")
+    promote_complete_directory_v09(
+        building,
+        tmp_path / "input_attempt_01",
+        expected_relative_files=(
+            "input_audit.json",
+            "manifest.json",
+            "seal.json",
+        ),
+    )
 ```
 
 - [ ] **Step 2: 运行工具测试并确认失败**
@@ -503,6 +554,34 @@ def digest_pairs_v09(pairs: Sequence[tuple[str, str]]) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
+def executable_tree_manifest_v09(
+    repo_root: str | Path,
+    relative_paths: Sequence[str],
+) -> dict:
+    root = Path(repo_root).resolve()
+    paths = tuple(str(path).replace("\\", "/") for path in relative_paths)
+    if tuple(sorted(paths)) != paths or len(set(paths)) != len(paths):
+        raise ValueError("executable paths must be unique and sorted")
+    pairs = []
+    for relative in paths:
+        candidate = (root / relative).resolve()
+        try:
+            canonical_relative = candidate.relative_to(root).as_posix()
+        except ValueError as error:
+            raise ValueError("executable path escapes repository root") from error
+        if canonical_relative != relative:
+            raise ValueError("executable path must use its canonical repository-relative spelling")
+        if not candidate.is_file():
+            raise FileNotFoundError(candidate)
+        pairs.append((relative, sha256_file(candidate)))
+    return {
+        "algorithm": "ordered_relative_path_and_file_sha256_v1",
+        "relative_paths": list(paths),
+        "file_sha256": {key: value for key, value in pairs},
+        "tree_sha256": digest_pairs_v09(tuple(pairs)),
+    }
+
+
 def atomic_json(path: str | Path, payload: Mapping) -> None:
     path = Path(path)
     if path.exists():
@@ -510,10 +589,17 @@ def atomic_json(path: str | Path, payload: Mapping) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     if temporary.exists():
         raise FileExistsError(temporary)
-    temporary.write_text(
-        json.dumps(dict(payload), indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    with temporary.open("x", encoding="utf-8", newline="\n") as handle:
+        json.dump(
+            dict(payload),
+            handle,
+            allow_nan=False,
+            indent=2,
+            sort_keys=True,
+        )
+        handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
     os.link(temporary, path)
     temporary.unlink()
 
@@ -569,6 +655,7 @@ def environment_fingerprint_v09(repo_root: str | Path) -> dict:
 def promote_complete_directory_v09(
     building_root: str | Path,
     final_root: str | Path,
+    expected_relative_files: Sequence[str],
 ) -> None:
     building_root = Path(building_root)
     final_root = Path(final_root)
@@ -580,6 +667,16 @@ def promote_complete_directory_v09(
     seal = json.loads(seal_path.read_text(encoding="utf-8"))
     if seal.get("status") != "complete_input_seal":
         raise RuntimeError("building directory has no complete input seal")
+    expected = tuple(expected_relative_files)
+    if tuple(sorted(expected)) != expected or len(set(expected)) != len(expected):
+        raise ValueError("expected relative files must be unique and sorted")
+    actual = tuple(sorted(
+        path.relative_to(building_root).as_posix()
+        for path in building_root.rglob("*")
+        if path.is_file()
+    ))
+    if actual != expected:
+        raise RuntimeError("building directory file set is not closed and exact")
     for name, expected in seal["artifacts"].items():
         if sha256_file(building_root / name) != expected:
             raise RuntimeError(f"sealed artifact hash drift: {name}")
@@ -587,7 +684,10 @@ def promote_complete_directory_v09(
 ```
 
 `atomic_json`使用同目录硬链接发布，目标已存在时由文件系统原子拒绝覆盖。目录提升使用同卷原子重命名；
-真实构建器必须把`.building`和最终目录放在同一父目录。
+真实构建器必须把`.building`和最终目录放在同一父目录。严格JSON不允许`NaN`或正负无穷。
+`executable_tree_manifest_v09()`要求仓库相对路径已经按字节序排序、唯一、均为普通文件且不能逃出
+仓库根目录；树摘要对完整路径集合和每个文件SHA-256共同敏感。正式输入构建树和两个外部审核树
+分别使用显式常量路径集合，不能用“当前已导入模块”或Git树对象替代。
 
 - [ ] **Step 4: 运行工具测试**
 
@@ -1209,7 +1309,7 @@ git commit -m "Feat: Add trusted formal v09 target export"
 
 **Interfaces:**
 - Produces: `seal_formal_inputs_v09(input_root, protocol) -> dict`。
-- Produces: `open_formal_inputs_v09(input_root, protocol) -> FormalTrainingInputPack`。
+- Produces: `open_formal_inputs_v09(input_root, protocol_path) -> FormalTrainingInputPack`。
 - Produces: `audit_formal_inputs_v09(input_root, protocol) -> dict`。
 - Produces: `targets.npy`、`statics.npy`、`scaler.json`、`environment.json`、`manifest.json`、
   `input_audit.json`和最终`seal.json`。
@@ -1280,6 +1380,19 @@ def test_all_candidate_formal_input_modules_exclude_raw_discharge_reads():
     for path in roots:
         source = path.read_text(encoding="utf-8")
         assert all(token not in source for token in forbidden)
+
+
+def test_readonly_loader_uses_protocol_and_requires_closed_manifests(sealed_input):
+    from formal_input_v09 import FormalInputError, open_formal_inputs_v09
+
+    wrong_protocol = sealed_input.root / "wrong_protocol.json"
+    wrong_protocol.write_text('{"protocol_id":"wrong"}\n', encoding="utf-8")
+    with pytest.raises(FormalInputError, match="protocol"):
+        open_formal_inputs_v09(sealed_input.root, wrong_protocol)
+    for mutation in ("omit_manifest_artifact", "add_seal_artifact", "add_unsealed_file"):
+        broken = sealed_input.mutated(mutation)
+        with pytest.raises(FormalInputError):
+            open_formal_inputs_v09(broken.root, sealed_input.protocol_path)
 ```
 
 - [ ] **Step 2: 运行输入测试并确认失败**
@@ -1443,12 +1556,19 @@ class FormalTrainingInputPack:
 
 def open_formal_inputs_v09(
     input_root: str | Path,
-    protocol: Mapping,
+    protocol_path: str | Path,
 ) -> FormalTrainingInputPack:
     root = Path(input_root)
+    protocol = load_protocol_v09(protocol_path)
+    if sha256_file(protocol_path) != PROTOCOL_SHA256:
+        raise FormalInputError("formal version 09 protocol SHA-256 drift")
     seal = json.loads((root / "seal.json").read_text(encoding="utf-8"))
     if seal.get("status") != "complete_input_seal":
         raise FormalInputError("formal input directory has no complete seal")
+    if seal.get("protocol_sha256") != PROTOCOL_SHA256:
+        raise FormalInputError("sealed protocol SHA-256 drift")
+    if set(seal.get("artifacts", {})) != {"manifest.json", "input_audit.json"}:
+        raise FormalInputError("input seal artifact set is not exact")
     for name, expected in seal["artifacts"].items():
         if sha256_file(root / name) != expected:
             raise FormalInputError(f"sealed top-level artifact hash drift: {name}")
@@ -1458,6 +1578,10 @@ def open_formal_inputs_v09(
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     if manifest.get("status") != "built_pending_audit":
         raise FormalInputError("formal input build manifest status drift")
+    if manifest.get("protocol_sha256") != PROTOCOL_SHA256:
+        raise FormalInputError("input manifest protocol SHA-256 drift")
+    if set(manifest.get("artifacts", {})) != set(EXPECTED_INPUT_ARTIFACTS):
+        raise FormalInputError("input manifest artifact set is not exact")
     for name, expected in manifest["artifacts"].items():
         if sha256_file(root / name) != expected:
             raise FormalInputError(f"artifact hash drift: {name}")
@@ -1486,6 +1610,12 @@ def open_formal_inputs_v09(
 `open_formal_inputs_v09()`是唯一允许训练代码调用的重载入口，不打开也不返回
 `statics_raw.float64.npy`。只有独立输入审核函数可以直接打开原始静态数组，用于重算统计、精度顺序
 和两个有效载荷哈希；审核对象不得传给训练器。
+
+该入口必须实际使用传入的协议路径，而不是接受后丢弃参数。除上述协议和两级清单检查外，还必须验证
+最终目录的相对文件集合严格等于`manifest.json`登记的11个产物加
+`manifest.json`、`input_audit.json`和`seal.json`，并逐项核对冻结531流域顺序、10,501个日期、
+标量和数组有限性、归一化字段键集合、列顺序与自由度。遗漏清单项、增加未封存文件或未知JSON键
+均拒绝。
 
 顶层`manifest.json`必须是不可变的构建记录，状态为`built_pending_audit`。其`artifacts`字段必须
 逐项包含：
@@ -1566,6 +1696,9 @@ targets.npy
 11. 通过正式只读接口再次重载封存输入；
 12. 原子提升为`input_attempt_01`。
 
+第12步调用目录提升器时，`expected_relative_files`必须是上一段冻结的14个相对文件名；不能从实际
+目录反推“期望集合”，也不能允许额外失败文件、临时文件或未封存旁路文件进入最终目录。
+
 任何步骤失败都保留`.building/failure.json`，但没有
 `seal.json::status=complete_input_seal`的目录不能被训练入口读取。
 如果授权消费后、`.building`创建前发生异常，则在正式根目录写
@@ -1607,9 +1740,14 @@ git commit -m "Feat: Seal and audit formal v09 inputs"
 - Consumes: 已验证代码、精确授权凭据、原始 Maurer、冻结静态文件和可信训练目标源。
 - Produces: 唯一正式输入目录和独立审核结论。
 
+进入Task 6前，必须已经在实施批准作用域内完成Task 1至Task 5、提交全部代码，并在内存门满足时
+运行完整局部测试；还要由未参与实现的独立上下文只读审查源码树路径集合、原始流量隔离、日期边界、
+原子性、严格JSON和封存闭包。只有代码审核通过且工作区干净，才允许请求生产批准。生产批准不得
+被用来补写或修复实现代码；生产批准后的任何代码变化都会使批准失效。
+
 - [ ] **Step 1: 创建精确授权凭据**
 
-只有收到Global Constraints中的逐字直接批准后，调用
+只有在上述实施审核通过后收到Global Constraints中的逐字生产批准，才调用
 `create_input_authorization_receipt_v09()`创建收据。固定字段必须与Task 1的
 `fixed_expected`逐项相同；三个动态字段只能来自批准发生后的可信事实：
 
@@ -1763,9 +1901,13 @@ git commit -m "Phase: Record formal v09 input audit"
 
 Plan complete and saved to
 `docs/superpowers/plans/2026-07-31-historical-multiscale-formal-v09-input-stage.md`.
-在收到精确输入阶段批准后有两种执行方式：
+执行需要两个不能合并的批准。先逐字批准输入代码实现与合成测试；Task 1至Task 5实现、测试、提交
+和独立审核通过后，再逐字批准一次真实输入生成。收到第一个批准后有两种实现方式：
 
-1. **Subagent-Driven**：主上下文按Task 1至Task 6实现，独立上下文在每个组件和真实输入完成后审核。
-2. **Inline Execution**：当前上下文按Task 1至Task 6执行，在Task 6 Step 9切换到独立上下文。
+1. **Subagent-Driven**：主上下文先按Task 1至Task 5实现并完成代码审核；收到第二个批准后执行
+   Task 6，独立上下文审核真实输入。
+2. **Inline Execution**：当前上下文先按Task 1至Task 5实现并审核；收到第二个批准后执行Task 6，
+   并在Task 6 Step 9切换到独立上下文。
 
-无论选择哪种方式，未收到精确批准文本前都不得执行本计划。
+无论选择哪种方式，未收到实施批准前不得写代码；未收到后续生产批准前不得创建生产收据、消费授权
+或生成任何真实输入。

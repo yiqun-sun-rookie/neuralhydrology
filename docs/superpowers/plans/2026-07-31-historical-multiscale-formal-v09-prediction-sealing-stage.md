@@ -10,8 +10,14 @@
 
 ## Global Constraints
 
-- 本计划不授权实现、正式预测或评分。只有用户另行批准执行本计划后，才允许写预测代码和合成测试。
-- 正式预测运行还需要一次性的直接批准文本和精确授权收据；训练完成或训练审核通过不能替代该授权。
+- 本计划不授权实现、正式预测或评分。只有用户逐字发送
+  `批准版本09正式预测代码实现与合成测试；不批准生成正式预测或评分。`
+  后，才允许写Task 1至Task 5的预测与封存代码、运行合成测试和完成只读代码审核。该无换行
+  UTF-8文本的SHA-256固定为
+  `b230a506ba67b050ac1e3506149cb091b14d936efa6da3cce50769d82a32fe78`。
+- 上述实施批准不得创建生产预测授权收据、消费授权、加载正式检查点生成正式期数值或构建真实源码
+  包。代码实现、完整局部测试和独立审核通过后，正式预测运行还需要Task 1冻结的一次性直接批准
+  文本和精确授权收据；训练完成或训练审核通过不能替代该授权。
 - 前置证据必须同时存在并通过：正式输入封存、输入产物独立审核、可信训练目标来源独立审核、
   旧参考函数桥接审核、严格嵌套封存、严格嵌套独立审核、状态数值诊断预注册及其独立重放审核、
   24次主训练总封存和训练独立审核。
@@ -44,9 +50,9 @@
 **Files:**
 - Read after clean-pair route implementation:
   `src/26_historical_band_experts/configs/formal_v09_clean_pair_scoring_contract.json`
-- Create after execution approval:
+- Create after implementation approval:
   `src/26_historical_band_experts/configs/formal_v09_submission.json`
-- Modify after execution approval: `src/26_historical_band_experts/stage_authorization_v09.py`
+- Modify after implementation approval: `src/26_historical_band_experts/stage_authorization_v09.py`
 - Test: `src/26_historical_band_experts/tests/test_formal_v09_submission.py`
 - Modify: `src/26_historical_band_experts/tests/test_stage_authorization_v09.py`
 - Create only after direct prediction approval:
@@ -530,7 +536,7 @@ git commit -m "Feat: Add independent formal v09 prediction replay"
 
 - [ ] **Step 1: 在任何正式预测前完成代码审核**
 
-代码全部提交后：
+只有收到Global Constraints中的实施批准后才能编写代码。代码全部提交后：
 
 1. 只格式化本计划新增或修改的Python文件；
 2. 可用物理内存至少12.68 GiB时运行
@@ -671,7 +677,7 @@ git commit -m "Phase: Record formal v09 prediction audit"
 正式预测也未获授权。执行顺序不可合并：
 
 1. 训练总封存和独立审核通过；
-2. 用户批准实施预测代码和合成测试；
+2. 用户逐字批准实施预测代码和合成测试；
 3. 代码审核通过后，用户逐字批准一次正式预测；
 4. 24个逐随机数文件、三个集合、源码包和全量独立重放全部通过；
 5. 锁定三个集合及其固定角色的实际SHA-256后，才进入清洁配对唯一一次评分计划。
