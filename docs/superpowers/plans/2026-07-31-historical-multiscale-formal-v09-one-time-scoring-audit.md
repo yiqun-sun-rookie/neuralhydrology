@@ -116,6 +116,8 @@
 使用临时合成预测、临时冻结规范和临时账本，覆盖：
 
 - 预测封存或独立重放报告缺失；
+- 输入产物审核、可信训练目标来源审核、旧参考函数桥接审核、严格嵌套审核、训练审核或预测审核
+  未被后继封存逐层绑定；
 - 唯一候选路径不是连续历史集合；
 - 候选文件SHA-256与预测封存不一致；
 - 行数、键、日期或有限性不是精确覆盖；
@@ -126,7 +128,7 @@
 - `confirmed`不是`true`；
 - 评分门槛或自助抽样次数、随机数不是合同值；
 - 账本哈希链断裂、已有`S09-SEALED`或评分进程正在运行；
-- 报告、消费收据、标准输出或错误输出路径已存在；
+- 正式报告、临时报告、消费收据、标准输出或错误输出路径已存在；
 - 没有具体预测哈希的一次性评分收据。
 
 - [ ] **Step 3: 运行前置门测试并确认失败**
@@ -265,6 +267,7 @@ results/26_historical_band_experts/formal_v09/scoring_authorization_consumed.jso
 - `preflight.json`
 - `attempt.json`
 - `score_report.json`
+- `score_report.json.tmp`（仅在评分服务写入期间存在；成功验证后原子改名）
 - `stdout.txt`
 - `stderr.txt`
 - `post_score_ledger.json`
@@ -275,13 +278,15 @@ results/26_historical_band_experts/formal_v09/scoring_authorization_consumed.jso
 2. 再次确认报告目录除前置报告外为空、没有评分进程、账本未变化；
 3. 原子独占写消费收据；
 4. 写`attempt.json`的`status="started"`、确切命令参数和启动时间；
-5. 调用现有评分服务一次；
-6. 立即把返回报告原子写为`score_report.json`；
+5. 调用现有评分服务一次，并把唯一`--out`指向事先不存在的`score_report.json.tmp`；
+6. 进程正常退出后验证临时报告是完整JSON、实验标识和候选哈希正确，再原子改名为
+   `score_report.json`；外层包装器不得第二次写同一报告内容；
 7. 捕获标准输出、错误输出和退出状态；
 8. 重算账本并写`post_score_ledger.json`；
 9. 把尝试状态写为`completed`或`failed_after_authorization_consumed`。
 
-不管第5步之后发生什么，都禁止第二次进入第5步。
+现有评分服务先追加账本、后写报告，因此第5步异常可能留下账本记录但没有完整报告。不管第5步之后
+发生什么，都禁止第二次进入第5步；该状态由评分后终审归类为`HOLD`。
 
 - [ ] **Step 5: 固定唯一评分参数**
 
@@ -296,7 +301,7 @@ python -m fair_benchmark.score `
   --frozen-dir fair_benchmark\frozen `
   --ledger fair_benchmark\registry\portfolio_ledger.csv `
   --experiment-dir ..\results\26_historical_band_experts\formal_v09\predictions\source_bundle `
-  --out ..\results\26_historical_band_experts\formal_v09\scoring\S09-SEALED\score_report.json
+  --out ..\results\26_historical_band_experts\formal_v09\scoring\S09-SEALED\score_report.json.tmp
 ```
 
 实际执行由包装器完成，不手工另行运行该命令。参数中不得出现`--allow-unconfirmed`。
@@ -441,6 +446,7 @@ python src\26_historical_band_experts\audit_pre_score_v09.py `
 - 评分合同和八个评分源码哈希；
 - 冻结规范五个历史例外指纹；
 - 评分前账本行数、末行哈希和文件SHA-256；
+- 评分前独立审核报告SHA-256；
 - 用户完整批准文本、文本SHA-256和批准任务标识。
 
 提交收据：

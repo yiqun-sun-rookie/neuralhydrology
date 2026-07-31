@@ -43,7 +43,8 @@
 - 严格嵌套和24次主训练分别需要单独、一次性的直接授权。一个授权在首次进程启动时即消耗；
   通过、失败、手动中断或异常退出都不得复用。
 - 本阶段证明的是新正式管线中“停用历史路径模型”和“干净经典近期模型”的逐元素嵌套关系；
-  不声称重现2019式历史八随机数检查点的训练轨迹。历史八随机数集合仍只作为正式评分服务中的冻结基准。
+  另以八个实际冻结检查点的同设备合成前向零差异证明函数桥接；不声称重现旧八随机数检查点的
+  完整训练轨迹。历史八随机数集合仍只作为正式评分服务中的冻结基准。
 
 ---
 
@@ -60,7 +61,7 @@
   `src/26_historical_band_experts/configs/formal_v09_training_authorization.json`
 
 **Interfaces:**
-- `validate_stage_authorization_v09(receipt, *, action, scope, protocol_sha256, input_seal_sha256, input_external_audit_sha256, trusted_source_external_audit_sha256, executable_tree_sha256) -> dict`
+- `validate_stage_authorization_v09(receipt, *, action, scope=None, protocol_sha256=None, prerequisite_sha256=None, executable_tree_sha256=None) -> dict`
 - `consume_stage_authorization_v09(receipt, *, consumption_path) -> dict`
 - `assert_launch_allowed_v09(config, *, action, estimated_peak_bytes, snapshot=None, stage_authorization=None, authorization_scope=None) -> dict`
 
@@ -117,6 +118,11 @@ Expected: 新增严格嵌套和主训练作用域测试失败；既有输入收�
 授权模式不得使用“任意训练均允许”的布尔值。验证器使用动作、作用域、批准文本哈希、协议哈希、
 输入封存哈希、输入产物外部审核报告哈希、可信训练目标来源外部审核报告哈希、可执行源码树哈希、
 固定运行集合和固定输出根目录的完整相等比较。
+`prerequisite_sha256`是键集合也受冻结约束的映射：严格嵌套授权必须恰好包含输入封存、两个输入
+外部审核报告和旧八随机数检查点函数桥接审核；主训练授权还必须包含严格嵌套运行封存与严格嵌套
+外部审核报告。未知键、缺失键或任一值漂移都拒绝。
+只有既有输入生成动作允许省略后五个扩展参数，并继续执行输入计划冻结的完整收据相等检查；
+所有训练和后续动作缺少任一扩展参数都拒绝。
 
 严格嵌套收据固定：
 
@@ -379,18 +385,35 @@ git commit -m "Feat: Add full formal v09 lockstep training"
 
 ---
 
-### Task 4: 实现独立严格嵌套重放审核
+### Task 4: 实现旧参考函数桥接和独立严格嵌套重放审核
 
 **Files:**
+- Create after execution approval:
+  `src/26_historical_band_experts/audit_legacy_checkpoint_bridge_v09.py`
+- Test:
+  `src/26_historical_band_experts/tests/test_audit_legacy_checkpoint_bridge_v09.py`
 - Create after execution approval: `src/26_historical_band_experts/audit_strict_formal_v09.py`
 - Test: `src/26_historical_band_experts/tests/test_audit_strict_formal_v09.py`
+- Generated, not tracked:
+  `results/26_historical_band_experts/formal_v09/legacy_checkpoint_forward_bridge.external_audit.json`
 - Generated, not tracked:
   `results/26_historical_band_experts/formal_v09/strict_nesting_seed_100.external_audit.json`
 
 **Interfaces:**
+- `audit_legacy_checkpoint_bridge_v09(protocol_path, legacy_root, report_path, devices) -> dict`
 - `audit_strict_nesting_v09(input_root, strict_root, protocol_path, report_path, device) -> dict`
 
-- [ ] **Step 1: 写独立审核反驳测试**
+- [ ] **Step 1: 写旧参考函数桥接和独立审核反驳测试**
+
+旧参考桥接审核必须对八个冻结随机数逐项验证：
+
+- 旧运行配置和第30轮检查点SHA-256与协议一致；
+- 检查点恰好包含近期长短期记忆网络和单输出头的六个活动参数张量；
+- 检查点严格加载到核心`CudaLSTM`和版本09干净经典模型；
+- 加载到停用历史模型时，只允许缺少六个永不执行、不可训练的历史参数键，不能缺少或多出活动键；
+- 固定合成输入使用2个样本、270天、5项动态和27项静态属性，生成随机数固定为29,090；
+- 核心、干净经典和停用历史三条路径在同一设备上的预测必须逐元素完全相同；
+- 审核不能读取训练或正式评估流量、旧`test_results.p`或正式评分答案。
 
 审核器必须拒绝：
 
@@ -403,17 +426,28 @@ git commit -m "Feat: Add full formal v09 lockstep training"
 - 训练期预测摘要最大差不为0；
 - 独立进程重算的固定训练键预测与封存预测字节流最大绝对差超过`1e-6`。
 
-- [ ] **Step 2: 运行审核测试并确认失败**
+- [ ] **Step 2: 运行两个审核测试并确认失败**
 
 Run:
 
 ```powershell
-pytest src/26_historical_band_experts/tests/test_audit_strict_formal_v09.py -q
+pytest src/26_historical_band_experts/tests/test_audit_legacy_checkpoint_bridge_v09.py `
+  src/26_historical_band_experts/tests/test_audit_strict_formal_v09.py -q
 ```
 
-Expected: FAIL，原因是审核器尚不存在。
+Expected: FAIL，原因是两个审核器尚不存在。
 
-- [ ] **Step 3: 实现只读独立审核**
+- [ ] **Step 3: 实现只读旧参考函数桥接**
+
+桥接审核器只读取协议登记的八份旧配置和第30轮检查点。它在中央处理器和正式训练设备上分别构建
+核心`CudaLSTM`、版本09干净经典模型和停用历史模型，加载同一活动参数并对固定合成输入执行
+评估模式前向。每个随机数、每个设备的两个配对最大绝对差都必须为0。
+
+该审核只证明“冻结检查点的函数映射可由版本09近期路径和停用历史路径逐元素复现”，不证明旧训练
+批次、随机数状态、归一化来源或完整训练轨迹可重建。报告路径必须预先不存在，并记录八个配置、
+八个检查点、审核源码和环境哈希；后继严格嵌套授权从最终报告文件外部计算并绑定报告SHA-256。
+
+- [ ] **Step 4: 实现只读严格嵌套独立审核**
 
 审核器从第30轮检查点分别重建经典和停用历史模型，使用一个新进程和独立加载的只读输入，
 按冻结训练键流式重算全部训练期预测，并与封存的
@@ -426,22 +460,25 @@ Expected: FAIL，原因是审核器尚不存在。
 
 审核报告只写在严格运行目录之外，且输出路径预先不存在。
 
-- [ ] **Step 4: 运行审核测试**
+- [ ] **Step 5: 运行两个审核测试**
 
 Run:
 
 ```powershell
-pytest src/26_historical_band_experts/tests/test_audit_strict_formal_v09.py -q
+pytest src/26_historical_band_experts/tests/test_audit_legacy_checkpoint_bridge_v09.py `
+  src/26_historical_band_experts/tests/test_audit_strict_formal_v09.py -q
 ```
 
 Expected: PASS。
 
-- [ ] **Step 5: 提交严格审核器**
+- [ ] **Step 6: 提交两个审核器**
 
 ```powershell
-git add src/26_historical_band_experts/audit_strict_formal_v09.py `
+git add src/26_historical_band_experts/audit_legacy_checkpoint_bridge_v09.py `
+  src/26_historical_band_experts/audit_strict_formal_v09.py `
+  src/26_historical_band_experts/tests/test_audit_legacy_checkpoint_bridge_v09.py `
   src/26_historical_band_experts/tests/test_audit_strict_formal_v09.py
-git commit -m "Feat: Add independent formal v09 nesting audit"
+git commit -m "Feat: Add formal v09 legacy bridge and nesting audit"
 ```
 
 ---
@@ -597,7 +634,8 @@ Expected: FAIL，原因是总审核器尚不存在。
 
 `training_seal.json`固定包含：
 
-- 协议、输入封存、严格嵌套独立审核、授权收据、可执行源码树和环境哈希；
+- 协议、输入封存、输入产物外部审核、可信训练目标来源外部审核、旧参考函数桥接审核、
+  严格嵌套运行封存、严格嵌套独立审核、授权收据、可执行源码树和环境哈希；
 - 24项运行的固定顺序、运行封存哈希和第30轮检查点SHA-256；
 - 第10、20轮检查点哈希，但明确标记`not_eligible_for_formal_prediction=true`；
 - `formal_prediction_generated=false`和`official_score_called=false`；
@@ -630,6 +668,8 @@ git commit -m "Feat: Add formal v09 training audit"
   `src/26_historical_band_experts/configs/formal_v09_strict_nesting_authorization.json`
 - Create only after direct main approval:
   `src/26_historical_band_experts/configs/formal_v09_training_authorization.json`
+- Generated before strict approval, not tracked:
+  `results/26_historical_band_experts/formal_v09/legacy_checkpoint_forward_bridge.external_audit.json`
 - Modify after each completed audit: `src/26_historical_band_experts/registry.csv`
 - Create after strict audit:
   `docs/technical/historical_multiscale_formal_v09_strict_nesting_audit.md`
@@ -637,8 +677,8 @@ git commit -m "Feat: Add formal v09 training audit"
   `docs/technical/historical_multiscale_formal_v09_training_audit.md`
 
 **Interfaces:**
-- Consumes: 已通过全部测试的训练提交、正式输入封存、两个逐阶段直接授权。
-- Produces: 严格嵌套封存、24次主训练封存、两个独立审核和训练总封存。
+- Consumes: 已通过全部测试的训练提交、协议登记的旧参考结果根目录、正式输入封存、两个逐阶段直接授权。
+- Produces: 旧参考函数桥接审核、严格嵌套封存、24次主训练封存、两个独立审核和训练总封存。
 
 - [ ] **Step 1: 在任何正式训练前完成代码审核**
 
@@ -652,15 +692,26 @@ git commit -m "Feat: Add formal v09 training audit"
 5. 核对协议SHA-256仍为
    `b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8`；
 6. 核对冻结目录和评分代码相对版本09实施父提交没有差异；
-7. 由独立上下文审查训练代码的数据边界、随机数、损失、原子性和停止条件。
+7. 由独立上下文审查训练代码的数据边界、随机数、损失、原子性和停止条件；
+8. 在中央处理器和正式训练设备上运行八随机数旧参考函数桥接审核；任一最大差不为0都停止。
+
+桥接审核命令固定为：
+
+```powershell
+python src\26_historical_band_experts\audit_legacy_checkpoint_bridge_v09.py `
+  --protocol src\26_historical_band_experts\configs\formal_v09_protocol.json `
+  --legacy-root G:\github\pycharm\projects\neuralhydrology\results\18_lstm_fair_531 `
+  --devices cpu,cuda:0 `
+  --report results\26_historical_band_experts\formal_v09\legacy_checkpoint_forward_bridge.external_audit.json
+```
 
 任一项失败时不得申请严格嵌套授权。
 
 - [ ] **Step 2: 请求并固化严格嵌套授权**
 
 只有用户逐字发送Task 1给出的严格嵌套批准文本后，才创建收据。收据绑定实际输入封存哈希、
-输入产物外部审核报告哈希、可信训练目标来源外部审核报告哈希、可执行源码树哈希、
-严格输出目录和当前批准任务标识，并提交：
+输入产物外部审核报告哈希、可信训练目标来源外部审核报告哈希、旧参考函数桥接审核报告哈希、
+可执行源码树哈希、严格输出目录和当前批准任务标识，并提交：
 
 ```powershell
 git add src/26_historical_band_experts/configs/formal_v09_strict_nesting_authorization.json `
