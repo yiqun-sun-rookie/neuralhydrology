@@ -1,5 +1,15 @@
 # 历史连续多尺度气象模型正式版本09交接
 
+## 2026-07-31补充
+
+可用物理内存达到硬门后，完整命令
+`pytest src/26_historical_band_experts/tests -q`
+已在提交`23575402ab2bae8857ecf80c3081d16af64434a0`上首次通过：
+`378 passed, 1 warning in 48.35s`。协议哈希、四个配置绑定、冻结边界和工作区随后复核无漂移。
+正式输入、训练、预测和评分授权仍全部为`false`，没有正式结果目录。
+完整记录见
+`docs/technical/historical_multiscale_formal_v09_full_test_audit.md`。
+
 ## 当前结论
 
 版本09的协议、代码和轻量测试已经完成，并已修复经典控制与核心 `CudaLSTM` 训练期丢弃位置不一致的问题；没有开始531流域数据构建、训练、正式预测或评分。
