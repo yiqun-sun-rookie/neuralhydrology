@@ -10,7 +10,9 @@
 
 ## Global Constraints
 
-- 本计划不授权实现、训练、正式预测或评分。只有用户另行批准执行本计划后，才允许写训练代码和合成测试。
+- 本计划不授权实现、资源预检、训练、正式预测或评分。只有用户逐字批准下述“训练代码实现与独立
+  合成资源预检”文本后，才允许写训练代码、运行合成测试和执行一次独立合成资源预检；该批准不授权
+  严格嵌套或主训练。
 - 正式输入必须已经位于
   `results/26_historical_band_experts/formal_v09/input_attempt_01`，具有通过的内部
   `seal.json`、目录外输入产物审核报告
@@ -34,6 +36,22 @@
 - 正式静态张量必须按输入封存中的`FORMAL_V09_STATIC_COLUMNS`字母顺序读取，静态尺度必须标记
   `ddof=1`；动态和流量尺度必须标记`ddof=0`且只来自训练期。任一列名、顺序、自由度或统计范围
   漂移都停止。
+- 训练读取的`statics.npy`已经按旧核心精度顺序完成归一化：源双精度统计、双精度归一化、最后转
+  单精度。其有效载荷SHA-256必须为
+  `aa53d1d06247b246f5557efe6761b9b7becd2be3a680f99d667d2e3c89b9b37a`；
+  训练器不得读取`statics_raw.float64.npy`或再次归一化。
+- 气象和目标的封存统计以`float64`记录，但每批运算前中心、尺度和每流域损失尺度只转换一次为
+  `float32`。原始`float32`批次必须在中央处理器NumPy中按“减中心、除尺度”的顺序完成
+  `float32`归一化，再以C连续`float32`张量传到设备；不得在图形处理器上归一化。
+- 连续历史模型必须先归一化完整`[批量,3562,5]`气象窗口，再调用`split_windows_v09()`；
+  即120个历史分箱聚合的是归一化Maurer。近期模型单独读取并归一化270天切片，其结果必须与同一
+  完整窗口的最后270天逐字节相同。目标同样在中央处理器按单精度归一化；损失权重中的每流域原始
+  流量标准差和常数0.1均为单精度。
+- 每个主训练随机数拆成互不混用的模型初始化、批次排列和丢弃层随机数流。模型仍用协议随机数
+  100至800初始化；每轮批次排列使用既有`seed * 1_000_003 + epoch`；模型和优化器构造完毕后，
+  必须把PyTorch中央处理器和全部图形处理器随机数重置为
+  `dropout_seed = seed * 1_000_003 + 900_001`。这样不同宽度模型的初始化耗用量不会改变训练期
+  丢弃流起点。三个模型族同一主随机数的初始丢弃随机数状态哈希必须相同。
 - 只把第30轮检查点用于后续正式预测；第10轮和第20轮检查点只用于中断诊断和审计，不得用于选择。
 - 主训练全部24次结束前不得计算验证指标、正式指标、分支消融或根据损失选择模型、随机数或检查点。
 - 版本08发现的历史记忆状态大而有限是预先公开的数值警示。版本09不得以该数值设置事后阈值，
@@ -96,6 +114,21 @@
 6. 创建消费收据必须使用独占创建，不能先覆盖再检查；
 7. 内存门发生在消费收据之前；内存通过后、正式训练子进程启动前原子写入消费收据。
 
+训练代码实现与独立合成资源预检批准文本固定为：
+
+```text
+批准版本09训练代码实现与独立合成资源预检；不批准严格嵌套训练、主实验训练、正式预测或评分。
+```
+
+UTF-8、无末尾换行的SHA-256固定为：
+
+```text
+2ca80e4dba179ab8de6ffe81ef515dd7b9f3fb85cf61c9057b840ef7da51a2ba
+```
+
+这项批准只允许完成Task 1至Task 6的实现、测试、只读审核和Task 7中的独立合成资源预检。它不能
+创建或替代严格嵌套、主训练、正式预测或评分收据；资源预检报告必须记录批准文本哈希和所在任务标识。
+
 严格嵌套直接批准文本固定为：
 
 ```text
@@ -136,9 +169,11 @@ Expected: 新增严格嵌套和主训练作用域测试失败；既有输入收�
 授权模式不得使用“任意训练均允许”的布尔值。验证器使用动作、作用域、批准文本哈希、协议哈希、
 输入封存哈希、输入产物外部审核报告哈希、可信训练目标来源外部审核报告哈希、可执行源码树哈希、
 固定运行集合和固定输出根目录的完整相等比较。
-`prerequisite_sha256`是键集合也受冻结约束的映射：严格嵌套授权必须恰好包含输入封存、两个输入
-外部审核报告和旧八随机数检查点函数桥接审核；主训练授权还必须包含严格嵌套运行封存与严格嵌套
-外部审核报告，以及
+`prerequisite_sha256`是键集合也受冻结约束的映射。严格嵌套授权必须恰好包含
+`input_seal`、`input_artifact_external_audit`、`trusted_target_external_audit`、
+`legacy_checkpoint_bridge_external_audit`和`training_resource_preflight_external_audit`。
+主训练授权必须继续包含这五项，并恰好增加`strict_nesting_run_seal`、
+`strict_nesting_external_audit`和
 `docs/technical/historical_multiscale_formal_v09_state_diagnostics_preregistration.md`
 的完整文件SHA-256。未知键、缺失键或任一值漂移都拒绝。
 只有既有输入生成动作允许省略后五个扩展参数，并继续执行输入计划冻结的完整收据相等检查；
@@ -167,8 +202,8 @@ Expected: 新增严格嵌套和主训练作用域测试失败；既有输入收�
 - `official_scoring_authorized=false`
 
 收据还必须保存直接批准所在任务标识、批准时间、批准文本和其SHA-256。批准发生后才把实际
-输入封存哈希、两个目录外输入审核报告哈希、状态诊断预注册文件哈希、可执行源码树哈希和Git提交
-写入收据；禁止预先生成收据。
+输入封存哈希、两个目录外输入审核报告哈希、旧检查点桥接哈希、资源预检哈希、适用阶段的严格嵌套
+证据、状态诊断预注册文件哈希、可执行源码树哈希和Git提交写入收据；禁止预先生成收据。
 可执行源码树只包含实际运行的Python文件和科学配置，不包含授权收据、审计文档或结果目录，
 避免收据把自身纳入哈希形成循环。
 
@@ -182,8 +217,8 @@ Expected: 新增严格嵌套和主训练作用域测试失败；既有输入收�
   `results/26_historical_band_experts/formal_v09/training_authorization_consumed.json`
 
 文件以独占创建模式写入，内容包括授权收据SHA-256、启动时间、主机、进程标识、Git提交、
-工作区树哈希、输入封存哈希、两个输入审核报告哈希、主训练适用的状态诊断预注册文件哈希和
-启动内存快照。消费文件一旦存在，
+工作区树哈希、输入封存哈希、两个输入审核报告哈希、旧检查点桥接哈希、资源预检哈希、适用阶段的
+严格嵌套证据、主训练适用的状态诊断预注册文件哈希和启动内存快照。消费文件一旦存在，
 任何入口都拒绝同一阶段重启。
 
 - [ ] **Step 5: 运行授权和启动门测试**
@@ -222,6 +257,8 @@ git commit -m "Feat: Scope formal v09 training authorization"
 - `load_sealed_training_inputs_v09(input_root, protocol_path) -> FormalTrainingInputsV09`
 - `ordered_training_keys_v09(inputs) -> tuple[np.ndarray, np.ndarray]`
 - `epoch_order_v09(sample_count, *, seed, epoch) -> np.ndarray`
+- `normalize_forcing_batch_v09(values, scaler) -> np.ndarray`
+- `normalize_target_batch_v09(values, scaler) -> np.ndarray`
 - `load_training_batch_v09(inputs, basin_indices, target_indices, *, variant, device, gate) -> TrainingBatchV09`
 - `masked_nse_training_loss_v09(prediction, target, raw_per_basin_std) -> torch.Tensor`
 
@@ -231,13 +268,17 @@ git commit -m "Feat: Scope formal v09 training authorization"
 
 - 输入目录以只读方式打开；缺失`seal.json`、输入产物外部审核、可信训练目标来源外部审核，
   任一审核状态不通过，或任一授权绑定哈希漂移都拒绝；
+- 正式训练输入对象不含`statics_raw`字段，训练进程从不打开`statics_raw.float64.npy`；
 - 训练键严格按冻结流域顺序、再按日期1999-10-01至2008-09-30生成，共1,745,928项；
 - 每轮使用独立CPU `torch.Generator`和固定种子派生规则生成一个完整排列，不重复、不遗漏；
 - 相同随机数和轮次产生相同排列，不同轮次产生不同排列；
 - 经典、停用历史和369单元控制只读取270天近期切片；
 - 连续历史候选读取一个不超过256样本的3,562天窗口，并生成120个历史分箱；
+- 完整窗口先在中央处理器以单精度归一化再分箱；完整窗口末270天与单独近期切片的归一化结果
+  逐字节相同；
 - 所有模型收到完全相同的静态属性、目标和训练键；
-- 静态属性列严格等于输入封存的显式字母顺序，静态尺度`ddof=1`；动态和流量尺度`ddof=0`；
+- 静态属性列严格等于输入封存的显式字母顺序，静态尺度`ddof=1`，预归一化有效载荷哈希固定且
+  不再归一化；动态和流量尺度`ddof=0`；
 - 损失与`neuralhydrology.training.loss.MaskedNSELoss(eps=0.1)`在构造样本上逐元素一致；
 - 训练目标列不能进入动态输入或静态输入；
 - 试图读取正式评估观测、原始流量目录或水文签名文件时失败；
@@ -270,12 +311,41 @@ epoch_seed = seed * 1_000_003 + epoch
 
 - [ ] **Step 4: 实现分模型批量读取**
 
-近期模型直接从只读气象内存映射复制`[batch,270,5]`。连续历史候选调用
-`gather_causal_windows_v09()`得到`[batch,3562,5]`，再调用`split_windows_v09()`得到
-`recent=[batch,270,5]`和`history=[batch,120,7]`。每个复制或转设备操作前调用内存门。
+近期模型直接从只读气象内存映射复制`[batch,270,5]`，在中央处理器以固定单精度顺序归一化后
+转设备。连续历史候选调用`gather_causal_windows_v09()`得到`[batch,3562,5]`，先用同一函数
+归一化完整窗口，再转为设备张量并调用`split_windows_v09()`得到
+`recent=[batch,270,5]`和`history=[batch,120,7]`。每个复制、归一化临时数组或转设备操作前
+调用内存门。
 
-目标使用输入封存中的全局训练期中心和尺度归一化；损失权重使用每流域训练期原始流量标准差。
-任何标准差非有限或小于等于0时停止，不临时替换。
+`normalize_forcing_batch_v09()`和`normalize_target_batch_v09()`必须先验证输入是C连续
+`float32`，把封存`float64`统计转为C连续`float32`，再用显式输出数组执行单精度减法和除法。
+目标使用输入封存中的全局训练期中心和尺度；损失权重使用转为`float32`的每流域训练期原始流量
+标准差。任何标准差非有限或小于等于0时停止，不临时替换。
+
+归一化函数的运算顺序固定为：
+
+```python
+def normalize_forcing_batch_v09(values: np.ndarray, scaler: Mapping) -> np.ndarray:
+    if values.dtype != np.float32 or not values.flags.c_contiguous:
+        raise FormalTrainingDataError("forcing batch layout drift")
+    center = np.ascontiguousarray(
+        np.asarray(scaler["dynamic_center"], dtype=np.float32)
+    )
+    scale = np.ascontiguousarray(
+        np.asarray(scaler["dynamic_scale"], dtype=np.float32)
+    )
+    if not np.isfinite(scale).all() or np.any(scale <= 0):
+        raise FormalTrainingDataError("invalid dynamic scale")
+    normalized = np.empty_like(values)
+    np.subtract(values, center, out=normalized, casting="no")
+    np.divide(normalized, scale, out=normalized, casting="no")
+    if not np.isfinite(normalized).all():
+        raise FormalTrainingDataError("nonfinite normalized forcing")
+    return normalized
+```
+
+目标函数使用同一两步顺序和标量`q_center`、`q_scale`。测试必须检查输入数组未被修改、输出C连续、
+数据类型严格为`float32`，并对人工构造的边界值比较原始字节而不是只用宽松数值容差。
 
 - [ ] **Step 5: 运行训练数据和既有分箱测试**
 
@@ -458,7 +528,8 @@ git commit -m "Feat: Add full formal v09 lockstep training"
 - 核心、干净经典和停用历史三条路径在同一设备上的预测必须逐元素完全相同；
 - 另从封存正式输入只读加载全部531个流域、每流域12个固定训练日期，共6,372个真实语义样本；
   日期索引固定为`floor(linspace(0, 3287, 12))`，与状态诊断预注册面板相同；
-- 真实语义桥接只读取Maurer、显式字母顺序的27项静态属性以及二者的训练期归一化字段，不打开
+- 真实语义桥接只读取Maurer、显式字母顺序且已预归一化的`statics.npy`以及Maurer训练期归一化
+  字段，不打开
   `targets.npy`，不读取旧动态或流量归一化文件，也不反归一化流量输出；
 - 对每个旧检查点、每个设备，核心、干净经典和停用历史三条路径在6,372个真实语义样本上的
   归一化输出字节流SHA-256必须完全相同，逐块最大绝对差必须为0；
@@ -542,13 +613,19 @@ git commit -m "Feat: Add formal v09 legacy bridge and nesting audit"
 **Files:**
 - Create after execution approval:
   `src/26_historical_band_experts/configs/formal_v09_run_order.json`
+- Create after execution approval:
+  `src/26_historical_band_experts/resource_preflight_formal_v09.py`
 - Create after execution approval: `src/26_historical_band_experts/train_formal_v09.py`
 - Create after execution approval: `src/26_historical_band_experts/run_formal_training_v09.py`
+- Test: `src/26_historical_band_experts/tests/test_resource_preflight_formal_v09.py`
 - Test: `src/26_historical_band_experts/tests/test_train_formal_v09.py`
 - Test: `src/26_historical_band_experts/tests/test_run_formal_training_v09.py`
 
 **Interfaces:**
 - `validate_run_order_v09(order) -> tuple[FormalRunSpecV09, ...]`
+- `dropout_seed_v09(seed) -> int`
+- `reset_training_dropout_rng_v09(seed) -> dict`
+- `run_resource_preflight_v09(protocol_path, *, device, report_path) -> dict`
 - `run_training_v09(inputs, *, variant, seed, output_dir, device, gate) -> dict`
 - `run_training_suite_v09(protocol_path, authorization_path, run_order_path, input_root, formal_root, device) -> dict`
 
@@ -586,7 +663,23 @@ git commit -m "Feat: Add formal v09 legacy bridge and nesting audit"
   开关漂移、算法不支持或数组不一致时失败；
 - 不计算验证指标，不读取正式评估观测，不生成正式期预测；
 - 同一随机数的三个模型每轮排列哈希完全相同；
+- 同一随机数的三个模型在第一个训练批次前具有完全相同的中央处理器和图形处理器随机数状态哈希；
+  经典与连续历史候选因近期隐藏宽度相同且历史前向不使用随机数，每一步近期输出丢弃流必须保持配对；
+- 资源预检在独立一次性子进程中只用合成数据和可丢弃模型；它不能打开正式输入、创建正式输出或把
+  模型、Adam、随机数状态带入正式训练进程；
 - 输出目录存在、哈希漂移、非有限损失或内存越界时立即失败。
+
+资源预检测试必须覆盖四种固定工作负载：
+
+1. 经典近期模型与停用历史模型同时驻留的严格锁步工作负载；
+2. 256隐藏单元经典近期模型；
+3. 369隐藏单元同参数量控制；
+4. 256隐藏单元连续历史候选。
+
+每种工作负载使用批量256及其正式窗口形状，在两个依次启动的全新图形处理器子进程中，以同一合成
+输入完成一次前向、损失、反向和Adam更新。测试必须证明两个子进程输出的参数、Adam状态、损失、
+峰值显存和随机数状态字段完整；除峰值显存外的数值数组哈希完全相同。工作进程拒绝任何输入根目录、
+正式输出根目录或真实文件参数；只有父进程可以在全部工作进程退出后原子写一份报告。
 
 - [ ] **Step 2: 运行主训练测试并确认失败**
 
@@ -604,21 +697,31 @@ Expected: FAIL，原因是主训练模块尚不存在。
 每个运行在独立进程中执行以下固定顺序：
 
 1. 验证协议、配置、收据、输入封存、源码树、Git工作区和内存；
-2. 核对正式环境字段与严格嵌套封存完全相同，再固定Python、NumPy、PyTorch CPU和图形处理器随机数；
-3. 构建模型并验证参数量；
-4. 用独立CPU生成器生成每轮排列；
-5. 执行30轮、204,630次Adam更新；
-6. 在第10、20、30轮原子保存检查点；
-7. 重载第30轮检查点并验证模型、优化器、随机数和哈希；
-8. 写`seal.json`并原子提交运行目录。
+2. 核对正式环境字段与严格嵌套封存完全相同，再用协议随机数固定Python、NumPy和模型初始化；
+3. 构建模型和显式Adam并验证参数量与参数组；
+4. 把PyTorch中央处理器和全部图形处理器重置为固定`dropout_seed`，记录初始状态哈希；
+5. 用独立CPU生成器生成每轮排列；
+6. 执行30轮、204,630次Adam更新；
+7. 在第10、20、30轮原子保存检查点；
+8. 重载第30轮检查点并验证模型、优化器、随机数和哈希；
+9. 写`seal.json`并原子提交运行目录。
 
 连续历史候选只在正式前向和反向中记录计算图健康信息，不在训练进程内另算状态分布。八个
 候选的状态分布在24次主训练全部结束后由独立进程从封存检查点计算，避免诊断前向影响训练随机数、
 优化器、显存峰值或运行时模型状态。
 
-图形处理器运行前用同一模型、最大批量和同一窗口形状执行一次完整前向、反向和优化器步的资源预检。
-正式运行前可用图形处理器内存必须至少达到
+图形处理器资源预检必须由独立预检驱动器启动一次性子进程，用同一模型结构、最大批量、同一窗口
+形状和纯合成数据执行一次完整前向、反向和优化器步。预检进程不得打开正式输入或正式输出目录；
+退出后模型、Adam和随机数状态全部丢弃。只有预检进程完全退出、无残留图形处理器进程且缓存释放后，
+才启动全新的正式训练进程，并从步骤1重新验证和播种。正式运行前可用图形处理器内存必须至少达到
 `max(预检峰值的2倍, 预检峰值加2 GiB)`；该门只保护资源，不允许改变批量大小或科学配置。
+资源预检在申请严格嵌套授权前执行一次，报告同时覆盖严格锁步双模型和三个主模型族，写在正式输入
+封存目录之外，并绑定协议、可执行源码树、设备和环境哈希。严格嵌套与主训练授权都必须绑定该报告
+SHA-256；实际启动仍重新检查当前可用主机内存、图形处理器内存和环境完全一致。
+报告路径固定为
+`results/26_historical_band_experts/formal_v09/training_resource_preflight.external_audit.json`；
+状态只能是`complete_resource_preflight`。报告逐工作负载记录输入形状、参数量、两次独立数组哈希、
+峰值已分配和保留显存、确定性开关、工作进程标识与退出码，并证明进程不曾接收正式输入或输出路径。
 
 - [ ] **Step 4: 实现串行编排器**
 
@@ -684,6 +787,8 @@ git commit -m "Feat: Add serial formal v09 training suite"
 - 24项中缺失、重复或多出任一运行；
 - 运行顺序、模型族、随机数、参数量、30轮或204,630步不匹配；
 - 同随机数三个模型的任一轮排列哈希不同；
+- 同随机数三个模型的初始丢弃随机数状态哈希不同，或丢弃流没有在模型和优化器构造后重置；
+- 资源预检与正式训练共用进程、模型、优化器、随机数状态或正式输入；
 - 第30轮检查点缺失或不是唯一允许的正式预测来源；
 - 输入、源码、环境、授权或运行清单哈希漂移；
 - 任何非有限损失、非有限参数、历史候选无梯度、内存越界或失败收据；
@@ -722,7 +827,8 @@ Expected: FAIL，原因是总审核器尚不存在。
 `training_seal.json`固定包含：
 
 - 协议、输入封存、输入产物外部审核、可信训练目标来源外部审核、旧参考函数桥接审核、
-  严格嵌套运行封存、严格嵌套独立审核、状态诊断预注册文件、授权收据、可执行源码树和环境哈希；
+  独立合成资源预检、严格嵌套运行封存、严格嵌套独立审核、状态诊断预注册文件、授权收据、
+  可执行源码树和环境哈希；
 - 24项运行的固定顺序、运行封存哈希和第30轮检查点SHA-256；
 - 第10、20轮检查点哈希，但明确标记`not_eligible_for_formal_prediction=true`；
 - 八个连续历史候选状态诊断目录哈希和状态诊断外部审核报告SHA-256；
@@ -758,6 +864,8 @@ git commit -m "Feat: Add formal v09 training audit"
   `src/26_historical_band_experts/configs/formal_v09_training_authorization.json`
 - Generated before strict approval, not tracked:
   `results/26_historical_band_experts/formal_v09/legacy_checkpoint_forward_bridge.external_audit.json`
+- Generated before strict approval, not tracked:
+  `results/26_historical_band_experts/formal_v09/training_resource_preflight.external_audit.json`
 - Modify after each completed audit: `src/26_historical_band_experts/registry.csv`
 - Create after strict audit:
   `docs/technical/historical_multiscale_formal_v09_strict_nesting_audit.md`
@@ -770,7 +878,7 @@ git commit -m "Feat: Add formal v09 training audit"
 
 - [ ] **Step 1: 在任何正式训练前完成代码审核**
 
-实现代码全部提交后：
+用户逐字发送上述训练代码实现与独立合成资源预检批准文本，且实现代码全部提交后：
 
 1. 运行YAPF，仅格式化本计划新增或修改的Python文件；
 2. 在可用物理内存至少12.68 GiB时运行
@@ -782,6 +890,17 @@ git commit -m "Feat: Add formal v09 training audit"
 6. 核对冻结目录和评分代码相对版本09实施父提交没有差异；
 7. 由独立上下文审查训练代码的数据边界、随机数、损失、原子性和停止条件；
 8. 在中央处理器和正式训练设备上运行八随机数旧参考函数桥接审核；任一最大差不为0都停止。
+9. 在独立子进程中用合成数据完成严格锁步和三个主模型族的资源预检，封存报告；任一工作负载
+   不支持确定性算法、超过资源门或污染正式输入／输出时停止。
+
+资源预检命令固定为：
+
+```powershell
+python src\26_historical_band_experts\resource_preflight_formal_v09.py `
+  --protocol src\26_historical_band_experts\configs\formal_v09_protocol.json `
+  --device cuda:0 `
+  --report results\26_historical_band_experts\formal_v09\training_resource_preflight.external_audit.json
+```
 
 桥接审核命令固定为：
 
@@ -799,7 +918,7 @@ python src\26_historical_band_experts\audit_legacy_checkpoint_bridge_v09.py `
 
 只有用户逐字发送Task 1给出的严格嵌套批准文本后，才创建收据。收据绑定实际输入封存哈希、
 输入产物外部审核报告哈希、可信训练目标来源外部审核报告哈希、旧参考函数桥接审核报告哈希、
-可执行源码树哈希、严格输出目录和当前批准任务标识，并提交：
+独立合成资源预检报告哈希、可执行源码树哈希、严格输出目录和当前批准任务标识，并提交：
 
 ```powershell
 git add src/26_historical_band_experts/configs/formal_v09_strict_nesting_authorization.json `
@@ -839,7 +958,8 @@ python src\26_historical_band_experts\audit_strict_formal_v09.py `
 
 - [ ] **Step 5: 请求并固化主训练授权**
 
-只有严格嵌套审计通过且用户逐字发送Task 1给出的主训练批准文本后，才创建主训练收据并提交：
+只有严格嵌套审计通过且用户逐字发送Task 1给出的主训练批准文本后，才创建主训练收据。收据必须
+继续绑定同一独立合成资源预检报告，并新增严格嵌套运行封存和外部审核哈希，然后提交：
 
 ```powershell
 git add src/26_historical_band_experts/configs/formal_v09_training_authorization.json `

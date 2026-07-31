@@ -29,6 +29,9 @@
 - 静态属性中心使用531个冻结流域的算术平均，尺度使用样本标准差`ddof=1`，与旧核心
   pandas静态属性归一化一致。Maurer气象、全局流量尺度和每流域损失尺度继续只用
   `1999-10-01`至`2008-09-30`训练期并使用`ddof=0`。
+- 静态属性必须先以源文件双精度值计算中心和尺度，在双精度中归一化，最后只把归一化结果转换为
+  `float32`模型输入。不得先把原始静态属性转换为`float32`再计算统计。正式输入同时封存
+  `statics_raw.float64.npy`和预归一化`statics.npy`；训练只读取后者且不得再次归一化。
 - 不得载入或复用旧八随机数运行的动态或流量归一化值。旧核心数据集先加入269天预热区间，再在整个
   数据集上计算流量和气象统计；因此旧流量统计包含`1999-01-05`至`1999-09-30`，不满足版本09
   正式评估观测封存边界。版本09保留干净训练期统计，并明确不声称复现旧训练轨迹。
@@ -304,6 +307,7 @@ git commit -m "Feat: Add external formal v09 stage authorization"
 
 **Interfaces:**
 - Produces: `sha256_file(path) -> str`。
+- Produces: `sha256_array_payload(array) -> str`。
 - Produces: `digest_pairs_v09(pairs) -> str`。
 - Produces: `atomic_json(path, payload) -> None`。
 - Produces: `environment_fingerprint_v09(repo_root) -> dict`。
@@ -351,6 +355,17 @@ def test_digest_pairs_is_order_sensitive_and_unambiguous():
     assert digest_pairs_v09(first) != digest_pairs_v09(tuple(reversed(first)))
 
 
+def test_array_payload_hashes_exact_bytes_and_requires_c_order():
+    from artifact_v09 import sha256_array_payload
+
+    values = np.arange(6, dtype=np.float64).reshape(2, 3)
+    assert sha256_array_payload(values) != sha256_array_payload(
+        values.astype(np.float32)
+    )
+    with pytest.raises(ValueError):
+        sha256_array_payload(values.T)
+
+
 def test_directory_promotion_requires_complete_verified_seal(tmp_path):
     from artifact_v09 import atomic_json, promote_complete_directory_v09, sha256_file
 
@@ -389,6 +404,15 @@ def sha256_file(path: str | Path) -> str:
     with Path(path).open("rb") as handle:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
+    return digest.hexdigest()
+
+
+def sha256_array_payload(array: np.ndarray) -> str:
+    values = np.asarray(array)
+    if not values.flags.c_contiguous:
+        raise ValueError("array payload hashing requires C-contiguous storage")
+    digest = hashlib.sha256()
+    digest.update(memoryview(values).cast("B"))
     return digest.hexdigest()
 
 
@@ -509,7 +533,7 @@ git commit -m "Feat: Add formal v09 artifact fingerprints"
 
 ---
 
-### Task 3: 实现流式 Maurer 气象和静态属性存储
+### Task 3: 实现流式 Maurer 气象和原始静态属性存储
 
 **Files:**
 - Create: `src/26_historical_band_experts/formal_forcing_store_v09.py`
@@ -519,7 +543,8 @@ git commit -m "Feat: Add formal v09 artifact fingerprints"
 - Consumes: 冻结531流域列表、原始 Maurer 根目录、冻结静态属性文件、协议和输入阶段授权。
 - Produces: `discover_maurer_files_v09(root, basin_ids) -> dict[str, Path]`。
 - Produces: `build_forcing_store_v09(...) -> dict`。
-- Produces: `forcing.npy`、`dates.npy`、`basins.txt`、`statics.npy`和`forcing_manifest.json`。
+- Produces: `forcing.npy`、`dates.npy`、`basins.txt`、`statics_raw.float64.npy`和
+  `forcing_manifest.json`。预归一化`statics.npy`在Task 5统计冻结后生成。
 
 - [ ] **Step 1: 写递归发现和不正确目录假设的失败测试**
 
@@ -677,10 +702,16 @@ def build_forcing_store_v09(
         raise ForcingStoreError("static source column order drift")
     static_frame["gauge_id"] = static_frame["gauge_id"].str.zfill(8)
     static_frame = static_frame.set_index("gauge_id").loc[list(basin_ids)]
-    statics = static_frame.loc[
-        :, list(FORMAL_V09_STATIC_COLUMNS)
-    ].to_numpy(dtype=np.float32)
-    np.save(building_root / "statics.npy", statics, allow_pickle=False)
+    statics_raw = np.ascontiguousarray(
+        static_frame.loc[
+            :, list(FORMAL_V09_STATIC_COLUMNS)
+        ].to_numpy(dtype=np.float64)
+    )
+    np.save(
+        building_root / "statics_raw.float64.npy",
+        statics_raw,
+        allow_pickle=False,
+    )
     dates = np.arange(
         np.datetime64("1980-01-01"),
         np.datetime64("2008-10-01"),
@@ -742,9 +773,13 @@ assert frame["gauge_id"].astype(str).str.zfill(8).is_unique
 assert FORMAL_V09_STATIC_COLUMNS == tuple(sorted(STATIC_COLUMNS))
 ```
 
-按冻结流域顺序和上述显式字母列顺序写出`statics.npy`，形状`(531, 27)`、类型`float32`、
-数组有效载荷`57,348`字节；不把 NumPy 文件头长度写成跨版本固定值。`manifest.json`、
-`scaler.json`和输入审核报告都必须逐项记录`FORMAL_V09_STATIC_COLUMNS`，重载时不允许只检查列数。
+按冻结流域顺序和上述显式字母列顺序先写出`statics_raw.float64.npy`，形状`(531, 27)`、
+类型`float64`、数组有效载荷`114,696`字节、有效载荷SHA-256为
+`6c59dcad191e71bf5f7acabb91f7117882d7d1f6736be4d94193921c57dc60a3`。Task 5再用该数组计算
+`ddof=1`统计并写出预归一化`statics.npy`，类型`float32`、有效载荷`57,348`字节、有效载荷
+SHA-256为`aa53d1d06247b246f5557efe6761b9b7becd2be3a680f99d667d2e3c89b9b37a`。
+不把 NumPy 文件头长度或文件哈希写成跨版本固定值。`manifest.json`、`scaler.json`和输入审核报告
+都必须逐项记录`FORMAL_V09_STATIC_COLUMNS`、两个有效载荷哈希和精度顺序，重载时不允许只检查列数。
 
 - [ ] **Step 6: 写出气象清单并测试重载**
 
@@ -1099,9 +1134,9 @@ git commit -m "Feat: Add trusted formal v09 target export"
 
 **Interfaces:**
 - Produces: `seal_formal_inputs_v09(input_root, protocol) -> dict`。
-- Produces: `open_formal_inputs_v09(input_root, protocol) -> FormalInputPack`。
+- Produces: `open_formal_inputs_v09(input_root, protocol) -> FormalTrainingInputPack`。
 - Produces: `audit_formal_inputs_v09(input_root, protocol) -> dict`。
-- Produces: `targets.npy`、`scaler.json`、`environment.json`、`manifest.json`、
+- Produces: `targets.npy`、`statics.npy`、`scaler.json`、`environment.json`、`manifest.json`、
   `input_audit.json`和最终`seal.json`。
 
 - [ ] **Step 1: 写归一化日期和封存重载失败测试**
@@ -1113,8 +1148,9 @@ def test_scaler_uses_indices_7213_through_10500_only(tmp_path):
     forcing = np.full((2, 10_501, 5), 99.0, dtype=np.float32)
     forcing[:, 7_213:10_501] = 2.0
     targets = np.full((2, 3_288), 3.0, dtype=np.float32)
-    statics = np.asarray([[0.0] * 27, [2.0] * 27], dtype=np.float32)
-    scaler = compute_scaler_v09(forcing, targets, statics)
+    statics_raw = np.asarray([[0.0] * 27, [2.0] * 27], dtype=np.float64)
+    scaler = compute_scaler_v09(forcing, targets, statics_raw)
+    statics = normalize_statics_v09(statics_raw, scaler)
     np.testing.assert_array_equal(scaler["dynamic_center"], np.full(5, 2.0))
     assert scaler["q_center"] == 3.0
     np.testing.assert_array_equal(scaler["static_center"], np.full(27, 1.0))
@@ -1128,6 +1164,35 @@ def test_scaler_uses_indices_7213_through_10500_only(tmp_path):
     assert scaler["q_ddof"] == 0
     assert scaler["static_ddof"] == 1
     assert tuple(scaler["static_columns"]) == FORMAL_V09_STATIC_COLUMNS
+    assert statics.dtype == np.float32
+    np.testing.assert_array_equal(
+        statics[0],
+        np.full(27, -1.0 / np.sqrt(2.0), dtype=np.float32),
+    )
+    np.testing.assert_array_equal(
+        statics[1],
+        np.full(27, 1.0 / np.sqrt(2.0), dtype=np.float32),
+    )
+
+
+def test_frozen_static_precision_and_payload_contract():
+    frame = pd.read_csv(FROZEN_STATICS, dtype={"gauge_id": "string"})
+    frame["gauge_id"] = frame["gauge_id"].str.zfill(8)
+    frame = frame.set_index("gauge_id").loc[list(FROZEN_BASINS)]
+    raw = np.ascontiguousarray(
+        frame.loc[:, list(FORMAL_V09_STATIC_COLUMNS)].to_numpy(
+            dtype=np.float64
+        )
+    )
+    center = raw.mean(axis=0)
+    scale = raw.std(axis=0, ddof=1)
+    normalized = ((raw - center) / scale).astype(np.float32)
+    assert sha256_array_payload(raw) == (
+        "6c59dcad191e71bf5f7acabb91f7117882d7d1f6736be4d94193921c57dc60a3"
+    )
+    assert sha256_array_payload(normalized) == (
+        "aa53d1d06247b246f5557efe6761b9b7becd2be3a680f99d667d2e3c89b9b37a"
+    )
 
 
 def test_all_candidate_formal_input_modules_exclude_raw_discharge_reads():
@@ -1197,7 +1262,7 @@ targets.flush()
 def compute_scaler_v09(
     forcing: np.ndarray,
     targets: np.ndarray,
-    statics: np.ndarray,
+    statics_raw: np.ndarray,
 ) -> dict:
     dynamic_sum = np.zeros(5, dtype=np.float64)
     for basin_index in range(531):
@@ -1237,7 +1302,9 @@ def compute_scaler_v09(
         per_basin_q_std[basin_index] = values.std(ddof=0)
     q_scale = float(np.sqrt(q_squared_deviation / float(q_count)))
 
-    static64 = np.asarray(statics, dtype=np.float64)
+    if statics_raw.dtype != np.float64:
+        raise FormalInputError("raw statics must remain float64 until normalized")
+    static64 = np.asarray(statics_raw, dtype=np.float64)
     static_scale = static64.std(axis=0, ddof=1)
     return {
         "dynamic_center": dynamic_center.tolist(),
@@ -1258,17 +1325,37 @@ def compute_scaler_v09(
         "training_start_index": 7213,
         "training_end_index_inclusive": 10500,
     }
+
+
+def normalize_statics_v09(statics_raw: np.ndarray, scaler: Mapping) -> np.ndarray:
+    if statics_raw.dtype != np.float64:
+        raise FormalInputError("raw statics precision drift")
+    center = np.asarray(scaler["static_center"], dtype=np.float64)
+    scale = np.asarray(scaler["static_scale"], dtype=np.float64)
+    normalized = (statics_raw - center) / scale
+    if not np.isfinite(normalized).all():
+        raise FormalInputError("nonfinite normalized statics")
+    return np.ascontiguousarray(normalized.astype(np.float32))
+
+
+statics_raw = np.load(
+    input_root / "statics_raw.float64.npy",
+    mmap_mode="r",
+)
+statics = normalize_statics_v09(statics_raw, scaler)
+np.save(input_root / "statics.npy", statics, allow_pickle=False)
 ```
 
 上述两遍算法使峰值保持在一个流域的`3,288 × 5`数据以内。审核器使用独立的逐流域
 Welford算法重算；动态、目标和静态统计最大绝对差不得超过`1e-9`。审核器还必须拒绝
-静态列不是显式字母顺序、静态尺度不是`ddof=1`、或者任何旧动态／流量归一化文件被作为输入。
+静态列不是显式字母顺序、静态尺度不是`ddof=1`、原始静态属性在统计前降为`float32`、
+预归一化静态有效载荷哈希漂移、训练再次归一化静态属性，或者任何旧动态／流量归一化文件被作为输入。
 
 - [ ] **Step 5: 实现只读输入重载**
 
 ```python
 @dataclass(frozen=True)
-class FormalInputPack:
+class FormalTrainingInputPack:
     basins: tuple[str, ...]
     dates: np.ndarray
     forcing: np.ndarray
@@ -1279,7 +1366,10 @@ class FormalInputPack:
     seal: dict
 
 
-def open_formal_inputs_v09(input_root: str | Path, protocol: Mapping) -> FormalInputPack:
+def open_formal_inputs_v09(
+    input_root: str | Path,
+    protocol: Mapping,
+) -> FormalTrainingInputPack:
     root = Path(input_root)
     seal = json.loads((root / "seal.json").read_text(encoding="utf-8"))
     if seal.get("status") != "complete_input_seal":
@@ -1304,7 +1394,9 @@ def open_formal_inputs_v09(input_root: str | Path, protocol: Mapping) -> FormalI
         raise FormalInputError("forcing layout drift")
     if targets.shape != (531, 3_288) or targets.dtype != np.float32:
         raise FormalInputError("target layout drift")
-    return FormalInputPack(
+    if statics.shape != (531, 27) or statics.dtype != np.float32:
+        raise FormalInputError("normalized static layout drift")
+    return FormalTrainingInputPack(
         basins=tuple((root / "basins.txt").read_text(encoding="utf-8").splitlines()),
         dates=dates,
         forcing=forcing,
@@ -1313,8 +1405,12 @@ def open_formal_inputs_v09(input_root: str | Path, protocol: Mapping) -> FormalI
         scaler=json.loads((root / "scaler.json").read_text(encoding="utf-8")),
         manifest=manifest,
         seal=seal,
-    )
+)
 ```
+
+`open_formal_inputs_v09()`是唯一允许训练代码调用的重载入口，不打开也不返回
+`statics_raw.float64.npy`。只有独立输入审核函数可以直接打开原始静态数组，用于重算统计、精度顺序
+和两个有效载荷哈希；审核对象不得传给训练器。
 
 顶层`manifest.json`必须是不可变的构建记录，状态为`built_pending_audit`。其`artifacts`字段必须
 逐项包含：
@@ -1327,6 +1423,7 @@ forcing.npy
 forcing_manifest.json
 scaler.json
 statics.npy
+statics_raw.float64.npy
 targets.csv
 targets.manifest.json
 targets.npy
@@ -1344,6 +1441,10 @@ targets.npy
 - 10,501个气象日期和3,288个训练目标日期；
 - 气象、静态属性和训练目标的唯一性、完整性、有限性；
 - 5项动态和27项静态的精确列顺序；
+- 原始静态数组为双精度，预归一化静态数组为单精度，二者有效载荷SHA-256分别严格等于
+  `6c59dcad191e71bf5f7acabb91f7117882d7d1f6736be4d94193921c57dc60a3`和
+  `aa53d1d06247b246f5557efe6761b9b7becd2be3a680f99d667d2e3c89b9b37a`；
+- 静态归一化严格执行“源双精度统计、双精度归一化、最后转单精度”，且训练接口只暴露预归一化数组；
 - `Tmin(C)`与`Tmax(C)`的冻结逐元素相等事实；
 - 目标包没有任何`1989-10-01`至`1999-09-30`行；
 - `targets.manifest.json`中的训练期流量解析数恰为1,745,928，
@@ -1590,7 +1691,8 @@ git commit -m "Phase: Record formal v09 input audit"
 - Spec coverage: 授权、Maurer、27项静态属性、3,561天最长滞后所需日期、训练期目标、内存、
   安全边界、顺序敏感来源摘要、完整环境快照、禁止输入和独立审核均有对应任务。
 - Scope boundary: 本计划不包含训练、正式预测或评分；这些必须在输入独立审核后另写计划。
-- Type consistency: 全部气象、静态和目标存储均为float32；统计累积为float64；流域和日期索引均为整数；训练读取接口只返回封存产物。
+- Type consistency: 气象、预归一化静态和目标存储为`float32`，原始静态存储和统计累积为
+  `float64`；流域和日期索引均为整数；训练读取接口只暴露封存的预归一化静态数组。
 - Atomicity: 所有真实输出先写`input_attempt_01.building`，只有`input_audit.json`和
   `seal.json`完整后才能提升；既有最终目录和临时目录均拒绝覆盖。
 - 未定字段检查：计划没有未定字段；授权值由Global Constraints中的精确用户回复唯一决定。
