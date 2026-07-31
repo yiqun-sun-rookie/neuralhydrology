@@ -11,7 +11,9 @@
 ## Global Constraints
 
 - 本计划当前状态为`PROPOSED-HOLD`，不授权写代码、生成正式输入、训练、正式预测或评分。
-- 只有用户逐字发送本计划冻结的“清洁同信息配对评分路线实施批准”后，才允许实现新入口和合成测试。
+- 只有用户逐字发送本计划冻结的“清洁同信息配对评分路线实施批准”后，才允许实现该文本逐项列明的
+  合同、评分包构建器、评分入口、一次性授权与随机划分模块、两个审核器及合成测试。该批准不允许
+  用真实预测构建评分包，也不允许任何正式输入、训练、预测或评分动作。
 - 不修改`src/fair_benchmark/frozen/`、`src/fair_benchmark/score.py`、`gate.py`、`stats.py`、
   `metrics.py`、`ledger.py`、`io.py`、`leakage.py`或`tracks.py`。
 - 不覆盖或改写现有`track0_forcing_only`。新赛道固定为
@@ -40,7 +42,17 @@
   主训练总封存及独立审核、24个第30轮检查点、正式预测总封存和24文件独立重放审核；任一缺失、
   非通过或哈希漂移均不得评分。
 - 清洁配对服务只允许一次进程启动、一次`score_submission()`调用、一次账本追加；没有重试。
+- 编写训练、预测或评分包装代码的实施者不得消费正式评分授权。唯一评分调用必须由未参与实现的
+  独立干净上下文在重算全部哈希后执行；这一次调用同时承担独立重执行，不再允许第二次“审核重跑”。
 - 授权首次消费后，无论成功、失败、中断、答案根缺失、账本已追加但报告失败，均不得复用。
+- 当前仓库不会把`src/fair_benchmark`安装为顶层包。正式入口必须在授权消费前把当前工作树
+  `src`的解析后绝对路径设为唯一`PYTHONPATH`并完成只读导入探针；启动快照和授权收据必须绑定该
+  路径、Python解释器绝对路径和模块文件SHA-256，禁止依赖用户会话中偶然存在的搜索路径。
+- 留出划分必须在打开正式答案前由随机数抽取收据重新派生并核对；收据、划分盐或集合摘要不一致时，
+  `load_obs_csv()`调用次数必须为0。
+- 最终报告必须是严格JSON。现有评分函数在全零配对差异时会返回非有限Wilcoxon检验值；可信包装器
+  必须把允许出现的非有限聚合统计规范化为`null`并记录原因，再以`allow_nan=false`序列化。逐流域
+  指标非有限仍是合同失败，不能用`null`掩盖。
 - 正式答案文件不在隔离工作区。可信入口必须显式接收主仓库只读冻结根
   `G:\github\pycharm\projects\neuralhydrology\src\fair_benchmark\frozen`，逐项验证哈希，且不得复制答案。
 - 正式答案只能由已授权的可信评分进程解析。无观测前置门、候选代码和独立终审不得解析或复制答案。
@@ -98,14 +110,18 @@
 用户必须逐字发送：
 
 ```text
-批准版本09清洁同信息配对评分路线及三组预测封存后由唯一评分进程抽取256位随机数派生107流域留出规则；仅授权编写新评分入口、前置门和合成测试，不批准生成正式输入、训练、正式预测或评分。
+批准版本09清洁同信息配对评分路线及三组预测封存后由唯一评分进程抽取256位随机数派生107流域留出规则；仅授权编写清洁评分合同、三集合评分包构建器、新评分入口、一次性授权与随机划分模块、评分前置审核器、最终不重评分审核器及合成测试，不批准生成正式输入、训练、正式预测或评分。
 ```
 
 UTF-8、无末尾换行的SHA-256固定为：
 
 ```text
-7a73fcbd2ca916d4764d1b3791ddb9e037385f6a69cd73307c29376a6c088fd3
+f85f846c0bea8135b6c8effd1aaa44dd75f9611fcfa3442b90edb95c0f353c8d
 ```
+
+先前只写“新评分入口、前置门和合成测试”的较窄文本及其
+`7a73fcbd2ca916d4764d1b3791ddb9e037385f6a69cd73307c29376a6c088fd3`哈希已被本版取代，不再接受；
+原因是它没有明确授权评分包构建器、一次性随机划分和最终不重评分审核器的代码实现。
 
 - [ ] **Step 2: 写科学合同失败测试**
 
@@ -651,6 +667,7 @@ def test_clean_pair_service_calls_existing_scorer_once_and_logs_once(
 - 改变任一封存预测哈希会使评分包与授权失效；
 - 改变评分进程的一次性随机数会改变派生留出摘要；
 - 可信核心派生的`nonce_sha256`必须等于抽取收据登记值；
+- 随机数抽取收据、划分盐或留出集合摘要漂移时，`load_obs_csv()`调用次数为0；
 - 同参数量控制只改变次要比较，不改变主判定；
 - 任一集合缺失531个有限逐流域指标时`contract_ok=false`，不能`PASS`；
 - 公开比较数必须为424且后封存留出比较数必须为107，否则不能`PASS`；
@@ -659,6 +676,9 @@ def test_clean_pair_service_calls_existing_scorer_once_and_logs_once(
 - 候选源码包出现旧逐流域基准、旧留出列表、既有评分报告或评分账本访问词时也强制`HOLD`；
 - 答案哈希或流域哈希漂移时，在调用现有评分函数前失败；
 - 原冻结留出文件即使存在，也不能传入`Track.secret_holdout`。
+- 主比较或同参数量比较全部配对差异为0时仍产生可解析的严格JSON报告：Wilcoxon检验值写为
+  `null`并附`all_paired_differences_zero`，账本中的`nan`字符串由终审显式映射，不能导致评分后
+  报告写出失败。
 
 - [ ] **Step 2: 运行测试并确认失败**
 
@@ -674,22 +694,10 @@ Expected: FAIL，原因是可信评分核心尚不存在。
 正式输入并验证SHA-256；旧基准与旧留出文件不得解析。工作区内答案不存在不是错误修复目标；服务
 必须使用显式可信根，不能复制答案。
 
-核心固定顺序：
+核心固定顺序是先验证后封存划分，再打开正式答案。下列划分代码必须发生在首次
+`load_obs_csv()`之前：
 
 ```python
-obs = load_obs_csv(answer_key_path)
-classic_sim = load_predictions(classic_path)
-classic_nse = per_basin_score(obs, classic_sim, nse)
-del classic_sim
-
-capacity_sim = load_predictions(capacity_path)
-capacity_nse = per_basin_score(obs, capacity_sim, nse)
-del capacity_sim
-
-candidate_sim = load_predictions(candidate_path)
-candidate_nse = per_basin_score(obs, candidate_sim, nse)
-del candidate_sim
-
 partition = derive_postseal_holdout_v09(
     basin_ids,
     protocol_sha256=contract["protocol_sha256"],
@@ -702,6 +710,19 @@ assert len(partition["holdout_ids"]) == bundle["postseal_holdout"]["holdout_coun
 assert partition["nonce_sha256"] == holdout_draw_receipt["nonce_sha256"]
 assert partition["partition_salt_sha256"] == holdout_draw_receipt["partition_salt_sha256"]
 assert partition["holdout_set_sha256"] == holdout_draw_receipt["holdout_set_sha256"]
+
+obs = load_obs_csv(answer_key_path)
+classic_sim = load_predictions(classic_path)
+classic_nse = per_basin_score(obs, classic_sim, nse)
+del classic_sim
+
+capacity_sim = load_predictions(capacity_path)
+capacity_nse = per_basin_score(obs, capacity_sim, nse)
+del capacity_sim
+
+candidate_sim = load_predictions(candidate_path)
+candidate_nse = per_basin_score(obs, candidate_sim, nse)
+del candidate_sim
 ```
 
 三个字典必须键集合等于冻结531流域且值全部有限；公开和留出数量分别固定为424和107。然后构造：
@@ -777,6 +798,11 @@ primary = score_submission(
 - `score_submission_call_count=1`和`ledger_append_count=1`。
 
 报告不得包含逐流域字典、留出流域列表或逐日值。
+
+报告写入使用同目录独占`.building`文件，先把仅允许出现于聚合统计的`NaN`或正负无穷规范化为
+`null`和明确原因，再调用`json.dumps(..., allow_nan=False, sort_keys=True)`；刷新并同步到磁盘后
+原子改名为`report.json`。若账本已追加但严格报告未能完成，授权保持已消费，终审输出
+`HOLD_INCOMPLETE_NO_RETRY`。
 
 - [ ] **Step 6: 运行测试并提交**
 
@@ -913,6 +939,8 @@ Expected: FAIL，原因是授权模块尚不存在。
 - 24个第30轮检查点SHA-256；
 - 候选源码包哈希树；
 - 新可信评分入口和全部复用评分模块哈希；
+- Python解释器解析后绝对路径、当前工作树`src`解析后绝对路径，以及
+  `PYTHONPATH`严格等于该单一路径的启动合同；
 - 正式答案和流域列表的预期SHA-256；
 - `postseal_nonce_sha256_rank_v1`、操作系统密码学随机源、抽取数1、重抽数0和107/424计数；
 - 旧留出列表及不合格历史基准的受保护快照SHA-256，并明确两者不参与主判定；
@@ -967,6 +995,9 @@ git commit -m "Feat: Authorize one clean pair score"
 - 三个预测均通过精确覆盖；
 - 评分包的后封存划分状态严格为`awaiting_authorized_nonce_draw`，且不含随机数或划分结果；
 - 新服务和复用评分模块哈希正确；
+- 使用授权将绑定的Python解释器，且`PYTHONPATH`严格设为当前工作树解析后的`src`绝对路径时，
+  `fair_benchmark.score_clean_pair_v09`及其全部可信依赖能够只读导入；模块文件均位于该工作树，
+  不从主仓库、用户目录或其他环境阴影导入；
 - 旧冻结赛道文件没有变化；
 - 旧留出列表被标记为`legacy_reused_holdout_nonqualifying`，真实账本中至少7条历史记录均不得被
   当作新留出集证据；
@@ -975,6 +1006,8 @@ git commit -m "Feat: Authorize one clean pair score"
 - 正式答案在隔离工作区缺失，在显式可信根存在；
 - 前置审核只检查答案文件元数据和合同登记值，不解析、不复制、不计算内容指标；
 - 账本链有效且没有`S09C-CLEAN-PAIR`；
+- 账本当前快照的行数、SHA-256和末行哈希与授权输入一致；当前已知历史快照为7行且0个链断点，
+  但正式前置门必须以届时重算值为准，不能硬编码7；
 - 授权消费收据、留出随机数抽取收据和正式报告均不存在；
 - 可用物理内存至少12.68 GiB；
 - 任一失败时状态不是`ready_for_clean_pair_score_authorization`。
@@ -1029,9 +1062,11 @@ python src\26_historical_band_experts\audit_clean_pair_score_preflight_v09.py `
 授权收据是正式封存产物，不修改或提交源码；其SHA-256写入启动快照。收据生成后再次只读验证全部
 哈希，不能改预测、合同、源码、账本或输出路径。
 
-- [ ] **Step 7: 执行唯一一次可信评分**
+- [ ] **Step 7: 由未参与实现的独立评分执行者执行唯一一次可信评分**
 
 ```powershell
+$env:PYTHONPATH = (Resolve-Path 'src').Path
+python -c "import fair_benchmark.score_clean_pair_v09 as m; print(m.__file__)"
 python -m fair_benchmark.score_clean_pair_v09 `
   --contract src\26_historical_band_experts\configs\formal_v09_clean_pair_scoring_contract.json `
   --bundle results\26_historical_band_experts\formal_v09\predictions\clean_pair_bundle.json `
@@ -1045,8 +1080,12 @@ python -m fair_benchmark.score_clean_pair_v09 `
   --out results\26_historical_band_experts\formal_v09\clean_pair_score_attempt_01\report.json
 ```
 
-入口先检查内存、三个输出不存在和账本快照，再独占消费授权；随后恰好抽取一次256位随机数、派生
-107流域集合并独占写抽取收据，之后才解析答案。任何异常均停止且禁止重抽或重试。
+导入探针属于消费授权前的只读门，输出的模块路径必须位于当前工作树`src/fair_benchmark`并与授权
+哈希一致。入口先检查内存、三个输出不存在、解释器、`PYTHONPATH`、模块来源和账本快照，再独占
+消费授权；随后恰好抽取一次256位随机数、派生107流域集合并独占写抽取收据，之后才解析答案。
+任何异常均停止且禁止重抽或重试。评分调用前再次验证账本仍等于授权快照；变化时不调用评分并进入
+`HOLD_INCOMPLETE_NO_RETRY`。正式评分窗口内不得启动其他评分进程。执行上下文必须记录其独立任务
+标识并声明未参与候选、训练、预测或可信评分包装器的实现；实施者自己的任务标识不得通过启动门。
 
 ---
 
@@ -1063,7 +1102,7 @@ python -m fair_benchmark.score_clean_pair_v09 `
   `docs/technical/historical_multiscale_formal_v09_clean_pair_score_final_audit.md`
 
 **Interfaces:**
-- `audit_clean_pair_score_final_v09(report_path, authorization_path, consumption_path, holdout_draw_receipt_path, bundle_path, ledger_path) -> dict`。
+- `audit_clean_pair_score_final_v09(report_path, authorization_path, consumption_path, holdout_draw_receipt_path, bundle_path, basin_file_path, ledger_path) -> dict`。
 - Must not import or call `load_obs_csv`、`score_submission`、`score_clean_pair_core_v09`。
 
 - [ ] **Step 1: 写不重评分的终审测试**
@@ -1080,6 +1119,7 @@ def test_final_audit_uses_only_report_ledger_and_hashes(monkeypatch):
         CONSUMPTION,
         HOLDOUT_DRAW_RECEIPT,
         BUNDLE,
+        BASIN_FILE,
         LEDGER,
     )
     assert result["score_submission_call_count"] == 1
@@ -1093,8 +1133,12 @@ def test_final_audit_uses_only_report_ledger_and_hashes(monkeypatch):
 - 账本链有效，只有一个`S09C-CLEAN-PAIR`；
 - 三个预测哈希与评分包、授权和报告一致；
 - 主判定可由报告中的公开、后封存留出聚合值和固定门槛重新推导；
+- 报告是`allow_nan=false`可解析的严格JSON；账本字段值`nan`只允许对应报告中因
+  `all_paired_differences_zero`而规范化的`null`，其他非有限或无法逐字段映射的值使终审失败；
 - 抽取收据只有一个64位随机数，且其SHA-256、划分盐和留出集合摘要可由三组封存预测哈希确定性
   复核，计数严格为107/424；
+- 冻结流域列表SHA-256与合同相同，恰有531个唯一标识；终审只读取该非观测列表来重算107流域集合
+  摘要，不读取答案、预测值或逐流域指标；
 - 同参数量控制没有改变主判定；
 - 旧基准始终标记不具资格；
 - 报告或账本缺失时结论为`HOLD_INCOMPLETE_NO_RETRY`；
@@ -1117,10 +1161,11 @@ git add src/26_historical_band_experts/audit_clean_pair_score_final_v09.py `
 git commit -m "Feat: Audit clean pair score once"
 ```
 
-- [ ] **Step 4: 由未参与实现的独立上下文执行终审**
+- [ ] **Step 4: 由另一个未参与实现的独立上下文执行终审**
 
-独立上下文只读取合同、评分包、三个预测哈希、授权、消费收据、留出随机数抽取收据、服务报告、
-账本、源码树和封存链。它不得打开正式答案、调用任何评分入口或重算逐流域指标。
+独立上下文只读取合同、评分包、三个预测哈希、授权、消费收据、留出随机数抽取收据、冻结531流域
+标识列表、服务报告、账本、源码树和封存链。它不得打开正式答案或预测数值、调用任何评分入口或重算
+逐流域指标。该终审上下文不得是实施者；优先与唯一评分执行上下文也分离，并记录两个任务标识。
 
 最终状态限定为：
 
