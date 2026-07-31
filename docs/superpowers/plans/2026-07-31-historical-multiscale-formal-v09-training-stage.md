@@ -13,7 +13,10 @@
 - 本计划不授权实现、训练、正式预测或评分。只有用户另行批准执行本计划后，才允许写训练代码和合成测试。
 - 正式输入必须已经位于
   `results/26_historical_band_experts/formal_v09/input_attempt_01`，具有通过的内部
-  `seal.json`和目录外独立审核报告；任何哈希漂移立即停止。
+  `seal.json`、目录外输入产物审核报告
+  `input_attempt_01.external_audit.json`和目录外可信训练目标来源审核报告
+  `input_attempt_01.trusted_source_external_audit.json`。训练授权必须绑定这三个文件的
+  SHA-256；任一报告缺失、状态不通过或哈希漂移都立即停止。
 - 不修改`src/fair_benchmark/frozen/`、`src/fair_benchmark/score.py`、正式流域列表、
   正式切分、评分门槛或版本09科学协议。
 - 训练只允许Maurer五个命名气象变量、27项静态属性和1999-10-01至2008-09-30训练目标。
@@ -57,7 +60,7 @@
   `src/26_historical_band_experts/configs/formal_v09_training_authorization.json`
 
 **Interfaces:**
-- `validate_stage_authorization_v09(receipt, *, action, scope, protocol_sha256, executable_tree_sha256) -> dict`
+- `validate_stage_authorization_v09(receipt, *, action, scope, protocol_sha256, input_seal_sha256, input_external_audit_sha256, trusted_source_external_audit_sha256, executable_tree_sha256) -> dict`
 - `consume_stage_authorization_v09(receipt, *, consumption_path) -> dict`
 - `assert_launch_allowed_v09(config, *, action, estimated_peak_bytes, snapshot=None, stage_authorization=None, authorization_scope=None) -> dict`
 
@@ -68,7 +71,8 @@
 1. 输入阶段收据仍只能授权正式输入生成；
 2. 严格嵌套收据只允许`action="training"`、`scope="R09-NEST-S100"`；
 3. 主训练收据只允许下列24个运行标识，不能包含严格嵌套或正式预测；
-4. 协议哈希、输入封存哈希、可执行源码树哈希、输出根目录或批准文本任一漂移都拒绝；
+4. 协议哈希、输入封存哈希、任一输入外部审核报告哈希、可执行源码树哈希、输出根目录或批准文本
+   任一漂移都拒绝；
 5. 消费收据已经存在时拒绝第二次启动；
 6. 创建消费收据必须使用独占创建，不能先覆盖再检查；
 7. 内存门发生在消费收据之前；内存通过后、正式训练子进程启动前原子写入消费收据。
@@ -111,7 +115,8 @@ Expected: 新增严格嵌套和主训练作用域测试失败；既有输入收�
 - [ ] **Step 3: 实现多阶段精确授权**
 
 授权模式不得使用“任意训练均允许”的布尔值。验证器使用动作、作用域、批准文本哈希、协议哈希、
-输入封存哈希、可执行源码树哈希、固定运行集合和固定输出根目录的完整相等比较。
+输入封存哈希、输入产物外部审核报告哈希、可信训练目标来源外部审核报告哈希、可执行源码树哈希、
+固定运行集合和固定输出根目录的完整相等比较。
 
 严格嵌套收据固定：
 
@@ -136,8 +141,9 @@ Expected: 新增严格嵌套和主训练作用域测试失败；既有输入收�
 - `official_scoring_authorized=false`
 
 收据还必须保存直接批准所在任务标识、批准时间、批准文本和其SHA-256。批准发生后才把实际
-输入封存哈希、可执行源码树哈希和Git提交写入收据；禁止预先生成收据。可执行源码树只包含实际运行的
-Python文件和科学配置，不包含授权收据、审计文档或结果目录，避免收据把自身纳入哈希形成循环。
+输入封存哈希、两个目录外输入审核报告哈希、可执行源码树哈希和Git提交写入收据；禁止预先生成收据。
+可执行源码树只包含实际运行的Python文件和科学配置，不包含授权收据、审计文档或结果目录，
+避免收据把自身纳入哈希形成循环。
 
 - [ ] **Step 4: 实现原子消费收据**
 
@@ -149,7 +155,8 @@ Python文件和科学配置，不包含授权收据、审计文档或结果目�
   `results/26_historical_band_experts/formal_v09/training_authorization_consumed.json`
 
 文件以独占创建模式写入，内容包括授权收据SHA-256、启动时间、主机、进程标识、Git提交、
-工作区树哈希、输入封存哈希和启动内存快照。消费文件一旦存在，任何入口都拒绝同一阶段重启。
+工作区树哈希、输入封存哈希、两个输入审核报告哈希和启动内存快照。消费文件一旦存在，
+任何入口都拒绝同一阶段重启。
 
 - [ ] **Step 5: 运行授权和启动门测试**
 
@@ -181,7 +188,7 @@ git commit -m "Feat: Scope formal v09 training authorization"
 - Test: `src/26_historical_band_experts/tests/test_formal_training_data_v09.py`
 - Reuse: `src/26_historical_band_experts/bands_formal_v09.py`
 - Reuse after input stage:
-  `src/26_historical_band_experts/formal_inputs_v09.py`
+  `src/26_historical_band_experts/formal_input_v09.py`
 
 **Interfaces:**
 - `load_sealed_training_inputs_v09(input_root, protocol_path) -> FormalTrainingInputsV09`
@@ -194,7 +201,8 @@ git commit -m "Feat: Scope formal v09 training authorization"
 
 测试必须证明：
 
-- 输入目录以只读方式打开，缺失`seal.json`、外部审核未通过或任何文件哈希漂移都拒绝；
+- 输入目录以只读方式打开；缺失`seal.json`、输入产物外部审核、可信训练目标来源外部审核，
+  任一审核状态不通过，或任一授权绑定哈希漂移都拒绝；
 - 训练键严格按冻结流域顺序、再按日期1999-10-01至2008-09-30生成，共1,745,928项；
 - 每轮使用独立CPU `torch.Generator`和固定种子派生规则生成一个完整排列，不重复、不遗漏；
 - 相同随机数和轮次产生相同排列，不同轮次产生不同排列；
@@ -651,7 +659,8 @@ git commit -m "Feat: Add formal v09 training audit"
 - [ ] **Step 2: 请求并固化严格嵌套授权**
 
 只有用户逐字发送Task 1给出的严格嵌套批准文本后，才创建收据。收据绑定实际输入封存哈希、
-可执行源码树哈希、严格输出目录和当前批准任务标识，并提交：
+输入产物外部审核报告哈希、可信训练目标来源外部审核报告哈希、可执行源码树哈希、
+严格输出目录和当前批准任务标识，并提交：
 
 ```powershell
 git add src/26_historical_band_experts/configs/formal_v09_strict_nesting_authorization.json `

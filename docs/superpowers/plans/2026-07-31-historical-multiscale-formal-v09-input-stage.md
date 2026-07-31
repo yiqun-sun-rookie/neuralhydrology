@@ -25,6 +25,14 @@
 - 静态输入只有冻结文件中的27项属性，顺序采用`data.py::STATIC_COLUMNS`。
 - 气象期为`1980-01-01`至`2008-09-30`，每个流域10,501天。
 - 训练目标期为`1999-10-01`至`2008-09-30`，每个流域3,288天；不得输出任何正式评估期流量。
+- 可信训练目标导出器不得调用
+  `neuralhydrology.datasetzoo.camelsus.load_camels_us_discharge`或用pandas一次读取整份原始流量文件；
+  该核心函数会解析并转换全部日期的`QObs`，不满足正式评估期封存要求。
+- 可信导出器只能流式解析日期前缀；只有日期位于训练期时才允许分离和数值转换流量字段。
+  正式评估期和其他非训练期的流量字段不得转换、记录、汇总、哈希或写入日志。
+- 正式评估期封存的可验证运行条件为：
+  `trusted_formal_evaluation_q_tokens_parsed=0`、
+  `candidate_raw_streamflow_files_opened=0`和输出日期严格位于训练期。
 - 气象文件必须递归查找；不得根据测站编号前两位推导18个水文分区目录。
 - 正式气象根目录固定为
   `G:/github/pycharm/projects/neuralhydrology/data/camels_us/basin_mean_forcing/maurer`；
@@ -742,40 +750,76 @@ git commit -m "Feat: Add formal v09 streaming forcing store"
 
 **Files:**
 - Create: `src/26_historical_band_experts/prepare_formal_targets_v09.py`
+- Create: `src/26_historical_band_experts/audit_formal_target_source_v09.py`
 - Test: `src/26_historical_band_experts/tests/test_prepare_formal_targets_v09.py`
 - Modify: `src/26_historical_band_experts/tests/test_data.py`
 
 **Interfaces:**
-- Consumes: 冻结协议、输入阶段授权、冻结流域顺序和可信原始流量加载函数。
+- Consumes: 冻结协议、输入阶段授权、冻结流域顺序、规范Maurer面积文件头和可信原始流量文件。
+- Produces:
+  `iter_training_discharge_v09(streamflow_path, basin, area_m2, train_start, train_end) -> Iterator[tuple[str, float, bytes]]`。
 - Produces: `prepare_formal_target_bundle_v09(...) -> dict`。
+- Produces:
+  `audit_formal_target_source_v09(data_dir, forcing_root, input_root, report_path) -> dict`。
 - Produces: `targets.csv`和`targets.manifest.json`。
 
-- [ ] **Step 1: 写训练期边界和常量内存失败测试**
+- [ ] **Step 1: 写训练期专用解析和正式评估期哨兵测试**
 
 ```python
-def test_formal_target_export_writes_only_training_dates(tmp_path):
-    from prepare_formal_targets_v09 import prepare_formal_target_bundle_v09
+def test_parser_never_parses_formal_evaluation_q_token(tmp_path):
+    from prepare_formal_targets_v09 import iter_training_discharge_v09
 
-    dates = pd.date_range("1989-10-01", "2008-09-30", freq="D")
-    series = pd.Series(np.arange(len(dates), dtype=np.float64), index=dates)
-    basin_file = tmp_path / "basins.txt"
-    basin_file.write_text("00000001\n00000002\n", encoding="utf-8")
-    report = prepare_formal_target_bundle_v09(
-        protocol=_protocol(),
-        stage_authorization=_receipt(),
-        basin_ids=("00000001", "00000002"),
-        basin_file=basin_file,
-        output_path=tmp_path / "targets.csv",
-        load_one=lambda _basin: series,
-        source_digest=lambda _basin: "0" * 64,
-        gate=_safe_gate(),
-        snapshot=_safe_snapshot(),
+    path = tmp_path / "00000001_streamflow_qc.txt"
+    path.write_text(
+        "00000001 1989 10 01 DO_NOT_PARSE E EXTRA TOKENS\n"
+        "00000001 1999 09 30\n"
+        "00000001 1999 10 01 1.25 A\n"
+        "00000001 2008 09 30 2.50 A\n"
+        "00000001 2008 10 01 DO_NOT_PARSE P\n",
+        encoding="utf-8",
     )
-    emitted = pd.read_csv(tmp_path / "targets.csv", dtype={"basin": str})
-    assert emitted["date"].min() == "1999-10-01"
-    assert emitted["date"].max() == "2008-09-30"
-    assert len(emitted) == 2 * 3_288
-    assert report["formal_evaluation_rows_emitted"] == 0
+    records = list(iter_training_discharge_v09(
+        path,
+        basin="00000001",
+        area_m2=1_000_000,
+        train_start=date(1999, 10, 1),
+        train_end=date(2008, 9, 30),
+    ))
+    assert [record[0] for record in records] == ["1999-10-01", "2008-09-30"]
+    assert all(np.isfinite(record[1]) for record in records)
+
+
+def test_parser_rejects_missing_duplicate_or_nonnumeric_training_q(tmp_path):
+    from prepare_formal_targets_v09 import FormalTargetError, iter_training_discharge_v09
+
+    path = tmp_path / "00000001_streamflow_qc.txt"
+    path.write_text(
+        "00000001 1999 10 01 INVALID A\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(FormalTargetError, match="training discharge"):
+        list(iter_training_discharge_v09(
+            path,
+            basin="00000001",
+            area_m2=1_000_000,
+            train_start=date(1999, 10, 1),
+            train_end=date(1999, 10, 1),
+        ))
+
+
+def test_trusted_target_module_does_not_use_full_series_loader():
+    source = (IDEA_ROOT / "prepare_formal_targets_v09.py").read_text(encoding="utf-8")
+    assert "load_camels_us_discharge" not in source
+    assert "pd.read_csv" not in source
+
+
+def test_trusted_source_auditor_is_independent_from_exporter():
+    source = (IDEA_ROOT / "audit_formal_target_source_v09.py").read_text(
+        encoding="utf-8"
+    )
+    assert "prepare_formal_targets_v09" not in source
+    assert "load_camels_us_discharge" not in source
+    assert "pd.read_csv" not in source
 ```
 
 - [ ] **Step 2: 运行目标测试并确认失败**
@@ -785,41 +829,63 @@ Run:
 
 Expected: FAIL，原因是`prepare_formal_targets_v09`尚不存在。
 
-- [ ] **Step 3: 实现逐流域临时文件写入**
+- [ ] **Step 3: 实现日期先行、训练期专用的流式解析器**
 
 ```python
-assert_launch_allowed_v09(
-    dict(protocol),
-    action="formal_target_bundle_generation",
-    estimated_peak_bytes=128 * 2**20,
-    snapshot=snapshot,
-    stage_authorization=stage_authorization,
-)
-allowed_dates = pd.date_range("1999-10-01", "2008-09-30", freq="D")
-temporary = output_path.with_suffix(".csv.tmp")
-with temporary.open("x", encoding="utf-8", newline="") as handle:
-    writer = csv.writer(handle, lineterminator="\n")
-    writer.writerow(("basin", "date", "qobs"))
-    for basin in basin_ids:
-        gate.assert_runtime_safe(sample_host_memory())
-        series = load_one(basin).copy()
-        series.index = pd.to_datetime(series.index)
-        values = pd.to_numeric(series.reindex(allowed_dates), errors="coerce").to_numpy(
-            dtype=np.float64
-        )
-        if not np.isfinite(values).all() or np.any(values < 0):
-            raise FormalTargetError(f"incomplete training targets for basin {basin}")
-        for date, value in zip(allowed_dates, values):
-            writer.writerow((basin, date.strftime("%Y-%m-%d"), format(float(value), ".17g")))
-temporary.replace(output_path)
+def iter_training_discharge_v09(
+    streamflow_path: Path,
+    *,
+    basin: str,
+    area_m2: int,
+    train_start: date,
+    train_end: date,
+) -> Iterator[tuple[str, float, bytes]]:
+    if area_m2 <= 0:
+        raise FormalTargetError("Maurer area must be positive")
+    with streamflow_path.open("r", encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, 1):
+            prefix = line.rstrip("\r\n").split(maxsplit=4)
+            if len(prefix) < 4:
+                raise FormalTargetError(
+                    f"invalid trusted streamflow date prefix at line {line_number}"
+                )
+            row_basin, year, month, day = prefix[:4]
+            unparsed_tail = prefix[4] if len(prefix) == 5 else ""
+            if row_basin.zfill(8) != basin:
+                raise FormalTargetError("trusted streamflow basin drift")
+            try:
+                row_date = date(int(year), int(month), int(day))
+            except ValueError as error:
+                raise FormalTargetError("invalid trusted streamflow date") from error
+            if row_date < train_start or row_date > train_end:
+                # Do not split, convert, hash, log, or return the Q token.
+                del unparsed_tail
+                continue
+            target_fields = unparsed_tail.split()
+            if len(target_fields) != 2:
+                raise FormalTargetError("invalid training discharge fields")
+            q_token, quality_flag = target_fields
+            try:
+                q_cfs = float(q_token)
+            except ValueError as error:
+                raise FormalTargetError("invalid training discharge value") from error
+            if not math.isfinite(q_cfs) or q_cfs < 0:
+                raise FormalTargetError("nonfinite or negative training discharge")
+            q_mm_day = 28_316_846.592 * q_cfs * 86_400 / (area_m2 * 1_000_000)
+            canonical_source_record = (
+                f"{basin},{row_date.isoformat()},{q_token},{quality_flag}\n"
+            ).encode("utf-8")
+            yield row_date.isoformat(), q_mm_day, canonical_source_record
 ```
 
-真实命令入口中，只有此文件允许导入`load_camels_us_discharge`。它不得打印目标值、原始流量路径或流域统计，
-也不得复制到未来正式评分扫描的候选源码包。
+解析器不可导入pandas或核心完整流量加载器。`split(maxsplit=4)`只分离流域和日期前缀；
+非训练期的尾部字符串立即删除，不再分割，也不要求尾字段存在。合成测试同时使用缺失尾字段和
+不可转换的`DO_NOT_PARSE`作为正式评估期哨兵，确保非训练期的字段可用性、字段数量或内容都不影响
+训练目标输出。
 
-- [ ] **Step 4: 封存可信来源摘要**
+- [ ] **Step 4: 实现唯一文件、面积和逐流域完整训练日期验证**
 
-可信模块在读取每个流域前，以递归搜索明确锁定唯一原始流量文件，并在同一可信模块内计算摘要：
+可信模块只允许在授权后、授权消费收据写出后打开原始流量文件。文件和面积查找固定为：
 
 ```python
 def find_streamflow_file_v09(data_dir: Path, basin: str) -> Path:
@@ -833,19 +899,63 @@ def find_streamflow_file_v09(data_dir: Path, basin: str) -> Path:
     return matches[0]
 
 
-def trusted_source_digest_v09(data_dir: Path, basin: str) -> str:
-    return sha256_file(find_streamflow_file_v09(data_dir, basin))
-
-
-def trusted_load_one_v09(data_dir: Path, basin: str) -> pd.Series:
-    _forcing, area = load_camels_us_forcings(data_dir, basin, "maurer")
-    return load_camels_us_discharge(data_dir, basin, area)
+def read_maurer_area_v09(forcing_path: Path) -> int:
+    with forcing_path.open("r", encoding="utf-8") as handle:
+        handle.readline()
+        handle.readline()
+        area_text = handle.readline().strip()
+    try:
+        area_m2 = int(area_text)
+    except ValueError as error:
+        raise FormalTargetError("invalid Maurer area header") from error
+    if area_m2 <= 0:
+        raise FormalTargetError("Maurer area must be positive")
+    return area_m2
 ```
 
-真实入口只把`trusted_source_digest_v09`得到的`(basin, sha256)`对按冻结流域顺序交给
-`digest_pairs_v09`组合为摘要树；
-`load_camels_us_forcings`仅用于取得与现有可信加载器一致的流域面积，气象产品参数固定为`maurer`。
-候选输入模块不接触上述函数，也不接收原始流量路径。
+每个流域必须恰好得到3,288条记录，日期逐项等于
+`1999-10-01`至`2008-09-30`完整日序列。缺失、重复、乱序、额外训练日期或非有限值立即停止。
+面积只从已经授权和哈希绑定的规范Maurer文件第三行读取；不加载气象表，也不把面积写入候选输入。
+
+- [ ] **Step 5: 实现逐流域临时文件写入和训练行来源摘要**
+
+```python
+train_start = date(1999, 10, 1)
+allowed_dates = tuple(train_start + timedelta(days=index) for index in range(3_288))
+if allowed_dates[-1] != date(2008, 9, 30):
+    raise FormalTargetError("frozen training date geometry drift")
+temporary = output_path.with_suffix(".csv.tmp")
+source_digests = []
+with temporary.open("x", encoding="utf-8", newline="") as handle:
+    writer = csv.writer(handle, lineterminator="\n")
+    writer.writerow(("basin", "date", "qobs"))
+    for basin in basin_ids:
+        gate.assert_runtime_safe(sample_host_memory())
+        streamflow_path = find_streamflow_file_v09(data_dir, basin)
+        forcing_path = forcing_paths[basin]
+        area_m2 = read_maurer_area_v09(forcing_path)
+        source_digest = hashlib.sha256()
+        records = iter_training_discharge_v09(
+            streamflow_path,
+            basin=basin,
+            area_m2=area_m2,
+            train_start=allowed_dates[0],
+            train_end=allowed_dates[-1],
+        )
+        seen_dates = []
+        for row_date, value, source_record in records:
+            seen_dates.append(date.fromisoformat(row_date))
+            source_digest.update(source_record)
+            writer.writerow((basin, row_date, format(float(value), ".17g")))
+        if tuple(seen_dates) != allowed_dates:
+            raise FormalTargetError(f"incomplete training target dates for basin {basin}")
+        source_digests.append((basin, source_digest.hexdigest()))
+temporary.replace(output_path)
+source_training_rows_digest_tree = digest_pairs_v09(source_digests)
+```
+
+来源摘要只覆盖被允许解析的训练期规范记录，不读取或哈希正式评估期流量字段。它证明输出可追溯到
+确定的训练行，但不形成正式评估期答案的旁路指纹。
 
 `targets.manifest.json`必须记录：
 
@@ -859,17 +969,19 @@ def trusted_load_one_v09(data_dir: Path, basin: str) -> pd.Series:
     "minimum_date": "1999-10-01",
     "maximum_date": "2008-09-30",
     "formal_evaluation_rows_emitted": 0,
-    "trusted_raw_streamflow_files_read": 531,
-    "candidate_raw_streamflow_files_read": 0,
-    "source_streamflow_digest_tree_sha256": digest_tree,
+    "trusted_raw_streamflow_files_opened": 531,
+    "trusted_training_q_tokens_parsed": 1745928,
+    "trusted_formal_evaluation_q_tokens_parsed": 0,
+    "trusted_other_nontraining_q_tokens_parsed": 0,
+    "candidate_raw_streamflow_files_opened": 0,
+    "source_training_rows_digest_tree_sha256": source_training_rows_digest_tree,
     "target_bundle_sha256": sha256_file(output_path),
 }
 ```
 
-来源摘要只写组合哈希和文件数量，不写原始流量路径。测试必须覆盖流量文件缺失、重复和摘要漂移，
-且确认531个源文件摘要按冻结流域顺序组合。
+清单不得包含原始流量路径、逐文件摘要、正式评估期流量统计或任何非训练期流量派生量。
 
-- [ ] **Step 5: 增加候选路径禁止读取测试**
+- [ ] **Step 6: 增加候选路径禁止读取和可信模块静态测试**
 
 ```python
 def test_candidate_input_modules_do_not_reference_raw_discharge():
@@ -881,19 +993,51 @@ def test_candidate_input_modules_do_not_reference_raw_discharge():
     for path in roots:
         source = path.read_text(encoding="utf-8")
         assert all(token not in source for token in forbidden)
+
+
+def test_trusted_parser_has_no_full_series_reader():
+    forbidden = (
+        "load_camels_us_discharge",
+        "pd.read_csv",
+        "pandas.read_csv",
+        "QObs =",
+    )
+    for name in ("prepare_formal_targets_v09.py", "audit_formal_target_source_v09.py"):
+        source = (IDEA_ROOT / name).read_text(encoding="utf-8")
+        assert all(token not in source for token in forbidden)
 ```
 
-- [ ] **Step 6: 运行目标和数据边界测试**
+候选训练、预测和源码包都不得导入可信目标模块。可信模块因包含原始流量路径标记，必须永久排除在
+评分命令的`--experiment-dir`之外；评分源码包完整性审核必须同时证明候选运行时没有导入它。
+
+- [ ] **Step 7: 实现独立可信来源审核器**
+
+`audit_formal_target_source_v09.py`不得导入导出器。它用独立代码重复以下只读计算：
+
+1. 验证531个原始流量文件和规范Maurer面积文件唯一；
+2. 日期先行，只有训练日期才转换流量字段；
+3. 逐项比较封存`targets.csv`中的流域、日期和转换后流量；
+4. 独立重算训练行来源摘要树；
+5. 验证正式评估期和其他非训练期流量字段解析数均为0；
+6. 报告写在封存输入目录之外，且不得修改输入目录。
+
+审核输出固定为
+`results/26_historical_band_experts/formal_v09/input_attempt_01.trusted_source_external_audit.json`。
+它包含目标最大绝对差、训练行数、来源摘要树、两个非训练期解析计数和报告自身之外的证据哈希，
+不包含目标值、流域统计、原始路径或逐文件摘要。
+
+- [ ] **Step 8: 运行目标和数据边界测试**
 
 Run:
 `pytest src/26_historical_band_experts/tests/test_prepare_formal_targets_v09.py src/26_historical_band_experts/tests/test_data.py -q`
 
 Expected: PASS。
 
-- [ ] **Step 7: 提交可信目标实现**
+- [ ] **Step 9: 提交可信目标实现**
 
 ```powershell
 git add src/26_historical_band_experts/prepare_formal_targets_v09.py `
+  src/26_historical_band_experts/audit_formal_target_source_v09.py `
   src/26_historical_band_experts/tests/test_prepare_formal_targets_v09.py `
   src/26_historical_band_experts/tests/test_data.py
 git commit -m "Feat: Add trusted formal v09 target export"
@@ -1143,6 +1287,10 @@ targets.npy
 - 5项动态和27项静态的精确列顺序；
 - `Tmin(C)`与`Tmax(C)`的冻结逐元素相等事实；
 - 目标包没有任何`1989-10-01`至`1999-09-30`行；
+- `targets.manifest.json`中的训练期流量解析数恰为1,745,928，
+  正式评估期和其他非训练期流量解析数均为0；
+- 训练行来源摘要树存在、格式正确并被顶层封存绑定；
+- 可信目标模块不含完整序列加载器或pandas原始流量读取，候选运行模块不导入可信目标模块；
 - 全部产物哈希、代码提交、干净工作区和环境指纹；
 - 正式训练、预测和评分授权仍为`false`。
 
@@ -1170,19 +1318,23 @@ targets.npy
 `build_formal_inputs_v09.py`按以下顺序调用：
 
 1. 验证外部输入授权，并确认命令输出根目录与凭据绑定路径逐字一致；
-2. 验证内存、工作区和协议；
-3. 创建唯一`.building`目录；
-4. 构建气象和静态存储；
-5. 可信导出训练目标；
-6. 构建`targets.npy`和`scaler.json`；
-7. 写`environment.json`和状态为`built_pending_audit`的顶层`manifest.json`；
-8. 独立算法重载并审核全部构建产物，写`input_audit.json`；
-9. 写`seal.json`；
-10. 通过正式只读接口再次重载封存输入；
-11. 原子提升为`input_attempt_01`。
+2. 只读验证内存、工作区、协议、规范Maurer摘要树、531个原始流量文件的唯一存在性和全部输出不存在；
+   此时不得打开或解析原始流量内容；
+3. 独占写`input_authorization_consumed.json`，从此无论结果如何都不得复用授权；
+4. 创建唯一`.building`目录；
+5. 构建气象和静态存储；
+6. 可信流式导出训练目标；只在这一步打开原始流量文件；
+7. 构建`targets.npy`和`scaler.json`；
+8. 写`environment.json`和状态为`built_pending_audit`的顶层`manifest.json`；
+9. 独立算法重载并审核全部构建产物，写`input_audit.json`；
+10. 写`seal.json`；
+11. 通过正式只读接口再次重载封存输入；
+12. 原子提升为`input_attempt_01`。
 
 任何步骤失败都保留`.building/failure.json`，但没有
 `seal.json::status=complete_input_seal`的目录不能被训练入口读取。
+如果授权消费后、`.building`创建前发生异常，则在正式根目录写
+`input_attempt_01.failure.json`；消费收据本身已经足以禁止重试。
 
 - [ ] **Step 8: 运行输入、审核和禁止读取测试**
 
@@ -1213,6 +1365,8 @@ git commit -m "Feat: Seal and audit formal v09 inputs"
 - Generated, not tracked: `results/26_historical_band_experts/formal_v09/input_attempt_01/`
 - Generated, not tracked:
   `results/26_historical_band_experts/formal_v09/input_attempt_01.external_audit.json`
+- Generated, not tracked:
+  `results/26_historical_band_experts/formal_v09/input_attempt_01.trusted_source_external_audit.json`
 
 **Interfaces:**
 - Consumes: 已验证代码、精确授权凭据、原始 Maurer、冻结静态文件和可信训练目标源。
@@ -1274,7 +1428,8 @@ Run:
 `pytest src/26_historical_band_experts/tests -q`
 
 Expected: 全部测试通过，准确数量写入输入审计记录。由于代码已变化，不能复用
-`2ed4a414`提交上的`378 passed`作为新提交证据。
+`23575402ab2bae8857ecf80c3081d16af64434a0`提交上的
+`378 passed, 1 warning in 48.35s`作为新提交证据。
 
 - [ ] **Step 6: 运行只读真实输入预检**
 
@@ -1286,6 +1441,7 @@ Expected: 全部测试通过，准确数量写入输入审计记录。由于代�
   `59665c3f34a42b6c6ba7f6dd7696481ef56a9ac0d30eacad116b4fee6bcb83fa`；
 - 每个文件10,597行，日期`1980-01-01`至`2008-12-31`；
 - 冻结静态表531行、28列、531个唯一测站；
+- 531个原始流量文件按文件名唯一存在；预检只检查路径和数量，不打开文件内容；
 - `G:`盘至少有`1 GiB`可用空间；
 - 最终目录与同父目录的`input_attempt_01.building`均不存在；
 - `input_authorization_consumed.json`不存在；
@@ -1334,9 +1490,24 @@ python src\26_historical_band_experts\audit_formal_inputs_v09.py `
 1. 核对当前提交和工作区；
 2. 重算协议、源清单和全部输入产物哈希；
 3. 重载内存映射并独立重算覆盖、有限性和训练期统计；
-4. 扫描候选输入模块，确认没有原始流量读取；
-5. 确认没有训练、预测、评分或冻结目录改动；
-6. 尝试以缺失、重复、越界、哈希漂移和低内存样本反驳输入审核。
+4. 用正式评估期不可转换哨兵重新运行可信解析器的合成反驳测试；
+5. 静态检查可信解析器不调用完整流量加载器，且只在训练日期分支转换流量字段；
+6. 扫描候选输入模块，确认没有原始流量读取或可信目标模块导入；
+7. 确认没有训练、预测、评分或冻结目录改动；
+8. 尝试以缺失、重复、越界、哈希漂移和低内存样本反驳输入审核。
+
+独立上下文还必须运行可信来源审核器：
+
+```powershell
+python src\26_historical_band_experts\audit_formal_target_source_v09.py `
+  --data-dir G:\github\pycharm\projects\neuralhydrology\data\camels_us `
+  --forcing-root G:\github\pycharm\projects\neuralhydrology\data\camels_us\basin_mean_forcing\maurer `
+  --input-root results\26_historical_band_experts\formal_v09\input_attempt_01 `
+  --report results\26_historical_band_experts\formal_v09\input_attempt_01.trusted_source_external_audit.json
+```
+
+Expected：1,745,928个训练值逐项一致，训练行来源摘要树一致，正式评估期和其他非训练期流量字段
+解析数均为0。该审核只读原始训练监督和封存输入，不生成第二个目标包，也不修改封存目录。
 
 独立审核未通过时，输入状态为`HOLD`，不得申请训练授权。
 
