@@ -1,0 +1,165 @@
+{
+  "contract_id": "S09C-CLEAN-PAIR",
+  "track_id": "track0_forcing_only_clean_v09",
+  "protocol_id": "P09-FORMAL",
+  "protocol_sha256": "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8",
+  "protocol_scoring_supersession": {
+    "scope": "scoring_governance_semantics_only",
+    "permitted_semantic_supersessions": [
+      "/sealed_scoring_id",
+      "/track",
+      "/legacy_reference/description",
+      "/legacy_frozen_manifest_issue/must_be_resolved_before_scoring_authorization",
+      "/success_gates/secret_holdout_median_delta_at_least",
+      "/success_gates/secret_retained_public_fraction_at_least"
+    ],
+    "mapping": {
+      "/sealed_scoring_id": {
+        "protocol_value": "S09-SEALED",
+        "clean_route_value": "S09C-CLEAN-PAIR"
+      },
+      "/track": {
+        "protocol_value": "track0_forcing_only",
+        "clean_route_value": "track0_forcing_only_clean_v09"
+      },
+      "/legacy_reference/description": {
+        "protocol_value": "frozen eight-seed classic LSTM ensemble; scoring reference only",
+        "clean_route_interpretation": "historical_reference_nonqualifying"
+      },
+      "/legacy_frozen_manifest_issue/must_be_resolved_before_scoring_authorization": {
+        "protocol_value": true,
+        "legacy_route_status": "unresolved_and_blocks_S09-SEALED",
+        "clean_route_applicability": "not_applicable_direct_hash_bindings_required"
+      },
+      "/success_gates/secret_holdout_median_delta_at_least": {
+        "protocol_value": 0.005,
+        "clean_route_partition": "postseal_nonce_sha256_rank_v1_first_107",
+        "numeric_value_overridden": false
+      },
+      "/success_gates/secret_retained_public_fraction_at_least": {
+        "protocol_value": 0.5,
+        "clean_route_partition": "postseal_nonce_sha256_rank_v1_first_107",
+        "numeric_value_overridden": false
+      }
+    },
+    "scientific_fields_overridden": [],
+    "protocol_authorization_overridden": false,
+    "external_authorization_required": true,
+    "formal_evaluation_target_access_overridden": false,
+    "legacy_route_authorizable": false
+  },
+  "roles": {
+    "baseline": "B09-CLASSIC",
+    "capacity_control": "B09-CAPACITY",
+    "challenger": "E09-CONTINUOUS"
+  },
+  "selection_provenance": {
+    "status": "complete_multiseed_go",
+    "scope": "fixed_60_basin_internal_confirmation_only",
+    "candidate_config_sha256": "837563c11fc792b522a798423da35d43ce307f166b32fe39cc421ca6608765cb",
+    "analysis_manifest_sha256": "3540fd0ec30ebd979ed1f4a1ac9e19180ad3e4dd71332455ffc626d145d561ce",
+    "summary_sha256": "b6f506b560287619c3d2362c741accdd4c84ecb12fac779ceb63bc7764db4342",
+    "independent_audit_sha256": "9298a7a9d22a8210366ebde03c68255d9815da5d2dd4b100ce3f39ea23c1a104",
+    "formal_observations_used": false,
+    "may_reselect": false
+  },
+  "ensemble_paths": {
+    "baseline": "predictions/ensembles/B09-CLASSIC_ensemble.csv",
+    "capacity_control": "predictions/ensembles/B09-CAPACITY_ensemble.csv",
+    "challenger": "predictions/ensembles/E09-CONTINUOUS_ensemble.csv"
+  },
+  "prediction_contract": {
+    "basin_count": 531,
+    "start_date": "1989-10-01",
+    "end_date": "1999-09-30",
+    "dates_per_basin": 3652,
+    "rows_per_file": 1939212,
+    "columns": [
+      "basin",
+      "date",
+      "qsim"
+    ],
+    "seeds": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800
+    ],
+    "ensemble_operation": "float64_arithmetic_mean"
+  },
+  "trusted_frozen_inputs": {
+    "answer_key": {
+      "relative_path": "track0_forcing_only_obs_eval.parquet",
+      "sha256": "576d548253064699ade1e312ea875097d070557e3eef334874c310df61d8fd1e"
+    },
+    "basins": {
+      "relative_path": "track0_forcing_only_basins.txt",
+      "sha256": "cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85"
+    }
+  },
+  "postseal_holdout": {
+    "method": "postseal_nonce_sha256_rank_v1",
+    "domain_separator": "P09C-CLEAN-HOLDOUT-V1",
+    "nonce_source": "python_secrets_token_bytes_32_after_authorization_consumption",
+    "nonce_draws": 1,
+    "nonce_redraws": 0,
+    "holdout_count": 107,
+    "public_count": 424,
+    "preimage_order": [
+      "domain_separator",
+      "protocol_sha256",
+      "baseline_prediction_sha256",
+      "capacity_control_prediction_sha256",
+      "challenger_prediction_sha256",
+      "nonce_hex"
+    ],
+    "field_separator": "\n",
+    "basin_rank_preimage": "partition_salt_sha256 + newline + basin_id",
+    "selection": "ascending_rank_sha256_then_basin_id_first_107",
+    "set_digest": "sha256(sorted_selected_basin_ids_joined_by_newline_with_final_newline)",
+    "may_affect_training_or_selection": false
+  },
+  "legacy_nonqualifying_inputs": {
+    "secret_holdout": {
+      "relative_path": "track0_forcing_only_secret_holdout_basins.txt",
+      "sha256": "305211b0fd256769a65cfe662ec94a66f58aab5730fd5eb1b964dfc2c64c2494",
+      "status": "legacy_reused_holdout_nonqualifying",
+      "qualifying": false,
+      "minimum_recorded_score_calls": 7
+    },
+    "historical_baseline": {
+      "relative_path": "track0_forcing_only_baseline_per_basin_nse.csv",
+      "sha256": "63d989d155f6806d52f996e28f734afb9ec7cecbdcc797ac414d3cd2ff8670d6",
+      "status": "historical_reference_nonqualifying",
+      "qualifying": false
+    }
+  },
+  "primary_gate": {
+    "min_effect": 0.01,
+    "max_wilcoxon_p": 0.05,
+    "bootstrap_samples": 10000,
+    "bootstrap_seed": 0,
+    "ci_low_must_exceed": 0.0,
+    "holdout_min_effect": 0.005,
+    "holdout_retention": 0.5
+  },
+  "capacity_comparison": {
+    "status": "descriptive_preregistered_no_verdict",
+    "may_select_model": false
+  },
+  "historical_reference": {
+    "status": "historical_reference_nonqualifying",
+    "qualifying": false,
+    "may_affect_verdict": false
+  },
+  "execution": {
+    "score_submission_calls": 1,
+    "ledger_appends": 1,
+    "retries": 0,
+    "allow_unconfirmed": false
+  }
+}
