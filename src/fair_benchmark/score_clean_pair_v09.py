@@ -1,17 +1,30 @@
 """Trusted one-call scoring core for the formal version-09 clean comparison."""
 from __future__ import annotations
 
+import argparse
 from collections.abc import Mapping
+from datetime import datetime, timezone
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
+import sys
 
 import numpy as np
+import psutil
 
+from .clean_pair_authorization_v09 import (
+    clean_pair_ledger_snapshot_v09,
+    consume_clean_pair_score_authorization_v09,
+    draw_holdout_nonce_once_v09,
+    trusted_source_tree_v09,
+    validate_clean_pair_score_authorization_v09,
+)
+from .clean_pair_contract_v09 import load_clean_pair_contract_v09
 from .gate import GateConfig
 from .io import load_obs_csv, load_predictions
-from .leakage import DEFAULT_FORBIDDEN
+from .leakage import DEFAULT_FORBIDDEN, scan_for_forbidden_access
 from .ledger import count_attempts, read_rows
 from .metrics import nse, per_basin_score
 from .postseal_holdout_v09 import derive_postseal_holdout_v09
@@ -373,6 +386,7 @@ def score_clean_pair_core_v09(
         "primary": {
             "baseline_id": contract["roles"]["baseline"],
             "challenger_id": contract["roles"]["challenger"],
+            "gate": dict(gate),
             "public": _strict_stats(expected_public),
             "holdout": _strict_stats(expected_holdout),
             "coverage_ok": bool(primary["coverage_ok"]),
@@ -417,3 +431,234 @@ def score_clean_pair_core_v09(
     }
     json.dumps(report, allow_nan=False, sort_keys=True)
     return report
+
+
+def _strict_json_load(path: Path) -> dict:
+    def reject_constant(value: str):
+        raise CleanPairScoreError(f"non-finite JSON constant is forbidden: {value}")
+
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"), parse_constant=reject_constant)
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+        raise CleanPairScoreError(f"unable to load strict JSON from {path}: {exc}") from exc
+    if not isinstance(value, dict):
+        raise CleanPairScoreError(f"JSON root must be an object: {path}")
+    return value
+
+
+def _source_bundle_tree_sha256(root: Path) -> str:
+    if not root.is_dir():
+        raise CleanPairScoreError("candidate source bundle is missing")
+    files = {
+        path.relative_to(root).as_posix(): _sha256(path)
+        for path in sorted(root.rglob("*"), key=lambda item: item.as_posix())
+        if path.is_file()
+    }
+    if not files:
+        raise CleanPairScoreError("candidate source bundle is empty")
+    return _canonical_sha256(files)
+
+
+def _assert_score_start_memory_safe() -> dict:
+    memory = psutil.virtual_memory()
+    required = max(12 * 2**30, math.ceil(0.40 * int(memory.total)))
+    if int(memory.available) < required:
+        raise CleanPairScoreError(
+            f"available physical memory below scoring threshold: {memory.available} < {required}"
+        )
+    return {
+        "total_bytes": int(memory.total),
+        "available_bytes": int(memory.available),
+        "required_available_bytes": required,
+    }
+
+
+def _exclusive_atomic_report(path: Path, report: Mapping) -> None:
+    if path.exists():
+        raise CleanPairScoreError(f"score report already exists: {path}")
+    building = path.with_suffix(path.suffix + ".building")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with building.open("x", encoding="utf-8", newline="\n") as handle:
+            json.dump(
+                report,
+                handle,
+                ensure_ascii=False,
+                sort_keys=True,
+                indent=2,
+                allow_nan=False,
+            )
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        if path.exists():
+            raise CleanPairScoreError(f"score report appeared during exclusive write: {path}")
+        os.replace(building, path)
+    except FileExistsError as exc:
+        raise CleanPairScoreError(f"score report building file already exists: {building}") from exc
+
+
+def run_clean_pair_score_once_v09(
+    *,
+    contract_path: str | Path,
+    bundle_path: str | Path,
+    authorization_path: str | Path,
+    prediction_root: str | Path,
+    source_bundle: str | Path,
+    trusted_frozen_root: str | Path,
+    ledger_path: str | Path,
+    consumption_path: str | Path,
+    holdout_draw_receipt_path: str | Path,
+    out_path: str | Path,
+    execution_task_id: str,
+    timestamp: str | None = None,
+) -> dict:
+    """Validate, consume, draw, score, and persist exactly one non-retryable attempt."""
+    worktree_src = Path(__file__).resolve().parents[1]
+    expected_pythonpath = str(worktree_src)
+    if os.environ.get("PYTHONPATH") != expected_pythonpath:
+        raise CleanPairScoreError("PYTHONPATH must equal the single resolved worktree src path")
+    if not execution_task_id.strip():
+        raise CleanPairScoreError("an independent execution task identity is required")
+
+    contract_path = Path(contract_path)
+    bundle_path = Path(bundle_path)
+    authorization_path = Path(authorization_path)
+    prediction_root = Path(prediction_root)
+    source_bundle = Path(source_bundle)
+    trusted_frozen_root = Path(trusted_frozen_root).resolve()
+    ledger_path = Path(ledger_path)
+    consumption_path = Path(consumption_path)
+    draw_path = Path(holdout_draw_receipt_path)
+    out_path = Path(out_path)
+    for output in (consumption_path, draw_path, out_path, out_path.with_suffix(out_path.suffix + ".building")):
+        if output.exists():
+            raise CleanPairScoreError(f"one-attempt output already exists: {output}")
+
+    protocol_path = contract_path.parent / "formal_v09_protocol.json"
+    contract = load_clean_pair_contract_v09(contract_path, protocol_path=protocol_path)
+    bundle = _strict_json_load(bundle_path)
+    authorization = _strict_json_load(authorization_path)
+    _validate_contract_and_bundle(contract, bundle)
+
+    source_tree = trusted_source_tree_v09(worktree_src)
+    ledger_snapshot = clean_pair_ledger_snapshot_v09(ledger_path)
+    validated_authorization = validate_clean_pair_score_authorization_v09(
+        authorization,
+        contract=contract,
+        bundle=bundle,
+        source_tree=source_tree,
+        ledger_snapshot=ledger_snapshot,
+    )
+    runtime = {
+        "python_executable": str(Path(sys.executable).resolve()),
+        "worktree_src": expected_pythonpath,
+        "pythonpath": expected_pythonpath,
+    }
+    if validated_authorization["runtime"] != runtime:
+        raise CleanPairScoreError("live Python runtime differs from the authorized runtime")
+    if Path(validated_authorization["trusted_frozen_root"]).resolve() != trusted_frozen_root:
+        raise CleanPairScoreError("live trusted frozen root differs from the authorization")
+    if validated_authorization["approval"]["task_id"] == execution_task_id:
+        raise CleanPairScoreError("the scoring executor task must differ from the approval task")
+
+    memory = _assert_score_start_memory_safe()
+    prediction_sha256, _ = _prediction_hashes(bundle, prediction_root)
+    if prediction_sha256 != validated_authorization["prediction_sha256"]:
+        raise CleanPairScoreError("live prediction hashes differ from the authorization")
+    source_tree_sha256 = _source_bundle_tree_sha256(source_bundle)
+    if source_tree_sha256 != bundle.get("source_bundle", {}).get("tree_sha256"):
+        raise CleanPairScoreError("candidate source bundle tree drift before authorization consumption")
+    hits = scan_for_forbidden_access(source_bundle, CLEAN_PAIR_FORBIDDEN_PATTERNS)
+    if hits:
+        raise CleanPairScoreError(f"candidate source bundle has {len(hits)} forbidden-access hit(s)")
+
+    trusted = contract["trusted_frozen_inputs"]
+    basin_path = _safe_child(trusted_frozen_root, trusted["basins"]["relative_path"], "trusted basin list")
+    _require_file_hash(basin_path, trusted["basins"]["sha256"], "trusted basin list")
+    basin_ids = _load_basin_ids(basin_path)
+    answer_path = _safe_child(trusted_frozen_root, trusted["answer_key"]["relative_path"], "trusted answer key")
+    _require_file_hash(answer_path, trusted["answer_key"]["sha256"], "trusted answer key")
+    if clean_pair_ledger_snapshot_v09(ledger_path) != ledger_snapshot:
+        raise CleanPairScoreError("ledger changed before authorization consumption")
+
+    timestamp = timestamp or datetime.now(timezone.utc).isoformat()
+    launch_snapshot = {
+        "timestamp": timestamp,
+        "task_id": execution_task_id,
+        "runtime": runtime,
+        "memory": memory,
+        "source_tree": source_tree,
+        "ledger_snapshot": ledger_snapshot,
+    }
+    consumption = consume_clean_pair_score_authorization_v09(
+        validated_authorization,
+        consumption_path,
+        launch_snapshot,
+    )
+    draw_receipt = draw_holdout_nonce_once_v09(
+        consumption_path,
+        draw_path,
+        contract=contract,
+        bundle=bundle,
+        basin_ids=basin_ids,
+    )
+    if clean_pair_ledger_snapshot_v09(ledger_path) != ledger_snapshot:
+        raise CleanPairScoreError("ledger changed after the nonce draw; attempt is consumed without retry")
+
+    report = score_clean_pair_core_v09(
+        contract=contract,
+        bundle=bundle,
+        holdout_draw_receipt=draw_receipt,
+        trusted_frozen_root=trusted_frozen_root,
+        prediction_root=prediction_root,
+        source_bundle=source_bundle,
+        ledger_path=ledger_path,
+        timestamp=timestamp,
+    )
+    report["provenance"].update({
+        "authorization_sha256": _canonical_sha256(validated_authorization),
+        "consumption_file_sha256": _sha256(consumption_path),
+        "consumption_canonical_sha256": _canonical_sha256(consumption),
+        "trusted_source_tree_sha256": source_tree["tree_sha256"],
+        "candidate_source_tree_sha256": source_tree_sha256,
+        "execution_task_id": execution_task_id,
+    })
+    json.dumps(report, allow_nan=False, sort_keys=True)
+    _exclusive_atomic_report(out_path, report)
+    return report
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--contract", required=True)
+    parser.add_argument("--bundle", required=True)
+    parser.add_argument("--authorization", required=True)
+    parser.add_argument("--prediction-root", required=True)
+    parser.add_argument("--source-bundle", required=True)
+    parser.add_argument("--trusted-frozen-root", required=True)
+    parser.add_argument("--ledger", required=True)
+    parser.add_argument("--consumption", required=True)
+    parser.add_argument("--holdout-draw-receipt", required=True)
+    parser.add_argument("--out", required=True)
+    parser.add_argument("--execution-task-id", required=True)
+    args = parser.parse_args(argv)
+    report = run_clean_pair_score_once_v09(
+        contract_path=args.contract,
+        bundle_path=args.bundle,
+        authorization_path=args.authorization,
+        prediction_root=args.prediction_root,
+        source_bundle=args.source_bundle,
+        trusted_frozen_root=args.trusted_frozen_root,
+        ledger_path=args.ledger,
+        consumption_path=args.consumption,
+        holdout_draw_receipt_path=args.holdout_draw_receipt,
+        out_path=args.out,
+        execution_task_id=args.execution_task_id,
+    )
+    print(json.dumps(report, sort_keys=True, ensure_ascii=False, allow_nan=False))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

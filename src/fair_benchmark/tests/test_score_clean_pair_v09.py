@@ -277,6 +277,18 @@ def test_source_bundle_forbidden_access_forces_hold(tmp_path):
     assert report["primary"]["leakage_hits"] >= 1
 
 
+def test_one_attempt_entry_has_one_existing_scorer_call_and_fail_closed_order():
+    source = Path(score_clean_pair_v09.__file__).read_text(encoding="utf-8")
+    assert source.count("score_" + "submission(") == 1
+    run_body = source.split("def run_clean_pair_score_once_v09(", 1)[1]
+    consume = run_body.index("consume_clean_pair_score_authorization_v09(")
+    draw = run_body.index("draw_holdout_nonce_once_v09(")
+    score = run_body.index("report = score_clean_pair_core_v09(")
+    persist = run_body.index("_exclusive_atomic_report(")
+    assert consume < draw < score < persist
+    assert 'parser.add_argument("--execution-task-id", required=True)' in run_body
+
+
 @pytest.mark.parametrize("role", ("baseline", "capacity_control", "challenger"))
 def test_prediction_hash_drift_fails_without_ledger_append(tmp_path, role):
     case = _case(tmp_path)

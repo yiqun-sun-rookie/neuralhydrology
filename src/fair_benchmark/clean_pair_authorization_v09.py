@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import re
 import secrets
+import subprocess
 
 from .postseal_holdout_v09 import derive_postseal_holdout_v09, public_partition_summary
 
@@ -49,6 +50,20 @@ _FORBIDDEN_PREAUTH_KEYS = {
     "partition_salt_sha256",
     "holdout_set_sha256",
 }
+_TRUSTED_SOURCE_FILES = (
+    "fair_benchmark/score_clean_pair_v09.py",
+    "fair_benchmark/clean_pair_authorization_v09.py",
+    "fair_benchmark/clean_pair_contract_v09.py",
+    "fair_benchmark/postseal_holdout_v09.py",
+    "fair_benchmark/score.py",
+    "fair_benchmark/gate.py",
+    "fair_benchmark/stats.py",
+    "fair_benchmark/metrics.py",
+    "fair_benchmark/ledger.py",
+    "fair_benchmark/io.py",
+    "fair_benchmark/leakage.py",
+    "fair_benchmark/tracks.py",
+)
 
 
 def _canonical_bytes(value: Mapping) -> bytes:
@@ -63,6 +78,47 @@ def _canonical_bytes(value: Mapping) -> bytes:
 
 def _canonical_sha256(value: Mapping) -> str:
     return hashlib.sha256(_canonical_bytes(value)).hexdigest()
+
+
+def trusted_source_tree_v09(worktree_src: str | Path) -> dict:
+    """Hash the exact trusted scoring implementation and bind its Git commit."""
+    worktree_src = Path(worktree_src).resolve()
+    files = {}
+    for relative_path in _TRUSTED_SOURCE_FILES:
+        path = (worktree_src / relative_path).resolve()
+        if not path.is_relative_to(worktree_src) or not path.is_file():
+            raise CleanPairAuthorizationError(f"trusted scoring source is missing: {relative_path}")
+        files[relative_path] = _sha256_file(path)
+    completed = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=worktree_src.parent,
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    return {
+        "git_head": completed.stdout.strip(),
+        "tree_sha256": hashlib.sha256(_canonical_bytes(files)).hexdigest(),
+        "files": files,
+    }
+
+
+def clean_pair_ledger_snapshot_v09(ledger_path: str | Path) -> dict:
+    """Return the exact pre-score ledger state used by the authorization."""
+    from .governance import verify_chain
+    from .ledger import GENESIS, read_rows
+
+    path = Path(ledger_path)
+    rows = read_rows(path)
+    chain = verify_chain(path)
+    return {
+        "row_count": len(rows),
+        "sha256": _sha256_file(path) if path.is_file() else hashlib.sha256(b"").hexdigest(),
+        "last_row_hash": rows[-1].get("row_hash", "") if rows else GENESIS,
+        "experiment_id_count": sum(row.get("experiment_id") == _EXPERIMENT_ID for row in rows),
+        "chain_breaks": len(chain["breaks"]),
+    }
 
 
 def _require_hex64(value: object, name: str) -> str:

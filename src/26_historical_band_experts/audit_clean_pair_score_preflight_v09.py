@@ -22,12 +22,12 @@ if str(WORKTREE_SRC) not in sys.path:
 
 from clean_pair_bundle_v09 import build_clean_pair_bundle_v09  # noqa: E402
 from fair_benchmark.clean_pair_authorization_v09 import (  # noqa: E402
+    clean_pair_ledger_snapshot_v09,
     render_clean_pair_score_approval_text,
+    trusted_source_tree_v09,
 )
 from fair_benchmark.clean_pair_contract_v09 import load_clean_pair_contract_v09  # noqa: E402
-from fair_benchmark.governance import verify_chain  # noqa: E402
 from fair_benchmark.leakage import scan_for_forbidden_access  # noqa: E402
-from fair_benchmark.ledger import GENESIS, read_rows  # noqa: E402
 from fair_benchmark.score_clean_pair_v09 import CLEAN_PAIR_FORBIDDEN_PATTERNS  # noqa: E402
 
 
@@ -102,18 +102,6 @@ def hash_tree_v09(root: str | Path) -> dict:
     }
 
 
-def _ledger_snapshot(path: Path) -> dict:
-    rows = read_rows(path)
-    chain = verify_chain(path)
-    return {
-        "row_count": len(rows),
-        "sha256": _sha256(path) if path.is_file() else hashlib.sha256(b"").hexdigest(),
-        "last_row_hash": rows[-1].get("row_hash", "") if rows else GENESIS,
-        "experiment_id_count": sum(row.get("experiment_id") == _EXPERIMENT_ID for row in rows),
-        "chain_breaks": len(chain["breaks"]),
-    }
-
-
 def _module_import_probe() -> dict:
     script = (
         "import importlib,json;"
@@ -135,12 +123,7 @@ def _module_import_probe() -> dict:
     for name, raw_path in paths.items():
         if not Path(raw_path).resolve().is_relative_to(trusted_root):
             raise RuntimeError(f"trusted module imported outside this worktree: {name}")
-    return {
-        "python_executable": str(Path(sys.executable).resolve()),
-        "worktree_src": str(WORKTREE_SRC),
-        "pythonpath": str(WORKTREE_SRC),
-        "module_paths": paths,
-    }
+    return paths
 
 
 def _verify_artifacts(
@@ -288,8 +271,8 @@ def audit_clean_pair_score_preflight_v09(
         if rebuilt != bundle:
             raise ValueError("saved clean-pair bundle differs from a complete rebuild")
 
-        source_tree = hash_tree_v09(source_bundle)
-        if source_tree["tree_sha256"] != bundle.get("source_bundle", {}).get("tree_sha256"):
+        candidate_source_tree = hash_tree_v09(source_bundle)
+        if candidate_source_tree["tree_sha256"] != bundle.get("source_bundle", {}).get("tree_sha256"):
             raise ValueError("candidate source bundle tree SHA-256 drift")
         hits = scan_for_forbidden_access(source_bundle, CLEAN_PAIR_FORBIDDEN_PATTERNS)
         if hits:
@@ -297,7 +280,7 @@ def audit_clean_pair_score_preflight_v09(
 
         upstream_count, selection_count, checkpoint_count = _verify_artifacts(contract, bundle, seal)
         trusted_inputs = _verify_trusted_inputs(contract, trusted_root)
-        ledger = _ledger_snapshot(ledger_path)
+        ledger = clean_pair_ledger_snapshot_v09(ledger_path)
         if ledger["chain_breaks"] or ledger["experiment_id_count"]:
             raise ValueError("ledger chain is broken or the clean-pair experiment already exists")
 
@@ -323,7 +306,13 @@ def audit_clean_pair_score_preflight_v09(
             raise ValueError(f"score-attempt output already exists: {existing}")
 
         worktree = _require_clean_worktree() if require_clean_worktree else {"clean_check_skipped": True}
-        runtime = _module_import_probe()
+        module_paths = _module_import_probe()
+        source_tree = trusted_source_tree_v09(WORKTREE_SRC)
+        runtime = {
+            "python_executable": str(Path(sys.executable).resolve()),
+            "worktree_src": str(WORKTREE_SRC),
+            "pythonpath": str(WORKTREE_SRC),
+        }
         report.update({
             "status": "ready_for_clean_pair_score_authorization",
             "contract_sha256": bundle["contract_sha256"],
@@ -334,10 +323,12 @@ def audit_clean_pair_score_preflight_v09(
             "upstream_artifacts_verified": upstream_count,
             "selection_artifacts_verified": selection_count,
             "candidate_source_scan_hits": 0,
+            "candidate_source_tree": candidate_source_tree,
             "source_tree": source_tree,
             "trusted_inputs": trusted_inputs,
             "ledger": ledger,
             "runtime": runtime,
+            "module_import_paths": module_paths,
             "worktree": worktree,
             "memory": {
                 "total_bytes": total_memory,

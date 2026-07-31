@@ -7,9 +7,11 @@ import pytest
 
 from fair_benchmark.clean_pair_authorization_v09 import (
     CleanPairAuthorizationError,
+    clean_pair_ledger_snapshot_v09,
     consume_clean_pair_score_authorization_v09,
     draw_holdout_nonce_once_v09,
     render_clean_pair_score_approval_text,
+    trusted_source_tree_v09,
     validate_clean_pair_score_authorization_v09,
 )
 
@@ -221,6 +223,24 @@ def test_clean_pair_authorization_consumes_exclusively_once(tmp_path):
     assert first["status"] == "consumed_no_retry"
     with pytest.raises(CleanPairAuthorizationError, match="already exists"):
         consume_clean_pair_score_authorization_v09(_receipt(), path, {})
+
+
+def test_authorization_helpers_bind_trusted_service_tree_and_empty_ledger(tmp_path):
+    worktree_src = Path(__file__).resolve().parents[2]
+    tree = trusted_source_tree_v09(worktree_src)
+    assert len(tree["files"]) == 12
+    assert "fair_benchmark/score_clean_pair_v09.py" in tree["files"]
+    assert len(tree["git_head"]) == 40
+    assert len(tree["tree_sha256"]) == 64
+
+    snapshot = clean_pair_ledger_snapshot_v09(tmp_path / "missing.csv")
+    assert snapshot == {
+        "row_count": 0,
+        "sha256": hashlib.sha256(b"").hexdigest(),
+        "last_row_hash": "GENESIS",
+        "experiment_id_count": 0,
+        "chain_breaks": 0,
+    }
 
 
 def test_holdout_nonce_is_drawn_once_only_after_consumption(tmp_path):
