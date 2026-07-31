@@ -34,8 +34,11 @@
 - 长任务启动可用物理内存至少`12.68 GiB`；运行中至少保留`8 GiB`；当前进程驻留内存不超过`6 GiB`；单次计划分配不超过`512 MiB`。
 - 真实输出根目录固定为
   `results/26_historical_band_experts/formal_v09/input_attempt_01`，
-  已存在时拒绝覆盖。
+  临时构建目录固定为同父目录下的`input_attempt_01.building`；任一目录已存在时拒绝覆盖。
 - 本计划只到输入独立审核结束；不包含严格嵌套训练、三个模型家族训练、正式预测或评分。
+- 可信目标导出模块含有正式评分服务禁止的原始流量标记，永远不得放入未来评分命令的
+  `--experiment-dir`。未来评分必须显式指向一个另行封存的候选源码包；该包必须包含训练和预测
+  实际使用的全部传递依赖，但不得包含可信输入工具，并在评分前证明禁止标记扫描为零。
 
 ---
 
@@ -60,6 +63,9 @@
 def _receipt():
     return {
         "receipt_id": "A09-INPUT-01",
+        "attempt_id": "input_attempt_01",
+        "output_root": "results/26_historical_band_experts/formal_v09/input_attempt_01",
+        "maximum_attempts": 1,
         "protocol_id": "P09-FORMAL",
         "protocol_sha256": (
             "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8"
@@ -127,6 +133,9 @@ def validate_stage_authorization_v09(
         raise StageAuthorizationError(f"stage authorization does not allow action {action}")
     expected = {
         "receipt_id": "A09-INPUT-01",
+        "attempt_id": "input_attempt_01",
+        "output_root": "results/26_historical_band_experts/formal_v09/input_attempt_01",
+        "maximum_attempts": 1,
         "protocol_id": "P09-FORMAL",
         "protocol_sha256": PROTOCOL_SHA256,
         "action": AUTHORIZED_ACTION,
@@ -203,6 +212,7 @@ git commit -m "Feat: Add external formal v09 stage authorization"
 
 **Interfaces:**
 - Produces: `sha256_file(path) -> str`。
+- Produces: `digest_pairs_v09(pairs) -> str`。
 - Produces: `atomic_json(path, payload) -> None`。
 - Produces: `environment_fingerprint_v09(repo_root) -> dict`。
 - Produces: `promote_complete_directory_v09(building_root, final_root) -> None`。
@@ -226,15 +236,50 @@ def test_environment_fingerprint_contains_reproducibility_keys(repo_root):
     report = environment_fingerprint_v09(repo_root)
     assert set(report) == {
         "git_head",
+        "git_tree",
         "git_clean",
         "python",
+        "python_executable",
         "platform",
         "numpy",
         "pandas",
         "torch",
+        "torch_cuda_version",
+        "torch_cuda_available",
         "psutil",
+        "pip_freeze",
         "pip_freeze_sha256",
     }
+
+
+def test_digest_pairs_is_order_sensitive_and_unambiguous():
+    from artifact_v09 import digest_pairs_v09
+
+    first = (("00000001", "0" * 64), ("00000002", "1" * 64))
+    assert digest_pairs_v09(first) != digest_pairs_v09(tuple(reversed(first)))
+
+
+def test_directory_promotion_requires_complete_verified_seal(tmp_path):
+    from artifact_v09 import atomic_json, promote_complete_directory_v09, sha256_file
+
+    building = tmp_path / "input.building"
+    building.mkdir()
+    (building / "manifest.json").write_text('{"status":"built_pending_audit"}\n', encoding="utf-8")
+    with pytest.raises(FileNotFoundError):
+        promote_complete_directory_v09(building, tmp_path / "input_attempt_01")
+
+    (building / "input_audit.json").write_text(
+        '{"status":"complete_input_audit"}\n',
+        encoding="utf-8",
+    )
+    atomic_json(building / "seal.json", {
+        "status": "complete_input_seal",
+        "artifacts": {
+            "manifest.json": sha256_file(building / "manifest.json"),
+            "input_audit.json": sha256_file(building / "input_audit.json"),
+        },
+    })
+    promote_complete_directory_v09(building, tmp_path / "input_attempt_01")
 ```
 
 - [ ] **Step 2: 运行工具测试并确认失败**
@@ -255,6 +300,20 @@ def sha256_file(path: str | Path) -> str:
     return digest.hexdigest()
 
 
+def digest_pairs_v09(pairs: Sequence[tuple[str, str]]) -> str:
+    normalized = [(str(key), str(digest)) for key, digest in pairs]
+    if len({key for key, _digest in normalized}) != len(normalized):
+        raise ValueError("digest tree keys must be unique")
+    if any(re.fullmatch(r"[0-9a-f]{64}", digest) is None for _key, digest in normalized):
+        raise ValueError("digest tree values must be lowercase SHA-256")
+    payload = json.dumps(
+        normalized,
+        ensure_ascii=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def atomic_json(path: str | Path, payload: Mapping) -> None:
     path = Path(path)
     if path.exists():
@@ -266,18 +325,28 @@ def atomic_json(path: str | Path, payload: Mapping) -> None:
         json.dumps(dict(payload), indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
-    temporary.replace(path)
+    os.link(temporary, path)
+    temporary.unlink()
 
 
 def environment_fingerprint_v09(repo_root: str | Path) -> dict:
-    freeze = subprocess.run(
+    freeze_stdout = subprocess.run(
         [sys.executable, "-m", "pip", "freeze"],
         check=True,
         capture_output=True,
         text=True,
-    ).stdout.replace("\r\n", "\n")
+    ).stdout
+    freeze_lines = tuple(line for line in freeze_stdout.splitlines() if line)
+    freeze = "".join(f"{line}\n" for line in freeze_lines)
     head = subprocess.run(
         ["git", "rev-parse", "HEAD"],
+        cwd=repo_root,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    tree = subprocess.run(
+        ["git", "rev-parse", "HEAD^{tree}"],
         cwd=repo_root,
         check=True,
         capture_output=True,
@@ -292,13 +361,18 @@ def environment_fingerprint_v09(repo_root: str | Path) -> dict:
     ).stdout
     return {
         "git_head": head,
+        "git_tree": tree,
         "git_clean": dirty == "",
         "python": platform.python_version(),
+        "python_executable": str(Path(sys.executable).resolve()),
         "platform": platform.platform(),
         "numpy": np.__version__,
         "pandas": pd.__version__,
         "torch": torch.__version__,
+        "torch_cuda_version": torch.version.cuda,
+        "torch_cuda_available": torch.cuda.is_available(),
         "psutil": psutil.__version__,
+        "pip_freeze": list(freeze_lines),
         "pip_freeze_sha256": hashlib.sha256(freeze.encode("utf-8")).hexdigest(),
     }
 
@@ -313,14 +387,18 @@ def promote_complete_directory_v09(
         raise FileNotFoundError(building_root)
     if final_root.exists():
         raise FileExistsError(final_root)
-    manifest_path = building_root / "manifest.json"
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    if manifest.get("status") != "complete":
-        raise RuntimeError("building directory has no complete manifest")
+    seal_path = building_root / "seal.json"
+    seal = json.loads(seal_path.read_text(encoding="utf-8"))
+    if seal.get("status") != "complete_input_seal":
+        raise RuntimeError("building directory has no complete input seal")
+    for name, expected in seal["artifacts"].items():
+        if sha256_file(building_root / name) != expected:
+            raise RuntimeError(f"sealed artifact hash drift: {name}")
     building_root.replace(final_root)
 ```
 
-目录提升使用同卷原子重命名；真实构建器必须把`.building`和最终目录放在同一父目录。
+`atomic_json`使用同目录硬链接发布，目标已存在时由文件系统原子拒绝覆盖。目录提升使用同卷原子重命名；
+真实构建器必须把`.building`和最终目录放在同一父目录。
 
 - [ ] **Step 4: 运行工具测试**
 
@@ -492,6 +570,7 @@ def build_forcing_store_v09(
         gate.assert_runtime_safe(sample_host_memory())
         source_hashes.append((basin, sha256_file(source_path)))
     forcing.flush()
+    digest_tree = digest_pairs_v09(source_hashes)
 
     static_frame = pd.read_csv(statics_file, dtype={"gauge_id": "string"})
     if list(static_frame.columns) != ["gauge_id", *STATIC_COLUMNS]:
@@ -512,7 +591,8 @@ def build_forcing_store_v09(
     )
     return {
         "forcing_shape": [531, 10_501, 5],
-        "source_hashes": source_hashes,
+        "source_file_count": len(source_hashes),
+        "source_digest_tree_sha256": digest_tree,
     }
 ```
 
@@ -534,7 +614,8 @@ assert frame["gauge_id"].astype(str).str.zfill(8).is_unique
 
 - [ ] **Step 6: 写出气象清单并测试重载**
 
-`forcing_manifest.json`必须记录：
+`forcing_manifest.json`必须记录。`digest_tree`必须由
+`digest_pairs_v09(tuple(source_hashes))`按冻结流域顺序计算；清单不得写入原始文件路径或逐文件摘要：
 
 ```python
 {
@@ -594,11 +675,13 @@ def test_formal_target_export_writes_only_training_dates(tmp_path):
 
     dates = pd.date_range("1989-10-01", "2008-09-30", freq="D")
     series = pd.Series(np.arange(len(dates), dtype=np.float64), index=dates)
+    basin_file = tmp_path / "basins.txt"
+    basin_file.write_text("00000001\n00000002\n", encoding="utf-8")
     report = prepare_formal_target_bundle_v09(
         protocol=_protocol(),
         stage_authorization=_receipt(),
         basin_ids=("00000001", "00000002"),
-        basin_file=tmp_path / "basins.txt",
+        basin_file=basin_file,
         output_path=tmp_path / "targets.csv",
         load_one=lambda _basin: series,
         source_digest=lambda _basin: "0" * 64,
@@ -648,7 +731,8 @@ with temporary.open("x", encoding="utf-8", newline="") as handle:
 temporary.replace(output_path)
 ```
 
-真实命令入口中，只有此文件允许导入`load_camels_us_discharge`。它不得打印目标值、原始流量路径或流域统计。
+真实命令入口中，只有此文件允许导入`load_camels_us_discharge`。它不得打印目标值、原始流量路径或流域统计，
+也不得复制到未来正式评分扫描的候选源码包。
 
 - [ ] **Step 4: 封存可信来源摘要**
 
@@ -675,7 +759,8 @@ def trusted_load_one_v09(data_dir: Path, basin: str) -> pd.Series:
     return load_camels_us_discharge(data_dir, basin, area)
 ```
 
-真实入口只把`trusted_source_digest_v09`得到的`(basin, sha256)`对按冻结流域顺序组合为摘要树；
+真实入口只把`trusted_source_digest_v09`得到的`(basin, sha256)`对按冻结流域顺序交给
+`digest_pairs_v09`组合为摘要树；
 `load_camels_us_forcings`仅用于取得与现有可信加载器一致的流域面积，气象产品参数固定为`maurer`。
 候选输入模块不接触上述函数，也不接收原始流量路径。
 
@@ -746,7 +831,8 @@ git commit -m "Feat: Add trusted formal v09 target export"
 - Produces: `seal_formal_inputs_v09(input_root, protocol) -> dict`。
 - Produces: `open_formal_inputs_v09(input_root, protocol) -> FormalInputPack`。
 - Produces: `audit_formal_inputs_v09(input_root, protocol) -> dict`。
-- Produces: `targets.npy`、`scaler.json`、`environment.json`和顶层`manifest.json`。
+- Produces: `targets.npy`、`scaler.json`、`environment.json`、`manifest.json`、
+  `input_audit.json`和最终`seal.json`。
 
 - [ ] **Step 1: 写归一化日期和封存重载失败测试**
 
@@ -904,11 +990,23 @@ class FormalInputPack:
     targets: np.ndarray
     scaler: dict
     manifest: dict
+    seal: dict
 
 
 def open_formal_inputs_v09(input_root: str | Path, protocol: Mapping) -> FormalInputPack:
     root = Path(input_root)
+    seal = json.loads((root / "seal.json").read_text(encoding="utf-8"))
+    if seal.get("status") != "complete_input_seal":
+        raise FormalInputError("formal input directory has no complete seal")
+    for name, expected in seal["artifacts"].items():
+        if sha256_file(root / name) != expected:
+            raise FormalInputError(f"sealed top-level artifact hash drift: {name}")
+    input_audit = json.loads((root / "input_audit.json").read_text(encoding="utf-8"))
+    if input_audit.get("status") != "complete_input_audit":
+        raise FormalInputError("formal input audit status drift")
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+    if manifest.get("status") != "built_pending_audit":
+        raise FormalInputError("formal input build manifest status drift")
     for name, expected in manifest["artifacts"].items():
         if sha256_file(root / name) != expected:
             raise FormalInputError(f"artifact hash drift: {name}")
@@ -928,8 +1026,28 @@ def open_formal_inputs_v09(input_root: str | Path, protocol: Mapping) -> FormalI
         targets=targets,
         scaler=json.loads((root / "scaler.json").read_text(encoding="utf-8")),
         manifest=manifest,
+        seal=seal,
     )
 ```
+
+顶层`manifest.json`必须是不可变的构建记录，状态为`built_pending_audit`。其`artifacts`字段必须
+逐项包含：
+
+```text
+basins.txt
+dates.npy
+environment.json
+forcing.npy
+forcing_manifest.json
+scaler.json
+statics.npy
+targets.csv
+targets.manifest.json
+targets.npy
+```
+
+它还必须记录输入尝试标识、固定输出根目录、协议哈希、授权凭据哈希、Git提交和树对象，
+以及本阶段全部实现模块和配置文件的逐文件 SHA-256。不能使用目录修改时间或模糊版本标签替代文件哈希。
 
 - [ ] **Step 6: 实现独立完整审核**
 
@@ -946,22 +1064,42 @@ def open_formal_inputs_v09(input_root: str | Path, protocol: Mapping) -> FormalI
 - 正式训练、预测和评分授权仍为`false`。
 
 审核输出`input_audit.json`，状态只能是`complete_input_audit`或抛出异常；不得用警告替代失败。
+审核成功后才写`seal.json`：
+
+```python
+{
+    "status": "complete_input_seal",
+    "attempt_id": "input_attempt_01",
+    "protocol_sha256": PROTOCOL_SHA256,
+    "authorization_receipt_sha256": authorization_receipt_sha256,
+    "artifacts": {
+        "manifest.json": sha256_file(input_root / "manifest.json"),
+        "input_audit.json": sha256_file(input_root / "input_audit.json"),
+    },
+}
+```
+
+该两级结构避免`manifest.json`既包含自身或审核文件哈希又需要在审核后改写的循环。`seal.json`
+不包含自身哈希；最终审计记录和 Git 登记负责固定`seal.json`哈希。
 
 - [ ] **Step 7: 实现单一编排入口**
 
 `build_formal_inputs_v09.py`按以下顺序调用：
 
-1. 验证外部输入授权；
+1. 验证外部输入授权，并确认命令输出根目录与凭据绑定路径逐字一致；
 2. 验证内存、工作区和协议；
 3. 创建唯一`.building`目录；
 4. 构建气象和静态存储；
 5. 可信导出训练目标；
 6. 构建`targets.npy`和`scaler.json`；
-7. 写`environment.json`和顶层`manifest.json`；
-8. 重载全部产物；
-9. 审核通过后原子提升为`input_attempt_01`。
+7. 写`environment.json`和状态为`built_pending_audit`的顶层`manifest.json`；
+8. 独立算法重载并审核全部构建产物，写`input_audit.json`；
+9. 写`seal.json`；
+10. 通过正式只读接口再次重载封存输入；
+11. 原子提升为`input_attempt_01`。
 
-任何步骤失败都保留`.building/failure.json`，但没有`status=complete`的目录不能被训练入口读取。
+任何步骤失败都保留`.building/failure.json`，但没有
+`seal.json::status=complete_input_seal`的目录不能被训练入口读取。
 
 - [ ] **Step 8: 运行输入、审核和禁止读取测试**
 
@@ -990,6 +1128,8 @@ git commit -m "Feat: Seal and audit formal v09 inputs"
 - Modify: `src/26_historical_band_experts/registry.csv`
 - Create: `docs/technical/historical_multiscale_formal_v09_input_audit.md`
 - Generated, not tracked: `results/26_historical_band_experts/formal_v09/input_attempt_01/`
+- Generated, not tracked:
+  `results/26_historical_band_experts/formal_v09/input_attempt_01.external_audit.json`
 
 **Interfaces:**
 - Consumes: 已验证代码、精确授权凭据、原始 Maurer、冻结静态文件和可信训练目标源。
@@ -1002,6 +1142,9 @@ git commit -m "Feat: Seal and audit formal v09 inputs"
 ```json
 {
   "receipt_id": "A09-INPUT-01",
+  "attempt_id": "input_attempt_01",
+  "output_root": "results/26_historical_band_experts/formal_v09/input_attempt_01",
+  "maximum_attempts": 1,
   "protocol_id": "P09-FORMAL",
   "protocol_sha256": "b81bce8fc83aa8c4cad2d36475c6e6da553567f54b5f5f8d52457006fb446ed8",
   "action": "formal_target_bundle_generation",
@@ -1055,9 +1198,10 @@ Expected: 全部测试通过，准确数量写入输入审计记录。由于代�
 - 每个文件10,597行，日期`1980-01-01`至`2008-12-31`；
 - 冻结静态表531行、28列、531个唯一测站；
 - `G:`盘至少有`1 GiB`可用空间；
-- 正式结果根目录和`.building`目录均不存在；
+- 最终目录与同父目录的`input_attempt_01.building`均不存在；
 - 工作区干净；
 - 协议、授权凭据和代码提交哈希一致；
+- 授权凭据只绑定`input_attempt_01`、固定输出根目录和最多一次尝试；
 - 可用物理内存至少`12.68 GiB`。
 
 - [ ] **Step 7: 一次性生成正式输入**
@@ -1069,7 +1213,7 @@ python src\26_historical_band_experts\build_formal_inputs_v09.py `
   --basin-file src\fair_benchmark\frozen\track0_forcing_only_basins.txt `
   --statics-file src\fair_benchmark\frozen\bundle\track0_statics.csv `
   --data-dir G:\github\pycharm\projects\neuralhydrology\data\camels_us `
-  --output-root results\26_historical_band_experts\formal_v09\input_attempt_01
+  --output-root results/26_historical_band_experts/formal_v09/input_attempt_01
 ```
 
 运行中每个流域和每个50,000行目标块前检查内存。可用内存低于`8 GiB`、进程驻留内存超过
@@ -1082,10 +1226,12 @@ Run:
 ```powershell
 python src\26_historical_band_experts\audit_formal_inputs_v09.py `
   --protocol src\26_historical_band_experts\configs\formal_v09_protocol.json `
-  --input-root results\26_historical_band_experts\formal_v09\input_attempt_01
+  --input-root results\26_historical_band_experts\formal_v09\input_attempt_01 `
+  --report results\26_historical_band_experts\formal_v09\input_attempt_01.external_audit.json
 ```
 
-Expected: `status=complete_input_audit`，531个流域、5,576,031个气象行和1,745,928个训练目标全部通过。
+外部报告路径必须位于封存输入目录之外且事先不存在；审核器不得修改封存目录。Expected:
+`status=complete_input_audit`，531个流域、5,576,031个气象行和1,745,928个训练目标全部通过。
 
 - [ ] **Step 9: 由独立上下文审核**
 
@@ -1117,10 +1263,12 @@ git commit -m "Phase: Record formal v09 input audit"
 
 ## Self-Review
 
-- Spec coverage: 授权、Maurer、27项静态属性、3,561天最长滞后所需日期、训练期目标、内存、安全边界、哈希、环境、禁止输入和独立审核均有对应任务。
+- Spec coverage: 授权、Maurer、27项静态属性、3,561天最长滞后所需日期、训练期目标、内存、
+  安全边界、顺序敏感来源摘要、完整环境快照、禁止输入和独立审核均有对应任务。
 - Scope boundary: 本计划不包含训练、正式预测或评分；这些必须在输入独立审核后另写计划。
 - Type consistency: 全部气象、静态和目标存储均为float32；统计累积为float64；流域和日期索引均为整数；训练读取接口只返回封存产物。
-- Atomicity: 所有真实输出先写`.building`，只有完整审核后才能提升；既有最终目录和临时目录均拒绝覆盖。
+- Atomicity: 所有真实输出先写`input_attempt_01.building`，只有`input_audit.json`和
+  `seal.json`完整后才能提升；既有最终目录和临时目录均拒绝覆盖。
 - 未定字段检查：计划没有未定字段；授权值由Global Constraints中的精确用户回复唯一决定。
 
 ## Execution Handoff
@@ -1129,7 +1277,7 @@ Plan complete and saved to
 `docs/superpowers/plans/2026-07-31-historical-multiscale-formal-v09-input-stage.md`.
 在收到精确输入阶段批准后有两种执行方式：
 
-1. **Subagent-Driven**：主上下文逐任务实现，独立上下文在每个组件和真实输入完成后审核。
-2. **Inline Execution**：当前上下文按Task 1至Task 7顺序实现，Task 8再切换到独立上下文。
+1. **Subagent-Driven**：主上下文按Task 1至Task 6实现，独立上下文在每个组件和真实输入完成后审核。
+2. **Inline Execution**：当前上下文按Task 1至Task 6执行，在Task 6 Step 9切换到独立上下文。
 
 无论选择哪种方式，未收到精确批准文本前都不得执行本计划。
