@@ -30,7 +30,16 @@
   1–10轮为0.001、11–20轮为0.0005、21–30轮为0.0001。
 - 只把第30轮检查点用于后续正式预测；第10轮和第20轮检查点只用于中断诊断和审计，不得用于选择。
 - 主训练全部24次结束前不得计算验证指标、正式指标、分支消融或根据损失选择模型、随机数或检查点。
+- 版本08发现的历史记忆状态大而有限是预先公开的数值警示。版本09不得以该数值设置事后阈值，
+  不得据此更换模型或检查点；正式预测前必须按
+  `docs/technical/historical_multiscale_formal_v09_state_diagnostics_preregistration.md`
+  完成八个连续历史候选的训练期状态分布和独立重放。
 - 每次训练使用独立进程，禁止并行运行两个正式训练进程。
+- 正式图形处理器运行使用确定性算法：导入PyTorch前固定
+  `CUBLAS_WORKSPACE_CONFIG=:4096:8`，启用`torch.use_deterministic_algorithms(True)`，
+  关闭cuDNN基准搜索并启用cuDNN确定性模式，禁用矩阵乘法和卷积的TensorFloat-32快速路径。
+  两个全新进程必须先对同一合成历史批次产生逐字节相同的状态数组；不支持或不一致时停止，
+  不得放宽重放容差。
 - 长任务启动可用物理内存必须达到
   `max(12 GiB, 机器总物理内存的40%)`；当前机器对应硬门为12.68 GiB。运行中必须保留
   `max(8 GiB, 总物理内存的25%)`，单进程驻留内存不超过
@@ -120,7 +129,9 @@ Expected: 新增严格嵌套和主训练作用域测试失败；既有输入收�
 固定运行集合和固定输出根目录的完整相等比较。
 `prerequisite_sha256`是键集合也受冻结约束的映射：严格嵌套授权必须恰好包含输入封存、两个输入
 外部审核报告和旧八随机数检查点函数桥接审核；主训练授权还必须包含严格嵌套运行封存与严格嵌套
-外部审核报告。未知键、缺失键或任一值漂移都拒绝。
+外部审核报告，以及
+`docs/technical/historical_multiscale_formal_v09_state_diagnostics_preregistration.md`
+的完整文件SHA-256。未知键、缺失键或任一值漂移都拒绝。
 只有既有输入生成动作允许省略后五个扩展参数，并继续执行输入计划冻结的完整收据相等检查；
 所有训练和后续动作缺少任一扩展参数都拒绝。
 
@@ -147,7 +158,8 @@ Expected: 新增严格嵌套和主训练作用域测试失败；既有输入收�
 - `official_scoring_authorized=false`
 
 收据还必须保存直接批准所在任务标识、批准时间、批准文本和其SHA-256。批准发生后才把实际
-输入封存哈希、两个目录外输入审核报告哈希、可执行源码树哈希和Git提交写入收据；禁止预先生成收据。
+输入封存哈希、两个目录外输入审核报告哈希、状态诊断预注册文件哈希、可执行源码树哈希和Git提交
+写入收据；禁止预先生成收据。
 可执行源码树只包含实际运行的Python文件和科学配置，不包含授权收据、审计文档或结果目录，
 避免收据把自身纳入哈希形成循环。
 
@@ -161,7 +173,8 @@ Expected: 新增严格嵌套和主训练作用域测试失败；既有输入收�
   `results/26_historical_band_experts/formal_v09/training_authorization_consumed.json`
 
 文件以独占创建模式写入，内容包括授权收据SHA-256、启动时间、主机、进程标识、Git提交、
-工作区树哈希、输入封存哈希、两个输入审核报告哈希和启动内存快照。消费文件一旦存在，
+工作区树哈希、输入封存哈希、两个输入审核报告哈希、主训练适用的状态诊断预注册文件哈希和
+启动内存快照。消费文件一旦存在，
 任何入口都拒绝同一阶段重启。
 
 - [ ] **Step 5: 运行授权和启动门测试**
@@ -521,8 +534,14 @@ git commit -m "Feat: Add formal v09 legacy bridge and nesting audit"
 - 只允许协议中的模型和随机数；
 - 参数量分别为297,217、595,198、596,737；
 - 轮数、更新数、学习率、批次哈希、损失、梯度裁剪和检查点周期固定；
-- 连续历史模型第3步前历史编码器必须出现非零有限梯度；
-- 历史门初值严格为0，但训练过程中允许学习；
+- 连续历史模型第1步前两个历史门严格为0；第1次反向传播时历史编码器梯度存在、有限且
+  逐元素为0，两个门梯度存在且有限，合并欧氏范数严格大于0；
+- 连续历史模型第3步结束前历史编码器必须出现非零有限梯度；
+- 训练中健康信息只读取同一次反向传播已经产生的张量，不增加第二次前向；启用或停用记录时，
+  预测、损失、梯度、参数、Adam状态及全部随机数状态必须零差异；
+- 历史门初值严格为0，但训练过程中允许学习；每轮记录门参数、门梯度和历史编码器梯度统计；
+- 两个全新图形处理器进程在冻结确定性开关下产生相同的合成状态数组SHA-256；任一确定性
+  开关漂移、算法不支持或数组不一致时失败；
 - 不计算验证指标，不读取正式评估观测，不生成正式期预测；
 - 同一随机数的三个模型每轮排列哈希完全相同；
 - 输出目录存在、哈希漂移、非有限损失或内存越界时立即失败。
@@ -550,6 +569,10 @@ Expected: FAIL，原因是主训练模块尚不存在。
 6. 在第10、20、30轮原子保存检查点；
 7. 重载第30轮检查点并验证模型、优化器、随机数和哈希；
 8. 写`seal.json`并原子提交运行目录。
+
+连续历史候选只在正式前向和反向中记录计算图健康信息，不在训练进程内另算状态分布。八个
+候选的状态分布在24次主训练全部结束后由独立进程从封存检查点计算，避免诊断前向影响训练随机数、
+优化器、显存峰值或运行时模型状态。
 
 图形处理器运行前用同一模型、最大批量和同一窗口形状执行一次完整前向、反向和优化器步的资源预检。
 正式运行前可用图形处理器内存必须至少达到
@@ -592,7 +615,14 @@ git commit -m "Feat: Add serial formal v09 training suite"
 
 **Files:**
 - Create after execution approval: `src/26_historical_band_experts/audit_formal_training_v09.py`
+- Create after execution approval: `src/26_historical_band_experts/state_diagnostics_formal_v09.py`
+- Create after execution approval: `src/26_historical_band_experts/audit_state_diagnostics_formal_v09.py`
 - Test: `src/26_historical_band_experts/tests/test_audit_formal_training_v09.py`
+- Test: `src/26_historical_band_experts/tests/test_state_diagnostics_formal_v09.py`
+- Generated, not tracked:
+  `results/26_historical_band_experts/formal_v09/state_diagnostics/`
+- Generated, not tracked:
+  `results/26_historical_band_experts/formal_v09/state_diagnostics_external_audit.json`
 - Generated, not tracked:
   `results/26_historical_band_experts/formal_v09/training_external_audit.json`
 - Generated, not tracked:
@@ -600,6 +630,8 @@ git commit -m "Feat: Add serial formal v09 training suite"
 
 **Interfaces:**
 - `audit_training_run_v09(run_root, expected_spec, input_seal, source_seal) -> dict`
+- `write_history_state_diagnostics_v09(input_root, training_root, output_root, device) -> dict`
+- `audit_history_state_diagnostics_v09(input_root, training_root, diagnostic_root, report_path, device) -> dict`
 - `audit_training_suite_v09(formal_root, run_order, report_path) -> dict`
 - `seal_training_suite_v09(formal_root, audit_report) -> dict`
 
@@ -613,6 +645,10 @@ git commit -m "Feat: Add serial formal v09 training suite"
 - 第30轮检查点缺失或不是唯一允许的正式预测来源；
 - 输入、源码、环境、授权或运行清单哈希漂移；
 - 任何非有限损失、非有限参数、历史候选无梯度、内存越界或失败收据；
+- 八个连续历史候选缺少第10、20、30轮固定面板状态数组，或第30轮缺少全部1,745,928个
+  训练键状态数组；
+- 任一状态非有限、固定面板不是531个流域乘12个冻结日期、状态诊断访问训练目标或正式评估观测；
+- 同设备独立重放的样本键或五列`float32`状态数组SHA-256不一致；
 - 任何验证指标、正式期观测、正式期预测或评分产物提前出现；
 - 训练封存写在审核完成之前；
 - 总审核报告写入任一运行封存目录。
@@ -629,15 +665,25 @@ Expected: FAIL，原因是总审核器尚不存在。
 
 - [ ] **Step 3: 实现独立审核和总封存**
 
-审核器逐项重算运行目录哈希树，重载第30轮检查点并验证所有张量有限、结构和参数量正确。
-它不运行正式期推理，不读取正式评估观测，也不计算性能。全部24项通过后才写目录外审核报告。
+24次训练全部结束后，状态诊断进程按预注册文件只读取训练期Maurer气象、27项静态属性和
+八个连续历史候选的第10、20、30轮检查点。每个检查点对531个流域乘12个冻结训练日期计算
+原始与门控后的隐藏状态和记忆状态范数；第30轮另覆盖全部1,745,928个训练键。诊断不读取训练
+目标，不执行近期路径或流量输出头，不生成流量预测。第二个进程在同一正式设备和环境上重算，
+样本键固定为小端`int32[样本数,2]`，五列状态固定为小端`float32[样本数,5]`；数组原始字节
+和`.npy`文件必须哈希完全相同。状态诊断目录和外部审核报告只由最终训练封存绑定，
+不得回写已封存运行目录。
+
+训练审核器逐项重算运行目录哈希树，重载第30轮检查点并验证所有张量有限、结构和参数量正确。
+它不运行正式期推理，不读取正式评估观测，也不计算性能。全部24项和全部状态诊断通过后才写
+目录外训练审核报告。
 
 `training_seal.json`固定包含：
 
 - 协议、输入封存、输入产物外部审核、可信训练目标来源外部审核、旧参考函数桥接审核、
-  严格嵌套运行封存、严格嵌套独立审核、授权收据、可执行源码树和环境哈希；
+  严格嵌套运行封存、严格嵌套独立审核、状态诊断预注册文件、授权收据、可执行源码树和环境哈希；
 - 24项运行的固定顺序、运行封存哈希和第30轮检查点SHA-256；
 - 第10、20轮检查点哈希，但明确标记`not_eligible_for_formal_prediction=true`；
+- 八个连续历史候选状态诊断目录哈希和状态诊断外部审核报告SHA-256；
 - `formal_prediction_generated=false`和`official_score_called=false`；
 - 独立训练审核报告SHA-256。
 
@@ -790,7 +836,8 @@ python src\26_historical_band_experts\audit_formal_training_v09.py `
 
 训练审计文档必须明确：
 
-- 事实：严格嵌套差异、运行数、随机数、更新数、检查点、资源和哈希；
+- 事实：严格嵌套差异、运行数、随机数、更新数、检查点、资源、状态分布和哈希；
+- 数值边界：大而有限的历史状态只作报告；没有预注册数值上限，也不能解释成历史气象因果贡献；
 - 未知：尚未生成正式期预测，模型效果仍无法确定；
 - 下一条件：单独批准正式预测与封存阶段；
 - 禁止推断：训练损失或运行完成不能证明候选优于冻结经典基准。
@@ -815,7 +862,8 @@ git commit -m "Phase: Record formal v09 training audit"
 - 独立严格重放超过`1e-6`；
 - 任何运行不是30轮、204,630步或第30轮检查点缺失；
 - 同随机数三个模型的批次排列哈希不同；
-- 任何非有限值、历史候选无有效梯度、残留训练进程或原子封存失败；
+- 第1步零门/梯度链路不成立，或第3步结束前历史编码器没有非零有限梯度；
+- 任何非有限值、状态诊断覆盖或哈希不完整、诊断改变训练轨迹、残留训练进程或原子封存失败；
 - 正式评估观测、正式预测或评分服务被提前访问；
 - 24项没有全部完成独立审核。
 
@@ -826,6 +874,7 @@ git commit -m "Phase: Record formal v09 training audit"
 - 嵌套强度：同进程204,630步零容差加独立进程全部训练键预测`1e-6`容差，不能用少量合成批次替代。
 - 公平性：三个主模型共享训练键、批次顺序、目标、归一化、优化器和随机数；只有结构和参数量按预注册变化。
 - 防选择：24项全部完成前不计算性能，第30轮是唯一预测来源。
+- 数值诊断：训练后独立覆盖全部531个流域和全部训练键；有限大状态强制报告但不触发事后选择。
 - 数据边界：训练目标只作监督，正式评估观测和水文签名保持封存。
 - 资源边界：单进程、逐批内存门、显存预检、失败即停和禁止自动重试。
 - 可追溯性：输入、源码、环境、收据、每轮排列、检查点、运行目录和总封存均有SHA-256。
