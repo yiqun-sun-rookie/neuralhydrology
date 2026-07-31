@@ -1,5 +1,19 @@
 # 历史连续多尺度气象模型正式版本09交接
 
+## 2026-07-31经典训练对齐补充
+
+只读旧训练审查确认：旧核心数据集把269天预热区间纳入气象、流量和每流域损失尺度统计，
+其中`1999-01-05`至`1999-09-30`属于正式评估期。版本09不得复用旧流量统计，也不能声称逐轨迹
+复现旧八随机数训练。合法命题是：八个冻结检查点的函数映射桥接，加上新干净训练管线内经典路径与
+停用历史路径的30轮逐更新严格嵌套。
+
+同一审查发现原输入计划把真实静态属性顺序和尺度写错：旧核心实际按属性名字母顺序送入27项静态
+属性，并用`ddof=1`的样本标准差。输入和训练计划现已改为显式冻结字母顺序和`ddof=1`；动态和
+流量统计仍只用训练期并采用`ddof=0`。详细证据见
+`docs/technical/historical_multiscale_formal_v09_classic_training_alignment_audit.md`。
+旧检查点桥接门还新增531个流域乘12个固定训练日期的真实语义检查；该门必须在正式输入封存后、
+严格嵌套授权前通过，当前尚未执行。
+
 ## 2026-07-31补充
 
 可用物理内存达到硬门后，完整命令
@@ -33,10 +47,11 @@
 1. `docs/plans/2026-07-29-historical-multiscale-formal-v09-protocol.md`
 2. `docs/technical/historical_multiscale_formal_v09_implementation_audit.md`
 3. `docs/technical/historical_multiscale_formal_v09_core_classic_repair.md`
-4. `docs/technical/historical_multiscale_formal_v09_goal_completion_audit.md`
-5. `src/26_historical_band_experts/configs/formal_v09_protocol.json`
-6. `src/26_historical_band_experts/launch_gate_v09.py`
-7. `src/26_historical_band_experts/memory_safety_v09.py`
+4. `docs/technical/historical_multiscale_formal_v09_classic_training_alignment_audit.md`
+5. `docs/technical/historical_multiscale_formal_v09_goal_completion_audit.md`
+6. `src/26_historical_band_experts/configs/formal_v09_protocol.json`
+7. `src/26_historical_band_experts/launch_gate_v09.py`
+8. `src/26_historical_band_experts/memory_safety_v09.py`
 
 协议JSON SHA-256：
 
@@ -46,6 +61,7 @@
 
 - 冻结531流域、训练期、评估期、最长3,561天滞后、120个历史块和成功门槛；
 - 定义新的无泄漏经典近期控制，零容差复现核心 `CudaLSTM` 的模型和优化计算，但不声称复现旧数据轨迹；
+- 冻结真实静态张量的属性名字母顺序和`ddof=1`尺度，明确禁止复用含预热期流量的旧归一化值；
 - 定义同参数量控制和连续多尺度历史候选；
 - 冻结八个训练随机数、30轮和经典学习率计划；
 - 将八个旧参考运行的标识、配置哈希和第30轮检查点哈希写入机器验证协议；
@@ -91,7 +107,8 @@
 2. 实现并测试流式输入构建器；
 3. 按流域逐个写入气象内存映射文件；
 4. 生成只含训练期观测的目标包；
-5. 重载产物，核对531流域、日期、5项 Maurer、27项静态属性、唯一性、有限性和所有哈希；
+5. 重载产物，核对531流域、日期、5项 Maurer、27项静态属性的字母语义顺序与`ddof=1`尺度、
+   唯一性、有限性和所有哈希；
 6. 由独立上下文审核输入产物；
 7. 输入审核通过后，再单独申请严格嵌套和训练授权。
 
@@ -108,6 +125,7 @@ docs/plans/2026-07-29-historical-multiscale-formal-v09-handoff.md
 docs/plans/2026-07-29-historical-multiscale-formal-v09-protocol.md
 docs/technical/historical_multiscale_formal_v09_implementation_audit.md
 docs/technical/historical_multiscale_formal_v09_core_classic_repair.md
+docs/technical/historical_multiscale_formal_v09_classic_training_alignment_audit.md
 docs/technical/historical_multiscale_formal_v09_goal_completion_audit.md
 
 只读确认分支、HEAD、工作区和协议JSON哈希。历史实施提交为

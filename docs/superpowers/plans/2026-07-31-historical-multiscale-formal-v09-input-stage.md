@@ -22,7 +22,16 @@
 - 不修改`src/fair_benchmark/frozen/`、`src/fair_benchmark/score.py`、流域列表、切分文件或冻结规范。
 - 动态输入只有5项 Maurer：
   `PRCP(mm/day)`、`Tmin(C)`、`Tmax(C)`、`SRAD(W/m2)`、`Vp(Pa)`。
-- 静态输入只有冻结文件中的27项属性，顺序采用`data.py::STATIC_COLUMNS`。
+- 静态输入只有冻结文件中的27项属性。冻结逗号分隔文件的源列顺序仍用
+  `data.py::STATIC_COLUMNS`验证；送入模型和写入`statics.npy`的正式语义顺序必须使用显式冻结的
+  `FORMAL_V09_STATIC_COLUMNS`，其值为这27个名字的字母顺序。这与旧核心数据集实际执行的
+  `sort_index(axis=1)`一致，不能把配置文件的列出顺序误当成旧模型的实际张量顺序。
+- 静态属性中心使用531个冻结流域的算术平均，尺度使用样本标准差`ddof=1`，与旧核心
+  pandas静态属性归一化一致。Maurer气象、全局流量尺度和每流域损失尺度继续只用
+  `1999-10-01`至`2008-09-30`训练期并使用`ddof=0`。
+- 不得载入或复用旧八随机数运行的动态或流量归一化值。旧核心数据集先加入269天预热区间，再在整个
+  数据集上计算流量和气象统计；因此旧流量统计包含`1999-01-05`至`1999-09-30`，不满足版本09
+  正式评估观测封存边界。版本09保留干净训练期统计，并明确不声称复现旧训练轨迹。
 - 气象期为`1980-01-01`至`2008-09-30`，每个流域10,501天。
 - 训练目标期为`1999-10-01`至`2008-09-30`，每个流域3,288天；不得输出任何正式评估期流量。
 - 可信训练目标导出器不得调用
@@ -665,10 +674,12 @@ def build_forcing_store_v09(
 
     static_frame = pd.read_csv(statics_file, dtype={"gauge_id": "string"})
     if list(static_frame.columns) != ["gauge_id", *STATIC_COLUMNS]:
-        raise ForcingStoreError("static attribute column order drift")
+        raise ForcingStoreError("static source column order drift")
     static_frame["gauge_id"] = static_frame["gauge_id"].str.zfill(8)
     static_frame = static_frame.set_index("gauge_id").loc[list(basin_ids)]
-    statics = static_frame.loc[:, list(STATIC_COLUMNS)].to_numpy(dtype=np.float32)
+    statics = static_frame.loc[
+        :, list(FORMAL_V09_STATIC_COLUMNS)
+    ].to_numpy(dtype=np.float32)
     np.save(building_root / "statics.npy", statics, allow_pickle=False)
     dates = np.arange(
         np.datetime64("1980-01-01"),
@@ -693,15 +704,47 @@ def build_forcing_store_v09(
 静态属性必须验证：
 
 ```python
+FORMAL_V09_STATIC_COLUMNS = (
+    "area_gages2",
+    "aridity",
+    "carbonate_rocks_frac",
+    "clay_frac",
+    "elev_mean",
+    "frac_forest",
+    "frac_snow",
+    "geol_permeability",
+    "gvf_diff",
+    "gvf_max",
+    "high_prec_dur",
+    "high_prec_freq",
+    "lai_diff",
+    "lai_max",
+    "low_prec_dur",
+    "low_prec_freq",
+    "max_water_content",
+    "p_mean",
+    "p_seasonality",
+    "pet_mean",
+    "sand_frac",
+    "silt_frac",
+    "slope_mean",
+    "soil_conductivity",
+    "soil_depth_pelletier",
+    "soil_depth_statsgo",
+    "soil_porosity",
+)
+
 assert sha256_file(statics_file) == (
     "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2"
 )
 assert list(frame.columns) == ["gauge_id", *STATIC_COLUMNS]
 assert frame["gauge_id"].astype(str).str.zfill(8).is_unique
+assert FORMAL_V09_STATIC_COLUMNS == tuple(sorted(STATIC_COLUMNS))
 ```
 
-按冻结流域顺序写出`statics.npy`，形状`(531, 27)`、类型`float32`、数组有效载荷
-`57,348`字节；不把 NumPy 文件头长度写成跨版本固定值。
+按冻结流域顺序和上述显式字母列顺序写出`statics.npy`，形状`(531, 27)`、类型`float32`、
+数组有效载荷`57,348`字节；不把 NumPy 文件头长度写成跨版本固定值。`manifest.json`、
+`scaler.json`和输入审核报告都必须逐项记录`FORMAL_V09_STATIC_COLUMNS`，重载时不允许只检查列数。
 
 - [ ] **Step 6: 写出气象清单并测试重载**
 
@@ -1075,6 +1118,16 @@ def test_scaler_uses_indices_7213_through_10500_only(tmp_path):
     np.testing.assert_array_equal(scaler["dynamic_center"], np.full(5, 2.0))
     assert scaler["q_center"] == 3.0
     np.testing.assert_array_equal(scaler["static_center"], np.full(27, 1.0))
+    np.testing.assert_allclose(
+        scaler["static_scale"],
+        np.full(27, np.sqrt(2.0)),
+        rtol=0.0,
+        atol=1e-15,
+    )
+    assert scaler["dynamic_ddof"] == 0
+    assert scaler["q_ddof"] == 0
+    assert scaler["static_ddof"] == 1
+    assert tuple(scaler["static_columns"]) == FORMAL_V09_STATIC_COLUMNS
 
 
 def test_all_candidate_formal_input_modules_exclude_raw_discharge_reads():
@@ -1185,6 +1238,7 @@ def compute_scaler_v09(
     q_scale = float(np.sqrt(q_squared_deviation / float(q_count)))
 
     static64 = np.asarray(statics, dtype=np.float64)
+    static_scale = static64.std(axis=0, ddof=1)
     return {
         "dynamic_center": dynamic_center.tolist(),
         "dynamic_scale": np.where(dynamic_scale < 1e-8, 1.0, dynamic_scale).tolist(),
@@ -1193,17 +1247,22 @@ def compute_scaler_v09(
         "per_basin_q_std": per_basin_q_std.tolist(),
         "static_center": static64.mean(axis=0).tolist(),
         "static_scale": np.where(
-            static64.std(axis=0, ddof=0) < 1e-8,
+            static_scale < 1e-8,
             1.0,
-            static64.std(axis=0, ddof=0),
+            static_scale,
         ).tolist(),
+        "dynamic_ddof": 0,
+        "q_ddof": 0,
+        "static_ddof": 1,
+        "static_columns": list(FORMAL_V09_STATIC_COLUMNS),
         "training_start_index": 7213,
         "training_end_index_inclusive": 10500,
-}
+    }
 ```
 
 上述两遍算法使峰值保持在一个流域的`3,288 × 5`数据以内。审核器使用独立的逐流域
-Welford算法重算；动态、目标和静态统计最大绝对差不得超过`1e-9`。
+Welford算法重算；动态、目标和静态统计最大绝对差不得超过`1e-9`。审核器还必须拒绝
+静态列不是显式字母顺序、静态尺度不是`ddof=1`、或者任何旧动态／流量归一化文件被作为输入。
 
 - [ ] **Step 5: 实现只读输入重载**
 
