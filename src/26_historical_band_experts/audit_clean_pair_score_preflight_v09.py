@@ -111,7 +111,7 @@ def _module_import_probe() -> dict:
     environment = dict(os.environ)
     environment["PYTHONPATH"] = str(WORKTREE_SRC)
     completed = subprocess.run(
-        [sys.executable, "-I", "-c", "import sys;sys.path.insert(0," + repr(str(WORKTREE_SRC)) + ");" + script],
+        [sys.executable, "-c", script],
         check=True,
         capture_output=True,
         text=True,

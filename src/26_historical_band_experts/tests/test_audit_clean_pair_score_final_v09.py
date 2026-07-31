@@ -70,6 +70,11 @@ def _case(tmp_path: Path) -> dict:
         "bundle_sha256": "f" * 64,
         "protocol_sha256": PROTOCOL_SHA,
         "prediction_seal_sha256": "1" * 64,
+        "source_bundle": {
+            "status": "complete_source_bundle",
+            "scan_hits": 0,
+            "tree_sha256": "3" * 64,
+        },
         "predictions": {
             role: {"sha256": digest}
             for role, digest in HASHES.items()
@@ -87,6 +92,11 @@ def _case(tmp_path: Path) -> dict:
         "bundle_sha256": bundle["bundle_sha256"],
         "prediction_sha256": HASHES,
         "prediction_seal_sha256": bundle["prediction_seal_sha256"],
+        "source_tree": {
+            "git_head": "4" * 40,
+            "tree_sha256": "5" * 64,
+            "files": {"fair_benchmark/score_clean_pair_v09.py": "6" * 64},
+        },
         "trusted_frozen_inputs": {
             "basins": {
                 "relative_path": basin_path.name,
@@ -206,6 +216,11 @@ def _case(tmp_path: Path) -> dict:
             "nonce_sha256": partition["nonce_sha256"],
             "partition_salt_sha256": partition["partition_salt_sha256"],
             "holdout_set_sha256": partition["holdout_set_sha256"],
+            "authorization_sha256": _canonical_sha256(authorization),
+            "consumption_file_sha256": _sha256(consumption_path),
+            "consumption_canonical_sha256": _canonical_sha256(consumption),
+            "trusted_source_tree_sha256": authorization["source_tree"]["tree_sha256"],
+            "candidate_source_tree_sha256": bundle["source_bundle"]["tree_sha256"],
         },
         "ledger": {
             "before": {"row_count": 0, "sha256": None, "last_row_hash": None},
@@ -268,7 +283,7 @@ def test_final_audit_missing_report_is_incomplete_and_nonretryable(tmp_path):
     assert result["retry_allowed"] is False
 
 
-@pytest.mark.parametrize("tamper", ("ledger", "draw", "leak"))
+@pytest.mark.parametrize("tamper", ("ledger", "draw", "consumption_binding", "leak"))
 def test_final_audit_rejects_integrity_drift_or_sensitive_output(tmp_path, tamper):
     case = _case(tmp_path)
     if tamper == "ledger":
@@ -276,6 +291,10 @@ def test_final_audit_rejects_integrity_drift_or_sensitive_output(tmp_path, tampe
     elif tamper == "draw":
         draw = json.loads(case["draw"].read_text(encoding="utf-8"))
         draw["holdout_set_sha256"] = "9" * 64
+        _write(case["draw"], draw)
+    elif tamper == "consumption_binding":
+        draw = json.loads(case["draw"].read_text(encoding="utf-8"))
+        draw["consumption_file_sha256"] = "9" * 64
         _write(case["draw"], draw)
     else:
         report = json.loads(case["report"].read_text(encoding="utf-8"))

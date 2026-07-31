@@ -124,6 +124,13 @@ def _validate_receipt_before_answer(
 ) -> dict:
     if receipt.get("status") != "complete_single_holdout_draw":
         raise CleanPairScoreError("holdout draw receipt is incomplete")
+    if (
+        receipt.get("contract_sha256") != bundle.get("contract_sha256")
+        or receipt.get("bundle_sha256") != bundle.get("bundle_sha256")
+        or receipt.get("nonce_draw_count") != 1
+        or receipt.get("nonce_redraw_count") != 0
+    ):
+        raise CleanPairScoreError("holdout draw contract, bundle, or draw-count binding drift")
     if receipt.get("prediction_sha256") != dict(prediction_sha256):
         raise CleanPairScoreError("holdout draw prediction binding drift")
     partition = derive_postseal_holdout_v09(

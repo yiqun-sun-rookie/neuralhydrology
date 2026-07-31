@@ -201,6 +201,7 @@ def _verify_receipts_and_partition(
     report: Mapping,
     authorization: Mapping,
     consumption: Mapping,
+    consumption_file_sha256: str,
     draw: Mapping,
     bundle: Mapping,
     basin_ids: list[str],
@@ -230,6 +231,8 @@ def _verify_receipts_and_partition(
         raise ValueError("authorization consumption receipt drift")
     if (
         draw.get("status") != "complete_single_holdout_draw"
+        or draw.get("consumption_file_sha256") != consumption_file_sha256
+        or draw.get("consumption_canonical_sha256") != _canonical_sha256(consumption)
         or draw.get("contract_sha256") != bundle.get("contract_sha256")
         or draw.get("bundle_sha256") != bundle.get("bundle_sha256")
         or draw.get("prediction_sha256") != prediction_hashes
@@ -271,6 +274,17 @@ def _verify_receipts_and_partition(
         "partition_salt_sha256": partition["partition_salt_sha256"],
         "holdout_set_sha256": partition["holdout_set_sha256"],
     }
+    source_tree = authorization.get("source_tree")
+    source_bundle = bundle.get("source_bundle")
+    if not isinstance(source_tree, Mapping) or not isinstance(source_bundle, Mapping):
+        raise ValueError("trusted or candidate source tree binding is missing")
+    expected_provenance.update({
+        "authorization_sha256": _canonical_sha256(authorization),
+        "consumption_file_sha256": consumption_file_sha256,
+        "consumption_canonical_sha256": _canonical_sha256(consumption),
+        "trusted_source_tree_sha256": source_tree.get("tree_sha256"),
+        "candidate_source_tree_sha256": source_bundle.get("tree_sha256"),
+    })
     if any(provenance.get(key) != value for key, value in expected_provenance.items()):
         raise ValueError("report provenance binding drift")
     return {
@@ -370,6 +384,7 @@ def audit_clean_pair_score_final_v09(
             report,
             authorization,
             consumption,
+            _sha256(paths["consumption"]),
             draw,
             bundle,
             basin_ids,

@@ -157,6 +157,8 @@ def _case(tmp_path: Path, *, zero_delta: bool = False) -> dict:
         "nonce_hex": "1" * 64,
         **public_partition_summary(partition),
         "prediction_sha256": prediction_sha,
+        "nonce_draw_count": 1,
+        "nonce_redraw_count": 0,
     }
     bundle = {
         "bundle_version": 1,
@@ -183,6 +185,8 @@ def _case(tmp_path: Path, *, zero_delta: bool = False) -> dict:
         "status": "complete_clean_pair_bundle",
     }
     bundle["bundle_sha256"] = clean_pair_bundle_sha256(bundle)
+    draw_receipt["contract_sha256"] = bundle["contract_sha256"]
+    draw_receipt["bundle_sha256"] = bundle["bundle_sha256"]
     return {
         "contract": contract,
         "bundle": bundle,
