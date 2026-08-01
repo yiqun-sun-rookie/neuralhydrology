@@ -29,10 +29,12 @@ _ESTIMATE_METHODS = {
     "analytical_prediction_working_set_v1",
     "synthetic_bound_v1",
 }
-_GLOBAL_LOCK_PATH = (
-    Path(tempfile.gettempdir()) / "neuralhydrology_historical_multiscale_v09_high_load.lock"
-)
 _ACTIVE_LEASE_REGISTRATIONS: set[object] = set()
+
+
+def _global_lock_path() -> Path:
+    """Resolve the user temporary directory only when a lease is requested."""
+    return Path(tempfile.gettempdir()) / "neuralhydrology_historical_multiscale_v09_high_load.lock"
 
 
 class MemorySafetyError(RuntimeError):
@@ -684,7 +686,7 @@ def exclusive_high_load_lease_v09(
     lock_path: str | Path | None = None,
 ) -> Iterator[TaskMemoryLease]:
     """Hold one current-user cross-process lease for the full high-load action."""
-    path = Path(lock_path).resolve() if lock_path is not None else _GLOBAL_LOCK_PATH
+    path = Path(lock_path).resolve() if lock_path is not None else _global_lock_path()
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a+b") as handle:
         if path.stat().st_size == 0:
