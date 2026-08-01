@@ -10,7 +10,6 @@ import pytest
 
 IDEA_ROOT = Path(__file__).resolve().parents[1]
 CONFIG_ROOT = IDEA_ROOT / "configs"
-REPO_ROOT = IDEA_ROOT.parents[1]
 sys.path.insert(0, str(IDEA_ROOT))
 
 
@@ -155,15 +154,22 @@ def test_formal_v09_strict_config_is_single_seed_and_not_authorized():
     assert config["protocol_sha256"] == _sha256(CONFIG_ROOT / "formal_v09_protocol.json")
 
 
-def test_formal_v09_registry_rows_are_unique_and_unrun():
+def test_formal_v09_registry_tracks_target_bundle_without_authorizing_models():
     with (IDEA_ROOT / "registry.csv").open(encoding="utf-8", newline="") as handle:
         rows = list(csv.DictReader(handle))
 
-    for experiment_id in ("P09-FORMAL", "R09-NEST", "B09-CLASSIC", "B09-CAPACITY", "E09-CONTINUOUS"):
+    protocol_rows = [row for row in rows if row["exp_id"] == "P09-FORMAL"]
+    assert len(protocol_rows) == 1
+    assert protocol_rows[0]["status"] == (
+        "training_target_bundle_generated_and_independently_audited_training_not_authorized"
+    )
+    assert protocol_rows[0]["best_checkpoint"] == ""
+    assert protocol_rows[0]["metrics_path"] == ""
+    assert "training_targets.manifest.json" in protocol_rows[0]["notes"]
+
+    for experiment_id in ("R09-NEST", "B09-CLASSIC", "B09-CAPACITY", "E09-CONTINUOUS"):
         selected = [row for row in rows if row["exp_id"] == experiment_id]
         assert len(selected) == 1
         assert selected[0]["status"] == "protocol_implemented_training_not_authorized"
         assert selected[0]["best_checkpoint"] == ""
         assert selected[0]["metrics_path"] == ""
-
-    assert not (REPO_ROOT / "results/26_historical_band_experts/formal_v09").exists()
