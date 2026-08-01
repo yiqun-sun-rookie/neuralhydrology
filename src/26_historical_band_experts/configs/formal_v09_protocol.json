@@ -300,7 +300,7 @@
   "authorization": {
     "protocol_implementation": true,
     "synthetic_tests": true,
-    "formal_target_bundle_generation": false,
+    "formal_target_bundle_generation": true,
     "training": false,
     "formal_prediction_generation": false,
     "official_scoring": false

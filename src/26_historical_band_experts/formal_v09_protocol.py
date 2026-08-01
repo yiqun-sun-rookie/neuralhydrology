@@ -15,7 +15,7 @@ _EDGE_SHA256 = "55bbdaf654e7ea2b8959cc5dd62de98e4631c272ffe9d7f4efeae9cb7240927b
 _AUTHORIZATION = {
     "protocol_implementation": True,
     "synthetic_tests": True,
-    "formal_target_bundle_generation": False,
+    "formal_target_bundle_generation": True,
     "training": False,
     "formal_prediction_generation": False,
     "official_scoring": False,
