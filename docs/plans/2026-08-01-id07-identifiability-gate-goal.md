@@ -1,7 +1,7 @@
 # ID07 Goal: 可辨识性闸门方法论文（identifiability gate）
 
 **立项**: 2026-08-01（用户指令"全部做 + 制定 1 个计划 1 个 goal"）
-**状态**: Stage 0 ✅ / Stage 1 ✅ (2026-08-01, 见 worktree `results/07_hydroagent/cd/identifiability_gate_stage1/`), 下一步 Stage 2
+**状态**: Stage 0 ✅ / Stage 1 ✅ / Stage 2 🔄 **批量运行中** (2026-08-01 启动, 脱离会话 pid 38568, 日志 `screen_v03_mini/batch_log.txt`) / Stage 3 阈值已预注册 ✅（worktree `docs/plans/2026-08-01-id07-gate-preregistration.md`, 先于数据提交）
 
 ## Goal（唯一目标）
 
