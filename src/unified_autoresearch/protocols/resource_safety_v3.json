@@ -1,0 +1,48 @@
+{
+  "schema_version": "resource_safety_v3",
+  "supersedes": "resource_safety_v1",
+  "decision_basis": "declared task request, task-specific reserve, current capacity, and candidate-attributable footprint",
+  "calibration_note": "The v1 absolute 4 GB system-memory stop floor sat inside this workstation's normal available-memory band (idle about 7 GB, dips to about 3.7 GB under external load) and false-stopped a 26 MB candidate during a real supervised loop. v3 stops for memory only when the candidate's own footprint exceeds the envelope it reserved, or when free system memory falls below a genuine near-out-of-memory floor set below that normal band.",
+  "sample_interval_seconds": 30,
+  "summary_interval_seconds": 600,
+  "capacity_unit": "GB",
+  "prelaunch": {
+    "required_estimates": [
+      "cpu_cores",
+      "gpu_count",
+      "estimated_peak_memory_gb",
+      "memory_safety_reserve_gb",
+      "estimated_output_gb",
+      "disk_safety_reserve_gb"
+    ],
+    "launch_rule": {
+      "cpu": "cpu_cores <= current_available_cpu_cores",
+      "gpu": "gpu_count <= current_available_gpu_count",
+      "memory": "estimated_peak_memory_gb + memory_safety_reserve_gb <= current_available_memory_gb",
+      "disk": "estimated_output_gb + disk_safety_reserve_gb <= current_free_disk_gb"
+    }
+  },
+  "runtime_stop": {
+    "basis": "stop only for danger the candidate itself can relieve, or a genuine near-out-of-memory system floor set below the normal fluctuation band",
+    "consecutive_low_samples": 2,
+    "candidate_memory": {
+      "declared_envelope": "estimated_peak_memory_gb + memory_safety_reserve_gb",
+      "stop_when_process_gb_exceeds_envelope_times": 1.5
+    },
+    "system_memory_critical": {
+      "stop_free_gb_floor": 1.5,
+      "stop_free_fraction_floor": 0.04
+    },
+    "disk": {
+      "stop_new_writes_free_gb_floor": 10,
+      "stop_new_writes_free_fraction_floor": 0.05
+    }
+  },
+  "process_ownership_fields": [
+    "process_id",
+    "create_time",
+    "executable_path",
+    "run_id"
+  ],
+  "foreign_process_action": "forbidden"
+}

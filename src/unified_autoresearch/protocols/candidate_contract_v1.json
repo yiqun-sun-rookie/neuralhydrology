@@ -1,0 +1,58 @@
+{
+  "schema_version": "candidate_contract_v1",
+  "method_space": "open",
+  "required_integration_categories": [
+    "deep_learning",
+    "conceptual_rainfall_runoff",
+    "fusion",
+    "custom_python"
+  ],
+  "required_commands": [
+    "train",
+    "predict"
+  ],
+  "required_declarations": [
+    "candidate_id",
+    "category",
+    "entrypoint",
+    "dependencies",
+    "allowed_reads",
+    "outputs",
+    "seed",
+    "resources",
+    "checkpoint",
+    "resume"
+  ],
+  "training_inputs": [
+    "train_features.parquet",
+    "train_targets.parquet",
+    "static_attributes.json"
+  ],
+  "prediction_inputs": [
+    "predict_features.parquet",
+    "static_attributes.json",
+    "model_artifacts"
+  ],
+  "prediction_truth_mounted": false,
+  "prediction_output": {
+    "file": "predictions.parquet",
+    "required_columns": [
+      "basin",
+      "date",
+      "qsim"
+    ]
+  },
+  "exit_status": {
+    "success": 0,
+    "checkpointed_stop": 75,
+    "contract_failure": 2,
+    "runtime_failure": 1
+  },
+  "default_deny": {
+    "files": true,
+    "network": true,
+    "child_processes": true
+  },
+  "corrections": "new candidate record must reference the superseded record"
+}
+

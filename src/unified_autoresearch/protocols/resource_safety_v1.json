@@ -1,0 +1,44 @@
+{
+  "schema_version": "resource_safety_v1",
+  "representative_pilot_required": true,
+  "independent_monitor_required": true,
+  "sample_interval_seconds": 30,
+  "summary_interval_seconds": 600,
+  "capacity_unit": "GB",
+  "utilization_unit": "percent",
+  "system_memory": {
+    "launch_free_gb_floor": 8,
+    "launch_free_fraction_floor": 0.15,
+    "launch_pilot_peak_multiplier": 1.25,
+    "launch_pilot_reserve_gb": 4,
+    "stop_free_gb_floor": 4,
+    "stop_free_fraction_floor": 0.08,
+    "consecutive_low_samples": 2
+  },
+  "graphics_memory": {
+    "launch_pilot_peak_multiplier": 1.25,
+    "launch_pilot_reserve_gb": 2,
+    "cached_low_free_memory_is_not_a_stop_reason": true
+  },
+  "disk": {
+    "launch_free_gb_floor": 20,
+    "launch_free_fraction_floor": 0.10,
+    "stop_new_writes_free_gb_floor": 10,
+    "stop_new_writes_free_fraction_floor": 0.05
+  },
+  "checkpoint": {
+    "maximum_interval_seconds": 900,
+    "also_at_every_stage": true,
+    "retained_verified_versions": 2,
+    "graceful_exit_seconds": 60
+  },
+  "maximum_retries_per_same_error": 2,
+  "process_ownership_fields": [
+    "process_id",
+    "create_time",
+    "executable_path",
+    "run_id"
+  ],
+  "foreign_process_action": "forbidden"
+}
+

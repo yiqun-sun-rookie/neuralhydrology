@@ -1,0 +1,34 @@
+{
+  "schema_version": "resource_safety_v2",
+  "decision_basis": "declared task request, task-specific reserve, and current capacity",
+  "prelaunch_required": true,
+  "required_estimates": [
+    "cpu_cores",
+    "gpu_count",
+    "estimated_peak_memory_gb",
+    "memory_safety_reserve_gb",
+    "estimated_output_gb",
+    "disk_safety_reserve_gb"
+  ],
+  "launch_rule": {
+    "cpu": "cpu_cores <= current_available_cpu_cores",
+    "gpu": "gpu_count <= current_available_gpu_count",
+    "memory": "estimated_peak_memory_gb + memory_safety_reserve_gb <= current_available_memory_gb",
+    "disk": "estimated_output_gb + disk_safety_reserve_gb <= current_free_disk_gb"
+  },
+  "response_when_not_fit": [
+    "reduce_parallelism",
+    "reduce_task_scale",
+    "re-estimate",
+    "do_not_launch"
+  ],
+  "monitoring": {
+    "decision": "per_task",
+    "required_declaration": true,
+    "required_reason": true,
+    "fixed_sample_interval": false,
+    "fixed_summary_interval": false
+  },
+  "capacity_unit": "GB",
+  "foreign_process_action": "forbidden"
+}
