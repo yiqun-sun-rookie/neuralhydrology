@@ -1,7 +1,7 @@
 # ID07 Goal: 可辨识性闸门方法论文（identifiability gate）
 
 **立项**: 2026-08-01（用户指令"全部做 + 制定 1 个计划 1 个 goal"）
-**状态**: Stage 0 完成, Stage 1 进行中
+**状态**: Stage 0 ✅ / Stage 1 ✅ (2026-08-01, 见 worktree `results/07_hydroagent/cd/identifiability_gate_stage1/`), 下一步 Stage 2
 
 ## Goal（唯一目标）
 
@@ -28,10 +28,10 @@
 ### Stage 0: 审计 + 修复 + 留痕 — ✅ 完成 (2026-08-01)
 - 双独立审计（机械真/科学作废）；PET≡0 bug 修复（同 repro_v01 的 PT 实现 + 退化保险丝）；A/B 量化 +0.41/+0.19 NSE；250 测试绿；worktree commit `54874c40`，主仓 `7a363056`。
 
-### Stage 1: 免费 Before 证据固化（零训练，读盘统计）
+### Stage 1: 免费 Before 证据固化（零训练，读盘统计）— ✅ 完成 (2026-08-01)
 - **做**: 对 screen_v02 的 11 个完成单元：①逐 (河×方向×家族) 跨种子选中结构一致性表；②候选池"近并列冠军"计数（选择分距冠军 ≤0.01 的不同结构数）。
 - **产出**: worktree `results/07_hydroagent/cd/identifiability_gate_stage1/`（表 + 汇总 + 复算说明）。
-- **成功标准**: 每个数字可从原始 report.json/candidates 复算；结论句只写数据支持的。
+- **结果**: ①两个搜索家族在 4 个 (河×方向) 组里**零组做到 3 种子同结构**（genetic 3/3/3/2、agent 3/2/2/2），不搜索的 fixed 对照臂 4/4 全一致 → 不稳定性来自搜索本身；②单池近并列中位=1 → 单次运行冠军看似唯一是假象，**闸门必须含跨种子重搜，单池并列计数不够**（此发现修正了闸门草案的权重）。
 - **注意**: 此层证据带"PET bug 时代"标签——只能说"当时的搜索不可复现"，机制级结论等 Stage 2。
 
 ### Stage 2: 干净小重跑（screen_v03-mini, 12 单元）
