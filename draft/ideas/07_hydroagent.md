@@ -1,8 +1,29 @@
 # 07 - HydroAgent: LLM-based Hydrological Model Structure Discovery
 
-**状态**: dev (Phase 2 agent loop validated — 4/4 CAMELS basins reach NSE target with DeepSeek)
+**状态**: dev → **PIVOT 到「可辨识性闸门」方法论文**（2026-07-23）。两条实验线均无正效果证据，详见下方状态更新。
 **创建日期**: 2026-01-01
-**最后更新**: 2026-03-02
+**最后更新**: 2026-07-23
+
+> ⚠ **旧状态说明**：本文件头部曾写"Phase 2 agent loop validated — 4/4 CAMELS basins reach NSE target"。该结论只在**样本内（率定期）**成立；2026-07 的公平留出检验已将其**证伪**——AI 发现的结构在密封留出期塌陷（过拟合不泛化）。旧诊断/Agent 循环代码仍有效，被证伪的只是"AI 无约束搜结构能产出有竞争力模型"这一命题。
+
+---
+
+## 状态更新 2026-07-23：效果合并判定（两条实验线均无正效果证据）
+
+**这是当前最新、覆盖上方 2026-03 旧状态的判定。**
+
+- **纯概念线**（`results/07_hydroagent/cc_discover/fair_*`，15 河公平留出，CMA-ES 5000×3，repro_v01 + Priestley-Taylor PET）：AI 结构留出中位 **0.52 / 0.671**（剔 2 河数值发散），输传统模型 **10/15**、输 LSTM **13/15** → **干净的负结果**（样本内好、留出崩＝过拟合不泛化）。已双重独立验证（主分析 + 独立上下文从原始 `_holdout_5k3.json` 重算 + 5 项对抗挑错全过）。→ 原"退一步对比论文"方向 **PIVOT**。
+
+- **混合线**（`.worktrees/hydroagent-compositional-discovery/results/07_hydroagent/cd/screen_v02/`，12/72 单元后因内存不足停止，2 河 11 完整单元 × 2 方向 × 3 种子）：经两个互不通气的独立审计——
+  - **机械层可信**：55 个家族分数从原始 USGS 观测 **bit-exact 重算（误差 1e-13）**；选择流程 **11/11 验证"入选结构 = 选择窗 argmax"，无观测泄漏**；批内 LSTM 0/11 全胜混合确实发生。
+  - **科学层作废**：存在 **PET≡0 数据 bug**——本仓 Maurer 强迫文件 **Tmax 恒等于 Tmin**（已亲手核实），Hargreaves 公式的 √(Tmax−Tmin) 因子 = 0 → **蒸发潜力输入每天每河恒为 0**，砍掉语法里所有物理 ET 通路（06452000 的 −21~−36 灾难分即由此判死，非模型差）；叠加 **LSTM 基线三重不对称**（预算集中：1600 步全给单模型 vs 混合摊 16 候选×100 步 / 训练配方精调 NSE-loss+LR 调度+梯度裁剪 vs 混合固定 lr0.01+MSE / 无质量守恒约束）→ **架构级结论无效**（"测不出"，不是"测出没效果"）。
+  - **处置**：剩余 60 单元**不按原样跑**（等于在污染协议上烧算力）；任何重启前置＝修 `compositional_discovery/data.py` 的 PET（改用 Priestley-Taylor 或带 Ra 的 Hargreaves，参考本仓 PET-bug 前科）+ 修基线对称性 + 把 `compositional_discovery/` 包纳入 git（当前未跟踪，无法排除代码漂移）。
+
+- **战略转向**：负结果不是死路，正是 **「可辨识性闸门」方法论文**的核心论据——无约束地让 AI 搜水文模型结构，要么过拟合不泛化（纯概念线），要么结构跨种子不复现（混合线：agent/genetic 跨 3 种子基本 3 结构，agent 约半数单元收敛回 fixed 基线结构）。让"效果"转正只有两条路：修混合线 bug 重跑（赌 <20% 翻盘）或给搜索加约束（闸门，主线方向）。
+
+- **证据与细节**：memory `hydroagent_fair_comparison_pivot_20260722` / `hydroagent_screen_v02_audit_20260722`；批量中断原因＝可用内存 395MB 跌破保留线 609MB 触发优雅停止（有 `resources.jsonl` 日志实锤）。
+
+---
 
 ---
 
