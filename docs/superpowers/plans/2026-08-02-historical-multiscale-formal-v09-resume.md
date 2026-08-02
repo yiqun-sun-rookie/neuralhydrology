@@ -236,4 +236,3 @@ Stop the entire stage and preserve evidence if any immutable hash drifts; the wo
 - Resource consistency: no fixed 12.68 GiB gate remains; all high-load work uses the protocol-bound analytical estimate plus current live snapshots and reserves.
 - Type and identifier consistency: model variants, experiment identifiers, seeds, epochs, run counts, and artifact names match the current protocol and existing prediction-sealing plan.
 - Placeholder scan: the plan contains no deferred scientific choices; every selection rule and stopping boundary is frozen before formal execution.
-
