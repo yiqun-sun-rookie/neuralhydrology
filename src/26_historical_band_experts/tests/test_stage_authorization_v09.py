@@ -179,3 +179,20 @@ def test_consumption_is_exclusive_and_cannot_be_replayed(tmp_path):
             consumed_utc="2026-08-02T03:00:00Z",
             memory_snapshot={"available_bytes": 10},
         )
+
+
+def test_stage_authorization_paths_reject_reparse_directory_before_resolve(tmp_path, monkeypatch):
+    import artifact_v09
+    from stage_authorization_v09 import stage_authorization_paths_v09
+
+    authorization_directory = (
+        tmp_path / "results/26_historical_band_experts/formal_v09/authorizations")
+    authorization_directory.mkdir(parents=True)
+    original = artifact_v09.is_reparse_point
+    monkeypatch.setattr(
+        artifact_v09,
+        "is_reparse_point",
+        lambda path: Path(path) == authorization_directory or original(path),
+    )
+    with pytest.raises(ValueError, match="reparse point"):
+        stage_authorization_paths_v09("R09-NEST-S100", worktree_root=tmp_path)

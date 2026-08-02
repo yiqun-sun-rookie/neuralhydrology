@@ -4,6 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import hashlib
 import json
+import os
 from pathlib import Path
 from typing import Mapping
 
@@ -12,6 +13,7 @@ import torch
 
 from artifact_v09 import (
     array_payload_sha256,
+    assert_no_reparse_components,
     assert_no_reparse_tree,
     canonical_sha256,
     sha256_file,
@@ -169,12 +171,19 @@ def load_sealed_training_inputs_v09(
     input_root: str | Path,
     protocol_path: str | Path,
     *,
+    worktree_root: str | Path,
     external_audit_path: str | Path | None = None,
     trusted_source_audit_path: str | Path | None = None,
 ) -> FormalTrainingInputsV09:
     """Open only the sealed normalized arrays needed by formal training."""
-    input_root = Path(input_root).resolve()
-    protocol_path = Path(protocol_path).resolve()
+    trusted_root = Path(os.path.abspath(worktree_root))
+    raw_input_root = Path(os.path.abspath(input_root))
+    raw_protocol_path = Path(os.path.abspath(protocol_path))
+    assert_no_reparse_components(trusted_root, trusted_root)
+    assert_no_reparse_components(trusted_root, raw_input_root)
+    assert_no_reparse_components(trusted_root, raw_protocol_path)
+    input_root = raw_input_root.resolve()
+    protocol_path = raw_protocol_path.resolve()
     formal_root = input_root.parent
     if external_audit_path is None:
         external_audit_path = formal_root / f"{input_root.name}.external_audit.json"
@@ -182,6 +191,8 @@ def load_sealed_training_inputs_v09(
         trusted_source_audit_path = formal_root / f"{input_root.name}.trusted_source_external_audit.json"
     external_audit_path = Path(external_audit_path)
     trusted_source_audit_path = Path(trusted_source_audit_path)
+    assert_no_reparse_components(trusted_root, external_audit_path)
+    assert_no_reparse_components(trusted_root, trusted_source_audit_path)
     external = _load_passed_report(external_audit_path, "complete_input_audit_passed")
     trusted = _load_passed_report(trusted_source_audit_path, "complete_trusted_training_target_audit")
     protocol = json.loads(protocol_path.read_text(encoding="utf-8"))

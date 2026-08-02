@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 import sys
 
 import numpy as np
@@ -86,6 +87,35 @@ def test_external_strict_audit_rejects_nested_file_named_seal(tmp_path):
             inputs=_inputs(),
             device="cpu",
             report_path=tmp_path / "nested-seal.external.json",
+            model_builder=_tiny_builder,
+        )
+
+
+def test_external_strict_audit_rejects_registered_nested_seal(tmp_path):
+    from artifact_v09 import canonical_sha256, sha256_file
+    from audit_strict_formal_v09 import audit_strict_run_v09
+
+    run = _make_run(tmp_path)
+    nested = run / "unexpected"
+    nested.mkdir()
+    nested_seal = nested / "seal.json"
+    nested_seal.write_text("{}", encoding="utf-8")
+    root_seal = run / "seal.json"
+    seal = json.loads(root_seal.read_text(encoding="utf-8"))
+    seal["sealed_files"].append({
+        "relative_path": "unexpected/seal.json",
+        "size_bytes": nested_seal.stat().st_size,
+        "sha256": sha256_file(nested_seal),
+    })
+    seal["sealed_files_sha256"] = canonical_sha256(seal["sealed_files"])
+    root_seal.write_text(json.dumps(seal), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="cannot seal"):
+        audit_strict_run_v09(
+            run,
+            inputs=_inputs(),
+            device="cpu",
+            report_path=tmp_path / "registered-nested-seal.external.json",
             model_builder=_tiny_builder,
         )
 

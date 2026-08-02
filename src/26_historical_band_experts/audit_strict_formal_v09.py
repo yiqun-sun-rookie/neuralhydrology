@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Callable
 
@@ -39,6 +40,10 @@ def _verify_sealed_files(run_dir: Path, seal: dict) -> None:
     if (seal.get("status") != "sealed" or not isinstance(sealed_files, list) or
             seal.get("sealed_files_sha256") != canonical_sha256(sealed_files)):
         raise ValueError("strict run seal drift")
+    if any(
+            isinstance(item, dict) and Path(str(item.get("relative_path", ""))).name == "seal.json"
+            for item in sealed_files):
+        raise ValueError("strict run cannot seal a nested or replacement seal.json")
     expected = {item.get("relative_path") for item in sealed_files}
     actual = {
         path.relative_to(run_dir).as_posix()
@@ -167,7 +172,9 @@ def audit_strict_run_v09(
     model_builder: Callable[[str, int], nn.Module] = build_model_v09,
 ) -> dict:
     """Reload the final checkpoint and replay every training-key prediction."""
-    run_dir = Path(run_dir).resolve()
+    raw_run_dir = Path(os.path.abspath(run_dir))
+    assert_no_reparse_tree(raw_run_dir)
+    run_dir = raw_run_dir.resolve()
     report_path = Path(report_path).resolve()
     if report_path == run_dir or run_dir in report_path.parents:
         raise ValueError("strict external audit report must be outside the sealed run")

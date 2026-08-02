@@ -201,7 +201,7 @@ def test_formal_loader_opens_only_normalized_read_only_model_arrays(tmp_path, mo
     monkeypatch.setattr(module, "array_payload_sha256", lambda values: module.STATIC_NORMALIZED_FLOAT32_SHA256)
     monkeypatch.setattr(module, "_validate_training_arrays_v09", lambda *args, **kwargs: None)
 
-    loaded = module.load_sealed_training_inputs_v09(input_root, protocol)
+    loaded = module.load_sealed_training_inputs_v09(input_root, protocol, worktree_root=tmp_path)
 
     assert opened == [
         "dates.npy",
@@ -221,7 +221,7 @@ def test_formal_loader_opens_only_normalized_read_only_model_arrays(tmp_path, mo
     (input_root / "answers_obs_eval.parquet").write_bytes(b"forbidden extra file")
     opened.clear()
     with pytest.raises(module.FormalTrainingDataError, match="directory file inventory"):
-        module.load_sealed_training_inputs_v09(input_root, protocol)
+        module.load_sealed_training_inputs_v09(input_root, protocol, worktree_root=tmp_path)
     assert opened == []
 
 
@@ -239,7 +239,30 @@ def test_formal_loader_fails_before_arrays_when_external_audit_is_missing(tmp_pa
     )
 
     with pytest.raises(module.FormalTrainingDataError, match="external audit is missing"):
-        module.load_sealed_training_inputs_v09(input_root, protocol)
+        module.load_sealed_training_inputs_v09(input_root, protocol, worktree_root=tmp_path)
+
+
+def test_formal_loader_rejects_input_root_reparse_before_reading(tmp_path, monkeypatch):
+    import artifact_v09
+    import formal_training_data_v09 as module
+
+    input_root = tmp_path / "input_attempt_01"
+    input_root.mkdir()
+    protocol = tmp_path / "protocol.json"
+    protocol.write_text('{"formal_evaluation_target_access":false}', encoding="utf-8")
+    original = artifact_v09.is_reparse_point
+    monkeypatch.setattr(
+        artifact_v09,
+        "is_reparse_point",
+        lambda path: Path(path) == input_root or original(path),
+    )
+    monkeypatch.setattr(
+        module.np,
+        "load",
+        lambda *args, **kwargs: pytest.fail("array opened through a reparse root"),
+    )
+    with pytest.raises(ValueError, match="reparse point"):
+        module.load_sealed_training_inputs_v09(input_root, protocol, worktree_root=tmp_path)
 
 
 @pytest.mark.parametrize(

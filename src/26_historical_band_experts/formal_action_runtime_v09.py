@@ -10,6 +10,7 @@ import socket
 from typing import Any
 from types import MappingProxyType
 
+from artifact_v09 import assert_no_reparse_components, canonical_sha256
 from formal_action_resources_v09 import (
     AcceleratorMemorySnapshot,
     assert_accelerator_runtime_safe_v09,
@@ -210,6 +211,43 @@ def _assert_stage_callback_v09(scope: str, callback: Callable) -> None:
         raise ValueError("strict nesting receipt requires the fixed formal training executor")
 
 
+def _validate_stage_callback_kwargs_v09(
+    config: Mapping,
+    receipt: Mapping,
+    *,
+    scope: str,
+    worktree_root: str | Path,
+    run_claim: Mapping,
+    callback_kwargs: Mapping | None,
+) -> dict:
+    if scope != "R09-NEST-S100":
+        raise ValueError(f"no callback contract is registered for stage scope {scope}")
+    expected_keys = {"inputs", "protocol", "output_dir", "device"}
+    if not isinstance(callback_kwargs, Mapping) or set(callback_kwargs) != expected_keys:
+        raise ValueError("strict nesting callback argument schema drift")
+    from formal_training_data_v09 import FormalTrainingInputsV09
+    values = dict(callback_kwargs)
+    if values["protocol"] is not config or canonical_sha256(config) != receipt.get("protocol_sha256"):
+        raise ValueError("strict nesting callback protocol binding drift")
+    inputs = values["inputs"]
+    root = Path(os.path.abspath(worktree_root))
+    expected_input_root = root / "results/26_historical_band_experts/formal_v09/input_attempt_01"
+    if not isinstance(inputs, FormalTrainingInputsV09) or inputs.root is None:
+        raise ValueError("strict nesting callback requires sealed formal inputs")
+    assert_no_reparse_components(root, expected_input_root)
+    if Path(os.path.abspath(inputs.root)) != expected_input_root:
+        raise ValueError("strict nesting callback input root drift")
+    if inputs.input_seal_sha256 != receipt["prerequisite_sha256"]["input_seal"]:
+        raise ValueError("strict nesting callback input seal drift")
+    output_dir = Path(os.path.abspath(values["output_dir"]))
+    assert_no_reparse_components(root, output_dir)
+    if str(output_dir.resolve()) != run_claim["output_root"]:
+        raise ValueError("strict nesting callback output directory drift")
+    if values["device"] != "cuda:0":
+        raise ValueError("strict nesting callback device drift")
+    return values
+
+
 def _audit_formal_action_resources_v09(
     config: Mapping,
     *,
@@ -320,6 +358,14 @@ def _run_authorized_formal_action_v09(
             run_claim=run_claim,
         )
         _assert_stage_callback_v09(authorization_scope, callback)
+        callback_kwargs = _validate_stage_callback_kwargs_v09(
+            config,
+            stage_authorization,
+            scope=authorization_scope,
+            worktree_root=stage_worktree_root,
+            run_claim=run_claim,
+            callback_kwargs=callback_kwargs,
+        )
     elif callback_kwargs is not None:
         raise ValueError("generic formal callback does not accept stage callback arguments")
     estimate = build_formal_action_peak_estimate_v09(config, action, variant=variant)
@@ -375,7 +421,7 @@ def _run_authorized_formal_action_v09(
         if stage_authorization is None:
             result = callback(runtime)
         else:
-            result = callback(runtime=runtime, **dict(callback_kwargs or {}))
+            result = callback(runtime=runtime, **callback_kwargs)
     return {
         "status": "formal_action_completed",
         "action": action,

@@ -4,9 +4,10 @@ from __future__ import annotations
 from collections.abc import Mapping
 import hashlib
 import json
+import os
 from pathlib import Path
 
-from artifact_v09 import canonical_sha256, sha256_file
+from artifact_v09 import assert_no_reparse_components, canonical_sha256, sha256_file
 
 STRICT_NESTING_APPROVAL_TEXT = ("批准版本09严格嵌套训练阶段；仅授权R09-NEST种子100的一次531流域30轮训练，"
                                 "不批准主实验训练、正式预测或评分。")
@@ -91,15 +92,22 @@ def _validated_prerequisites(scope: str, values: Mapping) -> dict[str, str]:
     return {key: _require_sha256(values[key], f"prerequisite {key}") for key in expected}
 
 
+def _trusted_worktree_root(worktree_root: str | Path) -> Path:
+    root = Path(os.path.abspath(worktree_root))
+    assert_no_reparse_components(root, root)
+    return root
+
+
 def _resolved_output_root(worktree_root: str | Path, output_root: str | Path) -> str:
-    worktree = Path(worktree_root).resolve()
+    worktree = _trusted_worktree_root(worktree_root)
     output = Path(output_root)
     if not output.is_absolute():
         output = worktree / output
-    output = output.resolve()
+    output = Path(os.path.abspath(output))
+    assert_no_reparse_components(worktree, output)
     if output == worktree or worktree not in output.parents:
         raise ValueError("stage authorization output root must be inside the bound worktree")
-    return str(output)
+    return str(output.resolve())
 
 
 def create_stage_authorization_v09(
@@ -124,7 +132,7 @@ def create_stage_authorization_v09(
         raise ValueError("stage authorization requires a full Git commit")
     if not isinstance(output_root, str) or not output_root:
         raise ValueError("stage authorization output root is required")
-    resolved_worktree = str(Path(worktree_root).resolve())
+    resolved_worktree = str(_trusted_worktree_root(worktree_root).resolve())
     resolved_output = _resolved_output_root(worktree_root, output_root)
     if not isinstance(created_utc, str) or not created_utc:
         raise ValueError("stage authorization creation time is required")
@@ -161,13 +169,14 @@ def stage_authorization_paths_v09(
     """Return the only legal authorization and consumption paths for one scope."""
     if scope not in _SCOPE_SPECS:
         raise ValueError(f"unsupported formal stage scope: {scope}")
-    root = Path(worktree_root).resolve()
+    root = _trusted_worktree_root(worktree_root)
     receipt_id = _SCOPE_SPECS[scope]["receipt_id"]
     directory = root / _AUTHORIZATION_DIRECTORY
-    return (
-        directory / f"{receipt_id}.authorization.json",
-        directory / f"{receipt_id}.consumption.json",
-    )
+    authorization = directory / f"{receipt_id}.authorization.json"
+    consumption = directory / f"{receipt_id}.consumption.json"
+    assert_no_reparse_components(root, authorization)
+    assert_no_reparse_components(root, consumption)
+    return authorization, consumption
 
 
 def validate_stage_authorization_v09(
@@ -222,7 +231,7 @@ def validate_stage_authorization_v09(
         "protocol_sha256": _require_sha256(protocol_sha256, "protocol SHA-256"),
         "prerequisite_sha256": prerequisites,
         "executable_tree_sha256": _require_sha256(executable_tree_sha256, "executable tree SHA-256"),
-        "worktree_root": str(Path(worktree_root).resolve()),
+        "worktree_root": str(_trusted_worktree_root(worktree_root).resolve()),
         "output_root": _resolved_output_root(worktree_root, output_root),
         "approval": {
             "text": approval_text,
@@ -254,14 +263,17 @@ def consume_stage_authorization_v09(
     memory_snapshot: Mapping,
 ) -> dict:
     """Exclusively consume a validated receipt immediately before execution."""
-    authorization_path = Path(authorization_path).resolve()
+    root = _trusted_worktree_root(worktree_root)
+    authorization_path = Path(os.path.abspath(authorization_path))
     expected_authorization, consumption_path = stage_authorization_paths_v09(
         receipt.get("scope"),
         worktree_root=worktree_root,
     )
-    if authorization_path != expected_authorization.resolve():
+    assert_no_reparse_components(root, authorization_path)
+    assert_no_reparse_components(root, consumption_path)
+    if authorization_path != expected_authorization:
         raise ValueError("stage authorization file is outside its canonical path")
-    if receipt.get("worktree_root") != str(Path(worktree_root).resolve()):
+    if receipt.get("worktree_root") != str(root.resolve()):
         raise ValueError("stage authorization worktree binding drift")
     recorded = json.loads(authorization_path.read_text(encoding="utf-8"))
     if recorded != dict(receipt):

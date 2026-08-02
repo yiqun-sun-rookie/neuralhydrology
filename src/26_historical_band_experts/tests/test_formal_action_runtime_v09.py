@@ -1,5 +1,6 @@
 import inspect
 import json
+from dataclasses import replace
 from pathlib import Path
 import sys
 
@@ -274,6 +275,7 @@ def test_entry_rechecks_full_accelerator_peak_before_callback(tmp_path, monkeypa
 
 
 def test_training_stage_receipt_is_consumed_after_resource_checks_and_before_callback(tmp_path, monkeypatch):
+    from artifact_v09 import canonical_sha256
     from formal_action_runtime_v09 import _run_authorized_formal_action_v09
     from stage_authorization_v09 import (
         STRICT_NESTING_APPROVAL_TEXT,
@@ -289,10 +291,12 @@ def test_training_stage_receipt_is_consumed_after_resource_checks_and_before_cal
         "training_resource_preflight_external_audit": "5" * 64,
     }
     output_root = "results/26_historical_band_experts/formal_v09/strict_nesting/seed_100"
+    config = _config()
+    protocol_sha256 = canonical_sha256(config)
     receipt = create_stage_authorization_v09(
         approval_text=STRICT_NESTING_APPROVAL_TEXT,
         scope="R09-NEST-S100",
-        protocol_sha256="a" * 64,
+        protocol_sha256=protocol_sha256,
         prerequisite_sha256=prerequisites,
         executable_tree_sha256="b" * 64,
         git_commit="c" * 40,
@@ -305,15 +309,25 @@ def test_training_stage_receipt_is_consumed_after_resource_checks_and_before_cal
     authorization_path.write_text(json.dumps(receipt), encoding="utf-8")
     callback_observations = []
 
-    def callback(*, runtime):
+    def callback(*, runtime, inputs, protocol, output_dir, device):
+        assert inputs.root == tmp_path / "results/26_historical_band_experts/formal_v09/input_attempt_01"
+        assert protocol is config
+        assert Path(output_dir).resolve() == Path(receipt["output_root"])
+        assert device == "cuda:0"
         callback_observations.append(consumption_path.is_file())
         return runtime.checkpoint()
 
     import train_strict_formal_v09
     monkeypatch.setattr(train_strict_formal_v09, "run_strict_training_v09", callback)
 
+    from test_train_strict_formal_v09 import _inputs
+    inputs = replace(
+        _inputs(),
+        root=tmp_path / "results/26_historical_band_experts/formal_v09/input_attempt_01",
+        input_seal_sha256="1" * 64,
+    )
     result = _run_authorized_formal_action_v09(
-        _config(),
+        config,
         action="training",
         variant="strict_nesting_pair",
         callback=callback,
@@ -323,7 +337,7 @@ def test_training_stage_receipt_is_consumed_after_resource_checks_and_before_cal
         authorization_scope="R09-NEST-S100",
         stage_worktree_root=tmp_path,
         stage_bindings={
-            "protocol_sha256": "a" * 64,
+            "protocol_sha256": protocol_sha256,
             "prerequisite_sha256": prerequisites,
             "executable_tree_sha256": "b" * 64,
             "worktree_root": str(tmp_path.resolve()),
@@ -334,6 +348,12 @@ def test_training_stage_receipt_is_consumed_after_resource_checks_and_before_cal
             "seed": 100,
             "variant": "strict_nesting_pair",
             "output_root": receipt["output_root"],
+        },
+        callback_kwargs={
+            "inputs": inputs,
+            "protocol": config,
+            "output_dir": receipt["output_root"],
+            "device": "cuda:0",
         },
     )
 
@@ -404,3 +424,41 @@ def test_strict_stage_rejects_wrong_workload_before_consuming_receipt(tmp_path, 
             },
         )
     assert not consumption_path.exists()
+
+
+def test_strict_stage_callback_arguments_fail_before_consumption(tmp_path):
+    from artifact_v09 import canonical_sha256
+    from formal_action_runtime_v09 import _validate_stage_callback_kwargs_v09
+    from test_train_strict_formal_v09 import _inputs
+
+    config = _config()
+    input_root = tmp_path / "results/26_historical_band_experts/formal_v09/input_attempt_01"
+    inputs = replace(_inputs(), root=input_root, input_seal_sha256="1" * 64)
+    output_root = str((tmp_path / "results/strict").resolve())
+    receipt = {
+        "protocol_sha256": canonical_sha256(config),
+        "prerequisite_sha256": {
+            "input_seal": "1" * 64
+        },
+    }
+    claim = {
+        "run_id": "R09-NEST-S100",
+        "seed": 100,
+        "variant": "strict_nesting_pair",
+        "output_root": output_root,
+    }
+    arguments = {
+        "inputs": inputs,
+        "protocol": config,
+        "output_dir": tmp_path / "wrong-output",
+        "device": "cuda:0",
+    }
+    with pytest.raises(ValueError, match="output directory drift"):
+        _validate_stage_callback_kwargs_v09(
+            config,
+            receipt,
+            scope="R09-NEST-S100",
+            worktree_root=tmp_path,
+            run_claim=claim,
+            callback_kwargs=arguments,
+        )
