@@ -38,6 +38,7 @@ _FORMAL_ACTIONS = {
     "training",
     "formal_prediction_generation",
 }
+_FORMAL_ACCELERATOR_DEVICE_INDEX = 0
 
 
 def _require_action(action: str) -> None:
@@ -54,7 +55,10 @@ def _initial_accelerator_snapshot(
         if supplied is not None:
             raise ValueError("target-bundle generation does not accept an accelerator snapshot")
         return None
-    return supplied if supplied is not None else sampler()
+    snapshot = supplied if supplied is not None else sampler()
+    if type(snapshot.device_index) is not int or snapshot.device_index != _FORMAL_ACCELERATOR_DEVICE_INDEX:
+        raise MemorySafetyError("formal model actions require a CUDA device-0 resource snapshot")
+    return snapshot
 
 
 def _assert_same_accelerator_v09(
@@ -260,7 +264,34 @@ def _audit_formal_action_resources_v09(
     lock_path: str | Path | None = None,
 ) -> dict:
     """Injectable implementation used only by isolated synthetic tests."""
+    with exclusive_high_load_lease_v09(lock_path=lock_path) as lease:
+        return _audit_formal_action_resources_under_lease_v09(
+            config,
+            action=action,
+            variant=variant,
+            lease=lease,
+            host_snapshot=host_snapshot,
+            accelerator_snapshot=accelerator_snapshot,
+            host_sampler=host_sampler,
+            accelerator_sampler=accelerator_sampler,
+        )
+
+
+def _audit_formal_action_resources_under_lease_v09(
+    config: Mapping,
+    *,
+    action: str,
+    lease: TaskMemoryLease,
+    variant: str | None = None,
+    host_snapshot: HostMemorySnapshot | None = None,
+    accelerator_snapshot: AcceleratorMemorySnapshot | None = None,
+    host_sampler: Callable[[], HostMemorySnapshot] = sample_host_memory,
+    accelerator_sampler: Callable[[], AcceleratorMemorySnapshot] = sample_cuda_memory_v09,
+) -> dict:
+    """Audit resources while the caller keeps the one global high-load lease."""
     _require_action(action)
+    if not isinstance(lease, TaskMemoryLease) or not lease.is_valid():
+        raise MemorySafetyError("resource preflight requires the live serial lease")
     estimate = build_formal_action_peak_estimate_v09(config, action, variant=variant)
     validate_formal_action_peak_estimate_v09(
         config,
@@ -268,33 +299,48 @@ def _audit_formal_action_resources_v09(
         estimate,
         variant=variant,
     )
-    with exclusive_high_load_lease_v09(lock_path=lock_path) as lease:
-        initial_host = host_snapshot if host_snapshot is not None else host_sampler()
-        initial_accelerator = _initial_accelerator_snapshot(
-            action,
-            accelerator_snapshot,
-            accelerator_sampler,
-        )
-        host_gate = MemorySafetyGate.from_snapshot(initial_host, config["memory_safety"])
-        host_report = host_gate.assert_start_safe(
-            initial_host,
-            estimate,
-            long_running=True,
-            lease=lease,
-        )
-        accelerator_report = assert_accelerator_safe_v09(
-            config,
-            action,
-            estimate,
-            initial_accelerator,
-            variant=variant,
-        )
+    initial_host = host_snapshot if host_snapshot is not None else host_sampler()
+    initial_accelerator = _initial_accelerator_snapshot(
+        action,
+        accelerator_snapshot,
+        accelerator_sampler,
+    )
+    host_gate = MemorySafetyGate.from_snapshot(initial_host, config["memory_safety"])
+    host_report = host_gate.assert_start_safe(
+        initial_host,
+        estimate,
+        long_running=True,
+        lease=lease,
+    )
+    accelerator_report = assert_accelerator_safe_v09(
+        config,
+        action,
+        estimate,
+        initial_accelerator,
+        variant=variant,
+    )
     return {
         "status": "resource_preflight_passed",
         "action": action,
         "variant": variant,
         "authorization_checked": False,
         "estimate": estimate,
+        "host_snapshot": {
+            "total_bytes": initial_host.total_bytes,
+            "available_bytes": initial_host.available_bytes,
+            "process_rss_bytes": initial_host.process_rss_bytes,
+            "commit_headroom_bytes": initial_host.commit_headroom_bytes,
+        },
+        "accelerator_snapshot": (
+            {
+                "device_index": initial_accelerator.device_index,
+                "device_name": initial_accelerator.device_name,
+                "total_bytes": initial_accelerator.total_bytes,
+                "available_bytes": initial_accelerator.available_bytes,
+            }
+            if initial_accelerator is not None
+            else None
+        ),
         "host": host_report,
         "accelerator": accelerator_report,
     }

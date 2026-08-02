@@ -58,6 +58,134 @@ def test_normalization_rejects_layout_dtype_and_invalid_scale():
         )
 
 
+def test_bridge_loader_never_opens_or_hashes_training_target_values(tmp_path, monkeypatch):
+    import formal_training_data_v09 as module
+    from artifact_v09 import sha256_file
+
+    input_root = tmp_path / "formal/input_attempt_01"
+    input_root.mkdir(parents=True)
+    protocol_path = tmp_path / "protocol.json"
+    protocol_path.write_text(json.dumps({"formal_evaluation_target_access": False}), encoding="utf-8")
+    seal_path = input_root / "seal.json"
+    seal_path.write_text(json.dumps({"status": "sealed"}), encoding="utf-8")
+    external_path = input_root.parent / "input_attempt_01.external_audit.json"
+    external_path.write_text(
+        json.dumps({
+            "status": "complete_input_audit_passed",
+            "audit_context": {
+                "input_seal_sha256": sha256_file(seal_path)
+            },
+        }),
+        encoding="utf-8",
+    )
+    trusted_path = input_root.parent / "input_attempt_01.trusted_source_external_audit.json"
+    trusted_path.write_text(
+        json.dumps({
+            "status": "complete_trusted_training_target_audit",
+            "complete_input_external_audit_sha256": sha256_file(external_path),
+        }),
+        encoding="utf-8",
+    )
+    (input_root / "basins.txt").write_text(
+        "\n".join(f"{index + 1:08d}" for index in range(531)) + "\n",
+        encoding="utf-8",
+    )
+    (input_root / "scaler.json").write_text("{}", encoding="utf-8")
+
+    dates = np.arange("1980-01-01", "2008-10-31", dtype="datetime64[D]")[:10_501]
+    target_dates = dates[-3_288:].copy()
+    forcing = np.broadcast_to(np.zeros((), dtype=np.float32), (531, 10_501, 5))
+    statics = np.zeros((531, 27), dtype=np.float32)
+    for values in (dates, target_dates, statics):
+        values.setflags(write=False)
+    arrays = {
+        "dates.npy": dates,
+        "target_dates.npy": target_dates,
+        "forcing.npy": forcing,
+        "statics.npy": statics,
+    }
+    consumed = {}
+
+    def verify(input_path, seal, *, consumed_names):
+        consumed["names"] = consumed_names
+        assert "targets.npy" not in consumed_names
+
+    def load(path, **kwargs):
+        name = Path(path).name
+        if name == "targets.npy":
+            pytest.fail("bridge loader must never open training targets")
+        return arrays[name]
+
+    monkeypatch.setattr(module, "_verify_consumed_input_files_v09", verify)
+    monkeypatch.setattr(module.np, "load", load)
+    monkeypatch.setattr(module, "array_payload_sha256", lambda values: module.STATIC_NORMALIZED_FLOAT32_SHA256)
+
+    result = module.load_sealed_bridge_inputs_v09(
+        input_root,
+        protocol_path,
+        worktree_root=tmp_path,
+        external_audit_path=external_path,
+        trusted_source_audit_path=trusted_path,
+    )
+
+    assert "targets.npy" not in consumed["names"]
+    assert not hasattr(result, "targets")
+    assert result.forcing.shape == (531, 10_501, 5)
+
+
+def test_bridge_final_recheck_rejects_predictor_replacement_without_hashing_targets(tmp_path, monkeypatch):
+    import formal_training_data_v09 as module
+    from artifact_v09 import canonical_sha256, sha256_file
+
+    input_root = tmp_path / "formal/input_attempt_01"
+    input_root.mkdir(parents=True)
+    names = module._BRIDGE_CONSUMED_NAMES + ("targets.npy",)
+    for name in names:
+        (input_root / name).write_bytes(f"original-{name}".encode("utf-8"))
+    descriptors = [{
+        "relative_path": name,
+        "size_bytes": (input_root / name).stat().st_size,
+        "sha256": sha256_file(input_root / name),
+    } for name in names]
+    seal = {
+        "status": "sealed",
+        "sealed_files": descriptors,
+        "sealed_files_sha256": canonical_sha256(descriptors),
+    }
+    seal_path = input_root / "seal.json"
+    seal_path.write_text(json.dumps(seal), encoding="utf-8")
+    external_path = input_root.parent / "input_attempt_01.external_audit.json"
+    trusted_path = input_root.parent / "input_attempt_01.trusted_source_external_audit.json"
+    external_path.write_text("{}", encoding="utf-8")
+    trusted_path.write_text("{}", encoding="utf-8")
+    inputs = module.FormalBridgeInputsV09(
+        root=input_root,
+        basins=("00000001",),
+        dates=np.asarray([np.datetime64("2000-01-01", "D")]),
+        target_dates=np.asarray([np.datetime64("2000-01-01", "D")]),
+        forcing=np.zeros((1, 1, 5), dtype=np.float32),
+        statics=np.zeros((1, 27), dtype=np.float32),
+        scaler={},
+        input_seal_sha256=sha256_file(seal_path),
+        external_audit_sha256=sha256_file(external_path),
+        trusted_source_audit_sha256=sha256_file(trusted_path),
+    )
+    (input_root / "forcing.npy").write_bytes(b"replacement-forcing")
+    seen = []
+    original_sha256_file = module.sha256_file
+
+    def recorded_sha256(path):
+        seen.append(Path(path).name)
+        return original_sha256_file(path)
+
+    monkeypatch.setattr(module, "sha256_file", recorded_sha256)
+
+    with pytest.raises(module.FormalTrainingDataError, match="forcing.npy"):
+        module.verify_sealed_bridge_inputs_unchanged_v09(inputs)
+
+    assert "targets.npy" not in seen
+
+
 def test_target_normalization_and_masked_nse_loss_match_frozen_formula():
     from formal_training_data_v09 import (
         masked_nse_training_loss_v09,

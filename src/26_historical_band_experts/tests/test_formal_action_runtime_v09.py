@@ -57,9 +57,32 @@ def test_resource_preflight_is_read_only_and_covers_host_accelerator_and_lock(
 
     assert report["status"] == "resource_preflight_passed"
     assert report["authorization_checked"] is False
+    assert report["host_snapshot"] == {
+        "total_bytes": 32 * GIB,
+        "available_bytes": 16 * GIB,
+        "process_rss_bytes": 256 * MIB,
+        "commit_headroom_bytes": 30 * GIB,
+    }
     assert report["host"]["safe"] is True
     assert report["host"]["serial_lease"]["held"] is True
     assert report["accelerator"]["required"] is accelerator_required
+    assert (report["accelerator_snapshot"] is not None) is accelerator_required
+
+
+def test_resource_preflight_rejects_nonzero_accelerator_before_audit(tmp_path):
+    from formal_action_resources_v09 import AcceleratorMemorySnapshot
+    from formal_action_runtime_v09 import _audit_formal_action_resources_v09
+    from memory_safety_v09 import MemorySafetyError
+
+    with pytest.raises(MemorySafetyError, match="device-0"):
+        _audit_formal_action_resources_v09(
+            _config(),
+            action="training",
+            variant="classic_lstm_256_clean",
+            host_snapshot=_host_snapshot(),
+            accelerator_snapshot=AcceleratorMemorySnapshot(1, "synthetic-cuda-1", 16 * GIB, 12 * GIB),
+            lock_path=tmp_path / "formal-v09.lock",
+        )
 
 
 def test_authorized_runner_refuses_before_callback_while_authorization_is_closed(tmp_path):

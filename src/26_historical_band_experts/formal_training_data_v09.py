@@ -33,6 +33,14 @@ _RECENT_VARIANTS = {
     "nested_history_disabled",
 }
 _HISTORY_VARIANT = "continuous_multiscale_history"
+_BRIDGE_CONSUMED_NAMES = (
+    "basins.txt",
+    "dates.npy",
+    "target_dates.npy",
+    "forcing.npy",
+    "statics.npy",
+    "scaler.json",
+)
 
 
 class FormalTrainingDataError(RuntimeError):
@@ -88,6 +96,22 @@ class FormalTrainingInputsV09:
 
 
 @dataclass(frozen=True)
+class FormalBridgeInputsV09:
+    """Sealed predictor-only inputs for checkpoint bridging; targets are absent by construction."""
+
+    root: Path
+    basins: tuple[str, ...]
+    dates: np.ndarray
+    target_dates: np.ndarray
+    forcing: np.ndarray
+    statics: np.ndarray
+    scaler: Mapping
+    input_seal_sha256: str
+    external_audit_sha256: str
+    trusted_source_audit_sha256: str
+
+
+@dataclass(frozen=True)
 class TrainingBatchV09:
     dynamic: dict[str, torch.Tensor]
     statics: torch.Tensor
@@ -139,8 +163,13 @@ def _load_passed_report(path: Path, expected_status: str) -> dict:
     return report
 
 
-def _verify_consumed_input_files_v09(input_root: Path, seal: Mapping) -> None:
-    """Rehash every file that can affect training before opening any array."""
+def _verify_consumed_input_files_v09(
+    input_root: Path,
+    seal: Mapping,
+    *,
+    consumed_names: tuple[str, ...] | None = None,
+) -> None:
+    """Rehash every file consumed by one operation before opening its arrays."""
     sealed_files = seal.get("sealed_files")
     if not isinstance(sealed_files, list):
         raise FormalTrainingDataError("complete input sealed-file inventory drift")
@@ -149,15 +178,16 @@ def _verify_consumed_input_files_v09(input_root: Path, seal: Mapping) -> None:
         raise FormalTrainingDataError("complete input sealed-file inventory drift")
     assert_no_reparse_tree(input_root)
     descriptor_by_name = {item.get("relative_path"): item for item in sealed_files if isinstance(item, Mapping)}
-    consumed_names = (
-        "basins.txt",
-        "dates.npy",
-        "target_dates.npy",
-        "forcing.npy",
-        "statics.npy",
-        "targets.npy",
-        "scaler.json",
-    )
+    if consumed_names is None:
+        consumed_names = (
+            "basins.txt",
+            "dates.npy",
+            "target_dates.npy",
+            "forcing.npy",
+            "statics.npy",
+            "targets.npy",
+            "scaler.json",
+        )
     if any(name not in descriptor_by_name for name in consumed_names):
         raise FormalTrainingDataError("complete input consumed-file inventory is incomplete")
     actual_names = sorted(path.relative_to(input_root).as_posix() for path in input_root.rglob("*") if path.is_file())
@@ -169,6 +199,117 @@ def _verify_consumed_input_files_v09(input_root: Path, seal: Mapping) -> None:
         path = input_root / name
         if (path.stat().st_size != descriptor.get("size_bytes") or sha256_file(path) != descriptor.get("sha256")):
             raise FormalTrainingDataError(f"sealed training input file drift: {name}")
+
+
+def load_sealed_bridge_inputs_v09(
+    input_root: str | Path,
+    protocol_path: str | Path,
+    *,
+    worktree_root: str | Path,
+    external_audit_path: str | Path | None = None,
+    trusted_source_audit_path: str | Path | None = None,
+) -> FormalBridgeInputsV09:
+    """Load sealed predictors for bridging without opening or hashing ``targets.npy``."""
+    trusted_root = Path(os.path.abspath(worktree_root))
+    raw_input_root = Path(os.path.abspath(input_root))
+    raw_protocol_path = Path(os.path.abspath(protocol_path))
+    assert_no_reparse_components(trusted_root, trusted_root)
+    assert_no_reparse_components(trusted_root, raw_input_root)
+    assert_no_reparse_components(trusted_root, raw_protocol_path)
+    input_root = raw_input_root.resolve()
+    protocol_path = raw_protocol_path.resolve()
+    formal_root = input_root.parent
+    if external_audit_path is None:
+        external_audit_path = formal_root / f"{input_root.name}.external_audit.json"
+    if trusted_source_audit_path is None:
+        trusted_source_audit_path = formal_root / f"{input_root.name}.trusted_source_external_audit.json"
+    external_audit_path = Path(external_audit_path)
+    trusted_source_audit_path = Path(trusted_source_audit_path)
+    assert_no_reparse_components(trusted_root, external_audit_path)
+    assert_no_reparse_components(trusted_root, trusted_source_audit_path)
+    external = _load_passed_report(external_audit_path, "complete_input_audit_passed")
+    trusted = _load_passed_report(trusted_source_audit_path, "complete_trusted_training_target_audit")
+    protocol = json.loads(protocol_path.read_text(encoding="utf-8"))
+    if protocol.get("formal_evaluation_target_access") is not False:
+        raise FormalTrainingDataError("formal evaluation target access must remain closed")
+    seal_path = input_root / "seal.json"
+    seal = json.loads(seal_path.read_text(encoding="utf-8"))
+    if seal.get("status") != "sealed":
+        raise FormalTrainingDataError("complete input seal status drift")
+    if external.get("audit_context", {}).get("input_seal_sha256") != sha256_file(seal_path):
+        raise FormalTrainingDataError("external input audit seal binding drift")
+    if trusted.get("complete_input_external_audit_sha256") != sha256_file(external_audit_path):
+        raise FormalTrainingDataError("trusted target audit binding drift")
+    _verify_consumed_input_files_v09(
+        input_root,
+        seal,
+        consumed_names=_BRIDGE_CONSUMED_NAMES,
+    )
+    basins = tuple(
+        line.strip() for line in (input_root / "basins.txt").read_text(encoding="utf-8").splitlines() if line.strip())
+    scaler = json.loads((input_root / "scaler.json").read_text(encoding="utf-8"))
+    dates = np.load(input_root / "dates.npy", mmap_mode="r", allow_pickle=False)
+    target_dates = np.load(input_root / "target_dates.npy", mmap_mode="r", allow_pickle=False)
+    forcing = np.load(input_root / "forcing.npy", mmap_mode="r", allow_pickle=False)
+    statics = np.load(input_root / "statics.npy", mmap_mode="r", allow_pickle=False)
+    for label, values in (
+        ("dates", dates),
+        ("target dates", target_dates),
+        ("forcing", forcing),
+        ("statics", statics),
+    ):
+        if values.flags.writeable:
+            raise FormalTrainingDataError(f"sealed {label} array is not read-only")
+    if len(basins) != 531 or forcing.dtype != np.float32 or forcing.shape != (531, 10_501, 5):
+        raise FormalTrainingDataError("formal bridge forcing geometry or dtype drift")
+    if statics.dtype != np.float32 or statics.shape != (531, 27) or not np.isfinite(statics).all():
+        raise FormalTrainingDataError("formal bridge static geometry or values drift")
+    if dates.dtype != np.dtype("datetime64[D]") or dates.shape != (10_501,):
+        raise FormalTrainingDataError("formal bridge date geometry or dtype drift")
+    if target_dates.dtype != np.dtype("datetime64[D]") or target_dates.shape != (3_288,):
+        raise FormalTrainingDataError("formal bridge target-date geometry or dtype drift")
+    if not np.all(np.diff(dates).astype("timedelta64[D]") == np.timedelta64(1, "D")):
+        raise FormalTrainingDataError("formal bridge forcing dates are not contiguous")
+    if not np.all(np.diff(target_dates).astype("timedelta64[D]") == np.timedelta64(1, "D")):
+        raise FormalTrainingDataError("formal bridge target dates are not contiguous")
+    if array_payload_sha256(statics) != STATIC_NORMALIZED_FLOAT32_SHA256:
+        raise FormalTrainingDataError("normalized static payload SHA-256 drift")
+    return FormalBridgeInputsV09(
+        root=input_root,
+        basins=basins,
+        dates=dates,
+        target_dates=target_dates,
+        forcing=forcing,
+        statics=statics,
+        scaler=scaler,
+        input_seal_sha256=sha256_file(seal_path),
+        external_audit_sha256=sha256_file(external_audit_path),
+        trusted_source_audit_sha256=sha256_file(trusted_source_audit_path),
+    )
+
+
+def verify_sealed_bridge_inputs_unchanged_v09(inputs: FormalBridgeInputsV09) -> None:
+    """Rehash every predictor consumed by the bridge immediately before report publication."""
+    if not isinstance(inputs, FormalBridgeInputsV09):
+        raise FormalTrainingDataError("bridge inputs must use the target-free sealed input type")
+    input_root = inputs.root
+    seal_path = input_root / "seal.json"
+    external_audit_path = input_root.parent / f"{input_root.name}.external_audit.json"
+    trusted_source_audit_path = input_root.parent / f"{input_root.name}.trusted_source_external_audit.json"
+    if sha256_file(seal_path) != inputs.input_seal_sha256:
+        raise FormalTrainingDataError("bridge input seal changed while the bridge was running")
+    if sha256_file(external_audit_path) != inputs.external_audit_sha256:
+        raise FormalTrainingDataError("bridge complete-input audit changed while the bridge was running")
+    if sha256_file(trusted_source_audit_path) != inputs.trusted_source_audit_sha256:
+        raise FormalTrainingDataError("bridge trusted-source audit changed while the bridge was running")
+    seal = json.loads(seal_path.read_text(encoding="utf-8"))
+    if seal.get("status") != "sealed":
+        raise FormalTrainingDataError("complete input seal status drift")
+    _verify_consumed_input_files_v09(
+        input_root,
+        seal,
+        consumed_names=_BRIDGE_CONSUMED_NAMES,
+    )
 
 
 def load_sealed_training_inputs_v09(

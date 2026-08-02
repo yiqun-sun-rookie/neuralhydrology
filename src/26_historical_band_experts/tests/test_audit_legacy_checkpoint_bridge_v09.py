@@ -67,3 +67,73 @@ def test_legacy_bridge_report_rejects_reparse_parent_before_resolve(tmp_path, mo
     )
     with pytest.raises(ValueError, match="reparse point"):
         _assert_report_outside_protected_paths(report_parent / "report.json", (protected,))
+
+
+def test_legacy_bridge_rejects_registered_checkpoint_reparse_before_loading(tmp_path, monkeypatch):
+    import artifact_v09
+    from audit_legacy_checkpoint_bridge_v09 import audit_legacy_checkpoint_bridge_v09
+    from formal_v09_protocol import load_protocol_v09
+    from test_train_strict_formal_v09 import _inputs
+
+    protocol = load_protocol_v09(IDEA_ROOT / "configs/formal_v09_protocol.json")
+    legacy_root = tmp_path / "legacy"
+    first_run = legacy_root / protocol["legacy_reference"]["runs"][0]["run_id"]
+    first_run.mkdir(parents=True)
+    checkpoint = first_run / "model_epoch030.pt"
+    original = artifact_v09.is_reparse_point
+    monkeypatch.setattr(
+        artifact_v09,
+        "is_reparse_point",
+        lambda path: Path(path) == checkpoint or original(path),
+    )
+
+    with pytest.raises(ValueError, match="reparse point"):
+        audit_legacy_checkpoint_bridge_v09(
+            protocol,
+            legacy_results_root=legacy_root,
+            inputs=_inputs(),
+            report_path=tmp_path / "bridge.json",
+            device="cpu",
+        )
+
+
+def test_legacy_bridge_rechecks_registered_files_after_identity_verification(tmp_path, monkeypatch):
+    import artifact_v09
+    import audit_legacy_checkpoint_bridge_v09 as module
+    from formal_v09_protocol import load_protocol_v09
+    from test_train_strict_formal_v09 import _inputs
+
+    protocol = load_protocol_v09(IDEA_ROOT / "configs/formal_v09_protocol.json")
+    legacy_root = tmp_path / "legacy"
+    first_run = legacy_root / protocol["legacy_reference"]["runs"][0]["run_id"]
+    first_run.mkdir(parents=True)
+    config_path = first_run / "config.yml"
+    after_verification = {"value": False}
+    original = artifact_v09.is_reparse_point
+
+    def verify(*args, **kwargs):
+        after_verification["value"] = True
+        return {
+            "verified": True,
+            "run_count": 8,
+            "file_count": 16,
+            "seeds": [run["seed"] for run in protocol["legacy_reference"]["runs"]],
+            "recorded_code_commit_prefix": protocol["legacy_reference"]["recorded_code_commit_prefix"],
+        }
+
+    monkeypatch.setattr(module, "verify_legacy_reference_v09", verify)
+    monkeypatch.setattr(
+        artifact_v09,
+        "is_reparse_point",
+        lambda path: (after_verification["value"] and Path(path) == config_path) or original(path),
+    )
+    monkeypatch.setattr(module.torch, "load", lambda *args, **kwargs: pytest.fail("must reject before torch.load"))
+
+    with pytest.raises(ValueError, match="reparse point"):
+        module.audit_legacy_checkpoint_bridge_v09(
+            protocol,
+            legacy_results_root=legacy_root,
+            inputs=_inputs(),
+            report_path=tmp_path / "bridge.json",
+            device="cpu",
+        )

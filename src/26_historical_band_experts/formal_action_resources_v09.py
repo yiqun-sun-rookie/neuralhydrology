@@ -281,13 +281,14 @@ def validate_formal_action_peak_estimate_v09(
     return validated
 
 
-def sample_cuda_memory_v09() -> AcceleratorMemorySnapshot:
-    """Read live free CUDA memory without allocating model or data tensors."""
+def sample_cuda_memory_v09(device_index: int = 0) -> AcceleratorMemorySnapshot:
+    """Read live memory for the fixed formal CUDA device without allocating tensors."""
     import torch
 
     if not torch.cuda.is_available():
         raise MemorySafetyError("CUDA is unavailable for the formal model action")
-    device_index = int(torch.cuda.current_device())
+    if type(device_index) is not int or device_index != 0:
+        raise MemorySafetyError("formal model resource sampling is fixed to CUDA device 0")
     available_bytes, total_bytes = torch.cuda.mem_get_info(device_index)
     return AcceleratorMemorySnapshot(
         device_index=device_index,

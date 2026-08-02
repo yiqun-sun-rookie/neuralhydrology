@@ -1,6 +1,8 @@
 """Read-only bridge from frozen core checkpoints to version-09 model classes."""
 from __future__ import annotations
 
+import hashlib
+import io
 import json
 import os
 import platform
@@ -11,9 +13,14 @@ from typing import Iterable, Mapping
 
 import numpy as np
 import torch
+import yaml
 
 from artifact_v09 import assert_no_reparse_components, canonical_sha256, sha256_file, write_json_atomic
-from formal_training_data_v09 import FormalTrainingInputsV09, normalize_forcing_batch_v09
+from formal_training_data_v09 import (
+    FormalBridgeInputsV09,
+    normalize_forcing_batch_v09,
+    verify_sealed_bridge_inputs_unchanged_v09,
+)
 from formal_v09_protocol import validate_protocol_v09
 from models_formal_v09 import build_model_v09
 from verify_legacy_reference_v09 import verify_legacy_reference_v09
@@ -46,6 +53,7 @@ def _source_bindings_v09() -> dict[str, str]:
     repo_root = Path(__file__).resolve().parents[2]
     paths = {
         "audit_legacy_checkpoint_bridge_v09.py": Path(__file__).resolve(),
+        "formal_training_data_v09.py": Path(__file__).resolve().with_name("formal_training_data_v09.py"),
         "models_formal_v09.py": Path(__file__).resolve().with_name("models_formal_v09.py"),
         "verify_legacy_reference_v09.py": Path(__file__).resolve().with_name("verify_legacy_reference_v09.py"),
         "neuralhydrology/modelzoo/cudalstm.py": repo_root / "neuralhydrology/modelzoo/cudalstm.py",
@@ -115,7 +123,7 @@ def assert_legacy_checkpoint_bridge_v09(
     }
 
 
-def _real_panel_batches(inputs: FormalTrainingInputsV09, batch_size: int = 256):
+def _real_panel_batches(inputs: FormalBridgeInputsV09, batch_size: int = 256):
     selected_target_dates = np.linspace(0, len(inputs.target_dates) - 1, 12, dtype=np.int64)
     forcing_indices = np.searchsorted(inputs.dates, inputs.target_dates[selected_target_dates])
     basin_indices = np.repeat(np.arange(len(inputs.basins), dtype=np.int64), 12)
@@ -131,11 +139,28 @@ def _real_panel_batches(inputs: FormalTrainingInputsV09, batch_size: int = 256):
         yield torch.from_numpy(normalized), torch.from_numpy(statics)
 
 
+def _read_registered_bytes_v09(
+    legacy_results_root: Path,
+    path: Path,
+    expected_sha256: str,
+    *,
+    label: str,
+) -> bytes:
+    """Bind validation, hashing, and later parsing/loading to one byte payload."""
+    assert_no_reparse_components(legacy_results_root, path)
+    payload = path.read_bytes()
+    assert_no_reparse_components(legacy_results_root, path)
+    actual_sha256 = hashlib.sha256(payload).hexdigest()
+    if actual_sha256 != expected_sha256:
+        raise ValueError(f"legacy {label} SHA-256 drift")
+    return payload
+
+
 def audit_legacy_checkpoint_bridge_v09(
         protocol: Mapping,
         *,
         legacy_results_root: str | Path,
-        inputs: FormalTrainingInputsV09,
+        inputs: FormalBridgeInputsV09,
         report_path: str | Path,
         device: str | torch.device,
         protected_run_roots: Iterable[str | Path] = (),
@@ -154,6 +179,11 @@ def audit_legacy_checkpoint_bridge_v09(
     report_path = _assert_report_outside_protected_paths(report_path, protected_roots)
     if report_path.exists():
         raise FileExistsError(f"legacy bridge report already exists: {report_path}")
+    for run in protocol["legacy_reference"]["runs"]:
+        run_dir = legacy_results_root / run["run_id"]
+        assert_no_reparse_components(legacy_results_root, run_dir)
+        assert_no_reparse_components(legacy_results_root, run_dir / "config.yml")
+        assert_no_reparse_components(legacy_results_root, run_dir / "model_epoch030.pt")
     identity = verify_legacy_reference_v09(protocol, legacy_results_root)
     generator = torch.Generator().manual_seed(29_090)
     synthetic_recent = torch.randn(2, 270, 5, generator=generator)
@@ -164,9 +194,26 @@ def audit_legacy_checkpoint_bridge_v09(
     for run in protocol["legacy_reference"]["runs"]:
         run_dir = legacy_results_root / run["run_id"]
         assert_no_reparse_components(legacy_results_root, run_dir)
-        state = torch.load(run_dir / "model_epoch030.pt", map_location="cpu", weights_only=False)
+        config_path = run_dir / "config.yml"
+        checkpoint_path = run_dir / "model_epoch030.pt"
+        config_payload = _read_registered_bytes_v09(
+            legacy_results_root,
+            config_path,
+            run["config_sha256"],
+            label="config",
+        )
+        checkpoint_payload = _read_registered_bytes_v09(
+            legacy_results_root,
+            checkpoint_path,
+            run["checkpoint_epoch030_sha256"],
+            label="checkpoint",
+        )
+        state = torch.load(io.BytesIO(checkpoint_payload), map_location="cpu", weights_only=False)
         _require_checkpoint_state(state)
-        config = Config(run_dir / "config.yml")
+        config_mapping = yaml.safe_load(config_payload.decode("utf-8"))
+        if not isinstance(config_mapping, dict):
+            raise ValueError("legacy config must decode to a mapping")
+        config = Config(config_mapping)
         core = CudaLSTM(config).to(device)
         classic = build_model_v09("classic_lstm_256_clean", run["seed"]).to(device)
         nested = build_model_v09("nested_history_disabled", run["seed"]).to(device)
@@ -207,16 +254,22 @@ def audit_legacy_checkpoint_bridge_v09(
         run_rows.append({
             "seed": run["seed"],
             "run_id": run["run_id"],
-            "config_sha256": sha256_file(run_dir / "config.yml"),
-            "checkpoint_sha256": sha256_file(run_dir / "model_epoch030.pt"),
+            "config_sha256": hashlib.sha256(config_payload).hexdigest(),
+            "checkpoint_sha256": hashlib.sha256(checkpoint_payload).hexdigest(),
             "real_panel_rows": rows,
         })
+    verify_sealed_bridge_inputs_unchanged_v09(inputs)
     report = {
         "schema": "historical_multiscale_formal_v09_legacy_checkpoint_bridge_audit_v1",
         "status": "legacy_checkpoint_bridge_external_audit_passed",
         "protocol_canonical_sha256": canonical_sha256(protocol),
         "source_bindings": _source_bindings_v09(),
         "environment_binding": _environment_binding_v09(device),
+        "input_bindings": {
+            "input_seal_sha256": inputs.input_seal_sha256,
+            "complete_input_external_audit_sha256": inputs.external_audit_sha256,
+            "trusted_source_external_audit_sha256": inputs.trusted_source_audit_sha256,
+        },
         "verified_identity": identity,
         "runs": run_rows,
         "run_count": len(run_rows),

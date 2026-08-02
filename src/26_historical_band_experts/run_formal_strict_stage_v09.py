@@ -1,16 +1,30 @@
 """Only production entry for the authorized version-09 strict-nesting run."""
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
+import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import subprocess
+import tempfile
 
-from artifact_v09 import assert_no_reparse_components, canonical_sha256, sha256_file
+from artifact_v09 import (
+    assert_no_reparse_components,
+    canonical_sha256,
+    is_reparse_point,
+    sha256_file,
+)
+from formal_action_resources_v09 import (
+    AcceleratorMemorySnapshot,
+    build_formal_action_peak_estimate_v09,
+)
 from formal_action_runtime_v09 import _run_authorized_formal_action_v09
 from formal_training_data_v09 import load_sealed_training_inputs_v09
 from formal_v09_protocol import load_protocol_v09
+from memory_safety_v09 import GIB, HostMemorySnapshot, MemorySafetyPolicy
 from stage_authorization_v09 import stage_authorization_paths_v09
 from train_strict_formal_v09 import run_strict_training_v09
 
@@ -30,6 +44,7 @@ _EXECUTABLE_FILES = (
     "src/26_historical_band_experts/memory_safety_v09.py",
     "src/26_historical_band_experts/models_formal_v09.py",
     "src/26_historical_band_experts/models_v03.py",
+    "src/26_historical_band_experts/prepare_formal_strict_stage_v09.py",
     "src/26_historical_band_experts/run_formal_strict_stage_v09.py",
     "src/26_historical_band_experts/stage_authorization_v09.py",
     "src/26_historical_band_experts/strict_nesting_formal_v09.py",
@@ -107,18 +122,73 @@ def strict_executable_tree_v09(worktree_root: str | Path) -> dict:
     }
 
 
-def _load_json_status(path: Path, expected_status: str) -> dict:
-    if not path.is_file():
+def _load_json_status_and_sha256(path: Path, expected_status: str) -> tuple[dict, str]:
+    if not path.is_file() or is_reparse_point(path):
         raise FileNotFoundError(f"strict prerequisite is missing: {path}")
-    report = json.loads(path.read_text(encoding="utf-8"))
+    payload = path.read_bytes()
+    report = json.loads(payload.decode("utf-8"))
     if report.get("status") != expected_status:
         raise ValueError(f"strict prerequisite status drift: {path.name}")
+    return report, hashlib.sha256(payload).hexdigest()
+
+
+def _load_json_status(path: Path, expected_status: str) -> dict:
+    report, _ = _load_json_status_and_sha256(path, expected_status)
     return report
 
 
-def _validate_legacy_bridge_report_v09(legacy: dict, protocol: dict, *, device: str) -> None:
+def _require_exact_json_value(actual, expected, *, label: str) -> None:
+    """Reject Python equality aliases such as ``False == 0`` in evidence JSON."""
+    if type(actual) is not type(expected):
+        raise ValueError(f"{label} type drift")
+    if isinstance(expected, dict):
+        if set(actual) != set(expected):
+            raise ValueError(f"{label} schema drift")
+        for key, expected_value in expected.items():
+            _require_exact_json_value(actual[key], expected_value, label=f"{label}.{key}")
+        return
+    if isinstance(expected, list):
+        if len(actual) != len(expected):
+            raise ValueError(f"{label} length drift")
+        for index, expected_value in enumerate(expected):
+            _require_exact_json_value(actual[index], expected_value, label=f"{label}[{index}]")
+        return
+    if actual != expected:
+        raise ValueError(f"{label} value drift")
+
+
+def _validate_legacy_bridge_report_v09(
+    legacy: dict,
+    protocol: dict,
+    *,
+    device: str,
+    input_bindings: Mapping,
+) -> None:
     from audit_legacy_checkpoint_bridge_v09 import _environment_binding_v09, _source_bindings_v09
 
+    expected_keys = {
+        "schema",
+        "status",
+        "protocol_canonical_sha256",
+        "source_bindings",
+        "environment_binding",
+        "input_bindings",
+        "verified_identity",
+        "runs",
+        "run_count",
+        "synthetic_panel_rows_per_run",
+        "real_panel_rows_per_run",
+        "real_panel_rows_total",
+        "maximum_prediction_difference",
+        "training_target_value_reads",
+        "formal_evaluation_observation_reads",
+    }
+    if set(legacy) != expected_keys:
+        raise ValueError("legacy bridge report schema drift")
+    if legacy.get("schema") != "historical_multiscale_formal_v09_legacy_checkpoint_bridge_audit_v1":
+        raise ValueError("legacy bridge report schema drift")
+    if legacy.get("status") != "legacy_checkpoint_bridge_external_audit_passed":
+        raise ValueError("legacy bridge report status drift")
     if legacy.get("protocol_canonical_sha256") != canonical_sha256(protocol):
         raise ValueError("legacy bridge protocol binding drift")
     if legacy.get("source_bindings") != _source_bindings_v09():
@@ -144,6 +214,7 @@ def _validate_legacy_bridge_report_v09(legacy: dict, protocol: dict, *, device: 
         "recorded_code_commit_prefix": protocol["legacy_reference"]["recorded_code_commit_prefix"],
     }
     fixed = {
+        "input_bindings": dict(input_bindings),
         "verified_identity": expected_identity,
         "runs": expected_runs,
         "run_count": 8,
@@ -155,8 +226,201 @@ def _validate_legacy_bridge_report_v09(legacy: dict, protocol: dict, *, device: 
         "formal_evaluation_observation_reads": 0,
     }
     for key, expected in fixed.items():
-        if legacy.get(key) != expected:
-            raise ValueError(f"legacy bridge report geometry drift: {key}")
+        _require_exact_json_value(
+            legacy.get(key),
+            expected,
+            label=f"legacy bridge report geometry.{key}",
+        )
+
+
+def _validate_resource_preflight_report_v09(resource: Mapping, protocol: Mapping) -> None:
+    """Recompute every launch-relevant claim in one persisted resource report."""
+    if not isinstance(resource, Mapping):
+        raise ValueError("resource preflight report must be an object")
+    expected_keys = {
+        "status",
+        "action",
+        "variant",
+        "authorization_checked",
+        "estimate",
+        "host_snapshot",
+        "accelerator_snapshot",
+        "host",
+        "accelerator",
+    }
+    if set(resource) != expected_keys:
+        raise ValueError("resource preflight report schema drift")
+    fixed = {
+        "status": "resource_preflight_passed",
+        "action": "training",
+        "variant": _VARIANT,
+        "authorization_checked": False,
+    }
+    for key, expected in fixed.items():
+        label = "authorization" if key == "authorization_checked" else "binding"
+        _require_exact_json_value(
+            resource.get(key),
+            expected,
+            label=f"resource preflight {label}.{key}",
+        )
+    expected_estimate = build_formal_action_peak_estimate_v09(
+        protocol,
+        "training",
+        variant=_VARIANT,
+    )
+    _require_exact_json_value(
+        resource.get("estimate"),
+        expected_estimate,
+        label="resource preflight estimate",
+    )
+
+    host_snapshot_payload = resource.get("host_snapshot")
+    if not isinstance(host_snapshot_payload, Mapping) or set(host_snapshot_payload) != {
+        "total_bytes",
+        "available_bytes",
+        "process_rss_bytes",
+        "commit_headroom_bytes",
+    }:
+        raise ValueError("resource preflight host snapshot schema drift")
+    if any(type(host_snapshot_payload[key]) is not int for key in host_snapshot_payload):
+        raise ValueError("resource preflight host snapshot type drift")
+    try:
+        host_snapshot = HostMemorySnapshot(**host_snapshot_payload)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("resource preflight host snapshot drift") from exc
+    policy = MemorySafetyPolicy.from_total(host_snapshot.total_bytes, protocol["memory_safety"])
+    host_peak = expected_estimate["estimated_peak_bytes"]
+    guarded_host_peak = math.ceil(host_peak * policy.estimated_peak_safety_factor)
+    host = resource.get("host")
+    expected_host_keys = {
+        "safe",
+        "long_running",
+        "method",
+        "estimated_peak_bytes",
+        "evidence_sha256",
+        "guarded_estimated_peak_bytes",
+        "available_after_guarded_peak_bytes",
+        "commit_headroom_after_guarded_peak_bytes",
+        "physical_reserve_bytes",
+        "commit_headroom_reserve_bytes",
+        "serial_lease",
+    }
+    if not isinstance(host, Mapping) or set(host) != expected_host_keys or host.get("safe") is not True:
+        raise ValueError("resource preflight host safety drift")
+    fixed_host = {
+        "long_running": True,
+        "method": expected_estimate["method"],
+        "estimated_peak_bytes": host_peak,
+        "evidence_sha256": expected_estimate["evidence_sha256"],
+        "guarded_estimated_peak_bytes": guarded_host_peak,
+        "available_after_guarded_peak_bytes": host_snapshot.available_bytes - guarded_host_peak,
+        "commit_headroom_after_guarded_peak_bytes": host_snapshot.commit_headroom_bytes - guarded_host_peak,
+        "physical_reserve_bytes": policy.physical_reserve_bytes,
+        "commit_headroom_reserve_bytes": policy.commit_headroom_reserve_bytes,
+    }
+    for key, expected in fixed_host.items():
+        try:
+            _require_exact_json_value(host.get(key), expected, label=f"resource preflight host.{key}")
+        except ValueError as exc:
+            raise ValueError("resource preflight host arithmetic drift") from exc
+    if host["available_after_guarded_peak_bytes"] < policy.physical_reserve_bytes:
+        raise ValueError("resource preflight host physical reserve drift")
+    if host["commit_headroom_after_guarded_peak_bytes"] < policy.commit_headroom_reserve_bytes:
+        raise ValueError("resource preflight host commit reserve drift")
+    lease = host.get("serial_lease")
+    expected_lock = str(
+        Path(tempfile.gettempdir(), "neuralhydrology_historical_multiscale_v09_high_load.lock")
+    )
+    if not isinstance(lease, Mapping) or set(lease) != {"held", "lock_path"}:
+        raise ValueError("resource preflight serial lease drift")
+    _require_exact_json_value(
+        dict(lease),
+        {"held": True, "lock_path": expected_lock},
+        label="resource preflight serial lease",
+    )
+
+    accelerator_snapshot_payload = resource.get("accelerator_snapshot")
+    if not isinstance(accelerator_snapshot_payload, Mapping) or set(accelerator_snapshot_payload) != {
+        "device_index",
+        "device_name",
+        "total_bytes",
+        "available_bytes",
+    }:
+        raise ValueError("resource preflight accelerator snapshot schema drift")
+    if (
+        type(accelerator_snapshot_payload["device_index"]) is not int
+        or type(accelerator_snapshot_payload["device_name"]) is not str
+        or type(accelerator_snapshot_payload["total_bytes"]) is not int
+        or type(accelerator_snapshot_payload["available_bytes"]) is not int
+    ):
+        raise ValueError("resource preflight accelerator snapshot type drift")
+    try:
+        accelerator_snapshot = AcceleratorMemorySnapshot(**accelerator_snapshot_payload)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("resource preflight accelerator snapshot drift") from exc
+    if accelerator_snapshot.device_index != 0:
+        raise ValueError("resource preflight accelerator device drift")
+    accelerator = resource.get("accelerator")
+    expected_accelerator_keys = {
+        "required",
+        "safe",
+        "device_index",
+        "device_name",
+        "estimated_peak_bytes",
+        "guarded_estimated_peak_bytes",
+        "available_after_guarded_peak_bytes",
+        "reserve_bytes",
+    }
+    if (
+        not isinstance(accelerator, Mapping)
+        or set(accelerator) != expected_accelerator_keys
+        or accelerator.get("required") is not True
+        or accelerator.get("safe") is not True
+    ):
+        raise ValueError("resource preflight accelerator safety drift")
+    expected_accelerator_peak = expected_estimate["evidence"]["accelerator_estimated_peak_bytes"]
+    resource_spec = protocol["formal_action_resources"]["training"]
+    guarded_accelerator_peak = math.ceil(
+        expected_accelerator_peak * float(resource_spec["accelerator_safety_factor"])
+    )
+    accelerator_reserve = math.ceil(float(resource_spec["accelerator_reserve_gib"]) * GIB)
+    fixed_accelerator = {
+        "device_index": accelerator_snapshot.device_index,
+        "device_name": accelerator_snapshot.device_name,
+        "estimated_peak_bytes": expected_accelerator_peak,
+        "guarded_estimated_peak_bytes": guarded_accelerator_peak,
+        "available_after_guarded_peak_bytes": accelerator_snapshot.available_bytes - guarded_accelerator_peak,
+        "reserve_bytes": accelerator_reserve,
+    }
+    for key, expected in fixed_accelerator.items():
+        try:
+            _require_exact_json_value(
+                accelerator.get(key),
+                expected,
+                label=f"resource preflight accelerator.{key}",
+            )
+        except ValueError as exc:
+            raise ValueError("resource preflight accelerator arithmetic drift") from exc
+    if accelerator["available_after_guarded_peak_bytes"] < accelerator_reserve:
+        raise ValueError("resource preflight accelerator reserve drift")
+
+
+def strict_input_bindings_v09(paths: StrictStagePathsV09) -> dict[str, str]:
+    """Hash the three current sealed-input evidence files from their validated bytes."""
+    _, seal_sha256 = _load_json_status_and_sha256(paths.input_root / "seal.json", "sealed")
+    _, input_audit_sha256 = _load_json_status_and_sha256(
+        paths.input_external_audit,
+        "complete_input_audit_passed",
+    )
+    _, trusted_audit_sha256 = _load_json_status_and_sha256(
+        paths.trusted_source_audit,
+        "complete_trusted_training_target_audit",
+    )
+    return {
+        "input_seal_sha256": seal_sha256,
+        "complete_input_external_audit_sha256": input_audit_sha256,
+        "trusted_source_external_audit_sha256": trusted_audit_sha256,
+    }
 
 
 def strict_prerequisite_hashes_v09(
@@ -165,21 +429,28 @@ def strict_prerequisite_hashes_v09(
     *,
     device: str = "cuda:0",
 ) -> dict[str, str]:
-    seal = _load_json_status(paths.input_root / "seal.json", "sealed")
-    del seal
-    _load_json_status(paths.input_external_audit, "complete_input_audit_passed")
-    _load_json_status(paths.trusted_source_audit, "complete_trusted_training_target_audit")
-    legacy = _load_json_status(paths.legacy_bridge_audit, "legacy_checkpoint_bridge_external_audit_passed")
-    resource = _load_json_status(paths.resource_preflight_audit, "resource_preflight_passed")
-    _validate_legacy_bridge_report_v09(legacy, protocol, device=device)
-    if resource.get("action") != "training" or resource.get("variant") != _VARIANT:
-        raise ValueError("strict training resource preflight binding drift")
+    input_bindings = strict_input_bindings_v09(paths)
+    legacy, legacy_sha256 = _load_json_status_and_sha256(
+        paths.legacy_bridge_audit,
+        "legacy_checkpoint_bridge_external_audit_passed",
+    )
+    resource, resource_sha256 = _load_json_status_and_sha256(
+        paths.resource_preflight_audit,
+        "resource_preflight_passed",
+    )
+    _validate_legacy_bridge_report_v09(
+        legacy,
+        protocol,
+        device=device,
+        input_bindings=input_bindings,
+    )
+    _validate_resource_preflight_report_v09(resource, protocol)
     return {
-        "input_seal": sha256_file(paths.input_root / "seal.json"),
-        "input_artifact_external_audit": sha256_file(paths.input_external_audit),
-        "trusted_target_external_audit": sha256_file(paths.trusted_source_audit),
-        "legacy_checkpoint_bridge_external_audit": sha256_file(paths.legacy_bridge_audit),
-        "training_resource_preflight_external_audit": sha256_file(paths.resource_preflight_audit),
+        "input_seal": input_bindings["input_seal_sha256"],
+        "input_artifact_external_audit": input_bindings["complete_input_external_audit_sha256"],
+        "trusted_target_external_audit": input_bindings["trusted_source_external_audit_sha256"],
+        "legacy_checkpoint_bridge_external_audit": legacy_sha256,
+        "training_resource_preflight_external_audit": resource_sha256,
     }
 
 
