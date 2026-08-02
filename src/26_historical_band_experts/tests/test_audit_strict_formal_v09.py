@@ -110,12 +110,35 @@ def test_external_strict_audit_rejects_registered_nested_seal(tmp_path):
     seal["sealed_files_sha256"] = canonical_sha256(seal["sealed_files"])
     root_seal.write_text(json.dumps(seal), encoding="utf-8")
 
-    with pytest.raises(ValueError, match="cannot seal"):
+    with pytest.raises(ValueError, match="cannot include"):
         audit_strict_run_v09(
             run,
             inputs=_inputs(),
             device="cpu",
             report_path=tmp_path / "registered-nested-seal.external.json",
+            model_builder=_tiny_builder,
+        )
+
+
+def test_external_strict_audit_rejects_reparse_report_directory_before_resolve(tmp_path, monkeypatch):
+    import artifact_v09
+    from audit_strict_formal_v09 import audit_strict_run_v09
+
+    run = _make_run(tmp_path)
+    report_directory = tmp_path / "audits"
+    report_directory.mkdir()
+    original = artifact_v09.is_reparse_point
+    monkeypatch.setattr(
+        artifact_v09,
+        "is_reparse_point",
+        lambda path: Path(path) == report_directory or original(path),
+    )
+    with pytest.raises(ValueError, match="reparse point"):
+        audit_strict_run_v09(
+            run,
+            inputs=_inputs(),
+            device="cpu",
+            report_path=report_directory / "report.json",
             model_builder=_tiny_builder,
         )
 

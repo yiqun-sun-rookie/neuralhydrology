@@ -49,3 +49,21 @@ def test_legacy_bridge_report_path_rejects_every_protected_root(tmp_path):
 
     external = tmp_path / "audits" / "report.json"
     assert _assert_report_outside_protected_paths(external, (legacy, inputs, formal_run)) == external.resolve()
+
+
+def test_legacy_bridge_report_rejects_reparse_parent_before_resolve(tmp_path, monkeypatch):
+    import artifact_v09
+    from audit_legacy_checkpoint_bridge_v09 import _assert_report_outside_protected_paths
+
+    protected = tmp_path / "legacy"
+    protected.mkdir()
+    report_parent = tmp_path / "audits"
+    report_parent.mkdir()
+    original = artifact_v09.is_reparse_point
+    monkeypatch.setattr(
+        artifact_v09,
+        "is_reparse_point",
+        lambda path: Path(path) == report_parent or original(path),
+    )
+    with pytest.raises(ValueError, match="reparse point"):
+        _assert_report_outside_protected_paths(report_parent / "report.json", (protected,))

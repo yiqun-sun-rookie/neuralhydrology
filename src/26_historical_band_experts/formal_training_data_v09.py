@@ -13,6 +13,7 @@ import torch
 
 from artifact_v09 import (
     array_payload_sha256,
+    assert_no_embedded_seal_entries,
     assert_no_reparse_components,
     assert_no_reparse_tree,
     canonical_sha256,
@@ -144,6 +145,7 @@ def _verify_consumed_input_files_v09(input_root: Path, seal: Mapping) -> None:
     sealed_files = seal.get("sealed_files")
     if (not isinstance(sealed_files, list) or seal.get("sealed_files_sha256") != canonical_sha256(sealed_files)):
         raise FormalTrainingDataError("complete input sealed-file inventory drift")
+    assert_no_embedded_seal_entries(sealed_files)
     descriptor_by_name = {item.get("relative_path"): item for item in sealed_files if isinstance(item, Mapping)}
     consumed_names = (
         "basins.txt",

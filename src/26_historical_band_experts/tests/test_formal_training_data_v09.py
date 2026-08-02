@@ -309,3 +309,38 @@ def test_consumed_sealed_file_drift_fails_before_array_open(tmp_path, changed_na
         handle.write(b"drift")
     with pytest.raises(module.FormalTrainingDataError, match="file drift"):
         module._verify_consumed_input_files_v09(root, seal)
+
+
+@pytest.mark.parametrize("nested_name", ["seal.json", "SEAL.JSON"])
+def test_formal_input_inventory_rejects_registered_nested_seal(tmp_path, nested_name):
+    import formal_training_data_v09 as module
+
+    root = tmp_path / "input_attempt_01"
+    root.mkdir()
+    required = (
+        "basins.txt",
+        "dates.npy",
+        "target_dates.npy",
+        "forcing.npy",
+        "statics.npy",
+        "targets.npy",
+        "scaler.json",
+    )
+    for name in required:
+        (root / name).write_bytes(name.encode("utf-8"))
+    nested = root / "unexpected" / nested_name
+    nested.parent.mkdir()
+    nested.write_text("{}", encoding="utf-8")
+    descriptors = [{
+        "relative_path": path.relative_to(root).as_posix(),
+        "size_bytes": path.stat().st_size,
+        "sha256": module.sha256_file(path),
+    } for path in sorted((*[root / name for name in required], nested))]
+    seal = {
+        "sealed_files": descriptors,
+        "sealed_files_sha256": module.canonical_sha256(descriptors),
+    }
+    (root / "seal.json").write_text("{}", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="cannot include"):
+        module._verify_consumed_input_files_v09(root, seal)

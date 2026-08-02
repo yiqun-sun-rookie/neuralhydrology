@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 import platform
 from pathlib import Path
 import subprocess
@@ -11,7 +12,7 @@ from typing import Iterable, Mapping
 import numpy as np
 import torch
 
-from artifact_v09 import canonical_sha256, sha256_file, write_json_atomic
+from artifact_v09 import assert_no_reparse_components, canonical_sha256, sha256_file, write_json_atomic
 from formal_training_data_v09 import FormalTrainingInputsV09, normalize_forcing_batch_v09
 from formal_v09_protocol import validate_protocol_v09
 from models_formal_v09 import build_model_v09
@@ -28,12 +29,17 @@ _ACTIVE_TENSORS = (
 
 
 def _assert_report_outside_protected_paths(report_path: str | Path, protected_roots: Iterable[str | Path]) -> Path:
-    report_path = Path(report_path).resolve()
+    raw_report_path = Path(os.path.abspath(report_path))
     for root in protected_roots:
-        protected = Path(root).resolve()
+        raw_protected = Path(os.path.abspath(root))
+        common_root = Path(os.path.commonpath((raw_protected, raw_report_path)))
+        assert_no_reparse_components(common_root, raw_protected)
+        assert_no_reparse_components(common_root, raw_report_path)
+        protected = raw_protected.resolve()
+        report_path = raw_report_path.resolve()
         if report_path == protected or protected in report_path.parents:
             raise ValueError(f"legacy bridge report must be outside protected path: {protected}")
-    return report_path
+    return raw_report_path.resolve()
 
 
 def _source_bindings_v09() -> dict[str, str]:
@@ -139,7 +145,9 @@ def audit_legacy_checkpoint_bridge_v09(
     from neuralhydrology.utils.config import Config
 
     validate_protocol_v09(protocol)
-    legacy_results_root = Path(legacy_results_root).resolve()
+    raw_legacy_results_root = Path(os.path.abspath(legacy_results_root))
+    assert_no_reparse_components(raw_legacy_results_root, raw_legacy_results_root)
+    legacy_results_root = raw_legacy_results_root.resolve()
     protected_roots = [legacy_results_root, *protected_run_roots]
     if inputs.root is not None:
         protected_roots.append(inputs.root)
@@ -155,6 +163,7 @@ def audit_legacy_checkpoint_bridge_v09(
     run_rows = []
     for run in protocol["legacy_reference"]["runs"]:
         run_dir = legacy_results_root / run["run_id"]
+        assert_no_reparse_components(legacy_results_root, run_dir)
         state = torch.load(run_dir / "model_epoch030.pt", map_location="cpu", weights_only=False)
         _require_checkpoint_state(state)
         config = Config(run_dir / "config.yml")

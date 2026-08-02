@@ -10,7 +10,14 @@ import numpy as np
 import torch
 from torch import nn
 
-from artifact_v09 import assert_no_reparse_tree, canonical_sha256, sha256_file, write_json_atomic
+from artifact_v09 import (
+    assert_no_embedded_seal_entries,
+    assert_no_reparse_components,
+    assert_no_reparse_tree,
+    canonical_sha256,
+    sha256_file,
+    write_json_atomic,
+)
 from formal_training_data_v09 import FormalTrainingInputsV09
 from formal_training_data_v09 import epoch_order_v09, permutation_sha256_v09
 from models_formal_v09 import build_model_v09
@@ -40,10 +47,7 @@ def _verify_sealed_files(run_dir: Path, seal: dict) -> None:
     if (seal.get("status") != "sealed" or not isinstance(sealed_files, list) or
             seal.get("sealed_files_sha256") != canonical_sha256(sealed_files)):
         raise ValueError("strict run seal drift")
-    if any(
-            isinstance(item, dict) and Path(str(item.get("relative_path", ""))).name == "seal.json"
-            for item in sealed_files):
-        raise ValueError("strict run cannot seal a nested or replacement seal.json")
+    assert_no_embedded_seal_entries(sealed_files)
     expected = {item.get("relative_path") for item in sealed_files}
     actual = {
         path.relative_to(run_dir).as_posix()
@@ -173,9 +177,13 @@ def audit_strict_run_v09(
 ) -> dict:
     """Reload the final checkpoint and replay every training-key prediction."""
     raw_run_dir = Path(os.path.abspath(run_dir))
+    raw_report_path = Path(os.path.abspath(report_path))
+    common_root = Path(os.path.commonpath((raw_run_dir, raw_report_path)))
+    assert_no_reparse_components(common_root, raw_run_dir)
+    assert_no_reparse_components(common_root, raw_report_path)
     assert_no_reparse_tree(raw_run_dir)
     run_dir = raw_run_dir.resolve()
-    report_path = Path(report_path).resolve()
+    report_path = raw_report_path.resolve()
     if report_path == run_dir or run_dir in report_path.parents:
         raise ValueError("strict external audit report must be outside the sealed run")
     seal_path = run_dir / "seal.json"

@@ -151,6 +151,20 @@ def test_directory_promotion_rejects_reparse_building_and_final_paths(tmp_path, 
         module.promote_directory(building, final)
 
 
+def test_trusted_path_rejects_reparse_ancestor_above_root(tmp_path, monkeypatch):
+    import artifact_v09 as module
+
+    marked_ancestor = tmp_path.parent
+    original = module.is_reparse_point
+    monkeypatch.setattr(
+        module,
+        "is_reparse_point",
+        lambda path: Path(path) == marked_ancestor or original(path),
+    )
+    with pytest.raises(ValueError, match="above trusted root"):
+        module.assert_no_reparse_components(tmp_path, tmp_path / "payload.json")
+
+
 def test_source_tree_manifest_binds_paths_and_bytes(tmp_path):
     from artifact_v09 import canonical_sha256, source_tree_manifest
 

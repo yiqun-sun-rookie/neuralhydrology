@@ -34,6 +34,9 @@ def assert_no_reparse_components(root: str | Path, target: str | Path) -> None:
     target = Path(os.path.abspath(target))
     if target != root and root not in target.parents:
         raise ValueError("target path escapes its trusted root")
+    for ancestor in (root, *root.parents):
+        if is_reparse_point(ancestor):
+            raise ValueError(f"reparse point is forbidden above trusted root: {ancestor}")
     current = root
     for part in (None, *target.relative_to(root).parts):
         if part is not None:
@@ -44,6 +47,19 @@ def assert_no_reparse_components(root: str | Path, target: str | Path) -> None:
     resolved_target = target.resolve(strict=False)
     if resolved_target != resolved_root and resolved_root not in resolved_target.parents:
         raise ValueError("resolved target path escapes its trusted root")
+
+
+def assert_no_embedded_seal_entries(sealed_files: Sequence[Mapping]) -> None:
+    """Reject any sealed payload that attempts to include another seal file."""
+    for item in sealed_files:
+        if not isinstance(item, Mapping):
+            raise ValueError("sealed file descriptor must be an object")
+        relative_path = item.get("relative_path")
+        if not isinstance(relative_path, str):
+            raise ValueError("sealed file relative path is invalid")
+        normalized_name = Path(relative_path.replace("\\", "/")).name.casefold()
+        if normalized_name == "seal.json":
+            raise ValueError("sealed payload cannot include a nested or replacement seal.json")
 
 
 def assert_no_reparse_tree(root: str | Path) -> None:
