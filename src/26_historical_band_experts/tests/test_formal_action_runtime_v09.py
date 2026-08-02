@@ -5,7 +5,6 @@ import sys
 
 import pytest
 
-
 IDEA_ROOT = Path(__file__).resolve().parents[1]
 CONFIG = IDEA_ROOT / "configs/formal_v09_protocol.json"
 sys.path.insert(0, str(IDEA_ROOT))
@@ -51,9 +50,7 @@ def test_resource_preflight_is_read_only_and_covers_host_accelerator_and_lock(
         action=action,
         variant=variant,
         host_snapshot=_host_snapshot(),
-        accelerator_snapshot=(
-            _accelerator_snapshot() if accelerator_required else None
-        ),
+        accelerator_snapshot=(_accelerator_snapshot() if accelerator_required else None),
         lock_path=tmp_path / "formal-v09.lock",
     )
 
@@ -129,15 +126,18 @@ def test_training_runtime_checkpoint_fails_closed_on_accelerator_pressure(
     monkeypatch.setattr(
         runtime_module,
         "assert_launch_allowed_v09",
-        lambda config, **kwargs: {"status": "launch_allowed", "memory": {"safe": True}},
+        lambda config, **kwargs: {
+            "status": "launch_allowed",
+            "memory": {
+                "safe": True
+            }
+        },
     )
-    snapshots = iter(
-        [
-            _accelerator_snapshot(),
-            _accelerator_snapshot(),
-            AcceleratorMemorySnapshot(0, "synthetic-cuda", 16 * GIB, 1 * GIB - 1),
-        ]
-    )
+    snapshots = iter([
+        _accelerator_snapshot(),
+        _accelerator_snapshot(),
+        AcceleratorMemorySnapshot(0, "synthetic-cuda", 16 * GIB, 1 * GIB - 1),
+    ])
 
     with pytest.raises(MemorySafetyError, match="runtime reserve"):
         runtime_module._run_authorized_formal_action_v09(
@@ -179,14 +179,17 @@ def test_runtime_rejects_accelerator_device_switch_before_callback(tmp_path, mon
     monkeypatch.setattr(
         runtime_module,
         "assert_launch_allowed_v09",
-        lambda config, **kwargs: {"status": "launch_allowed", "memory": {"safe": True}},
+        lambda config, **kwargs: {
+            "status": "launch_allowed",
+            "memory": {
+                "safe": True
+            }
+        },
     )
-    snapshots = iter(
-        [
-            _accelerator_snapshot(),
-            AcceleratorMemorySnapshot(1, "other-cuda", 16 * GIB, 12 * GIB),
-        ]
-    )
+    snapshots = iter([
+        _accelerator_snapshot(),
+        AcceleratorMemorySnapshot(1, "other-cuda", 16 * GIB, 12 * GIB),
+    ])
     called = []
 
     with pytest.raises(MemorySafetyError, match="device identity"):
@@ -210,14 +213,17 @@ def test_entry_rechecks_full_host_peak_before_callback(tmp_path, monkeypatch):
     monkeypatch.setattr(
         runtime_module,
         "assert_launch_allowed_v09",
-        lambda config, **kwargs: {"status": "launch_allowed", "memory": {"safe": True}},
+        lambda config, **kwargs: {
+            "status": "launch_allowed",
+            "memory": {
+                "safe": True
+            }
+        },
     )
-    host_snapshots = iter(
-        [
-            _host_snapshot(),
-            HostMemorySnapshot(32 * GIB, 2 * GIB + 1, 256 * MIB, 30 * GIB),
-        ]
-    )
+    host_snapshots = iter([
+        _host_snapshot(),
+        HostMemorySnapshot(32 * GIB, 2 * GIB + 1, 256 * MIB, 30 * GIB),
+    ])
     called = []
 
     with pytest.raises(MemorySafetyError, match="guarded task estimate"):
@@ -240,14 +246,17 @@ def test_entry_rechecks_full_accelerator_peak_before_callback(tmp_path, monkeypa
     monkeypatch.setattr(
         runtime_module,
         "assert_launch_allowed_v09",
-        lambda config, **kwargs: {"status": "launch_allowed", "memory": {"safe": True}},
+        lambda config, **kwargs: {
+            "status": "launch_allowed",
+            "memory": {
+                "safe": True
+            }
+        },
     )
-    accelerator_snapshots = iter(
-        [
-            _accelerator_snapshot(),
-            AcceleratorMemorySnapshot(0, "synthetic-cuda", 16 * GIB, 2 * GIB),
-        ]
-    )
+    accelerator_snapshots = iter([
+        _accelerator_snapshot(),
+        AcceleratorMemorySnapshot(0, "synthetic-cuda", 16 * GIB, 2 * GIB),
+    ])
     called = []
 
     with pytest.raises(MemorySafetyError, match="accelerator reserve"):
@@ -262,3 +271,58 @@ def test_entry_rechecks_full_accelerator_peak_before_callback(tmp_path, monkeypa
         )
 
     assert called == []
+
+
+def test_training_stage_receipt_is_consumed_after_resource_checks_and_before_callback(tmp_path):
+    from formal_action_runtime_v09 import _run_authorized_formal_action_v09
+    from stage_authorization_v09 import STRICT_NESTING_APPROVAL_TEXT, create_stage_authorization_v09
+
+    prerequisites = {
+        "input_seal": "1" * 64,
+        "input_artifact_external_audit": "2" * 64,
+        "trusted_target_external_audit": "3" * 64,
+        "legacy_checkpoint_bridge_external_audit": "4" * 64,
+        "training_resource_preflight_external_audit": "5" * 64,
+    }
+    output_root = "results/26_historical_band_experts/formal_v09/strict_nesting/seed_100"
+    receipt = create_stage_authorization_v09(
+        approval_text=STRICT_NESTING_APPROVAL_TEXT,
+        scope="R09-NEST-S100",
+        protocol_sha256="a" * 64,
+        prerequisite_sha256=prerequisites,
+        executable_tree_sha256="b" * 64,
+        git_commit="c" * 40,
+        output_root=output_root,
+        created_utc="2026-08-02T00:00:00Z",
+    )
+    authorization_path = tmp_path / "authorization.json"
+    authorization_path.write_text(json.dumps(receipt), encoding="utf-8")
+    consumption_path = tmp_path / "consumption.json"
+    callback_observations = []
+
+    def callback(runtime):
+        callback_observations.append(consumption_path.is_file())
+        return runtime.checkpoint()
+
+    result = _run_authorized_formal_action_v09(
+        _config(),
+        action="training",
+        variant="classic_lstm_256_clean",
+        callback=callback,
+        host_sampler=_host_snapshot,
+        accelerator_sampler=_accelerator_snapshot,
+        lock_path=tmp_path / "formal-v09.lock",
+        stage_authorization_path=authorization_path,
+        stage_consumption_path=consumption_path,
+        authorization_scope="R09-NEST-S100",
+        stage_bindings={
+            "protocol_sha256": "a" * 64,
+            "prerequisite_sha256": prerequisites,
+            "executable_tree_sha256": "b" * 64,
+            "output_root": output_root,
+        },
+    )
+
+    assert callback_observations == [True]
+    assert result["stage_consumption"]["status"] == "consumed_once"
+    assert json.loads(consumption_path.read_text(encoding="utf-8"))["scope"] == "R09-NEST-S100"

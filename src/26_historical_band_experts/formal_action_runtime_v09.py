@@ -2,7 +2,11 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping
+from datetime import datetime, timezone
+import json
+import os
 from pathlib import Path
+import socket
 from typing import Any
 
 from formal_action_resources_v09 import (
@@ -22,7 +26,7 @@ from memory_safety_v09 import (
     exclusive_high_load_lease_v09,
     sample_host_memory,
 )
-
+from stage_authorization_v09 import consume_stage_authorization_v09
 
 _FORMAL_ACTIONS = {
     "formal_target_bundle_generation",
@@ -88,11 +92,7 @@ class FormalActionRuntimeV09:
         if not self.lease.is_valid():
             raise MemorySafetyError("formal action runtime no longer owns the serial lease")
         host_report = self.host_gate.assert_runtime_safe(self.host_sampler())
-        current_accelerator = (
-            None
-            if self.action == "formal_target_bundle_generation"
-            else self.accelerator_sampler()
-        )
+        current_accelerator = (None if self.action == "formal_target_bundle_generation" else self.accelerator_sampler())
         _assert_same_accelerator_v09(self.initial_accelerator, current_accelerator)
         accelerator_report = assert_accelerator_runtime_safe_v09(
             self.config,
@@ -114,11 +114,7 @@ class FormalActionRuntimeV09:
             long_running=True,
             lease=self.lease,
         )
-        current_accelerator = (
-            None
-            if self.action == "formal_target_bundle_generation"
-            else self.accelerator_sampler()
-        )
+        current_accelerator = (None if self.action == "formal_target_bundle_generation" else self.accelerator_sampler())
         _assert_same_accelerator_v09(self.initial_accelerator, current_accelerator)
         accelerator_report = assert_accelerator_safe_v09(
             self.config,
@@ -233,9 +229,26 @@ def _run_authorized_formal_action_v09(
     host_sampler: Callable[[], HostMemorySnapshot] = sample_host_memory,
     accelerator_sampler: Callable[[], AcceleratorMemorySnapshot] = sample_cuda_memory_v09,
     lock_path: str | Path | None = None,
+    stage_authorization_path: str | Path | None = None,
+    stage_consumption_path: str | Path | None = None,
+    authorization_scope: str | None = None,
+    stage_bindings: Mapping | None = None,
 ) -> dict:
     """Injectable implementation used only by isolated lifecycle tests."""
     _require_action(action)
+    stage_arguments = (
+        stage_authorization_path,
+        stage_consumption_path,
+        authorization_scope,
+        stage_bindings,
+    )
+    if any(value is not None for value in stage_arguments) and any(value is None for value in stage_arguments):
+        raise ValueError("formal stage authorization arguments must be supplied together")
+    stage_authorization = None
+    if stage_authorization_path is not None:
+        stage_authorization_path = Path(stage_authorization_path)
+        stage_consumption_path = Path(stage_consumption_path)
+        stage_authorization = json.loads(stage_authorization_path.read_text(encoding="utf-8"))
     estimate = build_formal_action_peak_estimate_v09(config, action, variant=variant)
     with exclusive_high_load_lease_v09(lock_path=lock_path) as lease:
         initial_host = host_sampler()
@@ -246,6 +259,9 @@ def _run_authorized_formal_action_v09(
             variant=variant,
             snapshot=initial_host,
             lease=lease,
+            stage_authorization=stage_authorization,
+            authorization_scope=authorization_scope,
+            stage_bindings=stage_bindings,
         )
         initial_accelerator = _initial_accelerator_snapshot(
             action,
@@ -271,6 +287,17 @@ def _run_authorized_formal_action_v09(
             initial_accelerator=initial_accelerator,
         )
         entry_checkpoint = runtime.assert_entry_safe()
+        stage_consumption = None
+        if stage_authorization is not None:
+            stage_consumption = consume_stage_authorization_v09(
+                stage_authorization_path,
+                stage_consumption_path,
+                receipt=stage_authorization,
+                process_id=os.getpid(),
+                hostname=socket.gethostname(),
+                consumed_utc=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+                memory_snapshot=launch_report["host"],
+            )
         result = callback(runtime)
     return {
         "status": "formal_action_completed",
@@ -279,6 +306,7 @@ def _run_authorized_formal_action_v09(
         "launch": launch_report,
         "accelerator": accelerator_report,
         "entry_checkpoint": entry_checkpoint,
+        "stage_consumption": stage_consumption,
         "result": result,
     }
 
@@ -289,6 +317,10 @@ def run_authorized_formal_action_v09(
     action: str,
     callback: Callable[[FormalActionRuntimeV09], Any],
     variant: str | None = None,
+    stage_authorization_path: str | Path | None = None,
+    stage_consumption_path: str | Path | None = None,
+    authorization_scope: str | None = None,
+    stage_bindings: Mapping | None = None,
 ) -> dict:
     """Run only with live samplers and the one fixed global serial lock."""
     return _run_authorized_formal_action_v09(
@@ -299,4 +331,8 @@ def run_authorized_formal_action_v09(
         host_sampler=sample_host_memory,
         accelerator_sampler=sample_cuda_memory_v09,
         lock_path=None,
+        stage_authorization_path=stage_authorization_path,
+        stage_consumption_path=stage_consumption_path,
+        authorization_scope=authorization_scope,
+        stage_bindings=stage_bindings,
     )
