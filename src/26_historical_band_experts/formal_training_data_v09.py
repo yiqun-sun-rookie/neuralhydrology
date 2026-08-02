@@ -141,11 +141,13 @@ def _load_passed_report(path: Path, expected_status: str) -> dict:
 
 def _verify_consumed_input_files_v09(input_root: Path, seal: Mapping) -> None:
     """Rehash every file that can affect training before opening any array."""
-    assert_no_reparse_tree(input_root)
     sealed_files = seal.get("sealed_files")
-    if (not isinstance(sealed_files, list) or seal.get("sealed_files_sha256") != canonical_sha256(sealed_files)):
+    if not isinstance(sealed_files, list):
         raise FormalTrainingDataError("complete input sealed-file inventory drift")
     assert_no_embedded_seal_entries(sealed_files)
+    if seal.get("sealed_files_sha256") != canonical_sha256(sealed_files):
+        raise FormalTrainingDataError("complete input sealed-file inventory drift")
+    assert_no_reparse_tree(input_root)
     descriptor_by_name = {item.get("relative_path"): item for item in sealed_files if isinstance(item, Mapping)}
     consumed_names = (
         "basins.txt",

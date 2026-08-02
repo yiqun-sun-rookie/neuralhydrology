@@ -143,6 +143,30 @@ def test_external_strict_audit_rejects_reparse_report_directory_before_resolve(t
         )
 
 
+def test_embedded_seal_rejection_precedes_tree_scan_and_manifest_hash(tmp_path, monkeypatch):
+    import audit_strict_formal_v09 as module
+
+    monkeypatch.setattr(
+        module,
+        "assert_no_reparse_tree",
+        lambda *args: pytest.fail("tree scanned before embedded seal rejection"),
+    )
+    monkeypatch.setattr(
+        module,
+        "canonical_sha256",
+        lambda *args: pytest.fail("manifest hashed before embedded seal rejection"),
+    )
+    seal = {
+        "status": "sealed",
+        "sealed_files": [{
+            "relative_path": "deep/SEAL.JSON"
+        }],
+        "sealed_files_sha256": "0" * 64,
+    }
+    with pytest.raises(ValueError, match="cannot include"):
+        module._verify_sealed_files(tmp_path / "not-opened", seal)
+
+
 def test_formal_manifest_contract_rejects_wrong_geometry_and_missing_input_hash():
     from audit_strict_formal_v09 import _FORMAL_GEOMETRY, _validate_manifest_trajectory_v09
 

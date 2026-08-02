@@ -42,12 +42,14 @@ _FORMAL_GEOMETRY = {
 
 
 def _verify_sealed_files(run_dir: Path, seal: dict) -> None:
-    assert_no_reparse_tree(run_dir)
     sealed_files = seal.get("sealed_files")
-    if (seal.get("status") != "sealed" or not isinstance(sealed_files, list) or
-            seal.get("sealed_files_sha256") != canonical_sha256(sealed_files)):
+    if not isinstance(sealed_files, list):
         raise ValueError("strict run seal drift")
     assert_no_embedded_seal_entries(sealed_files)
+    if (seal.get("status") != "sealed" or
+            seal.get("sealed_files_sha256") != canonical_sha256(sealed_files)):
+        raise ValueError("strict run seal drift")
+    assert_no_reparse_tree(run_dir)
     expected = {item.get("relative_path") for item in sealed_files}
     actual = {
         path.relative_to(run_dir).as_posix()

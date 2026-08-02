@@ -344,3 +344,26 @@ def test_formal_input_inventory_rejects_registered_nested_seal(tmp_path, nested_
 
     with pytest.raises(ValueError, match="cannot include"):
         module._verify_consumed_input_files_v09(root, seal)
+
+
+def test_formal_embedded_seal_rejection_precedes_tree_scan_and_manifest_hash(tmp_path, monkeypatch):
+    import formal_training_data_v09 as module
+
+    monkeypatch.setattr(
+        module,
+        "assert_no_reparse_tree",
+        lambda *args: pytest.fail("tree scanned before embedded seal rejection"),
+    )
+    monkeypatch.setattr(
+        module,
+        "canonical_sha256",
+        lambda *args: pytest.fail("manifest hashed before embedded seal rejection"),
+    )
+    seal = {
+        "sealed_files": [{
+            "relative_path": "deep\\SeAl.JsOn"
+        }],
+        "sealed_files_sha256": "0" * 64,
+    }
+    with pytest.raises(ValueError, match="cannot include"):
+        module._verify_consumed_input_files_v09(tmp_path / "not-opened", seal)
