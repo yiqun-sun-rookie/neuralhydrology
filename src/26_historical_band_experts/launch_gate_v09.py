@@ -7,7 +7,6 @@ import json
 from pathlib import Path
 import sys
 
-
 IDEA_ROOT = Path(__file__).resolve().parent
 WORKTREE_SRC = IDEA_ROOT.parent
 if str(WORKTREE_SRC) not in sys.path:
@@ -23,7 +22,7 @@ from memory_safety_v09 import (
     exclusive_high_load_lease_v09,
     sample_host_memory,
 )
-
+from stage_authorization_v09 import validate_stage_authorization_v09
 
 _ACTION_AUTHORIZATION = {
     "synthetic_test": "synthetic_tests",
@@ -53,29 +52,51 @@ def assert_launch_allowed_v09(
     variant: str | None = None,
     snapshot: HostMemorySnapshot | None = None,
     lease: TaskMemoryLease | None = None,
+    stage_authorization: Mapping | None = None,
+    authorization_scope: str | None = None,
+    stage_bindings: Mapping | None = None,
 ) -> dict:
-    """Require both explicit protocol authorization and a safe host-memory state."""
+    """Require exact authorization and a safe host-memory state."""
     validate_protocol_v09(config)
     if action not in _ACTION_AUTHORIZATION:
         raise ValueError(f"unknown version 09 action: {action}")
     authorization_key = _ACTION_AUTHORIZATION[action]
-    if config["authorization"].get(authorization_key) is not True:
-        raise LaunchAuthorizationError(
-            f"version 09 action {action} is not authorized by protocol {config['protocol_id']}"
+    if config["authorization"].get(authorization_key) is True:
+        if any(value is not None for value in (stage_authorization, authorization_scope, stage_bindings)):
+            raise LaunchAuthorizationError("protocol authorization cannot be mixed with a stage receipt")
+        authorization_mode = "protocol_boolean"
+    else:
+        if action != "training" or any(
+                value is None for value in (stage_authorization, authorization_scope, stage_bindings)):
+            raise LaunchAuthorizationError(
+                f"version 09 action {action} is not authorized by protocol {config['protocol_id']}")
+        expected_binding_keys = {
+            "protocol_sha256",
+            "prerequisite_sha256",
+            "executable_tree_sha256",
+            "output_root",
+        }
+        if not isinstance(stage_bindings, Mapping) or set(stage_bindings) != expected_binding_keys:
+            raise LaunchAuthorizationError("formal training stage binding schema drift")
+        validate_stage_authorization_v09(
+            stage_authorization,
+            action=action,
+            scope=authorization_scope,
+            protocol_sha256=stage_bindings["protocol_sha256"],
+            prerequisite_sha256=stage_bindings["prerequisite_sha256"],
+            executable_tree_sha256=stage_bindings["executable_tree_sha256"],
+            output_root=stage_bindings["output_root"],
         )
+        authorization_mode = "one_use_stage_receipt"
     allowed_peak_methods = _ACTION_PEAK_METHODS[action]
     if not allowed_peak_methods:
-        raise MemorySafetyError(
-            f"no trusted task-specific peak estimator is registered for action {action}"
-        )
+        raise MemorySafetyError(f"no trusted task-specific peak estimator is registered for action {action}")
     if peak_estimate.get("method") not in allowed_peak_methods:
-        raise MemorySafetyError(
-            f"peak estimate method is not registered for action {action}"
-        )
+        raise MemorySafetyError(f"peak estimate method is not registered for action {action}")
     if action in {
-        "formal_target_bundle_generation",
-        "training",
-        "formal_prediction_generation",
+            "formal_target_bundle_generation",
+            "training",
+            "formal_prediction_generation",
     }:
         validate_formal_action_peak_estimate_v09(
             config,
@@ -99,6 +120,8 @@ def assert_launch_allowed_v09(
         "protocol_id": config["protocol_id"],
         "action": action,
         "authorization_key": authorization_key,
+        "authorization_mode": authorization_mode,
+        "authorization_scope": authorization_scope,
         "memory": memory_report,
         "host": {
             "total_bytes": snapshot.total_bytes,

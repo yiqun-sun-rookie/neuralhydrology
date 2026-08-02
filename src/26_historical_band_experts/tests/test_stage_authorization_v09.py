@@ -1,0 +1,161 @@
+import json
+from pathlib import Path
+import sys
+
+import pytest
+
+IDEA_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(IDEA_ROOT))
+
+
+def _prerequisites(scope: str) -> dict[str, str]:
+    keys = [
+        "input_seal",
+        "input_artifact_external_audit",
+        "trusted_target_external_audit",
+        "legacy_checkpoint_bridge_external_audit",
+        "training_resource_preflight_external_audit",
+    ]
+    if scope == "FORMAL-MAIN-24":
+        keys.extend([
+            "strict_nesting_run_seal",
+            "strict_nesting_external_audit",
+            "state_diagnostics_preregistration",
+        ])
+    return {key: str(index + 1) * 64 for index, key in enumerate(keys)}
+
+
+def test_strict_receipt_requires_exact_scope_text_and_single_run():
+    from stage_authorization_v09 import (
+        STRICT_NESTING_APPROVAL_TEXT,
+        create_stage_authorization_v09,
+    )
+
+    receipt = create_stage_authorization_v09(
+        approval_text=STRICT_NESTING_APPROVAL_TEXT,
+        scope="R09-NEST-S100",
+        protocol_sha256="a" * 64,
+        prerequisite_sha256=_prerequisites("R09-NEST-S100"),
+        executable_tree_sha256="b" * 64,
+        git_commit="c" * 40,
+        output_root="results/26_historical_band_experts/formal_v09/strict_nesting/seed_100",
+        created_utc="2026-08-02T00:00:00Z",
+    )
+
+    assert receipt["allowed_runs"] == ["R09-NEST-S100"]
+    assert receipt["maximum_attempts"] == 1
+    assert receipt["formal_prediction_generation_authorized"] is False
+    assert receipt["official_scoring_authorized"] is False
+
+
+def test_main_receipt_rejects_missing_or_extra_prerequisite_keys():
+    from stage_authorization_v09 import (
+        MAIN_TRAINING_APPROVAL_TEXT,
+        create_stage_authorization_v09,
+    )
+
+    prerequisites = _prerequisites("FORMAL-MAIN-24")
+    prerequisites.pop("strict_nesting_external_audit")
+    with pytest.raises(ValueError, match="prerequisite"):
+        create_stage_authorization_v09(
+            approval_text=MAIN_TRAINING_APPROVAL_TEXT,
+            scope="FORMAL-MAIN-24",
+            protocol_sha256="a" * 64,
+            prerequisite_sha256=prerequisites,
+            executable_tree_sha256="b" * 64,
+            git_commit="c" * 40,
+            output_root="results/26_historical_band_experts/formal_v09",
+            created_utc="2026-08-02T00:00:00Z",
+        )
+
+
+def test_validation_rejects_protocol_tree_output_and_receipt_tampering():
+    from stage_authorization_v09 import (
+        STRICT_NESTING_APPROVAL_TEXT,
+        create_stage_authorization_v09,
+        validate_stage_authorization_v09,
+    )
+
+    prerequisites = _prerequisites("R09-NEST-S100")
+    receipt = create_stage_authorization_v09(
+        approval_text=STRICT_NESTING_APPROVAL_TEXT,
+        scope="R09-NEST-S100",
+        protocol_sha256="a" * 64,
+        prerequisite_sha256=prerequisites,
+        executable_tree_sha256="b" * 64,
+        git_commit="c" * 40,
+        output_root="results/26_historical_band_experts/formal_v09/strict_nesting/seed_100",
+        created_utc="2026-08-02T00:00:00Z",
+    )
+    validate_stage_authorization_v09(
+        receipt,
+        action="training",
+        scope="R09-NEST-S100",
+        protocol_sha256="a" * 64,
+        prerequisite_sha256=prerequisites,
+        executable_tree_sha256="b" * 64,
+        output_root="results/26_historical_band_experts/formal_v09/strict_nesting/seed_100",
+    )
+
+    for field, value in (
+        ("protocol_sha256", "d" * 64),
+        ("executable_tree_sha256", "e" * 64),
+        ("output_root", "elsewhere"),
+        ("maximum_attempts", 2),
+    ):
+        drift = dict(receipt)
+        drift[field] = value
+        with pytest.raises(ValueError):
+            validate_stage_authorization_v09(
+                drift,
+                action="training",
+                scope="R09-NEST-S100",
+                protocol_sha256="a" * 64,
+                prerequisite_sha256=prerequisites,
+                executable_tree_sha256="b" * 64,
+                output_root="results/26_historical_band_experts/formal_v09/strict_nesting/seed_100",
+            )
+
+
+def test_consumption_is_exclusive_and_cannot_be_replayed(tmp_path):
+    from stage_authorization_v09 import (
+        STRICT_NESTING_APPROVAL_TEXT,
+        consume_stage_authorization_v09,
+        create_stage_authorization_v09,
+    )
+
+    prerequisites = _prerequisites("R09-NEST-S100")
+    receipt = create_stage_authorization_v09(
+        approval_text=STRICT_NESTING_APPROVAL_TEXT,
+        scope="R09-NEST-S100",
+        protocol_sha256="a" * 64,
+        prerequisite_sha256=prerequisites,
+        executable_tree_sha256="b" * 64,
+        git_commit="c" * 40,
+        output_root="results/26_historical_band_experts/formal_v09/strict_nesting/seed_100",
+        created_utc="2026-08-02T00:00:00Z",
+    )
+    authorization_path = tmp_path / "authorization.json"
+    authorization_path.write_text(json.dumps(receipt), encoding="utf-8")
+    consumed_path = tmp_path / "consumed.json"
+
+    consumed = consume_stage_authorization_v09(
+        authorization_path,
+        consumed_path,
+        receipt=receipt,
+        process_id=123,
+        hostname="test-host",
+        consumed_utc="2026-08-02T01:00:00Z",
+        memory_snapshot={"available_bytes": 10},
+    )
+    assert consumed["status"] == "consumed_once"
+    with pytest.raises(FileExistsError):
+        consume_stage_authorization_v09(
+            authorization_path,
+            consumed_path,
+            receipt=receipt,
+            process_id=124,
+            hostname="test-host",
+            consumed_utc="2026-08-02T02:00:00Z",
+            memory_snapshot={"available_bytes": 10},
+        )
