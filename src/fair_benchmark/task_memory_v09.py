@@ -516,6 +516,7 @@ def _validate_model_action_peak_evidence_v09(
     _require_hex64_evidence(evidence.get("protocol_canonical_sha256"), "protocol content")
     variant = evidence.get("variant")
     if variant not in {
+        "strict_nesting_pair",
         "classic_lstm_256_clean",
         "classic_lstm_369_capacity",
         "continuous_multiscale_history",

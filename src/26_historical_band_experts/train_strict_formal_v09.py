@@ -301,7 +301,13 @@ def run_strict_training_v09(
 ) -> dict:
     """Run the only formal seed-100 strict stage under a live guarded runtime."""
     spec = _formal_spec(protocol)
-    if runtime is None or not runtime.is_valid_for("training"):
+    if runtime is None or not runtime.is_valid_for(
+            "training",
+            run_id="R09-NEST-S100",
+            seed=100,
+            variant="strict_nesting_pair",
+            output_root=output_dir,
+    ):
         raise ValueError("formal strict training requires a live training runtime")
     return _run_strict_training_v09(
         inputs,

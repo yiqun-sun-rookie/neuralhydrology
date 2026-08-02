@@ -25,7 +25,7 @@ def _prerequisites(scope: str) -> dict[str, str]:
     return {key: str(index + 1) * 64 for index, key in enumerate(keys)}
 
 
-def test_strict_receipt_requires_exact_scope_text_and_single_run():
+def test_strict_receipt_requires_exact_scope_text_and_single_run(tmp_path):
     from stage_authorization_v09 import (
         STRICT_NESTING_APPROVAL_TEXT,
         create_stage_authorization_v09,
@@ -38,6 +38,7 @@ def test_strict_receipt_requires_exact_scope_text_and_single_run():
         prerequisite_sha256=_prerequisites("R09-NEST-S100"),
         executable_tree_sha256="b" * 64,
         git_commit="c" * 40,
+        worktree_root=tmp_path,
         output_root="results/26_historical_band_experts/formal_v09/strict_nesting/seed_100",
         created_utc="2026-08-02T00:00:00Z",
     )
@@ -48,7 +49,7 @@ def test_strict_receipt_requires_exact_scope_text_and_single_run():
     assert receipt["official_scoring_authorized"] is False
 
 
-def test_main_receipt_rejects_missing_or_extra_prerequisite_keys():
+def test_main_receipt_rejects_missing_or_extra_prerequisite_keys(tmp_path):
     from stage_authorization_v09 import (
         MAIN_TRAINING_APPROVAL_TEXT,
         create_stage_authorization_v09,
@@ -64,12 +65,13 @@ def test_main_receipt_rejects_missing_or_extra_prerequisite_keys():
             prerequisite_sha256=prerequisites,
             executable_tree_sha256="b" * 64,
             git_commit="c" * 40,
+            worktree_root=tmp_path,
             output_root="results/26_historical_band_experts/formal_v09",
             created_utc="2026-08-02T00:00:00Z",
         )
 
 
-def test_validation_rejects_protocol_tree_output_and_receipt_tampering():
+def test_validation_rejects_protocol_tree_output_and_receipt_tampering(tmp_path):
     from stage_authorization_v09 import (
         STRICT_NESTING_APPROVAL_TEXT,
         create_stage_authorization_v09,
@@ -84,6 +86,7 @@ def test_validation_rejects_protocol_tree_output_and_receipt_tampering():
         prerequisite_sha256=prerequisites,
         executable_tree_sha256="b" * 64,
         git_commit="c" * 40,
+        worktree_root=tmp_path,
         output_root="results/26_historical_band_experts/formal_v09/strict_nesting/seed_100",
         created_utc="2026-08-02T00:00:00Z",
     )
@@ -94,6 +97,7 @@ def test_validation_rejects_protocol_tree_output_and_receipt_tampering():
         protocol_sha256="a" * 64,
         prerequisite_sha256=prerequisites,
         executable_tree_sha256="b" * 64,
+        worktree_root=tmp_path,
         output_root="results/26_historical_band_experts/formal_v09/strict_nesting/seed_100",
     )
 
@@ -113,6 +117,7 @@ def test_validation_rejects_protocol_tree_output_and_receipt_tampering():
                 protocol_sha256="a" * 64,
                 prerequisite_sha256=prerequisites,
                 executable_tree_sha256="b" * 64,
+                worktree_root=tmp_path,
                 output_root="results/26_historical_band_experts/formal_v09/strict_nesting/seed_100",
             )
 
@@ -122,6 +127,7 @@ def test_consumption_is_exclusive_and_cannot_be_replayed(tmp_path):
         STRICT_NESTING_APPROVAL_TEXT,
         consume_stage_authorization_v09,
         create_stage_authorization_v09,
+        stage_authorization_paths_v09,
     )
 
     prerequisites = _prerequisites("R09-NEST-S100")
@@ -132,17 +138,18 @@ def test_consumption_is_exclusive_and_cannot_be_replayed(tmp_path):
         prerequisite_sha256=prerequisites,
         executable_tree_sha256="b" * 64,
         git_commit="c" * 40,
+        worktree_root=tmp_path,
         output_root="results/26_historical_band_experts/formal_v09/strict_nesting/seed_100",
         created_utc="2026-08-02T00:00:00Z",
     )
-    authorization_path = tmp_path / "authorization.json"
+    authorization_path, consumed_path = stage_authorization_paths_v09("R09-NEST-S100", worktree_root=tmp_path)
+    authorization_path.parent.mkdir(parents=True)
     authorization_path.write_text(json.dumps(receipt), encoding="utf-8")
-    consumed_path = tmp_path / "consumed.json"
 
     consumed = consume_stage_authorization_v09(
         authorization_path,
-        consumed_path,
         receipt=receipt,
+        worktree_root=tmp_path,
         process_id=123,
         hostname="test-host",
         consumed_utc="2026-08-02T01:00:00Z",
@@ -152,10 +159,23 @@ def test_consumption_is_exclusive_and_cannot_be_replayed(tmp_path):
     with pytest.raises(FileExistsError):
         consume_stage_authorization_v09(
             authorization_path,
-            consumed_path,
             receipt=receipt,
+            worktree_root=tmp_path,
             process_id=124,
             hostname="test-host",
             consumed_utc="2026-08-02T02:00:00Z",
+            memory_snapshot={"available_bytes": 10},
+        )
+
+    copied = tmp_path / "copied-authorization.json"
+    copied.write_text(json.dumps(receipt), encoding="utf-8")
+    with pytest.raises(ValueError, match="canonical path"):
+        consume_stage_authorization_v09(
+            copied,
+            receipt=receipt,
+            worktree_root=tmp_path,
+            process_id=125,
+            hostname="test-host",
+            consumed_utc="2026-08-02T03:00:00Z",
             memory_snapshot={"available_bytes": 10},
         )

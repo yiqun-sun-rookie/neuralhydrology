@@ -69,6 +69,7 @@ _SCOPE_SPECS = {
         "allowed_runs": MAIN_ALLOWED_RUNS,
     },
 }
+_AUTHORIZATION_DIRECTORY = Path("results/26_historical_band_experts/formal_v09/authorizations")
 
 
 def _require_sha256(value: object, label: str) -> str:
@@ -90,6 +91,17 @@ def _validated_prerequisites(scope: str, values: Mapping) -> dict[str, str]:
     return {key: _require_sha256(values[key], f"prerequisite {key}") for key in expected}
 
 
+def _resolved_output_root(worktree_root: str | Path, output_root: str | Path) -> str:
+    worktree = Path(worktree_root).resolve()
+    output = Path(output_root)
+    if not output.is_absolute():
+        output = worktree / output
+    output = output.resolve()
+    if output == worktree or worktree not in output.parents:
+        raise ValueError("stage authorization output root must be inside the bound worktree")
+    return str(output)
+
+
 def create_stage_authorization_v09(
     *,
     approval_text: str,
@@ -98,6 +110,7 @@ def create_stage_authorization_v09(
     prerequisite_sha256: Mapping,
     executable_tree_sha256: str,
     git_commit: str,
+    worktree_root: str | Path,
     output_root: str,
     created_utc: str,
 ) -> dict:
@@ -111,6 +124,8 @@ def create_stage_authorization_v09(
         raise ValueError("stage authorization requires a full Git commit")
     if not isinstance(output_root, str) or not output_root:
         raise ValueError("stage authorization output root is required")
+    resolved_worktree = str(Path(worktree_root).resolve())
+    resolved_output = _resolved_output_root(worktree_root, output_root)
     if not isinstance(created_utc, str) or not created_utc:
         raise ValueError("stage authorization creation time is required")
     prerequisites = _validated_prerequisites(scope, prerequisite_sha256)
@@ -126,7 +141,8 @@ def create_stage_authorization_v09(
         "prerequisite_sha256": prerequisites,
         "executable_tree_sha256": _require_sha256(executable_tree_sha256, "executable tree SHA-256"),
         "git_commit": git_commit.lower(),
-        "output_root": output_root,
+        "worktree_root": resolved_worktree,
+        "output_root": resolved_output,
         "approval": {
             "text": approval_text,
             "sha256": hashlib.sha256(approval_text.encode("utf-8")).hexdigest(),
@@ -137,6 +153,23 @@ def create_stage_authorization_v09(
     }
 
 
+def stage_authorization_paths_v09(
+    scope: str,
+    *,
+    worktree_root: str | Path,
+) -> tuple[Path, Path]:
+    """Return the only legal authorization and consumption paths for one scope."""
+    if scope not in _SCOPE_SPECS:
+        raise ValueError(f"unsupported formal stage scope: {scope}")
+    root = Path(worktree_root).resolve()
+    receipt_id = _SCOPE_SPECS[scope]["receipt_id"]
+    directory = root / _AUTHORIZATION_DIRECTORY
+    return (
+        directory / f"{receipt_id}.authorization.json",
+        directory / f"{receipt_id}.consumption.json",
+    )
+
+
 def validate_stage_authorization_v09(
     receipt: Mapping,
     *,
@@ -145,6 +178,7 @@ def validate_stage_authorization_v09(
     protocol_sha256: str,
     prerequisite_sha256: Mapping,
     executable_tree_sha256: str,
+    worktree_root: str | Path,
     output_root: str,
 ) -> dict:
     """Reject any receipt field, prerequisite, or executable binding drift."""
@@ -165,6 +199,7 @@ def validate_stage_authorization_v09(
         "prerequisite_sha256",
         "executable_tree_sha256",
         "git_commit",
+        "worktree_root",
         "output_root",
         "approval",
         "created_utc",
@@ -187,7 +222,8 @@ def validate_stage_authorization_v09(
         "protocol_sha256": _require_sha256(protocol_sha256, "protocol SHA-256"),
         "prerequisite_sha256": prerequisites,
         "executable_tree_sha256": _require_sha256(executable_tree_sha256, "executable tree SHA-256"),
-        "output_root": output_root,
+        "worktree_root": str(Path(worktree_root).resolve()),
+        "output_root": _resolved_output_root(worktree_root, output_root),
         "approval": {
             "text": approval_text,
             "sha256": hashlib.sha256(approval_text.encode("utf-8")).hexdigest(),
@@ -209,17 +245,24 @@ def validate_stage_authorization_v09(
 
 def consume_stage_authorization_v09(
     authorization_path: str | Path,
-    consumption_path: str | Path,
     *,
     receipt: Mapping,
+    worktree_root: str | Path,
     process_id: int,
     hostname: str,
     consumed_utc: str,
     memory_snapshot: Mapping,
 ) -> dict:
     """Exclusively consume a validated receipt immediately before execution."""
-    authorization_path = Path(authorization_path)
-    consumption_path = Path(consumption_path)
+    authorization_path = Path(authorization_path).resolve()
+    expected_authorization, consumption_path = stage_authorization_paths_v09(
+        receipt.get("scope"),
+        worktree_root=worktree_root,
+    )
+    if authorization_path != expected_authorization.resolve():
+        raise ValueError("stage authorization file is outside its canonical path")
+    if receipt.get("worktree_root") != str(Path(worktree_root).resolve()):
+        raise ValueError("stage authorization worktree binding drift")
     recorded = json.loads(authorization_path.read_text(encoding="utf-8"))
     if recorded != dict(receipt):
         raise ValueError("stage authorization file differs from the validated receipt")

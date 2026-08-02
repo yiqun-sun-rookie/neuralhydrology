@@ -273,9 +273,13 @@ def test_entry_rechecks_full_accelerator_peak_before_callback(tmp_path, monkeypa
     assert called == []
 
 
-def test_training_stage_receipt_is_consumed_after_resource_checks_and_before_callback(tmp_path):
+def test_training_stage_receipt_is_consumed_after_resource_checks_and_before_callback(tmp_path, monkeypatch):
     from formal_action_runtime_v09 import _run_authorized_formal_action_v09
-    from stage_authorization_v09 import STRICT_NESTING_APPROVAL_TEXT, create_stage_authorization_v09
+    from stage_authorization_v09 import (
+        STRICT_NESTING_APPROVAL_TEXT,
+        create_stage_authorization_v09,
+        stage_authorization_paths_v09,
+    )
 
     prerequisites = {
         "input_seal": "1" * 64,
@@ -292,37 +296,111 @@ def test_training_stage_receipt_is_consumed_after_resource_checks_and_before_cal
         prerequisite_sha256=prerequisites,
         executable_tree_sha256="b" * 64,
         git_commit="c" * 40,
+        worktree_root=tmp_path,
         output_root=output_root,
         created_utc="2026-08-02T00:00:00Z",
     )
-    authorization_path = tmp_path / "authorization.json"
+    authorization_path, consumption_path = stage_authorization_paths_v09("R09-NEST-S100", worktree_root=tmp_path)
+    authorization_path.parent.mkdir(parents=True)
     authorization_path.write_text(json.dumps(receipt), encoding="utf-8")
-    consumption_path = tmp_path / "consumption.json"
     callback_observations = []
 
-    def callback(runtime):
+    def callback(*, runtime):
         callback_observations.append(consumption_path.is_file())
         return runtime.checkpoint()
+
+    import train_strict_formal_v09
+    monkeypatch.setattr(train_strict_formal_v09, "run_strict_training_v09", callback)
 
     result = _run_authorized_formal_action_v09(
         _config(),
         action="training",
-        variant="classic_lstm_256_clean",
+        variant="strict_nesting_pair",
         callback=callback,
         host_sampler=_host_snapshot,
         accelerator_sampler=_accelerator_snapshot,
         lock_path=tmp_path / "formal-v09.lock",
-        stage_authorization_path=authorization_path,
-        stage_consumption_path=consumption_path,
         authorization_scope="R09-NEST-S100",
+        stage_worktree_root=tmp_path,
         stage_bindings={
             "protocol_sha256": "a" * 64,
             "prerequisite_sha256": prerequisites,
             "executable_tree_sha256": "b" * 64,
-            "output_root": output_root,
+            "worktree_root": str(tmp_path.resolve()),
+            "output_root": receipt["output_root"],
+        },
+        run_claim={
+            "run_id": "R09-NEST-S100",
+            "seed": 100,
+            "variant": "strict_nesting_pair",
+            "output_root": receipt["output_root"],
         },
     )
 
     assert callback_observations == [True]
     assert result["stage_consumption"]["status"] == "consumed_once"
     assert json.loads(consumption_path.read_text(encoding="utf-8"))["scope"] == "R09-NEST-S100"
+
+
+def test_strict_stage_rejects_wrong_workload_before_consuming_receipt(tmp_path, monkeypatch):
+    from formal_action_runtime_v09 import _run_authorized_formal_action_v09
+    from stage_authorization_v09 import (
+        STRICT_NESTING_APPROVAL_TEXT,
+        create_stage_authorization_v09,
+        stage_authorization_paths_v09,
+    )
+    import train_strict_formal_v09
+
+    prerequisites = {
+        "input_seal": "1" * 64,
+        "input_artifact_external_audit": "2" * 64,
+        "trusted_target_external_audit": "3" * 64,
+        "legacy_checkpoint_bridge_external_audit": "4" * 64,
+        "training_resource_preflight_external_audit": "5" * 64,
+    }
+    receipt = create_stage_authorization_v09(
+        approval_text=STRICT_NESTING_APPROVAL_TEXT,
+        scope="R09-NEST-S100",
+        protocol_sha256="a" * 64,
+        prerequisite_sha256=prerequisites,
+        executable_tree_sha256="b" * 64,
+        git_commit="c" * 40,
+        worktree_root=tmp_path,
+        output_root="results/strict",
+        created_utc="2026-08-02T00:00:00Z",
+    )
+    authorization_path, consumption_path = stage_authorization_paths_v09("R09-NEST-S100", worktree_root=tmp_path)
+    authorization_path.parent.mkdir(parents=True)
+    authorization_path.write_text(json.dumps(receipt), encoding="utf-8")
+
+    def callback(*, runtime):
+        return runtime.checkpoint()
+
+    monkeypatch.setattr(train_strict_formal_v09, "run_strict_training_v09", callback)
+    bindings = {
+        "protocol_sha256": "a" * 64,
+        "prerequisite_sha256": prerequisites,
+        "executable_tree_sha256": "b" * 64,
+        "worktree_root": str(tmp_path.resolve()),
+        "output_root": receipt["output_root"],
+    }
+    with pytest.raises(ValueError, match="strict nesting workload"):
+        _run_authorized_formal_action_v09(
+            _config(),
+            action="training",
+            variant="strict_nesting_pair",
+            callback=callback,
+            host_sampler=_host_snapshot,
+            accelerator_sampler=_accelerator_snapshot,
+            lock_path=tmp_path / "formal-v09.lock",
+            authorization_scope="R09-NEST-S100",
+            stage_worktree_root=tmp_path,
+            stage_bindings=bindings,
+            run_claim={
+                "run_id": "R09-NEST-S100",
+                "seed": 101,
+                "variant": "strict_nesting_pair",
+                "output_root": receipt["output_root"],
+            },
+        )
+    assert not consumption_path.exists()

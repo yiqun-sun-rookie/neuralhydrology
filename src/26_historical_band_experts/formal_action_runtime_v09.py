@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import socket
 from typing import Any
+from types import MappingProxyType
 
 from formal_action_resources_v09 import (
     AcceleratorMemorySnapshot,
@@ -26,7 +27,10 @@ from memory_safety_v09 import (
     exclusive_high_load_lease_v09,
     sample_host_memory,
 )
-from stage_authorization_v09 import consume_stage_authorization_v09
+from stage_authorization_v09 import (
+    consume_stage_authorization_v09,
+    stage_authorization_paths_v09,
+)
 
 _FORMAL_ACTIONS = {
     "formal_target_bundle_generation",
@@ -79,13 +83,30 @@ class FormalActionRuntimeV09:
         "host_sampler",
         "accelerator_sampler",
         "initial_accelerator",
+        "run_claim",
     )
 
     def __init__(self, *args, **kwargs) -> None:
         raise TypeError("FormalActionRuntimeV09 is created only by the authorized runner")
 
-    def is_valid_for(self, action: str) -> bool:
-        return self.action == action and self.lease.is_valid()
+    def is_valid_for(
+        self,
+        action: str,
+        *,
+        run_id: str | None = None,
+        seed: int | None = None,
+        variant: str | None = None,
+        output_root: str | Path | None = None,
+    ) -> bool:
+        if self.action != action or not self.lease.is_valid():
+            return False
+        expected = {
+            "run_id": run_id,
+            "seed": seed,
+            "variant": variant,
+            "output_root": None if output_root is None else str(Path(output_root).resolve()),
+        }
+        return all(value is None or self.run_claim.get(key) == value for key, value in expected.items())
 
     def checkpoint(self) -> dict:
         """Fail closed between chunks if the lock, device, or either reserve is lost."""
@@ -137,6 +158,7 @@ def _create_runtime_v09(
     host_sampler: Callable[[], HostMemorySnapshot],
     accelerator_sampler: Callable[[], AcceleratorMemorySnapshot],
     initial_accelerator: AcceleratorMemorySnapshot | None,
+    run_claim: Mapping | None = None,
 ) -> FormalActionRuntimeV09:
     runtime = object.__new__(FormalActionRuntimeV09)
     runtime.config = config
@@ -148,7 +170,44 @@ def _create_runtime_v09(
     runtime.host_sampler = host_sampler
     runtime.accelerator_sampler = accelerator_sampler
     runtime.initial_accelerator = initial_accelerator
+    runtime.run_claim = MappingProxyType(dict(run_claim or {}))
     return runtime
+
+
+def _validate_stage_run_claim_v09(
+    receipt: Mapping,
+    *,
+    scope: str,
+    action: str,
+    variant: str | None,
+    run_claim: Mapping,
+) -> dict:
+    expected_keys = {"run_id", "seed", "variant", "output_root"}
+    if not isinstance(run_claim, Mapping) or set(run_claim) != expected_keys:
+        raise ValueError("formal stage run claim schema drift")
+    claim = dict(run_claim)
+    if action != "training" or claim["run_id"] not in receipt.get("allowed_runs", ()):
+        raise ValueError("formal stage run is outside the authorized workload")
+    if claim["variant"] != variant or claim["output_root"] != receipt.get("output_root"):
+        raise ValueError("formal stage variant or output root claim drift")
+    if scope == "R09-NEST-S100":
+        expected = {
+            "run_id": "R09-NEST-S100",
+            "seed": 100,
+            "variant": "strict_nesting_pair",
+            "output_root": receipt["output_root"],
+        }
+        if claim != expected:
+            raise ValueError("strict nesting workload claim drift")
+    return claim
+
+
+def _assert_stage_callback_v09(scope: str, callback: Callable) -> None:
+    if scope != "R09-NEST-S100":
+        raise ValueError(f"no closed formal executor is registered for stage scope {scope}")
+    from train_strict_formal_v09 import run_strict_training_v09
+    if callback is not run_strict_training_v09:
+        raise ValueError("strict nesting receipt requires the fixed formal training executor")
 
 
 def _audit_formal_action_resources_v09(
@@ -229,26 +288,40 @@ def _run_authorized_formal_action_v09(
     host_sampler: Callable[[], HostMemorySnapshot] = sample_host_memory,
     accelerator_sampler: Callable[[], AcceleratorMemorySnapshot] = sample_cuda_memory_v09,
     lock_path: str | Path | None = None,
-    stage_authorization_path: str | Path | None = None,
-    stage_consumption_path: str | Path | None = None,
     authorization_scope: str | None = None,
     stage_bindings: Mapping | None = None,
+    stage_worktree_root: str | Path | None = None,
+    run_claim: Mapping | None = None,
+    callback_kwargs: Mapping | None = None,
 ) -> dict:
     """Injectable implementation used only by isolated lifecycle tests."""
     _require_action(action)
     stage_arguments = (
-        stage_authorization_path,
-        stage_consumption_path,
         authorization_scope,
         stage_bindings,
+        stage_worktree_root,
+        run_claim,
     )
     if any(value is not None for value in stage_arguments) and any(value is None for value in stage_arguments):
         raise ValueError("formal stage authorization arguments must be supplied together")
     stage_authorization = None
-    if stage_authorization_path is not None:
-        stage_authorization_path = Path(stage_authorization_path)
-        stage_consumption_path = Path(stage_consumption_path)
+    stage_authorization_path = None
+    if authorization_scope is not None:
+        stage_authorization_path, _ = stage_authorization_paths_v09(
+            authorization_scope,
+            worktree_root=stage_worktree_root,
+        )
         stage_authorization = json.loads(stage_authorization_path.read_text(encoding="utf-8"))
+        run_claim = _validate_stage_run_claim_v09(
+            stage_authorization,
+            scope=authorization_scope,
+            action=action,
+            variant=variant,
+            run_claim=run_claim,
+        )
+        _assert_stage_callback_v09(authorization_scope, callback)
+    elif callback_kwargs is not None:
+        raise ValueError("generic formal callback does not accept stage callback arguments")
     estimate = build_formal_action_peak_estimate_v09(config, action, variant=variant)
     with exclusive_high_load_lease_v09(lock_path=lock_path) as lease:
         initial_host = host_sampler()
@@ -285,20 +358,24 @@ def _run_authorized_formal_action_v09(
             host_sampler=host_sampler,
             accelerator_sampler=accelerator_sampler,
             initial_accelerator=initial_accelerator,
+            run_claim=run_claim,
         )
         entry_checkpoint = runtime.assert_entry_safe()
         stage_consumption = None
         if stage_authorization is not None:
             stage_consumption = consume_stage_authorization_v09(
                 stage_authorization_path,
-                stage_consumption_path,
                 receipt=stage_authorization,
+                worktree_root=stage_worktree_root,
                 process_id=os.getpid(),
                 hostname=socket.gethostname(),
                 consumed_utc=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
                 memory_snapshot=launch_report["host"],
             )
-        result = callback(runtime)
+        if stage_authorization is None:
+            result = callback(runtime)
+        else:
+            result = callback(runtime=runtime, **dict(callback_kwargs or {}))
     return {
         "status": "formal_action_completed",
         "action": action,
@@ -317,10 +394,6 @@ def run_authorized_formal_action_v09(
     action: str,
     callback: Callable[[FormalActionRuntimeV09], Any],
     variant: str | None = None,
-    stage_authorization_path: str | Path | None = None,
-    stage_consumption_path: str | Path | None = None,
-    authorization_scope: str | None = None,
-    stage_bindings: Mapping | None = None,
 ) -> dict:
     """Run only with live samplers and the one fixed global serial lock."""
     return _run_authorized_formal_action_v09(
@@ -331,8 +404,4 @@ def run_authorized_formal_action_v09(
         host_sampler=sample_host_memory,
         accelerator_sampler=sample_cuda_memory_v09,
         lock_path=None,
-        stage_authorization_path=stage_authorization_path,
-        stage_consumption_path=stage_consumption_path,
-        authorization_scope=authorization_scope,
-        stage_bindings=stage_bindings,
     )

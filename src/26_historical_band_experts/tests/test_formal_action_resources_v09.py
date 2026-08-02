@@ -5,7 +5,6 @@ import sys
 
 import pytest
 
-
 IDEA_ROOT = Path(__file__).resolve().parents[1]
 CONFIG = IDEA_ROOT / "configs/formal_v09_protocol.json"
 sys.path.insert(0, str(IDEA_ROOT))
@@ -26,8 +25,7 @@ def _rehash(estimate: dict) -> None:
             separators=(",", ":"),
             ensure_ascii=False,
             allow_nan=False,
-        ).encode("utf-8")
-    ).hexdigest()
+        ).encode("utf-8")).hexdigest()
 
 
 def test_target_bundle_estimate_matches_streaming_formula():
@@ -42,14 +40,10 @@ def test_target_bundle_estimate_matches_streaming_formula():
         "formal_target_bundle_generation",
     )
     resources = config["formal_action_resources"]["target_bundle"]
-    expected = (
-        resources["fixed_overhead_mib"] * MIB
-        + resources["source_rows_per_basin"]
-        * resources["source_row_bytes_upper_bound"]
-        + resources["target_rows_per_basin"]
-        * resources["target_row_bytes_upper_bound"]
-        + resources["serialization_buffer_mib"] * MIB
-    )
+    expected = (resources["fixed_overhead_mib"] * MIB +
+                resources["source_rows_per_basin"] * resources["source_row_bytes_upper_bound"] +
+                resources["target_rows_per_basin"] * resources["target_row_bytes_upper_bound"] +
+                resources["serialization_buffer_mib"] * MIB)
 
     assert estimate["method"] == "analytical_target_bundle_working_set_v1"
     assert estimate["estimated_peak_bytes"] == expected
@@ -64,6 +58,7 @@ def test_target_bundle_estimate_matches_streaming_formula():
 @pytest.mark.parametrize(
     ("variant", "parameter_count", "recent_hidden", "history_steps"),
     [
+        ("strict_nesting_pair", 594_434, 512, 0),
         ("classic_lstm_256_clean", 297_217, 256, 0),
         ("classic_lstm_369_capacity", 595_198, 369, 0),
         ("continuous_multiscale_history", 596_737, 256, 120),
@@ -292,4 +287,7 @@ def test_target_bundle_does_not_require_accelerator_snapshot():
         "formal_target_bundle_generation",
         estimate,
         None,
-    ) == {"required": False, "safe": True}
+    ) == {
+        "required": False,
+        "safe": True
+    }

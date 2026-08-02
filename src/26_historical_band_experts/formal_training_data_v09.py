@@ -10,7 +10,12 @@ from typing import Mapping
 import numpy as np
 import torch
 
-from artifact_v09 import array_payload_sha256, sha256_file
+from artifact_v09 import (
+    array_payload_sha256,
+    assert_no_reparse_tree,
+    canonical_sha256,
+    sha256_file,
+)
 from bands_formal_v09 import gather_causal_windows_v09, split_windows_v09
 from formal_input_contract_v09 import STATIC_NORMALIZED_FLOAT32_SHA256
 from memory_safety_v09 import HostMemorySnapshot, MemorySafetyGate, sample_host_memory
@@ -131,6 +136,35 @@ def _load_passed_report(path: Path, expected_status: str) -> dict:
     return report
 
 
+def _verify_consumed_input_files_v09(input_root: Path, seal: Mapping) -> None:
+    """Rehash every file that can affect training before opening any array."""
+    assert_no_reparse_tree(input_root)
+    sealed_files = seal.get("sealed_files")
+    if (not isinstance(sealed_files, list) or seal.get("sealed_files_sha256") != canonical_sha256(sealed_files)):
+        raise FormalTrainingDataError("complete input sealed-file inventory drift")
+    descriptor_by_name = {item.get("relative_path"): item for item in sealed_files if isinstance(item, Mapping)}
+    consumed_names = (
+        "basins.txt",
+        "dates.npy",
+        "target_dates.npy",
+        "forcing.npy",
+        "statics.npy",
+        "targets.npy",
+        "scaler.json",
+    )
+    if any(name not in descriptor_by_name for name in consumed_names):
+        raise FormalTrainingDataError("complete input consumed-file inventory is incomplete")
+    actual_names = sorted(path.relative_to(input_root).as_posix() for path in input_root.rglob("*") if path.is_file())
+    expected_names = sorted((*descriptor_by_name, "seal.json"))
+    if actual_names != expected_names:
+        raise FormalTrainingDataError("complete input directory file inventory drift")
+    for name in consumed_names:
+        descriptor = descriptor_by_name[name]
+        path = input_root / name
+        if (path.stat().st_size != descriptor.get("size_bytes") or sha256_file(path) != descriptor.get("sha256")):
+            raise FormalTrainingDataError(f"sealed training input file drift: {name}")
+
+
 def load_sealed_training_inputs_v09(
     input_root: str | Path,
     protocol_path: str | Path,
@@ -161,6 +195,7 @@ def load_sealed_training_inputs_v09(
         raise FormalTrainingDataError("external input audit seal binding drift")
     if trusted.get("complete_input_external_audit_sha256") != sha256_file(external_audit_path):
         raise FormalTrainingDataError("trusted target audit binding drift")
+    _verify_consumed_input_files_v09(input_root, seal)
     basins = tuple(
         line.strip() for line in (input_root / "basins.txt").read_text(encoding="utf-8").splitlines() if line.strip())
     scaler = json.loads((input_root / "scaler.json").read_text(encoding="utf-8"))

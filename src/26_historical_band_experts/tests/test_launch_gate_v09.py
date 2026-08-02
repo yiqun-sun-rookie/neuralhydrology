@@ -166,6 +166,7 @@ def test_training_launch_accepts_only_a_fully_bound_stage_receipt(tmp_path):
         prerequisite_sha256=prerequisites,
         executable_tree_sha256="b" * 64,
         git_commit="c" * 40,
+        worktree_root=tmp_path,
         output_root="results/26_historical_band_experts/formal_v09/strict_nesting/seed_100",
         created_utc="2026-08-02T00:00:00Z",
     )
@@ -180,6 +181,7 @@ def test_training_launch_accepts_only_a_fully_bound_stage_receipt(tmp_path):
         "protocol_sha256": "a" * 64,
         "prerequisite_sha256": prerequisites,
         "executable_tree_sha256": "b" * 64,
+        "worktree_root": str(tmp_path.resolve()),
         "output_root": receipt["output_root"],
     }
 

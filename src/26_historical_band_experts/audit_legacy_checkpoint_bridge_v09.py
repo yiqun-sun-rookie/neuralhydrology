@@ -2,13 +2,16 @@
 from __future__ import annotations
 
 import json
+import platform
 from pathlib import Path
+import subprocess
+import sys
 from typing import Iterable, Mapping
 
 import numpy as np
 import torch
 
-from artifact_v09 import sha256_file, write_json_atomic
+from artifact_v09 import canonical_sha256, sha256_file, write_json_atomic
 from formal_training_data_v09 import FormalTrainingInputsV09, normalize_forcing_batch_v09
 from formal_v09_protocol import validate_protocol_v09
 from models_formal_v09 import build_model_v09
@@ -22,6 +25,47 @@ _ACTIVE_TENSORS = (
     "head.net.0.weight",
     "head.net.0.bias",
 )
+
+
+def _assert_report_outside_protected_paths(report_path: str | Path, protected_roots: Iterable[str | Path]) -> Path:
+    report_path = Path(report_path).resolve()
+    for root in protected_roots:
+        protected = Path(root).resolve()
+        if report_path == protected or protected in report_path.parents:
+            raise ValueError(f"legacy bridge report must be outside protected path: {protected}")
+    return report_path
+
+
+def _source_bindings_v09() -> dict[str, str]:
+    repo_root = Path(__file__).resolve().parents[2]
+    paths = {
+        "audit_legacy_checkpoint_bridge_v09.py": Path(__file__).resolve(),
+        "models_formal_v09.py": Path(__file__).resolve().with_name("models_formal_v09.py"),
+        "verify_legacy_reference_v09.py": Path(__file__).resolve().with_name("verify_legacy_reference_v09.py"),
+        "neuralhydrology/modelzoo/cudalstm.py": repo_root / "neuralhydrology/modelzoo/cudalstm.py",
+        "neuralhydrology/modelzoo/inputlayer.py": repo_root / "neuralhydrology/modelzoo/inputlayer.py",
+        "neuralhydrology/modelzoo/head.py": repo_root / "neuralhydrology/modelzoo/head.py",
+    }
+    return {label: sha256_file(path) for label, path in paths.items()}
+
+
+def _environment_binding_v09(device: str | torch.device) -> dict:
+    repo_root = Path(__file__).resolve().parents[2]
+    completed = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=repo_root,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return {
+        "python_version": platform.python_version(),
+        "python_executable": str(Path(sys.executable).resolve()),
+        "torch_version": torch.__version__,
+        "torch_cuda_version": torch.version.cuda,
+        "device": str(torch.device(device)),
+        "git_head": completed.stdout.strip(),
+    }
 
 
 def _require_checkpoint_state(state: Mapping) -> None:
@@ -82,20 +126,24 @@ def _real_panel_batches(inputs: FormalTrainingInputsV09, batch_size: int = 256):
 
 
 def audit_legacy_checkpoint_bridge_v09(
-    protocol: Mapping,
-    *,
-    legacy_results_root: str | Path,
-    inputs: FormalTrainingInputsV09,
-    report_path: str | Path,
-    device: str | torch.device,
+        protocol: Mapping,
+        *,
+        legacy_results_root: str | Path,
+        inputs: FormalTrainingInputsV09,
+        report_path: str | Path,
+        device: str | torch.device,
+        protected_run_roots: Iterable[str | Path] = (),
 ) -> dict:
     """Verify all frozen run hashes and exact core/formal predictions without targets."""
     from neuralhydrology.modelzoo.cudalstm import CudaLSTM
     from neuralhydrology.utils.config import Config
 
     validate_protocol_v09(protocol)
-    legacy_results_root = Path(legacy_results_root)
-    report_path = Path(report_path)
+    legacy_results_root = Path(legacy_results_root).resolve()
+    protected_roots = [legacy_results_root, *protected_run_roots]
+    if inputs.root is not None:
+        protected_roots.append(inputs.root)
+    report_path = _assert_report_outside_protected_paths(report_path, protected_roots)
     if report_path.exists():
         raise FileExistsError(f"legacy bridge report already exists: {report_path}")
     identity = verify_legacy_reference_v09(protocol, legacy_results_root)
@@ -157,6 +205,9 @@ def audit_legacy_checkpoint_bridge_v09(
     report = {
         "schema": "historical_multiscale_formal_v09_legacy_checkpoint_bridge_audit_v1",
         "status": "legacy_checkpoint_bridge_external_audit_passed",
+        "protocol_canonical_sha256": canonical_sha256(protocol),
+        "source_bindings": _source_bindings_v09(),
+        "environment_binding": _environment_binding_v09(device),
         "verified_identity": identity,
         "runs": run_rows,
         "run_count": len(run_rows),

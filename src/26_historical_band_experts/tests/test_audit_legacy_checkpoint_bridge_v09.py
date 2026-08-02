@@ -34,3 +34,18 @@ def test_checkpoint_bridge_requires_six_exact_active_tensors_and_three_equal_mod
             seed=100,
             panels=((dynamic, statics),),
         )
+
+
+def test_legacy_bridge_report_path_rejects_every_protected_root(tmp_path):
+    from audit_legacy_checkpoint_bridge_v09 import _assert_report_outside_protected_paths
+
+    legacy = tmp_path / "legacy"
+    inputs = tmp_path / "inputs"
+    formal_run = tmp_path / "formal-run"
+    for root in (legacy, inputs, formal_run):
+        root.mkdir()
+        with pytest.raises(ValueError, match="outside protected"):
+            _assert_report_outside_protected_paths(root / "report.json", (legacy, inputs, formal_run))
+
+    external = tmp_path / "audits" / "report.json"
+    assert _assert_report_outside_protected_paths(external, (legacy, inputs, formal_run)) == external.resolve()

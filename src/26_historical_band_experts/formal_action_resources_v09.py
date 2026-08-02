@@ -23,6 +23,14 @@ _ACTION_METHODS = {
     "formal_prediction_generation": "analytical_prediction_working_set_v1",
 }
 _VARIANT_GEOMETRY = {
+    "strict_nesting_pair": {
+        "parameter_key": "classic_parameter_count",
+        "parameter_multiplier": 2,
+        "recent_hidden_key": "classic_hidden_size",
+        "recent_hidden_multiplier": 2,
+        "history_steps": 0,
+        "history_hidden_size": 0,
+    },
     "classic_lstm_256_clean": {
         "parameter_key": "classic_parameter_count",
         "recent_hidden_key": "classic_hidden_size",
@@ -83,8 +91,8 @@ def _variant_geometry(config: Mapping, variant: str) -> dict:
     frozen = _VARIANT_GEOMETRY[variant]
     return {
         "variant": variant,
-        "parameter_count": int(config[frozen["parameter_key"]]),
-        "recent_hidden_size": int(config[frozen["recent_hidden_key"]]),
+        "parameter_count": int(config[frozen["parameter_key"]]) * int(frozen.get("parameter_multiplier", 1)),
+        "recent_hidden_size": int(config[frozen["recent_hidden_key"]]) * int(frozen.get("recent_hidden_multiplier", 1)),
         "history_steps": int(frozen["history_steps"]),
         "history_hidden_size": (
             int(config[frozen["history_hidden_key"]])

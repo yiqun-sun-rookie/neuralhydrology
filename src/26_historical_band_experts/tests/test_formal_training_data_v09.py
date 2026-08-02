@@ -140,9 +140,25 @@ def test_formal_loader_opens_only_normalized_read_only_model_arrays(tmp_path, mo
 
     input_root = tmp_path / "input_attempt_01"
     input_root.mkdir()
-    (input_root / "seal.json").write_text('{"status":"sealed"}', encoding="utf-8")
     (input_root / "basins.txt").write_text("00000001\n", encoding="utf-8")
     (input_root / "scaler.json").write_text("{}", encoding="utf-8")
+    for name in ("dates.npy", "target_dates.npy", "forcing.npy", "statics.npy", "targets.npy"):
+        (input_root / name).write_bytes(b"sealed normalized array")
+    # This sealed provenance file is present but must never be passed to np.load().
+    (input_root / "statics_raw.float64.npy").write_bytes(b"sealed raw statics")
+    descriptors = [{
+        "relative_path": path.name,
+        "size_bytes": path.stat().st_size,
+        "sha256": "a" * 64,
+    } for path in sorted(input_root.iterdir())]
+    (input_root / "seal.json").write_text(
+        json.dumps({
+            "status": "sealed",
+            "sealed_files": descriptors,
+            "sealed_files_sha256": module.canonical_sha256(descriptors),
+        }),
+        encoding="utf-8",
+    )
     protocol = tmp_path / "protocol.json"
     protocol.write_text('{"formal_evaluation_target_access":false}', encoding="utf-8")
     external = tmp_path / "input_attempt_01.external_audit.json"
@@ -163,10 +179,6 @@ def test_formal_loader_opens_only_normalized_read_only_model_arrays(tmp_path, mo
         }),
         encoding="utf-8",
     )
-    # Forbidden files are deliberately present; the loader must ignore them.
-    (input_root / "statics_raw.float64.npy").write_bytes(b"forbidden")
-    (input_root / "answers_obs_eval.parquet").write_bytes(b"forbidden")
-
     arrays = {
         "dates.npy": np.arange("2000-01-01", "2000-01-03", dtype="datetime64[D]"),
         "target_dates.npy": np.asarray([np.datetime64("2000-01-02", "D")]),
@@ -206,6 +218,12 @@ def test_formal_loader_opens_only_normalized_read_only_model_arrays(tmp_path, mo
         loaded.targets,
     ))
 
+    (input_root / "answers_obs_eval.parquet").write_bytes(b"forbidden extra file")
+    opened.clear()
+    with pytest.raises(module.FormalTrainingDataError, match="directory file inventory"):
+        module.load_sealed_training_inputs_v09(input_root, protocol)
+    assert opened == []
+
 
 def test_formal_loader_fails_before_arrays_when_external_audit_is_missing(tmp_path, monkeypatch):
     import formal_training_data_v09 as module
@@ -222,3 +240,49 @@ def test_formal_loader_fails_before_arrays_when_external_audit_is_missing(tmp_pa
 
     with pytest.raises(module.FormalTrainingDataError, match="external audit is missing"):
         module.load_sealed_training_inputs_v09(input_root, protocol)
+
+
+@pytest.mark.parametrize(
+    "changed_name",
+    [
+        "basins.txt",
+        "dates.npy",
+        "target_dates.npy",
+        "forcing.npy",
+        "statics.npy",
+        "targets.npy",
+        "scaler.json",
+    ],
+)
+def test_consumed_sealed_file_drift_fails_before_array_open(tmp_path, changed_name):
+    import formal_training_data_v09 as module
+
+    root = tmp_path / "input_attempt_01"
+    root.mkdir()
+    for name in (
+            "basins.txt",
+            "dates.npy",
+            "target_dates.npy",
+            "forcing.npy",
+            "statics.npy",
+            "targets.npy",
+            "scaler.json",
+            "statics_raw.float64.npy",
+    ):
+        (root / name).write_bytes(f"sealed:{name}".encode("utf-8"))
+    descriptors = [{
+        "relative_path": path.name,
+        "size_bytes": path.stat().st_size,
+        "sha256": module.sha256_file(path),
+    } for path in sorted(root.iterdir())]
+    seal = {
+        "sealed_files": descriptors,
+        "sealed_files_sha256": module.canonical_sha256(descriptors),
+    }
+    (root / "seal.json").write_text("{}", encoding="utf-8")
+    module._verify_consumed_input_files_v09(root, seal)
+
+    with (root / changed_name).open("ab") as handle:
+        handle.write(b"drift")
+    with pytest.raises(module.FormalTrainingDataError, match="file drift"):
+        module._verify_consumed_input_files_v09(root, seal)

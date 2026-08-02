@@ -74,6 +74,7 @@ def assert_launch_allowed_v09(
             "protocol_sha256",
             "prerequisite_sha256",
             "executable_tree_sha256",
+            "worktree_root",
             "output_root",
         }
         if not isinstance(stage_bindings, Mapping) or set(stage_bindings) != expected_binding_keys:
@@ -85,6 +86,7 @@ def assert_launch_allowed_v09(
             protocol_sha256=stage_bindings["protocol_sha256"],
             prerequisite_sha256=stage_bindings["prerequisite_sha256"],
             executable_tree_sha256=stage_bindings["executable_tree_sha256"],
+            worktree_root=stage_bindings["worktree_root"],
             output_root=stage_bindings["output_root"],
         )
         authorization_mode = "one_use_stage_receipt"
@@ -139,6 +141,7 @@ def main() -> None:
     parser.add_argument(
         "--variant",
         choices=(
+            "strict_nesting_pair",
             "classic_lstm_256_clean",
             "classic_lstm_369_capacity",
             "continuous_multiscale_history",

@@ -38,8 +38,9 @@ def test_external_strict_audit_replays_final_checkpoint(tmp_path):
         model_builder=_tiny_builder,
     )
 
-    assert report["status"] == "strict_nesting_external_audit_passed"
+    assert report["status"] == "strict_nesting_synthetic_checkpoint_prediction_replay_passed"
     assert report["maximum_reference_difference"] == 0.0
+    assert report["permutation_hashes_recomputed"] == 1
     assert report_path.is_file()
 
 
@@ -69,3 +70,48 @@ def test_external_strict_audit_rejects_report_inside_run_and_prediction_drift(tm
             report_path=tmp_path / "drift.external.json",
             model_builder=_tiny_builder,
         )
+
+
+def test_external_strict_audit_rejects_nested_file_named_seal(tmp_path):
+    from audit_strict_formal_v09 import audit_strict_run_v09
+
+    run = _make_run(tmp_path)
+    nested = run / "unexpected"
+    nested.mkdir()
+    (nested / "seal.json").write_text("{}", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="inventory drift"):
+        audit_strict_run_v09(
+            run,
+            inputs=_inputs(),
+            device="cpu",
+            report_path=tmp_path / "nested-seal.external.json",
+            model_builder=_tiny_builder,
+        )
+
+
+def test_formal_manifest_contract_rejects_wrong_geometry_and_missing_input_hash():
+    from audit_strict_formal_v09 import _FORMAL_GEOMETRY, _validate_manifest_trajectory_v09
+
+    manifest = {
+        "schema": "historical_multiscale_formal_v09_strict_run_v1",
+        "status": "strict_nesting_complete",
+        "formal_execution": True,
+        **_FORMAL_GEOMETRY,
+        "protocol_canonical_sha256": "1" * 64,
+        "input_bindings": {
+            "input_seal_sha256": "2" * 64,
+            "input_external_audit_sha256": "3" * 64,
+            "trusted_source_audit_sha256": "4" * 64,
+        },
+        "formal_evaluation_observation_reads": 0,
+        "epoch_trace": [],
+    }
+    wrong_batch = dict(manifest, batch_size=255)
+    with pytest.raises(ValueError, match="batch_size drift"):
+        _validate_manifest_trajectory_v09(wrong_batch)
+
+    missing_hash = dict(manifest)
+    missing_hash["input_bindings"] = dict(manifest["input_bindings"], input_seal_sha256=None)
+    with pytest.raises(ValueError, match="input binding input_seal_sha256"):
+        _validate_manifest_trajectory_v09(missing_hash)
