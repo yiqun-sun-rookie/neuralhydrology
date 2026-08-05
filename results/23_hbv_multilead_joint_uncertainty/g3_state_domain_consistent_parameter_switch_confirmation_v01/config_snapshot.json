@@ -1,0 +1,252 @@
+{
+  "candidate_construction_seeds": {
+    "forcing": [
+      3601001,
+      3601002,
+      3601003,
+      3601004,
+      3601005,
+      3601006,
+      3601007,
+      3601008
+    ]
+  },
+  "candidate_distinguishability_gate": {
+    "development_only": true,
+    "failure_action": "stop_before_formal_confirmation",
+    "minimum_pairwise_rmse_as_trained_center_discharge_standard_deviation": 0.5,
+    "minimum_pairwise_rmse_in_observation_standard_deviations": 5.0
+  },
+  "experiment_id": "g3_state_domain_consistent_parameter_switch_confirmation_v01",
+  "filter": {
+    "candidate_count": 3,
+    "factor_transition_stay_probability": 0.98,
+    "global_posterior_output": "posterior-probability-weighted fifteen-state state and covariance after every update",
+    "initial_candidate_probabilities": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "initial_covariance_fraction": 0.001,
+    "interaction_mode": "full"
+  },
+  "fixed_process_noise": {
+    "all_other_fourteen_state_variances": 0.0,
+    "plain_name": "lower groundwater storage",
+    "process_id": "fixed_lower_groundwater_sd_1",
+    "standard_deviation_mm_day": 1.0,
+    "state_index": 4,
+    "state_name": "SLZ",
+    "variance_mm2_day2": 1.0
+  },
+  "forbidden_scope": {
+    "forecast_executed": false,
+    "forecast_imported": false,
+    "future_observations_used": false,
+    "joint_parameter_process_noise_switching": false,
+    "process_noise_switching": false,
+    "real_basin_claim": false,
+    "state_accuracy_claim": false,
+    "state_interaction_attribution": false,
+    "walrus_claim": false
+  },
+  "forcing": {
+    "assimilation_days": 540,
+    "potential_evaporation_mm_day": 2.0,
+    "rain_floor_mm_day": 5.0,
+    "rain_gamma_scale_mm_day": 4.0,
+    "rain_gamma_shape": 0.8,
+    "temperature_celsius": 10.0,
+    "warmup_days": 45
+  },
+  "formal_confirmation_seeds": {
+    "forcing": [
+      3701001,
+      3701002,
+      3701003,
+      3701004,
+      3701005,
+      3701006,
+      3701007,
+      3701008
+    ],
+    "observation_noise": [
+      3703001,
+      3703002,
+      3703003,
+      3703004,
+      3703005,
+      3703006,
+      3703007,
+      3703008
+    ],
+    "process_noise": [
+      3702001,
+      3702002,
+      3702003,
+      3702004,
+      3702005,
+      3702006,
+      3702007,
+      3702008
+    ]
+  },
+  "independence_contract": {
+    "candidate_construction_and_formal_confirmation_disjoint": true,
+    "candidate_construction_seed_prefix": 360,
+    "clean_process_noise_switch_seed_prefix": 350,
+    "failure_action": "stop_without_scientific_conclusion",
+    "formal_confirmation_seed_prefix": 370,
+    "old_parameter_switch_seed_prefix": 330
+  },
+  "numerical_response_rule": {
+    "confidence_level": 0.95,
+    "consecutive_clear_dominance_days": 5,
+    "event_count_per_directed_transition": 16,
+    "minimum_exact_interval_lower_bound_exclusive": 0.5,
+    "minimum_new_true_candidate_probability_exclusive": 0.5,
+    "minimum_probability_margin_over_runner_up_inclusive": 0.1,
+    "minimum_successful_events_per_directed_transition": 13,
+    "response_window_days": 30,
+    "success_definition": "within thirty days after switching, the new true candidate has posterior probability greater than 0.5 and a margin over the runner-up of at least 0.10 for five consecutive days"
+  },
+  "numerical_tolerance": 1e-12,
+  "observation_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_inputs_v01/observation_noise_low.csv",
+    "sha256": "0ff9a34b0dd863e99e40038b0876d781561a0a1e9d371a81ee3b8fafff6ef3c8"
+  },
+  "parameter_candidates": [
+    {
+      "lag_time": 2.885576589073694,
+      "parBETA": 3.930024224341894,
+      "parCFMAX": 2.3990648005216,
+      "parCFR": 0.0534926610099832,
+      "parCWH": 4.790858379798471e-09,
+      "parFC": 115.41144086847932,
+      "parK0": 0.2699972328484517,
+      "parK1": 0.1994683789679514,
+      "parK2": 0.0057130358488307,
+      "parLP": 0.6837035504251265,
+      "parPERC": 3.8430224748105832,
+      "parTT": -1.6780754264252151,
+      "parUZL": 78.09374860016432,
+      "parameter_id": "candidate_1_shared_limits",
+      "source_parameter_id": "equifinal_diverse_1"
+    },
+    {
+      "lag_time": 1.7953195629813012,
+      "parBETA": 1.0000000698913354,
+      "parCFMAX": 2.5549045075022465,
+      "parCFR": 0.0463012343434304,
+      "parCWH": 4.790858379798471e-09,
+      "parFC": 115.41144086847932,
+      "parK0": 0.8999999945687556,
+      "parK1": 0.3593900045350728,
+      "parK2": 0.0221122277234756,
+      "parLP": 0.9999992059019986,
+      "parPERC": 9.99999952398291,
+      "parTT": 0.4899906312144009,
+      "parUZL": 44.36393857438976,
+      "parameter_id": "candidate_2_shared_limits",
+      "source_parameter_id": "trained_center"
+    },
+    {
+      "lag_time": 1.5494828503985754,
+      "parBETA": 4.858081071646,
+      "parCFMAX": 3.704036943247782,
+      "parCFR": 0.0818680926072159,
+      "parCWH": 4.790858379798471e-09,
+      "parFC": 115.41144086847932,
+      "parK0": 0.5349697172955139,
+      "parK1": 0.428992148585032,
+      "parK2": 0.1521464073770692,
+      "parLP": 0.3995755335956368,
+      "parPERC": 7.256614023611052,
+      "parTT": 1.3105730924947303,
+      "parUZL": 14.82086403755268,
+      "parameter_id": "candidate_3_shared_limits",
+      "source_parameter_id": "equifinal_diverse_2"
+    }
+  ],
+  "parameter_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_gate_param_switch_v01/parameter_vectors.csv",
+    "sha256": "6c3080099ba1dce0e2ef0411fc585282f70760e9955c1c49f7b9c9892d8fa925",
+    "transformation": "copy every non-domain-setting value unchanged; replace parFC and parCWH in all three rows with the trained-center values before formal confirmation"
+  },
+  "parameters_that_set_truth_state_limits": [
+    "parFC",
+    "parCWH"
+  ],
+  "population": {
+    "event_count": 48,
+    "events_per_directed_transition": 16,
+    "matched_block_count": 8,
+    "stage_count": 3,
+    "stage_length_days": 180,
+    "switch_count_per_trial": 2,
+    "truth_trial_count": 3
+  },
+  "required_result_files": [
+    "candidate_construction_audit.csv",
+    "checksums.json",
+    "config_snapshot.json",
+    "daily_probabilities.csv",
+    "environment.json",
+    "event_panel_manifest.json",
+    "evidence.npz",
+    "fixed_process_covariance.csv",
+    "numeric_response_summary.png",
+    "parameter_vectors.csv",
+    "registry_entry.json",
+    "source_manifest.json",
+    "summary.json",
+    "switch_response_events_numeric.csv",
+    "switch_response_summary_numeric.csv"
+  ],
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/g3_state_domain_consistent_parameter_switch_confirmation_v01",
+  "scientific_question": "When the true fixed parameter candidate switches at known stage boundaries while all fifteen truth-state values remain continuous and unprojected, can a fully interacting three-filter bank form clear and stable posterior dominance for the new true candidate in all three directed transitions?",
+  "scope": "assimilation-only warm-wet synthetic HBV-lite parameter-switch confirmation",
+  "state_contract": {
+    "all_transition_projection_event_count_required": 0,
+    "maximum_absolute_projection_adjustment_required": 0.0,
+    "state_count": 15,
+    "state_reset_at_switch": false,
+    "switch_boundary_projection_event_count_required": 0,
+    "truth_state_continuous_across_switches": true
+  },
+  "status": "frozen_before_run",
+  "truth_trial_stage_orders": [
+    [
+      "candidate_2_shared_limits",
+      "candidate_3_shared_limits",
+      "candidate_1_shared_limits"
+    ],
+    [
+      "candidate_3_shared_limits",
+      "candidate_1_shared_limits",
+      "candidate_2_shared_limits"
+    ],
+    [
+      "candidate_1_shared_limits",
+      "candidate_2_shared_limits",
+      "candidate_3_shared_limits"
+    ]
+  ],
+  "user_facing_name": "parameter switching without truth-state clipping",
+  "verification_relative_path": "results/23_hbv_multilead_joint_uncertainty/g3_state_domain_consistent_parameter_switch_confirmation_v01_independent_verification_v01",
+  "visual_review_relative_path": "results/23_hbv_multilead_joint_uncertainty/g3_state_domain_consistent_parameter_switch_confirmation_v01_visual_review_v01",
+  "visual_review_rule": {
+    "allowed_labels": [
+      "clear_success",
+      "ambiguous",
+      "failure"
+    ],
+    "classification_before_numeric_decision_unblinding": true,
+    "clear_success_definition": "the new true candidate forms sustained visibly separated dominance after the switch and was not already persistently dominant before the switch",
+    "display_order_seed": 3704001,
+    "final_event_success_definition": "numerical_success and visual_label equals clear_success",
+    "relative_day_end": 30,
+    "relative_day_start": -15,
+    "required": true
+  }
+}

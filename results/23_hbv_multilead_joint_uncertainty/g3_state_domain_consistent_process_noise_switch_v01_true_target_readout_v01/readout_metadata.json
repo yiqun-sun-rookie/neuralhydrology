@@ -1,0 +1,19 @@
+{
+  "created_utc": "2026-08-03T02:58:20.018266+00:00",
+  "experiment_rerun": false,
+  "outputs": [
+    "true_target_annotated_probability_response.png",
+    "medium_to_high_green_follow_zoom.png"
+  ],
+  "readout_id": "g3_state_domain_consistent_process_noise_switch_v01_true_target_readout_v01",
+  "sealed_result_modified": false,
+  "source_evidence_sha256": "091c2477f6639d004c334255be081db29ac5c50e668eea6fd44c4261034fe874",
+  "source_result": "G:\\wt\\id23-readout\\results\\23_hbv_multilead_joint_uncertainty\\g3_state_domain_consistent_process_noise_switch_v01",
+  "source_summary_sha256": "5917bd09079f9ed4dd247e2481c171d0a01c36658d862efe63aab7f09a2a35ad",
+  "visual_contract": {
+    "background_after_switch": "new true candidate colour",
+    "background_before_switch": "old true candidate colour",
+    "thick_line_after_switch": "new true candidate",
+    "thick_line_before_switch": "old true candidate"
+  }
+}

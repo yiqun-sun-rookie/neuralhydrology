@@ -1,0 +1,13 @@
+{
+  "event_panel_manifest_sha256": "c4c2b32764336fe459848912db585eefeb3f58373e51fccbdaa6131c9f163e0e",
+  "label_counts": {
+    "ambiguous": 0,
+    "clear_success": 48,
+    "failure": 0
+  },
+  "numeric_decisions_opened_before_labels": false,
+  "review_count": 48,
+  "review_interpretation": "The user confirmed review_005 as clear success despite fluctuation because the new true parameter candidate ultimately took over, then authorized the next step after being asked to confirm that all remaining panels were clear successes unless exceptions were listed.",
+  "reviewer": "user_blinded_visual_review",
+  "visual_review_csv_sha256": "4ba8af08049f22c1707c698827f95252c80df04771536f2f6dba82f63ae8c86d"
+}

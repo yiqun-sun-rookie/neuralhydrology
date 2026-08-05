@@ -1,0 +1,539 @@
+{
+ "answer_1": "能区分但慢：低→中30天窗内平均逐日对数似然比+0.074，仅为中→高(+0.335)的1/4.5、高→低(+0.289)的1/3.9；16事件中1个窗内平均证据为负(-0.106)。纯似然裁判(理论上限)最慢事件也需46天>30天窗。",
+ "answer_2": "否。实际完整递推(裁判B, 低→中最晚73天)快于无转移混合的似然+先验负担(裁判C, 最晚113天)：转移先验的遗忘在稀释旧证据，是加速不是抑制。",
+ "created": "2026-08-05",
+ "diagnosis_id": "g3_state_domain_consistent_process_noise_switch_v01_likelihood_diagnosis_v01",
+ "directions": {
+  "lower_groundwater_high_to_lower_groundwater_low": {
+   "event_count": 16,
+   "events": [
+    {
+     "block": 0,
+     "judgeA_likelihood_only_day": 1,
+     "judgeB_actual_imm_day": 20,
+     "judgeC_likelihood_plus_prior_day": 28,
+     "mean_daily_llr_30d": 0.2912348193493118,
+     "switch_day_index": 360,
+     "trial": 0
+    },
+    {
+     "block": 0,
+     "judgeA_likelihood_only_day": 4,
+     "judgeB_actual_imm_day": 12,
+     "judgeC_likelihood_plus_prior_day": 20,
+     "mean_daily_llr_30d": 0.28992757101780636,
+     "switch_day_index": 180,
+     "trial": 1
+    },
+    {
+     "block": 1,
+     "judgeA_likelihood_only_day": 12,
+     "judgeB_actual_imm_day": 10,
+     "judgeC_likelihood_plus_prior_day": 13,
+     "mean_daily_llr_30d": 0.26229943205161155,
+     "switch_day_index": 360,
+     "trial": 0
+    },
+    {
+     "block": 1,
+     "judgeA_likelihood_only_day": 8,
+     "judgeB_actual_imm_day": 11,
+     "judgeC_likelihood_plus_prior_day": 14,
+     "mean_daily_llr_30d": 0.2707786009711706,
+     "switch_day_index": 180,
+     "trial": 1
+    },
+    {
+     "block": 2,
+     "judgeA_likelihood_only_day": 17,
+     "judgeB_actual_imm_day": 17,
+     "judgeC_likelihood_plus_prior_day": 20,
+     "mean_daily_llr_30d": 0.2168846858380123,
+     "switch_day_index": 360,
+     "trial": 0
+    },
+    {
+     "block": 2,
+     "judgeA_likelihood_only_day": 2,
+     "judgeB_actual_imm_day": 4,
+     "judgeC_likelihood_plus_prior_day": 5,
+     "mean_daily_llr_30d": 0.3597990266856857,
+     "switch_day_index": 180,
+     "trial": 1
+    },
+    {
+     "block": 3,
+     "judgeA_likelihood_only_day": 22,
+     "judgeB_actual_imm_day": 20,
+     "judgeC_likelihood_plus_prior_day": 22,
+     "mean_daily_llr_30d": 0.26123265111305355,
+     "switch_day_index": 360,
+     "trial": 0
+    },
+    {
+     "block": 3,
+     "judgeA_likelihood_only_day": 8,
+     "judgeB_actual_imm_day": 10,
+     "judgeC_likelihood_plus_prior_day": 16,
+     "mean_daily_llr_30d": 0.2257608959222216,
+     "switch_day_index": 180,
+     "trial": 1
+    },
+    {
+     "block": 4,
+     "judgeA_likelihood_only_day": 8,
+     "judgeB_actual_imm_day": 9,
+     "judgeC_likelihood_plus_prior_day": 11,
+     "mean_daily_llr_30d": 0.20315700325662156,
+     "switch_day_index": 360,
+     "trial": 0
+    },
+    {
+     "block": 4,
+     "judgeA_likelihood_only_day": 10,
+     "judgeB_actual_imm_day": 11,
+     "judgeC_likelihood_plus_prior_day": 12,
+     "mean_daily_llr_30d": 0.38774048539439865,
+     "switch_day_index": 180,
+     "trial": 1
+    },
+    {
+     "block": 5,
+     "judgeA_likelihood_only_day": 6,
+     "judgeB_actual_imm_day": 10,
+     "judgeC_likelihood_plus_prior_day": 15,
+     "mean_daily_llr_30d": 0.3028738191346165,
+     "switch_day_index": 360,
+     "trial": 0
+    },
+    {
+     "block": 5,
+     "judgeA_likelihood_only_day": 0,
+     "judgeB_actual_imm_day": 10,
+     "judgeC_likelihood_plus_prior_day": 10,
+     "mean_daily_llr_30d": 0.3048226476461172,
+     "switch_day_index": 180,
+     "trial": 1
+    },
+    {
+     "block": 6,
+     "judgeA_likelihood_only_day": 4,
+     "judgeB_actual_imm_day": 7,
+     "judgeC_likelihood_plus_prior_day": 8,
+     "mean_daily_llr_30d": 0.35674513805737473,
+     "switch_day_index": 360,
+     "trial": 0
+    },
+    {
+     "block": 6,
+     "judgeA_likelihood_only_day": 9,
+     "judgeB_actual_imm_day": 9,
+     "judgeC_likelihood_plus_prior_day": 12,
+     "mean_daily_llr_30d": 0.32607036027802383,
+     "switch_day_index": 180,
+     "trial": 1
+    },
+    {
+     "block": 7,
+     "judgeA_likelihood_only_day": 12,
+     "judgeB_actual_imm_day": 12,
+     "judgeC_likelihood_plus_prior_day": 16,
+     "mean_daily_llr_30d": 0.2721100339802893,
+     "switch_day_index": 360,
+     "trial": 0
+    },
+    {
+     "block": 7,
+     "judgeA_likelihood_only_day": 7,
+     "judgeB_actual_imm_day": 6,
+     "judgeC_likelihood_plus_prior_day": 6,
+     "mean_daily_llr_30d": 0.2955951253201039,
+     "switch_day_index": 180,
+     "trial": 1
+    }
+   ],
+   "judgeA_likelihood_only": {
+    "max": 22,
+    "median": 8.0,
+    "missing_within_180d": 0
+   },
+   "judgeB_actual_imm": {
+    "max": 20,
+    "median": 10.0,
+    "missing_within_180d": 0
+   },
+   "judgeC_likelihood_plus_prior": {
+    "max": 28,
+    "median": 13.5,
+    "missing_within_180d": 0
+   },
+   "mean_daily_llr_30d_max": 0.38774048539439865,
+   "mean_daily_llr_30d_mean": 0.2891895185010262,
+   "mean_daily_llr_30d_min": 0.20315700325662156
+  },
+  "lower_groundwater_low_to_lower_groundwater_medium": {
+   "event_count": 16,
+   "events": [
+    {
+     "block": 0,
+     "judgeA_likelihood_only_day": 7,
+     "judgeB_actual_imm_day": 14,
+     "judgeC_likelihood_plus_prior_day": 14,
+     "mean_daily_llr_30d": 0.1405181559393944,
+     "switch_day_index": 360,
+     "trial": 1
+    },
+    {
+     "block": 0,
+     "judgeA_likelihood_only_day": 29,
+     "judgeB_actual_imm_day": 29,
+     "judgeC_likelihood_plus_prior_day": 29,
+     "mean_daily_llr_30d": 0.05287747160720765,
+     "switch_day_index": 180,
+     "trial": 2
+    },
+    {
+     "block": 1,
+     "judgeA_likelihood_only_day": 2,
+     "judgeB_actual_imm_day": 4,
+     "judgeC_likelihood_plus_prior_day": 4,
+     "mean_daily_llr_30d": 0.13673761875705326,
+     "switch_day_index": 360,
+     "trial": 1
+    },
+    {
+     "block": 1,
+     "judgeA_likelihood_only_day": 2,
+     "judgeB_actual_imm_day": 6,
+     "judgeC_likelihood_plus_prior_day": 9,
+     "mean_daily_llr_30d": 0.14938276926874858,
+     "switch_day_index": 180,
+     "trial": 2
+    },
+    {
+     "block": 2,
+     "judgeA_likelihood_only_day": 8,
+     "judgeB_actual_imm_day": 14,
+     "judgeC_likelihood_plus_prior_day": 23,
+     "mean_daily_llr_30d": 0.08054467177428994,
+     "switch_day_index": 360,
+     "trial": 1
+    },
+    {
+     "block": 2,
+     "judgeA_likelihood_only_day": 46,
+     "judgeB_actual_imm_day": 56,
+     "judgeC_likelihood_plus_prior_day": 48,
+     "mean_daily_llr_30d": -0.043592039555325965,
+     "switch_day_index": 180,
+     "trial": 2
+    },
+    {
+     "block": 3,
+     "judgeA_likelihood_only_day": 10,
+     "judgeB_actual_imm_day": 0,
+     "judgeC_likelihood_plus_prior_day": 0,
+     "mean_daily_llr_30d": 0.05827090009487274,
+     "switch_day_index": 360,
+     "trial": 1
+    },
+    {
+     "block": 3,
+     "judgeA_likelihood_only_day": 12,
+     "judgeB_actual_imm_day": 12,
+     "judgeC_likelihood_plus_prior_day": 15,
+     "mean_daily_llr_30d": 0.14420152666466113,
+     "switch_day_index": 180,
+     "trial": 2
+    },
+    {
+     "block": 4,
+     "judgeA_likelihood_only_day": 15,
+     "judgeB_actual_imm_day": 26,
+     "judgeC_likelihood_plus_prior_day": 16,
+     "mean_daily_llr_30d": 0.09066377407065258,
+     "switch_day_index": 360,
+     "trial": 1
+    },
+    {
+     "block": 4,
+     "judgeA_likelihood_only_day": 7,
+     "judgeB_actual_imm_day": 10,
+     "judgeC_likelihood_plus_prior_day": 8,
+     "mean_daily_llr_30d": 0.14395383509487936,
+     "switch_day_index": 180,
+     "trial": 2
+    },
+    {
+     "block": 5,
+     "judgeA_likelihood_only_day": 5,
+     "judgeB_actual_imm_day": 7,
+     "judgeC_likelihood_plus_prior_day": 8,
+     "mean_daily_llr_30d": 0.03304660709444848,
+     "switch_day_index": 360,
+     "trial": 1
+    },
+    {
+     "block": 5,
+     "judgeA_likelihood_only_day": 6,
+     "judgeB_actual_imm_day": 12,
+     "judgeC_likelihood_plus_prior_day": 12,
+     "mean_daily_llr_30d": 0.16278425146008285,
+     "switch_day_index": 180,
+     "trial": 2
+    },
+    {
+     "block": 6,
+     "judgeA_likelihood_only_day": 4,
+     "judgeB_actual_imm_day": 3,
+     "judgeC_likelihood_plus_prior_day": 3,
+     "mean_daily_llr_30d": 0.12201395523992094,
+     "switch_day_index": 360,
+     "trial": 1
+    },
+    {
+     "block": 6,
+     "judgeA_likelihood_only_day": 20,
+     "judgeB_actual_imm_day": 20,
+     "judgeC_likelihood_plus_prior_day": 61,
+     "mean_daily_llr_30d": 0.0032989666973875027,
+     "switch_day_index": 180,
+     "trial": 2
+    },
+    {
+     "block": 7,
+     "judgeA_likelihood_only_day": 2,
+     "judgeB_actual_imm_day": 73,
+     "judgeC_likelihood_plus_prior_day": 113,
+     "mean_daily_llr_30d": 0.014730304307631824,
+     "switch_day_index": 360,
+     "trial": 1
+    },
+    {
+     "block": 7,
+     "judgeA_likelihood_only_day": 45,
+     "judgeB_actual_imm_day": 44,
+     "judgeC_likelihood_plus_prior_day": 67,
+     "mean_daily_llr_30d": -0.10552272091315577,
+     "switch_day_index": 180,
+     "trial": 2
+    }
+   ],
+   "judgeA_likelihood_only": {
+    "max": 46,
+    "median": 7.5,
+    "missing_within_180d": 0
+   },
+   "judgeB_actual_imm": {
+    "max": 73,
+    "median": 13.0,
+    "missing_within_180d": 0
+   },
+   "judgeC_likelihood_plus_prior": {
+    "max": 113,
+    "median": 14.5,
+    "missing_within_180d": 0
+   },
+   "mean_daily_llr_30d_max": 0.16278425146008285,
+   "mean_daily_llr_30d_mean": 0.07399437797517185,
+   "mean_daily_llr_30d_min": -0.10552272091315577
+  },
+  "lower_groundwater_medium_to_lower_groundwater_high": {
+   "event_count": 16,
+   "events": [
+    {
+     "block": 0,
+     "judgeA_likelihood_only_day": 3,
+     "judgeB_actual_imm_day": 0,
+     "judgeC_likelihood_plus_prior_day": 0,
+     "mean_daily_llr_30d": 0.21007752142100486,
+     "switch_day_index": 180,
+     "trial": 0
+    },
+    {
+     "block": 0,
+     "judgeA_likelihood_only_day": 1,
+     "judgeB_actual_imm_day": 13,
+     "judgeC_likelihood_plus_prior_day": 13,
+     "mean_daily_llr_30d": 0.32208328504063366,
+     "switch_day_index": 360,
+     "trial": 2
+    },
+    {
+     "block": 1,
+     "judgeA_likelihood_only_day": 1,
+     "judgeB_actual_imm_day": 2,
+     "judgeC_likelihood_plus_prior_day": 2,
+     "mean_daily_llr_30d": 0.3716084623966855,
+     "switch_day_index": 180,
+     "trial": 0
+    },
+    {
+     "block": 1,
+     "judgeA_likelihood_only_day": 1,
+     "judgeB_actual_imm_day": 2,
+     "judgeC_likelihood_plus_prior_day": 2,
+     "mean_daily_llr_30d": 0.3548184388590931,
+     "switch_day_index": 360,
+     "trial": 2
+    },
+    {
+     "block": 2,
+     "judgeA_likelihood_only_day": 3,
+     "judgeB_actual_imm_day": 12,
+     "judgeC_likelihood_plus_prior_day": 12,
+     "mean_daily_llr_30d": 0.3256774294059078,
+     "switch_day_index": 180,
+     "trial": 0
+    },
+    {
+     "block": 2,
+     "judgeA_likelihood_only_day": 3,
+     "judgeB_actual_imm_day": 7,
+     "judgeC_likelihood_plus_prior_day": 7,
+     "mean_daily_llr_30d": 0.3687839206118159,
+     "switch_day_index": 360,
+     "trial": 2
+    },
+    {
+     "block": 3,
+     "judgeA_likelihood_only_day": 8,
+     "judgeB_actual_imm_day": 8,
+     "judgeC_likelihood_plus_prior_day": 9,
+     "mean_daily_llr_30d": 0.3518286293552645,
+     "switch_day_index": 180,
+     "trial": 0
+    },
+    {
+     "block": 3,
+     "judgeA_likelihood_only_day": 1,
+     "judgeB_actual_imm_day": 2,
+     "judgeC_likelihood_plus_prior_day": 2,
+     "mean_daily_llr_30d": 0.3755608946609333,
+     "switch_day_index": 360,
+     "trial": 2
+    },
+    {
+     "block": 4,
+     "judgeA_likelihood_only_day": 5,
+     "judgeB_actual_imm_day": 5,
+     "judgeC_likelihood_plus_prior_day": 6,
+     "mean_daily_llr_30d": 0.48301407005763725,
+     "switch_day_index": 180,
+     "trial": 0
+    },
+    {
+     "block": 4,
+     "judgeA_likelihood_only_day": 4,
+     "judgeB_actual_imm_day": 13,
+     "judgeC_likelihood_plus_prior_day": 13,
+     "mean_daily_llr_30d": 0.3257638417302668,
+     "switch_day_index": 360,
+     "trial": 2
+    },
+    {
+     "block": 5,
+     "judgeA_likelihood_only_day": 6,
+     "judgeB_actual_imm_day": 6,
+     "judgeC_likelihood_plus_prior_day": 7,
+     "mean_daily_llr_30d": 0.3411048354931362,
+     "switch_day_index": 180,
+     "trial": 0
+    },
+    {
+     "block": 5,
+     "judgeA_likelihood_only_day": 4,
+     "judgeB_actual_imm_day": 4,
+     "judgeC_likelihood_plus_prior_day": 4,
+     "mean_daily_llr_30d": 0.24585258487326894,
+     "switch_day_index": 360,
+     "trial": 2
+    },
+    {
+     "block": 6,
+     "judgeA_likelihood_only_day": 1,
+     "judgeB_actual_imm_day": 1,
+     "judgeC_likelihood_plus_prior_day": 1,
+     "mean_daily_llr_30d": 0.3541285157766328,
+     "switch_day_index": 180,
+     "trial": 0
+    },
+    {
+     "block": 6,
+     "judgeA_likelihood_only_day": 1,
+     "judgeB_actual_imm_day": 2,
+     "judgeC_likelihood_plus_prior_day": 2,
+     "mean_daily_llr_30d": 0.4176029340494691,
+     "switch_day_index": 360,
+     "trial": 2
+    },
+    {
+     "block": 7,
+     "judgeA_likelihood_only_day": 9,
+     "judgeB_actual_imm_day": 9,
+     "judgeC_likelihood_plus_prior_day": 16,
+     "mean_daily_llr_30d": 0.28534427149368,
+     "switch_day_index": 180,
+     "trial": 0
+    },
+    {
+     "block": 7,
+     "judgeA_likelihood_only_day": 2,
+     "judgeB_actual_imm_day": 14,
+     "judgeC_likelihood_plus_prior_day": 14,
+     "mean_daily_llr_30d": 0.22618175425718318,
+     "switch_day_index": 360,
+     "trial": 2
+    }
+   ],
+   "judgeA_likelihood_only": {
+    "max": 9,
+    "median": 3.0,
+    "missing_within_180d": 0
+   },
+   "judgeB_actual_imm": {
+    "max": 14,
+    "median": 5.5,
+    "missing_within_180d": 0
+   },
+   "judgeC_likelihood_plus_prior": {
+    "max": 16,
+    "median": 6.5,
+    "missing_within_180d": 0
+   },
+   "mean_daily_llr_30d_max": 0.48301407005763725,
+   "mean_daily_llr_30d_mean": 0.3349644618426633,
+   "mean_daily_llr_30d_min": 0.21007752142100486
+  }
+ },
+ "discharge_footprint_mm_day": {
+  "lower_groundwater_high": 0.3537956435756096,
+  "lower_groundwater_low": 0.0221122277234756,
+  "lower_groundwater_medium": 0.0884489108939024
+ },
+ "implication_for_joint_design": "联合参数-过程噪声切换确认应将判定拆为参数边缘与噪声边缘分别预注册；涉及低↔中噪声的边缘应预注册'预期慢/可能不过30天窗'，其失败不构成方法失败证据。",
+ "innovation_variance_by_truth": {
+  "lower_groundwater_high": {
+   "filter_high": 0.13058987280352236,
+   "filter_low": 0.0712368854358006,
+   "filter_medium": 0.0726883504132416
+  },
+  "lower_groundwater_low": {
+   "filter_high": 0.10852646418567254,
+   "filter_low": 0.03677049831497932,
+   "filter_medium": 0.0486862838392333
+  },
+  "lower_groundwater_medium": {
+   "filter_high": 0.11563970195072935,
+   "filter_low": 0.04056092380214808,
+   "filter_medium": 0.048979965919902356
+  }
+ },
+ "method": "生产建组函数+生产滤波代码在封存输入(初值/强迫/观测)上重跑，逐日记录每候选对数似然/先验概率/新息方差；重跑后验与封存后验逐位一致后方采信。未改候选间距、观测噪声、概率转移、阶段长度。",
+ "observation_standard_deviation": 0.1779767450200294,
+ "question_1": "观测预测似然能否稳定区分低与中过程噪声？",
+ "question_2": "概率递推或转移先验是否抑制响应？",
+ "reproduction_check_max_abs_diff": 0.0,
+ "root_cause": "信道信息极限：三档过程噪声只作用于下层地下水储量，经出流系数parK2=0.02211进入流量。当日流量足迹 低0.0221/中0.0885/高0.3538 mm/d，观测噪声标准差0.1780 mm/d。中档足迹=观测噪声的0.50倍(被淹没)，高档=1.99倍(可见)。真值为中时低/中滤波器新息方差比仅1.208，中/高为2.361。",
+ "scope": "仅适用于暖湿合成HBV-lite、下层地下水单状态过程噪声、流量单观测；诊断为测试线内结论，未一般化。"
+}

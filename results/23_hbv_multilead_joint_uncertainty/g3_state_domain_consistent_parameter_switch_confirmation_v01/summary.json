@@ -1,0 +1,169 @@
+{
+  "candidate_construction_audit": [
+    {
+      "left_parameter_id": "candidate_1_shared_limits",
+      "maximum_daily_start_projection_adjustment": 0.0,
+      "minimum_required_center_standard_deviation": 0.5,
+      "minimum_required_observation_standard_deviations": 5.0,
+      "pairwise_discharge_rmse": 1.3998100970243983,
+      "passed": true,
+      "right_parameter_id": "candidate_2_shared_limits",
+      "rmse_as_center_discharge_standard_deviation": 1.9484138074160868,
+      "rmse_in_observation_standard_deviations": 7.86512921599316
+    },
+    {
+      "left_parameter_id": "candidate_1_shared_limits",
+      "maximum_daily_start_projection_adjustment": 0.0,
+      "minimum_required_center_standard_deviation": 0.5,
+      "minimum_required_observation_standard_deviations": 5.0,
+      "pairwise_discharge_rmse": 2.4357513054459736,
+      "passed": true,
+      "right_parameter_id": "candidate_3_shared_limits",
+      "rmse_as_center_discharge_standard_deviation": 3.3903537951690987,
+      "rmse_in_observation_standard_deviations": 13.685784090342004
+    },
+    {
+      "left_parameter_id": "candidate_2_shared_limits",
+      "maximum_daily_start_projection_adjustment": 0.0,
+      "minimum_required_center_standard_deviation": 0.5,
+      "minimum_required_observation_standard_deviations": 5.0,
+      "pairwise_discharge_rmse": 1.951566327383755,
+      "passed": true,
+      "right_parameter_id": "candidate_3_shared_limits",
+      "rmse_as_center_discharge_standard_deviation": 2.716410451993286,
+      "rmse_in_observation_standard_deviations": 10.965288342384994
+    }
+  ],
+  "directed_transition_numeric_results": [
+    {
+      "event_count": 16,
+      "exact_interval_lower": 0.7940927857921773,
+      "exact_interval_upper": 1.0,
+      "maximum_response_start_day": 0,
+      "median_response_start_day": 0.0,
+      "new_parameter_id": "candidate_2_shared_limits",
+      "numerical_criterion_passed": true,
+      "numerical_response_fraction": 1.0,
+      "numerically_successful_event_count": 16,
+      "old_parameter_id": "candidate_1_shared_limits",
+      "transition_label": "candidate_1_shared_limits_to_candidate_2_shared_limits"
+    },
+    {
+      "event_count": 16,
+      "exact_interval_lower": 0.7940927857921773,
+      "exact_interval_upper": 1.0,
+      "maximum_response_start_day": 0,
+      "median_response_start_day": 0.0,
+      "new_parameter_id": "candidate_3_shared_limits",
+      "numerical_criterion_passed": true,
+      "numerical_response_fraction": 1.0,
+      "numerically_successful_event_count": 16,
+      "old_parameter_id": "candidate_2_shared_limits",
+      "transition_label": "candidate_2_shared_limits_to_candidate_3_shared_limits"
+    },
+    {
+      "event_count": 16,
+      "exact_interval_lower": 0.7940927857921773,
+      "exact_interval_upper": 1.0,
+      "maximum_response_start_day": 1,
+      "median_response_start_day": 0.0,
+      "new_parameter_id": "candidate_1_shared_limits",
+      "numerical_criterion_passed": true,
+      "numerical_response_fraction": 1.0,
+      "numerically_successful_event_count": 16,
+      "old_parameter_id": "candidate_3_shared_limits",
+      "transition_label": "candidate_3_shared_limits_to_candidate_1_shared_limits"
+    }
+  ],
+  "evidence_boundary": "warm-wet synthetic HBV-lite assimilation only; not forecast, state-accuracy, process-noise-switch, joint-identification, WALRUS, or real-basin evidence",
+  "experiment_id": "g3_state_domain_consistent_parameter_switch_confirmation_v01",
+  "fixed_process_noise": {
+    "all_other_fourteen_state_variances": 0.0,
+    "plain_name": "lower groundwater storage",
+    "process_id": "fixed_lower_groundwater_sd_1",
+    "standard_deviation_mm_day": 1.0,
+    "state_index": 4,
+    "state_name": "SLZ",
+    "variance_mm2_day2": 1.0
+  },
+  "forbidden_scope_checks": {
+    "forecast_executed": false,
+    "forecast_imported": false,
+    "future_observations_used": false,
+    "joint_parameter_process_noise_switching": false,
+    "process_noise_switching": false,
+    "real_basin_claim": false,
+    "state_accuracy_claim": false,
+    "state_interaction_attribution": false,
+    "walrus_claim": false
+  },
+  "full_stage_descriptive_accuracy": [
+    {
+      "day_count": 4320,
+      "mean_true_candidate_probability": 0.9989786926419579,
+      "top_ranked_day_count": 4318,
+      "top_ranked_fraction": 0.999537037037037,
+      "true_parameter_id": "candidate_1_shared_limits"
+    },
+    {
+      "day_count": 4320,
+      "mean_true_candidate_probability": 0.9999999999987604,
+      "top_ranked_day_count": 4320,
+      "top_ranked_fraction": 1.0,
+      "true_parameter_id": "candidate_2_shared_limits"
+    },
+    {
+      "day_count": 4320,
+      "mean_true_candidate_probability": 0.999999999995314,
+      "top_ranked_day_count": 4320,
+      "top_ranked_fraction": 1.0,
+      "true_parameter_id": "candidate_3_shared_limits"
+    }
+  ],
+  "numerical_response_rule": {
+    "confidence_level": 0.95,
+    "consecutive_clear_dominance_days": 5,
+    "event_count_per_directed_transition": 16,
+    "minimum_exact_interval_lower_bound_exclusive": 0.5,
+    "minimum_new_true_candidate_probability_exclusive": 0.5,
+    "minimum_probability_margin_over_runner_up_inclusive": 0.1,
+    "minimum_successful_events_per_directed_transition": 13,
+    "response_window_days": 30,
+    "success_definition": "within thirty days after switching, the new true candidate has posterior probability greater than 0.5 and a margin over the runner-up of at least 0.10 for five consecutive days"
+  },
+  "only_switched_factor": "true fixed parameter candidate",
+  "parameter_ids": [
+    "candidate_1_shared_limits",
+    "candidate_2_shared_limits",
+    "candidate_3_shared_limits"
+  ],
+  "parameters_setting_truth_state_limits": [
+    "parFC",
+    "parCWH"
+  ],
+  "probability_normalization_maximum_absolute_error": 1.1102230246251565e-16,
+  "scientific_conclusion_withheld": true,
+  "shared_parCWH": 4.790858379798471e-09,
+  "shared_parFC": 115.41144086847932,
+  "status": "complete_pending_blinded_visual_review_and_independent_verification",
+  "switch_boundary_projection_gate": {
+    "maximum_absolute_projection_adjustment": 0.0,
+    "passed": true,
+    "projection_event_count": 0
+  },
+  "truth_population": {
+    "assimilation_days_per_trial": 540,
+    "events_per_directed_transition": 16,
+    "matched_blocks": 8,
+    "switch_events": 48,
+    "truth_transition_count": 12960,
+    "truth_trials": 3
+  },
+  "truth_projection_gate": {
+    "maximum_absolute_projection_adjustment": 0.0,
+    "passed": true,
+    "projection_event_count": 0
+  },
+  "visual_review_required": true,
+  "visual_review_status": "not_yet_performed"
+}

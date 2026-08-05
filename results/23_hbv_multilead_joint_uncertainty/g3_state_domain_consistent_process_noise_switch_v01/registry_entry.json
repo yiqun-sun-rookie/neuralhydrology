@@ -1,0 +1,9 @@
+{
+  "decision": "not_supported_under_clean_synthetic_condition",
+  "experiment_id": "g3_state_domain_consistent_process_noise_switch_v01",
+  "experiment_type": "assimilation-only clean synthetic process-noise switch",
+  "forecast_executed": false,
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/g3_state_domain_consistent_process_noise_switch_v01",
+  "scientific_boundary": "warm-wet synthetic HBV-lite truth with process noise only on lower groundwater storage; this is not forecast evidence, not general process-noise evidence, not WALRUS evidence, and not real-catchment evidence",
+  "status": "complete_pending_independent_verification"
+}

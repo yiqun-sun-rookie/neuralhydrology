@@ -1,0 +1,4 @@
+left_parameter_id,right_parameter_id,pairwise_discharge_rmse,rmse_in_observation_standard_deviations,rmse_as_center_discharge_standard_deviation,minimum_required_observation_standard_deviations,minimum_required_center_standard_deviation,maximum_daily_start_projection_adjustment,passed
+candidate_1_shared_limits,candidate_2_shared_limits,1.3998100970243983,7.86512921599316,1.9484138074160868,5.0,0.5,0.0,True
+candidate_1_shared_limits,candidate_3_shared_limits,2.4357513054459736,13.685784090342004,3.3903537951690987,5.0,0.5,0.0,True
+candidate_2_shared_limits,candidate_3_shared_limits,1.951566327383755,10.965288342384994,2.716410451993286,5.0,0.5,0.0,True

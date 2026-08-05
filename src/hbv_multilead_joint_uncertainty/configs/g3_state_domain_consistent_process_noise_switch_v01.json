@@ -1,0 +1,121 @@
+{
+  "experiment_id": "g3_state_domain_consistent_process_noise_switch_v01",
+  "status": "frozen_before_run",
+  "scientific_question": "Can a fully interacting three-filter bank follow known switches among three process-noise levels when the HBV-lite parameter vector is fixed and the synthetic truth receives exact unprojected lower-groundwater perturbations?",
+  "scope": "assimilation-only warm-wet synthetic HBV-lite process-noise switch experiment",
+  "fixed_parameter_id": "trained_center",
+  "parameter_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_gate_param_switch_v01/parameter_vectors.csv",
+    "sha256": "6c3080099ba1dce0e2ef0411fc585282f70760e9955c1c49f7b9c9892d8fa925"
+  },
+  "observation_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_inputs_v01/observation_noise_low.csv",
+    "sha256": "0ff9a34b0dd863e99e40038b0876d781561a0a1e9d371a81ee3b8fafff6ef3c8"
+  },
+  "state_contract": {
+    "state_count": 15,
+    "perturbed_state_index": 4,
+    "perturbed_state_name": "SLZ",
+    "perturbed_state_plain_name": "lower groundwater storage",
+    "all_other_state_noise_variances": 0.0,
+    "truth_state_continuous_across_switches": true,
+    "state_reset_at_switch": false
+  },
+  "process_noise_candidates": [
+    {
+      "process_id": "lower_groundwater_low",
+      "plain_name": "low process noise",
+      "standard_deviation_mm_day": 1.0,
+      "variance_mm2_day2": 1.0
+    },
+    {
+      "process_id": "lower_groundwater_medium",
+      "plain_name": "medium process noise",
+      "standard_deviation_mm_day": 4.0,
+      "variance_mm2_day2": 16.0
+    },
+    {
+      "process_id": "lower_groundwater_high",
+      "plain_name": "high process noise",
+      "standard_deviation_mm_day": 16.0,
+      "variance_mm2_day2": 256.0
+    }
+  ],
+  "forcing": {
+    "warmup_days": 90,
+    "assimilation_days": 540,
+    "rain_floor_mm_day": 5.0,
+    "rain_gamma_shape": 0.8,
+    "rain_gamma_scale_mm_day": 4.0,
+    "potential_evaporation_mm_day": 2.0,
+    "temperature_celsius": 10.0
+  },
+  "population": {
+    "matched_block_count": 8,
+    "truth_trial_count": 3,
+    "stage_length_days": 180,
+    "stage_count": 3,
+    "switch_count_per_trial": 2,
+    "event_count": 48,
+    "events_per_directed_transition": 16
+  },
+  "truth_trial_stage_orders": [
+    ["lower_groundwater_medium", "lower_groundwater_high", "lower_groundwater_low"],
+    ["lower_groundwater_high", "lower_groundwater_low", "lower_groundwater_medium"],
+    ["lower_groundwater_low", "lower_groundwater_medium", "lower_groundwater_high"]
+  ],
+  "seeds": {
+    "forcing": [3501001, 3501002, 3501003, 3501004, 3501005, 3501006, 3501007, 3501008],
+    "process_noise": [3502001, 3502002, 3502003, 3502004, 3502005, 3502006, 3502007, 3502008],
+    "observation_noise": [3503001, 3503002, 3503003, 3503004, 3503005, 3503006, 3503007, 3503008]
+  },
+  "filter": {
+    "candidate_count": 3,
+    "interaction_mode": "full",
+    "factor_transition_stay_probability": 0.98,
+    "initial_covariance_fraction": 0.001,
+    "global_posterior_output": "posterior-probability-weighted fifteen-state state and covariance after every update"
+  },
+  "truth_domain_gate": {
+    "projection_event_count_required": 0,
+    "maximum_absolute_projection_adjustment_required": 0.0,
+    "failure_action": "stop_without_scientific_conclusion"
+  },
+  "response_rule": {
+    "response_window_days": 30,
+    "consecutive_top_ranked_days": 5,
+    "minimum_successful_events_per_directed_transition": 13,
+    "event_count_per_directed_transition": 16,
+    "confidence_level": 0.95,
+    "minimum_exact_interval_lower_bound_exclusive": 0.5,
+    "success_definition": "the new true process-noise candidate is top-ranked for five consecutive days with the run beginning within days zero through twenty-five after the switch"
+  },
+  "forbidden_scope": {
+    "forecast_imported": false,
+    "forecast_executed": false,
+    "future_observations_used": false,
+    "parameter_switching": false,
+    "parameter_estimation": false,
+    "real_basin_claim": false,
+    "walrus_claim": false
+  },
+  "numerical_tolerance": 1e-12,
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/g3_state_domain_consistent_process_noise_switch_v01",
+  "verification_relative_path": "results/23_hbv_multilead_joint_uncertainty/g3_state_domain_consistent_process_noise_switch_v01_independent_verification_v01",
+  "required_result_files": [
+    "checksums.json",
+    "config_snapshot.json",
+    "daily_probabilities.csv",
+    "environment.json",
+    "evidence.npz",
+    "observation_noise_low.csv",
+    "parameter_vectors.csv",
+    "probability_response.png",
+    "process_noise_covariances.csv",
+    "registry_entry.json",
+    "response_summary.png",
+    "summary.json",
+    "switch_response_events.csv",
+    "switch_response_summary.csv"
+  ]
+}

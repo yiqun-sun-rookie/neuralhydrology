@@ -1,0 +1,57 @@
+{
+  "base_config": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_gate_param_switch_v01/parameter_vectors.csv",
+    "sha256": "6c3080099ba1dce0e2ef0411fc585282f70760e9955c1c49f7b9c9892d8fa925",
+    "transformation": "copy every non-domain-setting value unchanged; replace parFC and parCWH in all three rows with the trained-center values before formal confirmation"
+  },
+  "changed_factor": "true fixed parameter candidate at days 181 and 361",
+  "exp_id": "g3_state_domain_consistent_parameter_switch_confirmation_v01",
+  "fixed_factors": [
+    "fifteen-state HBV-lite implementation",
+    "fixed lower-groundwater process noise",
+    "fixed observation noise",
+    "forcing distribution",
+    "initial conditions",
+    "candidate bank",
+    "transition probabilities"
+  ],
+  "hypothesis": "When the true fixed parameter candidate switches at known stage boundaries while all fifteen truth-state values remain continuous and unprojected, can a fully interacting three-filter bank form clear and stable posterior dominance for the new true candidate in all three directed transitions?",
+  "metrics_path": "results/23_hbv_multilead_joint_uncertainty/g3_state_domain_consistent_parameter_switch_confirmation_v01/switch_response_summary_numeric.csv",
+  "notes": "No forecast; final event success also requires sealed blinded visual review.",
+  "paper_name": "not_assigned",
+  "run_dir": "results/23_hbv_multilead_joint_uncertainty/g3_state_domain_consistent_parameter_switch_confirmation_v01",
+  "seeds": {
+    "forcing": [
+      3701001,
+      3701002,
+      3701003,
+      3701004,
+      3701005,
+      3701006,
+      3701007,
+      3701008
+    ],
+    "observation_noise": [
+      3703001,
+      3703002,
+      3703003,
+      3703004,
+      3703005,
+      3703006,
+      3703007,
+      3703008
+    ],
+    "process_noise": [
+      3702001,
+      3702002,
+      3702003,
+      3702004,
+      3702005,
+      3702006,
+      3702007,
+      3702008
+    ]
+  },
+  "status": "complete_pending_blinded_visual_review_and_independent_verification",
+  "type": "prospective_synthetic_parameter_switch_confirmation"
+}

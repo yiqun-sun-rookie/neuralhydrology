@@ -1,0 +1,120 @@
+{
+  "all_numeric_evidence_finite": true,
+  "candidate_parameter_ids": [
+    "trained_center",
+    "trained_center",
+    "trained_center"
+  ],
+  "candidate_process_ids": [
+    "lower_groundwater_low",
+    "lower_groundwater_medium",
+    "lower_groundwater_high"
+  ],
+  "decision": "not_supported_under_clean_synthetic_condition",
+  "directed_transition_results": [
+    {
+      "criterion_passed": false,
+      "event_count": 16,
+      "exact_interval_lower": 0.4133793635486414,
+      "exact_interval_upper": 0.8898300452828823,
+      "maximum_response_start_day": 20,
+      "median_response_start_day": 10.0,
+      "new_process_id": "lower_groundwater_medium",
+      "old_process_id": "lower_groundwater_low",
+      "response_fraction": 0.6875,
+      "successful_event_count": 11,
+      "transition_label": "lower_groundwater_low_to_lower_groundwater_medium"
+    },
+    {
+      "criterion_passed": true,
+      "event_count": 16,
+      "exact_interval_lower": 0.7940927857921773,
+      "exact_interval_upper": 1.0,
+      "maximum_response_start_day": 14,
+      "median_response_start_day": 5.5,
+      "new_process_id": "lower_groundwater_high",
+      "old_process_id": "lower_groundwater_medium",
+      "response_fraction": 1.0,
+      "successful_event_count": 16,
+      "transition_label": "lower_groundwater_medium_to_lower_groundwater_high"
+    },
+    {
+      "criterion_passed": true,
+      "event_count": 16,
+      "exact_interval_lower": 0.7940927857921773,
+      "exact_interval_upper": 1.0,
+      "maximum_response_start_day": 20,
+      "median_response_start_day": 10.0,
+      "new_process_id": "lower_groundwater_low",
+      "old_process_id": "lower_groundwater_high",
+      "response_fraction": 1.0,
+      "successful_event_count": 16,
+      "transition_label": "lower_groundwater_high_to_lower_groundwater_low"
+    }
+  ],
+  "evidence_boundary": "warm-wet synthetic HBV-lite truth with process noise only on lower groundwater storage; this is not forecast evidence, not general process-noise evidence, not WALRUS evidence, and not real-catchment evidence",
+  "experiment_id": "g3_state_domain_consistent_process_noise_switch_v01",
+  "fixed_parameter_id": "trained_center",
+  "forbidden_scope_checks": {
+    "forecast_executed": false,
+    "forecast_imported": false,
+    "future_observations_used": false,
+    "parameter_estimation": false,
+    "parameter_switching": false
+  },
+  "full_stage_descriptive_accuracy": [
+    {
+      "day_count": 4320,
+      "mean_true_candidate_probability": 0.7498897799233275,
+      "top_ranked_day_count": 4048,
+      "top_ranked_fraction": 0.937037037037037,
+      "true_process_id": "lower_groundwater_low"
+    },
+    {
+      "day_count": 4320,
+      "mean_true_candidate_probability": 0.6401884656253107,
+      "top_ranked_day_count": 3511,
+      "top_ranked_fraction": 0.8127314814814814,
+      "true_process_id": "lower_groundwater_medium"
+    },
+    {
+      "day_count": 4320,
+      "mean_true_candidate_probability": 0.8109832251820954,
+      "top_ranked_day_count": 4095,
+      "top_ranked_fraction": 0.9479166666666666,
+      "true_process_id": "lower_groundwater_high"
+    }
+  ],
+  "only_changed_factor": "true and candidate lower-groundwater process-noise standard deviation: 1, 4, or 16 millimetres per day",
+  "probability_normalization_maximum_absolute_error": 2.220446049250313e-16,
+  "process_noise_support": {
+    "all_other_fourteen_state_variances": 0.0,
+    "plain_name": "lower groundwater storage",
+    "state_index": 4,
+    "state_name": "SLZ"
+  },
+  "response_rule": {
+    "confidence_level": 0.95,
+    "consecutive_top_ranked_days": 5,
+    "event_count_per_directed_transition": 16,
+    "minimum_exact_interval_lower_bound_exclusive": 0.5,
+    "minimum_successful_events_per_directed_transition": 13,
+    "response_window_days": 30,
+    "success_definition": "the new true process-noise candidate is top-ranked for five consecutive days with the run beginning within days zero through twenty-five after the switch"
+  },
+  "scientific_conclusion_withheld_until_independent_verification": true,
+  "status": "complete_pending_independent_verification",
+  "truth_population": {
+    "assimilation_days_per_trial": 540,
+    "events_per_directed_transition": 16,
+    "matched_blocks": 8,
+    "switch_events": 48,
+    "total_truth_transitions": 12960,
+    "truth_trials": 3
+  },
+  "truth_state_domain_gate": {
+    "maximum_absolute_projection_adjustment": 0.0,
+    "passed": true,
+    "projection_event_count": 0
+  }
+}
