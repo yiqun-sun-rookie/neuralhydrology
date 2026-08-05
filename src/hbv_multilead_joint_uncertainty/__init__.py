@@ -1,6 +1,8 @@
-"""Daily multi-lead diagnostic hindcasts for joint parameter and noise uncertainty."""
+"""Joint parameter-and-noise updating with optional forecast utilities.
 
-from .forecast import forecast_from_posterior, origin_target_indices, run_multilead_assimilation
+Forecast functions are loaded only when explicitly requested.  This keeps
+same-day state audits structurally independent from every forecast module.
+"""
 from .synthetic_truth import ReferenceTruth, generate_reference_truth
 from .single_filter_validation import (
     SingleFilterStateValidationResult,
@@ -42,3 +44,15 @@ __all__ = [
     "run_single_filter_state_validation",
     "run_multilead_assimilation",
 ]
+
+
+def __getattr__(name):
+    if name in {
+        "forecast_from_posterior",
+        "origin_target_indices",
+        "run_multilead_assimilation",
+    }:
+        from . import forecast
+
+        return getattr(forecast, name)
+    raise AttributeError(name)

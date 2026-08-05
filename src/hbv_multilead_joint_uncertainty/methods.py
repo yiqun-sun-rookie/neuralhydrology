@@ -1,4 +1,9 @@
-"""Matched candidate contracts for the five attribution methods."""
+"""Matched model-bank contracts with one global posterior output per update.
+
+Each bank keeps model-conditioned filter states internally. ``full`` builds
+the standard fully interacting calculation; every interaction mode publishes
+one posterior-probability-weighted global posterior state after the update.
+"""
 
 from __future__ import annotations
 
@@ -20,6 +25,9 @@ from hbv_joint_uncertainty.preflight import (
 from hbv_joint_uncertainty.sigma_filter import ModifiedUnscentedFilter
 
 
+# ``parameter_only`` is a frozen artifact key.  It means three fixed parameter
+# candidates sharing one fixed process covariance; no parameter vector is
+# updated during assimilation.
 METHOD_ORDER = ("open_loop", "fixed_filter", "parameter_only", "noise_only", "joint")
 PARAMETER_ORDER = ("equifinal_diverse_1", "trained_center", "equifinal_diverse_2")
 LEGACY_PARAMETER_ORDER = ("equifinal_low_flow", "trained_center", "equifinal_high_flow")
@@ -112,6 +120,7 @@ def build_method_definitions(
     process_covariances: Mapping[str, np.ndarray],
     selected_process_id: str,
 ) -> dict[str, tuple[MethodCandidate, ...]]:
+    """Build immutable parameter-process candidates for each method family."""
     parameter_order = parameter_order_from_identifiers(parameter_vectors)
     parameters = {
         parameter_id: _validated_parameters(parameter_vectors[parameter_id], parameter_id)
@@ -211,8 +220,8 @@ def build_method_bank(
         transition_matrix=transition_matrix,
         initial_probabilities=np.full(len(filters), 1.0 / len(filters), dtype=np.float64),
         parameter_groups=[definition.parameter_group for definition in old_definitions],
+        interaction_mode=interaction_mode,
     )
-    estimator.interaction_mode = interaction_mode
     return CandidateBank(
         estimator=estimator,
         transitions=tuple(transitions),

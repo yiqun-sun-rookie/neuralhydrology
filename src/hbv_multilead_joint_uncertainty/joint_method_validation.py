@@ -140,7 +140,7 @@ def _assimilate_then_forecast(
         for transition in bank.transitions:
             transition.set_forcing(rain, potential_evaporation, temperature)
         bank.estimator.step(observations[day])
-    origin_state = bank.estimator.state.copy()
+    origin_state = bank.estimator.global_posterior_state
     origin_probabilities = bank.estimator.probabilities.copy()
     future = active_forcing[
         assimilation_days : assimilation_days + int(leads[-1])

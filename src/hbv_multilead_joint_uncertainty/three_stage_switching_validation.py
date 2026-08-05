@@ -290,7 +290,7 @@ def _assimilate_record_then_forecast(
             transition.set_forcing(rain, potential_evaporation, temperature)
         bank.estimator.step(observations[day])
         probabilities[day] = bank.estimator.probabilities
-        states[day] = bank.estimator.state
+        states[day] = bank.estimator.global_posterior_state
     future = active_forcing[assimilation_days : assimilation_days + int(leads[-1])]
     forecast = forecast_from_posterior(
         bank,
@@ -298,7 +298,7 @@ def _assimilate_record_then_forecast(
         lead_days=tuple(int(value) for value in leads),
         interaction_mode="full",
     )
-    return probabilities, states, bank.estimator.state.copy(), forecast
+    return probabilities, states, bank.estimator.global_posterior_state, forecast
 
 
 def run_three_stage_switching_validation(

@@ -137,9 +137,9 @@ def _lead_time_plot(comparisons: pd.DataFrame, output: Path) -> None:
         "joint_vs_fixed_filter": "#009E73",
     }
     labels = {
-        "parameter_only_vs_fixed_filter": "Parameter-only",
-        "noise_only_vs_fixed_filter": "Process-noise-only",
-        "joint_vs_fixed_filter": "Joint parameter and process noise",
+        "parameter_only_vs_fixed_filter": "Three fixed parameter candidates",
+        "noise_only_vs_fixed_filter": "Three fixed process-noise candidates",
+        "joint_vs_fixed_filter": "Fixed parameter-process candidate grid",
     }
     figure, axes = plt.subplots(1, 2, figsize=(10.5, 4.2), constrained_layout=True)
     for comparison_id in colors:

@@ -1,0 +1,15 @@
+{
+  "applies_to_experiment_id": "g3_fixed_process_parameter_candidate_controlled_forecast_v01",
+  "correction_date": "2026-08-01",
+  "historical_config_immutable": true,
+  "archived_state_key_roles": {
+    "single_fixed_parameter_filter_state": "single_filter_posterior_state",
+    "three_parameter_candidates_combined_state": "fully_interacting_multiple_model_global_posterior_state"
+  },
+  "standard_method_output": "fully_interacting_multiple_model_global_posterior_state",
+  "forecast_origin_rule": "Each arm starts one deterministic trajectory from its method's unique final posterior state.",
+  "model_conditioned_subfilter_trajectories_used": false,
+  "mechanism_attribution_allowed": false,
+  "corrected_interpretation": "The forecast readout is controlled but the source states compare a single filter with a standard fully interacting three-model method. The result cannot be attributed only to adding parameter candidates or only to state interaction.",
+  "sealed_evidence_unchanged": true
+}

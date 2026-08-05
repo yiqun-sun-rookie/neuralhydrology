@@ -1,0 +1,44 @@
+{
+  "experiment_id": "g3_deterministic_unique_state_forecast_attribution_v01",
+  "classification": "mechanism_attribution_audit",
+  "scenario": "idealized_three_stage_parameter_switch",
+  "assimilation_days": 540,
+  "lead_days": [1, 2, 3, 4, 5, 6, 7],
+  "state_sources": [
+    "posterior_all_states",
+    "truth_all_states",
+    "posterior_hydrologic_truth_routing",
+    "truth_hydrologic_posterior_routing"
+  ],
+  "parameter_sources": [
+    "true_stage_parameters",
+    "posterior_weighted_parameters",
+    "maximum_posterior_parameters"
+  ],
+  "primary_population": "all 540 assimilation-day origins with same-stage targets",
+  "cross_switch_policy": "diagnostic_only",
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 20260731,
+    "unit": "matched_block"
+  },
+  "numerical_tolerances": {
+    "source_alignment": 0.0,
+    "posterior_state_alignment": 1e-9,
+    "independent_forecast": 1e-10
+  },
+  "resource_limits": {
+    "maximum_peak_working_memory_gibibytes": 1.0,
+    "sequential_method_processing": true
+  },
+  "sealed_ideal_evidence": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_gate_param_switch_v01/evidence.npz",
+    "sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67"
+  },
+  "sealed_readout_evidence": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_daily_rolling_forecast_readout_development_v01/evidence.npz",
+    "sha256": "53a04d893d4a86962c241408b4fe8ee50bd3a680a9a91f9cfaa4869042eed4c4"
+  },
+  "design_doc": "docs/plans/2026-07-31-id23-deterministic-unique-state-attribution-design.md",
+  "scope_limit": "Synthetic mechanism attribution only; true-stage parameters are unavailable operationally and results cannot be extrapolated to real basins."
+}

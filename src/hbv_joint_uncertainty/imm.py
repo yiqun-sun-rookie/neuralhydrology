@@ -172,6 +172,15 @@ def interact_model_states(
 
 @dataclass(frozen=True)
 class InteractingStepResult:
+    """One update result with internal model-conditionals and one global posterior.
+
+    ``candidate_results`` contains the model-conditioned posterior states used
+    internally by the filter bank.  ``combined_state`` and
+    ``combined_covariance`` are retained as archived names; the canonical
+    public names are ``global_posterior_state`` and
+    ``global_posterior_covariance``.
+    """
+
     prior_probabilities: np.ndarray
     posterior_probabilities: np.ndarray
     candidate_results: tuple[FilterStepResult, ...]
@@ -179,9 +188,31 @@ class InteractingStepResult:
     combined_state: np.ndarray
     combined_covariance: np.ndarray
 
+    @property
+    def global_posterior_state(self) -> np.ndarray:
+        """Return the unique state estimate published after this update."""
+
+        return self.combined_state.copy()
+
+    @property
+    def global_posterior_covariance(self) -> np.ndarray:
+        """Return the covariance of the unique global posterior estimate."""
+
+        return self.combined_covariance.copy()
+
 
 class InteractingMultipleModel:
-    """Run full, parameter_grouped, or none interaction; the legacy default is parameter_grouped."""
+    """Update model-conditionals and publish one global posterior estimate.
+
+    ``full`` is the standard fully interacting multiple-model calculation.
+    ``parameter_grouped`` is a partial-interaction research control and
+    ``none`` is a non-interacting multi-filter control.  Every mode still ends
+    an observation update by combining the model-conditioned posteriors into
+    one probability-weighted global posterior state and covariance.
+
+    The default remains ``parameter_grouped`` only to preserve older callers;
+    current experiment builders pass the intended mode explicitly.
+    """
 
     def __init__(
         self,
@@ -189,6 +220,7 @@ class InteractingMultipleModel:
         transition_matrix,
         initial_probabilities,
         parameter_groups: Sequence[object],
+        interaction_mode: str = "parameter_grouped",
     ):
         self.filters = list(filters)
         if not self.filters:
@@ -225,8 +257,50 @@ class InteractingMultipleModel:
             raise ValueError("parameter_groups cannot contain missing labels")
         self.parameter_groups = groups
 
+        if interaction_mode not in {"full", "parameter_grouped", "none"}:
+            raise ValueError(
+                "interaction_mode must be full, parameter_grouped, or none"
+            )
+        self.interaction_mode = interaction_mode
+
         self.state = self.filters[0].state.copy()
         self.covariance = self.filters[0].covariance.copy()
+
+    @property
+    def global_posterior_state(self) -> np.ndarray:
+        """Return the most recent unique global posterior state."""
+
+        return self.state.copy()
+
+    @global_posterior_state.setter
+    def global_posterior_state(self, values) -> None:
+        state = np.asarray(values, dtype=np.float64)
+        if state.shape != (self.n_state,) or not np.all(np.isfinite(state)):
+            raise ValueError(
+                f"global posterior state must have shape ({self.n_state},) and be finite"
+            )
+        self.state = state.copy()
+
+    @property
+    def global_posterior_covariance(self) -> np.ndarray:
+        """Return the covariance of the most recent global posterior."""
+
+        return self.covariance.copy()
+
+    @global_posterior_covariance.setter
+    def global_posterior_covariance(self, values) -> None:
+        covariance = np.asarray(values, dtype=np.float64)
+        expected = (self.n_state, self.n_state)
+        if (
+            covariance.shape != expected
+            or not np.all(np.isfinite(covariance))
+            or not np.allclose(covariance, covariance.T, rtol=0.0, atol=1e-12)
+        ):
+            raise ValueError(
+                "global posterior covariance must match the state dimension, "
+                "be finite, and be symmetric"
+            )
+        self.covariance = covariance.copy()
 
     def _interact(self) -> np.ndarray:
         interaction = interact_model_states(
@@ -237,7 +311,7 @@ class InteractingMultipleModel:
             transition_matrix=self.transition_matrix,
             current_probabilities=self.probabilities,
             parameter_groups=self.parameter_groups,
-            interaction_mode=getattr(self, "interaction_mode", "parameter_grouped"),
+            interaction_mode=self.interaction_mode,
         )
         for destination, candidate in enumerate(self.filters):
             candidate.state = interaction.mixed_states[destination].copy()
@@ -256,29 +330,35 @@ class InteractingMultipleModel:
         for probability, result in zip(prior_probabilities, candidate_results):
             combined_prior_observation += probability * result.prior_observation
 
-        combined_state = np.zeros(self.n_state, dtype=np.float64)
+        global_posterior_state = np.zeros(self.n_state, dtype=np.float64)
         for probability, result in zip(posterior_probabilities, candidate_results):
-            combined_state += probability * result.posterior_state
-        combined_covariance = np.zeros((self.n_state, self.n_state), dtype=np.float64)
+            global_posterior_state += probability * result.posterior_state
+        global_posterior_covariance = np.zeros(
+            (self.n_state, self.n_state), dtype=np.float64
+        )
         for probability, result in zip(posterior_probabilities, candidate_results):
-            deviation = result.posterior_state - combined_state
-            combined_covariance += probability * (
+            deviation = result.posterior_state - global_posterior_state
+            global_posterior_covariance += probability * (
                 result.posterior_covariance + np.outer(deviation, deviation)
             )
-        combined_covariance = 0.5 * (combined_covariance + combined_covariance.T)
-        if not np.all(np.isfinite(combined_state)) or not np.all(np.isfinite(combined_covariance)):
-            raise ValueError("combined state or covariance is non-finite")
+        global_posterior_covariance = 0.5 * (
+            global_posterior_covariance + global_posterior_covariance.T
+        )
+        if not np.all(np.isfinite(global_posterior_state)) or not np.all(
+            np.isfinite(global_posterior_covariance)
+        ):
+            raise ValueError("global posterior state or covariance is non-finite")
         if abs(float(posterior_probabilities.sum()) - 1.0) > 1e-12:
             raise ValueError("posterior probabilities do not sum to one within 1e-12")
 
         self.probabilities = posterior_probabilities
-        self.state = combined_state
-        self.covariance = combined_covariance
+        self.state = global_posterior_state
+        self.covariance = global_posterior_covariance
         return InteractingStepResult(
             prior_probabilities=prior_probabilities.copy(),
             posterior_probabilities=posterior_probabilities.copy(),
             candidate_results=candidate_results,
             combined_prior_observation=combined_prior_observation,
-            combined_state=combined_state.copy(),
-            combined_covariance=combined_covariance.copy(),
+            combined_state=global_posterior_state.copy(),
+            combined_covariance=global_posterior_covariance.copy(),
         )

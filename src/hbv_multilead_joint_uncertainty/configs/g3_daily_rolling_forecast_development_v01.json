@@ -1,0 +1,105 @@
+{
+  "experiment_id": "g3_daily_rolling_forecast_development_v01",
+  "classification": "development_screen",
+  "scenario": "parameter_switch",
+  "purpose": "Test whether full state interaction improves daily one-through-seven-day forecasts over both complete post-switch parameter stages.",
+  "design_doc": "docs/plans/2026-07-28-id23-daily-rolling-forecast-design.md",
+  "implementation_plan": "docs/plans/2026-07-28-id23-daily-rolling-forecast.md",
+  "forecast_contract": {
+    "model_transition_during_forecast": "identity",
+    "candidate_probabilities_during_forecast": "fixed_at_origin_assimilation_posterior",
+    "cross_candidate_state_mixing_during_forecast": false
+  },
+  "comparison_methods": [
+    "full",
+    "none",
+    "uniform_independent"
+  ],
+  "lead_days": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "stage_lengths": [
+    180,
+    180,
+    180
+  ],
+  "switch_days": [
+    180,
+    360
+  ],
+  "origin_start_day": 180,
+  "crosscheck_origin": 539,
+  "expected_block_count": 8,
+  "expected_truth_count": 3,
+  "primary_candidate_method_name": "parameter_only",
+  "selected_process_id": "process_2",
+  "factor_transition_stay_probability": 0.98,
+  "bootstrap": {
+    "unit": "matched_block",
+    "replicates": 20000,
+    "seed": 8820001,
+    "shared_resample_indices_across_leads_and_comparisons": true
+  },
+  "development_gates": {
+    "minimum_full_stage_rmse_improvement_fraction": 0.01,
+    "require_all_seven_leads_against_both_controls": true
+  },
+  "sealed_ideal_input_evidence": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_gate_param_switch_v01/evidence.npz",
+    "sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67"
+  },
+  "sealed_baseline_evidence": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_state_weight_factorial_param_switch_v03/evidence.npz",
+    "sha256": "f22c3c9f5b264df993563631ed402392f7e5d99d8f4497044d7be0aac0f63ba3"
+  },
+  "parameter_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g2_spacing_inputs_v01/parameter_vectors_m80.csv",
+    "sha256": "845d5bbd70e9f5dc373de1d01303a33d9c59932ec05901eb8c2c901ca505a292",
+    "source_basin_id": "12143600",
+    "parameter_ids": [
+      "equifinal_diverse_1",
+      "trained_center",
+      "equifinal_diverse_2"
+    ]
+  },
+  "process_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/process_noise_covariances.csv",
+    "sha256": "b95b637a40c0a6f1f15d8b81739f35ac60a8ae3d85aa3872ad47ada17c8684d2",
+    "source_basin_id": "12143600",
+    "process_ids": [
+      "process_0",
+      "process_1",
+      "process_2"
+    ],
+    "selected_process_id": "process_2"
+  },
+  "observation_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_inputs_v01/observation_noise_low.csv",
+    "sha256": "0ff9a34b0dd863e99e40038b0876d781561a0a1e9d371a81ee3b8fafff6ef3c8",
+    "source_basin_id": "12143600"
+  },
+  "protected_paths": [
+    "results/23_hbv_multilead_joint_uncertainty/g3_ideal_gate_param_switch_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g3_state_weight_factorial_param_switch_v03",
+    "results/23_hbv_multilead_joint_uncertainty/g3_post_switch_forecast_development_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g3_post_switch_forecast_confirmation_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g3_corrected_forecast_param_switch_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g2_spacing_inputs_v01",
+    "results/23_hbv_multilead_joint_uncertainty/g3_ideal_inputs_v01",
+    "results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05",
+    "docs/plans/2026-07-27-id23-post-switch-forecast-confirmation-design.md",
+    "docs/plans/2026-07-28-id23-post-switch-forecast-confirmation-closure.md",
+    "docs/plans/2026-07-25-g3-corrected-forecast-comparison-closure.md",
+    "docs/plans/2026-07-28-id23-daily-rolling-forecast-design.md",
+    "docs/plans/2026-07-28-id23-daily-rolling-forecast.md",
+    "src/hbv_multilead_joint_uncertainty/configs/g3_post_switch_forecast_development_v01.json",
+    "src/hbv_multilead_joint_uncertainty/configs/g3_post_switch_forecast_confirmation_v01.json"
+  ],
+  "scope_limit": "Development-only full-stage daily rolling evaluation on eight previously used ideal synthetic blocks. Passing only permits a fresh formal design; failing stops the general full-stage claim."
+}

@@ -1,0 +1,106 @@
+{
+  "experiment_id": "g3_truth_parameter_switch_state_response_causal_control_v01",
+  "classification": "controlled_synthetic_truth_state_causal_audit",
+  "scenario": "sealed_three_stage_true_parameter_switch",
+  "response_days": 30,
+  "switch_boundaries_zero_based": [180, 360],
+  "switch_boundaries_between_days_one_based": [[180, 181], [360, 361]],
+  "branch_names": [
+    "continue_old_true_parameters",
+    "switch_to_new_true_parameters"
+  ],
+  "only_changed_factor": "true parameter vector used for matched state propagation: continue old versus switch to new",
+  "fixed_factors": {
+    "initial_state": "same saved fifteen-state truth vector from the day before the switch",
+    "meteorological_forcing": "same saved daily rain potential evaporation and temperature",
+    "process_perturbations": "same saved fifteen-state realized perturbation vector at every response lead",
+    "response_window": "same thirty days",
+    "state_projection_rule": "same parameter-specific reference truth projection",
+    "observation_use": "none",
+    "state_reset_or_manual_remapping": "none"
+  },
+  "population": {
+    "matched_block_count": 8,
+    "truth_trial_count": 3,
+    "switch_count_per_trial": 2,
+    "event_count": 48,
+    "state_count": 15
+  },
+  "state_groups": {
+    "hydrologic_stores": [0, 1, 2, 3, 4],
+    "routing_memory": [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+  },
+  "observed_discharge_read": false,
+  "forecast_executed": false,
+  "assimilation_executed": false,
+  "state_reset_at_switch": false,
+  "sealed_truth_evidence": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_gate_param_switch_v01/evidence.npz",
+    "sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67"
+  },
+  "frozen_state_scale_evidence": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_fixed_process_state_interaction_global_posterior_audit_v01/evidence.npz",
+    "sha256": "22f1b99ee0cf537e1aa7c9b414662c0b390510f2dc0d6b07bf538dd6dda33a04",
+    "array": "truth_standard_deviation"
+  },
+  "frozen_model_sources": {
+    "primary_reference": {
+      "src/hbv_multilead_joint_uncertainty/synthetic_truth.py": "f2cffdf30115ec3a7a3530314cab155325d646b46f5b5271628568601f269f8d",
+      "src/scl_hydro/hbv_lite_numpy.py": "0a18663e3c3306dfe59d34a628aae1854b296e041d414a9ba15733e59100ffdd"
+    },
+    "independent_verifier": {
+      "src/hbv_joint_uncertainty/hbv_adapter.py": "4955ba523012ec75adced08cf0ce8b21b712dcd8ef9d02cc35adc21c53654437",
+      "src/hbv_joint_uncertainty/preflight.py": "95aa7e73e8889b3e28e3f45b5c5ad47d16ef8e108ba6eefd4bd955c87f348d88"
+    }
+  },
+  "required_truth_arrays": {
+    "forcing_blocks": [8, 592, 3],
+    "truth_states": [8, 3, 547, 15],
+    "truth_process_perturbations": [8, 3, 547, 15],
+    "truth_parameter_indices": [3, 547],
+    "parameter_ids": [3],
+    "parameter_vectors": [3, 13]
+  },
+  "required_scale_arrays": {
+    "truth_standard_deviation": [15],
+    "state_names": [15]
+  },
+  "physical_checks": {
+    "all_states_finite": true,
+    "all_states_nonnegative_with_tolerance": true,
+    "soil_moisture_not_above_active_field_capacity": true,
+    "meltwater_not_above_active_holding_fraction_times_snowpack": true,
+    "routing_memory_process_perturbations_exactly_zero": true,
+    "routing_memory_shift_exact_within_tolerance": true
+  },
+  "metrics": {
+    "difference_definition": "switch_to_new_true_parameters minus continue_old_true_parameters",
+    "standardization": "divide each state difference by the frozen all-day truth standard deviation",
+    "first_day": "root mean square across matched events",
+    "thirty_day_process": "root mean square standardized response at every lead",
+    "maximum_response": "maximum thirty-day root mean square standardized response",
+    "maximum_response_day": "first one-based lead attaining that maximum"
+  },
+  "decision_rule": {
+    "clean_general_state_accuracy_truth_requires_zero_initial_new_parameter_domain_projection_events": true,
+    "if_projection_event_count_above_zero": "requires_separate_fixed_parameter_state_jump_recovery_experiment",
+    "if_projection_event_count_equals_zero": "suitable_as_clean_parameter_switch_truth_condition_for_state_accuracy",
+    "failed_gate": "stop_without_scientific_conclusion"
+  },
+  "numerical_tolerance": 1e-12,
+  "output_files": [
+    "config_snapshot.json",
+    "environment.json",
+    "evidence.npz",
+    "per_state_summary.csv",
+    "transition_state_summary.csv",
+    "response_curves.csv",
+    "summary.json",
+    "per_state_standardized_response.png",
+    "state_group_standardized_response.png",
+    "initial_new_parameter_domain_projection.png",
+    "checksums.json"
+  ],
+  "status": "frozen_before_run",
+  "scope_limit": "HBV synthetic truth-generator state-response evidence only. No observation update assimilation-method comparison forecast evaluation lowland model claim or real-basin claim."
+}

@@ -1,0 +1,28 @@
+{
+  "experiment_id": "g3_deterministic_updated_state_ranking_v01",
+  "classification": "mechanism_attribution_audit",
+  "scenario": "idealized_three_stage_parameter_switch",
+  "assimilation_days": 540,
+  "lead_days": [1, 2, 3, 4, 5, 6, 7],
+  "state_methods": [
+    "open_loop",
+    "fixed_filter",
+    "parameter_only",
+    "noise_only",
+    "joint",
+    "truth_state_oracle"
+  ],
+  "parameter_source": "true_stage_parameters",
+  "primary_population": "all 540 assimilation-day origins with same-stage targets",
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 20260731,
+    "unit": "matched_block"
+  },
+  "sealed_ideal_evidence": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_gate_param_switch_v01/evidence.npz",
+    "sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67"
+  },
+  "numerical_tolerance": 1e-10,
+  "scope_limit": "Synthetic true-parameter mechanism audit only; it ranks complete saved states under one matched deterministic forecast and cannot be used operationally or extrapolated to real basins."
+}

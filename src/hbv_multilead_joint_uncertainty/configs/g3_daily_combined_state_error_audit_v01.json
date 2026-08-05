@@ -1,0 +1,47 @@
+{
+  "experiment_id": "g3_daily_combined_state_error_audit_v01",
+  "classification": "read_only_state_error_audit",
+  "purpose": "Compare each daily posterior combined state directly with the same day's true hydrologic state over all 540 assimilation days.",
+  "primary_population": "all_assimilation_days",
+  "assimilation_days": 540,
+  "hydrologic_state_names": [
+    "SNOWPACK",
+    "MELTWATER",
+    "SM",
+    "SUZ",
+    "SLZ"
+  ],
+  "primary_method": "parameter_only",
+  "baseline_methods": [
+    "fixed_filter",
+    "open_loop"
+  ],
+  "expected_method_names": [
+    "open_loop",
+    "fixed_filter",
+    "parameter_only",
+    "noise_only",
+    "joint"
+  ],
+  "expected_parameter_only_candidate_ids": [
+    "equifinal_diverse_1__process_2",
+    "trained_center__process_2",
+    "equifinal_diverse_2__process_2"
+  ],
+  "bootstrap": {
+    "unit": "matched_forcing_block",
+    "replicates": 20000,
+    "seed": 3309761
+  },
+  "sealed_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_gate_param_switch_v01/evidence.npz",
+    "sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67"
+  },
+  "output_dir": "results/23_hbv_multilead_joint_uncertainty/g3_daily_combined_state_error_audit_v01",
+  "forbidden_groupings": [
+    "days_since_switch",
+    "post_switch_window",
+    "time_strata"
+  ],
+  "scope_limit": "This audit directly evaluates the unique combined state saved by the sealed three-stage synthetic experiment. It does not turn posterior-weighted candidate parameters into a daily-changing truth parameter and does not establish real-basin state accuracy."
+}

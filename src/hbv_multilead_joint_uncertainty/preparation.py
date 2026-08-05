@@ -556,7 +556,9 @@ def evaluate_development_interaction_modes(
                     "finite": bool(
                         np.all(np.isfinite(log_likelihoods))
                         and np.all(np.isfinite(prior_predictions))
-                        and np.all(np.isfinite(bank.estimator.state))
+                        and np.all(
+                            np.isfinite(bank.estimator.global_posterior_state)
+                        )
                     ),
                 }
             )

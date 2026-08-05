@@ -1,0 +1,32 @@
+{
+  "experiment_id": "g3_forecast_sensitive_state_error_attribution_v01",
+  "classification": "exploratory_synthetic_mechanism_attribution",
+  "scenario": "idealized_three_stage_parameter_switch",
+  "assimilation_days": 540,
+  "lead_days": [1, 2, 3, 4, 5, 6, 7],
+  "state_methods": ["parameter_only", "joint"],
+  "parameter_source": "true_stage_parameters",
+  "primary_population": "all 540 assimilation-day origins with same-stage targets",
+  "cross_switch_policy": "exclude_from_primary_metrics",
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 20260801,
+    "unit": "matched_block"
+  },
+  "screening_rule": {
+    "minimum_relative_rmse_reduction": 0.01,
+    "pointwise_confidence_level": 0.95,
+    "paired_mse_interval_upper_bound_below_zero": true,
+    "multiplicity_controlled": false
+  },
+  "sealed_ideal_evidence": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_gate_param_switch_v01/evidence.npz",
+    "sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67"
+  },
+  "numerical_tolerance": 1e-10,
+  "resource_limits": {
+    "maximum_peak_memory_gibibytes": 1.0,
+    "sequential_intervention_processing": true
+  },
+  "scope_limit": "Synthetic true-parameter exploratory mechanism attribution only; one-at-a-time state replacements are marginal and non-additive, are not multiplicity-controlled formal confirmation, and cannot be extrapolated to real basins."
+}

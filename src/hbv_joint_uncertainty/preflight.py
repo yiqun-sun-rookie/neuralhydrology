@@ -121,11 +121,19 @@ class CandidateBank:
 
 @dataclass(frozen=True)
 class AssimilationResult:
+    """Archived assimilation arrays with one global posterior state per day."""
+
     prior_discharge: np.ndarray
     candidate_prior_discharge: np.ndarray
     prior_probabilities: np.ndarray
     posterior_probabilities: np.ndarray
     combined_states: np.ndarray
+
+    @property
+    def global_posterior_states(self) -> np.ndarray:
+        """Return the canonical daily global posterior state sequence."""
+
+        return self.combined_states.copy()
 
 
 @dataclass(frozen=True)
@@ -290,6 +298,7 @@ def build_candidate_bank(
         transition_matrix=transition_matrix,
         initial_probabilities=np.full(len(candidates), 1.0 / len(candidates), dtype=np.float64),
         parameter_groups=[definition.parameter_group for definition in candidates],
+        interaction_mode="parameter_grouped",
     )
     return CandidateBank(estimator=estimator, transitions=tuple(transitions), definitions=candidates)
 
@@ -341,7 +350,7 @@ def run_assimilation(
         ]
         prior_probabilities[day] = step.prior_probabilities
         posterior_probabilities[day] = step.posterior_probabilities
-        combined_states[day] = step.combined_state
+        combined_states[day] = step.global_posterior_state
         if monitor_callback is not None and time.monotonic() - last_monitor >= interval:
             monitor_callback(day + 1, n_days)
             last_monitor = time.monotonic()

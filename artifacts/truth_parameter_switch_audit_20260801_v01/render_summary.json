@@ -1,0 +1,38 @@
+{
+  "audit_id": "truth_parameter_switch_audit_20260801_v01",
+  "status": "rendered",
+  "source_evidence": "G:\\wt\\id23-readout\\results\\23_hbv_multilead_joint_uncertainty\\g3_ideal_gate_param_switch_v01\\evidence.npz",
+  "source_evidence_sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67",
+  "registered_block_index_zero_based": 0,
+  "registered_block_id": "g3_ideal_block_01",
+  "assimilation_days": 540,
+  "truth_trial_count": 3,
+  "state_count": 15,
+  "switch_boundaries_between_days": [
+    180,
+    360
+  ],
+  "process_indices_by_trial": [
+    [
+      2
+    ],
+    [
+      2
+    ],
+    [
+      2
+    ]
+  ],
+  "maximum_observation_equation_absolute_residual": 3.0531133177191805e-15,
+  "aggregation": "none",
+  "outputs": [
+    "G:\\wt\\id23-readout\\artifacts\\truth_parameter_switch_audit_20260801_v01\\truth_parameter_switch_audit_all_trials.png",
+    "G:\\wt\\id23-readout\\artifacts\\truth_parameter_switch_audit_20260801_v01\\truth_parameter_switch_audit_trial_1.png",
+    "G:\\wt\\id23-readout\\artifacts\\truth_parameter_switch_audit_20260801_v01\\truth_parameter_switch_audit_trial_2.png",
+    "G:\\wt\\id23-readout\\artifacts\\truth_parameter_switch_audit_20260801_v01\\truth_parameter_switch_audit_trial_3.png",
+    "G:\\wt\\id23-readout\\artifacts\\truth_parameter_switch_audit_20260801_v01\\stage_schedule.csv",
+    "G:\\wt\\id23-readout\\artifacts\\truth_parameter_switch_audit_20260801_v01\\true_parameter_vectors.csv",
+    "G:\\wt\\id23-readout\\artifacts\\truth_parameter_switch_audit_20260801_v01\\boundary_state_change_audit.csv",
+    "G:\\wt\\id23-readout\\artifacts\\truth_parameter_switch_audit_20260801_v01\\plotted_data.npz"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "audit_id": "truth_parameter_switch_audit_20260801_v01",
+  "status": "pass",
+  "independent_verifier": "G:\\wt\\id23-readout\\artifacts\\truth_parameter_switch_audit_20260801_v01\\verify_truth_parameter_switch_audit.py",
+  "source_evidence": "G:\\wt\\id23-readout\\results\\23_hbv_multilead_joint_uncertainty\\g3_ideal_gate_param_switch_v01\\evidence.npz",
+  "source_evidence_sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67",
+  "checks": {
+    "source_evidence_sha256_matches": true,
+    "assimilation_days_equal_540": true,
+    "registered_block_matches": true,
+    "plotted_arrays_exactly_match_source": true,
+    "plotted_array_max_absolute_differences": {
+      "parameter_indices": 0.0,
+      "process_indices": 0.0,
+      "truth_states": 0.0,
+      "truth_discharge": 0.0,
+      "observed_discharge": 0.0,
+      "observation_standard_normals": 0.0
+    },
+    "switches_exactly_180_and_360": true,
+    "switch_indices_zero_based": [
+      [
+        180,
+        360
+      ],
+      [
+        180,
+        360
+      ],
+      [
+        180,
+        360
+      ]
+    ],
+    "process_candidate_fixed": true,
+    "process_indices_by_trial": [
+      [
+        2
+      ],
+      [
+        2
+      ],
+      [
+        2
+      ]
+    ],
+    "observation_equation_maximum_absolute_residual": 3.837208328860697e-15,
+    "observation_equation_passes_1e_minus_12": true,
+    "all_truth_arrays_finite": true,
+    "stage_schedule_has_nine_rows": true,
+    "all_stages_have_180_days": true,
+    "all_schedule_process_indices_equal_2": true,
+    "boundary_audit_has_90_rows": true,
+    "boundary_audit_values_are_finite": true,
+    "all_images_decode_and_have_positive_dimensions": true,
+    "image_details": {
+      "truth_parameter_switch_audit_all_trials.png": {
+        "width": 4396,
+        "height": 4408,
+        "mode": "RGBA",
+        "sha256": "652a465f4bb5e3f8e08253e384b3a4656f00c3c7fa8afa3659f6ed75151d47eb"
+      },
+      "truth_parameter_switch_audit_trial_1.png": {
+        "width": 3029,
+        "height": 4408,
+        "mode": "RGBA",
+        "sha256": "d6e4e7736c46c7819d8ef4c40602df8267aa0fe70cc95d9092d519c038e1518d"
+      },
+      "truth_parameter_switch_audit_trial_2.png": {
+        "width": 3029,
+        "height": 4408,
+        "mode": "RGBA",
+        "sha256": "51477a5b223c150c200d86dfbc709b5206922d8fde7d7be9a9840071088b578c"
+      },
+      "truth_parameter_switch_audit_trial_3.png": {
+        "width": 3029,
+        "height": 4408,
+        "mode": "RGBA",
+        "sha256": "1dbfb9e1dfaab516e7fe8316e9ac5cb58260f7218a45cc74821b24e6e9a6b741"
+      }
+    }
+  }
+}

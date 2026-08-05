@@ -1,4 +1,10 @@
-"""Causal one-, three-, and seven-day forecasts from copied posterior filter banks."""
+"""Archived multi-trajectory uncertainty propagation from copied filter banks.
+
+This module advances model-conditioned states and combines their trajectories.
+It supports ensemble controls and historical covariance-propagating evidence;
+it does not define the standard interacting multiple-model method's final state
+output. That output is the unique global posterior state at assimilation end.
+"""
 
 from __future__ import annotations
 
@@ -138,8 +144,10 @@ def _forecast_one_day(bank: CandidateBank, interaction_mode: str):
         estimator, probabilities, predicted_states, predicted_covariances
     )
     estimator.probabilities = probabilities.copy()
-    estimator.state = combined_state.copy()
-    estimator.covariance = 0.5 * (combined_covariance + combined_covariance.T)
+    estimator.global_posterior_state = combined_state
+    estimator.global_posterior_covariance = 0.5 * (
+        combined_covariance + combined_covariance.T
+    )
     return (
         combined_observation,
         observation_matrix,
@@ -168,8 +176,8 @@ def _assimilation_step(bank: CandidateBank, observation: float, interaction_mode
         estimator, posterior_probabilities, states, covariances
     )
     estimator.probabilities = posterior_probabilities
-    estimator.state = combined_state.copy()
-    estimator.covariance = combined_covariance.copy()
+    estimator.global_posterior_state = combined_state
+    estimator.global_posterior_covariance = combined_covariance
     combined_prior_observation = float(
         sum(
             probability * result.prior_observation[0]

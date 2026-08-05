@@ -1,0 +1,9 @@
+{
+  "historical_config_immutable": true,
+  "scope_status": "archived_local_multi_trajectory_ensemble_control",
+  "truth_parameter_switch_definition": "The synthetic truth changes between prespecified fixed parameter stages; daily posterior-probability updates are not truth-parameter switches.",
+  "standard_method_final_output": "one_global_posterior_state_and_covariance_after_each_update",
+  "model_conditioned_states_role": "internal_diagnostic_or_explicit_ensemble_control_only",
+  "current_primary_state_evaluation": "same_day_global_posterior_error_for_all_540_days_and_all_15_states",
+  "forecast_attribution_allowed": false
+}

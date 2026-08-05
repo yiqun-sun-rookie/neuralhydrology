@@ -218,7 +218,7 @@ def oracle_arm(
             for transition in bank.transitions:
                 transition.set_forcing(rain, potential_evaporation, temperature)
             bank.estimator.step(observations[day])
-        carried_state = bank.estimator.state.copy()
+        carried_state = bank.estimator.global_posterior_state
         carried_covariance = bank.estimator.covariance.copy()
 
     future = active_forcing[assimilation_days : assimilation_days + int(leads[-1])]

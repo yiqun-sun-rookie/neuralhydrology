@@ -1,0 +1,16 @@
+{
+  "audit_id": "state_parameter_stage_overlay_20260801_v01",
+  "purpose": "Overlay the three staged true-parameter vectors on the state-trajectory comparison figures.",
+  "state_evidence": "G:\\wt\\id23-readout\\results\\23_hbv_multilead_joint_uncertainty\\g3_fixed_process_state_interaction_global_posterior_audit_v01\\evidence.npz",
+  "state_evidence_sha256": "22f1b99ee0cf537e1aa7c9b414662c0b390510f2dc0d6b07bf538dd6dda33a04",
+  "truth_evidence": "G:\\wt\\id23-readout\\results\\23_hbv_multilead_joint_uncertainty\\g3_ideal_gate_param_switch_v01\\evidence.npz",
+  "truth_evidence_sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67",
+  "registered_block_index_zero_based": 0,
+  "registered_block_id": "g3_ideal_block_01",
+  "assimilation_days": 540,
+  "stage_lengths": [180, 180, 180],
+  "switch_boundaries_between_days": [180, 360],
+  "aggregation": "none",
+  "forecast_run": false,
+  "overwrite_existing_figures": false
+}

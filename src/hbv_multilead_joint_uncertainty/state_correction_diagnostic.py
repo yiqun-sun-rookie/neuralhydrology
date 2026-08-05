@@ -563,8 +563,8 @@ def _assimilate_and_capture(bank: CandidateBank, observation: float, interaction
         posterior_covariances,
     )
     bank.estimator.probabilities = posterior_probabilities.copy()
-    bank.estimator.state = combined_state.copy()
-    bank.estimator.covariance = combined_covariance.copy()
+    bank.estimator.global_posterior_state = combined_state
+    bank.estimator.global_posterior_covariance = combined_covariance
     return {
         "prior_probabilities": prior_probabilities,
         "posterior_probabilities": posterior_probabilities,
@@ -595,8 +595,8 @@ def _set_candidate_means(bank: CandidateBank, candidate_means: np.ndarray) -> Ca
         means,
         covariances,
     )
-    branch.estimator.state = combined_state.copy()
-    branch.estimator.covariance = combined_covariance.copy()
+    branch.estimator.global_posterior_state = combined_state
+    branch.estimator.global_posterior_covariance = combined_covariance
     return branch
 
 
@@ -769,8 +769,12 @@ def run_state_diagnostic_assimilation(
             candidate._prior_state = None
             candidate._prior_covariance = None
         reference_bank.estimator.probabilities = checkpoint.reference_probabilities.copy()
-        reference_bank.estimator.state = checkpoint.reference_combined_state.copy()
-        reference_bank.estimator.covariance = checkpoint.reference_combined_covariance.copy()
+        reference_bank.estimator.global_posterior_state = (
+            checkpoint.reference_combined_state
+        )
+        reference_bank.estimator.global_posterior_covariance = (
+            checkpoint.reference_combined_covariance
+        )
         for name, destination in main_arrays.items():
             destination[:start_origin_row] = checkpoint.main_arrays[name]
         for field, controls in control_origin_arrays.items():
@@ -797,8 +801,12 @@ def run_state_diagnostic_assimilation(
                 dtype=np.float64,
             ),
             reference_probabilities=reference_bank.estimator.probabilities.copy(),
-            reference_combined_state=reference_bank.estimator.state.copy(),
-            reference_combined_covariance=reference_bank.estimator.covariance.copy(),
+            reference_combined_state=(
+                reference_bank.estimator.global_posterior_state
+            ),
+            reference_combined_covariance=(
+                reference_bank.estimator.global_posterior_covariance
+            ),
             main_arrays={
                 name: values[:completed].copy() for name, values in main_arrays.items()
             },

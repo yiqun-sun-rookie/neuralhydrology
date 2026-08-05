@@ -1,0 +1,27 @@
+{
+  "audit_id": "state_parameter_stage_overlay_20260801_v01",
+  "status": "rendered",
+  "state_evidence": "G:\\wt\\id23-readout\\results\\23_hbv_multilead_joint_uncertainty\\g3_fixed_process_state_interaction_global_posterior_audit_v01\\evidence.npz",
+  "state_evidence_sha256": "22f1b99ee0cf537e1aa7c9b414662c0b390510f2dc0d6b07bf538dd6dda33a04",
+  "truth_evidence": "G:\\wt\\id23-readout\\results\\23_hbv_multilead_joint_uncertainty\\g3_ideal_gate_param_switch_v01\\evidence.npz",
+  "truth_evidence_sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67",
+  "registered_block_index_zero_based": 0,
+  "registered_block_id": "g3_ideal_block_01",
+  "truth_alignment_maximum_absolute_error": 0.0,
+  "assimilation_days": 540,
+  "state_count": 15,
+  "switch_boundaries_between_days": [
+    180,
+    360
+  ],
+  "aggregation": "none",
+  "forecast_run": false,
+  "outputs": [
+    "G:\\wt\\id23-readout\\artifacts\\state_parameter_stage_overlay_20260801_v01\\five_hydrologic_states_with_true_parameter_stages.png",
+    "G:\\wt\\id23-readout\\artifacts\\state_parameter_stage_overlay_20260801_v01\\all_15_states_with_true_parameter_stages_trial_1.png",
+    "G:\\wt\\id23-readout\\artifacts\\state_parameter_stage_overlay_20260801_v01\\all_15_states_with_true_parameter_stages_trial_2.png",
+    "G:\\wt\\id23-readout\\artifacts\\state_parameter_stage_overlay_20260801_v01\\all_15_states_with_true_parameter_stages_trial_3.png",
+    "G:\\wt\\id23-readout\\artifacts\\state_parameter_stage_overlay_20260801_v01\\plotted_data.npz",
+    "G:\\wt\\id23-readout\\artifacts\\state_parameter_stage_overlay_20260801_v01\\stage_schedule.csv"
+  ]
+}

@@ -96,7 +96,46 @@ def test_one_candidate_reduces_exactly_to_standalone_filter():
     assert candidate_result.log_likelihood == standalone_result.log_likelihood
     np.testing.assert_array_equal(result.combined_state, standalone_result.posterior_state)
     np.testing.assert_array_equal(result.combined_covariance, standalone_result.posterior_covariance)
+    np.testing.assert_array_equal(
+        result.global_posterior_state, standalone_result.posterior_state
+    )
+    np.testing.assert_array_equal(
+        result.global_posterior_covariance,
+        standalone_result.posterior_covariance,
+    )
+    np.testing.assert_array_equal(
+        estimator.global_posterior_state, standalone_result.posterior_state
+    )
     np.testing.assert_array_equal(result.posterior_probabilities, np.ones(1))
+
+
+@pytest.mark.parametrize("interaction_mode", ("full", "none"))
+def test_each_mode_publishes_one_probability_weighted_global_posterior(
+    interaction_mode,
+):
+    estimator = InteractingMultipleModel(
+        filters=[_linear_filter(0.0), _linear_filter(10.0)],
+        transition_matrix=np.array([[0.9, 0.1], [0.2, 0.8]]),
+        initial_probabilities=np.array([0.8, 0.2]),
+        parameter_groups=("low", "high"),
+        interaction_mode=interaction_mode,
+    )
+
+    result = estimator.step(4.0)
+    expected = sum(
+        probability * candidate.posterior_state
+        for probability, candidate in zip(
+            result.posterior_probabilities, result.candidate_results
+        )
+    )
+
+    np.testing.assert_allclose(
+        result.global_posterior_state, expected, rtol=0.0, atol=1e-14
+    )
+    np.testing.assert_allclose(
+        estimator.global_posterior_state, expected, rtol=0.0, atol=1e-14
+    )
+    assert len(result.candidate_results) == 2
 
 
 def test_probabilities_are_finite_nonnegative_and_normalized():

@@ -1,0 +1,69 @@
+{
+  "audit_id": "state_parameter_stage_overlay_20260801_v01",
+  "status": "pass",
+  "state_evidence": "G:\\wt\\id23-readout\\results\\23_hbv_multilead_joint_uncertainty\\g3_fixed_process_state_interaction_global_posterior_audit_v01\\evidence.npz",
+  "state_evidence_sha256": "22f1b99ee0cf537e1aa7c9b414662c0b390510f2dc0d6b07bf538dd6dda33a04",
+  "truth_evidence": "G:\\wt\\id23-readout\\results\\23_hbv_multilead_joint_uncertainty\\g3_ideal_gate_param_switch_v01\\evidence.npz",
+  "truth_evidence_sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67",
+  "checks": {
+    "state_evidence_hash_matches": true,
+    "truth_evidence_hash_matches": true,
+    "plotted_arrays_maximum_absolute_differences": {
+      "parameter_indices": 0.0,
+      "truth_states": 0.0,
+      "full_interaction_states": 0.0,
+      "no_interaction_states": 0.0,
+      "open_loop_states": 0.0
+    },
+    "all_plotted_arrays_exactly_match_sources": true,
+    "truth_files_alignment_maximum_absolute_difference": 0.0,
+    "truth_files_align_exactly": true,
+    "switch_indices_zero_based": [
+      [
+        180,
+        360
+      ],
+      [
+        180,
+        360
+      ],
+      [
+        180,
+        360
+      ]
+    ],
+    "all_trials_switch_only_at_180_and_360": true,
+    "state_count_is_15": true,
+    "assimilation_day_count_is_540": true,
+    "all_plotted_arrays_finite": true,
+    "stage_schedule_has_nine_rows": true,
+    "every_stage_has_180_days": true,
+    "image_details": {
+      "five_hydrologic_states_with_true_parameter_stages.png": {
+        "width": 4372,
+        "height": 4183,
+        "mode": "RGBA",
+        "sha256": "bcd2b625459b8c459f37bc994eda3756795a5742f32f5083cad0c27febefdde0"
+      },
+      "all_15_states_with_true_parameter_stages_trial_1.png": {
+        "width": 4176,
+        "height": 3965,
+        "mode": "RGBA",
+        "sha256": "d41be872b486ef09cb4cd2836940f2d612c086a0b1df927cf6815b1df9501094"
+      },
+      "all_15_states_with_true_parameter_stages_trial_2.png": {
+        "width": 4176,
+        "height": 3965,
+        "mode": "RGBA",
+        "sha256": "2eab13dc5784965b54f12c1e8e5fb325fdc40ed220420195659d3c4da58078f1"
+      },
+      "all_15_states_with_true_parameter_stages_trial_3.png": {
+        "width": 4176,
+        "height": 3965,
+        "mode": "RGBA",
+        "sha256": "8b1afedd8076137cd4a51dc842943df763745e30de9f6fc7cc8168a99b1bcedf"
+      }
+    },
+    "all_images_decode": true
+  }
+}

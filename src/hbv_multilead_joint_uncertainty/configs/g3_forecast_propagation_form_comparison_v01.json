@@ -1,0 +1,24 @@
+{
+  "experiment_id": "g3_forecast_propagation_form_comparison_v01",
+  "classification": "mechanism_attribution_audit",
+  "origin_start_day": 180,
+  "origin_end_day": 539,
+  "lead_days": [1, 2, 3, 4, 5, 6, 7],
+  "methods": [
+    "deterministic_unique_state_weighted_parameters",
+    "unscented_unique_state_complete_covariance_weighted_parameters",
+    "unscented_unique_state_within_covariance_weighted_parameters",
+    "multiple_trajectory_ensemble_full_interaction",
+    "multiple_trajectory_ensemble_no_state_interaction"
+  ],
+  "bootstrap_unit": "matched_block",
+  "sealed_deterministic_evidence": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_deterministic_unique_state_forecast_attribution_v01/evidence.npz",
+    "sha256": "7325646edb1b1bffd01051f1ddcf697814e119593dacf42011985a4a9107ab82"
+  },
+  "sealed_historical_readout_evidence": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_daily_rolling_forecast_readout_development_v01/evidence.npz",
+    "sha256": "53a04d893d4a86962c241408b4fe8ee50bd3a680a9a91f9cfaa4869042eed4c4"
+  },
+  "scope_limit": "Matched synthetic propagation-form comparison only; it does not establish operational or real-basin superiority."
+}

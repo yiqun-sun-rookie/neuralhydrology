@@ -109,6 +109,10 @@ def test_short_joint_assimilation_is_finite_physical_and_probability_normalized(
     assert result.prior_probabilities.shape == (4, 9)
     assert result.posterior_probabilities.shape == (4, 9)
     assert result.combined_states.shape == (4, 15)
+    assert result.global_posterior_states.shape == (4, 15)
+    np.testing.assert_array_equal(
+        result.global_posterior_states, result.combined_states
+    )
     assert np.all(np.isfinite(result.prior_discharge))
     assert np.all(np.isfinite(result.candidate_prior_discharge))
     assert np.all(np.isfinite(result.prior_probabilities))
@@ -118,6 +122,7 @@ def test_short_joint_assimilation_is_finite_physical_and_probability_normalized(
     assert np.max(np.abs(result.prior_probabilities.sum(axis=1) - 1.0)) <= 1e-12
     assert np.max(np.abs(result.posterior_probabilities.sum(axis=1) - 1.0)) <= 1e-12
     assert np.all(result.combined_states >= 0.0)
+    assert np.all(result.global_posterior_states >= 0.0)
 
 
 def test_each_unique_parameter_vector_warmup_matches_authoritative_model_within_one_e_minus_eight(frozen_case):

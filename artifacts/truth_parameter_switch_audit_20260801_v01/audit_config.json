@@ -1,0 +1,16 @@
+{
+  "audit_id": "truth_parameter_switch_audit_20260801_v01",
+  "purpose": "Visualize the staged true-parameter schedule used to generate synthetic truth states, truth discharge, and noisy observed discharge.",
+  "source_evidence": "G:\\wt\\id23-readout\\results\\23_hbv_multilead_joint_uncertainty\\g3_ideal_gate_param_switch_v01\\evidence.npz",
+  "source_evidence_sha256": "77f84d793f18a72972e5af5f2ac4ed767645471e37da31c612ab995ecf4bbf67",
+  "registered_block_index_zero_based": 0,
+  "registered_block_id": "g3_ideal_block_01",
+  "truth_trial_indices_zero_based": [0, 1, 2],
+  "assimilation_days": 540,
+  "expected_switch_boundaries_between_days": [180, 360],
+  "expected_stage_lengths": [180, 180, 180],
+  "state_rule": "Carry the complete 15-state truth vector continuously across true-parameter switches; do not reset states.",
+  "aggregation": "none",
+  "forecast_metrics": false,
+  "scientific_inference": false
+}

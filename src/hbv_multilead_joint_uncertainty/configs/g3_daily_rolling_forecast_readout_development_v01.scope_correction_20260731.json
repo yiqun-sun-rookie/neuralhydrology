@@ -1,0 +1,15 @@
+{
+  "applies_to_experiment_id": "g3_daily_rolling_forecast_readout_development_v01",
+  "correction_date": "2026-07-31",
+  "historical_config_immutable": true,
+  "canonical_assimilation_output": "fully_interacting_multiple_model_global_posterior_state",
+  "historical_covariance_readout": "posterior_unique_complete_covariance_weighted_parameters",
+  "ensemble_forecast_control": "current_multiple_states",
+  "interpretation": {
+    "canonical_assimilation_output": "The standard fully interacting method already produces one posterior-probability-weighted global posterior state at assimilation end.",
+    "historical_covariance_readout": "The archived readout starts one unscented filter from the global posterior and propagates covariance and sigma points; it is not a deterministic primary trajectory.",
+    "ensemble_forecast_control": "Each candidate state and parameter vector issues a separate trajectory, after which discharge trajectories are probability weighted."
+  },
+  "scope": "The archived development comparison and its numbers remain unchanged. The current_multiple_states key is retained only for reproducibility and denotes a model-conditioned multi-trajectory ensemble control.",
+  "forbidden_claim": "Do not call model-conditioned subfilter states the final states of the interacting multiple-model method. Do not call current_multiple_states the default or primary forecast method."
+}

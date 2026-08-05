@@ -1,0 +1,15 @@
+{
+  "applies_to_experiment_id": "g3_fixed_process_parameter_candidate_complete_state_audit_v01",
+  "correction_date": "2026-08-01",
+  "historical_config_immutable": true,
+  "archived_state_key_roles": {
+    "single_fixed_parameter_filter_state": "single_filter_posterior_state",
+    "three_parameter_candidates_combined_state": "fully_interacting_multiple_model_global_posterior_state"
+  },
+  "standard_method_output": "fully_interacting_multiple_model_global_posterior_state",
+  "model_conditioned_subfilter_states_are_final_outputs": false,
+  "mechanism_attribution_allowed": false,
+  "corrected_interpretation": "This completed experiment compares a single fixed-parameter filter with the standard fully interacting three-parameter-model method as complete assimilation methods. It does not isolate parameter-candidate count or the state-interaction operation.",
+  "sealed_evidence_unchanged": true,
+  "forecast_executed": false
+}
