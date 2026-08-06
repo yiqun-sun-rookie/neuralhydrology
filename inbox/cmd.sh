@@ -1,65 +1,44 @@
 #!/bin/bash
-# seq=6 — 全 GPU 节点健康普查。sinfo 的 idle 不代表 CUDA 可用（ngu002 已证明），
-# 只能逐个真跑。每节点约 20-40s，成本很小。
+# seq=7 — 按 HPC_AGENT_GUIDE.md 的标准流程实跑一遍，验证手册准确性。
+# 顺带补齐手册第 4 节里还没实测的几个事实。全部只读。
 
-cd ~/hpc_mailbox || exit 1
-mkdir -p outbox
-
-# hgpu2p 全部 9 节点 + hgpu2 的 2 个 + hgpu8 的 3 个（ngu103 已 down，跳过）
-P2P="ngu001 ngu002 ngu004 ngu005 ngu006 ngu007 ngu008 ngu010 ngu011"
-P2="ngu003 ngu009"
-P8="ngu201 ngu202 ngu203"
-P4="ngu101 ngu102 ngu104"
-
-echo "=== SUBMIT ==="
-JOBIDS=""
-submit () {  # $1=node $2=partition
-    JID=$(sbatch --parsable -p "$2" --nodelist=$1 --job-name=nt_$1 \
-          -t 00:04:00 inbox/node_test.slurm 2>&1)
-    case "$JID" in
-        [0-9]*) echo "$1 ($2) -> $JID"; JOBIDS="$JOBIDS $JID:$1" ;;
-        *)      echo "$1 ($2) -> SUBMIT_REJECTED: $JID" ;;
-    esac
-}
-for N in $P2P; do submit $N hgpu2p; done
-for N in $P2;  do submit $N hgpu2;  done
-for N in $P8;  do submit $N hgpu8;  done
-for N in $P4;  do submit $N hgpu4;  done
-
-echo; echo "=== WAIT (max 10 min) ==="
-for i in $(seq 1 60); do
-    LEFT=$(squeue -u "$USER" -h -o "%i" 2>/dev/null | wc -l)
-    [ $((i % 3)) -eq 0 ] && echo "t=${i}0s left=$LEFT"
-    [ "$LEFT" -eq 0 ] && break
-    sleep 10
+echo "=== A GUIDE CLAIM: paths exist ==="
+for p in ~/neuralhydrology ~/hpc_mailbox ~/hpc_mailbox/inbox/node_test.slurm; do
+    [ -e "$p" ] && echo "OK   $p" || echo "MISS $p"
 done
 
-echo; echo "=== VERDICT TABLE ==="
-printf "%-9s %-9s %-14s %-8s %-6s %s\n" NODE JOB STATE EXIT GPUS VERDICT
-for JN in $JOBIDS; do
-    J=${JN%%:*}; N=${JN##*:}
-    ST=$(sacct -j "$J" -X -n --format=State%14 2>/dev/null | head -1 | tr -d ' ')
-    EC=$(sacct -j "$J" -X -n --format=ExitCode%8 2>/dev/null | head -1 | tr -d ' ')
-    F="outbox/nodetest_${J}.out"
-    NG=$(grep -c "GeForce\|NVIDIA" "$F" 2>/dev/null)
-    V=$(grep -o "VERDICT: .*" "$F" 2>/dev/null | head -1)
-    [ -z "$V" ] && V="(no verdict)"
-    printf "%-9s %-9s %-14s %-8s %-6s %s\n" "$N" "$J" "$ST" "$EC" "$NG" "$V"
-done
+echo; echo "=== B GUIDE CLAIM: git 1.8.3.1 syntax limits ==="
+echo -n "git version: "; git --version
+echo -n "git -C     : "; git -C ~/neuralhydrology status >/dev/null 2>&1 && echo "SUPPORTED(unexpected)" || echo "NOT SUPPORTED (as documented)"
+echo -n "--show-current: "; git rev-parse --abbrev-ref HEAD >/dev/null 2>&1 && \
+    (cd ~/neuralhydrology && git branch --show-current >/dev/null 2>&1 && echo "SUPPORTED(unexpected)" || echo "NOT SUPPORTED (as documented)")
 
-echo; echo "=== FAILING NODES DETAIL ==="
-for JN in $JOBIDS; do
-    J=${JN%%:*}; N=${JN##*:}
-    F="outbox/nodetest_${J}.out"
-    if ! grep -q "NODE_HEALTHY" "$F" 2>/dev/null; then
-        echo "----- $N (job $J) -----"
-        cat "$F" 2>/dev/null | tail -18
-        [ -s "outbox/nodetest_${J}.err" ] && { echo "-- stderr --"; head -8 "outbox/nodetest_${J}.err"; }
-    fi
-done
+echo; echo "=== C GUIDE CLAIM: remote is SSH ==="
+cd ~/neuralhydrology && git remote -v | head -2
 
-echo; echo "=== SINFO CROSS-CHECK (what SLURM thinks) ==="
-sinfo -N -o "%12N %10P %10T %30E" 2>&1 | grep -E "NODELIST|ngu"
+echo; echo "=== D GUIDE CLAIM: network ==="
+echo -n "github:22   "; timeout 8 bash -c '</dev/tcp/20.205.243.166/22' 2>/dev/null && echo OK || echo FAIL
+echo -n "github:443  "; timeout 8 bash -c '</dev/tcp/20.205.243.166/443' 2>/dev/null && echo OK || echo FAIL
+echo -n "pypi:443    "; timeout 8 bash -c '</dev/tcp/151.101.128.223/443' 2>/dev/null && echo OK || echo FAIL
 
-rm -f outbox/nodetest_*.out outbox/nodetest_*.err
-echo; echo "cleanup done"
+echo; echo "=== E GUIDE CLAIM: nh_final content ==="
+source /data1/home/$USER/miniconda3/etc/profile.d/conda.sh 2>/dev/null
+conda activate nh_final 2>/dev/null && \
+  python -c "import sys,torch;print('python',sys.version.split()[0],'| torch',torch.__version__)" 2>&1
+
+echo; echo "=== F 531 RESULTS (real user question) ==="
+R=~/neuralhydrology/results/10_global_conceptual_model_benchmark
+if [ -d "$R" ]; then
+    ls "$R" 2>&1 | head -6
+    echo "--- repro_v01 summary ---"
+    ls -la "$R/camels_us_531_repro_v01/summary/" 2>&1 | head -12
+else
+    echo "results dir not found: $R"
+fi
+
+echo; echo "=== G RUNNER HEALTH ==="
+pgrep -af "bash runner.sh" || echo "NO RUNNER (impossible if you are reading this)"
+echo "uptime: $(uptime | sed 's/.*up //;s/,.*users.*//')"
+
+echo; echo "=== H DISK ==="
+df -h "$HOME" 2>&1 | tail -1
