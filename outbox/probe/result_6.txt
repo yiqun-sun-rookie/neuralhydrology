@@ -1,0 +1,37 @@
+### channel=probe seq=6
+### host=login4
+### started=2026-08-06T17:21:30+0800
+### ---------- output ----------
+=== 1. GresUsed (is the GPU actually held?) ===
+ngu201   CPUAlloc=16 Gres=gpu:8 State=MIXED 
+ngu202   CPUAlloc=22 Gres=gpu:8 State=MIXED 
+ngu203   CPUAlloc=22 Gres=gpu:8 State=MIXED 
+ngu001   CPUAlloc=2 Gres=gpu:2 State=MIXED 
+
+=== 2. Where did zhangjw's successful jobs actually run? ===
+   201433    sunyiq None ass+      PENDING  00:00:00                              
+   201434    sunyiq    ngu202    COMPLETED  00:00:20       billing=4,cpu=4,node=1 
+   201435    sunyiq None ass+      PENDING  00:00:00                              
+   201440   zhangjw    ngu202    COMPLETED  00:08:54       billing=8,cpu=8,node=1 
+   201443   zhangjw    ngu202    COMPLETED  00:21:58       billing=8,cpu=8,node=1 
+   201446   zhangjw    ngu202    COMPLETED  00:02:29       billing=8,cpu=8,node=1 
+   201449   zhangjw    ngu202    COMPLETED  00:02:29       billing=8,cpu=8,node=1 
+   201452    sunyiq None ass+ CANCELLED b+  00:00:00                              
+   201453    sunyiq None ass+ CANCELLED b+  00:00:00                              
+   201454     hhu01    ngu202      RUNNING  00:02:02     billing=20,cpu=20,node=1 
+
+=== 3. CANCEL the two zombie-blocked jobs ===
+cancelled 201433 201435 (ETA was 2027)
+
+=== 4. FINAL: test ngu202 only (the one that works) ===
+  ngu202 -> 201455
+--------- --------- ------------ -------- --------- 
+   201455    ngu202    COMPLETED      0:0  00:00:21 
+VERDICT: NODE_HEALTHY
+  gpus seen: 0
+
+=== 5. MY QUEUE (should be empty) ===
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T17:22:00+0800
