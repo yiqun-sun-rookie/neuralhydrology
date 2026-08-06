@@ -1,0 +1,40 @@
+### seq=9
+### host=login4
+### started=2026-08-06T15:54:29+0800
+### ---------- output ----------
+=== A. REPO STATE ===
+branch: migration/reorg-v1
+commit: 96703ce fix(adversarial): handle empty/NaN targets in metrics (basin 09535100)
+dirty files: 78
+=== B. CAMELS DATA PRESENT? ===
+OK   data/camels_us/basin_mean_forcing/maurer  size=402M  files=675
+OK   data/camels_us/usgs_streamflow  size=251M  files=674
+OK   data/camels_us/camels_attributes_v2.0  size=573K  files=7
+maurer subdirs: 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 
+=== C. TARGET MODEL PRESENT? ===
+MISS config.yml
+MISS model_epoch030.pt
+MISS test/model_epoch030/test_results.p
+--- config key lines ---
+grep: /data1/home/sunyiq/neuralhydrology/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/config.yml: No such file or directory
+=== D. ADVERSARIAL CODE PRESENT? ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/src/adversarial/scripts/run_exp*.py: No such file or directory
+inbox/cmd.sh: line 31: /data1/home/sunyiq/neuralhydrology/src/adversarial/data/531_basins.txt: No such file or directory
+basin list lines: 
+existing adversarial results:
+ls: cannot access /data1/home/sunyiq/neuralhydrology/results/05_adversarial_robustness/: No such file or directory
+=== E. CONDA ENVS ===
+knet_clean neuralhydrology nh_clean nh_final 
+=== F. GPU PARTITION NOW ===
+PARTITION    AVAIL      NODES    NODELIST             STATE     
+hgpu2p       up         1        ngu010               mixed     
+hgpu2p       up         8        ngu[001-002,004-008, idle      
+--- my jobs ---
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+            201433     hgpu8 nt_ngu20   sunyiq PD       0:00      1 (Resources)
+            201435     hgpu8 nt_ngu20   sunyiq PD       0:00      1 (Resources)
+=== G. DISK ===
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T15:54:31+0800
