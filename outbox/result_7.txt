@@ -1,0 +1,38 @@
+### seq=7
+### host=login4
+### started=2026-08-06T15:42:49+0800
+### ---------- output ----------
+=== A GUIDE CLAIM: paths exist ===
+OK   /data1/home/sunyiq/neuralhydrology
+OK   /data1/home/sunyiq/hpc_mailbox
+OK   /data1/home/sunyiq/hpc_mailbox/inbox/node_test.slurm
+
+=== B GUIDE CLAIM: git 1.8.3.1 syntax limits ===
+git version: git version 1.8.3.1
+git -C     : NOT SUPPORTED (as documented)
+--show-current: NOT SUPPORTED (as documented)
+
+=== C GUIDE CLAIM: remote is SSH ===
+origin	git@github.com:yiqun-sun-rookie/neuralhydrology.git (fetch)
+origin	git@github.com:yiqun-sun-rookie/neuralhydrology.git (push)
+
+=== D GUIDE CLAIM: network ===
+github:22   OK
+github:443  OK
+pypi:443    OK
+
+=== E GUIDE CLAIM: nh_final content ===
+python 3.11.13 | torch 2.4.0
+
+=== F 531 RESULTS (real user question) ===
+results dir not found: /data1/home/sunyiq/neuralhydrology/results/10_global_conceptual_model_benchmark
+
+=== G RUNNER HEALTH ===
+10550 bash runner.sh
+uptime: 1077 days
+
+=== H DISK ===
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T15:43:09+0800
