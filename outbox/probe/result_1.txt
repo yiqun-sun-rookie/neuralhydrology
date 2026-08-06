@@ -1,0 +1,17 @@
+### channel=probe seq=1
+### host=login4
+### started=2026-08-06T17:00:30+0800
+### ---------- output ----------
+=== runner2 multi-channel smoke ===
+channel=probe  host=login4  time=2026-08-06T17:00:30+0800
+--- active runner ---
+1610 bash /data1/home/sunyiq/.hpc_runner_active.sh
+1993 bash /data1/home/sunyiq/.hpc_runner_active.sh
+2001 bash /data1/home/sunyiq/.hpc_runner_active.sh
+--- channels present ---
+/data1/home/sunyiq/hpc_mailbox/inbox/probe/
+--- concurrency proof: sleep 45s then report ---
+woke at 2026-08-06T17:01:15+0800  (if another channel got a result during this, concurrency works)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T17:01:15+0800

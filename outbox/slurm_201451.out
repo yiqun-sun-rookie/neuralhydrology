@@ -1,0 +1,13 @@
+==========================================
+[Thu Aug  6 17:00:59 CST 2026] adv531 smoke test
+node=ngu010  job=201451
+Python 3.11.13
+torch 2.4.0 cuda True NVIDIA GeForce RTX 3090
+--- pre-flight ---
+pre-flight OK
+--- header check on the 4 repaired forcing files ---
+03/02108000: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+09/05120500: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+11/07067000: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+15/09492400: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+--- exp2 on the first 3 basins of chunk 0, eps=0.1, all three levels ---
