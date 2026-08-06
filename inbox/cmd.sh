@@ -1,30 +1,41 @@
 #!/bin/bash
-# seq=4 — 补查：坏节点真实状态 + 那批 FAILED 作业的死因。只读。
+# seq=5 — 实测所谓"坏节点"。提交小作业到 ngu001/ngu002（旧文档称坏）
+# 和 ngu004（对照组），每个 4 核 5 分钟上限。会消耗少量机时，用户已授权。
 
-echo "=== 1 ALL GPU NODES FULL STATE ==="
-sinfo -N -o "%12N %12P %10T %5c %10G %30E" 2>&1 | grep -E "NODELIST|ngu"
+cd ~/hpc_mailbox || exit 1
+mkdir -p outbox
 
-echo; echo "=== 2 DOWN / DRAIN / RESERVED NODES (any) ==="
-sinfo -R 2>&1 | head -20
-echo "--- (empty above means no node is down/drained) ---"
+echo "=== SUBMIT ==="
+JOBIDS=""
+for N in ngu001 ngu002 ngu004; do
+    JID=$(sbatch --parsable --nodelist=$N --job-name=nt_$N inbox/node_test.slurm 2>&1)
+    echo "$N -> $JID"
+    JOBIDS="$JOBIDS $JID"
+done
 
-echo; echo "=== 3 THE FAILED BATCH 157838-157847 ==="
-sacct -j 157838,157839,157840,157841,157842,157843,157847 \
-  --format=JobID%12,JobName%18,Partition%9,NodeList%12,State%20,ExitCode%9,Start%20,Elapsed%10 2>&1
+echo; echo "=== WAIT (max 6 min) ==="
+for i in $(seq 1 36); do
+    PENDING=$(squeue -u "$USER" -h -o "%i" 2>/dev/null | wc -l)
+    echo "t=${i}0s running/pending=$PENDING"
+    [ "$PENDING" -eq 0 ] && break
+    sleep 10
+done
 
-echo; echo "=== 4 hgpu2p FAILURES DETAIL ==="
-sacct -j 157876,157878,157881,157888,157908 \
-  --format=JobID%12,JobName%18,NodeList%12,State%20,ExitCode%9,Elapsed%10,Comment%25 2>&1
+echo; echo "=== SACCT ==="
+for J in $JOBIDS; do
+    sacct -j "$J" -X --format=JobID%10,JobName%10,NodeList%9,State%14,ExitCode%8,Elapsed%9 2>&1 | tail -2
+done
 
-echo; echo "=== 5 LAST COMPLETED JOB (reference) ==="
-sacct -j 157494,157907 \
-  --format=JobID%12,JobName%20,Partition%9,NodeList%12,AllocTRES%30,Elapsed%12,State%12 2>&1
+echo; echo "=== OUTPUT PER NODE ==="
+for J in $JOBIDS; do
+    echo "----- job $J -----"
+    cat "outbox/nodetest_${J}.out" 2>/dev/null || echo "(no .out)"
+    if [ -s "outbox/nodetest_${J}.err" ]; then
+        echo "--- stderr ---"
+        head -20 "outbox/nodetest_${J}.err"
+    fi
+done
 
-echo; echo "=== 6 PARTITION LIMITS (real) ==="
-scontrol show partition hgpu2p 2>&1 | head -20
-
-echo; echo "=== 7 QOS / ACCOUNT LIMITS ==="
-sacctmgr -n show assoc where user=$USER format=Account%16,Partition%12,QOS%20,MaxJobs%8,MaxSubmit%10,GrpTRES%25 2>&1 | head -15
-
-echo; echo "=== 8 SLURM LOG DIR HINT ==="
-ls -lt ~/neuralhydrology/logs/ 2>/dev/null | head -8
+echo; echo "=== CLEANUP (keep results out of git) ==="
+rm -f outbox/nodetest_*.out outbox/nodetest_*.err
+echo done
