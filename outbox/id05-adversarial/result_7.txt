@@ -1,0 +1,84 @@
+### channel=id05-adversarial seq=7
+### host=login4
+### started=2026-08-07T02:15:13+0800
+### ---------- output ----------
+=== QUEUE ===
+         JOBID             NAME  ST        TIME     NODELIST(REASON)
+      201465_4      adv531_exp4   R     5:31:55               ngu006
+      201465_3      adv531_exp4   R     5:32:13               ngu008
+      201465_2      adv531_exp4   R     5:35:46               ngu008
+      201465_1      adv531_exp4   R     5:36:04               ngu007
+      201465_0      adv531_exp4   R     5:36:49               ngu007
+      201459_1      adv531_exp2   R     8:36:52               ngu011
+      201459_2      adv531_exp2   R     8:36:52               ngu011
+running=7  pending=0
+=== SACCT ===
+         JobID          JobName        State ExitCode    Elapsed 
+-------------- ---------------- ------------ -------- ---------- 
+        201457    adv531_smoke2    COMPLETED      0:0   00:08:41 
+      201459_0      adv531_exp2    COMPLETED      0:0   08:32:35 
+      201459_1      adv531_exp2      RUNNING      0:0   08:36:52 
+      201459_2      adv531_exp2      RUNNING      0:0   08:36:52 
+      201459_3      adv531_exp2    COMPLETED      0:0   07:07:23 
+      201459_4      adv531_exp2    COMPLETED      0:0   07:07:22 
+      201460_0      adv531_l1l2    COMPLETED      0:0   01:27:52 
+      201460_1      adv531_l1l2    COMPLETED      0:0   01:27:28 
+      201460_2      adv531_l1l2    COMPLETED      0:0   01:27:35 
+      201460_3      adv531_l1l2    COMPLETED      0:0   01:28:03 
+      201460_4      adv531_l1l2    COMPLETED      0:0   01:27:21 
+      201461_0      adv531_exp3    COMPLETED      0:0   02:15:56 
+      201461_1      adv531_exp3    COMPLETED      0:0   02:10:06 
+      201461_2      adv531_exp3    COMPLETED      0:0   02:11:52 
+      201461_3      adv531_exp3    COMPLETED      0:0   02:15:27 
+      201461_4      adv531_exp3    COMPLETED      0:0   02:11:40 
+      201462_0      adv531_exp6    COMPLETED      0:0   00:49:24 
+      201462_1      adv531_exp6    COMPLETED      0:0   00:49:32 
+      201462_2      adv531_exp6    COMPLETED      0:0   00:49:30 
+      201462_3      adv531_exp6    COMPLETED      0:0   00:49:36 
+      201462_4      adv531_exp6    COMPLETED      0:0   00:50:43 
+      201463_0    adv531_detect    COMPLETED      0:0   00:49:55 
+      201463_1    adv531_detect    COMPLETED      0:0   00:49:26 
+      201463_2    adv531_detect    COMPLETED      0:0   00:48:56 
+      201463_3    adv531_detect    COMPLETED      0:0   00:49:12 
+      201463_4    adv531_detect    COMPLETED      0:0   00:49:01 
+      201464_0      adv531_exp5    COMPLETED      0:0   02:10:59 
+      201464_1      adv531_exp5    COMPLETED      0:0   02:10:56 
+      201464_2      adv531_exp5    COMPLETED      0:0   02:10:06 
+      201464_3      adv531_exp5    COMPLETED      0:0   02:09:54 
+      201464_4      adv531_exp5    COMPLETED      0:0   02:07:19 
+      201465_0      adv531_exp4      RUNNING      0:0   05:36:49 
+      201465_1      adv531_exp4      RUNNING      0:0   05:36:04 
+      201465_2      adv531_exp4      RUNNING      0:0   05:35:46 
+      201465_3      adv531_exp4      RUNNING      0:0   05:32:13 
+      201465_4      adv531_exp4      RUNNING      0:0   05:31:55 
+      201466_0    adv531_ksweep    COMPLETED      0:0   03:22:38 
+      201466_1    adv531_ksweep    COMPLETED      0:0   03:24:56 
+      201466_2    adv531_ksweep    COMPLETED      0:0   03:19:57 
+      201466_3    adv531_ksweep    COMPLETED      0:0   03:20:47 
+      201466_4    adv531_ksweep    COMPLETED      0:0   03:19:24 
+=== PER-BLOCK PROGRESS (basins written / 531) ===
+  exp2      526 / 531
+  exp3      531 / 531
+  exp4      274 / 531
+  exp5      531 / 531
+  exp6      531 / 531
+  detect    531 / 531
+  ksweep    531 / 531
+  l1l2      531 / 531
+=== ERRORS ===
+=== NEWEST LOG LINES ===
+--- adv531_exp4_201465_0.out
+[54/107] 05495000 | 364s/basin
+[55/107] 05508805 | 364s/basin
+--- adv531_exp4_201465_3.out
+[53/106] 05488200 | 365s/basin
+[54/106] 05503800 | 365s/basin
+--- adv531_exp4_201465_4.out
+[54/106] 05507600 | 358s/basin
+[55/106] 05591550 | 358s/basin
+--- adv531_exp4_201465_1.out
+[54/106] 05495500 | 361s/basin
+[55/106] 05525500 | 361s/basin
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T02:15:15+0800
