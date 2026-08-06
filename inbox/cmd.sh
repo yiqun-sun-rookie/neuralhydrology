@@ -1,46 +1,45 @@
 #!/bin/bash
-# seq=8 — 严格重测网络（TCP 层 vs 应用层，各测 3 次看稳定性）。
-# 起因：seq=7 的 TCP 探测结果与更早的 curl 测试矛盾，需要判定到底哪层被挡。
+# seq=9  read-only survey: can the adversarial 531 re-run start on HPC as-is?
+R=~/neuralhydrology
 
-echo "=== A TCP LAYER x3 ==="
-for round in 1 2 3; do
-  printf "round%d: " $round
-  printf "gh22="; timeout 6 bash -c '</dev/tcp/20.205.243.166/22'  2>/dev/null && printf "OK " || printf "FAIL "
-  printf "gh443="; timeout 6 bash -c '</dev/tcp/20.205.243.166/443' 2>/dev/null && printf "OK " || printf "FAIL "
-  printf "pypi443="; timeout 6 bash -c '</dev/tcp/151.101.128.223/443' 2>/dev/null && printf "OK" || printf "FAIL"
-  echo
+echo "=== A. REPO STATE ==="
+cd $R 2>/dev/null || { echo "REPO_MISSING"; exit 0; }
+echo "branch: $(git rev-parse --abbrev-ref HEAD 2>&1)"
+echo "commit: $(git log --oneline -1 2>&1)"
+echo "dirty files: $(git status --porcelain 2>/dev/null | wc -l)"
+
+echo "=== B. CAMELS DATA PRESENT? ==="
+for d in data/camels_us/basin_mean_forcing/maurer data/camels_us/usgs_streamflow data/camels_us/camels_attributes_v2.0; do
+  if [ -d "$R/$d" ]; then
+    echo "OK   $d  size=$(du -sh $R/$d 2>/dev/null | cut -f1)  files=$(find $R/$d -type f 2>/dev/null | wc -l)"
+  else
+    echo "MISS $d"
+  fi
 done
+echo "maurer subdirs: $(ls $R/data/camels_us/basin_mean_forcing/maurer 2>/dev/null | tr '\n' ' ')"
 
-echo; echo "=== B APPLICATION LAYER (curl, 20s timeout each) ==="
-echo -n "github.com     : "
-timeout 25 curl -sS -o /dev/null -m 20 -w "http=%{http_code} tls=%{time_appconnect}s total=%{time_total}s\n" https://github.com 2>&1 | tail -1
-echo -n "api.github.com : "
-timeout 25 curl -sS -o /dev/null -m 20 -w "http=%{http_code} total=%{time_total}s\n" https://api.github.com 2>&1 | tail -1
-echo -n "pypi.org       : "
-timeout 25 curl -sS -o /dev/null -m 20 -w "http=%{http_code} total=%{time_total}s\n" https://pypi.org/simple/ 2>&1 | tail -1
-echo -n "files.pythonhosted: "
-timeout 25 curl -sS -o /dev/null -m 20 -w "http=%{http_code} total=%{time_total}s\n" https://files.pythonhosted.org 2>&1 | tail -1
+echo "=== C. TARGET MODEL PRESENT? ==="
+M=$R/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30
+for f in config.yml model_epoch030.pt test/model_epoch030/test_results.p; do
+  if [ -f "$M/$f" ]; then echo "OK   $f  $(du -h $M/$f | cut -f1)"; else echo "MISS $f"; fi
+done
+echo "--- config key lines ---"
+grep -E "^data_dir|^dataset|^forcings" $M/config.yml 2>&1 | head -5
 
-echo; echo "=== C REAL GIT OPS (the thing that actually matters) ==="
-cd /tmp && rm -rf _nettest && mkdir _nettest && cd _nettest && git init -q 2>/dev/null
-echo -n "git ls-remote via HTTPS: "
-timeout 40 git ls-remote https://github.com/yiqun-sun-rookie/neuralhydrology.git HEAD 2>&1 | head -1
-echo -n "git ls-remote via SSH  : "
-timeout 40 git ls-remote git@github.com:yiqun-sun-rookie/neuralhydrology.git HEAD 2>&1 | head -1
-cd /tmp && rm -rf _nettest
+echo "=== D. ADVERSARIAL CODE PRESENT? ==="
+ls $R/src/adversarial/scripts/run_exp*.py 2>&1 | head -10
+echo "basin list lines: $(wc -l < $R/src/adversarial/data/531_basins.txt 2>&1)"
+echo "existing adversarial results:"
+ls $R/results/05_adversarial_robustness/ 2>&1 | head -5
 
-echo; echo "=== D REAL PIP (dry, no install) ==="
-source /data1/home/$USER/miniconda3/etc/profile.d/conda.sh 2>/dev/null
-conda activate nh_final 2>/dev/null
-timeout 40 pip download --no-deps --dest /tmp/_piptest six 2>&1 | tail -3
-rm -rf /tmp/_piptest
+echo "=== E. CONDA ENVS ==="
+ls -d /data1/home/$USER/miniconda3/envs/* 2>/dev/null | xargs -n1 basename 2>/dev/null | tr '\n' ' '
+echo ""
 
-echo; echo "=== E PROXY ENV ==="
-env | grep -i proxy || echo "(none)"
-cat ~/.condarc 2>/dev/null | head -10 || echo "(no .condarc)"
-grep -is "index-url\|proxy" ~/.pip/pip.conf ~/.config/pip/pip.conf 2>/dev/null || echo "(no pip.conf proxy/index)"
+echo "=== F. GPU PARTITION NOW ==="
+sinfo -p hgpu2p -o "%12P %10a %8D %20N %10T" 2>&1 | head -8
+echo "--- my jobs ---"
+squeue -u $USER 2>&1 | head -5
 
-echo; echo "=== F WHERE ARE THE 531 RESULTS? ==="
-ls -d ~/neuralhydrology/results/*/ 2>/dev/null | head -20 || echo "no results/ subdirs"
-echo "--- any 531 anywhere ---"
-find ~/neuralhydrology/results -maxdepth 2 -name "*531*" 2>/dev/null | head -10 || echo none
+echo "=== G. DISK ==="
+df -h /data1 2>&1 | tail -1
