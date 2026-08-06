@@ -1,0 +1,36 @@
+### channel=probe seq=3
+### host=login4
+### started=2026-08-06T17:15:48+0800
+### ---------- output ----------
+=== 1. CANCEL MY DUPLICATES (keep the older 201433/201435) ===
+cancelled 201452 201453
+
+=== 2. GPU ALLOCATION PER NODE (this is the real constraint) ===
+
+=== 3. ALL JOBS ON hgpu8 (everyone, not just me) ===
+JOBID    USER       NODES  TRES_PER_NODE        TIME         TIME_LIMIT   NODELIST
+
+=== 4. WHY IS MINE PENDING ===
+--- job 201433 ---
+  Priority=210634 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+  JobState=PENDING Reason=Resources Dependency=(null)
+  StartTime=2027-08-06T13:59:07 EndTime=2027-08-06T14:03:07 Deadline=N/A
+  TRES=cpu=4,node=1,billing=4
+--- job 201435 ---
+  Priority=210634 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+  JobState=PENDING Reason=Resources Dependency=(null)
+  StartTime=2027-07-14T11:02:07 EndTime=2027-07-14T11:06:07 Deadline=N/A
+  TRES=cpu=4,node=1,billing=4
+
+=== 5. ESTIMATED START (backfill) ===
+JOBID      NAME         PARTITION START_TIME           NODELIST(REASON)    
+201435     nt_ngu203    hgpu8     2027-07-14T11:02:07  (Resources)         
+201433     nt_ngu201    hgpu8     2027-08-06T13:59:07  (Resources)         
+
+=== 6. HOW LONG HAVE THEY WAITED ===
+JOBID      NAME         STATE    SUBMIT_TIME    TIME         NODELIST(REASON)    
+201433     nt_ngu201    PENDING  2026-08-06T15: 0:00         (Resources)         
+201435     nt_ngu203    PENDING  2026-08-06T15: 0:00         (Resources)         
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T17:15:49+0800
