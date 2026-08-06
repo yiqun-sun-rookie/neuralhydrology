@@ -22,7 +22,13 @@
 # 停止：
 #   pkill -f "hpc_runner_active.sh"; pkill -f "bash runner2.sh"
 # =============================================================================
-set -u
+# 【不要加 set -u】两个原因：
+#   1. HPC 是 CentOS 7 / bash 4.2。set -u 下展开空关联数组
+#      （${!arr[@]} / ${#arr[@]}）会报 unbound variable 直接退出，
+#      而且不同 bash 版本行为不一致（4.4 修了一部分，5.x 又不同），
+#      靠版本判断等于赌博。本脚本全程用 ${VAR:-default}，不需要 -u。
+#   2. set -u 还会让 conda activate 静默退出（见 HPC_PLAYBOOK 铁律 2）。
+set -o pipefail
 
 MAILBOX_DIR="${MAILBOX_DIR:-$HOME/hpc_mailbox}"
 STAGING="${STAGING:-$HOME/.hpc_mailbox_staging}"
@@ -117,7 +123,7 @@ run_channel () {
 declare -A RUNNING   # channel -> pid
 
 while true; do
-    # 回收已结束的 worker
+    # 回收已结束的 worker（无 set -u，空数组展开是安全的）
     for CH in "${!RUNNING[@]}"; do
         kill -0 "${RUNNING[$CH]}" 2>/dev/null || unset "RUNNING[$CH]"
     done
