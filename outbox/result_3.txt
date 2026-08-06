@@ -1,0 +1,118 @@
+### seq=3
+### host=login4
+### started=2026-08-06T15:09:55+0800
+### ---------- output ----------
+=== 1 IDENTITY ===
+login4
+sunyiq
+2026-08-06T15:09:55+0800
+
+=== 2 SINFO SUMMARY ===
+PARTITION AVAIL  TIMELIMIT   NODES(A/I/O/T)  NODELIST
+hcpu48*      up   infinite      15/33/16/64  icn[201-264]
+hcpu48y      up   infinite         3/6/3/12  icn[270-281]
+hgpu8        up   infinite          3/0/0/3  ngu[201-203]
+hgpu4        up   infinite          0/3/1/4  ngu[101-104]
+hgpu2        up   infinite          1/1/0/2  ngu[003,009]
+hgpu2p       up   infinite          1/8/0/9  ngu[001-002,004-008,010-011]
+
+=== 3 PARTITION DETAIL ===
+PARTITION            AVAIL  TIMELIMIT    NODES  NODELIST                 GRES        
+hcpu48*              up     infinite     64     icn[201-264]             (null)      
+hcpu48y              up     infinite     12     icn[270-281]             (null)      
+hgpu8                up     infinite     3      ngu[201-203]             gpu:8       
+hgpu4                up     infinite     4      ngu[101-104]             gpu:4       
+hgpu2                up     infinite     2      ngu[003,009]             gpu:2       
+hgpu2p               up     infinite     9      ngu[001-002,004-008,010- gpu:2       
+
+=== 4 NGU NODES (suspected bad) ===
+ngu001         1    hgpu2p        idle   96   2:24:2      1        0      1   (null) none                
+ngu002         1    hgpu2p        idle   96   2:24:2      1        0      1   (null) none                
+ngu003         1     hgpu2       mixed   96   2:24:2      1        0      1   (null) none                
+ngu004         1    hgpu2p        idle   96   2:24:2      1        0      1   (null) none                
+ngu005         1    hgpu2p        idle   96   2:24:2      1        0      1   (null) none                
+ngu006         1    hgpu2p        idle   96   2:24:2      1        0      1   (null) none                
+ngu007         1    hgpu2p        idle   96   2:24:2      1        0      1   (null) none                
+ngu008         1    hgpu2p        idle   96   2:24:2      1        0      1   (null) none                
+ngu009         1     hgpu2        idle   96   2:24:2      1        0      1   (null) none                
+ngu010         1    hgpu2p       mixed   32   2:16:1      1        0      1   (null) none                
+ngu011         1    hgpu2p        idle   32   2:16:1      1        0      1   (null) none                
+ngu101         1     hgpu4        idle   96   2:24:2      1        0      1   (null) none                
+
+=== 5 OFFICIAL ALIASES ===
+inbox/cmd.sh: line 19: type: si: not found
+inbox/cmd.sh: line 20: type: sq: not found
+
+=== 6 CONDA ENVS ===
+# conda environments:
+#
+base                  *  /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+
+
+=== 6b nh_final CONTENT ===
+python 3.11.13
+torch 2.4.0
+cuda_avail False
+
+=== 7 REPO STATE ===
+migration/reorg-v1
+96703ce fix(adversarial): handle empty/NaN targets in metrics (basin 09535100)
+origin	git@github.com:yiqun-sun-rookie/neuralhydrology.git (fetch)
+origin	git@github.com:yiqun-sun-rookie/neuralhydrology.git (push)
+--- dirty files (count) ---
+78
+
+=== 8 ACCOUNTING / BILLING ===
+     JobID  Partition Alloc                          AllocTRES     Elapsed       State 
+---------- ---------- ----- ---------------------------------- ----------- ----------- 
+    157491      hgpu8     8                                       00:00:00      FAILED 
+    157494      hgpu8     8             billing=8,cpu=8,node=1    07:51:53   COMPLETED 
+    157754      hgpu8     8                                       00:00:00      FAILED 
+    157755      hgpu8     4             billing=4,cpu=4,node=1    00:00:00      FAILED 
+    157838      hgpu8     8             billing=8,cpu=8,node=1    00:00:28      FAILED 
+    157839      hgpu8     8             billing=8,cpu=8,node=1    00:00:05      FAILED 
+    157840      hgpu8     8             billing=8,cpu=8,node=1    00:00:05      FAILED 
+    157841      hgpu8     8             billing=8,cpu=8,node=1    00:00:05      FAILED 
+    157842      hgpu8     8             billing=8,cpu=8,node=1    00:00:05      FAILED 
+    157843      hgpu8     8             billing=8,cpu=8,node=1    00:00:51      FAILED 
+    157844      hgpu8     8             billing=8,cpu=8,node=1    00:00:14      FAILED 
+    157845      hgpu8     8             billing=8,cpu=8,node=1    00:00:13      FAILED 
+    157846      hgpu8     8             billing=8,cpu=8,node=1    00:00:13      FAILED 
+    157847      hgpu8     8             billing=8,cpu=8,node=1    00:00:13      FAILED 
+    157873      hgpu8     4             billing=4,cpu=4,node=1    00:07:39      FAILED 
+    157876     hgpu2p     4             billing=4,cpu=4,node=1    00:00:01      FAILED 
+    157878     hgpu2p     4             billing=4,cpu=4,node=1    00:00:00      FAILED 
+    157881     hgpu2p     4             billing=4,cpu=4,node=1    00:02:44      FAILED 
+    157888     hgpu2p     4             billing=4,cpu=4,node=1    00:08:50      FAILED 
+    157906     hgpu2p     4                                       00:00:00      FAILED 
+    157907     hgpu2p     4             billing=4,cpu=4,node=1    00:02:37   COMPLETED 
+    157908     hgpu2p     4             billing=4,cpu=4,node=1    00:00:38      FAILED 
+    157935      hgpu8     4                                       00:00:00      FAILED 
+
+=== 9 MY QUEUE NOW ===
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+
+=== 10 DATA PRESENCE ===
+FOUND /data1/home/sunyiq/neuralhydrology/data/camels_us
+basin_mean_forcing
+camels_attributes_v2.0
+demo
+full
+raw
+usgs_streamflow
+FOUND /data1/home/sunyiq/neuralhydrology/data
+camelsh
+camels_us
+Caravan
+namou_kuwei_hourly
+
+=== 11 QUOTA / DISK ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T15:10:38+0800
