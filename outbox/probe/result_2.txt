@@ -1,0 +1,27 @@
+### channel=probe seq=2
+### host=login4
+### started=2026-08-06T17:14:06+0800
+### ---------- output ----------
+=== hgpu8 CURRENT LOAD ===
+NODELIST     STATE      CPUS(A GRES      
+ngu201       mixed      16/48/ gpu:8     
+ngu202       mixed      2/62/0 gpu:8     
+ngu203       mixed      22/42/ gpu:8     
+--- who is on hgpu8 ---
+JOBID    USER       STATE    TIME         TIME_LIMIT   NODELIST
+201433   sunyiq     PENDING  0:00         4:00                 
+201435   sunyiq     PENDING  0:00         4:00                 
+
+=== SUBMIT (no wait) ===
+ngu201 -> 201452
+ngu203 -> 201453
+
+=== MY QUEUE ===
+JOBID      NAME         PARTITION STATE    TIME       NODELIST(REASON)    
+201433     nt_ngu201    hgpu8     PENDING  0:00       (Resources)         
+201435     nt_ngu203    hgpu8     PENDING  0:00       (Resources)         
+201452     nt_ngu201    hgpu8     PENDING  0:00       (Priority)          
+201453     nt_ngu203    hgpu8     PENDING  0:00       (Priority)          
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T17:14:06+0800
