@@ -1,0 +1,62 @@
+### channel=probe seq=4
+### host=login4
+### started=2026-08-06T17:17:30+0800
+### ---------- output ----------
+=== 1. scontrol show node (raw, no grep) ===
+NodeName=ngu201 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=16 CPUTot=64 CPULoad=23.14
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu201 NodeHostName=ngu201 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=1997 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-04-28T14:13:39 SlurmdStartTime=2026-04-28T14:14:06
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=16
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+
+=== 2. ALL jobs on these nodes, any state, any user ===
+JOBID    USER       PARTITION STATE    NODES  TRES_PER_NODE  TIME       TIME_LIMIT
+
+=== 3. Partition-wide, all states ===
+JOBID    USER       STATE    TRES_PER_NODE  TIME       TIME_LIMIT NODELIST(R
+201433   sunyiq     PENDING  gpu:1          0:00       4:00       (Resources
+201435   sunyiq     PENDING  gpu:1          0:00       4:00       (Resources
+
+=== 4. GRES detail via sinfo ===
+NODELIST     STATE      CPUS(A/I/O/T)        GRES            NODES(A/I)          
+ngu[201-203] mixed      40/152/0/192         gpu:8           3/0                 
+
+=== 5. Does the partition allow me at all? ===
+  AllowGroups=ALL
+  AllowAccounts=ALL
+  AllowQos=ALL
+  DefaultTime=NONE
+  MaxTime=UNLIMITED
+  MaxCPUsPerNode=UNLIMITED
+  PriorityTier=1
+  OverSubscribe=NO
+  State=UP
+  TotalNodes=3
+
+=== 6. My QOS limits ===
+Unknown field 'maxsubmitpu'
+
+=== 7. Compare: hgpu2p partition config ===
+  AllowGroups=ALL
+  AllowAccounts=ALL
+  AllowQos=ALL
+  MaxTime=UNLIMITED
+  MaxCPUsPerNode=UNLIMITED
+  State=UP
+  TotalNodes=9
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T17:17:31+0800
