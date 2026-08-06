@@ -24,9 +24,20 @@ outbox/<channel>/result_<seq>.txt   结果
 
 | channel | 用途 | 登记时间 | 备注 |
 |---|---|---|---|
-| `default` | v1 遗留的 `inbox/cmd.sh` + `inbox/seq` | 2026-08-06 | 向后兼容保留，**新任务不要用** |
-| `adv531` | ID05 对抗攻击 531 流域，`~/adv531` 部署 + smoke test | 2026-08-06 | 由另一会话使用中 |
+| `default` | v1 遗留的 `inbox/cmd.sh` + `inbox/seq` | 2026-08-06 | **当前被 ID05 对抗攻击任务占用**（`~/adv531`，已跑到 seq=15）。该任务建议迁到 `inbox/adv531/`，迁移前别人不要碰 |
 | `probe` | 临时探测、环境体检 | 2026-08-06 | 谁都可以用，但结果可能被别人覆盖 |
+
+**迁移方法**（`default` → 自己的 channel，随时可做，不影响正在跑的）：
+
+```bash
+mkdir -p inbox/<新channel>
+git mv inbox/cmd.sh inbox/<新channel>/cmd.sh
+echo -n "<当前seq>" > inbox/<新channel>/seq
+git rm inbox/seq
+```
+
+注意新 channel 的 seq 要么延续旧编号，要么从 1 开始都行——
+判重是按 `outbox/<channel>/result_<seq>.txt` 是否存在，各 channel 独立。
 
 **新开 channel 时请在此表加一行并提交**，避免撞名。
 
