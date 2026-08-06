@@ -1,0 +1,56 @@
+### seq=8
+### host=login4
+### started=2026-08-06T15:45:05+0800
+### ---------- output ----------
+=== A TCP LAYER x3 ===
+round1: gh22=OK gh443=OK pypi443=OK
+round2: gh22=OK gh443=OK pypi443=OK
+round3: gh22=OK gh443=OK pypi443=OK
+
+=== B APPLICATION LAYER (curl, 20s timeout each) ===
+github.com     : http=200 tls=11.038s total=11.670s
+api.github.com : http=200 total=11.128s
+pypi.org       : http=200 total=19.999s
+files.pythonhosted: http=200 total=11.062s
+
+=== C REAL GIT OPS (the thing that actually matters) ===
+git ls-remote via HTTPS: c61841e895d77ddd3ceaba282382f696a493f484	HEAD
+git ls-remote via SSH  : c61841e895d77ddd3ceaba282382f696a493f484	HEAD
+
+=== D REAL PIP (dry, no install) ===
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Saved ./_piptest/six-1.17.0-py2.py3-none-any.whl
+Successfully downloaded six
+
+=== E PROXY ENV ===
+(none)
+channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+  - defaults
+show_channel_urls: true
+(no pip.conf proxy/index)
+
+=== F WHERE ARE THE 531 RESULTS? ===
+/data1/home/sunyiq/neuralhydrology/results/01_caravan_global/
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us/
+/data1/home/sunyiq/neuralhydrology/results/03_mamba_camelsh/
+/data1/home/sunyiq/neuralhydrology/results/04_namou_kuwei/
+/data1/home/sunyiq/neuralhydrology/results/05_full_531_basins/
+/data1/home/sunyiq/neuralhydrology/results/06_haihe_river/
+/data1/home/sunyiq/neuralhydrology/results/07_hydroagent/
+/data1/home/sunyiq/neuralhydrology/results/41_mts_mamba_global_transfer/
+/data1/home/sunyiq/neuralhydrology/results/adversarial_eval/
+/data1/home/sunyiq/neuralhydrology/results/backups/
+/data1/home/sunyiq/neuralhydrology/results/models/
+/data1/home/sunyiq/neuralhydrology/results/namou_kuwei/
+/data1/home/sunyiq/neuralhydrology/results/outputs/
+/data1/home/sunyiq/neuralhydrology/results/reports/
+--- any 531 anywhere ---
+/data1/home/sunyiq/neuralhydrology/results/05_full_531_basins
+/data1/home/sunyiq/neuralhydrology/results/05_full_531_basins/reproduce_531_nse074_2025_1129_2145_ep30
+/data1/home/sunyiq/neuralhydrology/results/reports/full_531_status_20251207.md
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T15:46:57+0800
