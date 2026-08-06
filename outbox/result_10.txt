@@ -1,0 +1,24 @@
+### seq=10
+### host=login4
+### started=2026-08-06T16:05:25+0800
+### ---------- output ----------
+=== DATA MANIFEST FINGERPRINTS ===
+data/camels_us/basin_mean_forcing/maurer  files=675  bytes=421092228  manifest_md5=b29dd667ca14e694aa7d0f074d6d2fe3
+data/camels_us/usgs_streamflow  files=674  bytes=262904060  manifest_md5=7150e54ea55bd780aaf9e53bda97d959
+data/camels_us/camels_attributes_v2.0  files=7  bytes=581244  manifest_md5=a752854b0ea75a54e7335870e507ab56
+=== SAMPLE FILE HEAD (line-ending probe) ===
+file: data/camels_us/basin_mean_forcing/maurer/01/01022500_lump_maurer_forcing_leap.txt
+  44.82$
+ 133.00$
+ 587675987$
+Year Mnth Day Hr^IDayl(s)^IPRCP(mm/day)^ISRAD(W/m2)^ISWE(mm)^ITmax(C)^ITmin(C)^IVp(Pa)$
+=== FREE SPACE FOR NEW WORKDIR ===
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+adv531 absent (good)
+=== STUCK JOBS ===
+     JOBID  PARTITION           NAME  ST       TIME NODELIST(REASON)
+    201433      hgpu8      nt_ngu201  PD       0:00 (Resources)
+    201435      hgpu8      nt_ngu203  PD       0:00 (Resources)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T16:06:00+0800
