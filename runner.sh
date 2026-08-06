@@ -31,21 +31,21 @@ echo "[INFO] dir=$MAILBOX_DIR branch=$BRANCH interval=${POLL_INTERVAL}s"
 echo "[INFO] host=$(hostname) pid=$$"
 echo "=========================================="
 
+# 不再用"启动基线"判重 —— 那会吞掉启动前就已存在的第一条命令。
+# 改为：只要 outbox/result_<seq>.txt 不存在，就说明这条还没跑过。
 LAST=""
-# 启动时先记下当前 seq，避免把历史命令重跑一遍
-if [ -f inbox/seq ]; then
-    LAST=$(cat inbox/seq 2>/dev/null)
-    echo "[INFO] baseline seq=$LAST (will not re-run)"
-fi
 
 while true; do
-    git fetch origin "$BRANCH" -q 2>/dev/null
-    git reset --hard "origin/$BRANCH" -q 2>/dev/null
+    # 【关键】HPC 的 git 是 1.8.3.1：`git fetch origin <branch>` 只写 FETCH_HEAD，
+    # 不会更新 refs/remotes/origin/<branch>，导致 reset 永远回到旧 commit。
+    # 必须写全 refspec 并加 + 强制更新。
+    git fetch -q origin "+${BRANCH}:refs/remotes/origin/${BRANCH}" 2>/dev/null
+    git reset -q --hard "refs/remotes/origin/${BRANCH}" 2>/dev/null
 
     SEQ=""
     [ -f inbox/seq ] && SEQ=$(cat inbox/seq 2>/dev/null)
 
-    if [ -n "$SEQ" ] && [ "$SEQ" != "$LAST" ] && [ -f inbox/cmd.sh ]; then
+    if [ -n "$SEQ" ] && [ "$SEQ" != "$LAST" ] && [ ! -f "outbox/result_${SEQ}.txt" ] && [ -f inbox/cmd.sh ]; then
         echo "[$(date)] --- running seq=$SEQ ---"
         mkdir -p outbox
 
