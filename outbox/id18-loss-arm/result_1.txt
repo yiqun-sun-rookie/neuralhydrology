@@ -1,0 +1,64 @@
+### channel=id18-loss-arm seq=1
+### host=login4
+### started=2026-08-06T21:24:38+0800
+### ---------- output ----------
+=== RUNNING JOBS (do not disturb) ===
+     JOBID           NAME  PARTITION     STATE        TIME  NODES NODELIST(REASON)
+201466_[0-  adv531_ksweep     hgpu2p   PENDING        0:00      1 (Resources)
+  201465_4    adv531_exp4     hgpu2p   RUNNING       41:20      1 ngu006
+  201465_3    adv531_exp4     hgpu2p   RUNNING       41:38      1 ngu008
+  201465_2    adv531_exp4     hgpu2p   RUNNING       45:11      1 ngu008
+  201465_1    adv531_exp4     hgpu2p   RUNNING       45:29      1 ngu007
+  201465_0    adv531_exp4     hgpu2p   RUNNING       46:14      1 ngu007
+  201464_4    adv531_exp5     hgpu2p   RUNNING     1:27:31      1 ngu005
+  201464_3    adv531_exp5     hgpu2p   RUNNING     1:28:49      1 ngu004
+  201464_2    adv531_exp5     hgpu2p   RUNNING     1:29:12      1 ngu005
+  201464_1    adv531_exp5     hgpu2p   RUNNING     1:29:17      1 ngu004
+  201464_0    adv531_exp5     hgpu2p   RUNNING     1:29:32      1 ngu006
+  201459_0    adv531_exp2     hgpu2p   RUNNING     3:46:17      1 ngu010
+  201459_1    adv531_exp2     hgpu2p   RUNNING     3:46:17      1 ngu011
+  201459_2    adv531_exp2     hgpu2p   RUNNING     3:46:17      1 ngu011
+  201459_3    adv531_exp2     hgpu2p   RUNNING     3:46:17      1 ngu001
+  201459_4    adv531_exp2     hgpu2p   RUNNING     3:46:17      1 ngu001
+=== PARTITION IDLE ===
+ PARTITION  AVAIL  TIMELIMIT  NODES  STATE NODELIST
+   hcpu48*     up   infinite     10 alloc$ icn[202,204-207,210-212,216-217]
+   hcpu48*     up   infinite      5  maint icn[214,220-221,246,249]
+   hcpu48*     up   infinite     16  down* icn[203,215,218,224,230,233-237,239,242-243,245,247,256]
+   hcpu48*     up   infinite      4  alloc icn[201,213,225-226]
+   hcpu48*     up   infinite     29   idle icn[208-209,219,222-223,227-229,231-232,238,240-241,244,248,250-255,257-264]
+   hcpu48y     up   infinite      1  down$ icn281
+   hcpu48y     up   infinite      1  maint icn280
+   hcpu48y     up   infinite      2  down* icn[278-279]
+   hcpu48y     up   infinite      2    mix icn[274,277]
+   hcpu48y     up   infinite      6   idle icn[270-273,275-276]
+     hgpu8     up   infinite      3    mix ngu[201-203]
+=== REPO HEAD ===
+migration/reorg-v1
+96703ce fix(adversarial): handle empty/NaN targets in metrics (basin 09535100)
+78
+=== CAMELS DATA ===
+18G	/data1/home/sunyiq/neuralhydrology/data/camels_us
+basin_mean_forcing
+camels_attributes_v2.0
+demo
+full
+raw
+usgs_streamflow
+=== LOSS MECHANISM CODE ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/src/loss_mechanism_531/: No such file or directory
+=== E01 RESULTS PRESENT? ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/results/18_lstm_fair_531/: No such file or directory
+=== CPU PARTITION DETAIL ===
+ PARTITION  NODES  STATE     CPUS NODELIST
+   hcpu48*     10 alloc$       48 icn[202,204-207,210-212,216-217]
+   hcpu48*      5  maint       48 icn[214,220-221,246,249]
+   hcpu48*     16  down*       48 icn[203,215,218,224,230,233-237,239,242-243,245,247,256]
+   hcpu48*      4  alloc       48 icn[201,213,225-226]
+   hcpu48*     29   idle       48 icn[208-209,219,222-223,227-229,231-232,238,240-241,244,248,250-255,257-264]
+=== DISK ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T21:24:46+0800
