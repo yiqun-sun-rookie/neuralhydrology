@@ -1,0 +1,82 @@
+### channel=id05-adversarial seq=1
+### host=login4
+### started=2026-08-06T17:27:11+0800
+### ---------- output ----------
+=== 1. DEPLOY PAYLOAD v2 ===
+  md5=a122366e74b6677ecd1630d54cd08153  expect=a122366e74b6677ecd1630d54cd08153
+  new options present:
+    run_exp2         --offset
+
+    run_exp3         --offset
+
+    run_exp4         --offset
+
+    run_exp5         --offset
+
+    run_exp6         --offset
+
+    run_exp_detect   --offset
+
+    run_ksweep       --offset
+
+    run_exp4 control: 2
+    l1l2 offset:      2
+=== 2. GATE: smoke the new random-window control (1 basin) ===
+  smoke jobid=201457
+  t=60s state=R
+  t=120s state=R
+  t=180s state=R
+  t=240s state=R
+  t=300s state=R
+  t=360s state=R
+  t=420s state=R
+  t=480s state=R
+     JobID        State ExitCode    Elapsed 
+---------- ------------ -------- ---------- 
+    201457    COMPLETED      0:0   00:08:41 
+--- smoke log ---
+[Thu Aug  6 17:29:31 CST 2026] smoke2: exp4 with the random-window control, 1 basin
+torch 2.4.0 | cuda True
+Exp4: 1 basins (0 done, 1 todo) x [1, 3, 7, 14] @ eps=0.1 chunk=256
+[1/1] 01022500 | 439s/basin
+
+=== Exp4 medians (over 1) ===
+ D_overall: 1d=0.0122 3d=0.0354 7d=0.0625 14d=0.0951
+ D_peak:    1d=0.1518 3d=0.3702 7d=0.5701 14d=0.8104
+ D_peak_rand:    1d=0.0054 3d=0.0181 7d=0.0956 14d=0.1249
+ D_overall_rand: 1d=0.0008 3d=0.0039 7d=0.0157 14d=0.0205
+ pre-minus-random exposed days (median): 1d=+0 3d=+0 7d=-4 14d=+0
+DONE -> results/05_adversarial_robustness/id18_s100_hpc/smoke2_exp4.json
+--- what the control produced ---
+basin 01022500 | peaks 38
+ window  D_peak_pre  D_peak_rand  days_pre  days_rand
+      1      0.1518       0.0054        38         38
+      3      0.3702       0.0181       114        114
+      7      0.5701       0.0956       266        270
+     14      0.8104       0.1249       532        532
+EXPOSURE-MATCH AND SIGN CHECK: PASS
+[Thu Aug  6 17:38:09 CST 2026] smoke2 done
+=== GATE PASSED ===
+=== 3. LAUNCH FULL 531 CAMPAIGN (8 blocks x 5 chunks = 40 array tasks) ===
+  exp2 -> 201459
+  l1l2 -> 201460
+  exp3 -> 201461
+  exp6 -> 201462
+  detect -> 201463
+  exp5 -> 201464
+  exp4 -> 201465
+  ksweep -> 201466
+=== 4. QUEUE STATE ===
+       JOBID           NAME  ST       TIME  NODES NODELIST(REASON)
+201459_[0-4]    adv531_exp2  PD       0:00      1 (None)
+201460_[0-4]    adv531_l1l2  PD       0:00      1 (None)
+201461_[0-4]    adv531_exp3  PD       0:00      1 (None)
+201462_[0-4]    adv531_exp6  PD       0:00      1 (None)
+201463_[0-4]  adv531_detect  PD       0:00      1 (None)
+201464_[0-4]    adv531_exp5  PD       0:00      1 (None)
+201465_[0-4]    adv531_exp4  PD       0:00      1 (None)
+201466_[0-4]  adv531_ksweep  PD       0:00      1 (None)
+  total tasks queued: 40
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T17:38:22+0800
