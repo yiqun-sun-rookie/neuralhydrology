@@ -1,0 +1,83 @@
+### channel=id05-adversarial seq=4
+### host=login4
+### started=2026-08-06T20:22:24+0800
+### ---------- output ----------
+############ EXP3 flow-targeted ############
+  records=531 ok=531 errors=0 chunks={'hunk0.json': 107, 'hunk1.json': 106, 'hunk2.json': 106, 'hunk3.json': 106, 'hunk4.json': 106}
+  531    median D_flood                  = +0.3285
+  531    median D_lowflow                = +0.0447
+  531    median D_untargeted             = +0.3794
+  531    median dkge_flood               = -0.1563
+  531    median dkge_lowflow             = -0.0157
+  531    median dkge_untargeted          = -0.1630
+  531    median kge_clean                = +0.7581
+  531    median nse_clean                = +0.7332
+  531    median official                 = +0.7332
+  --- chunk0 = the published 107 subset (n=107) ---
+  c0     median D_flood                  = +0.3223
+  c0     median D_lowflow                = +0.0477
+  c0     median D_untargeted             = +0.3833
+  c0     median dkge_flood               = -0.1488
+  c0     median dkge_lowflow             = -0.0156
+  c0     median dkge_untargeted          = -0.1551
+  c0     median kge_clean                = +0.7734
+  c0     median nse_clean                = +0.7471
+  c0     median official                 = +0.7471
+
+############ EXP6 KGE ############
+  records=531 ok=531 errors=0 chunks={'hunk0.json': 107, 'hunk1.json': 106, 'hunk2.json': 106, 'hunk3.json': 106, 'hunk4.json': 106}
+  531    median D_nse                    = +0.3794
+  531    median dkge                     = -0.1630
+  531    median kge_adv                  = +0.5787
+  531    median kge_clean                = +0.7581
+  531    median nse_adv                  = +0.3233
+  531    median nse_clean                = +0.7332
+  531    median official                 = +0.7332
+  --- chunk0 = the published 107 subset (n=107) ---
+  c0     median D_nse                    = +0.3833
+  c0     median dkge                     = -0.1551
+  c0     median kge_adv                  = +0.5967
+  c0     median kge_clean                = +0.7734
+  c0     median nse_adv                  = +0.3324
+  c0     median nse_clean                = +0.7471
+  c0     median official                 = +0.7471
+
+############ L1L2 leave-one-variable-out ############
+  exp_l1l2_summary_eps0.1.json: 107
+  exp_l1l2_summary_eps0.1_chunk1.json: 106
+  exp_l1l2_summary_eps0.1_chunk2.json: 106
+  exp_l1l2_summary_eps0.1_chunk3.json: 106
+  exp_l1l2_summary_eps0.1_chunk4.json: 106
+  merged basins = 531
+  531    median D_nse        = +0.3793
+  531    median nse_clean    = +0.7332
+  531    median precip_att   = +0.1989
+  531    median temp_att     = +0.1709
+  531    median srad_att     = +0.0594
+  531    median vp_att       = +0.0444
+  531    median temp_share   = 0.3368
+  531    median precip_share = 0.4363
+  npz records on disk = 531
+
+=== STILL RUNNING ===
+  201465_[0-4]      adv531_exp4  PD       0:00
+  201466_[0-4]    adv531_ksweep  PD       0:00
+      201464_4      adv531_exp5   R      25:17
+      201464_3      adv531_exp5   R      26:35
+      201464_2      adv531_exp5   R      26:58
+      201464_1      adv531_exp5   R      27:03
+      201464_0      adv531_exp5   R      27:18
+      201463_4    adv531_detect   R      28:07
+      201463_3    adv531_detect   R      28:36
+      201463_2    adv531_detect   R      32:11
+      201463_1    adv531_detect   R      32:23
+      201463_0    adv531_detect   R      33:55
+      201459_0      adv531_exp2   R    2:44:03
+      201459_1      adv531_exp2   R    2:44:03
+      201459_2      adv531_exp2   R    2:44:03
+      201459_3      adv531_exp2   R    2:44:03
+      201459_4      adv531_exp2   R    2:44:03
+running=15 pending=10
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T20:22:27+0800
