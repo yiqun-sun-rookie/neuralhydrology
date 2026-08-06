@@ -1,0 +1,51 @@
+### channel=probe seq=5
+### host=login4
+### started=2026-08-06T17:19:13+0800
+### ---------- output ----------
+=== 1. RealMemory / CPUAlloc / AllocTRES ACROSS ALL GPU NODES ===
+NODE     STATE    RealMem    CPUAlloc  CPUTot    AllocTRES              Boot
+ngu001   MIXED    1          2         96        cpu=2                  2026-01-22
+ngu002   IDLE     1          0         96        none                   2026-01-22
+ngu004   MIXED    1          2         96        cpu=2                  2026-01-22
+ngu008   IDLE     1          0         96        none                   2026-02-28
+ngu010   MIXED    1          1         32        cpu=1                  2026-02-28
+ngu003   MIXED    1          8         96        cpu=8                  2025-05-14
+ngu101   IDLE     1          0         96        none                   2024-03-12
+ngu102   IDLE     1          0         96        none                   2024-03-12
+ngu201   MIXED    1          16        64        cpu=16                 2026-04-28
+ngu202   MIXED    1          2         64        cpu=2                  2026-01-22
+ngu203   MIXED    1          22        64        cpu=22                 2025-07-23
+
+=== 2. ORPHANED ALLOC? jobs actually on hgpu8 nodes ===
+squeue -w ngu201,ngu202,ngu203 (all states, all users):
+JOBID    USER       STATE    TIME      
+-> if only a header shows, the CPUAlloc on those nodes has no owning job
+
+=== 3. DefMemPerCPU / DefMemPerNode ===
+  hgpu8: DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED 
+  hgpu2p: DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED 
+
+=== 4. LAST SUCCESSFUL JOB ON hgpu8 (when did it last work?) ===
+    201416    zhangjw    COMPLETED  2026-08-06T14:21:10   00:07:10 
+    201417    zhangjw    COMPLETED  2026-08-06T14:38:57   00:02:19 
+    201418    zhangjw    COMPLETED  2026-08-06T15:18:58   00:06:19 
+    201433     sunyiq      PENDING              Unknown   00:00:00 
+    201434     sunyiq    COMPLETED  2026-08-06T15:25:37   00:00:20 
+    201435     sunyiq      PENDING              Unknown   00:00:00 
+    201440    zhangjw    COMPLETED  2026-08-06T15:35:36   00:08:54 
+    201443    zhangjw    COMPLETED  2026-08-06T16:07:42   00:21:58 
+    201446    zhangjw    COMPLETED  2026-08-06T16:39:48   00:02:29 
+    201449    zhangjw    COMPLETED  2026-08-06T16:44:26   00:02:29 
+    201452     sunyiq CANCELLED b+  2026-08-06T17:15:48   00:00:00 
+    201453     sunyiq CANCELLED b+  2026-08-06T17:15:48   00:00:00 
+
+=== 5. SLURM VERSION / SCHED CONFIG ===
+  SchedulerType           = sched/backfill
+  SelectType              = select/cons_res
+  SelectTypeParameters    = CR_CORE
+  SlurmctldHost[0]        = node10(11.11.6.210)
+  SlurmctldHost[1]        = node20(11.11.6.220)
+  SLURM_VERSION           = 19.05.4
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T17:19:28+0800
