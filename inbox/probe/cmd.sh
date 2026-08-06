@@ -1,31 +1,45 @@
 #!/bin/bash
-# probe seq=6 — 确认 GPU 是否被僵尸分配占死，然后取消排到 2027 的作业
+# probe seq=7 — 停机公告应对：确认节点校区归属 + 现有环境的升级风险
 cd ~/hpc_mailbox || exit 1
 
-echo "=== 1. GresUsed (is the GPU actually held?) ==="
-for N in ngu201 ngu202 ngu203 ngu001; do
-    printf "%-8s " "$N"
-    scontrol show node $N 2>/dev/null | tr ' ' '\n' | grep -E "^Gres=|^GresUsed=|^CPUAlloc=|^State=" | tr '\n' ' '
-    echo
+echo "=== 1. WHICH CAMPUS ARE THE COMPUTE NODES? (IP tells the campus) ==="
+echo "  江宁 = 11.11.1.x / 11.11.4.x ; 常州 = 11.11.6.x  (per the official manual)"
+for N in ngu001 ngu201 ngu101 icn201; do
+    A=$(scontrol show node $N 2>/dev/null | tr ' ' '\n' | grep "^NodeAddr=" | cut -d= -f2)
+    R=$(getent hosts "$A" 2>/dev/null | awk '{print $1}')
+    printf "  %-8s NodeAddr=%-14s resolved=%s\n" "$N" "${A:-?}" "${R:-n/a}"
 done
+echo "  --- login node I am on ---"
+hostname; hostname -i 2>/dev/null; ip -4 addr 2>/dev/null | grep -o "inet 11\.11\.[0-9.]*" | head -3
 
-echo; echo "=== 2. Where did zhangjw's successful jobs actually run? ==="
-sacct -a -S 2026-08-06 -X -r hgpu8 --format=JobID%9,User%9,NodeList%9,State%12,Elapsed%9,AllocTRES%28 2>&1 | tail -10
+echo "  --- slurm controller ---"
+scontrol show config 2>/dev/null | grep -E "^SlurmctldHost" | sed 's/^/  /'
 
-echo; echo "=== 3. CANCEL the two zombie-blocked jobs ==="
-scancel 201433 201435 2>&1 && echo "cancelled 201433 201435 (ETA was 2027)"
+echo; echo "=== 2. CURRENT OS / GLIBC / TOOLCHAIN (baseline before upgrade) ==="
+cat /etc/redhat-release 2>/dev/null
+ldd --version 2>&1 | head -1
+echo "bash $BASH_VERSION"
+git --version
+python3 --version 2>&1
 
-echo; echo "=== 4. FINAL: test ngu202 only (the one that works) ==="
-JID=$(sbatch --parsable -p hgpu8 --nodelist=ngu202 --job-name=nt_ngu202 -t 00:04:00 inbox/node_test.slurm 2>&1)
-echo "  ngu202 -> $JID"
-for i in $(seq 1 30); do
-    ST=$(squeue -j "$JID" -h -o "%t" 2>/dev/null); [ -z "$ST" ] && break
-    sleep 10
-done
-sacct -j "$JID" -X --format=JobID%9,NodeList%9,State%12,ExitCode%8,Elapsed%9 2>&1 | tail -2
-grep -o "VERDICT: .*" outbox/nodetest_${JID}.out 2>/dev/null || echo "(no verdict file)"
-grep -c "GeForce" outbox/nodetest_${JID}.out 2>/dev/null | sed 's/^/  gpus seen: /'
-rm -f outbox/nodetest_*.out outbox/nodetest_*.err
+echo; echo "=== 3. nh_final BINARY LINKAGE RISK ==="
+P=/data1/home/$USER/miniconda3/envs/nh_final/bin/python
+$P -c "import sys,torch;print('  python',sys.version.split()[0],'torch',torch.__version__)" 2>&1
+echo "  --- torch links against which glibc symbols ---"
+TL=$($P -c "import torch,os;print(os.path.dirname(torch.__file__))" 2>/dev/null)
+if [ -n "$TL" ] && [ -f "$TL/lib/libtorch_cpu.so" ]; then
+    objdump -T "$TL/lib/libtorch_cpu.so" 2>/dev/null | grep -o "GLIBC_[0-9.]*" | sort -uV | tail -3 | sed 's/^/    /'
+else
+    echo "    (libtorch_cpu.so not found, skipping)"
+fi
+echo "  conda env size: $(du -sh /data1/home/$USER/miniconda3/envs/nh_final 2>/dev/null | cut -f1)"
 
-echo; echo "=== 5. MY QUEUE (should be empty) ==="
+echo; echo "=== 4. ANYTHING OF MINE STILL QUEUED/RUNNING? ==="
 squeue -u "$USER" 2>&1
+echo "  (must be empty before 2026-08-11 noon)"
+
+echo; echo "=== 5. WHAT WOULD I LOSE? results/ size on HPC ==="
+du -sh ~/neuralhydrology/results 2>/dev/null
+du -sh ~/adv531 2>/dev/null
+echo "  --- uncommitted work in the repo ---"
+cd ~/neuralhydrology && git status --porcelain 2>/dev/null | wc -l
