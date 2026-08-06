@@ -1,0 +1,78 @@
+### seq=5
+### host=login4
+### started=2026-08-06T15:23:30+0800
+### ---------- output ----------
+=== SUBMIT ===
+ngu001 -> 201419
+ngu002 -> 201420
+ngu004 -> 201421
+
+=== WAIT (max 6 min) ===
+t=10s running/pending=3
+t=20s running/pending=3
+t=30s running/pending=2
+t=40s running/pending=2
+t=50s running/pending=0
+
+=== SACCT ===
+---------- ---------- --------- -------------- -------- --------- 
+    201419  nt_ngu001    ngu001      COMPLETED      0:0  00:00:19 
+---------- ---------- --------- -------------- -------- --------- 
+    201420  nt_ngu002    ngu002         FAILED      2:0  00:00:37 
+---------- ---------- --------- -------------- -------- --------- 
+    201421  nt_ngu004    ngu004      COMPLETED      0:0  00:00:38 
+
+=== OUTPUT PER NODE ===
+----- job 201419 -----
+=== NODE: ngu001 JOB: 201419 ===
+=== GRES: 0 ===
+--- nvidia-smi ---
+0, NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+1, NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+--- conda ---
+conda OK: /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+--- torch CUDA init ---
+torch 2.4.0
+cuda_available True
+device_count 1
+device_name NVIDIA GeForce RTX 3090
+matmul_ok sum=-9.3394e+04 elapsed=0.31s
+mem_alloc_MB 138.5
+VERDICT: NODE_HEALTHY
+=== EXIT: 0 on ngu001 ===
+----- job 201420 -----
+=== NODE: ngu002 JOB: 201420 ===
+=== GRES: 0 ===
+--- nvidia-smi ---
+0, NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+--- conda ---
+conda OK: /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+--- torch CUDA init ---
+torch 2.4.0
+/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/cuda/__init__.py:128: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /opt/conda/conda-bld/pytorch_1720538456841/work/c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+cuda_available False
+VERDICT: CUDA_INIT_FAILED
+----- job 201421 -----
+=== NODE: ngu004 JOB: 201421 ===
+=== GRES: 0 ===
+--- nvidia-smi ---
+0, NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+1, NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+--- conda ---
+conda OK: /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+--- torch CUDA init ---
+torch 2.4.0
+cuda_available True
+device_count 1
+device_name NVIDIA GeForce RTX 3090
+matmul_ok sum=2.5722e+05 elapsed=1.14s
+mem_alloc_MB 138.5
+VERDICT: NODE_HEALTHY
+=== EXIT: 0 on ngu004 ===
+
+=== CLEANUP (keep results out of git) ===
+done
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T15:24:12+0800
