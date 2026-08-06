@@ -1,0 +1,130 @@
+### seq=4
+### host=login4
+### started=2026-08-06T15:14:14+0800
+### ---------- output ----------
+=== 1 ALL GPU NODES FULL STATE ===
+NODELIST     PARTITION    STATE      CPUS  GRES       REASON                        
+ngu001       hgpu2p       idle       96    gpu:2      none                          
+ngu002       hgpu2p       idle       96    gpu:2      none                          
+ngu003       hgpu2        mixed      96    gpu:2      none                          
+ngu004       hgpu2p       idle       96    gpu:2      none                          
+ngu005       hgpu2p       idle       96    gpu:2      none                          
+ngu006       hgpu2p       idle       96    gpu:2      none                          
+ngu007       hgpu2p       idle       96    gpu:2      none                          
+ngu008       hgpu2p       idle       96    gpu:2      none                          
+ngu009       hgpu2        idle       96    gpu:2      none                          
+ngu010       hgpu2p       mixed      32    gpu:2      none                          
+ngu011       hgpu2p       idle       32    gpu:2      none                          
+ngu101       hgpu4        idle       96    gpu:4      none                          
+ngu102       hgpu4        idle       96    gpu:4      none                          
+ngu103       hgpu4        down*      96    gpu:4      Not responding                
+ngu104       hgpu4        idle       96    gpu:4      none                          
+ngu201       hgpu8        mixed      64    gpu:8      none                          
+ngu202       hgpu8        mixed      64    gpu:8      none                          
+ngu203       hgpu8        mixed      64    gpu:8      none                          
+
+=== 2 DOWN / DRAIN / RESERVED NODES (any) ===
+REASON               USER      TIMESTAMP           NODELIST
+Not responding       root      2026-05-12T05:03:18 icn203
+Not responding       root      2026-05-13T15:59:40 icn215
+Not responding       root      2026-01-16T00:43:13 icn218
+Not responding       root      2026-01-19T17:07:05 icn224
+Not responding       root      2026-01-10T07:47:14 icn230
+Not responding       root      2026-04-25T01:51:39 icn[233,243,245]
+Not responding       root      2026-01-19T22:24:09 icn234
+Not responding       root      2026-03-10T05:52:38 icn[235,237,247]
+Not responding       root      2026-05-09T19:59:37 icn236
+Not responding       root      2026-04-24T20:16:32 icn239
+Not responding       root      2025-11-04T11:55:53 icn242
+Not responding       root      2026-01-20T14:12:40 icn256
+Not responding       root      2026-05-06T18:55:06 icn281
+Not responding       root      2026-05-05T20:28:13 icn278
+Not responding       root      2026-02-28T11:10:15 icn279
+Not responding       root      2026-01-13T10:39:13 ngu103
+--- (empty above means no node is down/drained) ---
+
+=== 3 THE FAILED BATCH 157838-157847 ===
+       JobID            JobName Partition     NodeList                State  ExitCode                Start    Elapsed 
+------------ ------------------ --------- ------------ -------------------- --------- -------------------- ---------- 
+      157838 t41-seqscale_cuda+     hgpu8       ngu203               FAILED     127:0  2026-03-07T05:55:58   00:00:28 
+157838.batch              batch                 ngu203               FAILED     127:0  2026-03-07T05:55:58   00:00:28 
+157838.exte+             extern                 ngu203            COMPLETED       0:0  2026-03-07T05:55:58   00:00:28 
+      157839 t41-seqscale_cuda+     hgpu8       ngu203               FAILED     127:0  2026-03-07T05:56:28   00:00:05 
+157839.batch              batch                 ngu203               FAILED     127:0  2026-03-07T05:56:28   00:00:05 
+157839.exte+             extern                 ngu203            COMPLETED       0:0  2026-03-07T05:56:28   00:00:05 
+      157840 t41-seqscale_cuda+     hgpu8       ngu203               FAILED     127:0  2026-03-07T05:56:58   00:00:05 
+157840.batch              batch                 ngu203               FAILED     127:0  2026-03-07T05:56:58   00:00:05 
+157840.exte+             extern                 ngu203            COMPLETED       0:0  2026-03-07T05:56:58   00:00:05 
+      157841 t41-seqscale_cuda+     hgpu8       ngu203               FAILED     127:0  2026-03-07T05:57:28   00:00:05 
+157841.batch              batch                 ngu203               FAILED     127:0  2026-03-07T05:57:28   00:00:05 
+157841.exte+             extern                 ngu203            COMPLETED       0:0  2026-03-07T05:57:28   00:00:05 
+      157842 t41-seqscale_cuda+     hgpu8       ngu203               FAILED     127:0  2026-03-07T05:57:58   00:00:05 
+157842.batch              batch                 ngu203               FAILED     127:0  2026-03-07T05:57:58   00:00:05 
+157842.exte+             extern                 ngu203            COMPLETED       0:0  2026-03-07T05:57:58   00:00:05 
+      157843 t41-seqscale_mamb+     hgpu8       ngu203               FAILED     127:0  2026-03-07T05:58:28   00:00:51 
+157843.batch              batch                 ngu203               FAILED     127:0  2026-03-07T05:58:28   00:00:51 
+157843.exte+             extern                 ngu203            COMPLETED       0:0  2026-03-07T05:58:28   00:00:51 
+      157847 t41-seqscale_mamb+     hgpu8       ngu203               FAILED     127:0  2026-03-07T06:00:58   00:00:13 
+157847.batch              batch                 ngu203               FAILED     127:0  2026-03-07T06:00:58   00:00:13 
+157847.exte+             extern                 ngu203            COMPLETED       0:0  2026-03-07T06:00:58   00:00:13 
+
+=== 4 hgpu2p FAILURES DETAIL ===
+       JobID            JobName     NodeList                State  ExitCode    Elapsed                   Comment 
+------------ ------------------ ------------ -------------------- --------- ---------- ------------------------- 
+      157876         v2_metrics       ngu001               FAILED       1:0   00:00:01                           
+157876.batch              batch       ngu001               FAILED       1:0   00:00:01                           
+157876.exte+             extern       ngu001            COMPLETED       0:0   00:00:01                           
+      157878         v2_metrics       ngu001               FAILED       1:0   00:00:00                           
+157878.batch              batch       ngu001               FAILED       1:0   00:00:00                           
+157878.exte+             extern       ngu001            COMPLETED       0:0   00:00:00                           
+      157881         v2_metrics       ngu001               FAILED       1:0   00:02:44                           
+157881.batch              batch       ngu001               FAILED       1:0   00:02:44                           
+157881.exte+             extern       ngu001            COMPLETED       0:0   00:02:44                           
+      157888         v2_metrics       ngu007               FAILED       1:0   00:08:50                           
+157888.batch              batch       ngu007               FAILED       1:0   00:08:50                           
+157888.exte+             extern       ngu007            COMPLETED       0:0   00:08:50                           
+      157908         hydrograph       ngu007               FAILED       1:0   00:00:38                           
+157908.batch              batch       ngu007               FAILED       1:0   00:00:38                           
+157908.exte+             extern       ngu007            COMPLETED       0:0   00:00:38                           
+
+=== 5 LAST COMPLETED JOB (reference) ===
+       JobID              JobName Partition     NodeList                      AllocTRES      Elapsed        State 
+------------ -------------------- --------- ------------ ------------------------------ ------------ ------------ 
+      157494    t41-p2v2-mtsmamba     hgpu8       ngu203         billing=8,cpu=8,node=1     07:51:53    COMPLETED 
+157494.batch                batch                 ngu203             cpu=8,mem=0,node=1     07:51:53    COMPLETED 
+157494.exte+               extern                 ngu203         billing=8,cpu=8,node=1     07:51:53    COMPLETED 
+    157494.0               python                 ngu203             cpu=8,mem=0,node=1     07:48:57    COMPLETED 
+    157494.1               python                 ngu203             cpu=8,mem=0,node=1     00:01:45    COMPLETED 
+      157907           hydrograph    hgpu2p       ngu008         billing=4,cpu=4,node=1     00:02:37    COMPLETED 
+157907.batch                batch                 ngu008             cpu=4,mem=0,node=1     00:02:37    COMPLETED 
+157907.exte+               extern                 ngu008         billing=4,cpu=4,node=1     00:02:37    COMPLETED 
+
+=== 6 PARTITION LIMITS (real) ===
+PartitionName=hgpu2p
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[001-002,004-008,010-011]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=736 TotalNodes=9 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+
+=== 7 QOS / ACCOUNT LIMITS ===
+        g_sunyiq                        qos_sunyiq                                               
+
+=== 8 SLURM LOG DIR HINT ===
+total 48
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Mar 12 15:03 05_adversarial
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Mar 10 17:08 05_adversarial
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Mar  7 05:59 41_mts_mamba_global_transfer
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Mar  5 11:53 01_caravan_global
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Mar  5 11:53 02_mamba_camels_us
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Mar  5 11:53 03_mamba_camelsh
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Mar  5 11:53 04_namou_kuwei
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T15:14:15+0800
