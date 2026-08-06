@@ -1,0 +1,107 @@
+### seq=6
+### host=login4
+### started=2026-08-06T15:25:34+0800
+### ---------- output ----------
+=== SUBMIT ===
+ngu001 (hgpu2p) -> 201422
+ngu002 (hgpu2p) -> 201423
+ngu004 (hgpu2p) -> 201424
+ngu005 (hgpu2p) -> 201425
+ngu006 (hgpu2p) -> 201426
+ngu007 (hgpu2p) -> 201427
+ngu008 (hgpu2p) -> 201428
+ngu010 (hgpu2p) -> 201429
+ngu011 (hgpu2p) -> 201430
+ngu003 (hgpu2) -> 201431
+ngu009 (hgpu2) -> 201432
+ngu201 (hgpu8) -> 201433
+ngu202 (hgpu8) -> 201434
+ngu203 (hgpu8) -> 201435
+ngu101 (hgpu4) -> 201436
+ngu102 (hgpu4) -> 201437
+ngu104 (hgpu4) -> 201438
+
+=== WAIT (max 10 min) ===
+t=30s left=12
+t=60s left=3
+t=90s left=2
+t=120s left=2
+t=150s left=2
+t=180s left=2
+t=210s left=2
+t=240s left=2
+t=270s left=2
+t=300s left=2
+t=330s left=2
+t=360s left=2
+t=390s left=2
+t=420s left=2
+t=450s left=2
+t=480s left=2
+t=510s left=2
+t=540s left=2
+t=570s left=2
+t=600s left=2
+
+=== VERDICT TABLE ===
+NODE      JOB       STATE          EXIT     GPUS   VERDICT
+ngu001    201422    COMPLETED      0:0      3      VERDICT: NODE_HEALTHY
+ngu002    201423    FAILED         2:0      1      VERDICT: CUDA_INIT_FAILED
+ngu004    201424    COMPLETED      0:0      3      VERDICT: NODE_HEALTHY
+ngu005    201425    COMPLETED      0:0      3      VERDICT: NODE_HEALTHY
+ngu006    201426    COMPLETED      0:0      3      VERDICT: NODE_HEALTHY
+ngu007    201427    COMPLETED      0:0      3      VERDICT: NODE_HEALTHY
+ngu008    201428    COMPLETED      0:0      3      VERDICT: NODE_HEALTHY
+ngu010    201429    COMPLETED      0:0      3      VERDICT: NODE_HEALTHY
+ngu011    201430    COMPLETED      0:0      3      VERDICT: NODE_HEALTHY
+ngu003    201431    COMPLETED      0:0      3      VERDICT: NODE_HEALTHY
+ngu009    201432    COMPLETED      0:0      3      VERDICT: NODE_HEALTHY
+ngu201    201433    PENDING        0:0             (no verdict)
+ngu202    201434    COMPLETED      0:0      9      VERDICT: NODE_HEALTHY
+ngu203    201435    PENDING        0:0             (no verdict)
+ngu101    201436    COMPLETED      0:0      5      VERDICT: NODE_HEALTHY
+ngu102    201437    COMPLETED      0:0      5      VERDICT: NODE_HEALTHY
+ngu104    201438    COMPLETED      0:0      5      VERDICT: NODE_HEALTHY
+
+=== FAILING NODES DETAIL ===
+----- ngu002 (job 201423) -----
+=== NODE: ngu002 JOB: 201423 ===
+=== GRES: 0 ===
+--- nvidia-smi ---
+0, NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+--- conda ---
+conda OK: /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+--- torch CUDA init ---
+torch 2.4.0
+/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/cuda/__init__.py:128: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /opt/conda/conda-bld/pytorch_1720538456841/work/c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+cuda_available False
+VERDICT: CUDA_INIT_FAILED
+----- ngu201 (job 201433) -----
+----- ngu203 (job 201435) -----
+
+=== SINFO CROSS-CHECK (what SLURM thinks) ===
+NODELIST     PARTITION  STATE      REASON                        
+ngu001       hgpu2p     idle       none                          
+ngu002       hgpu2p     idle       none                          
+ngu003       hgpu2      mixed      none                          
+ngu004       hgpu2p     idle       none                          
+ngu005       hgpu2p     idle       none                          
+ngu006       hgpu2p     idle       none                          
+ngu007       hgpu2p     idle       none                          
+ngu008       hgpu2p     idle       none                          
+ngu009       hgpu2      idle       none                          
+ngu010       hgpu2p     mixed      none                          
+ngu011       hgpu2p     idle       none                          
+ngu101       hgpu4      idle       none                          
+ngu102       hgpu4      idle       none                          
+ngu103       hgpu4      down*      Not responding                
+ngu104       hgpu4      idle       none                          
+ngu201       hgpu8      mixed      none                          
+ngu202       hgpu8      mixed      none                          
+ngu203       hgpu8      mixed      none                          
+
+cleanup done
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T15:35:50+0800
