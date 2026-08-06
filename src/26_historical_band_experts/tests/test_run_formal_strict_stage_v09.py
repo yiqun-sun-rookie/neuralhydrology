@@ -31,6 +31,7 @@ def _valid_legacy_report(protocol, input_bindings=None):
         "source_bindings": _source_bindings_v09(),
         "environment_binding": _environment_binding_v09("cuda:0"),
         "input_bindings": dict(input_bindings),
+        "legacy_dynamic_input_names": ["PRCP(mm/day)", "Tmin(C)", "Tmax(C)", "SRAD(W/m2)", "Vp(Pa)"],
         "verified_identity": {
             "verified": True,
             "run_count": 8,

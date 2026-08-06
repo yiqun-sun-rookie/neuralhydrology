@@ -16,6 +16,7 @@ import torch
 import yaml
 
 from artifact_v09 import assert_no_reparse_components, canonical_sha256, sha256_file, write_json_atomic
+from formal_input_contract_v09 import DYNAMIC_COLUMNS_V09
 from formal_training_data_v09 import (
     FormalBridgeInputsV09,
     normalize_forcing_batch_v09,
@@ -85,6 +86,28 @@ def _environment_binding_v09(device: str | torch.device) -> dict:
 def _require_checkpoint_state(state: Mapping) -> None:
     if tuple(state) != _ACTIVE_TENSORS or any(not isinstance(state[name], torch.Tensor) for name in _ACTIVE_TENSORS):
         raise ValueError("legacy checkpoint must contain exactly six ordered active tensors")
+
+
+def _legacy_dynamic_input_names_v09(config, *, expected_count: int) -> tuple[str, ...]:
+    """Derive the exact ``x_d`` keys the bound legacy core model requires.
+
+    The keys belong to the hash-bound legacy config, never to the formal protocol: the two
+    name the same five Maurer variables in the same order but with different vocabularies
+    (``PRCP(mm/day)`` versus ``prcp``). Reading them from the config keeps the bridge bound
+    to the bytes whose SHA-256 the protocol already registers.
+    """
+    names = getattr(config, "dynamic_inputs", None)
+    if isinstance(names, dict):
+        raise ValueError("legacy bridge requires a single-frequency legacy config")
+    if not isinstance(names, (list, tuple)) or not names:
+        raise ValueError("legacy config dynamic inputs are invalid")
+    if any(not isinstance(name, str) or not name for name in names):
+        raise ValueError("legacy bridge requires flat legacy dynamic input names")
+    if len(set(names)) != len(names):
+        raise ValueError("legacy config dynamic input names are not unique")
+    if len(names) != int(expected_count):
+        raise ValueError("legacy config dynamic input count drift")
+    return tuple(names)
 
 
 def assert_legacy_checkpoint_bridge_v09(
@@ -191,6 +214,7 @@ def audit_legacy_checkpoint_bridge_v09(
     maximum = 0.0
     total_real_rows = 0
     run_rows = []
+    legacy_dynamic_input_names: tuple[str, ...] | None = None
     for run in protocol["legacy_reference"]["runs"]:
         run_dir = legacy_results_root / run["run_id"]
         assert_no_reparse_components(legacy_results_root, run_dir)
@@ -214,6 +238,19 @@ def audit_legacy_checkpoint_bridge_v09(
         if not isinstance(config_mapping, dict):
             raise ValueError("legacy config must decode to a mapping")
         config = Config(config_mapping)
+        dynamic_input_names = _legacy_dynamic_input_names_v09(
+            config,
+            expected_count=int(protocol["dynamic_input_count"]),
+        )
+        # The sealed forcing columns were built from exactly these names in exactly this order,
+        # so equality here is what makes the positional x_d assignment below verifiable rather
+        # than assumed.
+        if dynamic_input_names != DYNAMIC_COLUMNS_V09:
+            raise ValueError("legacy config dynamic inputs differ from the sealed forcing column contract")
+        if legacy_dynamic_input_names is None:
+            legacy_dynamic_input_names = dynamic_input_names
+        elif dynamic_input_names != legacy_dynamic_input_names:
+            raise ValueError("legacy config dynamic input name drift across registered runs")
         core = CudaLSTM(config).to(device)
         classic = build_model_v09("classic_lstm_256_clean", run["seed"]).to(device)
         nested = build_model_v09("nested_history_disabled", run["seed"]).to(device)
@@ -229,7 +266,7 @@ def audit_legacy_checkpoint_bridge_v09(
             statics = statics.to(device)
             core_data = {
                 "x_d": {
-                    name: recent[:, :, index:index + 1] for index, name in enumerate(protocol["dynamic_inputs"])
+                    name: recent[:, :, index:index + 1] for index, name in enumerate(dynamic_input_names)
                 },
                 "x_s": statics,
             }
@@ -258,6 +295,8 @@ def audit_legacy_checkpoint_bridge_v09(
             "checkpoint_sha256": hashlib.sha256(checkpoint_payload).hexdigest(),
             "real_panel_rows": rows,
         })
+    if legacy_dynamic_input_names is None:
+        raise ValueError("legacy bridge verified no registered run")
     verify_sealed_bridge_inputs_unchanged_v09(inputs)
     report = {
         "schema": "historical_multiscale_formal_v09_legacy_checkpoint_bridge_audit_v1",
@@ -270,6 +309,7 @@ def audit_legacy_checkpoint_bridge_v09(
             "complete_input_external_audit_sha256": inputs.external_audit_sha256,
             "trusted_source_external_audit_sha256": inputs.trusted_source_audit_sha256,
         },
+        "legacy_dynamic_input_names": list(legacy_dynamic_input_names),
         "verified_identity": identity,
         "runs": run_rows,
         "run_count": len(run_rows),

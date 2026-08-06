@@ -22,6 +22,7 @@ from formal_action_resources_v09 import (
     build_formal_action_peak_estimate_v09,
 )
 from formal_action_runtime_v09 import _run_authorized_formal_action_v09
+from formal_input_contract_v09 import DYNAMIC_COLUMNS_V09
 from formal_training_data_v09 import load_sealed_training_inputs_v09
 from formal_v09_protocol import load_protocol_v09
 from memory_safety_v09 import GIB, HostMemorySnapshot, MemorySafetyPolicy
@@ -36,6 +37,7 @@ _FORMAL_ROOT = Path("results/26_historical_band_experts/formal_v09")
 _EXECUTABLE_FILES = (
     "src/26_historical_band_experts/artifact_v09.py",
     "src/26_historical_band_experts/bands_formal_v09.py",
+    "src/26_historical_band_experts/create_formal_strict_authorization_v09.py",
     "src/26_historical_band_experts/formal_action_resources_v09.py",
     "src/26_historical_band_experts/formal_action_runtime_v09.py",
     "src/26_historical_band_experts/formal_training_data_v09.py",
@@ -173,6 +175,7 @@ def _validate_legacy_bridge_report_v09(
         "source_bindings",
         "environment_binding",
         "input_bindings",
+        "legacy_dynamic_input_names",
         "verified_identity",
         "runs",
         "run_count",
@@ -195,6 +198,15 @@ def _validate_legacy_bridge_report_v09(
         raise ValueError("legacy bridge source binding drift")
     if legacy.get("environment_binding") != _environment_binding_v09(device):
         raise ValueError("legacy bridge environment binding drift")
+    # The core key names live in the hash-bound legacy configs, not in the protocol, but the
+    # sealed forcing columns were built from the same frozen tuple, so this binds by value.
+    if len(DYNAMIC_COLUMNS_V09) != int(protocol["dynamic_input_count"]):
+        raise ValueError("sealed forcing column contract disagrees with the protocol")
+    _require_exact_json_value(
+        legacy.get("legacy_dynamic_input_names"),
+        list(DYNAMIC_COLUMNS_V09),
+        label="legacy bridge report geometry.legacy_dynamic_input_names",
+    )
     registered_runs = protocol.get("legacy_reference", {}).get("runs")
     if not isinstance(registered_runs, list) or len(registered_runs) != 8:
         raise ValueError("legacy bridge registered run geometry drift")
