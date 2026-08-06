@@ -25,6 +25,32 @@ FROZEN_DEVELOPMENT_SELECTION = {
     "eligible_basins_sha256": "cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85",
     "basins": ["10259000", "04045500", "12175500", "02300700", "08190500", "02038850", "11230500", "06847900"],
 }
+FROZEN_DEVELOPMENT_SELECTION_64 = {
+    "schema_version": 1,
+    "selection_method": "deterministic_standardized_farthest_point_v1",
+    "selection_inputs": "static attributes only; no discharge or model results",
+    "static_sha256": "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2",
+    "eligible_basins_sha256": "cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85",
+    "basins": [
+        "10259000", "04045500", "12175500", "02300700", "08190500", "02038850", "11230500", "06847900", "11143000",
+        "14301000", "04122500", "09306242", "05458000", "02450250", "06289000", "08109700", "08267500", "14216500",
+        "11151300", "12375900", "11528700", "06879650", "02472000", "06614800", "04213075", "12073500", "04296000",
+        "13313000", "06350000", "01491000", "03281500", "08194200", "04057510", "13240000", "04063700", "11476600",
+        "01466500", "07060710", "08158810", "10244950", "14020000", "14138800", "12010000", "04115265", "08066300",
+        "04185000", "06409000", "02231000", "09378170", "07142300", "02077200", "02102908", "01451800", "09512280",
+        "06906800", "03455500", "13161500", "04027000", "09494000", "09430600", "12167000", "11381500", "12377150",
+        "08189500",
+    ],
+}
+FROZEN_DEVELOPMENT_SELECTIONS = (FROZEN_DEVELOPMENT_SELECTION, FROZEN_DEVELOPMENT_SELECTION_64)
+
+
+def load_frozen_selection(selection_path: str | Path) -> dict:
+    """Read a basin selection and refuse anything that is not one of the frozen records."""
+    selection = json.loads(Path(selection_path).read_text(encoding="utf-8"))
+    if selection not in FROZEN_DEVELOPMENT_SELECTIONS:
+        raise ValueError("frozen development basin selection mismatch")
+    return selection
 
 
 def _sha256(path: Path) -> str:
@@ -91,9 +117,7 @@ def build_development_packages(
     manifest_path = Path(source_manifest_path).resolve()
     source_manifest = _load_source_manifest(source_root, manifest_path)
     protocol = load_and_validate_development_protocol(protocol_path)
-    selection = json.loads(Path(selection_path).read_text(encoding="utf-8"))
-    if selection != FROZEN_DEVELOPMENT_SELECTION:
-        raise ValueError("frozen development basin selection mismatch")
+    selection = load_frozen_selection(selection_path)
     basins = [str(basin).zfill(8) for basin in selection["basins"]]
 
     final_root = Path(output_root).resolve()

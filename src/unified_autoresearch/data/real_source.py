@@ -17,8 +17,8 @@ import pandas as pd
 
 from unified_autoresearch.data.packages import (
     DEVELOPMENT_DATE_BOUNDS,
-    FROZEN_DEVELOPMENT_SELECTION,
     SOURCE_FILES,
+    load_frozen_selection,
 )
 from unified_autoresearch.protocols.validation import load_and_validate_development_protocol
 from unified_autoresearch.selection.basins import APPROVED_STATIC_ATTRIBUTES
@@ -100,8 +100,8 @@ def _read_basin_discharge(camels_root: Path, basin: str, area: int, window: pd.D
     )
 
 
-def _frozen_static_attributes(static_table_path: Path, basins: list[str]) -> dict:
-    if _sha256(static_table_path) != FROZEN_DEVELOPMENT_SELECTION["static_sha256"]:
+def _frozen_static_attributes(static_table_path: Path, basins: list[str], expected_static_sha256: str) -> dict:
+    if _sha256(static_table_path) != expected_static_sha256:
         raise ValueError("static attribute table hash does not match the frozen selection input")
     table = pd.read_csv(static_table_path, dtype={"gauge_id": str})
     table["gauge_id"] = table["gauge_id"].str.zfill(8)
@@ -134,9 +134,7 @@ def build_development_source_root(
         raise FileExistsError(output_root)
 
     protocol = load_and_validate_development_protocol(protocol_path)
-    selection = json.loads(Path(selection_path).read_text(encoding="utf-8"))
-    if selection != FROZEN_DEVELOPMENT_SELECTION:
-        raise ValueError("frozen development basin selection mismatch")
+    selection = load_frozen_selection(selection_path)
     basins = [str(basin).zfill(8) for basin in selection["basins"]]
 
     window = pd.date_range(*pd.to_datetime(DEVELOPMENT_DATE_BOUNDS), freq="D")
@@ -144,7 +142,7 @@ def build_development_source_root(
     if window[0] <= sealed_end:
         raise ValueError("development window must start after the sealed final evaluation interval")
 
-    static_attributes = _frozen_static_attributes(static_table_path, basins)
+    static_attributes = _frozen_static_attributes(static_table_path, basins, selection["static_sha256"])
     feature_frames = []
     target_frames = []
     for basin in basins:
