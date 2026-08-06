@@ -1,0 +1,23 @@
+### seq=11
+### host=login4
+### started=2026-08-06T16:07:59+0800
+### ---------- output ----------
+=== ROBUST FINGERPRINTS ===
+data/camels_us/basin_mean_forcing/maurer  hashes_md5=0897338511d6f88b5097e83b75828904  paths_md5=db4d84bffaae13c88e9ac9c7af8a895c
+data/camels_us/usgs_streamflow  hashes_md5=796f63d789251cef6d7548276849b421  paths_md5=2945d22cb95aa744ff0618ae0edf7935
+data/camels_us/camels_attributes_v2.0  hashes_md5=a1ea6856c15ddf50be3a03dbb7569321  paths_md5=4377b0bb4ed5b04ec0994a8784e20f75
+=== THE 4 SUSPECT FILES ON HPC ===
+--- 03/02108000  size=627947  md5=fdcd36fe61d1d9385d3119b26fbe40bc
+dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)
+--- 09/05120500  size=625278  md5=7fbea314d0988afc9889d61b64d2fdc5
+dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)
+--- 11/07067000  size=625714  md5=ddad2728481581f55977d57b2103642d
+dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)
+--- 15/09492400  size=617704  md5=b0dbbcbe20051822cd06de0cc4934f1e
+dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)
+=== A KNOWN-GOOD FILE FOR CONTRAST ===
+01022500 size=624068 md5=021c8631e375ba1dbbdc6b3b5cffe74a
+Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SRAD(W/m2)	SWE(mm)	Tmax(C)	Tmin(C)	Vp(Pa)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T16:08:01+0800
