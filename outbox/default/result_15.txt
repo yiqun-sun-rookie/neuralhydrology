@@ -1,0 +1,68 @@
+### channel=default seq=15
+### host=login4
+### started=2026-08-06T17:00:30+0800
+### ---------- output ----------
+=== 1. REPLACE run_exp2.py ===
+  md5=0cfe789646efbc85c9d6526ba1c598c3  expect=0cfe789646efbc85c9d6526ba1c598c3
+  argparse options: 8
+  usage: run_exp2.py [-h] [--stride STRIDE] [--offset OFFSET] [--out OUT]
+                     [--limit LIMIT] [--epsilons EPSILONS] [--levels LEVELS]
+                     [--apgd-iters APGD_ITERS] [--device DEVICE]
+  
+=== 2. SUBMIT SMOKE ===
+  jobid=201451
+=== 3. WAIT (max 15 min) ===
+  t=60s state=R
+  t=120s state=R
+  t=180s state=R
+  t=240s state=R
+  t=300s state=R
+  t=360s state=R
+=== 4. RESULT ===
+     JobID        JobName  NodeList        State ExitCode    Elapsed 
+---------- -------------- --------- ------------ -------- ---------- 
+    201451   adv531_smoke    ngu010    COMPLETED      0:0   00:06:18 
+--- stdout ---
+==========================================
+[Thu Aug  6 17:00:59 CST 2026] adv531 smoke test
+node=ngu010  job=201451
+Python 3.11.13
+torch 2.4.0 cuda True NVIDIA GeForce RTX 3090
+--- pre-flight ---
+pre-flight OK
+--- header check on the 4 repaired forcing files ---
+03/02108000: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+09/05120500: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+11/07067000: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+15/09492400: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+--- exp2 on the first 3 basins of chunk 0, eps=0.1, all three levels ---
+Exp2: 3 stratified basins (stride 5, offset 0) x ['lp', 'physical', 'statistical'] x [0.1] -> results/05_adversarial_robustness/id18_s100_hpc/smoke_exp2.json
+[1/3] 01022500 | 102s/basin | ETA 0.1h
+[2/3] 01055000 | 101s/basin | ETA 0.0h
+[3/3] 01134500 | 101s/basin | ETA 0.0h
+
+=== Exp2 constraint ablation (median over 3 basins) ===
+  eps=0.1: lp=0.465(100%)  physical=0.444(96%)  statistical=0.325(70%)
+DONE -> results/05_adversarial_robustness/id18_s100_hpc/smoke_exp2.json
+--- compare against the published per-basin values ---
+     basin                  key  published        hpc      diff
+  01022500             D_lp_0.1     0.4104     0.4104   +0.0000
+  01022500       D_physical_0.1     0.3939     0.3939   +0.0000
+  01022500    D_statistical_0.1     0.3254     0.3254   +0.0000
+  01022500            nse_clean     0.7718     0.7718   -0.0000
+  01055000             D_lp_0.1     0.4649     0.4649   +0.0000
+  01055000       D_physical_0.1     0.4441     0.4441   -0.0000
+  01055000    D_statistical_0.1     0.3167     0.3167   -0.0000
+  01055000            nse_clean     0.6876     0.6876   -0.0000
+  01134500             D_lp_0.1     0.7184     0.7184   -0.0000
+  01134500       D_physical_0.1     0.6763     0.6763   +0.0000
+  01134500    D_statistical_0.1     0.4559     0.4559   -0.0000
+  01134500            nse_clean     0.7581     0.7581   +0.0000
+
+max abs difference = 0.0000
+NOTE: the published run used an unrecorded random start, so exact equality is not expected.
+[Thu Aug  6 17:07:13 CST 2026] smoke done
+--- stderr (tail) ---
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T17:07:18+0800
