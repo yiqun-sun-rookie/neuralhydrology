@@ -32,9 +32,20 @@ outbox/<channel>/result_<seq>.txt   结果
 
 ## 并发行为
 
-- 不同 channel **并行**执行（最多 4 个）
+- 不同 channel **并行**执行，默认上限 **16 个**
 - 同一 channel 内**串行**（前一条没跑完不会启动下一条）
-- 单条命令超过 1 小时会被 `timeout` 杀掉，结果里会写 `### TIMEOUT`
+- 单条命令超过 **2 小时**会被 `timeout` 杀掉，结果里会写 `### TIMEOUT`
+
+需要更高并发，启动时覆盖：
+
+```bash
+( cd ~/hpc_mailbox && MAX_WORKERS=32 nohup bash runner2.sh > runner2.log 2>&1 & )
+```
+
+**并发能开大的前提**：`cmd.sh` 只做轻量操作（git / sacct / squeue / 文件检查 /
+`sleep` 等作业完成）。这些几乎不占 CPU。
+**登录节点禁止跑计算**（平台明令），真正的计算一律 `sbatch` 交给计算节点。
+如果有人在 `cmd.sh` 里跑 CPU 密集的东西，并发开大会拖垮登录节点、影响所有用户。
 
 ## 注意
 

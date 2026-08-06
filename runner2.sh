@@ -5,9 +5,11 @@
 # 相比 v1 的改变：
 #   1. 多 channel 隔离：inbox/<channel>/{cmd.sh,seq} -> outbox/<channel>/result_<seq>.txt
 #      不同任务/会话用不同 channel，互不覆盖。
-#   2. 并发：不同 channel 的任务后台并行跑（上限 MAX_WORKERS），
+#   2. 并发：不同 channel 的任务后台并行跑（默认上限 16，可用 MAX_WORKERS 覆盖），
 #      一个 channel 里等 12 分钟的作业不再阻塞其他 channel。
 #      同一 channel 内严格串行。
+#      ⚠️ 并发的前提是 cmd.sh 只做轻量事（git/sacct/sleep 等作业）。
+#         登录节点禁止跑计算，真正的计算一律 sbatch。
 #   3. 结果先写 git 工作区之外的 staging，push 时才拷进来
 #      —— 避免主循环的 `git reset --hard` 把正在写的结果冲掉。
 #   4. push 用锁串行化，避免多个 worker 同时 push 打架。
@@ -28,8 +30,11 @@ LOCKDIR="${LOCKDIR:-$HOME/.hpc_mailbox_pushlock}"
 ACTIVE_COPY="$HOME/.hpc_runner_active.sh"
 BRANCH="hpc-mailbox"
 POLL_INTERVAL="${POLL_INTERVAL:-20}"
-MAX_WORKERS="${MAX_WORKERS:-4}"
-WORKER_TIMEOUT="${WORKER_TIMEOUT:-3600}"   # 单个任务最长 1 小时，防卡死
+# 并发上限。worker 在登录节点上几乎只做 git / sacct / sleep（等 sbatch），
+# 不吃 CPU，所以可以开大。真正的串行点是 push 锁，每次 push 只占几秒。
+# 需要更多就启动时覆盖：MAX_WORKERS=32 bash runner2.sh
+MAX_WORKERS="${MAX_WORKERS:-16}"
+WORKER_TIMEOUT="${WORKER_TIMEOUT:-7200}"   # 单个任务最长 2 小时，防卡死
 
 # ---- 自我保护：从 git 工作区外的副本运行 ----
 if [ "${HPC_RUNNER_DETACHED:-0}" != "1" ]; then
