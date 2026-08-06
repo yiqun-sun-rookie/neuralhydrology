@@ -1,0 +1,57 @@
+### seq=14
+### host=login4
+### started=2026-08-06T16:33:27+0800
+### ---------- output ----------
+=== 0. PAYLOAD ===
+23599887 /data1/home/sunyiq/hpc_mailbox/payload/adv531.tar.gz
+md5=b74a31e1899dd9c1e59d8ea86768aba8  expect=b74a31e1899dd9c1e59d8ea86768aba8
+=== 1. DATA: copy maurer first (stale), payload overwrites the 4 repaired files after ===
+maurer files: 675
+=== 2. UNPACK CODE + MODEL + THE 4 REPAIRED FORCING FILES ===
+top level: data neuralhydrology results src 
+=== 3. REPAIRED HEADERS (must be tab-separated Maurer style) ===
+  03/02108000: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SRAD
+  09/05120500: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SRAD
+  11/07067000: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SRAD
+  15/09492400: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SRAD
+=== 4. DATA FINGERPRINTS vs LOCAL ===
+  MATCH  data/camels_us/basin_mean_forcing/maurer  files=675
+  MATCH  data/camels_us/usgs_streamflow  files=674
+  MATCH  data/camels_us/camels_attributes_v2.0  files=7
+=== 5. CONFIG PATH SEPARATOR ===
+  data_dir: data/camels_us
+  dataset: camels_us
+=== 6. CRLF SCRUB + STAGE ===
+=== 7. ENV CHECK (direct interpreter, no activate) ===
+  python 3.11.13 | torch 2.4.0 | numpy 2.3.3 | pandas 2.3.2
+  attack-chain imports OK
+=== 8. SUBMIT SMOKE (only if data matched) ===
+  jobid=201444
+=== 9. WAIT (max 12 min) ===
+  t=60s state=R
+=== 10. RESULT ===
+     JobID        JobName  NodeList        State ExitCode    Elapsed 
+---------- -------------- --------- ------------ -------- ---------- 
+    201444   adv531_smoke    ngu010       FAILED      2:0   00:01:40 
+--- stdout ---
+==========================================
+[Thu Aug  6 16:34:59 CST 2026] adv531 smoke test
+node=ngu010  job=201444
+Python 3.11.13
+torch 2.4.0 cuda True NVIDIA GeForce RTX 3090
+--- pre-flight ---
+pre-flight OK
+--- header check on the 4 repaired forcing files ---
+03/02108000: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+09/05120500: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+11/07067000: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+15/09492400: Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SR
+--- exp2 on the first 3 basins of chunk 0, eps=0.1, all three levels ---
+--- stderr (tail) ---
+usage: run_exp2.py [-h] [--stride STRIDE] [--offset OFFSET] [--out OUT]
+                   [--epsilons EPSILONS] [--levels LEVELS]
+                   [--apgd-iters APGD_ITERS] [--device DEVICE]
+run_exp2.py: error: unrecognized arguments: --limit 3
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T16:36:38+0800
