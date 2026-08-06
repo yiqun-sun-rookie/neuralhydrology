@@ -1,0 +1,51 @@
+### seq=12
+### host=login4
+### started=2026-08-06T16:13:22+0800
+### ---------- output ----------
+=== A ENV nh_final ===
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+ModuleNotFoundError: No module named 'torch'
+python 3.11.5
+  MISS torch ModuleNotFoundError
+  MISS pandas ModuleNotFoundError
+  MISS numpy ModuleNotFoundError
+  MISS pyarrow ModuleNotFoundError
+  OK   tqdm 4.65.0
+  MISS sklearn ModuleNotFoundError
+  MISS scipy ModuleNotFoundError
+=== B HOME LAYOUT ===
+ls: cannot access /data1/home/sunyiq/nature_1st*: No such file or directory
+/data1/home/sunyiq/hpc_mailbox
+/data1/home/sunyiq/neuralhydrology
+--- space ---
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+=== C GPU PARTITIONS ===
+PARTITION    AVAIL  NODES    NODELIST             STATE   
+hgpu4        up     1        ngu103               down*   
+hgpu4        up     3        ngu[101-102,104]     idle    
+hgpu2        up     1        ngu003               mix     
+hgpu2        up     1        ngu009               idle    
+hgpu2p       up     2        ngu[010-011]         mix     
+hgpu2p       up     7        ngu[001-002,004-008] idle    
+=== D MY JOBS ===
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+            201433     hgpu8 nt_ngu20   sunyiq PD       0:00      1 (Resources)
+            201435     hgpu8 nt_ngu20   sunyiq PD       0:00      1 (Resources)
+=== E SFTP LANDING DIR ===
+total 34079
+drwx------.  22 sunyiq g_sunyiq     4096 Aug  6 14:56 .
+drwxr-xr-x. 152 root   root         4096 Aug  6 09:52 ..
+-rw-------.   1 sunyiq g_sunyiq    30009 Mar 12 20:34 .bash_history
+-rw-------.   1 sunyiq g_sunyiq       18 Sep  8  2025 .bash_logout
+-rw-------.   1 sunyiq g_sunyiq      193 Sep  8  2025 .bash_profile
+-rw-------.   1 sunyiq g_sunyiq      740 Sep 13  2025 .bashrc
+drwx------.   6 sunyiq g_sunyiq     4096 Sep 13  2025 .cache
+-rwxr-xr-x.   1 sunyiq g_sunyiq 24714296 Jan  8  2026 code
+drwxr-xr-x.   4 sunyiq g_sunyiq     4096 Sep 12  2025 .conda
+-rw-r--r--.   1 sunyiq g_sunyiq      238 Sep 12  2025 .condarc
+drwx------.   4 sunyiq g_sunyiq     4096 Sep 13  2025 .config
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-06T16:13:24+0800
