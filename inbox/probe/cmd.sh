@@ -1,34 +1,31 @@
 #!/bin/bash
-# probe seq=5 — 对比 hgpu8 vs hgpu2p 的 RealMemory / 僵尸分配，确认 hgpu8 是否配置损坏
+# probe seq=6 — 确认 GPU 是否被僵尸分配占死，然后取消排到 2027 的作业
 cd ~/hpc_mailbox || exit 1
 
-echo "=== 1. RealMemory / CPUAlloc / AllocTRES ACROSS ALL GPU NODES ==="
-printf "%-8s %-8s %-10s %-9s %-9s %-22s %s\n" NODE STATE RealMem CPUAlloc CPUTot AllocTRES Boot
-for N in ngu001 ngu002 ngu004 ngu008 ngu010 ngu003 ngu101 ngu102 ngu201 ngu202 ngu203; do
-    D=$(scontrol show node $N 2>/dev/null)
-    ST=$(echo "$D" | grep -o "State=[A-Z*+]*" | head -1 | cut -d= -f2)
-    RM=$(echo "$D" | grep -o "RealMemory=[0-9]*" | cut -d= -f2)
-    CA=$(echo "$D" | grep -o "CPUAlloc=[0-9]*" | cut -d= -f2)
-    CT=$(echo "$D" | grep -o "CPUTot=[0-9]*" | cut -d= -f2)
-    AT=$(echo "$D" | grep -o "AllocTRES=[^ ]*" | cut -d= -f2-)
-    BT=$(echo "$D" | grep -o "BootTime=[^ ]*" | cut -d= -f2 | cut -c1-10)
-    printf "%-8s %-8s %-10s %-9s %-9s %-22s %s\n" "$N" "$ST" "${RM:-?}" "${CA:-?}" "${CT:-?}" "${AT:-none}" "${BT:-?}"
-done
-
-echo; echo "=== 2. ORPHANED ALLOC? jobs actually on hgpu8 nodes ==="
-echo "squeue -w ngu201,ngu202,ngu203 (all states, all users):"
-squeue -w ngu201,ngu202,ngu203 -a -o "%8i %10u %8T %10M" 2>&1 | head
-echo "-> if only a header shows, the CPUAlloc on those nodes has no owning job"
-
-echo; echo "=== 3. DefMemPerCPU / DefMemPerNode ==="
-for P in hgpu8 hgpu2p; do
-    echo -n "  $P: "
-    scontrol show partition $P 2>&1 | tr ' ' '\n' | grep -E "DefMemPerCPU|DefMemPerNode|MaxMemPerCPU|MaxMemPerNode|TRESBillingWeights" | tr '\n' ' '
+echo "=== 1. GresUsed (is the GPU actually held?) ==="
+for N in ngu201 ngu202 ngu203 ngu001; do
+    printf "%-8s " "$N"
+    scontrol show node $N 2>/dev/null | tr ' ' '\n' | grep -E "^Gres=|^GresUsed=|^CPUAlloc=|^State=" | tr '\n' ' '
     echo
 done
 
-echo; echo "=== 4. LAST SUCCESSFUL JOB ON hgpu8 (when did it last work?) ==="
-sacct -a -S 2026-01-01 -X -r hgpu8 --format=JobID%10,User%10,State%12,Start%20,Elapsed%10 2>&1 | tail -12
+echo; echo "=== 2. Where did zhangjw's successful jobs actually run? ==="
+sacct -a -S 2026-08-06 -X -r hgpu8 --format=JobID%9,User%9,NodeList%9,State%12,Elapsed%9,AllocTRES%28 2>&1 | tail -10
 
-echo; echo "=== 5. SLURM VERSION / SCHED CONFIG ==="
-scontrol show config 2>/dev/null | grep -E "^SchedulerType|^SelectType |^SelectTypeParameters|^DefMemPerCPU|^SlurmctldHost|SLURM_VERSION" | sed 's/^/  /'
+echo; echo "=== 3. CANCEL the two zombie-blocked jobs ==="
+scancel 201433 201435 2>&1 && echo "cancelled 201433 201435 (ETA was 2027)"
+
+echo; echo "=== 4. FINAL: test ngu202 only (the one that works) ==="
+JID=$(sbatch --parsable -p hgpu8 --nodelist=ngu202 --job-name=nt_ngu202 -t 00:04:00 inbox/node_test.slurm 2>&1)
+echo "  ngu202 -> $JID"
+for i in $(seq 1 30); do
+    ST=$(squeue -j "$JID" -h -o "%t" 2>/dev/null); [ -z "$ST" ] && break
+    sleep 10
+done
+sacct -j "$JID" -X --format=JobID%9,NodeList%9,State%12,ExitCode%8,Elapsed%9 2>&1 | tail -2
+grep -o "VERDICT: .*" outbox/nodetest_${JID}.out 2>/dev/null || echo "(no verdict file)"
+grep -c "GeForce" outbox/nodetest_${JID}.out 2>/dev/null | sed 's/^/  gpus seen: /'
+rm -f outbox/nodetest_*.out outbox/nodetest_*.err
+
+echo; echo "=== 5. MY QUEUE (should be empty) ==="
+squeue -u "$USER" 2>&1
