@@ -1,0 +1,29 @@
+### channel=a02 seq=7
+### host=login4
+### started=2026-08-07T12:09:12+0800
+### ---------- output ----------
+=== SUBMIT ===
+  jobid=201616
+=== WAIT (max 55 min) ===
+  finished at t=120s
+=== ACCOUNTING ===
+     JobID      JobName   NodeList        State ExitCode    Elapsed 
+---------- ------------ ---------- ------------ -------- ---------- 
+    201616    a02_smoke     ngu004       FAILED      1:0   00:01:47 
+=== STDOUT (tail 60) ===
+=== GATE 1: environment ===
+torch 2.4.0 pandas 2.3.2 numpy 2.3.3 pyarrow 20.0.0
+cuda True
+=== GATE 2: data integrity (sha256 + rows + duplicate timestamps) ===
+checked 2885 station files, total rows 126363000
+aux/code files checked: 10
+PROBLEMS:
+   SHA MISMATCH scripts/train_depth_v1.py
+   SHA MISMATCH src/stage_dataset_v2.py
+   SHA MISMATCH src/models/simple_lstm_v2.py
+total problems: 3
+[FATAL] package verification failed
+=== STDERR (tail 15) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T12:11:03+0800
