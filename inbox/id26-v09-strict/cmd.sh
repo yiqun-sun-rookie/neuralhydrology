@@ -1,36 +1,82 @@
 #!/bin/bash
-# id26-v09-strict seq=5 : find the uploaded file wherever it landed. Read-only search.
+# id26-v09-strict seq=6 : extract the verified upload and check every frozen hash.
+# Login-node safe: only tar + sha256. No GPU, no sbatch, no authorization.
 export LC_ALL=C
-WANT="feee746c7bda7970c8bac470969bf4247118f8f35d6cf543a44a8a6b4bd1bed7"
+REPO="$HOME/v09_strict/neuralhydrology"
+DEST="$REPO/results/26_historical_band_experts/formal_v09"
+TAR="$REPO/results/26_historical_band_experts/v09_sealed_input.tar.gz"
+WANT_TAR_SHA="feee746c7bda7970c8bac470969bf4247118f8f35d6cf543a44a8a6b4bd1bed7"
 
-echo "=== A NEWEST THINGS IN \$HOME (top level, by mtime) ==="
-ls -lat "$HOME" 2>/dev/null | head -20
+echo "=== A RE-VERIFY TARBALL ==="
+GOT=$(sha256sum "$TAR" | cut -d' ' -f1)
+echo "got   =$GOT"
+echo "want  =$WANT_TAR_SHA"
+[ "$GOT" = "$WANT_TAR_SHA" ] || { echo "TARBALL HASH MISMATCH -- stopping"; exit 1; }
+echo "MATCH"
 
-echo "=== B ANY .tar.gz ANYWHERE UNDER \$HOME (depth<=5) ==="
-find "$HOME" -maxdepth 5 -type f -name '*.tar.gz' 2>/dev/null | head -30
+echo "=== B REFUSE TO CLOBBER ==="
+if [ -e "$DEST" ] && [ -n "$(ls -A "$DEST" 2>/dev/null)" ]; then
+  echo "destination non-empty, refusing:"; ls -la "$DEST" | head; exit 1
+fi
+echo "destination clear"
 
-echo "=== C ANY FILE >40MB MODIFIED TODAY (depth<=5) ==="
-find "$HOME" -maxdepth 5 -type f -size +40M -newermt '2026-08-07 00:00' 2>/dev/null \
-  -printf '%TY-%Tm-%Td %TH:%TM  %10s  %p\n' 2>/dev/null | head -30
+echo "=== C EXTRACT ==="
+tar xzf "$TAR" -C "$REPO" && echo "extracted"
+echo "files under formal_v09: $(find "$DEST" -type f 2>/dev/null | wc -l)  (want 19)"
+find "$DEST" -type f 2>/dev/null | sed "s|$DEST/||" | sort
 
-echo "=== D V09_STRICT TREE ==="
-find "$HOME/v09_strict" -maxdepth 4 2>/dev/null | head -40
+echo "=== D FROZEN HASHES ==="
+"$HOME/miniconda3/envs/nh_final/bin/python" - <<'PY' 2>&1 | tail -25
+import hashlib, pathlib
+base = pathlib.Path.home() / "v09_strict/neuralhydrology/results/26_historical_band_experts/formal_v09"
+want = {
+ "input_attempt_01/seal.json": "a5a64e43312ac303bf03ea3840e2cf126563527c6b82b8b94035c34978c25b3a",
+ "input_attempt_01.external_audit.json": "e18be463df4cc6fe6c21a1e39c675f77db3e8c833109c1e9cfb557e37a832cd6",
+ "input_attempt_01.trusted_source_external_audit.json": "81e3658fe27e8f658e59d81015ce3d1b2a3baef11045a3e22bd76254ef5d8387",
+ "authorizations/formal_input_seal_authorization.json": "43b883940d58787d25b1a64bf1cee6097d459f3f95e595d59bea740a94b446d0",
+ "formal_input_seal_authorization_consumed.json": "553cdbb8786735f7ac869982b4cb2a748b0f62e5241bd612fa59b0c69e871277",
+ "inputs/training_targets.csv": "6abadf7172f1c8ebd48122a8abf68985d7d4f94b8c894371270208eeb45f2ebb",
+ "inputs/training_targets.manifest.json": "3061d548fa0b9c81c8e3e25f0dbdd8cfbdb347aaea965ac6f6400c5f09da13e8",
+}
+bad = 0
+for rel, exp in want.items():
+    p = base / rel
+    if not p.is_file():
+        print(f"MISSING {rel}"); bad += 1; continue
+    got = hashlib.sha256(p.read_bytes()).hexdigest()
+    print(f"{'OK   ' if got==exp else 'DRIFT'} {rel}")
+    bad += got != exp
+print(f"frozen hash mismatches: {bad} (want 0)")
+PY
 
-echo "=== E OTHER PLAUSIBLE LANDING SPOTS ==="
-for d in /data1/home/$USER /data1/$USER /tmp /data1/tmp "$HOME/upload" "$HOME/uploads" "$HOME/data"; do
-  [ -d "$d" ] && echo "-- $d --" && ls -lat "$d" 2>/dev/null | head -8
+echo "=== E SEAL INVENTORY SELF-CHECK ==="
+"$HOME/miniconda3/envs/nh_final/bin/python" - <<'PY' 2>&1 | tail -8
+import hashlib, json, pathlib
+root = pathlib.Path.home() / "v09_strict/neuralhydrology/results/26_historical_band_experts/formal_v09/input_attempt_01"
+seal = json.loads((root / "seal.json").read_text(encoding="utf-8"))
+bad = 0
+for item in seal["sealed_files"]:
+    p = root / item["relative_path"].replace("\\", "/")
+    if not p.is_file():
+        print("MISSING", item["relative_path"]); bad += 1; continue
+    if hashlib.sha256(p.read_bytes()).hexdigest() != item["sha256"]:
+        print("DRIFT", item["relative_path"]); bad += 1
+print(f"sealed files: {len(seal['sealed_files'])}, mismatches: {bad} (want 0)")
+PY
+
+echo "=== F MOVE THE TARBALL OUT OF THE FORMAL TREE ==="
+mkdir -p "$HOME/v09_strict/upload_archive"
+mv "$TAR" "$HOME/v09_strict/upload_archive/" && echo "archived to ~/v09_strict/upload_archive/"
+
+echo "=== G WORKTREE CLEAN + STAGE UNUSED ==="
+cd "$REPO" || exit 1
+echo "dirty_files=$(git status --porcelain --untracked-files=all 2>/dev/null | wc -l)  (want 0)"
+for p in "$DEST/authorizations/A09-NEST-01.authorization.json" \
+         "$DEST/authorizations/A09-NEST-01.consumption.json" \
+         "$DEST/strict_nesting" \
+         "$DEST/R09-NEST-S100.legacy_checkpoint_bridge_external_audit.json" \
+         "$DEST/R09-NEST-S100.training_resource_preflight_external_audit.json"; do
+  [ -e "$p" ] && echo "PRESENT (BAD) $(basename "$p")" || echo "absent (good) $(basename "$p")"
 done
-
-echo "=== F HASH-MATCH SCAN over today's >40MB files ==="
-FOUND=""
-for f in $(find "$HOME" -maxdepth 5 -type f -size +40M -newermt '2026-08-07 00:00' 2>/dev/null | head -20); do
-  s=$(sha256sum "$f" 2>/dev/null | cut -d' ' -f1)
-  echo "  $s  $f"
-  [ "$s" = "$WANT" ] && FOUND="$f"
-done
-[ -n "$FOUND" ] && echo "MATCH FOUND: $FOUND" || echo "NO HASH MATCH among scanned files"
-
-echo "=== G DISK / QUOTA (did the upload maybe fail on space?) ==="
-df -h /data1 2>&1 | tail -1
 
 echo "=== END ==="
