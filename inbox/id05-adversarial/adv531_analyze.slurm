@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-# Moment/structure audit analysis over all recorded whole-period-statistics perturbations.
+# Moment/structure audit analysis over all 531 recorded whole-period-statistics perturbations.
+# Pure numpy/pandas: no GPU needed, so it runs on the CPU partition to avoid the GPU queue.
 #SBATCH -J adv531_analyze
-#SBATCH -p hgpu2p
+#SBATCH -p hcpu48
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH --cpus-per-task=4
-#SBATCH --gres=gpu:1
-#SBATCH --exclude=ngu002
 #SBATCH -t 02:00:00
 #SBATCH -o /data1/home/sunyiq/adv531/logs/%x_%j.out
 #SBATCH -e /data1/home/sunyiq/adv531/logs/%x_%j.err

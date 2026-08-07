@@ -1,35 +1,45 @@
 #!/bin/bash
-# id05-adversarial seq=22: collect moment-audit array 201637 and dependent analysis 201693.
+# id05-adversarial seq=23: 201693 is stuck behind a02 in the GPU queue but needs no GPU.
+# Cancel it, resubmit on the CPU partition, wait, and print the audit numbers.
 export LC_ALL=C
 A=/data1/home/$USER/adv531
+IN=/data1/home/$USER/hpc_mailbox/inbox/id05-adversarial
 R=$A/results/05_adversarial_robustness/id18_s100
-REC=$R/statistical_constraint_records_eps0.1
 
 echo "=== TIME ==="
 date
 
-echo "=== JOBS ==="
-sacct -j 201637,201693 -X --format=JobID%14,JobName%16,State%14,ExitCode%8,Elapsed%10 2>&1
+echo "=== CANCEL PENDING GPU ANALYSIS ==="
+ST=$(sacct -j 201693 -X -n --format=State 2>/dev/null | head -1 | tr -d ' ')
+echo "201693 state=$ST"
+case "$ST" in
+  PENDING) scancel 201693 && echo "  cancelled 201693";;
+  *) echo "  not pending, left alone";;
+esac
 
-echo "=== RECORDS ==="
-ls -1 $REC/*.npz 2>/dev/null | wc -l
+echo "=== RESUBMIT ON CPU ==="
+cp -f $IN/analyze_statistical_structure.py $A/src/adversarial/scripts/
+cp -f $IN/adv531_analyze.slurm $A/
+sed -i 's/\r$//' $A/src/adversarial/scripts/analyze_statistical_structure.py $A/adv531_analyze.slurm
+cd $A
+J=$(sbatch --parsable adv531_analyze.slurm 2>&1)
+echo "job=$J"
 
-echo "=== MOMENT CHUNK TAILS ==="
-for i in 0 1 2 3 4; do
-  echo "--- chunk $i ---"
-  tail -2 $A/logs/adv531_moment_201637_${i}.out 2>&1
+echo "=== WAIT (max 15 min) ==="
+for i in $(seq 1 90); do
+  ST=$(sacct -j $J -X -n --format=State 2>/dev/null | head -1 | tr -d ' ')
+  case "$ST" in
+    COMPLETED|FAILED|CANCELLED*|TIMEOUT|NODE_FAIL|OUT_OF_MEMORY) echo "state=$ST after ~${i}0s"; break;;
+  esac
+  sleep 10
 done
-echo "--- moment err bytes ---"
-ls -l $A/logs/adv531_moment_201637_*.err 2>&1 | awk '{print $5, $9}'
+sacct -j $J -X --format=JobID%14,State%14,ExitCode%8,Elapsed%10 2>&1
 
-echo "=== ANALYSIS STDOUT ==="
-cat $A/logs/adv531_analyze_201693.out 2>&1 | tail -60
+echo "=== STDOUT ==="
+cat $A/logs/adv531_analyze_${J}.out 2>&1 | tail -60
 
-echo "=== ANALYSIS STDERR ==="
-tail -12 $A/logs/adv531_analyze_201693.err 2>&1
+echo "=== STDERR ==="
+tail -12 $A/logs/adv531_analyze_${J}.err 2>&1
 
-echo "=== SUMMARY CSV ==="
+echo "=== CSV ==="
 ls -l $R/statistical_structure_summary_eps0.1.csv 2>&1
-
-echo "=== QUEUE ==="
-squeue -u $USER -o "%.16i %.16j %.3t %.10M %.24R" 2>&1 | head -8
