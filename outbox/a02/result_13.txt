@@ -1,0 +1,51 @@
+### channel=a02 seq=13
+### host=login4
+### started=2026-08-07T14:27:53+0800
+### ---------- output ----------
+=== A CURRENT A02 QUEUE (any movement?) ===
+    201681      a02_pre_s42  PENDING       0:00         (Priority)
+    201682      a02_sam_s42  PENDING       0:00         (Priority)
+    201683      a02_pre_s43  PENDING       0:00         (Priority)
+    201684      a02_sam_s43  PENDING       0:00         (Priority)
+    201685      a02_pre_s44  PENDING       0:00         (Priority)
+    201686      a02_sam_s44  PENDING       0:00         (Priority)
+    201687      a02_pre_s45  PENDING       0:00         (Priority)
+    201688      a02_sam_s45  PENDING       0:00         (Priority)
+    201689      a02_pre_s46  PENDING       0:00         (Priority)
+    201690      a02_sam_s46  PENDING       0:00         (Priority)
+    201691      a02_pre_s47  PENDING       0:00         (Priority)
+    201692      a02_sam_s47  PENDING       0:00         (Priority)
+  running=0  pending=12
+=== B GRES USED RIGHT NOW ===
+HOSTNAMESSTATE   GRES_USED       
+ngu001   mixed   gpu:2,dcu:0     
+ngu002   idle    gpu:0,dcu:0     
+ngu004   mixed   gpu:2,dcu:0     
+ngu005   mixed   gpu:2,dcu:0     
+ngu006   mixed   gpu:2,dcu:0     
+ngu007   mixed   gpu:2,dcu:0     
+ngu008   mixed   gpu:2,dcu:0     
+ngu010   mixed   gpu:2,dcu:0     
+ngu011   mixed   gpu:2,dcu:0     
+=== C SUBMIT A 60-SECOND CUDA TEST PINNED TO ngu002 ===
+  jobid=201697
+=== D WAIT (max 5 min) ===
+  finished at t=40s
+=== E VERDICT ===
+    JobID  NodeList       State ExitCod   Elapsed 
+--------- --------- ----------- ------- --------- 
+   201697    ngu002      FAILED     1:0  00:00:18 
+--- output ---
+host=ngu002
+0, NVIDIA GeForce RTX 3090, 24576 MiB
+cuda_available False
+device_count 1
+--- stderr ---
+/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/cuda/__init__.py:128: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /opt/conda/conda-bld/pytorch_1720538456841/work/c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+Traceback (most recent call last):
+  File "<string>", line 5, in <module>
+AssertionError: CUDA NOT AVAILABLE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T14:28:24+0800
