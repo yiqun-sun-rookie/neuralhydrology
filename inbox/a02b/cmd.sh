@@ -1,34 +1,27 @@
 #!/bin/bash
-# a02b seq=3 : RESCUE tarballs out of the git-managed outbox, then report.
-# NEVER read *.err (tqdm progress bars, hundreds of MB).
+# a02b seq=4 : verify the authoritative results under $PKG/runs (never touched by git).
 export LC_ALL=C
 PKG=/data1/home/$USER/nature_1st_a02
-MB=/data1/home/$USER/hpc_mailbox/outbox
-SAFE=/data1/home/$USER/a02_results
 
-echo "=== A RESCUE COPY (out of git working tree) ==="
-mkdir -p "$SAFE"
-timeout 120 bash -c 'cp -n '"$MB"'/a02_*.tar.gz '"$SAFE"'/ 2>/dev/null; true'
-timeout 20 ls -la "$SAFE"/ 2>&1 | grep -E "a02|total" | sed 's/^/  /'
+echo "=== A RUNS DIR ==="
+timeout 30 ls -la "$PKG/runs/" 2>&1 | sed 's/^/  /'
 
-echo "=== B PER-RUN SUMMARY (from .out only) ==="
-timeout 60 bash -c '
-for f in '"$PKG"'/logs/a02_pre_s4*.out '"$PKG"'/logs/a02_sam_s4*.out; do
-  [ -f "$f" ] || continue
-  b=$(basename "$f" .out)
-  best=$(grep -a "Best median NSE" "$f" 2>/dev/null | tail -1)
-  pack=$(grep -a "a02_.*\.tar\.gz" "$f" 2>/dev/null | tail -1 | awk "{print \$5, \$9}")
-  ep=$(grep -ac "^Epoch" "$f" 2>/dev/null)
-  printf "  %-24s ep=%-3s %-42s pack=[%s]\n" "$b" "$ep" "${best:-<still running>}" "${pack:-none}"
+echo "=== B PER-RUN ARTIFACTS ==="
+timeout 60 bash -c 'for d in '"$PKG"'/runs/a02_*/; do
+  [ -d "$d" ] || continue
+  n=$(basename "$d")
+  ck=$([ -f "$d/best_model.pt" ] && du -h "$d/best_model.pt" | cut -f1 || echo MISSING)
+  bm=$([ -f "$d/best_metrics.json" ] && echo yes || echo MISSING)
+  hs=$([ -f "$d/train_history.jsonl" ] && wc -l < "$d/train_history.jsonl" || echo MISSING)
+  printf "  %-26s ckpt=%-7s best_metrics=%-8s history_lines=%s\n" "$n" "$ck" "$bm" "$hs"
 done' 2>&1
 
-echo "=== C MODEL OUTPUT DIRS (can we rebuild a lost tarball?) ==="
-timeout 40 bash -c 'for d in '"$PKG"'/models/*/; do
-  printf "  %-32s files=%-3s size=%s\n" "$(basename $d)" "$(ls -1 $d 2>/dev/null | wc -l)" "$(du -sh $d 2>/dev/null | cut -f1)"
+echo "=== C BEST METRICS CONTENT (completed runs) ==="
+timeout 40 bash -c 'for d in '"$PKG"'/runs/a02_*/; do
+  [ -f "$d/best_metrics.json" ] || continue
+  printf "  %-26s %s\n" "$(basename $d)" "$(head -c 400 $d/best_metrics.json | tr -d "\n ")"
 done' 2>&1
 
-echo "=== D WHAT THE PACKAGING STEP TARS ==="
-timeout 15 grep -a -A8 "PACKAGING RESULT" "$PKG/slurm/a02_pre_s43.slurm" 2>&1 | sed 's/^/  /'
-
-echo "=== E MAILBOX OUTBOX NOW ==="
-timeout 20 ls -la "$MB"/a02_*.tar.gz 2>&1 | awk '{print "  ",$9,$5}'
+echo "=== D DISK SPACE ==="
+timeout 20 df -h /data1 2>&1 | tail -2 | sed 's/^/  /'
+timeout 30 du -sh "$PKG/runs" 2>&1 | sed 's/^/  /'
