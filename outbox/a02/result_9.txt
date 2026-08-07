@@ -1,0 +1,52 @@
+### channel=a02 seq=9
+### host=login4
+### started=2026-08-07T14:17:07+0800
+### ---------- output ----------
+=== A PRE-SUBMIT SANITY ===
+  job scripts: 12 (expect 12)
+  smoke run dir kept at: /data1/home/sunyiq/nature_1st_a02/runs/a02_smoke
+  partition state:
+   PARTITION    AVAIL    NODES  NODELIST                   STATE   
+   hgpu2p       up       8      ngu[001,004-008,010-011]   mix     
+   hgpu2p       up       1      ngu002                     idle    
+  my current jobs before submit:
+     201637_4    adv531_moment  RUNNING
+     201637_3    adv531_moment  RUNNING
+     201637_2    adv531_moment  RUNNING
+     201637_0    adv531_moment  RUNNING
+     201637_1    adv531_moment  RUNNING
+=== B REMOVE SMOKE RUN DIR (frees the name, keeps nothing needed) ===
+  done
+=== C SUBMIT 12 JOBS ===
+  a02_preceding_s42        -> jobid 201681
+  a02_same_time_s42        -> jobid 201682
+  a02_preceding_s43        -> jobid 201683
+  a02_same_time_s43        -> jobid 201684
+  a02_preceding_s44        -> jobid 201685
+  a02_same_time_s44        -> jobid 201686
+  a02_preceding_s45        -> jobid 201687
+  a02_same_time_s45        -> jobid 201688
+  a02_preceding_s46        -> jobid 201689
+  a02_same_time_s46        -> jobid 201690
+  a02_preceding_s47        -> jobid 201691
+  a02_same_time_s47        -> jobid 201692
+=== D QUEUE STATE (30 s after submit) ===
+     JOBID               NAME PARTITION    STATE       TIME     NODELIST(REASON)
+    201681        a02_pre_s42    hgpu2p  PENDING       0:00           (Priority)
+    201682        a02_sam_s42    hgpu2p  PENDING       0:00           (Priority)
+    201683        a02_pre_s43    hgpu2p  PENDING       0:00           (Priority)
+    201684        a02_sam_s43    hgpu2p  PENDING       0:00           (Priority)
+    201685        a02_pre_s44    hgpu2p  PENDING       0:00           (Priority)
+    201686        a02_sam_s44    hgpu2p  PENDING       0:00           (Priority)
+    201687        a02_pre_s45    hgpu2p  PENDING       0:00           (Priority)
+    201688        a02_sam_s45    hgpu2p  PENDING       0:00           (Priority)
+    201689        a02_pre_s46    hgpu2p  PENDING       0:00           (Priority)
+    201690        a02_sam_s46    hgpu2p  PENDING       0:00           (Priority)
+    201691        a02_pre_s47    hgpu2p  PENDING       0:00           (Priority)
+    201692        a02_sam_s47    hgpu2p  PENDING       0:00           (Priority)
+=== E COUNT ===
+  a02 jobs in queue: 12
+  submitted job ids recorded in /data1/home/sunyiq/nature_1st_a02/.a02_jobids
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T14:17:38+0800
