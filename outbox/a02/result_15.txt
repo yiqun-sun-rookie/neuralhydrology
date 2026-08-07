@@ -1,0 +1,65 @@
+### channel=a02 seq=15
+### host=login4
+### started=2026-08-07T14:32:26+0800
+### ---------- output ----------
+=== A EVERY JOB IN EVERY STATE, ALL USERS ===
+JOBID    USER      PARTITIOST   NODELIST   TRES_PER_NOTIME     
+201681   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201682   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201683   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201684   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201685   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201686   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201687   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201688   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201689   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201690   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201691   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201692   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201693   sunyiq    hgpu2p  PD              gpu:1      0:00     
+201637   sunyiq    hgpu2p  R    ngu007     gpu:1      1:00:01  
+201650   sunyiq    hgpu2p  R    ngu006     gpu:1      1:00:37  
+201649   sunyiq    hgpu2p  R    ngu006     gpu:1      1:00:38  
+201638   sunyiq    hgpu2p  R    ngu008     gpu:1      1:26:54  
+  total lines above (excluding header) = jobs known to the scheduler
+=== B SUSPENDED / COMPLETING ANYWHERE? ===
+JOBID    USER     ST   NODELIST  
+=== C NODE-LEVEL GRES DETAIL (three representative nodes) ===
+--- ngu101 ---
+    NodeName=ngu101
+    Gres=gpu:4
+    State=MIXED
+    CfgTRES=cpu=96,mem=1M,billing=96
+    AllocTRES=cpu=8
+--- ngu201 ---
+    NodeName=ngu201
+    Gres=gpu:8
+    State=MIXED
+    CfgTRES=cpu=64,mem=1M,billing=64
+    AllocTRES=cpu=16
+--- ngu009 ---
+    NodeName=ngu009
+    Gres=gpu:2
+    State=MIXED
+    CfgTRES=cpu=96,mem=1M,billing=96
+    AllocTRES=cpu=2
+=== D CUDA TEST ON ngu009 (has 1 free GPU slot) ===
+  jobid=201698
+  finished at t=30s
+    JobID  NodeList       State ExitCod   Elapsed 
+--------- --------- ----------- ------- --------- 
+   201698    ngu009   COMPLETED     0:0  00:00:16 
+--- output ---
+host=ngu009
+0, NVIDIA GeForce RTX 3090
+1, NVIDIA GeForce RTX 3090
+cuda_available True
+device_count 1
+matmul_ok True
+NODE_TEST_PASS
+--- stderr ---
+=== E A02 STATUS ===
+  running=0  pending=12
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T14:32:46+0800
