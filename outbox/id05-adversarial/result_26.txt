@@ -1,0 +1,28 @@
+### channel=id05-adversarial seq=26
+### host=login4
+### started=2026-08-07T15:29:43+0800
+### ---------- output ----------
+=== TIME ===
+Fri Aug  7 15:29:43 CST 2026
+=== CANDIDATE RECORD DIRS ===
+/data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/l1l2_records : 531 npz, 0
+    (symlink -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100_hpc/l1l2_531/l1l2_records)
+/data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100_hpc/l1l2_531/l1l2_records : 531 npz, 26M
+/data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100_merged/l1l2_records : ABSENT
+=== ANY OTHER l1l2_records UNDER adv531 ===
+/data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100_hpc/l1l2_531/l1l2_records
+=== STAGED SUMMARY FILES ===
+  l1_attribution_summary.csv           531 rows
+  l2_signatures_summary.csv            531 rows
+  hydro_vulnerability_summary.csv      531 rows
+=== EXACT-MOMENT JOB ===
+         JobID        State ExitCode    Elapsed 
+-------------- ------------ -------- ---------- 
+      201707_0      RUNNING      0:0   00:05:38 
+      201707_1      RUNNING      0:0   00:05:37 
+      201707_2      RUNNING      0:0   00:05:37 
+      201707_3      RUNNING      0:0   00:01:07 
+    201707_[4]      PENDING      0:0   00:00:00 
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T15:29:44+0800
