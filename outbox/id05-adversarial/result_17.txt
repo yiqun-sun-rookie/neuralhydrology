@@ -1,0 +1,31 @@
+### channel=id05-adversarial seq=17
+### host=login4
+### started=2026-08-07T11:30:11+0800
+### ---------- output ----------
+occlusion md5=b6e1b232bb062f0516caa6c710f933a7 expect=1093d4ade1306c1aff756d71acad9a08
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/adv531/src/adversarial/scripts/analyze_forcing_error_robustness_audit.py", line 352, in <module>
+    analysis = run()
+               ^^^^^
+  File "/data1/home/sunyiq/adv531/src/adversarial/scripts/analyze_forcing_error_robustness_audit.py", line 263, in run
+    moment = pd.read_csv(MOMENT_PATH, dtype={"basin": str})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+                   ^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+             ^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/statistical_structure_summary_eps0.1.csv'
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T11:31:15+0800
