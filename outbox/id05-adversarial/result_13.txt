@@ -1,0 +1,37 @@
+### channel=id05-adversarial seq=13
+### host=login4
+### started=2026-08-07T11:04:13+0800
+### ---------- output ----------
+=== MERGE (list-of-records blocks) ===
+  exp2_constraint_ablation.json       531 basins, 0 errors, 0.24 MB
+  exp3_targeted.json                  531 basins, 0 errors, 0.19 MB
+  exp4_causal.json                    531 basins, 0 errors, 0.48 MB
+  exp5_cw.json                        531 basins, 0 errors, 0.07 MB
+  exp6_yang_kge.json                  531 basins, 0 errors, 0.14 MB
+  exp_detect.json                     531 basins, 0 errors, 0.16 MB
+  ksweep.json                         531 basins, 0 errors, 0.17 MB
+=== MERGE (l1l2 summary dict) ===
+  exp_l1l2_summary_eps0.1.json        531 basins, 0.14 MB
+  npz records kept on HPC: 531
+=== SANITY: every block must hold 531 unique basins ===
+  exp2_constraint_ablation.json       531 OK
+  exp3_targeted.json                  531 OK
+  exp4_causal.json                    531 OK
+  exp5_cw.json                        531 OK
+  exp6_yang_kge.json                  531 OK
+  exp_detect.json                     531 OK
+  exp_l1l2_summary_eps0.1.json        531 OK
+  ksweep.json                         531 OK
+=== HAND BACK THROUGH OUTBOX ===
+  bb3a8e5d8dad491fe017ec8b3212f372  exp2_constraint_ablation.json
+  62e0db4918402d2d0f33645caa2b6252  exp3_targeted.json
+  edda59123304c61e90f8a2c38e0e5533  exp4_causal.json
+  0ffdd41bbe388f48bb001d19c293d6fd  exp5_cw.json
+  a45728f9c91aa26aab24f13c5b680ca6  exp6_yang_kge.json
+  9342f779ebf45a07a221715c14ec3ef0  exp_detect.json
+  96c30fd0a45ce4e0610f71fbbb4a1af0  exp_l1l2_summary_eps0.1.json
+  fe845cd94d084284ba77c131aa3f589a  ksweep.json
+  total: 4.0K
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T11:04:15+0800
