@@ -1,0 +1,21 @@
+### channel=probe seq=8
+### host=login4
+### started=2026-08-07T11:56:08+0800
+### ---------- output ----------
+ALIVE login4 2026-08-07T11:56:08+0800
+--- runner processes ---
+1610 bash /data1/home/sunyiq/.hpc_runner_active.sh
+43300 bash /data1/home/sunyiq/.hpc_runner_active.sh
+--- staging dirs (which channels are mid-flight) ---
+total 32
+drwxr-xr-x.  8 sunyiq g_sunyiq 4096 Aug  7 11:44 .
+drwx------. 24 sunyiq g_sunyiq 4096 Aug  7 11:56 ..
+drwxr-xr-x.  2 sunyiq g_sunyiq 4096 Aug  7 11:30 a02
+drwxr-xr-x.  2 sunyiq g_sunyiq 4096 Aug  6 17:07 default
+drwxr-xr-x.  2 sunyiq g_sunyiq 4096 Aug  7 11:31 id05-adversarial
+drwxr-xr-x.  2 sunyiq g_sunyiq 4096 Aug  6 21:25 id18-loss-arm
+drwxr-xr-x.  2 sunyiq g_sunyiq 4096 Aug  7 11:56 id26-v09-strict
+drwxr-xr-x.  2 sunyiq g_sunyiq 4096 Aug  7 11:56 probe
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T11:56:08+0800
