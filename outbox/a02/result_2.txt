@@ -1,0 +1,43 @@
+### channel=a02 seq=2
+### host=login4
+### started=2026-08-07T11:13:17+0800
+### ---------- output ----------
+=== A LANDING SITE (must not exist yet) ===
+ls: cannot access /data1/home/sunyiq/nature_1st_a02: No such file or directory
+  clean: ~/nature_1st_a02 does not exist
+-rw-r--r--.   1 sunyiq g_sunyiq 10052110 Jan 14  2026 vscode_cli.tar.gz
+=== B DISK ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+49M	/data1/home/sunyiq/hpc_mailbox
+=== C ENV nh_final (pyarrow still missing?) ===
+  OK   torch 2.4.0
+  OK   pandas 2.3.2
+  OK   numpy 2.3.3
+  MISS pyarrow ModuleNotFoundError
+  OK   tqdm 4.67.1
+=== D PIP CHANNEL REACHABLE (no install, dry check) ===
+pyarrow (25.0.0)
+Available versions: 25.0.0, 24.0.0, 23.0.1, 23.0.0, 22.0.0, 21.0.0, 20.0.0, 19.0.1, 19.0.0, 18.1.0, 18.0.0, 17.0.0, 16.1.0, 16.0.0, 15.0.2, 15.0.1, 15.0.0, 14.0.2, 14.0.1, 14.0.0, 13.0.0, 12.0.1, 12.0.0, 11.0.0, 10.0.1, 10.0.0, 9.0.0, 8.0.0, 7.0.0, 6.0.1, 6.0.0, 5.0.0, 4.0.1, 4.0.0, 3.0.0, 2.0.0, 1.0.1, 1.0.0, 0.17.1, 0.17.0, 0.16.0, 0.15.1, 0.14.0, 0.13.0, 0.12.1, 0.12.0, 0.11.1, 0.11.0, 0.10.0, 0.9.0
+=== E GPU PARTITION NOW ===
+PARTITION    AVAIL    NODES  NODELIST                 STATE   
+hgpu2p       up       3      ngu[001,010-011]         mix     
+hgpu2p       up       6      ngu[002,004-008]         idle    
+--- my running/pending jobs (all lines, to check contention) ---
+     JOBID             NAME PARTITION    STATE       TIME     NODELIST(REASON)
+=== F MAILBOX OUTBOX STATE ===
+total 69
+drwxr-xr-x. 7 sunyiq g_sunyiq  4096 Aug  7 11:08 .
+drwxr-xr-x. 6 sunyiq g_sunyiq  4096 Aug  7 11:07 ..
+-rw-r--r--. 1 sunyiq g_sunyiq    11 Aug  6 14:56 .gitkeep
+drwxr-xr-x. 2 sunyiq g_sunyiq  4096 Aug  7 11:08 a02
+drwxr-xr-x. 2 sunyiq g_sunyiq  4096 Aug  6 17:07 default
+drwxr-xr-x. 3 sunyiq g_sunyiq  4096 Aug  7 11:04 id05-adversarial
+drwxr-xr-x. 2 sunyiq g_sunyiq  4096 Aug  6 21:25 id18-loss-arm
+drwxr-xr-x. 2 sunyiq g_sunyiq  4096 Aug  6 17:26 probe
+-rw-r--r--. 1 sunyiq g_sunyiq  1127 Aug  6 16:06 result_10.txt
+-rw-r--r--. 1 sunyiq g_sunyiq  1318 Aug  6 16:08 result_11.txt
+-rw-r--r--. 1 sunyiq g_sunyiq  2282 Aug  6 16:13 result_12.txt
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T11:13:44+0800
