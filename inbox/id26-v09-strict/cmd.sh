@@ -1,82 +1,97 @@
 #!/bin/bash
-# id26-v09-strict seq=3 : stage the v09 code + legacy checkpoints under ~/v09_strict.
-# Touches ONLY ~/v09_strict and reads ~/hpc_mailbox/payload/id26.
-# Does NOT touch ~/neuralhydrology, ~/adv531, ~/nature_1st_a02.
-# No sbatch, no training.
+# id26-v09-strict seq=4 : locate the uploaded sealed-input tarball, verify, extract, verify again.
+# Touches ONLY ~/v09_strict. No sbatch, no training, no authorization.
 export LC_ALL=C
-ROOT="$HOME/v09_strict"
-REPO="$ROOT/neuralhydrology"
-BRANCH="codex/historical-band-experts-pilot"
-WANT_COMMIT="f94183209bf44ed6e672e1c23f98020905804e6d"
-TARBALL="$HOME/hpc_mailbox/payload/id26/legacy_18_lstm_fair_531.tar.gz"
+REPO="$HOME/v09_strict/neuralhydrology"
+WANT_TAR_SHA="feee746c7bda7970c8bac470969bf4247118f8f35d6cf543a44a8a6b4bd1bed7"
+DEST="$REPO/results/26_historical_band_experts/formal_v09"
 
-echo "=== A GIT CAPABILITY (v09 code needs 'rev-parse --path-format=absolute --git-common-dir') ==="
-echo "system git : $(git --version 2>&1)  at $(command -v git)"
-git rev-parse --path-format=absolute --git-common-dir >/dev/null 2>&1 \
-  && echo "system git supports --path-format : YES" || echo "system git supports --path-format : NO"
-CONDA_GIT="$HOME/miniconda3/envs/nh_final/bin/git"
-if [ -x "$CONDA_GIT" ]; then echo "conda git  : $($CONDA_GIT --version)"; else echo "conda git  : none"; fi
-echo "-- module system --"
-(module avail 2>&1 | grep -i "git" | head -5) 2>/dev/null || echo "(no module command)"
-
-echo "=== B PAYLOAD PRESENT? ==="
-if [ -f "$TARBALL" ]; then
-  echo "ok $(stat -c%s "$TARBALL") bytes"
-  echo "sha256=$(sha256sum "$TARBALL" | cut -d' ' -f1)"
-  echo "expect=d5980dba3068a3715433c0217a02e476461db8b9afa0be8a9ce92ef76c6859ae"
+echo "=== A LOCATE THE UPLOAD ==="
+CANDIDATES=$(find "$HOME" -maxdepth 4 \
+    \( -name 'v09_sealed_input.tar.gz' -o -name 'formal_v09.tar.gz' -o -name 'v09*.tar.gz' \) \
+    -newermt '2026-08-07 14:40' 2>/dev/null | head -10)
+if [ -z "$CANDIDATES" ]; then
+  echo "no obvious name match; listing recent large files under \$HOME (depth<=3):"
+  find "$HOME" -maxdepth 3 -type f -size +40M -newermt '2026-08-07 14:40' 2>/dev/null | head -15
 else
-  echo "MISSING $TARBALL"; exit 1
+  echo "$CANDIDATES"
 fi
 
-echo "=== C CLONE CODE (shallow, single branch) ==="
-mkdir -p "$ROOT"
-if [ -d "$REPO/.git" ]; then
-  echo "repo exists, fetching"
-  cd "$REPO" || exit 1
-  git fetch -q origin "+${BRANCH}:refs/remotes/origin/${BRANCH}" 2>&1 | tail -3
-  git checkout -q "refs/remotes/origin/${BRANCH}" 2>&1 | tail -3
-else
-  git clone -q --depth 1 --branch "$BRANCH" --single-branch \
-    git@github.com:yiqun-sun-rookie/neuralhydrology.git "$REPO" 2>&1 | tail -5
+TAR=""
+for c in $CANDIDATES; do
+  s=$(sha256sum "$c" 2>/dev/null | cut -d' ' -f1)
+  echo "  candidate: $c"
+  echo "    size=$(stat -c%s "$c") sha256=$s"
+  [ "$s" = "$WANT_TAR_SHA" ] && TAR="$c" && echo "    ^^ MATCHES EXPECTED HASH"
+done
+
+if [ -z "$TAR" ]; then
+  echo "=== NO MATCHING TARBALL FOUND -- stopping, nothing changed ==="
+  echo "expected sha256=$WANT_TAR_SHA"
+  exit 0
 fi
-cd "$REPO" 2>/dev/null || { echo "CLONE FAILED"; exit 1; }
-GOT=$(git rev-parse HEAD 2>&1)
-echo "HEAD     = $GOT"
-echo "expected = $WANT_COMMIT"
-[ "$GOT" = "$WANT_COMMIT" ] && echo "COMMIT MATCH: YES" || echo "COMMIT MATCH: NO"
-echo "clone size: $(du -sh "$REPO" 2>/dev/null | cut -f1)"
 
-echo "=== D EXTRACT LEGACY CHECKPOINTS ==="
-tar xzf "$TARBALL" -C "$REPO" && echo "extracted"
-echo "checkpoints: $(find "$REPO/results/18_lstm_fair_531" -name 'model_epoch030.pt' 2>/dev/null | wc -l) (want 8)"
-echo "configs    : $(find "$REPO/results/18_lstm_fair_531" -name 'config.yml' 2>/dev/null | wc -l) (want 8)"
+echo "=== B REFUSE TO CLOBBER ==="
+if [ -e "$DEST" ] && [ -n "$(ls -A "$DEST" 2>/dev/null)" ]; then
+  echo "destination already non-empty, refusing:"; ls -la "$DEST" | head; exit 1
+fi
+echo "destination clear"
 
-echo "=== E VERIFY CHECKPOINT HASHES AGAINST THE FROZEN PROTOCOL ==="
-"$HOME/miniconda3/envs/nh_final/bin/python" - <<'PY' 2>&1 | tail -20
-import hashlib, json, pathlib
-repo = pathlib.Path.home() / "v09_strict" / "neuralhydrology"
-proto = json.loads((repo / "src/26_historical_band_experts/configs/formal_v09_protocol.json").read_text(encoding="utf-8"))
+echo "=== C EXTRACT ==="
+tar xzf "$TAR" -C "$REPO" && echo "extracted"
+echo "file count under formal_v09: $(find "$DEST" -type f 2>/dev/null | wc -l)  (want 19)"
+find "$DEST" -type f 2>/dev/null | sed "s|$DEST/||" | sort
+
+echo "=== D VERIFY THE FROZEN HASHES ==="
+"$HOME/miniconda3/envs/nh_final/bin/python" - <<'PY' 2>&1 | tail -25
+import hashlib, pathlib
+base = pathlib.Path.home() / "v09_strict/neuralhydrology/results/26_historical_band_experts/formal_v09"
+want = {
+ "input_attempt_01/seal.json": "a5a64e43312ac303bf03ea3840e2cf126563527c6b82b8b94035c34978c25b3a",
+ "input_attempt_01.external_audit.json": "e18be463df4cc6fe6c21a1e39c675f77db3e8c833109c1e9cfb557e37a832cd6",
+ "input_attempt_01.trusted_source_external_audit.json": "81e3658fe27e8f658e59d81015ce3d1b2a3baef11045a3e22bd76254ef5d8387",
+ "authorizations/formal_input_seal_authorization.json": "43b883940d58787d25b1a64bf1cee6097d459f3f95e595d59bea740a94b446d0",
+ "formal_input_seal_authorization_consumed.json": "553cdbb8786735f7ac869982b4cb2a748b0f62e5241bd612fa59b0c69e871277",
+ "inputs/training_targets.csv": "6abadf7172f1c8ebd48122a8abf68985d7d4f94b8c894371270208eeb45f2ebb",
+ "inputs/training_targets.manifest.json": "3061d548fa0b9c81c8e3e25f0dbdd8cfbdb347aaea965ac6f6400c5f09da13e8",
+}
 bad = 0
-for run in proto["legacy_reference"]["runs"]:
-    d = repo / "results/18_lstm_fair_531" / run["run_id"]
-    for name, key in (("config.yml", "config_sha256"), ("model_epoch030.pt", "checkpoint_epoch030_sha256")):
-        p = d / name
-        if not p.is_file():
-            print(f"MISSING seed={run['seed']} {name}"); bad += 1; continue
-        got = hashlib.sha256(p.read_bytes()).hexdigest()
-        if got != run[key]:
-            print(f"HASH DRIFT seed={run['seed']} {name}"); bad += 1
-print(f"legacy checkpoint hash mismatches: {bad} (want 0)")
+for rel, exp in want.items():
+    p = base / rel
+    if not p.is_file():
+        print(f"MISSING {rel}"); bad += 1; continue
+    got = hashlib.sha256(p.read_bytes()).hexdigest()
+    print(f"{'OK  ' if got==exp else 'DRIFT'} {rel}")
+    bad += got != exp
+print(f"frozen hash mismatches: {bad} (want 0)")
 PY
 
-echo "=== F WORKTREE MUST BE CLEAN (v09 gates require it) ==="
+echo "=== E SEALED FILE SET SELF-CHECK (seal.json inventory) ==="
+"$HOME/miniconda3/envs/nh_final/bin/python" - <<'PY' 2>&1 | tail -8
+import hashlib, json, pathlib
+root = pathlib.Path.home() / "v09_strict/neuralhydrology/results/26_historical_band_experts/formal_v09/input_attempt_01"
+seal = json.loads((root / "seal.json").read_text(encoding="utf-8"))
+bad = 0
+for item in seal["sealed_files"]:
+    p = root / item["relative_path"].replace("\\", "/")
+    if not p.is_file():
+        print("MISSING", item["relative_path"]); bad += 1; continue
+    if hashlib.sha256(p.read_bytes()).hexdigest() != item["sha256"]:
+        print("DRIFT", item["relative_path"]); bad += 1
+print(f"sealed files checked: {len(seal['sealed_files'])}, mismatches: {bad} (want 0)")
+PY
+
+echo "=== F WORKTREE STILL CLEAN? ==="
 cd "$REPO" || exit 1
 echo "dirty_files=$(git status --porcelain --untracked-files=all 2>/dev/null | wc -l)  (want 0)"
 
-echo "=== G UPLOAD TARGET FOR THE 179 MB SEALED INPUT ==="
-mkdir -p "$REPO/results/26_historical_band_experts"
-echo "destination: $REPO/results/26_historical_band_experts/formal_v09"
-ls -la "$REPO/results/26_historical_band_experts" 2>&1 | head -5
-df -h /data1 2>&1 | tail -1
+echo "=== G STAGE STATE (must be: no authorization, no consumption, no output) ==="
+for p in "$DEST/authorizations/A09-NEST-01.authorization.json" \
+         "$DEST/authorizations/A09-NEST-01.consumption.json" \
+         "$DEST/strict_nesting" \
+         "$DEST/R09-NEST-S100.legacy_checkpoint_bridge_external_audit.json" \
+         "$DEST/R09-NEST-S100.training_resource_preflight_external_audit.json"; do
+  [ -e "$p" ] && echo "PRESENT (BAD) $p" || echo "absent (good) $(basename "$p")"
+done
 
 echo "=== END ==="
