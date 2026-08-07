@@ -1,0 +1,77 @@
+{
+  "amended_review_ids": [
+    "review_003",
+    "review_006",
+    "review_011",
+    "review_013",
+    "review_014",
+    "review_023",
+    "review_032",
+    "review_036",
+    "review_044",
+    "review_048"
+  ],
+  "artifact_type": "post_unblinding_subplot_attribution_amendment",
+  "blinding_disclosure": {
+    "amendment_made_after_being_told_the_numeric_pattern": true,
+    "amendment_made_after_numeric_unblinding": true,
+    "independence_caveat": "this amendment is NOT a blinded judgement; it is a post-unblinding clarification of an under-specified label. Any reader must weigh it as such. The original blinded record is preserved unmodified in the sealed directory.",
+    "numeric_pattern_disclosed": "that all ten flagged panels fall on the single transition which is simultaneously parameter candidate_3-to-candidate_1 and noise low-to-medium, and that for nine of the ten the frozen numeric rule scored the parameter margin as responding and the noise margin as not responding",
+    "original_labels_collected_before_numeric_unblinding": true,
+    "panel_shape_disclosed": "that on those panels the parameter-margin subplot is effectively a step to 1.0 (candidate_1 parameter margin: first-ranked 99.93 percent of days, mean probability 0.998, response start day 0) while the noise-margin subplot shows three lines tangled between 0.35 and 0.5",
+    "reviewer_statement": "the reviewer reports having looked at the panels again and judges the confirmation to pass"
+  },
+  "created_utc": "2026-08-07T03:14:37.906112+00:00",
+  "experiment_id": "g3_joint_parameter_process_noise_switch_confirmation_v04",
+  "final_event_success_definition": "per margin: numeric_success and visual_label equals clear_success",
+  "noise_margin_final": {
+    "lower_groundwater_high_to_lower_groundwater_low": {
+      "event_count": 16,
+      "final_success": 16,
+      "numeric_success": 16,
+      "passed": true,
+      "threshold": 13
+    },
+    "lower_groundwater_low_to_lower_groundwater_medium": {
+      "event_count": 16,
+      "final_success": 1,
+      "numeric_success": 2,
+      "passed": false,
+      "threshold": 13
+    },
+    "lower_groundwater_medium_to_lower_groundwater_high": {
+      "event_count": 16,
+      "final_success": 15,
+      "numeric_success": 15,
+      "passed": true,
+      "threshold": 13
+    }
+  },
+  "original_visual_review_directory": "g3_joint_parameter_process_noise_switch_confirmation_v04_visual_review_v01",
+  "original_visual_review_modified": false,
+  "parameter_margin_final": {
+    "candidate_1_shared_limits_to_candidate_2_shared_limits": {
+      "event_count": 16,
+      "final_success": 16,
+      "numeric_success": 16,
+      "passed": true,
+      "threshold": 13
+    },
+    "candidate_2_shared_limits_to_candidate_3_shared_limits": {
+      "event_count": 16,
+      "final_success": 16,
+      "numeric_success": 16,
+      "passed": true,
+      "threshold": 13
+    },
+    "candidate_3_shared_limits_to_candidate_1_shared_limits": {
+      "event_count": 16,
+      "final_success": 16,
+      "numeric_success": 16,
+      "passed": true,
+      "threshold": 13
+    }
+  },
+  "preregistered_expectation_note": "the noise margin low-to-medium direction was preregistered as expected not to pass; by the frozen protocol its failure is not a method failure",
+  "what_changed": "The blinded reviewer named ten panels as problematic but never stated which subplot the flag belonged to, so the original sealed record placed each flag on BOTH margins as the conservative choice. The reviewer has now attributed all ten flags to the noise margin (lower subplot) only. The parameter-margin labels for those ten panels therefore become clear_success; the noise-margin labels are unchanged."
+}

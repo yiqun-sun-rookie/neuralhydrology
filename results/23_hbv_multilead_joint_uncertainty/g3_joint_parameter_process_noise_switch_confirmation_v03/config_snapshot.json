@@ -1,0 +1,300 @@
+{
+  "candidate_construction_seeds": {
+    "forcing": [
+      3805001,
+      3805002,
+      3805003,
+      3805004,
+      3805005,
+      3805006,
+      3805007,
+      3805008
+    ]
+  },
+  "candidate_count": 9,
+  "candidate_distinguishability_gate": {
+    "development_only": true,
+    "failure_action": "stop_before_formal_confirmation",
+    "minimum_pairwise_rmse_as_trained_center_discharge_standard_deviation": 0.5,
+    "minimum_pairwise_rmse_in_observation_standard_deviations": 5.0
+  },
+  "design_document": "docs/plans/2026-08-05-id23-joint-parameter-process-noise-switch-confirmation-design.md",
+  "experiment_id": "g3_joint_parameter_process_noise_switch_confirmation_v03",
+  "filter": {
+    "candidate_count": 9,
+    "factor_transition_stay_probability": 0.98,
+    "global_posterior_output": "posterior-probability-weighted fifteen-state state and covariance after every update",
+    "initial_candidate_probabilities_uniform": true,
+    "initial_covariance_fraction": 0.001,
+    "interaction_mode": "full"
+  },
+  "forbidden_scope": {
+    "forecast_executed": false,
+    "forecast_imported": false,
+    "future_observations_used": false,
+    "joint_unique_combination_confirmatory_claim": false,
+    "real_basin_claim": false,
+    "state_accuracy_claim": false,
+    "state_interaction_attribution": false,
+    "walrus_claim": false
+  },
+  "forcing": {
+    "assimilation_days": 540,
+    "potential_evaporation_mm_day": 2.0,
+    "rain_floor_mm_day": 5.0,
+    "rain_gamma_scale_mm_day": 4.0,
+    "rain_gamma_shape": 0.8,
+    "temperature_celsius": 10.0,
+    "warmup_days": 45
+  },
+  "formal_confirmation_seeds": {
+    "forcing": [
+      3801001,
+      3801002,
+      3801003,
+      3801004,
+      3801005,
+      3801006,
+      3801007,
+      3801008
+    ],
+    "observation_noise": [
+      3803001,
+      3803002,
+      3803003,
+      3803004,
+      3803005,
+      3803006,
+      3803007,
+      3803008
+    ],
+    "process_noise": [
+      3802001,
+      3802002,
+      3802003,
+      3802004,
+      3802005,
+      3802006,
+      3802007,
+      3802008
+    ]
+  },
+  "joint_unique_combination_readout": {
+    "confirmatory": false,
+    "note": "descriptive only: top-ranked fraction and takeover timing of the true (parameter, noise) pair; no pass/fail gate because the noise-channel information limit would make any 30-day joint-uniqueness gate a predictable failure"
+  },
+  "noise_margin_response_rule": {
+    "confidence_level": 0.95,
+    "consecutive_top_ranked_days": 5,
+    "event_count_per_directed_transition": 16,
+    "latest_allowed_response_start_day": 25,
+    "margin_definition": "posterior probability summed over the three parameter candidates for each process-noise level",
+    "minimum_exact_interval_lower_bound_exclusive": 0.5,
+    "minimum_successful_events_per_directed_transition": 13,
+    "response_window_days": 30
+  },
+  "numerical_tolerance": 1e-12,
+  "observation_noise_source": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_inputs_v01/observation_noise_low.csv",
+    "sha256": "0ff9a34b0dd863e99e40038b0876d781561a0a1e9d371a81ee3b8fafff6ef3c8"
+  },
+  "parameter_candidates": [
+    {
+      "lag_time": 2.885576589073694,
+      "parBETA": 3.930024224341894,
+      "parCFMAX": 2.3990648005216,
+      "parCFR": 0.0534926610099832,
+      "parCWH": 4.790858379798471e-09,
+      "parFC": 115.41144086847932,
+      "parK0": 0.2699972328484517,
+      "parK1": 0.1994683789679514,
+      "parK2": 0.0057130358488307,
+      "parLP": 0.6837035504251265,
+      "parPERC": 3.8430224748105832,
+      "parTT": -1.6780754264252151,
+      "parUZL": 78.09374860016432,
+      "parameter_id": "candidate_1_shared_limits",
+      "source_parameter_id": "equifinal_diverse_1"
+    },
+    {
+      "lag_time": 1.7953195629813012,
+      "parBETA": 1.0000000698913354,
+      "parCFMAX": 2.5549045075022465,
+      "parCFR": 0.0463012343434304,
+      "parCWH": 4.790858379798471e-09,
+      "parFC": 115.41144086847932,
+      "parK0": 0.8999999945687556,
+      "parK1": 0.3593900045350728,
+      "parK2": 0.0221122277234756,
+      "parLP": 0.9999992059019986,
+      "parPERC": 9.99999952398291,
+      "parTT": 0.4899906312144009,
+      "parUZL": 44.36393857438976,
+      "parameter_id": "candidate_2_shared_limits",
+      "source_parameter_id": "trained_center"
+    },
+    {
+      "lag_time": 1.5494828503985754,
+      "parBETA": 4.858081071646,
+      "parCFMAX": 3.704036943247782,
+      "parCFR": 0.0818680926072159,
+      "parCWH": 4.790858379798471e-09,
+      "parFC": 115.41144086847932,
+      "parK0": 0.5349697172955139,
+      "parK1": 0.428992148585032,
+      "parK2": 0.1521464073770692,
+      "parLP": 0.3995755335956368,
+      "parPERC": 7.256614023611052,
+      "parTT": 1.3105730924947303,
+      "parUZL": 14.82086403755268,
+      "parameter_id": "candidate_3_shared_limits",
+      "source_parameter_id": "equifinal_diverse_2"
+    }
+  ],
+  "parameter_margin_response_rule": {
+    "confidence_level": 0.95,
+    "consecutive_clear_dominance_days": 5,
+    "event_count_per_directed_transition": 16,
+    "margin_definition": "posterior probability summed over the three process-noise levels for each parameter candidate",
+    "minimum_exact_interval_lower_bound_exclusive": 0.5,
+    "minimum_new_true_candidate_probability_exclusive": 0.5,
+    "minimum_probability_margin_over_runner_up_inclusive": 0.1,
+    "minimum_successful_events_per_directed_transition": 13,
+    "response_window_days": 30
+  },
+  "parameter_source": {
+    "frozen_config": "src/hbv_multilead_joint_uncertainty/configs/g3_state_domain_consistent_parameter_switch_confirmation_v01.json",
+    "note": "the three shared-state-domain parameter candidates are copied literally from the sealed parameter-switch confirmation config",
+    "sha256": "a7c974608a647f7eade14a7fa0ee443f6148950cf7175103b21d91c6bb344059"
+  },
+  "parameters_that_set_truth_state_limits": [
+    "parFC",
+    "parCWH"
+  ],
+  "population": {
+    "event_count": 48,
+    "events_per_directed_transition_per_margin": 16,
+    "matched_block_count": 8,
+    "stage_count": 3,
+    "stage_length_days": 180,
+    "switch_count_per_trial": 2,
+    "truth_trial_count": 3
+  },
+  "preregistered_expectations": {
+    "lower_groundwater_low_to_lower_groundwater_medium": {
+      "basis": "docs/plans/2026-08-05-id23-low-to-medium-process-noise-slow-response-diagnosis.md",
+      "consequence": "reported verbatim; its failure does not count as method failure and does not trigger a stop",
+      "expectation": "expected_not_to_pass",
+      "reason": "discharge-channel information limit: medium footprint 0.0885 mm/day is half the 0.1780 mm/day observation noise; likelihood-only upper bound needs 46 days, beyond the 30-day window"
+    }
+  },
+  "process_noise_candidates": [
+    {
+      "plain_name": "low process noise",
+      "process_id": "lower_groundwater_low",
+      "standard_deviation_mm_day": 1.0,
+      "variance_mm2_day2": 1.0
+    },
+    {
+      "plain_name": "medium process noise",
+      "process_id": "lower_groundwater_medium",
+      "standard_deviation_mm_day": 4.0,
+      "variance_mm2_day2": 16.0
+    },
+    {
+      "plain_name": "high process noise",
+      "process_id": "lower_groundwater_high",
+      "standard_deviation_mm_day": 16.0,
+      "variance_mm2_day2": 256.0
+    }
+  ],
+  "required_result_files": [
+    "checksums.json",
+    "config_snapshot.json",
+    "daily_parameter_margin_probabilities.csv",
+    "daily_noise_margin_probabilities.csv",
+    "environment.json",
+    "event_panel_manifest.json",
+    "evidence.npz",
+    "parameter_vectors.csv",
+    "process_noise_covariances.csv",
+    "registry_entry.json",
+    "source_manifest.json",
+    "summary.json",
+    "switch_response_events_numeric.csv",
+    "switch_response_summary_numeric.csv"
+  ],
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/g3_joint_parameter_process_noise_switch_confirmation_v03",
+  "scientific_question": "When the true parameter candidate and the true lower-groundwater process-noise level switch simultaneously at known stage boundaries while all fifteen truth-state values remain continuous and unprojected, does the fully interacting nine-candidate bank keep parameter-margin identification undegraded, and does noise-margin identification follow the single-factor pattern?",
+  "scope": "assimilation-only warm-wet synthetic HBV-lite joint switch confirmation; no forecast",
+  "state_contract": {
+    "all_other_state_noise_variances": 0.0,
+    "all_transition_projection_event_count_required": 0,
+    "maximum_absolute_projection_adjustment_required": 0.0,
+    "perturbed_state_index": 4,
+    "perturbed_state_name": "SLZ",
+    "state_count": 15,
+    "state_reset_at_switch": false,
+    "switch_boundary_projection_event_count_required": 0,
+    "truth_state_continuous_across_switches": true
+  },
+  "status": "frozen_before_run",
+  "truth_trial_stage_orders": {
+    "note": "aligned rotations re-paired in v03: high noise is permanently paired with candidate_2 stages (fast recovery time constant about 45 days, equilibrium lower-groundwater storage about 452 mm), fast-draining candidate_3 is permanently paired with low noise (exactly the combination already verified projection-free in the sealed parameter-switch confirmation), and candidate_1 is permanently paired with medium noise; v01 placed high noise on candidate_3 (median lower-groundwater storage 33 mm) and correctly failed the truth projection gate with zero output; v02 moved high noise to candidate_1 but stage inheritance carried low storage (19 to 36 mm) across the boundary into candidate_1 stages whose recovery time constant is about 175 days, so it also failed the gate after the boundary with zero output; the v03 pairing passed the truth feasibility check with zero projections on all eight formal forcing seeds and all three rotations before this freeze, and the truth depends only on the frozen seeds, so the formal-run physical gate outcome is deterministic; 3 of 9 direction pairings covered, each margin direction 16 events, unchanged from v01",
+    "parameter": [
+      [
+        "candidate_2_shared_limits",
+        "candidate_3_shared_limits",
+        "candidate_1_shared_limits"
+      ],
+      [
+        "candidate_3_shared_limits",
+        "candidate_1_shared_limits",
+        "candidate_2_shared_limits"
+      ],
+      [
+        "candidate_1_shared_limits",
+        "candidate_2_shared_limits",
+        "candidate_3_shared_limits"
+      ]
+    ],
+    "process_noise": [
+      [
+        "lower_groundwater_high",
+        "lower_groundwater_low",
+        "lower_groundwater_medium"
+      ],
+      [
+        "lower_groundwater_low",
+        "lower_groundwater_medium",
+        "lower_groundwater_high"
+      ],
+      [
+        "lower_groundwater_medium",
+        "lower_groundwater_high",
+        "lower_groundwater_low"
+      ]
+    ]
+  },
+  "user_facing_name": "joint parameter and process-noise switching without truth-state clipping",
+  "verification_relative_path": "results/23_hbv_multilead_joint_uncertainty/g3_joint_parameter_process_noise_switch_confirmation_v03_independent_verification_v01",
+  "visual_review_relative_path": "results/23_hbv_multilead_joint_uncertainty/g3_joint_parameter_process_noise_switch_confirmation_v03_visual_review_v01",
+  "visual_review_rule": {
+    "allowed_labels": [
+      "clear_success",
+      "ambiguous",
+      "failure"
+    ],
+    "classification_before_numeric_decision_unblinding": true,
+    "clear_success_definition": "the new true candidate margin forms sustained visibly separated dominance after the switch and was not already persistently dominant before the switch",
+    "display_order_seed": 3804001,
+    "final_event_success_definition": "per margin: numerical_success and visual_label equals clear_success",
+    "labels_per_event": [
+      "parameter_margin",
+      "noise_margin"
+    ],
+    "relative_day_end": 30,
+    "relative_day_start": -15,
+    "required": true
+  }
+}

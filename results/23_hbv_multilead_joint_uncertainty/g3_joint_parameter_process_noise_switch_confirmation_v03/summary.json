@@ -1,0 +1,242 @@
+{
+  "candidate_construction_audit": [
+    {
+      "left_parameter_id": "candidate_1_shared_limits",
+      "maximum_daily_start_projection_adjustment": 0.0,
+      "minimum_required_center_standard_deviation": 0.5,
+      "minimum_required_observation_standard_deviations": 5.0,
+      "pairwise_discharge_rmse": 1.4180261865636015,
+      "passed": true,
+      "right_parameter_id": "candidate_2_shared_limits",
+      "rmse_as_center_discharge_standard_deviation": 1.7679849294849959,
+      "rmse_in_observation_standard_deviations": 7.96748016941212
+    },
+    {
+      "left_parameter_id": "candidate_1_shared_limits",
+      "maximum_daily_start_projection_adjustment": 0.0,
+      "minimum_required_center_standard_deviation": 0.5,
+      "minimum_required_observation_standard_deviations": 5.0,
+      "pairwise_discharge_rmse": 2.410653525120855,
+      "passed": true,
+      "right_parameter_id": "candidate_3_shared_limits",
+      "rmse_as_center_discharge_standard_deviation": 3.005585611188142,
+      "rmse_in_observation_standard_deviations": 13.544766901145213
+    },
+    {
+      "left_parameter_id": "candidate_2_shared_limits",
+      "maximum_daily_start_projection_adjustment": 0.0,
+      "minimum_required_center_standard_deviation": 0.5,
+      "minimum_required_observation_standard_deviations": 5.0,
+      "pairwise_discharge_rmse": 1.9181838702020009,
+      "passed": true,
+      "right_parameter_id": "candidate_3_shared_limits",
+      "rmse_as_center_discharge_standard_deviation": 2.3915779600070404,
+      "rmse_in_observation_standard_deviations": 10.777721943314166
+    }
+  ],
+  "descriptive_readouts": {
+    "joint_unique_combination_full_stage": [
+      {
+        "day_count": 4320,
+        "mean_true_probability": 0.39270955280386405,
+        "top_ranked_fraction": 0.46782407407407406,
+        "true_identifier": "candidate_1_shared_limits__lower_groundwater_medium"
+      },
+      {
+        "day_count": 4320,
+        "mean_true_probability": 0.7998236545134876,
+        "top_ranked_fraction": 0.9261574074074074,
+        "true_identifier": "candidate_2_shared_limits__lower_groundwater_high"
+      },
+      {
+        "day_count": 4320,
+        "mean_true_probability": 0.9151246159629355,
+        "top_ranked_fraction": 0.9733796296296297,
+        "true_identifier": "candidate_3_shared_limits__lower_groundwater_low"
+      }
+    ],
+    "noise_margin_full_stage": [
+      {
+        "day_count": 4320,
+        "mean_true_probability": 0.8000092113963657,
+        "top_ranked_fraction": 0.9261574074074074,
+        "true_identifier": "lower_groundwater_high"
+      },
+      {
+        "day_count": 4320,
+        "mean_true_probability": 0.915129316226046,
+        "top_ranked_fraction": 0.9733796296296297,
+        "true_identifier": "lower_groundwater_low"
+      },
+      {
+        "day_count": 4320,
+        "mean_true_probability": 0.39287098769433904,
+        "top_ranked_fraction": 0.46782407407407406,
+        "true_identifier": "lower_groundwater_medium"
+      }
+    ],
+    "parameter_margin_full_stage": [
+      {
+        "day_count": 4320,
+        "mean_true_probability": 0.997998047146517,
+        "top_ranked_fraction": 0.9993055555555556,
+        "true_identifier": "candidate_1_shared_limits"
+      },
+      {
+        "day_count": 4320,
+        "mean_true_probability": 0.9997789661955424,
+        "top_ranked_fraction": 1.0,
+        "true_identifier": "candidate_2_shared_limits"
+      },
+      {
+        "day_count": 4320,
+        "mean_true_probability": 0.9999949883945337,
+        "top_ranked_fraction": 1.0,
+        "true_identifier": "candidate_3_shared_limits"
+      }
+    ]
+  },
+  "evidence_boundary": "warm-wet synthetic HBV-lite assimilation only; joint unique-combination readout is descriptive; not forecast, state-accuracy, WALRUS, or real-basin evidence",
+  "experiment_id": "g3_joint_parameter_process_noise_switch_confirmation_v03",
+  "forbidden_scope_checks": {
+    "forecast_executed": false,
+    "forecast_imported": false,
+    "future_observations_used": false,
+    "joint_unique_combination_confirmatory_claim": false,
+    "real_basin_claim": false,
+    "state_accuracy_claim": false,
+    "state_interaction_attribution": false,
+    "walrus_claim": false
+  },
+  "noise_margin_numeric_results": [
+    {
+      "criterion_passed": true,
+      "event_count": 16,
+      "exact_interval_lower": 0.7940927857921773,
+      "exact_interval_upper": 1.0,
+      "maximum_response_start_day": 12,
+      "median_response_start_day": 5.5,
+      "success_fraction": 1.0,
+      "successful_event_count": 16,
+      "transition_label": "lower_groundwater_high_to_lower_groundwater_low"
+    },
+    {
+      "criterion_passed": false,
+      "event_count": 16,
+      "exact_interval_lower": 0.015513603815413893,
+      "exact_interval_upper": 0.3834762368492636,
+      "maximum_response_start_day": 23,
+      "median_response_start_day": 19.0,
+      "success_fraction": 0.125,
+      "successful_event_count": 2,
+      "transition_label": "lower_groundwater_low_to_lower_groundwater_medium"
+    },
+    {
+      "criterion_passed": true,
+      "event_count": 16,
+      "exact_interval_lower": 0.6976792615654681,
+      "exact_interval_upper": 0.9984188882772341,
+      "maximum_response_start_day": 25,
+      "median_response_start_day": 5.0,
+      "success_fraction": 0.9375,
+      "successful_event_count": 15,
+      "transition_label": "lower_groundwater_medium_to_lower_groundwater_high"
+    }
+  ],
+  "noise_margin_response_rule": {
+    "confidence_level": 0.95,
+    "consecutive_top_ranked_days": 5,
+    "event_count_per_directed_transition": 16,
+    "latest_allowed_response_start_day": 25,
+    "margin_definition": "posterior probability summed over the three parameter candidates for each process-noise level",
+    "minimum_exact_interval_lower_bound_exclusive": 0.5,
+    "minimum_successful_events_per_directed_transition": 13,
+    "response_window_days": 30
+  },
+  "parameter_ids": [
+    "candidate_1_shared_limits",
+    "candidate_2_shared_limits",
+    "candidate_3_shared_limits"
+  ],
+  "parameter_margin_numeric_results": [
+    {
+      "criterion_passed": true,
+      "event_count": 16,
+      "exact_interval_lower": 0.7940927857921773,
+      "exact_interval_upper": 1.0,
+      "maximum_response_start_day": 0,
+      "median_response_start_day": 0.0,
+      "success_fraction": 1.0,
+      "successful_event_count": 16,
+      "transition_label": "candidate_1_shared_limits_to_candidate_2_shared_limits"
+    },
+    {
+      "criterion_passed": true,
+      "event_count": 16,
+      "exact_interval_lower": 0.7940927857921773,
+      "exact_interval_upper": 1.0,
+      "maximum_response_start_day": 0,
+      "median_response_start_day": 0.0,
+      "success_fraction": 1.0,
+      "successful_event_count": 16,
+      "transition_label": "candidate_2_shared_limits_to_candidate_3_shared_limits"
+    },
+    {
+      "criterion_passed": true,
+      "event_count": 16,
+      "exact_interval_lower": 0.7940927857921773,
+      "exact_interval_upper": 1.0,
+      "maximum_response_start_day": 1,
+      "median_response_start_day": 0.0,
+      "success_fraction": 1.0,
+      "successful_event_count": 16,
+      "transition_label": "candidate_3_shared_limits_to_candidate_1_shared_limits"
+    }
+  ],
+  "parameter_margin_response_rule": {
+    "confidence_level": 0.95,
+    "consecutive_clear_dominance_days": 5,
+    "event_count_per_directed_transition": 16,
+    "margin_definition": "posterior probability summed over the three process-noise levels for each parameter candidate",
+    "minimum_exact_interval_lower_bound_exclusive": 0.5,
+    "minimum_new_true_candidate_probability_exclusive": 0.5,
+    "minimum_probability_margin_over_runner_up_inclusive": 0.1,
+    "minimum_successful_events_per_directed_transition": 13,
+    "response_window_days": 30
+  },
+  "physical_gates": {
+    "probability_normalization_maximum_absolute_error": 3.3306690738754696e-16,
+    "switch_boundary_projection_gate": {
+      "maximum_absolute_projection_adjustment": 0.0,
+      "passed": true,
+      "projection_event_count": 0
+    },
+    "switch_event_count": 48,
+    "truth_projection_gate": {
+      "maximum_absolute_projection_adjustment": 0.0,
+      "passed": true,
+      "projection_event_count": 0
+    },
+    "truth_transition_count": 12960
+  },
+  "preregistered_expectations": {
+    "lower_groundwater_low_to_lower_groundwater_medium": {
+      "basis": "docs/plans/2026-08-05-id23-low-to-medium-process-noise-slow-response-diagnosis.md",
+      "consequence": "reported verbatim; its failure does not count as method failure and does not trigger a stop",
+      "expectation": "expected_not_to_pass",
+      "reason": "discharge-channel information limit: medium footprint 0.0885 mm/day is half the 0.1780 mm/day observation noise; likelihood-only upper bound needs 46 days, beyond the 30-day window"
+    }
+  },
+  "process_ids": [
+    "lower_groundwater_low",
+    "lower_groundwater_medium",
+    "lower_groundwater_high"
+  ],
+  "scientific_conclusion_withheld": true,
+  "shared_parCWH": 4.790858379798471e-09,
+  "shared_parFC": 115.41144086847932,
+  "status": "complete_pending_blinded_visual_review_and_independent_verification",
+  "switched_factors": "true parameter candidate and true process-noise level together",
+  "visual_review_required": true,
+  "visual_review_status": "not_yet_performed"
+}

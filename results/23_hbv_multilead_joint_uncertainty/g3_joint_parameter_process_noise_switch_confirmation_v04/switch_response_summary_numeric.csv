@@ -1,0 +1,7 @@
+margin,transition_label,event_count,successful_event_count,success_fraction,exact_interval_lower,exact_interval_upper,criterion_passed,median_response_start_day,maximum_response_start_day
+parameter,candidate_1_shared_limits_to_candidate_2_shared_limits,16,16,1.0,0.7940927857921773,1.0,True,0.0,0
+parameter,candidate_2_shared_limits_to_candidate_3_shared_limits,16,16,1.0,0.7940927857921773,1.0,True,0.0,0
+parameter,candidate_3_shared_limits_to_candidate_1_shared_limits,16,16,1.0,0.7940927857921773,1.0,True,0.0,1
+process_noise,lower_groundwater_high_to_lower_groundwater_low,16,16,1.0,0.7940927857921773,1.0,True,5.5,12
+process_noise,lower_groundwater_low_to_lower_groundwater_medium,16,2,0.125,0.015513603815413893,0.3834762368492636,False,19.0,23
+process_noise,lower_groundwater_medium_to_lower_groundwater_high,16,15,0.9375,0.6976792615654681,0.9984188882772341,True,5.0,25

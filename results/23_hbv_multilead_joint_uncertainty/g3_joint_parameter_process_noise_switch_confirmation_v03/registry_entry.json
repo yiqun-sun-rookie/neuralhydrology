@@ -1,0 +1,57 @@
+{
+  "base_config": {
+    "frozen_config": "src/hbv_multilead_joint_uncertainty/configs/g3_state_domain_consistent_parameter_switch_confirmation_v01.json",
+    "note": "the three shared-state-domain parameter candidates are copied literally from the sealed parameter-switch confirmation config",
+    "sha256": "a7c974608a647f7eade14a7fa0ee443f6148950cf7175103b21d91c6bb344059"
+  },
+  "changed_factor": "true parameter candidate and true lower-groundwater process-noise level switch together at days 181 and 361",
+  "exp_id": "g3_joint_parameter_process_noise_switch_confirmation_v03",
+  "fixed_factors": [
+    "fifteen-state HBV-lite implementation",
+    "shared state-domain parameters parFC and parCWH",
+    "fixed observation noise",
+    "forcing distribution",
+    "initial conditions",
+    "nine-candidate bank",
+    "factorized transition probabilities"
+  ],
+  "hypothesis": "When the true parameter candidate and the true lower-groundwater process-noise level switch simultaneously at known stage boundaries while all fifteen truth-state values remain continuous and unprojected, does the fully interacting nine-candidate bank keep parameter-margin identification undegraded, and does noise-margin identification follow the single-factor pattern?",
+  "metrics_path": "results/23_hbv_multilead_joint_uncertainty/g3_joint_parameter_process_noise_switch_confirmation_v03/switch_response_summary_numeric.csv",
+  "notes": "No forecast; margins judged separately; low-to-medium noise margin preregistered as expected not to pass; final event success also requires sealed blinded visual review.",
+  "paper_name": "not_assigned",
+  "run_dir": "results/23_hbv_multilead_joint_uncertainty/g3_joint_parameter_process_noise_switch_confirmation_v03",
+  "seeds": {
+    "forcing": [
+      3801001,
+      3801002,
+      3801003,
+      3801004,
+      3801005,
+      3801006,
+      3801007,
+      3801008
+    ],
+    "observation_noise": [
+      3803001,
+      3803002,
+      3803003,
+      3803004,
+      3803005,
+      3803006,
+      3803007,
+      3803008
+    ],
+    "process_noise": [
+      3802001,
+      3802002,
+      3802003,
+      3802004,
+      3802005,
+      3802006,
+      3802007,
+      3802008
+    ]
+  },
+  "status": "complete_pending_blinded_visual_review_and_independent_verification",
+  "type": "prospective_synthetic_joint_switch_confirmation"
+}

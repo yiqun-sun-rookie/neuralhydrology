@@ -1,0 +1,46 @@
+{
+  "allowed_labels": [
+    "ambiguous",
+    "clear_success",
+    "failure"
+  ],
+  "created_utc": "2026-08-06T12:39:57.649436+00:00",
+  "experiment_id": "g3_joint_parameter_process_noise_switch_confirmation_v04",
+  "final_event_success_definition": "per margin: numerical_success and visual_label equals clear_success",
+  "joint_unique_combination_figures_shown_before_labels": false,
+  "label_counts": {
+    "noise_margin": {
+      "ambiguous": 2,
+      "clear_success": 38,
+      "failure": 8
+    },
+    "parameter_margin": {
+      "ambiguous": 2,
+      "clear_success": 38,
+      "failure": 8
+    }
+  },
+  "labels_migrated_from": {
+    "experiment_id": "g3_joint_parameter_process_noise_switch_confirmation_v03",
+    "justification": "the v04 run reproduces v03 bit for bit: every evidence array has a maximum absolute difference of 0.0, both numeric decision files are byte-identical, and all 48 review ids map to the same event with byte-identical panel images, so the labels describe exactly the same pictures; both identity conditions are re-checked by the sealing script before any file is written",
+    "labels_were_collected_before_any_numeric_unblinding": true,
+    "numeric_results_were_unblinded_between_v03_and_v04": true,
+    "review_manifest_sha256": "0daac528d234ed9382ca16d63d819b06f521650145bf0eb097a9d3ad8fc4e504",
+    "visual_review_csv_sha256": "a932c48dad5c1d0385514356d28568666fc9b88db78a90affb25f434a9ab6bf5",
+    "why_that_does_not_contaminate_these_labels": "the labels are copied verbatim from the v03 sealing, which happened before the numeric decisions were opened; no label was reviewed, revised or re-elicited after unblinding"
+  },
+  "labels_per_event": [
+    "parameter_margin",
+    "noise_margin"
+  ],
+  "numeric_decisions_opened_before_labels": false,
+  "numeric_decisions_opened_before_labels_evidence": "the runner printed only the physical gates; summary.json, switch_response_events_numeric.csv, switch_response_summary_numeric.csv and evidence.npz were never opened before this file was written",
+  "panel_count": 48,
+  "protocol_deviations": [
+    "the reviewer supplied labels in batch shorthand (naming only the panels with a problem) rather than two explicit labels per panel; every panel not named was recorded as clear_success on both margins",
+    "for the ten panels the reviewer flagged (003, 006, 011, 013, 014, 023, 032, 036, 044, 048) the reviewer did not state which subplot failed, so the flag was recorded on BOTH margins; this is the conservative choice because a non-clear_success label can only reduce, never increase, the count of finally successful events",
+    "panels 003 and 006 were recorded as ambiguous ('has a problem'); panels 011, 013, 014 were recorded as failure ('failed'); panels 023, 032, 036, 044, 048 were named by number only and were recorded as failure, which has the same effect on success counting as ambiguous",
+    "these labels were collected against the v03 panels and migrated to v04 unchanged; v04 exists only because the v03 independent verifier carried an inverted-polarity verdict aggregation and could never report success, not because anything about the truth, the filtering, the margin rules or the visual protocol changed"
+  ],
+  "reviewer": "user (blinded human visual review)"
+}

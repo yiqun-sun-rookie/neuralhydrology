@@ -80,3 +80,6 @@ src/test_data/configs/*.txt
 !runs/README.md
 !results/README.md
 
+
+# run logs and scratch output (not part of the sealed record)
+tmp/
