@@ -1,0 +1,57 @@
+### channel=id26-v09-strict seq=7
+### host=login4
+### started=2026-08-07T15:58:48+0800
+### ---------- output ----------
+=== SLURM FILE ===
+/data1/home/sunyiq/v09_strict/jobs/prepare.slurm: a /usr/bin/env bash script, ASCII text executable
+=== PRE-FLIGHT: worktree must be clean, stage must be unused ===
+dirty_files=0 (want 0)
+absent(good) A09-NEST-01.authorization.json
+absent(good) strict_nesting
+absent(good) R09-NEST-S100.legacy_checkpoint_bridge_external_audit.json
+=== SUBMIT ===
+jobid=201716
+=== WAIT (max 45 min) ===
+  t=60s state=R
+finished at t=110s
+=== ACCOUNTING ===
+     JobID    JobName  NodeList        State ExitCode    Elapsed 
+---------- ---------- --------- ------------ -------- ---------- 
+    201716    v09prep    ngu004       FAILED      1:0   00:01:09 
+=== STDOUT ===
+node=ngu004
+0, NVIDIA GeForce RTX 3090, 24576 MiB, 24125 MiB
+1, NVIDIA GeForce RTX 3090, 24576 MiB, 22374 MiB
+py 3.11.13 torch 2.4.0 numpy 2.3.3 cuda_ok True
+               total        used        free      shared  buff/cache   available
+Mem:             251          12          23           0         217         238
+=== RUN PREPARE ===
+=== STDERR (tail 30) ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/v09_strict/neuralhydrology/src/26_historical_band_experts/prepare_formal_strict_stage_v09.py", line 297, in <module>
+    main()
+  File "/data1/home/sunyiq/v09_strict/neuralhydrology/src/26_historical_band_experts/prepare_formal_strict_stage_v09.py", line 293, in main
+    print(json.dumps(prepare_formal_strict_stage_v09(), indent=2, sort_keys=True))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/v09_strict/neuralhydrology/src/26_historical_band_experts/prepare_formal_strict_stage_v09.py", line 272, in prepare_formal_strict_stage_v09
+    _require_clean_worktree_v09(worktree_root)
+  File "/data1/home/sunyiq/v09_strict/neuralhydrology/src/26_historical_band_experts/prepare_formal_strict_stage_v09.py", line 63, in _require_clean_worktree_v09
+    head = subprocess.run(
+           ^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+=== DID THE TWO PREREQUISITE REPORTS APPEAR? ===
+MISSING R09-NEST-S100.legacy_checkpoint_bridge_external_audit.json
+MISSING R09-NEST-S100.training_resource_preflight_external_audit.json
+=== BRIDGE VERDICT (the number that decides go/no-go) ===
+no bridge report
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T16:00:28+0800
