@@ -27,6 +27,7 @@ outbox/<channel>/result_<seq>.txt   结果
 | `default` | v1 遗留的 `inbox/cmd.sh` + `inbox/seq` | 2026-08-06 | **当前被 ID05 对抗攻击任务占用**（`~/adv531`，已跑到 seq=15）。该任务建议迁到 `inbox/adv531/`，迁移前别人不要碰 |
 | `a02` | nature_1st 论文实验 A02（目标时刻流量 × 6 种子配对） | 2026-08-06 | 由 Claude 会话占用，包落点 `~/nature_1st_a02`；结果 tar 走 `outbox/a02/` |
 | `probe` | 临时探测、环境体检 | 2026-08-06 | 谁都可以用，但结果可能被别人覆盖 |
+| `id26-v09-strict` | ID26 历史连续多尺度 v09 严格嵌套阶段（本地内存争用下不可靠，评估迁 HPC） | 2026-08-07 | 由 Claude 会话占用；计划落点 `~/v09_strict`，**不碰 `~/neuralhydrology`**（那里有 78 个未提交文件） |
 
 **迁移方法**（`default` → 自己的 channel，随时可做，不影响正在跑的）：
 
