@@ -1,0 +1,111 @@
+### channel=id26-v09-strict seq=5
+### host=login4
+### started=2026-08-07T15:53:41+0800
+### ---------- output ----------
+=== A NEWEST THINGS IN $HOME (top level, by mtime) ===
+total 1077904
+drwx------.  26 sunyiq g_sunyiq       4096 Aug  7 15:53 .
+drwxr-xr-x.   9 sunyiq g_sunyiq       4096 Aug  7 15:31 adv531
+drwxr-xr-x.   3 sunyiq g_sunyiq       4096 Aug  7 14:47 v09_strict
+drwxr-xr-x.   9 sunyiq g_sunyiq       4096 Aug  7 14:17 nature_1st_a02
+drwxr-xr-x.   8 sunyiq g_sunyiq       4096 Aug  7 11:44 .hpc_mailbox_staging
+drwxr-xr-x.   6 sunyiq g_sunyiq       4096 Aug  7 11:44 hpc_mailbox
+-rw-r--r--.   1 sunyiq g_sunyiq 1068849391 Aug  7 11:43 nature_1st_a02.tar.gz
+-rw-------.   1 sunyiq g_sunyiq      33671 Aug  6 20:38 .bash_history
+-rw-r--r--.   1 sunyiq g_sunyiq       6964 Aug  6 17:00 .hpc_runner_active.sh
+drwxr-xr-x. 152 root   root           4096 Aug  6 09:52 ..
+drwxr-xr-x.   6 sunyiq g_sunyiq       4096 Mar 12 20:26 kan_xaj_hpc
+-rw-------.   1 sunyiq g_sunyiq       3259 Mar  9 21:20 .viminfo
+drwxr-xr-x.  32 sunyiq g_sunyiq       4096 Mar  9 17:34 neuralhydrology
+-rw-r--r--.   1 sunyiq g_sunyiq         29 Mar  7 12:52 .gitconfig
+drwxr-xr-x.  26 sunyiq g_sunyiq       4096 Mar  5 22:14 kalmannet
+drwxr-xr-x.  31 sunyiq g_sunyiq       4096 Mar  4 22:27 neuralhydrology_backup_20260304
+-rw-------.   1 sunyiq g_sunyiq       1196 Feb 19 21:56 .Xauthority
+drwxr-xr-x.   3 sunyiq g_sunyiq       4096 Jan 24  2026 .local
+drwxr-xr-x.   2 sunyiq g_sunyiq       4096 Jan 24  2026 perl5
+=== B ANY .tar.gz ANYWHERE UNDER $HOME (depth<=5) ===
+/data1/home/sunyiq/vscode_cli.tar.gz
+/data1/home/sunyiq/kalmannet/draft/artifacts/long_horizon_dense/predictions_H41_72.tar.gz
+/data1/home/sunyiq/v09_strict/neuralhydrology/results/26_historical_band_experts/v09_sealed_input.tar.gz
+/data1/home/sunyiq/neuralhydrology_messy_backup/data_namou.tar.gz
+/data1/home/sunyiq/neuralhydrology_messy_backup/nh_code.tar.gz
+/data1/home/sunyiq/neuralhydrology_messy_backup/dist_hpc/caravan_meta.tar.gz
+/data1/home/sunyiq/neuralhydrology_messy_backup/caravan_meta.tar.gz
+/data1/home/sunyiq/neuralhydrology_messy_backup/caravan_ts.tar.gz
+/data1/home/sunyiq/hpc_mailbox/payload/adv531_v2.tar.gz
+/data1/home/sunyiq/hpc_mailbox/payload/id26/legacy_18_lstm_fair_531.tar.gz
+/data1/home/sunyiq/hpc_mailbox/payload/adv531.tar.gz
+/data1/home/sunyiq/nature_1st_a02.tar.gz
+=== C ANY FILE >40MB MODIFIED TODAY (depth<=5) ===
+2026-08-07 14:50    83051913  /data1/home/sunyiq/v09_strict/neuralhydrology/results/26_historical_band_experts/v09_sealed_input.tar.gz
+2026-08-07 11:43  1068849391  /data1/home/sunyiq/nature_1st_a02.tar.gz
+=== D V09_STRICT TREE ===
+/data1/home/sunyiq/v09_strict
+/data1/home/sunyiq/v09_strict/neuralhydrology
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/refs
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/refs/heads
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/refs/tags
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/branches
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/description
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/hooks
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/hooks/applypatch-msg.sample
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/hooks/pre-applypatch.sample
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/hooks/pre-push.sample
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/hooks/pre-rebase.sample
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/hooks/prepare-commit-msg.sample
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/hooks/update.sample
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/hooks/commit-msg.sample
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/hooks/post-update.sample
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/hooks/pre-commit.sample
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/info
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/info/exclude
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/packed-refs
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/HEAD
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/config
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/objects
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/objects/info
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/objects/pack
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/shallow
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/logs
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/logs/refs
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/logs/HEAD
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git/index
+/data1/home/sunyiq/v09_strict/neuralhydrology/.claude
+/data1/home/sunyiq/v09_strict/neuralhydrology/.claude/skills
+/data1/home/sunyiq/v09_strict/neuralhydrology/.claude/skills/hydro-discover
+/data1/home/sunyiq/v09_strict/neuralhydrology/.cursor
+/data1/home/sunyiq/v09_strict/neuralhydrology/.cursor/10-hpc-workflow.mdc
+/data1/home/sunyiq/v09_strict/neuralhydrology/.cursor/20-code-editing.mdc
+/data1/home/sunyiq/v09_strict/neuralhydrology/.cursor/plans
+/data1/home/sunyiq/v09_strict/neuralhydrology/.cursor/plans/hydro_agent_structure_discovery.plan.md
+/data1/home/sunyiq/v09_strict/neuralhydrology/.cursor/plans/全球水文模型论文计划_ee017201.plan.md
+=== E OTHER PLAUSIBLE LANDING SPOTS ===
+-- /data1/home/sunyiq --
+total 1077904
+drwx------.  26 sunyiq g_sunyiq       4096 Aug  7 15:53 .
+drwxr-xr-x.   9 sunyiq g_sunyiq       4096 Aug  7 15:31 adv531
+drwxr-xr-x.   3 sunyiq g_sunyiq       4096 Aug  7 14:47 v09_strict
+drwxr-xr-x.   9 sunyiq g_sunyiq       4096 Aug  7 14:17 nature_1st_a02
+drwxr-xr-x.   8 sunyiq g_sunyiq       4096 Aug  7 11:44 .hpc_mailbox_staging
+drwxr-xr-x.   6 sunyiq g_sunyiq       4096 Aug  7 11:44 hpc_mailbox
+-rw-r--r--.   1 sunyiq g_sunyiq 1068849391 Aug  7 11:43 nature_1st_a02.tar.gz
+-- /tmp --
+total 188212
+-rw-r--r--.  1 root        root           53938284 Aug  7 15:54 collect_node_statistics.55-20260803-220808
+-rw-r--r--.  1 root        root            7251358 Aug  7 15:54 .python_log_compress.lock
+drwxrwxrwt. 48 root        root               8192 Aug  7 15:37 .
+-rw-r--r--.  1 sunyiq      g_sunyiq            764 Aug  7 14:32 a02_009.slurm
+-rw-r--r--.  1 sunyiq      g_sunyiq            811 Aug  7 14:27 a02_ngu002_test.slurm
+-rw-r--r--.  1 sunyiq      g_sunyiq           2443 Aug  7 11:29 a02_probe.parquet
+drwxr-xr-x.  2 sunyiq      g_sunyiq           4096 Aug  7 11:28 a02_wheelprobe
+=== F HASH-MATCH SCAN over today's >40MB files ===
+  feee746c7bda7970c8bac470969bf4247118f8f35d6cf543a44a8a6b4bd1bed7  /data1/home/sunyiq/v09_strict/neuralhydrology/results/26_historical_band_experts/v09_sealed_input.tar.gz
+  202d83ff0af4a18ab70f0b263a102f8de10e6f7cf24515164e93b5c60bd44907  /data1/home/sunyiq/nature_1st_a02.tar.gz
+MATCH FOUND: /data1/home/sunyiq/v09_strict/neuralhydrology/results/26_historical_band_experts/v09_sealed_input.tar.gz
+=== G DISK / QUOTA (did the upload maybe fail on space?) ===
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T15:54:46+0800
