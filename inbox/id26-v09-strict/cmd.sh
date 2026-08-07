@@ -1,6 +1,6 @@
 #!/bin/bash
-# id26-v09-strict seq=13 : GPU verification of the S3 resource preflight.
-# seq=12 aborted before the real work because nh_final has no pytest and set -e killed the
+# id26-v09-strict seq=14 : GPU verification of the S3 resource preflight.
+# seq=13 died on a CUDA-init bug in the preflight itself (now fixed at c9bcfb4e).
 # job. The CPU suite already passes locally; nh_final is left alone (a02 / id05 use it).
 # Synthetic data only. No formal input opened, no formal report written, no training.
 export LC_ALL=C
