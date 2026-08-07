@@ -1,0 +1,54 @@
+### channel=a02 seq=3
+### host=login4
+### started=2026-08-07T11:15:00+0800
+### ---------- output ----------
+=== A BEFORE ===
+   numpy 2.3.3
+   pandas 2.3.2
+   torch 2.4.0
+   pyarrow MISSING
+=== B INSTALL (pip) ===
+      note: This is an issue with the package mentioned above, not pip.
+      hint: See above for details.
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: subprocess-exited-with-error
+
+× pip subprocess to install build dependencies did not run successfully.
+│ exit code: 1
+╰─> See above for output.
+
+note: This error originates from a subprocess, and is likely not a problem with pip.
+=== C AFTER (numpy/pandas/torch versions MUST be unchanged) ===
+Traceback (most recent call last):
+  File "<string>", line 5, in <module>
+ModuleNotFoundError: No module named 'pyarrow'
+   numpy 2.3.3
+   pandas 2.3.2
+   torch 2.4.0
+=== D FUNCTIONAL CHECK: pandas parquet round-trip ===
+Traceback (most recent call last):
+  File "<string>", line 7, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/core/frame.py", line 3118, in to_parquet
+    return to_parquet(
+           ^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/io/parquet.py", line 478, in to_parquet
+    impl = get_engine(engine)
+           ^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/io/parquet.py", line 68, in get_engine
+    raise ImportError(
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+=== E LANDING SITE (has the tarball arrived yet?) ===
+ls: cannot access /data1/home/sunyiq/nature_1st_a02.tar.gz: No such file or directory
+  tarball not uploaded yet
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T11:16:55+0800
