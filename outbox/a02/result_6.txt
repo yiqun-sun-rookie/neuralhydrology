@@ -1,0 +1,55 @@
+### channel=a02 seq=6
+### host=login4
+### started=2026-08-07T12:06:18+0800
+### ---------- output ----------
+=== A UNPACK ===
+
+real	0m20.683s
+user	0m17.696s
+sys	0m7.873s
+  unpacked
+=== B STRUCTURE ===
+  data/processed/timeseries          2885 entries
+  data/interim                          5 entries
+  data/processed/station_meta           1 entries
+  scripts                               1 entries
+  src/models                            1 entries
+  hpc                                  16 entries
+  reference                             1 entries
+=== C KEY FILES PRESENT ===
+  OK   scripts/train_depth_v1.py
+  OK   src/stage_dataset_v2.py
+  OK   src/models/simple_lstm_v2.py
+  OK   data/interim/stage_station_splits.json
+  OK   reference/A01R1_config.json
+  OK   manifest_sha256.json
+  OK   hpc/a02_smoke.slurm
+  OK   hpc/verify_package.py
+  OK   hpc/check_config_contract.py
+  OK   hpc/submit_all.sh
+  slurm job scripts: 13 (expect 13)
+=== D FIX LINE ENDINGS + PERMISSIONS (iron rule 4) ===
+  /data1/home/sunyiq/nature_1st_a02/hpc/a02_smoke.slurm: a /usr/bin/env bash script, ASCII text executable
+  logs/ and runs/ ready
+=== E IMPORT SMOKE (login node, lightweight) ===
+    handles = get_handle(
+              ^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/io/common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'data/processed/timeseries/01011000_hourly.parquet'
+  imports OK
+  window 168 stride 1 align preceding
+=== F CLI CONTRACT ===
+                         [--patience PATIENCE] [--seed SEED] [--device DEVICE]
+                         [--output_dir OUTPUT_DIR]
+                         [--require_empty_output_dir]
+                         [--discharge_alignment {preceding,same_time}]
+  --seed SEED
+  --device DEVICE
+=== G DISK ===
+1.4G	/data1/home/sunyiq/nature_1st_a02
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T12:07:10+0800
