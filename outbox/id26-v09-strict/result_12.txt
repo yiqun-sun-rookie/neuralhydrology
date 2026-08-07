@@ -1,0 +1,34 @@
+### channel=id26-v09-strict seq=12
+### host=login4
+### started=2026-08-07T21:23:08+0800
+### ---------- output ----------
+=== A SEALED STRICT EVIDENCE MUST STAY AT ITS RECORDED COMMIT ===
+strict checkout HEAD = f94183209bf44ed6e672e1c23f98020905804e6d (must stay f9418320...)
+=== B CODE CHECKOUT ===
+codetest HEAD = abdeb4bd1043198d4a8e4f4b8d4e8aedacf6e0b1
+expected      = abdeb4bd1043198d4a8e4f4b8d4e8aedacf6e0b1
+MATCH
+=== C WRITE GPU PREFLIGHT JOB ===
+=== D SUBMIT AND WAIT (cap 60 min) ===
+jobid=201773
+finished at t=40s
+=== E ACCOUNTING ===
+     JobID    JobName  NodeList        State ExitCode      Elapsed 
+---------- ---------- --------- ------------ -------- ------------ 
+    201773     v09pre    ngu010       FAILED      1:0     00:00:18 
+=== F STDOUT ===
+node=ngu010
+0, NVIDIA GeForce RTX 3090, 24125 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+torch 2.4.0 cudnn 90100
+=== CPU TEST SUITE FOR S1-S3 ===
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python: No module named pytest
+=== G STDERR (tail 20) ===
+=== H CONFIRM NOTHING FORMAL WAS TOUCHED ===
+strict HEAD still: f94183209bf44ed6e672e1c23f98020905804e6d
+ls: cannot access /data1/home/sunyiq/v09_strict/neuralhydrology/results/26_historical_band_experts/formal_v09/training_resource_preflight.external_audit.json: No such file or directory
+strict run dir intact: 7 files
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T21:24:42+0800
