@@ -1,22 +1,29 @@
 #!/bin/bash
-# a02 seq=11 : why are all 12 jobs PENDING(Priority)? real capacity vs limits.
+# a02 seq=12 : are the GPUs actually busy, or is ExcNodeList=ngu002 the blocker?
 export LC_ALL=C
 
-echo "=== A CLUSTER-WIDE hgpu2p QUEUE (all users) ==="
-squeue -p hgpu2p -o "%.10i %.10u %.16j %.8T %.6D %.12b %.10M %.18R" 2>&1 | head -22
+echo "=== A GPU ALLOC PER NODE (configured vs used) ==="
+sinfo -p hgpu2p -N -O "NodeHost:10,StateLong:10,Gres:14,GresUsed:18,CPUsState:16" 2>&1 | head -14
 
-echo "=== B GPU ALLOCATION PER NODE ==="
-sinfo -p hgpu2p -N -o "  %10N %8t %12C %20G %30E" 2>&1 | head -14
-echo "--- gres detail (alloc/total) ---"
-scontrol show node ngu001 ngu004 ngu005 ngu006 2>/dev/null | grep -E "NodeName|CfgTRES|AllocTRES|State=" | sed 's/^/  /' | head -20
+echo "=== B FULL NODE DETAIL FOR TWO NODES ==="
+scontrol show node ngu001 2>&1 | tr ' ' '\n' | grep -E "^(NodeName|State|CfgTRES|AllocTRES|Gres)" | sed 's/^/  ngu001 /'
+scontrol show node ngu002 2>&1 | tr ' ' '\n' | grep -E "^(NodeName|State|CfgTRES|AllocTRES|Gres|Reason)" | sed 's/^/  ngu002 /'
 
-echo "=== C WHY IS MY FIRST JOB WAITING (authoritative reason) ==="
-scontrol show job 201681 2>&1 | grep -E "JobId|JobState|Reason|Priority|NumCPUs|TresPerNode|Partition|ExcNodeList|StartTime" | sed 's/^/  /'
+echo "=== C EVERY JOB ON THE CLUSTER USING GPUs (all users, all partitions) ==="
+squeue -t R -O "JobID:9,UserName:10,Partition:9,NodeList:12,tres-per-node:12,TimeUsed:10,Name:18" 2>&1 | head -20
 
-echo "=== D ACCOUNT LIMITS (is there a per-user cap?) ==="
-sacctmgr -n show assoc user=$USER format=Account,User,Partition,MaxJobs,MaxSubmit,GrpTRES,MaxTRES 2>&1 | head -10
-echo "--- qos ---"
-sacctmgr -n show qos format=Name,MaxJobsPU,MaxSubmitPU,MaxTRESPU,GrpTRES 2>&1 | head -8
+echo "=== D WHAT DOES SLURM SAY IF I ASK IT TO TEST-SCHEDULE ONE JOB ==="
+scontrol show job 201681 2>&1 | tr ' ' '\n' | grep -E "^(Reason|StartTime|Priority|TresPerNode|NumCPUs|TimeLimit|ExcNodeList)" | sed 's/^/  /'
 
-echo "=== E MY PRIORITY VS QUEUE ==="
-squeue -p hgpu2p -o "%.10i %.10u %.8T %.12p %.16j" --sort=-p 2>&1 | head -14
+echo "=== E DOES A SHORT JOB WITHOUT THE EXCLUDE GET A BETTER START TIME? (test only, not submitted) ==="
+sbatch --test-only -p hgpu2p -N1 -n1 --cpus-per-task=4 --gres=gpu:1 -t 10:00:00 \
+       --wrap="echo test" 2>&1 | head -3
+echo "--- same but excluding ngu002 ---"
+sbatch --test-only -p hgpu2p -N1 -n1 --cpus-per-task=4 --gres=gpu:1 -t 10:00:00 \
+       --exclude=ngu002 --wrap="echo test" 2>&1 | head -3
+echo "--- same but 30h like our real jobs ---"
+sbatch --test-only -p hgpu2p -N1 -n1 --cpus-per-task=4 --gres=gpu:1 -t 30:00:00 \
+       --exclude=ngu002 --wrap="echo test" 2>&1 | head -3
+
+echo "=== F PARTITION LIMITS ==="
+scontrol show partition hgpu2p 2>&1 | tr ' ' '\n' | grep -E "^(PartitionName|MaxTime|DefaultTime|MaxNodes|TotalCPUs|TotalNodes|State|QoS|MaxCPUsPerNode)" | sed 's/^/  /'
