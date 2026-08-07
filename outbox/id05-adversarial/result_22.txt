@@ -1,0 +1,57 @@
+### channel=id05-adversarial seq=22
+### host=login4
+### started=2026-08-07T15:01:52+0800
+### ---------- output ----------
+=== TIME ===
+Fri Aug  7 15:01:52 CST 2026
+=== JOBS ===
+         JobID          JobName          State ExitCode    Elapsed 
+-------------- ---------------- -------------- -------- ---------- 
+      201637_0    adv531_moment      COMPLETED      0:0   01:29:27 
+      201637_1    adv531_moment      COMPLETED      0:0   01:26:34 
+      201637_2    adv531_moment      COMPLETED      0:0   01:28:44 
+      201637_3    adv531_moment      COMPLETED      0:0   01:27:48 
+      201637_4    adv531_moment      COMPLETED      0:0   01:27:37 
+        201693   adv531_analyze        PENDING      0:0   00:00:00 
+=== RECORDS ===
+531
+=== MOMENT CHUNK TAILS ===
+--- chunk 0 ---
+DONE 107/107 -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/statistical_structure_probe_eps0.1.json
+[Fri Aug  7 14:34:15 CST 2026] chunk 0 done
+--- chunk 1 ---
+DONE 106/106 -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/statistical_structure_probe_eps0.1.json
+[Fri Aug  7 14:31:23 CST 2026] chunk 1 done
+--- chunk 2 ---
+DONE 138/106 -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/statistical_structure_probe_eps0.1.json
+[Fri Aug  7 15:00:32 CST 2026] chunk 2 done
+--- chunk 3 ---
+DONE 138/106 -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/statistical_structure_probe_eps0.1.json
+[Fri Aug  7 14:59:37 CST 2026] chunk 3 done
+--- chunk 4 ---
+DONE 139/106 -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/statistical_structure_probe_eps0.1.json
+[Fri Aug  7 14:59:56 CST 2026] chunk 4 done
+--- moment err bytes ---
+0 /data1/home/sunyiq/adv531/logs/adv531_moment_201637_0.err
+0 /data1/home/sunyiq/adv531/logs/adv531_moment_201637_1.err
+0 /data1/home/sunyiq/adv531/logs/adv531_moment_201637_2.err
+0 /data1/home/sunyiq/adv531/logs/adv531_moment_201637_3.err
+0 /data1/home/sunyiq/adv531/logs/adv531_moment_201637_4.err
+=== ANALYSIS STDOUT ===
+cat: /data1/home/sunyiq/adv531/logs/adv531_analyze_201693.out: No such file or directory
+=== ANALYSIS STDERR ===
+tail: cannot open '/data1/home/sunyiq/adv531/logs/adv531_analyze_201693.err' for reading: No such file or directory
+=== SUMMARY CSV ===
+ls: cannot access /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/statistical_structure_summary_eps0.1.csv: No such file or directory
+=== QUEUE ===
+           JOBID             NAME  ST       TIME         NODELIST(REASON)
+          201692      a02_sam_s47  PD       0:00               (Priority)
+          201693   adv531_analyze  PD       0:00               (Priority)
+          201691      a02_pre_s47   R       0:17                   ngu001
+          201690      a02_sam_s46   R       0:30                   ngu202
+          201688      a02_sam_s45   R       1:17                   ngu011
+          201689      a02_pre_s46   R       1:17                   ngu006
+          201687      a02_pre_s45   R       2:29                   ngu101
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T15:01:53+0800
