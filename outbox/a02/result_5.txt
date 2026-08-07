@@ -1,0 +1,20 @@
+### channel=a02 seq=5
+### host=login4
+### started=2026-08-07T12:02:21+0800
+### ---------- output ----------
+=== A SIZE SAMPLES (30 s apart) ===
+  t=  0s  bytes=1068849391  (100.0% of expected)
+  t= 30s  bytes=1068849391  (100.0% of expected)
+  t= 60s  bytes=1068849391  (100.0% of expected)
+  t= 90s  bytes=1068849391  (100.0% of expected)
+=== B VERDICT ===
+  SIZE MATCHES EXACTLY -- verifying sha256 (may take ~30 s)
+  local  : 202d83ff0af4a18ab70f0b263a102f8de10e6f7cf24515164e93b5c60bd44907
+  remote : 202d83ff0af4a18ab70f0b263a102f8de10e6f7cf24515164e93b5c60bd44907
+  tar readability:
+    entries: 2925
+=== C DISK / QUOTA SANITY ===
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T12:04:21+0800
