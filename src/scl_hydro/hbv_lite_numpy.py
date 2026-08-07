@@ -254,12 +254,50 @@ def _half_triangular_lag(q_raw: np.ndarray, lag_time: float) -> np.ndarray:
     return q_out
 
 
+def _rising_half_triangular_lag(q_raw: np.ndarray, lag_time: float) -> np.ndarray:
+    """Apply RISING-half triangular routing lag (peak delayed by n-1 days).
+
+    With ``n = ceil(lag_time)`` and weights ``w_k = (k+1)/sum`` for
+    ``k = 0..n-1``, the simulated discharge at day ``t`` is::
+
+        q_sim[t] = w_{n-1} * q_raw[t-n+1] + ... + w_1 * q_raw[t-1] + w_0 * q_raw[t]
+
+    where ``w_{n-1}`` (the LARGEST weight) multiplies the OLDEST raw runoff,
+    so a runoff pulse peaks ``n-1`` days after it is generated — the
+    conventional concentration-time representation. Mirrors the PyTorch
+    ``DifferentiableHBVLite._triangular_lag_batch`` kernel.
+
+    Parameters calibrated under one kernel are NOT transferable to the
+    other (lag-bug diagnostic: median dNSE -0.0241, verdict SEVERE); use
+    this kernel only with parameters calibrated under ``lag_kernel="rising"``.
+    """
+    n = max(int(np.ceil(lag_time)), 1)
+    weights = np.arange(1, n + 1, dtype=np.float64)
+    weights = weights / weights.sum()
+    T = q_raw.shape[0]
+    q_out = np.zeros(T, dtype=np.float64)
+    for t in range(T):
+        s = 0.0
+        for k in range(n):
+            if t - k >= 0:
+                s = s + weights[k] * q_raw[t - k]
+        q_out[t] = s
+    return q_out
+
+
+LAG_KERNELS = {
+    "recession": _half_triangular_lag,
+    "rising": _rising_half_triangular_lag,
+}
+
+
 def simulate_hbv_lite(
     rain: np.ndarray,
     pet: np.ndarray,
     temp: np.ndarray,
     params: dict,
     initial_state: Optional[dict] = None,
+    lag_kernel: str = "recession",
 ) -> Tuple[np.ndarray, dict]:
     """Simulate HBV-light over a time series.
 
@@ -267,11 +305,19 @@ def simulate_hbv_lite(
         rain/pet/temp: 1D arrays of length T (mm/d, mm/d, °C).
         params: dict with the 13 named parameters.
         initial_state: optional dict with SNOWPACK / MELTWATER / SM / SUZ / SLZ.
+        lag_kernel: routing-lag kernel — "recession" (default, canonical for
+            the repro_v01 tables, peak at t=0) or "rising" (peak delayed by
+            n-1 days). Parameters are only valid under the kernel they were
+            calibrated with; the default preserves historical behaviour
+            bit-for-bit.
 
     Returns:
         q_sim: 1D array length T, post-lag simulated discharge (mm/d).
         final_state: dict with end states.
     """
+    if lag_kernel not in LAG_KERNELS:
+        raise ValueError(f"Unknown lag_kernel: {lag_kernel!r} "
+                         f"(expected one of {sorted(LAG_KERNELS)})")
     rain = np.asarray(rain, dtype=np.float64)
     pet = np.asarray(pet, dtype=np.float64)
     temp = np.asarray(temp, dtype=np.float64)
@@ -305,7 +351,7 @@ def simulate_hbv_lite(
         float(params["parPERC"]),
         float(params["parK2"]),
     )
-    q_sim = _half_triangular_lag(q_raw, float(params["lag_time"]))
+    q_sim = LAG_KERNELS[lag_kernel](q_raw, float(params["lag_time"]))
     final_state = {
         "SNOWPACK": SP,
         "MELTWATER": WC,

@@ -76,6 +76,7 @@ def calibrate_hbv_lite_cma(
     init_mean_norm: float | None = None,
     init_sigma: float = 0.3,
     param_bounds: dict | None = None,
+    lag_kernel: str = "recession",
 ) -> dict:
     """CMA-ES multi-restart calibration of HBV-light.
 
@@ -93,6 +94,10 @@ def calibrate_hbv_lite_cma(
         preserves the historical import-time / ``HBV_BOUNDS``-env behaviour
         bit-for-bit. Pass ``resolve_hbv_bounds(preset)`` to select bounds at
         runtime (used by the ``--bounds-preset`` CLI).
+    lag_kernel : str
+        Routing-lag kernel passed through to ``simulate_hbv_lite`` —
+        "recession" (default, canonical repro_v01) or "rising". The optimum
+        is only valid under the kernel it was calibrated with.
 
     Returns
     -------
@@ -112,7 +117,7 @@ def calibrate_hbv_lite_cma(
     def objective(x_norm: np.ndarray) -> float:
         params = _make_params(x_norm)
         try:
-            q_sim, _ = simulate_hbv_lite(rain, pet, temp, params, initial_state=state_init)
+            q_sim, _ = simulate_hbv_lite(rain, pet, temp, params, initial_state=state_init, lag_kernel=lag_kernel)
             q_eval = q_sim[warmup:]
             if loss == "nse":
                 nse = _nse(obs_eval, q_eval)
@@ -158,7 +163,7 @@ def calibrate_hbv_lite_cma(
 
     best_params = _make_params(best_overall[0])
     try:
-        best_q, final_state = simulate_hbv_lite(rain, pet, temp, best_params, initial_state=state_init)
+        best_q, final_state = simulate_hbv_lite(rain, pet, temp, best_params, initial_state=state_init, lag_kernel=lag_kernel)
         best_nse = _nse(obs_eval, best_q[warmup:])
     except Exception:
         best_q = np.zeros(len(obs))

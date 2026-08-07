@@ -74,7 +74,8 @@ SOLVER_NAME = "explicit_euler_dt1"
 def _run_one(args_tuple):
     (basin_id, data_root, n_trials, n_restarts, forcing,
      cal_period, eval_period, loss, kge_weight, pet_method,
-     init_mean, init_sigma, warmup_year, bounds_preset) = args_tuple
+     init_mean, init_sigma, warmup_year, bounds_preset,
+     lag_kernel) = args_tuple
 
     # Worker must use same import path as Numba cache (no `src.` prefix).
     import sys as _sys
@@ -119,6 +120,7 @@ def _run_one(args_tuple):
             loss=loss, kge_weight=kge_weight,
             init_mean_norm=init_mean, init_sigma=init_sigma,
             param_bounds=resolve_hbv_bounds(bounds_preset),
+            lag_kernel=lag_kernel,
         )
 
         # Determine eval-period init state. Two conventions:
@@ -153,6 +155,7 @@ def _run_one(args_tuple):
                 rain_w, pet_w, temp_w,
                 cal_result["optimized_params"],
                 initial_state=None,  # default init at start of warmup
+                lag_kernel=lag_kernel,
             )
         else:
             eval_init_state = cal_result["final_state"]
@@ -175,6 +178,7 @@ def _run_one(args_tuple):
             rain_eval, pet_eval, temp_eval,
             cal_result["optimized_params"],
             initial_state=eval_init_state,
+            lag_kernel=lag_kernel,
         )
         sim_series = pd.Series(q_eval_np, index=obs_eval.index, name="qsim")
         metrics = compute_metrics(obs_eval, sim_series)
@@ -243,6 +247,12 @@ def _build_parser() -> argparse.ArgumentParser:
                    help="HBV bounds preset key (see hbv_lite_numpy.BOUNDS_PRESETS). "
                         "v1 = hydroDL2 literature-tight (repro_v01 headline); v5 = wide. "
                         "Authoritative — overrides the import-time HBV_BOUNDS env var.")
+    p.add_argument("--lag-kernel", choices=["recession", "rising"],
+                   default="recession",
+                   help="Routing-lag UH kernel. recession = canonical repro_v01 "
+                        "(peak at t=0); rising = conventional concentration-time "
+                        "(peak delayed n-1 days). Parameters are only valid under "
+                        "the kernel they were calibrated with.")
     p.add_argument("--output-subdir", default=MODEL_NAME,
                    help="Subdir under the repro_v01 results root to write per-basin csvs "
                         "(and the summary filename prefix). Defaults to the model name so "
@@ -284,7 +294,7 @@ def main(argv=None) -> int:
 
     print(f"[{time.strftime('%H:%M:%S')}] {MODEL_NAME} 531 full (CMA-ES)")
     print(f"  protocol      = repro_v01 ({args.trials} trials × {args.restarts} restarts)")
-    print(f"  forcing       = {args.forcing}  pet = {args.pet_method}  bounds = {args.bounds_preset}")
+    print(f"  forcing       = {args.forcing}  pet = {args.pet_method}  bounds = {args.bounds_preset}  lag_kernel = {args.lag_kernel}")
     print(f"  loss          = {args.loss} (kge_w={args.kge_weight})  init_mean={args.init_mean} sigma={args.init_sigma}")
     print(f"  warmup_year   = {args.warmup_year}")
     print(f"  out subdir    = {model_dir}")
@@ -299,7 +309,8 @@ def main(argv=None) -> int:
         (b, args.data_root, args.trials, args.restarts,
          args.forcing, cal_period, eval_period,
          args.loss, args.kge_weight, args.pet_method,
-         args.init_mean, args.init_sigma, args.warmup_year, args.bounds_preset)
+         args.init_mean, args.init_sigma, args.warmup_year, args.bounds_preset,
+         args.lag_kernel)
         for b in todo
     ]
 
@@ -368,6 +379,7 @@ def main(argv=None) -> int:
         "loss": args.loss,
         "kge_weight": args.kge_weight,
         "bounds_preset": args.bounds_preset,
+        "lag_kernel": args.lag_kernel,
         "calibration_start": cal_period[0],
         "calibration_end": cal_period[1],
         "evaluation_start": eval_period[0],
