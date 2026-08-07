@@ -162,6 +162,14 @@
 - 独立核验：`..._v04_independent_verification_v01/independent_verification.json`
 - **被取代但完整保留**：`..._v03`、`..._v03_visual_review_v01`、`..._v03_independent_verification_v01`（其中 `status: failed` 的核验报告是上述核验器缺陷的证据，不得删除）
 
+### 封存目录内的过期字段（旁注已就位）
+
+封存目录内的文件受散列清单锁定，事后不得增删改，因此以下**封存瞬间的历史状态**至今仍留在文件里，容易被误读。两份旁注文件放在封存目录之外说明此事：
+
+- `..._v04.READ_FIRST.md`：说明 `summary.json` 与 `registry_entry.json` 的 `status` 仍为 `..._pending_blinded_visual_review_and_independent_verification`、`visual_review_status` 仍为 `not_yet_performed`、`scientific_conclusion_withheld` 仍为 `true`（三者均已过期）；并警告**单独使用 `..._v04_visual_review_v01/visual_review.csv` 会算出 6/16 而得出相反结论**，必须同时读归属澄清件。
+- `..._v03.SUPERSEDED.md`：说明本目录已被 v04 取代，且其核验报告的 `status: failed` 是核验器极性缺陷所致、非数据完整性问题（14 项实质检查全过，重建差 0.0）。
+- 各版冻结配置的 `status` 字段一律为 `frozen_before_run`，那是冻结时刻的值，运行后未（也不应）改写。
+
 ## 执行记录
 
 - v03 正式运行、盲态目视采集、目视封存均在数值判定未公开的条件下完成；运行器终端只打印物理门。
