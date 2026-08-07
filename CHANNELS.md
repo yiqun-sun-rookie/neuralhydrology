@@ -29,6 +29,7 @@ outbox/<channel>/result_<seq>.txt   结果
 | `probe` | 临时探测、环境体检 | 2026-08-06 | 谁都可以用，但结果可能被别人覆盖 |
 | `id26-v09-strict` | ID26 历史连续多尺度 v09 严格嵌套阶段（本地内存争用下不可靠，评估迁 HPC） | 2026-08-07 | 由 Claude 会话占用；计划落点 `~/v09_strict`，**不碰 `~/neuralhydrology`**（那里有 78 个未提交文件） |
 | `nature1st-hrrr` | nature_1st 小时流量预报战役：HRRR 预报气象可行性探测 | 2026-08-07 | 由 Claude 会话占用；**只读探测阶段**，落点未定，绝不碰 `a02` / `default` / `id26-v09-strict` |
+| `id17-film-gate` | ID17 实体感知闸门：EA-LSTM vs FiLM-LSTM 多折多种子 PUB 对比 | 2026-08-05 | 由 Claude 会话占用；计划落点 `~/id17_film_gate`（`~/neuralhydrology` 的本地 clone），**不碰 `~/neuralhydrology` 的 git 状态**（78 个未提交文件），不碰其他 channel |
 
 **迁移方法**（`default` → 自己的 channel，随时可做，不影响正在跑的）：
 
