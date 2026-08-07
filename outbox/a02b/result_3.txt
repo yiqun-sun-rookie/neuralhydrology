@@ -1,0 +1,29 @@
+### channel=a02b seq=3
+### host=login4
+### started=2026-08-07T22:24:04+0800
+### ---------- output ----------
+=== A RESCUE COPY (out of git working tree) ===
+  total 8
+  -rw-r--r--.  1 sunyiq g_sunyiq 12703059 Aug  7 22:24 a02_preceding_s45.tar.gz
+=== B PER-RUN SUMMARY (from .out only) ===
+  a02_pre_s42-201681       ep=10    -> Best median NSE: 0.8139               pack=[none]
+  a02_pre_s43-201683       ep=9   Done! Best median NSE: 0.8175 at epoch 4   pack=[12754691 /data1/home/sunyiq/hpc_mailbox/outbox/a02_preceding_s43.tar.gz]
+  a02_pre_s44-201685       ep=9     -> Best median NSE: 0.8177               pack=[none]
+  a02_pre_s45-201687       ep=8   Done! Best median NSE: 0.8191 at epoch 3   pack=[12703059 /data1/home/sunyiq/hpc_mailbox/outbox/a02_preceding_s45.tar.gz]
+  a02_pre_s46-201689       ep=8   Done! Best median NSE: 0.8235 at epoch 3   pack=[12704884 /data1/home/sunyiq/hpc_mailbox/outbox/a02_preceding_s46.tar.gz]
+  a02_pre_s47-201691       ep=9     -> Best median NSE: 0.8196               pack=[none]
+  a02_sam_s42-201682       ep=10    -> Best median NSE: 0.8143               pack=[none]
+  a02_sam_s43-201684       ep=10    -> Best median NSE: 0.8207               pack=[none]
+  a02_sam_s44-201686       ep=7     -> Best median NSE: 0.8224               pack=[none]
+  a02_sam_s45-201688       ep=9   Done! Best median NSE: 0.8145 at epoch 4   pack=[12706320 /data1/home/sunyiq/hpc_mailbox/outbox/a02_same_time_s45.tar.gz]
+  a02_sam_s46-201690       ep=10    -> Best median NSE: 0.8188               pack=[none]
+  a02_sam_s47-201692       ep=8     -> Best median NSE: 0.8221               pack=[none]
+=== C MODEL OUTPUT DIRS (can we rebuild a lost tarball?) ===
+  *                                files=0   size=
+=== D WHAT THE PACKAGING STEP TARS ===
+  grep: /data1/home/sunyiq/nature_1st_a02/slurm/a02_pre_s43.slurm: No such file or directory
+=== E MAILBOX OUTBOX NOW ===
+   /data1/home/sunyiq/hpc_mailbox/outbox/a02_preceding_s45.tar.gz 12703059
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T22:24:05+0800
