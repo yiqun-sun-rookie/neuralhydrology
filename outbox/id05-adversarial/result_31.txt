@@ -1,0 +1,37 @@
+### channel=id05-adversarial seq=31
+### host=login4
+### started=2026-08-07T17:55:19+0800
+### ---------- output ----------
+=== TIME ===
+Fri Aug  7 17:55:19 CST 2026
+=== JOB 201707 ===
+         JobID        State ExitCode    Elapsed 
+-------------- ------------ -------- ---------- 
+      201707_0    COMPLETED      0:0   01:48:01 
+      201707_1    COMPLETED      0:0   01:29:56 
+      201707_2    COMPLETED      0:0   01:27:25 
+      201707_3    COMPLETED      0:0   01:26:22 
+      201707_4    COMPLETED      0:0   01:44:05 
+=== CHUNK PROGRESS ===
+  chunk 0: DONE 107/107 -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exact_moment_probe_eps0.1_part0of5.csv
+  chunk 1: DONE 106/106 -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exact_moment_probe_eps0.1_part1of5.csv
+  chunk 2: DONE 106/106 -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exact_moment_probe_eps0.1_part2of5.csv
+  chunk 3: DONE 106/106 -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exact_moment_probe_eps0.1_part3of5.csv
+  chunk 4: DONE 106/106 -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exact_moment_probe_eps0.1_part4of5.csv
+=== PARTS ===
+   26528 /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exact_moment_probe_eps0.1_part0of5.csv
+   26183 /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exact_moment_probe_eps0.1_part1of5.csv
+   26231 /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exact_moment_probe_eps0.1_part2of5.csv
+   26278 /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exact_moment_probe_eps0.1_part3of5.csv
+   26264 /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exact_moment_probe_eps0.1_part4of5.csv
+  parts written: 5 / 5
+=== MERGE + SUMMARY ===
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ModuleNotFoundError: No module named 'pandas'
+cp: cannot stat '/data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exact_moment_probe_eps0.1.csv': No such file or directory
+md5sum: outbox/id05-adversarial/data/exact_moment_probe_eps0.1.csv: No such file or directory
+shipped: 
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T17:55:20+0800
