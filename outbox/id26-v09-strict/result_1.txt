@@ -1,0 +1,100 @@
+### channel=id26-v09-strict seq=1
+### host=login4
+### started=2026-08-07T11:44:18+0800
+### ---------- output ----------
+=== IDENTITY ===
+login4
+sunyiq
+2026-08-07 11:44:20 +0800
+=== DISK ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+-- home usage (top level, may be slow; capped) --
+6.2T	/data1/home/sunyiq
+=== HOME TOP LEVEL (do not disturb existing work) ===
+total 1077896
+drwx------.  24 sunyiq g_sunyiq       4096 Aug  7 11:44 .
+drwxr-xr-x. 152 root   root           4096 Aug  6 09:52 ..
+drwxr-xr-x.   9 sunyiq g_sunyiq       4096 Aug  7 11:20 adv531
+-rw-------.   1 sunyiq g_sunyiq      33671 Aug  6 20:38 .bash_history
+-rw-------.   1 sunyiq g_sunyiq         18 Sep  8  2025 .bash_logout
+-rw-------.   1 sunyiq g_sunyiq        193 Sep  8  2025 .bash_profile
+-rw-------.   1 sunyiq g_sunyiq        740 Sep 13  2025 .bashrc
+drwx------.   6 sunyiq g_sunyiq       4096 Sep 13  2025 .cache
+-rwxr-xr-x.   1 sunyiq g_sunyiq   24714296 Jan  8  2026 code
+drwxr-xr-x.   4 sunyiq g_sunyiq       4096 Sep 12  2025 .conda
+-rw-r--r--.   1 sunyiq g_sunyiq        238 Sep 12  2025 .condarc
+drwx------.   4 sunyiq g_sunyiq       4096 Sep 13  2025 .config
+drwxr-xr-x.  12 sunyiq g_sunyiq       4096 Jul 18  2025 filters
+-rw-r--r--.   1 sunyiq g_sunyiq         29 Mar  7 12:52 .gitconfig
+drwxr-xr-x.   2 sunyiq g_sunyiq       4096 Jan 20  2026 hpc
+drwxr-xr-x.   6 sunyiq g_sunyiq       4096 Aug  7 11:44 hpc_mailbox
+drwxr-xr-x.   8 sunyiq g_sunyiq       4096 Aug  7 11:44 .hpc_mailbox_staging
+-rw-r--r--.   1 sunyiq g_sunyiq       6964 Aug  6 17:00 .hpc_runner_active.sh
+drwxr-xr-x.  26 sunyiq g_sunyiq       4096 Mar  5 22:14 kalmannet
+drwxr-xr-x.   6 sunyiq g_sunyiq       4096 Mar 12 20:26 kan_xaj_hpc
+drwxr-xr-x.  23 sunyiq g_sunyiq       4096 Dec  1  2025 knet_project
+-rw-------.   1 sunyiq g_sunyiq        172 Sep  8  2025 .kshrc
+drwxr-xr-x.   3 sunyiq g_sunyiq       4096 Jan 24  2026 .local
+drwxr-xr-x.  19 sunyiq g_sunyiq       4096 Sep 13  2025 miniconda3
+drwx------.   4 sunyiq g_sunyiq       4096 Sep  8  2025 .mozilla
+-rw-r--r--.   1 sunyiq g_sunyiq 1068849391 Aug  7 11:43 nature_1st_a02.tar.gz
+drwxr-xr-x.  32 sunyiq g_sunyiq       4096 Mar  9 17:34 neuralhydrology
+drwxr-xr-x.  31 sunyiq g_sunyiq       4096 Mar  4 22:27 neuralhydrology_backup_20260304
+drwxr-xr-x.  16 sunyiq g_sunyiq       4096 Jan 20  2026 neuralhydrology_messy_backup
+=== RUNNING / QUEUED JOBS (must not disturb) ===
+     JOBID           NAME PARTITION    STATE       TIME  NODES NODELIST(REASON)
+=== RECENT JOBS (last 3 days) ===
+     JobID            JobName        State    Elapsed  NodeList 
+---------- ------------------ ------------ ---------- --------- 
+    201419          nt_ngu001    COMPLETED   00:00:19    ngu001 
+    201420          nt_ngu002       FAILED   00:00:37    ngu002 
+    201421          nt_ngu004    COMPLETED   00:00:38    ngu004 
+    201422          nt_ngu001    COMPLETED   00:00:18    ngu001 
+    201423          nt_ngu002       FAILED   00:00:12    ngu002 
+    201424          nt_ngu004    COMPLETED   00:00:18    ngu004 
+    201425          nt_ngu005    COMPLETED   00:00:22    ngu005 
+    201426          nt_ngu006    COMPLETED   00:00:22    ngu006 
+    201427          nt_ngu007    COMPLETED   00:00:35    ngu007 
+    201428          nt_ngu008    COMPLETED   00:00:35    ngu008 
+    201429          nt_ngu010    COMPLETED   00:00:29    ngu010 
+    201430          nt_ngu011    COMPLETED   00:00:35    ngu011 
+    201431          nt_ngu003    COMPLETED   00:00:23    ngu003 
+    201432          nt_ngu009    COMPLETED   00:00:23    ngu009 
+    201433          nt_ngu201 CANCELLED b+   00:00:00 None ass+ 
+    201434          nt_ngu202    COMPLETED   00:00:20    ngu202 
+    201435          nt_ngu203 CANCELLED b+   00:00:00 None ass+ 
+    201436          nt_ngu101    COMPLETED   00:00:23    ngu101 
+=== PARTITIONS ===
+PARTITION AVAIL  TIMELIMIT   NODES(A/I/O/T)  NODELIST
+hcpu48*      up   infinite      12/36/16/64  icn[201-264]
+hcpu48y      up   infinite         2/7/3/12  icn[270-281]
+hgpu8        up   infinite          3/0/0/3  ngu[201-203]
+hgpu4        up   infinite          1/2/1/4  ngu[101-104]
+hgpu2        up   infinite          1/1/0/2  ngu[003,009]
+hgpu2p       up   infinite          3/6/0/9  ngu[001-002,004-008,010-011]
+=== NEURALHYDROLOGY REPO STATE ===
+HEAD=96703cee48718aa789e72a8148c827601857dd44
+branch=migration/reorg-v1
+dirty_files=387
+remote=git@github.com:yiqun-sun-rookie/neuralhydrology.git
+-- does the v09 branch exist remotely? --
+=== IS THE V09 CODE PRESENT? ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/src/26_historical_band_experts/: No such file or directory
+=== RAW CAMELS DATA (needed only if inputs were ever rebuilt here) ===
+OK   basin_mean_forcing/maurer  402M
+OK   usgs_streamflow  251M
+OK   camels_attributes_v2.0  573K
+=== LEGACY 8-SEED CHECKPOINTS (bridge needs these) ===
+MISSING /data1/home/sunyiq/neuralhydrology/results/18_lstm_fair_531
+=== ANY EXISTING V09 FORMAL DIR? (must not clobber) ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/results/26_historical_band_experts: No such file or directory
+=== CONDA ENV nh_final ===
+python 3.11.13
+torch 2.4.0
+cuda 12.1
+numpy 2.3.3
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T11:55:33+0800
