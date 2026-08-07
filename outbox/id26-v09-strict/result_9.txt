@@ -1,0 +1,56 @@
+### channel=id26-v09-strict seq=9
+### host=login4
+### started=2026-08-07T16:11:45+0800
+### ---------- output ----------
+=== A GATE: prerequisites present, stage unused ===
+OK      R09-NEST-S100.legacy_checkpoint_bridge_external_audit.json
+OK      R09-NEST-S100.training_resource_preflight_external_audit.json
+stage unused: confirmed
+git=git version 2.55.0  dirty_files=0 (want 0)
+=== B CREATE THE ONE-USE AUTHORIZATION (no GPU, no training) ===
+{
+  "authorization_canonical_sha256": "1b713992108dbc37de9cf4f8a26f6925cdf8325028252d8d28be7ac224a7f14f",
+  "authorization_file_sha256": "00b10dcc5af9d661d50c369cfa056cc9d898b4ab353b93d0a43e0876bf833231",
+  "authorization_path": "/data1/home/sunyiq/v09_strict/neuralhydrology/results/26_historical_band_experts/formal_v09/authorizations/A09-NEST-01.authorization.json",
+  "executable_tree_sha256": "46dca143c2c4cb7ad379dd523f22d8c958b9a584cc4ab4a0de478ff7009a05a5",
+  "formal_prediction_generation_authorized": false,
+  "formal_training_started": false,
+  "git_commit": "f94183209bf44ed6e672e1c23f98020905804e6d",
+  "official_scoring_authorized": false,
+  "prerequisite_sha256": {
+    "input_artifact_external_audit": "e18be463df4cc6fe6c21a1e39c675f77db3e8c833109c1e9cfb557e37a832cd6",
+    "input_seal": "a5a64e43312ac303bf03ea3840e2cf126563527c6b82b8b94035c34978c25b3a",
+    "legacy_checkpoint_bridge_external_audit": "4208df32fabcf52f76ac0203e8211bb3f7a4e4c1f4012577b50b0a279b890379",
+    "training_resource_preflight_external_audit": "8d63f2041e5a4fb59fa94943cb6efaca7abedacf04216b1a90c53bfe125c9e8f",
+    "trusted_target_external_audit": "81e3658fe27e8f658e59d81015ce3d1b2a3baef11045a3e22bd76254ef5d8387"
+  },
+  "receipt_id": "A09-NEST-01",
+  "schema": "historical_multiscale_formal_v09_strict_authorization_creation_v1",
+  "scope": "R09-NEST-S100",
+  "status": "strict_training_authorization_created"
+}
+create_rc=0
+=== C VERIFY THE RECEIPT ON DISK ===
+status                                   authorized_once
+receipt_id                               A09-NEST-01
+scope                                    R09-NEST-S100
+maximum_attempts                         1
+allowed_runs                             ['R09-NEST-S100']
+git_commit                               f94183209bf44ed6e672e1c23f98020905804e6d
+formal_prediction_generation_authorized  False
+official_scoring_authorized              False
+approval_text_ok                         True
+=== D WRITE TRAINING SLURM ===
+/data1/home/sunyiq/v09_strict/jobs/train.slurm: a /usr/bin/env bash script, ASCII text executable
+=== E SUBMIT (do not wait) ===
+TRAIN_JOBID=201718
+     JOBID       NAME PARTITION    STATE       TIME NODELIST(REASON)
+    201718   v09train    hgpu2p  RUNNING       0:05 ngu008
+=== F NOTE ===
+expected wall clock ~2-3 h; checkpoints at epochs 10/20/30
+outputs land in: /data1/home/sunyiq/v09_strict/neuralhydrology/results/26_historical_band_experts/formal_v09/strict_nesting/R09-NEST-S100
+poll with a later seq; this worker exits now on purpose
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T16:13:17+0800
