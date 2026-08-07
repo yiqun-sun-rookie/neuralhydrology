@@ -1,0 +1,22 @@
+### channel=id05-adversarial seq=32
+### host=login4
+### started=2026-08-07T18:06:38+0800
+### ---------- output ----------
+=== TIME ===
+Fri Aug  7 18:06:38 CST 2026
+=== SHIPPED ===
+  a9d48be1fb614137da000c8c5a9085f1  exact_moment_probe_eps0.1_part0of5.csv  107 rows
+  7a7e86d86e061563974913243260bd58  exact_moment_probe_eps0.1_part1of5.csv  106 rows
+  bdd16d8d9fa9d16321250c26bfedf377  exact_moment_probe_eps0.1_part2of5.csv  106 rows
+  827a38430b9343bf83ac38f4cd804f9b  exact_moment_probe_eps0.1_part3of5.csv  106 rows
+  6f33edee4319755547a118712d35c088  exact_moment_probe_eps0.1_part4of5.csv  106 rows
+=== ERR CHECK ===
+   0 /data1/home/sunyiq/adv531/logs/adv531_exact_201707_0.err
+   0 /data1/home/sunyiq/adv531/logs/adv531_exact_201707_1.err
+   0 /data1/home/sunyiq/adv531/logs/adv531_exact_201707_2.err
+   0 /data1/home/sunyiq/adv531/logs/adv531_exact_201707_3.err
+   0 /data1/home/sunyiq/adv531/logs/adv531_exact_201707_4.err
+  (err grep end)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T18:06:39+0800
