@@ -1,0 +1,60 @@
+### channel=a02 seq=12
+### host=login4
+### started=2026-08-07T14:25:38+0800
+### ---------- output ----------
+=== A GPU ALLOC PER NODE (configured vs used) ===
+HOSTNAMES STATE     GRES          GRES_USED         CPUS(A/I/O/T)   
+ngu001    mixed     gpu:2         gpu:2,dcu:0       4/92/0/96       
+ngu002    idle      gpu:2         gpu:0,dcu:0       0/96/0/96       
+ngu004    mixed     gpu:2         gpu:2,dcu:0       4/92/0/96       
+ngu005    mixed     gpu:2         gpu:2,dcu:0       4/92/0/96       
+ngu006    mixed     gpu:2         gpu:2,dcu:0       8/88/0/96       
+ngu007    mixed     gpu:2         gpu:2,dcu:0       6/90/0/96       
+ngu008    mixed     gpu:2         gpu:2,dcu:0       8/88/0/96       
+ngu010    mixed     gpu:2         gpu:2,dcu:0       4/28/0/32       
+ngu011    mixed     gpu:2         gpu:2,dcu:0       4/28/0/32       
+=== B FULL NODE DETAIL FOR TWO NODES ===
+  ngu001 NodeName=ngu001
+  ngu001 Gres=gpu:2
+  ngu001 State=MIXED
+  ngu001 CfgTRES=cpu=96,mem=1M,billing=96
+  ngu001 AllocTRES=cpu=4
+  ngu002 NodeName=ngu002
+  ngu002 Gres=gpu:2
+  ngu002 State=IDLE
+  ngu002 CfgTRES=cpu=96,mem=1M,billing=96
+  ngu002 AllocTRES=
+=== C EVERY JOB ON THE CLUSTER USING GPUs (all users, all partitions) ===
+JOBID    USER      PARTITIONNODELIST    TRES_PER_NODTIME      NAME              
+201637   sunyiq    hgpu2p   ngu007      gpu:1       53:13     adv531_moment     
+201650   sunyiq    hgpu2p   ngu006      gpu:1       53:49     adv531_moment     
+201649   sunyiq    hgpu2p   ngu006      gpu:1       53:50     adv531_moment     
+201638   sunyiq    hgpu2p   ngu008      gpu:1       1:20:06   adv531_moment     
+201639   sunyiq    hgpu2p   ngu008      gpu:1       1:20:06   adv531_moment     
+=== D WHAT DOES SLURM SAY IF I ASK IT TO TEST-SCHEDULE ONE JOB ===
+  Priority=200561
+  Reason=Priority
+  TimeLimit=1-06:00:00
+  StartTime=2027-08-07T10:40:52
+  ExcNodeList=ngu002
+  NumCPUs=4
+  TresPerNode=gpu:1
+=== E DOES A SHORT JOB WITHOUT THE EXCLUDE GET A BETTER START TIME? (test only, not submitted) ===
+sbatch: Job 201694 to start at 2137-08-10T10:12:38 using 4 processors on nodes ngu002 in partition hgpu2p
+--- same but excluding ngu002 ---
+sbatch: Job 201695 to start at 2137-08-10T20:52:32 using 4 processors on nodes ngu008 in partition hgpu2p
+--- same but 30h like our real jobs ---
+sbatch: Job 201696 to start at 2137-08-10T20:52:32 using 4 processors on nodes ngu008 in partition hgpu2p
+=== F PARTITION LIMITS ===
+  PartitionName=hgpu2p
+  QoS=N/A
+  DefaultTime=NONE
+  MaxNodes=UNLIMITED
+  MaxTime=UNLIMITED
+  MaxCPUsPerNode=UNLIMITED
+  State=UP
+  TotalCPUs=736
+  TotalNodes=9
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T14:25:38+0800
