@@ -1,0 +1,50 @@
+### channel=id05-adversarial seq=20
+### host=login4
+### started=2026-08-07T14:21:07+0800
+### ---------- output ----------
+=== TIME ===
+Fri Aug  7 14:21:07 CST 2026
+=== MOMENT ARRAY 201637 ===
+         JobID          JobName        State ExitCode    Elapsed 
+-------------- ---------------- ------------ -------- ---------- 
+      201637_0    adv531_moment      RUNNING      0:0   01:15:34 
+      201637_1    adv531_moment      RUNNING      0:0   01:15:34 
+      201637_2    adv531_moment      RUNNING      0:0   00:49:18 
+      201637_3    adv531_moment      RUNNING      0:0   00:49:17 
+      201637_4    adv531_moment      RUNNING      0:0   00:48:41 
+=== CHUNK LOG TAILS ===
+--- chunk 0 ---
+[87/107] 10336645 | D=0.2423 | 49.5s/basin | ETA 0.28h
+[88/107] 12020000 | D=0.1787 | 49.5s/basin | ETA 0.26h
+[89/107] 12048000 | D=0.6163 | 49.5s/basin | ETA 0.25h
+--- chunk 1 ---
+[89/106] 12054000 | D=0.4518 | 48.3s/basin | ETA 0.23h
+[90/106] 12114500 | D=0.3205 | 48.3s/basin | ETA 0.21h
+[91/106] 12145500 | D=0.1096 | 48.3s/basin | ETA 0.20h
+--- chunk 2 ---
+[55/106] 05556500 | D=0.4768 | 49.7s/basin | ETA 0.70h
+[56/106] 05593575 | D=0.1601 | 49.7s/basin | ETA 0.69h
+[57/106] 07362100 | D=0.1421 | 49.7s/basin | ETA 0.68h
+--- chunk 3 ---
+[56/106] 05593900 | D=0.3099 | 49.1s/basin | ETA 0.68h
+[57/106] 07362587 | D=0.2363 | 49.1s/basin | ETA 0.67h
+[58/106] 05120500 | D=0.4828 | 49.1s/basin | ETA 0.65h
+--- chunk 4 ---
+[56/106] 05595730 | D=0.1927 | 49.0s/basin | ETA 0.68h
+[57/106] 07375000 | D=0.1409 | 49.0s/basin | ETA 0.67h
+[58/106] 06221400 | D=0.2389 | 49.0s/basin | ETA 0.65h
+=== ERR SIZES ===
+0 /data1/home/sunyiq/adv531/logs/adv531_moment_201637_0.err
+0 /data1/home/sunyiq/adv531/logs/adv531_moment_201637_1.err
+0 /data1/home/sunyiq/adv531/logs/adv531_moment_201637_2.err
+0 /data1/home/sunyiq/adv531/logs/adv531_moment_201637_3.err
+0 /data1/home/sunyiq/adv531/logs/adv531_moment_201637_4.err
+(err grep end)
+=== RECORDS ===
+npz count: 356
+34M	/data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/statistical_constraint_records_eps0.1
+=== ANALYSIS ===
+only 356 records, expected 531 -- analysis NOT submitted
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T14:21:07+0800
