@@ -1,0 +1,57 @@
+### channel=a02b seq=4
+### host=login4
+### started=2026-08-07T22:28:03+0800
+### ---------- output ----------
+=== A RUNS DIR ===
+  total 49734
+  drwxr-xr-x. 14 sunyiq g_sunyiq     4096 Aug  7 21:32 .
+  drwxr-xr-x.  9 sunyiq g_sunyiq     4096 Aug  7 14:17 ..
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 22:18 a02_preceding_s42
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 21:09 a02_preceding_s43
+  -rw-r--r--.  1 sunyiq g_sunyiq 12754691 Aug  7 21:09 a02_preceding_s43.tar.gz
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 21:54 a02_preceding_s44
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 21:32 a02_preceding_s45
+  -rw-r--r--.  1 sunyiq g_sunyiq 12703059 Aug  7 21:32 a02_preceding_s45.tar.gz
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 21:00 a02_preceding_s46
+  -rw-r--r--.  1 sunyiq g_sunyiq 12704884 Aug  7 21:00 a02_preceding_s46.tar.gz
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 21:43 a02_preceding_s47
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 21:50 a02_same_time_s42
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 21:51 a02_same_time_s43
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 21:54 a02_same_time_s44
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 21:19 a02_same_time_s45
+  -rw-r--r--.  1 sunyiq g_sunyiq 12706320 Aug  7 21:19 a02_same_time_s45.tar.gz
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 22:11 a02_same_time_s46
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 21:59 a02_same_time_s47
+=== B PER-RUN ARTIFACTS ===
+  a02_preceding_s42          ckpt=3.3M    best_metrics=yes      history_lines=10
+  a02_preceding_s43          ckpt=3.3M    best_metrics=yes      history_lines=9
+  a02_preceding_s44          ckpt=3.3M    best_metrics=yes      history_lines=9
+  a02_preceding_s45          ckpt=3.3M    best_metrics=yes      history_lines=8
+  a02_preceding_s46          ckpt=3.3M    best_metrics=yes      history_lines=8
+  a02_preceding_s47          ckpt=3.3M    best_metrics=yes      history_lines=9
+  a02_same_time_s42          ckpt=3.3M    best_metrics=yes      history_lines=10
+  a02_same_time_s43          ckpt=3.3M    best_metrics=yes      history_lines=10
+  a02_same_time_s44          ckpt=3.3M    best_metrics=yes      history_lines=7
+  a02_same_time_s45          ckpt=3.3M    best_metrics=yes      history_lines=9
+  a02_same_time_s46          ckpt=3.3M    best_metrics=yes      history_lines=10
+  a02_same_time_s47          ckpt=3.3M    best_metrics=yes      history_lines=8
+=== C BEST METRICS CONTENT (completed runs) ===
+  a02_preceding_s42          {"epoch":10,"train_loss":0.2279333099850107,"lr":0.00025,"median_nse":0.8139176964759827,"mean_nse":0.6781197786331177,"p25_nse":0.6079869270324707,"p75_nse":0.8998440504074097,"global_rmse":0.6126209497451782,"n_stations":431}
+  a02_preceding_s43          {"epoch":4,"train_loss":0.31302549140361974,"lr":0.0005,"median_nse":0.8174557685852051,"mean_nse":0.6922029852867126,"p25_nse":0.5956728458404541,"p75_nse":0.9064943790435791,"global_rmse":0.6032811403274536,"n_stations":431}
+  a02_preceding_s44          {"epoch":8,"train_loss":0.24352795085487833,"lr":0.00025,"median_nse":0.8177046775817871,"mean_nse":0.68569016456604,"p25_nse":0.6059778928756714,"p75_nse":0.9058293104171753,"global_rmse":0.6075078248977661,"n_stations":431}
+  a02_preceding_s45          {"epoch":3,"train_loss":0.3193781544946788,"lr":0.0005,"median_nse":0.819140613079071,"mean_nse":0.692300021648407,"p25_nse":0.6026428937911987,"p75_nse":0.9015206098556519,"global_rmse":0.603268027305603,"n_stations":431}
+  a02_preceding_s46          {"epoch":3,"train_loss":0.319105458520149,"lr":0.0005,"median_nse":0.8235262036323547,"mean_nse":0.6856850981712341,"p25_nse":0.5864511132240295,"p75_nse":0.905156135559082,"global_rmse":0.6057208180427551,"n_stations":431}
+  a02_preceding_s47          {"epoch":9,"train_loss":0.23486048593386935,"lr":0.00025,"median_nse":0.8196054697036743,"mean_nse":0.6649355292320251,"p25_nse":0.5985749959945679,"p75_nse":0.9103195667266846,"global_rmse":0.622395932674408,"n_stations":431}
+  a02_same_time_s42          {"epoch":10,"train_loss":0.22554946806538761,"lr":0.00025,"median_nse":0.8143251538276672,"mean_nse":0.6755722165107727,"p25_nse":0.6172792911529541,"p75_nse":0.8941123485565186,"global_rmse":0.6182329654693604,"n_stations":431}
+  a02_same_time_s43          {"epoch":9,"train_loss":0.23263079946433687,"lr":0.00025,"median_nse":0.8207440972328186,"mean_nse":0.671907901763916,"p25_nse":0.5958598852157593,"p75_nse":0.9045324325561523,"global_rmse":0.6167547106742859,"n_stations":431}
+  a02_same_time_s44          {"epoch":3,"train_loss":0.3178085129287235,"lr":0.0005,"median_nse":0.8223854303359985,"mean_nse":0.6830919981002808,"p25_nse":0.6021729111671448,"p75_nse":0.909155547618866,"global_rmse":0.609980046749115,"n_stations":431}
+  a02_same_time_s45          {"epoch":4,"train_loss":0.29378882796169553,"lr":0.0005,"median_nse":0.8145414590835571,"mean_nse":0.6891043782234192,"p25_nse":0.5919579267501831,"p75_nse":0.9001300930976868,"global_rmse":0.6048416495323181,"n_stations":431}
+  a02_same_time_s46          {"epoch":6,"train_loss":0.285412264612259,"lr":0.0005,"median_nse":0.8187935948371887,"mean_nse":0.6983450651168823,"p25_nse":0.6108943819999695,"p75_nse":0.8971968293190002,"global_rmse":0.5966207981109619,"n_stations":431}
+  a02_same_time_s47          {"epoch":4,"train_loss":0.29708794446234954,"lr":0.0005,"median_nse":0.8220547437667847,"mean_nse":0.6985250115394592,"p25_nse":0.5980241894721985,"p75_nse":0.9038746356964111,"global_rmse":0.5980179309844971,"n_stations":431}
+=== D DISK SPACE ===
+  Filesystem                   Size  Used Avail Use% Mounted on
+  hhjt_parastor_hhjt_parastor  954T  591T  363T  62% /data1
+  205M	/data1/home/sunyiq/nature_1st_a02/runs
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T22:28:04+0800
