@@ -1,0 +1,49 @@
+{
+  "schema": "historical_multiscale_formal_v09_run_order_v1",
+  "scope": "FORMAL-MAIN-24",
+  "description": "Frozen execution order for the 24 formal version-09 main trainings; each row runs left to right.",
+  "families": {
+    "B09-CLASSIC": {
+      "variant": "classic_lstm_256_clean",
+      "trainable_parameters": 297217,
+      "results_root": "results/26_historical_band_experts/formal_v09/classic"
+    },
+    "B09-CAPACITY": {
+      "variant": "classic_lstm_369_capacity",
+      "trainable_parameters": 595198,
+      "results_root": "results/26_historical_band_experts/formal_v09/capacity"
+    },
+    "E09-CONTINUOUS": {
+      "variant": "continuous_multiscale_history",
+      "trainable_parameters": 596737,
+      "results_root": "results/26_historical_band_experts/formal_v09/continuous"
+    }
+  },
+  "seeds": [100, 200, 300, 400, 500, 600, 700, 800],
+  "runs": [
+    {"position": 1, "seed": 100, "family": "B09-CLASSIC", "run_id": "B09-CLASSIC-S100"},
+    {"position": 2, "seed": 100, "family": "B09-CAPACITY", "run_id": "B09-CAPACITY-S100"},
+    {"position": 3, "seed": 100, "family": "E09-CONTINUOUS", "run_id": "E09-CONTINUOUS-S100"},
+    {"position": 4, "seed": 200, "family": "B09-CLASSIC", "run_id": "B09-CLASSIC-S200"},
+    {"position": 5, "seed": 200, "family": "E09-CONTINUOUS", "run_id": "E09-CONTINUOUS-S200"},
+    {"position": 6, "seed": 200, "family": "B09-CAPACITY", "run_id": "B09-CAPACITY-S200"},
+    {"position": 7, "seed": 300, "family": "B09-CAPACITY", "run_id": "B09-CAPACITY-S300"},
+    {"position": 8, "seed": 300, "family": "B09-CLASSIC", "run_id": "B09-CLASSIC-S300"},
+    {"position": 9, "seed": 300, "family": "E09-CONTINUOUS", "run_id": "E09-CONTINUOUS-S300"},
+    {"position": 10, "seed": 400, "family": "B09-CAPACITY", "run_id": "B09-CAPACITY-S400"},
+    {"position": 11, "seed": 400, "family": "E09-CONTINUOUS", "run_id": "E09-CONTINUOUS-S400"},
+    {"position": 12, "seed": 400, "family": "B09-CLASSIC", "run_id": "B09-CLASSIC-S400"},
+    {"position": 13, "seed": 500, "family": "E09-CONTINUOUS", "run_id": "E09-CONTINUOUS-S500"},
+    {"position": 14, "seed": 500, "family": "B09-CLASSIC", "run_id": "B09-CLASSIC-S500"},
+    {"position": 15, "seed": 500, "family": "B09-CAPACITY", "run_id": "B09-CAPACITY-S500"},
+    {"position": 16, "seed": 600, "family": "E09-CONTINUOUS", "run_id": "E09-CONTINUOUS-S600"},
+    {"position": 17, "seed": 600, "family": "B09-CAPACITY", "run_id": "B09-CAPACITY-S600"},
+    {"position": 18, "seed": 600, "family": "B09-CLASSIC", "run_id": "B09-CLASSIC-S600"},
+    {"position": 19, "seed": 700, "family": "B09-CLASSIC", "run_id": "B09-CLASSIC-S700"},
+    {"position": 20, "seed": 700, "family": "B09-CAPACITY", "run_id": "B09-CAPACITY-S700"},
+    {"position": 21, "seed": 700, "family": "E09-CONTINUOUS", "run_id": "E09-CONTINUOUS-S700"},
+    {"position": 22, "seed": 800, "family": "B09-CAPACITY", "run_id": "B09-CAPACITY-S800"},
+    {"position": 23, "seed": 800, "family": "E09-CONTINUOUS", "run_id": "E09-CONTINUOUS-S800"},
+    {"position": 24, "seed": 800, "family": "B09-CLASSIC", "run_id": "B09-CLASSIC-S800"}
+  ]
+}
