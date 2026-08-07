@@ -1,0 +1,44 @@
+### channel=id05-adversarial seq=19
+### host=login4
+### started=2026-08-07T13:03:56+0800
+### ---------- output ----------
+=== HOST/TIME ===
+login4
+Fri Aug  7 13:03:56 CST 2026
+=== DID SEQ18 LAND ===
+ls: cannot access /data1/home/sunyiq/adv531/adv531_moment.slurm: No such file or directory
+3c52605c3406202736945c9ba2b848fa 
+  expect probe md5=b45d49568d9b06f49e295a3e0b6625b1
+=== QUEUE NOW ===
+         JOBID               NAME  ST       TIME     NODELIST(REASON)
+=== JOBS TODAY ===
+         JobID          JobName        State ExitCode    Elapsed 
+-------------- ---------------- ------------ -------- ---------- 
+      201459_0      adv531_exp2    COMPLETED      0:0   08:32:35 
+      201459_1      adv531_exp2    COMPLETED      0:0   08:47:26 
+      201459_2      adv531_exp2    COMPLETED      0:0   08:42:43 
+      201459_3      adv531_exp2    COMPLETED      0:0   07:07:23 
+      201459_4      adv531_exp2    COMPLETED      0:0   07:07:22 
+      201465_0      adv531_exp4    COMPLETED      0:0   10:17:30 
+      201465_1      adv531_exp4    COMPLETED      0:0   10:12:09 
+      201465_2      adv531_exp4    COMPLETED      0:0   10:05:14 
+      201465_3      adv531_exp4    COMPLETED      0:0   10:08:32 
+      201465_4      adv531_exp4    COMPLETED      0:0   09:57:15 
+      201466_0    adv531_ksweep    COMPLETED      0:0   03:22:38 
+      201466_1    adv531_ksweep    COMPLETED      0:0   03:24:56 
+      201466_2    adv531_ksweep    COMPLETED      0:0   03:19:57 
+      201466_3    adv531_ksweep    COMPLETED      0:0   03:20:47 
+      201466_4    adv531_ksweep    COMPLETED      0:0   03:19:24 
+        201616        a02_smoke       FAILED      1:0   00:01:47 
+        201618        a02_smoke    COMPLETED      0:0   00:48:21 
+=== IDEMPOTENT SUBMIT ===
+existing adv531_moment records today: 0
+  probe md5 after copy=b45d49568d9b06f49e295a3e0b6625b1
+  offset option present: 2
+  submitted: 201637
+=== QUEUE AFTER ===
+         JOBID               NAME  ST       TIME
+  201637_[0-4]      adv531_moment  PD       0:00
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T13:05:12+0800
