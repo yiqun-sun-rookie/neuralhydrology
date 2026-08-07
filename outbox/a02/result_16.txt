@@ -1,0 +1,66 @@
+### channel=a02 seq=16
+### host=login4
+### started=2026-08-07T14:35:15+0800
+### ---------- output ----------
+=== A WIDEN PARTITION FOR THE 12 A02 JOBS ===
+  201681 -> hgpu2p,hgpu2,hgpu4,hgpu8
+  201682 -> hgpu2p,hgpu2,hgpu4,hgpu8
+  201683 -> hgpu2p,hgpu2,hgpu4,hgpu8
+  201684 -> hgpu2p,hgpu2,hgpu4,hgpu8
+  201685 -> hgpu2p,hgpu2,hgpu4,hgpu8
+  201686 -> hgpu2p,hgpu2,hgpu4,hgpu8
+  201687 -> hgpu2p,hgpu2,hgpu4,hgpu8
+  201688 -> hgpu2p,hgpu2,hgpu4,hgpu8
+  201689 -> hgpu2p,hgpu2,hgpu4,hgpu8
+  201690 -> hgpu2p,hgpu2,hgpu4,hgpu8
+  201691 -> hgpu2p,hgpu2,hgpu4,hgpu8
+  201692 -> hgpu2p,hgpu2,hgpu4,hgpu8
+=== B CONFIRM ===
+  JobId=201681
+  Reason=Priority
+  TimeLimit=1-06:00:00
+  Partition=hgpu2p,hgpu2,hgpu4,hgpu8
+  ExcNodeList=ngu002
+=== C WAIT 3 MIN FOR THE SCHEDULER ===
+=== D QUEUE NOW ===
+     JOBID             NAME PARTITION    STATE       TIME NODELIST(REASON)
+    201682      a02_sam_s42 hgpu2p,hg  PENDING       0:00      (Resources)
+    201683      a02_pre_s43 hgpu2p,hg  PENDING       0:00       (Priority)
+    201684      a02_sam_s43 hgpu2p,hg  PENDING       0:00       (Priority)
+    201685      a02_pre_s44 hgpu2p,hg  PENDING       0:00       (Priority)
+    201686      a02_sam_s44 hgpu2p,hg  PENDING       0:00       (Priority)
+    201687      a02_pre_s45 hgpu2p,hg  PENDING       0:00       (Priority)
+    201688      a02_sam_s45 hgpu2p,hg  PENDING       0:00       (Priority)
+    201689      a02_pre_s46 hgpu2p,hg  PENDING       0:00       (Priority)
+    201690      a02_sam_s46 hgpu2p,hg  PENDING       0:00       (Priority)
+    201691      a02_pre_s47 hgpu2p,hg  PENDING       0:00       (Priority)
+    201692      a02_sam_s47 hgpu2p,hg  PENDING       0:00       (Priority)
+    201681      a02_pre_s42     hgpu2  RUNNING       2:58           ngu009
+  a02 running=1  pending=11
+=== E FREE GPU SLOTS RIGHT NOW ===
+ngu001   hgpu2p  mixed    gpu:2    gpu:2,dcu:0   
+ngu002   hgpu2p  idle     gpu:2    gpu:0,dcu:0   
+ngu003   hgpu2   mixed    gpu:2    gpu:2,dcu:0   
+ngu004   hgpu2p  mixed    gpu:2    gpu:2,dcu:0   
+ngu005   hgpu2p  mixed    gpu:2    gpu:2,dcu:0   
+ngu006   hgpu2p  mixed    gpu:2    gpu:2,dcu:0   
+ngu007   hgpu2p  mixed    gpu:2    gpu:2,dcu:0   
+ngu008   hgpu2p  mixed    gpu:2    gpu:2,dcu:0   
+ngu009   hgpu2   mixed    gpu:2    gpu:2,dcu:0   
+ngu010   hgpu2p  mixed    gpu:2    gpu:2,dcu:0   
+ngu011   hgpu2p  mixed    gpu:2    gpu:2,dcu:0   
+ngu101   hgpu4   mixed    gpu:4    gpu:4,dcu:0   
+ngu102   hgpu4   mixed    gpu:4    gpu:4,dcu:0   
+ngu103   hgpu4   down*    gpu:4    gpu:0,dcu:0   
+ngu104   hgpu4   mixed    gpu:4    gpu:4,dcu:0   
+ngu201   hgpu8   mixed    gpu:8    gpu:8,dcu:0   
+ngu202   hgpu8   mixed    gpu:8    gpu:8,dcu:0   
+ngu203   hgpu8   mixed    gpu:8    gpu:8,dcu:0   
+=== F ADV531 PROGRESS (when will those 5 GPUs free up?) ===
+201637   adv531_moment   ngu007   1:05:52   12:00:00   
+201650   adv531_moment   ngu006   1:06:28   12:00:00   
+201649   adv531_moment   ngu006   1:06:29   12:00:00   
+201681   a02_pre_s42     ngu009   2:59      1-06:00:00 
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T14:38:17+0800
