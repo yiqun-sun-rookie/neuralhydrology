@@ -1,0 +1,57 @@
+### channel=id17-film-gate seq=1
+### host=login4
+### started=2026-08-07T19:42:05+0800
+### ---------- output ----------
+=== A. RUNNING JOBS (must not disturb) ===
+     JOBID           NAME PARTITION    STATE       TIME  NODES NODELIST(REASON)
+    201692    a02_sam_s47     hgpu4  RUNNING    4:39:35      1 ngu102
+    201691    a02_pre_s47    hgpu2p  RUNNING    4:40:29      1 ngu001
+    201690    a02_sam_s46     hgpu8  RUNNING    4:40:42      1 ngu202
+    201688    a02_sam_s45    hgpu2p  RUNNING    4:41:29      1 ngu011
+    201689    a02_pre_s46    hgpu2p  RUNNING    4:41:29      1 ngu006
+    201687    a02_pre_s45     hgpu4  RUNNING    4:42:41      1 ngu101
+    201686    a02_sam_s44     hgpu2  RUNNING    4:42:54      1 ngu003
+    201685    a02_pre_s44     hgpu2  RUNNING    4:46:15      1 ngu009
+    201684    a02_sam_s43     hgpu8  RUNNING    4:51:33      1 ngu202
+    201683    a02_pre_s43     hgpu8  RUNNING    4:53:43      1 ngu202
+    201682    a02_sam_s42     hgpu8  RUNNING    4:53:44      1 ngu202
+    201681    a02_pre_s42     hgpu2  RUNNING    5:06:47      1 ngu009
+=== B. PARTITION hgpu2p ===
+ PARTITION  AVAIL  TIMELIMIT  NODES  STATE NODELIST
+    hgpu2p     up   infinite      8    mix ngu[001,004-008,010-011]
+    hgpu2p     up   infinite      1   idle ngu002
+=== C. REPO STATE ===
+migration/reorg-v1
+96703ce fix(adversarial): handle empty/NaN targets in metrics (basin 09535100)
+dirty files: 78
+=== D. CAMELS_US DATA ===
+/data1/home/sunyiq/neuralhydrology/data/camelsh
+/data1/home/sunyiq/neuralhydrology/data/camels_us
+--- /data1/home/sunyiq/neuralhydrology/data/camels_us ---
+basin_mean_forcing
+camels_attributes_v2.0
+demo
+full
+raw
+usgs_streamflow
+=== E. FORCING + ATTRIBUTES ===
+/data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing
+/data1/home/sunyiq/neuralhydrology/data/camels_us/camels_attributes_v2.0
+/data1/home/sunyiq/neuralhydrology/data/camels_us/full/camels_attributes_v2.0
+/data1/home/sunyiq/neuralhydrology/data/camels_us/full/usgs_streamflow
+/data1/home/sunyiq/neuralhydrology/data/camels_us/full/basin_mean_forcing
+/data1/home/sunyiq/neuralhydrology/data/camels_us/demo/basin_mean_forcing
+=== F. FOLD BASIN FILES (static_falsification) ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/src/static_falsification/data/fold*_*.txt: No such file or directory
+wc: /data1/home/sunyiq/neuralhydrology/src/static_falsification/data/fold0_train.txt: No such file or directory
+=== G. CONDA ENV ===
+py 3.11.13 torch 2.4.0
+=== H. DISK + HOME DIRS ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+/data1/home/sunyiq/adv531
+/data1/home/sunyiq/nature_1st_a02
+/data1/home/sunyiq/v09_strict
+### ---------- end ----------
+### exit_code=2
+### finished=2026-08-07T19:42:27+0800
