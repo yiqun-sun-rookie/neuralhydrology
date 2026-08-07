@@ -13,12 +13,21 @@ from typing import Mapping
 import numpy as np
 import pandas as pd
 
-from unified_autoresearch.data.packages import FROZEN_DEVELOPMENT_SELECTION
+from unified_autoresearch.data.packages import FROZEN_DEVELOPMENT_SELECTIONS
 from unified_autoresearch.protocols.validation import FROZEN_DEVELOPMENT_PROTOCOL
 from unified_autoresearch.runtime.descriptor import CANDIDATE_CATEGORIES, CANDIDATE_ID_PATTERN
 
 
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+FROZEN_BASIN_LISTS = tuple(list(selection["basins"]) for selection in FROZEN_DEVELOPMENT_SELECTIONS)
+
+
+def _frozen_basin_list(basins) -> list[str]:
+    """Return the frozen basin list matching this set, or refuse a basin set nobody froze."""
+    for candidate in FROZEN_BASIN_LISTS:
+        if set(candidate) == set(basins):
+            return list(candidate)
+    raise ValueError("basin set is not one of the frozen development selections")
 
 
 def _sha256(path: Path) -> str:
@@ -102,7 +111,7 @@ def score_development_predictions(
         manifest.get("schema_version") != "development_packages_v1"
         or manifest.get("protocols") != ["forward", "reverse"]
         or manifest.get("development_protocols") != FROZEN_DEVELOPMENT_PROTOCOL["development_protocols"]
-        or manifest.get("basins") != FROZEN_DEVELOPMENT_SELECTION["basins"]
+        or manifest.get("basins") not in FROZEN_BASIN_LISTS
         or not isinstance(manifest.get("source_manifest_sha256"), str)
         or SHA256_PATTERN.fullmatch(manifest["source_manifest_sha256"]) is None
     ):
@@ -198,7 +207,7 @@ def summarize_candidate_development_scores(
 
     reports: dict[str, dict] = {}
     hashes: dict[str, str] = {}
-    expected_basins = set(FROZEN_DEVELOPMENT_SELECTION["basins"])
+    frozen_basins: list[str] | None = None
     expected_report_fields = {
         "schema_version",
         "candidate_id",
@@ -218,6 +227,16 @@ def summarize_candidate_development_scores(
             raise ValueError("score reports must be unlinked regular files")
         report = json.loads(path.read_text(encoding="utf-8"))
         metrics = report.get("basin_metrics")
+        if isinstance(metrics, dict):
+            # Both protocols must report the same frozen basin set; nothing else is accepted.
+            try:
+                protocol_basins = _frozen_basin_list(metrics)
+            except ValueError as error:
+                raise ValueError("development score report identity or source mismatch") from error
+            if frozen_basins is None:
+                frozen_basins = protocol_basins
+            if protocol_basins != frozen_basins:
+                raise ValueError("development score report identity or source mismatch")
         if (
             set(report) != expected_report_fields
             or report.get("schema_version") != "development_score_v1"
@@ -234,7 +253,6 @@ def summarize_candidate_development_scores(
             or not isinstance(report.get("predictions_sha256"), str)
             or SHA256_PATTERN.fullmatch(report["predictions_sha256"]) is None
             or not isinstance(metrics, dict)
-            or set(metrics) != expected_basins
             or any(isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) for value in metrics.values())
         ):
             raise ValueError("development score report identity or source mismatch")
@@ -242,7 +260,7 @@ def summarize_candidate_development_scores(
         hashes[protocol_name] = _sha256(path)
 
     cells = []
-    for basin in FROZEN_DEVELOPMENT_SELECTION["basins"]:
+    for basin in frozen_basins or []:
         forward = float(reports["forward"]["basin_metrics"][basin])
         reverse = float(reports["reverse"]["basin_metrics"][basin])
         mean = forward / 2.0 + reverse / 2.0

@@ -1,0 +1,66 @@
+{
+  "schema_version": "resource_safety_v4",
+  "supersedes": "resource_safety_v3",
+  "decision_basis": "declared task request, task-specific reserve, current capacity, candidate-attributable footprint, and the summed footprint of everything launched at once",
+  "calibration_note": "v3 judges one task at a time, which is only sound while candidates run serially. Under parallel execution several tasks that each fit alone can jointly exhaust memory, so the launch gate is applied to the sum. The headroom withheld from the aggregate gate is exactly the v3 runtime stop floor: a batch must never be admitted into a state the supervisor would immediately stop it in.",
+  "sample_interval_seconds": 30,
+  "summary_interval_seconds": 600,
+  "capacity_unit": "GB",
+  "prelaunch": {
+    "required_estimates": [
+      "cpu_cores",
+      "gpu_count",
+      "estimated_peak_memory_gb",
+      "memory_safety_reserve_gb",
+      "estimated_output_gb",
+      "disk_safety_reserve_gb"
+    ],
+    "launch_rule": {
+      "cpu": "cpu_cores <= current_available_cpu_cores",
+      "gpu": "gpu_count <= current_available_gpu_count",
+      "memory": "estimated_peak_memory_gb + memory_safety_reserve_gb <= current_available_memory_gb",
+      "disk": "estimated_output_gb + disk_safety_reserve_gb <= current_free_disk_gb"
+    }
+  },
+  "parallel_launch": {
+    "basis": "the sum over concurrently launched tasks, measured against current capacity minus the supervisor stop headroom",
+    "aggregate_rule": {
+      "cpu": "sum(cpu_cores) <= current_available_cpu_cores",
+      "gpu": "sum(gpu_count) <= current_available_gpu_count",
+      "memory": "sum(estimated_peak_memory_gb + memory_safety_reserve_gb) <= current_available_memory_gb - memory_headroom",
+      "disk": "sum(estimated_output_gb + disk_safety_reserve_gb) <= current_free_disk_gb - disk_headroom"
+    },
+    "memory_headroom_gb": 1.5,
+    "memory_headroom_fraction": 0.04,
+    "disk_headroom_gb": 10,
+    "disk_headroom_fraction": 0.05,
+    "headroom_rule": "headroom = max(absolute_floor_gb, fraction * total_capacity_gb), identical to the v3 runtime stop floors",
+    "max_concurrent_tasks_ceiling": 4,
+    "ceiling_basis": "Each concurrent task adds one supervisor subprocess, and supervisor overhead under parallel execution is unmeasured. The ceiling bounds that unmeasured cost while still allowing a useful speedup; the planner lowers the batch below it whenever the aggregate rule says so. Raise it only after measuring supervisor cost and log volume under real parallel load.",
+    "planner": "deterministic greedy packing in declared order; a task that cannot pass the aggregate gate alone is refused rather than silently deferred",
+    "default_max_concurrent_tasks": 1
+  },
+  "runtime_stop": {
+    "basis": "stop only for danger the candidate itself can relieve, or a genuine near-out-of-memory system floor set below the normal fluctuation band",
+    "consecutive_low_samples": 2,
+    "candidate_memory": {
+      "declared_envelope": "estimated_peak_memory_gb + memory_safety_reserve_gb",
+      "stop_when_process_gb_exceeds_envelope_times": 1.5
+    },
+    "system_memory_critical": {
+      "stop_free_gb_floor": 1.5,
+      "stop_free_fraction_floor": 0.04
+    },
+    "disk": {
+      "stop_new_writes_free_gb_floor": 10,
+      "stop_new_writes_free_fraction_floor": 0.05
+    }
+  },
+  "process_ownership_fields": [
+    "process_id",
+    "create_time",
+    "executable_path",
+    "run_id"
+  ],
+  "foreign_process_action": "forbidden"
+}
