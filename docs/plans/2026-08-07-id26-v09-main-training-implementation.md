@@ -34,10 +34,26 @@ SHA-256、同随机数三模型逐轮排列哈希一致、历史门第 1/3 步�
   历史门第 1 步为 0 且梯度有限、第 3 步前历史编码器出现非零梯度。
 - 判据：参数量 297,217 / 595,198 / 596,737；30 轮 204,630 步；同随机数三模型逐轮排列哈希相同。
 
-### S3 资源预检 `resource_preflight_formal_v09.py`
+### S3 资源预检 `resource_preflight_formal_v09.py` — 已完成
 
-- 四种工作负载 × 两个一次性 GPU 子进程，数组哈希一致（峰值显存除外）。
-- 子进程拒绝任何正式输入/输出路径。**需要 GPU → 测试在 HPC 跑。**
+四种工作负载 × 两个一次性 GPU 子进程，数组哈希一致（峰值显存除外）。
+子进程结构上无法接收路径参数（命令行只有 workload/device/五个形状整数）。
+
+**HPC 实测（RTX 3090, torch 2.4.0, cuDNN 9.1.0）：四个负载全部 `identical=True`。**
+冻结开关：`cudnn_deterministic=true`, `cudnn_benchmark=false`,
+`deterministic_algorithms_requested=true`, `CUBLAS_WORKSPACE_CONFIG=:4096:8`。
+
+实测峰值显存（batch 256，正式窗口形状）：
+
+| 负载 | peak allocated | peak reserved |
+|---|---:|---:|
+| strict_nesting_pair | 984 MiB | 1142 MiB |
+| classic_lstm_256_clean | 979 MiB | 1120 MiB |
+| classic_lstm_369_capacity | 1363 MiB | 1610 MiB |
+| continuous_multiscale_history | 1165 MiB | 1402 MiB |
+
+协议要求启动前可用显存 ≥ `max(2×峰值, 峰值+2 GiB)`，最严的一档是 continuous 的
+`1402+2048 = 3450 MiB`；3090 上空闲 24 GB，不构成约束。
 
 ### S4 串行编排器 `run_formal_training_v09.py`
 
@@ -63,6 +79,6 @@ SHA-256、同随机数三模型逐轮排列哈希一致、历史门第 1/3 步�
 
 - [x] S1 冻结运行顺序
 - [x] S2 单运行训练器
-- [x] S3 资源预检（代码 + CPU 测试；GPU 双进程一致性待 HPC 验）
+- [x] S3 资源预检（GPU 双进程一致性已在 RTX 3090 实测通过，job 201776）
 - [ ] S4 串行编排器
 - [ ] S5 审核与总封存
