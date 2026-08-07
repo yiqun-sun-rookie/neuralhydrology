@@ -1,15 +1,17 @@
 #!/bin/bash
-# id05-adversarial  ship the occlusion table (unchanged, already 531 in the manuscript)
-# and rerun the robustness audit for the section 5.3 local-scale numbers.
+# id05-adversarial  moment audit on all 531 basins: ship the chunkable probe and launch it.
 export LC_ALL=C
 A=/data1/home/$USER/adv531
-S=$A/results/05_adversarial_robustness/id18_s100
-MB=/data1/home/$USER/hpc_mailbox
+IN=/data1/home/$USER/hpc_mailbox/inbox/id05-adversarial
 P=/data1/home/$USER/miniconda3/envs/nh_final/bin/python
 
-cp -f $MB/payload/occlusion_importance_shuffle.csv $S/
-echo "occlusion md5=$(md5sum $S/occlusion_importance_shuffle.csv | cut -c1-32) expect=1093d4ade1306c1aff756d71acad9a08"
+cp -f $IN/run_statistical_structure_probe.py $A/src/adversarial/scripts/
+cp -f $IN/adv531_moment.slurm $A/
+sed -i 's/\r$//' $A/src/adversarial/scripts/run_statistical_structure_probe.py $A/adv531_moment.slurm
+echo "probe md5=$(md5sum $A/src/adversarial/scripts/run_statistical_structure_probe.py | cut -c1-32) expect=b45d49568d9b06f49e295a3e0b6625b1"
+$P $A/src/adversarial/scripts/run_statistical_structure_probe.py --help 2>&1 | grep -c offset | sed 's/^/  offset option present: /'
 
 cd $A
-export PYTHONPATH=$(pwd):$PYTHONPATH
-$P -u src/adversarial/scripts/analyze_forcing_error_robustness_audit.py 2>&1 | tail -55
+J=$(sbatch --parsable adv531_moment.slurm 2>&1)
+echo "submitted: $J"
+squeue -u $USER -o "%.14i %.16j %.3t %.10M" 2>&1 | head -8
