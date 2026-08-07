@@ -1,3 +1,11 @@
+> **已归档（2026-08-07）：本文已被拆分版取代，仅作历史记录保留。**
+>
+> 现行指南（在 `src/hbv_multilead_joint_uncertainty/`）：
+> - `GUIDE_HBV_SINGLE_FILTER_STATE_UPDATE_VALIDATION.md` —— 验证部分
+> - `GUIDE_HBV_SINGLE_FILTER_STATE_UPDATE_PLOTTING.md` —— 绘图部分
+>
+> 归档前按章节标题核对，本文各节在新版中均有归属（验证类归验证指南、第九节绘图归绘图指南）；新版为重写而非搬运，篇幅更大、结构不同。若发现某处细节确实只存在于本文，请回填至现行指南而不是复活本文。
+
 # HBV-lite 单滤波器状态更新验证与绘图指南
 
 文档类型：单滤波器执行指南  

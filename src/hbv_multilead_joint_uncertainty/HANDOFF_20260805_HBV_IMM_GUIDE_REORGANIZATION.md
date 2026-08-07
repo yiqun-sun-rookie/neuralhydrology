@@ -6,15 +6,15 @@
 > - 曾以 `GUIDE_HBV_INTERACTING_MULTIPLE_MODEL_VALIDATION.md` 之名入库的文件已被删除（应为改名）。
 > - 上述新增与删除已于提交 `0dcf362c` 一并入库（用户明确指示提交全部未提交内容）。**其内容未经该次提交者审阅**，只是从"未提交"状态保存下来，避免丢失。
 >
-> **遗留的待决问题（本任务的所有者决定，未处理）**：新旧两代指南目前**并存且范围重叠**，任何读者都无法从文件本身判断哪一份为准——
+> **旧版并存问题已按用户指示解决（2026-08-07）**：三份旧的"验证与绘图"合并版指南已 `git mv` 至 `docs/archive/superseded_guides/`，各自文首加了"已归档、以现行拆分版为准"的抬头。`src/hbv_multilead_joint_uncertainty/` 下现在**每个主题只留最新的一套**：
 >
-> | 主题 | 旧（合并版，仍在库） | 新（拆分版） |
+> | 主题 | 现行（保留） | 已归档 |
 > |---|---|---|
-> | 交互式多模型 | `GUIDE_HBV_INTERACTING_MULTIPLE_MODEL_VALIDATION_AND_PLOTTING.md` | `GUIDE_INTERACTING_MULTIPLE_MODEL_VALIDATION.md` + `GUIDE_CANDIDATE_SWITCHING_PROBABILITY_PLOTTING.md` |
-> | 候选切换概率 | `GUIDE_CANDIDATE_SWITCHING_PROBABILITY_PLOTTING_AND_JUDGMENT.md` | 同上两份 |
-> | 单滤波器 | `GUIDE_HBV_SINGLE_FILTER_STATE_UPDATE_VALIDATION_AND_PLOTTING.md` | `GUIDE_HBV_SINGLE_FILTER_STATE_UPDATE_VALIDATION.md` + `GUIDE_HBV_SINGLE_FILTER_STATE_UPDATE_PLOTTING.md` |
+> | 单滤波器 | `GUIDE_HBV_SINGLE_FILTER_STATE_UPDATE_VALIDATION.md` + `..._PLOTTING.md` | `..._VALIDATION_AND_PLOTTING.md` |
+> | 交互式多模型 + 候选切换 | `GUIDE_INTERACTING_MULTIPLE_MODEL_VALIDATION.md` + `GUIDE_CANDIDATE_SWITCHING_PROBABILITY_PLOTTING.md` | `GUIDE_HBV_INTERACTING_MULTIPLE_MODEL_VALIDATION_AND_PLOTTING.md`、`GUIDE_CANDIDATE_SWITCHING_PROBABILITY_PLOTTING_AND_JUDGMENT.md` |
+> | 实验设计 | `GUIDE_HBV_FILTER_EXPERIMENT_DESIGN_VALIDATION_AND_PLOTTING.md`（仍是合并式，**尚未拆分**） | —— |
 >
-> 建议由本任务所有者在每份旧指南开头加一行"已被 XXX 取代"，或明确保留旧版并说明分工。本注记不代做此决定。
+> **⚠ 归档时发现的内容缺口，属本任务未完成部分**：旧多模型指南的**第六层之后的"第七层：预报价值"、"九、交互状态图应该怎样画"、"十、预报比较图"** 三节，在新体系中**没有对应指南**——新版明确声明"预报验证以后另立指南""状态与预报绘图以后另立指南"，但那两份指南尚未创建。已在归档件抬头写明：补齐之前，这三类内容以归档件的对应章节为准。本任务后续应补出这两份指南，或把这三节回填到现行指南。
 
 # HBV-lite 交互式多模型验证指南整理任务交接
 
