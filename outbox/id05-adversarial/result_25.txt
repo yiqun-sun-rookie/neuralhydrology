@@ -1,0 +1,28 @@
+### channel=id05-adversarial seq=25
+### host=login4
+### started=2026-08-07T15:24:01+0800
+### ---------- output ----------
+=== TIME ===
+Fri Aug  7 15:24:01 CST 2026
+=== PRECONDITIONS ===
+npz records: 531  (need 531)
+-rw-r--r--. 1 sunyiq g_sunyiq 241472 Aug  7 11:17 /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/exp2_constraint_ablation.json
+=== IDEMPOTENT SUBMIT ===
+existing adv531_exact records today: 0
+  probe md5=d936884bc788fae2606903f5498eb71b
+  expect  =d936884bc788fae2606903f5498eb71b
+  submitted: 201707
+=== QUEUE ===
+           JOBID             NAME  ST       TIME       NODELIST(REASON)
+    201707_[0-4]     adv531_exact  PD       0:00                 (None)
+          201692      a02_sam_s47   R      21:31                 ngu102
+          201691      a02_pre_s47   R      22:25                 ngu001
+          201690      a02_sam_s46   R      22:38                 ngu202
+          201688      a02_sam_s45   R      23:25                 ngu011
+          201689      a02_pre_s46   R      23:25                 ngu006
+          201687      a02_pre_s45   R      24:37                 ngu101
+          201686      a02_sam_s44   R      24:50                 ngu003
+          201685      a02_pre_s44   R      28:11                 ngu009
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T15:24:01+0800
