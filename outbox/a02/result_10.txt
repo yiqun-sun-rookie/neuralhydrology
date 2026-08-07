@@ -1,0 +1,51 @@
+### channel=a02 seq=10
+### host=login4
+### started=2026-08-07T14:21:06+0800
+### ---------- output ----------
+=== A A02 QUEUE ===
+     JOBID               NAME    STATE       TIME     NODELIST(REASON)
+    201681        a02_pre_s42  PENDING       0:00           (Priority)
+    201682        a02_sam_s42  PENDING       0:00           (Priority)
+    201683        a02_pre_s43  PENDING       0:00           (Priority)
+    201684        a02_sam_s43  PENDING       0:00           (Priority)
+    201685        a02_pre_s44  PENDING       0:00           (Priority)
+    201686        a02_sam_s44  PENDING       0:00           (Priority)
+    201687        a02_pre_s45  PENDING       0:00           (Priority)
+    201688        a02_sam_s45  PENDING       0:00           (Priority)
+    201689        a02_pre_s46  PENDING       0:00           (Priority)
+    201690        a02_sam_s46  PENDING       0:00           (Priority)
+    201691        a02_pre_s47  PENDING       0:00           (Priority)
+    201692        a02_sam_s47  PENDING       0:00           (Priority)
+  running: 0  pending: 12
+=== B OTHER JOBS (contention, not touched) ===
+  201637_4      adv531_moment  RUNNING
+  201637_3      adv531_moment  RUNNING
+  201637_2      adv531_moment  RUNNING
+  201637_0      adv531_moment  RUNNING
+  201637_1      adv531_moment  RUNNING
+=== C ANY A02 FINISHED OR FAILED YET ===
+    JobID       JobName  NodeList       State ExitCod   Elapsed 
+--------- ------------- --------- ----------- ------- --------- 
+   201681   a02_pre_s42 None ass+     PENDING     0:0  00:00:00 
+   201682   a02_sam_s42 None ass+     PENDING     0:0  00:00:00 
+   201683   a02_pre_s43 None ass+     PENDING     0:0  00:00:00 
+   201684   a02_sam_s43 None ass+     PENDING     0:0  00:00:00 
+   201685   a02_pre_s44 None ass+     PENDING     0:0  00:00:00 
+   201686   a02_sam_s44 None ass+     PENDING     0:0  00:00:00 
+   201687   a02_pre_s45 None ass+     PENDING     0:0  00:00:00 
+   201688   a02_sam_s45 None ass+     PENDING     0:0  00:00:00 
+   201689   a02_pre_s46 None ass+     PENDING     0:0  00:00:00 
+   201690   a02_sam_s46 None ass+     PENDING     0:0  00:00:00 
+   201691   a02_pre_s47 None ass+     PENDING     0:0  00:00:00 
+   201692   a02_sam_s47 None ass+     PENDING     0:0  00:00:00 
+=== D TRAINING PROGRESS (epoch lines per run) ===
+  a02_smoke-201616.out               epochs=0   
+  a02_smoke-201618.out               epochs=1   Epoch 1: loss=0.4422, median_NSE=0.7815, RMSE=0.6182, lr=5.00e-04
+=== E RESULT TARBALLS SO FAR ===
+=== F GPU NODES ===
+  PARTITION    NODES  NODELIST                   STATE   
+  hgpu2p       8      ngu[001,004-008,010-011]   mix     
+  hgpu2p       1      ngu002                     idle    
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T14:21:07+0800
