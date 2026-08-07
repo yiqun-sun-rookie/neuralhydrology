@@ -91,8 +91,12 @@ def run_workload_in_process_v09(name: str, *, device: str, profile: Mapping, see
     statics_size = int(profile["statics"])
 
     if torch_device.type == "cuda":
-        torch.cuda.reset_peak_memory_stats(torch_device)
+        # The allocator has no per-device state until CUDA is initialised, and resetting peak
+        # stats before that raises "Invalid device argument". Bind the device first.
+        torch.cuda.set_device(torch_device)
+        torch.cuda.init()
         torch.cuda.empty_cache()
+        torch.cuda.reset_peak_memory_stats(torch_device)
 
     generator = torch.Generator().manual_seed(seed)
     if workload.needs_history:
