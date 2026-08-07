@@ -1,0 +1,36 @@
+### channel=id26-v09-strict seq=3
+### host=login4
+### started=2026-08-07T14:47:08+0800
+### ---------- output ----------
+=== A GIT CAPABILITY (v09 code needs 'rev-parse --path-format=absolute --git-common-dir') ===
+system git : git version 1.8.3.1  at /usr/bin/git
+system git supports --path-format : YES
+conda git  : none
+-- module system --
+=== B PAYLOAD PRESENT? ===
+ok 8837296 bytes
+sha256=d5980dba3068a3715433c0217a02e476461db8b9afa0be8a9ce92ef76c6859ae
+expect=d5980dba3068a3715433c0217a02e476461db8b9afa0be8a9ce92ef76c6859ae
+=== C CLONE CODE (shallow, single branch) ===
+HEAD     = f94183209bf44ed6e672e1c23f98020905804e6d
+expected = f94183209bf44ed6e672e1c23f98020905804e6d
+COMMIT MATCH: YES
+clone size: 84M
+=== D EXTRACT LEGACY CHECKPOINTS ===
+extracted
+checkpoints: 8 (want 8)
+configs    : 8 (want 8)
+=== E VERIFY CHECKPOINT HASHES AGAINST THE FROZEN PROTOCOL ===
+legacy checkpoint hash mismatches: 0 (want 0)
+=== F WORKTREE MUST BE CLEAN (v09 gates require it) ===
+dirty_files=0  (want 0)
+=== G UPLOAD TARGET FOR THE 179 MB SEALED INPUT ===
+destination: /data1/home/sunyiq/v09_strict/neuralhydrology/results/26_historical_band_experts/formal_v09
+total 8
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Aug  7 14:48 .
+drwxr-xr-x. 9 sunyiq g_sunyiq 4096 Aug  7 14:48 ..
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T14:48:11+0800
