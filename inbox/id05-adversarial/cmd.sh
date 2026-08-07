@@ -1,30 +1,45 @@
 #!/bin/bash
-# id05-adversarial seq=26: read-only survey of the l1l2 record dirs before re-running the
-# l2-signature and drought analyses on all 531 basins.
+# id05-adversarial seq=27: re-run l2-signature + drought analyses on all 531 basins.
 export LC_ALL=C
 A=/data1/home/$USER/adv531
-R=$A/results/05_adversarial_robustness
+IN=/data1/home/$USER/hpc_mailbox/inbox/id05-adversarial
+R=$A/results/05_adversarial_robustness/id18_s100
 
 echo "=== TIME ==="
 date
 
-echo "=== CANDIDATE RECORD DIRS ==="
-for d in $R/id18_s100/l1l2_records $R/id18_s100_hpc/l1l2_531/l1l2_records $R/id18_s100_merged/l1l2_records; do
-  if [ -d "$d" ]; then
-    echo "$d : $(ls -1 $d/*.npz 2>/dev/null | wc -l) npz, $(du -sh $d 2>/dev/null | cut -f1)"
-    [ -L "$d" ] && echo "    (symlink -> $(readlink -f $d))"
-  else
-    echo "$d : ABSENT"
-  fi
+echo "=== PRECONDITIONS ==="
+echo "l1l2_records npz: $(ls -1 $R/l1l2_records/*.npz 2>/dev/null | wc -l)"
+echo "camels data dir : $(ls -d $A/data/camels_us 2>&1)"
+ls -1 $A/data/camels_us 2>/dev/null | head -4
+
+echo "=== BACKUP EXISTING L2 SUMMARY ==="
+cp -p $R/l2_signatures_summary.csv $R/l2_signatures_summary.csv.bak_seq27 2>&1 && echo "  backed up"
+
+echo "=== SUBMIT ==="
+cp -f $IN/adv531_l2drought.slurm $A/
+sed -i 's/\r$//' $A/adv531_l2drought.slurm
+cd $A
+J=$(sbatch --parsable adv531_l2drought.slurm 2>&1)
+echo "job=$J"
+
+echo "=== WAIT (max 15 min) ==="
+for i in $(seq 1 90); do
+  ST=$(sacct -j $J -X -n --format=State 2>/dev/null | head -1 | tr -d ' ')
+  case "$ST" in
+    COMPLETED|FAILED|CANCELLED*|TIMEOUT|NODE_FAIL|OUT_OF_MEMORY) echo "state=$ST after ~${i}0s"; break;;
+  esac
+  sleep 10
 done
+sacct -j $J -X --format=JobID%14,State%14,ExitCode%8,Elapsed%10 2>&1
 
-echo "=== ANY OTHER l1l2_records UNDER adv531 ==="
-find $R -maxdepth 4 -type d -name "l1l2_records" 2>/dev/null | head -10
+echo "=== STDOUT ==="
+cat $A/logs/adv531_l2drought_${J}.out 2>&1 | tail -70
 
-echo "=== STAGED SUMMARY FILES ==="
-for f in l1_attribution_summary.csv l2_signatures_summary.csv hydro_vulnerability_summary.csv; do
-  printf "  %-36s %s rows\n" "$f" "$(($(wc -l < $R/id18_s100/$f 2>/dev/null || echo 1) - 1))"
+echo "=== STDERR ==="
+tail -10 $A/logs/adv531_l2drought_${J}.err 2>&1
+
+echo "=== ROW COUNTS AFTER ==="
+for f in l2_signatures_summary.csv drought_mechanism_summary.csv; do
+  printf "  %-34s %s rows\n" "$f" "$(($(wc -l < $R/$f 2>/dev/null || echo 1) - 1))"
 done
-
-echo "=== EXACT-MOMENT JOB ==="
-sacct -j 201707 -X --format=JobID%14,State%12,ExitCode%8,Elapsed%10 2>&1 | head -8
