@@ -1,0 +1,35 @@
+### channel=a02 seq=4
+### host=login4
+### started=2026-08-07T11:24:01+0800
+### ---------- output ----------
+=== A SYSTEM ===
+ldd (GNU libc) 2.17
+pip 25.2 from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip (python 3.11)
+py 3.11.13 x86_64
+=== B WHICH WHEELS EXIST (download only, no install) ===
+  pyarrow 21.0.0 : no compatible wheel
+  pyarrow 20.0.0 : WHEEL AVAILABLE
+  pyarrow 19.0.1 : WHEEL AVAILABLE
+  pyarrow 18.1.0 : WHEEL AVAILABLE
+  pyarrow 17.0.0 : WHEEL AVAILABLE
+  pyarrow 16.1.0 : WHEEL AVAILABLE
+pyarrow-16.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+pyarrow-18.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+pyarrow-19.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+pyarrow-20.0.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+=== C INSTALL BEST AVAILABLE pyarrow (binary only) ===
+  installed pyarrow==20.0.0
+=== D FALLBACK: fastparquet (pandas auto-falls back to it) ===
+=== E VERSIONS AFTER (numpy/pandas/torch MUST be unchanged) ===
+   numpy 2.3.3
+   pandas 2.3.2
+   torch 2.4.0
+   pyarrow 20.0.0
+   fastparquet MISSING
+=== F FUNCTIONAL: parquet round-trip through whatever engine works ===
+   round-trip OK (7, 3) float64
+=== G LANDING SITE ===
+-rw-r--r--. 1 sunyiq g_sunyiq 388497408 Aug  7 11:29 /data1/home/sunyiq/nature_1st_a02.tar.gz
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T11:29:49+0800
