@@ -80,8 +80,9 @@ def build_transition_matrix(candidate_count: int, diagonal: float) -> np.ndarray
 class ForcingTransition:
     """HBV-lite transition with daily forcing assigned before each filter step."""
 
-    def __init__(self, parameters: Mapping[str, float]):
+    def __init__(self, parameters: Mapping[str, float], parameter_bounds: Mapping | None = None):
         self.parameters = dict(parameters)
+        self._parameter_bounds = dict(parameter_bounds) if parameter_bounds is not None else None
         self._forcing: tuple[float, float, float] | None = None
 
     def set_forcing(self, rain: float, pet: float, temperature: float) -> None:
@@ -96,7 +97,8 @@ class ForcingTransition:
         rain, pet, temperature = self._forcing
         physical = project_hbv_state(state, self.parameters)
         return project_hbv_state(
-            advance_state(physical, rain, pet, temperature, self.parameters),
+            advance_state(physical, rain, pet, temperature, self.parameters,
+                          bounds=self._parameter_bounds),
             self.parameters,
         )
 

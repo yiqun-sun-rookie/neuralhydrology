@@ -58,17 +58,24 @@ def pack_state(hydrologic: Sequence[float], routing: Sequence[float]) -> np.ndar
     return np.concatenate((stores, memory))
 
 
-def _validated_parameters(params: dict) -> dict[str, float]:
+def _validated_parameters(params: dict, bounds: dict | None = None) -> dict[str, float]:
     missing = [name for name in PARAMETER_NAMES if name not in params]
     if missing:
         raise ValueError(f"missing HBV-lite parameters: {missing}")
     values = {name: float(params[name]) for name in PARAMETER_NAMES}
     if not np.all(np.isfinite(list(values.values()))):
         raise ValueError("HBV-lite parameters must be finite")
-    for name, (lower, upper) in V1_PARAMETER_BOUNDS.items():
+    # Default None preserves the frozen id23 behaviour bit-for-bit (v1 bounds).
+    # Callers working in another calibration domain (e.g. the CAMELS v5-wide
+    # rising-kernel line) pass their own preset instead of clipping parameters.
+    bounds_label = "v1" if bounds is None else "override"
+    effective_bounds = V1_PARAMETER_BOUNDS if bounds is None else bounds
+    for name, (lower, upper) in effective_bounds.items():
+        if name not in values:
+            continue
         if values[name] < lower or values[name] > upper:
             raise ValueError(
-                f"parameter {name}={values[name]!r} is outside explicit v1 bounds [{lower}, {upper}]"
+                f"parameter {name}={values[name]!r} is outside explicit {bounds_label} bounds [{lower}, {upper}]"
             )
     return values
 
@@ -90,10 +97,11 @@ def initial_state_vector(params: dict, initial_state: dict | None = None) -> np.
     return pack_state(stores, np.zeros(len(ROUTING_STATE_NAMES), dtype=np.float64))
 
 
-def advance_state(state: Sequence[float], rain: float, pet: float, temp: float, params: dict) -> np.ndarray:
+def advance_state(state: Sequence[float], rain: float, pet: float, temp: float, params: dict,
+                  bounds: dict | None = None) -> np.ndarray:
     """Advance the exact HBV-lite equations by one day and shift routing memory."""
     current = _as_finite_vector(state, len(STATE_NAMES), "state")
-    p = _validated_parameters(params)
+    p = _validated_parameters(params, bounds)
     forcing = np.asarray([rain, pet, temp], dtype=np.float64)
     if not np.all(np.isfinite(forcing)):
         raise ValueError("rain, pet, and temp must be finite")
