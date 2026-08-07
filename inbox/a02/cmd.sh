@@ -1,35 +1,29 @@
 #!/bin/bash
-# a02 seq=9 : submit the 12 production jobs (user-authorised 2026-08-07 after smoke green).
-# 6 shared seeds (42-47) x 2 arms (preceding | same_time), paired arms adjacent.
+# a02 seq=10 : progress probe -- how many started, any early failures, GPU contention.
 export LC_ALL=C
 PKG=/data1/home/$USER/nature_1st_a02
-cd $PKG/hpc || exit 1
 
-echo "=== A PRE-SUBMIT SANITY ==="
-echo "  job scripts: $(ls -1 a02_preceding_s*.slurm a02_same_time_s*.slurm 2>/dev/null | wc -l) (expect 12)"
-echo "  smoke run dir kept at: $(ls -d $PKG/runs/a02_smoke 2>/dev/null || echo none)"
-echo "  partition state:"
-sinfo -p hgpu2p -o "   %12P %8a %6D %26N %8t" 2>&1 | head -6
-echo "  my current jobs before submit:"
-squeue -u "$USER" -h -o "   %.10i %.16j %.8T" 2>&1 | head -8
+echo "=== A A02 QUEUE ==="
+squeue -u "$USER" -o "%.10i %.18j %.8T %.10M %.20R" 2>&1 | grep -E "a02_|JOBID"
+echo "  running: $(squeue -u "$USER" -h -t R -o '%j' 2>/dev/null | grep -c '^a02_')  pending: $(squeue -u "$USER" -h -t PD -o '%j' 2>/dev/null | grep -c '^a02_')"
 
-echo "=== B REMOVE SMOKE RUN DIR (frees the name, keeps nothing needed) ==="
-rm -rf $PKG/runs/a02_smoke
-echo "  done"
+echo "=== B OTHER JOBS (contention, not touched) ==="
+squeue -u "$USER" -h -o "%.10i %.18j %.8T" 2>&1 | grep -v "^ *[0-9]* *a02_" | head -8
 
-echo "=== C SUBMIT 12 JOBS ==="
-for SEED in 42 43 44 45 46 47; do
-  for ARM in preceding same_time; do
-    S=$(sbatch --parsable a02_${ARM}_s${SEED}.slurm 2>&1)
-    printf "  %-24s -> jobid %s\n" "a02_${ARM}_s${SEED}" "$S"
-    echo "$S" >> $PKG/.a02_jobids
-  done
+echo "=== C ANY A02 FINISHED OR FAILED YET ==="
+sacct -S today -u "$USER" -X --name=a02_pre_s42,a02_sam_s42,a02_pre_s43,a02_sam_s43,a02_pre_s44,a02_sam_s44,a02_pre_s45,a02_sam_s45,a02_pre_s46,a02_sam_s46,a02_pre_s47,a02_sam_s47 \
+  --format=JobID%9,JobName%13,NodeList%9,State%11,ExitCode%7,Elapsed%9 2>&1 | head -18
+
+echo "=== D TRAINING PROGRESS (epoch lines per run) ==="
+for f in $PKG/logs/a02_*.out; do
+  [ -f "$f" ] || continue
+  n=$(grep -c "^Epoch" "$f" 2>/dev/null)
+  last=$(grep "^Epoch" "$f" 2>/dev/null | tail -1 | cut -c1-72)
+  printf "  %-34s epochs=%-3s %s\n" "$(basename $f)" "$n" "$last"
 done
 
-echo "=== D QUEUE STATE (30 s after submit) ==="
-sleep 30
-squeue -u "$USER" -o "%.10i %.18j %.9P %.8T %.10M %.20R" 2>&1 | grep -E "a02_|JOBID"
+echo "=== E RESULT TARBALLS SO FAR ==="
+ls -la /data1/home/$USER/hpc_mailbox/outbox/a02_*.tar.gz 2>/dev/null | head -14 || echo "  none yet"
 
-echo "=== E COUNT ==="
-echo "  a02 jobs in queue: $(squeue -u "$USER" -h -o '%j' 2>/dev/null | grep -c '^a02_')"
-echo "  submitted job ids recorded in $PKG/.a02_jobids"
+echo "=== F GPU NODES ==="
+sinfo -p hgpu2p -o "  %12P %6D %26N %8t" 2>&1 | head -5
