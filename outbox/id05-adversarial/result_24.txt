@@ -1,0 +1,14 @@
+### channel=id05-adversarial seq=24
+### host=login4
+### started=2026-08-07T15:06:24+0800
+### ---------- output ----------
+=== TIME ===
+Fri Aug  7 15:06:24 CST 2026
+=== SHIPPED ===
+-rw-r--r--. 1 sunyiq g_sunyiq 241922 Aug  7 15:06 outbox/id05-adversarial/data/statistical_structure_summary_eps0.1.csv
+a41ce014ddf89fc065424ce062187654  outbox/id05-adversarial/data/statistical_structure_summary_eps0.1.csv
+532 outbox/id05-adversarial/data/statistical_structure_summary_eps0.1.csv
+basin,D_record,D_exp2,D_abs_diff_vs_exp2,whole_mean_abs_max,whole_std_rel_max,whole_corr_abs_max,whole_corr_abs_median,delta_abs_p50,delta_abs_p90,delta_abs_p99,rolling_mean_abs_p50,rolling_mean_abs_p90,rolling_mean_abs_p99,rolling_mean_abs_max,rolling_std_rel_p50,rolling_std_rel_p90,rolling_std_rel_p99,rolling_std_rel_max,rolling_corr_abs_p50,rolling_corr_abs_p90,rolling_corr_abs_p99,rolling_corr_abs_max
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T15:06:24+0800
