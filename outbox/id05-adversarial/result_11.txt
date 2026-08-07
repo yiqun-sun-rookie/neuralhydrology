@@ -1,0 +1,77 @@
+### channel=id05-adversarial seq=11
+### host=login4
+### started=2026-08-07T10:15:32+0800
+### ---------- output ----------
+=== QUEUE ===
+         JOBID             NAME  ST        TIME     NODELIST(REASON)
+running=0  pending=0
+=== SACCT ===
+         JobID          JobName        State ExitCode    Elapsed 
+-------------- ---------------- ------------ -------- ---------- 
+        201457    adv531_smoke2    COMPLETED      0:0   00:08:41 
+      201459_0      adv531_exp2    COMPLETED      0:0   08:32:35 
+      201459_1      adv531_exp2    COMPLETED      0:0   08:47:26 
+      201459_2      adv531_exp2    COMPLETED      0:0   08:42:43 
+      201459_3      adv531_exp2    COMPLETED      0:0   07:07:23 
+      201459_4      adv531_exp2    COMPLETED      0:0   07:07:22 
+      201460_0      adv531_l1l2    COMPLETED      0:0   01:27:52 
+      201460_1      adv531_l1l2    COMPLETED      0:0   01:27:28 
+      201460_2      adv531_l1l2    COMPLETED      0:0   01:27:35 
+      201460_3      adv531_l1l2    COMPLETED      0:0   01:28:03 
+      201460_4      adv531_l1l2    COMPLETED      0:0   01:27:21 
+      201461_0      adv531_exp3    COMPLETED      0:0   02:15:56 
+      201461_1      adv531_exp3    COMPLETED      0:0   02:10:06 
+      201461_2      adv531_exp3    COMPLETED      0:0   02:11:52 
+      201461_3      adv531_exp3    COMPLETED      0:0   02:15:27 
+      201461_4      adv531_exp3    COMPLETED      0:0   02:11:40 
+      201462_0      adv531_exp6    COMPLETED      0:0   00:49:24 
+      201462_1      adv531_exp6    COMPLETED      0:0   00:49:32 
+      201462_2      adv531_exp6    COMPLETED      0:0   00:49:30 
+      201462_3      adv531_exp6    COMPLETED      0:0   00:49:36 
+      201462_4      adv531_exp6    COMPLETED      0:0   00:50:43 
+      201463_0    adv531_detect    COMPLETED      0:0   00:49:55 
+      201463_1    adv531_detect    COMPLETED      0:0   00:49:26 
+      201463_2    adv531_detect    COMPLETED      0:0   00:48:56 
+      201463_3    adv531_detect    COMPLETED      0:0   00:49:12 
+      201463_4    adv531_detect    COMPLETED      0:0   00:49:01 
+      201464_0      adv531_exp5    COMPLETED      0:0   02:10:59 
+      201464_1      adv531_exp5    COMPLETED      0:0   02:10:56 
+      201464_2      adv531_exp5    COMPLETED      0:0   02:10:06 
+      201464_3      adv531_exp5    COMPLETED      0:0   02:09:54 
+      201464_4      adv531_exp5    COMPLETED      0:0   02:07:19 
+      201465_0      adv531_exp4    COMPLETED      0:0   10:17:30 
+      201465_1      adv531_exp4    COMPLETED      0:0   10:12:09 
+      201465_2      adv531_exp4    COMPLETED      0:0   10:05:14 
+      201465_3      adv531_exp4    COMPLETED      0:0   10:08:32 
+      201465_4      adv531_exp4    COMPLETED      0:0   09:57:15 
+      201466_0    adv531_ksweep    COMPLETED      0:0   03:22:38 
+      201466_1    adv531_ksweep    COMPLETED      0:0   03:24:56 
+      201466_2    adv531_ksweep    COMPLETED      0:0   03:19:57 
+      201466_3    adv531_ksweep    COMPLETED      0:0   03:20:47 
+      201466_4    adv531_ksweep    COMPLETED      0:0   03:19:24 
+=== PER-BLOCK PROGRESS (basins written / 531) ===
+  exp2      531 / 531
+  exp3      531 / 531
+  exp4      531 / 531
+  exp5      531 / 531
+  exp6      531 / 531
+  detect    531 / 531
+  ksweep    531 / 531
+  l1l2      531 / 531
+=== ERRORS ===
+=== NEWEST LOG LINES ===
+--- adv531_exp4_201465_0.out
+DONE -> results/05_adversarial_robustness/id18_s100_hpc/exp4_531_chunk0.json
+[Fri Aug  7 06:55:50 CST 2026] block=exp4 chunk=0 done (exit 0)
+--- adv531_exp4_201465_3.out
+DONE -> results/05_adversarial_robustness/id18_s100_hpc/exp4_531_chunk3.json
+[Fri Aug  7 06:50:50 CST 2026] block=exp4 chunk=3 done (exit 0)
+--- adv531_exp4_201465_1.out
+DONE -> results/05_adversarial_robustness/id18_s100_hpc/exp4_531_chunk1.json
+[Fri Aug  7 06:51:14 CST 2026] block=exp4 chunk=1 done (exit 0)
+--- adv531_exp4_201465_2.out
+DONE -> results/05_adversarial_robustness/id18_s100_hpc/exp4_531_chunk2.json
+[Fri Aug  7 06:43:59 CST 2026] block=exp4 chunk=2 done (exit 0)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T10:15:34+0800
