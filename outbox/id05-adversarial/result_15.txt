@@ -1,0 +1,64 @@
+### channel=id05-adversarial seq=15
+### host=login4
+### started=2026-08-07T11:20:04+0800
+### ---------- output ----------
+=== A. hydro vulnerability (feeds the cross-analysis) ===
+    high_prec_dur    -0.219 +0.000            -0.226 +0.000
+          aridity    +0.170 +0.000            +0.223 +0.000
+     low_prec_dur    -0.207 +0.000            -0.192 +0.000
+
+================ L0 HEADLINE NUMBERS ================
+all-531 median D_APGD           : 0.381
+flashy (slope_fdc>2) n / median : 31 / 0.268
+snow (frac_snow>0.2) n          : 152
+  D_APGD  snow vs non-snow      : 0.507 vs 0.319
+  cleanNSE snow vs non-snow     : 0.774 vs 0.715
+frac_snow partial Spearman (|cleanNSE) vs D_APGD : +0.607 (p=9.3e-55)
+confound: raw Spearman(D_APGD, cleanNSE)         : -0.257
+====================================================
+/data1/home/sunyiq/adv531/src/adversarial/scripts/analyze_hydro_vulnerability.py:127: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  ax2.boxplot(data, labels=[f"low-snow\n(n={int((~snow).sum())})",
+
+saved -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/hydro_vulnerability_summary.csv
+saved -> /data1/home/sunyiq/adv531/draft/papers/05_adversarial_latex/figures/fig6_hydro_vulnerability.pdf
+
+=== B. constraint x snow cross-analysis  (section 4.3 numbers) ===
+analysis_id: statistical_constraint_snow_cross_v01
+status: PASS
+population: total=531 snow=152 low_snow=379
+
+constraint_level_medians:
+  maximum_size_only: snow=0.502624 low_snow=0.318951 difference=0.183674 bootstrap95=[0.134082, 0.235768] partial_rho=0.604986 p=3.216729e-54
+  physical_ranges: snow=0.475411 low_snow=0.303498 difference=0.171913 bootstrap95=[0.129929, 0.230373] partial_rho=0.609354 p=3.475872e-55
+  statistical: snow=0.380678 low_snow=0.237840 difference=0.142838 bootstrap95=[0.108098, 0.177577] partial_rho=0.646818 p=3.931480e-64
+
+statistical_retention_over_maximum: snow=0.800561 low_snow=0.790189 difference=0.010372 bootstrap95=[-0.010424, 0.031591]
+
+permitted_claim: Prediction loss remains greater in the evaluated snow-influenced basins under the nested physical-range and whole-period-statistics condition.
+prohibited_claim: Do not claim that the statistical constraint retains a disproportionately larger fraction of loss in snow-influenced basins unless differential_retention_supported is true.
+
+=== C. snow amplification (section 5.3 local-scale control) ===
+=== snow amplification check | 531 basins, snow(n=152) non-snow(n=379) ===
+gradient damage D_APGD vs frac_snow           : Spearman +0.519 (p=5.8e-38) | partial|nse_clean +0.607 (p=9.3e-55)  [n=531]
+random damage  D_rs100 vs frac_snow           : Spearman +0.359 (p=1.5e-17) | partial|nse_clean +0.481 (p=4.4e-32)  [n=531]
+amp (=D_APGD/D_rs100) vs frac_snow            : Spearman +0.185 (p=1.8e-05) | partial|nse_clean +0.163 (p=1.7e-04)  [n=531]
+
+medians                 snow      non-snow
+  D_APGD         0.507         0.319
+  D_rs100        0.029         0.022
+  amp           16.734        14.545
+  nse_clean      0.774         0.715
+
+median-of-ratios  amp = 15.02   ratio-of-medians = 15.92
+
+=== HAND BACK ===
+  new: /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/l2_signatures_summary.csv
+  new: /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/hydro_vulnerability_summary.csv
+  new: /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/statistical_constraint_snow_cross_v01/basin_metrics.csv
+  new: /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/l1_attribution_summary.csv
+  304912 hydro_vulnerability_summary.csv
+  55327 l1_attribution_summary.csv
+  75061 l2_signatures_summary.csv
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T11:20:25+0800
