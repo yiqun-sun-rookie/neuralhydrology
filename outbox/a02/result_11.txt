@@ -1,0 +1,66 @@
+### channel=a02 seq=11
+### host=login4
+### started=2026-08-07T14:23:23+0800
+### ---------- output ----------
+=== A CLUSTER-WIDE hgpu2p QUEUE (all users) ===
+     JOBID       USER             NAME    STATE  NODES TRES_PER_NOD       TIME   NODELIST(REASON)
+    201681     sunyiq      a02_pre_s42  PENDING      1        gpu:1       0:00         (Priority)
+    201682     sunyiq      a02_sam_s42  PENDING      1        gpu:1       0:00         (Priority)
+    201683     sunyiq      a02_pre_s43  PENDING      1        gpu:1       0:00         (Priority)
+    201684     sunyiq      a02_sam_s43  PENDING      1        gpu:1       0:00         (Priority)
+    201685     sunyiq      a02_pre_s44  PENDING      1        gpu:1       0:00         (Priority)
+    201686     sunyiq      a02_sam_s44  PENDING      1        gpu:1       0:00         (Priority)
+    201687     sunyiq      a02_pre_s45  PENDING      1        gpu:1       0:00         (Priority)
+    201688     sunyiq      a02_sam_s45  PENDING      1        gpu:1       0:00         (Priority)
+    201689     sunyiq      a02_pre_s46  PENDING      1        gpu:1       0:00         (Priority)
+    201690     sunyiq      a02_sam_s46  PENDING      1        gpu:1       0:00         (Priority)
+    201691     sunyiq      a02_pre_s47  PENDING      1        gpu:1       0:00         (Priority)
+    201692     sunyiq      a02_sam_s47  PENDING      1        gpu:1       0:00         (Priority)
+  201637_4     sunyiq    adv531_moment  RUNNING      1        gpu:1      50:58             ngu007
+  201637_3     sunyiq    adv531_moment  RUNNING      1        gpu:1      51:34             ngu006
+  201637_2     sunyiq    adv531_moment  RUNNING      1        gpu:1      51:35             ngu006
+  201637_0     sunyiq    adv531_moment  RUNNING      1        gpu:1    1:17:51             ngu008
+  201637_1     sunyiq    adv531_moment  RUNNING      1        gpu:1    1:17:51             ngu008
+=== B GPU ALLOCATION PER NODE ===
+  NODELIST   STATE    CPUS(A/I/O/T GRES                 REASON                        
+  ngu001     mix      4/92/0/96    gpu:2                none                          
+  ngu002     idle     0/96/0/96    gpu:2                none                          
+  ngu004     mix      4/92/0/96    gpu:2                none                          
+  ngu005     mix      4/92/0/96    gpu:2                none                          
+  ngu006     mix      8/88/0/96    gpu:2                none                          
+  ngu007     mix      6/90/0/96    gpu:2                none                          
+  ngu008     mix      8/88/0/96    gpu:2                none                          
+  ngu010     mix      4/28/0/32    gpu:2                none                          
+  ngu011     mix      4/28/0/32    gpu:2                none                          
+--- gres detail (alloc/total) ---
+=== C WHY IS MY FIRST JOB WAITING (authoritative reason) ===
+  JobId=201681 JobName=a02_pre_s42
+     Priority=200561 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+     JobState=PENDING Reason=Priority Dependency=(null)
+     StartTime=2027-08-07T10:40:52 EndTime=2027-08-08T16:40:52 Deadline=N/A
+     Partition=hgpu2p AllocNode:Sid=login04:19259
+     ReqNodeList=(null) ExcNodeList=ngu002
+     NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+     TresPerNode=gpu:1
+=== D ACCOUNT LIMITS (is there a per-user cap?) ===
+  g_sunyiq     sunyiq                                                          
+--- qos ---
+Unknown field 'maxsubmitpu'
+=== E MY PRIORITY VS QUEUE ===
+     JOBID       USER    STATE     PRIORITY             NAME
+  201637_4     sunyiq  RUNNING 0.0000470879    adv531_moment
+  201637_3     sunyiq  RUNNING 0.0000470879    adv531_moment
+  201637_2     sunyiq  RUNNING 0.0000470879    adv531_moment
+    201681     sunyiq  PENDING 0.0000466967      a02_pre_s42
+    201682     sunyiq  PENDING 0.0000466967      a02_sam_s42
+    201683     sunyiq  PENDING 0.0000466967      a02_pre_s43
+    201684     sunyiq  PENDING 0.0000466967      a02_sam_s43
+    201685     sunyiq  PENDING 0.0000466967      a02_pre_s44
+    201686     sunyiq  PENDING 0.0000466967      a02_sam_s44
+    201687     sunyiq  PENDING 0.0000466967      a02_pre_s45
+    201688     sunyiq  PENDING 0.0000466967      a02_sam_s45
+    201689     sunyiq  PENDING 0.0000466967      a02_pre_s46
+    201690     sunyiq  PENDING 0.0000466967      a02_sam_s46
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T14:23:23+0800
