@@ -1,0 +1,63 @@
+### channel=nature1st-hrrr seq=1
+### host=login4
+### started=2026-08-07T17:55:19+0800
+### ---------- output ----------
+=== A HRRR ARCHIVE REACHABLE (decisive question) ===
+  http=200 tls=11.454s total=11.719s bytes=776
+  --- keys returned ---
+<Key>hrrr.20240101/conus/hrrr.t00z.wrfsfcf01.grib2</Key>
+<Key>hrrr.20240101/conus/hrrr.t00z.wrfsfcf01.grib2.idx</Key>
+=== B BYTE-RANGE FETCH (the actual access pattern we need) ===
+  http=206 total=47.541s bytes=1048576 speed=22056.000B/s
+  local: 1048576 bytes
+=== C GRIB DECODE TOOLING IN nh_final ===
+  OK   torch 2.4.0
+  OK   numpy 2.3.3
+  OK   pandas 2.3.2
+  OK   xarray 2025.12.0
+  MISS cfgrib
+  MISS eccodes
+  OK   pyarrow 20.0.0
+  OK   netCDF4 1.7.4
+  OK   psutil 7.0.0
+  MISS wgrib2
+=== D STORAGE HEADROOM ===
+  /data1 size=954T used=591T avail=364T (62%)
+  home total: 6.2T
+=== E EXISTING nature_1st PACKAGE (read-only, not touching it) ===
+  ~/nature_1st_a02 size: 1.7G
+    data
+    hpc
+    logs
+    manifest_sha256.json
+    reference
+    runs
+    scripts
+    src
+  --- data subdir sizes ---
+    48K	/data1/home/sunyiq/nature_1st_a02/data/interim
+    1.4G	/data1/home/sunyiq/nature_1st_a02/data/processed
+=== F GPU AVAILABILITY RIGHT NOW ===
+  hgpu8     ngu[201-203]              mixed     3    
+  hgpu4     ngu103                    down*     1    
+  hgpu4     ngu[101-102,104]          mixed     3    
+  hgpu2     ngu[003,009]              mixed     2    
+  hgpu2p    ngu[001,004-008,010-011]  mixed     8    
+  hgpu2p    ngu002                    idle      1    
+  --- my jobs (must not be disturbed) ---
+     201692      a02_sam_s47     hgpu4  RUNNING    3:03:54
+     201691      a02_pre_s47    hgpu2p  RUNNING    3:04:48
+     201690      a02_sam_s46     hgpu8  RUNNING    3:05:01
+     201688      a02_sam_s45    hgpu2p  RUNNING    3:05:48
+     201689      a02_pre_s46    hgpu2p  RUNNING    3:05:48
+     201687      a02_pre_s45     hgpu4  RUNNING    3:07:00
+     201686      a02_sam_s44     hgpu2  RUNNING    3:07:13
+     201685      a02_pre_s44     hgpu2  RUNNING    3:10:34
+     201684      a02_sam_s43     hgpu8  RUNNING    3:15:52
+     201683      a02_pre_s43     hgpu8  RUNNING    3:18:02
+     201682      a02_sam_s42     hgpu8  RUNNING    3:18:03
+     201718         v09train    hgpu2p  RUNNING    1:53:12
+     201681      a02_pre_s42     hgpu2  RUNNING    3:31:06
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T18:06:24+0800
