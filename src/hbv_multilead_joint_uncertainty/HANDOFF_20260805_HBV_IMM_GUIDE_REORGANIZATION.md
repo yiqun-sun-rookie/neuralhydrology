@@ -1,3 +1,21 @@
+> **状态注记（2026-08-05 追加，只陈述观察到的事实，未替本任务作任何决定）**
+>
+> 本文第一节写"拟议新文件 `GUIDE_HBV_INTERACTING_MULTIPLE_MODEL_VALIDATION.md`，2026-08-05 只读核对时该文件不存在，后续是否创建须先让用户确认拆分结构"。**该前提已不成立**，请勿据此重新发起确认。目前工作树实际状态：
+>
+> - 拆分已经发生，且新文件名去掉了 `HBV_` 前缀：现有 `GUIDE_INTERACTING_MULTIPLE_MODEL_VALIDATION.md`（标题为《交互式多模型方法验证与候选切换判断指南》）与 `GUIDE_CANDIDATE_SWITCHING_PROBABILITY_PLOTTING.md`（《候选切换概率绘图指南》）。
+> - 曾以 `GUIDE_HBV_INTERACTING_MULTIPLE_MODEL_VALIDATION.md` 之名入库的文件已被删除（应为改名）。
+> - 上述新增与删除已于提交 `0dcf362c` 一并入库（用户明确指示提交全部未提交内容）。**其内容未经该次提交者审阅**，只是从"未提交"状态保存下来，避免丢失。
+>
+> **遗留的待决问题（本任务的所有者决定，未处理）**：新旧两代指南目前**并存且范围重叠**，任何读者都无法从文件本身判断哪一份为准——
+>
+> | 主题 | 旧（合并版，仍在库） | 新（拆分版） |
+> |---|---|---|
+> | 交互式多模型 | `GUIDE_HBV_INTERACTING_MULTIPLE_MODEL_VALIDATION_AND_PLOTTING.md` | `GUIDE_INTERACTING_MULTIPLE_MODEL_VALIDATION.md` + `GUIDE_CANDIDATE_SWITCHING_PROBABILITY_PLOTTING.md` |
+> | 候选切换概率 | `GUIDE_CANDIDATE_SWITCHING_PROBABILITY_PLOTTING_AND_JUDGMENT.md` | 同上两份 |
+> | 单滤波器 | `GUIDE_HBV_SINGLE_FILTER_STATE_UPDATE_VALIDATION_AND_PLOTTING.md` | `GUIDE_HBV_SINGLE_FILTER_STATE_UPDATE_VALIDATION.md` + `GUIDE_HBV_SINGLE_FILTER_STATE_UPDATE_PLOTTING.md` |
+>
+> 建议由本任务所有者在每份旧指南开头加一行"已被 XXX 取代"，或明确保留旧版并说明分工。本注记不代做此决定。
+
 # HBV-lite 交互式多模型验证指南整理任务交接
 
 日期：2026-08-05  
