@@ -1,0 +1,54 @@
+### channel=a02b seq=1
+### host=login4
+### started=2026-08-07T22:19:34+0800
+### ---------- output ----------
+=== A QUEUE ===
+     JOBID             NAME    STATE       TIME NODELIST(REASON)
+    201692      a02_sam_s47  RUNNING    7:17:04         ngu102
+    201691      a02_pre_s47  RUNNING    7:17:58         ngu001
+    201690      a02_sam_s46  RUNNING    7:18:11         ngu202
+    201686      a02_sam_s44  RUNNING    7:20:23         ngu003
+    201685      a02_pre_s44  RUNNING    7:23:44         ngu009
+    201684      a02_sam_s43  RUNNING    7:29:02         ngu202
+    201682      a02_sam_s42  RUNNING    7:31:13         ngu202
+    201681      a02_pre_s42  RUNNING    7:44:16         ngu009
+=== B ACCOUNTING ===
+    JobID       JobName       State ExitCod   Elapsed 
+--------- ------------- ----------- ------- --------- 
+   201681   a02_pre_s42     RUNNING     0:0  07:44:15 
+   201682   a02_sam_s42     RUNNING     0:0  07:31:12 
+   201683   a02_pre_s43   COMPLETED     0:0  06:21:30 
+   201684   a02_sam_s43     RUNNING     0:0  07:29:01 
+   201685   a02_pre_s44     RUNNING     0:0  07:23:43 
+   201686   a02_sam_s44     RUNNING     0:0  07:20:22 
+   201687   a02_pre_s45   COMPLETED     0:0  06:32:46 
+   201688   a02_sam_s45   COMPLETED     0:0  06:18:46 
+   201689   a02_pre_s46   COMPLETED     0:0  06:00:22 
+   201690   a02_sam_s46     RUNNING     0:0  07:18:10 
+   201691   a02_pre_s47     RUNNING     0:0  07:17:57 
+   201692   a02_sam_s47     RUNNING     0:0  07:17:03 
+=== C EPOCH COUNTS ===
+  a02_pre_s42-201681       lines=36      Epoch 10: loss=0.2279, median_NSE=0.8139, RMSE=0.6126, lr=2.50e-04
+  a02_pre_s43-201683       lines=42      Epoch 9: loss=0.2458, median_NSE=0.7992, RMSE=0.6235, lr=2.50e-04
+  a02_pre_s44-201685       lines=34      Epoch 9: loss=0.2294, median_NSE=0.8140, RMSE=0.6067, lr=1.25e-04
+  a02_pre_s45-201687       lines=40      Epoch 8: loss=0.2372, median_NSE=0.8137, RMSE=0.6092, lr=2.50e-04
+  a02_pre_s46-201689       lines=40      Epoch 8: loss=0.2406, median_NSE=0.8119, RMSE=0.6154, lr=2.50e-04
+  a02_pre_s47-201691       lines=34      Epoch 9: loss=0.2349, median_NSE=0.8196, RMSE=0.6224, lr=2.50e-04
+  a02_sam_s42-201682       lines=36      Epoch 10: loss=0.2255, median_NSE=0.8143, RMSE=0.6182, lr=2.50e-04
+  a02_sam_s43-201684       lines=36      Epoch 10: loss=0.2277, median_NSE=0.8109, RMSE=0.6241, lr=2.50e-04
+  a02_sam_s44-201686       lines=30      Epoch 7: loss=0.2583, median_NSE=0.7919, RMSE=0.6149, lr=5.00e-04
+  a02_sam_s45-201688       lines=42      Epoch 9: loss=0.2230, median_NSE=0.7983, RMSE=0.6180, lr=2.50e-04
+  a02_sam_s46-201690       lines=36      Epoch 10: loss=0.2299, median_NSE=0.8172, RMSE=0.6068, lr=2.50e-04
+  a02_sam_s47-201692       lines=32      Epoch 8: loss=0.2535, median_NSE=0.8115, RMSE=0.6164, lr=5.00e-04
+  a02_smoke-201616         lines=12      
+  a02_smoke-201618         lines=29      Epoch 1: loss=0.4422, median_NSE=0.7815, RMSE=0.6182, lr=5.00e-04
+=== D TARBALLS ===
+   /data1/home/sunyiq/hpc_mailbox/outbox/a02_preceding_s45.tar.gz 12703059
+=== E STUCK a02 WORKER ===
+16498       00:00 S    timeout 7200 bash /data1/home/sunyiq/.hpc_mailbox_staging/a02b/cmd_1.sh
+16503       00:00 S    bash /data1/home/sunyiq/.hpc_mailbox_staging/a02b/cmd_1.sh
+16504       00:00 S    timeout 7200 bash /data1/home/sunyiq/.hpc_mailbox_staging/a02/cmd_18.sh
+16512       00:00 S    bash /data1/home/sunyiq/.hpc_mailbox_staging/a02/cmd_18.sh
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T22:19:34+0800
