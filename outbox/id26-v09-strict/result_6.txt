@@ -1,0 +1,56 @@
+### channel=id26-v09-strict seq=6
+### host=login4
+### started=2026-08-07T15:56:31+0800
+### ---------- output ----------
+=== A RE-VERIFY TARBALL ===
+got   =feee746c7bda7970c8bac470969bf4247118f8f35d6cf543a44a8a6b4bd1bed7
+want  =feee746c7bda7970c8bac470969bf4247118f8f35d6cf543a44a8a6b4bd1bed7
+MATCH
+=== B REFUSE TO CLOBBER ===
+destination clear
+=== C EXTRACT ===
+extracted
+files under formal_v09: 19  (want 19)
+authorizations/formal_input_seal_authorization.json
+formal_input_seal_authorization_consumed.json
+input_attempt_01.external_audit.json
+input_attempt_01.trusted_source_external_audit.json
+input_attempt_01/basins.txt
+input_attempt_01/dates.npy
+input_attempt_01/environment.json
+input_attempt_01/forcing.npy
+input_attempt_01/forcing_manifest.json
+input_attempt_01/input_audit.json
+input_attempt_01/manifest.json
+input_attempt_01/scaler.json
+input_attempt_01/seal.json
+input_attempt_01/statics.npy
+input_attempt_01/statics_raw.float64.npy
+input_attempt_01/target_dates.npy
+input_attempt_01/targets.npy
+inputs/training_targets.csv
+inputs/training_targets.manifest.json
+=== D FROZEN HASHES ===
+OK    input_attempt_01/seal.json
+OK    input_attempt_01.external_audit.json
+OK    input_attempt_01.trusted_source_external_audit.json
+OK    authorizations/formal_input_seal_authorization.json
+OK    formal_input_seal_authorization_consumed.json
+OK    inputs/training_targets.csv
+OK    inputs/training_targets.manifest.json
+frozen hash mismatches: 0 (want 0)
+=== E SEAL INVENTORY SELF-CHECK ===
+sealed files: 12, mismatches: 0 (want 0)
+=== F MOVE THE TARBALL OUT OF THE FORMAL TREE ===
+archived to ~/v09_strict/upload_archive/
+=== G WORKTREE CLEAN + STAGE UNUSED ===
+dirty_files=0  (want 0)
+absent (good) A09-NEST-01.authorization.json
+absent (good) A09-NEST-01.consumption.json
+absent (good) strict_nesting
+absent (good) R09-NEST-S100.legacy_checkpoint_bridge_external_audit.json
+absent (good) R09-NEST-S100.training_resource_preflight_external_audit.json
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T15:56:43+0800
