@@ -1,0 +1,27 @@
+### channel=id05-adversarial seq=30
+### host=login4
+### started=2026-08-07T15:51:25+0800
+### ---------- output ----------
+=== TIME ===
+Fri Aug  7 15:51:25 CST 2026
+=== JOB 201707 ===
+         JobID        State ExitCode    Elapsed 
+-------------- ------------ -------- ---------- 
+      201707_0      RUNNING      0:0   00:27:19 
+      201707_1      RUNNING      0:0   00:27:18 
+      201707_2      RUNNING      0:0   00:27:18 
+      201707_3      RUNNING      0:0   00:22:48 
+      201707_4      RUNNING      0:0   00:21:18 
+=== CHUNK PROGRESS ===
+  chunk 0: [26/107] 02193340 | D_exact=0.2261 | eps_excess=0.1623 | phys_excess=0.123
+  chunk 1: [31/106] 02374500 | D_exact=0.3205 | eps_excess=0.08392 | phys_excess=0.2291
+  chunk 2: [31/106] 02381600 | D_exact=0.3470 | eps_excess=0.1108 | phys_excess=0.1981
+  chunk 3: [26/106] 02202600 | D_exact=0.2724 | eps_excess=0.1467 | phys_excess=0.1415
+  chunk 4: [20/106] 02065500 | D_exact=0.4876 | eps_excess=0.05473 | phys_excess=0.1866
+=== PARTS ===
+   No directory
+  parts written: 0 / 5
+  not all parts done yet, no merge
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T15:51:25+0800
