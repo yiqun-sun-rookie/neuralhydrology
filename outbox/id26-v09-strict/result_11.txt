@@ -1,0 +1,137 @@
+### channel=id26-v09-strict seq=11
+### host=login4
+### started=2026-08-07T18:06:38+0800
+### ---------- output ----------
+=== A FINISH WATCHING TRAINING 201718 (cap 60 min) ===
+[t=10s] run_dir: checkpoint_epoch010.pt checkpoint_epoch020.pt 
+[t=100s] run_dir: checkpoint_epoch010.pt checkpoint_epoch020.pt checkpoint_epoch030.pt 
+[t=170s] run_dir: checkpoint_epoch010.pt checkpoint_epoch020.pt checkpoint_epoch030.pt classic_training_predictions.float32.npy manifest.json nested_training_predictions.float32.npy seal.json 
+[t=180s] job left the queue
+=== B TRAINING ACCOUNTING ===
+     JobID    JobName  NodeList        State ExitCode      Elapsed 
+---------- ---------- --------- ------------ -------- ------------ 
+    201718   v09train    ngu008    COMPLETED      0:0     01:56:07 
+=== C TRAINING STDOUT (tail 45) ===
+      "input_seal_sha256": "a5a64e43312ac303bf03ea3840e2cf126563527c6b82b8b94035c34978c25b3a",
+      "trusted_source_audit_sha256": "81e3658fe27e8f658e59d81015ce3d1b2a3baef11045a3e22bd76254ef5d8387"
+    },
+    "maximum_prediction_difference": 0.0,
+    "nested_prediction_payload_sha256": "e9fe4cfb564bdb8dcab6db1a5c44524d81b5e2692e53614c28ccd39ed5427d3d",
+    "optimizer_steps_per_epoch": 6821,
+    "optimizer_steps_total": 204630,
+    "protocol_canonical_sha256": "d2652a0415677ced1656e24485688c3a3f542e11cdd173523899b6f6d04d184c",
+    "schema": "historical_multiscale_formal_v09_strict_run_v1",
+    "seed": 100,
+    "status": "strict_nesting_complete",
+    "training_samples": 1745928
+  },
+  "stage_consumption": {
+    "authorization_canonical_sha256": "1b713992108dbc37de9cf4f8a26f6925cdf8325028252d8d28be7ac224a7f14f",
+    "authorization_file_sha256": "00b10dcc5af9d661d50c369cfa056cc9d898b4ab353b93d0a43e0876bf833231",
+    "consumed_utc": "2026-08-07T08:13:35.308391Z",
+    "executable_tree_sha256": "46dca143c2c4cb7ad379dd523f22d8c958b9a584cc4ab4a0de478ff7009a05a5",
+    "git_commit": "f94183209bf44ed6e672e1c23f98020905804e6d",
+    "hostname": "ngu008",
+    "memory_snapshot": {
+      "available_bytes": 257531813888,
+      "commit_headroom_bytes": 291771756544,
+      "process_rss_bytes": 712900608,
+      "total_bytes": 270074814464
+    },
+    "output_root": "/data1/home/sunyiq/v09_strict/neuralhydrology/results/26_historical_band_experts/formal_v09/strict_nesting/R09-NEST-S100",
+    "prerequisite_sha256": {
+      "input_artifact_external_audit": "e18be463df4cc6fe6c21a1e39c675f77db3e8c833109c1e9cfb557e37a832cd6",
+      "input_seal": "a5a64e43312ac303bf03ea3840e2cf126563527c6b82b8b94035c34978c25b3a",
+      "legacy_checkpoint_bridge_external_audit": "4208df32fabcf52f76ac0203e8211bb3f7a4e4c1f4012577b50b0a279b890379",
+      "training_resource_preflight_external_audit": "8d63f2041e5a4fb59fa94943cb6efaca7abedacf04216b1a90c53bfe125c9e8f",
+      "trusted_target_external_audit": "81e3658fe27e8f658e59d81015ce3d1b2a3baef11045a3e22bd76254ef5d8387"
+    },
+    "process_id": 2852079,
+    "protocol_sha256": "d2652a0415677ced1656e24485688c3a3f542e11cdd173523899b6f6d04d184c",
+    "receipt_id": "A09-NEST-01",
+    "schema": "historical_multiscale_formal_v09_stage_authorization_consumption_v1",
+    "scope": "R09-NEST-S100",
+    "status": "consumed_once"
+  },
+  "status": "formal_action_completed",
+  "variant": "strict_nesting_pair"
+}
+end=2026-08-07T18:08:36+08:00
+=== D TRAINING STDERR (tail 20) ===
+=== E RUN DIR ===
+total 38114
+drwxr-xr-x. 2 sunyiq g_sunyiq    4096 Aug  7 18:09 .
+drwxr-xr-x. 3 sunyiq g_sunyiq    4096 Aug  7 16:14 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 8346907 Aug  7 16:52 checkpoint_epoch010.pt
+-rw-r--r--. 1 sunyiq g_sunyiq 8346907 Aug  7 17:30 checkpoint_epoch020.pt
+-rw-r--r--. 1 sunyiq g_sunyiq 8346907 Aug  7 18:08 checkpoint_epoch030.pt
+-rw-r--r--. 1 sunyiq g_sunyiq 6983840 Aug  7 18:09 classic_training_predictions.float32.npy
+-rw-r--r--. 1 sunyiq g_sunyiq    8337 Aug  7 18:09 manifest.json
+-rw-r--r--. 1 sunyiq g_sunyiq 6983840 Aug  7 18:09 nested_training_predictions.float32.npy
+-rw-r--r--. 1 sunyiq g_sunyiq    1361 Aug  7 18:09 seal.json
+=== F MANIFEST VERDICT ===
+schema                             historical_multiscale_formal_v09_strict_run_v1
+status                             strict_nesting_complete
+formal_execution                   True
+seed                               100
+epochs                             30
+batch_size                         256
+training_samples                   1745928
+optimizer_steps_per_epoch          6821
+optimizer_steps_total              204630
+checkpoint_epochs                  [10, 20, 30]
+checkpoint_files                   ['checkpoint_epoch010.pt', 'checkpoint_epoch020.pt', 'checkpoint_epoch030.pt']
+formal_evaluation_observation_reads 0
+=== G WRITE AUDIT SLURM ===
+=== H SUBMIT AUDIT ===
+AUDIT_JOBID=201740
+=== I WAIT FOR AUDIT (cap 45 min) ===
+  t=120s state=R
+audit finished at t=170s
+=== J AUDIT ACCOUNTING ===
+     JobID    JobName  NodeList        State ExitCode      Elapsed 
+---------- ---------- --------- ------------ -------- ------------ 
+    201740   v09audit    ngu010    COMPLETED      0:0     00:02:24 
+=== K AUDIT STDOUT (tail 40) ===
+node=ngu010 start=2026-08-07T18:09:43+08:00
+0, NVIDIA GeForce RTX 3090, 15612 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+=== RUN INDEPENDENT REPLAY AUDIT ===
+{
+  "formal_prediction_generation_authorized": false,
+  "official_scoring_authorized": false,
+  "report": {
+    "checkpoints_verified": [
+      "checkpoint_epoch010.pt",
+      "checkpoint_epoch020.pt",
+      "checkpoint_epoch030.pt"
+    ],
+    "formal_evaluation_observation_reads": 0,
+    "maximum_pair_difference": 0.0,
+    "maximum_reference_difference": 0.0,
+    "permutation_hashes_recomputed": 30,
+    "run_manifest_sha256": "150770d3d8b5f18ec02d6d9e5e682459a802a11ac57a40075b6ea39f88dd3062",
+    "run_seal_sha256": "740443d761a7af485d10aac6cc7edb4b6db91785a4ceda7d1dc6e1f1b529cd3a",
+    "schema": "historical_multiscale_formal_v09_strict_external_audit_v1",
+    "status": "strict_nesting_checkpoint_prediction_replay_passed",
+    "training_samples": 1745928
+  },
+  "report_path": "/data1/home/sunyiq/v09_strict/neuralhydrology/results/26_historical_band_experts/formal_v09/R09-NEST-S100.strict_nesting_external_audit.json",
+  "schema": "historical_multiscale_formal_v09_strict_stage_audit_entry_v1",
+  "scope": "R09-NEST-S100",
+  "status": "strict_nesting_external_audit_complete"
+}
+end=2026-08-07T18:12:05+08:00
+=== L AUDIT STDERR (tail 20) ===
+=== M AUDIT REPORT ===
+status                               strict_nesting_checkpoint_prediction_replay_passed
+training_samples                     1745928
+checkpoints_verified                 ['checkpoint_epoch010.pt', 'checkpoint_epoch020.pt', 'checkpoint_epoch030.pt']
+permutation_hashes_recomputed        30
+maximum_pair_difference              0.0
+maximum_reference_difference         0.0
+formal_evaluation_observation_reads  0
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T18:12:11+0800
