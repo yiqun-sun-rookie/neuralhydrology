@@ -1,0 +1,82 @@
+### channel=id26-v09-strict seq=8
+### host=login4
+### started=2026-08-07T16:03:19+0800
+### ---------- output ----------
+=== A LOGIN NODE GIT ===
+login git: /usr/bin/git git version 1.8.3.1
+=== B ISOLATED GIT ENV ===
+creating /data1/home/sunyiq/v09_strict/gitenv (this can take a few minutes)
+#
+#     $ conda activate /data1/home/sunyiq/v09_strict/gitenv
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+
+
+Channel "defaults" has the following notices:
+  [info] -- Thu Aug  6 00:00:00 2026
+  main-x (Anaconda's new authenticated channel) is now generally available, with thousands of additional packages from our secure supply chain. Get started at: https://anaconda.com/docs/getting-started/main-x?utm_source=channel_notices
+
+OK  git version 2.55.0  at /data1/home/sunyiq/v09_strict/gitenv/bin/git
+=== C DOES IT SUPPORT THE FLAGS v09 NEEDS? ===
+/data1/home/sunyiq/v09_strict/neuralhydrology/.git
+f94183209bf44ed6e672e1c23f98020905804e6d
+0
+=== D REWRITE SLURM WITH GIT ON PATH ===
+=== E PRE-FLIGHT ===
+dirty_files=0 (want 0)
+absent(good) A09-NEST-01.authorization.json
+absent(good) strict_nesting
+absent(good) R09-NEST-S100.legacy_checkpoint_bridge_external_audit.json
+=== F SUBMIT ===
+jobid=201717
+=== G WAIT (max 40 min) ===
+  t=60s state=R
+finished at t=120s
+=== H ACCOUNTING ===
+     JobID    JobName  NodeList        State ExitCode    Elapsed 
+---------- ---------- --------- ------------ -------- ---------- 
+    201717    v09prep    ngu004    COMPLETED      0:0   00:01:13 
+=== I STDOUT ===
+node=ngu004
+git=/data1/home/sunyiq/v09_strict/gitenv/bin/git git version 2.55.0
+0, NVIDIA GeForce RTX 3090, 24576 MiB, 24125 MiB
+1, NVIDIA GeForce RTX 3090, 24576 MiB, 22374 MiB
+py 3.11.13 torch 2.4.0 numpy 2.3.3
+Mem:             251          12          23           0         217         238
+=== RUN PREPARE ===
+{
+  "formal_prediction_generation_authorized": false,
+  "formal_training_started": false,
+  "official_scoring_authorized": false,
+  "preparation_serial_lease": {
+    "held": true,
+    "lock_path": "/tmp/neuralhydrology_historical_multiscale_v09_strict_prerequisites.lock"
+  },
+  "prerequisite_sha256": {
+    "input_artifact_external_audit": "e18be463df4cc6fe6c21a1e39c675f77db3e8c833109c1e9cfb557e37a832cd6",
+    "input_seal": "a5a64e43312ac303bf03ea3840e2cf126563527c6b82b8b94035c34978c25b3a",
+    "legacy_checkpoint_bridge_external_audit": "4208df32fabcf52f76ac0203e8211bb3f7a4e4c1f4012577b50b0a279b890379",
+    "training_resource_preflight_external_audit": "8d63f2041e5a4fb59fa94943cb6efaca7abedacf04216b1a90c53bfe125c9e8f",
+    "trusted_target_external_audit": "81e3658fe27e8f658e59d81015ce3d1b2a3baef11045a3e22bd76254ef5d8387"
+  },
+  "schema": "historical_multiscale_formal_v09_strict_prerequisite_preparation_v1",
+  "scope": "R09-NEST-S100",
+  "status": "strict_prerequisites_prepared",
+  "training_authorization_created": false
+}
+=== J STDERR (tail 25) ===
+=== K BRIDGE VERDICT ===
+status                               legacy_checkpoint_bridge_external_audit_passed
+maximum_prediction_difference        0.0
+run_count                            8
+real_panel_rows_total                50976
+training_target_value_reads          0
+formal_evaluation_observation_reads  0
+legacy_dynamic_input_names           ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)']
+torch                                2.4.0
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T16:09:33+0800
