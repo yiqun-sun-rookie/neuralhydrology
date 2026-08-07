@@ -1,0 +1,47 @@
+### channel=id05-adversarial seq=14
+### host=login4
+### started=2026-08-07T11:17:15+0800
+### ---------- output ----------
+=== STAGE ===
+  staged json: 9   npz visible: 531
+=== L1 attribution (leave-one-variable-out by snow group) ===
+basins analyzed: 531
+temp_share  median 0.337  range [0.20, 0.60]
+precip_share median 0.436
+
+temp_share vs frac_snow : Spearman +0.690 (p=2.7e-76) | partial|cleanNSE +0.673 (p=4.1e-71)
+precip_share vs frac_snow: Spearman -0.520
+
+=== snow (frac_snow>0.2, n=152) vs rain (n=379) ===
+temp_share   snow 0.440  vs rain 0.305
+precip_share snow 0.342  vs rain 0.461
+temp>precip? snow: 106/152 basins | rain: 44/379 basins
+
+saved -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/l1_attribution_summary.csv
+=== L2 signatures (flood peaks, water balance) ===
+basins: 531 | snow(n=152) rain(n=379)
+
+--- (A) flood-peak corruption (predicted adv vs clean, around obs peaks) ---
+median predicted-peak magnitude change : -0.119  (snow -0.191 | rain -0.078)
+median |predicted-peak timing shift|   : 0.00 d  (snow 0.00 | rain 0.00)
+individual peaks with unchanged timing: 79.1%
+individual-peak local shape correlation: median 0.986 [Q25 0.961, Q75 0.995]
+basins with nonzero median peak-timing shift: 43/531 (snow 39, rain 4)
+
+--- (B) mass-balance violation: water-year runoff coefficient RC>1 ---
+basin-mean frac of water-years with RC>1 : adv 0.041 vs clean 0.021  (attack-induced +0.020)
+  snow: adv 0.076 vs clean 0.032  (+0.044)
+  rain: adv 0.028 vs clean 0.017  (+0.011)
+basins with NO clean RC>1 water-year but >=1 under attack: 24/531
+median RC (adv vs clean): 0.409 vs 0.371
+
+saved -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/l2_signatures_summary.csv
+=== HAND BACK ===
+  40ce14902b1c41db2f15806bf1f3e572  l1_attribution_summary.csv
+  dd917af3b00295e6f6da6a59e33947c8  l2_signatures_summary.csv
+     532 l1_attribution_summary.csv
+     532 l2_signatures_summary.csv
+    1064 total
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T11:17:46+0800
