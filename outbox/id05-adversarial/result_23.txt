@@ -1,0 +1,52 @@
+### channel=id05-adversarial seq=23
+### host=login4
+### started=2026-08-07T15:03:35+0800
+### ---------- output ----------
+=== TIME ===
+Fri Aug  7 15:03:35 CST 2026
+=== CANCEL PENDING GPU ANALYSIS ===
+201693 state=PENDING
+  cancelled 201693
+=== RESUBMIT ON CPU ===
+job=201701
+=== WAIT (max 15 min) ===
+state=COMPLETED after ~60s
+         JobID          State ExitCode    Elapsed 
+-------------- -------------- -------- ---------- 
+        201701      COMPLETED      0:0   00:00:45 
+=== STDOUT ===
+[Fri Aug  7 15:03:39 CST 2026] structure analysis on node icn213
+records: 531 -> /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/statistical_structure_summary_eps0.1.csv
+
+--- damage reproducibility against exp2 ---
+median D_record=0.2927
+median D_exp2=0.2927
+max |D_record-D_exp2|=1.078e-02
+
+--- whole-period moment audit ---
+median basin max |mean shift|=1.177e-02
+max basin max |mean shift|=2.067e-02
+median basin max relative std shift=5.940e-03
+max basin max relative std shift=2.523e-02
+
+--- 270-day input-window structure ---
+rolling_mean_abs_p90: median=0.0568  p90=0.0722
+rolling_mean_abs_p99: median=0.0771  p90=0.0887
+rolling_mean_abs_max: median=0.0854  p90=0.0961
+rolling_std_rel_p90: median=0.0435  p90=0.0749
+rolling_std_rel_p99: median=0.0683  p90=0.1474
+rolling_std_rel_max: median=0.0852  p90=0.2194
+rolling_corr_abs_p90: median=0.0500  p90=0.0827
+rolling_corr_abs_p99: median=0.0813  p90=0.1538
+rolling_corr_abs_max: median=0.1111  p90=0.2336
+
+--- whole-period cross-variable structure ---
+median basin max |corr change|=0.0194
+p90 basin max |corr change|=0.0432
+[Fri Aug  7 15:04:21 CST 2026] analysis done
+=== STDERR ===
+=== CSV ===
+-rw-r--r--. 1 sunyiq g_sunyiq 241922 Aug  7 15:04 /data1/home/sunyiq/adv531/results/05_adversarial_robustness/id18_s100/statistical_structure_summary_eps0.1.csv
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T15:04:26+0800
