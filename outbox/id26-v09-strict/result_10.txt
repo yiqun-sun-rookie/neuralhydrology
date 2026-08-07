@@ -1,0 +1,52 @@
+### channel=id26-v09-strict seq=10
+### host=login4
+### started=2026-08-07T16:14:35+0800
+### ---------- output ----------
+=== WATCHING JOB 201718 (max 100 min this round) ===
+[t=300s] state=R  run_dir=<empty>
+[t=600s] state=R  run_dir=<empty>
+[t=900s] state=R  run_dir=<empty>
+[t=1200s] state=R  run_dir=<empty>
+[t=1500s] state=R  run_dir=<empty>
+[t=1800s] state=R  run_dir=<empty>
+[t=2100s] state=R  run_dir=<empty>
+[t=2270s] run_dir: checkpoint_epoch010.pt 
+[t=2400s] state=R  run_dir=checkpoint_epoch010.pt 
+[t=2700s] state=R  run_dir=checkpoint_epoch010.pt 
+[t=3000s] state=R  run_dir=checkpoint_epoch010.pt 
+[t=3300s] state=R  run_dir=checkpoint_epoch010.pt 
+[t=3600s] state=R  run_dir=checkpoint_epoch010.pt 
+[t=3900s] state=R  run_dir=checkpoint_epoch010.pt 
+[t=4200s] state=R  run_dir=checkpoint_epoch010.pt 
+[t=4500s] state=R  run_dir=checkpoint_epoch010.pt 
+[t=4530s] run_dir: checkpoint_epoch010.pt checkpoint_epoch020.pt 
+[t=4800s] state=R  run_dir=checkpoint_epoch010.pt checkpoint_epoch020.pt 
+[t=5100s] state=R  run_dir=checkpoint_epoch010.pt checkpoint_epoch020.pt 
+[t=5400s] state=R  run_dir=checkpoint_epoch010.pt checkpoint_epoch020.pt 
+[t=5700s] state=R  run_dir=checkpoint_epoch010.pt checkpoint_epoch020.pt 
+[t=6000s] state=R  run_dir=checkpoint_epoch010.pt checkpoint_epoch020.pt 
+=== ACCOUNTING ===
+     JobID    JobName  NodeList        State ExitCode      Elapsed 
+---------- ---------- --------- ------------ -------- ------------ 
+    201718   v09train    ngu008      RUNNING      0:0     01:41:41 
+=== RUN DIR ===
+total 16311
+drwxr-xr-x. 2 sunyiq g_sunyiq    4096 Aug  7 17:30 .
+drwxr-xr-x. 3 sunyiq g_sunyiq    4096 Aug  7 16:14 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 8346907 Aug  7 16:52 checkpoint_epoch010.pt
+-rw-r--r--. 1 sunyiq g_sunyiq 8346907 Aug  7 17:30 checkpoint_epoch020.pt
+=== STDOUT (tail 40) ===
+node=ngu008 start=2026-08-07T16:12:32+08:00
+git=git version 2.55.0
+0, NVIDIA GeForce RTX 3090, 24125 MiB
+1, NVIDIA GeForce RTX 3090, 17638 MiB
+Mem:             251          11          84           1         158         240
+=== RUN STRICT NESTING TRAINING (531 basins, 30 epochs, seed 100) ===
+=== STDERR (tail 25) ===
+=== STAGE STATE ===
+present A09-NEST-01.authorization.json
+present A09-NEST-01.consumption.json
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T17:54:53+0800
