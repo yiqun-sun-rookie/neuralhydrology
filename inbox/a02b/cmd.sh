@@ -1,23 +1,27 @@
 #!/bin/bash
-# a02b seq=1 : hardened status check. Every call bounded by timeout.
+# a02b seq=2 : why do 4 COMPLETED jobs have only 1 tarball?
 export LC_ALL=C
 PKG=/data1/home/$USER/nature_1st_a02
+MB=/data1/home/$USER/hpc_mailbox/outbox
 
-echo "=== A QUEUE ==="
-timeout 25 squeue -u "$USER" -o "%.10i %.16j %.8T %.10M %.14R" 2>&1 | grep -E "a02_|JOBID"
+echo "=== A TAIL OF THE 4 COMPLETED LOGS ==="
+for j in a02_pre_s43-201683 a02_pre_s45-201687 a02_sam_s45-201688 a02_pre_s46-201689; do
+  echo "--- $j.out (last 14 lines) ---"
+  timeout 15 tail -14 "$PKG/logs/$j.out" 2>&1 | sed 's/^/   /'
+  if [ -s "$PKG/logs/$j.err" ]; then
+    echo "   -- .err tail --"; timeout 15 tail -6 "$PKG/logs/$j.err" 2>&1 | sed 's/^/   /'
+  fi
+done
 
-echo "=== B ACCOUNTING ==="
-timeout 40 sacct -S 2026-08-07 -u "$USER" -X --format=JobID%9,JobName%13,State%11,ExitCode%7,Elapsed%9 2>&1 | grep -E "a02_(pre|sam)|JobID|----"
+echo "=== B OUTPUT DIRS ==="
+timeout 25 ls -d $PKG/models/*/ 2>&1 | sed 's/^/  /'
+echo "--- contents of each ---"
+timeout 30 bash -c 'for d in '"$PKG"'/models/*/; do printf "  %-34s %s files, best=%s\n" "$(basename $d)" "$(ls $d 2>/dev/null | wc -l)" "$(ls $d 2>/dev/null | grep -c best)"; done' 2>&1
 
-echo "=== C EPOCH COUNTS ==="
-timeout 30 bash -c '
-for f in '"$PKG"'/logs/a02_*.out; do
-  [ -f "$f" ] || continue
-  printf "  %-24s lines=%-7s %s\n" "$(basename $f .out)" "$(wc -l < $f)" "$(tail -c 4000 $f | grep -a "^Epoch" | tail -1 | cut -c1-70)"
-done' 2>&1
+echo "=== C ALL TARBALLS AND STAGING ==="
+timeout 20 ls -la $MB/ 2>&1 | grep -E "a02|total" | sed 's/^/  /'
+timeout 20 ls -la $PKG/*.tar.gz $PKG/results* 2>&1 | sed 's/^/  /' | head -20
 
-echo "=== D TARBALLS ==="
-timeout 20 ls -la /data1/home/$USER/hpc_mailbox/outbox/a02_*.tar.gz 2>&1 | awk '{print "  ",$9,$5}'
-
-echo "=== E STUCK a02 WORKER ==="
-timeout 15 ps -u "$USER" -o pid,etime,stat,cmd 2>&1 | grep -E "cmd_18|a02" | grep -v grep | head -5
+echo "=== D SLURM SCRIPT TAIL (how the tarball is made) ==="
+timeout 15 ls $PKG/slurm/ 2>&1 | head -14 | sed 's/^/  /'
+timeout 15 tail -22 "$PKG/slurm/a02_pre_s43.slurm" 2>&1 | sed 's/^/  /'
