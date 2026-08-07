@@ -1,0 +1,35 @@
+### channel=id05-adversarial seq=21
+### host=login4
+### started=2026-08-07T14:23:23+0800
+### ---------- output ----------
+=== TIME ===
+Fri Aug  7 14:23:23 CST 2026
+=== ARRAY 201637 ===
+         JobID        State ExitCode    Elapsed 
+-------------- ------------ -------- ---------- 
+      201637_0      RUNNING      0:0   01:17:50 
+      201637_1      RUNNING      0:0   01:17:50 
+      201637_2      RUNNING      0:0   00:51:34 
+      201637_3      RUNNING      0:0   00:51:33 
+      201637_4      RUNNING      0:0   00:50:57 
+=== RECORDS SO FAR ===
+369
+=== DEPENDENT ANALYSIS ===
+existing adv531_analyze records today: 0
+  queued: 201693 (starts after 201637 completes)
+=== QUEUE ===
+           JOBID             NAME  ST       TIME           NODELIST(REASON)
+          201681      a02_pre_s42  PD       0:00                 (Priority)
+          201682      a02_sam_s42  PD       0:00                 (Priority)
+          201683      a02_pre_s43  PD       0:00                 (Priority)
+          201684      a02_sam_s43  PD       0:00                 (Priority)
+          201685      a02_pre_s44  PD       0:00                 (Priority)
+          201686      a02_sam_s44  PD       0:00                 (Priority)
+          201687      a02_pre_s45  PD       0:00                 (Priority)
+          201688      a02_sam_s45  PD       0:00                 (Priority)
+          201689      a02_pre_s46  PD       0:00                 (Priority)
+          201690      a02_sam_s46  PD       0:00                 (Priority)
+          201691      a02_pre_s47  PD       0:00                 (Priority)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T14:23:23+0800
