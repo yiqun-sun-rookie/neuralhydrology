@@ -1,0 +1,25 @@
+### channel=a02 seq=14
+### host=login4
+### started=2026-08-07T14:30:09+0800
+### ---------- output ----------
+=== A ALL GPU PARTITIONS: GRES USED ===
+HOSTNAMESPARTITIONSTATE     GRES      GRES_USED       CPUS(A/I/O/T) 
+ngu003   hgpu2    mixed     gpu:2     gpu:2,dcu:0     10/86/0/96    
+ngu009   hgpu2    mixed     gpu:2     gpu:1,dcu:0     2/94/0/96     
+ngu101   hgpu4    mixed     gpu:4     gpu:4,dcu:0     8/88/0/96     
+ngu102   hgpu4    mixed     gpu:4     gpu:4,dcu:0     8/88/0/96     
+ngu103   hgpu4    down*     gpu:4     gpu:0,dcu:0     0/0/96/96     
+ngu104   hgpu4    mixed     gpu:4     gpu:4,dcu:0     8/88/0/96     
+ngu201   hgpu8    mixed     gpu:8     gpu:8,dcu:0     16/48/0/64    
+ngu202   hgpu8    mixed     gpu:8     gpu:8,dcu:0     16/48/0/64    
+ngu203   hgpu8    mixed     gpu:8     gpu:8,dcu:0     22/42/0/64    
+=== B RUNNING JOBS ON THOSE PARTITIONS (all users) ===
+JOBID    USER     PARTITIONODELIST  TRES_PER_NOTIME     
+  (empty means nothing running there)
+=== C PICK A CANDIDATE AND CUDA-TEST IT ===
+  candidate node: NONE FOUND
+=== D A02 QUEUE STILL STUCK? ===
+  running=0  pending=12
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T14:30:09+0800
