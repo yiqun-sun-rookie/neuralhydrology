@@ -1,0 +1,47 @@
+### channel=id26-v09-strict seq=13
+### host=login4
+### started=2026-08-07T21:27:06+0800
+### ---------- output ----------
+=== A CODE CHECKOUT ===
+codetest HEAD = abdeb4bd1043198d4a8e4f4b8d4e8aedacf6e0b1
+=== B SUBMIT AND WAIT (cap 60 min) ===
+jobid=201774
+finished at t=110s
+=== C ACCOUNTING ===
+     JobID    JobName  NodeList        State ExitCode      Elapsed 
+---------- ---------- --------- ------------ -------- ------------ 
+    201774     v09pre    ngu010       FAILED      2:0     00:01:21 
+=== D STDOUT ===
+node=ngu010
+0, NVIDIA GeForce RTX 3090, 24125 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+torch 2.4.0 cudnn 90100
+=== REAL GPU PREFLIGHT: 4 workloads x 2 fresh subprocesses, batch 256, window 3562 ===
+profile: {"batch_size": 256, "features": 5, "recent_days": 270, "statics": 27, "window_days": 3562}
+ALL_WORKLOADS_IDENTICAL: False
+=== E STDERR (tail 25) ===
+Traceback (most recent call last):
+  File "<stdin>", line 6, in <module>
+  File "/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/src/26_historical_band_experts/resource_preflight_formal_v09.py", line 258, in run_preflight_workloads_v09
+    first = launcher(workload.name, device=device, profile=profile, python=python)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/src/26_historical_band_experts/resource_preflight_formal_v09.py", line 240, in _launch_worker_v09
+    raise ResourcePreflightError(
+resource_preflight_formal_v09.ResourcePreflightError: preflight worker for strict_nesting_pair exited 1: drology/src/26_historical_band_experts/resource_preflight_formal_v09.py", line 321, in _worker_main
+    payload = run_workload_in_process_v09(args.workload, device=args.device, profile=profile)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/src/26_historical_band_experts/resource_preflight_formal_v09.py", line 94, in run_workload_in_process_v09
+    torch.cuda.reset_peak_memory_stats(torch_device)
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/cuda/memory.py", line 322, in reset_peak_memory_stats
+    return torch._C._cuda_resetPeakMemoryStats(device)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Invalid device argument 
+
+=== F NOTHING FORMAL TOUCHED ===
+strict HEAD still: f94183209bf44ed6e672e1c23f98020905804e6d
+strict run dir files: 7
+no formal report written (expected)
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-07T21:29:13+0800
