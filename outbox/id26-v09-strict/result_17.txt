@@ -1,0 +1,29 @@
+### channel=id26-v09-strict seq=17
+### host=login4
+### started=2026-08-08T18:13:32+0800
+### ---------- output ----------
+=== JOB ===
+     JOBID       NAME    STATE         TIME NODELIST(REASON)
+    201861   v09suite  RUNNING      2:34:06 ngu011
+     JobID        State ExitCode      Elapsed 
+---------- ------------ -------- ------------ 
+    201861      RUNNING      0:0     02:34:06 
+=== RUN DIRECTORIES ===
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/capacity/seed_100.building
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/classic/seed_100
+=== SUITE LOG (tail 25) ===
+node=ngu011 start=2026-08-08T15:36:45+08:00
+0, NVIDIA GeForce RTX 3090, 24125 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+Mem:             250           3         118           0         130         247
+=== RUN SUITE: seed 100, three arms (max-runs 3) ===
+{"run_id": "B09-CLASSIC-S100", "status": "formal_training_complete"}
+=== SUITE ERR (tail 15) ===
+=== FINISHED ARMS ===
+classic    : formal_training_complete params=297217 steps=204630 wake=None loss ep1=0.04088 -> ep30=0.01017
+capacity   : not finished
+continuous : not finished
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T18:13:33+0800
