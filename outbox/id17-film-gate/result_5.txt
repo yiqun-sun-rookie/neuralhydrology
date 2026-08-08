@@ -1,0 +1,25 @@
+### channel=id17-film-gate seq=5
+### host=login4
+### started=2026-08-08T18:12:59+0800
+### ---------- output ----------
+=== SACCT ===
+       JobID  NodeList        State ExitCode    Elapsed 
+------------ --------- ------------ -------- ---------- 
+      201892    ngu011       FAILED    127:0   00:18:55 
+=== KEY LINES ===
+[TIMING] smoke_ea_fold0_seed0.yml train 2 epochs: 251s
+[TIMING] smoke_ea_fold0_seed0.yml test eval: 243s
+[RESULT] smoke_ea_fold0_seed0_2026_0808_1647_ep2 median NSE = 0.2956
+[TIMING] smoke_film_fold0_seed0.yml train 2 epochs: 303s
+[TIMING] smoke_film_fold0_seed0.yml test eval: 255s
+[RESULT] smoke_film_fold0_seed0_2026_0808_1655_ep2 median NSE = 0.2982
+[Sat Aug  8 05:03:52 PM CST 2026] SMOKE DONE
+=== ERRORS ===
+=== RUNS PRODUCED ===
+runs/smoke_ea_fold0_seed0_2026_0808_1647_ep2
+runs/smoke_film_fold0_seed0_2026_0808_1655_ep2
+runs/smoke_ea_fold0_seed0_2026_0808_1647_ep2: 2 ckpts, test dirs: 1
+runs/smoke_film_fold0_seed0_2026_0808_1655_ep2: 2 ckpts, test dirs: 1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T18:12:59+0800
