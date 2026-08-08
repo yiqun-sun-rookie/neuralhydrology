@@ -1,0 +1,34 @@
+### channel=id29-nearing2022-da seq=3
+### host=login4
+### started=2026-08-08T15:08:23+0800
+### ---------- output ----------
+=== A: stage code ===
+  package files: 79
+  configs: assimilation_block_lead1.yml autoregression_531_lead1_holdout0.yml simulation_531.yml smoke_autoregression.yml smoke_simulation.yml 
+  assimilation.py present: yes
+=== B: build data dir (symlink the shared CAMELS, keep extended local) ===
+total 4
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Aug  8 15:08 basin_mean_forcing
+lrwxr-xr-x. 1 sunyiq g_sunyiq   88 Aug  8 15:08 camels_attributes_v2.0 -> /data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/camels_attributes_v2.0
+lrwxr-xr-x. 1 sunyiq g_sunyiq   81 Aug  8 15:08 usgs_streamflow -> /data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/usgs_streamflow
+total 0
+lrwxr-xr-x. 1 sunyiq g_sunyiq 91 Aug  8 15:08 daymet -> /data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/basin_mean_forcing/daymet
+lrwxr-xr-x. 1 sunyiq g_sunyiq 91 Aug  8 15:08 maurer -> /data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/basin_mean_forcing/maurer
+lrwxr-xr-x. 1 sunyiq g_sunyiq 90 Aug  8 15:08 nldas -> /data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/basin_mean_forcing/nldas
+=== C: download extended forcings from HydroShare ===
+  maurer: http=200 size=25M
+  nldas: http=200 size=28M
+=== D: unpack extended forcings ===
+  maurer_extended: 675 files
+  nldas_extended: 671 files
+=== E: verify real Tmin/Tmax (the whole reason we need these) ===
+  maurer           n=10593  Tmax==Tmin=100%  mean diurnal=0.00C
+  maurer_extended  n=10593  Tmax==Tmin=0%  mean diurnal=12.87C
+  nldas            n=12784  Tmax==Tmin=100%  mean diurnal=0.00C
+  nldas_extended   n=12784  Tmax==Tmin=0%  mean diurnal=7.88C
+  daymet           n=12784  Tmax==Tmin=0%  mean diurnal=11.70C
+=== F: disk used ===
+993M	/data1/home/sunyiq/nearing2022_da
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T15:09:58+0800
