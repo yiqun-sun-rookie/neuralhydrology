@@ -107,7 +107,7 @@ clip_gradient_norm: 1.0
 log_interval: 50
 log_tensorboard: False
 log_n_figures: 0
-save_weights_every: 10
+save_weights_every: {save_every}
 metrics:
   - NSE
   - KGE
@@ -119,11 +119,11 @@ FILM_EXTRA = "film_site: input\nfilm_generator_hidden_size: 64\n"
 
 
 def write_config(model: str, fold: int, seed: int, num_workers: int, epochs: int, out_dir: Path,
-                 exp_prefix: str, train_file_override: str = None) -> Path:
+                 exp_prefix: str, train_file_override: str = None, save_every: int = 10) -> Path:
     label = {"ealstm": "EA-LSTM", "filmlstm": "FiLM-LSTM (input-site, unbounded gamma)"}[model]
     exp = f"{exp_prefix}_{'film' if model == 'filmlstm' else 'ea'}_fold{fold}_seed{seed}"
     text = TEMPLATE.format(model=model, model_label=label, fold=fold, seed=seed, exp=exp,
-                           epochs=epochs, num_workers=num_workers,
+                           epochs=epochs, num_workers=num_workers, save_every=save_every,
                            model_extra=FILM_EXTRA if model == "filmlstm" else "")
     if train_file_override:
         text = text.replace(f"train_basin_file: src/static_falsification/data/fold{fold}_train.txt",
@@ -145,7 +145,7 @@ def main():
     smoke_dir = OUT.parent / "hpc_smoke"
     for model in ("ealstm", "filmlstm"):
         written.append(write_config(model, 0, 0, num_workers=3, epochs=2, out_dir=smoke_dir,
-                                    exp_prefix="smoke",
+                                    exp_prefix="smoke", save_every=1,
                                     train_file_override="src/static_falsification/data/smoke20.txt"))
     print(f"wrote {len(written)} configs")
     for p in written:
