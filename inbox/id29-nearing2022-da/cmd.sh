@@ -1,43 +1,75 @@
 #!/bin/bash
-# ID29 probe 2: can the HPC fetch the extended forcings itself, and what do the GPU nodes look like?
-# Read-only / no sbatch.
+# ID29 seq=3: stage the reproduction package and fetch the extended forcings.
+# Login-node work is limited to unpacking and downloading. No computation, no sbatch here.
+set -o pipefail
+export LC_ALL=C
 
-echo "=== A: outbound reachability ==="
-for u in https://www.hydroshare.org https://github.com https://pypi.org; do
-  code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$u" 2>/dev/null)
-  echo "  $u -> ${code:-TIMEOUT}"
+ROOT=/data1/home/$USER/nearing2022_da
+SRC=/data1/home/$USER/neuralhydrology_backup_20260304/data/camels_us
+MB=/data1/home/$USER/hpc_mailbox
+
+echo "=== A: stage code ==="
+mkdir -p "$ROOT"
+tar -xzf "$MB/inbox/id29-nearing2022-da/payload.tar.gz" -C "$ROOT" || echo "UNTAR FAILED"
+echo "  package files: $(find $ROOT/neuralhydrology -name '*.py' | wc -l)"
+echo "  configs: $(ls $ROOT/src/29_nearing2022_da_ar/configs 2>/dev/null | tr '\n' ' ')"
+echo "  assimilation.py present: $([ -f $ROOT/neuralhydrology/evaluation/assimilation.py ] && echo yes || echo NO)"
+
+echo "=== B: build data dir (symlink the shared CAMELS, keep extended local) ==="
+mkdir -p "$ROOT/data/camels_us/basin_mean_forcing"
+for d in camels_attributes_v2.0 usgs_streamflow; do
+  [ -e "$ROOT/data/camels_us/$d" ] || ln -s "$SRC/$d" "$ROOT/data/camels_us/$d"
+done
+for p in daymet maurer nldas; do
+  [ -e "$ROOT/data/camels_us/basin_mean_forcing/$p" ] || ln -s "$SRC/basin_mean_forcing/$p" "$ROOT/data/camels_us/basin_mean_forcing/$p"
+done
+ls -l "$ROOT/data/camels_us" | head -5
+ls -l "$ROOT/data/camels_us/basin_mean_forcing" | head -8
+
+echo "=== C: download extended forcings from HydroShare ==="
+cd "$ROOT" || exit 1
+mkdir -p dl
+for pair in "maurer:17c896843cf940339c3c3496d0c1c077" "nldas:0a68bfd7ddf642a8be9041d60f40868c"; do
+  name=${pair%%:*}; rid=${pair##*:}
+  if [ -s "dl/${name}_extended.zip" ]; then
+    echo "  ${name}: already downloaded ($(du -h dl/${name}_extended.zip | cut -f1))"
+    continue
+  fi
+  code=$(curl -sL --max-time 600 -w '%{http_code}' \
+      "https://www.hydroshare.org/django_irods/rest_download/bags/${rid}.zip" \
+      -o "dl/${name}_extended.zip")
+  echo "  ${name}: http=$code size=$(du -h dl/${name}_extended.zip 2>/dev/null | cut -f1)"
 done
 
-echo "=== B: hydroshare bag endpoint (headers only, no download) ==="
-curl -sIL --max-time 30 "https://www.hydroshare.org/hsapi/resource/17c896843cf940339c3c3496d0c1c077/" 2>&1 \
-  | grep -iE "^HTTP|^location|^content-length" | head -6
+echo "=== D: unpack extended forcings ==="
+cd "$ROOT/dl" || exit 1
+FDIR="$ROOT/data/camels_us/basin_mean_forcing"
 
-echo "=== C: gpu node detail (hgpu4 / hgpu8) ==="
-for n in ngu101 ngu201; do
-  scontrol show node $n 2>/dev/null | grep -oE "NodeName=[^ ]+|Gres=[^ ]+|CPUTot=[0-9]+|RealMemory=[0-9]+|State=[^ ]+" | tr '\n' ' '
-  echo ""
+# maurer bag -> inner zip
+if [ ! -d "$FDIR/maurer_extended" ]; then
+  unzip -o -q maurer_extended.zip -d maurer_bag && \
+  unzip -o -q maurer_bag/*/data/contents/maurer_extended.zip -d "$FDIR" && \
+  echo "  maurer_extended: $(ls $FDIR/maurer_extended/*/*.txt 2>/dev/null | wc -l) files"
+else
+  echo "  maurer_extended already present"
+fi
+
+# nldas bag -> inner tar.xz
+if [ ! -d "$FDIR/nldas_extended" ]; then
+  unzip -o -q nldas_extended.zip -d nldas_bag && \
+  tar -xJf nldas_bag/*/data/contents/nldas_extended.tar.xz -C "$FDIR" && \
+  echo "  nldas_extended: $(ls $FDIR/nldas_extended/*/*.txt 2>/dev/null | wc -l) files"
+else
+  echo "  nldas_extended already present"
+fi
+
+echo "=== E: verify real Tmin/Tmax (the whole reason we need these) ==="
+for p in maurer maurer_extended nldas nldas_extended daymet; do
+  f=$(ls $FDIR/$p/*/01013500*.txt 2>/dev/null | head -1)
+  [ -z "$f" ] && { echo "  $p: NO FILE"; continue; }
+  awk -v prod="$p" 'NR>4 {n++; if ($9==$10) eq++; d+=$9-$10} END {printf "  %-16s n=%d  Tmax==Tmin=%.0f%%  mean diurnal=%.2fC\n", prod, n, 100*eq/n, d/n}' "$f"
 done
 
-echo "=== D: queue pressure ==="
-squeue -h -o "%.10P %.8T" 2>/dev/null | sort | uniq -c | head -10
-echo "my jobs:"; squeue -u "$USER" -h 2>/dev/null | wc -l
-
-echo "=== E: nh_final package check ==="
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY' 2>&1 | tail -20
-import importlib
-for m in ['torch','numpy','pandas','xarray','ruamel.yaml','tqdm','scipy','numba','matplotlib','netCDF4','sklearn']:
-    try:
-        mod = importlib.import_module(m)
-        print(f'  OK   {m:14s} {getattr(mod,"__version__","?")}')
-    except Exception as e:
-        print(f'  MISS {m:14s} {type(e).__name__}')
-PY
-
-echo "=== F: camels data sanity (read-only) ==="
-D=/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us
-ls $D
-echo "basins in maurer: $(ls $D/basin_mean_forcing/maurer/*/*.txt 2>/dev/null | wc -l)"
-echo "basins in daymet: $(ls $D/basin_mean_forcing/daymet/*/*.txt 2>/dev/null | wc -l)"
-echo "basins in nldas:  $(ls $D/basin_mean_forcing/nldas/*/*.txt 2>/dev/null | wc -l)"
-echo "streamflow files: $(ls $D/usgs_streamflow/*/*.txt 2>/dev/null | wc -l)"
-head -4 $D/basin_mean_forcing/maurer/01/01013500_lump_maurer_forcing_leap.txt 2>/dev/null | tail -1
+echo "=== F: disk used ==="
+du -sh "$ROOT" 2>/dev/null | tail -1
+rm -rf "$ROOT/dl/maurer_bag" "$ROOT/dl/nldas_bag"
