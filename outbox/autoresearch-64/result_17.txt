@@ -1,0 +1,51 @@
+### channel=autoresearch-64 seq=17
+### host=login4
+### started=2026-08-08T21:36:03+0800
+### ---------- output ----------
+=== deny lines in the access log ===
+{"decision":"deny","event":"ctypes.dlopen","reason":"candidate dynamic local library loading is disabled"}
+=== last 8 events before the end ===
+{"decision":"allow","event":"import","module":"ast","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/__pycache__/ast.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"_ast","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"ctypes","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/ctypes/__pycache__/__init__.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"_ctypes","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"_ctypes","reason":"declared dependency initialization"}
+{"decision":"deny","event":"ctypes.dlopen","reason":"candidate dynamic local library loading is disabled"}
+=== runtime result ===
+{
+  "candidate_id": "hbv-lite-calibrated-v1",
+  "checkpoint_id": null,
+  "checkpoint_root_sha256": null,
+  "denied_event_count": 1,
+  "dependency_preflight_decision": "launch",
+  "mode": "train",
+  "normalized_exit_code": 2,
+  "output_contract": {
+    "actual_top_level": [],
+    "expected_top_level": [
+      "model_artifacts"
+    ],
+    "failures": [
+      "required top-level outputs are missing: ['model_artifacts']"
+    ],
+    "valid": false
+  },
+  "process_exit_code": 2,
+  "required_outputs_complete": false,
+  "resource_preflight_decision": "launch",
+  "resume_checkpoint_id": null,
+  "resume_checkpoint_root_sha256": null,
+  "schema_version": "runtime_result_v1",
+  "status": "contract_failure"
+}
+=== dependency preflight decision ===
+decision: launch
+  numpy==1.26.4 active 1.26.4 installed ['1.26.4'] matched True
+  pandas==2.2.3 active 2.2.3 installed ['2.2.3'] matched True
+  pyarrow==17.0.0 active 17.0.0 installed ['17.0.0'] matched True
+=== candidate stderr ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T21:36:04+0800
