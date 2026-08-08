@@ -1,0 +1,34 @@
+### channel=autoresearch-64 seq=7
+### host=login4
+### started=2026-08-08T15:06:03+0800
+### ---------- output ----------
+=== A. what can conda actually solve for the declared pins? ===
+                          /data1/home/sunyiq/.conda/envs
+               platform : linux-64
+             user-agent : conda/23.10.0 requests/2.31.0 CPython/3.11.5 Linux/3.10.0-957.el7.x86_64 centos/7.6.1810 glibc/2.17
+                UID:GID : 2272:2269
+             netrc file : None
+           offline mode : False
+
+
+An unexpected error has occurred. Conda has prepared the above report.
+If you suspect this error is being caused by a malfunctioning plugin,
+consider using the --no-plugins option to turn off plugins.
+
+Example: conda --no-plugins install <package>
+
+Alternatively, you can set the CONDA_NO_PLUGINS environment variable on
+the command line to run the command without plugins enabled.
+
+Example: CONDA_NO_PLUGINS=true conda install <package>
+
+Upload did not complete.
+=== B. env exists? ===
+NOT CREATED
+=== C. installed versions vs declared pins ===
+SKIPPING C/D: env was not created
+=== E. nh_final untouched ===
+nh_final still: 2.3.3 2.3.2 20.0.0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T15:07:15+0800
