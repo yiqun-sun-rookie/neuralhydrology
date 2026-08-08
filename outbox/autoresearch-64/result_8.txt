@@ -1,0 +1,76 @@
+### channel=autoresearch-64 seq=8
+### host=login4
+### started=2026-08-08T15:10:43+0800
+### ---------- output ----------
+=== SUBMIT ===
+jobid=201838
+=== WAIT (max 15 min) ===
+=== RESULT ===
+     JobID        JobName  NodeList          State ExitCode    Elapsed 
+---------- -------------- --------- -------------- -------- ---------- 
+    201838   a64-database    icn201      COMPLETED      0:0   00:00:38 
+---- stdout ----
+=== versions used for this build ===
+numpy 2.3.3 pandas 2.3.2 pyarrow 20.0.0
+=== 1. build development source (64 basins) ===
+    "2008-09-30"
+  ],
+  "files": {
+    "features.parquet": "c2288dd3e27d940ae17dc4f896a4860278ccf96bb20995241916a396b64cf451",
+    "static_attributes.json": "0e0993a80c6487f7efa1dd287ccca695cb174d90c615779764a8ad1897793108",
+    "targets.parquet": "d539f07cf560c6b55d94d648990abee43cfc53b6d409ce6401f1bd2d9c017dc7"
+  },
+  "forcing_product": "maurer",
+  "schema_version": "development_source_v1",
+  "sealed_final_evaluation_present": false,
+  "source_kind": "explicitly_pre_sliced_development_only"
+}
+=== 2. build both protocol packages ===
+    "11381500",
+    "12377150",
+    "08189500"
+  ]
+}
+files: 12
+=== 3. independent per-basin verification ===
+usage: verify_development_artifacts.py [-h] --source-root SOURCE_ROOT
+                                       --package-root PACKAGE_ROOT
+                                       [--camels-root CAMELS_ROOT]
+                                       [--static-table STATIC_TABLE]
+                                       [--protocol PROTOCOL] --selection
+                                       SELECTION --report REPORT
+verify_development_artifacts.py: error: the following arguments are required: --report
+=== 4. pre-search basin eligibility ===
+{
+  "record_sha256": "d01f76f2bfb5bbc65a3b280aa2e9e1d7b7973cc119b3dc2fbf5e33cfff1d9ebe",
+  "standard_basin_count": 53,
+  "thresholds": {
+    "single_day_variance_share_at_or_above": 0.5,
+    "zero_flow_fraction_at_or_above": 0.5
+  },
+  "unstable_basin_count": 11,
+  "unstable_basins": [
+    "02300700",
+    "08190500",
+    "06847900",
+    "05458000",
+    "11151300",
+    "06879650",
+    "08194200",
+    "08158810",
+    "02102908",
+    "09512280",
+    "09430600"
+  ]
+}
+=== 5. do the Linux artifacts hash-match the Windows ones? ===
+c2288dd3e27d940ae17dc4f896a4860278ccf96bb20995241916a396b64cf451  features.parquet
+d539f07cf560c6b55d94d648990abee43cfc53b6d409ce6401f1bd2d9c017dc7  targets.parquet
+0e0993a80c6487f7efa1dd287ccca695cb174d90c615779764a8ad1897793108  static_attributes.json
+windows features.parquet 1c13a08328a588888c63bb7f44b6677d985e10121421583016a9d8774f414896
+windows targets.parquet  3d070cd4a6f92e291ddf8844455be71b9d19da58e8a2d91824c4b503c2277573
+windows statics.json     a59be77c9cf651112e616b525b215a15f0118527a5f843626538f511e9311734
+---- stderr (tail) ----
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T15:11:23+0800
