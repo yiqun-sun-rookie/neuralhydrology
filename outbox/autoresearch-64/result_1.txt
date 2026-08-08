@@ -1,0 +1,37 @@
+### channel=autoresearch-64 seq=1
+### host=login4
+### started=2026-08-08T14:11:42+0800
+### ---------- output ----------
+=== A. CAMELS archive present? ===
+/data1/home/sunyiq/neuralhydrology/data/camels_us
+forcing maurer files:
+675
+streamflow files:
+674
+=== B. static table + basin list ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/src/fair_benchmark/frozen/bundle/track0_statics.csv: No such file or directory
+-rw-r--r--. 1 sunyiq g_sunyiq 4779 Mar  4 22:27 /data1/home/sunyiq/neuralhydrology/examples/06-Finetuning/531_basin_list.txt
+=== C. is unified_autoresearch already there? ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/src/unified_autoresearch: No such file or directory
+=== D. repo git state (READ ONLY) ===
+migration/reorg-v1
+96703ce fix(adversarial): handle empty/NaN targets in metrics (basin 09535100)
+dirty files:
+78
+=== E. conda env ===
+Python 3.11.13
+pandas 2.3.2 pyarrow 20.0.0 numpy 2.3.3 psutil 7.0.0
+=== F. capacity ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  592T  363T  62% /data1
+=== G. partitions ===
+   PARTITION  NODES NODES(A/I/O/T)     MEMORY
+     hcpu48*     64    12/36/16/64          1
+     hcpu48y     12       2/7/3/12          1
+       hgpu8      3        3/0/0/3          1
+       hgpu4      4        0/3/1/4          1
+       hgpu2      2        1/1/0/2          1
+      hgpu2p      9        4/5/0/9          1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T14:12:03+0800
