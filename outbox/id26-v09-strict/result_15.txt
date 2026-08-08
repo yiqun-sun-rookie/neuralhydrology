@@ -1,0 +1,37 @@
+### channel=id26-v09-strict seq=15
+### host=login4
+### started=2026-08-08T15:37:50+0800
+### ---------- output ----------
+=== A CODE ===
+codetest HEAD = bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
+dirty = 0
+=== B SEALED INPUTS INTO THE CODE TREE ===
+tar sha256 = feee746c7bda7970c8bac470969bf4247118f8f35d6cf543a44a8a6b4bd1bed7
+expected   = feee746c7bda7970c8bac470969bf4247118f8f35d6cf543a44a8a6b4bd1bed7
+extracted
+input files: 13 (want 13)
+sealed files 12, mismatches 0 (want 0)
+=== C PROGRESS BEFORE ===
+{
+  "total": 24,
+  "completed": [],
+  "pending": [
+    "B09-CLASSIC-S100",
+    "B09-CAPACITY-S100",
+    "E09-CONTINUOUS-S100",
+    "B09-CLASSIC-S200"
+  ],
+  "dirty": []
+}
+=== D WRITE SUITE JOB ===
+=== E SUBMIT (do not wait) ===
+SUITE_JOBID=201861
+     JOBID       NAME PARTITION    STATE       TIME NODELIST(REASON)
+    201861   v09suite    hgpu2p  RUNNING       0:25 ngu011
+=== F NOTE ===
+expected ~4 h for three arms; poll with a later seq
+strict evidence tree untouched at: f94183209bf44ed6e672e1c23f98020905804e6d
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T15:39:51+0800
