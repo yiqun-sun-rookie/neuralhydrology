@@ -66,5 +66,5 @@ done
 
 echo "=========================================="
 echo "[$(date)] SMOKE DONE"
-scontrol show job $SLURM_JOB_ID | head -20
+command -v scontrol >/dev/null && scontrol show job $SLURM_JOB_ID | head -20 || true
 echo "=========================================="

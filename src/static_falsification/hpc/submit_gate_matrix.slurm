@@ -7,7 +7,7 @@
 #SBATCH --gres=gpu:1
 #SBATCH --exclude=ngu002
 #SBATCH -t 48:00:00
-#SBATCH --array=0-19%6
+#SBATCH --array=0-19%8
 #SBATCH -o /data1/home/sunyiq/id17_film_gate/logs/17_entity_awareness_hypernet/gate_%A_%a.out
 #SBATCH -e /data1/home/sunyiq/id17_film_gate/logs/17_entity_awareness_hypernet/gate_%A_%a.err
 # never write --mem
