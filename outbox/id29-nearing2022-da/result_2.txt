@@ -1,0 +1,47 @@
+### channel=id29-nearing2022-da seq=2
+### host=login4
+### started=2026-08-08T15:03:48+0800
+### ---------- output ----------
+=== A: outbound reachability ===
+  https://www.hydroshare.org -> 200
+  https://github.com -> 000
+  https://pypi.org -> 200
+=== B: hydroshare bag endpoint (headers only, no download) ===
+HTTP/1.1 302 Found
+Location: /django_irods/rest_download/bags/17c896843cf940339c3c3496d0c1c077.zip
+Content-Length: 0
+HTTP/1.1 405 Method Not Allowed
+Content-Length: 41
+=== C: gpu node detail (hgpu4 / hgpu8) ===
+NodeName=ngu101 CPUTot=96 Gres=gpu:4 RealMemory=1 State=IDLE 
+NodeName=ngu201 CPUTot=64 Gres=gpu:8 RealMemory=1 State=MIXED 
+=== D: queue pressure ===
+my jobs:
+0
+=== E: nh_final package check ===
+  OK   torch          2.4.0
+  OK   numpy          2.3.3
+  OK   pandas         2.3.2
+  OK   xarray         2025.12.0
+  OK   ruamel.yaml    0.19.1
+  OK   tqdm           4.67.1
+  OK   scipy          1.16.2
+  OK   numba          0.63.1
+  OK   matplotlib     3.10.6
+  OK   netCDF4        1.7.4
+  MISS sklearn        ModuleNotFoundError
+=== F: camels data sanity (read-only) ===
+basin_mean_forcing
+camels_attributes_v2.0
+demo
+full
+raw
+usgs_streamflow
+basins in maurer: 675
+basins in daymet: 677
+basins in nldas:  675
+streamflow files: 674
+Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SRAD(W/m2)	SWE(mm)	Tmax(C)	Tmin(C)	Vp(Pa)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T15:05:16+0800
