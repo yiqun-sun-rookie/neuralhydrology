@@ -1,28 +1,46 @@
 #!/bin/bash
-# ID29 seq=8: the slurm logs look empty (stdout buffering). Read neuralhydrology's own output.log instead.
+# ID29 seq=9: runner is back. Find out (a) where the dependency job 201864 went, (b) how far training has got.
+# No ssh into compute nodes, no wildcard log deletion.
 ROOT=/data1/home/sunyiq/nearing2022_da
 RES=$ROOT/results/29_nearing2022_da_ar
 
-echo "=== A: queue ==="
-squeue -u "$USER" -o "%.10i %.12j %.8T %.12M %R" 2>&1
+echo "=== A: full queue with reasons ==="
+squeue -u "$USER" -o "%.10i %.12j %.10T %.12M %.12L %R" 2>&1
 
-echo "=== B: run directories created? ==="
-ls -1dt $RES/*/ 2>/dev/null | head -5
+echo "=== B: what happened to the assimilation job(s) ==="
+sacct -u "$USER" -X --starttime 2026-08-08T15:00 \
+      --format=JobID%10,JobName%12,State%14,ExitCode%8,Elapsed%10,Submit%20,Reason%22 2>&1 | tail -15
 
-echo "=== C: neuralhydrology output.log per run ==="
-for d in $(ls -1dt $RES/*/ 2>/dev/null | head -2); do
-  echo "---- $(basename $d)"
-  if [ -f "$d/output.log" ]; then
-    grep -E "Loading basin data|Calculating target|Create lookup|Epoch [0-9]+ average|Median validation|Setting|device" "$d/output.log" 2>/dev/null | tail -8
-    echo "   (last line): $(tail -1 "$d/output.log" | cut -c1-140)"
-    echo "   (log size): $(wc -c < "$d/output.log") bytes, mtime $(date -r "$d/output.log" +%H:%M:%S)"
-  else
-    echo "   no output.log yet; dir contents:"; ls "$d" | head -6
-  fi
+echo "=== C: simulation 201858 progress (neuralhydrology's own log) ==="
+D=$(ls -1dt $RES/nearing2022_simulation_seed0_*/ 2>/dev/null | head -1)
+echo "run=$D"
+if [ -n "$D" ] && [ -f "$D/output.log" ]; then
+  grep -E "Epoch [0-9]+ average loss" "$D/output.log" | tail -4
+  echo "  last line: $(tail -1 "$D/output.log" | cut -c1-130)"
+  echo "  log mtime: $(date -r "$D/output.log" +%H:%M:%S)  size: $(wc -c < "$D/output.log")"
+  ls "$D" | grep -c "model_epoch" | sed 's/^/  checkpoints saved: /'
+else
+  echo "  no output.log yet"; ls -la "$D" 2>/dev/null | head -8
+fi
+
+echo "=== D: autoregression 201859 progress ==="
+D=$(ls -1dt $RES/nearing2022_autoregression_*/ 2>/dev/null | head -1)
+echo "run=$D"
+if [ -n "$D" ] && [ -f "$D/output.log" ]; then
+  grep -E "Epoch [0-9]+ average loss" "$D/output.log" | tail -4
+  echo "  last line: $(tail -1 "$D/output.log" | cut -c1-130)"
+  echo "  log mtime: $(date -r "$D/output.log" +%H:%M:%S)"
+  ls "$D" | grep -c "model_epoch" | sed 's/^/  checkpoints saved: /'
+else
+  echo "  no output.log yet"; ls -la "$D" 2>/dev/null | head -8
+fi
+
+echo "=== E: slurm logs ==="
+ls -la "$ROOT/logs" 2>/dev/null | tail -8
+
+echo "=== F: errors if any ==="
+for f in "$ROOT"/logs/*.err; do
+  n=$(grep -icE "traceback|error|out of memory" "$f" 2>/dev/null)
+  echo "  $(basename $f): $n error-ish lines"
+  [ "$n" -gt 0 ] && grep -iE "traceback|error|out of memory" "$f" | head -3
 done
-
-echo "=== D: are the processes actually burning cpu? ==="
-ssh -o BatchMode=yes -o ConnectTimeout=10 ngu104 "ps -u sunyiq -o pid,etime,time,%cpu,%mem,cmd --sort=-time | grep -E 'nh_run|PID' | head -5" 2>&1 | tail -5
-
-echo "=== E: slurm log sizes (confirm buffering vs nothing) ==="
-ls -la $ROOT/logs/ 2>/dev/null | tail -6
