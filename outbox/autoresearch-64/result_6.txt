@@ -1,0 +1,37 @@
+### channel=autoresearch-64 seq=6
+### host=login4
+### started=2026-08-08T14:58:40+0800
+### ---------- output ----------
+=== A. base interpreter ===
+Python 3.11.13
+=== B. create venv ===
+Python 3.11.13
+=== C. install pinned contract versions ===
+      
+      × Encountered error while generating package metadata.
+      ╰─> numpy
+      
+      note: This is an issue with the package mentioned above, not pip.
+      hint: See above for details.
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+ERROR: Failed to build 'pandas' when installing build dependencies for pandas
+=== D. verify against declared pins ===
+MISMATCH numpy: declared 1.26.4, installed MISSING
+MISMATCH pandas: declared 2.3.3, installed MISSING
+MISMATCH pyarrow: declared 22.0.0, installed MISSING
+    psutil: MISSING
+    pytest: MISSING
+CONTRACT_VERSIONS_DIFFER
+=== E. selection reproduces on HPC? ===
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+  File "/data1/home/sunyiq/autoresearch64/src/unified_autoresearch/selection/basins.py", line 11, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+=== F. venv must stay out of the workspace git index ===
+0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T15:00:45+0800
