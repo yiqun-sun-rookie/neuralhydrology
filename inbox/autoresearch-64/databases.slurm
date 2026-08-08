@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH -J a64-database
+#SBATCH -J a64-verify
 #SBATCH -p hcpu48
 #SBATCH -N 1
 #SBATCH -n 1
@@ -18,36 +18,44 @@ CAMELS=/data1/home/sunyiq/neuralhydrology/data/camels_us
 cd "$ROOT" || exit 1
 export PYTHONPATH="$ROOT/src:$PYTHONPATH"
 
-echo "=== versions used for this build ==="
-python -c "import numpy,pandas,pyarrow;print('numpy',numpy.__version__,'pandas',pandas.__version__,'pyarrow',pyarrow.__version__)"
-
-echo "=== 1. build development source (64 basins) ==="
-python src/unified_autoresearch/scripts/build_real_development_source.py \
-  --camels-root "$CAMELS" \
-  --selection src/unified_autoresearch/selection/development_basins_64_v1.json \
-  --output-root runs/unified_autoresearch/development_source_real_64_hpc 2>&1 | tail -12
-
-echo "=== 2. build both protocol packages ==="
-python src/unified_autoresearch/scripts/build_real_development_packages.py \
-  --source-root runs/unified_autoresearch/development_source_real_64_hpc \
-  --selection src/unified_autoresearch/selection/development_basins_64_v1.json \
-  --output-root runs/unified_autoresearch/development_packages_real_64_hpc 2>&1 | tail -6
-
-echo "=== 3. independent per-basin verification ==="
+echo "=== 1. independent per-basin verification (correct flag this time) ==="
 python src/unified_autoresearch/scripts/verify_development_artifacts.py \
   --source-root runs/unified_autoresearch/development_source_real_64_hpc \
   --package-root runs/unified_autoresearch/development_packages_real_64_hpc \
   --camels-root "$CAMELS" \
   --selection src/unified_autoresearch/selection/development_basins_64_v1.json \
-  --output runs/unified_autoresearch/VERIFICATION_64_HPC.json 2>&1 | tail -25
+  --report runs/unified_autoresearch/VERIFICATION_64_HPC.json 2>&1 | tail -30
 
-echo "=== 4. pre-search basin eligibility ==="
-python src/unified_autoresearch/scripts/classify_development_basins.py \
-  --package-root runs/unified_autoresearch/development_packages_real_64_hpc \
-  --output runs/unified_autoresearch/BASIN_ELIGIBILITY_64_HPC.json 2>&1 | tail -22
+echo "=== 2. platform-independent CONTENT digest (not byte digest) ==="
+python - <<'PY'
+import hashlib, pathlib, pandas as pd
+root = pathlib.Path("runs/unified_autoresearch/development_source_real_64_hpc")
+for name, cols in (("targets.parquet", ["basin","date","qobs"]), ("features.parquet", ["basin","date","prcp","tmin","tmax","srad","vp"])):
+    f = pd.read_parquet(root / name)
+    f["basin"] = f["basin"].astype(str).str.zfill(8)
+    f["date"] = pd.to_datetime(f["date"]).dt.strftime("%Y-%m-%d")
+    f = f.sort_values(["basin","date"]).reset_index(drop=True)
+    digest = hashlib.sha256()
+    for row in f[cols].itertuples(index=False):
+        digest.update(("|".join(f"{v:.12g}" if isinstance(v, float) else str(v) for v in row) + "\n").encode())
+    print(f"{name}: rows={len(f)} content_sha256={digest.hexdigest()}")
+PY
 
-echo "=== 5. do the Linux artifacts hash-match the Windows ones? ==="
-cd runs/unified_autoresearch/development_source_real_64_hpc && sha256sum features.parquet targets.parquet static_attributes.json
-echo "windows features.parquet 1c13a08328a588888c63bb7f44b6677d985e10121421583016a9d8774f414896"
-echo "windows targets.parquet  3d070cd4a6f92e291ddf8844455be71b9d19da58e8a2d91824c4b503c2277573"
-echo "windows statics.json     a59be77c9cf651112e616b525b215a15f0118527a5f843626538f511e9311734"
+echo "=== 3. why do the JSON bytes differ? line endings ==="
+python - <<'PY'
+import pathlib
+p = pathlib.Path("runs/unified_autoresearch/development_source_real_64_hpc/static_attributes.json")
+raw = p.read_bytes()
+print("CRLF count:", raw.count(b"\r\n"), "| bare LF count:", raw.count(b"\n") - raw.count(b"\r\n"))
+PY
+
+echo "=== 4. eligibility content vs the Windows record (ignoring embedded package hash) ==="
+python - <<'PY'
+import json, hashlib, pathlib
+r = json.loads(pathlib.Path("runs/unified_autoresearch/BASIN_ELIGIBILITY_64_HPC.json").read_text())
+core = {k: r[k] for k in ("schema_version","decided_from","protocols","thresholds","basins","standard_basins","unstable_basins")}
+blob = json.dumps(core, sort_keys=True, separators=(",",":")).encode()
+print("eligibility CONTENT sha256 (excludes package_manifest_sha256):", hashlib.sha256(blob).hexdigest())
+print("standard:", len(r["standard_basins"]), "unstable:", len(r["unstable_basins"]))
+print("unstable list:", ",".join(r["unstable_basins"]))
+PY
