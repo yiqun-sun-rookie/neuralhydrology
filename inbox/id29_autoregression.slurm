@@ -5,13 +5,15 @@
 #SBATCH -n 1
 #SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:1
-#SBATCH -t 36:00:00
+#SBATCH -t 72:00:00
 #SBATCH -o /data1/home/sunyiq/nearing2022_da/logs/ar_%j.out
 #SBATCH -e /data1/home/sunyiq/nearing2022_da/logs/ar_%j.err
 
 # Nearing et al. 2022 reproduction, arm 2 of 3: autoregression, lag 1 day, 0% training holdout.
 # 531 basins, 30 epochs, three forcing products (daymet + maurer_extended + nldas_extended), seed 0.
 # Target: median NSE = 0.879
+# Wall clock: measured 1.51 it/s x 6821 batches = ~75 min/epoch -> ~38 h for 30 epochs.
+# The per-timestep python loop in ARLSTM is the bottleneck (~20x slower than CudaLSTM); a GPU upgrade does not help.
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
 PY=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
