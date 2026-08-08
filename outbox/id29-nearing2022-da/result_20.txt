@@ -1,0 +1,18 @@
+### channel=id29-nearing2022-da seq=20
+### host=login4
+### started=2026-08-08T22:19:12+0800
+### ---------- output ----------
+=== QUEUE ===
+     JOBID       NAME      STATE         TIME
+    201890    id29_da    RUNNING      4:12:01
+    201893    id29_ar    RUNNING      5:31:13
+=== ACCOUNTING ===
+     JobID      JobName        State ExitCode    Elapsed 
+---------- ------------ ------------ -------- ---------- 
+    201890      id29_da      RUNNING      0:0   04:12:01 
+    201893      id29_ar      RUNNING      0:0   05:31:13 
+=== HEADLINE TABLE ===
+NOT_PRESENT
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T22:19:13+0800
