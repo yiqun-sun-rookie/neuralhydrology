@@ -1,0 +1,28 @@
+### channel=id26-v09-strict seq=19
+### host=login4
+### started=2026-08-08T20:27:55+0800
+### ---------- output ----------
+=== JOB ===
+     JobID        State ExitCode      Elapsed 
+---------- ------------ -------- ------------ 
+    201861      RUNNING      0:0     04:48:29 
+=== DIRS ===
+capacity/seed_100
+classic/seed_100
+continuous/seed_100.building
+=== LOG TAIL ===
+node=ngu011 start=2026-08-08T15:36:45+08:00
+0, NVIDIA GeForce RTX 3090, 24125 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+Mem:             250           3         118           0         130         247
+=== RUN SUITE: seed 100, three arms (max-runs 3) ===
+{"run_id": "B09-CLASSIC-S100", "status": "formal_training_complete"}
+{"run_id": "B09-CAPACITY-S100", "status": "formal_training_complete"}
+=== ARMS ===
+classic    : formal_training_complete params=297217 steps=204630 wake=None loss 0.04088 -> 0.01017
+capacity   : formal_training_complete params=595198 steps=204630 wake=None loss 0.03614 -> 0.00855
+continuous : not finished
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T20:27:55+0800
