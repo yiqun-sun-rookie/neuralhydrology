@@ -1,0 +1,19 @@
+### channel=id29-nearing2022-da seq=16
+### host=login4
+### started=2026-08-08T20:07:07+0800
+### ---------- output ----------
+=== queue ===
+     JOBID       NAME      STATE         TIME    TIME_LEFT
+    201890    id29_da    RUNNING      1:59:56     22:00:04
+    201893    id29_ar    RUNNING      3:19:08   2-20:40:52
+=== assimilation (201890) ===
+  Evaluation:  40%|████      | 215/531 [1:58:31<2:27:43, 28.05s/it]
+=== autoregression (201893) ===
+  epochs: 2 / 30
+  2026-08-08 19:17:55,310: Epoch 2 average loss: avg_loss: 0.01380, avg_total_loss: 0.01380
+=== errors ===
+/data1/home/sunyiq/nearing2022_da/logs/da_201890.err:0
+/data1/home/sunyiq/nearing2022_da/logs/ar_201893.err:0
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-08T20:07:07+0800
