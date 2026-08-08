@@ -1,30 +1,31 @@
 #!/bin/bash
-# ID29 seq=11: the AR arm needs ~41.5 h but was given 36 h. Extend the wall clock in place if SLURM allows it,
-# which costs nothing; only fall back to cancel+resubmit if the extension is refused.
+# ID29 seq=12: the AR arm needs ~38 h but has a 36 h limit and SLURM refuses to extend a running job.
+# Only 1 epoch is in flight (none completed), so cancel and resubmit with a 72 h limit - nothing is lost.
+# The simulation arm (201858) and the dependent assimilation job (201890) are NOT touched.
+cd ~/hpc_mailbox || exit 1
 ROOT=/data1/home/sunyiq/nearing2022_da
 
-echo "=== A: current limit ==="
-squeue -j 201859 -o "%.10i %.12j %.10T %.12M %.12l %.12L" 2>&1
+echo "=== A: confirm nothing completed yet on the AR arm ==="
+D=$(ls -1dt $ROOT/results/29_nearing2022_da_ar/nearing2022_autoregression_*/ 2>/dev/null | head -1)
+echo "  run=$D"
+echo "  completed epochs: $(grep -cE 'Epoch [0-9]+ average loss' "$D/output.log" 2>/dev/null)"
+echo "  checkpoints: $(ls "$D" 2>/dev/null | grep -c model_epoch)"
 
-echo "=== B: try to extend to 72h ==="
-scontrol update jobid=201859 TimeLimit=72:00:00 2>&1
-RC=$?
-echo "  scontrol rc=$RC"
+echo "=== B: cancel the AR arm only ==="
+scancel 201859 2>&1
+sleep 10
+squeue -u "$USER" -o "%.10i %.12j %.11T %.12l %.20R" 2>&1
 
-echo "=== C: limit after the attempt ==="
-squeue -j 201859 -o "%.10i %.12j %.10T %.12M %.12l %.12L" 2>&1
+echo "=== C: resubmit with 72 h ==="
+AR=$(sbatch --parsable inbox/id29_autoregression.slurm 2>&1)
+echo "  new ar_jobid=$AR"
+sleep 30
+squeue -u "$USER" -o "%.10i %.12j %.11T %.12M %.12l %.20R" 2>&1
 
-echo "=== D: also extend the dependent assimilation job if needed (it is 24h, needs ~6h) ==="
-squeue -j 201890 -o "%.10i %.12j %.11T %.12l %.24R" 2>&1
+echo "=== D: sanity - the simulation arm and the dependency job must be untouched ==="
+sacct -j 201858,201890 -X --format=JobID%10,JobName%12,State%14,Elapsed%10,Timelimit%12 2>&1 | head -6
 
-echo "=== E: current epoch rates, both arms ==="
-for tag in sim_201858 ar_201859; do
-  echo "-- $tag"
-  tr '\r' '\n' < "$ROOT/logs/${tag}.out" 2>/dev/null \
-    | grep -oE "Epoch [0-9]+: *[0-9]+%\|[^|]*\| *[0-9]+/[0-9]+ \[[^]]*\]" | tail -1 | sed 's/^/    /'
-done
-
-echo "=== F: simulation epochs done ==="
-D=$(ls -1dt $ROOT/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_*/ 2>/dev/null | head -1)
-grep -cE "Epoch [0-9]+ average loss" "$D/output.log" 2>/dev/null | sed 's/^/  /'
-grep -E "Epoch [0-9]+ average loss" "$D/output.log" 2>/dev/null | tail -2
+echo "=== E: simulation progress ==="
+S=$(ls -1dt $ROOT/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_*/ 2>/dev/null | head -1)
+echo "  epochs done: $(grep -cE 'Epoch [0-9]+ average loss' "$S/output.log" 2>/dev/null) / 30"
+grep -E "Epoch [0-9]+ average loss" "$S/output.log" 2>/dev/null | tail -1
