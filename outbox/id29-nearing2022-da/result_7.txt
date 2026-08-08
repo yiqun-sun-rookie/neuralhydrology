@@ -1,0 +1,26 @@
+### channel=id29-nearing2022-da seq=7
+### host=login4
+### started=2026-08-08T15:37:50+0800
+### ---------- output ----------
+=== A: wait 5 min so at least one epoch boundary is visible ===
+=== B: queue ===
+     JOBID  PARTITION         NAME    STATE         TIME   TIME_LIMIT NODELIST(REASON)
+    201858      hgpu4     id29_sim  RUNNING         8:56     12:00:00 ngu104
+    201859      hgpu4      id29_ar  RUNNING         8:56   1-12:00:00 ngu104
+    201861     hgpu2p     v09suite  RUNNING         3:24     12:00:00 ngu011
+=== C: simulation (201858) progress ===
+-- last progress line --
+=== D: autoregression (201859) progress ===
+-- last progress line --
+=== E: any errors ===
+-- sim_201858.err
+-- ar_201859.err
+=== F: gpu utilisation on the shared node ===
+Warning: Permanently added 'ngu104,11.11.6.68' (ECDSA) to the list of known hosts.
+0, NVIDIA A40, 1752 MiB, 53 %
+1, NVIDIA A40, 1478 MiB, 14 %
+2, NVIDIA A40, 11894 MiB, 98 %
+3, NVIDIA A40, 4 MiB, 0 %
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T15:42:56+0800
