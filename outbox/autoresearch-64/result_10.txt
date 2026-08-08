@@ -1,0 +1,71 @@
+### channel=autoresearch-64 seq=10
+### host=login4
+### started=2026-08-08T15:37:50+0800
+### ---------- output ----------
+=== 1. conda envs: did the 3 failed creates leave debris? ===
+# conda environments:
+#
+base                  *  /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+                         /data1/home/sunyiq/v09_strict/gitenv
+
+--- partial env dirs? ---
+total 24
+drwxr-xr-x.  6 sunyiq g_sunyiq 4096 Jan 22  2026 .
+drwxr-xr-x. 19 sunyiq g_sunyiq 4096 Sep 13  2025 ..
+-rw-r--r--.  1 sunyiq g_sunyiq    0 Sep 13  2025 .conda_envs_dir_test
+drwxr-xr-x. 22 sunyiq g_sunyiq 4096 Jan 29  2026 knet_clean
+drwxr-xr-x. 25 sunyiq g_sunyiq 4096 Jan 20  2026 neuralhydrology
+drwxr-xr-x. 23 sunyiq g_sunyiq 4096 Jan 21  2026 nh_clean
+drwxr-xr-x. 22 sunyiq g_sunyiq 4096 Feb  2  2026 nh_final
+total 8
+drwxrwsr-x. 2 sunyiq g_sunyiq 4096 Sep 12  2025 .
+drwxr-xr-x. 4 sunyiq g_sunyiq 4096 Sep 12  2025 ..
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep 12  2025 .conda_envs_dir_test
+=== 2. is .condarc untouched? ===
+-rw-r--r--. 1 sunyiq g_sunyiq 238 Sep 12  2025 /data1/home/sunyiq/.condarc
+--- content ---
+channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+  - defaults
+show_channel_urls: true
+=== 3. nh_final still works and unchanged? ===
+nh_final OK: 2.3.3 2.3.2 20.0.0 torch 2.4.0
+=== 4. your repo untouched? (HEAD + dirty count should match the earlier probe) ===
+migration/reorg-v1
+96703ce fix(adversarial): handle empty/NaN targets in metrics (basin 09535100)
+dirty files: 78  (earlier probe said 78)
+=== 5. adv531 untouched? ===
+drwxr-xr-x. 9 sunyiq g_sunyiq 4096 Aug  7 15:31 /data1/home/sunyiq/adv531
+(nothing listed above = nothing of mine touched it today)
+=== 6. disk footprint I added ===
+14M	/data1/home/sunyiq/autoresearch64
+4.0G	/data1/home/sunyiq/.cache/pip
+hhjt_parastor_hhjt_parastor  954T  592T  363T  62% /data1
+=== 7. queue clean? no stray jobs of mine ===
+     JOBID           NAME      STATE       TIME
+    201858       id29_sim    RUNNING       4:08
+    201859        id29_ar    RUNNING       4:08
+    201837   adv531_smoke       FAILED   00:01:20 
+    201838   a64-database    COMPLETED   00:00:38 
+    201839     id29_smoke    COMPLETED   00:09:36 
+    201854     a64-verify    COMPLETED   00:00:19 
+    201856       id29_sim       FAILED   00:00:01 
+    201857        id29_ar       FAILED   00:00:00 
+    201858       id29_sim      RUNNING   00:04:08 
+    201859        id29_ar      RUNNING   00:04:08 
+=== 8. mailbox runner healthy for other channels? ===
+833 bash /data1/home/sunyiq/.hpc_runner_active.sh
+1142 bash /data1/home/sunyiq/.hpc_runner_active.sh
+1172 bash /data1/home/sunyiq/.hpc_runner_active.sh
+127
+leftover slurm logs in outbox (should be 0):
+4
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T15:38:02+0800
