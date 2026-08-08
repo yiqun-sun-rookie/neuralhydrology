@@ -1,37 +1,43 @@
 #!/bin/bash
-# Read-only probe for the Nearing 2022 DA/AR reproduction (ID29).
-# Nothing here computes; all heavy work goes through sbatch later.
+# ID29 probe 2: can the HPC fetch the extended forcings itself, and what do the GPU nodes look like?
+# Read-only / no sbatch.
 
-echo "=== A: repo ==="
-if [ -d ~/neuralhydrology ]; then
-  cd ~/neuralhydrology && git log --oneline -1 && echo "uncommitted: $(git status --porcelain | wc -l)" && cd ~
-else
-  echo "NO ~/neuralhydrology"
-fi
-
-echo "=== B: home layout ==="
-ls ~ | head -30
-
-echo "=== C: where is CAMELS ==="
-find ~ -maxdepth 5 -type d -name "basin_mean_forcing" 2>/dev/null | head -5
-
-echo "=== D: forcing products present ==="
-for f in $(find ~ -maxdepth 5 -type d -name "basin_mean_forcing" 2>/dev/null | head -3); do
-  echo "-- $f"
-  ls "$f" 2>/dev/null
-  du -sh "$f" 2>/dev/null | tail -1
+echo "=== A: outbound reachability ==="
+for u in https://www.hydroshare.org https://github.com https://pypi.org; do
+  code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$u" 2>/dev/null)
+  echo "  $u -> ${code:-TIMEOUT}"
 done
 
-echo "=== E: attributes + streamflow ==="
-find ~ -maxdepth 5 -type d \( -name "camels_attributes_v2.0" -o -name "usgs_streamflow" \) 2>/dev/null | head -5
+echo "=== B: hydroshare bag endpoint (headers only, no download) ==="
+curl -sIL --max-time 30 "https://www.hydroshare.org/hsapi/resource/17c896843cf940339c3c3496d0c1c077/" 2>&1 \
+  | grep -iE "^HTTP|^location|^content-length" | head -6
 
-echo "=== F: conda env ==="
-source ~/miniconda3/etc/profile.d/conda.sh 2>/dev/null || source ~/anaconda3/etc/profile.d/conda.sh 2>/dev/null
-conda env list 2>&1 | head -10
-conda run -n nh_final python -c "import torch,sys;print('py',sys.version.split()[0],'torch',torch.__version__,'cuda',torch.version.cuda)" 2>&1 | tail -3
+echo "=== C: gpu node detail (hgpu4 / hgpu8) ==="
+for n in ngu101 ngu201; do
+  scontrol show node $n 2>/dev/null | grep -oE "NodeName=[^ ]+|Gres=[^ ]+|CPUTot=[0-9]+|RealMemory=[0-9]+|State=[^ ]+" | tr '\n' ' '
+  echo ""
+done
 
-echo "=== G: gpu partitions ==="
-sinfo -o "%.12P %.6a %.11l %.5D %.6t %N" 2>&1 | head -15
+echo "=== D: queue pressure ==="
+squeue -h -o "%.10P %.8T" 2>/dev/null | sort | uniq -c | head -10
+echo "my jobs:"; squeue -u "$USER" -h 2>/dev/null | wc -l
 
-echo "=== H: disk ==="
-df -h /data1/home/sunyiq 2>&1 | tail -2
+echo "=== E: nh_final package check ==="
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python - <<'PY' 2>&1 | tail -20
+import importlib
+for m in ['torch','numpy','pandas','xarray','ruamel.yaml','tqdm','scipy','numba','matplotlib','netCDF4','sklearn']:
+    try:
+        mod = importlib.import_module(m)
+        print(f'  OK   {m:14s} {getattr(mod,"__version__","?")}')
+    except Exception as e:
+        print(f'  MISS {m:14s} {type(e).__name__}')
+PY
+
+echo "=== F: camels data sanity (read-only) ==="
+D=/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us
+ls $D
+echo "basins in maurer: $(ls $D/basin_mean_forcing/maurer/*/*.txt 2>/dev/null | wc -l)"
+echo "basins in daymet: $(ls $D/basin_mean_forcing/daymet/*/*.txt 2>/dev/null | wc -l)"
+echo "basins in nldas:  $(ls $D/basin_mean_forcing/nldas/*/*.txt 2>/dev/null | wc -l)"
+echo "streamflow files: $(ls $D/usgs_streamflow/*/*.txt 2>/dev/null | wc -l)"
+head -4 $D/basin_mean_forcing/maurer/01/01013500_lump_maurer_forcing_leap.txt 2>/dev/null | tail -1
