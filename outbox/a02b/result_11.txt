@@ -1,0 +1,38 @@
+### channel=a02b seq=11
+### host=login4
+### started=2026-08-08T16:31:58+0800
+### ---------- output ----------
+##BEGIN_JSONL
+201681|a02_pre_s42|ngu009|hgpu2|COMPLETED|0:0|11:31:56|2026-08-07T14:35:18|2026-08-08T02:07:14|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+201682|a02_sam_s42|ngu202|hgpu8|COMPLETED|0:0|13:10:31|2026-08-07T14:48:21|2026-08-08T03:58:52|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+201683|a02_pre_s43|ngu202|hgpu8|COMPLETED|0:0|06:21:30|2026-08-07T14:48:22|2026-08-07T21:09:52|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+201684|a02_sam_s43|ngu202|hgpu8|COMPLETED|0:0|11:08:19|2026-08-07T14:50:32|2026-08-08T01:58:51|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+201685|a02_pre_s44|ngu009|hgpu2|COMPLETED|0:0|10:01:51|2026-08-07T14:55:50|2026-08-08T00:57:41|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+201686|a02_sam_s44|ngu003|hgpu2|COMPLETED|0:0|07:53:58|2026-08-07T14:59:11|2026-08-07T22:53:09|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+201687|a02_pre_s45|ngu101|hgpu4|COMPLETED|0:0|06:32:46|2026-08-07T14:59:24|2026-08-07T21:32:10|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+201688|a02_sam_s45|ngu011|hgpu2p|COMPLETED|0:0|06:18:46|2026-08-07T15:00:36|2026-08-07T21:19:22|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+201689|a02_pre_s46|ngu006|hgpu2p|COMPLETED|0:0|06:00:22|2026-08-07T15:00:36|2026-08-07T21:00:58|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+201690|a02_sam_s46|ngu202|hgpu8|COMPLETED|0:0|07:52:06|2026-08-07T15:01:23|2026-08-07T22:53:29|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+201691|a02_pre_s47|ngu001|hgpu2p|COMPLETED|0:0|10:28:42|2026-08-07T15:01:36|2026-08-08T01:30:18|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+201692|a02_sam_s47|ngu102|hgpu4|COMPLETED|0:0|07:46:01|2026-08-07T15:02:30|2026-08-07T22:48:31|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+##END_JSONL
+##FIELDS JobID|JobName|NodeList|Partition|State|ExitCode|Elapsed|Start|End|ReqTRES|AllocTRES
+##GPUMODEL
+  ngu001 Gres=gpu:2
+  ngu002 Gres=gpu:2
+  ngu003 Gres=gpu:2
+  ngu004 Gres=gpu:2
+  ngu005 Gres=gpu:2
+  ngu006 Gres=gpu:2
+  ngu007 Gres=gpu:2
+  ngu008 Gres=gpu:2
+  ngu009 Gres=gpu:2
+  ngu010 Gres=gpu:2
+  ngu011 Gres=gpu:2
+  ngu101 Gres=gpu:4
+  ngu102 Gres=gpu:4
+  ngu104 Gres=gpu:4
+  ngu202 Gres=gpu:8
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T16:31:59+0800
