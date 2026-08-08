@@ -1,0 +1,82 @@
+### channel=id26-v09-strict seq=16
+### host=login4
+### started=2026-08-08T16:31:58+0800
+### ---------- output ----------
+=== WATCHING SUITE 201861 (cap 100 min) ===
+[t=10s] dirs: classic 
+[t=3000s] state=R
+[t=300s] state=R
+[t=3300s] state=R
+[t=600s] state=R
+[t=3600s] state=R
+[t=3640s] dirs: capacity classic 
+[t=740s] dirs: capacity classic 
+[t=900s] state=R
+[t=3900s] state=R
+[t=1200s] state=R
+[t=4200s] state=R
+[t=1500s] state=R
+[t=4500s] state=R
+[t=1800s] state=R
+[t=4800s] state=R
+[t=2100s] state=R
+[t=5100s] state=R
+[t=2400s] state=R
+[t=5400s] state=R
+[t=2700s] state=R
+[t=5700s] state=R
+[t=3000s] state=R
+[t=6000s] state=R
+=== ACCOUNTING ===
+     JobID    JobName  NodeList        State ExitCode      Elapsed 
+---------- ---------- --------- ------------ -------- ------------ 
+    201861   v09suite    ngu011      RUNNING      0:0     01:44:21 
+=== SUITE STDOUT (tail 45) ===
+node=ngu011 start=2026-08-08T15:36:45+08:00
+0, NVIDIA GeForce RTX 3090, 24125 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+Mem:             250           3         118           0         130         247
+=== RUN SUITE: seed 100, three arms (max-runs 3) ===
+{"run_id": "B09-CLASSIC-S100", "status": "formal_training_complete"}
+=== SUITE STDERR (tail 25) ===
+=== PROGRESS ===
+completed: ['B09-CLASSIC-S100']
+dirty    : ['B09-CAPACITY-S100']
+pending  : 22
+classic     seed100: status=formal_training_complete params=297217 steps=204630 wake=None loss_ep1=0.04088 loss_ep30=0.01017
+capacity    seed100: not finished
+continuous  seed100: not finished
+=== END ===
+[t=3300s] state=R
+[t=3600s] state=R
+[t=3900s] state=R
+[t=4200s] state=R
+[t=4500s] state=R
+[t=4800s] state=R
+[t=5100s] state=R
+[t=5400s] state=R
+[t=5700s] state=R
+[t=6000s] state=R
+=== ACCOUNTING ===
+     JobID    JobName  NodeList        State ExitCode      Elapsed 
+---------- ---------- --------- ------------ -------- ------------ 
+    201861   v09suite    ngu011      RUNNING      0:0     02:32:50 
+=== SUITE STDOUT (tail 45) ===
+node=ngu011 start=2026-08-08T15:36:45+08:00
+0, NVIDIA GeForce RTX 3090, 24125 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+Mem:             250           3         118           0         130         247
+=== RUN SUITE: seed 100, three arms (max-runs 3) ===
+{"run_id": "B09-CLASSIC-S100", "status": "formal_training_complete"}
+=== SUITE STDERR (tail 25) ===
+=== PROGRESS ===
+completed: ['B09-CLASSIC-S100']
+dirty    : ['B09-CAPACITY-S100']
+pending  : 22
+classic     seed100: status=formal_training_complete params=297217 steps=204630 wake=None loss_ep1=0.04088 loss_ep30=0.01017
+capacity    seed100: not finished
+continuous  seed100: not finished
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T18:12:26+0800
