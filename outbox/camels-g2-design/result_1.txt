@@ -1,0 +1,47 @@
+### channel=camels-g2-design seq=1
+### host=login4
+### started=2026-08-08T14:51:18+0800
+### ---------- output ----------
+=== IDENTITY ===
+2026-08-08T14:51:18+0800
+login4
+user=sunyiq
+=== CURRENT JOBS ===
+             JOBID    PARTITION                     NAME      STATE         TIME  NODES NODELIST(REASON)
+=== PARTITIONS ===
+hcpu48*      up         infinite     10     alloc$   icn[202,204-207,210-212,216-217]
+hcpu48*      up         infinite     5      maint    icn[214,220-221,246,249]
+hcpu48*      up         infinite     16     down*    icn[203,215,218,224,230,233-237,239,242-243,245,247,256]
+hcpu48*      up         infinite     2      alloc    icn[213,226]
+hcpu48*      up         infinite     31     idle     icn[201,208-209,219,222-223,225,227-229,231-232,238,240-241,244,248,250-255,257-264]
+hcpu48y      up         infinite     1      down$    icn281
+hcpu48y      up         infinite     1      maint    icn280
+hcpu48y      up         infinite     2      down*    icn[278-279]
+hcpu48y      up         infinite     2      mix      icn[274,277]
+hcpu48y      up         infinite     6      idle     icn[270-273,275-276]
+hgpu8        up         infinite     3      mix      ngu[201-203]
+hgpu4        up         infinite     1      down*    ngu103
+hgpu4        up         infinite     3      idle     ngu[101-102,104]
+hgpu2        up         infinite     1      mix      ngu003
+hgpu2        up         infinite     1      idle     ngu009
+hgpu2p       up         infinite     1      mix      ngu010
+hgpu2p       up         infinite     8      idle     ngu[001-002,004-008,011]
+=== ISOLATION GUARD ===
+ISOLATED_ROOT_ABSENT
+=== SHARED INPUTS ===
+drwxr-xr-x. 8 sunyiq g_sunyiq 4096 Jan 24  2026 /data1/home/sunyiq/neuralhydrology/data/camels_us
+MISSING /data1/home/sunyiq/neuralhydrology/results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_rising_local_full.csv
+MISSING /data1/home/sunyiq/neuralhydrology/results/23_camels_switch_confirmation/g1_precheck_v01/g1_precheck.csv
+MISSING /data1/home/sunyiq/neuralhydrology/results/23_camels_switch_confirmation/g1_precheck_v01/g1_precheck.metadata.json
+=== BRANCH REACHABILITY ===
+61e938b3a89f648e460a20e6f03e005bdc9fca4a	refs/heads/codex/camels-rising-half-recal
+=== ENVIRONMENT ===
+python 3.11.13
+numpy 2.3.3
+pandas 2.3.2
+=== STORAGE ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  592T  363T  62% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T14:51:44+0800
