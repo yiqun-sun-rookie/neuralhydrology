@@ -1,0 +1,48 @@
+### channel=id29-nearing2022-da seq=9
+### host=login4
+### started=2026-08-08T16:33:39+0800
+### ---------- output ----------
+=== A: full queue with reasons ===
+     JOBID         NAME      STATE         TIME    TIME_LEFT NODELIST(REASON)
+    201858     id29_sim    RUNNING        59:45     11:00:15 ngu104
+    201859      id29_ar    RUNNING        59:45   1-11:00:15 ngu104
+    201861     v09suite    RUNNING        54:13     11:05:47 ngu011
+=== B: what happened to the assimilation job(s) ===
+     JobID      JobName          State ExitCode    Elapsed               Submit                 Reason 
+---------- ------------ -------------- -------- ---------- -------------------- ---------------------- 
+    201838 a64-database      COMPLETED      0:0   00:00:38  2026-08-08T15:10:43                   None 
+    201839   id29_smoke      COMPLETED      0:0   00:09:36  2026-08-08T15:12:24                   None 
+    201854   a64-verify      COMPLETED      0:0   00:00:19  2026-08-08T15:22:35                   None 
+    201856     id29_sim         FAILED      1:0   00:00:01  2026-08-08T15:30:30        NonZeroExitCode 
+    201857      id29_ar         FAILED      1:0   00:00:00  2026-08-08T15:30:30        NonZeroExitCode 
+    201858     id29_sim        RUNNING      0:0   00:59:45  2026-08-08T15:33:53                   None 
+    201859      id29_ar        RUNNING      0:0   00:59:45  2026-08-08T15:33:53                   None 
+    201861     v09suite        RUNNING      0:0   00:54:13  2026-08-08T15:39:25                   None 
+=== C: simulation 201858 progress (neuralhydrology's own log) ===
+run=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/
+2026-08-08 16:16:06,613: Epoch 8 average loss: avg_loss: 0.01358, avg_total_loss: 0.01358
+2026-08-08 16:20:24,818: Epoch 9 average loss: avg_loss: 0.01308, avg_total_loss: 0.01308
+2026-08-08 16:24:43,096: Epoch 10 average loss: avg_loss: 0.01127, avg_total_loss: 0.01127
+2026-08-08 16:28:59,798: Epoch 11 average loss: avg_loss: 0.01056, avg_total_loss: 0.01056
+  last line: 2026-08-08 16:28:59,798: Epoch 11 average loss: avg_loss: 0.01056, avg_total_loss: 0.01056
+  log mtime: 16:29:32  size: 5482
+  checkpoints saved: 12
+=== D: autoregression 201859 progress ===
+run=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1535_ep30/
+  last line: 2026-08-08 15:39:34,701: Validation set to validate every 30 epoch(s), but 'validate_n_random_basins' not set or set to zero. Will
+  log mtime: 15:39:37
+  checkpoints saved: 0
+=== E: slurm logs ===
+total 8904
+drwxr-xr-x. 2 sunyiq g_sunyiq    4096 Aug  8 15:33 .
+drwxr-xr-x. 9 sunyiq g_sunyiq    4096 Aug  8 15:35 ..
+-rw-r--r--. 1 sunyiq g_sunyiq       0 Aug  8 15:33 ar_201859.err
+-rw-r--r--. 1 sunyiq g_sunyiq  780873 Aug  8 16:33 ar_201859.out
+-rw-r--r--. 1 sunyiq g_sunyiq       0 Aug  8 15:33 sim_201858.err
+-rw-r--r--. 1 sunyiq g_sunyiq 8327775 Aug  8 16:33 sim_201858.out
+=== F: errors if any ===
+  ar_201859.err: 0 error-ish lines
+  sim_201858.err: 0 error-ish lines
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-08T16:33:39+0800
