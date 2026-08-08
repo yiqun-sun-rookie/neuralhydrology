@@ -1,22 +1,34 @@
 #!/bin/bash
 set -o pipefail
 ROOT=~/autoresearch64
-BUNDLE=~/hpc_mailbox/inbox/autoresearch-64/payload/a64_update3.tar.gz
+VENV=$ROOT/.venv
 source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh && conda activate nh_final
 
-echo "=== UPDATE CODE ==="
-sha256sum "$BUNDLE" | head -1; echo "expected ef425e5700a414b53c552f88189b48135635035c95384aa96e29e8d2275bc52b"
-rm -rf "$ROOT/src/unified_autoresearch"
-tar xzf "$BUNDLE" -C "$ROOT" || { echo UNPACK_FAILED; exit 1; }
-
-echo "=== INSTALL THE FROZEN CLUSTER SET INTO AN ISOLATED DIR ==="
-if [ -d "$ROOT/.pylibs/numpy" ]; then echo "already installed"; else
-  rm -rf "$ROOT/.pylibs" "$ROOT/.pylibs_probe"
-  python -m pip install -q --only-binary=:all: --target "$ROOT/.pylibs"     "numpy==1.26.4" "pandas==2.2.3" "pyarrow==17.0.0" 2>&1 | tail -4
+echo "=== BUILD A REAL ENVIRONMENT WITH THE FROZEN CLUSTER SET ==="
+if [ -x "$VENV/bin/python" ] && "$VENV/bin/python" -c "import numpy,pandas,pyarrow" 2>/dev/null; then
+  echo "venv already usable"
+else
+  rm -rf "$VENV"
+  python -m venv "$VENV" 2>&1 | tail -3
+  "$VENV/bin/python" -m pip install -q --upgrade pip 2>&1 | tail -2
+  "$VENV/bin/python" -m pip install --only-binary=:all: \
+    "numpy==1.26.4" "pandas==2.2.3" "pyarrow==17.0.0" psutil pytest 2>&1 | tail -6
 fi
-PYTHONPATH="$ROOT/.pylibs" python -c "import numpy,pandas,pyarrow;print('isolated set:',numpy.__version__,pandas.__version__,pyarrow.__version__)"
-grep -q "^\.pylibs" "$ROOT/.gitignore" || printf '.pylibs/\n.pylibs_probe/\n' >> "$ROOT/.gitignore"
-cd "$ROOT" && git add -A && git commit -q -m "package update: frozen cluster dependency set" 2>&1 | tail -1
+
+echo "=== WHAT A CLEAN INTERPRETER RESOLVES (this is exactly what the gate checks) ==="
+env -u PYTHONPATH "$VENV/bin/python" -c "
+import importlib.metadata as md
+for n in ('numpy','pandas','pyarrow','psutil','pytest'):
+    try: print('  %s: %s' % (n, md.version(n)))
+    except Exception: print('  %s: MISSING' % n)
+import numpy,pandas,pyarrow
+print('  imported:', numpy.__version__, pandas.__version__, pyarrow.__version__)
+"
+
+echo "=== drop the abandoned PYTHONPATH-injection dirs ==="
+rm -rf "$ROOT/.pylibs" "$ROOT/.pylibs_probe" "$ROOT/.pytools"
+grep -q "^\.venv/" "$ROOT/.gitignore" || printf '.venv/\n' >> "$ROOT/.gitignore"
+cd "$ROOT" && git add -A && git commit -q -m "real virtual environment for the frozen cluster dependency set" 2>&1 | tail -1
 git log -1 --format="%h %s"
 
 cd ~/hpc_mailbox || exit 1
@@ -24,9 +36,9 @@ mkdir -p outbox
 echo "=== SUBMIT ==="
 JID=$(sbatch --parsable inbox/autoresearch-64/run.slurm 2>&1)
 echo "jobid=$JID"
-for i in $(seq 1 150); do
+for i in $(seq 1 200); do
     LEFT=$(squeue -j "$JID" -h -o "%i" 2>/dev/null | wc -l)
-    [ $((i % 12)) -eq 0 ] && echo "t=$((i*10))s still running"
+    [ $((i % 18)) -eq 0 ] && echo "t=$((i*10))s still running"
     [ "$LEFT" -eq 0 ] && break
     sleep 10
 done
