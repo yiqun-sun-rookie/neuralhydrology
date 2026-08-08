@@ -1,31 +1,24 @@
 #!/bin/bash
-# ID29 seq=12: the AR arm needs ~38 h but has a 36 h limit and SLURM refuses to extend a running job.
-# Only 1 epoch is in flight (none completed), so cancel and resubmit with a 72 h limit - nothing is lost.
-# The simulation arm (201858) and the dependent assimilation job (201890) are NOT touched.
-cd ~/hpc_mailbox || exit 1
+# ID29 seq=13: light progress check. Read-only, no waiting, no ssh, no wildcard deletes.
 ROOT=/data1/home/sunyiq/nearing2022_da
+RES=$ROOT/results/29_nearing2022_da_ar
 
-echo "=== A: confirm nothing completed yet on the AR arm ==="
-D=$(ls -1dt $ROOT/results/29_nearing2022_da_ar/nearing2022_autoregression_*/ 2>/dev/null | head -1)
-echo "  run=$D"
-echo "  completed epochs: $(grep -cE 'Epoch [0-9]+ average loss' "$D/output.log" 2>/dev/null)"
-echo "  checkpoints: $(ls "$D" 2>/dev/null | grep -c model_epoch)"
+echo "=== queue ==="
+squeue -u "$USER" -o "%.10i %.12j %.11T %.12M %.12l %.16R" 2>&1
 
-echo "=== B: cancel the AR arm only ==="
-scancel 201859 2>&1
-sleep 10
-squeue -u "$USER" -o "%.10i %.12j %.11T %.12l %.20R" 2>&1
+for tag in simulation_seed0 autoregression; do
+  D=$(ls -1dt $RES/nearing2022_${tag}_*/ 2>/dev/null | head -1)
+  echo "=== $tag ==="
+  if [ -n "$D" ] && [ -f "$D/output.log" ]; then
+    echo "  epochs done: $(grep -cE 'Epoch [0-9]+ average loss' "$D/output.log") / 30"
+    grep -E "Epoch [0-9]+ average loss" "$D/output.log" | tail -2 | sed 's/^/    /'
+    grep -E "Median validation metrics" "$D/output.log" | tail -1 | cut -c1-200 | sed 's/^/    /'
+  else
+    echo "  no output.log yet ($D)"
+  fi
+done
 
-echo "=== C: resubmit with 72 h ==="
-AR=$(sbatch --parsable inbox/id29_autoregression.slurm 2>&1)
-echo "  new ar_jobid=$AR"
-sleep 30
-squeue -u "$USER" -o "%.10i %.12j %.11T %.12M %.12l %.20R" 2>&1
-
-echo "=== D: sanity - the simulation arm and the dependency job must be untouched ==="
-sacct -j 201858,201890 -X --format=JobID%10,JobName%12,State%14,Elapsed%10,Timelimit%12 2>&1 | head -6
-
-echo "=== E: simulation progress ==="
-S=$(ls -1dt $ROOT/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_*/ 2>/dev/null | head -1)
-echo "  epochs done: $(grep -cE 'Epoch [0-9]+ average loss' "$S/output.log" 2>/dev/null) / 30"
-grep -E "Epoch [0-9]+ average loss" "$S/output.log" 2>/dev/null | tail -1
+echo "=== has the simulation started its test evaluation / finished ==="
+S=$(ls -1dt $RES/nearing2022_simulation_seed0_*/ 2>/dev/null | head -1)
+ls "$S/test" 2>/dev/null && find "$S/test" -name "test_metrics.csv" 2>/dev/null | head -2
+sacct -j 201858,201890,201893 -X --format=JobID%10,JobName%12,State%12,Elapsed%10,Timelimit%12 2>&1 | head -6
