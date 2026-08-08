@@ -1,0 +1,24 @@
+### channel=id29-nearing2022-da seq=22
+### host=login4
+### started=2026-08-08T23:18:51+0800
+### ---------- output ----------
+=== QUEUE ===
+     JOBID       NAME      STATE         TIME
+    201893    id29_ar    RUNNING      6:30:52
+=== ACCOUNTING ===
+     JobID      JobName        State ExitCode    Elapsed 
+---------- ------------ ------------ -------- ---------- 
+    201890      id29_da    COMPLETED      0:0   04:47:33 
+    201893      id29_ar      RUNNING      0:0   06:30:52 
+=== HEADLINE TABLE ===
+,Simulation,Assimilation,Simulation (paper),Simulation (diff),Assimilation (paper),Assimilation (diff)
+NSE,0.792,0.863,0.796,-0.004,0.862,0.001
+KGE,0.801,0.877,0.795,0.006,0.878,-0.001
+Alpha-NSE,0.866,0.915,0.874,-0.008,0.913,0.002
+Pearson-r,0.902,0.932,0.902,-0.0,0.932,-0.0
+Beta-NSE,-0.026,-0.014,-0.027,0.001,-0.014,0.0
+Peak-Timing,0.263,0.471,0.263,0.0,0.444,0.027
+Missed-Peaks,0.355,0.25,0.352,0.003,0.25,0.0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T23:18:51+0800
