@@ -38,7 +38,8 @@ $PY -m neuralhydrology.nh_run evaluate --run-dir "$DA" --period test --data-assi
 echo "EVAL_EXIT=$?"
 
 echo "=== install comparison script (added after the code payload was shipped) ==="
-cp -f /data1/home/sunyiq/hpc_mailbox/inbox/id29_compare_to_paper.py \n      src/29_nearing2022_da_ar/scripts/compare_to_paper.py && echo "  installed"
+mkdir -p src/29_nearing2022_da_ar/scripts
+cp -f /data1/home/sunyiq/hpc_mailbox/inbox/id29_compare_to_paper.py src/29_nearing2022_da_ar/scripts/compare_to_paper.py && echo "  installed"
 
 echo "=== HEADLINE TABLE vs PAPER ==="
 AR=$(ls -dt results/29_nearing2022_da_ar/nearing2022_autoregression_*/ 2>/dev/null | head -1)
