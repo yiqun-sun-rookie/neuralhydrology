@@ -1,0 +1,33 @@
+### channel=id29-nearing2022-da seq=12
+### host=login4
+### started=2026-08-08T16:47:49+0800
+### ---------- output ----------
+=== A: confirm nothing completed yet on the AR arm ===
+  run=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1535_ep30/
+  completed epochs: 0
+  checkpoints: 0
+=== B: cancel the AR arm only ===
+     JOBID         NAME       STATE   TIME_LIMIT     NODELIST(REASON)
+    201890      id29_da     PENDING   1-00:00:00         (Dependency)
+    201858     id29_sim     RUNNING     12:00:00               ngu104
+    201892   id17-smoke     RUNNING      1:00:00               ngu011
+    201861     v09suite     RUNNING     12:00:00               ngu011
+=== C: resubmit with 72 h ===
+  new ar_jobid=201893
+     JOBID         NAME       STATE         TIME   TIME_LIMIT     NODELIST(REASON)
+    201890      id29_da     PENDING         0:00   1-00:00:00         (Dependency)
+    201893      id29_ar     RUNNING         0:30   3-00:00:00               ngu104
+    201858     id29_sim     RUNNING      1:14:35     12:00:00               ngu104
+    201892   id17-smoke     RUNNING         0:49      1:00:00               ngu011
+    201861     v09suite     RUNNING      1:09:03     12:00:00               ngu011
+=== D: sanity - the simulation arm and the dependency job must be untouched ===
+     JobID      JobName          State    Elapsed    Timelimit 
+---------- ------------ -------------- ---------- ------------ 
+    201858     id29_sim        RUNNING   01:14:34     12:00:00 
+    201890      id29_da        PENDING   00:00:00   1-00:00:00 
+=== E: simulation progress ===
+  epochs done: 15 / 30
+2026-08-08 16:46:33,238: Epoch 15 average loss: avg_loss: 0.00933, avg_total_loss: 0.00933
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T16:48:29+0800
