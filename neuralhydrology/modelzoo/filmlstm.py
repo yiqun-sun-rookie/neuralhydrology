@@ -19,12 +19,25 @@ class _FiLMGenerator(nn.Module):
     """MLP that maps static attributes to per-gate (gamma, beta) FiLM parameters.
 
     Output: (gamma, beta) each of shape [B, 4 * hidden_size], one pair per LSTM gate (i, f, g, o).
-    Identity initialization: final-layer weights are zero, biases encode gamma=1, beta=0, so at init
-    the FiLM modulation is a no-op (the LSTM behaves as a vanilla LSTM regardless of static input).
+
+    bounded=True (film_site='preact'): gamma = 1 + tanh(raw), bounded to (0, 2). Needed there because
+    gamma multiplies the full pre-activation INCLUDING the recurrent term h @ weight_hh, so unbounded
+    gamma amplifies the recurrence until BPTT gradients exploded and clip_grad_norm turned inf into
+    NaN -> crash. Caveat: Perez et al. 2018 (Sec. 4.2) show range-restricting gamma costs about as
+    much as removing gamma conditioning entirely, and that negative gamma matters (36% of their
+    learned gammas are negative) — the bound is a stability hack that cripples FiLM.
+
+    bounded=False (film_site='input'): gamma = 1 + raw, unbounded and sign-free as in the original
+    paper. Safe because in 'input' mode gamma only scales the input projection x @ weight_ih, never
+    the recurrent term, so it does not enter the recurrent Jacobian and cannot compound over time.
+
+    Identity initialization: final-layer weights AND biases are zero, so raw≡0 -> gamma=1, beta=0
+    at init in both modes (the LSTM behaves as a vanilla LSTM regardless of static input).
     """
 
-    def __init__(self, cfg, static_size: int):
+    def __init__(self, cfg, static_size: int, bounded: bool = True):
         super().__init__()
+        self._bounded = bounded
         H = cfg.hidden_size
         mid = cfg.film_generator_hidden_size
 
@@ -41,15 +54,24 @@ class _FiLMGenerator(nn.Module):
         self._identity_init()
 
     def _identity_init(self):
-        # gamma: final weight=0, bias=1 -> gamma ≡ 1 at init (any input yields ones)
+        # gamma = 1 + tanh(raw): final weight=0, bias=0 -> raw≡0 -> gamma ≡ 1 at init (no-op)
         nn.init.zeros_(self.mlp_gamma[-1].weight)
-        nn.init.ones_(self.mlp_gamma[-1].bias)
+        nn.init.zeros_(self.mlp_gamma[-1].bias)
         # beta: final weight=0, bias=0 -> beta ≡ 0 at init
         nn.init.zeros_(self.mlp_beta[-1].weight)
         nn.init.zeros_(self.mlp_beta[-1].bias)
 
     def forward(self, s: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        return self.mlp_gamma(s), self.mlp_beta(s)
+        raw = self.mlp_gamma(s)
+        if self._bounded:
+            # (0, 2) bound: required in 'preact' mode where gamma multiplies the recurrent term
+            # (unbounded there -> BPTT explosion -> clip_grad_norm inf->NaN, see class docstring).
+            gamma = 1.0 + torch.tanh(raw)
+        else:
+            # 'input' mode: gamma never touches the recurrence, so it stays unbounded and can be
+            # negative / >2 as in Perez et al. 2018.
+            gamma = 1.0 + raw
+        return gamma, self.mlp_beta(s)
 
 
 class FiLMLSTM(BaseModel):
@@ -60,6 +82,14 @@ class FiLMLSTM(BaseModel):
         Other 3 gates (f, o, g) are dynamic.
       - FiLMLSTM: all 4 gates (i, f, g, o) are dynamic. Static attributes generate per-gate
         (gamma, beta) vectors that affinely modulate pre-activations before sigmoid/tanh.
+
+    cfg.film_site selects WHERE the modulation applies:
+      - 'preact' (legacy default): gamma * (x@W_ih + h@W_hh + b) + beta. Because gamma multiplies
+        the recurrent term, it must be bounded to (0, 2) for stability — which Perez et al. 2018
+        show costs about as much as no gamma conditioning at all (and audits show the bound binds).
+      - 'input': gamma * (x@W_ih) + beta + h@W_hh + b. gamma only scales the input projection and
+        never enters the recurrent Jacobian, so it is UNBOUNDED (negative / >2 allowed) as in the
+        original paper. Equivalent to a per-basin diagonal row-rescaling hypernetwork on W_ih.
 
     Identity initialization (gamma=1, beta=0) makes the model behave as a vanilla LSTM at init.
     """
@@ -73,7 +103,10 @@ class FiLMLSTM(BaseModel):
         if self.embedding_net.statics_output_size == 0:
             raise ValueError('FiLMLSTM requires static inputs.')
 
-        self.film_generator = _FiLMGenerator(cfg, static_size=self.embedding_net.statics_output_size)
+        self._film_site = cfg.film_site
+        self.film_generator = _FiLMGenerator(cfg,
+                                             static_size=self.embedding_net.statics_output_size,
+                                             bounded=(self._film_site == 'preact'))
 
         # 4-gate LSTM parameters: order is (i, f, g, o) along the 4H axis
         input_size = self.embedding_net.dynamics_output_size
@@ -109,9 +142,14 @@ class FiLMLSTM(BaseModel):
         c_t = x_d.new_zeros(B, self._hidden_size)
         h_n, c_n = [], []
 
+        input_site = self._film_site == 'input'
         for x_dt in x_d:
-            pre_act = x_dt @ self.weight_ih + h_t @ self.weight_hh + self.bias  # [B, 4H]
-            pre_act = gamma * pre_act + beta  # FiLM modulation
+            if input_site:
+                # FiLM on the input projection only: gamma stays out of the recurrent Jacobian.
+                pre_act = gamma * (x_dt @ self.weight_ih) + beta + h_t @ self.weight_hh + self.bias
+            else:
+                pre_act = x_dt @ self.weight_ih + h_t @ self.weight_hh + self.bias  # [B, 4H]
+                pre_act = gamma * pre_act + beta  # FiLM modulation
             i, f, g, o = pre_act.chunk(4, dim=-1)
             i = torch.sigmoid(i)
             f = torch.sigmoid(f)

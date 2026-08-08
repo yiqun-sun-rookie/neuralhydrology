@@ -277,6 +277,16 @@ class Config(object):
         return self._cfg.get("allow_subsequent_nan_losses", 0)
 
     @property
+    def assimilation_config(self) -> Optional["AssimilationConfig"]:
+        """Settings for variational data assimilation at inference time, or None if assimilation is not configured."""
+        assimilation_config = self._cfg.get("assimilation_config", None)
+        if not assimilation_config:
+            return None
+        # imported here to avoid a circular import at module load time
+        from neuralhydrology.utils.assimilationconfig import AssimilationConfig
+        return AssimilationConfig(dict(assimilation_config))
+
+    @property
     def autoregressive_inputs(self) -> Union[List[str], Dict[str, List[str]]]:
         return self._as_default_list(self._cfg.get("autoregressive_inputs", []))
 
@@ -488,6 +498,35 @@ class Config(object):
         return self._cfg.get("film_generator_hidden_size", 64)
 
     @property
+    def film_site(self) -> str:
+        """Where FiLMLSTM applies modulation: 'preact' (legacy, bounded gamma) or 'input'
+        (gamma only scales the input projection and stays unbounded as in Perez et al. 2018)."""
+        site = self._cfg.get("film_site", "preact")
+        if site not in ("preact", "input"):
+            raise ValueError(f"film_site must be 'preact' or 'input', got {site!r}")
+        return site
+
+    @property
+    def hypernet_rank(self) -> int:
+        return self._cfg.get("hypernet_rank", 2)
+
+    @property
+    def hypernet_hidden_size(self) -> int:
+        return self._cfg.get("hypernet_hidden_size", 64)
+
+    @property
+    def hypernet_init_delta_scale(self) -> float:
+        if "hypernet_init_delta_scale" not in self._cfg:
+            raise ValueError(
+                "`hypernet_init_delta_scale` must be set explicitly for FactorHypernetLSTM. "
+                "It scales the basin-specific weight deltas; leaving it unset previously "
+                "defaulted to 0.0, which silently zeroes every delta and degrades the model "
+                "to a plain shared LSTM without any error. Set it to 1.0 for a standard "
+                "residual hypernetwork, or explicitly to 0.0 only as a deliberate negative "
+                "control.")
+        return self._cfg["hypernet_init_delta_scale"]
+
+    @property
     def hidden_size(self) -> Union[int, Dict[str, int]]:
         return self._get_value_verbose("hidden_size")
 
@@ -686,6 +725,16 @@ class Config(object):
     @property
     def peak_loss_weight_cap(self) -> float:
         return self._cfg.get("peak_loss_weight_cap", None)
+
+    @property
+    def anchor_gamma(self) -> float:
+        # strength of the anchor-regression invariance penalty (loss: anchornse). 0 == plain NSE.
+        return self._cfg.get("anchor_gamma", 0.0)
+
+    @property
+    def quantile_tau(self) -> float:
+        # target quantile for the pinball loss (loss: quantile). tau>0.5 lifts peaks. 0.5 == median.
+        return self._cfg.get("quantile_tau", 0.5)
 
     @property
     def num_workers(self) -> int:
