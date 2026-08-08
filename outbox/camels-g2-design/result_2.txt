@@ -1,0 +1,15 @@
+### channel=camels-g2-design seq=2
+### host=login4
+### started=2026-08-08T14:55:17+0800
+### ---------- output ----------
+=== GUARDS ===
+2026-08-08T14:55:17+0800
+=== CREATE ISOLATED CHECKOUT ===
+commit=61e938b3a89f648e460a20e6f03e005bdc9fca4a branch=codex/camels-rising-half-recal
+=== INSTALL READ-ONLY INPUT LINKS AND COPIES ===
+=== INPUT HASHES ===
+results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_rising_local_full.csv: FAILED
+sha256sum: WARNING: 1 computed checksum did NOT match
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-08T14:56:21+0800
