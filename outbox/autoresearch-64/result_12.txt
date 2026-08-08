@@ -1,0 +1,66 @@
+### channel=autoresearch-64 seq=12
+### host=login4
+### started=2026-08-08T16:39:20+0800
+### ---------- output ----------
+=== UPDATE CODE ===
+a186eea99647528557e0795ca04e155466bba917bd011de59e25390236ffcc92  /data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/payload/a64_update2.tar.gz
+expected a186eea99647528557e0795ca04e155466bba917bd011de59e25390236ffcc92
+d42ecb2 package update: old-git compatible status invocation
+=== INSTALL pytest INTO AN ISOLATED DIR (nh_final untouched) ===
+bin
+iniconfig
+iniconfig-2.3.0.dist-info
+packaging
+packaging-26.3.dist-info
+=== SANITY: git status form now works on git 1.8.3.1 ===
+porcelain OK (rc=0)
+=== SUBMIT ===
+jobid=201891
+t=120s still running
+t=240s still running
+=== RESULT ===
+     JobID          State ExitCode    Elapsed 
+---------- -------------- -------- ---------- 
+    201891      COMPLETED      0:0   00:04:46 
+=== 0. environment actually in use ===
+numpy 2.3.3 pandas 2.3.2 pyarrow 20.0.0
+=== 1. full test suite on the cluster ===
+FAILED src/unified_autoresearch/tests/test_development_recovery.py::test_registered_recovery_matches_a_clean_deterministic_training_run
+FAILED src/unified_autoresearch/tests/test_development_recovery.py::test_full_development_loop_produces_exactly_32_finite_registered_cells
+FAILED src/unified_autoresearch/tests/test_development_recovery.py::test_full_development_loop_supervises_every_registered_run_when_declared
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[conceptual_rainfall_runoff]
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[custom_python]
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[deep_learning]
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[fusion]
+FAILED src/unified_autoresearch/tests/test_restricted_runtime.py::test_restricted_runtime_accepts_one_exact_installed_dependency_version
+FAILED src/unified_autoresearch/tests/test_restricted_runtime.py::test_candidate_cannot_redirect_path_checks_by_replacing_os_path_helpers
+FAILED src/unified_autoresearch/tests/test_single_candidate_development.py::test_a_single_reference_candidate_produces_one_cell_per_frozen_basin
+FAILED src/unified_autoresearch/tests/test_single_candidate_development.py::test_the_declared_candidate_identity_is_carried_into_every_cell
+11 failed, 259 passed, 8 skipped in 273.82s (0:04:33)
+=== 2. run HBV-lite on the 64 basins, cluster dependency set ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/autoresearch64/src/unified_autoresearch/scripts/run_single_candidate.py", line 101, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/autoresearch64/src/unified_autoresearch/scripts/run_single_candidate.py", line 80, in main
+    result = run_single_candidate_development(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/autoresearch64/src/unified_autoresearch/workflow/candidate_development.py", line 103, in run_single_candidate_development
+    raise RuntimeError(f"candidate training failed: {protocol}")
+RuntimeError: candidate training failed: forward
+=== 3. scores, split by the pre-registered eligibility record ===
+=== 4. supervisor: peak and denied access, recounted from raw logs ===
+samples=1 process_peak_gb=0.0128 denied_access=1
+---- stderr ----
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'runs/unified_autoresearch/hbv_lite_64_hpc_v2/CANDIDATE_SUMMARY.json'
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T16:44:43+0800
