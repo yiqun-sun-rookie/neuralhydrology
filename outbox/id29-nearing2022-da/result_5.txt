@@ -1,0 +1,18 @@
+### channel=id29-nearing2022-da seq=5
+### host=login4
+### started=2026-08-08T15:30:30+0800
+### ---------- output ----------
+=== SUBMIT arm 1: simulation (531 basins, 30 epochs, target NSE 0.796) ===
+  sim_jobid=201856
+=== SUBMIT arm 2: autoregression lag 1 (target NSE 0.879) ===
+  ar_jobid=201857
+=== QUEUE ===
+     JOBID  PARTITION         NAME    STATE       TIME TIME_LIMIT  NODES NODELIST(REASON)
+=== EARLY PROGRESS (60s in) ===
+--- job 201856 ---
+--- job 201857 ---
+=== NOTE ===
+arm 3 (data assimilation) depends on arm 1 finishing; submit it after sim_jobid=201856 completes.
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T15:31:31+0800
