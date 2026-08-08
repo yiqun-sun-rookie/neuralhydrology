@@ -1,0 +1,38 @@
+### channel=id29-nearing2022-da seq=6
+### host=login4
+### started=2026-08-08T15:33:53+0800
+### ---------- output ----------
+=== A: what happened to the two jobs ===
+       JobID      JobName          State ExitCode    Elapsed                Start               Reason 
+------------ ------------ -------------- -------- ---------- -------------------- -------------------- 
+      201856     id29_sim         FAILED      1:0   00:00:01  2026-08-08T15:30:30      NonZeroExitCode 
+201856.batch        batch         FAILED      1:0   00:00:01  2026-08-08T15:30:30                      
+201856.exte+       extern      COMPLETED      0:0   00:00:01  2026-08-08T15:30:30                      
+      201857      id29_ar         FAILED      1:0   00:00:00  2026-08-08T15:30:30      NonZeroExitCode 
+201857.batch        batch         FAILED      1:0   00:00:00  2026-08-08T15:30:30                      
+201857.exte+       extern      COMPLETED      0:0   00:00:01  2026-08-08T15:30:30                      
+=== B: anything of mine in the queue right now ===
+     JOBID  PARTITION         NAME    STATE       TIME NODELIST(REASON)
+=== C: does the log dir exist ===
+ls: cannot access /data1/home/sunyiq/nearing2022_da/logs: No such file or directory
+=== D: create it ===
+  logs dir ready: drwxr-xr-x. /data1/home/sunyiq/nearing2022_da/logs
+=== E: resubmit if and only if nothing of mine is queued/running ===
+  sim_jobid=201858
+  ar_jobid=201859
+--- queue after resubmit ---
+     JOBID  PARTITION         NAME    STATE       TIME NODELIST(REASON)
+    201858      hgpu4     id29_sim  RUNNING       0:44 ngu104
+    201859      hgpu4      id29_ar  RUNNING       0:44 ngu104
+--- first lines of each log ---
+  [job 201858 out]
+host=ngu104 started=2026-08-08T15:33:54+0800
+gpu: NVIDIA A40
+  [job 201858 err]
+  [job 201859 out]
+host=ngu104 started=2026-08-08T15:33:54+0800
+gpu: NVIDIA A40
+  [job 201859 err]
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T15:34:38+0800
