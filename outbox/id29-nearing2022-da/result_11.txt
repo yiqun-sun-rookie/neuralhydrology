@@ -1,0 +1,28 @@
+### channel=id29-nearing2022-da seq=11
+### host=login4
+### started=2026-08-08T16:44:59+0800
+### ---------- output ----------
+=== A: current limit ===
+     JOBID         NAME      STATE         TIME   TIME_LIMIT    TIME_LEFT
+    201859      id29_ar    RUNNING      1:11:05   1-12:00:00   1-10:48:55
+=== B: try to extend to 72h ===
+Access/permission denied for job 201859
+  scontrol rc=1
+=== C: limit after the attempt ===
+     JOBID         NAME      STATE         TIME   TIME_LIMIT    TIME_LEFT
+    201859      id29_ar    RUNNING      1:11:05   1-12:00:00   1-10:48:55
+=== D: also extend the dependent assimilation job if needed (it is 24h, needs ~6h) ===
+     JOBID         NAME       STATE   TIME_LIMIT         NODELIST(REASON)
+    201890      id29_da     PENDING   1-00:00:00             (Dependency)
+=== E: current epoch rates, both arms ===
+-- sim_201858
+    Epoch 15:  56%|#####5    | 3795/6821 [02:23<01:51, 27.12it/s, Loss: 0.0053]
+-- ar_201859
+    Epoch 1:  83%|########2 | 5637/6821 [1:04:58<13:04,  1.51it/s, Loss: 0.0053]
+=== F: simulation epochs done ===
+  14
+2026-08-08 16:37:49,774: Epoch 13 average loss: avg_loss: 0.00978, avg_total_loss: 0.00978
+2026-08-08 16:42:15,369: Epoch 14 average loss: avg_loss: 0.00948, avg_total_loss: 0.00948
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T16:45:00+0800
