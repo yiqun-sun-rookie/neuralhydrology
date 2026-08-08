@@ -1,0 +1,42 @@
+### channel=id17-film-gate seq=2
+### host=login4
+### started=2026-08-08T16:31:58+0800
+### ---------- output ----------
+=== A. CLONE (branch hpc/id17-film-gate) ===
+cloned
+ca3ed12 feat(id17): HPC gate matrix (5 folds x 2 seeds x EA/FiLM-input) + smoke test
+=== B. LINK DATA (read-only reuse, no copy) ===
+lrwxr-xr-x. 1 sunyiq g_sunyiq 39 Aug  8 16:33 /data1/home/sunyiq/id17_film_gate/data -> /data1/home/sunyiq/neuralhydrology/data
+daymet
+maurer
+nldas
+daymet basins: 677
+streamflow files: 674
+camels_clim.txt
+camels_geol.txt
+camels_hydro.txt
+camels_name.txt
+camels_soil.txt
+=== C. FOLD BASIN FILES ===
+  383 src/static_falsification/data/fold0_train.txt
+  383 src/static_falsification/data/fold1_train.txt
+  383 src/static_falsification/data/fold2_train.txt
+  383 src/static_falsification/data/fold3_train.txt
+  382 src/static_falsification/data/fold4_train.txt
+  106 src/static_falsification/data/fold0_test.txt
+ 2020 total
+=== D. FIX CRLF + MAKE LOG DIRS ===
+src/static_falsification/hpc/smoke_gate.slurm: a /usr/bin/env bash script, ASCII text executable
+=== E. GENERATE CONFIGS (lightweight, login-node safe) ===
+wrote 22 configs
+   src/static_falsification/configs/hpc_gate/gate_ea_fold0_seed0.yml
+   src/static_falsification/configs/hpc_gate/gate_film_fold0_seed0.yml
+20
+=== F. IMPORT CHECK (no compute) ===
+film_site = input | FiLMLSTM importable OK
+=== G. DISK USE ===
+149M	/data1/home/sunyiq/id17_film_gate
+hhjt_parastor_hhjt_parastor  954T  592T  363T  62% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T16:34:18+0800
