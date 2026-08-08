@@ -31,6 +31,7 @@ outbox/<channel>/result_<seq>.txt   结果
 | `nature1st-hrrr` | nature_1st 小时流量预报战役：HRRR 预报气象可行性探测 | 2026-08-07 | 由 Claude 会话占用；**只读探测阶段**，落点未定，绝不碰 `a02` / `default` / `id26-v09-strict` |
 | `id17-film-gate` | ID17 实体感知闸门：EA-LSTM vs FiLM-LSTM 多折多种子 PUB 对比 | 2026-08-05 | 由 Claude 会话占用；计划落点 `~/id17_film_gate`（`~/neuralhydrology` 的本地 clone），**不碰 `~/neuralhydrology` 的 git 状态**（78 个未提交文件），不碰其他 channel |
 | `autoresearch-64` | 统一自动科研纵向：64 流域数据底座 + 单候选运行 | 2026-08-08 | 工作目录 `~/autoresearch64`，不碰 `~/neuralhydrology` 与 `~/adv531` |
+| `camels-g2-design` | CAMELS-US 531 流域参数切换辨认第二阶段冻结前探索性设计运行 | 2026-08-08 | 工作目录 `~/camels_g2_design_20260808`；只用设计种子 0/1，不碰 `~/neuralhydrology` 的 git 状态或其他实验 |
 
 **迁移方法**（`default` → 自己的 channel，随时可做，不影响正在跑的）：
 
