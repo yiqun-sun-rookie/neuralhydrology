@@ -1,25 +1,28 @@
 #!/bin/bash
-# a02b seq=6 : inventory one run dir, then build a lean bundle and drop it for shipping.
+# a02b seq=7 : why did `git add -A outbox` skip the 38MB bundle?
 export LC_ALL=C
-PKG=/data1/home/$USER/nature_1st_a02
-MB=/data1/home/$USER/hpc_mailbox/outbox
+MBD=/data1/home/$USER/hpc_mailbox
 
-echo "=== A ONE RUN DIR, FILE SIZES ==="
-timeout 25 ls -la "$PKG/runs/a02_preceding_s43/" 2>&1 | sed 's/^/  /'
+echo "=== A FILE STILL THERE? ==="
+timeout 20 ls -la "$MBD/outbox/"*.tar.gz 2>&1 | sed 's/^/  /'
 
-echo "=== B BUILD LEAN BUNDLE ==="
-cd "$PKG/runs" || exit 1
-rm -f a02_lean_bundle.tar.gz
-timeout 300 tar czf a02_lean_bundle.tar.gz \
-  a02_*/config.json a02_*/best_model.pt a02_*/best_metrics.json \
-  a02_*/train_history.jsonl a02_*/SHA256SUMS 2>&1 | head -5
-echo "  built:"; timeout 20 ls -la a02_lean_bundle.tar.gz 2>&1 | sed 's/^/    /'
-echo "  members: $(timeout 60 tar tzf a02_lean_bundle.tar.gz 2>/dev/null | wc -l)"
-echo "  sha256:  $(timeout 120 sha256sum a02_lean_bundle.tar.gz | cut -d' ' -f1)"
+cd "$MBD" || exit 1
+echo "=== B IGNORE RULES ==="
+echo "  --- check-ignore ---"
+timeout 20 git check-ignore -v outbox/a02_lean_bundle.tar.gz 2>&1 | sed 's/^/    /' || echo "    (not ignored)"
+echo "  --- .git/info/exclude ---"
+timeout 15 cat .git/info/exclude 2>&1 | grep -v "^#" | grep -v "^$" | sed 's/^/    /' || echo "    (empty)"
+echo "  --- .gitignore files present ---"
+timeout 20 ls -la .gitignore outbox/.gitignore 2>&1 | sed 's/^/    /'
+echo "  --- core.excludesfile ---"
+timeout 15 git config --get core.excludesfile 2>&1 | sed 's/^/    /' || echo "    (unset)"
 
-echo "=== C DROP FOR SHIPPING (atomic) ==="
-mkdir -p "$MB"
-timeout 120 cp a02_lean_bundle.tar.gz "$MB/.tmp_a02_lean_bundle.tar.gz" && \
-  mv "$MB/.tmp_a02_lean_bundle.tar.gz" "$MB/a02_lean_bundle.tar.gz" && echo "  dropped OK"
-timeout 20 ls -la "$MB/a02_lean_bundle.tar.gz" 2>&1 | sed 's/^/  /'
-echo "  NOTE: authoritative copy stays at $PKG/runs/a02_lean_bundle.tar.gz"
+echo "=== C GIT STATUS OF OUTBOX ==="
+timeout 40 git status --short outbox 2>&1 | head -10 | sed 's/^/  /'
+
+echo "=== D FILTERS / LFS / SIZE LIMITS ==="
+timeout 15 git config --get-regexp "^(lfs|http|pack)\." 2>&1 | sed 's/^/  /' | head -8
+timeout 15 ls -la .gitattributes 2>&1 | sed 's/^/  /'
+
+echo "=== E CAN WE ADD IT MANUALLY? (dry run) ==="
+timeout 60 git add -n outbox/a02_lean_bundle.tar.gz 2>&1 | sed 's/^/  /' | head -3
