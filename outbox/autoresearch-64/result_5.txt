@@ -1,0 +1,20 @@
+### channel=autoresearch-64 seq=5
+### host=login4
+### started=2026-08-08T14:55:50+0800
+### ---------- output ----------
+=== A. create env (plugins disabled) ===
+
+CondaValueError: You have chosen a non-default solver backend (libmamba) but it was not recognized. Choose one of: classic
+
+=== B. confirm it exists ===
+base                  *  /data1/home/sunyiq/miniconda3
+=== C. install pinned versions ===
+
+EnvironmentNameNotFound: Could not find conda environment: autoresearch64
+You can list all discoverable environments with `conda info --envs`.
+
+
+ACTIVATE_FAILED
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-08T14:55:53+0800
