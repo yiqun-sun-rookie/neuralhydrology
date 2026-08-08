@@ -1,0 +1,21 @@
+### channel=autoresearch-64 seq=4
+### host=login4
+### started=2026-08-08T14:52:28+0800
+### ---------- output ----------
+=== A. does the env already exist? ===
+creating...
+the command line to run the command without plugins enabled.
+
+Example: CONDA_NO_PLUGINS=true conda install <package>
+
+Upload did not complete.
+=== B. install the pinned contract versions ===
+
+EnvironmentNameNotFound: Could not find conda environment: autoresearch64
+You can list all discoverable environments with `conda info --envs`.
+
+
+ACTIVATE_FAILED
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-08T14:54:08+0800
