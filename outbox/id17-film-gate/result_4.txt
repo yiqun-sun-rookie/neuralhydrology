@@ -1,0 +1,28 @@
+### channel=id17-film-gate seq=4
+### host=login4
+### started=2026-08-08T16:47:15+0800
+### ---------- output ----------
+=== A. UPDATE CODE ===
+8b4f8a7 fix(id17-hpc): smoke configs must checkpoint every epoch (2-epoch run had no weights to evaluate)
+=== B. SUBMIT SMOKE ===
+jobid=201892
+=== C. WAIT (max 13 min) ===
+t=120s state=RUNNING
+t=240s state=RUNNING
+t=360s state=RUNNING
+t=480s state=RUNNING
+t=600s state=RUNNING
+t=720s state=RUNNING
+=== D. SACCT ===
+       JobID  NodeList        State ExitCode    Elapsed 
+------------ --------- ------------ -------- ---------- 
+      201892    ngu011      RUNNING      0:0   00:13:01 
+=== E. KEY LINES ===
+[INFO] torch 2.4.0 cuda=True dev=NVIDIA GeForce RTX 3090
+[TIMING] smoke_ea_fold0_seed0.yml train 2 epochs: 251s
+[TIMING] smoke_ea_fold0_seed0.yml test eval: 243s
+[RESULT] smoke_ea_fold0_seed0_2026_0808_1647_ep2 median NSE = 0.2956
+--- errors (if any) ---
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-08T17:00:41+0800
