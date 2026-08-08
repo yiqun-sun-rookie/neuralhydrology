@@ -1,0 +1,28 @@
+### channel=autoresearch-64 seq=9
+### host=login4
+### started=2026-08-08T15:22:36+0800
+### ---------- output ----------
+=== SUBMIT ===
+jobid=201854
+=== RESULT ===
+     JobID          State ExitCode    Elapsed 
+---------- -------------- -------- ---------- 
+    201854      COMPLETED      0:0   00:00:19 
+=== 1. independent per-basin verification (correct flag this time) ===
+basins verified: 64
+sealed interval rows: 0
+artifact files pinned: 17
+all passed: True
+=== 2. platform-independent CONTENT digest (not byte digest) ===
+targets.parquet: rows=210432 content_sha256=9f3e936172c805dce63413491228161d4068d22e90b188fd5c5a4f112d48d192
+features.parquet: rows=210432 content_sha256=9e0ebb10ae806d7e33ace3d7d45c23c654ae4c940b6c7268210ff86b3fbd0c01
+=== 3. why do the JSON bytes differ? line endings ===
+CRLF count: 0 | bare LF count: 1861
+=== 4. eligibility content vs the Windows record (ignoring embedded package hash) ===
+eligibility CONTENT sha256 (excludes package_manifest_sha256): 51c1f290cbea121bef72fe3e6b16f8cd8f86d6f48fcd453717f5ec052a830fd4
+standard: 53 unstable: 11
+unstable list: 02300700,08190500,06847900,05458000,11151300,06879650,08194200,08158810,02102908,09512280,09430600
+---- stderr ----
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T15:22:56+0800
