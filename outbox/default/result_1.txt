@@ -1,0 +1,30 @@
+### channel=default seq=1
+### host=login4
+### started=2026-08-08T14:56:58+0800
+### ---------- output ----------
+=== 1. REPLACE run_exp2.py ===
+  md5=0cfe789646efbc85c9d6526ba1c598c3  expect=0cfe789646efbc85c9d6526ba1c598c3
+  argparse options: 8
+  usage: run_exp2.py [-h] [--stride STRIDE] [--offset OFFSET] [--out OUT]
+                     [--limit LIMIT] [--epsilons EPSILONS] [--levels LEVELS]
+                     [--apgd-iters APGD_ITERS] [--device DEVICE]
+  
+=== 2. SUBMIT SMOKE ===
+  jobid=201837
+=== 3. WAIT (max 15 min) ===
+  t=60s state=R
+=== 4. RESULT ===
+     JobID        JobName  NodeList        State ExitCode    Elapsed 
+---------- -------------- --------- ------------ -------- ---------- 
+    201837   adv531_smoke    ngu010       FAILED      1:0   00:01:20 
+--- stdout ---
+--- stderr (tail) ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/adv531/src/adversarial/scripts/run_exp2.py", line 104, in <module>
+    main()
+  File "/data1/home/sunyiq/adv531/src/adversarial/scripts/run_exp2.py", line 59, in main
+    print(
+FileNotFoundError: [Errno 2] No such file or directory
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T14:59:38+0800
