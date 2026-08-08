@@ -1,0 +1,26 @@
+### channel=id29-nearing2022-da seq=13
+### host=login4
+### started=2026-08-08T17:01:26+0800
+### ---------- output ----------
+=== queue ===
+     JOBID         NAME       STATE         TIME   TIME_LIMIT NODELIST(REASON)
+    201890      id29_da     PENDING         0:00   1-00:00:00     (Dependency)
+    201893      id29_ar     RUNNING        13:27   3-00:00:00           ngu104
+    201858     id29_sim     RUNNING      1:27:32     12:00:00           ngu104
+    201892   id17-smoke     RUNNING        13:46      1:00:00           ngu011
+    201861     v09suite     RUNNING      1:22:00     12:00:00           ngu011
+=== simulation_seed0 ===
+  epochs done: 18 / 30
+    2026-08-08 16:55:05,948: Epoch 17 average loss: avg_loss: 0.00869, avg_total_loss: 0.00869
+    2026-08-08 16:59:34,199: Epoch 18 average loss: avg_loss: 0.00863, avg_total_loss: 0.00863
+=== autoregression ===
+  epochs done: 0 / 30
+=== has the simulation started its test evaluation / finished ===
+     JobID      JobName        State    Elapsed    Timelimit 
+---------- ------------ ------------ ---------- ------------ 
+    201858     id29_sim      RUNNING   01:27:32     12:00:00 
+    201890      id29_da      PENDING   00:00:00   1-00:00:00 
+    201893      id29_ar      RUNNING   00:13:27   3-00:00:00 
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T17:01:26+0800
