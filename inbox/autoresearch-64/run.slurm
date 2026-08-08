@@ -15,7 +15,7 @@ export MKL_THREADING_LAYER=GNU
 
 ROOT=/data1/home/sunyiq/autoresearch64
 cd "$ROOT" || exit 1
-export PYTHONPATH="$ROOT/src:$ROOT/.pytools:$PYTHONPATH"
+export PYTHONPATH="$ROOT/.pylibs:$ROOT/src:$ROOT/.pytools:$PYTHONPATH"
 export PATH="$ROOT/.pytools/bin:$PATH"
 
 echo "=== 0. environment actually in use ==="
@@ -29,7 +29,7 @@ python src/unified_autoresearch/scripts/run_single_candidate.py \
   --candidate hbv_lite \
   --dependencies cluster \
   --package-root runs/unified_autoresearch/development_packages_real_64_hpc \
-  --output-root runs/unified_autoresearch/hbv_lite_64_hpc_v2 \
+  --output-root runs/unified_autoresearch/hbv_lite_64_hpc_v3 \
   --monitor-sample-interval-seconds 1.0 \
   --monitor-reason "first real candidate on the cluster; per-basin calibration needs supervision" 2>&1 | tail -15
 
@@ -38,21 +38,21 @@ python - <<'PY'
 import json, pathlib, statistics, sys
 sys.path.insert(0, "src")
 from unified_autoresearch.evaluation.basin_eligibility import partition_summary_cells
-r = json.loads(pathlib.Path("runs/unified_autoresearch/hbv_lite_64_hpc_v2/CANDIDATE_SUMMARY.json").read_text())
+r = json.loads(pathlib.Path("runs/unified_autoresearch/hbv_lite_64_hpc_v3/CANDIDATE_SUMMARY.json").read_text())
 e = json.loads(pathlib.Path("runs/unified_autoresearch/BASIN_ELIGIBILITY_64_HPC.json").read_text())
 p = partition_summary_cells(cells=r["cells"], eligibility=e)
 for label, group in (("ALL 64", r["cells"]), ("standard", p["standard"]), ("unstable", p["unstable"])):
     m = [c["mean_nse"] for c in group]
     print("%-9s n=%2d median %.6f  min %.4f  max %.4f  #>0 %d" % (
         label, len(m), statistics.median(m), min(m), max(m), sum(1 for v in m if v > 0)))
-print("declared dependencies:", json.loads(pathlib.Path("runs/unified_autoresearch/hbv_lite_64_hpc_v2/candidate/candidate-descriptor.json").read_text())["dependencies"])
+print("declared dependencies:", json.loads(pathlib.Path("runs/unified_autoresearch/hbv_lite_64_hpc_v3/candidate/candidate-descriptor.json").read_text())["dependencies"])
 print("markers:", {k: v for k, v in r.items() if k.endswith(("_run", "_claimed", "_scored"))})
 PY
 
 echo "=== 4. supervisor: peak and denied access, recounted from raw logs ==="
 python - <<'PY'
 import json, pathlib
-root = pathlib.Path("runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs")
+root = pathlib.Path("runs/unified_autoresearch/hbv_lite_64_hpc_v3/runs")
 peak = 0.0; samples = 0; denied = 0
 for p in sorted(root.rglob("resource-monitor.jsonl")):
     rows = [json.loads(l) for l in p.read_text().splitlines() if l.strip()]
