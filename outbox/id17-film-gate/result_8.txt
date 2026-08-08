@@ -1,0 +1,40 @@
+### channel=id17-film-gate seq=8
+### host=login4
+### started=2026-08-08T21:16:53+0800
+### ---------- output ----------
+=== QUEUE ===
+running=8 pending=1
+ 201920_[8-19%8]  PENDING       0:00 (JobArrayTaskLimit)
+        201920_7  RUNNING    1:57:32 ngu004
+        201920_6  RUNNING    1:57:32 ngu004
+        201920_5  RUNNING    2:02:14 ngu005
+        201920_4  RUNNING    2:02:14 ngu005
+        201920_3  RUNNING    2:56:56 ngu008
+        201920_2  RUNNING    2:56:56 ngu008
+        201920_1  RUNNING    2:56:56 ngu011
+        201920_0  RUNNING    2:56:56 ngu010
+=== FINISHED CELLS (sacct) ===
+          201920_0      RUNNING      0:0    02:56:56 
+          201920_1      RUNNING      0:0    02:56:56 
+          201920_2      RUNNING      0:0    02:56:56 
+          201920_3      RUNNING      0:0    02:56:56 
+          201920_4      RUNNING      0:0    02:02:14 
+          201920_5      RUNNING      0:0    02:02:14 
+          201920_6      RUNNING      0:0    01:57:32 
+          201920_7      RUNNING      0:0    01:57:32 
+   201920_[8-19%8]      PENDING      0:0    00:00:00 
+=== RESULTS SO FAR ===
+=== PROTOCOL CHECKS ===
+=== ERRORS ===
+=== PROGRESS (latest epoch per running cell) ===
+gate_201920_0.out: Epoch 5 average loss
+gate_201920_1.out: Epoch 4 average loss
+gate_201920_2.out: Epoch 6 average loss
+gate_201920_3.out: Epoch 5 average loss
+gate_201920_4.out: Epoch 4 average loss
+gate_201920_5.out: Epoch 3 average loss
+gate_201920_6.out: Epoch 4 average loss
+gate_201920_7.out: Epoch 3 average loss
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T21:16:55+0800
