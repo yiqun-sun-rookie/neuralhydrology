@@ -1,0 +1,96 @@
+### channel=autoresearch-64 seq=13
+### host=login4
+### started=2026-08-08T16:47:49+0800
+### ---------- output ----------
+=== A. what does the run record say? ===
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/candidate/candidate-descriptor.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/control/MONITOR_TARGET.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/logs/runtime-result.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/logs/dependency-preflight.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/logs/resource-preflight.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/logs/runtime-policy.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/candidate-descriptor.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/fingerprint.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/inputs/static_attributes.json
+--- /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/logs/runtime-result.json ---
+{
+  "candidate_id": "hbv-lite-calibrated-v1",
+  "checkpoint_id": null,
+  "checkpoint_root_sha256": null,
+  "denied_event_count": 1,
+  "dependency_preflight_decision": "launch",
+  "mode": "train",
+  "normalized_exit_code": 2,
+  "output_contract": {
+    "actual_top_level": [],
+    "expected_top_level": [
+      "model_artifacts"
+    ],
+    "failures": [
+      "required top-level outputs are missing: ['model_artifacts']"
+    ],
+    "valid": false
+  },
+  "process_exit_code": 2,
+  "required_outputs_complete": false,
+  "resource_preflight_decision": "launch",
+  "resume_checkpoint_id": null,
+  "resume_checkpoint_root_sha256": null,
+  "schema_version": "runtime_result_v1",
+  "status": "contract_failure"
+}
+=== B. candidate stderr / stdout ===
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/logs/stdout.txt
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/logs/stderr.txt
+--- /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/runs/forward/train/logs/stderr.txt ---
+=== C. access log (what was denied?) ===
+{"decision":"allow","event":"import","module":"numpy._core._add_newdocs","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/__pycache__/_add_newdocs.cpython-311.pyc"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/_add_newdocs.py"}
+{"decision":"allow","event":"import","module":"numpy._core._add_newdocs_scalars","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/__pycache__/_add_newdocs_scalars.cpython-311.pyc"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/_add_newdocs_scalars.py"}
+{"decision":"allow","event":"import","module":"numpy._core._dtype_ctypes","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/__pycache__/_dtype_ctypes.cpython-311.pyc"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/_dtype_ctypes.py"}
+{"decision":"allow","event":"import","module":"numpy._core._internal","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/__pycache__/_internal.cpython-311.pyc"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/_internal.py"}
+{"decision":"allow","event":"import","module":"ast","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/__pycache__/ast.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"_ast","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"ctypes","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/ctypes/__pycache__/__init__.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"_ctypes","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"_ctypes","reason":"declared dependency initialization"}
+{"decision":"deny","event":"ctypes.dlopen","reason":"candidate dynamic local library loading is disabled"}
+=== D. full log dir listing ===
+total 37
+drwxr-xr-x.  2 sunyiq g_sunyiq  4096 Aug  8 16:44 .
+drwxr-xr-x. 10 sunyiq g_sunyiq  4096 Aug  8 16:44 ..
+-r--r--r--.  1 sunyiq g_sunyiq 22502 Aug  8 16:44 access.jsonl
+-r--r--r--.  1 sunyiq g_sunyiq  2049 Aug  8 16:44 dependency-preflight.json
+-r--r--r--.  1 sunyiq g_sunyiq     0 Aug  8 16:44 git-diff.bin
+-r--r--r--.  1 sunyiq g_sunyiq     0 Aug  8 16:44 git-status.bin
+-rwxr-xr-x.  1 sunyiq g_sunyiq   483 Aug  8 16:44 resource-monitor.jsonl
+-r--r--r--.  1 sunyiq g_sunyiq   720 Aug  8 16:44 resource-preflight.json
+-r--r--r--.  1 sunyiq g_sunyiq  1746 Aug  8 16:44 runtime-policy.json
+-r--r--r--.  1 sunyiq g_sunyiq   706 Aug  8 16:44 runtime-result.json
+-rw-r--r--.  1 sunyiq g_sunyiq     0 Aug  8 16:44 stderr.txt
+-rw-r--r--.  1 sunyiq g_sunyiq     0 Aug  8 16:44 stdout.txt
+total 58
+drwxr-xr-x. 10 sunyiq g_sunyiq  4096 Aug  8 16:44 .
+drwxr-xr-x.  3 sunyiq g_sunyiq  4096 Aug  8 16:44 ..
+drwxr-xr-x.  2 sunyiq g_sunyiq  4096 Aug  8 16:44 candidate
+-rw-r--r--.  1 sunyiq g_sunyiq  1188 Aug  8 16:44 candidate-descriptor.json
+drwxr-xr-x.  2 sunyiq g_sunyiq  4096 Aug  8 16:44 checkpoints
+drwxr-xr-x.  2 sunyiq g_sunyiq  4096 Aug  8 16:44 checkpoint_staging
+drwxr-xr-x.  2 sunyiq g_sunyiq  4096 Aug  8 16:44 control
+-r--r--r--.  1 sunyiq g_sunyiq 16117 Aug  8 16:44 fingerprint.json
+drwxr-xr-x.  2 sunyiq g_sunyiq  4096 Aug  8 16:44 inputs
+drwxr-xr-x.  2 sunyiq g_sunyiq  4096 Aug  8 16:44 logs
+drwxr-xr-x.  2 sunyiq g_sunyiq  4096 Aug  8 16:44 outputs
+drwxr-xr-x.  3 sunyiq g_sunyiq  4096 Aug  8 16:44 registry
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T16:47:50+0800
