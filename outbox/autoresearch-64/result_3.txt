@@ -1,0 +1,49 @@
+### channel=autoresearch-64 seq=3
+### host=login4
+### started=2026-08-08T14:50:10+0800
+### ---------- output ----------
+=== A. refuse to clobber ===
+ok, /data1/home/sunyiq/autoresearch64 is free
+=== B. bundle integrity ===
+-rw-r--r--. 1 sunyiq g_sunyiq 334922 Aug  8 14:50 /data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/payload/a64_bundle.tar.gz
+b970dcf4a3dc255ce69da68f9dabd70f4b82277896f34c07b599e0cd58c92926  /data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/payload/a64_bundle.tar.gz
+expected b970dcf4a3dc255ce69da68f9dabd70f4b82277896f34c07b599e0cd58c92926
+=== C. unpack ===
+=== D. git repo (fingerprinting needs a real HEAD) ===
+67a76d3 autoresearch64 workspace: unified_autoresearch package, frozen statics, basin list
+0
+=== E. layout ===
+.
+./examples
+./examples/06-Finetuning
+./runs
+./runs/unified_autoresearch
+./src
+./src/fair_benchmark
+./src/fair_benchmark/frozen
+./src/unified_autoresearch
+./src/unified_autoresearch/candidates
+./src/unified_autoresearch/data
+./src/unified_autoresearch/docs
+./src/unified_autoresearch/evaluation
+./src/unified_autoresearch/evidence
+./src/unified_autoresearch/protocols
+./src/unified_autoresearch/registry
+./src/unified_autoresearch/runtime
+./src/unified_autoresearch/scripts
+./src/unified_autoresearch/selection
+./src/unified_autoresearch/tests
+package files:
+80
+statics:
+532 src/fair_benchmark/frozen/bundle/track0_statics.csv
+basin list:
+531 examples/06-Finetuning/531_basin_list.txt
+score.py present? (must be absent):
+0
+=== F. frozen selection hashes match the shipped inputs? ===
+085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2  src/fair_benchmark/frozen/bundle/track0_statics.csv
+cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85  examples/06-Finetuning/531_basin_list.txt
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T14:50:14+0800
