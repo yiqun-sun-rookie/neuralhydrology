@@ -137,6 +137,9 @@ def score_development_predictions(
 
     truth = pd.read_parquet(truth_path)
     predictions = pd.read_parquet(predictions_path)
+    if set(truth["basin"].astype(str).str.zfill(8)) != set(manifest["basins"]):
+        # Otherwise a package could declare 64 basins while truth silently covers only the easy 8.
+        raise ValueError("development truth must cover every basin the package declares")
     if set(truth.columns) != {"basin", "date", "qobs"} or set(predictions.columns) != {"basin", "date", "qsim"}:
         raise ValueError("development scoring columns do not match the frozen contract")
     for frame in (truth, predictions):

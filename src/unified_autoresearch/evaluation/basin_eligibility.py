@@ -21,6 +21,8 @@ from typing import Mapping, Sequence
 import numpy as np
 import pandas as pd
 
+from unified_autoresearch.evaluation.scoring import _frozen_basin_list
+
 
 SCHEMA_VERSION = "basin_eligibility_v1"
 DECIDED_FROM = "validation truth only; no candidate prediction is read"
@@ -96,7 +98,8 @@ def classify_development_basins(
     if _sha256(manifest_path) != expected_package_manifest_sha256:
         raise ValueError("development package manifest differs from the frozen digest")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    basins = [str(basin).zfill(8) for basin in manifest["basins"]]
+    # Classifying an arbitrary package would let the unstable set be chosen rather than derived.
+    basins = _frozen_basin_list([str(basin).zfill(8) for basin in manifest["basins"]])
     protocols = list(manifest["protocols"])
 
     truth_by_protocol: dict[str, pd.DataFrame] = {}
@@ -151,6 +154,10 @@ def partition_summary_cells(*, cells: Sequence[Mapping], eligibility: Mapping) -
         raise ValueError("basin eligibility record schema mismatch")
     standard = list(eligibility["standard_basins"])
     unstable = list(eligibility["unstable_basins"])
+    # Guarding only against a missing basin would let a duplicate or an overlap inflate the
+    # headline group while every count still looked self-consistent.
+    if len(set(standard)) != len(standard) or len(set(unstable)) != len(unstable) or set(standard) & set(unstable):
+        raise ValueError("classified basins must be unique and must not overlap")
     by_basin = {str(cell["basin"]).zfill(8): cell for cell in cells}
     if len(by_basin) != len(cells) or set(by_basin) != set(standard) | set(unstable):
         raise ValueError("summary cells must cover exactly the classified basins")

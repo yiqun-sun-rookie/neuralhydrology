@@ -72,6 +72,58 @@ def _descriptor_value(category: str) -> dict:
     }
 
 
+def _hbv_lite_descriptor_value() -> dict:
+    """The first real candidate declares a supervised, longer-running workload."""
+    return {
+        "schema_version": "candidate_descriptor_v1",
+        "candidate_id": "hbv-lite-calibrated-v1",
+        "category": "conceptual_rainfall_runoff",
+        "entrypoint": {"train": "entrypoint.py", "predict": "entrypoint.py"},
+        "dependencies": list(PINNED_DEPENDENCIES),
+        "allowed_reads": {
+            "train": ["train_features.parquet", "train_targets.parquet", "static_attributes.json"],
+            "predict": ["predict_features.parquet", "static_attributes.json", "model_artifacts"],
+        },
+        "outputs": {"train": ["model_artifacts"], "predict": ["predictions.parquet"]},
+        "seed": 29,
+        "resources": {
+            "cpu_cores": 1,
+            "gpu_count": 0,
+            "estimated_peak_memory_gb": 1.0,
+            "memory_safety_reserve_gb": 0.5,
+            "estimated_output_gb": 0.05,
+            "disk_safety_reserve_gb": 0.5,
+            "independent_monitor_enabled": True,
+            "monitor_reason": "first real candidate; per-basin calibration runs long enough to need supervision",
+        },
+        "checkpoint": {"supported": True, "staging_dir": "checkpoint_staging", "keep": "all"},
+        "resume": {"supported": True},
+    }
+
+
+def materialize_hbv_lite_candidate(*, output_root: str | Path) -> MaterializedReferenceCandidate:
+    """Copy the calibrated HBV-lite method plus the common runtime into a new root."""
+    root = Path(output_root).resolve()
+    if root.exists():
+        raise FileExistsError(root)
+    root.mkdir(parents=True)
+    package_root = Path(__file__).resolve().parent
+    _copy_file_long_path_safe(package_root / "templates" / "entrypoint.py", root / "entrypoint.py")
+    _copy_file_long_path_safe(package_root / "templates" / "runtime_common.py", root / "runtime_common.py")
+    _copy_file_long_path_safe(package_root / "implementations" / "hbv_lite.py", root / "method.py")
+    descriptor_path = root / "candidate-descriptor.json"
+    descriptor_path.write_text(
+        json.dumps(_hbv_lite_descriptor_value(), indent=2, sort_keys=True, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+    descriptor = load_and_validate_candidate_descriptor(descriptor_path, candidate_root=root)
+    return MaterializedReferenceCandidate(
+        source_root=root,
+        descriptor_path=descriptor_path,
+        descriptor=descriptor,
+    )
+
+
 def materialize_reference_candidate(
     *, category: str, output_root: str | Path
 ) -> MaterializedReferenceCandidate:
