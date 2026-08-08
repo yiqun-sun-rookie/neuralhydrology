@@ -1,27 +1,29 @@
 #!/bin/bash
-# a02b seq=4 : verify the authoritative results under $PKG/runs (never touched by git).
+# a02b seq=5 : are all 12 done?
 export LC_ALL=C
 PKG=/data1/home/$USER/nature_1st_a02
 
-echo "=== A RUNS DIR ==="
-timeout 30 ls -la "$PKG/runs/" 2>&1 | sed 's/^/  /'
+echo "=== A QUEUE ==="
+timeout 25 squeue -u "$USER" -o "%.10i %.16j %.8T %.10M" 2>&1 | grep -E "a02_|JOBID" || echo "  (no a02 jobs in queue)"
 
-echo "=== B PER-RUN ARTIFACTS ==="
-timeout 60 bash -c 'for d in '"$PKG"'/runs/a02_*/; do
-  [ -d "$d" ] || continue
-  n=$(basename "$d")
-  ck=$([ -f "$d/best_model.pt" ] && du -h "$d/best_model.pt" | cut -f1 || echo MISSING)
-  bm=$([ -f "$d/best_metrics.json" ] && echo yes || echo MISSING)
-  hs=$([ -f "$d/train_history.jsonl" ] && wc -l < "$d/train_history.jsonl" || echo MISSING)
-  printf "  %-26s ckpt=%-7s best_metrics=%-8s history_lines=%s\n" "$n" "$ck" "$bm" "$hs"
-done' 2>&1
+echo "=== B FINAL STATES ==="
+timeout 40 sacct -S 2026-08-07 -u "$USER" -X --format=JobID%9,JobName%13,State%11,ExitCode%7,Elapsed%9 2>&1 | grep -E "a02_(pre|sam)|JobID|----"
 
-echo "=== C BEST METRICS CONTENT (completed runs) ==="
+echo "=== C BEST METRICS (all 12) ==="
 timeout 40 bash -c 'for d in '"$PKG"'/runs/a02_*/; do
   [ -f "$d/best_metrics.json" ] || continue
-  printf "  %-26s %s\n" "$(basename $d)" "$(head -c 400 $d/best_metrics.json | tr -d "\n ")"
+  printf "  %-24s %s\n" "$(basename $d)" "$(python -c "
+import json,sys
+m=json.load(open(sys.argv[1]))
+print(f\"epoch={m[chr(39)]+chr(39)}\" if False else f\"epoch={m[\\\"epoch\\\"]:<3d} median_nse={m[\\\"median_nse\\\"]:.6f} n={m[\\\"n_stations\\\"]}\")
+" "$d/best_metrics.json" 2>/dev/null || head -c 200 $d/best_metrics.json)"
 done' 2>&1
 
-echo "=== D DISK SPACE ==="
-timeout 20 df -h /data1 2>&1 | tail -2 | sed 's/^/  /'
-timeout 30 du -sh "$PKG/runs" 2>&1 | sed 's/^/  /'
+echo "=== D DONE MARKERS IN LOGS ==="
+timeout 40 bash -c 'for f in '"$PKG"'/logs/a02_pre_s4*.out '"$PKG"'/logs/a02_sam_s4*.out; do
+  [ -f "$f" ] || continue
+  printf "  %-24s %s\n" "$(basename $f .out)" "$(grep -a "Best median NSE\|Done (exit" "$f" | tail -2 | tr "\n" " | ")"
+done' 2>&1
+
+echo "=== E TARBALLS UNDER runs/ ==="
+timeout 25 ls -la "$PKG/runs/"*.tar.gz 2>&1 | awk '{print "  ",$9,$5}'
