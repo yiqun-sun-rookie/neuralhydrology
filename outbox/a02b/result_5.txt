@@ -1,0 +1,147 @@
+### channel=a02b seq=5
+### host=login4
+### started=2026-08-08T14:05:29+0800
+### ---------- output ----------
+=== A QUEUE ===
+     JOBID             NAME    STATE       TIME
+=== B FINAL STATES ===
+    JobID       JobName       State ExitCod   Elapsed 
+--------- ------------- ----------- ------- --------- 
+   201681   a02_pre_s42   COMPLETED     0:0  11:31:56 
+   201682   a02_sam_s42   COMPLETED     0:0  13:10:31 
+   201683   a02_pre_s43   COMPLETED     0:0  06:21:30 
+   201684   a02_sam_s43   COMPLETED     0:0  11:08:19 
+   201685   a02_pre_s44   COMPLETED     0:0  10:01:51 
+   201686   a02_sam_s44   COMPLETED     0:0  07:53:58 
+   201687   a02_pre_s45   COMPLETED     0:0  06:32:46 
+   201688   a02_sam_s45   COMPLETED     0:0  06:18:46 
+   201689   a02_pre_s46   COMPLETED     0:0  06:00:22 
+   201690   a02_sam_s46   COMPLETED     0:0  07:52:06 
+   201691   a02_pre_s47   COMPLETED     0:0  10:28:42 
+   201692   a02_sam_s47   COMPLETED     0:0  07:46:01 
+=== C BEST METRICS (all 12) ===
+  a02_preceding_s42        {
+  "epoch": 10,
+  "train_loss": 0.2279333099850107,
+  "lr": 0.00025,
+  "median_nse": 0.8139176964759827,
+  "mean_nse": 0.6781197786331177,
+  "p25_nse": 0.6079869270324707,
+  "p75_nse": 0.899844050407
+  a02_preceding_s43        {
+  "epoch": 4,
+  "train_loss": 0.31302549140361974,
+  "lr": 0.0005,
+  "median_nse": 0.8174557685852051,
+  "mean_nse": 0.6922029852867126,
+  "p25_nse": 0.5956728458404541,
+  "p75_nse": 0.9064943790435
+  a02_preceding_s44        {
+  "epoch": 8,
+  "train_loss": 0.24352795085487833,
+  "lr": 0.00025,
+  "median_nse": 0.8177046775817871,
+  "mean_nse": 0.68569016456604,
+  "p25_nse": 0.6059778928756714,
+  "p75_nse": 0.90582931041717
+  a02_preceding_s45        {
+  "epoch": 3,
+  "train_loss": 0.3193781544946788,
+  "lr": 0.0005,
+  "median_nse": 0.819140613079071,
+  "mean_nse": 0.692300021648407,
+  "p25_nse": 0.6026428937911987,
+  "p75_nse": 0.9015206098556519
+  a02_preceding_s46        {
+  "epoch": 3,
+  "train_loss": 0.319105458520149,
+  "lr": 0.0005,
+  "median_nse": 0.8235262036323547,
+  "mean_nse": 0.6856850981712341,
+  "p25_nse": 0.5864511132240295,
+  "p75_nse": 0.905156135559082
+  a02_preceding_s47        {
+  "epoch": 9,
+  "train_loss": 0.23486048593386935,
+  "lr": 0.00025,
+  "median_nse": 0.8196054697036743,
+  "mean_nse": 0.6649355292320251,
+  "p25_nse": 0.5985749959945679,
+  "p75_nse": 0.910319566726
+  a02_same_time_s42        {
+  "epoch": 14,
+  "train_loss": 0.20166437289259828,
+  "lr": 0.000125,
+  "median_nse": 0.8148269653320312,
+  "mean_nse": 0.6832478046417236,
+  "p25_nse": 0.6144781708717346,
+  "p75_nse": 0.8994578123
+  a02_same_time_s43        {
+  "epoch": 11,
+  "train_loss": 0.21433803684008917,
+  "lr": 0.000125,
+  "median_nse": 0.8244215250015259,
+  "mean_nse": 0.6699138283729553,
+  "p25_nse": 0.6076427102088928,
+  "p75_nse": 0.9076458811
+  a02_same_time_s44        {
+  "epoch": 3,
+  "train_loss": 0.3178085129287235,
+  "lr": 0.0005,
+  "median_nse": 0.8223854303359985,
+  "mean_nse": 0.6830919981002808,
+  "p25_nse": 0.6021729111671448,
+  "p75_nse": 0.90915554761886
+  a02_same_time_s45        {
+  "epoch": 4,
+  "train_loss": 0.29378882796169553,
+  "lr": 0.0005,
+  "median_nse": 0.8145414590835571,
+  "mean_nse": 0.6891043782234192,
+  "p25_nse": 0.5919579267501831,
+  "p75_nse": 0.9001300930976
+  a02_same_time_s46        {
+  "epoch": 6,
+  "train_loss": 0.285412264612259,
+  "lr": 0.0005,
+  "median_nse": 0.8187935948371887,
+  "mean_nse": 0.6983450651168823,
+  "p25_nse": 0.6108943819999695,
+  "p75_nse": 0.897196829319000
+  a02_same_time_s47        {
+  "epoch": 4,
+  "train_loss": 0.29708794446234954,
+  "lr": 0.0005,
+  "median_nse": 0.8220547437667847,
+  "mean_nse": 0.6985250115394592,
+  "p25_nse": 0.5980241894721985,
+  "p75_nse": 0.9038746356964
+=== D DONE MARKERS IN LOGS ===
+  a02_pre_s42-201681       Done! Best median NSE: 0.8139 at epoch 10 [Sat Aug  8 02:07:14 CST 2026] Done (exit=0) 
+  a02_pre_s43-201683       Done! Best median NSE: 0.8175 at epoch 4 [Fri Aug  7 21:09:53 CST 2026] Done (exit=0) 
+  a02_pre_s44-201685       Done! Best median NSE: 0.8177 at epoch 8 [Sat Aug  8 00:57:41 CST 2026] Done (exit=0) 
+  a02_pre_s45-201687       Done! Best median NSE: 0.8191 at epoch 3 [Fri Aug  7 21:32:10 CST 2026] Done (exit=0) 
+  a02_pre_s46-201689       Done! Best median NSE: 0.8235 at epoch 3 [Fri Aug  7 21:00:59 CST 2026] Done (exit=0) 
+  a02_pre_s47-201691       Done! Best median NSE: 0.8196 at epoch 9 [Sat Aug  8 01:30:14 CST 2026] Done (exit=0) 
+  a02_sam_s42-201682       Done! Best median NSE: 0.8148 at epoch 14 [Sat Aug  8 03:58:52 CST 2026] Done (exit=0) 
+  a02_sam_s43-201684       Done! Best median NSE: 0.8244 at epoch 11 [Sat Aug  8 01:58:51 CST 2026] Done (exit=0) 
+  a02_sam_s44-201686       Done! Best median NSE: 0.8224 at epoch 3 [Fri Aug  7 22:53:09 CST 2026] Done (exit=0) 
+  a02_sam_s45-201688       Done! Best median NSE: 0.8145 at epoch 4 [Fri Aug  7 21:16:39 CST 2026] Done (exit=0) 
+  a02_sam_s46-201690       Done! Best median NSE: 0.8188 at epoch 6 [Fri Aug  7 22:53:30 CST 2026] Done (exit=0) 
+  a02_sam_s47-201692       Done! Best median NSE: 0.8221 at epoch 4 [Fri Aug  7 22:48:32 CST 2026] Done (exit=0) 
+=== E TARBALLS UNDER runs/ ===
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_preceding_s42.tar.gz 12674131
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_preceding_s43.tar.gz 12754691
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_preceding_s44.tar.gz 12688800
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_preceding_s45.tar.gz 12703059
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_preceding_s46.tar.gz 12704884
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_preceding_s47.tar.gz 12699911
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_same_time_s42.tar.gz 12670161
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_same_time_s43.tar.gz 12688113
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_same_time_s44.tar.gz 12736472
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_same_time_s45.tar.gz 12706320
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_same_time_s46.tar.gz 12709300
+   /data1/home/sunyiq/nature_1st_a02/runs/a02_same_time_s47.tar.gz 12726984
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T14:05:31+0800
