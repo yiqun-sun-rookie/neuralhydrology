@@ -1,0 +1,44 @@
+### channel=autoresearch-64 seq=18
+### host=login4
+### started=2026-08-08T21:43:30+0800
+### ---------- output ----------
+=== 我这条线还有作业在跑吗 ===
+     JOBID             NAME  PARTITION     STATE       TIME
+201920_[8-        id17-gate     hgpu2p   PENDING       0:00
+  201920_6        id17-gate     hgpu2p   RUNNING    2:24:09
+  201920_7        id17-gate     hgpu2p   RUNNING    2:24:09
+  201920_4        id17-gate     hgpu2p   RUNNING    2:28:51
+  201920_5        id17-gate     hgpu2p   RUNNING    2:28:51
+    201890          id29_da      hgpu4   RUNNING    3:36:19
+    201893          id29_ar      hgpu4   RUNNING    4:55:31
+  201920_0        id17-gate     hgpu2p   RUNNING    3:23:33
+  201920_1        id17-gate     hgpu2p   RUNNING    3:23:33
+=== 今天所有作业的收尾状态 ===
+    201892       id17-smoke       FAILED   00:18:55 
+    201893          id29_ar      RUNNING   04:55:30 
+    201919    a64-candidate    COMPLETED   00:04:47 
+  201920_0        id17-gate      RUNNING   03:23:32 
+  201920_1        id17-gate      RUNNING   03:23:32 
+  201920_2        id17-gate      RUNNING   03:23:32 
+  201920_3        id17-gate      RUNNING   03:23:32 
+  201920_4        id17-gate      RUNNING   02:28:50 
+  201920_5        id17-gate      RUNNING   02:28:50 
+  201920_6        id17-gate      RUNNING   02:24:08 
+  201920_7        id17-gate      RUNNING   02:24:08 
+    201929    a64-candidate    COMPLETED   00:04:42 
+=== 我的工作区有没有残留的锁或半成品 ===
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/development_packages_real_64_hpc/
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/development_source_real_64_hpc/
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc/
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v2/
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v3/
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_v4/
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/pytest_single_candidate/
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/pytest_single_candidate_identity/
+--- 是否有未完成的 CANDIDATE_SUMMARY ---
+hbv_lite_64_hpc_v2: INCOMPLETE
+hbv_lite_64_hpc_v3: INCOMPLETE
+hbv_lite_64_hpc_v4: INCOMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T21:43:33+0800
