@@ -1,0 +1,32 @@
+### channel=id17-film-gate seq=6
+### host=login4
+### started=2026-08-08T18:19:14+0800
+### ---------- output ----------
+=== A. UPDATE + REGENERATE CONFIGS ===
+a17e176 fix(id17-hpc): guard scontrol (absent on compute nodes, caused post-success exit 127); array concurrency 8
+wrote 22 configs
+   src/static_falsification/configs/hpc_gate/gate_ea_fold0_seed0.yml
+gate configs: 20
+=== B. SUBMIT ARRAY ===
+array_jobid=201920
+=== C. QUEUE STATE (30s later) ===
+         JOBID         NAME PARTITION    STATE       TIME NODELIST(REASON)
+201920_[4-19%8    id17-gate    hgpu2p  PENDING       0:00 (Priority)
+        201890      id29_da     hgpu4  RUNNING      13:10 ngu104
+        201893      id29_ar     hgpu4  RUNNING    1:32:22 ngu104
+      201920_0    id17-gate    hgpu2p  RUNNING       0:24 ngu010
+      201920_1    id17-gate    hgpu2p  RUNNING       0:24 ngu011
+      201920_2    id17-gate    hgpu2p  RUNNING       0:24 ngu008
+      201920_3    id17-gate    hgpu2p  RUNNING       0:24 ngu008
+        201861     v09suite    hgpu2p  RUNNING    2:40:55 ngu011
+--- my array only ---
+201920_[4-19%8  PENDING (Priority)
+      201920_3  RUNNING ngu008
+      201920_2  RUNNING ngu008
+      201920_1  RUNNING ngu011
+      201920_0  RUNNING ngu010
+mine running: 4  pending: 1
+a02 jobs still up: 0 (untouched)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T18:20:21+0800
