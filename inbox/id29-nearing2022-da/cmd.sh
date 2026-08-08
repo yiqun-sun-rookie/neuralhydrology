@@ -1,28 +1,27 @@
 #!/bin/bash
-# ID29 seq=4: submit the HPC environment smoke job (6 basins, 1 epoch, all three arms).
-# User approved running this reproduction on HPC.
+# ID29 seq=5: launch the two training arms of the full 531-basin reproduction.
+# User approved running this reproduction on HPC. Submit and report only - do NOT wait 11 hours here.
 cd ~/hpc_mailbox || exit 1
-mkdir -p outbox
 
-echo "=== SUBMIT ==="
-JID=$(sbatch --parsable inbox/id29_smoke.slurm 2>&1)
-echo "jobid=$JID"
+echo "=== SUBMIT arm 1: simulation (531 basins, 30 epochs, target NSE 0.796) ==="
+SIM=$(sbatch --parsable inbox/id29_simulation.slurm 2>&1)
+echo "  sim_jobid=$SIM"
 
-echo "=== WAIT (max 12 min) ==="
-for i in $(seq 1 72); do
-    ST=$(squeue -j "$JID" -h -o "%t" 2>/dev/null)
-    [ -z "$ST" ] && break
-    [ $((i % 6)) -eq 0 ] && echo "  t=$((i*10))s state=$ST"
-    sleep 10
+echo "=== SUBMIT arm 2: autoregression lag 1 (target NSE 0.879) ==="
+AR=$(sbatch --parsable inbox/id29_autoregression.slurm 2>&1)
+echo "  ar_jobid=$AR"
+
+echo "=== QUEUE ==="
+sleep 20
+squeue -u "$USER" -o "%.10i %.10P %.12j %.8T %.10M %.10l %.6D %R" 2>&1
+
+echo "=== EARLY PROGRESS (60s in) ==="
+sleep 40
+for j in $SIM $AR; do
+  echo "--- job $j ---"
+  tail -3 /data1/home/sunyiq/nearing2022_da/logs/*_${j}.out 2>/dev/null
+  tail -3 /data1/home/sunyiq/nearing2022_da/logs/*_${j}.err 2>/dev/null | grep -viE "it/s|%\|" | head -3
 done
 
-echo "=== SACCT ==="
-sacct -j "$JID" -X --format=JobID%10,JobName%12,NodeList%9,State%12,ExitCode%8,Elapsed%10 2>&1
-
-echo "=== STDOUT ==="
-tail -45 outbox/slurm_${JID}.out 2>/dev/null
-
-echo "=== STDERR (tail) ==="
-tail -20 outbox/slurm_${JID}.err 2>/dev/null
-
-rm -f outbox/slurm_*.out outbox/slurm_*.err
+echo "=== NOTE ==="
+echo "arm 3 (data assimilation) depends on arm 1 finishing; submit it after sim_jobid=$SIM completes."
