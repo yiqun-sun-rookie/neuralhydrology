@@ -1,0 +1,31 @@
+### channel=id29-nearing2022-da seq=15
+### host=login4
+### started=2026-08-08T19:24:17+0800
+### ---------- output ----------
+=== job outcomes ===
+     JobID      JobName        State ExitCode    Elapsed                  End 
+---------- ------------ ------------ -------- ---------- -------------------- 
+    201858     id29_sim    COMPLETED      0:0   02:33:17  2026-08-08T18:07:11 
+    201890      id29_da      RUNNING      0:0   01:17:06              Unknown 
+    201893      id29_ar      RUNNING      0:0   02:36:18              Unknown 
+=== simulation run: nearing2022_simulation_seed0_2026_0808_1535_ep30 ===
+  epochs: 30 / 30
+  2026-08-08 17:51:30,870: Epoch 30 average loss: avg_loss: 0.00574, avg_total_loss: 0.00574
+=== SIMULATION vs PAPER (median over basins) ===
+  basins scored: 531
+  metric             ours    paper     diff
+  NSE               0.792    0.796   -0.004
+  KGE               0.801    0.795   +0.006
+  Alpha-NSE         0.866    0.874   -0.008
+  Pearson-r         0.902    0.902   -0.000
+  Beta-NSE         -0.026   -0.027   +0.001
+  Peak-Timing       0.263    0.263   +0.000
+  Missed-Peaks      0.355    0.352   +0.003
+=== assimilation progress ===
+  run: assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30
+  Evaluation:  25%|██▌       | 134/531 [1:16:07<3:59:37, 36.22s/it]
+=== autoregression progress ===
+  epochs: 2 / 30
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T19:24:30+0800
