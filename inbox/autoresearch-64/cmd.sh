@@ -1,24 +1,22 @@
 #!/bin/bash
-# venv instead of conda: fewer moving parts, and it leaves the user's conda config alone.
+# conda is the toolchain that already works on this box (nh_final was built with it) and the
+# tsinghua mirror is configured. pip failed because CentOS 7 glibc has no wheels for these pins.
 set -o pipefail
 source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh || exit 1
-conda activate nh_final || { echo "BASE_ACTIVATE_FAILED"; exit 1; }
+rm -rf ~/autoresearch64/.venv
 
-VENV=~/autoresearch64/.venv
-echo "=== A. base interpreter ==="
-python -V 2>&1
+echo "=== A. what can conda actually solve for the declared pins? ==="
+conda create -y -n autoresearch64 --solver=classic -c conda-forge \
+  python=3.11 numpy=1.26.4 pandas=2.3.3 "pyarrow=22.0.0" psutil pytest 2>&1 | tail -20
 
-echo "=== B. create venv ==="
-if [ -d "$VENV" ]; then echo "venv already exists, reusing"; else python -m venv "$VENV" 2>&1 | tail -5; fi
-[ -x "$VENV/bin/python" ] || { echo "VENV_CREATE_FAILED"; ls -la "$VENV" 2>&1 | head; exit 1; }
-"$VENV/bin/python" -V 2>&1
+echo "=== B. env exists? ==="
+conda env list | grep -E "autoresearch64" 2>&1 || echo "NOT CREATED"
 
-echo "=== C. install pinned contract versions ==="
-"$VENV/bin/python" -m pip install -q --upgrade pip 2>&1 | tail -3
-"$VENV/bin/python" -m pip install "numpy==1.26.4" "pandas==2.3.3" "pyarrow==22.0.0" psutil pytest 2>&1 | tail -10
-
-echo "=== D. verify against declared pins ==="
-"$VENV/bin/python" - <<'PY'
+echo "=== C. installed versions vs declared pins ==="
+if conda env list | grep -qE "^autoresearch64\s"; then
+  conda activate autoresearch64
+  python -V 2>&1
+  python - <<'PY'
 import importlib.metadata as md
 want = {"numpy": "1.26.4", "pandas": "2.3.3", "pyarrow": "22.0.0"}
 ok = True
@@ -32,19 +30,19 @@ for extra in ("psutil", "pytest"):
     except Exception: print(f"    {extra}: MISSING")
 print("CONTRACT_VERSIONS_MATCH" if ok else "CONTRACT_VERSIONS_DIFFER")
 PY
-
-echo "=== E. selection reproduces on HPC? ==="
-cd ~/autoresearch64 || exit 1
-PYTHONPATH=$(pwd)/src "$VENV/bin/python" -c "
+  echo "=== D. selection reproduces on HPC? ==="
+  cd ~/autoresearch64 && PYTHONPATH=$(pwd)/src python -c "
 import json,pathlib
 from unified_autoresearch.selection.basins import select_development_basins
 b=select_development_basins('src/fair_benchmark/frozen/bundle/track0_statics.csv','examples/06-Finetuning/531_basin_list.txt',count=64)
-frozen=json.loads(pathlib.Path('src/unified_autoresearch/selection/development_basins_64_v1.json').read_text())['basins']
-print('64-basin selection reproduces on HPC:', b==frozen)
-print('prefix equals frozen 8:', b[:8]==json.loads(pathlib.Path('src/unified_autoresearch/selection/development_basins_v1.json').read_text())['basins'])
-" 2>&1 | tail -5
+f64=json.loads(pathlib.Path('src/unified_autoresearch/selection/development_basins_64_v1.json').read_text())['basins']
+f8=json.loads(pathlib.Path('src/unified_autoresearch/selection/development_basins_v1.json').read_text())['basins']
+print('64 selection reproduces on HPC:', b==f64)
+print('prefix equals frozen 8:', b[:8]==f8)
+" 2>&1 | tail -4
+else
+  echo "SKIPPING C/D: env was not created"
+fi
 
-echo "=== F. venv must stay out of the workspace git index ==="
-grep -q "^\.venv/" .gitignore || printf '.venv/\n' >> .gitignore
-git add .gitignore && git commit -q -m "ignore the local virtual environment" 2>&1 | tail -2
-git status --porcelain | wc -l
+echo "=== E. nh_final untouched ==="
+conda activate nh_final && python -c "import numpy,pandas,pyarrow;print('nh_final still:',numpy.__version__,pandas.__version__,pyarrow.__version__)" 2>&1 | tail -2
