@@ -1,0 +1,70 @@
+### channel=autoresearch-64 seq=16
+### host=login4
+### started=2026-08-08T19:25:58+0800
+### ---------- output ----------
+=== BUILD A REAL ENVIRONMENT WITH THE FROZEN CLUSTER SET ===
+Using cached pytz-2026.3.post1-py2.py3-none-any.whl (508 kB)
+Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Using cached tzdata-2026.3-py2.py3-none-any.whl (348 kB)
+Installing collected packages: pytz, tzdata, six, pygments, psutil, pluggy, packaging, numpy, iniconfig, python-dateutil, pytest, pyarrow, pandas
+
+Successfully installed iniconfig-2.3.0 numpy-1.26.4 packaging-26.3 pandas-2.2.3 pluggy-1.6.0 psutil-7.2.2 pyarrow-17.0.0 pygments-2.20.0 pytest-9.1.1 python-dateutil-2.9.0.post0 pytz-2026.3.post1 six-1.17.0 tzdata-2026.3
+=== WHAT A CLEAN INTERPRETER RESOLVES (this is exactly what the gate checks) ===
+  numpy: 1.26.4
+  pandas: 2.2.3
+  pyarrow: 17.0.0
+  psutil: 7.2.2
+  pytest: 9.1.1
+  imported: 1.26.4 2.2.3 17.0.0
+=== drop the abandoned PYTHONPATH-injection dirs ===
+nothing to commit, working directory clean
+af8d8b1 package update: frozen cluster dependency set
+=== SUBMIT ===
+jobid=201929
+t=180s still running
+=== RESULT ===
+     JobID          State ExitCode    Elapsed 
+---------- -------------- -------- ---------- 
+    201929      COMPLETED      0:0   00:04:42 
+=== 0. environment actually in use ===
+numpy 1.26.4 pandas 2.2.3 pyarrow 17.0.0
+=== 1. full test suite on the cluster ===
+=========================== short test summary info ============================
+FAILED src/unified_autoresearch/tests/test_development_recovery.py::test_registered_recovery_matches_a_clean_deterministic_training_run
+FAILED src/unified_autoresearch/tests/test_development_recovery.py::test_full_development_loop_produces_exactly_32_finite_registered_cells
+FAILED src/unified_autoresearch/tests/test_development_recovery.py::test_full_development_loop_supervises_every_registered_run_when_declared
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[conceptual_rainfall_runoff]
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[custom_python]
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[deep_learning]
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[fusion]
+FAILED src/unified_autoresearch/tests/test_restricted_runtime.py::test_candidate_cannot_redirect_path_checks_by_replacing_os_path_helpers
+FAILED src/unified_autoresearch/tests/test_single_candidate_development.py::test_a_single_reference_candidate_produces_one_cell_per_frozen_basin
+FAILED src/unified_autoresearch/tests/test_single_candidate_development.py::test_the_declared_candidate_identity_is_carried_into_every_cell
+10 failed, 260 passed, 8 skipped in 268.84s (0:04:28)
+=== 2. run HBV-lite on the 64 basins, cluster dependency set ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/autoresearch64/src/unified_autoresearch/scripts/run_single_candidate.py", line 101, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/autoresearch64/src/unified_autoresearch/scripts/run_single_candidate.py", line 80, in main
+    result = run_single_candidate_development(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/autoresearch64/src/unified_autoresearch/workflow/candidate_development.py", line 103, in run_single_candidate_development
+    raise RuntimeError(f"candidate training failed: {protocol}")
+RuntimeError: candidate training failed: forward
+=== 3. scores, split by the pre-registered eligibility record ===
+=== 4. supervisor: peak and denied access, recounted from raw logs ===
+samples=1 process_peak_gb=0.0123 denied_access=1
+---- stderr ----
+Traceback (most recent call last):
+  File "<stdin>", line 4, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'runs/unified_autoresearch/hbv_lite_64_hpc_v4/CANDIDATE_SUMMARY.json'
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T19:32:59+0800
