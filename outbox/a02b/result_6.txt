@@ -1,0 +1,27 @@
+### channel=a02b seq=6
+### host=login4
+### started=2026-08-08T14:08:18+0800
+### ---------- output ----------
+=== A ONE RUN DIR, FILE SIZES ===
+  total 13292
+  drwxr-xr-x.  2 sunyiq g_sunyiq     4096 Aug  7 21:09 .
+  drwxr-xr-x. 14 sunyiq g_sunyiq     4096 Aug  8 03:58 ..
+  -rw-r--r--.  1 sunyiq g_sunyiq      410 Aug  7 21:09 SHA256SUMS
+  -rw-r--r--.  1 sunyiq g_sunyiq      264 Aug  7 17:43 best_metrics.json
+  -rw-r--r--.  1 sunyiq g_sunyiq  3393999 Aug  7 17:43 best_model.pt
+  -rw-r--r--.  1 sunyiq g_sunyiq      756 Aug  7 14:52 config.json
+  -rw-r--r--.  1 sunyiq g_sunyiq      115 Aug  7 14:51 dqdt_stats.json
+  -rw-r--r--.  1 sunyiq g_sunyiq 10202650 Aug  7 21:09 last_checkpoint.pt
+  -rw-r--r--.  1 sunyiq g_sunyiq     2184 Aug  7 21:09 train_history.jsonl
+=== B BUILD LEAN BUNDLE ===
+  built:
+    -rw-r--r--. 1 sunyiq g_sunyiq 37770897 Aug  8 14:08 a02_lean_bundle.tar.gz
+  members: 60
+  sha256:  06c000e22c3ee24d1a614201ef5443b3da679e1b6818e293f01bb41b519df44d
+=== C DROP FOR SHIPPING (atomic) ===
+  dropped OK
+  -rw-r--r--. 1 sunyiq g_sunyiq 37770897 Aug  8 14:08 /data1/home/sunyiq/hpc_mailbox/outbox/a02_lean_bundle.tar.gz
+  NOTE: authoritative copy stays at /data1/home/sunyiq/nature_1st_a02/runs/a02_lean_bundle.tar.gz
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T14:08:22+0800
