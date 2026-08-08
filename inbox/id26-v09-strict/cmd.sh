@@ -1,100 +1,62 @@
 #!/bin/bash
-# id26-v09-strict seq=15 : first real main-training runs -- seed 100, all three arms.
-# Runs in ~/v09_strict/codetest so the sealed strict-nesting evidence tree stays at its
-# recorded commit f9418320. Submits and returns; the suite is ~4 h and the mailbox worker
-# is killed at 2 h, so progress is polled in later rounds.
+# id26-v09-strict seq=16 : watch the seed-100 three-arm suite (job in suite_jobid.txt).
+# Read-only. Caps at 100 min because the mailbox worker is killed at 120.
 export LC_ALL=C
 ROOT=/data1/home/sunyiq/v09_strict
 CODE=$ROOT/codetest/neuralhydrology
-TAR=$ROOT/upload_archive/v09_sealed_input.tar.gz
-WANT_TAR=feee746c7bda7970c8bac470969bf4247118f8f35d6cf543a44a8a6b4bd1bed7
-export PATH=$ROOT/gitenv/bin:$PATH
+PY=$HOME/miniconda3/envs/nh_final/bin/python
+JID=$(cat "$ROOT/suite_jobid.txt" 2>/dev/null || echo 201861)
 
-echo "=== A CODE ==="
-cd "$CODE" && git fetch -q origin "+codex/historical-band-experts-pilot:refs/remotes/origin/codex/historical-band-experts-pilot" \
-  && git checkout -q refs/remotes/origin/codex/historical-band-experts-pilot
-echo "codetest HEAD = $(git rev-parse HEAD)"
-echo "dirty = $(git status --porcelain --untracked-files=no | wc -l)"
+echo "=== WATCHING SUITE $JID (cap 100 min) ==="
+SEEN=""
+for i in $(seq 1 600); do
+  ST=$(squeue -j "$JID" -h -o "%t" 2>/dev/null)
+  CUR=$(find "$CODE/results/26_historical_band_experts/formal_v09" -maxdepth 2 -name 'seed_*' -printf '%f@%h\n' 2>/dev/null | sed 's|.*/||' | sort | tr '\n' ' ')
+  if [ "$CUR" != "$SEEN" ]; then echo "[t=$((i*10))s] dirs: ${CUR:-<none>}"; SEEN="$CUR"; fi
+  [ -z "$ST" ] && { echo "[t=$((i*10))s] job left the queue"; break; }
+  [ $((i % 30)) -eq 0 ] && echo "[t=$((i*10))s] state=$ST"
+  sleep 10
+done
 
-echo "=== B SEALED INPUTS INTO THE CODE TREE ==="
-D=$CODE/results/26_historical_band_experts/formal_v09
-if [ -f "$D/input_attempt_01/seal.json" ]; then
-  echo "inputs already present"
-else
-  echo "tar sha256 = $(sha256sum "$TAR" | cut -d' ' -f1)"
-  echo "expected   = $WANT_TAR"
-  [ "$(sha256sum "$TAR" | cut -d' ' -f1)" = "$WANT_TAR" ] || { echo "TAR HASH MISMATCH"; exit 1; }
-  mkdir -p "$CODE/results/26_historical_band_experts"
-  tar xzf "$TAR" -C "$CODE" && echo "extracted"
-fi
-echo "input files: $(find "$D/input_attempt_01" -type f | wc -l) (want 13)"
-"$HOME/miniconda3/envs/nh_final/bin/python" - <<'PY'
-import hashlib, json, pathlib
-root = pathlib.Path.home()/"v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/input_attempt_01"
-seal = json.loads((root/"seal.json").read_text(encoding="utf-8"))
-bad = sum(hashlib.sha256((root/i["relative_path"].replace("\\","/")).read_bytes()).hexdigest() != i["sha256"]
-          for i in seal["sealed_files"])
-print(f"sealed files {len(seal['sealed_files'])}, mismatches {bad} (want 0)")
-PY
+echo "=== ACCOUNTING ==="
+sacct -j "$JID" -X --format=JobID%10,JobName%10,NodeList%9,State%12,ExitCode%8,Elapsed%12 2>&1
 
-echo "=== C PROGRESS BEFORE ==="
+echo "=== SUITE STDOUT (tail 45) ==="
+tail -45 "$ROOT/logs/suite_${JID}.out" 2>&1
+echo "=== SUITE STDERR (tail 25) ==="
+tail -25 "$ROOT/logs/suite_${JID}.err" 2>&1
+
+echo "=== PROGRESS ==="
 cd "$CODE"
-"$HOME/miniconda3/envs/nh_final/bin/python" - <<'PY'
-import sys, json, pathlib
+$PY - <<'PY' 2>&1 | tail -40
+import json, pathlib, sys
 sys.path.insert(0, "src/26_historical_band_experts")
 from run_formal_training_v09 import scan_progress_v09
 from train_formal_v09 import load_run_order_v09
 root = pathlib.Path.cwd()
 specs = load_run_order_v09("src/26_historical_band_experts/configs/formal_v09_run_order.json")
-p = scan_progress_v09(root, specs)
-print(json.dumps({k: (v if k != "pending" else v[:4]) for k, v in p.items()}, indent=2))
+try:
+    p = scan_progress_v09(root, specs)
+    print("completed:", p["completed"])
+    print("dirty    :", p["dirty"])
+    print("pending  :", len(p["pending"]))
+except Exception as exc:
+    print("scan error:", exc)
+
+base = root/"results/26_historical_band_experts/formal_v09"
+for family, seed in (("classic", 100), ("capacity", 100), ("continuous", 100)):
+    m = base/family/f"seed_{seed}"/"manifest.json"
+    if not m.is_file():
+        print(f"{family:11s} seed{seed}: not finished")
+        continue
+    d = json.loads(m.read_text(encoding="utf-8"))
+    print(f"{family:11s} seed{seed}: status={d['status']} params={d['trainable_parameters']} "
+          f"steps={d['optimizer_steps_total']} wake={d.get('history_encoder_first_nonzero_gradient_step')} "
+          f"loss_ep1={d['epoch_trace'][0]['mean_training_loss']:.5f} "
+          f"loss_ep30={d['epoch_trace'][-1]['mean_training_loss']:.5f}")
+    if d.get("history_health_trace"):
+        h = d["history_health_trace"][0]
+        print(f"             step1 gate_abs_max={h['gate_absolute_maximum']} "
+              f"enc_grad={h['history_encoder_gradient_norm']} gate_grad={h['gate_gradient_norm']:.6g}")
 PY
-
-echo "=== D WRITE SUITE JOB ==="
-mkdir -p "$ROOT/jobs" "$ROOT/logs"
-cat > "$ROOT/jobs/suite.slurm" <<'SLURM'
-#!/usr/bin/env bash
-#SBATCH -J v09suite
-#SBATCH -p hgpu2p
-#SBATCH -N 1
-#SBATCH -n 1
-#SBATCH --cpus-per-task=4
-#SBATCH --gres=gpu:1
-#SBATCH --exclude=ngu002
-#SBATCH -t 12:00:00
-#SBATCH -o /data1/home/sunyiq/v09_strict/logs/suite_%j.out
-#SBATCH -e /data1/home/sunyiq/v09_strict/logs/suite_%j.err
-
-set -eo pipefail
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final || { echo "CONDA_FAILED"; exit 1; }
-export PATH=/data1/home/sunyiq/v09_strict/gitenv/bin:$PATH
-export MKL_THREADING_LAYER=GNU
-export MKL_SERVICE_FORCE_INTEL=1
-export CUBLAS_WORKSPACE_CONFIG=:4096:8
-
-cd /data1/home/sunyiq/v09_strict/codetest/neuralhydrology
-export PYTHONPATH=$(pwd):$(pwd)/src/26_historical_band_experts:$PYTHONPATH
-
-echo "node=$(hostname) start=$(date -Iseconds)"
-nvidia-smi --query-gpu=index,name,memory.free --format=csv,noheader
-free -g | sed -n 2p
-
-echo "=== RUN SUITE: seed 100, three arms (max-runs 3) ==="
-python -u src/26_historical_band_experts/run_formal_training_v09.py \
-  --worktree-root . --device cuda:0 --max-runs 3
-echo "end=$(date -Iseconds)"
-SLURM
-sed -i 's/\r$//' "$ROOT/jobs/suite.slurm"
-
-echo "=== E SUBMIT (do not wait) ==="
-cd "$ROOT/jobs"
-JID=$(sbatch --parsable suite.slurm 2>&1)
-echo "SUITE_JOBID=$JID"
-echo "$JID" > "$ROOT/suite_jobid.txt"
-sleep 25
-squeue -j "$JID" -o "%.10i %.10j %.9P %.8T %.10M %R" 2>&1 | head -5
-echo "=== F NOTE ==="
-echo "expected ~4 h for three arms; poll with a later seq"
-echo "strict evidence tree untouched at: $(cd $ROOT/neuralhydrology && git rev-parse HEAD)"
 echo "=== END ==="
