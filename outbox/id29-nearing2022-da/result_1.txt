@@ -1,0 +1,90 @@
+### channel=id29-nearing2022-da seq=1
+### host=login4
+### started=2026-08-08T14:58:40+0800
+### ---------- output ----------
+=== A: repo ===
+96703ce fix(adversarial): handle empty/NaN targets in metrics (basin 09535100)
+uncommitted: 78
+=== B: home layout ===
+a02_results
+adv531
+autoresearch64
+camels_g2_design_20260808
+code
+filters
+hpc
+hpc_mailbox
+kalmannet
+kan_xaj_hpc
+knet_project
+miniconda3
+nature_1st_a02
+nature_1st_a02.tar.gz
+neuralhydrology
+neuralhydrology_backup_20260304
+neuralhydrology_messy_backup
+perl5
+v09_strict
+vscode_cli.tar.gz
+=== C: where is CAMELS ===
+/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/basin_mean_forcing
+/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/full/basin_mean_forcing
+/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/demo/basin_mean_forcing
+/data1/home/sunyiq/neuralhydrology_backup_20260304/test/test_data/camels_us/basin_mean_forcing
+/data1/home/sunyiq/neuralhydrology/test/test_data/camels_us/basin_mean_forcing
+=== D: forcing products present ===
+-- /data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/basin_mean_forcing
+daymet
+maurer
+nldas
+1.4G	/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/basin_mean_forcing
+-- /data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/full/basin_mean_forcing
+daymet
+maurer
+nldas
+1.4G	/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/full/basin_mean_forcing
+-- /data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/demo/basin_mean_forcing
+daymet
+maurer
+nldas
+343M	/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/demo/basin_mean_forcing
+=== E: attributes + streamflow ===
+/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/usgs_streamflow
+/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/camels_attributes_v2.0
+/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/full/usgs_streamflow
+/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/full/camels_attributes_v2.0
+/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/demo/camels_attributes_v2.0
+=== F: conda env ===
+# conda environments:
+#
+base                  *  /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+                         /data1/home/sunyiq/v09_strict/gitenv
+
+py 3.11.13 torch 2.4.0 cuda 12.1
+
+=== G: gpu partitions ===
+   PARTITION  AVAIL   TIMELIMIT NODES  STATE NODELIST
+     hcpu48*     up    infinite    10 alloc$ icn[202,204-207,210-212,216-217]
+     hcpu48*     up    infinite     5  maint icn[214,220-221,246,249]
+     hcpu48*     up    infinite    16  down* icn[203,215,218,224,230,233-237,239,242-243,245,247,256]
+     hcpu48*     up    infinite     2  alloc icn[213,226]
+     hcpu48*     up    infinite    31   idle icn[201,208-209,219,222-223,225,227-229,231-232,238,240-241,244,248,250-255,257-264]
+     hcpu48y     up    infinite     1  down$ icn281
+     hcpu48y     up    infinite     1  maint icn280
+     hcpu48y     up    infinite     2  down* icn[278-279]
+     hcpu48y     up    infinite     2    mix icn[274,277]
+     hcpu48y     up    infinite     6   idle icn[270-273,275-276]
+       hgpu8     up    infinite     3    mix ngu[201-203]
+       hgpu4     up    infinite     1  down* ngu103
+       hgpu4     up    infinite     3   idle ngu[101-102,104]
+       hgpu2     up    infinite     1    mix ngu003
+=== H: disk ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  592T  363T  62% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T14:59:44+0800
