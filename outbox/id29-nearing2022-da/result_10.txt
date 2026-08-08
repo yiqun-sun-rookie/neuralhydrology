@@ -1,0 +1,50 @@
+### channel=id29-nearing2022-da seq=10
+### host=login4
+### started=2026-08-08T16:37:05+0800
+### ---------- output ----------
+=== A: where is 201864 ===
+slurm_load_jobs error: Invalid job id specified
+     JobID      JobName            State                   Reason               Submit 
+---------- ------------ ---------------- ------------------------ -------------------- 
+    201864      g2-T124           FAILED                     None  2026-08-08T15:59:07 
+201864.ba+        batch           FAILED                           2026-08-08T15:59:07 
+201864.ex+       extern        COMPLETED                           2026-08-08T15:59:07 
+-- all my jobs, any state --
+     JOBID         NAME       STATE         NODELIST(REASON)
+    201889   id17-smoke     PENDING                   (None)
+    201858     id29_sim     RUNNING                   ngu104
+    201859      id29_ar     RUNNING                   ngu104
+    201861     v09suite     RUNNING                   ngu011
+=== B: submit arm 3 with a dependency, unless one already exists ===
+  da_jobid=201890
+     JOBID         NAME       STATE         NODELIST(REASON)
+    201890      id29_da     PENDING             (Dependency)
+    201858     id29_sim     RUNNING                   ngu104
+    201859      id29_ar     RUNNING                   ngu104
+    201889   id17-smoke     RUNNING                   ngu011
+    201861     v09suite     RUNNING                   ngu011
+=== C: autoregression speed - has epoch 1 finished yet ===
+  completed epochs: 0
+  last tqdm state:
+    Epoch 1:  73%|#######3  | 4992/6821 [57:27<22:15,  1.37it/s, Loss: 0.0174]
+    Epoch 1:  73%|#######3  | 4993/6821 [57:27<21:38,  1.41it/s, Loss: 0.0174]
+  simulation for comparison:
+    Epoch 13:  84%|########3 | 5717/6821 [03:46<00:40, 27.07it/s, Loss: 0.0045]
+    Epoch 13:  84%|########3 | 5720/6821 [03:46<00:42, 26.13it/s, Loss: 0.0045]
+=== D: is the AR job actually on GPU or has it fallen back to CPU ===
+gpu: NVIDIA A40
+2026-08-08 15:35:21,727: device: cuda:0
+2026-08-08 15:35:26,923: ### Device cuda:0 will be used for training
+2026-08-08 15:35:21,727: device: cuda:0
+2026-08-08 15:35:26,923: ### Device cuda:0 will be used for training
+=== E: node load (via slurm, not ssh) ===
+CPUAlloc=18
+CPUTot=96
+State=MIXED
+AllocTRES=cpu=18
+     JOBID       USER         NAME      STATE        TRES_PER_NODE
+    201858     sunyiq     id29_sim    RUNNING                gpu:1
+    201859     sunyiq      id29_ar    RUNNING                gpu:1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-08T16:37:12+0800
