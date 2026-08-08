@@ -1,0 +1,20 @@
+### channel=a02b seq=8
+### host=login4
+### started=2026-08-08T14:15:11+0800
+### ---------- output ----------
+=== A SOURCE BUNDLE ===
+  -rw-r--r--. 1 sunyiq g_sunyiq 37770897 Aug  8 14:08 /data1/home/sunyiq/nature_1st_a02/runs/a02_lean_bundle.tar.gz
+  sha256: 06c000e22c3ee24d1a614201ef5443b3da679e1b6818e293f01bb41b519df44d
+=== B SCRATCH REPO ===
+  committed: 53f5b77
+=== C PUSH TO ITS OWN BRANCH ===
+Unknown option: -C
+usage: git [--version] [--help] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+  [FATAL] no remote url
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-08T14:15:13+0800
