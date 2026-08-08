@@ -1,24 +1,36 @@
 #!/bin/bash
-echo "=== A. are our 64 basins all in the HPC archive? ==="
-cd ~/neuralhydrology/data/camels_us || exit 1
-MISS=0
-for b in 10259000 04045500 12175500 02300700 08190500 02038850 11230500 06847900 11143000 14301000 04122500 09306242 05458000 02450250 06289000 08109700 08267500 14216500 11151300 12375900 11528700 06879650 02472000 06614800 04213075 12073500 04296000 13313000 06350000 01491000 03281500 08194200 04057510 13240000 04063700 11476600 01466500 07060710 08158810 10244950 14020000 14138800 12010000 04115265 08066300 04185000 06409000 02231000 09378170 07142300 02077200 02102908 01451800 09512280 06906800 03455500 13161500 04027000 09494000 09430600 12167000 11381500 12377150 08189500; do
-  F=$(find basin_mean_forcing/maurer -name "${b}_*_forcing_leap.txt" 2>/dev/null | wc -l)
-  Q=$(find usgs_streamflow -name "${b}_streamflow_qc.txt" 2>/dev/null | wc -l)
-  [ "$F" -eq 1 ] && [ "$Q" -eq 1 ] || { echo "MISSING $b forcing=$F flow=$Q"; MISS=$((MISS+1)); }
-done
-echo "missing_basins=$MISS / 64"
-echo "=== B. conda envs available ==="
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null && conda env list 2>&1 | head -10
-echo "=== C. are the pinned versions installable? (query only, no install) ==="
-conda activate nh_final 2>/dev/null
-timeout 60 pip index versions numpy 2>&1 | head -3
-timeout 60 pip index versions pyarrow 2>&1 | head -3
-echo "=== D. git on login node ==="
-git --version 2>&1
-echo "=== E. does ~/autoresearch64 already exist? (must not clobber) ==="
-ls -d ~/autoresearch64 2>&1 | head -2
-echo "=== F. other people's live jobs (do not disturb) ==="
-squeue -u "$USER" -o "%.10i %.14j %.10P %.8T %.10M" 2>&1 | head -10
-echo "=== G. cpu partition idle ==="
-sinfo -p hcpu48 -o "%.10P %.6D %.14F" 2>&1 | head -3
+# Set up a self-contained workspace. Never touches ~/neuralhydrology or ~/adv531.
+set -o pipefail
+ROOT=~/autoresearch64
+BUNDLE=~/hpc_mailbox/inbox/autoresearch-64/payload/a64_bundle.tar.gz
+
+echo "=== A. refuse to clobber ==="
+if [ -e "$ROOT" ]; then echo "ABORT: $ROOT already exists"; ls -la "$ROOT" | head -5; exit 1; fi
+echo "ok, $ROOT is free"
+
+echo "=== B. bundle integrity ==="
+ls -l "$BUNDLE" 2>&1 | head -2
+sha256sum "$BUNDLE" 2>&1 | head -2
+echo "expected b970dcf4a3dc255ce69da68f9dabd70f4b82277896f34c07b599e0cd58c92926"
+
+echo "=== C. unpack ==="
+mkdir -p "$ROOT" && cd "$ROOT" || exit 1
+tar xzf "$BUNDLE" || { echo "UNPACK_FAILED"; exit 1; }
+mkdir -p runs/unified_autoresearch
+printf 'runs/\n__pycache__/\n*.pyc\n' > .gitignore
+
+echo "=== D. git repo (fingerprinting needs a real HEAD) ==="
+git init -q . && git config user.email "yiqun.sun.hydro.gee@gmail.com" && git config user.name "yiqun.sun"
+git add -A && git commit -q -m "autoresearch64 workspace: unified_autoresearch package, frozen statics, basin list"
+git log -1 --format="%h %s" 2>&1
+git status --porcelain | wc -l
+
+echo "=== E. layout ==="
+find . -maxdepth 3 -type d -not -path "./.git*" | sort | head -20
+echo "package files:"; find src/unified_autoresearch -name "*.py" | wc -l
+echo "statics:"; wc -l src/fair_benchmark/frozen/bundle/track0_statics.csv 2>&1 | head -1
+echo "basin list:"; wc -l examples/06-Finetuning/531_basin_list.txt 2>&1 | head -1
+echo "score.py present? (must be absent):"; find src -name "score.py" | wc -l
+
+echo "=== F. frozen selection hashes match the shipped inputs? ==="
+sha256sum src/fair_benchmark/frozen/bundle/track0_statics.csv examples/06-Finetuning/531_basin_list.txt 2>&1
