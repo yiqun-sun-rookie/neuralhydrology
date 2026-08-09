@@ -1,0 +1,24 @@
+### channel=id18-loss-arm seq=8
+### host=login4
+### started=2026-08-09T19:35:01+0800
+### ---------- output ----------
+=== SQUEUE ===
+     JOBID                     NAME  PARTITION     STATE        TIME  NODES NODELIST(REASON)
+    202067           id18-e04-smoke     hgpu2p   RUNNING        3:25      1 ngu004
+=== SACCT ===
+JobID|JobName|Partition|State|Elapsed|ExitCode|AllocCPUS|AllocTRES
+202067|id18-e04-smoke|hgpu2p|RUNNING|00:03:25|0:0|8|billing=8,cpu=8,node=1
+202067.batch|batch||RUNNING|00:03:25|0:0|8|cpu=8,mem=0,node=1
+202067.extern|extern||RUNNING|00:03:25|0:0|8|billing=8,cpu=8,node=1
+=== STDOUT_TAIL ===
+{"experiment_id": "E04_daymet_post2008_objective_confirmation_482", "generated_config_count": 6}
+[1/1] 01022500 success 3.4s
+[1/1] 01022500 success 1.4s
+[1/1] 01022500 success 27.8s
+[1/1] 01022500 success 3.2s
+[1/1] 01022500 success 1.7s
+[1/1] 01022500 success 1.1s
+=== STDERR_TAIL ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T19:35:01+0800
