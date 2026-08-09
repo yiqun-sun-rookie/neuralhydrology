@@ -1,0 +1,17 @@
+### channel=kalmannet-tukf06 seq=13
+### host=login4
+### started=2026-08-10T01:16:04+0800
+### ---------- output ----------
+=== FORMAL SELECTION ACCOUNTING ===
+             JobID              JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------------ -------------------- ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+            202136        tukf06-select     hcpu48       icn213          COMPLETED      0:0   02:50:46   1-21:33:04              
+      202136.batch                batch                  icn213          COMPLETED      0:0   02:50:46   1-21:33:04    39615852K 
+     202136.extern               extern                  icn213          COMPLETED      0:0   02:50:46    00:00.002        1156K 
+=== INDEPENDENT READ-ONLY SELECTION AUDIT ===
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+ModuleNotFoundError: No module named 'numpy'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-10T01:16:05+0800
