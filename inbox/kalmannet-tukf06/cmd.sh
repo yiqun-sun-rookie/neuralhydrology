@@ -13,6 +13,14 @@ if [[ -z "${SLURM_JOB_ID:-}" ]]; then
     echo "evaluation artifact exists before selection audit" >&2
     exit 85
   fi
+  echo "=== FORMAL SELECTION ACCOUNTING ==="
+  sacct -j "$JID" --format=JobID%18,JobName%20,Partition%10,NodeList%12,State%18,ExitCode%8,Elapsed%10,TotalCPU%12,MaxRSS%12
+  selection_state=$(sacct -j "$JID" -X -n -o State | awk 'NF {print $1; exit}')
+  selection_exit=$(sacct -j "$JID" -X -n -o ExitCode | awk 'NF {print $1; exit}')
+  if [[ "$selection_state" != "COMPLETED" || "$selection_exit" != "0:0" ]]; then
+    echo "selection accounting gate failed: state=$selection_state exit_code=$selection_exit" >&2
+    exit 81
+  fi
   existing=$(squeue -h -u "$USER" -n tukf06-audit -o '%i %T' | head -n 1)
   if [[ -n "$existing" ]]; then
     echo "a TUKF06 selection-audit job already exists: $existing" >&2
@@ -62,13 +70,7 @@ if [[ -z "${SLURM_JOB_ID:-}" ]]; then
 fi
 
 echo "=== FORMAL SELECTION ACCOUNTING ==="
-sacct -j "$JID" --format=JobID%18,JobName%20,Partition%10,NodeList%12,State%18,ExitCode%8,Elapsed%10,TotalCPU%12,MaxRSS%12
-state=$(sacct -j "$JID" -X -n -o State | awk 'NF {print $1; exit}')
-exit_code=$(sacct -j "$JID" -X -n -o ExitCode | awk 'NF {print $1; exit}')
-if [[ "$state" != "COMPLETED" || "$exit_code" != "0:0" ]]; then
-  echo "selection accounting gate failed: state=$state exit_code=$exit_code" >&2
-  exit 81
-fi
+echo "selection job $JID was verified COMPLETED with exit code 0:0 on the login node before this audit was scheduled"
 if [[ ! -f "$OUTPUT/selection.sealed.json" ]]; then
   echo "selection seal is absent" >&2
   exit 82
