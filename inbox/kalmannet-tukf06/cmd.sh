@@ -179,6 +179,7 @@ sampling_rb = []
 backprop_rb = []
 start_relative_spread = []
 budget_validation_differences = {str(value): [] for value in (32, 64, 128, 256)}
+bound_rtol = 64.0 * np.finfo(np.float64).eps
 
 for index, basin in enumerate(basins):
     dimension = int(dims[basin])
@@ -235,8 +236,22 @@ for index, basin in enumerate(basins):
         selected = method['selected']
         assert len(selected['theta_log']) == dimension + 1
         assert len(selected['q_diagonal']) == dimension
-        assert all(1e-5 <= value <= 0.1 for value in selected['q_diagonal'])
-        assert 0.0025 <= selected['r_b'] <= 0.32
+        theta_values = np.asarray(selected['theta_log'], dtype=np.float64)
+        q_values = np.asarray(selected['q_diagonal'], dtype=np.float64)
+        r_b_value = float(selected['r_b'])
+        q_log_lower, q_log_upper = math.log(1e-5), math.log(0.1)
+        r_log_lower, r_log_upper = math.log(0.0025), math.log(0.32)
+        assert np.all(theta_values[:-1] >= q_log_lower - bound_rtol * abs(q_log_lower))
+        assert np.all(theta_values[:-1] <= q_log_upper + bound_rtol * abs(q_log_upper))
+        assert r_log_lower - bound_rtol * abs(r_log_lower) <= theta_values[-1]
+        assert theta_values[-1] <= r_log_upper + bound_rtol * abs(r_log_upper)
+        np.testing.assert_allclose(
+            q_values, np.exp(theta_values[:-1]), rtol=bound_rtol, atol=0.0)
+        assert math.isclose(
+            r_b_value, math.exp(float(theta_values[-1])), rel_tol=bound_rtol, abs_tol=0.0)
+        assert np.all(q_values >= 1e-5 * (1.0 - bound_rtol))
+        assert np.all(q_values <= 0.1 * (1.0 + bound_rtol))
+        assert 0.0025 * (1.0 - bound_rtol) <= r_b_value <= 0.32 * (1.0 + bound_rtol)
         assert selected['validation_objective'] == validation_history[method['selected_index']]
 
     sampling = record['sampling_search']
@@ -308,6 +323,7 @@ payload = {
         'backpropagation_r_b': [float(min(backprop_rb)), float(max(backprop_rb))],
     },
     'backpropagation_start_relative_spread_median': float(np.median(start_relative_spread)),
+    'physical_bound_relative_tolerance': float(bound_rtol),
     'selection_wall_seconds': float(summary['wall_seconds']),
     'worker_count': int(summary['environment']['worker_count']),
 }
