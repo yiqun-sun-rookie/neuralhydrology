@@ -1,31 +1,90 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -eo pipefail
 
-echo "=== HCPU48 AVAILABILITY ==="
-sinfo -p hcpu48 -N -o "%12N %12P %10T %5c %10m %10e %30E" 2>&1 | head -90
+MAILBOX=/data1/home/sunyiq/hpc_mailbox
+PAYLOAD="$MAILBOX/payload/kalmannet-tukf06"
+ARCHIVE="$PAYLOAD/TUKF06_FULL_DIAGONAL_SEARCH_HEAD_TO_HEAD_V1.tar.gz"
+EXPECTED_SHA=a9f73b3394b30ffdbf2dd46b2b275163f16cd369e660ff3e3aa8053445a439fd
+TARGET=/data1/home/sunyiq/kalmannet_tukf06_20260809
+PENDING=/data1/home/sunyiq/kalmannet_tukf06_20260809.pending-a9f73b33
 
-echo "=== HCPU48 PARTITION POLICY ==="
-scontrol show partition hcpu48 2>&1 | head -50
+cd "$MAILBOX"
+echo "=== DEPLOYMENT INPUT ==="
+test -f "$ARCHIVE"
+ACTUAL_SHA=$(sha256sum "$ARCHIVE" | awk '{print $1}')
+echo "archive_sha256=$ACTUAL_SHA"
+if [[ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]]; then
+  echo "archive hash mismatch" >&2
+  exit 31
+fi
+if [[ -e "$TARGET" ]]; then
+  echo "target already exists; refusing deployment: $TARGET" >&2
+  exit 32
+fi
+if [[ -e "$PENDING" ]]; then
+  echo "pending target already exists; refusing deployment: $PENDING" >&2
+  exit 33
+fi
 
-echo "=== CURRENT USER CPU JOBS ==="
-squeue -u "$USER" -p hcpu48 -o "%.18i %.24j %.10P %.8T %.10M %.20R" 2>&1 | head -50
+mkdir "$PENDING"
+mkdir "$PENDING/source.pending"
+tar -xzf "$ARCHIVE" -C "$PENDING/source.pending"
+python - "$PENDING/source.pending" <<'PY'
+import hashlib
+import json
+import pathlib
+import sys
 
-echo "=== DATA FILE EXAMPLES ==="
-find /data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/maurer \
-  -maxdepth 2 -type f -name '04105700*' -print 2>/dev/null | head -5
-find /data1/home/sunyiq/neuralhydrology/data/camels_us/usgs_streamflow \
-  -maxdepth 2 -type f -name '04105700*' -print 2>/dev/null | head -5
-
-echo "=== STANDALONE DATA LOADER ==="
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh || source "$HOME/miniconda3/etc/profile.d/conda.sh"
-conda activate nh_final
-python - <<'PY'
-import importlib.util
-from pathlib import Path
-path = Path('/data1/home/sunyiq/neuralhydrology/src/hydroagent/data_loading.py')
-spec = importlib.util.spec_from_file_location('tukf06_data_loading', path)
-module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(module)
-print('LOADER_FILE', path)
-print('LOAD_CAMELS_BASIN_AVAILABLE', callable(module.load_camels_basin))
+root = pathlib.Path(sys.argv[1]).resolve()
+manifest = json.loads((root / 'bundle_manifest.json').read_text(encoding='utf-8'))
+if manifest.get('experiment_id') != 'TUKF06_FULL_DIAGONAL_SEARCH_HEAD_TO_HEAD_V1':
+    raise SystemExit('internal experiment identifier mismatch')
+for relative, expected in manifest['member_sha256'].items():
+    path = root / relative
+    if not path.is_file():
+        raise SystemExit(f'missing member: {relative}')
+    if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
+        raise SystemExit(f'member hash mismatch: {relative}')
+print(f"verified_members={len(manifest['member_sha256'])}")
 PY
+mv "$PENDING/source.pending" "$PENDING/source"
+mkdir "$PENDING/logs" "$PENDING/smoke" "$PENDING/results"
+mv "$PENDING" "$TARGET"
+echo "deployed_target=$TARGET"
+
+echo "=== DUPLICATE JOB GUARD ==="
+if squeue -u "$USER" -h -n tukf06-smoke -o '%i' | grep -q .; then
+  echo "an existing tukf06-smoke job is already queued or running" >&2
+  exit 34
+fi
+squeue -u "$USER" -p hcpu48 -o '%.18i %.24j %.10P %.8T %.10M %.20R' | head -30
+
+echo "=== SUBMIT PAID SMOKE ==="
+JID=$(sbatch --parsable "$TARGET/source/hpc/tukf06_full_diagonal/submit_smoke_cpu.slurm")
+echo "jobid=$JID"
+printf '%s\n' "$JID" > "$TARGET/smoke/job_id.txt"
+
+echo "=== WAIT FOR THIS JOB ONLY ==="
+for i in $(seq 1 180); do
+  if ! squeue -h -j "$JID" -o '%i' 2>/dev/null | grep -q .; then
+    break
+  fi
+  if [[ $((i % 6)) -eq 0 ]]; then
+    echo "elapsed_wait_seconds=$((i * 10))"
+    squeue -h -j "$JID" -o '%.18i %.24j %.10P %.8T %.10M %.20R'
+  fi
+  sleep 10
+done
+
+echo "=== ACCOUNTING ==="
+sacct -j "$JID" -X --format=JobID%12,JobName%18,Partition%10,NodeList%12,State%18,ExitCode%8,Elapsed%10,TotalCPU%12,MaxRSS%12
+echo "=== STDOUT ==="
+tail -120 "$TARGET/logs/smoke-${JID}.out" 2>/dev/null || true
+echo "=== STDERR ==="
+tail -120 "$TARGET/logs/smoke-${JID}.err" 2>/dev/null || true
+echo "=== SMOKE JSON ==="
+if [[ ! -f "$TARGET/smoke/smoke_04105700.json" ]]; then
+  echo "smoke result is absent" >&2
+  exit 35
+fi
+cat "$TARGET/smoke/smoke_04105700.json"
