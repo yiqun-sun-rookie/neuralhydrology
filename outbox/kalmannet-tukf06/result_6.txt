@@ -1,0 +1,533 @@
+### channel=kalmannet-tukf06 seq=6
+### host=login4
+### started=2026-08-09T22:13:54+0800
+### ---------- output ----------
+=== DEPLOYMENT INPUT ===
+archive_sha256=3deb8ff8096eaf32d1c22dd19d51bc30fe59548991fecc8a74e108ad07fc001b
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_data_fingerprints_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_full_diagonal_search_head_to_head_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_search_design_v1.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_search_design_v1.sha256.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf06_full_diagonal/preflight.sh: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf06_full_diagonal/submit_evaluation_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf06_full_diagonal/submit_selection_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf06_full_diagonal/submit_smoke_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/conceptual_benchmark_camels_us_531_repro.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/hbv_lite_cma_local_full.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_tukf06_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/evaluate_tukf06_full_diagonal_head_to_head.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/freeze_tukf06_search_design.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_da.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_differentiable_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf06_full_diagonal_selection.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/smoke_tukf06_full_diagonal.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf06_full_diagonal_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/verify_tukf06_full_diagonal_head_to_head.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/conventional_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/data/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/data/caravan_dataset.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/data/hbvlite_prior.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/data/multi_obs_caravan.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/differentiable_m4.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/differentiable_walrus.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/dl_ssm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_ukf_adapter.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hydro_system.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/m4_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/static_encoder.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/walrus_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: vendor/hydroagent_data_loading.py: implausibly old time stamp 1970-01-01 08:00:00
+verified_members=39
+deployed_target=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2
+=== DUPLICATE JOB GUARD ===
+             JOBID                     NAME  PARTITION    STATE       TIME     NODELIST(REASON)
+=== SUBMIT PAID SMOKE ===
+jobid=202134
+=== WAIT FOR THIS JOB ONLY ===
+elapsed_wait_seconds=60
+            202134             tukf06-smoke     hcpu48  RUNNING       0:50               icn213
+elapsed_wait_seconds=120
+            202134             tukf06-smoke     hcpu48  RUNNING       1:51               icn213
+elapsed_wait_seconds=180
+            202134             tukf06-smoke     hcpu48  RUNNING       2:51               icn213
+elapsed_wait_seconds=240
+            202134             tukf06-smoke     hcpu48  RUNNING       3:51               icn213
+=== ACCOUNTING ===
+       JobID            JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------ ------------------ ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+      202134       tukf06-smoke     hcpu48       icn213          COMPLETED      0:0   00:04:35     00:00:00              
+=== STDOUT ===
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77755720
+{"elapsed_seconds": 239.54097808897495, "output": "/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/smoke/smoke_04105700.json", "repeat_maximum_differences": {"gradient": 0.0, "training_objective": 0.0, "validation_objective": 0.0}}
+JobId=202134 JobName=tukf06-smoke
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200009 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:04:35 TimeLimit=00:30:00 TimeMin=N/A
+   SubmitTime=2026-08-09T22:13:54 EligibleTime=2026-08-09T22:13:54
+   AccrueTime=2026-08-09T22:13:54
+   StartTime=2026-08-09T22:13:54 EndTime=2026-08-09T22:43:54 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-09T22:13:54
+   Partition=hcpu48 AllocNode:Sid=login04:44128
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=icn213
+   BatchHost=icn213
+   NumNodes=1 NumCPUs=48 NumTasks=1 CPUs/Task=48 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=48,node=1,billing=48
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=48 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/source/hpc/tukf06_full_diagonal/submit_smoke_cpu.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/logs/smoke-202134.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/logs/smoke-202134.out
+   Power=
+
+=== STDERR ===
+=== SMOKE JSON ===
+{
+  "anchors_after_one_update": [
+    {
+      "initial": {
+        "gradient": [
+          0.0600577000787564,
+          0.059638066018135844,
+          0.038882387592626085,
+          0.047925151458144855,
+          -0.006863052010349157,
+          -0.10716515903350905,
+          -0.012086885324164654,
+          -0.1882803439395766
+        ],
+        "theta_log": [
+          -6.907755278982137,
+          -6.907755278982137,
+          -6.907755278982137,
+          -6.907755278982137,
+          -6.907755278982137,
+          -6.907755278982137,
+          -6.907755278982137,
+          -3.912023005428146
+        ],
+        "training_objective": 0.17142969200876154,
+        "validation_objective": 0.20479673363519202
+      },
+      "start_index": 0,
+      "updated": {
+        "theta_log": [
+          -6.957755270656811,
+          -6.9577552705982315,
+          -6.957755266122848,
+          -6.957755268549204,
+          -6.857755351835915,
+          -6.8577552836478315,
+          -6.857755320349253,
+          -3.86202300808376
+        ],
+        "training_objective": 0.1787302602014704,
+        "validation_objective": 0.20714765383878675
+      }
+    },
+    {
+      "initial": {
+        "gradient": [
+          -0.003551978624730527,
+          -0.003762841707556258,
+          -0.002312358399014319,
+          -0.002778327234989736,
+          -0.0012856573394819707,
+          -0.0006496737597733446,
+          4.6607711227136006e-05,
+          0.0
+        ],
+        "theta_log": [
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -5.991464547107982
+        ],
+        "training_objective": 0.29966826007280484,
+        "validation_objective": 0.23715390209308515
+      },
+      "start_index": 1,
+      "updated": {
+        "theta_log": [
+          -11.462925605736444,
+          -11.462925597848173,
+          -11.46292568119875,
+          -11.462925644933984,
+          -11.462925853873317,
+          -11.462926234575429,
+          -11.512925464970229,
+          -5.991464547107982
+        ],
+        "training_objective": 0.2989357257684921,
+        "validation_objective": 0.23701632201041037
+      }
+    },
+    {
+      "initial": {
+        "gradient": [
+          0.0011839631675677077,
+          0.006672087193398619,
+          -0.018495869770023914,
+          -0.006278945935180876,
+          -0.01479313634643219,
+          0.021304214775668226,
+          0.005091230968520197,
+          0.20525573689117496
+        ],
+        "theta_log": [
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -1.1394342831883648
+        ],
+        "training_objective": 0.35252683462148976,
+        "validation_objective": 0.3102193669311856
+      },
+      "start_index": 2,
+      "updated": {
+        "theta_log": [
+          -2.3525846706871776,
+          -2.3525850180550893,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.352585069524522,
+          -2.352584994786162,
+          -1.1894342807523794
+        ],
+        "training_objective": 0.34073888869479996,
+        "validation_objective": 0.30504459387502036
+      }
+    },
+    {
+      "initial": {
+        "gradient": [
+          0.0003831290670586164,
+          0.000503133877525497,
+          -3.7960069988995e-06,
+          0.00023998702875333277,
+          -3.0947828039556433e-06,
+          -2.1644930221054387e-06,
+          1.811696211097183e-10,
+          6.622222853855291e-05
+        ],
+        "theta_log": [
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -1.1394342831883648
+        ],
+        "training_objective": 0.3184896113113132,
+        "validation_objective": 0.2447203386534159
+      },
+      "start_index": 3,
+      "updated": {
+        "theta_log": [
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.463056836247302,
+          -11.512925464970229,
+          -11.463086506830987,
+          -11.463155403624857,
+          -11.512925464970229,
+          -1.1894267339934934
+        ],
+        "training_objective": 0.3184856182606812,
+        "validation_objective": 0.24471915162982252
+      }
+    },
+    {
+      "initial": {
+        "gradient": [
+          -0.00785588925489472,
+          -0.006872022087608905,
+          -0.010599957225544177,
+          -0.00862618413502488,
+          -0.010613862500306326,
+          0.06820350196168072,
+          0.012968475499995904,
+          0.0
+        ],
+        "theta_log": [
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -5.991464547107982
+        ],
+        "training_objective": 0.193403006790384,
+        "validation_objective": 0.2184009217707168
+      },
+      "start_index": 4,
+      "updated": {
+        "theta_log": [
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3525850856630446,
+          -2.352585054439042,
+          -5.991464547107982
+        ],
+        "training_objective": 0.18925961672494193,
+        "validation_objective": 0.21662912579850482
+      }
+    },
+    {
+      "initial": {
+        "gradient": [
+          -0.0012861077649074307,
+          -0.002228339699032971,
+          0.00013392964204326447,
+          -0.00219636168508444,
+          -0.001460771433895609,
+          2.9607207637163607e-05,
+          1.0305721712204983e-05,
+          0.013928958902405376
+        ],
+        "theta_log": [
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -11.512925464970229,
+          -11.512925464970229,
+          -3.5654494151481733
+        ],
+        "training_objective": 0.051020220437672535,
+        "validation_objective": 0.13048281156752972
+      },
+      "start_index": 5,
+      "updated": {
+        "theta_log": [
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -2.352581359969286,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -11.512925464970229,
+          -11.512925464970229,
+          -3.615449379251762
+        ],
+        "training_objective": 0.050325021971130014,
+        "validation_objective": 0.13024595068861597
+      }
+    },
+    {
+      "initial": {
+        "gradient": [
+          0.00031456158508510275,
+          0.00041533572567437456,
+          -8.549094174389375e-06,
+          0.00019673744713750126,
+          -4.575902551190973e-06,
+          -0.007451795703296538,
+          0.00646631152220973,
+          0.002089622333282346
+        ],
+        "theta_log": [
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.512925464970229,
+          -2.3025850929940455,
+          -2.3025850929940455,
+          -3.5654494151481733
+        ],
+        "training_objective": 0.26979461189538134,
+        "validation_objective": 0.2092467750949066
+      },
+      "start_index": 6,
+      "updated": {
+        "theta_log": [
+          -11.512925464970229,
+          -11.512925464970229,
+          -11.462983882366954,
+          -11.512925464970229,
+          -11.463034494761947,
+          -2.3025850929940455,
+          -2.3525850156703307,
+          -3.6154491758716305
+        ],
+        "training_objective": 0.26937494435157067,
+        "validation_objective": 0.20888930214462445
+      }
+    },
+    {
+      "initial": {
+        "gradient": [
+          -0.008944223546940319,
+          -0.009488087223383528,
+          -0.00326546127437396,
+          -0.008329301420883875,
+          -0.008283333185585544,
+          0.006657822458593814,
+          0.002565399886240549,
+          0.059802025517693494
+        ],
+        "theta_log": [
+          -6.907755278982137,
+          -6.907755278982137,
+          -6.907755278982137,
+          -6.907755278982137,
+          -6.907755278982137,
+          -6.907755278982137,
+          -6.907755278982137,
+          -3.5654494151481733
+        ],
+        "training_objective": 0.19864363990710113,
+        "validation_objective": 0.21676292259244592
+      },
+      "start_index": 7,
+      "updated": {
+        "theta_log": [
+          -6.857755334884076,
+          -6.8577553316797415,
+          -6.857755432099393,
+          -6.857755339011108,
+          -6.857755339344238,
+          -6.95775520388262,
+          -6.957755084081508,
+          -3.615449406787254
+        ],
+        "training_objective": 0.19041189731321403,
+        "validation_objective": 0.21413442050800233
+      }
+    }
+  ],
+  "basin_id": "04105700",
+  "contract_sha256": "4b19eda7cf4ce7dcd9c0940693577077d6a6faf3b18912b03178164613cac7a3",
+  "elapsed_seconds": 239.54097808897495,
+  "environment": {
+    "hostname": "icn213",
+    "numpy": "2.3.3",
+    "platform": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17",
+    "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+    "slurm_job_id": "202134",
+    "torch": "2.4.0"
+  },
+  "experiment_id": "TUKF06_FULL_DIAGONAL_SEARCH_HEAD_TO_HEAD_V1",
+  "input_semantic_sha256": "68b91e45a1f652d1203d1108975744960113e3a1673ba0a7a7f11d59991b4486",
+  "maximum_resident_set_size_native_units": 1261736,
+  "maximum_resident_set_size_units": "kibibytes_on_linux",
+  "neutral_repeats": [
+    {
+      "gradient": [
+        0.0600577000787564,
+        0.059638066018135844,
+        0.038882387592626085,
+        0.047925151458144855,
+        -0.006863052010349157,
+        -0.10716515903350905,
+        -0.012086885324164654,
+        -0.1882803439395766
+      ],
+      "theta_log": [
+        -6.907755278982137,
+        -6.907755278982137,
+        -6.907755278982137,
+        -6.907755278982137,
+        -6.907755278982137,
+        -6.907755278982137,
+        -6.907755278982137,
+        -3.912023005428146
+      ],
+      "training_objective": 0.17142969200876154,
+      "validation_objective": 0.20479673363519202
+    },
+    {
+      "gradient": [
+        0.0600577000787564,
+        0.059638066018135844,
+        0.038882387592626085,
+        0.047925151458144855,
+        -0.006863052010349157,
+        -0.10716515903350905,
+        -0.012086885324164654,
+        -0.1882803439395766
+      ],
+      "theta_log": [
+        -6.907755278982137,
+        -6.907755278982137,
+        -6.907755278982137,
+        -6.907755278982137,
+        -6.907755278982137,
+        -6.907755278982137,
+        -6.907755278982137,
+        -3.912023005428146
+      ],
+      "training_objective": 0.17142969200876154,
+      "validation_objective": 0.20479673363519202
+    }
+  ],
+  "repeat_maximum_differences": {
+    "gradient": 0.0,
+    "training_objective": 0.0,
+    "validation_objective": 0.0
+  },
+  "search_design_sha256": "408843dfbfbab923fa3e1758e8b1d200e1da0a112120982469ceaff862f988a9",
+  "source_sha256": {
+    "configs/tukf06_data_fingerprints_v1.json": "637d382783afd35e9e567aff19dcdfd1506ed48bd8adeba49d660d162979c96f",
+    "configs/tukf06_full_diagonal_search_head_to_head_v1.json": "4b19eda7cf4ce7dcd9c0940693577077d6a6faf3b18912b03178164613cac7a3",
+    "configs/tukf06_search_design_v1.npz": "408843dfbfbab923fa3e1758e8b1d200e1da0a112120982469ceaff862f988a9",
+    "configs/tukf06_search_design_v1.sha256.json": "cdfe7125e28e9abeca679485f7c4e5d4b8da9bf92fcad647a44c7bb979f7c120",
+    "hpc/tukf06_full_diagonal/preflight.sh": "54f7c77be48de62a647a3f515aec8f2e48c3677f9d986572dd48517559498a55",
+    "hpc/tukf06_full_diagonal/submit_evaluation_cpu.slurm": "a0c1c44568c597d79af53acf504156fe11014fd68af45e50320ef0092a66c9e3",
+    "hpc/tukf06_full_diagonal/submit_selection_cpu.slurm": "662e629fb134df5ae1a6fe9179bd43412f01aad4c75c87b7c63b0ae146c76894",
+    "hpc/tukf06_full_diagonal/submit_smoke_cpu.slurm": "14f3879b88b8cd9263ca5fda92a956003bb709cb1a7cb5d31925b62db3a437ca",
+    "scripts/build_tukf06_hpc_bundle.py": "3de95ea90d74e0b69f292438177a3ebdabf865eb8f5ebc0cd34546f6535d4145",
+    "scripts/differentiable_ukf_hbvlite.py": "5d4d0fce3018aef42d6ef81ac32fa97541654f0a878c0508f5594ff2ec73c02d",
+    "scripts/evaluate_tukf06_full_diagonal_head_to_head.py": "63092093913addfef7103894b32b481eb09c353980e414d86ba385ea3b1fad8f",
+    "scripts/freeze_tukf06_search_design.py": "bf7ebcf6f660f29554d50c6aceab06aa9d1d4bc7ff82bb36fcc76d74612a1638",
+    "scripts/run_aligned_gr4j_da.py": "02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926",
+    "scripts/run_aligned_gr4j_differentiable_ukf.py": "a8bae71dc1007c3b0502e81e50e766328202996aaf370987a347041ddde0d23f",
+    "scripts/run_tukf06_full_diagonal_selection.py": "5de35e6dd09c6fb825c862c12d3756b24558f5ddcf5ba07547c11bd721fa0852",
+    "scripts/smoke_tukf06_full_diagonal.py": "0e6bb500da3b0eceeee705c2cef2d275d79be2f81f8d9aa34a43181e9f891414",
+    "scripts/tukf06_full_diagonal_common.py": "2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02",
+    "scripts/verify_tukf06_full_diagonal_head_to_head.py": "589994e39cf6ce894c4711d09bb4e75503ba230decfdab7629b2bb8afb0b8980",
+    "src/global_hydrology/assimilation/conventional_ukf.py": "2c1a17f0d48962ab8ac7c68c0ae8edaf0ad616f938a6466f0925d27ee9258c3a",
+    "src/global_hydrology/data/hbvlite_prior.py": "9e723dfb0f5431afb70bda1aca9b25ad57340f44b05bc4db4b9f57f8de0747ad",
+    "src/global_hydrology/models/differentiable_hbv_lite.py": "d7a04be86f19cddd8b9703e432fafb999a38215cb85de8983fe39a40bda0d6ea",
+    "src/global_hydrology/models/hbvlite_system_model.py": "0d32d0f8dc656bdfbea81ba9f61eba0775ecc770d4466ff0442597d7c8d7a597",
+    "src/global_hydrology/models/hbvlite_ukf_adapter.py": "2bf82d8ee0da909982769dd585657feed37a4ad46249f3b1fe9a72e1ccbc377a"
+  },
+  "state_dimension": 7,
+  "training_days": 2557,
+  "validation_days": 731
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T22:18:37+0800
