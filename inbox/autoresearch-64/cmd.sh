@@ -1,25 +1,29 @@
 #!/bin/bash
 set -o pipefail
+cd ~/hpc_mailbox || exit 1
 
-EVIDENCE=~/autoresearch64/runs/unified_autoresearch/dlopen_dependency_probe_20260809_seq19
-[ -f "$EVIDENCE/SUMMARY.json" ] || { echo "SUMMARY_MISSING"; exit 1; }
+echo "=== SUBMIT NARROW-FIX VALIDATION ==="
+JID=$(sbatch --parsable inbox/autoresearch-64/dlopen_probe.slurm 2>&1)
+STATUS=$?
+echo "sbatch_exit=$STATUS jobid=$JID"
+[ "$STATUS" -eq 0 ] || exit "$STATUS"
 
-echo "=== THREE SANDBOX DENIAL RECORDS ==="
-for PACKAGE in numpy pandas pyarrow; do
-  echo "--- $PACKAGE ---"
-  grep '"event":"ctypes.dlopen"' "$EVIDENCE/runs/$PACKAGE/logs/access.jsonl"
-  grep -E '"decision"|"declaration"|"active_version"|"active_module_path"|"initialization_probe_error"' \
-    "$EVIDENCE/runs/$PACKAGE/logs/dependency-preflight.json"
+echo "=== WAIT AT MOST 50 SECONDS ==="
+for i in $(seq 1 10); do
+  STATE=$(squeue -j "$JID" -h -o "%T" 2>/dev/null | head -1)
+  [ -z "$STATE" ] && break
+  echo "t=$((i * 5))s state=$STATE"
+  sleep 5
 done
 
-echo "=== THREE NON-BLOCKING AUDIT STACKS ==="
-for PACKAGE in numpy pandas pyarrow; do
-  echo "--- $PACKAGE ---"
-  cat "$EVIDENCE/supporting_traces/$PACKAGE.stdout.txt"
-  echo "stderr_bytes=$(wc -c < "$EVIDENCE/supporting_traces/$PACKAGE.stderr.txt")"
-done
-
-echo "=== PROVENANCE ==="
-grep -A 8 '"runtime_source_sha256"' "$EVIDENCE/SUMMARY.json"
-echo "summary=$EVIDENCE/SUMMARY.json"
-echo "manifest=$EVIDENCE/MANIFEST.sha256"
+echo "=== SCHEDULER RECORD ==="
+sacct -j "$JID" -X --format=JobID%12,JobName%20,State%14,ExitCode%8,Elapsed%10 2>&1
+echo "=== JOB STDOUT ==="
+tail -160 "outbox/slurm_${JID}.out" 2>/dev/null
+echo "=== JOB STDERR ==="
+tail -120 "outbox/slurm_${JID}.err" 2>/dev/null
+echo "=== PRESERVED EVIDENCE ==="
+EVIDENCE=~/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence
+[ -f "$EVIDENCE/SUMMARY.json" ] && echo "summary=$EVIDENCE/SUMMARY.json"
+[ -f "$EVIDENCE/MANIFEST.sha256" ] && echo "manifest=$EVIDENCE/MANIFEST.sha256"
+[ -f "$EVIDENCE/ERROR.json" ] && cat "$EVIDENCE/ERROR.json"

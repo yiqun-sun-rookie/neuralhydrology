@@ -1,0 +1,32 @@
+--- src/unified_autoresearch/runtime/bootstrap.py
++++ src/unified_autoresearch/runtime/bootstrap.py
+@@ -185,17 +185,25 @@
+         if event.startswith("ctypes."):
+             library = arguments[0] if arguments else None
+             symbol = arguments[1] if len(arguments) > 1 else None
++            allowed_current_process_handle = event == "ctypes.dlopen" and library is None
++            allowed_fixed_windows_library = event == "ctypes.dlopen" and library in allowed_initialization_libraries
++            allowed_fixed_windows_symbol = event == "ctypes.dlsym" and symbol in allowed_initialization_symbols
+             allowed_initialization_event = dependency_initialization and (
+-                (event == "ctypes.dlopen" and library in allowed_initialization_libraries)
+-                or (event == "ctypes.dlsym" and symbol in allowed_initialization_symbols)
++                allowed_current_process_handle
++                or allowed_fixed_windows_library
++                or allowed_fixed_windows_symbol
+             )
+             if allowed_initialization_event:
+                 write_event(
+                     {
+                         "event": event,
+                         "decision": "allow",
+-                        "reason": "declared dependency initialization requires a fixed Windows system library",
+-                        "library": str(library),
++                        "reason": (
++                            "declared dependency initialization requires the current-process handle"
++                            if allowed_current_process_handle
++                            else "declared dependency initialization requires a fixed Windows system library"
++                        ),
++                        "library": None if library is None else str(library),
+                         "symbol": None if symbol is None else str(symbol),
+                     }
+                 )

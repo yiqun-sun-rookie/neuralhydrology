@@ -17,10 +17,16 @@ from unified_autoresearch.runtime.runner import run_candidate
 
 
 EVIDENCE_ROOT = Path(
-    "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/"
-    "dlopen_dependency_probe_20260809_seq19"
+    os.environ.get(
+        "DLOPEN_PROBE_EVIDENCE_ROOT",
+        "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/"
+        "dlopen_dependency_probe_20260809_seq19",
+    )
 )
-PROJECT_ROOT = Path("/data1/home/sunyiq/autoresearch64")
+PROJECT_ROOT = Path(
+    os.environ.get("DLOPEN_PROBE_PROJECT_ROOT", "/data1/home/sunyiq/autoresearch64")
+)
+EXPECT_SANDBOX_SUCCESS = os.environ.get("DLOPEN_PROBE_EXPECT_SANDBOX_SUCCESS") == "1"
 RUNTIME_SOURCE_FILES = (
     "src/unified_autoresearch/runtime/adapter.py",
     "src/unified_autoresearch/runtime/bootstrap.py",
@@ -174,10 +180,11 @@ def _run_one(package: str, declaration: str, shared_inputs: Path, trace_root: Pa
         for line in result.access_log_path.read_text(encoding="utf-8").splitlines()
         if line
     ]
+    dlopen_events = [event for event in events if event.get("event") == "ctypes.dlopen"]
     denied_dlopen = [
         event
-        for event in events
-        if event.get("event") == "ctypes.dlopen" and event.get("decision") == "deny"
+        for event in dlopen_events
+        if event.get("decision") == "deny"
     ]
     preflight = json.loads(result.dependency_preflight_path.read_text(encoding="utf-8"))
     runtime_result = json.loads(result.result_path.read_text(encoding="utf-8"))
@@ -192,6 +199,7 @@ def _run_one(package: str, declaration: str, shared_inputs: Path, trace_root: Pa
             "status": result.status,
             "denied_event_count": result.denied_event_count,
             "ctypes_dlopen_denied": bool(denied_dlopen),
+            "ctypes_dlopen_events": dlopen_events,
             "ctypes_dlopen_denials": denied_dlopen,
             "last_12_access_events": events[-12:],
             "access_log_path": str(result.access_log_path),
@@ -206,6 +214,21 @@ def _run_one(package: str, declaration: str, shared_inputs: Path, trace_root: Pa
         raise RuntimeError(f"{package}: unexpected sandbox exit {result.process_exit_code}")
     if trace_result["exit_code"] != 0:
         raise RuntimeError(f"{package}: supporting trace failed")
+    if EXPECT_SANDBOX_SUCCESS:
+        if result.process_exit_code != 0 or result.status != "succeeded":
+            raise RuntimeError(f"{package}: sandbox did not succeed after the narrow allow rule")
+        if result.denied_event_count != 0:
+            raise RuntimeError(f"{package}: sandbox recorded a denied event after the narrow allow rule")
+        if not dlopen_events:
+            raise RuntimeError(f"{package}: sandbox recorded no ctypes.dlopen event")
+        if any(
+            event.get("decision") != "allow"
+            or event.get("library") is not None
+            or event.get("reason")
+            != "declared dependency initialization requires the current-process handle"
+            for event in dlopen_events
+        ):
+            raise RuntimeError(f"{package}: sandbox allowed a ctypes.dlopen event outside the narrow rule")
     return value
 
 
