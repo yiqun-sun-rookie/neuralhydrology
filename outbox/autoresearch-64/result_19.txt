@@ -1,0 +1,117 @@
+### channel=autoresearch-64 seq=19
+### host=login4
+### started=2026-08-09T17:06:20+0800
+### ---------- output ----------
+=== SUBMIT ONE BOUNDED DIAGNOSTIC BATCH ===
+sbatch_exit=0 jobid=202059
+=== WAIT AT MOST 50 SECONDS ===
+t=5s state=PENDING
+t=10s state=RUNNING
+t=15s state=RUNNING
+t=20s state=RUNNING
+t=25s state=RUNNING
+=== SCHEDULER RECORD ===
+       JobID              JobName          State ExitCode    Elapsed 
+------------ -------------------- -------------- -------- ---------- 
+      202059     a64-dlopen-probe      COMPLETED      0:0   00:00:23 
+=== JOB STDOUT TAIL ===
+        ],
+        "exit_code": 0,
+        "role": "supporting non-blocking audit trace for the exact call stack",
+        "stderr_path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_dependency_probe_20260809_seq19/supporting_traces/pyarrow.stderr.txt",
+        "stdout_path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_dependency_probe_20260809_seq19/supporting_traces/pyarrow.stdout.txt"
+      }
+    }
+  ],
+  "python_executable": "/data1/home/sunyiq/autoresearch64/.venv/bin/python",
+  "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+  "runtime_source_sha256": {
+    "src/unified_autoresearch/runtime/adapter.py": "8f732c7f3d596cd1557e06aab42ceb359dd0b3872995bea62a594aa25ca2912e",
+    "src/unified_autoresearch/runtime/bootstrap.py": "342df724e345e750485229f84ca626bac0e7630abf37b79147c7ac6c508ecf81",
+    "src/unified_autoresearch/runtime/dependencies.py": "764de2084f30e5e518c30e7f6ebc1d5074564216dafd43fc94fc33e0b6478484",
+    "src/unified_autoresearch/runtime/descriptor.py": "9b29c593da6e5227c43f9dcbb2a95925b28f4e5304c69cc9492932d9ab6a7e74",
+    "src/unified_autoresearch/runtime/layout.py": "891ea5b5435bff3fe95c53d60715e90ebe03392df5791cf0ba1ceb7a65876082",
+    "src/unified_autoresearch/runtime/outputs.py": "7be36c4728232988dd04eabb3b137c7448f6704078683a07af19321766e9a363",
+    "src/unified_autoresearch/runtime/runner.py": "96b27379e1f60729a5329a14ef3a1d0a931c5e232121f6923b0c73ae3e5505ac"
+  },
+  "schema_version": "dlopen_dependency_probe_v1"
+}
+=== MANIFEST ===
+8ce4babbfe2ff287598ba39021240d1b7ecc4ea4c8b12118bda59602f1df3d10  PROBE_numpy.json
+319106c644c1811fa6d41330dfaa30d5ed33583b4b6e33eca3d746540efc452e  PROBE_pandas.json
+b1cd05037998c1416fdc3f2ddb903b381adca5dd8374df7c8caca3db4beb65b5  PROBE_pyarrow.json
+d31dca2b83750595a188a3389e8f5c479595f7edfe582dddef4ec8cf7f99c326  SUMMARY.json
+2a28d3c311d41d2adbb169a1f4555a41b2e6bd5c64fb1be1386611008ed8e954  candidate_sources/numpy/candidate-descriptor.json
+5f227565cf2446935ce38ab9352c1157719a33fbc2cf0b9936f2b663e50c0b57  candidate_sources/numpy/entrypoint.py
+01d2810b3c80fd01d11ffbe15f7ca0f38477ab6b9fc88eaf2d23a45ce22281b8  candidate_sources/pandas/candidate-descriptor.json
+5f227565cf2446935ce38ab9352c1157719a33fbc2cf0b9936f2b663e50c0b57  candidate_sources/pandas/entrypoint.py
+ee9ef504a85b7cba1e0c0c41d2549e8ac4a8815df462612c31fb37c92c900139  candidate_sources/pyarrow/candidate-descriptor.json
+5f227565cf2446935ce38ab9352c1157719a33fbc2cf0b9936f2b663e50c0b57  candidate_sources/pyarrow/entrypoint.py
+ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356  declared_inputs/static_attributes.json
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  declared_inputs/train_features.parquet
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  declared_inputs/train_targets.parquet
+2a28d3c311d41d2adbb169a1f4555a41b2e6bd5c64fb1be1386611008ed8e954  runs/numpy/candidate/candidate-descriptor.json
+5f227565cf2446935ce38ab9352c1157719a33fbc2cf0b9936f2b663e50c0b57  runs/numpy/candidate/entrypoint.py
+2a28d3c311d41d2adbb169a1f4555a41b2e6bd5c64fb1be1386611008ed8e954  runs/numpy/candidate-descriptor.json
+ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356  runs/numpy/inputs/static_attributes.json
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/numpy/inputs/train_features.parquet
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/numpy/inputs/train_targets.parquet
+e3bebab9d925e6d22cff0571af4cfc56f53e9ab5d385c40a363ab907de6e5c53  runs/numpy/logs/access.jsonl
+8ea26309f2fca7cc03f6f638154396bf24e296c777b68992624a8e8f890ad8b1  runs/numpy/logs/dependency-preflight.json
+8c29d87c63d2376fd8ac3854c25ea74e02e5aeda1785bda4af576200338d5bea  runs/numpy/logs/resource-preflight.json
+a6fafb111abb650d4e17f8bd262d4facee13a984ef390a2cda548776505c7d78  runs/numpy/logs/runtime-policy.json
+434e2d31d0c232cb1a8af52ee88d058b256d465ccf57c70624a97d5ea4b5e2b4  runs/numpy/logs/runtime-result.json
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/numpy/logs/stderr.txt
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/numpy/logs/stdout.txt
+01d2810b3c80fd01d11ffbe15f7ca0f38477ab6b9fc88eaf2d23a45ce22281b8  runs/pandas/candidate/candidate-descriptor.json
+5f227565cf2446935ce38ab9352c1157719a33fbc2cf0b9936f2b663e50c0b57  runs/pandas/candidate/entrypoint.py
+01d2810b3c80fd01d11ffbe15f7ca0f38477ab6b9fc88eaf2d23a45ce22281b8  runs/pandas/candidate-descriptor.json
+ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356  runs/pandas/inputs/static_attributes.json
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/pandas/inputs/train_features.parquet
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/pandas/inputs/train_targets.parquet
+249fd48bd29b98716b6102c6ff75bf7d5db97086731c4b9aff56833a5341433b  runs/pandas/logs/access.jsonl
+9ac585e520856bf95f797e92a873cbb43bfb47d002ecd6b887550b265f3b53eb  runs/pandas/logs/dependency-preflight.json
+979eea8856dd0dd8720b489b8d8198d66280544c90ede15a586017aab6fdfc2b  runs/pandas/logs/resource-preflight.json
+ed67845cd032821ecb698fc27a04abe88e772c9f0e1ae2581188b55689b366d4  runs/pandas/logs/runtime-policy.json
+71483fe0b5057214a5025d032967061f6510c61912272071dfadd4c9ba99a06a  runs/pandas/logs/runtime-result.json
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/pandas/logs/stderr.txt
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/pandas/logs/stdout.txt
+ee9ef504a85b7cba1e0c0c41d2549e8ac4a8815df462612c31fb37c92c900139  runs/pyarrow/candidate/candidate-descriptor.json
+5f227565cf2446935ce38ab9352c1157719a33fbc2cf0b9936f2b663e50c0b57  runs/pyarrow/candidate/entrypoint.py
+ee9ef504a85b7cba1e0c0c41d2549e8ac4a8815df462612c31fb37c92c900139  runs/pyarrow/candidate-descriptor.json
+ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356  runs/pyarrow/inputs/static_attributes.json
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/pyarrow/inputs/train_features.parquet
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/pyarrow/inputs/train_targets.parquet
+f049b503edaa4c34bca060c8559fa0fa8406eaaf6d33f4ff9d27ae36eb86e44e  runs/pyarrow/logs/access.jsonl
+ec6d83fb62949b8b1b416f19adccef2b7fe075f87954745edb755cd717579c4d  runs/pyarrow/logs/dependency-preflight.json
+29a2feba4b766c1510c5d82037c6110d0389da4c9ed315146d3c5a5cd5572c43  runs/pyarrow/logs/resource-preflight.json
+3895ef76623f66c1e7bfda0119ee4183bfcb7a9853ea27ed5a3e01d9cff6dd89  runs/pyarrow/logs/runtime-policy.json
+feb737d3cbefa0aa985770bf5dd5747b1883918e45c62a17f6c6e4cc1385d7cc  runs/pyarrow/logs/runtime-result.json
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/pyarrow/logs/stderr.txt
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  runs/pyarrow/logs/stdout.txt
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  supporting_traces/numpy.stderr.txt
+278b0dd3c316c01bf6b9e6dfc294ef331bce57978015ea7f7319b939f528cb51  supporting_traces/numpy.stdout.txt
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  supporting_traces/pandas.stderr.txt
+3d9ddef3c9744d4022fda8b5c329f2bd4d0f72730c49bea2d35effc70c7d7110  supporting_traces/pandas.stdout.txt
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  supporting_traces/pyarrow.stderr.txt
+dbc7a4f32be6098c9830c77b09e6a7a27008c2c3824b4f4b45efcbb1c8f74c8e  supporting_traces/pyarrow.stdout.txt
+=== JOB STDERR TAIL ===
+=== PRESERVED EVIDENCE STATUS ===
+  "diagnostic_complete": true,
+      "package": "numpy",
+        "ctypes_dlopen_denied": true,
+        "process_exit_code": 2,
+          "process_exit_code": 2,
+      "package": "pandas",
+        "ctypes_dlopen_denied": true,
+        "process_exit_code": 2,
+          "process_exit_code": 2,
+      "package": "pyarrow",
+        "ctypes_dlopen_denied": true,
+        "process_exit_code": 2,
+          "process_exit_code": 2,
+summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_dependency_probe_20260809_seq19/SUMMARY.json
+manifest=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_dependency_probe_20260809_seq19/MANIFEST.sha256
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T17:06:45+0800
