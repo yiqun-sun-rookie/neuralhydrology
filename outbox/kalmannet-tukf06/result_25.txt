@@ -1,0 +1,19 @@
+### channel=kalmannet-tukf06 seq=25
+### host=login4
+### started=2026-08-10T03:00:12+0800
+### ---------- output ----------
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'sunyiq@login4.(none)')
+### ---------- end ----------
+### exit_code=128
+### finished=2026-08-10T03:01:08+0800
