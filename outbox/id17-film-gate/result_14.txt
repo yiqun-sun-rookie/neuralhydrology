@@ -1,0 +1,71 @@
+### channel=id17-film-gate seq=14
+### host=login4
+### started=2026-08-09T15:16:47+0800
+### ---------- output ----------
+=== QUEUE ===
+running=8 pending=1
+201920_[16-19%8]  PENDING       0:00 (JobArrayTaskLimit)
+       201920_15  RUNNING    2:23:47 ngu011
+       201920_14  RUNNING    3:07:16 ngu008
+       201920_13  RUNNING    3:24:17 ngu005
+       201920_12  RUNNING    5:15:47 ngu001
+       201920_11  RUNNING    5:40:58 ngu001
+       201920_10  RUNNING    5:48:52 ngu010
+        201920_9  RUNNING    5:52:28 ngu004
+        201920_8  RUNNING    7:30:46 ngu011
+=== FINISHED CELLS (sacct) ===
+          201920_0    COMPLETED      0:0    15:07:58 
+          201920_1    COMPLETED      0:0    18:33:03 
+          201920_2    COMPLETED      0:0    13:26:04 
+          201920_3    COMPLETED      0:0    15:41:03 
+          201920_4    COMPLETED      0:0    14:21:10 
+          201920_5    COMPLETED      0:0    16:37:50 
+          201920_6    COMPLETED      0:0    14:04:58 
+          201920_7    COMPLETED      0:0    16:50:08 
+          201920_8      RUNNING      0:0    07:30:46 
+          201920_9      RUNNING      0:0    05:52:28 
+         201920_10      RUNNING      0:0    05:48:52 
+         201920_11      RUNNING      0:0    05:40:58 
+         201920_12      RUNNING      0:0    05:15:47 
+         201920_13      RUNNING      0:0    03:24:17 
+         201920_14      RUNNING      0:0    03:07:16 
+         201920_15      RUNNING      0:0    02:23:47 
+  201920_[16-19%8]      PENDING      0:0    00:00:00 
+=== RESULTS SO FAR ===
+[RESULT] gate_ea_fold0_seed0 epoch20 test median NSE = 0.6082
+[RESULT] gate_ea_fold0_seed0 epoch30 test median NSE = 0.4951
+[RESULT] gate_ea_fold0_seed1 epoch20 test median NSE = 0.6464
+[RESULT] gate_ea_fold0_seed1 epoch30 test median NSE = 0.5641
+[RESULT] gate_ea_fold1_seed0 epoch20 test median NSE = 0.6563
+[RESULT] gate_ea_fold1_seed0 epoch30 test median NSE = 0.6398
+[RESULT] gate_ea_fold1_seed1 epoch20 test median NSE = 0.6635
+[RESULT] gate_ea_fold1_seed1 epoch30 test median NSE = 0.6530
+[RESULT] gate_film_fold0_seed0 epoch20 test median NSE = 0.6269
+[RESULT] gate_film_fold0_seed0 epoch30 test median NSE = 0.6144
+[RESULT] gate_film_fold0_seed1 epoch20 test median NSE = 0.6188
+[RESULT] gate_film_fold0_seed1 epoch30 test median NSE = 0.6060
+[RESULT] gate_film_fold1_seed0 epoch20 test median NSE = 0.6596
+[RESULT] gate_film_fold1_seed0 epoch30 test median NSE = 0.6661
+[RESULT] gate_film_fold1_seed1 epoch20 test median NSE = 0.6422
+[RESULT] gate_film_fold1_seed1 epoch30 test median NSE = 0.6615
+=== PROTOCOL CHECKS ===
+[CHECK] protocol OK: gate_ea_fold0_seed0 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold0_seed1 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold1_seed0 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold1_seed1 model=ealstm film_site=None
+[CHECK] protocol OK: gate_film_fold0_seed0 model=filmlstm film_site=input
+=== ERRORS ===
+=== PROGRESS (latest epoch per running cell) ===
+gate_201920_0.out: Epoch 30 average loss
+gate_201920_10.out: Epoch 11 average loss
+gate_201920_11.out: Epoch 10 average loss
+gate_201920_12.out: Epoch 11 average loss
+gate_201920_13.out: Epoch 6 average loss
+gate_201920_14.out: Epoch 6 average loss
+gate_201920_15.out: Epoch 3 average loss
+gate_201920_1.out: Epoch 30 average loss
+gate_201920_2.out: Epoch 30 average loss
+gate_201920_3.out: Epoch 30 average loss
+### ---------- end ----------
+### exit_code=141
+### finished=2026-08-09T15:16:53+0800
