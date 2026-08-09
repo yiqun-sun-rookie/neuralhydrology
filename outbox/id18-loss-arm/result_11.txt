@@ -1,0 +1,10 @@
+### channel=id18-loss-arm seq=11
+### host=login4
+### started=2026-08-09T19:42:58+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 31, in <module>
+KeyError: 'basin_count'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-09T19:42:58+0800
