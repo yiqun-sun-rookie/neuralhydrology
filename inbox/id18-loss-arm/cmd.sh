@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID18 seq=11: corrected read-only isolation audit after smoke job 202067.
+# ID18 seq=12: final corrected read-only isolation audit after smoke job 202067.
 set -eo pipefail
 
 TARGET=/data1/home/sunyiq/id18_e04_20260809
@@ -36,7 +36,7 @@ for path in conceptual_files:
 for path in neural_files:
     payload = json.loads(path.read_text(encoding='utf-8'))
     assert payload['non_scientific_smoke'] is True, path
-    assert int(payload['basin_count']) == 1, path
+    assert int(payload['integrity']['basin_count']) == 1, path
 
 formal_conceptual = sorted((result / 'conceptual').glob('*/*/completion.json'))
 formal_neural = sorted((result / 'protocol/neural_completions').glob('*.json'))
