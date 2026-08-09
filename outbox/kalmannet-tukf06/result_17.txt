@@ -1,0 +1,48 @@
+### channel=kalmannet-tukf06 seq=17
+### host=login4
+### started=2026-08-10T01:47:45+0800
+### ---------- output ----------
+=== IMMUTABLE SELECTION AND AUDIT ACCOUNTING ===
+             JobID              JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------------ -------------------- ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+            202136        tukf06-select     hcpu48       icn213          COMPLETED      0:0   02:50:46   1-21:33:04              
+      202136.batch                batch                  icn213          COMPLETED      0:0   02:50:46   1-21:33:04    39615852K 
+     202136.extern               extern                  icn213          COMPLETED      0:0   02:50:46    00:00.002        1156K 
+            202143         tukf06-audit     hcpu48       icn201          COMPLETED      0:0   00:00:03    00:01.193              
+      202143.batch                batch                  icn201          COMPLETED      0:0   00:00:03    00:01.191        1588K 
+     202143.extern               extern                  icn201          COMPLETED      0:0   00:00:03    00:00.002        1160K 
+PRE_EVALUATION_SELECTION_GATE_PASS basins=21 evaluation_period_read=false
+  "status": "SELECTION_AUDIT_PASS",
+  "evaluation_period_read": false,
+  "finite_json_and_arrays": true,
+TUKF06_SELECTION_READ_ONLY_AUDIT_PASS
+TUKF06_HISTORICAL_EVALUATION_SUBMITTED job_id=202156
+JobId=202156 JobName=tukf06-eval
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200009 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A
+   SubmitTime=2026-08-10T01:47:47 EligibleTime=2026-08-10T01:47:47
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T01:47:47
+   Partition=hcpu48 AllocNode:Sid=login04:44128
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=48 NumTasks=1 CPUs/Task=48 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=48,node=1,billing=48
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=48 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/source/hpc/tukf06_full_diagonal/submit_evaluation_cpu.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/logs/evaluation-202156.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/logs/evaluation-202156.out
+   Power=
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T01:47:47+0800
