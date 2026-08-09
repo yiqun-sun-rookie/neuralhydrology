@@ -1,0 +1,18 @@
+### channel=id18-loss-arm seq=7
+### host=login4
+### started=2026-08-09T19:31:36+0800
+### ---------- output ----------
+{
+  "job_id": 202067,
+  "raw_job_id": "202067",
+  "submitted_at": "2026-08-09T19:31:36+0800",
+  "script": "src/loss_mechanism_531/hpc/e04_smoke.slurm",
+  "scope": "one-basin technical smoke only"
+}
+=== SQUEUE ===
+     JOBID                     NAME  PARTITION     STATE        TIME  NODES NODELIST(REASON)
+    202067           id18-e04-smoke     hgpu2p   PENDING        0:00      1 (None)
+E04_SMOKE_SUBMITTED job_id=202067
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T19:31:36+0800
