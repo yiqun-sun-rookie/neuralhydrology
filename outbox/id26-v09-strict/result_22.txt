@@ -1,0 +1,38 @@
+### channel=id26-v09-strict seq=22
+### host=login4
+### started=2026-08-09T16:37:28+0800
+### ---------- output ----------
+=== JOB ===
+     JobID        State ExitCode                Start                  End      Elapsed 
+---------- ------------ -------- -------------------- -------------------- ------------ 
+    201861    COMPLETED      0:0  2026-08-08T15:39:26  2026-08-08T22:49:57     07:10:31 
+=== LOG MARKERS ===
+1:node=ngu011 start=2026-08-08T15:36:45+08:00
+6:{"run_id": "B09-CLASSIC-S100", "status": "formal_training_complete"}
+7:{"run_id": "B09-CAPACITY-S100", "status": "formal_training_complete"}
+8:{"run_id": "E09-CONTINUOUS-S100", "status": "formal_training_complete"}
+56:end=2026-08-08T22:47:13+08:00
+=== RUN FILE TIMES ===
+--- classic ---
+dir|birth=-|mtime=2026-08-08 16:43:04.000000000 +0800|change=2026-08-08 16:43:05.000000000 +0800
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/classic/seed_100/manifest.json|birth=-|mtime=2026-08-08 16:43:04.000000000 +0800|change=2026-08-08 16:43:04.000000000 +0800|bytes=8477
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/classic/seed_100/seal.json|birth=-|mtime=2026-08-08 16:43:04.000000000 +0800|change=2026-08-08 16:43:04.000000000 +0800|bytes=980
+--- capacity ---
+dir|birth=-|mtime=2026-08-08 18:44:47.000000000 +0800|change=2026-08-08 18:44:48.000000000 +0800
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/capacity/seed_100/manifest.json|birth=-|mtime=2026-08-08 18:44:47.000000000 +0800|change=2026-08-08 18:44:47.000000000 +0800|bytes=8488
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/capacity/seed_100/seal.json|birth=-|mtime=2026-08-08 18:44:47.000000000 +0800|change=2026-08-08 18:44:47.000000000 +0800|bytes=980
+--- continuous ---
+dir|birth=-|mtime=2026-08-08 22:49:55.000000000 +0800|change=2026-08-08 22:49:56.000000000 +0800
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/continuous/seed_100/manifest.json|birth=-|mtime=2026-08-08 22:49:55.000000000 +0800|change=2026-08-08 22:49:55.000000000 +0800|bytes=9288
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/continuous/seed_100/seal.json|birth=-|mtime=2026-08-08 22:49:55.000000000 +0800|change=2026-08-08 22:49:55.000000000 +0800|bytes=980
+=== JOB FILES ===
+total 7
+-rw-r--r--. 1 sunyiq g_sunyiq 1074 2026-08-08 15:39:26.000000000 +0800 suite.slurm
+-rw-r--r--. 1 sunyiq g_sunyiq 1963 2026-08-07 21:32:12.000000000 +0800 preflight.slurm
+-rw-r--r--. 1 sunyiq g_sunyiq  904 2026-08-07 18:09:30.000000000 +0800 audit.slurm
+-rw-r--r--. 1 sunyiq g_sunyiq 1016 2026-08-07 16:12:57.000000000 +0800 train.slurm
+-rw-r--r--. 1 sunyiq g_sunyiq 1139 2026-08-07 16:07:43.000000000 +0800 prepare.slurm
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T16:37:28+0800
