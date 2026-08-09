@@ -1,0 +1,25 @@
+### channel=id18-loss-arm seq=4
+### host=login4
+### started=2026-08-09T17:59:35+0800
+### ---------- output ----------
+=== TIME_AND_RUNNER ===
+2026-08-09T17:59:35+0800
+runner delivered id18-loss-arm seq=4
+=== CONDA_ENVIRONMENTS ===
+# conda environments:
+#
+base                  *  /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+                         /data1/home/sunyiq/v09_strict/gitenv
+
+=== CMA_IN_EXISTING_ENVIRONMENTS ===
+=== CMA_IN_BASE_INSTALL ===
+=== CMA_IN_PROJECTS ===
+=== CACHED_CMA_ARTIFACTS ===
+E04_CMA_SEARCH_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T18:00:07+0800
