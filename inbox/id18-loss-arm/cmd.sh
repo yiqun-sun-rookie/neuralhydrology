@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID18 seq=20: read-only status, completion, and log audit for the exact E04 jobs.
+# ID18 seq=21: read-only status, completion, and log audit for the exact E04 jobs.
 set -eo pipefail
 
 TARGET=/data1/home/sunyiq/id18_e04_20260809
