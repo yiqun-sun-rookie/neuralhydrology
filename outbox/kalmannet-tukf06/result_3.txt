@@ -1,0 +1,70 @@
+### channel=kalmannet-tukf06 seq=3
+### host=login4
+### started=2026-08-09T21:39:59+0800
+### ---------- output ----------
+=== DEPLOYMENT INPUT ===
+archive_sha256=a9f73b3394b30ffdbf2dd46b2b275163f16cd369e660ff3e3aa8053445a439fd
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_data_fingerprints_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_full_diagonal_search_head_to_head_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_search_design_v1.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_search_design_v1.sha256.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf06_full_diagonal/preflight.sh: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf06_full_diagonal/submit_evaluation_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf06_full_diagonal/submit_selection_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf06_full_diagonal/submit_smoke_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/conceptual_benchmark_camels_us_531_repro.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/hbv_lite_cma_local_full.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_tukf06_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/evaluate_tukf06_full_diagonal_head_to_head.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/freeze_tukf06_search_design.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_da.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_differentiable_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf06_full_diagonal_selection.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/smoke_tukf06_full_diagonal.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf06_full_diagonal_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/verify_tukf06_full_diagonal_head_to_head.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/conventional_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/data/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/data/hbvlite_prior.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_ukf_adapter.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: vendor/hydroagent_data_loading.py: implausibly old time stamp 1970-01-01 08:00:00
+verified_members=30
+deployed_target=/data1/home/sunyiq/kalmannet_tukf06_20260809
+=== DUPLICATE JOB GUARD ===
+             JOBID                     NAME  PARTITION    STATE       TIME     NODELIST(REASON)
+=== SUBMIT PAID SMOKE ===
+jobid=202129
+=== WAIT FOR THIS JOB ONLY ===
+=== ACCOUNTING ===
+       JobID            JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------ ------------------ ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+      202129       tukf06-smoke     hcpu48       icn219             FAILED      1:0   00:00:11     00:00:00              
+=== STDOUT ===
+{"hostname": "icn219", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+=== STDERR ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf06_20260809/source/scripts/build_tukf06_hpc_bundle.py", line 25, in <module>
+    from scripts.tukf06_full_diagonal_common import (  # noqa: E402
+  File "/data1/home/sunyiq/kalmannet_tukf06_20260809/source/scripts/tukf06_full_diagonal_common.py", line 24, in <module>
+    from scripts.differentiable_ukf_hbvlite import run_hbvlite_corrected_ukf  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf06_20260809/source/scripts/differentiable_ukf_hbvlite.py", line 41, in <module>
+    from global_hydrology.assimilation.conventional_ukf import recenter_covariance  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf06_20260809/source/src/global_hydrology/__init__.py", line 4, in <module>
+    from .models import DifferentiableM4, StaticEncoder, M4SystemModel, GlobalHydroSystem
+  File "/data1/home/sunyiq/kalmannet_tukf06_20260809/source/src/global_hydrology/models/__init__.py", line 4, in <module>
+    from .differentiable_m4 import DifferentiableM4
+ModuleNotFoundError: No module named 'global_hydrology.models.differentiable_m4'
+=== SMOKE JSON ===
+smoke result is absent
+### ---------- end ----------
+### exit_code=35
+### finished=2026-08-09T21:40:19+0800
