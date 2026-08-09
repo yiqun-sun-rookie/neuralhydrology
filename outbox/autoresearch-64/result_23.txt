@@ -1,0 +1,31 @@
+### channel=autoresearch-64 seq=23
+### host=login4
+### started=2026-08-09T19:44:40+0800
+### ---------- output ----------
+=== SUBMIT NARROW TIMEZONE-FIX VALIDATION ===
+sbatch_exit=0 jobid=202070
+=== WAIT AT MOST 60 SECONDS ===
+t=5s state=PENDING
+t=10s state=RUNNING
+=== SCHEDULER RECORD ===
+       JobID              JobName          State ExitCode    Elapsed 
+------------ -------------------- -------------- -------- ---------- 
+      202070      a64-tz-validate         FAILED      1:0   00:00:05 
+=== JOB STDOUT ===
+=== ENVIRONMENT ===
+/data1/home/sunyiq/autoresearch64/.venv/bin/python
+3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]
+compiled_tzpath=/data1/home/sunyiq/miniconda3/envs/nh_final/share/zoneinfo:/data1/home/sunyiq/miniconda3/envs/nh_final/share/tzinfo
+3bb7fdfd48a38a10e0d7bba8ec302856e4c184836fd12fd4f16e591059dae26c  /data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/dlopen_probe.py
+711b984ded1ab615426c57f12a559fcaaedb48c0c663fd2a3b8f17699094585a  /data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/runtime_dlopen_timezone.patch
+=== CREATE ISOLATED SOURCE SNAPSHOT ===
+patching file src/unified_autoresearch/runtime/bootstrap.py
+patching file src/unified_autoresearch/runtime/runner.py
+Hunk #1 FAILED at 60 (different line endings).
+Hunk #2 FAILED at 218 (different line endings).
+2 out of 2 hunks FAILED -- saving rejects to file src/unified_autoresearch/runtime/runner.py.rej
+=== JOB STDERR ===
+=== PRESERVED EVIDENCE ===
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-09T19:44:50+0800
