@@ -1,10 +1,10 @@
 #!/bin/bash
-# ID18 seq=2: read-only E04 environment and isolation probe. No sbatch.
+# ID18 seq=3: read-only E04 environment and isolation probe. No sbatch.
 set -eo pipefail
 
 echo "=== TIME_AND_RUNNER ==="
 date -Is
-echo "runner delivered id18-loss-arm seq=2"
+echo "runner delivered id18-loss-arm seq=3"
 
 echo "=== QUEUE ==="
 squeue -u "$USER" -o "%.10i %.18j %.10P %.9T %.11M %.6D %R" 2>&1 | head -30
@@ -13,8 +13,7 @@ echo "=== PARTITION ==="
 sinfo -p hgpu2p -o "%.10P %.6a %.10l %.6D %.6t %N" 2>&1
 
 echo "=== MAIN_REPO_READ_ONLY ==="
-git -C /data1/home/sunyiq/neuralhydrology rev-parse --abbrev-ref HEAD 2>&1
-git -C /data1/home/sunyiq/neuralhydrology status --short 2>&1 | wc -l
+( cd /data1/home/sunyiq/neuralhydrology && git rev-parse --abbrev-ref HEAD && git status --short | wc -l ) 2>&1
 
 echo "=== ISOLATED_TARGET ==="
 if [ -e /data1/home/sunyiq/id18_e04_20260809 ]; then
