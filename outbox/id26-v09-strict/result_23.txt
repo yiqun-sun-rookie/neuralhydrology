@@ -1,0 +1,47 @@
+### channel=id26-v09-strict seq=23
+### host=login4
+### started=2026-08-09T16:39:43+0800
+### ---------- output ----------
+=== PARTITION ===
+PartitionName=hgpu2p
+DefaultTime=NONE
+MaxTime=UNLIMITED
+State=UP
+=== EXISTING SUITE SCRIPT ===
+#!/usr/bin/env bash
+#SBATCH -J v09suite
+#SBATCH -p hgpu2p
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1
+#SBATCH --exclude=ngu002
+#SBATCH -t 12:00:00
+#SBATCH -o /data1/home/sunyiq/v09_strict/logs/suite_%j.out
+#SBATCH -e /data1/home/sunyiq/v09_strict/logs/suite_%j.err
+
+set -eo pipefail
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final || { echo "CONDA_FAILED"; exit 1; }
+export PATH=/data1/home/sunyiq/v09_strict/gitenv/bin:$PATH
+export MKL_THREADING_LAYER=GNU
+export MKL_SERVICE_FORCE_INTEL=1
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
+
+cd /data1/home/sunyiq/v09_strict/codetest/neuralhydrology
+export PYTHONPATH=$(pwd):$(pwd)/src/26_historical_band_experts:$PYTHONPATH
+
+echo "node=$(hostname) start=$(date -Iseconds)"
+nvidia-smi --query-gpu=index,name,memory.free --format=csv,noheader
+free -g | sed -n 2p
+
+echo "=== RUN SUITE: seed 100, three arms (max-runs 3) ==="
+python -u src/26_historical_band_experts/run_formal_training_v09.py \
+  --worktree-root . --device cuda:0 --max-runs 3
+echo "end=$(date -Iseconds)"
+=== CURRENT JOB ID ===
+201861
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T16:39:43+0800
