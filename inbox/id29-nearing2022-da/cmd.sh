@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=48: read-only status and artifact check for three-arm comparison job 202159.
+# ID29 seq=49: read-only status and artifact check for three-arm comparison job 202159.
 ROOT=/data1/home/sunyiq/nearing2022_da
 
 echo "=== ACCOUNTING ==="
