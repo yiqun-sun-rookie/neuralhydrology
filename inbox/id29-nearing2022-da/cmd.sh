@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=44: two-hour status probe. Short, read-only, no waiting.
+# ID29 seq=45: two-hour status probe. Short, read-only, no waiting.
 echo "=== QUEUE ==="
 squeue -j 201890,201893 -o "%.10i %.10j %.10T %.12M" 2>&1
 
