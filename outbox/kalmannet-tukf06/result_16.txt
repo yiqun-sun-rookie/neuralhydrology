@@ -1,0 +1,115 @@
+### channel=kalmannet-tukf06 seq=16
+### host=login4
+### started=2026-08-10T01:39:17+0800
+### ---------- output ----------
+=== FORMAL SELECTION ACCOUNTING ===
+             JobID              JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------------ -------------------- ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+            202136        tukf06-select     hcpu48       icn213          COMPLETED      0:0   02:50:46   1-21:33:04              
+      202136.batch                batch                  icn213          COMPLETED      0:0   02:50:46   1-21:33:04    39615852K 
+     202136.extern               extern                  icn213          COMPLETED      0:0   02:50:46    00:00.002        1156K 
+selection_audit_job_id=202143
+             JobID              JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------------ -------------------- ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+            202143         tukf06-audit     hcpu48       icn201          COMPLETED      0:0   00:00:03    00:01.193              
+      202143.batch                batch                  icn201          COMPLETED      0:0   00:00:03    00:01.191        1588K 
+     202143.extern               extern                  icn201          COMPLETED      0:0   00:00:03    00:00.002        1160K 
+=== SCHEDULED AUDIT STDOUT ===
+=== FORMAL SELECTION ACCOUNTING ===
+selection job 202136 was verified COMPLETED with exit code 0:0 on the login node before this audit was scheduled
+=== INDEPENDENT READ-ONLY SELECTION AUDIT ===
+{
+  "backpropagation_start_relative_spread_median": 0.37005703861004885,
+  "basin_count": 21,
+  "budget_validation_difference_medians": {
+    "128": 0.0,
+    "256": 0.0,
+    "32": 0.0,
+    "64": 0.0
+  },
+  "equal_budget_per_method_per_basin": {
+    "backpropagation_updates": 248,
+    "filter_passes": 512,
+    "training_queries": 256,
+    "validation_queries": 256
+  },
+  "evaluation_artifacts_absent": true,
+  "evaluation_period_read": false,
+  "experiment_id": "TUKF06_FULL_DIAGONAL_SEARCH_HEAD_TO_HEAD_V1",
+  "finite_json_and_arrays": true,
+  "manifest_member_count": 66,
+  "physical_bound_relative_tolerance": 1.4210854715202004e-14,
+  "selected_boundary_basin_counts": {
+    "backpropagation_exact_any": 21,
+    "backpropagation_outer_five_percent_any": 21,
+    "sampling_exact_any": 7,
+    "sampling_outer_five_percent_any": 16
+  },
+  "selected_parameter_ranges": {
+    "backpropagation_q": [
+      9.999999999999997e-06,
+      0.10000000000000002
+    ],
+    "backpropagation_r_b": [
+      0.0025000000000000005,
+      0.32
+    ],
+    "sampling_q": [
+      9.999999999999997e-06,
+      0.10000000000000002
+    ],
+    "sampling_r_b": [
+      0.0025000000000000005,
+      0.2285399911841874
+    ]
+  },
+  "selection_manifest_sha256": "63160e786c2b6b07bbb144766deda8bdc29c86d889dbeb8a0f81d468623bc8c3",
+  "selection_seal_sha256": "9151f439e110a679802739eadd7a21857ab396e824ce3c4ea01052b6c611e35a",
+  "selection_wall_seconds": 10233.18228431046,
+  "status": "SELECTION_AUDIT_PASS",
+  "training_objective_backprop_minus_sampling_median": -0.004969390181862293,
+  "validation_objective_backprop_minus_sampling": {
+    "backpropagation_better_basin_count": 8,
+    "maximum": 0.03585318910013302,
+    "mean": -0.014797488705127355,
+    "median": 0.0,
+    "minimum": -0.21667683488863299,
+    "per_basin": {
+      "01435000": 0.028114771425920004,
+      "01440400": 0.0,
+      "01487000": -0.00023133499057406692,
+      "02092500": 0.0015838426031541952,
+      "02102908": 0.022680197938637292,
+      "02178400": 0.0,
+      "03049000": 0.03585318910013302,
+      "03076600": 0.0254627420960869,
+      "04027000": -0.004176232304492045,
+      "04105700": -0.004955320875310851,
+      "05503800": -0.02082083940906898,
+      "06803510": 0.0035166334682821265,
+      "08070200": 0.0,
+      "08086290": 0.0038838684688229375,
+      "08109700": 0.005935205242099895,
+      "08190500": 0.0038361739786670623,
+      "09035800": -0.013078681486705643,
+      "09513780": 0.004320618172805102,
+      "12175500": -0.09602266098647405,
+      "12447390": -0.21667683488863299,
+      "14185900": -0.08997260036102439
+    },
+    "sampling_better_basin_count": 10,
+    "tie_basin_count": 3
+  },
+  "worker_count": 21
+}
+=== LOG INTEGRITY ===
+selection_stderr_bytes=0
+selection_stdout_sha256=2e60d94d94e19ff29482212ad64865adeae52d483d6b280dccfa2004e5b2a32d
+SELECTION_SEALED basins=21 output=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/results/tukf06_full_diagonal_search_head_to_head_v1
+TUKF06_SELECTION_READ_ONLY_AUDIT_PASS
+=== SCHEDULED AUDIT STDERR ===
+TUKF06_SELECTION_READ_ONLY_AUDIT_PASS
+TUKF06_SCHEDULED_SELECTION_AUDIT_PASS job_id=202143
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T01:39:28+0800
