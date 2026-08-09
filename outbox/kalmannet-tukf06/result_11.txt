@@ -1,0 +1,125 @@
+### channel=kalmannet-tukf06 seq=11
+### host=login4
+### started=2026-08-10T00:12:10+0800
+### ---------- output ----------
+=== MONITOR FORMAL SELECTION JOB 202136 ===
+monitor_seconds=300 timestamp=2026-08-10T00:16:40+0800
+            202136            tukf06-select     hcpu48  RUNNING    1:55:58               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+monitor_seconds=600 timestamp=2026-08-10T00:21:40+0800
+            202136            tukf06-select     hcpu48  RUNNING    2:00:58               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+01487000: selected
+02178400: selected
+monitor_seconds=900 timestamp=2026-08-10T00:26:40+0800
+            202136            tukf06-select     hcpu48  RUNNING    2:05:58               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+01487000: selected
+02178400: selected
+06803510: selected
+monitor_seconds=1200 timestamp=2026-08-10T00:31:40+0800
+            202136            tukf06-select     hcpu48  RUNNING    2:10:58               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+01487000: selected
+02178400: selected
+06803510: selected
+04105700: selected
+03049000: selected
+01440400: selected
+01435000: selected
+09513780: selected
+02102908: selected
+12175500: selected
+03076600: selected
+05503800: selected
+08190500: selected
+monitor_seconds=1500 timestamp=2026-08-10T00:36:41+0800
+            202136            tukf06-select     hcpu48  RUNNING    2:15:59               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+01487000: selected
+02178400: selected
+06803510: selected
+04105700: selected
+03049000: selected
+01440400: selected
+01435000: selected
+09513780: selected
+02102908: selected
+12175500: selected
+03076600: selected
+05503800: selected
+08190500: selected
+08086290: selected
+14185900: selected
+12447390: selected
+08070200: selected
+02092500: selected
+monitor_seconds=1800 timestamp=2026-08-10T00:41:41+0800
+            202136            tukf06-select     hcpu48  RUNNING    2:20:59               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+01487000: selected
+02178400: selected
+06803510: selected
+04105700: selected
+03049000: selected
+01440400: selected
+01435000: selected
+09513780: selected
+02102908: selected
+12175500: selected
+03076600: selected
+05503800: selected
+08190500: selected
+08086290: selected
+14185900: selected
+12447390: selected
+08070200: selected
+02092500: selected
+04027000: selected
+=== ACCOUNTING SNAPSHOT ===
+             JobID              JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------------ -------------------- ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+            202136        tukf06-select     hcpu48       icn213            RUNNING      0:0   02:21:29     00:00:00              
+      202136.batch                batch                  icn213            RUNNING      0:0   02:21:29     00:00:00              
+     202136.extern               extern                  icn213            RUNNING      0:0   02:21:29     00:00:00              
+=== FINAL LOG TAILS ===
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+01487000: selected
+02178400: selected
+06803510: selected
+04105700: selected
+03049000: selected
+01440400: selected
+01435000: selected
+09513780: selected
+02102908: selected
+12175500: selected
+03076600: selected
+05503800: selected
+08190500: selected
+08086290: selected
+14185900: selected
+12447390: selected
+08070200: selected
+02092500: selected
+04027000: selected
+=== SELECTION ARTIFACT STATUS ===
+selection_not_yet_sealed
+completed_basin_json_count=19
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T00:42:11+0800
