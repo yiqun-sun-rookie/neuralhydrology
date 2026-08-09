@@ -1,0 +1,28 @@
+### channel=kalmannet-tukf06 seq=15
+### host=login4
+### started=2026-08-10T01:27:57+0800
+### ---------- output ----------
+=== FORMAL SELECTION ACCOUNTING ===
+             JobID              JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------------ -------------------- ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+            202136        tukf06-select     hcpu48       icn213          COMPLETED      0:0   02:50:46   1-21:33:04              
+      202136.batch                batch                  icn213          COMPLETED      0:0   02:50:46   1-21:33:04    39615852K 
+     202136.extern               extern                  icn213          COMPLETED      0:0   02:50:46    00:00.002        1156K 
+selection_audit_job_id=202142
+             JobID              JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------------ -------------------- ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+            202142         tukf06-audit     hcpu48       icn201             FAILED      1:0   00:00:09    00:02.069              
+      202142.batch                batch                  icn201             FAILED      1:0   00:00:09    00:02.066        1588K 
+     202142.extern               extern                  icn201          COMPLETED      0:0   00:00:09    00:00.002        1160K 
+=== SCHEDULED AUDIT STDOUT ===
+=== FORMAL SELECTION ACCOUNTING ===
+selection job 202136 was verified COMPLETED with exit code 0:0 on the login node before this audit was scheduled
+=== INDEPENDENT READ-ONLY SELECTION AUDIT ===
+=== SCHEDULED AUDIT STDERR ===
+Traceback (most recent call last):
+  File "<stdin>", line 154, in <module>
+AssertionError
+scheduled selection audit failed: state=FAILED exit_code=1:0
+### ---------- end ----------
+### exit_code=87
+### finished=2026-08-10T01:28:10+0800
