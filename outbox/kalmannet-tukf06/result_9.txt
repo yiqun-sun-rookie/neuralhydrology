@@ -1,0 +1,50 @@
+### channel=kalmannet-tukf06 seq=9
+### host=login4
+### started=2026-08-09T22:59:52+0800
+### ---------- output ----------
+=== MONITOR FORMAL SELECTION JOB 202136 ===
+monitor_seconds=300 timestamp=2026-08-09T23:04:22+0800
+            202136            tukf06-select     hcpu48  RUNNING      43:40               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+monitor_seconds=600 timestamp=2026-08-09T23:09:23+0800
+            202136            tukf06-select     hcpu48  RUNNING      48:41               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+monitor_seconds=900 timestamp=2026-08-09T23:14:23+0800
+            202136            tukf06-select     hcpu48  RUNNING      53:41               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+monitor_seconds=1200 timestamp=2026-08-09T23:19:23+0800
+            202136            tukf06-select     hcpu48  RUNNING      58:41               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+monitor_seconds=1500 timestamp=2026-08-09T23:24:23+0800
+            202136            tukf06-select     hcpu48  RUNNING    1:03:41               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+monitor_seconds=1800 timestamp=2026-08-09T23:29:23+0800
+            202136            tukf06-select     hcpu48  RUNNING    1:08:41               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+=== ACCOUNTING SNAPSHOT ===
+             JobID              JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------------ -------------------- ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+            202136        tukf06-select     hcpu48       icn213            RUNNING      0:0   01:09:11     00:00:00              
+      202136.batch                batch                  icn213            RUNNING      0:0   01:09:11     00:00:00              
+     202136.extern               extern                  icn213            RUNNING      0:0   01:09:11     00:00:00              
+=== FINAL LOG TAILS ===
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+=== SELECTION ARTIFACT STATUS ===
+selection_not_yet_sealed
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T23:29:54+0800
