@@ -1,0 +1,170 @@
+### channel=kalmannet-tukf06 seq=12
+### host=login4
+### started=2026-08-10T00:53:31+0800
+### ---------- output ----------
+=== MONITOR FORMAL SELECTION JOB 202136 ===
+monitor_seconds=300 timestamp=2026-08-10T00:58:01+0800
+            202136            tukf06-select     hcpu48  RUNNING    2:37:19               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+01487000: selected
+02178400: selected
+06803510: selected
+04105700: selected
+03049000: selected
+01440400: selected
+01435000: selected
+09513780: selected
+02102908: selected
+12175500: selected
+03076600: selected
+05503800: selected
+08190500: selected
+08086290: selected
+14185900: selected
+12447390: selected
+08070200: selected
+02092500: selected
+04027000: selected
+08109700: selected
+monitor_seconds=600 timestamp=2026-08-10T01:03:02+0800
+            202136            tukf06-select     hcpu48  RUNNING    2:42:20               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+01487000: selected
+02178400: selected
+06803510: selected
+04105700: selected
+03049000: selected
+01440400: selected
+01435000: selected
+09513780: selected
+02102908: selected
+12175500: selected
+03076600: selected
+05503800: selected
+08190500: selected
+08086290: selected
+14185900: selected
+12447390: selected
+08070200: selected
+02092500: selected
+04027000: selected
+08109700: selected
+monitor_seconds=900 timestamp=2026-08-10T01:08:02+0800
+            202136            tukf06-select     hcpu48  RUNNING    2:47:20               icn213
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+01487000: selected
+02178400: selected
+06803510: selected
+04105700: selected
+03049000: selected
+01440400: selected
+01435000: selected
+09513780: selected
+02102908: selected
+12175500: selected
+03076600: selected
+05503800: selected
+08190500: selected
+08086290: selected
+14185900: selected
+12447390: selected
+08070200: selected
+02092500: selected
+04027000: selected
+08109700: selected
+selection left queue after monitor_seconds=1080
+=== ACCOUNTING SNAPSHOT ===
+             JobID              JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------------ -------------------- ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+            202136        tukf06-select     hcpu48       icn213          COMPLETED      0:0   02:50:46   1-21:33:04              
+      202136.batch                batch                  icn213          COMPLETED      0:0   02:50:46   1-21:33:04    39615852K 
+     202136.extern               extern                  icn213          COMPLETED      0:0   02:50:46    00:00.002        1156K 
+=== FINAL LOG TAILS ===
+{"hostname": "icn213", "numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "scipy": "1.16.2", "torch": "2.4.0"}
+TUKF06_DATA_FINGERPRINTS_MATCH
+TUKF06_PREFLIGHT_PASS mem_available_kib=77728376
+01487000: selected
+02178400: selected
+06803510: selected
+04105700: selected
+03049000: selected
+01440400: selected
+01435000: selected
+09513780: selected
+02102908: selected
+12175500: selected
+03076600: selected
+05503800: selected
+08190500: selected
+08086290: selected
+14185900: selected
+12447390: selected
+08070200: selected
+02092500: selected
+04027000: selected
+08109700: selected
+09035800: selected
+SELECTION_SEALED basins=21 output=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/results/tukf06_full_diagonal_search_head_to_head_v1
+JobId=202136 JobName=tukf06-select
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200009 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=02:50:46 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-08-09T22:20:42 EligibleTime=2026-08-09T22:20:42
+   AccrueTime=2026-08-09T22:20:42
+   StartTime=2026-08-09T22:20:42 EndTime=2026-08-10T04:20:42 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-09T22:20:42
+   Partition=hcpu48 AllocNode:Sid=login04:44128
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=icn213
+   BatchHost=icn213
+   NumNodes=1 NumCPUs=48 NumTasks=1 CPUs/Task=48 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=48,node=1,billing=48
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=48 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/source/hpc/tukf06_full_diagonal/submit_selection_cpu.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/logs/selection-202136.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/logs/selection-202136.out
+   Power=
+
+=== SELECTION ARTIFACT STATUS ===
+{
+  "basin_count": 21,
+  "environment": {
+    "hostname": "icn213",
+    "mem_available_gib_at_start": 73.88862228393555,
+    "numpy": "2.3.3",
+    "platform": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17",
+    "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+    "slurm_job_id": "202136",
+    "torch": "2.4.0",
+    "worker_count": 21
+  },
+  "evaluation_period_read": false,
+  "failures": [],
+  "seal": {
+    "basin_count": 21,
+    "evaluation_period_read": false,
+    "experiment_id": "TUKF06_FULL_DIAGONAL_SEARCH_HEAD_TO_HEAD_V1",
+    "selection_manifest_sha256": "63160e786c2b6b07bbb144766deda8bdc29c86d889dbeb8a0f81d468623bc8c3",
+    "status": "SELECTED_SEALED"
+  },
+  "selection_manifest_sha256": "63160e786c2b6b07bbb144766deda8bdc29c86d889dbeb8a0f81d468623bc8c3",
+  "selection_seal_sha256": "9151f439e110a679802739eadd7a21857ab396e824ce3c4ea01052b6c611e35a",
+  "selection_status": "SELECTION_COMPLETE",
+  "wall_seconds": 10233.18228431046
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T01:11:33+0800
