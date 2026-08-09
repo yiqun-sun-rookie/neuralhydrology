@@ -1,0 +1,34 @@
+### channel=id18-loss-arm seq=2
+### host=login4
+### started=2026-08-09T17:51:36+0800
+### ---------- output ----------
+=== TIME_AND_RUNNER ===
+2026-08-09T17:51:36+0800
+runner delivered id18-loss-arm seq=2
+=== QUEUE ===
+     JOBID               NAME  PARTITION     STATE        TIME  NODES NODELIST(REASON)
+201920_[16          id17-gate     hgpu2p   PENDING        0:00      1 (JobArrayTaskLimit)
+ 201920_15          id17-gate     hgpu2p   RUNNING     4:58:36      1 ngu011
+ 201920_14          id17-gate     hgpu2p   RUNNING     5:42:05      1 ngu008
+ 201920_13          id17-gate     hgpu2p   RUNNING     5:59:06      1 ngu005
+ 201920_12          id17-gate     hgpu2p   RUNNING     7:50:36      1 ngu001
+ 201920_11          id17-gate     hgpu2p   RUNNING     8:15:47      1 ngu001
+ 201920_10          id17-gate     hgpu2p   RUNNING     8:23:41      1 ngu010
+  201920_9          id17-gate     hgpu2p   RUNNING     8:27:17      1 ngu004
+  201920_8          id17-gate     hgpu2p   RUNNING    10:05:35      1 ngu011
+    201893            id29_ar      hgpu4   RUNNING  1-01:03:37      1 ngu104
+    202054          v09main21     hgpu2p   RUNNING     1:08:56      1 ngu008
+=== PARTITION ===
+ PARTITION  AVAIL  TIMELIMIT  NODES  STATE NODELIST
+    hgpu2p     up   infinite      8    mix ngu[001,004-008,010-011]
+    hgpu2p     up   infinite      1   idle ngu002
+=== MAIN_REPO_READ_ONLY ===
+Unknown option: -C
+usage: git [--version] [--help] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+### ---------- end ----------
+### exit_code=129
+### finished=2026-08-09T17:51:36+0800
