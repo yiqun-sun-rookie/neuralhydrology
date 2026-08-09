@@ -1,0 +1,10 @@
+### channel=id18-loss-arm seq=10
+### host=login4
+### started=2026-08-09T19:41:16+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 26, in <module>
+KeyError: 'non_scientific_smoke'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-09T19:41:16+0800
