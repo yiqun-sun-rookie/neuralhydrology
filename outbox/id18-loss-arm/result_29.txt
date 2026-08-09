@@ -1,0 +1,277 @@
+### channel=id18-loss-arm seq=29
+### host=login4
+### started=2026-08-10T04:00:49+0800
+### ---------- output ----------
+=== TIMESTAMP ===
+2026-08-10T04:00:49+0800
+=== FINAL_JOB_STATUS ===
+JobID|JobName|State|Elapsed|ExitCode|NodeList|AllocCPUS|AllocTRES|Start|End
+202071|id18-c-gr4j-nse|COMPLETED|00:04:23|0:0|ngu001|28|billing=28,cpu=28,node=1|2026-08-09T19:47:32|2026-08-09T19:51:55
+202072|id18-c-gr4j-frnse|COMPLETED|00:05:28|0:0|ngu001|28|billing=28,cpu=28,node=1|2026-08-09T19:47:32|2026-08-09T19:53:00
+202073|id18-c-xaj-nse|COMPLETED|08:03:38|0:0|ngu001|28|billing=28,cpu=28,node=1|2026-08-09T19:47:32|2026-08-10T03:51:10
+202074|id18-c-xaj-frnse|COMPLETED|08:02:00|0:0|ngu004|28|billing=28,cpu=28,node=1|2026-08-09T19:47:32|2026-08-10T03:49:32
+202075|id18-c-hbv_lite-nse|COMPLETED|00:36:37|0:0|ngu004|28|billing=28,cpu=28,node=1|2026-08-09T19:47:32|2026-08-09T20:24:09
+202076|id18-c-hbv_lite-frnse|COMPLETED|00:36:48|0:0|ngu004|28|billing=28,cpu=28,node=1|2026-08-09T19:47:32|2026-08-09T20:24:20
+202077|id18-lstm-nse-s100|COMPLETED|01:29:37|0:0|ngu004|8|billing=8,cpu=8,node=1|2026-08-09T19:47:35|2026-08-09T21:17:12
+202078|id18-lstm-nse-s200|COMPLETED|01:18:08|0:0|ngu005|8|billing=8,cpu=8,node=1|2026-08-09T19:47:35|2026-08-09T21:05:43
+202079|id18-lstm-nse-s300|COMPLETED|01:18:31|0:0|ngu006|8|billing=8,cpu=8,node=1|2026-08-09T19:47:35|2026-08-09T21:06:06
+202080|id18-lstm-frnse-s100|COMPLETED|01:18:46|0:0|ngu006|8|billing=8,cpu=8,node=1|2026-08-09T19:47:35|2026-08-09T21:06:21
+202081|id18-lstm-frnse-s200|COMPLETED|01:20:17|0:0|ngu007|8|billing=8,cpu=8,node=1|2026-08-09T19:52:50|2026-08-09T21:13:07
+202082|id18-lstm-frnse-s300|COMPLETED|01:20:16|0:0|ngu007|8|billing=8,cpu=8,node=1|2026-08-09T19:52:51|2026-08-09T21:13:07
+202083|id18-e04-score|COMPLETED|00:03:55|0:0|ngu010|8|billing=8,cpu=8,node=1|2026-08-10T03:51:21|2026-08-10T03:55:16
+=== SCORE_LOG ===
+{
+  "experiment_id": "E04_daymet_post2008_objective_confirmation_482",
+  "gradient_passed": true,
+  "model_dependence_passed": true,
+  "verdict": "CONFIRMED",
+  "consequence": "All four criteria pass exactly as registered.",
+  "model_variability_responses": {
+    "gr4j": 0.06371326794569221,
+    "hbv_lite": 0.049281141136397366,
+    "xaj": 0.060073261178842596,
+    "lstm_three_seed_ensemble": 0.01498683897503783
+  }
+}
+{"audit_status": "PASS", "verdict": "CONFIRMED"}
+=== ERROR_LOG_SIZES ===
+/data1/home/sunyiq/id18_e04_20260809/logs/conceptual-202071.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/conceptual-202072.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/conceptual-202073.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/conceptual-202074.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/conceptual-202075.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/conceptual-202076.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/neural-202077.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/neural-202078.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/neural-202079.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/neural-202080.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/neural-202081.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/neural-202082.err size=0
+/data1/home/sunyiq/id18_e04_20260809/logs/score-202083.err size=0
+=== COMPLETION_FILES ===
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/conceptual/flow_regime_nse/gr4j/completion.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/conceptual/flow_regime_nse/hbv_lite/completion.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/conceptual/flow_regime_nse/xaj/completion.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/conceptual/nse/gr4j/completion.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/conceptual/nse/hbv_lite/completion.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/conceptual/nse/xaj/completion.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/neural_completions/flow_regime_nse_s100.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/neural_completions/flow_regime_nse_s200.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/neural_completions/flow_regime_nse_s300.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/neural_completions/nse_s100.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/neural_completions/nse_s200.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/neural_completions/nse_s300.json
+=== DERIVED_FILES ===
+analysis_manifest.json size=3924
+criterion_summary.csv size=1424
+decision.json size=422
+event_metrics_by_basin.csv size=620997
+full_series_by_basin.csv size=279705
+paired_changes.csv size=1002414
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/audit/e04_independent_recomputation.json size=2456
+=== INDEPENDENT_ARTIFACT_CHECK ===
+{
+  "artifact_check": "PASS",
+  "experiment_id": "E04_daymet_post2008_objective_confirmation_482",
+  "job_completion_count": 13,
+  "conceptual_completion_count": 6,
+  "neural_completion_count": 6,
+  "source_file_hash_count": 30,
+  "generated_config_hash_count": 6,
+  "contract_sha256": "a5ddb3df556e0c0dc5672df18e3ad8bf9e2eea1a9f7424b215a49c416933101f",
+  "basin_manifest_sha256": "cb82fb47ec6a8edd5315a58dc5d4792b8d620c989dfd27aa4c0e4c410906943c",
+  "source_basin_manifest_sha256": "cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85",
+  "analysis_output_hashes": {
+    "full_series_by_basin.csv": "eb997bf6caf56aefc3c7a46e269080824e95dcbd80a420963bbc043a69e0337c",
+    "event_metrics_by_basin.csv": "c90c80081c2171838b0e5ee83c4920ca53e80953b980c6aa298e928627c99bdf",
+    "paired_changes.csv": "c02d747c01668ce0851d3e48ca313a9cf57b3d15fe3d4be70a65f5d11c96e0be",
+    "criterion_summary.csv": "ac17638b25d978f9dfddb490febaffe18bb79b8b926143863db9da6dec55dffa",
+    "decision.json": "696bf34075f205d11fc2051aae3ad7f6ed7c33672ecc5764ecbfedc6a0e9e103"
+  },
+  "audit_file_sha256": "afd7fb91b78025df9138cd4bdcde0c866f511bd088f10869fd310d1dad5f4fab",
+  "decision": {
+    "experiment_id": "E04_daymet_post2008_objective_confirmation_482",
+    "gradient_passed": true,
+    "model_dependence_passed": true,
+    "verdict": "CONFIRMED",
+    "consequence": "All four criteria pass exactly as registered.",
+    "model_variability_responses": {
+      "gr4j": 0.06371326794569221,
+      "hbv_lite": 0.049281141136397366,
+      "xaj": 0.060073261178842596,
+      "lstm_three_seed_ensemble": 0.01498683897503783
+    }
+  },
+  "criterion_summary": [
+    {
+      "criterion": "variability_over_correlation",
+      "detail": "gr4j",
+      "estimate": "0.046919855565228374",
+      "ci_lower": "0.04341787997065649",
+      "ci_upper": "0.05168398669718566",
+      "threshold": "0.0",
+      "comparison": "ci_lower > threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "variability_over_correlation",
+      "detail": "hbv_lite",
+      "estimate": "0.033556130743879586",
+      "ci_lower": "0.02874384150374132",
+      "ci_upper": "0.036289814644418494",
+      "threshold": "0.0",
+      "comparison": "ci_lower > threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "variability_over_correlation",
+      "detail": "xaj",
+      "estimate": "0.04340364723255313",
+      "ci_lower": "0.03852034538974508",
+      "ci_upper": "0.04893148633654504",
+      "threshold": "0.0",
+      "comparison": "ci_lower > threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "variability_over_correlation",
+      "detail": "lstm_three_seed_ensemble",
+      "estimate": "0.023273076628365974",
+      "ci_lower": "0.019311446282493594",
+      "ci_upper": "0.028435616904566918",
+      "threshold": "0.0",
+      "comparison": "ci_lower > threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "peak_over_shape",
+      "detail": "gr4j",
+      "estimate": "0.2082580565402869",
+      "ci_lower": "",
+      "ci_upper": "",
+      "threshold": "0.5",
+      "comparison": "estimate < threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "peak_over_shape",
+      "detail": "hbv_lite",
+      "estimate": "0.25928587205054526",
+      "ci_lower": "",
+      "ci_upper": "",
+      "threshold": "0.5",
+      "comparison": "estimate < threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "peak_over_shape",
+      "detail": "xaj",
+      "estimate": "0.05950499654194838",
+      "ci_lower": "",
+      "ci_upper": "",
+      "threshold": "0.5",
+      "comparison": "estimate < threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "peak_over_shape",
+      "detail": "lstm_three_seed_ensemble",
+      "estimate": "0.22862657109008347",
+      "ci_lower": "",
+      "ci_upper": "",
+      "threshold": "0.5",
+      "comparison": "estimate < threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "timing_stability",
+      "detail": "gr4j",
+      "estimate": "0.0",
+      "ci_lower": "",
+      "ci_upper": "",
+      "threshold": "0.5",
+      "comparison": "estimate <= threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "timing_stability",
+      "detail": "hbv_lite",
+      "estimate": "0.0",
+      "ci_lower": "",
+      "ci_upper": "",
+      "threshold": "0.5",
+      "comparison": "estimate <= threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "timing_stability",
+      "detail": "xaj",
+      "estimate": "0.0",
+      "ci_lower": "",
+      "ci_upper": "",
+      "threshold": "0.5",
+      "comparison": "estimate <= threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "timing_stability",
+      "detail": "lstm_three_seed_ensemble",
+      "estimate": "0.0",
+      "ci_lower": "",
+      "ci_upper": "",
+      "threshold": "0.5",
+      "comparison": "estimate <= threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "model_dependence",
+      "detail": "xaj_minus_lstm_three_seed_ensemble",
+      "estimate": "0.019802939625238103",
+      "ci_lower": "0.01533787138295506",
+      "ci_upper": "0.024997572471651464",
+      "threshold": "0.0",
+      "comparison": "ci_lower > threshold",
+      "passed": "True"
+    },
+    {
+      "criterion": "model_dependence",
+      "detail": "largest_to_smallest_variability_response",
+      "estimate": "4.2512812776472355",
+      "ci_lower": "",
+      "ci_upper": "",
+      "threshold": "1.5",
+      "comparison": "estimate >= threshold",
+      "passed": "True"
+    }
+  ],
+  "audit_status": "PASS",
+  "audit_comparisons": {
+    "full_series": {
+      "passed": true,
+      "reason": "match",
+      "maximum_numeric_difference": 3.552713678800501e-15,
+      "tolerance": 1e-10
+    },
+    "events": {
+      "passed": true,
+      "reason": "match",
+      "maximum_numeric_difference": 3.552713678800501e-15,
+      "tolerance": 1e-10
+    },
+    "criteria": {
+      "passed": true,
+      "reason": "match",
+      "maximum_numeric_difference": 8.881784197001252e-16,
+      "tolerance": 1e-10
+    },
+    "decision": {
+      "passed": true,
+      "reason": "match",
+      "maximum_numeric_difference": 0.0,
+      "tolerance": 1e-10
+    }
+  }
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T04:00:55+0800
