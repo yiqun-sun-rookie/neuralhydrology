@@ -1,5 +1,5 @@
 #!/bin/bash
-# id26-v09-strict seq=20 : short status query, no waiting loop.
+# id26-v09-strict seq=21 : short status query, no waiting loop.
 export LC_ALL=C
 ROOT=/data1/home/sunyiq/v09_strict
 CODE=$ROOT/codetest/neuralhydrology
