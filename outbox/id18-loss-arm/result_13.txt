@@ -1,0 +1,191 @@
+### channel=id18-loss-arm seq=13
+### host=login4
+### started=2026-08-09T19:47:32+0800
+### ---------- output ----------
+SUBMITTED label=conceptual:gr4j:nse job_id=202071
+SUBMITTED label=conceptual:gr4j:flow_regime_nse job_id=202072
+SUBMITTED label=conceptual:xaj:nse job_id=202073
+SUBMITTED label=conceptual:xaj:flow_regime_nse job_id=202074
+SUBMITTED label=conceptual:hbv_lite:nse job_id=202075
+SUBMITTED label=conceptual:hbv_lite:flow_regime_nse job_id=202076
+SUBMITTED label=neural:nse:s100 job_id=202077
+SUBMITTED label=neural:nse:s200 job_id=202078
+SUBMITTED label=neural:nse:s300 job_id=202079
+SUBMITTED label=neural:flow_regime_nse:s100 job_id=202080
+SUBMITTED label=neural:flow_regime_nse:s200 job_id=202081
+SUBMITTED label=neural:flow_regime_nse:s300 job_id=202082
+SUBMITTED label=score_and_independent_audit job_id=202083
+{
+  "experiment_id": "E04_daymet_post2008_objective_confirmation_482",
+  "model_job_count": 12,
+  "score_job_count": 1,
+  "job_ids": [
+    202071,
+    202072,
+    202073,
+    202074,
+    202075,
+    202076,
+    202077,
+    202078,
+    202079,
+    202080,
+    202081,
+    202082,
+    202083
+  ],
+  "model_job_ids": [
+    202071,
+    202072,
+    202073,
+    202074,
+    202075,
+    202076,
+    202077,
+    202078,
+    202079,
+    202080,
+    202081,
+    202082
+  ],
+  "score_job_id": 202083,
+  "score_dependency": "202071:202072:202073:202074:202075:202076:202077:202078:202079:202080:202081:202082",
+  "jobs": [
+    {
+      "record_type": "job",
+      "label": "conceptual:gr4j:nse",
+      "job_name": "id18-c-gr4j-nse",
+      "job_id": 202071,
+      "raw_job_id": "202071",
+      "submitted_at": "2026-08-09T19:47:32+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_conceptual.slurm gr4j nse"
+    },
+    {
+      "record_type": "job",
+      "label": "conceptual:gr4j:flow_regime_nse",
+      "job_name": "id18-c-gr4j-frnse",
+      "job_id": 202072,
+      "raw_job_id": "202072",
+      "submitted_at": "2026-08-09T19:47:32+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_conceptual.slurm gr4j flow_regime_nse"
+    },
+    {
+      "record_type": "job",
+      "label": "conceptual:xaj:nse",
+      "job_name": "id18-c-xaj-nse",
+      "job_id": 202073,
+      "raw_job_id": "202073",
+      "submitted_at": "2026-08-09T19:47:32+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_conceptual.slurm xaj nse"
+    },
+    {
+      "record_type": "job",
+      "label": "conceptual:xaj:flow_regime_nse",
+      "job_name": "id18-c-xaj-frnse",
+      "job_id": 202074,
+      "raw_job_id": "202074",
+      "submitted_at": "2026-08-09T19:47:32+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_conceptual.slurm xaj flow_regime_nse"
+    },
+    {
+      "record_type": "job",
+      "label": "conceptual:hbv_lite:nse",
+      "job_name": "id18-c-hbv_lite-nse",
+      "job_id": 202075,
+      "raw_job_id": "202075",
+      "submitted_at": "2026-08-09T19:47:32+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_conceptual.slurm hbv_lite nse"
+    },
+    {
+      "record_type": "job",
+      "label": "conceptual:hbv_lite:flow_regime_nse",
+      "job_name": "id18-c-hbv_lite-frnse",
+      "job_id": 202076,
+      "raw_job_id": "202076",
+      "submitted_at": "2026-08-09T19:47:32+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_conceptual.slurm hbv_lite flow_regime_nse"
+    },
+    {
+      "record_type": "job",
+      "label": "neural:nse:s100",
+      "job_name": "id18-lstm-nse-s100",
+      "job_id": 202077,
+      "raw_job_id": "202077",
+      "submitted_at": "2026-08-09T19:47:32+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_neural.slurm nse 100"
+    },
+    {
+      "record_type": "job",
+      "label": "neural:nse:s200",
+      "job_name": "id18-lstm-nse-s200",
+      "job_id": 202078,
+      "raw_job_id": "202078",
+      "submitted_at": "2026-08-09T19:47:32+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_neural.slurm nse 200"
+    },
+    {
+      "record_type": "job",
+      "label": "neural:nse:s300",
+      "job_name": "id18-lstm-nse-s300",
+      "job_id": 202079,
+      "raw_job_id": "202079",
+      "submitted_at": "2026-08-09T19:47:32+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_neural.slurm nse 300"
+    },
+    {
+      "record_type": "job",
+      "label": "neural:flow_regime_nse:s100",
+      "job_name": "id18-lstm-frnse-s100",
+      "job_id": 202080,
+      "raw_job_id": "202080",
+      "submitted_at": "2026-08-09T19:47:33+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_neural.slurm flow_regime_nse 100"
+    },
+    {
+      "record_type": "job",
+      "label": "neural:flow_regime_nse:s200",
+      "job_name": "id18-lstm-frnse-s200",
+      "job_id": 202081,
+      "raw_job_id": "202081",
+      "submitted_at": "2026-08-09T19:47:33+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_neural.slurm flow_regime_nse 200"
+    },
+    {
+      "record_type": "job",
+      "label": "neural:flow_regime_nse:s300",
+      "job_name": "id18-lstm-frnse-s300",
+      "job_id": 202082,
+      "raw_job_id": "202082",
+      "submitted_at": "2026-08-09T19:47:33+0800",
+      "sbatch_args": "src/loss_mechanism_531/hpc/e04_neural.slurm flow_regime_nse 300"
+    },
+    {
+      "record_type": "job",
+      "label": "score_and_independent_audit",
+      "job_name": "id18-e04-score",
+      "job_id": 202083,
+      "raw_job_id": "202083",
+      "submitted_at": "2026-08-09T19:47:33+0800",
+      "sbatch_args": "--dependency=afterok:202071:202072:202073:202074:202075:202076:202077:202078:202079:202080:202081:202082 src/loss_mechanism_531/hpc/e04_score.slurm"
+    }
+  ]
+}
+=== SQUEUE ===
+     JOBID                         NAME  PARTITION     STATE        TIME  NODES NODELIST(REASON)
+    202077           id18-lstm-nse-s100     hgpu2p   PENDING        0:00      1 (None)
+    202078           id18-lstm-nse-s200     hgpu2p   PENDING        0:00      1 (None)
+    202079           id18-lstm-nse-s300     hgpu2p   PENDING        0:00      1 (None)
+    202080         id18-lstm-frnse-s100     hgpu2p   PENDING        0:00      1 (None)
+    202081         id18-lstm-frnse-s200     hgpu2p   PENDING        0:00      1 (None)
+    202082         id18-lstm-frnse-s300     hgpu2p   PENDING        0:00      1 (None)
+    202083               id18-e04-score     hgpu2p   PENDING        0:00      1 (Dependency)
+    202071              id18-c-gr4j-nse     hgpu2p   RUNNING        0:01      1 ngu001
+    202072            id18-c-gr4j-frnse     hgpu2p   RUNNING        0:01      1 ngu001
+    202073               id18-c-xaj-nse     hgpu2p   RUNNING        0:01      1 ngu001
+    202074             id18-c-xaj-frnse     hgpu2p   RUNNING        0:01      1 ngu004
+    202075          id18-c-hbv_lite-nse     hgpu2p   RUNNING        0:01      1 ngu004
+    202076        id18-c-hbv_lite-frnse     hgpu2p   RUNNING        0:01      1 ngu004
+E04_FORMAL_SUBMISSION_PASS model_jobs=12 score_jobs=1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T19:47:33+0800
