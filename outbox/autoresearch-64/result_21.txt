@@ -1,0 +1,446 @@
+### channel=autoresearch-64 seq=21
+### host=login4
+### started=2026-08-09T17:21:40+0800
+### ---------- output ----------
+=== SUBMIT NARROW-FIX VALIDATION ===
+sbatch_exit=0 jobid=202060
+=== WAIT AT MOST 50 SECONDS ===
+t=5s state=PENDING
+t=10s state=RUNNING
+t=15s state=RUNNING
+=== SCHEDULER RECORD ===
+       JobID              JobName          State ExitCode    Elapsed 
+------------ -------------------- -------------- -------- ---------- 
+      202060     a64-dlopen-probe         FAILED      3:0   00:00:11 
+=== JOB STDOUT ===
+=== ENVIRONMENT ===
+/data1/home/sunyiq/autoresearch64/.venv/bin/python
+3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]
+3bb7fdfd48a38a10e0d7bba8ec302856e4c184836fd12fd4f16e591059dae26c  /data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/dlopen_probe.py
+a5187ec5ecce6343a987f30c64f6c9fe11e7199aea01b6d95c5da8254753e0ce  /data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/bootstrap_dlopen_none.patch
+=== CREATE ISOLATED SOURCE SNAPSHOT ===
+patching file src/unified_autoresearch/runtime/bootstrap.py
+expected_bootstrap_sha256=3f28a4e1076c99edecb87e29c182476ca788d1a68117cfe345dd196ca6a774f6
+actual_bootstrap_sha256=3f28a4e1076c99edecb87e29c182476ca788d1a68117cfe345dd196ca6a774f6
+=== THREE ISOLATED SANDBOX PROBES AFTER THE NARROW FIX ===
+=== JOB STDERR ===
+=== PRESERVED EVIDENCE ===
+{
+  "diagnostic_complete": false,
+  "error": "pandas: sandbox did not succeed after the narrow allow rule",
+  "error_type": "RuntimeError",
+  "partial_summary": {
+    "created_at_utc": "2026-08-09T09:21:45.950932+00:00",
+    "driver_path": "/data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/dlopen_probe.py",
+    "driver_sha256": "3bb7fdfd48a38a10e0d7bba8ec302856e4c184836fd12fd4f16e591059dae26c",
+    "evidence_root": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence",
+    "probes": [
+      {
+        "declaration": "numpy==1.26.4",
+        "dependency_preflight": {
+          "decision": "launch",
+          "initialization_probe_error": null,
+          "initialization_read_roots": [
+            "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy"
+          ],
+          "matches": [
+            {
+              "active_module_path": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy/__init__.py",
+              "active_probe_error": null,
+              "active_version": "1.26.4",
+              "declaration": "numpy==1.26.4",
+              "installed_versions": [
+                "1.26.4"
+              ],
+              "matched": true,
+              "package_name": "numpy",
+              "requested_version": "1.26.4"
+            }
+          ],
+          "requested": [
+            "numpy==1.26.4"
+          ],
+          "schema_version": "dependency_preflight_v1"
+        },
+        "package": "numpy",
+        "sandbox": {
+          "access_log_path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/runs/numpy/logs/access.jsonl",
+          "ctypes_dlopen_denials": [],
+          "ctypes_dlopen_denied": false,
+          "ctypes_dlopen_events": [
+            {
+              "decision": "allow",
+              "event": "ctypes.dlopen",
+              "library": null,
+              "reason": "declared dependency initialization requires the current-process handle",
+              "symbol": null
+            }
+          ],
+          "denied_event_count": 0,
+          "last_12_access_events": [
+            {
+              "decision": "allow",
+              "event": "import",
+              "module": "token",
+              "reason": "declared dependency initialization"
+            },
+            {
+              "decision": "allow",
+              "event": "open",
+              "operation": "read",
+              "path": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/__pycache__/token.cpython-311.pyc"
+            },
+            {
+              "decision": "allow",
+              "event": "import",
+              "module": "numpy.ma.extras",
+              "reason": "declared dependency initialization"
+            },
+            {
+              "decision": "allow",
+              "event": "open",
+              "operation": "read",
+              "path": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy/ma/__pycache__/extras.cpython-311.pyc"
+            },
+            {
+              "decision": "allow",
+              "event": "bootstrap.dependency_initialization",
+              "phase": "complete"
+            },
+            {
+              "decision": "allow",
+              "event": "import",
+              "module": "pkgutil",
+              "reason": "declared or standard dependency"
+            },
+            {
+              "decision": "allow",
+              "event": "os.listdir",
+              "operation": "read",
+              "path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/runs/numpy/candidate"
+            },
+            {
+              "decision": "allow",
+              "event": "open",
+              "operation": "read",
+              "path": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/__pycache__/pkgutil.cpython-311.pyc"
+            },
+            {
+              "decision": "allow",
+              "event": "open",
+              "operation": "read",
+              "path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/runs/numpy/candidate/entrypoint.py"
+            },
+            {
+              "decision": "allow",
+              "event": "open",
+              "operation": "read",
+              "path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/runs/numpy/candidate/entrypoint.py"
+            },
+            {
+              "decision": "allow",
+              "event": "open",
+              "operation": "read",
+              "path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/runs/numpy/candidate/entrypoint.py"
+            },
+            {
+              "decision": "allow",
+              "event": "os.mkdir",
+              "operation": "write",
+              "path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/runs/numpy/outputs/model_artifacts"
+            }
+          ],
+          "normalized_exit_code": 0,
+          "process_exit_code": 0,
+          "runtime_result": {
+            "candidate_id": "dlopen-probe-numpy-v1",
+            "checkpoint_id": null,
+            "checkpoint_root_sha256": null,
+            "denied_event_count": 0,
+            "dependency_preflight_decision": "launch",
+            "mode": "train",
+            "normalized_exit_code": 0,
+            "output_contract": {
+              "actual_top_level": [
+                "model_artifacts"
+              ],
+              "expected_top_level": [
+                "model_artifacts"
+              ],
+              "failures": [],
+              "valid": true
+            },
+            "process_exit_code": 0,
+            "required_outputs_complete": true,
+            "resource_preflight_decision": "launch",
+            "resume_checkpoint_id": null,
+            "resume_checkpoint_root_sha256": null,
+            "schema_version": "runtime_result_v1",
+            "status": "succeeded"
+          },
+          "status": "succeeded"
+        },
+        "trace": {
+          "ctypes_dlopen_events": [
+            {
+              "arguments": [
+                "None"
+              ],
+              "event": "ctypes.dlopen",
+              "stack": [
+                {
+                  "filename": "<string>",
+                  "line": "",
+                  "lineno": 27,
+                  "name": "<module>"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1176,
+                  "name": "_find_and_load"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1147,
+                  "name": "_find_and_load_unlocked"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 690,
+                  "name": "_load_unlocked"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap_external>",
+                  "line": "",
+                  "lineno": 940,
+                  "name": "exec_module"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 241,
+                  "name": "_call_with_frames_removed"
+                },
+                {
+                  "filename": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy/__init__.py",
+                  "line": "from numpy.__config__ import show as show_config",
+                  "lineno": 130,
+                  "name": "<module>"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1176,
+                  "name": "_find_and_load"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1147,
+                  "name": "_find_and_load_unlocked"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 690,
+                  "name": "_load_unlocked"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap_external>",
+                  "line": "",
+                  "lineno": 940,
+                  "name": "exec_module"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 241,
+                  "name": "_call_with_frames_removed"
+                },
+                {
+                  "filename": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy/__config__.py",
+                  "line": "from numpy.core._multiarray_umath import (",
+                  "lineno": 4,
+                  "name": "<module>"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1176,
+                  "name": "_find_and_load"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1126,
+                  "name": "_find_and_load_unlocked"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 241,
+                  "name": "_call_with_frames_removed"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1176,
+                  "name": "_find_and_load"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1147,
+                  "name": "_find_and_load_unlocked"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 690,
+                  "name": "_load_unlocked"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap_external>",
+                  "line": "",
+                  "lineno": 940,
+                  "name": "exec_module"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 241,
+                  "name": "_call_with_frames_removed"
+                },
+                {
+                  "filename": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy/core/__init__.py",
+                  "line": "from . import _internal",
+                  "lineno": 104,
+                  "name": "<module>"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1232,
+                  "name": "_handle_fromlist"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 241,
+                  "name": "_call_with_frames_removed"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1176,
+                  "name": "_find_and_load"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1147,
+                  "name": "_find_and_load_unlocked"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 690,
+                  "name": "_load_unlocked"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap_external>",
+                  "line": "",
+                  "lineno": 940,
+                  "name": "exec_module"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 241,
+                  "name": "_call_with_frames_removed"
+                },
+                {
+                  "filename": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy/core/_internal.py",
+                  "line": "import ctypes",
+                  "lineno": 15,
+                  "name": "<module>"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1176,
+                  "name": "_find_and_load"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 1147,
+                  "name": "_find_and_load_unlocked"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 690,
+                  "name": "_load_unlocked"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap_external>",
+                  "line": "",
+                  "lineno": 940,
+                  "name": "exec_module"
+                },
+                {
+                  "filename": "<frozen importlib._bootstrap>",
+                  "line": "",
+                  "lineno": 241,
+                  "name": "_call_with_frames_removed"
+                },
+                {
+                  "filename": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/ctypes/__init__.py",
+                  "line": "pythonapi = PyDLL(None)",
+                  "lineno": 466,
+                  "name": "<module>"
+                },
+                {
+                  "filename": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/ctypes/__init__.py",
+                  "line": "self._handle = _dlopen(self._name, mode)",
+                  "lineno": 376,
+                  "name": "__init__"
+                },
+                {
+                  "filename": "<string>",
+                  "line": "",
+                  "lineno": 12,
+                  "name": "audit"
+                }
+              ]
+            }
+          ],
+          "exit_code": 0,
+          "role": "supporting non-blocking audit trace for the exact call stack",
+          "stderr_path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/supporting_traces/numpy.stderr.txt",
+          "stdout_path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/supporting_traces/numpy.stdout.txt"
+        }
+      }
+    ],
+    "python_executable": "/data1/home/sunyiq/autoresearch64/.venv/bin/python",
+    "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+    "runtime_source_sha256": {
+      "src/unified_autoresearch/runtime/adapter.py": "8f732c7f3d596cd1557e06aab42ceb359dd0b3872995bea62a594aa25ca2912e",
+      "src/unified_autoresearch/runtime/bootstrap.py": "3f28a4e1076c99edecb87e29c182476ca788d1a68117cfe345dd196ca6a774f6",
+      "src/unified_autoresearch/runtime/dependencies.py": "764de2084f30e5e518c30e7f6ebc1d5074564216dafd43fc94fc33e0b6478484",
+      "src/unified_autoresearch/runtime/descriptor.py": "9b29c593da6e5227c43f9dcbb2a95925b28f4e5304c69cc9492932d9ab6a7e74",
+      "src/unified_autoresearch/runtime/layout.py": "891ea5b5435bff3fe95c53d60715e90ebe03392df5791cf0ba1ceb7a65876082",
+      "src/unified_autoresearch/runtime/outputs.py": "7be36c4728232988dd04eabb3b137c7448f6704078683a07af19321766e9a363",
+      "src/unified_autoresearch/runtime/runner.py": "96b27379e1f60729a5329a14ef3a1d0a931c5e232121f6923b0c73ae3e5505ac"
+    },
+    "schema_version": "dlopen_dependency_probe_v1"
+  },
+  "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/dlopen_probe.py\", line 271, in main\n    summary[\"probes\"].append(_run_one(package, declaration, shared_inputs, trace_root))\n                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/dlopen_probe.py\", line 219, in _run_one\n    raise RuntimeError(f\"{package}: sandbox did not succeed after the narrow allow rule\")\nRuntimeError: pandas: sandbox did not succeed after the narrow allow rule\n"
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T17:21:55+0800
