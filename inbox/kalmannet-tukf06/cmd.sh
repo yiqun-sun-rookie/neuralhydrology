@@ -2,11 +2,11 @@
 set -eo pipefail
 
 MAILBOX=/data1/home/sunyiq/hpc_mailbox
-PAYLOAD="$MAILBOX/payload/kalmannet-tukf06"
+PAYLOAD="$MAILBOX/payload/kalmannet-tukf06/retry1"
 ARCHIVE="$PAYLOAD/TUKF06_FULL_DIAGONAL_SEARCH_HEAD_TO_HEAD_V1.tar.gz"
-EXPECTED_SHA=a9f73b3394b30ffdbf2dd46b2b275163f16cd369e660ff3e3aa8053445a439fd
-TARGET=/data1/home/sunyiq/kalmannet_tukf06_20260809
-PENDING=/data1/home/sunyiq/kalmannet_tukf06_20260809.pending-a9f73b33
+EXPECTED_SHA=448d1f45b15c192171816b83d4d1303bc911991ff9e4a63fcd5333a974e861d1
+TARGET=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry1
+PENDING=/data1/home/sunyiq/kalmannet_tukf06_20260809/.retry1.pending-448d1f45
 
 cd "$MAILBOX"
 echo "=== DEPLOYMENT INPUT ==="
