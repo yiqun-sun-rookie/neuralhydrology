@@ -4,7 +4,7 @@ set -eo pipefail
 TARGET=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2
 RETRIEVAL="$TARGET/retrieval"
 SOURCE_MAILBOX=/data1/home/sunyiq/hpc_mailbox
-CLONE="$RETRIEVAL/mailbox_push_clone_v1"
+CLONE="$RETRIEVAL/mailbox_push_clone_v2"
 NAME=TUKF06_FULL_DIAGONAL_SEARCH_HEAD_TO_HEAD_V1_jobs_202136_202156_202157.tar.gz
 ARCHIVE="$RETRIEVAL/$NAME"
 MANIFEST="$RETRIEVAL/package_manifest.json"
@@ -24,7 +24,13 @@ fi
 
 origin_url=$(cd "$SOURCE_MAILBOX" && git config --get remote.origin.url)
 test -n "$origin_url"
-git clone -q -b hpc-mailbox --single-branch "$origin_url" "$CLONE"
+git clone -q -b hpc-mailbox --single-branch --no-checkout "$origin_url" "$CLONE"
+cd "$CLONE"
+git config core.autocrlf false
+git config core.safecrlf false
+git config core.sparseCheckout true
+printf '%s\n' '/outbox/kalmannet-tukf06/artifacts/' > .git/info/sparse-checkout
+git checkout -q hpc-mailbox
 DEST="$CLONE/outbox/kalmannet-tukf06/artifacts"
 mkdir -p "$DEST"
 for path in "$DEST/.gitattributes" "$DEST/$NAME" \
