@@ -1,0 +1,17 @@
+### channel=id26-v09-strict seq=24
+### host=login4
+### started=2026-08-09T16:42:31+0800
+### ---------- output ----------
+Unknown option: -C
+usage: git [--version] [--help] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+CODE_HEAD=
+SUBMITTED_JOB=202054
+JobId=202054 JobName=v09main21 UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=3-00:00:00 TimeMin=N/A SubmitTime=2026-08-09T16:42:33 EligibleTime=2026-08-09T16:42:33 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-09T16:42:33 Partition=hgpu2p AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/v09_strict/jobs/suite_remaining_21.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/v09_strict/logs/suite_remaining_202054.err StdIn=/dev/null StdOut=/data1/home/sunyiq/v09_strict/logs/suite_remaining_202054.out Power= TresPerNode=gpu:1
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T16:42:34+0800
