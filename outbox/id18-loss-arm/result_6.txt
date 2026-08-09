@@ -1,0 +1,63 @@
+### channel=id18-loss-arm seq=6
+### host=login4
+### started=2026-08-09T18:07:34+0800
+### ---------- output ----------
+=== TARGET_AND_QUEUE ===
+2026-08-09T18:07:34+0800
+     JOBID               NAME  PARTITION     STATE        TIME  NODES NODELIST(REASON)
+201920_[16          id17-gate     hgpu2p   PENDING        0:00      1 (JobArrayTaskLimit)
+ 201920_15          id17-gate     hgpu2p   RUNNING     5:14:34      1 ngu011
+ 201920_14          id17-gate     hgpu2p   RUNNING     5:58:03      1 ngu008
+ 201920_13          id17-gate     hgpu2p   RUNNING     6:15:04      1 ngu005
+ 201920_12          id17-gate     hgpu2p   RUNNING     8:06:34      1 ngu001
+ 201920_11          id17-gate     hgpu2p   RUNNING     8:31:45      1 ngu001
+ 201920_10          id17-gate     hgpu2p   RUNNING     8:39:39      1 ngu010
+  201920_9          id17-gate     hgpu2p   RUNNING     8:43:15      1 ngu004
+  201920_8          id17-gate     hgpu2p   RUNNING    10:21:33      1 ngu011
+    201893            id29_ar      hgpu4   RUNNING  1-01:19:35      1 ngu104
+    202054          v09main21     hgpu2p   RUNNING     1:24:54      1 ngu008
+ PARTITION  AVAIL  TIMELIMIT  NODES  STATE NODELIST
+    hgpu2p     up   infinite      8    mix ngu[001,004-008,010-011]
+    hgpu2p     up   infinite      1   idle ngu002
+=== FROZEN_HASH_AUDIT ===
+{
+  "source_file_count": 30,
+  "source_hash_mismatches": [],
+  "generated_config_count": 6,
+  "config_hash_mismatches": [],
+  "formal_completion_files": [],
+  "cma_version": "4.4.4",
+  "cma_file": "/data1/home/sunyiq/id18_e04_20260809/cma/__init__.py",
+  "preflight_sha256": "dca85b3a3b9e219345a1dfe860fcd893647f34119224ccc41a45a471361e8143"
+}
+=== SLURM_SCRIPTS ===
+#SBATCH -p hgpu2p
+#SBATCH --cpus-per-task=28
+#SBATCH -t 36:00:00
+#SBATCH --exclude=ngu002
+#SBATCH -o /data1/home/sunyiq/id18_e04_20260809/logs/conceptual-%j.out
+#SBATCH -e /data1/home/sunyiq/id18_e04_20260809/logs/conceptual-%j.err
+#SBATCH -p hgpu2p
+#SBATCH --cpus-per-task=8
+#SBATCH --gres=gpu:1
+#SBATCH -t 12:00:00
+#SBATCH --exclude=ngu002
+#SBATCH -o /data1/home/sunyiq/id18_e04_20260809/logs/neural-%j.out
+#SBATCH -e /data1/home/sunyiq/id18_e04_20260809/logs/neural-%j.err
+#SBATCH -p hgpu2p
+#SBATCH --cpus-per-task=8
+#SBATCH -t 04:00:00
+#SBATCH --exclude=ngu002
+#SBATCH -o /data1/home/sunyiq/id18_e04_20260809/logs/score-%j.out
+#SBATCH -e /data1/home/sunyiq/id18_e04_20260809/logs/score-%j.err
+#SBATCH -p hgpu2p
+#SBATCH --cpus-per-task=8
+#SBATCH --gres=gpu:1
+#SBATCH -t 02:00:00
+#SBATCH --exclude=ngu002
+#SBATCH -o /data1/home/sunyiq/id18_e04_20260809/logs/smoke-%j.out
+#SBATCH -e /data1/home/sunyiq/id18_e04_20260809/logs/smoke-%j.err
+E04_PRE_SBATCH_AUDIT_PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T18:07:37+0800
