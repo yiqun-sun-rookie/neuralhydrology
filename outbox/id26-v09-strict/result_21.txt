@@ -1,0 +1,42 @@
+### channel=id26-v09-strict seq=21
+### host=login4
+### started=2026-08-09T16:35:13+0800
+### ---------- output ----------
+=== JOB ===
+     JobID        State ExitCode      Elapsed 
+---------- ------------ -------- ------------ 
+    201861    COMPLETED      0:0     07:10:31 
+=== DIRS ===
+capacity/seed_100
+classic/seed_100
+continuous/seed_100
+=== LOG TAIL ===
+      "B09-CAPACITY-S600",
+      "B09-CLASSIC-S600",
+      "B09-CLASSIC-S700",
+      "B09-CAPACITY-S700",
+      "E09-CONTINUOUS-S700",
+      "B09-CAPACITY-S800",
+      "E09-CONTINUOUS-S800",
+      "B09-CLASSIC-S800"
+    ],
+    "total": 24
+  },
+  "schema": "historical_multiscale_formal_v09_training_suite_v1",
+  "started_this_call": [
+    "B09-CLASSIC-S100",
+    "B09-CAPACITY-S100",
+    "E09-CONTINUOUS-S100"
+  ],
+  "status": "suite_incomplete"
+}
+end=2026-08-08T22:47:13+08:00
+=== ARMS ===
+classic    : formal_training_complete params=297217 steps=204630 wake=None loss 0.04088 -> 0.01017
+capacity   : formal_training_complete params=595198 steps=204630 wake=None loss 0.03614 -> 0.00855
+continuous : formal_training_complete params=596737 steps=204630 wake=2 loss 0.03684 -> 0.00961
+             step1 gate_abs_max=0.0 enc_grad=0.0 gate_grad=20.5132
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T16:35:15+0800
