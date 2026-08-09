@@ -1,0 +1,37 @@
+### channel=id26-v09-strict seq=27
+### host=login4
+### started=2026-08-09T21:00:59+0800
+### ---------- output ----------
+=== JOB ===
+     JOBID        STATE         TIME           START_TIME     NODELIST(REASON)
+    202054      RUNNING      4:18:19  2026-08-09T16:42:40               ngu008
+     JobID        State ExitCode                Start      Elapsed 
+---------- ------------ -------- -------------------- ------------ 
+    202054      RUNNING      0:0  2026-08-09T16:42:40     04:18:19 
+=== PROGRESS SUMMARY ===
+completed=5
+building=0
+failed=0
+=== CURRENT BUILDING ===
+=== FAILED DIRS ===
+=== FAILURE RECORD ===
+none
+=== COMPLETED RUNS ===
+capacity/seed_100
+classic/seed_100
+classic/seed_200
+continuous/seed_100
+continuous/seed_200
+=== LOG TAIL ===
+node=ngu008 start=2026-08-09T16:41:59+08:00
+0, NVIDIA GeForce RTX 3090, 23268 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+Mem:             251           8          83           0         161         243
+=== RUN SUITE: remaining formal trainings (no max-runs) ===
+{"run_id": "B09-CLASSIC-S200", "status": "formal_training_complete"}
+{"run_id": "E09-CONTINUOUS-S200", "status": "formal_training_complete"}
+=== ERROR TAIL ===
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T21:01:00+0800
