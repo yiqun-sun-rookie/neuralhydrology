@@ -1,0 +1,28 @@
+### channel=id18-loss-arm seq=5
+### host=login4
+### started=2026-08-09T18:03:35+0800
+### ---------- output ----------
+=== PRECONDITIONS ===
+2026-08-09T18:03:35+0800
+payload_sha256=509de349ce6bcb3479bb5872b1a0063fc3b6df472bc9a6b860f86cc3a8cd19bb
+=== EXTRACT_NEW_TARGET ===
+tar: Ignoring unknown extended header keyword `SCHILY.fflags'
+=== ISOLATED_IMPORTS ===
+{"cma_version": "4.4.4", "cma_file": "/data1/home/sunyiq/id18_e04_20260809.deploying_seq5/cma/__init__.py", "numpy_version": "2.3.3", "pandas_version": "2.3.2", "torch_version": "2.4.0", "xarray_version": "2025.12.0"}
+=== MATERIALIZE_PROTOCOL ===
+{"experiment_id": "E04_daymet_post2008_objective_confirmation_482", "generated_config_count": 6}
+deployment_sha256=d1af38c447912bee71bf894e1d9e1712d46e287c998bc6af4a2db7da978b3f6d
+=== DEPLOYED_FILES ===
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/deployment.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/e04_daymet_confirmation_contract.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/generated_configs/flow_regime_nse_s100.yml
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/generated_configs/flow_regime_nse_s200.yml
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/generated_configs/flow_regime_nse_s300.yml
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/generated_configs/nse_s100.yml
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/generated_configs/nse_s200.yml
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/generated_configs/nse_s300.yml
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/preflight.json
+E04_ISOLATED_DEPLOYMENT_PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T18:04:19+0800
