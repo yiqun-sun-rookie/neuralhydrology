@@ -1,0 +1,94 @@
+### channel=kalmannet-tukf06 seq=2
+### host=login4
+### started=2026-08-09T21:01:33+0800
+### ---------- output ----------
+=== HCPU48 AVAILABILITY ===
+NODELIST     PARTITION    STATE      CPUS  MEMORY     FREE_MEM   REASON                        
+icn201       hcpu48*      allocated  48    1          71441      none                          
+icn202       hcpu48*      allocated$ 48    1          36165      none                          
+icn203       hcpu48*      down*      48    1          N/A        Not responding                
+icn204       hcpu48*      allocated$ 48    1          35888      none                          
+icn205       hcpu48*      allocated$ 48    1          29079      none                          
+icn206       hcpu48*      allocated$ 48    1          39663      none                          
+icn207       hcpu48*      allocated$ 48    1          37914      none                          
+icn208       hcpu48*      idle       48    1          74492      none                          
+icn209       hcpu48*      idle       48    1          73018      none                          
+icn210       hcpu48*      allocated$ 48    1          36244      none                          
+icn211       hcpu48*      allocated$ 48    1          39587      none                          
+icn212       hcpu48*      allocated$ 48    1          41174      none                          
+icn213       hcpu48*      allocated  48    1          73886      none                          
+icn214       hcpu48*      maint      48    1          62909      none                          
+icn215       hcpu48*      down*      48    1          N/A        Not responding                
+icn216       hcpu48*      allocated$ 48    1          35145      none                          
+icn217       hcpu48*      allocated$ 48    1          35443      none                          
+icn218       hcpu48*      down*      48    1          N/A        Not responding                
+icn219       hcpu48*      idle       48    1          71039      none                          
+icn220       hcpu48*      maint      48    1          67192      none                          
+icn221       hcpu48*      maint      48    1          56749      none                          
+icn222       hcpu48*      idle       48    1          66107      none                          
+icn223       hcpu48*      idle       48    1          68556      none                          
+icn224       hcpu48*      down*      48    1          N/A        Not responding                
+icn225       hcpu48*      idle       48    1          70561      none                          
+icn226       hcpu48*      allocated  48    1          54272      none                          
+icn227       hcpu48*      idle       48    1          70379      none                          
+icn228       hcpu48*      idle       48    1          70419      none                          
+icn229       hcpu48*      idle       48    1          65810      none                          
+icn230       hcpu48*      down*      48    1          N/A        Not responding                
+icn231       hcpu48*      idle       48    1          67347      none                          
+icn232       hcpu48*      idle       48    1          66838      none                          
+icn233       hcpu48*      down*      48    1          N/A        Not responding                
+icn234       hcpu48*      down*      48    1          N/A        Not responding                
+icn235       hcpu48*      down*      48    1          N/A        Not responding                
+icn236       hcpu48*      down*      48    1          N/A        Not responding                
+icn237       hcpu48*      down*      48    1          N/A        Not responding                
+icn238       hcpu48*      idle       48    1          71000      none                          
+icn239       hcpu48*      down*      48    1          N/A        Not responding                
+icn240       hcpu48*      idle       48    1          66726      none                          
+icn241       hcpu48*      idle       48    1          68617      none                          
+icn242       hcpu48*      down*      48    1          N/A        Not responding                
+icn243       hcpu48*      down*      48    1          N/A        Not responding                
+icn244       hcpu48*      idle       48    1          74453      none                          
+icn245       hcpu48*      down*      48    1          N/A        Not responding                
+icn246       hcpu48*      maint      48    1          73462      none                          
+icn247       hcpu48*      down*      48    1          N/A        Not responding                
+icn248       hcpu48*      idle       48    1          72064      none                          
+icn249       hcpu48*      maint      48    1          66413      none                          
+icn250       hcpu48*      idle       48    1          71669      none                          
+icn251       hcpu48*      idle       48    1          68480      none                          
+icn252       hcpu48*      idle       48    1          72244      none                          
+icn253       hcpu48*      idle       48    1          67361      none                          
+icn254       hcpu48*      idle       48    1          68565      none                          
+icn255       hcpu48*      idle       48    1          65593      none                          
+icn256       hcpu48*      down*      48    1          N/A        Not responding                
+icn257       hcpu48*      idle       48    1          64952      none                          
+icn258       hcpu48*      idle       48    1          60136      none                          
+icn259       hcpu48*      idle       48    1          70841      none                          
+icn260       hcpu48*      idle       48    1          71690      none                          
+icn261       hcpu48*      idle       48    1          69148      none                          
+icn262       hcpu48*      idle       48    1          71222      none                          
+icn263       hcpu48*      idle       48    1          67083      none                          
+icn264       hcpu48*      idle       48    1          75182      none                          
+=== HCPU48 PARTITION POLICY ===
+PartitionName=hcpu48
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=YES QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=icn[201-264]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=EXCLUSIVE
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=3072 TotalNodes=64 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+=== CURRENT USER CPU JOBS ===
+             JOBID                     NAME  PARTITION    STATE       TIME     NODELIST(REASON)
+=== DATA FILE EXAMPLES ===
+/data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/maurer/04/04105700_lump_maurer_forcing_leap.txt
+/data1/home/sunyiq/neuralhydrology/data/camels_us/usgs_streamflow/04/04105700_streamflow_qc.txt
+=== STANDALONE DATA LOADER ===
+LOADER_FILE /data1/home/sunyiq/neuralhydrology/src/hydroagent/data_loading.py
+LOAD_CAMELS_BASIN_AVAILABLE True
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T21:01:39+0800
