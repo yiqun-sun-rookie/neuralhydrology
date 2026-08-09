@@ -1,0 +1,44 @@
+### channel=id18-loss-arm seq=3
+### host=login4
+### started=2026-08-09T17:55:03+0800
+### ---------- output ----------
+=== TIME_AND_RUNNER ===
+2026-08-09T17:55:03+0800
+runner delivered id18-loss-arm seq=3
+=== QUEUE ===
+     JOBID               NAME  PARTITION     STATE        TIME  NODES NODELIST(REASON)
+201920_[16          id17-gate     hgpu2p   PENDING        0:00      1 (JobArrayTaskLimit)
+ 201920_15          id17-gate     hgpu2p   RUNNING     5:02:03      1 ngu011
+ 201920_14          id17-gate     hgpu2p   RUNNING     5:45:32      1 ngu008
+ 201920_13          id17-gate     hgpu2p   RUNNING     6:02:33      1 ngu005
+ 201920_12          id17-gate     hgpu2p   RUNNING     7:54:03      1 ngu001
+ 201920_11          id17-gate     hgpu2p   RUNNING     8:19:14      1 ngu001
+ 201920_10          id17-gate     hgpu2p   RUNNING     8:27:08      1 ngu010
+  201920_9          id17-gate     hgpu2p   RUNNING     8:30:44      1 ngu004
+  201920_8          id17-gate     hgpu2p   RUNNING    10:09:02      1 ngu011
+    201893            id29_ar      hgpu4   RUNNING  1-01:07:04      1 ngu104
+    202054          v09main21     hgpu2p   RUNNING     1:12:23      1 ngu008
+=== PARTITION ===
+ PARTITION  AVAIL  TIMELIMIT  NODES  STATE NODELIST
+    hgpu2p     up   infinite      8    mix ngu[001,004-008,010-011]
+    hgpu2p     up   infinite      1   idle ngu002
+=== MAIN_REPO_READ_ONLY ===
+migration/reorg-v1
+78
+=== ISOLATED_TARGET ===
+TARGET_ABSENT
+=== DATA_COVERAGE ===
+677
+01022500 forcing=/data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/daymet/01/01022500_lump_cida_forcing_leap.txt
+2014 12 31 12	31104.01	0.00	187.35	0.00	-7.25	-16.56	160.00
+11475560 forcing=/data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/daymet/18/11475560_lump_cida_forcing_leap.txt
+2014 12 31 12	33177.60	0.00	257.98	0.00	12.62	-2.43	520.00
+14362250 forcing=/data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/daymet/17/14362250_lump_cida_forcing_leap.txt
+2014 12 31 12	32140.80	0.00	257.11	0.00	6.12	-6.00	400.00
+=== PYTHON_ENVIRONMENT ===
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ModuleNotFoundError: No module named 'cma'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-09T17:55:09+0800
