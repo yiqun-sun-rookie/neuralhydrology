@@ -1,0 +1,28 @@
+### channel=id26-v09-strict seq=25
+### host=login4
+### started=2026-08-09T16:45:20+0800
+### ---------- output ----------
+=== JOB ===
+     JOBID        STATE         TIME           START_TIME     NODELIST(REASON)
+    202054      RUNNING         2:40  2026-08-09T16:42:40               ngu008
+     JobID        State ExitCode                Start      Elapsed 
+---------- ------------ -------- -------------------- ------------ 
+    202054      RUNNING      0:0  2026-08-09T16:42:40     00:02:40 
+=== CODE ===
+HEAD
+bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
+=== PROGRESS ===
+capacity/seed_100
+classic/seed_100
+classic/seed_200.building
+continuous/seed_100
+=== LOG TAIL ===
+node=ngu008 start=2026-08-09T16:41:59+08:00
+0, NVIDIA GeForce RTX 3090, 23268 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+Mem:             251           8          83           0         161         243
+=== RUN SUITE: remaining formal trainings (no max-runs) ===
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T16:45:21+0800
