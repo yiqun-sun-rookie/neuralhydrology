@@ -1,0 +1,542 @@
+### channel=autoresearch-64 seq=22
+### host=login4
+### started=2026-08-09T19:31:36+0800
+### ---------- output ----------
+=== EXISTENCE AND SIZES ===
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/PROBE_pandas.json bytes=13246 modified=2026-08-09 17:21:52.000000000 +0800
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/runs/pandas/logs/access.jsonl bytes=65277 modified=2026-08-09 17:21:51.000000000 +0800
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/runs/pandas/logs/runtime-result.json bytes=706 modified=2026-08-09 17:21:51.000000000 +0800
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/runs/pandas/logs/dependency-preflight.json bytes=1198 modified=2026-08-09 17:21:49.000000000 +0800
+=== PANDAS PROBE ===
+{
+  "declaration": "pandas==2.2.3",
+  "dependency_preflight": {
+    "decision": "launch",
+    "initialization_probe_error": null,
+    "initialization_read_roots": [
+      "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/__pycache__/six.cpython-311.pyc",
+      "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil",
+      "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy",
+      "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pandas",
+      "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pyarrow",
+      "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pytz",
+      "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/six.py"
+    ],
+    "matches": [
+      {
+        "active_module_path": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pandas/__init__.py",
+        "active_probe_error": null,
+        "active_version": "2.2.3",
+        "declaration": "pandas==2.2.3",
+        "installed_versions": [
+          "2.2.3"
+        ],
+        "matched": true,
+        "package_name": "pandas",
+        "requested_version": "2.2.3"
+      }
+    ],
+    "requested": [
+      "pandas==2.2.3"
+    ],
+    "schema_version": "dependency_preflight_v1"
+  },
+  "package": "pandas",
+  "sandbox": {
+    "access_log_path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/runs/pandas/logs/access.jsonl",
+    "ctypes_dlopen_denials": [],
+    "ctypes_dlopen_denied": false,
+    "ctypes_dlopen_events": [
+      {
+        "decision": "allow",
+        "event": "ctypes.dlopen",
+        "library": null,
+        "reason": "declared dependency initialization requires the current-process handle",
+        "symbol": null
+      }
+    ],
+    "denied_event_count": 1,
+    "last_12_access_events": [
+      {
+        "decision": "allow",
+        "event": "open",
+        "operation": "read",
+        "path": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil/tz/__pycache__/tz.cpython-311.pyc"
+      },
+      {
+        "decision": "allow",
+        "event": "import",
+        "module": "six",
+        "reason": "declared dependency initialization"
+      },
+      {
+        "decision": "allow",
+        "event": "open",
+        "operation": "read",
+        "path": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/__pycache__/six.cpython-311.pyc"
+      },
+      {
+        "decision": "allow",
+        "event": "import",
+        "module": "six.moves",
+        "reason": "declared dependency initialization"
+      },
+      {
+        "decision": "allow",
+        "event": "import",
+        "module": "dateutil.tz._common",
+        "reason": "declared dependency initialization"
+      },
+      {
+        "decision": "allow",
+        "event": "open",
+        "operation": "read",
+        "path": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil/tz/__pycache__/_common.cpython-311.pyc"
+      },
+      {
+        "decision": "allow",
+        "event": "import",
+        "module": "dateutil.tz._factories",
+        "reason": "declared dependency initialization"
+      },
+      {
+        "decision": "allow",
+        "event": "open",
+        "operation": "read",
+        "path": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil/tz/__pycache__/_factories.cpython-311.pyc"
+      },
+      {
+        "decision": "allow",
+        "event": "import",
+        "module": "dateutil.tz.win",
+        "reason": "declared dependency initialization"
+      },
+      {
+        "decision": "allow",
+        "event": "open",
+        "operation": "read",
+        "path": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil/tz/__pycache__/win.cpython-311.pyc"
+      },
+      {
+        "decision": "allow",
+        "event": "import",
+        "module": "six.moves.winreg",
+        "reason": "declared dependency initialization"
+      },
+      {
+        "decision": "deny",
+        "event": "open",
+        "operation": "read",
+        "path": "/usr/share/zoneinfo/UTC"
+      }
+    ],
+    "normalized_exit_code": 2,
+    "process_exit_code": 2,
+    "runtime_result": {
+      "candidate_id": "dlopen-probe-pandas-v1",
+      "checkpoint_id": null,
+      "checkpoint_root_sha256": null,
+      "denied_event_count": 1,
+      "dependency_preflight_decision": "launch",
+      "mode": "train",
+      "normalized_exit_code": 2,
+      "output_contract": {
+        "actual_top_level": [],
+        "expected_top_level": [
+          "model_artifacts"
+        ],
+        "failures": [
+          "required top-level outputs are missing: ['model_artifacts']"
+        ],
+        "valid": false
+      },
+      "process_exit_code": 2,
+      "required_outputs_complete": false,
+      "resource_preflight_decision": "launch",
+      "resume_checkpoint_id": null,
+      "resume_checkpoint_root_sha256": null,
+      "schema_version": "runtime_result_v1",
+      "status": "contract_failure"
+    },
+    "status": "contract_failure"
+  },
+  "trace": {
+    "ctypes_dlopen_events": [
+      {
+        "arguments": [
+          "None"
+        ],
+        "event": "ctypes.dlopen",
+        "stack": [
+          {
+            "filename": "<frozen importlib._bootstrap_external>",
+            "line": "",
+            "lineno": 940,
+            "name": "exec_module"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 241,
+            "name": "_call_with_frames_removed"
+          },
+          {
+            "filename": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pandas/__init__.py",
+            "line": "__import__(_dependency)",
+            "lineno": 14,
+            "name": "<module>"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1176,
+            "name": "_find_and_load"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1147,
+            "name": "_find_and_load_unlocked"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 690,
+            "name": "_load_unlocked"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap_external>",
+            "line": "",
+            "lineno": 940,
+            "name": "exec_module"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 241,
+            "name": "_call_with_frames_removed"
+          },
+          {
+            "filename": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy/__init__.py",
+            "line": "from numpy.__config__ import show as show_config",
+            "lineno": 130,
+            "name": "<module>"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1176,
+            "name": "_find_and_load"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1147,
+            "name": "_find_and_load_unlocked"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 690,
+            "name": "_load_unlocked"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap_external>",
+            "line": "",
+            "lineno": 940,
+            "name": "exec_module"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 241,
+            "name": "_call_with_frames_removed"
+          },
+          {
+            "filename": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy/__config__.py",
+            "line": "from numpy.core._multiarray_umath import (",
+            "lineno": 4,
+            "name": "<module>"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1176,
+            "name": "_find_and_load"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1126,
+            "name": "_find_and_load_unlocked"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 241,
+            "name": "_call_with_frames_removed"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1176,
+            "name": "_find_and_load"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1147,
+            "name": "_find_and_load_unlocked"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 690,
+            "name": "_load_unlocked"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap_external>",
+            "line": "",
+            "lineno": 940,
+            "name": "exec_module"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 241,
+            "name": "_call_with_frames_removed"
+          },
+          {
+            "filename": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy/core/__init__.py",
+            "line": "from . import _internal",
+            "lineno": 104,
+            "name": "<module>"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1232,
+            "name": "_handle_fromlist"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 241,
+            "name": "_call_with_frames_removed"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1176,
+            "name": "_find_and_load"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1147,
+            "name": "_find_and_load_unlocked"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 690,
+            "name": "_load_unlocked"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap_external>",
+            "line": "",
+            "lineno": 940,
+            "name": "exec_module"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 241,
+            "name": "_call_with_frames_removed"
+          },
+          {
+            "filename": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy/core/_internal.py",
+            "line": "import ctypes",
+            "lineno": 15,
+            "name": "<module>"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1176,
+            "name": "_find_and_load"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 1147,
+            "name": "_find_and_load_unlocked"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 690,
+            "name": "_load_unlocked"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap_external>",
+            "line": "",
+            "lineno": 940,
+            "name": "exec_module"
+          },
+          {
+            "filename": "<frozen importlib._bootstrap>",
+            "line": "",
+            "lineno": 241,
+            "name": "_call_with_frames_removed"
+          },
+          {
+            "filename": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/ctypes/__init__.py",
+            "line": "pythonapi = PyDLL(None)",
+            "lineno": 466,
+            "name": "<module>"
+          },
+          {
+            "filename": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/ctypes/__init__.py",
+            "line": "self._handle = _dlopen(self._name, mode)",
+            "lineno": 376,
+            "name": "__init__"
+          },
+          {
+            "filename": "<string>",
+            "line": "",
+            "lineno": 12,
+            "name": "audit"
+          }
+        ]
+      }
+    ],
+    "exit_code": 0,
+    "role": "supporting non-blocking audit trace for the exact call stack",
+    "stderr_path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/supporting_traces/pandas.stderr.txt",
+    "stdout_path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_fix_validation_20260809_seq21/evidence/supporting_traces/pandas.stdout.txt"
+  }
+}
+=== PANDAS ACCESS LOG TAIL ===
+{"decision":"allow","event":"import","module":"pandas._libs.pandas_parser","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.pandas_datetime","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.pandas_datetime","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.interval","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.interval","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.hashtable","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.hashtable","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.missing","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.missing","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.nattype","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pandas/_libs/tslibs/__pycache__/__init__.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.dtypes","reason":"declared dependency initialization"}
+{"decision":"allow","event":"os.listdir","operation":"read","path":"/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pandas/_libs/tslibs"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.dtypes","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.ccalendar","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.ccalendar","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.np_datetime","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.np_datetime","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.conversion","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.conversion","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.base","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.base","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.offsets","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.offsets","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.timestamps","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.timestamps","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.nattype","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.nattype","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.timedeltas","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.timedeltas","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.timezones","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas._libs.tslibs.timezones","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"pandas.compat._optional","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pandas/compat/__pycache__/_optional.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"zoneinfo","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/zoneinfo/__pycache__/__init__.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"zoneinfo._tzpath","reason":"declared dependency initialization"}
+{"decision":"allow","event":"os.listdir","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/zoneinfo"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/zoneinfo/__pycache__/_tzpath.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"zoneinfo._common","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/zoneinfo/__pycache__/_common.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"_zoneinfo","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"_zoneinfo","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"dateutil.tz","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil/tz/__pycache__/__init__.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"dateutil.tz.tz","reason":"declared dependency initialization"}
+{"decision":"allow","event":"os.listdir","operation":"read","path":"/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil/tz"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil/tz/__pycache__/tz.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"six","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/__pycache__/six.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"six.moves","reason":"declared dependency initialization"}
+{"decision":"allow","event":"import","module":"dateutil.tz._common","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil/tz/__pycache__/_common.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"dateutil.tz._factories","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil/tz/__pycache__/_factories.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"dateutil.tz.win","reason":"declared dependency initialization"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil/tz/__pycache__/win.cpython-311.pyc"}
+{"decision":"allow","event":"import","module":"six.moves.winreg","reason":"declared dependency initialization"}
+{"decision":"deny","event":"open","operation":"read","path":"/usr/share/zoneinfo/UTC"}
+=== PANDAS RUNTIME RESULT ===
+{
+  "candidate_id": "dlopen-probe-pandas-v1",
+  "checkpoint_id": null,
+  "checkpoint_root_sha256": null,
+  "denied_event_count": 1,
+  "dependency_preflight_decision": "launch",
+  "mode": "train",
+  "normalized_exit_code": 2,
+  "output_contract": {
+    "actual_top_level": [],
+    "expected_top_level": [
+      "model_artifacts"
+    ],
+    "failures": [
+      "required top-level outputs are missing: ['model_artifacts']"
+    ],
+    "valid": false
+  },
+  "process_exit_code": 2,
+  "required_outputs_complete": false,
+  "resource_preflight_decision": "launch",
+  "resume_checkpoint_id": null,
+  "resume_checkpoint_root_sha256": null,
+  "schema_version": "runtime_result_v1",
+  "status": "contract_failure"
+}
+=== PANDAS DEPENDENCY PREFLIGHT ===
+{
+  "decision": "launch",
+  "initialization_probe_error": null,
+  "initialization_read_roots": [
+    "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/__pycache__/six.cpython-311.pyc",
+    "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/dateutil",
+    "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/numpy",
+    "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pandas",
+    "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pyarrow",
+    "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pytz",
+    "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/six.py"
+  ],
+  "matches": [
+    {
+      "active_module_path": "/data1/home/sunyiq/autoresearch64/.venv/lib/python3.11/site-packages/pandas/__init__.py",
+      "active_probe_error": null,
+      "active_version": "2.2.3",
+      "declaration": "pandas==2.2.3",
+      "installed_versions": [
+        "2.2.3"
+      ],
+      "matched": true,
+      "package_name": "pandas",
+      "requested_version": "2.2.3"
+    }
+  ],
+  "requested": [
+    "pandas==2.2.3"
+  ],
+  "schema_version": "dependency_preflight_v1"
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T19:31:36+0800
