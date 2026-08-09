@@ -1,0 +1,26 @@
+### channel=id18-loss-arm seq=12
+### host=login4
+### started=2026-08-09T19:44:40+0800
+### ---------- output ----------
+{
+  "source_hash_mismatches": [],
+  "config_hash_mismatches": [],
+  "smoke_conceptual_completions": [
+    "smoke/conceptual/flow_regime_nse/gr4j/completion.json",
+    "smoke/conceptual/flow_regime_nse/hbv_lite/completion.json",
+    "smoke/conceptual/flow_regime_nse/xaj/completion.json",
+    "smoke/conceptual/nse/gr4j/completion.json",
+    "smoke/conceptual/nse/hbv_lite/completion.json",
+    "smoke/conceptual/nse/xaj/completion.json"
+  ],
+  "smoke_neural_completions": [
+    "smoke/neural_completions/flow_regime_nse_s100.json",
+    "smoke/neural_completions/nse_s100.json"
+  ],
+  "formal_conceptual_completions": [],
+  "formal_neural_completions": []
+}
+E04_POST_SMOKE_ISOLATION_PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T19:44:40+0800
