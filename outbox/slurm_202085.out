@@ -1,0 +1,60 @@
+=== ENVIRONMENT ===
+/data1/home/sunyiq/autoresearch64/.venv/bin/python
+3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]
+compiled_tzpath=/data1/home/sunyiq/miniconda3/envs/nh_final/share/zoneinfo:/data1/home/sunyiq/miniconda3/envs/nh_final/share/tzinfo
+3bb7fdfd48a38a10e0d7bba8ec302856e4c184836fd12fd4f16e591059dae26c  /data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/dlopen_probe.py
+31970695c64577a8a2158478d259a0c6332c0ff02aee8674cb5271b5ee55f9eb  /data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/runtime_dlopen_timezone.patch
+=== CREATE ISOLATED SOURCE SNAPSHOT ===
+patching file src/unified_autoresearch/runtime/bootstrap.py
+patching file src/unified_autoresearch/runtime/runner.py
+expected_bootstrap_sha256=85652feb4e2d28c78ad28cf65ccdb257578b65e5b14a671f3be28a279dda3e0e
+actual_bootstrap_sha256=85652feb4e2d28c78ad28cf65ccdb257578b65e5b14a671f3be28a279dda3e0e
+expected_runner_sha256=50d82fe4e139eea10461cad720aea3f8f6f61aa27924ad221208ecf1604b7831
+actual_runner_sha256=50d82fe4e139eea10461cad720aea3f8f6f61aa27924ad221208ecf1604b7831
+=== THREE ISOLATED SANDBOX PROBES AFTER NARROW DLOPEN AND TIMEZONE FIXES ===
+=== RESULT SUMMARY ===
+  "diagnostic_complete": true,
+      "package": "numpy",
+        "ctypes_dlopen_denied": false,
+        "process_exit_code": 0,
+          "process_exit_code": 0,
+          "required_outputs_complete": true,
+          "status": "succeeded"
+        "status": "succeeded"
+      "package": "pandas",
+        "ctypes_dlopen_denied": false,
+        "process_exit_code": 0,
+          "process_exit_code": 0,
+          "required_outputs_complete": true,
+          "status": "succeeded"
+        "status": "succeeded"
+      "package": "pyarrow",
+        "ctypes_dlopen_denied": false,
+        "process_exit_code": 0,
+          "process_exit_code": 0,
+          "required_outputs_complete": true,
+          "status": "succeeded"
+        "status": "succeeded"
+=== SANDBOX DYNAMIC-LOADING EVENTS ===
+--- numpy ---
+{"decision":"allow","event":"ctypes.dlopen","library":null,"reason":"declared dependency initialization requires the current-process handle","symbol":null}
+--- pandas ---
+{"decision":"allow","event":"ctypes.dlopen","library":null,"reason":"declared dependency initialization requires the current-process handle","symbol":null}
+--- pyarrow ---
+{"decision":"allow","event":"ctypes.dlopen","library":null,"reason":"declared dependency initialization requires the current-process handle","symbol":null}
+=== PHASE-SCOPED SYSTEM TIMEZONE READS ===
+--- numpy policy ---
+  "dependency_initialization_system_read_paths": [
+--- numpy timezone reads ---
+--- pandas policy ---
+  "dependency_initialization_system_read_paths": [
+--- pandas timezone reads ---
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/zoneinfo/__pycache__/__init__.cpython-311.pyc"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/zoneinfo/__pycache__/_tzpath.cpython-311.pyc"}
+{"decision":"allow","event":"open","operation":"read","path":"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/zoneinfo/__pycache__/_common.cpython-311.pyc"}
+{"decision":"allow","event":"open","operation":"read","path":"/usr/share/zoneinfo/UTC"}
+--- pyarrow policy ---
+  "dependency_initialization_system_read_paths": [
+--- pyarrow timezone reads ---
+summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/evidence/SUMMARY.json
+manifest=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/evidence/MANIFEST.sha256
