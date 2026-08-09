@@ -23,7 +23,7 @@ tail -220 "outbox/slurm_${JID}.out" 2>/dev/null
 echo "=== JOB STDERR ==="
 tail -160 "outbox/slurm_${JID}.err" 2>/dev/null
 echo "=== PRESERVED EVIDENCE ==="
-EVIDENCE=~/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq23/evidence
+EVIDENCE=~/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/evidence
 [ -f "$EVIDENCE/SUMMARY.json" ] && echo "summary=$EVIDENCE/SUMMARY.json"
 [ -f "$EVIDENCE/MANIFEST.sha256" ] && echo "manifest=$EVIDENCE/MANIFEST.sha256"
 [ -f "$EVIDENCE/ERROR.json" ] && cat "$EVIDENCE/ERROR.json"

@@ -22,10 +22,10 @@ cd "$ROOT" || exit 1
 
 DRIVER=/data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/dlopen_probe.py
 PATCH_FILE=/data1/home/sunyiq/hpc_mailbox/inbox/autoresearch-64/runtime_dlopen_timezone.patch
-WORK_ROOT="$ROOT/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq23"
+WORK_ROOT="$ROOT/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24"
 EVIDENCE="$WORK_ROOT/evidence"
-EXPECTED_BOOTSTRAP_SHA256=cfa856be50c0549694a7a7c226a1f84b3b6d47dbcd1fc15587bfaa5c87a9cb18
-EXPECTED_RUNNER_SHA256=202b67d56e9a0f1535de225f6085ba8f7f199e591b46f13473d85b27b7551227
+EXPECTED_BOOTSTRAP_SHA256=85652feb4e2d28c78ad28cf65ccdb257578b65e5b14a671f3be28a279dda3e0e
+EXPECTED_RUNNER_SHA256=50d82fe4e139eea10461cad720aea3f8f6f61aa27924ad221208ecf1604b7831
 
 echo "=== ENVIRONMENT ==="
 python -c "import sys; print(sys.executable); print(sys.version)"
@@ -37,6 +37,7 @@ echo "=== CREATE ISOLATED SOURCE SNAPSHOT ==="
 [ ! -e "$WORK_ROOT" ] || { echo "WORK_ROOT_ALREADY_EXISTS"; exit 2; }
 mkdir -p "$WORK_ROOT/src"
 cp -a "$ROOT/src/unified_autoresearch" "$WORK_ROOT/src/"
+sed -i 's/\r$//' "$WORK_ROOT/src/unified_autoresearch/runtime/runner.py"
 patch --batch -p1 -d "$WORK_ROOT" < "$PATCH_FILE"
 ACTUAL_BOOTSTRAP_SHA256=$(sha256sum "$WORK_ROOT/src/unified_autoresearch/runtime/bootstrap.py" | cut -d' ' -f1)
 ACTUAL_RUNNER_SHA256=$(sha256sum "$WORK_ROOT/src/unified_autoresearch/runtime/runner.py" | cut -d' ' -f1)
@@ -66,7 +67,7 @@ done
 echo "=== PHASE-SCOPED SYSTEM TIMEZONE READS ==="
 for PACKAGE in numpy pandas pyarrow; do
   echo "--- $PACKAGE policy ---"
-  grep 'dependency_initialization_system_read_roots' "$EVIDENCE/runs/$PACKAGE/logs/runtime-policy.json"
+  grep 'dependency_initialization_system_read_paths' "$EVIDENCE/runs/$PACKAGE/logs/runtime-policy.json"
   echo "--- $PACKAGE timezone reads ---"
   grep '/zoneinfo/' "$EVIDENCE/runs/$PACKAGE/logs/access.jsonl" || true
 done
