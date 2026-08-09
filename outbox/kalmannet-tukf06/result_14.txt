@@ -1,0 +1,18 @@
+### channel=kalmannet-tukf06 seq=14
+### host=login4
+### started=2026-08-10T01:21:11+0800
+### ---------- output ----------
+selection_audit_job_id=202141
+             JobID              JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------------ -------------------- ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+            202141         tukf06-audit     hcpu48       icn201             FAILED    127:0   00:00:03    00:01.115              
+      202141.batch                batch                  icn201             FAILED    127:0   00:00:03    00:01.113        1584K 
+     202141.extern               extern                  icn201          COMPLETED      0:0   00:00:04    00:00.002        1156K 
+=== SCHEDULED AUDIT STDOUT ===
+=== FORMAL SELECTION ACCOUNTING ===
+=== SCHEDULED AUDIT STDERR ===
+/data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-tukf06/cmd.sh: line 65: sacct: command not found
+scheduled selection audit failed: state=FAILED exit_code=127:0
+### ---------- end ----------
+### exit_code=87
+### finished=2026-08-10T01:21:21+0800
