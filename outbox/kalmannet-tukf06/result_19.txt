@@ -1,0 +1,118 @@
+### channel=kalmannet-tukf06 seq=19
+### host=login4
+### started=2026-08-10T02:02:27+0800
+### ---------- output ----------
+EVALUATION_COMPLETE verdict=NO_DISCERNIBLE_ADVANTAGE paired_median=+0.002163
+evaluation_audit_job_id=202157
+             JobID              JobName  Partition     NodeList              State ExitCode    Elapsed     TotalCPU       MaxRSS 
+------------------ -------------------- ---------- ------------ ------------------ -------- ---------- ------------ ------------ 
+            202157    tukf06-eval-audit     hcpu48       icn201          COMPLETED      0:0   00:00:02    00:01.376              
+      202157.batch                batch                  icn201          COMPLETED      0:0   00:00:02    00:01.374        1588K 
+     202157.extern               extern                  icn201          COMPLETED      0:0   00:00:02    00:00.002        1152K 
+=== SCHEDULED EVALUATION AUDIT STDOUT ===
+{
+  "basin_count": 21,
+  "bootstrap_95_percent_interval": [
+    0.0,
+    0.006379855418264764
+  ],
+  "catastrophic_lead1_basin_count": {
+    "backpropagation_filter": 0,
+    "default_noise_filter": 0,
+    "sampling_search_filter": 0
+  },
+  "evaluation_manifest_member_count": 43,
+  "evaluation_manifest_sha256": "50fbdc6c44efa9e055f1ebd8772c992bb98dc9ca77a854d676954cd39f609965",
+  "evaluation_role": "reused_historical_benchmark",
+  "evaluation_summary_sha256": "f053e8f9af10ec82e4005ed113e7d987bf4a9f09399383b4411e3d55a9720a9d",
+  "evaluation_wall_seconds": 29.9852895103395,
+  "experiment_id": "TUKF06_FULL_DIAGONAL_SEARCH_HEAD_TO_HEAD_V1",
+  "finite_on_every_common_scoring_index": true,
+  "median_filter_gain_vs_same_forcing_open_loop": {
+    "backpropagation_filter": {
+      "1": 0.10848598450552838,
+      "2": 0.08420523139491887,
+      "3": 0.038440530684952345
+    },
+    "default_noise_filter": {
+      "1": 0.020786429106602555,
+      "2": 0.011552104606073588,
+      "3": 0.007536424485256821
+    },
+    "sampling_search_filter": {
+      "1": 0.10848598450552838,
+      "2": 0.06774292503424006,
+      "3": 0.03965271704150053
+    }
+  },
+  "negative_gain_basin_count": {
+    "backpropagation_filter": {
+      "1": 2,
+      "2": 2,
+      "3": 1
+    },
+    "default_noise_filter": {
+      "1": 1,
+      "2": 2,
+      "3": 2
+    },
+    "sampling_search_filter": {
+      "1": 2,
+      "2": 4,
+      "3": 3
+    }
+  },
+  "paired_median_backpropagation_minus_sampling": 0.0021629313279885043,
+  "practical_equivalence_tolerance": 0.01,
+  "selection_manifest_sha256": "63160e786c2b6b07bbb144766deda8bdc29c86d889dbeb8a0f81d468623bc8c3",
+  "status": "EVALUATION_AUDIT_PASS",
+  "structural_nan_count_outside_common_masks": 882,
+  "verdict": "NO_DISCERNIBLE_ADVANTAGE",
+  "wins_over_persistence_basin_count": {
+    "backpropagation_filter": {
+      "1": 17,
+      "2": 19,
+      "3": 19
+    },
+    "default_noise_filter": {
+      "1": 13,
+      "2": 18,
+      "3": 19
+    },
+    "sampling_search_filter": {
+      "1": 17,
+      "2": 19,
+      "3": 19
+    }
+  },
+  "wins_over_second_order_autoregression_basin_count": {
+    "backpropagation_filter": {
+      "1": 16,
+      "2": 19,
+      "3": 19
+    },
+    "default_noise_filter": {
+      "1": 12,
+      "2": 18,
+      "3": 18
+    },
+    "sampling_search_filter": {
+      "1": 15,
+      "2": 19,
+      "3": 19
+    }
+  },
+  "worker_count": 21
+}
+TUKF06_EVALUATION_READ_ONLY_AUDIT_PASS
+=== SCHEDULED EVALUATION AUDIT STDERR ===
+TUKF06_EVALUATION_READ_ONLY_AUDIT_PASS
+=== DEDICATED ARTIFACT SIZES ===
+12852538	/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/results/tukf06_full_diagonal_search_head_to_head_v1
+10247	/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/logs
+10153	/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/audit
+18385	/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/smoke
+TUKF06_SCHEDULED_EVALUATION_AUDIT_PASS job_id=202157
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T02:02:38+0800
