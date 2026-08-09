@@ -1,0 +1,113 @@
+diff --git a/src/unified_autoresearch/runtime/bootstrap.py b/src/unified_autoresearch/runtime/bootstrap.py
+index 87e9c814..e1c3a503 100644
+--- a/src/unified_autoresearch/runtime/bootstrap.py
++++ b/src/unified_autoresearch/runtime/bootstrap.py
+@@ -82,20 +82,29 @@ def _install_file_hook(policy: dict[str, Any], log_descriptor: int) -> Callable[
+         normalize(path) for path in policy.get("restricted_site_package_roots", ())
+     )
+     dependency_initialization_read_roots = tuple(
+         normalize(path) for path in policy.get("dependency_initialization_read_roots", ())
+     )
++    dependency_initialization_system_read_roots = tuple(
++        normalize(path) for path in policy.get("dependency_initialization_system_read_roots", ())
++    )
+     candidate_root = normalize(policy["candidate_root"])
+     allowed_dependencies = set(policy["allowed_dependency_imports"])
+     dependency_initialization = True
+     allowed_initialization_libraries = frozenset({"kernel32", "user32", "tzres.dll"})
+     allowed_initialization_symbols = frozenset({"GetLastError", "LoadStringW"})
+ 
+     def deny(event: str, reason: str, **details: Any) -> None:
+         reject({"event": event, "decision": "deny", "reason": reason, **details})
+ 
+     def path_allowed(path: str, roots: tuple[str, ...], operation: str) -> bool:
++        if (
++            operation == "read"
++            and dependency_initialization
++            and inside(path, dependency_initialization_system_read_roots)
++        ):
++            return True
+         allowed = inside(path, roots)
+         if (
+             allowed
+             and operation == "read"
+             and inside(path, restricted_site_package_roots)
+@@ -183,21 +192,29 @@ def _install_file_hook(policy: dict[str, Any], log_descriptor: int) -> Callable[
+         if event.startswith("socket."):
+             deny(event, "candidate network access is disabled")
+         if event.startswith("ctypes."):
+             library = arguments[0] if arguments else None
+             symbol = arguments[1] if len(arguments) > 1 else None
++            allowed_current_process_handle = event == "ctypes.dlopen" and library is None
++            allowed_fixed_windows_library = event == "ctypes.dlopen" and library in allowed_initialization_libraries
++            allowed_fixed_windows_symbol = event == "ctypes.dlsym" and symbol in allowed_initialization_symbols
+             allowed_initialization_event = dependency_initialization and (
+-                (event == "ctypes.dlopen" and library in allowed_initialization_libraries)
+-                or (event == "ctypes.dlsym" and symbol in allowed_initialization_symbols)
++                allowed_current_process_handle
++                or allowed_fixed_windows_library
++                or allowed_fixed_windows_symbol
+             )
+             if allowed_initialization_event:
+                 write_event(
+                     {
+                         "event": event,
+                         "decision": "allow",
+-                        "reason": "declared dependency initialization requires a fixed Windows system library",
+-                        "library": str(library),
++                        "reason": (
++                            "declared dependency initialization requires the current-process handle"
++                            if allowed_current_process_handle
++                            else "declared dependency initialization requires a fixed Windows system library"
++                        ),
++                        "library": None if library is None else str(library),
+                         "symbol": None if symbol is None else str(symbol),
+                     }
+                 )
+                 return
+             deny(event, "candidate dynamic local library loading is disabled")
+diff --git a/src/unified_autoresearch/runtime/runner.py b/src/unified_autoresearch/runtime/runner.py
+index b14df132..63f50734 100644
+--- a/src/unified_autoresearch/runtime/runner.py
++++ b/src/unified_autoresearch/runtime/runner.py
+@@ -60,10 +60,28 @@ def _access_events(path: Path) -> list[dict]:
+     if not path.is_file():
+         return []
+     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+ 
+ 
++def _system_timezone_read_roots() -> list[str]:
++    raw_value = sysconfig.get_config_var("TZPATH")
++    if not isinstance(raw_value, str):
++        return []
++    roots: set[str] = set()
++    for value in raw_value.split(os.pathsep):
++        path = Path(value)
++        if not path.is_absolute():
++            continue
++        resolved = path.resolve()
++        if resolved == Path(resolved.anchor) or not resolved.is_dir():
++            continue
++        if not ((resolved / "UTC").is_file() or (resolved / "Etc" / "UTC").is_file()):
++            continue
++        roots.add(str(resolved))
++    return sorted(roots)
++
++
+ def _append_parent_denial(path: Path, *, process_exit_code: int) -> dict:
+     event = {
+         "event": "bootstrap.contract_failure",
+         "decision": "deny",
+         "reason": "child contract failure had no intact child denial record",
+@@ -218,10 +236,11 @@ def run_candidate(
+         "allowed_dependency_imports": [
+             dependency.split("==", 1)[0].replace("-", "_") for dependency in descriptor.dependencies
+         ],
+         "restricted_site_package_roots": restricted_site_package_roots,
+         "dependency_initialization_read_roots": list(dependency_assessment.initialization_read_roots),
++        "dependency_initialization_system_read_roots": _system_timezone_read_roots(),
+     }
+     _write_json_exclusive(policy_path, policy)
+     command = build_candidate_command(
+         policy_path=policy_path,
+         access_log_path=access_log_path,
