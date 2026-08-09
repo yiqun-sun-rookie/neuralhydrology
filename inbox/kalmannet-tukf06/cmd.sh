@@ -33,6 +33,8 @@ test "$(git config --get remote.origin.url)" = "$origin_url"
 git config core.autocrlf false
 git config core.safecrlf false
 git config core.sparseCheckout true
+git config user.name 'TUKF06 Evidence Bot'
+git config user.email 'tukf06-evidence@localhost'
 printf '%s\n' \
   '/inbox/kalmannet-tukf06/' \
   '/outbox/kalmannet-tukf06/' > .git/info/sparse-checkout
