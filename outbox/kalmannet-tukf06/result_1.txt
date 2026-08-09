@@ -1,0 +1,63 @@
+### channel=kalmannet-tukf06 seq=1
+### host=login4
+### started=2026-08-09T20:45:45+0800
+### ---------- output ----------
+=== RUNNER AND TIME ===
+Sun Aug  9 20:45:45 CST 2026
+login4
+1807 bash /data1/home/sunyiq/.hpc_runner_active.sh
+18040 bash /data1/home/sunyiq/.hpc_runner_active.sh
+19069 bash /data1/home/sunyiq/.hpc_runner_active.sh
+=== CURRENT USER JOBS ===
+             JOBID                     NAME  PARTITION    STATE       TIME     NODELIST(REASON)
+  201920_[16-19%8]                id17-gate     hgpu2p  PENDING       0:00  (JobArrayTaskLimit)
+            202083           id18-e04-score     hgpu2p  PENDING       0:00         (Dependency)
+         201920_15                id17-gate     hgpu2p  RUNNING    7:52:45               ngu011
+         201920_14                id17-gate     hgpu2p  RUNNING    8:36:14               ngu008
+         201920_13                id17-gate     hgpu2p  RUNNING    8:53:15               ngu005
+         201920_12                id17-gate     hgpu2p  RUNNING   10:44:45               ngu001
+         201920_11                id17-gate     hgpu2p  RUNNING   11:09:56               ngu001
+         201920_10                id17-gate     hgpu2p  RUNNING   11:17:50               ngu010
+          201920_9                id17-gate     hgpu2p  RUNNING   11:21:26               ngu004
+          201920_8                id17-gate     hgpu2p  RUNNING   12:59:44               ngu011
+            202082     id18-lstm-frnse-s300     hgpu2p  RUNNING      52:54               ngu007
+            202081     id18-lstm-frnse-s200     hgpu2p  RUNNING      52:55               ngu007
+            202073           id18-c-xaj-nse     hgpu2p  RUNNING      58:13               ngu001
+            202074         id18-c-xaj-frnse     hgpu2p  RUNNING      58:13               ngu004
+            202077       id18-lstm-nse-s100     hgpu2p  RUNNING      58:10               ngu004
+            202078       id18-lstm-nse-s200     hgpu2p  RUNNING      58:10               ngu005
+            202079       id18-lstm-nse-s300     hgpu2p  RUNNING      58:10               ngu006
+            202080     id18-lstm-frnse-s100     hgpu2p  RUNNING      58:10               ngu006
+            201893                  id29_ar      hgpu4  RUNNING 1-03:57:46               ngu104
+            202054                v09main21     hgpu2p  RUNNING    4:03:05               ngu008
+=== HGPU2P AVAILABILITY ===
+NODELIST     PARTITION    STATE      CPUS  GRES       REASON                        
+ngu001       hgpu2p       mixed      96    gpu:2      none                          
+ngu002       hgpu2p       idle       96    gpu:2      none                          
+ngu004       hgpu2p       mixed      96    gpu:2      none                          
+ngu005       hgpu2p       mixed      96    gpu:2      none                          
+ngu006       hgpu2p       mixed      96    gpu:2      none                          
+ngu007       hgpu2p       mixed      96    gpu:2      none                          
+ngu008       hgpu2p       mixed      96    gpu:2      none                          
+ngu010       hgpu2p       mixed      32    gpu:2      none                          
+ngu011       hgpu2p       mixed      32    gpu:2      none                          
+=== ISOLATED TARGET ===
+TARGET_AVAILABLE=/data1/home/sunyiq/kalmannet_tukf06_20260809
+=== REQUIRED DATA AND PRIOR ===
+FOUND /data1/home/sunyiq/neuralhydrology/data/camels_us
+MISSING /data1/home/sunyiq/neuralhydrology/results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01_BEST/summary/hbv_lite_cma_local_full.csv
+MISSING /data1/home/sunyiq/neuralhydrology/src/xaj_global_pilot/configs/conceptual_benchmark_camels_us_531_repro.txt
+=== ENVIRONMENT ===
+python 3.11.13
+torch 2.4.0
+login_cuda_available False
+IMPORT_OK numpy 2.3.3
+IMPORT_OK pandas 2.3.2
+IMPORT_OK scipy 1.16.2
+IMPORT_FAIL hydroagent.data_loading ModuleNotFoundError No module named 'hydroagent.marrmot_elements'
+=== STORAGE ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  592T  363T  62% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-09T20:46:28+0800
