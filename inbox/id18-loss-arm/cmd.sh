@@ -1,94 +1,71 @@
 #!/bin/bash
-# ID18 seq=5: deploy and validate E04 in a new isolated directory. No sbatch.
+# ID18 seq=6: final read-only pre-sbatch audit. No sbatch.
 set -eo pipefail
 
 TARGET=/data1/home/sunyiq/id18_e04_20260809
-STAGING=/data1/home/sunyiq/id18_e04_20260809.deploying_seq5
 BASE=/data1/home/sunyiq/neuralhydrology
-PAYLOAD=/data1/home/sunyiq/hpc_mailbox/inbox/id18-loss-arm/payload_e04_20260809_v2.tar.gz
-EXPECTED=509de349ce6bcb3479bb5872b1a0063fc3b6df472bc9a6b860f86cc3a8cd19bb
-ORIGINAL_PYTHONPATH="${PYTHONPATH:-}"
+RESULT=$TARGET/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482
 
-echo "=== PRECONDITIONS ==="
+echo "=== TARGET_AND_QUEUE ==="
 date -Is
-test ! -e "$TARGET" || { echo "REFUSE_EXISTING_TARGET=$TARGET"; exit 3; }
-test ! -e "$STAGING" || { echo "REFUSE_EXISTING_STAGING=$STAGING"; exit 3; }
-test -f "$PAYLOAD"
-ACTUAL=$(sha256sum "$PAYLOAD" | awk '{print $1}')
-echo "payload_sha256=$ACTUAL"
-test "$ACTUAL" = "$EXPECTED"
+test -d "$TARGET"
+test -f "$RESULT/protocol/preflight.json"
+squeue -u "$USER" -o "%.10i %.18j %.10P %.9T %.11M %.6D %R" 2>&1 | head -30
+sinfo -p hgpu2p -o "%.10P %.6a %.10l %.6D %.6t %N" 2>&1
 
-echo "=== EXTRACT_NEW_TARGET ==="
-mkdir "$STAGING"
-tar -xzf "$PAYLOAD" -C "$STAGING"
-mkdir -p "$STAGING/logs"
-find "$STAGING/src/loss_mechanism_531/hpc" -type f -name 'e04_*.slurm' -exec sed -i 's/\r$//' {} +
-find "$STAGING/src/loss_mechanism_531/hpc" -type f -name 'e04_*.slurm' -exec bash -n {} \;
-
-echo "=== ISOLATED_IMPORTS ==="
+echo "=== FROZEN_HASH_AUDIT ==="
 source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
 export MKL_THREADING_LAYER=GNU
 export MKL_SERVICE_FORCE_INTEL=1
-export PYTHONPATH="$STAGING:$BASE:$ORIGINAL_PYTHONPATH"
-cd "$STAGING"
-python - <<'PY'
-import json
-import pathlib
-
-import cma
-import numpy
-import pandas
-import torch
-import xarray
-
-root = pathlib.Path('/data1/home/sunyiq/id18_e04_20260809.deploying_seq5').resolve()
-loaded = pathlib.Path(cma.__file__).resolve()
-assert root in loaded.parents, loaded
-assert cma.__version__ == '4.4.4'
-print(json.dumps({
-    'cma_version': cma.__version__,
-    'cma_file': str(loaded),
-    'numpy_version': numpy.__version__,
-    'pandas_version': pandas.__version__,
-    'torch_version': torch.__version__,
-    'xarray_version': xarray.__version__,
-}))
-PY
-
-cd /data1/home/sunyiq
-mv "$STAGING" "$TARGET"
-export PYTHONPATH="$TARGET:$BASE:$ORIGINAL_PYTHONPATH"
+export PYTHONPATH="$TARGET:$BASE:${PYTHONPATH:-}"
 cd "$TARGET"
-
-echo "=== MATERIALIZE_PROTOCOL ==="
-python -u -m src.loss_mechanism_531.prepare_e04_confirmation \
-    --data-root "$BASE/data/camels_us" \
-    --result-root "$TARGET/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482" \
-    --run-root "$TARGET/runs/e04_daymet_confirmation_482"
-
 python - <<'PY'
 import hashlib
 import json
 import pathlib
 
+import cma
+
 root = pathlib.Path('/data1/home/sunyiq/id18_e04_20260809')
-record = {
-    'experiment_id': 'E04_daymet_post2008_objective_confirmation_482',
-    'isolated_root': str(root),
-    'base_repository_usage': 'read_only_data_only',
-    'shared_conda_environment_modified': False,
-    'payload_sha256': '509de349ce6bcb3479bb5872b1a0063fc3b6df472bc9a6b860f86cc3a8cd19bb',
-    'vendored_cma_version': '4.4.4',
-    'vendored_cma_license': 'BSD-3-Clause',
-}
-path = root / 'results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol/deployment.json'
-with path.open('x', encoding='utf-8') as handle:
-    json.dump(record, handle, indent=2)
-    handle.write('\n')
-print('deployment_sha256=' + hashlib.sha256(path.read_bytes()).hexdigest())
+result = root / 'results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482'
+preflight_path = result / 'protocol/preflight.json'
+preflight = json.loads(preflight_path.read_text(encoding='utf-8'))
+bad_sources = []
+for item in preflight['source_files']:
+    path = root / item['path']
+    actual = hashlib.sha256(path.read_bytes()).hexdigest()
+    if actual != item['sha256']:
+        bad_sources.append(item['path'])
+bad_configs = []
+for item in preflight['generated_configs']:
+    path = result / item['path']
+    actual = hashlib.sha256(path.read_bytes()).hexdigest()
+    if actual != item['sha256']:
+        bad_configs.append(item['path'])
+loaded = pathlib.Path(cma.__file__).resolve()
+assert root in loaded.parents, loaded
+assert cma.__version__ == '4.4.4'
+formal_completion_files = sorted(str(path.relative_to(root)) for path in result.glob('**/completion.json'))
+assert not bad_sources, bad_sources
+assert not bad_configs, bad_configs
+assert not formal_completion_files, formal_completion_files
+print(json.dumps({
+    'source_file_count': len(preflight['source_files']),
+    'source_hash_mismatches': bad_sources,
+    'generated_config_count': len(preflight['generated_configs']),
+    'config_hash_mismatches': bad_configs,
+    'formal_completion_files': formal_completion_files,
+    'cma_version': cma.__version__,
+    'cma_file': str(loaded),
+    'preflight_sha256': hashlib.sha256(preflight_path.read_bytes()).hexdigest(),
+}, indent=2))
 PY
 
-echo "=== DEPLOYED_FILES ==="
-find "$TARGET/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/protocol" -maxdepth 2 -type f -print | sort
-echo "E04_ISOLATED_DEPLOYMENT_PASS"
+echo "=== SLURM_SCRIPTS ==="
+for script in "$TARGET"/src/loss_mechanism_531/hpc/e04_*.slurm; do
+    bash -n "$script"
+    grep -E '^#SBATCH (-p|--exclude|--cpus-per-task|--gres|-t|-o|-e)' "$script"
+done
+
+echo "E04_PRE_SBATCH_AUDIT_PASS"
