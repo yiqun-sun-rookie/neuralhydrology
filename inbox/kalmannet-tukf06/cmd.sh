@@ -5,6 +5,61 @@ TARGET=/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2
 SOURCE="$TARGET/source"
 OUTPUT="$TARGET/results/tukf06_full_diagonal_search_head_to_head_v1"
 JID=202136
+MAILBOX=/data1/home/sunyiq/hpc_mailbox
+AUDIT_DIR="$TARGET/audit"
+
+if [[ -z "${SLURM_JOB_ID:-}" ]]; then
+  if [[ -e "$OUTPUT/evaluation_summary.json" || -e "$OUTPUT/evaluation" ]]; then
+    echo "evaluation artifact exists before selection audit" >&2
+    exit 85
+  fi
+  existing=$(squeue -h -u "$USER" -n tukf06-audit -o '%i %T' | head -n 1)
+  if [[ -n "$existing" ]]; then
+    echo "a TUKF06 selection-audit job already exists: $existing" >&2
+    exit 86
+  fi
+  mkdir -p "$AUDIT_DIR"
+  audit_job=$(sbatch --parsable \
+    -J tukf06-audit \
+    -p hcpu48 \
+    -N 1 \
+    -n 1 \
+    --cpus-per-task=48 \
+    -t 00:20:00 \
+    -o "$AUDIT_DIR/selection-audit-%j.out" \
+    -e "$AUDIT_DIR/selection-audit-%j.err" \
+    --wrap="/bin/bash -lc 'source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh; conda activate nh_final; export MKL_THREADING_LAYER=GNU MKL_SERVICE_FORCE_INTEL=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1; bash $MAILBOX/inbox/kalmannet-tukf06/cmd.sh'")
+  audit_job=${audit_job%%;*}
+  echo "selection_audit_job_id=$audit_job"
+  for _ in $(seq 1 120); do
+    audit_state=$(sacct -j "$audit_job" -X -n -o State | awk 'NF {print $1; exit}')
+    case "$audit_state" in
+      COMPLETED|FAILED|CANCELLED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED) break ;;
+    esac
+    sleep 10
+  done
+  sacct -j "$audit_job" --format=JobID%18,JobName%20,Partition%10,NodeList%12,State%18,ExitCode%8,Elapsed%10,TotalCPU%12,MaxRSS%12
+  audit_state=$(sacct -j "$audit_job" -X -n -o State | awk 'NF {print $1; exit}')
+  audit_exit=$(sacct -j "$audit_job" -X -n -o ExitCode | awk 'NF {print $1; exit}')
+  audit_stdout="$AUDIT_DIR/selection-audit-${audit_job}.out"
+  audit_stderr="$AUDIT_DIR/selection-audit-${audit_job}.err"
+  test -f "$audit_stdout" -a -f "$audit_stderr"
+  echo "=== SCHEDULED AUDIT STDOUT ==="
+  cat "$audit_stdout"
+  echo "=== SCHEDULED AUDIT STDERR ==="
+  cat "$audit_stderr"
+  if [[ "$audit_state" != "COMPLETED" || "$audit_exit" != "0:0" ]]; then
+    echo "scheduled selection audit failed: state=$audit_state exit_code=$audit_exit" >&2
+    exit 87
+  fi
+  if [[ -s "$audit_stderr" ]]; then
+    echo "scheduled selection audit stderr is nonempty" >&2
+    exit 88
+  fi
+  grep -F 'TUKF06_SELECTION_READ_ONLY_AUDIT_PASS' "$audit_stdout"
+  echo "TUKF06_SCHEDULED_SELECTION_AUDIT_PASS job_id=$audit_job"
+  exit 0
+fi
 
 echo "=== FORMAL SELECTION ACCOUNTING ==="
 sacct -j "$JID" --format=JobID%18,JobName%20,Partition%10,NodeList%12,State%18,ExitCode%8,Elapsed%10,TotalCPU%12,MaxRSS%12
