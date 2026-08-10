@@ -1,0 +1,57 @@
+### channel=id29-nearing2022-da seq=170
+### host=login4
+### started=2026-08-11T07:09:35+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-11T07:09:35+0800
+=== REGISTERED COMPLETE-ROLE COUNTS ===
+{"evaluation_by_family": {"time_assimilation": 7, "time_autoregression": 5}, "evaluation_complete": 12, "evaluation_total": 180, "hyperparameter_complete": 0, "hyperparameter_total": 660, "training_by_family": {"basin_simulation": 10, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 12, "training_total": 46}
+=== LIVE MAIN PROGRESS ===
+{"epoch": 16, "epoch_step": 4213, "epoch_total_steps": 6821, "job": "202214", "name": "N22-train", "projected_slack_hours": 11.16, "projected_total_hours": 36.84, "runtime": "19:10:39", "stdout_bytes": 16672364, "stdout_exists": true, "thirty_epoch_fraction": 0.520588, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 16, "epoch_step": 939, "epoch_total_steps": 6821, "job": "202215_0", "name": "N22-time", "projected_slack_hours": 11.28, "projected_total_hours": 36.72, "runtime": "18:31:48", "stdout_bytes": 16160025, "stdout_exists": true, "thirty_epoch_fraction": 0.504589, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 15, "epoch_step": 3846, "epoch_total_steps": 6821, "job": "202215_1", "name": "N22-time", "projected_slack_hours": 9.83, "projected_total_hours": 38.17, "runtime": "18:31:48", "stdout_bytes": 15565839, "stdout_exists": true, "thirty_epoch_fraction": 0.485462, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 15, "epoch_step": 4253, "epoch_total_steps": 6821, "job": "202215_2", "name": "N22-time", "projected_slack_hours": 9.99, "projected_total_hours": 38.01, "runtime": "18:31:48", "stdout_bytes": 15626811, "stdout_exists": true, "thirty_epoch_fraction": 0.487451, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 5, "epoch_step": 5881, "epoch_total_steps": 6127, "job": "202216_10", "name": "N22-basin", "projected_slack_hours": 14.11, "projected_total_hours": 33.89, "runtime": "05:36:13", "stdout_bytes": 4743898, "stdout_exists": true, "thirty_epoch_fraction": 0.165328, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 5, "epoch_step": 3036, "epoch_total_steps": 6140, "job": "202216_11", "name": "N22-basin", "projected_slack_hours": 15.01, "projected_total_hours": 32.99, "runtime": "04:56:32", "stdout_bytes": 4307171, "stdout_exists": true, "thirty_epoch_fraction": 0.149815, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"job": "202222_12", "name": "N22-eval-now", "percent": 19, "runtime": "01:03:50", "stdout_bytes": 8241, "stdout_exists": true, "step": 99, "time_limit": "1-00:00:00", "total": 531}
+{"job": "202222_13", "name": "N22-eval-now", "percent": 15, "runtime": "00:52:38", "stdout_bytes": 6782, "stdout_exists": true, "step": 78, "time_limit": "1-00:00:00", "total": 531}
+=== REPAIR JOB STATES ===
+202506|N22-data-port-531|FAILED|1:0|00:06:04|2026-08-11T06:17:11|2026-08-11T06:23:15|ngu102
+202507|N22-mask-iso-531|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202510|N22-data-port-v2|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202511|N22-mask-iso-v2|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202507|N22-mask-iso-531|PENDING|0:00|(DependencyNeverSatisfied)|afterok:202506
+202510|N22-data-port-v2|PENDING|0:00|(Dependency)|afterany:202222_*
+202511|N22-mask-iso-v2|PENDING|0:00|(Dependency)|afterok:202510
+=== REPAIR SUBMISSION RECEIPT ===
+18e6aeeee3321427d0f851d68d2cbbfb02f8d13e477f6f96dd5f22eed1d4d2a1  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_repair_submission_01.json
+=== REPAIR OUTPUT INVENTORY ===
+data_v2_final_absent
+mask_v2_final_absent
+=== MAIN JOB STATES AND FAILURE GATE ===
+202214|RUNNING|19:10:41|2-00:00:00|ngu104|N22-train
+202215_0|RUNNING|18:31:49|2-00:00:00|ngu104|N22-time
+202215_1|RUNNING|18:31:49|2-00:00:00|ngu101|N22-time
+202215_2|RUNNING|18:31:49|2-00:00:00|ngu101|N22-time
+202215_[3-22%3]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-time
+202216_10|RUNNING|5:36:13|2-00:00:00|ngu102|N22-basin
+202216_11|RUNNING|4:56:32|2-00:00:00|ngu104|N22-basin
+202216_[12-19%2]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-basin
+202222_12|RUNNING|1:03:50|1-00:00:00|ngu104|N22-eval-now
+202222_13|RUNNING|52:38|1-00:00:00|ngu102|N22-eval-now
+202222_[14-29%2]|PENDING|0:00|1-00:00:00|(JobArrayTaskLimit)|N22-eval-now
+202226_[0-119%4]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-later
+202227_[0-9%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-basin-da
+202228_[0-659%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-hyper
+202229|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-eval
+202230|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-hyper
+202238_[0-19%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-bs-direct
+202293|PENDING|0:00|1-00:00:00|(JobHeldUser)|N22-manifest
+202294|PENDING|0:00|4:00:00|(Dependency)|N22-export
+202315|PENDING|0:00|2:00:00|(Dependency)|N22-gate
+
+=== FROZEN SAFETY BOUNDARY ===
+registered_matrix_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T07:09:49+0800
