@@ -1,0 +1,14 @@
+### channel=id29-nearing2022-da seq=95
+### host=login4
+### started=2026-08-10T19:05:21+0800
+### ---------- output ----------
+=== VALIDATION STATE ===
+slurm_load_jobs error: Invalid job id specified
+202365|N22-preclosure-check|FAILED|1:0|00:00:03|2026-08-10T19:02:34|2026-08-10T19:02:37
+202365.batch|batch|FAILED|1:0|00:00:03|2026-08-10T19:02:34|2026-08-10T19:02:37
+202365.extern|extern|COMPLETED|0:0|00:00:03|2026-08-10T19:02:34|2026-08-10T19:02:37
+validation_state=FAILED
+Unexpected validation state: FAILED
+### ---------- end ----------
+### exit_code=4
+### finished=2026-08-10T19:05:21+0800
