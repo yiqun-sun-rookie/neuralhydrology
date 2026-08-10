@@ -1,11 +1,11 @@
 #!/bin/bash
-# ID29 seq=76: install closure v12 and atomically replace the still-pending final manifest/export chain.
+# ID29 seq=77: locate the content-addressed closure v12 payload and replace the still-pending final chain.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
 IDEA="$ROOT/src/29_nearing2022_da_ar"
-PAYLOAD=/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v12.tar.gz
-EXPECTED_PAYLOAD_SHA=2aef37780744bab14af4e1a01d0d11fec6a15b6506fd9c33172e5f92ea6fceb6
+PAYLOAD_DIR=/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da
+EXPECTED_PAYLOAD_SHA=e4daf4ab87d42e9ba9ad4ac1f4c40c824f44b5e58a98324fba3737d8b0bf616c
 README="$IDEA/README.md"
 AGGREGATOR="$IDEA/scripts/aggregate_registered_results.py"
 VERIFIER="$IDEA/scripts/verify_registered_closure.py"
@@ -18,6 +18,24 @@ CONTRACT_TEST="$ROOT/test/test_nearing2022_reproduction_contract.py"
 AGGREGATION_ROOT="$ROOT/closure_20260810/aggregation"
 
 echo "=== INSTALL V12 ==="
+PAYLOAD=
+for _ in $(seq 1 25); do
+  for CANDIDATE in "$PAYLOAD_DIR"/*; do
+    test -f "$CANDIDATE" || continue
+    CANDIDATE_SHA=$(sha256sum "$CANDIDATE" | awk '{print $1}')
+    if test "$CANDIDATE_SHA" = "$EXPECTED_PAYLOAD_SHA"; then
+      PAYLOAD=$CANDIDATE
+      break 2
+    fi
+  done
+  sleep 2
+done
+if test -z "$PAYLOAD"; then
+  echo "Expected content-addressed payload was not synchronized" >&2
+  find "$PAYLOAD_DIR" -maxdepth 1 -type f -printf '%f|%s\n' | sort >&2 || true
+  exit 2
+fi
+echo "resolved_payload=$PAYLOAD"
 echo "$EXPECTED_PAYLOAD_SHA  $PAYLOAD" | sha256sum -c -
 test "$(tar -tzf "$PAYLOAD" | wc -l)" -eq 9
 tar -xzf "$PAYLOAD" -C "$ROOT"
