@@ -1,148 +1,259 @@
 #!/bin/bash
-# ID29 seq=169: submit the two immutable all-531 direct-raw repair audits.
+# ID29 seq=170: read-only matrix and direct-raw repair-chain refresh.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
+MAIN_JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
+DIAGNOSTIC_JOBS=202506,202507,202510,202511
 DIAGNOSTIC_ROOT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics"
-V1="$ROOT/src/29_nearing2022_da_ar/scripts/audit_training_data_port.py"
-V2="$ROOT/src/29_nearing2022_da_ar/scripts/audit_training_data_port_v2.py"
-PROTOCOL="$DIAGNOSTIC_ROOT/warmup_target_paired_retraining_protocol.json"
-AMENDMENT="$DIAGNOSTIC_ROOT/warmup_target_paired_retraining_protocol_amendment_01.json"
-DATA_SLURM="$ROOT/src/29_nearing2022_da_ar/hpc/run_author_v13_training_data_port_all531_v2.slurm"
-MASK_SLURM="$ROOT/src/29_nearing2022_da_ar/hpc/run_author_v13_warmup_isolation_all531_v2.slurm"
-FAILED_STAGING="$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531.preparing-202506"
-FAILED_AUDIT="$FAILED_STAGING/audit.json"
-FAILED_STDOUT="$FAILED_STAGING/audit_stdout.json"
-DATA_FINAL="$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531_v2"
-MASK_FINAL="$DIAGNOSTIC_ROOT/author_v13_warmup_isolation_all531_v2"
-RECEIPT="$DIAGNOSTIC_ROOT/warmup_target_repair_submission_01.json"
-RECEIPT_TEMP="$RECEIPT.preparing-seq169"
+DATA_V2="$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531_v2"
+MASK_V2="$DIAGNOSTIC_ROOT/author_v13_warmup_isolation_all531_v2"
+SUBMISSION_RECEIPT="$DIAGNOSTIC_ROOT/warmup_target_repair_submission_01.json"
 
-assert_sha256() {
-  local path=$1
-  local expected=$2
-  test -f "$path"
-  local actual
-  actual=$(sha256sum "$path" | awk '{print $1}')
-  test "$actual" = "$expected"
-  echo "sha256=$actual|path=$path"
-}
+echo "=== SNAPSHOT TIME ==="
+date --iso-8601=seconds
 
-test ! -e "$DATA_FINAL"
-test ! -e "$MASK_FINAL"
-test ! -e "$RECEIPT"
-test ! -e "$RECEIPT_TEMP"
-if compgen -G "$DATA_FINAL.preparing-*" >/dev/null; then
-  echo "unexpected version-2 data-audit staging directory" >&2
-  exit 1
-fi
-if compgen -G "$MASK_FINAL.preparing-*" >/dev/null; then
-  echo "unexpected version-2 mask-audit staging directory" >&2
-  exit 1
-fi
-test -z "$(squeue -h -n N22-data-port-v2)"
-test -z "$(squeue -h -n N22-mask-iso-v2)"
-
-FAILED_STATE=$(sacct -n -X -j 202506 --format=State,ExitCode -P | awk -F'|' 'NF {print $1"|"$2; exit}')
-DEPENDENCY_FAILED_STATE=$(squeue -h -j 202507 -o '%T|%r' | awk 'NF {print; exit}')
-test "$FAILED_STATE" = 'FAILED|1:0'
-test "$DEPENDENCY_FAILED_STATE" = 'PENDING|DependencyNeverSatisfied'
-
-assert_sha256 "$V1" 5f7d49c4899aeb0ffb1d097cffd98cfe86393f86b5849a153d3074094744eb85
-assert_sha256 "$V2" 51b9091c928a8b514f0be6e81ab5afd304bda654e3dc63a6cb27746e3dee3233
-assert_sha256 "$PROTOCOL" 16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1
-assert_sha256 "$AMENDMENT" a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5
-assert_sha256 "$DATA_SLURM" 7805e78942a9d512075deb1f546a230d4fe20f04a7efd837a8507ada9e4a493e
-assert_sha256 "$MASK_SLURM" 9d8d2c890e6ec8a28be30e674ea05c3c90a8926ba0e4e80bf088386879127053
-assert_sha256 "$FAILED_AUDIT" 3f5fe1e597a2d8cee36dffac4426a178075d8828eae560c585fe7727d2a4aa30
-assert_sha256 "$FAILED_STDOUT" a577a8ec870a4f2a100643b3d6cfc49a29a00d19384bee888590b9cee3112336
-
-DATA_SUBMISSION=$(sbatch --parsable --dependency=afterany:202222 "$DATA_SLURM")
-DATA_JOB=${DATA_SUBMISSION%%;*}
-test -n "$DATA_JOB"
-MASK_SUBMISSION=$(sbatch --parsable --dependency="afterok:$DATA_JOB" "$MASK_SLURM")
-MASK_JOB=${MASK_SUBMISSION%%;*}
-test -n "$MASK_JOB"
-
-DATA_JOB_RECORD=$(scontrol show job -o "$DATA_JOB")
-MASK_JOB_RECORD=$(scontrol show job -o "$MASK_JOB")
-
-python - "$RECEIPT_TEMP" "$DATA_JOB" "$MASK_JOB" "$FAILED_STATE" "$DEPENDENCY_FAILED_STATE" \
-  "$V1" "$V2" "$PROTOCOL" "$AMENDMENT" "$DATA_SLURM" "$MASK_SLURM" \
-  "$FAILED_AUDIT" "$FAILED_STDOUT" "$DATA_JOB_RECORD" "$MASK_JOB_RECORD" <<'PY'
-from datetime import datetime
-import hashlib
+echo "=== REGISTERED COMPLETE-ROLE COUNTS ==="
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+cd "$ROOT"
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
+python - <<'PY'
+from collections import Counter
 import json
 from pathlib import Path
 import sys
-from zoneinfo import ZoneInfo
+
+import pandas as pd
+
+root = Path('/data1/home/sunyiq/nearing2022_da')
+scripts = root / 'src/29_nearing2022_da_ar/scripts'
+sys.path.insert(0, str(scripts))
+from aggregate_registered_results import _registered_run
+from prepare_evaluation_run import resolve_source_run
+from verify_registered_closure import _metrics_path
+
+registry = root / 'src/29_nearing2022_da_ar/registry'
+training = pd.read_csv(registry / 'experiment_registry.csv', keep_default_na=False, dtype=str)
+evaluations = pd.read_csv(registry / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
+hyper = pd.read_csv(registry / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str)
 
 
-def digest(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def complete(paths):
+    return all(path.is_file() for path in paths)
 
 
-receipt_path = Path(sys.argv[1])
-data_job = sys.argv[2]
-mask_job = sys.argv[3]
-failed_state = sys.argv[4]
-dependency_failed_state = sys.argv[5]
-v1, v2, protocol, amendment, data_slurm, mask_slurm, failed_audit, failed_stdout = map(Path, sys.argv[6:14])
-data_job_record = sys.argv[14]
-mask_job_record = sys.argv[15]
+training_done = Counter()
+for _, row in training.iterrows():
+    try:
+        run = resolve_source_run(root, training, row['exp_id'])
+        required = [
+            run / 'config.yml',
+            run / 'model_epoch030.pt',
+            run / 'output.log',
+            run / 'train_data/train_data_scaler.yml',
+        ]
+        if complete(required):
+            training_done[row['family']] += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
 
-receipt = {
-    'schema': 'nearing2022-warmup-target-entry-repair-submission-v1',
-    'created_at': datetime.now(ZoneInfo('Asia/Singapore')).isoformat(),
-    'registered_matrix_modified': False,
-    'jobs': {
-        'training_data_port_v2': {
-            'slurm_job_id': data_job,
-            'dependency_requested': 'afterany:202222',
-            'script': str(data_slurm),
-            'script_sha256': digest(data_slurm),
-            'output': 'results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2',
-            'scheduler_record_at_submission': data_job_record,
-        },
-        'warmup_target_isolation_v2': {
-            'slurm_job_id': mask_job,
-            'dependency_requested': f'afterok:{data_job}',
-            'script': str(mask_slurm),
-            'script_sha256': digest(mask_slurm),
-            'output': 'results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2',
-            'scheduler_record_at_submission': mask_job_record,
-        },
-    },
-    'source_bindings': {
-        'version_1_audit_sha256': digest(v1),
-        'version_2_audit_sha256': digest(v2),
-        'original_protocol_sha256': digest(protocol),
-        'protocol_amendment_01_sha256': digest(amendment),
-        'preserved_failed_audit_sha256': digest(failed_audit),
-        'preserved_failed_stdout_sha256': digest(failed_stdout),
-    },
-    'preserved_failed_jobs': {
-        '202506': failed_state,
-        '202507': dependency_failed_state,
-    },
-    'resource_boundary': {
-        'data_audit_waits_for_complete_evaluation_array': '202222',
-        'mask_audit_waits_for_successful_data_audit': data_job,
-        'additional_gpu_concurrency_before_202222_finishes': 0,
-    },
-    'claim_boundary': (
-        'Submission proves nothing by itself. The all-531 direct pre-normalization raw-target gate and the '
-        'single-mask isolation remain unknown until both immutable jobs complete and their receipts pass.'
-    ),
-}
-receipt_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n', encoding='utf-8')
-print(json.dumps(receipt, sort_keys=True))
+evaluation_done = Counter()
+for _, row in evaluations.iterrows():
+    try:
+        run = _registered_run(root, training, row)
+        result = run / row['result_file']
+        reference_run = resolve_source_run(root, training, row['reference_exp_id'])
+        reference = reference_run / 'test/model_epoch030/test_results.p'
+        required = [
+            run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
+            _metrics_path(result), reference, _metrics_path(reference),
+        ]
+        if complete(required):
+            evaluation_done[row['family']] += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
+
+hyper_done = 0
+for _, row in hyper.iterrows():
+    try:
+        run = Path(row['run_dir'])
+        run = run if run.is_absolute() else root / run
+        result = run / row['result_file']
+        reference_run = resolve_source_run(root, training, row['source_exp_id'])
+        reference = reference_run / 'test/model_epoch030/test_results.p'
+        required = [
+            run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
+            _metrics_path(result), reference, _metrics_path(reference),
+        ]
+        if complete(required):
+            hyper_done += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
+
+print(json.dumps({
+    'training_complete': sum(training_done.values()),
+    'training_total': len(training),
+    'training_by_family': dict(sorted(training_done.items())),
+    'evaluation_complete': sum(evaluation_done.values()),
+    'evaluation_total': len(evaluations),
+    'evaluation_by_family': dict(sorted(evaluation_done.items())),
+    'hyperparameter_complete': hyper_done,
+    'hyperparameter_total': len(hyper),
+}, sort_keys=True))
 PY
 
-test -f "$RECEIPT_TEMP"
-mv "$RECEIPT_TEMP" "$RECEIPT"
-sha256sum "$RECEIPT"
-squeue -h -j "$DATA_JOB,$MASK_JOB" -o '%i|%j|%T|%r|%E'
-echo "data_job_id=$DATA_JOB"
-echo "mask_job_id=$MASK_JOB"
-echo "receipt=$RECEIPT"
+echo "=== LIVE MAIN PROGRESS ==="
+python - <<'PY'
+import json
+from pathlib import Path
+import re
+import subprocess
+
+parents = '202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315'
+running = subprocess.run(
+    ['squeue', '-h', '-j', parents, '-t', 'RUNNING', '-o', '%i'],
+    check=True,
+    capture_output=True,
+    text=True,
+).stdout.split()
+ansi = re.compile(r'\x1b\[[0-9;]*[A-Za-z]')
+epoch_pattern = re.compile(r'# Epoch\s+(\d+):\s*(\d+)%\|.*?\|\s*(\d+)/(\d+)')
+generic_pattern = re.compile(r'(?<!Epoch\s)(\d+)%\|.*?\|\s*(\d+)/(\d+)')
+
+
+def seconds(value):
+    days = 0
+    if '-' in value:
+        day_text, value = value.split('-', 1)
+        days = int(day_text)
+    fields = [int(item) for item in value.split(':')]
+    if len(fields) == 3:
+        hours, minutes, secs = fields
+    else:
+        hours, minutes, secs = 0, fields[0], fields[1]
+    return days * 86400 + hours * 3600 + minutes * 60 + secs
+
+
+for job in sorted(running):
+    record = subprocess.run(
+        ['scontrol', 'show', 'job', '-o', job], check=True, capture_output=True, text=True
+    ).stdout.strip()
+    fields = dict(token.split('=', 1) for token in record.split() if '=' in token)
+    stdout = Path(fields['StdOut'])
+    payload = {
+        'job': job,
+        'name': fields['JobName'],
+        'runtime': fields['RunTime'],
+        'time_limit': fields['TimeLimit'],
+        'stdout_exists': stdout.is_file(),
+    }
+    if stdout.is_file():
+        size = stdout.stat().st_size
+        with stdout.open('rb') as handle:
+            handle.seek(max(0, size - 4 * 1024 * 1024))
+            tail = ansi.sub('', handle.read().decode('utf-8', errors='replace')).replace('\r', '\n')
+        epochs = list(epoch_pattern.finditer(tail))
+        generic = list(generic_pattern.finditer(tail))
+        payload['stdout_bytes'] = size
+        if epochs:
+            epoch, _, step, total = map(int, epochs[-1].groups())
+            fraction = ((epoch - 1) + step / total) / 30
+            projected = seconds(fields['RunTime']) / fraction if fraction > 0 else None
+            limit = seconds(fields['TimeLimit'])
+            payload.update({
+                'epoch': epoch,
+                'epoch_step': step,
+                'epoch_total_steps': total,
+                'thirty_epoch_fraction': round(fraction, 6),
+                'projected_total_hours': round(projected / 3600, 2),
+                'projected_slack_hours': round((limit - projected) / 3600, 2),
+                'time_limit_risk': projected > limit,
+            })
+        elif generic:
+            percent, step, total = map(int, generic[-1].groups())
+            payload.update({'percent': percent, 'step': step, 'total': total})
+    print(json.dumps(payload, sort_keys=True))
+PY
+
+echo "=== REPAIR JOB STATES ==="
+sacct -n -X -P -j "$DIAGNOSTIC_JOBS" --format=JobID,JobName,State,ExitCode,Elapsed,Start,End,NodeList
+squeue -h -j "$DIAGNOSTIC_JOBS" -o '%i|%j|%T|%M|%R|%E' | sort
+
+echo "=== REPAIR SUBMISSION RECEIPT ==="
+test -f "$SUBMISSION_RECEIPT"
+test "$(sha256sum "$SUBMISSION_RECEIPT" | awk '{print $1}')" = \
+  18e6aeeee3321427d0f851d68d2cbbfb02f8d13e477f6f96dd5f22eed1d4d2a1
+sha256sum "$SUBMISSION_RECEIPT"
+
+echo "=== REPAIR OUTPUT INVENTORY ==="
+find "$DIAGNOSTIC_ROOT" -maxdepth 1 -mindepth 1 \
+  \( -name 'author_v13_training_data_port_all531_v2*' -o -name 'author_v13_warmup_isolation_all531_v2*' \) \
+  -printf '%f|%y\n' | sort
+
+if test -d "$DATA_V2"; then
+  test -f "$DATA_V2/audit.json"
+  test -f "$DATA_V2/diagnostic_receipt.json"
+  sha256sum "$DATA_V2/audit.json" "$DATA_V2/diagnostic_receipt.json"
+  python - "$DATA_V2/audit.json" "$DATA_V2/diagnostic_receipt.json" <<'PY'
+import json
+from pathlib import Path
+import sys
+
+audit = json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
+receipt = json.loads(Path(sys.argv[2]).read_text(encoding='utf-8'))
+print(json.dumps({
+    'schema': audit['schema'],
+    'scope': audit['scope'],
+    'inputs': audit['inputs'],
+    'target_scaler': audit['target_scaler'],
+    'direct_raw_targets': audit['raw_targets_before_normalization'],
+    'inverse_scaling_diagnostic': audit['raw_targets_after_inverse_scaling'],
+    'per_basin_target_standard_deviation': {
+        'basins_exact': audit['per_basin_target_standard_deviation']['basins_exact'],
+        'basins_different': audit['per_basin_target_standard_deviation']['basins_different'],
+        'absolute_difference_quantiles': audit['per_basin_target_standard_deviation']['absolute_difference_quantiles'],
+    },
+    'conclusion': audit['conclusion'],
+    'receipt': receipt,
+}, sort_keys=True))
+PY
+else
+  echo "data_v2_final_absent"
+fi
+
+if test -d "$MASK_V2"; then
+  test -f "$MASK_V2/audit.json"
+  test -f "$MASK_V2/diagnostic_receipt.json"
+  sha256sum "$MASK_V2/audit.json" "$MASK_V2/diagnostic_receipt.json"
+  python - "$MASK_V2/audit.json" "$MASK_V2/diagnostic_receipt.json" <<'PY'
+import json
+from pathlib import Path
+import sys
+
+audit = json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
+receipt = json.loads(Path(sys.argv[2]).read_text(encoding='utf-8'))
+print(json.dumps({
+    'scope': audit['scope'],
+    'author_vs_current_masked': audit['author_vs_current_masked'],
+    'one_factor_contract': audit['one_factor_contract'],
+    'conclusion': audit['conclusion'],
+    'receipt': receipt,
+}, sort_keys=True))
+PY
+else
+  echo "mask_v2_final_absent"
+fi
+
+echo "=== MAIN JOB STATES AND FAILURE GATE ==="
+squeue -h -j "$MAIN_JOBS" -o '%i|%T|%M|%l|%R|%j' | sort
+MAIN_FAILURES=$(sacct -n -X -P -j "$MAIN_JOBS" --format=JobIDRaw,JobName,State,ExitCode | \
+  awk -F'|' '$3 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/')
+printf '%s\n' "$MAIN_FAILURES"
+test -z "$MAIN_FAILURES"
+
+echo "=== FROZEN SAFETY BOUNDARY ==="
+test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = '202293|PENDING|JobHeldUser|N22-manifest'
+test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
+test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
+echo "registered_matrix_modified=false"
