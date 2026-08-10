@@ -1,56 +1,69 @@
 #!/bin/bash
-set -euo pipefail
+set -eo pipefail
 
-EVIDENCE=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/evidence
-PYTHON=/data1/home/sunyiq/autoresearch64/.venv/bin/python
+ROOT=/data1/home/sunyiq/autoresearch64
+PYTHON="$ROOT/.venv/bin/python"
+RUNS="$ROOT/runs/unified_autoresearch"
 
-echo "=== SCHEDULER ==="
-sacct -j 202085 -X --format=JobID%12,JobName%20,State%14,ExitCode%8,Elapsed%10
+echo "=== CHANNEL INVENTORY ==="
+for name in \
+  development_packages_real_v1 \
+  milestone3_round12_development_packages \
+  development_packages_real_64_hpc \
+  dlopen_timezone_fix_validation_20260809_seq24
+do
+  path="$RUNS/$name"
+  if [ -d "$path" ]; then
+    echo "EXISTS $path"
+  else
+    echo "MISSING $path"
+  fi
+done
 
-test -f "$EVIDENCE/SUMMARY.json"
-test -f "$EVIDENCE/MANIFEST.sha256"
-
-"$PYTHON" - "$EVIDENCE" <<'PY'
+echo "=== DEVELOPMENT PACKAGE MANIFESTS ==="
+"$PYTHON" - "$RUNS" <<'PY'
+import hashlib
 import json
 import sys
 from pathlib import Path
 
-evidence = Path(sys.argv[1])
-summary = json.loads((evidence / "SUMMARY.json").read_text(encoding="utf-8"))
-print(f"diagnostic_complete={summary['diagnostic_complete']}")
-print(f"manifest_entries={len((evidence / 'MANIFEST.sha256').read_text(encoding='utf-8').splitlines())}")
-for probe in summary["probes"]:
-    package = probe["package"]
-    sandbox = probe["sandbox"]
-    runtime = sandbox["runtime_result"]
-    events = [
-        json.loads(line)
-        for line in (evidence / "runs" / package / "logs" / "access.jsonl")
-        .read_text(encoding="utf-8")
-        .splitlines()
-        if line
-    ]
-    print(
-        json.dumps(
-            {
-                "package": package,
-                "declaration": probe["declaration"],
-                "process_exit_code": sandbox["process_exit_code"],
-                "normalized_exit_code": sandbox["normalized_exit_code"],
-                "status": sandbox["status"],
-                "denied_event_count": sandbox["denied_event_count"],
-                "independently_counted_denials": sum(
-                    event.get("decision") == "deny" for event in events
-                ),
-                "required_outputs_complete": runtime["required_outputs_complete"],
-            },
-            sort_keys=True,
-        )
-    )
+runs = Path(sys.argv[1])
+for name in (
+    "development_packages_real_v1",
+    "milestone3_round12_development_packages",
+    "development_packages_real_64_hpc",
+):
+    path = runs / name / "PACKAGE_MANIFEST.json"
+    if not path.is_file():
+        continue
+    raw = path.read_bytes()
+    value = json.loads(raw)
+    print(json.dumps({
+        "name": name,
+        "path": str(path),
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "schema_version": value.get("schema_version"),
+        "basin_count": len(value.get("basins", [])),
+        "protocols": sorted(value.get("protocols", {})),
+        "source_manifest_sha256": value.get("source_manifest_sha256"),
+    }, sort_keys=True))
 PY
 
-(cd "$EVIDENCE" && sha256sum -c MANIFEST.sha256 >/dev/null)
-echo "manifest_check=ok"
-echo "summary=$EVIDENCE/SUMMARY.json"
-echo "manifest=$EVIDENCE/MANIFEST.sha256"
-exit 0
+echo "=== VALIDATED SOURCE SNAPSHOT ==="
+EVIDENCE="$RUNS/dlopen_timezone_fix_validation_20260809_seq24/evidence"
+if [ -f "$EVIDENCE/SUMMARY.json" ]; then
+  "$PYTHON" - "$EVIDENCE/SUMMARY.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+summary = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+for key in sorted(summary):
+    if "source" in key or "snapshot" in key or "root" in key:
+        print(f"{key}={summary[key]}")
+PY
+fi
+find "$RUNS/dlopen_timezone_fix_validation_20260809_seq24" -maxdepth 3 -type d -print 2>/dev/null | sort | head -80
+
+echo "=== JOB 202085 ==="
+sacct -j 202085 -X --format=JobID%12,JobName%20,State%14,ExitCode%8,Elapsed%10
