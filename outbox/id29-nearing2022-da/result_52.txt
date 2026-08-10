@@ -1,0 +1,19 @@
+### channel=id29-nearing2022-da seq=52
+### host=login4
+### started=2026-08-10T12:03:31+0800
+### ---------- output ----------
+=== PREFLIGHT ===
+=== INTERNAL MANIFEST ===
+9ba869c692c59bf63c6d70a2a302801c134a8a1e81255d5c14a8ca6a04d20162  config.yml
+763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9  model_epoch030.pt
+9c4b7c28a06b9b4698e1cc9f2deccc1e9a2b8e77d2cbe19ffbc8dabae4419be4  output.log
+3b37702cbf33a03e05ec045bc8e73d8ae0a14c37617483a1e5e1cad4ee4623fd  train_data/train_data_scaler.yml
+cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221  test/model_epoch030/test_results.p
+7411a6a0b77f10188858d3c6c4eab75bc59250131662d3a6c5333ebf18ee3c86  test/model_epoch030/test_metrics.csv
+=== PACKAGE ===
+08afe86608c762cc80e21262f07c9068f3549480f6d50d5310d2b18f8dba8f41  /data1/home/sunyiq/hpc_mailbox/outbox/id29-nearing2022-da/artifacts/closure_20260810/existing_simulation_epoch030.tar.gz
+archive_bytes=22691822
+archive_members=7
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T12:03:35+0800
