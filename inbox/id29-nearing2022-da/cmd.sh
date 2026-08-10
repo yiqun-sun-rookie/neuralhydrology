@@ -1,11 +1,13 @@
 #!/bin/bash
-# ID29 seq=143: read-only preflight for an isolated author-v1.3 evaluation of the confirmed TE100 discrepancy.
-set -euo pipefail
+# ID29 seq=144: repair seq 143's nounset/Conda activation conflict and finish the read-only compatibility preflight.
+set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
 ARCHIVE="$ROOT/results/29_nearing2022_da_ar/formal_closure/author_source_archives/zenodo-7063259-grey-nearing-neuralhydrology-public-v.1.3.0.zip"
 SOURCE_RUN="$ROOT/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30"
 CURRENT_EVAL="$ROOT/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0"
+TEMP_ROOT=$(mktemp -d)
+trap 'rm -rf -- "$TEMP_ROOT"' EXIT
 
 test -f "$ARCHIVE"
 test -f "$SOURCE_RUN/config.yml"
@@ -15,62 +17,61 @@ test -f "$CURRENT_EVAL/config.yml"
 test -f "$CURRENT_EVAL/model_epoch030.pt"
 test -f "$CURRENT_EVAL/test/model_epoch030/test_results.p"
 
-echo "=== CONDA ENVIRONMENTS ==="
 source ~/miniconda3/etc/profile.d/conda.sh
-conda env list
 
-echo "=== AUTHOR V1.3 EVALUATION SOURCE PREFLIGHT ==="
-python - <<'PY'
-from __future__ import annotations
-
-import hashlib
+echo "=== ENVIRONMENT VERSION PROBES ==="
+cat > "$TEMP_ROOT/probe_versions.py" <<'PY'
+import importlib
 import json
+import platform
+import sys
+
+packages = ['torch', 'numpy', 'pandas', 'scipy', 'xarray', 'neuralhydrology']
+versions = {}
+for name in packages:
+    try:
+        module = importlib.import_module(name)
+        versions[name] = getattr(module, '__version__', 'no___version__')
+    except Exception as exc:
+        versions[name] = f'{type(exc).__name__}: {exc}'
+print(json.dumps({'python': sys.version.replace('\n', ' '), 'platform': platform.platform(), 'packages': versions},
+                 sort_keys=True))
+PY
+
+for environment in neuralhydrology nh_clean nh_final knet_clean; do
+  echo "--- environment=$environment ---"
+  set +e
+  conda run --no-capture-output -n "$environment" python "$TEMP_ROOT/probe_versions.py"
+  status=$?
+  set -e
+  echo "probe_exit_code=$status"
+done
+
+echo "=== EXTRACT AUTHOR V1.3 SOURCE TO EPHEMERAL DIRECTORY ==="
+python - "$ARCHIVE" "$TEMP_ROOT" <<'PY'
 from pathlib import Path
-import re
+import sys
 import zipfile
 
-archive = Path(
-    '/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/'
-    'author_source_archives/zenodo-7063259-grey-nearing-neuralhydrology-public-v.1.3.0.zip'
-)
-root = 'grey-nearing-neuralhydrology-public-a4c284b/'
-
+archive = Path(sys.argv[1])
+target = Path(sys.argv[2])
 with zipfile.ZipFile(archive) as handle:
-    names = set(handle.namelist())
-    relevant = sorted(
-        name
-        for name in names
-        if name.startswith(root + 'neuralhydrology/')
-        and any(token in name.lower() for token in ('evaluation', 'tester', 'nh_run.py', 'config.py'))
-        and name.endswith('.py')
-    )
-    print(json.dumps({'archive_sha256': hashlib.sha256(archive.read_bytes()).hexdigest(),
-                      'relevant_members': relevant}, sort_keys=True))
-
-    requested = [
-        root + 'neuralhydrology/nh_run.py',
-        root + 'neuralhydrology/evaluation/__init__.py',
-        root + 'neuralhydrology/evaluation/tester.py',
-        root + 'neuralhydrology/evaluation/basetester.py',
-        root + 'neuralhydrology/evaluation/regressiontester.py',
-        root + 'neuralhydrology/utils/config.py',
-    ]
-    patterns = re.compile(
-        r'evaluate|run_dir|run-dir|period|epoch|gpu|Tester|test_results|save|metrics|test_basin_file|'
-        r'random_holdout|lagged_features|autoregressive_inputs|clip_targets|num_workers|device',
-        flags=re.IGNORECASE,
-    )
-    for member in requested:
-        print(f'--- MEMBER {member} present={member in names} ---')
-        if member not in names:
-            continue
-        data = handle.read(member)
-        print(f'bytes={len(data)} sha256={hashlib.sha256(data).hexdigest()}')
-        text = data.decode('utf-8')
-        for number, line in enumerate(text.splitlines(), start=1):
-            if patterns.search(line):
-                print(f'{number}:{line[:300]}')
+    handle.extractall(target)
+print(target / 'grey-nearing-neuralhydrology-public-a4c284b')
 PY
+AUTHOR_SRC="$TEMP_ROOT/grey-nearing-neuralhydrology-public-a4c284b"
+test -f "$AUTHOR_SRC/neuralhydrology/nh_run.py"
+
+echo "=== AUTHOR CLI IMPORT PROBES ==="
+for environment in neuralhydrology nh_clean nh_final; do
+  echo "--- environment=$environment ---"
+  set +e
+  PYTHONPATH="$AUTHOR_SRC" conda run --no-capture-output -n "$environment" \
+    python -m neuralhydrology.nh_run --help 2>&1 | head -80
+  status=${PIPESTATUS[0]}
+  set -e
+  echo "author_cli_exit_code=$status"
+done
 
 echo "=== CURRENT CHECKPOINT AND RESULT FORMAT ==="
 conda activate nh_final
