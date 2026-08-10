@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=166: bind the completed audit payload to the formal scaler and isolation wrapper.
+# ID29 seq=167: bind the completed audit payload using the formal runtime.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -8,6 +8,9 @@ PARTIAL_166="$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531.preparing-202
 SOURCE_RUN_166="$ROOT/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30"
 SCALER_166="$SOURCE_RUN_166/train_data/train_data_scaler.yml"
 MASK_SLURM_166="$DIAGNOSTIC_ROOT/run_author_v13_warmup_isolation_all531.slurm"
+
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
 
 echo "=== COMPACT AUDIT AND REGISTERED SCALER BINDING ==="
 python - "$PARTIAL_166/audit.json" "$SCALER_166" <<'PY'
