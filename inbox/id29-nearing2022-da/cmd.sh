@@ -1,8 +1,54 @@
 #!/bin/bash
-# ID29 seq=165: inspect preserved all-531 audit bytes and the failed wrapper log.
+# ID29 seq=166: bind the completed audit payload to the formal scaler and isolation wrapper.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
+DIAGNOSTIC_ROOT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics"
+PARTIAL_166="$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531.preparing-202506"
+SOURCE_RUN_166="$ROOT/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30"
+SCALER_166="$SOURCE_RUN_166/train_data/train_data_scaler.yml"
+MASK_SLURM_166="$DIAGNOSTIC_ROOT/run_author_v13_warmup_isolation_all531.slurm"
+
+echo "=== COMPACT AUDIT AND REGISTERED SCALER BINDING ==="
+python - "$PARTIAL_166/audit.json" "$SCALER_166" <<'PY'
+import json
+from pathlib import Path
+import sys
+
+import yaml
+
+audit = json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
+scaler = yaml.safe_load(Path(sys.argv[2]).read_text(encoding='utf-8'))
+center = float(scaler['xarray_feature_center']['data_vars']['QObs(mm/d)']['data'])
+scale = float(scaler['xarray_feature_scale']['data_vars']['QObs(mm/d)']['data'])
+print(json.dumps({
+    'audit_sha256_source': str(Path(sys.argv[1])),
+    'scope': audit['scope'],
+    'inputs': audit['inputs'],
+    'target_scaler': audit['target_scaler'],
+    'registered_target_center': center,
+    'registered_target_scale': scale,
+    'registered_matches_current_audit': (
+        center == audit['target_scaler']['current_center']
+        and scale == audit['target_scaler']['current_scale']
+    ),
+    'raw_targets_after_inverse_scaling': audit['raw_targets_after_inverse_scaling'],
+    'per_basin_target_standard_deviation_summary': {
+        'basins_exact': audit['per_basin_target_standard_deviation']['basins_exact'],
+        'basins_different': audit['per_basin_target_standard_deviation']['basins_different'],
+        'absolute_difference_quantiles': audit['per_basin_target_standard_deviation'][
+            'absolute_difference_quantiles'
+        ],
+    },
+    'conclusion': audit['conclusion'],
+}, sort_keys=True))
+PY
+sha256sum "$PARTIAL_166/audit.json" "$SCALER_166" "$MASK_SLURM_166"
+
+echo "=== DEPENDENCY-FAILED ISOLATION WRAPPER ==="
+cat "$MASK_SLURM_166"
+exit 0
+
 PARTIAL="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506"
 SLURM="$PARTIAL/run_author_v13_training_data_port_all531.slurm"
 
