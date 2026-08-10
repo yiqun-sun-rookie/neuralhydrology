@@ -1,161 +1,103 @@
 #!/bin/bash
-# ID29 seq=87: report Slurm health and full-role artifact progress including two-phase gate 202315; keep candidate manifest 202293 held.
+# ID29 seq=88: install the safety-only immutable-output evaluator revision before pending gate job 202315 can start; keep candidate manifest 202293 held.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
+IDEA="$ROOT/src/29_nearing2022_da_ar"
+PAYLOAD="$HOME/hpc_mailbox/inbox/id29-nearing2022-da/payload.tar.gz"
+EVALUATOR="$IDEA/scripts/evaluate_full_reproduction.py"
+PROVENANCE="$IDEA/reference/numerical_gate_source_update.json"
+BACKUP="$ROOT/closure_20260810/provenance/evaluate_full_reproduction_pre_immutability_patch_f6548d2c.py"
+RECEIPT="$ROOT/closure_20260810/provenance/numerical_gate_source_update_receipt.json"
+GATE_OUTPUT="$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
+GATE_DETAILS="$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
+PAYLOAD_SHA=ac999e267e1fc20257ea3f4d7467a7653d35c20ba8b5b0722b4d4e7104c86acd
+OLD_SHA=f6548d2c1935093266ddbfcced8f66b5a540a02ce4e52216001526a34d6b4082
+NEW_SHA=820ce3cb543270edd439afcd5b26d21de8867c2560d5be4addc86be80c098276
+PROVENANCE_SHA=31737312ed6dd35097670ddf20b34af09cf255894ec104600a021e271b3e423e
 
-echo "=== SQUEUE COUNTS BY ARRAY PARENT AND STATE ==="
-squeue -h -j "$JOBS" -o '%F|%T' | sort | uniq -c
+echo "=== PRE-INSTALL SAFETY BOUNDARY ==="
+test -f "$PAYLOAD"
+echo "$PAYLOAD_SHA  $PAYLOAD" | sha256sum -c -
+mapfile -t PAYLOAD_MEMBERS < <(tar -tzf "$PAYLOAD")
+test "${#PAYLOAD_MEMBERS[@]}" -eq 2
+test "${PAYLOAD_MEMBERS[0]}" = "src/29_nearing2022_da_ar/scripts/evaluate_full_reproduction.py"
+test "${PAYLOAD_MEMBERS[1]}" = "src/29_nearing2022_da_ar/reference/numerical_gate_source_update.json"
+GATE_STATE=$(squeue -h -j 202315 -o '%i|%T|%r|%j')
+echo "gate_state_before=$GATE_STATE"
+test "$GATE_STATE" = "202315|PENDING|Dependency|N22-gate"
+test ! -e "$GATE_OUTPUT"
+test ! -e "$GATE_DETAILS"
+test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = "202293|PENDING|JobHeldUser|N22-manifest"
 
-echo "=== SACCT COUNTS BY ARRAY PARENT, STATE, AND EXIT CODE ==="
-sacct -n -P -j "$JOBS" --format=JobID,State,ExitCode | awk -F'|' '
-  NF >= 3 && $1 !~ /\./ {
-    parent = $1
-    sub(/_.*/, "", parent)
-    key = parent "|" $2 "|" $3
-    count[key]++
-  }
-  END {
-    for (key in count) print count[key] "|" key
-  }
-' | sort -t'|' -k2,2n -k3,3
+echo "=== PRESERVE AND INSTALL ==="
+mkdir -p "$(dirname "$BACKUP")"
+CURRENT_SHA=$(sha256sum "$EVALUATOR" | awk '{print $1}')
+case "$CURRENT_SHA" in
+  "$OLD_SHA")
+    if [ -e "$BACKUP" ]; then
+      echo "$OLD_SHA  $BACKUP" | sha256sum -c -
+    else
+      install -m 0644 "$EVALUATOR" "$BACKUP"
+      echo "$OLD_SHA  $BACKUP" | sha256sum -c -
+    fi
+    tar -xzf "$PAYLOAD" -C "$ROOT"
+    ;;
+  "$NEW_SHA")
+    echo "$OLD_SHA  $BACKUP" | sha256sum -c -
+    echo "install_status=ALREADY_INSTALLED"
+    ;;
+  *)
+    echo "Unexpected evaluator SHA-256 before install: $CURRENT_SHA" >&2
+    exit 3
+    ;;
+esac
 
-echo "=== ACTIVE FAILURE STATES ==="
-sacct -n -P -j "$JOBS" --format=JobID,State,ExitCode | awk -F'|' '
-  $1 !~ /\./ && $2 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/ { print }
-' || true
-
-echo "=== EXPECTED CANCELLATIONS ==="
-sacct -n -P -j 202242,202280,202281,202289,202290 --format=JobID,JobName,State,ExitCode | sed '/^[[:space:]]*$/d'
-
-echo "=== FINAL DEPENDENCIES AND HOLD ==="
-for job in 202229 202230 202293 202294 202315; do
-  scontrol show job -o "$job" | sed -n "s/.*Dependency=\([^ ]*\).*/$job|\1/p"
-done
-HELD_STATE=$(squeue -h -j 202293 -o '%i|%T|%r|%j')
-echo "held_manifest=$HELD_STATE"
-test "$HELD_STATE" = "202293|PENDING|JobHeldUser|N22-manifest"
-
-echo "=== REGISTERED FULL-ROLE ARTIFACT PROGRESS ==="
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-cd "$ROOT"
-export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python - <<'PY'
-from collections import Counter
+echo "$NEW_SHA  $EVALUATOR" | sha256sum -c -
+echo "$PROVENANCE_SHA  $PROVENANCE" | sha256sum -c -
+python -m py_compile "$EVALUATOR"
+python - "$PROVENANCE" "$BACKUP" "$RECEIPT" "$OLD_SHA" "$NEW_SHA" <<'PY'
+from datetime import datetime, timezone
+import hashlib
 import json
 from pathlib import Path
 import sys
 
-import pandas as pd
-
-root = Path('/data1/home/sunyiq/nearing2022_da')
-scripts = root / 'src/29_nearing2022_da_ar/scripts'
-sys.path.insert(0, str(scripts))
-from aggregate_registered_results import _registered_run
-from prepare_evaluation_run import resolve_source_run
-from verify_registered_closure import (
-    EVALUATION_AGGREGATION_FILES,
-    HYPERPARAMETER_AGGREGATION_FILES,
-    _metrics_path,
-)
-
-registry_root = root / 'src/29_nearing2022_da_ar/registry'
-training = pd.read_csv(registry_root / 'experiment_registry.csv', keep_default_na=False, dtype=str)
-evaluations = pd.read_csv(registry_root / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
-hyper = pd.read_csv(registry_root / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str)
-
-
-def require(paths):
-    missing = [path for path in paths if not path.is_file()]
-    if missing:
-        raise FileNotFoundError(missing[0])
-
-
-training_done = Counter()
-training_missing = []
-for _, row in training.iterrows():
-    try:
-        run = resolve_source_run(root, training, row['exp_id'])
-        require([
-            run / 'config.yml',
-            run / 'model_epoch030.pt',
-            run / 'output.log',
-            run / 'train_data/train_data_scaler.yml',
-        ])
-        training_done[row['family']] += 1
-    except (FileNotFoundError, KeyError, ValueError) as exc:
-        training_missing.append(f"{row['exp_id']}:{type(exc).__name__}")
-
-evaluation_done = Counter()
-evaluation_missing = []
-for _, row in evaluations.iterrows():
-    try:
-        run = _registered_run(root, training, row)
-        result = run / row['result_file']
-        reference_run = resolve_source_run(root, training, row['reference_exp_id'])
-        reference_result = reference_run / 'test/model_epoch030/test_results.p'
-        require([
-            run / 'config.yml',
-            run / 'model_epoch030.pt',
-            run / 'output.log',
-            result,
-            _metrics_path(result),
-            reference_result,
-            _metrics_path(reference_result),
-        ])
-        evaluation_done[row['family']] += 1
-    except (FileNotFoundError, KeyError, ValueError) as exc:
-        evaluation_missing.append(f"{row['eval_id']}:{type(exc).__name__}")
-
-hyper_done = 0
-hyper_missing = []
-for _, row in hyper.iterrows():
-    try:
-        run = Path(row['run_dir'])
-        run = run if run.is_absolute() else root / run
-        result = run / row['result_file']
-        reference_run = resolve_source_run(root, training, row['source_exp_id'])
-        reference_result = reference_run / 'test/model_epoch030/test_results.p'
-        require([
-            run / 'config.yml',
-            run / 'model_epoch030.pt',
-            run / 'output.log',
-            result,
-            _metrics_path(result),
-            reference_result,
-            _metrics_path(reference_result),
-        ])
-        hyper_done += 1
-    except (FileNotFoundError, KeyError, ValueError) as exc:
-        hyper_missing.append(f"{row['eval_id']}:{type(exc).__name__}")
-
-evaluation_aggregation = root / 'closure_20260810/aggregation/evaluations'
-hyper_aggregation = root / 'closure_20260810/aggregation/hyperparameters'
-evaluation_aggregation_missing = [
-    name for name in EVALUATION_AGGREGATION_FILES if not (evaluation_aggregation / name).is_file()
-]
-hyper_aggregation_missing = [
-    name for name in HYPERPARAMETER_AGGREGATION_FILES if not (hyper_aggregation / name).is_file()
-]
+provenance_path, backup_path, receipt_path = map(Path, sys.argv[1:4])
+old_sha, new_sha = sys.argv[4:6]
+provenance = json.loads(provenance_path.read_text(encoding='utf-8'))
+assert provenance['schema'] == 'nearing2022-numerical-gate-source-update-v1'
+assert provenance['slurm_job_id'] == '202315'
+assert provenance['numerical_logic_changed'] is False
+assert provenance['submitted_evaluator_sha256'] == old_sha
+assert provenance['replacement_evaluator_sha256'] == new_sha
 payload = {
-    'training_complete': sum(training_done.values()),
-    'training_total': len(training),
-    'training_by_family': dict(sorted(training_done.items())),
-    'training_missing_first': training_missing[:5],
-    'evaluation_complete': sum(evaluation_done.values()),
-    'evaluation_total': len(evaluations),
-    'evaluation_by_family': dict(sorted(evaluation_done.items())),
-    'evaluation_missing_first': evaluation_missing[:5],
-    'hyperparameter_complete': hyper_done,
-    'hyperparameter_total': len(hyper),
-    'hyperparameter_missing_first': hyper_missing[:5],
-    'evaluation_aggregation_missing': evaluation_aggregation_missing,
-    'hyperparameter_aggregation_missing': hyper_aggregation_missing,
-    'final_gate_exists': (root / 'closure_20260810/aggregation/final_reproduction_gate.json').is_file(),
-    'final_manifest_exists': (root / 'closure_20260810/aggregation/final_artifact_manifest.json').is_file(),
-    'final_export_exists': (root / 'closure_20260810/export/nearing2022_final_closure.tar.gz').is_file(),
+    'schema': 'nearing2022-numerical-gate-source-update-receipt-v1',
+    'mailbox_seq': 88,
+    'slurm_job_id': '202315',
+    'installed_at': datetime.now(timezone.utc).isoformat(),
+    'old_evaluator_backup': str(backup_path),
+    'old_evaluator_sha256': hashlib.sha256(backup_path.read_bytes()).hexdigest(),
+    'installed_evaluator_sha256': new_sha,
+    'numerical_logic_changed': False,
 }
-print(json.dumps(payload, sort_keys=True))
+receipt_path.parent.mkdir(parents=True, exist_ok=True)
+if receipt_path.exists():
+    existing = json.loads(receipt_path.read_text(encoding='utf-8'))
+    for key in payload.keys() - {'installed_at'}:
+        assert existing[key] == payload[key]
+else:
+    temporary = receipt_path.with_suffix(receipt_path.suffix + '.tmp')
+    temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
+    temporary.replace(receipt_path)
+print(json.dumps(json.loads(receipt_path.read_text(encoding='utf-8')), sort_keys=True))
 PY
+
+echo "=== POST-INSTALL SAFETY BOUNDARY ==="
+GATE_STATE=$(squeue -h -j 202315 -o '%i|%T|%r|%j')
+echo "gate_state_after=$GATE_STATE"
+test "$GATE_STATE" = "202315|PENDING|Dependency|N22-gate"
+test ! -e "$GATE_OUTPUT"
+test ! -e "$GATE_DETAILS"
+test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = "202293|PENDING|JobHeldUser|N22-manifest"
+sha256sum "$EVALUATOR" "$PROVENANCE" "$BACKUP" "$RECEIPT"
