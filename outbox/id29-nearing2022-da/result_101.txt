@@ -1,0 +1,35 @@
+### channel=id29-nearing2022-da seq=101
+### host=login4
+### started=2026-08-10T19:26:24+0800
+### ---------- output ----------
+=== PRE-INSTALL SAFETY BOUNDARY ===
+/data1/home/sunyiq/hpc_mailbox/inbox/id29-nearing2022-da/payload.tar.gz: OK
+=== PRESERVE, DIFF, AND INSTALL ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/deployment/seq101/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm: OK
+--- /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm	2026-08-10 17:02:58.000000000 +0800
++++ /data1/home/sunyiq/nearing2022_da/closure_20260810/deployment/seq101/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm	2026-08-10 17:44:01.000000000 +0800
+@@ -26,6 +26,8 @@
+ test -f "$TIME_COMPARISONS"
+ test -f "$BASIN_COMPARISONS"
+ test -f "$HYPERPARAMETER_SCORES"
++test ! -e "$GATE_OUTPUT"
++test ! -e "$GATE_DETAILS"
+ 
+ source ~/miniconda3/etc/profile.d/conda.sh
+ conda activate nh_final
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/run_registered_numerical_gate_pre_seq101_9c5bfa33.slurm: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm.seq101.tmp: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm: OK
+{"installed_at": "2026-08-10T11:26:24.992482+00:00", "installed_sha256": "1513634e48a76be1ccffe1f7ef6a36955e6594b05bda39ed0957c41d72ed58ac", "mailbox_seq": 101, "numerical_evaluator_changed": false, "previous_sha256": "9c5bfa339b3ed8be3b389cf10f8555a74b278dbf27aa247f7e77abc7b753f254", "previous_source_backup": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/run_registered_numerical_gate_pre_seq101_9c5bfa33.slurm", "queued_job_id": "202315", "queued_job_spool_changed": false, "queued_job_state_during_update": "PENDING Dependency", "schema": "nearing2022-numerical-gate-slurm-source-update-v1", "target": "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm"}
+=== SUBMIT THIRD CPU VALIDATION ATTEMPT ===
+validation_job_id=202370
+JobId=202370 JobName=N22-preclosure-check UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-08-10T19:26:24 EligibleTime=2026-08-10T19:26:24 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T19:26:24 Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* TRES=cpu=2,node=1,billing=2 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_preclosure_validation.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202370.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202370.out Power=
+=== POST-INSTALL SAFETY BOUNDARY ===
+1f01b23421d39755478916c33f58bd13952deb39e3c4ac9a5e1aab0ab6911d1f  /data1/home/sunyiq/hpc_mailbox/inbox/id29-nearing2022-da/payload.tar.gz
+1513634e48a76be1ccffe1f7ef6a36955e6594b05bda39ed0957c41d72ed58ac  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm
+9c5bfa339b3ed8be3b389cf10f8555a74b278dbf27aa247f7e77abc7b753f254  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/run_registered_numerical_gate_pre_seq101_9c5bfa33.slurm
+3950512085a6d5ee7e5252ac306f2a8031565e3816ffd42933a39c55180f3ee2  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/numerical_gate_slurm_source_seq101_receipt.json
+aa1192ec60ae0a94428512babcc99c8481e3d4a69ae5fe764652310ff368a09c  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_seq101_job.txt
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T19:26:26+0800
