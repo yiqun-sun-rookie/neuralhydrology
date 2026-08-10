@@ -1,0 +1,22 @@
+### channel=id29-nearing2022-da seq=121
+### host=login4
+### started=2026-08-10T20:39:29+0800
+### ---------- output ----------
+=== HYPERPARAMETER JOB CONTRACT ===
+{"array_task_id": "0-659%2", "array_task_throttle": "2", "cpus_per_task": "4", "dependency": "afterok:202216_*", "held_out_basin_files": ["src/29_nearing2022_da_ar/basin_lists/author_pub/test_kfold_0_seed_0.txt"], "job_id": 202228, "job_state": "PENDING", "registry_rows": 660, "source_complete_roles": true, "source_required_files": ["/data1/home/sunyiq/nearing2022_da/closure_20260810/basin_split/simulation/nearing2022_full_basin_simulation_fold0_seed0_2026_0810_1239_ep30/config.yml", "/data1/home/sunyiq/nearing2022_da/closure_20260810/basin_split/simulation/nearing2022_full_basin_simulation_fold0_seed0_2026_0810_1239_ep30/model_epoch030.pt", "/data1/home/sunyiq/nearing2022_da/closure_20260810/basin_split/simulation/nearing2022_full_basin_simulation_fold0_seed0_2026_0810_1239_ep30/output.log", "/data1/home/sunyiq/nearing2022_da/closure_20260810/basin_split/simulation/nearing2022_full_basin_simulation_fold0_seed0_2026_0810_1239_ep30/train_data/train_data_scaler.yml"], "source_run": "/data1/home/sunyiq/nearing2022_da/closure_20260810/basin_split/simulation/nearing2022_full_basin_simulation_fold0_seed0_2026_0810_1239_ep30", "source_slurm_job_id": "202216_0", "time_limit": "1-00:00:00", "tres_per_node": "gpu:1", "unique_source_exp_ids": ["N22-BS-SIM-F00-S0"]}
+{"completed_202222_tasks": [{"elapsed": "00:40:02", "elapsed_seconds": 2402, "eval_id": "N22-EVAL-TS-AR-L01-TR000-TE025-S0", "evaluation_mode": "autoregression", "exit_code": "0:0", "family": "time_autoregression", "lead": "1", "slurm_task": "202222_1", "state": "COMPLETED", "test_holdout": "0.25"}, {"elapsed": "00:39:53", "elapsed_seconds": 2393, "eval_id": "N22-EVAL-TS-AR-L01-TR000-TE050-S0", "evaluation_mode": "autoregression", "exit_code": "0:0", "family": "time_autoregression", "lead": "1", "slurm_task": "202222_2", "state": "COMPLETED", "test_holdout": "0.5"}, {"elapsed": "00:32:11", "elapsed_seconds": 1931, "eval_id": "N22-EVAL-TS-AR-L01-TR000-TE075-S0", "evaluation_mode": "autoregression", "exit_code": "0:0", "family": "time_autoregression", "lead": "1", "slurm_task": "202222_3", "state": "COMPLETED", "test_holdout": "0.75"}, {"elapsed": "00:32:12", "elapsed_seconds": 1932, "eval_id": "N22-EVAL-TS-AR-L01-TR000-TE100-S0", "evaluation_mode": "autoregression", "exit_code": "0:0", "family": "time_autoregression", "lead": "1", "slurm_task": "202222_4", "state": "COMPLETED", "test_holdout": "1.0"}, {"elapsed": "05:19:33", "elapsed_seconds": 19173, "eval_id": "N22-EVAL-TS-DA-L01-TE025-S0", "evaluation_mode": "data_assimilation", "exit_code": "0:0", "family": "time_assimilation", "lead": "1", "slurm_task": "202222_6", "state": "COMPLETED", "test_holdout": "0.25"}, {"elapsed": "05:19:21", "elapsed_seconds": 19161, "eval_id": "N22-EVAL-TS-DA-L01-TE050-S0", "evaluation_mode": "data_assimilation", "exit_code": "0:0", "family": "time_assimilation", "lead": "1", "slurm_task": "202222_7", "state": "COMPLETED", "test_holdout": "0.5"}]}
+=== CURRENT ID29 GPU LOAD ===
+202214|N22-train|gpu:1|8:40:23|ngu104
+202215_0|N22-time|gpu:1|8:01:31|ngu104
+202215_1|N22-time|gpu:1|8:01:31|ngu101
+202215_2|N22-time|gpu:1|8:01:31|ngu101
+202216_5|N22-basin|gpu:1|2:27:06|ngu101
+202216_6|N22-basin|gpu:1|14:20|ngu104
+202222_8|N22-eval-now|gpu:1|1:23:06|ngu101
+202222_9|N22-eval-now|gpu:1|1:23:03|ngu102
+=== ACTIVE FAILURE STATES ===
+
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T20:39:31+0800
