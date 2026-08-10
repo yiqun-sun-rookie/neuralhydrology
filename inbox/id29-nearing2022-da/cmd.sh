@@ -1,121 +1,120 @@
 #!/bin/bash
-# ID29 seq=110: verify preclosure job 202376 and preserve immutable success evidence.
+# ID29 seq=111: report current full-role progress after successful preclosure; keep unsafe candidate manifest held.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-JOB=202376
-OUT="$ROOT/closure_20260810/logs/N22-preclosure-check_${JOB}.out"
-ERR="$ROOT/closure_20260810/logs/N22-preclosure-check_${JOB}.err"
-PROVENANCE="$ROOT/closure_20260810/provenance"
-PRESERVED_OUT="$PROVENANCE/preclosure_validation_${JOB}.out"
-PRESERVED_ERR="$PROVENANCE/preclosure_validation_${JOB}.err"
-RECEIPT="$PROVENANCE/preclosure_validation_${JOB}_receipt.json"
-JOB_RECEIPT="$PROVENANCE/preclosure_validation_seq109_job.txt"
-VALIDATION="$ROOT/src/29_nearing2022_da_ar/hpc/run_preclosure_validation.slurm"
-CHECKER="$ROOT/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py"
-VERIFIER="$ROOT/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py"
-LOCAL_RECEIPT="$ROOT/src/29_nearing2022_da_ar/reference/local_contract_validation.json"
-HEADLINE_BINDING="$ROOT/src/29_nearing2022_da_ar/reference/headline_artifact_recovery_binding.json"
+JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
 
-echo "=== VALIDATION STATE ==="
-squeue -h -j "$JOB" -o '%i|%T|%r|%j' || true
-sacct -n -P -j "$JOB" --format=JobID,JobName,State,ExitCode,Elapsed,Start,End,NodeList | sed '/^[[:space:]]*$/d'
-STATE=$(sacct -n -P -j "$JOB" --format=JobIDRaw,State | awk -F'|' -v job="$JOB" '$1 == job {print $2; exit}')
-echo "validation_state=$STATE"
+echo "=== PRECLOSURE SUCCESS ==="
+sacct -n -P -j 202376 --format=JobID,JobName,State,ExitCode,Elapsed,Start,End,NodeList | sed '/^[[:space:]]*$/d'
+test "$(sacct -n -P -j 202376 --format=JobIDRaw,State,ExitCode | awk -F'|' '$1 == "202376" {print $2 "|" $3; exit}')" = "COMPLETED|0:0"
+test -f "$ROOT/closure_20260810/provenance/preclosure_validation_202376_receipt.json"
 
-if [ "$STATE" = "COMPLETED" ]; then
-  test -f "$OUT"
-  test -f "$ERR"
-  echo "=== VALIDATION STDOUT ==="
-  cat "$OUT"
-  echo "=== VALIDATION STDERR ==="
-  cat "$ERR"
-  test ! -s "$ERR"
-  grep -q '"ok": true' "$OUT"
-  grep -q '"tests": 64' "$OUT"
-  grep -q '"bound_file_count": 15' "$OUT"
-  grep -q '"unique_file_count": 97' "$OUT"
-  grep -q '"file_count": 20' "$OUT"
-  grep -q '"dataset_sha256": "a3cb1f81e6b2f25e2b919c0d5b315e46fe82f8ed9c9d8a4bd56671da5500a35f"' "$OUT"
-  grep -q '"complete_history_verified_in_empty_repository": true' "$OUT"
-  grep -q 'finished=' "$OUT"
-  test ! -e "$PRESERVED_OUT"
-  test ! -e "$PRESERVED_ERR"
-  test ! -e "$RECEIPT"
-  install -m 0644 "$OUT" "$PRESERVED_OUT"
-  install -m 0644 "$ERR" "$PRESERVED_ERR"
-  test "$(sha256sum "$OUT" | awk '{print $1}')" = "$(sha256sum "$PRESERVED_OUT" | awk '{print $1}')"
-  test "$(sha256sum "$ERR" | awk '{print $1}')" = "$(sha256sum "$PRESERVED_ERR" | awk '{print $1}')"
-  python - "$JOB" "$OUT" "$ERR" "$PRESERVED_OUT" "$PRESERVED_ERR" "$RECEIPT" "$JOB_RECEIPT" "$VALIDATION" "$CHECKER" "$VERIFIER" "$LOCAL_RECEIPT" "$HEADLINE_BINDING" <<'PY'
-from datetime import datetime, timezone
-import hashlib
+echo "=== SQUEUE COUNTS BY ARRAY PARENT AND STATE ==="
+squeue -h -j "$JOBS" -o '%F|%T' | sort | uniq -c
+
+echo "=== SACCT COUNTS BY ARRAY PARENT, STATE, AND EXIT CODE ==="
+sacct -n -P -j "$JOBS" --format=JobID,State,ExitCode | awk -F'|' '
+  NF >= 3 && $1 !~ /\./ {
+    parent = $1
+    sub(/_.*/, "", parent)
+    key = parent "|" $2 "|" $3
+    count[key]++
+  }
+  END { for (key in count) print count[key] "|" key }
+' | sort -t'|' -k2,2n -k3,3
+
+echo "=== ACTIVE FAILURE STATES ==="
+sacct -n -P -j "$JOBS" --format=JobID,State,ExitCode | awk -F'|' '
+  $1 !~ /\./ && $2 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/ { print }
+' || true
+
+echo "=== REGISTERED FULL-ROLE ARTIFACT PROGRESS ==="
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+cd "$ROOT"
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
+python - <<'PY'
+from collections import Counter
 import json
 from pathlib import Path
-import subprocess
 import sys
 
-job = sys.argv[1]
-out, err, preserved_out, preserved_err, receipt, job_receipt, validation, checker, verifier, local_receipt, headline_binding = (
-    Path(value) for value in sys.argv[2:]
-)
+import pandas as pd
 
-def digest(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+root = Path('/data1/home/sunyiq/nearing2022_da')
+scripts = root / 'src/29_nearing2022_da_ar/scripts'
+sys.path.insert(0, str(scripts))
+from aggregate_registered_results import _registered_run
+from prepare_evaluation_run import resolve_source_run
+from verify_registered_closure import EVALUATION_AGGREGATION_FILES, HYPERPARAMETER_AGGREGATION_FILES, _metrics_path
 
-records = subprocess.run(
-    ['sacct', '-n', '-P', '-j', job, '--format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList'],
-    check=True,
-    capture_output=True,
-    text=True,
-).stdout.splitlines()
-record = next(line.split('|') for line in records if line.split('|', 1)[0].strip() == job)
-fields = ('job_id', 'job_name', 'state', 'exit_code', 'elapsed', 'start', 'end', 'node_list')
-slurm = dict(zip(fields, record, strict=True))
-assert slurm['state'] == 'COMPLETED'
-assert slurm['exit_code'] == '0:0'
-assert slurm['node_list'] == 'ngu003'
+registry_root = root / 'src/29_nearing2022_da_ar/registry'
+training = pd.read_csv(registry_root / 'experiment_registry.csv', keep_default_na=False, dtype=str)
+evaluations = pd.read_csv(registry_root / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
+hyper = pd.read_csv(registry_root / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str)
+
+def require(paths):
+    missing = [path for path in paths if not path.is_file()]
+    if missing:
+        raise FileNotFoundError(missing[0])
+
+training_done = Counter()
+for _, row in training.iterrows():
+    try:
+        run = resolve_source_run(root, training, row['exp_id'])
+        require([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', run / 'train_data/train_data_scaler.yml'])
+        training_done[row['family']] += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
+
+evaluation_done = Counter()
+for _, row in evaluations.iterrows():
+    try:
+        run = _registered_run(root, training, row)
+        result = run / row['result_file']
+        reference = resolve_source_run(root, training, row['reference_exp_id']) / 'test/model_epoch030/test_results.p'
+        require([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
+                 _metrics_path(result), reference, _metrics_path(reference)])
+        evaluation_done[row['family']] += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
+
+hyper_done = 0
+for _, row in hyper.iterrows():
+    try:
+        run = Path(row['run_dir'])
+        run = run if run.is_absolute() else root / run
+        result = run / row['result_file']
+        reference = resolve_source_run(root, training, row['source_exp_id']) / 'test/model_epoch030/test_results.p'
+        require([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
+                 _metrics_path(result), reference, _metrics_path(reference)])
+        hyper_done += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
+
+evaluation_aggregation = root / 'closure_20260810/aggregation/evaluations'
+hyper_aggregation = root / 'closure_20260810/aggregation/hyperparameters'
 payload = {
-    'schema': 'nearing2022-preclosure-validation-receipt-v1',
-    'created_utc': datetime.now(timezone.utc).isoformat(),
-    'slurm': slurm,
-    'source_stdout': str(out),
-    'source_stderr': str(err),
-    'preserved_stdout': str(preserved_out),
-    'preserved_stderr': str(preserved_err),
-    'stdout_sha256': digest(out),
-    'stderr_sha256': digest(err),
-    'job_receipt_sha256': digest(job_receipt),
-    'validation_slurm_sha256': digest(validation),
-    'server_checker_sha256': digest(checker),
-    'closure_verifier_sha256': digest(verifier),
-    'local_validation_receipt_sha256': digest(local_receipt),
-    'headline_artifact_binding_sha256': digest(headline_binding),
+    'training_complete': sum(training_done.values()),
+    'training_total': len(training),
+    'training_by_family': dict(sorted(training_done.items())),
+    'evaluation_complete': sum(evaluation_done.values()),
+    'evaluation_total': len(evaluations),
+    'evaluation_by_family': dict(sorted(evaluation_done.items())),
+    'hyperparameter_complete': hyper_done,
+    'hyperparameter_total': len(hyper),
+    'evaluation_aggregation_missing': [name for name in EVALUATION_AGGREGATION_FILES if not (evaluation_aggregation / name).is_file()],
+    'hyperparameter_aggregation_missing': [name for name in HYPERPARAMETER_AGGREGATION_FILES if not (hyper_aggregation / name).is_file()],
+    'final_gate_exists': (root / 'closure_20260810/aggregation/final_reproduction_gate.json').is_file(),
+    'final_manifest_exists': (root / 'closure_20260810/aggregation/final_artifact_manifest.json').is_file(),
+    'final_export_exists': (root / 'closure_20260810/export/nearing2022_final_closure.tar.gz').is_file(),
 }
-assert payload['stdout_sha256'] == digest(preserved_out)
-assert payload['stderr_sha256'] == digest(preserved_err)
-temporary = receipt.with_suffix(receipt.suffix + '.tmp')
-assert not receipt.exists() and not temporary.exists()
-temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
-temporary.replace(receipt)
 print(json.dumps(payload, sort_keys=True))
 PY
-  sha256sum "$OUT" "$ERR" "$PRESERVED_OUT" "$PRESERVED_ERR" "$RECEIPT" "$JOB_RECEIPT" "$VALIDATION" "$CHECKER" "$VERIFIER" "$LOCAL_RECEIPT" "$HEADLINE_BINDING"
-elif [ "$STATE" = "RUNNING" ] || [ "$STATE" = "PENDING" ]; then
-  echo "validation_pending=1"
-else
-  echo "=== FAILED STDOUT ==="
-  test -f "$OUT" && cat "$OUT"
-  echo "=== FAILED STDERR ==="
-  test -f "$ERR" && cat "$ERR"
-  test -f "$OUT" && test -f "$ERR" && sha256sum "$OUT" "$ERR" "$JOB_RECEIPT"
-fi
 
 echo "=== SAFETY BOUNDARY ==="
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = "202293|PENDING|JobHeldUser|N22-manifest"
 test "$(squeue -h -j 202315 -o '%i|%T|%r|%j')" = "202315|PENDING|Dependency|N22-gate"
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
-
-if [ "$STATE" != "COMPLETED" ] && [ "$STATE" != "RUNNING" ] && [ "$STATE" != "PENDING" ]; then
-  exit 4
-fi
