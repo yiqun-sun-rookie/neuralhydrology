@@ -1,0 +1,105 @@
+### channel=id29-nearing2022-da seq=63
+### host=login4
+### started=2026-08-10T12:49:44+0800
+### ---------- output ----------
+=== QUEUE ===
+             JOBID               NAME ST       TIME  NODES NODELIST(REASON)
+   202215_[3-22%3]           N22-time PD       0:00      1 (JobArrayTaskLimit)
+   202216_[2-19%2]          N22-basin PD       0:00      1 (JobArrayTaskLimit)
+   202222_[3-29%2]       N22-eval-now PD       0:00      1 (JobArrayTaskLimit)
+  202226_[0-119%4]     N22-eval-later PD       0:00      1 (Dependency)
+    202227_[0-9%2]       N22-basin-da PD       0:00      1 (Dependency)
+  202228_[0-659%2]          N22-hyper PD       0:00      1 (Dependency)
+          202222_2       N22-eval-now  R       4:55      1 ngu102
+          202222_1       N22-eval-now  R       5:05      1 ngu102
+          202215_0           N22-time  R      11:44      1 ngu104
+          202216_0          N22-basin  R      11:44      1 ngu101
+          202215_1           N22-time  R      11:44      1 ngu101
+          202215_2           N22-time  R      11:44      1 ngu101
+          202216_1          N22-basin  R      11:44      1 ngu101
+            202214          N22-train  R      50:36      1 ngu104
+=== ACCOUNTING ===
+JobID|JobName|Partition|State|Elapsed|ExitCode
+202214|N22-train|hgpu4|RUNNING|00:50:36|0:0
+202214.batch|batch||RUNNING|00:50:36|0:0
+202214.extern|extern||RUNNING|00:50:36|0:0
+202215_0|N22-time|hgpu4|RUNNING|00:11:44|0:0
+202215_0.batch|batch||RUNNING|00:11:44|0:0
+202215_0.extern|extern||RUNNING|00:11:44|0:0
+202215_1|N22-time|hgpu4|RUNNING|00:11:44|0:0
+202215_1.batch|batch||RUNNING|00:11:44|0:0
+202215_1.extern|extern||RUNNING|00:11:44|0:0
+202215_2|N22-time|hgpu4|RUNNING|00:11:44|0:0
+202215_2.batch|batch||RUNNING|00:11:44|0:0
+202215_2.extern|extern||RUNNING|00:11:44|0:0
+202215_[3-22%3]|N22-time|hgpu4,hgpu8,hgpu2|PENDING|00:00:00|0:0
+202216_0|N22-basin|hgpu4|RUNNING|00:11:44|0:0
+202216_0.batch|batch||RUNNING|00:11:44|0:0
+202216_0.extern|extern||RUNNING|00:11:44|0:0
+202216_1|N22-basin|hgpu4|RUNNING|00:11:44|0:0
+202216_1.batch|batch||RUNNING|00:11:44|0:0
+202216_1.extern|extern||RUNNING|00:11:44|0:0
+202216_[2-19%2]|N22-basin|hgpu4,hgpu8,hgpu2|PENDING|00:00:00|0:0
+202222_0|N22-eval-now|hgpu4|COMPLETED|00:00:10|0:0
+202222_0.batch|batch||COMPLETED|00:00:10|0:0
+202222_0.extern|extern||COMPLETED|00:00:10|0:0
+202222_1|N22-eval-now|hgpu4|RUNNING|00:05:05|0:0
+202222_1.batch|batch||RUNNING|00:05:05|0:0
+202222_1.extern|extern||RUNNING|00:05:05|0:0
+202222_2|N22-eval-now|hgpu4|RUNNING|00:04:55|0:0
+202222_2.batch|batch||RUNNING|00:04:55|0:0
+202222_2.extern|extern||RUNNING|00:04:55|0:0
+202222_[3-29%2]|N22-eval-now|hgpu4,hgpu8,hgpu2|PENDING|00:00:00|0:0
+=== EVALUATION LOG INVENTORY ===
+N22-eval-now_202222_0.err 0 bytes
+N22-eval-now_202222_0.out 266 bytes
+N22-eval-now_202222_1.err 1027 bytes
+N22-eval-now_202222_1.out 4820 bytes
+N22-eval-now_202222_2.err 1027 bytes
+N22-eval-now_202222_2.out 4820 bytes
+=== COMPLETED OR FAILED EVALUATION TASK TAILS ===
+--- task=0 stdout ---
+started=2026-08-10T12:44:49+0800
+eval_id=N22-EVAL-TS-AR-L01-TR000-TE000-S0
+run_dir=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30
+prepare_status=completed
+status=SKIPPED_COMPLETED
+--- task=1 stdout ---
+started=2026-08-10T12:44:49+0800
+eval_id=N22-EVAL-TS-AR-L01-TR000-TE025-S0
+run_dir=/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0
+prepare_status=prepared
+b1314b4c9b50df9d15463366e591972c79edb21371a2b5147b6c70c77e752662  /data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/config.yml
+c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b  /data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/model_epoch030.pt
+f25e2185e6f2edc1b2612d72f289f8873d9a1627be90abd1258befd2f3fd375f  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/evaluation_registry.csv
+08645c6fecc8c43a72514a057adba613d69a97ba21620fdc6050556ab482a675  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/time_split_existing_source_evaluation_batch.txt
+NVIDIA A40, 535.104.05, 46068 MiB
+NVIDIA A40, 535.104.05, 46068 MiB
+NVIDIA A40, 535.104.05, 46068 MiB
+NVIDIA A40, 535.104.05, 46068 MiB
+2026-08-10 12:45:57,456: Logging to /data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/output.log initialized.
+2026-08-10 12:45:58,045: Using the model weights from /data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/model_epoch030.pt
+  0%|          | 0/531 [00:00<?, ?it/s]# Evaluation:   0%|          | 0/531 [00:00<?, ?it/s]# Evaluation:   0%|          | 1/531 [00:09<1:23:40,  9.47s/it]# Evaluation:   0%|          | 2/531 [00:14<1:00:12,  6.83s/it]# Evaluation:   1%|          | 3/531 [00:18<49:45,  5.65s/it]  # Evaluation:   1%|          | 4/531 [00:23<44:59,  5.12s/it]# Evaluation:   1%|          | 5/531 [00:27<43:28,  4.96s/it]# Evaluation:   1%|          | 6/531 [00:31<40:57,  4.68s/it]# Evaluation:   1%|▏         | 7/531 [00:36<39:50,  4.56s/it]# Evaluation:   2%|▏         | 8/531 [00:40<38:39,  4.43s/it]# Evaluation:   2%|▏         | 9/531 [00:45<41:04,  4.72s/it]# Evaluation:   2%|▏         | 10/531 [00:49<39:19,  4.53s/it]# Evaluation:   2%|▏         | 11/531 [00:53<38:25,  4.43s/it]# Evaluation:   2%|▏         | 12/531 [00:58<38:01,  4.40s/it]# Evaluation:   2%|▏         | 13/531 [01:02<38:17,  4.44s/it]# Evaluation:   3%|▎         | 14/531 [01:07<37:36,  4.36s/it]# Evaluation:   3%|▎         | 15/531 [01:11<37:07,  4.32s/it]# Evaluation:   3%|▎         | 16/531 [01:16<38:27,  4.48s/it]# Evaluation:   3%|▎         | 17/531 [01:20<38:13,  4.46s/it]# Evaluation:   3%|▎         | 18/531 [01:24<37:31,  4.39s/it]# Evaluation:   4%|▎         | 19/531 [01:28<37:02,  4.34s/it]# Evaluation:   4%|▍         | 20/531 [01:33<37:30,  4.40s/it]# Evaluation:   4%|▍         | 21/531 [01:37<36:47,  4.33s/it]# Evaluation:   4%|▍         | 22/531 [01:41<36:30,  4.30s/it]# Evaluation:   4%|▍         | 23/531 [01:46<38:09,  4.51s/it]# Evaluation:   5%|▍         | 24/531 [01:51<37:36,  4.45s/it]# Evaluation:   5%|▍         | 25/531 [01:55<37:06,  4.40s/it]# Evaluation:   5%|▍         | 26/531 [01:59<36:40,  4.36s/it]# Evaluation:   5%|▌         | 27/531 [02:03<36:20,  4.33s/it]# Evaluation:   5%|▌         | 28/531 [02:08<36:44,  4.38s/it]# Evaluation:   5%|▌         | 29/531 [02:12<36:17,  4.34s/it]# Evaluation:   6%|▌         | 30/531 [02:17<37:39,  4.51s/it]# Evaluation:   6%|▌         | 31/531 [02:21<36:52,  4.43s/it]# Evaluation:   6%|▌         | 32/531 [02:26<36:55,  4.44s/it]# Evaluation:   6%|▌         | 33/531 [02:30<36:21,  4.38s/it]# Evaluation:   6%|▋         | 34/531 [02:34<36:02,  4.35s/it]# Evaluation:   7%|▋         | 35/531 [02:39<35:47,  4.33s/it]# Evaluation:   7%|▋         | 36/531 [02:43<36:38,  4.44s/it]# Evaluation:   7%|▋         | 37/531 [02:48<37:36,  4.57s/it]# Evaluation:   7%|▋         | 38/531 [02:52<36:43,  4.47s/it]# Evaluation:   7%|▋         | 39/531 [02:57<36:12,  4.42s/it]# Evaluation:   8%|▊         | 40/531 [03:01<36:19,  4.44s/it]# Evaluation:   8%|▊         | 41/531 [03:05<35:03,  4.29s/it]# Evaluation:   8%|▊         | 42/531 [03:09<34:44,  4.26s/it]# Evaluation:   8%|▊         | 43/531 [03:14<34:23,  4.23s/it]# Evaluation:   8%|▊         | 44/531 [03:19<36:40,  4.52s/it]# Evaluation:   8%|▊         | 45/531 [03:23<35:28,  4.38s/it]# Evaluation:   9%|▊         | 46/531 [03:27<34:54,  4.32s/it]# Evaluation:   9%|▉         | 47/531 [03:31<34:39,  4.30s/it]# Evaluation:   9%|▉         | 48/531 [03:36<34:59,  4.35s/it]# Evaluation:   9%|▉         | 49/531 [03:40<34:04,  4.24s/it]# Evaluation:   9%|▉         | 50/531 [03:44<33:55,  4.23s/it]--- task=1 stderr ---
+/data1/home/sunyiq/nearing2022_da/neuralhydrology/evaluation/tester.py:145: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(weight_file, map_location=self.device))
+--- task=2 stdout ---
+started=2026-08-10T12:44:56+0800
+eval_id=N22-EVAL-TS-AR-L01-TR000-TE050-S0
+run_dir=/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0
+prepare_status=prepared
+37b3942cfca36f25da1c5f00aff7fac34cb8ccabdd4ab452d8ac0c5058d3967c  /data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/config.yml
+c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b  /data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/model_epoch030.pt
+f25e2185e6f2edc1b2612d72f289f8873d9a1627be90abd1258befd2f3fd375f  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/evaluation_registry.csv
+08645c6fecc8c43a72514a057adba613d69a97ba21620fdc6050556ab482a675  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/time_split_existing_source_evaluation_batch.txt
+NVIDIA A40, 535.104.05, 46068 MiB
+NVIDIA A40, 535.104.05, 46068 MiB
+NVIDIA A40, 535.104.05, 46068 MiB
+NVIDIA A40, 535.104.05, 46068 MiB
+2026-08-10 12:45:57,455: Logging to /data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/output.log initialized.
+2026-08-10 12:45:58,045: Using the model weights from /data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/model_epoch030.pt
+  0%|          | 0/531 [00:00<?, ?it/s]# Evaluation:   0%|          | 0/531 [00:00<?, ?it/s]# Evaluation:   0%|          | 1/531 [00:09<1:23:21,  9.44s/it]# Evaluation:   0%|          | 2/531 [00:14<1:00:16,  6.84s/it]# Evaluation:   1%|          | 3/531 [00:18<49:39,  5.64s/it]  # Evaluation:   1%|          | 4/531 [00:22<44:56,  5.12s/it]# Evaluation:   1%|          | 5/531 [00:27<43:04,  4.91s/it]# Evaluation:   1%|          | 6/531 [00:31<41:11,  4.71s/it]# Evaluation:   1%|▏         | 7/531 [00:36<39:59,  4.58s/it]# Evaluation:   2%|▏         | 8/531 [00:40<38:45,  4.45s/it]# Evaluation:   2%|▏         | 9/531 [00:45<40:50,  4.70s/it]# Evaluation:   2%|▏         | 10/531 [00:49<39:23,  4.54s/it]# Evaluation:   2%|▏         | 11/531 [00:53<38:28,  4.44s/it]# Evaluation:   2%|▏         | 12/531 [00:58<37:52,  4.38s/it]# Evaluation:   2%|▏         | 13/531 [01:02<38:01,  4.40s/it]# Evaluation:   3%|▎         | 14/531 [01:06<37:33,  4.36s/it]# Evaluation:   3%|▎         | 15/531 [01:11<37:02,  4.31s/it]# Evaluation:   3%|▎         | 16/531 [01:15<38:24,  4.47s/it]# Evaluation:   3%|▎         | 17/531 [01:20<38:16,  4.47s/it]# Evaluation:   3%|▎         | 18/531 [01:24<37:35,  4.40s/it]# Evaluation:   4%|▎         | 19/531 [01:28<37:01,  4.34s/it]# Evaluation:   4%|▍         | 20/531 [01:33<37:23,  4.39s/it]# Evaluation:   4%|▍         | 21/531 [01:37<36:57,  4.35s/it]# Evaluation:   4%|▍         | 22/531 [01:41<36:43,  4.33s/it]# Evaluation:   4%|▍         | 23/531 [01:46<38:14,  4.52s/it]# Evaluation:   5%|▍         | 24/531 [01:51<37:52,  4.48s/it]# Evaluation:   5%|▍         | 25/531 [01:55<37:10,  4.41s/it]# Evaluation:   5%|▍         | 26/531 [01:59<36:44,  4.37s/it]# Evaluation:   5%|▌         | 27/531 [02:04<36:22,  4.33s/it]# Evaluation:   5%|▌         | 28/531 [02:08<36:40,  4.38s/it]# Evaluation:   5%|▌         | 29/531 [02:12<36:18,  4.34s/it]# Evaluation:   6%|▌         | 30/531 [02:17<37:47,  4.53s/it]# Evaluation:   6%|▌         | 31/531 [02:21<36:56,  4.43s/it]# Evaluation:   6%|▌         | 32/531 [02:26<36:53,  4.44s/it]# Evaluation:   6%|▌         | 33/531 [02:30<36:17,  4.37s/it]# Evaluation:   6%|▋         | 34/531 [02:34<35:58,  4.34s/it]# Evaluation:   7%|▋         | 35/531 [02:39<35:47,  4.33s/it]# Evaluation:   7%|▋         | 36/531 [02:43<36:13,  4.39s/it]# Evaluation:   7%|▋         | 37/531 [02:48<37:30,  4.56s/it]# Evaluation:   7%|▋         | 38/531 [02:52<36:44,  4.47s/it]# Evaluation:   7%|▋         | 39/531 [02:57<36:47,  4.49s/it]# Evaluation:   8%|▊         | 40/531 [03:01<35:28,  4.34s/it]# Evaluation:   8%|▊         | 41/531 [03:05<35:03,  4.29s/it]# Evaluation:   8%|▊         | 42/531 [03:09<34:42,  4.26s/it]# Evaluation:   8%|▊         | 43/531 [03:14<35:05,  4.32s/it]# Evaluation:   8%|▊         | 44/531 [03:19<36:17,  4.47s/it]# Evaluation:   8%|▊         | 45/531 [03:23<35:33,  4.39s/it]# Evaluation:   9%|▊         | 46/531 [03:27<34:58,  4.33s/it]# Evaluation:   9%|▉         | 47/531 [03:31<35:13,  4.37s/it]# Evaluation:   9%|▉         | 48/531 [03:35<34:16,  4.26s/it]# Evaluation:   9%|▉         | 49/531 [03:40<34:08,  4.25s/it]# Evaluation:   9%|▉         | 50/531 [03:44<33:59,  4.24s/it]--- task=2 stderr ---
+/data1/home/sunyiq/nearing2022_da/neuralhydrology/evaluation/tester.py:145: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(weight_file, map_location=self.device))
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T12:49:45+0800
