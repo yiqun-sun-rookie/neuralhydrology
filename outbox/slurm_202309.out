@@ -1,0 +1,164 @@
+=== VERIFY AND EXTRACT IMMUTABLE TEST SNAPSHOT ===
+payload_sha256=47a97cfc2404b582c2100be67dd8d7db6273e21d96b5f3e8188e9592d175664b
+snapshot_manifest_entries=172
+snapshot_manifest_check=ok
+=== TARGETED LINUX REGRESSION GATE ===
+.......................                                                  [100%]
+23 passed in 177.42s (0:02:57)
+{"candidate_launch_allowed": true, "errors": 0, "failures": 0, "label": "TARGETED_GATE", "passed": 23, "process_exit_code": 0, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 0, "tests": 23}
+=== COMPLETE LINUX SAFETY TEST GATE ===
+..........................................................s............. [ 24%]
+.....................s................................................s. [ 49%]
+...............s.............................................s.......... [ 74%]
+............ss..............s.......................................FFF. [ 98%]
+...                                                                      [100%]
+=================================== FAILURES ===================================
+_____ test_a_single_reference_candidate_produces_one_cell_per_frozen_basin _____
+
+real_packages = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot/runs/unified_autoresearch/pytest_single_candidate_packages/packages')
+tmp_path = PosixPath('/tmp/pytest-of-sunyiq/pytest-2/test_a_single_reference_candid0')
+
+    def test_a_single_reference_candidate_produces_one_cell_per_frozen_basin(real_packages, tmp_path):
+        workspace = REPO_ROOT / "runs" / "unified_autoresearch" / "pytest_single_candidate"
+        if workspace.exists():
+            _remove_tree(workspace)
+        try:
+>           result = _run(real_packages, workspace)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/unified_autoresearch/tests/test_single_candidate_development.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/unified_autoresearch/tests/test_single_candidate_development.py:74: in _run
+    return run_single_candidate_development(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_root = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot')
+package_root = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot/runs/unified_autoresearch/pytest_single_candidate_packages/packages')
+expected_package_manifest_sha256 = 'd1f527e49104094eb1985e8c72545f678fb8eefd698bf6b4902fae058869119e'
+materialize = <function _reference_conceptual at 0x2ac1b55f0cc0>
+output_root = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot/runs/unified_autoresearch/pytest_single_candidate')
+resource_snapshot = ResourceSnapshot(available_cpu_cores=8, available_gpu_count=0, available_memory_gb=16.0, free_disk_gb=500.0)
+monitor_sample_interval_seconds = None, monitor_reason = None
+
+    def run_single_candidate_development(
+        *,
+        repo_root: str | Path,
+        package_root: str | Path,
+        expected_package_manifest_sha256: str,
+        materialize,
+        output_root: str | Path,
+        resource_snapshot: ResourceSnapshot,
+        monitor_sample_interval_seconds: float | None = None,
+        monitor_reason: str | None = None,
+    ) -> dict[str, Any]:
+        """Train and predict one candidate on both protocols, then score every frozen basin."""
+        monitor_enabled = monitor_sample_interval_seconds is not None
+        if monitor_enabled and not (monitor_reason and monitor_reason.strip()):
+            raise ValueError("a supervised candidate run requires a non-empty monitor reason")
+        repo = Path(repo_root).resolve()
+        if not (repo / ".git").exists():
+>           raise ValueError("a candidate development run requires a Git repository root")
+E           ValueError: a candidate development run requires a Git repository root
+
+src/unified_autoresearch/workflow/candidate_development.py:51: ValueError
+_______ test_the_declared_candidate_identity_is_carried_into_every_cell ________
+
+real_packages = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot/runs/unified_autoresearch/pytest_single_candidate_packages/packages')
+tmp_path = PosixPath('/tmp/pytest-of-sunyiq/pytest-2/test_the_declared_candidate_id0')
+
+    def test_the_declared_candidate_identity_is_carried_into_every_cell(real_packages, tmp_path):
+        workspace = REPO_ROOT / "runs" / "unified_autoresearch" / "pytest_single_candidate_identity"
+        if workspace.exists():
+            _remove_tree(workspace)
+        try:
+>           result = _run(real_packages, workspace)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/unified_autoresearch/tests/test_single_candidate_development.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/unified_autoresearch/tests/test_single_candidate_development.py:74: in _run
+    return run_single_candidate_development(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_root = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot')
+package_root = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot/runs/unified_autoresearch/pytest_single_candidate_packages/packages')
+expected_package_manifest_sha256 = 'd1f527e49104094eb1985e8c72545f678fb8eefd698bf6b4902fae058869119e'
+materialize = <function _reference_conceptual at 0x2ac1b55f0cc0>
+output_root = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot/runs/unified_autoresearch/pytest_single_candidate_identity')
+resource_snapshot = ResourceSnapshot(available_cpu_cores=8, available_gpu_count=0, available_memory_gb=16.0, free_disk_gb=500.0)
+monitor_sample_interval_seconds = None, monitor_reason = None
+
+    def run_single_candidate_development(
+        *,
+        repo_root: str | Path,
+        package_root: str | Path,
+        expected_package_manifest_sha256: str,
+        materialize,
+        output_root: str | Path,
+        resource_snapshot: ResourceSnapshot,
+        monitor_sample_interval_seconds: float | None = None,
+        monitor_reason: str | None = None,
+    ) -> dict[str, Any]:
+        """Train and predict one candidate on both protocols, then score every frozen basin."""
+        monitor_enabled = monitor_sample_interval_seconds is not None
+        if monitor_enabled and not (monitor_reason and monitor_reason.strip()):
+            raise ValueError("a supervised candidate run requires a non-empty monitor reason")
+        repo = Path(repo_root).resolve()
+        if not (repo / ".git").exists():
+>           raise ValueError("a candidate development run requires a Git repository root")
+E           ValueError: a candidate development run requires a Git repository root
+
+src/unified_autoresearch/workflow/candidate_development.py:51: ValueError
+_________ test_the_runner_refuses_to_overwrite_an_existing_output_root _________
+
+real_packages = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot/runs/unified_autoresearch/pytest_single_candidate_packages/packages')
+tmp_path = PosixPath('/tmp/pytest-of-sunyiq/pytest-2/test_the_runner_refuses_to_ove0')
+
+    def test_the_runner_refuses_to_overwrite_an_existing_output_root(real_packages, tmp_path):
+        workspace = REPO_ROOT / "runs" / "unified_autoresearch" / "pytest_single_candidate_exists"
+        workspace.mkdir(parents=True, exist_ok=True)
+        try:
+            with pytest.raises(FileExistsError):
+>               _run(real_packages, workspace)
+
+src/unified_autoresearch/tests/test_single_candidate_development.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/unified_autoresearch/tests/test_single_candidate_development.py:74: in _run
+    return run_single_candidate_development(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo_root = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot')
+package_root = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot/runs/unified_autoresearch/pytest_single_candidate_packages/packages')
+expected_package_manifest_sha256 = 'd1f527e49104094eb1985e8c72545f678fb8eefd698bf6b4902fae058869119e'
+materialize = <function _reference_conceptual at 0x2ac1b55f0cc0>
+output_root = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq43/snapshot/runs/unified_autoresearch/pytest_single_candidate_exists')
+resource_snapshot = ResourceSnapshot(available_cpu_cores=8, available_gpu_count=0, available_memory_gb=16.0, free_disk_gb=500.0)
+monitor_sample_interval_seconds = None, monitor_reason = None
+
+    def run_single_candidate_development(
+        *,
+        repo_root: str | Path,
+        package_root: str | Path,
+        expected_package_manifest_sha256: str,
+        materialize,
+        output_root: str | Path,
+        resource_snapshot: ResourceSnapshot,
+        monitor_sample_interval_seconds: float | None = None,
+        monitor_reason: str | None = None,
+    ) -> dict[str, Any]:
+        """Train and predict one candidate on both protocols, then score every frozen basin."""
+        monitor_enabled = monitor_sample_interval_seconds is not None
+        if monitor_enabled and not (monitor_reason and monitor_reason.strip()):
+            raise ValueError("a supervised candidate run requires a non-empty monitor reason")
+        repo = Path(repo_root).resolve()
+        if not (repo / ".git").exists():
+>           raise ValueError("a candidate development run requires a Git repository root")
+E           ValueError: a candidate development run requires a Git repository root
+
+src/unified_autoresearch/workflow/candidate_development.py:51: ValueError
+=========================== short test summary info ============================
+FAILED src/unified_autoresearch/tests/test_single_candidate_development.py::test_a_single_reference_candidate_produces_one_cell_per_frozen_basin
+FAILED src/unified_autoresearch/tests/test_single_candidate_development.py::test_the_declared_candidate_identity_is_carried_into_every_cell
+FAILED src/unified_autoresearch/tests/test_single_candidate_development.py::test_the_runner_refuses_to_overwrite_an_existing_output_root
+3 failed, 280 passed, 8 skipped in 394.78s (0:06:34)
+{"candidate_launch_allowed": false, "errors": 0, "failures": 3, "label": "FULL_GATE", "passed": 280, "process_exit_code": 1, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 8, "tests": 291}
