@@ -1,0 +1,33 @@
+### channel=id29-nearing2022-da seq=106
+### host=login4
+### started=2026-08-10T19:41:10+0800
+### ---------- output ----------
+=== VALIDATION STATE ===
+slurm_load_jobs error: Invalid job id specified
+202373|N22-preclosure-check|FAILED|1:0|00:00:18|2026-08-10T19:39:03|2026-08-10T19:39:21|ngu003
+202373.batch|batch|FAILED|1:0|00:00:18|2026-08-10T19:39:03|2026-08-10T19:39:21|ngu003
+202373.extern|extern|COMPLETED|0:0|00:00:18|2026-08-10T19:39:03|2026-08-10T19:39:21|ngu003
+validation_state=FAILED
+=== FAILED STDOUT ===
+started=2026-08-10T19:39:04+0800
+=== FAILED STDERR ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py", line 203, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py", line 149, in main
+    author_archives = verify_author_source_archives(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py", line 553, in verify_author_source_archives
+    verification = subprocess.run(
+                   ^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', '-C', '/tmp/nearing2022-bundle-wb3x174r/verify.git', 'bundle', 'verify', '/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/author_source_archives/github-grey-nearing-neuralhydrology-public-assimilation-a3f8bfc.bundle']' returned non-zero exit status 129.
+d80ee85cfbca54c994ddb128437db022f746b80698e915fc8fb6c4aaa22187bf  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202373.out
+ad39cf19284882d86723418de40eadf725081e45aab97f499ddbf4521e0c8393  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202373.err
+f621051ad2e9da8eed0a6367e41c49fe53fa739552b52a2be71439b0ac1a9dd5  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_seq105_job.txt
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=4
+### finished=2026-08-10T19:41:10+0800
