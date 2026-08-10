@@ -1,0 +1,49 @@
+### channel=id29-nearing2022-da seq=72
+### host=login4
+### started=2026-08-10T13:57:12+0800
+### ---------- output ----------
+=== INSTALL ===
+/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v8.tar.gz: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_manifest.slurm: OK
+=== FAIL-CLOSED PREFLIGHT ===
+{
+  "complete": false,
+  "counts": {
+    "evaluations": 180,
+    "hyperparameters": 660,
+    "training": 46
+  },
+  "missing_count": 3324,
+  "missing_first": [
+    {
+      "coordinate_id": "N22-TS-AR-L01-H025-S0",
+      "coordinate_type": "training",
+      "error": "FileNotFoundError: Expected one completed source run for N22-TS-AR-L01-H025-S0 under /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression, found 0",
+      "path": "",
+      "role": "run_resolution"
+    },
+    {
+      "coordinate_id": "N22-TS-AR-L01-H050-S0",
+      "coordinate_type": "training",
+      "error": "FileNotFoundError: Expected one completed source run for N22-TS-AR-L01-H050-S0 under /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression, found 0",
+      "path": "",
+      "role": "run_resolution"
+    },
+    {
+      "coordinate_id": "N22-TS-AR-L01-H075-S0",
+      "coordinate_type": "training",
+      "error": "FileNotFoundError: Expected one completed source run for N22-TS-AR-L01-H075-S0 under /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression, found 0",
+      "path": "",
+      "role": "run_resolution"
+    },
+=== SUBMIT ===
+final_manifest_job_id=202242 dependency=afterok:202229:202230
+             JOBID                     NAME ST       TIME  NODES NODELIST(REASON)
+            202229             N22-agg-eval PD       0:00      1 (Dependency)
+            202230            N22-agg-hyper PD       0:00      1 (Dependency)
+            202242             N22-manifest PD       0:00      1 (Dependency)
+manifest_dependency=afterok:202229,afterok:202230
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T13:57:15+0800
