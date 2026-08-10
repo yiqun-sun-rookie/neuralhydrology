@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=135: event-driven refresh after projected completion window of basin training task 202216_8.
+# ID29 seq=136: read-only refresh after the startup transient of basin training task 202216_10.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
