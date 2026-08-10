@@ -1,11 +1,15 @@
 #!/bin/bash
-# ID29 seq=120: audit hyperparameter dependency, source readiness, and measured assimilation throughput; read-only.
+# ID29 seq=121: audit hyperparameter dependency, source readiness, and measured assimilation throughput; read-only.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
 JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
 
 echo "=== HYPERPARAMETER JOB CONTRACT ==="
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+cd "$ROOT"
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 python - <<'PY'
 import json
 from pathlib import Path
