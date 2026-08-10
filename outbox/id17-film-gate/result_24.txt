@@ -1,0 +1,25 @@
+### channel=id17-film-gate seq=24
+### host=login4
+### started=2026-08-11T00:22:07+0800
+### ---------- output ----------
+=== SENSITIVITY: same verdict computed at EPOCH 20 instead of 30 ===
+Traceback (most recent call last):
+  File "/tmp/agm20.py", line 24, in <module>
+    REPO = Path(__file__).resolve().parents[3]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/pathlib.py", line 445, in __getitem__
+    raise IndexError(idx)
+IndexError: 3
+
+=== EPOCH 20 -> 30 DEGRADATION PER ARM (test median NSE) ===
+ea   : ep30-ep20 per cell = ['-0.1131', '-0.0823', '-0.0165', '-0.0105', '-0.0357', '+0.0230', '-0.0903', '+0.0006', '+0.0074', '-0.0076']
+       mean -0.0325   worst -0.1131   cells that got worse: 7/10
+       ep20 spread: min 0.6081 max 0.6682 sd 0.0214
+       ep30 spread: min 0.4951 max 0.6572 sd 0.0528
+film : ep30-ep20 per cell = ['-0.0125', '-0.0128', '+0.0065', '+0.0193', '-0.0331', '-0.0232', '+0.0046', '+0.0080', '+0.0158', '-0.0060']
+       mean -0.0033   worst -0.0331   cells that got worse: 5/10
+       ep20 spread: min 0.6057 max 0.6839 sd 0.0242
+       ep30 spread: min 0.6060 max 0.6661 sd 0.0208
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T00:22:10+0800
