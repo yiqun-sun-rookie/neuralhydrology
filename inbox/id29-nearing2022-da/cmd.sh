@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=139: skip unresolved sources, then read-only audit every currently complete evaluation coordinate.
+# ID29 seq=140: independently confirm the largest partial numerical discrepancy from raw artifacts.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -312,6 +312,143 @@ for metric in METRICS:
     print(json.dumps(payload, sort_keys=True))
 for payload in coordinate_rows:
     print(json.dumps(payload, sort_keys=True))
+PY
+
+echo "=== INDEPENDENT RAW TE100 NSE CONFIRMATION ==="
+python - <<'PY'
+import hashlib
+import json
+from pathlib import Path
+import pickle
+import sys
+
+import numpy as np
+import pandas as pd
+import yaml
+
+root = Path('/data1/home/sunyiq/nearing2022_da')
+scripts = root / 'src/29_nearing2022_da_ar/scripts'
+sys.path.insert(0, str(scripts))
+from aggregate_registered_results import load_legacy_pandas_pickle  # noqa: E402
+from prepare_evaluation_run import resolve_source_run  # noqa: E402
+
+registry_root = root / 'src/29_nearing2022_da_ar/registry'
+reference_root = root / 'src/29_nearing2022_da_ar/reference'
+training = pd.read_csv(registry_root / 'experiment_registry.csv', keep_default_na=False, dtype=str)
+evaluations = pd.read_csv(registry_root / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
+eval_id = 'N22-EVAL-TS-AR-L01-TR000-TE100-S0'
+selected = evaluations.loc[evaluations['eval_id'] == eval_id]
+if len(selected) != 1:
+    raise ValueError(f'Expected one registry row for {eval_id}, found {len(selected)}')
+row = selected.iloc[0]
+if not (
+    row['family'] == 'time_autoregression'
+    and int(row['lead']) == 1
+    and float(row['train_holdout']) == 0.0
+    and float(row['test_holdout']) == 1.0
+    and int(row['seed']) == 0
+):
+    raise ValueError('Frozen registry row does not match the intended TE100 coordinate')
+
+candidate_run = root / row['run_dir']
+source_run = resolve_source_run(root, training, row['source_exp_id'])
+reference_run = resolve_source_run(root, training, row['reference_exp_id'])
+candidate_result = candidate_run / row['result_file']
+reference_result = reference_run / 'test/model_epoch030/test_results.p'
+candidate_checkpoint = candidate_run / 'model_epoch030.pt'
+source_checkpoint = source_run / 'model_epoch030.pt'
+candidate_config_path = candidate_run / 'config.yml'
+metrics_path = candidate_result.with_name('test_metrics.csv')
+
+def digest(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+config = yaml.safe_load(candidate_config_path.read_text(encoding='utf-8'))
+holdout = config['random_holdout_from_dynamic_features']
+expected_holdout = {
+    'QObs(mm/d)_shift1': {
+        'missing_fraction': 1.0,
+        'mean_missing_length': 5,
+    }
+}
+if holdout != expected_holdout:
+    raise ValueError(f'Unexpected TE100 holdout config: {holdout!r}')
+if config['model'].lower() != 'arlstm' or int(config['seed']) != 0:
+    raise ValueError('TE100 config does not use the registered ARLSTM and seed')
+source_checkpoint_sha256 = digest(source_checkpoint)
+candidate_checkpoint_sha256 = digest(candidate_checkpoint)
+if candidate_checkpoint_sha256 != source_checkpoint_sha256:
+    raise ValueError('Evaluation checkpoint bytes differ from the registered source checkpoint')
+
+with reference_result.open('rb') as handle:
+    reference = pickle.load(handle)
+with candidate_result.open('rb') as handle:
+    candidate = pickle.load(handle)
+if set(reference) != set(candidate) or len(reference) != 531:
+    raise ValueError('Reference and candidate basin sets are not the same 531 basins')
+
+def extract(dataset, variable):
+    values = np.asarray(dataset[variable].values)
+    if values.ndim == 2 and values.shape[1] == 1:
+        values = values[:, 0]
+    elif values.ndim != 1:
+        raise ValueError(f'Unexpected shape for {variable}: {values.shape}')
+    dates = np.asarray(dataset['date'].values)
+    return pd.Series(values.astype(float), index=pd.DatetimeIndex(dates))
+
+nse_values = []
+common_counts = []
+for basin in sorted(reference):
+    reference_dataset = reference[basin]['1D']['xr']
+    candidate_dataset = candidate[basin]['1D']['xr']
+    obs = extract(reference_dataset, 'QObs(mm/d)_obs').rename('obs')
+    sim = extract(candidate_dataset, 'QObs(mm/d)_sim').rename('sim')
+    aligned = pd.concat([obs, sim], axis=1, join='inner').dropna()
+    if aligned.index.has_duplicates or aligned.empty:
+        raise ValueError(f'Invalid common-date record for basin {basin}')
+    observed = aligned['obs'].to_numpy()
+    simulated = aligned['sim'].to_numpy()
+    denominator = float(np.sum((observed - np.mean(observed)) ** 2))
+    if denominator == 0:
+        nse = np.nan
+    else:
+        nse = 1.0 - float(np.sum((simulated - observed) ** 2)) / denominator
+    nse_values.append(nse)
+    common_counts.append(len(aligned))
+
+manual_median_nse = float(np.nanmedian(np.asarray(nse_values, dtype=float)))
+metrics = pd.read_csv(metrics_path)
+metrics_median_nse = float(metrics['NSE'].median())
+author_path = reference_root / 'author_time_split_statistics.pkl'
+author = load_legacy_pandas_pickle(author_path)
+author_median_nse = float(author[1]['NSE'][(0.0, 1.0, 1, 0)].median())
+acceptance_path = reference_root / 'reproduction_acceptance.json'
+acceptance = json.loads(acceptance_path.read_text(encoding='utf-8'))
+tolerance = float(acceptance['absolute_difference_tolerance']['NSE'])
+difference = manual_median_nse - author_median_nse
+payload = {
+    'eval_id': eval_id,
+    'basins': len(nse_values),
+    'minimum_common_dates': min(common_counts),
+    'maximum_common_dates': max(common_counts),
+    'manual_median_nse': manual_median_nse,
+    'metrics_file_median_nse': metrics_median_nse,
+    'manual_minus_metrics_file': manual_median_nse - metrics_median_nse,
+    'author_median_nse': author_median_nse,
+    'reproduction_minus_author': difference,
+    'absolute_tolerance': tolerance,
+    'within_absolute_tolerance': abs(difference) <= tolerance + 1e-12,
+    'checkpoint_bytes_identical': True,
+    'source_checkpoint_sha256': source_checkpoint_sha256,
+    'candidate_checkpoint_sha256': candidate_checkpoint_sha256,
+    'candidate_config_sha256': digest(candidate_config_path),
+    'candidate_result_sha256': digest(candidate_result),
+    'reference_result_sha256': digest(reference_result),
+    'metrics_sha256': digest(metrics_path),
+    'config_holdout': expected_holdout,
+    'scoring_implementation': 'standalone NumPy NSE over common finite dates; no score_reproduction_matrix import',
+}
+print(json.dumps(payload, sort_keys=True))
 PY
 
 echo "=== SAFETY BOUNDARY ==="
