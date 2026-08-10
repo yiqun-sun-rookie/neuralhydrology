@@ -1,0 +1,87 @@
+### channel=id17-film-gate seq=23
+### host=login4
+### started=2026-08-11T00:19:52+0800
+### ---------- output ----------
+=== SANITY: all 20 cells COMPLETED, no non-zero ExitCode ===
+completed=20  nonzero_exit=0
+=== PROTOCOL CHECKS (must be 20) ===
+20
+[CHECK] protocol OK: gate_ea_fold0_seed0 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold0_seed1 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold1_seed0 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold1_seed1 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold2_seed0 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold2_seed1 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold3_seed0 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold3_seed1 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold4_seed0 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold4_seed1 model=ealstm film_site=None
+[CHECK] protocol OK: gate_film_fold0_seed0 model=filmlstm film_site=input
+[CHECK] protocol OK: gate_film_fold0_seed1 model=filmlstm film_site=input
+[CHECK] protocol OK: gate_film_fold1_seed0 model=filmlstm film_site=input
+[CHECK] protocol OK: gate_film_fold1_seed1 model=filmlstm film_site=input
+[CHECK] protocol OK: gate_film_fold2_seed0 model=filmlstm film_site=input
+[CHECK] protocol OK: gate_film_fold2_seed1 model=filmlstm film_site=input
+[CHECK] protocol OK: gate_film_fold3_seed0 model=filmlstm film_site=input
+[CHECK] protocol OK: gate_film_fold3_seed1 model=filmlstm film_site=input
+[CHECK] protocol OK: gate_film_fold4_seed0 model=filmlstm film_site=input
+[CHECK] protocol OK: gate_film_fold4_seed1 model=filmlstm film_site=input
+=== ERRORS ===
+=== ALL EPOCH-30 RESULTS ===
+[RESULT] gate_ea_fold0_seed0 epoch30 test median NSE = 0.4951
+[RESULT] gate_ea_fold0_seed1 epoch30 test median NSE = 0.5641
+[RESULT] gate_ea_fold1_seed0 epoch30 test median NSE = 0.6398
+[RESULT] gate_ea_fold1_seed1 epoch30 test median NSE = 0.6530
+[RESULT] gate_ea_fold2_seed0 epoch30 test median NSE = 0.6325
+[RESULT] gate_ea_fold2_seed1 epoch30 test median NSE = 0.6572
+[RESULT] gate_ea_fold3_seed0 epoch30 test median NSE = 0.5292
+[RESULT] gate_ea_fold3_seed1 epoch30 test median NSE = 0.6182
+[RESULT] gate_ea_fold4_seed0 epoch30 test median NSE = 0.6155
+[RESULT] gate_ea_fold4_seed1 epoch30 test median NSE = 0.6386
+[RESULT] gate_film_fold0_seed0 epoch30 test median NSE = 0.6144
+[RESULT] gate_film_fold0_seed1 epoch30 test median NSE = 0.6060
+[RESULT] gate_film_fold1_seed0 epoch30 test median NSE = 0.6661
+[RESULT] gate_film_fold1_seed1 epoch30 test median NSE = 0.6615
+[RESULT] gate_film_fold2_seed0 epoch30 test median NSE = 0.6410
+[RESULT] gate_film_fold2_seed1 epoch30 test median NSE = 0.6606
+[RESULT] gate_film_fold3_seed0 epoch30 test median NSE = 0.6300
+[RESULT] gate_film_fold3_seed1 epoch30 test median NSE = 0.6137
+[RESULT] gate_film_fold4_seed0 epoch30 test median NSE = 0.6414
+[RESULT] gate_film_fold4_seed1 epoch30 test median NSE = 0.6217
+=== FINAL VERDICT ===
+==============================================================================
+ID17 GATE MATRIX — EA-LSTM vs FiLM-LSTM (input-site, unbounded gamma) @ epoch 30
+==============================================================================
+  fold0 seed0: n=106  ea=0.4951  film=0.6144  dArch=+0.1193  paired=+0.0939  win=83.0%  p=0.000
+  fold0 seed1: n=106  ea=0.5641  film=0.6060  dArch=+0.0419  paired=+0.0424  win=62.3%  p=0.015
+  fold1 seed0: n=106  ea=0.6398  film=0.6661  dArch=+0.0263  paired=+0.0134  win=54.7%  p=0.382
+  fold1 seed1: n=106  ea=0.6530  film=0.6615  dArch=+0.0085  paired=+0.0009  win=50.0%  p=1.000
+  fold2 seed0: n=106  ea=0.6325  film=0.6410  dArch=+0.0085  paired=+0.0245  win=60.4%  p=0.041
+  fold2 seed1: n=106  ea=0.6572  film=0.6606  dArch=+0.0034  paired=+0.0047  win=54.7%  p=0.382
+  fold3 seed0: n=106  ea=0.5292  film=0.6300  dArch=+0.1009  paired=+0.0671  win=78.3%  p=0.000
+  fold3 seed1: n=106  ea=0.6182  film=0.6137  dArch=-0.0045  paired=+0.0063  win=54.7%  p=0.382
+  fold4 seed0: n=107  ea=0.6155  film=0.6414  dArch=+0.0259  paired=+0.0365  win=67.3%  p=0.000
+  fold4 seed1: n=107  ea=0.6386  film=0.6217  dArch=-0.0169  paired=-0.0001  win=49.5%  p=1.000
+
+------------------------------------------------------------------------------
+PER-FOLD dArch (averaged over seeds)
+  fold0: +0.0806   (2 seed(s))
+  fold1: +0.0174   (2 seed(s))
+  fold2: +0.0060   (2 seed(s))
+  fold3: +0.0482   (2 seed(s))
+  fold4: +0.0045   (2 seed(s))
+
+------------------------------------------------------------------------------
+  folds complete       : 5/5   cells: 10/10
+  mean dArch over folds: +0.0313   (sd 0.0292, range +0.0045..+0.0806)
+  fold-mean signs      : ['+', '+', '+', '+', '+']   sign-test p=0.062
+  paired median (cells): mean +0.0290, 9/10 positive
+  FiLM win rate        : mean 61.5%, 8/10 cells >50%
+
+------------------------------------------------------------------------------
+H3 VERDICT (pre-registered)
+  GREEN — mean dArch=+0.0313 >= +0.02 and all 5 fold means positive. Static-attribute conditioning DOES help on ungauged basins; ID17 has a real result.
+==============================================================================
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T00:20:03+0800
