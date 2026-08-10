@@ -1,0 +1,22 @@
+### channel=id29-nearing2022-da seq=118
+### host=login4
+### started=2026-08-10T20:28:41+0800
+### ---------- output ----------
+=== BOUNDED PROGRESS AND WALLTIME PROJECTION ===
+{"conservative_projected_total_hours": 37.03, "epoch": 7, "epoch_step": 6007, "epoch_total_steps": 6821, "job": "202214", "name": "N22-train", "projected_slack_hours": 10.97, "runtime": "08:29:33", "stdout_bytes": 7335182, "thirty_epoch_fraction": 0.229355, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 37.02, "epoch": 7, "epoch_step": 2437, "epoch_total_steps": 6821, "job": "202215_0", "name": "N22-time", "projected_slack_hours": 10.98, "runtime": "07:50:41", "stdout_bytes": 6784220, "thirty_epoch_fraction": 0.211909, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 38.69, "epoch": 7, "epoch_step": 568, "epoch_total_steps": 6821, "job": "202215_1", "name": "N22-time", "projected_slack_hours": 9.31, "runtime": "07:50:42", "stdout_bytes": 6504649, "thirty_epoch_fraction": 0.202776, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 38.53, "epoch": 7, "epoch_step": 733, "epoch_total_steps": 6821, "job": "202215_2", "name": "N22-time", "projected_slack_hours": 9.47, "runtime": "07:50:42", "stdout_bytes": 6529445, "thirty_epoch_fraction": 0.203582, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 2.75, "epoch": 25, "epoch_step": 4795, "epoch_total_steps": 6140, "job": "202216_5", "name": "N22-basin", "projected_slack_hours": 45.25, "runtime": "02:16:18", "stdout_bytes": 15783126, "thirty_epoch_fraction": 0.826031, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 19.9, "epoch": 1, "epoch_step": 545, "epoch_total_steps": 6140, "job": "202216_6", "name": "N22-basin", "projected_slack_hours": 28.1, "runtime": "00:03:32", "stdout_bytes": 104639, "thirty_epoch_fraction": 0.002959, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"job": "202222_8", "last_generic_percent": 21, "last_generic_step": 110, "last_generic_total": 531, "name": "N22-eval-now", "runtime": "01:12:18", "stdout_bytes": 9037, "time_limit": "1-00:00:00"}
+{"job": "202222_9", "last_generic_percent": 21, "last_generic_step": 112, "last_generic_total": 531, "name": "N22-eval-now", "runtime": "01:12:15", "stdout_bytes": 28387, "time_limit": "1-00:00:00"}
+=== ACTIVE FAILURE STATES ===
+
+=== CHECKPOINT POLICY ===
+epoch_checkpoints=every_epoch
+target_epoch=30
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T20:28:43+0800
