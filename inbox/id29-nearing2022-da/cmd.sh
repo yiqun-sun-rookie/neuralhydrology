@@ -1,8 +1,40 @@
 #!/bin/bash
-# ID29 seq=163: refresh the full matrix plus the two-stage all-531 warmup-target audit.
+# ID29 seq=164: diagnose failed all-531 training-data-port audit without rerunning it.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
+DIAG_ROOT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics"
+
+echo "=== JOB RECORD ==="
+RECORD=$(scontrol show job -dd -o 202506 2>&1 || true)
+printf '%s\n' "$RECORD"
+sacct -n -P -j 202506 \
+  --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList,WorkDir,SubmitLine,AllocTRES,ReqTRES || true
+seff 202506 || true
+
+field() {
+  printf '%s\n' "$RECORD" | tr ' ' '\n' | sed -n "s/^$1=//p" | head -n 1
+}
+
+echo "=== STANDARD OUTPUT AND ERROR ==="
+for KEY in StdOut StdErr Command; do
+  VALUE=$(field "$KEY")
+  printf '%s=%s\n' "$KEY" "$VALUE"
+  if test -n "$VALUE" && test -f "$VALUE"; then
+    stat --printf='%n|%s bytes|%y\n' "$VALUE"
+    tail -n 300 "$VALUE"
+  fi
+done
+
+echo "=== RECENT DIAGNOSTIC FILES ==="
+if test -d "$DIAG_ROOT"; then
+  find "$DIAG_ROOT" -maxdepth 3 -type f -mmin -180 \
+    -printf '%T@|%s|%p\n' | sort -n | tail -n 100
+  find "$DIAG_ROOT" -maxdepth 2 -type d \
+    \( -name '*training_data_port*' -o -name '.*training_data_port*' \) -print
+fi
+exit 0
+
 JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315,202506,202507
 DATA_FINAL="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531"
 MASK_FINAL="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531"
