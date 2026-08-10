@@ -1,0 +1,80 @@
+### channel=id29-nearing2022-da seq=117
+### host=login4
+### started=2026-08-10T20:24:11+0800
+### ---------- output ----------
+=== ACTIVE TASKS ===
+202214|N22-train|RUNNING|8:25:03|2-00:00:00|ngu104
+202215_0|N22-time|RUNNING|7:46:11|2-00:00:00|ngu104
+202215_1|N22-time|RUNNING|7:46:11|2-00:00:00|ngu101
+202215_2|N22-time|RUNNING|7:46:11|2-00:00:00|ngu101
+202215_[3-22%3]|N22-time|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)
+202216_4|N22-basin|RUNNING|2:30:29|2-00:00:00|ngu104
+202216_5|N22-basin|RUNNING|2:11:46|2-00:00:00|ngu101
+202216_[6-19%2]|N22-basin|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)
+202222_[10-29%2]|N22-eval-now|PENDING|0:00|1-00:00:00|(JobArrayTaskLimit)
+202222_8|N22-eval-now|RUNNING|1:07:46|1-00:00:00|ngu101
+202222_9|N22-eval-now|RUNNING|1:07:43|1-00:00:00|ngu102
+202226_[0-119%4]|N22-eval-later|PENDING|0:00|1-00:00:00|(Dependency)
+202227_[0-9%2]|N22-basin-da|PENDING|0:00|1-00:00:00|(Dependency)
+202228_[0-659%2]|N22-hyper|PENDING|0:00|1-00:00:00|(Dependency)
+202229|N22-agg-eval|PENDING|0:00|1-00:00:00|(Dependency)
+202230|N22-agg-hyper|PENDING|0:00|1-00:00:00|(Dependency)
+202238_[0-19%2]|N22-eval-bs-direct|PENDING|0:00|1-00:00:00|(Dependency)
+202293|N22-manifest|PENDING|0:00|1-00:00:00|(JobHeldUser)
+202294|N22-export|PENDING|0:00|4:00:00|(Dependency)
+202315|N22-gate|PENDING|0:00|2:00:00|(Dependency)
+=== ACCOUNTING COUNTS ===
+1|202214|RUNNING|0:0
+1|202215|PENDING|0:0
+3|202215|RUNNING|0:0
+4|202216|COMPLETED|0:0
+1|202216|PENDING|0:0
+2|202216|RUNNING|0:0
+8|202222|COMPLETED|0:0
+1|202222|PENDING|0:0
+2|202222|RUNNING|0:0
+1|202226|PENDING|0:0
+1|202227|PENDING|0:0
+1|202228|PENDING|0:0
+1|202229|PENDING|0:0
+1|202230|PENDING|0:0
+1|202238|PENDING|0:0
+1|202293|PENDING|0:0
+1|202294|PENDING|0:0
+1|202315|PENDING|0:0
+=== ACTIVE FAILURE STATES ===
+
+=== RUNNING LOG METADATA ===
+running_task_count=8
+--- job=202214
+stdout=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out|bytes=7265662|mtime=2026-08-10 20:23:51.000000000 +0800
+stderr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err|bytes=0|mtime=2026-08-10 11:59:15.000000000 +0800
+--- job=202215_0
+stdout=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_0.out|bytes=6718154|mtime=2026-08-10 20:23:51.000000000 +0800
+stderr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_0.err|bytes=0|mtime=2026-08-10 12:38:03.000000000 +0800
+--- job=202215_1
+stdout=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_1.out|bytes=6440845|mtime=2026-08-10 20:23:49.000000000 +0800
+stderr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_1.err|bytes=0|mtime=2026-08-10 12:38:03.000000000 +0800
+--- job=202215_2
+stdout=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_2.out|bytes=6466421|mtime=2026-08-10 20:23:59.000000000 +0800
+stderr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_2.err|bytes=224|mtime=2026-08-10 12:42:23.000000000 +0800
+edcee20e00b7964ea84f9ff8664fcc6032648de00fe0e30e7f3a40413b92b403  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_2.err
+--- job=202216_4
+stdout=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-basin_202216_4.out|bytes=19022587|mtime=2026-08-10 20:23:56.000000000 +0800
+stderr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-basin_202216_4.err|bytes=0|mtime=2026-08-10 17:53:46.000000000 +0800
+--- job=202216_5
+stdout=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-basin_202216_5.out|bytes=15241952|mtime=2026-08-10 20:24:09.000000000 +0800
+stderr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-basin_202216_5.err|bytes=0|mtime=2026-08-10 18:12:29.000000000 +0800
+--- job=202222_8
+stdout=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval-now_202222_8.out|bytes=8533|mtime=2026-08-10 20:23:59.000000000 +0800
+stderr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval-now_202222_8.err|bytes=1027|mtime=2026-08-10 19:17:53.000000000 +0800
+cdea5604ee66c30da26e4dc51e960ef86902f23eaed10afb97e12c9651af4d1d  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval-now_202222_8.err
+--- job=202222_9
+stdout=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval-now_202222_9.out|bytes=26693|mtime=2026-08-10 20:24:08.000000000 +0800
+stderr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval-now_202222_9.err|bytes=1027|mtime=2026-08-10 19:17:30.000000000 +0800
+cdea5604ee66c30da26e4dc51e960ef86902f23eaed10afb97e12c9651af4d1d  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval-now_202222_9.err
+=== REFRESHED PRECLOSURE BOUNDARY ===
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T20:24:12+0800
