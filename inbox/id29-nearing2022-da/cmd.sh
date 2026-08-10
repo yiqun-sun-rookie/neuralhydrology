@@ -1,9 +1,20 @@
 #!/bin/bash
-# ID29 seq=136: read-only refresh after the startup transient of basin training task 202216_10.
+# ID29 seq=137: bounded event wait for basin training task 202216_9, followed by the same read-only audit.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
 JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
+
+echo "=== BOUNDED EVENT WAIT ==="
+WAIT_JOB=202216_9
+WAIT_DEADLINE=$((SECONDS + 900))
+while squeue -h -j "$WAIT_JOB" -t RUNNING,PENDING -o '%i' | grep -qx "$WAIT_JOB"; do
+  if (( SECONDS >= WAIT_DEADLINE )); then
+    break
+  fi
+  sleep 30
+done
+echo "waited_seconds=$SECONDS"
 
 echo "=== BOUNDED PROGRESS AND WALLTIME PROJECTION ==="
 python - <<'PY'
