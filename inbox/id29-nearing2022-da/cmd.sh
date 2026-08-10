@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=59: submit the 43 remaining released-code training coordinates as two throttled arrays.
+# ID29 seq=60: activate the project environment, then submit the 43 remaining training coordinates.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -14,6 +14,10 @@ test -f "$SCRIPT"
 test "$(grep -cv '^[[:space:]]*$' "$TIME_BATCH")" -eq 23
 test "$(grep -cv '^[[:space:]]*$' "$BASIN_BATCH")" -eq 20
 sha256sum "$SCRIPT" "$TIME_BATCH" "$BASIN_BATCH"
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+cd "$ROOT"
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 python - "$ROOT" "$TIME_BATCH" "$BASIN_BATCH" <<'PY'
 from pathlib import Path
 import sys
