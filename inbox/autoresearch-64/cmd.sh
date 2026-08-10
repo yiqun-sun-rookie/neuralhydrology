@@ -3,8 +3,8 @@ set -eo pipefail
 
 cd /data1/home/sunyiq/hpc_mailbox || exit 1
 
-echo "=== SUBMIT GIT-BACKED SNAPSHOT GATED 64-BASIN REPRODUCTION ==="
-JID=$(sbatch --parsable inbox/autoresearch-64/hbv_lite_64_reproduction_seq44.slurm 2>&1)
+echo "=== SUBMIT LEGACY-GIT-COMPATIBLE SNAPSHOT GATED 64-BASIN REPRODUCTION ==="
+JID=$(sbatch --parsable inbox/autoresearch-64/hbv_lite_64_reproduction_seq45.slurm 2>&1)
 echo "jobid=$JID"
 
 echo "=== WAIT FOR THIS EXACT JOB ==="
@@ -29,7 +29,7 @@ echo "=== EXACT JOB STANDARD ERROR ==="
 tail -120 "outbox/slurm_${JID}.err" 2>/dev/null || true
 
 echo "=== EVIDENCE STATUS ==="
-ATTEMPT=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq44
+ATTEMPT=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45
 for path in \
   "$ATTEMPT/evidence/SNAPSHOT_MANIFEST.sha256" \
   "$ATTEMPT/evidence/SNAPSHOT_GIT_COMMIT.txt" \
