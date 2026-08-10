@@ -1,2 +1,9 @@
 * text=auto eol=lf
 *.sh text eol=lf
+*.gz -text
+*.tgz -text
+*.tar -text
+*.zip -text
+*.p -text
+*.pt -text
+*.parquet -text

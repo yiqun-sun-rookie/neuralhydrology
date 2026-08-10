@@ -1,12 +1,12 @@
 #!/bin/bash
-# ID29 seq=52: package the immutable formal simulation artifacts for local independent scoring.
+# ID29 seq=53: repackage simulation artifacts after declaring archives binary in .gitattributes.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
 RUN="$ROOT/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30"
 ARTDIR=/data1/home/sunyiq/hpc_mailbox/outbox/id29-nearing2022-da/artifacts/closure_20260810
-METADIR="$ROOT/closure_20260810/artifact_manifests/existing_simulation_seq52"
-OUT="$ARTDIR/existing_simulation_epoch030.tar.gz"
+METADIR="$ROOT/closure_20260810/artifact_manifests/existing_simulation_seq53"
+OUT="$ARTDIR/existing_simulation_epoch030_v2.tar.gz"
 FILES=(
   config.yml
   model_epoch030.pt
