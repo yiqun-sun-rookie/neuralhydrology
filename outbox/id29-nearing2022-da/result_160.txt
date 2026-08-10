@@ -1,0 +1,32 @@
+### channel=id29-nearing2022-da seq=160
+### host=login4
+### started=2026-08-11T05:28:02+0800
+### ---------- output ----------
+
+helper=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_training_data_port.py
+helper_sha256=5f7d49c4899aeb0ffb1d097cffd98cfe86393f86b5849a153d3074094744eb85
+isolation_script=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_warmup_target_isolation.py
+isolation_script_sha256=9f898a80aafb4e207bb56fd095125e9d5d092ec8c96af4d6010bdaeb36a27f8c
+protocol=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol.json
+protocol_sha256=16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1
+slurm_script=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/run_author_v13_warmup_isolation_all531.slurm
+slurm_script_sha256=078ed7ea96895dc2cfe3239b8a5201a46a5fd6beb6f5c10d487a1566d1f09121
+dependency=afterok:202506
+job_id=202507
+JobId=202507 JobName=N22-mask-iso-531 UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Dependency Dependency=afterok:202506 Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A SubmitTime=2026-08-11T05:28:02 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-11T05:28:02 Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/run_author_v13_warmup_isolation_all531.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-mask-iso-531_202507.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-mask-iso-531_202507.out Power= TresPerNode=gpu:1
+=== CURRENT DEPENDENCY CHAIN ===
+202222_10|N22-eval-now|RUNNING|0:0|04:45:42|2026-08-11T00:42:20|Unknown|ngu104
+202222_10.batch|batch|RUNNING|0:0|04:45:42|2026-08-11T00:42:20|Unknown|ngu104
+202222_10.extern|extern|RUNNING|0:0|04:45:42|2026-08-11T00:42:20|Unknown|ngu104
+202222_11|N22-eval-now|RUNNING|0:0|04:34:05|2026-08-11T00:53:57|Unknown|ngu102
+202222_11.batch|batch|RUNNING|0:0|04:34:05|2026-08-11T00:53:57|Unknown|ngu102
+202222_11.extern|extern|RUNNING|0:0|04:34:05|2026-08-11T00:53:57|Unknown|ngu102
+202506|N22-data-port-531|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202222_10|RUNNING|4:45:42|1-00:00:00|ngu104|N22-eval-now
+202222_11|RUNNING|4:34:05|1-00:00:00|ngu102|N22-eval-now
+202506|PENDING|0:00|2:00:00|(Dependency)|N22-data-port-531
+202507|PENDING|0:00|2:00:00|(Dependency)|N22-mask-iso-531
+=== REGISTERED ARTIFACT SAFETY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T05:28:02+0800
