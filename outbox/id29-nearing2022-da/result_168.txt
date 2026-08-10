@@ -1,0 +1,12 @@
+### channel=id29-nearing2022-da seq=168
+### host=login4
+### started=2026-08-11T06:49:44+0800
+### ---------- output ----------
+deployed=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_training_data_port_v2.py|sha256=51b9091c928a8b514f0be6e81ab5afd304bda654e3dc63a6cb27746e3dee3233
+deployed=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol_amendment_01.json|sha256=a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5
+deployed=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_author_v13_training_data_port_all531_v2.slurm|sha256=7805e78942a9d512075deb1f546a230d4fe20f04a7efd837a8507ada9e4a493e
+deployed=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_author_v13_warmup_isolation_all531_v2.slurm|sha256=9d8d2c890e6ec8a28be30e674ea05c3c90a8926ba0e4e80bf088386879127053
+deployment_only=true
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T06:49:44+0800
