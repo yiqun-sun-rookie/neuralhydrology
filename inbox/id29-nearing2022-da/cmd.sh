@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=125: refresh bounded log-tail progress and conservative walltime risk.
+# ID29 seq=126: scheduled role-count, failure-state, liveness, and walltime refresh.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
