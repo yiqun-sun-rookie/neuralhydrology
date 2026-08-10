@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=123: refresh complete-role counts and active failure states after storage audit.
+# ID29 seq=124: scheduled 30-minute refresh of complete-role counts and active failure states.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
