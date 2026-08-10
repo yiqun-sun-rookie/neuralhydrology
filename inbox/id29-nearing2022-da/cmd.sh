@@ -1,28 +1,40 @@
 #!/bin/bash
-# ID29 seq=96: diagnose failed preclosure validation job 202365 without modifying or resubmitting anything.
+# ID29 seq=97: read-only inventory of existing Python environments after job 202365 showed pytest missing from nh_final.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-JOB=202365
-OUT="$ROOT/closure_20260810/logs/N22-preclosure-check_${JOB}.out"
-ERR="$ROOT/closure_20260810/logs/N22-preclosure-check_${JOB}.err"
-RECEIPT="$ROOT/closure_20260810/provenance/preclosure_payload_seq94_receipt.json"
-JOB_RECEIPT="$ROOT/closure_20260810/provenance/preclosure_validation_seq94_job.txt"
 
-echo "=== FAILED JOB ACCOUNTING ==="
-sacct -n -P -j "$JOB" --format=JobID,JobName,State,ExitCode,Elapsed,Start,End,NodeList | sed '/^[[:space:]]*$/d'
-STATE=$(sacct -n -P -j "$JOB" --format=JobIDRaw,State | awk -F'|' -v job="$JOB" '$1 == job {print $2; exit}')
-test "$STATE" = "FAILED"
+echo "=== CONDA ENVIRONMENTS ==="
+source ~/miniconda3/etc/profile.d/conda.sh
+conda env list
 
-echo "=== STDOUT ==="
-test -f "$OUT"
-cat "$OUT"
-echo "=== STDERR ==="
-test -f "$ERR"
-cat "$ERR"
+echo "=== PYTHON CAPABILITY MATRIX ==="
+for python_executable in ~/miniconda3/bin/python ~/miniconda3/envs/*/bin/python; do
+  if [ ! -x "$python_executable" ]; then
+    continue
+  fi
+  "$python_executable" - "$python_executable" <<'PY'
+import importlib.util
+import json
+import sys
 
-echo "=== IMMUTABLE DIAGNOSTIC HASHES ==="
-sha256sum "$OUT" "$ERR" "$RECEIPT" "$JOB_RECEIPT"
+modules = ('pytest', 'numpy', 'pandas', 'scipy', 'torch', 'xarray', 'yaml')
+payload = {
+    'python': sys.argv[1],
+    'version': sys.version.split()[0],
+    'modules': {name: importlib.util.find_spec(name) is not None for name in modules},
+}
+print(json.dumps(payload, sort_keys=True))
+PY
+done
+
+echo "=== EXISTING PYTEST ENTRYPOINTS ==="
+find ~/miniconda3 -maxdepth 4 -type f -path '*/bin/pytest' -print | sort || true
+
+echo "=== FAILED JOB LOG HASHES ==="
+sha256sum \
+  "$ROOT/closure_20260810/logs/N22-preclosure-check_202365.out" \
+  "$ROOT/closure_20260810/logs/N22-preclosure-check_202365.err"
 
 echo "=== SAFETY BOUNDARY ==="
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = "202293|PENDING|JobHeldUser|N22-manifest"
