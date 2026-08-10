@@ -1,0 +1,41 @@
+### channel=id29-nearing2022-da seq=164
+### host=login4
+### started=2026-08-11T06:31:36+0800
+### ---------- output ----------
+=== JOB RECORD ===
+slurm_load_jobs error: Invalid job id specified
+sacct: error: Invalid field requested: "SubmitLine"
+/data1/home/sunyiq/.hpc_mailbox_staging/id29-nearing2022-da/cmd_164.sh: line 13: seff: command not found
+=== STANDARD OUTPUT AND ERROR ===
+StdOut=
+StdErr=
+Command=
+=== RECENT DIAGNOSTIC FILES ===
+1786390740.0000000000|10705|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5.slurm
+1786390744.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5.preparing-202503/model_epoch030.pt
+1786390744.0000000000|2710|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5.preparing-202503/config.yml
+1786390744.0000000000|45|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5.preparing-202503/first5_basins.txt
+1786391349.0000000000|10741|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5_attempt2.slurm
+1786391355.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5/model_epoch030.pt
+1786391355.0000000000|2710|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5/config.yml
+1786391355.0000000000|45|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5/first5_basins.txt
+1786391403.0000000000|651|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5/output.log
+1786391418.0000000000|5352|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5/diagnostic_receipt.json
+1786391694.0000000000|10744|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531.slurm
+1786391698.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531/model_epoch030.pt
+1786391698.0000000000|2710|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531/config.yml
+1786391698.0000000000|4779|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531/all531_basins.txt
+1786393577.0000000000|651|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531/output.log
+1786393597.0000000000|372185|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531/diagnostic_receipt.json
+1786395545.0000000000|14478|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/audit_training_data_port.py
+1786395545.0000000000|5849|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/run_author_v13_training_data_port_all531.slurm
+1786397282.0000000000|6088|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/run_author_v13_warmup_isolation_all531.slurm
+1786397282.0000000000|7266|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol.json
+1786400232.0000000000|14478|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506/audit_training_data_port.py
+1786400232.0000000000|5849|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506/run_author_v13_training_data_port_all531.slurm
+1786400594.0000000000|23988|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506/audit_stdout.json
+1786400594.0000000000|30766|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506/audit.json
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T06:31:37+0800
