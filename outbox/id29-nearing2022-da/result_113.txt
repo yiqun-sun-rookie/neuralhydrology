@@ -1,0 +1,32 @@
+### channel=id29-nearing2022-da seq=113
+### host=login4
+### started=2026-08-10T20:08:55+0800
+### ---------- output ----------
+=== EXACT NON-EMPTY STDERR ===
+--- job=202215_2
+stderr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_2.err
+bytes=224
+edcee20e00b7964ea84f9ff8664fcc6032648de00fe0e30e7f3a40413b92b403  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_2.err
+/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/lib/_nanfunctions_impl.py:2015: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+
+--- job=202222_8
+stderr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval-now_202222_8.err
+bytes=1027
+cdea5604ee66c30da26e4dc51e960ef86902f23eaed10afb97e12c9651af4d1d  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval-now_202222_8.err
+/data1/home/sunyiq/nearing2022_da/neuralhydrology/evaluation/tester.py:145: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(weight_file, map_location=self.device))
+
+--- job=202222_9
+stderr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval-now_202222_9.err
+bytes=1027
+cdea5604ee66c30da26e4dc51e960ef86902f23eaed10afb97e12c9651af4d1d  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval-now_202222_9.err
+/data1/home/sunyiq/nearing2022_da/neuralhydrology/evaluation/tester.py:145: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(weight_file, map_location=self.device))
+
+=== ACTIVE FAILURE STATES ===
+
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T20:08:55+0800
