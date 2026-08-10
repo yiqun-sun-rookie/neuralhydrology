@@ -1,0 +1,52 @@
+### channel=id26-v09-strict seq=35
+### host=login4
+### started=2026-08-10T13:06:44+0800
+### ---------- output ----------
+=== JOB ===
+     JOBID        STATE         TIME           START_TIME     NODELIST(REASON)
+    202054      RUNNING     20:24:04  2026-08-09T16:42:40               ngu008
+     JobID        State ExitCode                Start      Elapsed 
+---------- ------------ -------- -------------------- ------------ 
+    202054      RUNNING      0:0  2026-08-09T16:42:40     20:24:04 
+=== PROGRESS SUMMARY ===
+completed=12
+building=1
+failed=0
+=== CURRENT BUILDING ===
+continuous/seed_500.building
+=== FAILED DIRS ===
+=== FAILURE RECORD ===
+none
+=== COMPLETED RUNS ===
+capacity/seed_100
+capacity/seed_200
+capacity/seed_300
+capacity/seed_400
+classic/seed_100
+classic/seed_200
+classic/seed_300
+classic/seed_400
+continuous/seed_100
+continuous/seed_200
+continuous/seed_300
+continuous/seed_400
+=== LOG TAIL ===
+node=ngu008 start=2026-08-09T16:41:59+08:00
+0, NVIDIA GeForce RTX 3090, 23268 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+Mem:             251           8          83           0         161         243
+=== RUN SUITE: remaining formal trainings (no max-runs) ===
+{"run_id": "B09-CLASSIC-S200", "status": "formal_training_complete"}
+{"run_id": "E09-CONTINUOUS-S200", "status": "formal_training_complete"}
+{"run_id": "B09-CAPACITY-S200", "status": "formal_training_complete"}
+{"run_id": "B09-CAPACITY-S300", "status": "formal_training_complete"}
+{"run_id": "B09-CLASSIC-S300", "status": "formal_training_complete"}
+{"run_id": "E09-CONTINUOUS-S300", "status": "formal_training_complete"}
+{"run_id": "B09-CAPACITY-S400", "status": "formal_training_complete"}
+{"run_id": "E09-CONTINUOUS-S400", "status": "formal_training_complete"}
+{"run_id": "B09-CLASSIC-S400", "status": "formal_training_complete"}
+=== ERROR TAIL ===
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T13:06:45+0800
