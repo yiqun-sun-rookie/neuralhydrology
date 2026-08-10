@@ -1,0 +1,37 @@
+### channel=autoresearch-64 seq=35
+### host=login4
+### started=2026-08-10T13:54:54+0800
+### ---------- output ----------
+=== REPOSITORY ROOT ===
+git_repository=true
+af8d8b107805e668e5b6ccfa692f9286efec622d
+=== DEVELOPMENT-ONLY SOURCE ===
+source_exists=true
+features.parquet 2864166
+SOURCE_MANIFEST.json 539
+static_attributes.json 65369
+targets.parquet 690355
+{"date_bounds": ["1999-10-01", "2008-09-30"], "file_names": ["features.parquet", "static_attributes.json", "targets.parquet"], "schema_version": "development_source_v1", "sealed_final_evaluation_present": false, "source_kind": "explicitly_pre_sliced_development_only"}
+=== SNAPSHOT FILE HASHES ===
+247fa54a894a79de4766f6830e7baae018e83c0b1cc23e745c4c25c72638cfb5  src/unified_autoresearch/candidates/catalog.py
+eeb8933ff6a52678a2d8576becae5f117bf44468c9aede69eb6cac66072df6e6  src/unified_autoresearch/candidates/implementations/hbv_lite.py
+e33483fb869ed0ac002b2d6cad0d2ef3992fceb97d93be334a210dcdcecda72e  src/unified_autoresearch/data/packages.py
+85652feb4e2d28c78ad28cf65ccdb257578b65e5b14a671f3be28a279dda3e0e  src/unified_autoresearch/runtime/bootstrap.py
+764de2084f30e5e518c30e7f6ebc1d5074564216dafd43fc94fc33e0b6478484  src/unified_autoresearch/runtime/dependencies.py
+50d82fe4e139eea10461cad720aea3f8f6f61aa27924ad221208ecf1604b7831  src/unified_autoresearch/runtime/runner.py
+1433c65ba984057a9f716b0a79eafc648ad4827d65b4983066447437b8e7d7c7  src/unified_autoresearch/scripts/run_single_candidate.py
+2040b128b4fb3ac80c41d263f91ebedd6bd63943603dfcdc8036a542c619b469  src/unified_autoresearch/selection/development_basins_v1.json
+b7dc47bdcf55135a78cf7e1e8ee85e9108c7866cb9fa383617f557d6f1829f6f  src/unified_autoresearch/workflow/candidate_development.py
+candidate_contract_v1.json
+development_v1.json
+__init__.py
+resource_safety_v1.json
+resource_safety_v2.json
+resource_safety_v3.json
+resource_safety_v4.json
+validation.py
+=== OUTPUT COLLISION CHECK ===
+output_exists=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T13:54:55+0800
