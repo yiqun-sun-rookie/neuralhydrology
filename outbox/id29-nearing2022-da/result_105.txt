@@ -1,0 +1,14 @@
+### channel=id29-nearing2022-da seq=105
+### host=login4
+### started=2026-08-10T19:38:54+0800
+### ---------- output ----------
+=== PRECONDITIONS ===
+=== SUBMIT UNCHANGED VALIDATOR ON VERIFIED NODE ===
+validation_job_id=202373
+JobId=202373 JobName=N22-preclosure-check UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-08-10T19:38:54 EligibleTime=2026-08-10T19:38:54 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T19:38:54 Partition=hgpu2,hgpu4,hgpu8 AllocNode:Sid=login04:44128 ReqNodeList=ngu003 ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* TRES=cpu=2,node=1,billing=2 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_preclosure_validation.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202373.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202373.out Power=
+=== SAFETY BOUNDARY ===
+bf6dd27da64e6a4d1af1bd4adefce37cce033ad5bcd97d82b2f0d1717d8c0c89  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_preclosure_validation.slurm
+f621051ad2e9da8eed0a6367e41c49fe53fa739552b52a2be71439b0ac1a9dd5  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_seq105_job.txt
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T19:38:55+0800
