@@ -1,0 +1,97 @@
+### channel=id29-nearing2022-da seq=149
+### host=login4
+### started=2026-08-11T03:54:53+0800
+### ---------- output ----------
+=== FIVE-BASIN DECISION BOUNDARY ===
+{"basins": 5, "boundary": "five basins are insufficient to exclude a material evaluation difference over all 531 basins", "confirmed_paper_nse_difference": 0.06215864532974047, "maximum_nse_absolute_difference": 2.2946998688433418e-05, "maximum_prediction_absolute_difference": 0.0160369873046875, "paper_to_subset_max_nse_difference_ratio": 2708.7919502549994}
+=== FULL-COHORT SCRIPT DIFFERENCE ===
+--- /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5_attempt2.slurm	2026-08-11 03:49:09.000000000 +0800
++++ /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531.slurm.preparing-39236	2026-08-11 03:54:54.000000000 +0800
+@@ -1,12 +1,12 @@
+ #!/bin/bash
+-#SBATCH --job-name=N22-author-v13-eval2
++#SBATCH --job-name=N22-author-v13-full
+ #SBATCH --partition=hgpu4,hgpu8,hgpu2
+ #SBATCH --nodes=1
+ #SBATCH --ntasks=1
+ #SBATCH --cpus-per-task=4
+ #SBATCH --gres=gpu:1
+ #SBATCH --exclude=ngu002
+-#SBATCH --time=01:00:00
++#SBATCH --time=02:00:00
+ #SBATCH --output=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.out
+ #SBATCH --error=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.err
+ 
+@@ -17,7 +17,7 @@
+ SOURCE_RUN="$ROOT/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30"
+ CURRENT_EVAL="$ROOT/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0"
+ FROZEN_BASINS="$ROOT/src/29_nearing2022_da_ar/basin_lists/531_basin_list.txt"
+-FINAL="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5"
++FINAL="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531"
+ WORK="$FINAL.preparing-$SLURM_JOB_ID"
+ SOURCE_TEMP=$(mktemp -d)
+ trap 'rm -rf -- "$SOURCE_TEMP"' EXIT
+@@ -53,7 +53,7 @@
+ cp "$SOURCE_RUN/model_epoch030.pt" "$WORK/model_epoch030.pt"
+ cp -a "$SOURCE_RUN/train_data" "$WORK/train_data"
+ 
+-python - "$SOURCE_RUN/config.yml" "$WORK/config.yml" "$FROZEN_BASINS" "$WORK/first5_basins.txt" "$WORK" <<'PY'
++python - "$SOURCE_RUN/config.yml" "$WORK/config.yml" "$FROZEN_BASINS" "$WORK/all531_basins.txt" "$WORK" <<'PY'
+ from pathlib import Path
+ import sys
+ 
+@@ -66,13 +66,13 @@
+ run_dir = Path(sys.argv[5])
+ 
+ basins = [line.strip() for line in frozen_basin_file.read_text(encoding='utf-8').splitlines() if line.strip()]
+-selected = basins[:5]
+-if len(selected) != 5 or len(set(selected)) != 5:
+-    raise ValueError(f'Expected five unique frozen basins, found {selected}')
++selected = basins
++if len(selected) != 531 or len(set(selected)) != 531:
++    raise ValueError(f'Expected 531 unique frozen basins, found {len(selected)}')
+ target_basin_file.write_text('\n'.join(selected) + '\n', encoding='utf-8', newline='\n')
+ 
+ config = yaml.safe_load(source_config.read_text(encoding='utf-8'))
+-config['experiment_name'] = 'author_v13_same_checkpoint_te100_first5'
++config['experiment_name'] = 'author_v13_same_checkpoint_te100_all531'
+ config['run_dir'] = str(run_dir)
+ config['test_basin_file'] = str(target_basin_file)
+ config['random_holdout_from_dynamic_features']['QObs(mm/d)_shift1']['missing_fraction'] = 1.0
+@@ -102,7 +102,7 @@
+ echo "compatibility_shim=restore matplotlib.axes._subplots.Axes for eager type-annotation evaluation only"
+ sha256sum "$ARCHIVE" "$SOURCE_RUN/model_epoch030.pt" "$WORK/model_epoch030.pt" \
+   "$SOURCE_RUN/train_data/train_data_scaler.yml" "$WORK/train_data/train_data_scaler.yml" \
+-  "$WORK/config.yml" "$WORK/first5_basins.txt" \
++  "$WORK/config.yml" "$WORK/all531_basins.txt" \
+   "$AUTHOR_SOURCE/neuralhydrology/nh_run.py" "$AUTHOR_SOURCE/neuralhydrology/evaluation/tester.py" \
+   "$AUTHOR_SOURCE/neuralhydrology/modelzoo/arlstm.py" "$SOURCE_TEMP/run_author_cli.py"
+ nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv,noheader
+@@ -167,7 +167,7 @@
+ with current_result_path.open('rb') as handle:
+     current = pickle.load(handle)
+ 
+-basins = [line.strip() for line in (work / 'first5_basins.txt').read_text(encoding='utf-8').splitlines()
++basins = [line.strip() for line in (work / 'all531_basins.txt').read_text(encoding='utf-8').splitlines()
+           if line.strip()]
+ comparisons = []
+ for basin in basins:
+@@ -219,7 +219,7 @@
+         digest(work / 'train_data/train_data_scaler.yml') == digest(source_run / 'train_data/train_data_scaler.yml')
+     ),
+     'diagnostic_config_sha256': digest(work / 'config.yml'),
+-    'basin_file_sha256': digest(work / 'first5_basins.txt'),
++    'basin_file_sha256': digest(work / 'all531_basins.txt'),
+     'basins': basins,
+     'author_result_sha256': digest(author_result_path),
+     'current_result_sha256': digest(current_result_path),
+source_script=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5_attempt2.slurm
+source_script_sha256=634de7a3d6fd17b1c00cdf3890c448ab0ba6dbfc85adc01ab1b55c44c2057eae
+new_script=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531.slurm
+new_script_sha256=7ba903f61db081334dece8f89600cfb7dbc58e2c420d22fe7cd2e468e7411d05
+job_id=202505
+JobId=202505 JobName=N22-author-v13-full UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A SubmitTime=2026-08-11T03:54:54 EligibleTime=2026-08-11T03:54:54 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-11T03:54:54 Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-author-v13-full_202505.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-author-v13-full_202505.out Power= TresPerNode=gpu:1
+=== REGISTERED ARTIFACT SAFETY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T03:54:54+0800
