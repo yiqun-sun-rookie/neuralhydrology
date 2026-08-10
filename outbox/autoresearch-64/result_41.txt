@@ -1,0 +1,39 @@
+### channel=autoresearch-64 seq=41
+### host=login4
+### started=2026-08-10T16:33:50+0800
+### ---------- output ----------
+=== FAILED TEST GATE ===
+{
+  "candidate_launch_allowed": false,
+  "errors": 38,
+  "failures": 23,
+  "passed": 209,
+  "process_exit_code": 1,
+  "schema_version": "unified_autoresearch_linux_test_gate_v1",
+  "skipped": 8,
+  "tests": 278
+}
+=== REQUIRED REPOSITORY-LEVEL FILES IN SNAPSHOT ===
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/src/fair_benchmark/frozen/bundle/track0_statics.csv
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/examples/06-Finetuning/531_basin_list.txt
+=== DISTINCT TEST FAILURE CAUSES ===
+record_count=61
+missing_path_count=104 path=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/src/fair_benchmark/frozen/bundle/track0_statics.csv
+missing_path_count=2 path=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/examples/06-Finetuning/531_basin_list.txt
+terminal_message_count=50 message=../../../../miniconda3/envs/nh_final/lib/python3.11/pathlib.py:1044: FileNotFoundError
+terminal_message_count=7 message=src/unified_autoresearch/runtime/runner.py:200: DependencyEnvironmentError
+terminal_message_count=3 message=../../../.venv/lib/python3.11/site-packages/pandas/io/common.py:873: FileNotFoundError
+terminal_message_count=1 message=../../../src/unified_autoresearch/tests/test_restricted_runtime.py:475: AssertionError
+non_missing_file_case=failure src.unified_autoresearch.tests.test_development_recovery::test_registered_recovery_matches_a_clean_deterministic_training_run terminal=src/unified_autoresearch/runtime/runner.py:200: DependencyEnvironmentError
+non_missing_file_case=failure src.unified_autoresearch.tests.test_development_recovery::test_full_development_loop_produces_exactly_32_finite_registered_cells terminal=src/unified_autoresearch/runtime/runner.py:200: DependencyEnvironmentError
+non_missing_file_case=failure src.unified_autoresearch.tests.test_development_recovery::test_full_development_loop_supervises_every_registered_run_when_declared terminal=src/unified_autoresearch/runtime/runner.py:200: DependencyEnvironmentError
+non_missing_file_case=failure src.unified_autoresearch.tests.test_reference_candidates::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[conceptual_rainfall_runoff] terminal=src/unified_autoresearch/runtime/runner.py:200: DependencyEnvironmentError
+non_missing_file_case=failure src.unified_autoresearch.tests.test_reference_candidates::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[custom_python] terminal=src/unified_autoresearch/runtime/runner.py:200: DependencyEnvironmentError
+non_missing_file_case=failure src.unified_autoresearch.tests.test_reference_candidates::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[deep_learning] terminal=src/unified_autoresearch/runtime/runner.py:200: DependencyEnvironmentError
+non_missing_file_case=failure src.unified_autoresearch.tests.test_reference_candidates::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[fusion] terminal=src/unified_autoresearch/runtime/runner.py:200: DependencyEnvironmentError
+non_missing_file_case=failure src.unified_autoresearch.tests.test_restricted_runtime::test_candidate_cannot_redirect_path_checks_by_replacing_os_path_helpers terminal=../../../src/unified_autoresearch/tests/test_restricted_runtime.py:475: AssertionError
+=== CANDIDATE WAS NOT LAUNCHED ===
+candidate_run_absent=true
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T16:33:51+0800
