@@ -1,0 +1,23 @@
+### channel=id29-nearing2022-da seq=85
+### host=login4
+### started=2026-08-10T17:23:23+0800
+### ---------- output ----------
+=== INSTALLED FILES ===
+9c5bfa339b3ed8be3b389cf10f8555a74b278dbf27aa247f7e77abc7b753f254  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm
+f6548d2c1935093266ddbfcced8f66b5a540a02ce4e52216001526a34d6b4082  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/evaluate_full_reproduction.py
+6125cab8935c3ad0ab498865c661c47ea83c837c7627dff2534ba5a5b9185895  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/reproduction_acceptance.json
+=== PRE-SUBMISSION PATH GUARDS ===
+exists=NO|path=/data1/home/sunyiq/nearing2022_da/closure_20260810/aggregation/final_reproduction_gate.json
+exists=NO|path=/data1/home/sunyiq/nearing2022_da/closure_20260810/aggregation/final_reproduction_differences.csv
+=== EXISTING NUMERICAL-GATE JOBS ===
+202315|PENDING|Dependency|N22-gate
+=== DEPENDENCIES AND CANDIDATE HOLD ===
+202229|afterok:202222_*,afterok:202226_*,afterok:202216_*,afterok:202238_*,afterok:202227_*
+202230|afterok:202228_*,afterok:202238_*
+202293|afterok:202229,afterok:202230
+202294|afterok:202293
+held_manifest=202293|PENDING|JobHeldUser|N22-manifest
+diagnostic_complete=YES
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T17:23:26+0800
