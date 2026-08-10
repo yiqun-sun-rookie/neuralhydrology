@@ -1,0 +1,19 @@
+### channel=id29-nearing2022-da seq=71
+### host=login4
+### started=2026-08-10T13:51:31+0800
+### ---------- output ----------
+=== INSTALL ===
+/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v7.tar.gz: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/evaluation_registry.csv: OK
+=== REGISTRY BINDING ===
+direct_rows=20
+direct_jobs=202238_0..202238_19
+=== JOB AND DEPENDENCY ===
+             JOBID                     NAME ST       TIME  NODES NODELIST(REASON)
+            202229             N22-agg-eval PD       0:00      1 (Dependency)
+   202238_[0-19%2]       N22-eval-bs-direct PD       0:00      1 (Dependency)
+aggregation_dependency=afterok:202222_*,afterok:202226_*,afterok:202216_*,afterok:202238_*,afterok:202227_*
+202238_[0-19%2]|PENDING|0:0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T13:51:35+0800
