@@ -1,0 +1,276 @@
+### channel=id29-nearing2022-da seq=143
+### host=login4
+### started=2026-08-11T03:26:25+0800
+### ---------- output ----------
+=== CONDA ENVIRONMENTS ===
+# conda environments:
+#
+base                  *  /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+                         /data1/home/sunyiq/v09_strict/gitenv
+
+=== AUTHOR V1.3 EVALUATION SOURCE PREFLIGHT ===
+{"archive_sha256": "91aefc74675aa83d0cc63695a48b69cec89f43605bb68c836424d839d212603d", "relevant_members": ["grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/evaluation/__init__.py", "grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/evaluation/evaluate.py", "grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/evaluation/metrics.py", "grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/evaluation/plots.py", "grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/evaluation/signatures.py", "grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/evaluation/tester.py", "grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/evaluation/utils.py", "grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/nh_run.py", "grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/utils/config.py"]}
+--- MEMBER grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/nh_run.py present=True ---
+bytes=6629 sha256=97d9df22f13cde77cf854343ae657ad741fc08a98f7a6503c698249995b28130
+8:from neuralhydrology.evaluation.evaluate import start_evaluation
+16:    parser.add_argument('mode', choices=["train", "continue_training", "finetune", "evaluate"])
+18:    parser.add_argument('--run-dir', type=str)
+19:    parser.add_argument('--epoch', type=int, help="Epoch, of which the model should be evaluated")
+20:    parser.add_argument('--period', type=str, choices=["train", "validation", "test"], default="test")
+21:    parser.add_argument('--gpu', type=int,
+22:                        help="GPU id to use. Overrides config argument 'device'. Use a value < 0 for CPU.")
+28:    if (args["mode"] == "continue_training") and (args["run_dir"] is None):
+31:    if (args["mode"] == "evaluate") and (args["run_dir"] is None):
+39:    if (args["run_dir"] is not None) and (args["mode"] == "evaluate"):
+40:        setup_logging(str(Path(args["run_dir"]) / "output.log"))
+43:        start_run(config_file=Path(args["config_file"]), gpu=args["gpu"])
+45:        continue_run(run_dir=Path(args["run_dir"]),
+47:                     gpu=args["gpu"])
+49:        finetune(config_file=Path(args["config_file"]), gpu=args["gpu"])
+50:    elif args["mode"] == "evaluate":
+51:        eval_run(run_dir=Path(args["run_dir"]), period=args["period"], epoch=args["epoch"], gpu=args["gpu"])
+56:def start_run(config_file: Path, gpu: int = None):
+63:    gpu : int, optional
+64:        GPU id to use. Will override config argument 'device'. A value smaller than zero indicates CPU.
+70:    # check if a GPU has been specified as command line argument. If yes, overwrite config
+71:    if gpu is not None and gpu >= 0:
+72:        config.device = f"cuda:{gpu}"
+73:    if gpu is not None and gpu < 0:
+74:        config.device = "cpu"
+79:def continue_run(run_dir: Path, config_file: Path = None, gpu: int = None):
+84:    run_dir : Path
+88:    gpu : int, optional
+89:        GPU id to use. Will override config argument 'device'. A value smaller than zero indicates CPU.
+93:    base_config = Config(run_dir / "config.yml")
+100:    # check if a GPU has been specified as command line argument. If yes, overwrite config
+101:    if gpu is not None and gpu >= 0:
+102:        base_config.device = f"cuda:{gpu}"
+103:    if gpu is not None and gpu < 0:
+104:        base_config.device = "cpu"
+109:def finetune(config_file: Path = None, gpu: int = None):
+116:        The config file for finetuning must contain the argument `base_run_dir`, pointing to the folder of the 
+119:    gpu : int, optional
+120:        GPU id to use. Will override config argument 'device'. A value smaller than zero indicates CPU.
+129:    config = Config(temp_config.base_run_dir / "config.yml")
+130:    config.update_config({'run_dir': None, 'experiment_name': None})
+137:    # check if a GPU has been specified as command line argument. If yes, overwrite config
+138:    if gpu is not None and gpu >= 0:
+139:        config.device = f"cuda:{gpu}"
+140:    if gpu is not None and gpu < 0:
+141:        config.device = "cpu"
+146:def eval_run(run_dir: Path, period: str, epoch: int = None, gpu: int = None):
+151:    run_dir : Path
+153:    period : {'train', 'validation', 'test'}
+154:        The period to evaluate.
+155:    epoch : int, optional
+156:        Define a specific epoch to use. By default, the weights of the last epoch are used.  
+157:    gpu : int, optional
+158:        GPU id to use. Will override config argument 'device'. A value less than zero indicates CPU.
+161:    config = Config(run_dir / "config.yml")
+163:    # check if a GPU has been specified as command line argument. If yes, overwrite config
+164:    if gpu is not None and gpu >= 0:
+165:        config.device = f"cuda:{gpu}"
+166:    if gpu is not None and gpu < 0:
+167:        config.device = "cpu"
+169:    start_evaluation(cfg=config, run_dir=run_dir, epoch=epoch, period=period)
+--- MEMBER grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/evaluation/__init__.py present=True ---
+bytes=1414 sha256=21d421e9df19c9a34051ed8bc2706bf946b66b48c89583253956ae5b38fe94b0
+3:from neuralhydrology.evaluation.tester import BaseTester, RegressionTester, UncertaintyTester
+7:def get_tester(cfg: Config, run_dir: Path, period: str, init_model: bool) -> BaseTester:
+8:    """Get specific tester class objects depending on the model (head) type.
+14:    run_dir : Path
+16:    period : {'train', 'validation', 'test'}
+17:        The period to evaluate.
+19:        If True, the model weights will be initialized with the checkpoint from the last available epoch in `run_dir`.
+23:    BaseTester
+24:        `RegressionTester` if the model head is 'regression'. `UncertaintyTester` if the model head is one of 
+28:        Tester = UncertaintyTester
+31:        Tester = RegressionTester
+35:    return Tester(cfg=cfg, run_dir=run_dir, period=period, init_model=init_model)
+--- MEMBER grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/evaluation/tester.py present=True ---
+bytes=25115 sha256=b5b13551a1643a0e81677dfba32c040ff55bd480bcfb2f9f0c6b26d94e6136d6
+22:from neuralhydrology.evaluation.metrics import calculate_metrics, get_available_metrics
+34:class BaseTester(object):
+37:    Use subclasses of this class to evaluate a trained model on its train, test, or validation period.
+38:    For regression settings, `RegressionTester` is used; for uncertainty prediction, `UncertaintyTester`.
+44:    run_dir : Path
+46:    period : {'train', 'validation', 'test'}, optional
+47:        The period to evaluate, by default 'test'.
+49:        If True, the model weights will be initialized with the checkpoint from the last available epoch in `run_dir`.
+52:    def __init__(self, cfg: Config, run_dir: Path, period: str = "test", init_model: bool = True):
+54:        self.run_dir = run_dir
+56:        if period in ["train", "validation", "test"]:
+57:            self.period = period
+59:            raise ValueError(f'Invalid period {period}. Must be one of ["train", "validation", "test"]')
+61:        # determine device
+62:        self._set_device()
+65:            self.model = get_model(cfg).to(self.device)
+81:    def _set_device(self):
+82:        if self.cfg.device is not None:
+83:            if "cuda" in self.cfg.device:
+84:                gpu_id = int(self.cfg.device.split(':')[-1])
+85:                if gpu_id > torch.cuda.device_count():
+86:                    raise RuntimeError(f"This machine does not have GPU #{gpu_id} ")
+88:                    self.device = torch.device(self.cfg.device)
+90:                self.device = torch.device("cpu")
+92:            self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+98:        self.basins = load_basin_file(getattr(self.cfg, f"{self.period}_basin_file"))
+101:        self.scaler = load_scaler(self.cfg.run_dir)
+111:            self.id_to_int = load_basin_id_encoding(self.cfg.run_dir)
+117:    def _get_weight_file(self, epoch: int):
+119:        if epoch is None:
+120:            weight_file = sorted(list(self.run_dir.glob('model_epoch*.pt')))[-1]
+122:            weight_file = self.run_dir / f"model_epoch{str(epoch).zfill(3)}.pt"
+126:    def _load_weights(self, epoch: int = None):
+127:        """Load weights of a certain (or the last) epoch into the model."""
+128:        weight_file = self._get_weight_file(epoch)
+131:        self.model.load_state_dict(torch.load(weight_file, map_location=self.device))
+137:                         period=self.period,
+144:    def evaluate(self,
+145:                 epoch: int = None,
+146:                 save_results: bool = True,
+147:                 metrics: Union[list, dict] = [],
+150:        """Evaluate the model.
+154:        epoch : int, optional
+155:            Define a specific epoch to evaluate. By default, the weights of the last epoch are used.
+156:        save_results : bool, optional
+158:        metrics : Union[list, dict], optional
+159:            List of metrics to compute during evaluation. Can also be a dict that specifies per-target metrics
+163:            Logger can be passed during training to log metrics
+172:                self._load_weights(epoch=epoch)
+177:        # during validation, depending on settings, only evaluate on a random subset of basins
+179:        if self.period == "validation":
+193:        pbar.set_description('# Validation' if self.period == "validation" else "# Evaluation")
+205:                if self.cfg.cache_validation_data and self.period == "validation":
+208:            loader = DataLoader(ds, batch_size=self.cfg.batch_size, num_workers=0)
+210:            y_hat, y, loss = self._evaluate(model, loader, ds.frequencies)
+212:            # log loss of this basin plus number of samples in the logger to compute epoch aggregates later
+249:                    freq: ds.get_period_start(basin) + (seq_length[freq] - 1) * to_offset(freq)
+256:                # we use the end_date stored in the dataset, which also covers issues with per-basin different periods
+280:                    tqdm.write(f'Metrics for {freq} are calculated over last {frequency_factor} elements only. '
+283:                if metrics:
+285:                        # stack dates and time_steps so we don't just evaluate every 24H when use_frequencies=[1D, 1H]
+289:                        # check if there are observations for this period
+296:                            if target_variable in self.cfg.clip_targets_to_zero:
+302:                            var_metrics = metrics if isinstance(metrics, list) else metrics[target_variable]
+303:                            if 'all' in var_metrics:
+304:                                var_metrics = get_available_metrics()
+306:                                values = calculate_metrics(obs, sim, metrics=var_metrics, resolution=freq)
+313:                                values = {metric: np.nan for metric in var_metrics}
+315:                            # add variable identifier to metrics if needed
+318:                            # add frequency identifier to metrics if needed
+330:        if (self.period == "validation") and (self.cfg.log_n_figures > 0) and (experiment_logger is not None):
+331:            self._create_and_log_figures(results, experiment_logger, epoch)
+333:        if save_results:
+334:            self._save_results(results, epoch)
+338:    def _create_and_log_figures(self, results: dict, experiment_logger: Logger, epoch: int):
+350:                    if target_var in self.cfg.clip_targets_to_zero:
+354:                            obs, sim, title=f"{target_var} - Basin {basins[i]} - Epoch {epoch} - Frequency {freq}")[0])
+358:    def _save_results(self, results: dict, epoch: int = None):
+363:        be used as variable names. However, for convenience we will store metrics, if calculated, in a separate csv-file.
+366:        weight_file = self._get_weight_file(epoch=epoch)
+369:        result_file = self.run_dir / self.period / weight_file.stem / f"{self.period}_results.p"
+374:        if self.cfg.metrics:
+375:            df = self._metrics_to_dataframe(results)
+376:            file_name = self.run_dir / self.period / weight_file.stem / f"{self.period}_metrics.csv"
+381:    def _metrics_to_dataframe(self, results: dict) -> pd.DataFrame:
+387:            Dictionary, containing the results of the model evaluation as returned by the `Tester.evaluate()`.
+394:        metrics_dict = defaultdict(dict)
+397:                for metric in self.cfg.metrics:
+399:                        metrics_dict[basin][metric] = freq_results[metric]
+401:                        # in case the current period has no valid samples, the result dict has no metric-key
+402:                        metrics_dict[basin][metric] = np.nan
+404:        df = pd.DataFrame.from_dict(metrics_dict, orient="index")
+409:    def _evaluate(self, model: BaseModel, loader: DataLoader, frequencies: List[str]):
+410:        """Evaluate model"""
+421:                    data[key] = data[key].to(self.device)
+463:class RegressionTester(BaseTester):
+464:    """Tester class to run inference on a regression model.
+466:    Use the `evaluate` method of this class to evaluate a trained model on its train, test, or validation period.
+472:    run_dir : Path
+474:    period : {'train', 'validation', 'test'}
+475:        The period to evaluate.
+477:        If True, the model weights will be initialized with the checkpoint from the last available epoch in `run_dir`.
+480:    def __init__(self, cfg: Config, run_dir: Path, period: str = "test", init_model: bool = True):
+481:        super(RegressionTester, self).__init__(cfg, run_dir, period, init_model)
+500:class UncertaintyTester(BaseTester):
+501:    """Tester class to run inference on an uncertainty model.
+503:    Use the `evaluate` method of this class to evaluate a trained model on its train, test, or validation period.
+509:    run_dir : Path
+511:    period : {'train', 'validation', 'test'}
+512:        The period to evaluate.
+514:        If True, the model weights will be initialized with the checkpoint from the last available epoch in `run_dir`.
+517:    def __init__(self, cfg: Config, run_dir: Path, period: str = "test", init_model: bool = True):
+518:        super(UncertaintyTester, self).__init__(cfg, run_dir, period, init_model)
+--- MEMBER grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/evaluation/basetester.py present=False ---
+--- MEMBER grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/evaluation/regressiontester.py present=False ---
+--- MEMBER grey-nearing-neuralhydrology-public-a4c284b/neuralhydrology/utils/config.py present=True ---
+bytes=27327 sha256=566f3f32b1d5882ff4b96de6fd0b5166f61107f6a027a2817996427d88202e66
+62:        """Save the run configuration as a .yml file to disk.
+96:                            # Ignore None's due to e.g. using a per_basin_period_file
+202:        if 'autoregressive_inputs' in cfg:
+203:            if len(cfg['autoregressive_inputs']) > 1:
+205:            if cfg['autoregressive_inputs'] and len(cfg['target_variables']) > 1:
+207:            if not cfg['autoregressive_inputs'][0].startswith(cfg['target_variables'][0]):
+235:    def autoregressive_inputs(self) -> Union[List[str], Dict[str, List[str]]]:
+236:        return self._as_default_list(self._cfg.get("autoregressive_inputs", []))
+239:    def base_run_dir(self) -> Path:
+240:        return self._get_value_verbose("base_run_dir")
+242:    @base_run_dir.setter
+243:    def base_run_dir(self, folder: Path):
+244:        self._cfg["base_run_dir"] = folder
+263:    def clip_targets_to_zero(self) -> List[str]:
+264:        return self._as_default_list(self._cfg.get("clip_targets_to_zero", []))
+267:    def continue_from_epoch(self) -> int:
+268:        return self._cfg.get("continue_from_epoch", None)
+283:    def device(self) -> str:
+284:        return self._cfg.get("device", None)
+286:    @device.setter
+287:    def device(self, device: str):
+288:        if device == "cpu" or device.startswith("cuda:"):
+289:            self._cfg["device"] = device
+291:            raise ValueError("'device' must be either 'cpu' or a 'cuda:X', with 'X' being the GPU ID.")
+320:    def epochs(self) -> int:
+321:        return self._get_value_verbose("epochs")
+357:    def save_git_diff(self) -> bool:
+358:        return self._cfg.get('save_git_diff', False)
+404:    def lagged_features(self) -> dict:
+405:        return self._as_default_dict(self._cfg.get("lagged_features", {}))
+415:                raise ValueError("Unsupported data type for learning rate. Use either dict (epoch to float) or float.")
+451:    def metrics(self) -> Union[List[str], Dict[str, List[str]]]:
+452:        return self._cfg.get("metrics", [])
+454:    @metrics.setter
+455:    def metrics(self, metrics: Union[str, List[str], Dict[str, List[str]]]):
+456:        self._cfg["metrics"] = metrics
+487:    def num_workers(self) -> int:
+488:        return self._cfg.get("num_workers", 0)
+523:    def per_basin_test_periods_file(self) -> Path:
+524:        return self._cfg.get("per_basin_test_periods_file", None)
+527:    def per_basin_train_periods_file(self) -> Path:
+528:        return self._cfg.get("per_basin_train_periods_file", None)
+531:    def per_basin_validation_periods_file(self) -> Path:
+532:        return self._cfg.get("per_basin_validation_periods_file", None)
+539:    def random_holdout_from_dynamic_features(self) -> Dict[str, float]:
+540:        return self._as_default_dict(self._cfg.get("random_holdout_from_dynamic_features", {}))
+551:    def run_dir(self) -> Path:
+552:        return self._cfg.get("run_dir", None)
+554:    @run_dir.setter
+555:    def run_dir(self, folder: Path):
+556:        self._cfg["run_dir"] = folder
+559:    def save_train_data(self) -> bool:
+560:        return self._cfg.get("save_train_data", False)
+563:    def save_validation_results(self) -> bool:
+564:        return self._cfg.get("save_validation_results", False)
+567:    def save_weights_every(self) -> int:
+568:        return self._cfg.get("save_weights_every", 1)
+662:    def test_basin_file(self) -> Path:
+663:        return self._get_value_verbose("test_basin_file")
+=== CURRENT CHECKPOINT AND RESULT FORMAT ===
+/data1/home/sunyiq/miniconda3/envs/nh_final/etc/conda/activate.d/libblas_mkl_activate.sh: line 1: MKL_INTERFACE_LAYER: unbound variable
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-11T03:26:33+0800
