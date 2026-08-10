@@ -1,0 +1,14 @@
+### channel=id29-nearing2022-da seq=84
+### host=login4
+### started=2026-08-10T17:08:32+0800
+### ---------- output ----------
+=== INSTALL TWO-PHASE NUMERICAL GATE ===
+/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/gate_preflight_v1.tar.gz: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/evaluate_full_reproduction.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/reproduction_acceptance.json: OK
+gate_acceptance_contract=OK
+=== SUBMIT TWO-PHASE NUMERICAL GATE ===
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-10T17:08:33+0800
