@@ -1,0 +1,87 @@
+### channel=id29-nearing2022-da seq=156
+### host=login4
+### started=2026-08-11T04:27:22+0800
+### ---------- output ----------
+=== ALL-531 AUTHOR V1.3 EVALUATOR ===
+202505|N22-author-v13-full|COMPLETED|0:0|00:31:43|2026-08-11T03:54:54|2026-08-11T04:26:37|ngu102
+202505.batch|batch|COMPLETED|0:0|00:31:43|2026-08-11T03:54:54|2026-08-11T04:26:37|ngu102
+202505.extern|extern|COMPLETED|0:0|00:31:43|2026-08-11T03:54:54|2026-08-11T04:26:37|ngu102
+parent_state=COMPLETED
+--- bounded diagnostic summary ---
+{
+  "absolute_per_basin_nse_difference_quantiles": {
+    "0.5": 6.574304350359661e-06,
+    "0.9": 2.4174856180669835e-05,
+    "0.95": 3.869967646297212e-05,
+    "0.99": 0.00013264557138021905,
+    "1.0": 0.002339514984186053
+  },
+  "absolute_per_basin_nse_difference_threshold_counts": {
+    "0.0001": 9,
+    "0.001": 1,
+    "0.01": 0,
+    "0.02": 0,
+    "1e-05": 183
+  },
+  "all_observations_bitwise_identical": true,
+  "author_result_sha256": "371b0ae07a9ac8893ccbf3a805e4ccd962e27dcffa173584c379313ac2ae70b8",
+  "basin_count": 531,
+  "checkpoint_identical_to_registered_source": true,
+  "common_finite_prediction_count_values": [
+    3652
+  ],
+  "current_evaluator_median_nse_from_receipt": 0.6161134850361614,
+  "current_result_sha256": "5d0f29c3df32d0e6073c4a58efbac6bc0a0ba6b23219dce13f2de143dca1b247",
+  "date_count_values": [
+    3652
+  ],
+  "difference_of_medians_released_minus_current": -7.022602713124826e-06,
+  "evaluation_shift_fraction_of_confirmed_paper_gap": 0.00011297869629994633,
+  "evaluation_shift_toward_paper": 7.022602713124826e-06,
+  "independent_current_median_nse": 0.6161134850361614,
+  "independent_current_minus_paper": 0.06215864532974047,
+  "maximum_absolute_per_basin_nse_difference": 0.002339514984186053,
+  "maximum_prediction_absolute_difference": 1.4730758666992188,
+  "maximum_prediction_mean_absolute_difference": 0.0017965693528654804,
+  "median_of_paired_nse_differences_released_minus_current": 9.016783417692409e-07,
+  "median_prediction_mean_absolute_difference": 0.0001493387193564909,
+  "paper_reported_median_nse": 0.5539548397064209,
+  "prediction_bitwise_identical_count": 0,
+  "released_v13_evaluator_median_nse": 0.6161064624334482,
+  "scaler_identical_to_registered_source": true,
+  "schema": "nearing2022-author-v13-same-checkpoint-evaluation-v1",
+  "unique_basin_count": 531
+}
+--- diagnostic artifact hashes ---
+14a8cc4c6f94e4b03c1fa06002428e52691ad3cbe714ab53949ccec744dc5249  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531/diagnostic_receipt.json
+371b0ae07a9ac8893ccbf3a805e4ccd962e27dcffa173584c379313ac2ae70b8  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531/test/model_epoch030/test_results.p
+970a14fa24abc7ca04187d170104fb76e1179b8e2166c9bd91ca36437dca66cf  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-author-v13-full_202505.out
+db816ce3e6d2711c74c49d6af401e5d8cb793294b6604a481e88b4b6d0317a10  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-author-v13-full_202505.err
+=== REGISTERED COMPLETE-ROLE COUNTS ===
+{"evaluation_by_family": {"time_assimilation": 5, "time_autoregression": 5}, "evaluation_complete": 10, "evaluation_total": 180, "hyperparameter_complete": 0, "hyperparameter_total": 660, "training_by_family": {"basin_simulation": 10, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 12, "training_total": 46}
+=== ACTIVE MAIN JOBS AND FAILURE STATES ===
+202214|RUNNING|16:28:20|2-00:00:00|ngu104|N22-train
+202215_0|RUNNING|15:49:28|2-00:00:00|ngu104|N22-time
+202215_1|RUNNING|15:49:28|2-00:00:00|ngu101|N22-time
+202215_2|RUNNING|15:49:28|2-00:00:00|ngu101|N22-time
+202215_[3-22%3]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-time
+202216_10|RUNNING|2:53:52|2-00:00:00|ngu102|N22-basin
+202216_11|RUNNING|2:14:11|2-00:00:00|ngu104|N22-basin
+202216_[12-19%2]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-basin
+202222_10|RUNNING|3:45:08|1-00:00:00|ngu104|N22-eval-now
+202222_11|RUNNING|3:33:31|1-00:00:00|ngu102|N22-eval-now
+202222_[12-29%2]|PENDING|0:00|1-00:00:00|(JobArrayTaskLimit)|N22-eval-now
+202226_[0-119%4]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-later
+202227_[0-9%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-basin-da
+202228_[0-659%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-hyper
+202229|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-eval
+202230|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-hyper
+202238_[0-19%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-bs-direct
+202293|PENDING|0:00|1-00:00:00|(JobHeldUser)|N22-manifest
+202294|PENDING|0:00|4:00:00|(Dependency)|N22-export
+202315|PENDING|0:00|2:00:00|(Dependency)|N22-gate
+
+=== REGISTERED ARTIFACT SAFETY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T04:27:28+0800
