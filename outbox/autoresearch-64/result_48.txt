@@ -1,0 +1,90 @@
+### channel=autoresearch-64 seq=48
+### host=login4
+### started=2026-08-10T17:38:49+0800
+### ---------- output ----------
+=== SUBMIT MAILBOX-INDEPENDENT LOGGED 64-BASIN REPRODUCTION ===
+jobid=202321
+=== WAIT FOR THIS EXACT JOB ===
+t=60s state=RUNNING
+t=120s state=RUNNING
+t=180s state=RUNNING
+t=240s state=RUNNING
+t=300s state=RUNNING
+t=360s state=RUNNING
+t=420s state=RUNNING
+t=480s state=RUNNING
+t=540s state=RUNNING
+t=600s state=RUNNING
+t=660s state=RUNNING
+t=720s state=RUNNING
+t=780s state=RUNNING
+t=840s state=RUNNING
+t=900s state=RUNNING
+t=960s state=RUNNING
+t=1020s state=RUNNING
+t=1080s state=RUNNING
+t=1140s state=RUNNING
+t=1200s state=RUNNING
+t=1260s state=RUNNING
+=== JOB ACCOUNTING ===
+       JobID              JobName  NodeList          State ExitCode    Elapsed 
+------------ -------------------- --------- -------------- -------- ---------- 
+      202321         a64-hbv64-io    icn213      COMPLETED      0:0   00:22:12 
+=== EXACT JOB STANDARD OUTPUT ===
+=== EXACT JOB STANDARD ERROR ===
+=== STABLE ATTEMPT JOB OUTPUT ===
+=== VERIFY AND EXTRACT IMMUTABLE TEST SNAPSHOT ===
+=== INITIALIZE IMMUTABLE SNAPSHOT AS A GIT REPOSITORY ===
+payload_sha256=6bedefb2538f979a5896d236a09eabd58e5823fe9575ef1bec85bbe84f43add9
+snapshot_manifest_entries=173
+snapshot_manifest_check=ok
+=== TARGETED LINUX REGRESSION GATE ===
+..........................                                               [100%]
+26 passed in 279.28s (0:04:39)
+{"candidate_launch_allowed": true, "errors": 0, "failures": 0, "label": "TARGETED_GATE", "passed": 26, "process_exit_code": 0, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 0, "tests": 26}
+=== COMPLETE LINUX SAFETY TEST GATE ===
+..........................................................s............. [ 24%]
+.....................s................................................s. [ 49%]
+...............s.............................................s.......... [ 74%]
+............ss..............s........................................... [ 98%]
+...                                                                      [100%]
+283 passed, 8 skipped in 482.40s (0:08:02)
+{"candidate_launch_allowed": true, "errors": 0, "failures": 0, "label": "FULL_GATE", "passed": 283, "process_exit_code": 0, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 8, "tests": 291}
+=== FROZEN 64-BASIN PACKAGE GATE ===
+{"basin_count": 64, "date_bounds": ["1999-10-01", "2008-09-30"], "package_file_count": 12, "package_manifest_sha256": "293f74bb65fe0fc5974f4c977c210341ec7609faa7e46f589746bc265a4e7964", "protocols": ["forward", "reverse"], "schema_version": "frozen_64_basin_package_gate_v1", "sealed_final_evaluation_present": false, "source_manifest_sha256": "c7038d8c99d2b7f3eb16db40bd4900ecf87b05215b825d9b2190bf38ce093fd6", "standard_basin_count": 53, "unstable_basin_count": 11}
+=== RUN ONE PREDECLARED HBV-LITE CANDIDATE ON 64 DEVELOPMENT BASINS ===
+{
+  "basin_count": 64,
+  "candidate_id": "hbv-lite-calibrated-v1",
+  "category": "conceptual_rainfall_runoff",
+  "cell_count": 64,
+  "registered_run_count": 4
+}
+=== INDEPENDENT REPRODUCTION EVIDENCE CHECK ===
+{"basin_count": 64, "candidate_id": "hbv-lite-calibrated-v1", "experiment_id": "hbv_lite_64_hpc_reproduction_20260810_seq48", "full_test_gate": {"candidate_launch_allowed": true, "errors": 0, "failures": 0, "label": "FULL_GATE", "passed": 283, "process_exit_code": 0, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 8, "tests": 291}, "group_metrics": {"all": {"count": 64, "maximum_mean_nse": 0.8864327627041511, "median_mean_nse": 0.5022568476184368, "minimum_mean_nse": -8.627963014524003, "positive_mean_nse_count": 54}, "standard": {"count": 53, "maximum_mean_nse": 0.8864327627041511, "median_mean_nse": 0.5456194110972769, "minimum_mean_nse": -8.627963014524003, "positive_mean_nse_count": 46}, "unstable": {"count": 11, "maximum_mean_nse": 0.5425052462668687, "median_mean_nse": 0.32027179570466113, "minimum_mean_nse": -4.968356050952189, "positive_mean_nse_count": 8}}, "independently_counted_denials": 0, "job_id": "202321", "runtime_count": 4, "targeted_test_gate": {"candidate_launch_allowed": true, "errors": 0, "failures": 0, "label": "TARGETED_GATE", "passed": 26, "process_exit_code": 0, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 0, "tests": 26}, "windows_reference_cells_exact_match": true}
+=== FINALIZE COMPLETE ATTEMPT MANIFEST ===
+summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/REPRODUCTION_SUMMARY.json
+manifest=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/MANIFEST.sha256
+candidate_summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/candidate_run/CANDIDATE_SUMMARY.json
+=== STABLE ATTEMPT JOB ERROR ===
+=== EVIDENCE STATUS ===
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/JOB_STDOUT.txt
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/JOB_STDERR.txt
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/SNAPSHOT_MANIFEST.sha256
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/SNAPSHOT_GIT_COMMIT.txt
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/TARGETED_GATE.json
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/FULL_GATE.json
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/PACKAGE_GATE.json
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/candidate_run/CANDIDATE_SUMMARY.json
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/REPRODUCTION_SUMMARY.json
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/MANIFEST.sha256
+targeted_gate={"candidate_launch_allowed":true,"errors":0,"failures":0,"label":"TARGETED_GATE","passed":26,"process_exit_code":0,"schema_version":"unified_autoresearch_linux_test_gate_v1","skipped":0,"tests":26}
+full_gate={"candidate_launch_allowed":true,"errors":0,"failures":0,"label":"FULL_GATE","passed":283,"process_exit_code":0,"schema_version":"unified_autoresearch_linux_test_gate_v1","skipped":8,"tests":291}
+{"basin_count": 64, "candidate_id": "hbv-lite-calibrated-v1", "dependency_versions": {"numpy": "1.26.4", "pandas": "2.2.3", "pyarrow": "17.0.0"}, "experiment_id": "hbv_lite_64_hpc_reproduction_20260810_seq48", "full_test_gate": {"candidate_launch_allowed": true, "errors": 0, "failures": 0, "label": "FULL_GATE", "passed": 283, "process_exit_code": 0, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 8, "tests": 291}, "group_metrics": {"all": {"count": 64, "maximum_mean_nse": 0.8864327627041511, "median_mean_nse": 0.5022568476184368, "minimum_mean_nse": -8.627963014524003, "positive_mean_nse_count": 54}, "standard": {"count": 53, "maximum_mean_nse": 0.8864327627041511, "median_mean_nse": 0.5456194110972769, "minimum_mean_nse": -8.627963014524003, "positive_mean_nse_count": 46}, "unstable": {"count": 11, "maximum_mean_nse": 0.5425052462668687, "median_mean_nse": 0.32027179570466113, "minimum_mean_nse": -4.968356050952189, "positive_mean_nse_count": 8}}, "independently_counted_denials": 0, "job_id": "202321", "metric_deltas_from_windows_reference": {"all": {"maximum_mean_nse": 0.0, "median_mean_nse": 0.0, "minimum_mean_nse": 0.0, "positive_mean_nse_count": 0}, "standard": {"maximum_mean_nse": 0.0, "median_mean_nse": 0.0, "minimum_mean_nse": 0.0, "positive_mean_nse_count": 0}, "unstable": {"maximum_mean_nse": 0.0, "median_mean_nse": 0.0, "minimum_mean_nse": 0.0, "positive_mean_nse_count": 0}}, "normalized_exit_codes": [0, 0, 0, 0], "process_exit_codes": [0, 0, 0, 0], "registered_run_count": 4, "required_outputs_complete": [true, true, true, true], "runtime_count": 4, "runtime_statuses": ["succeeded", "succeeded", "succeeded", "succeeded"], "score_report_count": 2, "targeted_test_gate": {"candidate_launch_allowed": true, "errors": 0, "failures": 0, "label": "TARGETED_GATE", "passed": 26, "process_exit_code": 0, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 0, "tests": 26}, "windows_reference_cells_exact_match": true}
+manifest_check=ok
+manifest_entries=533
+summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/REPRODUCTION_SUMMARY.json
+manifest=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/MANIFEST.sha256
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T18:01:14+0800
