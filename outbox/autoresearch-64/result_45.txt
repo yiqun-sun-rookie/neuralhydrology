@@ -1,0 +1,159 @@
+### channel=autoresearch-64 seq=45
+### host=login4
+### started=2026-08-10T17:12:34+0800
+### ---------- output ----------
+=== SUBMIT LEGACY-GIT-COMPATIBLE SNAPSHOT GATED 64-BASIN REPRODUCTION ===
+jobid=202317
+=== WAIT FOR THIS EXACT JOB ===
+t=60s state=RUNNING
+t=120s state=RUNNING
+t=180s state=RUNNING
+t=240s state=RUNNING
+t=300s state=RUNNING
+t=360s state=RUNNING
+t=420s state=RUNNING
+t=480s state=RUNNING
+t=540s state=RUNNING
+t=600s state=RUNNING
+=== JOB ACCOUNTING ===
+       JobID              JobName  NodeList          State ExitCode    Elapsed 
+------------ -------------------- --------- -------------- -------- ---------- 
+      202317       a64-hbv64-git2    icn219         FAILED     10:0   00:10:05 
+=== EXACT JOB STANDARD OUTPUT ===
+        if resume_checkpoint is not None:
+            if descriptor.resume.get("supported") is not True:
+                raise ValueError("candidate does not support checkpoint resume")
+            resume_record = mount_verified_checkpoint(
+                layout.root,
+                resume_checkpoint,
+                expected_candidate_id=descriptor.candidate_id,
+            )
+        policy_path = layout.log_root / "runtime-policy.json"
+        dependency_preflight_path = layout.log_root / "dependency-preflight.json"
+        resource_preflight_path = layout.log_root / "resource-preflight.json"
+        access_log_path = layout.log_root / "access.jsonl"
+        stdout_path = layout.log_root / "stdout.txt"
+        stderr_path = layout.log_root / "stderr.txt"
+        result_path = layout.log_root / "runtime-result.json"
+        dependency_assessment = assess_dependency_environment(descriptor.dependencies)
+        _write_json_exclusive(dependency_preflight_path, dependency_assessment.as_dict())
+        if dependency_assessment.decision != "launch":
+>           raise DependencyEnvironmentError(dependency_assessment)
+E           unified_autoresearch.runtime.dependencies.DependencyEnvironmentError: declared dependency environment does not match
+
+src/unified_autoresearch/runtime/runner.py:200: DependencyEnvironmentError
+
+During handling of the above exception, another exception occurred:
+
+topfd = 23
+path = '/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/snapshot/runs/unified_autoresearch/pytest_single_candidate_identity/runs/forward/train'
+onerror = <function _remove_tree.<locals>._clear_readonly at 0x2ae4e0e96160>
+
+    def _rmtree_safe_fd(topfd, path, onerror):
+        try:
+            with os.scandir(topfd) as scandir_it:
+                entries = list(scandir_it)
+        except OSError as err:
+            err.filename = path
+            onerror(os.scandir, path, sys.exc_info())
+            return
+        for entry in entries:
+            fullname = os.path.join(path, entry.name)
+            try:
+                is_dir = entry.is_dir(follow_symlinks=False)
+            except OSError:
+                is_dir = False
+            else:
+                if is_dir:
+                    try:
+                        orig_st = entry.stat(follow_symlinks=False)
+                        is_dir = stat.S_ISDIR(orig_st.st_mode)
+                    except OSError:
+                        onerror(os.lstat, fullname, sys.exc_info())
+                        continue
+            if is_dir:
+                try:
+                    dirfd = os.open(entry.name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=topfd)
+                    dirfd_closed = False
+                except OSError:
+                    onerror(os.open, fullname, sys.exc_info())
+                else:
+                    try:
+                        if os.path.samestat(orig_st, os.fstat(dirfd)):
+                            _rmtree_safe_fd(dirfd, fullname, onerror)
+                            try:
+                                os.close(dirfd)
+                            except OSError:
+                                # close() should not be retried after an error.
+                                dirfd_closed = True
+                                onerror(os.close, fullname, sys.exc_info())
+                            dirfd_closed = True
+                            try:
+>                               os.rmdir(entry.name, dir_fd=topfd)
+E                               OSError: [Errno 39] Directory not empty: 'registry'
+
+../../../../../miniconda3/envs/nh_final/lib/python3.11/shutil.py:681: OSError
+
+During handling of the above exception, another exception occurred:
+
+real_packages = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/snapshot/runs/unified_autoresearch/pytest_single_candidate_packages/packages')
+tmp_path = PosixPath('/tmp/pytest-of-sunyiq/pytest-4/test_the_declared_candidate_id0')
+
+    def test_the_declared_candidate_identity_is_carried_into_every_cell(real_packages, tmp_path):
+        workspace = REPO_ROOT / "runs" / "unified_autoresearch" / "pytest_single_candidate_identity"
+        if workspace.exists():
+            _remove_tree(workspace)
+        try:
+            result = _run(real_packages, workspace)
+        finally:
+            if workspace.exists():
+>               _remove_tree(workspace)
+
+src/unified_autoresearch/tests/test_single_candidate_development.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/unified_autoresearch/tests/test_single_candidate_development.py:39: in _remove_tree
+    shutil.rmtree(path, onerror=_clear_readonly)
+../../../../../miniconda3/envs/nh_final/lib/python3.11/shutil.py:752: in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+../../../../../miniconda3/envs/nh_final/lib/python3.11/shutil.py:672: in _rmtree_safe_fd
+    _rmtree_safe_fd(dirfd, fullname, onerror)
+../../../../../miniconda3/envs/nh_final/lib/python3.11/shutil.py:672: in _rmtree_safe_fd
+    _rmtree_safe_fd(dirfd, fullname, onerror)
+../../../../../miniconda3/envs/nh_final/lib/python3.11/shutil.py:672: in _rmtree_safe_fd
+    _rmtree_safe_fd(dirfd, fullname, onerror)
+../../../../../miniconda3/envs/nh_final/lib/python3.11/shutil.py:683: in _rmtree_safe_fd
+    onerror(os.rmdir, fullname, sys.exc_info())
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+function = <built-in function rmdir>
+target = '/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/snapshot/runs/unified_autoresearch/pytest_single_candidate_identity/runs/forward/train/registry'
+_excinfo = (<class 'OSError'>, OSError(39, 'Directory not empty'), <traceback object at 0x2ae4f26a1380>)
+
+    def _clear_readonly(function, target, _excinfo):
+        Path(target).chmod(stat.S_IWRITE)
+>       function(target)
+E       OSError: [Errno 39] Directory not empty: '/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/snapshot/runs/unified_autoresearch/pytest_single_candidate_identity/runs/forward/train/registry'
+
+src/unified_autoresearch/tests/test_single_candidate_development.py:37: OSError
+=========================== short test summary info ============================
+FAILED src/unified_autoresearch/tests/test_single_candidate_development.py::test_a_single_reference_candidate_produces_one_cell_per_frozen_basin
+FAILED src/unified_autoresearch/tests/test_single_candidate_development.py::test_the_declared_candidate_identity_is_carried_into_every_cell
+2 failed, 281 passed, 8 skipped in 423.48s (0:07:03)
+{"candidate_launch_allowed": false, "errors": 0, "failures": 2, "label": "FULL_GATE", "passed": 281, "process_exit_code": 1, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 8, "tests": 291}
+=== EXACT JOB STANDARD ERROR ===
+=== EVIDENCE STATUS ===
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/evidence/SNAPSHOT_MANIFEST.sha256
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/evidence/SNAPSHOT_GIT_COMMIT.txt
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/evidence/TARGETED_GATE.json
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/evidence/FULL_GATE.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/evidence/PACKAGE_GATE.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/candidate_run/CANDIDATE_SUMMARY.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/evidence/REPRODUCTION_SUMMARY.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/evidence/MANIFEST.sha256
+targeted_gate={"candidate_launch_allowed":true,"errors":0,"failures":0,"label":"TARGETED_GATE","passed":23,"process_exit_code":0,"schema_version":"unified_autoresearch_linux_test_gate_v1","skipped":0,"tests":23}
+full_gate={"candidate_launch_allowed":false,"errors":0,"failures":2,"label":"FULL_GATE","passed":281,"process_exit_code":1,"schema_version":"unified_autoresearch_linux_test_gate_v1","skipped":8,"tests":291}
+summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/evidence/REPRODUCTION_SUMMARY.json
+manifest=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq45/evidence/MANIFEST.sha256
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T17:22:45+0800
