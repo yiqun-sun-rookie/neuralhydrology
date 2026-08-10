@@ -1,0 +1,31 @@
+### channel=id29-nearing2022-da seq=99
+### host=login4
+### started=2026-08-10T19:21:47+0800
+### ---------- output ----------
+=== VALIDATION STATE ===
+slurm_load_jobs error: Invalid job id specified
+202369|N22-preclosure-check|FAILED|1:0|00:00:14|2026-08-10T19:19:30|2026-08-10T19:19:44|ngu104
+202369.batch|batch|FAILED|1:0|00:00:14|2026-08-10T19:19:30|2026-08-10T19:19:44|ngu104
+202369.extern|extern|COMPLETED|0:0|00:00:14|2026-08-10T19:19:30|2026-08-10T19:19:44|ngu104
+validation_state=FAILED
+=== FAILED STDOUT ===
+started=2026-08-10T19:19:33+0800
+=== FAILED STDERR ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py", line 203, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py", line 145, in main
+    local_validation = verify_local_pytest_receipt(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py", line 83, in verify_local_pytest_receipt
+    raise ValueError(f"Local pytest-bound file changed: {relative_value}")
+ValueError: Local pytest-bound file changed: src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm
+e32eb972350971042f47346fcca74a71edd398aabd8d60974d6ddba0eca2ca23  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202369.out
+454e95d3c8bb93ad2b1ab1056ee8b8ad9bdb426557108139d74e28a06f435991  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202369.err
+1c3f09d3071192d4567adb3e21898a21242dcf30462dbe232695b90705c8c46e  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_payload_seq98_receipt.json
+c023a4893760a896a722300cfe8dd8f6f9bf97e98b3fbdb14cabb56104939944  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_seq98_job.txt
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=4
+### finished=2026-08-10T19:21:47+0800
