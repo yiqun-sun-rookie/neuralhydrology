@@ -1,0 +1,36 @@
+### channel=id29-nearing2022-da seq=89
+### host=login4
+### started=2026-08-10T18:17:19+0800
+### ---------- output ----------
+=== SQUEUE COUNTS BY ARRAY PARENT AND STATE ===
+      1 202214|RUNNING
+      1 202215|PENDING
+      3 202215|RUNNING
+      1 202216|PENDING
+      2 202216|RUNNING
+      1 202222|PENDING
+      2 202222|RUNNING
+      1 202226|PENDING
+      1 202227|PENDING
+      1 202228|PENDING
+      1 202229|PENDING
+      1 202230|PENDING
+      1 202238|PENDING
+      1 202293|PENDING
+      1 202294|PENDING
+      1 202315|PENDING
+=== ACTIVE FAILURE STATES ===
+=== FINAL DEPENDENCIES AND HOLD ===
+202229|afterok:202222_*,afterok:202226_*,afterok:202216_*,afterok:202238_*,afterok:202227_*
+202230|afterok:202228_*,afterok:202238_*
+202293|afterok:202229,afterok:202230
+202294|afterok:202293
+202315|afterok:202229,afterok:202230
+held_manifest=202293|PENDING|JobHeldUser|N22-manifest
+=== REGISTERED FULL-ROLE ARTIFACT PROGRESS ===
+{"evaluation_aggregation_missing": ["aggregation_summary.json", "per_basin_metrics.csv", "time_simulation_per_basin_metrics.csv", "median_matrix.csv", "time_split_vs_author.csv", "basin_split_vs_author.csv"], "evaluation_by_family": {"time_assimilation": 1, "time_autoregression": 5}, "evaluation_complete": 6, "evaluation_total": 180, "final_export_exists": false, "final_gate_exists": false, "final_manifest_exists": false, "hyperparameter_aggregation_missing": ["selection_summary.json", "per_basin_metrics.csv", "scores.csv"], "hyperparameter_complete": 0, "hyperparameter_total": 660, "training_by_family": {"basin_simulation": 4, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 6, "training_total": 46}
+=== COMPARISON-REGISTER EVIDENCE PATH INVENTORY ===
+{"comparison_items": 35, "inventory": [{"bytes": 14656, "files": 1, "kind": "file", "path": "neuralhydrology/evaluation/assimilation.py"}, {"bytes": 6432, "files": 1, "kind": "file", "path": "neuralhydrology/modelzoo/arlstm.py"}, {"bytes": 31751, "files": 1, "kind": "file", "path": "neuralhydrology/training/loss.py"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/author_reference_b254529/zero_lag_zero_holdout_metrics_table.txt"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/continuation_state.json"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/existing_three_conditions"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/headline_three_arm_vs_paper.csv"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/provenance/hpc_camels_us_manifest_v2.json"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/provenance/local_camels_us_manifest_v2.json"}, {"bytes": 5310, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/basin_lists/531_basin_list.txt"}, {"bytes": 53100, "files": 20, "kind": "directory", "path": "src/29_nearing2022_da_ar/basin_lists/author_pub"}, {"bytes": 2113, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/configs/assimilation_block_lead1.yml"}, {"bytes": 103635, "files": 46, "kind": "directory", "path": "src/29_nearing2022_da_ar/configs/full_reproduction"}, {"bytes": 2280, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.0_seed_0.yml"}, {"bytes": 2065, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/configs/full_reproduction/time_split/simulation/seed_0.yml"}, {"bytes": 2664, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/hpc/run_registered_closure_export.slurm"}, {"bytes": 5810, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/hpc/run_registered_closure_manifest.slurm"}, {"bytes": 751, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/reference/assimilation_hyperparameter_grid.json"}, {"bytes": 1810, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/reference/author_pub_basin_lists.sha256"}, {"bytes": 288, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/reference/author_released_results.sha256"}, {"bytes": 1982, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/reference/released_protocol.json"}, {"bytes": 1540, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/reference/reproduction_acceptance.json"}, {"bytes": 334058, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/registry/assimilation_hyperparameter_registry.csv"}, {"bytes": 610, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/registry/basin_direct_evaluation_batch.txt"}, {"bytes": 2000, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/registry/basin_split_training_batch.txt"}, {"bytes": 73013, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/registry/evaluation_registry.csv"}, {"bytes": 36970, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/registry/experiment_registry.csv"}, {"bytes": 14711, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/scripts/aggregate_registered_results.py"}, {"bytes": 13600, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/scripts/evaluate_full_reproduction.py"}, {"bytes": 15158, "files": 1, "kind": "file", "path": "src/29_nearing2022_da_ar/scripts/verify_registered_closure.py"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "test/test_assimilation.py"}, {"bytes": 38191, "files": 1, "kind": "file", "path": "test/test_nearing2022_reproduction_contract.py"}], "missing_or_unsafe": [{"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/author_reference_b254529/zero_lag_zero_holdout_metrics_table.txt"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/continuation_state.json"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/existing_three_conditions"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/headline_three_arm_vs_paper.csv"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/provenance/hpc_camels_us_manifest_v2.json"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "results/29_nearing2022_da_ar/formal_closure/provenance/local_camels_us_manifest_v2.json"}, {"bytes": 0, "files": 0, "kind": "missing", "path": "test/test_assimilation.py"}], "present_paths": 25, "register_schema": "nearing2022-reproduction-comparison-register-v1", "status_counts": {"conflict": 5, "pending": 8, "verified": 19, "verified_with_boundary": 3}, "unique_evidence_paths": 32}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T18:17:39+0800
