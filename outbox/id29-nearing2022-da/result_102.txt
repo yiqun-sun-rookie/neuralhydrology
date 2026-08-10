@@ -1,0 +1,76 @@
+### channel=id29-nearing2022-da seq=102
+### host=login4
+### started=2026-08-10T19:29:52+0800
+### ---------- output ----------
+=== VALIDATION STATE ===
+slurm_load_jobs error: Invalid job id specified
+202370|N22-preclosure-check|FAILED|1:0|00:00:14|2026-08-10T19:26:27|2026-08-10T19:26:41|ngu104
+202370.batch|batch|FAILED|1:0|00:00:14|2026-08-10T19:26:27|2026-08-10T19:26:41|ngu104
+202370.extern|extern|COMPLETED|0:0|00:00:14|2026-08-10T19:26:27|2026-08-10T19:26:41|ngu104
+validation_state=FAILED
+=== FAILED STDOUT ===
+started=2026-08-10T19:26:29+0800
+=== FAILED STDERR ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py", line 203, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py", line 149, in main
+    author_archives = verify_author_source_archives(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py", line 547, in verify_author_source_archives
+    subprocess.run(
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+5cf9924fff1b6550c5a55ca66fb2163d3d0bdf6a4e649e66c92462b9a60975a1  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202370.out
+bec4944bf6fea54ac5513798be8cd42208c0ef7f06a592641306e1557ef6464c  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202370.err
+3950512085a6d5ee7e5252ac306f2a8031565e3816ffd42933a39c55180f3ee2  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/numerical_gate_slurm_source_seq101_receipt.json
+aa1192ec60ae0a94428512babcc99c8481e3d4a69ae5fe764652310ff368a09c  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_seq101_job.txt
+=== MAIN JOB STATES ===
+      1 202214|RUNNING
+      1 202215|PENDING
+      3 202215|RUNNING
+      1 202216|PENDING
+      2 202216|RUNNING
+      1 202222|PENDING
+      2 202222|RUNNING
+      1 202226|PENDING
+      1 202227|PENDING
+      1 202228|PENDING
+      1 202229|PENDING
+      1 202230|PENDING
+      1 202238|PENDING
+      1 202293|PENDING
+      1 202294|PENDING
+      1 202315|PENDING
+1|202214|RUNNING|0:0
+1|202215|PENDING|0:0
+3|202215|RUNNING|0:0
+4|202216|COMPLETED|0:0
+1|202216|PENDING|0:0
+2|202216|RUNNING|0:0
+8|202222|COMPLETED|0:0
+1|202222|PENDING|0:0
+2|202222|RUNNING|0:0
+1|202226|PENDING|0:0
+1|202227|PENDING|0:0
+1|202228|PENDING|0:0
+1|202229|PENDING|0:0
+1|202230|PENDING|0:0
+1|202238|PENDING|0:0
+1|202293|PENDING|0:0
+1|202294|PENDING|0:0
+1|202315|PENDING|0:0
+=== ACTIVE FAILURE STATES ===
+=== REGISTERED FULL-ROLE ARTIFACT PROGRESS ===
+{"evaluation_aggregation_missing": ["aggregation_summary.json", "per_basin_metrics.csv", "time_simulation_per_basin_metrics.csv", "median_matrix.csv", "time_split_vs_author.csv", "basin_split_vs_author.csv"], "evaluation_by_family": {"time_assimilation": 3, "time_autoregression": 5}, "evaluation_complete": 8, "evaluation_missing_first": ["N22-EVAL-TS-AR-L01-TR025-TE000-S0:FileNotFoundError", "N22-EVAL-TS-AR-L01-TR025-TE025-S0:FileNotFoundError", "N22-EVAL-TS-AR-L01-TR025-TE050-S0:FileNotFoundError", "N22-EVAL-TS-AR-L01-TR025-TE075-S0:FileNotFoundError", "N22-EVAL-TS-AR-L01-TR025-TE100-S0:FileNotFoundError"], "evaluation_total": 180, "final_export_exists": false, "final_gate_exists": false, "final_manifest_exists": false, "hyperparameter_aggregation_missing": ["selection_summary.json", "per_basin_metrics.csv", "scores.csv"], "hyperparameter_complete": 0, "hyperparameter_missing_first": ["N22-HYP-W01-E0005-H01-D010-LR0p0001-TCN:FileNotFoundError", "N22-HYP-W01-E0005-H01-D010-LR0p001-TCN:FileNotFoundError", "N22-HYP-W01-E0005-H01-D010-LR0p01-TCN:FileNotFoundError", "N22-HYP-W01-E0005-H01-D010-LR0p05-TCN:FileNotFoundError", "N22-HYP-W01-E0005-H01-D010-LR0p1-TCN:FileNotFoundError"], "hyperparameter_total": 660, "training_by_family": {"basin_simulation": 4, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 6, "training_missing_first": ["N22-TS-AR-L01-H025-S0:FileNotFoundError", "N22-TS-AR-L01-H050-S0:FileNotFoundError", "N22-TS-AR-L01-H075-S0:FileNotFoundError", "N22-TS-AR-L01-H100-S0:FileNotFoundError", "N22-TS-AR-L02-H000-S0:FileNotFoundError"], "training_total": 46}
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=4
+### finished=2026-08-10T19:30:22+0800
