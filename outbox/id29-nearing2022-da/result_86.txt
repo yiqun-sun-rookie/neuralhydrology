@@ -1,0 +1,59 @@
+### channel=id29-nearing2022-da seq=86
+### host=login4
+### started=2026-08-10T17:25:39+0800
+### ---------- output ----------
+=== SQUEUE COUNTS BY ARRAY PARENT AND STATE ===
+      1 202214|RUNNING
+      1 202215|PENDING
+      3 202215|RUNNING
+      1 202216|PENDING
+      2 202216|RUNNING
+      1 202222|PENDING
+      2 202222|RUNNING
+      1 202226|PENDING
+      1 202227|PENDING
+      1 202228|PENDING
+      1 202229|PENDING
+      1 202230|PENDING
+      1 202238|PENDING
+      1 202293|PENDING
+      1 202294|PENDING
+      1 202315|PENDING
+=== SACCT COUNTS BY ARRAY PARENT, STATE, AND EXIT CODE ===
+1|202214|RUNNING|0:0
+1|202215|PENDING|0:0
+3|202215|RUNNING|0:0
+2|202216|COMPLETED|0:0
+1|202216|PENDING|0:0
+2|202216|RUNNING|0:0
+6|202222|COMPLETED|0:0
+1|202222|PENDING|0:0
+2|202222|RUNNING|0:0
+1|202226|PENDING|0:0
+1|202227|PENDING|0:0
+1|202228|PENDING|0:0
+1|202229|PENDING|0:0
+1|202230|PENDING|0:0
+1|202238|PENDING|0:0
+1|202293|PENDING|0:0
+1|202294|PENDING|0:0
+1|202315|PENDING|0:0
+=== ACTIVE FAILURE STATES ===
+=== EXPECTED CANCELLATIONS ===
+202242|N22-manifest|CANCELLED by 2272|0:0
+202280|N22-manifest|CANCELLED by 2272|0:0
+202281|N22-export|CANCELLED by 2272|0:0
+202289|N22-manifest|CANCELLED by 2272|0:0
+202290|N22-export|CANCELLED by 2272|0:0
+=== FINAL DEPENDENCIES AND HOLD ===
+202229|afterok:202222_*,afterok:202226_*,afterok:202216_*,afterok:202238_*,afterok:202227_*
+202230|afterok:202228_*,afterok:202238_*
+202293|afterok:202229,afterok:202230
+202294|afterok:202293
+202315|afterok:202229,afterok:202230
+held_manifest=202293|PENDING|JobHeldUser|N22-manifest
+=== REGISTERED FULL-ROLE ARTIFACT PROGRESS ===
+{"evaluation_aggregation_missing": ["aggregation_summary.json", "per_basin_metrics.csv", "time_simulation_per_basin_metrics.csv", "median_matrix.csv", "time_split_vs_author.csv", "basin_split_vs_author.csv"], "evaluation_by_family": {"time_assimilation": 1, "time_autoregression": 5}, "evaluation_complete": 6, "evaluation_missing_first": ["N22-EVAL-TS-AR-L01-TR025-TE000-S0:FileNotFoundError", "N22-EVAL-TS-AR-L01-TR025-TE025-S0:FileNotFoundError", "N22-EVAL-TS-AR-L01-TR025-TE050-S0:FileNotFoundError", "N22-EVAL-TS-AR-L01-TR025-TE075-S0:FileNotFoundError", "N22-EVAL-TS-AR-L01-TR025-TE100-S0:FileNotFoundError"], "evaluation_total": 180, "final_export_exists": false, "final_gate_exists": false, "final_manifest_exists": false, "hyperparameter_aggregation_missing": ["selection_summary.json", "per_basin_metrics.csv", "scores.csv"], "hyperparameter_complete": 0, "hyperparameter_missing_first": ["N22-HYP-W01-E0005-H01-D010-LR0p0001-TCN:FileNotFoundError", "N22-HYP-W01-E0005-H01-D010-LR0p001-TCN:FileNotFoundError", "N22-HYP-W01-E0005-H01-D010-LR0p01-TCN:FileNotFoundError", "N22-HYP-W01-E0005-H01-D010-LR0p05-TCN:FileNotFoundError", "N22-HYP-W01-E0005-H01-D010-LR0p1-TCN:FileNotFoundError"], "hyperparameter_total": 660, "training_by_family": {"basin_simulation": 2, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 4, "training_missing_first": ["N22-TS-AR-L01-H025-S0:FileNotFoundError", "N22-TS-AR-L01-H050-S0:FileNotFoundError", "N22-TS-AR-L01-H075-S0:FileNotFoundError", "N22-TS-AR-L01-H100-S0:FileNotFoundError", "N22-TS-AR-L02-H000-S0:FileNotFoundError"], "training_total": 46}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T17:26:02+0800
