@@ -1,26 +1,27 @@
 #!/bin/bash
-# ID29 seq=72: install the fail-closed final manifest verifier and schedule it after both aggregations.
+# ID29 seq=73: strengthen final manifest with evaluation logs and verify pending job inputs.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-PAYLOAD=/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v8.tar.gz
-EXPECTED_PAYLOAD_SHA=62a5dd6beeb7cf1b6b9e5fbd75d8d7f371d82c1bcad3b246d70b543cb3d8a80d
+PAYLOAD=/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v9.tar.gz
+EXPECTED_PAYLOAD_SHA=ee67b01649f17a322137d2b4457521317476c6a189a9b182e5923908e268091e
 VERIFIER="$ROOT/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py"
-JOB_SCRIPT="$ROOT/src/29_nearing2022_da_ar/hpc/run_registered_closure_manifest.slurm"
+DATA_MANIFEST="$ROOT/closure_20260810/provenance/hpc_camels_us_manifest_v2.json"
 
 echo "=== INSTALL ==="
 echo "$EXPECTED_PAYLOAD_SHA  $PAYLOAD" | sha256sum -c -
-test "$(tar -tzf "$PAYLOAD" | wc -l)" -eq 2
+test "$(tar -tzf "$PAYLOAD" | wc -l)" -eq 1
 tar -xzf "$PAYLOAD" -C "$ROOT"
-echo "aa1b1b302c3deca3d2dc5f95fda340b42cefc4852752197d734c3b07a3e04160  $VERIFIER" | sha256sum -c -
-echo "38fa0a67b6d82471db57345ed7010cdff390ba911a8dc2d5532ea20012395217  $JOB_SCRIPT" | sha256sum -c -
+echo "c5f994524fb2c1ecc92fad9509a8fa51f7299d2cb0d22c432c9c54a6e8385136  $VERIFIER" | sha256sum -c -
+test -f "$DATA_MANIFEST"
+sha256sum "$DATA_MANIFEST"
 
-echo "=== FAIL-CLOSED PREFLIGHT ==="
+echo "=== FAIL-CLOSED STATUS ==="
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
 cd "$ROOT"
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-PREFLIGHT=$(mktemp)
+STATUS=$(mktemp)
 set +e
 python "$VERIFIER" \
   --repo-root "$ROOT" \
@@ -28,25 +29,17 @@ python "$VERIFIER" \
   --evaluation-registry "$ROOT/src/29_nearing2022_da_ar/registry/evaluation_registry.csv" \
   --hyperparameter-registry "$ROOT/src/29_nearing2022_da_ar/registry/assimilation_hyperparameter_registry.csv" \
   --evaluation-aggregation-dir "$ROOT/closure_20260810/aggregation/evaluations" \
-  --hyperparameter-aggregation-dir "$ROOT/closure_20260810/aggregation/hyperparameters" > "$PREFLIGHT"
-PREFLIGHT_RC=$?
+  --hyperparameter-aggregation-dir "$ROOT/closure_20260810/aggregation/hyperparameters" > "$STATUS"
+STATUS_RC=$?
 set -e
-test "$PREFLIGHT_RC" -eq 2
-grep -q '"complete": false' "$PREFLIGHT"
-grep -q '"training": 46' "$PREFLIGHT"
-grep -q '"evaluations": 180' "$PREFLIGHT"
-grep -q '"hyperparameters": 660' "$PREFLIGHT"
-sed -n '1,30p' "$PREFLIGHT"
-rm -f "$PREFLIGHT"
+test "$STATUS_RC" -eq 2
+grep -q '"complete": false' "$STATUS"
+grep -q '"training": 46' "$STATUS"
+grep -q '"evaluations": 180' "$STATUS"
+grep -q '"hyperparameters": 660' "$STATUS"
+sed -n '1,16p' "$STATUS"
+rm -f "$STATUS"
 
-if squeue -h -u "$USER" -n N22-manifest | grep -q .; then
-  echo "Refusing duplicate final manifest submission" >&2
-  squeue -u "$USER" -n N22-manifest
-  exit 3
-fi
-
-echo "=== SUBMIT ==="
-MANIFEST_JOB=$(sbatch --parsable --dependency=afterok:202229:202230 "$JOB_SCRIPT")
-echo "final_manifest_job_id=$MANIFEST_JOB dependency=afterok:202229:202230"
-squeue -j "$MANIFEST_JOB,202229,202230" -o '%.18i %.24j %.2t %.10M %.6D %R'
-scontrol show job -o "$MANIFEST_JOB" | sed -n 's/.*Dependency=\([^ ]*\).*/manifest_dependency=\1/p'
+echo "=== PENDING FINAL GATE ==="
+squeue -j 202229,202230,202242 -o '%.18i %.24j %.2t %.10M %.6D %R'
+scontrol show job -o 202242 | sed -n 's/.*Dependency=\([^ ]*\).*/manifest_dependency=\1/p'
