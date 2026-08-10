@@ -1,11 +1,17 @@
 #!/bin/bash
-# ID29 seq=121: audit hyperparameter dependency, source readiness, and measured assimilation throughput; read-only.
+# ID29 seq=122: audit storage capacity for all 660 frozen hyperparameter outputs; read-only.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
 JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
 
-echo "=== HYPERPARAMETER JOB CONTRACT ==="
+echo "=== FILESYSTEM CAPACITY ==="
+df -B1 "$ROOT"
+du -sb "$ROOT/closure_20260810"
+echo "=== USER QUOTA IF CONFIGURED ==="
+quota -s 2>&1 || true
+
+echo "=== HYPERPARAMETER STORAGE PROJECTION ==="
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
 cd "$ROOT"
@@ -13,106 +19,65 @@ export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 python - <<'PY'
 import json
 from pathlib import Path
-import re
-import subprocess
-import sys
 
 import pandas as pd
 
 root = Path('/data1/home/sunyiq/nearing2022_da')
-scripts = root / 'src/29_nearing2022_da_ar/scripts'
-sys.path.insert(0, str(scripts))
-from prepare_evaluation_run import resolve_source_run
-
-def job_record(job):
-    return subprocess.run(
-        ['scontrol', 'show', 'job', '-dd', '-o', str(job)],
-        check=True,
-        capture_output=True,
-        text=True,
-    ).stdout.strip()
-
-record = job_record(202228)
-fields = {}
-for token in record.split():
-    if '=' in token:
-        key, value = token.split('=', 1)
-        fields[key] = value
-
 registry_root = root / 'src/29_nearing2022_da_ar/registry'
-training = pd.read_csv(registry_root / 'experiment_registry.csv', keep_default_na=False, dtype=str)
 evaluations = pd.read_csv(registry_root / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
 hyper = pd.read_csv(registry_root / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str)
 
-sources = sorted(hyper['source_exp_id'].unique())
-assert sources == ['N22-BS-SIM-F00-S0']
-source_row = training.loc[training['exp_id'] == sources[0]].iloc[0]
-source_run = resolve_source_run(root, training, sources[0])
-required = [source_run / 'config.yml', source_run / 'model_epoch030.pt', source_run / 'output.log',
-            source_run / 'train_data/train_data_scaler.yml']
-source_ready = all(path.is_file() for path in required)
+def tree_bytes(path):
+    return sum(item.stat().st_size for item in path.rglob('*') if item.is_file())
 
+def record(path):
+    return {'path': str(path), 'bytes': path.stat().st_size}
+
+completed_rows = evaluations.loc[evaluations['slurm_job_id'].isin(['202222_6', '202222_7'])]
+samples = []
+estimates = []
+for _, row in completed_rows.iterrows():
+    run = Path(row['run_dir'])
+    run = run if run.is_absolute() else root / run
+    assert run.is_dir(), run
+    result = run / row['result_file']
+    assert result.is_file(), result
+    fixed_paths = [run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log']
+    assert all(path.is_file() for path in fixed_paths)
+    train_data = run / 'train_data'
+    assert train_data.is_dir()
+    fixed_bytes = sum(path.stat().st_size for path in fixed_paths) + tree_bytes(train_data)
+    test_bytes = tree_bytes(run / 'test')
+    total_bytes = tree_bytes(run)
+    assert fixed_bytes + test_bytes == total_bytes
+    estimated_53_basin_bytes = fixed_bytes + round(test_bytes * 53 / 531)
+    estimates.append(estimated_53_basin_bytes)
+    samples.append({
+        'eval_id': row['eval_id'],
+        'run': str(run),
+        'full_531_basin_total_bytes': total_bytes,
+        'fixed_bytes': fixed_bytes,
+        'test_tree_bytes': test_bytes,
+        'result': record(result),
+        'estimated_53_basin_total_bytes': estimated_53_basin_bytes,
+    })
+
+assert len(samples) == 2
+estimates.sort()
+median_estimate = estimates[len(estimates) // 2]
+existing_hyper_dirs = [path for path in (root / 'closure_20260810/evaluations/hyperparameter_search').glob('*') if path.is_dir()] \
+    if (root / 'closure_20260810/evaluations/hyperparameter_search').is_dir() else []
 print(json.dumps({
-    'job_id': 202228,
-    'job_state': fields.get('JobState'),
-    'dependency': fields.get('Dependency'),
-    'array_task_id': fields.get('ArrayTaskId'),
-    'array_task_throttle': fields.get('ArrayTaskThrottle'),
-    'time_limit': fields.get('TimeLimit'),
-    'cpus_per_task': fields.get('CPUs/Task'),
-    'tres_per_node': fields.get('TresPerNode'),
-    'registry_rows': len(hyper),
-    'unique_source_exp_ids': sources,
-    'source_slurm_job_id': source_row['slurm_job_id'],
-    'source_run': str(source_run),
-    'source_complete_roles': source_ready,
-    'source_required_files': [str(path) for path in required],
-    'held_out_basin_files': sorted(hyper['test_basin_file'].unique()),
+    'samples': samples,
+    'hyperparameter_rows': len(hyper),
+    'hyperparameter_basin_count': 53,
+    'existing_hyperparameter_directories': len(existing_hyper_dirs),
+    'median_estimated_bytes_per_53_basin_directory': median_estimate,
+    'estimated_660_directory_bytes': median_estimate * len(hyper),
+    'two_x_conservative_bytes': 2 * median_estimate * len(hyper),
+    'projection_limit': 'Scales the completed test tree linearly from 531 to 53 basins and keeps copied checkpoint, scaler, config, and log bytes fixed; hyperparameter settings can change log and result sizes.',
 }, sort_keys=True))
-
-records = subprocess.run(
-    ['sacct', '-n', '-P', '-j', '202222', '--format=JobID,State,ExitCode,ElapsedRaw,Elapsed'],
-    check=True,
-    capture_output=True,
-    text=True,
-).stdout.splitlines()
-accounting = {}
-for raw in records:
-    parts = raw.split('|')
-    if len(parts) >= 5 and re.fullmatch(r'202222_\d+', parts[0]):
-        accounting[parts[0]] = {
-            'state': parts[1], 'exit_code': parts[2], 'elapsed_seconds': int(parts[3]), 'elapsed': parts[4]
-        }
-
-measured = []
-for _, row in evaluations.loc[evaluations['slurm_job_id'].str.startswith('202222_', na=False)].iterrows():
-    item = accounting.get(row['slurm_job_id'])
-    if item and item['state'] == 'COMPLETED':
-        measured.append({
-            'slurm_task': row['slurm_job_id'],
-            'eval_id': row['eval_id'],
-            'family': row['family'],
-            'evaluation_mode': row['evaluation_mode'],
-            'lead': row['lead'],
-            'test_holdout': row['test_holdout'],
-            **item,
-        })
-print(json.dumps({'completed_202222_tasks': measured}, sort_keys=True))
-
-assimilation_seconds = sorted(item['elapsed_seconds'] for item in measured if item['evaluation_mode'] == 'assimilation')
-if assimilation_seconds:
-    print(json.dumps({
-        'measured_full_531_basin_assimilation_tasks': len(assimilation_seconds),
-        'min_seconds': assimilation_seconds[0],
-        'median_seconds': assimilation_seconds[len(assimilation_seconds) // 2],
-        'max_seconds': assimilation_seconds[-1],
-        'hyperparameter_basin_count': sum(1 for line in (root / hyper.iloc[0]['test_basin_file']).read_text().splitlines() if line.strip()),
-        'throughput_note': 'The hyperparameter rows vary assimilation epochs and cannot be timed by basin-count scaling alone.',
-    }, sort_keys=True))
 PY
-
-echo "=== CURRENT ID29 GPU LOAD ==="
-squeue -h -j "$JOBS" -t RUNNING -o '%i|%j|%b|%M|%R' | sort
 
 echo "=== ACTIVE FAILURE STATES ==="
 FAILURES=$(sacct -n -P -j "$JOBS" --format=JobIDRaw,JobName,State,ExitCode | \
