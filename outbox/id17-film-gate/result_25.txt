@@ -1,0 +1,38 @@
+### channel=id17-film-gate seq=25
+### host=login4
+### started=2026-08-11T00:23:54+0800
+### ---------- output ----------
+=== VERDICT RECOMPUTED AT EPOCH 20 (same script, same rules, only the epoch differs) ===
+  fold0 seed0: n=106  ea=0.6082  film=0.6269  dArch=+0.0187  paired=+0.0084  win=51.9%  p=0.771
+  fold0 seed1: n=106  ea=0.6464  film=0.6188  dArch=-0.0276  paired=+0.0028  win=50.9%  p=0.923
+  fold1 seed0: n=106  ea=0.6563  film=0.6596  dArch=+0.0033  paired=-0.0166  win=44.3%  p=0.285
+  fold1 seed1: n=106  ea=0.6635  film=0.6422  dArch=-0.0213  paired=-0.0097  win=44.3%  p=0.285
+  fold2 seed0: n=106  ea=0.6682  film=0.6741  dArch=+0.0059  paired=+0.0084  win=54.7%  p=0.382
+  fold2 seed1: n=106  ea=0.6342  film=0.6839  dArch=+0.0497  paired=+0.0333  win=64.2%  p=0.005
+  fold3 seed0: n=106  ea=0.6195  film=0.6254  dArch=+0.0060  paired=+0.0186  win=61.3%  p=0.025
+  fold3 seed1: n=106  ea=0.6176  film=0.6057  dArch=-0.0119  paired=-0.0037  win=50.0%  p=1.000
+  fold4 seed0: n=107  ea=0.6081  film=0.6256  dArch=+0.0175  paired=+0.0075  win=53.3%  p=0.562
+  fold4 seed1: n=107  ea=0.6463  film=0.6277  dArch=-0.0186  paired=-0.0131  win=45.8%  p=0.439
+
+------------------------------------------------------------------------------
+PER-FOLD dArch (averaged over seeds)
+  fold0: -0.0045   (2 seed(s))
+  fold1: -0.0090   (2 seed(s))
+  fold2: +0.0278   (2 seed(s))
+  fold3: -0.0030   (2 seed(s))
+  fold4: -0.0006   (2 seed(s))
+
+------------------------------------------------------------------------------
+  folds complete       : 5/5   cells: 10/10
+  mean dArch over folds: +0.0021   (sd 0.0131, range -0.0090..+0.0278)
+  fold-mean signs      : ['-', '-', '+', '-', '-']   sign-test p=0.375
+  paired median (cells): mean +0.0036, 6/10 positive
+  FiLM win rate        : mean 52.1%, 6/10 cells >50%
+
+------------------------------------------------------------------------------
+H3 VERDICT (pre-registered)
+  AMBER — |mean dArch|=0.0021 < 0.02; fold-mean signs inconsistent ['-', '-', '+', '-', '-']. The architecture effect is inside the fold/seed noise at this scale: neither '反超' nor 'EA wins' is supported.
+==============================================================================
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T00:23:57+0800
