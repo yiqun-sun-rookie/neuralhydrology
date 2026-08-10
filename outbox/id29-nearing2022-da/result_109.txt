@@ -1,0 +1,28 @@
+### channel=id29-nearing2022-da seq=109
+### host=login4
+### started=2026-08-10T19:53:04+0800
+### ---------- output ----------
+=== PRE-INSTALL SAFETY BOUNDARY ===
+/data1/home/sunyiq/hpc_mailbox/inbox/id29-nearing2022-da/payload.tar.gz: OK
+=== STAGE AND ATOMICALLY INSTALL BINDING ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/deployment/seq109/src/29_nearing2022_da_ar/reference/headline_artifact_recovery_binding.json: OK
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/headline_binding_seq109_payload.tar.gz: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/headline_artifact_recovery_binding.json.seq109.tmp: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/headline_artifact_recovery_binding.json: OK
+=== PRESERVE ATTEMPT 202374 ===
+{"created_utc": "2026-08-10T11:53:04.637873+00:00", "mailbox_seq": 109, "payload_bytes": 1274, "payload_copy": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/headline_binding_seq109_payload.tar.gz", "payload_sha256": "59287a2b7a4bb2933a68d4c95fe665e1e0c4430351eb629d91e9183b0d938661", "schema": "nearing2022-headline-binding-deployment-v1", "target": "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/headline_artifact_recovery_binding.json", "target_bytes": 4363, "target_sha256": "b0381957e7fcb23fc7ce0b946bc6cc46f1e3d74e31dce3c5a2f20c33dcba61cb"}
+{"created_utc": "2026-08-10T11:53:04.699590+00:00", "root_cause": "missing_headline_artifact_recovery_binding", "schema": "nearing2022-preclosure-failed-attempt-receipt-v1", "slurm": {"elapsed": "00:00:13", "end": "2026-08-10T19:47:46", "exit_code": "1:0", "job_id": "202374", "job_name": "N22-preclosure-check", "node_list": "ngu003", "start": "2026-08-10T19:47:33", "state": "FAILED"}, "stderr": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_attempt_202374.err", "stderr_bytes": 1374, "stderr_sha256": "86e5b74116ef8c41db7778056bce04f59c6b278c1f3a71ddf83fe45c2831697c", "stdout": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_attempt_202374.out", "stdout_bytes": 33, "stdout_sha256": "75d06e42c53a7f0258f4e3922c27bd284cc9f76ec34db7546a322c3613d332bd"}
+=== SUBMIT PRECLOSURE VALIDATION ===
+validation_job_id=202376
+JobId=202376 JobName=N22-preclosure-check UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-08-10T19:53:04 EligibleTime=2026-08-10T19:53:04 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T19:53:04 Partition=hgpu2,hgpu4,hgpu8 AllocNode:Sid=login04:44128 ReqNodeList=ngu003 ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* TRES=cpu=2,node=1,billing=2 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_preclosure_validation.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202376.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202376.out Power=
+=== POST-INSTALL SAFETY BOUNDARY ===
+b0381957e7fcb23fc7ce0b946bc6cc46f1e3d74e31dce3c5a2f20c33dcba61cb  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/headline_artifact_recovery_binding.json
+59287a2b7a4bb2933a68d4c95fe665e1e0c4430351eb629d91e9183b0d938661  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/headline_binding_seq109_payload.tar.gz
+a7e82c39877960a53d663824a5a7cd9b4d893936f9677fd1fab0c30fd6c855bc  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/headline_binding_seq109_receipt.json
+75d06e42c53a7f0258f4e3922c27bd284cc9f76ec34db7546a322c3613d332bd  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_attempt_202374.out
+86e5b74116ef8c41db7778056bce04f59c6b278c1f3a71ddf83fe45c2831697c  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_attempt_202374.err
+e57b5be05d49f735839d93145fd8cd41c4174fbeea2c66ae354192bba8c365a0  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_failed_attempt_202374_receipt.json
+403c8015b2a4662691a07984bcdbbc63579fb320519a5edd1ebb2a7211b73169  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_seq109_job.txt
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T19:53:04+0800
