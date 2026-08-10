@@ -1,0 +1,21 @@
+### channel=id29-nearing2022-da seq=88
+### host=login4
+### started=2026-08-10T18:06:31+0800
+### ---------- output ----------
+=== PRE-INSTALL SAFETY BOUNDARY ===
+/data1/home/sunyiq/hpc_mailbox/inbox/id29-nearing2022-da/payload.tar.gz: OK
+gate_state_before=202315|PENDING|Dependency|N22-gate
+=== PRESERVE AND INSTALL ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/evaluate_full_reproduction_pre_immutability_patch_f6548d2c.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/evaluate_full_reproduction.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/numerical_gate_source_update.json: OK
+{"installed_at": "2026-08-10T10:06:32.980534+00:00", "installed_evaluator_sha256": "820ce3cb543270edd439afcd5b26d21de8867c2560d5be4addc86be80c098276", "mailbox_seq": 88, "numerical_logic_changed": false, "old_evaluator_backup": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/evaluate_full_reproduction_pre_immutability_patch_f6548d2c.py", "old_evaluator_sha256": "f6548d2c1935093266ddbfcced8f66b5a540a02ce4e52216001526a34d6b4082", "schema": "nearing2022-numerical-gate-source-update-receipt-v1", "slurm_job_id": "202315"}
+=== POST-INSTALL SAFETY BOUNDARY ===
+gate_state_after=202315|PENDING|Dependency|N22-gate
+820ce3cb543270edd439afcd5b26d21de8867c2560d5be4addc86be80c098276  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/evaluate_full_reproduction.py
+31737312ed6dd35097670ddf20b34af09cf255894ec104600a021e271b3e423e  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/numerical_gate_source_update.json
+f6548d2c1935093266ddbfcced8f66b5a540a02ce4e52216001526a34d6b4082  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/evaluate_full_reproduction_pre_immutability_patch_f6548d2c.py
+46d955aa5f5d77d1bd4643af16034da86d0d7d37570b788bb8cfe917d8efcdc1  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/numerical_gate_source_update_receipt.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T18:06:33+0800
