@@ -1,0 +1,49 @@
+### channel=id29-nearing2022-da seq=114
+### host=login4
+### started=2026-08-10T20:12:19+0800
+### ---------- output ----------
+=== PRE-INSTALL SAFETY BOUNDARY ===
+/data1/home/sunyiq/hpc_mailbox/inbox/id29-nearing2022-da/payload.tar.gz: OK
+/data1/home/sunyiq/nearing2022_da/test/test_nearing2022_reproduction_contract.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation.json: OK
+=== STAGE AND VERIFY ALL FIVE MEMBERS ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/deployment/seq114/test/test_nearing2022_reproduction_contract.py: OK
+/data1/home/sunyiq/nearing2022_da/closure_20260810/deployment/seq114/src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml: OK
+/data1/home/sunyiq/nearing2022_da/closure_20260810/deployment/seq114/src/29_nearing2022_da_ar/reference/local_contract_validation.json: OK
+/data1/home/sunyiq/nearing2022_da/closure_20260810/deployment/seq114/src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_dynamic_progress_20260810.xml: OK
+/data1/home/sunyiq/nearing2022_da/closure_20260810/deployment/seq114/src/29_nearing2022_da_ar/reference/local_contract_validation_pre_dynamic_progress_20260810.json: OK
+=== PRESERVE PREVIOUS CANONICAL BYTES ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/pre_dynamic_progress_contract_seq114/test_nearing2022_reproduction_contract.py: OK
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/pre_dynamic_progress_contract_seq114/local_contract_validation_junit.xml: OK
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/pre_dynamic_progress_contract_seq114/local_contract_validation.json: OK
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/dynamic_progress_contract_seq114_payload.tar.gz: OK
+=== PREPARE AND ATOMICALLY PUBLISH NEW BYTES ===
+/data1/home/sunyiq/nearing2022_da/test/test_nearing2022_reproduction_contract.py.seq114.tmp: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml.seq114.tmp: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation.json.seq114.tmp: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_dynamic_progress_20260810.xml.seq114.tmp: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_pre_dynamic_progress_20260810.json.seq114.tmp: OK
+/data1/home/sunyiq/nearing2022_da/test/test_nearing2022_reproduction_contract.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation.json: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_dynamic_progress_20260810.xml: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_pre_dynamic_progress_20260810.json: OK
+=== VERIFY RECEIPT CONTENT AND WRITE DEPLOYMENT RECEIPT ===
+{"created_utc": "2026-08-10T12:12:20.079386+00:00", "deployed_files": [{"bytes": 69070, "path": "/data1/home/sunyiq/nearing2022_da/test/test_nearing2022_reproduction_contract.py", "sha256": "dc8c5a18b77d321b1a4ae6aba24315b16cb5a59e4fa2c3a6c99ae8de4ba2d6ed"}, {"bytes": 9288, "path": "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml", "sha256": "25f0ad9ba2e9cf51c1bac3de15ef307a6a56f64adce35a9b70043abf6fd2a553"}, {"bytes": 3517, "path": "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation.json", "sha256": "dd7819377de090baf9e7210216e8d62ac1fd12fa46d2eb8a59fa74c6a4372b67"}, {"bytes": 9288, "path": "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_dynamic_progress_20260810.xml", "sha256": "3224f75cb2a8c28d80b94055fe143278b07e52c667386ff8241eedae7679db01"}, {"bytes": 3517, "path": "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_pre_dynamic_progress_20260810.json", "sha256": "62c11fb1cdd1aa1545cc073c178049e704369b36ac7152b9f8d31f9ee9ae7a7e"}], "mailbox_seq": 114, "payload": {"bytes": 19053, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/dynamic_progress_contract_seq114_payload.tar.gz", "sha256": "a029b3b9468e7b5bc9d652eb8e38b41897f904cb1c57c25500df4496982a5478"}, "previous_canonical_files": [{"bytes": 3517, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/pre_dynamic_progress_contract_seq114/local_contract_validation.json", "sha256": "62c11fb1cdd1aa1545cc073c178049e704369b36ac7152b9f8d31f9ee9ae7a7e"}, {"bytes": 9288, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/pre_dynamic_progress_contract_seq114/local_contract_validation_junit.xml", "sha256": "3224f75cb2a8c28d80b94055fe143278b07e52c667386ff8241eedae7679db01"}, {"bytes": 68737, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/pre_dynamic_progress_contract_seq114/test_nearing2022_reproduction_contract.py", "sha256": "8896fe1f7437789ac14087d8b67cc68e11b4bff6d806e24bcd0cd263530b1b4a"}], "result": "five exact members deployed; previous canonical bytes preserved; local receipt content verified", "schema": "nearing2022-dynamic-progress-contract-deployment-v1"}
+=== SUBMIT UPDATED PRECLOSURE VALIDATION ===
+validation_job_id=202388
+JobId=202388 JobName=N22-preclosure-check UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-08-10T20:12:19 EligibleTime=2026-08-10T20:12:19 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T20:12:19 Partition=hgpu2,hgpu4,hgpu8 AllocNode:Sid=login04:44128 ReqNodeList=ngu003 ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:* TRES=cpu=2,node=1,billing=2 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_preclosure_validation.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202388.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202388.out Power=
+=== POST-INSTALL SAFETY BOUNDARY ===
+a029b3b9468e7b5bc9d652eb8e38b41897f904cb1c57c25500df4496982a5478  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/dynamic_progress_contract_seq114_payload.tar.gz
+5cc4c950e520146b51ee063861c6d676b6b1a5a68a705c51570fb611aacbefd8  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/dynamic_progress_contract_seq114_receipt.json
+f2566e0af1742d67102bc90d9127f4d28352e61e58ada6498294463a4a958433  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_seq114_job.txt
+a66e9eb6777686ad21f870cd30d6832057b62128c8cc563eb14faff2b3ed15f0  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_preclosure_validation.slurm
+dc8c5a18b77d321b1a4ae6aba24315b16cb5a59e4fa2c3a6c99ae8de4ba2d6ed  /data1/home/sunyiq/nearing2022_da/test/test_nearing2022_reproduction_contract.py
+25f0ad9ba2e9cf51c1bac3de15ef307a6a56f64adce35a9b70043abf6fd2a553  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml
+dd7819377de090baf9e7210216e8d62ac1fd12fa46d2eb8a59fa74c6a4372b67  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation.json
+3224f75cb2a8c28d80b94055fe143278b07e52c667386ff8241eedae7679db01  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_dynamic_progress_20260810.xml
+62c11fb1cdd1aa1545cc073c178049e704369b36ac7152b9f8d31f9ee9ae7a7e  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_pre_dynamic_progress_20260810.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T20:12:21+0800
