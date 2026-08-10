@@ -1,12 +1,12 @@
 #!/bin/bash
-# ID29 seq=57: install closure v2, fingerprint training data, and inspect the headline job.
+# ID29 seq=58: install symlink-safe closure v3, fingerprint training data, and inspect the headline job.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-PAYLOAD=/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v2.tar.gz
-EXPECTED_PAYLOAD_SHA=6254c2675654f3a29b541956bde03d20c127e6647bb9e2d8bab60eb4bf939551
+PAYLOAD=/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v3.tar.gz
+EXPECTED_PAYLOAD_SHA=6ee07cefd5e3f14c6687c66ff940f6efdb1a2818da9d897447cabe1af0687f21
 PROVENANCE="$ROOT/closure_20260810/provenance"
-MANIFEST="$PROVENANCE/hpc_camels_us_manifest.json"
+MANIFEST="$PROVENANCE/hpc_camels_us_manifest_v2.json"
 
 echo "=== PAYLOAD ==="
 echo "$EXPECTED_PAYLOAD_SHA  $PAYLOAD" | sha256sum -c -
