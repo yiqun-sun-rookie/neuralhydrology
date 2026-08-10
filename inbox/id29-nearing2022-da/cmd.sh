@@ -1,196 +1,184 @@
 #!/bin/bash
-# ID29 seq=134: repair seq133 receipt quoting and seal Slurm preclosure job 202500 without redeployment.
-set -euo pipefail
+# ID29 seq=135: event-driven refresh after projected completion window of basin training task 202216_8.
+set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-IDEA="$ROOT/src/29_nearing2022_da_ar"
-CLOSURE="$ROOT/closure_20260810"
-PREVIOUS="$CLOSURE/provenance/pre_strict_decision_seq133"
-PROVENANCE_PAYLOAD="$CLOSURE/provenance/strict_decision_seq133_payload.tar.gz"
-DEPLOYMENT_RECEIPT="$CLOSURE/provenance/strict_decision_seq133_deployment_receipt.json"
-JOB_RECEIPT="$CLOSURE/provenance/preclosure_validation_seq133_job.txt"
-JOB_ID="$(cat "$JOB_RECEIPT")"
-STDOUT="$CLOSURE/logs/N22-preclosure-check_${JOB_ID}.out"
-STDERR="$CLOSURE/logs/N22-preclosure-check_${JOB_ID}.err"
-PRESERVED_STDOUT="$CLOSURE/provenance/preclosure_validation_${JOB_ID}.out"
-PRESERVED_STDERR="$CLOSURE/provenance/preclosure_validation_${JOB_ID}.err"
-VALIDATION_RECEIPT="$CLOSURE/provenance/preclosure_validation_${JOB_ID}_receipt.json"
+JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
 
-echo "=== VERIFY SEQ133 DEPLOYMENT STATE ==="
-test "$JOB_ID" = "202500"
-test ! -e "$DEPLOYMENT_RECEIPT"
-test ! -e "$VALIDATION_RECEIPT"
-test ! -e "$PRESERVED_STDOUT"
-test ! -e "$PRESERVED_STDERR"
-sha256sum -c <<'SHA256_DEPLOYED'
-a686e5e558a295c36da9efdc2e1588873132d8c984c052003115e8c5fa264a15  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/strict_decision_seq133_payload.tar.gz
-c4487ffb1a4ba151dbc782830fb6209e2eae62666fb0819179dad632fae351db  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/pre_strict_decision_seq133/verify_registered_closure.py
-17463a5ab783d024def54993b0d04cbd37a4f655fbfd4f696da57d7c5251cea8  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/pre_strict_decision_seq133/run_server_preclosure_check.py
-dd7819377de090baf9e7210216e8d62ac1fd12fa46d2eb8a59fa74c6a4372b67  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/pre_strict_decision_seq133/local_contract_validation.json
-25f0ad9ba2e9cf51c1bac3de15ef307a6a56f64adce35a9b70043abf6fd2a553  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/pre_strict_decision_seq133/local_contract_validation_junit.xml
-3b0caef6076d457e303864227e6748ab947e39da01c0c1faea15795807ce8945  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py
-4ed2cdf9994e37ff913ffbd7f4eb466fe24d0a49675bfdbd886dd5799aa8419b  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py
-84d43c8e0fedc1d43576467c8c9d6b07553e54a36a6959bde801581b0f02cf7e  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation.json
-6920a8bdd91d5e441d49754d2de16943153d487f0ee7d8b7a065784f5e7c970b  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml
-dd7819377de090baf9e7210216e8d62ac1fd12fa46d2eb8a59fa74c6a4372b67  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_pre_strict_decision_20260811.json
-25f0ad9ba2e9cf51c1bac3de15ef307a6a56f64adce35a9b70043abf6fd2a553  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_strict_decision_20260811.xml
-dc8c5a18b77d321b1a4ae6aba24315b16cb5a59e4fa2c3a6c99ae8de4ba2d6ed  /data1/home/sunyiq/nearing2022_da/test/test_nearing2022_reproduction_contract.py
-SHA256_DEPLOYED
-
-echo "=== REPAIR DEPLOYMENT RECEIPT ONLY ==="
-python - "$ROOT" "$PROVENANCE_PAYLOAD" "$PREVIOUS" "$DEPLOYMENT_RECEIPT" "$JOB_ID" <<'PY'
-from datetime import datetime, timezone
-import hashlib
+echo "=== BOUNDED PROGRESS AND WALLTIME PROJECTION ==="
+python - <<'PY'
 import json
-import os
+from pathlib import Path
+import re
+import subprocess
+
+parents = '202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315'
+running = subprocess.run(
+    ['squeue', '-h', '-j', parents, '-t', 'RUNNING', '-o', '%i'],
+    check=True,
+    capture_output=True,
+    text=True,
+).stdout.split()
+
+ansi = re.compile(r'\x1b\[[0-9;]*[A-Za-z]')
+epoch_pattern = re.compile(r'# Epoch\s+(\d+):\s*(\d+)%\|.*?\|\s*(\d+)/(\d+)')
+generic_pattern = re.compile(r'(?<!Epoch\s)(\d+)%\|.*?\|\s*(\d+)/(\d+)')
+
+def seconds(value):
+    days = 0
+    if '-' in value:
+        day_text, value = value.split('-', 1)
+        days = int(day_text)
+    fields = [int(item) for item in value.split(':')]
+    if len(fields) == 3:
+        hours, minutes, secs = fields
+    elif len(fields) == 2:
+        hours, minutes, secs = 0, fields[0], fields[1]
+    else:
+        raise ValueError(value)
+    return days * 86400 + hours * 3600 + minutes * 60 + secs
+
+for job in sorted(running):
+    record = subprocess.run(
+        ['scontrol', 'show', 'job', '-o', job],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    fields = {}
+    for token in record.split():
+        if '=' in token:
+            key, value = token.split('=', 1)
+            fields[key] = value
+    stdout = Path(fields['StdOut'])
+    size = stdout.stat().st_size
+    with stdout.open('rb') as handle:
+        handle.seek(max(0, size - 4 * 1024 * 1024))
+        text = ansi.sub('', handle.read().decode('utf-8', errors='replace')).replace('\r', '\n')
+    epochs = list(epoch_pattern.finditer(text))
+    generic = list(generic_pattern.finditer(text))
+    payload = {
+        'job': job,
+        'name': fields['JobName'],
+        'runtime': fields['RunTime'],
+        'time_limit': fields['TimeLimit'],
+        'stdout_bytes': size,
+    }
+    if epochs:
+        match = epochs[-1]
+        epoch, percent, step, total = map(int, match.groups())
+        fraction = ((epoch - 1) + step / total) / 30
+        runtime_seconds = seconds(fields['RunTime'])
+        limit_seconds = seconds(fields['TimeLimit'])
+        projected_seconds = runtime_seconds / fraction if fraction > 0 else None
+        payload.update({
+            'epoch': epoch,
+            'epoch_step': step,
+            'epoch_total_steps': total,
+            'thirty_epoch_fraction': round(fraction, 6),
+            'conservative_projected_total_hours': round(projected_seconds / 3600, 2),
+            'projected_slack_hours': round((limit_seconds - projected_seconds) / 3600, 2),
+            'time_limit_risk': projected_seconds > limit_seconds,
+        })
+    elif generic:
+        percent, step, total = map(int, generic[-1].groups())
+        payload.update({'last_generic_percent': percent, 'last_generic_step': step, 'last_generic_total': total})
+    else:
+        lines = [line.strip()[:300] for line in text.splitlines() if line.strip()]
+        payload['last_nonempty_line'] = lines[-1] if lines else ''
+    print(json.dumps(payload, sort_keys=True))
+PY
+
+echo "=== ACTIVE MAIN JOBS ==="
+squeue -h -j "$JOBS" -o '%i|%T|%M|%l|%R|%j' | sort
+
+echo "=== BASIN TRAINING TASKS ==="
+sacct -n -P -j 202216 --format=JobID,State,ExitCode,Elapsed,Start,End,NodeList | \
+  awk -F'|' '$1 !~ /\./ && $1 ~ /^202216_[0-9]+$/ {print}' | sort
+
+echo "=== ACTIVE FAILURE STATES ==="
+FAILURES=$(sacct -n -P -j "$JOBS" --format=JobIDRaw,JobName,State,ExitCode | \
+  awk -F'|' '$1 !~ /\./ && $3 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/')
+printf '%s\n' "$FAILURES"
+test -z "$FAILURES"
+
+echo "=== REGISTERED COMPLETE-ROLE COUNTS ==="
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+cd "$ROOT"
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
+python - <<'PY'
+from collections import Counter
+import json
 from pathlib import Path
 import sys
 
-root = Path(sys.argv[1])
-payload = Path(sys.argv[2])
-previous = Path(sys.argv[3])
-receipt = Path(sys.argv[4])
-job_id = sys.argv[5]
+import pandas as pd
 
-def record(path):
-    data = path.read_bytes()
-    return {"path": str(path), "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+root = Path('/data1/home/sunyiq/nearing2022_da')
+scripts = root / 'src/29_nearing2022_da_ar/scripts'
+sys.path.insert(0, str(scripts))
+from aggregate_registered_results import _registered_run
+from prepare_evaluation_run import resolve_source_run
+from verify_registered_closure import _metrics_path
 
-deployed_relative = [
-    "src/29_nearing2022_da_ar/scripts/verify_registered_closure.py",
-    "src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py",
-    "src/29_nearing2022_da_ar/reference/local_contract_validation.json",
-    "src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml",
-    "src/29_nearing2022_da_ar/reference/local_contract_validation_pre_strict_decision_20260811.json",
-    "src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_strict_decision_20260811.xml",
-]
-payload_record = record(payload)
-if payload_record["bytes"] != 19865 or payload_record["sha256"] != "a686e5e558a295c36da9efdc2e1588873132d8c984c052003115e8c5fa264a15":
-    raise ValueError("Published payload changed")
-result = {
-    "schema": "nearing2022-strict-final-decision-deployment-v1",
-    "mailbox_seq": 133,
-    "receipt_repair_mailbox_seq": 134,
-    "created_utc": datetime.now(timezone.utc).isoformat(),
-    "payload": payload_record,
-    "previous_canonical_files": [record(path) for path in sorted(previous.iterdir())],
-    "deployed_files": [record(root / relative) for relative in deployed_relative],
-    "unchanged_contract_test": record(root / "test/test_nearing2022_reproduction_contract.py"),
-    "validation_job_id": job_id,
-    "result": "strict exact final-decision matcher, server self-check, 64-test receipt, and preserved prior bytes deployed",
-}
-temporary = receipt.with_name(receipt.name + ".tmp")
-temporary.write_text(json.dumps(result, indent=2, sort_keys=True) + chr(10), encoding="utf-8")
-os.replace(temporary, receipt)
-print(json.dumps(result, sort_keys=True))
+registry_root = root / 'src/29_nearing2022_da_ar/registry'
+training = pd.read_csv(registry_root / 'experiment_registry.csv', keep_default_na=False, dtype=str)
+evaluations = pd.read_csv(registry_root / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
+hyper = pd.read_csv(registry_root / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str)
+
+def complete(paths):
+    return all(path.is_file() for path in paths)
+
+training_done = Counter()
+for _, row in training.iterrows():
+    try:
+        run = resolve_source_run(root, training, row['exp_id'])
+        if complete([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log',
+                     run / 'train_data/train_data_scaler.yml']):
+            training_done[row['family']] += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
+
+evaluation_done = Counter()
+for _, row in evaluations.iterrows():
+    try:
+        run = _registered_run(root, training, row)
+        result = run / row['result_file']
+        reference = resolve_source_run(root, training, row['reference_exp_id']) / 'test/model_epoch030/test_results.p'
+        if complete([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
+                     _metrics_path(result), reference, _metrics_path(reference)]):
+            evaluation_done[row['family']] += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
+
+hyper_done = 0
+for _, row in hyper.iterrows():
+    try:
+        run = Path(row['run_dir'])
+        run = run if run.is_absolute() else root / run
+        result = run / row['result_file']
+        reference = resolve_source_run(root, training, row['source_exp_id']) / 'test/model_epoch030/test_results.p'
+        if complete([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
+                     _metrics_path(result), reference, _metrics_path(reference)]):
+            hyper_done += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
+
+print(json.dumps({
+    'training_complete': sum(training_done.values()),
+    'training_total': len(training),
+    'training_by_family': dict(sorted(training_done.items())),
+    'evaluation_complete': sum(evaluation_done.values()),
+    'evaluation_total': len(evaluations),
+    'evaluation_by_family': dict(sorted(evaluation_done.items())),
+    'hyperparameter_complete': hyper_done,
+    'hyperparameter_total': len(hyper),
+}, sort_keys=True))
 PY
 
-echo "=== VERIFY SLURM JOB 202500 ==="
-ROW="$(sacct -n -X -P -j "$JOB_ID" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList | awk -F'|' -v job="$JOB_ID" '$1 == job {print; exit}')"
-test -n "$ROW"
-printf '%s
-' "$ROW"
-IFS='|' read -r OBS_JOB JOB_NAME STATE EXIT_CODE ELAPSED START END NODE_LIST <<< "$ROW"
-test "$OBS_JOB" = "$JOB_ID"
-test "$JOB_NAME" = "N22-preclosure-check"
-test "$STATE" = "COMPLETED"
-test "$EXIT_CODE" = "0:0"
-test -f "$STDOUT"
-test -f "$STDERR"
-test ! -s "$STDERR"
-cp -p "$STDOUT" "$PRESERVED_STDOUT.tmp"
-cp -p "$STDERR" "$PRESERVED_STDERR.tmp"
-mv "$PRESERVED_STDOUT.tmp" "$PRESERVED_STDOUT"
-mv "$PRESERVED_STDERR.tmp" "$PRESERVED_STDERR"
-cmp "$STDOUT" "$PRESERVED_STDOUT"
-cmp "$STDERR" "$PRESERVED_STDERR"
-
-echo "=== PARSE STRICT SELF-CHECK AND WRITE VALIDATION RECEIPT ==="
-python - "$ROOT" "$STDOUT" "$STDERR" "$PRESERVED_STDOUT" "$PRESERVED_STDERR" "$DEPLOYMENT_RECEIPT" "$VALIDATION_RECEIPT" "$JOB_ID" "$ELAPSED" "$START" "$END" "$NODE_LIST" <<'PY'
-from datetime import datetime, timezone
-import hashlib
-import json
-import os
-from pathlib import Path
-import sys
-
-root = Path(sys.argv[1])
-stdout = Path(sys.argv[2])
-stderr = Path(sys.argv[3])
-preserved_stdout = Path(sys.argv[4])
-preserved_stderr = Path(sys.argv[5])
-deployment_receipt = Path(sys.argv[6])
-receipt = Path(sys.argv[7])
-job_id, elapsed, start, end, node_list = sys.argv[8:13]
-
-def record(path):
-    data = path.read_bytes()
-    return {"path": str(path), "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
-
-text = stdout.read_text(encoding="utf-8")
-start_json = text.index("{")
-summary, _ = json.JSONDecoder().raw_decode(text[start_json:])
-expected_strict = {
-    "accepted": ["GO", "NO_GO"],
-    "rejected": [
-        {"gate": "GO", "register": "NO_GO"},
-        {"gate": "NO_GO", "register": "GO"},
-        {"gate": "GO", "register": "HOLD"},
-    ],
-}
-if summary.get("strict_final_decision_match") != expected_strict:
-    raise ValueError(f"Strict decision self-check changed: {summary.get('strict_final_decision_match')}")
-if summary.get("registry_counts") != {"training": 46, "evaluation": 180, "hyperparameter": 660}:
-    raise ValueError("Registry counts changed")
-if summary.get("local_validation", {}).get("receipt_sha256") != "84d43c8e0fedc1d43576467c8c9d6b07553e54a36a6959bde801581b0f02cf7e":
-    raise ValueError("Server did not validate the current local test receipt")
-if summary.get("local_validation", {}).get("junit_sha256") != "6920a8bdd91d5e441d49754d2de16943153d487f0ee7d8b7a065784f5e7c970b":
-    raise ValueError("Server did not validate the current JUnit XML")
-if summary.get("data_manifests", {}).get("file_count") != 2131:
-    raise ValueError("Data manifest file count changed")
-if summary.get("data_manifests", {}).get("basin_count") != 531:
-    raise ValueError("Data manifest basin count changed")
-if summary.get("headline_recovery", {}).get("file_count") != 20:
-    raise ValueError("Headline artifact binding changed")
-result = {
-    "schema": "nearing2022-preclosure-validation-receipt-v2",
-    "created_utc": datetime.now(timezone.utc).isoformat(),
-    "slurm": {
-        "job_id": job_id,
-        "job_name": "N22-preclosure-check",
-        "state": "COMPLETED",
-        "exit_code": "0:0",
-        "elapsed": elapsed,
-        "start": start,
-        "end": end,
-        "node_list": node_list,
-    },
-    "strict_final_decision_match": expected_strict,
-    "deployment_receipt": record(deployment_receipt),
-    "source_stdout": record(stdout),
-    "source_stderr": record(stderr),
-    "preserved_stdout": record(preserved_stdout),
-    "preserved_stderr": record(preserved_stderr),
-    "closure_verifier": record(root / "src/29_nearing2022_da_ar/scripts/verify_registered_closure.py"),
-    "server_checker": record(root / "src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py"),
-    "local_validation_receipt": record(root / "src/29_nearing2022_da_ar/reference/local_contract_validation.json"),
-    "local_validation_junit": record(root / "src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml"),
-    "contract_test": record(root / "test/test_nearing2022_reproduction_contract.py"),
-    "server_summary": summary,
-}
-temporary = receipt.with_name(receipt.name + ".tmp")
-temporary.write_text(json.dumps(result, indent=2, sort_keys=True) + chr(10), encoding="utf-8")
-os.replace(temporary, receipt)
-print(json.dumps(result, sort_keys=True))
-PY
-
-echo "=== FINAL SAFETY BOUNDARY ==="
+echo "=== SAFETY BOUNDARY ==="
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = "202293|PENDING|JobHeldUser|N22-manifest"
 test "$(squeue -h -j 202315 -o '%i|%T|%r|%j')" = "202315|PENDING|Dependency|N22-gate"
-test ! -e "$CLOSURE/aggregation/final_reproduction_gate.json"
-test ! -e "$CLOSURE/aggregation/final_reproduction_differences.csv"
-FAILURES="$(sacct -n -P -j 202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315,202500 --format=JobIDRaw,JobName,State,ExitCode | awk -F'|' '$1 !~ /\./ && $3 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/')"
-printf '%s
-' "$FAILURES"
-test -z "$FAILURES"
-sha256sum "$DEPLOYMENT_RECEIPT" "$VALIDATION_RECEIPT" "$PRESERVED_STDOUT" "$PRESERVED_STDERR"
+test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
+test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
