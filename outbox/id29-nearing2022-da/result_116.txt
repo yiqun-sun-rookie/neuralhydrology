@@ -1,0 +1,52 @@
+### channel=id29-nearing2022-da seq=116
+### host=login4
+### started=2026-08-10T20:16:51+0800
+### ---------- output ----------
+=== REFRESHED PRECLOSURE SUCCESS ===
+202388|N22-preclosure-check|COMPLETED|0:0|00:00:14|2026-08-10T20:12:37|2026-08-10T20:12:51|ngu003
+202388.batch|batch|COMPLETED|0:0|00:00:14|2026-08-10T20:12:37|2026-08-10T20:12:51|ngu003
+202388.extern|extern|COMPLETED|0:0|00:00:14|2026-08-10T20:12:37|2026-08-10T20:12:51|ngu003
+=== SQUEUE COUNTS BY ARRAY PARENT AND STATE ===
+      1 202214|RUNNING
+      1 202215|PENDING
+      3 202215|RUNNING
+      1 202216|PENDING
+      2 202216|RUNNING
+      1 202222|PENDING
+      2 202222|RUNNING
+      1 202226|PENDING
+      1 202227|PENDING
+      1 202228|PENDING
+      1 202229|PENDING
+      1 202230|PENDING
+      1 202238|PENDING
+      1 202293|PENDING
+      1 202294|PENDING
+      1 202315|PENDING
+=== SACCT COUNTS BY ARRAY PARENT, STATE, AND EXIT CODE ===
+1|202214|RUNNING|0:0
+1|202215|PENDING|0:0
+3|202215|RUNNING|0:0
+4|202216|COMPLETED|0:0
+1|202216|PENDING|0:0
+2|202216|RUNNING|0:0
+8|202222|COMPLETED|0:0
+1|202222|PENDING|0:0
+2|202222|RUNNING|0:0
+1|202226|PENDING|0:0
+1|202227|PENDING|0:0
+1|202228|PENDING|0:0
+1|202229|PENDING|0:0
+1|202230|PENDING|0:0
+1|202238|PENDING|0:0
+1|202293|PENDING|0:0
+1|202294|PENDING|0:0
+1|202315|PENDING|0:0
+=== ACTIVE FAILURE STATES ===
+
+=== REGISTERED FULL-ROLE ARTIFACT PROGRESS ===
+{"evaluation_aggregation_missing": ["aggregation_summary.json", "per_basin_metrics.csv", "time_simulation_per_basin_metrics.csv", "median_matrix.csv", "time_split_vs_author.csv", "basin_split_vs_author.csv"], "evaluation_by_family": {"time_assimilation": 3, "time_autoregression": 5}, "evaluation_complete": 8, "evaluation_total": 180, "final_export_exists": false, "final_gate_exists": false, "final_manifest_exists": false, "hyperparameter_aggregation_missing": ["selection_summary.json", "per_basin_metrics.csv", "scores.csv"], "hyperparameter_complete": 0, "hyperparameter_total": 660, "training_by_family": {"basin_simulation": 4, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 6, "training_total": 46}
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T20:16:58+0800
