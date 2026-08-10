@@ -1,0 +1,21 @@
+### channel=id29-nearing2022-da seq=64
+### host=login4
+### started=2026-08-10T12:54:16+0800
+### ---------- output ----------
+=== PAYLOAD ===
+/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v5.tar.gz: OK
+payload_members=120
+=== PREFLIGHT ===
+685c7f32caa68efec842dd721e9079cfa0aac8b0b8bf6e538ae333afe73e0db4  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+94b56b61f9ddc5ae656a32011996c3426b1e5418ac829da0ed8960fb47338eab  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/aggregate_registered_results.py
+74aac5b377973dc745336da1b1d6a22be3f03b3544b6ae85b4cede37106af0ee  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/author_time_split_statistics.pkl
+4d50b98b0e4f7d30974ba1fd606e4421b1a25178462e289f9a50bf28d94bcdbb  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/author_pub_statistics.pkl
+=== SUBMIT ===
+evaluation_aggregation_job_id=202229 dependency=afterok:202222:202226:202216:202227
+hyperparameter_aggregation_job_id=202230 dependency=afterok:202228
+             JOBID               NAME ST       TIME  NODES NODELIST(REASON)
+            202229       N22-agg-eval PD       0:00      1 (Dependency)
+            202230      N22-agg-hyper PD       0:00      1 (Dependency)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T12:54:24+0800
