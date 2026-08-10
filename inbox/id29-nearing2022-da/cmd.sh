@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=138: read-only partial numerical audit of every currently complete evaluation coordinate.
+# ID29 seq=139: skip unresolved sources, then read-only audit every currently complete evaluation coordinate.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -215,21 +215,24 @@ systematic = {
 
 complete = []
 for _, row in evaluations.iterrows():
-    run = _registered_run(root, training, row)
-    result = run / row['result_file']
-    reference_run = resolve_source_run(root, training, row['reference_exp_id'])
-    reference = reference_run / 'test/model_epoch030/test_results.p'
-    roles = [
-        run / 'config.yml',
-        run / 'model_epoch030.pt',
-        run / 'output.log',
-        result,
-        _metrics_path(result),
-        reference,
-        _metrics_path(reference),
-    ]
-    if all(path.is_file() for path in roles):
-        complete.append((row, reference, result))
+    try:
+        run = _registered_run(root, training, row)
+        result = run / row['result_file']
+        reference_run = resolve_source_run(root, training, row['reference_exp_id'])
+        reference = reference_run / 'test/model_epoch030/test_results.p'
+        roles = [
+            run / 'config.yml',
+            run / 'model_epoch030.pt',
+            run / 'output.log',
+            result,
+            _metrics_path(result),
+            reference,
+            _metrics_path(reference),
+        ]
+        if all(path.is_file() for path in roles):
+            complete.append((row, reference, result))
+    except (FileNotFoundError, KeyError, ValueError):
+        continue
 
 reference_cache = {}
 details = []
