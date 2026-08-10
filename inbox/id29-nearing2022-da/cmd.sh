@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=141: audit the author-versus-current runtime boundary behind the confirmed discrepancy.
+# ID29 seq=142: correct the executable-AST comparison by excluding docstrings as well as annotations.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -493,6 +493,17 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 class StripAnnotations(ast.NodeTransformer):
+    @staticmethod
+    def _without_docstring(body):
+        if (
+            body
+            and isinstance(body[0], ast.Expr)
+            and isinstance(body[0].value, ast.Constant)
+            and isinstance(body[0].value.value, str)
+        ):
+            return body[1:]
+        return body
+
     def visit_arg(self, node):
         node = self.generic_visit(node)
         node.annotation = None
@@ -503,12 +514,19 @@ class StripAnnotations(ast.NodeTransformer):
         node = self.generic_visit(node)
         node.returns = None
         node.type_comment = None
+        node.body = self._without_docstring(node.body)
         return node
 
     def visit_AsyncFunctionDef(self, node):
         node = self.generic_visit(node)
         node.returns = None
         node.type_comment = None
+        node.body = self._without_docstring(node.body)
+        return node
+
+    def visit_ClassDef(self, node):
+        node = self.generic_visit(node)
+        node.body = self._without_docstring(node.body)
         return node
 
 def selected_ast_sha(data, kind, name):
@@ -589,8 +607,8 @@ payload = {
     ),
     'author_arlstm_sha256': digest(author_arlstm),
     'current_arlstm_sha256': digest(current_arlstm_bytes),
-    'author_arlstm_annotation_stripped_ast_sha256': author_arlstm_ast,
-    'current_arlstm_annotation_stripped_ast_sha256': current_arlstm_ast,
+    'author_arlstm_executable_ast_sha256': author_arlstm_ast,
+    'current_arlstm_executable_ast_sha256': current_arlstm_ast,
     'arlstm_behavioral_ast_identical': author_arlstm_ast == current_arlstm_ast,
     'author_sampler_sha256': digest(author_sampler),
     'current_sampler_sha256': digest(current_sampler_bytes),
