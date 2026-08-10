@@ -1,0 +1,22 @@
+### channel=id29-nearing2022-da seq=62
+### host=login4
+### started=2026-08-10T12:47:27+0800
+### ---------- output ----------
+=== PREFLIGHT ===
+49f8e764da499077d5e4fcb4f42513b8714013afc3af3a75cc495a7dce585f8d  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+f25e2185e6f2edc1b2612d72f289f8873d9a1627be90abd1258befd2f3fd375f  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/evaluation_registry.csv
+cebc13dedff8cf796d6303ee2946a26c2ec9d011327dd278ea09643f53371095  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/assimilation_hyperparameter_registry.csv
+aeb77ec81f38552f7ee849de45677701eecdf498990c0dba41e2d8d00c08a560  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/time_split_pending_source_evaluation_batch.txt
+85307f54089d4fbb92186e65050ecc27c522ae5d8c3d86231322af2fab53b1a4  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/basin_assimilation_evaluation_batch.txt
+80b05137fe4496e22ca5504ad23663cdee7d73319b9918b3133336c673c55efe  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/hyperparameter_evaluation_batch.txt
+=== SUBMIT ===
+time_evaluation_job_id=202226 tasks=120 max_concurrent=4 dependency=afterok:202214:202215
+basin_assimilation_job_id=202227 tasks=10 max_concurrent=2 dependency=afterok:202216
+hyperparameter_job_id=202228 tasks=660 max_concurrent=2 dependency=afterok:202216
+             JOBID               NAME ST       TIME  NODES NODELIST(REASON)
+  202226_[0-119%4]     N22-eval-later PD       0:00      1 (None)
+    202227_[0-9%2]       N22-basin-da PD       0:00      1 (None)
+  202228_[0-659%2]          N22-hyper PD       0:00      1 (None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T12:47:27+0800
