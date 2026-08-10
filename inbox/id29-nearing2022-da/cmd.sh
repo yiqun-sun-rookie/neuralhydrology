@@ -1,25 +1,24 @@
 #!/bin/bash
-# ID29 seq=170: read-only matrix and direct-raw repair-chain refresh.
+# ID29 seq=171: extend the frozen partial numerical audit to every currently complete evaluation coordinate.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-MAIN_JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
-DIAGNOSTIC_JOBS=202506,202507,202510,202511
 DIAGNOSTIC_ROOT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics"
-DATA_V2="$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531_v2"
-MASK_V2="$DIAGNOSTIC_ROOT/author_v13_warmup_isolation_all531_v2"
-SUBMISSION_RECEIPT="$DIAGNOSTIC_ROOT/warmup_target_repair_submission_01.json"
+FINAL="$DIAGNOSTIC_ROOT/partial_numerical_audit_seq171.json"
+TEMP="$FINAL.preparing-seq171"
 
-echo "=== SNAPSHOT TIME ==="
-date --iso-8601=seconds
+test ! -e "$FINAL"
+test ! -e "$TEMP"
+mkdir -p "$DIAGNOSTIC_ROOT"
 
-echo "=== REGISTERED COMPLETE-ROLE COUNTS ==="
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
 cd "$ROOT"
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python - <<'PY'
+
+python - "$TEMP" <<'PY'
 from collections import Counter
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -27,232 +26,179 @@ import sys
 import pandas as pd
 
 root = Path('/data1/home/sunyiq/nearing2022_da')
+output = Path(sys.argv[1])
 scripts = root / 'src/29_nearing2022_da_ar/scripts'
 sys.path.insert(0, str(scripts))
-from aggregate_registered_results import _registered_run
-from prepare_evaluation_run import resolve_source_run
-from verify_registered_closure import _metrics_path
-
-registry = root / 'src/29_nearing2022_da_ar/registry'
-training = pd.read_csv(registry / 'experiment_registry.csv', keep_default_na=False, dtype=str)
-evaluations = pd.read_csv(registry / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
-hyper = pd.read_csv(registry / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str)
-
-
-def complete(paths):
-    return all(path.is_file() for path in paths)
+from aggregate_registered_results import (  # noqa: E402
+    _author_time_value,
+    _read_registry,
+    _registered_run,
+    load_legacy_pandas_pickle,
+)
+from prepare_evaluation_run import resolve_source_run  # noqa: E402
+from score_reproduction_matrix import METRICS, _load_pickle, score_payloads  # noqa: E402
+from verify_registered_closure import _metrics_path  # noqa: E402
 
 
-training_done = Counter()
-for _, row in training.iterrows():
-    try:
-        run = resolve_source_run(root, training, row['exp_id'])
-        required = [
-            run / 'config.yml',
-            run / 'model_epoch030.pt',
-            run / 'output.log',
-            run / 'train_data/train_data_scaler.yml',
-        ]
-        if complete(required):
-            training_done[row['family']] += 1
-    except (FileNotFoundError, KeyError, ValueError):
-        pass
+def digest(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
-evaluation_done = Counter()
+
+registry_root = root / 'src/29_nearing2022_da_ar/registry'
+reference_root = root / 'src/29_nearing2022_da_ar/reference'
+training_path = registry_root / 'experiment_registry.csv'
+evaluation_path = registry_root / 'evaluation_registry.csv'
+author_path = reference_root / 'author_time_split_statistics.pkl'
+acceptance_path = reference_root / 'reproduction_acceptance.json'
+training = _read_registry(training_path, 'exp_id')
+evaluations = _read_registry(evaluation_path, 'eval_id')
+author = load_legacy_pandas_pickle(author_path)
+acceptance = json.loads(acceptance_path.read_text(encoding='utf-8'))
+tolerances = {key: float(value) for key, value in acceptance['absolute_difference_tolerance'].items()}
+systematic = {
+    key: float(value) for key, value in acceptance['median_signed_difference_tolerance'].items()
+}
+
+complete = []
+artifact_paths = {
+    str(training_path.relative_to(root)),
+    str(evaluation_path.relative_to(root)),
+    str(author_path.relative_to(root)),
+    str(acceptance_path.relative_to(root)),
+}
 for _, row in evaluations.iterrows():
     try:
         run = _registered_run(root, training, row)
         result = run / row['result_file']
         reference_run = resolve_source_run(root, training, row['reference_exp_id'])
         reference = reference_run / 'test/model_epoch030/test_results.p'
-        required = [
-            run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
-            _metrics_path(result), reference, _metrics_path(reference),
+        roles = [
+            run / 'config.yml',
+            run / 'model_epoch030.pt',
+            run / 'output.log',
+            result,
+            _metrics_path(result),
+            reference,
+            _metrics_path(reference),
         ]
-        if complete(required):
-            evaluation_done[row['family']] += 1
+        if all(path.is_file() for path in roles):
+            complete.append((row, reference, result, roles))
+            artifact_paths.update(str(path.relative_to(root)) for path in roles)
     except (FileNotFoundError, KeyError, ValueError):
-        pass
+        continue
 
-hyper_done = 0
-for _, row in hyper.iterrows():
-    try:
-        run = Path(row['run_dir'])
-        run = run if run.is_absolute() else root / run
-        result = run / row['result_file']
-        reference_run = resolve_source_run(root, training, row['source_exp_id'])
-        reference = reference_run / 'test/model_epoch030/test_results.p'
-        required = [
-            run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
-            _metrics_path(result), reference, _metrics_path(reference),
-        ]
-        if complete(required):
-            hyper_done += 1
-    except (FileNotFoundError, KeyError, ValueError):
-        pass
+if len(complete) < 12:
+    raise ValueError(f'Expected at least the 12 coordinates verified by sequence 170, found {len(complete)}')
 
-print(json.dumps({
-    'training_complete': sum(training_done.values()),
-    'training_total': len(training),
-    'training_by_family': dict(sorted(training_done.items())),
-    'evaluation_complete': sum(evaluation_done.values()),
-    'evaluation_total': len(evaluations),
-    'evaluation_by_family': dict(sorted(evaluation_done.items())),
-    'hyperparameter_complete': hyper_done,
-    'hyperparameter_total': len(hyper),
-}, sort_keys=True))
-PY
+reference_cache = {}
+details = []
+coordinates = []
+for row, reference_path, result_path, roles in complete:
+    if reference_path not in reference_cache:
+        reference_cache[reference_path] = _load_pickle(reference_path)
+    reference = reference_cache[reference_path]
+    scores = score_payloads(reference, _load_pickle(result_path), expected_basins=len(reference))
+    if len(scores) != 531 or scores['basin'].nunique() != 531:
+        raise ValueError(f"{row['eval_id']} did not score exactly 531 unique basins")
+    failures = []
+    metrics = {}
+    maximum_absolute_difference = 0.0
+    for metric in METRICS:
+        reproduction = float(scores[metric].median())
+        author_value = _author_time_value(author, row, metric)
+        difference = reproduction - author_value
+        within = abs(difference) <= tolerances[metric] + 1e-12
+        metrics[metric] = {
+            'reproduction': reproduction,
+            'author': author_value,
+            'difference': difference,
+            'absolute_tolerance': tolerances[metric],
+            'within_tolerance': within,
+        }
+        details.append({
+            'eval_id': row['eval_id'],
+            'family': row['family'],
+            'metric': metric,
+            'difference': difference,
+            'within_tolerance': within,
+        })
+        if not within:
+            failures.append(metric)
+        maximum_absolute_difference = max(maximum_absolute_difference, abs(difference))
+    coordinates.append({
+        'eval_id': row['eval_id'],
+        'family': row['family'],
+        'lead': int(row['lead']),
+        'train_holdout': float(row['train_holdout']) if row['train_holdout'] else None,
+        'test_holdout': float(row['test_holdout']),
+        'basins': len(scores),
+        'metrics': metrics,
+        'maximum_absolute_metric_difference': maximum_absolute_difference,
+        'failed_metrics': failures,
+        'result_path': str(result_path.relative_to(root)),
+        'result_sha256': digest(result_path),
+        'reference_path': str(reference_path.relative_to(root)),
+        'reference_sha256': digest(reference_path),
+        'candidate_checkpoint_sha256': digest(roles[1]),
+    })
 
-echo "=== LIVE MAIN PROGRESS ==="
-python - <<'PY'
-import json
-from pathlib import Path
-import re
-import subprocess
-
-parents = '202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315'
-running = subprocess.run(
-    ['squeue', '-h', '-j', parents, '-t', 'RUNNING', '-o', '%i'],
-    check=True,
-    capture_output=True,
-    text=True,
-).stdout.split()
-ansi = re.compile(r'\x1b\[[0-9;]*[A-Za-z]')
-epoch_pattern = re.compile(r'# Epoch\s+(\d+):\s*(\d+)%\|.*?\|\s*(\d+)/(\d+)')
-generic_pattern = re.compile(r'(?<!Epoch\s)(\d+)%\|.*?\|\s*(\d+)/(\d+)')
-
-
-def seconds(value):
-    days = 0
-    if '-' in value:
-        day_text, value = value.split('-', 1)
-        days = int(day_text)
-    fields = [int(item) for item in value.split(':')]
-    if len(fields) == 3:
-        hours, minutes, secs = fields
-    else:
-        hours, minutes, secs = 0, fields[0], fields[1]
-    return days * 86400 + hours * 3600 + minutes * 60 + secs
-
-
-for job in sorted(running):
-    record = subprocess.run(
-        ['scontrol', 'show', 'job', '-o', job], check=True, capture_output=True, text=True
-    ).stdout.strip()
-    fields = dict(token.split('=', 1) for token in record.split() if '=' in token)
-    stdout = Path(fields['StdOut'])
-    payload = {
-        'job': job,
-        'name': fields['JobName'],
-        'runtime': fields['RunTime'],
-        'time_limit': fields['TimeLimit'],
-        'stdout_exists': stdout.is_file(),
+frame = pd.DataFrame(details)
+metric_summaries = {}
+for metric in METRICS:
+    values = frame.loc[frame['metric'] == metric]
+    median_difference = float(values['difference'].median())
+    metric_summaries[metric] = {
+        'coordinates': len(values),
+        'median_signed_difference': median_difference,
+        'systematic_tolerance': systematic[metric],
+        'partial_within_systematic_tolerance': bool(
+            abs(median_difference) <= systematic[metric] + 1e-12
+        ),
+        'maximum_absolute_difference': float(values['difference'].abs().max()),
+        'individual_failures': int((~values['within_tolerance']).sum()),
     }
-    if stdout.is_file():
-        size = stdout.stat().st_size
-        with stdout.open('rb') as handle:
-            handle.seek(max(0, size - 4 * 1024 * 1024))
-            tail = ansi.sub('', handle.read().decode('utf-8', errors='replace')).replace('\r', '\n')
-        epochs = list(epoch_pattern.finditer(tail))
-        generic = list(generic_pattern.finditer(tail))
-        payload['stdout_bytes'] = size
-        if epochs:
-            epoch, _, step, total = map(int, epochs[-1].groups())
-            fraction = ((epoch - 1) + step / total) / 30
-            projected = seconds(fields['RunTime']) / fraction if fraction > 0 else None
-            limit = seconds(fields['TimeLimit'])
-            payload.update({
-                'epoch': epoch,
-                'epoch_step': step,
-                'epoch_total_steps': total,
-                'thirty_epoch_fraction': round(fraction, 6),
-                'projected_total_hours': round(projected / 3600, 2),
-                'projected_slack_hours': round((limit - projected) / 3600, 2),
-                'time_limit_risk': projected > limit,
-            })
-        elif generic:
-            percent, step, total = map(int, generic[-1].groups())
-            payload.update({'percent': percent, 'step': step, 'total': total})
-    print(json.dumps(payload, sort_keys=True))
-PY
 
-echo "=== REPAIR JOB STATES ==="
-sacct -n -X -P -j "$DIAGNOSTIC_JOBS" --format=JobID,JobName,State,ExitCode,Elapsed,Start,End,NodeList
-squeue -h -j "$DIAGNOSTIC_JOBS" -o '%i|%j|%T|%M|%R|%E' | sort
-
-echo "=== REPAIR SUBMISSION RECEIPT ==="
-test -f "$SUBMISSION_RECEIPT"
-test "$(sha256sum "$SUBMISSION_RECEIPT" | awk '{print $1}')" = \
-  18e6aeeee3321427d0f851d68d2cbbfb02f8d13e477f6f96dd5f22eed1d4d2a1
-sha256sum "$SUBMISSION_RECEIPT"
-
-echo "=== REPAIR OUTPUT INVENTORY ==="
-find "$DIAGNOSTIC_ROOT" -maxdepth 1 -mindepth 1 \
-  \( -name 'author_v13_training_data_port_all531_v2*' -o -name 'author_v13_warmup_isolation_all531_v2*' \) \
-  -printf '%f|%y\n' | sort
-
-if test -d "$DATA_V2"; then
-  test -f "$DATA_V2/audit.json"
-  test -f "$DATA_V2/diagnostic_receipt.json"
-  sha256sum "$DATA_V2/audit.json" "$DATA_V2/diagnostic_receipt.json"
-  python - "$DATA_V2/audit.json" "$DATA_V2/diagnostic_receipt.json" <<'PY'
-import json
-from pathlib import Path
-import sys
-
-audit = json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
-receipt = json.loads(Path(sys.argv[2]).read_text(encoding='utf-8'))
-print(json.dumps({
-    'schema': audit['schema'],
-    'scope': audit['scope'],
-    'inputs': audit['inputs'],
-    'target_scaler': audit['target_scaler'],
-    'direct_raw_targets': audit['raw_targets_before_normalization'],
-    'inverse_scaling_diagnostic': audit['raw_targets_after_inverse_scaling'],
-    'per_basin_target_standard_deviation': {
-        'basins_exact': audit['per_basin_target_standard_deviation']['basins_exact'],
-        'basins_different': audit['per_basin_target_standard_deviation']['basins_different'],
-        'absolute_difference_quantiles': audit['per_basin_target_standard_deviation']['absolute_difference_quantiles'],
+payload = {
+    'schema': 'nearing2022-partial-numerical-audit-v2',
+    'mailbox_sequence': 171,
+    'scope': (
+        'Every evaluation coordinate with all frozen registered roles present at execution; interim diagnostic only. '
+        'The final numerical gate still requires all 180 evaluation and 660 hyperparameter coordinates.'
+    ),
+    'complete_coordinates': len(complete),
+    'complete_by_family': dict(sorted(Counter(row['family'] for row, _, _, _ in complete).items())),
+    'comparison_rows': len(frame),
+    'individual_tolerance_failures': int((~frame['within_tolerance']).sum()),
+    'coordinates_with_failures': int(sum(bool(row['failed_metrics']) for row in coordinates)),
+    'metric_summaries': metric_summaries,
+    'coordinates': coordinates,
+    'source_artifacts': {
+        path: {'sha256': digest(root / path), 'bytes': (root / path).stat().st_size}
+        for path in sorted(artifact_paths)
     },
-    'conclusion': audit['conclusion'],
-    'receipt': receipt,
-}, sort_keys=True))
-PY
-else
-  echo "data_v2_final_absent"
-fi
-
-if test -d "$MASK_V2"; then
-  test -f "$MASK_V2/audit.json"
-  test -f "$MASK_V2/diagnostic_receipt.json"
-  sha256sum "$MASK_V2/audit.json" "$MASK_V2/diagnostic_receipt.json"
-  python - "$MASK_V2/audit.json" "$MASK_V2/diagnostic_receipt.json" <<'PY'
-import json
-from pathlib import Path
-import sys
-
-audit = json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
-receipt = json.loads(Path(sys.argv[2]).read_text(encoding='utf-8'))
+    'registered_matrix_modified': False,
+    'frozen_acceptance_modified': False,
+}
+output.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n', encoding='utf-8')
 print(json.dumps({
-    'scope': audit['scope'],
-    'author_vs_current_masked': audit['author_vs_current_masked'],
-    'one_factor_contract': audit['one_factor_contract'],
-    'conclusion': audit['conclusion'],
-    'receipt': receipt,
+    'complete_coordinates': payload['complete_coordinates'],
+    'complete_by_family': payload['complete_by_family'],
+    'comparison_rows': payload['comparison_rows'],
+    'individual_tolerance_failures': payload['individual_tolerance_failures'],
+    'coordinates_with_failures': payload['coordinates_with_failures'],
+    'metric_summaries': payload['metric_summaries'],
+    'failed_coordinates': [
+        {'eval_id': row['eval_id'], 'failed_metrics': row['failed_metrics']}
+        for row in coordinates if row['failed_metrics']
+    ],
 }, sort_keys=True))
 PY
-else
-  echo "mask_v2_final_absent"
-fi
 
-echo "=== MAIN JOB STATES AND FAILURE GATE ==="
-squeue -h -j "$MAIN_JOBS" -o '%i|%T|%M|%l|%R|%j' | sort
-MAIN_FAILURES=$(sacct -n -X -P -j "$MAIN_JOBS" --format=JobIDRaw,JobName,State,ExitCode | \
-  awk -F'|' '$3 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/')
-printf '%s\n' "$MAIN_FAILURES"
-test -z "$MAIN_FAILURES"
+test -f "$TEMP"
+mv "$TEMP" "$FINAL"
+sha256sum "$FINAL"
 
-echo "=== FROZEN SAFETY BOUNDARY ==="
+echo "=== SAFETY BOUNDARY ==="
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = '202293|PENDING|JobHeldUser|N22-manifest'
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
