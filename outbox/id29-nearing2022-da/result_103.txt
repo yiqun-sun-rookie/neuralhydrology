@@ -1,0 +1,45 @@
+### channel=id29-nearing2022-da seq=103
+### host=login4
+### started=2026-08-10T19:32:43+0800
+### ---------- output ----------
+=== FAILED VALIDATION ROOT ===
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+=== LOGIN NODE INVENTORY ===
+login4
+PATH=/data1/home/sunyiq/miniconda3/bin:/data1/home/sunyiq/miniconda3/condabin:/usr/local/globle/softs/slurm/19.05.4.1/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/ibutils/bin:/data1/home/sunyiq/.local/bin:/data1/home/sunyiq/bin
+/usr/bin/git
+/usr/bin/git
+-rwxr-xr-x. 113 root root 1527752 May 29  2020 /usr/bin/git
+git version 1.8.3.1
+-rwxr-xr-x. 113 root root 1527752 May 29  2020 /bin/git
+git version 1.8.3.1
+missing=/usr/local/bin/git
+missing=/data1/home/sunyiq/miniconda3/bin/git
+missing=/data1/home/sunyiq/bin/git
+/data1/home/sunyiq/miniconda3/pkgs/git-2.55.0-pl5321h5685339_1/bin/git
+/data1/home/sunyiq/miniconda3/pkgs/git-2.55.0-pl5321h5685339_1/libexec/git-core/git
+=== COMPUTE NODE INVENTORY ===
+sbatch_rc=0
+job_output=202372
+ngu003
+PATH=/data1/home/sunyiq/miniconda3/bin:/data1/home/sunyiq/miniconda3/condabin:/usr/local/globle/softs/slurm/19.05.4.1/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/ibutils/bin:/data1/home/sunyiq/.local/bin:/data1/home/sunyiq/bin
+/usr/bin/git
+/usr/bin/git
+-rwxr-xr-x 113 root root 1527752 May 29  2020 /usr/bin/git
+git version 1.8.3.1
+-rwxr-xr-x 113 root root 1527752 May 29  2020 /bin/git
+git version 1.8.3.1
+missing=/usr/local/bin/git
+missing=/data1/home/sunyiq/miniconda3/bin/git
+missing=/data1/home/sunyiq/bin/git
+/data1/home/sunyiq/miniconda3/pkgs/git-2.55.0-pl5321h5685339_1/bin/git
+/data1/home/sunyiq/miniconda3/pkgs/git-2.55.0-pl5321h5685339_1/libexec/git-core/git
+CONDA_PATH=/data1/home/sunyiq/miniconda3/envs/nh_final/bin:/data1/home/sunyiq/miniconda3/condabin:/usr/local/globle/softs/slurm/19.05.4.1/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/ibutils/bin:/data1/home/sunyiq/.local/bin:/data1/home/sunyiq/bin
+python_which_git=/usr/bin/git
+38c8084f002ce855521fe2202cbc8d1ae4830365b808492cb77c79465394f9eb  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/git_executable_compute_probe_seq103.out
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/git_executable_compute_probe_seq103.err
+3e600c1e668ae0e2e4a8fc467bba091c39f4aa5b252853d9580a92448e60aa11  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/git_executable_compute_probe_seq103_job.txt
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T19:34:37+0800
