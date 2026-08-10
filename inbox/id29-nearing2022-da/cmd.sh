@@ -1,12 +1,12 @@
 #!/bin/bash
-# ID29 seq=55: return the formal autoregression archive through the guaranteed result channel.
+# ID29 seq=56: return the formal data-assimilation archive through the guaranteed result channel.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-RUN="$ROOT/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30"
+RUN="$ROOT/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30"
 ARTDIR=/data1/home/sunyiq/hpc_mailbox/outbox/id29-nearing2022-da/artifacts/closure_20260810
-METADIR="$ROOT/closure_20260810/artifact_manifests/existing_autoregression_seq55"
-OUT="$ARTDIR/existing_autoregression_epoch030_seq55.tar.gz"
+METADIR="$ROOT/closure_20260810/artifact_manifests/existing_assimilation_seq56"
+OUT="$ARTDIR/existing_assimilation_epoch030_seq56.tar.gz"
 FILES=(
   config.yml
   model_epoch030.pt
@@ -14,6 +14,8 @@ FILES=(
   train_data/train_data_scaler.yml
   test/model_epoch030/test_results.p
   test/model_epoch030/test_metrics.csv
+  test/model_epoch030/test_results_data_assimilation.p
+  test/model_epoch030/test_metrics_data_assimilation.csv
 )
 
 echo "=== PREFLIGHT ==="
