@@ -1,0 +1,42 @@
+### channel=autoresearch-64 seq=46
+### host=login4
+### started=2026-08-10T17:26:51+0800
+### ---------- output ----------
+=== SUBMIT COMPLETE PORTABLE GATED 64-BASIN REPRODUCTION ===
+jobid=202319
+=== WAIT FOR THIS EXACT JOB ===
+t=60s state=RUNNING
+t=120s state=RUNNING
+t=180s state=RUNNING
+t=240s state=RUNNING
+=== JOB ACCOUNTING ===
+       JobID              JobName  NodeList          State ExitCode    Elapsed 
+------------ -------------------- --------- -------------- -------- ---------- 
+      202319      a64-hbv64-gate3    icn219         FAILED    120:0   00:04:31 
+=== EXACT JOB STANDARD OUTPUT ===
+=== VERIFY AND EXTRACT IMMUTABLE TEST SNAPSHOT ===
+=== INITIALIZE IMMUTABLE SNAPSHOT AS A GIT REPOSITORY ===
+payload_sha256=6bedefb2538f979a5896d236a09eabd58e5823fe9575ef1bec85bbe84f43add9
+snapshot_manifest_entries=173
+snapshot_manifest_check=ok
+=== TARGETED LINUX REGRESSION GATE ===
+................=== EXACT JOB STANDARD ERROR ===
+tee: standard output: No such file or directory
+tee: write error
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+FileNotFoundError: [Errno 2] No such file or directory
+=== EVIDENCE STATUS ===
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/evidence/SNAPSHOT_MANIFEST.sha256
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/evidence/SNAPSHOT_GIT_COMMIT.txt
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/evidence/TARGETED_GATE.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/evidence/FULL_GATE.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/evidence/PACKAGE_GATE.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/candidate_run/CANDIDATE_SUMMARY.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/evidence/REPRODUCTION_SUMMARY.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/evidence/MANIFEST.sha256
+targeted_gate={"candidate_launch_allowed":true,"errors":0,"failures":0,"label":"TARGETED_GATE","passed":26,"process_exit_code":0,"schema_version":"unified_autoresearch_linux_test_gate_v1","skipped":0,"tests":26}
+summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/evidence/REPRODUCTION_SUMMARY.json
+manifest=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/evidence/MANIFEST.sha256
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T17:31:27+0800
