@@ -1,0 +1,51 @@
+### channel=autoresearch-64 seq=47
+### host=login4
+### started=2026-08-10T17:34:14+0800
+### ---------- output ----------
+=== EXACT JOB ACCOUNTING ===
+       JobID                JobName  NodeList          State ExitCode    Elapsed 
+------------ ---------------------- --------- -------------- -------- ---------- 
+      202319        a64-hbv64-gate3    icn219         FAILED    120:0   00:04:31 
+=== SAME-NAME JOBS ===
+202319                a64-hbv64-gate3     FAILED    120:0 2026-08-10T17:26:51 2026-08-10T17:31:22 
+=== EXACT SLURM LOG FILES ===
+outbox/slurm_202319.out|inode=10086144518|bytes=301|mtime=2026-08-10 17:27:45.000000000 +0800
+=== VERIFY AND EXTRACT IMMUTABLE TEST SNAPSHOT ===
+=== INITIALIZE IMMUTABLE SNAPSHOT AS A GIT REPOSITORY ===
+payload_sha256=6bedefb2538f979a5896d236a09eabd58e5823fe9575ef1bec85bbe84f43add9
+snapshot_manifest_entries=173
+snapshot_manifest_check=ok
+=== TARGETED LINUX REGRESSION GATE ===
+................outbox/slurm_202319.err|inode=10086148102|bytes=0|mtime=2026-08-10 17:31:41.000000000 +0800
+=== ATTEMPT AND EVIDENCE FILES ===
+SNAPSHOT_GIT_COMMIT.txt|bytes=41|mtime=2026-08-10T17:26:55.0000000000
+SNAPSHOT_MANIFEST.sha256|bytes=22873|mtime=2026-08-10T17:26:52.0000000000
+TARGETED_GATE.json|bytes=235|mtime=2026-08-10T17:31:22.0000000000
+TARGETED_GATE_STDOUT.txt|bytes=111|mtime=2026-08-10T17:31:22.0000000000
+TARGETED_GATE.xml|bytes=4757|mtime=2026-08-10T17:31:22.0000000000
+--- /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/evidence/TARGETED_GATE.json
+{
+  "candidate_launch_allowed": true,
+  "errors": 0,
+  "failures": 0,
+  "label": "TARGETED_GATE",
+  "passed": 26,
+  "process_exit_code": 0,
+  "schema_version": "unified_autoresearch_linux_test_gate_v1",
+  "skipped": 0,
+  "tests": 26
+}
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq46/evidence/FULL_GATE.json
+=== TARGETED GATE OUTPUT TAIL ===
+..........................                                               [100%]
+26 passed in 266.95s (0:04:26)
+=== RUNNER PROCESS AND SEQUENCE RECORDS ===
+1807 bash /data1/home/sunyiq/.hpc_runner_active.sh
+41317 bash /data1/home/sunyiq/.hpc_runner_active.sh
+41891 bash /data1/home/sunyiq/.hpc_runner_active.sh
+4863:[Mon Aug 10 17:26:51 CST 2026] --- start channel=autoresearch-64 seq=46 ---
+4870:[Mon Aug 10 17:31:56 CST 2026] done channel=autoresearch-64 seq=46 rc=0
+=== MAILBOX LOG STATUS ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T17:34:14+0800
