@@ -1,32 +1,47 @@
 #!/bin/bash
-# ID29 seq=63: bounded health check for training and immediate evaluation arrays.
+# ID29 seq=64: install aggregation closure v5 and schedule independent comparison jobs.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-LOG_ROOT="$ROOT/closure_20260810/logs"
+PAYLOAD=/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v5.tar.gz
+EXPECTED_PAYLOAD_SHA=9fb8b19813a5dcd8003f50f54e13fdff7a515fb605c71fbd2129975f0c647f7d
+SCRIPT="$ROOT/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm"
+AGGREGATOR="$ROOT/src/29_nearing2022_da_ar/scripts/aggregate_registered_results.py"
+AUTHOR_TIME="$ROOT/src/29_nearing2022_da_ar/reference/author_time_split_statistics.pkl"
+AUTHOR_PUB="$ROOT/src/29_nearing2022_da_ar/reference/author_pub_statistics.pkl"
 
-echo "=== QUEUE ==="
-squeue -j 202214,202215,202216,202222,202226,202227,202228 \
-  -o '%.18i %.18j %.2t %.10M %.6D %R' || true
+echo "=== PAYLOAD ==="
+echo "$EXPECTED_PAYLOAD_SHA  $PAYLOAD" | sha256sum -c -
+echo "payload_members=$(tar -tzf "$PAYLOAD" | wc -l)"
+tar -xzf "$PAYLOAD" -C "$ROOT"
 
-echo "=== ACCOUNTING ==="
-sacct -j 202214,202215,202216,202222 \
-  --format=JobID,JobName,Partition,State,Elapsed,ExitCode -P | head -80
+echo "=== PREFLIGHT ==="
+test -f "$SCRIPT"
+test -f "$AGGREGATOR"
+test -f "$AUTHOR_TIME"
+test -f "$AUTHOR_PUB"
+sha256sum "$SCRIPT" "$AGGREGATOR" "$AUTHOR_TIME" "$AUTHOR_PUB"
+test "$(sha256sum "$AUTHOR_TIME" | cut -d' ' -f1)" = 74aac5b377973dc745336da1b1d6a22be3f03b3544b6ae85b4cede37106af0ee
+test "$(sha256sum "$AUTHOR_PUB" | cut -d' ' -f1)" = 4d50b98b0e4f7d30974ba1fd606e4421b1a25178462e289f9a50bf28d94bcdbb
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+cd "$ROOT"
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
+python "$AGGREGATOR" --help >/dev/null
 
-echo "=== EVALUATION LOG INVENTORY ==="
-find "$LOG_ROOT" -maxdepth 1 -type f -name 'N22-eval-now_202222_*' \
-  -printf '%f %s bytes\n' | sort | head -40
+if squeue -h -u "$USER" -n N22-agg-eval,N22-agg-hyper | grep -q .; then
+  echo "Refusing duplicate aggregation submission" >&2
+  squeue -u "$USER" -n N22-agg-eval,N22-agg-hyper
+  exit 3
+fi
 
-echo "=== COMPLETED OR FAILED EVALUATION TASK TAILS ==="
-for task in 0 1 2 3; do
-  out="$LOG_ROOT/N22-eval-now_202222_${task}.out"
-  err="$LOG_ROOT/N22-eval-now_202222_${task}.err"
-  if [ -f "$out" ]; then
-    echo "--- task=$task stdout ---"
-    tail -20 "$out"
-  fi
-  if [ -s "$err" ]; then
-    echo "--- task=$task stderr ---"
-    tail -20 "$err"
-  fi
-done
+echo "=== SUBMIT ==="
+EVAL_AGG_JOB=$(sbatch --parsable --job-name=N22-agg-eval \
+  --dependency=afterok:202222:202226:202216:202227 \
+  --export=ALL,AGGREGATION_KIND=evaluations "$SCRIPT")
+HYPER_AGG_JOB=$(sbatch --parsable --job-name=N22-agg-hyper \
+  --dependency=afterok:202228 \
+  --export=ALL,AGGREGATION_KIND=hyperparameters "$SCRIPT")
+echo "evaluation_aggregation_job_id=$EVAL_AGG_JOB dependency=afterok:202222:202226:202216:202227"
+echo "hyperparameter_aggregation_job_id=$HYPER_AGG_JOB dependency=afterok:202228"
+squeue -j "$EVAL_AGG_JOB,$HYPER_AGG_JOB" -o '%.18i %.18j %.2t %.10M %.6D %R'
