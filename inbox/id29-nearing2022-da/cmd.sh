@@ -1,8 +1,42 @@
 #!/bin/bash
-# ID29 seq=164: diagnose failed all-531 training-data-port audit without rerunning it.
+# ID29 seq=165: inspect preserved all-531 audit bytes and the failed wrapper log.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
+PARTIAL="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506"
+SLURM="$PARTIAL/run_author_v13_training_data_port_all531.slurm"
+
+echo "=== PRESERVED FILE HASHES ==="
+test -d "$PARTIAL"
+sha256sum "$PARTIAL"/*
+
+echo "=== SUBMITTED SLURM SCRIPT ==="
+cat "$SLURM"
+
+echo "=== AUDIT STANDARD OUTPUT ==="
+cat "$PARTIAL/audit_stdout.json"
+
+echo "=== AUDIT JSON ==="
+cat "$PARTIAL/audit.json"
+
+echo "=== RESOLVED SLURM LOGS ==="
+while IFS= read -r TEMPLATE; do
+  PATH_VALUE=${TEMPLATE//%j/202506}
+  PATH_VALUE=${PATH_VALUE//%A/202506}
+  PATH_VALUE=${PATH_VALUE//%x/N22-data-port-531}
+  if [[ "$PATH_VALUE" != /* ]]; then
+    PATH_VALUE="$ROOT/$PATH_VALUE"
+  fi
+  printf '%s\n' "$PATH_VALUE"
+  if test -f "$PATH_VALUE"; then
+    stat --printf='%n|%s bytes|%y\n' "$PATH_VALUE"
+    tail -n 400 "$PATH_VALUE"
+  fi
+done < <(sed -n -E 's/^#SBATCH --(output|error)=//p' "$SLURM")
+
+find "$ROOT/logs" -maxdepth 4 -type f -name '*202506*' -print 2>/dev/null || true
+exit 0
+
 DIAG_ROOT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics"
 
 echo "=== JOB RECORD ==="
