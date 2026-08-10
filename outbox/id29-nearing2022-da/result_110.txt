@@ -1,0 +1,137 @@
+### channel=id29-nearing2022-da seq=110
+### host=login4
+### started=2026-08-10T19:55:52+0800
+### ---------- output ----------
+=== VALIDATION STATE ===
+slurm_load_jobs error: Invalid job id specified
+202376|N22-preclosure-check|COMPLETED|0:0|00:00:14|2026-08-10T19:53:33|2026-08-10T19:53:47|ngu003
+202376.batch|batch|COMPLETED|0:0|00:00:14|2026-08-10T19:53:33|2026-08-10T19:53:47|ngu003
+202376.extern|extern|COMPLETED|0:0|00:00:14|2026-08-10T19:53:33|2026-08-10T19:53:47|ngu003
+validation_state=COMPLETED
+=== VALIDATION STDOUT ===
+started=2026-08-10T19:53:35+0800
+{
+  "author_source_archives": {
+    "archives": {
+      "experiment_zenodo_v1_0": {
+        "bytes": 5187841,
+        "commit": "b254529deb75d950f6417b67e51a7292b7aed430",
+        "file_entries": 58,
+        "kind": "zenodo_zip",
+        "sha256": "5b6ac24a946d3516af6e1f8464ebceed99fd4ee09c6c8a8650a7716338dd7906",
+        "tree": "1ab781e3a479abcde3a1f8d80fc72643141b69d3"
+      },
+      "model_assimilation_git_bundle": {
+        "bytes": 11639604,
+        "commit": "a3f8bfc0781af44bfee4ed3b4fdfae5ec5aa9a70",
+        "complete_history_verified_in_empty_repository": true,
+        "kind": "git_bundle",
+        "sha256": "c8a2e694f68450eca2f8bdfddda28a1468b9033e85ef60563d0b87c168bfadb4",
+        "tracked_file_count": 216,
+        "tree": "ba5a6a110ed1b0b93f9c1bb8b79d7fd35a99df76"
+      },
+      "model_zenodo_v1_3_0": {
+        "bytes": 5935555,
+        "commit": "a4c284b92934ee973c8b3fedf8a60df60c8feae1",
+        "file_entries": 213,
+        "kind": "zenodo_zip",
+        "sha256": "91aefc74675aa83d0cc63695a48b69cec89f43605bb68c836424d839d212603d",
+        "tree": "0cfe36f4931fe634dd5a5b86c69ab319a0f1aeab"
+      }
+    },
+    "binding": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/author_source_archives/source_archive_binding.json",
+    "ok": true
+  },
+  "comparison_evidence": {
+    "binding_count": 145,
+    "total_bytes": 2036192,
+    "unique_file_count": 97
+  },
+  "data_manifests": {
+    "basin_count": 531,
+    "basin_list_sha256": "cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85",
+    "dataset_sha256": "a3cb1f81e6b2f25e2b919c0d5b315e46fe82f8ed9c9d8a4bd56671da5500a35f",
+    "file_count": 2131,
+    "ok": true,
+    "paths": {
+      "hpc_evidence": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/provenance/hpc_camels_us_manifest_v2.json",
+      "hpc_execution": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/hpc_camels_us_manifest_v2.json",
+      "local": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/provenance/local_camels_us_manifest_v2.json"
+    },
+    "source_sha256": {
+      "hpc_evidence": "b0081173696f6c07cbe2e46fded65c08fb9f9ae8f2cbc7b8d44184a0bda80597",
+      "hpc_execution": "b0081173696f6c07cbe2e46fded65c08fb9f9ae8f2cbc7b8d44184a0bda80597",
+      "local": "7fa3afc7fb88c62598ec8c66124118a796ca308345a512b541dc8c0d67a3abc1"
+    },
+    "total_bytes": 1313175181
+  },
+  "headline_recovery": {
+    "binding": "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/headline_artifact_recovery_binding.json",
+    "conditions": {
+      "assimilation": {
+        "file_count": 8,
+        "registry_id": "N22-EVAL-TS-DA-L01-TE000-S0",
+        "registry_kind": "evaluation",
+        "run": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30",
+        "total_bytes": 95421703
+      },
+      "autoregression": {
+        "file_count": 6,
+        "registry_id": "N22-TS-AR-L01-H000-S0",
+        "registry_kind": "training",
+        "run": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30",
+        "total_bytes": 48341376
+      },
+      "simulation": {
+        "file_count": 6,
+        "registry_id": "N22-TS-SIM-S0",
+        "registry_kind": "training",
+        "run": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30",
+        "total_bytes": 48331632
+      }
+    },
+    "file_count": 20,
+    "ok": true
+  },
+  "local_validation": {
+    "bound_file_count": 15,
+    "junit_sha256": "3224f75cb2a8c28d80b94055fe143278b07e52c667386ff8241eedae7679db01",
+    "ok": true,
+    "receipt_sha256": "62c11fb1cdd1aa1545cc073c178049e704369b36ac7152b9f8d31f9ee9ae7a7e",
+    "result": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 64
+    }
+  },
+  "ok": true,
+  "registry_counts": {
+    "evaluation": 180,
+    "hyperparameter": 660,
+    "training": 46
+  },
+  "schema": "nearing2022-server-preclosure-check-v1",
+  "source_scope_audit_sha256": "2d81bee2fc38b43ea85dbaa896b7cf74b7d7b593a28900013fd1d5db19612eeb"
+}
+5b6ac24a946d3516af6e1f8464ebceed99fd4ee09c6c8a8650a7716338dd7906  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/author_source_archives/zenodo-7063252-grey-nearing-lstm-data-assimilation-v1.0.zip
+91aefc74675aa83d0cc63695a48b69cec89f43605bb68c836424d839d212603d  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/author_source_archives/zenodo-7063259-grey-nearing-neuralhydrology-public-v.1.3.0.zip
+c8a2e694f68450eca2f8bdfddda28a1468b9033e85ef60563d0b87c168bfadb4  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/author_source_archives/github-grey-nearing-neuralhydrology-public-assimilation-a3f8bfc.bundle
+finished=2026-08-10T19:53:47+0800
+=== VALIDATION STDERR ===
+{"closure_verifier_sha256": "c4487ffb1a4ba151dbc782830fb6209e2eae62666fb0819179dad632fae351db", "created_utc": "2026-08-10T11:55:53.096243+00:00", "headline_artifact_binding_sha256": "b0381957e7fcb23fc7ce0b946bc6cc46f1e3d74e31dce3c5a2f20c33dcba61cb", "job_receipt_sha256": "403c8015b2a4662691a07984bcdbbc63579fb320519a5edd1ebb2a7211b73169", "local_validation_receipt_sha256": "62c11fb1cdd1aa1545cc073c178049e704369b36ac7152b9f8d31f9ee9ae7a7e", "preserved_stderr": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_202376.err", "preserved_stdout": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_202376.out", "schema": "nearing2022-preclosure-validation-receipt-v1", "server_checker_sha256": "17463a5ab783d024def54993b0d04cbd37a4f655fbfd4f696da57d7c5251cea8", "slurm": {"elapsed": "00:00:14", "end": "2026-08-10T19:53:47", "exit_code": "0:0", "job_id": "202376", "job_name": "N22-preclosure-check", "node_list": "ngu003", "start": "2026-08-10T19:53:33", "state": "COMPLETED"}, "source_stderr": "/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202376.err", "source_stdout": "/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202376.out", "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "stdout_sha256": "28b25632d0b4583751f0fd4553a8208fe87dfba1728d43100818104aa06612a3", "validation_slurm_sha256": "a66e9eb6777686ad21f870cd30d6832057b62128c8cc563eb14faff2b3ed15f0"}
+28b25632d0b4583751f0fd4553a8208fe87dfba1728d43100818104aa06612a3  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202376.out
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202376.err
+28b25632d0b4583751f0fd4553a8208fe87dfba1728d43100818104aa06612a3  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_202376.out
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_202376.err
+16abed16791fab79904b0cb741f4995e88e469b473876eace67d51ce70688b94  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_202376_receipt.json
+403c8015b2a4662691a07984bcdbbc63579fb320519a5edd1ebb2a7211b73169  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_seq109_job.txt
+a66e9eb6777686ad21f870cd30d6832057b62128c8cc563eb14faff2b3ed15f0  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_preclosure_validation.slurm
+17463a5ab783d024def54993b0d04cbd37a4f655fbfd4f696da57d7c5251cea8  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py
+c4487ffb1a4ba151dbc782830fb6209e2eae62666fb0819179dad632fae351db  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py
+62c11fb1cdd1aa1545cc073c178049e704369b36ac7152b9f8d31f9ee9ae7a7e  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation.json
+b0381957e7fcb23fc7ce0b946bc6cc46f1e3d74e31dce3c5a2f20c33dcba61cb  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/headline_artifact_recovery_binding.json
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T19:55:53+0800
