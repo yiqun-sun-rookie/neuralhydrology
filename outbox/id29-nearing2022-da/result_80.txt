@@ -1,0 +1,31 @@
+### channel=id29-nearing2022-da seq=80
+### host=login4
+### started=2026-08-10T15:15:31+0800
+### ---------- output ----------
+=== INSTALL AUDIT V13 ===
+/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v13.tar.gz: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/README.md: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_manifest.slurm: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_export.slurm: OK
+/data1/home/sunyiq/nearing2022_da/test/test_nearing2022_reproduction_contract.py: OK
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/reproduction_comparison_register.json: OK
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/final_reproduction_report.md: OK
+audit_contract=OK
+=== VERIFY CURRENT FINAL CHAIN IS STILL SAFE TO REPLACE ===
+=== REPLACE WITH USER-HELD FINAL MANIFEST ===
+held_manifest_state=PENDING|JobHeldUser|N22-manifest
+replacement_manifest_job=202293
+replacement_export_job=202294
+manifest_dependency=afterok:202229,afterok:202230
+export_dependency=afterok:202293
+             JOBID                     NAME ST       TIME  NODES NODELIST(REASON)
+            202229             N22-agg-eval PD       0:00      1 (Dependency)
+            202230            N22-agg-hyper PD       0:00      1 (Dependency)
+            202294               N22-export PD       0:00      1 (Dependency)
+            202293             N22-manifest PD       0:00      1 (JobHeldUser)
+=== SUPERSEDED JOB ACCOUNTING ===
+202289|N22-manifest|CANCELLED by 2272|0:0
+202290|N22-export|CANCELLED by 2272|0:0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T15:15:34+0800
