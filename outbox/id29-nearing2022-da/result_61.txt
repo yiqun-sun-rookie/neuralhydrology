@@ -1,0 +1,24 @@
+### channel=id29-nearing2022-da seq=61
+### host=login4
+### started=2026-08-10T12:44:36+0800
+### ---------- output ----------
+=== PAYLOAD ===
+/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v4.tar.gz: OK
+payload_members=115
+=== PREFLIGHT ===
+49f8e764da499077d5e4fcb4f42513b8714013afc3af3a75cc495a7dce585f8d  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+f25e2185e6f2edc1b2612d72f289f8873d9a1627be90abd1258befd2f3fd375f  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/evaluation_registry.csv
+6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/experiment_registry.csv
+08645c6fecc8c43a72514a057adba613d69a97ba21620fdc6050556ab482a675  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/time_split_existing_source_evaluation_batch.txt
+97cd594fa6bfc637cd3d4dee3090aa2c493bb3f1771232f08abe2556fb0f035b  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_evaluation_run.py
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30
+0
+test/model_epoch030/test_results.p
+completed
+=== SUBMIT ===
+evaluation_job_id=202222 tasks=30 max_concurrent=2 completed_coordinates_skip_automatically=true
+             JOBID               NAME ST       TIME  NODES NODELIST(REASON)
+   202222_[0-29%2]       N22-eval-now PD       0:00      1 (None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T12:44:38+0800
