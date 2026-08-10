@@ -124,7 +124,9 @@ def test_reference_candidate_source_copy_supports_a_path_longer_than_260_charact
 
 
 @pytest.mark.parametrize("category", sorted(EXPECTED_FAMILIES))
-def test_each_reference_candidate_trains_and_predicts_through_registered_runtime(category, tmp_path):
+def test_each_reference_candidate_trains_and_predicts_through_registered_runtime(
+    category, tmp_path, frozen_dependencies_for_active_environment
+):
     from unified_autoresearch.candidates.catalog import materialize_reference_candidate
     from unified_autoresearch.registry.store import Registry
     from unified_autoresearch.runtime.layout import create_run_layout
@@ -136,6 +138,7 @@ def test_each_reference_candidate_trains_and_predicts_through_registered_runtime
     materialized = materialize_reference_candidate(
         category=category,
         output_root=repo / "candidate-source",
+        dependencies=frozen_dependencies_for_active_environment,
     )
     inputs = repo / "synthetic-development-inputs"
     _write_candidate_inputs(inputs)

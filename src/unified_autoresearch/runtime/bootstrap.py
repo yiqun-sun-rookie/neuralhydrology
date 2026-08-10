@@ -44,13 +44,43 @@ def _install_file_hook(policy: dict[str, Any], log_descriptor: int) -> Callable[
     forbidden_imports = frozenset(FORBIDDEN_IMPORTS)
     stdlib_module_names = frozenset(sys.stdlib_module_names)
     module_search_path = tuple(sys.path)
+    os_module = os
+    path_module = os.path
+    module_type = type(os)
+    protected_path_helpers = frozenset(
+        {
+            "__class__",
+            "abspath",
+            "commonpath",
+            "isfile",
+            "join",
+            "normcase",
+            "realpath",
+        }
+    )
+
+    def lexical(path: str) -> str:
+        return normcase(abspath(path))
 
     def normalize(path: str) -> str:
         return normcase(realpath(abspath(path)))
 
-    def inside(path: str, roots: tuple[str, ...]) -> bool:
+    def root_pairs(paths: tuple[str, ...] | list[str]) -> tuple[tuple[str, str], ...]:
+        return tuple((lexical(path), normalize(path)) for path in paths)
+
+    def inside(path: str, roots: tuple[tuple[str, str], ...]) -> bool:
+        lexical_path = lexical(path)
+        possible_roots = []
+        for lexical_root, canonical_root in roots:
+            try:
+                if commonpath((lexical_path, lexical_root)) == lexical_root:
+                    possible_roots.append(canonical_root)
+            except ValueError:
+                continue
+        if not possible_roots:
+            return False
         normalized = normalize(path)
-        for root in roots:
+        for root in possible_roots:
             try:
                 if commonpath((normalized, root)) == root:
                     return True
@@ -76,13 +106,14 @@ def _install_file_hook(policy: dict[str, Any], log_descriptor: int) -> Callable[
         finally:
             terminate_process(2)
 
-    read_roots = tuple(normalize(path) for path in policy["read_roots"])
-    write_roots = tuple(normalize(path) for path in policy["write_roots"])
-    restricted_site_package_roots = tuple(
-        normalize(path) for path in policy.get("restricted_site_package_roots", ())
+    read_roots = root_pairs(policy["read_roots"])
+    write_roots = root_pairs(policy["write_roots"])
+    restricted_site_package_roots = root_pairs(policy.get("restricted_site_package_roots", ()))
+    dependency_initialization_read_roots = root_pairs(
+        policy.get("dependency_initialization_read_roots", ())
     )
-    dependency_initialization_read_roots = tuple(
-        normalize(path) for path in policy.get("dependency_initialization_read_roots", ())
+    dependency_initialization_system_read_paths = root_pairs(
+        policy.get("dependency_initialization_system_read_paths", ())
     )
     candidate_root = normalize(policy["candidate_root"])
     allowed_dependencies = set(policy["allowed_dependency_imports"])
@@ -93,7 +124,37 @@ def _install_file_hook(policy: dict[str, Any], log_descriptor: int) -> Callable[
     def deny(event: str, reason: str, **details: Any) -> None:
         reject({"event": event, "decision": "deny", "reason": reason, **details})
 
-    def path_allowed(path: str, roots: tuple[str, ...], operation: str) -> bool:
+    def protect_path_helpers() -> None:
+        class ProtectedPathModule(module_type):
+            def __setattr__(self, name: str, value: Any) -> None:
+                if name in protected_path_helpers:
+                    deny(
+                        "runtime.path_helper_mutation",
+                        "candidate replacement of audit path helpers is disabled",
+                        helper=f"os.path.{name}",
+                    )
+                module_type.__setattr__(self, name, value)
+
+        class ProtectedOsModule(module_type):
+            def __setattr__(self, name: str, value: Any) -> None:
+                if name in {"__class__", "path"}:
+                    deny(
+                        "runtime.path_helper_mutation",
+                        "candidate replacement of the audit path module is disabled",
+                        helper="os.path" if name == "path" else "os.__class__",
+                    )
+                module_type.__setattr__(self, name, value)
+
+        path_module.__class__ = ProtectedPathModule
+        os_module.__class__ = ProtectedOsModule
+
+    def path_allowed(path: str, roots: tuple[tuple[str, str], ...], operation: str) -> bool:
+        if (
+            operation == "read"
+            and dependency_initialization
+            and inside(path, dependency_initialization_system_read_paths)
+        ):
+            return True
         allowed = inside(path, roots)
         if (
             allowed
@@ -185,17 +246,25 @@ def _install_file_hook(policy: dict[str, Any], log_descriptor: int) -> Callable[
         if event.startswith("ctypes."):
             library = arguments[0] if arguments else None
             symbol = arguments[1] if len(arguments) > 1 else None
+            allowed_current_process_handle = event == "ctypes.dlopen" and library is None
+            allowed_fixed_windows_library = event == "ctypes.dlopen" and library in allowed_initialization_libraries
+            allowed_fixed_windows_symbol = event == "ctypes.dlsym" and symbol in allowed_initialization_symbols
             allowed_initialization_event = dependency_initialization and (
-                (event == "ctypes.dlopen" and library in allowed_initialization_libraries)
-                or (event == "ctypes.dlsym" and symbol in allowed_initialization_symbols)
+                allowed_current_process_handle
+                or allowed_fixed_windows_library
+                or allowed_fixed_windows_symbol
             )
             if allowed_initialization_event:
                 write_event(
                     {
                         "event": event,
                         "decision": "allow",
-                        "reason": "declared dependency initialization requires a fixed Windows system library",
-                        "library": str(library),
+                        "reason": (
+                            "declared dependency initialization requires the current-process handle"
+                            if allowed_current_process_handle
+                            else "declared dependency initialization requires a fixed Windows system library"
+                        ),
+                        "library": None if library is None else str(library),
                         "symbol": None if symbol is None else str(symbol),
                     }
                 )
@@ -255,6 +324,8 @@ def _install_file_hook(policy: dict[str, Any], log_descriptor: int) -> Callable[
     def finish_dependency_initialization(succeeded: bool) -> None:
         nonlocal dependency_initialization
         dependency_initialization = False
+        if succeeded:
+            protect_path_helpers()
         write_event(
             {
                 "event": "bootstrap.dependency_initialization",

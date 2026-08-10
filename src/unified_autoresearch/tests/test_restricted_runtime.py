@@ -99,6 +99,76 @@ def _read_access_events(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
 
 
+def _run_bootstrap_with_dependency_source(
+    tmp_path: Path,
+    dependency_source: str,
+    *,
+    dependency_initialization_system_read_paths: tuple[Path, ...] = (),
+    entrypoint_source: str = "pass\n",
+):
+    import sysconfig
+
+    from unified_autoresearch.runtime.adapter import build_candidate_command
+
+    interpreter_root = tmp_path / "interpreter_root"
+    site_packages_root = interpreter_root / "site-packages"
+    dependency_root = site_packages_root / "audit_probe_dependency"
+    dependency_root.mkdir(parents=True)
+    (dependency_root / "__init__.py").write_text(dependency_source, encoding="utf-8")
+    candidate_root = tmp_path / "candidate_source"
+    candidate_root.mkdir()
+    entrypoint = candidate_root / "predict.py"
+    entrypoint.write_text(entrypoint_source, encoding="utf-8")
+    output_root = tmp_path / "outputs"
+    checkpoint_root = tmp_path / "checkpoint_staging"
+    output_root.mkdir()
+    checkpoint_root.mkdir()
+    policy_path = tmp_path / "runtime-policy.json"
+    policy_path.write_text(
+        json.dumps(
+            {
+                "schema_version": "runtime_policy_v1",
+                "read_roots": [
+                    str(candidate_root),
+                    str(interpreter_root),
+                    *[
+                        value
+                        for key, value in sysconfig.get_paths().items()
+                        if key in {"stdlib", "platstdlib"} and value
+                    ],
+                ],
+                "write_roots": [str(output_root), str(checkpoint_root)],
+                "candidate_root": str(candidate_root),
+                "allowed_dependency_imports": ["audit_probe_dependency"],
+                "restricted_site_package_roots": [str(site_packages_root)],
+                "dependency_initialization_read_roots": [str(dependency_root)],
+                "dependency_initialization_system_read_paths": [
+                    str(path.resolve()) for path in dependency_initialization_system_read_paths
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    access_log_path = tmp_path / "access.jsonl"
+    environment = os.environ.copy()
+    environment["PYTHONDONTWRITEBYTECODE"] = "1"
+    environment["PYTHONPATH"] = str(site_packages_root)
+    completed = subprocess.run(
+        build_candidate_command(
+            policy_path=policy_path,
+            access_log_path=access_log_path,
+            entrypoint=entrypoint,
+            mode="predict",
+        ),
+        cwd=tmp_path,
+        env=environment,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    return completed, _read_access_events(access_log_path)
+
+
 def _prediction_parquet_bytes(*, required_columns: bool = True) -> bytes:
     import io
 
@@ -255,6 +325,42 @@ assert packaging.__version__ == {installed_version!r}
     )
 
 
+def test_system_timezone_read_paths_accept_only_existing_utc_files_from_trusted_directories(tmp_path, monkeypatch):
+    from unified_autoresearch.runtime import runner
+
+    compiled_timezone_root = tmp_path / "compiled_zoneinfo"
+    compiled_timezone_root.mkdir()
+    compiled_utc_path = compiled_timezone_root / "UTC"
+    compiled_utc_path.write_bytes(b"compiled-timezone-data")
+    system_timezone_root = tmp_path / "system_zoneinfo"
+    system_timezone_root.mkdir()
+    system_utc_path = system_timezone_root / "UTC"
+    system_utc_path.write_bytes(b"system-timezone-data")
+    directory_without_timezone_marker = tmp_path / "not_zoneinfo"
+    directory_without_timezone_marker.mkdir()
+    missing_directory = tmp_path / "missing_zoneinfo"
+    filesystem_root = Path(tmp_path.anchor)
+    raw_tzpath = os.pathsep.join(
+        [
+            str(compiled_timezone_root),
+            str(directory_without_timezone_marker),
+            str(missing_directory),
+            "relative-zoneinfo",
+            str(filesystem_root),
+        ]
+    )
+    monkeypatch.setattr(
+        runner.sysconfig,
+        "get_config_var",
+        lambda name: raw_tzpath if name == "TZPATH" else None,
+    )
+    monkeypatch.setattr(runner, "_DEFAULT_SYSTEM_TIMEZONE_ROOTS", (str(system_timezone_root),))
+
+    assert runner._system_timezone_read_paths() == sorted(
+        [str(compiled_utc_path.resolve()), str(system_utc_path.resolve())]
+    )
+
+
 def test_bootstrap_records_and_restricts_declared_dependency_initialization(tmp_path):
     import sysconfig
 
@@ -326,6 +432,146 @@ def test_bootstrap_records_and_restricts_declared_dependency_initialization(tmp_
     assert any(
         event.get("decision") == "deny"
         and str(outside_path).lower() == str(event.get("path", "")).lower()
+        for event in events
+    )
+
+
+def test_bootstrap_allows_dlopen_none_only_during_declared_dependency_initialization(tmp_path):
+    completed, events = _run_bootstrap_with_dependency_source(
+        tmp_path,
+        'import sys\nsys.audit("ctypes.dlopen", None)\n',
+    )
+
+    assert completed.returncode == 0
+    matching = [event for event in events if event.get("event") == "ctypes.dlopen"]
+    assert matching == [
+        {
+            "decision": "allow",
+            "event": "ctypes.dlopen",
+            "library": None,
+            "reason": "declared dependency initialization requires the current-process handle",
+            "symbol": None,
+        }
+    ]
+
+
+def test_bootstrap_denies_path_based_dlopen_during_declared_dependency_initialization(tmp_path):
+    completed, events = _run_bootstrap_with_dependency_source(
+        tmp_path,
+        'import sys\nsys.audit("ctypes.dlopen", "/tmp/unified-autoresearch-forbidden.so")\n',
+    )
+
+    assert completed.returncode == 2
+    assert any(
+        event.get("decision") == "deny" and event.get("event") == "ctypes.dlopen"
+        for event in events
+    )
+
+
+def test_restricted_runtime_denies_dlopen_none_after_dependency_initialization(tmp_path):
+    from unified_autoresearch.runtime.runner import run_candidate
+
+    descriptor, layout = _prepare_prediction_run(
+        tmp_path,
+        'import sys\nsys.audit("ctypes.dlopen", None)\n',
+    )
+
+    result = run_candidate(descriptor=descriptor, layout=layout, mode="predict")
+
+    assert result.exit_code == 2
+    assert result.status == "contract_failure"
+    events = _read_access_events(result.access_log_path)
+    assert any(
+        event.get("decision") == "deny" and event.get("event") == "ctypes.dlopen"
+        for event in events
+    )
+
+
+def test_bootstrap_allows_system_timezone_read_only_during_declared_dependency_initialization(tmp_path):
+    timezone_root = tmp_path / "system_zoneinfo"
+    timezone_root.mkdir()
+    utc_path = timezone_root / "UTC"
+    utc_path.write_bytes(b"test-timezone-data")
+
+    completed, events = _run_bootstrap_with_dependency_source(
+        tmp_path,
+        f"from pathlib import Path\nPath({str(utc_path)!r}).read_bytes()\n",
+        dependency_initialization_system_read_paths=(utc_path,),
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert any(
+        event.get("decision") == "allow"
+        and event.get("operation") == "read"
+        and Path(event.get("path", "")).resolve() == utc_path.resolve()
+        for event in events
+    )
+
+
+def test_bootstrap_denies_system_timezone_read_outside_trusted_root_during_initialization(tmp_path):
+    timezone_root = tmp_path / "system_zoneinfo"
+    timezone_root.mkdir()
+    utc_path = timezone_root / "UTC"
+    utc_path.write_bytes(b"trusted")
+    outside_path = timezone_root / "not-UTC"
+    outside_path.write_bytes(b"outside")
+
+    completed, events = _run_bootstrap_with_dependency_source(
+        tmp_path,
+        f"from pathlib import Path\nPath({str(outside_path)!r}).read_bytes()\n",
+        dependency_initialization_system_read_paths=(utc_path,),
+    )
+
+    assert completed.returncode == 2
+    assert any(
+        event.get("decision") == "deny"
+        and event.get("operation") == "read"
+        and Path(event.get("path", "")).resolve() == outside_path.resolve()
+        for event in events
+    )
+
+
+def test_restricted_runtime_denies_system_timezone_read_after_dependency_initialization(tmp_path):
+    timezone_root = tmp_path / "system_zoneinfo"
+    timezone_root.mkdir()
+    utc_path = timezone_root / "UTC"
+    utc_path.write_bytes(b"test-timezone-data")
+
+    completed, events = _run_bootstrap_with_dependency_source(
+        tmp_path,
+        "pass\n",
+        dependency_initialization_system_read_paths=(utc_path,),
+        entrypoint_source=f"from pathlib import Path\nPath({str(utc_path)!r}).read_bytes()\n",
+    )
+
+    assert completed.returncode == 2
+    assert any(
+        event.get("decision") == "deny"
+        and event.get("operation") == "read"
+        and Path(event.get("path", "")).resolve() == utc_path.resolve()
+        for event in events
+    )
+
+
+def test_bootstrap_denies_system_timezone_write_during_dependency_initialization(tmp_path):
+    timezone_root = tmp_path / "system_zoneinfo"
+    timezone_root.mkdir()
+    utc_path = timezone_root / "UTC"
+    original_bytes = b"test-timezone-data"
+    utc_path.write_bytes(original_bytes)
+
+    completed, events = _run_bootstrap_with_dependency_source(
+        tmp_path,
+        f"from pathlib import Path\nPath({str(utc_path)!r}).write_text('tampered', encoding='utf-8')\n",
+        dependency_initialization_system_read_paths=(utc_path,),
+    )
+
+    assert completed.returncode == 2
+    assert utc_path.read_bytes() == original_bytes
+    assert any(
+        event.get("decision") == "deny"
+        and event.get("operation") == "write"
+        and Path(event.get("path", "")).resolve() == utc_path.resolve()
         for event in events
     )
 
@@ -474,6 +720,28 @@ payload = Path({str(forbidden)!r}).read_text(encoding="utf-8")
     assert result.status == "contract_failure"
     assert result.denied_event_count >= 1
     assert not (layout.output_root / "predictions.parquet").exists()
+
+
+def test_candidate_cannot_replace_the_os_path_module_used_by_the_audit_hook(tmp_path):
+    from unified_autoresearch.runtime.runner import run_candidate
+
+    descriptor, layout = _prepare_prediction_run(
+        tmp_path,
+        "import os\nos.path = object()\n",
+    )
+
+    result = run_candidate(descriptor=descriptor, layout=layout, mode="predict")
+
+    assert result.exit_code == 2
+    assert result.status == "contract_failure"
+    assert result.denied_event_count >= 1
+    events = _read_access_events(result.access_log_path)
+    assert any(
+        event.get("decision") == "deny"
+        and event.get("event") == "runtime.path_helper_mutation"
+        and event.get("helper") == "os.path"
+        for event in events
+    )
 
 
 @pytest.mark.parametrize(

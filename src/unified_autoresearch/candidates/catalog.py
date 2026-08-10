@@ -21,6 +21,25 @@ REFERENCE_CATEGORIES = (
     "custom_python",
 )
 PINNED_DEPENDENCIES = ("numpy==1.26.4", "pandas==2.3.3", "pyarrow==22.0.0")
+# The cluster cannot reach the set above. Its conda cannot create environments, its glibc 2.17
+# limits it to manylinux2014 wheels, and pandas 2.3.3 is not published on the package index at
+# all -- the original pin is only satisfiable from a conda channel. This second set is the
+# closest one that installs there: numpy is identical, pandas and pyarrow step back.
+#
+# It also has to avoid numpy 2.x, whose import calls ctypes.dlopen, which the candidate sandbox
+# denies by design. Relaxing that denial to accommodate a library version would trade away a
+# real isolation property, so the dependency set moves instead of the sandbox.
+#
+# Written out here rather than read from the interpreter: a declaration derived from the
+# environment would agree with that environment by construction and check nothing.
+PINNED_DEPENDENCIES_CLUSTER = ("numpy==1.26.4", "pandas==2.2.3", "pyarrow==17.0.0")
+FROZEN_DEPENDENCY_SETS = (PINNED_DEPENDENCIES, PINNED_DEPENDENCIES_CLUSTER)
+
+
+def _frozen_dependencies(dependencies: tuple[str, ...]) -> list[str]:
+    if tuple(dependencies) not in FROZEN_DEPENDENCY_SETS:
+        raise ValueError("dependency set is not one of the frozen declarations")
+    return list(dependencies)
 
 
 def _io_path(path: str | Path) -> str:
@@ -43,14 +62,14 @@ class MaterializedReferenceCandidate:
     descriptor: CandidateDescriptor
 
 
-def _descriptor_value(category: str) -> dict:
+def _descriptor_value(category: str, dependencies: tuple[str, ...]) -> dict:
     candidate_id = f"reference-{category.replace('_', '-')}-v1"
     return {
         "schema_version": "candidate_descriptor_v1",
         "candidate_id": candidate_id,
         "category": category,
         "entrypoint": {"train": "entrypoint.py", "predict": "entrypoint.py"},
-        "dependencies": list(PINNED_DEPENDENCIES),
+        "dependencies": _frozen_dependencies(dependencies),
         "allowed_reads": {
             "train": ["train_features.parquet", "train_targets.parquet", "static_attributes.json"],
             "predict": ["predict_features.parquet", "static_attributes.json", "model_artifacts"],
@@ -72,14 +91,14 @@ def _descriptor_value(category: str) -> dict:
     }
 
 
-def _hbv_lite_descriptor_value() -> dict:
+def _hbv_lite_descriptor_value(dependencies: tuple[str, ...]) -> dict:
     """The first real candidate declares a supervised, longer-running workload."""
     return {
         "schema_version": "candidate_descriptor_v1",
         "candidate_id": "hbv-lite-calibrated-v1",
         "category": "conceptual_rainfall_runoff",
         "entrypoint": {"train": "entrypoint.py", "predict": "entrypoint.py"},
-        "dependencies": list(PINNED_DEPENDENCIES),
+        "dependencies": _frozen_dependencies(dependencies),
         "allowed_reads": {
             "train": ["train_features.parquet", "train_targets.parquet", "static_attributes.json"],
             "predict": ["predict_features.parquet", "static_attributes.json", "model_artifacts"],
@@ -101,8 +120,11 @@ def _hbv_lite_descriptor_value() -> dict:
     }
 
 
-def materialize_hbv_lite_candidate(*, output_root: str | Path) -> MaterializedReferenceCandidate:
+def materialize_hbv_lite_candidate(
+    *, output_root: str | Path, dependencies: tuple[str, ...] = PINNED_DEPENDENCIES
+) -> MaterializedReferenceCandidate:
     """Copy the calibrated HBV-lite method plus the common runtime into a new root."""
+    descriptor_value = _hbv_lite_descriptor_value(dependencies)  # validates before touching disk
     root = Path(output_root).resolve()
     if root.exists():
         raise FileExistsError(root)
@@ -113,7 +135,7 @@ def materialize_hbv_lite_candidate(*, output_root: str | Path) -> MaterializedRe
     _copy_file_long_path_safe(package_root / "implementations" / "hbv_lite.py", root / "method.py")
     descriptor_path = root / "candidate-descriptor.json"
     descriptor_path.write_text(
-        json.dumps(_hbv_lite_descriptor_value(), indent=2, sort_keys=True, allow_nan=False) + "\n",
+        json.dumps(descriptor_value, indent=2, sort_keys=True, allow_nan=False) + "\n",
         encoding="utf-8",
     )
     descriptor = load_and_validate_candidate_descriptor(descriptor_path, candidate_root=root)
@@ -125,11 +147,15 @@ def materialize_hbv_lite_candidate(*, output_root: str | Path) -> MaterializedRe
 
 
 def materialize_reference_candidate(
-    *, category: str, output_root: str | Path
+    *,
+    category: str,
+    output_root: str | Path,
+    dependencies: tuple[str, ...] = PINNED_DEPENDENCIES,
 ) -> MaterializedReferenceCandidate:
     """Copy exactly one reference method plus its common runtime into a new root."""
     if category not in REFERENCE_CATEGORIES:
         raise ValueError(f"unknown reference candidate category: {category!r}")
+    descriptor_value = _descriptor_value(category, dependencies)  # validates before touching disk
     root = Path(output_root).resolve()
     if root.exists():
         raise FileExistsError(root)
@@ -140,7 +166,7 @@ def materialize_reference_candidate(
     _copy_file_long_path_safe(package_root / "implementations" / f"{category}.py", root / "method.py")
     descriptor_path = root / "candidate-descriptor.json"
     descriptor_path.write_text(
-        json.dumps(_descriptor_value(category), indent=2, sort_keys=True, allow_nan=False) + "\n",
+        json.dumps(descriptor_value, indent=2, sort_keys=True, allow_nan=False) + "\n",
         encoding="utf-8",
     )
     descriptor = load_and_validate_candidate_descriptor(descriptor_path, candidate_root=root)

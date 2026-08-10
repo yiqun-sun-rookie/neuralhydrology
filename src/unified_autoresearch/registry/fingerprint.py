@@ -127,7 +127,7 @@ def _uncommitted_details(
     untracked_scope_paths: Iterable[str | Path] | None = None,
 ) -> dict[str, Any]:
     current_diff = _git(repo_root, "diff", "--binary", "HEAD", "--", ".")
-    current_status = _git(repo_root, "status", "--porcelain=v1", "-z", "--untracked-files=all")
+    current_status = _git(repo_root, "status", "--porcelain", "-z", "--untracked-files=all")
     if (git_diff_path is None) != (git_status_path is None):
         raise ValueError("saved Git difference and status paths must be provided together")
     if git_diff_path is None:

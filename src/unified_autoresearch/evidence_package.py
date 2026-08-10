@@ -341,7 +341,7 @@ def build_milestone1_repair1(
     _copy_test_evidence(test_evidence, artifact_root)
 
     diff = _git(repo, "diff", "--binary", "HEAD", "--", ".")
-    status = _git(repo, "status", "--porcelain=v1", "-z", "--untracked-files=all")
+    status = _git(repo, "status", "--porcelain", "-z", "--untracked-files=all")
     _write_bytes_exclusive(artifact_root / "git-diff.bin", diff)
     _write_bytes_exclusive(artifact_root / "git-status.bin", status)
 

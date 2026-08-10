@@ -59,7 +59,7 @@ def _capture_git_state(repo: Path, log_root: Path) -> tuple[Path, Path]:
         stderr=subprocess.PIPE,
     ).stdout
     status = subprocess.run(
-        ["git", "status", "--porcelain=v1", "-z", "--untracked-files=all"],
+        ["git", "status", "--porcelain", "-z", "--untracked-files=all"],
         cwd=repo,
         check=True,
         stdout=subprocess.PIPE,

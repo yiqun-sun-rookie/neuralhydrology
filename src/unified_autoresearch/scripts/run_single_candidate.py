@@ -29,6 +29,8 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from unified_autoresearch.candidates.catalog import (  # noqa: E402
+    PINNED_DEPENDENCIES,
+    PINNED_DEPENDENCIES_CLUSTER,
     REFERENCE_CATEGORIES,
     materialize_hbv_lite_candidate,
     materialize_reference_candidate,
@@ -37,7 +39,7 @@ from unified_autoresearch.runtime.resources import capture_resource_snapshot  # 
 from unified_autoresearch.workflow.candidate_development import run_single_candidate_development  # noqa: E402
 
 
-CANDIDATES = {"hbv_lite": materialize_hbv_lite_candidate}
+DEPENDENCY_SETS = {"default": PINNED_DEPENDENCIES, "cluster": PINNED_DEPENDENCIES_CLUSTER}
 
 
 def _sha256(path: Path) -> str:
@@ -48,12 +50,16 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _resolve(name: str):
-    if name in CANDIDATES:
-        return CANDIDATES[name]
+def _resolve(name: str, dependencies):
+    if name == "hbv_lite":
+        return lambda *, output_root: materialize_hbv_lite_candidate(
+            output_root=output_root, dependencies=dependencies
+        )
     if name in REFERENCE_CATEGORIES:
-        return lambda *, output_root: materialize_reference_candidate(category=name, output_root=output_root)
-    raise SystemExit(f"unknown candidate: {name!r}; choose from {sorted(CANDIDATES) + list(REFERENCE_CATEGORIES)}")
+        return lambda *, output_root: materialize_reference_candidate(
+            category=name, output_root=output_root, dependencies=dependencies
+        )
+    raise SystemExit(f"unknown candidate: {name!r}; choose from {['hbv_lite'] + list(REFERENCE_CATEGORIES)}")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -64,6 +70,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--monitor-sample-interval-seconds", type=float, default=None)
     parser.add_argument("--monitor-reason", type=str, default=None)
+    parser.add_argument(
+        "--dependencies",
+        choices=sorted(DEPENDENCY_SETS),
+        default="default",
+        help="which frozen dependency declaration this run uses; 'cluster' is the HPC environment",
+    )
     arguments = parser.parse_args(argv)
 
     manifest_path = arguments.package_root / "PACKAGE_MANIFEST.json"
@@ -71,7 +83,7 @@ def main(argv: list[str] | None = None) -> int:
         repo_root=arguments.repo_root,
         package_root=arguments.package_root,
         expected_package_manifest_sha256=_sha256(manifest_path),
-        materialize=_resolve(arguments.candidate),
+        materialize=_resolve(arguments.candidate, DEPENDENCY_SETS[arguments.dependencies]),
         output_root=arguments.output_root,
         resource_snapshot=capture_resource_snapshot(arguments.repo_root),
         monitor_sample_interval_seconds=arguments.monitor_sample_interval_seconds,

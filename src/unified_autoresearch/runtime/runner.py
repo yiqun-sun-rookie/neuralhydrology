@@ -28,6 +28,12 @@ from .resources import (
 
 
 RESOURCE_POLICY_PATH = Path(__file__).resolve().parents[1] / "protocols" / "resource_safety_v3.json"
+_DEFAULT_SYSTEM_TIMEZONE_ROOTS = (
+    "/usr/share/zoneinfo",
+    "/usr/lib/zoneinfo",
+    "/usr/share/lib/zoneinfo",
+    "/etc/zoneinfo",
+)
 
 
 @dataclass(frozen=True)
@@ -60,6 +66,23 @@ def _access_events(path: Path) -> list[dict]:
     if not path.is_file():
         return []
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+
+
+def _system_timezone_read_paths() -> list[str]:
+    raw_value = sysconfig.get_config_var("TZPATH")
+    configured_roots = [] if not isinstance(raw_value, str) else raw_value.split(os.pathsep)
+    trusted_paths: set[str] = set()
+    for value in [*configured_roots, *_DEFAULT_SYSTEM_TIMEZONE_ROOTS]:
+        root = Path(value)
+        if not root.is_absolute():
+            continue
+        resolved_root = root.resolve()
+        if resolved_root == Path(resolved_root.anchor) or not resolved_root.is_dir():
+            continue
+        for marker in (resolved_root / "UTC", resolved_root / "Etc" / "UTC"):
+            if marker.is_file():
+                trusted_paths.add(str(marker.resolve()))
+    return sorted(trusted_paths)
 
 
 def _append_parent_denial(path: Path, *, process_exit_code: int) -> dict:
@@ -220,6 +243,7 @@ def run_candidate(
         ],
         "restricted_site_package_roots": restricted_site_package_roots,
         "dependency_initialization_read_roots": list(dependency_assessment.initialization_read_roots),
+        "dependency_initialization_system_read_paths": _system_timezone_read_paths(),
     }
     _write_json_exclusive(policy_path, policy)
     command = build_candidate_command(

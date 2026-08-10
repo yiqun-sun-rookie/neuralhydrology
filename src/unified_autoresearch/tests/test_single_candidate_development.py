@@ -62,31 +62,37 @@ def real_packages(tmp_path_factory) -> Path:
     _remove_tree(scratch)
 
 
-def _reference_conceptual(*, output_root):
+def _reference_conceptual(*, output_root, dependencies):
     from unified_autoresearch.candidates.catalog import materialize_reference_candidate
 
-    return materialize_reference_candidate(category="conceptual_rainfall_runoff", output_root=output_root)
+    return materialize_reference_candidate(
+        category="conceptual_rainfall_runoff", output_root=output_root, dependencies=dependencies
+    )
 
 
-def _run(package_root: Path, output_root: Path, materialize=_reference_conceptual):
+def _run(package_root: Path, output_root: Path, dependencies):
     from unified_autoresearch.workflow.candidate_development import run_single_candidate_development
 
     return run_single_candidate_development(
         repo_root=REPO_ROOT,
         package_root=package_root,
         expected_package_manifest_sha256=_sha256(package_root / "PACKAGE_MANIFEST.json"),
-        materialize=materialize,
+        materialize=lambda *, output_root: _reference_conceptual(
+            output_root=output_root, dependencies=dependencies
+        ),
         output_root=output_root,
         resource_snapshot=_snapshot(),
     )
 
 
-def test_a_single_reference_candidate_produces_one_cell_per_frozen_basin(real_packages, tmp_path):
+def test_a_single_reference_candidate_produces_one_cell_per_frozen_basin(
+    real_packages, tmp_path, frozen_dependencies_for_active_environment
+):
     workspace = REPO_ROOT / "runs" / "unified_autoresearch" / "pytest_single_candidate"
     if workspace.exists():
         _remove_tree(workspace)
     try:
-        result = _run(real_packages, workspace)
+        result = _run(real_packages, workspace, frozen_dependencies_for_active_environment)
     finally:
         if workspace.exists():
             _remove_tree(workspace)
@@ -100,12 +106,14 @@ def test_a_single_reference_candidate_produces_one_cell_per_frozen_basin(real_pa
     assert {cell["basin"] for cell in result["cells"]} == set(frozen_64_basins())
 
 
-def test_the_declared_candidate_identity_is_carried_into_every_cell(real_packages, tmp_path):
+def test_the_declared_candidate_identity_is_carried_into_every_cell(
+    real_packages, tmp_path, frozen_dependencies_for_active_environment
+):
     workspace = REPO_ROOT / "runs" / "unified_autoresearch" / "pytest_single_candidate_identity"
     if workspace.exists():
         _remove_tree(workspace)
     try:
-        result = _run(real_packages, workspace)
+        result = _run(real_packages, workspace, frozen_dependencies_for_active_environment)
     finally:
         if workspace.exists():
             _remove_tree(workspace)
@@ -114,12 +122,14 @@ def test_the_declared_candidate_identity_is_carried_into_every_cell(real_package
     assert all(cell["category"] == "conceptual_rainfall_runoff" for cell in result["cells"])
 
 
-def test_the_runner_refuses_to_overwrite_an_existing_output_root(real_packages, tmp_path):
+def test_the_runner_refuses_to_overwrite_an_existing_output_root(
+    real_packages, tmp_path, frozen_dependencies_for_active_environment
+):
     workspace = REPO_ROOT / "runs" / "unified_autoresearch" / "pytest_single_candidate_exists"
     workspace.mkdir(parents=True, exist_ok=True)
     try:
         with pytest.raises(FileExistsError):
-            _run(real_packages, workspace)
+            _run(real_packages, workspace, frozen_dependencies_for_active_environment)
     finally:
         if workspace.exists():
             _remove_tree(workspace)

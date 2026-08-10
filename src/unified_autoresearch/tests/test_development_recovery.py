@@ -102,7 +102,9 @@ def _build_synthetic_development_packages(repo: Path) -> Path:
     return package_root
 
 
-def test_registered_recovery_matches_a_clean_deterministic_training_run(tmp_path):
+def test_registered_recovery_matches_a_clean_deterministic_training_run(
+    tmp_path, frozen_dependencies_for_active_environment
+):
     from unified_autoresearch.registry.store import Registry
     from unified_autoresearch.runtime.checkpoints import verify_checkpoint
     from unified_autoresearch.runtime.resources import ResourceSnapshot
@@ -128,6 +130,7 @@ def test_registered_recovery_matches_a_clean_deterministic_training_run(tmp_path
         category="custom_python",
         output_root=output_root,
         resource_snapshot=snapshot,
+        candidate_dependencies=frozen_dependencies_for_active_environment,
     )
 
     assert result["schema_version"] == "development_recovery_cycle_v1"
@@ -168,6 +171,7 @@ def test_registered_recovery_matches_a_clean_deterministic_training_run(tmp_path
             category="custom_python",
             output_root=output_root,
             resource_snapshot=snapshot,
+            candidate_dependencies=frozen_dependencies_for_active_environment,
         )
 
 
@@ -196,7 +200,9 @@ def test_recovery_summary_manifest_includes_deep_checkpoint_metadata(tmp_path):
         assert manifest[label]["bytes"] == len(content)
 
 
-def test_full_development_loop_produces_exactly_32_finite_registered_cells(tmp_path):
+def test_full_development_loop_produces_exactly_32_finite_registered_cells(
+    tmp_path, frozen_dependencies_for_active_environment
+):
     from unified_autoresearch.candidates.catalog import REFERENCE_CATEGORIES
     from unified_autoresearch.registry.store import Registry
     from unified_autoresearch.runtime.resources import ResourceSnapshot
@@ -214,6 +220,7 @@ def test_full_development_loop_produces_exactly_32_finite_registered_cells(tmp_p
         package_root=package_root,
         expected_package_manifest_sha256=_sha256(package_root / "PACKAGE_MANIFEST.json"),
         output_root=output_root,
+        candidate_dependencies=frozen_dependencies_for_active_environment,
         resource_snapshot=ResourceSnapshot(
             available_cpu_cores=4,
             available_gpu_count=0,
@@ -260,6 +267,7 @@ def test_full_development_loop_produces_exactly_32_finite_registered_cells(tmp_p
             package_root=package_root,
             expected_package_manifest_sha256=_sha256(package_root / "PACKAGE_MANIFEST.json"),
             output_root=output_root,
+            candidate_dependencies=frozen_dependencies_for_active_environment,
             resource_snapshot=ResourceSnapshot(
                 available_cpu_cores=4,
                 available_gpu_count=0,
@@ -269,7 +277,9 @@ def test_full_development_loop_produces_exactly_32_finite_registered_cells(tmp_p
         )
 
 
-def test_full_development_loop_supervises_every_registered_run_when_declared(tmp_path):
+def test_full_development_loop_supervises_every_registered_run_when_declared(
+    tmp_path, frozen_dependencies_for_active_environment
+):
     from unified_autoresearch.runtime.resources import ResourceSnapshot
     from unified_autoresearch.workflow.development_loop import run_full_development_loop
 
@@ -285,6 +295,7 @@ def test_full_development_loop_supervises_every_registered_run_when_declared(tmp
         package_root=package_root,
         expected_package_manifest_sha256=_sha256(package_root / "PACKAGE_MANIFEST.json"),
         output_root=output_root,
+        candidate_dependencies=frozen_dependencies_for_active_environment,
         resource_snapshot=ResourceSnapshot(
             available_cpu_cores=4,
             available_gpu_count=0,

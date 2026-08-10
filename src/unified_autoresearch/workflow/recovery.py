@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-from unified_autoresearch.candidates.catalog import materialize_reference_candidate
+from unified_autoresearch.candidates.catalog import PINNED_DEPENDENCIES, materialize_reference_candidate
 from unified_autoresearch.runtime.checkpoints import verify_checkpoint
 from unified_autoresearch.runtime.layout import create_run_layout
 from unified_autoresearch.runtime.orchestrator import RegisteredRuntimeResult, run_registered_candidate
@@ -99,6 +99,7 @@ def run_recovery_reproducibility_cycle(
     category: str,
     output_root: str | Path,
     resource_snapshot: ResourceSnapshot,
+    candidate_dependencies: tuple[str, ...] = PINNED_DEPENDENCIES,
 ) -> dict[str, Any]:
     """Checkpoint one forward training run, resume it, and compare a clean rerun."""
     repo = Path(repo_root).resolve()
@@ -122,6 +123,7 @@ def run_recovery_reproducibility_cycle(
     materialized = materialize_reference_candidate(
         category=category,
         output_root=root / "candidate-source",
+        dependencies=candidate_dependencies,
     )
     descriptor = materialized.descriptor
     train_root = packages / "forward" / "train"

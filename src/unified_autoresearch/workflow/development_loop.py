@@ -9,7 +9,11 @@ import os
 from pathlib import Path
 from typing import Any
 
-from unified_autoresearch.candidates.catalog import REFERENCE_CATEGORIES, materialize_reference_candidate
+from unified_autoresearch.candidates.catalog import (
+    PINNED_DEPENDENCIES,
+    REFERENCE_CATEGORIES,
+    materialize_reference_candidate,
+)
 from unified_autoresearch.evaluation.scoring import (
     score_development_predictions,
     summarize_candidate_development_scores,
@@ -152,6 +156,7 @@ def run_full_development_loop(
     expected_package_manifest_sha256: str,
     output_root: str | Path,
     resource_snapshot: ResourceSnapshot,
+    candidate_dependencies: tuple[str, ...] = PINNED_DEPENDENCIES,
     monitor_sample_interval_seconds: float | None = None,
     monitor_reason: str | None = None,
 ) -> dict[str, Any]:
@@ -183,6 +188,7 @@ def run_full_development_loop(
         materialized = materialize_reference_candidate(
             category=category,
             output_root=root / "candidates" / category,
+            dependencies=candidate_dependencies,
         )
         if monitor_enabled:
             descriptor = _enable_candidate_monitor(
