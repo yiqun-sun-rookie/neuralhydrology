@@ -1,0 +1,75 @@
+### channel=id29-nearing2022-da seq=50
+### host=login4
+### started=2026-08-10T11:54:27+0800
+### ---------- output ----------
+=== RUNNER ===
+2026-08-10T11:54:27+0800
+login4
+=== STORAGE ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  592T  363T  62% /data1
+191M	/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30
+192M	/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30
+236M	/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30
+=== QUEUE ===
+       JOBID             NAME  PARTITION        STATE       TIME TIME_LIMIT NODELIST(REASON)
+   201920_19        id17-gate     hgpu2p      RUNNING   10:22:21 2-00:00:00 ngu001
+   201920_18        id17-gate     hgpu2p      RUNNING   11:20:56 2-00:00:00 ngu010
+   201920_17        id17-gate     hgpu2p      RUNNING   12:17:44 2-00:00:00 ngu001
+   201920_16        id17-gate     hgpu2p      RUNNING   12:19:53 2-00:00:00 ngu011
+      202054        v09main21     hgpu2p      RUNNING   19:11:47 3-00:00:00 ngu008
+PARTITION    AVAIL      TIMELIMIT  NODES    STATE       
+hcpu48*      up         infinite   10       allocated$  
+hcpu48*      up         infinite   5        maint       
+hcpu48*      up         infinite   16       down*       
+hcpu48*      up         infinite   1        allocated   
+hcpu48*      up         infinite   32       idle        
+hcpu48y      up         infinite   1        down$       
+hcpu48y      up         infinite   1        maint       
+hcpu48y      up         infinite   2        down*       
+hcpu48y      up         infinite   2        mixed       
+hcpu48y      up         infinite   6        idle        
+hgpu8        up         infinite   3        mixed       
+hgpu4        up         infinite   1        down*       
+hgpu4        up         infinite   1        mixed       
+hgpu4        up         infinite   2        idle        
+hgpu2        up         infinite   1        mixed       
+hgpu2        up         infinite   1        idle        
+hgpu2p       up         infinite   8        mixed       
+hgpu2p       up         infinite   1        idle        
+=== REQUIRED ARTIFACTS ===
+--- SIM /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30 ---
+2366 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/config.yml
+1228165 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/model_epoch030.pt
+8796 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/output.log
+4775 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/train_data/train_data_scaler.yml
+47014459 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p
+73071 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv
+47014459 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p
+73071 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv
+--- AR /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30 ---
+2640 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/config.yml
+1236357 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/model_epoch030.pt
+9337 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/output.log
+4945 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/train_data/train_data_scaler.yml
+47014459 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/test/model_epoch030/test_results.p
+73638 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/test/model_epoch030/test_metrics.csv
+47014459 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/test/model_epoch030/test_results.p
+73638 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/test/model_epoch030/test_metrics.csv
+--- DA /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30 ---
+3658 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/config.yml
+1228165 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/model_epoch030.pt
+9582 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/output.log
+4775 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/train_data/train_data_scaler.yml
+47014459 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p
+73071 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv
+47014459 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results_data_assimilation.p
+73534 bytes  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics_data_assimilation.csv
+=== SOURCE AND ENVIRONMENT ===
+python=3.11.13
+torch=2.4.0
+neuralhydrology=unknown
+cuda=12.1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T11:54:51+0800
