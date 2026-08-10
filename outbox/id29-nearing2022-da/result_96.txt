@@ -1,0 +1,21 @@
+### channel=id29-nearing2022-da seq=96
+### host=login4
+### started=2026-08-10T19:08:10+0800
+### ---------- output ----------
+=== FAILED JOB ACCOUNTING ===
+202365|N22-preclosure-check|FAILED|1:0|00:00:03|2026-08-10T19:02:34|2026-08-10T19:02:37|ngu104
+202365.batch|batch|FAILED|1:0|00:00:03|2026-08-10T19:02:34|2026-08-10T19:02:37|ngu104
+202365.extern|extern|COMPLETED|0:0|00:00:03|2026-08-10T19:02:34|2026-08-10T19:02:37|ngu104
+=== STDOUT ===
+started=2026-08-10T19:02:36+0800
+=== STDERR ===
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python: No module named pytest
+=== IMMUTABLE DIAGNOSTIC HASHES ===
+f87870abd577482c8760c491ec2006939ee79f2df86b3294245d6ed34af80f30  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202365.out
+bc9ebfbc4f7f167056075c7785483ff7cd4002d9ef21f627ab90c4be2279ede6  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202365.err
+f1f200cd282b2b06fb5ed19274cc76b20ee23c8d4bec690913c5268a9311cea8  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_payload_seq94_receipt.json
+51ccdc660378dd6891f4bff5e8f9430f776edd12a9cf58cc23679322bcf970b9  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_validation_seq94_job.txt
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T19:08:10+0800
