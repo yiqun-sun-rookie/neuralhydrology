@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=127: scheduled role-count, failure-state, liveness, and walltime refresh.
+# ID29 seq=128: event-driven refresh after basin task 202216_6 reached epoch 30.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
