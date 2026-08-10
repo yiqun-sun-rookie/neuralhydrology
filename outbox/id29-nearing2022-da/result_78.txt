@@ -1,0 +1,50 @@
+### channel=id29-nearing2022-da seq=78
+### host=login4
+### started=2026-08-10T14:55:10+0800
+### ---------- output ----------
+=== INSTALL V12 ===
+/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v12.tar.gz: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/README.md: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/aggregate_registered_results.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/evaluate_full_reproduction.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/reproduction_acceptance.json: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/released_protocol.json: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_manifest.slurm: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_export.slurm: OK
+/data1/home/sunyiq/nearing2022_da/test/test_nearing2022_reproduction_contract.py: OK
+frozen_contracts=OK
+=== VERIFY UPSTREAM AND REPLACED JOBS ARE STILL PENDING ===
+=== FAIL-CLOSED PREFLIGHT ===
+{
+  "complete": false,
+  "counts": {
+    "evaluations": 180,
+    "hyperparameters": 660,
+    "training": 46
+  },
+  "missing_count": 4827,
+  "missing_first": [
+    {
+      "coordinate_id": "N22-TS-AR-L01-H025-S0",
+      "coordinate_type": "training",
+      "error": "FileNotFoundError: Expected one completed source run for N22-TS-AR-L01-H025-S0 under /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression, found 0",
+      "path": "",
+      "role": "run_resolution"
+    },
+=== REPLACE PENDING V11 FINAL CHAIN ===
+replacement_manifest_job=202289
+replacement_export_job=202290
+             JOBID                     NAME ST       TIME  NODES NODELIST(REASON)
+            202229             N22-agg-eval PD       0:00      1 (Dependency)
+            202230            N22-agg-hyper PD       0:00      1 (Dependency)
+            202289             N22-manifest PD       0:00      1 (Dependency)
+            202290               N22-export PD       0:00      1 (Dependency)
+manifest_dependency=afterok:202229,afterok:202230
+export_dependency=afterok:202289
+=== SUPERSEDED JOB ACCOUNTING ===
+202280|N22-manifest|CANCELLED by 2272|0:0
+202281|N22-export|CANCELLED by 2272|0:0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T14:55:30+0800
