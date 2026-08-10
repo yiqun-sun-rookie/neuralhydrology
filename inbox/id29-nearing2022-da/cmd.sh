@@ -1,51 +1,71 @@
 #!/bin/bash
-# ID29 seq=108: verify final preclosure job 202374 and preserve immutable success evidence.
+# ID29 seq=109: deploy the missing frozen headline binding, preserve attempt 202374, and resubmit preclosure.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-JOB=202374
-OUT="$ROOT/closure_20260810/logs/N22-preclosure-check_${JOB}.out"
-ERR="$ROOT/closure_20260810/logs/N22-preclosure-check_${JOB}.err"
+PAYLOAD="$HOME/hpc_mailbox/inbox/id29-nearing2022-da/payload.tar.gz"
+PAYLOAD_SHA=59287a2b7a4bb2933a68d4c95fe665e1e0c4430351eb629d91e9183b0d938661
+RELATIVE=src/29_nearing2022_da_ar/reference/headline_artifact_recovery_binding.json
+FILE_SHA=b0381957e7fcb23fc7ce0b946bc6cc46f1e3d74e31dce3c5a2f20c33dcba61cb
+TARGET="$ROOT/$RELATIVE"
+STAGE="$ROOT/closure_20260810/deployment/seq109"
 PROVENANCE="$ROOT/closure_20260810/provenance"
-PRESERVED_OUT="$PROVENANCE/preclosure_validation_${JOB}.out"
-PRESERVED_ERR="$PROVENANCE/preclosure_validation_${JOB}.err"
-RECEIPT="$PROVENANCE/preclosure_validation_${JOB}_receipt.json"
-JOB_RECEIPT="$PROVENANCE/preclosure_validation_seq107_job.txt"
+PAYLOAD_COPY="$PROVENANCE/headline_binding_seq109_payload.tar.gz"
+DEPLOYMENT_RECEIPT="$PROVENANCE/headline_binding_seq109_receipt.json"
+FAILED_RECEIPT="$PROVENANCE/preclosure_failed_attempt_202374_receipt.json"
+JOB_RECEIPT="$PROVENANCE/preclosure_validation_seq109_job.txt"
 VALIDATION="$ROOT/src/29_nearing2022_da_ar/hpc/run_preclosure_validation.slurm"
-CHECKER="$ROOT/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py"
-VERIFIER="$ROOT/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py"
-LOCAL_RECEIPT="$ROOT/src/29_nearing2022_da_ar/reference/local_contract_validation.json"
+OUT_202374="$ROOT/closure_20260810/logs/N22-preclosure-check_202374.out"
+ERR_202374="$ROOT/closure_20260810/logs/N22-preclosure-check_202374.err"
+PRESERVED_OUT="$PROVENANCE/preclosure_attempt_202374.out"
+PRESERVED_ERR="$PROVENANCE/preclosure_attempt_202374.err"
 
-echo "=== VALIDATION STATE ==="
-squeue -h -j "$JOB" -o '%i|%T|%r|%j' || true
-sacct -n -P -j "$JOB" --format=JobID,JobName,State,ExitCode,Elapsed,Start,End,NodeList | sed '/^[[:space:]]*$/d'
-STATE=$(sacct -n -P -j "$JOB" --format=JobIDRaw,State | awk -F'|' -v job="$JOB" '$1 == job {print $2; exit}')
-echo "validation_state=$STATE"
+echo "=== PRE-INSTALL SAFETY BOUNDARY ==="
+test -f "$PAYLOAD"
+echo "$PAYLOAD_SHA  $PAYLOAD" | sha256sum -c -
+mapfile -t MEMBERS < <(tar -tzf "$PAYLOAD")
+test "${#MEMBERS[@]}" -eq 1
+test "${MEMBERS[0]}" = "$RELATIVE"
+test ! -e "$TARGET"
+test ! -e "$STAGE"
+test ! -e "$PAYLOAD_COPY"
+test ! -e "$DEPLOYMENT_RECEIPT"
+test ! -e "$FAILED_RECEIPT"
+test ! -e "$JOB_RECEIPT"
+test ! -e "$PRESERVED_OUT"
+test ! -e "$PRESERVED_ERR"
+test "$(sacct -n -P -j 202374 --format=JobIDRaw,State | awk -F'|' '$1 == "202374" {print $2; exit}')" = "FAILED"
+grep -Fq "headline_artifact_recovery_binding.json" "$ERR_202374"
+test -z "$(squeue -h -n N22-preclosure-check -o '%i')"
+test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = "202293|PENDING|JobHeldUser|N22-manifest"
+test "$(squeue -h -j 202315 -o '%i|%T|%r|%j')" = "202315|PENDING|Dependency|N22-gate"
+test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
+test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
 
-if [ "$STATE" = "COMPLETED" ]; then
-  test -f "$OUT"
-  test -f "$ERR"
-  echo "=== VALIDATION STDOUT ==="
-  cat "$OUT"
-  echo "=== VALIDATION STDERR ==="
-  cat "$ERR"
-  test ! -s "$ERR"
-  grep -q '"ok": true' "$OUT"
-  grep -q '"tests": 64' "$OUT"
-  grep -q '"bound_file_count": 15' "$OUT"
-  grep -q '"unique_file_count": 97' "$OUT"
-  grep -q '"file_count": 20' "$OUT"
-  grep -q '"dataset_sha256": "a3cb1f81e6b2f25e2b919c0d5b315e46fe82f8ed9c9d8a4bd56671da5500a35f"' "$OUT"
-  grep -q '"complete_history_verified_in_empty_repository": true' "$OUT"
-  grep -q 'finished=' "$OUT"
-  test ! -e "$PRESERVED_OUT"
-  test ! -e "$PRESERVED_ERR"
-  test ! -e "$RECEIPT"
-  install -m 0644 "$OUT" "$PRESERVED_OUT"
-  install -m 0644 "$ERR" "$PRESERVED_ERR"
-  test "$(sha256sum "$OUT" | awk '{print $1}')" = "$(sha256sum "$PRESERVED_OUT" | awk '{print $1}')"
-  test "$(sha256sum "$ERR" | awk '{print $1}')" = "$(sha256sum "$PRESERVED_ERR" | awk '{print $1}')"
-  python - "$JOB" "$OUT" "$ERR" "$PRESERVED_OUT" "$PRESERVED_ERR" "$RECEIPT" "$JOB_RECEIPT" "$VALIDATION" "$CHECKER" "$VERIFIER" "$LOCAL_RECEIPT" <<'PY'
+echo "=== STAGE AND ATOMICALLY INSTALL BINDING ==="
+mkdir -p "$STAGE"
+tar -xzf "$PAYLOAD" -C "$STAGE"
+STAGED="$STAGE/$RELATIVE"
+test -f "$STAGED"
+echo "$FILE_SHA  $STAGED" | sha256sum -c -
+install -m 0644 "$PAYLOAD" "$PAYLOAD_COPY"
+echo "$PAYLOAD_SHA  $PAYLOAD_COPY" | sha256sum -c -
+mkdir -p "$(dirname "$TARGET")"
+TEMPORARY="$TARGET.seq109.tmp"
+test ! -e "$TEMPORARY"
+install -m 0644 "$STAGED" "$TEMPORARY"
+echo "$FILE_SHA  $TEMPORARY" | sha256sum -c -
+mv "$TEMPORARY" "$TARGET"
+echo "$FILE_SHA  $TARGET" | sha256sum -c -
+python -m json.tool "$TARGET" >/dev/null
+
+echo "=== PRESERVE ATTEMPT 202374 ==="
+install -m 0644 "$OUT_202374" "$PRESERVED_OUT"
+install -m 0644 "$ERR_202374" "$PRESERVED_ERR"
+test "$(sha256sum "$OUT_202374" | awk '{print $1}')" = "$(sha256sum "$PRESERVED_OUT" | awk '{print $1}')"
+test "$(sha256sum "$ERR_202374" | awk '{print $1}')" = "$(sha256sum "$PRESERVED_ERR" | awk '{print $1}')"
+
+python - "$TARGET" "$PAYLOAD_COPY" "$DEPLOYMENT_RECEIPT" "$PRESERVED_OUT" "$PRESERVED_ERR" "$FAILED_RECEIPT" <<'PY'
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -53,67 +73,67 @@ from pathlib import Path
 import subprocess
 import sys
 
-job = sys.argv[1]
-out, err, preserved_out, preserved_err, receipt, job_receipt, validation, checker, verifier, local_receipt = (
-    Path(value) for value in sys.argv[2:]
-)
+target, payload_copy, deployment_receipt, out, err, failed_receipt = map(Path, sys.argv[1:])
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
+deployment = {
+    'schema': 'nearing2022-headline-binding-deployment-v1',
+    'mailbox_seq': 109,
+    'created_utc': datetime.now(timezone.utc).isoformat(),
+    'target': str(target),
+    'target_bytes': target.stat().st_size,
+    'target_sha256': digest(target),
+    'payload_copy': str(payload_copy),
+    'payload_bytes': payload_copy.stat().st_size,
+    'payload_sha256': digest(payload_copy),
+}
+temporary = deployment_receipt.with_suffix(deployment_receipt.suffix + '.tmp')
+assert not deployment_receipt.exists() and not temporary.exists()
+temporary.write_text(json.dumps(deployment, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
+temporary.replace(deployment_receipt)
+print(json.dumps(deployment, sort_keys=True))
+
 records = subprocess.run(
-    ['sacct', '-n', '-P', '-j', job, '--format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList'],
+    ['sacct', '-n', '-P', '-j', '202374', '--format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList'],
     check=True,
     capture_output=True,
     text=True,
 ).stdout.splitlines()
-record = next(line.split('|') for line in records if line.split('|', 1)[0].strip() == job)
+record = next(line.split('|') for line in records if line.split('|', 1)[0].strip() == '202374')
 fields = ('job_id', 'job_name', 'state', 'exit_code', 'elapsed', 'start', 'end', 'node_list')
 slurm = dict(zip(fields, record, strict=True))
-assert slurm['state'] == 'COMPLETED'
-assert slurm['exit_code'] == '0:0'
-assert slurm['node_list'] == 'ngu003'
-payload = {
-    'schema': 'nearing2022-preclosure-validation-receipt-v1',
+assert slurm['state'] == 'FAILED'
+failed = {
+    'schema': 'nearing2022-preclosure-failed-attempt-receipt-v1',
     'created_utc': datetime.now(timezone.utc).isoformat(),
     'slurm': slurm,
-    'source_stdout': str(out),
-    'source_stderr': str(err),
-    'preserved_stdout': str(preserved_out),
-    'preserved_stderr': str(preserved_err),
+    'stdout': str(out),
+    'stdout_bytes': out.stat().st_size,
     'stdout_sha256': digest(out),
+    'stderr': str(err),
+    'stderr_bytes': err.stat().st_size,
     'stderr_sha256': digest(err),
-    'job_receipt_sha256': digest(job_receipt),
-    'validation_slurm_sha256': digest(validation),
-    'server_checker_sha256': digest(checker),
-    'closure_verifier_sha256': digest(verifier),
-    'local_validation_receipt_sha256': digest(local_receipt),
+    'root_cause': 'missing_headline_artifact_recovery_binding',
 }
-assert payload['stdout_sha256'] == digest(preserved_out)
-assert payload['stderr_sha256'] == digest(preserved_err)
-temporary = receipt.with_suffix(receipt.suffix + '.tmp')
-assert not receipt.exists() and not temporary.exists()
-temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
-temporary.replace(receipt)
-print(json.dumps(payload, sort_keys=True))
+temporary = failed_receipt.with_suffix(failed_receipt.suffix + '.tmp')
+assert not failed_receipt.exists() and not temporary.exists()
+temporary.write_text(json.dumps(failed, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
+temporary.replace(failed_receipt)
+print(json.dumps(failed, sort_keys=True))
 PY
-  sha256sum "$OUT" "$ERR" "$PRESERVED_OUT" "$PRESERVED_ERR" "$RECEIPT" "$JOB_RECEIPT" "$VALIDATION" "$CHECKER" "$VERIFIER" "$LOCAL_RECEIPT"
-elif [ "$STATE" = "RUNNING" ] || [ "$STATE" = "PENDING" ]; then
-  echo "validation_pending=1"
-else
-  echo "=== FAILED STDOUT ==="
-  test -f "$OUT" && cat "$OUT"
-  echo "=== FAILED STDERR ==="
-  test -f "$ERR" && cat "$ERR"
-  test -f "$OUT" && test -f "$ERR" && sha256sum "$OUT" "$ERR" "$JOB_RECEIPT"
-fi
 
-echo "=== SAFETY BOUNDARY ==="
+echo "=== SUBMIT PRECLOSURE VALIDATION ==="
+VALIDATION_JOB_ID=$(sbatch --parsable "$VALIDATION" | cut -d';' -f1)
+test -n "$VALIDATION_JOB_ID"
+printf '%s\n' "$VALIDATION_JOB_ID" > "$JOB_RECEIPT"
+echo "validation_job_id=$VALIDATION_JOB_ID"
+scontrol show job -o "$VALIDATION_JOB_ID"
+
+echo "=== POST-INSTALL SAFETY BOUNDARY ==="
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = "202293|PENDING|JobHeldUser|N22-manifest"
 test "$(squeue -h -j 202315 -o '%i|%T|%r|%j')" = "202315|PENDING|Dependency|N22-gate"
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
-
-if [ "$STATE" != "COMPLETED" ] && [ "$STATE" != "RUNNING" ] && [ "$STATE" != "PENDING" ]; then
-  exit 4
-fi
+sha256sum "$TARGET" "$PAYLOAD_COPY" "$DEPLOYMENT_RECEIPT" "$PRESERVED_OUT" "$PRESERVED_ERR" "$FAILED_RECEIPT" "$JOB_RECEIPT"
