@@ -1,20 +1,9 @@
 #!/bin/bash
-# ID29 seq=137: bounded event wait for basin training task 202216_9, followed by the same read-only audit.
+# ID29 seq=138: read-only partial numerical audit of every currently complete evaluation coordinate.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
 JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
-
-echo "=== BOUNDED EVENT WAIT ==="
-WAIT_JOB=202216_9
-WAIT_DEADLINE=$((SECONDS + 900))
-while squeue -h -j "$WAIT_JOB" -t RUNNING,PENDING -o '%i' | grep -qx "$WAIT_JOB"; do
-  if (( SECONDS >= WAIT_DEADLINE )); then
-    break
-  fi
-  sleep 30
-done
-echo "waited_seconds=$SECONDS"
 
 echo "=== BOUNDED PROGRESS AND WALLTIME PROJECTION ==="
 python - <<'PY'
@@ -186,6 +175,140 @@ print(json.dumps({
     'hyperparameter_complete': hyper_done,
     'hyperparameter_total': len(hyper),
 }, sort_keys=True))
+PY
+
+echo "=== PARTIAL NUMERICAL AUDIT OF COMPLETE EVALUATIONS ==="
+python - <<'PY'
+from collections import Counter
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+import pandas as pd
+
+root = Path('/data1/home/sunyiq/nearing2022_da')
+scripts = root / 'src/29_nearing2022_da_ar/scripts'
+sys.path.insert(0, str(scripts))
+from aggregate_registered_results import (  # noqa: E402
+    _author_time_value,
+    _read_registry,
+    _registered_run,
+    load_legacy_pandas_pickle,
+)
+from prepare_evaluation_run import resolve_source_run  # noqa: E402
+from score_reproduction_matrix import METRICS, _load_pickle, score_payloads  # noqa: E402
+from verify_registered_closure import _metrics_path  # noqa: E402
+
+registry_root = root / 'src/29_nearing2022_da_ar/registry'
+reference_root = root / 'src/29_nearing2022_da_ar/reference'
+training = _read_registry(registry_root / 'experiment_registry.csv', 'exp_id')
+evaluations = _read_registry(registry_root / 'evaluation_registry.csv', 'eval_id')
+author_path = reference_root / 'author_time_split_statistics.pkl'
+acceptance_path = reference_root / 'reproduction_acceptance.json'
+author = load_legacy_pandas_pickle(author_path)
+acceptance = json.loads(acceptance_path.read_text(encoding='utf-8'))
+tolerances = {key: float(value) for key, value in acceptance['absolute_difference_tolerance'].items()}
+systematic = {
+    key: float(value) for key, value in acceptance['median_signed_difference_tolerance'].items()
+}
+
+complete = []
+for _, row in evaluations.iterrows():
+    run = _registered_run(root, training, row)
+    result = run / row['result_file']
+    reference_run = resolve_source_run(root, training, row['reference_exp_id'])
+    reference = reference_run / 'test/model_epoch030/test_results.p'
+    roles = [
+        run / 'config.yml',
+        run / 'model_epoch030.pt',
+        run / 'output.log',
+        result,
+        _metrics_path(result),
+        reference,
+        _metrics_path(reference),
+    ]
+    if all(path.is_file() for path in roles):
+        complete.append((row, reference, result))
+
+reference_cache = {}
+details = []
+coordinate_rows = []
+for row, reference_path, result_path in complete:
+    if reference_path not in reference_cache:
+        reference_cache[reference_path] = _load_pickle(reference_path)
+    reference = reference_cache[reference_path]
+    scores = score_payloads(reference, _load_pickle(result_path), expected_basins=len(reference))
+    if len(scores) != 531 or scores['basin'].nunique() != 531:
+        raise ValueError(f"{row['eval_id']} did not score exactly 531 unique basins")
+    failures = []
+    nse = None
+    nse_author = None
+    nse_difference = None
+    max_abs_difference = 0.0
+    for metric in METRICS:
+        reproduction = float(scores[metric].median())
+        author_value = _author_time_value(author, row, metric)
+        difference = reproduction - author_value
+        within = abs(difference) <= tolerances[metric] + 1e-12
+        details.append({
+            'eval_id': row['eval_id'],
+            'family': row['family'],
+            'metric': metric,
+            'difference': difference,
+            'within_tolerance': within,
+        })
+        if not within:
+            failures.append(metric)
+        max_abs_difference = max(max_abs_difference, abs(difference))
+        if metric == 'NSE':
+            nse = reproduction
+            nse_author = author_value
+            nse_difference = difference
+    coordinate_rows.append({
+        'eval_id': row['eval_id'],
+        'family': row['family'],
+        'lead': int(row['lead']),
+        'train_holdout': float(row['train_holdout']) if row['train_holdout'] else None,
+        'test_holdout': float(row['test_holdout']),
+        'basins': len(scores),
+        'nse': nse,
+        'author_nse': nse_author,
+        'nse_difference': nse_difference,
+        'maximum_absolute_metric_difference': max_abs_difference,
+        'failed_metrics': failures,
+        'result_path': str(result_path.relative_to(root)),
+        'reference_path': str(reference_path.relative_to(root)),
+    })
+
+frame = pd.DataFrame(details)
+summary = {
+    'complete_coordinates': len(complete),
+    'complete_by_family': dict(sorted(Counter(row['family'] for row, _, _ in complete).items())),
+    'comparison_rows': len(frame),
+    'individual_tolerance_failures': int((~frame['within_tolerance']).sum()),
+    'coordinates_with_failures': int(sum(bool(row['failed_metrics']) for row in coordinate_rows)),
+    'author_statistics_sha256': hashlib.sha256(author_path.read_bytes()).hexdigest(),
+    'acceptance_sha256': hashlib.sha256(acceptance_path.read_bytes()).hexdigest(),
+    'scope': 'interim diagnostic only; the frozen final gate still requires all registered coordinates',
+}
+print(json.dumps(summary, sort_keys=True))
+for metric in METRICS:
+    values = frame.loc[frame['metric'] == metric]
+    payload = {
+        'metric': metric,
+        'coordinates': len(values),
+        'median_signed_difference': float(values['difference'].median()),
+        'systematic_tolerance': systematic[metric],
+        'partial_within_systematic_tolerance': bool(
+            abs(float(values['difference'].median())) <= systematic[metric] + 1e-12
+        ),
+        'maximum_absolute_difference': float(values['difference'].abs().max()),
+        'individual_failures': int((~values['within_tolerance']).sum()),
+    }
+    print(json.dumps(payload, sort_keys=True))
+for payload in coordinate_rows:
+    print(json.dumps(payload, sort_keys=True))
 PY
 
 echo "=== SAFETY BOUNDARY ==="
