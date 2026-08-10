@@ -1,0 +1,29 @@
+### channel=autoresearch-64 seq=50
+### host=login4
+### started=2026-08-10T21:36:43+0800
+### ---------- output ----------
+=== MAILBOX RUNNER PROCESSES ===
+1807 bash /data1/home/sunyiq/.hpc_runner_active.sh
+17071 bash /data1/home/sunyiq/.hpc_runner_active.sh
+17934 bash /data1/home/sunyiq/.hpc_runner_active.sh
+=== ACTIVE UNIFIED AUTORESEARCH SLURM JOBS ===
+=== RECENT UNIFIED AUTORESEARCH ACCOUNTING ===
+202243                     a64-hbv8-smoke  COMPLETED      0:0   00:01:48 2026-08-10T14:01:54 
+202306                    a64-hbv64-repro     FAILED     10:0   00:01:14 2026-08-10T16:30:29 
+202309                      a64-hbv64-fix     FAILED     10:0   00:09:35 2026-08-10T17:03:20 
+202316                      a64-hbv64-git     FAILED      1:0   00:00:01 2026-08-10T17:08:33 
+202317                     a64-hbv64-git2     FAILED     10:0   00:10:05 2026-08-10T17:22:39 
+202319                    a64-hbv64-gate3     FAILED    120:0   00:04:31 2026-08-10T17:31:22 
+202321                       a64-hbv64-io  COMPLETED      0:0   00:22:12 2026-08-10T18:01:01 
+=== LAST VERIFIED JOB ===
+       JobID              JobName  NodeList          State ExitCode    Elapsed                  End 
+------------ -------------------- --------- -------------- -------- ---------- -------------------- 
+      202321         a64-hbv64-io    icn213      COMPLETED      0:0   00:22:12  2026-08-10T18:01:01 
+=== LAST VERIFIED EVIDENCE ===
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/REPRODUCTION_SUMMARY.json|bytes=8824|mtime=2026-08-10 18:01:00.000000000 +0800
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/MANIFEST.sha256|bytes=71860|mtime=2026-08-10 18:01:01.000000000 +0800
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/candidate_run/CANDIDATE_SUMMARY.json|bytes=44677|mtime=2026-08-10 18:00:59.000000000 +0800
+manifest_check=ok
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T21:36:49+0800
