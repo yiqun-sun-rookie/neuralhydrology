@@ -1,168 +1,124 @@
 #!/bin/bash
-# ID29 seq=75: bind hyperparameter aggregation to its fold-0 reference and report full artifact progress.
+# ID29 seq=76: install closure v12 and atomically replace the still-pending final manifest/export chain.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202280,202281
+IDEA="$ROOT/src/29_nearing2022_da_ar"
+PAYLOAD=/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v12.tar.gz
+EXPECTED_PAYLOAD_SHA=2aef37780744bab14af4e1a01d0d11fec6a15b6506fd9c33172e5f92ea6fceb6
+README="$IDEA/README.md"
+AGGREGATOR="$IDEA/scripts/aggregate_registered_results.py"
+VERIFIER="$IDEA/scripts/verify_registered_closure.py"
+GATE="$IDEA/scripts/evaluate_full_reproduction.py"
+ACCEPTANCE="$IDEA/reference/reproduction_acceptance.json"
+PROTOCOL="$IDEA/reference/released_protocol.json"
+MANIFEST_SCRIPT="$IDEA/hpc/run_registered_closure_manifest.slurm"
+EXPORT_SCRIPT="$IDEA/hpc/run_registered_closure_export.slurm"
+CONTRACT_TEST="$ROOT/test/test_nearing2022_reproduction_contract.py"
+AGGREGATION_ROOT="$ROOT/closure_20260810/aggregation"
 
-echo "=== REPAIR HYPERPARAMETER AGGREGATION DEPENDENCY ==="
-test "$(squeue -h -j 202230 -o '%T|%j')" = "PENDING|N22-agg-hyper"
-BEFORE=$(scontrol show job -o 202230 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
-echo "before=$BEFORE"
-scontrol update JobId=202230 Dependency=afterok:202228:202238
-AFTER=$(scontrol show job -o 202230 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
-echo "after=$AFTER"
-echo "$AFTER" | grep -q 'afterok:202228'
-echo "$AFTER" | grep -q 'afterok:202238'
+echo "=== INSTALL V12 ==="
+echo "$EXPECTED_PAYLOAD_SHA  $PAYLOAD" | sha256sum -c -
+test "$(tar -tzf "$PAYLOAD" | wc -l)" -eq 9
+tar -xzf "$PAYLOAD" -C "$ROOT"
+echo "c4696b70af3597b9eee28f740e5aeef4844ab17f92a95742a5124a085f7e4cb3  $README" | sha256sum -c -
+echo "54d9c52818235cf83075b35d51b32c3f7fa4a014374649d6d24ac3a702e48a4a  $AGGREGATOR" | sha256sum -c -
+echo "e70a49668b46119bcd41b887df9506a53d389b42c66038a9f59b02d08f948e6e  $VERIFIER" | sha256sum -c -
+echo "f6548d2c1935093266ddbfcced8f66b5a540a02ce4e52216001526a34d6b4082  $GATE" | sha256sum -c -
+echo "6125cab8935c3ad0ab498865c661c47ea83c837c7627dff2534ba5a5b9185895  $ACCEPTANCE" | sha256sum -c -
+echo "2f532baecbe275074111934a5de02c0a3f0ca6b77c81beb739e469b46df1b931  $PROTOCOL" | sha256sum -c -
+echo "fa8a50ee433ee19b47d71e4870afa6302dbbe35634f7de2d8c7c1c868a671e9f  $MANIFEST_SCRIPT" | sha256sum -c -
+echo "954dd4a6b068070020ec00f126c97fec8adff04cc271db4592ac5bf5eb0f81e0  $EXPORT_SCRIPT" | sha256sum -c -
+echo "4b133ba23257b22da7e60b06cbe12249d3fd4dcef3f1d10aa3cca65e38f2ee2c  $CONTRACT_TEST" | sha256sum -c -
+bash -n "$MANIFEST_SCRIPT"
+bash -n "$EXPORT_SCRIPT"
 
-echo "=== SQUEUE COUNTS BY ARRAY PARENT AND STATE ==="
-squeue -h -j "$JOBS" -o '%F|%T' | sort | uniq -c
-
-echo "=== SACCT COUNTS BY ARRAY PARENT, STATE, AND EXIT CODE ==="
-sacct -n -P -j "$JOBS" --format=JobID,State,ExitCode | awk -F'|' '
-  NF >= 3 && $1 !~ /\./ {
-    parent = $1
-    sub(/_.*/, "", parent)
-    key = parent "|" $2 "|" $3
-    count[key]++
-  }
-  END {
-    for (key in count) print count[key] "|" key
-  }
-' | sort -t'|' -k2,2n -k3,3
-
-echo "=== ACTIVE FAILURE STATES ==="
-sacct -n -P -j "$JOBS" --format=JobID,State,ExitCode | awk -F'|' '
-  $1 !~ /\./ && $2 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/ { print }
-' || true
-
-echo "=== EXPECTED CANCELLATION OF SUPERSEDED JOB ==="
-sacct -n -P -j 202242 --format=JobID,JobName,State,ExitCode | sed '/^[[:space:]]*$/d'
-
-echo "=== DEPENDENCIES ==="
-for job in 202229 202230 202280 202281; do
-  scontrol show job -o "$job" | sed -n "s/.*Dependency=\([^ ]*\).*/$job|\1/p"
-done
-
-echo "=== REGISTERED FULL-ROLE ARTIFACT PROGRESS ==="
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
 cd "$ROOT"
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python - <<'PY'
-from collections import Counter
+python -m py_compile "$AGGREGATOR" "$VERIFIER" "$GATE"
+python - "$ACCEPTANCE" "$PROTOCOL" <<'PY'
 import json
 from pathlib import Path
 import sys
 
-import pandas as pd
-
-root = Path('/data1/home/sunyiq/nearing2022_da')
-scripts = root / 'src/29_nearing2022_da_ar/scripts'
-sys.path.insert(0, str(scripts))
-from aggregate_registered_results import _registered_run
-from prepare_evaluation_run import resolve_source_run
-from verify_registered_closure import (
-    EVALUATION_AGGREGATION_FILES,
-    HYPERPARAMETER_AGGREGATION_FILES,
-    _metrics_path,
-)
-
-registry_root = root / 'src/29_nearing2022_da_ar/registry'
-training = pd.read_csv(registry_root / 'experiment_registry.csv', keep_default_na=False, dtype=str)
-evaluations = pd.read_csv(registry_root / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
-hyper = pd.read_csv(registry_root / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str)
-
-
-def require(paths):
-    missing = [path for path in paths if not path.is_file()]
-    if missing:
-        raise FileNotFoundError(missing[0])
-
-
-training_done = Counter()
-training_missing = []
-for _, row in training.iterrows():
-    try:
-        run = resolve_source_run(root, training, row['exp_id'])
-        require([
-            run / 'config.yml',
-            run / 'model_epoch030.pt',
-            run / 'output.log',
-            run / 'train_data/train_data_scaler.yml',
-        ])
-        training_done[row['family']] += 1
-    except (FileNotFoundError, KeyError, ValueError) as exc:
-        training_missing.append(f"{row['exp_id']}:{type(exc).__name__}")
-
-evaluation_done = Counter()
-evaluation_missing = []
-for _, row in evaluations.iterrows():
-    try:
-        run = _registered_run(root, training, row)
-        result = run / row['result_file']
-        reference_run = resolve_source_run(root, training, row['reference_exp_id'])
-        reference_result = reference_run / 'test/model_epoch030/test_results.p'
-        require([
-            run / 'config.yml',
-            run / 'model_epoch030.pt',
-            run / 'output.log',
-            result,
-            _metrics_path(result),
-            reference_result,
-            _metrics_path(reference_result),
-        ])
-        evaluation_done[row['family']] += 1
-    except (FileNotFoundError, KeyError, ValueError) as exc:
-        evaluation_missing.append(f"{row['eval_id']}:{type(exc).__name__}")
-
-hyper_done = 0
-hyper_missing = []
-for _, row in hyper.iterrows():
-    try:
-        run = Path(row['run_dir'])
-        run = run if run.is_absolute() else root / run
-        result = run / row['result_file']
-        reference_run = resolve_source_run(root, training, row['source_exp_id'])
-        reference_result = reference_run / 'test/model_epoch030/test_results.p'
-        require([
-            run / 'config.yml',
-            run / 'model_epoch030.pt',
-            run / 'output.log',
-            result,
-            _metrics_path(result),
-            reference_result,
-            _metrics_path(reference_result),
-        ])
-        hyper_done += 1
-    except (FileNotFoundError, KeyError, ValueError) as exc:
-        hyper_missing.append(f"{row['eval_id']}:{type(exc).__name__}")
-
-evaluation_aggregation = root / 'closure_20260810/aggregation/evaluations'
-hyper_aggregation = root / 'closure_20260810/aggregation/hyperparameters'
-evaluation_aggregation_missing = [
-    name for name in EVALUATION_AGGREGATION_FILES if not (evaluation_aggregation / name).is_file()
-]
-hyper_aggregation_missing = [
-    name for name in HYPERPARAMETER_AGGREGATION_FILES if not (hyper_aggregation / name).is_file()
-]
-payload = {
-    'training_complete': sum(training_done.values()),
-    'training_total': len(training),
-    'training_by_family': dict(sorted(training_done.items())),
-    'training_missing_first': training_missing[:5],
-    'evaluation_complete': sum(evaluation_done.values()),
-    'evaluation_total': len(evaluations),
-    'evaluation_by_family': dict(sorted(evaluation_done.items())),
-    'evaluation_missing_first': evaluation_missing[:5],
-    'hyperparameter_complete': hyper_done,
-    'hyperparameter_total': len(hyper),
-    'hyperparameter_missing_first': hyper_missing[:5],
-    'evaluation_aggregation_missing': evaluation_aggregation_missing,
-    'hyperparameter_aggregation_missing': hyper_aggregation_missing,
-    'final_gate_exists': (root / 'closure_20260810/aggregation/final_reproduction_gate.json').is_file(),
-    'final_manifest_exists': (root / 'closure_20260810/aggregation/final_artifact_manifest.json').is_file(),
-    'final_export_exists': (root / 'closure_20260810/export/nearing2022_final_closure.tar.gz').is_file(),
+acceptance = json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
+protocol = json.loads(Path(sys.argv[2]).read_text(encoding='utf-8'))
+assert acceptance['schema'] == 'nearing2022-reproduction-acceptance-v1'
+assert acceptance['frozen_before_full_matrix_results'] is True
+assert acceptance['scope'] == {
+    'numerical_target': 'released_code',
+    'hyperparameter_evaluation_period': 'test',
+    'paper_text_hyperparameter_evaluation_period': 'validation',
 }
-print(json.dumps(payload, sort_keys=True))
+assert acceptance['expected'] == {
+    'time_comparison_rows': 1057,
+    'basin_comparison_rows': 21,
+    'hyperparameter_coordinates': 660,
+}
+assert protocol['released_experiment_code']['commit'] == 'b254529deb75d950f6417b67e51a7292b7aed430'
+assert protocol['released_model_code']['commit'] == 'a3f8bfc0781af44bfee4ed3b4fdfae5ec5aa9a70'
+assert protocol['assimilation_hyperparameter_grid']['released_code_evaluation_period'] == 'test'
+assert protocol['assimilation_hyperparameter_grid']['paper_text_evaluation_period'] == 'validation'
+assert protocol['assimilation_hyperparameter_grid']['expected_runs'] == 660
+print('frozen_contracts=OK')
 PY
+
+echo "=== VERIFY UPSTREAM AND REPLACED JOBS ARE STILL PENDING ==="
+test "$(squeue -h -j 202229 -o '%T|%j')" = "PENDING|N22-agg-eval"
+test "$(squeue -h -j 202230 -o '%T|%j')" = "PENDING|N22-agg-hyper"
+test "$(squeue -h -j 202280 -o '%T|%j')" = "PENDING|N22-manifest"
+test "$(squeue -h -j 202281 -o '%T|%j')" = "PENDING|N22-export"
+test ! -e "$AGGREGATION_ROOT/final_artifact_manifest.json"
+test ! -e "$AGGREGATION_ROOT/final_reproduction_gate.json"
+test ! -e "$AGGREGATION_ROOT/final_reproduction_differences.csv"
+test ! -e "$ROOT/closure_20260810/provenance/execution_environment.json"
+test ! -e "$ROOT/closure_20260810/provenance/pip_freeze.txt"
+test ! -e "$ROOT/closure_20260810/export/nearing2022_final_closure.tar.gz"
+
+echo "=== FAIL-CLOSED PREFLIGHT ==="
+STATUS=$(mktemp)
+set +e
+python "$VERIFIER" \
+  --repo-root "$ROOT" \
+  --training-registry "$IDEA/registry/experiment_registry.csv" \
+  --evaluation-registry "$IDEA/registry/evaluation_registry.csv" \
+  --hyperparameter-registry "$IDEA/registry/assimilation_hyperparameter_registry.csv" \
+  --evaluation-aggregation-dir "$AGGREGATION_ROOT/evaluations" \
+  --hyperparameter-aggregation-dir "$AGGREGATION_ROOT/hyperparameters" > "$STATUS"
+STATUS_RC=$?
+set -e
+test "$STATUS_RC" -eq 2
+grep -q '"complete": false' "$STATUS"
+grep -q '"training": 46' "$STATUS"
+grep -q '"evaluations": 180' "$STATUS"
+grep -q '"hyperparameters": 660' "$STATUS"
+sed -n '1,16p' "$STATUS"
+rm -f "$STATUS"
+
+echo "=== REPLACE PENDING V11 FINAL CHAIN ==="
+scancel 202281 202280
+for _ in $(seq 1 20); do
+  ACTIVE=$(squeue -h -j 202280,202281 -o '%i' 2>/dev/null || true)
+  test -z "$ACTIVE" && break
+  sleep 1
+done
+test -z "$(squeue -h -j 202280,202281 -o '%i' 2>/dev/null || true)"
+test -z "$(squeue -h -u "$USER" -n N22-manifest -o '%i' 2>/dev/null || true)"
+test -z "$(squeue -h -u "$USER" -n N22-export -o '%i' 2>/dev/null || true)"
+
+MANIFEST_JOB=$(sbatch --parsable --dependency=afterok:202229:202230 "$MANIFEST_SCRIPT")
+MANIFEST_JOB=${MANIFEST_JOB%%;*}
+test -n "$MANIFEST_JOB"
+EXPORT_JOB=$(sbatch --parsable --dependency="afterok:$MANIFEST_JOB" "$EXPORT_SCRIPT")
+EXPORT_JOB=${EXPORT_JOB%%;*}
+test -n "$EXPORT_JOB"
+echo "replacement_manifest_job=$MANIFEST_JOB"
+echo "replacement_export_job=$EXPORT_JOB"
+squeue -j "202229,202230,$MANIFEST_JOB,$EXPORT_JOB" -o '%.18i %.24j %.2t %.10M %.6D %R'
+scontrol show job -o "$MANIFEST_JOB" | sed -n 's/.*Dependency=\([^ ]*\).*/manifest_dependency=\1/p'
+scontrol show job -o "$EXPORT_JOB" | sed -n 's/.*Dependency=\([^ ]*\).*/export_dependency=\1/p'
+
+echo "=== SUPERSEDED JOB ACCOUNTING ==="
+sacct -n -P -j 202280,202281 --format=JobID,JobName,State,ExitCode | sed '/^[[:space:]]*$/d'
