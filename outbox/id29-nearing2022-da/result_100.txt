@@ -1,0 +1,154 @@
+### channel=id29-nearing2022-da seq=100
+### host=login4
+### started=2026-08-10T19:24:03+0800
+### ---------- output ----------
+=== VALIDATION FAILURE BOUNDARY ===
+=== ALL LOCAL-TEST BINDING HASHES ===
+{
+  "file_count": 15,
+  "files": [
+    {
+      "exists": true,
+      "expected_bytes": 7208,
+      "expected_sha256": "eb4461ff539e223ee7124cba1e78ba3ba3e526aa260516a0f7a687118d25da2d",
+      "match": true,
+      "observed_bytes": 7208,
+      "observed_sha256": "eb4461ff539e223ee7124cba1e78ba3ba3e526aa260516a0f7a687118d25da2d",
+      "path": "test/test_assimilation.py"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 68460,
+      "expected_sha256": "46d232a19aef3f53719bc3b24daf7c067512730e0485905964fb5e895c213495",
+      "match": true,
+      "observed_bytes": 68460,
+      "observed_sha256": "46d232a19aef3f53719bc3b24daf7c067512730e0485905964fb5e895c213495",
+      "path": "test/test_nearing2022_reproduction_contract.py"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 14656,
+      "expected_sha256": "d924534387faac80f822260c0a70be44b0acb16cc06a2ab9a622e28445773659",
+      "match": true,
+      "observed_bytes": 14656,
+      "observed_sha256": "d924534387faac80f822260c0a70be44b0acb16cc06a2ab9a622e28445773659",
+      "path": "neuralhydrology/evaluation/assimilation.py"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 4548,
+      "expected_sha256": "78b9977e20ac59318060c7771e180bc9a9498dfe753ed13652b733ca922b58dd",
+      "match": true,
+      "observed_bytes": 4548,
+      "observed_sha256": "78b9977e20ac59318060c7771e180bc9a9498dfe753ed13652b733ca922b58dd",
+      "path": "neuralhydrology/modelzoo/cudalstm.py"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 7552,
+      "expected_sha256": "f079eb9d6424fa60c95af0d560dc5988d8cf8adb09921cb6877717ec689eff04",
+      "match": true,
+      "observed_bytes": 7552,
+      "observed_sha256": "f079eb9d6424fa60c95af0d560dc5988d8cf8adb09921cb6877717ec689eff04",
+      "path": "neuralhydrology/utils/assimilationconfig.py"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 31751,
+      "expected_sha256": "b27f46fbaf128b85b93c2fe0d206e5e109bfa2fb7140f05aac179714f54371fb",
+      "match": true,
+      "observed_bytes": 31751,
+      "observed_sha256": "b27f46fbaf128b85b93c2fe0d206e5e109bfa2fb7140f05aac179714f54371fb",
+      "path": "neuralhydrology/training/loss.py"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 62472,
+      "expected_sha256": "b7de3e94afccf5648edfec91036721d3fd594ef566cea0cd92b0491752665e21",
+      "match": true,
+      "observed_bytes": 62472,
+      "observed_sha256": "b7de3e94afccf5648edfec91036721d3fd594ef566cea0cd92b0491752665e21",
+      "path": "src/29_nearing2022_da_ar/scripts/verify_registered_closure.py"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 9615,
+      "expected_sha256": "855512b1235ceae3230e6cd67feb1be6350d800f92d53bf8da7d9c949391ce02",
+      "match": true,
+      "observed_bytes": 9615,
+      "observed_sha256": "855512b1235ceae3230e6cd67feb1be6350d800f92d53bf8da7d9c949391ce02",
+      "path": "src/29_nearing2022_da_ar/scripts/independent_verify_closure_export.py"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 8692,
+      "expected_sha256": "17463a5ab783d024def54993b0d04cbd37a4f655fbfd4f696da57d7c5251cea8",
+      "match": true,
+      "observed_bytes": 8692,
+      "observed_sha256": "17463a5ab783d024def54993b0d04cbd37a4f655fbfd4f696da57d7c5251cea8",
+      "path": "src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 14531,
+      "expected_sha256": "a11babfdafca2f2720b65db713c7b0cae103077df31717d92b93d92e19c255f9",
+      "match": true,
+      "observed_bytes": 14531,
+      "observed_sha256": "a11babfdafca2f2720b65db713c7b0cae103077df31717d92b93d92e19c255f9",
+      "path": "src/29_nearing2022_da_ar/scripts/evaluate_full_reproduction.py"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 1793,
+      "expected_sha256": "1513634e48a76be1ccffe1f7ef6a36955e6594b05bda39ed0957c41d72ed58ac",
+      "match": false,
+      "observed_bytes": 1742,
+      "observed_sha256": "9c5bfa339b3ed8be3b389cf10f8555a74b278dbf27aa247f7e77abc7b753f254",
+      "path": "src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 8440,
+      "expected_sha256": "2cb9a513fc3a489622938d3b9f0a8fe1a0b6f093f1f584419e266453cb887803",
+      "match": true,
+      "observed_bytes": 8440,
+      "observed_sha256": "2cb9a513fc3a489622938d3b9f0a8fe1a0b6f093f1f584419e266453cb887803",
+      "path": "src/29_nearing2022_da_ar/hpc/run_registered_closure_manifest.slurm"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 3902,
+      "expected_sha256": "9f2b197239d58b8cd0068007645152f890d7173c0e513c4bc3f7214c7dae854b",
+      "match": true,
+      "observed_bytes": 3902,
+      "observed_sha256": "9f2b197239d58b8cd0068007645152f890d7173c0e513c4bc3f7214c7dae854b",
+      "path": "src/29_nearing2022_da_ar/hpc/run_registered_closure_export.slurm"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 1618,
+      "expected_sha256": "bf6dd27da64e6a4d1af1bd4adefce37cce033ad5bcd97d82b2f0d1717d8c0c89",
+      "match": true,
+      "observed_bytes": 1618,
+      "observed_sha256": "bf6dd27da64e6a4d1af1bd4adefce37cce033ad5bcd97d82b2f0d1717d8c0c89",
+      "path": "src/29_nearing2022_da_ar/hpc/run_preclosure_validation.slurm"
+    },
+    {
+      "exists": true,
+      "expected_bytes": 2620,
+      "expected_sha256": "abaf1dc519bba8a74bdcf0c8ce4c21e5477d0ec93de90dc1f9a5e78c5389dd44",
+      "match": true,
+      "observed_bytes": 2620,
+      "observed_sha256": "abaf1dc519bba8a74bdcf0c8ce4c21e5477d0ec93de90dc1f9a5e78c5389dd44",
+      "path": "results/29_nearing2022_da_ar/formal_closure/author_source_archives/source_archive_binding.json"
+    }
+  ],
+  "match_count": 14,
+  "mismatch_count": 1,
+  "receipt_sha256": "70b86ac597d1512122f8a56315d6f1cddeda5889572b0e3bcdaa18d1272333fb",
+  "schema": "nearing2022-server-local-test-binding-audit-v1"
+}
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T19:24:04+0800
