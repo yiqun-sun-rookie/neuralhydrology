@@ -1,0 +1,18 @@
+### channel=id29-nearing2022-da seq=60
+### host=login4
+### started=2026-08-10T12:37:47+0800
+### ---------- output ----------
+=== PREFLIGHT ===
+c7fd856c19f2d8670b9453b4a9d5132824970b22670a8d03311121193e86bfe5  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+2ad6850f24bb9b6af5e42634748988b4c984eb19ca227e66f9aabf84831c0313  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/time_split_remaining_training_batch.txt
+a9b6627d50a8337bc88df3f106328fd5ef3021b700256f6b0f9feec84ae62dd9  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/basin_split_training_batch.txt
+config_contract=PASS count=43 unique_experiments=43
+=== SUBMIT ===
+time_job_id=202215 tasks=23 max_concurrent=3
+basin_job_id=202216 tasks=20 max_concurrent=2
+             JOBID               NAME ST       TIME  NODES NODELIST(REASON)
+   202215_[0-22%3]           N22-time PD       0:00      1 (None)
+   202216_[0-19%2]          N22-basin PD       0:00      1 (None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T12:37:59+0800
