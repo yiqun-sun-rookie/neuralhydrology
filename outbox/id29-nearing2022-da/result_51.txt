@@ -1,0 +1,22 @@
+### channel=id29-nearing2022-da seq=51
+### host=login4
+### started=2026-08-10T11:58:59+0800
+### ---------- output ----------
+=== PAYLOAD ===
+/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v1.tar.gz: OK
+82
+=== CONFIG PREFLIGHT ===
+512971a337cc0fe8135b6f7ccc16a6fa24846af7d27cfb3350ceeae2bbf72178  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.5_seed_0.yml
+3437efc863d0d832129bbe3610b73e58bca31861b079d7e4f4fa8c1515d4ea35  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training.slurm
+config_contract=PASS
+=== DUPLICATE GUARD ===
+=== SUBMIT ===
+job_id=202214
+JobId=202214 JobName=N22-train
+   JobState=PENDING Reason=None Dependency=(null)
+   Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128
+   Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training.slurm
+   WorkDir=/data1/home/sunyiq/nearing2022_da
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T11:59:09+0800
