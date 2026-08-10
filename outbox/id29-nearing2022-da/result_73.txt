@@ -1,0 +1,34 @@
+### channel=id29-nearing2022-da seq=73
+### host=login4
+### started=2026-08-10T14:14:26+0800
+### ---------- output ----------
+=== INSTALL ===
+/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v9.tar.gz: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py: OK
+b0081173696f6c07cbe2e46fded65c08fb9f9ae8f2cbc7b8d44184a0bda80597  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/hpc_camels_us_manifest_v2.json
+=== FAIL-CLOSED STATUS ===
+{
+  "complete": false,
+  "counts": {
+    "evaluations": 180,
+    "hyperparameters": 660,
+    "training": 46
+  },
+  "missing_count": 4136,
+  "missing_first": [
+    {
+      "coordinate_id": "N22-TS-AR-L01-H025-S0",
+      "coordinate_type": "training",
+      "error": "FileNotFoundError: Expected one completed source run for N22-TS-AR-L01-H025-S0 under /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression, found 0",
+      "path": "",
+      "role": "run_resolution"
+    },
+=== PENDING FINAL GATE ===
+             JOBID                     NAME ST       TIME  NODES NODELIST(REASON)
+            202229             N22-agg-eval PD       0:00      1 (Dependency)
+            202230            N22-agg-hyper PD       0:00      1 (Dependency)
+            202242             N22-manifest PD       0:00      1 (Dependency)
+manifest_dependency=afterok:202229,afterok:202230
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T14:14:44+0800
