@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=66: array-aware read-only health snapshot for the complete reproduction matrix.
+# ID29 seq=67: Slurm-compatible array-aware health snapshot.
 set -eo pipefail
 
 JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230
@@ -8,14 +8,11 @@ echo "=== SQUEUE COUNTS BY ARRAY PARENT AND STATE ==="
 squeue -h -j "$JOBS" -o '%F|%T' | sort | uniq -c
 
 echo "=== SACCT COUNTS BY ARRAY PARENT, STATE, AND EXIT CODE ==="
-sacct -n -P -j "$JOBS" --format=JobIDRaw,ArrayJobID,State,ExitCode | awk -F'|' '
-  NF >= 4 && $1 !~ /\./ {
-    parent = $2
-    if (parent == "") {
-      parent = $1
-      sub(/_.*/, "", parent)
-    }
-    key = parent "|" $3 "|" $4
+sacct -n -P -j "$JOBS" --format=JobID,State,ExitCode | awk -F'|' '
+  NF >= 3 && $1 !~ /\./ {
+    parent = $1
+    sub(/_.*/, "", parent)
+    key = parent "|" $2 "|" $3
     count[key]++
   }
   END {
