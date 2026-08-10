@@ -1,89 +1,97 @@
 #!/bin/bash
-# ID29 seq=122: audit storage capacity for all 660 frozen hyperparameter outputs; read-only.
+# ID29 seq=123: refresh complete-role counts and active failure states after storage audit.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
 JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
 
-echo "=== FILESYSTEM CAPACITY ==="
-df -B1 "$ROOT"
-du -sb "$ROOT/closure_20260810"
-echo "=== USER QUOTA IF CONFIGURED ==="
-quota -s 2>&1 || true
+echo "=== ACTIVE MAIN JOBS ==="
+squeue -h -j "$JOBS" -o '%i|%T|%M|%l|%R|%j' | sort
 
-echo "=== HYPERPARAMETER STORAGE PROJECTION ==="
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-cd "$ROOT"
-export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python - <<'PY'
-import json
-from pathlib import Path
-
-import pandas as pd
-
-root = Path('/data1/home/sunyiq/nearing2022_da')
-registry_root = root / 'src/29_nearing2022_da_ar/registry'
-evaluations = pd.read_csv(registry_root / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
-hyper = pd.read_csv(registry_root / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str)
-
-def tree_bytes(path):
-    return sum(item.stat().st_size for item in path.rglob('*') if item.is_file())
-
-def record(path):
-    return {'path': str(path), 'bytes': path.stat().st_size}
-
-completed_rows = evaluations.loc[evaluations['slurm_job_id'].isin(['202222_6', '202222_7'])]
-samples = []
-estimates = []
-for _, row in completed_rows.iterrows():
-    run = Path(row['run_dir'])
-    run = run if run.is_absolute() else root / run
-    assert run.is_dir(), run
-    result = run / row['result_file']
-    assert result.is_file(), result
-    fixed_paths = [run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log']
-    assert all(path.is_file() for path in fixed_paths)
-    train_data = run / 'train_data'
-    assert train_data.is_dir()
-    fixed_bytes = sum(path.stat().st_size for path in fixed_paths) + tree_bytes(train_data)
-    test_bytes = tree_bytes(run / 'test')
-    total_bytes = tree_bytes(run)
-    assert fixed_bytes + test_bytes == total_bytes
-    estimated_53_basin_bytes = fixed_bytes + round(test_bytes * 53 / 531)
-    estimates.append(estimated_53_basin_bytes)
-    samples.append({
-        'eval_id': row['eval_id'],
-        'run': str(run),
-        'full_531_basin_total_bytes': total_bytes,
-        'fixed_bytes': fixed_bytes,
-        'test_tree_bytes': test_bytes,
-        'result': record(result),
-        'estimated_53_basin_total_bytes': estimated_53_basin_bytes,
-    })
-
-assert len(samples) == 2
-estimates.sort()
-median_estimate = estimates[len(estimates) // 2]
-existing_hyper_dirs = [path for path in (root / 'closure_20260810/evaluations/hyperparameter_search').glob('*') if path.is_dir()] \
-    if (root / 'closure_20260810/evaluations/hyperparameter_search').is_dir() else []
-print(json.dumps({
-    'samples': samples,
-    'hyperparameter_rows': len(hyper),
-    'hyperparameter_basin_count': 53,
-    'existing_hyperparameter_directories': len(existing_hyper_dirs),
-    'median_estimated_bytes_per_53_basin_directory': median_estimate,
-    'estimated_660_directory_bytes': median_estimate * len(hyper),
-    'two_x_conservative_bytes': 2 * median_estimate * len(hyper),
-    'projection_limit': 'Scales the completed test tree linearly from 531 to 53 basins and keeps copied checkpoint, scaler, config, and log bytes fixed; hyperparameter settings can change log and result sizes.',
-}, sort_keys=True))
-PY
+echo "=== BASIN TRAINING TASKS ==="
+sacct -n -P -j 202216 --format=JobID,State,ExitCode,Elapsed,Start,End,NodeList | \
+  awk -F'|' '$1 !~ /\./ && $1 ~ /^202216_[0-9]+$/ {print}' | sort
 
 echo "=== ACTIVE FAILURE STATES ==="
 FAILURES=$(sacct -n -P -j "$JOBS" --format=JobIDRaw,JobName,State,ExitCode | \
   awk -F'|' '$1 !~ /\./ && $3 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/')
 printf '%s\n' "$FAILURES"
 test -z "$FAILURES"
+
+echo "=== REGISTERED COMPLETE-ROLE COUNTS ==="
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+cd "$ROOT"
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
+python - <<'PY'
+from collections import Counter
+import json
+from pathlib import Path
+import sys
+
+import pandas as pd
+
+root = Path('/data1/home/sunyiq/nearing2022_da')
+scripts = root / 'src/29_nearing2022_da_ar/scripts'
+sys.path.insert(0, str(scripts))
+from aggregate_registered_results import _registered_run
+from prepare_evaluation_run import resolve_source_run
+from verify_registered_closure import _metrics_path
+
+registry_root = root / 'src/29_nearing2022_da_ar/registry'
+training = pd.read_csv(registry_root / 'experiment_registry.csv', keep_default_na=False, dtype=str)
+evaluations = pd.read_csv(registry_root / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
+hyper = pd.read_csv(registry_root / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str)
+
+def complete(paths):
+    return all(path.is_file() for path in paths)
+
+training_done = Counter()
+for _, row in training.iterrows():
+    try:
+        run = resolve_source_run(root, training, row['exp_id'])
+        if complete([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log',
+                     run / 'train_data/train_data_scaler.yml']):
+            training_done[row['family']] += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
+
+evaluation_done = Counter()
+for _, row in evaluations.iterrows():
+    try:
+        run = _registered_run(root, training, row)
+        result = run / row['result_file']
+        reference = resolve_source_run(root, training, row['reference_exp_id']) / 'test/model_epoch030/test_results.p'
+        if complete([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
+                     _metrics_path(result), reference, _metrics_path(reference)]):
+            evaluation_done[row['family']] += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
+
+hyper_done = 0
+for _, row in hyper.iterrows():
+    try:
+        run = Path(row['run_dir'])
+        run = run if run.is_absolute() else root / run
+        result = run / row['result_file']
+        reference = resolve_source_run(root, training, row['source_exp_id']) / 'test/model_epoch030/test_results.p'
+        if complete([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
+                     _metrics_path(result), reference, _metrics_path(reference)]):
+            hyper_done += 1
+    except (FileNotFoundError, KeyError, ValueError):
+        pass
+
+print(json.dumps({
+    'training_complete': sum(training_done.values()),
+    'training_total': len(training),
+    'training_by_family': dict(sorted(training_done.items())),
+    'evaluation_complete': sum(evaluation_done.values()),
+    'evaluation_total': len(evaluations),
+    'evaluation_by_family': dict(sorted(evaluation_done.items())),
+    'hyperparameter_complete': hyper_done,
+    'hyperparameter_total': len(hyper),
+}, sort_keys=True))
+PY
 
 echo "=== SAFETY BOUNDARY ==="
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = "202293|PENDING|JobHeldUser|N22-manifest"
