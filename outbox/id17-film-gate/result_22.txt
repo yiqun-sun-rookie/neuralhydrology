@@ -1,0 +1,90 @@
+### channel=id17-film-gate seq=22
+### host=login4
+### started=2026-08-11T00:16:58+0800
+### ---------- output ----------
+=== QUEUE ===
+running=0 pending=0
+slurm_load_jobs error: Invalid job id specified
+=== FINISHED CELLS (sacct) ===
+          201920_0    COMPLETED      0:0    15:07:58 
+          201920_1    COMPLETED      0:0    18:33:03 
+          201920_2    COMPLETED      0:0    13:26:04 
+          201920_3    COMPLETED      0:0    15:41:03 
+          201920_4    COMPLETED      0:0    14:21:10 
+          201920_5    COMPLETED      0:0    16:37:50 
+          201920_6    COMPLETED      0:0    14:04:58 
+          201920_7    COMPLETED      0:0    16:50:08 
+          201920_8    COMPLETED      0:0    15:48:31 
+          201920_9    COMPLETED      0:0    16:08:37 
+         201920_10    COMPLETED      0:0    15:05:36 
+         201920_11    COMPLETED      0:0    15:56:17 
+         201920_12    COMPLETED      0:0    13:35:43 
+         201920_13    COMPLETED      0:0    16:02:55 
+         201920_14    COMPLETED      0:0    13:46:52 
+         201920_15    COMPLETED      0:0    18:27:19 
+         201920_16    COMPLETED      0:0    16:29:43 
+         201920_17    COMPLETED      0:0    15:44:29 
+         201920_18    COMPLETED      0:0    14:55:24 
+         201920_19    COMPLETED      0:0    17:02:03 
+=== RESULTS SO FAR ===
+[RESULT] gate_ea_fold0_seed0 epoch20 test median NSE = 0.6082
+[RESULT] gate_ea_fold0_seed0 epoch30 test median NSE = 0.4951
+[RESULT] gate_ea_fold0_seed1 epoch20 test median NSE = 0.6464
+[RESULT] gate_ea_fold0_seed1 epoch30 test median NSE = 0.5641
+[RESULT] gate_ea_fold1_seed0 epoch20 test median NSE = 0.6563
+[RESULT] gate_ea_fold1_seed0 epoch30 test median NSE = 0.6398
+[RESULT] gate_ea_fold1_seed1 epoch20 test median NSE = 0.6635
+[RESULT] gate_ea_fold1_seed1 epoch30 test median NSE = 0.6530
+[RESULT] gate_ea_fold2_seed0 epoch20 test median NSE = 0.6682
+[RESULT] gate_ea_fold2_seed0 epoch30 test median NSE = 0.6325
+[RESULT] gate_ea_fold2_seed1 epoch20 test median NSE = 0.6342
+[RESULT] gate_ea_fold2_seed1 epoch30 test median NSE = 0.6572
+[RESULT] gate_ea_fold3_seed0 epoch20 test median NSE = 0.6195
+[RESULT] gate_ea_fold3_seed0 epoch30 test median NSE = 0.5292
+[RESULT] gate_ea_fold3_seed1 epoch20 test median NSE = 0.6176
+[RESULT] gate_ea_fold3_seed1 epoch30 test median NSE = 0.6182
+[RESULT] gate_ea_fold4_seed0 epoch20 test median NSE = 0.6081
+[RESULT] gate_ea_fold4_seed0 epoch30 test median NSE = 0.6155
+[RESULT] gate_ea_fold4_seed1 epoch20 test median NSE = 0.6463
+[RESULT] gate_ea_fold4_seed1 epoch30 test median NSE = 0.6386
+[RESULT] gate_film_fold0_seed0 epoch20 test median NSE = 0.6269
+[RESULT] gate_film_fold0_seed0 epoch30 test median NSE = 0.6144
+[RESULT] gate_film_fold0_seed1 epoch20 test median NSE = 0.6188
+[RESULT] gate_film_fold0_seed1 epoch30 test median NSE = 0.6060
+[RESULT] gate_film_fold1_seed0 epoch20 test median NSE = 0.6596
+[RESULT] gate_film_fold1_seed0 epoch30 test median NSE = 0.6661
+[RESULT] gate_film_fold1_seed1 epoch20 test median NSE = 0.6422
+[RESULT] gate_film_fold1_seed1 epoch30 test median NSE = 0.6615
+[RESULT] gate_film_fold2_seed0 epoch20 test median NSE = 0.6741
+[RESULT] gate_film_fold2_seed0 epoch30 test median NSE = 0.6410
+[RESULT] gate_film_fold2_seed1 epoch20 test median NSE = 0.6839
+[RESULT] gate_film_fold2_seed1 epoch30 test median NSE = 0.6606
+[RESULT] gate_film_fold3_seed0 epoch20 test median NSE = 0.6254
+[RESULT] gate_film_fold3_seed0 epoch30 test median NSE = 0.6300
+[RESULT] gate_film_fold3_seed1 epoch20 test median NSE = 0.6057
+[RESULT] gate_film_fold3_seed1 epoch30 test median NSE = 0.6137
+[RESULT] gate_film_fold4_seed0 epoch20 test median NSE = 0.6256
+[RESULT] gate_film_fold4_seed0 epoch30 test median NSE = 0.6414
+[RESULT] gate_film_fold4_seed1 epoch20 test median NSE = 0.6277
+[RESULT] gate_film_fold4_seed1 epoch30 test median NSE = 0.6217
+=== PROTOCOL CHECKS ===
+[CHECK] protocol OK: gate_ea_fold0_seed0 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold0_seed1 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold1_seed0 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold1_seed1 model=ealstm film_site=None
+[CHECK] protocol OK: gate_ea_fold2_seed0 model=ealstm film_site=None
+=== ERRORS ===
+=== PROGRESS (latest epoch per running cell) ===
+gate_201920_0.out: Epoch 30 average loss
+gate_201920_10.out: Epoch 30 average loss
+gate_201920_11.out: Epoch 30 average loss
+gate_201920_12.out: Epoch 30 average loss
+gate_201920_13.out: Epoch 30 average loss
+gate_201920_14.out: Epoch 30 average loss
+gate_201920_15.out: Epoch 30 average loss
+gate_201920_16.out: Epoch 30 average loss
+gate_201920_17.out: Epoch 30 average loss
+gate_201920_18.out: Epoch 30 average loss
+### ---------- end ----------
+### exit_code=141
+### finished=2026-08-11T00:17:11+0800
