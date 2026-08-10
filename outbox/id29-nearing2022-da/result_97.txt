@@ -1,0 +1,28 @@
+### channel=id29-nearing2022-da seq=97
+### host=login4
+### started=2026-08-10T19:10:58+0800
+### ---------- output ----------
+=== CONDA ENVIRONMENTS ===
+# conda environments:
+#
+base                  *  /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+                         /data1/home/sunyiq/v09_strict/gitenv
+
+=== PYTHON CAPABILITY MATRIX ===
+{"modules": {"numpy": false, "pandas": false, "pytest": false, "scipy": false, "torch": false, "xarray": false, "yaml": false}, "python": "/data1/home/sunyiq/miniconda3/bin/python", "version": "3.11.5"}
+{"modules": {"numpy": true, "pandas": true, "pytest": false, "scipy": true, "torch": true, "xarray": false, "yaml": true}, "python": "/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python", "version": "3.11.13"}
+{"modules": {"numpy": true, "pandas": true, "pytest": false, "scipy": true, "torch": true, "xarray": true, "yaml": true}, "python": "/data1/home/sunyiq/miniconda3/envs/neuralhydrology/bin/python", "version": "3.11.14"}
+{"modules": {"numpy": true, "pandas": true, "pytest": false, "scipy": true, "torch": true, "xarray": false, "yaml": false}, "python": "/data1/home/sunyiq/miniconda3/envs/nh_clean/bin/python", "version": "3.10.19"}
+{"modules": {"numpy": true, "pandas": true, "pytest": false, "scipy": true, "torch": true, "xarray": true, "yaml": true}, "python": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "version": "3.11.13"}
+=== EXISTING PYTEST ENTRYPOINTS ===
+=== FAILED JOB LOG HASHES ===
+f87870abd577482c8760c491ec2006939ee79f2df86b3294245d6ed34af80f30  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202365.out
+bc9ebfbc4f7f167056075c7785483ff7cd4002d9ef21f627ab90c4be2279ede6  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-preclosure-check_202365.err
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T19:11:28+0800
