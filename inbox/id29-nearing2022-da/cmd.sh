@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=86: report Slurm health and full-role artifact progress including two-phase gate 202315; keep candidate manifest 202293 held.
+# ID29 seq=87: report Slurm health and full-role artifact progress including two-phase gate 202315; keep candidate manifest 202293 held.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
