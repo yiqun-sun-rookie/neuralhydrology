@@ -1,0 +1,19 @@
+### channel=autoresearch-64 seq=33
+### host=login4
+### started=2026-08-10T12:07:33+0800
+### ---------- output ----------
+=== SCHEDULER ===
+       JobID              JobName          State ExitCode    Elapsed 
+------------ -------------------- -------------- -------- ---------- 
+      202085      a64-tz-validate      COMPLETED      0:0   00:00:18 
+diagnostic_complete=True
+manifest_entries=58
+{"declaration": "numpy==1.26.4", "denied_event_count": 0, "independently_counted_denials": 0, "normalized_exit_code": 0, "package": "numpy", "process_exit_code": 0, "required_outputs_complete": true, "status": "succeeded"}
+{"declaration": "pandas==2.2.3", "denied_event_count": 0, "independently_counted_denials": 0, "normalized_exit_code": 0, "package": "pandas", "process_exit_code": 0, "required_outputs_complete": true, "status": "succeeded"}
+{"declaration": "pyarrow==17.0.0", "denied_event_count": 0, "independently_counted_denials": 0, "normalized_exit_code": 0, "package": "pyarrow", "process_exit_code": 0, "required_outputs_complete": true, "status": "succeeded"}
+manifest_check=ok
+summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/evidence/SUMMARY.json
+manifest=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/evidence/MANIFEST.sha256
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T12:07:35+0800
