@@ -1,0 +1,127 @@
+### channel=id29-nearing2022-da seq=148
+### host=login4
+### started=2026-08-11T03:51:24+0800
+### ---------- output ----------
+=== ISOLATED AUTHOR V1.3 EVALUATOR ATTEMPT 2 ===
+202504|N22-author-v13-eval2|COMPLETED|0:0|00:01:09|2026-08-11T03:49:10|2026-08-11T03:50:19|ngu102
+202504.batch|batch|COMPLETED|0:0|00:01:09|2026-08-11T03:49:10|2026-08-11T03:50:19|ngu102
+202504.extern|extern|COMPLETED|0:0|00:01:10|2026-08-11T03:49:10|2026-08-11T03:50:20|ngu102
+parent_state=COMPLETED
+--- diagnostic receipt ---
+{
+  "all_observation_arrays_bitwise_identical": true,
+  "all_prediction_arrays_bitwise_identical": false,
+  "archive_sha256": "91aefc74675aa83d0cc63695a48b69cec89f43605bb68c836424d839d212603d",
+  "author_result_sha256": "76a225a23dc38b7ee39672e2146ba88a4cc21cd11ab8fd73756510af76ad4a4c",
+  "author_source_file_sha256": {
+    "evaluation/tester.py": "b5b13551a1643a0e81677dfba32c040ff55bd480bcfb2f9f0c6b26d94e6136d6",
+    "modelzoo/arlstm.py": "040e3ad2602d598127b155ea413663dfb3175805c99a5e077f785b80839b3ef2",
+    "nh_run.py": "97d9df22f13cde77cf854343ae657ad741fc08a98f7a6503c698249995b28130"
+  },
+  "author_source_release": "Zenodo neuralhydrology-public v1.3.0 root a4c284b",
+  "basin_file_sha256": "59477ff48f18b86897af6ed5322ff647febb9be280d623fdd56fb54d017affb1",
+  "basins": [
+    "01022500",
+    "01031500",
+    "01047000",
+    "01052500",
+    "01054200"
+  ],
+  "checkpoint_identical_to_registered_source": true,
+  "checkpoint_sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b",
+  "comparisons": [
+    {
+      "author_nse": 0.7475402267554812,
+      "author_prediction_sha256": "e9251ea3b7fb26b128dc2f22e55f33426968ba622f11bf990bb6aa296c76ea51",
+      "basin": "01022500",
+      "common_finite_predictions": 3652,
+      "current_nse": 0.7475375941618458,
+      "current_prediction_sha256": "fb9070ff5ed1d1f541b167c196a41cf62ef604ca4c822927da8991b3597312e0",
+      "dates": 3652,
+      "observation_bitwise_identical_equal_nan": true,
+      "observation_max_absolute_difference": 0.0,
+      "prediction_bitwise_identical_equal_nan": false,
+      "prediction_max_absolute_difference": 0.005107879638671875,
+      "prediction_mean_absolute_difference": 0.00018634713231407407
+    },
+    {
+      "author_nse": 0.7595663830490489,
+      "author_prediction_sha256": "401d8f230b9cf1a4abcd7a1ca1c9ba1f7276cbdae78bfef73b4debd82b25fa62",
+      "basin": "01031500",
+      "common_finite_predictions": 3652,
+      "current_nse": 0.7595716719787373,
+      "current_prediction_sha256": "47fd4a06bfc92df61584d254155cdd314a349cd2a30b7a4d10ff4a720bcaaed8",
+      "dates": 3652,
+      "observation_bitwise_identical_equal_nan": true,
+      "observation_max_absolute_difference": 0.0,
+      "prediction_bitwise_identical_equal_nan": false,
+      "prediction_max_absolute_difference": 0.01197052001953125,
+      "prediction_mean_absolute_difference": 0.0003158101834446551
+    },
+    {
+      "author_nse": 0.6872978149585074,
+      "author_prediction_sha256": "bd505bf475e7dcb72adc10ddb2ca09b55075eef30f80a36602e4fc008827b22e",
+      "basin": "01047000",
+      "common_finite_predictions": 3652,
+      "current_nse": 0.6872872350866742,
+      "current_prediction_sha256": "f7c97356b356afc58a69070fb7e2b992fde2820b7453349d56950c4cf5f3a464",
+      "dates": 3652,
+      "observation_bitwise_identical_equal_nan": true,
+      "observation_max_absolute_difference": 0.0,
+      "prediction_bitwise_identical_equal_nan": false,
+      "prediction_max_absolute_difference": 0.006914615631103516,
+      "prediction_mean_absolute_difference": 0.0002593539434873784
+    },
+    {
+      "author_nse": 0.7574749155796976,
+      "author_prediction_sha256": "2960027843251c8ceac94e555d39c72eb703550e7ce73e50072e2cafea26bc28",
+      "basin": "01052500",
+      "common_finite_predictions": 3652,
+      "current_nse": 0.7574734498566473,
+      "current_prediction_sha256": "026325872406abc2d93c0afad263ec0b5f38d8f9123412b5720225d05c421a1e",
+      "dates": 3652,
+      "observation_bitwise_identical_equal_nan": true,
+      "observation_max_absolute_difference": 0.0,
+      "prediction_bitwise_identical_equal_nan": false,
+      "prediction_max_absolute_difference": 0.007060050964355469,
+      "prediction_mean_absolute_difference": 0.00024355249428409606
+    },
+    {
+      "author_nse": 0.47824780878036066,
+      "author_prediction_sha256": "9d2da0625f06c5b8d7887e152b4fe3a934530c7da451c04cf307e4fa23f31b1f",
+      "basin": "01054200",
+      "common_finite_predictions": 3652,
+      "current_nse": 0.47822486178167223,
+      "current_prediction_sha256": "2a8cebd5eb9d4f11d1a11535e501b2ee1133c0f28e159457750f5936456feb90",
+      "dates": 3652,
+      "observation_bitwise_identical_equal_nan": true,
+      "observation_max_absolute_difference": 0.0,
+      "prediction_bitwise_identical_equal_nan": false,
+      "prediction_max_absolute_difference": 0.0160369873046875,
+      "prediction_mean_absolute_difference": 0.0003926565489137029
+    }
+  ],
+  "compatibility_shim": "restored matplotlib.axes._subplots.Axes for eager type-annotation evaluation only; no author source file changed",
+  "current_result_sha256": "5d0f29c3df32d0e6073c4a58efbac6bc0a0ba6b23219dce13f2de143dca1b247",
+  "diagnostic_config_sha256": "a9a3981d3c7951172ffced2ca00d6f6478d8c62b9462c076983b1955c713a938",
+  "maximum_nse_absolute_difference": 2.2946998688433418e-05,
+  "maximum_prediction_absolute_difference": 0.0160369873046875,
+  "runtime_scope": "author source evaluated under the same nh_final runtime used by the current reproduction",
+  "scaler_identical_to_registered_source": true,
+  "scaler_sha256": "add1a777647f92f1aa7a8ad039e3d406d32f05c21f30c685a14736d22f45a5d4",
+  "schema": "nearing2022-author-v13-same-checkpoint-evaluation-v1",
+  "scientific_scope": "diagnostic only; not a registered matrix coordinate and not used to select a model",
+  "torch_version": "2.4.0"
+}
+--- diagnostic artifact hashes ---
+7c3aecc86b3d660a7220b4a9594ce28b68136aeed59d83f1f128957070ceefe1  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5/diagnostic_receipt.json
+76a225a23dc38b7ee39672e2146ba88a4cc21cd11ab8fd73756510af76ad4a4c  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5/test/model_epoch030/test_results.p
+a973bba7e5095e75923e8dd37821e91b0028b00e32d17c2360caa606695ef615  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-author-v13-eval2_202504.out
+9a86400cdcedfe487b2571f71add4c197a5fd9c7f938cee5bb35d9a02c032044  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-author-v13-eval2_202504.err
+=== ATTEMPT 1 PRESERVATION ===
+b723c19fb358ae020a7a057b86aa322e92d99a6cc221ba706d4bedd7292263d6  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-author-v13-eval_202503.out
+bb1dabb5705cf8ae4d601316f8f6b6642f8a3a8567f6a7e607fbff82ec9603b1  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-author-v13-eval_202503.err
+=== REGISTERED ARTIFACT SAFETY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T03:51:25+0800
