@@ -1,0 +1,17 @@
+### channel=id29-nearing2022-da seq=122
+### host=login4
+### started=2026-08-10T21:03:50+0800
+### ---------- output ----------
+=== FILESYSTEM CAPACITY ===
+Filesystem                         1B-blocks            Used       Available Use% Mounted on
+hhjt_parastor_hhjt_parastor 1048866010951680 650227979763712 398638031187968  62% /data1
+1275597141	/data1/home/sunyiq/nearing2022_da/closure_20260810
+=== USER QUOTA IF CONFIGURED ===
+=== HYPERPARAMETER STORAGE PROJECTION ===
+{"estimated_660_directory_bytes": 3918004860, "existing_hyperparameter_directories": 0, "hyperparameter_basin_count": 53, "hyperparameter_rows": 660, "median_estimated_bytes_per_53_basin_directory": 5936371, "projection_limit": "Scales the completed test tree linearly from 531 to 53 basins and keeps copied checkpoint, scaler, config, and log bytes fixed; hyperparameter settings can change log and result sizes.", "samples": [{"estimated_53_basin_total_bytes": 5936371, "eval_id": "N22-EVAL-TS-DA-L01-TE025-S0", "fixed_bytes": 1236568, "full_531_basin_total_bytes": 48323274, "result": {"bytes": 47014459, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/test/model_epoch030/test_results_data_assimilation.p"}, "run": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0", "test_tree_bytes": 47086706}, {"estimated_53_basin_total_bytes": 5935930, "eval_id": "N22-EVAL-TS-DA-L01-TE050-S0", "fixed_bytes": 1236567, "full_531_basin_total_bytes": 48318863, "result": {"bytes": 47013979, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/test/model_epoch030/test_results_data_assimilation.p"}, "run": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0", "test_tree_bytes": 47082296}], "two_x_conservative_bytes": 7836009720}
+=== ACTIVE FAILURE STATES ===
+
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T21:03:55+0800
