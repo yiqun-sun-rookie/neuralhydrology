@@ -1,0 +1,154 @@
+### channel=id29-nearing2022-da seq=167
+### host=login4
+### started=2026-08-11T06:39:01+0800
+### ---------- output ----------
+=== COMPACT AUDIT AND REGISTERED SCALER BINDING ===
+{"audit_sha256_source": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506/audit.json", "conclusion": {"causal_boundary": "This diagnostic establishes a concrete training-path mismatch. It does not by itself quantify how much of the final checkpoint or paper-score discrepancy the mismatch causes; that requires an isolated author-consistent retraining comparison.", "direct_fact": "The released source masks target values before the configured training-period start, while the current port does not. This changes target normalization and per-basin NSE-loss standard deviations.", "training_data_port_is_exact_for_this_scope": false}, "inputs": {"basins_compared": 531, "basins_with_bitwise_identical_normalized_dynamic_inputs": 531, "basins_with_bitwise_identical_static_attributes": 531}, "per_basin_target_standard_deviation_summary": {"absolute_difference_quantiles": {"maximum": 1.2413259744644165, "p50": 0.05698561668395996, "p90": 0.2560311555862427, "p95": 0.3833777904510498}, "basins_different": 531, "basins_exact": 0}, "raw_targets_after_inverse_scaling": {"author_finite_current_missing": 0, "author_finite_values": 1745928, "common_finite_values": 1745928, "common_values_within_1e_5": false, "current_finite_author_missing": 193284, "current_finite_values": 1939212, "maximum_absolute_common_difference": 2.5566369004081935e-05, "shape": [531, 3652, 1]}, "registered_matches_current_audit": true, "registered_target_center": 1.5146349668502808, "registered_target_scale": 3.6992526054382324, "scope": {"author_compatibility_shim": "pandas Series.iteritems = Series.items only", "basin_count": 531, "basin_selection": "first basins in the frozen 531-basin list", "configuration": "src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.0_seed_0.yml", "registered_matrix_modified": false, "runtime": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "sequence_length": 365, "training_holdout": 0.0}, "target_scaler": {"author_center": 1.5002624988555908, "author_scale": 3.6244070529937744, "current_center": 1.5146349668502808, "current_minus_author_center": 0.014372467994689941, "current_minus_author_scale": 0.07484555244445801, "current_scale": 3.6992526054382324}}
+3f5fe1e597a2d8cee36dffac4426a178075d8828eae560c585fe7727d2a4aa30  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506/audit.json
+add1a777647f92f1aa7a8ad039e3d406d32f05c21f30c685a14736d22f45a5d4  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/train_data/train_data_scaler.yml
+078ed7ea96895dc2cfe3239b8a5201a46a5fd6beb6f5c10d487a1566d1f09121  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/run_author_v13_warmup_isolation_all531.slurm
+=== DEPENDENCY-FAILED ISOLATION WRAPPER ===
+#!/bin/bash
+#SBATCH --job-name=N22-mask-iso-531
+#SBATCH --partition=hgpu4,hgpu8,hgpu2
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1
+#SBATCH --exclude=ngu002
+#SBATCH --time=02:00:00
+#SBATCH --output=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.out
+#SBATCH --error=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.err
+
+set -eo pipefail
+ROOT=/data1/home/sunyiq/nearing2022_da
+SOURCE_SCRIPTS="$ROOT/src/29_nearing2022_da_ar/scripts"
+DIAGNOSTIC_ROOT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics"
+HELPER="$SOURCE_SCRIPTS/audit_training_data_port.py"
+ISOLATION_SCRIPT="$SOURCE_SCRIPTS/audit_warmup_target_isolation.py"
+PROTOCOL="$DIAGNOSTIC_ROOT/warmup_target_paired_retraining_protocol.json"
+SLURM_SCRIPT="$DIAGNOSTIC_ROOT/run_author_v13_warmup_isolation_all531.slurm"
+UPSTREAM_FINAL="$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531"
+FINAL="$DIAGNOSTIC_ROOT/author_v13_warmup_isolation_all531"
+WORK="$FINAL.preparing-$SLURM_JOB_ID"
+
+test ! -e "$FINAL"
+test ! -e "$WORK"
+test -f "$UPSTREAM_FINAL/audit.json"
+test -f "$UPSTREAM_FINAL/diagnostic_receipt.json"
+test -f "$HELPER"
+test -f "$ISOLATION_SCRIPT"
+test -f "$PROTOCOL"
+mkdir "$WORK"
+cp "$HELPER" "$WORK/audit_training_data_port.py"
+cp "$ISOLATION_SCRIPT" "$WORK/audit_warmup_target_isolation.py"
+cp "$PROTOCOL" "$WORK/warmup_target_paired_retraining_protocol.json"
+cp "$SLURM_SCRIPT" "$WORK/run_author_v13_warmup_isolation_all531.slurm"
+
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+cd "$ROOT"
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
+python "$ISOLATION_SCRIPT" \
+  --repo-root "$ROOT" \
+  --basin-count 531 \
+  --unmasked-evidence "$UPSTREAM_FINAL/audit.json" \
+  --output "$WORK/audit.json" > "$WORK/audit_stdout.json"
+
+python - "$WORK/audit.json" "$UPSTREAM_FINAL/audit.json" "$UPSTREAM_FINAL/diagnostic_receipt.json" \
+  "$HELPER" "$ISOLATION_SCRIPT" "$PROTOCOL" "$SLURM_SCRIPT" "$WORK/diagnostic_receipt.json" <<'PY'
+import hashlib
+import json
+import os
+from pathlib import Path
+import platform
+import sys
+
+import numpy
+import pandas
+import scipy
+import torch
+import xarray
+
+audit_path = Path(sys.argv[1])
+upstream_audit_path = Path(sys.argv[2])
+upstream_receipt_path = Path(sys.argv[3])
+helper_path = Path(sys.argv[4])
+isolation_path = Path(sys.argv[5])
+protocol_path = Path(sys.argv[6])
+slurm_path = Path(sys.argv[7])
+receipt_path = Path(sys.argv[8])
+
+def digest(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+audit = json.loads(audit_path.read_text(encoding='utf-8'))
+comparison = audit['author_vs_current_masked']
+if audit['scope']['basin_count'] != 531 or comparison['basins_compared'] != 531:
+    raise ValueError('All-531 warmup isolation did not use exactly 531 basins')
+if comparison['bitwise_identical_normalized_dynamic_input_basins'] != 531:
+    raise ValueError('Masked-current and author normalized dynamic inputs differ')
+if comparison['bitwise_identical_static_attribute_basins'] != 531:
+    raise ValueError('Masked-current and author static attributes differ')
+if not comparison['metadata_identical'] or not comparison['finite_target_mask_identical']:
+    raise ValueError('Masked-current and author dataset structure or finite-target mask differs')
+for key in (
+    'masked_minus_author_target_center',
+    'masked_minus_author_target_scale',
+    'maximum_absolute_common_raw_target_difference',
+    'maximum_absolute_target_standard_deviation_difference',
+):
+    if comparison[key] != 0.0:
+        raise ValueError(f'Expected exact zero for {key}, got {comparison[key]}')
+if comparison['per_basin_target_standard_deviations_within_1e_6'] != 531:
+    raise ValueError('Not all per-basin target standard deviations match')
+if not audit['conclusion']['single_mask_restores_released_training_data_for_scope']:
+    raise ValueError('Single-mask restoration conclusion did not pass')
+if audit['one_factor_contract']['other_installed_source_files_modified'] != 0:
+    raise ValueError('Isolation changed an installed source file')
+if audit['source_binding']['unmasked_evidence_sha256'] != digest(upstream_audit_path):
+    raise ValueError('Isolation is not bound to the completed upstream all-531 audit')
+
+gpu = os.popen('nvidia-smi --query-gpu=name,uuid,driver_version --format=csv,noheader').read().strip()
+receipt = {
+    'schema': 'nearing2022-author-v13-warmup-isolation-all531-receipt-v1',
+    'slurm_job_id': os.environ['SLURM_JOB_ID'],
+    'node': os.environ.get('SLURMD_NODENAME'),
+    'gpu': gpu,
+    'runtime': {
+        'python': platform.python_version(),
+        'torch': torch.__version__,
+        'cuda': torch.version.cuda,
+        'cudnn': str(torch.backends.cudnn.version()),
+        'numpy': numpy.__version__,
+        'pandas': pandas.__version__,
+        'scipy': scipy.__version__,
+        'xarray': xarray.__version__,
+    },
+    'audit_sha256': digest(audit_path),
+    'upstream_audit_sha256': digest(upstream_audit_path),
+    'upstream_receipt_sha256': digest(upstream_receipt_path),
+    'helper_script_sha256': digest(helper_path),
+    'isolation_script_sha256': digest(isolation_path),
+    'paired_retraining_protocol_sha256': digest(protocol_path),
+    'slurm_script_sha256': digest(slurm_path),
+    'single_mask_restores_released_training_data_for_531_basins': True,
+    'registered_matrix_modified': False,
+    'scientific_boundary': (
+        'This establishes all-531 data-tensor and scaling causality for the single warmup mask. It does not quantify '
+        'the trained-checkpoint or paper-metric effect; the preregistered paired retraining remains required.'
+    ),
+}
+receipt_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+print(json.dumps(receipt, sort_keys=True))
+PY
+
+sha256sum "$WORK/audit.json" "$WORK/audit_stdout.json" "$WORK/diagnostic_receipt.json" \
+  "$WORK/audit_training_data_port.py" "$WORK/audit_warmup_target_isolation.py" \
+  "$WORK/warmup_target_paired_retraining_protocol.json" \
+  "$WORK/run_author_v13_warmup_isolation_all531.slurm"
+mv "$WORK" "$FINAL"
+echo "final=$FINAL"
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T06:39:02+0800
