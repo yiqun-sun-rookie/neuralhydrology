@@ -1,82 +1,55 @@
 #!/bin/bash
 set -eo pipefail
 
-cd /data1/home/sunyiq/hpc_mailbox || exit 1
-
-echo "=== SUBMIT ONE GATED 64-BASIN REPRODUCTION ==="
-JID=$(sbatch --parsable inbox/autoresearch-64/hbv_lite_64_reproduction_seq40.slurm 2>&1)
-echo "jobid=$JID"
-
-echo "=== WAIT FOR THIS EXACT JOB ==="
-for i in $(seq 1 270); do
-  STATE=$(sacct -j "$JID" -X -n -o State 2>/dev/null | head -1 | tr -d ' ')
-  case "$STATE" in
-    COMPLETED|FAILED|CANCELLED|TIMEOUT|NODE_FAIL|OUT_OF_MEMORY)
-      break
-      ;;
-  esac
-  [ $((i % 6)) -eq 0 ] && echo "t=$((i * 10))s state=${STATE:-UNKNOWN}"
-  sleep 10
-done
-
-echo "=== JOB ACCOUNTING ==="
-sacct -j "$JID" -X --format=JobID%12,JobName%20,NodeList%9,State%14,ExitCode%8,Elapsed%10
-
-echo "=== EXACT JOB STANDARD OUTPUT ==="
-tail -80 "outbox/slurm_${JID}.out" 2>/dev/null || true
-
-echo "=== EXACT JOB STANDARD ERROR ==="
-tail -80 "outbox/slurm_${JID}.err" 2>/dev/null || true
-
-echo "=== EVIDENCE STATUS ==="
+SNAPSHOT=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24
 ATTEMPT=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq40
+PYTHON=/data1/home/sunyiq/autoresearch64/.venv/bin/python
+
+echo "=== FAILED TEST GATE ==="
+cat "$ATTEMPT/evidence/TEST_GATE.json"
+
+echo "=== REQUIRED REPOSITORY-LEVEL FILES IN SNAPSHOT ==="
 for path in \
-  "$ATTEMPT/evidence/TEST_GATE.json" \
-  "$ATTEMPT/evidence/PACKAGE_GATE.json" \
-  "$ATTEMPT/candidate_run/CANDIDATE_SUMMARY.json" \
-  "$ATTEMPT/evidence/REPRODUCTION_SUMMARY.json" \
-  "$ATTEMPT/evidence/MANIFEST.sha256"; do
+  "$SNAPSHOT/src/fair_benchmark/frozen/bundle/track0_statics.csv" \
+  "$SNAPSHOT/examples/06-Finetuning/531_basin_list.txt"; do
   if [ -f "$path" ]; then
-    echo "EXISTS $path"
+    sha256sum "$path"
   else
     echo "MISSING $path"
   fi
 done
 
-if [ -f "$ATTEMPT/evidence/REPRODUCTION_SUMMARY.json" ]; then
-  /data1/home/sunyiq/autoresearch64/.venv/bin/python - "$ATTEMPT/evidence/REPRODUCTION_SUMMARY.json" <<'PY'
-import json
+echo "=== DISTINCT TEST FAILURE CAUSES ==="
+"$PYTHON" - "$ATTEMPT/evidence/pytest.xml" <<'PY'
+import collections
+import re
 import sys
+import xml.etree.ElementTree as ET
 
-summary = json.load(open(sys.argv[1], encoding="utf-8"))
-print(json.dumps({
-    "experiment_id": summary["experiment_id"],
-    "job_id": summary["job_id"],
-    "candidate_id": summary["candidate_id"],
-    "test_gate": summary["test_gate"],
-    "basin_count": summary["basin_count"],
-    "registered_run_count": summary["registered_run_count"],
-    "score_report_count": summary["score_report_count"],
-    "runtime_count": summary["runtime_count"],
-    "process_exit_codes": [item["process_exit_code"] for item in summary["runtimes"]],
-    "normalized_exit_codes": [item["normalized_exit_code"] for item in summary["runtimes"]],
-    "runtime_statuses": [item["status"] for item in summary["runtimes"]],
-    "required_outputs_complete": [item["required_outputs_complete"] for item in summary["runtimes"]],
-    "independently_counted_denials": summary["independently_counted_denials"],
-    "group_metrics": summary["group_metrics"],
-    "metric_deltas_from_windows_reference": summary["metric_deltas_from_windows_reference"],
-    "windows_reference_cells_exact_match": summary["windows_reference_cells_exact_match"],
-    "dependency_versions": summary["dependency_versions"],
-}, sort_keys=True))
+root = ET.parse(sys.argv[1]).getroot()
+records = []
+for case in root.findall(".//testcase"):
+    for kind in ("failure", "error"):
+        node = case.find(kind)
+        if node is None:
+            continue
+        text = (node.attrib.get("message", "") + "\n" + (node.text or "")).strip()
+        missing = re.findall(r"FileNotFoundError:.*?'([^']+)'", text)
+        last = next((line.strip() for line in reversed(text.splitlines()) if line.strip()), "")
+        records.append((kind, case.attrib.get("classname"), case.attrib.get("name"), missing, last))
+
+print(f"record_count={len(records)}")
+missing_counts = collections.Counter(path for record in records for path in record[3])
+for path, count in missing_counts.most_common():
+    print(f"missing_path_count={count} path={path}")
+last_counts = collections.Counter(record[4] for record in records)
+for message, count in last_counts.most_common(12):
+    print(f"terminal_message_count={count} message={message[:500]}")
+for kind, classname, name, missing, last in records:
+    if not missing:
+        print(f"non_missing_file_case={kind} {classname}::{name} terminal={last[:500]}")
 PY
-fi
 
-if [ -f "$ATTEMPT/evidence/MANIFEST.sha256" ]; then
-  (cd "$ATTEMPT" && sha256sum -c evidence/MANIFEST.sha256 >/dev/null)
-  echo "manifest_check=ok"
-  echo "manifest_entries=$(wc -l < "$ATTEMPT/evidence/MANIFEST.sha256")"
-fi
-
-echo "summary=$ATTEMPT/evidence/REPRODUCTION_SUMMARY.json"
-echo "manifest=$ATTEMPT/evidence/MANIFEST.sha256"
-exit 0
+echo "=== CANDIDATE WAS NOT LAUNCHED ==="
+test ! -e "$ATTEMPT/candidate_run"
+echo "candidate_run_absent=true"
