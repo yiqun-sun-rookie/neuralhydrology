@@ -1,0 +1,25 @@
+### channel=id29-nearing2022-da seq=57
+### host=login4
+### started=2026-08-10T12:26:51+0800
+### ---------- output ----------
+=== PAYLOAD ===
+/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v2.tar.gz: OK
+payload_members=104
+cc8e4478a0977d131d6795a6ec9ed48d5783b62951be58b9e4569ac51c48823f  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/experiment_registry.csv
+=== DATA MANIFEST ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/build_data_manifest.py", line 142, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/build_data_manifest.py", line 135, in main
+    manifest = build_manifest(args.data_root, args.basin_file, expected_basins=args.expected_basins)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/build_data_manifest.py", line 94, in build_manifest
+    relative = path.resolve().relative_to(data_root).as_posix()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/lib/python3.11/pathlib.py", line 730, in relative_to
+    raise ValueError("{!r} is not in the subpath of {!r}"
+ValueError: '/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us/basin_mean_forcing/daymet/01/01022500_lump_cida_forcing_leap.txt' is not in the subpath of '/data1/home/sunyiq/nearing2022_da/data/camels_us' OR one path is relative and the other is absolute.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-10T12:26:53+0800
