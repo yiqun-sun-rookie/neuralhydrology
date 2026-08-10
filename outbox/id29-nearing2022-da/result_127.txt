@@ -1,0 +1,51 @@
+### channel=id29-nearing2022-da seq=127
+### host=login4
+### started=2026-08-10T22:56:03+0800
+### ---------- output ----------
+=== BOUNDED PROGRESS AND WALLTIME PROJECTION ===
+{"conservative_projected_total_hours": 36.99, "epoch": 9, "epoch_step": 6005, "epoch_total_steps": 6821, "job": "202214", "name": "N22-train", "projected_slack_hours": 11.01, "runtime": "10:56:55", "stdout_bytes": 9451628, "thirty_epoch_fraction": 0.296012, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 37.0, "epoch": 9, "epoch_step": 2408, "epoch_total_steps": 6821, "job": "202215_0", "name": "N22-time", "projected_slack_hours": 11.0, "runtime": "10:18:03", "stdout_bytes": 8897190, "thirty_epoch_fraction": 0.278434, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 38.61, "epoch": 9, "epoch_step": 31, "epoch_total_steps": 6821, "job": "202215_1", "name": "N22-time", "projected_slack_hours": 9.39, "runtime": "10:18:04", "stdout_bytes": 8541668, "thirty_epoch_fraction": 0.266818, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 38.43, "epoch": 9, "epoch_step": 280, "epoch_total_steps": 6821, "job": "202215_2", "name": "N22-time", "projected_slack_hours": 9.57, "runtime": "10:18:04", "stdout_bytes": 8578931, "thirty_epoch_fraction": 0.268035, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 2.53, "epoch": 30, "epoch_step": 5008, "epoch_total_steps": 6140, "job": "202216_6", "name": "N22-basin", "projected_slack_hours": 45.47, "runtime": "02:30:53", "stdout_bytes": 18979990, "thirty_epoch_fraction": 0.993855, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 2.72, "epoch": 22, "epoch_step": 4827, "epoch_total_steps": 6140, "job": "202216_7", "name": "N22-basin", "projected_slack_hours": 45.28, "runtime": "01:58:28", "stdout_bytes": 13847787, "thirty_epoch_fraction": 0.726205, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"job": "202222_8", "last_generic_percent": 66, "last_generic_step": 350, "last_generic_total": 531, "name": "N22-eval-now", "runtime": "03:39:40", "stdout_bytes": 27631, "time_limit": "1-00:00:00"}
+{"job": "202222_9", "last_generic_percent": 65, "last_generic_step": 344, "last_generic_total": 531, "name": "N22-eval-now", "runtime": "03:39:37", "stdout_bytes": 85785, "time_limit": "1-00:00:00"}
+=== ACTIVE MAIN JOBS ===
+202214|RUNNING|10:56:57|2-00:00:00|ngu104|N22-train
+202215_0|RUNNING|10:18:05|2-00:00:00|ngu104|N22-time
+202215_1|RUNNING|10:18:05|2-00:00:00|ngu101|N22-time
+202215_2|RUNNING|10:18:05|2-00:00:00|ngu101|N22-time
+202215_[3-22%3]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-time
+202216_6|RUNNING|2:30:54|2-00:00:00|ngu104|N22-basin
+202216_7|RUNNING|1:58:29|2-00:00:00|ngu101|N22-basin
+202216_[8-19%2]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-basin
+202222_[10-29%2]|PENDING|0:00|1-00:00:00|(JobArrayTaskLimit)|N22-eval-now
+202222_8|RUNNING|3:39:40|1-00:00:00|ngu101|N22-eval-now
+202222_9|RUNNING|3:39:37|1-00:00:00|ngu102|N22-eval-now
+202226_[0-119%4]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-later
+202227_[0-9%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-basin-da
+202228_[0-659%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-hyper
+202229|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-eval
+202230|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-hyper
+202238_[0-19%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-bs-direct
+202293|PENDING|0:00|1-00:00:00|(JobHeldUser)|N22-manifest
+202294|PENDING|0:00|4:00:00|(Dependency)|N22-export
+202315|PENDING|0:00|2:00:00|(Dependency)|N22-gate
+=== BASIN TRAINING TASKS ===
+202216_0|COMPLETED|0:0|02:46:22|2026-08-10T12:38:00|2026-08-10T15:24:22|ngu101
+202216_1|COMPLETED|0:0|02:45:03|2026-08-10T12:38:00|2026-08-10T15:23:03|ngu101
+202216_2|COMPLETED|0:0|02:30:39|2026-08-10T15:23:03|2026-08-10T17:53:42|ngu104
+202216_3|COMPLETED|0:0|02:48:03|2026-08-10T15:24:22|2026-08-10T18:12:25|ngu101
+202216_4|COMPLETED|0:0|02:31:29|2026-08-10T17:53:42|2026-08-10T20:25:11|ngu104
+202216_5|COMPLETED|0:0|02:45:10|2026-08-10T18:12:25|2026-08-10T20:57:35|ngu101
+202216_6|RUNNING|0:0|02:30:53|2026-08-10T20:25:11|Unknown|ngu104
+202216_7|RUNNING|0:0|01:58:28|2026-08-10T20:57:36|Unknown|ngu101
+=== ACTIVE FAILURE STATES ===
+
+=== REGISTERED COMPLETE-ROLE COUNTS ===
+{"evaluation_by_family": {"time_assimilation": 3, "time_autoregression": 5}, "evaluation_complete": 8, "evaluation_total": 180, "hyperparameter_complete": 0, "hyperparameter_total": 660, "training_by_family": {"basin_simulation": 6, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 8, "training_total": 46}
+=== SAFETY BOUNDARY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T22:56:16+0800
