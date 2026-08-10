@@ -1,0 +1,11 @@
+### channel=id29-nearing2022-da seq=166
+### host=login4
+### started=2026-08-11T06:37:19+0800
+### ---------- output ----------
+=== COMPACT AUDIT AND REGISTERED SCALER BINDING ===
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+ModuleNotFoundError: No module named 'yaml'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-11T06:37:19+0800
