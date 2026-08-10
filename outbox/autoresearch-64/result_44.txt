@@ -1,0 +1,35 @@
+### channel=autoresearch-64 seq=44
+### host=login4
+### started=2026-08-10T17:08:32+0800
+### ---------- output ----------
+=== SUBMIT GIT-BACKED SNAPSHOT GATED 64-BASIN REPRODUCTION ===
+jobid=202316
+=== WAIT FOR THIS EXACT JOB ===
+=== JOB ACCOUNTING ===
+       JobID              JobName  NodeList          State ExitCode    Elapsed 
+------------ -------------------- --------- -------------- -------- ---------- 
+      202316        a64-hbv64-git    icn219         FAILED      1:0   00:00:01 
+=== EXACT JOB STANDARD OUTPUT ===
+=== VERIFY AND EXTRACT IMMUTABLE TEST SNAPSHOT ===
+=== INITIALIZE IMMUTABLE SNAPSHOT AS A GIT REPOSITORY ===
+=== EXACT JOB STANDARD ERROR ===
+Unknown option: -C
+usage: git [--version] [--help] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+=== EVIDENCE STATUS ===
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq44/evidence/SNAPSHOT_MANIFEST.sha256
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq44/evidence/SNAPSHOT_GIT_COMMIT.txt
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq44/evidence/TARGETED_GATE.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq44/evidence/FULL_GATE.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq44/evidence/PACKAGE_GATE.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq44/candidate_run/CANDIDATE_SUMMARY.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq44/evidence/REPRODUCTION_SUMMARY.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq44/evidence/MANIFEST.sha256
+summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq44/evidence/REPRODUCTION_SUMMARY.json
+manifest=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq44/evidence/MANIFEST.sha256
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T17:08:43+0800
