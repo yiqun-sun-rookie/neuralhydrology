@@ -2,68 +2,60 @@
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/autoresearch64
-PYTHON="$ROOT/.venv/bin/python"
 RUNS="$ROOT/runs/unified_autoresearch"
+SNAPSHOT="$RUNS/dlopen_timezone_fix_validation_20260809_seq24"
+SOURCE64="$RUNS/development_source_real_64_hpc"
+OUTPUT="$RUNS/hbv_lite_8_hpc_smoke_20260810_seq36"
 
-echo "=== CHANNEL INVENTORY ==="
-for name in \
-  development_packages_real_v1 \
-  milestone3_round12_development_packages \
-  development_packages_real_64_hpc \
-  dlopen_timezone_fix_validation_20260809_seq24
-do
-  path="$RUNS/$name"
-  if [ -d "$path" ]; then
-    echo "EXISTS $path"
-  else
-    echo "MISSING $path"
-  fi
-done
-
-echo "=== DEVELOPMENT PACKAGE MANIFESTS ==="
-"$PYTHON" - "$RUNS" <<'PY'
-import hashlib
-import json
-import sys
-from pathlib import Path
-
-runs = Path(sys.argv[1])
-for name in (
-    "development_packages_real_v1",
-    "milestone3_round12_development_packages",
-    "development_packages_real_64_hpc",
-):
-    path = runs / name / "PACKAGE_MANIFEST.json"
-    if not path.is_file():
-        continue
-    raw = path.read_bytes()
-    value = json.loads(raw)
-    print(json.dumps({
-        "name": name,
-        "path": str(path),
-        "sha256": hashlib.sha256(raw).hexdigest(),
-        "schema_version": value.get("schema_version"),
-        "basin_count": len(value.get("basins", [])),
-        "protocols": sorted(value.get("protocols", {})),
-        "source_manifest_sha256": value.get("source_manifest_sha256"),
-    }, sort_keys=True))
-PY
-
-echo "=== VALIDATED SOURCE SNAPSHOT ==="
-EVIDENCE="$RUNS/dlopen_timezone_fix_validation_20260809_seq24/evidence"
-if [ -f "$EVIDENCE/SUMMARY.json" ]; then
-  "$PYTHON" - "$EVIDENCE/SUMMARY.json" <<'PY'
-import json
-import sys
-from pathlib import Path
-
-summary = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-for key in sorted(summary):
-    if "source" in key or "snapshot" in key or "root" in key:
-        print(f"{key}={summary[key]}")
-PY
+echo "=== REPOSITORY ROOT ==="
+if [ -d "$ROOT/.git" ]; then
+  echo "git_repository=true"
+  cd "$ROOT"
+  git rev-parse --verify HEAD 2>/dev/null || true
+  git status --porcelain | head -80
+else
+  echo "git_repository=false"
 fi
-find "$RUNS/dlopen_timezone_fix_validation_20260809_seq24" -maxdepth 3 -type d -print 2>/dev/null | sort | head -80
 
-echo "=== JOB 202085 ==="
-sacct -j 202085 -X --format=JobID%12,JobName%20,State%14,ExitCode%8,Elapsed%10
+echo "=== DEVELOPMENT-ONLY SOURCE ==="
+if [ -d "$SOURCE64" ]; then
+  echo "source_exists=true"
+  find "$SOURCE64" -maxdepth 1 -type f -printf '%f %s\n' | sort
+  "$ROOT/.venv/bin/python" - "$SOURCE64/SOURCE_MANIFEST.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+value = json.loads(path.read_text(encoding="utf-8"))
+print(json.dumps({
+    "schema_version": value.get("schema_version"),
+    "source_kind": value.get("source_kind"),
+    "date_bounds": value.get("date_bounds"),
+    "sealed_final_evaluation_present": value.get("sealed_final_evaluation_present"),
+    "file_names": sorted(value.get("files", {})),
+}, sort_keys=True))
+PY
+else
+  echo "source_exists=false"
+fi
+
+echo "=== SNAPSHOT FILE HASHES ==="
+cd "$SNAPSHOT"
+for relative in \
+  src/unified_autoresearch/candidates/catalog.py \
+  src/unified_autoresearch/candidates/implementations/hbv_lite.py \
+  src/unified_autoresearch/data/packages.py \
+  src/unified_autoresearch/runtime/bootstrap.py \
+  src/unified_autoresearch/runtime/dependencies.py \
+  src/unified_autoresearch/runtime/runner.py \
+  src/unified_autoresearch/scripts/run_single_candidate.py \
+  src/unified_autoresearch/selection/development_basins_v1.json \
+  src/unified_autoresearch/workflow/candidate_development.py
+do
+  if [ -f "$relative" ]; then sha256sum "$relative"; else echo "MISSING $relative"; fi
+done
+find src/unified_autoresearch/protocols -maxdepth 1 -type f -printf '%f\n' | sort
+
+echo "=== OUTPUT COLLISION CHECK ==="
+if [ -e "$OUTPUT" ]; then echo "output_exists=true"; else echo "output_exists=false"; fi
