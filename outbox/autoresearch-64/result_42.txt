@@ -1,0 +1,230 @@
+### channel=autoresearch-64 seq=42
+### host=login4
+### started=2026-08-10T16:37:15+0800
+### ---------- output ----------
+=== EXACT NON-FILE FAILURE TRACEBACKS ===
+--- src.unified_autoresearch.tests.test_development_recovery::test_registered_recovery_matches_a_clean_deterministic_training_run ---
+unified_autoresearch.runtime.dependencies.DependencyEnvironmentError: declared dependency environment does not match
+tmp_path = PosixPath('/tmp/pytest-of-sunyiq/pytest-0/test_registered_recovery_match0')
+
+    def test_registered_recovery_matches_a_clean_deterministic_training_run(tmp_path):
+        from unified_autoresearch.registry.store import Registry
+        from unified_autoresearch.runtime.checkpoints import verify_checkpoint
+        from unified_autoresearch.runtime.resources import ResourceSnapshot
+        from unified_autoresearch.workflow.recovery import run_recovery_reproducibility_cycle
+    
+        repo = tmp_path / "repo"
+        _initialize_repo(repo)
+        package_root = _build_synthetic_development_packages(repo)
+        subprocess.run(["git", "add", "."], cwd=repo, check=True)
+        subprocess.run(["git", "commit", "-q", "-m", "synthetic development package"], cwd=repo, check=True)
+        output_root = repo / "runs" / "recovery-cycle"
+        snapshot = ResourceSnapshot(
+            available_cpu_cores=4,
+            available_gpu_count=0,
+            available_memory_gb=4.0,
+            free_disk_gb=10.0,
+        )
+    
+>       result = run_recovery_reproducibility_cycle(
+            repo_root=repo,
+            package_root=package_root,
+            expected_package_manifest_sha256=_sha256(package_root / "PACKAGE_MANIFEST.json"),
+            category="custom_python",
+            output_root=output_root,
+            resource_snapshot=snapshot,
+        )
+
+../../../src/unified_autoresearch/tests/test_development_recovery.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/unified_autoresearch/workflow/recovery.py:155: in run_recovery_reproducibility_cycle
+    interrupted = run_registered_candidate(
+src/unified_autoresearch/runtime/orchestrator.py:193: in run_registered_candidate
+    runtime_result = run_candidate(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+descriptor = CandidateDescriptor(schema_version='candidate_descriptor_v1', candidate_id='reference-custom-python-v1', category='cus...load'}, checkpoint={'keep': 'all', 'staging_dir': 'checkpoint_staging', 'supported': True}, resume={'supported': True})
+layout = RunLayout(root=PosixPath('/tmp/pytest-of-sunyiq/pytest-0/test_registered_recovery_match0/repo/runs/recovery-cycle/runs.../tmp/pytest-of-sunyiq/pytest-0/test_registered_recovery_match0/repo/runs/recovery-cycle/runs/forward-checkpoint/logs'))
+mode = 'train', resume_checkpoint = None
+resource_snapshot = ResourceSnapshot(available_cpu_cores=4, available_gpu_count=0, available_memory_gb=4.0, free_disk_gb=10.0)
+monitor_sample_interval_seconds = None
+
+    def run_candidate(
+        *,
+        descriptor: CandidateDescriptor,
+        layout: RunLayout,
+        mode: str,
+        resume_checkpoint: str | Path | None = None,
+        resource_snapshot: ResourceSnapshot | None = None,
+        monitor_sample_interval_seconds: float | None = None,
+    ) -> RuntimeResult:
+        """Run a candidate once and standardize contract and runtime failures."""
+        if mode not in {"train", "predict"}:
+            raise ValueError(f"unsupported candidate mode: {mode!r}")
+        resume_record: CheckpointRecord | None = None
+        if resume_checkpoint is not None:
+            if descriptor.resume.get("supported") is not True:
+                raise ValueError("candidate does not support checkpoint resume")
+            resume_record = mount_verified_checkpoint(
+                layout.root,
+                resume_checkpoint,
+                expected_candidate_id=descriptor.candidate_id,
+            )
+        policy_path = layout.log_root / "runtime-policy.json"
+        dependency_preflight_path = layout.log_root / "dependency-preflight.json"
+        resource_preflight_path = layout.log_root / "resource-preflight.json"
+        access_log_path = layout.log_root / "access.jsonl"
+        stdout_path = layout.log_root / "stdout.txt"
+        stderr_path = layout.log_root / "stderr.txt"
+        result_path = layout.log_root / "runtime-result.json"
+        dependency_assessment = assess_dependency_environment(descriptor.dependencies)
+        _write_json_exclusive(dependency_preflight_path, dependency_assessment.as_dict())
+        if dependency_assessment.decision != "launch":
+>           raise DependencyEnvironmentError(dependency_assessment)
+E           unified_autoresearch.runtime.dependencies.DependencyEnvironmentError: declared dependency environment does not match
+
+src/unified_autoresearch/runtime/runner.py:200: DependencyEnvironmentError
+--- src.unified_autoresearch.tests.test_reference_candidates::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[conceptual_rainfall_runoff] ---
+unified_autoresearch.runtime.dependencies.DependencyEnvironmentError: declared dependency environment does not match
+category = 'conceptual_rainfall_runoff'
+tmp_path = PosixPath('/tmp/pytest-of-sunyiq/pytest-0/test_each_reference_candidate_0')
+
+    @pytest.mark.parametrize("category", sorted(EXPECTED_FAMILIES))
+    def test_each_reference_candidate_trains_and_predicts_through_registered_runtime(category, tmp_path):
+        from unified_autoresearch.candidates.catalog import materialize_reference_candidate
+        from unified_autoresearch.registry.store import Registry
+        from unified_autoresearch.runtime.layout import create_run_layout
+        from unified_autoresearch.runtime.orchestrator import run_registered_candidate
+        from unified_autoresearch.runtime.resources import ResourceSnapshot
+    
+        repo = tmp_path / "repo"
+        _initialize_repo(repo)
+        materialized = materialize_reference_candidate(
+            category=category,
+            output_root=repo / "candidate-source",
+        )
+        inputs = repo / "synthetic-development-inputs"
+        _write_candidate_inputs(inputs)
+        (repo / "requirements.txt").write_text(
+            "\n".join(materialized.descriptor.dependencies) + "\n", encoding="utf-8"
+        )
+        subprocess.run(["git", "add", "."], cwd=repo, check=True)
+        subprocess.run(["git", "commit", "-q", "-m", "synthetic candidate fixture"], cwd=repo, check=True)
+    
+        snapshot = ResourceSnapshot(
+            available_cpu_cores=4,
+            available_gpu_count=0,
+            available_memory_gb=4.0,
+            free_disk_gb=10.0,
+        )
+        train_run_id = f"{category}-train"
+        train_layout = create_run_layout(
+            repo / "runs" / train_run_id,
+            descriptor=materialized.descriptor,
+            candidate_source_root=materialized.source_root,
+            mode="train",
+            input_sources={
+                "train_features.parquet": inputs / "train_features.parquet",
+                "train_targets.parquet": inputs / "train_targets.parquet",
+                "static_attributes.json": inputs / "static_attributes.json",
+            },
+        )
+>       train_result = run_registered_candidate(
+            repo_root=repo,
+            descriptor=materialized.descriptor,
+            layout=train_layout,
+            mode="train",
+            run_id=train_run_id,
+            code_paths=[materialized.source_root],
+            configuration_paths=[repo / "configuration.json", materialized.descriptor_path],
+            dependency_paths=[repo / "requirements.txt"],
+            data_manifest_paths=[repo / "data-manifest.json"],
+            resource_snapshot=snapshot,
+        )
+
+../../../src/unified_autoresearch/tests/test_reference_candidates.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/unified_autoresearch/runtime/orchestrator.py:193: in run_registered_candidate
+    runtime_result = run_candidate(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+descriptor = CandidateDescriptor(schema_version='candidate_descriptor_v1', candidate_id='reference-conceptual-rainfall-runoff-v1', ...load'}, checkpoint={'keep': 'all', 'staging_dir': 'checkpoint_staging', 'supported': True}, resume={'supported': True})
+layout = RunLayout(root=PosixPath('/tmp/pytest-of-sunyiq/pytest-0/test_each_reference_candidate_0/repo/runs/conceptual_rainfall...Path('/tmp/pytest-of-sunyiq/pytest-0/test_each_reference_candidate_0/repo/runs/conceptual_rainfall_runoff-train/logs'))
+mode = 'train', resume_checkpoint = None
+resource_snapshot = ResourceSnapshot(available_cpu_cores=4, available_gpu_count=0, available_memory_gb=4.0, free_disk_gb=10.0)
+monitor_sample_interval_seconds = None
+
+    def run_candidate(
+        *,
+        descriptor: CandidateDescriptor,
+        layout: RunLayout,
+        mode: str,
+        resume_checkpoint: str | Path | None = None,
+        resource_snapshot: ResourceSnapshot | None = None,
+        monitor_sample_interval_seconds: float | None = None,
+    ) -> RuntimeResult:
+        """Run a candidate once and standardize contract and runtime failures."""
+        if mode not in {"train", "predict"}:
+            raise ValueError(f"unsupported candidate mode: {mode!r}")
+        resume_record: CheckpointRecord | None = None
+        if resume_checkpoint is not None:
+            if descriptor.resume.get("supported") is not True:
+                raise ValueError("candidate does not support checkpoint resume")
+            resume_record = mount_verified_checkpoint(
+                layout.root,
+                resume_checkpoint,
+                expected_candidate_id=descriptor.candidate_id,
+            )
+        policy_path = layout.log_root / "runtime-policy.json"
+        dependency_preflight_path = layout.log_root / "dependency-preflight.json"
+        resource_preflight_path = layout.log_root / "resource-preflight.json"
+        access_log_path = layout.log_root / "access.jsonl"
+        stdout_path = layout.log_root / "stdout.txt"
+        stderr_path = layout.log_root / "stderr.txt"
+        result_path = layout.log_root / "runtime-result.json"
+        dependency_assessment = assess_dependency_environment(descriptor.dependencies)
+        _write_json_exclusive(dependency_preflight_path, dependency_assessment.as_dict())
+        if dependency_assessment.decision != "launch":
+>           raise DependencyEnvironmentError(dependency_assessment)
+E           unified_autoresearch.runtime.dependencies.DependencyEnvironmentError: declared dependency environment does not match
+
+src/unified_autoresearch/runtime/runner.py:200: DependencyEnvironmentError
+--- src.unified_autoresearch.tests.test_restricted_runtime::test_candidate_cannot_redirect_path_checks_by_replacing_os_path_helpers ---
+AssertionError: assert 0 >= 1
+ +  where 0 = RuntimeResult(exit_code=2, process_exit_code=0, status='contract_failure', denied_event_count=0, output_contract_valid...ight_path=PosixPath('/tmp/pytest-of-sunyiq/pytest-0/test_candidate_cannot_redirect0/run/logs/resource-preflight.json')).denied_event_count
+tmp_path = PosixPath('/tmp/pytest-of-sunyiq/pytest-0/test_candidate_cannot_redirect0')
+
+    def test_candidate_cannot_redirect_path_checks_by_replacing_os_path_helpers(tmp_path):
+        from unified_autoresearch.runtime.runner import run_candidate
+    
+        forbidden = tmp_path / "path-helper-forbidden.txt"
+        forbidden.write_text("path-helper-secret", encoding="utf-8")
+        descriptor, layout = _prepare_prediction_run(
+            tmp_path,
+            f'''import os
+    from pathlib import Path
+    allowed = os.environ["UNIFIED_INPUT_ROOT"]
+    forbidden = {str(forbidden)!r}
+    original_abspath = os.path.abspath
+    original_realpath = os.path.realpath
+    os.path.abspath = lambda path: allowed if os.fspath(path) == forbidden else original_abspath(path)
+    os.path.realpath = lambda path: allowed if os.fspath(path) == forbidden else original_realpath(path)
+    payload = Path({str(forbidden)!r}).read_text(encoding="utf-8")
+    (Path(os.environ["UNIFIED_OUTPUT_ROOT"]) / "predictions.parquet").write_text(payload, encoding="utf-8")
+    ''',
+        )
+    
+        result = run_candidate(descriptor=descriptor, layout=layout, mode="predict")
+    
+        assert result.exit_code == 2
+        assert result.status == "contract_failure"
+>       assert result.denied_event_count >= 1
+E       AssertionError: assert 0 >= 1
+E        +  where 0 = RuntimeResult(exit_code=2, process_exit_code=0, status='contract_failure', denied_event_count=0, output_contract_valid...ight_path=PosixPath('/tmp/pytest-of-sunyiq/pytest-0/test_candidate_cannot_redirect0/run/logs/resource-preflight.json')).denied_event_count
+
+../../../src/unified_autoresearch/tests/test_restricted_runtime.py:475: AssertionError
+=== CANDIDATE WAS NOT LAUNCHED ===
+candidate_run_absent=true
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T16:37:16+0800
