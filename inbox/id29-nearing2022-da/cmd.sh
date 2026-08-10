@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=140: independently confirm the largest partial numerical discrepancy from raw artifacts.
+# ID29 seq=141: audit the author-versus-current runtime boundary behind the confirmed discrepancy.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -450,6 +450,162 @@ payload = {
 }
 print(json.dumps(payload, sort_keys=True))
 PY
+
+echo "=== AUTHOR VERSUS CURRENT RUNTIME BOUNDARY ==="
+(
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+python - <<'PY'
+import ast
+import hashlib
+import importlib.metadata
+import json
+from pathlib import Path
+import platform
+import re
+import subprocess
+import sys
+import zipfile
+
+import numpy
+import pandas
+import scipy
+import torch
+import xarray
+
+root = Path('/data1/home/sunyiq/nearing2022_da')
+archive = (
+    root
+    / 'results/29_nearing2022_da_ar/formal_closure/author_source_archives'
+    / 'zenodo-7063259-grey-nearing-neuralhydrology-public-v.1.3.0.zip'
+)
+author_root = 'grey-nearing-neuralhydrology-public-a4c284b'
+author_arlstm_member = f'{author_root}/neuralhydrology/modelzoo/arlstm.py'
+author_sampler_member = f'{author_root}/neuralhydrology/utils/samplingutils.py'
+environment_members = [
+    f'{author_root}/environments/environment_cuda10_2.yml',
+    f'{author_root}/environments/environment_cuda11_3.yml',
+]
+current_arlstm = root / 'neuralhydrology/modelzoo/arlstm.py'
+current_sampler = root / 'neuralhydrology/utils/samplingutils.py'
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+class StripAnnotations(ast.NodeTransformer):
+    def visit_arg(self, node):
+        node = self.generic_visit(node)
+        node.annotation = None
+        node.type_comment = None
+        return node
+
+    def visit_FunctionDef(self, node):
+        node = self.generic_visit(node)
+        node.returns = None
+        node.type_comment = None
+        return node
+
+    def visit_AsyncFunctionDef(self, node):
+        node = self.generic_visit(node)
+        node.returns = None
+        node.type_comment = None
+        return node
+
+def selected_ast_sha(data, kind, name):
+    tree = ast.parse(data.decode('utf-8'))
+    selected = None
+    for node in tree.body:
+        if kind == 'class' and isinstance(node, ast.ClassDef) and node.name == name:
+            selected = node
+        if kind == 'function' and isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == name:
+            selected = node
+    if selected is None:
+        raise ValueError(f'Could not find {kind} {name}')
+    selected = StripAnnotations().visit(selected)
+    ast.fix_missing_locations(selected)
+    return digest(ast.dump(selected, include_attributes=False).encode('utf-8'))
+
+with zipfile.ZipFile(archive) as handle:
+    author_arlstm = handle.read(author_arlstm_member)
+    author_sampler = handle.read(author_sampler_member)
+    author_environments = {}
+    for member in environment_members:
+        data = handle.read(member)
+        text = data.decode('utf-8')
+        relevant = [
+            line.strip()
+            for line in text.splitlines()
+            if re.search(r'python|pytorch|cudatoolkit|numpy|pandas|xarray|scipy', line, flags=re.IGNORECASE)
+        ]
+        author_environments[Path(member).name] = {
+            'sha256': digest(data),
+            'relevant_lines': relevant,
+        }
+
+current_arlstm_bytes = current_arlstm.read_bytes()
+current_sampler_bytes = current_sampler.read_bytes()
+author_arlstm_ast = selected_ast_sha(author_arlstm, 'class', 'ARLSTM')
+current_arlstm_ast = selected_ast_sha(current_arlstm_bytes, 'class', 'ARLSTM')
+author_sampler_ast = selected_ast_sha(author_sampler, 'function', 'bernoulli_subseries_sampler')
+current_sampler_ast = selected_ast_sha(current_sampler_bytes, 'function', 'bernoulli_subseries_sampler')
+
+job_gpu_lines = {}
+for job in ('202214', '202215_0', '202216_10'):
+    info = subprocess.run(
+        ['scontrol', 'show', 'job', '-o', job],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    fields = dict(token.split('=', 1) for token in info.split() if '=' in token)
+    stdout_path = Path(fields['StdOut'])
+    gpu_line = None
+    if stdout_path.exists():
+        for line in stdout_path.read_text(encoding='utf-8', errors='replace').splitlines()[:20]:
+            if any(label in line for label in ('NVIDIA', 'Tesla', 'GeForce', 'Quadro')):
+                gpu_line = line.strip()
+                break
+    job_gpu_lines[job] = {'stdout': str(stdout_path), 'gpu_line': gpu_line}
+
+payload = {
+    'python': sys.version.replace('\n', ' '),
+    'platform': platform.platform(),
+    'packages': {
+        'neuralhydrology': importlib.metadata.version('neuralhydrology'),
+        'numpy': numpy.__version__,
+        'pandas': pandas.__version__,
+        'scipy': scipy.__version__,
+        'torch': torch.__version__,
+        'xarray': xarray.__version__,
+    },
+    'torch_cuda_build': torch.version.cuda,
+    'torch_cudnn_version': torch.backends.cudnn.version(),
+    'torch_deterministic_algorithms_enabled': torch.are_deterministic_algorithms_enabled(),
+    'torch_cudnn_benchmark': torch.backends.cudnn.benchmark,
+    'torch_cudnn_deterministic': torch.backends.cudnn.deterministic,
+    'author_environment_members': author_environments,
+    'author_environment_interpretation': (
+        'Python and CUDA toolkit are pinned, but PyTorch, NumPy, pandas, SciPy, xarray and cuDNN exact versions are not.'
+    ),
+    'author_arlstm_sha256': digest(author_arlstm),
+    'current_arlstm_sha256': digest(current_arlstm_bytes),
+    'author_arlstm_annotation_stripped_ast_sha256': author_arlstm_ast,
+    'current_arlstm_annotation_stripped_ast_sha256': current_arlstm_ast,
+    'arlstm_behavioral_ast_identical': author_arlstm_ast == current_arlstm_ast,
+    'author_sampler_sha256': digest(author_sampler),
+    'current_sampler_sha256': digest(current_sampler_bytes),
+    'author_sampler_ast_sha256': author_sampler_ast,
+    'current_sampler_ast_sha256': current_sampler_ast,
+    'sampler_ast_identical': author_sampler_ast == current_sampler_ast,
+    'running_job_gpu_lines': job_gpu_lines,
+    'causal_boundary': (
+        'Exact runtime versions and training hardware differ or are under-specified; this is a plausible source of '
+        'checkpoint variation but does not by itself attribute the confirmed numerical discrepancy.'
+    ),
+}
+print(json.dumps(payload, sort_keys=True))
+PY
+)
 
 echo "=== SAFETY BOUNDARY ==="
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = "202293|PENDING|JobHeldUser|N22-manifest"
