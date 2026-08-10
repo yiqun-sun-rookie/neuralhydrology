@@ -1,52 +1,56 @@
 #!/bin/bash
-set -o pipefail
+set -euo pipefail
 
-JID=202243
-ATTEMPT=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_8_hpc_smoke_20260810_seq36
+EVIDENCE=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/evidence
+PYTHON=/data1/home/sunyiq/autoresearch64/.venv/bin/python
 
-echo "=== JOB ACCOUNTING ==="
-squeue -j "$JID" -h -o 'job=%i state=%T elapsed=%M node=%N' 2>&1 || true
-sacct -j "$JID" -X --format=JobID%12,JobName%20,State%14,ExitCode%8,Elapsed%10,NodeList%12 2>&1 || true
+echo "=== SCHEDULER ==="
+sacct -j 202085 -X --format=JobID%12,JobName%20,State%14,ExitCode%8,Elapsed%10
 
-echo "=== EXACT JOB LOGS ==="
-tail -120 "outbox/slurm_${JID}.out" 2>/dev/null || true
-tail -120 "outbox/slurm_${JID}.err" 2>/dev/null || true
+test -f "$EVIDENCE/SUMMARY.json"
+test -f "$EVIDENCE/MANIFEST.sha256"
 
-echo "=== EVIDENCE STATUS ==="
-for path in \
-  "$ATTEMPT/candidate_run/CANDIDATE_SUMMARY.json" \
-  "$ATTEMPT/evidence/SMOKE_SUMMARY.json" \
-  "$ATTEMPT/evidence/MANIFEST.sha256"
-do
-  if [ -f "$path" ]; then echo "EXISTS $path"; else echo "MISSING $path"; fi
-done
-
-if [ -f "$ATTEMPT/evidence/SMOKE_SUMMARY.json" ]; then
-  /data1/home/sunyiq/autoresearch64/.venv/bin/python - "$ATTEMPT/evidence/SMOKE_SUMMARY.json" <<'PY'
+"$PYTHON" - "$EVIDENCE" <<'PY'
 import json
 import sys
 from pathlib import Path
 
-value = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-print(json.dumps({
-    "experiment_id": value["experiment_id"],
-    "job_id": value["job_id"],
-    "candidate_id": value["candidate_id"],
-    "basin_count": value["basin_count"],
-    "cell_count": value["cell_count"],
-    "runtime_count": value["runtime_count"],
-    "independently_counted_denials": value["independently_counted_denials"],
-    "dependency_versions": value["dependency_versions"],
-    "runtime_statuses": [runtime["status"] for runtime in value["runtimes"]],
-    "process_exit_codes": [runtime["process_exit_code"] for runtime in value["runtimes"]],
-    "normalized_exit_codes": [runtime["normalized_exit_code"] for runtime in value["runtimes"]],
-    "required_outputs_complete": [runtime["required_outputs_complete"] for runtime in value["runtimes"]],
-}, sort_keys=True))
+evidence = Path(sys.argv[1])
+summary = json.loads((evidence / "SUMMARY.json").read_text(encoding="utf-8"))
+print(f"diagnostic_complete={summary['diagnostic_complete']}")
+print(f"manifest_entries={len((evidence / 'MANIFEST.sha256').read_text(encoding='utf-8').splitlines())}")
+for probe in summary["probes"]:
+    package = probe["package"]
+    sandbox = probe["sandbox"]
+    runtime = sandbox["runtime_result"]
+    events = [
+        json.loads(line)
+        for line in (evidence / "runs" / package / "logs" / "access.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line
+    ]
+    print(
+        json.dumps(
+            {
+                "package": package,
+                "declaration": probe["declaration"],
+                "process_exit_code": sandbox["process_exit_code"],
+                "normalized_exit_code": sandbox["normalized_exit_code"],
+                "status": sandbox["status"],
+                "denied_event_count": sandbox["denied_event_count"],
+                "independently_counted_denials": sum(
+                    event.get("decision") == "deny" for event in events
+                ),
+                "required_outputs_complete": runtime["required_outputs_complete"],
+            },
+            sort_keys=True,
+        )
+    )
 PY
-fi
 
-if [ -f "$ATTEMPT/evidence/MANIFEST.sha256" ]; then
-  (cd "$ATTEMPT" && sha256sum -c evidence/MANIFEST.sha256 >/dev/null) && echo "manifest_check=ok" || echo "manifest_check=failed"
-  echo "manifest_entries=$(wc -l < "$ATTEMPT/evidence/MANIFEST.sha256")"
-fi
+(cd "$EVIDENCE" && sha256sum -c MANIFEST.sha256 >/dev/null)
+echo "manifest_check=ok"
+echo "summary=$EVIDENCE/SUMMARY.json"
+echo "manifest=$EVIDENCE/MANIFEST.sha256"
 exit 0
