@@ -1,0 +1,1152 @@
+### channel=id29-nearing2022-da seq=172
+### host=login4
+### started=2026-08-11T07:24:16+0800
+### ---------- output ----------
+672a679fe8a32fa30e7d4001fe0cb6e73a889d988171295745c60217aa5a64a1  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq171.json
+48848 /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq171.json
+=== BEGIN PARTIAL NUMERICAL AUDIT SEQ171 JSON ===
+{
+  "comparison_rows": 84,
+  "complete_by_family": {
+    "time_assimilation": 7,
+    "time_autoregression": 5
+  },
+  "complete_coordinates": 12,
+  "coordinates": [
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b",
+      "eval_id": "N22-EVAL-TS-AR-L01-TR000-TE000-S0",
+      "failed_metrics": [],
+      "family": "time_autoregression",
+      "lead": 1,
+      "maximum_absolute_metric_difference": 0.01619433198380571,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.9416686205924235,
+          "difference": -0.008447203497064404,
+          "reproduction": 0.9332214170953591,
+          "within_tolerance": true
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.007236351970055042,
+          "difference": 0.0033845723219772987,
+          "reproduction": -0.003851779648077743,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8959840002275973,
+          "difference": -1.0895834625768153e-05,
+          "reproduction": 0.8959731043929715,
+          "within_tolerance": true
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.25,
+          "difference": -0.004716981132075471,
+          "reproduction": 0.24528301886792453,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8789654970169067,
+          "difference": 0.003944613922063356,
+          "reproduction": 0.8829101109389701,
+          "within_tolerance": true
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.38461538461538464,
+          "difference": -0.01619433198380571,
+          "reproduction": 0.3684210526315789,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.9389944839186591,
+          "difference": 0.002155878672709499,
+          "reproduction": 0.9411503625913686,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/test/model_epoch030/test_results.p",
+      "result_sha256": "33e321afb01aa37f13df2cdfbe9b561f0e8139d971d7efba842a43db8d6ea4f7",
+      "test_holdout": 0.0,
+      "train_holdout": 0.0
+    },
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b",
+      "eval_id": "N22-EVAL-TS-AR-L01-TR000-TE025-S0",
+      "failed_metrics": [],
+      "family": "time_autoregression",
+      "lead": 1,
+      "maximum_absolute_metric_difference": 0.016999607077042955,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.9392211869922215,
+          "difference": -0.016999607077042955,
+          "reproduction": 0.9222215799151785,
+          "within_tolerance": true
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.005985627605498024,
+          "difference": 0.002447251311930283,
+          "reproduction": -0.0035383762935677415,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.879370292258223,
+          "difference": -0.002704919618675361,
+          "reproduction": 0.8766653726395477,
+          "within_tolerance": true
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.2916666666666667,
+          "difference": -0.010416666666666685,
+          "reproduction": 0.28125,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8567029237747192,
+          "difference": 0.00037682933056393253,
+          "reproduction": 0.8570797531052832,
+          "within_tolerance": true
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.35294117647058826,
+          "difference": -0.0029411764705882804,
+          "reproduction": 0.35,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.9283157211082693,
+          "difference": 0.0017813833173530025,
+          "reproduction": 0.9300971044256223,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/test/model_epoch030/test_results.p",
+      "result_sha256": "b3bf5d57ecf3b20b3d5d380d32ecd3914df73044577cff0aba5e62990b0337cc",
+      "test_holdout": 0.25,
+      "train_holdout": 0.0
+    },
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b",
+      "eval_id": "N22-EVAL-TS-AR-L01-TR000-TE050-S0",
+      "failed_metrics": [],
+      "family": "time_autoregression",
+      "lead": 1,
+      "maximum_absolute_metric_difference": 0.03794390818120752,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.9392740245252195,
+          "difference": -0.03794390818120752,
+          "reproduction": 0.901330116344012,
+          "within_tolerance": true
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.006103647523387485,
+          "difference": 0.0035409820024600567,
+          "reproduction": -0.002562665520927428,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8585948863021389,
+          "difference": -0.008940998979854675,
+          "reproduction": 0.8496538873222842,
+          "within_tolerance": true
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.3333333333333333,
+          "difference": -0.012578616352201255,
+          "reproduction": 0.32075471698113206,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.830546423792839,
+          "difference": 0.0041146331689411175,
+          "reproduction": 0.8346610569617802,
+          "within_tolerance": true
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.3333333333333333,
+          "difference": 0.026666666666666672,
+          "reproduction": 0.36,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.9191070986737883,
+          "difference": 0.0003144493892365263,
+          "reproduction": 0.9194215480630248,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/test/model_epoch030/test_results.p",
+      "result_sha256": "3c24dd7ea21b973853dce5a82135ab6105977bcbc64191ae581c6fc816374355",
+      "test_holdout": 0.5,
+      "train_holdout": 0.0
+    },
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b",
+      "eval_id": "N22-EVAL-TS-AR-L01-TR000-TE075-S0",
+      "failed_metrics": [
+        "KGE",
+        "Alpha-NSE"
+      ],
+      "family": "time_autoregression",
+      "lead": 1,
+      "maximum_absolute_metric_difference": 0.052958485649081344,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.9255443196769535,
+          "difference": -0.052958485649081344,
+          "reproduction": 0.8725858340278722,
+          "within_tolerance": false
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.012333181197463183,
+          "difference": 0.007447744133858607,
+          "reproduction": -0.004885437063604576,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8272209862367359,
+          "difference": -0.021070974709055945,
+          "reproduction": 0.80615001152768,
+          "within_tolerance": false
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.375,
+          "difference": -0.011363636363636354,
+          "reproduction": 0.36363636363636365,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.7979172468185425,
+          "difference": 0.008165926292668324,
+          "reproduction": 0.8060831731112108,
+          "within_tolerance": true
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.3333333333333333,
+          "difference": 0.016666666666666663,
+          "reproduction": 0.35,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.9058041114956801,
+          "difference": -0.0020237766800672574,
+          "reproduction": 0.9037803348156128,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE075-S0/test/model_epoch030/test_results.p",
+      "result_sha256": "b242a81bafc9ab657f4d6f7feef800f7ddc2fb6a393595ada5b6bcb60a763b03",
+      "test_holdout": 0.75,
+      "train_holdout": 0.0
+    },
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b",
+      "eval_id": "N22-EVAL-TS-AR-L01-TR000-TE100-S0",
+      "failed_metrics": [
+        "NSE",
+        "KGE",
+        "Alpha-NSE"
+      ],
+      "family": "time_autoregression",
+      "lead": 1,
+      "maximum_absolute_metric_difference": 0.12792776489612456,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.8827774943550455,
+          "difference": -0.12792776489612456,
+          "reproduction": 0.7548497294589209,
+          "within_tolerance": false
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.010640050098618601,
+          "difference": 0.04208524595556916,
+          "reproduction": 0.03144519585695056,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.5359643280769177,
+          "difference": 0.028340740947302212,
+          "reproduction": 0.56430506902422,
+          "within_tolerance": false
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.4722222222222222,
+          "difference": -0.0222222222222222,
+          "reproduction": 0.45,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.5539548397064209,
+          "difference": 0.06215864532974047,
+          "reproduction": 0.6161134850361614,
+          "within_tolerance": false
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.3684210526315789,
+          "difference": 0.01619433198380571,
+          "reproduction": 0.38461538461538464,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8051180881323584,
+          "difference": 0.01692472504156106,
+          "reproduction": 0.8220428131739195,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0/test/model_epoch030/test_results.p",
+      "result_sha256": "5d0f29c3df32d0e6073c4a58efbac6bc0a0ba6b23219dce13f2de143dca1b247",
+      "test_holdout": 1.0,
+      "train_holdout": 0.0
+    },
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9",
+      "eval_id": "N22-EVAL-TS-DA-L01-TE000-S0",
+      "failed_metrics": [],
+      "family": "time_assimilation",
+      "lead": 1,
+      "maximum_absolute_metric_difference": 0.02614379084967322,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.9134605343812205,
+          "difference": 0.0018895158458385186,
+          "reproduction": 0.9153500502270591,
+          "within_tolerance": true
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.013917203026957155,
+          "difference": 4.274254534804463e-05,
+          "reproduction": -0.01387446048160911,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8776792110602499,
+          "difference": -0.0009091530959003391,
+          "reproduction": 0.8767700579643496,
+          "within_tolerance": true
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.25,
+          "difference": 0.0,
+          "reproduction": 0.25,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8616504669189453,
+          "difference": 0.0018436205087942747,
+          "reproduction": 0.8634940874277396,
+          "within_tolerance": true
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.4444444444444444,
+          "difference": 0.02614379084967322,
+          "reproduction": 0.47058823529411764,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.9316844711785138,
+          "difference": 0.00024491980579866013,
+          "reproduction": 0.9319293909843125,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results_data_assimilation.p",
+      "result_sha256": "e87bc2ad3c93c3380c65c854834ddf982bd8fc1a8c2dca4d9e501d1bc4f928ef",
+      "test_holdout": 0.0,
+      "train_holdout": null
+    },
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9",
+      "eval_id": "N22-EVAL-TS-DA-L01-TE025-S0",
+      "failed_metrics": [],
+      "family": "time_assimilation",
+      "lead": 1,
+      "maximum_absolute_metric_difference": 0.004901960784313764,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.9078216899847951,
+          "difference": 0.0016076974847061276,
+          "reproduction": 0.9094293874695012,
+          "within_tolerance": true
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.01832299702603377,
+          "difference": -0.0005968367605598372,
+          "reproduction": -0.018919833786593607,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8614160748336198,
+          "difference": 0.0013223268385618159,
+          "reproduction": 0.8627384016721816,
+          "within_tolerance": true
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.2807017543859649,
+          "difference": -0.0012899896800825372,
+          "reproduction": 0.27941176470588236,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8482010811567307,
+          "difference": 0.0036370103799227005,
+          "reproduction": 0.8518380915366534,
+          "within_tolerance": true
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.4166666666666667,
+          "difference": -0.004901960784313764,
+          "reproduction": 0.4117647058823529,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.9248626223853348,
+          "difference": 0.0010371361431656956,
+          "reproduction": 0.9258997585285005,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "result_sha256": "5da8cb5f19ea80a56aa4ccf0343443fdffacaa297e6681f9ba4d8ea835225c3a",
+      "test_holdout": 0.25,
+      "train_holdout": null
+    },
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9",
+      "eval_id": "N22-EVAL-TS-DA-L01-TE050-S0",
+      "failed_metrics": [],
+      "family": "time_assimilation",
+      "lead": 1,
+      "maximum_absolute_metric_difference": 0.022883295194508046,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.8975773520694784,
+          "difference": 0.0019445008612269943,
+          "reproduction": 0.8995218529307054,
+          "within_tolerance": true
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.02188401078441455,
+          "difference": -7.742670053781028e-05,
+          "reproduction": -0.02196143748495236,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8444363127013296,
+          "difference": 0.007641644910031498,
+          "reproduction": 0.8520779576113611,
+          "within_tolerance": true
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.3076923076923077,
+          "difference": 0.003783102143757877,
+          "reproduction": 0.3114754098360656,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8316194415092468,
+          "difference": 0.007819616071710445,
+          "reproduction": 0.8394390575809573,
+          "within_tolerance": true
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.3684210526315789,
+          "difference": 0.022883295194508046,
+          "reproduction": 0.391304347826087,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.916795663793875,
+          "difference": 0.0022605570563142274,
+          "reproduction": 0.9190562208501892,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "result_sha256": "7cc940008b3b3f091125e018d865f61e4beaca8e2f2d07474f1a64fbb37a8cd6",
+      "test_holdout": 0.5,
+      "train_holdout": null
+    },
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9",
+      "eval_id": "N22-EVAL-TS-DA-L01-TE075-S0",
+      "failed_metrics": [],
+      "family": "time_assimilation",
+      "lead": 1,
+      "maximum_absolute_metric_difference": 0.005952380952380987,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.8864389094315711,
+          "difference": -0.0019975715462241528,
+          "reproduction": 0.884441337885347,
+          "within_tolerance": true
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.025697939764483004,
+          "difference": 0.0010778738422841765,
+          "reproduction": -0.024620065922198828,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8305763580754586,
+          "difference": -0.0007475843294653117,
+          "reproduction": 0.8298287737459933,
+          "within_tolerance": true
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.3333333333333333,
+          "difference": 0.005952380952380987,
+          "reproduction": 0.3392857142857143,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8204281777143478,
+          "difference": -0.0007904526841422399,
+          "reproduction": 0.8196377250302056,
+          "within_tolerance": true
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.3333333333333333,
+          "difference": 0.0,
+          "reproduction": 0.3333333333333333,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.9107649569000132,
+          "difference": -0.0005894791916141173,
+          "reproduction": 0.9101754777083991,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE075-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "result_sha256": "66b2aec404686ef4bce852a68b905a192e89a1716732a2987fa9ff4b244df77d",
+      "test_holdout": 0.75,
+      "train_holdout": null
+    },
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9",
+      "eval_id": "N22-EVAL-TS-DA-L01-TE100-S0",
+      "failed_metrics": [],
+      "family": "time_assimilation",
+      "lead": 1,
+      "maximum_absolute_metric_difference": 0.008568761514637258,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.8743124359526371,
+          "difference": -0.008568761514637258,
+          "reproduction": 0.8657436744379998,
+          "within_tolerance": true
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.02681285291857018,
+          "difference": 0.0012492444643164673,
+          "reproduction": -0.025563608454253713,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.79509288886378,
+          "difference": 0.006174260876615434,
+          "reproduction": 0.8012671497403955,
+          "within_tolerance": true
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.35185185185185186,
+          "difference": 0.0029868578255675127,
+          "reproduction": 0.3548387096774194,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.7960150390863419,
+          "difference": -0.003686510933373799,
+          "reproduction": 0.7923285281529681,
+          "within_tolerance": true
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.2631578947368421,
+          "difference": 0.0,
+          "reproduction": 0.2631578947368421,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.9023405369532577,
+          "difference": -0.0004514355132401171,
+          "reproduction": 0.9018891014400175,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE100-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "result_sha256": "62d6bd178d9fd7d5484ec4bcc7633bd2d9aba5af4d30f5ec7fb9bc7aeb966b48",
+      "test_holdout": 1.0,
+      "train_holdout": null
+    },
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9",
+      "eval_id": "N22-EVAL-TS-DA-L02-TE000-S0",
+      "failed_metrics": [],
+      "family": "time_assimilation",
+      "lead": 2,
+      "maximum_absolute_metric_difference": 0.01224489795918371,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.8956221871861981,
+          "difference": -0.002633743094632046,
+          "reproduction": 0.8929884440915661,
+          "within_tolerance": true
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.019938245495380168,
+          "difference": -0.0001803728136106561,
+          "reproduction": -0.020118618308990824,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8438823971263116,
+          "difference": -0.003394192663948248,
+          "reproduction": 0.8404882044623634,
+          "within_tolerance": true
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.3877551020408163,
+          "difference": 0.01224489795918371,
+          "reproduction": 0.4,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8264854550361633,
+          "difference": 0.002103786460942114,
+          "reproduction": 0.8285892414971054,
+          "within_tolerance": true
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.4166666666666667,
+          "difference": 0.00438596491228066,
+          "reproduction": 0.42105263157894735,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.9133977590641806,
+          "difference": 0.0009044393114400195,
+          "reproduction": 0.9143021983756207,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE000-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "result_sha256": "28b626e46acaf425ab35ae634e58bd368972437c4da16e074a08240af732fc68",
+      "test_holdout": 0.0,
+      "train_holdout": null
+    },
+    {
+      "basins": 531,
+      "candidate_checkpoint_sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9",
+      "eval_id": "N22-EVAL-TS-DA-L02-TE025-S0",
+      "failed_metrics": [],
+      "family": "time_assimilation",
+      "lead": 2,
+      "maximum_absolute_metric_difference": 0.022883295194508046,
+      "metrics": {
+        "Alpha-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": 0.891260817642515,
+          "difference": 0.00021828743434693099,
+          "reproduction": 0.8914791050768619,
+          "within_tolerance": true
+        },
+        "Beta-NSE": {
+          "absolute_tolerance": 0.05,
+          "author": -0.022333995663231812,
+          "difference": -0.0011291548555073874,
+          "reproduction": -0.0234631505187392,
+          "within_tolerance": true
+        },
+        "KGE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8415506421788215,
+          "difference": -0.005025873073030818,
+          "reproduction": 0.8365247691057907,
+          "within_tolerance": true
+        },
+        "Missed-Peaks": {
+          "absolute_tolerance": 0.05,
+          "author": 0.375,
+          "difference": 0.005952380952380931,
+          "reproduction": 0.38095238095238093,
+          "within_tolerance": true
+        },
+        "NSE": {
+          "absolute_tolerance": 0.02,
+          "author": 0.8233303427696228,
+          "difference": 0.0020942500899849836,
+          "reproduction": 0.8254245928596078,
+          "within_tolerance": true
+        },
+        "Peak-Timing": {
+          "absolute_tolerance": 0.1,
+          "author": 0.3684210526315789,
+          "difference": 0.022883295194508046,
+          "reproduction": 0.391304347826087,
+          "within_tolerance": true
+        },
+        "Pearson-r": {
+          "absolute_tolerance": 0.02,
+          "author": 0.9132951621567174,
+          "difference": 3.850523703408104e-05,
+          "reproduction": 0.9133336673937514,
+          "within_tolerance": true
+        }
+      },
+      "reference_path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "reference_sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221",
+      "result_path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE025-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "result_sha256": "d881c8a6e004445026e99a977ff5409be24de1a19965982036d7155f3341fe2c",
+      "test_holdout": 0.25,
+      "train_holdout": null
+    }
+  ],
+  "coordinates_with_failures": 2,
+  "frozen_acceptance_modified": false,
+  "individual_tolerance_failures": 5,
+  "mailbox_sequence": 171,
+  "metric_summaries": {
+    "Alpha-NSE": {
+      "coordinates": 12,
+      "individual_failures": 2,
+      "maximum_absolute_difference": 0.12792776489612456,
+      "median_signed_difference": -0.005540473295848225,
+      "partial_within_systematic_tolerance": true,
+      "systematic_tolerance": 0.02
+    },
+    "Beta-NSE": {
+      "coordinates": 12,
+      "individual_failures": 0,
+      "maximum_absolute_difference": 0.04208524595556916,
+      "median_signed_difference": 0.0011635591533003219,
+      "partial_within_systematic_tolerance": true,
+      "systematic_tolerance": 0.02
+    },
+    "KGE": {
+      "coordinates": 12,
+      "individual_failures": 2,
+      "maximum_absolute_difference": 0.028340740947302212,
+      "median_signed_difference": -0.0008283687126828254,
+      "partial_within_systematic_tolerance": true,
+      "systematic_tolerance": 0.01
+    },
+    "Missed-Peaks": {
+      "coordinates": 12,
+      "individual_failures": 0,
+      "maximum_absolute_difference": 0.0222222222222222,
+      "median_signed_difference": -0.0006449948400412686,
+      "partial_within_systematic_tolerance": true,
+      "systematic_tolerance": 0.02
+    },
+    "NSE": {
+      "coordinates": 12,
+      "individual_failures": 1,
+      "maximum_absolute_difference": 0.06215864532974047,
+      "median_signed_difference": 0.0028703984204324073,
+      "partial_within_systematic_tolerance": true,
+      "systematic_tolerance": 0.01
+    },
+    "Peak-Timing": {
+      "coordinates": 12,
+      "individual_failures": 0,
+      "maximum_absolute_difference": 0.026666666666666672,
+      "median_signed_difference": 0.010290148448043185,
+      "partial_within_systematic_tolerance": true,
+      "systematic_tolerance": 0.02
+    },
+    "Pearson-r": {
+      "coordinates": 12,
+      "individual_failures": 0,
+      "maximum_absolute_difference": 0.01692472504156106,
+      "median_signed_difference": 0.0006094443503382729,
+      "partial_within_systematic_tolerance": true,
+      "systematic_tolerance": 0.01
+    }
+  },
+  "registered_matrix_modified": false,
+  "schema": "nearing2022-partial-numerical-audit-v2",
+  "scope": "Every evaluation coordinate with all frozen registered roles present at execution; interim diagnostic only. The final numerical gate still requires all 180 evaluation and 660 hyperparameter coordinates.",
+  "source_artifacts": {
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/config.yml": {
+      "bytes": 2842,
+      "sha256": "f012a327c92ef5b32c055e8876ddcc5ab61a1beb51bb330c678bb50dc0202651"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/model_epoch030.pt": {
+      "bytes": 1228165,
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/output.log": {
+      "bytes": 786,
+      "sha256": "e9e39e81697ba04006a766ec4c143bdcdbf7b98a117894a55770d86e7608fd50"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/test/model_epoch030/test_metrics_data_assimilation.csv": {
+      "bytes": 72247,
+      "sha256": "f65815578086cb70cd5bd4d745b1ba530bb6cdda9a26a5618ee5f8b7894e9057"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/test/model_epoch030/test_results_data_assimilation.p": {
+      "bytes": 47014459,
+      "sha256": "5da8cb5f19ea80a56aa4ccf0343443fdffacaa297e6681f9ba4d8ea835225c3a"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/config.yml": {
+      "bytes": 2841,
+      "sha256": "ed08472a47c69bb16549eb5892b8acf8cb166a3d34463c5bcbf46be0fa69c980"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/model_epoch030.pt": {
+      "bytes": 1228165,
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/output.log": {
+      "bytes": 786,
+      "sha256": "2d6c01f71c90adf47d4b52b49a303ac47b67f00ae73b1c173593c7801d9e270f"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/test/model_epoch030/test_metrics_data_assimilation.csv": {
+      "bytes": 68317,
+      "sha256": "17dbbe5581d433b8eba4a2338241c998ec37e4fd7c469e3ab247f3ac8db3bb3f"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/test/model_epoch030/test_results_data_assimilation.p": {
+      "bytes": 47013979,
+      "sha256": "7cc940008b3b3f091125e018d865f61e4beaca8e2f2d07474f1a64fbb37a8cd6"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE075-S0/config.yml": {
+      "bytes": 2842,
+      "sha256": "d5b78baebca6b906b13ac206ba722411bd76084370bb7b8d374ebb8dc91edf9b"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE075-S0/model_epoch030.pt": {
+      "bytes": 1228165,
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE075-S0/output.log": {
+      "bytes": 786,
+      "sha256": "8b98e7e2e224274da28beda917fea0dca44136976883468b001972c167f7da42"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE075-S0/test/model_epoch030/test_metrics_data_assimilation.csv": {
+      "bytes": 60947,
+      "sha256": "963a0ae76cda56d4e4a32d68de63284abebfe4b65d25253acda76d60e138d8c9"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE075-S0/test/model_epoch030/test_results_data_assimilation.p": {
+      "bytes": 47009249,
+      "sha256": "66b2aec404686ef4bce852a68b905a192e89a1716732a2987fa9ff4b244df77d"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE100-S0/config.yml": {
+      "bytes": 2841,
+      "sha256": "86be5059f5a9315d03d0a1fc90fe52d82fae6a1a410be9518d54981713f875a7"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE100-S0/model_epoch030.pt": {
+      "bytes": 1228165,
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE100-S0/output.log": {
+      "bytes": 91056,
+      "sha256": "0016cf44e6e74ab16e8d99baffd801e11b7463a774ccb834894a73d6b12c69ff"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE100-S0/test/model_epoch030/test_metrics_data_assimilation.csv": {
+      "bytes": 8564,
+      "sha256": "905b6c0b949503c7b9bce8f667d0e2a3c3f33713a679761c41dfa11d0cfcc42a"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE100-S0/test/model_epoch030/test_results_data_assimilation.p": {
+      "bytes": 46962314,
+      "sha256": "62d6bd178d9fd7d5484ec4bcc7633bd2d9aba5af4d30f5ec7fb9bc7aeb966b48"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE000-S0/config.yml": {
+      "bytes": 2841,
+      "sha256": "00c14c3d5da63a0febde994104b2b1b8794370f1908cc2a8149a0773fb2bb771"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE000-S0/model_epoch030.pt": {
+      "bytes": 1228165,
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE000-S0/output.log": {
+      "bytes": 786,
+      "sha256": "3ebb2cf8ab6780df34367913d23cf7b62cc6fec8cb02eb5c2ee54829b59d737e"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE000-S0/test/model_epoch030/test_metrics_data_assimilation.csv": {
+      "bytes": 73202,
+      "sha256": "4170f417a6eaf0fa1a23cc2cc339c97af514722c7f890be23323952a3846092c"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE000-S0/test/model_epoch030/test_results_data_assimilation.p": {
+      "bytes": 47014459,
+      "sha256": "28b626e46acaf425ab35ae634e58bd368972437c4da16e074a08240af732fc68"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE025-S0/config.yml": {
+      "bytes": 2842,
+      "sha256": "1c4ff68cf282248eaf53af4a6e396f0ddce49e96e769432a04f2fb59933af41e"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE025-S0/model_epoch030.pt": {
+      "bytes": 1228165,
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE025-S0/output.log": {
+      "bytes": 786,
+      "sha256": "f442641cb110578b657d564d0e2673f09719ffdcb9ed38e40c4e0ecc45fd7c92"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE025-S0/test/model_epoch030/test_metrics_data_assimilation.csv": {
+      "bytes": 71519,
+      "sha256": "a67b977ebfff4234e3ec267b92c3eeadcfe6454257e67394a534f4064da4363e"
+    },
+    "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE025-S0/test/model_epoch030/test_results_data_assimilation.p": {
+      "bytes": 47014459,
+      "sha256": "d881c8a6e004445026e99a977ff5409be24de1a19965982036d7155f3341fe2c"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/config.yml": {
+      "bytes": 2611,
+      "sha256": "b1314b4c9b50df9d15463366e591972c79edb21371a2b5147b6c70c77e752662"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/model_epoch030.pt": {
+      "bytes": 1236357,
+      "sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/output.log": {
+      "bytes": 782,
+      "sha256": "c59094c305118bf1e05386747fa57a20a252cf0dd1c9392202d47008c2b12fac"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/test/model_epoch030/test_metrics.csv": {
+      "bytes": 73440,
+      "sha256": "efe5068e9560e41326a819df5316d0ca63e07e4351ecbf7b31e98972b006cd87"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/test/model_epoch030/test_results.p": {
+      "bytes": 47014459,
+      "sha256": "b3bf5d57ecf3b20b3d5d380d32ecd3914df73044577cff0aba5e62990b0337cc"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/config.yml": {
+      "bytes": 2610,
+      "sha256": "37b3942cfca36f25da1c5f00aff7fac34cb8ccabdd4ab452d8ac0c5058d3967c"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/model_epoch030.pt": {
+      "bytes": 1236357,
+      "sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/output.log": {
+      "bytes": 782,
+      "sha256": "b73a1788d002aa8d7d14218c6214f5076894ffb412e803a683d1dd7101849c36"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/test/model_epoch030/test_metrics.csv": {
+      "bytes": 73225,
+      "sha256": "ed46ca782a0e4dae88aef5881af31268a569784580dea279c20bfae396297c07"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/test/model_epoch030/test_results.p": {
+      "bytes": 47014459,
+      "sha256": "3c24dd7ea21b973853dce5a82135ab6105977bcbc64191ae581c6fc816374355"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE075-S0/config.yml": {
+      "bytes": 2611,
+      "sha256": "5e6e01985bec355ee50be9c298345fd03018326b96d66dadd122a64730296206"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE075-S0/model_epoch030.pt": {
+      "bytes": 1236357,
+      "sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE075-S0/output.log": {
+      "bytes": 782,
+      "sha256": "59cb41c38059b38d8e2dd12a67ce7a8d4ee707aee4511ba8aa819533a947930a"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE075-S0/test/model_epoch030/test_metrics.csv": {
+      "bytes": 73202,
+      "sha256": "c2e5cf59b7c75a2fbb73ab94d950aa221f102010f248cbc5816aa71f35caa095"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE075-S0/test/model_epoch030/test_results.p": {
+      "bytes": 47014459,
+      "sha256": "b242a81bafc9ab657f4d6f7feef800f7ddc2fb6a393595ada5b6bcb60a763b03"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0/config.yml": {
+      "bytes": 2610,
+      "sha256": "35d6e920965614421bfddc45ac5aeab09a8637f7df3b2d06d41a9c28ab30f5fa"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0/model_epoch030.pt": {
+      "bytes": 1236357,
+      "sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0/output.log": {
+      "bytes": 782,
+      "sha256": "5ea80501e20000af622c857c2e84dc9ab6e72c2df776e81380d85f44e5ad68c1"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0/test/model_epoch030/test_metrics.csv": {
+      "bytes": 72951,
+      "sha256": "1e18c74360b12e4181021a43aa9ce6af11ec145ef500789f889bd8333644c02f"
+    },
+    "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0/test/model_epoch030/test_results.p": {
+      "bytes": 47014459,
+      "sha256": "5d0f29c3df32d0e6073c4a58efbac6bc0a0ba6b23219dce13f2de143dca1b247"
+    },
+    "results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/config.yml": {
+      "bytes": 3658,
+      "sha256": "00effd6c73be60392e965d70766f8c8ea556d0f127309ead4ea8bff6f125f1b6"
+    },
+    "results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/model_epoch030.pt": {
+      "bytes": 1228165,
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    "results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/output.log": {
+      "bytes": 9582,
+      "sha256": "b6de621154ae0c2cc2e8f2d1d0ab9c0543b5efe3fe580737a829ecc944860449"
+    },
+    "results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics_data_assimilation.csv": {
+      "bytes": 73534,
+      "sha256": "228d6ac3cf28ec67af8037fbfa02f325d0716aab894e75d212b9f6a1779ea2db"
+    },
+    "results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results_data_assimilation.p": {
+      "bytes": 47014459,
+      "sha256": "e87bc2ad3c93c3380c65c854834ddf982bd8fc1a8c2dca4d9e501d1bc4f928ef"
+    },
+    "results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/config.yml": {
+      "bytes": 2640,
+      "sha256": "504d16fdf4d5c2d138790694656dfaecf089d7852be63ef3efc22f4814cd8996"
+    },
+    "results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/model_epoch030.pt": {
+      "bytes": 1236357,
+      "sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b"
+    },
+    "results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/output.log": {
+      "bytes": 9337,
+      "sha256": "d8ef14a61da71a4200291160687d87d535d6b23310e15c6ab0291b83553b3a16"
+    },
+    "results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/test/model_epoch030/test_metrics.csv": {
+      "bytes": 73638,
+      "sha256": "34245f470670174f64471aa68c6aa072f50aaad48376edf6ebdb63288aee9005"
+    },
+    "results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/test/model_epoch030/test_results.p": {
+      "bytes": 47014459,
+      "sha256": "33e321afb01aa37f13df2cdfbe9b561f0e8139d971d7efba842a43db8d6ea4f7"
+    },
+    "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv": {
+      "bytes": 73071,
+      "sha256": "7411a6a0b77f10188858d3c6c4eab75bc59250131662d3a6c5333ebf18ee3c86"
+    },
+    "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p": {
+      "bytes": 47014459,
+      "sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221"
+    },
+    "src/29_nearing2022_da_ar/reference/author_time_split_statistics.pkl": {
+      "bytes": 4550899,
+      "sha256": "74aac5b377973dc745336da1b1d6a22be3f03b3544b6ae85b4cede37106af0ee"
+    },
+    "src/29_nearing2022_da_ar/reference/reproduction_acceptance.json": {
+      "bytes": 1540,
+      "sha256": "6125cab8935c3ad0ab498865c661c47ea83c837c7627dff2534ba5a5b9185895"
+    },
+    "src/29_nearing2022_da_ar/registry/evaluation_registry.csv": {
+      "bytes": 73013,
+      "sha256": "37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215"
+    },
+    "src/29_nearing2022_da_ar/registry/experiment_registry.csv": {
+      "bytes": 36970,
+      "sha256": "6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64"
+    }
+  }
+}
+=== END PARTIAL NUMERICAL AUDIT SEQ171 JSON ===
+registered_matrix_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T07:24:16+0800
