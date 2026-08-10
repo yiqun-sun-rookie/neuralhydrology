@@ -1,0 +1,25 @@
+### channel=autoresearch-64 seq=38
+### host=login4
+### started=2026-08-10T14:18:56+0800
+### ---------- output ----------
+=== JOB ACCOUNTING ===
+slurm_load_jobs error: Invalid job id specified
+       JobID              JobName          State ExitCode    Elapsed     NodeList 
+------------ -------------------- -------------- -------- ---------- ------------ 
+      202243       a64-hbv8-smoke      COMPLETED      0:0   00:01:48       icn201 
+=== EXACT JOB LOGS ===
+=== BUILD EIGHT-BASIN DEVELOPMENT-ONLY SOURCE ===
+{"basin_count": 8, "row_count": 26304, "source_manifest_sha256": "59d333daa833a5d67167ad96f8203328b96990b1a0efc470777b22c84319c8d7"}
+=== BUILD FROZEN DEVELOPMENT PACKAGES ===
+{"basin_count": 8, "package_manifest_sha256": "f877e7932d33dc2db35f25026b425dd69755dda1338649020db40a1f4d5b38ea", "protocols": ["forward", "reverse"]}
+=== RUN ONE PREDECLARED HBV-LITE CANDIDATE ===
+=== EVIDENCE STATUS ===
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_8_hpc_smoke_20260810_seq36/candidate_run/CANDIDATE_SUMMARY.json
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_8_hpc_smoke_20260810_seq36/evidence/SMOKE_SUMMARY.json
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_8_hpc_smoke_20260810_seq36/evidence/MANIFEST.sha256
+{"basin_count": 8, "candidate_id": "hbv-lite-calibrated-v1", "cell_count": 8, "dependency_versions": {"numpy": "1.26.4", "pandas": "2.2.3", "pyarrow": "17.0.0"}, "experiment_id": "hbv_lite_8_hpc_smoke_20260810_seq36", "independently_counted_denials": 0, "job_id": "202243", "normalized_exit_codes": [0, 0, 0, 0], "process_exit_codes": [0, 0, 0, 0], "required_outputs_complete": [true, true, true, true], "runtime_count": 4, "runtime_statuses": ["succeeded", "succeeded", "succeeded", "succeeded"]}
+manifest_check=ok
+manifest_entries=151
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T14:18:59+0800
