@@ -1,0 +1,20 @@
+### channel=id29-nearing2022-da seq=70
+### host=login4
+### started=2026-08-10T13:47:31+0800
+### ---------- output ----------
+=== PAYLOAD ===
+/data1/home/sunyiq/hpc_mailbox/payload/id29-nearing2022-da/closure_v6.tar.gz: OK
+=== PREFLIGHT ===
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/build_evaluation_registry.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_evaluation_run.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/basin_direct_evaluation_batch.txt: OK
+direct_coordinates=20
+=== SUBMIT ===
+direct_basin_evaluation_job_id=202238 dependency=afterok:202216
+             JOBID                     NAME ST       TIME  NODES NODELIST(REASON)
+            202229             N22-agg-eval PD       0:00      1 (Dependency)
+   202238_[0-19%2]       N22-eval-bs-direct PD       0:00      1 (None)
+aggregation_dependency=afterok:202222_*,afterok:202226_*,afterok:202216_*,afterok:202238_*,afterok:202227_*
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T13:47:35+0800
