@@ -1,184 +1,510 @@
 #!/bin/bash
-# ID29 seq=132: event-driven refresh near projected completion of evaluation task 202222_9.
-set -eo pipefail
+# ID29 seq=133: deploy and Slurm-validate strict exact matching for the final numerical decision.
+set -euo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
+IDEA="$ROOT/src/29_nearing2022_da_ar"
+CLOSURE="$ROOT/closure_20260810"
+STAGE="$CLOSURE/deployment/seq133"
+PREVIOUS="$CLOSURE/provenance/pre_strict_decision_seq133"
+PROVENANCE_PAYLOAD="$CLOSURE/provenance/strict_decision_seq133_payload.tar.gz"
+DEPLOYMENT_RECEIPT="$CLOSURE/provenance/strict_decision_seq133_deployment_receipt.json"
+JOB_RECEIPT="$CLOSURE/provenance/preclosure_validation_seq133_job.txt"
+PAYLOAD="$STAGE/payload.tar.gz"
 
-echo "=== BOUNDED PROGRESS AND WALLTIME PROJECTION ==="
-python - <<'PY'
+echo "=== PRE-DEPLOY SAFETY BOUNDARY ==="
+test ! -e "$STAGE"
+test ! -e "$PREVIOUS"
+test ! -e "$PROVENANCE_PAYLOAD"
+test ! -e "$DEPLOYMENT_RECEIPT"
+test ! -e "$JOB_RECEIPT"
+test ! -e "$IDEA/reference/local_contract_validation_pre_strict_decision_20260811.json"
+test ! -e "$IDEA/reference/local_contract_validation_junit_pre_strict_decision_20260811.xml"
+sha256sum -c <<'SHA256_PRE'
+c4487ffb1a4ba151dbc782830fb6209e2eae62666fb0819179dad632fae351db  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py
+17463a5ab783d024def54993b0d04cbd37a4f655fbfd4f696da57d7c5251cea8  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py
+dd7819377de090baf9e7210216e8d62ac1fd12fa46d2eb8a59fa74c6a4372b67  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation.json
+25f0ad9ba2e9cf51c1bac3de15ef307a6a56f64adce35a9b70043abf6fd2a553  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml
+dc8c5a18b77d321b1a4ae6aba24315b16cb5a59e4fa2c3a6c99ae8de4ba2d6ed  /data1/home/sunyiq/nearing2022_da/test/test_nearing2022_reproduction_contract.py
+SHA256_PRE
+
+echo "=== DECODE AND VERIFY SIX-MEMBER PAYLOAD ==="
+mkdir -p "$STAGE"
+base64 -d > "$PAYLOAD" <<'PAYLOAD_B64'
+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
+PAYLOAD_B64
+test "$(stat -c '%s' "$PAYLOAD")" = "19865"
+echo "a686e5e558a295c36da9efdc2e1588873132d8c984c052003115e8c5fa264a15  $PAYLOAD" | sha256sum -c -
+cat > "$STAGE/expected_members.txt" <<'MEMBERS'
+src/29_nearing2022_da_ar/scripts/verify_registered_closure.py
+src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py
+src/29_nearing2022_da_ar/reference/local_contract_validation.json
+src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml
+src/29_nearing2022_da_ar/reference/local_contract_validation_pre_strict_decision_20260811.json
+src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_strict_decision_20260811.xml
+MEMBERS
+tar -tzf "$PAYLOAD" > "$STAGE/actual_members.txt"
+diff -u "$STAGE/expected_members.txt" "$STAGE/actual_members.txt"
+tar -xzf "$PAYLOAD" -C "$STAGE"
+test -z "$(find "$STAGE/src" -type l -print)"
+while IFS= read -r relative; do
+  test -f "$STAGE/$relative"
+done < "$STAGE/expected_members.txt"
+sha256sum -c <<SHA256_STAGE
+3b0caef6076d457e303864227e6748ab947e39da01c0c1faea15795807ce8945  $STAGE/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py
+4ed2cdf9994e37ff913ffbd7f4eb466fe24d0a49675bfdbd886dd5799aa8419b  $STAGE/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py
+84d43c8e0fedc1d43576467c8c9d6b07553e54a36a6959bde801581b0f02cf7e  $STAGE/src/29_nearing2022_da_ar/reference/local_contract_validation.json
+6920a8bdd91d5e441d49754d2de16943153d487f0ee7d8b7a065784f5e7c970b  $STAGE/src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml
+dd7819377de090baf9e7210216e8d62ac1fd12fa46d2eb8a59fa74c6a4372b67  $STAGE/src/29_nearing2022_da_ar/reference/local_contract_validation_pre_strict_decision_20260811.json
+25f0ad9ba2e9cf51c1bac3de15ef307a6a56f64adce35a9b70043abf6fd2a553  $STAGE/src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_strict_decision_20260811.xml
+SHA256_STAGE
+
+echo "=== PRESERVE PREVIOUS CANONICAL BYTES ==="
+mkdir -p "$PREVIOUS"
+cp -p "$IDEA/scripts/verify_registered_closure.py" "$PREVIOUS/verify_registered_closure.py"
+cp -p "$IDEA/scripts/run_server_preclosure_check.py" "$PREVIOUS/run_server_preclosure_check.py"
+cp -p "$IDEA/reference/local_contract_validation.json" "$PREVIOUS/local_contract_validation.json"
+cp -p "$IDEA/reference/local_contract_validation_junit.xml" "$PREVIOUS/local_contract_validation_junit.xml"
+sha256sum -c <<SHA256_PREVIOUS
+c4487ffb1a4ba151dbc782830fb6209e2eae62666fb0819179dad632fae351db  $PREVIOUS/verify_registered_closure.py
+17463a5ab783d024def54993b0d04cbd37a4f655fbfd4f696da57d7c5251cea8  $PREVIOUS/run_server_preclosure_check.py
+dd7819377de090baf9e7210216e8d62ac1fd12fa46d2eb8a59fa74c6a4372b67  $PREVIOUS/local_contract_validation.json
+25f0ad9ba2e9cf51c1bac3de15ef307a6a56f64adce35a9b70043abf6fd2a553  $PREVIOUS/local_contract_validation_junit.xml
+SHA256_PREVIOUS
+
+echo "=== ATOMICALLY PUBLISH STRICT VERIFIER AND RECEIPTS ==="
+for relative in   src/29_nearing2022_da_ar/scripts/verify_registered_closure.py   src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py   src/29_nearing2022_da_ar/reference/local_contract_validation.json   src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml   src/29_nearing2022_da_ar/reference/local_contract_validation_pre_strict_decision_20260811.json   src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_strict_decision_20260811.xml
+do
+  destination="$ROOT/$relative"
+  temporary="$destination.seq133.tmp"
+  test ! -e "$temporary"
+  cp -p "$STAGE/$relative" "$temporary"
+  mv "$temporary" "$destination"
+done
+cp -p "$PAYLOAD" "$PROVENANCE_PAYLOAD.tmp"
+echo "a686e5e558a295c36da9efdc2e1588873132d8c984c052003115e8c5fa264a15  $PROVENANCE_PAYLOAD.tmp" | sha256sum -c -
+mv "$PROVENANCE_PAYLOAD.tmp" "$PROVENANCE_PAYLOAD"
+sha256sum -c <<'SHA256_DEPLOYED'
+3b0caef6076d457e303864227e6748ab947e39da01c0c1faea15795807ce8945  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_registered_closure.py
+4ed2cdf9994e37ff913ffbd7f4eb466fe24d0a49675bfdbd886dd5799aa8419b  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py
+84d43c8e0fedc1d43576467c8c9d6b07553e54a36a6959bde801581b0f02cf7e  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation.json
+6920a8bdd91d5e441d49754d2de16943153d487f0ee7d8b7a065784f5e7c970b  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml
+dd7819377de090baf9e7210216e8d62ac1fd12fa46d2eb8a59fa74c6a4372b67  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_pre_strict_decision_20260811.json
+25f0ad9ba2e9cf51c1bac3de15ef307a6a56f64adce35a9b70043abf6fd2a553  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_strict_decision_20260811.xml
+SHA256_DEPLOYED
+
+echo "=== SUBMIT NEW SLURM PRECLOSURE VALIDATION ==="
+JOB_ID="$(sbatch --parsable "$IDEA/hpc/run_preclosure_validation.slurm")"
+[[ "$JOB_ID" =~ ^[0-9]+$ ]]
+printf '%s
+' "$JOB_ID" > "$JOB_RECEIPT.tmp"
+mv "$JOB_RECEIPT.tmp" "$JOB_RECEIPT"
+scontrol show job -o "$JOB_ID"
+
+echo "=== WRITE DEPLOYMENT RECEIPT ==="
+python - "$ROOT" "$PROVENANCE_PAYLOAD" "$PREVIOUS" "$DEPLOYMENT_RECEIPT" "$JOB_ID" <<'PY'
+from datetime import datetime, timezone
+import hashlib
 import json
-from pathlib import Path
-import re
-import subprocess
-
-parents = '202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315'
-running = subprocess.run(
-    ['squeue', '-h', '-j', parents, '-t', 'RUNNING', '-o', '%i'],
-    check=True,
-    capture_output=True,
-    text=True,
-).stdout.split()
-
-ansi = re.compile(r'\x1b\[[0-9;]*[A-Za-z]')
-epoch_pattern = re.compile(r'# Epoch\s+(\d+):\s*(\d+)%\|.*?\|\s*(\d+)/(\d+)')
-generic_pattern = re.compile(r'(?<!Epoch\s)(\d+)%\|.*?\|\s*(\d+)/(\d+)')
-
-def seconds(value):
-    days = 0
-    if '-' in value:
-        day_text, value = value.split('-', 1)
-        days = int(day_text)
-    fields = [int(item) for item in value.split(':')]
-    if len(fields) == 3:
-        hours, minutes, secs = fields
-    elif len(fields) == 2:
-        hours, minutes, secs = 0, fields[0], fields[1]
-    else:
-        raise ValueError(value)
-    return days * 86400 + hours * 3600 + minutes * 60 + secs
-
-for job in sorted(running):
-    record = subprocess.run(
-        ['scontrol', 'show', 'job', '-o', job],
-        check=True,
-        capture_output=True,
-        text=True,
-    ).stdout.strip()
-    fields = {}
-    for token in record.split():
-        if '=' in token:
-            key, value = token.split('=', 1)
-            fields[key] = value
-    stdout = Path(fields['StdOut'])
-    size = stdout.stat().st_size
-    with stdout.open('rb') as handle:
-        handle.seek(max(0, size - 4 * 1024 * 1024))
-        text = ansi.sub('', handle.read().decode('utf-8', errors='replace')).replace('\r', '\n')
-    epochs = list(epoch_pattern.finditer(text))
-    generic = list(generic_pattern.finditer(text))
-    payload = {
-        'job': job,
-        'name': fields['JobName'],
-        'runtime': fields['RunTime'],
-        'time_limit': fields['TimeLimit'],
-        'stdout_bytes': size,
-    }
-    if epochs:
-        match = epochs[-1]
-        epoch, percent, step, total = map(int, match.groups())
-        fraction = ((epoch - 1) + step / total) / 30
-        runtime_seconds = seconds(fields['RunTime'])
-        limit_seconds = seconds(fields['TimeLimit'])
-        projected_seconds = runtime_seconds / fraction if fraction > 0 else None
-        payload.update({
-            'epoch': epoch,
-            'epoch_step': step,
-            'epoch_total_steps': total,
-            'thirty_epoch_fraction': round(fraction, 6),
-            'conservative_projected_total_hours': round(projected_seconds / 3600, 2),
-            'projected_slack_hours': round((limit_seconds - projected_seconds) / 3600, 2),
-            'time_limit_risk': projected_seconds > limit_seconds,
-        })
-    elif generic:
-        percent, step, total = map(int, generic[-1].groups())
-        payload.update({'last_generic_percent': percent, 'last_generic_step': step, 'last_generic_total': total})
-    else:
-        lines = [line.strip()[:300] for line in text.splitlines() if line.strip()]
-        payload['last_nonempty_line'] = lines[-1] if lines else ''
-    print(json.dumps(payload, sort_keys=True))
-PY
-
-echo "=== ACTIVE MAIN JOBS ==="
-squeue -h -j "$JOBS" -o '%i|%T|%M|%l|%R|%j' | sort
-
-echo "=== BASIN TRAINING TASKS ==="
-sacct -n -P -j 202216 --format=JobID,State,ExitCode,Elapsed,Start,End,NodeList | \
-  awk -F'|' '$1 !~ /\./ && $1 ~ /^202216_[0-9]+$/ {print}' | sort
-
-echo "=== ACTIVE FAILURE STATES ==="
-FAILURES=$(sacct -n -P -j "$JOBS" --format=JobIDRaw,JobName,State,ExitCode | \
-  awk -F'|' '$1 !~ /\./ && $3 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/')
-printf '%s\n' "$FAILURES"
-test -z "$FAILURES"
-
-echo "=== REGISTERED COMPLETE-ROLE COUNTS ==="
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-cd "$ROOT"
-export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-python - <<'PY'
-from collections import Counter
-import json
+import os
 from pathlib import Path
 import sys
 
-import pandas as pd
+root = Path(sys.argv[1])
+payload = Path(sys.argv[2])
+previous = Path(sys.argv[3])
+receipt = Path(sys.argv[4])
+job_id = sys.argv[5]
 
-root = Path('/data1/home/sunyiq/nearing2022_da')
-scripts = root / 'src/29_nearing2022_da_ar/scripts'
-sys.path.insert(0, str(scripts))
-from aggregate_registered_results import _registered_run
-from prepare_evaluation_run import resolve_source_run
-from verify_registered_closure import _metrics_path
+def record(path):
+    data = path.read_bytes()
+    return {"path": str(path), "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
 
-registry_root = root / 'src/29_nearing2022_da_ar/registry'
-training = pd.read_csv(registry_root / 'experiment_registry.csv', keep_default_na=False, dtype=str)
-evaluations = pd.read_csv(registry_root / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
-hyper = pd.read_csv(registry_root / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str)
-
-def complete(paths):
-    return all(path.is_file() for path in paths)
-
-training_done = Counter()
-for _, row in training.iterrows():
-    try:
-        run = resolve_source_run(root, training, row['exp_id'])
-        if complete([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log',
-                     run / 'train_data/train_data_scaler.yml']):
-            training_done[row['family']] += 1
-    except (FileNotFoundError, KeyError, ValueError):
-        pass
-
-evaluation_done = Counter()
-for _, row in evaluations.iterrows():
-    try:
-        run = _registered_run(root, training, row)
-        result = run / row['result_file']
-        reference = resolve_source_run(root, training, row['reference_exp_id']) / 'test/model_epoch030/test_results.p'
-        if complete([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
-                     _metrics_path(result), reference, _metrics_path(reference)]):
-            evaluation_done[row['family']] += 1
-    except (FileNotFoundError, KeyError, ValueError):
-        pass
-
-hyper_done = 0
-for _, row in hyper.iterrows():
-    try:
-        run = Path(row['run_dir'])
-        run = run if run.is_absolute() else root / run
-        result = run / row['result_file']
-        reference = resolve_source_run(root, training, row['source_exp_id']) / 'test/model_epoch030/test_results.p'
-        if complete([run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
-                     _metrics_path(result), reference, _metrics_path(reference)]):
-            hyper_done += 1
-    except (FileNotFoundError, KeyError, ValueError):
-        pass
-
-print(json.dumps({
-    'training_complete': sum(training_done.values()),
-    'training_total': len(training),
-    'training_by_family': dict(sorted(training_done.items())),
-    'evaluation_complete': sum(evaluation_done.values()),
-    'evaluation_total': len(evaluations),
-    'evaluation_by_family': dict(sorted(evaluation_done.items())),
-    'hyperparameter_complete': hyper_done,
-    'hyperparameter_total': len(hyper),
-}, sort_keys=True))
+deployed_relative = [
+    "src/29_nearing2022_da_ar/scripts/verify_registered_closure.py",
+    "src/29_nearing2022_da_ar/scripts/run_server_preclosure_check.py",
+    "src/29_nearing2022_da_ar/reference/local_contract_validation.json",
+    "src/29_nearing2022_da_ar/reference/local_contract_validation_junit.xml",
+    "src/29_nearing2022_da_ar/reference/local_contract_validation_pre_strict_decision_20260811.json",
+    "src/29_nearing2022_da_ar/reference/local_contract_validation_junit_pre_strict_decision_20260811.xml",
+]
+payload_record = record(payload)
+if payload_record["bytes"] != 19865 or payload_record["sha256"] != "a686e5e558a295c36da9efdc2e1588873132d8c984c052003115e8c5fa264a15":
+    raise ValueError("Published payload changed")
+result = {
+    "schema": "nearing2022-strict-final-decision-deployment-v1",
+    "mailbox_seq": 133,
+    "created_utc": datetime.now(timezone.utc).isoformat(),
+    "payload": payload_record,
+    "previous_canonical_files": [record(path) for path in sorted(previous.iterdir())],
+    "deployed_files": [record(root / relative) for relative in deployed_relative],
+    "unchanged_contract_test": record(root / "test/test_nearing2022_reproduction_contract.py"),
+    "validation_job_id": job_id,
+    "result": "strict exact final-decision matcher, server self-check, 64-test receipt, and preserved prior bytes deployed",
+}
+temporary = receipt.with_name(receipt.name + ".tmp")
+temporary.write_text(json.dumps(result, indent=2, sort_keys=True) + "
+", encoding="utf-8")
+os.replace(temporary, receipt)
+print(json.dumps(result, sort_keys=True))
 PY
 
-echo "=== SAFETY BOUNDARY ==="
+echo "=== POST-DEPLOY SAFETY BOUNDARY ==="
+test "$(cat "$JOB_RECEIPT")" = "$JOB_ID"
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = "202293|PENDING|JobHeldUser|N22-manifest"
 test "$(squeue -h -j 202315 -o '%i|%T|%r|%j')" = "202315|PENDING|Dependency|N22-gate"
-test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
-test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
+test ! -e "$CLOSURE/aggregation/final_reproduction_gate.json"
+test ! -e "$CLOSURE/aggregation/final_reproduction_differences.csv"
+FAILURES="$(sacct -n -P -j 202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315,"$JOB_ID" --format=JobIDRaw,JobName,State,ExitCode | awk -F'|' '$1 !~ /./ && $3 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/')"
+printf '%s
+' "$FAILURES"
+test -z "$FAILURES"
+sha256sum "$PROVENANCE_PAYLOAD" "$DEPLOYMENT_RECEIPT" "$JOB_RECEIPT"
