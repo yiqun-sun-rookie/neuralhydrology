@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=128: event-driven refresh after basin task 202216_6 reached epoch 30.
+# ID29 seq=129: event-driven refresh near projected completion of basin task 202216_7.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
