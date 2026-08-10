@@ -1,0 +1,41 @@
+### channel=id29-nearing2022-da seq=157
+### host=login4
+### started=2026-08-11T04:34:42+0800
+### ---------- output ----------
+=== LIVE PROGRESS AND WALLTIME PROJECTION ===
+{"conservative_projected_total_hours": 36.88, "epoch": 14, "epoch_step": 3395, "epoch_total_steps": 6821, "job": "202214", "name": "N22-train", "projected_slack_hours": 11.12, "runtime": "16:35:34", "stdout_bytes": 14400918, "thirty_epoch_fraction": 0.449924, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 36.77, "epoch": 14, "epoch_step": 68, "epoch_total_steps": 6821, "job": "202215_0", "name": "N22-time", "projected_slack_hours": 11.23, "runtime": "15:56:42", "stdout_bytes": 13879310, "thirty_epoch_fraction": 0.433666, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 38.24, "epoch": 13, "epoch_step": 3471, "epoch_total_steps": 6821, "job": "202215_1", "name": "N22-time", "projected_slack_hours": 9.76, "runtime": "15:56:43", "stdout_bytes": 13360953, "thirty_epoch_fraction": 0.416962, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 38.12, "epoch": 13, "epoch_step": 3744, "epoch_total_steps": 6821, "job": "202215_2", "name": "N22-time", "projected_slack_hours": 9.88, "runtime": "15:56:43", "stdout_bytes": 13401567, "thirty_epoch_fraction": 0.418296, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 34.19, "epoch": 3, "epoch_step": 3976, "epoch_total_steps": 6127, "job": "202216_10", "name": "N22-basin", "projected_slack_hours": 13.81, "runtime": "03:01:07", "stdout_bytes": 2555636, "thirty_epoch_fraction": 0.088298, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"conservative_projected_total_hours": 33.56, "epoch": 3, "epoch_step": 658, "epoch_total_steps": 6140, "job": "202216_11", "name": "N22-basin", "projected_slack_hours": 14.44, "runtime": "02:21:27", "stdout_bytes": 2046890, "thirty_epoch_fraction": 0.070239, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"job": "202222_10", "last_generic_percent": 71, "last_generic_step": 376, "last_generic_total": 531, "name": "N22-eval-now", "runtime": "03:52:24", "stdout_bytes": 29759, "time_limit": "1-00:00:00"}
+{"job": "202222_11", "last_generic_percent": 67, "last_generic_step": 357, "last_generic_total": 531, "name": "N22-eval-now", "runtime": "03:40:47", "stdout_bytes": 28203, "time_limit": "1-00:00:00"}
+=== REGISTERED COMPLETE-ROLE COUNTS ===
+{"evaluation_by_family": {"time_assimilation": 5, "time_autoregression": 5}, "evaluation_complete": 10, "evaluation_total": 180, "hyperparameter_complete": 0, "hyperparameter_total": 660, "training_by_family": {"basin_simulation": 10, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 12, "training_total": 46}
+=== ACTIVE MAIN JOBS AND FAILURE STATES ===
+202214|RUNNING|16:35:42|2-00:00:00|ngu104|N22-train
+202215_0|RUNNING|15:56:50|2-00:00:00|ngu104|N22-time
+202215_1|RUNNING|15:56:50|2-00:00:00|ngu101|N22-time
+202215_2|RUNNING|15:56:50|2-00:00:00|ngu101|N22-time
+202215_[3-22%3]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-time
+202216_10|RUNNING|3:01:14|2-00:00:00|ngu102|N22-basin
+202216_11|RUNNING|2:21:33|2-00:00:00|ngu104|N22-basin
+202216_[12-19%2]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-basin
+202222_10|RUNNING|3:52:30|1-00:00:00|ngu104|N22-eval-now
+202222_11|RUNNING|3:40:53|1-00:00:00|ngu102|N22-eval-now
+202222_[12-29%2]|PENDING|0:00|1-00:00:00|(JobArrayTaskLimit)|N22-eval-now
+202226_[0-119%4]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-later
+202227_[0-9%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-basin-da
+202228_[0-659%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-hyper
+202229|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-eval
+202230|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-hyper
+202238_[0-19%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-bs-direct
+202293|PENDING|0:00|1-00:00:00|(JobHeldUser)|N22-manifest
+202294|PENDING|0:00|4:00:00|(Dependency)|N22-export
+202315|PENDING|0:00|2:00:00|(Dependency)|N22-gate
+
+=== REGISTERED ARTIFACT SAFETY ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T04:34:51+0800
