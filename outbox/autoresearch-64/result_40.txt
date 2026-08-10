@@ -1,0 +1,105 @@
+### channel=autoresearch-64 seq=40
+### host=login4
+### started=2026-08-10T16:29:15+0800
+### ---------- output ----------
+=== SUBMIT ONE GATED 64-BASIN REPRODUCTION ===
+jobid=202306
+=== WAIT FOR THIS EXACT JOB ===
+t=60s state=RUNNING
+=== JOB ACCOUNTING ===
+       JobID              JobName  NodeList          State ExitCode    Elapsed 
+------------ -------------------- --------- -------------- -------- ---------- 
+      202306      a64-hbv64-repro    icn213         FAILED     10:0   00:01:14 
+=== EXACT JOB STANDARD OUTPUT ===
+self = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/src/fair_benchmark/frozen/bundle/track0_statics.csv')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/dlopen_timezone_fix_validation_20260809_seq24/src/fair_benchmark/frozen/bundle/track0_statics.csv'
+
+../../../../miniconda3/envs/nh_final/lib/python3.11/pathlib.py:1044: FileNotFoundError
+=========================== short test summary info ============================
+FAILED src/unified_autoresearch/tests/test_development_recovery.py::test_registered_recovery_matches_a_clean_deterministic_training_run
+FAILED src/unified_autoresearch/tests/test_development_recovery.py::test_full_development_loop_produces_exactly_32_finite_registered_cells
+FAILED src/unified_autoresearch/tests/test_development_recovery.py::test_full_development_loop_supervises_every_registered_run_when_declared
+FAILED src/unified_autoresearch/tests/test_real_source_root.py::test_real_source_builder_emits_only_the_development_window_and_drops_sealed_dates
+FAILED src/unified_autoresearch/tests/test_real_source_root.py::test_real_source_root_is_accepted_by_the_development_package_builder
+FAILED src/unified_autoresearch/tests/test_real_source_root.py::test_real_source_builder_rejects_a_static_table_that_is_not_the_frozen_table
+FAILED src/unified_autoresearch/tests/test_real_source_root.py::test_real_source_builder_rejects_a_missing_day_inside_the_development_window
+FAILED src/unified_autoresearch/tests/test_real_source_root.py::test_real_source_builder_rejects_missing_discharge_inside_the_development_window
+FAILED src/unified_autoresearch/tests/test_real_source_root.py::test_real_source_builder_converts_discharge_to_millimetres_per_day_with_header_area
+FAILED src/unified_autoresearch/tests/test_real_source_root.py::test_real_source_builder_writes_the_twenty_seven_frozen_static_attributes
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[conceptual_rainfall_runoff]
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[custom_python]
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[deep_learning]
+FAILED src/unified_autoresearch/tests/test_reference_candidates.py::test_each_reference_candidate_trains_and_predicts_through_registered_runtime[fusion]
+FAILED src/unified_autoresearch/tests/test_restricted_runtime.py::test_candidate_cannot_redirect_path_checks_by_replacing_os_path_helpers
+FAILED src/unified_autoresearch/tests/test_scaleup_64_data_base.py::test_source_builder_accepts_the_frozen_sixty_four_basin_selection
+FAILED src/unified_autoresearch/tests/test_scaleup_64_data_base.py::test_package_builder_accepts_the_frozen_sixty_four_basin_selection
+FAILED src/unified_autoresearch/tests/test_scaleup_64_data_base.py::test_builders_reject_a_reproducible_but_never_frozen_selection_size
+FAILED src/unified_autoresearch/tests/test_scaleup_64_data_base.py::test_source_builder_still_rejects_a_static_table_that_is_not_the_declared_one
+FAILED src/unified_autoresearch/tests/test_scaleup_64_selection.py::test_frozen_sixty_four_record_declares_the_two_frozen_selection_inputs
+FAILED src/unified_autoresearch/tests/test_scaleup_64_selection.py::test_frozen_sixty_four_basins_recompute_exactly_from_the_declared_inputs
+FAILED src/unified_autoresearch/tests/test_scaleup_64_selection.py::test_frozen_sixty_four_basins_are_all_drawn_from_the_eligible_five_hundred_and_thirty_one
+FAILED src/unified_autoresearch/tests/test_scaleup_64_selection.py::test_refreezing_into_a_scratch_path_reproduces_the_committed_record_byte_for_byte
+ERROR src/unified_autoresearch/tests/test_basin_eligibility.py::test_classification_declares_thresholds_and_covers_every_basin
+ERROR src/unified_autoresearch/tests/test_basin_eligibility.py::test_classification_reports_both_protocols_for_every_basin
+ERROR src/unified_autoresearch/tests/test_basin_eligibility.py::test_classification_is_written_once_and_refuses_to_overwrite
+ERROR src/unified_autoresearch/tests/test_basin_eligibility.py::test_classification_is_deterministic_byte_for_byte
+ERROR src/unified_autoresearch/tests/test_basin_eligibility.py::test_a_basin_that_is_dry_most_of_the_validation_window_is_unstable
+ERROR src/unified_autoresearch/tests/test_basin_eligibility.py::test_a_basin_whose_score_hangs_on_one_day_is_unstable
+ERROR src/unified_autoresearch/tests/test_basin_eligibility.py::test_a_basin_with_no_variance_is_unstable_rather_than_an_exception
+ERROR src/unified_autoresearch/tests/test_basin_eligibility.py::test_classification_rejects_a_package_whose_manifest_digest_does_not_match
+ERROR src/unified_autoresearch/tests/test_basin_eligibility.py::test_partitioning_a_candidate_summary_never_silently_drops_a_basin
+ERROR src/unified_autoresearch/tests/test_basin_eligibility.py::test_partitioning_refuses_a_summary_that_does_not_cover_the_classified_basins
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_of_a_clean_build_passes_every_basin
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_reports_zero_sealed_interval_rows_in_every_artifact
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_confirms_the_unit_conversion_against_the_raw_archive_exactly
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_confirms_the_date_boundaries_and_complete_daily_record
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_confirms_no_observed_discharge_reaches_any_prediction_package
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_confirms_twenty_seven_static_attributes_per_basin
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_records_diagnostics_for_the_two_sensitive_basins
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_ranks_the_diagnostic_extremes_instead_of_trusting_a_fixed_watchlist
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_pins_every_artifact_file_by_hash
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_fails_when_a_sealed_interval_row_is_injected
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_fails_when_the_discharge_unit_conversion_is_wrong
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_fails_when_observed_discharge_leaks_into_a_prediction_package
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_fails_when_a_static_attribute_is_dropped
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_fails_when_a_development_day_is_removed
+ERROR src/unified_autoresearch/tests/test_development_artifact_verification.py::test_verification_fails_when_an_artifact_no_longer_matches_its_manifest_hash
+ERROR src/unified_autoresearch/tests/test_review_hardening_20260807.py::test_scoring_refuses_truth_that_covers_fewer_basins_than_the_manifest_declares
+ERROR src/unified_autoresearch/tests/test_review_hardening_20260807.py::test_the_single_day_variance_threshold_is_pinned_from_both_sides[below]
+ERROR src/unified_autoresearch/tests/test_review_hardening_20260807.py::test_the_single_day_variance_threshold_is_pinned_from_both_sides[above]
+ERROR src/unified_autoresearch/tests/test_review_hardening_20260807.py::test_the_zero_flow_threshold_is_pinned_from_both_sides[below]
+ERROR src/unified_autoresearch/tests/test_review_hardening_20260807.py::test_the_zero_flow_threshold_is_pinned_from_both_sides[above]
+ERROR src/unified_autoresearch/tests/test_review_hardening_20260807.py::test_classification_refuses_a_package_whose_basin_set_was_never_frozen
+ERROR src/unified_autoresearch/tests/test_scoring_sixty_four_basins.py::test_scoring_accepts_a_sixty_four_basin_package_and_reports_every_basin
+ERROR src/unified_autoresearch/tests/test_scoring_sixty_four_basins.py::test_summarising_two_protocols_produces_one_cell_per_frozen_basin
+ERROR src/unified_autoresearch/tests/test_scoring_sixty_four_basins.py::test_scoring_refuses_a_package_whose_basin_list_is_not_a_frozen_set
+ERROR src/unified_autoresearch/tests/test_scoring_sixty_four_basins.py::test_summary_partitions_cleanly_against_the_basin_eligibility_record
+ERROR src/unified_autoresearch/tests/test_single_candidate_development.py::test_a_single_reference_candidate_produces_one_cell_per_frozen_basin
+ERROR src/unified_autoresearch/tests/test_single_candidate_development.py::test_the_declared_candidate_identity_is_carried_into_every_cell
+ERROR src/unified_autoresearch/tests/test_single_candidate_development.py::test_the_runner_refuses_to_overwrite_an_existing_output_root
+23 failed, 209 passed, 8 skipped, 38 errors in 70.37s (0:01:10)
+{"candidate_launch_allowed": false, "errors": 38, "failures": 23, "passed": 209, "process_exit_code": 1, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 8, "tests": 278}
+=== EXACT JOB STANDARD ERROR ===
+=== EVIDENCE STATUS ===
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq40/evidence/TEST_GATE.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq40/evidence/PACKAGE_GATE.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq40/candidate_run/CANDIDATE_SUMMARY.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq40/evidence/REPRODUCTION_SUMMARY.json
+MISSING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq40/evidence/MANIFEST.sha256
+summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq40/evidence/REPRODUCTION_SUMMARY.json
+manifest=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq40/evidence/MANIFEST.sha256
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T16:30:36+0800
