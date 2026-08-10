@@ -1,0 +1,21 @@
+### channel=id29-nearing2022-da seq=92
+### host=login4
+### started=2026-08-10T18:37:44+0800
+### ---------- output ----------
+=== PRE-INSTALL SAFETY BOUNDARY ===
+/data1/home/sunyiq/hpc_mailbox/inbox/id29-nearing2022-da/payload.tar.gz: OK
+gate_state_before=202315|PENDING|Dependency|N22-gate
+=== PRESERVE AND INSTALL ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/evaluate_full_reproduction_pre_exact_input_bytes_784e5b8d.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/evaluate_full_reproduction.py: OK
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/numerical_gate_exact_input_bytes_update.json: OK
+{"bound_inputs": ["time_comparisons", "basin_comparisons", "hyperparameter_scores", "acceptance"], "input_bytes_read_once": true, "installed_at": "2026-08-10T10:37:44.459620+00:00", "installed_evaluator_sha256": "a11babfdafca2f2720b65db713c7b0cae103077df31717d92b93d92e19c255f9", "mailbox_seq": 92, "numerical_function_ast_sha256": "71b015c7638cb0053b2eaeef13f9dccf27b5c84732f3016ff764bef7afce1a30", "numerical_logic_changed": false, "previous_evaluator_backup": "/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/evaluate_full_reproduction_pre_exact_input_bytes_784e5b8d.py", "previous_evaluator_sha256": "784e5b8d1c5be6db87788e3b62d6ae0f599a0efc2db3d3cbedb5b398c7c5a53b", "schema": "nearing2022-numerical-gate-exact-input-bytes-receipt-v1", "slurm_job_id": "202315"}
+=== POST-INSTALL SAFETY BOUNDARY ===
+gate_state_after=202315|PENDING|Dependency|N22-gate
+a11babfdafca2f2720b65db713c7b0cae103077df31717d92b93d92e19c255f9  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/evaluate_full_reproduction.py
+81d2d00d14970e10cf15bb52335250740abab7093e37cb4ee456ac44e43d6430  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/numerical_gate_exact_input_bytes_update.json
+784e5b8d1c5be6db87788e3b62d6ae0f599a0efc2db3d3cbedb5b398c7c5a53b  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/evaluate_full_reproduction_pre_exact_input_bytes_784e5b8d.py
+3308bfffe32b26b35642d707084fd03f0eed98fbc11fbf4152ac800da38699b3  /data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/numerical_gate_exact_input_bytes_receipt.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-10T18:37:44+0800
