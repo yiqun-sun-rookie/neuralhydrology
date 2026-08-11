@@ -10,9 +10,11 @@
 #SBATCH -o /data1/home/sunyiq/v09_strict/logs/training_audit_%j.out
 #SBATCH -e /data1/home/sunyiq/v09_strict/logs/training_audit_%j.err
 
-set -euo pipefail
+set -eo pipefail
+set +u
 source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
+set -u
 export PATH=/data1/home/sunyiq/v09_strict/gitenv/bin:$PATH
 export MKL_THREADING_LAYER=GNU
 export MKL_SERVICE_FORCE_INTEL=1

@@ -18,6 +18,20 @@ _HASHES = {
 }
 
 
+@pytest.mark.parametrize("filename", [
+    "audit_formal_training_v09.slurm",
+    "state_diagnostics_formal_v09.slurm",
+    "audit_state_diagnostics_formal_v09.slurm",
+])
+def test_v09_audit_slurm_scopes_nounset_around_conda_activation(filename):
+    script = (IDEA_ROOT / "hpc" / filename).read_text(encoding="utf-8")
+    disable_index = script.index("set +u")
+    activate_index = script.index("conda activate nh_final")
+    enable_index = script.index("set -u", activate_index)
+    audit_setup_index = script.index("AUDIT_REPO=")
+    assert disable_index < activate_index < enable_index < audit_setup_index
+
+
 def _model_builder(_variant, seed):
     torch.manual_seed(int(seed))
     return torch.nn.Linear(2, 2)
