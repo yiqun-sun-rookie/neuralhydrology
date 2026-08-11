@@ -1,0 +1,88 @@
+### channel=id29-nearing2022-da seq=195
+### host=login4
+### started=2026-08-11T12:37:50+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-11T12:37:50+0800
+=== REGISTERED COMPLETE-ROLE COUNTS ===
+{"evaluation_by_family": {"time_assimilation": 9, "time_autoregression": 5}, "evaluation_complete": 14, "evaluation_total": 180, "hyperparameter_by_family": {}, "hyperparameter_complete": 0, "hyperparameter_total": 660, "missing_roles_total": 5477, "registered_matrix_complete": false, "training_by_family": {"basin_simulation": 10, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 12, "training_total": 46}
+=== MAIN JOB STATES AND FAILURE GATE ===
+202214|RUNNING|1-00:38:51|2-00:00:00|ngu104|N22-train
+202215_0|RUNNING|23:59:59|2-00:00:00|ngu104|N22-time
+202215_1|RUNNING|23:59:59|2-00:00:00|ngu101|N22-time
+202215_2|RUNNING|23:59:59|2-00:00:00|ngu101|N22-time
+202215_[3-22%3]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-time
+202216_10|RUNNING|11:04:23|2-00:00:00|ngu102|N22-basin
+202216_11|RUNNING|10:24:42|2-00:00:00|ngu104|N22-basin
+202216_[12-19%2]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-basin
+202222_14|RUNNING|1:12:23|1-00:00:00|ngu104|N22-eval-now
+202222_15|RUNNING|51:07|1-00:00:00|ngu102|N22-eval-now
+202222_[16-29%2]|PENDING|0:00|1-00:00:00|(JobArrayTaskLimit)|N22-eval-now
+202226_[0-119%4]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-later
+202227_[0-9%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-basin-da
+202228_[0-659%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-hyper
+202229|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-eval
+202230|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-hyper
+202238_[0-19%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-bs-direct
+202293|PENDING|0:00|1-00:00:00|(JobHeldUser)|N22-manifest
+202294|PENDING|0:00|4:00:00|(Dependency)|N22-export
+202315|PENDING|0:00|2:00:00|(Dependency)|N22-gate
+202214|N22-train|RUNNING|0:0|1-00:38:51|2026-08-10T11:59:08|Unknown|ngu104
+202217|N22-time|RUNNING|0:0|23:59:59|2026-08-10T12:38:00|Unknown|ngu104
+202218|N22-time|RUNNING|0:0|23:59:59|2026-08-10T12:38:00|Unknown|ngu101
+202219|N22-time|RUNNING|0:0|23:59:59|2026-08-10T12:38:00|Unknown|ngu101
+202215|N22-time|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202220|N22-basin|COMPLETED|0:0|02:46:22|2026-08-10T12:38:00|2026-08-10T15:24:22|ngu101
+202221|N22-basin|COMPLETED|0:0|02:45:03|2026-08-10T12:38:00|2026-08-10T15:23:03|ngu101
+202295|N22-basin|COMPLETED|0:0|02:30:39|2026-08-10T15:23:03|2026-08-10T17:53:42|ngu104
+202296|N22-basin|COMPLETED|0:0|02:48:03|2026-08-10T15:24:22|2026-08-10T18:12:25|ngu101
+202324|N22-basin|COMPLETED|0:0|02:31:29|2026-08-10T17:53:42|2026-08-10T20:25:11|ngu104
+202326|N22-basin|COMPLETED|0:0|02:45:10|2026-08-10T18:12:25|2026-08-10T20:57:35|ngu101
+202390|N22-basin|COMPLETED|0:0|02:32:32|2026-08-10T20:25:11|2026-08-10T22:57:43|ngu104
+202404|N22-basin|COMPLETED|0:0|02:42:59|2026-08-10T20:57:36|2026-08-10T23:40:35|ngu101
+202464|N22-basin|COMPLETED|0:0|02:35:52|2026-08-10T22:57:44|2026-08-11T01:33:36|ngu102
+202470|N22-basin|COMPLETED|0:0|02:32:39|2026-08-10T23:40:38|2026-08-11T02:13:17|ngu104
+202501|N22-basin|RUNNING|0:0|11:04:23|2026-08-11T01:33:36|Unknown|ngu102
+202502|N22-basin|RUNNING|0:0|10:24:42|2026-08-11T02:13:17|Unknown|ngu104
+202216|N22-basin|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202223|N22-eval-now|COMPLETED|0:0|00:00:10|2026-08-10T12:44:39|2026-08-10T12:44:49|ngu102
+202224|N22-eval-now|COMPLETED|0:0|00:40:02|2026-08-10T12:44:39|2026-08-10T13:24:41|ngu102
+202225|N22-eval-now|COMPLETED|0:0|00:39:53|2026-08-10T12:44:49|2026-08-10T13:24:42|ngu102
+202231|N22-eval-now|COMPLETED|0:0|00:32:11|2026-08-10T13:24:42|2026-08-10T13:56:53|ngu202
+202232|N22-eval-now|COMPLETED|0:0|00:32:12|2026-08-10T13:24:42|2026-08-10T13:56:54|ngu202
+202239|N22-eval-now|COMPLETED|0:0|00:00:09|2026-08-10T13:56:55|2026-08-10T13:57:04|ngu102
+202240|N22-eval-now|COMPLETED|0:0|05:19:33|2026-08-10T13:56:55|2026-08-10T19:16:28|ngu102
+202241|N22-eval-now|COMPLETED|0:0|05:19:21|2026-08-10T13:57:04|2026-08-10T19:16:25|ngu102
+202367|N22-eval-now|COMPLETED|0:0|05:25:54|2026-08-10T19:16:25|2026-08-11T00:42:19|ngu101
+202368|N22-eval-now|COMPLETED|0:0|05:37:29|2026-08-10T19:16:28|2026-08-11T00:53:57|ngu102
+202497|N22-eval-now|COMPLETED|0:0|05:23:38|2026-08-11T00:42:20|2026-08-11T06:05:58|ngu104
+202498|N22-eval-now|COMPLETED|0:0|05:23:14|2026-08-11T00:53:57|2026-08-11T06:17:11|ngu102
+202508|N22-eval-now|COMPLETED|0:0|05:19:37|2026-08-11T06:05:59|2026-08-11T11:25:36|ngu104
+202509|N22-eval-now|COMPLETED|0:0|05:29:39|2026-08-11T06:17:11|2026-08-11T11:46:50|ngu102
+202550|N22-eval-now|RUNNING|0:0|01:12:23|2026-08-11T11:25:36|Unknown|ngu104
+202552|N22-eval-now|RUNNING|0:0|00:51:07|2026-08-11T11:46:52|Unknown|ngu102
+202222|N22-eval-now|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202226|N22-eval-later|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202227|N22-basin-da|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202228|N22-hyper|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202229|N22-agg-eval|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202230|N22-agg-hyper|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202238|N22-eval-bs-direct|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202293|N22-manifest|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202294|N22-export|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202315|N22-gate|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+
+=== REPLACEMENT AUDIT STATES AND OUTPUTS ===
+202510|N22-data-port-v2|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned|Dependency
+202511|N22-mask-iso-v2|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned|Dependency
+202510|N22-data-port-v2|PENDING|0:00|(Dependency)|afterany:202222_*
+202511|N22-mask-iso-v2|PENDING|0:00|(Dependency)|afterok:202510
+=== PAIR AND FROZEN SAFETY BOUNDARY ===
+paired_training_payload_present=0
+
+verification_job_submitted=false
+pair_training_submitted=false
+registered_matrix_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T12:37:59+0800
