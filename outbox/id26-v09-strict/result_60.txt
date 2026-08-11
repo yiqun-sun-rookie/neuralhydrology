@@ -1,0 +1,35 @@
+### channel=id26-v09-strict seq=60
+### host=login4
+### started=2026-08-12T07:02:00+0800
+### ---------- output ----------
+=== A JOB ===
+TRAINING_AUDIT_ATTEMPT_02_JOBID=202755
+slurm_load_jobs error: Invalid job id specified
+JobIDRaw|JobName|State|ExitCode|Elapsed|Start|End|NodeList
+202755|v09audit24|FAILED|1:0|00:01:24|2026-08-12T05:07:21|2026-08-12T05:08:45|ngu010
+=== B LOG FILES ===
+/data1/home/sunyiq/v09_strict/logs/training_audit_202755.err 1366 bytes
+/data1/home/sunyiq/v09_strict/logs/training_audit_202755.out 98 bytes
+--- stdout tail ---
+audit_commit=ac258afd31d835d93137da8961dc1206a1ee844c node=ngu010 start=2026-08-12T05:07:24+08:00
+--- stderr tail ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/v09_strict/audit_v09/neuralhydrology/src/26_historical_band_experts/audit_formal_training_v09.py", line 1247, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/v09_strict/audit_v09/neuralhydrology/src/26_historical_band_experts/audit_formal_training_v09.py", line 1233, in main
+    report = audit_training_suite_v09(args.formal_root, specs, args.report)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/v09_strict/audit_v09/neuralhydrology/src/26_historical_band_experts/audit_formal_training_v09.py", line 665, in audit_training_suite_v09
+    source_context = _validate_source_seal(source_seal or _production_source_seal(formal_root))
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/v09_strict/audit_v09/neuralhydrology/src/26_historical_band_experts/audit_formal_training_v09.py", line 521, in _production_source_seal
+    raise TrainingAuditError(f"tracked main-training source file is missing: {relative}")
+TrainingAuditError: tracked main-training source file is missing: ".cursor/plans/\345\205\250\347\220\203\346\260\264\346\226\207\346\250\241\345\236\213\350\256\272\346\226\207\350\256\241\345\210\222_ee017201.plan.md"
+=== C REPORT SUMMARY ===
+report_present=false
+=== D DOWNSTREAM ABSENCE ===
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-12T07:02:01+0800
