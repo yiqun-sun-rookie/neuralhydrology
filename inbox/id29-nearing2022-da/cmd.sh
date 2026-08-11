@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=177: read-only matrix refresh and server-side output-target audit.
+# ID29 seq=178: retain target audit and repair the scheduler-record diagnostic.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -199,12 +199,17 @@ live_prepare = root / 'src/29_nearing2022_da_ar/scripts/prepare_evaluation_run.p
 record = subprocess.run(
     ['scontrol', 'show', 'job', '-dd', '-o', '202238'], check=True, capture_output=True, text=True,
 ).stdout.strip()
+record_fields = dict(token.split('=', 1) for token in record.split() if '=' in token)
 spooled = subprocess.run(
     ['scontrol', 'write', 'batch_script', '202238', '/dev/stdout'], capture_output=True, text=True,
 )
 markers = ['prepare_evaluation_run.py', 'SKIPPED_COMPLETED', 'python -m neuralhydrology.nh_run evaluate']
 payload = {
     'job_id': '202238',
+    'job_command': record_fields.get('Command'),
+    'job_work_dir': record_fields.get('WorkDir'),
+    'job_dependency': record_fields.get('Dependency'),
+    'job_environment': record_fields.get('Environment'),
     'job_record_contains_expected_command': str(live_script) in record,
     'job_record_contains_expected_batch_file': 'basin_direct_evaluation_batch.txt' in record,
     'spooled_script_retrieval_returncode': spooled.returncode,
@@ -214,11 +219,7 @@ payload = {
     'live_script_sha256': hashlib.sha256(live_script.read_bytes()).hexdigest(),
     'live_prepare_sha256': hashlib.sha256(live_prepare.read_bytes()).hexdigest(),
 }
-assert payload['job_record_contains_expected_command']
-assert payload['job_record_contains_expected_batch_file']
 assert payload['live_prepare_sha256'] == '6e47896c2b3011fe8e93a561f7545397d5a4ddee70b09b38a520f08530646ccf'
-if spooled.returncode == 0:
-    assert all(payload['spooled_script_markers'].values())
 print(json.dumps(payload, sort_keys=True))
 if spooled.returncode != 0:
     print(json.dumps({'spooled_script_retrieval_stderr': spooled.stderr.strip()}, sort_keys=True))
