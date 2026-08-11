@@ -1,85 +1,158 @@
 #!/bin/bash
-# ID29 seq=205: deploy and submit the isolated 15-coordinate CPU numerical audit.
+# ID29 seq=206: verify and recover the isolated >=15-coordinate numerical audit when terminal.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-WRAPPER_REL=src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit_seq205.slurm
-TEST_REL=test/test_nearing2022_partial_audit_seq205_slurm.py
-PREFLIGHT_REL=results/29_nearing2022_da_ar/formal_closure/partial_registered_results_audit_seq205_preflight_20260811.json
-WRAPPER_SHA=8cf412a75d26803b2b8769beb2c7af46ec255122e006f8133744feaae5d9e248
-TEST_SHA=7d2ba27ea91946a3e8322e13224ac917dfa81d66c22dc5ad14996cd02df96470
-PREFLIGHT_SHA=0063d2419e08c9a15af57eb64dd83b3bd238d8bc9ca27b50a4b22a89835e51b7
-AUDITOR_SHA=7c99332b785a2a088961b51e6085fada72294ce4f8e98ed05663818660f35725
+JOB_ID=202610
 FINAL="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq205_v1"
+PREVIOUS="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq192_v1"
+STDOUT="$ROOT/closure_20260810/logs/N22-part-audit3_${JOB_ID}.out"
+STDERR="$ROOT/closure_20260810/logs/N22-part-audit3_${JOB_ID}.err"
 
-deploy_payload() {
-  relative=$1
-  expected=$2
-  target="$ROOT/$relative"
-  temporary="$target.preparing-seq205"
-  mkdir -p "$(dirname "$target")"
-  test ! -L "$target"
-  if test -e "$target"; then
-    cat >/dev/null
-    test -f "$target"
-    test "$(sha256sum "$target" | awk '{print $1}')" = "$expected"
-    echo "already_exact=$relative"
-    return
-  fi
-  test ! -e "$temporary"
-  base64 -d > "$temporary"
-  test "$(sha256sum "$temporary" | awk '{print $1}')" = "$expected"
-  mv "$temporary" "$target"
-  test "$(sha256sum "$target" | awk '{print $1}')" = "$expected"
-  echo "deployed=$relative"
-}
+echo "=== JOB RECORD ==="
+RECORD=$(sacct -n -X -P -j "$JOB_ID" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList,Reason | head -n 1)
+printf '%s\n' "$RECORD"
+STATE=$(printf '%s\n' "$RECORD" | awk -F'|' '{print $3}')
+EXIT_CODE=$(printf '%s\n' "$RECORD" | awk -F'|' '{print $4}')
 
-deploy_payload "$WRAPPER_REL" "$WRAPPER_SHA" <<'B64'
-IyEvYmluL2Jhc2gKI1NCQVRDSCAtLWpvYi1uYW1lPU4yMi1wYXJ0LWF1ZGl0MwojU0JBVENIIC0tcGFydGl0aW9uPWhncHU0LGhncHU4LGhncHUyCiNTQkFUQ0ggLS1ub2Rlcz0xCiNTQkFUQ0ggLS1udGFza3M9MQojU0JBVENIIC0tY3B1cy1wZXItdGFzaz0xCiNTQkFUQ0ggLS10aW1lPTAxOjAwOjAwCiNTQkFUQ0ggLS1vdXRwdXQ9L2RhdGExL2hvbWUvc3VueWlxL25lYXJpbmcyMDIyX2RhL2Nsb3N1cmVfMjAyNjA4MTAvbG9ncy8leF8lai5vdXQKI1NCQVRDSCAtLWVycm9yPS9kYXRhMS9ob21lL3N1bnlpcS9uZWFyaW5nMjAyMl9kYS9jbG9zdXJlXzIwMjYwODEwL2xvZ3MvJXhfJWouZXJyCgpzZXQgLWVvIHBpcGVmYWlsCgpST09UPS9kYXRhMS9ob21lL3N1bnlpcS9uZWFyaW5nMjAyMl9kYQpESUFHTk9TVElDX1JPT1Q9IiRST09UL3Jlc3VsdHMvMjlfbmVhcmluZzIwMjJfZGFfYXIvZm9ybWFsX2Nsb3N1cmUvZGlhZ25vc3RpY3MiCkFVRElUT1I9IiRST09UL3NyYy8yOV9uZWFyaW5nMjAyMl9kYV9hci9zY3JpcHRzL2F1ZGl0X3BhcnRpYWxfcmVnaXN0ZXJlZF9yZXN1bHRzLnB5IgpTRUxGPSIkUk9PVC9zcmMvMjlfbmVhcmluZzIwMjJfZGFfYXIvaHBjL3J1bl9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0c19hdWRpdF9zZXEyMDUuc2x1cm0iCkZJTkFMPSIkRElBR05PU1RJQ19ST09UL3BhcnRpYWxfbnVtZXJpY2FsX2F1ZGl0X3NlcTIwNV92MSIKV09SSz0iJEZJTkFMLnByZXBhcmluZy0kU0xVUk1fSk9CX0lEIgpFWFBFQ1RFRF9BVURJVE9SX1NIQTI1Nj03Yzk5MzMyYjc4NWEyYTA4ODk2MWI1MWU2MDg1ZmFkYTcyMjk0Y2U0ZjhlOThlZDA1NjYzODE4NjYwZjM1NzI1Cgp0ZXN0ICEgLWUgIiRGSU5BTCIKdGVzdCAhIC1lICIkV09SSyIKdGVzdCAiJChmaW5kICIkRElBR05PU1RJQ19ST09UIiAtbWF4ZGVwdGggMSAtbmFtZSAncGFydGlhbF9udW1lcmljYWxfYXVkaXRfc2VxMjA1X3YxLnByZXBhcmluZy0qJyBcCiAgLXByaW50IC1xdWl0KSIgPSAiIgp0ZXN0IC1mICIkQVVESVRPUiIKdGVzdCAtZiAiJFNFTEYiCnRlc3QgISAtTCAiJEFVRElUT1IiCnRlc3QgISAtTCAiJFNFTEYiCnRlc3QgIiQoc2hhMjU2c3VtICIkQVVESVRPUiIgfCBhd2sgJ3twcmludCAkMX0nKSIgPSAiJEVYUEVDVEVEX0FVRElUT1JfU0hBMjU2IgoKbWtkaXIgIiRXT1JLIgoKc291cmNlIH4vbWluaWNvbmRhMy9ldGMvcHJvZmlsZS5kL2NvbmRhLnNoCmNvbmRhIGFjdGl2YXRlIG5oX2ZpbmFsCmNkICIkUk9PVCIKZXhwb3J0IFBZVEhPTlBBVEg9IiRST09UJHtQWVRIT05QQVRIOis6JFBZVEhPTlBBVEh9IgoKcHl0aG9uICIkQVVESVRPUiIgLS1yZXBvLXJvb3QgIiRST09UIiAtLW91dHB1dCAiJFdPUksvYXVkaXRfMS5qc29uIiBcCiAgLS1tYWlsYm94LXNlcXVlbmNlIDIwNSAtLW1pbmltdW0tY29tcGxldGUgMTUgPiAiJFdPUksvYXVkaXRfc3Rkb3V0XzEuanNvbiIKcHl0aG9uICIkQVVESVRPUiIgLS1yZXBvLXJvb3QgIiRST09UIiAtLW91dHB1dCAiJFdPUksvYXVkaXRfMi5qc29uIiBcCiAgLS1tYWlsYm94LXNlcXVlbmNlIDIwNSAtLW1pbmltdW0tY29tcGxldGUgMTUgPiAiJFdPUksvYXVkaXRfc3Rkb3V0XzIuanNvbiIKY21wICIkV09SSy9hdWRpdF8xLmpzb24iICIkV09SSy9hdWRpdF8yLmpzb24iCmNtcCAiJFdPUksvYXVkaXRfc3Rkb3V0XzEuanNvbiIgIiRXT1JLL2F1ZGl0X3N0ZG91dF8yLmpzb24iCmNhdCAiJFdPUksvYXVkaXRfc3Rkb3V0XzEuanNvbiIKY3AgIiRBVURJVE9SIiAiJFdPUksvYXVkaXRfcGFydGlhbF9yZWdpc3RlcmVkX3Jlc3VsdHMucHkiCmNwICIkU0VMRiIgIiRXT1JLL3J1bl9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0c19hdWRpdF9zZXEyMDUuc2x1cm0iCgpweXRob24gLSAiJFdPUksiIDw8J1BZJwppbXBvcnQgaGFzaGxpYgppbXBvcnQganNvbgppbXBvcnQgb3MKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmltcG9ydCBzeXMKCndvcmsgPSBQYXRoKHN5cy5hcmd2WzFdKQoKCmRlZiBkaWdlc3QocGF0aDogUGF0aCkgLT4gc3RyOgogICAgcmV0dXJuIGhhc2hsaWIuc2hhMjU2KHBhdGgucmVhZF9ieXRlcygpKS5oZXhkaWdlc3QoKQoKCmF1ZGl0XzEgPSBqc29uLmxvYWRzKCh3b3JrIC8gImF1ZGl0XzEuanNvbiIpLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKSkKYXVkaXRfMiA9IGpzb24ubG9hZHMoKHdvcmsgLyAiYXVkaXRfMi5qc29uIikucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpKQppZiBhdWRpdF8xICE9IGF1ZGl0XzI6CiAgICByYWlzZSBWYWx1ZUVycm9yKCJSZXBlYXRlZCBwYXJ0aWFsIG51bWVyaWNhbCBhdWRpdHMgZGlmZmVyIikKaWYgYXVkaXRfMVsiY29tcGxldGVfY29vcmRpbmF0ZXMiXSA8IDE1OgogICAgcmFpc2UgVmFsdWVFcnJvcihmIlBhcnRpYWwgYXVkaXQgcmVncmVzc2VkIGJlbG93IDE1IGNvbXBsZXRlIGNvb3JkaW5hdGVzOiB7YXVkaXRfMX0iKQppZiBhdWRpdF8xWyJjb21wYXJpc29uX3Jvd3MiXSAhPSBhdWRpdF8xWyJjb21wbGV0ZV9jb29yZGluYXRlcyJdICogNzoKICAgIHJhaXNlIFZhbHVlRXJyb3IoIlBhcnRpYWwgYXVkaXQgZG9lcyBub3QgaGF2ZSBzZXZlbiBtZXRyaWNzIHBlciBjb29yZGluYXRlIikKaWYgYXVkaXRfMVsicmVnaXN0ZXJlZF9tYXRyaXhfbW9kaWZpZWQiXSBvciBhdWRpdF8xWyJmcm96ZW5fYWNjZXB0YW5jZV9tb2RpZmllZCJdOgogICAgcmFpc2UgVmFsdWVFcnJvcigiUGFydGlhbCBhdWRpdCByZXBvcnRzIGEgZnJvemVuLWlucHV0IG1vZGlmaWNhdGlvbiIpCgpyZWNlaXB0ID0gewogICAgInNjaGVtYSI6ICJuZWFyaW5nMjAyMi1wYXJ0aWFsLW51bWVyaWNhbC1hdWRpdC1leGVjdXRpb24tcmVjZWlwdC12MSIsCiAgICAic2x1cm1fam9iX2lkIjogb3MuZW52aXJvblsiU0xVUk1fSk9CX0lEIl0sCiAgICAic2x1cm1fbm9kZSI6IG9zLmVudmlyb24uZ2V0KCJTTFVSTURfTk9ERU5BTUUiKSwKICAgICJtYWlsYm94X3NlcXVlbmNlIjogMjA1LAogICAgImNvbXBsZXRlX2Nvb3JkaW5hdGVzIjogYXVkaXRfMVsiY29tcGxldGVfY29vcmRpbmF0ZXMiXSwKICAgICJjb21wYXJpc29uX3Jvd3MiOiBhdWRpdF8xWyJjb21wYXJpc29uX3Jvd3MiXSwKICAgICJpbmRpdmlkdWFsX3RvbGVyYW5jZV9mYWlsdXJlcyI6IGF1ZGl0XzFbImluZGl2aWR1YWxfdG9sZXJhbmNlX2ZhaWx1cmVzIl0sCiAgICAiY29vcmRpbmF0ZXNfd2l0aF9mYWlsdXJlcyI6IGF1ZGl0XzFbImNvb3JkaW5hdGVzX3dpdGhfZmFpbHVyZXMiXSwKICAgICJhdWRpdF9yZXByb2R1Y3Rpb25fYnl0ZV9pZGVudGljYWwiOiBUcnVlLAogICAgImF1ZGl0X3NoYTI1NiI6IGRpZ2VzdCh3b3JrIC8gImF1ZGl0XzEuanNvbiIpLAogICAgInJlZ2lzdGVyZWRfbWF0cml4X21vZGlmaWVkIjogRmFsc2UsCiAgICAiZnJvemVuX2FjY2VwdGFuY2VfbW9kaWZpZWQiOiBGYWxzZSwKfQood29yayAvICJleGVjdXRpb25fcmVjZWlwdC5qc29uIikud3JpdGVfdGV4dCgKICAgIGpzb24uZHVtcHMocmVjZWlwdCwgaW5kZW50PTIsIHNvcnRfa2V5cz1UcnVlKSArICJcbiIsIGVuY29kaW5nPSJ1dGYtOCIKKQoKZmlsZXMgPSBbXQpmb3IgcGF0aCBpbiBzb3J0ZWQod29yay5yZ2xvYigiKiIpKToKICAgIGlmIHBhdGguaXNfc3ltbGluaygpOgogICAgICAgIHJhaXNlIFZhbHVlRXJyb3IoZiJQYXJ0aWFsLWF1ZGl0IG91dHB1dCBjb250YWlucyBhIGxpbms6IHtwYXRofSIpCiAgICBpZiBwYXRoLmlzX2ZpbGUoKSBhbmQgcGF0aC5uYW1lICE9ICJhcnRpZmFjdF9tYW5pZmVzdC5qc29uIjoKICAgICAgICBmaWxlcy5hcHBlbmQoewogICAgICAgICAgICAicGF0aCI6IHBhdGgucmVsYXRpdmVfdG8od29yaykuYXNfcG9zaXgoKSwKICAgICAgICAgICAgImJ5dGVzIjogcGF0aC5zdGF0KCkuc3Rfc2l6ZSwKICAgICAgICAgICAgInNoYTI1NiI6IGRpZ2VzdChwYXRoKSwKICAgICAgICB9KQptYW5pZmVzdCA9IHsKICAgICJzY2hlbWEiOiAibmVhcmluZzIwMjItcGFydGlhbC1udW1lcmljYWwtYXVkaXQtbWFuaWZlc3QtdjEiLAogICAgImZpbGVfY291bnQiOiBsZW4oZmlsZXMpLAogICAgInRvdGFsX2J5dGVzIjogc3VtKGl0ZW1bImJ5dGVzIl0gZm9yIGl0ZW0gaW4gZmlsZXMpLAogICAgImZpbGVzIjogZmlsZXMsCn0KKHdvcmsgLyAiYXJ0aWZhY3RfbWFuaWZlc3QuanNvbiIpLndyaXRlX3RleHQoCiAgICBqc29uLmR1bXBzKG1hbmlmZXN0LCBpbmRlbnQ9Miwgc29ydF9rZXlzPVRydWUpICsgIlxuIiwgZW5jb2Rpbmc9InV0Zi04IgopCnByaW50KGpzb24uZHVtcHMocmVjZWlwdCwgc29ydF9rZXlzPVRydWUpKQpwcmludChqc29uLmR1bXBzKHsibWFuaWZlc3Rfc2hhMjU2IjogZGlnZXN0KHdvcmsgLyAiYXJ0aWZhY3RfbWFuaWZlc3QuanNvbiIpfSwgc29ydF9rZXlzPVRydWUpKQpQWQoKdGVzdCAiJChmaW5kICIkV09SSyIgLXR5cGUgbCAtcHJpbnQgLXF1aXQpIiA9ICIiCnNoYTI1NnN1bSAiJFdPUksiLyoKbXYgIiRXT1JLIiAiJEZJTkFMIgplY2hvICJmaW5hbD0kRklOQUwiCg==
-B64
+case "$STATE" in
+  COMPLETED)
+    test "$EXIT_CODE" = "0:0"
+    ;;
+  PENDING|RUNNING|CONFIGURING|COMPLETING)
+    echo "audit_terminal=false"
+    exit 0
+    ;;
+  *)
+    echo "audit_terminal_failure=$STATE/$EXIT_CODE" >&2
+    exit 1
+    ;;
+esac
 
-deploy_payload "$TEST_REL" "$TEST_SHA" <<'B64'
-aW1wb3J0IGhhc2hsaWIKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgoKUkVQT19ST09UID0gUGF0aChfX2ZpbGVfXykucmVzb2x2ZSgpLnBhcmVudHNbMV0KQVVESVRPUiA9IFJFUE9fUk9PVCAvICJzcmMiIC8gIjI5X25lYXJpbmcyMDIyX2RhX2FyIiAvICJzY3JpcHRzIiAvICJhdWRpdF9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0cy5weSIKUFJFREVDRVNTT1IgPSAoCiAgICBSRVBPX1JPT1QKICAgIC8gInNyYyIKICAgIC8gIjI5X25lYXJpbmcyMDIyX2RhX2FyIgogICAgLyAiaHBjIgogICAgLyAicnVuX3BhcnRpYWxfcmVnaXN0ZXJlZF9yZXN1bHRzX2F1ZGl0X2F0dGVtcHQyLnNsdXJtIgopCldSQVBQRVIgPSAoCiAgICBSRVBPX1JPT1QKICAgIC8gInNyYyIKICAgIC8gIjI5X25lYXJpbmcyMDIyX2RhX2FyIgogICAgLyAiaHBjIgogICAgLyAicnVuX3BhcnRpYWxfcmVnaXN0ZXJlZF9yZXN1bHRzX2F1ZGl0X3NlcTIwNS5zbHVybSIKKQoKCmRlZiB0ZXN0X3NlcTIwNV9jaGFuZ2VzX29ubHlfaWRlbnRpdHlfYW5kX21pbmltdW1fY29tcGxldGVfY291bnQoKToKICAgIHByZWRlY2Vzc29yID0gUFJFREVDRVNTT1IucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpCiAgICBjdXJyZW50ID0gV1JBUFBFUi5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikKICAgIG5vcm1hbGl6ZWQgPSBjdXJyZW50LnJlcGxhY2UoIk4yMi1wYXJ0LWF1ZGl0MyIsICJOMjItcGFydC1hdWRpdDIiKQogICAgbm9ybWFsaXplZCA9IG5vcm1hbGl6ZWQucmVwbGFjZSgKICAgICAgICAicnVuX3BhcnRpYWxfcmVnaXN0ZXJlZF9yZXN1bHRzX2F1ZGl0X3NlcTIwNS5zbHVybSIsCiAgICAgICAgInJ1bl9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0c19hdWRpdF9hdHRlbXB0Mi5zbHVybSIsCiAgICApCiAgICBub3JtYWxpemVkID0gbm9ybWFsaXplZC5yZXBsYWNlKCJzZXEyMDUiLCAic2VxMTkyIikucmVwbGFjZSgiIDIwNSAiLCAiIDE5MiAiKQogICAgbm9ybWFsaXplZCA9IG5vcm1hbGl6ZWQucmVwbGFjZSgnIm1haWxib3hfc2VxdWVuY2UiOiAyMDUsJywgJyJtYWlsYm94X3NlcXVlbmNlIjogMTkyLCcpCiAgICBub3JtYWxpemVkID0gbm9ybWFsaXplZC5yZXBsYWNlKCJiZWxvdyAxNSBjb21wbGV0ZSIsICJiZWxvdyAxMyBjb21wbGV0ZSIpCiAgICBub3JtYWxpemVkID0gbm9ybWFsaXplZC5yZXBsYWNlKCdbImNvbXBsZXRlX2Nvb3JkaW5hdGVzIl0gPCAxNScsICdbImNvbXBsZXRlX2Nvb3JkaW5hdGVzIl0gPCAxMycpCiAgICBub3JtYWxpemVkID0gbm9ybWFsaXplZC5yZXBsYWNlKCItLW1pbmltdW0tY29tcGxldGUgMTUiLCAiLS1taW5pbXVtLWNvbXBsZXRlIDEzIikKICAgIGFzc2VydCBub3JtYWxpemVkID09IHByZWRlY2Vzc29yCgoKZGVmIHRlc3Rfc2VxMjA1X2lzX2NwdV9vbmx5X2ZhaWxfY2xvc2VkX2FuZF9yZXF1aXJlc19maWZ0ZWVuX2Nvb3JkaW5hdGVzKCk6CiAgICB0ZXh0ID0gV1JBUFBFUi5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikKICAgIGFzc2VydCAiI1NCQVRDSCAtLW1lbSIgbm90IGluIHRleHQKICAgIGFzc2VydCAiI1NCQVRDSCAtLWdyZXM9Z3B1IiBub3QgaW4gdGV4dAogICAgYXNzZXJ0ICJwYXJ0aWFsX251bWVyaWNhbF9hdWRpdF9zZXEyMDVfdjEiIGluIHRleHQKICAgIGFzc2VydCB0ZXh0LmNvdW50KCItLW1haWxib3gtc2VxdWVuY2UgMjA1IC0tbWluaW11bS1jb21wbGV0ZSAxNSIpID09IDIKICAgIGFzc2VydCAnYXVkaXRfMVsiY29tcGxldGVfY29vcmRpbmF0ZXMiXSA8IDE1JyBpbiB0ZXh0CiAgICBhc3NlcnQgInRlc3QgISAtZSBcIiRGSU5BTFwiIiBpbiB0ZXh0CiAgICBhc3NlcnQgInNiYXRjaCIgbm90IGluIHRleHQKICAgIGFzc2VydCAicm0gLXJmIiBub3QgaW4gdGV4dAoKCmRlZiB0ZXN0X3NlcTIwNV9iaW5kc190aGVfdW5jaGFuZ2VkX2F1ZGl0b3JfaGFzaCgpOgogICAgdGV4dCA9IFdSQVBQRVIucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpCiAgICBhdWRpdG9yX2hhc2ggPSBoYXNobGliLnNoYTI1NihBVURJVE9SLnJlYWRfYnl0ZXMoKSkuaGV4ZGlnZXN0KCkKICAgIGFzc2VydCBmIkVYUEVDVEVEX0FVRElUT1JfU0hBMjU2PXthdWRpdG9yX2hhc2h9IiBpbiB0ZXh0Cg==
-B64
+echo "=== TERMINAL ARTIFACT CHECK ==="
+test -d "$FINAL"
+test -d "$PREVIOUS"
+test -f "$STDOUT"
+test -f "$STDERR"
+test ! -s "$STDERR"
+test "$(find "$FINAL" -type l -print -quit)" = ""
+cmp "$FINAL/audit_1.json" "$FINAL/audit_2.json"
+cmp "$FINAL/audit_stdout_1.json" "$FINAL/audit_stdout_2.json"
+sha256sum "$STDOUT" "$STDERR" "$FINAL"/*
 
-deploy_payload "$PREFLIGHT_REL" "$PREFLIGHT_SHA" <<'B64'
-ewogICJzY2hlbWEiOiAibmVhcmluZzIwMjItcGFydGlhbC1yZWdpc3RlcmVkLXJlc3VsdHMtYXVkaXQtc2VxMjA1LXByZWZsaWdodC12MSIsCiAgImNoZWNrZWRfYXQiOiAiMjAyNi0wOC0xMVQxNzoxMToxNyswODowMCIsCiAgInN0YXR1cyI6ICJyZWFkeV9mb3JfZXhhY3RfaGFzaF9kZXBsb3ltZW50X2FuZF9pc29sYXRlZF9jcHVfc3VibWlzc2lvbiIsCiAgInRyaWdnZXIiOiB7CiAgICAibWFpbGJveF9zZXF1ZW5jZSI6IDIwNCwKICAgICJjb21wbGV0ZV9ldmFsdWF0aW9uX2Nvb3JkaW5hdGVzX2JlZm9yZSI6IDE0LAogICAgImNvbXBsZXRlX2V2YWx1YXRpb25fY29vcmRpbmF0ZXNfYWZ0ZXIiOiAxNSwKICAgICJuZXdfY29tcGxldGVfY29vcmRpbmF0ZSI6ICJOMjItRVZBTC1UUy1EQS1MMDItVEUxMDAtUzAiLAogICAgInJlZ2lzdGVyZWRfc2x1cm1fdGFzayI6ICIyMDIyMjJfMTQiLAogICAgInJlZ2lzdGVyZWRfZmFtaWx5IjogInRpbWVfYXNzaW1pbGF0aW9uIiwKICAgICJpbmRlcGVuZGVudF9udW1lcmljYWxfc2NvcmVfYXZhaWxhYmxlIjogZmFsc2UKICB9LAogICJzaW5nbGVfZmFjdG9yX2Rlcml2YXRpb24iOiB7CiAgICAicHJlZGVjZXNzb3Jfd3JhcHBlciI6ICJzcmMvMjlfbmVhcmluZzIwMjJfZGFfYXIvaHBjL3J1bl9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0c19hdWRpdF9hdHRlbXB0Mi5zbHVybSIsCiAgICAicHJlZGVjZXNzb3Jfd3JhcHBlcl9ieXRlcyI6IDQ0ODEsCiAgICAicHJlZGVjZXNzb3Jfd3JhcHBlcl9zaGEyNTYiOiAiNWM1NTk4YjY2NDQ2OTNmNDk5MzMzOWQ3OWYyMTk4MjRhMjQxNTQ5Mzg4OWYyN2E5ZTBlNDVmZTNkZThlYzcyNCIsCiAgICAiY2hhbmdlcyI6IFsKICAgICAgInVzZSBhIG5ldyBqb2IgbmFtZSBhbmQgaW1tdXRhYmxlIHdyYXBwZXIgcGF0aCIsCiAgICAgICJ1c2UgdGhlIG5ldyBvdXRwdXQgcm9vdCBwYXJ0aWFsX251bWVyaWNhbF9hdWRpdF9zZXEyMDVfdjEiLAogICAgICAiYmluZCBtYWlsYm94IHNlcXVlbmNlIDIwNSIsCiAgICAgICJyYWlzZSBtaW5pbXVtIGNvbXBsZXRlLWNvb3JkaW5hdGUgY291bnQgZnJvbSAxMyB0byAxNSIKICAgIF0sCiAgICAibnVtZXJpY2FsX2F1ZGl0b3JfY2hhbmdlZCI6IGZhbHNlLAogICAgIm1ldHJpY3NfY2hhbmdlZCI6IGZhbHNlLAogICAgImF1dGhvcl9yZWZlcmVuY2VzX2NoYW5nZWQiOiBmYWxzZSwKICAgICJhY2NlcHRhbmNlX3RocmVzaG9sZHNfY2hhbmdlZCI6IGZhbHNlLAogICAgInJlZ2lzdGVyZWRfbWF0cml4X2NoYW5nZWQiOiBmYWxzZQogIH0sCiAgInBheWxvYWRzIjogewogICAgImF1ZGl0b3IiOiB7CiAgICAgICJwYXRoIjogInNyYy8yOV9uZWFyaW5nMjAyMl9kYV9hci9zY3JpcHRzL2F1ZGl0X3BhcnRpYWxfcmVnaXN0ZXJlZF9yZXN1bHRzLnB5IiwKICAgICAgImJ5dGVzIjogOTg1OSwKICAgICAgInNoYTI1NiI6ICI3Yzk5MzMyYjc4NWEyYTA4ODk2MWI1MWU2MDg1ZmFkYTcyMjk0Y2U0ZjhlOThlZDA1NjYzODE4NjYwZjM1NzI1IgogICAgfSwKICAgICJ3cmFwcGVyIjogewogICAgICAicGF0aCI6ICJzcmMvMjlfbmVhcmluZzIwMjJfZGFfYXIvaHBjL3J1bl9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0c19hdWRpdF9zZXEyMDUuc2x1cm0iLAogICAgICAiYnl0ZXMiOiA0NDc3LAogICAgICAic2hhMjU2IjogIjhjZjQxMmE3NWQyNjgwM2IyYjg3NjliZWIyYzdhZjQ2ZWMyNTUxMjJlMDA2ZjgxMzM3NDRmZWFhZTVkOWUyNDgiCiAgICB9LAogICAgInRlc3QiOiB7CiAgICAgICJwYXRoIjogInRlc3QvdGVzdF9uZWFyaW5nMjAyMl9wYXJ0aWFsX2F1ZGl0X3NlcTIwNV9zbHVybS5weSIsCiAgICAgICJieXRlcyI6IDIxMDQsCiAgICAgICJzaGEyNTYiOiAiN2QyYmEyN2VhOTE5NDZhM2U4MzIyZTEzMjI0YWM5MTdkZmE4MWQ2NmMyMmRjNWFkMTQ5OTZjZDAyZGY5NjQ3MCIKICAgIH0sCiAgICAiZXZhbHVhdGlvbl9yZWdpc3RyeSI6IHsKICAgICAgInBhdGgiOiAic3JjLzI5X25lYXJpbmcyMDIyX2RhX2FyL3JlZ2lzdHJ5L2V2YWx1YXRpb25fcmVnaXN0cnkuY3N2IiwKICAgICAgImJ5dGVzIjogNzMwMTMsCiAgICAgICJzaGEyNTYiOiAiMzdiMzEyZGJkMzYyMzk5YTk3NzFmMjIzM2QxZTExMzllYTI1ZDUzMzlkMWJiYzdhODA2ZmE3NWJlMzBiOTIxNSIKICAgIH0sCiAgICAiYWNjZXB0YW5jZSI6IHsKICAgICAgInBhdGgiOiAic3JjLzI5X25lYXJpbmcyMDIyX2RhX2FyL3JlZmVyZW5jZS9yZXByb2R1Y3Rpb25fYWNjZXB0YW5jZS5qc29uIiwKICAgICAgImJ5dGVzIjogMTU0MCwKICAgICAgInNoYTI1NiI6ICI2MTI1Y2FiODkzNWMzYWQwYWI0OTg4NjVjNjYxYzQ3ZWE4M2M4MzdjNzYyN2RmZjI1MzRiYTVhNWI5MTg1ODk1IgogICAgfQogIH0sCiAgImxvY2FsX3ZhbGlkYXRpb24iOiB7CiAgICAiYmFzaF9zeW50YXgiOiAicGFzc2VkIiwKICAgICJmb2N1c2VkX3Rlc3RzIjogewogICAgICAicGFzc2VkIjogMywKICAgICAgImZhaWxlZCI6IDAsCiAgICAgICJ3YXJuaW5ncyI6IDEKICAgIH0sCiAgICAicHJlZGVjZXNzb3JfZXF1aXZhbGVuY2VfdGVzdCI6ICJwYXNzZWQgYWZ0ZXIgbm9ybWFsaXppbmcgb25seSB0aGUgZm91ciBsaXN0ZWQgaWRlbnRpdHkgYW5kIG1pbmltdW0tY291bnQgY2hhbmdlcyIKICB9LAogICJleGVjdXRpb25fY29udHJhY3QiOiB7CiAgICAicmVzb3VyY2UiOiAib25lIENQVSB0YXNrIHdpdGggc2NoZWR1bGVyLWRlZmF1bHQgbWVtb3J5IGFuZCBubyBHUFUgcmVxdWVzdCIsCiAgICAicmVwZWF0X2NvdW50IjogMiwKICAgICJyZXBlYXRlZF9vdXRwdXRzX211c3RfYmVfYnl0ZV9pZGVudGljYWwiOiB0cnVlLAogICAgIm1pbmltdW1fY29tcGxldGVfY29vcmRpbmF0ZXMiOiAxNSwKICAgICJleHBlY3RlZF9tZXRyaWNfcm93c19taW5pbXVtIjogMTA1LAogICAgInJlZnVzZV9leGlzdGluZ19maW5hbF9vcl9zdGFnaW5nX3BhdGgiOiB0cnVlLAogICAgIm91dHB1dF9yb290IjogInJlc3VsdHMvMjlfbmVhcmluZzIwMjJfZGFfYXIvZm9ybWFsX2Nsb3N1cmUvZGlhZ25vc3RpY3MvcGFydGlhbF9udW1lcmljYWxfYXVkaXRfc2VxMjA1X3YxIgogIH0sCiAgInN1Ym1pc3Npb24iOiB7CiAgICAiZGVwbG95ZWQiOiBmYWxzZSwKICAgICJzdWJtaXR0ZWQiOiBmYWxzZSwKICAgICJzbHVybV9qb2JfaWQiOiBudWxsCiAgfSwKICAiYm91bmRhcnkiOiAiVGhpcyBwcmVmbGlnaHQgcHJvdmVzIG9ubHkgdGhhdCB0aGUgaXNvbGF0ZWQgd3JhcHBlciBwcmVzZXJ2ZXMgdGhlIGF1ZGl0ZWQgbnVtZXJpY2FsIG1ldGhvZCB3aGlsZSByZXF1aXJpbmcgYWxsIDE1IGN1cnJlbnRseSBjb21wbGV0ZSBjb29yZGluYXRlcy4gVGhlIG5ldyBjb29yZGluYXRlIGhhcyBubyBudW1lcmljYWwgZGVjaXNpb24gdW50aWwgdGhlIFNsdXJtIGpvYiBjb21wbGV0ZXMgYW5kIGl0cyBvdXRwdXQsIHNvdXJjZXMsIGFuZCByZWNlaXB0IGFyZSBpbmRlcGVuZGVudGx5IHJlY292ZXJlZCBhbmQgcmVoYXNoZWQuIgp9Cg==
-B64
-
-test "$(sha256sum "$ROOT/src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py" | awk '{print $1}')" = "$AUDITOR_SHA"
-test ! -e "$FINAL"
-test "$(find "$(dirname "$FINAL")" -maxdepth 1 -name 'partial_numerical_audit_seq205_v1.preparing-*' -print -quit)" = ""
-bash -n "$ROOT/$WRAPPER_REL"
-
-python - "$ROOT" "$WRAPPER_REL" "$TEST_REL" "$PREFLIGHT_REL" "$WRAPPER_SHA" "$TEST_SHA" "$PREFLIGHT_SHA" <<'PY'
+python - "$FINAL" "$PREVIOUS" <<'PY'
 import hashlib
 import json
 from pathlib import Path
 import sys
 
-root = Path(sys.argv[1])
-rows = list(zip(sys.argv[2:5], sys.argv[5:8]))
-for relative, expected in rows:
-    path = root / relative
-    assert path.is_file() and not path.is_symlink()
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == expected
-preflight = json.loads((root / sys.argv[4]).read_text(encoding="utf-8"))
-assert preflight["trigger"]["new_complete_coordinate"] == "N22-EVAL-TS-DA-L02-TE100-S0"
-assert preflight["execution_contract"]["minimum_complete_coordinates"] == 15
-assert preflight["single_factor_derivation"]["numerical_auditor_changed"] is False
-assert preflight["single_factor_derivation"]["acceptance_thresholds_changed"] is False
-wrapper = (root / sys.argv[2]).read_text(encoding="utf-8")
-assert "--mailbox-sequence 205 --minimum-complete 15" in wrapper
-assert "#SBATCH --gres=gpu" not in wrapper and "#SBATCH --mem" not in wrapper
-print(json.dumps({"deployment_hashes_verified": 3, "minimum_complete": 15}, sort_keys=True))
+final = Path(sys.argv[1])
+previous = Path(sys.argv[2])
+
+
+def digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+audit_bytes = (final / "audit_1.json").read_bytes()
+audit = json.loads(audit_bytes)
+audit_2 = json.loads((final / "audit_2.json").read_bytes())
+old = json.loads((previous / "audit_1.json").read_bytes())
+receipt = json.loads((final / "execution_receipt.json").read_text(encoding="utf-8"))
+manifest_path = final / "artifact_manifest.json"
+manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+if audit != audit_2:
+    raise ValueError("Repeated audits are not object-identical")
+if audit["complete_coordinates"] < 15:
+    raise ValueError("Terminal audit contains fewer than 15 complete coordinates")
+if audit["comparison_rows"] != audit["complete_coordinates"] * 7:
+    raise ValueError("Terminal audit does not contain seven metrics per coordinate")
+if audit["registered_matrix_modified"] or audit["frozen_acceptance_modified"]:
+    raise ValueError("Frozen input modification reported")
+
+old_coordinates = {row["eval_id"]: row for row in old["coordinates"]}
+new_coordinates = {row["eval_id"]: row for row in audit["coordinates"]}
+if not set(old_coordinates) < set(new_coordinates):
+    raise ValueError("The new audit does not strictly extend the 14-coordinate predecessor")
+if any(old_coordinates[key] != new_coordinates[key] for key in old_coordinates):
+    raise ValueError("A predecessor coordinate object changed")
+added = sorted(set(new_coordinates) - set(old_coordinates))
+expected = "N22-EVAL-TS-DA-L02-TE100-S0"
+if expected not in added:
+    raise ValueError(f"Expected newly complete coordinate is absent: {added}")
+
+old_sources = old["source_artifacts"]
+new_sources = audit["source_artifacts"]
+if any(old_sources[key] != new_sources.get(key) for key in old_sources):
+    raise ValueError("A predecessor source-artifact record changed")
+added_sources = sorted(set(new_sources) - set(old_sources))
+
+files = []
+for path in sorted(final.rglob("*")):
+    if path.is_symlink():
+        raise ValueError(f"Link in final audit: {path}")
+    if path.is_file() and path.name != "artifact_manifest.json":
+        files.append({
+            "path": path.relative_to(final).as_posix(),
+            "bytes": path.stat().st_size,
+            "sha256": digest(path),
+        })
+if manifest["files"] != files:
+    raise ValueError("Artifact manifest does not match live final files")
+if manifest["file_count"] != len(files):
+    raise ValueError("Artifact manifest file count differs")
+if manifest["total_bytes"] != sum(row["bytes"] for row in files):
+    raise ValueError("Artifact manifest byte count differs")
+if receipt["slurm_job_id"] != "202610":
+    raise ValueError("Execution receipt has the wrong job identifier")
+if receipt["mailbox_sequence"] != 205:
+    raise ValueError("Execution receipt has the wrong mailbox sequence")
+if receipt["complete_coordinates"] != audit["complete_coordinates"]:
+    raise ValueError("Execution receipt coordinate count differs")
+if receipt["comparison_rows"] != audit["comparison_rows"]:
+    raise ValueError("Execution receipt comparison count differs")
+if receipt["audit_sha256"] != digest(final / "audit_1.json"):
+    raise ValueError("Execution receipt audit hash differs")
+
+summary = {
+    "schema": "nearing2022-partial-numerical-audit-seq205-terminal-verification-v1",
+    "job_id": "202610",
+    "complete_coordinates": audit["complete_coordinates"],
+    "complete_by_family": audit["complete_by_family"],
+    "comparison_rows": audit["comparison_rows"],
+    "individual_tolerance_failures": audit["individual_tolerance_failures"],
+    "coordinates_with_failures": audit["coordinates_with_failures"],
+    "added_coordinates": added,
+    "added_coordinate_decisions": {
+        key: {
+            "failed_metrics": new_coordinates[key]["failed_metrics"],
+            "all_seven_metrics_within_tolerance": not new_coordinates[key]["failed_metrics"],
+        }
+        for key in added
+    },
+    "predecessor_coordinates_identical": len(old_coordinates),
+    "predecessor_source_records_identical": len(old_sources),
+    "source_artifacts": len(new_sources),
+    "source_artifact_bytes": sum(row["bytes"] for row in new_sources.values()),
+    "unique_source_hashes": len({row["sha256"] for row in new_sources.values()}),
+    "added_source_artifacts": added_sources,
+    "audit_bytes": len(audit_bytes),
+    "audit_sha256": hashlib.sha256(audit_bytes).hexdigest(),
+    "artifact_manifest_bytes": manifest_path.stat().st_size,
+    "artifact_manifest_sha256": digest(manifest_path),
+    "execution_receipt_bytes": (final / "execution_receipt.json").stat().st_size,
+    "execution_receipt_sha256": digest(final / "execution_receipt.json"),
+    "repeated_audits_byte_identical": (final / "audit_1.json").read_bytes() == (final / "audit_2.json").read_bytes(),
+    "repeated_summaries_byte_identical": (final / "audit_stdout_1.json").read_bytes() == (final / "audit_stdout_2.json").read_bytes(),
+    "registered_matrix_modified": False,
+    "frozen_acceptance_modified": False,
+}
+print(json.dumps(summary, indent=2, sort_keys=True))
 PY
 
-JOB_ID=$(sbatch --parsable "$ROOT/$WRAPPER_REL")
-case "$JOB_ID" in
-  ''|*[!0-9]*) echo "Invalid Slurm job id: $JOB_ID" >&2; exit 1 ;;
-esac
-echo "submitted_job_id=$JOB_ID"
-scontrol show job -o "$JOB_ID"
-sacct -n -X -P -j "$JOB_ID" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Reason
-echo "registered_matrix_modified=false"
-echo "frozen_acceptance_modified=false"
+echo "=== AUDIT BASE64 BEGIN ==="
+base64 -w 0 "$FINAL/audit_1.json"
+echo
+echo "=== AUDIT BASE64 END ==="
+echo "audit_terminal=true"
