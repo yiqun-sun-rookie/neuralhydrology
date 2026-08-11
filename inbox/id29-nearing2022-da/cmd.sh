@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=178: retain target audit and repair the scheduler-record diagnostic.
+# ID29 seq=179: retain target audit and prove the live downstream dependency graph.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -12,6 +12,28 @@ SUBMISSION_RECEIPT="$DIAGNOSTIC_ROOT/warmup_target_repair_submission_01.json"
 
 echo "=== SNAPSHOT TIME ==="
 date --iso-8601=seconds
+
+echo "=== LIVE DOWNSTREAM DEPENDENCY GRAPH ==="
+for job in 202238 202229 202230 202280 202281 202294 202315; do
+  record=$(scontrol show job -o "$job")
+  state=$(sed -n 's/.*JobState=\([^ ]*\).*/\1/p' <<<"$record")
+  reason=$(sed -n 's/.*Reason=\([^ ]*\).*/\1/p' <<<"$record")
+  dependency=$(sed -n 's/.*Dependency=\([^ ]*\).*/\1/p' <<<"$record")
+  command=$(sed -n 's/.*Command=\([^ ]*\).*/\1/p' <<<"$record")
+  printf '%s|%s|%s|%s|%s\n' "$job" "$state" "$reason" "$dependency" "$command"
+done
+
+dep_202238=$(scontrol show job -o 202238 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
+dep_202229=$(scontrol show job -o 202229 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
+dep_202230=$(scontrol show job -o 202230 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
+dep_202280=$(scontrol show job -o 202280 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
+dep_202281=$(scontrol show job -o 202281 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
+grep -q 'afterok:202216' <<<"$dep_202238"
+for required in 202222 202226 202216 202238 202227; do grep -q "$required" <<<"$dep_202229"; done
+for required in 202228 202238; do grep -q "$required" <<<"$dep_202230"; done
+for required in 202229 202230; do grep -q "$required" <<<"$dep_202280"; done
+grep -q '202280' <<<"$dep_202281"
+echo "dependency_graph_assertions=passed"
 
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final
