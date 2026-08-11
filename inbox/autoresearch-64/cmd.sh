@@ -1,38 +1,42 @@
 #!/bin/bash
-set -o pipefail
+set -euo pipefail
 
 ROOT=/data1/home/sunyiq/autoresearch64
+MAILBOX=/data1/home/sunyiq/hpc_mailbox
 PYTHON="$ROOT/.venv/bin/python"
 AUTO="$ROOT/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59"
-SCALE="$ROOT/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48"
+AUTO_EVIDENCE="$AUTO/evidence/REHEARSAL_EVIDENCE.json"
+AUTO_MANIFEST="$AUTO/evidence/MANIFEST.sha256"
+BASE="$MAILBOX/inbox/autoresearch-64/hbv_lite_64_reproduction_seq48.slurm"
+DERIVED="$MAILBOX/inbox/autoresearch-64/hbv_lite_64_prospective_seq62.slurm"
+RECEIPT_DIR="$ROOT/registries/unified_autoresearch"
+RECEIPT="$RECEIPT_DIR/hbv_lite_64_prospective_seq62_recommendation.json"
+ATTEMPT="$ROOT/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62"
+EXPECTED_AUTO_EVIDENCE_SHA256=7bb8d23ea03b0cffc0390c4fb6993fd2f6449cc65a47d1674771971a241a723e
+EXPECTED_AUTO_MANIFEST_SHA256=c000f729125676a4adc7a2097f38bacda4873a5fa10dcbafc13082734abd5a46
 
-echo "=== JOB PROVENANCE ==="
-sacct -j 202321,202556 -X --format=JobID%12,JobName%20,NodeList%9,State%14,ExitCode%8,Elapsed%10,Start%20,End%20
+test -f "$AUTO_EVIDENCE"
+test -f "$AUTO_MANIFEST"
+test -f "$BASE"
+test ! -e "$DERIVED"
+test ! -e "$RECEIPT"
+test ! -e "$ATTEMPT"
+test "$(sha256sum "$AUTO_EVIDENCE" | awk '{print $1}')" = "$EXPECTED_AUTO_EVIDENCE_SHA256"
+test "$(sha256sum "$AUTO_MANIFEST" | awk '{print $1}')" = "$EXPECTED_AUTO_MANIFEST_SHA256"
+(cd "$AUTO" && sha256sum -c evidence/MANIFEST.sha256 >/dev/null)
 
-echo "=== MANIFESTS ==="
-for root in "$SCALE" "$AUTO"; do
-  test -f "$root/evidence/MANIFEST.sha256" || { echo "HOLD missing_manifest=$root"; exit 20; }
-  (cd "$root" && sha256sum -c evidence/MANIFEST.sha256 >/dev/null) || exit 21
-  echo "root=$root manifest_check=ok entries=$(wc -l < "$root/evidence/MANIFEST.sha256") manifest_sha256=$(sha256sum "$root/evidence/MANIFEST.sha256" | awk '{print $1}')"
-done
-
-echo "=== PROMOTION-EVIDENCE COMPARISON ==="
-"$PYTHON" - "$AUTO" "$SCALE" <<'PY'
+mkdir -p "$RECEIPT_DIR"
+"$PYTHON" - "$RECEIPT" "$AUTO_EVIDENCE" "$AUTO_MANIFEST" <<'PY_RECEIPT'
 import hashlib
 import json
+import os
 import sys
+from datetime import datetime
 from pathlib import Path
 
-auto_root = Path(sys.argv[1])
-scale_root = Path(sys.argv[2])
-auto_evidence_path = auto_root / "evidence" / "REHEARSAL_EVIDENCE.json"
-scale_evidence_path = scale_root / "evidence" / "REPRODUCTION_SUMMARY.json"
-auto = json.loads(auto_evidence_path.read_text(encoding="utf-8"))
-scale = json.loads(scale_evidence_path.read_text(encoding="utf-8"))
-auto_candidate_path = auto_root / "rehearsal" / "candidates" / "hbv_lite" / "candidate" / "candidate-descriptor.json"
-scale_candidate_path = scale_root / "candidate_run" / "candidate" / "candidate-descriptor.json"
-auto_candidate = json.loads(auto_candidate_path.read_text(encoding="utf-8"))
-scale_candidate = json.loads(scale_candidate_path.read_text(encoding="utf-8"))
+receipt_path = Path(sys.argv[1])
+automatic_evidence_path = Path(sys.argv[2])
+automatic_manifest_path = Path(sys.argv[3])
 
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
@@ -41,85 +45,141 @@ def sha256(path: Path) -> str:
             digest.update(block)
     return digest.hexdigest()
 
-assert auto["recommended_candidate_id"] == "hbv-lite-calibrated-v1"
-assert scale["candidate_id"] == auto["recommended_candidate_id"]
-assert auto["dependency_versions"] == scale["dependency_versions"] == {
-    "numpy": "1.26.4",
-    "pandas": "2.2.3",
-    "pyarrow": "17.0.0",
+value = {
+    "schema_version": "immutable_recommendation_receipt_v1",
+    "receipt_id": "hbv_lite_64_prospective_seq62_recommendation",
+    "finalized_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+    "timestamp_source": "immutable_registry_receipt",
+    "automatic_experiment_id": "automatic_rehearsal_8x3_20260811_seq59",
+    "automatic_job_id": "202556",
+    "recommended_candidate_id": "hbv-lite-calibrated-v1",
+    "automatic_evidence_path": str(automatic_evidence_path),
+    "automatic_evidence_sha256": sha256(automatic_evidence_path),
+    "automatic_manifest_path": str(automatic_manifest_path),
+    "automatic_manifest_sha256": sha256(automatic_manifest_path),
+    "planned_scale_experiment_id": "hbv_lite_64_prospective_confirmation_20260811_seq62",
+    "planned_candidate_count": 1,
+    "planned_basin_count": 64,
+    "seed": 29,
+    "result_available_during_proposal": False,
+    "sealed_final_evaluation_read_or_scored": False,
+    "fair_benchmark_scoring_program_run": False,
+    "formal_basin_search_run": False,
+    "baseline_outperformance_claimed": False,
 }
-assert auto_candidate["candidate_id"] == scale_candidate["candidate_id"]
-assert auto_candidate["category"] == scale_candidate["category"]
-assert auto_candidate["seed"] == scale_candidate["seed"] == 29
-assert auto_candidate["dependencies"] == scale_candidate["dependencies"]
-assert auto_candidate["allowed_reads"] == scale_candidate["allowed_reads"]
-assert auto_candidate["outputs"] == scale_candidate["outputs"]
-assert auto["independently_counted_denials"] == scale["independently_counted_denials"] == 0
-assert scale["basin_count"] == 64
-assert scale["registered_run_count"] == 4
-assert scale["score_report_count"] == 2
-assert scale["sealed_final_evaluation_read_or_scored"] is False
-assert scale["fair_benchmark_scoring_program_run"] is False
-assert scale["formal_basin_search_run"] is False
-assert scale["baseline_outperformance_claimed"] is False
+descriptor = os.open(receipt_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o444)
+with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as stream:
+    json.dump(value, stream, indent=2, sort_keys=True)
+    stream.write("\n")
+    stream.flush()
+    os.fsync(stream.fileno())
+PY_RECEIPT
 
-relative_files = sorted(scale["runtime_source_sha256"])
-auto_snapshot = auto_root / "snapshot"
-source_hash_comparison = {
-    relative: {
-        "automatic_rehearsal_sha256": sha256(auto_snapshot / relative),
-        "scale_reproduction_sha256": scale["runtime_source_sha256"][relative],
-        "equal": sha256(auto_snapshot / relative) == scale["runtime_source_sha256"][relative],
-    }
-    for relative in relative_files
+RECEIPT_SHA256=$(sha256sum "$RECEIPT" | awk '{print $1}')
+RECOMMENDATION_FINALIZED_AT=$("$PYTHON" -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["finalized_at"])' "$RECEIPT")
+
+"$PYTHON" - "$BASE" "$DERIVED" "$RECEIPT" "$RECEIPT_SHA256" <<'PY_DERIVE'
+import hashlib
+import os
+import sys
+from pathlib import Path
+
+base_path = Path(sys.argv[1])
+derived_path = Path(sys.argv[2])
+receipt_path = sys.argv[3]
+receipt_sha256 = sys.argv[4]
+text = base_path.read_text(encoding="utf-8")
+
+replacements = {
+    "#SBATCH -J a64-hbv64-io": "#SBATCH -J a64-hbv64-pro",
+    'ATTEMPT="$RUNS/hbv_lite_64_hpc_reproduction_20260810_seq48"': 'ATTEMPT="$RUNS/hbv_lite_64_prospective_confirmation_20260811_seq62"',
+    'git commit -q -m "Immutable sequence 48 test snapshot"': 'git commit -q -m "Immutable sequence 62 prospective snapshot"',
+    '"experiment_id": "hbv_lite_64_hpc_reproduction_20260810_seq48"': '"experiment_id": "hbv_lite_64_prospective_confirmation_20260811_seq62"',
+    'restricted 64-basin development reproduction after complete Linux gate; one predeclared candidate': 'prospective 64-basin development confirmation after immutable recommendation receipt; one predeclared candidate',
 }
-all_runtime_source_hashes_equal = all(value["equal"] for value in source_hash_comparison.values())
-assert all_runtime_source_hashes_equal
+for old, new in replacements.items():
+    if text.count(old) != 1:
+        raise SystemExit(f"expected exactly one template match: {old!r}")
+    text = text.replace(old, new)
 
-auto_mtime = auto_evidence_path.stat().st_mtime
-scale_mtime = scale_evidence_path.stat().st_mtime
-assert scale_mtime < auto_mtime
+after_redirect = 'exec > "$EVIDENCE/JOB_STDOUT.txt" 2> "$EVIDENCE/JOB_STDERR.txt"\n'
+receipt_block = f'''\
+\n+echo "=== VERIFY IMMUTABLE RECOMMENDATION RECEIPT ==="
+PROMOTION_RECEIPT={receipt_path!r}
+EXPECTED_PROMOTION_RECEIPT_SHA256={receipt_sha256!r}
+test "$(sha256sum "$PROMOTION_RECEIPT" | awk '{{print $1}}')" = "$EXPECTED_PROMOTION_RECEIPT_SHA256"
+cp --no-clobber "$PROMOTION_RECEIPT" "$EVIDENCE/PROMOTION_RECEIPT.json"
+test "$(sha256sum "$EVIDENCE/PROMOTION_RECEIPT.json" | awk '{{print $1}}')" = "$EXPECTED_PROMOTION_RECEIPT_SHA256"
+'''
+if text.count(after_redirect) != 1:
+    raise SystemExit("job-output redirect insertion point is not unique")
+text = text.replace(after_redirect, after_redirect + receipt_block)
 
-result = {
-    "schema_version": "automatic_recommendation_scale_evidence_comparison_v1",
-    "automatic_rehearsal": {
-        "experiment_id": auto["experiment_id"],
-        "job_id": auto["job_id"],
-        "evidence_mtime_epoch_seconds": auto_mtime,
-        "recommended_candidate_id": auto["recommended_candidate_id"],
-        "eight_basin_median_mean_nse": auto["independently_recomputed_median_mean_nse"][auto["recommended_candidate_id"]],
-    },
-    "existing_scale_reproduction": {
-        "experiment_id": scale["experiment_id"],
-        "job_id": scale["job_id"],
-        "evidence_mtime_epoch_seconds": scale_mtime,
-        "candidate_id": scale["candidate_id"],
-        "basin_count": scale["basin_count"],
-        "all_basin_metrics": scale["group_metrics"]["all"],
-        "standard_basin_metrics": scale["group_metrics"]["standard"],
-        "unstable_basin_metrics": scale["group_metrics"]["unstable"],
-    },
-    "identity_checks": {
-        "candidate_id_equal": True,
-        "category_equal": True,
-        "seed_equal": True,
-        "dependencies_equal": True,
-        "allowed_reads_equal": True,
-        "outputs_equal": True,
-        "all_runtime_source_hashes_equal": all_runtime_source_hashes_equal,
-        "runtime_source_file_count": len(source_hash_comparison),
-        "denied_event_counts_zero": True,
-    },
-    "source_hash_comparison": source_hash_comparison,
-    "chronology": {
-        "scale_evidence_predates_automatic_recommendation": True,
-        "scale_evidence_lead_seconds": auto_mtime - scale_mtime,
-    },
-    "technical_scaleup_gate": "PASS",
-    "prospective_independence_gate": "HOLD",
-    "prospective_independence_reason": "The 64-basin result existed before the eight-basin automatic recommendation and therefore is not a fresh post-selection confirmation.",
+before_manifest = 'echo "=== FINALIZE COMPLETE ATTEMPT MANIFEST ==="\n'
+timing_block = '''\
+echo "=== WRITE IMMUTABLE PROSPECTIVE TIMING RECEIPT ==="
+"$PYTHON" - "$EVIDENCE/PROMOTION_TIMING.json" "$EVIDENCE/PROMOTION_RECEIPT.json" "$EVIDENCE/REPRODUCTION_SUMMARY.json" <<'PY_TIMING'
+import hashlib
+import json
+import os
+import sys
+from datetime import datetime
+from pathlib import Path
+
+output_path = Path(sys.argv[1])
+recommendation_path = Path(sys.argv[2])
+summary_path = Path(sys.argv[3])
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+recommendation = json.loads(recommendation_path.read_text(encoding="utf-8"))
+summary = json.loads(summary_path.read_text(encoding="utf-8"))
+value = {
+    "schema_version": "immutable_scale_evidence_receipt_v1",
+    "recommendation_finalized_at": recommendation["finalized_at"],
+    "recommendation_timestamp_source": recommendation["timestamp_source"],
+    "recommendation_receipt_sha256": sha256(recommendation_path),
+    "scale_experiment_id": summary["experiment_id"],
+    "scale_job_id": summary["job_id"],
+    "scale_evidence_created_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+    "scale_evidence_timestamp_source": "immutable_manifest_receipt",
+    "scale_summary_sha256": sha256(summary_path),
+    "result_available_during_proposal": False,
 }
-print(json.dumps(result, sort_keys=True))
-PY
-echo "GO read_only_promotion_comparison=complete"
-exit 0
+descriptor = os.open(output_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o444)
+with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as stream:
+    json.dump(value, stream, indent=2, sort_keys=True)
+    stream.write("\n")
+    stream.flush()
+    os.fsync(stream.fileno())
+print(json.dumps(value, sort_keys=True))
+PY_TIMING
+'''
+if text.count(before_manifest) != 1:
+    raise SystemExit("manifest insertion point is not unique")
+text = text.replace(before_manifest, timing_block + before_manifest)
+
+descriptor = os.open(derived_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o444)
+with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as stream:
+    stream.write(text)
+    stream.flush()
+    os.fsync(stream.fileno())
+print(hashlib.sha256(text.encode("utf-8")).hexdigest())
+PY_DERIVE
+
+DERIVED_SHA256=$(sha256sum "$DERIVED" | awk '{print $1}')
+JOB_ID=$(sbatch --parsable "$DERIVED")
+
+echo "GO prospective_confirmation_submitted=true"
+echo "recommendation_finalized_at=$RECOMMENDATION_FINALIZED_AT"
+echo "recommendation_receipt=$RECEIPT"
+echo "recommendation_receipt_sha256=$RECEIPT_SHA256"
+echo "derived_slurm=$DERIVED"
+echo "derived_slurm_sha256=$DERIVED_SHA256"
+echo "job_id=$JOB_ID"
+squeue -j "$JOB_ID" -o '%.18i %.20j %.12T %.10M %.10l %.20R'
