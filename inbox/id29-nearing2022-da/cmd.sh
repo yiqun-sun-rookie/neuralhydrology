@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=257: read-only compute-node and checkpoint diagnostic for stalled training job 202214.
+# ID29 seq=258: read-only thread, GPU-sampling, and recovery-input diagnostic for training job 202214.
 set -eo pipefail
 
 export LC_ALL=C
@@ -48,6 +48,32 @@ nvidia-smi \
 echo '--- gpu compute processes ---'
 nvidia-smi --query-compute-apps=gpu_uuid,pid,process_name,used_gpu_memory \
   --format=csv,noheader,nounits || true
+echo '--- target main process ---'
+main_pid=''
+while read -r candidate_pid; do
+  [[ -n "$candidate_pid" ]] || continue
+  candidate_cmd="$(tr '\0' ' ' < "/proc/$candidate_pid/cmdline" 2>/dev/null || true)"
+  if [[ "$candidate_cmd" == *'/time_split/autoregression/lead_1_holdout_0.5_seed_0.yml'* ]]; then
+    main_pid="$candidate_pid"
+    break
+  fi
+done < <(nvidia-smi --query-compute-apps=pid --format=csv,noheader,nounits 2>/dev/null || true)
+echo "main_pid=$main_pid"
+if [[ -n "$main_pid" && -d "/proc/$main_pid" ]]; then
+  echo '--- main process status ---'
+  cat "/proc/$main_pid/status" || true
+  echo '--- main process io ---'
+  cat "/proc/$main_pid/io" || true
+  echo '--- main process kernel wait channel ---'
+  cat "/proc/$main_pid/wchan" || true
+  echo
+  echo '--- main process threads ---'
+  ps -L -p "$main_pid" -o pid=,tid=,psr=,stat=,pcpu=,wchan:32=,comm= --sort=-pcpu | head -n 80 || true
+  echo '--- python stack sampler availability ---'
+  command -v py-spy || true
+fi
+echo '--- gpu process monitor ---'
+nvidia-smi pmon -i 1 -s um -d 1 -c 8 || true
 REMOTE_DIAGNOSTIC
   then
     echo "compute_node_probe_failed=$batch_host"
@@ -58,6 +84,13 @@ echo '=== RUN-DIRECTORY CHECKPOINT RECORDS ==='
 run_dir='/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30'
 if [[ -d "$run_dir" ]]; then
   find "$run_dir" -maxdepth 2 -type f -printf '%T@|%s|%p\n' | sort -n | tail -n 80
+  echo '--- recovery input sha256 ---'
+  sha256sum \
+    "$run_dir/config.yml" \
+    "$run_dir/train_data/train_data_scaler.yml" \
+    "$run_dir/model_epoch029.pt" \
+    "$run_dir/optimizer_state_epoch029.pt" \
+    "$run_dir/output.log"
 else
   echo "run_dir_missing=$run_dir"
 fi
