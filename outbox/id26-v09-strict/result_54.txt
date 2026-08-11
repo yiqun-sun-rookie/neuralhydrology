@@ -1,0 +1,22 @@
+### channel=id26-v09-strict seq=54
+### host=login4
+### started=2026-08-11T16:47:47+0800
+### ---------- output ----------
+=== A JOB ===
+TRAINING_AUDIT_JOBID=202586
+slurm_load_jobs error: Invalid job id specified
+JobIDRaw|JobName|State|ExitCode|Elapsed|Start|End|NodeList
+202586|v09audit24|FAILED|1:0|00:00:03|2026-08-11T14:47:21|2026-08-11T14:47:24|ngu008
+=== B LOG FILES ===
+/data1/home/sunyiq/v09_strict/logs/training_audit_202586.err 136 bytes
+/data1/home/sunyiq/v09_strict/logs/training_audit_202586.out 0 bytes
+--- stdout tail ---
+--- stderr tail ---
+/data1/home/sunyiq/miniconda3/envs/nh_final/etc/conda/activate.d/libblas_mkl_activate.sh: line 1: MKL_INTERFACE_LAYER: unbound variable
+=== C REPORT SUMMARY ===
+report_present=false
+=== D DOWNSTREAM ABSENCE ===
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T16:47:48+0800
