@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=259: read-only GPU-health and stack-tool diagnostic for training job 202214.
+# ID29 seq=260: bounded native-stack diagnostic for training job 202214.
 set -eo pipefail
 
 export LC_ALL=C
@@ -78,6 +78,12 @@ if [[ -n "$main_pid" && -d "/proc/$main_pid" ]]; then
   done
   echo '--- main process kernel stack availability ---'
   cat "/proc/$main_pid/stack" || true
+  echo '--- bounded native stack trace ---'
+  timeout -k 5 30 gdb -nx -batch -q -p "$main_pid" \
+    -ex 'set pagination off' \
+    -ex 'set confirm off' \
+    -ex 'thread apply all bt 24' \
+    -ex 'detach' || echo "gdb_stack_exit=$?"
 fi
 echo '--- gpu process monitor ---'
 nvidia-smi pmon -i 1 -s um -d 1 -c 8 || true
