@@ -1,0 +1,57 @@
+### channel=id29-nearing2022-da seq=194
+### host=login4
+### started=2026-08-11T12:25:18+0800
+### ---------- output ----------
+{
+  "added_coordinates": [
+    "N22-EVAL-TS-DA-L02-TE050-S0",
+    "N22-EVAL-TS-DA-L02-TE075-S0"
+  ],
+  "added_source_artifact_bytes": 96626202,
+  "added_source_artifacts": 11,
+  "audit_bytes": 56544,
+  "audit_sha256": "5c75619d61d5f182cb763ccbaf8572760180fdf04a261429b38cab901c63b8da",
+  "binding_type_counts": {
+    "evaluation:checkpoint_epoch030": 14,
+    "evaluation:evaluation_log": 14,
+    "evaluation:metrics": 14,
+    "evaluation:prediction": 14,
+    "evaluation:reference_metrics": 1,
+    "evaluation:reference_prediction": 1,
+    "evaluation:run_config": 14,
+    "provenance:provenance": 5,
+    "registry:registry": 2,
+    "training:checkpoint_epoch030": 1,
+    "training:run_config": 1,
+    "training:training_log": 1
+  },
+  "comparison_rows": 98,
+  "complete_coordinates": 14,
+  "coordinate_result_and_reference_bindings_verified": 28,
+  "final_manifest_preflight_complete": false,
+  "final_manifest_preflight_existing_artifact_count": 415,
+  "final_manifest_preflight_missing_role_count": 5479,
+  "manifest_written": false,
+  "mismatches": 0,
+  "predecessor_coordinates_identical": 12,
+  "predecessor_source_records_identical": 66,
+  "registered_matrix_modified": false,
+  "registry_counts": {
+    "evaluations": 180,
+    "hyperparameters": 660,
+    "training": 46
+  },
+  "schema": "nearing2022-partial-source-rehash-and-final-manifest-coverage-v2",
+  "source_artifact_bytes_verified": 728216375,
+  "source_artifacts_covered": 77,
+  "source_artifacts_missing_coverage": [],
+  "source_artifacts_verified": 77,
+  "unique_source_hashes": 65
+}
+=== REPLACEMENT AND HELD-MANIFEST STATES ===
+202510|N22-data-port-v2|PENDING|0:0|00:00:00|Dependency
+202511|N22-mask-iso-v2|PENDING|0:0|00:00:00|Dependency
+registered_matrix_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T12:25:31+0800
