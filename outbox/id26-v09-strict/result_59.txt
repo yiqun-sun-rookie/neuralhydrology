@@ -1,0 +1,23 @@
+### channel=id26-v09-strict seq=59
+### host=login4
+### started=2026-08-12T05:07:17+0800
+### ---------- output ----------
+=== A PRESERVED EVIDENCE ===
+attempt_01_jobid=202586 state=FAILED exit_code=1:0
+=== B FROZEN CHECKOUTS ===
+training_head=bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
+strict_head=f94183209bf44ed6e672e1c23f98020905804e6d
+=== C EXACT OFFLINE COMMIT RECONSTRUCTION ===
+audit_commit_object=reconstruct_from_embedded_patch
+reconstructed_tree=c90651619d44deb943c4dc1de2362cc82556c177
+reconstructed_commit=ac258afd31d835d93137da8961dc1206a1ee844c
+audit_head=ac258afd31d835d93137da8961dc1206a1ee844c
+638b957bc73eb92fa8c8408fe410826569b1a0720222d2a33bfac22c0e9ffed3  /data1/home/sunyiq/v09_strict/audit_v09/transport_seq59.index
+=== D SUBMIT TRAINING AUDIT ATTEMPT 02 ===
+TRAINING_AUDIT_ATTEMPT_02_JOBID=202755
+       JOBID               NAME      STATE         TIME         NODELIST(REASON)
+      202755         v09audit24    PENDING         0:00                   (None)
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-12T05:07:21+0800
