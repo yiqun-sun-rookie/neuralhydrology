@@ -1,0 +1,66 @@
+### channel=id29-nearing2022-da seq=182
+### host=login4
+### started=2026-08-11T09:49:00+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-11T09:49:00+0800
+=== LIVE DOWNSTREAM DEPENDENCY GRAPH ===
+202238|PENDING|Dependency|afterok:202216_*|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+202229|PENDING|Dependency|afterok:202222_*,afterok:202226_*,afterok:202216_*,afterok:202238_*,afterok:202227_*|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+202230|PENDING|Dependency|afterok:202228_*,afterok:202238_*|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+202280|ABSENT_OR_RETIRED|||slurm_load_jobs error: Invalid job id specified
+202281|ABSENT_OR_RETIRED|||slurm_load_jobs error: Invalid job id specified
+202294|PENDING|Dependency|afterok:202293|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_export.slurm
+202315|PENDING|Dependency|afterok:202229,afterok:202230|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm
+dependency_graph_assertions=passed
+=== REGISTERED COMPLETE-ROLE COUNTS ===
+{"evaluation_by_family": {"time_assimilation": 7, "time_autoregression": 5}, "evaluation_complete": 12, "evaluation_total": 180, "hyperparameter_complete": 0, "hyperparameter_total": 660, "training_by_family": {"basin_simulation": 10, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 12, "training_total": 46}
+=== SERVER OUTPUT-TARGET AUDIT ===
+{"casefold_unique_evaluation_plus_hyperparameter_targets": 840, "direct_basin_rows": 20, "direct_unique_registered_source_run_dirs": 20, "direct_unique_runtime_patterns": 20, "direct_unique_source_config_paths": 20, "direct_unique_source_exp_ids": 20, "evaluation_literal_duplicate_groups": 2, "evaluation_literal_unique_run_dirs": 162, "evaluation_plus_hyperparameter_targets": 840, "evaluation_rows": 180, "registries": [{"bytes": 36970, "path": "src/29_nearing2022_da_ar/registry/experiment_registry.csv", "sha256": "6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64"}, {"bytes": 73013, "path": "src/29_nearing2022_da_ar/registry/evaluation_registry.csv", "sha256": "37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215"}, {"bytes": 334058, "path": "src/29_nearing2022_da_ar/registry/assimilation_hyperparameter_registry.csv", "sha256": "7cb7f10ce13c41c1b064148b27a707ccaab56f87fa40c289d6833bc7c57b09a7"}], "resolved_casefold_unique_evaluation_targets": 180, "resolved_evaluation_targets": 180, "resolved_unique_evaluation_targets": 180, "training_rows": 46, "training_unique_registered_run_dirs": 46, "unique_evaluation_plus_hyperparameter_targets": 840}
+=== DIRECT-EVALUATION JOB PAYLOAD ===
+{"job_command": "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm", "job_dependency": "afterok:202216_*", "job_environment": null, "job_id": "202238", "job_record_contains_expected_batch_file": false, "job_record_contains_expected_command": true, "job_work_dir": "/data1/home/sunyiq/nearing2022_da", "live_prepare_sha256": "6e47896c2b3011fe8e93a561f7545397d5a4ddee70b09b38a520f08530646ccf", "live_script_sha256": "49f8e764da499077d5e4fcb4f42513b8714013afc3af3a75cc495a7dce585f8d", "spooled_script_bytes": 2632, "spooled_script_markers": {"SKIPPED_COMPLETED": true, "prepare_evaluation_run.py": true, "python -m neuralhydrology.nh_run evaluate": true}, "spooled_script_retrieval_returncode": 0, "spooled_script_sha256": "f65b8c1a90cefec9df490eec65390b19f29721587a29dfe06240792a04e0ee84"}
+=== LIVE MAIN PROGRESS ===
+{"epoch": 18, "epoch_step": 5448, "epoch_total_steps": 6821, "job": "202214", "name": "N22-train", "projected_slack_hours": 11.2, "projected_total_hours": 36.8, "runtime": "21:50:07", "stdout_bytes": 19008956, "stdout_exists": true, "thirty_epoch_fraction": 0.59329, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 18, "epoch_step": 2216, "epoch_total_steps": 6821, "job": "202215_0", "name": "N22-time", "projected_slack_hours": 11.31, "projected_total_hours": 36.69, "runtime": "21:11:15", "stdout_bytes": 18503642, "stdout_exists": true, "thirty_epoch_fraction": 0.577496, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 17, "epoch_step": 4755, "epoch_total_steps": 6821, "job": "202215_1", "name": "N22-time", "projected_slack_hours": 9.93, "projected_total_hours": 38.07, "runtime": "21:11:15", "stdout_bytes": 17852797, "stdout_exists": true, "thirty_epoch_fraction": 0.55657, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 17, "epoch_step": 5108, "epoch_total_steps": 6821, "job": "202215_2", "name": "N22-time", "projected_slack_hours": 10.05, "projected_total_hours": 37.95, "runtime": "21:11:16", "stdout_bytes": 17906075, "stdout_exists": true, "thirty_epoch_fraction": 0.558295, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 8, "epoch_step": 2129, "epoch_total_steps": 6127, "job": "202216_10", "name": "N22-basin", "projected_slack_hours": 14.27, "projected_total_hours": 33.73, "runtime": "08:15:40", "stdout_bytes": 7004379, "stdout_exists": true, "thirty_epoch_fraction": 0.244916, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 7, "epoch_step": 5891, "epoch_total_steps": 6140, "job": "202216_11", "name": "N22-basin", "projected_slack_hours": 15.24, "projected_total_hours": 32.76, "runtime": "07:35:59", "stdout_bytes": 6642897, "stdout_exists": true, "thirty_epoch_fraction": 0.231982, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"job": "202222_12", "name": "N22-eval-now", "percent": 68, "runtime": "03:43:18", "stdout_bytes": 28693, "stdout_exists": true, "step": 363, "time_limit": "1-00:00:00", "total": 531}
+{"job": "202222_13", "name": "N22-eval-now", "percent": 63, "runtime": "03:32:06", "stdout_bytes": 26157, "stdout_exists": true, "step": 332, "time_limit": "1-00:00:00", "total": 531}
+=== REPLACEMENT AUDIT STATES ===
+202510|N22-data-port-v2|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202511|N22-mask-iso-v2|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202510|N22-data-port-v2|PENDING|0:00|(Dependency)|afterany:202222_*
+202511|N22-mask-iso-v2|PENDING|0:00|(Dependency)|afterok:202510
+=== REPLACEMENT RECEIPT AND OUTPUTS ===
+18e6aeeee3321427d0f851d68d2cbbfb02f8d13e477f6f96dd5f22eed1d4d2a1  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_repair_submission_01.json
+absent|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2
+absent|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2
+=== MAIN JOB STATES AND FAILURE GATE ===
+202214|RUNNING|21:50:09|2-00:00:00|ngu104|N22-train
+202215_0|RUNNING|21:11:17|2-00:00:00|ngu104|N22-time
+202215_1|RUNNING|21:11:17|2-00:00:00|ngu101|N22-time
+202215_2|RUNNING|21:11:17|2-00:00:00|ngu101|N22-time
+202215_[3-22%3]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-time
+202216_10|RUNNING|8:15:41|2-00:00:00|ngu102|N22-basin
+202216_11|RUNNING|7:36:00|2-00:00:00|ngu104|N22-basin
+202216_[12-19%2]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-basin
+202222_12|RUNNING|3:43:18|1-00:00:00|ngu104|N22-eval-now
+202222_13|RUNNING|3:32:06|1-00:00:00|ngu102|N22-eval-now
+202222_[14-29%2]|PENDING|0:00|1-00:00:00|(JobArrayTaskLimit)|N22-eval-now
+202226_[0-119%4]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-later
+202227_[0-9%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-basin-da
+202228_[0-659%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-hyper
+202229|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-eval
+202230|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-hyper
+202238_[0-19%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-bs-direct
+202293|PENDING|0:00|1-00:00:00|(JobHeldUser)|N22-manifest
+202294|PENDING|0:00|4:00:00|(Dependency)|N22-export
+202315|PENDING|0:00|2:00:00|(Dependency)|N22-gate
+
+=== FROZEN SAFETY BOUNDARY ===
+registered_matrix_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T09:49:17+0800
