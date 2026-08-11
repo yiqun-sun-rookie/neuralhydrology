@@ -1,0 +1,21 @@
+### channel=id29-nearing2022-da seq=191
+### host=login4
+### started=2026-08-11T11:50:45+0800
+### ---------- output ----------
+=== PRE-SUBMISSION GATE ===
+2026-08-11T11:50:45+0800
+deployed_additively|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py
+deployed_additively|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit.slurm
+deployed_additively|/data1/home/sunyiq/nearing2022_da/test/test_nearing2022_partial_audit_slurm.py
+deployed_additively|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/partial_registered_results_audit_slurm_preflight_20260811.json
+=== EXACT PAYLOAD AND STATIC GATE ===
+7c99332b785a2a088961b51e6085fada72294ce4f8e98ed05663818660f35725  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py
+f8aa12391c58358b943ff14f7599a82bdc99952a1b3c4855d23c3578c481963c  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit.slurm
+33d26494d886c24e74e1dd1b70f4be8e835b4816feee9c011e475f5a56b85936  /data1/home/sunyiq/nearing2022_da/test/test_nearing2022_partial_audit_slurm.py
+a1159f0896685c799ec3a3f4a8dc38e8177cecf26eb5754de8e44743fd7443fc  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/partial_registered_results_audit_slurm_preflight_20260811.json
+=== SUBMIT ISOLATED CPU AUDIT ===
+sbatch: error: Memory specification can not be satisfied
+sbatch: error: Batch job submission failed: Requested node configuration is not available
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-11T11:50:45+0800
