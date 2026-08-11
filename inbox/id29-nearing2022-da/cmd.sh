@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=186: repair deployment-audit evidence and rerun all read-only gates.
+# ID29 seq=187: correct additive evidence deployment and rerun all gates.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -383,7 +383,7 @@ echo "strict_prerequisite_mismatches=$STRICT_MISMATCHES"
 test "$STRICT_MISMATCHES" -eq 0
 
 echo "=== ADDITIVE DEPLOYMENT-AUDIT REPAIR ==="
-+DEPLOYMENT_AUDIT="$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_payload_deployment_20260811.json"
+DEPLOYMENT_AUDIT="$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_payload_deployment_20260811.json"
 DEPLOYMENT_AUDIT_SHA=d469d2b135c533ac7bfb0433cf6f3ab52fc2e4dfb4e685e229dfbe48c8ef1b40
 if test -e "$DEPLOYMENT_AUDIT"; then
   test -f "$DEPLOYMENT_AUDIT"
