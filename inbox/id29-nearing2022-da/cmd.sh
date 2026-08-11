@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=258: read-only thread, GPU-sampling, and recovery-input diagnostic for training job 202214.
+# ID29 seq=259: read-only GPU-health and stack-tool diagnostic for training job 202214.
 set -eo pipefail
 
 export LC_ALL=C
@@ -71,9 +71,20 @@ if [[ -n "$main_pid" && -d "/proc/$main_pid" ]]; then
   ps -L -p "$main_pid" -o pid=,tid=,psr=,stat=,pcpu=,wchan:32=,comm= --sort=-pcpu | head -n 80 || true
   echo '--- python stack sampler availability ---'
   command -v py-spy || true
+  echo '--- native diagnostic tool availability ---'
+  for tool in gdb pstack eu-stack strace perf; do
+    tool_path="$(command -v "$tool" 2>/dev/null || true)"
+    echo "$tool=$tool_path"
+  done
+  echo '--- main process kernel stack availability ---'
+  cat "/proc/$main_pid/stack" || true
 fi
 echo '--- gpu process monitor ---'
 nvidia-smi pmon -i 1 -s um -d 1 -c 8 || true
+echo '--- gpu 1 full health record ---'
+nvidia-smi -i 1 -q || true
+echo '--- recent kernel NVIDIA records ---'
+dmesg 2>/dev/null | grep -Ei 'NVRM|Xid|GPU' | tail -n 80 || true
 REMOTE_DIAGNOSTIC
   then
     echo "compute_node_probe_failed=$batch_host"
