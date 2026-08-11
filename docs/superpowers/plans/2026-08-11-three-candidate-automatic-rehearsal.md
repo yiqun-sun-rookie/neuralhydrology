@@ -67,7 +67,7 @@
 - [x] **Step 1: Run the new focused tests locally.**
 - [x] **Step 2: Run existing candidate and workflow regression tests locally.**
 - [x] **Step 3: Review the diff for sealed-evaluation, scoring-service, and sandbox changes; require none.**
-- [ ] **Step 4: Commit and push the verified source so the cluster can fetch the exact revision.**
+- [x] **Step 4: Commit and push the verified source so the cluster can fetch the exact revision.**
 
 ### Task 4: Execute one cluster rehearsal
 
@@ -79,10 +79,10 @@
 - Consumes: the previously verified eight-basin development package and exact source commit.
 - Produces: one Slurm job containing the twelve registered candidate processes and independent evidence checks.
 
-- [ ] **Step 1: Verify the source revision, package manifest, eight-basin count, allowed dates, and absent output root before submission.**
-- [ ] **Step 2: Submit one central-processing-unit Slurm job; run all three candidates sequentially under independent resource monitoring.**
-- [ ] **Step 3: Run the complete unified-auto-research test suite on the cluster snapshot.**
-- [ ] **Step 4: Stop without retry if the job or any restricted runtime fails.**
+- [x] **Step 1: Verify the source revision, package manifest, eight-basin count, allowed dates, and absent output root before submission.**
+- [x] **Step 2: Submit one central-processing-unit Slurm job; run all three candidates sequentially under independent resource monitoring.**
+- [x] **Step 3: Run the complete unified-auto-research test suite on the cluster snapshot.**
+- [x] **Step 4: Stop after the first packaging failure; retry only after the user's explicit repair instruction, with one changed infrastructure factor and a new output root.**
 
 ### Task 5: Independently verify and report the promotion decision
 
@@ -94,8 +94,23 @@
 - Consumes: raw runtime results, access logs, predictions, development scores, and proposal registry.
 - Produces: a GO or HOLD decision for this rehearsal and, at most, one candidate proposed for a later 64-basin validation.
 
-- [ ] **Step 1: Independently recount three candidates, twelve runtimes, six score reports, and forty-eight candidate-protocol-basin metrics.**
-- [ ] **Step 2: Independently require process and normalized exit codes zero, output contracts complete, and denied-event count zero for every runtime.**
-- [ ] **Step 3: Recompute the preregistered development ranking from raw score reports and compare it with the loop recommendation.**
-- [ ] **Step 4: Hash every attempt artifact and verify the manifest.**
-- [ ] **Step 5: Report the exact limitation: this proves closed-loop operation, not scientific novelty or baseline superiority.**
+- [x] **Step 1: Independently recount three candidates, twelve runtimes, six score reports, and forty-eight candidate-protocol-basin metrics.**
+- [x] **Step 2: Independently require process and normalized exit codes zero, output contracts complete, and denied-event count zero for every runtime.**
+- [x] **Step 3: Recompute the preregistered development ranking from raw score reports and compare it with the loop recommendation.**
+- [x] **Step 4: Hash every attempt artifact and verify the manifest.**
+- [x] **Step 5: Report the exact limitation: this proves closed-loop operation, not scientific novelty or baseline superiority.**
+
+## Verified Outcome
+
+- Source commit: `65b31c823e5368e202215cf1c4d9d52a286a547c`.
+- First cluster job `202551` stopped before tests because Git archive conversion changed two frozen files from CRLF to LF bytes. Its failed root remains preserved.
+- The user then explicitly requested repair. The only changed retry factor was snapshot serialization: the replacement payload retained the preregistered Windows bytes and hashes of the static-attribute table and basin list.
+- Retry job `202556` completed on `icn201` with exit code `0:0` in 10 minutes 52 seconds.
+- Complete Linux test gate: 299 collected, 291 passed, 8 skipped, 0 failed, 0 errors.
+- Experimental cardinality: 3 candidates, 12 registered train/predict runtimes, 6 score reports, 48 protocol-basin metrics, and 24 two-protocol basin cells.
+- All 12 process exit codes and normalized exit codes were zero; all 12 required-output contracts were complete; independently counted denied events were zero.
+- Independently recomputed median two-protocol development Nash-Sutcliffe efficiencies were `0.33826309576997576` for HBV-lite, `0.0504941725368995` for fusion, and `-0.17988407821406893` for the multilayer perceptron.
+- Development-only recommendation: `hbv-lite-calibrated-v1`. This is only a recommendation for a later 64-basin validation, not a baseline-outperformance or scientific-novelty claim.
+- Evidence root: `/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59`.
+- Evidence summary SHA-256: `7bb8d23ea03b0cffc0390c4fb6993fd2f6449cc65a47d1674771971a241a723e`.
+- Complete 810-entry manifest SHA-256: `c000f729125676a4adc7a2097f38bacda4873a5fa10dcbafc13082734abd5a46`; independent `sha256sum -c` verification passed.
