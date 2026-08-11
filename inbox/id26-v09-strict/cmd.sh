@@ -1,5 +1,5 @@
 #!/bin/bash
-# id26-v09-strict seq=57 : transfer the audit commit from the local mailbox object store and submit attempt 02 once.
+# id26-v09-strict seq=58 : select the configured Git first, then transfer the audit commit locally and submit attempt 02 once.
 set -euo pipefail
 export LC_ALL=C
 ROOT=/data1/home/sunyiq/v09_strict
@@ -12,9 +12,9 @@ OLD_JOBID_FILE=$AUDIT_PARENT/training_audit_jobid.txt
 NEW_JOBID_FILE=$AUDIT_PARENT/training_audit_attempt_02_jobid.txt
 REPORT=$FORMAL_ROOT/training_external_audit.json
 COMMIT=ac258afd31d835d93137da8961dc1206a1ee844c
+export PATH=$ROOT/gitenv/bin:$PATH
 SCRIPT_DIR=${BASH_SOURCE[0]%/*}
 MAILBOX_REPO=$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel)
-export PATH=$ROOT/gitenv/bin:$PATH
 
 echo "=== A PRESERVED EVIDENCE ==="
 OLD_JID=$(tr -d '[:space:]' < "$OLD_JOBID_FILE")
