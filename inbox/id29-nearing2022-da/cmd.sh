@@ -1,6 +1,8 @@
 #!/bin/bash
-# ID29 seq=264: read-only post-release verification for recovered job 202214.
-set -euo pipefail
+# ID29 seq=265: execute the frozen read-only matrix health audit after job 202214 recovery.
+set -eo pipefail
+
+if false; then
 
 ROOT='/data1/home/sunyiq/nearing2022_da'
 JOB_ID=202214
@@ -392,6 +394,7 @@ date --iso-8601=seconds
 echo 'read_only=true'
 exit 0
 
+fi
 ROOT=/data1/home/sunyiq/nearing2022_da
 IDEA="$ROOT/src/29_nearing2022_da_ar"
 REGISTRY="$IDEA/registry"
