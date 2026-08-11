@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=176: read-only 30-minute matrix and replacement-audit refresh.
+# ID29 seq=177: read-only matrix refresh and server-side output-target audit.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -97,6 +97,131 @@ print(json.dumps({
     'hyperparameter_complete': hyper_done,
     'hyperparameter_total': len(hyper),
 }, sort_keys=True))
+PY
+
+echo "=== SERVER OUTPUT-TARGET AUDIT ==="
+python - <<'PY'
+import hashlib
+import json
+from pathlib import Path
+
+import pandas as pd
+import yaml
+
+root = Path('/data1/home/sunyiq/nearing2022_da')
+registry = root / 'src/29_nearing2022_da_ar/registry'
+training_path = registry / 'experiment_registry.csv'
+evaluation_path = registry / 'evaluation_registry.csv'
+hyper_path = registry / 'assimilation_hyperparameter_registry.csv'
+training = pd.read_csv(training_path, keep_default_na=False, dtype=str).set_index('exp_id')
+evaluations = pd.read_csv(evaluation_path, keep_default_na=False, dtype=str)
+hyper = pd.read_csv(hyper_path, keep_default_na=False, dtype=str)
+
+
+def file_record(path):
+    payload = path.read_bytes()
+    return {'path': str(path.relative_to(root)), 'bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest()}
+
+
+literal_dirs = evaluations['run_dir'].astype(str).str.replace('\\', '/', regex=False).tolist()
+direct = evaluations[evaluations['family'].isin({'basin_simulation', 'basin_autoregression'})]
+source_rows = training.loc[direct['source_exp_id']]
+runtime_patterns = []
+for row in source_rows.itertuples():
+    config = yaml.safe_load((root / row.config_path).read_text(encoding='utf-8'))
+    runtime_patterns.append(
+        str(config['run_dir']).replace('\\', '/').rstrip('/') + '/' + str(config['experiment_name']) + '_*_ep30'
+    )
+
+logical_evaluation_targets = []
+for row in evaluations.itertuples():
+    if row.family in {'basin_simulation', 'basin_autoregression'}:
+        value = str(training.loc[row.source_exp_id, 'run_dir'])
+    else:
+        value = str(row.run_dir)
+    logical_evaluation_targets.append(value.replace('\\', '/'))
+logical_all_targets = logical_evaluation_targets + hyper['run_dir'].astype(str).str.replace('\\', '/', regex=False).tolist()
+
+payload = {
+    'registries': [file_record(training_path), file_record(evaluation_path), file_record(hyper_path)],
+    'training_rows': len(training),
+    'training_unique_registered_run_dirs': training['run_dir'].nunique(),
+    'evaluation_rows': len(evaluations),
+    'evaluation_literal_unique_run_dirs': len(set(literal_dirs)),
+    'evaluation_literal_duplicate_groups': sum(count > 1 for count in pd.Series(literal_dirs).value_counts()),
+    'direct_basin_rows': len(direct),
+    'direct_unique_source_exp_ids': direct['source_exp_id'].nunique(),
+    'direct_unique_source_config_paths': source_rows['config_path'].nunique(),
+    'direct_unique_registered_source_run_dirs': source_rows['run_dir'].nunique(),
+    'direct_unique_runtime_patterns': len(set(runtime_patterns)),
+    'resolved_evaluation_targets': len(logical_evaluation_targets),
+    'resolved_unique_evaluation_targets': len(set(logical_evaluation_targets)),
+    'resolved_casefold_unique_evaluation_targets': len({item.casefold() for item in logical_evaluation_targets}),
+    'evaluation_plus_hyperparameter_targets': len(logical_all_targets),
+    'unique_evaluation_plus_hyperparameter_targets': len(set(logical_all_targets)),
+    'casefold_unique_evaluation_plus_hyperparameter_targets': len({item.casefold() for item in logical_all_targets}),
+}
+assert payload['training_rows'] == payload['training_unique_registered_run_dirs'] == 46
+assert payload['evaluation_rows'] == 180
+assert payload['evaluation_literal_unique_run_dirs'] == 162
+assert payload['evaluation_literal_duplicate_groups'] == 2
+assert payload['direct_basin_rows'] == 20
+assert payload['direct_unique_source_exp_ids'] == 20
+assert payload['direct_unique_source_config_paths'] == 20
+assert payload['direct_unique_registered_source_run_dirs'] == 20
+assert payload['direct_unique_runtime_patterns'] == 20
+assert payload['resolved_evaluation_targets'] == payload['resolved_unique_evaluation_targets'] == 180
+assert payload['resolved_casefold_unique_evaluation_targets'] == 180
+assert payload['evaluation_plus_hyperparameter_targets'] == payload['unique_evaluation_plus_hyperparameter_targets'] == 840
+assert payload['casefold_unique_evaluation_plus_hyperparameter_targets'] == 840
+expected_hashes = {
+    'src/29_nearing2022_da_ar/registry/experiment_registry.csv':
+        '6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64',
+    'src/29_nearing2022_da_ar/registry/evaluation_registry.csv':
+        '37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215',
+    'src/29_nearing2022_da_ar/registry/assimilation_hyperparameter_registry.csv':
+        '7cb7f10ce13c41c1b064148b27a707ccaab56f87fa40c289d6833bc7c57b09a7',
+}
+assert {row['path']: row['sha256'] for row in payload['registries']} == expected_hashes
+print(json.dumps(payload, sort_keys=True))
+PY
+
+echo "=== DIRECT-EVALUATION JOB PAYLOAD ==="
+python - <<'PY'
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+root = Path('/data1/home/sunyiq/nearing2022_da')
+live_script = root / 'src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm'
+live_prepare = root / 'src/29_nearing2022_da_ar/scripts/prepare_evaluation_run.py'
+record = subprocess.run(
+    ['scontrol', 'show', 'job', '-dd', '-o', '202238'], check=True, capture_output=True, text=True,
+).stdout.strip()
+spooled = subprocess.run(
+    ['scontrol', 'write', 'batch_script', '202238', '/dev/stdout'], capture_output=True, text=True,
+)
+markers = ['prepare_evaluation_run.py', 'SKIPPED_COMPLETED', 'python -m neuralhydrology.nh_run evaluate']
+payload = {
+    'job_id': '202238',
+    'job_record_contains_expected_command': str(live_script) in record,
+    'job_record_contains_expected_batch_file': 'basin_direct_evaluation_batch.txt' in record,
+    'spooled_script_retrieval_returncode': spooled.returncode,
+    'spooled_script_bytes': len(spooled.stdout.encode()),
+    'spooled_script_sha256': hashlib.sha256(spooled.stdout.encode()).hexdigest() if spooled.stdout else None,
+    'spooled_script_markers': {marker: marker in spooled.stdout for marker in markers},
+    'live_script_sha256': hashlib.sha256(live_script.read_bytes()).hexdigest(),
+    'live_prepare_sha256': hashlib.sha256(live_prepare.read_bytes()).hexdigest(),
+}
+assert payload['job_record_contains_expected_command']
+assert payload['job_record_contains_expected_batch_file']
+assert payload['live_prepare_sha256'] == '6e47896c2b3011fe8e93a561f7545397d5a4ddee70b09b38a520f08530646ccf'
+if spooled.returncode == 0:
+    assert all(payload['spooled_script_markers'].values())
+print(json.dumps(payload, sort_keys=True))
+if spooled.returncode != 0:
+    print(json.dumps({'spooled_script_retrieval_stderr': spooled.stderr.strip()}, sort_keys=True))
 PY
 
 echo "=== LIVE MAIN PROGRESS ==="
