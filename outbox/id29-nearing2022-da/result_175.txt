@@ -1,0 +1,642 @@
+### channel=id29-nearing2022-da seq=175
+### host=login4
+### started=2026-08-11T08:00:17+0800
+### ---------- output ----------
+{
+  "binding_type_counts": {
+    "evaluation:checkpoint_epoch030": 12,
+    "evaluation:evaluation_log": 12,
+    "evaluation:metrics": 12,
+    "evaluation:prediction": 12,
+    "evaluation:reference_metrics": 1,
+    "evaluation:reference_prediction": 1,
+    "evaluation:run_config": 12,
+    "provenance:provenance": 4,
+    "registry:registry": 2,
+    "training:checkpoint_epoch030": 1,
+    "training:run_config": 1,
+    "training:training_log": 1
+  },
+  "coverage": [
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:run_config"
+      ],
+      "bytes": 2842,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/config.yml",
+      "sha256": "f012a327c92ef5b32c055e8876ddcc5ab61a1beb51bb330c678bb50dc0202651"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030"
+      ],
+      "bytes": 1228165,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/model_epoch030.pt",
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:evaluation_log"
+      ],
+      "bytes": 786,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/output.log",
+      "sha256": "e9e39e81697ba04006a766ec4c143bdcdbf7b98a117894a55770d86e7608fd50"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 72247,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/test/model_epoch030/test_metrics_data_assimilation.csv",
+      "sha256": "f65815578086cb70cd5bd4d745b1ba530bb6cdda9a26a5618ee5f8b7894e9057"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 47014459,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE025-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "sha256": "5da8cb5f19ea80a56aa4ccf0343443fdffacaa297e6681f9ba4d8ea835225c3a"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:run_config"
+      ],
+      "bytes": 2841,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/config.yml",
+      "sha256": "ed08472a47c69bb16549eb5892b8acf8cb166a3d34463c5bcbf46be0fa69c980"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030"
+      ],
+      "bytes": 1228165,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/model_epoch030.pt",
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:evaluation_log"
+      ],
+      "bytes": 786,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/output.log",
+      "sha256": "2d6c01f71c90adf47d4b52b49a303ac47b67f00ae73b1c173593c7801d9e270f"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 68317,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/test/model_epoch030/test_metrics_data_assimilation.csv",
+      "sha256": "17dbbe5581d433b8eba4a2338241c998ec37e4fd7c469e3ab247f3ac8db3bb3f"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 47013979,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE050-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "sha256": "7cc940008b3b3f091125e018d865f61e4beaca8e2f2d07474f1a64fbb37a8cd6"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:run_config"
+      ],
+      "bytes": 2842,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE075-S0/config.yml",
+      "sha256": "d5b78baebca6b906b13ac206ba722411bd76084370bb7b8d374ebb8dc91edf9b"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030"
+      ],
+      "bytes": 1228165,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE075-S0/model_epoch030.pt",
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:evaluation_log"
+      ],
+      "bytes": 786,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE075-S0/output.log",
+      "sha256": "8b98e7e2e224274da28beda917fea0dca44136976883468b001972c167f7da42"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 60947,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE075-S0/test/model_epoch030/test_metrics_data_assimilation.csv",
+      "sha256": "963a0ae76cda56d4e4a32d68de63284abebfe4b65d25253acda76d60e138d8c9"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 47009249,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE075-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "sha256": "66b2aec404686ef4bce852a68b905a192e89a1716732a2987fa9ff4b244df77d"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:run_config"
+      ],
+      "bytes": 2841,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE100-S0/config.yml",
+      "sha256": "86be5059f5a9315d03d0a1fc90fe52d82fae6a1a410be9518d54981713f875a7"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030"
+      ],
+      "bytes": 1228165,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE100-S0/model_epoch030.pt",
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:evaluation_log"
+      ],
+      "bytes": 91056,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE100-S0/output.log",
+      "sha256": "0016cf44e6e74ab16e8d99baffd801e11b7463a774ccb834894a73d6b12c69ff"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 8564,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE100-S0/test/model_epoch030/test_metrics_data_assimilation.csv",
+      "sha256": "905b6c0b949503c7b9bce8f667d0e2a3c3f33713a679761c41dfa11d0cfcc42a"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 46962314,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L01-TE100-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "sha256": "62d6bd178d9fd7d5484ec4bcc7633bd2d9aba5af4d30f5ec7fb9bc7aeb966b48"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:run_config"
+      ],
+      "bytes": 2841,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE000-S0/config.yml",
+      "sha256": "00c14c3d5da63a0febde994104b2b1b8794370f1908cc2a8149a0773fb2bb771"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030"
+      ],
+      "bytes": 1228165,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE000-S0/model_epoch030.pt",
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:evaluation_log"
+      ],
+      "bytes": 786,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE000-S0/output.log",
+      "sha256": "3ebb2cf8ab6780df34367913d23cf7b62cc6fec8cb02eb5c2ee54829b59d737e"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 73202,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE000-S0/test/model_epoch030/test_metrics_data_assimilation.csv",
+      "sha256": "4170f417a6eaf0fa1a23cc2cc339c97af514722c7f890be23323952a3846092c"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 47014459,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE000-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "sha256": "28b626e46acaf425ab35ae634e58bd368972437c4da16e074a08240af732fc68"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:run_config"
+      ],
+      "bytes": 2842,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE025-S0/config.yml",
+      "sha256": "1c4ff68cf282248eaf53af4a6e396f0ddce49e96e769432a04f2fb59933af41e"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030"
+      ],
+      "bytes": 1228165,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE025-S0/model_epoch030.pt",
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:evaluation_log"
+      ],
+      "bytes": 786,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE025-S0/output.log",
+      "sha256": "f442641cb110578b657d564d0e2673f09719ffdcb9ed38e40c4e0ecc45fd7c92"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 71519,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE025-S0/test/model_epoch030/test_metrics_data_assimilation.csv",
+      "sha256": "a67b977ebfff4234e3ec267b92c3eeadcfe6454257e67394a534f4064da4363e"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 47014459,
+      "path": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L02-TE025-S0/test/model_epoch030/test_results_data_assimilation.p",
+      "sha256": "d881c8a6e004445026e99a977ff5409be24de1a19965982036d7155f3341fe2c"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:run_config"
+      ],
+      "bytes": 2611,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/config.yml",
+      "sha256": "b1314b4c9b50df9d15463366e591972c79edb21371a2b5147b6c70c77e752662"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030"
+      ],
+      "bytes": 1236357,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/model_epoch030.pt",
+      "sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:evaluation_log"
+      ],
+      "bytes": 782,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/output.log",
+      "sha256": "c59094c305118bf1e05386747fa57a20a252cf0dd1c9392202d47008c2b12fac"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 73440,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/test/model_epoch030/test_metrics.csv",
+      "sha256": "efe5068e9560e41326a819df5316d0ca63e07e4351ecbf7b31e98972b006cd87"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 47014459,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE025-S0/test/model_epoch030/test_results.p",
+      "sha256": "b3bf5d57ecf3b20b3d5d380d32ecd3914df73044577cff0aba5e62990b0337cc"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:run_config"
+      ],
+      "bytes": 2610,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/config.yml",
+      "sha256": "37b3942cfca36f25da1c5f00aff7fac34cb8ccabdd4ab452d8ac0c5058d3967c"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030"
+      ],
+      "bytes": 1236357,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/model_epoch030.pt",
+      "sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:evaluation_log"
+      ],
+      "bytes": 782,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/output.log",
+      "sha256": "b73a1788d002aa8d7d14218c6214f5076894ffb412e803a683d1dd7101849c36"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 73225,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/test/model_epoch030/test_metrics.csv",
+      "sha256": "ed46ca782a0e4dae88aef5881af31268a569784580dea279c20bfae396297c07"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 47014459,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE050-S0/test/model_epoch030/test_results.p",
+      "sha256": "3c24dd7ea21b973853dce5a82135ab6105977bcbc64191ae581c6fc816374355"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:run_config"
+      ],
+      "bytes": 2611,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE075-S0/config.yml",
+      "sha256": "5e6e01985bec355ee50be9c298345fd03018326b96d66dadd122a64730296206"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030"
+      ],
+      "bytes": 1236357,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE075-S0/model_epoch030.pt",
+      "sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:evaluation_log"
+      ],
+      "bytes": 782,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE075-S0/output.log",
+      "sha256": "59cb41c38059b38d8e2dd12a67ce7a8d4ee707aee4511ba8aa819533a947930a"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 73202,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE075-S0/test/model_epoch030/test_metrics.csv",
+      "sha256": "c2e5cf59b7c75a2fbb73ab94d950aa221f102010f248cbc5816aa71f35caa095"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 47014459,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE075-S0/test/model_epoch030/test_results.p",
+      "sha256": "b242a81bafc9ab657f4d6f7feef800f7ddc2fb6a393595ada5b6bcb60a763b03"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:run_config"
+      ],
+      "bytes": 2610,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0/config.yml",
+      "sha256": "35d6e920965614421bfddc45ac5aeab09a8637f7df3b2d06d41a9c28ab30f5fa"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030"
+      ],
+      "bytes": 1236357,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0/model_epoch030.pt",
+      "sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:evaluation_log"
+      ],
+      "bytes": 782,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0/output.log",
+      "sha256": "5ea80501e20000af622c857c2e84dc9ab6e72c2df776e81380d85f44e5ad68c1"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 72951,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0/test/model_epoch030/test_metrics.csv",
+      "sha256": "1e18c74360b12e4181021a43aa9ce6af11ec145ef500789f889bd8333644c02f"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 47014459,
+      "path": "closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR000-TE100-S0/test/model_epoch030/test_results.p",
+      "sha256": "5d0f29c3df32d0e6073c4a58efbac6bc0a0ba6b23219dce13f2de143dca1b247"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:run_config"
+      ],
+      "bytes": 3658,
+      "path": "results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/config.yml",
+      "sha256": "00effd6c73be60392e965d70766f8c8ea556d0f127309ead4ea8bff6f125f1b6"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030"
+      ],
+      "bytes": 1228165,
+      "path": "results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/model_epoch030.pt",
+      "sha256": "763dc59eba85920a1f3091b957f704036f9b43fd55909d7e0c3f0873a7f709b9"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:evaluation_log"
+      ],
+      "bytes": 9582,
+      "path": "results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/output.log",
+      "sha256": "b6de621154ae0c2cc2e8f2d1d0ab9c0543b5efe3fe580737a829ecc944860449"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 73534,
+      "path": "results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics_data_assimilation.csv",
+      "sha256": "228d6ac3cf28ec67af8037fbfa02f325d0716aab894e75d212b9f6a1779ea2db"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 47014459,
+      "path": "results/29_nearing2022_da_ar/assimilation_lead_1_holdout_0.0_from_nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results_data_assimilation.p",
+      "sha256": "e87bc2ad3c93c3380c65c854834ddf982bd8fc1a8c2dca4d9e501d1bc4f928ef"
+    },
+    {
+      "binding_count": 2,
+      "binding_types": [
+        "evaluation:run_config",
+        "training:run_config"
+      ],
+      "bytes": 2640,
+      "path": "results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/config.yml",
+      "sha256": "504d16fdf4d5c2d138790694656dfaecf089d7852be63ef3efc22f4814cd8996"
+    },
+    {
+      "binding_count": 2,
+      "binding_types": [
+        "evaluation:checkpoint_epoch030",
+        "training:checkpoint_epoch030"
+      ],
+      "bytes": 1236357,
+      "path": "results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/model_epoch030.pt",
+      "sha256": "c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b"
+    },
+    {
+      "binding_count": 2,
+      "binding_types": [
+        "evaluation:evaluation_log",
+        "training:training_log"
+      ],
+      "bytes": 9337,
+      "path": "results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/output.log",
+      "sha256": "d8ef14a61da71a4200291160687d87d535d6b23310e15c6ab0291b83553b3a16"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:metrics"
+      ],
+      "bytes": 73638,
+      "path": "results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/test/model_epoch030/test_metrics.csv",
+      "sha256": "34245f470670174f64471aa68c6aa072f50aaad48376edf6ebdb63288aee9005"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "evaluation:prediction"
+      ],
+      "bytes": 47014459,
+      "path": "results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/test/model_epoch030/test_results.p",
+      "sha256": "33e321afb01aa37f13df2cdfbe9b561f0e8139d971d7efba842a43db8d6ea4f7"
+    },
+    {
+      "binding_count": 150,
+      "binding_types": [
+        "evaluation:reference_metrics"
+      ],
+      "bytes": 73071,
+      "path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv",
+      "sha256": "7411a6a0b77f10188858d3c6c4eab75bc59250131662d3a6c5333ebf18ee3c86"
+    },
+    {
+      "binding_count": 150,
+      "binding_types": [
+        "evaluation:reference_prediction"
+      ],
+      "bytes": 47014459,
+      "path": "results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+      "sha256": "cc90daf3d61d4c59ed033ba2fad99ae532e73c1e851c362bbea7ad45809ac221"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "provenance:provenance"
+      ],
+      "bytes": 4550899,
+      "path": "src/29_nearing2022_da_ar/reference/author_time_split_statistics.pkl",
+      "sha256": "74aac5b377973dc745336da1b1d6a22be3f03b3544b6ae85b4cede37106af0ee"
+    },
+    {
+      "binding_count": 1,
+      "binding_types": [
+        "provenance:provenance"
+      ],
+      "bytes": 1540,
+      "path": "src/29_nearing2022_da_ar/reference/reproduction_acceptance.json",
+      "sha256": "6125cab8935c3ad0ab498865c661c47ea83c837c7627dff2534ba5a5b9185895"
+    },
+    {
+      "binding_count": 2,
+      "binding_types": [
+        "provenance:provenance",
+        "registry:registry"
+      ],
+      "bytes": 73013,
+      "path": "src/29_nearing2022_da_ar/registry/evaluation_registry.csv",
+      "sha256": "37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215"
+    },
+    {
+      "binding_count": 2,
+      "binding_types": [
+        "provenance:provenance",
+        "registry:registry"
+      ],
+      "bytes": 36970,
+      "path": "src/29_nearing2022_da_ar/registry/experiment_registry.csv",
+      "sha256": "6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64"
+    }
+  ],
+  "final_manifest_preflight_complete": false,
+  "final_manifest_preflight_existing_artifact_count": 400,
+  "final_manifest_preflight_missing_role_count": 5489,
+  "manifest_written": false,
+  "registered_matrix_modified": false,
+  "registry_counts": {
+    "evaluations": 180,
+    "hyperparameters": 660,
+    "training": 46
+  },
+  "schema": "nearing2022-partial-source-final-manifest-coverage-v1",
+  "source_artifact_bytes_covered": 631590173,
+  "source_artifacts_checked": 66,
+  "source_artifacts_covered": 66,
+  "source_artifacts_missing_coverage": [],
+  "source_audit_bytes": 48848,
+  "source_audit_sha256": "672a679fe8a32fa30e7d4001fe0cb6e73a889d988171295745c60217aa5a64a1"
+}
+registered_matrix_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T08:00:27+0800
