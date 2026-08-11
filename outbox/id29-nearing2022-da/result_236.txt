@@ -1,0 +1,62 @@
+### channel=id29-nearing2022-da seq=236
+### host=login4
+### started=2026-08-12T00:01:00+0800
+### ---------- output ----------
+{
+  "added_coordinates": [
+    "N22-EVAL-TS-DA-L04-TE050-S0"
+  ],
+  "added_source_artifact_bytes": 48313492,
+  "added_source_artifacts": 5,
+  "audit_bytes": 71434,
+  "audit_sha256": "aa4459c76f15b894e67a97e26e15df707766ed1504d2b8ed24054d59c8a3318e",
+  "binding_type_counts": {
+    "evaluation:checkpoint_epoch030": 18,
+    "evaluation:evaluation_log": 18,
+    "evaluation:metrics": 18,
+    "evaluation:prediction": 18,
+    "evaluation:reference_metrics": 1,
+    "evaluation:reference_prediction": 1,
+    "evaluation:run_config": 18,
+    "provenance:provenance": 5,
+    "registry:registry": 2,
+    "training:checkpoint_epoch030": 1,
+    "training:run_config": 1,
+    "training:training_log": 1
+  },
+  "comparison_rows": 126,
+  "complete_coordinates": 18,
+  "coordinate_result_and_reference_bindings_verified": 36,
+  "final_manifest_preflight_complete": false,
+  "final_manifest_preflight_existing_artifact_count": 442,
+  "final_manifest_preflight_missing_role_count": 5457,
+  "frozen_acceptance_modified": false,
+  "manifest_written": false,
+  "mismatches": 0,
+  "predecessor_coordinates_identical": 17,
+  "predecessor_source_records_identical": 92,
+  "registered_matrix_modified": false,
+  "registry_counts": {
+    "evaluations": 180,
+    "hyperparameters": 660,
+    "training": 46
+  },
+  "role_snapshot_bytes": 2934,
+  "role_snapshot_sha256": "75dec8632647fc2504540da1eb2f742a1d547aff7c9a0f90a0c6128318ada9da",
+  "schema": "nearing2022-partial-source-rehash-and-final-manifest-coverage-v4",
+  "source_artifact_bytes_verified": 921460556,
+  "source_artifacts_covered": 97,
+  "source_artifacts_missing_coverage": [],
+  "source_artifacts_verified": 97,
+  "unique_source_hashes": 80
+}
+=== REPLACEMENT AND HELD-MANIFEST STATES ===
+202293|N22-manifest|PENDING|0:0|00:00:00|JobHeldUser
+202510|N22-data-port-v2|PENDING|0:0|00:00:00|Dependency
+202511|N22-mask-iso-v2|PENDING|0:0|00:00:00|Dependency
+manifest_written=false
+registered_matrix_modified=false
+frozen_acceptance_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-12T00:01:38+0800
