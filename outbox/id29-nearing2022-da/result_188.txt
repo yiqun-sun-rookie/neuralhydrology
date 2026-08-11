@@ -1,0 +1,18 @@
+### channel=id29-nearing2022-da seq=188
+### host=login4
+### started=2026-08-11T11:21:24+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-11T11:21:24+0800
+deployed_additively|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_replacement_verifier.slurm
+deployed_additively|/data1/home/sunyiq/nearing2022_da/test/test_nearing2022_replacement_verifier_slurm.py
+deployed_additively|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_slurm_preflight_20260811.json
+=== DEPLOYED HASHES AND STATIC SYNTAX ===
+ad013f8b8618d4762a092a0a0b28f92248a7c3c8dd6b00679e633055338c24a2  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_replacement_verifier.slurm
+c078681dbd82573c2ea2a5585cfe2fb3103fbfa5cf2449643317aea91ca9992c  /data1/home/sunyiq/nearing2022_da/test/test_nearing2022_replacement_verifier_slurm.py
+f537464bcfefe1899ebced35362526504ad8398af48b2260b2bb5833aa53c634  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_slurm_preflight_20260811.json
+=== FROZEN PAIR BOUNDARY ===
+sha256sum: /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py: No such file or directory
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-11T11:21:24+0800
