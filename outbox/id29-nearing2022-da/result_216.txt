@@ -1,0 +1,58 @@
+### channel=id29-nearing2022-da seq=216
+### host=login4
+### started=2026-08-11T19:32:17+0800
+### ---------- output ----------
+{
+  "already_matching": 0,
+  "core_missing_roles": 5467,
+  "core_vs_complete_extras_missing_set_identical": true,
+  "deployed": 2,
+  "entries": [
+    {
+      "action": "deployed_additively",
+      "bytes": 183,
+      "path": "requirements-gpu.txt",
+      "sha256": "fda6511f52ecb74d81b28fd4082d2326b2686f019558932276edf544cb593e23"
+    },
+    {
+      "action": "deployed_additively",
+      "bytes": 123,
+      "path": "setup.cfg",
+      "sha256": "762b42fcd4c93bbe04edd8dcd96fb612e26bb97313f4172e5182ce4a3d5ce539"
+    }
+  ],
+  "evaluation_complete": 16,
+  "existing_extra_files": 295,
+  "files": 2,
+  "final_manifest_generated": false,
+  "hyperparameter_complete": 0,
+  "immediate_repeated_core_audits_identical": true,
+  "mailbox_seq": 216,
+  "missing_by_coordinate_type": {
+    "aggregation": 9,
+    "evaluation": 804,
+    "hyperparameter": 4620,
+    "training": 34
+  },
+  "missing_extra_files": [],
+  "missing_roles_with_requested_provenance": 5467,
+  "paired_runner_modified_or_deployed": false,
+  "registered_matrix_modified": false,
+  "requested_extra_files": 295,
+  "root": "/data1/home/sunyiq/nearing2022_da",
+  "schema": "nearing2022-static-final-provenance-deployment-v1",
+  "slurm_job_modified_or_submitted": false,
+  "status": "exact_static_provenance_present_and_audited",
+  "time_split_complete": 16,
+  "training_complete": 12
+}
+=== FROZEN STATES ===
+202510|N22-data-port-v2|PENDING|0:0|00:00:00|Dependency
+202511|N22-mask-iso-v2|PENDING|0:0|00:00:00|Dependency
+registered_matrix_modified=false
+paired_runner_modified_or_deployed=false
+slurm_job_modified_or_submitted=false
+final_manifest_generated=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T19:32:59+0800
