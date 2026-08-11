@@ -1,33 +1,49 @@
 #!/bin/bash
-# id26-v09-strict seq=52 : locate all resource and determinism preflight evidence.
+# id26-v09-strict seq=53 : create the isolated audit checkout and submit the 24-run audit.
+set -euo pipefail
 export LC_ALL=C
-BASE=/data1/home/sunyiq/v09_strict
-export BASE
-find "$BASE" -maxdepth 9 -type f \( -iname '*preflight*.json' -o -iname '*resource*.json' \) -printf '%P\n'
-python - <<'PY'
-import json
-import os
-from pathlib import Path
+ROOT=/data1/home/sunyiq/v09_strict
+AUDIT_PARENT=$ROOT/audit_v09
+AUDIT_REPO=$AUDIT_PARENT/neuralhydrology
+TRAIN_REPO=$ROOT/codetest/neuralhydrology
+STRICT_REPO=$ROOT/neuralhydrology
+COMMIT=31ff9ebe3814e088fd623b836f4a802ddab856cd
+BRANCH=codex/historical-band-experts-pilot
+REMOTE=https://github.com/yiqun-sun-rookie/neuralhydrology.git
+JOBID_FILE=$AUDIT_PARENT/training_audit_jobid.txt
+export PATH=$ROOT/gitenv/bin:$PATH
 
-root = Path(os.environ["BASE"])
-rows = []
-for path in root.rglob("*.json"):
-    lowered = path.name.lower()
-    if "preflight" not in lowered and "resource" not in lowered:
-        continue
-    try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-        rows.append({
-            "path": path.relative_to(root).as_posix(),
-            "schema": value.get("schema"),
-            "status": value.get("status"),
-            "device": value.get("device"),
-            "workload_count": value.get("workload_count"),
-            "opened_formal_inputs": value.get("opened_formal_inputs"),
-            "wrote_formal_outputs": value.get("wrote_formal_outputs"),
-            "top_level_keys": sorted(value),
-        })
-    except Exception as exc:
-        rows.append({"path": path.relative_to(root).as_posix(), "parse_error": str(exc)})
-print(json.dumps({"preflight_reports": rows}, indent=2, sort_keys=True))
-PY
+echo "=== A FROZEN CHECKOUTS ==="
+echo "training_head=$(git -C "$TRAIN_REPO" rev-parse HEAD)"
+echo "strict_head=$(git -C "$STRICT_REPO" rev-parse HEAD)"
+test "$(git -C "$TRAIN_REPO" rev-parse HEAD)" = bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
+test "$(git -C "$STRICT_REPO" rev-parse HEAD)" = f94183209bf44ed6e672e1c23f98020905804e6d
+
+echo "=== B ISOLATED AUDIT CHECKOUT ==="
+mkdir -p "$AUDIT_PARENT"
+if [ -e "$AUDIT_REPO" ]; then
+  test -d "$AUDIT_REPO/.git"
+  test -z "$(git -C "$AUDIT_REPO" status --porcelain --untracked-files=all)"
+else
+  git clone -q --no-checkout "$REMOTE" "$AUDIT_REPO"
+fi
+git -C "$AUDIT_REPO" fetch -q origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH"
+test "$(git -C "$AUDIT_REPO" rev-parse "refs/remotes/origin/$BRANCH")" = "$COMMIT"
+git -C "$AUDIT_REPO" checkout -q --detach "$COMMIT"
+test "$(git -C "$AUDIT_REPO" rev-parse HEAD)" = "$COMMIT"
+test -z "$(git -C "$AUDIT_REPO" status --porcelain --untracked-files=all)"
+echo "audit_head=$(git -C "$AUDIT_REPO" rev-parse HEAD)"
+
+echo "=== C AUDIT PRECONDITIONS ==="
+FORMAL_ROOT=$TRAIN_REPO/results/26_historical_band_experts/formal_v09
+test ! -e "$FORMAL_ROOT/training_external_audit.json"
+test ! -e "$FORMAL_ROOT/state_diagnostics"
+test ! -e "$JOBID_FILE"
+test -f "$AUDIT_REPO/src/26_historical_band_experts/hpc/audit_formal_training_v09.slurm"
+
+echo "=== D SUBMIT TRAINING AUDIT ==="
+JID=$(sbatch --parsable "$AUDIT_REPO/src/26_historical_band_experts/hpc/audit_formal_training_v09.slurm")
+printf '%s\n' "$JID" > "$JOBID_FILE"
+echo "TRAINING_AUDIT_JOBID=$JID"
+squeue -j "$JID" -o '%.12i %.18j %.10T %.12M %.24R'
+echo "=== END ==="
