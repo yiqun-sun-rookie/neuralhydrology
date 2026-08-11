@@ -1,0 +1,52 @@
+### channel=id17-film-gate seq=26
+### host=login4
+### started=2026-08-11T13:43:47+0800
+### ---------- output ----------
+=== A. PARSE VALIDATION CURVES FROM TRAINING LOGS (all 107 val basins, logged every 5 ep) ===
+gate_ea_fold0_seed0: val@10=0.59974 val@20=0.5899 val@30=0.56391 -> SELECT ep10
+gate_ea_fold0_seed1: val@10=0.6679 val@20=0.6627 val@30=0.53934 -> SELECT ep10
+gate_ea_fold1_seed0: val@10=0.57763 val@20=0.59067 val@30=0.56403 -> SELECT ep20
+gate_ea_fold1_seed1: val@10=0.6193 val@20=0.5714 val@30=0.61117 -> SELECT ep10
+gate_ea_fold2_seed0: val@10=0.59201 val@20=0.59019 val@30=0.54444 -> SELECT ep10
+gate_ea_fold2_seed1: val@10=0.57212 val@20=0.52498 val@30=0.55621 -> SELECT ep10
+gate_ea_fold3_seed0: val@10=0.6089 val@20=0.60352 val@30=0.55123 -> SELECT ep10
+gate_ea_fold3_seed1: val@10=0.66117 val@20=0.65452 val@30=0.66873 -> SELECT ep30
+gate_ea_fold4_seed0: val@10=0.60487 val@20=0.57031 val@30=0.54992 -> SELECT ep10
+gate_ea_fold4_seed1: val@10=0.59064 val@20=0.5983 val@30=0.57717 -> SELECT ep20
+gate_film_fold0_seed0: val@10=0.62954 val@20=0.6275 val@30=0.62772 -> SELECT ep10
+gate_film_fold0_seed1: val@10=0.64406 val@20=0.67393 val@30=0.63745 -> SELECT ep20
+gate_film_fold1_seed0: val@10=0.60697 val@20=0.5664 val@30=0.59176 -> SELECT ep10
+gate_film_fold1_seed1: val@10=0.55207 val@20=0.57179 val@30=0.58391 -> SELECT ep30
+gate_film_fold2_seed0: val@10=0.60277 val@20=0.53861 val@30=0.50478 -> SELECT ep10
+gate_film_fold2_seed1: val@10=0.61205 val@20=0.60469 val@30=0.55779 -> SELECT ep10
+gate_film_fold3_seed0: val@10=0.68161 val@20=0.67111 val@30=0.64966 -> SELECT ep10
+gate_film_fold3_seed1: val@10=0.6763 val@20=0.6608 val@30=0.66133 -> SELECT ep10
+gate_film_fold4_seed0: val@10=0.60349 val@20=0.62809 val@30=0.60672 -> SELECT ep20
+gate_film_fold4_seed1: val@10=0.57844 val@20=0.58946 val@30=0.58251 -> SELECT ep20
+
+cells needing a test eval at selected epoch: 13
+  runs/gate_ea_fold0_seed0_2026_0808_1821_ep30 @ ep10
+  runs/gate_ea_fold0_seed1_2026_0808_1820_ep30 @ ep10
+  runs/gate_ea_fold1_seed1_2026_0808_1920_ep30 @ ep10
+  runs/gate_ea_fold2_seed0_2026_0809_0744_ep30 @ ep10
+  runs/gate_ea_fold2_seed1_2026_0809_0929_ep30 @ ep10
+  runs/gate_ea_fold3_seed0_2026_0809_1002_ep30 @ ep10
+  runs/gate_ea_fold4_seed0_2026_0809_2333_ep30 @ ep10
+  runs/gate_film_fold0_seed0_2026_0808_1818_ep30 @ ep10
+  runs/gate_film_fold1_seed0_2026_0808_1915_ep30 @ ep10
+  runs/gate_film_fold2_seed0_2026_0809_0925_ep30 @ ep10
+  runs/gate_film_fold2_seed1_2026_0809_0937_ep30 @ ep10
+  runs/gate_film_fold3_seed0_2026_0809_1153_ep30 @ ep10
+  runs/gate_film_fold3_seed1_2026_0809_1251_ep30 @ ep10
+=== B. SUBMIT EVAL JOB IF NEEDED ===
+eval_jobid=202559
+=== C. SHIP PER-BASIN METRICS CSVs VIA OUTBOX ===
+shipped 40 csv files
+gate_ea_fold0_seed0_ep020.csv
+gate_ea_fold0_seed0_ep030.csv
+gate_ea_fold0_seed1_ep020.csv
+gate_ea_fold0_seed1_ep030.csv
+gate_ea_fold1_seed0_ep020.csv
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T13:43:50+0800
