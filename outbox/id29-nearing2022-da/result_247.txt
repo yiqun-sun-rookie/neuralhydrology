@@ -1,0 +1,62 @@
+### channel=id29-nearing2022-da seq=247
+### host=login4
+### started=2026-08-12T04:05:30+0800
+### ---------- output ----------
+{
+  "added_coordinates": [
+    "N22-EVAL-TS-DA-L04-TE075-S0"
+  ],
+  "added_source_artifact_bytes": 48302780,
+  "added_source_artifacts": 5,
+  "audit_bytes": 75160,
+  "audit_sha256": "2c02a4c6a67f657775cc0938aa248c5737cea2d7d3c02a3082d8498ce2f3869f",
+  "binding_type_counts": {
+    "evaluation:checkpoint_epoch030": 19,
+    "evaluation:evaluation_log": 19,
+    "evaluation:metrics": 19,
+    "evaluation:prediction": 19,
+    "evaluation:reference_metrics": 1,
+    "evaluation:reference_prediction": 1,
+    "evaluation:run_config": 19,
+    "provenance:provenance": 5,
+    "registry:registry": 2,
+    "training:checkpoint_epoch030": 1,
+    "training:run_config": 1,
+    "training:training_log": 1
+  },
+  "comparison_rows": 133,
+  "complete_coordinates": 19,
+  "coordinate_result_and_reference_bindings_verified": 38,
+  "final_manifest_preflight_complete": false,
+  "final_manifest_preflight_existing_artifact_count": 465,
+  "final_manifest_preflight_missing_role_count": 5444,
+  "frozen_acceptance_modified": false,
+  "manifest_written": false,
+  "mismatches": 0,
+  "predecessor_coordinates_identical": 18,
+  "predecessor_source_records_identical": 97,
+  "registered_matrix_modified": false,
+  "registry_counts": {
+    "evaluations": 180,
+    "hyperparameters": 660,
+    "training": 46
+  },
+  "role_snapshot_bytes": 2934,
+  "role_snapshot_sha256": "74ed2acb8f59a6d51f561081581b9bcbbd0d7af831789a74d2580d63a812eeee",
+  "schema": "nearing2022-partial-source-rehash-and-final-manifest-coverage-v5",
+  "source_artifact_bytes_verified": 969763336,
+  "source_artifacts_covered": 102,
+  "source_artifacts_missing_coverage": [],
+  "source_artifacts_verified": 102,
+  "unique_source_hashes": 84
+}
+=== REPLACEMENT AND HELD-MANIFEST STATES ===
+202293|N22-manifest|PENDING|0:0|00:00:00|JobHeldUser
+202510|N22-data-port-v2|PENDING|0:0|00:00:00|Dependency
+202511|N22-mask-iso-v2|PENDING|0:0|00:00:00|Dependency
+manifest_written=false
+registered_matrix_modified=false
+frozen_acceptance_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-12T04:05:47+0800
