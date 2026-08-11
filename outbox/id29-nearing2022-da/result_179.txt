@@ -1,0 +1,14 @@
+### channel=id29-nearing2022-da seq=179
+### host=login4
+### started=2026-08-11T09:01:21+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-11T09:01:21+0800
+=== LIVE DOWNSTREAM DEPENDENCY GRAPH ===
+202238|PENDING|Dependency|afterok:202216_*|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+202229|PENDING|Dependency|afterok:202222_*,afterok:202226_*,afterok:202216_*,afterok:202238_*,afterok:202227_*|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+202230|PENDING|Dependency|afterok:202228_*,afterok:202238_*|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+slurm_load_jobs error: Invalid job id specified
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-11T09:01:21+0800
