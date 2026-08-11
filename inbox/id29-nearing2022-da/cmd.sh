@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=256: read-only diagnostic for no visible progress in training job 202214.
+# ID29 seq=257: read-only compute-node and checkpoint diagnostic for stalled training job 202214.
 set -eo pipefail
 
 export LC_ALL=C
@@ -32,6 +32,36 @@ if [[ -n "$batch_host" && "$batch_host" != '(null)' ]]; then
   scontrol show node -o "$batch_host" || true
 fi
 
+echo '=== COMPUTE-NODE PROCESS AND GPU RECORDS ==='
+if [[ -n "$batch_host" && "$batch_host" != '(null)' ]]; then
+  if ! timeout 30 ssh -o BatchMode=yes -o ConnectTimeout=10 "$batch_host" bash -s -- "$JOB_ID" <<'REMOTE_DIAGNOSTIC'
+set -uo pipefail
+job_id="$1"
+echo '--- listpids ---'
+scontrol listpids "$job_id" || true
+echo '--- user process table ---'
+ps -u "$USER" -o pid=,ppid=,lstart=,etime=,state=,pcpu=,pmem=,wchan:32=,args= --sort=pid || true
+echo '--- gpu devices ---'
+nvidia-smi \
+  --query-gpu=index,uuid,utilization.gpu,utilization.memory,memory.used,memory.total,pstate,temperature.gpu \
+  --format=csv,noheader,nounits || true
+echo '--- gpu compute processes ---'
+nvidia-smi --query-compute-apps=gpu_uuid,pid,process_name,used_gpu_memory \
+  --format=csv,noheader,nounits || true
+REMOTE_DIAGNOSTIC
+  then
+    echo "compute_node_probe_failed=$batch_host"
+  fi
+fi
+
+echo '=== RUN-DIRECTORY CHECKPOINT RECORDS ==='
+run_dir='/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30'
+if [[ -d "$run_dir" ]]; then
+  find "$run_dir" -maxdepth 2 -type f -printf '%T@|%s|%p\n' | sort -n | tail -n 80
+else
+  echo "run_dir_missing=$run_dir"
+fi
+
 echo '=== LOG METADATA SNAPSHOT 1 ==='
 if [[ -f "$stdout_path" ]]; then
   stat -c 'stdout|%n|bytes=%s|mtime=%y|mtime_epoch=%Y|inode=%i' "$stdout_path"
@@ -62,7 +92,7 @@ if [[ -f "$stdout_path" ]]; then
   echo "stdout_size_delta_15s=$((stdout_size_after - stdout_size_before))"
   echo "stdout_mtime_delta_15s=$((stdout_mtime_after - stdout_mtime_before))"
   echo '=== STDOUT TAIL ==='
-  tail -n 120 "$stdout_path"
+  tail -c 65536 "$stdout_path" | tr '\r' '\n' | tail -n 120
 fi
 if [[ -f "$stderr_path" ]]; then
   stat -c 'stderr|%n|bytes=%s|mtime=%y|mtime_epoch=%Y|inode=%i' "$stderr_path"
