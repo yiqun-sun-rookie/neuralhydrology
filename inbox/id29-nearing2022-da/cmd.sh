@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=209: diagnose the seq207/208 two-role preflight-count delta without writes.
+# ID29 seq=210: distinguish core-role and final-provenance missing counts without writes.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -79,11 +79,24 @@ extra_files = [
     root / 'setup.cfg',
     root / 'requirements-gpu.txt',
 ]
-if any(not path.is_file() for path in extra_files):
-    raise ValueError('An enumerated provenance extra file disappeared')
-with_extras = run(extra_files)
-if missing_signature(first) != missing_signature(with_extras):
-    raise ValueError('Existing provenance extras changed the registered-role missing set')
+existing_extra_files = [path for path in extra_files if path.is_file()]
+missing_extra_files = [path for path in extra_files if not path.is_file()]
+with_existing_extras = run(existing_extra_files)
+if missing_signature(first) != missing_signature(with_existing_extras):
+    raise ValueError('Existing provenance extras changed the core registered-role missing set')
+with_requested_extras = run(extra_files)
+core_signature = set(missing_signature(first))
+requested_signature = set(missing_signature(with_requested_extras))
+extra_only = sorted(requested_signature - core_signature)
+if core_signature - requested_signature:
+    raise ValueError('Requested provenance extras removed a core missing-role record')
+actual_extra_paths = sorted(row[3] for row in extra_only)
+expected_extra_paths = sorted(str(path.resolve()) for path in missing_extra_files)
+if actual_extra_paths != expected_extra_paths:
+    raise ValueError(
+        f'Provenance-only missing paths disagree: actual={actual_extra_paths}, '
+        f'expected={expected_extra_paths}'
+    )
 
 targets = [
     'N22-EVAL-TS-DA-L04-TE025-S0',
@@ -130,7 +143,7 @@ missing_evaluation_ids = {
 }
 complete_evaluation_ids = sorted(set(evaluations['eval_id']) - missing_evaluation_ids)
 print(json.dumps({
-    'schema': 'nearing2022-live-missing-role-delta-diagnostic-v1',
+    'schema': 'nearing2022-live-missing-role-delta-diagnostic-v2',
     'registry_counts': first['counts'],
     'registered_closure_complete': first['complete'],
     'missing_roles_total': len(first['missing']),
@@ -140,11 +153,19 @@ print(json.dumps({
     'evaluation_complete': len(complete_evaluation_ids),
     'time_split_complete': sum(eval_id.startswith('N22-EVAL-TS-') for eval_id in complete_evaluation_ids),
     'target_details': details,
-    'extra_files_checked': len(extra_files),
+    'requested_extra_files': len(extra_files),
+    'existing_extra_files': len(existing_extra_files),
+    'missing_extra_files': expected_extra_paths,
+    'missing_roles_with_requested_provenance': len(with_requested_extras['missing']),
+    'provenance_only_missing_roles': len(extra_only),
     'immediate_repeated_audits_identical': True,
-    'no_extra_vs_existing_extras_missing_set_identical': True,
-    'sequence_207_reported_missing_roles': 5467,
-    'sequence_208_reported_missing_roles': 5469,
+    'core_vs_existing_extras_missing_set_identical': True,
+    'requested_vs_core_delta_matches_missing_extra_files': True,
+    'sequence_207_reported_core_missing_roles': 5467,
+    'sequence_208_reported_final_preflight_missing_roles': 5469,
+    'historical_two_role_delta_explained': (
+        len(expected_extra_paths) == 2 and 5469 - 5467 == len(expected_extra_paths)
+    ),
     'registered_matrix_modified': False,
 }, indent=2, sort_keys=True))
 PY
