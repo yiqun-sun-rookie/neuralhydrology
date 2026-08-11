@@ -1,5 +1,5 @@
 #!/bin/bash
-# id26-v09-strict seq=56 : recover from the transient GitHub timeout and submit audit attempt 02 once.
+# id26-v09-strict seq=57 : transfer the audit commit from the local mailbox object store and submit attempt 02 once.
 set -euo pipefail
 export LC_ALL=C
 ROOT=/data1/home/sunyiq/v09_strict
@@ -12,7 +12,8 @@ OLD_JOBID_FILE=$AUDIT_PARENT/training_audit_jobid.txt
 NEW_JOBID_FILE=$AUDIT_PARENT/training_audit_attempt_02_jobid.txt
 REPORT=$FORMAL_ROOT/training_external_audit.json
 COMMIT=ac258afd31d835d93137da8961dc1206a1ee844c
-BRANCH=codex/historical-band-experts-pilot
+SCRIPT_DIR=${BASH_SOURCE[0]%/*}
+MAILBOX_REPO=$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel)
 export PATH=$ROOT/gitenv/bin:$PATH
 
 echo "=== A PRESERVED EVIDENCE ==="
@@ -33,16 +34,13 @@ echo "strict_head=$(git -C "$STRICT_REPO" rev-parse HEAD)"
 test "$(git -C "$TRAIN_REPO" rev-parse HEAD)" = bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
 test "$(git -C "$STRICT_REPO" rev-parse HEAD)" = f94183209bf44ed6e672e1c23f98020905804e6d
 
-echo "=== C RECOVER ISOLATED AUDIT CHECKOUT ==="
+echo "=== C LOCAL-ONLY AUDIT COMMIT TRANSFER ==="
+echo "mailbox_repo=$MAILBOX_REPO"
+git -C "$MAILBOX_REPO" cat-file -e "$COMMIT^{commit}"
 test "$(git -C "$AUDIT_REPO" rev-parse HEAD)" = 31ff9ebe3814e088fd623b836f4a802ddab856cd
 test -z "$(git -C "$AUDIT_REPO" status --porcelain --untracked-files=all)"
-if git -C "$AUDIT_REPO" cat-file -e "$COMMIT^{commit}" 2>/dev/null; then
-  echo "audit_commit_object=already_present"
-else
-  echo "audit_commit_object=fetch_required"
-  git -C "$AUDIT_REPO" fetch -q origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH"
-fi
-test "$(git -C "$AUDIT_REPO" rev-parse "$COMMIT")" = "$COMMIT"
+git -C "$AUDIT_REPO" fetch -q "$MAILBOX_REPO" "$COMMIT"
+test "$(git -C "$AUDIT_REPO" rev-parse FETCH_HEAD)" = "$COMMIT"
 git -C "$AUDIT_REPO" checkout -q --detach "$COMMIT"
 test "$(git -C "$AUDIT_REPO" rev-parse HEAD)" = "$COMMIT"
 test -z "$(git -C "$AUDIT_REPO" status --porcelain --untracked-files=all)"
