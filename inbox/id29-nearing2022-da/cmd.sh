@@ -1,23 +1,15 @@
 #!/bin/bash
-# ID29 seq=208: independently rehash and final-manifest-cover all 87 seq=205 audit sources.
+# ID29 seq=209: diagnose the seq207/208 two-role preflight-count delta without writes.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
 IDEA="$ROOT/src/29_nearing2022_da_ar"
-AUDIT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq205_v1/audit_1.json"
-OLD_AUDIT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq192_v1/audit_1.json"
+REGISTRY="$IDEA/registry"
+AGGREGATION="$ROOT/closure_20260810/aggregation"
 SCRIPT="$IDEA/scripts/verify_registered_closure.py"
 
-test -f "$AUDIT"
-test -f "$OLD_AUDIT"
 test -f "$SCRIPT"
-test ! -L "$AUDIT"
-test ! -L "$OLD_AUDIT"
 test ! -L "$SCRIPT"
-test "$(stat -c '%s' "$AUDIT")" = 63990
-test "$(sha256sum "$AUDIT" | awk '{print $1}')" = 41ddc3238d4cf8553b0981d4fe6971d899f6535b0bbdd10b941ba9d5effa424b
-test "$(stat -c '%s' "$OLD_AUDIT")" = 56544
-test "$(sha256sum "$OLD_AUDIT" | awk '{print $1}')" = 5c75619d61d5f182cb763ccbaf8572760180fdf04a261429b38cab901c63b8da
 test "$(sha256sum "$SCRIPT" | awk '{print $1}')" = 3b0caef6076d457e303864227e6748ab947e39da01c0c1faea15795807ce8945
 
 source ~/miniconda3/etc/profile.d/conda.sh
@@ -25,73 +17,58 @@ conda activate nh_final
 cd "$ROOT"
 export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
-python - "$ROOT" "$IDEA" "$AUDIT" "$OLD_AUDIT" "$SCRIPT" <<'PY'
+python - "$ROOT" "$IDEA" "$REGISTRY" "$AGGREGATION" "$SCRIPT" <<'PY'
 from collections import Counter
-import hashlib
 import json
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 import sys
+
+import pandas as pd
 
 root = Path(sys.argv[1]).resolve()
 idea = Path(sys.argv[2]).resolve()
-audit_path = Path(sys.argv[3]).resolve()
-old_audit_path = Path(sys.argv[4]).resolve()
+registry = Path(sys.argv[3]).resolve()
+aggregation = Path(sys.argv[4]).resolve()
 script_path = Path(sys.argv[5]).resolve()
 sys.path.insert(0, str(script_path.parent))
 
 from verify_registered_closure import audit_registered_closure, extra_tree_files
 
-audit_bytes = audit_path.read_bytes()
-audit = json.loads(audit_bytes)
-old_audit = json.loads(old_audit_path.read_bytes())
-if audit['schema'] != 'nearing2022-partial-numerical-audit-v3':
-    raise ValueError(audit['schema'])
-if audit['complete_coordinates'] != 16 or audit['comparison_rows'] != 112:
-    raise ValueError('Unexpected current audit dimensions')
-if old_audit['complete_coordinates'] != 14 or old_audit['comparison_rows'] != 98:
-    raise ValueError('Unexpected predecessor audit dimensions')
-if audit['registered_matrix_modified'] or audit['frozen_acceptance_modified']:
-    raise ValueError('Frozen boundary was not preserved')
+training_path = registry / 'experiment_registry.csv'
+evaluation_path = registry / 'evaluation_registry.csv'
+hyperparameter_path = registry / 'assimilation_hyperparameter_registry.csv'
+evaluations = pd.read_csv(evaluation_path, keep_default_na=False, dtype=str)
 
-old_coordinates = {row['eval_id']: row for row in old_audit['coordinates']}
-coordinates = {row['eval_id']: row for row in audit['coordinates']}
-if not old_coordinates.keys() < coordinates.keys():
-    raise ValueError('Current coordinate set does not strictly extend the predecessor')
-if any(old_coordinates[key] != coordinates[key] for key in old_coordinates):
-    raise ValueError('A predecessor coordinate changed')
 
-artifacts = audit['source_artifacts']
-old_artifacts = old_audit['source_artifacts']
-if len(artifacts) != 87 or len(old_artifacts) != 77:
-    raise ValueError(f'Unexpected source counts: current={len(artifacts)}, old={len(old_artifacts)}')
-if not old_artifacts.keys() < artifacts.keys():
-    raise ValueError('Current source set does not strictly extend the predecessor')
-if any(old_artifacts[key] != artifacts[key] for key in old_artifacts):
-    raise ValueError('A predecessor source record changed')
+def run(extra_files=()):
+    return audit_registered_closure(
+        root,
+        training_path,
+        evaluation_path,
+        hyperparameter_path,
+        aggregation / 'evaluations',
+        aggregation / 'hyperparameters',
+        extra_files=extra_files,
+    )
 
-verified_bytes = 0
-verified_hashes = set()
-for relative, expected in sorted(artifacts.items()):
-    pure = PurePosixPath(relative)
-    if pure.is_absolute() or '..' in pure.parts:
-        raise ValueError(f'Unsafe source path: {relative}')
-    path = (root / Path(*pure.parts)).resolve()
-    if root not in path.parents:
-        raise ValueError(f'Outside-root source path: {relative}')
-    payload = path.read_bytes()
-    actual_hash = hashlib.sha256(payload).hexdigest()
-    if len(payload) != expected['bytes'] or actual_hash != expected['sha256']:
-        raise ValueError(f'Source identity mismatch: {relative}')
-    verified_bytes += len(payload)
-    verified_hashes.add(actual_hash)
-if verified_bytes != 824828945 or len(verified_hashes) != 72:
-    raise ValueError(f'Unexpected source totals: bytes={verified_bytes}, hashes={len(verified_hashes)}')
 
-for coordinate in audit['coordinates']:
-    for path_key, hash_key in (('result_path', 'result_sha256'), ('reference_path', 'reference_sha256')):
-        relative = coordinate[path_key]
-        if relative not in artifacts or artifacts[relative]['sha256'] != coordinate[hash_key]:
-            raise ValueError(f"{coordinate['eval_id']} {path_key} binding mismatch")
+def missing_signature(payload):
+    return sorted(
+        (
+            row['coordinate_type'],
+            row['coordinate_id'],
+            row['role'],
+            row.get('path', ''),
+            row.get('error', ''),
+        )
+        for row in payload['missing']
+    )
+
+
+first = run()
+second = run()
+if missing_signature(first) != missing_signature(second):
+    raise ValueError('Two immediate registered-closure audits disagree')
 
 extra_files = [
     *extra_tree_files(idea),
@@ -102,79 +79,80 @@ extra_files = [
     root / 'setup.cfg',
     root / 'requirements-gpu.txt',
 ]
-closure = audit_registered_closure(
-    root,
-    idea / 'registry' / 'experiment_registry.csv',
-    idea / 'registry' / 'evaluation_registry.csv',
-    idea / 'registry' / 'assimilation_hyperparameter_registry.csv',
-    root / 'closure_20260810' / 'aggregation' / 'evaluations',
-    root / 'closure_20260810' / 'aggregation' / 'hyperparameters',
-    extra_files=extra_files,
-)
-if closure['counts'] != {'training': 46, 'evaluations': 180, 'hyperparameters': 660}:
-    raise ValueError(f"Unexpected registry counts: {closure['counts']}")
-if closure['complete']:
-    raise ValueError('Preflight unexpectedly reports a complete still-running matrix')
+if any(not path.is_file() for path in extra_files):
+    raise ValueError('An enumerated provenance extra file disappeared')
+with_extras = run(extra_files)
+if missing_signature(first) != missing_signature(with_extras):
+    raise ValueError('Existing provenance extras changed the registered-role missing set')
 
-enumerated = {Path(row['path']).resolve(): row['bindings'] for row in closure['artifacts']}
-missing_coverage = []
-binding_type_counts = Counter()
-for relative in sorted(artifacts):
-    pure = PurePosixPath(relative)
-    path = (root / Path(*pure.parts)).resolve()
-    bindings = enumerated.get(path)
-    if not bindings:
-        missing_coverage.append(relative)
-        continue
-    binding_type_counts.update(
-        {f"{item['coordinate_type']}:{item['role']}" for item in bindings}
-    )
-if missing_coverage:
-    raise ValueError(f'Source artifacts omitted by closure enumerator: {missing_coverage}')
-
-added_coordinates = sorted(coordinates.keys() - old_coordinates.keys())
-added_sources = sorted(artifacts.keys() - old_artifacts.keys())
-expected_added_coordinates = [
-    'N22-EVAL-TS-DA-L02-TE100-S0',
-    'N22-EVAL-TS-DA-L04-TE000-S0',
+targets = [
+    'N22-EVAL-TS-DA-L04-TE025-S0',
+    'N22-EVAL-TS-DA-L04-TE050-S0',
 ]
-if added_coordinates != expected_added_coordinates:
-    raise ValueError(f'Unexpected added coordinates: {added_coordinates}')
-added_source_bytes = sum(artifacts[key]['bytes'] for key in added_sources)
-if len(added_sources) != 10 or added_source_bytes != 96612570:
-    raise ValueError(
-        f'Unexpected added sources: count={len(added_sources)}, bytes={added_source_bytes}'
-    )
+details = {}
+for target in targets:
+    rows = evaluations[evaluations['eval_id'] == target]
+    if len(rows) != 1:
+        raise ValueError(f'Expected one registry row for {target}')
+    missing = [
+        {
+            'role': row['role'],
+            'path': row.get('path', ''),
+            'error': row.get('error', ''),
+        }
+        for row in first['missing']
+        if row['coordinate_type'] == 'evaluation' and row['coordinate_id'] == target
+    ]
+    present = []
+    for artifact in first['artifacts']:
+        bindings = [
+            binding for binding in artifact['bindings']
+            if binding['coordinate_type'] == 'evaluation' and binding['coordinate_id'] == target
+        ]
+        if not bindings:
+            continue
+        path = Path(artifact['path'])
+        present.append({
+            'roles': sorted(binding['role'] for binding in bindings),
+            'path': str(path),
+            'bytes': path.stat().st_size,
+            'modified_time_ns': path.stat().st_mtime_ns,
+        })
+    details[target] = {
+        'registered_run_dir': rows.iloc[0]['run_dir'],
+        'missing': sorted(missing, key=lambda row: (row['role'], row['path'])),
+        'present': sorted(present, key=lambda row: row['path']),
+    }
+
+missing_evaluation_ids = {
+    row['coordinate_id'] for row in first['missing']
+    if row['coordinate_type'] == 'evaluation'
+}
+complete_evaluation_ids = sorted(set(evaluations['eval_id']) - missing_evaluation_ids)
 print(json.dumps({
-    'schema': 'nearing2022-partial-source-rehash-and-final-manifest-coverage-v3',
-    'audit_bytes': len(audit_bytes),
-    'audit_sha256': hashlib.sha256(audit_bytes).hexdigest(),
-    'complete_coordinates': audit['complete_coordinates'],
-    'comparison_rows': audit['comparison_rows'],
-    'predecessor_coordinates_identical': len(old_coordinates),
-    'added_coordinates': added_coordinates,
-    'source_artifacts_verified': len(artifacts),
-    'source_artifact_bytes_verified': verified_bytes,
-    'unique_source_hashes': len(verified_hashes),
-    'predecessor_source_records_identical': len(old_artifacts),
-    'added_source_artifacts': len(added_sources),
-    'added_source_artifact_bytes': added_source_bytes,
-    'coordinate_result_and_reference_bindings_verified': len(coordinates) * 2,
-    'registry_counts': closure['counts'],
-    'final_manifest_preflight_complete': closure['complete'],
-    'final_manifest_preflight_existing_artifact_count': len(enumerated),
-    'final_manifest_preflight_missing_role_count': len(closure['missing']),
-    'source_artifacts_covered': len(artifacts) - len(missing_coverage),
-    'source_artifacts_missing_coverage': missing_coverage,
-    'binding_type_counts': dict(sorted(binding_type_counts.items())),
-    'mismatches': 0,
-    'manifest_written': False,
+    'schema': 'nearing2022-live-missing-role-delta-diagnostic-v1',
+    'registry_counts': first['counts'],
+    'registered_closure_complete': first['complete'],
+    'missing_roles_total': len(first['missing']),
+    'missing_by_coordinate_type': dict(sorted(Counter(
+        row['coordinate_type'] for row in first['missing']
+    ).items())),
+    'evaluation_complete': len(complete_evaluation_ids),
+    'time_split_complete': sum(eval_id.startswith('N22-EVAL-TS-') for eval_id in complete_evaluation_ids),
+    'target_details': details,
+    'extra_files_checked': len(extra_files),
+    'immediate_repeated_audits_identical': True,
+    'no_extra_vs_existing_extras_missing_set_identical': True,
+    'sequence_207_reported_missing_roles': 5467,
+    'sequence_208_reported_missing_roles': 5469,
     'registered_matrix_modified': False,
 }, indent=2, sort_keys=True))
 PY
 
-echo "=== REPLACEMENT AND HELD-MANIFEST STATES ==="
-sacct -n -X -j 202510,202511 --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Reason -P
+echo "=== ACTIVE EVALUATION RECORDS ==="
+sacct -n -P -j 202222_16,202222_17 --format=JobID,State,ExitCode,Elapsed,Start,End
+echo "=== FROZEN STATES ==="
+sacct -n -X -P -j 202510,202511 --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Reason
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = '202293|PENDING|JobHeldUser|N22-manifest'
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
