@@ -1,0 +1,35 @@
+### channel=id29-nearing2022-da seq=229
+### host=login4
+### started=2026-08-11T23:15:30+0800
+### ---------- output ----------
+=== JOB RECORD ===
+202727|N22-part-audit5|FAILED|1:0|00:00:13|2026-08-11T23:10:56|2026-08-11T23:11:09|ngu104|None
+slurm_load_jobs error: Invalid job id specified
+=== OUTPUT PATHS ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-part-audit5_202727.out|0|2026-08-11 23:10:56.000000000 +0800
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-part-audit5_202727.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-part-audit5_202727.err|746|2026-08-11 23:11:10.000000000 +0800
+e3b92fe7afe2f185e2820ed083eda01de8b79b8d50d4198ee765d1ffbd93d691  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-part-audit5_202727.err
+=== STDOUT TAIL ===
+=== STDERR TAIL ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py", line 239, in <module>
+    main()
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py", line 233, in main
+    payload = build_partial_audit(args.repo_root, args.mailbox_sequence, args.minimum_complete)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py", line 88, in build_partial_audit
+    raise ValueError(
+ValueError: Expected at least 18 complete registered coordinates, found 17
+=== FINAL AND STAGING INVENTORY ===
+final_exists=false
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq227_v1.preparing-202727|d
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq227_v1.preparing-202727/audit_stdout_1.json|0
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq227_v1.preparing-202727/audit_stdout_1.json
+=== FROZEN BOUNDARY ===
+registered_matrix_modified=false
+frozen_acceptance_modified=false
+diagnostic_only=true
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T23:15:30+0800
