@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=265: execute the frozen read-only matrix health audit after job 202214 recovery.
+# ID29 seq=266: early read-only matrix health audit to reassess job 202214 restart projection.
 set -eo pipefail
 
 if false; then
