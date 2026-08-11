@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=266: early read-only matrix health audit to reassess job 202214 restart projection.
+# ID29 seq=267: scheduled read-only matrix health audit after the next 30-minute window.
 set -eo pipefail
 
 if false; then
