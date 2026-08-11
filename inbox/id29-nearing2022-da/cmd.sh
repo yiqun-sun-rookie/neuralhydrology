@@ -1,92 +1,230 @@
 #!/bin/bash
-# ID29 seq=234: deploy and submit the ngu104-excluded role-recorded audit.
+# ID29 seq=235: verify and recover the ngu104-excluded >=18-coordinate audit when terminal.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-WRAPPER_REL=src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit_seq234.slurm
-TEST_REL=test/test_nearing2022_partial_audit_seq234_slurm.py
-PREFLIGHT_REL=results/29_nearing2022_da_ar/formal_closure/partial_registered_results_audit_seq234_preflight_20260811.json
-WRAPPER_SHA=f017e0ea40cdecefbc8faaee09fdddc7cb03389b8dffbf438924a2cb2e7bfd1a
-TEST_SHA=5b53c69155de6ffaa72bba5b79348463727effc775355503da51911f702a9637
-PREFLIGHT_SHA=993ddd296204eb463db695c108be607d93ba925f89f0f7fac373d5f73b0ef810
-AUDITOR_SHA=7c99332b785a2a088961b51e6085fada72294ce4f8e98ed05663818660f35725
+JOB_ID=202729
+JOB_NAME=N22-part-audit7
+TARGET=N22-EVAL-TS-DA-L04-TE050-S0
 FINAL="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq234_v1"
+PREVIOUS="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq223_v1"
+STDOUT="$ROOT/closure_20260810/logs/${JOB_NAME}_${JOB_ID}.out"
+STDERR="$ROOT/closure_20260810/logs/${JOB_NAME}_${JOB_ID}.err"
 
-deploy_payload() {
-  relative=$1
-  expected=$2
-  target="$ROOT/$relative"
-  temporary="$target.preparing-seq234"
-  mkdir -p "$(dirname "$target")"
-  test ! -L "$target"
-  if test -e "$target"; then
-    cat >/dev/null
-    test -f "$target"
-    test "$(sha256sum "$target" | awk '{print $1}')" = "$expected"
-    echo "already_exact=$relative"
-    return
+echo "=== JOB RECORD ==="
+RECORD=$(sacct -n -X -P -j "$JOB_ID" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList,Reason | head -n 1)
+printf '%s\n' "$RECORD"
+STATE=$(printf '%s\n' "$RECORD" | awk -F'|' '{print $3}')
+EXIT_CODE=$(printf '%s\n' "$RECORD" | awk -F'|' '{print $4}')
+NODE=$(printf '%s\n' "$RECORD" | awk -F'|' '{print $8}')
+
+case "$STATE" in
+  PENDING|RUNNING|CONFIGURING|COMPLETING)
+    echo "audit_terminal=false"
+    exit 0
+    ;;
+esac
+
+echo "=== OUTPUT PATHS ==="
+for path in "$STDOUT" "$STDERR"; do
+  if test -f "$path"; then
+    stat -c '%n|%s|%y' "$path"
+    sha256sum "$path"
+  else
+    echo "missing=$path"
   fi
-  test ! -e "$temporary"
-  base64 -d | gzip -d > "$temporary"
-  test "$(sha256sum "$temporary" | awk '{print $1}')" = "$expected"
-  mv "$temporary" "$target"
-  test "$(sha256sum "$target" | awk '{print $1}')" = "$expected"
-  echo "deployed=$relative"
-}
+done
 
-deploy_payload "$WRAPPER_REL" "$WRAPPER_SHA" <<'B64'
-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
-B64
+if test "$STATE" != "COMPLETED" || test "$EXIT_CODE" != "0:0"; then
+  echo "=== STDOUT ==="
+  test -f "$STDOUT" && cat "$STDOUT"
+  echo "=== STDERR ==="
+  test -f "$STDERR" && cat "$STDERR"
+  echo "=== FINAL AND STAGING INVENTORY ==="
+  if test -e "$FINAL"; then
+    find "$FINAL" -maxdepth 3 -printf '%p|%y|%s\n' | sort
+  else
+    echo "final_exists=false"
+  fi
+  for staging in "$(dirname "$FINAL")"/partial_numerical_audit_seq234_v1.preparing-*; do
+    if test -d "$staging"; then
+      find "$staging" -maxdepth 2 -type f -printf '%p|%s\n' -exec sha256sum {} \;
+      if test -f "$staging/role_snapshot.json"; then
+        echo "=== ROLE SNAPSHOT ==="
+        cat "$staging/role_snapshot.json"
+      fi
+    fi
+  done
+  echo "audit_terminal_failure=$STATE/$EXIT_CODE" >&2
+  exit 1
+fi
 
-deploy_payload "$TEST_REL" "$TEST_SHA" <<'B64'
-H4sIAAAAAAAACsVWUW/bNhB+16/guAGxgUiLlTbLCughS9wmQNEYToYN8AKCJs8SC4pUSaqLN+y/DxRlO4qlxN3Lnmwe7/vuePfxKFFW2jhUUFtIsYxEWH62WkUro0tUUec3ULsxo66Iomg+nd2S+e3tPcoa04iQlZBAyDgxYLX8CqNxUlEDytnF5CG6+PXq5v52jjK0Q/6IsDUM+9/0Z6KAGqHy9CRNCaeEmmbDMiMqZ5v/tObCkYoaJ6gkBnJhHRjgxICtpbNJtcbRbD69ml5O7+6aYKMIIbQL2azasJv/vaE3m0W1czS1eiE4CdlZ+JKeThIra1PiaBz9Nr+Yzab/XypvdqnM5tP3H28+XN8PJ9MSHJbQSpuSSsKktrWBrfnAvEhlYCVFXjiSnqRnJ+eTSeJF5zONIg4r5MBunVlBVQ6WaCXXRHBQTrg1oYoTeGSy5mCJK4CsaC3dmijNYTR+12RUGeDAwFptvFR36kgMUE4cPLoRKKa5UHmGa7eKz/G4QbLaePmiDLVNfBWhmoqIv4CjbANPDFSSMhjh7+9+ubi/vEZx/FkvY0VLyD6laezrFTeV+Qkfo9e9zvqC7RZ98doaZSqvJydv/lA+zqEsoQEeEaR9KC6OSyrkUj/GFr7UoBiglqd351DeI9yCyQaM33nio2M0sDU5CszUWjCuEyB7qo4e1QlLWFUH0a2oCFoH3tVdKOpGbl4d36CYNqnBXmEkVMM54F1CiZHS7hW33IDN8qoe9PXrhOlauaHO+WBCibIuY6bLSoIDNDnHY1/F9CnVUIeOj/oCH/l6o+9QDAj/8P7m08VH3Ou3HSuqLsEIRmV3mnyd9JfKLqljxXCNTIlis+ru7wthKRQPE6ZWYRTx54lo818lENDEP8Ao27zDiS1o+vZs1L6bgWW5dmBH43FSwCMXOVg36shohae/z6aX99Mr0uLI3fVF+vYs+/tplH/wC0fdjeXdof08JbYCJlaCNTehNtDcAsuEn8XevNS14tSsnwzeQISy5msikZpyO9q+Qi8VJpzKGZHn4Mf2lmuBWyN+6Mg3GBf70nto9Hl62uvtT+I7qXnriNtb1+vtZV+7thqlsFaonBgtwQbwAjOquODUga8iF8wJ3czanb0EZwSzA9lLnQs1zB9ABioqnhXFu0r//DHf4+DRjRFsC9yOl3DobeLtsXsR2hVgiGUF8FqCZ7e6Ngxs+yhz/ICERe+ptBAaT9dNq7spbqzdIN+q9mZmt0yL8EGoDX5Y4EDwInnnQr5O/qehVQX75BudP+vA/kXoJrOxLvDe4Bgq5B6yVc/B/pQxqBxVDIgrDNhCS344+skHXEmdEY99yH8BuPNjlT4MAAA=
-B64
+test "$NODE" != "ngu104"
+test -d "$FINAL"
+test -d "$PREVIOUS"
+test -f "$STDOUT"
+test -f "$STDERR"
+test ! -s "$STDERR"
+test "$(find "$FINAL" -type l -print -quit)" = ""
+cmp "$FINAL/audit_1.json" "$FINAL/audit_2.json"
+cmp "$FINAL/audit_stdout_1.json" "$FINAL/audit_stdout_2.json"
+sha256sum "$STDOUT" "$STDERR" "$FINAL"/*
 
-deploy_payload "$PREFLIGHT_REL" "$PREFLIGHT_SHA" <<'B64'
-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
-B64
-
-test "$(sha256sum "$ROOT/src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py" | awk '{print $1}')" = "$AUDITOR_SHA"
-test ! -e "$FINAL"
-test "$(find "$(dirname "$FINAL")" -maxdepth 1 -name 'partial_numerical_audit_seq234_v1.preparing-*' -print -quit)" = ""
-bash -n "$ROOT/$WRAPPER_REL"
-
-python - "$ROOT" "$WRAPPER_REL" "$TEST_REL" "$PREFLIGHT_REL" "$WRAPPER_SHA" "$TEST_SHA" "$PREFLIGHT_SHA" <<'PY'
+python - "$FINAL" "$PREVIOUS" "$JOB_ID" "$NODE" "$TARGET" <<'PY'
 import hashlib
 import json
 from pathlib import Path
 import sys
 
-root = Path(sys.argv[1])
-rows = list(zip(sys.argv[2:5], sys.argv[5:8]))
-for relative, expected in rows:
-    path = root / relative
-    assert path.is_file() and not path.is_symlink()
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == expected
-preflight = json.loads((root / sys.argv[4]).read_text(encoding="utf-8"))
-assert preflight["trigger"]["mailbox_sequence"] == 233
-assert preflight["trigger"]["failed_node"] == "ngu104"
-assert preflight["trigger"]["compute_node_missing_roles"] == [
-    "candidate_prediction", "candidate_metrics"
-]
-assert preflight["single_factor_repair"]["excluded_nodes"] == ["ngu104"]
-assert preflight["single_factor_repair"]["other_scheduler_resources_changed"] is False
-assert preflight["execution_contract"]["minimum_complete_coordinates"] == 18
-assert preflight["scientific_boundary"]["numerical_auditor_changed"] is False
-assert preflight["scientific_boundary"]["acceptance_thresholds_changed"] is False
-wrapper = (root / sys.argv[2]).read_text(encoding="utf-8")
-assert "#SBATCH --exclude=ngu104" in wrapper
-assert wrapper.count("--mailbox-sequence 234 --minimum-complete 18") == 2
-assert "#SBATCH --gres=gpu" not in wrapper and "#SBATCH --mem" not in wrapper
-print(json.dumps({"deployment_hashes_verified": 3, "excluded_node": "ngu104"}, sort_keys=True))
+final = Path(sys.argv[1])
+previous = Path(sys.argv[2])
+job_id = sys.argv[3]
+node = sys.argv[4]
+target = sys.argv[5]
+
+
+def digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+audit_bytes = (final / "audit_1.json").read_bytes()
+audit = json.loads(audit_bytes)
+audit_2 = json.loads((final / "audit_2.json").read_bytes())
+old = json.loads((previous / "audit_1.json").read_bytes())
+role_path = final / "role_snapshot.json"
+role = json.loads(role_path.read_text(encoding="utf-8"))
+receipt_path = final / "execution_receipt.json"
+receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+manifest_path = final / "artifact_manifest.json"
+manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+if audit != audit_2:
+    raise ValueError("Repeated audits are not object-identical")
+if audit["complete_coordinates"] < 18:
+    raise ValueError("Terminal audit contains fewer than 18 complete coordinates")
+if audit["comparison_rows"] != audit["complete_coordinates"] * 7:
+    raise ValueError("Terminal audit does not contain seven metrics per coordinate")
+if audit["registered_matrix_modified"] or audit["frozen_acceptance_modified"]:
+    raise ValueError("Frozen input modification reported")
+
+if node == "ngu104" or role["slurm_node"] == "ngu104":
+    raise ValueError("Excluded node ngu104 executed the retry")
+if role["slurm_job_id"] != job_id or receipt["slurm_job_id"] != job_id:
+    raise ValueError("Job identifier differs across scheduler, snapshot, or receipt")
+if role["slurm_node"] != node or receipt["slurm_node"] != node:
+    raise ValueError("Node differs across scheduler, snapshot, or receipt")
+if role["partial_complete_count"] != audit["complete_coordinates"]:
+    raise ValueError("Role snapshot and numerical audit count differ")
+if role["partial_complete_count"] != role["closure_complete_count"]:
+    raise ValueError("Complete-role algorithms disagree")
+if role["partial_minus_closure"] or role["closure_minus_partial"]:
+    raise ValueError("Complete-role algorithms report different coordinates")
+if not role["target_partial_complete"] or not role["target_closure_complete"]:
+    raise ValueError("Target is not complete under both role algorithms")
+if set(role["target_roles"]) != {
+    "candidate_config", "candidate_checkpoint", "candidate_log",
+    "candidate_prediction", "candidate_metrics", "reference_prediction",
+    "reference_metrics",
+}:
+    raise ValueError("Target role set differs from the seven-role contract")
+for name, item in role["target_roles"].items():
+    if not item["exists"] or not item["is_file"] or item["is_dir"] or item["is_symlink"]:
+        raise ValueError(f"Target role is not a regular file: {name}={item}")
+
+old_coordinates = {row["eval_id"]: row for row in old["coordinates"]}
+new_coordinates = {row["eval_id"]: row for row in audit["coordinates"]}
+if not set(old_coordinates) < set(new_coordinates):
+    raise ValueError("The new audit does not strictly extend the predecessor")
+if any(old_coordinates[key] != new_coordinates[key] for key in old_coordinates):
+    raise ValueError("A predecessor coordinate object changed")
+added = sorted(set(new_coordinates) - set(old_coordinates))
+if target not in added:
+    raise ValueError(f"Expected newly complete target is absent: {added}")
+
+old_sources = old["source_artifacts"]
+new_sources = audit["source_artifacts"]
+if any(old_sources[key] != new_sources.get(key) for key in old_sources):
+    raise ValueError("A predecessor source-artifact record changed")
+added_sources = sorted(set(new_sources) - set(old_sources))
+
+files = []
+for path in sorted(final.rglob("*")):
+    if path.is_symlink():
+        raise ValueError(f"Link in final audit: {path}")
+    if path.is_file() and path.name != "artifact_manifest.json":
+        files.append({
+            "path": path.relative_to(final).as_posix(),
+            "bytes": path.stat().st_size,
+            "sha256": digest(path),
+        })
+if manifest["files"] != files:
+    raise ValueError("Artifact manifest does not match live final files")
+if manifest["file_count"] != len(files):
+    raise ValueError("Artifact manifest file count differs")
+if manifest["total_bytes"] != sum(row["bytes"] for row in files):
+    raise ValueError("Artifact manifest byte count differs")
+if receipt["mailbox_sequence"] != 234:
+    raise ValueError("Execution receipt has the wrong mailbox sequence")
+if receipt["complete_coordinates"] != audit["complete_coordinates"]:
+    raise ValueError("Execution receipt coordinate count differs")
+if receipt["comparison_rows"] != audit["comparison_rows"]:
+    raise ValueError("Execution receipt comparison count differs")
+if receipt["compute_node_role_snapshot_sha256"] != digest(role_path):
+    raise ValueError("Execution receipt role-snapshot hash differs")
+if receipt["audit_sha256"] != digest(final / "audit_1.json"):
+    raise ValueError("Execution receipt audit hash differs")
+
+summary = {
+    "schema": "nearing2022-partial-numerical-audit-seq234-terminal-verification-v1",
+    "job_id": job_id,
+    "slurm_node": node,
+    "excluded_node_respected": node != "ngu104",
+    "complete_coordinates": audit["complete_coordinates"],
+    "complete_by_family": audit["complete_by_family"],
+    "comparison_rows": audit["comparison_rows"],
+    "individual_tolerance_failures": audit["individual_tolerance_failures"],
+    "coordinates_with_failures": audit["coordinates_with_failures"],
+    "added_coordinates": added,
+    "added_coordinate_decisions": {
+        key: {
+            "failed_metrics": new_coordinates[key]["failed_metrics"],
+            "all_seven_metrics_within_tolerance": not new_coordinates[key]["failed_metrics"],
+        }
+        for key in added
+    },
+    "target_roles_regular_files": 7,
+    "predecessor_coordinates_identical": len(old_coordinates),
+    "predecessor_source_records_identical": len(old_sources),
+    "source_artifacts": len(new_sources),
+    "source_artifact_bytes": sum(row["bytes"] for row in new_sources.values()),
+    "unique_source_hashes": len({row["sha256"] for row in new_sources.values()}),
+    "added_source_artifacts": added_sources,
+    "audit_bytes": len(audit_bytes),
+    "audit_sha256": hashlib.sha256(audit_bytes).hexdigest(),
+    "role_snapshot_bytes": role_path.stat().st_size,
+    "role_snapshot_sha256": digest(role_path),
+    "artifact_manifest_bytes": manifest_path.stat().st_size,
+    "artifact_manifest_sha256": digest(manifest_path),
+    "execution_receipt_bytes": receipt_path.stat().st_size,
+    "execution_receipt_sha256": digest(receipt_path),
+    "repeated_audits_byte_identical": (final / "audit_1.json").read_bytes() == (final / "audit_2.json").read_bytes(),
+    "repeated_summaries_byte_identical": (final / "audit_stdout_1.json").read_bytes() == (final / "audit_stdout_2.json").read_bytes(),
+    "registered_matrix_modified": False,
+    "frozen_acceptance_modified": False,
+}
+print(json.dumps(summary, indent=2, sort_keys=True))
 PY
 
-JOB_ID=$(sbatch --parsable "$ROOT/$WRAPPER_REL")
-case "$JOB_ID" in
-  ''|*[!0-9]*) echo "Invalid Slurm job id: $JOB_ID" >&2; exit 1 ;;
-esac
-echo "submitted_job_id=$JOB_ID"
-scontrol show job -o "$JOB_ID"
-sacct -n -X -P -j "$JOB_ID" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Reason
+echo "=== AUDIT BASE64 BEGIN ==="
+base64 -w 0 "$FINAL/audit_1.json"
+echo
+echo "=== AUDIT BASE64 END ==="
+echo "=== ROLE SNAPSHOT BASE64 BEGIN ==="
+base64 -w 0 "$FINAL/role_snapshot.json"
+echo
+echo "=== ROLE SNAPSHOT BASE64 END ==="
+test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
+test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
 echo "registered_matrix_modified=false"
 echo "frozen_acceptance_modified=false"
+echo "audit_terminal=true"
