@@ -1,0 +1,68 @@
+### channel=id29-nearing2022-da seq=264
+### host=login4
+### started=2026-08-12T07:02:00+0800
+### ---------- output ----------
+=== POST-RELEASE VERIFICATION START ===
+2026-08-12T07:02:00+0800
+JobId=202214 JobName=N22-train UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=RUNNING Reason=None Dependency=(null) Requeue=1 Restarts=1 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:03:56 TimeLimit=2-00:00:00 TimeMin=N/A SubmitTime=2026-08-12T06:52:21 EligibleTime=2026-08-12T06:54:22 AccrueTime=2026-08-12T06:54:22 StartTime=2026-08-12T06:58:04 EndTime=2026-08-14T06:58:04 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-12T06:58:04 Partition=hgpu4 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002,ngu104 NodeList=ngu102 BatchHost=ngu102 NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training.slurm WorkDir=/data1/home/sunyiq/nearing2022_da StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out Power= TresPerNode=gpu:1
+excluded_node=ngu002
+excluded_node=ngu104
+=== INCIDENT MANIFEST RECHECK ===
+model_epoch029.pt: OK
+optimizer_state_epoch029.pt: OK
+run_config.yml: OK
+run_output.log: OK
+slurm_stderr.err: OK
+slurm_stdout.out: OK
+train_data_scaler.yml: OK
+=== SOURCE CANDIDATES ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30|checkpoint030=no
+/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0812_0659_ep30|checkpoint030=no
+=== ACTIVE SLURM LOGS ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out|bytes=57142|mtime=2026-08-12 07:01:38.000000000 +0800|inode=8825921795
+2026-08-12 07:01:24,911: Validation set to validate every 30 epoch(s), but 'validate_n_random_basins' not set or set to zero. Will validate on the entire validation set.
+
+  0%|          | 0/6821 [00:00<?, ?it/s]
+# Epoch 1:   0%|          | 0/6821 [00:00<?, ?it/s]
+# Epoch 1:   0%|          | 0/6821 [00:02<?, ?it/s, Loss: 0.7545]
+# Epoch 1:   0%|          | 1/6821 [00:02<4:07:24,  2.18s/it, Loss: 0.7545]
+# Epoch 1:   0%|          | 1/6821 [00:02<4:07:24,  2.18s/it, Loss: 0.1825]
+# Epoch 1:   0%|          | 2/6821 [00:02<2:24:54,  1.28s/it, Loss: 0.1825]
+# Epoch 1:   0%|          | 2/6821 [00:03<2:24:54,  1.28s/it, Loss: 0.1140]
+# Epoch 1:   0%|          | 3/6821 [00:03<1:54:07,  1.00s/it, Loss: 0.1140]
+# Epoch 1:   0%|          | 3/6821 [00:04<1:54:07,  1.00s/it, Loss: 0.2228]
+# Epoch 1:   0%|          | 4/6821 [00:04<1:36:47,  1.17it/s, Loss: 0.2228]
+# Epoch 1:   0%|          | 4/6821 [00:04<1:36:47,  1.17it/s, Loss: 0.1663]
+# Epoch 1:   0%|          | 5/6821 [00:04<1:28:43,  1.28it/s, Loss: 0.1663]
+# Epoch 1:   0%|          | 5/6821 [00:05<1:28:43,  1.28it/s, Loss: 0.2446]
+# Epoch 1:   0%|          | 6/6821 [00:05<1:22:48,  1.37it/s, Loss: 0.2446]
+# Epoch 1:   0%|          | 6/6821 [00:06<1:22:48,  1.37it/s, Loss: 0.5843]
+# Epoch 1:   0%|          | 7/6821 [00:06<1:19:24,  1.43it/s, Loss: 0.5843]
+# Epoch 1:   0%|          | 7/6821 [00:06<1:19:24,  1.43it/s, Loss: 0.0838]
+# Epoch 1:   0%|          | 8/6821 [00:06<1:16:37,  1.48it/s, Loss: 0.0838]
+# Epoch 1:   0%|          | 8/6821 [00:07<1:16:37,  1.48it/s, Loss: 0.1168]
+# Epoch 1:   0%|          | 9/6821 [00:07<1:16:10,  1.49it/s, Loss: 0.1168]
+# Epoch 1:   0%|          | 9/6821 [00:07<1:16:10,  1.49it/s, Loss: 0.3358]
+# Epoch 1:   0%|          | 10/6821 [00:07<1:15:14,  1.51it/s, Loss: 0.3358]
+# Epoch 1:   0%|          | 10/6821 [00:08<1:15:14,  1.51it/s, Loss: 0.1232]
+# Epoch 1:   0%|          | 11/6821 [00:08<1:14:00,  1.53it/s, Loss: 0.1232]
+# Epoch 1:   0%|          | 11/6821 [00:09<1:14:00,  1.53it/s, Loss: 0.1851]
+# Epoch 1:   0%|          | 12/6821 [00:09<1:12:51,  1.56it/s, Loss: 0.1851]
+# Epoch 1:   0%|          | 12/6821 [00:09<1:12:51,  1.56it/s, Loss: 0.1806]
+# Epoch 1:   0%|          | 13/6821 [00:09<1:14:17,  1.53it/s, Loss: 0.1806]
+# Epoch 1:   0%|          | 13/6821 [00:10<1:14:17,  1.53it/s, Loss: 0.1684]
+# Epoch 1:   0%|          | 14/6821 [00:10<1:14:28,  1.52it/s, Loss: 0.1684]
+# Epoch 1:   0%|          | 14/6821 [00:11<1:14:28,  1.52it/s, Loss: 0.2033]
+# Epoch 1:   0%|          | 15/6821 [00:11<1:13:45,  1.54it/s, Loss: 0.2033]
+# Epoch 1:   0%|          | 15/6821 [00:11<1:13:45,  1.54it/s, Loss: 0.2061]
+# Epoch 1:   0%|          | 16/6821 [00:11<1:12:30,  1.56it/s, Loss: 0.2061]
+# Epoch 1:   0%|          | 16/6821 [00:12<1:12:30,  1.56it/s, Loss: 0.1339]
+# Epoch 1:   0%|          | 17/6821 [00:12<1:12:40,  1.56it/s, Loss: 0.1339]
+# Epoch 1:   0%|          | 17/6821 [00:13<1:12:40,  1.56it/s, Loss: 0.1114]
+# Epoch 1:   0%|          | 18/6821 [00:13<1:12:29,  1.56it/s, Loss: 0.1114]/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err|bytes=0|mtime=2026-08-12 06:58:08.000000000 +0800|inode=8955876101
+=== POST-RELEASE VERIFICATION END ===
+2026-08-12T07:02:00+0800
+read_only=true
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-12T07:02:00+0800
