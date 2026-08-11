@@ -1,0 +1,100 @@
+### channel=id29-nearing2022-da seq=187
+### host=login4
+### started=2026-08-11T11:02:05+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-11T11:02:05+0800
+=== LIVE DOWNSTREAM DEPENDENCY GRAPH ===
+202238|PENDING|Dependency|afterok:202216_*|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+202229|PENDING|Dependency|afterok:202222_*,afterok:202226_*,afterok:202216_*,afterok:202238_*,afterok:202227_*|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+202230|PENDING|Dependency|afterok:202228_*,afterok:202238_*|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+202280|ABSENT_OR_RETIRED|||slurm_load_jobs error: Invalid job id specified
+202281|ABSENT_OR_RETIRED|||slurm_load_jobs error: Invalid job id specified
+202294|PENDING|Dependency|afterok:202293|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_export.slurm
+202315|PENDING|Dependency|afterok:202229,afterok:202230|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm
+dependency_graph_assertions=passed
+=== REGISTERED COMPLETE-ROLE COUNTS ===
+{"evaluation_by_family": {"time_assimilation": 7, "time_autoregression": 5}, "evaluation_complete": 12, "evaluation_total": 180, "hyperparameter_complete": 0, "hyperparameter_total": 660, "training_by_family": {"basin_simulation": 10, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 12, "training_total": 46}
+=== SERVER OUTPUT-TARGET AUDIT ===
+{"casefold_unique_evaluation_plus_hyperparameter_targets": 840, "direct_basin_rows": 20, "direct_unique_registered_source_run_dirs": 20, "direct_unique_runtime_patterns": 20, "direct_unique_source_config_paths": 20, "direct_unique_source_exp_ids": 20, "evaluation_literal_duplicate_groups": 2, "evaluation_literal_unique_run_dirs": 162, "evaluation_plus_hyperparameter_targets": 840, "evaluation_rows": 180, "registries": [{"bytes": 36970, "path": "src/29_nearing2022_da_ar/registry/experiment_registry.csv", "sha256": "6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64"}, {"bytes": 73013, "path": "src/29_nearing2022_da_ar/registry/evaluation_registry.csv", "sha256": "37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215"}, {"bytes": 334058, "path": "src/29_nearing2022_da_ar/registry/assimilation_hyperparameter_registry.csv", "sha256": "7cb7f10ce13c41c1b064148b27a707ccaab56f87fa40c289d6833bc7c57b09a7"}], "resolved_casefold_unique_evaluation_targets": 180, "resolved_evaluation_targets": 180, "resolved_unique_evaluation_targets": 180, "training_rows": 46, "training_unique_registered_run_dirs": 46, "unique_evaluation_plus_hyperparameter_targets": 840}
+=== DIRECT-EVALUATION JOB PAYLOAD ===
+{"job_command": "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm", "job_dependency": "afterok:202216_*", "job_environment": null, "job_id": "202238", "job_record_contains_expected_batch_file": false, "job_record_contains_expected_command": true, "job_work_dir": "/data1/home/sunyiq/nearing2022_da", "live_prepare_sha256": "6e47896c2b3011fe8e93a561f7545397d5a4ddee70b09b38a520f08530646ccf", "live_script_sha256": "49f8e764da499077d5e4fcb4f42513b8714013afc3af3a75cc495a7dce585f8d", "spooled_script_bytes": 2632, "spooled_script_markers": {"SKIPPED_COMPLETED": true, "prepare_evaluation_run.py": true, "python -m neuralhydrology.nh_run evaluate": true}, "spooled_script_retrieval_returncode": 0, "spooled_script_sha256": "f65b8c1a90cefec9df490eec65390b19f29721587a29dfe06240792a04e0ee84"}
+=== LIVE MAIN PROGRESS ===
+{"epoch": 19, "epoch_step": 5440, "epoch_total_steps": 6821, "job": "202214", "name": "N22-train", "projected_slack_hours": 11.21, "projected_total_hours": 36.79, "runtime": "23:03:04", "stdout_bytes": 20079569, "stdout_exists": true, "thirty_epoch_fraction": 0.626585, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 19, "epoch_step": 2217, "epoch_total_steps": 6821, "job": "202215_0", "name": "N22-time", "projected_slack_hours": 11.32, "projected_total_hours": 36.68, "runtime": "22:24:12", "stdout_bytes": 19575251, "stdout_exists": true, "thirty_epoch_fraction": 0.610834, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 18, "epoch_step": 4542, "epoch_total_steps": 6821, "job": "202215_1", "name": "N22-time", "projected_slack_hours": 9.95, "projected_total_hours": 38.05, "runtime": "22:24:13", "stdout_bytes": 18892770, "stdout_exists": true, "thirty_epoch_fraction": 0.588863, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 18, "epoch_step": 4950, "epoch_total_steps": 6821, "job": "202215_2", "name": "N22-time", "projected_slack_hours": 10.08, "projected_total_hours": 37.92, "runtime": "22:24:13", "stdout_bytes": 18954466, "stdout_exists": true, "thirty_epoch_fraction": 0.590857, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 9, "epoch_step": 2866, "epoch_total_steps": 6127, "job": "202216_10", "name": "N22-basin", "projected_slack_hours": 14.42, "projected_total_hours": 33.58, "runtime": "09:28:37", "stdout_bytes": 8063519, "stdout_exists": true, "thirty_epoch_fraction": 0.282259, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 9, "epoch_step": 453, "epoch_total_steps": 6140, "job": "202216_11", "name": "N22-basin", "projected_slack_hours": 15.24, "projected_total_hours": 32.76, "runtime": "08:48:56", "stdout_bytes": 7699938, "stdout_exists": true, "thirty_epoch_fraction": 0.269126, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"job": "202222_12", "name": "N22-eval-now", "percent": 93, "runtime": "04:56:15", "stdout_bytes": 39567, "stdout_exists": true, "step": 493, "time_limit": "1-00:00:00", "total": 531}
+{"job": "202222_13", "name": "N22-eval-now", "percent": 87, "runtime": "04:45:03", "stdout_bytes": 36947, "stdout_exists": true, "step": 462, "time_limit": "1-00:00:00", "total": 531}
+=== REPLACEMENT AUDIT STATES ===
+202510|N22-data-port-v2|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202511|N22-mask-iso-v2|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202510|N22-data-port-v2|PENDING|0:00|(Dependency)|afterany:202222_*
+202511|N22-mask-iso-v2|PENDING|0:00|(Dependency)|afterok:202510
+=== REPLACEMENT RECEIPT AND OUTPUTS ===
+18e6aeeee3321427d0f851d68d2cbbfb02f8d13e477f6f96dd5f22eed1d4d2a1  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_repair_submission_01.json
+absent|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2
+absent|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2
+=== REPLACEMENT VERIFIER STRICT PREREQUISITES ===
+deployed_protocol|MATCH|16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1|7266|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol.json
+deployed_amendment|MATCH|a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5|3779|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol_amendment_01.json
+submission_receipt|MATCH|18e6aeeee3321427d0f851d68d2cbbfb02f8d13e477f6f96dd5f22eed1d4d2a1|4910|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_repair_submission_01.json
+failed_audit|MATCH|3f5fe1e597a2d8cee36dffac4426a178075d8828eae560c585fe7727d2a4aa30|30766|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506/audit.json
+failed_stdout|MATCH|a577a8ec870a4f2a100643b3d6cfc49a29a00d19384bee888590b9cee3112336|23988|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506/audit_stdout.json
+version1_audit|MATCH|5f7d49c4899aeb0ffb1d097cffd98cfe86393f86b5849a153d3074094744eb85|14478|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_training_data_port.py
+version2_audit|MATCH|51b9091c928a8b514f0be6e81ab5afd304bda654e3dc63a6cb27746e3dee3233|14668|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_training_data_port_v2.py
+isolation_audit|MATCH|9f898a80aafb4e207bb56fd095125e9d5d092ec8c96af4d6010bdaeb36a27f8c|12662|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_warmup_target_isolation.py
+data_wrapper|MATCH|7805e78942a9d512075deb1f546a230d4fe20f04a7efd837a8507ada9e4a493e|8070|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_author_v13_training_data_port_all531_v2.slurm
+mask_wrapper|MATCH|9d8d2c890e6ec8a28be30e674ea05c3c90a8926ba0e4e80bf088386879127053|7584|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_author_v13_warmup_isolation_all531_v2.slurm
+frozen_config|MATCH|729985706faeb8c45480d3c485dbad72ae51eec94dff69b5c8964e2036591b1a|2280|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.0_seed_0.yml
+frozen_basins|MATCH|cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85|5310|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/basin_lists/531_basin_list.txt
+training_registry|MATCH|6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64|36970|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/experiment_registry.csv
+evaluation_registry|MATCH|37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215|73013|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/evaluation_registry.csv
+basedataset|MATCH|4658816ea3110a1c2efcf54c3dcf00d5c0982459dca4f7ac985beb983b12df0d|56472|/data1/home/sunyiq/nearing2022_da/neuralhydrology/datasetzoo/basedataset.py
+registered_checkpoint|MATCH|c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b|1236357|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/model_epoch030.pt
+registered_source_config|UNBOUND|504d16fdf4d5c2d138790694656dfaecf089d7852be63ef3efc22f4814cd8996|2640|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/config.yml
+registered_source_scaler|MATCH|add1a777647f92f1aa7a8ad039e3d406d32f05c21f30c685a14736d22f45a5d4|4945|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30/train_data/train_data_scaler.yml
+strict_prerequisite_mismatches=0
+=== ADDITIVE DEPLOYMENT-AUDIT REPAIR ===
+deployment_audit_action=deployed_additively
+deployment_audit_sha256=d469d2b135c533ac7bfb0433cf6f3ab52fc2e4dfb4e685e229dfbe48c8ef1b40
+=== FUTURE VERIFIER PAYLOAD INVENTORY ===
+source_protocol|MATCH|16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1|7266|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol.json
+source_amendment|MATCH|a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5|3779|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol_amendment_01.json
+replacement_verifier|MATCH|0bcabc96f9e702f2317464f1f0123c29d49d5f7f0f972a10ea3e01bbf18fe987|29458|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py
+replacement_verifier_test|MATCH|2da179cb1ef02b0697472fd273bd61ffad98ecb5790e5b5f2dce6032e478dad6|19042|/data1/home/sunyiq/nearing2022_da/test/test_nearing2022_replacement_chain_verifier.py
+reproduction_contract_test|STALE_OR_DIFFERENT|dc8c5a18b77d321b1a4ae6aba24315b16cb5a59e4fa2c3a6c99ae8de4ba2d6ed|69070|/data1/home/sunyiq/nearing2022_da/test/test_nearing2022_reproduction_contract.py
+comparison_register|STALE_OR_DIFFERENT|d31991cda016671b31d88670f34961a046728b9be41653fb10d823b4b2529c99|33768|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/reproduction_comparison_register.json
+replacement_verifier_preflight|MATCH|80bf711779dcef12b991be7b53359dfcdc550e3fbf049720ec5bc24b01620b0f|4819|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_independent_verifier_preflight_20260811.json
+replacement_verifier_prerequisites|MATCH|e4211d680611e34d85c9b93ebcb8c90f5b05fa7425e0e6f0830ad6971260fa8f|4392|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_prerequisite_audit_20260811.json
+replacement_verifier_deployment|MATCH|d469d2b135c533ac7bfb0433cf6f3ab52fc2e4dfb4e685e229dfbe48c8ef1b40|2934|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_payload_deployment_20260811.json
+deployed_verifier_payload_hashes=passed
+=== MAIN JOB STATES AND FAILURE GATE ===
+202214|RUNNING|23:03:06|2-00:00:00|ngu104|N22-train
+202215_0|RUNNING|22:24:14|2-00:00:00|ngu104|N22-time
+202215_1|RUNNING|22:24:14|2-00:00:00|ngu101|N22-time
+202215_2|RUNNING|22:24:14|2-00:00:00|ngu101|N22-time
+202215_[3-22%3]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-time
+202216_10|RUNNING|9:28:38|2-00:00:00|ngu102|N22-basin
+202216_11|RUNNING|8:48:57|2-00:00:00|ngu104|N22-basin
+202216_[12-19%2]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-basin
+202222_12|RUNNING|4:56:15|1-00:00:00|ngu104|N22-eval-now
+202222_13|RUNNING|4:45:03|1-00:00:00|ngu102|N22-eval-now
+202222_[14-29%2]|PENDING|0:00|1-00:00:00|(JobArrayTaskLimit)|N22-eval-now
+202226_[0-119%4]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-later
+202227_[0-9%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-basin-da
+202228_[0-659%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-hyper
+202229|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-eval
+202230|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-hyper
+202238_[0-19%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-bs-direct
+202293|PENDING|0:00|1-00:00:00|(JobHeldUser)|N22-manifest
+202294|PENDING|0:00|4:00:00|(Dependency)|N22-export
+202315|PENDING|0:00|2:00:00|(Dependency)|N22-gate
+
+=== FROZEN SAFETY BOUNDARY ===
+registered_matrix_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T11:02:14+0800
