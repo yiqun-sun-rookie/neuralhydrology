@@ -1,0 +1,22 @@
+### channel=autoresearch-64 seq=57
+### host=login4
+### started=2026-08-11T11:27:39+0800
+### ---------- output ----------
+=== READ-ONLY PREFLIGHT ===
+preflight=pass basins=8 protocols=2 sealed_final_evaluation_present=false
+=== SUBMIT THREE-CANDIDATE REHEARSAL ===
+jobid=202551
+=== WAIT FOR EXACT JOB ===
+=== JOB ACCOUNTING ===
+       JobID              JobName  NodeList          State ExitCode    Elapsed 
+------------ -------------------- --------- -------------- -------- ---------- 
+      202551          a64-auto3x8    icn201         FAILED      1:0   00:00:01 
+final_state=FAILED final_exit=1:0
+=== EXACT JOB LOGS ===
+=== STABLE ATTEMPT OUTPUT ===
+=== VERIFY IMMUTABLE SOURCE SNAPSHOT ===
+=== STABLE ATTEMPT ERROR ===
+HOLD job_failed_or_unfinished jobid=202551 state=FAILED exit=1:0
+### ---------- end ----------
+### exit_code=12
+### finished=2026-08-11T11:27:50+0800
