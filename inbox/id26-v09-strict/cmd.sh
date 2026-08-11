@@ -1,49 +1,65 @@
 #!/bin/bash
-# id26-v09-strict seq=53 : create the isolated audit checkout and submit the 24-run audit.
+# id26-v09-strict seq=54 : query the submitted 24-run training audit once.
 set -euo pipefail
 export LC_ALL=C
 ROOT=/data1/home/sunyiq/v09_strict
 AUDIT_PARENT=$ROOT/audit_v09
-AUDIT_REPO=$AUDIT_PARENT/neuralhydrology
 TRAIN_REPO=$ROOT/codetest/neuralhydrology
-STRICT_REPO=$ROOT/neuralhydrology
-COMMIT=31ff9ebe3814e088fd623b836f4a802ddab856cd
-BRANCH=codex/historical-band-experts-pilot
-REMOTE=https://github.com/yiqun-sun-rookie/neuralhydrology.git
-JOBID_FILE=$AUDIT_PARENT/training_audit_jobid.txt
-export PATH=$ROOT/gitenv/bin:$PATH
-
-echo "=== A FROZEN CHECKOUTS ==="
-echo "training_head=$(git -C "$TRAIN_REPO" rev-parse HEAD)"
-echo "strict_head=$(git -C "$STRICT_REPO" rev-parse HEAD)"
-test "$(git -C "$TRAIN_REPO" rev-parse HEAD)" = bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
-test "$(git -C "$STRICT_REPO" rev-parse HEAD)" = f94183209bf44ed6e672e1c23f98020905804e6d
-
-echo "=== B ISOLATED AUDIT CHECKOUT ==="
-mkdir -p "$AUDIT_PARENT"
-if [ -e "$AUDIT_REPO" ]; then
-  test -d "$AUDIT_REPO/.git"
-  test -z "$(git -C "$AUDIT_REPO" status --porcelain --untracked-files=all)"
-else
-  git clone -q --no-checkout "$REMOTE" "$AUDIT_REPO"
-fi
-git -C "$AUDIT_REPO" fetch -q origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH"
-test "$(git -C "$AUDIT_REPO" rev-parse "refs/remotes/origin/$BRANCH")" = "$COMMIT"
-git -C "$AUDIT_REPO" checkout -q --detach "$COMMIT"
-test "$(git -C "$AUDIT_REPO" rev-parse HEAD)" = "$COMMIT"
-test -z "$(git -C "$AUDIT_REPO" status --porcelain --untracked-files=all)"
-echo "audit_head=$(git -C "$AUDIT_REPO" rev-parse HEAD)"
-
-echo "=== C AUDIT PRECONDITIONS ==="
 FORMAL_ROOT=$TRAIN_REPO/results/26_historical_band_experts/formal_v09
-test ! -e "$FORMAL_ROOT/training_external_audit.json"
-test ! -e "$FORMAL_ROOT/state_diagnostics"
-test ! -e "$JOBID_FILE"
-test -f "$AUDIT_REPO/src/26_historical_band_experts/hpc/audit_formal_training_v09.slurm"
+JOBID_FILE=$AUDIT_PARENT/training_audit_jobid.txt
+REPORT=$FORMAL_ROOT/training_external_audit.json
 
-echo "=== D SUBMIT TRAINING AUDIT ==="
-JID=$(sbatch --parsable "$AUDIT_REPO/src/26_historical_band_experts/hpc/audit_formal_training_v09.slurm")
-printf '%s\n' "$JID" > "$JOBID_FILE"
+JID=$(tr -d '[:space:]' < "$JOBID_FILE")
+test "$JID" = 202586
+OUT=$ROOT/logs/training_audit_${JID}.out
+ERR=$ROOT/logs/training_audit_${JID}.err
+
+echo "=== A JOB ==="
 echo "TRAINING_AUDIT_JOBID=$JID"
-squeue -j "$JID" -o '%.12i %.18j %.10T %.12M %.24R'
+squeue -j "$JID" -o '%.12i %.18j %.10T %.12M %.24R' || true
+sacct -X -j "$JID" --starttime 2026-08-11 --format=JobIDRaw,JobName%20,State,ExitCode,Elapsed,Start,End,NodeList -P
+
+echo "=== B LOG FILES ==="
+find "$ROOT/logs" -maxdepth 1 -type f \( -name "training_audit_${JID}.out" -o -name "training_audit_${JID}.err" \) -printf '%p %s bytes\n' | sort
+echo "--- stdout tail ---"
+if [ -f "$OUT" ]; then tail -n 80 "$OUT"; else echo "MISSING $OUT"; fi
+echo "--- stderr tail ---"
+if [ -f "$ERR" ]; then tail -n 80 "$ERR"; else echo "MISSING $ERR"; fi
+
+echo "=== C REPORT SUMMARY ==="
+python - "$REPORT" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+print(f"report_present={str(path.is_file()).lower()}")
+if path.is_file():
+    data = json.loads(path.read_text(encoding="utf-8"))
+    runs = data.get("runs", [])
+    checkpoint_count = sum(len(run.get("checkpoints", [])) for run in runs)
+    nonfinite_count = sum(run.get("nonfinite_tensor_count", 0) for run in runs)
+    summary = {
+        "schema": data.get("schema"),
+        "status": data.get("status"),
+        "coverage": data.get("coverage"),
+        "checkpoint_count": checkpoint_count,
+        "expected_checkpoint_count": 72,
+        "nonfinite_tensor_count": nonfinite_count,
+        "all_checkpoint_tensors_finite": data.get("all_checkpoint_tensors_finite"),
+        "formal_evaluation_observation_reads": data.get("formal_evaluation_observation_reads"),
+        "formal_period_predictions_generated": data.get("formal_period_predictions_generated"),
+        "official_score_called": data.get("official_score_called"),
+        "validation_metrics_computed": data.get("validation_metrics_computed"),
+        "training_git_commit": data.get("source_context", {}).get("training_git_commit"),
+        "audit_git_commit": data.get("audit_source_context", {}).get("git_commit"),
+        "audit_source_clean": data.get("audit_source_context", {}).get("tracked_source_clean"),
+        "pre_seal_evidence": data.get("pre_seal_evidence"),
+    }
+    print(json.dumps(summary, sort_keys=True, separators=(",", ":")))
+PY
+if [ -f "$REPORT" ]; then sha256sum "$REPORT"; fi
+
+echo "=== D DOWNSTREAM ABSENCE ==="
+find "$FORMAL_ROOT" -maxdepth 2 -type f \( -name 'training_seal.json' -o -name 'state_diagnostics_root_manifest.json' -o -name 'state_diagnostics_external_audit.json' \) -print
 echo "=== END ==="
