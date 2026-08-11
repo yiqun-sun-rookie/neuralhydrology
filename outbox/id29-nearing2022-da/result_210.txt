@@ -1,0 +1,167 @@
+### channel=id29-nearing2022-da seq=210
+### host=login4
+### started=2026-08-11T17:57:33+0800
+### ---------- output ----------
+{
+  "core_vs_existing_extras_missing_set_identical": true,
+  "evaluation_complete": 16,
+  "existing_extra_files": 293,
+  "historical_two_role_delta_explained": true,
+  "immediate_repeated_audits_identical": true,
+  "missing_by_coordinate_type": {
+    "aggregation": 9,
+    "evaluation": 804,
+    "hyperparameter": 4620,
+    "training": 34
+  },
+  "missing_extra_files": [
+    "/data1/home/sunyiq/nearing2022_da/requirements-gpu.txt",
+    "/data1/home/sunyiq/nearing2022_da/setup.cfg"
+  ],
+  "missing_roles_total": 5467,
+  "missing_roles_with_requested_provenance": 5469,
+  "provenance_only_missing_roles": 2,
+  "registered_closure_complete": false,
+  "registered_matrix_modified": false,
+  "registry_counts": {
+    "evaluations": 180,
+    "hyperparameters": 660,
+    "training": 46
+  },
+  "requested_extra_files": 295,
+  "requested_vs_core_delta_matches_missing_extra_files": true,
+  "schema": "nearing2022-live-missing-role-delta-diagnostic-v2",
+  "sequence_207_reported_core_missing_roles": 5467,
+  "sequence_208_reported_final_preflight_missing_roles": 5469,
+  "target_details": {
+    "N22-EVAL-TS-DA-L04-TE025-S0": {
+      "missing": [
+        {
+          "error": "",
+          "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE025-S0/test/model_epoch030/test_metrics_data_assimilation.csv",
+          "role": "metrics"
+        },
+        {
+          "error": "",
+          "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE025-S0/test/model_epoch030/test_results_data_assimilation.p",
+          "role": "prediction"
+        }
+      ],
+      "present": [
+        {
+          "bytes": 2842,
+          "modified_time_ns": 1786438653000000000,
+          "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE025-S0/config.yml",
+          "roles": [
+            "run_config"
+          ]
+        },
+        {
+          "bytes": 1228165,
+          "modified_time_ns": 1786182690000000000,
+          "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE025-S0/model_epoch030.pt",
+          "roles": [
+            "checkpoint_epoch030"
+          ]
+        },
+        {
+          "bytes": 362,
+          "modified_time_ns": 1786438739000000000,
+          "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE025-S0/output.log",
+          "roles": [
+            "evaluation_log"
+          ]
+        },
+        {
+          "bytes": 73071,
+          "modified_time_ns": 1786183625000000000,
+          "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv",
+          "roles": [
+            "reference_metrics"
+          ]
+        },
+        {
+          "bytes": 47014459,
+          "modified_time_ns": 1786183625000000000,
+          "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+          "roles": [
+            "reference_prediction"
+          ]
+        }
+      ],
+      "registered_run_dir": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE025-S0"
+    },
+    "N22-EVAL-TS-DA-L04-TE050-S0": {
+      "missing": [
+        {
+          "error": "",
+          "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_metrics_data_assimilation.csv",
+          "role": "metrics"
+        },
+        {
+          "error": "",
+          "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_results_data_assimilation.p",
+          "role": "prediction"
+        }
+      ],
+      "present": [
+        {
+          "bytes": 2841,
+          "modified_time_ns": 1786439195000000000,
+          "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/config.yml",
+          "roles": [
+            "run_config"
+          ]
+        },
+        {
+          "bytes": 1228165,
+          "modified_time_ns": 1786182690000000000,
+          "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/model_epoch030.pt",
+          "roles": [
+            "checkpoint_epoch030"
+          ]
+        },
+        {
+          "bytes": 362,
+          "modified_time_ns": 1786439277000000000,
+          "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/output.log",
+          "roles": [
+            "evaluation_log"
+          ]
+        },
+        {
+          "bytes": 73071,
+          "modified_time_ns": 1786183625000000000,
+          "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv",
+          "roles": [
+            "reference_metrics"
+          ]
+        },
+        {
+          "bytes": 47014459,
+          "modified_time_ns": 1786183625000000000,
+          "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p",
+          "roles": [
+            "reference_prediction"
+          ]
+        }
+      ],
+      "registered_run_dir": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0"
+    }
+  },
+  "time_split_complete": 16
+}
+=== ACTIVE EVALUATION RECORDS ===
+202222_16|RUNNING|0:0|01:00:55|2026-08-11T16:57:24|Unknown
+202222_16.batch|RUNNING|0:0|01:00:55|2026-08-11T16:57:24|Unknown
+202222_16.extern|RUNNING|0:0|01:00:55|2026-08-11T16:57:24|Unknown
+202222_17|RUNNING|0:0|00:51:54|2026-08-11T17:06:25|Unknown
+202222_17.batch|RUNNING|0:0|00:51:54|2026-08-11T17:06:25|Unknown
+202222_17.extern|RUNNING|0:0|00:51:54|2026-08-11T17:06:25|Unknown
+=== FROZEN STATES ===
+202510|N22-data-port-v2|PENDING|0:0|00:00:00|Dependency
+202511|N22-mask-iso-v2|PENDING|0:0|00:00:00|Dependency
+registered_matrix_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T17:58:19+0800
