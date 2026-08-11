@@ -1,0 +1,47 @@
+### channel=id17-film-gate seq=28
+### host=login4
+### started=2026-08-11T13:51:15+0800
+### ---------- output ----------
+=== WAIT FOR 202560 (max 100 min) ===
+t=10min state=RUNNING
+t=20min state=RUNNING
+t=30min state=RUNNING
+t=40min state=RUNNING
+t=50min state=RUNNING
+       JobID        State ExitCode    Elapsed 
+------------ ------------ -------- ---------- 
+      202560    COMPLETED      0:0   00:54:42 
+2026-08-11 14:40:42,695: Stored metrics at runs/gate_film_fold3_seed1_2026_0809_1251_ep30/test/model_epoch010/test_metrics.csv
+2026-08-11 14:40:42,747: Stored results at runs/gate_film_fold3_seed1_2026_0809_1251_ep30/test/model_epoch010/test_results.p
+[SEL-EVALS DONE]
+=== VALIDATION-SELECTED VERDICT ===
+cell                      EA sel/test  FiLM sel/test  dArch_sel
+fold0 seed0:        ep10 0.6035    ep10 0.6294   +0.0259
+fold0 seed1:        ep10 0.6151    ep20 0.6188   +0.0037
+fold1 seed0:        ep20 0.6563    ep10 0.6435   -0.0128
+fold1 seed1:        ep10 0.6722    ep30 0.6615   -0.0107
+fold2 seed0:        ep10 0.6596    ep10 0.6717   +0.0121
+fold2 seed1:        ep10 0.6503    ep10 0.6754   +0.0251
+fold3 seed0:        ep10 0.6371    ep10 0.6317   -0.0054
+fold3 seed1:        ep30 0.6182    ep10 0.6260   +0.0078
+fold4 seed0:        ep10 0.6310    ep20 0.6256   -0.0053
+fold4 seed1:        ep20 0.6463    ep20 0.6277   -0.0186
+
+per-fold dArch (validation-selected): {0: 0.0148, 1: -0.0117, 2: 0.0186, 3: 0.0012, 4: -0.012}
+mean over folds = +0.0022   signs ['+', '-', '+', '+', '-']
+sign-test p = 1.000
+
+--- ORACLE (best test epoch per cell — upper bound, not a protocol) ---
+fold0: dArch_oracle = -0.0032
+fold1: dArch_oracle = -0.0005
+fold2: dArch_oracle = +0.0163
+fold3: dArch_oracle = +0.0012
+fold4: dArch_oracle = -0.0041
+oracle means: EA 0.6441  FiLM 0.6460  diff +0.0019
+
+selected-epoch histogram: EA [10, 10, 10, 10, 10, 10, 10, 20, 20, 30]  FiLM [10, 10, 10, 10, 10, 10, 20, 20, 20, 30]
+=== SHIP NEW ep10 CSVs ===
+shipped 13 ep10 csvs
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T14:41:33+0800
