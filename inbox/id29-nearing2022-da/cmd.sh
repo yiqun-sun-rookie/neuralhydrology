@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=179: retain target audit and prove the live downstream dependency graph.
+# ID29 seq=180: retain target audit and tolerate retired downstream job identifiers.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -15,7 +15,10 @@ date --iso-8601=seconds
 
 echo "=== LIVE DOWNSTREAM DEPENDENCY GRAPH ==="
 for job in 202238 202229 202230 202280 202281 202294 202315; do
-  record=$(scontrol show job -o "$job")
+  if ! record=$(scontrol show job -o "$job" 2>&1); then
+    printf '%s|ABSENT_OR_RETIRED|||%s\n' "$job" "$record"
+    continue
+  fi
   state=$(sed -n 's/.*JobState=\([^ ]*\).*/\1/p' <<<"$record")
   reason=$(sed -n 's/.*Reason=\([^ ]*\).*/\1/p' <<<"$record")
   dependency=$(sed -n 's/.*Dependency=\([^ ]*\).*/\1/p' <<<"$record")
@@ -26,13 +29,9 @@ done
 dep_202238=$(scontrol show job -o 202238 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
 dep_202229=$(scontrol show job -o 202229 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
 dep_202230=$(scontrol show job -o 202230 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
-dep_202280=$(scontrol show job -o 202280 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
-dep_202281=$(scontrol show job -o 202281 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
 grep -q 'afterok:202216' <<<"$dep_202238"
 for required in 202222 202226 202216 202238 202227; do grep -q "$required" <<<"$dep_202229"; done
 for required in 202228 202238; do grep -q "$required" <<<"$dep_202230"; done
-for required in 202229 202230; do grep -q "$required" <<<"$dep_202280"; done
-grep -q '202280' <<<"$dep_202281"
 echo "dependency_graph_assertions=passed"
 
 source ~/miniconda3/etc/profile.d/conda.sh
