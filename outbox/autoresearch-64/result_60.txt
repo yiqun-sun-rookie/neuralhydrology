@@ -1,0 +1,29 @@
+### channel=autoresearch-64 seq=60
+### host=login4
+### started=2026-08-11T12:26:30+0800
+### ---------- output ----------
+=== COMPLETED JOB ===
+       JobID              JobName  NodeList          State ExitCode    Elapsed                Start                  End 
+------------ -------------------- --------- -------------- -------- ---------- -------------------- -------------------- 
+      202556       a64-auto3x8-r1    icn201      COMPLETED      0:0   00:10:52  2026-08-11T12:13:30  2026-08-11T12:24:22 
+=== IMMUTABLE EVIDENCE FILES ===
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/FULL_GATE.json|bytes=209|mtime=2026-08-11 12:21:41.000000000 +0800
+f793d7386d5cdd079c84c4407199dff2cca488be7d6034fbe28500963f4ecb82  /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/FULL_GATE.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/PACKAGE_GATE.json|bytes=551|mtime=2026-08-11 12:21:41.000000000 +0800
+77a7d4a40bbf86ed30b91759511f7e8b6de6d32d896f89bbfce306da9432b573  /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/PACKAGE_GATE.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/rehearsal/PROPOSAL_REGISTRY.json|bytes=1844|mtime=2026-08-11 12:21:42.000000000 +0800
+af5bec6ad030d933934ee2a1ea4f7710acb6713db032b26ea291f09bb11d81f5  /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/rehearsal/PROPOSAL_REGISTRY.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/rehearsal/REHEARSAL_SUMMARY.json|bytes=86624|mtime=2026-08-11 12:24:20.000000000 +0800
+14b95b5b15c9b36898e79417a0198e16024ee1d8fe70b94f3db1d2bb02d9c5e5  /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/rehearsal/REHEARSAL_SUMMARY.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/REHEARSAL_EVIDENCE.json|bytes=14868|mtime=2026-08-11 12:24:21.000000000 +0800
+7bb8d23ea03b0cffc0390c4fb6993fd2f6449cc65a47d1674771971a241a723e  /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/REHEARSAL_EVIDENCE.json
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/MANIFEST.sha256|bytes=117046|mtime=2026-08-11 12:24:22.000000000 +0800
+c000f729125676a4adc7a2097f38bacda4873a5fa10dcbafc13082734abd5a46  /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/MANIFEST.sha256
+=== COMPLETE MANIFEST CHECK ===
+manifest_check=ok entries=810
+=== INDEPENDENT SUMMARY ===
+{"candidate_count": 3, "cell_count": 24, "dependency_versions": {"numpy": "1.26.4", "pandas": "2.2.3", "pyarrow": "17.0.0"}, "experiment_id": "automatic_rehearsal_8x3_20260811_seq59", "full_test_gate": {"candidate_launch_allowed": true, "errors": 0, "failures": 0, "passed": 291, "process_exit_code": 0, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 8, "tests": 299}, "independently_counted_denials": 0, "independently_recomputed_median_mean_nse": {"hbv-lite-calibrated-v1": 0.33826309576997576, "reference-deep-learning-v1": -0.17988407821406893, "reference-fusion-v1": 0.0504941725368995}, "independently_recomputed_ranking": ["hbv-lite-calibrated-v1", "reference-fusion-v1", "reference-deep-learning-v1"], "job_id": "202556", "normalized_exit_codes": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "process_exit_codes": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "protocol_basin_metric_count": 48, "recommended_candidate_id": "hbv-lite-calibrated-v1", "required_outputs_complete": [true, true, true, true, true, true, true, true, true, true, true, true], "retry_of_job_id": "202551", "runtime_count": 12, "score_report_count": 6}
+GO read_only_reverification=pass
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T12:26:30+0800
