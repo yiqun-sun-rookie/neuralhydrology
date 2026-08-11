@@ -1,6 +1,34 @@
 #!/bin/bash
-# ID29 seq=260: bounded native-stack diagnostic for training job 202214.
+# ID29 seq=261: read-only requeue capability, output-mode, and dependency preflight for job 202214.
 set -eo pipefail
+
+echo '=== REQUEUE PREFLIGHT START ==='
+date --iso-8601=seconds
+echo '=== SCONTROL HELP FILTER ==='
+scontrol --help 2>&1 | grep -Ei 'requeue|hold|release|update' || true
+echo '=== SLURM REQUEUE AND OUTPUT CONFIG ==='
+scontrol show config | grep -Ei 'JobRequeue|JobFileAppend|SlurmctldVersion|SchedulerType' || true
+echo '=== SBATCH REQUEUE OPTIONS ==='
+sbatch --help 2>&1 | grep -Ei -- '--requeue|--no-requeue|--open-mode' || true
+echo '=== RELEVANT JOB DEPENDENCY RECORDS ==='
+for candidate_job in 202214 202215 202216 202222 202226 202227 202228 202229 202230 202238 202293 202294 202315 202510 202511; do
+  scontrol show job -o "$candidate_job" || true
+done
+echo '=== CURRENT REGISTERED SOURCE CANDIDATES ==='
+output_parent='/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression'
+while IFS= read -r candidate_dir; do
+  if [[ -f "$candidate_dir/model_epoch030.pt" ]]; then
+    checkpoint030=yes
+  else
+    checkpoint030=no
+  fi
+  printf '%s|checkpoint030=%s\n' "$candidate_dir" "$checkpoint030"
+done < <(find "$output_parent" -mindepth 1 -maxdepth 1 -type d \
+  -name 'nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_*_ep30' -print | sort)
+echo '=== REQUEUE PREFLIGHT END ==='
+date --iso-8601=seconds
+echo 'read_only=true'
+exit 0
 
 export LC_ALL=C
 JOB_ID=202214
