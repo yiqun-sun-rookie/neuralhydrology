@@ -1,0 +1,188 @@
+{
+  "assessment": {
+    "automatic_experiment_id": "automatic_rehearsal_8x3_20260811_seq59",
+    "candidate_id": "hbv-lite-calibrated-v1",
+    "promotion_decision": "HOLD",
+    "prospective_failures": [
+      "automatic recommendation timestamp source is not trusted",
+      "scale evidence timestamp source is not trusted",
+      "scale validation started before the recommendation was finalized",
+      "scale evidence was created before the recommendation was finalized",
+      "scale result was available during proposal or development selection"
+    ],
+    "prospective_independence_gate": "HOLD",
+    "scale_experiment_id": "hbv_lite_64_hpc_reproduction_20260810_seq48",
+    "schema_version": "promotion_assessment_v1",
+    "technical_failures": [],
+    "technical_scaleup_gate": "PASS"
+  },
+  "audit_context": {
+    "automatic_rehearsal_metrics": {
+      "basin_count": 8,
+      "median_mean_nse": 0.33826309576997576
+    },
+    "dependency_versions": {
+      "NumPy": "1.26.4",
+      "Pandas": "2.2.3",
+      "PyArrow": "17.0.0"
+    },
+    "discarded_prospective_attempts": [
+      {
+        "candidate_execution_started": false,
+        "failure": "derived script contained a literal +echo command",
+        "job_id": "202557",
+        "promotion_evidence_created": false,
+        "scheduler_exit_code": "127:0",
+        "scheduler_state": "FAILED"
+      },
+      {
+        "candidate_execution_started": false,
+        "failure": "mailbox command could not read the historical submission template",
+        "mailbox_exit_code": 1,
+        "mailbox_sequence": 64,
+        "promotion_evidence_created": false,
+        "scheduler_job_created": false
+      }
+    ],
+    "evidence_comparison_query": {
+      "channel": "autoresearch-64",
+      "exit_code": 0,
+      "mailbox_result": "outbox/autoresearch-64/result_61.txt",
+      "sequence": 61
+    },
+    "job_provenance": {
+      "automatic_rehearsal": {
+        "elapsed": "00:10:52",
+        "end": "2026-08-11T12:24:22+08:00",
+        "exit_code": "0:0",
+        "job_id": "202556",
+        "start": "2026-08-11T12:13:30+08:00",
+        "state": "COMPLETED"
+      },
+      "scale_validation": {
+        "elapsed": "00:22:12",
+        "end": "2026-08-10T18:01:01+08:00",
+        "exit_code": "0:0",
+        "job_id": "202321",
+        "start": "2026-08-10T17:38:49+08:00",
+        "state": "COMPLETED"
+      }
+    },
+    "manifest_checks": {
+      "automatic_entry_count": 810,
+      "automatic_manifest_check": "PASS",
+      "scale_entry_count": 533,
+      "scale_manifest_check": "PASS"
+    },
+    "prospective_equivalence_boundary": {
+      "equivalent_result_known_before_retry": true,
+      "equivalence_scope": "same candidate, seed 29, 64-basin set, forward and reverse protocols, and nine runtime source hashes",
+      "known_result_job_id": "202321",
+      "known_result_manifest_sha256": "2702f7c59890872cecea4947ca60ef266935eaadf8097b4ebed9022e26a2ed13",
+      "same_deterministic_rerun_can_pass_prospective_gate": false
+    },
+    "runtime_source_hashes": {
+      "src/unified_autoresearch/candidates/catalog.py": "4de5b2e5fff9e834b2ccefad67f796fc6b9cf441d6d203ec7120f8df0a2b36d8",
+      "src/unified_autoresearch/candidates/implementations/hbv_lite.py": "eeb8933ff6a52678a2d8576becae5f117bf44468c9aede69eb6cac66072df6e6",
+      "src/unified_autoresearch/data/packages.py": "e33483fb869ed0ac002b2d6cad0d2ef3992fceb97d93be334a210dcdcecda72e",
+      "src/unified_autoresearch/runtime/bootstrap.py": "647debd07c081eb693af17478f187cec2bcb1a395389be79a9d492d39a8e66e6",
+      "src/unified_autoresearch/runtime/dependencies.py": "764de2084f30e5e518c30e7f6ebc1d5074564216dafd43fc94fc33e0b6478484",
+      "src/unified_autoresearch/runtime/runner.py": "50d82fe4e139eea10461cad720aea3f8f6f61aa27924ad221208ecf1604b7831",
+      "src/unified_autoresearch/scripts/run_single_candidate.py": "455d10e3431b6573290727bc389ba3857f3912333dcabdaa0b4fd7c5cd31c965",
+      "src/unified_autoresearch/selection/development_basins_64_v1.json": "3d75df6cfce527b8f6580a9dcfe0eacccb65c8bd7aae987ce23ead462ab00e53",
+      "src/unified_autoresearch/workflow/candidate_development.py": "b7dc47bdcf55135a78cf7e1e8ee85e9108c7866cb9fa383617f557d6f1829f6f"
+    },
+    "scale_validation_metrics": {
+      "all_64_basins": {
+        "maximum_mean_nse": 0.8864327627041511,
+        "median_mean_nse": 0.5022568476184368,
+        "minimum_mean_nse": -8.627963014524003,
+        "positive_mean_nse_count": 54
+      },
+      "standard_53_basins": {
+        "median_mean_nse": 0.5456194110972769,
+        "positive_mean_nse_count": 46
+      },
+      "unstable_11_basins": {
+        "median_mean_nse": 0.32027179570466113,
+        "positive_mean_nse_count": 8
+      }
+    },
+    "scope_boundary": {
+      "baseline_outperformance_claimed": false,
+      "fair_benchmark_scoring_program_run": false,
+      "formal_basin_search_run": false,
+      "identical_rerun_claimed_as_prospective_confirmation": false,
+      "sealed_final_evaluation_read_or_scored": false,
+      "technical_scaleup_pass_is_scientific_superiority": false
+    }
+  },
+  "record": {
+    "artifacts": {
+      "automatic_evidence_path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/REHEARSAL_EVIDENCE.json",
+      "automatic_evidence_sha256": "7bb8d23ea03b0cffc0390c4fb6993fd2f6449cc65a47d1674771971a241a723e",
+      "automatic_manifest_sha256": "c000f729125676a4adc7a2097f38bacda4873a5fa10dcbafc13082734abd5a46",
+      "scale_evidence_path": "/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_hpc_reproduction_20260810_seq48/evidence/REPRODUCTION_SUMMARY.json",
+      "scale_evidence_sha256": "169b344b9ebaac799db740c83e75bc8ff5cc824359297eb384fef752ffde6532",
+      "scale_manifest_sha256": "2702f7c59890872cecea4947ca60ef266935eaadf8097b4ebed9022e26a2ed13"
+    },
+    "automatic_recommendation": {
+      "candidate_id": "hbv-lite-calibrated-v1",
+      "experiment_id": "automatic_rehearsal_8x3_20260811_seq59",
+      "finalized_at": "2026-08-11T12:24:21+08:00",
+      "job_id": "202556",
+      "timestamp_source": "filesystem_mtime"
+    },
+    "identity_checks": {
+      "allowed_reads_equal": true,
+      "category_equal": true,
+      "dependencies_equal": true,
+      "outputs_equal": true,
+      "runtime_source_file_count": 9,
+      "runtime_source_hashes_equal": true,
+      "seed_equal": true
+    },
+    "scale_validation": {
+      "basin_count": 64,
+      "candidate_id": "hbv-lite-calibrated-v1",
+      "denied_event_count": 0,
+      "evidence_created_at": "2026-08-10T18:01:00+08:00",
+      "evidence_created_at_source": "filesystem_mtime",
+      "experiment_id": "hbv_lite_64_hpc_reproduction_20260810_seq48",
+      "job_id": "202321",
+      "normalized_exit_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "process_exit_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "protected_boundaries": {
+        "baseline_outperformance_claimed": false,
+        "fair_benchmark_scoring_program_run": false,
+        "formal_basin_search_run": false,
+        "sealed_final_evaluation_read_or_scored": false
+      },
+      "registered_run_count": 4,
+      "required_outputs_complete": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "result_available_during_proposal": true,
+      "runtime_count": 4,
+      "score_report_count": 2,
+      "seed": 29,
+      "started_at": "2026-08-10T17:38:49+08:00",
+      "started_at_source": "slurm_accounting"
+    },
+    "schema_version": "promotion_evidence_record_v1"
+  },
+  "schema_version": "promotion_audit_v1"
+}

@@ -42,7 +42,30 @@ FROZEN_DEVELOPMENT_SELECTION_64 = {
         "08189500",
     ],
 }
-FROZEN_DEVELOPMENT_SELECTIONS = (FROZEN_DEVELOPMENT_SELECTION, FROZEN_DEVELOPMENT_SELECTION_64)
+FROZEN_DEVELOPMENT_CONFIRMATION_SELECTION_64 = {
+    "schema_version": 1,
+    "selection_method": "deterministic_standardized_farthest_point_block_v1",
+    "selection_inputs": "static attributes only; no discharge or model results",
+    "static_sha256": "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2",
+    "eligible_basins_sha256": "cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85",
+    "historical_selection_sha256": "3d75df6cfce527b8f6580a9dcfe0eacccb65c8bd7aae987ce23ead462ab00e53",
+    "selection_rank_range": [65, 128],
+    "basins": [
+        "05507600", "06278300", "14166500", "02349900", "01078000", "06280300", "11124500", "04127918",
+        "02108000", "01594950", "06479215", "08101000", "14316700", "06404000", "06601000", "14303200",
+        "09484600", "11237500", "08023080", "05408000", "11284400", "09312600", "12381400", "12447390",
+        "01440400", "12189500", "06885500", "08196000", "06447500", "07263295", "13023000", "03604000",
+        "02381600", "06221400", "11532500", "04015330", "07299670", "09505350", "12048000", "09497980",
+        "08380500", "11176400", "05057200", "04127997", "14362250", "12411000", "13235000", "03368000",
+        "01632900", "07180500", "07346045", "01669000", "06440200", "08014500", "09081600", "09492400",
+        "08171300", "11523200", "06332515", "02384540", "04040500", "03346000", "02298123", "06311000",
+    ],
+}
+FROZEN_DEVELOPMENT_SELECTIONS = (
+    FROZEN_DEVELOPMENT_SELECTION,
+    FROZEN_DEVELOPMENT_SELECTION_64,
+    FROZEN_DEVELOPMENT_CONFIRMATION_SELECTION_64,
+)
 
 
 def load_frozen_selection(selection_path: str | Path) -> dict:

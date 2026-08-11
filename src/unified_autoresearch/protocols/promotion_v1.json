@@ -1,0 +1,25 @@
+{
+  "protected_boundary_fields": [
+    "sealed_final_evaluation_read_or_scored",
+    "fair_benchmark_scoring_program_run",
+    "formal_basin_search_run",
+    "baseline_outperformance_claimed"
+  ],
+  "equivalent_result_scope": "same_candidate_seed_basin_set_protocols_and_runtime_sources_v1",
+  "required_runtime_source_file_count": 9,
+  "required_scale_basin_count": 64,
+  "required_scale_registered_run_count": 4,
+  "required_scale_runtime_count": 4,
+  "required_scale_score_report_count": 2,
+  "required_scale_seed": 29,
+  "schema_version": "promotion_policy_v1",
+  "trusted_recommendation_timestamp_sources": [
+    "immutable_registry_receipt"
+  ],
+  "trusted_scale_evidence_timestamp_sources": [
+    "immutable_manifest_receipt"
+  ],
+  "trusted_scale_start_timestamp_sources": [
+    "slurm_accounting"
+  ]
+}

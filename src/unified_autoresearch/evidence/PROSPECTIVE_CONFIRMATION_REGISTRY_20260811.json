@@ -1,0 +1,85 @@
+{
+  "automatic_recommendation": {
+    "evidence_sha256": "7bb8d23ea03b0cffc0390c4fb6993fd2f6449cc65a47d1674771971a241a723e",
+    "experiment_id": "automatic_rehearsal_8x3_20260811_seq59",
+    "job_id": "202556",
+    "recommended_candidate_id": "hbv-lite-calibrated-v1"
+  },
+  "candidate": {
+    "candidate_id": "hbv-lite-calibrated-v1",
+    "category": "conceptual_rainfall_runoff",
+    "seed": 29
+  },
+  "candidate_count": 1,
+  "candidate_runtime_source_sha256": {
+    "src/unified_autoresearch/candidates/catalog.py": "4de5b2e5fff9e834b2ccefad67f796fc6b9cf441d6d203ec7120f8df0a2b36d8",
+    "src/unified_autoresearch/candidates/implementations/hbv_lite.py": "eeb8933ff6a52678a2d8576becae5f117bf44468c9aede69eb6cac66072df6e6",
+    "src/unified_autoresearch/data/packages.py": "e33483fb869ed0ac002b2d6cad0d2ef3992fceb97d93be334a210dcdcecda72e",
+    "src/unified_autoresearch/runtime/bootstrap.py": "647debd07c081eb693af17478f187cec2bcb1a395389be79a9d492d39a8e66e6",
+    "src/unified_autoresearch/runtime/dependencies.py": "764de2084f30e5e518c30e7f6ebc1d5074564216dafd43fc94fc33e0b6478484",
+    "src/unified_autoresearch/runtime/runner.py": "50d82fe4e139eea10461cad720aea3f8f6f61aa27924ad221208ecf1604b7831",
+    "src/unified_autoresearch/scripts/run_single_candidate.py": "455d10e3431b6573290727bc389ba3857f3912333dcabdaa0b4fd7c5cd31c965",
+    "src/unified_autoresearch/selection/development_basins_64_v1.json": "3d75df6cfce527b8f6580a9dcfe0eacccb65c8bd7aae987ce23ead462ab00e53",
+    "src/unified_autoresearch/workflow/candidate_development.py": "b7dc47bdcf55135a78cf7e1e8ee85e9108c7866cb9fa383617f557d6f1829f6f"
+  },
+  "changed_factor": "basin_set",
+  "confirmation_result_available_at_freeze": false,
+  "dependencies": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "pyarrow": "17.0.0"
+  },
+  "experiment_id": "hbv_lite_unseen_64_confirmation_20260811_v1",
+  "fixed_factors": {
+    "candidate_method": true,
+    "candidate_seed": true,
+    "dependency_versions": true,
+    "development_date_bounds": [
+      "1999-10-01",
+      "2008-09-30"
+    ],
+    "development_protocol_sha256": "71d9cbbe26abf6008f853a7f8db2266e85c12e6e2b7c205871ee4c3dbd52d9bf",
+    "forcing_product": "maurer",
+    "prediction_information": "forcing plus 27 approved static attributes",
+    "protocols": [
+      "forward",
+      "reverse"
+    ],
+    "runtime_source_snapshot": "automatic_rehearsal_8x3_20260811_seq59"
+  },
+  "frozen_at": "2026-08-11T13:30:14+08:00",
+  "historical_equivalent_result_known": true,
+  "historical_scale_evidence": {
+    "basin_selection_sha256": "3d75df6cfce527b8f6580a9dcfe0eacccb65c8bd7aae987ce23ead462ab00e53",
+    "experiment_id": "hbv_lite_64_hpc_reproduction_20260810_seq48",
+    "job_id": "202321",
+    "manifest_sha256": "2702f7c59890872cecea4947ca60ef266935eaadf8097b4ebed9022e26a2ed13"
+  },
+  "planned_execution": {
+    "basin_count": 64,
+    "candidate_count": 1,
+    "high_performance_computing_channel": "autoresearch-64",
+    "new_output_root_required": true,
+    "registered_process_count": 4,
+    "score_report_count": 2
+  },
+  "protected_boundaries": {
+    "baseline_outperformance_claimed": false,
+    "fair_benchmark_scoring_program_run": false,
+    "formal_basin_search_run": false,
+    "sealed_final_evaluation_read_or_scored": false
+  },
+  "schema_version": "prospective_confirmation_registry_v1",
+  "selection": {
+    "historical_overlap_count": 0,
+    "path": "src/unified_autoresearch/selection/development_basins_confirmation_64_v1.json",
+    "rank_range": [
+      65,
+      128
+    ],
+    "result_dependent_inputs": false,
+    "selection_inputs": "static attributes only; no discharge or model results",
+    "sha256": "630c0fe47e7aabbecd24bfe4a4900b7a3d71f31c314af29a4e863d0428efae1f"
+  },
+  "source_parent_commit": "35b47a9d8d5a1b44e689c4b781a513c6a7e74711"
+}

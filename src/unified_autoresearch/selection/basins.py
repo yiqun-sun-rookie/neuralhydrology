@@ -114,6 +114,49 @@ def select_development_basins(static_path: str | Path, basin_path: str | Path, *
     return [basins[index] for index in chosen]
 
 
+def select_development_basin_block(
+    static_path: str | Path,
+    basin_path: str | Path,
+    *,
+    rank_start: int,
+    count: int,
+) -> list[str]:
+    """Return one contiguous, one-based block from the deterministic basin ordering."""
+    if (
+        not isinstance(rank_start, int)
+        or isinstance(rank_start, bool)
+        or not isinstance(count, int)
+        or isinstance(count, bool)
+        or rank_start < 1
+        or count < 1
+    ):
+        raise ValueError("selection rank range must contain positive integers")
+    rank_end = rank_start + count - 1
+    eligible_count = len(_eligible_basins(Path(basin_path).resolve()))
+    if rank_end > eligible_count:
+        raise ValueError("selection rank range exceeds the eligible basin count")
+    ranked = select_development_basins(static_path, basin_path, count=rank_end)
+    return ranked[rank_start - 1 : rank_end]
+
+
+def _write_json_exclusive(output_path: Path, record: dict) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary_name = tempfile.mkstemp(prefix=f".{output_path.name}.", suffix=".tmp", dir=output_path.parent)
+    temporary_path = Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as stream:
+            json.dump(record, stream, indent=2, sort_keys=True)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        try:
+            os.link(temporary_path, output_path)
+        except FileExistsError:
+            raise FileExistsError(output_path) from None
+    finally:
+        temporary_path.unlink(missing_ok=True)
+
+
 def freeze_selection(
     static_path: str | Path,
     basin_path: str | Path,
@@ -135,19 +178,47 @@ def freeze_selection(
         "eligible_basins_sha256": _sha256(basin_path),
         "basins": select_development_basins(static_path, basin_path, count=count),
     }
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    descriptor, temporary_name = tempfile.mkstemp(prefix=f".{output_path.name}.", suffix=".tmp", dir=output_path.parent)
-    temporary_path = Path(temporary_name)
-    try:
-        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as stream:
-            json.dump(record, stream, indent=2, sort_keys=True)
-            stream.write("\n")
-            stream.flush()
-            os.fsync(stream.fileno())
-        try:
-            os.link(temporary_path, output_path)
-        except FileExistsError:
-            raise FileExistsError(output_path) from None
-    finally:
-        temporary_path.unlink(missing_ok=True)
+    _write_json_exclusive(output_path, record)
+    return record
+
+
+def freeze_selection_block(
+    static_path: str | Path,
+    basin_path: str | Path,
+    historical_selection_path: str | Path,
+    output_path: str | Path,
+    *,
+    rank_start: int,
+    count: int,
+) -> dict:
+    """Freeze a result-independent basin block and bind it to the preceding historical prefix."""
+    static_path = Path(static_path).resolve()
+    basin_path = Path(basin_path).resolve()
+    historical_selection_path = Path(historical_selection_path).resolve()
+    output_path = Path(output_path).resolve()
+    if output_path.exists():
+        raise FileExistsError(output_path)
+    if not isinstance(rank_start, int) or isinstance(rank_start, bool) or rank_start < 2:
+        raise ValueError("selection rank range requires a preceding historical prefix")
+    selected = select_development_basin_block(
+        static_path,
+        basin_path,
+        rank_start=rank_start,
+        count=count,
+    )
+    historical = json.loads(historical_selection_path.read_text(encoding="utf-8"))
+    expected_prefix = select_development_basins(static_path, basin_path, count=rank_start - 1)
+    if historical.get("basins") != expected_prefix:
+        raise ValueError("historical selection does not match the preceding deterministic prefix")
+    record = {
+        "schema_version": 1,
+        "selection_method": "deterministic_standardized_farthest_point_block_v1",
+        "selection_inputs": "static attributes only; no discharge or model results",
+        "static_sha256": _sha256(static_path),
+        "eligible_basins_sha256": _sha256(basin_path),
+        "historical_selection_sha256": _sha256(historical_selection_path),
+        "selection_rank_range": [rank_start, rank_start + count - 1],
+        "basins": selected,
+    }
+    _write_json_exclusive(output_path, record)
     return record
