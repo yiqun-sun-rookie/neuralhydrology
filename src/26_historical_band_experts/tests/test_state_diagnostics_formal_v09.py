@@ -5,7 +5,9 @@ docs/technical/historical_multiscale_formal_v09_state_diagnostics_preregistratio
 any result was seen. The tests exist so that none of it can drift afterwards.
 """
 from pathlib import Path
+import json
 import sys
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -188,3 +190,192 @@ def test_replay_comparison_accepts_identical_and_rejects_drift(tmp_path):
     drifted["arrays"]["epoch010_panel_state_norms"]["raw_bytes_sha256"] = "0" * 64
     with pytest.raises(StateDiagnosticsError, match="epoch010_panel_state_norms"):
         compare_diagnostic_manifests_v09(first, drifted)
+
+
+def test_formal_state_kernel_maps_target_dates_and_never_needs_targets(monkeypatch):
+    import state_diagnostics_formal_v09 as diagnostics
+
+    dates = np.arange("1990-01-01", "2001-01-01", dtype="datetime64[D]")
+    target_dates = dates[-300:]
+    inputs = SimpleNamespace(
+        basins=("a", "b"),
+        dates=dates,
+        target_dates=target_dates,
+        forcing=np.zeros((2, len(dates), 5), dtype=np.float32),
+        statics=np.zeros((2, 27), dtype=np.float32),
+        scaler={"dynamic_center_float64": [0.0] * 5, "dynamic_scale_float64": [1.0] * 5},
+    )
+    assert not hasattr(inputs, "targets")
+    keys = np.ascontiguousarray(
+        np.stack((np.arange(300) % 2, np.arange(300)), axis=1).astype("<i4"))
+    calls = []
+
+    def fake_gather(_forcing, basins, positions):
+        calls.append((np.array(basins, copy=True), np.array(positions, copy=True)))
+        return np.zeros((len(basins), 3_562, 5), dtype=np.float32)
+
+    def fake_split(windows):
+        return {"history": torch.zeros((len(windows), 120, 7), dtype=torch.float32)}
+
+    def fake_states(_model, history, statics):
+        assert history.shape[0] == statics.shape[0]
+        values = torch.ones((history.shape[0], 2), dtype=torch.float32)
+        return {
+            "raw_hidden": values,
+            "raw_cell": values * 2,
+            "gated_hidden": values * 3,
+            "gated_cell": values * 4,
+        }
+
+    monkeypatch.setattr(diagnostics, "gather_causal_windows_v09", fake_gather, raising=False)
+    monkeypatch.setattr(diagnostics, "split_windows_v09", fake_split, raising=False)
+    monkeypatch.setattr(diagnostics, "history_states_v09", fake_states)
+    result = diagnostics.state_norms_for_keys_v09(inputs, object(), keys, device="cpu")
+    expected_positions = np.searchsorted(dates, target_dates)
+    assert [len(item[0]) for item in calls] == [256, 44]
+    assert np.array_equal(np.concatenate([item[1] for item in calls]), expected_positions)
+    assert result.shape == (300, 5) and result.dtype.str == "<f4"
+    assert np.isfinite(result).all()
+
+
+def _diagnostic_training_audit(specs):
+    runs = []
+    for position, spec in enumerate(specs, start=1):
+        checkpoints = [
+            {
+                "epoch": epoch,
+                "relative_path": f"checkpoint_epoch{epoch:03d}.pt",
+                "sha256": f"{position * 100 + epoch:064x}",
+                "size_bytes": 1,
+                "finite_tensor_count": 1,
+                "not_eligible_for_formal_prediction": epoch != 30,
+                "eligible_for_formal_prediction": epoch == 30,
+            }
+            for epoch in (10, 20, 30)
+        ]
+        runs.append({
+            "run_id": spec.run_id,
+            "family": spec.family,
+            "variant": spec.variant,
+            "seed": spec.seed,
+            "run_root": str(Path(spec.results_root) / f"seed_{spec.seed}"),
+            "run_seal_sha256": f"{position:064x}",
+            "checkpoints": checkpoints,
+        })
+    return {
+        "schema": "historical_multiscale_formal_v09_training_external_audit_v1",
+        "status": "complete_training_audit",
+        "source_context_sha256": "a" * 64,
+        "input_bindings": {
+            "input_seal_sha256": "b" * 64,
+            "input_external_audit_sha256": "c" * 64,
+            "trusted_source_audit_sha256": "d" * 64,
+        },
+        "coverage": {"expected_runs": 24, "audited_runs": 24, "passed_runs": 24},
+        "runs": runs,
+        "formal_evaluation_observation_reads": 0,
+        "formal_period_predictions_generated": False,
+        "official_score_called": False,
+    }
+
+
+def test_formal_driver_writes_all_eight_seed_directories_without_target_access(tmp_path, monkeypatch):
+    import state_diagnostics_formal_v09 as diagnostics
+    from train_formal_v09 import load_run_order_v09
+
+    specs = load_run_order_v09(IDEA_ROOT / "configs/formal_v09_run_order.json")
+    formal_root = tmp_path / "formal_v09"
+    formal_root.mkdir()
+    audit = _diagnostic_training_audit(specs)
+    (formal_root / "training_external_audit.json").write_text(
+        json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    inputs = SimpleNamespace(
+        basins=("a", "b"),
+        input_seal_sha256="b" * 64,
+        external_audit_sha256="c" * 64,
+        trusted_source_audit_sha256="d" * 64,
+    )
+    verifier_calls = []
+    monkeypatch.setattr(diagnostics, "_load_diagnostic_inputs_v09", lambda *_args, **_kwargs: inputs, raising=False)
+    monkeypatch.setattr(
+        diagnostics,
+        "verify_sealed_bridge_inputs_unchanged_v09",
+        lambda value: verifier_calls.append(value),
+        raising=False,
+    )
+    monkeypatch.setattr(
+        diagnostics,
+        "_load_diagnostic_model_v09",
+        lambda _path, spec, epoch, _sha, _device: SimpleNamespace(seed=spec.seed, epoch=epoch),
+        raising=False,
+    )
+    monkeypatch.setattr(
+        diagnostics,
+        "panel_keys_v09",
+        lambda _count: np.ascontiguousarray(np.array([[0, 0], [1, 1]], dtype="<i4")),
+    )
+    monkeypatch.setattr(
+        diagnostics,
+        "all_training_keys_v09",
+        lambda _count: np.ascontiguousarray(np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype="<i4")),
+    )
+
+    def fake_compute(_inputs, model, keys, *, device):
+        assert device == "cpu"
+        return np.ascontiguousarray(np.full((len(keys), 5), model.seed + model.epoch, dtype="<f4"))
+
+    monkeypatch.setattr(diagnostics, "state_norms_for_keys_v09", fake_compute, raising=False)
+    monkeypatch.setattr(
+        diagnostics,
+        "gate_summary_v09",
+        lambda model: {"hidden_gate": {"seed": model.seed, "epoch": model.epoch}},
+    )
+    root_manifest = diagnostics.write_history_state_diagnostics_v09(
+        tmp_path / "input_attempt_01",
+        formal_root,
+        specs,
+        formal_root / "state_diagnostics",
+        "cpu",
+        require_formal_geometry=False,
+    )
+    assert root_manifest["status"] == "state_diagnostics_complete"
+    assert root_manifest["seed_count"] == 8
+    assert root_manifest["training_target_reads"] == 0
+    assert root_manifest["formal_evaluation_observation_reads"] == 0
+    assert root_manifest["recent_path_executed"] is False
+    assert root_manifest["flow_head_executed"] is False
+    assert len(verifier_calls) == 2
+    written = sorted(path.name for path in (formal_root / "state_diagnostics").iterdir() if path.is_dir())
+    assert written == [f"E09-CONTINUOUS_s{seed}" for seed in range(100, 801, 100)]
+    for seed in range(100, 801, 100):
+        manifest = json.loads(
+            (formal_root / "state_diagnostics" / f"E09-CONTINUOUS_s{seed}" / "manifest.json").read_text(
+                encoding="utf-8"))
+        assert manifest["provenance"]["input_seal_sha256"] == "b" * 64
+        assert manifest["training_target_reads"] == 0
+
+
+def test_formal_driver_never_overwrites_an_existing_diagnostic_root(tmp_path):
+    from state_diagnostics_formal_v09 import write_history_state_diagnostics_v09
+
+    output = tmp_path / "state_diagnostics"
+    output.mkdir()
+    (output / "evidence.txt").write_text("keep", encoding="utf-8")
+    with pytest.raises(FileExistsError, match="already exists"):
+        write_history_state_diagnostics_v09(tmp_path / "input", tmp_path / "formal", (), output, "cpu")
+
+
+def test_cpu_environment_capture_does_not_change_global_determinism():
+    import torch
+
+    import state_diagnostics_formal_v09 as diagnostics
+
+    before = torch.are_deterministic_algorithms_enabled()
+    environment = diagnostics._deterministic_environment_v09("cpu")
+    assert torch.are_deterministic_algorithms_enabled() is before
+    assert environment["device"] == "cpu"
+    assert environment["driver_version"] is None
+    assert environment["device_capability"] is None
+    assert environment["device_total_memory_bytes"] is None
+    assert environment["python"]
+    assert environment["numpy"]
