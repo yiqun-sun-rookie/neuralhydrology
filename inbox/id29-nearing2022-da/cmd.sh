@@ -1,321 +1,88 @@
 #!/bin/bash
-# ID29 seq=226: inlined frozen read-only matrix progress, walltime, dependency-release, and boundary audit.
+# ID29 seq=227: deploy and submit the isolated minimum-18-coordinate CPU numerical audit.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-IDEA="$ROOT/src/29_nearing2022_da_ar"
-REGISTRY="$IDEA/registry"
-AGGREGATION="$ROOT/closure_20260810/aggregation"
-DIAGNOSTICS="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics"
-MAIN_JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
+WRAPPER_REL=src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit_seq227.slurm
+TEST_REL=test/test_nearing2022_partial_audit_seq227_slurm.py
+PREFLIGHT_REL=results/29_nearing2022_da_ar/formal_closure/partial_registered_results_audit_seq227_preflight_20260811.json
+WRAPPER_SHA=17f4f48ee714f81a145d6808ce7dbbffdc9a8fb6f7f2a789e8c2e953b7648832
+TEST_SHA=d2cb851ab6260973e71b76cc37319527f76ac0b7b9e69f7b6001a5df2405c723
+PREFLIGHT_SHA=863e3c13cb478bdb3dabd208b58a65f48e5104d455a4980d98e0bbed219fca97
+AUDITOR_SHA=7c99332b785a2a088961b51e6085fada72294ce4f8e98ed05663818660f35725
+FINAL="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq227_v1"
 
-echo "=== SNAPSHOT TIME ==="
-date --iso-8601=seconds
+deploy_payload() {
+  relative=$1
+  expected=$2
+  target="$ROOT/$relative"
+  temporary="$target.preparing-seq227"
+  mkdir -p "$(dirname "$target")"
+  test ! -L "$target"
+  if test -e "$target"; then
+    cat >/dev/null
+    test -f "$target"
+    test "$(sha256sum "$target" | awk '{print $1}')" = "$expected"
+    echo "already_exact=$relative"
+    return
+  fi
+  test ! -e "$temporary"
+  base64 -d > "$temporary"
+  test "$(sha256sum "$temporary" | awk '{print $1}')" = "$expected"
+  mv "$temporary" "$target"
+  test "$(sha256sum "$target" | awk '{print $1}')" = "$expected"
+  echo "deployed=$relative"
+}
 
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-cd "$ROOT"
-export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
+deploy_payload "$WRAPPER_REL" "$WRAPPER_SHA" <<'B64'
+IyEvYmluL2Jhc2gKI1NCQVRDSCAtLWpvYi1uYW1lPU4yMi1wYXJ0LWF1ZGl0NQojU0JBVENIIC0tcGFydGl0aW9uPWhncHU0LGhncHU4LGhncHUyCiNTQkFUQ0ggLS1ub2Rlcz0xCiNTQkFUQ0ggLS1udGFza3M9MQojU0JBVENIIC0tY3B1cy1wZXItdGFzaz0xCiNTQkFUQ0ggLS10aW1lPTAxOjAwOjAwCiNTQkFUQ0ggLS1vdXRwdXQ9L2RhdGExL2hvbWUvc3VueWlxL25lYXJpbmcyMDIyX2RhL2Nsb3N1cmVfMjAyNjA4MTAvbG9ncy8leF8lai5vdXQKI1NCQVRDSCAtLWVycm9yPS9kYXRhMS9ob21lL3N1bnlpcS9uZWFyaW5nMjAyMl9kYS9jbG9zdXJlXzIwMjYwODEwL2xvZ3MvJXhfJWouZXJyCgpzZXQgLWVvIHBpcGVmYWlsCgpST09UPS9kYXRhMS9ob21lL3N1bnlpcS9uZWFyaW5nMjAyMl9kYQpESUFHTk9TVElDX1JPT1Q9IiRST09UL3Jlc3VsdHMvMjlfbmVhcmluZzIwMjJfZGFfYXIvZm9ybWFsX2Nsb3N1cmUvZGlhZ25vc3RpY3MiCkFVRElUT1I9IiRST09UL3NyYy8yOV9uZWFyaW5nMjAyMl9kYV9hci9zY3JpcHRzL2F1ZGl0X3BhcnRpYWxfcmVnaXN0ZXJlZF9yZXN1bHRzLnB5IgpTRUxGPSIkUk9PVC9zcmMvMjlfbmVhcmluZzIwMjJfZGFfYXIvaHBjL3J1bl9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0c19hdWRpdF9zZXEyMjcuc2x1cm0iCkZJTkFMPSIkRElBR05PU1RJQ19ST09UL3BhcnRpYWxfbnVtZXJpY2FsX2F1ZGl0X3NlcTIyN192MSIKV09SSz0iJEZJTkFMLnByZXBhcmluZy0kU0xVUk1fSk9CX0lEIgpFWFBFQ1RFRF9BVURJVE9SX1NIQTI1Nj03Yzk5MzMyYjc4NWEyYTA4ODk2MWI1MWU2MDg1ZmFkYTcyMjk0Y2U0ZjhlOThlZDA1NjYzODE4NjYwZjM1NzI1Cgp0ZXN0ICEgLWUgIiRGSU5BTCIKdGVzdCAhIC1lICIkV09SSyIKdGVzdCAiJChmaW5kICIkRElBR05PU1RJQ19ST09UIiAtbWF4ZGVwdGggMSAtbmFtZSAncGFydGlhbF9udW1lcmljYWxfYXVkaXRfc2VxMjI3X3YxLnByZXBhcmluZy0qJyBcCiAgLXByaW50IC1xdWl0KSIgPSAiIgp0ZXN0IC1mICIkQVVESVRPUiIKdGVzdCAtZiAiJFNFTEYiCnRlc3QgISAtTCAiJEFVRElUT1IiCnRlc3QgISAtTCAiJFNFTEYiCnRlc3QgIiQoc2hhMjU2c3VtICIkQVVESVRPUiIgfCBhd2sgJ3twcmludCAkMX0nKSIgPSAiJEVYUEVDVEVEX0FVRElUT1JfU0hBMjU2IgoKbWtkaXIgIiRXT1JLIgoKc291cmNlIH4vbWluaWNvbmRhMy9ldGMvcHJvZmlsZS5kL2NvbmRhLnNoCmNvbmRhIGFjdGl2YXRlIG5oX2ZpbmFsCmNkICIkUk9PVCIKZXhwb3J0IFBZVEhPTlBBVEg9IiRST09UJHtQWVRIT05QQVRIOis6JFBZVEhPTlBBVEh9IgoKcHl0aG9uICIkQVVESVRPUiIgLS1yZXBvLXJvb3QgIiRST09UIiAtLW91dHB1dCAiJFdPUksvYXVkaXRfMS5qc29uIiBcCiAgLS1tYWlsYm94LXNlcXVlbmNlIDIyNyAtLW1pbmltdW0tY29tcGxldGUgMTggPiAiJFdPUksvYXVkaXRfc3Rkb3V0XzEuanNvbiIKcHl0aG9uICIkQVVESVRPUiIgLS1yZXBvLXJvb3QgIiRST09UIiAtLW91dHB1dCAiJFdPUksvYXVkaXRfMi5qc29uIiBcCiAgLS1tYWlsYm94LXNlcXVlbmNlIDIyNyAtLW1pbmltdW0tY29tcGxldGUgMTggPiAiJFdPUksvYXVkaXRfc3Rkb3V0XzIuanNvbiIKY21wICIkV09SSy9hdWRpdF8xLmpzb24iICIkV09SSy9hdWRpdF8yLmpzb24iCmNtcCAiJFdPUksvYXVkaXRfc3Rkb3V0XzEuanNvbiIgIiRXT1JLL2F1ZGl0X3N0ZG91dF8yLmpzb24iCmNhdCAiJFdPUksvYXVkaXRfc3Rkb3V0XzEuanNvbiIKY3AgIiRBVURJVE9SIiAiJFdPUksvYXVkaXRfcGFydGlhbF9yZWdpc3RlcmVkX3Jlc3VsdHMucHkiCmNwICIkU0VMRiIgIiRXT1JLL3J1bl9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0c19hdWRpdF9zZXEyMjcuc2x1cm0iCgpweXRob24gLSAiJFdPUksiIDw8J1BZJwppbXBvcnQgaGFzaGxpYgppbXBvcnQganNvbgppbXBvcnQgb3MKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmltcG9ydCBzeXMKCndvcmsgPSBQYXRoKHN5cy5hcmd2WzFdKQoKCmRlZiBkaWdlc3QocGF0aDogUGF0aCkgLT4gc3RyOgogICAgcmV0dXJuIGhhc2hsaWIuc2hhMjU2KHBhdGgucmVhZF9ieXRlcygpKS5oZXhkaWdlc3QoKQoKCmF1ZGl0XzEgPSBqc29uLmxvYWRzKCh3b3JrIC8gImF1ZGl0XzEuanNvbiIpLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKSkKYXVkaXRfMiA9IGpzb24ubG9hZHMoKHdvcmsgLyAiYXVkaXRfMi5qc29uIikucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpKQppZiBhdWRpdF8xICE9IGF1ZGl0XzI6CiAgICByYWlzZSBWYWx1ZUVycm9yKCJSZXBlYXRlZCBwYXJ0aWFsIG51bWVyaWNhbCBhdWRpdHMgZGlmZmVyIikKaWYgYXVkaXRfMVsiY29tcGxldGVfY29vcmRpbmF0ZXMiXSA8IDE4OgogICAgcmFpc2UgVmFsdWVFcnJvcihmIlBhcnRpYWwgYXVkaXQgcmVncmVzc2VkIGJlbG93IDE4IGNvbXBsZXRlIGNvb3JkaW5hdGVzOiB7YXVkaXRfMX0iKQppZiBhdWRpdF8xWyJjb21wYXJpc29uX3Jvd3MiXSAhPSBhdWRpdF8xWyJjb21wbGV0ZV9jb29yZGluYXRlcyJdICogNzoKICAgIHJhaXNlIFZhbHVlRXJyb3IoIlBhcnRpYWwgYXVkaXQgZG9lcyBub3QgaGF2ZSBzZXZlbiBtZXRyaWNzIHBlciBjb29yZGluYXRlIikKaWYgYXVkaXRfMVsicmVnaXN0ZXJlZF9tYXRyaXhfbW9kaWZpZWQiXSBvciBhdWRpdF8xWyJmcm96ZW5fYWNjZXB0YW5jZV9tb2RpZmllZCJdOgogICAgcmFpc2UgVmFsdWVFcnJvcigiUGFydGlhbCBhdWRpdCByZXBvcnRzIGEgZnJvemVuLWlucHV0IG1vZGlmaWNhdGlvbiIpCgpyZWNlaXB0ID0gewogICAgInNjaGVtYSI6ICJuZWFyaW5nMjAyMi1wYXJ0aWFsLW51bWVyaWNhbC1hdWRpdC1leGVjdXRpb24tcmVjZWlwdC12MSIsCiAgICAic2x1cm1fam9iX2lkIjogb3MuZW52aXJvblsiU0xVUk1fSk9CX0lEIl0sCiAgICAic2x1cm1fbm9kZSI6IG9zLmVudmlyb24uZ2V0KCJTTFVSTURfTk9ERU5BTUUiKSwKICAgICJtYWlsYm94X3NlcXVlbmNlIjogMjIzLAogICAgImNvbXBsZXRlX2Nvb3JkaW5hdGVzIjogYXVkaXRfMVsiY29tcGxldGVfY29vcmRpbmF0ZXMiXSwKICAgICJjb21wYXJpc29uX3Jvd3MiOiBhdWRpdF8xWyJjb21wYXJpc29uX3Jvd3MiXSwKICAgICJpbmRpdmlkdWFsX3RvbGVyYW5jZV9mYWlsdXJlcyI6IGF1ZGl0XzFbImluZGl2aWR1YWxfdG9sZXJhbmNlX2ZhaWx1cmVzIl0sCiAgICAiY29vcmRpbmF0ZXNfd2l0aF9mYWlsdXJlcyI6IGF1ZGl0XzFbImNvb3JkaW5hdGVzX3dpdGhfZmFpbHVyZXMiXSwKICAgICJhdWRpdF9yZXByb2R1Y3Rpb25fYnl0ZV9pZGVudGljYWwiOiBUcnVlLAogICAgImF1ZGl0X3NoYTI1NiI6IGRpZ2VzdCh3b3JrIC8gImF1ZGl0XzEuanNvbiIpLAogICAgInJlZ2lzdGVyZWRfbWF0cml4X21vZGlmaWVkIjogRmFsc2UsCiAgICAiZnJvemVuX2FjY2VwdGFuY2VfbW9kaWZpZWQiOiBGYWxzZSwKfQood29yayAvICJleGVjdXRpb25fcmVjZWlwdC5qc29uIikud3JpdGVfdGV4dCgKICAgIGpzb24uZHVtcHMocmVjZWlwdCwgaW5kZW50PTIsIHNvcnRfa2V5cz1UcnVlKSArICJcbiIsIGVuY29kaW5nPSJ1dGYtOCIKKQoKZmlsZXMgPSBbXQpmb3IgcGF0aCBpbiBzb3J0ZWQod29yay5yZ2xvYigiKiIpKToKICAgIGlmIHBhdGguaXNfc3ltbGluaygpOgogICAgICAgIHJhaXNlIFZhbHVlRXJyb3IoZiJQYXJ0aWFsLWF1ZGl0IG91dHB1dCBjb250YWlucyBhIGxpbms6IHtwYXRofSIpCiAgICBpZiBwYXRoLmlzX2ZpbGUoKSBhbmQgcGF0aC5uYW1lICE9ICJhcnRpZmFjdF9tYW5pZmVzdC5qc29uIjoKICAgICAgICBmaWxlcy5hcHBlbmQoewogICAgICAgICAgICAicGF0aCI6IHBhdGgucmVsYXRpdmVfdG8od29yaykuYXNfcG9zaXgoKSwKICAgICAgICAgICAgImJ5dGVzIjogcGF0aC5zdGF0KCkuc3Rfc2l6ZSwKICAgICAgICAgICAgInNoYTI1NiI6IGRpZ2VzdChwYXRoKSwKICAgICAgICB9KQptYW5pZmVzdCA9IHsKICAgICJzY2hlbWEiOiAibmVhcmluZzIwMjItcGFydGlhbC1udW1lcmljYWwtYXVkaXQtbWFuaWZlc3QtdjEiLAogICAgImZpbGVfY291bnQiOiBsZW4oZmlsZXMpLAogICAgInRvdGFsX2J5dGVzIjogc3VtKGl0ZW1bImJ5dGVzIl0gZm9yIGl0ZW0gaW4gZmlsZXMpLAogICAgImZpbGVzIjogZmlsZXMsCn0KKHdvcmsgLyAiYXJ0aWZhY3RfbWFuaWZlc3QuanNvbiIpLndyaXRlX3RleHQoCiAgICBqc29uLmR1bXBzKG1hbmlmZXN0LCBpbmRlbnQ9Miwgc29ydF9rZXlzPVRydWUpICsgIlxuIiwgZW5jb2Rpbmc9InV0Zi04IgopCnByaW50KGpzb24uZHVtcHMocmVjZWlwdCwgc29ydF9rZXlzPVRydWUpKQpwcmludChqc29uLmR1bXBzKHsibWFuaWZlc3Rfc2hhMjU2IjogZGlnZXN0KHdvcmsgLyAiYXJ0aWZhY3RfbWFuaWZlc3QuanNvbiIpfSwgc29ydF9rZXlzPVRydWUpKQpQWQoKdGVzdCAiJChmaW5kICIkV09SSyIgLXR5cGUgbCAtcHJpbnQgLXF1aXQpIiA9ICIiCnNoYTI1NnN1bSAiJFdPUksiLyoKbXYgIiRXT1JLIiAiJEZJTkFMIgplY2hvICJmaW5hbD0kRklOQUwiCg==
+B64
 
-echo "=== REGISTERED COMPLETE-ROLE COUNTS ==="
-python - "$ROOT" "$IDEA" "$REGISTRY" "$AGGREGATION" <<'PY'
-from collections import Counter
+deploy_payload "$TEST_REL" "$TEST_SHA" <<'B64'
+aW1wb3J0IGhhc2hsaWIKaW1wb3J0IGpzb24KZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgoKUkVQT19ST09UID0gUGF0aChfX2ZpbGVfXykucmVzb2x2ZSgpLnBhcmVudHNbMV0KQVVESVRPUiA9IFJFUE9fUk9PVCAvICJzcmMiIC8gIjI5X25lYXJpbmcyMDIyX2RhX2FyIiAvICJzY3JpcHRzIiAvICJhdWRpdF9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0cy5weSIKUFJFREVDRVNTT1IgPSAoCiAgICBSRVBPX1JPT1QKICAgIC8gInNyYyIKICAgIC8gIjI5X25lYXJpbmcyMDIyX2RhX2FyIgogICAgLyAiaHBjIgogICAgLyAicnVuX3BhcnRpYWxfcmVnaXN0ZXJlZF9yZXN1bHRzX2F1ZGl0X3NlcTIyMy5zbHVybSIKKQpXUkFQUEVSID0gKAogICAgUkVQT19ST09UCiAgICAvICJzcmMiCiAgICAvICIyOV9uZWFyaW5nMjAyMl9kYV9hciIKICAgIC8gImhwYyIKICAgIC8gInJ1bl9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0c19hdWRpdF9zZXEyMjcuc2x1cm0iCikKUFJFRkxJR0hUID0gKAogICAgUkVQT19ST09UCiAgICAvICJyZXN1bHRzIgogICAgLyAiMjlfbmVhcmluZzIwMjJfZGFfYXIiCiAgICAvICJmb3JtYWxfY2xvc3VyZSIKICAgIC8gInBhcnRpYWxfcmVnaXN0ZXJlZF9yZXN1bHRzX2F1ZGl0X3NlcTIyN19wcmVmbGlnaHRfMjAyNjA4MTEuanNvbiIKKQoKCmRlZiB0ZXN0X3NlcTIyN19jaGFuZ2VzX29ubHlfaWRlbnRpdHlfYW5kX21pbmltdW1fY29tcGxldGVfY291bnQoKToKICAgIHByZWRlY2Vzc29yID0gUFJFREVDRVNTT1IucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpCiAgICBjdXJyZW50ID0gV1JBUFBFUi5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikKICAgIG5vcm1hbGl6ZWQgPSBjdXJyZW50LnJlcGxhY2UoIk4yMi1wYXJ0LWF1ZGl0NSIsICJOMjItcGFydC1hdWRpdDQiKQogICAgbm9ybWFsaXplZCA9IG5vcm1hbGl6ZWQucmVwbGFjZSgKICAgICAgICAicnVuX3BhcnRpYWxfcmVnaXN0ZXJlZF9yZXN1bHRzX2F1ZGl0X3NlcTIyNy5zbHVybSIsCiAgICAgICAgInJ1bl9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0c19hdWRpdF9zZXEyMjMuc2x1cm0iLAogICAgKQogICAgbm9ybWFsaXplZCA9IG5vcm1hbGl6ZWQucmVwbGFjZSgic2VxMjI3IiwgInNlcTIyMyIpLnJlcGxhY2UoIiAyMjcgIiwgIiAyMjMgIikKICAgIG5vcm1hbGl6ZWQgPSBub3JtYWxpemVkLnJlcGxhY2UoJyJtYWlsYm94X3NlcXVlbmNlIjogMjI3LCcsICcibWFpbGJveF9zZXF1ZW5jZSI6IDIyMywnKQogICAgbm9ybWFsaXplZCA9IG5vcm1hbGl6ZWQucmVwbGFjZSgiYmVsb3cgMTggY29tcGxldGUiLCAiYmVsb3cgMTcgY29tcGxldGUiKQogICAgbm9ybWFsaXplZCA9IG5vcm1hbGl6ZWQucmVwbGFjZSgnWyJjb21wbGV0ZV9jb29yZGluYXRlcyJdIDwgMTgnLCAnWyJjb21wbGV0ZV9jb29yZGluYXRlcyJdIDwgMTcnKQogICAgbm9ybWFsaXplZCA9IG5vcm1hbGl6ZWQucmVwbGFjZSgiLS1taW5pbXVtLWNvbXBsZXRlIDE4IiwgIi0tbWluaW11bS1jb21wbGV0ZSAxNyIpCiAgICBhc3NlcnQgbm9ybWFsaXplZCA9PSBwcmVkZWNlc3NvcgoKCmRlZiB0ZXN0X3NlcTIyN19pc19jcHVfb25seV9mYWlsX2Nsb3NlZF9hbmRfcmVxdWlyZXNfZWlnaHRlZW5fY29vcmRpbmF0ZXMoKToKICAgIHRleHQgPSBXUkFQUEVSLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKQogICAgYXNzZXJ0ICIjU0JBVENIIC0tbWVtIiBub3QgaW4gdGV4dAogICAgYXNzZXJ0ICIjU0JBVENIIC0tZ3Jlcz1ncHUiIG5vdCBpbiB0ZXh0CiAgICBhc3NlcnQgInBhcnRpYWxfbnVtZXJpY2FsX2F1ZGl0X3NlcTIyN192MSIgaW4gdGV4dAogICAgYXNzZXJ0IHRleHQuY291bnQoIi0tbWFpbGJveC1zZXF1ZW5jZSAyMjcgLS1taW5pbXVtLWNvbXBsZXRlIDE4IikgPT0gMgogICAgYXNzZXJ0ICdhdWRpdF8xWyJjb21wbGV0ZV9jb29yZGluYXRlcyJdIDwgMTgnIGluIHRleHQKICAgIGFzc2VydCAndGVzdCAhIC1lICIkRklOQUwiJyBpbiB0ZXh0CiAgICBhc3NlcnQgInNiYXRjaCIgbm90IGluIHRleHQKICAgIGFzc2VydCAicm0gLXJmIiBub3QgaW4gdGV4dAoKCmRlZiB0ZXN0X3NlcTIyN19iaW5kc190aGVfdW5jaGFuZ2VkX2F1ZGl0b3JfaGFzaCgpOgogICAgdGV4dCA9IFdSQVBQRVIucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpCiAgICBhdWRpdG9yX2hhc2ggPSBoYXNobGliLnNoYTI1NihBVURJVE9SLnJlYWRfYnl0ZXMoKSkuaGV4ZGlnZXN0KCkKICAgIGFzc2VydCBmIkVYUEVDVEVEX0FVRElUT1JfU0hBMjU2PXthdWRpdG9yX2hhc2h9IiBpbiB0ZXh0CgoKZGVmIHRlc3Rfc2VxMjI3X3ByZWZsaWdodF9iaW5kc190cmlnZ2VyX2FuZF9zY2llbnRpZmljX2lucHV0cygpOgogICAgcHJlZmxpZ2h0ID0ganNvbi5sb2FkcyhQUkVGTElHSFQucmVhZF90ZXh0KGVuY29kaW5nPSJ1dGYtOCIpKQogICAgdHJpZ2dlciA9IHByZWZsaWdodFsidHJpZ2dlciJdCiAgICBhc3NlcnQgdHJpZ2dlclsibWFpbGJveF9zZXF1ZW5jZSJdID09IDIyNgogICAgYXNzZXJ0IHRyaWdnZXJbIm5ld19jb21wbGV0ZV9jb29yZGluYXRlIl0gPT0gIk4yMi1FVkFMLVRTLURBLUwwNC1URTA1MC1TMCIKICAgIGFzc2VydCB0cmlnZ2VyWyJyZWdpc3RlcmVkX3NsdXJtX3Rhc2siXSA9PSAiMjAyMjIyXzE3IgogICAgYXNzZXJ0IHRyaWdnZXJbIm1haWxib3hfcmVzdWx0X3NoYTI1NiJdID09ICgKICAgICAgICAiOGFmZWIzZWFiMWNmNWQ0MGZmNDY2YzIwNTJiZDQ0NTY3NWZiMDNhMTNjZmFmZTU2MzJiZmQyY2RkMzg1ODg4ZCIKICAgICkKICAgIGFzc2VydCBwcmVmbGlnaHRbImV4ZWN1dGlvbl9jb250cmFjdCJdWyJtaW5pbXVtX2NvbXBsZXRlX2Nvb3JkaW5hdGVzIl0gPT0gMTgKICAgIGFzc2VydCBwcmVmbGlnaHRbImV4ZWN1dGlvbl9jb250cmFjdCJdWyJleHBlY3RlZF9tZXRyaWNfcm93c19taW5pbXVtIl0gPT0gMTI2CiAgICBwYXlsb2FkcyA9IHByZWZsaWdodFsicGF5bG9hZHMiXQogICAgYXNzZXJ0IGhhc2hsaWIuc2hhMjU2KEFVRElUT1IucmVhZF9ieXRlcygpKS5oZXhkaWdlc3QoKSA9PSBwYXlsb2Fkc1siYXVkaXRvciJdWyJzaGEyNTYiXQogICAgYXNzZXJ0IGhhc2hsaWIuc2hhMjU2KFdSQVBQRVIucmVhZF9ieXRlcygpKS5oZXhkaWdlc3QoKSA9PSBwYXlsb2Fkc1sid3JhcHBlciJdWyJzaGEyNTYiXQogICAgYXNzZXJ0IHByZWZsaWdodFsic2luZ2xlX2ZhY3Rvcl9kZXJpdmF0aW9uIl1bIm1ldHJpY3NfY2hhbmdlZCJdIGlzIEZhbHNlCiAgICBhc3NlcnQgcHJlZmxpZ2h0WyJzaW5nbGVfZmFjdG9yX2Rlcml2YXRpb24iXVsiYWNjZXB0YW5jZV90aHJlc2hvbGRzX2NoYW5nZWQiXSBpcyBGYWxzZQo=
+B64
+
+deploy_payload "$PREFLIGHT_REL" "$PREFLIGHT_SHA" <<'B64'
+ewogICJzY2hlbWEiOiAibmVhcmluZzIwMjItcGFydGlhbC1yZWdpc3RlcmVkLXJlc3VsdHMtYXVkaXQtc2VxMjI3LXByZWZsaWdodC12MSIsCiAgImNoZWNrZWRfYXQiOiAiMjAyNi0wOC0xMVQyMzowNjo0MiswODowMCIsCiAgInN0YXR1cyI6ICJyZWFkeV9mb3JfZXhhY3RfaGFzaF9kZXBsb3ltZW50X2FuZF9pc29sYXRlZF9jcHVfc3VibWlzc2lvbiIsCiAgInRyaWdnZXIiOiB7CiAgICAibWFpbGJveF9zZXF1ZW5jZSI6IDIyNiwKICAgICJtYWlsYm94X3Jlc3VsdF9jb21taXQiOiAiZGNhYTc4ZDBiYWYxMGFkMDlmYmFmOWNhMjAzMWNkMDFjOWU5MGY0ZSIsCiAgICAibWFpbGJveF9yZXN1bHRfcGF0aCI6ICJvdXRib3gvaWQyOS1uZWFyaW5nMjAyMi1kYS9yZXN1bHRfMjI2LnR4dCIsCiAgICAibWFpbGJveF9yZXN1bHRfYnl0ZXMiOiAxNTM2NSwKICAgICJtYWlsYm94X3Jlc3VsdF9zaGEyNTYiOiAiOGFmZWIzZWFiMWNmNWQ0MGZmNDY2YzIwNTJiZDQ0NTY3NWZiMDNhMTNjZmFmZTU2MzJiZmQyY2RkMzg1ODg4ZCIsCiAgICAibWFpbGJveF9yZXN1bHRfZ2l0X2Jsb2Jfc2hhMSI6ICIyOWQ5YmJjOTNhYzQ2MDMxMzIyOTRjNDJlZWZhZTNjZGU1YmRhYjkyIiwKICAgICJjb21wbGV0ZV9ldmFsdWF0aW9uX2Nvb3JkaW5hdGVzX2JlZm9yZSI6IDE3LAogICAgImNvbXBsZXRlX2V2YWx1YXRpb25fY29vcmRpbmF0ZXNfYWZ0ZXIiOiAxOCwKICAgICJuZXdfY29tcGxldGVfY29vcmRpbmF0ZSI6ICJOMjItRVZBTC1UUy1EQS1MMDQtVEUwNTAtUzAiLAogICAgInJlZ2lzdGVyZWRfc2x1cm1fdGFzayI6ICIyMDIyMjJfMTciLAogICAgInJlZ2lzdGVyZWRfZmFtaWx5IjogInRpbWVfYXNzaW1pbGF0aW9uIiwKICAgICJpbmRlcGVuZGVudF9udW1lcmljYWxfc2NvcmVfYXZhaWxhYmxlIjogZmFsc2UKICB9LAogICJzaW5nbGVfZmFjdG9yX2Rlcml2YXRpb24iOiB7CiAgICAicHJlZGVjZXNzb3Jfd3JhcHBlciI6ICJzcmMvMjlfbmVhcmluZzIwMjJfZGFfYXIvaHBjL3J1bl9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0c19hdWRpdF9zZXEyMjMuc2x1cm0iLAogICAgInByZWRlY2Vzc29yX3dyYXBwZXJfYnl0ZXMiOiA0NDc3LAogICAgInByZWRlY2Vzc29yX3dyYXBwZXJfc2hhMjU2IjogImRiOTcyZDBiMTI3NTc5MDVlNmE3ZmZkOTEzYzhjOWM1NTI4NWJjMGJhNDZjOTRiOTkyNjQyOTE2MjZlN2JlZmMiLAogICAgImNoYW5nZXMiOiBbCiAgICAgICJ1c2UgYSBuZXcgam9iIG5hbWUgYW5kIGltbXV0YWJsZSB3cmFwcGVyIHBhdGgiLAogICAgICAidXNlIHRoZSBuZXcgb3V0cHV0IHJvb3QgcGFydGlhbF9udW1lcmljYWxfYXVkaXRfc2VxMjI3X3YxIiwKICAgICAgImJpbmQgbWFpbGJveCBzZXF1ZW5jZSAyMjciLAogICAgICAicmFpc2UgbWluaW11bSBjb21wbGV0ZS1jb29yZGluYXRlIGNvdW50IGZyb20gMTcgdG8gMTgiCiAgICBdLAogICAgIm51bWVyaWNhbF9hdWRpdG9yX2NoYW5nZWQiOiBmYWxzZSwKICAgICJtZXRyaWNzX2NoYW5nZWQiOiBmYWxzZSwKICAgICJhdXRob3JfcmVmZXJlbmNlc19jaGFuZ2VkIjogZmFsc2UsCiAgICAiYWNjZXB0YW5jZV90aHJlc2hvbGRzX2NoYW5nZWQiOiBmYWxzZSwKICAgICJyZWdpc3RlcmVkX21hdHJpeF9jaGFuZ2VkIjogZmFsc2UKICB9LAogICJwYXlsb2FkcyI6IHsKICAgICJhdWRpdG9yIjogewogICAgICAicGF0aCI6ICJzcmMvMjlfbmVhcmluZzIwMjJfZGFfYXIvc2NyaXB0cy9hdWRpdF9wYXJ0aWFsX3JlZ2lzdGVyZWRfcmVzdWx0cy5weSIsCiAgICAgICJieXRlcyI6IDk4NTksCiAgICAgICJzaGEyNTYiOiAiN2M5OTMzMmI3ODVhMmEwODg5NjFiNTFlNjA4NWZhZGE3MjI5NGNlNGY4ZTk4ZWQwNTY2MzgxODY2MGYzNTcyNSIKICAgIH0sCiAgICAid3JhcHBlciI6IHsKICAgICAgInBhdGgiOiAic3JjLzI5X25lYXJpbmcyMDIyX2RhX2FyL2hwYy9ydW5fcGFydGlhbF9yZWdpc3RlcmVkX3Jlc3VsdHNfYXVkaXRfc2VxMjI3LnNsdXJtIiwKICAgICAgImJ5dGVzIjogNDQ3NywKICAgICAgInNoYTI1NiI6ICIxN2Y0ZjQ4ZWU3MTRmODFhMTQ1ZDY4MDhjZTdkYmJmZmRjOWE4ZmI2ZjdmMmE3ODllOGMyZTk1M2I3NjQ4ODMyIgogICAgfSwKICAgICJ0ZXN0IjogewogICAgICAicGF0aCI6ICJ0ZXN0L3Rlc3RfbmVhcmluZzIwMjJfcGFydGlhbF9hdWRpdF9zZXEyMjdfc2x1cm0ucHkiLAogICAgICAiYnl0ZXMiOiAzMzE3LAogICAgICAic2hhMjU2IjogImQyY2I4NTFhYjYyNjA5NzNlNzFiNzZjYzM3MzE5NTI3Zjc2YWMwYjdiOWU2OWY3YjYwMDFhNWRmMjQwNWM3MjMiCiAgICB9LAogICAgImV2YWx1YXRpb25fcmVnaXN0cnkiOiB7CiAgICAgICJwYXRoIjogInNyYy8yOV9uZWFyaW5nMjAyMl9kYV9hci9yZWdpc3RyeS9ldmFsdWF0aW9uX3JlZ2lzdHJ5LmNzdiIsCiAgICAgICJieXRlcyI6IDczMDEzLAogICAgICAic2hhMjU2IjogIjM3YjMxMmRiZDM2MjM5OWE5NzcxZjIyMzNkMWUxMTM5ZWEyNWQ1MzM5ZDFiYmM3YTgwNmZhNzViZTMwYjkyMTUiCiAgICB9LAogICAgImFjY2VwdGFuY2UiOiB7CiAgICAgICJwYXRoIjogInNyYy8yOV9uZWFyaW5nMjAyMl9kYV9hci9yZWZlcmVuY2UvcmVwcm9kdWN0aW9uX2FjY2VwdGFuY2UuanNvbiIsCiAgICAgICJieXRlcyI6IDE1NDAsCiAgICAgICJzaGEyNTYiOiAiNjEyNWNhYjg5MzVjM2FkMGFiNDk4ODY1YzY2MWM0N2VhODNjODM3Yzc2MjdkZmYyNTM0YmE1YTViOTE4NTg5NSIKICAgIH0KICB9LAogICJsb2NhbF92YWxpZGF0aW9uIjogewogICAgImJhc2hfc3ludGF4IjogInBhc3NlZCIsCiAgICAiZm9jdXNlZF90ZXN0cyI6IHsKICAgICAgInBhc3NlZCI6IDQsCiAgICAgICJmYWlsZWQiOiAwLAogICAgICAid2FybmluZ3MiOiAxCiAgICB9LAogICAgInByZWRlY2Vzc29yX2VxdWl2YWxlbmNlX3Rlc3QiOiAicGFzc2VkIGFmdGVyIG5vcm1hbGl6aW5nIG9ubHkgdGhlIGZvdXIgbGlzdGVkIGlkZW50aXR5IGFuZCBtaW5pbXVtLWNvdW50IGNoYW5nZXMiCiAgfSwKICAiZXhlY3V0aW9uX2NvbnRyYWN0IjogewogICAgInJlc291cmNlIjogIm9uZSBDUFUgdGFzayB3aXRoIHNjaGVkdWxlci1kZWZhdWx0IG1lbW9yeSBhbmQgbm8gR1BVIHJlcXVlc3QiLAogICAgInJlcGVhdF9jb3VudCI6IDIsCiAgICAicmVwZWF0ZWRfb3V0cHV0c19tdXN0X2JlX2J5dGVfaWRlbnRpY2FsIjogdHJ1ZSwKICAgICJtaW5pbXVtX2NvbXBsZXRlX2Nvb3JkaW5hdGVzIjogMTgsCiAgICAiZXhwZWN0ZWRfbWV0cmljX3Jvd3NfbWluaW11bSI6IDEyNiwKICAgICJyZWZ1c2VfZXhpc3RpbmdfZmluYWxfb3Jfc3RhZ2luZ19wYXRoIjogdHJ1ZSwKICAgICJvdXRwdXRfcm9vdCI6ICJyZXN1bHRzLzI5X25lYXJpbmcyMDIyX2RhX2FyL2Zvcm1hbF9jbG9zdXJlL2RpYWdub3N0aWNzL3BhcnRpYWxfbnVtZXJpY2FsX2F1ZGl0X3NlcTIyN192MSIKICB9LAogICJzdWJtaXNzaW9uIjogewogICAgImRlcGxveWVkIjogZmFsc2UsCiAgICAic3VibWl0dGVkIjogZmFsc2UsCiAgICAic2x1cm1fam9iX2lkIjogbnVsbAogIH0sCiAgImJvdW5kYXJ5IjogIlRoaXMgcHJlZmxpZ2h0IHByb3ZlcyBvbmx5IHRoYXQgdGhlIGlzb2xhdGVkIHdyYXBwZXIgcHJlc2VydmVzIHRoZSBhdWRpdGVkIG51bWVyaWNhbCBtZXRob2Qgd2hpbGUgcmVxdWlyaW5nIGFsbCAxOCBjdXJyZW50bHkgY29tcGxldGUgY29vcmRpbmF0ZXMuIFRoZSBuZXcgY29vcmRpbmF0ZSBoYXMgbm8gbnVtZXJpY2FsIGRlY2lzaW9uIHVudGlsIHRoZSBTbHVybSBqb2IgY29tcGxldGVzIGFuZCBpdHMgb3V0cHV0LCBzb3VyY2VzLCBhbmQgcmVjZWlwdCBhcmUgaW5kZXBlbmRlbnRseSByZWNvdmVyZWQgYW5kIHJlaGFzaGVkLiIKfQo=
+B64
+
+test "$(sha256sum "$ROOT/src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py" | awk '{print $1}')" = "$AUDITOR_SHA"
+test ! -e "$FINAL"
+test "$(find "$(dirname "$FINAL")" -maxdepth 1 -name 'partial_numerical_audit_seq227_v1.preparing-*' -print -quit)" = ""
+bash -n "$ROOT/$WRAPPER_REL"
+
+python - "$ROOT" "$WRAPPER_REL" "$TEST_REL" "$PREFLIGHT_REL" "$WRAPPER_SHA" "$TEST_SHA" "$PREFLIGHT_SHA" <<'PY'
+import hashlib
 import json
 from pathlib import Path
 import sys
 
-import pandas as pd
-
-root = Path(sys.argv[1]).resolve()
-idea = Path(sys.argv[2]).resolve()
-registry = Path(sys.argv[3]).resolve()
-aggregation = Path(sys.argv[4]).resolve()
-sys.path.insert(0, str(idea / 'scripts'))
-
-from verify_registered_closure import audit_registered_closure
-
-training = pd.read_csv(registry / 'experiment_registry.csv', keep_default_na=False, dtype=str)
-evaluations = pd.read_csv(registry / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
-hyperparameters = pd.read_csv(
-    registry / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str,
-)
-closure = audit_registered_closure(
-    root,
-    registry / 'experiment_registry.csv',
-    registry / 'evaluation_registry.csv',
-    registry / 'assimilation_hyperparameter_registry.csv',
-    aggregation / 'evaluations',
-    aggregation / 'hyperparameters',
-)
-missing = {
-    coordinate_type: {
-        row['coordinate_id'] for row in closure['missing']
-        if row['coordinate_type'] == coordinate_type
-    }
-    for coordinate_type in ('training', 'evaluation', 'hyperparameter')
-}
-
-
-def family_counts(frame, identifier, coordinate_type):
-    return dict(sorted(Counter(
-        row['family'] for _, row in frame.iterrows()
-        if row[identifier] not in missing[coordinate_type]
-    ).items()))
-
-
-print(json.dumps({
-    'training_complete': len(training) - len(missing['training']),
-    'training_total': len(training),
-    'training_by_family': family_counts(training, 'exp_id', 'training'),
-    'evaluation_complete': len(evaluations) - len(missing['evaluation']),
-    'evaluation_total': len(evaluations),
-    'evaluation_by_family': family_counts(evaluations, 'eval_id', 'evaluation'),
-    'hyperparameter_complete': len(hyperparameters) - len(missing['hyperparameter']),
-    'hyperparameter_total': len(hyperparameters),
-    'hyperparameter_by_family': family_counts(hyperparameters, 'eval_id', 'hyperparameter'),
-    'missing_roles_total': len(closure['missing']),
-    'registered_matrix_complete': closure['complete'],
-}, sort_keys=True))
+root = Path(sys.argv[1])
+rows = list(zip(sys.argv[2:5], sys.argv[5:8]))
+for relative, expected in rows:
+    path = root / relative
+    assert path.is_file() and not path.is_symlink()
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == expected
+preflight = json.loads((root / sys.argv[4]).read_text(encoding="utf-8"))
+assert preflight["trigger"]["mailbox_sequence"] == 226
+assert preflight["trigger"]["new_complete_coordinate"] == "N22-EVAL-TS-DA-L04-TE050-S0"
+assert preflight["trigger"]["registered_slurm_task"] == "202222_17"
+assert preflight["execution_contract"]["minimum_complete_coordinates"] == 18
+assert preflight["execution_contract"]["expected_metric_rows_minimum"] == 126
+assert preflight["single_factor_derivation"]["numerical_auditor_changed"] is False
+assert preflight["single_factor_derivation"]["acceptance_thresholds_changed"] is False
+wrapper = (root / sys.argv[2]).read_text(encoding="utf-8")
+assert "--mailbox-sequence 227 --minimum-complete 18" in wrapper
+assert "#SBATCH --gres=gpu" not in wrapper and "#SBATCH --mem" not in wrapper
+print(json.dumps({"deployment_hashes_verified": 3, "minimum_complete": 18}, sort_keys=True))
 PY
 
-echo "=== EVALUATION ARRAY TASK RECORDS ==="
-sacct -n -P -j 202222 --format=JobID,State,ExitCode,ElapsedRaw,Elapsed,Start,End
-
-echo "=== PLANNING ESTIMATE ==="
-python - <<'PY'
-from datetime import datetime, timedelta
-import json
-import math
-from pathlib import Path
-import re
-import statistics
-import subprocess
-
-records = subprocess.run(
-    [
-        'sacct', '-n', '-P', '-j', '202222',
-        '--format=JobID,State,ExitCode,ElapsedRaw,Elapsed,Start,End',
-    ],
-    check=True, capture_output=True, text=True,
-).stdout.splitlines()
-task_pattern = re.compile(r'^202222_(\d+)$')
-tasks = {}
-for line in records:
-    fields = line.split('|')
-    if len(fields) < 7:
-        continue
-    match = task_pattern.fullmatch(fields[0])
-    if not match:
-        continue
-    task = int(match.group(1))
-    tasks[task] = {
-        'state': fields[1],
-        'exit_code': fields[2],
-        'elapsed_seconds': int(fields[3] or 0),
-        'elapsed': fields[4],
-        'start': fields[5],
-        'end': fields[6],
-    }
-
-completed = sorted(task for task, row in tasks.items() if row['state'] == 'COMPLETED')
-running = sorted(task for task, row in tasks.items() if row['state'] == 'RUNNING')
-pending = sorted(set(range(30)) - set(completed) - set(running))
-failed = sorted(
-    task for task, row in tasks.items()
-    if row['state'] in {
-        'FAILED', 'TIMEOUT', 'OUT_OF_MEMORY', 'NODE_FAIL', 'PREEMPTED',
-        'BOOT_FAIL', 'DEADLINE',
-    }
-)
-long_durations = sorted(
-    tasks[task]['elapsed_seconds'] for task in completed
-    if tasks[task]['elapsed_seconds'] >= 3600
-)
-if not long_durations:
-    raise ValueError('No completed long evaluation tasks are available for planning')
-
-ansi = re.compile(r'\x1b\[[0-9;]*[A-Za-z]')
-progress_pattern = re.compile(r'(?<!Epoch\s)(\d+)%\|.*?\|\s*(\d+)/(\d+)')
-running_estimates = []
-for task in running:
-    job = f'202222_{task}'
-    record = subprocess.run(
-        ['scontrol', 'show', 'job', '-o', job], check=True, capture_output=True, text=True,
-    ).stdout.strip()
-    fields = dict(token.split('=', 1) for token in record.split() if '=' in token)
-    stdout = Path(fields['StdOut'])
-    payload = {'task': task, 'job': job, 'runtime': fields['RunTime']}
-    if stdout.is_file():
-        size = stdout.stat().st_size
-        with stdout.open('rb') as handle:
-            handle.seek(max(0, size - 4 * 1024 * 1024))
-            tail = ansi.sub('', handle.read().decode('utf-8', errors='replace')).replace('\r', '\n')
-        matches = list(progress_pattern.finditer(tail))
-        if matches:
-            percent, step, total = map(int, matches[-1].groups())
-            fraction = step / total
-            elapsed = tasks[task]['elapsed_seconds']
-            total_seconds = elapsed / fraction
-            remaining_seconds = max(0.0, total_seconds - elapsed)
-            payload.update({
-                'reported_percent': percent,
-                'completed_basins': step,
-                'total_basins': total,
-                'projected_total_hours': round(total_seconds / 3600, 2),
-                'projected_remaining_hours': round(remaining_seconds / 3600, 2),
-            })
-    running_estimates.append(payload)
-
-if not running_estimates or any('projected_remaining_hours' not in row for row in running_estimates):
-    raise ValueError('Every running task must have a progress-based projection')
-
-current_wave_remaining = max(row['projected_remaining_hours'] for row in running_estimates)
-future_waves = math.ceil(len(pending) / 2)
-duration_hours = {
-    'lower': min(long_durations) / 3600,
-    'median': statistics.median(long_durations) / 3600,
-    'upper': max(long_durations) / 3600,
-}
-now = datetime.now().astimezone()
-finish = {
-    key: now + timedelta(hours=current_wave_remaining + future_waves * value)
-    for key, value in duration_hours.items()
-}
-print(json.dumps({
-    'schema': 'nearing2022-evaluation-array-planning-estimate-v1',
-    'array_job_id': '202222',
-    'array_tasks_total': 30,
-    'array_concurrency': 2,
-    'completed_tasks': completed,
-    'running_tasks': running,
-    'pending_tasks': pending,
-    'failed_tasks': failed,
-    'completed_long_task_count': len(long_durations),
-    'completed_long_duration_hours': [round(value / 3600, 3) for value in long_durations],
-    'completed_long_duration_summary_hours': {
-        key: round(value, 3) for key, value in duration_hours.items()
-    },
-    'running_task_estimates': running_estimates,
-    'future_waves_after_current': future_waves,
-    'projected_dependency_release': {
-        key: value.isoformat(timespec='seconds') for key, value in finish.items()
-    },
-    'replacement_job_202510_can_start_only_after_parent_terminal': True,
-    'planning_only': True,
-    'registered_matrix_modified': False,
-}, indent=2, sort_keys=True))
-PY
-
-echo "=== LIVE RUNNING PROGRESS AND WALLTIME PROJECTION ==="
-python - "$MAIN_JOBS" <<'PY'
-import json
-from pathlib import Path
-import re
-import subprocess
-import sys
-
-parents = sys.argv[1]
-running = subprocess.run(
-    ['squeue', '-h', '-j', parents, '-t', 'RUNNING', '-o', '%i'],
-    check=True, capture_output=True, text=True,
-).stdout.split()
-ansi = re.compile(r'\x1b\[[0-9;]*[A-Za-z]')
-epoch_pattern = re.compile(r'# Epoch\s+(\d+):\s*(\d+)%\|.*?\|\s*(\d+)/(\d+)')
-generic_pattern = re.compile(r'(?<!Epoch\s)(\d+)%\|.*?\|\s*(\d+)/(\d+)')
-
-
-def seconds(value):
-    days = 0
-    if '-' in value:
-        day_text, value = value.split('-', 1)
-        days = int(day_text)
-    fields = [int(item) for item in value.split(':')]
-    if len(fields) == 3:
-        hours, minutes, secs = fields
-    else:
-        hours, minutes, secs = 0, fields[0], fields[1]
-    return days * 86400 + hours * 3600 + minutes * 60 + secs
-
-
-risk_jobs = []
-for job in sorted(running):
-    record = subprocess.run(
-        ['scontrol', 'show', 'job', '-o', job], check=True, capture_output=True, text=True,
-    ).stdout.strip()
-    fields = dict(token.split('=', 1) for token in record.split() if '=' in token)
-    stdout = Path(fields['StdOut'])
-    payload = {
-        'job': job,
-        'name': fields['JobName'],
-        'runtime': fields['RunTime'],
-        'time_limit': fields['TimeLimit'],
-        'stdout_exists': stdout.is_file(),
-    }
-    if stdout.is_file():
-        size = stdout.stat().st_size
-        with stdout.open('rb') as handle:
-            handle.seek(max(0, size - 4 * 1024 * 1024))
-            tail = ansi.sub('', handle.read().decode('utf-8', errors='replace')).replace('\r', '\n')
-        epochs = list(epoch_pattern.finditer(tail))
-        generic = list(generic_pattern.finditer(tail))
-        payload['stdout_bytes'] = size
-        if epochs:
-            epoch, _, step, total = map(int, epochs[-1].groups())
-            fraction = ((epoch - 1) + step / total) / 30
-            projected = seconds(fields['RunTime']) / fraction if fraction > 0 else None
-            limit = seconds(fields['TimeLimit'])
-            risk = projected > limit
-            payload.update({
-                'epoch': epoch,
-                'epoch_step': step,
-                'epoch_total_steps': total,
-                'thirty_epoch_fraction': round(fraction, 6),
-                'projected_total_hours': round(projected / 3600, 2),
-                'projected_slack_hours': round((limit - projected) / 3600, 2),
-                'time_limit_risk': risk,
-            })
-            if risk:
-                risk_jobs.append(job)
-        elif generic:
-            percent, step, total = map(int, generic[-1].groups())
-            payload.update({'percent': percent, 'step': step, 'total': total})
-    print(json.dumps(payload, sort_keys=True))
-print(json.dumps({'time_limit_risk_jobs': sorted(risk_jobs), 'running_jobs': len(running)}, sort_keys=True))
-PY
-
-echo "=== MAIN JOB STATES AND FAILURE GATE ==="
-squeue -h -j "$MAIN_JOBS" -o '%i|%T|%M|%l|%R|%j' | sort
-sacct -n -X -P -j "$MAIN_JOBS" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList
-MAIN_FAILURES=$(sacct -n -X -P -j "$MAIN_JOBS" --format=JobIDRaw,JobName,State,ExitCode | \
-  awk -F'|' '$3 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/')
-printf '%s\n' "$MAIN_FAILURES"
-test -z "$MAIN_FAILURES"
-
-echo "=== REPLACEMENT AND FROZEN STATES ==="
-sacct -n -X -P -j 202510,202511 --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Reason
-squeue -h -j 202510,202511 -o '%i|%j|%T|%M|%R|%E' | sort
-find "$DIAGNOSTICS" -maxdepth 1 -mindepth 1 \
-  \( -name 'author_v13_training_data_port_all531_v2*' \
-  -o -name 'author_v13_warmup_isolation_all531_v2*' \
-  -o -name 'warmup_target_replacement_verification_v1*' \) -printf '%f|%y\n' | sort
-
-PAIR_PRESENT=0
-for relative in \
-  src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py \
-  src/29_nearing2022_da_ar/scripts/analyze_warmup_target_pair.py \
-  src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm \
-  src/29_nearing2022_da_ar/hpc/analyze_warmup_target_pair.slurm \
-  test/test_nearing2022_warmup_pair.py; do
-  if test -e "$ROOT/$relative"; then PAIR_PRESENT=$((PAIR_PRESENT + 1)); fi
-done
-echo "paired_training_payload_present=$PAIR_PRESENT"
-test "$PAIR_PRESENT" -eq 0
-PAIR_QUEUE=$(squeue -h -n N22-repl-verify,N22-warm-pair,N22-warm-analysis -o '%i|%j|%T|%M|%R')
-printf '%s\n' "$PAIR_QUEUE"
-test -z "$PAIR_QUEUE"
-test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = '202293|PENDING|JobHeldUser|N22-manifest'
-test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
-test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
-echo "verification_job_submitted=false"
-echo "pair_training_submitted=false"
+JOB_ID=$(sbatch --parsable "$ROOT/$WRAPPER_REL")
+case "$JOB_ID" in
+  ''|*[!0-9]*) echo "Invalid Slurm job id: $JOB_ID" >&2; exit 1 ;;
+esac
+echo "submitted_job_id=$JOB_ID"
+scontrol show job -o "$JOB_ID"
+sacct -n -X -P -j "$JOB_ID" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Reason
 echo "registered_matrix_modified=false"
+echo "frozen_acceptance_modified=false"
