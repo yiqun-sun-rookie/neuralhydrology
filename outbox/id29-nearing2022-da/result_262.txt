@@ -1,0 +1,31 @@
+### channel=id29-nearing2022-da seq=262
+### host=login4
+### started=2026-08-12T06:52:18+0800
+### ---------- output ----------
+=== RECOVERY ATTEMPT 1 START ===
+2026-08-12T06:52:18+0800
+JobId=202214 JobName=N22-train UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=RUNNING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=1-18:53:11 TimeLimit=2-00:00:00 TimeMin=N/A SubmitTime=2026-08-10T11:59:08 EligibleTime=2026-08-10T11:59:08 AccrueTime=2026-08-10T11:59:08 StartTime=2026-08-10T11:59:08 EndTime=2026-08-12T11:59:08 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T11:59:08 Partition=hgpu4 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=ngu104 BatchHost=ngu104 NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training.slurm WorkDir=/data1/home/sunyiq/nearing2022_da StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out Power= TresPerNode=gpu:1
+=== INCIDENT COPY HASHES ===
+32169a046e00b4789cd8268eaa1b72a0be1e237273053e915b1eb4f632917052  slurm_stdout.out
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  slurm_stderr.err
+df3b834bc27d939d69731019c32a71eb02c386e3d7a2c50a1ad32186043b6e9e  run_config.yml
+97cb80f9f9b7b08f3cf627293a81a912bbe39b6bb65ea1c484bf51c10a8558bc  train_data_scaler.yml
+4ccbca0040f969749807081984ebf5d3cc5f9cc1d9b62b04c7d34a8b9ccfc975  model_epoch029.pt
+1f6fb09b6bb9c03d332b6b047d996a66e44f98c838a335a22c2ccb567ff9e0c4  optimizer_state_epoch029.pt
+cec12be5cbf08ecd654bf75b93026ecd08dd6899f7b87cd338772759a7df1b58  run_output.log
+model_epoch029.pt: OK
+optimizer_state_epoch029.pt: OK
+run_config.yml: OK
+run_output.log: OK
+slurm_stderr.err: OK
+slurm_stdout.out: OK
+train_data_scaler.yml: OK
+incident_dir=/data1/home/sunyiq/nearing2022_da/closure_20260810/recovery/job202214_cuda_stall_seq262
+59f929d602d9e96948e9f049ee217f64c6c5fc0dfb72cc944ee985ec35d9bcfd  /data1/home/sunyiq/nearing2022_da/closure_20260810/recovery/job202214_cuda_stall_seq262/MANIFEST.sha256
+=== ENABLE MANUAL REQUEUE ===
+JobId=202214 JobName=N22-train UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=455281 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=RUNNING Reason=None Dependency=(null) Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=1-18:53:11 TimeLimit=2-00:00:00 TimeMin=N/A SubmitTime=2026-08-10T11:59:08 EligibleTime=2026-08-10T11:59:08 AccrueTime=2026-08-10T11:59:08 StartTime=2026-08-10T11:59:08 EndTime=2026-08-12T11:59:08 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T11:59:08 Partition=hgpu4 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=ngu104 BatchHost=ngu104 NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training.slurm WorkDir=/data1/home/sunyiq/nearing2022_da StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out Power= TresPerNode=gpu:1
+=== REQUEUE AND HOLD ===
+JobId=202214 JobName=N22-train UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=0 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=job_requeued_in_held_state Dependency=(null) Requeue=1 Restarts=1 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=2-00:00:00 TimeMin=N/A SubmitTime=2026-08-12T06:52:21 EligibleTime=2026-08-12T06:54:22 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T11:59:08 Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) BatchHost=ngu104 NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training.slurm WorkDir=/data1/home/sunyiq/nearing2022_da StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out Power= TresPerNode=gpu:1
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-12T06:54:33+0800
