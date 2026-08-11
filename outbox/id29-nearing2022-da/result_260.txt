@@ -1,0 +1,617 @@
+### channel=id29-nearing2022-da seq=260
+### host=login4
+### started=2026-08-12T06:43:46+0800
+### ---------- output ----------
+=== DIAGNOSTIC SNAPSHOT START ===
+2026-08-12T06:43:46+0800
+=== SCONTROL JOB RECORD ===
+JobId=202214 JobName=N22-train UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=RUNNING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=1-18:44:39 TimeLimit=2-00:00:00 TimeMin=N/A SubmitTime=2026-08-10T11:59:08 EligibleTime=2026-08-10T11:59:08 AccrueTime=2026-08-10T11:59:08 StartTime=2026-08-10T11:59:08 EndTime=2026-08-12T11:59:08 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T11:59:08 Partition=hgpu4 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=ngu104 BatchHost=ngu104 NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training.slurm WorkDir=/data1/home/sunyiq/nearing2022_da StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out Power= TresPerNode=gpu:1
+=== SQUEUE JOB RECORD ===
+202214|RUNNING|1-18:44:39|2-00:00:00|ngu104|ngu104|4|0|gpu:1|N22-train
+=== SACCT JOB AND STEP RECORDS ===
+202214|N22-train|RUNNING|0:0|1-18:44:38|2-00:00:00|2026-08-10T11:59:08|Unknown|ngu104|4|0n|billing=4,cpu=4,node=1
+202214.batch|batch|RUNNING|0:0|1-18:44:38||2026-08-10T11:59:08|Unknown|ngu104|4|0n|cpu=4,mem=0,node=1
+202214.extern|extern|RUNNING|0:0|1-18:44:38||2026-08-10T11:59:08|Unknown|ngu104|4|0n|billing=4,cpu=4,node=1
+=== SSTAT SNAPSHOT 1 ===
+202214.extern|213503982334-14:25:51||||||0
+202214.batch|3-02:38:35|8998772K|9009988K|63535484K|153829087281|152438622030|1
+=== NODE RECORD ===
+NodeName=ngu104 Arch=x86_64 CoresPerSocket=24  CPUAlloc=16 CPUTot=96 CPULoad=4.75 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:4 NodeAddr=ngu104 NodeHostName=ngu104 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=32701 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu4  BootTime=2026-03-16T17:57:22 SlurmdStartTime=2026-03-17T11:02:03 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=16 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+=== COMPUTE-NODE PROCESS AND GPU RECORDS ===
+--- listpids ---
+bash: line 4: scontrol: command not found
+--- user process table ---
+25340 25336 Tue Aug 11 02:13:21 2026  1-04:30:29 S  0.0  0.0 do_wait                          /bin/bash /var/spool/slurm/d/job202502/slurm_script
+25354 25340 Tue Aug 11 02:13:27 2026  1-04:30:23 S  190  0.3 futex_wait_queue_me              python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/basin_split/autoregression/fold_1_holdout_0.5_seed_0.yml --gpu 0
+61846 86717 Tue Aug 11 23:28:17 2026    07:15:33 S  0.2  0.3 poll_schedule_timeout            python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.5_seed_0.yml --gpu 0
+61909 86717 Tue Aug 11 23:28:17 2026    07:15:33 S  0.2  0.3 poll_schedule_timeout            python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.5_seed_0.yml --gpu 0
+61972 86717 Tue Aug 11 23:28:17 2026    07:15:33 S  0.2  0.3 poll_schedule_timeout            python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.5_seed_0.yml --gpu 0
+62036 86717 Tue Aug 11 23:28:17 2026    07:15:33 S  0.2  0.3 poll_schedule_timeout            python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.5_seed_0.yml --gpu 0
+65224 65220 Wed Aug 12 01:40:39 2026    05:03:11 S  0.0  0.0 do_wait                          /bin/bash /var/spool/slurm/d/job202743/slurm_script
+65238 65224 Wed Aug 12 01:40:45 2026    05:03:05 R  192  0.3 -                                python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_2_holdout_0.0_seed_0.yml --gpu 0
+68404 68400 Wed Aug 12 03:39:36 2026    03:04:14 S  0.0  0.0 do_wait                          /bin/bash /var/spool/slurm/d/job202751/slurm_script
+68414 68404 Wed Aug 12 03:39:43 2026    03:04:07 R 95.8  0.2 -                                python -m neuralhydrology.nh_run evaluate --run-dir /data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L08-TE000-S0 --period test --epoch 30 --gpu 0 --data-assimilation
+72254 65238 Wed Aug 12 06:24:14 2026       19:36 S  2.7  0.3 poll_schedule_timeout            python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_2_holdout_0.0_seed_0.yml --gpu 0
+72255 65238 Wed Aug 12 06:24:14 2026       19:36 S  2.6  0.3 poll_schedule_timeout            python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_2_holdout_0.0_seed_0.yml --gpu 0
+72380 65238 Wed Aug 12 06:24:14 2026       19:36 R  2.6  0.3 -                                python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_2_holdout_0.0_seed_0.yml --gpu 0
+72443 65238 Wed Aug 12 06:24:14 2026       19:36 S  2.6  0.3 poll_schedule_timeout            python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_2_holdout_0.0_seed_0.yml --gpu 0
+72724 25354 Wed Aug 12 06:33:47 2026       10:03 S  2.8  0.3 poll_schedule_timeout            python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/basin_split/autoregression/fold_1_holdout_0.5_seed_0.yml --gpu 0
+72745 25354 Wed Aug 12 06:33:47 2026       10:03 S  2.7  0.3 poll_schedule_timeout            python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/basin_split/autoregression/fold_1_holdout_0.5_seed_0.yml --gpu 0
+72788 25354 Wed Aug 12 06:33:47 2026       10:03 S  2.6  0.3 poll_schedule_timeout            python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/basin_split/autoregression/fold_1_holdout_0.5_seed_0.yml --gpu 0
+72913 25354 Wed Aug 12 06:33:47 2026       10:03 S  2.7  0.3 poll_schedule_timeout            python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/basin_split/autoregression/fold_1_holdout_0.5_seed_0.yml --gpu 0
+73280 73278 Wed Aug 12 06:43:48 2026       00:02 S  0.0  0.0 ?                                sshd: sunyiq@notty
+73281 73280 Wed Aug 12 06:43:48 2026       00:02 S  0.5  0.0 do_wait                          bash -s -- 202214
+73306 73281 Wed Aug 12 06:43:50 2026       00:00 R  0.0  0.0 -                                ps -u sunyiq -o pid=,ppid=,lstart=,etime=,state=,pcpu=,pmem=,wchan:32=,args= --sort=pid
+86709 86705 Mon Aug 10 11:59:15 2026  1-18:44:35 S  0.0  0.0 do_wait                          /bin/bash /var/spool/slurm/d/job202214/slurm_script
+86717 86709 Mon Aug 10 11:59:16 2026  1-18:44:34 R  174  0.3 -                                python -m neuralhydrology.nh_run train --config-file /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.5_seed_0.yml --gpu 0
+--- gpu devices ---
+0, GPU-d6513a7a-f24f-45ba-4b0a-034208e7836d, 17, 3, 1478, 46068, P0, 47
+1, GPU-4f94140e-b9c9-4839-4793-d5dcf4b7c136, 0, 0, 1478, 46068, P0, 42
+2, GPU-6a54b5c7-4653-d3fe-85c0-8e3263a3c6d5, 13, 1, 1806, 46068, P0, 41
+3, GPU-4865db69-8ac0-95e9-96fb-5d862ad4cb16, 13, 2, 1478, 46068, P0, 43
+--- gpu compute processes ---
+GPU-d6513a7a-f24f-45ba-4b0a-034208e7836d, 25354, python, 1466
+GPU-4f94140e-b9c9-4839-4793-d5dcf4b7c136, 86717, python, 1466
+GPU-6a54b5c7-4653-d3fe-85c0-8e3263a3c6d5, 68414, python, 1794
+GPU-4865db69-8ac0-95e9-96fb-5d862ad4cb16, 65238, python, 1466
+--- target main process ---
+main_pid=86717
+--- main process status ---
+Name:	pt_main_thread
+Umask:	0022
+State:	R (running)
+Tgid:	86717
+Ngid:	86717
+Pid:	86717
+PPid:	86709
+TracerPid:	0
+Uid:	2272	2272	2272	2272
+Gid:	2269	2269	2269	2269
+FDSize:	256
+Groups:	2269 
+VmPeak:	12752104 kB
+VmSize:	12720664 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	 2055708 kB
+VmRSS:	 2049664 kB
+RssAnon:	 1707700 kB
+RssFile:	  325596 kB
+RssShmem:	   16368 kB
+VmData:	 8746052 kB
+VmStk:	     156 kB
+VmExe:	    3216 kB
+VmLib:	 2166380 kB
+VmPTE:	    6340 kB
+VmSwap:	       0 kB
+Threads:	13
+SigQ:	0/2061781
+SigPnd:	0000000000000000
+ShdPnd:	0000000000000000
+SigBlk:	0000000000000000
+SigIgn:	0000000001001000
+SigCgt:	0000000180010002
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000001fffffffff
+CapAmb:	0000000000000000
+NoNewPrivs:	0
+Seccomp:	0
+Speculation_Store_Bypass:	thread vulnerable
+Cpus_allowed:	ffffffff,ffffffff,ffffffff
+Cpus_allowed_list:	0-95
+Mems_allowed:	00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000003
+Mems_allowed_list:	0-1
+voluntary_ctxt_switches:	23389697
+nonvoluntary_ctxt_switches:	258266
+--- main process io ---
+rchar: 153811863321
+wchar: 149337563306
+syscr: 53916703
+syscw: 31384317
+read_bytes: 17686528
+write_bytes: 162066432
+cancelled_write_bytes: 475136
+--- main process kernel wait channel ---
+0
+--- main process threads ---
+86717 86717   4 Rl   48.6 -                                pt_main_thread
+86717 86718  73 Sl    0.0 futex_wait_queue_me              jemalloc_bg_thd
+86717 87542   4 Sl    0.0 poll_schedule_timeout            cuda-EvtHandlr
+86717 87543   3 Sl    0.0 futex_wait_queue_me              pt_main_thread
+86717 89201  21 Sl    0.0 poll_schedule_timeout            cuda-EvtHandlr
+86717 89331  11 Sl   25.1 futex_wait_queue_me              pt_main_thread
+86717 89332  52 Sl   25.1 futex_wait_queue_me              pt_main_thread
+86717 89333   3 Sl   25.1 futex_wait_queue_me              pt_main_thread
+86717 89470  65 Sl   50.5 futex_wait_queue_me              pt_autograd_0
+86717 62100   0 Sl    0.0 futex_wait_queue_me              pt_main_thread
+86717 62101   2 Sl    0.0 futex_wait_queue_me              pt_main_thread
+86717 62102   2 Sl    0.0 futex_wait_queue_me              pt_main_thread
+86717 62103   2 Sl    0.0 futex_wait_queue_me              pt_main_thread
+--- python stack sampler availability ---
+--- native diagnostic tool availability ---
+gdb=/usr/bin/gdb
+pstack=/usr/bin/pstack
+eu-stack=/usr/bin/eu-stack
+strace=/usr/bin/strace
+perf=
+--- main process kernel stack availability ---
+cat: /proc/86717/stack: Permission denied
+--- bounded native stack trace ---
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11]
+[New LWP 62103]
+[New LWP 62102]
+[New LWP 62101]
+[New LWP 62100]
+[New LWP 89470]
+[New LWP 89333]
+[New LWP 89332]
+[New LWP 89331]
+[New LWP 89201]
+[New LWP 87543]
+[New LWP 87542]
+[New LWP 86718]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_struct.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_pickle.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/math.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_bisect.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_random.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_sha512.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_typing.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libstdc++.so.6]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libgcc_s.so.1]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_datetime.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_contextvars.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_ctypes.cpython-311-x86_64-linux-gnu.so]
+Missing separate debuginfo for /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+Try: yum --enablerepo='*debug*' install /usr/lib/debug/.build-id/9d/5e7d56d6997674784edc9a0603fd1db5eab5b8.debug
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_bz2.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/../../libbz2.so.1.0]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_lzma.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_decimal.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_socket.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/select.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/array.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_uuid.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_heapq.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_queue.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/binascii.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_hashlib.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_blake2.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_opcode.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_zoneinfo.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/fcntl.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_posixsubprocess.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/unicodedata.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/zlib.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_csv.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_json.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/mmap.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/grp.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/_libs/groupby.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/cmath.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/../../../../libgomp.so.1]
+Missing separate debuginfo for /lib64/libcuda.so.1
+Try: yum --enablerepo='*debug*' install /usr/lib/debug/.build-id/f4/5d2c0fbf95e8d6ee39893d591a8e6a1cb54e25.debug
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_ssl.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_asyncio.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_multiprocessing.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_multibytecodec.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/PIL/../../../libopenjp2.so.7]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/PIL/../../../libxcb.so.1]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/pyexpat.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_elementtree.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/_lsprof.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/gmpy2/../../../libmpfr.so.6]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/lib-dynload/termios.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/scipy/linalg/_matfuncs_schur_sqrtm.cpython-311-x86_64-linux-gnu.so]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/scipy/sparse/linalg/_eigen/arpack/../../../../../../../libgfortran.so.5]
+Dwarf Error: wrong version in compilation unit header (is 5, should be 2, 3, or 4) [in module /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/scipy/sparse/linalg/_eigen/arpack/../../../../../../.././libquadmath.so.0]
+0x00007ffd2eddd6c2 in clock_gettime ()
+
+Thread 13 (Thread 0x2b5f5a600700 (LWP 86718)):
+#0  0x00002b5f3e207a35 in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00002b5f58b0a0d9 in background_thread_entry () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pyarrow/libarrow.so.2000
+#2  0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#3  0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 12 (Thread 0x2b602de91700 (LWP 87542)):
+#0  0x00002b5f3ec14c3d in poll () from /lib64/libc.so.6
+#1  0x00002b6004fe1bef in ?? () from /lib64/libcuda.so.1
+#2  0x00002b60050a4e5f in ?? () from /lib64/libcuda.so.1
+#3  0x00002b6004fdacdf in ?? () from /lib64/libcuda.so.1
+#4  0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 11 (Thread 0x2b602f4e1700 (LWP 87543)):
+#0  0x00002b5f3e209d2f in do_futex_wait () from /lib64/libpthread.so.0
+#1  0x00002b5f3e209e07 in __new_sem_wait_slow () from /lib64/libpthread.so.0
+#2  0x00002b5f3e209ea5 in sem_timedwait () from /lib64/libpthread.so.0
+#3  0x000056496418ee2c in PyThread_acquire_lock_timed ()
+#4  0x0000564964280d4f in acquire_timed ()
+#5  0x000056496428084b in lock_PyThread_acquire_lock ()
+#6  0x00005649641d3384 in method_vectorcall_VARARGS_KEYWORDS ()
+#7  0x00005649641c18cc in PyObject_Vectorcall ()
+#8  0x00005649641b4d2a in _PyEval_EvalFrameDefault ()
+#9  0x00005649641f8a92 in _PyObject_VectorcallTstate.lto_priv.4 ()
+#10 0x00005649641f8360 in method_vectorcall ()
+#11 0x00005649642c973f in thread_run ()
+#12 0x0000564964296d64 in pythread_wrapper ()
+#13 0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#14 0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 10 (Thread 0x2b6052200700 (LWP 89201)):
+#0  0x00002b5f3ec14c3d in poll () from /lib64/libc.so.6
+#1  0x00002b6004fe1bef in ?? () from /lib64/libcuda.so.1
+#2  0x00002b60050a4e5f in ?? () from /lib64/libcuda.so.1
+#3  0x00002b6004fdacdf in ?? () from /lib64/libcuda.so.1
+#4  0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#5  0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 9 (Thread 0x2b6052fa4780 (LWP 89331)):
+#0  0x00002b5f3e207a35 in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00002b5f4b597871 in void __kmp_suspend_64<false, true>(int, kmp_flag_64<false, true>*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#2  0x00002b5f4b4b201f in bool _INTERNAL92a63c0c::__kmp_wait_template<kmp_flag_64<false, true>, true, false, true>(kmp_info*, kmp_flag_64<false, true>*, void*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#3  0x00002b5f4b4b4d37 in _INTERNAL92a63c0c::__kmp_hyper_barrier_release(barrier_type, kmp_info*, int, int, int, void*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#4  0x00002b5f4b4bd70b in __kmp_fork_barrier(int, int) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#5  0x00002b5f4b501b14 in __kmp_launch_thread () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#6  0x00002b5f4b590603 in _INTERNALfae7a54c::__kmp_launch_worker(void*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#7  0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 8 (Thread 0x2b60533a6800 (LWP 89332)):
+#0  0x00002b5f3e207a35 in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00002b5f4b597871 in void __kmp_suspend_64<false, true>(int, kmp_flag_64<false, true>*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#2  0x00002b5f4b4b201f in bool _INTERNAL92a63c0c::__kmp_wait_template<kmp_flag_64<false, true>, true, false, true>(kmp_info*, kmp_flag_64<false, true>*, void*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#3  0x00002b5f4b4b4d37 in _INTERNAL92a63c0c::__kmp_hyper_barrier_release(barrier_type, kmp_info*, int, int, int, void*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#4  0x00002b5f4b4bd70b in __kmp_fork_barrier(int, int) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#5  0x00002b5f4b501b14 in __kmp_launch_thread () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#6  0x00002b5f4b590603 in _INTERNALfae7a54c::__kmp_launch_worker(void*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#7  0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 7 (Thread 0x2b60537a8880 (LWP 89333)):
+#0  0x00002b5f3e207a35 in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00002b5f4b597871 in void __kmp_suspend_64<false, true>(int, kmp_flag_64<false, true>*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#2  0x00002b5f4b4b201f in bool _INTERNAL92a63c0c::__kmp_wait_template<kmp_flag_64<false, true>, true, false, true>(kmp_info*, kmp_flag_64<false, true>*, void*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#3  0x00002b5f4b4b4d37 in _INTERNAL92a63c0c::__kmp_hyper_barrier_release(barrier_type, kmp_info*, int, int, int, void*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#4  0x00002b5f4b4bd70b in __kmp_fork_barrier(int, int) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#5  0x00002b5f4b501b14 in __kmp_launch_thread () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#6  0x00002b5f4b590603 in _INTERNALfae7a54c::__kmp_launch_worker(void*) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libiomp5.so
+#7  0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 6 (Thread 0x2b606edbc700 (LWP 89470)):
+#0  0x00002b5f3e207a35 in pthread_cond_wait@@GLIBC_2.3.2 () from /lib64/libpthread.so.0
+#1  0x00002b5f46ae0e72 in std::condition_variable::wait () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libstdc++.so.6
+#2  0x00002b5f6a91dda3 in torch::autograd::ReadyQueue::pop() () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so
+#3  0x00002b5f6a922835 in torch::autograd::Engine::thread_main(std::shared_ptr<torch::autograd::GraphTask> const&) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so
+#4  0x00002b5f6a919def in torch::autograd::Engine::thread_init(int, std::shared_ptr<torch::autograd::ReadyQueue> const&, bool) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so
+#5  0x00002b5f64f01cac in torch::autograd::python::PythonEngine::thread_init(int, std::shared_ptr<torch::autograd::ReadyQueue> const&, bool) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_python.so
+#6  0x00002b5f46aff198 in execute_native_thread_routine () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/numpy/_core/../../../../libstdc++.so.6
+#7  0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#8  0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 5 (Thread 0x2b606817e700 (LWP 62100)):
+#0  0x00002b5f3e209b3b in do_futex_wait.constprop.1 () from /lib64/libpthread.so.0
+#1  0x00002b5f3e209bcf in __new_sem_wait_slow.constprop.0 () from /lib64/libpthread.so.0
+#2  0x00002b5f3e209c6b in sem_wait@@GLIBC_2.2.5 () from /lib64/libpthread.so.0
+#3  0x000056496418ed2e in PyThread_acquire_lock_timed ()
+#4  0x0000564964280d4f in acquire_timed ()
+#5  0x000056496428084b in lock_PyThread_acquire_lock ()
+#6  0x00005649641d3384 in method_vectorcall_VARARGS_KEYWORDS ()
+#7  0x00005649641c18cc in PyObject_Vectorcall ()
+#8  0x00005649641b4d2a in _PyEval_EvalFrameDefault ()
+#9  0x00005649641d9a4f in _PyFunction_Vectorcall ()
+#10 0x00005649641b9049 in _PyEval_EvalFrameDefault ()
+#11 0x00005649641f8a92 in _PyObject_VectorcallTstate.lto_priv.4 ()
+#12 0x00005649641f8360 in method_vectorcall ()
+#13 0x00005649642c973f in thread_run ()
+#14 0x0000564964296d64 in pythread_wrapper ()
+#15 0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#16 0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 4 (Thread 0x2b6068580700 (LWP 62101)):
+#0  0x00002b5f3e209b3b in do_futex_wait.constprop.1 () from /lib64/libpthread.so.0
+#1  0x00002b5f3e209bcf in __new_sem_wait_slow.constprop.0 () from /lib64/libpthread.so.0
+#2  0x00002b5f3e209c6b in sem_wait@@GLIBC_2.2.5 () from /lib64/libpthread.so.0
+#3  0x000056496418ed2e in PyThread_acquire_lock_timed ()
+#4  0x0000564964280d4f in acquire_timed ()
+#5  0x000056496428084b in lock_PyThread_acquire_lock ()
+#6  0x00005649641d3384 in method_vectorcall_VARARGS_KEYWORDS ()
+#7  0x00005649641c18cc in PyObject_Vectorcall ()
+#8  0x00005649641b4d2a in _PyEval_EvalFrameDefault ()
+#9  0x00005649641d9a4f in _PyFunction_Vectorcall ()
+#10 0x00005649641b9049 in _PyEval_EvalFrameDefault ()
+#11 0x00005649641f8a92 in _PyObject_VectorcallTstate.lto_priv.4 ()
+#12 0x00005649641f8360 in method_vectorcall ()
+#13 0x00005649642c973f in thread_run ()
+#14 0x0000564964296d64 in pythread_wrapper ()
+#15 0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#16 0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 3 (Thread 0x2b6068781700 (LWP 62102)):
+#0  0x00002b5f3e209b3b in do_futex_wait.constprop.1 () from /lib64/libpthread.so.0
+#1  0x00002b5f3e209bcf in __new_sem_wait_slow.constprop.0 () from /lib64/libpthread.so.0
+#2  0x00002b5f3e209c6b in sem_wait@@GLIBC_2.2.5 () from /lib64/libpthread.so.0
+#3  0x000056496418ed2e in PyThread_acquire_lock_timed ()
+#4  0x0000564964280d4f in acquire_timed ()
+#5  0x000056496428084b in lock_PyThread_acquire_lock ()
+#6  0x00005649641d3384 in method_vectorcall_VARARGS_KEYWORDS ()
+#7  0x00005649641c18cc in PyObject_Vectorcall ()
+#8  0x00005649641b4d2a in _PyEval_EvalFrameDefault ()
+#9  0x00005649641d9a4f in _PyFunction_Vectorcall ()
+#10 0x00005649641b9049 in _PyEval_EvalFrameDefault ()
+#11 0x00005649641f8a92 in _PyObject_VectorcallTstate.lto_priv.4 ()
+#12 0x00005649641f8360 in method_vectorcall ()
+#13 0x00005649642c973f in thread_run ()
+#14 0x0000564964296d64 in pythread_wrapper ()
+#15 0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#16 0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 2 (Thread 0x2b606837f700 (LWP 62103)):
+#0  0x00002b5f3e209b3b in do_futex_wait.constprop.1 () from /lib64/libpthread.so.0
+#1  0x00002b5f3e209bcf in __new_sem_wait_slow.constprop.0 () from /lib64/libpthread.so.0
+#2  0x00002b5f3e209c6b in sem_wait@@GLIBC_2.2.5 () from /lib64/libpthread.so.0
+#3  0x000056496418ed2e in PyThread_acquire_lock_timed ()
+#4  0x0000564964280d4f in acquire_timed ()
+#5  0x000056496428084b in lock_PyThread_acquire_lock ()
+#6  0x00005649641d3384 in method_vectorcall_VARARGS_KEYWORDS ()
+#7  0x00005649641c18cc in PyObject_Vectorcall ()
+#8  0x00005649641b4d2a in _PyEval_EvalFrameDefault ()
+#9  0x00005649641d9a4f in _PyFunction_Vectorcall ()
+#10 0x00005649641b9049 in _PyEval_EvalFrameDefault ()
+#11 0x00005649641f8a92 in _PyObject_VectorcallTstate.lto_priv.4 ()
+#12 0x00005649641f8360 in method_vectorcall ()
+#13 0x00005649642c973f in thread_run ()
+#14 0x0000564964296d64 in pythread_wrapper ()
+#15 0x00002b5f3e203ea5 in start_thread () from /lib64/libpthread.so.0
+#16 0x00002b5f3ec1f96d in clone () from /lib64/libc.so.6
+
+Thread 1 (Thread 0x2b5f3e0178c0 (LWP 86717)):
+#0  0x00007ffd2eddd6c2 in clock_gettime ()
+#1  0x00002b5f3ec3588d in clock_gettime () from /lib64/libc.so.6
+#2  0x00002b6004fd91a4 in ?? () from /lib64/libcuda.so.1
+#3  0x00002b6004ea327e in ?? () from /lib64/libcuda.so.1
+#4  0x00002b60050ea80c in ?? () from /lib64/libcuda.so.1
+#5  0x00002b60050eb101 in ?? () from /lib64/libcuda.so.1
+#6  0x00002b6005223f9b in ?? () from /lib64/libcuda.so.1
+#7  0x00002b6004e64116 in ?? () from /lib64/libcuda.so.1
+#8  0x00002b6004e64529 in ?? () from /lib64/libcuda.so.1
+#9  0x00002b6004e65367 in ?? () from /lib64/libcuda.so.1
+#10 0x00002b6005052011 in ?? () from /lib64/libcuda.so.1
+#11 0x00002b5f641da9f9 in ?? () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/../../../../libcudart.so.12
+#12 0x00002b5f641ad8ad in ?? () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/../../../../libcudart.so.12
+#13 0x00002b5f641ff0a5 in cudaMemcpyAsync () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/../../../../libcudart.so.12
+#14 0x00002b5f74fa4638 in void at::native::nonzero_cuda_out_impl<bool>(at::Tensor const&, at::Tensor&) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cuda.so
+#15 0x00002b5f74f8f61b in at::native::nonzero_out_cuda(at::Tensor const&, at::Tensor&) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cuda.so
+#16 0x00002b5f74f8fa13 in at::native::nonzero_cuda(at::Tensor const&) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cuda.so
+#17 0x00002b5f75fb2094 in at::(anonymous namespace)::(anonymous namespace)::wrapper_CUDA__nonzero(at::Tensor const&) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cuda.so
+#18 0x00002b5f75fb214d in c10::impl::wrap_kernel_functor_unboxed_<c10::impl::detail::WrapFunctionIntoFunctor_<c10::CompileTimeFunctionPointer<at::Tensor (at::Tensor const&), &at::(anonymous namespace)::(anonymous namespace)::wrapper_CUDA__nonzero>, at::Tensor, c10::guts::typelist::typelist<at::Tensor const&> >, at::Tensor (at::Tensor const&)>::call(c10::OperatorKernel*, c10::DispatchKeySet, at::Tensor const&) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cuda.so
+#19 0x00002b5f67b8928b in at::_ops::nonzero::call(at::Tensor const&) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so
+#20 0x00002b5f675e6689 in at::native::make_info(at::Tensor, c10::IListRef<at::OptionalTensorRef>) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so
+#21 0x00002b5f675e88fd in at::meta::structured_index_Tensor::meta(at::Tensor const&, c10::IListRef<at::OptionalTensorRef>) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cpu.so
+#22 0x00002b5f760e3ae8 in at::(anonymous namespace)::wrapper_CUDA_index_Tensor(at::Tensor const&, c10::List<std::optional<at::Tensor> > const&) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cuda.so
+#23 0x00002b5f760e3cc0 in c10::impl::wrap_kernel_functor_unboxed_<c10::impl::detail::WrapFunctionIntoFunctor_<c10::CompileTimeFunctionPointer<at::Tensor (at::Tensor const&, c10::List<std::optional<at::Tensor> > const&), &at::(anonymous namespace)::wrapper_CUDA_index_Tensor>, at::Tensor, c10::guts::typelist::typelist<at::Tensor const&, c10::List<std::optional<at::Tensor> > const&> >, at::Tensor (at::Tensor const&, c10::List<std::optional<at::Tensor> > const&)>::call(c10::OperatorKernel*, c10::DispatchKeySet, at::Tensor const&, c10::List<std::optional<at::Tensor> > const&) () from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/lib/libtorch_cuda.so
+[Inferior 1 (process 86717) detached]
+--- gpu process monitor ---
+# gpu         pid  type    sm    mem    enc    dec     fb    command
+# Idx           #   C/G     %      %      %      %     MB    name
+    1      86717     C      0      0      -      -   1466    python         
+    1      86717     C      0      0      -      -   1466    python         
+    1      86717     C      0      0      -      -   1466    python         
+    1      86717     C      0      0      -      -   1466    python         
+    1      86717     C      0      0      -      -   1466    python         
+    1      86717     C      0      0      -      -   1466    python         
+    1      86717     C      0      0      -      -   1466    python         
+Killed by signal 15.
+compute_node_probe_failed=ngu104
+=== RUN-DIRECTORY CHECKPOINT RECORDS ===
+1786334554.0000000000|2722|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/config.yml
+1786334554.0000000000|4944|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/train_data/train_data_scaler.yml
+1786338964.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch001.pt
+1786338964.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch001.pt
+1786343437.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch002.pt
+1786343437.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch002.pt
+1786347816.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch003.pt
+1786347816.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch003.pt
+1786352222.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch004.pt
+1786352222.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch004.pt
+1786356613.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch005.pt
+1786356613.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch005.pt
+1786361025.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch006.pt
+1786361025.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch006.pt
+1786365443.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch007.pt
+1786365443.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch007.pt
+1786369848.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch008.pt
+1786369848.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch008.pt
+1786374263.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch009.pt
+1786374263.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch009.pt
+1786378672.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch010.pt
+1786378672.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch010.pt
+1786383105.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch011.pt
+1786383105.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch011.pt
+1786387513.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch012.pt
+1786387513.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch012.pt
+1786391898.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch013.pt
+1786391898.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch013.pt
+1786396275.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch014.pt
+1786396275.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch014.pt
+1786400663.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch015.pt
+1786400663.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch015.pt
+1786405043.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch016.pt
+1786405043.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch016.pt
+1786409428.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch017.pt
+1786409428.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch017.pt
+1786413810.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch018.pt
+1786413810.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch018.pt
+1786418203.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch019.pt
+1786418203.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch019.pt
+1786422597.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch020.pt
+1786422597.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch020.pt
+1786426984.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch021.pt
+1786426984.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch021.pt
+1786431376.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch022.pt
+1786431376.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch022.pt
+1786435765.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch023.pt
+1786435765.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch023.pt
+1786440159.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch024.pt
+1786440159.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch024.pt
+1786444535.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch025.pt
+1786444535.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch025.pt
+1786448932.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch026.pt
+1786448932.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch026.pt
+1786453321.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch027.pt
+1786453321.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch027.pt
+1786457702.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch028.pt
+1786457702.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch028.pt
+1786462097.0000000000|1236357|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch029.pt
+1786462097.0000000000|2474006|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch029.pt
+1786462130.0000000000|7732|/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/output.log
+--- recovery input sha256 ---
+df3b834bc27d939d69731019c32a71eb02c386e3d7a2c50a1ad32186043b6e9e  /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/config.yml
+97cb80f9f9b7b08f3cf627293a81a912bbe39b6bb65ea1c484bf51c10a8558bc  /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/train_data/train_data_scaler.yml
+4ccbca0040f969749807081984ebf5d3cc5f9cc1d9b62b04c7d34a8b9ccfc975  /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/model_epoch029.pt
+1f6fb09b6bb9c03d332b6b047d996a66e44f98c838a335a22c2ccb567ff9e0c4  /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/optimizer_state_epoch029.pt
+cec12be5cbf08ecd654bf75b93026ecd08dd6899f7b87cd338772759a7df1b58  /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30/output.log
+=== LOG METADATA SNAPSHOT 1 ===
+stdout|/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out|bytes=31666659|mtime=2026-08-12 00:12:50.000000000 +0800|mtime_epoch=1786464770|inode=8825921795
+stderr|/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err|bytes=0|mtime=2026-08-10 11:59:15.000000000 +0800|mtime_epoch=1786334355|inode=8955876101
+=== SSTAT SNAPSHOT 2 ===
+202214.extern|213503982334-14:25:51||||||0
+202214.batch|3-02:39:00|8998776K|9009988K|63535484K|153829087281|152438622030|1
+=== LOG METADATA SNAPSHOT 2 ===
+stdout|/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out|bytes=31666659|mtime=2026-08-12 00:12:50.000000000 +0800|mtime_epoch=1786464770|inode=8825921795
+stdout_size_delta_15s=0
+stdout_mtime_delta_15s=0
+=== STDOUT TAIL ===
+# Epoch 30:  60%|#####9    | 4066/6821 [43:37<29:30,  1.56it/s, Loss: 0.0057]
+# Epoch 30:  60%|#####9    | 4067/6821 [43:37<29:26,  1.56it/s, Loss: 0.0057]
+# Epoch 30:  60%|#####9    | 4067/6821 [43:38<29:26,  1.56it/s, Loss: 0.0026]
+# Epoch 30:  60%|#####9    | 4068/6821 [43:38<29:14,  1.57it/s, Loss: 0.0026]
+# Epoch 30:  60%|#####9    | 4068/6821 [43:38<29:14,  1.57it/s, Loss: 0.0032]
+# Epoch 30:  60%|#####9    | 4069/6821 [43:38<29:16,  1.57it/s, Loss: 0.0032]
+# Epoch 30:  60%|#####9    | 4069/6821 [43:39<29:16,  1.57it/s, Loss: 0.0030]
+# Epoch 30:  60%|#####9    | 4070/6821 [43:39<29:24,  1.56it/s, Loss: 0.0030]
+# Epoch 30:  60%|#####9    | 4070/6821 [43:40<29:24,  1.56it/s, Loss: 0.0050]
+# Epoch 30:  60%|#####9    | 4071/6821 [43:40<29:25,  1.56it/s, Loss: 0.0050]
+# Epoch 30:  60%|#####9    | 4071/6821 [43:40<29:25,  1.56it/s, Loss: 0.0032]
+# Epoch 30:  60%|#####9    | 4072/6821 [43:40<29:10,  1.57it/s, Loss: 0.0032]
+# Epoch 30:  60%|#####9    | 4072/6821 [43:41<29:10,  1.57it/s, Loss: 0.0076]
+# Epoch 30:  60%|#####9    | 4073/6821 [43:41<29:11,  1.57it/s, Loss: 0.0076]
+# Epoch 30:  60%|#####9    | 4073/6821 [43:41<29:11,  1.57it/s, Loss: 0.0057]
+# Epoch 30:  60%|#####9    | 4074/6821 [43:41<29:18,  1.56it/s, Loss: 0.0057]
+# Epoch 30:  60%|#####9    | 4074/6821 [43:42<29:18,  1.56it/s, Loss: 0.0029]
+# Epoch 30:  60%|#####9    | 4075/6821 [43:42<29:16,  1.56it/s, Loss: 0.0029]
+# Epoch 30:  60%|#####9    | 4075/6821 [43:43<29:16,  1.56it/s, Loss: 0.0082]
+# Epoch 30:  60%|#####9    | 4076/6821 [43:43<29:04,  1.57it/s, Loss: 0.0082]
+# Epoch 30:  60%|#####9    | 4076/6821 [43:43<29:04,  1.57it/s, Loss: 0.0077]
+# Epoch 30:  60%|#####9    | 4077/6821 [43:43<29:07,  1.57it/s, Loss: 0.0077]
+# Epoch 30:  60%|#####9    | 4077/6821 [43:44<29:07,  1.57it/s, Loss: 0.0034]
+# Epoch 30:  60%|#####9    | 4078/6821 [43:44<29:17,  1.56it/s, Loss: 0.0034]
+# Epoch 30:  60%|#####9    | 4078/6821 [43:45<29:17,  1.56it/s, Loss: 0.0022]
+# Epoch 30:  60%|#####9    | 4079/6821 [43:45<29:11,  1.57it/s, Loss: 0.0022]
+# Epoch 30:  60%|#####9    | 4079/6821 [43:45<29:11,  1.57it/s, Loss: 0.0080]
+# Epoch 30:  60%|#####9    | 4080/6821 [43:45<29:00,  1.58it/s, Loss: 0.0080]
+# Epoch 30:  60%|#####9    | 4080/6821 [43:46<29:00,  1.58it/s, Loss: 0.0130]
+# Epoch 30:  60%|#####9    | 4081/6821 [43:46<29:02,  1.57it/s, Loss: 0.0130]
+# Epoch 30:  60%|#####9    | 4081/6821 [43:47<29:02,  1.57it/s, Loss: 0.0041]
+# Epoch 30:  60%|#####9    | 4082/6821 [43:47<29:13,  1.56it/s, Loss: 0.0041]
+# Epoch 30:  60%|#####9    | 4082/6821 [43:47<29:13,  1.56it/s, Loss: 0.0042]
+# Epoch 30:  60%|#####9    | 4083/6821 [43:47<29:11,  1.56it/s, Loss: 0.0042]
+# Epoch 30:  60%|#####9    | 4083/6821 [43:48<29:11,  1.56it/s, Loss: 0.0023]
+# Epoch 30:  60%|#####9    | 4084/6821 [43:48<28:59,  1.57it/s, Loss: 0.0023]
+# Epoch 30:  60%|#####9    | 4084/6821 [43:49<28:59,  1.57it/s, Loss: 0.0040]
+# Epoch 30:  60%|#####9    | 4085/6821 [43:49<29:02,  1.57it/s, Loss: 0.0040]
+# Epoch 30:  60%|#####9    | 4085/6821 [43:49<29:02,  1.57it/s, Loss: 0.0054]
+# Epoch 30:  60%|#####9    | 4086/6821 [43:49<29:09,  1.56it/s, Loss: 0.0054]
+# Epoch 30:  60%|#####9    | 4086/6821 [43:50<29:09,  1.56it/s, Loss: 0.0019]
+# Epoch 30:  60%|#####9    | 4087/6821 [43:50<29:06,  1.57it/s, Loss: 0.0019]
+# Epoch 30:  60%|#####9    | 4087/6821 [43:50<29:06,  1.57it/s, Loss: 0.0040]
+# Epoch 30:  60%|#####9    | 4088/6821 [43:50<28:54,  1.58it/s, Loss: 0.0040]
+# Epoch 30:  60%|#####9    | 4088/6821 [43:51<28:54,  1.58it/s, Loss: 0.0030]
+# Epoch 30:  60%|#####9    | 4089/6821 [43:51<28:56,  1.57it/s, Loss: 0.0030]
+# Epoch 30:  60%|#####9    | 4089/6821 [43:52<28:56,  1.57it/s, Loss: 0.0014]
+# Epoch 30:  60%|#####9    | 4090/6821 [43:52<29:07,  1.56it/s, Loss: 0.0014]
+# Epoch 30:  60%|#####9    | 4090/6821 [43:52<29:07,  1.56it/s, Loss: 0.0038]
+# Epoch 30:  60%|#####9    | 4091/6821 [43:52<29:02,  1.57it/s, Loss: 0.0038]
+# Epoch 30:  60%|#####9    | 4091/6821 [43:53<29:02,  1.57it/s, Loss: 0.0055]
+# Epoch 30:  60%|#####9    | 4092/6821 [43:53<28:51,  1.58it/s, Loss: 0.0055]
+# Epoch 30:  60%|#####9    | 4092/6821 [43:54<28:51,  1.58it/s, Loss: 0.0036]
+# Epoch 30:  60%|######    | 4093/6821 [43:54<28:55,  1.57it/s, Loss: 0.0036]
+# Epoch 30:  60%|######    | 4093/6821 [43:54<28:55,  1.57it/s, Loss: 0.0030]
+# Epoch 30:  60%|######    | 4094/6821 [43:54<29:04,  1.56it/s, Loss: 0.0030]
+# Epoch 30:  60%|######    | 4094/6821 [43:55<29:04,  1.56it/s, Loss: 0.0047]
+# Epoch 30:  60%|######    | 4095/6821 [43:55<29:02,  1.56it/s, Loss: 0.0047]
+# Epoch 30:  60%|######    | 4095/6821 [43:56<29:02,  1.56it/s, Loss: 0.0048]
+# Epoch 30:  60%|######    | 4096/6821 [43:56<28:56,  1.57it/s, Loss: 0.0048]
+# Epoch 30:  60%|######    | 4096/6821 [43:56<28:56,  1.57it/s, Loss: 0.0034]
+# Epoch 30:  60%|######    | 4097/6821 [43:56<28:58,  1.57it/s, Loss: 0.0034]
+# Epoch 30:  60%|######    | 4097/6821 [43:57<28:58,  1.57it/s, Loss: 0.0130]
+# Epoch 30:  60%|######    | 4098/6821 [43:57<29:04,  1.56it/s, Loss: 0.0130]
+# Epoch 30:  60%|######    | 4098/6821 [43:57<29:04,  1.56it/s, Loss: 0.0021]
+# Epoch 30:  60%|######    | 4099/6821 [43:57<28:59,  1.57it/s, Loss: 0.0021]
+# Epoch 30:  60%|######    | 4099/6821 [43:58<28:59,  1.57it/s, Loss: 0.0026]
+# Epoch 30:  60%|######    | 4100/6821 [43:58<28:49,  1.57it/s, Loss: 0.0026]
+# Epoch 30:  60%|######    | 4100/6821 [43:59<28:49,  1.57it/s, Loss: 0.0054]
+# Epoch 30:  60%|######    | 4101/6821 [43:59<28:49,  1.57it/s, Loss: 0.0054]
+# Epoch 30:  60%|######    | 4101/6821 [43:59<28:49,  1.57it/s, Loss: 0.0020]
+# Epoch 30:  60%|######    | 4102/6821 [43:59<28:58,  1.56it/s, Loss: 0.0020]
+# Epoch 30:  60%|######    | 4102/6821 [44:00<28:58,  1.56it/s, Loss: 0.0027]
+# Epoch 30:  60%|######    | 4103/6821 [44:00<28:55,  1.57it/s, Loss: 0.0027]
+# Epoch 30:  60%|######    | 4103/6821 [44:01<28:55,  1.57it/s, Loss: 0.0070]
+# Epoch 30:  60%|######    | 4104/6821 [44:01<28:46,  1.57it/s, Loss: 0.0070]
+# Epoch 30:  60%|######    | 4104/6821 [44:01<28:46,  1.57it/s, Loss: 0.0070]
+# Epoch 30:  60%|######    | 4105/6821 [44:01<28:50,  1.57it/s, Loss: 0.0070]
+# Epoch 30:  60%|######    | 4105/6821 [44:02<28:50,  1.57it/s, Loss: 0.0028]
+# Epoch 30:  60%|######    | 4106/6821 [44:02<28:59,  1.56it/s, Loss: 0.0028]
+# Epoch 30:  60%|######    | 4106/6821 [44:03<28:59,  1.56it/s, Loss: 0.0048]
+# Epoch 30:  60%|######    | 4107/6821 [44:03<28:55,  1.56it/s, Loss: 0.0048]
+# Epoch 30:  60%|######    | 4107/6821 [44:03<28:55,  1.56it/s, Loss: 0.0021]
+# Epoch 30:  60%|######    | 4108/6821 [44:03<28:43,  1.57it/s, Loss: 0.0021]
+# Epoch 30:  60%|######    | 4108/6821 [44:04<28:43,  1.57it/s, Loss: 0.0031]
+# Epoch 30:  60%|######    | 4109/6821 [44:04<28:47,  1.57it/s, Loss: 0.0031]
+# Epoch 30:  60%|######    | 4109/6821 [44:04<28:47,  1.57it/s, Loss: 0.0024]
+# Epoch 30:  60%|######    | 4110/6821 [44:04<28:56,  1.56it/s, Loss: 0.0024]
+# Epoch 30:  60%|######    | 4110/6821 [44:05<28:56,  1.56it/s, Loss: 0.0039]
+# Epoch 30:  60%|######    | 4111/6821 [44:05<28:51,  1.57it/s, Loss: 0.0039]
+# Epoch 30:  60%|######    | 4111/6821 [44:06<28:51,  1.57it/s, Loss: 0.0055]
+# Epoch 30:  60%|######    | 4112/6821 [44:06<28:41,  1.57it/s, Loss: 0.0055]
+# Epoch 30:  60%|######    | 4112/6821 [44:06<28:41,  1.57it/s, Loss: 0.0030]
+# Epoch 30:  60%|######    | 4113/6821 [44:06<28:46,  1.57it/s, Loss: 0.0030]
+# Epoch 30:  60%|######    | 4113/6821 [44:07<28:46,  1.57it/s, Loss: 0.0036]
+# Epoch 30:  60%|######    | 4114/6821 [44:07<28:55,  1.56it/s, Loss: 0.0036]
+# Epoch 30:  60%|######    | 4114/6821 [44:08<28:55,  1.56it/s, Loss: 0.0028]
+# Epoch 30:  60%|######    | 4115/6821 [44:08<28:50,  1.56it/s, Loss: 0.0028]
+# Epoch 30:  60%|######    | 4115/6821 [44:08<28:50,  1.56it/s, Loss: 0.0079]
+# Epoch 30:  60%|######    | 4116/6821 [44:08<28:41,  1.57it/s, Loss: 0.0079]
+# Epoch 30:  60%|######    | 4116/6821 [44:09<28:41,  1.57it/s, Loss: 0.0021]
+# Epoch 30:  60%|######    | 4117/6821 [44:09<28:43,  1.57it/s, Loss: 0.0021]
+# Epoch 30:  60%|######    | 4117/6821 [44:10<28:43,  1.57it/s, Loss: 0.0043]
+# Epoch 30:  60%|######    | 4118/6821 [44:10<28:52,  1.56it/s, Loss: 0.0043]
+# Epoch 30:  60%|######    | 4118/6821 [44:10<28:52,  1.56it/s, Loss: 0.0017]
+# Epoch 30:  60%|######    | 4119/6821 [44:10<28:49,  1.56it/s, Loss: 0.0017]
+# Epoch 30:  60%|######    | 4119/6821 [44:11<28:49,  1.56it/s, Loss: 0.0046]
+# Epoch 30:  60%|######    | 4120/6821 [44:11<28:37,  1.57it/s, Loss: 0.0046]
+# Epoch 30:  60%|######    | 4120/6821 [44:11<28:37,  1.57it/s, Loss: 0.0042]
+# Epoch 30:  60%|######    | 4121/6821 [44:11<28:38,  1.57it/s, Loss: 0.0042]
+# Epoch 30:  60%|######    | 4121/6821 [44:12<28:38,  1.57it/s, Loss: 0.0025]
+# Epoch 30:  60%|######    | 4122/6821 [44:12<28:48,  1.56it/s, Loss: 0.0025]
+# Epoch 30:  60%|######    | 4122/6821 [44:13<28:48,  1.56it/s, Loss: 0.0016]
+# Epoch 30:  60%|######    | 4123/6821 [44:13<28:46,  1.56it/s, Loss: 0.0016]
+# Epoch 30:  60%|######    | 4123/6821 [44:14<28:46,  1.56it/s, Loss: 0.0025]
+# Epoch 30:  60%|######    | 4124/6821 [44:14<38:05,  1.18it/s, Loss: 0.0025]
+# Epoch 30:  60%|######    | 4124/6821 [44:15<38:05,  1.18it/s, Loss: 0.0044]
+# Epoch 30:  60%|######    | 4125/6821 [44:15<35:13,  1.28it/s, Loss: 0.0044]
+# Epoch 30:  60%|######    | 4125/6821 [44:15<35:13,  1.28it/s, Loss: 0.0040]
+# Epoch 30:  60%|######    | 4126/6821 [44:15<33:22,  1.35it/s, Loss: 0.0040]stderr|/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err|bytes=0|mtime=2026-08-10 11:59:15.000000000 +0800|mtime_epoch=1786334355|inode=8955876101
+=== STDERR TAIL ===
+=== DIAGNOSTIC SNAPSHOT END ===
+2026-08-12T06:44:32+0800
+read_only=true
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-12T06:44:32+0800
