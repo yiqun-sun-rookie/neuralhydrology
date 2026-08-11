@@ -1,33 +1,54 @@
 #!/bin/bash
-set -o pipefail
+set -euo pipefail
 
-ROOT=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62
+MAILBOX=/data1/home/sunyiq/hpc_mailbox
+PYTHON=/data1/home/sunyiq/autoresearch64/.venv/bin/python
+CORRECTED=/tmp/autoresearch64-submit-seq64.sh
 
-echo "=== JOB 202557 ==="
-squeue -j 202557 -o '%.18i %.20j %.12T %.10M %.10l %.20R'
-sacct -j 202557 -X --format=JobID%12,JobName%20,NodeList%9,State%14,ExitCode%8,Elapsed%10,Start%20,End%20
+test ! -e "$CORRECTED"
+"$PYTHON" - "$MAILBOX" "$CORRECTED" <<'PY_FIX'
+import hashlib
+import os
+import subprocess
+import sys
+from pathlib import Path
 
-echo "=== EVIDENCE STATUS ==="
-for path in \
-  "$ROOT/evidence/PROMOTION_RECEIPT.json" \
-  "$ROOT/evidence/TARGETED_GATE.json" \
-  "$ROOT/evidence/FULL_GATE.json" \
-  "$ROOT/evidence/PACKAGE_GATE.json" \
-  "$ROOT/candidate_run/CANDIDATE_SUMMARY.json" \
-  "$ROOT/evidence/REPRODUCTION_SUMMARY.json" \
-  "$ROOT/evidence/PROMOTION_TIMING.json" \
-  "$ROOT/evidence/MANIFEST.sha256"; do
-  if [ -e "$path" ]; then
-    stat -c 'EXISTS %n bytes=%s mtime=%y' "$path"
-  else
-    echo "PENDING $path"
-  fi
-done
+mailbox = Path(sys.argv[1])
+output_path = Path(sys.argv[2])
+source = subprocess.run(
+    [
+        "git",
+        "-C",
+        str(mailbox),
+        "show",
+        "98ecf5e9:inbox/autoresearch-64/cmd.sh",
+    ],
+    check=True,
+    capture_output=True,
+    text=True,
+).stdout
+if source.count("seq62") != 7:
+    raise SystemExit("unexpected sequence-62 template count")
+if source.count("sequence 62") != 1:
+    raise SystemExit("unexpected snapshot-label template count")
+bad = r'\n+echo "=== VERIFY IMMUTABLE RECOMMENDATION RECEIPT ==="'
+good = r'\necho "=== VERIFY IMMUTABLE RECOMMENDATION RECEIPT ==="'
+if source.count(bad) != 1:
+    raise SystemExit("unexpected literal-plus defect count")
 
-echo "=== LOG TAILS ==="
-for path in "$ROOT/evidence/JOB_STDOUT.txt" "$ROOT/evidence/JOB_STDERR.txt"; do
-  if [ -f "$path" ]; then
-    echo "--- $path"
-    tail -30 "$path"
-  fi
-done
+corrected = source.replace("seq62", "seq64")
+corrected = corrected.replace("sequence 62", "sequence 64")
+corrected = corrected.replace(bad, good)
+if "+echo" in corrected:
+    raise SystemExit("literal-plus defect remains after correction")
+
+descriptor = os.open(output_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o444)
+with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as stream:
+    stream.write(corrected)
+    stream.flush()
+    os.fsync(stream.fileno())
+print(f"corrected_submit_sha256={hashlib.sha256(corrected.encode('utf-8')).hexdigest()}")
+PY_FIX
+
+bash -n "$CORRECTED"
+bash "$CORRECTED"
