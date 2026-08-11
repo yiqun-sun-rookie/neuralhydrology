@@ -1,12 +1,19 @@
 #!/bin/bash
-# ID29 seq=191: deploy and submit the isolated repeated partial numerical audit.
+# ID29 seq=192: one-factor scheduler-resource correction for the repeated partial numerical audit.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
 DIAGNOSTIC_ROOT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics"
-FINAL="$DIAGNOSTIC_ROOT/partial_numerical_audit_seq191_v1"
-SUBMISSION_RECEIPT="$DIAGNOSTIC_ROOT/partial_numerical_audit_seq191_submission.json"
-WRAPPER="$ROOT/src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit.slurm"
+AUDITOR="$ROOT/src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py"
+FAILED_WRAPPER="$ROOT/src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit.slurm"
+PREFLIGHT="$ROOT/results/29_nearing2022_da_ar/formal_closure/partial_registered_results_audit_slurm_preflight_20260811.json"
+WRAPPER="$ROOT/src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit_attempt2.slurm"
+TEST="$ROOT/test/test_nearing2022_partial_audit_attempt2_slurm.py"
+AMENDMENT="$ROOT/results/29_nearing2022_da_ar/formal_closure/partial_registered_results_audit_resource_amendment_01_20260811.json"
+FAILED_FINAL="$DIAGNOSTIC_ROOT/partial_numerical_audit_seq191_v1"
+FAILED_RECEIPT="$DIAGNOSTIC_ROOT/partial_numerical_audit_seq191_submission.json"
+FINAL="$DIAGNOSTIC_ROOT/partial_numerical_audit_seq192_v1"
+SUBMISSION_RECEIPT="$DIAGNOSTIC_ROOT/partial_numerical_audit_seq192_submission.json"
 TMP=
 trap 'test -z "$TMP" || rm -f "$TMP"' EXIT
 
@@ -23,7 +30,7 @@ deploy_gzip() {
     echo "already_matching|$target"
     return
   fi
-  TMP="$target.tmp.seq191.$$"
+  TMP="$target.tmp.seq192.$$"
   test ! -e "$TMP"
   base64 --decode | gzip -dc > "$TMP"
   test "$(stat -c '%s' "$TMP")" = "$expected_bytes"
@@ -38,50 +45,60 @@ deploy_gzip() {
   echo "deployed_additively|$target"
 }
 
-echo "=== PRE-SUBMISSION GATE ==="
+echo "=== PRESERVED ATTEMPT-1 FAILURE GATE ==="
 date --iso-8601=seconds
-test ! -e "$FINAL"
-test ! -e "$SUBMISSION_RECEIPT"
-test "$(find "$DIAGNOSTIC_ROOT" -maxdepth 1 -name 'partial_numerical_audit_seq191_v1.preparing-*' \
-  -print -quit)" = ""
+test -f "$AUDITOR"
+test -f "$FAILED_WRAPPER"
+test -f "$PREFLIGHT"
+test ! -L "$AUDITOR"
+test ! -L "$FAILED_WRAPPER"
+test ! -L "$PREFLIGHT"
+test "$(stat -c '%s' "$AUDITOR")" = 9859
+test "$(sha256sum "$AUDITOR" | awk '{print $1}')" = 7c99332b785a2a088961b51e6085fada72294ce4f8e98ed05663818660f35725
+test "$(stat -c '%s' "$FAILED_WRAPPER")" = 4483
+test "$(sha256sum "$FAILED_WRAPPER" | awk '{print $1}')" = f8aa12391c58358b943ff14f7599a82bdc99952a1b3c4855d23c3578c481963c
+test "$(stat -c '%s' "$PREFLIGHT")" = 3691
+test "$(sha256sum "$PREFLIGHT" | awk '{print $1}')" = a1159f0896685c799ec3a3f4a8dc38e8177cecf26eb5754de8e44743fd7443fc
+test ! -e "$FAILED_FINAL"
+test ! -e "$FAILED_RECEIPT"
+test "$(find "$DIAGNOSTIC_ROOT" -maxdepth 1 -name 'partial_numerical_audit_seq191_v1.preparing-*' -print -quit)" = ""
 test "$(squeue -h -n N22-partial-audit -o '%i')" = ""
 
-deploy_gzip "$ROOT/src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py" \
-  9859 7c99332b785a2a088961b51e6085fada72294ce4f8e98ed05663818660f35725 <<'PAYLOAD'
-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
-PAYLOAD
+echo "=== ATTEMPT-2 PRE-SUBMISSION GATE ==="
+test ! -e "$FINAL"
+test ! -e "$SUBMISSION_RECEIPT"
+test "$(find "$DIAGNOSTIC_ROOT" -maxdepth 1 -name 'partial_numerical_audit_seq192_v1.preparing-*' -print -quit)" = ""
+test "$(squeue -h -n N22-part-audit2 -o '%i')" = ""
 
 deploy_gzip "$WRAPPER" \
-  4483 f8aa12391c58358b943ff14f7599a82bdc99952a1b3c4855d23c3578c481963c <<'PAYLOAD'
-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
+  4481 5c5598b6644693f4993339d79f219824a2415493889f27a9e0e45fe3de8ec724 <<'PAYLOAD'
+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
 PAYLOAD
 
-deploy_gzip "$ROOT/test/test_nearing2022_partial_audit_slurm.py" \
-  2063 33d26494d886c24e74e1dd1b70f4be8e835b4816feee9c011e475f5a56b85936 <<'PAYLOAD'
-H4sIAAAAAAAACp1VbW/bNhD+rl9xIwZULix19tBiCaAPwepgxYba8FJ0wDwQtHSyuEkkcyQTB0H++0BRcuxkadH5g2Xf3XP33KtkZzQ5aIRtWrlNZPwbH63c5t7JNqlJd2CECyaDDlbCNclob+4cWpckyXqxWvL1cnkFRW+Rcl7LFjmf5IRWtzeYTnIjCJWzf87+Si4+vf9wtVxDAY/IN8AslSw852dcoSCpdvMf5nNeCS6oV9iSpHG2/y18JR03gpwULSfcSeuQsOKE1rfO5uaOJZ/XF6vV4tsDNSYakFdfCMF7DrltPXUsSZIKa+CtFlVUaEon5wkAgDVYQvGkvnmQ8lDkWKxWl8JJrVJ2zGmMPnhkUxiKN+k9d7ryLT73HeXRe4iThq8IEdYiuZ5THsgigbSgtIOPWuGB76DLcY8lj+7S+IhuCJ0nNRAYkg/jcMqYC6c7WfJbkg6JE9beouX6BqkXpa4zPMzYUKlDPk/q2Cu1d8Y7KGAEHeYg/9tqxXojI+4CFAq4Z7ZssBPsHJi9U65BJ0s2BXbUyU44kvuQn6wlVuwcLkVr8eGITN4T5SHCkE0aiUzHWCd1jbqcUFTc4d6lqEpdSbUrmHd19hObQFFA2kPC59X9RsFXONWB07S3+6+UNupho171HiOVW+maYTtzEtKiTS9li4u9tM4uiDRNoROubAq2Dh2RagdOw6ErbOjGtxXhxRm4JWEMEpeWS6tb4foVMiic2LbIhaq40orvjB8XJhQOChjW90vFHGbx2kvC0PTHwrLABL6DDGHDvr/88PHitw1j00f9SFL5DkmWB7oWr2dnM34zyw2h6Vcxe30MzLJOyHar95nFa4+qRJidzSDLOqlk57us1J1p0SHMfjzGRfezOKzP5PNn8rIzgfrn5frXN8fYDXsijtDT7KKG0JCufBkOC9/eOeSyQuVCtht2Dlfk8Rj08hRuxtU4iUFO1qJ0vBNK1mHanqbQ3YxUI+nTNpwsjmjbtBP0T7hHKk5ArQkeRWOXT1Asy3aEttgZz/ojNmBPbOw2DPvLeuogo/pU/9Vp3kpVWY77kL/Vnkrk4X36P0d4uHS9CyjGN3NuGzF/+y4dbn70Etpo08kkb3BfyR1aN9zHIZ2aLf5YLX6+WrznA47//svF/O274v44ygM75PovXW+Xiw8IAAA=
+deploy_gzip "$TEST" \
+  1718 4feffd3efa7963e0d14dfb0e94642d5aca3cff36253b09f091898509d72253d1 <<'PAYLOAD'
+H4sIAAAAAAACCp1V32/TMBB+z19hmYclUlNIEBOb1IeyFYaEaNUVgQTIchOnsRQ7mX+MFcT/ztlJllZqUbe+9Oy7++67+64uF02tDCqpLiu+DgpVC9RQ4w6It74FHIMgWM4Wc7Kcz1do4q9CQgpeMUKisWK6ru5ZGI0bqpg0+nvyM5h+uf64mi8hesh8ibBWGXbf6QWRjCouN+mrNCU5JVR5h84Ub4z2NrU5NwRADacVUWzDtWGK5WBqWxk9brY4eD/9+Gl2Tb4up4vFzNULAwSfp1UtmzZAWfmfesQTGuvKKoGDKDha05+6ur19sHbvdPV7+xQOhBrDRGPSgUwQ5KxAhunBSbKSyg3TpJbVlggmarUFnDvrg2ROOAhHDa8l4TkIx802jC49j4KCuDl0tj9e0JrmxLAHEzKZ1Tl0M8HWFPFbHPm8vjRknpoiayVoxX/7co99KdZUNGMh/pymsRtH7BtP8Qg9XsGE2ttDSMPhEcsHuc+zZjx6Wvpe1mn8sGZ3yYVv0VsJjgYfAg9yLjASdGLHZ1iAkOv6gWgnu8wYvnRAo7MROuJLRmedlFoz+P3vlph0ezGwenH7brq6ukFxDOs1Sc4//JCOIz68j1bDMuqsZLmtmCIQQGFg/Wa6jZTsF6mtaazpN9FtzhO2qWO9TwxDFwZx6cH2wnoVpRVM8QysVvtWCXKf4INpgNrOLu5n5+WBay65sCLOatFUzMD162MIG1iXyaaxx8npNTVZedyvBIpVse8/NPY1l7kmVrbPQd62WCvinv3njnkHAtK6P5CxLmn65jzsHv8WZb0FNmEUjUv2kHN4jkDa3TYKPPu2mF2t4JXp8sjtzRRgJn92q/wd5vgPWr5vF7YGAAA=
 PAYLOAD
 
-deploy_gzip \
-  "$ROOT/results/29_nearing2022_da_ar/formal_closure/partial_registered_results_audit_slurm_preflight_20260811.json" \
-  3691 a1159f0896685c799ec3a3f4a8dc38e8177cecf26eb5754de8e44743fd7443fc <<'PAYLOAD'
-H4sIAAAAAAAACp1XyZLbNhC9z1egdI01I24SObnmknN8S6VQTaApwgYBugFohnbl31MARW3W2BkfST6+Rr9e8e2BsZUTPQ6wemYrg0DK7PNNnq9HIK9Arwn3ynkklGtCF7R3awhS+bXTgYb1SNhpte/9+pCtPkQ6QQgeJQcfKfNNvl1v6nWWfcyy5zJ7zpvfNvXzZjODnQcfXAQSgpy4sZ5LHLWdUKYHF9pBeY/yiBd2xAj/00gc0Ug0Xk+M0AlLyPCANDE8gA7glTVMWEtSGfDIXpTvGWjNOrJf0TCyGh0bCR0az156NMz3yP6KbrFPtmXOA3n3gSkjdJDK7NN33yvyiMb3l+SdIueZbR3SASVThg2gdGtfmcMvAY1AljWbx9kJCL63pL6mI/LWBiOBptUz+/bAGItSLJLzATypVz5YqTqFcvXMOtAOIw1jq9kTDkLg6MEIfAuIr8p5Zfb8GFWeQvgWOjlBfIRJW5CneNyiolD8k20vYnSN2I+BU3TfXXx7YOzfpIIaRo0DGp9kOHufjmajed/HSDsST3nDL3KTS+BAT06QGr17mn1ZPLsQ75ivj+OUdL/gbiePMeuaumpuPrke8mobDe9E0xRF3u7qCnLY1HWzzdoqw+2mrjqQsMvzphRYdjU2NcpNtd0WdVZvt5uuqHZ5tboS6qfu9KN4omB+4MgctcfEd02++FOWdXH14exNVwNkedFkoqqLqm6bsui6rOx2VdNAnbdSNE1T5ZC1hSjrqpJ5IYpqV4uyzpptIRaDHp0/ORMfntKbS3+ukywd5CIGCb4cON9si8v35/MWhcy3ZVPKut6KvMRdiZmUWbvbdGWLNdZF1ZZ1tu0QsRGbLMNyV3UVVNu2rppiuzol2rFKlBmDjzb/Pgr0ViBm4Wl6wtcRScUUPQaDpkfhDifpf05wakTvJeiQYtN4mlsF92pA7kYd5Yz14rwS7nH8rN9BRTiSlUGk45xbxuMnZ00U65+lwUYGLqzxBMKf63JQRg1h4MLGwvXIz+0vqpotcWzBKeP4iHSBWD2zqsiOiAE9KXEHsjsCBBipJHjkYGL2H13gBC98JJQqOeFSc1GUeoungD/5ezF7/6+j0jFiGDEgeUd24MfsIdQIDm/+aZ3V4WjITc7jAF4J7q1GiuLeITorf8Ol9TwKuLOBBPJYRB0IHzl6cP3tgaMQKNA5S7wL+lhu8yhN7eJ+QnSWBtBcaOsC4dNSqyYMSEqcqxa/ZLtsTo47Bt9KgvwNLJBysQrsS4TV5R2YMlIdlAygeQdKB0qM1amM8RVFSMn7fW7a4MdwbkvvEUAq2BubCuqHYjQZP244aUJ3waHjp7naKQOaW+Jgplii+3nYpuNcJdk8ZCiY1P1OdCkjXWqLXMWl5mzdXVO8hXUe4hoh+azF7U+fMGaSm4bWaiW4VubzDfELKZ9cWmQmFKhGfxe1JCcfwKgO3Q1qDK1Wrk+n5A4G5J3SOFcIJzQw3GT/3VVh6W1pvXBceYe6+26POICO1X61Qxh84WmeCDsMYCLjapx8bw1bD2yMw8ez9wwvtv6yxH7hdnwE59Jpl9bXWREcyl+wetWcl/yOdu/DX4CGMPIRFL0NIhw1iLRicdGDMvyAFPe9//nPgj6L8IuKLbLcqHbqArHc05vNkmRARpl9qv8lo5KOqZcojWeSy74/qx5zG3mPeryLasH13E3Gw+vd7wO8pjGXWDSafarhLF/OdvGe7+OQuSI5ZaVEodyck6uPPTLC4KDVyMDI+Y6xVs7qeFOKFwyaN2HNTq2HJTmZckxbATpdckBOj+yPtI5HeOICZvCFnbtYuroMMLGRrECU6d5jg2dp2Z/iNea8WbLTkPmdGXthXGhQQzQexjhJJQvGK50uQISg2dxkIoBQ2MPMZaIrl9cy0aP4jPJx9fDvw3/zObU3aw4AAA==
+deploy_gzip "$AMENDMENT" \
+  4952 86b2018066cc5676d2759b1dd19cf3a34d4bb62fd013602d9d2aa63dc857eee4 <<'PAYLOAD'
+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
 PAYLOAD
 
 echo "=== EXACT PAYLOAD AND STATIC GATE ==="
-sha256sum \
-  "$ROOT/src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py" \
-  "$WRAPPER" \
-  "$ROOT/test/test_nearing2022_partial_audit_slurm.py" \
-  "$ROOT/results/29_nearing2022_da_ar/formal_closure/partial_registered_results_audit_slurm_preflight_20260811.json"
+sha256sum "$AUDITOR" "$FAILED_WRAPPER" "$PREFLIGHT" "$WRAPPER" "$TEST" "$AMENDMENT"
 bash -n "$WRAPPER"
+test "$(grep -c '^#SBATCH --mem' "$WRAPPER" || true)" -eq 0
 test "$(grep -c '^#SBATCH --gres=gpu' "$WRAPPER" || true)" -eq 0
+grep -Fq 'partial_numerical_audit_seq192_v1' "$WRAPPER"
+grep -Fq -- '--mailbox-sequence 192 --minimum-complete 13' "$WRAPPER"
 
-echo "=== SUBMIT ISOLATED CPU AUDIT ==="
+echo "=== SUBMIT ISOLATED CPU AUDIT ATTEMPT 2 ==="
 RAW_JOB_ID=$(sbatch --parsable "$WRAPPER")
 JOB_ID=${RAW_JOB_ID%%;*}
 test "$(printf '%s' "$JOB_ID" | tr -cd '0-9')" = "$JOB_ID"
 test -n "$JOB_ID"
-export JOB_ID SUBMISSION_RECEIPT WRAPPER
+export JOB_ID SUBMISSION_RECEIPT AUDITOR FAILED_WRAPPER PREFLIGHT WRAPPER TEST AMENDMENT
 python - <<'PY'
 from datetime import datetime
 import hashlib
@@ -95,7 +112,8 @@ if receipt.exists():
     raise FileExistsError(f'Refusing to overwrite submission receipt: {receipt}')
 
 
-def record(path):
+def record(environment_name):
+    path = Path(os.environ[environment_name])
     payload = path.read_bytes()
     return {
         'path': path.relative_to(root).as_posix(),
@@ -104,29 +122,42 @@ def record(path):
     }
 
 
-paths = [
-    root / 'src/29_nearing2022_da_ar/scripts/audit_partial_registered_results.py',
-    Path(os.environ['WRAPPER']),
-    root / 'test/test_nearing2022_partial_audit_slurm.py',
-    root / (
-        'results/29_nearing2022_da_ar/formal_closure/'
-        'partial_registered_results_audit_slurm_preflight_20260811.json'
-    ),
-]
 payload = {
-    'schema': 'nearing2022-partial-registered-results-audit-submission-v1',
+    'schema': 'nearing2022-partial-registered-results-audit-submission-v2',
     'created_at': datetime.now().astimezone().isoformat(timespec='seconds'),
-    'mailbox_sequence': 191,
+    'mailbox_sequence': 192,
     'slurm_job_id': os.environ['JOB_ID'],
-    'sbatch_command': 'sbatch --parsable src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit.slurm',
+    'sbatch_command': (
+        'sbatch --parsable '
+        'src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit_attempt2.slurm'
+    ),
     'dependencies': [],
     'minimum_complete_coordinates': 13,
+    'single_factor_change': {
+        'before': '#SBATCH --mem=16G',
+        'after': 'scheduler default memory',
+        'scientific_code_changed': False,
+    },
+    'preserved_attempt_1_failure': {
+        'mailbox_sequence': 191,
+        'command_commit': '9d725b386bdcf0eb5a5503db684edfdd8c4ff413',
+        'result_commit': '72c372da5d2c8fcd3152016b2efbd848d44df0f6',
+        'result_bytes': 1684,
+        'result_sha256': '742336f2df4b665cc9c9a3edd4125da1456247464dca28b92414e3729c0d48e5',
+        'job_created': False,
+        'submission_receipt_written': False,
+        'audit_output_written': False,
+        'scheduler_error': 'Memory specification can not be satisfied',
+    },
     'gpu_requested': False,
     'registered_matrix_modified': False,
     'frozen_acceptance_modified': False,
-    'files': [record(path) for path in paths],
+    'files': [
+        record(name)
+        for name in ('AUDITOR', 'FAILED_WRAPPER', 'PREFLIGHT', 'WRAPPER', 'TEST', 'AMENDMENT')
+    ],
 }
-temporary = receipt.with_name(f'{receipt.name}.tmp-seq191-{os.getpid()}')
+temporary = receipt.with_name(f'{receipt.name}.tmp-seq192-{os.getpid()}')
 if temporary.exists():
     raise FileExistsError(f'Refusing stale receipt temporary path: {temporary}')
 temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n', encoding='utf-8')
@@ -144,7 +175,7 @@ echo "=== SAFETY BOUNDARY ==="
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = '202293|PENDING|JobHeldUser|N22-manifest'
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
-echo "partial_audit_job_id=$JOB_ID"
+echo "partial_audit_attempt2_job_id=$JOB_ID"
 echo "gpu_requested=false"
 echo "registered_matrix_modified=false"
 echo "frozen_acceptance_modified=false"
