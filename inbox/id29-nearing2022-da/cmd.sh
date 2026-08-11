@@ -1,33 +1,126 @@
 #!/bin/bash
-# ID29 seq=261: read-only requeue capability, output-mode, and dependency preflight for job 202214.
-set -eo pipefail
+# ID29 seq=262: preserve the frozen failure evidence and requeue job 202214 from the original config.
+set -euo pipefail
 
-echo '=== REQUEUE PREFLIGHT START ==='
+ROOT='/data1/home/sunyiq/nearing2022_da'
+JOB_ID=202214
+RUN_DIR="$ROOT/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30"
+LOG_DIR="$ROOT/closure_20260810/logs"
+INCIDENT_DIR="$ROOT/closure_20260810/recovery/job202214_cuda_stall_seq262"
+
+echo '=== RECOVERY ATTEMPT 1 START ==='
 date --iso-8601=seconds
-echo '=== SCONTROL HELP FILTER ==='
-scontrol --help 2>&1 | grep -Ei 'requeue|hold|release|update' || true
-echo '=== SLURM REQUEUE AND OUTPUT CONFIG ==='
-scontrol show config | grep -Ei 'JobRequeue|JobFileAppend|SlurmctldVersion|SchedulerType' || true
-echo '=== SBATCH REQUEUE OPTIONS ==='
-sbatch --help 2>&1 | grep -Ei -- '--requeue|--no-requeue|--open-mode' || true
-echo '=== RELEVANT JOB DEPENDENCY RECORDS ==='
-for candidate_job in 202214 202215 202216 202222 202226 202227 202228 202229 202230 202238 202293 202294 202315 202510 202511; do
-  scontrol show job -o "$candidate_job" || true
-done
-echo '=== CURRENT REGISTERED SOURCE CANDIDATES ==='
-output_parent='/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression'
-while IFS= read -r candidate_dir; do
-  if [[ -f "$candidate_dir/model_epoch030.pt" ]]; then
-    checkpoint030=yes
-  else
-    checkpoint030=no
+
+job_before="$(scontrol show job -o "$JOB_ID")"
+printf '%s\n' "$job_before"
+[[ " $job_before " == *' JobState=RUNNING '* ]]
+[[ " $job_before " == *' NodeList=ngu104 '* ]]
+[[ " $job_before " == *' Requeue=0 '* ]]
+[[ ! -e "$RUN_DIR/model_epoch030.pt" ]]
+[[ ! -e "$INCIDENT_DIR" ]]
+
+mkdir -p "$ROOT/closure_20260810/recovery"
+mkdir "$INCIDENT_DIR"
+
+copy_and_verify() {
+  local source_path="$1"
+  local target_name="$2"
+  local expected_sha256="${3:-}"
+  local source_sha256
+  local target_sha256
+  [[ -f "$source_path" ]]
+  source_sha256="$(sha256sum "$source_path" | awk '{print $1}')"
+  if [[ -n "$expected_sha256" ]]; then
+    [[ "$source_sha256" == "$expected_sha256" ]]
   fi
-  printf '%s|checkpoint030=%s\n' "$candidate_dir" "$checkpoint030"
-done < <(find "$output_parent" -mindepth 1 -maxdepth 1 -type d \
-  -name 'nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_*_ep30' -print | sort)
-echo '=== REQUEUE PREFLIGHT END ==='
+  cp --reflink=auto --preserve=mode,timestamps -- "$source_path" "$INCIDENT_DIR/$target_name"
+  cmp -s -- "$source_path" "$INCIDENT_DIR/$target_name"
+  target_sha256="$(sha256sum "$INCIDENT_DIR/$target_name" | awk '{print $1}')"
+  [[ "$source_sha256" == "$target_sha256" ]]
+  printf '%s  %s\n' "$target_sha256" "$target_name"
+}
+
+echo '=== INCIDENT COPY HASHES ==='
+copy_and_verify "$LOG_DIR/N22-train_202214.out" 'slurm_stdout.out'
+copy_and_verify "$LOG_DIR/N22-train_202214.err" 'slurm_stderr.err'
+copy_and_verify "$RUN_DIR/config.yml" 'run_config.yml' \
+  'df3b834bc27d939d69731019c32a71eb02c386e3d7a2c50a1ad32186043b6e9e'
+copy_and_verify "$RUN_DIR/train_data/train_data_scaler.yml" 'train_data_scaler.yml' \
+  '97cb80f9f9b7b08f3cf627293a81a912bbe39b6bb65ea1c484bf51c10a8558bc'
+copy_and_verify "$RUN_DIR/model_epoch029.pt" 'model_epoch029.pt' \
+  '4ccbca0040f969749807081984ebf5d3cc5f9cc1d9b62b04c7d34a8b9ccfc975'
+copy_and_verify "$RUN_DIR/optimizer_state_epoch029.pt" 'optimizer_state_epoch029.pt' \
+  '1f6fb09b6bb9c03d332b6b047d996a66e44f98c838a335a22c2ccb567ff9e0c4'
+copy_and_verify "$RUN_DIR/output.log" 'run_output.log' \
+  'cec12be5cbf08ecd654bf75b93026ecd08dd6899f7b87cd338772759a7df1b58'
+
+(
+  cd "$INCIDENT_DIR"
+  sha256sum model_epoch029.pt optimizer_state_epoch029.pt run_config.yml run_output.log \
+    slurm_stderr.err slurm_stdout.out train_data_scaler.yml > MANIFEST.sha256.tmp
+  mv MANIFEST.sha256.tmp MANIFEST.sha256
+  sha256sum -c MANIFEST.sha256
+)
+chmod a-w "$INCIDENT_DIR"/*
+chmod a-w "$INCIDENT_DIR"
+echo "incident_dir=$INCIDENT_DIR"
+sha256sum "$INCIDENT_DIR/MANIFEST.sha256"
+
+echo '=== ENABLE MANUAL REQUEUE ==='
+scontrol update JobId="$JOB_ID" Requeue=1
+job_requeue_enabled="$(scontrol show job -o "$JOB_ID")"
+printf '%s\n' "$job_requeue_enabled"
+[[ " $job_requeue_enabled " == *' Requeue=1 '* ]]
+
+echo '=== REQUEUE AND HOLD ==='
+scontrol requeuehold "$JOB_ID"
+held=false
+for _ in $(seq 1 60); do
+  held_record="$(scontrol show job -o "$JOB_ID")"
+  if [[ " $held_record " == *' JobState=PENDING '* && " $held_record " == *' Reason=JobHeldUser '* ]]; then
+    held=true
+    break
+  fi
+  sleep 2
+done
+printf '%s\n' "$held_record"
+[[ "$held" == true ]]
+
+echo '=== EXCLUDE FAILED NODE ==='
+scontrol update JobId="$JOB_ID" ExcNodeList=ngu002,ngu104
+excluded_record="$(scontrol show job -o "$JOB_ID")"
+printf '%s\n' "$excluded_record"
+excluded_hostlist="$(printf '%s\n' "$excluded_record" | tr ' ' '\n' | sed -n 's/^ExcNodeList=//p' | head -n 1)"
+mapfile -t excluded_nodes < <(scontrol show hostnames "$excluded_hostlist")
+printf 'excluded_node=%s\n' "${excluded_nodes[@]}"
+printf '%s\n' "${excluded_nodes[@]}" | grep -Fxq 'ngu002'
+printf '%s\n' "${excluded_nodes[@]}" | grep -Fxq 'ngu104'
+
+echo '=== RELEASE REQUEUED JOB ==='
+scontrol release "$JOB_ID"
+released=false
+for _ in $(seq 1 60); do
+  released_record="$(scontrol show job -o "$JOB_ID")"
+  if [[ " $released_record " == *' JobState=PENDING '* || " $released_record " == *' JobState=RUNNING '* ]]; then
+    if [[ " $released_record " != *' Reason=JobHeldUser '* ]]; then
+      released=true
+      break
+    fi
+  fi
+  sleep 2
+done
+printf '%s\n' "$released_record"
+[[ "$released" == true ]]
+[[ " $released_record " == *' Requeue=1 '* ]]
+if [[ " $released_record " == *' JobState=RUNNING '* ]]; then
+  [[ " $released_record " != *' NodeList=ngu104 '* ]]
+fi
+
+echo '=== RECOVERY ATTEMPT 1 END ==='
 date --iso-8601=seconds
-echo 'read_only=true'
+echo 'failure_evidence_preserved=true'
+echo 'original_config_full_restart=true'
+echo 'registered_job_id_preserved=true'
 exit 0
 
 export LC_ALL=C
