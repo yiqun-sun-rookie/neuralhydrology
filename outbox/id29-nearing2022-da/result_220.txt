@@ -1,0 +1,248 @@
+### channel=id29-nearing2022-da seq=220
+### host=login4
+### started=2026-08-11T21:23:27+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-11T21:23:27+0800
+=== REGISTERED COMPLETE-ROLE COUNTS ===
+{"evaluation_by_family": {"time_assimilation": 11, "time_autoregression": 5}, "evaluation_complete": 16, "evaluation_total": 180, "hyperparameter_by_family": {}, "hyperparameter_complete": 0, "hyperparameter_total": 660, "missing_roles_total": 5467, "registered_matrix_complete": false, "training_by_family": {"basin_simulation": 10, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 12, "training_total": 46}
+=== EVALUATION ARRAY TASK RECORDS ===
+202222_0|COMPLETED|0:0|10|00:00:10|2026-08-10T12:44:39|2026-08-10T12:44:49
+202222_0.batch|COMPLETED|0:0|10|00:00:10|2026-08-10T12:44:39|2026-08-10T12:44:49
+202222_0.extern|COMPLETED|0:0|10|00:00:10|2026-08-10T12:44:39|2026-08-10T12:44:49
+202222_1|COMPLETED|0:0|2402|00:40:02|2026-08-10T12:44:39|2026-08-10T13:24:41
+202222_1.batch|COMPLETED|0:0|2402|00:40:02|2026-08-10T12:44:39|2026-08-10T13:24:41
+202222_1.extern|COMPLETED|0:0|2403|00:40:03|2026-08-10T12:44:39|2026-08-10T13:24:42
+202222_2|COMPLETED|0:0|2393|00:39:53|2026-08-10T12:44:49|2026-08-10T13:24:42
+202222_2.batch|COMPLETED|0:0|2393|00:39:53|2026-08-10T12:44:49|2026-08-10T13:24:42
+202222_2.extern|COMPLETED|0:0|2393|00:39:53|2026-08-10T12:44:49|2026-08-10T13:24:42
+202222_3|COMPLETED|0:0|1931|00:32:11|2026-08-10T13:24:42|2026-08-10T13:56:53
+202222_3.batch|COMPLETED|0:0|1931|00:32:11|2026-08-10T13:24:42|2026-08-10T13:56:53
+202222_3.extern|COMPLETED|0:0|1932|00:32:12|2026-08-10T13:24:42|2026-08-10T13:56:54
+202222_4|COMPLETED|0:0|1932|00:32:12|2026-08-10T13:24:42|2026-08-10T13:56:54
+202222_4.batch|COMPLETED|0:0|1932|00:32:12|2026-08-10T13:24:42|2026-08-10T13:56:54
+202222_4.extern|COMPLETED|0:0|1932|00:32:12|2026-08-10T13:24:42|2026-08-10T13:56:54
+202222_5|COMPLETED|0:0|9|00:00:09|2026-08-10T13:56:55|2026-08-10T13:57:04
+202222_5.batch|COMPLETED|0:0|9|00:00:09|2026-08-10T13:56:55|2026-08-10T13:57:04
+202222_5.extern|COMPLETED|0:0|9|00:00:09|2026-08-10T13:56:55|2026-08-10T13:57:04
+202222_6|COMPLETED|0:0|19173|05:19:33|2026-08-10T13:56:55|2026-08-10T19:16:28
+202222_6.batch|COMPLETED|0:0|19173|05:19:33|2026-08-10T13:56:55|2026-08-10T19:16:28
+202222_6.extern|COMPLETED|0:0|19173|05:19:33|2026-08-10T13:56:55|2026-08-10T19:16:28
+202222_7|COMPLETED|0:0|19161|05:19:21|2026-08-10T13:57:04|2026-08-10T19:16:25
+202222_7.batch|COMPLETED|0:0|19161|05:19:21|2026-08-10T13:57:04|2026-08-10T19:16:25
+202222_7.extern|COMPLETED|0:0|19161|05:19:21|2026-08-10T13:57:04|2026-08-10T19:16:25
+202222_8|COMPLETED|0:0|19554|05:25:54|2026-08-10T19:16:25|2026-08-11T00:42:19
+202222_8.batch|COMPLETED|0:0|19554|05:25:54|2026-08-10T19:16:25|2026-08-11T00:42:19
+202222_8.extern|COMPLETED|0:0|19555|05:25:55|2026-08-10T19:16:25|2026-08-11T00:42:20
+202222_9|COMPLETED|0:0|20249|05:37:29|2026-08-10T19:16:28|2026-08-11T00:53:57
+202222_9.batch|COMPLETED|0:0|20249|05:37:29|2026-08-10T19:16:28|2026-08-11T00:53:57
+202222_9.extern|COMPLETED|0:0|20249|05:37:29|2026-08-10T19:16:28|2026-08-11T00:53:57
+202222_10|COMPLETED|0:0|19418|05:23:38|2026-08-11T00:42:20|2026-08-11T06:05:58
+202222_10.batch|COMPLETED|0:0|19418|05:23:38|2026-08-11T00:42:20|2026-08-11T06:05:58
+202222_10.extern|COMPLETED|0:0|19418|05:23:38|2026-08-11T00:42:20|2026-08-11T06:05:58
+202222_11|COMPLETED|0:0|19394|05:23:14|2026-08-11T00:53:57|2026-08-11T06:17:11
+202222_11.batch|COMPLETED|0:0|19394|05:23:14|2026-08-11T00:53:57|2026-08-11T06:17:11
+202222_11.extern|COMPLETED|0:0|19394|05:23:14|2026-08-11T00:53:57|2026-08-11T06:17:11
+202222_12|COMPLETED|0:0|19177|05:19:37|2026-08-11T06:05:59|2026-08-11T11:25:36
+202222_12.batch|COMPLETED|0:0|19177|05:19:37|2026-08-11T06:05:59|2026-08-11T11:25:36
+202222_12.extern|COMPLETED|0:0|19177|05:19:37|2026-08-11T06:05:59|2026-08-11T11:25:36
+202222_13|COMPLETED|0:0|19779|05:29:39|2026-08-11T06:17:11|2026-08-11T11:46:50
+202222_13.batch|COMPLETED|0:0|19779|05:29:39|2026-08-11T06:17:11|2026-08-11T11:46:50
+202222_13.extern|COMPLETED|0:0|19780|05:29:40|2026-08-11T06:17:11|2026-08-11T11:46:51
+202222_14|COMPLETED|0:0|19908|05:31:48|2026-08-11T11:25:36|2026-08-11T16:57:24
+202222_14.batch|COMPLETED|0:0|19908|05:31:48|2026-08-11T11:25:36|2026-08-11T16:57:24
+202222_14.extern|COMPLETED|0:0|19908|05:31:48|2026-08-11T11:25:36|2026-08-11T16:57:24
+202222_15|COMPLETED|0:0|19172|05:19:32|2026-08-11T11:46:52|2026-08-11T17:06:24
+202222_15.batch|COMPLETED|0:0|19172|05:19:32|2026-08-11T11:46:52|2026-08-11T17:06:24
+202222_15.extern|COMPLETED|0:0|19173|05:19:33|2026-08-11T11:46:52|2026-08-11T17:06:25
+202222_16|RUNNING|0:0|15993|04:26:33|2026-08-11T16:57:24|Unknown
+202222_16.batch|RUNNING|0:0|15993|04:26:33|2026-08-11T16:57:24|Unknown
+202222_16.extern|RUNNING|0:0|15993|04:26:33|2026-08-11T16:57:24|Unknown
+202222_17|RUNNING|0:0|15452|04:17:32|2026-08-11T17:06:25|Unknown
+202222_17.batch|RUNNING|0:0|15452|04:17:32|2026-08-11T17:06:25|Unknown
+202222_17.extern|RUNNING|0:0|15452|04:17:32|2026-08-11T17:06:25|Unknown
+202222_[18-29%2]|PENDING|0:0|0|00:00:00|Unknown|Unknown
+=== PLANNING ESTIMATE ===
+{
+  "array_concurrency": 2,
+  "array_job_id": "202222",
+  "array_tasks_total": 30,
+  "completed_long_duration_hours": [
+    5.322,
+    5.326,
+    5.326,
+    5.327,
+    5.387,
+    5.394,
+    5.432,
+    5.494,
+    5.53,
+    5.625
+  ],
+  "completed_long_duration_summary_hours": {
+    "lower": 5.322,
+    "median": 5.391,
+    "upper": 5.625
+  },
+  "completed_long_task_count": 10,
+  "completed_tasks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "failed_tasks": [],
+  "future_waves_after_current": 6,
+  "pending_tasks": [
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "planning_only": true,
+  "projected_dependency_release": {
+    "lower": "2026-08-13T06:29:04+08:00",
+    "median": "2026-08-13T06:53:34+08:00",
+    "upper": "2026-08-13T08:17:52+08:00"
+  },
+  "registered_matrix_modified": false,
+  "replacement_job_202510_can_start_only_after_parent_terminal": true,
+  "running_task_estimates": [
+    {
+      "completed_basins": 437,
+      "job": "202222_16",
+      "projected_remaining_hours": 0.96,
+      "projected_total_hours": 5.4,
+      "reported_percent": 82,
+      "runtime": "04:26:34",
+      "task": 16,
+      "total_basins": 531
+    },
+    {
+      "completed_basins": 419,
+      "job": "202222_17",
+      "projected_remaining_hours": 1.15,
+      "projected_total_hours": 5.44,
+      "reported_percent": 79,
+      "runtime": "04:17:33",
+      "task": 17,
+      "total_basins": 531
+    }
+  ],
+  "running_tasks": [
+    16,
+    17
+  ],
+  "schema": "nearing2022-evaluation-array-planning-estimate-v1"
+}
+=== LIVE RUNNING PROGRESS AND WALLTIME PROJECTION ===
+{"epoch": 28, "epoch_step": 2000, "epoch_total_steps": 6821, "job": "202214", "name": "N22-train", "projected_slack_hours": 11.27, "projected_total_hours": 36.73, "runtime": "1-09:24:50", "stdout_bytes": 29190675, "stdout_exists": true, "thirty_epoch_fraction": 0.909774, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 27, "epoch_step": 6073, "epoch_total_steps": 6821, "job": "202215_0", "name": "N22-time", "projected_slack_hours": 11.44, "projected_total_hours": 36.56, "runtime": "1-08:45:58", "stdout_bytes": 28752012, "stdout_exists": true, "thirty_epoch_fraction": 0.896345, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 26, "epoch_step": 6683, "epoch_total_steps": 6821, "job": "202215_1", "name": "N22-time", "projected_slack_hours": 10.16, "projected_total_hours": 37.84, "runtime": "1-08:45:59", "stdout_bytes": 27815617, "stdout_exists": true, "thirty_epoch_fraction": 0.865992, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 27, "epoch_step": 434, "epoch_total_steps": 6821, "job": "202215_2", "name": "N22-time", "projected_slack_hours": 10.28, "projected_total_hours": 37.72, "runtime": "1-08:45:59", "stdout_bytes": 27901585, "stdout_exists": true, "thirty_epoch_fraction": 0.868788, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 18, "epoch_step": 5881, "epoch_total_steps": 6127, "job": "202216_10", "name": "N22-basin", "projected_slack_hours": 14.86, "projected_total_hours": 33.14, "runtime": "19:50:23", "stdout_bytes": 17151143, "stdout_exists": true, "thirty_epoch_fraction": 0.598662, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"epoch": 18, "epoch_step": 3511, "epoch_total_steps": 6140, "job": "202216_11", "name": "N22-basin", "projected_slack_hours": 15.26, "projected_total_hours": 32.74, "runtime": "19:10:43", "stdout_bytes": 16804593, "stdout_exists": true, "thirty_epoch_fraction": 0.585727, "time_limit": "2-00:00:00", "time_limit_risk": false}
+{"job": "202222_16", "name": "N22-eval-now", "percent": 82, "runtime": "04:26:36", "stdout_bytes": 34843, "stdout_exists": true, "step": 437, "time_limit": "1-00:00:00", "total": 531}
+{"job": "202222_17", "name": "N22-eval-now", "percent": 79, "runtime": "04:17:35", "stdout_bytes": 33359, "stdout_exists": true, "step": 419, "time_limit": "1-00:00:00", "total": 531}
+{"running_jobs": 8, "time_limit_risk_jobs": []}
+=== MAIN JOB STATES AND FAILURE GATE ===
+202214|RUNNING|1-09:24:52|2-00:00:00|ngu104|N22-train
+202215_0|RUNNING|1-08:46:00|2-00:00:00|ngu104|N22-time
+202215_1|RUNNING|1-08:46:00|2-00:00:00|ngu101|N22-time
+202215_2|RUNNING|1-08:46:00|2-00:00:00|ngu101|N22-time
+202215_[3-22%3]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-time
+202216_10|RUNNING|19:50:24|2-00:00:00|ngu102|N22-basin
+202216_11|RUNNING|19:10:43|2-00:00:00|ngu104|N22-basin
+202216_[12-19%2]|PENDING|0:00|2-00:00:00|(JobArrayTaskLimit)|N22-basin
+202222_16|RUNNING|4:26:36|1-00:00:00|ngu104|N22-eval-now
+202222_17|RUNNING|4:17:35|1-00:00:00|ngu101|N22-eval-now
+202222_[18-29%2]|PENDING|0:00|1-00:00:00|(JobArrayTaskLimit)|N22-eval-now
+202226_[0-119%4]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-later
+202227_[0-9%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-basin-da
+202228_[0-659%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-hyper
+202229|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-eval
+202230|PENDING|0:00|1-00:00:00|(Dependency)|N22-agg-hyper
+202238_[0-19%2]|PENDING|0:00|1-00:00:00|(Dependency)|N22-eval-bs-direct
+202293|PENDING|0:00|1-00:00:00|(JobHeldUser)|N22-manifest
+202294|PENDING|0:00|4:00:00|(Dependency)|N22-export
+202315|PENDING|0:00|2:00:00|(Dependency)|N22-gate
+202214|N22-train|RUNNING|0:0|1-09:24:52|2026-08-10T11:59:08|Unknown|ngu104
+202217|N22-time|RUNNING|0:0|1-08:46:00|2026-08-10T12:38:00|Unknown|ngu104
+202218|N22-time|RUNNING|0:0|1-08:46:00|2026-08-10T12:38:00|Unknown|ngu101
+202219|N22-time|RUNNING|0:0|1-08:46:00|2026-08-10T12:38:00|Unknown|ngu101
+202215|N22-time|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202220|N22-basin|COMPLETED|0:0|02:46:22|2026-08-10T12:38:00|2026-08-10T15:24:22|ngu101
+202221|N22-basin|COMPLETED|0:0|02:45:03|2026-08-10T12:38:00|2026-08-10T15:23:03|ngu101
+202295|N22-basin|COMPLETED|0:0|02:30:39|2026-08-10T15:23:03|2026-08-10T17:53:42|ngu104
+202296|N22-basin|COMPLETED|0:0|02:48:03|2026-08-10T15:24:22|2026-08-10T18:12:25|ngu101
+202324|N22-basin|COMPLETED|0:0|02:31:29|2026-08-10T17:53:42|2026-08-10T20:25:11|ngu104
+202326|N22-basin|COMPLETED|0:0|02:45:10|2026-08-10T18:12:25|2026-08-10T20:57:35|ngu101
+202390|N22-basin|COMPLETED|0:0|02:32:32|2026-08-10T20:25:11|2026-08-10T22:57:43|ngu104
+202404|N22-basin|COMPLETED|0:0|02:42:59|2026-08-10T20:57:36|2026-08-10T23:40:35|ngu101
+202464|N22-basin|COMPLETED|0:0|02:35:52|2026-08-10T22:57:44|2026-08-11T01:33:36|ngu102
+202470|N22-basin|COMPLETED|0:0|02:32:39|2026-08-10T23:40:38|2026-08-11T02:13:17|ngu104
+202501|N22-basin|RUNNING|0:0|19:50:24|2026-08-11T01:33:36|Unknown|ngu102
+202502|N22-basin|RUNNING|0:0|19:10:43|2026-08-11T02:13:17|Unknown|ngu104
+202216|N22-basin|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202223|N22-eval-now|COMPLETED|0:0|00:00:10|2026-08-10T12:44:39|2026-08-10T12:44:49|ngu102
+202224|N22-eval-now|COMPLETED|0:0|00:40:02|2026-08-10T12:44:39|2026-08-10T13:24:41|ngu102
+202225|N22-eval-now|COMPLETED|0:0|00:39:53|2026-08-10T12:44:49|2026-08-10T13:24:42|ngu102
+202231|N22-eval-now|COMPLETED|0:0|00:32:11|2026-08-10T13:24:42|2026-08-10T13:56:53|ngu202
+202232|N22-eval-now|COMPLETED|0:0|00:32:12|2026-08-10T13:24:42|2026-08-10T13:56:54|ngu202
+202239|N22-eval-now|COMPLETED|0:0|00:00:09|2026-08-10T13:56:55|2026-08-10T13:57:04|ngu102
+202240|N22-eval-now|COMPLETED|0:0|05:19:33|2026-08-10T13:56:55|2026-08-10T19:16:28|ngu102
+202241|N22-eval-now|COMPLETED|0:0|05:19:21|2026-08-10T13:57:04|2026-08-10T19:16:25|ngu102
+202367|N22-eval-now|COMPLETED|0:0|05:25:54|2026-08-10T19:16:25|2026-08-11T00:42:19|ngu101
+202368|N22-eval-now|COMPLETED|0:0|05:37:29|2026-08-10T19:16:28|2026-08-11T00:53:57|ngu102
+202497|N22-eval-now|COMPLETED|0:0|05:23:38|2026-08-11T00:42:20|2026-08-11T06:05:58|ngu104
+202498|N22-eval-now|COMPLETED|0:0|05:23:14|2026-08-11T00:53:57|2026-08-11T06:17:11|ngu102
+202508|N22-eval-now|COMPLETED|0:0|05:19:37|2026-08-11T06:05:59|2026-08-11T11:25:36|ngu104
+202509|N22-eval-now|COMPLETED|0:0|05:29:39|2026-08-11T06:17:11|2026-08-11T11:46:50|ngu102
+202550|N22-eval-now|COMPLETED|0:0|05:31:48|2026-08-11T11:25:36|2026-08-11T16:57:24|ngu104
+202552|N22-eval-now|COMPLETED|0:0|05:19:32|2026-08-11T11:46:52|2026-08-11T17:06:24|ngu102
+202606|N22-eval-now|RUNNING|0:0|04:26:36|2026-08-11T16:57:24|Unknown|ngu104
+202608|N22-eval-now|RUNNING|0:0|04:17:35|2026-08-11T17:06:25|Unknown|ngu101
+202222|N22-eval-now|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202226|N22-eval-later|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202227|N22-basin-da|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202228|N22-hyper|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202229|N22-agg-eval|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202230|N22-agg-hyper|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202238|N22-eval-bs-direct|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202293|N22-manifest|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202294|N22-export|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+202315|N22-gate|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+
+=== REPLACEMENT AND FROZEN STATES ===
+202510|N22-data-port-v2|PENDING|0:0|00:00:00|Dependency
+202511|N22-mask-iso-v2|PENDING|0:0|00:00:00|Dependency
+202510|N22-data-port-v2|PENDING|0:00|(Dependency)|afterany:202222_*
+202511|N22-mask-iso-v2|PENDING|0:00|(Dependency)|afterok:202510
+paired_training_payload_present=0
+
+verification_job_submitted=false
+pair_training_submitted=false
+registered_matrix_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T21:24:01+0800
