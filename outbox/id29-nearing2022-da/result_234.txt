@@ -1,0 +1,15 @@
+### channel=id29-nearing2022-da seq=234
+### host=login4
+### started=2026-08-11T23:50:08+0800
+### ---------- output ----------
+deployed=src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit_seq234.slurm
+deployed=test/test_nearing2022_partial_audit_seq234_slurm.py
+deployed=results/29_nearing2022_da_ar/formal_closure/partial_registered_results_audit_seq234_preflight_20260811.json
+{"deployment_hashes_verified": 3, "excluded_node": "ngu104"}
+submitted_job_id=202729
+JobId=202729 JobName=N22-part-audit7 UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=01:00:00 TimeMin=N/A SubmitTime=2026-08-11T23:50:08 EligibleTime=2026-08-11T23:50:08 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-11T23:50:08 Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu104 NodeList=(null) NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:* TRES=cpu=1,node=1,billing=1 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=1 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_partial_registered_results_audit_seq234.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-part-audit7_202729.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-part-audit7_202729.out Power=
+registered_matrix_modified=false
+frozen_acceptance_modified=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T23:50:09+0800
