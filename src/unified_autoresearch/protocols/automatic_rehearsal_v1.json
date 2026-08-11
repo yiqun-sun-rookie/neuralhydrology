@@ -1,0 +1,56 @@
+{
+  "schema_version": "automatic_rehearsal_policy_v1",
+  "proposal_budget": 3,
+  "proposal_rule": "lowest_priority_distinct_category_v1",
+  "proposal_inputs": [
+    "approved_candidate_catalog",
+    "declared_resource_budget",
+    "prediction_information_contract"
+  ],
+  "result_dependent_proposal_inputs": false,
+  "prediction_inputs": [
+    "maurer_forcing",
+    "static_attributes"
+  ],
+  "training_supervision": "observed_discharge_development_only",
+  "seed": 29,
+  "recommendation_rule": "descending_median_mean_nse_then_candidate_id_v1",
+  "candidate_pool": [
+    {
+      "candidate_key": "hbv_lite",
+      "candidate_id": "hbv-lite-calibrated-v1",
+      "category": "conceptual_rainfall_runoff",
+      "method_family": "hbv_lite",
+      "priority": 1,
+      "seed": 29,
+      "hypothesis": "Explicit snow, soil-moisture, evapotranspiration, and routing stores can transfer better across the two development windows than a memory-free response."
+    },
+    {
+      "candidate_key": "deep_learning",
+      "candidate_id": "reference-deep-learning-v1",
+      "category": "deep_learning",
+      "method_family": "multilayer_perceptron",
+      "priority": 2,
+      "seed": 29,
+      "hypothesis": "A nonlinear forcing-and-static-attribute mapping can capture interactions that a fixed conceptual response omits."
+    },
+    {
+      "candidate_key": "fusion",
+      "candidate_id": "reference-fusion-v1",
+      "category": "fusion",
+      "method_family": "reservoir_regression_fusion",
+      "priority": 3,
+      "seed": 29,
+      "hypothesis": "Combining a reservoir state with static-aware forcing regression can balance temporal memory and cross-basin information."
+    },
+    {
+      "candidate_key": "custom_python",
+      "candidate_id": "reference-custom-python-v1",
+      "category": "custom_python",
+      "method_family": "per_basin_mean",
+      "priority": 4,
+      "seed": 29,
+      "hypothesis": "A forcing-free per-basin mean provides a low-complexity control for the proposal budget but is not preferred over forcing-responsive families."
+    }
+  ]
+}
