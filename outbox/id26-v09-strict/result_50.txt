@@ -1,0 +1,340 @@
+### channel=id26-v09-strict seq=50
+### host=login4
+### started=2026-08-11T13:40:23+0800
+### ---------- output ----------
+formal_input_seal_authorization_consumed.json
+input_attempt_01.trusted_source_external_audit.json
+inputs/training_targets.csv
+inputs/training_targets.manifest.json
+input_attempt_01/dates.npy
+input_attempt_01/input_audit.json
+input_attempt_01/seal.json
+input_attempt_01/statics.npy
+input_attempt_01/statics_raw.float64.npy
+input_attempt_01/target_dates.npy
+input_attempt_01/targets.npy
+input_attempt_01/basins.txt
+input_attempt_01/environment.json
+input_attempt_01/forcing.npy
+input_attempt_01/forcing_manifest.json
+input_attempt_01/manifest.json
+input_attempt_01/scaler.json
+training_progress.json
+input_attempt_01.external_audit.json
+authorizations/formal_input_seal_authorization.json
+{
+  "root_json": [
+    {
+      "path": "formal_input_seal_authorization_consumed.json",
+      "schema": "historical_multiscale_formal_v09_input_authorization_consumption_v1",
+      "status": "consumed_once",
+      "top_level_keys": [
+        "allowed_action",
+        "authorization_canonical_sha256",
+        "authorization_file_sha256",
+        "consumed_utc",
+        "contract_sha256",
+        "schema",
+        "source_tree_sha256",
+        "status"
+      ]
+    },
+    {
+      "path": "input_attempt_01.trusted_source_external_audit.json",
+      "schema": "historical_multiscale_formal_v09_trusted_training_target_external_audit_v1",
+      "status": "complete_trusted_training_target_audit",
+      "top_level_keys": [
+        "audit_mode",
+        "authorization_closed_commit",
+        "basin_count",
+        "candidate_raw_streamflow_files_read",
+        "complete_input_external_audit_sha256",
+        "complete_input_external_audit_status",
+        "dates_per_basin",
+        "formal_evaluation_qobs_parsed",
+        "formal_evaluation_rows_emitted",
+        "generation_commit",
+        "maximum_date",
+        "minimum_date",
+        "row_count",
+        "schema",
+        "source_file_count",
+        "source_files_sha256",
+        "source_hash_differences",
+        "status",
+        "target_bundle_sha256",
+        "target_manifest_sha256",
+        "trusted_raw_streamflow_files_read",
+        "values_copied_into_report"
+      ]
+    },
+    {
+      "path": "training_progress.json",
+      "schema": "historical_multiscale_formal_v09_training_progress_v1",
+      "status": null,
+      "top_level_keys": [
+        "progress",
+        "schema"
+      ]
+    },
+    {
+      "path": "input_attempt_01.external_audit.json",
+      "schema": "historical_multiscale_formal_v09_complete_input_audit_v1",
+      "status": "complete_input_audit_passed",
+      "top_level_keys": [
+        "audit_context",
+        "basin_count",
+        "contract_sha256",
+        "forcing_rows",
+        "formal_evaluation_targets_present",
+        "independent_source_audit",
+        "phase",
+        "schema",
+        "status",
+        "target_rows",
+        "tmin_equals_tmax_rows"
+      ]
+    },
+    {
+      "path": "inputs/training_targets.manifest.json",
+      "schema": null,
+      "status": "complete",
+      "top_level_keys": [
+        "basin_count",
+        "basin_file_sha256",
+        "build_source_tree",
+        "candidate_raw_streamflow_files_read",
+        "canonical_data_root",
+        "canonical_data_root_relative",
+        "evaluation_observation_handling",
+        "formal_evaluation_qobs_parsed",
+        "formal_evaluation_rows_emitted",
+        "maximum_date",
+        "minimum_date",
+        "protocol_canonical_sha256",
+        "row_count",
+        "source_files",
+        "source_files_sha256",
+        "source_hash_policy",
+        "status",
+        "target_bundle_sha256",
+        "trusted_raw_streamflow_files_read",
+        "writer"
+      ]
+    },
+    {
+      "path": "input_attempt_01/input_audit.json",
+      "schema": "historical_multiscale_formal_v09_complete_input_audit_v1",
+      "status": "complete_input_audit_passed",
+      "top_level_keys": [
+        "basin_count",
+        "contract_sha256",
+        "forcing_rows",
+        "formal_evaluation_targets_present",
+        "independent_source_audit",
+        "phase",
+        "schema",
+        "status",
+        "target_rows",
+        "tmin_equals_tmax_rows"
+      ]
+    },
+    {
+      "path": "input_attempt_01/seal.json",
+      "schema": "historical_multiscale_formal_v09_complete_input_seal_v1",
+      "status": "sealed",
+      "top_level_keys": [
+        "contract_sha256",
+        "schema",
+        "sealed_files",
+        "sealed_files_sha256",
+        "status"
+      ]
+    },
+    {
+      "path": "input_attempt_01/environment.json",
+      "schema": null,
+      "status": null,
+      "top_level_keys": [
+        "byteorder",
+        "git_clean",
+        "git_head",
+        "git_tree",
+        "installed_distributions",
+        "installed_distributions_sha256",
+        "numpy",
+        "pandas",
+        "platform",
+        "psutil",
+        "python",
+        "python_executable",
+        "python_implementation"
+      ]
+    },
+    {
+      "path": "input_attempt_01/forcing_manifest.json",
+      "schema": "stream_one_maurer_basin_v1",
+      "status": null,
+      "top_level_keys": [
+        "forcing_file_sha256",
+        "records",
+        "schema",
+        "source_count",
+        "tmin_equals_tmax_rows"
+      ]
+    },
+    {
+      "path": "input_attempt_01/manifest.json",
+      "schema": "historical_multiscale_formal_v09_complete_input_manifest_v1",
+      "status": "complete_before_audit",
+      "top_level_keys": [
+        "arrays",
+        "authorization_consumption",
+        "basin_count",
+        "basins_file_sha256",
+        "contract_sha256",
+        "dynamic_columns",
+        "environment_file_sha256",
+        "forcing_manifest_file_sha256",
+        "forcing_period",
+        "protocol_canonical_sha256",
+        "protocol_raw_sha256",
+        "resource_evidence",
+        "scaler_file_sha256",
+        "schema",
+        "source_tree",
+        "static_columns",
+        "status",
+        "target_bundle_sha256",
+        "target_manifest_sha256",
+        "training_period"
+      ]
+    },
+    {
+      "path": "input_attempt_01/scaler.json",
+      "schema": "historical_multiscale_formal_v09_scaler_v1",
+      "status": null,
+      "top_level_keys": [
+        "dynamic_center_float64",
+        "dynamic_columns",
+        "dynamic_ddof",
+        "dynamic_scale_float64",
+        "per_basin_target_scale_float64",
+        "schema",
+        "static_center_float64",
+        "static_columns",
+        "static_ddof",
+        "static_scale_float64",
+        "target_center_float64",
+        "target_ddof",
+        "target_scale_float64",
+        "training_end",
+        "training_start"
+      ]
+    },
+    {
+      "path": "authorizations/formal_input_seal_authorization.json",
+      "schema": "historical_multiscale_formal_v09_input_authorization_v1",
+      "status": "authorized_once",
+      "top_level_keys": [
+        "allowed_action",
+        "allowed_output",
+        "approval",
+        "contract_sha256",
+        "created_utc",
+        "maximum_attempts",
+        "protocol_canonical_sha256",
+        "protocol_raw_sha256",
+        "schema",
+        "source_tree",
+        "status",
+        "target_bundle_sha256",
+        "target_manifest_sha256"
+      ]
+    }
+  ],
+  "sample": {
+    "continuous/seed_100/manifest.json": {
+      "checkpoint_files": [
+        "checkpoint_epoch010.pt",
+        "checkpoint_epoch020.pt",
+        "checkpoint_epoch030.pt"
+      ],
+      "dropout_rng_binding": {
+        "cpu_state_sha256": "9d2385d107d0a0aaa1a389fdd083314cc6ff0e6456e691dd07c8b13ac64b0931",
+        "cuda_state_sha256": "af2337e666bba40b2c668d9633f4167e3526af12c1265dd88126a8d90a9d2714",
+        "dropout_seed": 100900301
+      },
+      "input_bindings": {
+        "input_external_audit_sha256": "e18be463df4cc6fe6c21a1e39c675f77db3e8c833109c1e9cfb557e37a832cd6",
+        "input_seal_sha256": "a5a64e43312ac303bf03ea3840e2cf126563527c6b82b8b94035c34978c25b3a",
+        "trusted_source_audit_sha256": "81e3658fe27e8f658e59d81015ce3d1b2a3baef11045a3e22bd76254ef5d8387"
+      },
+      "schema": "historical_multiscale_formal_v09_main_run_v1",
+      "sealed_files": null,
+      "status": "formal_training_complete",
+      "top_level_keys": [
+        "batch_size",
+        "checkpoint_epochs",
+        "checkpoint_files",
+        "dropout_rng_binding",
+        "epoch_trace",
+        "epochs",
+        "formal_evaluation_observation_reads",
+        "formal_execution",
+        "formal_period_predictions_generated",
+        "history_encoder_first_nonzero_gradient_step",
+        "history_health_trace",
+        "input_bindings",
+        "optimizer_steps_per_epoch",
+        "optimizer_steps_total",
+        "schema",
+        "seed",
+        "status",
+        "trainable_parameters",
+        "training_samples",
+        "validation_metrics_computed",
+        "variant"
+      ]
+    },
+    "continuous/seed_100/seal.json": {
+      "checkpoint_files": null,
+      "dropout_rng_binding": null,
+      "input_bindings": null,
+      "schema": "historical_multiscale_formal_v09_main_run_seal_v1",
+      "sealed_files": [
+        {
+          "relative_path": "checkpoint_epoch010.pt",
+          "sha256": "1eb9986aeeb772f99e3c8045e62e03ea7969db8311ca2807b483f7fa9275a6d8",
+          "size_bytes": 7174848
+        },
+        {
+          "relative_path": "checkpoint_epoch020.pt",
+          "sha256": "0daeac4c809d45dfa2cb630154baf07e5ac18b1d533d4cbddd20b6c55822d890",
+          "size_bytes": 7174848
+        },
+        {
+          "relative_path": "checkpoint_epoch030.pt",
+          "sha256": "a157a7f912b98cc4ed1ec63ab791f01ae256a90e4889c98169b2ab66d2d2abc0",
+          "size_bytes": 7174848
+        },
+        {
+          "relative_path": "manifest.json",
+          "sha256": "8371c42f2f413af6e02f8606739bc37ac8fb56bf96b50d96ded4cd590282e25d",
+          "size_bytes": 9288
+        }
+      ],
+      "status": "sealed",
+      "top_level_keys": [
+        "manifest_sha256",
+        "schema",
+        "sealed_files",
+        "sealed_files_sha256",
+        "status"
+      ]
+    }
+  }
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T13:40:24+0800
