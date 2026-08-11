@@ -1,0 +1,28 @@
+### channel=id29-nearing2022-da seq=263
+### host=login4
+### started=2026-08-12T06:58:03+0800
+### ---------- output ----------
+=== RECOVERY ATTEMPT 1 RESUME START ===
+2026-08-12T06:58:03+0800
+JobId=202214 JobName=N22-train UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=0 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=job_requeued_in_held_state Dependency=(null) Requeue=1 Restarts=1 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=2-00:00:00 TimeMin=N/A SubmitTime=2026-08-12T06:52:21 EligibleTime=2026-08-12T06:54:22 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T11:59:08 Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) BatchHost=ngu104 NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training.slurm WorkDir=/data1/home/sunyiq/nearing2022_da StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out Power= TresPerNode=gpu:1
+model_epoch029.pt: OK
+optimizer_state_epoch029.pt: OK
+run_config.yml: OK
+run_output.log: OK
+slurm_stderr.err: OK
+slurm_stdout.out: OK
+train_data_scaler.yml: OK
+=== EXCLUDE FAILED NODE ===
+JobId=202214 JobName=N22-train UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=0 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=job_requeued_in_held_state Dependency=(null) Requeue=1 Restarts=1 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=2-00:00:00 TimeMin=N/A SubmitTime=2026-08-12T06:52:21 EligibleTime=2026-08-12T06:54:22 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T11:59:08 Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002,ngu104 NodeList=(null) BatchHost=ngu104 NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training.slurm WorkDir=/data1/home/sunyiq/nearing2022_da StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out Power= TresPerNode=gpu:1
+excluded_node=ngu002
+excluded_node=ngu104
+=== RELEASE REQUEUED JOB ===
+JobId=202214 JobName=N22-train UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=None Dependency=(null) Requeue=1 Restarts=1 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=2-00:00:00 TimeMin=N/A SubmitTime=2026-08-12T06:52:21 EligibleTime=2026-08-12T06:54:22 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T11:59:08 Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128 ReqNodeList=(null) ExcNodeList=ngu002,ngu104 NodeList=(null) BatchHost=ngu104 NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training.slurm WorkDir=/data1/home/sunyiq/nearing2022_da StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.err StdIn=/dev/null StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-train_202214.out Power= TresPerNode=gpu:1
+=== RECOVERY ATTEMPT 1 RESUME END ===
+2026-08-12T06:58:03+0800
+failure_evidence_reverified=true
+failed_node_excluded=true
+registered_job_id_preserved=true
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-12T06:58:03+0800
