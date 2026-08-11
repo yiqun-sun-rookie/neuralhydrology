@@ -1,0 +1,15 @@
+### channel=id29-nearing2022-da seq=184
+### host=login4
+### started=2026-08-11T10:33:49+0800
+### ---------- output ----------
+=== PAYLOAD DEPLOYMENT RECEIPT ===
+{"already_matching": 0, "deployed": 6, "entries": [{"action": "deployed_additively", "bytes": 7266, "path": "results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol.json", "sha256": "16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1"}, {"action": "deployed_additively", "bytes": 3779, "path": "results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol_amendment_01.json", "sha256": "a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5"}, {"action": "deployed_additively", "bytes": 29458, "path": "src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py", "sha256": "0bcabc96f9e702f2317464f1f0123c29d49d5f7f0f972a10ea3e01bbf18fe987"}, {"action": "deployed_additively", "bytes": 19042, "path": "test/test_nearing2022_replacement_chain_verifier.py", "sha256": "2da179cb1ef02b0697472fd273bd61ffad98ecb5790e5b5f2dce6032e478dad6"}, {"action": "deployed_additively", "bytes": 4819, "path": "results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_independent_verifier_preflight_20260811.json", "sha256": "80bf711779dcef12b991be7b53359dfcdc550e3fbf049720ec5bc24b01620b0f"}, {"action": "deployed_additively", "bytes": 4392, "path": "results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_prerequisite_audit_20260811.json", "sha256": "e4211d680611e34d85c9b93ebcb8c90f5b05fa7425e0e6f0830ad6971260fa8f"}], "files": 6, "mailbox_seq": 184, "paired_preparer_modified": false, "paired_runner_modified": false, "registered_matrix_modified": false, "root": "/data1/home/sunyiq/nearing2022_da", "schema": "nearing2022-replacement-verifier-payload-deployment-v1", "slurm_job_modified_or_submitted": false, "status": "exact_payload_present"}
+=== REPLACEMENT JOBS REMAIN UNCHANGED ===
+202510|PENDING|Dependency|afterany:202222_*
+202511|PENDING|Dependency|afterok:202510
+registered_matrix_modified=false
+paired_runner_modified=false
+slurm_job_modified_or_submitted=false
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T10:33:55+0800
