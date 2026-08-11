@@ -2,53 +2,40 @@
 set -euo pipefail
 
 MAILBOX=/data1/home/sunyiq/hpc_mailbox
-PYTHON=/data1/home/sunyiq/autoresearch64/.venv/bin/python
-CORRECTED=/tmp/autoresearch64-submit-seq64.sh
+SOURCE_BRANCH=codex/unified-autoresearch-vertical
+SOURCE_COMMIT=85ae470c9c08a62abd402f082ecc692cfe203294
+BUILDER_PAYLOAD="$MAILBOX/inbox/autoresearch-64/payload/unseen64_builder_85ae470c_seq65.tar.gz"
+TEMPLATE="$MAILBOX/inbox/autoresearch-64/hbv_lite_unseen_64_confirmation_seq65.slurm"
+SUBMIT_SCRIPT=/tmp/autoresearch64-unseen64-seq65.slurm
+RECEIPT=/tmp/autoresearch64-unseen64-seq65.receipt
+LOCK=/tmp/autoresearch64-unseen64-seq65.lock
 
-test ! -e "$CORRECTED"
-"$PYTHON" - "$MAILBOX" "$CORRECTED" <<'PY_FIX'
-import hashlib
-import os
-import subprocess
-import sys
-from pathlib import Path
+exec 9>"$LOCK"
+flock 9
+if [ -s "$RECEIPT" ]; then
+  cat "$RECEIPT"
+  exit 0
+fi
 
-mailbox = Path(sys.argv[1])
-output_path = Path(sys.argv[2])
-source = subprocess.run(
-    [
-        "git",
-        "-C",
-        str(mailbox),
-        "show",
-        "98ecf5e9:inbox/autoresearch-64/cmd.sh",
-    ],
-    check=True,
-    capture_output=True,
-    text=True,
-).stdout
-if source.count("seq62") != 7:
-    raise SystemExit("unexpected sequence-62 template count")
-if source.count("sequence 62") != 1:
-    raise SystemExit("unexpected snapshot-label template count")
-bad = r'\n+echo "=== VERIFY IMMUTABLE RECOMMENDATION RECEIPT ==="'
-good = r'\necho "=== VERIFY IMMUTABLE RECOMMENDATION RECEIPT ==="'
-if source.count(bad) != 1:
-    raise SystemExit("unexpected literal-plus defect count")
+cd "$MAILBOX"
+git fetch origin "$SOURCE_BRANCH"
+ACTUAL_COMMIT=$(git rev-parse FETCH_HEAD)
+test "$ACTUAL_COMMIT" = "$SOURCE_COMMIT"
 
-corrected = source.replace("seq62", "seq64")
-corrected = corrected.replace("sequence 62", "sequence 64")
-corrected = corrected.replace(bad, good)
-if "+echo" in corrected:
-    raise SystemExit("literal-plus defect remains after correction")
+if [ ! -e "$BUILDER_PAYLOAD" ]; then
+  TEMP_PAYLOAD="${BUILDER_PAYLOAD}.tmp.$$"
+  git archive --format=tar FETCH_HEAD | gzip -n > "$TEMP_PAYLOAD"
+  chmod 0444 "$TEMP_PAYLOAD"
+  mv "$TEMP_PAYLOAD" "$BUILDER_PAYLOAD"
+fi
+BUILDER_PAYLOAD_SHA256=$(sha256sum "$BUILDER_PAYLOAD" | awk '{print $1}')
 
-descriptor = os.open(output_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o444)
-with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as stream:
-    stream.write(corrected)
-    stream.flush()
-    os.fsync(stream.fileno())
-print(f"corrected_submit_sha256={hashlib.sha256(corrected.encode('utf-8')).hexdigest()}")
-PY_FIX
+sed \
+  -e "s/__BUILDER_PAYLOAD_SHA256__/$BUILDER_PAYLOAD_SHA256/g" \
+  "$TEMPLATE" > "$SUBMIT_SCRIPT"
+bash -n "$SUBMIT_SCRIPT"
 
-bash -n "$CORRECTED"
-bash "$CORRECTED"
+JOB_ID=$(sbatch --parsable "$SUBMIT_SCRIPT")
+printf 'job_id=%s\nsource_commit=%s\nbuilder_payload_sha256=%s\n' \
+  "$JOB_ID" "$SOURCE_COMMIT" "$BUILDER_PAYLOAD_SHA256" > "$RECEIPT"
+cat "$RECEIPT"
