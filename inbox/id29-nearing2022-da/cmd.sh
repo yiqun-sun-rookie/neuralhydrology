@@ -1,6 +1,63 @@
 #!/bin/bash
-# ID29 seq=263: resume the held recovery transaction, exclude ngu104, and release job 202214.
+# ID29 seq=264: read-only post-release verification for recovered job 202214.
 set -euo pipefail
+
+ROOT='/data1/home/sunyiq/nearing2022_da'
+JOB_ID=202214
+INCIDENT_DIR="$ROOT/closure_20260810/recovery/job202214_cuda_stall_seq262"
+OUTPUT_PARENT="$ROOT/closure_20260810/time_split/autoregression"
+
+echo '=== POST-RELEASE VERIFICATION START ==='
+date --iso-8601=seconds
+job_record="$(scontrol show job -o "$JOB_ID")"
+printf '%s\n' "$job_record"
+[[ " $job_record " == *' Requeue=1 '* ]]
+[[ " $job_record " == *' Restarts=1 '* ]]
+[[ " $job_record " != *' Reason=JobHeldUser '* ]]
+[[ " $job_record " != *' Reason=job_requeued_in_held_state '* ]]
+excluded_hostlist="$(printf '%s\n' "$job_record" | tr ' ' '\n' | sed -n 's/^ExcNodeList=//p' | head -n 1)"
+mapfile -t excluded_nodes < <(scontrol show hostnames "$excluded_hostlist")
+printf 'excluded_node=%s\n' "${excluded_nodes[@]}"
+printf '%s\n' "${excluded_nodes[@]}" | grep -Fxq 'ngu002'
+printf '%s\n' "${excluded_nodes[@]}" | grep -Fxq 'ngu104'
+if [[ " $job_record " == *' JobState=RUNNING '* ]]; then
+  [[ " $job_record " != *' NodeList=ngu104 '* ]]
+fi
+
+echo '=== INCIDENT MANIFEST RECHECK ==='
+[[ "$(sha256sum "$INCIDENT_DIR/MANIFEST.sha256" | awk '{print $1}')" == \
+   '59f929d602d9e96948e9f049ee217f64c6c5fc0dfb72cc944ee985ec35d9bcfd' ]]
+(
+  cd "$INCIDENT_DIR"
+  sha256sum -c MANIFEST.sha256
+)
+
+echo '=== SOURCE CANDIDATES ==='
+while IFS= read -r candidate_dir; do
+  if [[ -f "$candidate_dir/model_epoch030.pt" ]]; then
+    checkpoint030=yes
+  else
+    checkpoint030=no
+  fi
+  printf '%s|checkpoint030=%s\n' "$candidate_dir" "$checkpoint030"
+done < <(find "$OUTPUT_PARENT" -mindepth 1 -maxdepth 1 -type d \
+  -name 'nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_*_ep30' -print | sort)
+
+echo '=== ACTIVE SLURM LOGS ==='
+for log_path in "$ROOT/closure_20260810/logs/N22-train_202214.out" \
+  "$ROOT/closure_20260810/logs/N22-train_202214.err"; do
+  if [[ -f "$log_path" ]]; then
+    stat -c '%n|bytes=%s|mtime=%y|inode=%i' "$log_path"
+    tail -c 16384 "$log_path" | tr '\r' '\n' | tail -n 40
+  else
+    echo "missing=$log_path"
+  fi
+done
+
+echo '=== POST-RELEASE VERIFICATION END ==='
+date --iso-8601=seconds
+echo 'read_only=true'
+exit 0
 
 ROOT='/data1/home/sunyiq/nearing2022_da'
 JOB_ID=202214
