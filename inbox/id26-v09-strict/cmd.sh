@@ -1,32 +1,33 @@
 #!/bin/bash
-# id26-v09-strict seq=51 : locate strict-stage evidence and inspect the completed suite launcher.
+# id26-v09-strict seq=52 : locate all resource and determinism preflight evidence.
 export LC_ALL=C
-STRICT=/data1/home/sunyiq/v09_strict/neuralhydrology/results/26_historical_band_experts/formal_v09
 BASE=/data1/home/sunyiq/v09_strict
-export STRICT
-find "$STRICT" -maxdepth 3 -type f -printf '%P\n'
-find "$BASE" -maxdepth 2 -type f -name '*.json' -printf '%P\n'
-tail -n 160 "$BASE/jobs/suite_remaining_21.slurm"
+export BASE
+find "$BASE" -maxdepth 9 -type f \( -iname '*preflight*.json' -o -iname '*resource*.json' \) -printf '%P\n'
 python - <<'PY'
 import json
 import os
 from pathlib import Path
 
-root = Path(os.environ["STRICT"])
+root = Path(os.environ["BASE"])
 rows = []
 for path in root.rglob("*.json"):
-    relative = path.relative_to(root)
-    if len(relative.parts) > 3:
+    lowered = path.name.lower()
+    if "preflight" not in lowered and "resource" not in lowered:
         continue
     try:
         value = json.loads(path.read_text(encoding="utf-8"))
         rows.append({
-            "path": relative.as_posix(),
+            "path": path.relative_to(root).as_posix(),
             "schema": value.get("schema"),
             "status": value.get("status"),
+            "device": value.get("device"),
+            "workload_count": value.get("workload_count"),
+            "opened_formal_inputs": value.get("opened_formal_inputs"),
+            "wrote_formal_outputs": value.get("wrote_formal_outputs"),
             "top_level_keys": sorted(value),
         })
     except Exception as exc:
-        rows.append({"path": relative.as_posix(), "parse_error": str(exc)})
-print(json.dumps({"strict_root_json": rows}, indent=2, sort_keys=True))
+        rows.append({"path": path.relative_to(root).as_posix(), "parse_error": str(exc)})
+print(json.dumps({"preflight_reports": rows}, indent=2, sort_keys=True))
 PY
