@@ -1,6 +1,65 @@
 #!/bin/bash
-# ID29 seq=262: preserve the frozen failure evidence and requeue job 202214 from the original config.
+# ID29 seq=263: resume the held recovery transaction, exclude ngu104, and release job 202214.
 set -euo pipefail
+
+ROOT='/data1/home/sunyiq/nearing2022_da'
+JOB_ID=202214
+INCIDENT_DIR="$ROOT/closure_20260810/recovery/job202214_cuda_stall_seq262"
+
+echo '=== RECOVERY ATTEMPT 1 RESUME START ==='
+date --iso-8601=seconds
+held_record="$(scontrol show job -o "$JOB_ID")"
+printf '%s\n' "$held_record"
+[[ " $held_record " == *' JobState=PENDING '* ]]
+[[ " $held_record " == *' Requeue=1 '* ]]
+[[ " $held_record " == *' Restarts=1 '* ]]
+[[ " $held_record " == *' Reason=job_requeued_in_held_state '* || \
+   " $held_record " == *' Reason=JobHeldUser '* ]]
+[[ "$(sha256sum "$INCIDENT_DIR/MANIFEST.sha256" | awk '{print $1}')" == \
+   '59f929d602d9e96948e9f049ee217f64c6c5fc0dfb72cc944ee985ec35d9bcfd' ]]
+(
+  cd "$INCIDENT_DIR"
+  sha256sum -c MANIFEST.sha256
+)
+
+echo '=== EXCLUDE FAILED NODE ==='
+scontrol update JobId="$JOB_ID" ExcNodeList=ngu002,ngu104
+excluded_record="$(scontrol show job -o "$JOB_ID")"
+printf '%s\n' "$excluded_record"
+excluded_hostlist="$(printf '%s\n' "$excluded_record" | tr ' ' '\n' | sed -n 's/^ExcNodeList=//p' | head -n 1)"
+mapfile -t excluded_nodes < <(scontrol show hostnames "$excluded_hostlist")
+printf 'excluded_node=%s\n' "${excluded_nodes[@]}"
+printf '%s\n' "${excluded_nodes[@]}" | grep -Fxq 'ngu002'
+printf '%s\n' "${excluded_nodes[@]}" | grep -Fxq 'ngu104'
+
+echo '=== RELEASE REQUEUED JOB ==='
+scontrol release "$JOB_ID"
+released=false
+for _ in $(seq 1 60); do
+  released_record="$(scontrol show job -o "$JOB_ID")"
+  if [[ " $released_record " == *' JobState=PENDING '* || " $released_record " == *' JobState=RUNNING '* ]]; then
+    if [[ " $released_record " != *' Reason=JobHeldUser '* && \
+         " $released_record " != *' Reason=job_requeued_in_held_state '* ]]; then
+      released=true
+      break
+    fi
+  fi
+  sleep 2
+done
+printf '%s\n' "$released_record"
+[[ "$released" == true ]]
+[[ " $released_record " == *' Requeue=1 '* ]]
+[[ " $released_record " == *' Restarts=1 '* ]]
+if [[ " $released_record " == *' JobState=RUNNING '* ]]; then
+  [[ " $released_record " != *' NodeList=ngu104 '* ]]
+fi
+
+echo '=== RECOVERY ATTEMPT 1 RESUME END ==='
+date --iso-8601=seconds
+echo 'failure_evidence_reverified=true'
+echo 'failed_node_excluded=true'
+echo 'registered_job_id_preserved=true'
+exit 0
 
 ROOT='/data1/home/sunyiq/nearing2022_da'
 JOB_ID=202214
