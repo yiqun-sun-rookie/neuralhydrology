@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=182: refresh registered progress, dependencies, and replacement-audit gates.
+# ID29 seq=183: refresh progress and inventory replacement-verifier prerequisites.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
@@ -336,6 +336,72 @@ for final in "$DATA_V2" "$MASK_V2"; do
     echo "absent|$final"
   fi
 done
+
+echo "=== REPLACEMENT VERIFIER STRICT PREREQUISITES ==="
+SOURCE_RUN="$ROOT/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30"
+STRICT_MISMATCHES=0
+while IFS='|' read -r label expected path; do
+  test -n "$label" || continue
+  if ! test -f "$path"; then
+    echo "$label|ABSENT|$expected|$path"
+    STRICT_MISMATCHES=$((STRICT_MISMATCHES + 1))
+    continue
+  fi
+  actual=$(sha256sum "$path" | awk '{print $1}')
+  bytes=$(stat -c '%s' "$path")
+  status=UNBOUND
+  if test "$expected" != '-'; then
+    if test "$actual" = "$expected"; then
+      status=MATCH
+    else
+      status=MISMATCH
+      STRICT_MISMATCHES=$((STRICT_MISMATCHES + 1))
+    fi
+  fi
+  echo "$label|$status|$actual|$bytes|$path"
+done <<EOF
+deployed_protocol|16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1|$DIAGNOSTIC_ROOT/warmup_target_paired_retraining_protocol.json
+deployed_amendment|a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5|$DIAGNOSTIC_ROOT/warmup_target_paired_retraining_protocol_amendment_01.json
+submission_receipt|18e6aeeee3321427d0f851d68d2cbbfb02f8d13e477f6f96dd5f22eed1d4d2a1|$SUBMISSION_RECEIPT
+failed_audit|3f5fe1e597a2d8cee36dffac4426a178075d8828eae560c585fe7727d2a4aa30|$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531.preparing-202506/audit.json
+failed_stdout|a577a8ec870a4f2a100643b3d6cfc49a29a00d19384bee888590b9cee3112336|$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531.preparing-202506/audit_stdout.json
+version1_audit|5f7d49c4899aeb0ffb1d097cffd98cfe86393f86b5849a153d3074094744eb85|$ROOT/src/29_nearing2022_da_ar/scripts/audit_training_data_port.py
+version2_audit|51b9091c928a8b514f0be6e81ab5afd304bda654e3dc63a6cb27746e3dee3233|$ROOT/src/29_nearing2022_da_ar/scripts/audit_training_data_port_v2.py
+isolation_audit|9f898a80aafb4e207bb56fd095125e9d5d092ec8c96af4d6010bdaeb36a27f8c|$ROOT/src/29_nearing2022_da_ar/scripts/audit_warmup_target_isolation.py
+data_wrapper|7805e78942a9d512075deb1f546a230d4fe20f04a7efd837a8507ada9e4a493e|$ROOT/src/29_nearing2022_da_ar/hpc/run_author_v13_training_data_port_all531_v2.slurm
+mask_wrapper|9d8d2c890e6ec8a28be30e674ea05c3c90a8926ba0e4e80bf088386879127053|$ROOT/src/29_nearing2022_da_ar/hpc/run_author_v13_warmup_isolation_all531_v2.slurm
+frozen_config|729985706faeb8c45480d3c485dbad72ae51eec94dff69b5c8964e2036591b1a|$ROOT/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.0_seed_0.yml
+frozen_basins|cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85|$ROOT/src/29_nearing2022_da_ar/basin_lists/531_basin_list.txt
+training_registry|6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64|$ROOT/src/29_nearing2022_da_ar/registry/experiment_registry.csv
+evaluation_registry|37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215|$ROOT/src/29_nearing2022_da_ar/registry/evaluation_registry.csv
+basedataset|4658816ea3110a1c2efcf54c3dcf00d5c0982459dca4f7ac985beb983b12df0d|$ROOT/neuralhydrology/datasetzoo/basedataset.py
+registered_checkpoint|c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b|$SOURCE_RUN/model_epoch030.pt
+registered_source_config|-|$SOURCE_RUN/config.yml
+registered_source_scaler|add1a777647f92f1aa7a8ad039e3d406d32f05c21f30c685a14736d22f45a5d4|$SOURCE_RUN/train_data/train_data_scaler.yml
+EOF
+echo "strict_prerequisite_mismatches=$STRICT_MISMATCHES"
+test "$STRICT_MISMATCHES" -eq 0
+
+echo "=== FUTURE VERIFIER PAYLOAD INVENTORY ==="
+while IFS='|' read -r label expected path; do
+  test -n "$label" || continue
+  if test -f "$path"; then
+    actual=$(sha256sum "$path" | awk '{print $1}')
+    bytes=$(stat -c '%s' "$path")
+    if test "$actual" = "$expected"; then status=MATCH; else status=STALE_OR_DIFFERENT; fi
+    echo "$label|$status|$actual|$bytes|$path"
+  else
+    echo "$label|ABSENT|$expected|$path"
+  fi
+done <<EOF
+source_protocol|16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol.json
+source_amendment|a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol_amendment_01.json
+replacement_verifier|0bcabc96f9e702f2317464f1f0123c29d49d5f7f0f972a10ea3e01bbf18fe987|$ROOT/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py
+replacement_verifier_test|2da179cb1ef02b0697472fd273bd61ffad98ecb5790e5b5f2dce6032e478dad6|$ROOT/test/test_nearing2022_replacement_chain_verifier.py
+reproduction_contract_test|92be6ddf18e67e237ce2a0c6c73ec9c5441b735a9a78757213273cc1fc1f66ed|$ROOT/test/test_nearing2022_reproduction_contract.py
+comparison_register|98684f4e46e531c1a6acc16a6e714c7b9c2e07df127fd2109487349f89428717|$ROOT/results/29_nearing2022_da_ar/formal_closure/reproduction_comparison_register.json
+replacement_verifier_preflight|80bf711779dcef12b991be7b53359dfcdc550e3fbf049720ec5bc24b01620b0f|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_independent_verifier_preflight_20260811.json
+EOF
 
 echo "=== MAIN JOB STATES AND FAILURE GATE ==="
 squeue -h -j "$MAIN_JOBS" -o '%i|%T|%M|%l|%R|%j' | sort
