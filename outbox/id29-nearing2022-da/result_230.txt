@@ -1,0 +1,172 @@
+### channel=id29-nearing2022-da seq=230
+### host=login4
+### started=2026-08-11T23:21:43+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-11T23:21:43+0800
+=== ROLE-LEVEL COMPARISON ===
+{
+  "all_current_partial_complete_ids": [
+    "N22-EVAL-TS-AR-L01-TR000-TE000-S0",
+    "N22-EVAL-TS-AR-L01-TR000-TE025-S0",
+    "N22-EVAL-TS-AR-L01-TR000-TE050-S0",
+    "N22-EVAL-TS-AR-L01-TR000-TE075-S0",
+    "N22-EVAL-TS-AR-L01-TR000-TE100-S0",
+    "N22-EVAL-TS-DA-L01-TE000-S0",
+    "N22-EVAL-TS-DA-L01-TE025-S0",
+    "N22-EVAL-TS-DA-L01-TE050-S0",
+    "N22-EVAL-TS-DA-L01-TE075-S0",
+    "N22-EVAL-TS-DA-L01-TE100-S0",
+    "N22-EVAL-TS-DA-L02-TE000-S0",
+    "N22-EVAL-TS-DA-L02-TE025-S0",
+    "N22-EVAL-TS-DA-L02-TE050-S0",
+    "N22-EVAL-TS-DA-L02-TE075-S0",
+    "N22-EVAL-TS-DA-L02-TE100-S0",
+    "N22-EVAL-TS-DA-L04-TE000-S0",
+    "N22-EVAL-TS-DA-L04-TE025-S0",
+    "N22-EVAL-TS-DA-L04-TE050-S0"
+  ],
+  "closure_complete_count": 18,
+  "closure_minus_partial": [],
+  "missing_from_verified_17_closure": [],
+  "missing_from_verified_17_partial": [],
+  "new_since_verified_17_closure": [
+    "N22-EVAL-TS-DA-L04-TE050-S0"
+  ],
+  "new_since_verified_17_partial": [
+    "N22-EVAL-TS-DA-L04-TE050-S0"
+  ],
+  "partial_complete_count": 18,
+  "partial_minus_closure": [],
+  "reference_run_directory": {
+    "bytes": 4096,
+    "exists": true,
+    "is_dir": true,
+    "is_file": false,
+    "is_symlink": false,
+    "mtime_ns": 1786183625000000000,
+    "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30"
+  },
+  "registry_row": {
+    "artifact_manifest": "",
+    "completed_at": "",
+    "eval_id": "N22-EVAL-TS-DA-L04-TE050-S0",
+    "evaluation_mode": "data_assimilation",
+    "family": "time_assimilation",
+    "fold": "",
+    "lead": "4",
+    "notes": "Uses the released default assimilation settings and the simulation checkpoint.",
+    "reference_exp_id": "N22-TS-SIM-S0",
+    "result_file": "test/model_epoch030/test_results_data_assimilation.p",
+    "run_dir": "closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0",
+    "seed": "0",
+    "slurm_job_id": "202222_17",
+    "source_commit": "b254529deb75d950f6417b67e51a7292b7aed430",
+    "source_exp_id": "N22-TS-SIM-S0",
+    "status": "submitted",
+    "submitted_at": "2026-08-10T12:44:38+08:00",
+    "test_holdout": "0.5",
+    "train_holdout": ""
+  },
+  "run_directory": {
+    "bytes": 4096,
+    "exists": true,
+    "is_dir": true,
+    "is_file": false,
+    "is_symlink": false,
+    "mtime_ns": 1786458788000000000,
+    "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0"
+  },
+  "target": "N22-EVAL-TS-DA-L04-TE050-S0",
+  "target_closure_complete": true,
+  "target_closure_missing_rows": [],
+  "target_partial_complete": true,
+  "target_roles": {
+    "candidate_checkpoint": {
+      "bytes": 1228165,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786182690000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/model_epoch030.pt"
+    },
+    "candidate_config": {
+      "bytes": 2841,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786439195000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/config.yml"
+    },
+    "candidate_log": {
+      "bytes": 786,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786458789000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/output.log"
+    },
+    "candidate_metrics": {
+      "bytes": 67771,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786458788000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_metrics_data_assimilation.csv"
+    },
+    "candidate_prediction": {
+      "bytes": 47013929,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786458789000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_results_data_assimilation.p"
+    },
+    "reference_metrics": {
+      "bytes": 73071,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786183625000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv"
+    },
+    "reference_prediction": {
+      "bytes": 47014459,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786183625000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p"
+    }
+  }
+}
+=== TARGET RUN INVENTORY ===
+{"bytes": 2841, "exists": true, "is_dir": false, "is_file": true, "is_symlink": false, "mtime_ns": 1786439195000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/config.yml", "relative": "config.yml"}
+{"bytes": 1228165, "exists": true, "is_dir": false, "is_file": true, "is_symlink": false, "mtime_ns": 1786182690000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/model_epoch030.pt", "relative": "model_epoch030.pt"}
+{"bytes": 786, "exists": true, "is_dir": false, "is_file": true, "is_symlink": false, "mtime_ns": 1786458789000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/output.log", "relative": "output.log"}
+{"bytes": 4096, "exists": true, "is_dir": true, "is_file": false, "is_symlink": false, "mtime_ns": 1786458788000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test", "relative": "test"}
+{"bytes": 4096, "exists": true, "is_dir": true, "is_file": false, "is_symlink": false, "mtime_ns": 1786458788000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030", "relative": "test/model_epoch030"}
+{"bytes": 67771, "exists": true, "is_dir": false, "is_file": true, "is_symlink": false, "mtime_ns": 1786458788000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_metrics_data_assimilation.csv", "relative": "test/model_epoch030/test_metrics_data_assimilation.csv"}
+{"bytes": 47013929, "exists": true, "is_dir": false, "is_file": true, "is_symlink": false, "mtime_ns": 1786458789000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_results_data_assimilation.p", "relative": "test/model_epoch030/test_results_data_assimilation.p"}
+{"bytes": 4096, "exists": true, "is_dir": true, "is_file": false, "is_symlink": false, "mtime_ns": 1786174775000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/train_data", "relative": "train_data"}
+{"bytes": 4775, "exists": true, "is_dir": false, "is_file": true, "is_symlink": false, "mtime_ns": 1786174775000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/train_data/train_data_scaler.yml", "relative": "train_data/train_data_scaler.yml"}
+=== TARGET SLURM TASK ===
+202608|N22-eval-now|COMPLETED|0:0|05:26:45|2026-08-11T17:06:25|2026-08-11T22:33:10|ngu101|JobArrayTaskLimit
+Job 202222_17 not found
+=== TARGET SLURM LOGS ===
+missing=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval_202222_17.out
+missing=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval_202222_17.err
+=== BOUNDARY ===
+registered_matrix_modified=false
+frozen_acceptance_modified=false
+diagnostic_only=true
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T23:22:14+0800
