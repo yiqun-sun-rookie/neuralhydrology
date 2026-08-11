@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=180: retain target audit and tolerate retired downstream job identifiers.
+# ID29 seq=181: refresh registered progress, dependencies, and replacement-audit gates.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
