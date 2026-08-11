@@ -1,0 +1,19 @@
+### channel=id17-film-gate seq=27
+### host=login4
+### started=2026-08-11T13:46:04+0800
+### ---------- output ----------
+=== A. STATUS OF THE BROKEN JOB 202559 ===
+       JobID        State ExitCode    Elapsed 
+------------ ------------ -------- ---------- 
+      202559       FAILED      1:0   00:00:03 
+(cancelled if still queued)
+=== B. REGENERATE NEED-EVALS INTO SHARED FS ===
+need 13 evals -> _sel/need_evals.json
+=== C. RESUBMIT WITH SHARED-FS PATH ===
+eval_jobid=202560
+       JobID        State  NodeList 
+------------ ------------ --------- 
+      202560      RUNNING    ngu010 
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T13:46:25+0800
