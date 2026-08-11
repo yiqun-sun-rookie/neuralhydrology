@@ -1,0 +1,16 @@
+### channel=id26-v09-strict seq=56
+### host=login4
+### started=2026-08-11T23:02:26+0800
+### ---------- output ----------
+=== A PRESERVED EVIDENCE ===
+attempt_01_jobid=202586 state=FAILED exit_code=1:0
+=== B FROZEN CHECKOUTS ===
+training_head=bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
+strict_head=f94183209bf44ed6e672e1c23f98020905804e6d
+=== C RECOVER ISOLATED AUDIT CHECKOUT ===
+audit_commit_object=fetch_required
+error: RPC failed; curl 28 Failed to connect to github.com:443 after 127332 ms: Could not connect to server
+fatal: expected flush after ref listing
+### ---------- end ----------
+### exit_code=128
+### finished=2026-08-11T23:05:14+0800
