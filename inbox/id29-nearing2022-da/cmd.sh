@@ -1,6 +1,79 @@
 #!/bin/bash
-# ID29 seq=255: inlined frozen read-only matrix progress, walltime, dependency-release, and boundary audit.
+# ID29 seq=256: read-only diagnostic for no visible progress in training job 202214.
 set -eo pipefail
+
+export LC_ALL=C
+JOB_ID=202214
+
+echo '=== DIAGNOSTIC SNAPSHOT START ==='
+date --iso-8601=seconds
+
+echo '=== SCONTROL JOB RECORD ==='
+job_record="$(scontrol show job -o "$JOB_ID")"
+printf '%s\n' "$job_record"
+
+stdout_path="$(printf '%s\n' "$job_record" | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -n 1)"
+stderr_path="$(printf '%s\n' "$job_record" | tr ' ' '\n' | sed -n 's/^StdErr=//p' | head -n 1)"
+batch_host="$(printf '%s\n' "$job_record" | tr ' ' '\n' | sed -n 's/^BatchHost=//p' | head -n 1)"
+
+echo '=== SQUEUE JOB RECORD ==='
+squeue -h -j "$JOB_ID" -o '%i|%T|%M|%l|%N|%R|%C|%m|%b|%j'
+
+echo '=== SACCT JOB AND STEP RECORDS ==='
+sacct -j "$JOB_ID" -n -P \
+  --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Timelimit,Start,End,NodeList,AllocCPUS,ReqMem,AllocTRES
+
+echo '=== SSTAT SNAPSHOT 1 ==='
+sstat -a -j "$JOB_ID" -n -P \
+  --format=JobID,AveCPU,AveRSS,MaxRSS,MaxVMSize,MaxDiskRead,MaxDiskWrite,NTasks || true
+
+echo '=== NODE RECORD ==='
+if [[ -n "$batch_host" && "$batch_host" != '(null)' ]]; then
+  scontrol show node -o "$batch_host" || true
+fi
+
+echo '=== LOG METADATA SNAPSHOT 1 ==='
+if [[ -f "$stdout_path" ]]; then
+  stat -c 'stdout|%n|bytes=%s|mtime=%y|mtime_epoch=%Y|inode=%i' "$stdout_path"
+  stdout_size_before="$(stat -c '%s' "$stdout_path")"
+  stdout_mtime_before="$(stat -c '%Y' "$stdout_path")"
+else
+  echo "stdout_missing=$stdout_path"
+  stdout_size_before=-1
+  stdout_mtime_before=-1
+fi
+if [[ -f "$stderr_path" ]]; then
+  stat -c 'stderr|%n|bytes=%s|mtime=%y|mtime_epoch=%Y|inode=%i' "$stderr_path"
+else
+  echo "stderr_missing=$stderr_path"
+fi
+
+sleep 15
+
+echo '=== SSTAT SNAPSHOT 2 ==='
+sstat -a -j "$JOB_ID" -n -P \
+  --format=JobID,AveCPU,AveRSS,MaxRSS,MaxVMSize,MaxDiskRead,MaxDiskWrite,NTasks || true
+
+echo '=== LOG METADATA SNAPSHOT 2 ==='
+if [[ -f "$stdout_path" ]]; then
+  stat -c 'stdout|%n|bytes=%s|mtime=%y|mtime_epoch=%Y|inode=%i' "$stdout_path"
+  stdout_size_after="$(stat -c '%s' "$stdout_path")"
+  stdout_mtime_after="$(stat -c '%Y' "$stdout_path")"
+  echo "stdout_size_delta_15s=$((stdout_size_after - stdout_size_before))"
+  echo "stdout_mtime_delta_15s=$((stdout_mtime_after - stdout_mtime_before))"
+  echo '=== STDOUT TAIL ==='
+  tail -n 120 "$stdout_path"
+fi
+if [[ -f "$stderr_path" ]]; then
+  stat -c 'stderr|%n|bytes=%s|mtime=%y|mtime_epoch=%Y|inode=%i' "$stderr_path"
+  echo '=== STDERR TAIL ==='
+  tail -n 120 "$stderr_path"
+fi
+
+echo '=== DIAGNOSTIC SNAPSHOT END ==='
+date --iso-8601=seconds
+echo 'read_only=true'
+exit 0
 
 ROOT=/data1/home/sunyiq/nearing2022_da
 IDEA="$ROOT/src/29_nearing2022_da_ar"
