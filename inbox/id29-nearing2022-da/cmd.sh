@@ -1,93 +1,170 @@
 #!/bin/bash
-# ID29 seq=193: read-only recovery of partial numerical audit job 202554.
+# ID29 seq=194: independently rehash and final-manifest-cover all 77 seq=192 audit sources.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-DIAGNOSTIC_ROOT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics"
-FINAL="$DIAGNOSTIC_ROOT/partial_numerical_audit_seq192_v1"
-RECEIPT="$DIAGNOSTIC_ROOT/partial_numerical_audit_seq192_submission.json"
-STAGING_PATTERN='partial_numerical_audit_seq192_v1.preparing-*'
-STDOUT="$ROOT/closure_20260810/logs/N22-part-audit2_202554.out"
-STDERR="$ROOT/closure_20260810/logs/N22-part-audit2_202554.err"
+IDEA="$ROOT/src/29_nearing2022_da_ar"
+AUDIT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq192_v1/audit_1.json"
+OLD_AUDIT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq171.json"
+SCRIPT="$IDEA/scripts/verify_registered_closure.py"
 
-echo "=== FROZEN SUBMISSION RECEIPT ==="
-date --iso-8601=seconds
-test -f "$RECEIPT"
-test ! -L "$RECEIPT"
-test "$(sha256sum "$RECEIPT" | awk '{print $1}')" = 0ae9c1e53196b28f7a7817cc9dff4ebaf367801390829fef17d3f70bcc31eee9
-sha256sum "$RECEIPT"
+test -f "$AUDIT"
+test -f "$OLD_AUDIT"
+test -f "$SCRIPT"
+test ! -L "$AUDIT"
+test ! -L "$OLD_AUDIT"
+test ! -L "$SCRIPT"
+test "$(stat -c '%s' "$AUDIT")" = 56544
+test "$(sha256sum "$AUDIT" | awk '{print $1}')" = 5c75619d61d5f182cb763ccbaf8572760180fdf04a261429b38cab901c63b8da
+test "$(stat -c '%s' "$OLD_AUDIT")" = 48848
+test "$(sha256sum "$OLD_AUDIT" | awk '{print $1}')" = 672a679fe8a32fa30e7d4001fe0cb6e73a889d988171295745c60217aa5a64a1
+test "$(sha256sum "$SCRIPT" | awk '{print $1}')" = 3b0caef6076d457e303864227e6748ab947e39da01c0c1faea15795807ce8945
 
-echo "=== SCHEDULER ==="
-sacct -n -X -j 202554 --format=JobIDRaw,JobName,State,ExitCode,Elapsed,NodeList%20 -P
-squeue -h -j 202554 -o '%i|%j|%T|%M|%R' || true
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+cd "$ROOT"
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
-echo "=== LOG SNAPSHOT ==="
-for path in "$STDOUT" "$STDERR"; do
-  if test -f "$path"; then
-    stat -c '%n|%s' "$path"
-    sha256sum "$path"
-    echo "tail_begin|$path"
-    tail -c 65536 "$path"
-    echo
-    echo "tail_end|$path"
-  else
-    echo "absent|$path"
-  fi
-done
-
-echo "=== OUTPUT STATE ==="
-echo "final_exists=$(test -e "$FINAL" && echo true || echo false)"
-echo "staging_count=$(find "$DIAGNOSTIC_ROOT" -maxdepth 1 -name "$STAGING_PATTERN" | wc -l)"
-if test -e "$FINAL"; then
-  test -d "$FINAL"
-  test ! -L "$FINAL"
-  test "$(find "$FINAL" -type l -print -quit)" = ""
-  test "$(find "$DIAGNOSTIC_ROOT" -maxdepth 1 -name "$STAGING_PATTERN" -print -quit)" = ""
-  cmp "$FINAL/audit_1.json" "$FINAL/audit_2.json"
-  cmp "$FINAL/audit_stdout_1.json" "$FINAL/audit_stdout_2.json"
-  sha256sum "$FINAL"/*
-  echo "execution_receipt_begin"
-  cat "$FINAL/execution_receipt.json"
-  echo "execution_receipt_end"
-  echo "artifact_manifest_begin"
-  cat "$FINAL/artifact_manifest.json"
-  echo "artifact_manifest_end"
-  echo "audit_stdout_begin"
-  cat "$FINAL/audit_stdout_1.json"
-  echo "audit_stdout_end"
-  export FINAL
-  python - <<'PY'
-import base64
+python - "$ROOT" "$IDEA" "$AUDIT" "$OLD_AUDIT" "$SCRIPT" <<'PY'
+from collections import Counter
 import hashlib
 import json
-import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+import sys
 
-final = Path(os.environ['FINAL'])
-audit_path = final / 'audit_1.json'
-payload = audit_path.read_bytes()
-audit = json.loads(payload)
+root = Path(sys.argv[1]).resolve()
+idea = Path(sys.argv[2]).resolve()
+audit_path = Path(sys.argv[3]).resolve()
+old_audit_path = Path(sys.argv[4]).resolve()
+script_path = Path(sys.argv[5]).resolve()
+sys.path.insert(0, str(script_path.parent))
+
+from verify_registered_closure import audit_registered_closure, extra_tree_files
+
+audit_bytes = audit_path.read_bytes()
+audit = json.loads(audit_bytes)
+old_audit = json.loads(old_audit_path.read_bytes())
+if audit['schema'] != 'nearing2022-partial-numerical-audit-v3':
+    raise ValueError(audit['schema'])
+if audit['complete_coordinates'] != 14 or audit['comparison_rows'] != 98:
+    raise ValueError('Unexpected current audit dimensions')
+if old_audit['complete_coordinates'] != 12 or old_audit['comparison_rows'] != 84:
+    raise ValueError('Unexpected predecessor audit dimensions')
+if audit['registered_matrix_modified'] or audit['frozen_acceptance_modified']:
+    raise ValueError('Frozen boundary was not preserved')
+
+old_coordinates = {row['eval_id']: row for row in old_audit['coordinates']}
+coordinates = {row['eval_id']: row for row in audit['coordinates']}
+if not old_coordinates.keys() < coordinates.keys():
+    raise ValueError('Current coordinate set does not strictly extend the predecessor')
+if any(old_coordinates[key] != coordinates[key] for key in old_coordinates):
+    raise ValueError('A predecessor coordinate changed')
+
+artifacts = audit['source_artifacts']
+old_artifacts = old_audit['source_artifacts']
+if len(artifacts) != 77 or len(old_artifacts) != 66:
+    raise ValueError(f'Unexpected source counts: current={len(artifacts)}, old={len(old_artifacts)}')
+if not old_artifacts.keys() < artifacts.keys():
+    raise ValueError('Current source set does not strictly extend the predecessor')
+if any(old_artifacts[key] != artifacts[key] for key in old_artifacts):
+    raise ValueError('A predecessor source record changed')
+
+verified_bytes = 0
+verified_hashes = set()
+for relative, expected in sorted(artifacts.items()):
+    pure = PurePosixPath(relative)
+    if pure.is_absolute() or '..' in pure.parts:
+        raise ValueError(f'Unsafe source path: {relative}')
+    path = (root / Path(*pure.parts)).resolve()
+    if root not in path.parents:
+        raise ValueError(f'Outside-root source path: {relative}')
+    payload = path.read_bytes()
+    actual_hash = hashlib.sha256(payload).hexdigest()
+    if len(payload) != expected['bytes'] or actual_hash != expected['sha256']:
+        raise ValueError(f'Source identity mismatch: {relative}')
+    verified_bytes += len(payload)
+    verified_hashes.add(actual_hash)
+if verified_bytes != 728216375 or len(verified_hashes) != 65:
+    raise ValueError(f'Unexpected source totals: bytes={verified_bytes}, hashes={len(verified_hashes)}')
+
+for coordinate in audit['coordinates']:
+    for path_key, hash_key in (('result_path', 'result_sha256'), ('reference_path', 'reference_sha256')):
+        relative = coordinate[path_key]
+        if relative not in artifacts or artifacts[relative]['sha256'] != coordinate[hash_key]:
+            raise ValueError(f"{coordinate['eval_id']} {path_key} binding mismatch")
+
+extra_files = [
+    *extra_tree_files(idea),
+    *extra_tree_files(root / 'neuralhydrology'),
+    *extra_tree_files(root / 'closure_20260810' / 'provenance'),
+    root / 'test' / 'test_assimilation.py',
+    root / 'test' / 'test_nearing2022_reproduction_contract.py',
+    root / 'setup.cfg',
+    root / 'requirements-gpu.txt',
+]
+closure = audit_registered_closure(
+    root,
+    idea / 'registry' / 'experiment_registry.csv',
+    idea / 'registry' / 'evaluation_registry.csv',
+    idea / 'registry' / 'assimilation_hyperparameter_registry.csv',
+    root / 'closure_20260810' / 'aggregation' / 'evaluations',
+    root / 'closure_20260810' / 'aggregation' / 'hyperparameters',
+    extra_files=extra_files,
+)
+if closure['counts'] != {'training': 46, 'evaluations': 180, 'hyperparameters': 660}:
+    raise ValueError(f"Unexpected registry counts: {closure['counts']}")
+if closure['complete']:
+    raise ValueError('Preflight unexpectedly reports a complete still-running matrix')
+
+enumerated = {Path(row['path']).resolve(): row['bindings'] for row in closure['artifacts']}
+missing_coverage = []
+binding_type_counts = Counter()
+for relative in sorted(artifacts):
+    pure = PurePosixPath(relative)
+    path = (root / Path(*pure.parts)).resolve()
+    bindings = enumerated.get(path)
+    if not bindings:
+        missing_coverage.append(relative)
+        continue
+    binding_type_counts.update(
+        {f"{item['coordinate_type']}:{item['role']}" for item in bindings}
+    )
+if missing_coverage:
+    raise ValueError(f'Source artifacts omitted by closure enumerator: {missing_coverage}')
+
+added_coordinates = sorted(coordinates.keys() - old_coordinates.keys())
+added_sources = sorted(artifacts.keys() - old_artifacts.keys())
 print(json.dumps({
-    'audit_bytes': len(payload),
-    'audit_sha256': hashlib.sha256(payload).hexdigest(),
+    'schema': 'nearing2022-partial-source-rehash-and-final-manifest-coverage-v2',
+    'audit_bytes': len(audit_bytes),
+    'audit_sha256': hashlib.sha256(audit_bytes).hexdigest(),
     'complete_coordinates': audit['complete_coordinates'],
     'comparison_rows': audit['comparison_rows'],
-    'individual_tolerance_failures': audit['individual_tolerance_failures'],
-    'coordinates_with_failures': audit['coordinates_with_failures'],
-    'registered_matrix_modified': audit['registered_matrix_modified'],
-    'frozen_acceptance_modified': audit['frozen_acceptance_modified'],
-}, sort_keys=True))
-encoded = base64.b64encode(payload).decode('ascii')
-print('AUDIT1_B64_BEGIN')
-for start in range(0, len(encoded), 4096):
-    print(encoded[start:start + 4096])
-print('AUDIT1_B64_END')
+    'predecessor_coordinates_identical': len(old_coordinates),
+    'added_coordinates': added_coordinates,
+    'source_artifacts_verified': len(artifacts),
+    'source_artifact_bytes_verified': verified_bytes,
+    'unique_source_hashes': len(verified_hashes),
+    'predecessor_source_records_identical': len(old_artifacts),
+    'added_source_artifacts': len(added_sources),
+    'added_source_artifact_bytes': sum(artifacts[key]['bytes'] for key in added_sources),
+    'coordinate_result_and_reference_bindings_verified': len(coordinates) * 2,
+    'registry_counts': closure['counts'],
+    'final_manifest_preflight_complete': closure['complete'],
+    'final_manifest_preflight_existing_artifact_count': len(enumerated),
+    'final_manifest_preflight_missing_role_count': len(closure['missing']),
+    'source_artifacts_covered': len(artifacts) - len(missing_coverage),
+    'source_artifacts_missing_coverage': missing_coverage,
+    'binding_type_counts': dict(sorted(binding_type_counts.items())),
+    'mismatches': 0,
+    'manifest_written': False,
+    'registered_matrix_modified': False,
+}, indent=2, sort_keys=True))
 PY
-fi
 
-echo "=== SAFETY BOUNDARY ==="
+echo "=== REPLACEMENT AND HELD-MANIFEST STATES ==="
+sacct -n -X -j 202510,202511 --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Reason -P
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = '202293|PENDING|JobHeldUser|N22-manifest'
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
 test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
 echo "registered_matrix_modified=false"
-echo "frozen_acceptance_modified=false"
