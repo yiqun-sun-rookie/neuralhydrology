@@ -1,458 +1,81 @@
 #!/bin/bash
-# ID29 seq=187: correct additive evidence deployment and rerun all gates.
+# ID29 seq=188: deploy the fail-closed replacement verifier Slurm wrapper; submit nothing.
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/nearing2022_da
-MAIN_JOBS=202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315
-REPAIR_JOBS=202510,202511
-DIAGNOSTIC_ROOT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics"
-DATA_V2="$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531_v2"
-MASK_V2="$DIAGNOSTIC_ROOT/author_v13_warmup_isolation_all531_v2"
-SUBMISSION_RECEIPT="$DIAGNOSTIC_ROOT/warmup_target_repair_submission_01.json"
+TMP=
+trap 'test -z "$TMP" || rm -f "$TMP"' EXIT
+
+deploy_gzip() {
+  target=$1
+  expected_bytes=$2
+  expected_sha=$3
+  mkdir -p "$(dirname "$target")"
+  if test -e "$target"; then
+    test -f "$target"
+    test ! -L "$target"
+    test "$(stat -c '%s' "$target")" = "$expected_bytes"
+    test "$(sha256sum "$target" | awk '{print $1}')" = "$expected_sha"
+    echo "already_matching|$target"
+    return
+  fi
+  TMP="$target.tmp.seq188.$$"
+  test ! -e "$TMP"
+  base64 --decode | gzip -dc > "$TMP"
+  test "$(stat -c '%s' "$TMP")" = "$expected_bytes"
+  test "$(sha256sum "$TMP" | awk '{print $1}')" = "$expected_sha"
+  chmod 0644 "$TMP"
+  ln "$TMP" "$target"
+  rm -f "$TMP"
+  TMP=
+  test -f "$target"
+  test ! -L "$target"
+  test "$(sha256sum "$target" | awk '{print $1}')" = "$expected_sha"
+  echo "deployed_additively|$target"
+}
 
 echo "=== SNAPSHOT TIME ==="
 date --iso-8601=seconds
 
-echo "=== LIVE DOWNSTREAM DEPENDENCY GRAPH ==="
-for job in 202238 202229 202230 202280 202281 202294 202315; do
-  if ! record=$(scontrol show job -o "$job" 2>&1); then
-    printf '%s|ABSENT_OR_RETIRED|||%s\n' "$job" "$record"
-    continue
-  fi
-  state=$(sed -n 's/.*JobState=\([^ ]*\).*/\1/p' <<<"$record")
-  reason=$(sed -n 's/.*Reason=\([^ ]*\).*/\1/p' <<<"$record")
-  dependency=$(sed -n 's/.*Dependency=\([^ ]*\).*/\1/p' <<<"$record")
-  command=$(sed -n 's/.*Command=\([^ ]*\).*/\1/p' <<<"$record")
-  printf '%s|%s|%s|%s|%s\n' "$job" "$state" "$reason" "$dependency" "$command"
-done
-
-dep_202238=$(scontrol show job -o 202238 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
-dep_202229=$(scontrol show job -o 202229 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
-dep_202230=$(scontrol show job -o 202230 | sed -n 's/.*Dependency=\([^ ]*\).*/\1/p')
-grep -q 'afterok:202216' <<<"$dep_202238"
-for required in 202222 202226 202216 202238 202227; do grep -q "$required" <<<"$dep_202229"; done
-for required in 202228 202238; do grep -q "$required" <<<"$dep_202230"; done
-echo "dependency_graph_assertions=passed"
-
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-cd "$ROOT"
-export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
-
-echo "=== REGISTERED COMPLETE-ROLE COUNTS ==="
-python - <<'PY'
-from collections import Counter
-import json
-from pathlib import Path
-import sys
-
-import pandas as pd
-
-root = Path('/data1/home/sunyiq/nearing2022_da')
-scripts = root / 'src/29_nearing2022_da_ar/scripts'
-sys.path.insert(0, str(scripts))
-from aggregate_registered_results import _registered_run
-from prepare_evaluation_run import resolve_source_run
-from verify_registered_closure import _metrics_path
-
-registry = root / 'src/29_nearing2022_da_ar/registry'
-training = pd.read_csv(registry / 'experiment_registry.csv', keep_default_na=False, dtype=str)
-evaluations = pd.read_csv(registry / 'evaluation_registry.csv', keep_default_na=False, dtype=str)
-hyper = pd.read_csv(registry / 'assimilation_hyperparameter_registry.csv', keep_default_na=False, dtype=str)
-
-
-def complete(paths):
-    return all(path.is_file() for path in paths)
-
-
-training_done = Counter()
-for _, row in training.iterrows():
-    try:
-        run = resolve_source_run(root, training, row['exp_id'])
-        if complete([
-            run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log',
-            run / 'train_data/train_data_scaler.yml',
-        ]):
-            training_done[row['family']] += 1
-    except (FileNotFoundError, KeyError, ValueError):
-        pass
-
-evaluation_done = Counter()
-for _, row in evaluations.iterrows():
-    try:
-        run = _registered_run(root, training, row)
-        result = run / row['result_file']
-        reference_run = resolve_source_run(root, training, row['reference_exp_id'])
-        reference = reference_run / 'test/model_epoch030/test_results.p'
-        if complete([
-            run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
-            _metrics_path(result), reference, _metrics_path(reference),
-        ]):
-            evaluation_done[row['family']] += 1
-    except (FileNotFoundError, KeyError, ValueError):
-        pass
-
-hyper_done = 0
-for _, row in hyper.iterrows():
-    try:
-        run = Path(row['run_dir'])
-        run = run if run.is_absolute() else root / run
-        result = run / row['result_file']
-        reference_run = resolve_source_run(root, training, row['source_exp_id'])
-        reference = reference_run / 'test/model_epoch030/test_results.p'
-        if complete([
-            run / 'config.yml', run / 'model_epoch030.pt', run / 'output.log', result,
-            _metrics_path(result), reference, _metrics_path(reference),
-        ]):
-            hyper_done += 1
-    except (FileNotFoundError, KeyError, ValueError):
-        pass
-
-print(json.dumps({
-    'training_complete': sum(training_done.values()),
-    'training_total': len(training),
-    'training_by_family': dict(sorted(training_done.items())),
-    'evaluation_complete': sum(evaluation_done.values()),
-    'evaluation_total': len(evaluations),
-    'evaluation_by_family': dict(sorted(evaluation_done.items())),
-    'hyperparameter_complete': hyper_done,
-    'hyperparameter_total': len(hyper),
-}, sort_keys=True))
-PY
-
-echo "=== SERVER OUTPUT-TARGET AUDIT ==="
-python - <<'PY'
-import hashlib
-import json
-from pathlib import Path
-
-import pandas as pd
-import yaml
-
-root = Path('/data1/home/sunyiq/nearing2022_da')
-registry = root / 'src/29_nearing2022_da_ar/registry'
-training_path = registry / 'experiment_registry.csv'
-evaluation_path = registry / 'evaluation_registry.csv'
-hyper_path = registry / 'assimilation_hyperparameter_registry.csv'
-training = pd.read_csv(training_path, keep_default_na=False, dtype=str).set_index('exp_id')
-evaluations = pd.read_csv(evaluation_path, keep_default_na=False, dtype=str)
-hyper = pd.read_csv(hyper_path, keep_default_na=False, dtype=str)
-
-
-def file_record(path):
-    payload = path.read_bytes()
-    return {'path': str(path.relative_to(root)), 'bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest()}
-
-
-literal_dirs = evaluations['run_dir'].astype(str).str.replace('\\', '/', regex=False).tolist()
-direct = evaluations[evaluations['family'].isin({'basin_simulation', 'basin_autoregression'})]
-source_rows = training.loc[direct['source_exp_id']]
-runtime_patterns = []
-for row in source_rows.itertuples():
-    config = yaml.safe_load((root / row.config_path).read_text(encoding='utf-8'))
-    runtime_patterns.append(
-        str(config['run_dir']).replace('\\', '/').rstrip('/') + '/' + str(config['experiment_name']) + '_*_ep30'
-    )
-
-logical_evaluation_targets = []
-for row in evaluations.itertuples():
-    if row.family in {'basin_simulation', 'basin_autoregression'}:
-        value = str(training.loc[row.source_exp_id, 'run_dir'])
-    else:
-        value = str(row.run_dir)
-    logical_evaluation_targets.append(value.replace('\\', '/'))
-logical_all_targets = logical_evaluation_targets + hyper['run_dir'].astype(str).str.replace('\\', '/', regex=False).tolist()
-
-payload = {
-    'registries': [file_record(training_path), file_record(evaluation_path), file_record(hyper_path)],
-    'training_rows': len(training),
-    'training_unique_registered_run_dirs': training['run_dir'].nunique(),
-    'evaluation_rows': len(evaluations),
-    'evaluation_literal_unique_run_dirs': len(set(literal_dirs)),
-    'evaluation_literal_duplicate_groups': sum(count > 1 for count in pd.Series(literal_dirs).value_counts()),
-    'direct_basin_rows': len(direct),
-    'direct_unique_source_exp_ids': direct['source_exp_id'].nunique(),
-    'direct_unique_source_config_paths': source_rows['config_path'].nunique(),
-    'direct_unique_registered_source_run_dirs': source_rows['run_dir'].nunique(),
-    'direct_unique_runtime_patterns': len(set(runtime_patterns)),
-    'resolved_evaluation_targets': len(logical_evaluation_targets),
-    'resolved_unique_evaluation_targets': len(set(logical_evaluation_targets)),
-    'resolved_casefold_unique_evaluation_targets': len({item.casefold() for item in logical_evaluation_targets}),
-    'evaluation_plus_hyperparameter_targets': len(logical_all_targets),
-    'unique_evaluation_plus_hyperparameter_targets': len(set(logical_all_targets)),
-    'casefold_unique_evaluation_plus_hyperparameter_targets': len({item.casefold() for item in logical_all_targets}),
-}
-assert payload['training_rows'] == payload['training_unique_registered_run_dirs'] == 46
-assert payload['evaluation_rows'] == 180
-assert payload['evaluation_literal_unique_run_dirs'] == 162
-assert payload['evaluation_literal_duplicate_groups'] == 2
-assert payload['direct_basin_rows'] == 20
-assert payload['direct_unique_source_exp_ids'] == 20
-assert payload['direct_unique_source_config_paths'] == 20
-assert payload['direct_unique_registered_source_run_dirs'] == 20
-assert payload['direct_unique_runtime_patterns'] == 20
-assert payload['resolved_evaluation_targets'] == payload['resolved_unique_evaluation_targets'] == 180
-assert payload['resolved_casefold_unique_evaluation_targets'] == 180
-assert payload['evaluation_plus_hyperparameter_targets'] == payload['unique_evaluation_plus_hyperparameter_targets'] == 840
-assert payload['casefold_unique_evaluation_plus_hyperparameter_targets'] == 840
-expected_hashes = {
-    'src/29_nearing2022_da_ar/registry/experiment_registry.csv':
-        '6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64',
-    'src/29_nearing2022_da_ar/registry/evaluation_registry.csv':
-        '37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215',
-    'src/29_nearing2022_da_ar/registry/assimilation_hyperparameter_registry.csv':
-        '7cb7f10ce13c41c1b064148b27a707ccaab56f87fa40c289d6833bc7c57b09a7',
-}
-assert {row['path']: row['sha256'] for row in payload['registries']} == expected_hashes
-print(json.dumps(payload, sort_keys=True))
-PY
-
-echo "=== DIRECT-EVALUATION JOB PAYLOAD ==="
-python - <<'PY'
-import hashlib
-import json
-from pathlib import Path
-import subprocess
-
-root = Path('/data1/home/sunyiq/nearing2022_da')
-live_script = root / 'src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm'
-live_prepare = root / 'src/29_nearing2022_da_ar/scripts/prepare_evaluation_run.py'
-record = subprocess.run(
-    ['scontrol', 'show', 'job', '-dd', '-o', '202238'], check=True, capture_output=True, text=True,
-).stdout.strip()
-record_fields = dict(token.split('=', 1) for token in record.split() if '=' in token)
-spooled = subprocess.run(
-    ['scontrol', 'write', 'batch_script', '202238', '/dev/stdout'], capture_output=True, text=True,
-)
-markers = ['prepare_evaluation_run.py', 'SKIPPED_COMPLETED', 'python -m neuralhydrology.nh_run evaluate']
-payload = {
-    'job_id': '202238',
-    'job_command': record_fields.get('Command'),
-    'job_work_dir': record_fields.get('WorkDir'),
-    'job_dependency': record_fields.get('Dependency'),
-    'job_environment': record_fields.get('Environment'),
-    'job_record_contains_expected_command': str(live_script) in record,
-    'job_record_contains_expected_batch_file': 'basin_direct_evaluation_batch.txt' in record,
-    'spooled_script_retrieval_returncode': spooled.returncode,
-    'spooled_script_bytes': len(spooled.stdout.encode()),
-    'spooled_script_sha256': hashlib.sha256(spooled.stdout.encode()).hexdigest() if spooled.stdout else None,
-    'spooled_script_markers': {marker: marker in spooled.stdout for marker in markers},
-    'live_script_sha256': hashlib.sha256(live_script.read_bytes()).hexdigest(),
-    'live_prepare_sha256': hashlib.sha256(live_prepare.read_bytes()).hexdigest(),
-}
-assert payload['live_prepare_sha256'] == '6e47896c2b3011fe8e93a561f7545397d5a4ddee70b09b38a520f08530646ccf'
-print(json.dumps(payload, sort_keys=True))
-if spooled.returncode != 0:
-    print(json.dumps({'spooled_script_retrieval_stderr': spooled.stderr.strip()}, sort_keys=True))
-PY
-
-echo "=== LIVE MAIN PROGRESS ==="
-python - <<'PY'
-import json
-from pathlib import Path
-import re
-import subprocess
-
-parents = '202214,202215,202216,202222,202226,202227,202228,202229,202230,202238,202293,202294,202315'
-running = subprocess.run(
-    ['squeue', '-h', '-j', parents, '-t', 'RUNNING', '-o', '%i'],
-    check=True, capture_output=True, text=True,
-).stdout.split()
-ansi = re.compile(r'\x1b\[[0-9;]*[A-Za-z]')
-epoch_pattern = re.compile(r'# Epoch\s+(\d+):\s*(\d+)%\|.*?\|\s*(\d+)/(\d+)')
-generic_pattern = re.compile(r'(?<!Epoch\s)(\d+)%\|.*?\|\s*(\d+)/(\d+)')
-
-
-def seconds(value):
-    days = 0
-    if '-' in value:
-        day_text, value = value.split('-', 1)
-        days = int(day_text)
-    fields = [int(item) for item in value.split(':')]
-    if len(fields) == 3:
-        hours, minutes, secs = fields
-    else:
-        hours, minutes, secs = 0, fields[0], fields[1]
-    return days * 86400 + hours * 3600 + minutes * 60 + secs
-
-
-for job in sorted(running):
-    record = subprocess.run(
-        ['scontrol', 'show', 'job', '-o', job], check=True, capture_output=True, text=True,
-    ).stdout.strip()
-    fields = dict(token.split('=', 1) for token in record.split() if '=' in token)
-    stdout = Path(fields['StdOut'])
-    payload = {
-        'job': job, 'name': fields['JobName'], 'runtime': fields['RunTime'],
-        'time_limit': fields['TimeLimit'], 'stdout_exists': stdout.is_file(),
-    }
-    if stdout.is_file():
-        size = stdout.stat().st_size
-        with stdout.open('rb') as handle:
-            handle.seek(max(0, size - 4 * 1024 * 1024))
-            tail = ansi.sub('', handle.read().decode('utf-8', errors='replace')).replace('\r', '\n')
-        epochs = list(epoch_pattern.finditer(tail))
-        generic = list(generic_pattern.finditer(tail))
-        payload['stdout_bytes'] = size
-        if epochs:
-            epoch, _, step, total = map(int, epochs[-1].groups())
-            fraction = ((epoch - 1) + step / total) / 30
-            projected = seconds(fields['RunTime']) / fraction if fraction > 0 else None
-            limit = seconds(fields['TimeLimit'])
-            payload.update({
-                'epoch': epoch, 'epoch_step': step, 'epoch_total_steps': total,
-                'thirty_epoch_fraction': round(fraction, 6),
-                'projected_total_hours': round(projected / 3600, 2),
-                'projected_slack_hours': round((limit - projected) / 3600, 2),
-                'time_limit_risk': projected > limit,
-            })
-        elif generic:
-            percent, step, total = map(int, generic[-1].groups())
-            payload.update({'percent': percent, 'step': step, 'total': total})
-    print(json.dumps(payload, sort_keys=True))
-PY
-
-echo "=== REPLACEMENT AUDIT STATES ==="
-sacct -n -X -P -j "$REPAIR_JOBS" --format=JobID,JobName,State,ExitCode,Elapsed,Start,End,NodeList
-squeue -h -j "$REPAIR_JOBS" -o '%i|%j|%T|%M|%R|%E' | sort
-
-echo "=== REPLACEMENT RECEIPT AND OUTPUTS ==="
-test -f "$SUBMISSION_RECEIPT"
-test "$(sha256sum "$SUBMISSION_RECEIPT" | awk '{print $1}')" = \
-  18e6aeeee3321427d0f851d68d2cbbfb02f8d13e477f6f96dd5f22eed1d4d2a1
-sha256sum "$SUBMISSION_RECEIPT"
-find "$DIAGNOSTIC_ROOT" -maxdepth 1 -mindepth 1 \
-  \( -name 'author_v13_training_data_port_all531_v2*' -o -name 'author_v13_warmup_isolation_all531_v2*' \) \
-  -printf '%f|%y\n' | sort
-
-for final in "$DATA_V2" "$MASK_V2"; do
-  if test -d "$final"; then
-    test -f "$final/audit.json"
-    test -f "$final/diagnostic_receipt.json"
-    sha256sum "$final/audit.json" "$final/diagnostic_receipt.json"
-    cat "$final/audit.json"
-    cat "$final/diagnostic_receipt.json"
-  else
-    echo "absent|$final"
-  fi
-done
-
-echo "=== REPLACEMENT VERIFIER STRICT PREREQUISITES ==="
-SOURCE_RUN="$ROOT/results/29_nearing2022_da_ar/nearing2022_autoregression_lead1_holdout0.0_seed0_2026_0808_1648_ep30"
-STRICT_MISMATCHES=0
-while IFS='|' read -r label expected path; do
-  test -n "$label" || continue
-  if ! test -f "$path"; then
-    echo "$label|ABSENT|$expected|$path"
-    STRICT_MISMATCHES=$((STRICT_MISMATCHES + 1))
-    continue
-  fi
-  actual=$(sha256sum "$path" | awk '{print $1}')
-  bytes=$(stat -c '%s' "$path")
-  status=UNBOUND
-  if test "$expected" != '-'; then
-    if test "$actual" = "$expected"; then
-      status=MATCH
-    else
-      status=MISMATCH
-      STRICT_MISMATCHES=$((STRICT_MISMATCHES + 1))
-    fi
-  fi
-  echo "$label|$status|$actual|$bytes|$path"
-done <<EOF
-deployed_protocol|16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1|$DIAGNOSTIC_ROOT/warmup_target_paired_retraining_protocol.json
-deployed_amendment|a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5|$DIAGNOSTIC_ROOT/warmup_target_paired_retraining_protocol_amendment_01.json
-submission_receipt|18e6aeeee3321427d0f851d68d2cbbfb02f8d13e477f6f96dd5f22eed1d4d2a1|$SUBMISSION_RECEIPT
-failed_audit|3f5fe1e597a2d8cee36dffac4426a178075d8828eae560c585fe7727d2a4aa30|$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531.preparing-202506/audit.json
-failed_stdout|a577a8ec870a4f2a100643b3d6cfc49a29a00d19384bee888590b9cee3112336|$DIAGNOSTIC_ROOT/author_v13_training_data_port_all531.preparing-202506/audit_stdout.json
-version1_audit|5f7d49c4899aeb0ffb1d097cffd98cfe86393f86b5849a153d3074094744eb85|$ROOT/src/29_nearing2022_da_ar/scripts/audit_training_data_port.py
-version2_audit|51b9091c928a8b514f0be6e81ab5afd304bda654e3dc63a6cb27746e3dee3233|$ROOT/src/29_nearing2022_da_ar/scripts/audit_training_data_port_v2.py
-isolation_audit|9f898a80aafb4e207bb56fd095125e9d5d092ec8c96af4d6010bdaeb36a27f8c|$ROOT/src/29_nearing2022_da_ar/scripts/audit_warmup_target_isolation.py
-data_wrapper|7805e78942a9d512075deb1f546a230d4fe20f04a7efd837a8507ada9e4a493e|$ROOT/src/29_nearing2022_da_ar/hpc/run_author_v13_training_data_port_all531_v2.slurm
-mask_wrapper|9d8d2c890e6ec8a28be30e674ea05c3c90a8926ba0e4e80bf088386879127053|$ROOT/src/29_nearing2022_da_ar/hpc/run_author_v13_warmup_isolation_all531_v2.slurm
-frozen_config|729985706faeb8c45480d3c485dbad72ae51eec94dff69b5c8964e2036591b1a|$ROOT/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.0_seed_0.yml
-frozen_basins|cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85|$ROOT/src/29_nearing2022_da_ar/basin_lists/531_basin_list.txt
-training_registry|6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64|$ROOT/src/29_nearing2022_da_ar/registry/experiment_registry.csv
-evaluation_registry|37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215|$ROOT/src/29_nearing2022_da_ar/registry/evaluation_registry.csv
-basedataset|4658816ea3110a1c2efcf54c3dcf00d5c0982459dca4f7ac985beb983b12df0d|$ROOT/neuralhydrology/datasetzoo/basedataset.py
-registered_checkpoint|c2a6f260d555e323650103a84bc066d591fc8cc3e6bf8142a89f9ccd7f64661b|$SOURCE_RUN/model_epoch030.pt
-registered_source_config|-|$SOURCE_RUN/config.yml
-registered_source_scaler|add1a777647f92f1aa7a8ad039e3d406d32f05c21f30c685a14736d22f45a5d4|$SOURCE_RUN/train_data/train_data_scaler.yml
-EOF
-echo "strict_prerequisite_mismatches=$STRICT_MISMATCHES"
-test "$STRICT_MISMATCHES" -eq 0
-
-echo "=== ADDITIVE DEPLOYMENT-AUDIT REPAIR ==="
-DEPLOYMENT_AUDIT="$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_payload_deployment_20260811.json"
-DEPLOYMENT_AUDIT_SHA=d469d2b135c533ac7bfb0433cf6f3ab52fc2e4dfb4e685e229dfbe48c8ef1b40
-if test -e "$DEPLOYMENT_AUDIT"; then
-  test -f "$DEPLOYMENT_AUDIT"
-  test ! -L "$DEPLOYMENT_AUDIT"
-  test "$(sha256sum "$DEPLOYMENT_AUDIT" | awk '{print $1}')" = "$DEPLOYMENT_AUDIT_SHA"
-  echo "deployment_audit_action=already_matching"
-else
-  tmp="$DEPLOYMENT_AUDIT.tmp.seq186.$$"
-  test ! -e "$tmp"
-  trap 'rm -f "$tmp"' EXIT
-  base64 --decode > "$tmp" <<'PAYLOAD'
-ewogICJzY2hlbWEiOiAibmVhcmluZzIwMjItcmVwbGFjZW1lbnQtdmVyaWZpZXItcGF5bG9hZC1kZXBsb3ltZW50LWF1ZGl0LXYxIiwKICAiY3JlYXRlZF9hdCI6ICIyMDI2LTA4LTExVDEwOjM1OjU3KzA4OjAwIiwKICAibWFpbGJveF9zZXEiOiAxODQsCiAgImNvbW1hbmRfY29tbWl0IjogIjU5ZmM4NmY0ZjI5MmJhZjhlNmEzY2I0OTVjMDFjMDQ3NmE0M2I5MDAiLAogICJyZXN1bHRfY29tbWl0IjogImRiZmMxYzhkM2RmNDUzNWIwOGMwMWFiZjU1MzM5MmI5MDdmYjM1NTgiLAogICJyZXN1bHRfYnl0ZXMiOiAyMjM0LAogICJyZXN1bHRfc2hhMjU2IjogIjYxMjg1YTMwNWEzM2Y2Nzg4YmY1ZTZkMmUzMmIzN2VhODY0ZWEyNjFiMGZiNjM3Y2NhOGFhNmIyYTZkMTU2OGYiLAogICJzZXJ2ZXJfaG9zdCI6ICJsb2dpbjQiLAogICJzdGFydGVkX2F0IjogIjIwMjYtMDgtMTFUMTA6MzM6NDkrMDg6MDAiLAogICJmaW5pc2hlZF9hdCI6ICIyMDI2LTA4LTExVDEwOjMzOjU1KzA4OjAwIiwKICAiZXhpdF9jb2RlIjogMCwKICAic3RhdHVzIjogImV4YWN0X3BheWxvYWRfZGVwbG95ZWRfYWRkaXRpdmVseSIsCiAgImZpbGVzIjogNiwKICAiZGVwbG95ZWQiOiA2LAogICJhbHJlYWR5X21hdGNoaW5nIjogMCwKICAiZW50cmllcyI6IFsKICAgIHsKICAgICAgInBhdGgiOiAicmVzdWx0cy8yOV9uZWFyaW5nMjAyMl9kYV9hci9mb3JtYWxfY2xvc3VyZS93YXJtdXBfdGFyZ2V0X3BhaXJlZF9yZXRyYWluaW5nX3Byb3RvY29sLmpzb24iLAogICAgICAiYnl0ZXMiOiA3MjY2LAogICAgICAic2hhMjU2IjogIjE2YmRmNTdiY2JmM2FmZDMzNWU5MTEwN2JjOTA4MzMwZTg2YWM3ZmEyMGRiNjBjYmY1NGVlMzBiMWFiMzIxYzEiCiAgICB9LAogICAgewogICAgICAicGF0aCI6ICJyZXN1bHRzLzI5X25lYXJpbmcyMDIyX2RhX2FyL2Zvcm1hbF9jbG9zdXJlL3dhcm11cF90YXJnZXRfcGFpcmVkX3JldHJhaW5pbmdfcHJvdG9jb2xfYW1lbmRtZW50XzAxLmpzb24iLAogICAgICAiYnl0ZXMiOiAzNzc5LAogICAgICAic2hhMjU2IjogImEyMWJhZTI4YTI2ZjU3OTdlOTYyMzI2MjhmZGMxMzlmNWZmZDFlNTRlMzFlZTIwMzJhNzgwNWFjYjA3ODVlZjUiCiAgICB9LAogICAgewogICAgICAicGF0aCI6ICJzcmMvMjlfbmVhcmluZzIwMjJfZGFfYXIvc2NyaXB0cy92ZXJpZnlfd2FybXVwX3RhcmdldF9yZXBsYWNlbWVudF9jaGFpbi5weSIsCiAgICAgICJieXRlcyI6IDI5NDU4LAogICAgICAic2hhMjU2IjogIjBiY2FiYzk2ZjllNzAyZjIzMTc0NjRmMWYwMTIzYzI5ZDQ5ZDVmN2YwZjk3MmExMGVhM2UwMWJiZjE4ZmU5ODciCiAgICB9LAogICAgewogICAgICAicGF0aCI6ICJ0ZXN0L3Rlc3RfbmVhcmluZzIwMjJfcmVwbGFjZW1lbnRfY2hhaW5fdmVyaWZpZXIucHkiLAogICAgICAiYnl0ZXMiOiAxOTA0MiwKICAgICAgInNoYTI1NiI6ICIyZGExNzljYjFlZjAyYjA2OTc0NzJmZDI3M2JkNjFmZmFkOThlY2I1NzkwZTViNWYyZGNlNjAzMmU0NzhkYWQ2IgogICAgfSwKICAgIHsKICAgICAgInBhdGgiOiAicmVzdWx0cy8yOV9uZWFyaW5nMjAyMl9kYV9hci9mb3JtYWxfY2xvc3VyZS93YXJtdXBfdGFyZ2V0X3JlcGxhY2VtZW50X2luZGVwZW5kZW50X3ZlcmlmaWVyX3ByZWZsaWdodF8yMDI2MDgxMS5qc29uIiwKICAgICAgImJ5dGVzIjogNDgxOSwKICAgICAgInNoYTI1NiI6ICI4MGJmNzExNzc5ZGNlZjEyYjk5MWJlN2I1MzM1OWRmY2RjNTUwZTNmYmYwNDk3MjBlYzViYzI0YjAxNjIwYjBmIgogICAgfSwKICAgIHsKICAgICAgInBhdGgiOiAicmVzdWx0cy8yOV9uZWFyaW5nMjAyMl9kYV9hci9mb3JtYWxfY2xvc3VyZS93YXJtdXBfdGFyZ2V0X3JlcGxhY2VtZW50X3ZlcmlmaWVyX3ByZXJlcXVpc2l0ZV9hdWRpdF8yMDI2MDgxMS5qc29uIiwKICAgICAgImJ5dGVzIjogNDM5MiwKICAgICAgInNoYTI1NiI6ICJlNDIxMWQ2ODA2MTFlMzRkODVjOWI5M2ViY2I4YzkwZjViMDVmYTc0MjVlMGU2ZjA4MzBhZDY5NzEyNjBmYThmIgogICAgfQogIF0sCiAgInJlcGxhY2VtZW50X2pvYnMiOiB7CiAgICAiMjAyNTEwIjogIlBFTkRJTkcgRGVwZW5kZW5jeSBhZnRlcmFueToyMDIyMjJfKiIsCiAgICAiMjAyNTExIjogIlBFTkRJTkcgRGVwZW5kZW5jeSBhZnRlcm9rOjIwMjUxMCIKICB9LAogICJwYWlyZWRfcHJlcGFyZXJfbW9kaWZpZWQiOiBmYWxzZSwKICAicGFpcmVkX3J1bm5lcl9tb2RpZmllZCI6IGZhbHNlLAogICJyZWdpc3RlcmVkX21hdHJpeF9tb2RpZmllZCI6IGZhbHNlLAogICJzbHVybV9qb2JfbW9kaWZpZWRfb3Jfc3VibWl0dGVkIjogZmFsc2UsCiAgInJlbWFpbmluZ19zZXJ2ZXJfcGF5bG9hZF9nYXAiOiAiVGhlIGN1cnJlbnQgcmVwcm9kdWN0aW9uLWNvbnRyYWN0IHRlc3QgYW5kIGNvbXBhcmlzb24gcmVnaXN0ZXIgc3RpbGwgaGF2ZSBvbGRlciBzZXJ2ZXIgYnl0ZXMgYW5kIHJlcXVpcmUgYSBsYXRlciBleGFjdC1oYXNoIHJlZnJlc2ggYmVmb3JlIGZpbmFsIHNlYWxpbmcuIFRoZXkgYXJlIG5vdCBpbnB1dHMgdG8gcnVubmluZyBzY2llbnRpZmljIGpvYnMgb3IgdG8gcmVwbGFjZW1lbnQgam9icyAyMDI1MTAgYW5kIDIwMjUxMS4iLAogICJkZWNpc2lvbiI6ICJUaGUgYWRkaXRpdmUgZGVwbG95bWVudCBnYXAgZm9yIHRoZSBpbmRlcGVuZGVudCByZXBsYWNlbWVudCB2ZXJpZmllciwgaXRzIGltbXV0YWJsZSBwcm90b2NvbCBpbnB1dHMsIHRlc3RzLCBwcmVmbGlnaHQgYW5kIHByZXJlcXVpc2l0ZSBldmlkZW5jZSBpcyBjbG9zZWQuIFRoZSBzY2llbnRpZmljIGVudHJ5IGdhdGUgcmVtYWlucyBjbG9zZWQgdW50aWwgYm90aCByZXBsYWNlbWVudCBqb2JzIGNvbXBsZXRlLCBib3RoIHNjaGVkdWxlciBzdGF0ZXMgYXJlIGluZGVwZW5kZW50bHkgdmVyaWZpZWQgYXMgQ09NUExFVEVEIDA6MCwgYW5kIHRoZSBkZXBsb3llZCB2ZXJpZmllciBwYXNzZXMgdGhlIHJlYWwgb3V0cHV0cy4iCn0K
+deploy_gzip \
+  "$ROOT/src/29_nearing2022_da_ar/hpc/run_warmup_target_replacement_verifier.slurm" \
+  6299 ad013f8b8618d4762a092a0a0b28f92248a7c3c8dd6b00679e633055338c24a2 <<'PAYLOAD'
+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
 PAYLOAD
-  test "$(stat -c '%s' "$tmp")" = 2934
-  test "$(sha256sum "$tmp" | awk '{print $1}')" = "$DEPLOYMENT_AUDIT_SHA"
-  ln "$tmp" "$DEPLOYMENT_AUDIT"
-  rm -f "$tmp"
-  trap - EXIT
-  test "$(sha256sum "$DEPLOYMENT_AUDIT" | awk '{print $1}')" = "$DEPLOYMENT_AUDIT_SHA"
-  echo "deployment_audit_action=deployed_additively"
-fi
-echo "deployment_audit_sha256=$DEPLOYMENT_AUDIT_SHA"
 
+deploy_gzip \
+  "$ROOT/test/test_nearing2022_replacement_verifier_slurm.py" \
+  1571 c078681dbd82573c2ea2a5585cfe2fb3103fbfa5cf2449643317aea91ca9992c <<'PAYLOAD'
+H4sIAAAAAAAACp2U3WvbMBDA3/1XaKIPDixuYmjZAn4orcvKuiVkYR0sQyjW2dZqS97pnCaM/e/DTtLWJP3Y/CJz97sv3elStCWrJOWFXjBdVhaJTSTlnudN48lYTMfjGYtakS9EqgsQohcgOFsswe8FlUQw5L4Pf3g307PJJJ6yiD1YHjPuMOHNGb4XBiRqk4WDMBRKComtIq82ANZG3Eks60qQxAxIIFSFTKAEQ2IJqFMNGLiixpJ7nqcgZQTuMCZaTGgnUqkLkRTWgRLSKGGsEXYJeIeatMn83shjjDGCFbGIbYsIEKQSjcwHk1ilTRbxmtL+O95rcYRftUZQLGJ+K2g+3qTD3rA+sDk/urz6fHY95/ztE/qb8fTjAfWcHzmSBHPOInY+/jS5jmfxxSEMVppEYtUGHYwGj6FdgsLVi1I7p60RCiowCkyynvMRm3OZEqC9HYWD8GQ47OYikXQqk92NJpIaD8Pgp7PmZS7c45Ky2hV9/JzvOX8B27juJvuyc0fK1vTaGFv6UKhKahRYGwMopJIVbSwqwFITgWpudoY17NkQSm20yR43pGN1KQvXMUPItCNomlhKQr0SpVXNdB/G70sppdEpONrrQbl8mLv9Cd0MtnQOkJgsCr+UeAvItNk8jtQiexDt5qtjxd1CUpJzZizt7Dr6fj9DcFFW1U8zWLI+pl396177QhvlBOXQTHph16AeiFy6/D/f+nLr4583m0tQV+Ta/9bJ+pkFl+RSm6Ba8zbmdhU3WRd64bUyWFWQULtztvLA5TI8OfXvl2NbymJN4PxeL8hhpXQGjvxOl1Ief5vE57P4QnyNp1eXV/FUfPlwFp6cRr93Mf7w+7v/C1d9n18jBgAA
+PAYLOAD
 
-echo "=== FUTURE VERIFIER PAYLOAD INVENTORY ==="
-while IFS='|' read -r label expected path; do
-  test -n "$label" || continue
-  if test -f "$path"; then
-    actual=$(sha256sum "$path" | awk '{print $1}')
-    bytes=$(stat -c '%s' "$path")
-    if test "$actual" = "$expected"; then status=MATCH; else status=STALE_OR_DIFFERENT; fi
-    echo "$label|$status|$actual|$bytes|$path"
-  else
-    echo "$label|ABSENT|$expected|$path"
-  fi
-done <<EOF
-source_protocol|16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol.json
-source_amendment|a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol_amendment_01.json
-replacement_verifier|0bcabc96f9e702f2317464f1f0123c29d49d5f7f0f972a10ea3e01bbf18fe987|$ROOT/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py
-replacement_verifier_test|2da179cb1ef02b0697472fd273bd61ffad98ecb5790e5b5f2dce6032e478dad6|$ROOT/test/test_nearing2022_replacement_chain_verifier.py
-reproduction_contract_test|fe41d31b546e2839c2bbc4524a6109ba818f68124327f1f5db515eeff762945c|$ROOT/test/test_nearing2022_reproduction_contract.py
-comparison_register|06927b7472a5f60134da7ccb2a91def112386421da5baf7819b8687917b8e9c8|$ROOT/results/29_nearing2022_da_ar/formal_closure/reproduction_comparison_register.json
-replacement_verifier_preflight|80bf711779dcef12b991be7b53359dfcdc550e3fbf049720ec5bc24b01620b0f|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_independent_verifier_preflight_20260811.json
-replacement_verifier_prerequisites|e4211d680611e34d85c9b93ebcb8c90f5b05fa7425e0e6f0830ad6971260fa8f|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_prerequisite_audit_20260811.json
-replacement_verifier_deployment|d469d2b135c533ac7bfb0433cf6f3ab52fc2e4dfb4e685e229dfbe48c8ef1b40|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_payload_deployment_20260811.json
-EOF
+deploy_gzip \
+  "$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_slurm_preflight_20260811.json" \
+  3231 f537464bcfefe1899ebced35362526504ad8398af48b2260b2bb5833aa53c634 <<'PAYLOAD'
+H4sIAAAAAAAACp1WTY/jNgy9z68QfO14xh9xYufabk8tWqB7KFAsBFqiYs3IkleSJ+Mu9r8XkuN8TWa32GMcUiQfHx/55Y6QxLEOe0i2JNEIVupdkRVFugfbj0Pqwe7QpxYHBQx71D59QSuFRJs6Ndo+HSwKJXedT1/y5D48yCyCR07Bh0eLrFinWZ3m+cc83+arbVX8lNXbLJuNnQc/umBoEfhEtfGU46DMhDz+cGPbS++RH+yZGTCY/wpSpUwZh5z8FTIh+Ips9NJoYgTxHRKpOQ6oOWpPzitgHUhNljoICI+WtMZ3RIxKpVWZn5uTJ9M64kbGEPnDnAWMvjNW/gshHG3NqDnYKdmSL3eEEJIMIC1yOlgcwKKlveEhFk+2RIByeH9hZket3zc6S4WGVN6zc2hf0NIBJmWAH0G8spqrZnPiT6Y9w/dtbtRbkFrq3btWFnfSeQxV9OCtfH2T3R0hXyNmsh9UrCLGPmEVaUQH8F1oq7PssWjoGRUpBwr2sRvYox01nYlJZ2LSc3CWhj7EF2Ojjs+3k8fAsnXRNBd/uA6Kah0iA8/yUtRtvc5rvtqsC8iaAjLI2qIWTVGsatiwktWcr9ssW28aXJdlVlVlWbNiBcUS0KPzx3LCj8f45byiW1nTmM/DMF28s+SdV5v8/PspbZZt6nWd85bXRbUpWYFQQFXVFRNYiLbMs1K0AiomitWqWa/KMt8AQpMzaJqmYEu4SOJTNt/th2NWDt49Ro/pG22J03ZW11WgUyVZy6BlzVo0uMkKUZT5ZrVeiVxkeVGyouGrhldiIzLRbArIM4QSs7xtRV4LbOpNcqRakDQ+KrR0Bx5PVLsaJSp5wPafoFFVniX3Ua2qPE8+Hen9eYwjGvnvXBiaRVNYmPckiod53h4cD36fR7QyTDYyYzk9iha+AvMkaMKsK2Q2cERY0xMHjHmS/p28ie7nMpKf//j9z98+fPzwyxsTfJWeMsOjWbad1TWIcYfsGTltURiL1Ix+GD3l0iLzxk40ivU8j96Oy1iz0YYUqUVQEUN60ulRP2uzj+LhqPNSKRoACSpxgoaCpwoCUTUMrjP+1BywXgpg/qo3R0LYUYc4xWWFLo4ClUHMJQMVoMVAwMvE37N2HoJE8wMA7zih9naiFwnSAZyLanbh8ITMO/qe+s3yeulzQH6ZK4tuVN7dni1hbA+Khu02WnzkEnbaOC+Ze/ye/B2U/bCLY65idKG2V+l8aJKQGhQ1lu6NfV7yuVGcm/rWKMmokvr5Cua9lR7dCaketBTornAdxlZJ18VuUAc9UiEVusl57KlFDT0eHI7keDJSXzMjbqLDjgQOw7xA6IB2XknUaDXROIixW1dJvN1j8xwf/X98pb2AkvxqnWnc0yjRzPQ96OCUDJPvjCZpT4ag5578wFog6eelpUsIdyLnMi3CsNEh/7Hg1vCRRWyZ0d4C8yHubfMDDwO67xu9WQOnHf2/fL4FwlLpFRD1siYFSBW/ZAtnwQYKBHpUCzciNAGsQarbo96C66ibtIfXm//38Cr7sQ9DglSh3sVxyosl6tn3G3pyZBJHJgMrQ8M+dkhCSqPHNIwn2cFApCOHY1cZBkpNDyTY7S0MA9rwtzaeLEcfMZYcT7Z7AprHgzjIOYkjRqLUkZARsdiD1Mf3R+1lsGodmfdidJ/32+FKllq6bj6JnQs383QW4nQ4L/LgSCia+L0hQZbToyxfXOjHezwsgIfk7uvdf5rug9mfDAAA
+PAYLOAD
 
-while IFS='|' read -r expected path; do
-  test "$(sha256sum "$path" | awk '{print $1}')" = "$expected"
-done <<EOF
-16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol.json
-a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol_amendment_01.json
-0bcabc96f9e702f2317464f1f0123c29d49d5f7f0f972a10ea3e01bbf18fe987|$ROOT/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py
-2da179cb1ef02b0697472fd273bd61ffad98ecb5790e5b5f2dce6032e478dad6|$ROOT/test/test_nearing2022_replacement_chain_verifier.py
-80bf711779dcef12b991be7b53359dfcdc550e3fbf049720ec5bc24b01620b0f|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_independent_verifier_preflight_20260811.json
-e4211d680611e34d85c9b93ebcb8c90f5b05fa7425e0e6f0830ad6971260fa8f|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_prerequisite_audit_20260811.json
-d469d2b135c533ac7bfb0433cf6f3ab52fc2e4dfb4e685e229dfbe48c8ef1b40|$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_payload_deployment_20260811.json
-EOF
-echo "deployed_verifier_payload_hashes=passed"
+echo "=== DEPLOYED HASHES AND STATIC SYNTAX ==="
+sha256sum \
+  "$ROOT/src/29_nearing2022_da_ar/hpc/run_warmup_target_replacement_verifier.slurm" \
+  "$ROOT/test/test_nearing2022_replacement_verifier_slurm.py" \
+  "$ROOT/results/29_nearing2022_da_ar/formal_closure/warmup_target_replacement_verifier_slurm_preflight_20260811.json"
+bash -n "$ROOT/src/29_nearing2022_da_ar/hpc/run_warmup_target_replacement_verifier.slurm"
+test "$(sha256sum "$ROOT/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py" | awk '{print $1}')" = \
+  0bcabc96f9e702f2317464f1f0123c29d49d5f7f0f972a10ea3e01bbf18fe987
 
-echo "=== MAIN JOB STATES AND FAILURE GATE ==="
-squeue -h -j "$MAIN_JOBS" -o '%i|%T|%M|%l|%R|%j' | sort
-MAIN_FAILURES=$(sacct -n -X -P -j "$MAIN_JOBS" --format=JobIDRaw,JobName,State,ExitCode | \
-  awk -F'|' '$3 ~ /^(FAILED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL|PREEMPTED|BOOT_FAIL|DEADLINE)/')
-printf '%s\n' "$MAIN_FAILURES"
-test -z "$MAIN_FAILURES"
-
-echo "=== FROZEN SAFETY BOUNDARY ==="
+echo "=== FROZEN PAIR BOUNDARY ==="
+test "$(sha256sum "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" | awk '{print $1}')" = \
+  31f856df60b0daacea873386880581f975480c842fae0d605a5abe4b40a1b664
+test "$(sha256sum "$ROOT/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm" | awk '{print $1}')" = \
+  5c1d6a6f260440bd67d23ea2612c1ce9d28393684952c5978d1ddb103d27f804
 test "$(squeue -h -j 202293 -o '%i|%T|%r|%j')" = '202293|PENDING|JobHeldUser|N22-manifest'
-test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
-test ! -e "$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
+echo "paired_preparer_modified=false"
+echo "paired_runner_modified=false"
+echo "verification_job_submitted=false"
+echo "pair_training_submitted=false"
 echo "registered_matrix_modified=false"
+
+echo "=== REPLACEMENT JOB STATES ==="
+sacct -n -X -P -j 202510,202511 --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList
+squeue -h -j 202510,202511 -o '%i|%j|%T|%M|%R|%E' | sort
