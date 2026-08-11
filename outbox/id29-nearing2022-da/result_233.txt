@@ -1,0 +1,162 @@
+### channel=id29-nearing2022-da seq=233
+### host=login4
+### started=2026-08-11T23:41:37+0800
+### ---------- output ----------
+=== JOB RECORD ===
+202728|N22-part-audit6|FAILED|1:0|00:00:20|2026-08-11T23:34:12|2026-08-11T23:34:32|ngu104|None
+=== OUTPUT PATHS ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-part-audit6_202728.out|2443|2026-08-11 23:34:32.000000000 +0800
+350cf2101626bf18c1ec32a2823ff3fd55a5eaf2501f4bd1e443898f9cb79558  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-part-audit6_202728.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-part-audit6_202728.err|2583|2026-08-11 23:34:32.000000000 +0800
+d7dcc97b14ef5b15c869478432850184a7fe6077ac8d0f960dec20c27297987b  /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-part-audit6_202728.err
+=== STDOUT ===
+{"closure_complete_count": 17, "closure_minus_partial": [], "frozen_acceptance_modified": false, "partial_complete_count": 17, "partial_minus_closure": [], "registered_matrix_modified": false, "schema": "nearing2022-compute-node-complete-role-snapshot-v1", "slurm_job_id": "202728", "slurm_node": "ngu104", "target": "N22-EVAL-TS-DA-L04-TE050-S0", "target_closure_complete": false, "target_partial_complete": false, "target_roles": {"candidate_checkpoint": {"bytes": 1228165, "exists": true, "is_dir": false, "is_file": true, "is_symlink": false, "mtime_ns": 1786182690000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/model_epoch030.pt"}, "candidate_config": {"bytes": 2841, "exists": true, "is_dir": false, "is_file": true, "is_symlink": false, "mtime_ns": 1786439195000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/config.yml"}, "candidate_log": {"bytes": 786, "exists": true, "is_dir": false, "is_file": true, "is_symlink": false, "mtime_ns": 1786458789000000000, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/output.log"}, "candidate_metrics": {"exists": false, "is_dir": false, "is_file": false, "is_symlink": false, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_metrics_data_assimilation.csv"}, "candidate_prediction": {"exists": false, "is_dir": false, "is_file": false, "is_symlink": false, "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_results_data_assimilation.p"}, "reference_metrics": {"bytes": 73071, "exists": true, "is_dir": false, "is_file": true, "is_symlink": false, "mtime_ns": 1786183625000000000, "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv"}, "reference_prediction": {"bytes": 47014459, "exists": true, "is_dir": false, "is_file": true, "is_symlink": false, "mtime_ns": 1786183625000000000, "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p"}}}
+=== STDERR ===
+Traceback (most recent call last):
+  File "<stdin>", line 93, in <module>
+ValueError: Compute node sees fewer than 18 complete coordinates: {'schema': 'nearing2022-compute-node-complete-role-snapshot-v1', 'slurm_job_id': '202728', 'slurm_node': 'ngu104', 'target': 'N22-EVAL-TS-DA-L04-TE050-S0', 'partial_complete_count': 17, 'closure_complete_count': 17, 'partial_minus_closure': [], 'closure_minus_partial': [], 'target_partial_complete': False, 'target_closure_complete': False, 'target_roles': {'candidate_config': {'path': '/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/config.yml', 'exists': True, 'is_file': True, 'is_dir': False, 'is_symlink': False, 'bytes': 2841, 'mtime_ns': 1786439195000000000}, 'candidate_checkpoint': {'path': '/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/model_epoch030.pt', 'exists': True, 'is_file': True, 'is_dir': False, 'is_symlink': False, 'bytes': 1228165, 'mtime_ns': 1786182690000000000}, 'candidate_log': {'path': '/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/output.log', 'exists': True, 'is_file': True, 'is_dir': False, 'is_symlink': False, 'bytes': 786, 'mtime_ns': 1786458789000000000}, 'candidate_prediction': {'path': '/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_results_data_assimilation.p', 'exists': False, 'is_file': False, 'is_dir': False, 'is_symlink': False}, 'candidate_metrics': {'path': '/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_metrics_data_assimilation.csv', 'exists': False, 'is_file': False, 'is_dir': False, 'is_symlink': False}, 'reference_prediction': {'path': '/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p', 'exists': True, 'is_file': True, 'is_dir': False, 'is_symlink': False, 'bytes': 47014459, 'mtime_ns': 1786183625000000000}, 'reference_metrics': {'path': '/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv', 'exists': True, 'is_file': True, 'is_dir': False, 'is_symlink': False, 'bytes': 73071, 'mtime_ns': 1786183625000000000}}, 'registered_matrix_modified': False, 'frozen_acceptance_modified': False}
+=== FINAL AND STAGING INVENTORY ===
+final_exists=false
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq231_v1.preparing-202728|d
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq231_v1.preparing-202728/role_snapshot.json|2815
+ea5e6064b404cb31fe080a93b5a9587a2b645a8604551281c182fa0333d9ec3a  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/partial_numerical_audit_seq231_v1.preparing-202728/role_snapshot.json
+=== ROLE SNAPSHOT ===
+{
+  "closure_complete_count": 17,
+  "closure_minus_partial": [],
+  "frozen_acceptance_modified": false,
+  "partial_complete_count": 17,
+  "partial_minus_closure": [],
+  "registered_matrix_modified": false,
+  "schema": "nearing2022-compute-node-complete-role-snapshot-v1",
+  "slurm_job_id": "202728",
+  "slurm_node": "ngu104",
+  "target": "N22-EVAL-TS-DA-L04-TE050-S0",
+  "target_closure_complete": false,
+  "target_partial_complete": false,
+  "target_roles": {
+    "candidate_checkpoint": {
+      "bytes": 1228165,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786182690000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/model_epoch030.pt"
+    },
+    "candidate_config": {
+      "bytes": 2841,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786439195000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/config.yml"
+    },
+    "candidate_log": {
+      "bytes": 786,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786458789000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/output.log"
+    },
+    "candidate_metrics": {
+      "exists": false,
+      "is_dir": false,
+      "is_file": false,
+      "is_symlink": false,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_metrics_data_assimilation.csv"
+    },
+    "candidate_prediction": {
+      "exists": false,
+      "is_dir": false,
+      "is_file": false,
+      "is_symlink": false,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_results_data_assimilation.p"
+    },
+    "reference_metrics": {
+      "bytes": 73071,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786183625000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv"
+    },
+    "reference_prediction": {
+      "bytes": 47014459,
+      "exists": true,
+      "is_dir": false,
+      "is_file": true,
+      "is_symlink": false,
+      "mtime_ns": 1786183625000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p"
+    }
+  }
+}
+=== CURRENT LOGIN-NODE TARGET ROLES ===
+{
+  "complete_coordinates": 18,
+  "target_complete": true,
+  "target_roles": {
+    "candidate_checkpoint": {
+      "bytes": 1228165,
+      "exists": true,
+      "is_file": true,
+      "mtime_ns": 1786182690000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/model_epoch030.pt"
+    },
+    "candidate_config": {
+      "bytes": 2841,
+      "exists": true,
+      "is_file": true,
+      "mtime_ns": 1786439195000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/config.yml"
+    },
+    "candidate_log": {
+      "bytes": 786,
+      "exists": true,
+      "is_file": true,
+      "mtime_ns": 1786458789000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/output.log"
+    },
+    "candidate_metrics": {
+      "bytes": 67771,
+      "exists": true,
+      "is_file": true,
+      "mtime_ns": 1786458788000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_metrics_data_assimilation.csv"
+    },
+    "candidate_prediction": {
+      "bytes": 47013929,
+      "exists": true,
+      "is_file": true,
+      "mtime_ns": 1786458789000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/assimilation/N22-EVAL-TS-DA-L04-TE050-S0/test/model_epoch030/test_results_data_assimilation.p"
+    },
+    "reference_metrics": {
+      "bytes": 73071,
+      "exists": true,
+      "is_file": true,
+      "mtime_ns": 1786183625000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_metrics.csv"
+    },
+    "reference_prediction": {
+      "bytes": 47014459,
+      "exists": true,
+      "is_file": true,
+      "mtime_ns": 1786183625000000000,
+      "path": "/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30/test/model_epoch030/test_results.p"
+    }
+  }
+}
+=== BOUNDARY ===
+registered_matrix_modified=false
+frozen_acceptance_modified=false
+failed_staging_preserved=true
+diagnostic_only=true
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T23:41:43+0800
