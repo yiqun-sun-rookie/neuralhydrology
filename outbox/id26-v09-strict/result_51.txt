@@ -1,0 +1,430 @@
+### channel=id26-v09-strict seq=51
+### host=login4
+### started=2026-08-11T13:46:38+0800
+### ---------- output ----------
+input_attempt_01.external_audit.json
+inputs/training_targets.csv
+inputs/training_targets.manifest.json
+strict_nesting/R09-NEST-S100/checkpoint_epoch020.pt
+strict_nesting/R09-NEST-S100/classic_training_predictions.float32.npy
+strict_nesting/R09-NEST-S100/seal.json
+strict_nesting/R09-NEST-S100/checkpoint_epoch010.pt
+strict_nesting/R09-NEST-S100/checkpoint_epoch030.pt
+strict_nesting/R09-NEST-S100/nested_training_predictions.float32.npy
+strict_nesting/R09-NEST-S100/manifest.json
+R09-NEST-S100.training_resource_preflight_external_audit.json
+formal_input_seal_authorization_consumed.json
+input_attempt_01.trusted_source_external_audit.json
+authorizations/A09-NEST-01.consumption.json
+authorizations/formal_input_seal_authorization.json
+authorizations/A09-NEST-01.authorization.json
+input_attempt_01/dates.npy
+input_attempt_01/environment.json
+input_attempt_01/input_audit.json
+input_attempt_01/manifest.json
+input_attempt_01/scaler.json
+input_attempt_01/seal.json
+input_attempt_01/statics_raw.float64.npy
+input_attempt_01/target_dates.npy
+input_attempt_01/basins.txt
+input_attempt_01/forcing.npy
+input_attempt_01/forcing_manifest.json
+input_attempt_01/statics.npy
+input_attempt_01/targets.npy
+R09-NEST-S100.legacy_checkpoint_bridge_external_audit.json
+R09-NEST-S100.strict_nesting_external_audit.json
+#!/usr/bin/env bash
+#SBATCH -J v09main21
+#SBATCH -p hgpu2p
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1
+#SBATCH --exclude=ngu002
+#SBATCH -t 3-00:00:00
+#SBATCH -o /data1/home/sunyiq/v09_strict/logs/suite_remaining_%j.out
+#SBATCH -e /data1/home/sunyiq/v09_strict/logs/suite_remaining_%j.err
+
+set -eo pipefail
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final || { echo "CONDA_FAILED"; exit 1; }
+export PATH=/data1/home/sunyiq/v09_strict/gitenv/bin:$PATH
+export MKL_THREADING_LAYER=GNU
+export MKL_SERVICE_FORCE_INTEL=1
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
+
+cd /data1/home/sunyiq/v09_strict/codetest/neuralhydrology
+export PYTHONPATH=$(pwd):$(pwd)/src/26_historical_band_experts:$PYTHONPATH
+
+echo "node=$(hostname) start=$(date -Iseconds)"
+nvidia-smi --query-gpu=index,name,memory.free --format=csv,noheader
+free -g | sed -n 2p
+echo "=== RUN SUITE: remaining formal trainings (no max-runs) ==="
+python -u src/26_historical_band_experts/run_formal_training_v09.py \
+  --worktree-root . --device cuda:0
+echo "end=$(date -Iseconds)"
+{
+  "strict_root_json": [
+    {
+      "path": "input_attempt_01.external_audit.json",
+      "schema": "historical_multiscale_formal_v09_complete_input_audit_v1",
+      "status": "complete_input_audit_passed",
+      "top_level_keys": [
+        "audit_context",
+        "basin_count",
+        "contract_sha256",
+        "forcing_rows",
+        "formal_evaluation_targets_present",
+        "independent_source_audit",
+        "phase",
+        "schema",
+        "status",
+        "target_rows",
+        "tmin_equals_tmax_rows"
+      ]
+    },
+    {
+      "path": "R09-NEST-S100.training_resource_preflight_external_audit.json",
+      "schema": null,
+      "status": "resource_preflight_passed",
+      "top_level_keys": [
+        "accelerator",
+        "accelerator_snapshot",
+        "action",
+        "authorization_checked",
+        "estimate",
+        "host",
+        "host_snapshot",
+        "status",
+        "variant"
+      ]
+    },
+    {
+      "path": "formal_input_seal_authorization_consumed.json",
+      "schema": "historical_multiscale_formal_v09_input_authorization_consumption_v1",
+      "status": "consumed_once",
+      "top_level_keys": [
+        "allowed_action",
+        "authorization_canonical_sha256",
+        "authorization_file_sha256",
+        "consumed_utc",
+        "contract_sha256",
+        "schema",
+        "source_tree_sha256",
+        "status"
+      ]
+    },
+    {
+      "path": "input_attempt_01.trusted_source_external_audit.json",
+      "schema": "historical_multiscale_formal_v09_trusted_training_target_external_audit_v1",
+      "status": "complete_trusted_training_target_audit",
+      "top_level_keys": [
+        "audit_mode",
+        "authorization_closed_commit",
+        "basin_count",
+        "candidate_raw_streamflow_files_read",
+        "complete_input_external_audit_sha256",
+        "complete_input_external_audit_status",
+        "dates_per_basin",
+        "formal_evaluation_qobs_parsed",
+        "formal_evaluation_rows_emitted",
+        "generation_commit",
+        "maximum_date",
+        "minimum_date",
+        "row_count",
+        "schema",
+        "source_file_count",
+        "source_files_sha256",
+        "source_hash_differences",
+        "status",
+        "target_bundle_sha256",
+        "target_manifest_sha256",
+        "trusted_raw_streamflow_files_read",
+        "values_copied_into_report"
+      ]
+    },
+    {
+      "path": "R09-NEST-S100.legacy_checkpoint_bridge_external_audit.json",
+      "schema": "historical_multiscale_formal_v09_legacy_checkpoint_bridge_audit_v1",
+      "status": "legacy_checkpoint_bridge_external_audit_passed",
+      "top_level_keys": [
+        "environment_binding",
+        "formal_evaluation_observation_reads",
+        "input_bindings",
+        "legacy_dynamic_input_names",
+        "maximum_prediction_difference",
+        "protocol_canonical_sha256",
+        "real_panel_rows_per_run",
+        "real_panel_rows_total",
+        "run_count",
+        "runs",
+        "schema",
+        "source_bindings",
+        "status",
+        "synthetic_panel_rows_per_run",
+        "training_target_value_reads",
+        "verified_identity"
+      ]
+    },
+    {
+      "path": "R09-NEST-S100.strict_nesting_external_audit.json",
+      "schema": "historical_multiscale_formal_v09_strict_external_audit_v1",
+      "status": "strict_nesting_checkpoint_prediction_replay_passed",
+      "top_level_keys": [
+        "checkpoints_verified",
+        "formal_evaluation_observation_reads",
+        "maximum_pair_difference",
+        "maximum_reference_difference",
+        "permutation_hashes_recomputed",
+        "run_manifest_sha256",
+        "run_seal_sha256",
+        "schema",
+        "status",
+        "training_samples"
+      ]
+    },
+    {
+      "path": "inputs/training_targets.manifest.json",
+      "schema": null,
+      "status": "complete",
+      "top_level_keys": [
+        "basin_count",
+        "basin_file_sha256",
+        "build_source_tree",
+        "candidate_raw_streamflow_files_read",
+        "canonical_data_root",
+        "canonical_data_root_relative",
+        "evaluation_observation_handling",
+        "formal_evaluation_qobs_parsed",
+        "formal_evaluation_rows_emitted",
+        "maximum_date",
+        "minimum_date",
+        "protocol_canonical_sha256",
+        "row_count",
+        "source_files",
+        "source_files_sha256",
+        "source_hash_policy",
+        "status",
+        "target_bundle_sha256",
+        "trusted_raw_streamflow_files_read",
+        "writer"
+      ]
+    },
+    {
+      "path": "strict_nesting/R09-NEST-S100/seal.json",
+      "schema": "historical_multiscale_formal_v09_strict_seal_v1",
+      "status": "sealed",
+      "top_level_keys": [
+        "manifest_sha256",
+        "schema",
+        "sealed_files",
+        "sealed_files_sha256",
+        "status"
+      ]
+    },
+    {
+      "path": "strict_nesting/R09-NEST-S100/manifest.json",
+      "schema": "historical_multiscale_formal_v09_strict_run_v1",
+      "status": "strict_nesting_complete",
+      "top_level_keys": [
+        "batch_size",
+        "checkpoint_epochs",
+        "checkpoint_files",
+        "classic_prediction_payload_sha256",
+        "epoch_trace",
+        "epochs",
+        "formal_evaluation_observation_reads",
+        "formal_execution",
+        "input_bindings",
+        "maximum_prediction_difference",
+        "nested_prediction_payload_sha256",
+        "optimizer_steps_per_epoch",
+        "optimizer_steps_total",
+        "protocol_canonical_sha256",
+        "schema",
+        "seed",
+        "status",
+        "training_samples"
+      ]
+    },
+    {
+      "path": "authorizations/A09-NEST-01.consumption.json",
+      "schema": "historical_multiscale_formal_v09_stage_authorization_consumption_v1",
+      "status": "consumed_once",
+      "top_level_keys": [
+        "authorization_canonical_sha256",
+        "authorization_file_sha256",
+        "consumed_utc",
+        "executable_tree_sha256",
+        "git_commit",
+        "hostname",
+        "memory_snapshot",
+        "output_root",
+        "prerequisite_sha256",
+        "process_id",
+        "protocol_sha256",
+        "receipt_id",
+        "schema",
+        "scope",
+        "status"
+      ]
+    },
+    {
+      "path": "authorizations/formal_input_seal_authorization.json",
+      "schema": "historical_multiscale_formal_v09_input_authorization_v1",
+      "status": "authorized_once",
+      "top_level_keys": [
+        "allowed_action",
+        "allowed_output",
+        "approval",
+        "contract_sha256",
+        "created_utc",
+        "maximum_attempts",
+        "protocol_canonical_sha256",
+        "protocol_raw_sha256",
+        "schema",
+        "source_tree",
+        "status",
+        "target_bundle_sha256",
+        "target_manifest_sha256"
+      ]
+    },
+    {
+      "path": "authorizations/A09-NEST-01.authorization.json",
+      "schema": "historical_multiscale_formal_v09_stage_authorization_v1",
+      "status": "authorized_once",
+      "top_level_keys": [
+        "action",
+        "allowed_runs",
+        "approval",
+        "created_utc",
+        "executable_tree_sha256",
+        "formal_prediction_generation_authorized",
+        "git_commit",
+        "maximum_attempts",
+        "official_scoring_authorized",
+        "output_root",
+        "prerequisite_sha256",
+        "protocol_sha256",
+        "receipt_id",
+        "schema",
+        "scope",
+        "status",
+        "worktree_root"
+      ]
+    },
+    {
+      "path": "input_attempt_01/environment.json",
+      "schema": null,
+      "status": null,
+      "top_level_keys": [
+        "byteorder",
+        "git_clean",
+        "git_head",
+        "git_tree",
+        "installed_distributions",
+        "installed_distributions_sha256",
+        "numpy",
+        "pandas",
+        "platform",
+        "psutil",
+        "python",
+        "python_executable",
+        "python_implementation"
+      ]
+    },
+    {
+      "path": "input_attempt_01/input_audit.json",
+      "schema": "historical_multiscale_formal_v09_complete_input_audit_v1",
+      "status": "complete_input_audit_passed",
+      "top_level_keys": [
+        "basin_count",
+        "contract_sha256",
+        "forcing_rows",
+        "formal_evaluation_targets_present",
+        "independent_source_audit",
+        "phase",
+        "schema",
+        "status",
+        "target_rows",
+        "tmin_equals_tmax_rows"
+      ]
+    },
+    {
+      "path": "input_attempt_01/manifest.json",
+      "schema": "historical_multiscale_formal_v09_complete_input_manifest_v1",
+      "status": "complete_before_audit",
+      "top_level_keys": [
+        "arrays",
+        "authorization_consumption",
+        "basin_count",
+        "basins_file_sha256",
+        "contract_sha256",
+        "dynamic_columns",
+        "environment_file_sha256",
+        "forcing_manifest_file_sha256",
+        "forcing_period",
+        "protocol_canonical_sha256",
+        "protocol_raw_sha256",
+        "resource_evidence",
+        "scaler_file_sha256",
+        "schema",
+        "source_tree",
+        "static_columns",
+        "status",
+        "target_bundle_sha256",
+        "target_manifest_sha256",
+        "training_period"
+      ]
+    },
+    {
+      "path": "input_attempt_01/scaler.json",
+      "schema": "historical_multiscale_formal_v09_scaler_v1",
+      "status": null,
+      "top_level_keys": [
+        "dynamic_center_float64",
+        "dynamic_columns",
+        "dynamic_ddof",
+        "dynamic_scale_float64",
+        "per_basin_target_scale_float64",
+        "schema",
+        "static_center_float64",
+        "static_columns",
+        "static_ddof",
+        "static_scale_float64",
+        "target_center_float64",
+        "target_ddof",
+        "target_scale_float64",
+        "training_end",
+        "training_start"
+      ]
+    },
+    {
+      "path": "input_attempt_01/seal.json",
+      "schema": "historical_multiscale_formal_v09_complete_input_seal_v1",
+      "status": "sealed",
+      "top_level_keys": [
+        "contract_sha256",
+        "schema",
+        "sealed_files",
+        "sealed_files_sha256",
+        "status"
+      ]
+    },
+    {
+      "path": "input_attempt_01/forcing_manifest.json",
+      "schema": "stream_one_maurer_basin_v1",
+      "status": null,
+      "top_level_keys": [
+        "forcing_file_sha256",
+        "records",
+        "schema",
+        "source_count",
+        "tmin_equals_tmax_rows"
+      ]
+    }
+  ]
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T13:46:38+0800
