@@ -1,0 +1,70 @@
+### channel=autoresearch-64 seq=59
+### host=login4
+### started=2026-08-11T12:13:28+0800
+### ---------- output ----------
+=== READ-ONLY RETRY PREFLIGHT ===
+preflight=pass frozen_bytes=pass basins=8 protocols=2 sealed_final_evaluation_present=false
+=== SUBMIT BYTE-PRESERVING RETRY ===
+jobid=202556 retry_of_jobid=202551
+=== WAIT FOR EXACT JOB ===
+t=60s state=RUNNING
+t=120s state=RUNNING
+t=180s state=RUNNING
+t=240s state=RUNNING
+t=300s state=RUNNING
+t=360s state=RUNNING
+t=420s state=RUNNING
+t=480s state=RUNNING
+t=540s state=RUNNING
+t=600s state=RUNNING
+t=660s state=RUNNING
+=== JOB ACCOUNTING ===
+       JobID              JobName  NodeList          State ExitCode    Elapsed 
+------------ -------------------- --------- -------------- -------- ---------- 
+      202556       a64-auto3x8-r1    icn201      COMPLETED      0:0   00:10:52 
+final_state=COMPLETED final_exit=0:0
+=== EXACT JOB LOGS ===
+=== STABLE ATTEMPT OUTPUT ===
+=== VERIFY IMMUTABLE SOURCE SNAPSHOT ===
+=== INITIALIZE SNAPSHOT REPOSITORY ===
+source_commit=65b31c823e5368e202215cf1c4d9d52a286a547c
+payload_sha256=1f08efbebdf74b6ce2dbfda1c1fa00aaf9dfc95358dcb2e7eab9b5ff45dbe227
+snapshot_manifest_entries=178
+=== COMPLETE LINUX SAFETY TEST GATE ===
+..................................................................s..... [ 24%]
+.............................s.......................................... [ 48%]
+......s................s.............................................s.. [ 72%]
+....................ss..............s................................... [ 96%]
+...........                                                              [100%]
+291 passed, 8 skipped in 480.59s (0:08:00)
+{"candidate_launch_allowed": true, "errors": 0, "failures": 0, "passed": 291, "process_exit_code": 0, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 8, "tests": 299}
+=== FROZEN EIGHT-BASIN PACKAGE GATE ===
+{"basin_count": 8, "basins": ["10259000", "04045500", "12175500", "02300700", "08190500", "02038850", "11230500", "06847900"], "date_bounds": ["1999-10-01", "2008-09-30"], "package_file_count": 12, "package_manifest_sha256": "f877e7932d33dc2db35f25026b425dd69755dda1338649020db40a1f4d5b38ea", "schema_version": "frozen_eight_basin_package_gate_v1", "sealed_final_evaluation_present": false, "source_manifest_sha256": "59d333daa833a5d67167ad96f8203328b96990b1a0efc470777b22c84319c8d7"}
+=== RUN THREE-CANDIDATE AUTOMATIC REHEARSAL ===
+{
+  "candidate_count": 3,
+  "recommended_candidate_id": "hbv-lite-calibrated-v1",
+  "registered_run_count": 12,
+  "score_report_count": 6,
+  "total_denied_event_count": 0
+}
+=== INDEPENDENT RAW-EVIDENCE CHECK ===
+{"candidate_count": 3, "experiment_id": "automatic_rehearsal_8x3_20260811_seq59", "full_test_gate": {"candidate_launch_allowed": true, "errors": 0, "failures": 0, "passed": 291, "process_exit_code": 0, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 8, "tests": 299}, "independently_counted_denials": 0, "independently_recomputed_median_mean_nse": {"hbv-lite-calibrated-v1": 0.33826309576997576, "reference-deep-learning-v1": -0.17988407821406893, "reference-fusion-v1": 0.0504941725368995}, "job_id": "202556", "recommended_candidate_id": "hbv-lite-calibrated-v1", "runtime_count": 12, "score_report_count": 6}
+=== FINALIZE ATTEMPT MANIFEST ===
+summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/REHEARSAL_EVIDENCE.json
+manifest=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/MANIFEST.sha256
+rehearsal_summary=/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/rehearsal/REHEARSAL_SUMMARY.json
+=== STABLE ATTEMPT ERROR ===
+=== EVIDENCE STATUS ===
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/FULL_GATE.json|bytes=209|mtime=2026-08-11 12:21:41.000000000 +0800
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/PACKAGE_GATE.json|bytes=551|mtime=2026-08-11 12:21:41.000000000 +0800
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/rehearsal/PROPOSAL_REGISTRY.json|bytes=1844|mtime=2026-08-11 12:21:42.000000000 +0800
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/rehearsal/REHEARSAL_SUMMARY.json|bytes=86624|mtime=2026-08-11 12:24:20.000000000 +0800
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/REHEARSAL_EVIDENCE.json|bytes=14868|mtime=2026-08-11 12:24:21.000000000 +0800
+/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/automatic_rehearsal_8x3_20260811_seq59/evidence/MANIFEST.sha256|bytes=117046|mtime=2026-08-11 12:24:22.000000000 +0800
+manifest_check=ok entries=810
+{"candidate_count": 3, "changed_factor": "snapshot packaging preserves the preregistered Windows bytes of the two frozen input files", "experiment_id": "automatic_rehearsal_8x3_20260811_seq59", "full_test_gate": {"candidate_launch_allowed": true, "errors": 0, "failures": 0, "passed": 291, "process_exit_code": 0, "schema_version": "unified_autoresearch_linux_test_gate_v1", "skipped": 8, "tests": 299}, "independently_counted_denials": 0, "independently_recomputed_median_mean_nse": {"hbv-lite-calibrated-v1": 0.33826309576997576, "reference-deep-learning-v1": -0.17988407821406893, "reference-fusion-v1": 0.0504941725368995}, "job_id": "202556", "normalized_exit_codes": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "process_exit_codes": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "recommended_candidate_id": "hbv-lite-calibrated-v1", "required_outputs_complete": [true, true, true, true, true, true, true, true, true, true, true, true], "retry_of_job_id": "202551", "runtime_count": 12}
+GO jobid=202556
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T12:24:38+0800
