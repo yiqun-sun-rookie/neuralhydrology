@@ -1,0 +1,17 @@
+### channel=id29-nearing2022-da seq=177
+### host=login4
+### started=2026-08-11T08:39:19+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-11T08:39:19+0800
+=== REGISTERED COMPLETE-ROLE COUNTS ===
+{"evaluation_by_family": {"time_assimilation": 7, "time_autoregression": 5}, "evaluation_complete": 12, "evaluation_total": 180, "hyperparameter_complete": 0, "hyperparameter_total": 660, "training_by_family": {"basin_simulation": 10, "time_autoregression": 1, "time_simulation": 1}, "training_complete": 12, "training_total": 46}
+=== SERVER OUTPUT-TARGET AUDIT ===
+{"casefold_unique_evaluation_plus_hyperparameter_targets": 840, "direct_basin_rows": 20, "direct_unique_registered_source_run_dirs": 20, "direct_unique_runtime_patterns": 20, "direct_unique_source_config_paths": 20, "direct_unique_source_exp_ids": 20, "evaluation_literal_duplicate_groups": 2, "evaluation_literal_unique_run_dirs": 162, "evaluation_plus_hyperparameter_targets": 840, "evaluation_rows": 180, "registries": [{"bytes": 36970, "path": "src/29_nearing2022_da_ar/registry/experiment_registry.csv", "sha256": "6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64"}, {"bytes": 73013, "path": "src/29_nearing2022_da_ar/registry/evaluation_registry.csv", "sha256": "37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215"}, {"bytes": 334058, "path": "src/29_nearing2022_da_ar/registry/assimilation_hyperparameter_registry.csv", "sha256": "7cb7f10ce13c41c1b064148b27a707ccaab56f87fa40c289d6833bc7c57b09a7"}], "resolved_casefold_unique_evaluation_targets": 180, "resolved_evaluation_targets": 180, "resolved_unique_evaluation_targets": 180, "training_rows": 46, "training_unique_registered_run_dirs": 46, "unique_evaluation_plus_hyperparameter_targets": 840}
+=== DIRECT-EVALUATION JOB PAYLOAD ===
+Traceback (most recent call last):
+  File "<stdin>", line 28, in <module>
+AssertionError
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-11T08:39:29+0800
