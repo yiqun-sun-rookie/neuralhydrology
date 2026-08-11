@@ -1,0 +1,25 @@
+### channel=autoresearch-64 seq=63
+### host=login4
+### started=2026-08-11T13:07:29+0800
+### ---------- output ----------
+=== JOB 202557 ===
+slurm_load_jobs error: Invalid job id specified
+       JobID              JobName  NodeList          State ExitCode    Elapsed                Start                  End 
+------------ -------------------- --------- -------------- -------- ---------- -------------------- -------------------- 
+      202557        a64-hbv64-pro    icn201         FAILED    127:0   00:00:00  2026-08-11T13:05:52  2026-08-11T13:05:52 
+=== EVIDENCE STATUS ===
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62/evidence/PROMOTION_RECEIPT.json
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62/evidence/TARGETED_GATE.json
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62/evidence/FULL_GATE.json
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62/evidence/PACKAGE_GATE.json
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62/candidate_run/CANDIDATE_SUMMARY.json
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62/evidence/REPRODUCTION_SUMMARY.json
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62/evidence/PROMOTION_TIMING.json
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62/evidence/MANIFEST.sha256
+=== LOG TAILS ===
+--- /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62/evidence/JOB_STDOUT.txt
+--- /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_64_prospective_confirmation_20260811_seq62/evidence/JOB_STDERR.txt
+/var/spool/slurm/d/job202557/slurm_script: line 35: +echo: command not found
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-11T13:07:29+0800
