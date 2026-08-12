@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=268: scheduled read-only matrix health audit after the next 30-minute window.
+# ID29 seq=269: scheduled read-only matrix health audit after the next 30-minute window.
 set -eo pipefail
 
 if false; then
