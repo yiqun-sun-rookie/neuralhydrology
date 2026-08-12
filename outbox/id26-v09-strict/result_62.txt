@@ -1,0 +1,183 @@
+### channel=id26-v09-strict seq=62
+### host=login4
+### started=2026-08-12T15:51:48+0800
+### ---------- output ----------
+=== A JOB ===
+TRAINING_AUDIT_ATTEMPT_03_JOBID=202777
+slurm_load_jobs error: Invalid job id specified
+JobIDRaw|JobName|State|ExitCode|Elapsed|Start|End|NodeList
+202777|v09audit24|COMPLETED|0:0|00:03:55|2026-08-12T09:12:19|2026-08-12T09:16:14|ngu010
+=== B LOG FILES ===
+/data1/home/sunyiq/v09_strict/logs/training_audit_202777.err 0 bytes
+/data1/home/sunyiq/v09_strict/logs/training_audit_202777.out 156627 bytes
+--- stdout tail ---
+        "701b7645bbdd9443434e6365a90a410ef714ab81d549029ea31b772d4fe803cb",
+        "c5c114099a405bc80de608257ddf797a89608738df3f18775af5115242ee2cb7",
+        "a7528e45b1ac537f3015839ed0648272bb39d4af2507e4ff5aceb6eb7fff5b6e",
+        "3f2f160978828a72093a55b759abbde8ccf7611dbcb8467d3f9bbe845ac6f003",
+        "33d5a0221c0f10bf2033e45e31ce804d6e93ac93b010636d8813cf67919d5bd4"
+      ],
+      "position": 24,
+      "run_id": "B09-CLASSIC-S800",
+      "run_manifest_sha256": "6667772c3d365ee63cb08914104a0f5ef894e98be1b098808049d18ca645d53b",
+      "run_root": "/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/classic/seed_800",
+      "run_seal_sha256": "1c11e6ab54262e0d96e84e47eb6d1bb5f3f7badaf7cf70a342de877586dfdede",
+      "schema": "historical_multiscale_formal_v09_training_run_audit_v1",
+      "seed": 800,
+      "source_context_sha256": "02d6fbb4d6ffcd818795a9cb1aa114c31e1d48704613cf8b12f91beb55f58793",
+      "status": "training_run_audit_passed",
+      "validation_metrics_computed": false,
+      "variant": "classic_lstm_256_clean"
+    }
+  ],
+  "schema": "historical_multiscale_formal_v09_training_external_audit_v1",
+  "source_context": {
+    "environment": {
+      "byteorder": "little",
+      "git_clean": true,
+      "git_head": "bb519b8b9980725ac1d5f4e298d76ae80ea2c58d",
+      "git_tree": "bcbb222fa55fcf31f72a671ffc8b71986a20306a",
+      "installed_distributions": [
+        "Brotli==1.1.0",
+        "Jinja2==3.1.6",
+        "Mako==1.3.10",
+        "Markdown==3.9",
+        "MarkupSafe==3.0.2",
+        "PySide6==6.9.2",
+        "PySocks==1.7.1",
+        "PyYAML==6.0.2",
+        "SQLAlchemy==2.0.43",
+        "Werkzeug==3.1.3",
+        "absl-py==2.3.1",
+        "alembic==1.16.5",
+        "autocommand==2.2.2",
+        "backports.tarfile==1.2.0",
+        "certifi==2026.1.4",
+        "cffi==1.17.1",
+        "cftime==1.6.5",
+        "charset-normalizer==3.4.3",
+        "colorama==0.4.6",
+        "colorlog==6.9.0",
+        "contourpy==1.3.3",
+        "cycler==0.12.1",
+        "einops==0.8.1",
+        "filelock==3.19.1",
+        "filters==0.1",
+        "fonttools==4.59.2",
+        "fsspec==2026.1.0",
+        "gmpy2==2.2.1",
+        "greenlet==3.2.4",
+        "grpcio==1.74.1",
+        "h2==4.3.0",
+        "hf-xet==1.2.0",
+        "hpack==4.1.0",
+        "huggingface-hub==0.36.0",
+        "hyperframe==6.1.0",
+        "idna==3.10",
+        "importlib_metadata==8.0.0",
+        "importlib_metadata==8.7.0",
+        "inflect==7.3.1",
+        "jaraco.collections==5.1.0",
+        "jaraco.context==5.3.0",
+        "jaraco.functools==4.0.1",
+        "jaraco.text==3.12.1",
+        "kiwisolver==1.4.9",
+        "llvmlite==0.46.0",
+        "matplotlib==3.10.6",
+        "more-itertools==10.3.0",
+        "mpmath==1.3.0",
+        "munkres==1.1.4",
+        "netCDF4==1.7.4",
+        "networkx==3.5",
+        "neuralhydrology==1.12.0",
+        "ninja==1.13.0",
+        "numba==0.63.1",
+        "numpy==2.3.3",
+        "nvidia-ml-py==13.580.82",
+        "onnx==1.18.0",
+        "optuna==4.5.0",
+        "packaging==24.2",
+        "packaging==25.0",
+        "pandas==2.3.2",
+        "patsy==1.0.1",
+        "pillow==11.3.0",
+        "pip==25.2",
+        "platformdirs==4.2.2",
+        "protobuf==6.31.1",
+        "psutil==7.0.0",
+        "pyDOE2==1.3.0",
+        "pyarrow==20.0.0",
+        "pycparser==2.22",
+        "pyparsing==3.2.3",
+        "python-dateutil==2.9.0.post0",
+        "pytz==2025.2",
+        "regex==2026.1.15",
+        "requests==2.32.5",
+        "ruamel.yaml==0.19.1",
+        "safetensors==0.7.0",
+        "scipy==1.16.2",
+        "seaborn==0.13.2",
+        "setuptools==80.9.0",
+        "shiboken6==6.9.2",
+        "six==1.17.0",
+        "statsmodels==0.14.5",
+        "sympy==1.14.0",
+        "tensorboard==2.20.0",
+        "tensorboard_data_server==0.7.0",
+        "tokenizers==0.22.2",
+        "tomli==2.0.1",
+        "tomli==2.2.1",
+        "torch==2.4.0",
+        "torchaudio==2.4.0",
+        "torchvision==0.19.0",
+        "tornado==6.5.2",
+        "tqdm==4.67.1",
+        "transformers==4.57.6",
+        "triton==3.0.0",
+        "typeguard==4.3.0",
+        "typing_extensions==4.12.2",
+        "typing_extensions==4.15.0",
+        "tzdata==2025.2",
+        "unicodedata2==16.0.0",
+        "urllib3==2.5.0",
+        "wheel==0.45.1",
+        "wheel==0.45.1",
+        "xarray==2025.12.0",
+        "zipp==3.19.2",
+        "zipp==3.23.0",
+        "zstandard==0.24.0"
+      ],
+      "installed_distributions_sha256": "1c3056fdcd85a7e6ce67f5f518aa2d0be0515ca047cf39c3b593ac80f1f270e1",
+      "numpy": "2.3.3",
+      "pandas": "2.3.2",
+      "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+      "psutil": "7.0.0",
+      "python": "3.11.13",
+      "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11",
+      "python_implementation": "CPython"
+    },
+    "environment_sha256": "d746de4c3a2cf285e48dfcc278f40e9e2cdd5cb7e69104d7776bae7bf24f80bb",
+    "source_tree_sha256": "6b07b434e1190a19cdabf9382c539952af8fe7acf398b6a1e4a0a7304d5d46a3",
+    "tracked_file_count": 13972,
+    "training_git_commit": "bb519b8b9980725ac1d5f4e298d76ae80ea2c58d"
+  },
+  "source_context_sha256": "02d6fbb4d6ffcd818795a9cb1aa114c31e1d48704613cf8b12f91beb55f58793",
+  "status": "complete_training_audit",
+  "training_progress": {
+    "completed_run_count": 24,
+    "path": "/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/training_progress.json",
+    "sha256": "780c965f0e1967336944b74ac94388e9dd086f72560ed9654ac263847443ba6b"
+  },
+  "validation_metrics_computed": false
+}
+end=2026-08-12T09:16:10+08:00
+--- stderr tail ---
+=== C REPORT SUMMARY ===
+report_present=true
+{"all_checkpoint_tensors_finite":true,"audit_git_commit":"880a066d4b775e76a2e9b0358c393666c8737c6b","audit_source_clean":true,"checkpoint_count":72,"coverage":{"audited_runs":24,"expected_runs":24,"passed_runs":24},"expected_checkpoint_count":72,"expected_run_count":24,"formal_evaluation_observation_reads":0,"formal_period_predictions_generated":false,"nonfinite_tensor_count":0,"official_score_called":false,"pre_seal_evidence":{"canonical_four_workload_resource_preflight_report_present":false,"known_blockers":["canonical_four_workload_resource_preflight_report_missing"]},"run_count":24,"schema":"historical_multiscale_formal_v09_training_external_audit_v1","status":"complete_training_audit","training_git_commit":"bb519b8b9980725ac1d5f4e298d76ae80ea2c58d","training_progress":{"completed_run_count":24,"path":"/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/training_progress.json","sha256":"780c965f0e1967336944b74ac94388e9dd086f72560ed9654ac263847443ba6b"},"validation_metrics_computed":false}
+af6e424d6b88f53f5ad51f2ea76c4bfeb4a8bce408363c5909e952ec3ff80d9b  /data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/training_external_audit.json
+=== D DOWNSTREAM ABSENCE ===
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-12T15:51:49+0800
