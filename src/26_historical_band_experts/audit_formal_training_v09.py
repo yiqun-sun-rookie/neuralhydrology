@@ -467,11 +467,17 @@ def _run_git(repo_root: Path, *arguments: str) -> str:
         ["git", "-C", str(repo_root), *arguments],
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="surrogateescape",
         check=False,
     )
     if completed.returncode != 0:
         raise TrainingAuditError(f"Git source query failed: {' '.join(arguments)}")
     return completed.stdout
+
+
+def _tracked_git_files(repo_root: Path) -> tuple[str, ...]:
+    return tuple(value for value in _run_git(repo_root, "ls-files", "-z").split("\0") if value)
 
 
 def _audit_source_context() -> dict:
@@ -511,7 +517,7 @@ def _production_source_seal(formal_root: Path) -> dict:
         raise TrainingAuditError("frozen main-training Git commit drift")
     if _run_git(repo_root, "status", "--porcelain", "--untracked-files=no").strip():
         raise TrainingAuditError("frozen main-training checkout has tracked modifications")
-    tracked = [value for value in _run_git(repo_root, "ls-files").splitlines() if value]
+    tracked = _tracked_git_files(repo_root)
     if not tracked:
         raise TrainingAuditError("frozen main-training checkout has no tracked files")
     descriptors = []

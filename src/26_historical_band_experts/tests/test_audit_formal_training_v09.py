@@ -2,6 +2,7 @@
 from copy import deepcopy
 import json
 from pathlib import Path
+import subprocess
 from types import SimpleNamespace
 import sys
 
@@ -30,6 +31,19 @@ def test_v09_audit_slurm_scopes_nounset_around_conda_activation(filename):
     enable_index = script.index("set -u", activate_index)
     audit_setup_index = script.index("AUDIT_REPO=")
     assert disable_index < activate_index < enable_index < audit_setup_index
+
+
+def test_tracked_git_files_preserves_non_ascii_path(tmp_path):
+    from audit_formal_training_v09 import _tracked_git_files
+
+    repo = tmp_path / "repo"
+    subprocess.run(["git", "init", "-q", str(repo)], check=True)
+    relative = Path(".cursor/plans/全球水文模型论文计划_ee017201.plan.md")
+    path = repo / relative
+    path.parent.mkdir(parents=True)
+    path.write_text("plan\n", encoding="utf-8")
+    subprocess.run(["git", "-C", str(repo), "add", "--", relative.as_posix()], check=True)
+    assert _tracked_git_files(repo) == (relative.as_posix(),)
 
 
 def _model_builder(_variant, seed):
