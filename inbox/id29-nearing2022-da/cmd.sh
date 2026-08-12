@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=278: read-only full-matrix health check after the 22-coordinate source audit closed.
+# ID29 seq=279: read-only full-matrix health check after the next 30-minute interval.
 set -eo pipefail
 
 if false; then
