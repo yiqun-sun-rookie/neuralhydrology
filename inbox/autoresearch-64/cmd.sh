@@ -1,34 +1,110 @@
 #!/bin/bash
-set -euo pipefail
+set -o pipefail
 
-MAILBOX=/data1/home/sunyiq/hpc_mailbox
-TEMPLATE="$MAILBOX/inbox/autoresearch-64/hbv_lite_unseen_64_confirmation_seq67.slurm"
-PAYLOAD="$MAILBOX/inbox/autoresearch-64/payload/unseen64_builder_85ae470c_seq67.tar.gz"
-PAYLOAD_SHA256=2633567e3193d9161c4d4394bf960b1ff53f0eb6f57f684e88d4b3ea722baf4e
-RECEIPT=/tmp/autoresearch64-unseen64-seq67.receipt
-LOCK=/tmp/autoresearch64-unseen64-seq67.lock
+# Read-only status query for the seq=67 prospective unseen-64 confirmation.
+# Submits nothing, writes nothing into the attempt directory.
 
-exec 9>"$LOCK"
-flock 9
-if [ -s "$RECEIPT" ]; then
-  cat "$RECEIPT"
-  exit 0
+JOB=202585
+ROOT=/data1/home/sunyiq/autoresearch64
+ATTEMPT="$ROOT/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67"
+EVIDENCE="$ATTEMPT/evidence"
+CANDIDATE_RUN="$ATTEMPT/candidate_run"
+PYTHON="$ROOT/.venv/bin/python"
+if [ ! -x "$PYTHON" ]; then PYTHON=$(command -v python3); fi
+
+echo "=== JOB $JOB ==="
+squeue -j "$JOB" -o '%.18i %.20j %.12T %.10M %.10l %.20R' 2>&1
+sacct -j "$JOB" -X --format=JobID%12,JobName%20,NodeList%9,State%14,ExitCode%8,Elapsed%10,Start%20,End%20 2>&1
+echo "--- steps (memory) ---"
+sacct -j "$JOB" --format=JobID%16,JobName%16,State%14,ExitCode%8,Elapsed%10,MaxRSS%12,MaxVMSize%12,ReqMem%10 2>&1
+
+echo "=== ATTEMPT DIR ==="
+if [ -d "$ATTEMPT" ]; then
+  stat -c 'EXISTS %n mtime=%y' "$ATTEMPT"
+else
+  echo "MISSING $ATTEMPT"
 fi
 
-ACTIVE=$(squeue -h -u sunyiq -n a64-hbv64-new -o '%i %T' || true)
-if [ -n "$ACTIVE" ]; then
-  echo "existing_active_job=$ACTIVE"
-  exit 0
-fi
-HISTORICAL=$(sacct -u sunyiq -S 2026-08-11 -X -n -o JobIDRaw,JobName%24,State \
-  | awk '$2 == "a64-hbv64-new" {print $1 " " $3}')
-if [ -n "$HISTORICAL" ]; then
-  echo "existing_accounting_job=$HISTORICAL"
-  exit 0
+echo "=== EVIDENCE STATUS ==="
+for path in \
+  "$EVIDENCE/PREFLIGHT.json" \
+  "$EVIDENCE/BUILDER_SNAPSHOT_MANIFEST.sha256" \
+  "$EVIDENCE/RUNTIME_SNAPSHOT_MANIFEST.sha256" \
+  "$EVIDENCE/BUILDER_TESTS.xml" \
+  "$EVIDENCE/BUILDER_TESTS_STDOUT.txt" \
+  "$EVIDENCE/BUILD_SOURCE_STDOUT.txt" \
+  "$EVIDENCE/BUILD_PACKAGES_STDOUT.txt" \
+  "$EVIDENCE/CLASSIFY_BASINS_STDOUT.txt" \
+  "$ATTEMPT/BASIN_ELIGIBILITY.json" \
+  "$EVIDENCE/PACKAGE_GATE.json" \
+  "$EVIDENCE/CANDIDATE_COMMAND_STDOUT.txt" \
+  "$CANDIDATE_RUN/CANDIDATE_SUMMARY.json" \
+  "$EVIDENCE/CONFIRMATION_SUMMARY.json" \
+  "$EVIDENCE/MANIFEST.sha256"; do
+  if [ -e "$path" ]; then
+    stat -c 'EXISTS %n bytes=%s mtime=%y' "$path"
+  else
+    echo "PENDING $path"
+  fi
+done
+
+echo "=== CONFIRMATION SUMMARY ==="
+if [ -f "$EVIDENCE/CONFIRMATION_SUMMARY.json" ]; then
+  cat "$EVIDENCE/CONFIRMATION_SUMMARY.json"
+else
+  echo "PENDING $EVIDENCE/CONFIRMATION_SUMMARY.json"
 fi
 
-test "$(sha256sum "$PAYLOAD" | awk '{print $1}')" = "$PAYLOAD_SHA256"
-bash -n "$TEMPLATE"
-JOB_ID=$(sbatch --parsable "$TEMPLATE")
-printf 'job_id=%s\nbuilder_payload_sha256=%s\n' "$JOB_ID" "$PAYLOAD_SHA256" > "$RECEIPT"
-cat "$RECEIPT"
+echo "=== BUILDER TEST GATE ==="
+if [ -f "$EVIDENCE/BUILDER_TESTS.xml" ]; then
+  grep -o '<testsuite [^>]*>' "$EVIDENCE/BUILDER_TESTS.xml" | head -5
+else
+  echo "PENDING $EVIDENCE/BUILDER_TESTS.xml"
+fi
+if [ -f "$EVIDENCE/BUILDER_TESTS_STDOUT.txt" ]; then
+  echo "--- BUILDER_TESTS_STDOUT.txt (tail)"
+  tail -15 "$EVIDENCE/BUILDER_TESTS_STDOUT.txt"
+fi
+
+echo "=== MONITOR / PEAK MEMORY ==="
+if [ -d "$CANDIDATE_RUN" ]; then
+  "$PYTHON" - "$CANDIDATE_RUN" <<'PY' 2>&1
+import json, sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+paths = sorted(root.rglob("runtime-result.json"))
+print(f"runtime_result_count={len(paths)}")
+WANT = ("monitor", "peak", "sample", "memory", "rss", "_gb", "denied", "status", "exit")
+for path in paths:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"--- {path.relative_to(root)} UNREADABLE {exc}")
+        continue
+    print(f"--- {path.relative_to(root)}")
+    for key in sorted(value):
+        if any(token in key.lower() for token in WANT):
+            print(f"    {key}={json.dumps(value[key])[:300]}")
+PY
+else
+  echo "PENDING $CANDIDATE_RUN"
+fi
+
+echo "=== ACCESS LOGS ==="
+if [ -d "$CANDIDATE_RUN" ]; then
+  find "$CANDIDATE_RUN" -name access.jsonl -printf '%p lines=' -exec sh -c 'wc -l < "$1"' _ {} \; 2>&1 | head -10
+  echo "--- deny events ---"
+  find "$CANDIDATE_RUN" -name access.jsonl -exec grep -h '"decision": *"deny"' {} \; 2>/dev/null | head -20
+  echo "(end deny events)"
+fi
+
+echo "=== LOG TAILS ==="
+for path in "$EVIDENCE/JOB_STDOUT.txt" "$EVIDENCE/JOB_STDERR.txt"; do
+  if [ -f "$path" ]; then
+    echo "--- $path"
+    tail -40 "$path"
+  else
+    echo "--- $path MISSING"
+  fi
+done
