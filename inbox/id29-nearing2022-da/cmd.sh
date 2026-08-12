@@ -1,5 +1,5 @@
 #!/bin/bash
-# ID29 seq=269: scheduled read-only matrix health audit after the next 30-minute window.
+# ID29 seq=270: targeted read-only completion check after task 202222_20 reached 529/531 basins.
 set -eo pipefail
 
 if false; then
