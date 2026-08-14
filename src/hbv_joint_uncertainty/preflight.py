@@ -80,10 +80,24 @@ def build_transition_matrix(candidate_count: int, diagonal: float) -> np.ndarray
 class ForcingTransition:
     """HBV-lite transition with daily forcing assigned before each filter step."""
 
-    def __init__(self, parameters: Mapping[str, float], parameter_bounds: Mapping | None = None):
+    def __init__(
+        self,
+        parameters: Mapping[str, float],
+        parameter_bounds: Mapping | None = None,
+        state_projector: Callable[[np.ndarray], np.ndarray] | None = None,
+    ):
         self.parameters = dict(parameters)
         self._parameter_bounds = dict(parameter_bounds) if parameter_bounds is not None else None
+        if state_projector is not None and not callable(state_projector):
+            raise TypeError("state_projector must be callable or None")
+        self.state_projector = state_projector
         self._forcing: tuple[float, float, float] | None = None
+
+    def _project(self, state: np.ndarray) -> np.ndarray:
+        if self.state_projector is None:
+            return project_hbv_state(state, self.parameters)
+        projected = _state_vector(self.state_projector(state.copy()), "projected state")
+        return projected.copy()
 
     def set_forcing(self, rain: float, pet: float, temperature: float) -> None:
         forcing = np.asarray([rain, pet, temperature], dtype=np.float64)
@@ -95,11 +109,10 @@ class ForcingTransition:
         if self._forcing is None:
             raise RuntimeError("daily forcing must be assigned before transition")
         rain, pet, temperature = self._forcing
-        physical = project_hbv_state(state, self.parameters)
-        return project_hbv_state(
+        physical = self._project(state)
+        return self._project(
             advance_state(physical, rain, pet, temperature, self.parameters,
                           bounds=self._parameter_bounds),
-            self.parameters,
         )
 
 

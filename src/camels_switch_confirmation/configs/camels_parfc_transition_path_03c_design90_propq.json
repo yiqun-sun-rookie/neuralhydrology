@@ -1,0 +1,257 @@
+{
+  "experiment_id": "CAMELS_PARFC_TRANSITION_PATH_03C_DESIGN90_PROPQ",
+  "configuration_status": "design90_exploratory_propq_fix_design_seeds_not_validation",
+  "registered_date": "2026-08-14",
+  "changed_factor_against_03b": {
+    "filter_q_mode": "fixed -> lower_groundwater_state_proportional",
+    "everything_else": "inherited_from_frozen_03b_by_hash_equality"
+  },
+  "authorization_boundary": {
+    "design_seeds": [
+      0,
+      1
+    ],
+    "reserved_validation_seeds_authorized": false,
+    "full_531_basin_run_authorized": false,
+    "configuration_freeze_version_02_authorized": false,
+    "ninety_basin_execution_authorized_by_user_go": true,
+    "user_go_date": "2026-08-14"
+  },
+  "source_03b_configuration": {
+    "path": "src/camels_switch_confirmation/configs/camels_parfc_transition_path_03b_design90.json",
+    "sha256": "b7bd90e752738b4a9d766e0138e7d9007f97c18443cc7764e0bba6d0b5221669"
+  },
+  "motivating_evidence": {
+    "day540_fifteen_state_counterfactual_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_day540_truth_state_counterfactual_07184000_s0_01_20260812_local/summary.json",
+      "sha256": "b2e831e1fa4d0574869fc4b5cd69d2798de21c54e59801bb25bab2acb48f31f8"
+    },
+    "day540_sm_only_counterfactual_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_day540_state_subset_counterfactual_07184000_s0_01_20260814_local/sm_only/summary.json",
+      "sha256": "7233dbae93582844d93838fdc49b0e29917b66337bc06f5f00a7d74283c0bf52"
+    },
+    "day540_all_but_sm_counterfactual_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_day540_state_subset_counterfactual_07184000_s0_01_20260814_local/all_but_sm/summary.json",
+      "sha256": "c576558daa86878f3d3eb31358af658179d343468aba050db709b1c54e1f0ba5"
+    },
+    "single_basin_propq_C_s0_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_slz_state_proportional_q_07184000_01_20260814_local/C_s0/summary.json",
+      "sha256": "9f91c24c0b7353bcf8dc9bd505173d6674158619d1cc5339c65ade7afcc36654"
+    },
+    "single_basin_propq_C_s1_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_slz_state_proportional_q_07184000_01_20260814_local/C_s1/summary.json",
+      "sha256": "5a0fecbcc5899bc9893002027a6a05a965073fbfb540a7bc7ec7530d4d5fae63"
+    },
+    "single_basin_propq_P_s0_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_slz_state_proportional_q_07184000_01_20260814_local/P_s0/summary.json",
+      "sha256": "ea58624eeb1026bce111c92505303c784fe563b9c92d186c119f1b264941ce43"
+    },
+    "single_basin_propq_P_s1_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_slz_state_proportional_q_07184000_01_20260814_local/P_s1/summary.json",
+      "sha256": "392ee20edbb34a0367ee9af7d1cc5d457a1ccb54ed81c60525c92e452d903bc3"
+    }
+  },
+  "inputs": {
+    "parameter_table": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_rising_local_full.csv",
+    "parameter_table_sha256": "577b12fcb8e1a7a7a607995f0011dbda38a199ee68f3636732b80a3356c16be6",
+    "g1_precheck_table": "results/23_camels_switch_confirmation/g1_precheck_v01/g1_precheck.csv",
+    "g1_precheck_table_sha256": "3443ba601434dd30b43c3b5e8a9b838fc666cc394077700ddd4d3e7158b3ee73",
+    "data_root": "data/camels_us",
+    "raw_input_manifest": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-input-manifest-v01.csv",
+    "raw_input_manifest_sha256": "e9214738c64ba35800d06d4c6c07d1a3f31e5615cfefc9e1e55ae99ea3b3818b",
+    "task_table": "docs/plans/2026-08-11-camels-parfc-transition-path-03b-design90-tasks-v01.csv",
+    "task_table_sha256": "add9f3444ff2d4069a1fd8c4fb99056dd91f932ef3fe53b523b6644fc43cf95e",
+    "initial_moment_manifest": "docs/plans/2026-08-11-camels-parfc-transition-path-03b-design90-initial-moment-manifest-v01.npz",
+    "initial_moment_manifest_sha256": "3d12d5c289edeb477ae285a914e456643bc1b581ed603a1f4cd73aa998ce7042"
+  },
+  "design_selection": {
+    "basin_count": 90,
+    "basin_list": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-basins-v01.csv",
+    "basin_list_sha256": "813009cb0464b8fac6d650c69273a5b3b0f6bb329a3d7632fe3c1a198bf2c678",
+    "forcing_coverage_table": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-coverage-v01.csv",
+    "forcing_coverage_table_sha256": "1fc235448372d1abf7a0b844100187e0e1f0e7e81979ad756152a4a2a6aada64",
+    "selection_uses_prior_path_method_outcomes": false,
+    "selection_source": "completed state-interaction Design90 basin list"
+  },
+  "initial_moment_contract": {
+    "task_count": 180,
+    "candidate_count": 3,
+    "state_count": 15,
+    "probability_shape": [
+      180,
+      3
+    ],
+    "state_shape": [
+      180,
+      3,
+      15
+    ],
+    "covariance_shape": [
+      180,
+      3,
+      15,
+      15
+    ],
+    "independent_generation_bitwise_matches_production_initializer": true
+  },
+  "filter": {
+    "q_scale": 3e-08,
+    "q_structure": "lower_groundwater_state_only",
+    "q_mode": "lower_groundwater_state_proportional",
+    "q_state_multiplier": 1.0,
+    "observation_variance_multiplier": 1.0
+  },
+  "arms": [
+    {
+      "arm_id": "C",
+      "interaction_mode": "full",
+      "parameter_state_mapping": "conservative_parfc"
+    },
+    {
+      "arm_id": "P",
+      "interaction_mode": "pairwise_path_postcollapse",
+      "parameter_state_mapping": "conservative_parfc"
+    }
+  ],
+  "implementation": {
+    "g2_switch_confirmation": {
+      "path": "src/camels_switch_confirmation/g2_switch_confirmation.py",
+      "sha256": "437f703745f883af3886d202244e7899c8bf5a68ce2cb76f7f652cb9230b9f89"
+    },
+    "imm": {
+      "path": "src/hbv_joint_uncertainty/imm.py",
+      "sha256": "b56b0b1b128c0c0cfb1bda6cfacd5c7fe7ac8a91af5c0aaad5d198944211737c"
+    },
+    "hbv_state_mapping": {
+      "path": "src/hbv_joint_uncertainty/hbv_state_mapping.py",
+      "sha256": "2c8559df9d304856fc610cb2d29b7f61ef198eb0da67e6c919d3ded3278036bb"
+    },
+    "preflight": {
+      "path": "src/hbv_joint_uncertainty/preflight.py",
+      "sha256": "65ccef82344c0b73942fb833321becde487d33358630efa802dab12cec6194e4"
+    },
+    "hbv_adapter": {
+      "path": "src/hbv_joint_uncertainty/hbv_adapter.py",
+      "sha256": "a0892aa88e24aa3aac6bcde48fec36162bf83793991ec138998a021156e48e16"
+    },
+    "sigma_filter": {
+      "path": "src/hbv_joint_uncertainty/sigma_filter.py",
+      "sha256": "feed8c145e608239e64ca2dbdd1bad61698b8d754e0a9ec12620f3b5ea7f2eb3"
+    },
+    "bank": {
+      "path": "src/camels_switch_confirmation/bank.py",
+      "sha256": "16ff698eddf999fe8e88c8fbab7dee5ea0d2a2879113247b054b6760d2e6c8cf"
+    },
+    "g1_precheck": {
+      "path": "src/camels_switch_confirmation/g1_precheck.py",
+      "sha256": "23ecc0a4419fe69d6b9a27ba44340e3e17c5684da07ed59d064fbf0fa03bb46c"
+    },
+    "data_loader": {
+      "path": "src/hydroagent/data_loading.py",
+      "sha256": "aa9cf1a4b6dcdf259dd96181c4e6704fedd0bba4f0020b3cdb2464b16aa79de6"
+    },
+    "hbv_model_and_bounds": {
+      "path": "src/scl_hydro/hbv_lite_numpy.py",
+      "sha256": "2b3555501d66f225622c876e054156b1bcf8db745878aaf41489141cacbbd542"
+    },
+    "batch_control": {
+      "path": "src/camels_switch_confirmation/batch_control.py",
+      "sha256": "259ca7fa0da7406554d0ad865e8e23769992bf582b20e80f11c10fc0e3233ef2"
+    },
+    "mechanism_runner": {
+      "path": "src/camels_switch_confirmation/run_parameter_path_mechanism.py",
+      "sha256": "72a9965e441f7c9168bff681b6661c8901772e4d7d3b39ad15edeca57904f6b5"
+    },
+    "mechanism_tests": {
+      "path": "test/test_camels_parameter_path_mechanism.py",
+      "sha256": "73dd79e37d388416021173e31ce5dd1d694487729b99e3cd47de35cbfd566c22"
+    },
+    "mechanism_verifier": {
+      "path": "src/camels_switch_confirmation/verify_parameter_path_mechanism.py",
+      "sha256": "6480c402b0bfa9b831713fda2681bc8eb5e0e52359b37cf51125e64ccfe668f1"
+    },
+    "mechanism_verifier_tests": {
+      "path": "test/test_camels_parameter_path_mechanism_verifier.py",
+      "sha256": "ce4d0aa04af7d95f5d54b50cfcebb6dc0f205ffe5fbd02d584c3e594d2185c30"
+    },
+    "preregistration": {
+      "path": "docs/plans/2026-08-14-camels-parfc-transition-path-03c-design90-propq-prereg-v01.md",
+      "sha256": "a4a380a4fa57212bb08f90bd730bc2d6f65d5c29a0e4d2486d70864bd93a93ca"
+    },
+    "mechanism_plan": {
+      "path": "docs/superpowers/plans/2026-08-11-camels-parfc-path-postcollapse-design90-03b.md",
+      "sha256": "29c30110dbc6cf74783e58ebc5f605926588d8ee3a5ffc071828dd8244558d56"
+    },
+    "design90_runner": {
+      "path": "src/camels_switch_confirmation/run_parameter_path_design90.py",
+      "sha256": "9b5023eec8f6b627ba78ed7662b523ad0be5f5613c1cea6b7740b53a57583482"
+    },
+    "design90_runner_tests": {
+      "path": "test/test_camels_parameter_path_design90.py",
+      "sha256": "2cab73a2064ec632d9bb86ecd3b41f94520ed322f6a7122b95d3f88bfd7ecd78"
+    },
+    "design90_verifier": {
+      "path": "src/camels_switch_confirmation/verify_parameter_path_design90.py",
+      "sha256": "252af118d2c60d9885f5568a7ad64a7e8bd207cdfb8e4d221fa7bd54b6486f8e"
+    },
+    "design90_verifier_tests": {
+      "path": "test/test_camels_parameter_path_design90_verifier.py",
+      "sha256": "9ed4dc3c6d266e9193a1957f86185fed98df9d92188df3182f98bf8d740834ef"
+    },
+    "design90_registration": {
+      "path": "src/camels_switch_confirmation/register_parameter_path_design90.py",
+      "sha256": "dca137ff910583d8d1957dd9f9a816ee2406021f997f068b53ca43c2f4f5674f"
+    },
+    "design90_registration_tests": {
+      "path": "test/test_camels_parameter_path_design90_registration.py",
+      "sha256": "2ad0e11ee56de5f7f14cca6a843cf6c5037cb0754d2cf5ca572a1d1d6b737711"
+    },
+    "design90_propq_runner": {
+      "path": "src/camels_switch_confirmation/run_parameter_path_design90_propq.py",
+      "sha256": "4626b9c1a56cc92100346dd2796102e539f3e24450b0ac66d431a978f060bfb8"
+    }
+  },
+  "runtime": {
+    "python_executable": "C:\\Users\\yiqun\\anaconda3\\python.exe",
+    "python_executable_sha256": "c98caee82c66433f0e89d4abbf152b39a7dc2e99979b28dcb021598b4e3f5642",
+    "python_version": "3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]",
+    "python_implementation": "cpython",
+    "python_compiler": "MSC v.1916 64 bit (AMD64)",
+    "machine": "AMD64",
+    "numpy_version": "1.26.4",
+    "byteorder": "little",
+    "double_format": "IEEE, little-endian",
+    "float_radix": 2,
+    "float_mant_dig": 53,
+    "float_rounds": 1,
+    "ulp_one_hex": "0x1.0000000000000p-52",
+    "ulp_zero_hex": "0x0.0000000000001p-1022",
+    "nextafter_zero_hex": "0x0.0000000000001p-1022",
+    "math_fma_available": false
+  },
+  "outputs": {
+    "root": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03c_design90_propq_s01_20260814_local"
+  },
+  "decision_gates": {
+    "task_count": 360,
+    "source_task_count": 180,
+    "events_per_arm": 1080,
+    "events_per_transition_type_per_arm": 180,
+    "primary_response_window_days": 30,
+    "secondary_response_window_days": 90,
+    "per_transition_type_event_pass_rate_min": 0.5,
+    "zero_true_probability_days_max": 0,
+    "severe_negative_log_probability_days_max": 0,
+    "mean_true_negative_log_probability_max": 1.0986122886681098,
+    "multiclass_brier_max": 0.6666666666666666,
+    "secondary_tier_registered_before_execution": true
+  },
+  "claim_boundary": {
+    "parameter_candidate_identification": "exploratory_design90_only",
+    "noise_candidate_identification": "not_tested",
+    "complete_state_accuracy": "not_tested",
+    "forecast_value": "not_tested",
+    "real_observation_assimilation_value": "not_tested",
+    "truth_noise_magnitude_known_a_priori": true
+  }
+}
