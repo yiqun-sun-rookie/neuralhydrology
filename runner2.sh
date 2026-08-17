@@ -102,7 +102,16 @@ run_channel () {
         echo "### finished=$(date -Iseconds)"
     } >> "$OUT"
 
-    # ---- 拿锁后再进 git ----
+    push_result "$CH" "$SEQ"
+    rm -f "$WDIR/cmd_${SEQ}.sh"
+    echo "[$(date)] done channel=$CH seq=$SEQ rc=$RC"
+}
+
+# ---- 只负责把 staging 里已有的结果推上去（可反复重试，不重跑命令）----
+push_result () {
+    local CH="$1" SEQ="$2"
+    local OUT="$STAGING/$CH/result_${SEQ}.txt"
+    [ -f "$OUT" ] || return
     acquire_lock
     cd "$MAILBOX_DIR"
     git fetch -q origin "+${BRANCH}:refs/remotes/origin/${BRANCH}" 2>/dev/null
@@ -110,14 +119,15 @@ run_channel () {
     mkdir -p "outbox/$CH"
     cp -f "$OUT" "outbox/$CH/result_${SEQ}.txt"
     git add -A outbox
-    git commit -q -m "mailbox[$CH]: result seq=$SEQ (rc=$RC)" 2>/dev/null
+    git commit -q -m "mailbox[$CH]: result seq=$SEQ" 2>/dev/null
     if ! git push -q origin "$BRANCH" 2>/dev/null; then
+        # 推不动时先把散落的 outbox 改动收进来再 rebase（防 SLURM 日志边写边长挡住 rebase）
+        git add -A outbox && git commit -q -m "mailbox: stray outbox files" 2>/dev/null
         git pull --rebase -q origin "$BRANCH" 2>/dev/null
-        git push -q origin "$BRANCH" 2>/dev/null || echo "[ERROR] push failed: $CH/$SEQ"
+        git push -q origin "$BRANCH" 2>/dev/null \
+            || echo "[ERROR] push failed: $CH/$SEQ (result kept in staging, will retry push only)"
     fi
     release_lock
-    rm -f "$WDIR/cmd_${SEQ}.sh"
-    echo "[$(date)] done channel=$CH seq=$SEQ rc=$RC"
 }
 
 declare -A RUNNING   # channel -> pid
@@ -151,10 +161,19 @@ while true; do
 
         SEQ=$(cat "$CHDIR/seq" 2>/dev/null | tr -d '[:space:]')
         [ -z "$SEQ" ] && continue
-        [ -f "outbox/$CH/result_${SEQ}.txt" ] && continue          # 已跑过
+        [ -f "outbox/$CH/result_${SEQ}.txt" ] && continue          # 已跑过且已推送
         [ "$CH" = "default" ] && [ -f "outbox/result_${SEQ}.txt" ] && continue  # v1 遗留位置
         [ -n "${RUNNING[$CH]:-}" ] && continue                     # 该 channel 正在跑
         [ ${#RUNNING[@]} -ge "$MAX_WORKERS" ] && continue          # 并发已满
+
+        # 【关键】staging 里已有结果 = 命令跑过但 push 失败（如 DNS 断）。
+        # 只重试推送，绝不重跑命令 —— 否则网络故障会把 sbatch 反复执行。
+        if [ -f "$STAGING/$CH/result_${SEQ}.txt" ]; then
+            echo "[$(date)] --- retry push only: channel=$CH seq=$SEQ ---"
+            push_result "$CH" "$SEQ" &
+            RUNNING[$CH]=$!
+            continue
+        fi
 
         echo "[$(date)] --- start channel=$CH seq=$SEQ ---"
         run_channel "$CH" "$SEQ" "$CHDIR/cmd.sh" &
