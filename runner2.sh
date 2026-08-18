@@ -41,6 +41,10 @@ POLL_INTERVAL="${POLL_INTERVAL:-20}"
 # 需要更多就启动时覆盖：MAX_WORKERS=32 bash runner2.sh
 MAX_WORKERS="${MAX_WORKERS:-16}"
 WORKER_TIMEOUT="${WORKER_TIMEOUT:-7200}"   # 单个任务最长 2 小时，防卡死
+# 【必须】所有 git 网络操作都要有超时。2026-08-18 教训：仓库文件多到触发 git auto-gc，
+# 老 git(1.8.3.1) + 并行存储上打包极慢，无超时的 fetch 会永久卡死主循环，
+# 表现为"进程活着、日志不长、远端不动"，极难排查。
+GIT_TIMEOUT="${GIT_TIMEOUT:-120}"
 
 # ---- 自我保护：从 git 工作区外的副本运行 ----
 if [ "${HPC_RUNNER_DETACHED:-0}" != "1" ]; then
@@ -52,6 +56,10 @@ fi
 
 cd "$MAILBOX_DIR" || { echo "[FATAL] cannot cd $MAILBOX_DIR"; exit 1; }
 mkdir -p "$STAGING"
+
+# 关掉 git 自动打包：仓库里结果文件多，auto-gc 在并行存储上会卡死 fetch（见 GIT_TIMEOUT 注释）
+git config gc.auto 0 2>/dev/null
+git config gc.autoDetach false 2>/dev/null
 
 echo "=========================================="
 echo "[$(date)] mailbox runner v2 started"
@@ -114,17 +122,17 @@ push_result () {
     [ -f "$OUT" ] || return
     acquire_lock
     cd "$MAILBOX_DIR"
-    git fetch -q origin "+${BRANCH}:refs/remotes/origin/${BRANCH}" 2>/dev/null
-    git reset -q --hard "refs/remotes/origin/${BRANCH}" 2>/dev/null
+    timeout $GIT_TIMEOUT git fetch -q origin "+${BRANCH}:refs/remotes/origin/${BRANCH}" 2>/dev/null
+    timeout 60 git reset -q --hard "refs/remotes/origin/${BRANCH}" 2>/dev/null
     mkdir -p "outbox/$CH"
     cp -f "$OUT" "outbox/$CH/result_${SEQ}.txt"
     git add -A outbox
     git commit -q -m "mailbox[$CH]: result seq=$SEQ" 2>/dev/null
-    if ! git push -q origin "$BRANCH" 2>/dev/null; then
+    if ! timeout $GIT_TIMEOUT git push -q origin "$BRANCH" 2>/dev/null; then
         # 推不动时先把散落的 outbox 改动收进来再 rebase（防 SLURM 日志边写边长挡住 rebase）
         git add -A outbox && git commit -q -m "mailbox: stray outbox files" 2>/dev/null
-        git pull --rebase -q origin "$BRANCH" 2>/dev/null
-        git push -q origin "$BRANCH" 2>/dev/null \
+        timeout $GIT_TIMEOUT git pull --rebase -q origin "$BRANCH" 2>/dev/null
+        timeout $GIT_TIMEOUT git push -q origin "$BRANCH" 2>/dev/null \
             || echo "[ERROR] push failed: $CH/$SEQ (result kept in staging, will retry push only)"
     fi
     release_lock
@@ -141,11 +149,11 @@ while true; do
     # 只有在没有 worker 在跑时才 reset（否则会动到别人的文件）
     if [ ${#RUNNING[@]} -eq 0 ]; then
         acquire_lock
-        git fetch -q origin "+${BRANCH}:refs/remotes/origin/${BRANCH}" 2>/dev/null
-        git reset -q --hard "refs/remotes/origin/${BRANCH}" 2>/dev/null
+        timeout $GIT_TIMEOUT git fetch -q origin "+${BRANCH}:refs/remotes/origin/${BRANCH}" 2>/dev/null
+        timeout 60 git reset -q --hard "refs/remotes/origin/${BRANCH}" 2>/dev/null
         release_lock
     else
-        git fetch -q origin "+${BRANCH}:refs/remotes/origin/${BRANCH}" 2>/dev/null
+        timeout $GIT_TIMEOUT git fetch -q origin "+${BRANCH}:refs/remotes/origin/${BRANCH}" 2>/dev/null
     fi
 
     # 扫描所有 channel：inbox/<ch>/seq，外加向后兼容的 inbox/seq
