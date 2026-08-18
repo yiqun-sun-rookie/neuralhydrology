@@ -1,0 +1,16 @@
+### channel=id29-nearing2022-da seq=282
+### host=login4
+### started=2026-08-18T21:09:12+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-18T21:09:12+0800
+=== RUNNING JOB PROGRESS (epoch/step from logs) ===
+--- job 202215_15 ---
+RunTime=09:10:23
+TimeLimit=2-00:00:00
+NumNodes=1
+StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_15.out
+  logfile=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_15.out bytes=7852267
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-18T21:09:12+0800
