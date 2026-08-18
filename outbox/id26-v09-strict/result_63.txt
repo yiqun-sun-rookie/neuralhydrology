@@ -1,0 +1,21 @@
+### channel=id26-v09-strict seq=63
+### host=login4
+### started=2026-08-18T20:37:50+0800
+### ---------- output ----------
+=== A TRAINING AUDIT PASS GATE ===
+training_audit_jobid=202777 state=COMPLETED exit_code=0:0 elapsed=00:03:55
+training_external_audit_sha256=af6e424d6b88f53f5ad51f2ea76c4bfeb4a8bce408363c5909e952ec3ff80d9b
+training_audit_gate=passed runs=24 checkpoints=72 nonfinite=0 prohibited_reads=0 predictions=false scoring=false
+pre_seal_evidence=missing_canonical_four_workload_resource_preflight_report
+=== B FROZEN AND OUTPUT PRECONDITIONS ===
+training_head=bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
+strict_head=f94183209bf44ed6e672e1c23f98020905804e6d
+audit_head=880a066d4b775e76a2e9b0358c393666c8737c6b
+=== C SUBMIT STATE DIAGNOSTICS ===
+STATE_DIAGNOSTICS_JOBID=204847
+       JOBID               NAME      STATE         TIME         NODELIST(REASON)
+      204847          v09states    PENDING         0:00               (Priority)
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-18T20:37:53+0800
