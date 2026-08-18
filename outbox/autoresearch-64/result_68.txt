@@ -1,0 +1,101 @@
+### channel=autoresearch-64 seq=68
+### host=login4
+### started=2026-08-18T20:37:50+0800
+### ---------- output ----------
+=== JOB 202585 ===
+slurm_load_jobs error: Invalid job id specified
+       JobID              JobName  NodeList          State ExitCode    Elapsed                Start                  End 
+------------ -------------------- --------- -------------- -------- ---------- -------------------- -------------------- 
+      202585        a64-hbv64-new    icn201         FAILED      1:0   00:00:17  2026-08-11T14:42:12  2026-08-11T14:42:29 
+--- steps (memory) ---
+           JobID          JobName          State ExitCode    Elapsed       MaxRSS    MaxVMSize     ReqMem 
+---------------- ---------------- -------------- -------- ---------- ------------ ------------ ---------- 
+          202585    a64-hbv64-new         FAILED      1:0   00:00:17                                   0n 
+    202585.batch            batch         FAILED      1:0   00:00:17        1616K      185448K         0n 
+   202585.extern           extern      COMPLETED      0:0   00:00:17        1156K      185104K         0n 
+=== ATTEMPT DIR ===
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67 mtime=2026-08-11 14:42:12.000000000 +0800
+=== EVIDENCE STATUS ===
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/PREFLIGHT.json bytes=2129 mtime=2026-08-11 14:42:14.000000000 +0800
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/BUILDER_SNAPSHOT_MANIFEST.sha256 bytes=24253 mtime=2026-08-11 14:42:13.000000000 +0800
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/RUNTIME_SNAPSHOT_MANIFEST.sha256 bytes=22794 mtime=2026-08-11 14:42:13.000000000 +0800
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/BUILDER_TESTS.xml bytes=11003 mtime=2026-08-11 14:42:29.000000000 +0800
+EXISTS /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/BUILDER_TESTS_STDOUT.txt bytes=6477 mtime=2026-08-11 14:42:29.000000000 +0800
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/BUILD_SOURCE_STDOUT.txt
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/BUILD_PACKAGES_STDOUT.txt
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/CLASSIFY_BASINS_STDOUT.txt
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/BASIN_ELIGIBILITY.json
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/PACKAGE_GATE.json
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/CANDIDATE_COMMAND_STDOUT.txt
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/candidate_run/CANDIDATE_SUMMARY.json
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/CONFIRMATION_SUMMARY.json
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/MANIFEST.sha256
+=== CONFIRMATION SUMMARY ===
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/CONFIRMATION_SUMMARY.json
+=== BUILDER TEST GATE ===
+<testsuite name="pytest" errors="0" failures="4" skipped="0" tests="27" time="13.568" timestamp="2026-08-11T14:42:15.629777+08:00" hostname="icn201">
+--- BUILDER_TESTS_STDOUT.txt (tail)
+basins = ['10259000', '04045500', '12175500', '02300700', '08190500', '02038850', ...]
+expected_static_sha256 = '085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2'
+
+    def _frozen_static_attributes(static_table_path: Path, basins: list[str], expected_static_sha256: str) -> dict:
+        if _sha256(static_table_path) != expected_static_sha256:
+>           raise ValueError("static attribute table hash does not match the frozen selection input")
+E           ValueError: static attribute table hash does not match the frozen selection input
+
+src/unified_autoresearch/data/real_source.py:105: ValueError
+=========================== short test summary info ============================
+FAILED src/unified_autoresearch/tests/test_scaleup_64_selection.py::test_frozen_sixty_four_record_declares_the_two_frozen_selection_inputs
+FAILED src/unified_autoresearch/tests/test_scaleup_64_selection.py::test_refreezing_into_a_scratch_path_reproduces_the_committed_record_byte_for_byte
+FAILED src/unified_autoresearch/tests/test_scaleup_64_data_base.py::test_source_builder_accepts_the_frozen_sixty_four_basin_selection
+FAILED src/unified_autoresearch/tests/test_scaleup_64_data_base.py::test_package_builder_accepts_the_frozen_sixty_four_basin_selection
+4 failed, 23 passed in 13.56s
+=== MONITOR / PEAK MEMORY ===
+PENDING /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/candidate_run
+=== ACCESS LOGS ===
+=== LOG TAILS ===
+--- /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/JOB_STDOUT.txt
+        if _sha256(static_table_path) != expected_static_sha256:
+>           raise ValueError("static attribute table hash does not match the frozen selection input")
+E           ValueError: static attribute table hash does not match the frozen selection input
+
+src/unified_autoresearch/data/real_source.py:105: ValueError
+______ test_package_builder_accepts_the_frozen_sixty_four_basin_selection ______
+
+tmp_path = PosixPath('/tmp/pytest-of-sunyiq/pytest-1/test_package_builder_accepts_t0')
+
+    def test_package_builder_accepts_the_frozen_sixty_four_basin_selection(tmp_path):
+        basins = frozen_64_basins()
+        camels_root = write_camels_tree(tmp_path / "camels_us", basins)
+        source_root = tmp_path / "development_source"
+>       build_source(source_root, camels_root)
+
+src/unified_autoresearch/tests/test_scaleup_64_data_base.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/unified_autoresearch/tests/test_scaleup_64_data_base.py:85: in build_source
+    return build_development_source_root(
+src/unified_autoresearch/data/real_source.py:145: in build_development_source_root
+    static_attributes = _frozen_static_attributes(static_table_path, basins, selection["static_sha256"])
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+static_table_path = PosixPath('/data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/builder_snapshot/src/fair_benchmark/frozen/bundle/track0_statics.csv')
+basins = ['10259000', '04045500', '12175500', '02300700', '08190500', '02038850', ...]
+expected_static_sha256 = '085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2'
+
+    def _frozen_static_attributes(static_table_path: Path, basins: list[str], expected_static_sha256: str) -> dict:
+        if _sha256(static_table_path) != expected_static_sha256:
+>           raise ValueError("static attribute table hash does not match the frozen selection input")
+E           ValueError: static attribute table hash does not match the frozen selection input
+
+src/unified_autoresearch/data/real_source.py:105: ValueError
+=========================== short test summary info ============================
+FAILED src/unified_autoresearch/tests/test_scaleup_64_selection.py::test_frozen_sixty_four_record_declares_the_two_frozen_selection_inputs
+FAILED src/unified_autoresearch/tests/test_scaleup_64_selection.py::test_refreezing_into_a_scratch_path_reproduces_the_committed_record_byte_for_byte
+FAILED src/unified_autoresearch/tests/test_scaleup_64_data_base.py::test_source_builder_accepts_the_frozen_sixty_four_basin_selection
+FAILED src/unified_autoresearch/tests/test_scaleup_64_data_base.py::test_package_builder_accepts_the_frozen_sixty_four_basin_selection
+4 failed, 23 passed in 13.56s
+--- /data1/home/sunyiq/autoresearch64/runs/unified_autoresearch/hbv_lite_unseen_64_confirmation_20260811_seq67/evidence/JOB_STDERR.txt
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-18T20:37:50+0800
