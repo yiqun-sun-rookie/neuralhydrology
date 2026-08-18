@@ -1,0 +1,88 @@
+### channel=id29-nearing2022-da seq=284
+### host=login4
+### started=2026-08-18T21:20:00+0800
+### ---------- output ----------
+=== PREFLIGHT ===
+2026-08-18T21:20:00+0800
+batch_ok lines=23
+task6_config=src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_2_holdout_0.75_seed_0.yml
+task7_config=src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_2_holdout_1.0_seed_0.yml
+2ad6850f24bb9b6af5e42634748988b4c984eb19ca227e66f9aabf84831c0313  src/29_nearing2022_da_ar/registry/time_split_remaining_training_batch.txt
+c7fd856c19f2d8670b9453b4a9d5132824970b22670a8d03311121193e86bfe5  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+=== IDEMPOTENCE CHECK (do not double-submit) ===
+existing_retime_jobs=0
+=== SUBMIT RERUNS (--time=3-12:00:00) ===
+task=6 submitted_job=204860
+task=7 submitted_job=204861
+=== 202214 PROVENANCE (for its separate rerun) ===
+202214|N22-train|hgpu4|2-00:00:00|TIMEOUT|2-00:00:01|2026-08-14T06:58:05|/data1/home/sunyiq/nearing2022_da
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_seq98_backup/results/29_nearing2022_da_ar/formal_closure/final_reproduction_report.md
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_seq98_backup/test/test_nearing2022_reproduction_contract.py
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_payload_seq107_backups/test/test_nearing2022_reproduction_contract.py
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/pre_dynamic_progress_contract_seq114/test_nearing2022_reproduction_contract.py
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/preclosure_seq94_backup/test/test_nearing2022_reproduction_contract.py
+-rw-r--r--.  1 sunyiq g_sunyiq       99 Aug 14 06:58 N22-train_202214.err
+-rw-r--r--.  1 sunyiq g_sunyiq 31760089 Aug 13 19:07 N22-train_202214.out
+started=2026-08-12T06:58:08+0800
+host=ngu102
+config=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.5_seed_0.yml
+512971a337cc0fe8135b6f7ccc16a6fa24846af7d27cfb3350ceeae2bbf72178  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.5_seed_0.yml
+NVIDIA A40, 535.104.05, 46068 MiB
+NVIDIA A40, 535.104.05, 46068 MiB
+NVIDIA A40, 535.104.05, 46068 MiB
+NVIDIA A40, 535.104.05, 46068 MiB
+2026-08-12 06:59:03,075: Logging to closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0812_0659_ep30/output.log initialized.
+2026-08-12 06:59:03,075: ### Folder structure created at closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0812_0659_ep30
+2026-08-12 06:59:03,076: ### Run configurations for nearing2022_full_time_autoregression_lead1_holdout0.5_seed0
+2026-08-12 06:59:03,076: experiment_name: nearing2022_full_time_autoregression_lead1_holdout0.5_seed0
+2026-08-12 06:59:03,076: run_dir: closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0812_0659_ep30
+2026-08-12 06:59:03,076: dataset: camels_us
+2026-08-12 06:59:03,076: data_dir: data/camels_us
+2026-08-12 06:59:03,076: train_basin_file: src/29_nearing2022_da_ar/basin_lists/531_basin_list.txt
+2026-08-12 06:59:03,076: validation_basin_file: src/29_nearing2022_da_ar/basin_lists/531_basin_list.txt
+2026-08-12 06:59:03,077: test_basin_file: src/29_nearing2022_da_ar/basin_lists/531_basin_list.txt
+2026-08-12 06:59:03,077: train_start_date: 1999-10-01 00:00:00
+2026-08-12 06:59:03,077: train_end_date: 2008-09-30 00:00:00
+2026-08-12 06:59:03,077: validation_start_date: 1980-10-01 00:00:00
+2026-08-12 06:59:03,077: validation_end_date: 1989-09-30 00:00:00
+2026-08-12 06:59:03,077: test_start_date: 1989-10-01 00:00:00
+2026-08-12 06:59:03,077: test_end_date: 1999-09-30 00:00:00
+2026-08-12 06:59:03,077: seed: 0
+2026-08-12 06:59:03,077: device: cuda:0
+2026-08-12 06:59:03,078: model: arlstm
+2026-08-12 06:59:03,078: head: regression
+2026-08-12 06:59:03,078: output_activation: linear
+2026-08-12 06:59:03,078: hidden_size: 256
+2026-08-12 06:59:03,078: initial_forget_bias: 3
+2026-08-12 06:59:03,078: output_dropout: 0.4
+2026-08-12 06:59:03,078: optimizer: Adam
+2026-08-12 06:59:03,078: loss: NSE
+2026-08-12 06:59:03,078: learning_rate: {0: 0.001, 10: 0.0005, 25: 0.0001}
+2026-08-12 06:59:03,078: batch_size: 256
+2026-08-12 06:59:03,078: epochs: 30
+2026-08-12 06:59:03,078: seq_length: 365
+2026-08-12 06:59:03,079: predict_last_n: 1
+2026-08-12 06:59:03,079: target_noise_std: 0.005
+=== QUEUE AFTER ===
+     JOBID PARTITION           NAME     STATE        TIME NODELIST(REASON)
+202228_[32 hgpu4,hgp      N22-hyper   PENDING        0:00 (JobArrayTaskLimit)
+202226_[0- hgpu4,hgp N22-eval-later   PENDING        0:00 (DependencyNeverSatisfied)
+    202229 hgpu4,hgp   N22-agg-eval   PENDING        0:00 (Dependency)
+    202230 hgpu4,hgp  N22-agg-hyper   PENDING        0:00 (Dependency)
+    202294 hgpu4,hgp     N22-export   PENDING        0:00 (Dependency)
+    202315 hgpu4,hgp       N22-gate   PENDING        0:00 (Dependency)
+    202507 hgpu4,hgp N22-mask-iso-5   PENDING        0:00 (DependencyNeverSatisfied)
+202215_[18 hgpu4,hgp       N22-time   PENDING        0:00 (JobArrayTaskLimit)
+    202293 hgpu4,hgp   N22-manifest   PENDING        0:00 (JobHeldUser)
+202228_327     hgpu4      N22-hyper   RUNNING        3:45 ngu104
+202228_326     hgpu4      N22-hyper   RUNNING       11:02 ngu104
+  204860_6     hgpu4     N22-retime   RUNNING     INVALID ngu101
+  204861_7     hgpu4     N22-retime   RUNNING     INVALID ngu101
+ 202215_17     hgpu4       N22-time   RUNNING     1:42:09 ngu104
+ 202215_16     hgpu4       N22-time   RUNNING     5:01:23 ngu101
+ 202215_15     hgpu4       N22-time   RUNNING     9:21:14 ngu104
+=== END seq=284 ===
+2026-08-18T21:20:03+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-18T21:20:03+0800
