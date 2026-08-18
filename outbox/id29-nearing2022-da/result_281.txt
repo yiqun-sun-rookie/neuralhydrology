@@ -1,0 +1,137 @@
+### channel=id29-nearing2022-da seq=281
+### host=login4
+### started=2026-08-18T21:00:04+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-18T21:00:04+0800
+=== REGISTERED COMPLETE-ROLE COUNTS ===
+{"evaluation_by_family": {"basin_assimilation": 10, "basin_autoregression": 10, "basin_simulation": 10, "time_assimilation": 25, "time_autoregression": 5}, "evaluation_complete": 60, "evaluation_total": 180, "hyperparameter_by_family": {"assimilation_hyperparameter": 324}, "hyperparameter_complete": 324, "hyperparameter_total": 660, "missing_roles_total": 2294, "registered_matrix_complete": false, "training_by_family": {"basin_autoregression": 10, "basin_simulation": 10, "time_autoregression": 14, "time_simulation": 1}, "training_complete": 35, "training_total": 46}
+=== EVAL ARRAY 202222 SUMMARY ===
+     30 COMPLETED
+=== HYPER ARRAY 202228 SUMMARY ===
+    324 COMPLETED
+      1 PENDING
+      2 RUNNING
+=== TRAIN ARRAY 202215 SUMMARY ===
+     13 COMPLETED
+      1 PENDING
+      3 RUNNING
+      2 TIMEOUT
+=== NON-ARRAY JOB STATES ===
+202216_0|N22-basin|COMPLETED|0:0|02:46:22|2026-08-10T15:24:22
+202216_1|N22-basin|COMPLETED|0:0|02:45:03|2026-08-10T15:23:03
+202216_2|N22-basin|COMPLETED|0:0|02:30:39|2026-08-10T17:53:42
+202216_3|N22-basin|COMPLETED|0:0|02:48:03|2026-08-10T18:12:25
+202216_4|N22-basin|COMPLETED|0:0|02:31:29|2026-08-10T20:25:11
+202216_5|N22-basin|COMPLETED|0:0|02:45:10|2026-08-10T20:57:35
+202216_6|N22-basin|COMPLETED|0:0|02:32:32|2026-08-10T22:57:43
+202216_7|N22-basin|COMPLETED|0:0|02:42:59|2026-08-10T23:40:35
+202216_8|N22-basin|COMPLETED|0:0|02:35:52|2026-08-11T01:33:36
+202216_9|N22-basin|COMPLETED|0:0|02:32:39|2026-08-11T02:13:17
+202216_10|N22-basin|COMPLETED|0:0|1-08:56:30|2026-08-12T10:30:06
+202216_11|N22-basin|COMPLETED|0:0|1-08:40:38|2026-08-12T10:53:55
+202216_12|N22-basin|COMPLETED|0:0|1-08:36:47|2026-08-13T19:06:53
+202216_13|N22-basin|COMPLETED|0:0|1-08:54:14|2026-08-13T19:48:09
+202216_14|N22-basin|COMPLETED|0:0|1-08:40:26|2026-08-15T03:47:19
+202216_15|N22-basin|COMPLETED|0:0|1-08:55:51|2026-08-15T04:44:00
+202216_16|N22-basin|COMPLETED|0:0|1-08:38:31|2026-08-16T12:25:50
+202216_17|N22-basin|COMPLETED|0:0|1-08:53:12|2026-08-16T13:37:13
+202216_18|N22-basin|COMPLETED|0:0|1-09:16:08|2026-08-17T21:41:58
+202216_19|N22-basin|COMPLETED|0:0|1-08:10:32|2026-08-17T21:47:46
+202226_[0-119%4]|N22-eval-later|PENDING|0:0|00:00:00|Unknown
+202227_0|N22-basin-da|COMPLETED|0:0|00:32:59|2026-08-17T22:20:45
+202227_1|N22-basin-da|COMPLETED|0:0|00:32:30|2026-08-17T22:20:16
+202227_2|N22-basin-da|COMPLETED|0:0|00:32:56|2026-08-17T22:53:12
+202227_3|N22-basin-da|COMPLETED|0:0|00:32:26|2026-08-17T22:53:11
+202227_4|N22-basin-da|COMPLETED|0:0|00:32:33|2026-08-17T23:25:44
+202227_5|N22-basin-da|COMPLETED|0:0|00:32:06|2026-08-17T23:25:18
+202227_6|N22-basin-da|COMPLETED|0:0|00:33:09|2026-08-17T23:58:29
+202227_7|N22-basin-da|COMPLETED|0:0|00:32:38|2026-08-17T23:58:22
+202227_8|N22-basin-da|COMPLETED|0:0|00:31:46|2026-08-18T00:30:08
+202227_9|N22-basin-da|COMPLETED|0:0|00:33:38|2026-08-18T00:32:07
+202229|N22-agg-eval|PENDING|0:0|00:00:00|Unknown
+202230|N22-agg-hyper|PENDING|0:0|00:00:00|Unknown
+202238_0|N22-eval-bs-direct|COMPLETED|0:0|00:01:56|2026-08-17T21:49:42
+202238_1|N22-eval-bs-direct|COMPLETED|0:0|00:04:23|2026-08-17T21:52:09
+202238_2|N22-eval-bs-direct|COMPLETED|0:0|00:01:58|2026-08-17T21:51:40
+202238_3|N22-eval-bs-direct|COMPLETED|0:0|00:04:38|2026-08-17T21:56:18
+202238_4|N22-eval-bs-direct|COMPLETED|0:0|00:01:51|2026-08-17T21:54:00
+202238_5|N22-eval-bs-direct|COMPLETED|0:0|00:04:27|2026-08-17T21:58:27
+202238_6|N22-eval-bs-direct|COMPLETED|0:0|00:01:53|2026-08-17T21:58:11
+202238_7|N22-eval-bs-direct|COMPLETED|0:0|00:04:09|2026-08-17T22:02:20
+202238_8|N22-eval-bs-direct|COMPLETED|0:0|00:01:43|2026-08-17T22:00:10
+202238_9|N22-eval-bs-direct|COMPLETED|0:0|00:04:17|2026-08-17T22:04:27
+202238_10|N22-eval-bs-direct|COMPLETED|0:0|00:01:53|2026-08-17T22:04:13
+202238_11|N22-eval-bs-direct|COMPLETED|0:0|00:04:22|2026-08-17T22:08:35
+202238_12|N22-eval-bs-direct|COMPLETED|0:0|00:01:49|2026-08-17T22:06:16
+202238_13|N22-eval-bs-direct|COMPLETED|0:0|00:04:20|2026-08-17T22:10:36
+202238_14|N22-eval-bs-direct|COMPLETED|0:0|00:01:44|2026-08-17T22:10:19
+202238_15|N22-eval-bs-direct|COMPLETED|0:0|00:04:18|2026-08-17T22:14:37
+202238_16|N22-eval-bs-direct|COMPLETED|0:0|00:01:40|2026-08-17T22:12:16
+202238_17|N22-eval-bs-direct|COMPLETED|0:0|00:04:18|2026-08-17T22:16:34
+202238_18|N22-eval-bs-direct|COMPLETED|0:0|00:01:55|2026-08-17T22:16:33
+202238_19|N22-eval-bs-direct|COMPLETED|0:0|00:04:25|2026-08-17T22:20:58
+202293|N22-manifest|PENDING|0:0|00:00:00|Unknown
+202294|N22-export|PENDING|0:0|00:00:00|Unknown
+202315|N22-gate|PENDING|0:0|00:00:00|Unknown
+202510|N22-data-port-v2|COMPLETED|0:0|00:05:08|2026-08-13T06:46:43
+202511|N22-mask-iso-v2|COMPLETED|0:0|00:05:22|2026-08-13T06:52:05
+202214|N22-train|TIMEOUT|0:0|2-00:00:01|2026-08-14T06:58:05
+=== RUNNING NOW ===
+202228_[326-659%2]|N22-hyper|PENDING|0:00|(JobArrayTaskLimit)
+202226_[0-119%4]|N22-eval-later|PENDING|0:00|(DependencyNeverSatisfied)
+202229|N22-agg-eval|PENDING|0:00|(Dependency)
+202230|N22-agg-hyper|PENDING|0:00|(Dependency)
+202294|N22-export|PENDING|0:00|(Dependency)
+202315|N22-gate|PENDING|0:00|(Dependency)
+202507|N22-mask-iso-531|PENDING|0:00|(DependencyNeverSatisfied)
+202215_[18-22%3]|N22-time|PENDING|0:00|(JobArrayTaskLimit)
+202293|N22-manifest|PENDING|0:00|(JobHeldUser)
+202228_325|N22-hyper|RUNNING|6:05|ngu104
+202228_324|N22-hyper|RUNNING|13:00|ngu104
+202215_17|N22-time|RUNNING|1:22:24|ngu104
+202215_16|N22-time|RUNNING|4:41:38|ngu101
+202215_15|N22-time|RUNNING|9:01:29|ngu104
+=== PENDING REASONS ===
+202228_[326-659%2]|PENDING|(JobArrayTaskLimit)
+202226_[0-119%4]|PENDING|(DependencyNeverSatisfied)
+202229|PENDING|(Dependency)
+202230|PENDING|(Dependency)
+202294|PENDING|(Dependency)
+202315|PENDING|(Dependency)
+202507|PENDING|(DependencyNeverSatisfied)
+202215_[18-22%3]|PENDING|(JobArrayTaskLimit)
+202293|PENDING|(JobHeldUser)
+=== AGGREGATION AND DECISION OUTPUTS ===
+MISSING|/data1/home/sunyiq/nearing2022_da/closure_20260810/aggregation/evaluations
+MISSING|/data1/home/sunyiq/nearing2022_da/closure_20260810/aggregation/hyperparameters
+MISSING|/data1/home/sunyiq/nearing2022_da/closure_20260810/decision
+=== ENTRY-GATE DIAGNOSTIC OUTPUTS (202510/202511) ===
+EXISTS|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2
+  audit_training_data_port.py|14478 bytes
+  warmup_target_paired_retraining_protocol_amendment_01.json|3779 bytes
+  audit.json|31611 bytes
+  diagnostic_receipt.json|1724 bytes
+  audit_training_data_port_v2.py|14668 bytes
+  run_author_v13_training_data_port_all531_v2.slurm|8070 bytes
+  audit_stdout.json|24747 bytes
+EXISTS|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2
+  audit_training_data_port.py|14478 bytes
+  audit_warmup_target_isolation.py|12662 bytes
+  warmup_target_paired_retraining_protocol_amendment_01.json|3779 bytes
+  run_author_v13_warmup_isolation_all531_v2.slurm|7584 bytes
+  audit_stdout.json|481 bytes
+  audit.json|3039 bytes
+  diagnostic_receipt.json|1695 bytes
+  warmup_target_paired_retraining_protocol.json|7266 bytes
+=== PLATFORM VERIFIED ===
+NAME="CentOS Linux"
+VERSION="7 (Core)"
+GNU bash, version 4.2.46(2)-release (x86_64-redhat-linux-gnu)
+git version 1.8.3.1
+ldd (GNU libc) 2.17
+=== END seq=281 read_only=true ===
+2026-08-18T21:00:18+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-18T21:00:18+0800
