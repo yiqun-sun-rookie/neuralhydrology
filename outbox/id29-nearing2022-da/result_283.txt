@@ -1,0 +1,239 @@
+### channel=id29-nearing2022-da seq=283
+### host=login4
+### started=2026-08-18T21:15:28+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-08-18T21:15:28+0800
+=== RUNNING JOB PROGRESS ===
+--- job 202215_15 ---
+RunTime=09:16:39
+TimeLimit=2-00:00:00
+StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_15.out
+  bytes=7937275
+# Epoch 8:  44%|####4     | 3029/6821 [32:59<41:13,  1.53it/s, Loss: 0.0046]
+# Epoch 8:  44%|####4     | 3030/6821 [32:59<41:23,  1.53it/s, Loss: 0.0046]
+# Epoch 8:  44%|####4     | 3030/6821 [33:00<41:23,  1.53it/s, Loss: 0.0086]
+# Epoch 8:  44%|####4     | 3031/6821 [33:00<41:07,  1.54it/s, Loss: 0.0086]
+--- job 202215_16 ---
+RunTime=04:56:48
+TimeLimit=2-00:00:00
+StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_16.out
+  bytes=4057439
+# Epoch 4:  78%|#######7  | 5299/6821 [59:58<17:20,  1.46it/s, Loss: 0.0162]
+# Epoch 4:  78%|#######7  | 5300/6821 [59:58<17:12,  1.47it/s, Loss: 0.0162]
+# Epoch 4:  78%|#######7  | 5300/6821 [59:58<17:12,  1.47it/s, Loss: 0.0106]
+# Epoch 4:  78%|#######7  | 5301/6821 [59:58<17:12,  1.47it/s, Loss: 0.0106]
+--- job 202215_17 ---
+RunTime=01:37:34
+TimeLimit=2-00:00:00
+StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-time_202215_17.out
+  bytes=1428777
+# Epoch 2:  30%|##9       | 2036/6821 [21:33<50:53,  1.57it/s, Loss: 0.0206]
+# Epoch 2:  30%|##9       | 2037/6821 [21:33<51:04,  1.56it/s, Loss: 0.0206]
+# Epoch 2:  30%|##9       | 2037/6821 [21:33<51:04,  1.56it/s, Loss: 0.0161]
+# Epoch 2:  30%|##9       | 2038/6821 [21:33<50:39,  1.57it/s, Loss: 0.0161]
+=== 202226 SCONTROL ===
+JobId=202226
+ArrayJobId=202226
+ArrayTaskId=0-119%4
+JobName=N22-eval-later
+Reason=DependencyNeverSatisfied
+Dependency=afterok:202214,afterok:202215_*
+TimeLimit=1-00:00:00
+Partition=hgpu4,hgpu8,hgpu2
+NumCPUs=4
+Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+WorkDir=/data1/home/sunyiq/hpc_mailbox
+StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-eval-later_202226_4294967294.out
+=== 202214 / 202215 SCONTROL + SACCT ===
+--- 202214 ---
+  no live record
+202214|TIMEOUT|2-00:00:00|2-00:00:01|2026-08-14T06:58:05
+--- 202215 ---
+JobId=202215
+JobName=N22-time
+Reason=JobArrayTaskLimit
+Dependency=(null)
+TimeLimit=2-00:00:00
+Partition=hgpu4,hgpu8,hgpu2
+Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+JobId=204818
+JobName=N22-time
+Reason=None
+Dependency=(null)
+TimeLimit=2-00:00:00
+Partition=hgpu4
+Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+JobId=204694
+JobName=N22-time
+Reason=None
+Dependency=(null)
+TimeLimit=2-00:00:00
+Partition=hgpu4
+Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+JobId=204593
+JobName=N22-time
+Reason=None
+Dependency=(null)
+TimeLimit=2-00:00:00
+Partition=hgpu4
+Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+202215_0|COMPLETED|2-00:00:00|1-13:02:36|2026-08-12T01:40:36
+202215_1|COMPLETED|2-00:00:00|1-14:15:01|2026-08-12T02:53:01
+202215_2|COMPLETED|2-00:00:00|1-14:07:58|2026-08-12T02:45:58
+202215_3|COMPLETED|2-00:00:00|1-12:02:04|2026-08-13T13:42:41
+202215_4|COMPLETED|2-00:00:00|1-14:55:08|2026-08-13T17:41:07
+202215_5|COMPLETED|2-00:00:00|1-15:33:14|2026-08-13T18:26:15
+202215_6|TIMEOUT|2-00:00:00|2-00:00:26|2026-08-15T13:43:07
+202215_7|TIMEOUT|2-00:00:00|2-00:00:02|2026-08-15T17:41:09
+202215_8|COMPLETED|2-00:00:00|1-12:22:52|2026-08-15T06:49:07
+202215_9|COMPLETED|2-00:00:00|1-14:29:35|2026-08-16T21:18:42
+202215_10|COMPLETED|2-00:00:00|1-14:08:28|2026-08-17T03:51:37
+202215_11|COMPLETED|2-00:00:00|1-12:52:23|2026-08-17T06:33:33
+202215_12|COMPLETED|2-00:00:00|1-14:40:07|2026-08-18T11:58:49
+202215_13|COMPLETED|2-00:00:00|1-12:27:01|2026-08-18T16:18:38
+202215_14|COMPLETED|2-00:00:00|1-13:04:21|2026-08-18T19:37:54
+202215_15|RUNNING|2-00:00:00|09:16:49|Unknown
+202215_16|RUNNING|2-00:00:00|04:56:58|Unknown
+202215_17|RUNNING|2-00:00:00|01:37:44|Unknown
+202215_[18-22%3]|PENDING|2-00:00:00|00:00:00|Unknown
+=== DEPENDENCY WIRING ===
+202226 -> afterok:202214,afterok:202215_*
+202229 -> afterok:202226_*
+202230 -> afterok:202228_*
+202294 -> afterok:202293
+202315 -> afterok:202229,afterok:202230
+=== SLURM SCRIPTS ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/run_registered_numerical_gate_pre_seq101_9c5bfa33.slurm|1742
+=== ENTRY-GATE PAYLOADS ===
+--- author_v13_training_data_port_all531_v2 ---
+{
+  "amendment_sha256": "a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5",
+  "audit_sha256": "4c510edc9fdb8ea1dc0c325a45aac7079e949c1f605bd60b369f664f7ce20042",
+  "common_pre_normalization_raw_targets_bitwise_identical": true,
+  "current_audit_target_center": 1.5146349668502808,
+  "current_audit_target_scale": 3.6992526054382324,
+  "failed_audit_sha256": "3f5fe1e597a2d8cee36dffac4426a178075d8828eae560c585fe7727d2a4aa30",
+  "frozen_basin_list_sha256": "cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85",
+  "frozen_config_sha256": "729985706faeb8c45480d3c485dbad72ae51eec94dff69b5c8964e2036591b1a",
+  "inverse_scaling_is_descriptive_only": true,
+  "node": "ngu104",
+  "registered_matrix_modified": false,
+  "registered_source_config_sha256": "504d16fdf4d5c2d138790694656dfaecf089d7852be63ef3efc22f4814cd8996",
+  "registered_source_scaler_matches_current_audit": true,
+  "registered_source_scaler_sha256": "add1a777647f92f1aa7a8ad039e3d406d32f05c21f30c685a14736d22f45a5d4",
+  "registered_target_center": 1.5146349668502808,
+  "registered_target_scale": 3.6992526054382324,
+  "schema": "nearing2022-author-v13-training-data-port-all531-receipt-v2",
+  "scientific_boundary": "This repair proves exact common pre-normalization target identity and the full-cohort warmup-mask contrast. It does not quantify the trained-checkpoint or paper-score effect without the frozen paired retraining.",
+  "slurm_job_id": "202510",
+  "slurm_script_sha256": "7805e78942a9d512075deb1f546a230d4fe20f04a7efd837a8507ada9e4a493e",
+  "v1_script_sha256": "5f7d49c4899aeb0ffb1d097cffd98cfe86393f86b5849a153d3074094744eb85",
+  "v2_script_sha256": "51b9091c928a8b514f0be6e81ab5afd304bda654e3dc63a6cb27746e3dee3233"
+}
+
+audit.json sha256=4c510edc9fdb8ea1dc0c325a45aac7079e949c1f605bd60b369f664f7ce20042 bytes=31611
+{
+  "conclusion": {
+    "causal_boundary": "This diagnostic establishes a concrete training-path mismatch and exact common raw-target identity. It does not quantify the learned-checkpoint or paper-score effect without paired retraining.",
+    "common_pre_normalization_raw_targets_bitwise_identical": true,
+    "direct_fact": "The released source masks target values before the configured training-period start, while the current port does not. This changes target normalization and per-basin NSE-loss standard deviations.",
+    "training_data_port_is_exact_for_this_scope": false
+  },
+  "created_at": "2026-08-13T06:46:42.387632+08:00",
+  "dataset_structure": {
+    "dataset_length": 1745928,
+    "first_lookup": [
+      "01022500",
+      [
+        364
+      ]
+    ],
+    "last_lookup": [
+      "14400000",
+      [
+        3651
+      ]
+    ],
+    "metadata_identical": true,
+    "middle_lookup": [
+      "05488200",
+      [
+        2008
+      ]
+    ]
+  },
+  "inputs": {
+    "basins_compared": 531,
+    "basins_with_bitwise_identical_normalized_dynamic_inputs": 531,
+    "basins_with_bitwise_identical_static_attributes": 531
+  },
+  "measurement_repair": {
+    "decisive_raw_target_gate": "bitwise equality of common finite pre-normalization target values",
+    "inverse_scaling_absolute_tolerance_changed": false,
+    "inverse_scaling_role": "descriptive floating-point diagnostic only",
+    "version_1_helper": "src/29_nearing2022_da_ar/scripts/audit_training_data_port.py",
+    "version_1_helper_s
+--- author_v13_warmup_isolation_all531_v2 ---
+{
+  "audit_sha256": "1277bef6b3f67dca764247c4a9903421a3cd267b4888d7845e89fe39d91acbca",
+  "gpu": "NVIDIA A40, GPU-d6513a7a-f24f-45ba-4b0a-034208e7836d, 535.104.05\nNVIDIA A40, GPU-4f94140e-b9c9-4839-4793-d5dcf4b7c136, 535.104.05\nNVIDIA A40, GPU-6a54b5c7-4653-d3fe-85c0-8e3263a3c6d5, 535.104.05\nNVIDIA A40, GPU-4865db69-8ac0-95e9-96fb-5d862ad4cb16, 535.104.05",
+  "helper_script_sha256": "5f7d49c4899aeb0ffb1d097cffd98cfe86393f86b5849a153d3074094744eb85",
+  "isolation_script_sha256": "9f898a80aafb4e207bb56fd095125e9d5d092ec8c96af4d6010bdaeb36a27f8c",
+  "node": "ngu104",
+  "paired_retraining_protocol_sha256": "16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1",
+  "protocol_amendment_sha256": "a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5",
+  "registered_matrix_modified": false,
+  "runtime": {
+    "cuda": "12.1",
+    "cudnn": "90100",
+    "numpy": "2.3.3",
+    "pandas": "2.3.2",
+    "python": "3.11.13",
+    "scipy": "1.16.2",
+    "torch": "2.4.0",
+    "xarray": "2025.12.0"
+  },
+  "schema": "nearing2022-author-v13-warmup-isolation-all531-receipt-v2",
+  "scientific_boundary": "This establishes all-531 data-tensor and scaling causality for the single warmup mask after the exact-raw entry repair. It does not quantify the trained-checkpoint or paper-metric effect.",
+  "single_mask_restores_released_training_data_for_531_basins": true,
+  "slurm_job_id": "202511",
+  "slurm_script_sha256": "9d8d2c890e6ec8a28be30e674ea05c3c90a8926ba0e4e80bf088386879127053",
+  "upstream_audit_sha256": "4c510edc9fdb8ea1dc0c325a45aac7079e949c1f605bd60b369f664f7ce20042",
+  "upstream_receipt_sha256": "b1bb1698fb0cd54fcf032d6db66681588ab5f33609b67e7aa120629747db02ed"
+}
+
+audit.json sha256=1277bef6b3f67dca764247c4a9903421a3cd267b4888d7845e89fe39d91acbca bytes=3039
+{
+  "author_vs_current_masked": {
+    "author_target_center": 1.5002624988555908,
+    "author_target_scale": 3.6244070529937744,
+    "basins_compared": 531,
+    "bitwise_identical_normalized_dynamic_input_basins": 531,
+    "bitwise_identical_static_attribute_basins": 531,
+    "common_finite_target_values": 1745928,
+    "common_raw_targets_within_1e_5": true,
+    "dataset_length": 1745928,
+    "finite_target_mask_identical": true,
+    "masked_minus_author_target_center": 0.0,
+    "masked_minus_author_target_scale": 0.0,
+    "masked_target_center": 1.5002624988555908,
+    "masked_target_scale": 3.6244070529937744,
+    "maximum_absolute_common_raw_target_difference": 0.0,
+    "maximum_absolute_target_standard_deviation_difference": 0.0,
+    "metadata_identical": true,
+    "per_basin_target_standard_deviations_within_1e_6": 531
+  },
+  "conclusion": {
+    "causal_boundary": "Restoring the released training-data tensors and scaling proves data-path causality only. Its effect on learned checkpoints and paper metrics still requires an isolated paired retraining.",
+    "direct_fact": "The temporary current path differs from the installed current path by exactly the released warmup-target mask statement. No registered output or installed package file is modified.",
+    "single_mask_restores_released_training_data_for_scope": true
+  },
+  "created_at": "2026-08-13T06:51:48.790245+08:00",
+  "one_factor_contract": {
+    "inserted_statement": "df_sub.loc[df_sub.index < start_date, self.cfg.
+=== END seq=283 read_only=true ===
+2026-08-18T21:15:29+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-18T21:15:29+0800
