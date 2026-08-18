@@ -1,6 +1,5 @@
 #!/bin/bash
-# ID29 seq=280: read-only post-recovery status. Reuses the seq-279 role-count block verbatim;
-# the seq-279 PLANNING ESTIMATE block is dropped (it raised ValueError when no task is running).
+# ID29 seq=281: clean read-only health poll (must exit 0). No large directory dumps.
 set -eo pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
 IDEA="$ROOT/src/29_nearing2022_da_ar"
@@ -78,46 +77,46 @@ print(json.dumps({
 }, sort_keys=True))
 PY
 
-echo "=== EVALUATION ARRAY TASK RECORDS ==="
-sacct -n -P -j 202222 --format=JobID,State,ExitCode,ElapsedRaw,Elapsed,Start,End
 
+echo "=== EVAL ARRAY 202222 SUMMARY ==="
+sacct -X -n -P -j 202222 --format=State | sort | uniq -c
 
-echo "=== REGISTERED JOB STATES (all main jobs) ==="
-sacct -X -n -P -j "$MAIN_JOBS" --format=JobID,JobName,State,ExitCode,Elapsed,End,NodeList
+echo "=== HYPER ARRAY 202228 SUMMARY ==="
+sacct -X -n -P -j 202228 --format=State | sort | uniq -c
 
-echo "=== REPLACEMENT DIAGNOSTIC JOBS 202510/202511 ==="
-sacct -X -n -P -j 202510,202511 --format=JobID,JobName,State,ExitCode,Elapsed,End,Reason || echo 'absent'
+echo "=== TRAIN ARRAY 202215 SUMMARY ==="
+sacct -X -n -P -j 202215 --format=State | sort | uniq -c
 
-echo "=== QUEUE NOW ==="
-squeue -u sunyiq -o '%.10i %.9P %.30j %.9T %.11M %R' || true
+echo "=== NON-ARRAY JOB STATES ==="
+sacct -X -n -P -j 202214,202216,202226,202227,202229,202230,202238,202293,202294,202315,202510,202511 \
+  --format=JobID,JobName,State,ExitCode,Elapsed,End
 
-echo "=== AGGREGATION OUTPUTS ==="
-for d in "$AGGREGATION/evaluations" "$AGGREGATION/hyperparameters"; do
-  if [ -d "$d" ]; then
-    printf 'DIR_EXISTS|%s|files=%s\n' "$d" "$(find "$d" -type f | wc -l)"
-    find "$d" -type f -printf '  %p|%s bytes\n' 2>/dev/null | head -20
-  else
-    printf 'DIR_MISSING|%s\n' "$d"
-  fi
+echo "=== RUNNING NOW ==="
+squeue -u sunyiq -h -o '%i|%j|%T|%M|%R'
+
+echo "=== PENDING REASONS ==="
+squeue -u sunyiq -h -o '%i|%T|%R' | grep -i pending || echo 'none pending'
+
+echo "=== AGGREGATION AND DECISION OUTPUTS ==="
+for d in "$AGGREGATION/evaluations" "$AGGREGATION/hyperparameters" "$ROOT/closure_20260810/decision"; do
+  if [ -d "$d" ]; then printf 'EXISTS|%s|files=%s\n' "$d" "$(find "$d" -type f | wc -l)"
+  else printf 'MISSING|%s\n' "$d"; fi
 done
 
-echo "=== FROZEN NUMERICAL GATE OUTPUT (job 202315) ==="
-ls -la "$ROOT/closure_20260810/decision" 2>/dev/null || echo 'decision dir absent'
+echo "=== ENTRY-GATE DIAGNOSTIC OUTPUTS (202510/202511) ==="
+for d in "$DIAGNOSTICS/author_v13_training_data_port_all531_v2" "$DIAGNOSTICS/author_v13_warmup_isolation_all531_v2"; do
+  if [ -d "$d" ]; then
+    printf 'EXISTS|%s\n' "$d"
+    find "$d" -type f -printf '  %f|%s bytes\n' 2>/dev/null | head -10
+  else printf 'MISSING|%s\n' "$d"; fi
+done
 
-echo "=== MAILBOX STAGING (leftover results not pushed) ==="
-ls -la ~/.hpc_mailbox_staging/id29-nearing2022-da/ 2>/dev/null || echo 'staging empty/absent'
-
-echo "=== RUNNER ==="
-pgrep -af hpc_runner_active || echo 'runner NOT running'
-
-echo "=== PLATFORM AFTER UPGRADE ==="
-cat /etc/os-release | head -3
+echo "=== PLATFORM VERIFIED ==="
+grep -E '^(NAME|VERSION)=' /etc/os-release
 bash --version | head -1
 git --version
 ldd --version | head -1
-conda env list | head -10
-python -c "import torch;print('torch',torch.__version__,'cuda_avail',torch.cuda.is_available())" 2>&1 | tail -2
-sinfo -o '%.12P %.6a %.6D %.20N %.10T' 2>&1 | head -12
 
-echo "=== END seq=280 read_only=true ==="
+echo "=== END seq=281 read_only=true ==="
 date --iso-8601=seconds
+exit 0
