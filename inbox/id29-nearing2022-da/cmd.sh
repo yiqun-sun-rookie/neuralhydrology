@@ -1,49 +1,48 @@
 #!/bin/bash
-# ID29 seq=283: read-only repair intel. seq=282 died because a non-matching grep under
-# `set -eo pipefail` aborts the script; every grep/tail here is guarded with `|| true`.
+# ID29 seq=284: REPAIR. Resubmit the two timed-out time-split training array tasks with a
+# longer wall limit, and recover the provenance of standalone job 202214 for its own rerun.
+# Frozen configs, seeds and registries are untouched; only --time changes.
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
-CL="$ROOT/closure_20260810"
+IDEA="$ROOT/src/29_nearing2022_da_ar"
+BATCH=src/29_nearing2022_da_ar/registry/time_split_remaining_training_batch.txt
+SCRIPT="$IDEA/hpc/run_registered_training_array.slurm"
 
-echo "=== SNAPSHOT TIME ==="; date --iso-8601=seconds
+echo "=== PREFLIGHT ==="
+date --iso-8601=seconds
+cd "$ROOT"
+test -f "$BATCH" && echo "batch_ok lines=$(wc -l < "$BATCH")"
+echo "task6_config=$(sed -n '7p' "$BATCH")"
+echo "task7_config=$(sed -n '8p' "$BATCH")"
+sha256sum "$BATCH" "$SCRIPT"
 
-echo "=== RUNNING JOB PROGRESS ==="
-for J in 202215_15 202215_16 202215_17; do
-  echo "--- job $J ---"
-  scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | grep -E '^(StdOut|TimeLimit|RunTime)=' || true
-  SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
-  if [ -n "$SO" ] && [ -f "$SO" ]; then
-    echo "  bytes=$(stat -c %s "$SO")"
-    tail -c 400000 "$SO" 2>/dev/null | tr '\r' '\n' | grep -iE 'epoch' | tail -4 || true
-  fi
-done
+echo "=== IDEMPOTENCE CHECK (do not double-submit) ==="
+EXISTING=$(squeue -u sunyiq -h -o '%i|%j|%T' 2>/dev/null | grep -c 'N22-retime' || true)
+echo "existing_retime_jobs=$EXISTING"
 
-echo "=== 202226 SCONTROL ==="
-scontrol show job 202226 2>/dev/null | tr ' ' '\n' | grep -E '^(JobId|ArrayJobId|ArrayTaskId|JobName|Dependency|Command|StdOut|TimeLimit|Partition|Reason|WorkDir|NumCPUs|Gres)=' || echo 'no record'
+if [ "$EXISTING" -eq 0 ]; then
+  echo "=== SUBMIT RERUNS (--time=3-12:00:00) ==="
+  for T in 6 7; do
+    JID=$(sbatch --parsable \
+      --job-name=N22-retime \
+      --array="$T" \
+      --time=3-12:00:00 \
+      --export=ALL,BATCH_FILE_REL="$BATCH" \
+      "$SCRIPT" 2>&1)
+    echo "task=$T submitted_job=$JID"
+  done
+else
+  echo "SKIP: N22-retime jobs already present, not resubmitting"
+fi
 
-echo "=== 202214 / 202215 SCONTROL + SACCT ==="
-for J in 202214 202215; do
-  echo "--- $J ---"
-  scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | grep -E '^(JobId|JobName|Dependency|Command|TimeLimit|Partition|Reason)=' || echo '  no live record'
-  sacct -X -n -P -j "$J" --format=JobID,State,Timelimit,Elapsed,End 2>/dev/null | head -30 || true
-done
+echo "=== 202214 PROVENANCE (for its separate rerun) ==="
+sacct -X -n -P -j 202214 --format=JobID,JobName,Partition,Timelimit,State,Elapsed,End,WorkDir 2>/dev/null || true
+grep -rl '202214' "$ROOT/closure_20260810/provenance" 2>/dev/null | head -5 || true
+ls -la "$ROOT/closure_20260810/logs/" 2>/dev/null | grep -i '202214' | head -5 || true
+head -40 "$ROOT/closure_20260810/logs/N22-train_202214.out" 2>/dev/null || true
 
-echo "=== DEPENDENCY WIRING ==="
-for J in 202226 202229 202230 202294 202315; do
-  printf '%s -> %s\n' "$J" "$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^Dependency=//p' | head -1)"
-done
+echo "=== QUEUE AFTER ==="
+squeue -u sunyiq -o '%.10i %.9P %.14j %.9T %.11M %R' 2>/dev/null | head -20 || true
 
-echo "=== SLURM SCRIPTS ==="
-find "$CL" -maxdepth 3 -name '*.slurm' -printf '%p|%s\n' 2>/dev/null | sort | head -30 || true
-
-echo "=== ENTRY-GATE PAYLOADS ==="
-for D in author_v13_training_data_port_all531_v2 author_v13_warmup_isolation_all531_v2; do
-  P="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/$D"
-  echo "--- $D ---"
-  [ -f "$P/diagnostic_receipt.json" ] && cat "$P/diagnostic_receipt.json" || true
-  echo
-  [ -f "$P/audit.json" ] && { echo "audit.json sha256=$(sha256sum "$P/audit.json" | cut -d' ' -f1) bytes=$(stat -c %s "$P/audit.json")"; head -c 1500 "$P/audit.json"; echo; } || true
-done
-
-echo "=== END seq=283 read_only=true ==="; date --iso-8601=seconds
+echo "=== END seq=284 ==="; date --iso-8601=seconds
 exit 0
