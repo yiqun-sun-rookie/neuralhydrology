@@ -1,0 +1,54 @@
+### channel=sys-check seq=1
+### host=login4
+### started=2026-08-18T20:37:50+0800
+### ---------- output ----------
+=== 1. WHAT OS IS THIS LOGIN NODE RIGHT NOW ===
+CentOS Linux release 7.6.1810 (Core) 
+kernel: 3.10.0-957.el7.x86_64
+glibc:  ldd (GNU libc) 2.17
+date:   2026-08-18T20:37:50+0800
+uptime: up 2 years, 51 weeks, 5 days, 2 hours, 1 minute
+
+=== 2. DOES /data0/software EXIST (the announced new paths)? ===
+  EXISTS  /data0/software
+            abaqus
+            abelcarreras
+            anaconda3
+            ansys
+            autoconf
+  MISSING /data0/software/Intel
+  MISSING /data0/software/AMD
+  MISSING /data0/software/rocky9.5
+
+=== 3. SSHD PORT ON THIS HOST ===
+  LISTEN     0      128          *:22                       *:*                  
+  LISTEN     0      128         :::22                      :::*                  
+
+=== 4. COMPUTE NODE OS — are icn (CPU) nodes already on Rocky 9? ===
+PARTITION    STATE      NODES  NODELIST                      
+hcpu48*      allocated$ 15     icn[202,204-207,210-212,214,21
+hcpu48*      down*      16     icn[203,215,218,224,230,233-23
+hcpu48*      allocated  33     icn[201,208-209,213,219,222-22
+hcpu48y      down$      1      icn281                        
+hcpu48y      maint      1      icn280                        
+hcpu48y      down*      2      icn[278-279]                  
+hcpu48y      mixed      2      icn[274,277]                  
+hcpu48y      idle       6      icn[270-273,275-276]          
+hgpu8        mixed      2      ngu[201-202]                  
+hgpu8        idle       1      ngu203                        
+hgpu4        down*      1      ngu103                        
+  --- try to read OS reported by slurm per node ---
+  icn201   State=ALLOCATED OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018 
+  icn202   State=ALLOCATED$ OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018 
+  ngu001   State=MIXED  OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024 
+  ngu201   State=MIXED  OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+
+=== 5. SLURM VERSION (a Rocky 9 rebuild would likely bump it) ===
+  SLURM_VERSION           = 19.05.4
+  slurm 19.05.4
+
+=== 6. IS MY ENV STILL FUNCTIONAL RIGHT NOW ===
+  torch 2.4.0 ok
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-18T20:38:10+0800
