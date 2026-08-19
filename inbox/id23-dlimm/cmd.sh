@@ -1,46 +1,21 @@
 #!/bin/bash
-# id23-dlimm seq=2 : migration acceptance job on the CPU partition.
+# id23-dlimm seq=3 : why is 205449 pending; what partitions can actually take a CPU-only job.
 set -o pipefail
-cd ~/hpc_mailbox || exit 1
-mkdir -p outbox
-sed -i 's/\r$//' inbox/id23-dlimm/accept.slurm
 
-echo "=== SUBMIT ==="
-JID=$(sbatch --parsable inbox/id23-dlimm/accept.slurm 2>&1)
-echo "jobid=$JID"
+echo "=== SECTION A: my job ==="
+squeue -j 205449 -o "%.10i %.12P %.10T %.20r %.20S %.10L" 2>&1 | head -4 || true
+sacct -j 205449 -X --format=JobID%10,Partition%10,State%12,Submit%20,Start%20 2>&1 | head -4 || true
 
-echo "=== WAIT (max 18 min) ==="
-for i in $(seq 1 108); do
-    LEFT=$(squeue -j "$JID" -h -o "%i" 2>/dev/null | wc -l)
-    [ $((i % 12)) -eq 0 ] && echo "t=$((i*10))s left=$LEFT"
-    [ "$LEFT" -eq 0 ] && break
-    sleep 10
-done
+echo "=== SECTION B: hcpu48 state ==="
+sinfo -p hcpu48 -o "%P %a %D %t %N" 2>&1 | head -10 || true
+echo "queued on hcpu48: $(squeue -p hcpu48 -h -o '%i' 2>/dev/null | wc -l)"
 
-echo "=== SACCT ==="
-sacct -j "$JID" -X --format=JobID%12,JobName%12,NodeList%10,State%12,ExitCode%8,Elapsed%10 2>&1 | head -5
+echo "=== SECTION C: all partitions, idle counts ==="
+sinfo -o "%P %a %D %t" 2>&1 | head -25 || true
 
-echo "=== STDOUT ==="
-cat outbox/slurm_${JID}.out 2>/dev/null | tail -40 || true
-echo "=== STDERR (tail) ==="
-tail -15 outbox/slurm_${JID}.err 2>/dev/null || true
+echo "=== SECTION D: can hgpu2p take a job with no gres? ==="
+scontrol show partition hgpu2p 2>&1 | tr ' ' '\n' | grep -E "^(Name|State|TotalNodes|TotalCPUs|MaxTime|DefMemPerNode|QoS|AllowGroups)=" | head -10 || true
 
-echo "=== KEY NUMBERS ==="
-R=~/id23_dlimm/results/23_hbv_multilead_joint_uncertainty/h19_forecast_window_ceiling_throwaway_v01/forecast_window_ceiling_report.json
-if [ -f "$R" ]; then
-  python - "$R" <<'PY' 2>&1 | tail -20
-import json,sys
-d=json.load(open(sys.argv[1],encoding="utf-8"))
-s=d["arm_summary"]
-for k in sorted(s): print(f"{k:30s} lead7={s[k]['mean_forecast_rmse_lead_7']:.10f}")
-c=d["paired_block_contrasts_versus_frozen_base"]
-r=d["paired_block_contrasts_versus_evolving_base"]
-print("attribution_ceiling=%.16f" % c["frozen_base_minus_evolving_oracle_attribution_lead_7"]["point_estimate"])
-print("hazard_ceiling=%.16f" % c["frozen_base_minus_evolving_oracle_hazard_lead_7"]["point_estimate"])
-print("rule_space=%.16f" % r["evolving_base_minus_evolving_oracle_hazard_lead_7"]["point_estimate"])
-PY
-else
-  echo "REPORT_MISSING"
-fi
-rm -f outbox/slurm_${JID}.out outbox/slurm_${JID}.err
+echo "=== SECTION E: my queue overall ==="
+squeue -u "$USER" -o "%.10i %.12P %.14j %.10T %.20r" 2>&1 | head -12 || true
 echo "=== DONE ==="
