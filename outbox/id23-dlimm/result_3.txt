@@ -1,0 +1,60 @@
+### channel=id23-dlimm seq=3
+### host=login4
+### started=2026-08-19T15:06:26+0800
+### ---------- output ----------
+=== SECTION A: my job ===
+     JOBID    PARTITION      STATE               REASON           START_TIME  TIME_LEFT
+    205449       hcpu48    PENDING             Priority  2026-08-29T02:21:57    2:00:00
+     JobID  Partition        State               Submit                Start 
+---------- ---------- ------------ -------------------- -------------------- 
+    205449     hcpu48      PENDING  2026-08-19T14:46:04              Unknown 
+=== SECTION B: hcpu48 state ===
+PARTITION AVAIL NODES STATE NODELIST
+hcpu48* up 15 alloc$ icn[202,204-207,210-212,214,216-217,220-221,246,249]
+hcpu48* up 16 down* icn[203,215,218,224,230,233-237,239,242-243,245,247,256]
+hcpu48* up 33 alloc icn[201,208-209,213,219,222-223,225-229,231-232,238,240-241,244,248,250-255,257-264]
+queued on hcpu48: 1
+=== SECTION C: all partitions, idle counts ===
+PARTITION AVAIL NODES STATE
+hcpu48* up 15 alloc$
+hcpu48* up 16 down*
+hcpu48* up 33 alloc
+hcpu48y up 1 down$
+hcpu48y up 1 maint
+hcpu48y up 2 down*
+hcpu48y up 2 mix
+hcpu48y up 6 idle
+hgpu8 up 2 mix
+hgpu8 up 1 idle
+hgpu4 up 1 down*
+hgpu4 up 2 mix
+hgpu4 up 1 idle
+hgpu2 up 2 idle
+hgpu2p up 5 mix
+hgpu2p up 1 alloc
+hgpu2p up 3 idle
+=== SECTION D: can hgpu2p take a job with no gres? ===
+AllowGroups=ALL
+QoS=N/A
+MaxTime=UNLIMITED
+State=UP
+TotalCPUs=736
+TotalNodes=9
+DefMemPerNode=UNLIMITED
+=== SECTION E: my queue overall ===
+     JOBID    PARTITION           NAME      STATE               REASON
+202228_[43 hgpu4,hgpu8,      N22-hyper    PENDING    JobArrayTaskLimit
+    205449       hcpu48     id23accept    PENDING             Priority
+202226_[0- hgpu4,hgpu8, N22-eval-later    PENDING DependencyNeverSatis
+    202229 hgpu4,hgpu8,   N22-agg-eval    PENDING           Dependency
+    202230 hgpu4,hgpu8,  N22-agg-hyper    PENDING           Dependency
+    202294 hgpu4,hgpu8,     N22-export    PENDING           Dependency
+    202315 hgpu4,hgpu8,       N22-gate    PENDING           Dependency
+    202507 hgpu4,hgpu8, N22-mask-iso-5    PENDING DependencyNeverSatis
+202215_[18 hgpu4,hgpu8,       N22-time    PENDING    JobArrayTaskLimit
+    202293 hgpu4,hgpu8,   N22-manifest    PENDING          JobHeldUser
+202228_438        hgpu4      N22-hyper    RUNNING                 None
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T15:06:27+0800
