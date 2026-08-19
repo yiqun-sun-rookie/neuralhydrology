@@ -1,0 +1,133 @@
+{
+  "experiment_id": "CAMELS_PROCESS_NOISE_ONLY_01",
+  "manifest_status": "registered_not_run",
+  "registered_at": "2026-08-09",
+  "authorization": {
+    "source": "2026-08-09 user message: go",
+    "authorized": [
+      "write preregistration and implementation plan",
+      "implement and test in G:/wt/camels-rising",
+      "one-basin smoke with design seeds 0 and 1",
+      "90-basin exploratory design with design seeds 0 and 1"
+    ],
+    "not_authorized": [
+      "validation seeds 2 and 3",
+      "validation configuration version 02 freeze",
+      "new 531-basin run",
+      "commit",
+      "push",
+      "cleanup or deletion"
+    ]
+  },
+  "git": {
+    "worktree": "G:/wt/camels-rising",
+    "branch": "codex/camels-rising-half-recal",
+    "head": "61e938b3a89f648e460a20e6f03e005bdc9fca4a",
+    "dirty_worktree_preserved": true
+  },
+  "registered_inputs": {
+    "design_plan": {
+      "path": "docs/superpowers/plans/2026-08-09-camels-process-noise-only-switch.md",
+      "sha256": "aad88fbbf6651f0508859bb18825c08c8abdd6d0f7db0a1ef821803367127c2f"
+    },
+    "preregistration": {
+      "path": "docs/plans/2026-08-09-camels-process-noise-only-prereg-v01.md",
+      "sha256": "2d2187d40145dfc46b082b6312d8d98899a7a78e6b0debe98f637ab75b53409e"
+    },
+    "design_config": {
+      "path": "src/camels_process_noise_only/configs/camels_process_noise_only_01_design.json",
+      "sha256": "5e26f85f64c95cea864194430bb223affbebfb187d491edb2908479a31d68af7"
+    },
+    "registry": {
+      "path": "docs/plans/2026-08-09-camels-process-noise-only-registry-v01.csv",
+      "sha256_before_run_status_updates": "113054b2820c28a44e4e22bc828f5c032021a444dd2549ab15031d8d892b77bd"
+    },
+    "basin_list": {
+      "path": "docs/plans/2026-08-09-camels-process-noise-only-design90-basins-v01.csv",
+      "sha256": "73ea0e83d2fb8e00e5b8fa6bb17102dcca15237e91a1fc78a298fe508973391e",
+      "basin_count": 90
+    },
+    "raw_input_manifest": {
+      "path": "docs/plans/2026-08-09-camels-process-noise-only-design90-input-manifest-v01.csv",
+      "sha256": "78b4b05113e9ec2bc476bde95492013295f8deedf69fa3c7e87e11126a56adea",
+      "row_count": 182
+    },
+    "forcing_coverage": {
+      "path": "docs/plans/2026-08-09-camels-process-noise-only-design90-coverage-v01.csv",
+      "sha256": "059819e4482253a25f251afca7c1ee145e7c3b98faaf8265d7e8e5c3734f0b4b",
+      "basin_count": 90,
+      "days_per_basin": 2555,
+      "all_required_forcing_finite": true
+    },
+    "parameter_table": {
+      "path": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_rising_local_full.csv",
+      "sha256": "577b12fcb8e1a7a7a607995f0011dbda38a199ee68f3636732b80a3356c16be6"
+    },
+    "precheck_table": {
+      "path": "results/23_camels_switch_confirmation/g1_precheck_v01/g1_precheck.csv",
+      "sha256": "3443ba601434dd30b43c3b5e8a9b838fc666cc394077700ddd4d3e7158b3ee73"
+    }
+  },
+  "implementation": {
+    "contract": {
+      "path": "src/camels_process_noise_only/contract.py",
+      "sha256": "c49086a972ca958cf6825661c973ec76feaec84ae3a348bb260c932732b98e37"
+    },
+    "runner": {
+      "path": "src/camels_process_noise_only/runner.py",
+      "sha256": "719594fd8e33616f5aaff43d160f6cfeae64514ac1f180708e97304b91e21d1d"
+    },
+    "independent_verifier": {
+      "path": "src/camels_process_noise_only/verifier.py",
+      "sha256": "8820c201015e92e8c717fe819154c6886657a6d76428fe4820a04a9679d4fba2"
+    },
+    "shared_interacting_multiple_model_core": {
+      "path": "src/hbv_joint_uncertainty/imm.py",
+      "sha256": "72733bfba33c31a4a84bcd3775007ebbe11d88110bee72977c520482434a3e17"
+    },
+    "task_tests": {
+      "path": "test/test_camels_process_noise_only.py",
+      "sha256": "16fe059b9243f039d5b37f2a732f6aaf9d72c57ee63b392fecd819f21e0354ff"
+    },
+    "shared_core_tests": {
+      "path": "test/test_hbv_joint_uncertainty_imm.py",
+      "sha256": "a4d6bb758bf752f7307262f028d07a24a07ae224256157cc5039a3b21902fea6"
+    }
+  },
+  "test_evidence_before_run": {
+    "command": "C:/Users/yiqun/anaconda3/python.exe -m pytest -q test/test_camels_process_noise_only.py test/test_camels_switch_confirmation.py test/test_hbv_joint_uncertainty_imm.py",
+    "result": "58 passed, 1 pre-existing pytest configuration warning",
+    "syntax_check": "passed",
+    "git_diff_check": "passed"
+  },
+  "runs": {
+    "smoke": {
+      "basin_id": "09306242",
+      "seeds": [0, 1],
+      "workers": 1,
+      "output": "results/23_camels_process_noise_only/camels_process_noise_only_01_smoke_basin09306242_s01_20260809",
+      "mode": "contract evidence only",
+      "status": "registered_not_run"
+    },
+    "design90": {
+      "basin_count": 90,
+      "seeds": [0, 1],
+      "workers": 2,
+      "output": "results/23_camels_process_noise_only/camels_process_noise_only_01_design90_s01_20260809",
+      "mode": "exploratory process-noise candidate identification",
+      "status": "registered_not_run"
+    }
+  },
+  "stop_conditions": [
+    "test failure",
+    "registered input or implementation SHA-256 change",
+    "candidate difference outside process covariance",
+    "parameter or observation-noise switch",
+    "true candidate index mismatch",
+    "non-finite probability or log probability",
+    "daily probability normalization failure",
+    "truth domain adjustment",
+    "pre-existing output directory",
+    "independent verification failure"
+  ]
+}

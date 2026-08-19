@@ -1,0 +1,29 @@
+{
+  "experiment_id": "CAMELS_PARFC_OVERCONFIDENCE_DIAGNOSTIC_02_DESIGN10",
+  "status": "stopped_before_output_manifest_transcription_error",
+  "configuration_sha256": "8921049c4716910dc0f4d74043b59f4b26d4dc51c0c3c18c3d7d7260448ca47a",
+  "tasks_started": 0,
+  "output_root_created": false,
+  "error_type": "ValueError",
+  "error_message": "source probability SHA-256 changed",
+  "root_cause": {
+    "file": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local/arms/C/probs/05413500_s0.npz",
+    "registered_sha256_in_v01_task_table": "6c804169997a87b3a0f9782e2e6be049bea765e67a067dc41cd8faca0e776e",
+    "observed_and_previously_read_sha256": "6c804169997a87b3a0f9782e2e2e6be049bea765e67a067dc41cd8faca0e776e",
+    "classification": "manual manifest transcription error; source file did not change"
+  },
+  "preserved_logs": {
+    "stdout": {
+      "path": "tmp/camels_parfc_overconfidence_diagnostic_02_design10_s01_20260810_local.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "tmp/camels_parfc_overconfidence_diagnostic_02_design10_s01_20260810_local.stderr.log",
+      "bytes": 726,
+      "sha256": "835203bc966e668470dfe0555f5ae42f8064028edb4dd16f1b4d5a5a44f15e30"
+    }
+  },
+  "scientific_settings_changed": false,
+  "correction_boundary": "create an amended task table, configuration, output root, and log names; preserve this failed attempt"
+}

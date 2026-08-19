@@ -1,0 +1,91 @@
+{
+  "experiment_id": "CAMELS_PARFC_TRANSITION_PATH_03B_MECHANISM10",
+  "registered_date": "2026-08-11",
+  "status": "registered_not_run_awaiting_separate_user_go",
+  "purpose": "Run the final twenty-task mechanism comparison only after configuration freeze and two independent reviews, without changing the scientific contract.",
+  "configuration": {
+    "path": "src/camels_switch_confirmation/configs/camels_parfc_transition_path_03b_mechanism10.json",
+    "bytes": 11657,
+    "sha256": "90f2a19e6f45a78fca08debe697166faac6046029ea4f6d677358de58b07132e"
+  },
+  "initial_moment_manifest": {
+    "path": "docs/plans/2026-08-11-camels-parfc-transition-path-mechanism10-03b-initial-moment-manifest-v01.npz",
+    "bytes": 2957,
+    "sha256": "421070c8c9f7e432d8ee10f42ae3fc9ae8c04eb35fcbb5bf8262293c0ee205b4",
+    "probability_shape": [
+      10,
+      3
+    ],
+    "state_shape": [
+      10,
+      3,
+      15
+    ],
+    "covariance_shape": [
+      10,
+      3,
+      15,
+      15
+    ]
+  },
+  "execution": {
+    "authorization_status": "not_authorized_until_separate_user_go",
+    "working_directory": "G:\\wt\\camels-rising",
+    "python": "C:\\Users\\yiqun\\anaconda3\\python.exe",
+    "python_sha256": "c98caee82c66433f0e89d4abbf152b39a7dc2e99979b28dcb021598b4e3f5642",
+    "pythonpath": "G:\\wt\\camels-rising\\src",
+    "command": "C:\\Users\\yiqun\\anaconda3\\python.exe -m camels_switch_confirmation.run_parameter_path_mechanism --config src/camels_switch_confirmation/configs/camels_parfc_transition_path_03b_mechanism10.json --expected-config-sha256 90f2a19e6f45a78fca08debe697166faac6046029ea4f6d677358de58b07132e --workers 4",
+    "expected_tasks": 20,
+    "expected_tasks_per_arm": 10,
+    "workers": 4,
+    "stdout": "tmp/camels_parfc_transition_path_03b_mechanism10.stdout.log",
+    "stderr": "tmp/camels_parfc_transition_path_03b_mechanism10.stderr.log"
+  },
+  "independent_verification": {
+    "command": "C:\\Users\\yiqun\\anaconda3\\python.exe -m camels_switch_confirmation.verify_parameter_path_mechanism --config src/camels_switch_confirmation/configs/camels_parfc_transition_path_03b_mechanism10.json --expected-config-sha256 90f2a19e6f45a78fca08debe697166faac6046029ea4f6d677358de58b07132e",
+    "stdout": "tmp/camels_parfc_transition_path_03b_mechanism10_verify.stdout.log",
+    "stderr": "tmp/camels_parfc_transition_path_03b_mechanism10_verify.stderr.log",
+    "expected_output": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03b_mechanism10_s01_20260811_local/verification/verification_summary.json"
+  },
+  "output_root": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03b_mechanism10_s01_20260811_local",
+  "authorization_boundary": {
+    "seeds": [
+      0,
+      1
+    ],
+    "validation_seeds_2_and_3_authorized": false,
+    "ninety_basin_configuration_authorized": false,
+    "ninety_basin_run_authorized": false,
+    "full_531_basin_run_authorized": false,
+    "configuration_version_02_freeze_authorized": false,
+    "commit_push_delete_or_old_evidence_modification_authorized": false
+  },
+  "pre_run_evidence": {
+    "configuration_read_only_preflight": "passed",
+    "registered_implementation_files": 26,
+    "registered_raw_input_files": 184,
+    "relevant_tests_passed": 188,
+    "relevant_tests_failed": 0,
+    "test_stdout_sha256": "f6655fd886b6b8cd701aede9a7f49e75601c2c4f882673f8fb3e95fdb0a9292f",
+    "test_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "git_diff_check": "passed",
+    "version_03_output_collection_sha256": "495184901b82fb3ce8dad8d8b490b4831f599142ea9dbcf93429ee07f780b85b",
+    "version_03a_output_collection_sha256": "bfcfc14f178369e46d1cb934191b91d16f548465ec931690b525a91b93e01309",
+    "source_revision": "61e938b3a89f648e460a20e6f03e005bdc9fca4a"
+  },
+  "stop_conditions": {
+    "before_run": "Stop if any registered hash, runtime field, task identity, output path, log path, old evidence collection, or authorization boundary differs.",
+    "during_run": "Stop new task submission after the first failure; let in-flight tasks finish safely; preserve partial evidence atomically and exit nonzero.",
+    "after_run": "Hold if fewer than twenty tasks complete or any integrity, probability, truth, initial-moment, recursive, high-precision, or independent-verification gate fails."
+  },
+  "decision_rule": {
+    "scoring_indices": "180:1260",
+    "severe_day_definition": "stable true-candidate negative log probability greater than 100",
+    "continue_only_if": [
+      "all 20 tasks and all independent checks pass",
+      "P severe-day count is strictly lower than C",
+      "P mean stable true-candidate negative log probability is strictly lower than C"
+    ],
+    "passing_scope": "permission to request preparation of a separate ninety-basin design-seed configuration, not parameter-identification success or validation"
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "experiment_id": "CAMELS_PROCESS_NOISE_ONLY_01A_DESIGN90",
+  "status": "completed_not_passed",
+  "evidence_scope": "exploratory synthetic process-noise candidate identification using design seeds 0 and 1",
+  "config_sha256": "bae3b1d8ac51ddf3226865e0766e1344dc92ced929b2c36208eb0ac793e3bd54",
+  "run": {
+    "basin_count": 90,
+    "seeds": [0, 1],
+    "task_count": 180,
+    "success_count": 180,
+    "failure_count": 0,
+    "event_count": 1080,
+    "task_file_bytes": 129713668,
+    "wall_clock_minutes": 30.648,
+    "standard_error_empty": true
+  },
+  "integrity": {
+    "status": "passed",
+    "truth_domain_violation_count": 0,
+    "truth_state_replacement_count": 0,
+    "truth_projection_nonzero_day_count": 6564,
+    "maximum_truth_projection_absolute_difference": 6.8833827526759706e-15,
+    "maximum_truth_projection_tolerance_ratio": 0.677338065514391,
+    "maximum_probability_sum_error": 2.220446049250313e-16,
+    "maximum_probability_log_reconstruction_error": 1.1102230246251565e-16,
+    "zero_probability_count": 0,
+    "maximum_truth_replay_state_error": 0.0,
+    "maximum_truth_replay_discharge_error": 0.0
+  },
+  "scientific_gate": {
+    "status": "not_passed",
+    "passed_event_count": 649,
+    "total_event_count": 1080,
+    "overall_event_pass_rate": 0.600925925925926,
+    "required_overall_event_pass_rate": 0.8,
+    "overall_event_pass_rate_interval": {
+      "lower": 0.5472222222222223,
+      "upper": 0.6518518518518518
+    },
+    "required_overall_interval_lower": 0.75,
+    "direction_pass_rates": {
+      "0->1": 0.5333333333333333,
+      "0->2": 0.7611111111111111,
+      "1->0": 0.5555555555555556,
+      "1->2": 0.7,
+      "2->0": 0.6666666666666666,
+      "2->1": 0.3888888888888889
+    },
+    "required_each_direction_pass_rate": 0.7,
+    "worst_direction": "2->1",
+    "worst_direction_interval": {
+      "lower": 0.3111111111111111,
+      "upper": 0.4722222222222222
+    },
+    "required_worst_direction_interval_lower": 0.6,
+    "seed_event_agreement_count": 359,
+    "seed_event_pair_count": 540,
+    "seed_event_agreement": 0.6648148148148149,
+    "required_seed_event_agreement": 0.8
+  },
+  "probability_quality": {
+    "all_registered_probability_conditions_passed": true,
+    "multiclass_brier": 0.2213474928341488,
+    "multiclass_brier_interval": {
+      "lower": 0.19276151238674738,
+      "upper": 0.25275190557446375
+    },
+    "maximum_registered_brier_mean": 0.6,
+    "uniform_brier_baseline": 0.6666666666666666,
+    "true_negative_log_probability": 0.4038733260842112,
+    "true_negative_log_probability_interval": {
+      "lower": 0.36013012537199207,
+      "upper": 0.4522902433053544
+    },
+    "uniform_negative_log_probability_baseline": 1.0986122886681098,
+    "classwise_expected_calibration_error": 0.0612771470422507,
+    "maximum_registered_calibration_error": 0.1
+  },
+  "independent_recomputation": {
+    "raw_task_probability_recomputation_match": true,
+    "event_table_recomputation_match": true,
+    "seed_agreement_recomputation_match": true,
+    "ten_thousand_replicate_basin_cluster_bootstrap_match": true
+  },
+  "claim_boundary": {
+    "supported": "Stable-period candidate probabilities are substantially better than uniform baselines in this 90-basin exploratory synthetic design, but the complete preregistered noise-regime identification criterion is not met.",
+    "not_supported": [
+      "stable event-level process-noise switch identification",
+      "validation-seed confirmation",
+      "complete state accuracy",
+      "forecast value",
+      "real-observation assimilation value",
+      "unique true process noise",
+      "joint parameter and noise identification"
+    ]
+  },
+  "evidence": {
+    "runner_summary": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_design90_s01_20260809/runner_summary.json",
+      "sha256": "d8c0bebd0dbed44c448a1aff07cc0f60e0ae7b8fb8b852441754724e3a184ab2"
+    },
+    "runner_records": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_design90_s01_20260809/runner_records.csv",
+      "sha256": "3064bb16599c90cd8f691a41aa995fb58bdf8a772b5c264606f595ff523a03ee"
+    },
+    "events": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_design90_s01_20260809/events.csv",
+      "sha256": "2a49746855ec672cd624638333f68969c64c395d7a8fe5d6574de4f8f64810a5"
+    },
+    "task_verification": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_design90_s01_20260809/task_verification.csv",
+      "sha256": "5fc1096d8202d89b542576d20cdde9217f80394c7eee4f3606766067ace02a32"
+    },
+    "verification": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_design90_s01_20260809/verification.json",
+      "sha256": "1f374e4f7a7196bf22e944d1cf80936381b754f0d29b8aeb353d3e089a6510a8"
+    },
+    "scientific_summary": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_design90_s01_20260809/scientific_summary.json",
+      "sha256": "8e13af94e3e14d821b4b23d495f511831daba93a67e5d816bdb244e799456dd7"
+    },
+    "runner_standard_output": {
+      "path": "tmp/camels_process_noise_only_01a_design90_s01_20260809.stdout.log",
+      "sha256": "a75945b377d2bcb47ba5a9f5fc09aa450b6cc5be29008ef2288957c19cd70269"
+    },
+    "runner_standard_error": {
+      "path": "tmp/camels_process_noise_only_01a_design90_s01_20260809.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "verifier_standard_output": {
+      "path": "tmp/camels_process_noise_only_01a_design90_verify_20260809.stdout.log",
+      "sha256": "b4e231c5357dbc832b87114b29de772ecfa795cbec2934783882a3099bba9297"
+    },
+    "verifier_standard_error": {
+      "path": "tmp/camels_process_noise_only_01a_design90_verify_20260809.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "validation_seeds_used": false,
+  "formal_validation_config_frozen": false,
+  "new_531_basin_run_started": false
+}

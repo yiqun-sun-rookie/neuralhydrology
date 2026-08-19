@@ -1,0 +1,193 @@
+{
+  "experiment_id": "CAMELS_PARFC_STATE_INTERACTION_01A_DESIGN12",
+  "evidence_status": "complete_independently_verified_continuation_gate_passed",
+  "configuration_status": "registered_exploratory_design_not_validation_frozen",
+  "claim_boundary": "exploratory evidence from 12 mechanically selected basins and design seeds 0-1 only; not 531-basin evidence, not validation, not state-accuracy evidence, and not forecast evidence",
+  "execution": {
+    "planned_tasks": 72,
+    "successful_tasks": 72,
+    "failed_tasks": 0,
+    "event_count": 432,
+    "truth_clip_count": 0,
+    "probability_sum_maximum_absolute_error": 2.220446049250313e-16,
+    "stable_log_probability_normalization_maximum_absolute_error": 3.7990444123892075e-16,
+    "cross_arm_shared_field_mismatch_count": 0,
+    "legacy_event_decision_mismatch_count": 0,
+    "legacy_probability_maximum_absolute_difference": 3.6637359812630166e-15
+  },
+  "arms": {
+    "A": {
+      "description": "parameter-grouped states with legacy direct projection",
+      "events_passed": 80,
+      "events_total": 144,
+      "event_pass_rate": 0.5555555555555556,
+      "multiclass_brier": 0.8296624588105406,
+      "true_candidate_negative_log_probability": 91.80472467451132
+    },
+    "B": {
+      "description": "full cross-candidate interaction with legacy direct projection",
+      "events_passed": 72,
+      "events_total": 144,
+      "event_pass_rate": 0.5,
+      "multiclass_brier": 0.6853876587850342,
+      "true_candidate_negative_log_probability": 33.624966596668166
+    },
+    "C": {
+      "description": "full cross-candidate interaction with conservative parFC state treatment",
+      "events_passed": 97,
+      "events_total": 144,
+      "event_pass_rate": 0.6736111111111112,
+      "multiclass_brier": 0.3763974074958925,
+      "true_candidate_negative_log_probability": 10.70203900089079
+    }
+  },
+  "registered_comparisons": {
+    "A_to_B": {
+      "events_passed_change": -8,
+      "multiclass_brier_change": -0.1442748000255064,
+      "true_candidate_negative_log_probability_change": -58.179758077843154
+    },
+    "B_to_C": {
+      "events_passed_change": 25,
+      "multiclass_brier_change": -0.30899025128914165,
+      "true_candidate_negative_log_probability_change": -22.922927595777374
+    },
+    "A_to_C": {
+      "events_passed_change": 17,
+      "multiclass_brier_change": -0.45326505131464806,
+      "true_candidate_negative_log_probability_change": -81.10268567362053
+    }
+  },
+  "paired_task_diagnostics": {
+    "task_count": 24,
+    "C_minus_A_events_passed": {
+      "improved": 13,
+      "unchanged": 8,
+      "worsened": 3,
+      "median_change": 1.0
+    },
+    "C_minus_B_events_passed": {
+      "improved": 17,
+      "unchanged": 6,
+      "worsened": 1,
+      "median_change": 1.0
+    },
+    "C_minus_A_multiclass_brier": {
+      "lower_is_better": true,
+      "improved": 23,
+      "worsened": 1,
+      "median_change": -0.454327
+    },
+    "C_minus_A_true_candidate_negative_log_probability": {
+      "lower_is_better": true,
+      "improved": 23,
+      "worsened": 1,
+      "median_change": -8.50318
+    },
+    "event_level_C_versus_A": {
+      "newly_passed": 29,
+      "newly_failed": 12,
+      "passed_in_both": 68,
+      "failed_in_both": 35
+    },
+    "event_level_C_versus_B": {
+      "newly_passed": 29,
+      "newly_failed": 4,
+      "passed_in_both": 68,
+      "failed_in_both": 43
+    }
+  },
+  "corrected_arm_direction_results": {
+    "calibrated_to_half": {
+      "passed": 24,
+      "total": 24
+    },
+    "calibrated_to_double": {
+      "passed": 14,
+      "total": 24
+    },
+    "half_to_calibrated": {
+      "passed": 8,
+      "total": 24
+    },
+    "half_to_double": {
+      "passed": 10,
+      "total": 24
+    },
+    "double_to_calibrated": {
+      "passed": 19,
+      "total": 24
+    },
+    "double_to_half": {
+      "passed": 22,
+      "total": 24
+    }
+  },
+  "descriptive_subgroups": {
+    "initial_half_capacity_overflow_false": {
+      "A_passed": 39,
+      "C_passed": 43,
+      "events_per_arm": 72
+    },
+    "initial_half_capacity_overflow_true": {
+      "A_passed": 41,
+      "C_passed": 54,
+      "events_per_arm": 72
+    },
+    "interpretation_limit": "the 12 basins were deliberately stratified and these subgroup counts are descriptive, not population estimates"
+  },
+  "continuation_gate": {
+    "passed": true,
+    "scope": "exploratory_scale_up_only_not_validation",
+    "reason": "arm C has more passed events than arm A and has no worse multiclass Brier or true-candidate negative log probability",
+    "not_parameter_identification_success": true,
+    "remaining_failed_events_in_arm_C": 47,
+    "worst_direction": "half_to_calibrated",
+    "worst_direction_passed": 8,
+    "worst_direction_total": 24
+  },
+  "artifacts": {
+    "configuration": {
+      "path": "src/camels_switch_confirmation/configs/camels_parfc_state_interaction_design12_01a.json",
+      "sha256": "e2ab7c0eda18fefabcd176df8393e55105e6d6ea4d50d25165dfc32b3d945625"
+    },
+    "pre_run_manifest": {
+      "path": "docs/plans/2026-08-10-camels-parfc-state-interaction-design12-01a-run-manifest.json",
+      "sha256": "e5046b0ad075c4e27d72fbdf638171311b992aa8fd39534b2b0da2f1651275c5"
+    },
+    "runner_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01a_design12_s01_20260810_local/runner_summary.json",
+      "sha256": "ab938205819e88559d38a7d2f2300df39a8f2591e58e864b9d61d2dbb6bf8f5b"
+    },
+    "independent_verification_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01a_design12_s01_20260810_local/verification/comparison_summary.json",
+      "sha256": "e7e59d2c359a1f1b98928a7cd13620b437e494a022c61c185e99890f6c5a26a1"
+    },
+    "probability_file_set_independent_digest": {
+      "definition": "SHA-256 over sorted relative path, byte size, and per-file SHA-256 for all 72 probability files",
+      "sha256": "855c082c7c5199f3c1602df2722d7ab789b2482819f4981080d9035f54fda6ca"
+    },
+    "probability_figure": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01a_design12_s01_20260810_local/verification/probability_trajectory_comparison.png",
+      "sha256": "7dea4fcc5882aded5c4ac800322fdc6ef4979d9e150a26870d79e5e426afa445"
+    },
+    "probability_figure_manifest": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01a_design12_s01_20260810_local/verification/probability_trajectory_figure_manifest.json",
+      "sha256": "513cceadb6decc3b52c8372d748443a3a0f5ac96d5174fcd5a06bd1a276dfccd"
+    },
+    "run_stderr": {
+      "path": "tmp/camels_parfc_state_interaction_01a_design12_s01_20260810_local.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "verification_stderr": {
+      "path": "tmp/camels_parfc_state_interaction_01a_design12_s01_20260810_local.verify.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "explicit_non_claims": [
+    "The corrected arm did not establish stable parFC-switch identification.",
+    "The arm B to arm C contrast cannot be attributed only to replacing direct clipping; arm C is the complete conservative state-treatment contract.",
+    "No result applies to validation seeds 2-3, all 531 basins, state accuracy, forecast value, or real-observation assimilation.",
+    "No version-02 validation configuration was created or frozen."
+  ]
+}

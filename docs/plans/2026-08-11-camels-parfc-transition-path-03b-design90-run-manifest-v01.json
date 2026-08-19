@@ -1,0 +1,85 @@
+{
+  "experiment_id": "CAMELS_PARFC_TRANSITION_PATH_03B_DESIGN90",
+  "registered_date": "2026-08-11",
+  "status": "registered_not_run_awaiting_separate_user_go",
+  "configuration": {
+    "path": "src/camels_switch_confirmation/configs/camels_parfc_transition_path_03b_design90.json",
+    "bytes": 12186,
+    "sha256": "b7bd90e752738b4a9d766e0138e7d9007f97c18443cc7764e0bba6d0b5221669"
+  },
+  "task_contract": {
+    "basins": 90,
+    "design_seeds": [
+      0,
+      1
+    ],
+    "source_tasks": 180,
+    "arms": [
+      "C",
+      "P"
+    ],
+    "planned_tasks": 360,
+    "events_per_arm": 1080
+  },
+  "execution": {
+    "authorization_status": "not_authorized_until_separate_user_go",
+    "working_directory": "G:\\wt\\camels-rising",
+    "python": "C:\\Users\\yiqun\\anaconda3\\python.exe",
+    "python_sha256": "c98caee82c66433f0e89d4abbf152b39a7dc2e99979b28dcb021598b4e3f5642",
+    "pythonpath": "G:\\wt\\camels-rising\\src",
+    "workers": 4,
+    "command": "C:\\Users\\yiqun\\anaconda3\\python.exe -m camels_switch_confirmation.run_parameter_path_design90 --config src/camels_switch_confirmation/configs/camels_parfc_transition_path_03b_design90.json --expected-config-sha256 b7bd90e752738b4a9d766e0138e7d9007f97c18443cc7764e0bba6d0b5221669 --workers 4",
+    "stdout": "tmp/camels_parfc_transition_path_03b_design90.stdout.log",
+    "stderr": "tmp/camels_parfc_transition_path_03b_design90.stderr.log",
+    "output_root": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03b_design90_s01_20260811_local"
+  },
+  "independent_verification": {
+    "authorization_status": "not_authorized_until_execution_completes",
+    "command": "C:\\Users\\yiqun\\anaconda3\\python.exe -m camels_switch_confirmation.verify_parameter_path_design90 --config src/camels_switch_confirmation/configs/camels_parfc_transition_path_03b_design90.json --expected-config-sha256 b7bd90e752738b4a9d766e0138e7d9007f97c18443cc7764e0bba6d0b5221669",
+    "stdout": "tmp/camels_parfc_transition_path_03b_design90_verify.stdout.log",
+    "stderr": "tmp/camels_parfc_transition_path_03b_design90_verify.stderr.log",
+    "expected_output": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03b_design90_s01_20260811_local/verification/verification_summary.json"
+  },
+  "preflight_test_evidence": {
+    "passed": 211,
+    "failed": 0,
+    "stdout": {
+      "path": "tmp/camels_parfc_transition_path_03b_design90_prepare_tests.stdout.log",
+      "bytes": 734,
+      "sha256": "881148c070ff358a9270b808918ae971eaa6e74d4e584c1b340bb9e22161c8bd"
+    },
+    "stderr": {
+      "path": "tmp/camels_parfc_transition_path_03b_design90_prepare_tests.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "authorization_boundary": {
+    "seeds_2_and_3_authorized": false,
+    "ninety_basin_execution_authorized": false,
+    "full_531_basin_run_authorized": false,
+    "configuration_version_02_freeze_authorized": false,
+    "commit_push_delete_or_old_evidence_modification_authorized": false
+  },
+  "stop_conditions": {
+    "before_run": "Stop on any hash, runtime, task, initial-moment, output, log, source-evidence, or authorization mismatch.",
+    "during_run": "Stop new submissions after the first failure and preserve all completed or in-flight evidence.",
+    "after_run": "Hold unless 360 tasks and all independent checks pass; never change a registered scientific or numerical gate after results."
+  },
+  "decision_gates": {
+    "task_count": 360,
+    "source_task_count": 180,
+    "events_per_arm": 1080,
+    "events_per_direction_per_arm": 180,
+    "baseline_c_events_passed": 706,
+    "p_events_strictly_greater_than_c": true,
+    "p_overall_event_pass_rate_min": 0.65,
+    "p_direction_event_pass_rate_min": 0.5,
+    "maximum_direction_passed_event_decline": 9,
+    "p_multiclass_brier_max": 0.6666666666666666,
+    "p_mean_true_negative_log_probability_max": 1.0986122886681098,
+    "p_true_probability_below_0_01_days_max": 1944,
+    "p_severe_negative_log_probability_days_max": 0,
+    "p_zero_true_probability_days_max": 0
+  }
+}

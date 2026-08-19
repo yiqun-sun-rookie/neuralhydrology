@@ -1,0 +1,57 @@
+{
+  "experiment_id": "CAMELS_PROCESS_NOISE_ONLY_01A_SMOKE",
+  "status": "completed_contract_passed",
+  "scientific_status": "not_evaluated_smoke",
+  "config_sha256": "bae3b1d8ac51ddf3226865e0766e1344dc92ced929b2c36208eb0ac793e3bd54",
+  "basin_id": "09306242",
+  "seeds": [0, 1],
+  "task_count": 2,
+  "event_count": 12,
+  "integrity": {
+    "truth_domain_violation_count": 0,
+    "truth_state_replacement_count": 0,
+    "truth_projection_nonzero_day_count_across_tasks": 128,
+    "maximum_truth_projection_absolute_difference": 7.632783294297951e-16,
+    "maximum_truth_projection_tolerance_ratio": 0.107421875,
+    "maximum_probability_sum_error": 2.220446049250313e-16,
+    "maximum_probability_log_reconstruction_error": 1.1102230246251565e-16,
+    "zero_probability_count": 0,
+    "maximum_truth_replay_state_error": 0.0,
+    "maximum_truth_replay_discharge_error": 0.0
+  },
+  "scope_note": "The single-basin event and probability metrics are diagnostic only and were not used to change any scientific setting or success gate.",
+  "evidence": {
+    "runner_summary": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_smoke_basin09306242_s01_20260809/runner_summary.json",
+      "sha256": "e8d1ac12cd51a75e7f59d73e3bc1a910e1f18a7c8a8024d0ca8bdfe98e167b7f"
+    },
+    "runner_records": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_smoke_basin09306242_s01_20260809/runner_records.csv",
+      "sha256": "8f0e999efc758298ad632efb9cb0541f578d84fde86792b78209795b96ffb8d2"
+    },
+    "events": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_smoke_basin09306242_s01_20260809/events.csv",
+      "sha256": "2cab81f4b93cb59df8d0edccf95b44a1641faec4e7349b7fc762ed76ac17f429"
+    },
+    "task_verification": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_smoke_basin09306242_s01_20260809/task_verification.csv",
+      "sha256": "c0008a29c830b1618311106405716d10b553e0d0aa36c1c458f26041fb2b0130"
+    },
+    "verification": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_smoke_basin09306242_s01_20260809/verification.json",
+      "sha256": "de697530c3f432ce9507abbbdbedfc5e86a4ad8d63a112d5fd21e2cadea8fc2a"
+    },
+    "scientific_summary": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01a_smoke_basin09306242_s01_20260809/scientific_summary.json",
+      "sha256": "29687be6fbd38f91608d9bfdbf7f8da8982e5599e1cb222be853fa5bb410975a"
+    },
+    "runner_standard_error": {
+      "path": "tmp/camels_process_noise_only_01a_smoke_basin09306242_s01_20260809.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "verifier_standard_error": {
+      "path": "tmp/camels_process_noise_only_01a_smoke_verify_20260809.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

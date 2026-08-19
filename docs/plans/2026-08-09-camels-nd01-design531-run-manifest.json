@@ -1,0 +1,45 @@
+{
+  "experiment_id": "ND01",
+  "experiment_type": "exploratory_full_design_confirmation",
+  "status": "running",
+  "evidence_scope": "parameter_candidate_identification_only",
+  "configuration_status": "registered_exploratory_not_g2_v02_frozen",
+  "repository": {
+    "worktree": "G:/wt/camels-rising",
+    "branch": "codex/camels-rising-half-recal",
+    "commit": "61e938b3a89f648e460a20e6f03e005bdc9fca4a",
+    "runner_sha256": "0467370f021b06e8246ba8805d68385533d0d436e551edd65716f084bcce2038",
+    "candidate_bank_sha256": "16ff698eddf999fe8e88c8fbab7dee5ea0d2a2879113247b054b6760d2e6c8cf"
+  },
+  "inputs": {
+    "legacy_g2_v01_config_sha256": "e2d357f1c22089d1f85e54a8bc8c08634a411d8e56cc7ae8ae9db6454ef49c45",
+    "rising_parameter_table_sha256": "577b12fcb8e1a7a7a607995f0011dbda38a199ee68f3636732b80a3356c16be6",
+    "g1_precheck_csv_sha256": "3443ba601434dd30b43c3b5e8a9b838fc666cc394077700ddd4d3e7158b3ee73",
+    "data_root": "data/camels_us"
+  },
+  "design": {
+    "basin_count": 531,
+    "seeds": [0, 1],
+    "task_count": 1062,
+    "candidate_soil_storage_capacity_factors": [1.0, 0.5, 2.0],
+    "truth_lower_groundwater_lognormal_sigma": 0.02,
+    "filter_process_covariance_mode": "fixed",
+    "filter_process_covariance_structure": "lower_groundwater_state_only",
+    "filter_process_variance_scale": 3e-8,
+    "filter_observation_variance_multiplier": 1.0,
+    "workers": 2
+  },
+  "command": "C:/Users/yiqun/anaconda3/python.exe -X utf8 -m src.camels_switch_confirmation.g2_switch_confirmation --workers 2 --q-mode fixed --q-structure lower_groundwater_state_only --q-scale 3e-8 --filter-r-multiplier 1 --out-tag noise_nd01_design531_q3e8_r1_s01_20260809_local",
+  "outputs": {
+    "run_dir": "results/23_camels_switch_confirmation/g2_switch_confirmation_v01_noise_nd01_design531_q3e8_r1_s01_20260809_local",
+    "stdout_log": "tmp/camels_noise_nd01_design531_q3e8_r1_s01_20260809_local.stdout.log",
+    "stderr_log": "tmp/camels_noise_nd01_design531_q3e8_r1_s01_20260809_local.stderr.log"
+  },
+  "prohibitions": [
+    "do_not_use_seeds_2_or_3",
+    "do_not_freeze_g2_v02_in_this_run",
+    "do_not_claim_state_accuracy",
+    "do_not_claim_forecast_value",
+    "do_not_claim_real_observation_assimilation_value"
+  ]
+}

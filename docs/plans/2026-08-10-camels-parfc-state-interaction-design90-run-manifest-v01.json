@@ -1,0 +1,111 @@
+{
+  "experiment_id": "CAMELS_PARFC_STATE_INTERACTION_01B_DESIGN90",
+  "manifest_status": "registered_not_run",
+  "registered_at": "2026-08-10T19:12:01+08:00",
+  "authorization": {
+    "standing_user_instruction": "类似的命令以后全局不用审批",
+    "explicit_go_for_current_scale_up": true,
+    "authorized_design_seeds": [
+      0,
+      1
+    ],
+    "reserved_not_authorized_seeds": [
+      2,
+      3
+    ],
+    "authorized_basin_count": 90,
+    "full_531_basin_run_authorized": false,
+    "validation_configuration_freeze_authorized": false,
+    "commit_or_push_authorized": false
+  },
+  "git": {
+    "worktree": "G:/wt/camels-rising",
+    "branch": "codex/camels-rising-half-recal",
+    "head": "61e938b3a89f648e460a20e6f03e005bdc9fca4a",
+    "dirty_worktree_preserved": true
+  },
+  "registered_files": {
+    "configuration": {
+      "path": "src/camels_switch_confirmation/configs/camels_parfc_state_interaction_design90_01b.json",
+      "sha256": "1b5fed9c7958d719fefdbd3539993b3f5c567693e9be8032103698f5a1fbae13"
+    },
+    "preregistration": {
+      "path": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-prereg-v01.md",
+      "sha256": "8d804da432f2f7f665abee69094963847241d2dcee09bd85477f207c6f984037"
+    },
+    "implementation_plan": {
+      "path": "docs/superpowers/plans/2026-08-10-camels-parfc-state-interaction-design90.md",
+      "sha256": "48f438c1a202b1718b40de0a842b107d3a3b8f764203d9641bdd4b2de9db9c31"
+    },
+    "registry_before_run": {
+      "path": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-registry-v01.csv",
+      "sha256": "d89cea2b635d01a4ccf9722cfa93618393ad4e1a3ad79fe78034fcb021b1617c"
+    },
+    "basin_list": {
+      "path": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-basins-v01.csv",
+      "sha256": "813009cb0464b8fac6d650c69273a5b3b0f6bb329a3d7632fe3c1a198bf2c678"
+    },
+    "forcing_coverage": {
+      "path": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-coverage-v01.csv",
+      "sha256": "1fc235448372d1abf7a0b844100187e0e1f0e7e81979ad756152a4a2a6aada64"
+    },
+    "raw_input_manifest": {
+      "path": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-input-manifest-v01.csv",
+      "sha256": "e9214738c64ba35800d06d4c6c07d1a3f31e5615cfefc9e1e55ae99ea3b3818b"
+    },
+    "legacy_reference_manifest": {
+      "path": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-legacy-reference-v01.csv",
+      "sha256": "aff1cc906ec534655280ea3f1580b934cfbf8f5c6a067f7c7e97308c8b4b5faf"
+    }
+  },
+  "pre_run_evidence": {
+    "related_tests": "109 passed, 1 pre-existing pytest configuration warning",
+    "registered_input_gate": "passed for 90 basins, 184 raw-input rows, and 26 registered implementation files",
+    "legacy_reference_gate": "180 unique basin-seed references exist and match their registered sizes and SHA-256 digests",
+    "forcing_coverage_gate": "90 of 90 basins have 1260 finite required forcing days",
+    "output_root_exists": false
+  },
+  "registered_run": {
+    "workers": 4,
+    "task_count": 540,
+    "event_count": 3240,
+    "output": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local",
+    "stdout_log": "tmp/camels_parfc_state_interaction_01b_design90_s01_20260810_local.stdout.log",
+    "stderr_log": "tmp/camels_parfc_state_interaction_01b_design90_s01_20260810_local.stderr.log",
+    "command": "C:/Users/yiqun/anaconda3/python.exe -X utf8 -m camels_switch_confirmation.registered_parameter_interaction --config src/camels_switch_confirmation/configs/camels_parfc_state_interaction_design90_01b.json --config-sha256 1b5fed9c7958d719fefdbd3539993b3f5c567693e9be8032103698f5a1fbae13 --workers 4"
+  },
+  "registered_verification": {
+    "output": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local/verification",
+    "stdout_log": "tmp/camels_parfc_state_interaction_01b_design90_s01_20260810_local.verify.stdout.log",
+    "stderr_log": "tmp/camels_parfc_state_interaction_01b_design90_s01_20260810_local.verify.stderr.log",
+    "command": "C:/Users/yiqun/anaconda3/python.exe -X utf8 -m camels_switch_confirmation.verify_parameter_interaction_design --output-root results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local --config src/camels_switch_confirmation/configs/camels_parfc_state_interaction_design90_01b.json --config-sha256 1b5fed9c7958d719fefdbd3539993b3f5c567693e9be8032103698f5a1fbae13"
+  },
+  "registered_decision_gates": {
+    "scale_replication": {
+      "all_tasks_and_independent_checks_required": true,
+      "c_events_passed_strictly_greater_than_a": true,
+      "c_brier_not_greater_than_a": true,
+      "c_stable_true_negative_log_probability_not_greater_than_a": true
+    },
+    "validation_freeze_eligibility": {
+      "requires_scale_replication": true,
+      "c_overall_event_pass_rate_min": 0.65,
+      "c_minimum_direction_pass_rate_min": 0.5,
+      "c_multiclass_brier_max": 0.6666666666666666,
+      "c_stable_true_negative_log_probability_max": 1.0986122886681098,
+      "effect_if_passed": "user_review_only_no_automatic_freeze_or_validation_run"
+    }
+  },
+  "stop_conditions": [
+    "any registered SHA-256 change",
+    "test failure",
+    "candidate difference outside the registered interaction or state-mapping arm",
+    "parameter, truth noise, filter noise, forcing, or observation mismatch across arms",
+    "non-finite or non-normalized probability or stable log probability",
+    "truth clipping",
+    "pre-existing output directory, temporary directory, log, or probability file",
+    "worker failure or worker-process exception",
+    "legacy-control mismatch",
+    "independent verification failure"
+  ]
+}

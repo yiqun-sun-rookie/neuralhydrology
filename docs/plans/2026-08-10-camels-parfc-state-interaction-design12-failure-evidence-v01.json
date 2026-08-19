@@ -1,0 +1,71 @@
+{
+  "experiment_id": "CAMELS_PARFC_STATE_INTERACTION_01_DESIGN12",
+  "evidence_status": "failed_contract_stop_no_scientific_aggregation",
+  "configuration_sha256": "ec3eac2f621e3d165a1504acf2265b4cd2a31836ef236afbdcd5d2cc0a075206",
+  "output_root": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01_design12_s01_20260810_local",
+  "execution": {
+    "planned_tasks": 72,
+    "arm_a": {
+      "success": 24,
+      "failed": 0,
+      "status": "complete"
+    },
+    "arm_b": {
+      "success": 24,
+      "failed": 0,
+      "status": "complete"
+    },
+    "arm_c": {
+      "success": 6,
+      "failed": 2,
+      "not_submitted_after_first_failure": 16,
+      "status": "failed_early"
+    },
+    "first_failure": {
+      "basin_id": "05408000",
+      "seed": 0,
+      "task_index": 6,
+      "error": "ValueError: moment conversion did not conserve soil-plus-upper variance"
+    },
+    "same_failure_second_seed": true,
+    "residual_registered_python_processes": 0,
+    "stderr_bytes": 0
+  },
+  "read_only_reproduction": {
+    "source_parfc": 730.7683739499867,
+    "destination_parfc": 365.3841869749933,
+    "source_soil_water_mean": 185.28479483508727,
+    "source_upper_groundwater_mean": 31.252171736189926,
+    "source_soil_sigma_minimum": 185.27529809237166,
+    "source_soil_sigma_maximum": 185.29429157780288,
+    "destination_capacity_is_nonbinding_for_all_sigma_points": true,
+    "changed_sigma_point_count": 0,
+    "source_covariance_minimum_eigenvalue": 0.0,
+    "source_covariance_maximum_absolute_eigenvalue": 793.1918120746001,
+    "input_soil_plus_upper_variance": 0.22051244281577384,
+    "sigma_reconstructed_soil_plus_upper_variance": 0.22051244334414538,
+    "mapped_soil_plus_upper_variance": 0.22051244334414538,
+    "mapped_minus_input_variance": 5.283715409643008e-10,
+    "mapped_minus_sigma_reconstructed_variance": 0.0,
+    "assertion_absolute_tolerance": 1e-10,
+    "diagnosis": "The state mapping was an exact identity for all sigma points. The sigma-point generator added bounded diagonal jitter to a positive-semidefinite covariance so that Cholesky factorization was possible. The assertion then compared the reconstructed mapped covariance with the unrepaired input covariance. It therefore rejected a zero mapping error as a conservation failure."
+  },
+  "claim_boundary": {
+    "physical_water_or_variance_loss_observed": false,
+    "three_arm_scientific_metrics_authorized": false,
+    "continuation_gate_evaluable": false,
+    "automatic_rerun_performed": false,
+    "original_output_must_not_be_overwritten": true
+  },
+  "hashes": {
+    "runner_summary_json": "918cd822305c4d3fb7a7d2acf545f5bf5070807635b9643d8ad8b5e0e25bbc86",
+    "arm_a_summary_json": "00b5b277bf6ae08df0ae42ce0fee2d45265e3912918d55c811365145a04017c2",
+    "arm_a_events_csv": "a552238e3ac623f98432e5328d2e1d32608c96d1b3429d6b7d66d85d9ff9bf26",
+    "arm_b_summary_json": "524342072f20f6c98168a4aae6dc51c6b5445b84822d302f815a1cfe40df69a6",
+    "arm_b_events_csv": "cf929744cb52ad8753c630c89dca817397fd21ea05b23f567c437dc4df8a816c",
+    "arm_c_summary_json": "691440d8531c427cbc9e32cd0868e4f371a840a802eb14333d47e99c6b6190e5",
+    "arm_c_events_csv": "9d7b1f09c02696ad38ebc5d3d1d8464d45e125ea5f4ffcc1e26d1c8e822ff593",
+    "stdout_log": "918cd822305c4d3fb7a7d2acf545f5bf5070807635b9643d8ad8b5e0e25bbc86",
+    "stderr_log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

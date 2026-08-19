@@ -1,0 +1,130 @@
+{
+  "experiment_id": "CAMELS_PARFC_TRANSITION_PATH_03B_MECHANISM10",
+  "evidence_status": "complete_independently_verified_mechanism_gate_go",
+  "completed_date": "2026-08-11",
+  "scope": "ten_failure_selected_tasks_design_seeds_only",
+  "configuration_sha256": "90f2a19e6f45a78fca08debe697166faac6046029ea4f6d677358de58b07132e",
+  "verification_summary_sha256": "8ad2ea45a1b2a6c2178d17e324b16e9e64bd12d521669958ab4f0d6e80d35d03",
+  "verification_status": "passed",
+  "mechanism_gate_status": "GO",
+  "arm_summary": {
+    "C": {
+      "event_count": 60,
+      "event_pass_rate": 0.6,
+      "events_passed": 36,
+      "mean_true_negative_log_probability": 171554.13670938605,
+      "multiclass_brier": 0.7472093886277953,
+      "scored_days": 10800,
+      "severe_negative_log_probability_days": 1974,
+      "task_count": 10,
+      "zero_true_probability_days": 1707
+    },
+    "P": {
+      "event_count": 60,
+      "event_pass_rate": 0.6833333333333333,
+      "events_passed": 41,
+      "mean_true_negative_log_probability": 4190.874497762203,
+      "multiclass_brier": 0.539773314295361,
+      "scored_days": 10800,
+      "severe_negative_log_probability_days": 478,
+      "task_count": 10,
+      "zero_true_probability_days": 307
+    }
+  },
+  "paired_task_directions": {
+    "severe_negative_log_probability_days": {
+      "improved": 9,
+      "equal": 1,
+      "worse": 0
+    },
+    "mean_true_negative_log_probability": {
+      "improved": 7,
+      "equal": 0,
+      "worse": 3
+    },
+    "multiclass_brier": {
+      "improved": 6,
+      "equal": 0,
+      "worse": 4
+    }
+  },
+  "path_reconstruction_diagnostics": {
+    "authoritative_bitwise_reconstruction_maximum_difference": 0.0,
+    "destination_high_precision_covariance_maximum_ratio": 0.024935026982115728,
+    "destination_high_precision_mean_maximum_ratio": 0.12499998720737004,
+    "direct_nested_covariance_maximum_absolute_difference": 8.731149137020111e-11,
+    "direct_nested_covariance_maximum_relative_difference": 1.193408948418439e-12,
+    "direct_nested_covariance_maximum_ulp_distance": 176970284079383.0,
+    "direct_nested_state_maximum_absolute_difference": 1.8189894035458565e-12,
+    "direct_nested_state_maximum_relative_difference": 2.2204309873142044e-16,
+    "direct_nested_state_maximum_ulp_distance": 4.0,
+    "global_high_precision_covariance_maximum_ratio": 0.022484989150929138,
+    "global_high_precision_mean_maximum_ratio": 0.12497295894939775
+  },
+  "result_collection": {
+    "entry_format": "relative_path,bytes,sha256",
+    "count": 25,
+    "bytes": 242282368,
+    "sha256_of_newline_joined_sorted_entries": "6d1e275c3d9d8f8b3a338311c8b7f734162b16d98343eacc3fbda1c253fd6327",
+    "entries": [
+      "arms/C/probs/02096846_s0.npz,92256,ea2571f4463df441c565c351e0e7c267785ec3897cb080434a4658883aa8d7de",
+      "arms/C/probs/02096846_s1.npz,92663,34afb6f61ac492892ea2a6d9facf6e6945972a19adfdd3f9883dccfad028aa4c",
+      "arms/C/probs/02193340_s0.npz,90245,71939983419ec2dc4f6b51f804bf7137557e7532d4affcd4f74ad25135d01987",
+      "arms/C/probs/02193340_s1.npz,90212,5fe2e61e6844f1da106d7f01ee70799c7628af096fdfd912b0df9e7a56b2137e",
+      "arms/C/probs/02221525_s1.npz,91094,64bf7e17d70835af7bd3b7d872b3b4c2ec24a675d6b1a563f945e6f397d81313",
+      "arms/C/probs/02349900_s1.npz,91354,494380c776c5abdb3971349cf8f4bd55fb205931532b79b0acca978775e8bf80",
+      "arms/C/probs/05413500_s0.npz,84794,826a7909039b513082228c0be2f99ae3b0513d41784fc3d51cbcee2672d3c930",
+      "arms/C/probs/05501000_s1.npz,81344,45846973e06bcc63cd94d398f60a789e3af5f832b578d11e9062f9615e4c91b4",
+      "arms/C/probs/07145700_s0.npz,87379,c683b4fcb1e52b2bb90218a3173581b388c0cfc88a9bb217f0b10be972430917",
+      "arms/C/probs/07145700_s1.npz,86995,016a49aa1d879938ca67a16fabfa4ba61cacf125ba0b08fab3659ab0a9f3bbb4",
+      "arms/C/tasks.csv,3153,056084a9aaab9e9ce7db4c1e0e6771c46e406ccd3ec4490e6cdafd2c6c6457c5",
+      "arms/P/probs/02096846_s0.npz,24228764,06b256e441eb01a0e8465d2ec829b9e7b0cc31575214897a1922e2daed80452d",
+      "arms/P/probs/02096846_s1.npz,24098999,9f9a04ddba769a4b17c8642183b47580a42b84677f57f81dd31ba6a4b03d0cb1",
+      "arms/P/probs/02193340_s0.npz,24182862,27cd7e3113b76660ce5b0e0bdc527aea684aa905b4aec81446e3a72c2b387b80",
+      "arms/P/probs/02193340_s1.npz,23883812,ab97eb37b6b31a37107f62f8259cfb3f833f3d66bd94ec9bc3c7c84c9444fe6d",
+      "arms/P/probs/02221525_s1.npz,23045412,4f7779d6db6ad53f93bb948fddc6a9ebff81267cc87b2c4b8a3e59bdcf2496ac",
+      "arms/P/probs/02349900_s1.npz,22773062,7ecc5a051bf1a34c524fac644bad2956d642c5d8ff37118b0672007057de4055",
+      "arms/P/probs/05413500_s0.npz,26611114,e0b14a03148b305c239d16dee394793c5020e650d2d2afebddd855df9cf0924e",
+      "arms/P/probs/05501000_s1.npz,23170576,9d3de5f0e3d446a0e8eba5cb627c27cb8ae0f43a93b92b4b9fdab1cacfed2b23",
+      "arms/P/probs/07145700_s0.npz,24614946,94b28ebd5e522ca324c6ef0cea4b71b98fb23db55b4164445097081230ac30d6",
+      "arms/P/probs/07145700_s1.npz,24764592,631d9154dd8c4e7b9d88c0901936e79910bda694d6281c933c5cf8db8720a39d",
+      "arms/P/tasks.csv,3689,d4daa9c6c08631b68f1dd25ff95e464b3e95976fdcaa0817645f26ee8900954f",
+      "runner_summary.json,5237,b54792ffa250ddc9d8e57eba68ae7ee34464e21bdace2548bdc3fe4b0e0b685d",
+      "verification/task_metrics.csv,1509,221476dd1b57027b3eacdebb942f0e893d85f7e3e49554b4f0ec306dbf522e6c",
+      "verification/verification_summary.json,6305,8ad2ea45a1b2a6c2178d17e324b16e9e64bd12d521669958ab4f0d6e80d35d03"
+    ]
+  },
+  "logs": [
+    {
+      "path": "tmp/camels_parfc_transition_path_03b_mechanism10.stdout.log",
+      "bytes": 5237,
+      "sha256": "b54792ffa250ddc9d8e57eba68ae7ee34464e21bdace2548bdc3fe4b0e0b685d"
+    },
+    {
+      "path": "tmp/camels_parfc_transition_path_03b_mechanism10.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tmp/camels_parfc_transition_path_03b_mechanism10_verify.stdout.log",
+      "bytes": 6305,
+      "sha256": "8ad2ea45a1b2a6c2178d17e324b16e9e64bd12d521669958ab4f0d6e80d35d03"
+    },
+    {
+      "path": "tmp/camels_parfc_transition_path_03b_mechanism10_verify.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "authorization_boundary": {
+    "design_seeds_used": [
+      0,
+      1
+    ],
+    "reserved_seeds_used": false,
+    "ninety_basin_run_performed": false,
+    "full_531_basin_run_performed": false,
+    "validation_configuration_frozen": false
+  },
+  "claim_boundary": "The gate permits preparation of a separate Design90 configuration; it is not parameter-identification validation, state accuracy, forecast value, noise identification, or real-observation assimilation evidence."
+}

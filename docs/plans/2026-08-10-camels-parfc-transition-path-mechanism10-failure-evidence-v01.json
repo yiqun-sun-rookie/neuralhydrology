@@ -1,0 +1,110 @@
+{
+  "experiment_id": "CAMELS_PARFC_TRANSITION_PATH_03_MECHANISM10",
+  "evidence_date": "2026-08-10",
+  "status": "failed_before_scientific_aggregation",
+  "configuration": {
+    "path": "src/camels_switch_confirmation/configs/camels_parfc_transition_path_03_mechanism10.json",
+    "bytes": 6175,
+    "sha256": "df61c2964571d70dbff8adfce0c8853a371384a56260ddb5b20ce52e782c722e"
+  },
+  "run_manifest": {
+    "path": "docs/plans/2026-08-10-camels-parfc-transition-path-mechanism10-run-manifest-v01.json",
+    "bytes": 3046,
+    "sha256": "598bac7023c0905af963e82cf92fa7122dfdfd86dc827ffcbaa8c02bd9c6fa9c"
+  },
+  "command_exit_code": 1,
+  "execution": {
+    "planned": 20,
+    "submitted": 14,
+    "successful": 10,
+    "failed": 4,
+    "not_submitted_after_failure": 6,
+    "completed_after_stop": 3,
+    "baseline_c_successful": 10,
+    "improved_p_successful": 0,
+    "improved_p_failed": 4,
+    "first_failure": {
+      "task_index": 12,
+      "basin_id": "07145700",
+      "seed": 1,
+      "arm_id": "P",
+      "error": "ValueError: branch and destination global states do not match"
+    },
+    "all_four_failure_messages_identical": true,
+    "scientific_aggregation_performed": false
+  },
+  "independent_diagnosis": {
+    "method": "read-only in-memory replay under the registered code and inputs; comparison was intercepted only to expose the numerical difference and no task artifact was written",
+    "cases": [
+      {
+        "basin_id": "07145700",
+        "seed": 1,
+        "first_exceedance_zero_based_day": 39,
+        "maximum_state_absolute_difference": 1.8189894035458565e-12,
+        "registered_absolute_tolerance": 1e-12,
+        "state_component_index": 4,
+        "direct_state_value": 2220.1590150729044,
+        "nested_state_value": 2220.159015072906,
+        "relative_difference_to_state_scale": 8.193057096161211e-16
+      },
+      {
+        "basin_id": "02193340",
+        "seed": 0,
+        "first_exceedance_zero_based_day": 94,
+        "maximum_state_absolute_difference": 1.3642420526593924e-12,
+        "registered_absolute_tolerance": 1e-12,
+        "state_scale": 3302.406,
+        "relative_difference_to_state_scale": 4.13105491165954e-16
+      }
+    ],
+    "mathematical_interpretation": "The direct nine-branch and nested three-destination mixtures use mathematically equivalent weights but a different floating-point accumulation order. The observed relative differences are at double-precision rounding scale. This is a numerical consistency-check failure, not a scientific result for the proposed mechanism.",
+    "probability_or_path_contract_change_required": false,
+    "registered_tolerance_change_required": false
+  },
+  "logs": {
+    "stdout": {
+      "path": "tmp/camels_parfc_transition_path_03_mechanism10.stdout.log",
+      "bytes": 4099,
+      "sha256": "a21f42f5787023f2318547e9f1ef48c42ac39c3cce70dc66fc9ec5239b6ed14e"
+    },
+    "stderr": {
+      "path": "tmp/camels_parfc_transition_path_03_mechanism10.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "output_root": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03_mechanism10_s01_20260810_local",
+  "output_collection": {
+    "entry_format": "relative_path,bytes,sha256",
+    "sorted_entry_count": 13,
+    "sha256_of_newline_joined_sorted_entries": "495184901b82fb3ce8dad8d8b490b4831f599142ea9dbcf93429ee07f780b85b",
+    "entries": [
+      "arms/C/probs/02096846_s0.npz,91974,dfeaa46a06b8c9dbac41edff6d5752d4c6fe01e1800e7f9619574b5a27ab2e44",
+      "arms/C/probs/02096846_s1.npz,92381,81adffa41e7591e86e16f06fe03398452b4eb7156fbcaae3e8e3c6a47ca4ae7b",
+      "arms/C/probs/02193340_s0.npz,89964,abcd9030c03003d4b7665cc997404467c92b4633cea399ea3a57f6805f8b0664",
+      "arms/C/probs/02193340_s1.npz,89931,5ba8f4d7217f6a8d079ae0a63fa7a06f25ab34ee96c2513dd087792809587fd3",
+      "arms/C/probs/02221525_s1.npz,90814,7e4ba60b588202768c936ebdf3016d037bdf1c1df6aebc30f99dc58be093bcd9",
+      "arms/C/probs/02349900_s1.npz,91076,aa229e432868c884245e14de127dac6256d6a47a1eb87b0f8eff45c2e11c02cd",
+      "arms/C/probs/05413500_s0.npz,84515,6c804169997a87b3a0f9782e2e2e6be049bea765e67a067dc41cd8faca0e776e",
+      "arms/C/probs/05501000_s1.npz,81062,50c510a938796dfddcbe99acb1c549162ae5e54d843496990294ff689613e859",
+      "arms/C/probs/07145700_s0.npz,87101,7a77d3d8436ad75ca612116ba1b8ac9f34fa3eb574846d0c8d0f37fcc29f700f",
+      "arms/C/probs/07145700_s1.npz,86717,807527bad3798b9f25ba541c9e65f871f9779e2dbe23b260622e5c1637341e09",
+      "arms/C/tasks.csv,3456,4e744f4c228c2eb9eabf7bb9e7f83e25f05cf68e04d036162dcb16a697b65ebf",
+      "arms/P/tasks.csv,2587,3c4fb23f60cb3cb59dab1ed5cde194223202f7aaef39d5267ea3d2f184ff6048",
+      "runner_summary.json,4099,a21f42f5787023f2318547e9f1ef48c42ac39c3cce70dc66fc9ec5239b6ed14e"
+    ]
+  },
+  "artifact_state": {
+    "p_probability_files": 0,
+    "temporary_probability_files": 0,
+    "verification_directory_exists": false,
+    "matching_python_processes": 0,
+    "original_output_must_not_be_modified_or_reused": true
+  },
+  "decision": {
+    "scientific_status": "HOLD",
+    "technical_revision_03a_permitted_only_after_test_first_fix": true,
+    "revision_must_rerun_both_arms_all_twenty_tasks": true,
+    "validation_or_scale_run_permitted": false
+  }
+}

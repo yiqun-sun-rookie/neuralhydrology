@@ -1,0 +1,136 @@
+{
+  "experiment_id": "CAMELS_PARFC_TRANSITION_PATH_03B_MECHANISM10",
+  "evidence_timestamp": "2026-08-11T12:34:06.4726369+08:00",
+  "status": "preflight_passed_awaiting_two_independent_reviews_and_separate_execution_go",
+  "configuration": {
+    "path": "src/camels_switch_confirmation/configs/camels_parfc_transition_path_03b_mechanism10.json",
+    "bytes": 11657,
+    "sha256": "90f2a19e6f45a78fca08debe697166faac6046029ea4f6d677358de58b07132e",
+    "json_parse": "passed",
+    "read_only_runner_preflight": "passed"
+  },
+  "run_manifest": {
+    "path": "docs/plans/2026-08-11-camels-parfc-transition-path-mechanism10-03b-run-manifest-v01.json",
+    "bytes": 4882,
+    "sha256": "020c19dea53ae48538819392e837dfdcb398dd3fd608d19b29d23f2dbf3239e2",
+    "json_parse": "passed",
+    "status": "registered_not_run_awaiting_separate_user_go"
+  },
+  "initial_moment_manifest": {
+    "path": "docs/plans/2026-08-11-camels-parfc-transition-path-mechanism10-03b-initial-moment-manifest-v01.npz",
+    "bytes": 2957,
+    "sha256": "421070c8c9f7e432d8ee10f42ae3fc9ae8c04eb35fcbb5bf8262293c0ee205b4",
+    "allow_pickle_false_load": "passed",
+    "task_count": 10,
+    "candidate_count": 3,
+    "state_count": 15,
+    "probabilities_finite_nonnegative_and_normalized": true,
+    "states_and_covariances_finite": true,
+    "covariances_exactly_symmetric": true,
+    "axis_metadata": "passed",
+    "task_identity_and_order": "passed",
+    "independent_generation_bitwise_matches_production_initializer": true
+  },
+  "registered_inputs": {
+    "task_table_sha256": "e20f9d7d3b6f9f7f9bf90f4f94550e2cebc80a17a88d7f24ebabb989e33c4048",
+    "parameter_table_sha256": "577b12fcb8e1a7a7a607995f0011dbda38a199ee68f3636732b80a3356c16be6",
+    "g1_precheck_table_sha256": "3443ba601434dd30b43c3b5e8a9b838fc666cc394077700ddd4d3e7158b3ee73",
+    "raw_input_manifest_sha256": "e9214738c64ba35800d06d4c6c07d1a3f31e5615cfefc9e1e55ae99ea3b3818b",
+    "raw_input_file_count": 184,
+    "all_registered_input_hashes_match": true
+  },
+  "task_contract": {
+    "source_task_count": 10,
+    "planned_arm_count": 2,
+    "planned_total_task_count": 20,
+    "source_arm": "C",
+    "planned_arms": [
+      "C",
+      "P"
+    ],
+    "observed_design_seeds": [
+      0,
+      1
+    ],
+    "reserved_seed_present": false,
+    "ninety_or_531_basin_task_present": false
+  },
+  "implementation_and_runtime": {
+    "registered_file_count": 26,
+    "all_registered_file_hashes_match": true,
+    "python_executable": "C:\\Users\\yiqun\\anaconda3\\python.exe",
+    "python_executable_sha256": "c98caee82c66433f0e89d4abbf152b39a7dc2e99979b28dcb021598b4e3f5642",
+    "fixed_runtime_contract": "passed"
+  },
+  "test_evidence": {
+    "relevant_tests_passed": 188,
+    "relevant_tests_failed": 0,
+    "warning_count": 1,
+    "warning_scope": "existing_unknown_collect_ignore_glob_configuration_option",
+    "stdout": {
+      "path": "tmp/camels_03b_combined_tests_20260811_state15_fix.stdout.log",
+      "bytes": 734,
+      "sha256": "f6655fd886b6b8cd701aede9a7f49e75601c2c4f882673f8fb3e95fdb0a9292f"
+    },
+    "stderr": {
+      "path": "tmp/camels_03b_combined_tests_20260811_state15_fix.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "git_diff_check": "passed"
+  },
+  "protected_evidence": {
+    "version_03_entry_count": 13,
+    "version_03_output_collection_sha256": "495184901b82fb3ce8dad8d8b490b4831f599142ea9dbcf93429ee07f780b85b",
+    "version_03a_entry_count": 13,
+    "version_03a_output_collection_sha256": "bfcfc14f178369e46d1cb934191b91d16f548465ec931690b525a91b93e01309",
+    "old_outputs_reused": false,
+    "old_outputs_modified": false
+  },
+  "destinations_before_run": {
+    "output_root": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03b_mechanism10_s01_20260811_local",
+      "exists": false
+    },
+    "run_stdout": {
+      "path": "tmp/camels_parfc_transition_path_03b_mechanism10.stdout.log",
+      "exists": false
+    },
+    "run_stderr": {
+      "path": "tmp/camels_parfc_transition_path_03b_mechanism10.stderr.log",
+      "exists": false
+    },
+    "verification_stdout": {
+      "path": "tmp/camels_parfc_transition_path_03b_mechanism10_verify.stdout.log",
+      "exists": false
+    },
+    "verification_stderr": {
+      "path": "tmp/camels_parfc_transition_path_03b_mechanism10_verify.stderr.log",
+      "exists": false
+    },
+    "matching_python_process_count": 0
+  },
+  "authorization_boundary": {
+    "configuration_creation": "authorized_and_completed",
+    "twenty_task_execution": "not_authorized",
+    "independent_verification_execution": "not_authorized_until_twenty_tasks_complete",
+    "seeds_2_and_3": "prohibited",
+    "ninety_basin_configuration_or_run": "prohibited",
+    "full_531_basin_run": "prohibited",
+    "version_02_freeze": "prohibited",
+    "commit_push_delete_or_old_evidence_modification": "prohibited"
+  },
+  "review_requirement": {
+    "required_independent_reviewers": 2,
+    "review_scope": "this frozen twenty-task mechanism configuration only",
+    "both_must_return_go_before_execution_request": true
+  },
+  "scientific_status": {
+    "new_experiment_result_exists": false,
+    "parameter_candidate_identification_effect": "unverified",
+    "noise_candidate_identification_effect": "not_tested_here",
+    "complete_state_accuracy": "not_tested_here",
+    "forecast_value": "not_tested_here",
+    "real_observation_assimilation_value": "not_tested_here"
+  }
+}

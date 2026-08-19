@@ -1,0 +1,62 @@
+{
+  "experiment_id": "CAMELS_PROCESS_NOISE_ONLY_01_SMOKE",
+  "status": "failed_contract_stop",
+  "recorded_at": "2026-08-09",
+  "scientific_result_available": false,
+  "rerun_performed": false,
+  "design90_started": false,
+  "validation_seeds_used": false,
+  "registered_design_manifest": {
+    "path": "docs/plans/2026-08-09-camels-process-noise-only-design90-manifest-v01.json",
+    "sha256": "5079696271cf5694a90b3cd061efc1d2ca538eca7fe7c09faad6563f3e0a00bf"
+  },
+  "run": {
+    "basin_id": "09306242",
+    "seeds": [0, 1],
+    "task_count": 2,
+    "success_count": 0,
+    "failure_count": 2,
+    "output_directory": "results/23_camels_process_noise_only/camels_process_noise_only_01_smoke_basin09306242_s01_20260809",
+    "config_sha256": "5e26f85f64c95cea864194430bb223affbebfb187d491edb2908479a31d68af7"
+  },
+  "failure": {
+    "simulation_day_zero_based": 155,
+    "calendar_date": "1990-03-05",
+    "state_index_zero_based": 1,
+    "state_name": "meltwater",
+    "state_value": 0.2893299328193164,
+    "recomputed_physical_upper_bound": 0.2893299328193162,
+    "projection_difference": -2.220446049250313e-16,
+    "absolute_projection_difference": 2.220446049250313e-16,
+    "local_binary64_spacing": 5.551115123125783e-17,
+    "difference_in_local_spacings": 4.0,
+    "all_other_state_projection_differences_zero": true,
+    "same_failure_for_both_design_seeds": true,
+    "lower_groundwater_noise_state_adjusted": false,
+    "registered_stop_condition": "truth_domain_adjustment_maximum must equal exactly zero"
+  },
+  "interpretation": {
+    "fact": "The physical projector recomputed meltwater as parCWH multiplied by snow storage and lowered the stored boundary value by 2.220446049250313e-16.",
+    "inference": "The observed difference is floating-point recomputation at an otherwise matching physical boundary, not evidence that lower-groundwater process noise left the physical domain.",
+    "unknown": "Whether the complete smoke and 90-basin exploratory design pass after a preregistered machine-precision domain tolerance remains untested."
+  },
+  "preserved_evidence": {
+    "runner_records": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01_smoke_basin09306242_s01_20260809/runner_records.csv",
+      "sha256": "ddcda4d083be1320c28d1599a164cca5c5aff16250de21c0873a5848c3ca14d8"
+    },
+    "runner_summary": {
+      "path": "results/23_camels_process_noise_only/camels_process_noise_only_01_smoke_basin09306242_s01_20260809/runner_summary.json",
+      "sha256": "4d1f15c73bc8366731e839d283bce21ce1474019e19b3ce3753d308370836578"
+    },
+    "standard_output": {
+      "path": "tmp/camels_process_noise_only_01_smoke_basin09306242_s01_20260809.stdout.log",
+      "sha256": "ca9c1d10e7e3fcaeecae929e3b774275434a53bdbd8fa41c72749041bf3bed95"
+    },
+    "standard_error": {
+      "path": "tmp/camels_process_noise_only_01_smoke_basin09306242_s01_20260809.stderr.log",
+      "sha256": "5189a76980203d3f312b108322b8438bdf369bd2ba0295c653c7ebb59321f04d"
+    }
+  },
+  "continuation_condition": "Explicit user GO is required before registering a machine-precision domain tolerance, changing the implementation, selecting a new output identifier, or rerunning the smoke."
+}

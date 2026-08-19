@@ -1,0 +1,253 @@
+{
+  "experiment_id": "CAMELS_PARFC_STATE_INTERACTION_01B_DESIGN90",
+  "evidence_status": "complete_independently_verified_exploratory_hold",
+  "completed_date": "2026-08-10",
+  "authorization_boundary": {
+    "design_seeds_used": [
+      0,
+      1
+    ],
+    "reserved_validation_seeds_used": false,
+    "full_531_basin_run_performed": false,
+    "validation_configuration_frozen": false,
+    "commit_or_push_performed": false
+  },
+  "execution": {
+    "basins": 90,
+    "arms": 3,
+    "tasks_planned": 540,
+    "tasks_successful": 540,
+    "tasks_failed": 0,
+    "events": 3240,
+    "probability_files": 540,
+    "runner_exit_code": 0,
+    "verification_exit_code": 0,
+    "runner_wall_seconds": 1486.5,
+    "runner_standard_error_bytes": 0,
+    "verification_standard_error_bytes": 0
+  },
+  "independent_integrity_checks": {
+    "verification_status": "passed",
+    "task_count": 540,
+    "event_count": 3240,
+    "probabilities_all_finite": true,
+    "probability_sum_maximum_absolute_error": 2.220446049250313e-16,
+    "stable_log_probabilities_all_finite": true,
+    "stable_log_probability_normalization_maximum_absolute_error": 3.3306690738754696e-16,
+    "truth_clip_count_total": 0,
+    "cross_arm_registered_shared_fields_exactly_equal": true,
+    "legacy_arm_a_probability_maximum_absolute_difference": 2.853273173286652e-14,
+    "legacy_arm_a_probability_absolute_tolerance": 1e-12,
+    "legacy_arm_a_event_decisions_exactly_equal": true,
+    "all_registered_input_and_implementation_hashes_match": true
+  },
+  "arm_results": [
+    {
+      "arm_id": "A",
+      "description": "historical parameter-grouped states with legacy projection",
+      "tasks": 180,
+      "events_passed": 503,
+      "events_total": 1080,
+      "event_pass_rate": 0.46574074074074073,
+      "multiclass_brier": 0.820362832067344,
+      "stable_true_negative_log_probability": 277.71510065723254,
+      "ordinary_true_probability_zero_days": 2492,
+      "ordinary_true_probability_evaluation_days": 194400,
+      "ordinary_true_probability_zero_fraction": 0.012818930041152263
+    },
+    {
+      "arm_id": "B",
+      "description": "full state interaction with legacy projection",
+      "tasks": 180,
+      "events_passed": 563,
+      "events_total": 1080,
+      "event_pass_rate": 0.5212962962962963,
+      "multiclass_brier": 0.6042423567348794,
+      "stable_true_negative_log_probability": 356.70812578598355,
+      "ordinary_true_probability_zero_days": 495,
+      "ordinary_true_probability_evaluation_days": 194400,
+      "ordinary_true_probability_zero_fraction": 0.0025462962962962965
+    },
+    {
+      "arm_id": "C",
+      "description": "full state interaction with conservative soil-capacity state and covariance treatment",
+      "tasks": 180,
+      "events_passed": 706,
+      "events_total": 1080,
+      "event_pass_rate": 0.6537037037037037,
+      "multiclass_brier": 0.3579735233144937,
+      "stable_true_negative_log_probability": 9543.506547898589,
+      "ordinary_true_probability_zero_days": 2044,
+      "ordinary_true_probability_evaluation_days": 194400,
+      "ordinary_true_probability_zero_fraction": 0.01051440329218107
+    }
+  ],
+  "arm_c_direction_results": [
+    {
+      "direction": "center_to_half",
+      "passed": 178,
+      "events": 180,
+      "pass_rate": 0.9888888888888889
+    },
+    {
+      "direction": "center_to_double",
+      "passed": 73,
+      "events": 180,
+      "pass_rate": 0.40555555555555556
+    },
+    {
+      "direction": "half_to_center",
+      "passed": 51,
+      "events": 180,
+      "pass_rate": 0.2833333333333333
+    },
+    {
+      "direction": "half_to_double",
+      "passed": 87,
+      "events": 180,
+      "pass_rate": 0.48333333333333334
+    },
+    {
+      "direction": "double_to_center",
+      "passed": 145,
+      "events": 180,
+      "pass_rate": 0.8055555555555556
+    },
+    {
+      "direction": "double_to_half",
+      "passed": 172,
+      "events": 180,
+      "pass_rate": 0.9555555555555556
+    }
+  ],
+  "paired_task_results": {
+    "c_relative_to_a_events_passed": {
+      "improved": 114,
+      "same": 49,
+      "worsened": 17,
+      "median_change": 1.0
+    },
+    "c_relative_to_a_multiclass_brier": {
+      "improved": 169,
+      "same": 0,
+      "worsened": 11,
+      "median_change": -0.48370705635365874
+    },
+    "c_relative_to_a_stable_true_negative_log_probability": {
+      "improved": 160,
+      "same": 0,
+      "worsened": 20,
+      "median_change": -12.534614846953573
+    }
+  },
+  "arm_c_overconfidence_diagnostic": {
+    "task_negative_log_probability_median": 0.6302009826244335,
+    "task_negative_log_probability_greater_than_10": 19,
+    "task_negative_log_probability_greater_than_100": 15,
+    "task_negative_log_probability_greater_than_1000": 10,
+    "task_negative_log_probability_greater_than_10000": 7,
+    "task_negative_log_probability_greater_than_100000": 3,
+    "daily_negative_log_probability_median": 0.21898318639701594,
+    "daily_negative_log_probability_99th_percentile": 1207.6971817902895,
+    "worst_task": {
+      "basin_id": "05501000",
+      "seed": 1,
+      "events_passed": 3,
+      "task_multiclass_brier": 1.0605353236543815,
+      "task_stable_true_negative_log_probability": 1173499.16782037,
+      "maximum_single_day_stable_true_negative_log_probability": 11206301.407815091,
+      "maximum_day_zero_based": 608,
+      "true_candidate": "center_capacity",
+      "maximum_probability_candidate": "double_capacity",
+      "ordinary_true_probability": 0.0
+    },
+    "fact": "The stable log probabilities are finite and normalized; the extreme score is not caused by NaN, infinity, or a probability-sum failure.",
+    "inference": "The method remains severely overconfident when it is wrong in a small set of basin-history combinations. The early 30-day event rule and the bounded Brier score do not measure the severity of these near-zero true-candidate probabilities."
+  },
+  "registered_decision_gates": {
+    "scale_replication": {
+      "all_tasks_and_independent_checks": true,
+      "c_events_strictly_greater_than_a": true,
+      "c_brier_not_greater_than_a": true,
+      "c_stable_true_negative_log_probability_not_greater_than_a": false,
+      "passed": false
+    },
+    "validation_freeze_eligibility": {
+      "scale_replication_required_and_passed": false,
+      "c_overall_event_pass_rate_at_least_0_65": true,
+      "c_minimum_direction_pass_rate_at_least_0_50": false,
+      "c_brier_at_most_two_thirds": true,
+      "c_stable_true_negative_log_probability_at_most_log_three": false,
+      "passed": false
+    }
+  },
+  "scientific_conclusion": {
+    "fact": "Full state interaction with conservative soil-capacity treatment substantially improves event counts and Brier score relative to the historical method in this 90-basin design sample, but it fails both preregistered gates because directional robustness and probability calibration remain inadequate.",
+    "status": "HOLD",
+    "next_allowed_step": "read-only diagnosis of catastrophic likelihood confidence and late-stage return-to-center failures, followed by a separately preregistered design-seed diagnostic if the user authorizes it",
+    "not_authorized": [
+      "validation seed 2 or 3",
+      "validation configuration freeze",
+      "full 531-basin run",
+      "state-accuracy claim",
+      "forecast-value claim",
+      "real-observation assimilation claim"
+    ]
+  },
+  "evidence_files": {
+    "configuration": {
+      "path": "src/camels_switch_confirmation/configs/camels_parfc_state_interaction_design90_01b.json",
+      "sha256": "1b5fed9c7958d719fefdbd3539993b3f5c567693e9be8032103698f5a1fbae13"
+    },
+    "pre_run_manifest": {
+      "path": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-run-manifest-v01.json",
+      "sha256": "ecd5b3c9a5df230205f6edc2c9076a615c494d8fa39441562a98d8cc8e2ce53c"
+    },
+    "runner_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local/runner_summary.json",
+      "sha256": "57c9329f5386b8c0376fe581afe3d3772285523343b258f1b8b0305b8ee3411a"
+    },
+    "independent_comparison_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local/verification/comparison_summary.json",
+      "sha256": "85e2543a3c372d26615c8bf8616c33d43ed9893eab3bad028facc2a2241fb900"
+    },
+    "independent_task_metrics": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local/verification/task_metrics.csv",
+      "sha256": "99af08d732c327e7676c125b57cf351b81786c02f82cc04d223a56229f858ec1"
+    },
+    "independent_event_metrics": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local/verification/event_metrics.csv",
+      "sha256": "2bff2fa9a661e485617156165dc0256604d1f3c78336fa32845620f6b1e2a916"
+    },
+    "independent_arm_metrics": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local/verification/arm_metrics.csv",
+      "sha256": "867aa4f2cb99d96e561a61cf7c39fae9a3b59ca20d3e97a49fb6b9040ddf2be7"
+    },
+    "independent_direction_metrics": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local/verification/direction_metrics.csv",
+      "sha256": "a0ab2bb012e4593ae239eeb581644f96c352c51c9aeb774c19c69613d6217452"
+    },
+    "runner_standard_output": {
+      "path": "tmp/camels_parfc_state_interaction_01b_design90_s01_20260810_local.stdout.log",
+      "sha256": "57c9329f5386b8c0376fe581afe3d3772285523343b258f1b8b0305b8ee3411a"
+    },
+    "runner_standard_error": {
+      "path": "tmp/camels_parfc_state_interaction_01b_design90_s01_20260810_local.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "verification_standard_output": {
+      "path": "tmp/camels_parfc_state_interaction_01b_design90_s01_20260810_local.verify.stdout.log",
+      "sha256": "85e2543a3c372d26615c8bf8616c33d43ed9893eab3bad028facc2a2241fb900"
+    },
+    "verification_standard_error": {
+      "path": "tmp/camels_parfc_state_interaction_01b_design90_s01_20260810_local.verify.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "probability_file_collection": {
+      "algorithm": "SHA-256 over sorted lines of output-relative-path,byte-count,file-SHA-256",
+      "file_count": 540,
+      "bytes": 50801423,
+      "sha256": "79a497fa125daa462d5b7cd52feef92d7fb65e9913ff3263834d6d1765f9d6e7"
+    }
+  }
+}

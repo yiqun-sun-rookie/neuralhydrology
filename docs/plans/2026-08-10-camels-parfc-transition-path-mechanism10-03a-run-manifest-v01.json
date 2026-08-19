@@ -1,0 +1,67 @@
+{
+  "experiment_id": "CAMELS_PARFC_TRANSITION_PATH_03A_MECHANISM10",
+  "registered_date": "2026-08-10",
+  "status": "registered_not_run",
+  "purpose": "Repeat both mechanism arms after a test-first compensated-summation correction, without changing the scientific contract or numerical tolerances.",
+  "configuration": {
+    "path": "src/camels_switch_confirmation/configs/camels_parfc_transition_path_03a_mechanism10.json",
+    "sha256": "d70b5505aa3b9db6817f06eea9977510fc5e7553ec33c123d2755f0cb800c8f2"
+  },
+  "predecessor_failure": {
+    "configuration_sha256": "df61c2964571d70dbff8adfce0c8853a371384a56260ddb5b20ce52e782c722e",
+    "failure_evidence_path": "docs/plans/2026-08-10-camels-parfc-transition-path-mechanism10-failure-evidence-v01.json",
+    "failure_evidence_sha256": "4ecf017a5ef5625250568a939ef37851e02b1f5d015ad3011872f1cdcca9c316",
+    "old_outputs_reused": false
+  },
+  "amendment": {
+    "path": "docs/plans/2026-08-10-camels-parfc-transition-path-mechanism10-amendment-03a.md",
+    "sha256": "8bbfc78fb48487594401d2c74545c1e9ba5ea6418d46e12e8f112fb3407dce4d"
+  },
+  "execution": {
+    "working_directory": "G:\\wt\\camels-rising",
+    "python": "C:\\Users\\yiqun\\anaconda3\\python.exe",
+    "command": "C:\\Users\\yiqun\\anaconda3\\python.exe -m camels_switch_confirmation.run_parameter_path_mechanism --config src/camels_switch_confirmation/configs/camels_parfc_transition_path_03a_mechanism10.json --expected-config-sha256 d70b5505aa3b9db6817f06eea9977510fc5e7553ec33c123d2755f0cb800c8f2 --workers 4",
+    "pythonpath": "G:\\wt\\camels-rising\\src",
+    "expected_tasks": 20,
+    "expected_tasks_per_arm": 10,
+    "workers": 4,
+    "stdout": "tmp/camels_parfc_transition_path_03a_mechanism10.stdout.log",
+    "stderr": "tmp/camels_parfc_transition_path_03a_mechanism10.stderr.log"
+  },
+  "independent_verification": {
+    "command": "C:\\Users\\yiqun\\anaconda3\\python.exe -m camels_switch_confirmation.verify_parameter_path_mechanism --config src/camels_switch_confirmation/configs/camels_parfc_transition_path_03a_mechanism10.json --expected-config-sha256 d70b5505aa3b9db6817f06eea9977510fc5e7553ec33c123d2755f0cb800c8f2",
+    "stdout": "tmp/camels_parfc_transition_path_03a_mechanism10_verify.stdout.log",
+    "stderr": "tmp/camels_parfc_transition_path_03a_mechanism10_verify.stderr.log",
+    "expected_output": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03a_mechanism10_s01_20260810_local/verification/verification_summary.json"
+  },
+  "output_root": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03a_mechanism10_s01_20260810_local",
+  "authorization_boundary": {
+    "seeds": [
+      0,
+      1
+    ],
+    "validation_seeds_2_and_3_authorized": false,
+    "ninety_basin_run_authorized": false,
+    "full_531_basin_run_authorized": false,
+    "configuration_version_02_freeze_authorized": false
+  },
+  "pre_run_evidence": {
+    "relevant_tests_passed": 135,
+    "relevant_tests_failed": 0,
+    "git_diff_check": "passed",
+    "state_absolute_tolerance": 1e-12,
+    "covariance_absolute_tolerance": 1e-11,
+    "tolerances_changed_from_predecessor": false,
+    "source_revision": "61e938b3a89f648e460a20e6f03e005bdc9fca4a"
+  },
+  "decision_rule": {
+    "scoring_indices": "180:1260",
+    "severe_day_definition": "stable true-candidate negative log probability greater than 100",
+    "continue_only_if": [
+      "all 20 tasks and all independent checks pass",
+      "P severe-day count is strictly lower than C",
+      "P mean stable true-candidate negative log probability is strictly lower than C"
+    ],
+    "passing_scope": "permission to prepare a separate ninety-basin design-seed comparison, not parameter-identification success or validation"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "experiment_id": "CAMELS_PARFC_OVERCONFIDENCE_DIAGNOSTIC_02_DESIGN10",
+  "manifest_status": "registered_not_run",
+  "registered_at": "2026-08-10T20:15:00+08:00",
+  "authorization": {
+    "explicit_user_go": true,
+    "design_seeds": [0, 1],
+    "reserved_validation_seeds_used": false,
+    "full_531_basin_run_authorized": false,
+    "correction_or_tuning_authorized": false,
+    "commit_or_push_authorized": false
+  },
+  "parent": {
+    "experiment_id": "CAMELS_PARFC_STATE_INTERACTION_01B_DESIGN90",
+    "configuration_sha256": "1b5fed9c7958d719fefdbd3539993b3f5c567693e9be8032103698f5a1fbae13",
+    "independent_task_metrics_sha256": "99af08d732c327e7676c125b57cf351b81786c02f82cc04d223a56229f858ec1",
+    "independent_comparison_summary_sha256": "85e2543a3c372d26615c8bf8616c33d43ed9893eab3bad028facc2a2241fb900"
+  },
+  "registered_files": {
+    "configuration": {
+      "path": "src/camels_switch_confirmation/configs/camels_parfc_overconfidence_diagnostic_02_design10.json",
+      "sha256": "8921049c4716910dc0f4d74043b59f4b26d4dc51c0c3c18c3d7d7260448ca47a"
+    },
+    "preregistration": {
+      "path": "docs/plans/2026-08-10-camels-parfc-overconfidence-diagnostic-prereg-v01.md",
+      "sha256": "fe9196103ee187c8b9c016c1fc308e7025de73739914e3e93662ea7b0ccf4c9c"
+    },
+    "task_table": {
+      "path": "docs/plans/2026-08-10-camels-parfc-overconfidence-diagnostic-tasks-v01.csv",
+      "sha256": "5ccec863add1fa51185cc54c8403dd1fde0b1684fead6c5df814e2bb9b3ff846"
+    },
+    "diagnostic_runner": {
+      "path": "src/camels_switch_confirmation/diagnose_parameter_likelihood.py",
+      "sha256": "68d60f8159fe523eb43deda9e8b370cafb193e1b3cb043c270876d4dfe8ba0c5"
+    },
+    "diagnostic_tests": {
+      "path": "test/test_camels_parameter_likelihood_diagnostic.py",
+      "sha256": "ccbb371437ad5f7909c4bf65e3d80f39d643bc638f227f422a8824485e881179"
+    }
+  },
+  "pre_run_evidence": {
+    "focused_tests": "11 passed, 1 pre-existing pytest configuration warning",
+    "related_tests": "106 passed, 1 pre-existing pytest configuration warning",
+    "full_worst_task_smoke": {
+      "basin_id": "05501000",
+      "seed": 1,
+      "probability_maximum_absolute_difference": 0.0,
+      "stable_log_probability_maximum_absolute_difference": 0.0,
+      "day_index": 608,
+      "true_negative_log_probability": 11206301.407815091,
+      "prior_log_odds": 4.584967478670571,
+      "residual_contribution": 11206296.721800044,
+      "log_variance_contribution": 0.10104757039848526
+    },
+    "registered_file_gate": "22 files matched",
+    "raw_input_content_gate": "184 files matched",
+    "source_probability_gate": "10 registered files matched",
+    "output_root_exists": false
+  },
+  "registered_run": {
+    "task_count": 10,
+    "candidate_day_rows": 37800,
+    "output_root": "results/23_camels_switch_confirmation/camels_parfc_overconfidence_diagnostic_02_design10_s01_20260810_local",
+    "stdout_log": "tmp/camels_parfc_overconfidence_diagnostic_02_design10_s01_20260810_local.stdout.log",
+    "stderr_log": "tmp/camels_parfc_overconfidence_diagnostic_02_design10_s01_20260810_local.stderr.log",
+    "command": "C:/Users/yiqun/anaconda3/python.exe -X utf8 -m camels_switch_confirmation.diagnose_parameter_likelihood --config src/camels_switch_confirmation/configs/camels_parfc_overconfidence_diagnostic_02_design10.json --config-sha256 8921049c4716910dc0f4d74043b59f4b26d4dc51c0c3c18c3d7d7260448ca47a"
+  },
+  "stop_conditions": [
+    "registered file or raw-input content hash change",
+    "source probability hash change",
+    "truth, observation, forcing, candidate, probability, or stable log-probability mismatch",
+    "non-finite diagnostic value or non-positive innovation variance",
+    "existing output or log",
+    "task exception or decomposition closure error above 1e-8"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "experiment_id": "CAMELS_PARFC_OVERCONFIDENCE_DIAGNOSTIC_02A_DESIGN10",
+  "evidence_status": "complete_independently_recomputed",
+  "configuration_status": "registered_design_seed_failure_diagnostic_not_validation",
+  "configuration_sha256": "0b74376d92b35654bbfe537967ee25fa7e9caa06bb33851e58182ac89263b0d9",
+  "scope": {
+    "selection": "all ten arm-C design-seed tasks with stable true-candidate negative log probability strictly greater than 1000",
+    "task_count": 10,
+    "candidate_day_rows": 37800,
+    "reserved_validation_seeds_used": false,
+    "correction_or_tuning_tested": false,
+    "full_531_basin_run": false
+  },
+  "pre_run_gates": {
+    "registered_file_count_matched": 25,
+    "raw_input_file_count_matched": 184,
+    "source_probability_file_count_matched": 10,
+    "output_root_preexisted": false
+  },
+  "execution": {
+    "successful_task_count": 10,
+    "failed_task_count": 0,
+    "standard_error_bytes": 0,
+    "diagnostic_status": "complete"
+  },
+  "independent_recomputation": {
+    "selection_count": 10,
+    "task_count": 10,
+    "candidate_day_rows": 37800,
+    "severe_day_count": 1974,
+    "maximum_probability_replay_difference": 0.0,
+    "maximum_log_probability_replay_difference": 0.0,
+    "maximum_truth_difference": 0.0,
+    "maximum_observation_difference": 0.0,
+    "maximum_forcing_difference": 0.0,
+    "maximum_candidate_vector_difference": 0.0,
+    "maximum_standardized_innovation_recompute_difference": 1.1641532182693481e-10,
+    "maximum_log_likelihood_recompute_difference": 1.4901161193847656e-08,
+    "maximum_decomposition_closure_error": 3.725290298461914e-09,
+    "residual_squared_dominant_days": 1974,
+    "residual_squared_dominant_fraction": 1.0,
+    "innovation_variance_dominant_days": 0,
+    "severe_days_by_stage_zero_based": {
+      "3": 335,
+      "5": 553,
+      "6": 1086
+    },
+    "severe_days_by_true_to_winner": {
+      "0->2": 1421,
+      "1->0": 211,
+      "1->2": 342
+    },
+    "median_prior_log_odds": 4.584967478670571,
+    "median_residual_contribution": 32358.680353059484,
+    "median_log_variance_contribution": 1.0458642023584916,
+    "median_true_absolute_innovation_mm_per_day": 36.6923400403704,
+    "median_winner_absolute_innovation_mm_per_day": 0.04712009487521633
+  },
+  "state_path_mechanism": {
+    "all_severe_days_have_higher_capacity_winner_than_truth": true,
+    "true_candidate_overpredicts_observation_fraction": 1.0,
+    "winner_source_mean_soil_water_above_true_capacity_fraction": 0.9979736575481256,
+    "median_mean_excess_transferred_from_soil_to_upper_groundwater_mm": 137.21052215215244,
+    "median_winner_source_conditional_weight_in_true_destination": 0.9999999999999991,
+    "winner_source_conditional_weight_above_0_99_fraction": 0.8348530901722391,
+    "median_true_source_conditional_weight_in_true_destination": 0.0,
+    "median_true_destination_mixed_upper_groundwater_mm": 138.21798435514094,
+    "median_winner_mixed_upper_groundwater_mm": 0.0,
+    "median_absolute_soil_state_difference_between_recorded_mix_and_direct_winner_to_truth_mapping_mm": 1.1368683772161603e-13,
+    "median_absolute_upper_groundwater_difference_between_recorded_mix_and_direct_winner_to_truth_mapping_mm": 5.684341886080802e-14
+  },
+  "registered_conclusion": {
+    "classification": "prediction_mean_or_state_path_dominated",
+    "supported_interpretation": "When a high-capacity candidate dominates, the lower-capacity destination state is repeatedly rebuilt almost entirely from that winner. The conservative parameter-space mapping repeatedly transfers excess soil water into upper groundwater, producing a false high-flow prediction and a self-reinforcing posterior lock.",
+    "not_supported": [
+      "innovation variance is the main cause",
+      "likelihood tempering or noise inflation is already justified as the solution",
+      "parameter switching is stably identified",
+      "the result generalizes to all 531 basins or validation seeds",
+      "state accuracy or forecast value has been established"
+    ]
+  },
+  "artifact_hashes": {
+    "run_manifest_v02": "88c0aa55ab39e8b2ed0b5fa9419002a160a65681e0617f0c68128a05639a649a",
+    "standard_output": "c5c0c79f458086e2c9a0ac8c16b9cf066cb2c2d84d6613cd0aa4b900809419ee",
+    "empty_standard_error": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diagnostic_summary": "c5c0c79f458086e2c9a0ac8c16b9cf066cb2c2d84d6613cd0aa4b900809419ee",
+    "candidate_days": "cf96d2798e26f9c66e8ad2af32cec48bb801f1047a0a0da65b9544ee84d77f6b",
+    "severe_days": "7309fc88a9483db556d9ef890d696d9dd6c81021d66beb968a0bad03ebc1a424",
+    "task_summary": "003411e506c7382be5f78700b3c98bfb833a6462052d943198bc39e7c4560a6c",
+    "trace_collection": "de33b0d8aff1ddfc1f5e36bd6d2cfd8e383b1af3fcddf1913b6c0fcc3ea7a1ea"
+  },
+  "claim_boundary": "failure-selected design-seed diagnosis only; no correction, validation, 531-basin inference, state-accuracy claim, or forecast claim"
+}

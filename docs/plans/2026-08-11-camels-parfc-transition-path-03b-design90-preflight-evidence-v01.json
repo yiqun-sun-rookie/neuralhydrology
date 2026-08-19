@@ -1,0 +1,125 @@
+{
+  "experiment_id": "CAMELS_PARFC_TRANSITION_PATH_03B_DESIGN90",
+  "evidence_date": "2026-08-11",
+  "status": "configuration_preflight_passed_execution_not_authorized",
+  "configuration": {
+    "path": "src/camels_switch_confirmation/configs/camels_parfc_transition_path_03b_design90.json",
+    "sha256": "b7bd90e752738b4a9d766e0138e7d9007f97c18443cc7764e0bba6d0b5221669",
+    "read_only_runner_preflight": "passed"
+  },
+  "run_manifest": {
+    "path": "docs/plans/2026-08-11-camels-parfc-transition-path-03b-design90-run-manifest-v01.json",
+    "sha256": "930e803169b028eb43c78f34b1e19bacd17dacb88372b7bf0dbbf6b6aec7a442",
+    "status": "registered_not_run_awaiting_separate_user_go"
+  },
+  "task_contract": {
+    "basins": 90,
+    "source_tasks": 180,
+    "planned_tasks": 360,
+    "design_seeds": [
+      0,
+      1
+    ],
+    "reserved_seed_present": false
+  },
+  "initial_moment_manifest": {
+    "path": "docs/plans/2026-08-11-camels-parfc-transition-path-03b-design90-initial-moment-manifest-v01.npz",
+    "sha256": "3d12d5c289edeb477ae285a914e456643bc1b581ed603a1f4cd73aa998ce7042",
+    "probability_shape": [
+      180,
+      3
+    ],
+    "state_shape": [
+      180,
+      3,
+      15
+    ],
+    "covariance_shape": [
+      180,
+      3,
+      15,
+      15
+    ],
+    "independent_bitwise_match": true
+  },
+  "registered_inputs": {
+    "raw_input_manifest_rows": 184,
+    "raw_input_manifest_sha256": "e9214738c64ba35800d06d4c6c07d1a3f31e5615cfefc9e1e55ae99ea3b3818b",
+    "source_probability_files": 180,
+    "all_hashes_match": true
+  },
+  "historical_stopped_runs": {
+    "version_03": {
+      "root": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03_mechanism10_s01_20260810_local",
+      "status": "stopped_before_scientific_summary_not_method_evidence",
+      "result_collection": {
+        "entry_format": "relative_path,bytes,sha256",
+        "count": 13,
+        "bytes": 895677,
+        "sha256_of_newline_joined_sorted_entries": "495184901b82fb3ce8dad8d8b490b4831f599142ea9dbcf93429ee07f780b85b"
+      }
+    },
+    "version_03a": {
+      "root": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03a_mechanism10_s01_20260810_local",
+      "status": "stopped_before_scientific_summary_not_method_evidence",
+      "result_collection": {
+        "entry_format": "relative_path,bytes,sha256",
+        "count": 13,
+        "bytes": 896011,
+        "sha256_of_newline_joined_sorted_entries": "bfcfc14f178369e46d1cb934191b91d16f548465ec931690b525a91b93e01309"
+      }
+    }
+  },
+  "tests": {
+    "passed": 211,
+    "failed": 0,
+    "stdout": {
+      "path": "tmp/camels_parfc_transition_path_03b_design90_prepare_tests.stdout.log",
+      "bytes": 734,
+      "sha256": "881148c070ff358a9270b808918ae971eaa6e74d4e584c1b340bb9e22161c8bd"
+    },
+    "stderr": {
+      "path": "tmp/camels_parfc_transition_path_03b_design90_prepare_tests.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "destinations_before_run": [
+    {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03b_design90_s01_20260811_local",
+      "exists": false
+    },
+    {
+      "path": "tmp/camels_parfc_transition_path_03b_design90.stdout.log",
+      "exists": false
+    },
+    {
+      "path": "tmp/camels_parfc_transition_path_03b_design90.stderr.log",
+      "exists": false
+    },
+    {
+      "path": "tmp/camels_parfc_transition_path_03b_design90_verify.stdout.log",
+      "exists": false
+    },
+    {
+      "path": "tmp/camels_parfc_transition_path_03b_design90_verify.stderr.log",
+      "exists": false
+    }
+  ],
+  "scientific_status": {
+    "new_design90_result_exists": false,
+    "parameter_candidate_identification": "unverified_at_design90_scale",
+    "noise_candidate_identification": "not_tested",
+    "complete_state_accuracy": "not_tested",
+    "forecast_value": "not_tested",
+    "real_observation_assimilation_value": "not_tested"
+  },
+  "authorization_boundary": {
+    "configuration_preparation": "authorized_and_completed",
+    "execution": "not_authorized",
+    "independent_verification": "not_authorized_until_execution",
+    "seeds_2_and_3": "prohibited",
+    "full_531_basin_run": "prohibited",
+    "version_02_freeze": "prohibited"
+  }
+}

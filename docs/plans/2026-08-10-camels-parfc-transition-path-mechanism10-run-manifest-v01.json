@@ -1,0 +1,54 @@
+{
+  "experiment_id": "CAMELS_PARFC_TRANSITION_PATH_03_MECHANISM10",
+  "registered_date": "2026-08-10",
+  "status": "registered_not_run",
+  "purpose": "Check whether delaying the nine source-to-target path collapse until after the observation reduces the known probability-tail failure on exactly ten selected design-seed tasks.",
+  "configuration": {
+    "path": "src/camels_switch_confirmation/configs/camels_parfc_transition_path_03_mechanism10.json",
+    "sha256": "df61c2964571d70dbff8adfce0c8853a371384a56260ddb5b20ce52e782c722e"
+  },
+  "execution": {
+    "working_directory": "G:\\wt\\camels-rising",
+    "python": "C:\\Users\\yiqun\\anaconda3\\python.exe",
+    "command": "C:\\Users\\yiqun\\anaconda3\\python.exe -m camels_switch_confirmation.run_parameter_path_mechanism --config src/camels_switch_confirmation/configs/camels_parfc_transition_path_03_mechanism10.json --expected-config-sha256 df61c2964571d70dbff8adfce0c8853a371384a56260ddb5b20ce52e782c722e --workers 4",
+    "pythonpath": "G:\\wt\\camels-rising\\src",
+    "expected_tasks": 20,
+    "expected_tasks_per_arm": 10,
+    "workers": 4,
+    "stdout": "tmp/camels_parfc_transition_path_03_mechanism10.stdout.log",
+    "stderr": "tmp/camels_parfc_transition_path_03_mechanism10.stderr.log"
+  },
+  "independent_verification": {
+    "command": "C:\\Users\\yiqun\\anaconda3\\python.exe -m camels_switch_confirmation.verify_parameter_path_mechanism --config src/camels_switch_confirmation/configs/camels_parfc_transition_path_03_mechanism10.json --expected-config-sha256 df61c2964571d70dbff8adfce0c8853a371384a56260ddb5b20ce52e782c722e",
+    "stdout": "tmp/camels_parfc_transition_path_03_mechanism10_verify.stdout.log",
+    "stderr": "tmp/camels_parfc_transition_path_03_mechanism10_verify.stderr.log",
+    "expected_output": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03_mechanism10_s01_20260810_local/verification/verification_summary.json"
+  },
+  "output_root": "results/23_camels_switch_confirmation/camels_parfc_transition_path_03_mechanism10_s01_20260810_local",
+  "authorization_boundary": {
+    "seeds": [
+      0,
+      1
+    ],
+    "validation_seeds_2_and_3_authorized": false,
+    "ninety_basin_run_authorized": false,
+    "full_531_basin_run_authorized": false,
+    "configuration_version_02_freeze_authorized": false
+  },
+  "pre_run_evidence": {
+    "relevant_tests_passed": 130,
+    "relevant_tests_failed": 0,
+    "git_diff_check": "passed",
+    "source_revision": "61e938b3a89f648e460a20e6f03e005bdc9fca4a"
+  },
+  "decision_rule": {
+    "scoring_indices": "180:1260",
+    "severe_day_definition": "stable true-candidate negative log probability greater than 100",
+    "continue_only_if": [
+      "all 20 tasks and all independent checks pass",
+      "P severe-day count is strictly lower than C",
+      "P mean stable true-candidate negative log probability is strictly lower than C"
+    ],
+    "passing_scope": "permission to prepare a separate ninety-basin design-seed comparison, not parameter-identification success or validation"
+  }
+}

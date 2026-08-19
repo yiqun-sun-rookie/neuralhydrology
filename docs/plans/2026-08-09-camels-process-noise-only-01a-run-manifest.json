@@ -1,0 +1,111 @@
+{
+  "experiment_family": "CAMELS_PROCESS_NOISE_ONLY_01",
+  "configuration_revision": "01a_machine_precision_domain_tolerance",
+  "manifest_status": "registered_not_run",
+  "registered_at": "2026-08-09",
+  "authorization": {
+    "standing_user_instruction": "类似的命令以后全局不用审批",
+    "authorized_seeds": [0, 1],
+    "reserved_not_authorized_seeds": [2, 3],
+    "formal_validation_freeze_authorized": false,
+    "new_531_basin_run_authorized": false,
+    "commit_or_push_authorized": false
+  },
+  "git": {
+    "worktree": "G:/wt/camels-rising",
+    "branch": "codex/camels-rising-half-recal",
+    "head": "61e938b3a89f648e460a20e6f03e005bdc9fca4a",
+    "dirty_worktree_preserved": true
+  },
+  "amendment": {
+    "only_changed_factor": "truth physical-domain comparison uses 32*eps64*max(1,abs(raw),abs(projected)) per component",
+    "truth_state_replacement": false,
+    "scientific_design_changed": false,
+    "predecessor_failed_config_sha256": "5e26f85f64c95cea864194430bb223affbebfb187d491edb2908479a31d68af7",
+    "predecessor_failure_evidence_sha256": "72657435ae613128660a9d4b1a016f8ac24d3473d4bf0ada5a98fd846d43ac6a"
+  },
+  "registered_files": {
+    "amendment": {
+      "path": "docs/plans/2026-08-09-camels-process-noise-only-amendment-01a.md",
+      "sha256": "b55c2c4812f9c13daf26a923d38527a5dc50a3186f65e370b0ffa06b8ab470e5"
+    },
+    "config": {
+      "path": "src/camels_process_noise_only/configs/camels_process_noise_only_01a_design.json",
+      "sha256": "bae3b1d8ac51ddf3226865e0766e1344dc92ced929b2c36208eb0ac793e3bd54"
+    },
+    "registry_before_run_status_updates": {
+      "path": "docs/plans/2026-08-09-camels-process-noise-only-registry-v01.csv",
+      "sha256": "9d45c5215763311c40468b8339ff610a1df73c02e9b23d823dafb1231d4b0549"
+    },
+    "basin_list": {
+      "path": "docs/plans/2026-08-09-camels-process-noise-only-design90-basins-v01.csv",
+      "sha256": "73ea0e83d2fb8e00e5b8fa6bb17102dcca15237e91a1fc78a298fe508973391e"
+    },
+    "raw_input_manifest": {
+      "path": "docs/plans/2026-08-09-camels-process-noise-only-design90-input-manifest-v01.csv",
+      "sha256": "78b4b05113e9ec2bc476bde95492013295f8deedf69fa3c7e87e11126a56adea"
+    },
+    "forcing_coverage": {
+      "path": "docs/plans/2026-08-09-camels-process-noise-only-design90-coverage-v01.csv",
+      "sha256": "059819e4482253a25f251afca7c1ee145e7c3b98faaf8265d7e8e5c3734f0b4b"
+    },
+    "contract": {
+      "path": "src/camels_process_noise_only/contract.py",
+      "sha256": "0bf79696042dec3cb919095db19bbe094e7c55fe2a29c09cce49752d36578275"
+    },
+    "runner": {
+      "path": "src/camels_process_noise_only/runner.py",
+      "sha256": "f2e039c8c9fcf13fb90cdc24b418d35a9f3fa39add357b557d817ba06f9061e5"
+    },
+    "independent_verifier": {
+      "path": "src/camels_process_noise_only/verifier.py",
+      "sha256": "c1ca673009edb38fe3fca42b9cdf743ee33ba65bc67ae73df5fedf372cfebbe1"
+    },
+    "shared_interacting_multiple_model_core": {
+      "path": "src/hbv_joint_uncertainty/imm.py",
+      "sha256": "72733bfba33c31a4a84bcd3775007ebbe11d88110bee72977c520482434a3e17"
+    },
+    "task_tests": {
+      "path": "test/test_camels_process_noise_only.py",
+      "sha256": "7e4a481bc2385f9047f37ef2e5b0ed2e9657865d17aafa1a48d472d1b112d725"
+    },
+    "shared_core_tests": {
+      "path": "test/test_hbv_joint_uncertainty_imm.py",
+      "sha256": "a4d6bb758bf752f7307262f028d07a24a07ae224256157cc5039a3b21902fea6"
+    }
+  },
+  "test_evidence": {
+    "result": "62 passed, 1 pre-existing pytest configuration warning",
+    "syntax_check": "passed",
+    "git_diff_check": "passed",
+    "runner_input_hash_check": "passed",
+    "independent_input_hash_check": "passed"
+  },
+  "runs": {
+    "smoke": {
+      "basin_id": "09306242",
+      "seeds": [0, 1],
+      "workers": 1,
+      "output": "results/23_camels_process_noise_only/camels_process_noise_only_01a_smoke_basin09306242_s01_20260809",
+      "status": "registered_not_run"
+    },
+    "design90": {
+      "basin_count": 90,
+      "seeds": [0, 1],
+      "workers": 2,
+      "output": "results/23_camels_process_noise_only/camels_process_noise_only_01a_design90_s01_20260809",
+      "status": "blocked_pending_smoke"
+    }
+  },
+  "stop_conditions": [
+    "registered SHA-256 change",
+    "test failure",
+    "truth domain tolerance violation",
+    "truth state replacement",
+    "candidate difference outside process covariance",
+    "parameter or observation-noise switch",
+    "non-finite or non-normalized probability",
+    "pre-existing output directory",
+    "independent verification failure"
+  ]
+}
