@@ -1,0 +1,340 @@
+### channel=zhenjiang-oyv-qual seq=2
+### host=login4
+### started=2026-08-19T17:47:09+0800
+### ---------- output ----------
+=== A. GUARDS ===
+frozen_r2_root_present=true (untouched by this command)
+root_created=/data1/home/sunyiq/zhenjiang_oyv_qual_20260819
+=== B. CLONE PRIVATE CODE BUNDLE ===
+Cloning into '/data1/home/sunyiq/zhenjiang_oyv_qual_20260819/repo'...
+bundle_commit=406bce659b0bf6bab9435e14196c7c3de383a602
+--- bundle file identities ---
+91b4bd42fcaf455c937170970c2715d2818781250a3e1df747fb0a6070bb1592  .gitattributes
+862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793  .gitignore
+5ee5dd2ab8a22c86c9d2154f8970a1bf0d2eb81cd6acdcc9551506e54a165f30  qualification/hpc_environment_qualification_v1.py
+6834639fa045de4a4178a36cc9cd9d7917e805e43bf04c3eafda012be97972ee  qualification/submit_qualification.slurm
+81b7c45c2c5dea30f25ef8b80d7121e290c5c37a00b804b99a01f77fa5754199  README.md
+9b40542bdc7f5472457411c09b2929988a07b965dd07593774828a8381bc749e  scripts/analysis/tidal_fluvial_hidden_gauge_v1_contract.py
+6a8e45b8988809899ae84febd2e4790a6369acaad88f346bc7f2ddca7f40f5f5  scripts/astronomical_tide/wusongkou_astronomical_tide_realtime_v2.py
+46dfb67211f57436d26545c890857bee7519acb6eebfb7fd501390335fd52589  scripts/modeling/water_level_joint_encoder_decoder_v2.py
+d29a2197c24a3e243590f0e7dcf52a2a4266a0951abab08244957711cabaa5bd  third_party/pytides/astro.py
+fed8fa1a14663391f2f706e8ca70eedddd188321221a7fd8120ddcd01b11846a  third_party/pytides/constituent.py
+a207e1f1a18ec94542e7394eafc51d36645a5e48810300cb1d30568df489dc9b  third_party/pytides/__init__.py
+ae6af6c135fe88f90752fd6cf522d6976e5f8f8a29341d719627124dd254989b  third_party/pytides/nodal_corrections.py
+fbdc9ec80a4bc9741520e73751038ab06db836add2425dbcc420873fde5dcbce  third_party/pytides/tide.py
+=== C. ENVIRONMENT ===
+python=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+=== D. PRIVATE DEPENDENCY INSTALL (nh_final NOT modified) ===
+--- D1. threadpoolctl + joblib (pure python, required) ---
+  Downloading joblib-1.5.3-py3-none-any.whl.metadata (5.5 kB)
+Downloading threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Downloading joblib-1.5.3-py3-none-any.whl (309 kB)
+Installing collected packages: threadpoolctl, joblib
+
+Successfully installed joblib-1.5.3 threadpoolctl-3.6.0
+d1_exit=0
+--- D2. scikit-learn (binary wheels only, optional) ---
+Collecting scikit-learn
+  Downloading scikit_learn-1.7.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (11 kB)
+Downloading scikit_learn-1.7.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (9.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.7/9.7 MB 15.6 MB/s  0:00:00
+Installing collected packages: scikit-learn
+Successfully installed scikit-learn-1.7.2
+d2_exit=0
+=== E. IMPORT VERIFICATION ===
+{
+  "joblib": "1.5.3",
+  "numpy": "2.3.3",
+  "pandas": "2.3.2",
+  "psutil": "7.0.0",
+  "scipy": "1.16.2",
+  "sklearn": "1.7.2",
+  "threadpoolctl": "3.6.0",
+  "torch": "2.4.0"
+}
+=== F. MODEL IMPORT ON LOGIN NODE (import only, no compute) ===
+model_import_ok=True parameters=121217
+=== G. LINE ENDING FIX AND SUBMIT ===
+array_job_id=205525
+=== H. WAIT (max 20 min) ===
+t=60s remaining_tasks=4
+t=120s remaining_tasks=4
+t=180s remaining_tasks=2
+t=240s remaining_tasks=2
+=== I. SACCT ===
+           JobID   NodeList        State ExitCode    Elapsed 
+---------------- ---------- ------------ -------- ---------- 
+        205525_0     ngu011    COMPLETED      0:0   00:01:00 
+        205525_1     ngu008    COMPLETED      0:0   00:01:02 
+        205525_2     ngu008    COMPLETED      0:0   00:01:01 
+        205525_3     ngu011    COMPLETED      0:0   00:00:59 
+        205525_4     ngu008    COMPLETED      0:0   00:01:01 
+        205525_5     ngu008    COMPLETED      0:0   00:01:00 
+        205525_6     ngu011    COMPLETED      0:0   00:01:02 
+        205525_7     ngu008    COMPLETED      0:0   00:01:03 
+        205525_8     ngu008    COMPLETED      0:0   00:01:01 
+=== J. PER-TASK NODE AND GPU ===
+[INFO] job=205525 task=0 node=ngu011
+0, NVIDIA GeForce RTX 3090, GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da, 580.76.05, 24576 MiB
+1, NVIDIA GeForce RTX 3090, GPU-7b2fa2ee-6930-2a2e-e9f5-7736fd478efd, 580.76.05, 24576 MiB
+    "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+[INFO] job=205525 task=1 node=ngu008
+0, NVIDIA GeForce RTX 3090, GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161, 580.76.05, 24576 MiB
+1, NVIDIA GeForce RTX 3090, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, 580.76.05, 24576 MiB
+    "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+[INFO] job=205525 task=2 node=ngu008
+0, NVIDIA GeForce RTX 3090, GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161, 580.76.05, 24576 MiB
+1, NVIDIA GeForce RTX 3090, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, 580.76.05, 24576 MiB
+    "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+[INFO] job=205525 task=3 node=ngu011
+0, NVIDIA GeForce RTX 3090, GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da, 580.76.05, 24576 MiB
+1, NVIDIA GeForce RTX 3090, GPU-7b2fa2ee-6930-2a2e-e9f5-7736fd478efd, 580.76.05, 24576 MiB
+    "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+[INFO] job=205525 task=4 node=ngu008
+0, NVIDIA GeForce RTX 3090, GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161, 580.76.05, 24576 MiB
+1, NVIDIA GeForce RTX 3090, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, 580.76.05, 24576 MiB
+    "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+[INFO] job=205525 task=5 node=ngu008
+0, NVIDIA GeForce RTX 3090, GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161, 580.76.05, 24576 MiB
+1, NVIDIA GeForce RTX 3090, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, 580.76.05, 24576 MiB
+    "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+[INFO] job=205525 task=6 node=ngu011
+0, NVIDIA GeForce RTX 3090, GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da, 580.76.05, 24576 MiB
+1, NVIDIA GeForce RTX 3090, GPU-7b2fa2ee-6930-2a2e-e9f5-7736fd478efd, 580.76.05, 24576 MiB
+    "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+[INFO] job=205525 task=7 node=ngu008
+0, NVIDIA GeForce RTX 3090, GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161, 580.76.05, 24576 MiB
+1, NVIDIA GeForce RTX 3090, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, 580.76.05, 24576 MiB
+    "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+[INFO] job=205525 task=8 node=ngu008
+0, NVIDIA GeForce RTX 3090, GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161, 580.76.05, 24576 MiB
+1, NVIDIA GeForce RTX 3090, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, 580.76.05, 24576 MiB
+    "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+--- any fatal lines ---
+=== K. REPORT DIGEST ===
+{
+  "report_count": 9,
+  "rows": [
+    {
+      "determinism_error": null,
+      "driver": "580.76.05",
+      "elapsed_seconds": 8.5974,
+      "file": "qual_205525_0.json",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "gpu_capability": [
+        8,
+        6
+      ],
+      "gpu_uuid": "GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da",
+      "intra_process_determinism": true,
+      "node": "ngu011",
+      "numpy_differing": [
+        "scalar_promotion_dtype"
+      ],
+      "numpy_direction_ok": true,
+      "passed": true,
+      "prediction_sha256": "be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38",
+      "sample_passes_per_second": 5717.1,
+      "state_sha256": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+    },
+    {
+      "determinism_error": null,
+      "driver": "580.76.05",
+      "elapsed_seconds": 7.5297,
+      "file": "qual_205525_1.json",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "gpu_capability": [
+        8,
+        6
+      ],
+      "gpu_uuid": "GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161",
+      "intra_process_determinism": true,
+      "node": "ngu008",
+      "numpy_differing": [
+        "scalar_promotion_dtype"
+      ],
+      "numpy_direction_ok": true,
+      "passed": true,
+      "prediction_sha256": "be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38",
+      "sample_passes_per_second": 6527.8,
+      "state_sha256": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+    },
+    {
+      "determinism_error": null,
+      "driver": "580.76.05",
+      "elapsed_seconds": 7.4602,
+      "file": "qual_205525_2.json",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "gpu_capability": [
+        8,
+        6
+      ],
+      "gpu_uuid": "GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161",
+      "intra_process_determinism": true,
+      "node": "ngu008",
+      "numpy_differing": [
+        "scalar_promotion_dtype"
+      ],
+      "numpy_direction_ok": true,
+      "passed": true,
+      "prediction_sha256": "be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38",
+      "sample_passes_per_second": 6588.6,
+      "state_sha256": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+    },
+    {
+      "determinism_error": null,
+      "driver": "580.76.05",
+      "elapsed_seconds": 8.1561,
+      "file": "qual_205525_3.json",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "gpu_capability": [
+        8,
+        6
+      ],
+      "gpu_uuid": "GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da",
+      "intra_process_determinism": true,
+      "node": "ngu011",
+      "numpy_differing": [
+        "scalar_promotion_dtype"
+      ],
+      "numpy_direction_ok": true,
+      "passed": true,
+      "prediction_sha256": "be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38",
+      "sample_passes_per_second": 6026.4,
+      "state_sha256": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+    },
+    {
+      "determinism_error": null,
+      "driver": "580.76.05",
+      "elapsed_seconds": 7.0674,
+      "file": "qual_205525_4.json",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "gpu_capability": [
+        8,
+        6
+      ],
+      "gpu_uuid": "GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161",
+      "intra_process_determinism": true,
+      "node": "ngu008",
+      "numpy_differing": [
+        "scalar_promotion_dtype"
+      ],
+      "numpy_direction_ok": true,
+      "passed": true,
+      "prediction_sha256": "be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38",
+      "sample_passes_per_second": 6954.8,
+      "state_sha256": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+    },
+    {
+      "determinism_error": null,
+      "driver": "580.76.05",
+      "elapsed_seconds": 6.9595,
+      "file": "qual_205525_5.json",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "gpu_capability": [
+        8,
+        6
+      ],
+      "gpu_uuid": "GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161",
+      "intra_process_determinism": true,
+      "node": "ngu008",
+      "numpy_differing": [
+        "scalar_promotion_dtype"
+      ],
+      "numpy_direction_ok": true,
+      "passed": true,
+      "prediction_sha256": "be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38",
+      "sample_passes_per_second": 7062.6,
+      "state_sha256": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+    },
+    {
+      "determinism_error": null,
+      "driver": "580.76.05",
+      "elapsed_seconds": 8.1436,
+      "file": "qual_205525_6.json",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "gpu_capability": [
+        8,
+        6
+      ],
+      "gpu_uuid": "GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da",
+      "intra_process_determinism": true,
+      "node": "ngu011",
+      "numpy_differing": [
+        "scalar_promotion_dtype"
+      ],
+      "numpy_direction_ok": true,
+      "passed": true,
+      "prediction_sha256": "be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38",
+      "sample_passes_per_second": 6035.7,
+      "state_sha256": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+    },
+    {
+      "determinism_error": null,
+      "driver": "580.76.05",
+      "elapsed_seconds": 6.9761,
+      "file": "qual_205525_7.json",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "gpu_capability": [
+        8,
+        6
+      ],
+      "gpu_uuid": "GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161",
+      "intra_process_determinism": true,
+      "node": "ngu008",
+      "numpy_differing": [
+        "scalar_promotion_dtype"
+      ],
+      "numpy_direction_ok": true,
+      "passed": true,
+      "prediction_sha256": "be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38",
+      "sample_passes_per_second": 7045.7,
+      "state_sha256": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+    },
+    {
+      "determinism_error": null,
+      "driver": "580.76.05",
+      "elapsed_seconds": 6.9737,
+      "file": "qual_205525_8.json",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "gpu_capability": [
+        8,
+        6
+      ],
+      "gpu_uuid": "GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161",
+      "intra_process_determinism": true,
+      "node": "ngu008",
+      "numpy_differing": [
+        "scalar_promotion_dtype"
+      ],
+      "numpy_direction_ok": true,
+      "passed": true,
+      "prediction_sha256": "be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38",
+      "sample_passes_per_second": 7048.2,
+      "state_sha256": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+    }
+  ],
+  "state_hash_groups": [
+    {
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "nodes": [
+        "ngu011",
+        "ngu008",
+        "ngu008",
+        "ngu011",
+        "ngu008",
+        "ngu008",
+        "ngu011",
+        "ngu008",
+        "ngu008"
+      ],
+      "state_sha256": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+    }
+  ]
+}
+=== L. ROOT FOOTPRINT ===
+52M	/data1/home/sunyiq/zhenjiang_oyv_qual_20260819
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T17:53:16+0800
