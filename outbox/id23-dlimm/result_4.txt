@@ -1,0 +1,42 @@
+### channel=id23-dlimm seq=4
+### host=login4
+### started=2026-08-19T15:10:28+0800
+### ---------- output ----------
+=== CANCEL old ===
+=== SUBMIT on hcpu48y ===
+jobid=205465
+     JOBID  PARTITION      STATE             REASON
+    205465    hcpu48y    RUNNING               None
+=== WAIT (max 20 min) ===
+=== SACCT ===
+       JobID  Partition   NodeList        State ExitCode    Elapsed 
+------------ ---------- ---------- ------------ -------- ---------- 
+      205465    hcpu48y     icn277    COMPLETED      0:0   00:01:32 
+=== STDOUT ===
+host=icn277 torch=2.4.0
+--- operator audit (P = I bit identity) ---
+  "seconds": 5.121950503438711,
+  "training_performed": false
+}
+wrote results/23_hbv_multilead_joint_uncertainty/h19_forecast_operator_audit_throwaway_v01/forecast_operator_audit.json
+--- stage zero ceiling probe, 200 blocks (migration acceptance) ---
+  frozen_base                  lead1=0.2258918 lead3=0.2762722 lead7=0.3197604 mode_acc_l7=0.5537
+  evolving_base                lead1=0.2256173 lead3=0.2754633 lead7=0.3113272 mode_acc_l7=0.5538
+  evolving_uniform             lead1=0.3389884 lead3=0.3501895 lead7=0.3478846 mode_acc_l7=0.3285
+  evolving_oracle_hazard       lead1=0.2268635 lead3=0.2775471 lead7=0.3103825 mode_acc_l7=0.5539
+  evolving_oracle_attribution  lead1=0.0548210 lead3=0.0603816 lead7=0.0695105 mode_acc_l7=1.0000
+elapsed 35.7s
+=== STDERR tail ===
+=== KEY NUMBERS ===
+evolving_base                  lead7=0.311327196013
+evolving_oracle_attribution    lead7=0.069510476340
+evolving_oracle_hazard         lead7=0.310382511980
+evolving_uniform               lead7=0.347884630943
+frozen_base                    lead7=0.319760404478
+attribution_ceiling=0.2502499281380131
+hazard_ceiling=0.0093778924985559
+rule_space=0.0009446840330957
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T15:12:09+0800
