@@ -1,0 +1,71 @@
+### channel=nature1st-attr-swap seq=7
+### host=login4
+### started=2026-08-19T23:37:07+0800
+### ---------- output ----------
+=== A. JOB STATE ===
+     JobID                JobName          State ExitCode      Elapsed  NodeList 
+---------- ---------------------- -------------- -------- ------------ --------- 
+    206175        q_ctrl_us_attrs        RUNNING      0:0     01:18:16    ngu008 
+    206176   q_treat_global_attrs        RUNNING      0:0     01:18:16    ngu008 
+=== B. NODE + GPU ===
+--- 206175 : /data1/home/sunyiq/nature_1st/logs/attr_swap/control-206175.out ---
+[Wed Aug 19 10:18:21 PM CST 2026] Job 206175 on ngu008
+PyTorch 2.4.0, CUDA True
+============================================================
+--- 206176 : /data1/home/sunyiq/nature_1st/logs/attr_swap/hydroatlas-206176.out ---
+[Wed Aug 19 10:18:21 PM CST 2026] Job 206176 on ngu008
+PyTorch 2.4.0, CUDA True
+========================================================================
+=== C. FATAL / crash ===
+--- 206175 ---
+clean
+--- 206176 ---
+clean
+=== D. TRAINING PROGRESS ===
+--- 206175 ---
+  Model: FlowAuxLongMemLSTM (1,657,985 params)  daily_days=365  daily_norm_mode=shared  daily_rain_mode=mean  static_gate=False  climate_gate=False  climate_gate_mode=sigmoid  climate_gate_granularity=hidden
+Epoch 1: loss=1.0477  val_median_NSE(phys)=0.5262  val_RMSE_qspec=0.0824  NSE>0=0.86  lr=5.00e-04
+  -> Best median NSE: 0.5262
+Epoch 2: loss=0.6832  val_median_NSE(phys)=0.5415  val_RMSE_qspec=0.0811  NSE>0=0.86  lr=5.00e-04
+  -> Best median NSE: 0.5415
+Epoch 3: loss=0.6012  val_median_NSE(phys)=0.5962  val_RMSE_qspec=0.0776  NSE>0=0.86  lr=5.00e-04
+  -> Best median NSE: 0.5962
+Epoch 4: loss=0.5510  val_median_NSE(phys)=0.5812  val_RMSE_qspec=0.0775  NSE>0=0.88  lr=5.00e-04
+--- 206176 ---
+  Model: FlowAuxLongMemLSTM (1,658,049 params)  daily_days=365  daily_norm_mode=shared  daily_rain_mode=mean  static_gate=False  climate_gate=False  climate_gate_mode=sigmoid  climate_gate_granularity=hidden
+Epoch 1: loss=0.9880  val_median_NSE(phys)=0.4975  val_RMSE_qspec=0.0868  NSE>0=0.81  lr=5.00e-04
+  -> Best median NSE: 0.4975
+Epoch 2: loss=0.7565  val_median_NSE(phys)=0.5055  val_RMSE_qspec=0.0852  NSE>0=0.82  lr=5.00e-04
+  -> Best median NSE: 0.5055
+Epoch 3: loss=0.6701  val_median_NSE(phys)=0.5496  val_RMSE_qspec=0.0811  NSE>0=0.81  lr=5.00e-04
+  -> Best median NSE: 0.5496
+Epoch 4: loss=0.6140  val_median_NSE(phys)=0.5434  val_RMSE_qspec=0.0825  NSE>0=0.85  lr=5.00e-04
+=== E. FINAL METRICS IF DONE ===
+--- q_lstm_control_hpc_s42 ---
+{
+  "epoch": 3,
+  "train_loss": 0.6011762764534753,
+  "median_nse": 0.5961663518470066,
+  "mean_nse": -130.01281590073887,
+  "p25_nse": 0.3033935146126934,
+  "p75_nse": 0.7218779402446565,
+  "frac_nse_gt0": 0.8584686774941995,
+  "global_rmse_qspec_mmph": 0.07755550031476095,
+  "n_stations": 431,
+  "space": "physical_qcms_per_station_NSE"
+}--- q_lstm_hydroatlas_hpc_s42 ---
+{
+  "epoch": 3,
+  "train_loss": 0.6700662078418135,
+  "median_nse": 0.5496430523385384,
+  "mean_nse": -254.64538955056864,
+  "p25_nse": 0.20537022136323263,
+  "p75_nse": 0.7036176751654912,
+  "frac_nse_gt0": 0.8074245939675174,
+  "global_rmse_qspec_mmph": 0.08108951856138744,
+  "n_stations": 431,
+  "space": "physical_qcms_per_station_NSE"
+}=== END seq=6 (status only) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T23:37:08+0800
