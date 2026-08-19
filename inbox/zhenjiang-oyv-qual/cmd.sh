@@ -1,36 +1,34 @@
 #!/usr/bin/env bash
-# zhenjiang out-of-year validation :: step 12, independent audit
-# The registered inference returned NOT_CONFIRMED. That verdict is only worth
-# reporting once it has been independently reproduced, so this submits the audit
-# that re-derives the partitions, the direction rule, the events, the errors and
-# the statistics, and re-runs inference from every checkpoint for a bitwise
-# comparison against the stored packages.
+# zhenjiang out-of-year validation :: step 13, audit retry with a fixed comparator
+#
+# The first audit pass reported 1920 mismatches, four per task across all 480
+# tasks. Every one was a comparator fault: the normalisation statistics are
+# stored as float32 and were being compared against a float64 recomputation at a
+# 1e-12 tolerance. Rounding the recomputation to float32 reproduces every
+# recorded value bit for bit, so nothing numerical was ever different.
+#
+# Only the comparator changed. No registered rule, no statistic, no result. The
+# first pass is kept at independent_audit/ as evidence; this retry writes to
+# independent_audit_r2/.
+#
+# The consequence of the fault was that re-inference was skipped for every task,
+# so the strongest check has not yet run at all. That is what this retry is for.
 set -o pipefail
 
 ROOT=/data1/home/sunyiq/zhenjiang_oyv_v1
 
-echo "=== A. EVALUATION SUMMARY ==="
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
-source ${HOME}/miniconda3/etc/profile.d/conda.sh 2>/dev/null
-conda activate nh_final 2>/dev/null || echo "CONDA_ACTIVATE_FAILED"
-PYTHONPATH="$ROOT/pysite" python - "$ROOT" <<'PY'
-import json, sys
-from pathlib import Path
-root = Path(sys.argv[1])
-s = json.loads((root / "evaluation/evaluation_summary.json").read_text(encoding="utf-8"))
-keep = ("task_count_expected", "task_count_read", "paired_event_count", "paired_event_indices",
-        "minimum_paired_event_count", "coverage_gate_passed", "fold_years_with_paired_events",
-        "event_count_total", "primary_horizon_hours")
-print(json.dumps({k: s[k] for k in keep if k in s}, indent=2, sort_keys=True))
-PY
-echo "--- artifact manifests ---"
-cat "$ROOT/evaluation/completion_manifest.json" 2>/dev/null | head -30 || true
-cat "$ROOT/inference/completion_manifest.json" 2>/dev/null | head -30 || true
+echo "=== A. UPDATE CLONE ==="
+cd "$ROOT/repo" || { echo "REPO_MISSING"; exit 1; }
+timeout 600 git fetch -q origin "+refs/heads/main:refs/remotes/origin/main" 2>&1 | tail -3
+timeout 120 git reset -q --hard refs/remotes/origin/main
+echo "bundle_commit=$(git rev-parse HEAD)"
+test -d "$ROOT/independent_audit" && echo "first_pass_preserved=true" || echo "first_pass_preserved=false"
+test -e "$ROOT/independent_audit_r2" && echo "RETRY_ROOT_ALREADY_EXISTS" || echo "retry_root_clear=true"
 
-echo "=== B. SUBMIT INDEPENDENT AUDIT ==="
-cd "$ROOT/repo" || exit 1
-AJ=$(sbatch --parsable scripts/analysis/hpc/submit_independent_audit.slurm 2>&1)
-echo "independent_audit_job=$AJ"
+echo "=== B. SUBMIT AUDIT RETRY ==="
+AJ=$(sbatch --parsable --export=ALL,AUDIT_OUTPUT_SUBDIR=independent_audit_r2 \
+    scripts/analysis/hpc/submit_independent_audit.slurm 2>&1)
+echo "audit_retry_job=$AJ"
 case "$AJ" in
     ''|*[!0-9]*) echo "SBATCH_FAILED"; exit 1 ;;
 esac
@@ -43,13 +41,13 @@ for i in $(seq 1 570); do
     sleep 10
 done
 
-echo "=== D. AUDIT RESULT ==="
+echo "=== D. AUDIT RETRY RESULT ==="
 sacct -j "$AJ" -X --format=JobID%12,NodeList%9,State%12,ExitCode%8,Elapsed%10 2>&1 | head -4
-cat "$ROOT/independent_audit/independent_audit_summary.json" 2>/dev/null || true
-echo "--- mismatches, first lines ---"
-head -20 "$ROOT/independent_audit/mismatches.csv" 2>/dev/null || true
-echo "--- audit log tail ---"
-tail -25 "$ROOT/logs/independent_audit_${AJ}.out" 2>/dev/null || true
+cat "$ROOT/independent_audit_r2/independent_audit_summary.json" 2>/dev/null || true
+echo "--- mismatch kinds ---"
+tail -n +2 "$ROOT/independent_audit_r2/mismatches.csv" 2>/dev/null | cut -d, -f1 | sort | uniq -c | head -10 || echo "(no mismatch rows)"
+echo "--- first mismatch rows, if any ---"
+head -6 "$ROOT/independent_audit_r2/mismatches.csv" 2>/dev/null || true
 echo "--- stderr tail ---"
 tail -20 "$ROOT/logs/independent_audit_${AJ}.err" 2>/dev/null || true
 echo "=== END ==="
