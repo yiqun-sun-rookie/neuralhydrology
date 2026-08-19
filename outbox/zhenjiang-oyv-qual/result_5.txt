@@ -1,0 +1,56 @@
+### channel=zhenjiang-oyv-qual seq=5
+### host=login4
+### started=2026-08-19T18:49:40+0800
+### ---------- output ----------
+=== A. PER NODE JOB STATES ===
+    205548 None ass+      PENDING      0:0  00:00:00 
+    205549 None ass+      PENDING      0:0  00:00:00 
+    205550 None ass+      PENDING      0:0  00:00:00 
+    205551 None ass+      PENDING      0:0  00:00:00 
+    205552 None ass+      PENDING      0:0  00:00:00 
+    205553    ngu008    COMPLETED      0:0  00:00:53 
+    205554 None ass+      PENDING      0:0  00:00:00 
+    205555    ngu011    COMPLETED      0:0  00:00:55 
+=== B. STILL QUEUED ===
+    205548     hgpu2p  zj_oyv_node   PENDING        0:00           (Priority)
+    205552     hgpu2p  zj_oyv_node   PENDING        0:00           (Priority)
+    205549     hgpu2p  zj_oyv_node   PENDING        0:00           (Priority)
+    205551     hgpu2p  zj_oyv_node   PENDING        0:00           (Priority)
+    205550     hgpu2p  zj_oyv_node   PENDING        0:00           (Priority)
+    205554     hgpu2p  zj_oyv_node   PENDING        0:00           (Priority)
+=== C. CROSS NODE COMPARISON ===
+{
+  "all_passed": true,
+  "distinct_gpu_uuids": [
+    "GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161",
+    "GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da"
+  ],
+  "distinct_normalised_threadpool_digests": [
+    "bd2d2073fc6f948a7af98ab30ed5debfafd2e0c5ceb02688141c56ad6e308a46"
+  ],
+  "distinct_operating_systems": [
+    "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34"
+  ],
+  "distinct_raw_threadpool_digests": [
+    "3ac7c14081dedcbdfb35d9ac5deb0f97004529220d94d7dc4c007bd015b92806",
+    "7c5a1d6383d5d5ad13da46fb6138360047513e748de9fd8dff2d49e45a3bfe99"
+  ],
+  "distinct_state_digests": [
+    "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+  ],
+  "node_count": 2,
+  "nodes": [
+    "ngu008",
+    "ngu011"
+  ],
+  "normalised_threadpool_identical": true,
+  "seconds": [
+    6.9819,
+    8.1416
+  ],
+  "state_identical": true
+}
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T18:49:41+0800
