@@ -1,0 +1,28 @@
+### channel=id23-dlimm seq=2
+### host=login4
+### started=2026-08-19T14:45:52+0800
+### ---------- output ----------
+=== SUBMIT ===
+jobid=205449
+=== WAIT (max 18 min) ===
+t=120s left=1
+t=240s left=1
+t=360s left=1
+t=480s left=1
+t=600s left=1
+t=720s left=1
+t=840s left=1
+t=960s left=1
+t=1080s left=1
+=== SACCT ===
+       JobID      JobName   NodeList        State ExitCode    Elapsed 
+------------ ------------ ---------- ------------ -------- ---------- 
+      205449   id23accept None assi+      PENDING      0:0   00:00:00 
+=== STDOUT ===
+=== STDERR (tail) ===
+=== KEY NUMBERS ===
+REPORT_MISSING
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T15:03:55+0800
