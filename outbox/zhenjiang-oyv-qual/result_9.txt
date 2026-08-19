@@ -1,0 +1,13 @@
+### channel=zhenjiang-oyv-qual seq=9
+### host=login4
+### started=2026-08-19T19:51:38+0800
+### ---------- output ----------
+=== A. WATCH TRAINING ARRAY (max 100 min) ===
+t=600s queue_entries=10 completed_task_dirs=58
+t=1200s queue_entries=10 completed_task_dirs=91
+t=1800s queue_entries=10 completed_task_dirs=123
+t=2400s queue_entries=10 completed_task_dirs=154
+t=3000s queue_entries=10 completed_task_dirs=180
+t=3600s queue_entries=11 completed_task_dirs=210
+t=4200s queue_entries=13 completed_task_dirs=248
+t=4800s queue_entries=13 completed_task_dirs=290
