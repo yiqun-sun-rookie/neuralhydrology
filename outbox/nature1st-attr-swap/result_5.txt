@@ -1,0 +1,60 @@
+### channel=nature1st-attr-swap seq=5
+### host=login4
+### started=2026-08-19T22:18:27+0800
+### ---------- output ----------
+=== A. WHY THEY FAILED (stderr tails) ===
+--- 205886 : /data1/home/sunyiq/nature_1st/logs/attr_swap/control-205886.err ---
+srun: error: Invalid user id 2272: No error
+srun: Warning: Unable to assume uid=2272
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nature_1st/scripts/chain_train_q_v1.py", line 539, in <module>
+    main()
+  File "/data1/home/sunyiq/nature_1st/scripts/chain_train_q_v1.py", line 317, in main
+    prepare_output_directory(output_dir, require_empty=args.require_empty_output_dir)
+  File "/data1/home/sunyiq/nature_1st/scripts/chain_train_q_v1.py", line 234, in prepare_output_directory
+    raise FileExistsError(f"formal training output already exists: {output_dir}")
+FileExistsError: formal training output already exists: models/q_lstm_control_hpc_s42
+srun: error: ngu004: task 0: Exited with exit code 1
+--- 205887 : /data1/home/sunyiq/nature_1st/logs/attr_swap/hydroatlas-205887.err ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nature_1st/scripts/chain_train_q_hydroatlas.py", line 192, in <module>
+    main()
+  File "/data1/home/sunyiq/nature_1st/scripts/chain_train_q_hydroatlas.py", line 176, in main
+    base.main()
+  File "/data1/home/sunyiq/nature_1st/scripts/chain_train_q_v1.py", line 317, in main
+    prepare_output_directory(output_dir, require_empty=args.require_empty_output_dir)
+  File "/data1/home/sunyiq/nature_1st/scripts/chain_train_q_v1.py", line 234, in prepare_output_directory
+    raise FileExistsError(f"formal training output already exists: {output_dir}")
+FileExistsError: formal training output already exists: models/q_lstm_hydroatlas_hpc_s42
+srun: error: ngu008: task 0: Exited with exit code 1
+=== B. stdout tails ===
+--- 205886 ---
+[Wed Aug 19 09:54:13 PM CST 2026] Job 205886 on ngu004
+PyTorch 2.4.0, CUDA True
+--- 205887 ---
+ATTRIBUTE-SOURCE SWAP  (single variable: where the static attributes come from)
+  control   : models/q_lstm_v1_longmem_iter1   median NSE 0.6474
+  treatment : 13 HydroATLAS attributes, seed 42
+  stats     : stage_static_feature_stats_hydroatlas.json  (mean/std over TRAIN stations only)
+  meta      : trainable_mountain_stations_hydroatlas.csv
+========================================================================
+=== C. LEFTOVER OUTPUT DIRS ===
+total 16
+drwxr-xr-x. 4 sunyiq g_sunyiq 4096 Aug 19 20:42 .
+drwxr-xr-x. 7 sunyiq g_sunyiq 4096 Aug 19 20:41 ..
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Aug 19 20:45 q_lstm_control_hpc_s42
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Aug 19 20:45 q_lstm_hydroatlas_hpc_s42
+=== D. REMEDY ===
+CONFIRMED: non-empty output directory. Renaming (not deleting) and resubmitting.
+‘/data1/home/sunyiq/nature_1st/models/q_lstm_control_hpc_s42’ -> ‘/data1/home/sunyiq/nature_1st/models/_aborted_cpu_ngu002_control_205848’
+‘/data1/home/sunyiq/nature_1st/models/q_lstm_hydroatlas_hpc_s42’ -> ‘/data1/home/sunyiq/nature_1st/models/_aborted_cpu_ngu002_treatment_205854’
+[control] Submitted batch job 206175
+[hydroatlas] Submitted batch job 206176
+-- queue --
+     JOBID                     NAME PARTITION    STATE       TIME NODELIST(REASON)
+    206175          q_ctrl_us_attrs    hgpu2p  PENDING       0:00 (Priority)
+    206176     q_treat_global_attrs    hgpu2p  PENDING       0:00 (Priority)
+=== END seq=5 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T22:18:28+0800
