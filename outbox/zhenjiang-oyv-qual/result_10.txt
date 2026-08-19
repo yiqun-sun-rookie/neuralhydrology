@@ -1,0 +1,54 @@
+### channel=zhenjiang-oyv-qual seq=10
+### host=login4
+### started=2026-08-19T21:22:19+0800
+### ---------- output ----------
+=== A. IMMEDIATE STATE ===
+completed_task_dirs=334
+queue_entries=13
+    334      COMPLETED 
+      1        PENDING 
+     12        RUNNING 
+=== B. WATCH TO COMPLETION (max 60 min) ===
+t=300s queue_entries=13 completed_task_dirs=351
+t=600s queue_entries=13 completed_task_dirs=375
+t=900s queue_entries=13 completed_task_dirs=395
+t=1200s queue_entries=13 completed_task_dirs=415
+t=1500s queue_entries=13 completed_task_dirs=437
+t=1800s queue_entries=13 completed_task_dirs=460
+=== C. FINAL TRAINING STATE ===
+completed_task_dirs=480
+    480      COMPLETED 
+--- any task that did not complete ---
+=== D. NODE AND ENVIRONMENT SPREAD ===
+{
+  "completed_epochs": {
+    "max": 28,
+    "median": 13,
+    "min": 5
+  },
+  "distinct_cards": 6,
+  "distinct_normalised_threadpool_digests": [
+    "bd2d2073fc6f948a7af98ab30ed5debfafd2e0c5ceb02688141c56ad6e308a46"
+  ],
+  "elapsed_seconds": {
+    "max": 277.20992951467633,
+    "median": 138.8,
+    "min": 64.3
+  },
+  "identities_read": 480,
+  "nodes": {
+    "ngu004": 95,
+    "ngu005": 94,
+    "ngu006": 83,
+    "ngu007": 46,
+    "ngu008": 98,
+    "ngu011": 64
+  },
+  "total_gpu_hours": 19.31
+}
+=== E. SUBMIT EVALUATION AND INFERENCE ===
+evaluation_job=sbatch: error: Unable to open file scripts/analysis/hpc/submit_evaluate_and_infer.slurm
+SBATCH_FAILED
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-19T21:56:36+0800
