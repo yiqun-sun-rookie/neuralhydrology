@@ -2,7 +2,7 @@
 set -o pipefail
 
 ROOT=/data1/home/sunyiq/zhenjiang_stage_direction_r2_20260819
-SCRIPT=/data1/home/sunyiq/neuralhydrology/.hpc_mailbox/inbox/zhenjiang-stage-r2/environment_probe.slurm
+SCRIPT=/data1/home/sunyiq/hpc_mailbox/inbox/zhenjiang-stage-r2/environment_probe.slurm
 JOB_FILE="$ROOT/migration/environment_probe_jobid"
 
 echo "=== ENVIRONMENT PROBE PREFLIGHT ==="
