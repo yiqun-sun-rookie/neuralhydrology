@@ -35,6 +35,7 @@ outbox/<channel>/result_<seq>.txt   结果
 | `camels-g2-design` | CAMELS-US 531 流域参数切换辨认第二阶段冻结前探索性设计运行 | 2026-08-08 | 工作目录 `~/camels_g2_design_20260808`；只用设计种子 0/1，不碰 `~/neuralhydrology` 的 git 状态或其他实验 |
 | `id29-nearing2022-da` | 复现 Nearing 2022 变分同化 vs 自回归（CAMELS-US 531，三条臂） | 2026-08-08 | 由 Claude 会话占用；落点待定，**不碰 `~/neuralhydrology`** |
 | `kalmannet-tukf06` | Kalmannet 逐状态过程噪声与量测噪声的有界采样搜索和反向传播公平比较 | 2026-08-09 | 计划落点 `/data1/home/sunyiq/kalmannet_tukf06_20260809`；只操作本通道和该独立目录，不碰 `~/neuralhydrology` 的 Git 状态及其他实验 |
+| `id23-dlimm` | ID23 深度学习交互多模型（DL-IMM）：H19 预报证据层复现与模型加厚训练 | 2026-08-18 | 由 Claude 会话占用；落点 `~/id23_dlimm`（独立浅克隆），**不碰 `~/neuralhydrology`** 与其他 channel |
 
 **迁移方法**（`default` → 自己的 channel，随时可做，不影响正在跑的）：
 
