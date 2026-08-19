@@ -1,0 +1,23 @@
+{
+  "experiment_id": "h12_suz_assumed_filter_process_sd_0p1_v01",
+  "status": "registered",
+  "scientific_question": "Does restricting observation-driven correction of the upper-zone groundwater state expose wrong upper-zone recession-parameter candidates?",
+  "claim_boundary": "Synthetic matched-state mechanism test only. Truth noise is Gaussian before physical projection; no transition-probability, forecast-superiority, or real-basin claim follows from state compensation alone.",
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h12_suz_assumed_filter_process_sd_0p1_v01",
+  "source_h08_config": {
+    "path": "src/hbv_history_conditioned_imm/configs/h08_evidence_only_no_transition_regularization_v01.json",
+    "sha256": "4d8f4b259fe09f4752578db8aff74157b20a3054691484a6ecc611a6722e5dcd"
+  },
+  "truth_process_state_name": "SUZ",
+  "truth_process_standard_deviation": 1.0,
+  "truth_requires_zero_projection": false,
+  "assumed_filter_process_state_name": "SUZ",
+  "assumed_filter_process_standard_deviation": 0.1,
+  "direct_compensation_criterion": {
+    "matched_experiment_id": "h14_suz_assumed_filter_process_sd_1p0_v01",
+    "ordered_filter_process_standard_deviations": [0.1, 0.3, 1.0, 3.0],
+    "minimum_wrong_to_correct_mean_absolute_suz_correction_ratio": 1.1,
+    "minimum_wrong_candidate_mean_absolute_suz_error_reduction": 0.1,
+    "require_strictly_increasing_wrong_candidate_mean_absolute_suz_correction": true
+  }
+}

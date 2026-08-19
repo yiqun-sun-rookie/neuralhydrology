@@ -1,0 +1,84 @@
+{
+  "experiment_id": "h18_observation_only_state_update_v01",
+  "status": "registered",
+  "user_authorization": "2026-08-14 conversation: contract finalization and formal run explicitly authorized ('go')",
+  "preregistered_contract": "docs/plans/H18_CONTRACT_DRAFT_20260814_STATE_UPDATE_THREE_METHOD.md",
+  "scientific_question": "Under strict observation-only training with identical filters, data, and budgets, does a causal history-conditioned transition matrix improve the fifteen-state global posterior over a learned history-free static matrix and a fixed matrix?",
+  "claim_boundary": "Synthetic ideal-twin state-update evidence only. Passing establishes neither forecast value, real-basin performance, nor recovery of the true transition probabilities (the pilot showed gains can arise without probability recovery).",
+  "methods": {
+    "fixed": "frozen base matrix every day; no trainable parameters",
+    "static": "StaticTransitionNetwork, one learned constant matrix (9 parameters); zero-initialized, training is deterministic, trained once",
+    "history": "HistoryTransitionNetwork (GRUCell, 21 features from previous-day forcing, global posterior, mode probabilities); three initialization seeds"
+  },
+  "base_parameters_source": "h16_long_history_contract_preflight_v02.json base_parameters",
+  "parameter_candidates": {
+    "parameter_name": "parK1",
+    "ids": ["slow_recession", "calibrated_recession", "fast_recession"],
+    "values": [0.04, 0.3593900045350728, 0.8]
+  },
+  "data": {
+    "training_blocks": 96,
+    "validation_blocks": 24,
+    "evaluation_blocks": 400,
+    "assimilation_days": 300,
+    "maximum_forecast_lead": 7,
+    "warmup_days": 90,
+    "warmup_parameter_id": "calibrated_recession",
+    "process_state_name": "SLZ",
+    "process_standard_deviation": 1.0,
+    "observation_standard_deviation": 0.15,
+    "initial_covariance_fraction": 0.001,
+    "require_zero_projection": true,
+    "duration_hazard": "identical to h16_long_history_contract_preflight_v02",
+    "evaluation_generated_after_checkpoint_selection": true
+  },
+  "seeds": {
+    "namespace_base": 21000000000,
+    "family_offsets": {"forcing": 100000000, "process": 200000000, "observation": 400000000, "schedule": 500000000},
+    "split_offsets": {"train": 0, "validation": 1, "evaluation": 2},
+    "split_offset_multiplier": 10000,
+    "history_initialization_seeds": [1810101, 1810102, 1810103],
+    "bootstrap": {"anchor_G": 20260901, "primary_H": 20260902, "per_seed": 20260910, "accuracy": 20260920, "draws": 20000}
+  },
+  "training": {
+    "loss": "one-step observation negative log evidence only; multi-lead flow weight 0.0; transition regularizer weights 0.0",
+    "optimizer": "AdamW",
+    "learning_rate": 0.003,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "minibatch_blocks": 8,
+    "epochs": 40,
+    "checkpoint_rule": "validation negative-log-evidence minimum; best state restored before any evaluation",
+    "truth_isolation": "training functions accept ObservableAssimilationBatch only (forcing, observations, initial states, initial covariances); feature normalizer fitted from a fixed-matrix causal rollout on training observables"
+  },
+  "primary_endpoint": {
+    "metric": "per-block normalized RMSE of the global posterior over all scored states (each state divided by its evaluation-truth standard deviation; zero-variance snow states excluded and reported)",
+    "aggregation": "history = per-block mean over the three initialization seeds",
+    "contrast": "static minus history, paired by block",
+    "confidence": "paired block bootstrap, 20000 draws, 97.5 percent two-sided interval (Bonferroni family of 2 with prespecified H18F)",
+    "threshold_rule": {
+      "anchor": "G = fixed minus static per-block RMSE, 95 percent paired bootstrap interval",
+      "branch_A": "if G point estimate > 0 and interval excludes zero: T = 0.5 * G point estimate",
+      "branch_B": "otherwise: T = 0.05 * mean static RMSE",
+      "pass": "interval lower bound > 0 AND point estimate >= T"
+    }
+  },
+  "secondary_descriptive": [
+    "per-seed contrasts", "history versus fixed", "posterior mode accuracy with 95 percent paired bootstrap", "active-row Brier", "switch-hazard MAE", "age-stratified hazard MAE (<30, 30-39, 40-49, >=50)", "store-only and routing-only RMSE"
+  ],
+  "preflight_gates": {
+    "minimum_filter_free_pairwise_rmse_to_observation_sd_ratio": 2.0,
+    "zero_projection": true,
+    "causality": "trained history network: day-k transition gradient with respect to observations from day k onward must be exactly zero, and positive for some earlier day"
+  },
+  "artifact_decision": {
+    "global_posterior_covariance": "diagonal saved for all evaluation blocks; full matrix saved for the first 40 blocks (audit subset)",
+    "candidate_posterior_covariances": "not saved (size); global-mixture identity is inherent to the filter computation and the verifier replays the fixed arm bit-exactly instead"
+  },
+  "verification": {
+    "verifier": "scripts/verify_h18_observation_only_state_update.py",
+    "checks": ["decisive metrics recomputed from saved arrays with identical operations and bootstrap seeds, compared exactly", "fixed-arm full-batch replay from regenerated data, max absolute difference <= 1e-12 (same batch shape as the runner, per the H17R lesson)", "file checksums"],
+    "failure_terminal_state": "run directory preserved, registry row updated to a hold status, no rerun under this identifier without new authorization"
+  },
+  "h18f_prespecification": "H18F (evidence + multi-lead observed-flow loss) runs only if the H18 primary endpoint fails; both arms are always reported together; H18F cannot support the later independent forecast evidence layer"
+}

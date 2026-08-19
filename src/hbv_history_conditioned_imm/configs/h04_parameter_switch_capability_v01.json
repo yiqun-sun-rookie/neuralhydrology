@@ -1,0 +1,121 @@
+{
+  "experiment_id": "h04_parameter_switch_capability_v01",
+  "status": "registered_diagnostic_capability",
+  "scientific_question": "Can a causal history-conditioned transition matrix outperform both a fixed matrix and a learned history-free constant matrix when the synthetic HBV-lite truth switches between clearly distinguishable parameter regimes?",
+  "claim_boundary": "Synthetic warm-wet single-parameter capability test only; success cannot establish abrupt physical parameter changes or performance in real basins.",
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h04_parameter_switch_capability_v01",
+  "base_parameter_source": {
+    "path": "src/hbv_history_conditioned_imm/configs/h01_end_to_end_smoke_v01.json",
+    "sha256": "ae96b1661dd39c02f9f577294be487bbf74b0e0f905c96ef0617dbee734245c7"
+  },
+  "base_parameters": {
+    "parTT": 0.4899906312144009,
+    "parCFMAX": 2.5549045075022465,
+    "parCFR": 0.0463012343434304,
+    "parCWH": 4.790858379798471e-09,
+    "parFC": 115.41144086847932,
+    "parBETA": 1.0000000698913354,
+    "parLP": 0.9999992059019986,
+    "parK0": 0.8999999945687556,
+    "parK1": 0.3593900045350728,
+    "parUZL": 44.36393857438976,
+    "parPERC": 9.99999952398291,
+    "parK2": 0.0221122277234756,
+    "lag_time": 1.7953195629813012
+  },
+  "parameter_candidates": {
+    "parameter_name": "parK1",
+    "interpretation": "upper-zone recession coefficient controlling intermediate runoff release",
+    "ids": ["slow_recession", "calibrated_recession", "fast_recession"],
+    "values": [0.12, 0.3593900045350728, 0.65]
+  },
+  "data": {
+    "training_blocks": 12,
+    "validation_blocks": 4,
+    "test_blocks": 6,
+    "assimilation_days": 120,
+    "maximum_forecast_lead": 7,
+    "warmup_days": 90,
+    "minimum_regime_duration_days": 30,
+    "maximum_regime_duration_days": 50,
+    "fixed_lower_groundwater_process_standard_deviation": 1.0,
+    "observation_standard_deviation": 0.15,
+    "initial_covariance_fraction": 0.001,
+    "forcing_generator": "same warm-wet randomized generator as H01-H03"
+  },
+  "seeds": {
+    "history_network_initialization": 6101001,
+    "static_matrix_initialization": 6101002,
+    "forcing_prefix": 6102,
+    "process_prefix": 6103,
+    "observation_prefix": 6104,
+    "schedule_prefix": 6105,
+    "training_split_offset": 0,
+    "validation_split_offset": 1,
+    "test_split_offset": 2
+  },
+  "filter": {
+    "candidate_count": 3,
+    "interaction_mode": "full",
+    "base_transition_stay_probability": 0.98,
+    "all_candidates_share_process_covariance": true,
+    "state_count": 15,
+    "global_posterior_output": "one posterior-probability-weighted fifteen-state mean and covariance"
+  },
+  "forecast": {
+    "origin_state": "one posterior-probability-weighted global posterior state",
+    "parameter_readout": "one posterior-probability-weighted parameter vector frozen at the forecast origin",
+    "candidate_trajectories_used": false,
+    "future_observations_used": false,
+    "leads_days": [1, 3, 7]
+  },
+  "network": {
+    "history_features": ["previous forcing", "previous global posterior state", "previous posterior candidate probabilities"],
+    "hidden_size": 16,
+    "maximum_logit_correction": 2.0,
+    "current_observation_input": false,
+    "current_innovation_input": false
+  },
+  "training": {
+    "epochs": 12,
+    "batch_size": 4,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "checkpoint_selection": "minimum validation total loss before any test read",
+    "trained_methods": ["learned_history_free_constant", "history_conditioned_dynamic"]
+  },
+  "loss": {
+    "normalized_multilead_flow_mse": 1.0,
+    "observation_negative_log_evidence": 0.1,
+    "transition_kl_from_base": 0.001,
+    "transition_temporal_smoothness": 0.001,
+    "true_state_supervision": 0.0,
+    "true_mode_supervision": 0.0,
+    "oracle_transition_supervision": 0.0
+  },
+  "capability_gates": {
+    "maximum_absolute_projection_adjustment": 0.0,
+    "minimum_pairwise_rmse_to_observation_sd_ratio": 2.0,
+    "maximum_transition_row_sum_error": 1e-12,
+    "minimum_transition_probability": 0.0,
+    "minimum_relative_oracle_brier_reduction_history_vs_static": 0.1,
+    "minimum_relative_hazard_mae_reduction_history_vs_static": 0.1,
+    "minimum_relative_post_switch_forecast_loss_reduction_history_vs_static": 0.01,
+    "maximum_relative_overall_forecast_loss_increase_history_vs_static": 0.01
+  },
+  "required_result_files": [
+    "config_snapshot.json",
+    "registry_entry.json",
+    "signal_audit.json",
+    "static_training_history.csv",
+    "history_training_history.csv",
+    "static_best_checkpoint.pt",
+    "history_best_checkpoint.pt",
+    "daily_arrays.npz",
+    "metrics.json",
+    "gradient_audit.json",
+    "environment.json",
+    "checksums.json"
+  ]
+}

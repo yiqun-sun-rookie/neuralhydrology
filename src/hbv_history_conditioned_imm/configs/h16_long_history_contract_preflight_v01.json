@@ -1,0 +1,138 @@
+{
+  "experiment_id": "h16_long_history_contract_preflight_v01",
+  "status": "registered_preflight",
+  "scientific_question": "Does the frozen long-history synthetic design provide legal causal duration-dependent transition targets, sufficient event coverage, schedule-independent initialization, representable probabilities, and an observation-only future-training interface before any network is trained?",
+  "claim_boundary": "Synthetic generation and method-contract preflight only. Passing cannot establish learned probability recovery, mode identification, state superiority, forecast value, physical parameter switching in real basins, or recurrent-network capacity.",
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h16_long_history_contract_preflight_v01",
+  "source_h05_config": {
+    "path": "src/hbv_history_conditioned_imm/configs/h05_stronger_parameter_switch_capability_v01.json",
+    "sha256": "2f9ef7ab014399f2a1ba0eabc02d52e017a457efa25e90d5e0c68c86225e3c4d"
+  },
+  "legacy_h05_daily_arrays": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h05_stronger_parameter_switch_capability_v01/daily_arrays.npz",
+    "sha256": "7fb2d07dbd6dfc16527456218f5a81681759fbb009babccf64ca7dcdfa973e8d"
+  },
+  "base_parameters": {
+    "parTT": 0.4899906312144009,
+    "parCFMAX": 2.5549045075022465,
+    "parCFR": 0.0463012343434304,
+    "parCWH": 4.790858379798471e-09,
+    "parFC": 115.41144086847932,
+    "parBETA": 1.0000000698913354,
+    "parLP": 0.9999992059019986,
+    "parK0": 0.8999999945687556,
+    "parK1": 0.3593900045350728,
+    "parUZL": 44.36393857438976,
+    "parPERC": 9.99999952398291,
+    "parK2": 0.0221122277234756,
+    "lag_time": 1.7953195629813012
+  },
+  "parameter_candidates": {
+    "parameter_name": "parK1",
+    "ids": ["slow_recession", "calibrated_recession", "fast_recession"],
+    "values": [0.04, 0.3593900045350728, 0.8]
+  },
+  "data": {
+    "training_blocks": 24,
+    "validation_blocks": 8,
+    "test_blocks": 20,
+    "assimilation_days": 300,
+    "maximum_forecast_lead": 7,
+    "warmup_days": 90,
+    "warmup_parameter_id": "calibrated_recession",
+    "fixed_process_state_name": "SLZ",
+    "fixed_process_standard_deviation": 1.0,
+    "observation_standard_deviation": 0.15,
+    "initial_covariance_fraction": 0.001,
+    "require_zero_projection": true,
+    "maximum_process_resamples": 100,
+    "forcing_generator": "same warm-wet randomized generator as H01-H15"
+  },
+  "duration_hazard": {
+    "age_definition": "prior regime age before the transition into day t; the first day of a segment has age 1",
+    "transition_evaluation_starts_at_day": 1,
+    "early_age_maximum_exclusive": 30,
+    "early_hazard": 0.001,
+    "ramp_start_age": 30,
+    "ramp_end_age": 50,
+    "ramp_start_hazard": 0.01,
+    "ramp_slope_per_day": 0.022,
+    "late_hazard": 0.45,
+    "switch_destination": "uniform over the two non-source modes"
+  },
+  "seeds": {
+    "forcing_prefix": 16102,
+    "process_prefix": 16103,
+    "observation_prefix": 16104,
+    "schedule_prefix": 16105,
+    "training_split_offset": 0,
+    "validation_split_offset": 1,
+    "test_split_offset": 2
+  },
+  "filter": {
+    "candidate_count": 3,
+    "interaction_mode": "full state and covariance interaction",
+    "base_transition_stay_probability": 0.9729768340057481,
+    "all_candidates_share_process_covariance": true,
+    "state_count": 15,
+    "global_posterior_output": "one posterior-probability-weighted fifteen-state mean and covariance"
+  },
+  "network_output_contract": {
+    "calculation": "row softmax of log base transition plus bounded correction",
+    "maximum_logit_correction": 2.0,
+    "truth_total_hazard_minimum": 0.001,
+    "truth_total_hazard_maximum": 0.45,
+    "claim": "output-layer mathematical reachability only"
+  },
+  "future_training_contract": {
+    "transition_day_t_information_cutoff": "history through day t-1",
+    "history_features": [
+      "previous forcing",
+      "previous global posterior fifteen-state mean",
+      "previous posterior candidate probabilities"
+    ],
+    "current_observation_input": false,
+    "current_innovation_input": false,
+    "true_labels_available": false
+  },
+  "forecast": {
+    "origin_state": "one posterior-probability-weighted global posterior fifteen-state mean",
+    "parameter_readout": "one posterior-probability-weighted parameter vector frozen at the forecast origin",
+    "candidate_trajectories_used": false,
+    "future_observations_used": false,
+    "leads_days": [1, 3, 7]
+  },
+  "execution": {
+    "training_started": false,
+    "checkpoint_created": false,
+    "optimizer_created": false
+  },
+  "capability_gates": {
+    "minimum_total_switch_events": 100,
+    "minimum_each_directed_transition_events": 10,
+    "minimum_pairwise_rmse_to_observation_sd_ratio": 2.0,
+    "maximum_absolute_projection_adjustment": 0.0,
+    "maximum_initial_state_counterfactual_difference": 0.0,
+    "maximum_initial_covariance_counterfactual_difference": 0.0,
+    "minimum_output_probability_range_margin": 0.0,
+    "maximum_oracle_active_row_sum_error": 1e-12,
+    "forbidden_observable_truth_field_count": 0
+  },
+  "required_result_files": [
+    "config_snapshot.json",
+    "registry_entry.json",
+    "preflight_arrays.npz",
+    "hazard_audit.json",
+    "event_coverage_audit.json",
+    "probability_range_audit.json",
+    "initialization_audit.json",
+    "legacy_initialization_channel_audit.json",
+    "signal_audit.json",
+    "interface_audit.json",
+    "forecast_contract_audit.json",
+    "preflight_report.json",
+    "independent_verification.json",
+    "environment.json",
+    "checksums.json"
+  ]
+}

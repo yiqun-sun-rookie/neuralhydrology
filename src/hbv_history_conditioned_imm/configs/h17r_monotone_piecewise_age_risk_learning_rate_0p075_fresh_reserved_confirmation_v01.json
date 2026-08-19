@@ -1,0 +1,508 @@
+{
+  "experiment_id": "h17r_monotone_piecewise_age_risk_learning_rate_0p075_fresh_reserved_confirmation_v01",
+  "status": "preregistered_reserved_confirmation_blocked",
+  "scientific_question": "Do the three frozen H17F checkpoints independently retain at least 50 percent error reductions on one previously unread final reserve, including every rare-duration source-by-age cell?",
+  "claim_boundary": "One synthetic supervised duration-probability confirmation only; no strict observation-only learning, mode-identification, state, forecast, stability, real-basin, or H18 claim.",
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h17r_monotone_piecewise_age_risk_learning_rate_0p075_fresh_reserved_confirmation_v01",
+  "base_experiment_id": "h17f_monotone_piecewise_age_risk_learning_rate_0p075_supervised_probability_v01",
+  "repository_contract": {
+    "worktree": "G:/wt/id23-readout",
+    "source_repository_read_only": "G:/github/pycharm/projects/paper-imm-variable-params",
+    "branch": "codex/id23-predictive-skill-readout",
+    "git_head": "244fe8bff3323f77b567af78245a4a0430b4545c",
+    "pre_registration_registry_sha256": "10459db1c90083bee97cbd01698969eaed69e73ea56827422405a321edb0b1e1",
+    "pre_registration_h17r_row_count": 0,
+    "pre_registration_h17r_result_count": 0,
+    "pre_registration_h18_row_count": 0,
+    "pre_registration_h18_result_count": 0
+  },
+  "eligibility_contract": {
+    "h16_required_registry_status": "completed_preflight_go",
+    "h17p_required_registry_status": "completed_reserved_coverage_preflight_go",
+    "h17f_required_registry_status": "completed_supervised_repair_diagnostic_pass",
+    "h17f_required_decision": "DEVELOPMENT_DIAGNOSTIC_PASS_FRESH_CONFIRMATION_REQUIRED_H18_REMAINS_UNAUTHORIZED",
+    "all_independent_verifications_required_true": true,
+    "all_checksum_manifests_required_valid": true,
+    "existing_result_or_staging_forbidden": true,
+    "final_reserve_schedule_generated_before_open": false,
+    "final_reserve_target_read_count_before_open": 0,
+    "h18_authorized": false
+  },
+  "source_h16": {
+    "experiment_id": "h16_long_history_contract_preflight_v02",
+    "result_directory": "results/23_hbv_multilead_joint_uncertainty/h16_long_history_contract_preflight_v02",
+    "declaration": {
+      "path": "src/hbv_history_conditioned_imm/configs/h16_long_history_contract_preflight_v02.json",
+      "sha256": "0fdf0ebd51fd5112febfac5928f9f1c4c1e176ff287c44f7038db7c1a880dd6d"
+    },
+    "config_snapshot_sha256": "0cb690247c7ec19bc4034bbbbd55bc1a92f8f8dbb464c9f44a0ed1d2821ef2af",
+    "checksums_sha256": "79beb5b9535e403372fe24eb4c34e053209512376e4fce6ed15983abcc28d871",
+    "preflight_arrays_sha256": "cbcc41a9e43c897c13ef682c9dcec84342f304b5869a3cb7a258c5c8c217dc1a",
+    "preflight_report_sha256": "959571e2bf72b0ca987912798bf95c53779cfeac86a6846659e5370aebdeb9ae",
+    "independent_verification_sha256": "85d1f957949dd9cf036473684800e81e14d55e3bacca504be21e0a22ad0c94f1",
+    "preflight_arrays_use": "integrity_and_seed_disjointness_only_not_final_data",
+    "historical_source_manifest_available": false
+  },
+  "source_h17p": {
+    "experiment_id": "h17p_fresh_duration_coverage_preflight_v01",
+    "result_directory": "results/23_hbv_multilead_joint_uncertainty/h17p_fresh_duration_coverage_preflight_v01",
+    "declaration": {
+      "path": "src/hbv_history_conditioned_imm/configs/h17p_fresh_duration_coverage_preflight_v01.json",
+      "sha256": "b8441ded8bf46de2a3b90c3996e5823a7c6fa0988ff6911ec4ed729d17ccc129"
+    },
+    "config_snapshot_sha256": "79c3da7aaeea37ff40a02f5a8ec6db9263738a838285fc5c3d5fba32ff9046aa",
+    "checksums_sha256": "5aa809661ce0efcb344f7ef9a82508ce7dd8130bb4aea7fe2cc17070c1688611",
+    "coverage_report_sha256": "e92de822366d9c00ccc909ef6b5a9d3d2b89093140f55f09e6a43ab7824c1eb9",
+    "preflight_report_sha256": "3a2fd66cbab2856e8d8e5d3cbb6ade6c54b49ad36497e6dcea6f9958d9ab1820",
+    "seed_namespace_audit_sha256": "e86dfbb125f144c1c1db912c356c67ad3b387f6f286aac29bfe296a28e934979",
+    "independent_verification_sha256": "d50c27c904ae082409495a72cbbf007395c969f77a3dd6685dc4fed8edd41c47",
+    "source_manifest_sha256": "0a633bf99991ba4266893990fde15bd02a51ee774ab1d316495f22dfabbfd6ac",
+    "source_snapshot_sha256": "de5125e2787645c24376c2a93339dcb01f3098e65fee809603b8b1d6bbe47463",
+    "preflight_schedule_arrays_reused": false,
+    "preflight_accepted_block_count_used_as_final_count": false
+  },
+  "source_h17f": {
+    "experiment_id": "h17f_monotone_piecewise_age_risk_learning_rate_0p075_supervised_probability_v01",
+    "result_directory": "results/23_hbv_multilead_joint_uncertainty/h17f_monotone_piecewise_age_risk_learning_rate_0p075_supervised_probability_v01",
+    "declaration": {
+      "path": "src/hbv_history_conditioned_imm/configs/h17f_monotone_piecewise_age_risk_learning_rate_0p075_supervised_probability_v01.json",
+      "sha256": "b518976eb29c9df0ce61f4a2c9654b0b3c94d2baabf4e7a2621ada272f98dffc"
+    },
+    "config_snapshot_sha256": "0caf8d12fd355f2a3faba35f40b0e78a190e99f5e46063cd0732a48da269daf7",
+    "checksums_sha256": "f49f8dddbc19431602c2065224227b0551dd46bdec42a1eee9f24adf9960cbf9",
+    "metrics_sha256": "a217e5f04b58bf4db8c3ba8312f8727c2c309134b18816f9fd6c65ac150e7263",
+    "independent_verification_sha256": "815488782d65f88bf188574cdfb3e67a175cb68fc316e70fccee80f80b6fbb7a",
+    "source_manifest_sha256": "4a11c5c5484bac3224529683ef92bed0452b433a46b051009a20eeebe6929bdc",
+    "source_snapshot_sha256": "4981ceebbcfc277e49b56b9734c28484d452abe6e8c297a40c82a27490aa3e0d",
+    "checkpoints": [
+      {
+        "initialization_seed": 1710101,
+        "selected_epoch": 44,
+        "path": "results/23_hbv_multilead_joint_uncertainty/h17f_monotone_piecewise_age_risk_learning_rate_0p075_supervised_probability_v01/history_seed_1710101_best_checkpoint.pt",
+        "sha256": "942051209af69128ea373a2a7521a767781a1e5797fc821d372747f7d550c00b"
+      },
+      {
+        "initialization_seed": 1710102,
+        "selected_epoch": 44,
+        "path": "results/23_hbv_multilead_joint_uncertainty/h17f_monotone_piecewise_age_risk_learning_rate_0p075_supervised_probability_v01/history_seed_1710102_best_checkpoint.pt",
+        "sha256": "fc233237584a312070b8eb1c8cc3718066cddc0603cada1add264ae9e0bc2b82"
+      },
+      {
+        "initialization_seed": 1710103,
+        "selected_epoch": 44,
+        "path": "results/23_hbv_multilead_joint_uncertainty/h17f_monotone_piecewise_age_risk_learning_rate_0p075_supervised_probability_v01/history_seed_1710103_best_checkpoint.pt",
+        "sha256": "81af6e45a08179cb81d255386ed59fc32b426ed907ca5fa1d613af9f48d47535"
+      }
+    ],
+    "training_or_checkpoint_selection_allowed": false
+  },
+  "static_reference": {
+    "experiment_id": "h17_supervised_active_row_probability_upper_bound_v01",
+    "checksums_sha256": "ee68707bf46f9fe44794ded6899f058e4930e8e0775761dc89d7161c7e73a98c",
+    "checkpoint_path": "results/23_hbv_multilead_joint_uncertainty/h17_supervised_active_row_probability_upper_bound_v01/static_best_checkpoint.pt",
+    "checkpoint_sha256": "5e5072206b3a1fa2bc5b44d9743d83f9e1cbcc923d6872a287528227e1051ee2",
+    "comparison_name": "frozen_h17_learned_history_free_static_matrix"
+  },
+  "base_parameters": {
+    "parTT": 0.4899906312144009,
+    "parCFMAX": 2.5549045075022465,
+    "parCFR": 0.0463012343434304,
+    "parCWH": 4.790858379798471e-09,
+    "parFC": 115.41144086847932,
+    "parBETA": 1.0000000698913354,
+    "parLP": 0.9999992059019986,
+    "parK0": 0.8999999945687556,
+    "parK1": 0.3593900045350728,
+    "parUZL": 44.36393857438976,
+    "parPERC": 9.99999952398291,
+    "parK2": 0.0221122277234756,
+    "lag_time": 1.7953195629813012
+  },
+  "parameter_candidates": {
+    "parameter_name": "parK1",
+    "ids": [
+      "slow_recession",
+      "calibrated_recession",
+      "fast_recession"
+    ],
+    "values": [
+      0.04,
+      0.3593900045350728,
+      0.8
+    ]
+  },
+  "data": {
+    "assimilation_days": 300,
+    "scored_transition_days_per_block": 299,
+    "maximum_forecast_lead": 7,
+    "warmup_days": 90,
+    "warmup_parameter_id": "calibrated_recession",
+    "fixed_process_state_name": "SLZ",
+    "fixed_process_state_index": 4,
+    "fixed_process_standard_deviation": 1.0,
+    "observation_standard_deviation": 0.15,
+    "initial_covariance_fraction": 0.001,
+    "require_zero_projection": true,
+    "maximum_process_resamples": 100,
+    "forcing_generator": "same warm-wet randomized generator as H01-H15",
+    "natural_core_blocks": 120,
+    "natural_core_scored_transition_count": 35880,
+    "maximum_accepted_coverage_blocks": 256,
+    "maximum_candidate_schedules": 20000,
+    "natural_core_and_coverage_scored_separately": true
+  },
+  "duration_hazard": {
+    "age_definition": "prior regime age before the transition into day t; the first evaluated day of a segment has age 1",
+    "transition_evaluation_starts_at_day": 1,
+    "early_age_maximum_exclusive": 30,
+    "early_hazard": 0.001,
+    "ramp_start_age": 30,
+    "ramp_end_age": 50,
+    "ramp_start_hazard": 0.01,
+    "ramp_slope_per_day": 0.022,
+    "late_hazard": 0.45,
+    "switch_destination": "uniform over the two non-source modes"
+  },
+  "seed_namespace": {
+    "formula": "base + stage_code*stage_multiplier + layer_code*layer_multiplier + stream_code*stream_multiplier + ordinal",
+    "base": 16300000000,
+    "stage": "final_reserve",
+    "stage_multiplier": 1000000000,
+    "layer_multiplier": 100000000,
+    "stream_multiplier": 10000000,
+    "maximum_ordinal": 999999,
+    "stage_codes": {
+      "preflight": 1,
+      "final_reserve": 2
+    },
+    "layer_codes": {
+      "natural_core": 1,
+      "coverage": 2
+    },
+    "stream_codes": {
+      "schedule": 1,
+      "forcing": 2,
+      "process": 3,
+      "observation": 4,
+      "process_resample": 5
+    },
+    "natural_schedule_ordinals": {
+      "minimum": 1,
+      "maximum": 120
+    },
+    "coverage_candidate_schedule_ordinals": {
+      "minimum": 1,
+      "maximum": 20000
+    },
+    "committed_non_schedule_ordinal": "accepted block rank",
+    "process_resample_ordinal": "accepted block rank*1000 + resample attempt",
+    "maximum_process_resample_attempt": 99,
+    "maximum_total_process_attempts": 100,
+    "expected_final_reserve_namespace_minimum_seed": 18410000001,
+    "expected_final_reserve_namespace_maximum_seed": 18550999999,
+    "natural_stream_bases": {
+      "schedule": 18410000000,
+      "forcing": 18420000000,
+      "process": 18430000000,
+      "observation": 18440000000,
+      "process_resample": 18450000000
+    },
+    "coverage_stream_bases": {
+      "schedule": 18510000000,
+      "forcing": 18520000000,
+      "process": 18530000000,
+      "observation": 18540000000,
+      "process_resample": 18550000000
+    },
+    "all_stream_seeds_must_be_disjoint": true,
+    "all_seeds_must_be_disjoint_from_h16_and_h17p": true
+  },
+  "coverage_selection": {
+    "candidate_order": "ascending",
+    "maximum_candidate_schedules": 20000,
+    "maximum_accepted_coverage_blocks": 256,
+    "priority": [
+      "reduce an unmet age-50-plus day, segment, or distinct-block gap",
+      "otherwise reduce an unmet age-40-to-49 day gap"
+    ],
+    "selection_input_fields": [
+      "mode_indices",
+      "active_source_indices",
+      "regime_age_before_transition",
+      "transition_evaluation_mask"
+    ],
+    "forbidden_selection_fields": [
+      "forcing",
+      "observations",
+      "states",
+      "discharge",
+      "oracle_probabilities",
+      "filter_outputs",
+      "static_transition_matrix",
+      "model_predictions",
+      "prediction_errors",
+      "checkpoints"
+    ],
+    "exact_accepted_count_known_before_open": false,
+    "h17p_preflight_accepted_count_130_reused": false
+  },
+  "coverage_thresholds": {
+    "minimum_40_to_49_days_per_source": 200,
+    "minimum_50_plus_days_per_source": 40,
+    "minimum_segments_reaching_50_per_source": 20,
+    "minimum_distinct_50_plus_blocks_per_source": 15
+  },
+  "evaluation_contract": {
+    "evaluation_only": true,
+    "methods": [
+      "frozen_h17_learned_history_free_static_matrix",
+      "history_seed_1710101",
+      "history_seed_1710102",
+      "history_seed_1710103"
+    ],
+    "metrics": [
+      "unweighted_active_row_oracle_brier",
+      "unweighted_switch_hazard_mean_absolute_error"
+    ],
+    "relative_reduction_formula": "1 - candidate_error / static_reference_error",
+    "minimum_relative_reduction": 0.5,
+    "zero_or_nonfinite_static_denominator_is_terminal_hold": true,
+    "natural_core_gate": "each of three H17F checkpoints independently passes both metrics on all 35880 scored transitions",
+    "coverage_age_bins": {
+      "age_40_49": {
+        "minimum": 40,
+        "maximum": 49
+      },
+      "age_50_plus": {
+        "minimum": 50,
+        "maximum": 300
+      }
+    },
+    "coverage_source_ids": [
+      "slow_recession",
+      "calibrated_recession",
+      "fast_recession"
+    ],
+    "coverage_gate": "each checkpoint independently passes both metrics in all 3 source by 2 age cells",
+    "required_natural_performance_conditions": 6,
+    "required_coverage_performance_conditions": 36,
+    "required_total_performance_conditions": 42,
+    "seed_averaging_for_decision": false,
+    "coverage_and_natural_scores_merged": false,
+    "maximum_transition_row_sum_error": 1e-12,
+    "minimum_transition_probability": 0.0,
+    "maximum_same_day_observation_effect": 0.0,
+    "maximum_future_observation_effect": 0.0,
+    "maximum_forbidden_input_count": 0,
+    "causality_audit_natural_blocks": 1,
+    "all_values_finite": true
+  },
+  "one_read_contract": {
+    "final_reserve_previously_generated": false,
+    "pre_open_schedule_read_count": 0,
+    "pre_open_target_read_count": 0,
+    "pre_open_score_read_count": 0,
+    "maximum_reserve_open_events": 1,
+    "coverage_checked_before_checkpoint_load": true,
+    "checkpoint_load_count_before_coverage_pass": 0,
+    "training_started": false,
+    "optimizer_created": false,
+    "checkpoint_selection_performed": false,
+    "architecture_or_hyperparameter_selection_performed": false,
+    "human_intermediate_target_or_score_inspection": false,
+    "same_identifier_rerun_after_open": false,
+    "permanent_tombstone_relative_path": "src/hbv_history_conditioned_imm/configs/h17r_monotone_piecewise_age_risk_learning_rate_0p075_fresh_reserved_confirmation_v01.reserve_opened.tombstone.json",
+    "postdecision_independent_audit_allowed": true,
+    "postdecision_audit_cannot_change_model_or_thresholds": true
+  },
+  "model_input_contract": {
+    "allowed_inputs": [
+      "forcing through previous day",
+      "previous global posterior fifteen-state mean",
+      "previous posterior candidate probabilities",
+      "initial state",
+      "initial covariance",
+      "current observation only inside filter update after transition matrix is emitted"
+    ],
+    "forbidden_transition_inputs": [
+      "true mode",
+      "true regime age",
+      "switch label",
+      "oracle probability",
+      "block identifier",
+      "random seed",
+      "current observation",
+      "current innovation",
+      "future observation"
+    ],
+    "truth_fields_used_only_for_post_hoc_scoring": true,
+    "day_zero_transition": "frozen_base_transition",
+    "day_zero_scored": false,
+    "transition_orientation": "Pi[i,j] is source row i and destination column j"
+  },
+  "source_dependency_contract": {
+    "src/hbv_history_conditioned_imm/long_history.py": "3bddd87ebdbc3ebc03953c4af1fb07fc78117cb37118cf5aa22d61d1ce303c98",
+    "src/hbv_history_conditioned_imm/synthetic.py": "eb1552d494f7d35447072eed238a2d27c083b0169321b703e01e189e94149c11",
+    "src/hbv_history_conditioned_imm/parameter_switch.py": "6e549f706b9f76b6a7f47981a9c1dea267a336e223c70e372933e0eb419663c1",
+    "src/hbv_multilead_joint_uncertainty/synthetic_truth.py": "f2cffdf30115ec3a7a3530314cab155325d646b46f5b5271628568601f269f8d",
+    "src/scl_hydro/hbv_lite_numpy.py": "0a18663e3c3306dfe59d34a628aae1854b296e041d414a9ba15733e59100ffdd",
+    "src/hbv_history_conditioned_imm/causal_duration.py": "d08668459f16de51487c832da0ce74e8c9f3c1c75d3375ecd3a564ccb2627658",
+    "src/hbv_history_conditioned_imm/supervised_probability.py": "e2ae58af98788c9fcdb523fb760a33000dd52d33959573e69066018eb3c78e6b",
+    "src/hbv_history_conditioned_imm/hbv.py": "42e2160b03831f1851d3df7ec170977fb3a6118c638817d0fc32913415d230fc",
+    "src/hbv_history_conditioned_imm/filter.py": "419d4e71cb8eaca89dbfc5ab306e6035c701e60eb7e23a496950eb68be464352",
+    "src/hbv_history_conditioned_imm/network.py": "4da4a204f412b27d8c48cdf571e2a026c11c128ccb5ed952d100b36c1e31b0ca",
+    "src/hbv_multilead_joint_uncertainty/state_domain_consistent_process_noise_switch.py": "daccffce0ad600cb9e6468c57ddd971ef3cca95d9b54ed7243467fa7304ff08a",
+    "src/hbv_multilead_joint_uncertainty/methods.py": "d3ff65e771b663f8b227238a8c61aa36cf3de34695b4753f09a8f82b2db57ed0",
+    "src/scl_hydro/hbv_lite.py": "44b1e00115a1f1350d4a3c2380981255d9f2d87b16d10fe7044c7e186ed37d63",
+    "src/hbv_history_conditioned_imm/training.py": "4abae0b332d535a0bd325e64b986958572bf925786d26bb8d95771c67521090e",
+    "src/hbv_history_conditioned_imm/probability_audit.py": "954f5f439460c972060c1a36e882901d88abddfa4e5229f410e7ec5f7e4942d1",
+    "src/hbv_history_conditioned_imm/scripts/run_h01_end_to_end_smoke.py": "f0d6b3f12513ad426d9f4b925741b107a075f3ec61d591dcb0472745a6ef381b",
+    "src/hbv_history_conditioned_imm/scripts/run_h17_supervised_probability_upper_bound.py": "761e525c5eff60e8f0026717abafc9a3fed7ad816121d54ed3df5697ab23e11b",
+    "src/hbv_history_conditioned_imm/scripts/verify_h17_supervised_probability_upper_bound.py": "9fd334fed6f9f6399a5306b3bb2a146bf07175e880b543d5e1d1e22ee80754a3",
+    "src/hbv_history_conditioned_imm/__init__.py": "32aa9c2c9b7f5fe628320b3ee7b7704971c8594afa21f0aec95a97621a4f5970",
+    "src/hbv_history_conditioned_imm/scripts/__init__.py": "ead50a494fad13d6bb766748413259f3c63f492512032c61011fca8699cf7ba7",
+    "src/hbv_multilead_joint_uncertainty/__init__.py": "434510afc54ab73bdb3998624edf1bf4c360876a168c59930525346db6f9ee78",
+    "src/scl_hydro/__init__.py": "e7d0c2c61526ef2639a7b3bfbbf4c2a633d61f82e6252f9a1733891a6f26677e"
+  },
+  "decision_contract": {
+    "pass": "coverage, all 42 performance conditions, legality, causality, hashes, one-open, no-training, and zero-H18 checks all pass",
+    "hold": "any single condition fails",
+    "pass_decision": "FRESH_RESERVED_CONFIRMATION_PASS_SYNTHETIC_SUPERVISED_DURATION_PROBABILITY_ONLY_H18_REMAINS_UNAUTHORIZED",
+    "hold_decision": "FRESH_RESERVED_CONFIRMATION_HOLD_H18_REMAINS_UNAUTHORIZED",
+    "no_retry_or_threshold_change": true,
+    "h18_authorized": false
+  },
+  "registry_contract": {
+    "type": "fresh_reserved_confirmation",
+    "initial_status": "preregistered_reserved_confirmation_blocked",
+    "eligible_status": "registered_fresh_reserved_confirmation",
+    "completion_status_pass": "completed_fresh_reserved_confirmation_pass",
+    "completion_status_hold": "completed_fresh_reserved_confirmation_hold",
+    "exactly_one_row": true,
+    "only_status_and_notes_may_change_after_preregistration": true,
+    "h18_row_count": 0,
+    "metrics_relative_path": "results/23_hbv_multilead_joint_uncertainty/h17r_monotone_piecewise_age_risk_learning_rate_0p075_fresh_reserved_confirmation_v01/metrics.json"
+  },
+  "preregistration_manifest": {
+    "path": "src/hbv_history_conditioned_imm/configs/h17r_monotone_piecewise_age_risk_learning_rate_0p075_fresh_reserved_confirmation_v01.preregistered_manifest.json",
+    "registry_note_token": "preregistration_manifest_sha256=",
+    "must_be_verified_before_eligible_status": true
+  },
+  "external_approval_contract": {
+    "required": true,
+    "runner_argument": "--approved-prereg-sha256",
+    "verifier_argument": "--approved-prereg-sha256",
+    "registry_note_is_lookup_only": true,
+    "same_hash_required_for_run_and_verification": true
+  },
+  "source_snapshot": {
+    "format": "deterministic_zip_v1",
+    "fixed_zip_timestamp": "1980-01-01T00:00:00",
+    "files": [
+      "src/hbv_history_conditioned_imm/configs/h17r_monotone_piecewise_age_risk_learning_rate_0p075_fresh_reserved_confirmation_v01.json",
+      "src/hbv_history_conditioned_imm/configs/h17r_monotone_piecewise_age_risk_learning_rate_0p075_fresh_reserved_confirmation_v01.preregistered_manifest.json",
+      "src/hbv_history_conditioned_imm/scripts/run_h17_fresh_reserved_confirmation.py",
+      "src/hbv_history_conditioned_imm/scripts/verify_h17_fresh_reserved_confirmation.py",
+      "src/hbv_history_conditioned_imm/long_history.py",
+      "src/hbv_history_conditioned_imm/synthetic.py",
+      "src/hbv_history_conditioned_imm/parameter_switch.py",
+      "src/hbv_multilead_joint_uncertainty/state_domain_consistent_process_noise_switch.py",
+      "src/hbv_multilead_joint_uncertainty/synthetic_truth.py",
+      "src/hbv_multilead_joint_uncertainty/methods.py",
+      "src/scl_hydro/hbv_lite.py",
+      "src/scl_hydro/hbv_lite_numpy.py",
+      "src/hbv_history_conditioned_imm/causal_duration.py",
+      "src/hbv_history_conditioned_imm/supervised_probability.py",
+      "src/hbv_history_conditioned_imm/hbv.py",
+      "src/hbv_history_conditioned_imm/filter.py",
+      "src/hbv_history_conditioned_imm/network.py",
+      "src/hbv_history_conditioned_imm/training.py",
+      "src/hbv_history_conditioned_imm/probability_audit.py",
+      "src/hbv_history_conditioned_imm/scripts/run_h01_end_to_end_smoke.py",
+      "src/hbv_history_conditioned_imm/scripts/run_h17_supervised_probability_upper_bound.py",
+      "src/hbv_history_conditioned_imm/scripts/verify_h17_supervised_probability_upper_bound.py",
+      "src/hbv_history_conditioned_imm/scripts/run_h17_fresh_duration_coverage_preflight.py",
+      "src/hbv_history_conditioned_imm/__init__.py",
+      "src/hbv_history_conditioned_imm/scripts/__init__.py",
+      "src/hbv_multilead_joint_uncertainty/__init__.py",
+      "src/scl_hydro/__init__.py",
+      "test/test_hbv_history_conditioned_imm_h17_reserved_confirmation.py",
+      "docs/plans/H17R_PREREGISTRATION_TEST_REPORT_20260811.json"
+    ]
+  },
+  "required_result_files": [
+    "config_snapshot.json",
+    "registry_entry.json",
+    "registry_open_entry.json",
+    "registry_open_snapshot.csv",
+    "eligibility_audit.json",
+    "generator_contract.json",
+    "seed_namespace_audit.json",
+    "reserve_open_audit.json",
+    "schedule_arrays.npz",
+    "coverage_report.json",
+    "generation_audit.json",
+    "checkpoint_integrity_audit.json",
+    "static_reference_checkpoint.pt",
+    "history_seed_1710101_checkpoint.pt",
+    "history_seed_1710102_checkpoint.pt",
+    "history_seed_1710103_checkpoint.pt",
+    "generation_arrays.npz",
+    "reserve_arrays.npz",
+    "metrics.json",
+    "stratified_metrics.json",
+    "probability_legality_audit.json",
+    "causality_audit.json",
+    "execution_audit.json",
+    "decision.json",
+    "environment.json",
+    "source_manifest.json",
+    "source_snapshot.zip",
+    "independent_verification.json",
+    "checksums.json"
+  ],
+  "coverage_hold_result_files": [
+    "config_snapshot.json",
+    "registry_entry.json",
+    "registry_open_entry.json",
+    "registry_open_snapshot.csv",
+    "eligibility_audit.json",
+    "generator_contract.json",
+    "seed_namespace_audit.json",
+    "reserve_open_audit.json",
+    "schedule_arrays.npz",
+    "coverage_report.json",
+    "metrics.json",
+    "execution_audit.json",
+    "decision.json",
+    "environment.json",
+    "source_manifest.json",
+    "source_snapshot.zip",
+    "independent_verification.json",
+    "checksums.json"
+  ],
+  "process_exhaustion_hold_result_files": [
+    "config_snapshot.json",
+    "registry_entry.json",
+    "registry_open_entry.json",
+    "registry_open_snapshot.csv",
+    "eligibility_audit.json",
+    "generator_contract.json",
+    "seed_namespace_audit.json",
+    "reserve_open_audit.json",
+    "schedule_arrays.npz",
+    "coverage_report.json",
+    "metrics.json",
+    "process_exhaustion_audit.json",
+    "failure_report.json",
+    "execution_audit.json",
+    "decision.json",
+    "environment.json",
+    "source_manifest.json",
+    "source_snapshot.zip",
+    "partial_artifact_manifest.json",
+    "independent_verification.json",
+    "checksums.json"
+  ],
+  "h18_registered_or_run": false
+}

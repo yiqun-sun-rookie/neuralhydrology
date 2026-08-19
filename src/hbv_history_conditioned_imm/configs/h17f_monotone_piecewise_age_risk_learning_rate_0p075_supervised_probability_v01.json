@@ -1,0 +1,96 @@
+{
+  "experiment_id": "h17f_monotone_piecewise_age_risk_learning_rate_0p075_supervised_probability_v01",
+  "base_config": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h17e_monotone_piecewise_linear_age_risk_supervised_probability_v01/config_snapshot.json",
+    "sha256": "153c6e1a0ba4d34a784dff728222828ebb308196b049e6230173c9658d32a535"
+  },
+  "baseline_age_risk_repair": {
+    "experiment_id": "h17e_monotone_piecewise_linear_age_risk_supervised_probability_v01",
+    "declaration": {
+      "path": "src/hbv_history_conditioned_imm/configs/h17e_monotone_piecewise_linear_age_risk_supervised_probability_v01.json",
+      "sha256": "f759767b7219afb4edae512be45e5e7ec281fe8d5a57de86c730c32975ed0353"
+    },
+    "config_snapshot": {
+      "path": "results/23_hbv_multilead_joint_uncertainty/h17e_monotone_piecewise_linear_age_risk_supervised_probability_v01/config_snapshot.json",
+      "sha256": "153c6e1a0ba4d34a784dff728222828ebb308196b049e6230173c9658d32a535"
+    },
+    "result_directory": "results/23_hbv_multilead_joint_uncertainty/h17e_monotone_piecewise_linear_age_risk_supervised_probability_v01",
+    "checksums_sha256": "77f26325a670d3ca67dd4321f0d120ce80aaa261eefdebec1e2162ff35b7f3c4",
+    "independent_verification_sha256": "51f7baae24fd3f33b2d0400912c71a9b5ebe4b7c81b7b5838a2c110c9ab0542c"
+  },
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h17f_monotone_piecewise_age_risk_learning_rate_0p075_supervised_probability_v01",
+  "repair_contract": {
+    "attempt_number": 6,
+    "attempt_order_frozen_before_training": true,
+    "baseline_experiment_id": "h17e_monotone_piecewise_linear_age_risk_supervised_probability_v01",
+    "changed_factors": [
+      "training.learning_rate"
+    ],
+    "transition_architecture": "explicit_causal_duration",
+    "age_risk_representation": "monotone_piecewise_linear",
+    "training_objective": "active_row_cross_entropy",
+    "training_weighting": "uniform",
+    "optimizer": "AdamW",
+    "baseline_learning_rate": 0.003,
+    "learning_rate": 0.075,
+    "weight_decay": 0.0001,
+    "epochs": 60,
+    "static_reference": "frozen_h17_learned_static_matrix",
+    "test_evaluation_weighting": "uniform",
+    "warm_start": false,
+    "h17b_recurrent_checkpoint_loaded": false,
+    "success_rule": "all three initialization seeds independently reduce both original unweighted errors by at least 50 percent on the development diagnostic",
+    "fresh_reserved_confirmation_required_after_diagnostic_pass": true,
+    "h18_authorized": false
+  },
+  "duration_contract": {
+    "candidate_count": 3,
+    "maximum_age": 300,
+    "hazard_hidden_size": 16,
+    "maximum_logit_correction": 2.0,
+    "minimum_differentiable_mode_probability": 1e-12,
+    "rare_mode_gradient_rule": "preserve the exact forward conditional-age distribution but detach its recursion gradient below the probability floor",
+    "age_risk_representation": "monotone_piecewise_linear",
+    "baseline_age_risk_representation": "smooth_tanh_network",
+    "piecewise_knot_count": 31,
+    "piecewise_knot_positions": "uniform from age 1 through maximum age inclusive",
+    "piecewise_interpolation_space": "transition logit correction",
+    "piecewise_monotonicity": "nondecreasing by ordered bounded knots",
+    "piecewise_correction_bounds": "same open minus 4 to plus 4 range as the H17D smooth representation",
+    "piecewise_start_initialization": "zero transition logit correction at age one",
+    "piecewise_terminal_span_initialization": "sigmoid of minus 2 times the remaining positive correction range",
+    "piecewise_interval_allocation_initialization": "seeded normal logits with standard deviation 0.01 followed by softmax",
+    "knot_selection_inputs": [
+      "maximum_age",
+      "piecewise_knot_count"
+    ],
+    "development_diagnostic_targets_used_for_knot_selection": false,
+    "final_reserved_targets_used_for_knot_selection": false,
+    "day_zero_transition": "frozen_base_transition",
+    "day_zero_scored": false,
+    "initialization": "day_zero_detached_filter_posterior_mass_at_age_one",
+    "stay_update": "advance_one_age_with_overflow_retained_at_age_300",
+    "switch_update": "split_total_hazard_equally_between_other_modes_at_age_one",
+    "posterior_conditioning": "replace_predicted_mode_marginals_with_detached_filter_posterior_and_preserve_conditional_age_distribution",
+    "transition_day_information_cutoff": "filter posterior through previous day",
+    "hard_argmax_reset": false,
+    "true_mode_input": false,
+    "true_age_input": false,
+    "switch_label_input": false,
+    "target_probability_input": false,
+    "block_identifier_input": false,
+    "random_seed_input": false
+  },
+  "source_snapshot_files": [
+    "src/hbv_history_conditioned_imm/causal_duration.py",
+    "src/hbv_history_conditioned_imm/supervised_probability.py",
+    "src/hbv_history_conditioned_imm/scripts/run_h17_supervised_probability_upper_bound.py",
+    "src/hbv_history_conditioned_imm/scripts/run_h17_supervised_probability_repair.py",
+    "src/hbv_history_conditioned_imm/scripts/verify_h17_supervised_probability_upper_bound.py",
+    "src/hbv_history_conditioned_imm/scripts/verify_h17_supervised_probability_repair.py",
+    "src/hbv_history_conditioned_imm/configs/h17b_active_row_cross_entropy_supervised_probability_v01.json",
+    "src/hbv_history_conditioned_imm/configs/h17d_explicit_causal_duration_cross_entropy_supervised_probability_v02.json",
+    "src/hbv_history_conditioned_imm/configs/h17e_monotone_piecewise_linear_age_risk_supervised_probability_v01.json",
+    "src/hbv_history_conditioned_imm/configs/h17f_monotone_piecewise_age_risk_learning_rate_0p075_supervised_probability_v01.json"
+  ]
+}

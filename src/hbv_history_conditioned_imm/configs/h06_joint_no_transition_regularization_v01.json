@@ -1,0 +1,17 @@
+{
+  "experiment_id": "h06_joint_no_transition_regularization_v01",
+  "status": "registered_objective_ablation",
+  "scientific_question": "Does removing both transition-matrix regularizers improve the history-conditioned method when it is trained jointly by multi-lead flow error and one-step predictive evidence?",
+  "claim_boundary": "Synthetic warm-wet single-parameter capability test only; no real-basin or true transition-probability claim.",
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h06_joint_no_transition_regularization_v01",
+  "source_h05_config": {
+    "path": "src/hbv_history_conditioned_imm/configs/h05_stronger_parameter_switch_capability_v01.json",
+    "sha256": "2f9ef7ab014399f2a1ba0eabc02d52e017a457efa25e90d5e0c68c86225e3c4d"
+  },
+  "loss": {
+    "normalized_multilead_flow_mse": 1.0,
+    "observation_negative_log_evidence": 0.1,
+    "transition_kl_from_base": 0.0,
+    "transition_temporal_smoothness": 0.0
+  }
+}

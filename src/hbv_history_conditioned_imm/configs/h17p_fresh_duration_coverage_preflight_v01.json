@@ -1,0 +1,141 @@
+{
+  "experiment_id": "h17p_fresh_duration_coverage_preflight_v01",
+  "status": "registered_reserved_coverage_preflight",
+  "publication_authorized": true,
+  "scientific_question": "Does one frozen schedule-only seed scan provide a fresh natural core and a separate rare-duration coverage layer before any model or final reserve is read?",
+  "claim_boundary": "Synthetic schedule coverage and seed-separation preflight only. Passing cannot establish learned probability recovery, mode identification, state superiority, forecast value, physical switching, or real-basin validity.",
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h17p_fresh_duration_coverage_preflight_v01",
+  "source_h16_preflight_arrays": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h16_long_history_contract_preflight_v02/preflight_arrays.npz",
+    "sha256": "cbcc41a9e43c897c13ef682c9dcec84342f304b5869a3cb7a258c5c8c217dc1a"
+  },
+  "parameter_ids": [
+    "slow_recession",
+    "calibrated_recession",
+    "fast_recession"
+  ],
+  "data": {
+    "assimilation_days": 300,
+    "natural_core_blocks": 120,
+    "candidate_count": 3
+  },
+  "duration_hazard": {
+    "age_definition": "prior regime age before the transition into day t; the first evaluated day of a segment has age 1",
+    "transition_evaluation_starts_at_day": 1,
+    "early_age_maximum_exclusive": 30,
+    "early_hazard": 0.001,
+    "ramp_start_age": 30,
+    "ramp_end_age": 50,
+    "ramp_start_hazard": 0.01,
+    "ramp_slope_per_day": 0.022,
+    "late_hazard": 0.45,
+    "switch_destination": "uniform over the two non-source modes"
+  },
+  "coverage_selection": {
+    "candidate_order": "ascending",
+    "maximum_candidate_schedules": 20000,
+    "maximum_accepted_coverage_blocks": 256,
+    "priority": [
+      "reduce an unmet age-50-plus day, segment, or distinct-block gap",
+      "otherwise reduce an unmet age-40-to-49 day gap"
+    ],
+    "selection_input_fields": [
+      "mode_indices",
+      "active_source_indices",
+      "regime_age_before_transition",
+      "transition_evaluation_mask"
+    ],
+    "forbidden_selection_fields": [
+      "forcing",
+      "observations",
+      "states",
+      "discharge",
+      "oracle_probabilities",
+      "filter_outputs",
+      "static_transition_matrix",
+      "model_predictions",
+      "prediction_errors",
+      "checkpoints"
+    ]
+  },
+  "coverage_thresholds": {
+    "minimum_40_to_49_days_per_source": 200,
+    "minimum_50_plus_days_per_source": 40,
+    "minimum_segments_reaching_50_per_source": 20,
+    "minimum_distinct_50_plus_blocks_per_source": 15
+  },
+  "seed_namespace": {
+    "formula": "base + stage_code*stage_multiplier + layer_code*layer_multiplier + stream_code*stream_multiplier + ordinal",
+    "base": 16300000000,
+    "stage_multiplier": 1000000000,
+    "layer_multiplier": 100000000,
+    "stream_multiplier": 10000000,
+    "maximum_ordinal": 999999,
+    "stage_codes": {
+      "preflight": 1,
+      "final_reserve": 2
+    },
+    "layer_codes": {
+      "natural_core": 1,
+      "coverage": 2
+    },
+    "stream_codes": {
+      "schedule": 1,
+      "forcing": 2,
+      "process": 3,
+      "observation": 4,
+      "process_resample": 5
+    },
+    "process_resample_ordinal": "accepted block ordinal*1000 + resample attempt",
+    "maximum_process_resample_attempt": 100
+  },
+  "final_reserve_contract": {
+    "schedule_generated_by_preflight": false,
+    "schedule_read_by_preflight": false,
+    "target_statistics_read_by_preflight": false,
+    "only_seed_namespace_committed": true
+  },
+  "registry_contract": {
+    "type": "reserved_coverage_preflight",
+    "registered_status": "registered_reserved_coverage_preflight",
+    "completion_status_go": "completed_reserved_coverage_preflight_go",
+    "completion_status_hold": "completed_reserved_coverage_preflight_hold",
+    "metrics_relative_path": "results/23_hbv_multilead_joint_uncertainty/h17p_fresh_duration_coverage_preflight_v01/coverage_report.json",
+    "live_registry_written_by_runner": false
+  },
+  "source_snapshot": {
+    "format": "deterministic_zip_v1",
+    "fixed_zip_timestamp": "1980-01-01T00:00:00",
+    "files": [
+      "src/hbv_history_conditioned_imm/long_history.py",
+      "src/hbv_history_conditioned_imm/scripts/run_h17_fresh_duration_coverage_preflight.py",
+      "src/hbv_history_conditioned_imm/scripts/verify_h17_fresh_duration_coverage_preflight.py",
+      "src/hbv_history_conditioned_imm/configs/h17p_fresh_duration_coverage_preflight_v01.json"
+    ]
+  },
+  "execution": {
+    "training_started": false,
+    "checkpoint_loaded": false,
+    "model_prediction_read_count": 0,
+    "filter_loaded": false,
+    "static_matrix_loaded": false,
+    "optimizer_created": false,
+    "final_reserve_schedule_read_count": 0
+  },
+  "h18_registered_or_run": false,
+  "required_result_files": [
+    "config_snapshot.json",
+    "registry_entry.json",
+    "generator_contract.json",
+    "seed_namespace_audit.json",
+    "preflight_arrays.npz",
+    "coverage_report.json",
+    "data_interface_audit.json",
+    "preflight_report.json",
+    "source_manifest.json",
+    "source_snapshot.zip",
+    "environment.json",
+    "independent_verification.json",
+    "checksums.json"
+  ]
+}

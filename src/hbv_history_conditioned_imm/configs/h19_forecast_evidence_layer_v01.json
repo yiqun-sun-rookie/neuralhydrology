@@ -1,0 +1,112 @@
+{
+  "experiment_id": "h19_forecast_evidence_layer_v01",
+  "status": "registered",
+  "user_authorization": "2026-08-18 conversation: stage-zero execution, threshold option (b), and stage-one formal run explicitly authorized ('go', 'all', '继续')",
+  "preregistered_contract": "docs/plans/H19_CONTRACT_DRAFT_20260818_FORECAST_EVIDENCE_LAYER.md",
+  "scientific_question": "With the mode distribution allowed to evolve by the transition matrix inside the forecast window, does a causal history-conditioned transition matrix improve multi-lead discharge forecasts from one global posterior state over a learned static matrix and a fixed matrix?",
+  "claim_boundary": "Synthetic ideal-twin forecast evidence only. Passing establishes neither real-basin forecast value nor recovery of the true transition probabilities. A negative result cannot separate an absent mechanism from a network never optimised for forecasting, because every arm reuses H18 checkpoints trained on a one-step observation evidence loss with multi-lead weight 0.0.",
+  "layer": "evidence layer five of six (multi-step forecast value from one global posterior state)",
+  "training": {
+    "performed": false,
+    "optimizer_created": false,
+    "backward_passes": 0,
+    "note": "pure forward evaluation; the five networks are the checkpoints H18 already selected. Lead seven is a scoring ruler, never a training target. Any training in this layer requires a new identifier (see H18F)."
+  },
+  "restored_checkpoints": {
+    "fixed": "no trainable parameters",
+    "static": "static@epoch4",
+    "history_seed_1810101": "history_seed_1810101@epoch21",
+    "history_seed_1810102": "history_seed_1810102@epoch33",
+    "history_seed_1810103": "history_seed_1810103@epoch38",
+    "source_run_dir": "results/23_hbv_multilead_joint_uncertainty/h18_observation_only_state_update_v01"
+  },
+  "forecast_operators": {
+    "evolving": "forecast_global_state_mode_evolving; one global state, one trajectory; p_k = p_{k-1} P with P frozen at the forecast origin; the posterior-weighted parameter vector is recomputed at every step",
+    "frozen": "forecast_global_state_weighted_parameters; the existing operator, parameters frozen at the origin; run for every arm as a paired within-arm control",
+    "implementation_audit": "with P = I the evolving operator reduces to the frozen operator bit for bit (maximum absolute difference 0.0); perturbing forecast-window observations leaves every forecast bit identical; both probes self-validated by producing nonzero differences where a difference must appear"
+  },
+  "unique_variable": "how the daily three by three transition matrix is produced",
+  "fixed_factors": "three parK1 candidates 0.04 / 0.3593900045350728 / 0.8; long-history duration-hazard truth identical to h16_long_history_contract_preflight_v02; SLZ process sd 1.0; observation sd 0.15; 90-day warmup; 300 assimilation days; zero physical projection; identical filter and candidate library",
+  "data": {
+    "evaluation_blocks": 4000,
+    "assimilation_days": 300,
+    "origins_per_block": 300,
+    "maximum_forecast_lead": 7,
+    "leads": [1, 3, 7],
+    "warmup_days": 90,
+    "warmup_parameter_id": "calibrated_recession",
+    "evaluation_target": "noise-free truth discharge; evaluation only, never a training signal",
+    "h18_evaluation_blocks_reused": false,
+    "reuse_note": "the H18 evaluation blocks were consumed by its primary endpoint; reusing them would be a second test on the same data"
+  },
+  "seeds": {
+    "namespace_base": 22000000000,
+    "family_offsets": {
+      "forcing": 100000000,
+      "process": 200000000,
+      "observation": 400000000,
+      "schedule": 500000000
+    },
+    "split_offsets": {"evaluation": 2},
+    "split_offset_multiplier": 10000,
+    "block_id_prefix": "h19_evaluation_b",
+    "bootstrap": {
+      "primary": 20260818,
+      "per_seed": 20260819,
+      "descriptive": 20260820,
+      "draws": 20000
+    }
+  },
+  "primary_endpoint": {
+    "definition": "lead seven forecast discharge RMSE, static minus history seed mean, both arms under the evolving operator",
+    "statistical_unit": "evaluation block",
+    "method": "paired block bootstrap, 95 percent interval",
+    "family_size": 1,
+    "multiple_comparison_correction": "none required; a single lead and a single contrast",
+    "pass_requires_both": [
+      "the paired bootstrap 95 percent interval excludes zero with history better",
+      "the point estimate is at least the frozen threshold"
+    ]
+  },
+  "frozen_threshold": {
+    "value": 0.0017554,
+    "rule": "0.50 x stage-zero contestable space",
+    "stage_zero_contestable_space": 0.0035108,
+    "contestable_space_definition": "RMSE(evolving with the ordinary base matrix) - RMSE(evolving with the true generative matrix), lead seven, measured on a disjoint throwaway namespace at 2000 blocks",
+    "frozen_before_stage_one_data_generation": true,
+    "proportion_set_by": "drafting assistant, adopted by the user on 2026-08-18, revocable",
+    "superseded_rule": {
+      "rule": "0.10 x attribution ceiling",
+      "value": 0.02425001,
+      "why_discarded": "6.9 times the contestable space; sustaining it would repeat the H18 threshold mis-setting that failed a real and reproducible effect"
+    }
+  },
+  "descriptive_secondary": [
+    "leads 1 and 3 for the same contrast",
+    "monotonicity of the effect across leads 1, 3, 7 (failure does not change the decision but must be disclosed)",
+    "history minus fixed, static minus fixed at every lead",
+    "within-arm operator gain, frozen minus evolving, at lead seven",
+    "per-seed static minus history contrasts",
+    "regime age at or above 50 days stratum"
+  ],
+  "failure_state_names": {
+    "interval_contains_zero": "H19_FORECAST_NO_DISTINGUISHABLE_EFFECT",
+    "interval_excludes_zero_but_below_threshold": "H19_FORECAST_BELOW_PREREGISTERED_THRESHOLD",
+    "pass": "H19_FORECAST_EVIDENCE_PASS",
+    "rule": "no post-hoc threshold change, no rerun and no sample topping-up under this identifier"
+  },
+  "artifacts": [
+    "metrics.json",
+    "evaluation_arrays.npz",
+    "independent_verification.json",
+    "checksums.json",
+    "five restored checkpoints, which must stay bit-identical to the H18 originals"
+  ],
+  "stage_zero_provenance": {
+    "operator_audit": "results/23_hbv_multilead_joint_uncertainty/h19_forecast_operator_audit_throwaway_v01",
+    "ceiling_probe_200_blocks": "results/23_hbv_multilead_joint_uncertainty/h19_forecast_window_ceiling_throwaway_v01",
+    "power_calibration_2000_blocks": "results/23_hbv_multilead_joint_uncertainty/h19_forecast_window_power_calibration_throwaway_v01",
+    "gate_outcome": "passed; attribution ceiling 0.2425001 at lead seven, 77.74 percent relative, interval excludes zero",
+    "gate_caveat": "the attribution ceiling measures the value of KNOWING the mode, not the value of a better transition rule; the space this experiment competes in is 0.0035108"
+  }
+}

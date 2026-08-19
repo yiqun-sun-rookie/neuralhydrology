@@ -1,0 +1,96 @@
+{
+  "experiment_id": "h01_end_to_end_smoke_v01",
+  "status": "registered_diagnostic_smoke",
+  "scientific_question": "Can a causal history-conditioned transition matrix reduce generated multi-lead flow error relative to the same fixed-transition fully interacting three-filter method?",
+  "claim_boundary": "Software and gradient-path smoke test only; two epochs and eight synthetic blocks cannot establish scientific superiority.",
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h01_end_to_end_smoke_v01",
+  "parameter_source": {
+    "parameter_id": "trained_center",
+    "path": "results/23_hbv_multilead_joint_uncertainty/g3_ideal_gate_param_switch_v01/parameter_vectors.csv",
+    "sha256": "6c3080099ba1dce0e2ef0411fc585282f70760e9955c1c49f7b9c9892d8fa925"
+  },
+  "parameters": {
+    "parTT": 0.4899906312144009,
+    "parCFMAX": 2.5549045075022465,
+    "parCFR": 0.0463012343434304,
+    "parCWH": 4.790858379798471e-09,
+    "parFC": 115.41144086847932,
+    "parBETA": 1.0000000698913354,
+    "parLP": 0.9999992059019986,
+    "parK0": 0.8999999945687556,
+    "parK1": 0.3593900045350728,
+    "parUZL": 44.36393857438976,
+    "parPERC": 9.99999952398291,
+    "parK2": 0.0221122277234756,
+    "lag_time": 1.7953195629813012
+  },
+  "data": {
+    "training_blocks": 4,
+    "validation_blocks": 2,
+    "test_blocks": 2,
+    "assimilation_days": 120,
+    "maximum_forecast_lead": 7,
+    "warmup_days": 90,
+    "minimum_regime_duration_days": 30,
+    "maximum_regime_duration_days": 50,
+    "process_standard_deviations_mm_day": [1.0, 4.0, 16.0],
+    "observation_standard_deviation": 0.15,
+    "initial_covariance_fraction": 0.001,
+    "rain_floor_mm_day": 5.0,
+    "rain_gamma_shape": 0.8,
+    "rain_gamma_scale_mm_day": 4.0,
+    "potential_evaporation_mm_day": 2.0,
+    "temperature_celsius": 10.0
+  },
+  "seeds": {
+    "network_initialization": 4101001,
+    "forcing_prefix": 4102,
+    "process_prefix": 4103,
+    "observation_prefix": 4104,
+    "schedule_prefix": 4105,
+    "training_split_offset": 0,
+    "validation_split_offset": 1,
+    "test_split_offset": 2
+  },
+  "filter": {
+    "candidate_count": 3,
+    "interaction_mode": "full",
+    "base_transition_stay_probability": 0.98,
+    "state_count": 15,
+    "global_posterior_output": "one posterior-probability-weighted fifteen-state mean and covariance"
+  },
+  "network": {
+    "input_count": 21,
+    "hidden_size": 16,
+    "maximum_logit_correction": 2.0,
+    "current_observation_input": false,
+    "current_innovation_input": false,
+    "absolute_day_input": false
+  },
+  "training": {
+    "epochs": 2,
+    "batch_size": 2,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "forecast_leads_days": [1, 3, 7],
+    "checkpoint_selection": "minimum validation total loss"
+  },
+  "loss": {
+    "normalized_multilead_flow_mse": 1.0,
+    "standardized_fifteen_state_mse": 0.2,
+    "pre_observation_prior_cross_entropy": 0.1,
+    "transition_kl_from_base": 0.001,
+    "transition_temporal_smoothness": 0.001
+  },
+  "required_result_files": [
+    "config_snapshot.json",
+    "registry_entry.json",
+    "training_history.csv",
+    "best_checkpoint.pt",
+    "metrics.json",
+    "gradient_audit.json",
+    "environment.json",
+    "checksums.json"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "experiment_id": "h17c_age_source_balanced_supervised_probability_v01",
+  "base_config": {
+    "path": "src/hbv_history_conditioned_imm/configs/h17_supervised_active_row_probability_upper_bound_v01.json",
+    "sha256": "2bf1504e6430fe0dd2759d0e9490f0daba61921208f6e3ec3861aa0b24de7649"
+  },
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h17c_age_source_balanced_supervised_probability_v01",
+  "repair_contract": {
+    "attempt_number": 3,
+    "attempt_order_frozen_before_training": true,
+    "changed_factors": [
+      "training.sample_weighting"
+    ],
+    "network_output_parameterization": "full_matrix",
+    "training_objective": "active_row_brier",
+    "training_weighting": "sqrt_inverse_age_source_frequency",
+    "static_reference": "frozen_h17_learned_static_matrix",
+    "test_evaluation_weighting": "uniform",
+    "success_rule": "all three recurrent seeds independently reduce both original unweighted errors by at least 50 percent",
+    "h18_authorized": false
+  },
+  "source_h17_static_reference": {
+    "experiment_id": "h17_supervised_active_row_probability_upper_bound_v01",
+    "result_directory": "results/23_hbv_multilead_joint_uncertainty/h17_supervised_active_row_probability_upper_bound_v01",
+    "checksums_sha256": "ee68707bf46f9fe44794ded6899f058e4930e8e0775761dc89d7161c7e73a98c",
+    "checkpoint": {
+      "path": "results/23_hbv_multilead_joint_uncertainty/h17_supervised_active_row_probability_upper_bound_v01/static_best_checkpoint.pt",
+      "sha256": "5e5072206b3a1fa2bc5b44d9743d83f9e1cbcc923d6872a287528227e1051ee2"
+    },
+    "training_history": {
+      "path": "results/23_hbv_multilead_joint_uncertainty/h17_supervised_active_row_probability_upper_bound_v01/static_training_history.csv",
+      "sha256": "328da2b4c6983a9c1c8595d9a0a45e42777f77409f58ae0011ddbddeb64a9609"
+    }
+  },
+  "source_snapshot_files": [
+    "src/hbv_history_conditioned_imm/network.py",
+    "src/hbv_history_conditioned_imm/supervised_probability.py",
+    "src/hbv_history_conditioned_imm/scripts/run_h17_supervised_probability_upper_bound.py",
+    "src/hbv_history_conditioned_imm/scripts/run_h17_supervised_probability_repair.py",
+    "src/hbv_history_conditioned_imm/scripts/verify_h17_supervised_probability_upper_bound.py",
+    "src/hbv_history_conditioned_imm/scripts/verify_h17_supervised_probability_repair.py",
+    "src/hbv_history_conditioned_imm/configs/h17_supervised_active_row_probability_upper_bound_v01.json",
+    "src/hbv_history_conditioned_imm/configs/h17c_age_source_balanced_supervised_probability_v01.json"
+  ]
+}

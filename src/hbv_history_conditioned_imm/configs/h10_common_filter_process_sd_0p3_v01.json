@@ -1,0 +1,22 @@
+{
+  "experiment_id": "h10_common_filter_process_sd_0p3_v01",
+  "status": "registered_filter_noise_sensitivity",
+  "scientific_question": "Does moderately reducing the common process noise assumed by all subfilters expose the currently active parameter candidate more clearly?",
+  "claim_boundary": "Synthetic filter-noise sensitivity only; the truth process noise remains fixed and no real-basin claim is permitted.",
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h10_common_filter_process_sd_0p3_v01",
+  "source_h08_config": {
+    "path": "src/hbv_history_conditioned_imm/configs/h08_evidence_only_no_transition_regularization_v01.json",
+    "sha256": "4d8f4b259fe09f4752578db8aff74157b20a3054691484a6ecc611a6722e5dcd"
+  },
+  "truth_process_standard_deviation": 1.0,
+  "assumed_filter_process_standard_deviation": 0.3,
+  "state_compensation_criterion": {
+    "lower_filter_process_standard_deviations": [0.1, 0.3],
+    "baseline_filter_process_standard_deviation": 1.0,
+    "higher_filter_process_standard_deviation": 3.0,
+    "minimum_relative_fixed_cross_entropy_improvement": 0.01,
+    "minimum_relative_high_noise_cross_entropy_increase": 0.01,
+    "minimum_relative_history_forecast_improvement": 0.01,
+    "minimum_relative_history_oracle_brier_improvement": 0.01
+  }
+}

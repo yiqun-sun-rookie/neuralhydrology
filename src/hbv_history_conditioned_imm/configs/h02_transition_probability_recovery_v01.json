@@ -1,0 +1,59 @@
+{
+  "experiment_id": "h02_transition_probability_recovery_v01",
+  "status": "registered_diagnostic_audit",
+  "scientific_question": "Does the causal history network recover the known duration-conditioned switching hazard on held-out synthetic blocks, and does recovery persist when trained only from generated future-flow loss?",
+  "claim_boundary": "Truth-conditioned active-row diagnostic only; unvisited rows and real-basin transition probabilities are not identified.",
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h02_transition_probability_recovery_v01",
+  "source_h01_config": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h01_end_to_end_smoke_v01/config_snapshot.json",
+    "sha256": "d4ed4e92ba75c5677c6826ec7e827ec8cde3e94ec4d8e085ad7b3a6211206d1d"
+  },
+  "source_h01_checkpoint": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h01_end_to_end_smoke_v01/best_checkpoint.pt",
+    "sha256": "71ffc06733a8b141de1c9b013848f5fc0100ff3a5d99c177c45d9cad1eedb08c"
+  },
+  "matched_arms": [
+    {
+      "arm_id": "fixed_transition",
+      "training": "none",
+      "transition": "fixed 0.98 stay and 0.01 to each alternative"
+    },
+    {
+      "arm_id": "mixed_loss_dynamic",
+      "training": "frozen h01 checkpoint",
+      "transition": "history-conditioned"
+    },
+    {
+      "arm_id": "flow_only_dynamic",
+      "training": "new two-epoch matched run",
+      "transition": "history-conditioned"
+    }
+  ],
+  "oracle": {
+    "minimum_duration_days": 30,
+    "maximum_duration_days": 50,
+    "score_only_realized_source_row": true,
+    "exclude_day_zero": true,
+    "exclude_after_second_switch": true,
+    "next_destination_given_switch": "uniform over the two alternatives"
+  },
+  "flow_only_loss": {
+    "forecast": 1.0,
+    "state": 0.0,
+    "prior_cross_entropy": 0.0,
+    "transition_kl": 0.001,
+    "transition_temporal_smoothness": 0.001
+  },
+  "checkpoint_selection": "minimum validation flow-only total loss",
+  "test_read_rule": "after mixed-loss and flow-only checkpoints are fixed",
+  "required_result_files": [
+    "config_snapshot.json",
+    "registry_entry.json",
+    "flow_only_training_history.csv",
+    "flow_only_best_checkpoint.pt",
+    "probability_metrics.json",
+    "daily_active_row_audit.csv",
+    "environment.json",
+    "checksums.json"
+  ]
+}

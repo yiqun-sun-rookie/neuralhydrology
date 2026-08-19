@@ -1,0 +1,162 @@
+{
+  "experiment_id": "h17_supervised_active_row_probability_upper_bound_v01",
+  "status": "registered_supervised_upper_bound",
+  "scientific_question": "Can a causal recurrent transition network inside the fully interacting three-parameter HBV-lite filter learn the frozen duration-dependent active-source-row probabilities when those probabilities are supplied only as synthetic supervision targets?",
+  "claim_boundary": "Synthetic supervised probability-learning ceiling only. Passing cannot establish strict observation-evidence learning, mode identification, state superiority, forecast value, closed-loop stability, physical switching in real basins, or real-basin performance.",
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h17_supervised_active_row_probability_upper_bound_v01",
+  "source_h16_config_snapshot": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h16_long_history_contract_preflight_v02/config_snapshot.json",
+    "sha256": "0cb690247c7ec19bc4034bbbbd55bc1a92f8f8dbb464c9f44a0ed1d2821ef2af"
+  },
+  "source_h16_preflight_arrays": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h16_long_history_contract_preflight_v02/preflight_arrays.npz",
+    "sha256": "cbcc41a9e43c897c13ef682c9dcec84342f304b5869a3cb7a258c5c8c217dc1a"
+  },
+  "source_h16_preflight_report": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h16_long_history_contract_preflight_v02/preflight_report.json",
+    "sha256": "959571e2bf72b0ca987912798bf95c53779cfeac86a6846659e5370aebdeb9ae"
+  },
+  "source_h16_independent_verification": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h16_long_history_contract_preflight_v02/independent_verification.json",
+    "sha256": "85d1f957949dd9cf036473684800e81e14d55e3bacca504be21e0a22ad0c94f1"
+  },
+  "base_parameters": {
+    "parTT": 0.4899906312144009,
+    "parCFMAX": 2.5549045075022465,
+    "parCFR": 0.0463012343434304,
+    "parCWH": 4.790858379798471e-09,
+    "parFC": 115.41144086847932,
+    "parBETA": 1.0000000698913354,
+    "parLP": 0.9999992059019986,
+    "parK0": 0.8999999945687556,
+    "parK1": 0.3593900045350728,
+    "parUZL": 44.36393857438976,
+    "parPERC": 9.99999952398291,
+    "parK2": 0.0221122277234756,
+    "lag_time": 1.7953195629813012
+  },
+  "parameter_candidates": {
+    "parameter_name": "parK1",
+    "ids": ["slow_recession", "calibrated_recession", "fast_recession"],
+    "values": [0.04, 0.3593900045350728, 0.8]
+  },
+  "data": {
+    "training_blocks": 24,
+    "validation_blocks": 8,
+    "test_blocks": 20,
+    "assimilation_days": 300
+  },
+  "controls": [
+    "fixed_transition_matrix",
+    "learned_history_free_static_matrix",
+    "recurrent_history_dynamic_matrix"
+  ],
+  "method_contract": {
+    "candidate_count": 3,
+    "state_count": 15,
+    "interaction_mode": "full fifteen-state and covariance interaction",
+    "global_posterior_output": "one posterior-probability-weighted fifteen-state mean and covariance",
+    "transition_orientation": "Pi[i,j] is source row i and destination column j",
+    "transition_day_t_information_cutoff": "history through day t-1"
+  },
+  "filter": {
+    "base_transition_stay_probability": 0.9729768340057481,
+    "process_state_name": "SLZ",
+    "common_process_standard_deviation": 1.0,
+    "observation_standard_deviation": 0.15,
+    "all_candidates_share_process_covariance": true
+  },
+  "network": {
+    "history_features": [
+      "previous forcing",
+      "previous global posterior fifteen-state mean",
+      "previous posterior candidate probabilities"
+    ],
+    "hidden_size": 16,
+    "maximum_logit_correction": 2.0,
+    "current_observation_input": false,
+    "current_innovation_input": false
+  },
+  "normalization": {
+    "source": "fixed-transition fully interacting training-observation rollout",
+    "truth_used": false,
+    "supervision_used": false,
+    "validation_used": false,
+    "test_used": false,
+    "standard_deviation_floor": 1e-6
+  },
+  "supervision_contract": {
+    "allowed_target_fields": [
+      "active source index",
+      "active source row oracle probabilities",
+      "evaluation mask",
+      "switch event mask",
+      "prior regime age"
+    ],
+    "truth_used_as_network_input": false,
+    "truth_used_for_normalization": false,
+    "truth_state_used": false,
+    "truth_discharge_used": false,
+    "true_destination_used": false,
+    "block_identifier_used": false,
+    "random_seed_used": false,
+    "supervised_upper_bound": true
+  },
+  "closed_loop_gradient_contract": {
+    "physical_filter_runs_closed_loop": true,
+    "physical_filter_gradient": "stopped",
+    "recurrent_hidden_gradient": "retained across all assimilation days",
+    "direct_active_row_brier_gradient": "retained"
+  },
+  "training": {
+    "history_network_initialization_seeds": [1710101, 1710102, 1710103],
+    "static_matrix_initialization_seed": 1710001,
+    "epochs": 60,
+    "batch_size_blocks": 24,
+    "optimizer": "AdamW",
+    "learning_rate": 0.003,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "checkpoint_selection": "minimum validation active-row oracle Brier",
+    "test_read_policy": "after static and all recurrent checkpoints are frozen"
+  },
+  "loss": {
+    "active_row_oracle_brier": 1.0,
+    "forecast": 0.0,
+    "state": 0.0,
+    "mode_classification": 0.0,
+    "observation_evidence": 0.0,
+    "transition_regularization": 0.0,
+    "trajectory": 0.0
+  },
+  "capability_gates": {
+    "minimum_each_history_seed_relative_oracle_brier_reduction_vs_static": 0.5,
+    "minimum_each_history_seed_relative_hazard_mae_reduction_vs_static": 0.5,
+    "maximum_transition_row_sum_error": 1e-12,
+    "minimum_transition_probability": 0.0,
+    "maximum_current_observation_effect_on_same_day_transition": 0.0,
+    "maximum_future_observation_effect_on_earlier_transition": 0.0,
+    "minimum_permitted_prior_forcing_effect_on_next_transition": 0.0,
+    "maximum_forbidden_training_input_count": 0,
+    "maximum_test_reads_before_all_checkpoint_selections": 0
+  },
+  "required_result_files": [
+    "config_snapshot.json",
+    "registry_entry.json",
+    "normalization_audit.json",
+    "static_training_history.csv",
+    "static_best_checkpoint.pt",
+    "history_seed_1710101_training_history.csv",
+    "history_seed_1710101_best_checkpoint.pt",
+    "history_seed_1710102_training_history.csv",
+    "history_seed_1710102_best_checkpoint.pt",
+    "history_seed_1710103_training_history.csv",
+    "history_seed_1710103_best_checkpoint.pt",
+    "daily_arrays.npz",
+    "metrics.json",
+    "causality_audit.json",
+    "independent_verification.json",
+    "environment.json",
+    "checksums.json"
+  ]
+}

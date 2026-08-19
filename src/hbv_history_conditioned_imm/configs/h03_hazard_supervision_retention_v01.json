@@ -1,0 +1,74 @@
+{
+  "experiment_id": "h03_hazard_supervision_retention_v01",
+  "status": "registered_synthetic_capability_combo",
+  "scientific_question": "Can direct synthetic active-row probability supervision teach the duration-conditioned switching hazard, and is that structure retained after future-flow-only fine-tuning?",
+  "claim_boundary": "Synthetic active-source-row capability and retention only; no claim for unvisited matrix rows or real basins.",
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h03_hazard_supervision_retention_v01",
+  "source_h01_config": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h01_end_to_end_smoke_v01/config_snapshot.json",
+    "sha256": "d4ed4e92ba75c5677c6826ec7e827ec8cde3e94ec4d8e085ad7b3a6211206d1d"
+  },
+  "source_h02_config": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h02_transition_probability_recovery_v01/config_snapshot.json",
+    "sha256": "d6092d3c3b8c7799d5b7c6b21d0f56a78c5359df0305936684696aaa941d01c8"
+  },
+  "source_h02_flow_only_checkpoint": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h02_transition_probability_recovery_v01/flow_only_best_checkpoint.pt",
+    "sha256": "8c3156d419892afd5b60f834f7fc2561ba4ec899878f4ffc3fdcf387abdf85e4"
+  },
+  "oracle": {
+    "minimum_duration_days": 30,
+    "maximum_duration_days": 50,
+    "score_only_realized_source_row": true,
+    "balance_pre_eligible_and_switch_eligible_groups": true
+  },
+  "supervised_phase": {
+    "epochs": 10,
+    "learning_rate": 0.0003,
+    "batch_size": 2,
+    "checkpoint_selection": "minimum validation supervised total loss",
+    "loss_weights": {
+      "forecast": 1.0,
+      "state": 0.0,
+      "prior_cross_entropy": 0.0,
+      "transition_kl": 0.001,
+      "transition_temporal_smoothness": 0.001,
+      "active_row_oracle_brier": 10.0
+    }
+  },
+  "retention_phase": {
+    "epochs": 2,
+    "learning_rate": 0.0003,
+    "batch_size": 2,
+    "checkpoint_selection": "minimum validation flow-only total loss",
+    "loss_weights": {
+      "forecast": 1.0,
+      "state": 0.0,
+      "prior_cross_entropy": 0.0,
+      "transition_kl": 0.001,
+      "transition_temporal_smoothness": 0.001,
+      "active_row_oracle_brier": 0.0
+    }
+  },
+  "capability_gates": {
+    "minimum_relative_oracle_brier_reduction_vs_fixed": 0.10,
+    "minimum_relative_switch_hazard_mae_reduction_vs_fixed": 0.10,
+    "minimum_late_minus_early_predicted_hazard": 0.01
+  },
+  "retention_gates": {
+    "minimum_retained_fraction_of_supervised_hazard_mae_improvement": 0.50,
+    "maximum_relative_forecast_loss_increase_vs_h02_flow_only": 0.01
+  },
+  "required_result_files": [
+    "config_snapshot.json",
+    "registry_entry.json",
+    "supervised_training_history.csv",
+    "supervised_best_checkpoint.pt",
+    "retention_training_history.csv",
+    "retention_best_checkpoint.pt",
+    "metrics.json",
+    "daily_active_row_audit.csv",
+    "environment.json",
+    "checksums.json"
+  ]
+}

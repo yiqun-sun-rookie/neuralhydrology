@@ -1,0 +1,71 @@
+{
+  "experiment_id": "h17d_explicit_causal_duration_cross_entropy_supervised_probability_v02",
+  "base_config": {
+    "path": "results/23_hbv_multilead_joint_uncertainty/h17b_active_row_cross_entropy_supervised_probability_v01/config_snapshot.json",
+    "sha256": "0679a06411c52114167b97036d67c07b5089173ae05f519be732ba9599046153"
+  },
+  "baseline_repair": {
+    "experiment_id": "h17b_active_row_cross_entropy_supervised_probability_v01",
+    "declaration": {
+      "path": "src/hbv_history_conditioned_imm/configs/h17b_active_row_cross_entropy_supervised_probability_v01.json",
+      "sha256": "fceec8f6fc9bee6d5448c6943a711e2bd9c06bf6929a49264a4b106f7afb3346"
+    },
+    "result_directory": "results/23_hbv_multilead_joint_uncertainty/h17b_active_row_cross_entropy_supervised_probability_v01",
+    "checksums_sha256": "0f0283c642d6e0365adea8dd362b9cea473b0ca6bfc1ab1174e1c4c8d3e74687",
+    "independent_verification_sha256": "92c61324bcb863450fbea6378fca6419b2f1323be5a4f3fb204576f797545bb7"
+  },
+  "result_relative_path": "results/23_hbv_multilead_joint_uncertainty/h17d_explicit_causal_duration_cross_entropy_supervised_probability_v02",
+  "repair_contract": {
+    "attempt_number": 4,
+    "implementation_revision": 2,
+    "supersedes_implementation_failure": "h17d_explicit_causal_duration_cross_entropy_supervised_probability_v01",
+    "attempt_order_frozen_before_training": true,
+    "baseline_experiment_id": "h17b_active_row_cross_entropy_supervised_probability_v01",
+    "changed_factors": [
+      "network.transition_architecture"
+    ],
+    "transition_architecture": "explicit_causal_duration",
+    "training_objective": "active_row_cross_entropy",
+    "training_weighting": "uniform",
+    "static_reference": "frozen_h17_learned_static_matrix",
+    "test_evaluation_weighting": "uniform",
+    "warm_start": false,
+    "h17b_recurrent_checkpoint_loaded": false,
+    "success_rule": "all three initialization seeds independently reduce both original unweighted errors by at least 50 percent on the development diagnostic",
+    "fresh_reserved_confirmation_required_after_diagnostic_pass": true,
+    "h18_authorized": false
+  },
+  "duration_contract": {
+    "candidate_count": 3,
+    "maximum_age": 300,
+    "hazard_hidden_size": 16,
+    "maximum_logit_correction": 2.0,
+    "minimum_differentiable_mode_probability": 1e-12,
+    "rare_mode_gradient_rule": "preserve the exact forward conditional-age distribution but detach its recursion gradient below the probability floor",
+    "day_zero_transition": "frozen_base_transition",
+    "day_zero_scored": false,
+    "initialization": "day_zero_detached_filter_posterior_mass_at_age_one",
+    "stay_update": "advance_one_age_with_overflow_retained_at_age_300",
+    "switch_update": "split_total_hazard_equally_between_other_modes_at_age_one",
+    "posterior_conditioning": "replace_predicted_mode_marginals_with_detached_filter_posterior_and_preserve_conditional_age_distribution",
+    "transition_day_information_cutoff": "filter posterior through previous day",
+    "hard_argmax_reset": false,
+    "true_mode_input": false,
+    "true_age_input": false,
+    "switch_label_input": false,
+    "target_probability_input": false,
+    "block_identifier_input": false,
+    "random_seed_input": false
+  },
+  "source_snapshot_files": [
+    "src/hbv_history_conditioned_imm/causal_duration.py",
+    "src/hbv_history_conditioned_imm/supervised_probability.py",
+    "src/hbv_history_conditioned_imm/scripts/run_h17_supervised_probability_upper_bound.py",
+    "src/hbv_history_conditioned_imm/scripts/run_h17_supervised_probability_repair.py",
+    "src/hbv_history_conditioned_imm/scripts/verify_h17_supervised_probability_upper_bound.py",
+    "src/hbv_history_conditioned_imm/scripts/verify_h17_supervised_probability_repair.py",
+    "src/hbv_history_conditioned_imm/configs/h17b_active_row_cross_entropy_supervised_probability_v01.json",
+    "src/hbv_history_conditioned_imm/configs/h17d_explicit_causal_duration_cross_entropy_supervised_probability_v01.json",
+    "src/hbv_history_conditioned_imm/configs/h17d_explicit_causal_duration_cross_entropy_supervised_probability_v02.json"
+  ]
+}
