@@ -31,6 +31,9 @@ move_log.txt
 sync.ffs_db
 tmpclaude-*
 module_a_validation/
+# scratch run logs and one-off probe scripts (125 .log files as of 2026-08-19);
+# anything worth keeping belongs in logs/<ID>/ or src/<idea>/scripts/
+/tmp/
 
 # Root-level logs (project logs are in logs/<ID>/)
 /*.log
