@@ -1,48 +1,39 @@
 #!/bin/bash
-# nature1st-attr-swap seq=2
-# Jobs 205848 / 205854 both landed on ngu002 (the documented bad node), reported
-# CUDA False, and silently fell back to CPU -- they would take weeks, not hours.
-# This kills them, installs the patched sbatch scripts (in-script --exclude=ngu002
-# plus a fail-fast GPU check), and resubmits. User authorised both submissions.
+# nature1st-attr-swap seq=3 -- STATUS ONLY. Supersedes seq=2 (which would have
+# resubmitted). The user already resubmitted manually at 20:5x:
+#   205886 = control (12 US-only attributes)
+#   205887 = treatment (13 HydroATLAS global attributes)
+# Both carry #SBATCH --exclude=ngu002. This command MUST NOT submit anything --
+# a duplicate pair would silently double the machine-hour bill.
 set -o pipefail
-CH=nature1st-attr-swap
 RUN=/data1/home/sunyiq/nature_1st
 
-echo "=== A. CANCEL the CPU-fallback jobs ==="
-scancel 205848 205854 2>&1
-sleep 5
-sacct -j 205848,205854 -X --format=JobID%10,State%14,Elapsed%10,NodeList%9 2>&1
+echo "=== A. JOB STATE ==="
+sacct -j 205886,205887 -X --format=JobID%10,JobName%22,State%14,ExitCode%8,Elapsed%12,NodeList%9 2>&1
 
-echo "=== B. INSTALL patched scripts ==="
-cp -v ~/hpc_mailbox/inbox/$CH/hpc_train_q_control.sbatch "$RUN/scripts/" 2>&1
-cp -v ~/hpc_mailbox/inbox/$CH/hpc_train_q_hydroatlas.sbatch "$RUN/scripts/" 2>&1
-sed -i 's/\r$//' "$RUN"/scripts/hpc_train_q_*.sbatch 2>&1
-echo "-- exclude directive present? (want 1 and 1) --"
-grep -c 'exclude=ngu002' "$RUN"/scripts/hpc_train_q_control.sbatch "$RUN"/scripts/hpc_train_q_hydroatlas.sbatch 2>&1 || true
-echo "-- GPU fail-fast present? --"
-grep -c 'no usable GPU' "$RUN"/scripts/hpc_train_q_control.sbatch "$RUN"/scripts/hpc_train_q_hydroatlas.sbatch 2>&1 || true
+echo "=== B. NODE + GPU (must NOT say CUDA False) ==="
+for j in 205886 205887; do
+    f=$(ls "$RUN"/logs/attr_swap/*-${j}.out 2>/dev/null | head -1)
+    echo "--- $j : ${f:-no log yet} ---"
+    [ -n "$f" ] && head -3 "$f" 2>&1
+done
 
-echo "=== C. SUBMIT ==="
-cd "$RUN" || exit 1
-mkdir -p logs/attr_swap
-JIDS=""
-for arm in control hydroatlas; do
-    out=$(sbatch scripts/hpc_train_q_${arm}.sbatch 2>&1)
-    echo "[$arm] $(echo "$out" | grep -E 'Submitted batch job [0-9]+' || echo "NO JOB ID -- submission rejected")"
-    jid=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+$')
-    if [ -z "$jid" ]; then echo "[$arm] SUBMIT_FAILED; full output:"; echo "$out" | head -20; else JIDS="$JIDS $jid"; fi
-done
-echo "jids=$JIDS"
+echo "=== C. FATAL / GPU-guard trips ==="
+grep -h 'FATAL' "$RUN"/logs/attr_swap/*-20588*.err 2>/dev/null | head -5 || echo "none"
 
-echo "=== D. WAIT 3 min, then verify node + GPU ==="
-sleep 180
-for j in $JIDS; do
-    sacct -j "$j" -X --format=JobID%10,JobName%22,State%14,ExitCode%8,Elapsed%10,NodeList%9 2>&1 | tail -2
+echo "=== D. TRAINING PROGRESS (epoch lines) ==="
+for j in 205886 205887; do
+    f=$(ls "$RUN"/logs/attr_swap/*-${j}.out 2>/dev/null | head -1)
+    if [ -n "$f" ]; then
+        echo "--- $j ---"
+        grep -E '^(Epoch|\[.*\] Epoch)' "$f" 2>/dev/null | tail -6 || true
+        grep -E 'val_median_NSE|Best median NSE|Done\.' "$f" 2>/dev/null | tail -6 || true
+    fi
 done
-echo "-- log heads (must NOT say CUDA False) --"
-for f in $(ls -t "$RUN"/logs/attr_swap/*.out 2>/dev/null | head -2); do
-    echo "--- $f ---"; head -4 "$f" 2>&1
+
+echo "=== E. RESULTS IF FINISHED ==="
+for d in q_lstm_control_hpc_s42 q_lstm_hydroatlas_hpc_s42; do
+    echo "--- $d ---"
+    cat "$RUN/models/$d/best_metrics.json" 2>/dev/null || echo "(not finished)"
 done
-echo "-- any FATAL? --"
-grep -l 'FATAL' "$RUN"/logs/attr_swap/*.err 2>/dev/null || echo "none"
-echo "=== END seq=2 ==="
+echo "=== END seq=3 (status only, nothing submitted) ==="
