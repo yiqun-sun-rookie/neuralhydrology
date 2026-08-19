@@ -76,3 +76,4 @@ git rm inbox/seq
 - 只改自己 channel 的文件，不要动 `inbox/<别人的channel>/`
 - `runner2.sh` 只有在**没有任何 worker 在跑**时才会 `git reset --hard`，
   所以别人的任务跑到一半时你的 push 不会破坏它
+| `nature1st-attr-swap` | nature_1st 属性来源替换实验（12 项美国专有属性 vs 13 项 HydroATLAS 全球属性，对照组与实验组各一次 40 轮训练） | 2026-08-19 | 由 Claude 会话占用；落点 `/data1/home/sunyiq/nature_1st`，**不碰** `~/nature_1st_a02`、`~/neuralhydrology` 与其他通道 |
