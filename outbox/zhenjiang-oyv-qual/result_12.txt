@@ -1,0 +1,170 @@
+### channel=zhenjiang-oyv-qual seq=12
+### host=login4
+### started=2026-08-19T22:03:09+0800
+### ---------- output ----------
+=== A. EVALUATION SUMMARY ===
+{
+  "coverage_gate_passed": true,
+  "event_count_total": 20,
+  "fold_years_with_paired_events": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "minimum_paired_event_count": 10,
+  "paired_event_count": 13,
+  "paired_event_indices": [
+    0,
+    2,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    13,
+    16,
+    17,
+    18,
+    19
+  ],
+  "primary_horizon_hours": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "task_count_expected": 480,
+  "task_count_read": 480
+}
+--- artifact manifests ---
+{
+  "artifacts": [
+    {
+      "byte_count": 223227,
+      "relative_path": "task_state_errors.csv",
+      "sha256": "f25cf718081d0796d96c359188a6de468b4e69beb6e029af14d27342cb0ec13c"
+    },
+    {
+      "byte_count": 54317,
+      "relative_path": "seed_state_contrasts.csv",
+      "sha256": "cd43352f6ab9136963f3c7f1749875bc35e072bc2cd6763c3e0498e4d5c5b06d"
+    },
+    {
+      "byte_count": 3329,
+      "relative_path": "event_state_contrasts.csv",
+      "sha256": "dc8ed11f02816d013f22e7724866b5693b3d0006595fb06530bb5f268be8556d"
+    },
+    {
+      "byte_count": 4540,
+      "relative_path": "evaluation_summary.json",
+      "sha256": "f3b33c5b6c86ce85b5ed438c920d470ea0a7f7b727562280f487bd5333054c5a"
+    }
+  ],
+  "experiment_id": "zhenjiang_oyv_leave_one_year_out_direction_validation_v1",
+  "schema_version": 1,
+  "status": "completed"
+}
+{
+  "artifacts": [
+    {
+      "byte_count": 812,
+      "relative_path": "confirmatory_tests.csv",
+      "sha256": "1750bda833fd4b7c2c37e715d73dd0842ee8842ff1c782e6006affe8744bf10d"
+    },
+    {
+      "byte_count": 1817,
+      "relative_path": "fold_year_medians.csv",
+      "sha256": "eb162f56f277c06be10f0ea4655dd5e37ce01df6e4828cd56545f7f1051c2220"
+    },
+    {
+      "byte_count": 93,
+      "relative_path": "influence_checks.csv",
+      "sha256": "731473c5846e2e4463b410e31f13d827712d07ca60fe159b2b7e641498dd7542"
+    },
+    {
+      "byte_count": 798,
+      "relative_path": "machine_decision.json",
+      "sha256": "98cb882867abbd05f898e72ab30c066753d15bbb05b16eb79f6fb21728d0d07a"
+    }
+  ],
+  "experiment_id": "zhenjiang_oyv_leave_one_year_out_direction_validation_v1",
+  "schema_version": 1,
+  "status": "completed"
+}
+=== B. SUBMIT INDEPENDENT AUDIT ===
+independent_audit_job=206171
+=== C. WAIT (max 95 min) ===
+=== D. AUDIT RESULT ===
+       JobID  NodeList        State ExitCode    Elapsed 
+------------ --------- ------------ -------- ---------- 
+      206171    ngu008       FAILED      1:0   00:03:01 
+{
+  "accepted_issue_position_count": 64735,
+  "audit_status": "not_reproducible",
+  "closed_event_count": 20,
+  "derived_float64_absolute_tolerance": 1e-12,
+  "event_count": 20,
+  "experiment_id": "zhenjiang_oyv_leave_one_year_out_direction_validation_v1",
+  "mismatch_count": 1920,
+  "prediction_package_count": 480,
+  "raw_float32_comparison": "exact_zero_tolerance",
+  "reinference_count": 0,
+  "schema_version": 1,
+  "stored_decision": "NOT_CONFIRMED",
+  "task_count_audited": 480,
+  "written_utc": "2026-08-19T14:05:49.770317+00:00"
+}
+--- mismatches, first lines ---
+kind,subject,expected,observed
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_17/input_mean_m,"[8.310381889343262, 5.182540416717529, 4.4667863845825195, 3.259272336959839, 2.731048107147217, 2.230482578277588]","[8.310381418629992, 5.182540637388041, 4.466786275574692, 3.2592722888672174, 2.7310480016992766, 2.2304824604480933]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_17/input_standard_deviation_m,"[2.9435102939605713, 1.6566721200942993, 1.2958639860153198, 0.8897528648376465, 0.9025869369506836, 0.8970762491226196]","[2.943510359423839, 1.656672076206272, 1.295864032895119, 0.8897528883293259, 0.9025869429151131, 0.8970762388279595]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_17/target_mean_m,"[8.308967590332031, 5.182065010070801, 4.466518402099609, 3.2598538398742676, 2.7321038246154785, 2.2316746711730957]","[8.30896787985876, 5.182065177259905, 4.466518490459018, 3.2598538840938764, 2.7321038579692924, 2.2316747528680856]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_17/target_standard_deviation_m,"[2.942582368850708, 1.6559303998947144, 1.295405387878418, 0.8898741006851196, 0.9029285907745361, 0.8972957134246826]","[2.9425823676516765, 1.6559304197840228, 1.295405445113786, 0.8898740852923533, 0.9029285846882437, 0.8972957177855266]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_29/input_mean_m,"[8.310381889343262, 5.182540416717529, 4.4667863845825195, 3.259272336959839, 2.731048107147217, 2.230482578277588]","[8.310381418629992, 5.182540637388041, 4.466786275574692, 3.2592722888672174, 2.7310480016992766, 2.2304824604480933]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_29/input_standard_deviation_m,"[2.9435102939605713, 1.6566721200942993, 1.2958639860153198, 0.8897528648376465, 0.9025869369506836, 0.8970762491226196]","[2.943510359423839, 1.656672076206272, 1.295864032895119, 0.8897528883293259, 0.9025869429151131, 0.8970762388279595]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_29/target_mean_m,"[8.308967590332031, 5.182065010070801, 4.466518402099609, 3.2598538398742676, 2.7321038246154785, 2.2316746711730957]","[8.30896787985876, 5.182065177259905, 4.466518490459018, 3.2598538840938764, 2.7321038579692924, 2.2316747528680856]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_29/target_standard_deviation_m,"[2.942582368850708, 1.6559303998947144, 1.295405387878418, 0.8898741006851196, 0.9029285907745361, 0.8972957134246826]","[2.9425823676516765, 1.6559304197840228, 1.295405445113786, 0.8898740852923533, 0.9029285846882437, 0.8972957177855266]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_43/input_mean_m,"[8.310381889343262, 5.182540416717529, 4.4667863845825195, 3.259272336959839, 2.731048107147217, 2.230482578277588]","[8.310381418629992, 5.182540637388041, 4.466786275574692, 3.2592722888672174, 2.7310480016992766, 2.2304824604480933]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_43/input_standard_deviation_m,"[2.9435102939605713, 1.6566721200942993, 1.2958639860153198, 0.8897528648376465, 0.9025869369506836, 0.8970762491226196]","[2.943510359423839, 1.656672076206272, 1.295864032895119, 0.8897528883293259, 0.9025869429151131, 0.8970762388279595]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_43/target_mean_m,"[8.308967590332031, 5.182065010070801, 4.466518402099609, 3.2598538398742676, 2.7321038246154785, 2.2316746711730957]","[8.30896787985876, 5.182065177259905, 4.466518490459018, 3.2598538840938764, 2.7321038579692924, 2.2316747528680856]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_43/target_standard_deviation_m,"[2.942582368850708, 1.6559303998947144, 1.295405387878418, 0.8898741006851196, 0.9029285907745361, 0.8972957134246826]","[2.9425823676516765, 1.6559304197840228, 1.295405445113786, 0.8898740852923533, 0.9029285846882437, 0.8972957177855266]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_57/input_mean_m,"[8.310381889343262, 5.182540416717529, 4.4667863845825195, 3.259272336959839, 2.731048107147217, 2.230482578277588]","[8.310381418629992, 5.182540637388041, 4.466786275574692, 3.2592722888672174, 2.7310480016992766, 2.2304824604480933]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_57/input_standard_deviation_m,"[2.9435102939605713, 1.6566721200942993, 1.2958639860153198, 0.8897528648376465, 0.9025869369506836, 0.8970762491226196]","[2.943510359423839, 1.656672076206272, 1.295864032895119, 0.8897528883293259, 0.9025869429151131, 0.8970762388279595]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_57/target_mean_m,"[8.308967590332031, 5.182065010070801, 4.466518402099609, 3.2598538398742676, 2.7321038246154785, 2.2316746711730957]","[8.30896787985876, 5.182065177259905, 4.466518490459018, 3.2598538840938764, 2.7321038579692924, 2.2316747528680856]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_57/target_standard_deviation_m,"[2.942582368850708, 1.6559303998947144, 1.295405387878418, 0.8898741006851196, 0.9029285907745361, 0.8972957134246826]","[2.9425823676516765, 1.6559304197840228, 1.295405445113786, 0.8898740852923533, 0.9029285846882437, 0.8972957177855266]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_71/input_mean_m,"[8.310381889343262, 5.182540416717529, 4.4667863845825195, 3.259272336959839, 2.731048107147217, 2.230482578277588]","[8.310381418629992, 5.182540637388041, 4.466786275574692, 3.2592722888672174, 2.7310480016992766, 2.2304824604480933]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_71/input_standard_deviation_m,"[2.9435102939605713, 1.6566721200942993, 1.2958639860153198, 0.8897528648376465, 0.9025869369506836, 0.8970762491226196]","[2.943510359423839, 1.656672076206272, 1.295864032895119, 0.8897528883293259, 0.9025869429151131, 0.8970762388279595]"
+normalisation,zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_71/target_mean_m,"[8.308967590332031, 5.182065010070801, 4.466518402099609, 3.2598538398742676, 2.7321038246154785, 2.2316746711730957]","[8.30896787985876, 5.182065177259905, 4.466518490459018, 3.2598538840938764, 2.7321038579692924, 2.2316747528680856]"
+--- audit log tail ---
+[INFO] job=206171 node=ngu008
+NVIDIA GeForce RTX 3090, GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161, 580.76.05
+NVIDIA GeForce RTX 3090, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, 580.76.05
+{
+  "accepted_issue_position_count": 64735,
+  "audit_status": "not_reproducible",
+  "closed_event_count": 20,
+  "derived_float64_absolute_tolerance": 1e-12,
+  "event_count": 20,
+  "experiment_id": "zhenjiang_oyv_leave_one_year_out_direction_validation_v1",
+  "mismatch_count": 1920,
+  "prediction_package_count": 480,
+  "raw_float32_comparison": "exact_zero_tolerance",
+  "reinference_count": 0,
+  "schema_version": 1,
+  "stored_decision": "NOT_CONFIRMED",
+  "task_count_audited": 480,
+  "written_utc": "2026-08-19T14:05:49.770317+00:00"
+}
+--- stderr tail ---
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T22:06:30+0800
