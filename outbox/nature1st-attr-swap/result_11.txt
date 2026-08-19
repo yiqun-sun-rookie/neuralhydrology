@@ -1,0 +1,31 @@
+### channel=nature1st-attr-swap seq=11
+### host=login4
+### started=2026-08-20T03:19:03+0800
+### ---------- output ----------
+=== A. JOB STATE ===
+     JobID                JobName          State ExitCode      Elapsed  NodeList 
+---------- ---------------------- -------------- -------- ------------ --------- 
+    206175        q_ctrl_us_attrs        RUNNING      0:0     05:00:13    ngu008 
+    206176   q_treat_global_attrs      COMPLETED      0:0     03:26:25    ngu008 
+=== B. CONTROL PROGRESS (tail) ===
+  -> Best median NSE: 0.6329
+Epoch 14: loss=0.3895  val_median_NSE(phys)=0.6166  val_RMSE_qspec=0.0752  NSE>0=0.83  lr=5.00e-04
+Epoch 15: loss=0.3813  val_median_NSE(phys)=0.6432  val_RMSE_qspec=0.0726  NSE>0=0.84  lr=5.00e-04
+  -> Best median NSE: 0.6432
+Epoch 16: loss=0.3735  val_median_NSE(phys)=0.6394  val_RMSE_qspec=0.0732  NSE>0=0.85  lr=5.00e-04
+Epoch 17: loss=0.3640  val_median_NSE(phys)=0.6288  val_RMSE_qspec=0.0726  NSE>0=0.84  lr=5.00e-04
+Epoch 18: loss=0.3592  val_median_NSE(phys)=0.6330  val_RMSE_qspec=0.0731  NSE>0=0.84  lr=5.00e-04
+Epoch 19: loss=0.3288  val_median_NSE(phys)=0.6409  val_RMSE_qspec=0.0725  NSE>0=0.83  lr=2.50e-04
+=== C. EVAL ARTIFACTS ===
+--- q_lstm_control_hpc_s42 ---
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_control_hpc_s42/eval_val.json: No such file or directory
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_control_hpc_s42/eval_val_per_station.csv: No such file or directory
+--- q_lstm_hydroatlas_hpc_s42 ---
+-rw-r--r--. 1 sunyiq g_sunyiq  1651 Aug 20 01:45 /data1/home/sunyiq/nature_1st/models/q_lstm_hydroatlas_hpc_s42/eval_val.json
+-rw-r--r--. 1 sunyiq g_sunyiq 35149 Aug 20 01:45 /data1/home/sunyiq/nature_1st/models/q_lstm_hydroatlas_hpc_s42/eval_val_per_station.csv
+=== D. PAIRED ANALYSIS (only when both per-station files exist) ===
+(control eval not written yet -- rerun this poll after 206175 finishes)
+=== END seq=11 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T03:19:03+0800
