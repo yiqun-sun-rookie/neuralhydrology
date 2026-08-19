@@ -1,0 +1,241 @@
+{
+  "experiment_id": "CAMELS_PARFC_STATE_INTERACTION_01B_DESIGN90",
+  "configuration_status": "registered_exploratory_design_not_validation_frozen",
+  "registered_date": "2026-08-10",
+  "source_revision": "61e938b3a89f648e460a20e6f03e005bdc9fca4a",
+  "authorization_boundary": {
+    "scope": "ninety_basin_scale_replication_with_design_seeds_only",
+    "validation_seeds_authorized": false,
+    "full_531_basin_run_authorized": false,
+    "configuration_freeze_version_02_authorized": false
+  },
+  "inputs": {
+    "parameter_table": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_rising_local_full.csv",
+    "parameter_table_sha256": "577b12fcb8e1a7a7a607995f0011dbda38a199ee68f3636732b80a3356c16be6",
+    "g1_precheck_table": "results/23_camels_switch_confirmation/g1_precheck_v01/g1_precheck.csv",
+    "g1_precheck_table_sha256": "3443ba601434dd30b43c3b5e8a9b838fc666cc394077700ddd4d3e7158b3ee73",
+    "data_root": "data/camels_us",
+    "raw_input_manifest": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-input-manifest-v01.csv",
+    "raw_input_manifest_sha256": "e9214738c64ba35800d06d4c6c07d1a3f31e5615cfefc9e1e55ae99ea3b3818b",
+    "forcing_coverage_table": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-coverage-v01.csv",
+    "forcing_coverage_table_sha256": "1fc235448372d1abf7a0b844100187e0e1f0e7e81979ad756152a4a2a6aada64",
+    "forcing": "maurer",
+    "pet_method": "oudin"
+  },
+  "truth": {
+    "window_start": "1989-10-01",
+    "window_end": "1993-03-13",
+    "window_days": 1260,
+    "stage_days": 180,
+    "rotation": [
+      0,
+      1,
+      2,
+      0,
+      2,
+      1,
+      0
+    ],
+    "slz_lognormal_sigma": 0.02,
+    "seed_entropy": 20260807
+  },
+  "candidates": {
+    "parameter": "parFC",
+    "factors": [
+      1.0,
+      0.5,
+      2.0
+    ],
+    "bounds_preset": "v5"
+  },
+  "filter": {
+    "q_scale": 3e-8,
+    "q_structure": "lower_groundwater_state_only",
+    "q_mode": "fixed",
+    "q_state_multiplier": 1.0,
+    "observation_variance_multiplier": 1.0,
+    "transition_diagonal": 0.98,
+    "initial_covariance_fraction": 0.001
+  },
+  "event_rule": {
+    "response_window_days": 30,
+    "consecutive_days": 5,
+    "probability_threshold_exclusive": 0.5,
+    "margin_inclusive": 0.1
+  },
+  "seeds": {
+    "design": [
+      0,
+      1
+    ],
+    "reserved_validation_not_authorized": [
+      2,
+      3
+    ]
+  },
+  "design_selection": {
+    "basin_count": 90,
+    "basin_list": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-basins-v01.csv",
+    "basin_list_sha256": "813009cb0464b8fac6d650c69273a5b3b0f6bb329a3d7632fe3c1a198bf2c678",
+    "selection_uses_prior_event_outcomes": false,
+    "selection_rule": "three fixed r_min rank bands split by initial soil water exceeding the bounded half-capacity member; maximum-balanced cell allocation 16,16,16,16,9,17 with all nine rare-cell basins and deterministic interior ranks elsewhere"
+  },
+  "arms": [
+    {
+      "arm_id": "A",
+      "interaction_mode": "parameter_grouped",
+      "parameter_state_mapping": "legacy_projection"
+    },
+    {
+      "arm_id": "B",
+      "interaction_mode": "full",
+      "parameter_state_mapping": "legacy_projection"
+    },
+    {
+      "arm_id": "C",
+      "interaction_mode": "full",
+      "parameter_state_mapping": "conservative_parfc"
+    }
+  ],
+  "implementation": {
+    "parameter_switch_runner": {
+      "path": "src/camels_switch_confirmation/g2_switch_confirmation.py",
+      "sha256": "9d577d264374a5e1f5048ac4823cd11526bc5e7ed96348055693f44ec02f16f8"
+    },
+    "precheck_constants": {
+      "path": "src/camels_switch_confirmation/g1_precheck.py",
+      "sha256": "23ecc0a4419fe69d6b9a27ba44340e3e17c5684da07ed59d064fbf0fa03bb46c"
+    },
+    "parameter_bank": {
+      "path": "src/camels_switch_confirmation/bank.py",
+      "sha256": "16ff698eddf999fe8e88c8fbab7dee5ea0d2a2879113247b054b6760d2e6c8cf"
+    },
+    "fail_fast_batch_control": {
+      "path": "src/camels_switch_confirmation/batch_control.py",
+      "sha256": "259ca7fa0da7406554d0ad865e8e23769992bf582b20e80f11c10fc0e3233ef2"
+    },
+    "registered_input_gate": {
+      "path": "src/camels_switch_confirmation/run_integrity.py",
+      "sha256": "f188e5715462f79f8faef18107a43dc511f4b15fd5332f13df2a886262b41f88"
+    },
+    "registered_runner": {
+      "path": "src/camels_switch_confirmation/registered_parameter_interaction.py",
+      "sha256": "ae62e29806890ddf0bd84052220cc976444e1b7b9eb83b51fa6e59cb9b58aacc"
+    },
+    "independent_verifier": {
+      "path": "src/camels_switch_confirmation/verify_parameter_interaction_design.py",
+      "sha256": "0afaf03f7f894ad6450b73ce2ddce2259998dfc6a3136ed0720f6aab4cbad6f4"
+    },
+    "design_registration": {
+      "path": "src/camels_switch_confirmation/register_parameter_interaction_design90.py",
+      "sha256": "473f5619e69f83369727c02075280fe08b94a6819fb5a131ff81f5e30929e83b"
+    },
+    "conservative_state_mapping": {
+      "path": "src/hbv_joint_uncertainty/hbv_state_mapping.py",
+      "sha256": "2c8559df9d304856fc610cb2d29b7f61ef198eb0da67e6c919d3ded3278036bb"
+    },
+    "interacting_multiple_model": {
+      "path": "src/hbv_joint_uncertainty/imm.py",
+      "sha256": "948439c8ab46436f99af4b6dd452b65b2ece35b03279bf02427b0ad90c72b0df"
+    },
+    "filter_construction": {
+      "path": "src/hbv_joint_uncertainty/preflight.py",
+      "sha256": "65ccef82344c0b73942fb833321becde487d33358630efa802dab12cec6194e4"
+    },
+    "hbv_state_transition": {
+      "path": "src/hbv_joint_uncertainty/hbv_adapter.py",
+      "sha256": "a0892aa88e24aa3aac6bcde48fec36162bf83793991ec138998a021156e48e16"
+    },
+    "modified_unscented_filter": {
+      "path": "src/hbv_joint_uncertainty/sigma_filter.py",
+      "sha256": "feed8c145e608239e64ca2dbdd1bad61698b8d754e0a9ec12620f3b5ea7f2eb3"
+    },
+    "candidate_definition": {
+      "path": "src/hbv_joint_uncertainty/candidates.py",
+      "sha256": "155fa53569bc71c8c89cf46be8735df4535b6612e424fe82aaedbff39d81e00e"
+    },
+    "hbv_bounds_and_model": {
+      "path": "src/scl_hydro/hbv_lite_numpy.py",
+      "sha256": "2b3555501d66f225622c876e054156b1bcf8db745878aaf41489141cacbbd542"
+    },
+    "forcing_loader": {
+      "path": "src/hydroagent/data_loading.py",
+      "sha256": "aa9cf1a4b6dcdf259dd96181c4e6704fedd0bba4f0020b3cdb2464b16aa79de6"
+    },
+    "parameter_switch_tests": {
+      "path": "test/test_camels_switch_confirmation.py",
+      "sha256": "930517890ea8c999323133c638b9aef683b1a9a7e6eca110a417401f8bca263c"
+    },
+    "state_mapping_tests": {
+      "path": "test/test_hbv_parameter_state_mapping.py",
+      "sha256": "c040c8b7cf3b5045fb83c51324fd2334ed947b008207abaebd0e2c0430695f63"
+    },
+    "interaction_tests": {
+      "path": "test/test_hbv_joint_uncertainty_imm.py",
+      "sha256": "b2bdfe89a0865b1fb52d9f13820074ecf45ec9ed3a262be21a174f753cc50c2d"
+    },
+    "batch_control_tests": {
+      "path": "test/test_camels_switch_batch_control.py",
+      "sha256": "a41abd4488cf2e18d243c7486be6607affc709db35f251c42865d2b0a5dd9d8e"
+    },
+    "registered_input_gate_tests": {
+      "path": "test/test_camels_switch_run_integrity.py",
+      "sha256": "2def5d6200bbe330bbb637c6fcef274ef034506934f649843fa8904a0c8d61ae"
+    },
+    "registered_runner_tests": {
+      "path": "test/test_camels_registered_parameter_interaction.py",
+      "sha256": "ec7cd0eecdf662e1657d582d2f337b71e55b548ff74156899a7a6646abf65d4e"
+    },
+    "independent_verifier_tests": {
+      "path": "test/test_camels_parameter_interaction_verifier.py",
+      "sha256": "27b39f2f1a795274bc299d697d2161f55ba7b6f12f8d5e2ca7de9e92a8708982"
+    },
+    "design_registration_tests": {
+      "path": "test/test_camels_parameter_interaction_design90_registration.py",
+      "sha256": "d19fb2a114593b0f2d2ef7eb40610f66c94d942456889509329399c7b79bc625"
+    },
+    "preregistration": {
+      "path": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-prereg-v01.md",
+      "sha256": "8d804da432f2f7f665abee69094963847241d2dcee09bd85477f207c6f984037"
+    },
+    "implementation_plan": {
+      "path": "docs/superpowers/plans/2026-08-10-camels-parfc-state-interaction-design90.md",
+      "sha256": "48f438c1a202b1718b40de0a842b107d3a3b8f764203d9641bdd4b2de9db9c31"
+    }
+  },
+  "legacy_reference": {
+    "manifest": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-legacy-reference-v01.csv",
+    "manifest_sha256": "aff1cc906ec534655280ea3f1580b934cfbf8f5c6a067f7c7e97308c8b4b5faf",
+    "probability_absolute_tolerance": 1e-12
+  },
+  "predecessor_evidence": {
+    "experiment_id": "CAMELS_PARFC_STATE_INTERACTION_01A_DESIGN12",
+    "configuration_sha256": "e2ab7c0eda18fefabcd176df8393e55105e6d6ea4d50d25165dfc32b3d945625",
+    "verification_summary_sha256": "e7e59d2c359a1f1b98928a7cd13620b437e494a022c61c185e99890f6c5a26a1"
+  },
+  "outputs": {
+    "root": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local"
+  },
+  "continuation_gate": {
+    "requires_all_tasks_and_independent_checks": true,
+    "c_events_passed_strictly_greater_than_a": true,
+    "c_brier_not_greater_than_a": true,
+    "c_true_negative_log_probability_not_greater_than_a": true,
+    "scope": "design90_review_only_not_validation"
+  },
+  "decision_gates": {
+    "scale_replication": {
+      "requires_all_tasks_and_independent_checks": true,
+      "c_events_passed_strictly_greater_than_a": true,
+      "c_brier_not_greater_than_a": true,
+      "c_true_negative_log_probability_not_greater_than_a": true
+    },
+    "validation_freeze_eligibility": {
+      "requires_scale_replication": true,
+      "c_overall_event_pass_rate_min": 0.65,
+      "c_minimum_direction_pass_rate_min": 0.5,
+      "c_multiclass_brier_max": 0.6666666666666666,
+      "c_true_negative_log_probability_max": 1.0986122886681098
+    }
+  }
+}

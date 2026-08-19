@@ -1,0 +1,141 @@
+{
+  "experiment_id": "CAMELS_PROCESS_NOISE_ONLY_01",
+  "configuration_revision": "01a_machine_precision_domain_tolerance",
+  "configuration_status": "registered_exploratory_design_not_validation_frozen",
+  "registered_at": "2026-08-09",
+  "supersedes_failed_config_sha256": "5e26f85f64c95cea864194430bb223affbebfb187d491edb2908479a31d68af7",
+  "user_authorization": [
+    "2026-08-09 chat message: go",
+    "2026-08-09 chat message: 类似的命令以后全局不用审批"
+  ],
+  "evidence_scope": "synthetic_process_noise_candidate_identification_only",
+  "inputs": {
+    "parameter_table": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_rising_local_full.csv",
+    "parameter_table_sha256": "577b12fcb8e1a7a7a607995f0011dbda38a199ee68f3636732b80a3356c16be6",
+    "g1_precheck_table": "results/23_camels_switch_confirmation/g1_precheck_v01/g1_precheck.csv",
+    "g1_precheck_table_sha256": "3443ba601434dd30b43c3b5e8a9b838fc666cc394077700ddd4d3e7158b3ee73",
+    "data_root": "data/camels_us",
+    "forcing": "maurer",
+    "pet_method": "oudin",
+    "forcing_manifest_required": true,
+    "forcing_input_manifest": "docs/plans/2026-08-09-camels-process-noise-only-design90-input-manifest-v01.csv",
+    "forcing_input_manifest_sha256": "78b4b05113e9ec2bc476bde95492013295f8deedf69fa3c7e87e11126a56adea",
+    "forcing_coverage_table": "docs/plans/2026-08-09-camels-process-noise-only-design90-coverage-v01.csv",
+    "forcing_coverage_table_sha256": "059819e4482253a25f251afca7c1ee145e7c3b98faaf8265d7e8e5c3734f0b4b"
+  },
+  "truth": {
+    "window_start": "1989-10-01",
+    "window_end": "1996-09-28",
+    "stage_days": 365,
+    "rotation": [1, 0, 2, 1, 2, 0, 1],
+    "window_days": 2555,
+    "candidate_lognormal_sigmas": [0.01, 0.02, 0.04],
+    "noise_state_index": 4,
+    "noise_state_name": "lower_groundwater",
+    "noise_formula": "S_post = S_deterministic * exp(-sigma^2/2 + sigma*z), z~N(0,1)",
+    "routing_kernel": "rising_oldest_weighted",
+    "lag_cap_days": 10.0,
+    "domain_check": {
+      "method": "componentwise_projector_difference",
+      "float_type": "float64",
+      "tolerance_multiplier": 32.0,
+      "scale": "max(1, abs(raw_i), abs(projected_i))",
+      "violation_rule": "abs(projected_i-raw_i) > tolerance_multiplier*eps64*scale_i",
+      "record_nonzero_differences": true,
+      "replace_truth_state_with_projection": false
+    }
+  },
+  "filter": {
+    "candidate_count": 3,
+    "state_dimension": 15,
+    "parameters": "identical calibrated center parameters for all candidates and all days",
+    "process_covariance": "all zeros except Q_jt[4,4]=predicted_lower_groundwater_jt^2*expm1(candidate_sigma_j^2)",
+    "process_covariance_timing": "after full interaction and deterministic candidate prediction, before filter prediction/update",
+    "observation_variance": "exact basin sigma_obs^2 with multiplier 1.0 for truth generation and every filter",
+    "interaction_mode": "full",
+    "transition_diagonal": 0.9972602739726028,
+    "transition_off_diagonal": 0.00136986301369863,
+    "initial_probabilities": [0.3333333333333333, 0.3333333333333333, 0.3333333333333333],
+    "initial_covariance_fraction": 0.001,
+    "sigma_points": {
+      "alpha": 0.6874,
+      "beta": 2.0,
+      "kappa": -2.0
+    }
+  },
+  "event_rule": {
+    "adaptation_days": 90,
+    "scoring_day_start_one_based": 91,
+    "scoring_day_end_one_based": 180,
+    "scoring_days": 90,
+    "minimum_mean_true_probability": 0.5,
+    "minimum_mean_margin": 0.1,
+    "minimum_true_daily_argmax_days": 60
+  },
+  "probability_metrics": {
+    "stable_day_start_one_based": 181,
+    "stable_day_end_one_based": 365,
+    "multiclass_brier_uniform_baseline": 0.6666666666666666,
+    "maximum_mean_multiclass_brier": 0.6,
+    "true_negative_log_probability_uniform_baseline": 1.0986122886681098,
+    "calibration_bin_edges": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+    "maximum_classwise_expected_calibration_error": 0.1
+  },
+  "success_gate": {
+    "minimum_overall_event_pass_rate": 0.8,
+    "minimum_each_direction_pass_rate": 0.7,
+    "minimum_overall_cluster_interval_lower": 0.75,
+    "minimum_worst_direction_cluster_interval_lower": 0.6,
+    "minimum_seed_event_agreement": 0.8,
+    "require_brier_interval_upper_below_uniform": true,
+    "require_log_score_mean_and_interval_upper_below_uniform": true,
+    "all_conditions_required": true
+  },
+  "bootstrap": {
+    "cluster": "basin_id",
+    "replicates": 10000,
+    "percentiles": [2.5, 97.5],
+    "seed": 20260809
+  },
+  "seeds": {
+    "design": [0, 1],
+    "reserved_validation_not_authorized": [2, 3],
+    "entropy": 20260809,
+    "truth_stream": "SeedSequence((20260809, int(basin_id), seed, 0))",
+    "observation_stream": "SeedSequence((20260809, int(basin_id), seed, 1))"
+  },
+  "design_selection": {
+    "basin_count": 90,
+    "tertile_count": 3,
+    "basins_per_tertile": 30,
+    "source_rows_per_tertile": 177,
+    "proxy": "parK2*max(parPERC/parK2,1)*sqrt(expm1(0.02^2))/sigma_obs",
+    "sort": ["proxy_ascending", "basin_id_ascending"],
+    "positions": "round(linspace(0,176,30))",
+    "basin_list": "docs/plans/2026-08-09-camels-process-noise-only-design90-basins-v01.csv",
+    "basin_list_sha256": "73ea0e83d2fb8e00e5b8fa6bb17102dcca15237e91a1fc78a298fe508973391e"
+  },
+  "integrity": {
+    "probability_sum_absolute_tolerance": 1e-12,
+    "require_finite_probabilities": true,
+    "require_finite_log_probabilities": true,
+    "require_zero_truth_domain_violations": true,
+    "require_zero_truth_state_replacements": true,
+    "require_recorded_raw_projection_differences": true,
+    "require_atomic_task_outputs": true,
+    "refuse_preexisting_output": true,
+    "require_independent_verifier": true
+  },
+  "outputs": {
+    "root": "results/23_camels_process_noise_only",
+    "smoke_run": "camels_process_noise_only_01a_smoke_basin09306242_s01_20260809",
+    "design90_run": "camels_process_noise_only_01a_design90_s01_20260809"
+  },
+  "prohibited_claims": [
+    "complete_state_accuracy",
+    "forecast_value",
+    "real_observation_assimilation_value",
+    "unique_true_process_noise",
+    "joint_parameter_process_noise_identification"
+  ]
+}

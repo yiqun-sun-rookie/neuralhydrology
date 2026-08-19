@@ -1,0 +1,114 @@
+{
+  "experiment_id": "CAMELS_PARFC_OVERCONFIDENCE_DIAGNOSTIC_02_DESIGN10",
+  "configuration_status": "registered_design_seed_failure_diagnostic_not_validation",
+  "registered_date": "2026-08-10",
+  "source_revision": "61e938b3a89f648e460a20e6f03e005bdc9fca4a",
+  "design_seeds_only": true,
+  "reserved_validation_seeds_used": false,
+  "full_531_basin_run_authorized": false,
+  "correction_or_tuning_authorized": false,
+  "parent_experiment_id": "CAMELS_PARFC_STATE_INTERACTION_01B_DESIGN90",
+  "parent_config": "src/camels_switch_confirmation/configs/camels_parfc_state_interaction_design90_01b.json",
+  "parent_task_metrics": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local/verification/task_metrics.csv",
+  "task_table": "docs/plans/2026-08-10-camels-parfc-overconfidence-diagnostic-tasks-v01.csv",
+  "raw_input_manifest": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-input-manifest-v01.csv",
+  "selection_rule": "all arm-C tasks with stable true-candidate negative log probability strictly greater than 1000",
+  "selection_threshold_exclusive": 1000.0,
+  "selected_task_count": 10,
+  "severe_day_threshold_exclusive": 100.0,
+  "replay_absolute_tolerance": 1e-12,
+  "decomposition_absolute_tolerance": 1e-8,
+  "dominant_cause_fraction_threshold": 0.8,
+  "registered_files": {
+    "parent_configuration": {
+      "path": "src/camels_switch_confirmation/configs/camels_parfc_state_interaction_design90_01b.json",
+      "sha256": "1b5fed9c7958d719fefdbd3539993b3f5c567693e9be8032103698f5a1fbae13"
+    },
+    "parent_task_metrics": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local/verification/task_metrics.csv",
+      "sha256": "99af08d732c327e7676c125b57cf351b81786c02f82cc04d223a56229f858ec1"
+    },
+    "parent_comparison_summary": {
+      "path": "results/23_camels_switch_confirmation/camels_parfc_state_interaction_01b_design90_s01_20260810_local/verification/comparison_summary.json",
+      "sha256": "85e2543a3c372d26615c8bf8616c33d43ed9893eab3bad028facc2a2241fb900"
+    },
+    "raw_input_manifest": {
+      "path": "docs/plans/2026-08-10-camels-parfc-state-interaction-design90-input-manifest-v01.csv",
+      "sha256": "e9214738c64ba35800d06d4c6c07d1a3f31e5615cfefc9e1e55ae99ea3b3818b"
+    },
+    "diagnostic_task_table": {
+      "path": "docs/plans/2026-08-10-camels-parfc-overconfidence-diagnostic-tasks-v01.csv",
+      "sha256": "5ccec863add1fa51185cc54c8403dd1fde0b1684fead6c5df814e2bb9b3ff846"
+    },
+    "preregistration": {
+      "path": "docs/plans/2026-08-10-camels-parfc-overconfidence-diagnostic-prereg-v01.md",
+      "sha256": "fe9196103ee187c8b9c016c1fc308e7025de73739914e3e93662ea7b0ccf4c9c"
+    },
+    "implementation_plan": {
+      "path": "docs/superpowers/plans/2026-08-10-camels-parfc-overconfidence-diagnostic.md",
+      "sha256": "84c64f396cae63208ec1cecbb704745d17ddeb1125c035a7244296fbfc0b13f2"
+    },
+    "diagnostic_runner": {
+      "path": "src/camels_switch_confirmation/diagnose_parameter_likelihood.py",
+      "sha256": "68d60f8159fe523eb43deda9e8b370cafb193e1b3cb043c270876d4dfe8ba0c5"
+    },
+    "diagnostic_tests": {
+      "path": "test/test_camels_parameter_likelihood_diagnostic.py",
+      "sha256": "ccbb371437ad5f7909c4bf65e3d80f39d643bc638f227f422a8824485e881179"
+    },
+    "precheck_constants": {
+      "path": "src/camels_switch_confirmation/g1_precheck.py",
+      "sha256": "23ecc0a4419fe69d6b9a27ba44340e3e17c5684da07ed59d064fbf0fa03bb46c"
+    },
+    "parent_runner": {
+      "path": "src/camels_switch_confirmation/g2_switch_confirmation.py",
+      "sha256": "9d577d264374a5e1f5048ac4823cd11526bc5e7ed96348055693f44ec02f16f8"
+    },
+    "parameter_bank": {
+      "path": "src/camels_switch_confirmation/bank.py",
+      "sha256": "16ff698eddf999fe8e88c8fbab7dee5ea0d2a2879113247b054b6760d2e6c8cf"
+    },
+    "conservative_state_mapping": {
+      "path": "src/hbv_joint_uncertainty/hbv_state_mapping.py",
+      "sha256": "2c8559df9d304856fc610cb2d29b7f61ef198eb0da67e6c919d3ded3278036bb"
+    },
+    "interacting_multiple_model": {
+      "path": "src/hbv_joint_uncertainty/imm.py",
+      "sha256": "948439c8ab46436f99af4b6dd452b65b2ece35b03279bf02427b0ad90c72b0df"
+    },
+    "filter_construction": {
+      "path": "src/hbv_joint_uncertainty/preflight.py",
+      "sha256": "65ccef82344c0b73942fb833321becde487d33358630efa802dab12cec6194e4"
+    },
+    "modified_unscented_filter": {
+      "path": "src/hbv_joint_uncertainty/sigma_filter.py",
+      "sha256": "feed8c145e608239e64ca2dbdd1bad61698b8d754e0a9ec12620f3b5ea7f2eb3"
+    },
+    "hbv_state_transition": {
+      "path": "src/hbv_joint_uncertainty/hbv_adapter.py",
+      "sha256": "a0892aa88e24aa3aac6bcde48fec36162bf83793991ec138998a021156e48e16"
+    },
+    "candidate_definition": {
+      "path": "src/hbv_joint_uncertainty/candidates.py",
+      "sha256": "155fa53569bc71c8c89cf46be8735df4535b6612e424fe82aaedbff39d81e00e"
+    },
+    "hbv_model_and_bounds": {
+      "path": "src/scl_hydro/hbv_lite_numpy.py",
+      "sha256": "2b3555501d66f225622c876e054156b1bcf8db745878aaf41489141cacbbd542"
+    },
+    "forcing_loader": {
+      "path": "src/hydroagent/data_loading.py",
+      "sha256": "aa9cf1a4b6dcdf259dd96181c4e6704fedd0bba4f0020b3cdb2464b16aa79de6"
+    },
+    "parameter_table": {
+      "path": "results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_rising_local_full.csv",
+      "sha256": "577b12fcb8e1a7a7a607995f0011dbda38a199ee68f3636732b80a3356c16be6"
+    },
+    "precheck_table": {
+      "path": "results/23_camels_switch_confirmation/g1_precheck_v01/g1_precheck.csv",
+      "sha256": "3443ba601434dd30b43c3b5e8a9b838fc666cc394077700ddd4d3e7158b3ee73"
+    }
+  },
+  "output_root": "results/23_camels_switch_confirmation/camels_parfc_overconfidence_diagnostic_02_design10_s01_20260810_local",
+  "claim_boundary": "failure-selected design-seed diagnosis only; no correction, validation, full-sample inference, state-accuracy claim, or forecast claim"
+}
