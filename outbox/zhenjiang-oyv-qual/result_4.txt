@@ -1,0 +1,135 @@
+### channel=zhenjiang-oyv-qual seq=4
+### host=login4
+### started=2026-08-19T18:28:38+0800
+### ---------- output ----------
+=== A. UPDATE BUNDLE ===
+bundle_commit=459acd9e7970334a0fd0235c09f41ff1e376ee1a
+=== B. SUBMIT ONE JOB PER NODE ===
+submitted node=ngu001 jobid=205548
+submitted node=ngu004 jobid=205549
+submitted node=ngu005 jobid=205550
+submitted node=ngu006 jobid=205551
+submitted node=ngu007 jobid=205552
+submitted node=ngu008 jobid=205553
+submitted node=ngu010 jobid=205554
+submitted node=ngu011 jobid=205555
+submitted_ids= 205548 205549 205550 205551 205552 205553 205554 205555
+=== C. WAIT (max 15 min) ===
+t=60s remaining=8
+t=120s remaining=6
+t=180s remaining=6
+t=240s remaining=6
+t=300s remaining=6
+t=360s remaining=6
+t=420s remaining=6
+t=480s remaining=6
+t=540s remaining=6
+t=600s remaining=6
+t=660s remaining=6
+t=720s remaining=6
+t=780s remaining=6
+t=840s remaining=6
+t=900s remaining=6
+=== D. SACCT ===
+    205548 None ass+      PENDING      0:0  00:00:00 
+    205549 None ass+      PENDING      0:0  00:00:00 
+    205550 None ass+      PENDING      0:0  00:00:00 
+    205551 None ass+      PENDING      0:0  00:00:00 
+    205552 None ass+      PENDING      0:0  00:00:00 
+    205553    ngu008    COMPLETED      0:0  00:00:53 
+    205554 None ass+      PENDING      0:0  00:00:00 
+    205555    ngu011    COMPLETED      0:0  00:00:55 
+=== E. CROSS NODE DIGEST COMPARISON ===
+{
+  "all_numpy_ok": true,
+  "all_passed": true,
+  "distinct_capabilities": [
+    "[8, 6]"
+  ],
+  "distinct_drivers": [
+    "\"580.76.05\""
+  ],
+  "distinct_gpu_names": [
+    "\"NVIDIA GeForce RTX 3090\""
+  ],
+  "distinct_normalised_threadpool_digests": [
+    "\"bd2d2073fc6f948a7af98ab30ed5debfafd2e0c5ceb02688141c56ad6e308a46\""
+  ],
+  "distinct_operating_systems": [
+    "\"Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34\""
+  ],
+  "distinct_prediction_digests": [
+    "\"be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38\""
+  ],
+  "distinct_raw_threadpool_digests": [
+    "\"3ac7c14081dedcbdfb35d9ac5deb0f97004529220d94d7dc4c007bd015b92806\"",
+    "\"7c5a1d6383d5d5ad13da46fb6138360047513e748de9fd8dff2d49e45a3bfe99\""
+  ],
+  "distinct_state_digests": [
+    "\"bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803\""
+  ],
+  "distinct_threadpool_libraries": [
+    "[\"libgomp/openmp/None\", \"libgomp/openmp/None\", \"libmkl_rt/mkl/2022.1-Product\"]"
+  ],
+  "node_count": 2,
+  "nodes": [
+    "ngu008",
+    "ngu011"
+  ],
+  "normalised_threadpool_identical_across_nodes": true,
+  "rows": [
+    {
+      "capability": [
+        8,
+        6
+      ],
+      "driver": "580.76.05",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "gpu_uuid": "GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161",
+      "node": "ngu008",
+      "norm_tp": "bd2d2073fc6f948a7af98ab30ed5debfafd2e0c5ceb02688141c56ad6e308a46",
+      "numpy_ok": true,
+      "os": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+      "passed": true,
+      "prediction": "be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38",
+      "raw_tp": "7c5a1d6383d5d5ad13da46fb6138360047513e748de9fd8dff2d49e45a3bfe99",
+      "seconds": 6.9819,
+      "state": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803",
+      "tp_libs": [
+        "libgomp/openmp/None",
+        "libgomp/openmp/None",
+        "libmkl_rt/mkl/2022.1-Product"
+      ]
+    },
+    {
+      "capability": [
+        8,
+        6
+      ],
+      "driver": "580.76.05",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "gpu_uuid": "GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da",
+      "node": "ngu011",
+      "norm_tp": "bd2d2073fc6f948a7af98ab30ed5debfafd2e0c5ceb02688141c56ad6e308a46",
+      "numpy_ok": true,
+      "os": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+      "passed": true,
+      "prediction": "be41a7ca114854a6f092ab7a49b5d67814405bfc86d9c009c8d23f7d432bde38",
+      "raw_tp": "3ac7c14081dedcbdfb35d9ac5deb0f97004529220d94d7dc4c007bd015b92806",
+      "seconds": 8.1416,
+      "state": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803",
+      "tp_libs": [
+        "libgomp/openmp/None",
+        "libgomp/openmp/None",
+        "libmkl_rt/mkl/2022.1-Product"
+      ]
+    }
+  ],
+  "state_digest_identical_across_nodes": true
+}
+=== F. FOOTPRINT ===
+52M	/data1/home/sunyiq/zhenjiang_oyv_qual_20260819
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T18:44:23+0800
