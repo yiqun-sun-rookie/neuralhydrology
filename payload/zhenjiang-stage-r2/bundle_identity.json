@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "migration_id": "datong_stage_direction_r2_hpc_migration_20260819",
+  "archive": {
+    "relative_path": "payload/zhenjiang-stage-r2/datong_stage_direction_r2_hpc_payload_20260819.tar.gz",
+    "bytes": 6666393,
+    "sha256": "599468ee0c5b0892b71cbd146d2ccd737e4bebf894a6b5ed4bafafa2cd4eb958",
+    "member_count": 31
+  },
+  "migration_manifest": {
+    "archive_member_path": "docs/records/DATONG_STAGE_DIRECTION_EVENT_STABILITY_DIAGNOSTIC_2024_2025_V1_COVERAGE_AUDIT_RETRY_R2_HPC_MIGRATION_MANIFEST.json",
+    "bytes": 9771,
+    "sha256": "ce3ad6661d8c38c2a4738fff52d15b7ce38316a14ba9e7396cd906b933bc1496"
+  }
+}
