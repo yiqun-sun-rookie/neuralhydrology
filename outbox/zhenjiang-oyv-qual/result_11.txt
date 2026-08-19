@@ -1,0 +1,139 @@
+### channel=zhenjiang-oyv-qual seq=11
+### host=login4
+### started=2026-08-19T21:59:10+0800
+### ---------- output ----------
+=== A. UPDATE CLONE ===
+commit_before=2ffa41dfe0a1d230c6c04918a67e45c62d059b5e
+commit_after=d7ff5fdb853134cdcc6307a73358cad120941bbe
+evaluate_slurm_present=true
+audit_slurm_present=true
+task_dirs=480
+=== B. DIGEST CHAIN AFTER UPDATE ===
+{
+  "input_files": 13,
+  "input_mismatched": 0,
+  "source_bad": [],
+  "source_files": 19,
+  "source_mismatched": 0
+}
+=== C. SUBMIT EVALUATION AND INFERENCE ===
+evaluation_job=206168
+       JobID  NodeList        State ExitCode    Elapsed 
+------------ --------- ------------ -------- ---------- 
+      206168    ngu010    COMPLETED      0:0   00:01:01 
+=== D. EVALUATION AND INFERENCE OUTPUT ===
+  ],
+  "primary_horizon_hours": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "result_label": "fold_level_evaluation_not_confirmation",
+  "schema_version": 1,
+  "task_count_expected": 480,
+  "task_count_read": 480,
+  "written_utc": "2026-08-19T14:00:45.604410+00:00"
+}
+[STAGE] inference
+{
+  "bootstrap_draws": 10000,
+  "bootstrap_seed": 20260819,
+  "criteria": {
+    "enough_positive_fold_years": false,
+    "every_passing_test_meets_effect_floor": false,
+    "no_single_removal_flips_a_passing_test": true,
+    "paired_event_count_at_least_minimum": true,
+    "primary_family_all_passed": false,
+    "replication_family_all_passed": false
+  },
+  "decision": "NOT_CONFIRMED",
+  "experiment_id": "zhenjiang_oyv_leave_one_year_out_direction_validation_v1",
+  "family_alpha": 0.05,
+  "fragile": false,
+  "minimum_effect_m": 0.01,
+  "minimum_paired_event_count": 10,
+  "paired_event_count": 13,
+  "resampling_unit": "fold_year_cluster",
+  "result_label": "leave_one_year_out_out_of_sample_confirmation_attempt",
+  "schema_version": 1,
+  "written_utc": "2026-08-19T14:00:58.779775+00:00"
+}
+
+--- registered tests ---
+   target                  condition      family  event_count  fold_year_count  point_estimate_m  one_sided_lower_bound_m  bootstrap_probability  sign_test_probability  positive_fold_years  negative_fold_years  meets_effect_floor  lower_bound_above_zero  holm_passed  passed
+zhenjiang hidden_target_both_nearest     primary           13                8         -0.002327                -0.016895               0.883812               0.964844                    2                    6               False                   False        False   False
+zhenjiang             endpoints_only     primary           13                8         -0.000324                -0.008702               0.547145               0.636719                    4                    4               False                   False        False   False
+ jiangyin hidden_target_both_nearest replication           13                8          0.000769                -0.001549               0.409059               0.855469                    3                    5               False                   False        False   False
+ jiangyin             endpoints_only replication           13                8          0.009468                 0.003944               0.000100               0.144531                    6                    2               False                    True         True   False
+[DONE] machine decision:
+{
+  "bootstrap_draws": 10000,
+  "bootstrap_seed": 20260819,
+  "criteria": {
+    "enough_positive_fold_years": false,
+    "every_passing_test_meets_effect_floor": false,
+    "no_single_removal_flips_a_passing_test": true,
+    "paired_event_count_at_least_minimum": true,
+    "primary_family_all_passed": false,
+    "replication_family_all_passed": false
+  },
+  "decision": "NOT_CONFIRMED",
+  "experiment_id": "zhenjiang_oyv_leave_one_year_out_direction_validation_v1",
+  "family_alpha": 0.05,
+  "fragile": false,
+  "minimum_effect_m": 0.01,
+  "minimum_paired_event_count": 10,
+  "paired_event_count": 13,
+  "resampling_unit": "fold_year_cluster",
+  "result_label": "leave_one_year_out_out_of_sample_confirmation_attempt",
+  "schema_version": 1,
+  "written_utc": "2026-08-19T14:00:58.779775+00:00"
+}
+--- stderr tail ---
+=== E. CONFIRMATORY TESTS ===
+target,condition,family,event_count,fold_year_count,point_estimate_m,one_sided_lower_bound_m,bootstrap_probability,sign_test_probability,positive_fold_years,negative_fold_years,meets_effect_floor,lower_bound_above_zero,holm_passed,passed
+zhenjiang,hidden_target_both_nearest,primary,13,8,-0.00232716688981,-0.0168952301291907,0.8838116188381162,0.96484375,2,6,False,False,False,False
+zhenjiang,endpoints_only,primary,13,8,-0.0003236209352811,-0.0087018648649538,0.5471452854714528,0.63671875,4,4,False,False,False,False
+jiangyin,hidden_target_both_nearest,replication,13,8,0.0007694527214648,-0.0015489533986176,0.40905909409059094,0.85546875,3,5,False,False,False,False
+jiangyin,endpoints_only,replication,13,8,0.0094679618411168,0.0039440769197587495,9.999000099990002e-05,0.14453125,6,2,False,True,True,False
+--- fold year medians ---
+target,condition,fold_year,median_state_contrast_m
+zhenjiang,hidden_target_both_nearest,2017,-0.00232716688981
+zhenjiang,hidden_target_both_nearest,2018,-0.0152550322427733
+zhenjiang,hidden_target_both_nearest,2019,-0.0021974438091475
+zhenjiang,hidden_target_both_nearest,2020,-0.02468540754816135
+zhenjiang,hidden_target_both_nearest,2021,0.0232848726082719
+zhenjiang,hidden_target_both_nearest,2022,0.0050200938951903504
+zhenjiang,hidden_target_both_nearest,2023,-0.0284113654124191
+zhenjiang,hidden_target_both_nearest,2024,-0.0013893943228384
+zhenjiang,endpoints_only,2017,0.018749104731851
+zhenjiang,endpoints_only,2018,-0.0395535771698293
+zhenjiang,endpoints_only,2019,-0.0041099996547405
+zhenjiang,endpoints_only,2020,-0.02971646244357785
+zhenjiang,endpoints_only,2021,0.0132345608865081
+zhenjiang,endpoints_only,2022,0.0088560097607038
+zhenjiang,endpoints_only,2023,-0.00851672186571
+zhenjiang,endpoints_only,2024,0.0304306568020662
+jiangyin,hidden_target_both_nearest,2017,0.0067075174462813
+jiangyin,hidden_target_both_nearest,2018,-0.003908126629079351
+jiangyin,hidden_target_both_nearest,2019,-0.0015489533986176
+jiangyin,hidden_target_both_nearest,2020,0.00301098859951165
+jiangyin,hidden_target_both_nearest,2021,-0.002232775632267
+jiangyin,hidden_target_both_nearest,2022,-0.0019238602051351995
+jiangyin,hidden_target_both_nearest,2023,-0.0010971831985708
+jiangyin,hidden_target_both_nearest,2024,0.008118964390927
+jiangyin,endpoints_only,2017,0.0132959331026999
+jiangyin,endpoints_only,2018,-0.0153069537477343
+jiangyin,endpoints_only,2019,0.0104729733218642
+jiangyin,endpoints_only,2020,-0.00243550182244295
+jiangyin,endpoints_only,2021,0.0094679618411168
+jiangyin,endpoints_only,2022,0.0134540920787472
+jiangyin,endpoints_only,2023,0.0084832014601215
+jiangyin,endpoints_only,2024,0.0050350368451132
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T22:00:58+0800
