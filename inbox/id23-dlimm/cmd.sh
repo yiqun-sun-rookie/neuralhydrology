@@ -1,43 +1,46 @@
 #!/bin/bash
-# id23-dlimm seq=1 : environment probe + code fetch. Read-only. No compute, no sbatch.
+# id23-dlimm seq=2 : migration acceptance job on the CPU partition.
 set -o pipefail
+cd ~/hpc_mailbox || exit 1
+mkdir -p outbox
+sed -i 's/\r$//' inbox/id23-dlimm/accept.slurm
 
-echo "=== SECTION A: network ==="
-getent hosts github.com >/dev/null && echo DNS_OK || echo DNS_FAIL
-timeout 40 ssh -o ConnectTimeout=25 -T git@github.com 2>&1 | head -1
+echo "=== SUBMIT ==="
+JID=$(sbatch --parsable inbox/id23-dlimm/accept.slurm 2>&1)
+echo "jobid=$JID"
 
-echo "=== SECTION B: fetch code into ~/id23_dlimm (never touches ~/neuralhydrology) ==="
-DEST=$HOME/id23_dlimm
-BR=codex/id23-predictive-skill-readout
-if [ -d "$DEST/.git" ]; then
-  cd "$DEST" || exit 1
-  timeout 400 git fetch origin "+refs/heads/$BR:refs/remotes/origin/$BR" 2>&1 | tail -3
-  git checkout -q -B work "origin/$BR" 2>&1 | tail -3
+echo "=== WAIT (max 18 min) ==="
+for i in $(seq 1 108); do
+    LEFT=$(squeue -j "$JID" -h -o "%i" 2>/dev/null | wc -l)
+    [ $((i % 12)) -eq 0 ] && echo "t=$((i*10))s left=$LEFT"
+    [ "$LEFT" -eq 0 ] && break
+    sleep 10
+done
+
+echo "=== SACCT ==="
+sacct -j "$JID" -X --format=JobID%12,JobName%12,NodeList%10,State%12,ExitCode%8,Elapsed%10 2>&1 | head -5
+
+echo "=== STDOUT ==="
+cat outbox/slurm_${JID}.out 2>/dev/null | tail -40 || true
+echo "=== STDERR (tail) ==="
+tail -15 outbox/slurm_${JID}.err 2>/dev/null || true
+
+echo "=== KEY NUMBERS ==="
+R=~/id23_dlimm/results/23_hbv_multilead_joint_uncertainty/h19_forecast_window_ceiling_throwaway_v01/forecast_window_ceiling_report.json
+if [ -f "$R" ]; then
+  python - "$R" <<'PY' 2>&1 | tail -20
+import json,sys
+d=json.load(open(sys.argv[1],encoding="utf-8"))
+s=d["arm_summary"]
+for k in sorted(s): print(f"{k:30s} lead7={s[k]['mean_forecast_rmse_lead_7']:.10f}")
+c=d["paired_block_contrasts_versus_frozen_base"]
+r=d["paired_block_contrasts_versus_evolving_base"]
+print("attribution_ceiling=%.16f" % c["frozen_base_minus_evolving_oracle_attribution_lead_7"]["point_estimate"])
+print("hazard_ceiling=%.16f" % c["frozen_base_minus_evolving_oracle_hazard_lead_7"]["point_estimate"])
+print("rule_space=%.16f" % r["evolving_base_minus_evolving_oracle_hazard_lead_7"]["point_estimate"])
+PY
 else
-  timeout 900 git clone --depth 1 --single-branch -b "$BR" \
-    git@github.com:yiqun-sun-rookie/neuralhydrology.git "$DEST" 2>&1 | tail -6
-  cd "$DEST" || exit 1
+  echo "REPORT_MISSING"
 fi
-echo "head=$(git rev-parse --short HEAD 2>/dev/null)"
-echo "pkg_py=$(find src/hbv_history_conditioned_imm -name '*.py' 2>/dev/null | wc -l)"
-echo "scl_py=$(find src/scl_hydro -name '*.py' 2>/dev/null | wc -l)"
-echo "mlju_py=$(find src/hbv_multilead_joint_uncertainty -name '*.py' 2>/dev/null | wc -l)"
-
-echo "=== SECTION C: conda env nh_final ==="
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
-  source $HOME/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final || { echo "CONDA_FAILED"; exit 1; }
-python -c "import sys,torch,numpy;print('python',sys.version.split()[0]);print('torch',torch.__version__);print('numpy',numpy.__version__);print('cuda_available',torch.cuda.is_available())" 2>&1 | tail -6
-
-echo "=== SECTION D: import smoke (trivial, not compute) ==="
-cd "$DEST" || exit 1
-PYTHONPATH=$PWD/src timeout 300 python -c "
-from hbv_history_conditioned_imm.hbv import forecast_global_state_mode_evolving, forecast_global_state_weighted_parameters
-from hbv_history_conditioned_imm.network import HistoryTransitionNetwork
-from hbv_history_conditioned_imm.long_history import generate_long_history_parameter_switch_batch
-print('imports_ok')
-" 2>&1 | tail -8
-
-echo "=== SECTION E: partition state ==="
-sinfo -p hgpu2p -o "%P %a %D %t %N" 2>&1 | head -8
+rm -f outbox/slurm_${JID}.out outbox/slurm_${JID}.err
 echo "=== DONE ==="
