@@ -1,0 +1,31 @@
+### channel=nature1st-attr-swap seq=4
+### host=login4
+### started=2026-08-19T21:56:55+0800
+### ---------- output ----------
+=== A. JOB STATE ===
+     JobID                JobName          State ExitCode      Elapsed  NodeList 
+---------- ---------------------- -------------- -------- ------------ --------- 
+    205886        q_ctrl_us_attrs         FAILED      1:0     00:00:25    ngu004 
+    205887   q_treat_global_attrs         FAILED      1:0     00:00:23    ngu008 
+=== B. NODE + GPU (must NOT say CUDA False) ===
+--- 205886 : /data1/home/sunyiq/nature_1st/logs/attr_swap/control-205886.out ---
+[Wed Aug 19 09:54:13 PM CST 2026] Job 205886 on ngu004
+PyTorch 2.4.0, CUDA True
+--- 205887 : /data1/home/sunyiq/nature_1st/logs/attr_swap/hydroatlas-205887.out ---
+[Wed Aug 19 09:53:44 PM CST 2026] Job 205887 on ngu008
+PyTorch 2.4.0, CUDA True
+========================================================================
+=== C. FATAL / GPU-guard trips ===
+none
+=== D. TRAINING PROGRESS (epoch lines) ===
+--- 205886 ---
+--- 205887 ---
+=== E. RESULTS IF FINISHED ===
+--- q_lstm_control_hpc_s42 ---
+(not finished)
+--- q_lstm_hydroatlas_hpc_s42 ---
+(not finished)
+=== END seq=3 (status only, nothing submitted) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T21:56:55+0800
