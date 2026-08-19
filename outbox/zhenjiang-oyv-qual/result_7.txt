@@ -1,0 +1,39 @@
+### channel=zhenjiang-oyv-qual seq=7
+### host=login4
+### started=2026-08-19T19:24:53+0800
+### ---------- output ----------
+=== A. UPDATE CLONE ===
+bundle_commit=2ffa41dfe0a1d230c6c04918a67e45c62d059b5e
+file_count=97
+=== B. FULL DIGEST CHAIN ON THE CLUSTER ===
+{
+  "bound_artifacts": 10,
+  "bound_bad": [],
+  "bound_mismatched": 0,
+  "bundle_commit_in_registry": "0ff7d9c6c67d28ef24a8c75c37327036da676620",
+  "input_bad": [],
+  "input_files": 13,
+  "input_mismatched": 0,
+  "preregistration_matches_registry": true,
+  "source_bad": [],
+  "source_files": 17,
+  "source_mismatched": 0,
+  "task_count": 480
+}
+=== C. SUBMIT STATIC AUDIT AS A BATCH JOB ===
+static_audit_job=205645
+=== D. WAIT (max 30 min) ===
+t=120s remaining=1
+=== E. AUDIT RESULT ===
+       JobID  NodeList        State ExitCode    Elapsed 
+------------ --------- ------------ -------- ---------- 
+      205645    ngu010    COMPLETED      0:0   00:01:39 
+  "blocking_finding_count": 0,
+  "finding_count": 0,
+  "gate": "PASSED",
+  "tests_run": true,
+--- stderr tail ---
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T19:27:21+0800
