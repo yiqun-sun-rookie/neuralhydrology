@@ -1,0 +1,46 @@
+### channel=nature1st-attr-swap seq=12
+### host=login4
+### started=2026-08-20T04:18:09+0800
+### ---------- output ----------
+=== A. JOB STATE ===
+     JobID                JobName          State ExitCode      Elapsed  NodeList 
+---------- ---------------------- -------------- -------- ------------ --------- 
+    206175        q_ctrl_us_attrs      COMPLETED      0:0     05:16:08    ngu008 
+    206176   q_treat_global_attrs      COMPLETED      0:0     03:26:25    ngu008 
+=== B. CONTROL PROGRESS (tail) ===
+Epoch 15: loss=0.3813  val_median_NSE(phys)=0.6432  val_RMSE_qspec=0.0726  NSE>0=0.84  lr=5.00e-04
+  -> Best median NSE: 0.6432
+Epoch 16: loss=0.3735  val_median_NSE(phys)=0.6394  val_RMSE_qspec=0.0732  NSE>0=0.85  lr=5.00e-04
+Epoch 17: loss=0.3640  val_median_NSE(phys)=0.6288  val_RMSE_qspec=0.0726  NSE>0=0.84  lr=5.00e-04
+Epoch 18: loss=0.3592  val_median_NSE(phys)=0.6330  val_RMSE_qspec=0.0731  NSE>0=0.84  lr=5.00e-04
+Epoch 19: loss=0.3288  val_median_NSE(phys)=0.6409  val_RMSE_qspec=0.0725  NSE>0=0.83  lr=2.50e-04
+Epoch 20: loss=0.3220  val_median_NSE(phys)=0.6361  val_RMSE_qspec=0.0725  NSE>0=0.83  lr=2.50e-04
+Done. Best val median NSE: 0.6432 at epoch 15
+=== C. EVAL ARTIFACTS ===
+--- q_lstm_control_hpc_s42 ---
+-rw-r--r--. 1 sunyiq g_sunyiq  1648 Aug 20 03:34 /data1/home/sunyiq/nature_1st/models/q_lstm_control_hpc_s42/eval_val.json
+-rw-r--r--. 1 sunyiq g_sunyiq 35125 Aug 20 03:34 /data1/home/sunyiq/nature_1st/models/q_lstm_control_hpc_s42/eval_val_per_station.csv
+--- q_lstm_hydroatlas_hpc_s42 ---
+-rw-r--r--. 1 sunyiq g_sunyiq  1651 Aug 20 01:45 /data1/home/sunyiq/nature_1st/models/q_lstm_hydroatlas_hpc_s42/eval_val.json
+-rw-r--r--. 1 sunyiq g_sunyiq 35149 Aug 20 01:45 /data1/home/sunyiq/nature_1st/models/q_lstm_hydroatlas_hpc_s42/eval_val_per_station.csv
+=== D. PAIRED ANALYSIS (only when both per-station files exist) ===
+paired stations       431
+control  median NSE   0.6432   p25 0.3599  p75 0.7782
+global   median NSE   0.5983   p25 0.2373  p75 0.7325
+group median diff     -0.0449   <-- the pre-registered statistic
+PAIRED median diff    -0.0309   95%CI [-0.0500, -0.0192]
+worse / better        275 / 156  (63.8% worse)
+|change|<0.05         31.8%   lost>0.10 31.6%   gained>0.10 15.1%
+crossed zero          us>0&glob<0: 13   reverse: 8
+wilcoxon p            7.807e-10
+usable (ctrl>0)    n=361  group diff -0.0328  paired -0.0281
+good (ctrl>0.5)    n=285  group diff -0.0425  paired -0.0348
+-- by stratum (paired) --
+  arid         n=178  ctrl 0.3766  glob 0.3591  paired -0.0414
+  humid        n= 18  ctrl 0.7374  glob 0.7143  paired -0.0300
+  intermediate n=208  ctrl 0.7006  glob 0.6725  paired -0.0271
+  snow         n= 27  ctrl 0.6974  glob 0.7415  paired -0.0277
+=== END seq=11 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T04:18:34+0800
