@@ -1,0 +1,125 @@
+### channel=zhenjiang-oyv-qual seq=6
+### host=login4
+### started=2026-08-19T19:14:12+0800
+### ---------- output ----------
+=== A. GUARDS ===
+root_created=/data1/home/sunyiq/zhenjiang_oyv_v1
+=== B. CLONE DEPLOYMENT BUNDLE ===
+Cloning into '/data1/home/sunyiq/zhenjiang_oyv_v1/repo'...
+bundle_commit=239a3bae3baf300ccfeae10ac2a60a3e9b9e1436
+file_count=71
+84K	.
+=== C. PRIVATE DEPENDENCIES ===
+Using cached threadpoolctl-3.6.0-py3-none-any.whl (18 kB)
+Using cached joblib-1.5.3-py3-none-any.whl (309 kB)
+Installing collected packages: threadpoolctl, scikit-learn, joblib
+
+Successfully installed joblib-1.5.3 scikit-learn-1.7.2 threadpoolctl-3.6.0
+joblib-1.5.3.dist-info
+scikit_learn-1.7.2.dist-info
+threadpoolctl-3.6.0.dist-info
+=== D. INPUT IDENTITY ON THE CLUSTER SIDE ===
+{
+  "checked": 12,
+  "mismatched": 0,
+  "mismatches": [],
+  "tide_model_matches_frozen": true,
+  "tide_model_sha256": "ce8512f28e87ab6d62814b064d91ca358b98efd7ee27b4f831322ea93775516d"
+}
+=== E. STATIC AUDIT ON THE CLUSTER ===
+  "finding_count": 4,
+  "findings": [
+    {
+      "kind": "bound_artifact_missing",
+      "subject": "docs/plans/2026-08-19-zhenjiang-stage-direction-out-of-year-validation-context-reset-handoff.md"
+    },
+    {
+      "kind": "bound_artifact_missing",
+      "subject": "docs/records/TIDAL_FLUVIAL_HIDDEN_GAUGE_DATONG_STAGE_DIRECTION_CONFIRMATION_2024_2025_V1_PREREGISTRATION.json"
+    },
+    {
+      "kind": "bound_artifact_missing",
+      "subject": "results/analysis/zhenjiang_oyv_common_valid_event_coverage_v1/completion_manifest.json"
+    },
+    {
+      "kind": "bound_artifact_missing",
+      "subject": "results/analysis/zhenjiang_oyv_year_buffered_event_coverage_v2/completion_manifest.json"
+    }
+  ],
+  "gate": "BLOCKED",
+  "preregistration_sha256": "002be64291d9dc5628efaae7b4d6ba3a203f9adcba1e5ef937726c8dfbfd5526",
+  "schema_version": 1,
+  "tests_run": true,
+  "written_utc": "2026-08-19T11:16:15.959046+00:00"
+}
+=== F. SUBMIT ONE SMOKE TRAINING TASK ===
+smoke_job=205570
+=== G. WAIT (max 25 min) ===
+t=60s remaining=1
+t=120s remaining=1
+t=180s remaining=1
+=== H. RESULT ===
+       JobID  NodeList        State ExitCode    Elapsed 
+------------ --------- ------------ -------- ---------- 
+    205570_0    ngu011    COMPLETED      0:0   00:03:06 
+==========================================
+[2026-08-19T11:14:00Z] zhenjiang out-of-year validation :: training
+==========================================
+[INFO] array=205570 task=0 node=ngu011
+0, NVIDIA GeForce RTX 3090, GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da, 580.76.05
+1, NVIDIA GeForce RTX 3090, GPU-7b2fa2ee-6930-2a2e-e9f5-7736fd478efd, 580.76.05
+[INFO] torch 2.4.0 cuda True
+[INFO] output subdirectory: smoke
+{
+  "best_epoch": 6,
+  "best_inner_validation_mae_m": 0.050703634989072356,
+  "completed_epochs": 10,
+  "elapsed_seconds": 132.983,
+  "graphics_processor_unique_identifier": "GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da",
+  "node_name": "ngu011",
+  "task_id": "zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_17",
+  "test_sample_count": 7022
+}
+==========================================
+[2026-08-19T11:17:01Z] Done (exit: 0)
+==========================================
+--- stderr tail ---
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+=== I. SMOKE ARTIFACTS ===
+/data1/home/sunyiq/zhenjiang_oyv_v1/smoke/zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_17/test_predictions.npz
+/data1/home/sunyiq/zhenjiang_oyv_v1/smoke/zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_17/completion_manifest.json
+/data1/home/sunyiq/zhenjiang_oyv_v1/smoke/zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_17/best_state.pt
+/data1/home/sunyiq/zhenjiang_oyv_v1/smoke/zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_17/training_history.csv
+/data1/home/sunyiq/zhenjiang_oyv_v1/smoke/zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_17/run_identity.json
+{
+  "artifacts": [
+    {
+      "byte_count": 500706,
+      "relative_path": "best_state.pt",
+      "sha256": "11583a7e5b82a2d5340194bb1c3998e6f0f3865c1a33d9959542833f338e427e"
+    },
+    {
+      "byte_count": 617,
+      "relative_path": "training_history.csv",
+      "sha256": "38eb4eedb6fdcd9d8d7b487c4c07d0778c59e336acb8a3853b6f1570a6c602f1"
+    },
+    {
+      "byte_count": 1406012,
+      "relative_path": "test_predictions.npz",
+      "sha256": "c945323a30adf4e799e54a46df51954b699f00cf83f6b817639d80e90ba24ca6"
+    },
+    {
+      "byte_count": 6115,
+      "relative_path": "run_identity.json",
+      "sha256": "e3f41af24d5eb9c485f2cb74955a675d180d05e12897ff4b47095ddc19165c5e"
+    }
+  ],
+  "experiment_id": "zhenjiang_oyv_leave_one_year_out_direction_validation_v1",
+  "schema_version": 1,
+  "status": "completed",
+  "task_id": "zhenjiang_oyv_v1__fold_2017__zhenjiang__hidden_target__seed_17"
+}
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T19:19:46+0800
