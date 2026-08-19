@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #SBATCH -J id23accept
-#SBATCH -p hcpu48
+#SBATCH -p hcpu48y
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH --cpus-per-task=8
