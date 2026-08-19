@@ -1,0 +1,9 @@
+### channel=zhenjiang-stage-r2 seq=3
+### host=login4
+### started=2026-08-19T15:26:44+0800
+### ---------- output ----------
+/data1/home/sunyiq/.hpc_mailbox_staging/zhenjiang-stage-r2/cmd_3.sh: line 2: /data1/home/sunyiq/hpc_mailbox/inbox/zhenjiang-stage-r2/environment_probe_cmd.sh: Permission denied
+/data1/home/sunyiq/.hpc_mailbox_staging/zhenjiang-stage-r2/cmd_3.sh: line 2: exec: /data1/home/sunyiq/hpc_mailbox/inbox/zhenjiang-stage-r2/environment_probe_cmd.sh: cannot execute: Permission denied
+### ---------- end ----------
+### exit_code=126
+### finished=2026-08-19T15:26:44+0800
