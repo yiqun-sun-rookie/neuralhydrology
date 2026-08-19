@@ -1,0 +1,126 @@
+### channel=zhenjiang-oyv-qual seq=1
+### host=login4
+### started=2026-08-19T17:36:58+0800
+### ---------- output ----------
+=== A. HOST AND TIME ===
+login4
+2026-08-19T09:36:58Z
+3.10.0-957.el7.x86_64
+NAME="CentOS Linux"
+VERSION="7 (Core)"
+ID="centos"
+=== B. CONDA ENVS ===
+# conda environments:
+#
+base                  *  /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+                         /data1/home/sunyiq/v09_strict/gitenv
+
+=== C. nh_final PACKAGE PROBE (login node; cuda expected False here) ===
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+{
+  "missing": [
+    "sklearn",
+    "threadpoolctl"
+  ],
+  "modules": {
+    "numpy": "2.3.3",
+    "pandas": "2.3.2",
+    "psutil": "7.0.0",
+    "scipy": "1.16.2",
+    "sklearn": "MISSING:ModuleNotFoundError:No module named 'sklearn'",
+    "threadpoolctl": "MISSING:ModuleNotFoundError:No module named 'threadpoolctl'",
+    "torch": "2.4.0"
+  },
+  "operating_system": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17",
+  "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+  "python_version": "3.11.13",
+  "torch_cuda_available_on_login": false,
+  "torch_cuda_build": "12.1",
+  "torch_cudnn_version": 90100
+}
+=== D. PIP CAPABILITY (probe only, nothing installed) ===
+pip 25.2 from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip (python 3.11)
+=== E. PARTITIONS AND GPU TYPE HOMOGENEITY ===
+   PARTITION  AVAIL  NODES                   NODELIST               GRES      STATE
+     hcpu48*     up     15 icn[202,204-207,210-212,21             (null) allocated$
+     hcpu48*     up     16 icn[203,215,218,224,230,23             (null)      down*
+     hcpu48*     up     33 icn[201,208-209,213,219,22             (null)  allocated
+     hcpu48y     up      1                     icn281             (null)      down$
+     hcpu48y     up      1                     icn280             (null)      maint
+     hcpu48y     up      2               icn[278-279]             (null)      down*
+     hcpu48y     up      2               icn[274,277]             (null)      mixed
+     hcpu48y     up      6       icn[270-273,275-276]             (null)       idle
+       hgpu8     up      3               ngu[201-203]              gpu:8      mixed
+       hgpu4     up      1                     ngu103              gpu:4      down*
+       hgpu4     up      3           ngu[101-102,104]              gpu:4      mixed
+       hgpu2     up      2               ngu[003,009]              gpu:2       idle
+      hgpu2p     up      6       ngu[004-007,010-011]              gpu:2      mixed
+      hgpu2p     up      1                     ngu001              gpu:2  allocated
+      hgpu2p     up      2               ngu[002,008]              gpu:2       idle
+--- per-node gres on hgpu2p ---
+  NODELIST      STATE               GRES   CPUS
+    ngu001  allocated              gpu:2     96
+    ngu002       idle              gpu:2     96
+    ngu004      mixed              gpu:2     96
+    ngu005      mixed              gpu:2     96
+    ngu006      mixed              gpu:2     96
+    ngu007      mixed              gpu:2     96
+    ngu008       idle              gpu:2     96
+    ngu010      mixed              gpu:2     32
+    ngu011      mixed              gpu:2     32
+--- per-node gres on hgpu2 / hgpu4 ---
+  NODELIST      STATE               GRES   CPUS
+    ngu003       idle              gpu:2     96
+    ngu009       idle              gpu:2     96
+    ngu101      mixed              gpu:4     96
+    ngu102      mixed              gpu:4     96
+    ngu103      down*              gpu:4     96
+    ngu104      mixed              gpu:4     96
+--- drained/down reasons ---
+REASON               USER      TIMESTAMP           NODELIST
+Not responding       root      2026-05-12T05:03:18 icn203
+Not responding       root      2026-05-13T15:59:40 icn215
+Not responding       root      2026-01-16T00:43:13 icn218
+Not responding       root      2026-01-19T17:07:05 icn224
+Not responding       root      2026-01-10T07:47:14 icn230
+Not responding       root      2026-04-25T01:51:39 icn[233,243,245]
+Not responding       root      2026-01-19T22:24:09 icn234
+Not responding       root      2026-03-10T05:52:38 icn[235,237,247]
+Not responding       root      2026-05-09T19:59:37 icn236
+Not responding       root      2026-04-24T20:16:32 icn239
+Not responding       root      2025-11-04T11:55:53 icn242
+=== F. MY QUEUE ===
+     JOBID    PARTITION                   NAME     STATE        TIME NODELIST(REASON)
+202228_[45 hgpu4,hgpu8,              N22-hyper   PENDING        0:00 (JobArrayT
+202226_[0- hgpu4,hgpu8,         N22-eval-later   PENDING        0:00 (Dependenc
+    202229 hgpu4,hgpu8,           N22-agg-eval   PENDING        0:00 (Dependenc
+    202230 hgpu4,hgpu8,          N22-agg-hyper   PENDING        0:00 (Dependenc
+    202294 hgpu4,hgpu8,             N22-export   PENDING        0:00 (Dependenc
+    202315 hgpu4,hgpu8,               N22-gate   PENDING        0:00 (Dependenc
+    202507 hgpu4,hgpu8,       N22-mask-iso-531   PENDING        0:00 (Dependenc
+202215_[18 hgpu4,hgpu8,               N22-time   PENDING        0:00 (JobArrayT
+    202293 hgpu4,hgpu8,           N22-manifest   PENDING        0:00 (JobHeldUs
+202228_452        hgpu4              N22-hyper   RUNNING        0:41     ngu104
+202228_451        hgpu4              N22-hyper   RUNNING       13:42     ngu104
+  204860_6        hgpu4             N22-retime   RUNNING    20:17:12     ngu101
+  204861_7        hgpu4             N22-retime   RUNNING    20:17:12     ngu101
+ 202215_17        hgpu4               N22-time   RUNNING    21:59:28     ngu104
+ 202215_16        hgpu4               N22-time   RUNNING  1-01:18:42     ngu101
+ 202215_15        hgpu4               N22-time   RUNNING  1-05:38:33     ngu104
+=== G. OUTBOUND NETWORK (needed to clone a private repo) ===
+DNS_OK
+Hi yiqun-sun-rookie! You've successfully authenticated, but GitHub does not provide shell access.
+pypi=200
+=== H. DISK AND ROOT STATE (read-only) ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+frozen_r2_root_exists=true (must stay untouched)
+qual_root_preexists=false
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T17:37:48+0800
