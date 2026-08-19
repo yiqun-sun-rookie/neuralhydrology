@@ -1,0 +1,46 @@
+### channel=zhenjiang-oyv-qual seq=8
+### host=login4
+### started=2026-08-19T19:29:26+0800
+### ---------- output ----------
+=== A. GUARDS ===
+bundle_commit=2ffa41dfe0a1d230c6c04918a67e45c62d059b5e
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+=== B. SUBMIT THE 480 TASK ARRAY ===
+training_array_job=205647
+=== C. EARLY PROGRESS (20 min window) ===
+t=120s queue_entries=4 completed_task_dirs=0
+t=240s queue_entries=4 completed_task_dirs=3
+t=360s queue_entries=4 completed_task_dirs=3
+t=480s queue_entries=4 completed_task_dirs=6
+t=600s queue_entries=4 completed_task_dirs=8
+t=720s queue_entries=6 completed_task_dirs=10
+t=840s queue_entries=8 completed_task_dirs=14
+t=960s queue_entries=8 completed_task_dirs=16
+t=1080s queue_entries=8 completed_task_dirs=23
+t=1200s queue_entries=8 completed_task_dirs=26
+=== D. SNAPSHOT ===
+205647_[34-479   PENDING     0:00 (Resources
+     205647_33   RUNNING  INVALID     ngu005
+     205647_32   RUNNING     0:50     ngu005
+     205647_31   RUNNING     1:04     ngu004
+     205647_30   RUNNING     1:46     ngu008
+     205647_29   RUNNING     2:02     ngu008
+     205647_28   RUNNING     2:04     ngu004
+     205647_25   RUNNING     3:38     ngu011
+queue_entries=8
+completed_task_dirs=27
+     27      COMPLETED 
+      1        PENDING 
+      7        RUNNING 
+=== E. FIRST FINISHED TASK ===
+task=zhenjiang_oyv_v1__fold_2017__jiangyin__hidden_target__seed_17
+  "best_epoch": 4,
+  "completed_epochs": 8,
+  "elapsed_seconds": 90.9740842692554,
+    "test_sample_count": 7022,
+    "node_name": "ngu008",
+  "test_sample_count": 7022,
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T19:49:32+0800
