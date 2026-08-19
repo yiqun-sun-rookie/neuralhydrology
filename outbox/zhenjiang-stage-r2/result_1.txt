@@ -1,0 +1,29 @@
+### channel=zhenjiang-stage-r2 seq=1
+### host=login4
+### started=2026-08-19T15:15:17+0800
+### ---------- output ----------
+=== MAILBOX PREFLIGHT ===
+=== EXTRACT IMMUTABLE PAYLOAD ===
+=== SUBMIT ACCEPTANCE ===
+acceptance_jobid=205467
+=== WAIT ACCEPTANCE (max 30 min) ===
+=== ACCEPTANCE SACCT ===
+       JobID        JobName   NodeList          State ExitCode    Elapsed 
+------------ -------------- ---------- -------------- -------- ---------- 
+      205467   zj_r2_accept     ngu010         FAILED      1:0   00:00:10 
+=== ACCEPTANCE STDOUT ===
+=== PACKAGE IDENTITY ===
+PACKAGE_MISMATCH_COUNT=0
+PACKAGE_SOURCE_FILE_COUNT=30
+PACKAGE_MEMBER_COUNT=31
+=== ENVIRONMENT IDENTITY ===
+ENVIRONMENT_VERIFICATION_FAILED exit=1
+=== ACCEPTANCE STDERR ===
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+ModuleNotFoundError: No module named 'threadpoolctl'
+=== ACCEPTANCE JSON ===
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-19T15:15:38+0800
