@@ -1,37 +1,31 @@
-#!/bin/bash
-# ID29 seq=289: locate the actual run dirs / epoch-30 checkpoints for the rerun coordinates.
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
-AR="$ROOT/closure_20260810/time_split/autoregression"
-
-echo "=== TIME ==="; date --iso-8601=seconds
-echo "=== AR PARENT LISTING ==="
-ls -1 "$AR" 2>/dev/null | head -30 || echo "AR dir missing: $AR"
-echo "  (count=$(ls -1 "$AR" 2>/dev/null | wc -l))"
-
-echo "=== EPOCH-30 CHECKPOINTS UNDER AR (newest 8) ==="
-find "$AR" -name 'model_epoch030.pt' -printf '%T@|%p|%s\n' 2>/dev/null | sort -rn | head -8 | \
-  while IFS='|' read -r t p s; do printf '  %s  %10s bytes  %s\n' "$(date -d @${t%.*} '+%m-%d %H:%M')" "$s" "${p#$AR/}"; done
-
-echo "=== TARGET COORDINATES ==="
-for C in lead_2_holdout_0.75_seed_0 lead_2_holdout_1.0_seed_0 lead_1_holdout_0.5_seed_0; do
-  D="$AR/$C"
-  if [ -d "$D" ]; then
-    printf -- '--- %s ---\n' "$C"
-    ls -1 "$D" 2>/dev/null | head -6
-    find "$D" -name 'model_epoch0*.pt' 2>/dev/null | sed 's|.*/||' | sort | tail -3 | sed 's/^/    /'
-  else
-    printf -- '--- %s : parent dir ABSENT ---\n' "$C"
-  fi
+date --iso-8601=seconds
+echo "=== N22 JOBS ==="
+squeue -u sunyiq -h -o '%.12i %.14j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22|retime|re214' || echo 'no N22 jobs in queue'
+echo "=== RECENT TERMINAL STATES ==="
+sacct -X -n -P -S $(date -d '3 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22|retime|re214' | grep -vE '\|(RUNNING|PENDING)\|' | tail -20 || true
+echo "=== RUNNING PROGRESS ==="
+for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-(time|retime|re214)' | awk '{print $1}'); do
+  SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
+  [ -n "$SO" ] && [ -f "$SO" ] && { printf -- '--- %s log=%s ---\n' "$J" "$(stat -c %s "$SO")"; tail -c 120000 "$SO" 2>/dev/null | tr '\r' '\n' | grep -iE '^# Epoch' | tail -1 || true; }
 done
-
-echo "=== RERUN JOB STATES ==="
-sacct -X -n -P -j 204860,204861,206430 --format=JobID,JobName,State,Elapsed,End,NodeList 2>/dev/null || true
-echo "=== RERUN STDOUT TAILS ==="
-for J in 204860 204861; do
-  L=$(ls -t "$ROOT/closure_20260810/logs/"*"${J}"*.out 2>/dev/null | head -1)
-  [ -n "$L" ] && { printf -- '--- %s ---\n' "$(basename "$L")"; tail -c 4000 "$L" | tr '\r' '\n' | grep -vE '^# Epoch' | tail -8; }
-done
-
-echo "=== END seq=289 ==="; date --iso-8601=seconds
+echo "=== ROLE COUNTS ==="
+source ~/miniconda3/etc/profile.d/conda.sh && conda activate nh_final 2>/dev/null
+cd "$ROOT"
+python - <<'PY' 2>/dev/null || echo "recount unavailable"
+import json, sys
+from pathlib import Path
+root = Path('/data1/home/sunyiq/nearing2022_da')
+sys.path.insert(0, str(root / 'src/29_nearing2022_da_ar/scripts'))
+from verify_registered_closure import audit_registered_closure
+reg = root / 'src/29_nearing2022_da_ar/registry'
+agg = root / 'closure_20260810/aggregation'
+c = audit_registered_closure(root, reg/'experiment_registry.csv', reg/'evaluation_registry.csv',
+                             reg/'assimilation_hyperparameter_registry.csv', agg/'evaluations', agg/'hyperparameters')
+m = {}
+for row in c['missing']:
+    m[row['coordinate_type']] = m.get(row['coordinate_type'], 0) + 1
+print(json.dumps({'missing_by_type': m, 'missing_total': len(c['missing'])}, sort_keys=True))
+PY
 exit 0
