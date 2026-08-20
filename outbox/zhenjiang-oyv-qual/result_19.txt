@@ -1,0 +1,51 @@
+### channel=zhenjiang-oyv-qual seq=19
+### host=login4
+### started=2026-08-20T22:16:55+0800
+### ---------- output ----------
+=== A. LADDER 206431 ===
+completed_task_dirs=652 of 960
+    652      COMPLETED 
+      1        PENDING 
+     12        RUNNING 
+206431_[664-95   PENDING     0:00          (Resources)
+    206431_663   RUNNING  INVALID               ngu008
+    206431_662   RUNNING     0:08               ngu011
+    206431_661   RUNNING     0:12               ngu005
+--- failed, timed out or node failed ---
+(none)
+--- nodes used ---
+     97 ngu004
+     86 ngu005
+    106 ngu006
+     92 ngu007
+    222 ngu008
+     61 ngu011
+--- condition coverage so far ---
+    110 complete_observation
+    110 hidden_target_minus_datong
+     60 hidden_target_minus_jiangyin
+    110 hidden_target_minus_nanjing
+    103 hidden_target_minus_wusongkou
+    109 hidden_target_minus_xuliujing
+     50 hidden_target_minus_zhenjiang
+=== B. AUDIT (settled) ===
+  "audit_status": "reproducible",
+  "mismatch_count": 0,
+  "reinference_count": 480,
+=== C. QUEUE ===
+202228_[511-      N22-hyper   PENDING       0:00    (JobArrayTaskLimit)
+206431_[664-   zj_ladder_v2   PENDING       0:00            (Resources)
+      206718 q_armE_minus_l   PENDING       0:00             (Priority)
+      206719 q_armF_global_   PENDING       0:00             (Priority)
+202226_[0-11 N22-eval-later   PENDING       0:00 (DependencyNeverSatisf
+      202229   N22-agg-eval   PENDING       0:00           (Dependency)
+      202230  N22-agg-hyper   PENDING       0:00           (Dependency)
+      202294     N22-export   PENDING       0:00           (Dependency)
+total_entries=31
+=== D. DISK ===
+1.3G	/data1/home/sunyiq/zhenjiang_oyv_v1/ladder_tasks
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T22:17:01+0800
