@@ -1,0 +1,31 @@
+### channel=nature1st-attr-swap seq=17
+### host=login4
+### started=2026-08-20T12:13:00+0800
+### ---------- output ----------
+=== A. JOB STATE ===
+     JobID                  JobName        State ExitCode      Elapsed  NodeList 
+---------- ------------------------ ------------ -------- ------------ --------- 
+    206409      q_armC_us_minus_net      RUNNING      0:0     00:28:17    ngu008 
+    206410   q_armD_global_plus_net      RUNNING      0:0     00:28:15    ngu008 
+=== B. PROGRESS ===
+--- armC (206409) ---
+Epoch 1: loss=1.1055  val_median_NSE(phys)=0.4731  val_RMSE_qspec=0.0871  NSE>0=0.87  lr=5.00e-04
+  -> Best median NSE: 0.4731
+--- armD (206410) ---
+Epoch 1: loss=0.9430  val_median_NSE(phys)=0.5221  val_RMSE_qspec=0.0850  NSE>0=0.85  lr=5.00e-04
+  -> Best median NSE: 0.5221
+=== C. EVAL ARTIFACTS ===
+--- q_lstm_usminus4_hpc_s42 ---
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_usminus4_hpc_s42/eval_val_per_station.csv: No such file or directory
+-rw-r--r--. 1 sunyiq g_sunyiq 339 Aug 20 12:00 /data1/home/sunyiq/nature_1st/models/q_lstm_usminus4_hpc_s42/best_metrics.json
+--- q_lstm_globalplus4_hpc_s42 ---
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_globalplus4_hpc_s42/eval_val_per_station.csv: No such file or directory
+-rw-r--r--. 1 sunyiq g_sunyiq 337 Aug 20 12:01 /data1/home/sunyiq/nature_1st/models/q_lstm_globalplus4_hpc_s42/best_metrics.json
+=== D. PAIRED ANALYSIS (same procedure as the 2026-08-20 verdict) ===
+[armC vs control] not ready yet
+[armD vs global] not ready yet
+[armD vs control] not ready yet
+=== END seq=16 (status only) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T12:13:13+0800
