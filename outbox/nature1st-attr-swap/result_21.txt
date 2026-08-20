@@ -1,0 +1,39 @@
+### channel=nature1st-attr-swap seq=21
+### host=login4
+### started=2026-08-20T13:55:20+0800
+### ---------- output ----------
+=== A. JOB STATE ===
+     JobID                  JobName        State ExitCode      Elapsed  NodeList 
+---------- ------------------------ ------------ -------- ------------ --------- 
+    206409      q_armC_us_minus_net      RUNNING      0:0     02:10:37    ngu008 
+    206410   q_armD_global_plus_net      RUNNING      0:0     02:10:35    ngu008 
+=== B. PROGRESS ===
+--- armC (206409) ---
+Epoch 5: loss=0.5400  val_median_NSE(phys)=0.6096  val_RMSE_qspec=0.0751  NSE>0=0.87  lr=5.00e-04
+  -> Best median NSE: 0.6096
+Epoch 6: loss=0.5095  val_median_NSE(phys)=0.6005  val_RMSE_qspec=0.0762  NSE>0=0.86  lr=5.00e-04
+Epoch 7: loss=0.4894  val_median_NSE(phys)=0.5969  val_RMSE_qspec=0.0760  NSE>0=0.82  lr=5.00e-04
+Epoch 8: loss=0.4686  val_median_NSE(phys)=0.6142  val_RMSE_qspec=0.0751  NSE>0=0.86  lr=5.00e-04
+  -> Best median NSE: 0.6142
+--- armD (206410) ---
+Epoch 6: loss=0.4943  val_median_NSE(phys)=0.5681  val_RMSE_qspec=0.0790  NSE>0=0.83  lr=5.00e-04
+  -> Best median NSE: 0.5681
+Epoch 7: loss=0.4722  val_median_NSE(phys)=0.5805  val_RMSE_qspec=0.0763  NSE>0=0.82  lr=5.00e-04
+  -> Best median NSE: 0.5805
+Epoch 8: loss=0.4579  val_median_NSE(phys)=0.5895  val_RMSE_qspec=0.0765  NSE>0=0.80  lr=5.00e-04
+  -> Best median NSE: 0.5895
+=== C. EVAL ARTIFACTS ===
+--- q_lstm_usminus4_hpc_s42 ---
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_usminus4_hpc_s42/eval_val_per_station.csv: No such file or directory
+-rw-r--r--. 1 sunyiq g_sunyiq 340 Aug 20 13:45 /data1/home/sunyiq/nature_1st/models/q_lstm_usminus4_hpc_s42/best_metrics.json
+--- q_lstm_globalplus4_hpc_s42 ---
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_globalplus4_hpc_s42/eval_val_per_station.csv: No such file or directory
+-rw-r--r--. 1 sunyiq g_sunyiq 340 Aug 20 13:47 /data1/home/sunyiq/nature_1st/models/q_lstm_globalplus4_hpc_s42/best_metrics.json
+=== D. PAIRED ANALYSIS (same procedure as the 2026-08-20 verdict) ===
+[armC vs control] not ready yet
+[armD vs global] not ready yet
+[armD vs control] not ready yet
+=== END seq=16 (status only) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T13:55:29+0800
