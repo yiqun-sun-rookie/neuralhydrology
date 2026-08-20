@@ -1,0 +1,52 @@
+### channel=nature1st-attr-swap seq=15
+### host=login4
+### started=2026-08-20T11:44:23+0800
+### ---------- output ----------
+=== A. GUARD: output dirs must still be absent ===
+=== B. SUBMIT ===
+[us_minus_network] Submitted batch job 206409
+[hydroatlas_plus_network] Submitted batch job 206410
+jids= 206409 206410
+=== C. WAIT 4 min, then verify node + GPU (must NOT say CUDA False) ===
+---------- ------------------------ ------------ -------- ---------- --------- 
+    206409      q_armC_us_minus_net      RUNNING      0:0   00:03:40    ngu008 
+---------- ------------------------ ------------ -------- ---------- --------- 
+    206410   q_armD_global_plus_net      RUNNING      0:0   00:03:38    ngu008 
+-- newest arm C / arm D logs --
+--- /data1/home/sunyiq/nature_1st/logs/attr_swap/armC_usminus4-206409.out ---
+[Thu Aug 20 11:44:16 AM CST 2026] Job 206409 on ngu008
+PyTorch 2.4.0, CUDA True
+==============================================================================
+ARM C -- STREAM-NETWORK SUBTRACTION (single variable: 4 attributes removed)
+  control (12 US attrs)  median NSE 0.6432
+  global  (13 HydroATLAS) median NSE 0.5983
+  this arm: 8 attributes, seed 42, epochs 40
+  removed : ['hand_p50_m', 'gageii_Hydro_STRAHLER_MAX', 'gageii_Hydro_MAINSTEM_SINUOUSITY', 'gageii_Hydro_STREAMS_KM_SQ_KM']
+  stats   : stage_static_feature_stats_us_minus_network.json
+  meta    : trainable_mountain_stations.csv  (unchanged US table)
+==============================================================================
+============================================================
+--- /data1/home/sunyiq/nature_1st/logs/attr_swap/armD_globalplus4-206410.out ---
+[Thu Aug 20 11:44:16 AM CST 2026] Job 206410 on ngu008
+PyTorch 2.4.0, CUDA True
+==============================================================================
+ARM D -- STREAM-NETWORK ADDITION (single variable: 4 attributes added back)
+  control (12 US attrs)   median NSE 0.6432
+  global  (13 HydroATLAS) median NSE 0.5983
+  this arm: 17 attributes, seed 42, epochs 40
+  added   : ['hand_p50_m', 'gageii_Hydro_STRAHLER_MAX', 'gageii_Hydro_MAINSTEM_SINUOUSITY', 'gageii_Hydro_STREAMS_KM_SQ_KM']
+  stats   : stage_static_feature_stats_hydroatlas_plus_network.json
+  meta    : trainable_mountain_stations_hydroatlas_plus_network.csv
+==============================================================================
+============================================================
+-- guard lines (want: 8 US attributes / 17 attributes) --
+  [guard] train: 8 US attributes, 4 network attributes removed, 2908 stations in meta -- ablation verified
+  [guard] val: 8 US attributes, 4 network attributes removed, 2908 stations in meta -- ablation verified
+  [guard] train: 17 attributes (13 global + 4 network), 2908 stations in meta -- augmentation verified
+  [guard] val: 17 attributes (13 global + 4 network), 2908 stations in meta -- augmentation verified
+-- any FATAL / traceback? --
+none
+=== END seq=15 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T11:48:24+0800
