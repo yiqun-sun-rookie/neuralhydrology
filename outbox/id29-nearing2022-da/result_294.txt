@@ -1,0 +1,59 @@
+### channel=id29-nearing2022-da seq=294
+### host=login4
+### started=2026-08-21T02:04:19+0800
+### ---------- output ----------
+2026-08-21T02:04:19+0800
+=== N22 JOBS ===
+202228_[513-      N22-hyper   PENDING        0:00  1-00:00:00 (JobArrayTaskLimit)
+202226_[0-11 N22-eval-later   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202229   N22-agg-eval   PENDING        0:00  1-00:00:00 (Dependency)
+      202230  N22-agg-hyper   PENDING        0:00  1-00:00:00 (Dependency)
+      202294     N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315       N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-5   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+202215_[21-2       N22-time   PENDING        0:00  2-00:00:00 (JobArrayTaskLimit)
+      202293   N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+  202228_512      N22-hyper   RUNNING       24:00    23:36:00 ngu104
+  202228_511      N22-hyper   RUNNING     1:02:18    22:57:42 ngu101
+   202215_20       N22-time   RUNNING     9:45:34  1-14:14:26 ngu101
+    206430_0      N22-re214   RUNNING    12:28:46  2-23:31:14 ngu101
+   202215_19       N22-time   RUNNING    17:33:41  1-06:26:19 ngu104
+   202215_18       N22-time   RUNNING  1-00:25:15    23:34:45 ngu104
+    204860_6     N22-retime   RUNNING  2-04:44:09  1-07:15:51 ngu101
+=== RECENT TERMINAL STATES ===
+202228_492|N22-hyper|COMPLETED|0:0|00:34:09|2026-08-20T05:27:39
+202228_493|N22-hyper|COMPLETED|0:0|00:33:51|2026-08-20T05:51:06
+202228_494|N22-hyper|COMPLETED|0:0|00:35:14|2026-08-20T06:02:54
+202228_495|N22-hyper|COMPLETED|0:0|02:27:33|2026-08-20T08:18:39
+202228_496|N22-hyper|COMPLETED|0:0|02:01:30|2026-08-20T08:04:24
+202228_497|N22-hyper|COMPLETED|0:0|01:11:00|2026-08-20T09:15:30
+202228_498|N22-hyper|COMPLETED|0:0|01:59:56|2026-08-20T10:18:35
+202228_499|N22-hyper|COMPLETED|0:0|02:14:42|2026-08-20T11:30:12
+202228_500|N22-hyper|COMPLETED|0:0|02:41:43|2026-08-20T13:00:18
+202228_501|N22-hyper|COMPLETED|0:0|01:39:20|2026-08-20T13:09:32
+202228_502|N22-hyper|COMPLETED|0:0|01:15:22|2026-08-20T14:15:40
+202228_503|N22-hyper|COMPLETED|0:0|02:29:51|2026-08-20T15:39:23
+202228_504|N22-hyper|COMPLETED|0:0|02:33:14|2026-08-20T16:48:54
+202228_505|N22-hyper|COMPLETED|0:0|02:41:46|2026-08-20T18:21:10
+202228_506|N22-hyper|COMPLETED|0:0|01:58:40|2026-08-20T18:47:36
+202228_507|N22-hyper|COMPLETED|0:0|00:58:50|2026-08-20T19:20:00
+202228_508|N22-hyper|COMPLETED|0:0|06:52:43|2026-08-21T01:40:19
+202228_509|N22-hyper|COMPLETED|0:0|02:34:16|2026-08-20T21:54:16
+202228_510|N22-hyper|COMPLETED|0:0|03:07:45|2026-08-21T01:02:01
+204861_7|N22-retime|COMPLETED|0:0|1-13:55:44|2026-08-20T11:15:54
+=== RUNNING PROGRESS ===
+--- 202215_20 log=6895793 ---
+# Epoch 7:  43%|####2     | 2919/6821 [32:36<43:23,  1.50it/s, Loss: 0.0123]
+--- 206430_0 log=11039641 ---
+# Epoch 11:  37%|###6      | 2521/6821 [26:25<45:08,  1.59it/s, Loss: 0.0040]
+--- 202215_19 log=15306441 ---
+# Epoch 15:  34%|###4      | 2325/6821 [24:54<48:24,  1.55it/s, Loss: 0.0052]
+--- 202215_18 log=22426595 ---
+# Epoch 22:   3%|3         | 208/6821 [02:07<1:06:21,  1.66it/s, Loss: 0.0074]
+--- 204860_6 log=31409319 ---
+# Epoch 30:  32%|###1      | 2171/6821 [24:04<51:10,  1.51it/s, Loss: 0.0079]
+=== ROLE COUNTS ===
+{"missing_by_type": {"aggregation": 9, "evaluation": 600, "hyperparameter": 739, "training": 8}, "missing_total": 1356}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T02:04:51+0800
