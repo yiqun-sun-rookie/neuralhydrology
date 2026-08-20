@@ -1,0 +1,65 @@
+### channel=zhenjiang-oyv-qual seq=17
+### host=login4
+### started=2026-08-20T18:17:31+0800
+### ---------- output ----------
+=== A. LADDER 206431 ===
+completed_task_dirs=51 of 960
+     51      COMPLETED 
+      1        PENDING 
+      2        RUNNING 
+206431_[53-959   PENDING     0:00           (Priority)
+     206431_52   RUNNING     1:02               ngu008
+     206431_51   RUNNING     2:02               ngu008
+--- any failed or timed out ---
+(none)
+=== B. AUDIT 206419 ===
+    206419    COMPLETED      0:0   00:06:05 
+  "audit_status": "reproducible",
+  "mismatch_count": 0,
+  "reinference_count": 480,
+=== C. CARD PROBE ON hgpu2 AND hgpu4 ===
+probe_hgpu2_ngu003=206564
+probe_hgpu4_ngu101=206565
+=== D. WAIT FOR PROBES (max 12 min) ===
+    206564    ngu003    COMPLETED      0:0  00:00:57 
+    206565 None ass+      PENDING      0:0  00:00:00 
+=== E. CARD IDENTITY ON THOSE NODES ===
+[
+  {
+    "differing": {
+      "graphics_processor_driver_version": [
+        "580.76.05",
+        "535.104.05"
+      ],
+      "operating_system": [
+        "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+        "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17"
+      ]
+    },
+    "driver": "535.104.05",
+    "gpu": "NVIDIA GeForce RTX 3090",
+    "matches_pin": false,
+    "node": "ngu003",
+    "state_sha256": "bf01736d151084adbda1f99c508b602c16c39510468c43e5d7649c48e3f76803"
+  }
+]
+ALL_MATCH=no
+=== F. WIDEN THE LADDER ONLY IF BOTH MATCH ===
+partition_widened=no, the probe did not match the pinned environment
+=== G. QUEUE ===
+202228_[508-      N22-hyper   PENDING       0:00    (JobArrayTaskLimit)
+      205548    zj_oyv_node   PENDING       0:00            (Resources)
+206431_[61-9   zj_ladder_v2   PENDING       0:00             (Priority)
+      206565    zj_oyv_node   PENDING       0:00            (Resources)
+202226_[0-11 N22-eval-later   PENDING       0:00 (DependencyNeverSatisf
+      202229   N22-agg-eval   PENDING       0:00           (Dependency)
+      202230  N22-agg-hyper   PENDING       0:00           (Dependency)
+      202294     N22-export   PENDING       0:00           (Dependency)
+      202315       N22-gate   PENDING       0:00           (Dependency)
+      202507 N22-mask-iso-5   PENDING       0:00 (DependencyNeverSatisf
+202215_[21-2       N22-time   PENDING       0:00    (JobArrayTaskLimit)
+      202293   N22-manifest   PENDING       0:00          (JobHeldUser)
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T18:29:35+0800
