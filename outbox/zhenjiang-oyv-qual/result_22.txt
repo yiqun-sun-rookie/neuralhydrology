@@ -1,0 +1,56 @@
+### channel=zhenjiang-oyv-qual seq=22
+### host=login4
+### started=2026-08-21T04:47:24+0800
+### ---------- output ----------
+=== A. REPAIR THE CLONE ===
+commit_before=d02290e
+commit_after=e96bec7
+file_count=109
+present: scripts/modeling/water_level_joint_encoder_decoder_v2.py
+present: scripts/modeling/tidal_fluvial_hidden_gauge_v1_training.py
+present: scripts/analysis/tidal_fluvial_hidden_gauge_v1_contract.py
+present: results/modeling/wusongkou_astronomical_tide_v1_validation/tide_model.json
+present: data/processed/water_level_model_input_v7_beijing_realtime_verified/realtime_features/datong_realtime_features.csv
+=== B. DIGEST CHAIN ===
+{
+  "input_bad": [],
+  "input_files": 13,
+  "input_mismatched": 0,
+  "source_bad": [
+    "scripts/analysis/hpc/submit_independent_audit.slurm",
+    "scripts/analysis/independent_audit_zhenjiang_oyv_v1.py"
+  ],
+  "source_files": 19,
+  "source_mismatched": 2,
+  "tide_model_matches_frozen": true
+}
+=== C. SUBMIT THE LADDER AUDIT ===
+ladder_audit_job=207589
+=== D. WAIT (max 75 min) ===
+t=600s remaining=1
+=== E. RESULT ===
+       JobID  NodeList        State ExitCode    Elapsed 
+------------ --------- ------------ -------- ---------- 
+      207589    ngu011       FAILED      1:0   00:13:14 
+(no summary)
+--- mismatch kinds ---
+(no rows)
+--- stderr ---
+    return merge(
+           ^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 170, in merge
+    op = _MergeOperation(
+         ^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 794, in __init__
+    ) = self._get_merge_keys()
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/core/reshape/merge.py", line 1298, in _get_merge_keys
+    right_keys.append(right._get_label_or_level_values(rk))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/core/generic.py", line 1911, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'event_index'
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T05:01:45+0800
