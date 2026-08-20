@@ -1,0 +1,35 @@
+### channel=nature1st-attr-swap seq=13
+### host=login4
+### started=2026-08-20T10:35:34+0800
+### ---------- output ----------
+=== A. SPLIT FINGERPRINT (decisive: same file, same bytes?) ===
+--- q_lstm_control_hpc_s42 ---
+splits_path    /data1/home/sunyiq/nature_1st/data/interim/stage_station_splits.json
+splits_sha256  e2dee3bdd6622fa64a40e408f4ba06abe6aee5948470d180c69a21a5786039a2
+n_train_stations 2019  n_train_samples 3530259
+seed 42  model_class FlowAuxLongMemLSTM  n_params 1657985
+channels 11 ['Tair', 'Qair', 'PSurf', 'Wind_E', 'Wind_N', 'LWdown', 'CRainf_frac', 'CAPE', 'PotEvap', 'Rainf', 'SWdown']
+--- q_lstm_hydroatlas_hpc_s42 ---
+splits_path    /data1/home/sunyiq/nature_1st/data/interim/stage_station_splits.json
+splits_sha256  e2dee3bdd6622fa64a40e408f4ba06abe6aee5948470d180c69a21a5786039a2
+n_train_stations 2019  n_train_samples 3530259
+seed 42  model_class FlowAuxLongMemLSTM  n_params 1658049
+channels 11 ['Tair', 'Qair', 'PSurf', 'Wind_E', 'Wind_N', 'LWdown', 'CRainf_frac', 'CAPE', 'PotEvap', 'Rainf', 'SWdown']
+=== B. FULL CONFIG DIFF (only the attribute source should differ) ===
+IDENTICAL in both runs (39 keys):
+  batch_size, climate_gate, climate_gate_features, climate_gate_granularity, climate_gate_mode, climate_history_hours, climate_precipitation_epsilon_kg_m2, climate_temperature_threshold_celsius, daily_days, daily_history_end_mode, daily_norm_mode, daily_rain_mode, dropout, eval_space, horizon, include_static, initial_forget_bias, lr, lstm_hidden, lstm_layers, max_hours, max_hours_scope, met_vars, meteorology_alignment, mlp_hidden, model_class, num_dynamic_feats, num_workers, qinput_dir, seed, splits_path, static_gate, static_hidden, stride, target, task, train_samples, train_stations, window
+
+DIFFERENT (1 keys):
+  aux_dim: control=12  treatment=13
+=== C. EVAL UNIVERSE (same 431 stations scored?) ===
+control    n_eval=431 n_scored=431 station_list_sha256=09ee433e361b0a7e
+treatment  n_eval=431 n_scored=431 station_list_sha256=09ee433e361b0a7e
+=== D. NORMALISATION STATS: meteorology identical? ===
+control    met_norm        c1757390f1099be3
+control    q_norm          c4adc6f6659e804e
+treatment  met_norm        c1757390f1099be3
+treatment  q_norm          c4adc6f6659e804e
+=== END seq=13 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T10:35:47+0800
