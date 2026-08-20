@@ -1,0 +1,38 @@
+### channel=id29-nearing2022-da seq=288
+### host=login4
+### started=2026-08-20T13:35:16+0800
+### ---------- output ----------
+=== TIME ===
+2026-08-20T13:35:16+0800
+=== A. RERUN CHECKPOINTS ===
+204860_6|RUNNING|1-16:15:19|Unknown
+204861_7|COMPLETED|1-13:55:44|2026-08-20T11:15:54
+--- lead_2_holdout_0.75_seed_0 ---
+--- lead_2_holdout_1.0_seed_0 ---
+--- lead_1_holdout_0.5_seed_0 ---
+=== B. SUBMIT 202214 COORDINATE RERUN ===
+existing_re214_jobs=0
+already_complete=none
+batch_written sha256=8cd4fc169d155a833326869d308831efc2322c8b92fd870e733f8d0507d11497
+src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.5_seed_0.yml
+submitted_job=206430
+=== C. QUEUE ===
+202228_[504-      N22-hyper   PENDING        0:00  1-00:00:00 (JobArrayTaskLimit)
+202226_[0-11 N22-eval-later   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202229   N22-agg-eval   PENDING        0:00  1-00:00:00 (Dependency)
+      202230  N22-agg-hyper   PENDING        0:00  1-00:00:00 (Dependency)
+      202294     N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315       N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-5   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+202215_[20-2       N22-time   PENDING        0:00  2-00:00:00 (JobArrayTaskLimit)
+  206430_[0]      N22-re214   PENDING        0:00  3-12:00:00 (None)
+      202293   N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+  202228_503      N22-hyper   RUNNING       25:48    23:34:12 ngu104
+  202228_502      N22-hyper   RUNNING       35:02    23:24:58 ngu104
+   202215_19       N22-time   RUNNING     5:04:42  1-18:55:18 ngu104
+   202215_18       N22-time   RUNNING    11:56:16  1-12:03:44 ngu104
+=== END seq=288 ===
+2026-08-20T13:35:20+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T13:35:20+0800
