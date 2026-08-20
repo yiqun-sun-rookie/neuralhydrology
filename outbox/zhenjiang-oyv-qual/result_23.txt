@@ -1,0 +1,44 @@
+### channel=zhenjiang-oyv-qual seq=23
+### host=login4
+### started=2026-08-21T06:45:18+0800
+### ---------- output ----------
+=== A. UPDATE CLONE ===
+bundle_commit=91b7bce  files=109
+ladder_audit_clear=true
+=== B. SUBMIT ===
+ladder_audit_job=207599
+=== C. WAIT (max 70 min) ===
+t=600s remaining=1
+=== D. RESULT ===
+       JobID  NodeList        State ExitCode    Elapsed 
+------------ --------- ------------ -------- ---------- 
+      207599    ngu011    COMPLETED      0:0   00:13:18 
+{
+  "accepted_issue_position_count": 64735,
+  "audit_status": "reproducible",
+  "closed_event_count": 20,
+  "derived_float64_absolute_tolerance": 1e-12,
+  "event_count": 20,
+  "experiment_id": "zhenjiang_oyv_leave_one_year_out_direction_validation_v1",
+  "family": "ladder_v2",
+  "maximum_normalisation_ulp_allowed": 1,
+  "maximum_normalisation_ulp_distance": 1,
+  "mismatch_count": 0,
+  "prediction_package_count": 960,
+  "raw_float32_comparison": "exact_zero_tolerance",
+  "reinference_count": 960,
+  "schema_version": 1,
+  "stored_decision": null,
+  "task_count_audited": 960,
+  "written_utc": "2026-08-20T22:56:36.179281+00:00"
+}
+--- mismatch kinds ---
+--- first rows if any ---
+kind,subject,expected,observed
+--- stderr tail ---
+/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/analysis/independent_audit_zhenjiang_oyv_v1.py:453: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(checkpoint_path, map_location=device))
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T06:59:18+0800
