@@ -1,51 +1,91 @@
 #!/bin/bash
-# nature1st-attr-swap seq=15 -- SUBMIT the two stream-network ablation arms.
-# User authorised both GPU submissions (2026-08-20).
-#   arm C  scripts/hpc_train_q_us_minus_network.sbatch       -> models/q_lstm_usminus4_hpc_s42
-#   arm D  scripts/hpc_train_q_hydroatlas_plus_network.sbatch -> models/q_lstm_globalplus4_hpc_s42
-# Payload verified intact in seq=14 (statsC 8c2d69fe08fe4efc / statsD 81372304d67d2669 /
-# metaD 0b0fb44e4b8a2711). This cmd.sh MUST be superseded by a status-only one right
-# after it runs -- a daemon restart re-scans the channel and would resubmit.
+# nature1st-attr-swap seq=16 -- STATUS ONLY, supersedes the seq=15 submit command.
+# NO sbatch anywhere: a daemon restart re-scans this channel, and a leftover submit
+# command would launch duplicate jobs.
+#   206409 arm C  8 US attributes (12 minus the 4 network ones)
+#   206410 arm D  17 attributes (13 HydroATLAS + the 4 network ones)
+# Reference arms already finished: 206175 control 0.6432 / 206176 global 0.5983.
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
+C=206409
+D=206410
 
-echo "=== A. GUARD: output dirs must still be absent ==="
-BLOCK=0
-for d in q_lstm_usminus4_hpc_s42 q_lstm_globalplus4_hpc_s42; do
-    if [ -e "$RUN/models/$d" ]; then echo "PRESENT $d -- refusing to submit"; BLOCK=1; fi
-done
-[ "$BLOCK" -eq 0 ] || { echo "ABORT: stale output dir(s) present"; exit 1; }
+echo "=== A. JOB STATE ==="
+sacct -j $C,$D -X --format=JobID%10,JobName%24,State%12,ExitCode%8,Elapsed%12,NodeList%9 2>&1
 
-echo "=== B. SUBMIT ==="
-cd "$RUN" || exit 1
-mkdir -p logs/attr_swap
-JIDS=""
-for arm in us_minus_network hydroatlas_plus_network; do
-    out=$(sbatch scripts/hpc_train_q_${arm}.sbatch 2>&1)
-    line=$(echo "$out" | grep -E 'Submitted batch job [0-9]+' || echo "NO JOB ID -- submission rejected")
-    echo "[$arm] $line"
-    jid=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+$' || true)
-    if [ -z "$jid" ]; then
-        echo "[$arm] SUBMIT_FAILED; first 20 lines of wrapper output:"
-        echo "$out" | head -20
+echo "=== B. PROGRESS ==="
+for tag in "armC:$C" "armD:$D"; do
+    name=${tag%%:*}; jid=${tag##*:}
+    f=$(ls "$RUN"/logs/attr_swap/${name}_*-${jid}.out 2>/dev/null | head -1)
+    echo "--- $name ($jid) ---"
+    if [ -n "$f" ]; then
+        grep -E 'val_median_NSE|Best median NSE|early stop|Done\.' "$f" 2>/dev/null | tail -6 || true
     else
-        JIDS="$JIDS $jid"
+        echo "(no log yet)"
     fi
 done
-echo "jids=$JIDS"
 
-echo "=== C. WAIT 4 min, then verify node + GPU (must NOT say CUDA False) ==="
-sleep 240
-for j in $JIDS; do
-    sacct -j "$j" -X --format=JobID%10,JobName%24,State%12,ExitCode%8,Elapsed%10,NodeList%9 2>&1 | tail -2
+echo "=== C. EVAL ARTIFACTS ==="
+for d in q_lstm_usminus4_hpc_s42 q_lstm_globalplus4_hpc_s42; do
+    echo "--- $d ---"
+    ls -la "$RUN/models/$d"/best_metrics.json "$RUN/models/$d"/eval_val_per_station.csv 2>&1 | head -3
 done
-echo "-- newest arm C / arm D logs --"
-for f in $(ls -t "$RUN"/logs/attr_swap/armC_usminus4-*.out "$RUN"/logs/attr_swap/armD_globalplus4-*.out 2>/dev/null | head -2); do
-    echo "--- $f ---"; head -12 "$f" 2>&1
-done
-echo "-- guard lines (want: 8 US attributes / 17 attributes) --"
-grep -h '\[guard\]' "$RUN"/logs/attr_swap/armC_usminus4-*.out "$RUN"/logs/attr_swap/armD_globalplus4-*.out 2>/dev/null | head -6 || true
-echo "-- any FATAL / traceback? --"
-grep -l 'FATAL\|Traceback' "$RUN"/logs/attr_swap/armC_usminus4-*.err "$RUN"/logs/attr_swap/armD_globalplus4-*.err 2>/dev/null || echo "none"
 
-echo "=== END seq=15 ==="
+echo "=== D. PAIRED ANALYSIS (same procedure as the 2026-08-20 verdict) ==="
+CTRL="$RUN/models/q_lstm_control_hpc_s42/eval_val_per_station.csv"
+GLOB="$RUN/models/q_lstm_hydroatlas_hpc_s42/eval_val_per_station.csv"
+ARMC="$RUN/models/q_lstm_usminus4_hpc_s42/eval_val_per_station.csv"
+ARMD="$RUN/models/q_lstm_globalplus4_hpc_s42/eval_val_per_station.csv"
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null
+conda activate nh_final 2>/dev/null
+python - "$CTRL" "$GLOB" "$ARMC" "$ARMD" <<'PY' 2>&1
+import os, sys
+import numpy as np, pandas as pd
+
+ctrl, glob_, armc, armd = sys.argv[1:5]
+
+
+def load(p):
+    return pd.read_csv(p).set_index("station") if os.path.exists(p) else None
+
+
+CT, GL, C, D = load(ctrl), load(glob_), load(armc), load(armd)
+
+
+def paired(a, b, la, lb, note):
+    """b minus a, per station."""
+    if a is None or b is None:
+        print(f"[{lb} vs {la}] not ready yet")
+        return
+    j = b[["nse", "stratum"]].join(a[["nse"]], lsuffix="_b", rsuffix="_a").dropna(
+        subset=["nse_b", "nse_a"])
+    d = (j.nse_b - j.nse_a).values
+    rng = np.random.default_rng(0)
+    bs = [np.median(rng.choice(d, len(d), replace=True)) for _ in range(5000)]
+    print(f"[{lb} vs {la}]  {note}")
+    print(f"  paired stations     {len(j)}")
+    print(f"  {la:<10} median      {j.nse_a.median():.4f}")
+    print(f"  {lb:<10} median      {j.nse_b.median():.4f}")
+    print(f"  group median diff   {j.nse_b.median()-j.nse_a.median():+.4f}")
+    print(f"  PAIRED median diff  {np.median(d):+.4f}   "
+          f"95%CI [{np.percentile(bs,2.5):+.4f}, {np.percentile(bs,97.5):+.4f}]")
+    print(f"  worse / better      {(d<0).sum()} / {(d>0).sum()}  ({(d<0).mean()*100:.1f}% worse)")
+    print(f"  lost>0.10 {(d<-0.10).mean()*100:.1f}%   gained>0.10 {(d>0.10).mean()*100:.1f}%")
+    try:
+        from scipy.stats import wilcoxon
+        print(f"  wilcoxon p          {wilcoxon(j.nse_b, j.nse_a)[1]:.3e}")
+    except Exception as e:
+        print("  wilcoxon unavailable:", e)
+    print("  -- by stratum (paired) --")
+    for s, g in j.groupby("stratum"):
+        print(f"    {s:<12} n={len(g):>3}  paired {np.median((g.nse_b-g.nse_a).values):+.4f}")
+
+
+paired(CT, C, "control", "armC",
+       "subtraction: <= -0.020 network attrs carry information; >= -0.010 hypothesis dead")
+paired(GL, D, "global", "armD",
+       "addition (decisive): >= +0.020 they repair the gap; <= +0.010 hypothesis dead")
+paired(CT, D, "control", "armD", "context only: 17 attrs vs the US 12")
+PY
+
+echo "=== END seq=16 (status only) ==="
