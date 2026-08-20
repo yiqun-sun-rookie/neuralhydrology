@@ -1,0 +1,27 @@
+### channel=nature1st-attr-swap seq=16
+### host=login4
+### started=2026-08-20T11:50:50+0800
+### ---------- output ----------
+=== A. JOB STATE ===
+     JobID                  JobName        State ExitCode      Elapsed  NodeList 
+---------- ------------------------ ------------ -------- ------------ --------- 
+    206409      q_armC_us_minus_net      RUNNING      0:0     00:06:07    ngu008 
+    206410   q_armD_global_plus_net      RUNNING      0:0     00:06:05    ngu008 
+=== B. PROGRESS ===
+--- armC (206409) ---
+--- armD (206410) ---
+=== C. EVAL ARTIFACTS ===
+--- q_lstm_usminus4_hpc_s42 ---
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_usminus4_hpc_s42/best_metrics.json: No such file or directory
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_usminus4_hpc_s42/eval_val_per_station.csv: No such file or directory
+--- q_lstm_globalplus4_hpc_s42 ---
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_globalplus4_hpc_s42/best_metrics.json: No such file or directory
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_globalplus4_hpc_s42/eval_val_per_station.csv: No such file or directory
+=== D. PAIRED ANALYSIS (same procedure as the 2026-08-20 verdict) ===
+[armC vs control] not ready yet
+[armD vs global] not ready yet
+[armD vs control] not ready yet
+=== END seq=16 (status only) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T11:51:03+0800
