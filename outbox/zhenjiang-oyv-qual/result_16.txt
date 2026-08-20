@@ -1,0 +1,68 @@
+### channel=zhenjiang-oyv-qual seq=16
+### host=login4
+### started=2026-08-20T16:58:03+0800
+### ---------- output ----------
+=== A. LADDER ARRAY 206431 ===
+completed_task_dirs=20 of 960
+queue_entries=2
+     20      COMPLETED 
+      1        PENDING 
+      1        RUNNING 
+--- running now ---
+206431_[21-959   PENDING     0:00 (Priority)
+     206431_20   RUNNING     1:49     ngu008
+--- any non completed ---
+=== B. INDEPENDENT AUDIT 206419 ===
+    206419    ngu008    COMPLETED      0:0   00:06:05 
+not in queue
+--- audit r3 summary ---
+{
+  "accepted_issue_position_count": 64735,
+  "audit_status": "reproducible",
+  "closed_event_count": 20,
+  "derived_float64_absolute_tolerance": 1e-12,
+  "event_count": 20,
+  "experiment_id": "zhenjiang_oyv_leave_one_year_out_direction_validation_v1",
+  "maximum_normalisation_ulp_allowed": 1,
+  "maximum_normalisation_ulp_distance": 1,
+  "mismatch_count": 0,
+  "prediction_package_count": 480,
+  "raw_float32_comparison": "exact_zero_tolerance",
+  "reinference_count": 480,
+  "schema_version": 1,
+  "stored_decision": "NOT_CONFIRMED",
+  "task_count_audited": 480,
+  "written_utc": "2026-08-20T07:50:56.927109+00:00"
+}
+--- mismatch kinds ---
+=== C. WHOLE QUEUE FOR THIS USER ===
+202228_[507-      N22-hyper   PENDING       0:00  (JobArrayTaskLimit)
+      205548    zj_oyv_node   PENDING       0:00          (Resources)
+206431_[21-9   zj_ladder_v2   PENDING       0:00           (Priority)
+202226_[0-11 N22-eval-later   PENDING       0:00 (DependencyNeverSati
+      202229   N22-agg-eval   PENDING       0:00         (Dependency)
+      202230  N22-agg-hyper   PENDING       0:00         (Dependency)
+      202294     N22-export   PENDING       0:00         (Dependency)
+      202315       N22-gate   PENDING       0:00         (Dependency)
+      202507 N22-mask-iso-5   PENDING       0:00 (DependencyNeverSati
+202215_[21-2       N22-time   PENDING       0:00  (JobArrayTaskLimit)
+      202293   N22-manifest   PENDING       0:00        (JobHeldUser)
+  202228_506      N22-hyper   RUNNING       9:08               ngu104
+  202228_505      N22-hyper   RUNNING    1:18:40               ngu104
+   206431_20   zj_ladder_v2   RUNNING       1:49               ngu008
+total_entries=20
+=== D. PARTITION ===
+ PARTITION  AVAIL  NODES                     NODELIST      STATE
+    hgpu2p     up      7         ngu[004-008,010-011]      mixed
+    hgpu2p     up      1                       ngu001  allocated
+    hgpu2p     up      1                       ngu002       idle
+=== E. IMPACT ARTIFACTS ALREADY ON DISK ===
+completion_manifest.json
+fold_increments.csv
+increment_summary.csv
+removal_impact_summary.json
+task_horizon_errors.csv
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T16:58:04+0800
