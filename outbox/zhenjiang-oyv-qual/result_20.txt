@@ -1,0 +1,109 @@
+### channel=zhenjiang-oyv-qual seq=20
+### host=login4
+### started=2026-08-21T00:43:57+0800
+### ---------- output ----------
+=== A. LADDER 206431 ===
+ladder_tasks=960 of 960   v1_tasks=480 of 480
+    960      COMPLETED 
+--- failed, timed out or node failed ---
+(none)
+--- condition coverage ---
+    160 complete_observation
+    160 hidden_target_minus_datong
+     80 hidden_target_minus_jiangyin
+    160 hidden_target_minus_nanjing
+    160 hidden_target_minus_wusongkou
+    160 hidden_target_minus_xuliujing
+     80 hidden_target_minus_zhenjiang
+=== B. UPDATE CLONE AND SUBMIT THE LADDER EVALUATION ===
+bundle_commit=e58c4ae7e9f64adbf7b256add7ae9a5147c2b5df
+ladder_eval_job=207556
+       JobID  NodeList        State ExitCode    Elapsed 
+------------ --------- ------------ -------- ---------- 
+      207556    ngu010    COMPLETED      0:0   00:01:09 
+=== C. LADDER RESULT ===
+      6,
+      12,
+      24
+    ],
+    "primary_quantity": "mean absolute error in metres at the target station, minus the same quantity in the complete_observation arm of the same fold, target and seed; that difference is the cost of the failure",
+    "prohibited": [
+      "selecting a horizon after seeing the numbers",
+      "changing the aggregation after seeing the numbers",
+      "reopening the rising and falling state question on this data",
+      "reporting a subset of the five single-removal arms"
+    ],
+    "ranking_rule": "the five single-removal arms are ordered by median cost at one hour and again at six hours, and the complete ordering is reported both times; reporting only the largest is not permitted",
+    "secondary_quantity": "the same difference taken against the hidden_target arm instead, which isolates the cost of losing a further station once the target is already unavailable",
+    "significance_framing": "none; this is an estimation study and no arm is declared significant or not significant. Where an interval is wanted it is the across-fold range or a fold-clustered bootstrap, stated as such",
+    "spread_unit": "the eight fold years, because events inside one year are not exchangeable"
+  },
+  "result_label": "out_of_sample_measurement_not_hypothesis_test",
+  "schema_version": 1,
+  "seeds": [
+    17,
+    29,
+    43,
+    57,
+    71,
+    83,
+    97,
+    109,
+    127,
+    139
+  ],
+  "v1_task_count": 480,
+  "written_utc": "2026-08-20T16:46:03.393986+00:00"
+}
+
+--- cost of the target station failing, metres, vs complete_observation ---
+horizon_hours       1        3        6        12       24
+target                                                    
+jiangyin       0.00406  0.00128  0.00235  0.01492 -0.00367
+zhenjiang      0.00589  0.00709  0.00789  0.01173  0.00494
+
+--- station ranking, cost of losing one more station, vs hidden_target ---
+   target  horizon_hours  rank removed_station                     condition  median_cost_m  median_relative_cost  minimum_cost_m  maximum_cost_m  positive_fold_years
+zhenjiang              1     1         nanjing   hidden_target_minus_nanjing        0.00491               0.12208        -0.00217         0.01223                    7
+zhenjiang              1     2        jiangyin  hidden_target_minus_jiangyin        0.00380               0.08326        -0.00062         0.01488                    6
+zhenjiang              1     3          datong    hidden_target_minus_datong        0.00139               0.03696        -0.00322         0.00667                    6
+zhenjiang              1     4       wusongkou hidden_target_minus_wusongkou        0.00050               0.01119        -0.00390         0.00728                    5
+zhenjiang              1     5       xuliujing hidden_target_minus_xuliujing        0.00045               0.00890        -0.00351         0.00338                    5
+zhenjiang              6     1         nanjing   hidden_target_minus_nanjing        0.00291               0.05302         0.00058         0.01212                    8
+zhenjiang              6     2       xuliujing hidden_target_minus_xuliujing        0.00230               0.03905        -0.00082         0.00570                    7
+zhenjiang              6     3        jiangyin  hidden_target_minus_jiangyin        0.00183               0.03756        -0.00562         0.00518                    5
+zhenjiang              6     4       wusongkou hidden_target_minus_wusongkou        0.00168               0.03634        -0.00419         0.00825                    7
+zhenjiang              6     5          datong    hidden_target_minus_datong        0.00080               0.01647        -0.00373         0.00488                    7
+ jiangyin              1     1       xuliujing hidden_target_minus_xuliujing        0.01483               0.39375         0.00995         0.02327                    8
+ jiangyin              1     2         nanjing   hidden_target_minus_nanjing        0.00264               0.08358        -0.00088         0.00358                    7
+ jiangyin              1     3       zhenjiang hidden_target_minus_zhenjiang        0.00245               0.07861        -0.00077         0.00937                    7
+ jiangyin              1     4          datong    hidden_target_minus_datong        0.00202               0.05232        -0.00137         0.00736                    6
+ jiangyin              1     5       wusongkou hidden_target_minus_wusongkou       -0.00052              -0.01464        -0.00318         0.00267                    3
+ jiangyin              6     1       wusongkou hidden_target_minus_wusongkou        0.00541               0.08292         0.00190         0.00912                    8
+ jiangyin              6     2       xuliujing hidden_target_minus_xuliujing        0.00425               0.06200        -0.00163         0.00887                    7
+ jiangyin              6     3       zhenjiang hidden_target_minus_zhenjiang        0.00231               0.02928        -0.00086         0.00667                    6
+ jiangyin              6     4         nanjing   hidden_target_minus_nanjing        0.00070               0.01099        -0.00693         0.00501                    5
+ jiangyin              6     5          datong    hidden_target_minus_datong       -0.00077              -0.01202        -0.00278         0.00607                    2
+
+--- every arm at 1 and 6 hours, vs hidden_target ---
+horizon_hours                                  1        6
+target    condition                                      
+jiangyin  endpoints_only                 0.02815  0.01485
+          hidden_target_both_nearest     0.01614  0.00562
+          hidden_target_minus_datong     0.00202 -0.00077
+          hidden_target_minus_nanjing    0.00264  0.00070
+          hidden_target_minus_wusongkou -0.00052  0.00541
+          hidden_target_minus_xuliujing  0.01483  0.00425
+          hidden_target_minus_zhenjiang  0.00245  0.00231
+zhenjiang endpoints_only                 0.03794  0.02977
+          hidden_target_both_nearest     0.02401  0.01795
+          hidden_target_minus_datong     0.00139  0.00080
+          hidden_target_minus_jiangyin   0.00380  0.00183
+          hidden_target_minus_nanjing    0.00491  0.00291
+          hidden_target_minus_wusongkou  0.00050  0.00168
+          hidden_target_minus_xuliujing  0.00045  0.00230
+--- stderr ---
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T00:45:56+0800
