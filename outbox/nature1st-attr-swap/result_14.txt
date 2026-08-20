@@ -1,0 +1,53 @@
+### channel=nature1st-attr-swap seq=14
+### host=login4
+### started=2026-08-20T11:40:56+0800
+### ---------- output ----------
+=== A. INSTALL scripts ===
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/chain_prepare_network_ablation_static.py’ -> ‘/data1/home/sunyiq/nature_1st/scripts/chain_prepare_network_ablation_static.py’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/chain_train_q_us_minus_network.py’ -> ‘/data1/home/sunyiq/nature_1st/scripts/chain_train_q_us_minus_network.py’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/chain_train_q_hydroatlas_plus_network.py’ -> ‘/data1/home/sunyiq/nature_1st/scripts/chain_train_q_hydroatlas_plus_network.py’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/chain_eval_q_us_minus_network.py’ -> ‘/data1/home/sunyiq/nature_1st/scripts/chain_eval_q_us_minus_network.py’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/chain_eval_q_hydroatlas_plus_network.py’ -> ‘/data1/home/sunyiq/nature_1st/scripts/chain_eval_q_hydroatlas_plus_network.py’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/hpc_train_q_us_minus_network.sbatch’ -> ‘/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_us_minus_network.sbatch’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/hpc_train_q_hydroatlas_plus_network.sbatch’ -> ‘/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_hydroatlas_plus_network.sbatch’
+=== B. INSTALL attribute files ===
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/stage_static_feature_stats_us_minus_network.json’ -> ‘/data1/home/sunyiq/nature_1st/data/interim/stage_static_feature_stats_us_minus_network.json’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/stage_static_feature_stats_hydroatlas_plus_network.json’ -> ‘/data1/home/sunyiq/nature_1st/data/interim/stage_static_feature_stats_hydroatlas_plus_network.json’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/trainable_mountain_stations_hydroatlas_plus_network.csv’ -> ‘/data1/home/sunyiq/nature_1st/data/processed/station_meta/trainable_mountain_stations_hydroatlas_plus_network.csv’
+=== C. CONTENT FINGERPRINTS (must match the local values) ===
+expected: statsC=8c2d69fe08fe4efc n=8 | statsD=81372304d67d2669 n=17 | metaD=0b0fb44e4b8a2711 shape=(2908, 18)
+statsC 8c2d69fe08fe4efc n=8
+  keys ['gageii_Topo_SLOPE_PCT', 'gageii_BasinID_DRAIN_SQKM', 'gageii_LC06_Basin_DEVNLCD06', 'gageii_HydroMod_Dams_STOR_NID_2009', 'gageii_HydroMod_Dams_RAW_DIS_NEAREST_DAM', 'gageii_Hydro_PERDUN', 'gageii_Soils_PERMAVE', 'gageii_Topo_RRMEAN']
+statsD 81372304d67d2669 n=17
+  keys ['slp_dg_uav', 'ele_mt_sav', 'ele_mt_smn', 'ele_mt_smx', 'urb_pc_use', 'dor_pc_pva', 'cly_pc_uav', 'snd_pc_uav', 'kar_pc_use', 'swc_pc_syr', 'gwt_cm_sav', 'ari_ix_uav', 'for_pc_use', 'hand_p50_m', 'gageii_Hydro_STRAHLER_MAX', 'gageii_Hydro_MAINSTEM_SINUOUSITY', 'gageii_Hydro_STREAMS_KM_SQ_KM']
+metaD  0b0fb44e4b8a2711 shape=(2908, 18)
+=== D. SBATCH SCRIPTS SANITY (want 1 and 1 for each grep) ===
+/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_us_minus_network.sbatch:1
+/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_hydroatlas_plus_network.sbatch:1
+/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_us_minus_network.sbatch:2
+/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_hydroatlas_plus_network.sbatch:2
+-- epochs / output_dir lines --
+/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_us_minus_network.sbatch:50:  --output_dir models/q_lstm_usminus4_hpc_s42 --seed 42 --epochs 40 --num_workers 4
+/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_hydroatlas_plus_network.sbatch:52:  --output_dir models/q_lstm_globalplus4_hpc_s42 --seed 42 --epochs 40 --num_workers 4
+=== E. OUTPUT DIRS MUST NOT EXIST YET (the trainer refuses a non-empty dir) ===
+absent   q_lstm_usminus4_hpc_s42  (good)
+absent   q_lstm_globalplus4_hpc_s42  (good)
+=== F. CLUSTER STATE ===
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+202228_[502-659%2] hgpu4,hgp N22-hype   sunyiq PD       0:00      1 (JobArrayTaskLimit)
+            205548    hgpu2p zj_oyv_n   sunyiq PD       0:00      1 (Resources)
+  202226_[0-119%4] hgpu4,hgp N22-eval   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+            202229 hgpu4,hgp N22-agg-   sunyiq PD       0:00      1 (Dependency)
+            202230 hgpu4,hgp N22-agg-   sunyiq PD       0:00      1 (Dependency)
+            202294 hgpu4,hgp N22-expo   sunyiq PD       0:00      1 (Dependency)
+            202315 hgpu4,hgp N22-gate   sunyiq PD       0:00      1 (Dependency)
+            202507 hgpu4,hgp N22-mask   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+  202215_[20-22%3] hgpu4,hgp N22-time   sunyiq PD       0:00      1 (JobArrayTaskLimit)
+     JobID                JobName        State ExitCode    Elapsed  NodeList 
+---------- ---------------------- ------------ -------- ---------- --------- 
+    206175        q_ctrl_us_attrs    COMPLETED      0:0   05:16:08    ngu008 
+    206176   q_treat_global_attrs    COMPLETED      0:0   03:26:25    ngu008 
+=== END seq=14 (nothing submitted) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T11:41:12+0800
