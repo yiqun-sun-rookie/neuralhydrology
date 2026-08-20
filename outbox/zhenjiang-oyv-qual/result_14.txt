@@ -1,0 +1,20 @@
+### channel=zhenjiang-oyv-qual seq=14
+### host=login4
+### started=2026-08-20T12:14:41+0800
+### ---------- output ----------
+=== A. UPDATE CLONE ===
+bundle_commit=a06283b8305ab8d75fc26a7212a88a815fc02cfb
+impact_root_clear=true
+r3_root_clear=true
+=== B. SUBMIT BOTH ===
+impact_job=206418
+audit_r3_job=206419
+=== C. WAIT (max 90 min) ===
+t=600s remaining=1
+t=1200s remaining=1
+t=1800s remaining=1
+t=2400s remaining=1
+t=3000s remaining=1
+t=3600s remaining=1
+t=4200s remaining=1
+t=4800s remaining=1
