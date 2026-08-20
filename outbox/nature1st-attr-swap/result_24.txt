@@ -1,0 +1,63 @@
+### channel=nature1st-attr-swap seq=24
+### host=login4
+### started=2026-08-20T15:02:51+0800
+### ---------- output ----------
+=== A. JOB STATE ===
+     JobID                  JobName        State ExitCode      Elapsed  NodeList 
+---------- ------------------------ ------------ -------- ------------ --------- 
+    206409      q_armC_us_minus_net      RUNNING      0:0     03:18:09    ngu008 
+    206410   q_armD_global_plus_net      RUNNING      0:0     03:18:07    ngu008 
+=== B. PROGRESS ===
+--- armC (206409) ---
+Epoch 10: loss=0.4356  val_median_NSE(phys)=0.6313  val_RMSE_qspec=0.0734  NSE>0=0.85  lr=5.00e-04
+  -> Best median NSE: 0.6313
+Epoch 11: loss=0.4242  val_median_NSE(phys)=0.6357  val_RMSE_qspec=0.0739  NSE>0=0.84  lr=5.00e-04
+  -> Best median NSE: 0.6357
+Epoch 12: loss=0.4124  val_median_NSE(phys)=0.6242  val_RMSE_qspec=0.0739  NSE>0=0.86  lr=5.00e-04
+Epoch 13: loss=0.4040  val_median_NSE(phys)=0.6321  val_RMSE_qspec=0.0742  NSE>0=0.84  lr=5.00e-04
+--- armD (206410) ---
+  -> Best median NSE: 0.5895
+Epoch 9: loss=0.4416  val_median_NSE(phys)=0.5887  val_RMSE_qspec=0.0781  NSE>0=0.82  lr=5.00e-04
+Epoch 10: loss=0.4282  val_median_NSE(phys)=0.6059  val_RMSE_qspec=0.0759  NSE>0=0.82  lr=5.00e-04
+  -> Best median NSE: 0.6059
+Epoch 11: loss=0.4173  val_median_NSE(phys)=0.6012  val_RMSE_qspec=0.0767  NSE>0=0.82  lr=5.00e-04
+Epoch 12: loss=0.4073  val_median_NSE(phys)=0.5843  val_RMSE_qspec=0.0761  NSE>0=0.82  lr=5.00e-04
+=== B2. EPOCH-MATCHED TRAJECTORY (the only fair mid-run read) ===
+epoch   control    global      armC      armD
+    1    0.5262    0.4975    0.4731    0.5221
+    2    0.5415    0.5055    0.5626    0.5538
+    3    0.5962    0.5496    0.5585    0.5545
+    4    0.5812    0.5434    0.5908    0.5626
+    5    0.6123    0.5640    0.6096    0.5679
+    6    0.6122    0.5786    0.6005    0.5681
+    7    0.6005    0.5792    0.5969    0.5805
+    8    0.6220    0.5983    0.6142    0.5895
+    9    0.6093    0.5751    0.6243    0.5887
+   10    0.6265    0.5707    0.6313    0.6059
+   11    0.6126    0.5881    0.6357    0.6012
+   12    0.6273    0.5966    0.6242    0.5843
+   13    0.6329    0.5923    0.6321         -
+   14    0.6166         -         -         -
+   15    0.6432         -         -         -
+   16    0.6394         -         -         -
+   17    0.6288         -         -         -
+   18    0.6330         -         -         -
+   19    0.6409         -         -         -
+   20    0.6361         -         -         -
+best     0.6432    0.5983    0.6357    0.6059
+epochs       20        13        13        12
+=== C. EVAL ARTIFACTS ===
+--- q_lstm_usminus4_hpc_s42 ---
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_usminus4_hpc_s42/eval_val_per_station.csv: No such file or directory
+-rw-r--r--. 1 sunyiq g_sunyiq 344 Aug 20 14:30 /data1/home/sunyiq/nature_1st/models/q_lstm_usminus4_hpc_s42/best_metrics.json
+--- q_lstm_globalplus4_hpc_s42 ---
+ls: cannot access /data1/home/sunyiq/nature_1st/models/q_lstm_globalplus4_hpc_s42/eval_val_per_station.csv: No such file or directory
+-rw-r--r--. 1 sunyiq g_sunyiq 343 Aug 20 14:18 /data1/home/sunyiq/nature_1st/models/q_lstm_globalplus4_hpc_s42/best_metrics.json
+=== D. PAIRED ANALYSIS (same procedure as the 2026-08-20 verdict) ===
+[armC vs control] not ready yet
+[armD vs global] not ready yet
+[armD vs control] not ready yet
+=== END status round ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T15:03:08+0800
