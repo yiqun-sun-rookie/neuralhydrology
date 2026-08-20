@@ -1,0 +1,37 @@
+### channel=nature1st-attr-swap seq=32
+### host=login4
+### started=2026-08-20T20:16:42+0800
+### ---------- output ----------
+=== A. INSTALL ===
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/chain_prepare_attrset.py’ -> ‘/data1/home/sunyiq/nature_1st/scripts/chain_prepare_attrset.py’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/chain_train_q_attrset.py’ -> ‘/data1/home/sunyiq/nature_1st/scripts/chain_train_q_attrset.py’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/chain_eval_q_attrset.py’ -> ‘/data1/home/sunyiq/nature_1st/scripts/chain_eval_q_attrset.py’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/hpc_train_q_armE_minus4.sbatch’ -> ‘/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_armE_minus4.sbatch’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/hpc_train_q_armF_plus4.sbatch’ -> ‘/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_armF_plus4.sbatch’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/stage_static_feature_stats_armE.json’ -> ‘/data1/home/sunyiq/nature_1st/data/interim/stage_static_feature_stats_armE.json’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/stage_static_feature_stats_armF.json’ -> ‘/data1/home/sunyiq/nature_1st/data/interim/stage_static_feature_stats_armF.json’
+‘/data1/home/sunyiq/hpc_mailbox/inbox/nature1st-attr-swap/trainable_mountain_stations_armF.csv’ -> ‘/data1/home/sunyiq/nature_1st/data/processed/station_meta/trainable_mountain_stations_armF.csv’
+=== B. FINGERPRINT GATE (submit only if all three match) ===
+statsE 8ae820476141bd2a n=4 MATCH
+statsF 1398b7375f651487 n=17 MATCH
+metaF  be45af293fad3c92 shape=(2908, 18) MATCH
+GATE_PASS
+=== C. OUTPUT DIRS MUST BE ABSENT ===
+absent  q_lstm_armE_hpc_s42 (good)
+absent  q_lstm_armF_hpc_s42 (good)
+=== D. SUBMIT ===
+[armE_minus4] Submitted batch job 206718
+[armF_plus4] Submitted batch job 206719
+jids= 206718 206719
+=== E. WAIT 4 min, verify node + GPU + attribute guards ===
+---------- ------------------------ ------------ -------- ---------- --------- 
+    206718       q_armE_minus_lowR2      PENDING      0:0   00:00:00 None ass+ 
+---------- ------------------------ ------------ -------- ---------- --------- 
+    206719 q_armF_global_plus_lowR2      PENDING      0:0   00:00:00 None ass+ 
+-- guard lines (want 4 attributes / 17 attributes) --
+-- any FATAL / traceback? --
+none
+=== END submit round ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T20:20:50+0800
