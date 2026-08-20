@@ -1,0 +1,38 @@
+### channel=zhenjiang-oyv-qual seq=21
+### host=login4
+### started=2026-08-21T02:46:55+0800
+### ---------- output ----------
+=== A. UPDATE CLONE ===
+bundle_commit=d02290e9368ccb0b5c14b69db3c0f29c813bf8e4
+ladder_tasks=960  v1_tasks=480
+ladder_audit_root_clear=true
+=== B. LADDER IMPACT ARTIFACTS ===
+completion_manifest.json
+ladder_cost_summary.csv
+ladder_fold_costs.csv
+ladder_summary.json
+ladder_task_errors.csv
+station_ranking.csv
+  "arm_count": 10,
+  "ladder_task_count": 960,
+  "v1_task_count": 480,
+=== C. SUBMIT THE LADDER AUDIT ===
+ladder_audit_job=207569
+=== D. WAIT (max 80 min) ===
+=== E. RESULT ===
+       JobID  NodeList        State ExitCode    Elapsed 
+------------ --------- ------------ -------- ---------- 
+      207569    ngu011       FAILED      1:0   00:00:21 
+(no summary)
+--- mismatch kinds ---
+(no rows)
+--- first rows if any ---
+--- stderr ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/analysis/independent_audit_zhenjiang_oyv_v1.py", line 78, in <module>
+    from water_level_joint_encoder_decoder_v2 import (  # noqa: E402
+ModuleNotFoundError: No module named 'water_level_joint_encoder_decoder_v2'
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T02:47:52+0800
