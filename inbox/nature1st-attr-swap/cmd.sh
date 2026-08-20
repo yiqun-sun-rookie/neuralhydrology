@@ -13,6 +13,12 @@ F=206719
 echo "=== A. JOB STATE ==="
 sacct -j $E,$F -X --format=JobID%10,JobName%26,State%12,ExitCode%8,Elapsed%12,NodeList%9 2>&1
 
+echo "=== A2. QUEUE REASON (why still pending?) ==="
+squeue -j $E,$F -o "%.10i %.24j %.10T %.10M %.20R %.12Q" 2>&1 | head -5
+echo "-- partition hgpu2p occupancy --"
+squeue -p hgpu2p -o "%.10i %.10u %.10T %.12M %.20R" 2>&1 | head -12
+sinfo -p hgpu2p -o "%.12P %.6a %.10l %.6D %.6t %N" 2>&1 | head -6
+
 echo "=== B. PROGRESS ==="
 for tag in "armE:armE_minus4:$E" "armF:armF_plus4:$F"; do
     name=${tag%%:*}; rest=${tag#*:}; pre=${rest%%:*}; jid=${rest##*:}
