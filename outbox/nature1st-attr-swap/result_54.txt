@@ -1,0 +1,80 @@
+### channel=nature1st-attr-swap seq=54
+### host=login4
+### started=2026-08-21T05:11:18+0800
+### ---------- output ----------
+=== A. JOB STATE ===
+     JobID                    JobName        State ExitCode      Elapsed  NodeList 
+---------- -------------------------- ------------ -------- ------------ --------- 
+    206718         q_armE_minus_lowR2    COMPLETED      0:0     03:02:21    ngu011 
+    206719   q_armF_global_plus_lowR2      RUNNING      0:0     02:47:25    ngu011 
+=== A2. QUEUE REASON (why still pending?) ===
+     JOBID                     NAME      STATE       TIME     NODELIST(REASON)     PRIORITY
+    206719 q_armF_global_plus_lowR2    RUNNING    2:47:11               ngu011       236283
+-- partition hgpu2p occupancy --
+     JOBID       USER      STATE         TIME     NODELIST(REASON)
+    206719     sunyiq    RUNNING      2:47:11               ngu011
+   PARTITION  AVAIL  TIMELIMIT  NODES  STATE NODELIST
+      hgpu2p     up   infinite      5    mix ngu[005-007,010-011]
+      hgpu2p     up   infinite      3  alloc ngu[001,004,008]
+      hgpu2p     up   infinite      1   idle ngu002
+=== B. PROGRESS ===
+--- armE (206718) ---
+Epoch 8: loss=0.5026  val_median_NSE(phys)=0.5612  val_RMSE_qspec=0.0797  NSE>0=0.79  lr=5.00e-04
+Epoch 9: loss=0.4932  val_median_NSE(phys)=0.5786  val_RMSE_qspec=0.0791  NSE>0=0.81  lr=5.00e-04
+Epoch 10: loss=0.4714  val_median_NSE(phys)=0.5619  val_RMSE_qspec=0.0791  NSE>0=0.80  lr=5.00e-04
+Epoch 11: loss=0.4309  val_median_NSE(phys)=0.5559  val_RMSE_qspec=0.0791  NSE>0=0.79  lr=2.50e-04
+Epoch 12: loss=0.4163  val_median_NSE(phys)=0.5553  val_RMSE_qspec=0.0792  NSE>0=0.79  lr=2.50e-04
+Done. Best val median NSE: 0.5819 at epoch 7
+--- armF (206719) ---
+Epoch 8: loss=0.4678  val_median_NSE(phys)=0.6049  val_RMSE_qspec=0.0759  NSE>0=0.84  lr=5.00e-04
+  -> Best median NSE: 0.6049
+Epoch 9: loss=0.4507  val_median_NSE(phys)=0.6186  val_RMSE_qspec=0.0752  NSE>0=0.84  lr=5.00e-04
+  -> Best median NSE: 0.6186
+Epoch 10: loss=0.4375  val_median_NSE(phys)=0.5992  val_RMSE_qspec=0.0770  NSE>0=0.85  lr=5.00e-04
+Epoch 11: loss=0.4247  val_median_NSE(phys)=0.6186  val_RMSE_qspec=0.0749  NSE>0=0.84  lr=5.00e-04
+=== B2. EPOCH-MATCHED TRAJECTORY ===
+epoch   control    global      armC      armD      armE      armF
+    1    0.5262    0.4975    0.4731    0.5221    0.5011    0.5421
+    2    0.5415    0.5055    0.5626    0.5538    0.5073    0.5678
+    3    0.5962    0.5496    0.5585    0.5545    0.5107    0.5890
+    4    0.5812    0.5434    0.5908    0.5626    0.5462    0.5738
+    5    0.6123    0.5640    0.6096    0.5679    0.5522    0.5957
+    6    0.6122    0.5786    0.6005    0.5681    0.5465    0.5836
+    7    0.6005    0.5792    0.5969    0.5805    0.5819    0.5974
+    8    0.6220    0.5983    0.6142    0.5895    0.5612    0.6049
+    9    0.6093    0.5751    0.6243    0.5887    0.5786    0.6186
+   10    0.6265    0.5707    0.6313    0.6059    0.5619    0.5992
+   11    0.6126    0.5881    0.6357    0.6012    0.5559    0.6186
+   12    0.6273    0.5966    0.6242    0.5843    0.5553         -
+   13    0.6329    0.5923    0.6321    0.5770         -         -
+   14    0.6166         -    0.6407    0.5984         -         -
+   15    0.6432         -    0.6188    0.5974         -         -
+   16    0.6394         -    0.6299         -         -         -
+   17    0.6288         -    0.6352         -         -         -
+   18    0.6330         -    0.6306         -         -         -
+   19    0.6409         -    0.6466         -         -         -
+   20    0.6361         -    0.6355         -         -         -
+   21         -         -    0.6358         -         -         -
+   22         -         -    0.6216         -         -         -
+   23         -         -    0.6388         -         -         -
+   24         -         -    0.6386         -         -         -
+best     0.6432    0.5983    0.6466    0.6059    0.5819    0.6186
+epochs       20        13        24        15        12        11
+=== C. PAIRED ANALYSIS (same procedure as every verdict in this campaign) ===
+[armE vs armC]  subtraction: <= -0.020 those 4 carry the information; >= -0.010 they do not
+  n=431  armC median 0.6466   armE median 0.5819
+  group median diff   -0.0647
+  PAIRED median diff  -0.0568   95%CI [-0.0829, -0.0431]
+  worse/better 294/137  (68.2% worse)   lost>0.10 41.3%  gained>0.10 13.0%
+  wilcoxon p          2.455e-16
+    arid         n=178  paired -0.0829
+    humid        n= 18  paired -0.0446
+    intermediate n=208  paired -0.0487
+    snow         n= 27  paired +0.0094
+[armF vs global] not ready yet
+[armF vs armD] not ready yet
+[armF vs control] not ready yet
+=== END status round ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T05:11:20+0800
