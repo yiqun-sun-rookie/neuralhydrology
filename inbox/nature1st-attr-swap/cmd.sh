@@ -1,90 +1,122 @@
 #!/bin/bash
-# nature1st-attr-swap -- install and SUBMIT arms E and F (user authorised 2026-08-20).
-#   arm E  4 attributes  = the winning 8 minus the 4 the global set cannot reconstruct
-#   arm F  17 attributes = the 13 global plus those same 4  (same count as arm D)
-# The submit is gated on a byte-level fingerprint check: mismatch => abort, no job.
-# This cmd.sh MUST be superseded by a status-only one right after it runs -- a daemon
-# restart re-scans the channel and a leftover submit command would duplicate the jobs.
+# nature1st-attr-swap -- STATUS ONLY, supersedes the arm E/F submit command.
+# NO sbatch anywhere: a daemon restart re-scans this channel, and a leftover submit
+# command would launch duplicate jobs.
+#   206718 arm E   4 attributes = the winning 8 minus the 4 the global set cannot rebuild
+#   206719 arm F  17 attributes = the 13 global plus those same 4 (same count as arm D)
+# Finished arms: control 0.6432 / global 0.5983 / armC 0.6466 / armD 0.6059.
 set -o pipefail
-CH=nature1st-attr-swap
-IN=$HOME/hpc_mailbox/inbox/$CH
 RUN=/data1/home/sunyiq/nature_1st
+E=206718
+F=206719
 
-echo "=== A. INSTALL ==="
-for f in chain_prepare_attrset.py chain_train_q_attrset.py chain_eval_q_attrset.py \
-         hpc_train_q_armE_minus4.sbatch hpc_train_q_armF_plus4.sbatch; do
-    cp -v "$IN/$f" "$RUN/scripts/" 2>&1
+echo "=== A. JOB STATE ==="
+sacct -j $E,$F -X --format=JobID%10,JobName%26,State%12,ExitCode%8,Elapsed%12,NodeList%9 2>&1
+
+echo "=== B. PROGRESS ==="
+for tag in "armE:armE_minus4:$E" "armF:armF_plus4:$F"; do
+    name=${tag%%:*}; rest=${tag#*:}; pre=${rest%%:*}; jid=${rest##*:}
+    f=$(ls "$RUN"/logs/attr_swap/${pre}-${jid}.out 2>/dev/null | head -1)
+    echo "--- $name ($jid) ---"
+    if [ -n "$f" ]; then
+        grep -E '\[guard\]|val_median_NSE|Best median NSE|early stop|Done\.' "$f" 2>/dev/null | tail -6 || true
+    else
+        echo "(no log yet -- still queued?)"
+    fi
 done
-cp -v "$IN/stage_static_feature_stats_armE.json" "$RUN/data/interim/" 2>&1
-cp -v "$IN/stage_static_feature_stats_armF.json" "$RUN/data/interim/" 2>&1
-cp -v "$IN/trainable_mountain_stations_armF.csv" "$RUN/data/processed/station_meta/" 2>&1
-sed -i 's/\r$//' "$RUN"/scripts/chain_*_attrset.py "$RUN"/scripts/hpc_train_q_arm[EF]_*.sbatch \
-                 "$RUN"/data/interim/stage_static_feature_stats_arm[EF].json \
-                 "$RUN"/data/processed/station_meta/trainable_mountain_stations_armF.csv 2>&1
 
-echo "=== B. FINGERPRINT GATE (submit only if all three match) ==="
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
-source $HOME/miniconda3/etc/profile.d/conda.sh 2>/dev/null
-conda activate "${CONDA_ENV:-nh_final}" 2>&1 | head -2
+echo "=== B2. EPOCH-MATCHED TRAJECTORY ==="
 python - <<'PY' 2>&1
-import hashlib, json, sys
-import pandas as pd
-from pathlib import Path
-R = Path("/data1/home/sunyiq/nature_1st")
-WANT = {"statsE": ("8ae820476141bd2a", 4), "statsF": ("1398b7375f651487", 17),
-        "metaF": ("be45af293fad3c92", (2908, 18))}
-ok = True
-for tag, p in [("statsE", R / "data/interim/stage_static_feature_stats_armE.json"),
-               ("statsF", R / "data/interim/stage_static_feature_stats_armF.json")]:
-    d = json.loads(p.read_text())
-    h = hashlib.sha256(json.dumps(d, sort_keys=True).encode()).hexdigest()[:16]
-    good = (h, len(d)) == WANT[tag]
-    ok &= good
-    print(f"{tag} {h} n={len(d)} {'MATCH' if good else 'MISMATCH want ' + str(WANT[tag])}")
-df = pd.read_csv(R / "data/processed/station_meta/trainable_mountain_stations_armF.csv")
-h = hashlib.sha256(df.to_csv(index=False, lineterminator="\n").encode()).hexdigest()[:16]
-good = (h, df.shape) == WANT["metaF"]
-ok &= good
-print(f"metaF  {h} shape={df.shape} {'MATCH' if good else 'MISMATCH want ' + str(WANT['metaF'])}")
-print("GATE_" + ("PASS" if ok else "FAIL"))
-sys.exit(0 if ok else 1)
+import json, os
+R = "/data1/home/sunyiq/nature_1st/models"
+ARMS = [("control", "q_lstm_control_hpc_s42"), ("global", "q_lstm_hydroatlas_hpc_s42"),
+        ("armC", "q_lstm_usminus4_hpc_s42"), ("armD", "q_lstm_globalplus4_hpc_s42"),
+        ("armE", "q_lstm_armE_hpc_s42"), ("armF", "q_lstm_armF_hpc_s42")]
+hist = {}
+for lab, d in ARMS:
+    p = os.path.join(R, d, "train_history.jsonl")
+    if not os.path.exists(p):
+        continue
+    rows = []
+    for line in open(p):
+        line = line.strip()
+        if line:
+            try:
+                rows.append(json.loads(line))
+            except Exception:
+                pass
+    if rows:
+        hist[lab] = rows
+if not hist:
+    print("(no train_history.jsonl found)")
+else:
+    def nse(r):
+        for k in ("val_median_nse", "median_nse", "val_median_NSE", "nse"):
+            if k in r:
+                return r[k]
+        return (r.get("val") or {}).get("median_nse")
+    labs = [l for l, _ in ARMS if l in hist]
+    n = max(len(hist[l]) for l in labs)
+    print("epoch  " + "  ".join(f"{l:>8}" for l in labs))
+    for i in range(n):
+        cells = []
+        for l in labs:
+            v = nse(hist[l][i]) if i < len(hist[l]) else None
+            cells.append(f"{v:>8.4f}" if isinstance(v, (int, float)) else f"{'-':>8}")
+        print(f"{i+1:>5}  " + "  ".join(cells))
+    print("best   " + "  ".join(
+        f"{max([x for x in (nse(r) for r in hist[l]) if isinstance(x,(int,float))] or [float('nan')]):>8.4f}"
+        for l in labs))
+    print("epochs " + "  ".join(f"{len(hist[l]):>8}" for l in labs))
 PY
-GATE=$?
-[ "$GATE" -eq 0 ] || { echo "ABORT: fingerprint gate failed, nothing submitted"; exit 1; }
 
-echo "=== C. OUTPUT DIRS MUST BE ABSENT ==="
-BLOCK=0
-for d in q_lstm_armE_hpc_s42 q_lstm_armF_hpc_s42; do
-    if [ -e "$RUN/models/$d" ]; then echo "PRESENT $d -- refusing to submit"; BLOCK=1; \
-    else echo "absent  $d (good)"; fi
-done
-[ "$BLOCK" -eq 0 ] || { echo "ABORT: stale output dir(s)"; exit 1; }
+echo "=== C. PAIRED ANALYSIS (same procedure as every verdict in this campaign) ==="
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null
+conda activate nh_final 2>/dev/null
+python - <<'PY' 2>&1
+import os
+import numpy as np, pandas as pd
+R = "/data1/home/sunyiq/nature_1st/models"
+P = {"control": "q_lstm_control_hpc_s42", "global": "q_lstm_hydroatlas_hpc_s42",
+     "armC": "q_lstm_usminus4_hpc_s42", "armD": "q_lstm_globalplus4_hpc_s42",
+     "armE": "q_lstm_armE_hpc_s42", "armF": "q_lstm_armF_hpc_s42"}
 
-echo "=== D. SUBMIT ==="
-cd "$RUN" || exit 1
-mkdir -p logs/attr_swap
-JIDS=""
-for s in armE_minus4 armF_plus4; do
-    out=$(sbatch scripts/hpc_train_q_${s}.sbatch 2>&1)
-    line=$(echo "$out" | grep -E 'Submitted batch job [0-9]+' || echo "NO JOB ID -- rejected")
-    echo "[$s] $line"
-    jid=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+$' || true)
-    if [ -z "$jid" ]; then echo "[$s] SUBMIT_FAILED, wrapper said:"; echo "$out" | head -20; \
-    else JIDS="$JIDS $jid"; fi
-done
-echo "jids=$JIDS"
 
-echo "=== E. WAIT 4 min, verify node + GPU + attribute guards ==="
-sleep 240
-for j in $JIDS; do
-    sacct -j "$j" -X --format=JobID%10,JobName%24,State%12,ExitCode%8,Elapsed%10,NodeList%9 2>&1 | tail -2
-done
-for f in $(ls -t "$RUN"/logs/attr_swap/armE_minus4-*.out "$RUN"/logs/attr_swap/armF_plus4-*.out 2>/dev/null | head -2); do
-    echo "--- $f ---"; head -10 "$f" 2>&1
-done
-echo "-- guard lines (want 4 attributes / 17 attributes) --"
-grep -h '\[guard\]' "$RUN"/logs/attr_swap/armE_minus4-*.out "$RUN"/logs/attr_swap/armF_plus4-*.out 2>/dev/null | head -6 || true
-echo "-- any FATAL / traceback? --"
-grep -l 'FATAL\|Traceback' "$RUN"/logs/attr_swap/armE_minus4-*.err "$RUN"/logs/attr_swap/armF_plus4-*.err 2>/dev/null || echo "none"
+def load(k):
+    p = os.path.join(R, P[k], "eval_val_per_station.csv")
+    return pd.read_csv(p).set_index("station") if os.path.exists(p) else None
 
-echo "=== END submit round ==="
+
+def paired(la, lb, note):
+    a, b = load(la), load(lb)
+    if a is None or b is None:
+        print(f"[{lb} vs {la}] not ready yet")
+        return
+    j = b[["nse", "stratum"]].join(a[["nse"]], lsuffix="_b", rsuffix="_a").dropna(
+        subset=["nse_b", "nse_a"])
+    d = (j.nse_b - j.nse_a).values
+    rng = np.random.default_rng(0)
+    bs = [np.median(rng.choice(d, len(d), replace=True)) for _ in range(5000)]
+    print(f"[{lb} vs {la}]  {note}")
+    print(f"  n={len(j)}  {la} median {j.nse_a.median():.4f}   {lb} median {j.nse_b.median():.4f}")
+    print(f"  group median diff   {j.nse_b.median()-j.nse_a.median():+.4f}")
+    print(f"  PAIRED median diff  {np.median(d):+.4f}   "
+          f"95%CI [{np.percentile(bs,2.5):+.4f}, {np.percentile(bs,97.5):+.4f}]")
+    print(f"  worse/better {(d<0).sum()}/{(d>0).sum()}  ({(d<0).mean()*100:.1f}% worse)   "
+          f"lost>0.10 {(d<-0.10).mean()*100:.1f}%  gained>0.10 {(d>0.10).mean()*100:.1f}%")
+    try:
+        from scipy.stats import wilcoxon
+        print(f"  wilcoxon p          {wilcoxon(j.nse_b, j.nse_a)[1]:.3e}")
+    except Exception as e:
+        print("  wilcoxon unavailable:", e)
+    for s, g in j.groupby("stratum"):
+        print(f"    {s:<12} n={len(g):>3}  paired {np.median((g.nse_b-g.nse_a).values):+.4f}")
+
+
+paired("armC", "armE", "subtraction: <= -0.020 those 4 carry the information; >= -0.010 they do not")
+paired("global", "armF", "addition (decisive): >= +0.020 repairs; <= +0.010 does not")
+paired("armD", "armF", "COUNT-CONTROLLED: both arms have 17 attributes, only identity differs")
+paired("control", "armF", "context: how much of the US 12 is recovered")
+PY
+
+echo "=== END status round ==="
