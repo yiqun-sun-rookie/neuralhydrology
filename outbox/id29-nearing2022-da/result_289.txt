@@ -1,0 +1,67 @@
+### channel=id29-nearing2022-da seq=289
+### host=login4
+### started=2026-08-20T13:38:06+0800
+### ---------- output ----------
+=== TIME ===
+2026-08-20T13:38:06+0800
+=== AR PARENT LISTING ===
+nearing2022_full_time_autoregression_lead10_holdout0.0_seed0_2026_0820_0139_ep30
+nearing2022_full_time_autoregression_lead10_holdout0.25_seed0_2026_0820_0831_ep30
+nearing2022_full_time_autoregression_lead1_holdout0.25_seed0_2026_0810_1238_ep30
+nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0810_1200_ep30
+nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0812_0659_ep30
+nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0820_1336_ep30
+nearing2022_full_time_autoregression_lead1_holdout0.75_seed0_2026_0810_1239_ep30
+nearing2022_full_time_autoregression_lead1_holdout1.0_seed0_2026_0810_1239_ep30
+nearing2022_full_time_autoregression_lead2_holdout0.0_seed0_2026_0812_0141_ep30
+nearing2022_full_time_autoregression_lead2_holdout0.25_seed0_2026_0812_0247_ep30
+nearing2022_full_time_autoregression_lead2_holdout0.5_seed0_2026_0812_0254_ep30
+nearing2022_full_time_autoregression_lead2_holdout0.75_seed0_2026_0813_1343_ep30
+nearing2022_full_time_autoregression_lead2_holdout0.75_seed0_2026_0818_2120_ep30
+nearing2022_full_time_autoregression_lead2_holdout1.0_seed0_2026_0813_1742_ep30
+nearing2022_full_time_autoregression_lead2_holdout1.0_seed0_2026_0818_2120_ep30
+nearing2022_full_time_autoregression_lead4_holdout0.0_seed0_2026_0813_1827_ep30
+nearing2022_full_time_autoregression_lead4_holdout0.25_seed0_2026_0815_0650_ep30
+nearing2022_full_time_autoregression_lead4_holdout0.5_seed0_2026_0815_1344_ep30
+nearing2022_full_time_autoregression_lead4_holdout0.75_seed0_2026_0815_1742_ep30
+nearing2022_full_time_autoregression_lead4_holdout1.0_seed0_2026_0816_2119_ep30
+nearing2022_full_time_autoregression_lead8_holdout0.0_seed0_2026_0817_0352_ep30
+nearing2022_full_time_autoregression_lead8_holdout0.25_seed0_2026_0817_0634_ep30
+nearing2022_full_time_autoregression_lead8_holdout0.5_seed0_2026_0818_1159_ep30
+nearing2022_full_time_autoregression_lead8_holdout0.75_seed0_2026_0818_1619_ep30
+nearing2022_full_time_autoregression_lead8_holdout1.0_seed0_2026_0818_1938_ep30
+  (count=25)
+=== EPOCH-30 CHECKPOINTS UNDER AR (newest 8) ===
+  08-20 10:44     1236357 bytes  nearing2022_full_time_autoregression_lead2_holdout1.0_seed0_2026_0818_2120_ep30/model_epoch030.pt
+  08-20 07:59     1236357 bytes  nearing2022_full_time_autoregression_lead8_holdout1.0_seed0_2026_0818_1938_ep30/model_epoch030.pt
+  08-20 01:10     1236357 bytes  nearing2022_full_time_autoregression_lead8_holdout0.5_seed0_2026_0818_1159_ep30/model_epoch030.pt
+  08-18 19:07     1236357 bytes  nearing2022_full_time_autoregression_lead8_holdout0.25_seed0_2026_0817_0634_ep30/model_epoch030.pt
+  08-18 15:46     1236357 bytes  nearing2022_full_time_autoregression_lead8_holdout0.0_seed0_2026_0817_0352_ep30/model_epoch030.pt
+  08-18 11:28     1236357 bytes  nearing2022_full_time_autoregression_lead4_holdout1.0_seed0_2026_0816_2119_ep30/model_epoch030.pt
+  08-17 06:05     1236357 bytes  nearing2022_full_time_autoregression_lead4_holdout0.75_seed0_2026_0815_1742_ep30/model_epoch030.pt
+  08-17 03:20     1236357 bytes  nearing2022_full_time_autoregression_lead4_holdout0.5_seed0_2026_0815_1344_ep30/model_epoch030.pt
+=== TARGET COORDINATES ===
+--- lead_2_holdout_0.75_seed_0 : parent dir ABSENT ---
+--- lead_2_holdout_1.0_seed_0 : parent dir ABSENT ---
+--- lead_1_holdout_0.5_seed_0 : parent dir ABSENT ---
+=== RERUN JOB STATES ===
+204860_6|N22-retime|RUNNING|1-16:18:09|Unknown|ngu101
+204861_7|N22-retime|COMPLETED|1-13:55:44|2026-08-20T11:15:54|ngu101
+206430_0|N22-re214|RUNNING|00:02:46|Unknown|ngu101
+=== RERUN STDOUT TAILS ===
+--- N22-retime_204860_6.out ---
+.49it/s, Loss: 0.0038]
+--- N22-retime_204861_7.out ---
+# Validation: 100%|█████████▉| 529/531 [31:02<00:07,  3.54s/it]
+# Validation: 100%|█████████▉| 530/531 [31:06<00:03,  3.53s/it]
+# Validation: 100%|██████████| 531/531 [31:09<00:00,  3.44s/it]
+# Validation: 100%|██████████| 531/531 [31:09<00:00,  3.52s/it]
+2026-08-20 11:15:40,234: Stored metrics at closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead2_holdout1.0_seed0_2026_0818_2120_ep30/validation/model_epoch030/validation_metrics.csv
+2026-08-20 11:15:40,440: Stored results at closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead2_holdout1.0_seed0_2026_0818_2120_ep30/validation/model_epoch030/validation_results.p
+2026-08-20 11:15:40,455: Epoch 30 average validation loss: 0.01807 -- Median validation metrics: avg_loss: 0.01807, NSE: 0.77556, KGE: 0.76234, Alpha-NSE: 0.85054, Beta-NSE: -0.03605, Pearson-r: 0.89847, Peak-Timing: 0.33333, Missed-Peaks: 0.35714
+finished=2026-08-20T11:15:42+0800
+=== END seq=289 ===
+2026-08-20T13:38:06+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T13:38:06+0800
