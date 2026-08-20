@@ -1,0 +1,76 @@
+### channel=zhenjiang-oyv-qual seq=18
+### host=login4
+### started=2026-08-20T20:21:19+0800
+### ---------- output ----------
+=== A. LADDER 206431 ===
+completed_task_dirs=193 of 960
+    193      COMPLETED 
+      1        PENDING 
+     10        RUNNING 
+206431_[203-95   PENDING     0:00          (Resources)
+    206431_202   RUNNING     0:10               ngu007
+    206431_201   RUNNING     0:23               ngu005
+    206431_200   RUNNING     0:48               ngu006
+    206431_199   RUNNING     1:36               ngu006
+--- any failed, timed out or node failed ---
+(none)
+--- nodes used so far ---
+     17 ngu004
+      6 ngu005
+     28 ngu006
+     13 ngu007
+    139 ngu008
+=== B. AUDIT 206419 (settled) ===
+  "audit_status": "reproducible",
+  "mismatch_count": 0,
+  "reinference_count": 480,
+=== C. TIDY MY OWN STALE PROBE ===
+    205548      PENDING 
+cancelled_205548=yes
+=== D. hgpu4 PROBE 206565 ===
+    206565    ngu101    COMPLETED      0:0  00:01:12 
+[
+  {
+    "differing": {
+      "graphics_processor_driver_version": [
+        "580.76.05",
+        "535.104.05"
+      ],
+      "graphics_processor_name": [
+        "NVIDIA GeForce RTX 3090",
+        "NVIDIA A40"
+      ],
+      "operating_system": [
+        "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+        "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17"
+      ]
+    },
+    "driver": "535.104.05",
+    "gpu": "NVIDIA A40",
+    "matches_pin": false,
+    "node": "ngu101",
+    "os": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17",
+    "state_sha256": "50150c8ed0790360f976ba3e8d119f9fdf28546e1470f7fefbdf81485b7f8cd6"
+  }
+]
+HGPU4_MATCH=no
+=== E. WIDEN TO hgpu4 ONLY IF IT MATCHES ===
+partition_widened=no
+=== F. QUEUE ===
+202228_[510-      N22-hyper   PENDING       0:00    (JobArrayTaskLimit)
+206431_[203-   zj_ladder_v2   PENDING       0:00            (Resources)
+      206718 q_armE_minus_l   PENDING       0:00             (Priority)
+      206719 q_armF_global_   PENDING       0:00             (Priority)
+202226_[0-11 N22-eval-later   PENDING       0:00 (DependencyNeverSatisf
+      202229   N22-agg-eval   PENDING       0:00           (Dependency)
+      202230  N22-agg-hyper   PENDING       0:00           (Dependency)
+      202294     N22-export   PENDING       0:00           (Dependency)
+      202315       N22-gate   PENDING       0:00           (Dependency)
+      202507 N22-mask-iso-5   PENDING       0:00 (DependencyNeverSatisf
+202215_[21-2       N22-time   PENDING       0:00    (JobArrayTaskLimit)
+      202293   N22-manifest   PENDING       0:00          (JobHeldUser)
+total_entries=29
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-20T20:21:20+0800
