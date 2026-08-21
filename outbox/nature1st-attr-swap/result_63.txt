@@ -1,0 +1,55 @@
+### channel=nature1st-attr-swap seq=63
+### host=login4
+### started=2026-08-21T16:57:56+0800
+### ---------- output ----------
+=== A. RUN DIR + SYNC MECHANISM ===
+/data1/home/sunyiq/nature_1st
+-- is it a git repo? --
+fatal: Not a git repository (or any parent up to mount point /data1)
+fatal: Not a git repository (or any parent up to mount point /data1)
+fatal: Not a git repository (or any parent up to mount point /data1)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+-- remotes --
+fatal: Not a git repository (or any parent up to mount point /data1)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+-- how many uncommitted --
+0
+=== B. DO armG/armH ARTEFACTS EXIST HERE? ===
+ABSENT   data/interim/stage_static_feature_stats_armG.json
+ABSENT   data/interim/stage_static_feature_stats_armH.json
+ABSENT   data/processed/station_meta/trainable_mountain_stations_armG.csv
+ABSENT   data/processed/station_meta/trainable_mountain_stations_armH.csv
+ABSENT   scripts/chain_prepare_attrset_extended.py
+ABSENT   scripts/hpc_train_q_armG_china_supplyable.sbatch
+ABSENT   scripts/hpc_train_q_armH_china_supplyable_log.sbatch
+=== C. WHAT IS ALREADY HERE (the arms that ran) ===
+data/interim/stage_static_feature_stats_armE.json
+data/interim/stage_static_feature_stats_armF.json
+data/interim/stage_static_feature_stats_hydroatlas.json
+data/interim/stage_static_feature_stats_hydroatlas_plus_network.json
+data/interim/stage_static_feature_stats_us_minus_network.json
+data/processed/station_meta/trainable_mountain_stations_armF.csv
+data/processed/station_meta/trainable_mountain_stations_hydroatlas.csv
+data/processed/station_meta/trainable_mountain_stations_hydroatlas_plus_network.csv
+scripts/chain_eval_q_attrset.py
+scripts/chain_prepare_attrset.py
+scripts/chain_train_q_attrset.py
+=== D. SOURCE TABLE FOR THE TWO NEW COLUMNS ===
+PRESENT  13254754  /data1/home/sunyiq/neuralhydrology/data/camelsh/attributes_gageii/attributes_hydroATLAS.csv
+=== E. SPLITS FILE (stats must be train-only) ===
+-rw-r--r--. 1 sunyiq g_sunyiq 41180 Apr  1 12:01 data/interim/stage_station_splits.json
+a375d3f278f8b07d5bcf8272dcf67bf3  data/interim/stage_station_splits.json
+bfa4b816122e60f63bcd8c3e0b15ee22  data/interim/stage_static_feature_stats.json
+=== F. FINISHED ARM DIRS ===
+q_lstm_control_hpc_s42       {"epoch":15,"train_loss":0.3813181615602537,"median_nse":0.6431527829898235,"mean_nse":-164.30975623805597,"p25_nse":0.3
+q_lstm_hydroatlas_hpc_s42    {"epoch":8,"train_loss":0.49826778935652233,"median_nse":0.5982968069215535,"mean_nse":-254.38169214908396,"p25_nse":0.2
+q_lstm_usminus4_hpc_s42      {"epoch":19,"train_loss":0.3222614826225152,"median_nse":0.646622611311739,"mean_nse":-226.58454738737237,"p25_nse":0.35
+q_lstm_globalplus4_hpc_s42   {"epoch":10,"train_loss":0.4282419791732954,"median_nse":0.6058593065155349,"mean_nse":-207.90348208995653,"p25_nse":0.2
+q_lstm_armE_hpc_s42          {"epoch":7,"train_loss":0.5241947357265462,"median_nse":0.5819090068884227,"mean_nse":-199.44904755352883,"p25_nse":0.21
+q_lstm_armF_hpc_s42          {"epoch":20,"train_loss":0.32168383266933204,"median_nse":0.6436057490463808,"mean_nse":-294.55051636072244,"p25_nse":0.
+=== G. DISK ===
+hhjt_parastor_hhjt_parastor  954T  591T  364T  62% /data1
+=== END seq=63 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T16:57:57+0800
