@@ -1,0 +1,41 @@
+### channel=id29-nearing2022-da seq=303
+### host=login4
+### started=2026-08-21T12:07:31+0800
+### ---------- output ----------
+=== TIME ===
+2026-08-21T12:07:31+0800
+204860_state=RUNNING
+idle_seconds=92071
+epoch030_present=none
+=== CANCEL 204860 ===
+scancel_issued=yes
+204860_6|CANCELLED by 2272|2-14:47:40|2026-08-21T12:07:50
+=== RESUBMIT (exclude ngu002,ngu101) ===
+existing_re075_jobs=0
+task6_config=src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_2_holdout_0.75_seed_0.yml
+resubmitted_job=207690
+=== PRESERVED RUN DIRS (evidence kept) ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead2_holdout0.75_seed0_2026_0813_1343_ep30
+/data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead2_holdout0.75_seed0_2026_0818_2120_ep30
+=== QUEUE ===
+202228_[522-      N22-hyper   PENDING        0:00  1-00:00:00 (JobArrayTaskLimit)
+202226_[0-11 N22-eval-later   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202229   N22-agg-eval   PENDING        0:00  1-00:00:00 (Dependency)
+      202230  N22-agg-hyper   PENDING        0:00  1-00:00:00 (Dependency)
+      202294     N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315       N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-5   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+202215_[21-2       N22-time   PENDING        0:00  2-00:00:00 (JobArrayTaskLimit)
+  207690_[6]      N22-re075   PENDING        0:00  3-12:00:00 (None)
+      202293   N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+  202228_521      N22-hyper   RUNNING     1:26:16    22:33:44 ngu104
+  202228_520      N22-hyper   RUNNING     1:56:09    22:03:51 ngu104
+   202215_20       N22-time   RUNNING    19:49:04  1-04:10:56 ngu101
+    206430_0      N22-re214   RUNNING    22:32:16  2-13:27:44 ngu101
+   202215_19       N22-time   RUNNING  1-03:37:11    20:22:49 ngu104
+   202215_18       N22-time   RUNNING  1-10:28:45    13:31:15 ngu104
+=== END ===
+2026-08-21T12:07:49+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T12:07:49+0800
