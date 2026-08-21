@@ -1,41 +1,37 @@
 #!/usr/bin/env bash
-# zhenjiang gauge failure study :: ladder audit, retry with a family-correct comparison
-# The previous attempt completed all 960 re-inferences in 13 minutes and then died
-# comparing a horizon-keyed table against an event-keyed merge. Only that
-# comparison changed; every check before it is unaltered.
+# Read-only provenance extraction for the Zhenjiang six-hour Datong-removal comparison.
 set -o pipefail
 ROOT=/data1/home/sunyiq/zhenjiang_oyv_v1
+IMPACT="$ROOT/ladder_impact"
 
-echo "=== A. UPDATE CLONE ==="
-cd "$ROOT/repo" || exit 1
-timeout 600 git fetch -q origin "+refs/heads/main:refs/remotes/origin/main" 2>&1 | tail -2
-timeout 200 git reset -q --hard refs/remotes/origin/main
-echo "bundle_commit=$(git rev-parse --short HEAD)  files=$(find . -type f -not -path './.git/*' | wc -l)"
-test -e "$ROOT/ladder_audit" && { echo "LADDER_AUDIT_ROOT_EXISTS"; ls -1 "$ROOT/ladder_audit"; } || echo "ladder_audit_clear=true"
+echo "=== A. OUTPUT ROOT IDENTITY ==="
+test -d "$IMPACT" || { echo "MISSING_LADDER_IMPACT"; exit 1; }
+find "$IMPACT" -maxdepth 1 -type f -printf '%f\t%s bytes\n' | sort
+sha256sum \
+  "$IMPACT/completion_manifest.json" \
+  "$IMPACT/ladder_summary.json" \
+  "$IMPACT/ladder_cost_summary.csv" \
+  "$IMPACT/ladder_fold_costs.csv" \
+  "$IMPACT/ladder_task_errors.csv"
 
-echo "=== B. SUBMIT ==="
-sed -i 's/\r$//' scripts/analysis/hpc/submit_independent_audit.slurm
-AJ=$(sbatch --parsable \
-    --export=ALL,AUDIT_FAMILY=ladder_v2,AUDIT_TASK_ROOT="$ROOT/ladder_tasks",AUDIT_EVAL_ROOT="$ROOT/ladder_impact",AUDIT_INFER_ROOT="$ROOT/ladder_impact",AUDIT_OUTPUT_SUBDIR=ladder_audit \
-    scripts/analysis/hpc/submit_independent_audit.slurm 2>&1)
-echo "ladder_audit_job=$AJ"
-case "$AJ" in ''|*[!0-9]*) echo "SBATCH_FAILED"; exit 1 ;; esac
+echo "=== B. COMPLETION MANIFEST ==="
+cat "$IMPACT/completion_manifest.json"
 
-echo "=== C. WAIT (max 70 min) ==="
-for i in $(seq 1 420); do
-    LEFT=$(squeue -j "$AJ" -h -o "%i" 2>/dev/null | wc -l)
-    [ $((i % 60)) -eq 0 ] && echo "t=$((i * 10))s remaining=$LEFT"
-    [ "$LEFT" -eq 0 ] && break
-    sleep 10
-done
+echo "=== C. HEADLINE SUMMARY ==="
+cat "$IMPACT/ladder_summary.json"
 
-echo "=== D. RESULT ==="
-sacct -j "$AJ" -X --format=JobID%12,NodeList%9,State%12,ExitCode%8,Elapsed%10 2>&1 | head -4
-cat "$ROOT/ladder_audit/independent_audit_summary.json" 2>/dev/null || echo "(no summary)"
-echo "--- mismatch kinds ---"
-tail -n +2 "$ROOT/ladder_audit/mismatches.csv" 2>/dev/null | cut -d, -f1 | sort | uniq -c | head || echo "(no rows)"
-echo "--- first rows if any ---"
-head -4 "$ROOT/ladder_audit/mismatches.csv" 2>/dev/null || true
-echo "--- stderr tail ---"
-tail -14 "$ROOT/logs/independent_audit_${AJ}.err" 2>/dev/null || true
+echo "=== D. SIX-HOUR SUMMARY ROW ==="
+head -n 1 "$IMPACT/ladder_cost_summary.csv"
+grep '^hidden_target,zhenjiang,hidden_target_minus_datong,6,' "$IMPACT/ladder_cost_summary.csv"
+
+echo "=== E. SIX-HOUR FOLD ROWS ==="
+head -n 1 "$IMPACT/ladder_fold_costs.csv"
+grep '^hidden_target,zhenjiang,hidden_target_minus_datong,6,' "$IMPACT/ladder_fold_costs.csv"
+
+echo "=== F. MATCHED TASK ERRORS ==="
+head -n 1 "$IMPACT/ladder_task_errors.csv"
+grep -E '^(ladder_v2|oyv_v1),[0-9]+,zhenjiang,(hidden_target|hidden_target_minus_datong),[0-9]+,6,' "$IMPACT/ladder_task_errors.csv"
+
+echo "=== G. JOB STATE ==="
+sacct -j 207556,207599 -X --format=JobID%12,State%12,ExitCode%8,Elapsed%10 | head -6
 echo "=== END ==="
