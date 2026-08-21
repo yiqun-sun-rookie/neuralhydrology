@@ -1,53 +1,31 @@
-#!/bin/bash
-# ID29: RETRY of the cancel/resubmit that was overwritten by the scheduled watch.
-# Self-guarding: re-verifies the stall immediately before acting, aborts if the job recovered.
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
-SCRIPT="$ROOT/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm"
-BATCH=src/29_nearing2022_da_ar/registry/time_split_remaining_training_batch.txt
-AR="$ROOT/closure_20260810/time_split/autoregression"
-
-echo "=== TIME ==="; date --iso-8601=seconds
-
-STATE=$(sacct -X -n -P -j 204860 --format=State 2>/dev/null | head -1)
-echo "204860_state=$STATE"
-SO="$ROOT/closure_20260810/logs/N22-retime_204860_6.out"
-NOW=$(date +%s); MT=$(stat -c %Y "$SO" 2>/dev/null || echo 0); IDLE=$((NOW-MT))
-echo "idle_seconds=$IDLE"
-DONE=$(find "$AR" -maxdepth 2 -path '*lead2_holdout0.75_seed0*' -name 'model_epoch030.pt' 2>/dev/null | head -1)
-echo "epoch030_present=${DONE:-none}"
-
-if [ -n "$DONE" ]; then
-  echo "ABORT: epoch-30 checkpoint exists; nothing to do."
-elif [ "$IDLE" -lt 3600 ]; then
-  echo "ABORT: log wrote within the last hour; job alive."
-else
-  case "$STATE" in
-    RUNNING*|PENDING*)
-      echo "=== CANCEL 204860 ==="
-      scancel 204860 && echo "scancel_issued=yes"
-      sleep 12
-      sacct -X -n -P -j 204860 --format=JobID,State,Elapsed,End 2>/dev/null || true
-      ;;
-    *) echo "204860 already terminal ($STATE); skipping scancel" ;;
-  esac
-
-  echo "=== RESUBMIT (exclude ngu002,ngu101) ==="
-  EXISTING=$(squeue -u sunyiq -h -o '%j' 2>/dev/null | grep -c 'N22-re075' || true)
-  echo "existing_re075_jobs=$EXISTING"
-  if [ "$EXISTING" -eq 0 ]; then
-    echo "task6_config=$(sed -n '7p' "$ROOT/$BATCH")"
-    JID=$(sbatch --parsable --job-name=N22-re075 --array=6 --time=3-12:00:00 \
-      --exclude=ngu002,ngu101 --export=ALL,BATCH_FILE_REL="$BATCH" "$SCRIPT" 2>&1)
-    echo "resubmitted_job=$JID"
-  else
-    echo "SKIP: N22-re075 already queued"
-  fi
-fi
-
-echo "=== PRESERVED RUN DIRS (evidence kept) ==="
-ls -1d "$AR"/*lead2_holdout0.75_seed0* 2>/dev/null || true
-echo "=== QUEUE ==="
-squeue -u sunyiq -h -o '%.12i %.14j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22|re075|re214' || true
-echo "=== END ==="; date --iso-8601=seconds
+date --iso-8601=seconds
+echo "=== N22 JOBS ==="
+squeue -u sunyiq -h -o '%.12i %.14j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22|retime|re214' || echo 'no N22 jobs in queue'
+echo "=== RECENT TERMINAL STATES ==="
+sacct -X -n -P -S $(date -d '3 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22|retime|re214' | grep -vE '\|(RUNNING|PENDING)\|' | tail -20 || true
+echo "=== RUNNING PROGRESS ==="
+for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-(time|retime|re214)' | awk '{print $1}'); do
+  SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
+  [ -n "$SO" ] && [ -f "$SO" ] && { printf -- '--- %s log=%s ---\n' "$J" "$(stat -c %s "$SO")"; tail -c 120000 "$SO" 2>/dev/null | tr '\r' '\n' | grep -iE '^# Epoch' | tail -1 || true; }
+done
+echo "=== ROLE COUNTS ==="
+source ~/miniconda3/etc/profile.d/conda.sh && conda activate nh_final 2>/dev/null
+cd "$ROOT"
+python - <<'PY' 2>/dev/null || echo "recount unavailable"
+import json, sys
+from pathlib import Path
+root = Path('/data1/home/sunyiq/nearing2022_da')
+sys.path.insert(0, str(root / 'src/29_nearing2022_da_ar/scripts'))
+from verify_registered_closure import audit_registered_closure
+reg = root / 'src/29_nearing2022_da_ar/registry'
+agg = root / 'closure_20260810/aggregation'
+c = audit_registered_closure(root, reg/'experiment_registry.csv', reg/'evaluation_registry.csv',
+                             reg/'assimilation_hyperparameter_registry.csv', agg/'evaluations', agg/'hyperparameters')
+m = {}
+for row in c['missing']:
+    m[row['coordinate_type']] = m.get(row['coordinate_type'], 0) + 1
+print(json.dumps({'missing_by_type': m, 'missing_total': len(c['missing'])}, sort_keys=True))
+PY
 exit 0
