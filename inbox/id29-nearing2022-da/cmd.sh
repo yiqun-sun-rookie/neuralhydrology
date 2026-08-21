@@ -1,39 +1,36 @@
 #!/bin/bash
+# ID29: CONFIRM the 204860_6 stall with hard evidence (file mtime + GPU state + process),
+# then, only if confirmed, scancel and resubmit excluding the suspect nodes.
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
+SCRIPT="$ROOT/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm"
+BATCH=src/29_nearing2022_da_ar/registry/time_split_remaining_training_batch.txt
+
 echo "=== TIME ==="; date --iso-8601=seconds
-echo "=== N22 JOBS IN QUEUE ==="
-squeue -u sunyiq -h -o '%.12i %.14j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22|retime|re214' || echo 'none'
-echo "=== RECENT TERMINAL STATES (3d) ==="
-sacct -X -n -P -S $(date -d '3 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22|retime|re214' | grep -vE '\|(RUNNING|PENDING)\|' | tail -12 || true
-echo "=== RUNNING PROGRESS ==="
-for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-(time|retime|re214)' | awk '{print $1}'); do
-  SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
-  [ -n "$SO" ] && [ -f "$SO" ] && { printf -- '--- %s ---\n' "$J"; tail -c 120000 "$SO" 2>/dev/null | tr '\r' '\n' | grep -iE '^# Epoch' | tail -1 || true; }
-done
-echo "=== EPOCH30 FOR THE THREE REPAIR COORDINATES ==="
+
+echo "=== EVIDENCE 1: log file mtime (is anything still being written?) ==="
+SO=$(scontrol show job 204860_6 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
+echo "stdout=$SO"
+if [ -n "$SO" ] && [ -f "$SO" ]; then
+  stat -c 'bytes=%s  mtime=%y  age_seconds=%Y' "$SO"
+  NOW=$(date +%s); MT=$(stat -c %Y "$SO"); echo "seconds_since_last_write=$((NOW-MT))"
+fi
+SE=$(scontrol show job 204860_6 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdErr=//p' | head -1)
+[ -n "$SE" ] && [ -f "$SE" ] && { echo "stderr:"; stat -c '  bytes=%s mtime=%y' "$SE"; echo "  tail:"; tail -n 12 "$SE" 2>/dev/null | sed 's/^/    /' || true; }
+
+echo "=== EVIDENCE 2: what the process is doing on the node ==="
+NODE=$(squeue -h -j 204860_6 -o '%N' 2>/dev/null)
+echo "node=$NODE"
+if [ -n "$NODE" ]; then
+  srun --jobid=204860 --nodes=1 --ntasks=1 -w "$NODE" --overlap \
+    bash -c 'echo "--- nvidia-smi ---"; nvidia-smi --query-gpu=index,utilization.gpu,memory.used,memory.total --format=csv 2>&1 | head -6;
+             echo "--- python procs ---"; ps -eo pid,etimes,stat,pcpu,args | grep -E "[n]h_run|[p]ython -u" | head -5' 2>&1 | head -20 || echo "  srun probe failed (may be busy/denied)"
+fi
+
+echo "=== EVIDENCE 3: checkpoints already on disk for this coordinate ==="
 AR="$ROOT/closure_20260810/time_split/autoregression"
-for P in lead2_holdout0.75 lead2_holdout1.0 lead1_holdout0.5; do
-  n=$(find "$AR" -maxdepth 2 -path "*${P}_seed0*" -name 'model_epoch030.pt' 2>/dev/null | wc -l)
-  printf '  %-20s epoch030_files=%s\n' "$P" "$n"
-done
-echo "=== ROLE COUNTS ==="
-source ~/miniconda3/etc/profile.d/conda.sh && conda activate nh_final 2>/dev/null
-cd "$ROOT"
-python - <<'PY' 2>/dev/null || echo "recount unavailable"
-import json, sys
-from pathlib import Path
-root = Path('/data1/home/sunyiq/nearing2022_da')
-sys.path.insert(0, str(root / 'src/29_nearing2022_da_ar/scripts'))
-from verify_registered_closure import audit_registered_closure
-reg = root / 'src/29_nearing2022_da_ar/registry'
-agg = root / 'closure_20260810/aggregation'
-c = audit_registered_closure(root, reg/'experiment_registry.csv', reg/'evaluation_registry.csv',
-                             reg/'assimilation_hyperparameter_registry.csv', agg/'evaluations', agg/'hyperparameters')
-m = {}
-for row in c['missing']:
-    m[row['coordinate_type']] = m.get(row['coordinate_type'], 0) + 1
-print(json.dumps({'missing_by_type': m, 'missing_total': len(c['missing'])}, sort_keys=True))
-PY
-echo "=== END ==="; date --iso-8601=seconds
+find "$AR" -maxdepth 2 -path '*lead2_holdout0.75_seed0*' -name 'model_epoch*.pt' -printf '  %TY-%Tm-%Td %TH:%TM  %f  %p\n' 2>/dev/null | sort | tail -5 || echo "  none"
+
+echo "=== END EVIDENCE seq marker ==="
+date --iso-8601=seconds
 exit 0
