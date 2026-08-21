@@ -1,0 +1,47 @@
+### channel=nature1st-attr-swap seq=69
+### host=login4
+### started=2026-08-21T23:32:37+0800
+### ---------- output ----------
+=== A. STATE ===
+wallclock now: 2026-08-21 23:32:37 +0800
+     JOBID                         NAME      STATE       TIME         NODELIST(REASON)
+    207826      q_armG_china_supplyable    RUNNING    5:45:02                   ngu007
+     JobID                    JobName        State ExitCode      Elapsed  NodeList 
+---------- -------------------------- ------------ -------- ------------ --------- 
+    207826    q_armG_china_supplyable      RUNNING      0:0     05:45:17    ngu007 
+=== B. GUARD (must say 17 attributes) ===
+  [guard] train: 17 attributes, 2908 stations in meta -- attribute set verified
+  [guard] val: 17 attributes, 2908 stations in meta -- attribute set verified
+=== B2. ERRORS ===
+-- logs/attr_swap/armG_china_supplyable-207826.out --
+PyTorch 2.4.0, CUDA True
+-- logs/attr_swap/armG_china_supplyable-207826.err --
+=== C. PROGRESS ===
+log bytes: 3568  last touched: 2026-08-21 23:22:30
+Epoch 5: loss=0.5323  val_median_NSE(phys)=0.5920  val_RMSE_qspec=0.0789  NSE>0=0.81  lr=5.00e-04
+Epoch 6: loss=0.5084  val_median_NSE(phys)=0.5893  val_RMSE_qspec=0.0797  NSE>0=0.83  lr=5.00e-04
+Epoch 7: loss=0.4866  val_median_NSE(phys)=0.6032  val_RMSE_qspec=0.0776  NSE>0=0.82  lr=5.00e-04
+Epoch 8: loss=0.4672  val_median_NSE(phys)=0.5991  val_RMSE_qspec=0.0771  NSE>0=0.80  lr=5.00e-04
+Epoch 9: loss=0.4525  val_median_NSE(phys)=0.5922  val_RMSE_qspec=0.0783  NSE>0=0.82  lr=5.00e-04
+Epoch 10: loss=0.4407  val_median_NSE(phys)=0.6091  val_RMSE_qspec=0.0773  NSE>0=0.83  lr=5.00e-04
+Epoch 11: loss=0.4282  val_median_NSE(phys)=0.6075  val_RMSE_qspec=0.0769  NSE>0=0.81  lr=5.00e-04
+Epoch 12: loss=0.4177  val_median_NSE(phys)=0.6082  val_RMSE_qspec=0.0770  NSE>0=0.82  lr=5.00e-04
+=== D. FINISHED? ===
+{
+  "epoch": 10,
+  "train_loss": 0.44072371072211974,
+  "median_nse": 0.6091472595306994,
+  "mean_nse": -335.6560933688233,
+  "p25_nse": 0.26308857152463916,
+  "p75_nse": 0.7391301813227849,
+  "frac_nse_gt0": 0.8259860788863109,
+  "global_rmse_qspec_mmph": 0.07733912279140881,
+  "n_stations": 431,
+  "space": "physical_qcms_per_station_NSE"
+}
+=== E. PAIRED VERDICT (only runs once armG eval_val_per_station.csv exists) ===
+armG per-station scores not written yet -- nothing to judge
+=== END seq=69 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T23:32:38+0800
