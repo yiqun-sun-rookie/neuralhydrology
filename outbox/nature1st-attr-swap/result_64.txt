@@ -1,0 +1,76 @@
+### channel=nature1st-attr-swap seq=64
+### host=login4
+### started=2026-08-21T17:02:36+0800
+### ---------- output ----------
+=== A. INSTALL FILES (new only) ===
+  scripts/chain_prepare_attrset_extended.py                66f2cb378267817d  expect 66f2cb378267817d
+  scripts/hpc_train_q_armG_china_supplyable.sbatch         129981971de32913  expect 129981971de32913
+  scripts/hpc_train_q_armH_china_supplyable_log.sbatch     45f3cde42f7cbd43  expect 45f3cde42f7cbd43
+=== B. ENV ===
+pandas 2.3.2 numpy 2.3.3
+=== C. BUILD armG (raw scale) ===
+stats -> /data1/home/sunyiq/nature_1st/data/interim/stage_static_feature_stats_armG.json
+meta  -> /data1/home/sunyiq/nature_1st/data/processed/station_meta/trainable_mountain_stations_armG.csv
+raw HydroATLAS: /data1/home/sunyiq/neuralhydrology/data/camelsh/attributes_gageii/attributes_hydroATLAS.csv
+sources: 15 inherited, 2 fitted here on the 2020 TRAIN stations only (val 431 / test 434 contributed nothing)
+inherited global constants reproduce a train-only recompute (max diff 1.93e-12)
+--------------------------------------------------------------------------------------
+  attribute                  source                  mean          std   max |z|
+  gageii_BasinID_DRAIN_SQKM  US/inherit         1286.6501    1922.5203       4.5
+  gageii_Topo_SLOPE_PCT      US/inherit           11.4430      11.2307       5.0
+  gageii_Topo_RRMEAN         US/inherit            0.4100       0.1164       3.2
+  ele_mt_sav                 global/inherit      596.0441     541.7659       4.6
+  ele_mt_smn                 global/inherit      405.7108     428.1587       4.9
+  ele_mt_smx                 global/inherit      899.6106     788.4181       3.8
+  sgr_dk_sav                 newHA/fit           118.0395     135.4542       6.8
+  cly_pc_uav                 global/inherit       15.4176       6.8863       3.3
+  snd_pc_uav                 global/inherit       32.8248      12.6136       2.6
+  swc_pc_syr                 global/inherit       71.9797      18.5536       3.4
+  gwt_cm_sav                 global/inherit      320.3672     235.3583       3.5
+  kar_pc_use                 global/inherit       23.3657      31.6706       2.4
+  for_pc_use                 global/inherit       46.4542      34.3749       1.6
+  urb_pc_use                 global/inherit        4.1641      10.6638       8.3
+  ari_ix_uav                 global/inherit       78.7257      49.0803       6.6
+  dor_pc_pva                 global/inherit       90.7982     309.8561      16.7
+  lkv_mc_usu                 newHA/fit           413.4654    6351.0428      37.8
+======================================================================================
+=== D. BUILD armH (log1p on the four heavy tails) ===
+stats -> /data1/home/sunyiq/nature_1st/data/interim/stage_static_feature_stats_armH.json
+meta  -> /data1/home/sunyiq/nature_1st/data/processed/station_meta/trainable_mountain_stations_armH.csv
+raw HydroATLAS: /data1/home/sunyiq/neuralhydrology/data/camelsh/attributes_gageii/attributes_hydroATLAS.csv
+sources: 12 inherited, 5 fitted here on the 2020 TRAIN stations only (val 431 / test 434 contributed nothing)
+inherited global constants reproduce a train-only recompute (max diff 9.09e-13)
+--------------------------------------------------------------------------------------
+  attribute                  source                  mean          std   max |z|
+  log1p_gageii_BasinID_DRAIN_SQKM log1p/fit             6.1469       1.5897       3.3
+  gageii_Topo_SLOPE_PCT      US/inherit           11.4430      11.2307       5.0
+  gageii_Topo_RRMEAN         US/inherit            0.4100       0.1164       3.2
+  ele_mt_sav                 global/inherit      596.0441     541.7659       4.6
+  ele_mt_smn                 global/inherit      405.7108     428.1587       4.9
+  ele_mt_smx                 global/inherit      899.6106     788.4181       3.8
+  sgr_dk_sav                 newHA/fit           118.0395     135.4542       6.8
+  cly_pc_uav                 global/inherit       15.4176       6.8863       3.3
+  snd_pc_uav                 global/inherit       32.8248      12.6136       2.6
+  swc_pc_syr                 global/inherit       71.9797      18.5536       3.4
+  gwt_cm_sav                 global/inherit      320.3672     235.3583       3.5
+  kar_pc_use                 global/inherit       23.3657      31.6706       2.4
+  for_pc_use                 global/inherit       46.4542      34.3749       1.6
+  log1p_urb_pc_use           log1p/fit             0.7664       1.0970       3.4
+  ari_ix_uav                 global/inherit       78.7257      49.0803       6.6
+  log1p_dor_pc_pva           log1p/fit             1.4541       2.3524       3.0
+  log1p_lkv_mc_usu           log1p/fit             2.2206       2.4284       4.2
+======================================================================================
+=== E. FINGERPRINTS (must equal the workstation copies) ===
+dea22fbd2087e5814d89e16da8928bc55b28f69e252a47003db0e2037ea06d64  data/interim/stage_static_feature_stats_armG.json
+0bce21016730733decfee227ad7add300715704fca01148b685db3f17528d843  data/interim/stage_static_feature_stats_armH.json
+491b714cfde6647790f4587cadf778fd34daa840f4c77ef71e11a28449bad5bb  data/processed/station_meta/trainable_mountain_stations_armG.csv
+c7dc78e46ef94e1b539b3c37857ce52376228ab52a1d06c33066246cbabbf17d  data/processed/station_meta/trainable_mountain_stations_armH.csv
+workstation: armG stats 5a171b311d84caf3 / meta 9bc1ce757288eeb3
+workstation: armH stats b246409b8e04af45 / meta 1ede2e855f2d644d
+=== F. READY CHECK (no job submitted) ===
+-rwxr-xr-x. 1 sunyiq g_sunyiq 4612 Aug 21 17:02 scripts/hpc_train_q_armG_china_supplyable.sbatch
+  no arm job in queue
+=== END seq=64 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T17:02:54+0800
