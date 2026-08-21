@@ -1,8 +1,8 @@
 #!/bin/bash
-# nature1st-attr-swap seq=69 -- armG watchdog. READ-ONLY, no sbatch, no resubmit.
+# nature1st-attr-swap seq=70 -- armG watchdog. READ-ONLY, no sbatch, no resubmit.
 # Job 207826 = q_armG_china_supplyable, submitted 2026-08-21 17:05, 40-epoch cap, patience 5.
 # Reference wall time: armE 3h02 (12 epochs), armF 6h06 (25 epochs).
-# Previous check (seq=68, 20:32): RUNNING 2:45, epoch 5, guard confirmed 17 attributes.
+# Previous check (seq=69, 23:32): RUNNING 5:45, epoch 12, guard confirmed 17 attributes.
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
 J=207826
@@ -146,4 +146,4 @@ else:
 PY
 fi
 
-echo "=== END seq=69 ==="
+echo "=== END seq=70 ==="
