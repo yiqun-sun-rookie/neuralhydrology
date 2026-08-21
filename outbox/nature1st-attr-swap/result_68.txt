@@ -1,0 +1,39 @@
+### channel=nature1st-attr-swap seq=68
+### host=login4
+### started=2026-08-21T20:32:44+0800
+### ---------- output ----------
+=== A. STATE ===
+     JOBID                         NAME      STATE       TIME         NODELIST(REASON)
+    207826      q_armG_china_supplyable    RUNNING    2:45:09                   ngu007
+     JobID                    JobName        State ExitCode      Elapsed  NodeList 
+---------- -------------------------- ------------ -------- ------------ --------- 
+    207826    q_armG_china_supplyable      RUNNING      0:0     02:45:24    ngu007 
+=== B. GUARD FIRED? (would mean the attribute swap did not take) ===
+  [guard] train: 17 attributes, 2908 stations in meta -- attribute set verified
+  [guard] val: 17 attributes, 2908 stations in meta -- attribute set verified
+logs/attr_swap/armG_china_supplyable-207826.out:PyTorch 2.4.0, CUDA True
+=== C. PROGRESS ===
+log bytes: 2691  last touched: 2026-08-21 20:10:21
+Epoch 1: loss=1.0267  val_median_NSE(phys)=0.5164  val_RMSE_qspec=0.0853  NSE>0=0.83  lr=5.00e-04
+Epoch 2: loss=0.6985  val_median_NSE(phys)=0.5684  val_RMSE_qspec=0.0809  NSE>0=0.81  lr=5.00e-04
+Epoch 3: loss=0.6328  val_median_NSE(phys)=0.5798  val_RMSE_qspec=0.0795  NSE>0=0.84  lr=5.00e-04
+Epoch 4: loss=0.5672  val_median_NSE(phys)=0.5868  val_RMSE_qspec=0.0787  NSE>0=0.83  lr=5.00e-04
+Epoch 5: loss=0.5323  val_median_NSE(phys)=0.5920  val_RMSE_qspec=0.0789  NSE>0=0.81  lr=5.00e-04
+=== D. FINISHED? ===
+{
+  "epoch": 5,
+  "train_loss": 0.5323065168484068,
+  "median_nse": 0.5920348607884064,
+  "mean_nse": -141.08424141727764,
+  "p25_nse": 0.229421582372889,
+  "p75_nse": 0.7376281540103192,
+  "frac_nse_gt0": 0.814385150812065,
+  "global_rmse_qspec_mmph": 0.07886813776898033,
+  "n_stations": 431,
+  "space": "physical_qcms_per_station_NSE"
+}=== E. PAIRED VERDICT (only runs once eval_val_per_station.csv exists) ===
+armG per-station scores not written yet -- nothing to judge
+=== END seq=68 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T20:32:59+0800
