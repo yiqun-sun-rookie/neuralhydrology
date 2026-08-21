@@ -1,5 +1,5 @@
 #!/bin/bash
-# nature1st-attr-swap seq=67 -- armG watchdog. READ-ONLY, no sbatch, no resubmit.
+# nature1st-attr-swap seq=68 -- armG watchdog. READ-ONLY, no sbatch, no resubmit.
 # Job 207826 = q_armG_china_supplyable, submitted 2026-08-21 17:05, 40-epoch cap.
 # Reference wall time: armE 3h02 (12 epochs), armF 6h06 (25 epochs).
 set -o pipefail
@@ -63,4 +63,4 @@ else:
     paired('armF','armG','China-supplyable substitutes vs the US-sourced four')
     paired('control','armG','context: vs the 12 US-proprietary attributes')
 PY
-echo "=== END seq=67 ==="
+echo "=== END seq=68 ==="
