@@ -1,0 +1,38 @@
+### channel=nature1st-attr-swap seq=65
+### host=login4
+### started=2026-08-21T17:05:31+0800
+### ---------- output ----------
+=== A. GUARD: refuse to double-submit ===
+armG jobs already in queue: 0
+=== B. PREFLIGHT: the two attribute files ===
+dea22fbd2087e5814d89e16da8928bc55b28f69e252a47003db0e2037ea06d64  data/interim/stage_static_feature_stats_armG.json
+491b714cfde6647790f4587cadf778fd34daa840f4c77ef71e11a28449bad5bb  data/processed/station_meta/trainable_mountain_stations_armG.csv
+=== C. SUBMIT ===
+Submitted batch job 207826
+SUBMITTED jobid=207826
+=== D. QUEUE ===
+     JOBID                         NAME      STATE     TIME     NODELIST(REASON)
+    207826      q_armG_china_supplyable    PENDING     0:00           (Priority)
+=== E. armH META DISCREPANCY -- exact per-column fingerprints ===
+numpy 2.3.3 rows 2908
+log1p_gageii_BasinID_DRAIN_SQKM    sum=0x1.17146c98f5165p+14  max=0x1.26ac8c4c76579p+3
+gageii_Topo_SLOPE_PCT              sum=0x1.05782f6ce22b9p+15  max=0x1.0d0f156191149p+6
+gageii_Topo_RRMEAN                 sum=0x1.2aa054786b5a6p+10  max=0x1.938eaed2ef85ep-1
+ele_mt_sav                         sum=0x1.ac2b617ede678p+20  max=0x1.7f6179a8cdea0p+11
+ele_mt_smn                         sum=0x1.22ffa59bf5ec4p+20  max=0x1.3739b22af5771p+11
+ele_mt_smx                         sum=0x1.4275c2031f9a2p+21  max=0x1.e980000000000p+11
+sgr_dk_sav                         sum=0x1.54f17ae8c5ab1p+18  max=0x1.0300000000000p+10
+cly_pc_uav                         sum=0x1.5be81572b46c4p+15  max=0x1.308454b38b883p+5
+snd_pc_uav                         sum=0x1.75ccd59d7817ep+16  max=0x1.f6f0f15b218ecp+5
+swc_pc_syr                         sum=0x1.98fe7e927b6b0p+17  max=0x1.8800000000000p+6
+gwt_cm_sav                         sum=0x1.c9ed3f2a2750ap+19  max=0x1.1f80000000000p+10
+kar_pc_use                         sum=0x1.0a52a9d32a385p+16  max=0x1.8f400a73a1626p+6
+for_pc_use                         sum=0x1.0768fa785e269p+17  max=0x1.902aaeb661508p+6
+log1p_urb_pc_use                   sum=0x1.198356fb541f1p+11  max=0x1.22a9858ee1c0ep+2
+ari_ix_uav                         sum=0x1.bf69676f56fd0p+17  max=0x1.924372b2a5036p+8
+log1p_dor_pc_pva                   sum=0x1.0cf1b2ee72898p+12  max=0x1.1229025aa01bfp+3
+log1p_lkv_mc_usu                   sum=0x1.9fa9002eed7e0p+12  max=0x1.8c7c29acc8230p+3
+=== END seq=65 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T17:06:07+0800
