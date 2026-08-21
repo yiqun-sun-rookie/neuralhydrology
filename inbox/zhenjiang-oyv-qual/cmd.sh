@@ -1,37 +1,27 @@
 #!/usr/bin/env bash
-# Read-only provenance extraction for the Zhenjiang six-hour Datong-removal comparison.
+# Read-only extraction of the complete paper-facing gauge-failure evidence ledger.
 set -o pipefail
 ROOT=/data1/home/sunyiq/zhenjiang_oyv_v1
-IMPACT="$ROOT/ladder_impact"
+SUMMARY="$ROOT/ladder_impact/ladder_cost_summary.csv"
+RANKING="$ROOT/ladder_impact/station_ranking.csv"
 
-echo "=== A. OUTPUT ROOT IDENTITY ==="
-test -d "$IMPACT" || { echo "MISSING_LADDER_IMPACT"; exit 1; }
-find "$IMPACT" -maxdepth 1 -type f -printf '%f\t%s bytes\n' | sort
-sha256sum \
-  "$IMPACT/completion_manifest.json" \
-  "$IMPACT/ladder_summary.json" \
-  "$IMPACT/ladder_cost_summary.csv" \
-  "$IMPACT/ladder_fold_costs.csv" \
-  "$IMPACT/ladder_task_errors.csv"
+echo "=== A. IDENTITIES ==="
+test -f "$SUMMARY" || { echo "MISSING_SUMMARY"; exit 1; }
+test -f "$RANKING" || { echo "MISSING_RANKING"; exit 1; }
+sha256sum "$SUMMARY" "$RANKING"
 
-echo "=== B. COMPLETION MANIFEST ==="
-cat "$IMPACT/completion_manifest.json"
+echo "=== B. HEADER ==="
+head -n 1 "$SUMMARY"
 
-echo "=== C. HEADLINE SUMMARY ==="
-cat "$IMPACT/ladder_summary.json"
+echo "=== C. TARGET-GAUGE FAILURE COSTS, ALL REPORTED HORIZONS ==="
+grep -E '^complete_observation,(zhenjiang|jiangyin),hidden_target,(1|3|6|12|24),' "$SUMMARY"
 
-echo "=== D. SIX-HOUR SUMMARY ROW ==="
-head -n 1 "$IMPACT/ladder_cost_summary.csv"
-grep '^hidden_target,zhenjiang,hidden_target_minus_datong,6,' "$IMPACT/ladder_cost_summary.csv"
+echo "=== D. SINGLE ADDITIONAL STATION LOSSES, ALL REPORTED HORIZONS ==="
+grep -E '^hidden_target,(zhenjiang|jiangyin),hidden_target_minus_[a-z]+,(1|3|6|12|24),' "$SUMMARY"
 
-echo "=== E. SIX-HOUR FOLD ROWS ==="
-head -n 1 "$IMPACT/ladder_fold_costs.csv"
-grep '^hidden_target,zhenjiang,hidden_target_minus_datong,6,' "$IMPACT/ladder_fold_costs.csv"
+echo "=== E. MULTI-STATION LOSSES, ALL REPORTED HORIZONS ==="
+grep -E '^hidden_target,(zhenjiang|jiangyin),(hidden_target_both_nearest|endpoints_only),(1|3|6|12|24),' "$SUMMARY"
 
-echo "=== F. MATCHED TASK ERRORS ==="
-head -n 1 "$IMPACT/ladder_task_errors.csv"
-grep -E '^(ladder_v2|oyv_v1),[0-9]+,zhenjiang,(hidden_target|hidden_target_minus_datong),[0-9]+,6,' "$IMPACT/ladder_task_errors.csv"
-
-echo "=== G. JOB STATE ==="
-sacct -j 207556,207599 -X --format=JobID%12,State%12,ExitCode%8,Elapsed%10 | head -6
+echo "=== F. PREREGISTERED ONE- AND SIX-HOUR RANKINGS ==="
+cat "$RANKING"
 echo "=== END ==="
