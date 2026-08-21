@@ -1,0 +1,324 @@
+### channel=zhenjiang-oyv-qual seq=24
+### host=login4
+### started=2026-08-21T14:43:45+0800
+### ---------- output ----------
+=== A. OUTPUT ROOT IDENTITY ===
+completion_manifest.json	984 bytes
+ladder_cost_summary.csv	104054 bytes
+ladder_fold_costs.csv	608632 bytes
+ladder_summary.json	3002 bytes
+ladder_task_errors.csv	2715610 bytes
+station_ranking.csv	2907 bytes
+d509e3185da72cb5fc58bbfd3b712db6493f65249dcf20a19307a11218e6edf2  /data1/home/sunyiq/zhenjiang_oyv_v1/ladder_impact/completion_manifest.json
+630f6145f51901e9b562a897da14a03d20084cc0ea12975740864e6f08181b1a  /data1/home/sunyiq/zhenjiang_oyv_v1/ladder_impact/ladder_summary.json
+1c4859cd7e20470251874005fb32fbc3d5aa1998ba1d408b9377d6f546c36d72  /data1/home/sunyiq/zhenjiang_oyv_v1/ladder_impact/ladder_cost_summary.csv
+57093dc88a8a7c1d8d935c1eed46aeefeabd0d84ed4a61cee886ea193ee70e12  /data1/home/sunyiq/zhenjiang_oyv_v1/ladder_impact/ladder_fold_costs.csv
+56416472db32cd10f0f95fd67e188765fc9eaa50ce774eb62e9812522ae2e576  /data1/home/sunyiq/zhenjiang_oyv_v1/ladder_impact/ladder_task_errors.csv
+=== B. COMPLETION MANIFEST ===
+{
+  "artifacts": [
+    {
+      "byte_count": 2715610,
+      "relative_path": "ladder_task_errors.csv",
+      "sha256": "56416472db32cd10f0f95fd67e188765fc9eaa50ce774eb62e9812522ae2e576"
+    },
+    {
+      "byte_count": 608632,
+      "relative_path": "ladder_fold_costs.csv",
+      "sha256": "57093dc88a8a7c1d8d935c1eed46aeefeabd0d84ed4a61cee886ea193ee70e12"
+    },
+    {
+      "byte_count": 104054,
+      "relative_path": "ladder_cost_summary.csv",
+      "sha256": "1c4859cd7e20470251874005fb32fbc3d5aa1998ba1d408b9377d6f546c36d72"
+    },
+    {
+      "byte_count": 2907,
+      "relative_path": "station_ranking.csv",
+      "sha256": "71d769de46c3eb8b3c0a87f399810200f316c277334ebe7a011bad6afb653908"
+    },
+    {
+      "byte_count": 3002,
+      "relative_path": "ladder_summary.json",
+      "sha256": "630f6145f51901e9b562a897da14a03d20084cc0ea12975740864e6f08181b1a"
+    }
+  ],
+  "experiment_id": "zhenjiang_gauge_failure_ladder_v2",
+  "schema_version": 1,
+  "status": "completed"
+}
+=== C. HEADLINE SUMMARY ===
+{
+  "analysis": "complete_gauge_failure_ladder",
+  "arm_count": 10,
+  "arms_present": [
+    "complete_observation",
+    "endpoints_only",
+    "hidden_target",
+    "hidden_target_both_nearest",
+    "hidden_target_minus_datong",
+    "hidden_target_minus_jiangyin",
+    "hidden_target_minus_nanjing",
+    "hidden_target_minus_wusongkou",
+    "hidden_target_minus_xuliujing",
+    "hidden_target_minus_zhenjiang"
+  ],
+  "experiment_id": "zhenjiang_gauge_failure_ladder_v2",
+  "fold_years": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "headline": {
+    "jiangyin/cost_of_the_target_failing": {
+      "cost_m_h1": 0.00406,
+      "cost_m_h12": 0.01492,
+      "cost_m_h24": -0.00367,
+      "cost_m_h3": 0.00128,
+      "cost_m_h6": 0.00235,
+      "positive_fold_years_h1": 7,
+      "relative_cost_h1": 0.1161
+    },
+    "zhenjiang/cost_of_the_target_failing": {
+      "cost_m_h1": 0.00589,
+      "cost_m_h12": 0.01173,
+      "cost_m_h24": 0.00494,
+      "cost_m_h3": 0.00709,
+      "cost_m_h6": 0.00789,
+      "positive_fold_years_h1": 8,
+      "relative_cost_h1": 0.1587
+    }
+  },
+  "ladder_task_count": 960,
+  "parent_experiment_id": "zhenjiang_oyv_leave_one_year_out_direction_validation_v1",
+  "reporting": {
+    "aggregation": "median across the ten seeds within a fold, then median across the eight folds, reported with the full across-fold range",
+    "horizons_emphasised_hours": [
+      1,
+      6
+    ],
+    "horizons_reported_hours": [
+      1,
+      3,
+      6,
+      12,
+      24
+    ],
+    "primary_quantity": "mean absolute error in metres at the target station, minus the same quantity in the complete_observation arm of the same fold, target and seed; that difference is the cost of the failure",
+    "prohibited": [
+      "selecting a horizon after seeing the numbers",
+      "changing the aggregation after seeing the numbers",
+      "reopening the rising and falling state question on this data",
+      "reporting a subset of the five single-removal arms"
+    ],
+    "ranking_rule": "the five single-removal arms are ordered by median cost at one hour and again at six hours, and the complete ordering is reported both times; reporting only the largest is not permitted",
+    "secondary_quantity": "the same difference taken against the hidden_target arm instead, which isolates the cost of losing a further station once the target is already unavailable",
+    "significance_framing": "none; this is an estimation study and no arm is declared significant or not significant. Where an interval is wanted it is the across-fold range or a fold-clustered bootstrap, stated as such",
+    "spread_unit": "the eight fold years, because events inside one year are not exchangeable"
+  },
+  "result_label": "out_of_sample_measurement_not_hypothesis_test",
+  "schema_version": 1,
+  "seeds": [
+    17,
+    29,
+    43,
+    57,
+    71,
+    83,
+    97,
+    109,
+    127,
+    139
+  ],
+  "v1_task_count": 480,
+  "written_utc": "2026-08-20T16:46:03.393986+00:00"
+}
+=== D. SIX-HOUR SUMMARY ROW ===
+measured_against,target,condition,horizon_hours,median_cost_m,minimum_cost_m,maximum_cost_m,median_relative_cost,positive_fold_years,fold_count
+hidden_target,zhenjiang,hidden_target_minus_datong,6,0.000795574034311736,-0.00372547681670031,0.0048762459219843235,0.016470739700239934,7,8
+=== E. SIX-HOUR FOLD ROWS ===
+measured_against,target,condition,horizon_hours,test_year,cost_m,relative_cost,seed_count
+hidden_target,zhenjiang,hidden_target_minus_datong,6,2017,0.0048762459219843235,0.07963768877730107,10
+hidden_target,zhenjiang,hidden_target_minus_datong,6,2018,0.0009460033913254069,0.02048116630378437,10
+hidden_target,zhenjiang,hidden_target_minus_datong,6,2019,0.0006451446772980651,0.012460313096695493,10
+hidden_target,zhenjiang,hidden_target_minus_datong,6,2020,0.0010240001025005746,0.022896230971828423,10
+hidden_target,zhenjiang,hidden_target_minus_datong,6,2021,0.0005114955087251322,0.010836044289975828,10
+hidden_target,zhenjiang,hidden_target_minus_datong,6,2022,0.00035932160676475575,0.008575329693890285,10
+hidden_target,zhenjiang,hidden_target_minus_datong,6,2023,-0.00372547681670031,-0.06486470094655317,10
+hidden_target,zhenjiang,hidden_target_minus_datong,6,2024,0.0023639756696994876,0.03544965055251958,10
+=== F. MATCHED TASK ERRORS ===
+family,test_year,target,condition,seed,horizon_hours,sample_count,mean_absolute_error_m
+ladder_v2,2017,zhenjiang,hidden_target_minus_datong,17,6,7022,0.06707239588995803
+ladder_v2,2017,zhenjiang,hidden_target_minus_datong,29,6,7022,0.07065377803108218
+ladder_v2,2017,zhenjiang,hidden_target_minus_datong,43,6,7022,0.07444060857192093
+ladder_v2,2017,zhenjiang,hidden_target_minus_datong,57,6,7022,0.07605147932167237
+ladder_v2,2017,zhenjiang,hidden_target_minus_datong,71,6,7022,0.07239059392151687
+ladder_v2,2017,zhenjiang,hidden_target_minus_datong,83,6,7022,0.06532318708870154
+ladder_v2,2017,zhenjiang,hidden_target_minus_datong,97,6,7022,0.06559454247130522
+ladder_v2,2017,zhenjiang,hidden_target_minus_datong,109,6,7022,0.06448199935055839
+ladder_v2,2017,zhenjiang,hidden_target_minus_datong,127,6,7022,0.06762475384772249
+ladder_v2,2017,zhenjiang,hidden_target_minus_datong,139,6,7022,0.06758778375697863
+ladder_v2,2018,zhenjiang,hidden_target_minus_datong,17,6,7176,0.04502036280456594
+ladder_v2,2018,zhenjiang,hidden_target_minus_datong,29,6,7176,0.0470675241654799
+ladder_v2,2018,zhenjiang,hidden_target_minus_datong,43,6,7176,0.05993841487162621
+ladder_v2,2018,zhenjiang,hidden_target_minus_datong,57,6,7176,0.053803021626063145
+ladder_v2,2018,zhenjiang,hidden_target_minus_datong,71,6,7176,0.04669273248484302
+ladder_v2,2018,zhenjiang,hidden_target_minus_datong,83,6,7176,0.050137316170610575
+ladder_v2,2018,zhenjiang,hidden_target_minus_datong,97,6,7176,0.04481019908634981
+ladder_v2,2018,zhenjiang,hidden_target_minus_datong,109,6,7176,0.04348026589805067
+ladder_v2,2018,zhenjiang,hidden_target_minus_datong,127,6,7176,0.045708502149635066
+ladder_v2,2018,zhenjiang,hidden_target_minus_datong,139,6,7176,0.0489674749116568
+ladder_v2,2019,zhenjiang,hidden_target_minus_datong,17,6,7895,0.042218802743806655
+ladder_v2,2019,zhenjiang,hidden_target_minus_datong,29,6,7895,0.042288965420907175
+ladder_v2,2019,zhenjiang,hidden_target_minus_datong,43,6,7895,0.0442900861494899
+ladder_v2,2019,zhenjiang,hidden_target_minus_datong,57,6,7895,0.048058795838359036
+ladder_v2,2019,zhenjiang,hidden_target_minus_datong,71,6,7895,0.048823354031331485
+ladder_v2,2019,zhenjiang,hidden_target_minus_datong,83,6,7895,0.05064352378579466
+ladder_v2,2019,zhenjiang,hidden_target_minus_datong,97,6,7895,0.04474086196759292
+ladder_v2,2019,zhenjiang,hidden_target_minus_datong,109,6,7895,0.050295944256145336
+ladder_v2,2019,zhenjiang,hidden_target_minus_datong,127,6,7895,0.03923935995893134
+ladder_v2,2019,zhenjiang,hidden_target_minus_datong,139,6,7895,0.06350172322486457
+ladder_v2,2020,zhenjiang,hidden_target_minus_datong,17,6,8056,0.04874594845506617
+ladder_v2,2020,zhenjiang,hidden_target_minus_datong,29,6,8056,0.05046295669843566
+ladder_v2,2020,zhenjiang,hidden_target_minus_datong,43,6,8056,0.05114465521310032
+ladder_v2,2020,zhenjiang,hidden_target_minus_datong,57,6,8056,0.0790135906611559
+ladder_v2,2020,zhenjiang,hidden_target_minus_datong,71,6,8056,0.056970053641893184
+ladder_v2,2020,zhenjiang,hidden_target_minus_datong,83,6,8056,0.05140416266428086
+ladder_v2,2020,zhenjiang,hidden_target_minus_datong,97,6,8056,0.0551713502040094
+ladder_v2,2020,zhenjiang,hidden_target_minus_datong,109,6,8056,0.05952948991804871
+ladder_v2,2020,zhenjiang,hidden_target_minus_datong,127,6,8056,0.05880794088913881
+ladder_v2,2020,zhenjiang,hidden_target_minus_datong,139,6,8056,0.061767795619803605
+ladder_v2,2021,zhenjiang,hidden_target_minus_datong,17,6,7900,0.04822281306303
+ladder_v2,2021,zhenjiang,hidden_target_minus_datong,29,6,7900,0.060023814122888104
+ladder_v2,2021,zhenjiang,hidden_target_minus_datong,43,6,7900,0.05199600418911705
+ladder_v2,2021,zhenjiang,hidden_target_minus_datong,57,6,7900,0.05646523653706418
+ladder_v2,2021,zhenjiang,hidden_target_minus_datong,71,6,7900,0.04758904218673706
+ladder_v2,2021,zhenjiang,hidden_target_minus_datong,83,6,7900,0.058103498658047446
+ladder_v2,2021,zhenjiang,hidden_target_minus_datong,97,6,7900,0.04510416061063356
+ladder_v2,2021,zhenjiang,hidden_target_minus_datong,109,6,7900,0.05035180903688262
+ladder_v2,2021,zhenjiang,hidden_target_minus_datong,127,6,7900,0.05011878740938404
+ladder_v2,2021,zhenjiang,hidden_target_minus_datong,139,6,7900,0.04939632116993772
+ladder_v2,2022,zhenjiang,hidden_target_minus_datong,17,6,8032,0.05644893282616281
+ladder_v2,2022,zhenjiang,hidden_target_minus_datong,29,6,8032,0.05881792201523287
+ladder_v2,2022,zhenjiang,hidden_target_minus_datong,43,6,8032,0.04850564370176707
+ladder_v2,2022,zhenjiang,hidden_target_minus_datong,57,6,8032,0.05183526802347951
+ladder_v2,2022,zhenjiang,hidden_target_minus_datong,71,6,8032,0.057323473056711524
+ladder_v2,2022,zhenjiang,hidden_target_minus_datong,83,6,8032,0.05442920229230744
+ladder_v2,2022,zhenjiang,hidden_target_minus_datong,97,6,8032,0.06113666960917621
+ladder_v2,2022,zhenjiang,hidden_target_minus_datong,109,6,8032,0.049646124748357265
+ladder_v2,2022,zhenjiang,hidden_target_minus_datong,127,6,8032,0.04980590519499019
+ladder_v2,2022,zhenjiang,hidden_target_minus_datong,139,6,8032,0.05182646538513115
+ladder_v2,2023,zhenjiang,hidden_target_minus_datong,17,6,8046,0.0714902899142613
+ladder_v2,2023,zhenjiang,hidden_target_minus_datong,29,6,8046,0.0466347399144335
+ladder_v2,2023,zhenjiang,hidden_target_minus_datong,43,6,8046,0.09687418265630734
+ladder_v2,2023,zhenjiang,hidden_target_minus_datong,57,6,8046,0.046711496918052695
+ladder_v2,2023,zhenjiang,hidden_target_minus_datong,71,6,8046,0.06587799166435926
+ladder_v2,2023,zhenjiang,hidden_target_minus_datong,83,6,8046,0.04037533999378338
+ladder_v2,2023,zhenjiang,hidden_target_minus_datong,97,6,8046,0.05021146921384936
+ladder_v2,2023,zhenjiang,hidden_target_minus_datong,109,6,8046,0.0472778540892652
+ladder_v2,2023,zhenjiang,hidden_target_minus_datong,127,6,8046,0.05612321389483007
+ladder_v2,2023,zhenjiang,hidden_target_minus_datong,139,6,8046,0.0681678942860047
+ladder_v2,2024,zhenjiang,hidden_target_minus_datong,17,6,7920,0.05243197280650187
+ladder_v2,2024,zhenjiang,hidden_target_minus_datong,29,6,7920,0.042944327960110676
+ladder_v2,2024,zhenjiang,hidden_target_minus_datong,43,6,7920,0.067791362437937
+ladder_v2,2024,zhenjiang,hidden_target_minus_datong,57,6,7920,0.05647393993356011
+ladder_v2,2024,zhenjiang,hidden_target_minus_datong,71,6,7920,0.06324453129611834
+ladder_v2,2024,zhenjiang,hidden_target_minus_datong,83,6,7920,0.06914371485360946
+ladder_v2,2024,zhenjiang,hidden_target_minus_datong,97,6,7920,0.08070494567204003
+ladder_v2,2024,zhenjiang,hidden_target_minus_datong,109,6,7920,0.10477548462874961
+ladder_v2,2024,zhenjiang,hidden_target_minus_datong,127,6,7920,0.06957915261237309
+ladder_v2,2024,zhenjiang,hidden_target_minus_datong,139,6,7920,0.06974963122847104
+oyv_v1,2017,zhenjiang,hidden_target,17,6,7022,0.06938263555769567
+oyv_v1,2017,zhenjiang,hidden_target,29,6,7022,0.08445215204847874
+oyv_v1,2017,zhenjiang,hidden_target,43,6,7022,0.06553903800135356
+oyv_v1,2017,zhenjiang,hidden_target,57,6,7022,0.05976828575405902
+oyv_v1,2017,zhenjiang,hidden_target,71,6,7022,0.06824212948911314
+oyv_v1,2017,zhenjiang,hidden_target,83,6,7022,0.05666100452578465
+oyv_v1,2017,zhenjiang,hidden_target,97,6,7022,0.07027690402465273
+oyv_v1,2017,zhenjiang,hidden_target,109,6,7022,0.05991152805740152
+oyv_v1,2017,zhenjiang,hidden_target,127,6,7022,0.062442733296910705
+oyv_v1,2017,zhenjiang,hidden_target,139,6,7022,0.06107535999882632
+oyv_v1,2018,zhenjiang,hidden_target,17,6,7176,0.047912866076498126
+oyv_v1,2018,zhenjiang,hidden_target,29,6,7176,0.058282909850478834
+oyv_v1,2018,zhenjiang,hidden_target,43,6,7176,0.05133627758775666
+oyv_v1,2018,zhenjiang,hidden_target,57,6,7176,0.04901953697736181
+oyv_v1,2018,zhenjiang,hidden_target,71,6,7176,0.049015242153718455
+oyv_v1,2018,zhenjiang,hidden_target,83,6,7176,0.043127813500039684
+oyv_v1,2018,zhenjiang,hidden_target,97,6,7176,0.05175975440205007
+oyv_v1,2018,zhenjiang,hidden_target,109,6,7176,0.04073919560199597
+oyv_v1,2018,zhenjiang,hidden_target,127,6,7176,0.04468448398636868
+oyv_v1,2018,zhenjiang,hidden_target,139,6,7176,0.04809948629227238
+oyv_v1,2019,zhenjiang,hidden_target,17,6,7895,0.048419034533896274
+oyv_v1,2019,zhenjiang,hidden_target,29,6,7895,0.051778021094314355
+oyv_v1,2019,zhenjiang,hidden_target,43,6,7895,0.03754647623669731
+oyv_v1,2019,zhenjiang,hidden_target,57,6,7895,0.05517813982731032
+oyv_v1,2019,zhenjiang,hidden_target,71,6,7895,0.04469411721933182
+oyv_v1,2019,zhenjiang,hidden_target,83,6,7895,0.04065149082572797
+oyv_v1,2019,zhenjiang,hidden_target,97,6,7895,0.05167392755777795
+oyv_v1,2019,zhenjiang,hidden_target,109,6,7895,0.04066273734266053
+oyv_v1,2019,zhenjiang,hidden_target,127,6,7895,0.04207830741633487
+oyv_v1,2019,zhenjiang,hidden_target,139,6,7895,0.04702889440631927
+oyv_v1,2020,zhenjiang,hidden_target,17,6,8056,0.05281651147309221
+oyv_v1,2020,zhenjiang,hidden_target,29,6,8056,0.05449239828262215
+oyv_v1,2020,zhenjiang,hidden_target,43,6,8056,0.04816119247065282
+oyv_v1,2020,zhenjiang,hidden_target,57,6,8056,0.05943295276745074
+oyv_v1,2020,zhenjiang,hidden_target,71,6,8056,0.05790551617933953
+oyv_v1,2020,zhenjiang,hidden_target,83,6,8056,0.052736205845153795
+oyv_v1,2020,zhenjiang,hidden_target,97,6,8056,0.061449240756247935
+oyv_v1,2020,zhenjiang,hidden_target,109,6,8056,0.049124528939697924
+oyv_v1,2020,zhenjiang,hidden_target,127,6,8056,0.044668681867783215
+oyv_v1,2020,zhenjiang,hidden_target,139,6,8056,0.05173785832101089
+oyv_v1,2021,zhenjiang,hidden_target,17,6,7900,0.046942315976830976
+oyv_v1,2021,zhenjiang,hidden_target,29,6,7900,0.052744536520559576
+oyv_v1,2021,zhenjiang,hidden_target,43,6,7900,0.05238684820223458
+oyv_v1,2021,zhenjiang,hidden_target,57,6,7900,0.05854453946970686
+oyv_v1,2021,zhenjiang,hidden_target,71,6,7900,0.0467177091369146
+oyv_v1,2021,zhenjiang,hidden_target,83,6,7900,0.054405754397187055
+oyv_v1,2021,zhenjiang,hidden_target,97,6,7900,0.05235039394113082
+oyv_v1,2021,zhenjiang,hidden_target,109,6,7900,0.050200151069254816
+oyv_v1,2021,zhenjiang,hidden_target,127,6,7900,0.055516649107389814
+oyv_v1,2021,zhenjiang,hidden_target,139,6,7900,0.048448607227470304
+oyv_v1,2022,zhenjiang,hidden_target,17,6,8032,0.04583723948474424
+oyv_v1,2022,zhenjiang,hidden_target,29,6,8032,0.06121198191823238
+oyv_v1,2022,zhenjiang,hidden_target,43,6,8032,0.05547700178219503
+oyv_v1,2022,zhenjiang,hidden_target,57,6,8032,0.04721642769427888
+oyv_v1,2022,zhenjiang,hidden_target,71,6,8032,0.048259435926538065
+oyv_v1,2022,zhenjiang,hidden_target,83,6,8032,0.048360916233038995
+oyv_v1,2022,zhenjiang,hidden_target,97,6,8032,0.06482880618942687
+oyv_v1,2022,zhenjiang,hidden_target,109,6,8032,0.05109764211087588
+oyv_v1,2022,zhenjiang,hidden_target,127,6,8032,0.047635744618942065
+oyv_v1,2022,zhenjiang,hidden_target,139,6,8032,0.05775955138334715
+oyv_v1,2023,zhenjiang,hidden_target,17,6,8046,0.050542733591052685
+oyv_v1,2023,zhenjiang,hidden_target,29,6,8046,0.05118864519869306
+oyv_v1,2023,zhenjiang,hidden_target,43,6,8046,0.04976980741895789
+oyv_v1,2023,zhenjiang,hidden_target,57,6,8046,0.06565185795368439
+oyv_v1,2023,zhenjiang,hidden_target,71,6,8046,0.05583508430118736
+oyv_v1,2023,zhenjiang,hidden_target,83,6,8046,0.04738223609004541
+oyv_v1,2023,zhenjiang,hidden_target,97,6,8046,0.058268767638257446
+oyv_v1,2023,zhenjiang,hidden_target,109,6,8046,0.05505104524829096
+oyv_v1,2023,zhenjiang,hidden_target,127,6,8046,0.054332113031898895
+oyv_v1,2023,zhenjiang,hidden_target,139,6,8046,0.07106494263514576
+oyv_v1,2024,zhenjiang,hidden_target,17,6,7920,0.07491902552469812
+oyv_v1,2024,zhenjiang,hidden_target,29,6,7920,0.052488932224235146
+oyv_v1,2024,zhenjiang,hidden_target,43,6,7920,0.09525546145559562
+oyv_v1,2024,zhenjiang,hidden_target,57,6,7920,0.060359962555495174
+oyv_v1,2024,zhenjiang,hidden_target,71,6,7920,0.05838665778588767
+oyv_v1,2024,zhenjiang,hidden_target,83,6,7920,0.06790271271960904
+oyv_v1,2024,zhenjiang,hidden_target,97,6,7920,0.05799792878555529
+oyv_v1,2024,zhenjiang,hidden_target,109,6,7920,0.08475365482195459
+oyv_v1,2024,zhenjiang,hidden_target,127,6,7920,0.057954098675588164
+oyv_v1,2024,zhenjiang,hidden_target,139,6,7920,0.06626268202307248
+=== G. JOB STATE ===
+       JobID        State ExitCode    Elapsed 
+------------ ------------ -------- ---------- 
+      207556    COMPLETED      0:0   00:01:09 
+      207599    COMPLETED      0:0   00:13:18 
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T14:43:46+0800
