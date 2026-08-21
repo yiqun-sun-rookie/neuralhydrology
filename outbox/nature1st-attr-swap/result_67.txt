@@ -1,0 +1,21 @@
+### channel=nature1st-attr-swap seq=67
+### host=login4
+### started=2026-08-21T17:29:35+0800
+### ---------- output ----------
+=== A. STATE ===
+     JOBID                         NAME      STATE       TIME         NODELIST(REASON)
+    207826      q_armG_china_supplyable    PENDING       0:00               (Priority)
+     JobID                    JobName        State ExitCode      Elapsed  NodeList 
+---------- -------------------------- ------------ -------- ------------ --------- 
+    207826    q_armG_china_supplyable      PENDING      0:0     00:00:00 None ass+ 
+=== B. GUARD FIRED? (would mean the attribute swap did not take) ===
+(no stdout log yet -- still pending)
+=== C. PROGRESS ===
+=== D. FINISHED? ===
+(best_metrics.json not written yet)
+=== E. PAIRED VERDICT (only runs once eval_val_per_station.csv exists) ===
+armG per-station scores not written yet -- nothing to judge
+=== END seq=67 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-21T17:29:52+0800
