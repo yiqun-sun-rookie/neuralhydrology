@@ -1,50 +1,66 @@
 #!/bin/bash
-# nature1st-attr-swap seq=65 -- SUBMIT armG (user authorised this training round).
-# armG = the set China can actually supply, 17 attributes, raw scale.
-# Context: armF (global 13 + area/dam-storage/nearest-dam/permeability) reached 0.6436,
-# paired -0.0046 [-0.0138,+0.0029] vs the US-12 control = parity. armG asks whether
-# China-supplyable substitutes for three of those four hold that parity.
-# Pre-registered, paired vs armC (0.6466): good enough = paired >= -0.010 AND share
-# dropping >0.10 <= 20%; rejected = paired < -0.030 OR that share > 35%.
+# nature1st-attr-swap seq=66 -- armG watchdog. READ-ONLY, no sbatch, no resubmit.
+# Job 207826 = q_armG_china_supplyable, submitted 2026-08-21 17:05, 40-epoch cap.
+# Reference wall time: armE 3h02 (12 epochs), armF 6h06 (25 epochs).
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
-cd "$RUN" || { echo "RUN DIR MISSING"; exit 1; }
+J=207826
+cd "$RUN" || { echo RUN_DIR_MISSING; exit 1; }
 
-echo "=== A. GUARD: refuse to double-submit ==="
-EXIST=$(squeue -u $USER -h -o '%j' 2>/dev/null | grep -c 'q_armG' || true)
-echo "armG jobs already in queue: $EXIST"
-if [ "$EXIST" != "0" ]; then echo "ALREADY SUBMITTED -- refusing"; exit 0; fi
-if [ -d models/q_lstm_armG_hpc_s42 ]; then echo 'OUTPUT DIR EXISTS -- refusing'; exit 0; fi
-mkdir -p logs/attr_swap
+echo "=== A. STATE ==="
+squeue -j $J -o '%.10i %.28j %.10T %.10M %.24R' 2>&1
+sacct -j $J -X --format=JobID%10,JobName%26,State%12,ExitCode%8,Elapsed%12,NodeList%9 2>&1
 
-echo "=== B. PREFLIGHT: the two attribute files ==="
-sha256sum data/interim/stage_static_feature_stats_armG.json \
-          data/processed/station_meta/trainable_mountain_stations_armG.csv 2>&1
+echo "=== B. GUARD FIRED? (would mean the attribute swap did not take) ==="
+f=$(ls logs/attr_swap/armG_china_supplyable-${J}.out 2>/dev/null | head -1)
+e=$(ls logs/attr_swap/armG_china_supplyable-${J}.err 2>/dev/null | head -1)
+if [ -z "$f" ]; then echo "(no stdout log yet -- still pending)"; else
+  grep -E "\[guard\]|attributes, .* stations in meta" "$f" 2>/dev/null | head -4 || true
+  grep -E "RuntimeError|Traceback|CUDA|FATAL|refusing" "$f" "$e" 2>/dev/null | head -8 || true
+fi
 
-echo "=== C. SUBMIT ==="
-out=$(sbatch scripts/hpc_train_q_armG_china_supplyable.sbatch 2>&1); echo "$out"
-JID=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
-if [ -z "$JID" ]; then echo "SUBMIT_FAILED -- no job id in output"; exit 1; fi
-echo "SUBMITTED jobid=$JID"
+echo "=== C. PROGRESS ==="
+if [ -n "$f" ]; then
+  echo "log bytes: $(stat -c%s "$f")  last touched: $(stat -c%y "$f" | cut -c1-19)"
+  grep -E "^Epoch|Best val median NSE|Done\." "$f" 2>/dev/null | tail -8 || true
+fi
 
-echo "=== D. QUEUE ==="
-sleep 20
-squeue -j $JID -o '%.10i %.28j %.10T %.8M %.20R' 2>&1
+echo "=== D. FINISHED? ==="
+if [ -f models/q_lstm_armG_hpc_s42/best_metrics.json ]; then
+  cat models/q_lstm_armG_hpc_s42/best_metrics.json 2>&1
+else echo '(best_metrics.json not written yet)'; fi
 
-echo "=== E. armH META DISCREPANCY -- exact per-column fingerprints ==="
-# armG matched the workstation byte-for-byte after newline normalisation; armH's meta
-# did not, while its stats file DID. numpy differs (1.26.4 here vs 2.3.3 there), so the
-# suspicion is last-ulp log1p. Hex floats are exact -- no rounding hides a real gap.
+echo "=== E. PAIRED VERDICT (only runs once eval_val_per_station.csv exists) ==="
 source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null
 conda activate nh_final 2>/dev/null
 python - <<'PY' 2>&1
-import pandas as pd, numpy as np
-d = pd.read_csv('data/processed/station_meta/trainable_mountain_stations_armH.csv')
-print('numpy', np.__version__, 'rows', len(d))
-for c in d.columns:
-    if c == 'station_id':
-        continue
-    v = d[c].to_numpy(dtype=np.float64)
-    print(f'{c:<34} sum={float(v.sum()).hex()}  max={float(v.max()).hex()}')
+import os
+import numpy as np, pandas as pd
+R='/data1/home/sunyiq/nature_1st/models'
+P={'control':'q_lstm_control_hpc_s42','global':'q_lstm_hydroatlas_hpc_s42',
+   'armC':'q_lstm_usminus4_hpc_s42','armF':'q_lstm_armF_hpc_s42',
+   'armG':'q_lstm_armG_hpc_s42'}
+def load(k):
+    p=os.path.join(R,P[k],'eval_val_per_station.csv')
+    return pd.read_csv(p).set_index('station') if os.path.exists(p) else None
+if load('armG') is None:
+    print('armG per-station scores not written yet -- nothing to judge')
+else:
+    def paired(la,lb,note):
+        A,B=load(la),load(lb)
+        j=B[['nse','stratum']].join(A[['nse']],lsuffix='_b',rsuffix='_a').dropna(subset=['nse_b','nse_a'])
+        d=(j.nse_b-j.nse_a).values
+        rng=np.random.default_rng(0)
+        bs=[np.median(rng.choice(d,len(d),replace=True)) for _ in range(5000)]
+        print(f'[{lb} vs {la}]  {note}')
+        print(f'  n={len(j)}  {la} median {j.nse_a.median():.4f}   {lb} median {j.nse_b.median():.4f}')
+        print(f'  group median diff   {j.nse_b.median()-j.nse_a.median():+.4f}')
+        print(f'  PAIRED median diff  {np.median(d):+.4f}   95%CI [{np.percentile(bs,2.5):+.4f}, {np.percentile(bs,97.5):+.4f}]')
+        print(f'  worse/better {(d<0).sum()}/{(d>0).sum()}   lost>0.10 {(d<-0.10).mean()*100:.1f}%  gained>0.10 {(d>0.10).mean()*100:.1f}%')
+        for s,g in j.groupby('stratum'):
+            print(f'    {s:<12} n={len(g):>3}  paired {np.median((g.nse_b-g.nse_a).values):+.4f}')
+    paired('armC','armG','PRE-REGISTERED: pass >= -0.010 AND lost>0.10 <= 20%; reject < -0.030 OR > 35%')
+    paired('armF','armG','China-supplyable substitutes vs the US-sourced four')
+    paired('control','armG','context: vs the 12 US-proprietary attributes')
 PY
-echo "=== END seq=65 ==="
+echo "=== END seq=66 ==="
