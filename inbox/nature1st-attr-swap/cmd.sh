@@ -1,8 +1,9 @@
 #!/bin/bash
-# nature1st-attr-swap seq=73 -- armG watchdog, unattended routine re-check. READ-ONLY, no sbatch, no resubmit.
-# Job 207826 = q_armG_china_supplyable. Previous check (seq=72, 08:29): COMPLETED 09:55:16 on ngu007,
+# nature1st-attr-swap seq=74 -- armG watchdog, unattended routine re-check. READ-ONLY, no sbatch, no resubmit.
+# Job 207826 = q_armG_china_supplyable. Previous check (seq=73, 11:29 CST): COMPLETED 09:55:16 on ngu007,
 # guard confirmed 17 attributes, best epoch 16 median 0.6299, verdict INCONCLUSIVE vs armC.
-# This round re-confirms terminal state and re-derives the paired stats from scratch.
+# This round re-confirms the terminal state, re-derives the paired stats from scratch, and checks
+# whether any seed 43/44 follow-up job exists yet.
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
 J=207826
@@ -13,8 +14,8 @@ date '+wallclock now: %Y-%m-%d %H:%M:%S %z'
 squeue -j $J -o '%.10i %.28j %.10T %.10M %.24R' 2>&1 | head -5
 sacct -j $J -X --format=JobID%10,JobName%26,State%12,ExitCode%8,Elapsed%12,NodeList%9 2>&1 | head -5
 
-echo "=== A2. ANY OTHER JOBS OF MINE (context for seeds 43/44) ==="
-squeue -u sunyiq -o '%.10i %.28j %.10T %.10M %.20R' 2>&1 | head -12
+echo "=== A2. ANY ATTR-SWAP / SEED 43-44 JOBS IN QUEUE ==="
+squeue -u sunyiq -o '%.10i %.28j %.10T %.10M %.20R' 2>&1 | head -14
 
 echo "=== B. GUARD (must say 17 attributes) ==="
 f=logs/attr_swap/armG_china_supplyable-${J}.out
@@ -151,4 +152,4 @@ else:
     print("armC missing -- cannot decide")
 PY
 fi
-echo "=== END seq=73 ==="
+echo "=== END seq=74 ==="
