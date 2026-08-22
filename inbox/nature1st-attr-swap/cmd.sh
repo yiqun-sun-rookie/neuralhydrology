@@ -1,9 +1,9 @@
 #!/bin/bash
-# nature1st-attr-swap seq=74 -- armG watchdog, unattended routine re-check. READ-ONLY, no sbatch, no resubmit.
-# Job 207826 = q_armG_china_supplyable. Previous check (seq=73, 11:29 CST): COMPLETED 09:55:16 on ngu007,
+# nature1st-attr-swap seq=75 -- armG watchdog, unattended routine re-check. READ-ONLY, no sbatch, no resubmit.
+# Job 207826 = q_armG_china_supplyable. Previous check (seq=74, 14:29 CST): COMPLETED 09:55:16 on ngu007,
 # guard confirmed 17 attributes, best epoch 16 median 0.6299, verdict INCONCLUSIVE vs armC.
-# This round re-confirms the terminal state, re-derives the paired stats from scratch, and checks
-# whether any seed 43/44 follow-up job exists yet.
+# This round independently re-confirms the terminal state, re-derives every paired statistic from the
+# raw per-station CSVs, and checks whether any seed 43/44 follow-up job exists yet.
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
 J=207826
@@ -152,4 +152,4 @@ else:
     print("armC missing -- cannot decide")
 PY
 fi
-echo "=== END seq=74 ==="
+echo "=== END seq=75 ==="
