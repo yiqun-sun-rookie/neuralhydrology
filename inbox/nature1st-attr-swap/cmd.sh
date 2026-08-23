@@ -1,5 +1,5 @@
 #!/bin/bash
-# nature1st-attr-swap seq=84 -- armG (job 207826) unattended watchdog, independent re-check.
+# nature1st-attr-swap seq=85 -- armG (job 207826) unattended watchdog, independent re-check.
 # READ-ONLY. No sbatch, no resubmit, no computation.
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
@@ -156,4 +156,4 @@ for s in 43 44; do
   fi
 done
 
-echo "=== END seq=84 ==="
+echo "=== END seq=85 ==="
