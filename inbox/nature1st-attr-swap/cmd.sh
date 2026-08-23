@@ -1,159 +1,102 @@
 #!/bin/bash
-# nature1st-attr-swap seq=86 -- armG (job 207826) unattended watchdog, scheduled re-check.
-# READ-ONLY. No sbatch, no resubmit, no computation.
+# read-only watchdog for armG (job 207826) -- NO sbatch, NO compute
 set -o pipefail
+
 RUN=/data1/home/sunyiq/nature_1st
 J=207826
-cd "$RUN" || { echo RUN_DIR_MISSING; exit 1; }
+MD=$RUN/models/q_lstm_armG_hpc_s42
 
 echo "=== A. STATE ==="
-date '+wallclock now: %Y-%m-%d %H:%M:%S %z'
-squeue -j $J -o '%.10i %.28j %.10T %.10M %.24R' 2>&1 | head -5
-sacct -j $J -X --format=JobID%10,JobName%26,State%12,ExitCode%8,Elapsed%12,NodeList%9 2>&1 | head -5
-
-echo "=== A2. OWN QUEUE (looking for armG seed 43/44) ==="
-squeue -u sunyiq -o '%.10i %.28j %.10T %.10M %.20R' 2>&1 | head -14
+echo "wallclock now: $(date '+%F %T %z')"
+squeue -j $J -o '%.10i %.28j %.10T %.10M %.24R' 2>&1 | head -5 || true
+sacct -j $J -X --format=JobID%10,JobName%26,State%12,ExitCode%8,Elapsed%12,NodeList%9 2>&1 | head -5 || true
 
 echo "=== B. GUARD (must say 17 attributes) ==="
-LOG="$RUN/logs/attr_swap/armG_china_supplyable-207826.out"
-ERR="$RUN/logs/attr_swap/armG_china_supplyable-207826.err"
-if [ -f "$LOG" ]; then
-  grep '\[guard\]' "$LOG" | head -6 || true
-else
-  echo "OUT LOG MISSING: $LOG"
-fi
+grep '\[guard\]' $RUN/logs/attr_swap/armG_china_supplyable-$J.out 2>/dev/null | head -6 || true
 
 echo "=== B2. ERRORS ==="
-for f in "$LOG" "$ERR"; do
+for f in $RUN/logs/attr_swap/armG_china_supplyable-$J.out $RUN/logs/attr_swap/armG_china_supplyable-$J.err; do
   echo "-- $f --"
-  if [ -f "$f" ]; then
-    grep -E 'RuntimeError|Traceback|CUDA|FATAL|refusing' "$f" | head -12 || true
-  else
-    echo "(missing)"
-  fi
+  grep -E 'RuntimeError|Traceback|CUDA|FATAL|refusing' "$f" 2>/dev/null | head -12 || true
 done
 
 echo "=== C. PROGRESS ==="
-if [ -f "$LOG" ]; then
-  echo "out log bytes: $(stat -c%s "$LOG" 2>/dev/null)  last touched: $(stat -c%y "$LOG" 2>/dev/null)"
-  grep -E '^Epoch|Best val median NSE|Done\.' "$LOG" | tail -8 || true
-fi
+OUT=$RUN/logs/attr_swap/armG_china_supplyable-$J.out
+echo "out log bytes: $(stat -c%s $OUT 2>/dev/null)  last touched: $(stat -c%y $OUT 2>/dev/null)"
+grep -E '^Epoch|Best val median NSE|Done\.' $OUT 2>/dev/null | tail -8 || true
 
 echo "=== D. FINISHED? ==="
-BM="$RUN/models/q_lstm_armG_hpc_s42/best_metrics.json"
-if [ -f "$BM" ]; then cat "$BM"; else echo "best_metrics.json ABSENT"; fi
-echo ""
+if [ -f $MD/best_metrics.json ]; then cat $MD/best_metrics.json | head -20 || true; else echo "-- best_metrics.json absent --"; fi
 echo "-- artifact timestamps --"
-for f in "$RUN/models/q_lstm_armG_hpc_s42/best_metrics.json" "$RUN/models/q_lstm_armG_hpc_s42/eval_val_per_station.csv"; do
-  [ -f "$f" ] && stat -c '%y  %s bytes  %n' "$f" || echo "(absent) $f"
+for f in $MD/best_metrics.json $MD/eval_val_per_station.csv; do
+  [ -f "$f" ] && echo "$(stat -c'%y  %s bytes' $f)  $f" || echo "absent: $f"
 done
 
 echo "=== E. PAIRED VERDICT ==="
-CSV="$RUN/models/q_lstm_armG_hpc_s42/eval_val_per_station.csv"
-if [ -f "$CSV" ]; then
-  source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null
-  conda activate nh_final 2>/dev/null
-  python - <<'PYEOF' 2>&1 | head -120
+if [ -f $MD/eval_val_per_station.csv ]; then
+  source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+  conda activate nh_final
+  python - <<'PY' 2>&1 | head -120
 import os
-import numpy as np
-import pandas as pd
-
-RUN = "/data1/home/sunyiq/nature_1st"
-DIRS = {
-    "armG":    "q_lstm_armG_hpc_s42",
-    "armC":    "q_lstm_usminus4_hpc_s42",
-    "armF":    "q_lstm_armF_hpc_s42",
-    "control": "q_lstm_control_hpc_s42",
-}
-
-def load(d):
-    p = os.path.join(RUN, "models", d, "eval_val_per_station.csv")
+import numpy as np, pandas as pd
+R="/data1/home/sunyiq/nature_1st/models"
+ARMS={"armG":"q_lstm_armG_hpc_s42","armC":"q_lstm_usminus4_hpc_s42",
+      "armF":"q_lstm_armF_hpc_s42","control":"q_lstm_control_hpc_s42"}
+D={}
+for k,d in ARMS.items():
+    p=os.path.join(R,d,"eval_val_per_station.csv")
     if not os.path.exists(p):
-        return None
-    df = pd.read_csv(p)
-    df = df[["station", "nse", "stratum"]].copy()
-    df["station"] = df["station"].astype(str)
-    return df.drop_duplicates("station").set_index("station")
-
-data = {k: load(v) for k, v in DIRS.items()}
-for k, v in data.items():
-    if v is None:
-        print("MISSING per-station csv for %s (%s)" % (k, DIRS[k]))
-    else:
-        print("%-8s rows=%d  median=%.4f" % (k, len(v), v["nse"].median()))
-
-g = data["armG"]
-if g is None:
-    raise SystemExit("armG csv missing -- cannot compare")
-
-rng = np.random.default_rng(0)
-
-def compare(name):
-    o = data[name]
-    if o is None:
-        print("\n---------- armG vs %s : SKIPPED (csv missing) ----------" % name)
-        return None
-    j = g.join(o, how="inner", lsuffix="_g", rsuffix="_o")
-    d = (j["nse_g"] - j["nse_o"]).to_numpy()
-    n = len(d)
-    pmd = float(np.median(d))
-    boot = np.array([np.median(d[rng.integers(0, n, n)]) for _ in range(5000)])
-    lo, hi = np.percentile(boot, [2.5, 97.5])
-    worse = int((d < 0).sum()); better = int((d > 0).sum())
-    fdrop = float((d < -0.10).mean()) * 100.0
-    fgain = float((d > 0.10).mean()) * 100.0
-    print("\n---------- armG vs %s ----------" % name)
-    print("paired n            = %d" % n)
-    print("median armG         = %.4f" % j["nse_g"].median())
-    print("median %-12s= %.4f" % (name, j["nse_o"].median()))
-    print("group median diff   = %+.4f" % (j["nse_g"].median() - j["nse_o"].median()))
-    print("PAIRED median diff  = %+.4f   95%% CI [%+.4f, %+.4f]" % (pmd, lo, hi))
-    print("worse / better      = %d / %d" % (worse, better))
-    print("frac drop > 0.10    = %.1f%%" % fdrop)
-    print("frac gain > 0.10    = %.1f%%" % fgain)
-    print("by stratum (paired median diff, n):")
-    st = j["stratum_g"] if "stratum_g" in j.columns else j["stratum"]
-    for s, idx in j.groupby(st).groups.items():
-        dd = (j.loc[idx, "nse_g"] - j.loc[idx, "nse_o"]).to_numpy()
-        print("   %-20s %+.4f  n=%d" % (s, float(np.median(dd)), len(dd)))
-    return pmd, fdrop
-
-res = {}
-for nm in ("armC", "armF", "control"):
-    r = compare(nm)
-    if r:
-        res[nm] = r
-
-print("\n---------- PRE-REGISTERED DECISION vs armC ----------")
+        print("MISSING:",k,p); continue
+    df=pd.read_csv(p)
+    D[k]=df
+    print(f"{k:8s} rows={len(df)}  median={df['nse'].median():.4f}")
+def boot(d,n=5000):
+    rng=np.random.default_rng(0); a=np.asarray(d)
+    m=[np.median(a[rng.integers(0,len(a),len(a))]) for _ in range(n)]
+    return np.percentile(m,2.5), np.percentile(m,97.5)
+res={}
+for other in ["armC","armF","control"]:
+    if "armG" not in D or other not in D: continue
+    m=D["armG"].merge(D[other],on="station",suffixes=("_g","_o"))
+    d=(m["nse_g"]-m["nse_o"]).values
+    pmd=float(np.median(d)); lo,hi=boot(d)
+    drop=float((d<-0.10).mean()); gain=float((d>0.10).mean())
+    res[other]=(pmd,drop)
+    print(f"\n---------- armG vs {other} ----------")
+    print(f"paired n            = {len(d)}")
+    print(f"median armG         = {D['armG']['nse'].median():.4f}")
+    print(f"median {other:12s}= {D[other]['nse'].median():.4f}")
+    print(f"group median diff   = {D['armG']['nse'].median()-D[other]['nse'].median():+.4f}")
+    print(f"PAIRED median diff  = {pmd:+.4f}   95% CI [{lo:+.4f}, {hi:+.4f}]")
+    print(f"worse / better      = {int((d<0).sum())} / {int((d>0).sum())}")
+    print(f"frac drop > 0.10    = {drop*100:.1f}%")
+    print(f"frac gain > 0.10    = {gain*100:.1f}%")
+    sc = "stratum_g" if "stratum_g" in m.columns else ("stratum" if "stratum" in m.columns else None)
+    if sc:
+        print("by stratum (paired median diff, n):")
+        for s,g in m.groupby(sc):
+            dd=(g["nse_g"]-g["nse_o"]).values
+            print(f"   {str(s):20s} {np.median(dd):+.4f}  n={len(dd)}")
 if "armC" in res:
-    pmd, fdrop = res["armC"]
-    suff = (pmd >= -0.010) and (fdrop <= 20.0)
-    veto = (pmd < -0.030) or (fdrop > 35.0)
-    print("paired median diff = %+.4f   frac drop>0.10 = %.1f%%" % (pmd, fdrop))
-    print("  rule SUFFICIENT : pmd >= -0.010 AND drop <= 20%%  -> %s" % suff)
-    print("  rule VETO       : pmd <  -0.030 OR  drop >  35%%  -> %s" % veto)
-    if suff:
-        print("VERDICT: SUFFICIENT")
-    elif veto:
-        print("VERDICT: VETO")
-    else:
-        print("VERDICT: INCONCLUSIVE -- needs seeds 43/44, no single-seed conclusion allowed")
-else:
-    print("armC csv missing -- cannot apply pre-registered rule")
-PYEOF
+    pmd,drop=res["armC"]
+    print("\n---------- PRE-REGISTERED DECISION vs armC ----------")
+    print(f"paired median diff = {pmd:+.4f}   frac drop>0.10 = {drop*100:.1f}%")
+    suf = (pmd>=-0.010) and (drop<=0.20)
+    veto= (pmd< -0.030) or (drop>0.35)
+    print(f"  rule SUFFICIENT : pmd >= -0.010 AND drop <= 20%  -> {suf}")
+    print(f"  rule VETO       : pmd <  -0.030 OR  drop >  35%  -> {veto}")
+    print("VERDICT:", "SUFFICIENT" if suf else ("VETO" if veto else "INCONCLUSIVE -- needs seeds 43/44, no single-seed conclusion allowed"))
+PY
 else
-  echo "eval_val_per_station.csv ABSENT -- no paired comparison possible"
+  echo "-- eval_val_per_station.csv absent, skip paired analysis --"
 fi
 
 echo "=== F. SEED 43/44 FOLLOW-UP PRESENT? ==="
 for s in 43 44; do
-  D="$RUN/models/q_lstm_armG_hpc_s$s"
-  if [ -d "$D" ]; then
-    echo "-- $D EXISTS --"
-    if [ -f "$D/best_metrics.json" ]; then head -14 "$D/best_metrics.json"; else echo "   (no best_metrics.json yet)"; fi
-  else
-    echo "-- models/q_lstm_armG_hpc_s$s absent --"
-  fi
+  d=$RUN/models/q_lstm_armG_hpc_s$s
+  if [ -d "$d" ]; then echo "-- $d EXISTS --"; ls -la "$d" 2>/dev/null | head -8 || true
+  else echo "-- models/q_lstm_armG_hpc_s$s absent --"; fi
 done
+squeue -u sunyiq -o '%.10i %.28j %.9T %.10M %.20R' 2>&1 | grep -iE 'armG|JOBID' | head -10 || true
 
-echo "=== END seq=86 ==="
+echo "=== END seq=87 ==="
