@@ -1,0 +1,51 @@
+### channel=kalmannet-tukf19 seq=3
+### host=login4
+### started=2026-08-23T19:27:23+0800
+### ---------- output ----------
+=== TUKF19 SMOKE JOB ACCOUNTING ===
+         JobID                  JobName    Partition            State   ExitCode      Elapsed  AllocCPUS         NodeList         MaxRSS 
+-------------- ------------------------ ------------ ---------------- ---------- ------------ ---------- ---------------- -------------- 
+        209815             tukf19-smoke      hcpu48y           FAILED        2:0     00:00:24          1           icn274                
+  209815.batch                    batch                        FAILED        2:0     00:00:24          1           icn274          1592K 
+ 209815.extern                   extern                     COMPLETED        0:0     00:00:24          1           icn274          1352K 
+=== TUKF19 STATUS FILES ===
+total 9
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Aug 23 19:24 .
+drwxr-xr-x. 4 sunyiq g_sunyiq 4096 Aug 23 19:24 ..
+-rw-r--r--. 1 sunyiq g_sunyiq   27 Aug 23 19:24 smoke_sbatch_output.txt
+-rw-r--r--. 1 sunyiq g_sunyiq  298 Aug 23 19:24 smoke_submission.json
+total 12
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Aug 23 19:24 .
+drwxr-xr-x. 4 sunyiq g_sunyiq 4096 Aug 23 19:24 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 3222 Aug 23 19:24 smoke_report.json
+total 9
+drwxr-xr-x.  2 sunyiq g_sunyiq 4096 Aug 23 19:24 .
+drwxr-xr-x. 11 sunyiq g_sunyiq 4096 Aug 23 19:24 ..
+-rw-r--r--.  1 sunyiq g_sunyiq    0 Aug 23 19:24 smoke-209815.err
+-rw-r--r--.  1 sunyiq g_sunyiq   80 Aug 23 19:24 smoke-209815.out
+=== TUKF19 SMOKE REPORT ===
+{
+  "checks": {
+    "completed_without_exception": false
+  },
+  "deployment_config_sha256": "a00fc54a094ecda5eb75aa59e75d27baa545048d14ab8c68e28f83b96dce8c1f",
+  "deployment_id": "TUKF19_HBV_ROLLING_ORIGIN_FORMAL_EXECUTION_HPC_DEPLOYMENT_V1",
+  "elapsed_seconds": 0.9633432812988758,
+  "error": "No module named 'global_hydrology.models.differentiable_m4'",
+  "error_type": "ModuleNotFoundError",
+  "finished_at_utc": "2026-08-23T11:24:58.135017+00:00",
+  "schema_version": "tukf19_hpc_smoke_report_v1",
+  "scientific_experiment_id": "TUKF19_HBV_ROLLING_ORIGIN_FORMAL_EXECUTION_V1",
+  "started_at_utc": "2026-08-23T11:24:57.613040+00:00",
+  "status": "HPC_SMOKE_ERROR",
+  "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_tukf19_20260823/scripts/smoke_tukf19_hpc_compatibility.py\", line 308, in run_smoke\n    numeric = run_numeric_smoke(deployment, contract)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_tukf19_20260823/scripts/smoke_tukf19_hpc_compatibility.py\", line 222, in run_numeric_smoke\n    forcing, truth = scientific.generate_truth_for_seed(contract, seed)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_tukf19_20260823/scripts/tukf17_hbv_rolling_origin_state_hydrology_common.py\", line 589, in generate_truth_for_seed\n    modules = predecessor_modules(contract)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_tukf19_20260823/scripts/tukf17_hbv_rolling_origin_state_hydrology_common.py\", line 218, in predecessor_modules\n    \"truth_runner\": importlib.import_module(\n                    ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/importlib/__init__.py\", line 126, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1204, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1176, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1147, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 690, in _load_unlocked\n  File \"<frozen importlib._bootstrap_external>\", line 940, in exec_module\n  File \"<frozen importlib._bootstrap>\", line 241, in _call_with_frames_removed\n  File \"/data1/home/sunyiq/kalmannet_tukf19_20260823/G:/github/pycharm/projects/kalmannet/scripts/run_tukf11_hbv_joint_parameter_synthetic_mechanism_gate.py\", line 32, in <module>\n    from global_hydrology.models.differentiable_hbv_lite import (  # noqa: E402\n  File \"/data1/home/sunyiq/kalmannet_tukf19_20260823/G:/github/pycharm/projects/kalmannet/src/global_hydrology/__init__.py\", line 4, in <module>\n    from .models import DifferentiableM4, StaticEncoder, M4SystemModel, GlobalHydroSystem\n  File \"/data1/home/sunyiq/kalmannet_tukf19_20260823/G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/__init__.py\", line 4, in <module>\n    from .differentiable_m4 import DifferentiableM4\nModuleNotFoundError: No module named 'global_hydrology.models.differentiable_m4'\n"
+}
+=== TUKF19 SMOKE STDOUT ===
+{"checks": {"completed_without_exception": false}, "status": "HPC_SMOKE_ERROR"}
+=== TUKF19 SMOKE STDERR ===
+=== TUKF19 FORMAL SUBMISSION ABSENCE ===
+FORMAL_SUBMISSION_ABSENT
+TUKF19_SMOKE_FAILURE_DIAGNOSTIC_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-23T19:27:24+0800
