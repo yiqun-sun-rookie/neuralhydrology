@@ -1,7 +1,6 @@
 #!/bin/bash
-# nature1st-attr-swap seq=83 -- armG (job 207826) unattended watchdog. READ-ONLY. No sbatch, no resubmit.
-# Independent re-check of the terminal state and full re-derivation of the paired statistics from the raw
-# per-station CSVs, plus a check for any seed 43/44 follow-up that may have appeared since seq=82.
+# nature1st-attr-swap seq=84 -- armG (job 207826) unattended watchdog, independent re-check.
+# READ-ONLY. No sbatch, no resubmit, no computation.
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
 J=207826
@@ -43,6 +42,7 @@ fi
 echo "=== D. FINISHED? ==="
 BM="$RUN/models/q_lstm_armG_hpc_s42/best_metrics.json"
 if [ -f "$BM" ]; then cat "$BM"; else echo "best_metrics.json ABSENT"; fi
+echo ""
 echo "-- artifact timestamps --"
 for f in "$RUN/models/q_lstm_armG_hpc_s42/best_metrics.json" "$RUN/models/q_lstm_armG_hpc_s42/eval_val_per_station.csv"; do
   [ -f "$f" ] && stat -c '%y  %s bytes  %n' "$f" || echo "(absent) $f"
@@ -150,10 +150,10 @@ for s in 43 44; do
   D="$RUN/models/q_lstm_armG_hpc_s$s"
   if [ -d "$D" ]; then
     echo "-- $D EXISTS --"
-    if [ -f "$D/best_metrics.json" ]; then cat "$D/best_metrics.json" | head -14; else echo "   (no best_metrics.json yet)"; fi
+    if [ -f "$D/best_metrics.json" ]; then head -14 "$D/best_metrics.json"; else echo "   (no best_metrics.json yet)"; fi
   else
     echo "-- models/q_lstm_armG_hpc_s$s absent --"
   fi
 done
 
-echo "=== END seq=83 ==="
+echo "=== END seq=84 ==="
