@@ -1,0 +1,118 @@
+### channel=nature1st-attr-swap seq=85
+### host=login4
+### started=2026-08-23T23:29:15+0800
+### ---------- output ----------
+=== A. STATE ===
+wallclock now: 2026-08-23 23:29:15 +0800
+slurm_load_jobs error: Invalid job id specified
+     JobID                    JobName        State ExitCode      Elapsed  NodeList 
+---------- -------------------------- ------------ -------- ------------ --------- 
+    207826    q_armG_china_supplyable    COMPLETED      0:0     09:55:16    ngu007 
+=== A2. OWN QUEUE (looking for armG seed 43/44) ===
+     JOBID                         NAME      STATE       TIME     NODELIST(REASON)
+202228_[58                    N22-hyper    PENDING       0:00  (JobArrayTaskLimit)
+202226_[0-               N22-eval-later    PENDING       0:00 (DependencyNeverSati
+    202229                 N22-agg-eval    PENDING       0:00         (Dependency)
+    202230                N22-agg-hyper    PENDING       0:00         (Dependency)
+    202294                   N22-export    PENDING       0:00         (Dependency)
+    202315                     N22-gate    PENDING       0:00         (Dependency)
+    202507             N22-mask-iso-531    PENDING       0:00 (DependencyNeverSati
+    202293                 N22-manifest    PENDING       0:00        (JobHeldUser)
+202228_580                    N22-hyper    RUNNING      40:46               ngu104
+202228_579                    N22-hyper    RUNNING    1:37:45               ngu104
+=== B. GUARD (must say 17 attributes) ===
+  [guard] train: 17 attributes, 2908 stations in meta -- attribute set verified
+  [guard] val: 17 attributes, 2908 stations in meta -- attribute set verified
+=== B2. ERRORS ===
+-- /data1/home/sunyiq/nature_1st/logs/attr_swap/armG_china_supplyable-207826.out --
+PyTorch 2.4.0, CUDA True
+-- /data1/home/sunyiq/nature_1st/logs/attr_swap/armG_china_supplyable-207826.err --
+=== C. PROGRESS ===
+out log bytes: 6217  last touched: 2026-08-22 03:42:36.000000000 +0800
+Epoch 15: loss=0.3889  val_median_NSE(phys)=0.5987  val_RMSE_qspec=0.0782  NSE>0=0.80  lr=5.00e-04
+Epoch 16: loss=0.3843  val_median_NSE(phys)=0.6299  val_RMSE_qspec=0.0759  NSE>0=0.82  lr=5.00e-04
+Epoch 17: loss=0.3748  val_median_NSE(phys)=0.6173  val_RMSE_qspec=0.0754  NSE>0=0.81  lr=5.00e-04
+Epoch 18: loss=0.3672  val_median_NSE(phys)=0.6061  val_RMSE_qspec=0.0763  NSE>0=0.81  lr=5.00e-04
+Epoch 19: loss=0.3600  val_median_NSE(phys)=0.5994  val_RMSE_qspec=0.0769  NSE>0=0.82  lr=5.00e-04
+Epoch 20: loss=0.3279  val_median_NSE(phys)=0.6179  val_RMSE_qspec=0.0746  NSE>0=0.80  lr=2.50e-04
+Epoch 21: loss=0.3200  val_median_NSE(phys)=0.6225  val_RMSE_qspec=0.0749  NSE>0=0.80  lr=2.50e-04
+Done. Best val median NSE: 0.6299 at epoch 16
+=== D. FINISHED? ===
+{
+  "epoch": 16,
+  "train_loss": 0.3842882391649639,
+  "median_nse": 0.6298986899012694,
+  "mean_nse": -309.8161446383607,
+  "p25_nse": 0.23554084235970968,
+  "p75_nse": 0.7652227153887483,
+  "frac_nse_gt0": 0.8190255220417634,
+  "global_rmse_qspec_mmph": 0.07592989473045914,
+  "n_stations": 431,
+  "space": "physical_qcms_per_station_NSE"
+}
+-- artifact timestamps --
+2026-08-22 01:13:07.000000000 +0800  342 bytes  /data1/home/sunyiq/nature_1st/models/q_lstm_armG_hpc_s42/best_metrics.json
+2026-08-22 03:42:34.000000000 +0800  35160 bytes  /data1/home/sunyiq/nature_1st/models/q_lstm_armG_hpc_s42/eval_val_per_station.csv
+=== E. PAIRED VERDICT ===
+armG     rows=431  median=0.6299
+armC     rows=431  median=0.6466
+armF     rows=431  median=0.6436
+control  rows=431  median=0.6432
+
+---------- armG vs armC ----------
+paired n            = 431
+median armG         = 0.6299
+median armC        = 0.6466
+group median diff   = -0.0167
+PAIRED median diff  = -0.0276   95% CI [-0.0400, -0.0189]
+worse / better      = 266 / 165
+frac drop > 0.10    = 31.8%
+frac gain > 0.10    = 13.7%
+by stratum (paired median diff, n):
+   arid                 -0.0548  n=178
+   humid                +0.0095  n=18
+   intermediate         -0.0199  n=208
+   snow                 -0.0562  n=27
+
+---------- armG vs armF ----------
+paired n            = 431
+median armG         = 0.6299
+median armF        = 0.6436
+group median diff   = -0.0137
+PAIRED median diff  = -0.0250   95% CI [-0.0355, -0.0145]
+worse / better      = 258 / 173
+frac drop > 0.10    = 27.1%
+frac gain > 0.10    = 17.6%
+by stratum (paired median diff, n):
+   arid                 -0.0323  n=178
+   humid                -0.0143  n=18
+   intermediate         -0.0214  n=208
+   snow                 -0.0461  n=27
+
+---------- armG vs control ----------
+paired n            = 431
+median armG         = 0.6299
+median control     = 0.6432
+group median diff   = -0.0133
+PAIRED median diff  = -0.0256   95% CI [-0.0356, -0.0147]
+worse / better      = 263 / 168
+frac drop > 0.10    = 30.6%
+frac gain > 0.10    = 15.5%
+by stratum (paired median diff, n):
+   arid                 -0.0377  n=178
+   humid                -0.0334  n=18
+   intermediate         -0.0148  n=208
+   snow                 -0.0877  n=27
+
+---------- PRE-REGISTERED DECISION vs armC ----------
+paired median diff = -0.0276   frac drop>0.10 = 31.8%
+  rule SUFFICIENT : pmd >= -0.010 AND drop <= 20%  -> False
+  rule VETO       : pmd <  -0.030 OR  drop >  35%  -> False
+VERDICT: INCONCLUSIVE -- needs seeds 43/44, no single-seed conclusion allowed
+=== F. SEED 43/44 FOLLOW-UP PRESENT? ===
+-- models/q_lstm_armG_hpc_s43 absent --
+-- models/q_lstm_armG_hpc_s44 absent --
+=== END seq=85 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-23T23:29:32+0800
