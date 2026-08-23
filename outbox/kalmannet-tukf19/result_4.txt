@@ -1,0 +1,15 @@
+### channel=kalmannet-tukf19 seq=4
+### host=login4
+### started=2026-08-23T19:32:34+0800
+### ---------- output ----------
+=== TUKF19 FAILED SMOKE EVIDENCE HASH ===
+fe662637a6bf85f1cd525471e05ffe2a13dc7bd62cdff515af0c6d89435651c5  /data1/home/sunyiq/kalmannet_tukf19_20260823/artifacts/tukf19_hpc_deployment_v1/smoke/smoke_report.json
+3222 /data1/home/sunyiq/kalmannet_tukf19_20260823/artifacts/tukf19_hpc_deployment_v1/smoke/smoke_report.json
+=== TUKF19 FAILED TARGET IDENTITY ===
+17cf65f4e798253b66c3e4edc16f36b0e5f9b5d307faecfb80472fe27fb1130a  /data1/home/sunyiq/kalmannet_tukf19_20260823/_transport/tukf19_hpc_payload_v1.tar.gz
+348e77dc139e913eb364b35f40524d0ade2f66b1877259faf2b2688589eb12c8  /data1/home/sunyiq/kalmannet_tukf19_20260823/_transport/bundle_manifest.sha256.json
+FORMAL_SUBMISSION_ABSENT
+TUKF19_FAILED_SMOKE_EVIDENCE_HASH_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-23T19:32:34+0800
