@@ -1,0 +1,326 @@
+### channel=kalmannet-tukf19 seq=8
+### host=login4
+### started=2026-08-23T20:27:58+0800
+### ---------- output ----------
+=== TUKF19 RETRY2 SMOKE AND FORMAL ACCOUNTING ===
+209844|tukf19-smoke-r2|hcpu48y|COMPLETED|0:0|00:00:12|2026-08-23T20:23:06|2026-08-23T20:23:18|icn274
+209845|tukf19-formal-r2|hcpu48y|RUNNING|0:0|00:04:40|2026-08-23T20:23:36|Unknown|icn274
+=== TUKF19 FORMAL QUEUE ===
+             JOBID|   PARTITION|                          NAME|     STATE|      TIME|TIME_LIMIT|NODELIST(REASON)
+            209845|     hcpu48y|              tukf19-formal-r2|   RUNNING|      4:22|1-00:00:00|icn274
+=== TUKF19 BOUND SUBMISSIONS ===
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry2/artifacts/tukf19_hpc_deployment_retry2_v1/smoke/smoke_report.json
+da3ff78101afa609b183ae283e2f5db7500f8c52356db32b96191920d72ea4aa  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry2/artifacts/tukf19_hpc_deployment_retry2_v1/smoke/smoke_report.json
+{
+  "bundle_sha256": "3d1b118be805a95746fb8c7ac999df627675bb18573fb66311f8572395a7f629",
+  "checks": {
+    "available_memory": true,
+    "deterministic_repetition": true,
+    "environment_imports": true,
+    "finite_resident_memory": true,
+    "formal_figure_absent": true,
+    "formal_result_absent": true,
+    "formal_runtime_projection": true,
+    "free_storage": true,
+    "numerical_reference": true,
+    "payload_integrity": true,
+    "scientific_contract": true,
+    "sealed_test_boundary": true,
+    "single_torch_thread": true,
+    "smoke_runtime": true,
+    "thread_environment": true
+  },
+  "deployment_config_sha256": "fd7873f5ec726894475a7f173c990314a61c953faa3821874e0408f42834d599",
+  "deployment_id": "TUKF19_HBV_ROLLING_ORIGIN_FORMAL_EXECUTION_HPC_DEPLOYMENT_RETRY2_V1",
+  "elapsed_seconds": 7.941215347498655,
+  "environment": {
+    "matplotlib": "3.10.6",
+    "node": "icn274",
+    "numpy": "2.3.3",
+    "platform": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17",
+    "psutil": "7.0.0",
+    "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+    "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "slurm_cpus_per_task": "1",
+    "slurm_job_id": "209844",
+    "slurm_partition": "hcpu48y",
+    "thread_environment": {
+      "MKL_NUM_THREADS": "1",
+      "MKL_SERVICE_FORCE_INTEL": "1",
+      "MKL_THREADING_LAYER": "GNU",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "torch": "2.4.0",
+    "torch_interop_threads": 1,
+    "torch_threads": 1
+  },
+  "finished_at_utc": "2026-08-23T12:22:59.384072+00:00",
+  "numeric": {
+    "clean_target_queries": 0,
+    "deterministic": true,
+    "first": {
+      "hydrology_update_only": {
+        "coordinates_after_one_update": [
+          0.5450000002062647,
+          0.2653448274222238,
+          0.6,
+          0.554999872907993,
+          0.17969387760879915,
+          0.3850000001956487,
+          0.4799999994385098,
+          0.23723404255319153,
+          0.31030615034376835,
+          0.10499999558116867,
+          0.16166666800247662,
+          0.14481796327412325
+        ],
+        "elapsed_seconds": 0.44980960339307785,
+        "filter_noise_parameters_unchanged": true,
+        "gradient_nonzero_count": 10,
+        "gradient_norm_before_clipping": 3.4497972860803485,
+        "gradient_values": [
+          0.8362545596381846,
+          -1.0518762496590437,
+          0.0,
+          -0.001357170556125,
+          2.9853527262426636,
+          0.8816309866187274,
+          -0.3072002199720632,
+          0.0,
+          0.006183554701886626,
+          -0.0390351539704002,
+          0.1291275525448794,
+          -0.5414075764161569
+        ],
+        "method": "hydrology_update_only",
+        "selection_loss_after_one_update": 0.3694786507115457,
+        "selection_mse_by_lead_after_one_update": {
+          "1": 0.3830467822512851,
+          "2": 0.37894171033892954,
+          "3": 0.3464474595444224
+        },
+        "training_loss": 0.15125146814722032,
+        "training_mse_by_lead": {
+          "1": 0.14889114943340134,
+          "2": 0.15210909703918363,
+          "3": 0.15275415796907604
+        }
+      },
+      "state_and_hydrology_update": {
+        "coordinates_after_one_update": [
+          0.5450000003555197,
+          0.26534482736232123,
+          0.5950192939435042,
+          0.5549999912045686,
+          0.17969387765275963,
+          0.38500000048431915,
+          0.4799999988941485,
+          0.2398949980535619,
+          0.32030610076311694,
+          0.10499675006531943,
+          0.16166666694597254,
+          0.14481796320804116
+        ],
+        "elapsed_seconds": 1.3912953920662403,
+        "filter_noise_parameters_unchanged": true,
+        "gradient_nonzero_count": 12,
+        "gradient_norm_before_clipping": 0.6106238241336791,
+        "gradient_values": [
+          0.1406391661070911,
+          -0.2233282448445207,
+          2.581486804604502e-06,
+          -0.005684759408061585,
+          0.4914525544342409,
+          0.10323770248534121,
+          -0.045214021280145934,
+          -1.1376250006323942e-08,
+          -0.002305639573608127,
+          -1.5374924595208846e-05,
+          0.17901521335643394,
+          -0.12997904099053542
+        ],
+        "method": "state_and_hydrology_update",
+        "selection_loss_after_one_update": 0.08638733140975685,
+        "selection_mse_by_lead_after_one_update": {
+          "1": 0.07041488688825413,
+          "2": 0.1118702194143928,
+          "3": 0.07687688792662359
+        },
+        "training_loss": 0.03175369137765311,
+        "training_mse_by_lead": {
+          "1": 0.01090241879550797,
+          "2": 0.03248199372440213,
+          "3": 0.051876661613049234
+        }
+      }
+    },
+    "first_pass_elapsed_seconds": 1.8411049954593182,
+    "projected_formal_seconds": 4602.762488648295,
+    "reference_checks": {
+      "hydrology_update_only:filter_noise_unchanged": true,
+      "hydrology_update_only:finite_coordinates": true,
+      "hydrology_update_only:gradient_nonzero_count": true,
+      "hydrology_update_only:gradient_norm_before_clipping": true,
+      "hydrology_update_only:selection_loss_after_one_update": true,
+      "hydrology_update_only:training_loss": true,
+      "state_and_hydrology_update:filter_noise_unchanged": true,
+      "state_and_hydrology_update:finite_coordinates": true,
+      "state_and_hydrology_update:gradient_nonzero_count": true,
+      "state_and_hydrology_update:gradient_norm_before_clipping": true,
+      "state_and_hydrology_update:selection_loss_after_one_update": true,
+      "state_and_hydrology_update:training_loss": true
+    },
+    "second": {
+      "hydrology_update_only": {
+        "coordinates_after_one_update": [
+          0.5450000002062647,
+          0.2653448274222238,
+          0.6,
+          0.554999872907993,
+          0.17969387760879915,
+          0.3850000001956487,
+          0.4799999994385098,
+          0.23723404255319153,
+          0.31030615034376835,
+          0.10499999558116867,
+          0.16166666800247662,
+          0.14481796327412325
+        ],
+        "elapsed_seconds": 0.4372949041426182,
+        "filter_noise_parameters_unchanged": true,
+        "gradient_nonzero_count": 10,
+        "gradient_norm_before_clipping": 3.4497972860803485,
+        "gradient_values": [
+          0.8362545596381846,
+          -1.0518762496590437,
+          0.0,
+          -0.001357170556125,
+          2.9853527262426636,
+          0.8816309866187274,
+          -0.3072002199720632,
+          0.0,
+          0.006183554701886626,
+          -0.0390351539704002,
+          0.1291275525448794,
+          -0.5414075764161569
+        ],
+        "method": "hydrology_update_only",
+        "selection_loss_after_one_update": 0.3694786507115457,
+        "selection_mse_by_lead_after_one_update": {
+          "1": 0.3830467822512851,
+          "2": 0.37894171033892954,
+          "3": 0.3464474595444224
+        },
+        "training_loss": 0.15125146814722032,
+        "training_mse_by_lead": {
+          "1": 0.14889114943340134,
+          "2": 0.15210909703918363,
+          "3": 0.15275415796907604
+        }
+      },
+      "state_and_hydrology_update": {
+        "coordinates_after_one_update": [
+          0.5450000003555197,
+          0.26534482736232123,
+          0.5950192939435042,
+          0.5549999912045686,
+          0.17969387765275963,
+          0.38500000048431915,
+          0.4799999988941485,
+          0.2398949980535619,
+          0.32030610076311694,
+          0.10499675006531943,
+          0.16166666694597254,
+          0.14481796320804116
+        ],
+        "elapsed_seconds": 1.3815179504454136,
+        "filter_noise_parameters_unchanged": true,
+        "gradient_nonzero_count": 12,
+        "gradient_norm_before_clipping": 0.6106238241336791,
+        "gradient_values": [
+          0.1406391661070911,
+          -0.2233282448445207,
+          2.581486804604502e-06,
+          -0.005684759408061585,
+          0.4914525544342409,
+          0.10323770248534121,
+          -0.045214021280145934,
+          -1.1376250006323942e-08,
+          -0.002305639573608127,
+          -1.5374924595208846e-05,
+          0.17901521335643394,
+          -0.12997904099053542
+        ],
+        "method": "state_and_hydrology_update",
+        "selection_loss_after_one_update": 0.08638733140975685,
+        "selection_mse_by_lead_after_one_update": {
+          "1": 0.07041488688825413,
+          "2": 0.1118702194143928,
+          "3": 0.07687688792662359
+        },
+        "training_loss": 0.03175369137765311,
+        "training_mse_by_lead": {
+          "1": 0.01090241879550797,
+          "2": 0.03248199372440213,
+          "3": 0.051876661613049234
+        }
+      }
+    },
+    "start_id": "start_03",
+    "test_origin_queries": 0,
+    "truth_seed": 1802
+  },
+  "package": {
+    "bundle_bytes": 257768,
+    "bundle_sha256": "3d1b118be805a95746fb8c7ac999df627675bb18573fb66311f8572395a7f629",
+    "payload_manifest_sha256": "9bf6abbf5b7e7408e536ade16b8f1bae7b7066329c6569f6a41e45c8245e540d",
+    "verified_member_count": 75
+  },
+  "resources": {
+    "available_memory_gib": 214.04590606689453,
+    "free_storage_gib": 368614.97829818726,
+    "resident_memory_gib": 0.5729637145996094
+  },
+  "schema_version": "tukf19_hpc_smoke_report_v1",
+  "scientific_experiment_id": "TUKF19_HBV_ROLLING_ORIGIN_FORMAL_EXECUTION_V1",
+  "started_at_utc": "2026-08-23T12:22:51.877908+00:00",
+  "status": "HPC_SMOKE_PASS"
+}
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry2/artifacts/tukf19_hpc_deployment_retry2_v1/status/smoke_submission.json
+77ac355580f3670f28c8c12f4c5f899f1c8deea49571863eb8a41f0536f5664d  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry2/artifacts/tukf19_hpc_deployment_retry2_v1/status/smoke_submission.json
+{
+  "bundle_sha256": "3d1b118be805a95746fb8c7ac999df627675bb18573fb66311f8572395a7f629",
+  "job_id": 209844,
+  "job_kind": "smoke",
+  "schema_version": "tukf19_hpc_smoke_submission_v1",
+  "submission_output": "Submitted batch job 209844",
+  "submitted_at_utc": "2026-08-23T12:22:47.399641+00:00"
+}
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry2/artifacts/tukf19_hpc_deployment_retry2_v1/status/formal_submission.json
+d3336233ddbce6d387ad552a32bb64ddaf571ec96ac0cb3557183cdefc7b6913  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry2/artifacts/tukf19_hpc_deployment_retry2_v1/status/formal_submission.json
+{
+  "bundle_sha256": "3d1b118be805a95746fb8c7ac999df627675bb18573fb66311f8572395a7f629",
+  "job_id": 209845,
+  "job_kind": "formal",
+  "schema_version": "tukf19_hpc_formal_submission_v1",
+  "submission_output": "Submitted batch job 209845",
+  "submitted_at_utc": "2026-08-23T12:23:18.052968+00:00"
+}
+=== TUKF19 FORMAL LOG TAILS ===
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry2/logs/formal-209845.out
+0 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry2/logs/formal-209845.out
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry2/logs/formal-209845.err
+0 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry2/logs/formal-209845.err
+=== TUKF19 FORMAL OUTPUT INVENTORY ===
+attempt_identity.json|218
+smoke/smoke_report.json|9478
+status/formal_sbatch_output.txt|27
+status/formal_started.json|506
+status/formal_submission.json|300
+status/smoke_sbatch_output.txt|27
+status/smoke_submission.json|298
+TUKF19_FORMAL_STATUS_SNAPSHOT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-23T20:27:58+0800
