@@ -1,84 +1,185 @@
 #!/usr/bin/env bash
-set -o pipefail
+set -eo pipefail
 
-echo '=== TUKF19 READ-ONLY HPC LIVE PROBE ==='
-date -Is 2>&1 || true
-hostname -f 2>&1 || hostname 2>&1 || true
-uname -a 2>&1 || true
-
-echo '=== RUNNER ==='
-pgrep -af hpc_runner_active 2>&1 || true
-
-echo '=== SLURM COMMANDS ==='
-command -v sinfo 2>&1 || true
-command -v sbatch 2>&1 || true
-type sbatch 2>&1 || true
-sbatch --version 2>&1 || true
-
-echo '=== PARTITION SUMMARY ==='
-sinfo -h -o '%P|%a|%l|%D|%C|%m|%G' 2>&1 || true
-
-echo '=== RELEVANT PARTITIONS ==='
-for partition in hcpu48 hcpu48y hcpu64 hcpu128 hgpu2p; do
-  echo "--- $partition ---"
-  scontrol show partition "$partition" 2>&1 || true
-done
-
-echo '=== USER JOBS ==='
-squeue -u "${USER:-sunyiq}" -o '%.18i|%.12P|%.30j|%.10T|%.10M|%.10l|%.6D|%R' 2>&1 || true
-
-echo '=== RECENT ACCOUNTING ==='
-sacct -S 2026-08-20 -X --format=JobID%12,JobName%24,Partition%12,State%14,ExitCode%10,AllocCPUS%10,Elapsed%12,ReqMem%12,AllocTRES%40 2>&1 || true
-
-echo '=== STORAGE ==='
-df -BG /data1/home/sunyiq 2>&1 || true
-quota -s 2>&1 || true
 TARGET=/data1/home/sunyiq/kalmannet_tukf19_20260823
-if [[ -e "$TARGET" ]]; then
-  echo "TARGET_EXISTS=$TARGET"
-  ls -la "$TARGET" 2>&1 || true
-else
-  echo "TARGET_ABSENT=$TARGET"
-fi
+STAGING=/data1/home/sunyiq/.kalmannet_tukf19_staging_seq2_17cf65f4
+MAILBOX=/data1/home/sunyiq/hpc_mailbox
+PAYLOAD_DIR="$MAILBOX/payload/kalmannet-tukf19"
+ARCHIVE_NAME=tukf19_hpc_payload_v1.tar.gz
+MANIFEST_NAME=bundle_manifest.sha256.json
+SOURCE_ARCHIVE="$PAYLOAD_DIR/$ARCHIVE_NAME"
+SOURCE_MANIFEST="$PAYLOAD_DIR/$MANIFEST_NAME"
+EXPECTED_ARCHIVE_SHA=17cf65f4e798253b66c3e4edc16f36b0e5f9b5d307faecfb80472fe27fb1130a
+EXPECTED_ARCHIVE_BYTES=220724
+EXPECTED_MANIFEST_SHA=348e77dc139e913eb364b35f40524d0ade2f66b1877259faf2b2688589eb12c8
 
-echo '=== NH_FINAL ENVIRONMENT ==='
-CONDA_SH=/data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-if [[ ! -f "$CONDA_SH" ]]; then
-  CONDA_SH="$HOME/miniconda3/etc/profile.d/conda.sh"
-fi
-if [[ -f "$CONDA_SH" ]]; then
-  source "$CONDA_SH"
-  conda activate nh_final 2>&1 || true
-  command -v python 2>&1 || true
-  python - <<'PY' 2>&1 || true
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+PYTHON=$(command -v python)
+test -n "$PYTHON"
+
+verify_transport() {
+  archive=$1
+  manifest=$2
+  test -f "$archive" -a -f "$manifest"
+  test "$(wc -c < "$archive")" = "$EXPECTED_ARCHIVE_BYTES"
+  test "$(sha256sum "$archive" | awk '{print $1}')" = "$EXPECTED_ARCHIVE_SHA"
+  test "$(sha256sum "$manifest" | awk '{print $1}')" = "$EXPECTED_MANIFEST_SHA"
+}
+
+verify_extracted() {
+  root=$1
+  "$PYTHON" -B - "$root" <<'PY'
+import hashlib
 import json
-import os
-import platform
+from pathlib import Path, PurePosixPath
 import sys
 
-report = {
-    "executable": sys.executable,
-    "python": sys.version,
-    "platform": platform.platform(),
-    "cwd": os.getcwd(),
-}
-for name in ("numpy", "psutil", "torch"):
-    try:
-        module = __import__(name)
-        report[name] = getattr(module, "__version__", "UNKNOWN")
-    except BaseException as error:
-        report[name] = f"IMPORT_ERROR:{type(error).__name__}:{error}"
-try:
-    import torch
-    report["torch_threads"] = torch.get_num_threads()
-    report["torch_interop_threads"] = torch.get_num_interop_threads()
-except BaseException as error:
-    report["torch_runtime_error"] = f"{type(error).__name__}:{error}"
-print(json.dumps(report, sort_keys=True))
+root = Path(sys.argv[1]).resolve()
+external = json.loads((root / "_transport/bundle_manifest.sha256.json").read_text(encoding="utf-8"))
+payload_path = root / external["payload_manifest_name"]
+payload_bytes = payload_path.read_bytes()
+assert hashlib.sha256(payload_bytes).hexdigest() == external["payload_manifest_sha256"]
+payload = json.loads(payload_bytes.decode("utf-8"))
+assert payload["deployment_id"] == external["deployment_id"]
+assert payload["members"] == external["members"]
+for name, expected in payload["members"].items():
+    pure = PurePosixPath(name)
+    assert not pure.is_absolute() and ".." not in pure.parts
+    path = root.joinpath(*pure.parts).resolve()
+    path.relative_to(root)
+    assert path.is_file(), name
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    assert digest == expected, (name, digest, expected)
+print(f"PAYLOAD_MEMBERS_VERIFIED={len(payload['members'])}")
 PY
+}
+
+if [[ -e "$TARGET" ]]; then
+  test -d "$TARGET"
+  verify_transport "$TARGET/_transport/$ARCHIVE_NAME" "$TARGET/_transport/$MANIFEST_NAME"
+  verify_extracted "$TARGET"
+  echo "TUKF19_EXACT_DEPLOYMENT_ALREADY_PRESENT=$TARGET"
 else
-  echo "CONDA_SH_MISSING=$CONDA_SH"
+  test ! -e "$STAGING"
+  mkdir -p "$STAGING/_transport"
+  cp "$SOURCE_ARCHIVE" "$STAGING/_transport/$ARCHIVE_NAME"
+  cp "$SOURCE_MANIFEST" "$STAGING/_transport/$MANIFEST_NAME"
+  verify_transport "$STAGING/_transport/$ARCHIVE_NAME" "$STAGING/_transport/$MANIFEST_NAME"
+  tar -xzf "$STAGING/_transport/$ARCHIVE_NAME" -C "$STAGING"
+  verify_extracted "$STAGING"
+  sed -i 's/\r$//' "$STAGING"/hpc/tukf19_hbv_rolling_origin_formal_execution/*.slurm
+  verify_extracted "$STAGING"
+  mkdir -p "$STAGING/logs"
+  mv "$STAGING" "$TARGET"
+  echo "TUKF19_DEPLOYED=$TARGET"
 fi
 
-echo '=== TUKF19_READ_ONLY_PROBE_COMPLETE ==='
-exit 0
+STATUS_ROOT="$TARGET/artifacts/tukf19_hpc_deployment_v1/status"
+SMOKE_SUBMISSION="$STATUS_ROOT/smoke_submission.json"
+FORMAL_SUBMISSION="$STATUS_ROOT/formal_submission.json"
+SMOKE_REPORT="$TARGET/artifacts/tukf19_hpc_deployment_v1/smoke/smoke_report.json"
+mkdir -p "$STATUS_ROOT"
+
+read_job_id() {
+  "$PYTHON" -B - "$1" <<'PY'
+import json
+from pathlib import Path
+import sys
+print(int(json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))["job_id"]))
+PY
+}
+
+write_submission() {
+  destination=$1
+  kind=$2
+  job_id=$3
+  submit_output=$4
+  "$PYTHON" -B - "$destination" "$kind" "$job_id" "$submit_output" "$EXPECTED_ARCHIVE_SHA" <<'PY'
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+payload = {
+    "schema_version": f"tukf19_hpc_{sys.argv[2]}_submission_v1",
+    "job_kind": sys.argv[2],
+    "job_id": int(sys.argv[3]),
+    "submission_output": sys.argv[4],
+    "bundle_sha256": sys.argv[5],
+    "submitted_at_utc": datetime.now(timezone.utc).isoformat(),
+}
+with path.open("x", encoding="utf-8", newline="\n") as handle:
+    json.dump(payload, handle, indent=2, sort_keys=True)
+    handle.write("\n")
+PY
+}
+
+if [[ -f "$SMOKE_SUBMISSION" ]]; then
+  SMOKE_JOB_ID=$(read_job_id "$SMOKE_SUBMISSION")
+else
+  SMOKE_OUTPUT_FILE="$STATUS_ROOT/smoke_sbatch_output.txt"
+  test ! -e "$SMOKE_OUTPUT_FILE"
+  set +e
+  SMOKE_OUTPUT=$(sbatch "$TARGET/hpc/tukf19_hbv_rolling_origin_formal_execution/submit_smoke_cpu.slurm" 2>&1)
+  SMOKE_RC=$?
+  set -e
+  printf '%s\n' "$SMOKE_OUTPUT" | tee "$SMOKE_OUTPUT_FILE"
+  test "$SMOKE_RC" -eq 0
+  SMOKE_JOB_ID=$(printf '%s\n' "$SMOKE_OUTPUT" | awk '/^Submitted batch job [0-9]+$/ {print $4}')
+  test -n "$SMOKE_JOB_ID"
+  write_submission "$SMOKE_SUBMISSION" smoke "$SMOKE_JOB_ID" "$SMOKE_OUTPUT"
+fi
+echo "TUKF19_SMOKE_JOB_ID=$SMOKE_JOB_ID"
+
+SMOKE_COMPLETE=0
+for attempt in $(seq 1 80); do
+  accounting=$(sacct -j "$SMOKE_JOB_ID" -X -n -P --format=JobIDRaw,State,ExitCode 2>/dev/null | awk -F'|' -v id="$SMOKE_JOB_ID" '$1 == id {print $2 "|" $3; exit}')
+  state=$(printf '%s' "$accounting" | awk -F'|' '{print $1}' | sed 's/+.*$//')
+  exit_code=$(printf '%s' "$accounting" | awk -F'|' '{print $2}')
+  if [[ "$state" = "COMPLETED" && "$exit_code" = "0:0" ]]; then
+    SMOKE_COMPLETE=1
+    break
+  fi
+  case "$state" in
+    FAILED|CANCELLED|TIMEOUT|NODE_FAIL|OUT_OF_MEMORY|PREEMPTED)
+      echo "TUKF19_SMOKE_TERMINAL_FAILURE state=$state exit_code=$exit_code" >&2
+      exit 171
+      ;;
+  esac
+  echo "TUKF19_SMOKE_WAIT attempt=$attempt state=${state:-UNKNOWN} exit_code=${exit_code:-UNKNOWN}"
+  sleep 30
+done
+test "$SMOKE_COMPLETE" -eq 1
+test -f "$SMOKE_REPORT"
+"$PYTHON" -B - "$SMOKE_REPORT" "$EXPECTED_ARCHIVE_SHA" <<'PY'
+import json
+from pathlib import Path
+import sys
+
+report = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+assert report["status"] == "HPC_SMOKE_PASS", report.get("status")
+assert report["bundle_sha256"] == sys.argv[2]
+assert report["checks"] and all(report["checks"].values()), report["checks"]
+print("TUKF19_BOUND_SMOKE_PASS")
+PY
+
+if [[ -f "$FORMAL_SUBMISSION" ]]; then
+  FORMAL_JOB_ID=$(read_job_id "$FORMAL_SUBMISSION")
+else
+  FORMAL_OUTPUT_FILE="$STATUS_ROOT/formal_sbatch_output.txt"
+  test ! -e "$FORMAL_OUTPUT_FILE"
+  set +e
+  FORMAL_OUTPUT=$(sbatch "$TARGET/hpc/tukf19_hbv_rolling_origin_formal_execution/submit_formal_cpu.slurm" 2>&1)
+  FORMAL_RC=$?
+  set -e
+  printf '%s\n' "$FORMAL_OUTPUT" | tee "$FORMAL_OUTPUT_FILE"
+  test "$FORMAL_RC" -eq 0
+  FORMAL_JOB_ID=$(printf '%s\n' "$FORMAL_OUTPUT" | awk '/^Submitted batch job [0-9]+$/ {print $4}')
+  test -n "$FORMAL_JOB_ID"
+  write_submission "$FORMAL_SUBMISSION" formal "$FORMAL_JOB_ID" "$FORMAL_OUTPUT"
+fi
+echo "TUKF19_FORMAL_JOB_ID=$FORMAL_JOB_ID"
+squeue -j "$FORMAL_JOB_ID" -o '%.18i|%.12P|%.30j|%.10T|%.10M|%.10l|%R' 2>&1 || true
+echo TUKF19_SMOKE_PASSED_AND_FORMAL_SUBMITTED
