@@ -1,0 +1,139 @@
+### channel=kalmannet-tukf19 seq=13
+### host=login4
+### started=2026-08-23T22:59:28+0800
+### ---------- output ----------
+=== TUKF19 RETRY4 IMMUTABLE EVIDENCE GATES ===
+TUKF19_RETRY4_ALL_PRIOR_EVIDENCE_PINNED
+=== TUKF19 RETRY4 DEPLOYMENT ===
+tar: G:/github/pycharm/projects/kalmannet/G:/github/pycharm/projects/neuralhydrology/src/scl_hydro/hbv_lite_numpy.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/configs/tukf11_hbv_joint_parameter_synthetic_mechanism_gate_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/configs/tukf14_hbv_four_mode_randomised_start_ablation_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/configs/tukf16_hbv_balanced_error_four_mode_rerun_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/results/tukf15_hbv_truth_balance_forward_gate_v1/registry.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/run_aligned_gr4j_da.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/run_aligned_gr4j_differentiable_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/run_tukf11_hbv_joint_parameter_synthetic_mechanism_gate.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/tukf10_joint_hbv_physical_filter_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/tukf11_hbv_joint_parameter_synthetic_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/assimilation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/assimilation/conventional_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/data/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/data/caravan_dataset.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/data/multi_obs_caravan.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/differentiable_m4.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/differentiable_walrus.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/dl_ssm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/hydro_system.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/m4_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/static_encoder.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/trainable_hbvlite_ukf_adapter.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/walrus_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/neuralhydrology/src/scl_hydro/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/neuralhydrology/src/scl_hydro/hbv_lite_numpy.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf17_hbv_rolling_origin_state_hydrology_update_v1/preflight/balance_errors.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf17_hbv_rolling_origin_state_hydrology_update_v1/preflight/balance_gate.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf17_hbv_rolling_origin_state_hydrology_update_v1/preflight/independent_verification.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf17_hbv_rolling_origin_state_hydrology_update_v1/preflight/preflight.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf17_hbv_rolling_origin_state_hydrology_update_v1/preflight/seed_registry.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/balance_errors.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/balance_gate.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/independent_verification.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/postflight_resource_conflict.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/preflight.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/seed_registry.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf17_hbv_rolling_origin_state_hydrology_update_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf18_hbv_rolling_origin_balance_adjustment_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf19_hbv_rolling_origin_formal_execution_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf19_hpc_deployment_retry1_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf19_hpc_deployment_retry2_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf19_hpc_deployment_retry3_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf19_hpc_deployment_retry4_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf19_hpc_deployment_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-23-tukf18-balanced-rolling-origin-preflight.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-23-tukf19-hpc-cold-start-runtime-retry2.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-23-tukf19-hpc-import-closure-retry1.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-23-tukf19-hpc-migration.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-23-tukf19-hpc-postprocessing-recovery-retry3.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-23-tukf19-hpc-wrapped-error-recovery-retry4.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-23-tukf19-rolling-origin-formal-execution.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf19_hbv_rolling_origin_formal_execution/submit_formal_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf19_hbv_rolling_origin_formal_execution/submit_formal_cpu_retry1.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf19_hbv_rolling_origin_formal_execution/submit_formal_cpu_retry2.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf19_hbv_rolling_origin_formal_execution/submit_postprocessing_recovery_cpu_retry3.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf19_hbv_rolling_origin_formal_execution/submit_postprocessing_recovery_cpu_retry4.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf19_hbv_rolling_origin_formal_execution/submit_smoke_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf19_hbv_rolling_origin_formal_execution/submit_smoke_cpu_retry1.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf19_hbv_rolling_origin_formal_execution/submit_smoke_cpu_retry2.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: payload_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_tukf19_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/plot_tukf17_hbv_rolling_origin_state_hydrology_update.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/plot_tukf19_hbv_rolling_origin_formal_execution.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/recover_tukf19_hpc_postprocessing.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf17_hbv_rolling_origin_state_hydrology_update.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf18_hbv_rolling_origin_balance_preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf19_hbv_rolling_origin_formal_execution.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf19_hpc_formal_pipeline.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/smoke_tukf19_hpc_compatibility.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf17_hbv_rolling_origin_state_hydrology_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf18_hbv_rolling_origin_balance_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf19_hbv_rolling_origin_formal_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf19_hpc_deployment_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/verify_tukf17_hbv_rolling_origin_state_hydrology_update.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/verify_tukf18_hbv_rolling_origin_balance_preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/verify_tukf19_hbv_rolling_origin_formal_execution.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_tukf18_hbv_rolling_origin_balance_adjustment.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_tukf19_hbv_rolling_origin_formal_execution.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_tukf19_hpc_migration.py: implausibly old time stamp 1970-01-01 08:00:00
+PAYLOAD_MEMBERS_VERIFIED=82
+PAYLOAD_MEMBERS_VERIFIED=82
+TUKF19_RETRY4_DEPLOYED=/data1/home/sunyiq/kalmannet_tukf19_20260823_retry4
+=== TUKF19 RETRY4 UNIQUE RECOVERY SUBMISSION ===
+Submitted batch job 209951
+TUKF19_RETRY4_RECOVERY_JOB_ID=209951
+             JOBID|   PARTITION|                          NAME|     STATE|      TIME|TIME_LIMIT|NODELIST(REASON)
+            209951|     hcpu48y|                tukf19-post-r4|   PENDING|      0:00|     30:00|(None)
+=== TUKF19 RETRY4 WAIT ===
+TUKF19_RETRY4_WAIT attempt=3 state=RUNNING exit_code=0:0
+=== TUKF19 RETRY4 COMPLETION SUMMARY ===
+{
+  "archive_bytes": 7139866,
+  "archive_sha256": "e110f71c03933948792765a72888d6b21393247eb58274fb872c6b74c615ae86",
+  "checks": {
+    "archive_bytes": true,
+    "archive_sha256": true,
+    "completion_status": true,
+    "copied_file_count": true,
+    "copied_total_bytes": true,
+    "display_pair_count": true,
+    "figure_member_count": true,
+    "figure_status": true,
+    "formal_output_validation": true,
+    "formal_training_not_rerun": true,
+    "independent_verification_not_rerun": true,
+    "recovery_job": true,
+    "source_failure_checks": true,
+    "source_formal_job": true,
+    "source_result_checks": true
+  },
+  "member_count": 2024,
+  "selected_display_pair": {
+    "pair_count": 27,
+    "population_median_ratio": 0.11679781585163287,
+    "ratio": 0.11679781585163287,
+    "selection_basis": "display_only_state_and_hydrology_update_over_no_update_derived_from_verified_registry_rows",
+    "start_id": "start_06",
+    "truth_seed": 1805
+  }
+}
+=== TUKF19 RETRY4 MAILBOX RETRIEVAL ===
+TUKF19_RETRY4_RETRIEVED_ARCHIVE_SHA256=e110f71c03933948792765a72888d6b21393247eb58274fb872c6b74c615ae86
+TUKF19_RETRY4_RETRIEVED_ARCHIVE_BYTES=7139866
+209951|tukf19-post-r4|hcpu48y|COMPLETED|0:0|00:00:33|2026-08-23T22:59:52|2026-08-23T23:00:25|icn274|
+TUKF19_RETRY4_POSTPROCESSING_RECOVERY_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-23T23:00:15+0800
