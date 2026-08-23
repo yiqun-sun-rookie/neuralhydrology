@@ -1,5 +1,5 @@
 #!/bin/bash
-# nature1st-attr-swap seq=81 -- armG watchdog, unattended routine re-check. READ-ONLY, no sbatch, no resubmit.
+# nature1st-attr-swap seq=82 -- armG watchdog, unattended routine re-check. READ-ONLY, no sbatch, no resubmit.
 # Job 207826 = q_armG_china_supplyable. Previous check (seq=80, 08:31 CST): COMPLETED 09:55:16 on ngu007,
 # guard confirmed 17 attributes, best epoch 16 median 0.6299, verdict INCONCLUSIVE vs armC.
 # This round independently re-confirms the terminal state, re-derives every paired statistic from the raw
@@ -152,4 +152,15 @@ else:
     print("armC missing -- cannot decide")
 PY
 fi
-echo "=== END seq=81 ==="
+echo "=== F. SEED 43/44 FOLLOW-UP PRESENT? ==="
+for sd in 43 44; do
+  d=models/q_lstm_armG_hpc_s${sd}
+  if [ -d "$d" ]; then
+    echo "-- $d exists --"
+    stat -c '%y  %s bytes  %n' "$d"/best_metrics.json 2>/dev/null || echo "   (no best_metrics.json yet)"
+  else
+    echo "-- $d absent --"
+  fi
+done
+
+echo "=== END seq=82 ==="
