@@ -1,0 +1,302 @@
+### channel=kalmannet-tukf19 seq=6
+### host=login4
+### started=2026-08-23T20:05:58+0800
+### ---------- output ----------
+=== TUKF19 RETRY1 ACCOUNTING ===
+209825|tukf19-smoke-r1|hcpu48y|FAILED|2:0|00:00:45|icn274
+slurm_load_jobs error: Invalid job id specified
+=== TUKF19 RETRY1 FORMAL SUBMISSION BOUNDARY ===
+FORMAL_SUBMISSION_ABSENT
+=== FILE /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/artifacts/tukf19_hpc_deployment_retry1_v1/smoke/smoke_report.json ===
+7ab176aa0fa4a569a113575952d4334d79e977b55440692d70c8ea583038ab72  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/artifacts/tukf19_hpc_deployment_retry1_v1/smoke/smoke_report.json
+9476 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/artifacts/tukf19_hpc_deployment_retry1_v1/smoke/smoke_report.json
+{
+  "bundle_sha256": "d4e37bbd3f9191f26adb8b2a2a060358aeba5a822b0697fbb292e90308f2b407",
+  "checks": {
+    "available_memory": true,
+    "deterministic_repetition": true,
+    "environment_imports": true,
+    "finite_resident_memory": true,
+    "formal_figure_absent": true,
+    "formal_result_absent": true,
+    "formal_runtime_projection": true,
+    "free_storage": true,
+    "numerical_reference": true,
+    "payload_integrity": true,
+    "scientific_contract": true,
+    "sealed_test_boundary": true,
+    "single_torch_thread": true,
+    "smoke_runtime": false,
+    "thread_environment": true
+  },
+  "deployment_config_sha256": "8d1e48b17eaf4ab430cd8da3297beaa675fa42fe8424a8631149c1e46f9bbc88",
+  "deployment_id": "TUKF19_HBV_ROLLING_ORIGIN_FORMAL_EXECUTION_HPC_DEPLOYMENT_RETRY1_V1",
+  "elapsed_seconds": 40.415059223771095,
+  "environment": {
+    "matplotlib": "3.10.6",
+    "node": "icn274",
+    "numpy": "2.3.3",
+    "platform": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17",
+    "psutil": "7.0.0",
+    "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+    "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "slurm_cpus_per_task": "1",
+    "slurm_job_id": "209825",
+    "slurm_partition": "hcpu48y",
+    "thread_environment": {
+      "MKL_NUM_THREADS": "1",
+      "MKL_SERVICE_FORCE_INTEL": "1",
+      "MKL_THREADING_LAYER": "GNU",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "torch": "2.4.0",
+    "torch_interop_threads": 1,
+    "torch_threads": 1
+  },
+  "finished_at_utc": "2026-08-23T11:49:59.146435+00:00",
+  "numeric": {
+    "clean_target_queries": 0,
+    "deterministic": true,
+    "first": {
+      "hydrology_update_only": {
+        "coordinates_after_one_update": [
+          0.5450000002062647,
+          0.2653448274222238,
+          0.6,
+          0.554999872907993,
+          0.17969387760879915,
+          0.3850000001956487,
+          0.4799999994385098,
+          0.23723404255319153,
+          0.31030615034376835,
+          0.10499999558116867,
+          0.16166666800247662,
+          0.14481796327412325
+        ],
+        "elapsed_seconds": 0.5032354071736336,
+        "filter_noise_parameters_unchanged": true,
+        "gradient_nonzero_count": 10,
+        "gradient_norm_before_clipping": 3.4497972860803485,
+        "gradient_values": [
+          0.8362545596381846,
+          -1.0518762496590437,
+          0.0,
+          -0.001357170556125,
+          2.9853527262426636,
+          0.8816309866187274,
+          -0.3072002199720632,
+          0.0,
+          0.006183554701886626,
+          -0.0390351539704002,
+          0.1291275525448794,
+          -0.5414075764161569
+        ],
+        "method": "hydrology_update_only",
+        "selection_loss_after_one_update": 0.3694786507115457,
+        "selection_mse_by_lead_after_one_update": {
+          "1": 0.3830467822512851,
+          "2": 0.37894171033892954,
+          "3": 0.3464474595444224
+        },
+        "training_loss": 0.15125146814722032,
+        "training_mse_by_lead": {
+          "1": 0.14889114943340134,
+          "2": 0.15210909703918363,
+          "3": 0.15275415796907604
+        }
+      },
+      "state_and_hydrology_update": {
+        "coordinates_after_one_update": [
+          0.5450000003555197,
+          0.26534482736232123,
+          0.5950192939435042,
+          0.5549999912045686,
+          0.17969387765275963,
+          0.38500000048431915,
+          0.4799999988941485,
+          0.2398949980535619,
+          0.32030610076311694,
+          0.10499675006531943,
+          0.16166666694597254,
+          0.14481796320804116
+        ],
+        "elapsed_seconds": 1.5437935814261436,
+        "filter_noise_parameters_unchanged": true,
+        "gradient_nonzero_count": 12,
+        "gradient_norm_before_clipping": 0.6106238241336791,
+        "gradient_values": [
+          0.1406391661070911,
+          -0.2233282448445207,
+          2.581486804604502e-06,
+          -0.005684759408061585,
+          0.4914525544342409,
+          0.10323770248534121,
+          -0.045214021280145934,
+          -1.1376250006323942e-08,
+          -0.002305639573608127,
+          -1.5374924595208846e-05,
+          0.17901521335643394,
+          -0.12997904099053542
+        ],
+        "method": "state_and_hydrology_update",
+        "selection_loss_after_one_update": 0.08638733140975685,
+        "selection_mse_by_lead_after_one_update": {
+          "1": 0.07041488688825413,
+          "2": 0.1118702194143928,
+          "3": 0.07687688792662359
+        },
+        "training_loss": 0.03175369137765311,
+        "training_mse_by_lead": {
+          "1": 0.01090241879550797,
+          "2": 0.03248199372440213,
+          "3": 0.051876661613049234
+        }
+      }
+    },
+    "first_pass_elapsed_seconds": 2.047028988599777,
+    "projected_formal_seconds": 5117.572471499443,
+    "reference_checks": {
+      "hydrology_update_only:filter_noise_unchanged": true,
+      "hydrology_update_only:finite_coordinates": true,
+      "hydrology_update_only:gradient_nonzero_count": true,
+      "hydrology_update_only:gradient_norm_before_clipping": true,
+      "hydrology_update_only:selection_loss_after_one_update": true,
+      "hydrology_update_only:training_loss": true,
+      "state_and_hydrology_update:filter_noise_unchanged": true,
+      "state_and_hydrology_update:finite_coordinates": true,
+      "state_and_hydrology_update:gradient_nonzero_count": true,
+      "state_and_hydrology_update:gradient_norm_before_clipping": true,
+      "state_and_hydrology_update:selection_loss_after_one_update": true,
+      "state_and_hydrology_update:training_loss": true
+    },
+    "second": {
+      "hydrology_update_only": {
+        "coordinates_after_one_update": [
+          0.5450000002062647,
+          0.2653448274222238,
+          0.6,
+          0.554999872907993,
+          0.17969387760879915,
+          0.3850000001956487,
+          0.4799999994385098,
+          0.23723404255319153,
+          0.31030615034376835,
+          0.10499999558116867,
+          0.16166666800247662,
+          0.14481796327412325
+        ],
+        "elapsed_seconds": 0.438504196703434,
+        "filter_noise_parameters_unchanged": true,
+        "gradient_nonzero_count": 10,
+        "gradient_norm_before_clipping": 3.4497972860803485,
+        "gradient_values": [
+          0.8362545596381846,
+          -1.0518762496590437,
+          0.0,
+          -0.001357170556125,
+          2.9853527262426636,
+          0.8816309866187274,
+          -0.3072002199720632,
+          0.0,
+          0.006183554701886626,
+          -0.0390351539704002,
+          0.1291275525448794,
+          -0.5414075764161569
+        ],
+        "method": "hydrology_update_only",
+        "selection_loss_after_one_update": 0.3694786507115457,
+        "selection_mse_by_lead_after_one_update": {
+          "1": 0.3830467822512851,
+          "2": 0.37894171033892954,
+          "3": 0.3464474595444224
+        },
+        "training_loss": 0.15125146814722032,
+        "training_mse_by_lead": {
+          "1": 0.14889114943340134,
+          "2": 0.15210909703918363,
+          "3": 0.15275415796907604
+        }
+      },
+      "state_and_hydrology_update": {
+        "coordinates_after_one_update": [
+          0.5450000003555197,
+          0.26534482736232123,
+          0.5950192939435042,
+          0.5549999912045686,
+          0.17969387765275963,
+          0.38500000048431915,
+          0.4799999988941485,
+          0.2398949980535619,
+          0.32030610076311694,
+          0.10499675006531943,
+          0.16166666694597254,
+          0.14481796320804116
+        ],
+        "elapsed_seconds": 1.3641067892313004,
+        "filter_noise_parameters_unchanged": true,
+        "gradient_nonzero_count": 12,
+        "gradient_norm_before_clipping": 0.6106238241336791,
+        "gradient_values": [
+          0.1406391661070911,
+          -0.2233282448445207,
+          2.581486804604502e-06,
+          -0.005684759408061585,
+          0.4914525544342409,
+          0.10323770248534121,
+          -0.045214021280145934,
+          -1.1376250006323942e-08,
+          -0.002305639573608127,
+          -1.5374924595208846e-05,
+          0.17901521335643394,
+          -0.12997904099053542
+        ],
+        "method": "state_and_hydrology_update",
+        "selection_loss_after_one_update": 0.08638733140975685,
+        "selection_mse_by_lead_after_one_update": {
+          "1": 0.07041488688825413,
+          "2": 0.1118702194143928,
+          "3": 0.07687688792662359
+        },
+        "training_loss": 0.03175369137765311,
+        "training_mse_by_lead": {
+          "1": 0.01090241879550797,
+          "2": 0.03248199372440213,
+          "3": 0.051876661613049234
+        }
+      }
+    },
+    "start_id": "start_03",
+    "test_origin_queries": 0,
+    "truth_seed": 1802
+  },
+=== FILE /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/artifacts/tukf19_hpc_deployment_retry1_v1/status/smoke_submission.json ===
+e2017cc2a2511594d9c83a2ee38a22594c42e889c560af1d761356a637959881  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/artifacts/tukf19_hpc_deployment_retry1_v1/status/smoke_submission.json
+298 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/artifacts/tukf19_hpc_deployment_retry1_v1/status/smoke_submission.json
+{
+  "bundle_sha256": "d4e37bbd3f9191f26adb8b2a2a060358aeba5a822b0697fbb292e90308f2b407",
+  "job_id": 209825,
+  "job_kind": "smoke",
+  "schema_version": "tukf19_hpc_smoke_submission_v1",
+  "submission_output": "Submitted batch job 209825",
+  "submitted_at_utc": "2026-08-23T11:49:14.809353+00:00"
+}
+=== FILE /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/artifacts/tukf19_hpc_deployment_retry1_v1/status/smoke_sbatch_output.txt ===
+2e0c463f44a91be0ad107b7e2f1ac8575db4c10d343fc9d6c821c1516a1952d2  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/artifacts/tukf19_hpc_deployment_retry1_v1/status/smoke_sbatch_output.txt
+27 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/artifacts/tukf19_hpc_deployment_retry1_v1/status/smoke_sbatch_output.txt
+Submitted batch job 209825
+=== FILE /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/logs/smoke-209825.out ===
+32c7523dc47226335657ce5c1b31ee26bb157138ae181f54df39d7e1d2e18208  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/logs/smoke-209825.out
+475 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/logs/smoke-209825.out
+{"checks": {"available_memory": true, "deterministic_repetition": true, "environment_imports": true, "finite_resident_memory": true, "formal_figure_absent": true, "formal_result_absent": true, "formal_runtime_projection": true, "free_storage": true, "numerical_reference": true, "payload_integrity": true, "scientific_contract": true, "sealed_test_boundary": true, "single_torch_thread": true, "smoke_runtime": false, "thread_environment": true}, "status": "HPC_SMOKE_FAIL"}
+=== FILE /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/logs/smoke-209825.err ===
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/logs/smoke-209825.err
+0 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry1/logs/smoke-209825.err
+=== TUKF19 RETRY1 ARTIFACT INVENTORY ===
+smoke/smoke_report.json|9476
+status/smoke_sbatch_output.txt|27
+status/smoke_submission.json|298
+TUKF19_RETRY1_FAILURE_DIAGNOSTIC_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-23T20:05:59+0800
