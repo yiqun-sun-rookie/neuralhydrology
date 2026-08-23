@@ -1,0 +1,72 @@
+### channel=kalmannet-tukf19 seq=2
+### host=login4
+### started=2026-08-23T19:24:29+0800
+### ---------- output ----------
+tar: G:/github/pycharm/projects/kalmannet/G:/github/pycharm/projects/neuralhydrology/src/scl_hydro/hbv_lite_numpy.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/configs/tukf11_hbv_joint_parameter_synthetic_mechanism_gate_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/configs/tukf14_hbv_four_mode_randomised_start_ablation_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/configs/tukf16_hbv_balanced_error_four_mode_rerun_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/results/tukf15_hbv_truth_balance_forward_gate_v1/registry.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/run_aligned_gr4j_da.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/run_aligned_gr4j_differentiable_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/run_tukf11_hbv_joint_parameter_synthetic_mechanism_gate.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/tukf10_joint_hbv_physical_filter_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/tukf11_hbv_joint_parameter_synthetic_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/assimilation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/assimilation/conventional_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/trainable_hbvlite_ukf_adapter.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/neuralhydrology/src/scl_hydro/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/neuralhydrology/src/scl_hydro/hbv_lite_numpy.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf17_hbv_rolling_origin_state_hydrology_update_v1/preflight/balance_errors.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf17_hbv_rolling_origin_state_hydrology_update_v1/preflight/balance_gate.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf17_hbv_rolling_origin_state_hydrology_update_v1/preflight/independent_verification.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf17_hbv_rolling_origin_state_hydrology_update_v1/preflight/preflight.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf17_hbv_rolling_origin_state_hydrology_update_v1/preflight/seed_registry.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/balance_errors.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/balance_gate.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/independent_verification.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/postflight_resource_conflict.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/preflight.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: artifacts/tukf18_hbv_rolling_origin_balance_adjustment_v1/preflight/seed_registry.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf17_hbv_rolling_origin_state_hydrology_update_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf18_hbv_rolling_origin_balance_adjustment_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf19_hbv_rolling_origin_formal_execution_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf19_hpc_deployment_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-23-tukf18-balanced-rolling-origin-preflight.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-23-tukf19-hpc-migration.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-23-tukf19-rolling-origin-formal-execution.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf19_hbv_rolling_origin_formal_execution/submit_formal_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf19_hbv_rolling_origin_formal_execution/submit_smoke_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: payload_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_tukf19_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/plot_tukf17_hbv_rolling_origin_state_hydrology_update.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/plot_tukf19_hbv_rolling_origin_formal_execution.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf17_hbv_rolling_origin_state_hydrology_update.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf18_hbv_rolling_origin_balance_preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf19_hbv_rolling_origin_formal_execution.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf19_hpc_formal_pipeline.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/smoke_tukf19_hpc_compatibility.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf17_hbv_rolling_origin_state_hydrology_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf18_hbv_rolling_origin_balance_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf19_hbv_rolling_origin_formal_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf19_hpc_deployment_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/verify_tukf17_hbv_rolling_origin_state_hydrology_update.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/verify_tukf18_hbv_rolling_origin_balance_preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/verify_tukf19_hbv_rolling_origin_formal_execution.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_tukf18_hbv_rolling_origin_balance_adjustment.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_tukf19_hbv_rolling_origin_formal_execution.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_tukf19_hpc_migration.py: implausibly old time stamp 1970-01-01 08:00:00
+PAYLOAD_MEMBERS_VERIFIED=57
+PAYLOAD_MEMBERS_VERIFIED=57
+TUKF19_DEPLOYED=/data1/home/sunyiq/kalmannet_tukf19_20260823
+Submitted batch job 209815
+TUKF19_SMOKE_JOB_ID=209815
+TUKF19_SMOKE_WAIT attempt=1 state=UNKNOWN exit_code=UNKNOWN
+TUKF19_SMOKE_TERMINAL_FAILURE state=FAILED exit_code=2:0
+### ---------- end ----------
+### exit_code=171
+### finished=2026-08-23T19:25:04+0800
