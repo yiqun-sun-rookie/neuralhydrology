@@ -1,0 +1,85 @@
+### channel=kalmannet-tukf19 seq=12
+### host=login4
+### started=2026-08-23T22:41:35+0800
+### ---------- output ----------
+=== TUKF19 RETRY3 RECOVERY ACCOUNTING ===
+209938|tukf19-post-r3|hcpu48y|FAILED|1:0|00:00:05|2026-08-23T22:38:28|2026-08-23T22:38:33|icn274|
+slurm_load_jobs error: Invalid job id specified
+=== TUKF19 RETRY3 FAILURE EVIDENCE ===
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/status/postprocessing_recovery_submission.json
+af07f09972ba6438dd7cc29f3a2165576e388caa883433080073ef1265304898  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/status/postprocessing_recovery_submission.json
+368 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/status/postprocessing_recovery_submission.json
+{
+  "bundle_sha256": "497f3347134a0f19ecc6bbf1cbc2dc42e5a326aaf8c6cc52cda81c77265ee5c9",
+  "job_id": 209938,
+  "job_kind": "postprocessing_recovery",
+  "schema_version": "tukf19_hpc_postprocessing_recovery_submission_v1",
+  "source_formal_job_id": 209845,
+  "submission_output": "Submitted batch job 209938",
+  "submitted_at_utc": "2026-08-23T14:38:09.937069+00:00"
+}
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/status/postprocessing_recovery_sbatch_output.txt
+7d858f9e4b0134559e79c7e227e77f83df55cba1afda9a2de454fd28c77137fc  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/status/postprocessing_recovery_sbatch_output.txt
+27 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/status/postprocessing_recovery_sbatch_output.txt
+Submitted batch job 209938
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/status/postprocessing_recovery_started.json
+FILE_ABSENT
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/status/postprocessing_recovery_complete.json
+FILE_ABSENT
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/status/postprocessing_recovery_failure_209938.json
+effec19c256e5bcff91bdf969b92fcff11701414f8a0967bbde14b98a4035e49  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/status/postprocessing_recovery_failure_209938.json
+1476 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/status/postprocessing_recovery_failure_209938.json
+{
+  "deployment_id": "TUKF19_HBV_ROLLING_ORIGIN_FORMAL_EXECUTION_HPC_DEPLOYMENT_RETRY3_V1",
+  "error": "source formal-failure boundary changed: {'failure_status': True, 'error_type': False, 'missing_display_contrast': False, 'successful_preplot_steps': True, 'source_job_identity': True, 'source_bundle_identity': True}",
+  "error_type": "ValueError",
+  "failed_at_utc": "2026-08-23T14:38:14.641934+00:00",
+  "recovery_slurm_job_id": "209938",
+  "schema_version": "tukf19_hpc_postprocessing_recovery_failure_v1",
+  "scientific_experiment_id": "TUKF19_HBV_ROLLING_ORIGIN_FORMAL_EXECUTION_V1",
+  "source_formal_job_id": 209845,
+  "status": "HPC_POSTPROCESSING_RECOVERY_FAILED",
+  "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/scripts/recover_tukf19_hpc_postprocessing.py\", line 400, in run_recovery\n    source_failure_checks = _verify_source_failure(deployment, source_paths)\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/scripts/recover_tukf19_hpc_postprocessing.py\", line 233, in _verify_source_failure\n    raise ValueError(f\"source formal-failure boundary changed: {checks}\")\nValueError: source formal-failure boundary changed: {'failure_status': True, 'error_type': False, 'missing_display_contrast': False, 'successful_preplot_steps': True, 'source_job_identity': True, 'source_bundle_identity': True}\n"
+}
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/logs/postprocessing-recovery-209938.out
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/logs/postprocessing-recovery-209938.out
+0 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/logs/postprocessing-recovery-209938.out
+--- /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/logs/postprocessing-recovery-209938.err
+236b410d1a8291d86d300c1c9fee812dd84d33e94a6545807ac67293b1e79733  /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/logs/postprocessing-recovery-209938.err
+1132 /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/logs/postprocessing-recovery-209938.err
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/scripts/recover_tukf19_hpc_postprocessing.py", line 545, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/scripts/recover_tukf19_hpc_postprocessing.py", line 525, in main
+    report = run_recovery(
+             ^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/scripts/recover_tukf19_hpc_postprocessing.py", line 400, in run_recovery
+    source_failure_checks = _verify_source_failure(deployment, source_paths)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/scripts/recover_tukf19_hpc_postprocessing.py", line 233, in _verify_source_failure
+    raise ValueError(f"source formal-failure boundary changed: {checks}")
+ValueError: source formal-failure boundary changed: {'failure_status': True, 'error_type': False, 'missing_display_contrast': False, 'successful_preplot_steps': True, 'source_job_identity': True, 'source_bundle_identity': True}
+=== TUKF19 RETRY3 NONMUTATION GATE ===
+EXPECTED_ABSENT /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/results/tukf19_hbv_rolling_origin_formal_execution_v1
+EXPECTED_ABSENT /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hbv_rolling_origin_formal_execution_v1/formal_verified_summary_v1
+EXPECTED_ABSENT /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/tukf19_hpc_postprocessing_recovery_result_retry3_v1.tar.gz
+EXPECTED_ABSENT /data1/home/sunyiq/kalmannet_tukf19_20260823_retry3/artifacts/tukf19_hpc_deployment_retry3_v1/tukf19_hpc_postprocessing_recovery_result_retry3_v1.tar.gz.sha256.json
+=== TUKF19 SOURCE WRAPPED ERROR IDENTITY ===
+{
+  "failure_error": "formal HPC step failed: {'command': ['/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python', '-B', 'scripts/plot_tukf19_hbv_rolling_origin_formal_execution.py'], 'return_code': 1, 'elapsed_seconds': 7.248754542320967}",
+  "failure_error_type": "RuntimeError",
+  "failure_step_count": 2,
+  "failure_step_return_codes": [
+    0,
+    0
+  ],
+  "stderr_bytes": 2379,
+  "stderr_has_key_error": true,
+  "stderr_has_missing_contrast": true,
+  "stderr_sha256": "b396a0bef8ab19203dafa7eddf67a34f30b005d57ae3cc19656aa4f8a8c33cb1"
+}
+TUKF19_RETRY3_FAILURE_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-23T22:41:36+0800
