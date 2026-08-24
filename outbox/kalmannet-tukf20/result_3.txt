@@ -1,0 +1,16 @@
+### channel=kalmannet-tukf20 seq=3
+### host=login4
+### started=2026-08-24T16:05:42+0800
+### ---------- output ----------
+=== TUKF20 FULL SMOKE GATE REVALIDATION ===
+TUKF20_FULL_SMOKE_GATE_VERIFIED checks=24
+=== TUKF20 UNIQUE FORMAL SUBMISSION ===
+Submitted batch job 210748
+TUKF20_FORMAL_JOB_ID=210748
+210748|tukf20-formal|PENDING|hcpu48y|1
+       JobID    JobName  Partition  AllocCPUS      State ExitCode    Elapsed               Start                 End 
+------------ ---------- ---------- ---------- ---------- -------- ---------- ------------------- ------------------- 
+TUKF20_FORMAL_SUBMISSION_RECORDED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-24T16:06:01+0800
