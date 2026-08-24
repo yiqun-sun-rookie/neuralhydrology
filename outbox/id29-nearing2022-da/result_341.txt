@@ -1,0 +1,43 @@
+### channel=id29-nearing2022-da seq=341
+### host=login4
+### started=2026-08-24T17:01:58+0800
+### ---------- output ----------
+=== TIME ===
+2026-08-24T17:01:58+0800
+=== TRAINING COMPLETENESS DETAIL ===
+training missing roles: 4
+  N22-TS-AR-L08-H075-S0: ['run_resolution']
+  N22-TS-AR-L10-H050-S0: ['run_resolution']
+  N22-TS-AR-L10-H075-S0: ['run_resolution']
+  N22-TS-AR-L10-H100-S0: ['run_resolution']
+evaluation missing coordinates: 120 (first 5) ['N22-EVAL-TS-AR-L01-TR025-TE000-S0', 'N22-EVAL-TS-AR-L01-TR025-TE025-S0', 'N22-EVAL-TS-AR-L01-TR025-TE050-S0', 'N22-EVAL-TS-AR-L01-TR025-TE075-S0', 'N22-EVAL-TS-AR-L01-TR025-TE100-S0']
+=== THE THREE REPAIR CHECKPOINTS ===
+  lead2_holdout0.75  2026-08-23 02:02 /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead2_holdout0.75_seed0_2026_0821_1209_ep30/model_epoch030.pt
+  lead2_holdout1.0   2026-08-20 10:44 /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead2_holdout1.0_seed0_2026_0818_2120_ep30/model_epoch030.pt
+  lead1_holdout0.5   2026-08-22 02:19 /data1/home/sunyiq/nearing2022_da/closure_20260810/time_split/autoregression/nearing2022_full_time_autoregression_lead1_holdout0.5_seed0_2026_0820_1336_ep30/model_epoch030.pt
+=== 202226 BLOCK DETAIL ===
+JobId=202226
+ArrayTaskId=0-119%4
+Reason=DependencyNeverSatisfied
+Dependency=afterok:202214,afterok:202215_*
+TimeLimit=1-00:00:00
+Partition=hgpu4,hgpu8,hgpu2
+Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+--- upstream states it waits on ---
+202214|TIMEOUT
+202215_6|TIMEOUT
+202215_7|TIMEOUT
+202215_16|TIMEOUT
+202215_20|TIMEOUT
+202215_21|TIMEOUT
+202215_22|TIMEOUT
+=== EVAL BATCH FILE FOR 202226 ===
+lines=120  sha256=aeb77ec81f38552f7ee849de45677701eecdf498990c0dba41e2d8d00c08a560
+N22-EVAL-TS-AR-L01-TR025-TE000-S0
+N22-EVAL-TS-AR-L01-TR025-TE025-S0
+N22-EVAL-TS-AR-L01-TR025-TE050-S0
+=== END ===
+2026-08-24T17:02:34+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-24T17:02:34+0800
