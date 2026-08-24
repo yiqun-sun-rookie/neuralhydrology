@@ -2,10 +2,10 @@
 set -Eeuo pipefail
 
 MAILBOX_ROOT="/data1/home/${USER}/hpc_mailbox"
-PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/parity-v1"
+PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/parity-failclosed-v3"
 BASE="/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824"
-SOURCE_A01="${BASE}/source_A01"
-SOURCE_A02="${BASE}/source_A02"
+SOURCE_A01="${BASE}/source_A01_seq4"
+SOURCE_A02="${BASE}/source_A02_seq4"
 RUN_PARENT="${BASE}/runs"
 STATUS_DIRECTORY="${BASE}/status"
 LOG_DIRECTORY="${BASE}/logs"
@@ -15,18 +15,18 @@ A01_ID="DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_V1_20260824_A01"
 A02_ID="DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_PROBE_V1_20260824_A02"
 A01_ARCHIVE="${PAYLOAD_DIRECTORY}/${A01_ID}.tar.gz"
 A02_ARCHIVE="${PAYLOAD_DIRECTORY}/${A02_ID}.tar.gz"
-A01_SHA256="be80df77480276ab9ebda06d4d82de3569dd348d19ecf580d0e0335cb9a16fdd"
-A02_SHA256="bedadb3a33646cbda64378326fa12c910d15476d39b9cf0bd64926173fc6b6a9"
-A01_SIZE=198849
-A02_SIZE=199239
+A01_SHA256="6d241d9fe69bb7599151be24d8ca129244d624e6560a812a75124810bc4cb1fa"
+A02_SHA256="6a5844540a3120549792d69128e46ed302681496a7f8e6207a405c602894906d"
+A01_SIZE=198911
+A02_SIZE=199302
 
-EVIDENCE_NAME="DAILY_CAMELS_UKF_PARITY_REPLAYS_A01_A02_SEQ3_evidence.tar.gz"
+EVIDENCE_NAME="DAILY_CAMELS_UKF_PARITY_REPLAYS_A01_A02_SEQ4_evidence.tar.gz"
 EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/${EVIDENCE_NAME}"
 START_EPOCH="$(date +%s)"
 SOFT_DEADLINE_EPOCH="$((START_EPOCH + 6300))"
 BASE_OWNED=0
 ALL_SUBMITTED_JOBS_TERMINAL=0
-FINAL_STATUS="SEQ3_STARTED"
+FINAL_STATUS="SEQ4_RECOVERY_STARTED"
 declare -a JOB_IDS=()
 
 package_evidence() {
@@ -45,7 +45,7 @@ package_evidence() {
     return 0
   fi
 
-  local snapshot="${BASE}/seq3_snapshot_$$"
+  local snapshot="${BASE}/seq4_snapshot_$$"
   mkdir -p "$snapshot/status"
   printf '%s\n' "$FINAL_STATUS" > "${snapshot}/final_status.txt"
   printf '%s\n' "$command_exit_code" > "${snapshot}/command_exit_code.txt"
@@ -69,8 +69,8 @@ package_evidence() {
   if [[ "$ALL_SUBMITTED_JOBS_TERMINAL" -eq 1 ]]; then
     tar -czf "$temporary_archive" -C "$BASE" \
       status logs runs \
-      source_A01/bundle_manifest.json \
-      source_A02/bundle_manifest.json \
+      source_A01_seq4/bundle_manifest.json \
+      source_A02_seq4/bundle_manifest.json \
       "$(basename "$snapshot")"
   else
     tar -czf "$temporary_archive" -C "$BASE" "$(basename "$snapshot")"
@@ -96,7 +96,7 @@ on_exit() {
   exit "$command_exit_code"
 }
 trap on_exit EXIT
-trap 'FINAL_STATUS="SEQ3_INTERRUPTED_PARTIAL_PENDING"; exit 143' INT TERM
+trap 'FINAL_STATUS="SEQ4_INTERRUPTED_PARTIAL_PENDING"; exit 143' INT TERM
 
 archive_identity_check() {
   local archive="$1"
@@ -129,7 +129,7 @@ submit_job() {
   case "$job_id" in
     ''|*[!0-9]*) echo "invalid Slurm job id for ${label}: ${raw}" >&2; return 63 ;;
   esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq3_${label}_job_id.txt"
+  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq4_${label}_job_id.txt"
   JOB_IDS+=("$job_id")
   SUBMITTED_JOB_ID="$job_id"
   printf 'submitted label=%s job_id=%s\n' "$label" "$job_id"
@@ -180,33 +180,70 @@ require_jobs_succeeded() {
 }
 
 test ! -e "$EVIDENCE_ARCHIVE" || {
-  echo "refusing to replace existing seq3 evidence: $EVIDENCE_ARCHIVE" >&2
+  echo "refusing to replace existing seq4 evidence: $EVIDENCE_ARCHIVE" >&2
   exit 65
 }
-if ! mkdir "$BASE"; then
-  echo "unique parity root already exists; refusing to reuse: $BASE" >&2
+if [[ ! -d "$BASE" || -L "$BASE" ]]; then
+  echo "seq3 recovery root is absent or symbolic: $BASE" >&2
   exit 66
 fi
 BASE_OWNED=1
-mkdir "$SOURCE_A01" "$SOURCE_A02" "$RUN_PARENT" "$STATUS_DIRECTORY" "$LOG_DIRECTORY"
-FINAL_STATUS="SEQ3_REMOTE_ROOT_CREATED"
+for required_directory in "$RUN_PARENT" "$STATUS_DIRECTORY" "$LOG_DIRECTORY"; do
+  [[ -d "$required_directory" && ! -L "$required_directory" ]] || {
+    echo "seq3 recovery directory is absent or symbolic: $required_directory" >&2
+    exit 67
+  }
+done
+if find "$STATUS_DIRECTORY" -maxdepth 1 -type f -name 'seq3_*_job_id.txt' -print -quit | grep -q .; then
+  echo "seq3 recorded a Slurm job; refusing a possible duplicate submission" >&2
+  exit 68
+fi
+if find "$RUN_PARENT" -mindepth 1 -print -quit | grep -q .; then
+  echo "seq3 run parent is not empty; refusing to reuse it" >&2
+  exit 69
+fi
+SEQ3_SNAPSHOT="$(find "$BASE" -maxdepth 1 -type d -name 'seq3_snapshot_*' -print)"
+[[ -n "$SEQ3_SNAPSHOT" && "$(printf '%s\n' "$SEQ3_SNAPSHOT" | wc -l)" -eq 1 ]] || {
+  echo "exactly one seq3 failure snapshot is required" >&2
+  exit 70
+}
+[[ "$(tr -d '[:space:]' < "${SEQ3_SNAPSHOT}/final_status.txt")" = "SEQ3_REMOTE_ROOT_CREATED" ]] || {
+  echo "seq3 snapshot status does not prove pre-submission failure" >&2
+  exit 71
+}
+[[ "$(tr -d '[:space:]' < "${SEQ3_SNAPSHOT}/command_exit_code.txt")" = "1" ]] || {
+  echo "seq3 snapshot exit code differs" >&2
+  exit 72
+}
+[[ -z "$(tr -d '[:space:]' < "${SEQ3_SNAPSHOT}/submitted_job_ids.txt")" ]] || {
+  echo "seq3 snapshot contains a submitted job id" >&2
+  exit 73
+}
+[[ ! -e "$SOURCE_A01" && ! -e "$SOURCE_A02" ]] || {
+  echo "seq4 source directory already exists; refusing to replace it" >&2
+  exit 74
+}
+FINAL_STATUS="SEQ4_SEQ3_PRE_SUBMISSION_FAILURE_VERIFIED"
 
 echo '=== VERIFY IMMUTABLE PAYLOADS ==='
 archive_identity_check "$A01_ARCHIVE" "$A01_SHA256" "$A01_SIZE"
 archive_identity_check "$A02_ARCHIVE" "$A02_SHA256" "$A02_SIZE"
+mkdir "$SOURCE_A01" "$SOURCE_A02"
 tar -xzf "$A01_ARCHIVE" -C "$SOURCE_A01"
 tar -xzf "$A02_ARCHIVE" -C "$SOURCE_A02"
 
+set +u
 source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh"
 conda activate nh_final
+set -u
 export PYTHONDONTWRITEBYTECODE=1
 python -u "${SOURCE_A01}/hpc/daily_camels_ukf_knet_parity/preflight.py" \
   --bundle-root "$SOURCE_A01" --phase probe --offline-bundle-check \
-  --report "${STATUS_DIRECTORY}/seq3_offline_A01.json"
+  --report "${STATUS_DIRECTORY}/seq4_offline_A01.json"
 python -u "${SOURCE_A02}/hpc/daily_camels_ukf_knet_parity/preflight.py" \
   --bundle-root "$SOURCE_A02" --phase probe --offline-bundle-check \
-  --report "${STATUS_DIRECTORY}/seq3_offline_A02.json"
-FINAL_STATUS="SEQ3_OFFLINE_BUNDLES_VERIFIED"
+  --report "${STATUS_DIRECTORY}/seq4_offline_A02.json"
+FINAL_STATUS="SEQ4_OFFLINE_BUNDLES_VERIFIED"
 
 echo '=== SUBMIT TWO READ-ONLY GPU PROBES ==='
 submit_job "$SOURCE_A01" \
@@ -215,19 +252,19 @@ PROBE_A01_JOB_ID="$SUBMITTED_JOB_ID"
 submit_job "$SOURCE_A02" \
   hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm probe_A02
 PROBE_A02_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ3_PROBES_SUBMITTED"
+FINAL_STATUS="SEQ4_PROBES_SUBMITTED"
 
 if ! wait_for_jobs "$PROBE_A01_JOB_ID" "$PROBE_A02_JOB_ID"; then
-  FINAL_STATUS="SEQ3_PROBES_PARTIAL_PENDING"
+  FINAL_STATUS="SEQ4_PROBES_PARTIAL_PENDING"
   echo "soft deadline reached while probes are pending; no replay submitted" >&2
   exit 75
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
 require_jobs_succeeded "$PROBE_A01_JOB_ID" "$PROBE_A02_JOB_ID" || {
-  FINAL_STATUS="SEQ3_PROBE_HARD_STOP"
+  FINAL_STATUS="SEQ4_PROBE_HARD_STOP"
   exit 76
 }
-FINAL_STATUS="SEQ3_PROBE_EVIDENCE_CHECK"
+FINAL_STATUS="SEQ4_PROBE_EVIDENCE_CHECK"
 
 python - "$STATUS_DIRECTORY" "$A01_ID" "$PROBE_A01_JOB_ID" "$A02_ID" "$PROBE_A02_JOB_ID" <<'PY'
 import json
@@ -276,7 +313,7 @@ for experiment_id, job_id in pairs:
         "probe_gate": "PASS",
     }, sort_keys=True))
 PY
-FINAL_STATUS="SEQ3_PROBES_PASS"
+FINAL_STATUS="SEQ4_PROBES_PASS"
 
 echo '=== SUBMIT TWO DIAGNOSTIC REPLAYS; NO TRAINING ==='
 ALL_SUBMITTED_JOBS_TERMINAL=0
@@ -286,19 +323,19 @@ REPLAY_A01_JOB_ID="$SUBMITTED_JOB_ID"
 submit_job "$SOURCE_A02" \
   hpc/daily_camels_ukf_knet_parity/submit_replay_gpu.slurm replay_A02
 REPLAY_A02_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ3_REPLAYS_SUBMITTED"
+FINAL_STATUS="SEQ4_REPLAYS_SUBMITTED"
 
 if ! wait_for_jobs "$REPLAY_A01_JOB_ID" "$REPLAY_A02_JOB_ID"; then
-  FINAL_STATUS="SEQ3_REPLAYS_PARTIAL_PENDING"
+  FINAL_STATUS="SEQ4_REPLAYS_PARTIAL_PENDING"
   echo "soft deadline reached while replays are pending; jobs were not cancelled" >&2
   exit 77
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
 require_jobs_succeeded "$REPLAY_A01_JOB_ID" "$REPLAY_A02_JOB_ID" || {
-  FINAL_STATUS="SEQ3_REPLAY_HARD_STOP"
+  FINAL_STATUS="SEQ4_REPLAY_HARD_STOP"
   exit 78
 }
-FINAL_STATUS="SEQ3_REPLAY_EVIDENCE_CHECK"
+FINAL_STATUS="SEQ4_REPLAY_EVIDENCE_CHECK"
 
 python - "$STATUS_DIRECTORY" "$A01_ID" "$A02_ID" <<'PY'
 import json
@@ -357,5 +394,5 @@ echo '=== FINAL SLURM ACCOUNTING ==='
 JOB_CSV="$(IFS=,; printf '%s' "${JOB_IDS[*]}")"
 sacct -X -j "$JOB_CSV" \
   --format=JobID,JobName,Partition,AllocCPUS,State,ExitCode,Elapsed,Start,End,MaxRSS
-FINAL_STATUS="SEQ3_REPLAY_PASS"
-echo "DAILY_CAMELS_UKF_KNET_PARITY_SEQ3_PASS probes=${PROBE_A01_JOB_ID},${PROBE_A02_JOB_ID} replays=${REPLAY_A01_JOB_ID},${REPLAY_A02_JOB_ID}"
+FINAL_STATUS="SEQ4_REPLAY_PASS"
+echo "DAILY_CAMELS_UKF_KNET_PARITY_SEQ4_PASS probes=${PROBE_A01_JOB_ID},${PROBE_A02_JOB_ID} replays=${REPLAY_A01_JOB_ID},${REPLAY_A02_JOB_ID}"
