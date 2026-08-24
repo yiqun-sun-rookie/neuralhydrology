@@ -1,0 +1,30 @@
+### channel=kalmannet-tukf20 seq=6
+### host=login4
+### started=2026-08-24T20:27:27+0800
+### ---------- output ----------
+=== TUKF20 SOURCE ACCOUNTING ===
+slurm_load_jobs error: Invalid job id specified
+       JobID    JobName  Partition  AllocCPUS      State ExitCode    Elapsed               Start                 End 
+------------ ---------- ---------- ---------- ---------- -------- ---------- ------------------- ------------------- 
+210748       tukf20-fo+    hcpu48y          1     FAILED      1:0   02:19:56 2026-08-24T16:06:21 2026-08-24T18:26:17 
+=== TUKF20 SOURCE SIZE ===
+20M	/data1/home/sunyiq/kalmannet_tukf20_20260824
+result_files=2543 result_bytes=16646985
+=== TUKF20 PINNED SOURCE HASHES ===
+16bbe1922ddfa57dc34270a10e61fcf84e3135a3dd91d6ab8f7cb9adbdeb1ab8	7765	/data1/home/sunyiq/kalmannet_tukf20_20260824/_transport/bundle_manifest.sha256.json
+d2722e0aaa77bbe9cf203f9ecbd307aca752975088c3f787b81303dbcaca788f	32086	/data1/home/sunyiq/kalmannet_tukf20_20260824/logs/formal-210748.out
+b514115eac4bdd001d5bfbeaa9955225f624f6fd7c9b7aef76ceed65d9a9359e	1108	/data1/home/sunyiq/kalmannet_tukf20_20260824/logs/formal-210748.err
+371ceea8ed8fcc767f4b90f0ec09709ecbc8de55f8ee3aaad2aa1cfd790295a5	1102	/data1/home/sunyiq/kalmannet_tukf20_20260824/artifacts/tukf20_hpc_deployment_v1/status/formal_pipeline_started.json
+f7dc3514371d86f0cb83c5a5c4908ff7c1d13f4343d2af015a0ac362436c295c	301050	/data1/home/sunyiq/kalmannet_tukf20_20260824/results/tukf20_hbv_rolling_origin_joint_learning_v1/registry.json
+457138aec772a9552bb521386f111b86e0af76c17ee36f6aeba5653f642cbdf3	400851	/data1/home/sunyiq/kalmannet_tukf20_20260824/results/tukf20_hbv_rolling_origin_joint_learning_v1/manifest.json
+081120fcc7f93f327ea9db16c7577250e22cc9188e0b2ec829aad84e39477494	54667	/data1/home/sunyiq/kalmannet_tukf20_20260824/results/tukf20_hbv_rolling_origin_joint_learning_v1/independent_verification.json
+=== TUKF20 RECOVERY TARGET GUARD ===
+absent	/data1/home/sunyiq/kalmannet_tukf20_20260824_verifier_recovery1
+=== TUKF20 POSTPROCESSING PRESENCE ===
+absent	/data1/home/sunyiq/kalmannet_tukf20_20260824/artifacts/tukf20_hbv_rolling_origin_joint_learning_v1/figures
+absent	/data1/home/sunyiq/kalmannet_tukf20_20260824/artifacts/tukf20_hpc_deployment_v1/status/formal_pipeline_complete.json
+absent	/data1/home/sunyiq/kalmannet_tukf20_20260824/artifacts/tukf20_hpc_deployment_v1/status/formal_completion.json
+TUKF20_RECOVERY_DIAGNOSTIC_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-24T20:27:31+0800
