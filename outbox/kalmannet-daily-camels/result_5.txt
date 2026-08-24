@@ -1,0 +1,332 @@
+### channel=kalmannet-daily-camels seq=5
+### host=login4
+### started=2026-08-25T00:33:44+0800
+### ---------- output ----------
+=== VERIFY IMMUTABLE PAYLOADS ===
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_ukf_knet_parity_exact_replay_repair_v2.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_full_diagonal_search_head_to_head_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_replay_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_train_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/nn_kalman_clamp_5.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_daily_camels_ukf_knet_parity_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_da.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_differentiable_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_daily_camels_ukf_knet_parity.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf06_full_diagonal_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/conventional_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_native_knet_io.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_ukf_adapter.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/conftest.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_hpc_preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_run_daily_camels_ukf_knet_parity_entry.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_ukf_knet_parity_causal_replay_repair_v2.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_ukf_knet_parity_exact_replay_repair_v2.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_full_diagonal_search_head_to_head_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_replay_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_train_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/nn_kalman_clamp_5.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_daily_camels_ukf_knet_parity_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_da.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_differentiable_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_daily_camels_ukf_knet_parity.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf06_full_diagonal_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/conventional_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_native_knet_io.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_ukf_adapter.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/conftest.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_hpc_preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_run_daily_camels_ukf_knet_parity_entry.py: implausibly old time stamp 1970-01-01 08:00:00
+{
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_REPAIR_V2_20260825_A03",
+  "initialization_mode": "exact_tukf06_backward_time_diagnostic",
+  "member_count": 37,
+  "nse_gate_target_count_per_lead": 712,
+  "numpy_imported": false,
+  "selection_objective_target_count_per_lead": 728,
+  "status": "BUNDLE_VERIFIED",
+  "torch_imported": false
+}
+{
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_REPAIR_V2_20260825_A04",
+  "initialization_mode": "causal_shared_spinup",
+  "member_count": 38,
+  "nse_gate_target_count_per_lead": 712,
+  "numpy_imported": false,
+  "selection_objective_target_count_per_lead": 728,
+  "status": "BUNDLE_VERIFIED",
+  "torch_imported": false
+}
+=== SUBMIT TWO READ-ONLY GPU PROBES ===
+submitted label=probe_A03 job_id=211196
+submitted label=probe_A04 job_id=211197
+accounting job_id=211196 state=COMPLETED exit_code=0:0
+accounting job_id=211197 state=COMPLETED exit_code=0:0
+{"available_host_memory_bytes": 255575339008, "cuda_device_name": "NVIDIA GeForce RTX 3090", "cuda_memory_free_mib": 24125, "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_REPAIR_V2_20260825_A03", "hostname": "ngu001", "probe_gate": "PASS", "probe_job_id": "211196"}
+{"available_host_memory_bytes": 264500457472, "cuda_device_name": "NVIDIA GeForce RTX 3090", "cuda_memory_free_mib": 24125, "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_REPAIR_V2_20260825_A04", "hostname": "ngu008", "probe_gate": "PASS", "probe_job_id": "211197"}
+=== SUBMIT TWO DIAGNOSTIC REPLAYS; NO TRAINING ===
+submitted label=replay_A03 job_id=211198
+submitted label=replay_A04 job_id=211199
+accounting job_id=211198 state=FAILED exit_code=1:0
+evidence_archive=/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_UKF_PARITY_REPLAYS_REPAIR_V2_A03_A04_SEQ5_evidence.tar.gz
+evidence_archive_sha256=d1b27a9cd3421062f75d22ada349002221d0848b1757984f373a87833d61b8a9
+evidence_archive_size=13730
+evidence_status=SEQ5_REPLAY_HARD_STOP command_exit_code=78 all_jobs_terminal=1
+### ---------- end ----------
+### exit_code=78
+### finished=2026-08-25T00:35:02+0800
