@@ -39,6 +39,7 @@ outbox/<channel>/result_<seq>.txt   结果
 | `zhenjiang-stage-r2` | 大通水位事件稳定性覆盖不足第二次技术独立审核迁移 | 2026-08-19 | 独立落点 `/data1/home/sunyiq/zhenjiang_stage_direction_r2_20260819`；仅中央处理器、禁止图形处理器/训练/预测包/目标/误差访问，不碰 `~/neuralhydrology`、其他通道或实验。**该迁移已失败停用，落点与 `outbox/zhenjiang-stage-r2/` 作为失败证据冻结保留，不清理、不续跑** |
 | `zhenjiang-oyv-qual` | 镇江—江阴跨年份样本外验证：超算运行环境资格认定（合成数据烟测，不含任何真实站点数据） | 2026-08-19 | 由 Claude 会话占用；独立落点 `/data1/home/sunyiq/zhenjiang_oyv_qual_20260819`；**不碰** `zhenjiang-stage-r2` 的落点与结果、`~/neuralhydrology`、其他通道或实验 |
 | `kalmannet-tukf19` | 八状态水文模型滚动起点正式比较的超算迁移、训练、核验与取回 | 2026-08-23 | 独立落点 `/data1/home/sunyiq/kalmannet_tukf19_20260823`；仅操作本通道和该目录，不碰 `~/neuralhydrology`、其他通道、其他实验或既有证据 |
+| `kalmannet-tukf20` | 八状态水文模型在每日状态更新内部联合学习水文参数与滤波噪声的正式比较 | 2026-08-24 | 独立落点 `/data1/home/sunyiq/kalmannet_tukf20_20260824`；仅操作本通道和该目录，不碰原超算仓库、其他通道、旧实验或旧证据 |
 
 **迁移方法**（`default` → 自己的 channel，随时可做，不影响正在跑的）：
 
