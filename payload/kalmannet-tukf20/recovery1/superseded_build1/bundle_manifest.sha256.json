@@ -1,0 +1,22 @@
+{
+  "archive_bytes": 22307,
+  "archive_name": "tukf20_hpc_verifier_recovery_payload_v1.tar.gz",
+  "archive_sha256": "841eb8f50f8cb946efb71ac4f6ffd21c20f57da8411c045066cf5d96f23bf0c2",
+  "formal_training_rerun_forbidden": true,
+  "member_count": 8,
+  "members": {
+    "configs/tukf20_hpc_verifier_recovery_v1.json": "e531501cd76cf3f3fdd2504ba122ac0bde75a91ac0110f544f1f5463fddd852d",
+    "docs/superpowers/plans/2026-08-24-tukf20-verifier-recovery.md": "ae35a5014d6e6193538b515b11bcf3ec752b951c1f67a8d51003b0b083133f9e",
+    "hpc/tukf20_hbv_rolling_origin_joint_learning/submit_verifier_recovery_cpu1.slurm": "6f56e855ffd912721d77c524430a505d5f0472d0148ca50b7e8c5d01442d684f",
+    "hpc/tukf20_hbv_rolling_origin_joint_learning/submit_verifier_recovery_package_cpu1.slurm": "3c75319c9f9519dc865e46a02a19f64c90ea3d406b4b2e4ff745e397a619975b",
+    "scripts/build_tukf20_hpc_verifier_recovery_bundle.py": "5abd8d96cee0a43e2d86d4705e45d0133f851286a1ec88bcf4f526e208d2c00e",
+    "scripts/package_tukf20_hpc_verifier_recovery.py": "ef047a34ec49ac0777bc5c8ebfb3777585d1394d4dd9c1f061b1196f0175e58d",
+    "scripts/recover_tukf20_hpc_verifier_postprocessing.py": "f1a5870ca82324d66924fd071fc48ea571c9ab81127ebcca9f1bfc5d462a5d7d",
+    "scripts/verify_tukf20_hbv_rolling_origin_joint_learning_recovery1.py": "f19a3a0e89ead2783f9fe7f77d0250689077aa13333d2c5783cfd44ae1d8dfbe"
+  },
+  "payload_manifest_name": "recovery_payload_manifest.json",
+  "payload_manifest_sha256": "197befa0ce128d52df37c47ee307c11404bb03cb923128ca033bd368d4fdaffc",
+  "recovery_id": "TUKF20_HPC_VERIFIER_RECOVERY_V1",
+  "schema_version": "tukf20_hpc_verifier_recovery_bundle_manifest_v1",
+  "scientific_experiment_id": "TUKF20_HBV_ROLLING_ORIGIN_JOINT_LEARNING_V1"
+}
