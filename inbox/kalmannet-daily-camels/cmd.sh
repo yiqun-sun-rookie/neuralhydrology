@@ -4,7 +4,7 @@ set -Eeuo pipefail
 MAILBOX_ROOT="/data1/home/${USER}/hpc_mailbox"
 PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/parity-same-segment-diagnostic-v12"
 BASE="/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824"
-SOURCE_A14="${BASE}/source_A14_seq10"
+SOURCE_A14="${BASE}/source_A14_seq11"
 RUN_PARENT="${BASE}/runs"
 STATUS_DIRECTORY="${BASE}/status"
 LOG_DIRECTORY="${BASE}/logs"
@@ -20,16 +20,18 @@ A14_OUTER_MANIFEST="${PAYLOAD_DIRECTORY}/A14_bundle_manifest.sha256.json"
 A14_OUTER_MANIFEST_SHA256="35f83754b75a0b71e35876522d9b3388e7079a8a2f08f0dbf369c84d2909d2b6"
 A14_INTERNAL_MANIFEST_SHA256="c03d8484a879495e339d808a5690618f83376ed4a02dc5b1635e61d1cdefc440"
 A14_CONFIG_SHA256="8a0dcc965d3744de81ee39c797338ddae69144d6820d7bf713d9aa8ae4628d27"
+HOST_ADMISSION_MIN_BYTES=2800353280
+GPU_ADMISSION_MIN_FREE_MIB=822
 EXACT_REPLAY_GATE="${STATUS_DIRECTORY}/replay_gate_${A05_ID}.json"
 CAUSAL_REPLAY_GATE="${STATUS_DIRECTORY}/replay_gate_${A06_ID}.json"
 
-EVIDENCE_NAME="DAILY_CAMELS_KNET_SAME_SEGMENT_POST_STEP_DIAGNOSTIC_V1_A14_SEQ10_evidence.tar.gz"
+EVIDENCE_NAME="DAILY_CAMELS_KNET_SAME_SEGMENT_POST_STEP_DIAGNOSTIC_V1_A14_SEQ11_evidence.tar.gz"
 EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/${EVIDENCE_NAME}"
 START_EPOCH="$(date +%s)"
 SOFT_DEADLINE_EPOCH="$((START_EPOCH + 6300))"
 BASE_OWNED=0
 ALL_SUBMITTED_JOBS_TERMINAL=0
-FINAL_STATUS="SEQ10_RECOVERY_STARTED"
+FINAL_STATUS="SEQ11_RECOVERY_STARTED"
 declare -a JOB_IDS=()
 
 package_evidence() {
@@ -47,7 +49,7 @@ package_evidence() {
     return 0
   fi
 
-  local snapshot="${BASE}/seq10_snapshot_$$"
+  local snapshot="${BASE}/seq11_snapshot_$$"
   mkdir -p "$snapshot/status" "$snapshot/logs" "$snapshot/source"
   printf '%s\n' "$FINAL_STATUS" > "${snapshot}/final_status.txt"
   printf '%s\n' "$command_exit_code" > "${snapshot}/command_exit_code.txt"
@@ -64,7 +66,7 @@ package_evidence() {
   fi
   local candidate
   for candidate in \
-    "${STATUS_DIRECTORY}"/seq10_* \
+    "${STATUS_DIRECTORY}"/seq11_* \
     "${STATUS_DIRECTORY}"/probe-"${A14_ID}"-*.json \
     "${STATUS_DIRECTORY}"/entry-probe-"${A14_ID}"-*.json \
     "${STATUS_DIRECTORY}"/train-preflight-"${A14_ID}"-*.json \
@@ -126,7 +128,7 @@ on_exit() {
   exit "$command_exit_code"
 }
 trap on_exit EXIT
-trap 'FINAL_STATUS="SEQ10_INTERRUPTED_PARTIAL_PENDING"; exit 143' INT TERM
+trap 'FINAL_STATUS="SEQ11_INTERRUPTED_PARTIAL_PENDING"; exit 143' INT TERM
 
 archive_identity_check() {
   local archive="$1" expected_sha256="$2" expected_size="$3"
@@ -149,31 +151,33 @@ archive_identity_check() {
 
 submit_probe() {
   local raw job_id
-  raw="$(cd "$SOURCE_A14" && sbatch --parsable --mem=1G \
+  raw="$(cd "$SOURCE_A14" && sbatch --parsable --mem=0 \
     hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm)"
   job_id="${raw%%;*}"
   case "$job_id" in
     ''|*[!0-9]*) echo "invalid Slurm probe job id: ${raw}" >&2; return 63 ;;
   esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq10_probe_A14_job_id.txt"
+  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq11_probe_A14_job_id.txt"
   JOB_IDS+=("$job_id")
   SUBMITTED_JOB_ID="$job_id"
-  printf 'submitted label=probe_A14 job_id=%s memory_request=1G\n' "$job_id"
+  printf 'submitted label=probe_A14 job_id=%s scheduler_memory_request=0n runtime_host_min_bytes=%s runtime_gpu_min_free_mib=%s\n' \
+    "$job_id" "$HOST_ADMISSION_MIN_BYTES" "$GPU_ADMISSION_MIN_FREE_MIB"
 }
 
 submit_train() {
   local raw job_id
-  raw="$(cd "$SOURCE_A14" && sbatch --parsable --mem=3G \
+  raw="$(cd "$SOURCE_A14" && sbatch --parsable --mem=0 \
     --export=ALL,PARITY_EXACT_REPLAY_GATE="${EXACT_REPLAY_GATE}",PARITY_CAUSAL_REPLAY_GATE="${CAUSAL_REPLAY_GATE}" \
     hpc/daily_camels_ukf_knet_parity/submit_train_gpu.slurm)"
   job_id="${raw%%;*}"
   case "$job_id" in
     ''|*[!0-9]*) echo "invalid Slurm training job id: ${raw}" >&2; return 64 ;;
   esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq10_train_A14_job_id.txt"
+  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq11_train_A14_job_id.txt"
   JOB_IDS+=("$job_id")
   SUBMITTED_JOB_ID="$job_id"
-  printf 'submitted label=train_A14 job_id=%s memory_request=3G\n' "$job_id"
+  printf 'submitted label=train_A14 job_id=%s scheduler_memory_request=0n runtime_host_min_bytes=%s runtime_gpu_min_free_mib=%s\n' \
+    "$job_id" "$HOST_ADMISSION_MIN_BYTES" "$GPU_ADMISSION_MIN_FREE_MIB"
 }
 
 accounting_record_once() {
@@ -245,7 +249,7 @@ require_lock_cleared() {
 }
 
 test ! -e "$EVIDENCE_ARCHIVE" || {
-  echo "refusing to replace existing seq10 evidence: $EVIDENCE_ARCHIVE" >&2
+  echo "refusing to replace existing seq11 evidence: $EVIDENCE_ARCHIVE" >&2
   exit 65
 }
 if [[ ! -d "$BASE" || -L "$BASE" ]]; then
@@ -260,20 +264,20 @@ for required_directory in "$RUN_PARENT" "$STATUS_DIRECTORY" "$LOG_DIRECTORY"; do
   }
 done
 [[ ! -e "$SOURCE_A14" ]] || {
-  echo "seq10 source directory already exists; refusing to replace it" >&2
+  echo "seq11 source directory already exists; refusing to replace it" >&2
   exit 68
 }
-if find "$STATUS_DIRECTORY" -maxdepth 1 -type f -name 'seq10_*' -print -quit | grep -q .; then
-  echo "seq10 already recorded status evidence; refusing duplicate submission" >&2
+if find "$STATUS_DIRECTORY" -maxdepth 1 -type f -name 'seq11_*' -print -quit | grep -q .; then
+  echo "seq11 already recorded status evidence; refusing duplicate submission" >&2
   exit 69
 fi
 [[ ! -e "${RUN_PARENT}/${A14_ID}" ]] || {
-  echo "seq10 run directory already exists: ${RUN_PARENT}/${A14_ID}" >&2
+  echo "seq11 run directory already exists: ${RUN_PARENT}/${A14_ID}" >&2
   exit 70
 }
 for phase in probe replay train; do
   [[ ! -e "${STATUS_DIRECTORY}/locks/${A14_ID}.${phase}.lock" ]] || {
-    echo "seq10 phase lock already exists: ${A14_ID}.${phase}" >&2
+    echo "seq11 phase lock already exists: ${A14_ID}.${phase}" >&2
     exit 71
   }
 done
@@ -284,7 +288,7 @@ if find "$STATUS_DIRECTORY" -maxdepth 1 -type f \
        -o -name "train-gpu-resources-${A14_ID}-*.csv" \
        -o -name "train-cgroup-resources-${A14_ID}-*.txt" \) \
     -print -quit | grep -q .; then
-  echo "seq10 A14 status evidence already exists" >&2
+  echo "seq11 A14 status evidence already exists" >&2
   exit 72
 fi
 for gate in "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE"; do
@@ -293,7 +297,7 @@ for gate in "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE"; do
     exit 73
   }
 done
-FINAL_STATUS="SEQ10_NAMESPACE_ABSENCE_VERIFIED"
+FINAL_STATUS="SEQ11_NAMESPACE_ABSENCE_VERIFIED"
 
 echo '=== VERIFY IMMUTABLE PAYLOAD AND REPLAY GATES ==='
 archive_identity_check "$A14_ARCHIVE" "$A14_SHA256" "$A14_SIZE"
@@ -337,7 +341,7 @@ if (
     or sha256(outer_manifest_path) != expected_outer_sha
     or sha256(internal_manifest_path) != expected_internal_sha
 ):
-    raise SystemExit("seq10 archive or manifest identity differs")
+    raise SystemExit("seq11 archive or manifest identity differs")
 outer = json.loads(outer_manifest_path.read_text(encoding="utf-8"))
 manifest = json.loads(internal_manifest_path.read_text(encoding="utf-8"))
 active_member = manifest["active_config_member"]
@@ -350,7 +354,7 @@ if (
     or manifest.get("member_sha256", {}).get(active_member) != expected_config_sha
     or sha256(active_path) != expected_config_sha
 ):
-    raise SystemExit("seq10 outer or internal bundle inventory differs")
+    raise SystemExit("seq11 outer or internal bundle inventory differs")
 active = json.loads(active_path.read_text(encoding="utf-8"))
 exact_config = json.loads(
     (source / manifest["exact_replay_config_member"]).read_text(encoding="utf-8")
@@ -404,7 +408,7 @@ if (
     or manifest.get("selection_objective", {}).get("common_target_count_per_lead") != 728
     or manifest.get("nse_gate", {}).get("common_target_count_per_lead") != 712
 ):
-    raise SystemExit("seq10 training bundle identity or technical-smoke budget differs")
+    raise SystemExit("seq11 training bundle identity or technical-smoke budget differs")
 
 requirements = active.get("replay_gate_requirements", {})
 expected_gates = (
@@ -439,7 +443,7 @@ for name, path, experiment_id, mode in expected_gates:
             (77, "skipped_pytest_unavailable"),
         }
     ):
-        raise SystemExit(f"seq10 replay gate differs: {experiment_id}")
+        raise SystemExit(f"seq11 replay gate differs: {experiment_id}")
 causal_metrics = json.loads(causal_gate_path.read_text(encoding="utf-8"))[
     "verified_replay_metrics"
 ]
@@ -455,37 +459,40 @@ if (
     or [float(nse[str(lead)]) for lead in (1, 2, 3)]
     != [float(value) for value in reference["causal_tukf06_recovery_731_day_nse"]]
 ):
-    raise SystemExit("seq10 frozen causal reference differs from the A06 replay gate")
+    raise SystemExit("seq11 frozen causal reference differs from the A06 replay gate")
 PY
 python -u "${SOURCE_A14}/hpc/daily_camels_ukf_knet_parity/preflight.py" \
   --bundle-root "$SOURCE_A14" --phase probe --offline-bundle-check \
-  --report "${STATUS_DIRECTORY}/seq10_offline_A14.json"
-FINAL_STATUS="SEQ10_OFFLINE_BUNDLE_AND_REPLAY_GATES_VERIFIED"
+  --report "${STATUS_DIRECTORY}/seq11_offline_A14.json"
+FINAL_STATUS="SEQ11_OFFLINE_BUNDLE_AND_REPLAY_GATES_VERIFIED"
 
-echo '=== SUBMIT READ-ONLY A14 GPU PROBE WITH 1 GIB MEMORY REQUEST ==='
+echo '=== SUBMIT READ-ONLY A14 GPU PROBE WITH PARTITION-COMPATIBLE MEMORY AND MEASURED-PEAK ADMISSION ==='
 submit_probe
 PROBE_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ10_PROBE_SUBMITTED"
+FINAL_STATUS="SEQ11_PROBE_SUBMITTED"
 if ! wait_for_jobs "$PROBE_JOB_ID"; then
-  FINAL_STATUS="SEQ10_PROBE_PARTIAL_PENDING"
+  FINAL_STATUS="SEQ11_PROBE_PARTIAL_PENDING"
   echo "soft deadline reached while the probe is pending; no training submitted" >&2
   exit 74
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
 require_probe_succeeded "$PROBE_JOB_ID" || {
-  FINAL_STATUS="SEQ10_PROBE_HARD_STOP"
+  FINAL_STATUS="SEQ11_PROBE_HARD_STOP"
   exit 75
 }
 require_lock_cleared "${STATUS_DIRECTORY}/locks/${A14_ID}.probe.lock" || {
-  FINAL_STATUS="SEQ10_PROBE_LOCK_HARD_STOP"
+  FINAL_STATUS="SEQ11_PROBE_LOCK_HARD_STOP"
   exit 79
 }
-python - "$STATUS_DIRECTORY" "$A14_ID" "$PROBE_JOB_ID" <<'PY'
+python - "$STATUS_DIRECTORY" "$A14_ID" "$PROBE_JOB_ID" \
+  "$HOST_ADMISSION_MIN_BYTES" "$GPU_ADMISSION_MIN_FREE_MIB" <<'PY'
 import json
 from pathlib import Path
 import sys
 
 status, experiment_id, job_id = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+host_admission_min_bytes = int(sys.argv[4])
+gpu_admission_min_free_mib = int(sys.argv[5])
 scheduled = json.loads(
     (status / f"probe-{experiment_id}-{job_id}.json").read_text(encoding="utf-8")
 )
@@ -504,7 +511,12 @@ if (
     or scheduled.get("selection_objective", {}).get("common_target_count_per_lead") != 728
     or scheduled.get("nse_gate", {}).get("common_target_count_per_lead") != 712
     or scheduled.get("cuda_probe_without_torch_import", {}).get("visible_device_count") != 1
-    or int(scheduled.get("available_host_memory_bytes") or 0) <= 0
+    or int(scheduled.get("available_host_memory_bytes") or 0)
+       < host_admission_min_bytes
+    or int(
+        scheduled.get("cuda_probe_without_torch_import", {}).get("memory_free_mib")
+        or 0
+    ) < gpu_admission_min_free_mib
     or entry.get("status") != "PREFLIGHT_PASS"
     or entry.get("phase") != "probe"
     or entry.get("run_directory_absent") is not True
@@ -513,52 +525,57 @@ if (
     or entry.get("array_members_materialized") != 0
     or entry.get("numerical_frameworks_imported_by_entry") != 0
 ):
-    raise SystemExit("seq10 A14 probe evidence differs")
+    raise SystemExit("seq11 A14 probe evidence differs")
 print(json.dumps({
     "experiment_id": experiment_id,
     "probe_job_id": job_id,
     "hostname": scheduled["hostname"],
     "available_host_memory_bytes": scheduled["available_host_memory_bytes"],
     "gpu": scheduled["cuda_probe_without_torch_import"],
+    "host_admission_min_bytes": host_admission_min_bytes,
+    "gpu_admission_min_free_mib": gpu_admission_min_free_mib,
+    "host_admission_safety_factor_over_A13_process_peak": 2.0,
+    "gpu_admission_safety_factor_over_A13_incremental_peak": 2.0,
     "probe_gate": "PASS",
 }, sort_keys=True))
 PY
-FINAL_STATUS="SEQ10_PROBE_PASS"
+FINAL_STATUS="SEQ11_PROBE_PASS"
 
 echo '=== SUBMIT ONE-EPOCH ONE-STEP REAL BACKPROPAGATION RESOURCE SMOKE ==='
 ALL_SUBMITTED_JOBS_TERMINAL=0
 submit_train
 TRAIN_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ10_TRAIN_SUBMITTED"
+FINAL_STATUS="SEQ11_TRAIN_SUBMITTED"
 if ! wait_for_jobs "$TRAIN_JOB_ID"; then
-  FINAL_STATUS="SEQ10_TRAIN_PARTIAL_PENDING"
+  FINAL_STATUS="SEQ11_TRAIN_PARTIAL_PENDING"
   echo "soft deadline reached while training is pending; the job was not cancelled" >&2
   exit 76
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
 if ! classify_train_completion "$TRAIN_JOB_ID"; then
-  FINAL_STATUS="SEQ10_TRAIN_TECHNICAL_HARD_STOP"
+  FINAL_STATUS="SEQ11_TRAIN_TECHNICAL_HARD_STOP"
   exit 77
 fi
 require_lock_cleared "${STATUS_DIRECTORY}/locks/${A14_ID}.train.lock" || {
-  FINAL_STATUS="SEQ10_TRAIN_LOCK_HARD_STOP"
+  FINAL_STATUS="SEQ11_TRAIN_LOCK_HARD_STOP"
   exit 80
 }
 printf 'train_exit_class=%s\n' "$TRAIN_EXIT_CLASS"
 
-SACCT_RESOURCE_FILE="${STATUS_DIRECTORY}/seq10_train_A14_sacct_resources.txt"
+SACCT_RESOURCE_FILE="${STATUS_DIRECTORY}/seq11_train_A14_sacct_resources.txt"
 [[ ! -e "$SACCT_RESOURCE_FILE" ]] || {
-  echo "refusing to replace seq10 Slurm resource evidence" >&2
+  echo "refusing to replace seq11 Slurm resource evidence" >&2
   exit 78
 }
 sacct -P --units=K -j "$TRAIN_JOB_ID" \
   --format=JobIDRaw,JobName,Partition,AllocCPUS,ReqMem,AllocTRES,State,ExitCode,Elapsed,Start,End,MaxRSS,MaxVMSize,AveRSS \
   > "$SACCT_RESOURCE_FILE"
 
-FINAL_STATUS="SEQ10_TRAIN_EVIDENCE_CHECK"
+FINAL_STATUS="SEQ11_TRAIN_EVIDENCE_CHECK"
 python - "$RUN_PARENT" "$STATUS_DIRECTORY" "$A14_ID" "$TRAIN_JOB_ID" \
   "$TRAIN_EXIT_CLASS" "$A14_INTERNAL_MANIFEST_SHA256" \
-  "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE" <<'PY'
+  "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE" \
+  "$HOST_ADMISSION_MIN_BYTES" "$GPU_ADMISSION_MIN_FREE_MIB" <<'PY'
 import csv
 import hashlib
 import json
@@ -572,6 +589,8 @@ run_parent, status = Path(sys.argv[1]), Path(sys.argv[2])
 experiment_id, job_id, exit_class = sys.argv[3:6]
 expected_bundle_manifest_sha = sys.argv[6]
 exact_replay_gate_path, causal_replay_gate_path = map(Path, sys.argv[7:9])
+host_admission_min_bytes = int(sys.argv[9])
+gpu_admission_min_free_mib = int(sys.argv[10])
 run = run_parent / experiment_id
 
 def load_json(name):
@@ -960,7 +979,12 @@ if (
     or train_preflight.get("selection_objective", {}).get("common_target_count_per_lead") != 728
     or train_preflight.get("nse_gate", {}).get("common_target_count_per_lead") != 712
     or train_preflight.get("cuda_probe_without_torch_import", {}).get("visible_device_count") != 1
-    or int(train_preflight.get("available_host_memory_bytes") or 0) <= 0
+    or int(train_preflight.get("available_host_memory_bytes") or 0)
+       < host_admission_min_bytes
+    or int(
+        train_preflight.get("cuda_probe_without_torch_import", {}).get("memory_free_mib")
+        or 0
+    ) < gpu_admission_min_free_mib
     or train_preflight.get("array_members_materialized") != 0
     or train_preflight.get("reserved_data_member_count") != 0
 ):
@@ -987,7 +1011,7 @@ if host_process_peak <= 0 or torch_reserved <= 0:
 
 gpu_log = status / f"train-gpu-resources-{experiment_id}-{job_id}.csv"
 cgroup_log = status / f"train-cgroup-resources-{experiment_id}-{job_id}.txt"
-sacct_log = status / "seq10_train_A14_sacct_resources.txt"
+sacct_log = status / "seq11_train_A14_sacct_resources.txt"
 for path in (gpu_log, cgroup_log, sacct_log):
     if not path.is_file() or path.stat().st_size <= 0:
         raise SystemExit(f"A14 resource receipt is absent: {path.name}")
@@ -1068,7 +1092,11 @@ resource_summary = {
     "slurm_step_max_rss_bytes": slurm_step_peak,
     "host_peak_basis_bytes": host_basis,
     "host_peak_basis_excludes_parent_cgroup": True,
-    "slurm_requested_memory": "3G",
+    "slurm_requested_memory": "0n_partition_constraint",
+    "host_admission_min_bytes": host_admission_min_bytes,
+    "gpu_admission_min_free_mib": gpu_admission_min_free_mib,
+    "host_admission_safety_factor_over_A13_process_peak": 2.0,
+    "gpu_admission_safety_factor_over_A13_incremental_peak": 2.0,
     "gpu_total_bytes": gpu_rows[0]["total_mib"] * 1024 * 1024,
     "gpu_free_before_bytes": gpu_rows[0]["free_mib"] * 1024 * 1024,
     "gpu_used_before_bytes": gpu_baseline_used,
@@ -1090,7 +1118,7 @@ resource_summary = {
     "cgroup_resource_log_sha256": sha256(cgroup_log),
     "sacct_resource_log_sha256": sha256(sacct_log),
 }
-target = status / "seq10_A14_resource_summary.json"
+target = status / "seq11_A14_resource_summary.json"
 data = (json.dumps(resource_summary, sort_keys=True, separators=(",", ":")) + "\n").encode()
 descriptor = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
 try:
@@ -1121,8 +1149,8 @@ JOB_CSV="$(IFS=,; printf '%s' "${JOB_IDS[*]}")"
 sacct --units=K -j "$JOB_CSV" \
   --format=JobID,JobName,Partition,AllocCPUS,ReqMem,State,ExitCode,Elapsed,Start,End,MaxRSS,MaxVMSize,AveRSS
 if [[ "$TRAIN_EXIT_CLASS" = "scientific_gate_pass" ]]; then
-  FINAL_STATUS="SEQ10_TECHNICAL_COMPLETE_SCIENTIFIC_GATE_PASS"
+  FINAL_STATUS="SEQ11_TECHNICAL_COMPLETE_SCIENTIFIC_GATE_PASS"
 else
-  FINAL_STATUS="SEQ10_TECHNICAL_COMPLETE_SCIENTIFIC_GATE_FAIL"
+  FINAL_STATUS="SEQ11_TECHNICAL_COMPLETE_SCIENTIFIC_GATE_FAIL"
 fi
-echo "DAILY_CAMELS_UKF_KNET_PARITY_SEQ10_TECHNICAL_COMPLETE probe=${PROBE_JOB_ID} train=${TRAIN_JOB_ID} train_exit_class=${TRAIN_EXIT_CLASS} final_status=${FINAL_STATUS}"
+echo "DAILY_CAMELS_UKF_KNET_PARITY_SEQ11_TECHNICAL_COMPLETE probe=${PROBE_JOB_ID} train=${TRAIN_JOB_ID} train_exit_class=${TRAIN_EXIT_CLASS} final_status=${FINAL_STATUS}"
