@@ -1,0 +1,91 @@
+### channel=kalmannet-tukf20 seq=7
+### host=login4
+### started=2026-08-24T20:50:24+0800
+### ---------- output ----------
+=== TUKF20 RECOVERY IMMUTABLE SOURCE GATES ===
+TUKF20_RECOVERY_SOURCE_EVIDENCE_PINNED
+=== TUKF20 RECOVERY BUNDLE GATE ===
+tar: configs/tukf20_hpc_verifier_recovery_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-24-tukf20-verifier-recovery.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf20_hbv_rolling_origin_joint_learning/submit_verifier_recovery_cpu1.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf20_hbv_rolling_origin_joint_learning/submit_verifier_recovery_package_cpu1.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: recovery_payload_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_tukf20_hpc_verifier_recovery_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/package_tukf20_hpc_verifier_recovery.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/recover_tukf20_hpc_verifier_postprocessing.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/verify_tukf20_hbv_rolling_origin_joint_learning_recovery1.py: implausibly old time stamp 1970-01-01 08:00:00
+TUKF20_RECOVERY_BUNDLE_MEMBERS_VERIFIED=8
+=== TUKF20 UNIQUE VERIFIER RECOVERY SUBMISSION ===
+Submitted batch job 211130
+TUKF20_VERIFIER_RECOVERY_JOB_ID=211130
+             JOBID|   PARTITION|                          NAME|     STATE|      TIME|TIME_LIMIT|NODELIST(REASON)
+            211130|     hcpu48y|        tukf20-verify-recovery|   PENDING|      0:00|   1:00:00|(None)
+=== TUKF20 VERIFIER RECOVERY WAIT ===
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=6 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=12 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=18 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=24 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=30 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=36 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=42 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=48 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=54 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=60 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=66 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=72 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=78 state=RUNNING exit_code=0:0
+TUKF20_VERIFIER_RECOVERY_WAIT attempt=84 state=RUNNING exit_code=0:0
+=== TUKF20 VERIFIER RECOVERY ACCOUNTING AND COMPLETION ===
+{
+  "checks": {
+    "all_20_checks": true,
+    "clean_error_count": true,
+    "figure_count": true,
+    "figure_status": true,
+    "no_training_rerun": true,
+    "output_validation": true,
+    "readout_count": true,
+    "recovery_completed": true,
+    "verification_status": true
+  },
+  "primary_contrasts": {
+    "joint_over_all_frozen": {
+      "benefit_sign_test_one_sided_p": 0.0001553744077682495,
+      "classification": "CLEAR_BENEFIT",
+      "median_ratio": 0.5454693651306955,
+      "wins_below_one": 23
+    },
+    "joint_over_filter_only": {
+      "benefit_sign_test_one_sided_p": 0.0095786452293396,
+      "classification": "CLEAR_BENEFIT",
+      "median_ratio": 0.8343045551099305,
+      "wins_below_one": 20
+    },
+    "joint_over_hydrology_only": {
+      "benefit_sign_test_one_sided_p": 0.0029623061418533325,
+      "classification": "CLEAR_BENEFIT",
+      "median_ratio": 0.6339736676408522,
+      "wins_below_one": 21
+    }
+  },
+  "scientific_classification": {
+    "all_primary_clear_benefit": true,
+    "overall_status": "FINAL_JOINT_ADVANTAGE_ESTABLISHED",
+    "primary_classes": {
+      "joint_over_all_frozen": "CLEAR_BENEFIT",
+      "joint_over_filter_only": "CLEAR_BENEFIT",
+      "joint_over_hydrology_only": "CLEAR_BENEFIT"
+    },
+    "scientific_retuning_allowed": false,
+    "secondary_classes": {
+      "filter_only_over_all_frozen": "CLEAR_BENEFIT",
+      "hydrology_only_over_all_frozen": "CLEAR_BENEFIT"
+    },
+    "two_factor_interaction_descriptive_only": true
+  },
+  "technical_verification_is_not_scientific_success": true
+}
+TUKF20_VERIFIER_RECOVERY_COMPLETED job_id=211130
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-24T21:05:37+0800
