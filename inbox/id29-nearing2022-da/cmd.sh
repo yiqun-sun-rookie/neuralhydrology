@@ -1,19 +1,13 @@
+#!/bin/bash
+# ID29: are all 46 training coordinates complete? If so, what exactly blocks 202226?
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
-date --iso-8601=seconds
-echo "=== N22 JOBS ==="
-squeue -u sunyiq -h -o '%.12i %.14j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22|retime|re214' || echo 'no N22 jobs in queue'
-echo "=== RECENT TERMINAL STATES ==="
-sacct -X -n -P -S $(date -d '3 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22|retime|re214' | grep -vE '\|(RUNNING|PENDING)\|' | tail -20 || true
-echo "=== RUNNING PROGRESS ==="
-for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-(time|retime|re214)' | awk '{print $1}'); do
-  SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
-  [ -n "$SO" ] && [ -f "$SO" ] && { printf -- '--- %s log=%s ---\n' "$J" "$(stat -c %s "$SO")"; tail -c 120000 "$SO" 2>/dev/null | tr '\r' '\n' | grep -iE '^# Epoch' | tail -1 || true; }
-done
-echo "=== ROLE COUNTS ==="
+echo "=== TIME ==="; date --iso-8601=seconds
 source ~/miniconda3/etc/profile.d/conda.sh && conda activate nh_final 2>/dev/null
 cd "$ROOT"
-python - <<'PY' 2>/dev/null || echo "recount unavailable"
+
+echo "=== TRAINING COMPLETENESS DETAIL ==="
+python - <<'PY' 2>&1 | head -40
 import json, sys
 from pathlib import Path
 root = Path('/data1/home/sunyiq/nearing2022_da')
@@ -23,9 +17,34 @@ reg = root / 'src/29_nearing2022_da_ar/registry'
 agg = root / 'closure_20260810/aggregation'
 c = audit_registered_closure(root, reg/'experiment_registry.csv', reg/'evaluation_registry.csv',
                              reg/'assimilation_hyperparameter_registry.csv', agg/'evaluations', agg/'hyperparameters')
-m = {}
-for row in c['missing']:
-    m[row['coordinate_type']] = m.get(row['coordinate_type'], 0) + 1
-print(json.dumps({'missing_by_type': m, 'missing_total': len(c['missing'])}, sort_keys=True))
+tr = [r for r in c['missing'] if r['coordinate_type'] == 'training']
+print('training missing roles:', len(tr))
+seen = {}
+for r in tr:
+    seen.setdefault(r['coordinate_id'], []).append(r.get('role', '?'))
+for k, v in sorted(seen.items()):
+    print(f'  {k}: {sorted(v)}')
+ev = [r for r in c['missing'] if r['coordinate_type'] == 'evaluation']
+evc = sorted({r['coordinate_id'] for r in ev})
+print('evaluation missing coordinates:', len(evc), '(first 5)', evc[:5])
 PY
+
+echo "=== THE THREE REPAIR CHECKPOINTS ==="
+AR="$ROOT/closure_20260810/time_split/autoregression"
+for P in lead2_holdout0.75 lead2_holdout1.0 lead1_holdout0.5; do
+  f=$(find "$AR" -maxdepth 2 -path "*${P}_seed0*" -name 'model_epoch030.pt' -printf '%TY-%Tm-%Td %TH:%TM %p\n' 2>/dev/null | sort | tail -1)
+  printf '  %-18s %s\n' "$P" "${f:-MISSING}"
+done
+
+echo "=== 202226 BLOCK DETAIL ==="
+scontrol show job 202226 2>/dev/null | tr ' ' '\n' | grep -E '^(JobId|ArrayTaskId|Dependency|Reason|Command|TimeLimit|Partition)=' || echo 'no record'
+echo "--- upstream states it waits on ---"
+sacct -X -n -P -j 202214 --format=JobID,State 2>/dev/null || true
+sacct -X -n -P -j 202215 --format=JobID,State 2>/dev/null | grep -vE '\|COMPLETED' || echo '  202215: all COMPLETED'
+
+echo "=== EVAL BATCH FILE FOR 202226 ==="
+B="$ROOT/src/29_nearing2022_da_ar/registry/time_split_pending_source_evaluation_batch.txt"
+[ -f "$B" ] && { echo "lines=$(wc -l < "$B")  sha256=$(sha256sum "$B" | cut -d' ' -f1)"; head -3 "$B"; } || echo 'batch file missing'
+
+echo "=== END ==="; date --iso-8601=seconds
 exit 0
