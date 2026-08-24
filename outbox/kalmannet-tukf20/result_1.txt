@@ -1,0 +1,68 @@
+### channel=kalmannet-tukf20 seq=1
+### host=login4
+### started=2026-08-24T15:46:39+0800
+### ---------- output ----------
+=== TUKF20 TRANSPORT GATE ===
+TUKF20_ARCHIVE_VERIFIED=48
+=== TUKF20 ATOMIC DEPLOYMENT ===
+tar: G:/github/pycharm/projects/kalmannet/G:/github/pycharm/projects/neuralhydrology/src/scl_hydro/hbv_lite_numpy.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/configs/tukf11_hbv_joint_parameter_synthetic_mechanism_gate_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/configs/tukf14_hbv_four_mode_randomised_start_ablation_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/configs/tukf16_hbv_balanced_error_four_mode_rerun_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/run_aligned_gr4j_da.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/run_aligned_gr4j_differentiable_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/run_tukf11_hbv_joint_parameter_synthetic_mechanism_gate.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/tukf10_joint_hbv_physical_filter_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/tukf11_hbv_joint_parameter_synthetic_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/scripts/tukf16_hbv_balanced_error_four_mode_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/assimilation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/assimilation/conventional_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/data/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/data/caravan_dataset.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/data/multi_obs_caravan.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/differentiable_m4.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/differentiable_walrus.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/dl_ssm.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/hydro_system.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/m4_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/static_encoder.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/trainable_hbvlite_ukf_adapter.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/kalmannet/src/global_hydrology/models/walrus_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/neuralhydrology/src/scl_hydro/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: G:/github/pycharm/projects/neuralhydrology/src/scl_hydro/hbv_lite_numpy.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf20_hbv_rolling_origin_joint_learning_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf20_hpc_deployment_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-24-tukf20-rolling-origin-joint-learning.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf20_hbv_rolling_origin_joint_learning/submit_formal_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf20_hbv_rolling_origin_joint_learning/submit_smoke_cpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: logs/.keep: implausibly old time stamp 1970-01-01 08:00:00
+tar: payload_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_tukf20_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/plot_tukf20_hbv_rolling_origin_joint_learning.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf17_hbv_rolling_origin_state_hydrology_update.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf20_hbv_rolling_origin_joint_learning.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_tukf20_hpc_formal_pipeline.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/smoke_tukf20_hpc_compatibility.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf17_hbv_rolling_origin_state_hydrology_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf18_hbv_rolling_origin_balance_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf20_hbv_rolling_origin_joint_learning_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf20_hbv_rolling_origin_mode_training.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf20_hpc_deployment_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/verify_tukf17_hbv_rolling_origin_state_hydrology_update.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/verify_tukf20_hbv_rolling_origin_joint_learning.py: implausibly old time stamp 1970-01-01 08:00:00
+TUKF20_EXTRACTED_MEMBERS_VERIFIED=48
+TUKF20_DEPLOYED=/data1/home/sunyiq/kalmannet_tukf20_20260824
+=== TUKF20 UNIQUE SMOKE SUBMISSION ===
+Submitted batch job 210745
+TUKF20_SMOKE_JOB_ID=210745
+210745|tukf20-smoke|PENDING|hcpu48y|1
+       JobID    JobName  Partition  AllocCPUS      State ExitCode    Elapsed               Start                 End 
+------------ ---------- ---------- ---------- ---------- -------- ---------- ------------------- ------------------- 
+TUKF20_SMOKE_SUBMISSION_RECORDED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-24T15:46:44+0800
