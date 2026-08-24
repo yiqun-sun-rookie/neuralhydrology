@@ -1,0 +1,78 @@
+{
+  "formal_training_rerun": false,
+  "independent_verification_rerun_during_packaging": false,
+  "members": {
+    "figure_manifest.json": {
+      "bytes": 13850,
+      "sha256": "42ad54d269646b53a7ca489c3997cd40a438801f9be6e770d8f4f8eaf756f288"
+    },
+    "independent_verification.json": {
+      "bytes": 54655,
+      "sha256": "597cbe83bfb71edf3235873fafa3e155ec78e4ef6a5f2f1d8423e029fdca83c8"
+    },
+    "package_submission_receipt.json": {
+      "bytes": 878,
+      "sha256": "949ef05179e912691896c63f6c46829ba8849094d118fd57315cd200dd9899bb"
+    },
+    "packaging_outputs_complete.json": {
+      "bytes": 3605,
+      "sha256": "67b0cb13798454c85387ef0b783f6cc9dd6d014d4f91b60c70cd4a155c67e0b3"
+    },
+    "packaging_sacct_snapshot.txt": {
+      "bytes": 110,
+      "sha256": "d4029aa9784edbb23226263abe63fc495530d6f0beab09cc54106150c19ce90d"
+    },
+    "packaging_slurm_completion.json": {
+      "bytes": 1808,
+      "sha256": "ccd9074567f2779aee29fe2e0b48e9651934b6875fc0af7c90aff2d5b81fa159"
+    },
+    "recovery_submission_receipt.json": {
+      "bytes": 781,
+      "sha256": "f8faf24491ba1eaf52d274eb6dc9953f09ac5511e63090c20862c7ad132bb718"
+    },
+    "tukf20_hpc_verifier_recovery_result_v1.tar.gz": {
+      "bytes": 7993644,
+      "sha256": "1ef7e3c2a378e398fddd8ff5bfd968829667466bdd90be712b3a5ca96e91c6be"
+    },
+    "tukf20_hpc_verifier_recovery_result_v1.tar.gz.sha256.json": {
+      "bytes": 550892,
+      "sha256": "adba4485fa22723f816507094ac8d458da034ae7fff62e20b091ed6e36a36339"
+    },
+    "verifier-recovery-211130.err": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "verifier-recovery-211130.out": {
+      "bytes": 779,
+      "sha256": "65fe558d9f3d2870b80301b89e6d35e40113e0b771ff5b867087e50f8c3f1c50"
+    },
+    "verifier-recovery-package-211139.err": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "verifier-recovery-package-211139.out": {
+      "bytes": 464,
+      "sha256": "9b6ab57d8e4227eeb6ffb6834f61a6255b4fea42e45444d63ab1edd4e1db3e41"
+    },
+    "verifier_recovery_outputs_complete.json": {
+      "bytes": 7394,
+      "sha256": "3f658a14b93f1b865a9ade723904219bde0695a2a1bf263961914a67089e30fc"
+    },
+    "verifier_recovery_sacct_snapshot.txt": {
+      "bytes": 111,
+      "sha256": "a1c658b87cec278a232933ea5403b6bd37a10d8f4f66ee6630b37408367568c8"
+    },
+    "verifier_recovery_slurm_completion.json": {
+      "bytes": 1135,
+      "sha256": "0549b6ab48c274b952923ef6c61c1505ab0a9f8646c75d8d2698bd0242ba4051"
+    }
+  },
+  "packaging_slurm_job_id": 211139,
+  "recorded_at_utc": "2026-08-24T13:19:23.116137+00:00",
+  "recovery_id": "TUKF20_HPC_VERIFIER_RECOVERY_V1",
+  "recovery_slurm_job_id": 211130,
+  "schema_version": "tukf20_hpc_verifier_recovery_mailbox_retrieval_v1",
+  "scientific_experiment_id": "TUKF20_HBV_ROLLING_ORIGIN_JOINT_LEARNING_V1",
+  "source_formal_job_id": 210748,
+  "technical_verification_is_not_scientific_success": true
+}

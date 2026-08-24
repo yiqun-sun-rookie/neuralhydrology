@@ -1,0 +1,95 @@
+{
+  "archive": {
+    "bytes": 7993644,
+    "member_count": 2657,
+    "path": "artifacts/tukf20_hpc_verifier_recovery_v1/tukf20_hpc_verifier_recovery_result_v1.tar.gz",
+    "sha256": "1ef7e3c2a378e398fddd8ff5bfd968829667466bdd90be712b3a5ca96e91c6be"
+  },
+  "completed_at_utc": "2026-08-24T13:19:10.017494+00:00",
+  "formal_output_validation": {
+    "checks": {
+      "clean_error_budget": true,
+      "independent_readout_count": true,
+      "independent_verification": true,
+      "mode_history_count": true,
+      "primary_contrast_set": true,
+      "registry_readout_count": true,
+      "registry_status": true,
+      "scientific_identity": true,
+      "technical_boundary": true,
+      "verified_figures": true
+    },
+    "figure_manifest_sha256": "42ad54d269646b53a7ca489c3997cd40a438801f9be6e770d8f4f8eaf756f288",
+    "registry_sha256": "f7dc3514371d86f0cb83c5a5c4908ff7c1d13f4343d2af015a0ac362436c295c",
+    "scientific_classification": {
+      "all_primary_clear_benefit": true,
+      "overall_status": "FINAL_JOINT_ADVANTAGE_ESTABLISHED",
+      "primary_classes": {
+        "joint_over_all_frozen": "CLEAR_BENEFIT",
+        "joint_over_filter_only": "CLEAR_BENEFIT",
+        "joint_over_hydrology_only": "CLEAR_BENEFIT"
+      },
+      "scientific_retuning_allowed": false,
+      "secondary_classes": {
+        "filter_only_over_all_frozen": "CLEAR_BENEFIT",
+        "hydrology_only_over_all_frozen": "CLEAR_BENEFIT"
+      },
+      "two_factor_interaction_descriptive_only": true
+    },
+    "verification_sha256": "597cbe83bfb71edf3235873fafa3e155ec78e4ef6a5f2f1d8423e029fdca83c8"
+  },
+  "formal_training_rerun": false,
+  "independent_verification_rerun_during_packaging": false,
+  "manifest": {
+    "bytes": 550892,
+    "path": "artifacts/tukf20_hpc_verifier_recovery_v1/tukf20_hpc_verifier_recovery_result_v1.tar.gz.sha256.json",
+    "sha256": "adba4485fa22723f816507094ac8d458da034ae7fff62e20b091ed6e36a36339"
+  },
+  "packaging_slurm_job_id": "211139",
+  "recovery_completion_checks": {
+    "completed_accounting": true,
+    "identity": true,
+    "job_identity": true,
+    "no_training_rerun": true,
+    "outputs_hash": true,
+    "outputs_status": true,
+    "sacct_hash": true,
+    "schema": true,
+    "scientific_contract_unchanged": true,
+    "status": true,
+    "stderr_hash": true,
+    "stdout_hash": true
+  },
+  "recovery_id": "TUKF20_HPC_VERIFIER_RECOVERY_V1",
+  "recovery_slurm_job_id": 211130,
+  "schema_version": "tukf20_hpc_verifier_recovery_packaging_outputs_v1",
+  "scientific_classification": {
+    "all_primary_clear_benefit": true,
+    "overall_status": "FINAL_JOINT_ADVANTAGE_ESTABLISHED",
+    "primary_classes": {
+      "joint_over_all_frozen": "CLEAR_BENEFIT",
+      "joint_over_filter_only": "CLEAR_BENEFIT",
+      "joint_over_hydrology_only": "CLEAR_BENEFIT"
+    },
+    "scientific_retuning_allowed": false,
+    "secondary_classes": {
+      "filter_only_over_all_frozen": "CLEAR_BENEFIT",
+      "hydrology_only_over_all_frozen": "CLEAR_BENEFIT"
+    },
+    "two_factor_interaction_descriptive_only": true
+  },
+  "scientific_experiment_id": "TUKF20_HBV_ROLLING_ORIGIN_JOINT_LEARNING_V1",
+  "source_formal_job_id": 210748,
+  "source_validation_checks": {
+    "all_other_failed_run_checks_true": true,
+    "failed_verification_status": true,
+    "single_expected_failed_check": true,
+    "source_accounting": true,
+    "source_bundle_identity": true,
+    "source_elapsed": true,
+    "source_hashes": true,
+    "source_result_size": true
+  },
+  "status": "VERIFIER_RECOVERY_PACKAGE_COMPLETE_AWAITING_SLURM_ACCOUNTING",
+  "technical_verification_is_not_scientific_success": true
+}

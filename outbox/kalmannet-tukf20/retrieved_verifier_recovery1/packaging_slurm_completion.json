@@ -1,0 +1,42 @@
+{
+  "archive_bytes": 7993644,
+  "archive_member_count": 2657,
+  "archive_sha256": "1ef7e3c2a378e398fddd8ff5bfd968829667466bdd90be712b3a5ca96e91c6be",
+  "evidence": {
+    "sacct_sha256": "d4029aa9784edbb23226263abe63fc495530d6f0beab09cc54106150c19ce90d",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "9b6ab57d8e4227eeb6ffb6834f61a6255b4fea42e45444d63ab1edd4e1db3e41",
+    "submission_receipt_sha256": "949ef05179e912691896c63f6c46829ba8849094d118fd57315cd200dd9899bb"
+  },
+  "formal_training_rerun": false,
+  "independent_verification_rerun_during_packaging": false,
+  "manifest_sha256": "adba4485fa22723f816507094ac8d458da034ae7fff62e20b091ed6e36a36339",
+  "packaging_outputs_sha256": "67b0cb13798454c85387ef0b783f6cc9dd6d014d4f91b60c70cd4a155c67e0b3",
+  "packaging_slurm_job_id": 211139,
+  "recorded_at_utc": "2026-08-24T13:19:22.935862+00:00",
+  "recovery_id": "TUKF20_HPC_VERIFIER_RECOVERY_V1",
+  "recovery_slurm_job_id": 211130,
+  "schema_version": "tukf20_hpc_verifier_recovery_package_slurm_completion_v1",
+  "scientific_experiment_id": "TUKF20_HBV_ROLLING_ORIGIN_JOINT_LEARNING_V1",
+  "slurm_exit_code": "0:0",
+  "slurm_state": "COMPLETED",
+  "source_formal_job_id": 210748,
+  "status": "VERIFIER_RECOVERY_PACKAGE_SLURM_COMPLETED",
+  "technical_verification_is_not_scientific_success": true,
+  "validation_checks": {
+    "archive_bytes": true,
+    "archive_hash": true,
+    "archive_member_count": true,
+    "formal_validation": true,
+    "manifest_identity": true,
+    "manifest_jobs": true,
+    "no_training_rerun": true,
+    "no_verifier_rerun": true,
+    "outputs_archive": true,
+    "outputs_jobs": true,
+    "outputs_status": true,
+    "payload_members": true,
+    "recovery_completion": true,
+    "source_validation": true
+  }
+}

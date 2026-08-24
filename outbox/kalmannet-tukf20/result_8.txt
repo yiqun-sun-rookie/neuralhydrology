@@ -1,0 +1,54 @@
+### channel=kalmannet-tukf20 seq=8
+### host=login4
+### started=2026-08-24T21:18:56+0800
+### ---------- output ----------
+=== TUKF20 POST-RECOVERY PACKAGE IMMUTABLE GATES ===
+{"checks": {"clean_error_count": true, "completion_accounting": true, "completion_job_identity": true, "completion_status": true, "figure_count": true, "figure_status": true, "formal_bundle_identity": true, "readout_count": true, "recovery_bundle_identity": true, "recovery_contract_unchanged": true, "recovery_job_identity": true, "recovery_no_training": true, "recovery_outputs_status": true, "verification_checks": true, "verification_status": true}, "status": "TUKF20_PACKAGE_GATES_PASSED"}
+=== TUKF20 UNIQUE PACKAGE SUBMISSION ===
+Submitted batch job 211139
+TUKF20_VERIFIER_RECOVERY_PACKAGE_JOB_ID=211139
+             JOBID|   PARTITION|                          NAME|     STATE|      TIME|TIME_LIMIT|NODELIST(REASON)
+            211139|     hcpu48y|         tukf20-verify-package|   PENDING|      0:00|     30:00|(None)
+=== TUKF20 PACKAGE WAIT ===
+=== TUKF20 PACKAGE ACCOUNTING AND COMPLETION ===
+{
+  "archive_bytes": 7993644,
+  "archive_member_count": 2657,
+  "archive_sha256": "1ef7e3c2a378e398fddd8ff5bfd968829667466bdd90be712b3a5ca96e91c6be",
+  "checks": {
+    "archive_bytes": true,
+    "archive_hash": true,
+    "archive_member_count": true,
+    "formal_validation": true,
+    "manifest_identity": true,
+    "manifest_jobs": true,
+    "no_training_rerun": true,
+    "no_verifier_rerun": true,
+    "outputs_archive": true,
+    "outputs_jobs": true,
+    "outputs_status": true,
+    "payload_members": true,
+    "recovery_completion": true,
+    "source_validation": true
+  }
+}
+=== TUKF20 MAILBOX RESULT RETRIEVAL ===
+{
+  "archive_bytes": 7993644,
+  "archive_member_count": 2657,
+  "archive_sha256": "1ef7e3c2a378e398fddd8ff5bfd968829667466bdd90be712b3a5ca96e91c6be",
+  "formal_training_rerun": false,
+  "independent_verification_rerun_during_packaging": false,
+  "packaging_slurm_job_id": 211139,
+  "recovery_slurm_job_id": 211130,
+  "retrieved_file_count": 16,
+  "slurm_exit_code": "0:0",
+  "slurm_state": "COMPLETED",
+  "source_formal_job_id": 210748,
+  "status": "VERIFIER_RECOVERY_PACKAGE_SLURM_COMPLETED",
+  "technical_verification_is_not_scientific_success": true
+}
+TUKF20_VERIFIER_RECOVERY_PACKAGE_AND_RETRIEVAL_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-24T21:19:23+0800

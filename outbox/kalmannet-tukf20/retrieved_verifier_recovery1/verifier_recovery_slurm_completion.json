@@ -1,0 +1,22 @@
+{
+  "evidence": {
+    "sacct_path": "artifacts/tukf20_hpc_verifier_recovery_v1/evidence/verifier_recovery_sacct_snapshot.txt",
+    "sacct_sha256": "a1c658b87cec278a232933ea5403b6bd37a10d8f4f66ee6630b37408367568c8",
+    "stderr_path": "logs/verifier-recovery-211130.err",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_path": "logs/verifier-recovery-211130.out",
+    "stdout_sha256": "65fe558d9f3d2870b80301b89e6d35e40113e0b771ff5b867087e50f8c3f1c50"
+  },
+  "formal_training_rerun": false,
+  "outputs_complete_sha256": "3f658a14b93f1b865a9ade723904219bde0695a2a1bf263961914a67089e30fc",
+  "recorded_at_utc": "2026-08-24T13:05:37.489704+00:00",
+  "recovery_id": "TUKF20_HPC_VERIFIER_RECOVERY_V1",
+  "recovery_slurm_job_id": 211130,
+  "schema_version": "tukf20_hpc_verifier_recovery_slurm_completion_v1",
+  "scientific_experiment_id": "TUKF20_HBV_ROLLING_ORIGIN_JOINT_LEARNING_V1",
+  "slurm_exit_code": "0:0",
+  "slurm_state": "COMPLETED",
+  "source_formal_job_id": 210748,
+  "status": "VERIFIER_RECOVERY_SLURM_COMPLETED",
+  "technical_verification_is_not_scientific_success": true
+}
