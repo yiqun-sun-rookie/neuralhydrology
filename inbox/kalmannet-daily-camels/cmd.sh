@@ -2,9 +2,9 @@
 set -Eeuo pipefail
 
 MAILBOX_ROOT="/data1/home/${USER}/hpc_mailbox"
-PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/parity-near-zero-npz-resource-repair-v9"
+PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/parity-stable-lr-smoke-v10"
 BASE="/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824"
-SOURCE_A12="${BASE}/source_A12_seq8"
+SOURCE_A13="${BASE}/source_A13_seq9"
 RUN_PARENT="${BASE}/runs"
 STATUS_DIRECTORY="${BASE}/status"
 LOG_DIRECTORY="${BASE}/logs"
@@ -12,24 +12,24 @@ OUTBOX_DIRECTORY="${MAILBOX_ROOT}/outbox/kalmannet-daily-camels"
 
 A05_ID="DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05"
 A06_ID="DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06"
-A12_ID="DAILY_CAMELS_KNET_NEAR_ZERO_STRICT_SMOKE_V4_20260825_A12"
-A12_ARCHIVE="${PAYLOAD_DIRECTORY}/${A12_ID}.tar.gz"
-A12_SHA256="ba969ebff9167d79727eaa314a03d0a007dc78e503afa943e039df99e342be25"
-A12_SIZE=214477
-A12_OUTER_MANIFEST="${PAYLOAD_DIRECTORY}/A12_bundle_manifest.sha256.json"
-A12_OUTER_MANIFEST_SHA256="28a8a9095ebdf86b328ab00bea5e9781fcb98b553bc38619aee0ec2b71b7a202"
-A12_INTERNAL_MANIFEST_SHA256="0848aa1e3d66debbae16952a5c6e5b24dd55da035f4613bd15c5fde41168798b"
-A12_CONFIG_SHA256="d951ba1fec7e1b337a8650f001281414f94443aa7947458983150ee7e207bf13"
+A13_ID="DAILY_CAMELS_KNET_NEAR_ZERO_STABLE_LR_STRICT_SMOKE_V1_20260825_A13"
+A13_ARCHIVE="${PAYLOAD_DIRECTORY}/${A13_ID}.tar.gz"
+A13_SHA256="0042aa71cde254cd6755baccae8d9b1e511c0e5c810c21550b2c17bbacbfa227"
+A13_SIZE=214490
+A13_OUTER_MANIFEST="${PAYLOAD_DIRECTORY}/A13_bundle_manifest.sha256.json"
+A13_OUTER_MANIFEST_SHA256="003770e457710959687a72f79d9366c15b7d6f7d6a8297b15b3cb3016ad300a8"
+A13_INTERNAL_MANIFEST_SHA256="74066d9389edd5240e066b95bc86f43e2c844011aa4d059709020e21224d411f"
+A13_CONFIG_SHA256="31b9a4207c483730249bb379f04d113bc0f6459f1390ba90b7a4121b46a65fe1"
 EXACT_REPLAY_GATE="${STATUS_DIRECTORY}/replay_gate_${A05_ID}.json"
 CAUSAL_REPLAY_GATE="${STATUS_DIRECTORY}/replay_gate_${A06_ID}.json"
 
-EVIDENCE_NAME="DAILY_CAMELS_KNET_NEAR_ZERO_STRICT_SMOKE_V4_A12_SEQ8_evidence.tar.gz"
+EVIDENCE_NAME="DAILY_CAMELS_KNET_NEAR_ZERO_STABLE_LR_STRICT_SMOKE_V1_A13_SEQ9_evidence.tar.gz"
 EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/${EVIDENCE_NAME}"
 START_EPOCH="$(date +%s)"
 SOFT_DEADLINE_EPOCH="$((START_EPOCH + 6300))"
 BASE_OWNED=0
 ALL_SUBMITTED_JOBS_TERMINAL=0
-FINAL_STATUS="SEQ8_RECOVERY_STARTED"
+FINAL_STATUS="SEQ9_RECOVERY_STARTED"
 declare -a JOB_IDS=()
 
 package_evidence() {
@@ -47,7 +47,7 @@ package_evidence() {
     return 0
   fi
 
-  local snapshot="${BASE}/seq8_snapshot_$$"
+  local snapshot="${BASE}/seq9_snapshot_$$"
   mkdir -p "$snapshot/status" "$snapshot/logs" "$snapshot/source"
   printf '%s\n' "$FINAL_STATUS" > "${snapshot}/final_status.txt"
   printf '%s\n' "$command_exit_code" > "${snapshot}/command_exit_code.txt"
@@ -64,12 +64,12 @@ package_evidence() {
   fi
   local candidate
   for candidate in \
-    "${STATUS_DIRECTORY}"/seq8_* \
-    "${STATUS_DIRECTORY}"/probe-"${A12_ID}"-*.json \
-    "${STATUS_DIRECTORY}"/entry-probe-"${A12_ID}"-*.json \
-    "${STATUS_DIRECTORY}"/train-preflight-"${A12_ID}"-*.json \
-    "${STATUS_DIRECTORY}"/train-gpu-resources-"${A12_ID}"-*.csv \
-    "${STATUS_DIRECTORY}"/train-cgroup-resources-"${A12_ID}"-*.txt \
+    "${STATUS_DIRECTORY}"/seq9_* \
+    "${STATUS_DIRECTORY}"/probe-"${A13_ID}"-*.json \
+    "${STATUS_DIRECTORY}"/entry-probe-"${A13_ID}"-*.json \
+    "${STATUS_DIRECTORY}"/train-preflight-"${A13_ID}"-*.json \
+    "${STATUS_DIRECTORY}"/train-gpu-resources-"${A13_ID}"-*.csv \
+    "${STATUS_DIRECTORY}"/train-cgroup-resources-"${A13_ID}"-*.txt \
     "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE"; do
     [[ -f "$candidate" && ! -L "$candidate" ]] || continue
     cp -p "$candidate" "${snapshot}/status/"
@@ -88,20 +88,20 @@ package_evidence() {
       cp -p "$candidate" "${snapshot}/logs/"
     done
   fi
-  if [[ -f "${SOURCE_A12}/bundle_manifest.json" && \
-        ! -L "${SOURCE_A12}/bundle_manifest.json" ]]; then
-    cp -p "${SOURCE_A12}/bundle_manifest.json" "${snapshot}/source/"
+  if [[ -f "${SOURCE_A13}/bundle_manifest.json" && \
+        ! -L "${SOURCE_A13}/bundle_manifest.json" ]]; then
+    cp -p "${SOURCE_A13}/bundle_manifest.json" "${snapshot}/source/"
   fi
 
   local temporary_archive="${OUTBOX_DIRECTORY}/.${EVIDENCE_NAME}.$$"
   if [[ "$ALL_SUBMITTED_JOBS_TERMINAL" -eq 1 ]]; then
-    if [[ -d "${RUN_PARENT}/${A12_ID}" && ! -L "${RUN_PARENT}/${A12_ID}" ]]; then
-      if find "${RUN_PARENT}/${A12_ID}" -type l -print -quit | grep -q .; then
+    if [[ -d "${RUN_PARENT}/${A13_ID}" && ! -L "${RUN_PARENT}/${A13_ID}" ]]; then
+      if find "${RUN_PARENT}/${A13_ID}" -type l -print -quit | grep -q .; then
         printf 'evidence_archive=CREATE_FAILED symbolic_run_member=1 status=%s exit_code=%s\n' \
           "$FINAL_STATUS" "$command_exit_code"
         return 0
       fi
-      cp -a "${RUN_PARENT}/${A12_ID}" "${snapshot}/run"
+      cp -a "${RUN_PARENT}/${A13_ID}" "${snapshot}/run"
     fi
   fi
   tar -czf "$temporary_archive" -C "$BASE" "$(basename "$snapshot")"
@@ -126,7 +126,7 @@ on_exit() {
   exit "$command_exit_code"
 }
 trap on_exit EXIT
-trap 'FINAL_STATUS="SEQ8_INTERRUPTED_PARTIAL_PENDING"; exit 143' INT TERM
+trap 'FINAL_STATUS="SEQ9_INTERRUPTED_PARTIAL_PENDING"; exit 143' INT TERM
 
 archive_identity_check() {
   local archive="$1" expected_sha256="$2" expected_size="$3"
@@ -149,31 +149,31 @@ archive_identity_check() {
 
 submit_probe() {
   local raw job_id
-  raw="$(cd "$SOURCE_A12" && sbatch --parsable --mem=0 \
+  raw="$(cd "$SOURCE_A13" && sbatch --parsable --mem=0 \
     hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm)"
   job_id="${raw%%;*}"
   case "$job_id" in
     ''|*[!0-9]*) echo "invalid Slurm probe job id: ${raw}" >&2; return 63 ;;
   esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq8_probe_A12_job_id.txt"
+  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq9_probe_A13_job_id.txt"
   JOB_IDS+=("$job_id")
   SUBMITTED_JOB_ID="$job_id"
-  printf 'submitted label=probe_A12 job_id=%s memory_request=all_schedulable_node_memory\n' "$job_id"
+  printf 'submitted label=probe_A13 job_id=%s memory_request=all_schedulable_node_memory\n' "$job_id"
 }
 
 submit_train() {
   local raw job_id
-  raw="$(cd "$SOURCE_A12" && sbatch --parsable --mem=0 \
+  raw="$(cd "$SOURCE_A13" && sbatch --parsable --mem=0 \
     --export=ALL,PARITY_EXACT_REPLAY_GATE="${EXACT_REPLAY_GATE}",PARITY_CAUSAL_REPLAY_GATE="${CAUSAL_REPLAY_GATE}" \
     hpc/daily_camels_ukf_knet_parity/submit_train_gpu.slurm)"
   job_id="${raw%%;*}"
   case "$job_id" in
     ''|*[!0-9]*) echo "invalid Slurm training job id: ${raw}" >&2; return 64 ;;
   esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq8_train_A12_job_id.txt"
+  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq9_train_A13_job_id.txt"
   JOB_IDS+=("$job_id")
   SUBMITTED_JOB_ID="$job_id"
-  printf 'submitted label=train_A12 job_id=%s memory_request=all_schedulable_node_memory\n' "$job_id"
+  printf 'submitted label=train_A13 job_id=%s memory_request=all_schedulable_node_memory\n' "$job_id"
 }
 
 accounting_record_once() {
@@ -245,7 +245,7 @@ require_lock_cleared() {
 }
 
 test ! -e "$EVIDENCE_ARCHIVE" || {
-  echo "refusing to replace existing seq8 evidence: $EVIDENCE_ARCHIVE" >&2
+  echo "refusing to replace existing seq9 evidence: $EVIDENCE_ARCHIVE" >&2
   exit 65
 }
 if [[ ! -d "$BASE" || -L "$BASE" ]]; then
@@ -259,32 +259,32 @@ for required_directory in "$RUN_PARENT" "$STATUS_DIRECTORY" "$LOG_DIRECTORY"; do
     exit 67
   }
 done
-[[ ! -e "$SOURCE_A12" ]] || {
-  echo "seq8 source directory already exists; refusing to replace it" >&2
+[[ ! -e "$SOURCE_A13" ]] || {
+  echo "seq9 source directory already exists; refusing to replace it" >&2
   exit 68
 }
-if find "$STATUS_DIRECTORY" -maxdepth 1 -type f -name 'seq8_*' -print -quit | grep -q .; then
-  echo "seq8 already recorded status evidence; refusing duplicate submission" >&2
+if find "$STATUS_DIRECTORY" -maxdepth 1 -type f -name 'seq9_*' -print -quit | grep -q .; then
+  echo "seq9 already recorded status evidence; refusing duplicate submission" >&2
   exit 69
 fi
-[[ ! -e "${RUN_PARENT}/${A12_ID}" ]] || {
-  echo "seq8 run directory already exists: ${RUN_PARENT}/${A12_ID}" >&2
+[[ ! -e "${RUN_PARENT}/${A13_ID}" ]] || {
+  echo "seq9 run directory already exists: ${RUN_PARENT}/${A13_ID}" >&2
   exit 70
 }
 for phase in probe replay train; do
-  [[ ! -e "${STATUS_DIRECTORY}/locks/${A12_ID}.${phase}.lock" ]] || {
-    echo "seq8 phase lock already exists: ${A12_ID}.${phase}" >&2
+  [[ ! -e "${STATUS_DIRECTORY}/locks/${A13_ID}.${phase}.lock" ]] || {
+    echo "seq9 phase lock already exists: ${A13_ID}.${phase}" >&2
     exit 71
   }
 done
 if find "$STATUS_DIRECTORY" -maxdepth 1 -type f \
-    \( -name "probe-${A12_ID}-*.json" \
-       -o -name "entry-probe-${A12_ID}-*.json" \
-       -o -name "train-preflight-${A12_ID}-*.json" \
-       -o -name "train-gpu-resources-${A12_ID}-*.csv" \
-       -o -name "train-cgroup-resources-${A12_ID}-*.txt" \) \
+    \( -name "probe-${A13_ID}-*.json" \
+       -o -name "entry-probe-${A13_ID}-*.json" \
+       -o -name "train-preflight-${A13_ID}-*.json" \
+       -o -name "train-gpu-resources-${A13_ID}-*.csv" \
+       -o -name "train-cgroup-resources-${A13_ID}-*.txt" \) \
     -print -quit | grep -q .; then
-  echo "seq8 A12 status evidence already exists" >&2
+  echo "seq9 A13 status evidence already exists" >&2
   exit 72
 fi
 for gate in "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE"; do
@@ -293,23 +293,23 @@ for gate in "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE"; do
     exit 73
   }
 done
-FINAL_STATUS="SEQ8_NAMESPACE_ABSENCE_VERIFIED"
+FINAL_STATUS="SEQ9_NAMESPACE_ABSENCE_VERIFIED"
 
 echo '=== VERIFY IMMUTABLE PAYLOAD AND REPLAY GATES ==='
-archive_identity_check "$A12_ARCHIVE" "$A12_SHA256" "$A12_SIZE"
-archive_identity_check "$A12_OUTER_MANIFEST" "$A12_OUTER_MANIFEST_SHA256" 7967
-mkdir "$SOURCE_A12"
-tar -xzf "$A12_ARCHIVE" -C "$SOURCE_A12"
+archive_identity_check "$A13_ARCHIVE" "$A13_SHA256" "$A13_SIZE"
+archive_identity_check "$A13_OUTER_MANIFEST" "$A13_OUTER_MANIFEST_SHA256" 8017
+mkdir "$SOURCE_A13"
+tar -xzf "$A13_ARCHIVE" -C "$SOURCE_A13"
 
 set +u
 source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh"
 conda activate nh_final
 set -u
 export PYTHONDONTWRITEBYTECODE=1
-python - "$SOURCE_A12" "$A12_ARCHIVE" "$A12_OUTER_MANIFEST" \
-  "$A12_ID" "$A05_ID" "$A06_ID" "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE" \
-  "$A12_SHA256" "$A12_OUTER_MANIFEST_SHA256" \
-  "$A12_INTERNAL_MANIFEST_SHA256" "$A12_CONFIG_SHA256" <<'PY'
+python - "$SOURCE_A13" "$A13_ARCHIVE" "$A13_OUTER_MANIFEST" \
+  "$A13_ID" "$A05_ID" "$A06_ID" "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE" \
+  "$A13_SHA256" "$A13_OUTER_MANIFEST_SHA256" \
+  "$A13_INTERNAL_MANIFEST_SHA256" "$A13_CONFIG_SHA256" <<'PY'
 import hashlib
 import json
 import math
@@ -337,7 +337,7 @@ if (
     or sha256(outer_manifest_path) != expected_outer_sha
     or sha256(internal_manifest_path) != expected_internal_sha
 ):
-    raise SystemExit("seq8 archive or manifest identity differs")
+    raise SystemExit("seq9 archive or manifest identity differs")
 outer = json.loads(outer_manifest_path.read_text(encoding="utf-8"))
 manifest = json.loads(internal_manifest_path.read_text(encoding="utf-8"))
 active_member = manifest["active_config_member"]
@@ -350,7 +350,7 @@ if (
     or manifest.get("member_sha256", {}).get(active_member) != expected_config_sha
     or sha256(active_path) != expected_config_sha
 ):
-    raise SystemExit("seq8 outer or internal bundle inventory differs")
+    raise SystemExit("seq9 outer or internal bundle inventory differs")
 active = json.loads(active_path.read_text(encoding="utf-8"))
 exact_config = json.loads(
     (source / manifest["exact_replay_config_member"]).read_text(encoding="utf-8")
@@ -382,6 +382,12 @@ if (
     or optimization.get("lead_weights") != [1.0 / 3.0] * 3
     or optimization.get("training_epochs") != 1
     or optimization.get("steps_per_epoch") != 1
+    or not math.isclose(
+        float(optimization.get("learning_rate")),
+        0.0005,
+        rel_tol=0.0,
+        abs_tol=0.0,
+    )
     or optimization.get("segment_days") != 150
     or optimization.get("segment_filter_warmup_days") != 45
     or gate_config.get("minimum_nse_exclusive") != 0.6
@@ -395,7 +401,7 @@ if (
     or manifest.get("selection_objective", {}).get("common_target_count_per_lead") != 728
     or manifest.get("nse_gate", {}).get("common_target_count_per_lead") != 712
 ):
-    raise SystemExit("seq8 training bundle identity or technical-smoke budget differs")
+    raise SystemExit("seq9 training bundle identity or technical-smoke budget differs")
 
 requirements = active.get("replay_gate_requirements", {})
 expected_gates = (
@@ -430,7 +436,7 @@ for name, path, experiment_id, mode in expected_gates:
             (77, "skipped_pytest_unavailable"),
         }
     ):
-        raise SystemExit(f"seq8 replay gate differs: {experiment_id}")
+        raise SystemExit(f"seq9 replay gate differs: {experiment_id}")
 causal_metrics = json.loads(causal_gate_path.read_text(encoding="utf-8"))[
     "verified_replay_metrics"
 ]
@@ -446,32 +452,32 @@ if (
     or [float(nse[str(lead)]) for lead in (1, 2, 3)]
     != [float(value) for value in reference["causal_tukf06_recovery_731_day_nse"]]
 ):
-    raise SystemExit("seq8 frozen causal reference differs from the A06 replay gate")
+    raise SystemExit("seq9 frozen causal reference differs from the A06 replay gate")
 PY
-python -u "${SOURCE_A12}/hpc/daily_camels_ukf_knet_parity/preflight.py" \
-  --bundle-root "$SOURCE_A12" --phase probe --offline-bundle-check \
-  --report "${STATUS_DIRECTORY}/seq8_offline_A12.json"
-FINAL_STATUS="SEQ8_OFFLINE_BUNDLE_AND_REPLAY_GATES_VERIFIED"
+python -u "${SOURCE_A13}/hpc/daily_camels_ukf_knet_parity/preflight.py" \
+  --bundle-root "$SOURCE_A13" --phase probe --offline-bundle-check \
+  --report "${STATUS_DIRECTORY}/seq9_offline_A13.json"
+FINAL_STATUS="SEQ9_OFFLINE_BUNDLE_AND_REPLAY_GATES_VERIFIED"
 
-echo '=== SUBMIT READ-ONLY A12 GPU PROBE WITH WHOLE-NODE MEMORY REQUEST ==='
+echo '=== SUBMIT READ-ONLY A13 GPU PROBE WITH WHOLE-NODE MEMORY REQUEST ==='
 submit_probe
 PROBE_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ8_PROBE_SUBMITTED"
+FINAL_STATUS="SEQ9_PROBE_SUBMITTED"
 if ! wait_for_jobs "$PROBE_JOB_ID"; then
-  FINAL_STATUS="SEQ8_PROBE_PARTIAL_PENDING"
+  FINAL_STATUS="SEQ9_PROBE_PARTIAL_PENDING"
   echo "soft deadline reached while the probe is pending; no training submitted" >&2
   exit 74
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
 require_probe_succeeded "$PROBE_JOB_ID" || {
-  FINAL_STATUS="SEQ8_PROBE_HARD_STOP"
+  FINAL_STATUS="SEQ9_PROBE_HARD_STOP"
   exit 75
 }
-require_lock_cleared "${STATUS_DIRECTORY}/locks/${A12_ID}.probe.lock" || {
-  FINAL_STATUS="SEQ8_PROBE_LOCK_HARD_STOP"
+require_lock_cleared "${STATUS_DIRECTORY}/locks/${A13_ID}.probe.lock" || {
+  FINAL_STATUS="SEQ9_PROBE_LOCK_HARD_STOP"
   exit 79
 }
-python - "$STATUS_DIRECTORY" "$A12_ID" "$PROBE_JOB_ID" <<'PY'
+python - "$STATUS_DIRECTORY" "$A13_ID" "$PROBE_JOB_ID" <<'PY'
 import json
 from pathlib import Path
 import sys
@@ -504,7 +510,7 @@ if (
     or entry.get("array_members_materialized") != 0
     or entry.get("numerical_frameworks_imported_by_entry") != 0
 ):
-    raise SystemExit("seq8 A12 probe evidence differs")
+    raise SystemExit("seq9 A13 probe evidence differs")
 print(json.dumps({
     "experiment_id": experiment_id,
     "probe_job_id": job_id,
@@ -514,41 +520,41 @@ print(json.dumps({
     "probe_gate": "PASS",
 }, sort_keys=True))
 PY
-FINAL_STATUS="SEQ8_PROBE_PASS"
+FINAL_STATUS="SEQ9_PROBE_PASS"
 
 echo '=== SUBMIT ONE-EPOCH ONE-STEP REAL BACKPROPAGATION RESOURCE SMOKE ==='
 ALL_SUBMITTED_JOBS_TERMINAL=0
 submit_train
 TRAIN_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ8_TRAIN_SUBMITTED"
+FINAL_STATUS="SEQ9_TRAIN_SUBMITTED"
 if ! wait_for_jobs "$TRAIN_JOB_ID"; then
-  FINAL_STATUS="SEQ8_TRAIN_PARTIAL_PENDING"
+  FINAL_STATUS="SEQ9_TRAIN_PARTIAL_PENDING"
   echo "soft deadline reached while training is pending; the job was not cancelled" >&2
   exit 76
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
 if ! classify_train_completion "$TRAIN_JOB_ID"; then
-  FINAL_STATUS="SEQ8_TRAIN_TECHNICAL_HARD_STOP"
+  FINAL_STATUS="SEQ9_TRAIN_TECHNICAL_HARD_STOP"
   exit 77
 fi
-require_lock_cleared "${STATUS_DIRECTORY}/locks/${A12_ID}.train.lock" || {
-  FINAL_STATUS="SEQ8_TRAIN_LOCK_HARD_STOP"
+require_lock_cleared "${STATUS_DIRECTORY}/locks/${A13_ID}.train.lock" || {
+  FINAL_STATUS="SEQ9_TRAIN_LOCK_HARD_STOP"
   exit 80
 }
 printf 'train_exit_class=%s\n' "$TRAIN_EXIT_CLASS"
 
-SACCT_RESOURCE_FILE="${STATUS_DIRECTORY}/seq8_train_A12_sacct_resources.txt"
+SACCT_RESOURCE_FILE="${STATUS_DIRECTORY}/seq9_train_A13_sacct_resources.txt"
 [[ ! -e "$SACCT_RESOURCE_FILE" ]] || {
-  echo "refusing to replace seq8 Slurm resource evidence" >&2
+  echo "refusing to replace seq9 Slurm resource evidence" >&2
   exit 78
 }
 sacct -P --units=K -j "$TRAIN_JOB_ID" \
   --format=JobIDRaw,JobName,Partition,AllocCPUS,ReqMem,AllocTRES,State,ExitCode,Elapsed,Start,End,MaxRSS,MaxVMSize,AveRSS \
   > "$SACCT_RESOURCE_FILE"
 
-FINAL_STATUS="SEQ8_TRAIN_EVIDENCE_CHECK"
-python - "$RUN_PARENT" "$STATUS_DIRECTORY" "$A12_ID" "$TRAIN_JOB_ID" \
-  "$TRAIN_EXIT_CLASS" "$A12_INTERNAL_MANIFEST_SHA256" \
+FINAL_STATUS="SEQ9_TRAIN_EVIDENCE_CHECK"
+python - "$RUN_PARENT" "$STATUS_DIRECTORY" "$A13_ID" "$TRAIN_JOB_ID" \
+  "$TRAIN_EXIT_CLASS" "$A13_INTERNAL_MANIFEST_SHA256" \
   "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE" <<'PY'
 import csv
 import hashlib
@@ -581,12 +587,12 @@ manifest = load_json("manifest.sha256.json")
 history = load_json("epoch_history.json")
 identity = load_json("experiment_identity.json")
 if (run / "failure.json").exists():
-    raise SystemExit("A12 contains a failure record despite a completion marker")
+    raise SystemExit("A13 contains a failure record despite a completion marker")
 if len(history) != 2 or [row.get("epoch") for row in history] != [0, 1]:
-    raise SystemExit("A12 did not preserve exactly epoch zero and epoch one")
+    raise SystemExit("A13 did not preserve exactly epoch zero and epoch one")
 manifest_files = manifest.get("files", {})
 if not isinstance(manifest_files, dict) or not manifest_files:
-    raise SystemExit("A12 manifest file inventory is empty or malformed")
+    raise SystemExit("A13 manifest file inventory is empty or malformed")
 actual_files = {
     path.relative_to(run).as_posix()
     for path in run.rglob("*")
@@ -598,15 +604,15 @@ expected_files = set(manifest_files) | {
 }
 if actual_files != expected_files:
     raise SystemExit(
-        f"A12 manifest inventory differs: missing={sorted(expected_files - actual_files)} "
+        f"A13 manifest inventory differs: missing={sorted(expected_files - actual_files)} "
         f"extra={sorted(actual_files - expected_files)}"
     )
 if any(path.is_symlink() for path in run.rglob("*")):
-    raise SystemExit("A12 run contains a symbolic member")
+    raise SystemExit("A13 run contains a symbolic member")
 for relative, expected in manifest_files.items():
     path = run / relative
     if not path.is_file() or sha256(path) != expected:
-        raise SystemExit(f"A12 manifest mismatch: {relative}")
+        raise SystemExit(f"A13 manifest mismatch: {relative}")
 
 training = summary.get("training") or {}
 epoch_zero, epoch_one = history
@@ -625,7 +631,7 @@ if (
     or completion.get("experiment_id") != experiment_id
     or manifest.get("experiment_id") != experiment_id
 ):
-    raise SystemExit("A12 completion, manifest, summary, and identity chain differs")
+    raise SystemExit("A13 completion, manifest, summary, and identity chain differs")
 
 expected_status = (
     "TRAINING_COMPLETE_GATE_PASS"
@@ -648,16 +654,16 @@ for label, ledger in (
     ("training", training.get("access_ledger", {})),
 ):
     if any(int(ledger.get(key, -1)) != 0 for key in reserved_keys):
-        raise SystemExit(f"A12 {label} reserved-evaluation ledger is nonzero")
+        raise SystemExit(f"A13 {label} reserved-evaluation ledger is nonzero")
 
 epoch_one_mse = epoch_one.get(
     "training_mse_by_lead_physical_unit_mean_over_optimizer_steps"
 )
 if not isinstance(epoch_one_mse, dict) or set(epoch_one_mse) != {"1", "2", "3"}:
-    raise SystemExit("A12 epoch-one per-lead training MSE inventory differs")
+    raise SystemExit("A13 epoch-one per-lead training MSE inventory differs")
 epoch_one_mse_values = [float(epoch_one_mse[str(lead)]) for lead in (1, 2, 3)]
 if not all(math.isfinite(value) and value >= 0.0 for value in epoch_one_mse_values):
-    raise SystemExit("A12 epoch-one per-lead training MSE is invalid")
+    raise SystemExit("A13 epoch-one per-lead training MSE is invalid")
 epoch_one_objective = float(
     epoch_one["training_objective_physical_unit_multilead_mse"]
 )
@@ -667,7 +673,7 @@ if not math.isclose(
     rel_tol=1.0e-6,
     abs_tol=1.0e-8,
 ):
-    raise SystemExit("A12 epoch-one scalar loss does not equal the three-lead mean")
+    raise SystemExit("A13 epoch-one scalar loss does not equal the three-lead mean")
 
 epoch_objectives = [
     float(row["checkpoint_selection_objective_728_origins_without_warmup"])
@@ -677,7 +683,7 @@ expected_best_objective = min(epoch_objectives)
 expected_best_epoch = epoch_objectives.index(expected_best_objective)
 failed_gates = training.get("failed_gates")
 if not isinstance(failed_gates, list) or len(failed_gates) != len(set(failed_gates)):
-    raise SystemExit("A12 failed-gate inventory is malformed")
+    raise SystemExit("A13 failed-gate inventory is malformed")
 if (
     summary.get("status") != expected_status
     or completion.get("status") != expected_status
@@ -751,29 +757,29 @@ if (
     or epoch_zero.get("training_objective_physical_unit_multilead_mse") is not None
     or not math.isfinite(epoch_one_objective)
 ):
-    raise SystemExit("A12 technical training evidence differs")
+    raise SystemExit("A13 technical training evidence differs")
 
 def validate_strict_zero_comparison(name):
     comparison = training.get(name)
     if not isinstance(comparison, dict):
-        raise SystemExit(f"A12 {name} comparison is absent")
+        raise SystemExit(f"A13 {name} comparison is absent")
     top_values = (
         comparison.get("strict_zero_gain_checkpoint_objective_728"),
         comparison.get("candidate_checkpoint_objective_728"),
         comparison.get("checkpoint_objective_improvement_zero_minus_candidate"),
     )
     if not all(isinstance(value, (int, float)) and math.isfinite(float(value)) for value in top_values):
-        raise SystemExit(f"A12 {name} checkpoint comparison is invalid")
+        raise SystemExit(f"A13 {name} checkpoint comparison is invalid")
     if not math.isclose(
         float(top_values[2]),
         float(top_values[0]) - float(top_values[1]),
         rel_tol=1.0e-12,
         abs_tol=1.0e-15,
     ):
-        raise SystemExit(f"A12 {name} checkpoint improvement has the wrong sign")
+        raise SystemExit(f"A13 {name} checkpoint improvement has the wrong sign")
     rows = comparison.get("by_lead_712")
     if not isinstance(rows, dict) or set(rows) != {"1", "2", "3"}:
-        raise SystemExit(f"A12 {name} strict-zero lead inventory differs")
+        raise SystemExit(f"A13 {name} strict-zero lead inventory differs")
     row_better = []
     for lead in (1, 2, 3):
         row = rows[str(lead)]
@@ -787,18 +793,18 @@ def validate_strict_zero_comparison(name):
         )
         values = [float(row[key]) for key in keys]
         if not all(math.isfinite(value) for value in values):
-            raise SystemExit(f"A12 {name} lead-{lead} comparison is non-finite")
+            raise SystemExit(f"A13 {name} lead-{lead} comparison is non-finite")
         if not math.isclose(values[2], values[0] - values[1], rel_tol=1.0e-12, abs_tol=1.0e-15):
-            raise SystemExit(f"A12 {name} lead-{lead} MSE delta has the wrong sign")
+            raise SystemExit(f"A13 {name} lead-{lead} MSE delta has the wrong sign")
         if not math.isclose(values[5], values[4] - values[3], rel_tol=1.0e-12, abs_tol=1.0e-15):
-            raise SystemExit(f"A12 {name} lead-{lead} NSE delta has the wrong sign")
+            raise SystemExit(f"A13 {name} lead-{lead} NSE delta has the wrong sign")
         expected_better = values[2] > 0.0 and values[5] > 0.0
         if row.get("candidate_better") is not expected_better:
-            raise SystemExit(f"A12 {name} lead-{lead} better flag differs")
+            raise SystemExit(f"A13 {name} lead-{lead} better flag differs")
         row_better.append(expected_better)
     expected_all = all(row_better)
     if comparison.get("candidate_better_than_strict_zero_gain_each_lead") is not expected_all:
-        raise SystemExit(f"A12 {name} overall strict-zero flag differs")
+        raise SystemExit(f"A13 {name} overall strict-zero flag differs")
     return comparison, expected_all
 
 epoch_zero_comparison, _ = validate_strict_zero_comparison(
@@ -821,7 +827,7 @@ if (
         abs_tol=1.0e-15,
     )
 ):
-    raise SystemExit("A12 checkpoint objective chain differs")
+    raise SystemExit("A13 checkpoint objective chain differs")
 for lead in (1, 2, 3):
     zero_row = epoch_zero_comparison["by_lead_712"][str(lead)]
     best_row = best_comparison["by_lead_712"][str(lead)]
@@ -829,25 +835,25 @@ for lead in (1, 2, 3):
         zero_row["strict_zero_gain_mse"] != best_row["strict_zero_gain_mse"]
         or zero_row["strict_zero_gain_nse"] != best_row["strict_zero_gain_nse"]
     ):
-        raise SystemExit("A12 strict zero-gain reference changed between comparisons")
+        raise SystemExit("A13 strict zero-gain reference changed between comparisons")
 strict_gate_failed = "better_than_strict_zero_gain_each_lead" in failed_gates
 if (
     training.get("best_better_than_strict_zero_gain_each_lead") is not best_strict_pass
     or strict_gate_failed is best_strict_pass
 ):
-    raise SystemExit("A12 strict zero-gain comparison and scientific gate disagree")
+    raise SystemExit("A13 strict zero-gain comparison and scientific gate disagree")
 best_hash_changed = (
     training.get("best_parameter_sha256") != training.get("epoch_zero_parameter_sha256")
 )
 if ("parameter_hash_change" in failed_gates) is best_hash_changed:
-    raise SystemExit("A12 best-parameter change gate is inconsistent")
+    raise SystemExit("A13 best-parameter change gate is inconsistent")
 best_nse = training.get("best_nse_by_lead")
 if (
     not isinstance(best_nse, dict)
     or set(best_nse) != {"1", "2", "3"}
     or not all(math.isfinite(float(value)) for value in best_nse.values())
 ):
-    raise SystemExit("A12 best per-lead NSE inventory differs")
+    raise SystemExit("A13 best per-lead NSE inventory differs")
 if expected_gate_pass:
     if (
         expected_best_epoch <= 0
@@ -855,9 +861,9 @@ if expected_gate_pass:
         or any(float(value) <= 0.6 for value in best_nse.values())
         or not best_strict_pass
     ):
-        raise SystemExit("A12 scientific gate passed without satisfying every gate")
+        raise SystemExit("A13 scientific gate passed without satisfying every gate")
 elif not failed_gates:
-    raise SystemExit("A12 scientific gate failed without a named failed gate")
+    raise SystemExit("A13 scientific gate failed without a named failed gate")
 
 train_preflight_path = status / f"train-preflight-{experiment_id}-{job_id}.json"
 train_preflight = json.loads(train_preflight_path.read_text(encoding="utf-8"))
@@ -879,7 +885,7 @@ if (
     or train_preflight.get("array_members_materialized") != 0
     or train_preflight.get("reserved_data_member_count") != 0
 ):
-    raise SystemExit("A12 scheduled training preflight evidence differs")
+    raise SystemExit("A13 scheduled training preflight evidence differs")
 causal_gate = json.loads(causal_replay_gate_path.read_text(encoding="utf-8"))
 causal_metrics = causal_gate.get("verified_replay_metrics", {})
 if (
@@ -892,20 +898,20 @@ if (
     or summary.get("ukf_recovery_nse_by_lead_712")
        != causal_metrics.get("ukf_nse_by_lead_712")
 ):
-    raise SystemExit("A12 run did not preserve the frozen causal UKF reference")
+    raise SystemExit("A13 run did not preserve the frozen causal UKF reference")
 
 resources = summary.get("resource_peaks", {})
 host_process_peak = int(resources.get("host_peak_rss_bytes") or 0)
 torch_reserved = int(resources.get("graphics_peak_reserved_bytes") or 0)
 if host_process_peak <= 0 or torch_reserved <= 0:
-    raise SystemExit("A12 entry resource peaks are absent")
+    raise SystemExit("A13 entry resource peaks are absent")
 
 gpu_log = status / f"train-gpu-resources-{experiment_id}-{job_id}.csv"
 cgroup_log = status / f"train-cgroup-resources-{experiment_id}-{job_id}.txt"
-sacct_log = status / "seq8_train_A12_sacct_resources.txt"
+sacct_log = status / "seq9_train_A13_sacct_resources.txt"
 for path in (gpu_log, cgroup_log, sacct_log):
     if not path.is_file() or path.stat().st_size <= 0:
-        raise SystemExit(f"A12 resource receipt is absent: {path.name}")
+        raise SystemExit(f"A13 resource receipt is absent: {path.name}")
 
 gpu_rows = []
 with gpu_log.open("r", encoding="utf-8", newline="") as handle:
@@ -925,9 +931,9 @@ with gpu_log.open("r", encoding="utf-8", newline="") as handle:
             "free_mib": free_mib,
         })
 if not gpu_rows:
-    raise SystemExit("A12 GPU resource sampler produced no valid samples")
+    raise SystemExit("A13 GPU resource sampler produced no valid samples")
 if len({row["uuid"] for row in gpu_rows}) != 1:
-    raise SystemExit("A12 GPU resource samples span multiple devices")
+    raise SystemExit("A13 GPU resource samples span multiple devices")
 gpu_baseline_used = gpu_rows[0]["used_mib"] * 1024 * 1024
 gpu_sampled_peak_used = max(row["used_mib"] for row in gpu_rows) * 1024 * 1024
 gpu_incremental_peak = max(0, gpu_sampled_peak_used - gpu_baseline_used)
@@ -962,7 +968,7 @@ slurm_step_peak = max((parse_kib(row.get("MaxRSS", "")) for row in sacct_rows), 
 host_basis = max(host_process_peak, cgroup_peak, slurm_step_peak)
 gpu_basis = max(torch_reserved, gpu_incremental_peak)
 if host_basis <= 0 or gpu_basis <= 0:
-    raise SystemExit("A12 did not produce usable host and GPU peak bases")
+    raise SystemExit("A13 did not produce usable host and GPU peak bases")
 
 resource_summary = {
     "schema_version": "daily_camels_ukf_knet_resource_smoke_v2",
@@ -1004,7 +1010,7 @@ resource_summary = {
     "cgroup_resource_log_sha256": sha256(cgroup_log),
     "sacct_resource_log_sha256": sha256(sacct_log),
 }
-target = status / "seq8_A12_resource_summary.json"
+target = status / "seq9_A13_resource_summary.json"
 data = (json.dumps(resource_summary, sort_keys=True, separators=(",", ":")) + "\n").encode()
 descriptor = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
 try:
@@ -1031,8 +1037,8 @@ JOB_CSV="$(IFS=,; printf '%s' "${JOB_IDS[*]}")"
 sacct --units=K -j "$JOB_CSV" \
   --format=JobID,JobName,Partition,AllocCPUS,ReqMem,State,ExitCode,Elapsed,Start,End,MaxRSS,MaxVMSize,AveRSS
 if [[ "$TRAIN_EXIT_CLASS" = "scientific_gate_pass" ]]; then
-  FINAL_STATUS="SEQ8_TECHNICAL_COMPLETE_SCIENTIFIC_GATE_PASS"
+  FINAL_STATUS="SEQ9_TECHNICAL_COMPLETE_SCIENTIFIC_GATE_PASS"
 else
-  FINAL_STATUS="SEQ8_TECHNICAL_COMPLETE_SCIENTIFIC_GATE_FAIL"
+  FINAL_STATUS="SEQ9_TECHNICAL_COMPLETE_SCIENTIFIC_GATE_FAIL"
 fi
-echo "DAILY_CAMELS_UKF_KNET_PARITY_SEQ8_TECHNICAL_COMPLETE probe=${PROBE_JOB_ID} train=${TRAIN_JOB_ID} train_exit_class=${TRAIN_EXIT_CLASS} final_status=${FINAL_STATUS}"
+echo "DAILY_CAMELS_UKF_KNET_PARITY_SEQ9_TECHNICAL_COMPLETE probe=${PROBE_JOB_ID} train=${TRAIN_JOB_ID} train_exit_class=${TRAIN_EXIT_CLASS} final_status=${FINAL_STATUS}"
