@@ -2,31 +2,31 @@
 set -Eeuo pipefail
 
 MAILBOX_ROOT="/data1/home/${USER}/hpc_mailbox"
-PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/parity-repair-v4"
+PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/parity-dtype-repair-v5"
 BASE="/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824"
-SOURCE_A03="${BASE}/source_A03_seq5"
-SOURCE_A04="${BASE}/source_A04_seq5"
+SOURCE_A05="${BASE}/source_A05_seq6"
+SOURCE_A06="${BASE}/source_A06_seq6"
 RUN_PARENT="${BASE}/runs"
 STATUS_DIRECTORY="${BASE}/status"
 LOG_DIRECTORY="${BASE}/logs"
 OUTBOX_DIRECTORY="${MAILBOX_ROOT}/outbox/kalmannet-daily-camels"
 
-A03_ID="DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_REPAIR_V2_20260825_A03"
-A04_ID="DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_REPAIR_V2_20260825_A04"
-A03_ARCHIVE="${PAYLOAD_DIRECTORY}/${A03_ID}.tar.gz"
-A04_ARCHIVE="${PAYLOAD_DIRECTORY}/${A04_ID}.tar.gz"
-A03_SHA256="4f8cad161e788b045b5ea47002648de4b26ccfb22989ae1d55039016ee88fdb8"
-A04_SHA256="10b6700313eca04caaa5a10b2953d639a0826751a1c0efa5cb189b4b175dfa43"
-A03_SIZE=205449
-A04_SIZE=205793
+A05_ID="DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05"
+A06_ID="DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06"
+A05_ARCHIVE="${PAYLOAD_DIRECTORY}/${A05_ID}.tar.gz"
+A06_ARCHIVE="${PAYLOAD_DIRECTORY}/${A06_ID}.tar.gz"
+A05_SHA256="02b8af663f7fc73813917b1a63458ffc819eb27f7a16bc70166b062f8f251b72"
+A06_SHA256="9e5f5625e6d536dc02edae4f33eeef43bcc5e409ff0fdd9a86faf689d24076f0"
+A05_SIZE=206369
+A06_SIZE=206780
 
-EVIDENCE_NAME="DAILY_CAMELS_UKF_PARITY_REPLAYS_REPAIR_V2_A03_A04_SEQ5_evidence.tar.gz"
+EVIDENCE_NAME="DAILY_CAMELS_UKF_PARITY_REPLAYS_DTYPE_REPAIR_V3_A05_A06_SEQ6_evidence.tar.gz"
 EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/${EVIDENCE_NAME}"
 START_EPOCH="$(date +%s)"
 SOFT_DEADLINE_EPOCH="$((START_EPOCH + 6300))"
 BASE_OWNED=0
 ALL_SUBMITTED_JOBS_TERMINAL=0
-FINAL_STATUS="SEQ5_RECOVERY_STARTED"
+FINAL_STATUS="SEQ6_RECOVERY_STARTED"
 declare -a JOB_IDS=()
 
 package_evidence() {
@@ -45,7 +45,7 @@ package_evidence() {
     return 0
   fi
 
-  local snapshot="${BASE}/seq5_snapshot_$$"
+  local snapshot="${BASE}/seq6_snapshot_$$"
   mkdir -p "$snapshot/status"
   printf '%s\n' "$FINAL_STATUS" > "${snapshot}/final_status.txt"
   printf '%s\n' "$command_exit_code" > "${snapshot}/command_exit_code.txt"
@@ -69,8 +69,8 @@ package_evidence() {
   if [[ "$ALL_SUBMITTED_JOBS_TERMINAL" -eq 1 ]]; then
     tar -czf "$temporary_archive" -C "$BASE" \
       status logs runs \
-      source_A03_seq5/bundle_manifest.json \
-      source_A04_seq5/bundle_manifest.json \
+      source_A05_seq6/bundle_manifest.json \
+      source_A06_seq6/bundle_manifest.json \
       "$(basename "$snapshot")"
   else
     tar -czf "$temporary_archive" -C "$BASE" "$(basename "$snapshot")"
@@ -96,7 +96,7 @@ on_exit() {
   exit "$command_exit_code"
 }
 trap on_exit EXIT
-trap 'FINAL_STATUS="SEQ5_INTERRUPTED_PARTIAL_PENDING"; exit 143' INT TERM
+trap 'FINAL_STATUS="SEQ6_INTERRUPTED_PARTIAL_PENDING"; exit 143' INT TERM
 
 archive_identity_check() {
   local archive="$1"
@@ -129,7 +129,7 @@ submit_job() {
   case "$job_id" in
     ''|*[!0-9]*) echo "invalid Slurm job id for ${label}: ${raw}" >&2; return 63 ;;
   esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq5_${label}_job_id.txt"
+  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq6_${label}_job_id.txt"
   JOB_IDS+=("$job_id")
   SUBMITTED_JOB_ID="$job_id"
   printf 'submitted label=%s job_id=%s\n' "$label" "$job_id"
@@ -180,7 +180,7 @@ require_jobs_succeeded() {
 }
 
 test ! -e "$EVIDENCE_ARCHIVE" || {
-  echo "refusing to replace existing seq5 evidence: $EVIDENCE_ARCHIVE" >&2
+  echo "refusing to replace existing seq6 evidence: $EVIDENCE_ARCHIVE" >&2
   exit 65
 }
 if [[ ! -d "$BASE" || -L "$BASE" ]]; then
@@ -194,26 +194,26 @@ for required_directory in "$RUN_PARENT" "$STATUS_DIRECTORY" "$LOG_DIRECTORY"; do
     exit 67
   }
 done
-[[ ! -e "$SOURCE_A03" && ! -e "$SOURCE_A04" ]] || {
-  echo "seq5 source directory already exists; refusing to replace it" >&2
+[[ ! -e "$SOURCE_A05" && ! -e "$SOURCE_A06" ]] || {
+  echo "seq6 source directory already exists; refusing to replace it" >&2
   exit 68
 }
-if find "$STATUS_DIRECTORY" -maxdepth 1 -type f -name 'seq5_*_job_id.txt' -print -quit | grep -q .; then
-  echo "seq5 already recorded a Slurm job; refusing duplicate submission" >&2
+if find "$STATUS_DIRECTORY" -maxdepth 1 -type f -name 'seq6_*_job_id.txt' -print -quit | grep -q .; then
+  echo "seq6 already recorded a Slurm job; refusing duplicate submission" >&2
   exit 69
 fi
-for experiment_id in "$A03_ID" "$A04_ID"; do
+for experiment_id in "$A05_ID" "$A06_ID"; do
   [[ ! -e "${RUN_PARENT}/${experiment_id}" ]] || {
-    echo "seq5 run directory already exists: ${RUN_PARENT}/${experiment_id}" >&2
+    echo "seq6 run directory already exists: ${RUN_PARENT}/${experiment_id}" >&2
     exit 70
   }
   [[ ! -e "${STATUS_DIRECTORY}/replay_gate_${experiment_id}.json" ]] || {
-    echo "seq5 replay gate already exists: $experiment_id" >&2
+    echo "seq6 replay gate already exists: $experiment_id" >&2
     exit 71
   }
   for phase in probe replay train; do
     [[ ! -e "${STATUS_DIRECTORY}/locks/${experiment_id}.${phase}.lock" ]] || {
-      echo "seq5 phase lock already exists: ${experiment_id}.${phase}" >&2
+      echo "seq6 phase lock already exists: ${experiment_id}.${phase}" >&2
       exit 72
     }
   done
@@ -222,25 +222,25 @@ for experiment_id in "$A03_ID" "$A04_ID"; do
          -o -name "entry-probe-${experiment_id}-*.json" \
          -o -name "replay-preflight-${experiment_id}-*.json" \) \
       -print -quit | grep -q .; then
-    echo "seq5 status evidence already exists: $experiment_id" >&2
+    echo "seq6 status evidence already exists: $experiment_id" >&2
     exit 73
   fi
 done
-FINAL_STATUS="SEQ5_NAMESPACE_ABSENCE_VERIFIED"
+FINAL_STATUS="SEQ6_NAMESPACE_ABSENCE_VERIFIED"
 
 echo '=== VERIFY IMMUTABLE PAYLOADS ==='
-archive_identity_check "$A03_ARCHIVE" "$A03_SHA256" "$A03_SIZE"
-archive_identity_check "$A04_ARCHIVE" "$A04_SHA256" "$A04_SIZE"
-mkdir "$SOURCE_A03" "$SOURCE_A04"
-tar -xzf "$A03_ARCHIVE" -C "$SOURCE_A03"
-tar -xzf "$A04_ARCHIVE" -C "$SOURCE_A04"
+archive_identity_check "$A05_ARCHIVE" "$A05_SHA256" "$A05_SIZE"
+archive_identity_check "$A06_ARCHIVE" "$A06_SHA256" "$A06_SIZE"
+mkdir "$SOURCE_A05" "$SOURCE_A06"
+tar -xzf "$A05_ARCHIVE" -C "$SOURCE_A05"
+tar -xzf "$A06_ARCHIVE" -C "$SOURCE_A06"
 
 set +u
 source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh"
 conda activate nh_final
 set -u
 export PYTHONDONTWRITEBYTECODE=1
-python - "$SOURCE_A03" "$A03_ID" "$SOURCE_A04" "$A04_ID" <<'PY'
+python - "$SOURCE_A05" "$A05_ID" "$SOURCE_A06" "$A06_ID" <<'PY'
 import json
 from pathlib import Path
 import sys
@@ -258,38 +258,38 @@ for source, expected_id in ((sys.argv[1], sys.argv[2]), (sys.argv[3], sys.argv[4
         or policy.get("allow_replay") is not True
         or policy.get("allow_training") is not False
     ):
-        raise SystemExit(f"seq5 bundle execution identity differs: {expected_id}")
+        raise SystemExit(f"seq6 bundle execution identity differs: {expected_id}")
 PY
-python -u "${SOURCE_A03}/hpc/daily_camels_ukf_knet_parity/preflight.py" \
-  --bundle-root "$SOURCE_A03" --phase probe --offline-bundle-check \
-  --report "${STATUS_DIRECTORY}/seq5_offline_A03.json"
-python -u "${SOURCE_A04}/hpc/daily_camels_ukf_knet_parity/preflight.py" \
-  --bundle-root "$SOURCE_A04" --phase probe --offline-bundle-check \
-  --report "${STATUS_DIRECTORY}/seq5_offline_A04.json"
-FINAL_STATUS="SEQ5_OFFLINE_BUNDLES_VERIFIED"
+python -u "${SOURCE_A05}/hpc/daily_camels_ukf_knet_parity/preflight.py" \
+  --bundle-root "$SOURCE_A05" --phase probe --offline-bundle-check \
+  --report "${STATUS_DIRECTORY}/seq6_offline_A05.json"
+python -u "${SOURCE_A06}/hpc/daily_camels_ukf_knet_parity/preflight.py" \
+  --bundle-root "$SOURCE_A06" --phase probe --offline-bundle-check \
+  --report "${STATUS_DIRECTORY}/seq6_offline_A06.json"
+FINAL_STATUS="SEQ6_OFFLINE_BUNDLES_VERIFIED"
 
 echo '=== SUBMIT TWO READ-ONLY GPU PROBES ==='
-submit_job "$SOURCE_A03" \
-  hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm probe_A03
-PROBE_A03_JOB_ID="$SUBMITTED_JOB_ID"
-submit_job "$SOURCE_A04" \
-  hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm probe_A04
-PROBE_A04_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ5_PROBES_SUBMITTED"
+submit_job "$SOURCE_A05" \
+  hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm probe_A05
+PROBE_A05_JOB_ID="$SUBMITTED_JOB_ID"
+submit_job "$SOURCE_A06" \
+  hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm probe_A06
+PROBE_A06_JOB_ID="$SUBMITTED_JOB_ID"
+FINAL_STATUS="SEQ6_PROBES_SUBMITTED"
 
-if ! wait_for_jobs "$PROBE_A03_JOB_ID" "$PROBE_A04_JOB_ID"; then
-  FINAL_STATUS="SEQ5_PROBES_PARTIAL_PENDING"
+if ! wait_for_jobs "$PROBE_A05_JOB_ID" "$PROBE_A06_JOB_ID"; then
+  FINAL_STATUS="SEQ6_PROBES_PARTIAL_PENDING"
   echo "soft deadline reached while probes are pending; no replay submitted" >&2
   exit 75
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
-require_jobs_succeeded "$PROBE_A03_JOB_ID" "$PROBE_A04_JOB_ID" || {
-  FINAL_STATUS="SEQ5_PROBE_HARD_STOP"
+require_jobs_succeeded "$PROBE_A05_JOB_ID" "$PROBE_A06_JOB_ID" || {
+  FINAL_STATUS="SEQ6_PROBE_HARD_STOP"
   exit 76
 }
-FINAL_STATUS="SEQ5_PROBE_EVIDENCE_CHECK"
+FINAL_STATUS="SEQ6_PROBE_EVIDENCE_CHECK"
 
-python - "$STATUS_DIRECTORY" "$A03_ID" "$PROBE_A03_JOB_ID" "$A04_ID" "$PROBE_A04_JOB_ID" <<'PY'
+python - "$STATUS_DIRECTORY" "$A05_ID" "$PROBE_A05_JOB_ID" "$A06_ID" "$PROBE_A06_JOB_ID" <<'PY'
 import json
 from pathlib import Path
 import sys
@@ -336,31 +336,31 @@ for experiment_id, job_id in pairs:
         "probe_gate": "PASS",
     }, sort_keys=True))
 PY
-FINAL_STATUS="SEQ5_PROBES_PASS"
+FINAL_STATUS="SEQ6_PROBES_PASS"
 
 echo '=== SUBMIT TWO DIAGNOSTIC REPLAYS; NO TRAINING ==='
 ALL_SUBMITTED_JOBS_TERMINAL=0
-submit_job "$SOURCE_A03" \
-  hpc/daily_camels_ukf_knet_parity/submit_replay_gpu.slurm replay_A03
-REPLAY_A03_JOB_ID="$SUBMITTED_JOB_ID"
-submit_job "$SOURCE_A04" \
-  hpc/daily_camels_ukf_knet_parity/submit_replay_gpu.slurm replay_A04
-REPLAY_A04_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ5_REPLAYS_SUBMITTED"
+submit_job "$SOURCE_A05" \
+  hpc/daily_camels_ukf_knet_parity/submit_replay_gpu.slurm replay_A05
+REPLAY_A05_JOB_ID="$SUBMITTED_JOB_ID"
+submit_job "$SOURCE_A06" \
+  hpc/daily_camels_ukf_knet_parity/submit_replay_gpu.slurm replay_A06
+REPLAY_A06_JOB_ID="$SUBMITTED_JOB_ID"
+FINAL_STATUS="SEQ6_REPLAYS_SUBMITTED"
 
-if ! wait_for_jobs "$REPLAY_A03_JOB_ID" "$REPLAY_A04_JOB_ID"; then
-  FINAL_STATUS="SEQ5_REPLAYS_PARTIAL_PENDING"
+if ! wait_for_jobs "$REPLAY_A05_JOB_ID" "$REPLAY_A06_JOB_ID"; then
+  FINAL_STATUS="SEQ6_REPLAYS_PARTIAL_PENDING"
   echo "soft deadline reached while replays are pending; jobs were not cancelled" >&2
   exit 77
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
-require_jobs_succeeded "$REPLAY_A03_JOB_ID" "$REPLAY_A04_JOB_ID" || {
-  FINAL_STATUS="SEQ5_REPLAY_HARD_STOP"
+require_jobs_succeeded "$REPLAY_A05_JOB_ID" "$REPLAY_A06_JOB_ID" || {
+  FINAL_STATUS="SEQ6_REPLAY_HARD_STOP"
   exit 78
 }
-FINAL_STATUS="SEQ5_REPLAY_EVIDENCE_CHECK"
+FINAL_STATUS="SEQ6_REPLAY_EVIDENCE_CHECK"
 
-python - "$STATUS_DIRECTORY" "$A03_ID" "$A04_ID" <<'PY'
+python - "$STATUS_DIRECTORY" "$A05_ID" "$A06_ID" <<'PY'
 import json
 import math
 from pathlib import Path
@@ -423,5 +423,5 @@ echo '=== FINAL SLURM ACCOUNTING ==='
 JOB_CSV="$(IFS=,; printf '%s' "${JOB_IDS[*]}")"
 sacct -X -j "$JOB_CSV" \
   --format=JobID,JobName,Partition,AllocCPUS,State,ExitCode,Elapsed,Start,End,MaxRSS
-FINAL_STATUS="SEQ5_REPLAY_PASS"
-echo "DAILY_CAMELS_UKF_KNET_PARITY_SEQ5_PASS probes=${PROBE_A03_JOB_ID},${PROBE_A04_JOB_ID} replays=${REPLAY_A03_JOB_ID},${REPLAY_A04_JOB_ID}"
+FINAL_STATUS="SEQ6_REPLAY_PASS"
+echo "DAILY_CAMELS_UKF_KNET_PARITY_SEQ6_PASS probes=${PROBE_A05_JOB_ID},${PROBE_A06_JOB_ID} replays=${REPLAY_A05_JOB_ID},${REPLAY_A06_JOB_ID}"
