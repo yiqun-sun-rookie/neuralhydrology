@@ -1,0 +1,23 @@
+### channel=kalmannet-tukf20 seq=4
+### host=login4
+### started=2026-08-24T16:11:00+0800
+### ---------- output ----------
+=== TUKF20 FORMAL EVIDENCE PRESENCE ===
+3844c88e88170b751af2f8dbd794c37afabbb44cb698b9660c10524586290dcb	/data1/home/sunyiq/kalmannet_tukf20_20260824/artifacts/tukf20_hpc_deployment_v1/status/formal_submission_raw.txt
+aef390feda4419c2dee7921ca3c7fcc69b76b5537f3eabf7c3d2d50488213168	/data1/home/sunyiq/kalmannet_tukf20_20260824/artifacts/tukf20_hpc_deployment_v1/status/formal_submission_receipt.json
+2202f98018d2ac7522af597f2c49bfd846fb80a43a0a7e7c7863e51fda6afefb	/data1/home/sunyiq/kalmannet_tukf20_20260824/artifacts/tukf20_hpc_deployment_v1/status/formal_squeue_snapshot.txt
+=== TUKF20 FORMAL LIVE STATUS ===
+             JOBID|   PARTITION|                          NAME|     STATE|      TIME|TIME_LIMIT|NODELIST(REASON)
+            210748|     hcpu48y|                 tukf20-formal|   RUNNING|      4:39|1-00:00:00|icn277
+       JobID    JobName  Partition  AllocCPUS      State ExitCode    Elapsed               Start                 End 
+------------ ---------- ---------- ---------- ---------- -------- ---------- ------------------- ------------------- 
+210748       tukf20-fo+    hcpu48y          1    RUNNING      0:0   00:04:59 2026-08-24T16:06:21             Unknown 
+=== TUKF20 FORMAL LOG TAIL ===
+=== TUKF20 FORMAL PIPELINE MARKERS ===
+present	371ceea8ed8fcc767f4b90f0ec09709ecbc8de55f8ee3aaad2aa1cfd790295a5	/data1/home/sunyiq/kalmannet_tukf20_20260824/artifacts/tukf20_hpc_deployment_v1/status/formal_pipeline_started.json
+absent	/data1/home/sunyiq/kalmannet_tukf20_20260824/artifacts/tukf20_hpc_deployment_v1/status/formal_pipeline_complete.json
+absent	/data1/home/sunyiq/kalmannet_tukf20_20260824/artifacts/tukf20_hpc_deployment_v1/status/formal_completion.json
+TUKF20_FORMAL_MONITOR_OK state=RUNNING exit_code=0:0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-24T16:11:00+0800
