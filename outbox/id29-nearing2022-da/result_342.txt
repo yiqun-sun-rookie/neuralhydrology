@@ -1,0 +1,37 @@
+### channel=id29-nearing2022-da seq=342
+### host=login4
+### started=2026-08-24T17:04:49+0800
+### ---------- output ----------
+=== TIME ===
+2026-08-24T17:04:49+0800
+=== CONFIRM THE FOUR ARE TIMEOUT AND NOT COMPLETE ===
+202215_16|TIMEOUT|2-00:00:03
+202215_20|TIMEOUT|2-00:00:22
+202215_21|TIMEOUT|2-00:00:15
+202215_22|TIMEOUT|2-00:00:10
+--- their configs ---
+  task16  line17  src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_8_holdout_0.75_seed_0.yml
+  task20  line21  src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_10_holdout_0.5_seed_0.yml
+  task21  line22  src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_10_holdout_0.75_seed_0.yml
+  task22  line23  src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_10_holdout_1.0_seed_0.yml
+=== IDEMPOTENCE ===
+existing_relong_jobs=0
+=== SUBMIT (exclude ngu002,ngu101; --time 3-12:00:00; %2 concurrency) ===
+submitted_job=211001
+=== QUEUE ===
+202228_[597-      N22-hyper   PENDING        0:00  1-00:00:00 (JobArrayTaskLimit)
+202226_[0-11 N22-eval-later   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202229   N22-agg-eval   PENDING        0:00  1-00:00:00 (Dependency)
+      202230  N22-agg-hyper   PENDING        0:00  1-00:00:00 (Dependency)
+      202294     N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315       N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-5   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+211001_[16,2     N22-relong   PENDING        0:00  3-12:00:00 (None)
+      202293   N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+  202228_596      N22-hyper   RUNNING     1:07:56    22:52:04 ngu104
+  202228_595      N22-hyper   RUNNING     1:56:03    22:03:57 ngu104
+=== END ===
+2026-08-24T17:04:49+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-24T17:04:49+0800
