@@ -105,4 +105,4 @@ for s in 43 44; do
 done
 squeue -u sunyiq -o '%.10i %.28j %.9T %.10M %.20R' 2>&1 | grep -iE 'armG|JOBID' | head -10 || true
 
-echo "=== END seq=88 ==="
+echo "=== END seq=89 ==="
