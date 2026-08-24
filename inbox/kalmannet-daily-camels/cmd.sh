@@ -4,7 +4,7 @@ set -Eeuo pipefail
 MAILBOX_ROOT="/data1/home/${USER}/hpc_mailbox"
 PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/parity-ten-epoch-full-coverage-v14"
 BASE="/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824"
-SOURCE_A16="${BASE}/source_A16_seq13"
+SOURCE_A16="${BASE}/source_A16_seq14"
 RUN_PARENT="${BASE}/runs"
 STATUS_DIRECTORY="${BASE}/status"
 LOG_DIRECTORY="${BASE}/logs"
@@ -26,13 +26,13 @@ GPU_ADMISSION_MIN_FREE_MIB=826
 EXACT_REPLAY_GATE="${STATUS_DIRECTORY}/replay_gate_${A05_ID}.json"
 CAUSAL_REPLAY_GATE="${STATUS_DIRECTORY}/replay_gate_${A06_ID}.json"
 
-EVIDENCE_NAME="DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_A16_SEQ13_evidence.tar.gz"
+EVIDENCE_NAME="DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_A16_SEQ14_evidence.tar.gz"
 EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/${EVIDENCE_NAME}"
 START_EPOCH="$(date +%s)"
 SOFT_DEADLINE_EPOCH="$((START_EPOCH + 9000))"
 NAMESPACE_VERIFIED=0
 ALL_SUBMITTED_JOBS_TERMINAL=0
-FINAL_STATUS="SEQ13_A16_STARTED"
+FINAL_STATUS="SEQ14_A16_STARTED"
 declare -a JOB_IDS=()
 
 package_evidence() {
@@ -50,7 +50,7 @@ package_evidence() {
     return 0
   fi
 
-  local snapshot="${BASE}/seq13_snapshot_$$"
+  local snapshot="${BASE}/seq14_snapshot_$$"
   mkdir -p "$snapshot/status" "$snapshot/logs" "$snapshot/source"
   printf '%s\n' "$FINAL_STATUS" > "${snapshot}/final_status.txt"
   printf '%s\n' "$command_exit_code" > "${snapshot}/command_exit_code.txt"
@@ -68,7 +68,7 @@ package_evidence() {
 
   local candidate
   for candidate in \
-    "${STATUS_DIRECTORY}"/seq13_* \
+    "${STATUS_DIRECTORY}"/seq14_* \
     "${STATUS_DIRECTORY}"/probe-"${A16_ID}"-*.json \
     "${STATUS_DIRECTORY}"/entry-probe-"${A16_ID}"-*.json \
     "${STATUS_DIRECTORY}"/train-preflight-"${A16_ID}"-*.json \
@@ -119,7 +119,7 @@ on_exit() {
   exit "$command_exit_code"
 }
 trap on_exit EXIT
-trap 'FINAL_STATUS="SEQ13_A16_INTERRUPTED_PARTIAL_PENDING"; exit 143' INT TERM
+trap 'FINAL_STATUS="SEQ14_A16_INTERRUPTED_PARTIAL_PENDING"; exit 143' INT TERM
 
 archive_identity_check() {
   local path="$1" expected_sha256="$2" expected_size="$3"
@@ -213,7 +213,7 @@ submit_probe() {
   case "$job_id" in
     ''|*[!0-9]*) echo "invalid Slurm probe job id: ${raw}" >&2; return 63 ;;
   esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq13_probe_A16_job_id.txt"
+  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq14_probe_A16_job_id.txt"
   JOB_IDS+=("$job_id")
   SUBMITTED_JOB_ID="$job_id"
 }
@@ -224,12 +224,12 @@ submit_tests() {
     --gres=gpu:1 -t 00:15:00 --exclude=ngu002 -J daily-parity-tests \
     -o "${LOG_DIRECTORY}/tests-%j.out" -e "${LOG_DIRECTORY}/tests-%j.err" \
     --chdir="$SOURCE_A16" \
-    --wrap="set -euo pipefail; source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh; conda activate nh_final; export PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 NUMEXPR_NUM_THREADS=2; python -m pytest -q -p no:cacheprovider --maxfail=1 tests/test_daily_camels_ukf_knet_parity_contract.py tests/test_daily_camels_ukf_knet_parity_runner.py tests/test_knet_native_hbvlite_full_state.py tests/test_run_daily_camels_ukf_knet_parity_entry.py tests/test_daily_camels_ukf_knet_parity_hpc_preflight.py")"
+    --wrap="set -euo pipefail; set +u; source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh; conda activate nh_final; set -u; export PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 NUMEXPR_NUM_THREADS=2; python -m pytest -q -p no:cacheprovider --maxfail=1 tests/test_daily_camels_ukf_knet_parity_contract.py tests/test_daily_camels_ukf_knet_parity_runner.py tests/test_knet_native_hbvlite_full_state.py tests/test_run_daily_camels_ukf_knet_parity_entry.py tests/test_daily_camels_ukf_knet_parity_hpc_preflight.py")"
   job_id="${raw%%;*}"
   case "$job_id" in
     ''|*[!0-9]*) echo "invalid Slurm test job id: ${raw}" >&2; return 64 ;;
   esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq13_tests_A16_job_id.txt"
+  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq14_tests_A16_job_id.txt"
   JOB_IDS+=("$job_id")
   SUBMITTED_JOB_ID="$job_id"
 }
@@ -243,13 +243,13 @@ submit_train() {
   case "$job_id" in
     ''|*[!0-9]*) echo "invalid Slurm training job id: ${raw}" >&2; return 65 ;;
   esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq13_train_A16_job_id.txt"
+  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq14_train_A16_job_id.txt"
   JOB_IDS+=("$job_id")
   SUBMITTED_JOB_ID="$job_id"
 }
 
 test ! -e "$EVIDENCE_ARCHIVE" || {
-  echo "refusing to replace existing seq13 evidence: $EVIDENCE_ARCHIVE" >&2
+  echo "refusing to replace existing seq14 evidence: $EVIDENCE_ARCHIVE" >&2
   exit 66
 }
 [[ -d "$BASE" && ! -L "$BASE" ]] || {
@@ -263,15 +263,15 @@ for required_directory in "$RUN_PARENT" "$STATUS_DIRECTORY" "$LOG_DIRECTORY"; do
   }
 done
 [[ ! -e "$SOURCE_A16" ]] || {
-  echo "seq13 source directory already exists; refusing to replace it" >&2
+  echo "seq14 source directory already exists; refusing to replace it" >&2
   exit 69
 }
 [[ ! -e "${RUN_PARENT}/${A16_ID}" ]] || {
   echo "A16 run directory already exists; refusing duplicate submission" >&2
   exit 70
 }
-if find "$STATUS_DIRECTORY" -maxdepth 1 -type f -name 'seq13_*' -print -quit | grep -q .; then
-  echo "seq13 already recorded status evidence; refusing duplicate submission" >&2
+if find "$STATUS_DIRECTORY" -maxdepth 1 -type f -name 'seq14_*' -print -quit | grep -q .; then
+  echo "seq14 already recorded status evidence; refusing duplicate submission" >&2
   exit 71
 fi
 for phase in probe replay train; do
@@ -287,7 +287,7 @@ for gate in "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE"; do
   }
 done
 NAMESPACE_VERIFIED=1
-FINAL_STATUS="SEQ13_A16_NAMESPACE_ABSENCE_VERIFIED"
+FINAL_STATUS="SEQ14_A16_NAMESPACE_ABSENCE_VERIFIED"
 
 archive_identity_check "$A16_ARCHIVE" "$A16_SHA256" "$A16_SIZE"
 archive_identity_check "$A16_OUTER_MANIFEST" "$A16_OUTER_MANIFEST_SHA256" "$A16_OUTER_MANIFEST_SIZE"
@@ -327,7 +327,7 @@ internal_path = source / "bundle_manifest.json"
 if [sha256(archive_path), sha256(outer_path), sha256(internal_path)] != [
     archive_sha, outer_sha, internal_sha
 ]:
-    raise SystemExit("seq13 A16 archive or manifest identity differs")
+    raise SystemExit("seq14 A16 archive or manifest identity differs")
 outer = json.loads(outer_path.read_text(encoding="utf-8"))
 manifest = json.loads(internal_path.read_text(encoding="utf-8"))
 active_member = manifest["active_config_member"]
@@ -341,7 +341,7 @@ if (
     or manifest.get("member_sha256", {}).get(active_member) != config_sha
     or sha256(active_path) != config_sha
 ):
-    raise SystemExit("seq13 A16 bundle inventory differs")
+    raise SystemExit("seq14 A16 bundle inventory differs")
 config = json.loads(active_path.read_text(encoding="utf-8"))
 optimization = config.get("optimization", {})
 model = config.get("model", {})
@@ -372,7 +372,7 @@ if (
     or reference.get("a15_one_step_best_nse_by_lead")
        != [0.7931683983822845, 0.7837451386292139, 0.7756788158494483]
 ):
-    raise SystemExit("seq13 A16 scientific or optimization contract differs")
+    raise SystemExit("seq14 A16 scientific or optimization contract differs")
 requirements = config.get("replay_gate_requirements", {})
 for name, path, expected_id in (
     ("exact", exact_gate_path, exact_id),
@@ -385,9 +385,9 @@ for name, path, expected_id in (
         or receipt.get("experiment_id") != expected_id
         or sha256(path) != requirement.get("receipt_sha256")
     ):
-        raise SystemExit(f"seq13 A16 replay gate differs: {name}")
+        raise SystemExit(f"seq14 A16 replay gate differs: {name}")
 print(json.dumps({
-    "status": "SEQ13_A16_OFFLINE_IDENTITY_PASS",
+    "status": "SEQ14_A16_OFFLINE_IDENTITY_PASS",
     "experiment_id": active_id,
     "training_epochs": 10,
     "expected_optimizer_steps": 10,
@@ -398,25 +398,25 @@ PY
 
 python -u "${SOURCE_A16}/hpc/daily_camels_ukf_knet_parity/preflight.py" \
   --bundle-root "$SOURCE_A16" --phase probe --offline-bundle-check \
-  --report "${STATUS_DIRECTORY}/seq13_offline_A16.json"
-FINAL_STATUS="SEQ13_A16_OFFLINE_BUNDLE_VERIFIED"
+  --report "${STATUS_DIRECTORY}/seq14_offline_A16.json"
+FINAL_STATUS="SEQ14_A16_OFFLINE_BUNDLE_VERIFIED"
 
 echo '=== SUBMIT READ-ONLY A16 SCHEDULED GPU PROBE ==='
 submit_probe
 PROBE_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ13_A16_PROBE_SUBMITTED"
+FINAL_STATUS="SEQ14_A16_PROBE_SUBMITTED"
 if ! wait_for_job "$PROBE_JOB_ID"; then
-  FINAL_STATUS="SEQ13_A16_PROBE_PARTIAL_PENDING"
+  FINAL_STATUS="SEQ14_A16_PROBE_PARTIAL_PENDING"
   echo "soft deadline reached while probe is pending; no tests or training submitted" >&2
   exit 74
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
 require_completed_zero "$PROBE_JOB_ID" "probe_A16" || {
-  FINAL_STATUS="SEQ13_A16_PROBE_HARD_STOP"
+  FINAL_STATUS="SEQ14_A16_PROBE_HARD_STOP"
   exit 75
 }
 require_lock_cleared "${STATUS_DIRECTORY}/locks/${A16_ID}.probe.lock" || {
-  FINAL_STATUS="SEQ13_A16_PROBE_LOCK_HARD_STOP"
+  FINAL_STATUS="SEQ14_A16_PROBE_LOCK_HARD_STOP"
   exit 76
 }
 python - "$STATUS_DIRECTORY" "$A16_ID" "$PROBE_JOB_ID" \
@@ -453,56 +453,56 @@ if (
     or entry.get("array_members_materialized") != 0
     or entry.get("numerical_frameworks_imported_by_entry") != 0
 ):
-    raise SystemExit("seq13 A16 scheduled probe evidence differs")
+    raise SystemExit("seq14 A16 scheduled probe evidence differs")
 print(json.dumps({
-    "status": "SEQ13_A16_PROBE_PASS",
+    "status": "SEQ14_A16_PROBE_PASS",
     "job_id": job_id,
     "hostname": scheduled["hostname"],
     "available_host_memory_bytes": scheduled["available_host_memory_bytes"],
     "gpu": scheduled["cuda_probe_without_torch_import"],
 }, sort_keys=True))
 PY
-FINAL_STATUS="SEQ13_A16_PROBE_PASS"
+FINAL_STATUS="SEQ14_A16_PROBE_PASS"
 
 echo '=== SUBMIT ISOLATED NUMERICAL CONTRACT TESTS ==='
 ALL_SUBMITTED_JOBS_TERMINAL=0
 submit_tests
 TEST_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ13_A16_TESTS_SUBMITTED"
+FINAL_STATUS="SEQ14_A16_TESTS_SUBMITTED"
 if ! wait_for_job "$TEST_JOB_ID"; then
-  FINAL_STATUS="SEQ13_A16_TESTS_PARTIAL_PENDING"
+  FINAL_STATUS="SEQ14_A16_TESTS_PARTIAL_PENDING"
   echo "soft deadline reached while tests are pending; no training submitted" >&2
   exit 77
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
 require_completed_zero "$TEST_JOB_ID" "tests_A16" || {
-  FINAL_STATUS="SEQ13_A16_TESTS_HARD_STOP"
+  FINAL_STATUS="SEQ14_A16_TESTS_HARD_STOP"
   exit 78
 }
-FINAL_STATUS="SEQ13_A16_TESTS_PASS"
+FINAL_STATUS="SEQ14_A16_TESTS_PASS"
 
 echo '=== SUBMIT TEN-EPOCH FULL-TRAINING-COVERAGE CONVERGENCE DIAGNOSTIC ==='
 ALL_SUBMITTED_JOBS_TERMINAL=0
 submit_train
 TRAIN_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ13_A16_TRAIN_SUBMITTED"
+FINAL_STATUS="SEQ14_A16_TRAIN_SUBMITTED"
 if ! wait_for_job "$TRAIN_JOB_ID"; then
-  FINAL_STATUS="SEQ13_A16_TRAIN_PARTIAL_PENDING"
+  FINAL_STATUS="SEQ14_A16_TRAIN_PARTIAL_PENDING"
   echo "soft deadline reached while training is pending; the job was not cancelled" >&2
   exit 79
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
 if ! classify_train_completion "$TRAIN_JOB_ID"; then
-  FINAL_STATUS="SEQ13_A16_TRAIN_HARD_STOP"
+  FINAL_STATUS="SEQ14_A16_TRAIN_HARD_STOP"
   exit 80
 fi
 require_lock_cleared "${STATUS_DIRECTORY}/locks/${A16_ID}.train.lock" || {
-  FINAL_STATUS="SEQ13_A16_TRAIN_LOCK_HARD_STOP"
+  FINAL_STATUS="SEQ14_A16_TRAIN_LOCK_HARD_STOP"
   exit 81
 }
 sacct -P --units=K -j "$TRAIN_JOB_ID" \
   --format=JobIDRaw,JobName,Partition,AllocCPUS,ReqMem,AllocTRES,State,ExitCode,Elapsed,Start,End,MaxRSS,MaxVMSize,AveRSS \
-  > "${STATUS_DIRECTORY}/seq13_train_A16_sacct_resources.txt"
+  > "${STATUS_DIRECTORY}/seq14_train_A16_sacct_resources.txt"
 
 python - "$RUN_PARENT" "$STATUS_DIRECTORY" "$A16_ID" "$TRAIN_JOB_ID" \
   "$TRAIN_EXIT_CLASS" "$HOST_ADMISSION_MIN_BYTES" "$GPU_ADMISSION_MIN_FREE_MIB" <<'PY'
@@ -710,7 +710,7 @@ if (
 for path in (
     next(status.glob(f"train-gpu-resources-{experiment_id}-{job_id}.csv")),
     next(status.glob(f"train-cgroup-resources-{experiment_id}-{job_id}.txt")),
-    status / "seq13_train_A16_sacct_resources.txt",
+    status / "seq14_train_A16_sacct_resources.txt",
 ):
     if not path.is_file() or path.stat().st_size <= 0:
         raise SystemExit(f"A16 resource receipt is absent: {path.name}")
@@ -720,7 +720,7 @@ a15_nse = {"1": 0.7931683983822845, "2": 0.7837451386292139, "3": 0.775678815849
 ukf_nse = {key: float(value) for key, value in summary["ukf_recovery_nse_by_lead_712"].items()}
 best_nse_float = {key: float(value) for key, value in best_nse.items()}
 verification = {
-    "schema_version": "daily_camels_knet_a16_seq13_verification_v1",
+    "schema_version": "daily_camels_knet_a16_seq14_verification_v1",
     "status": "A16_TECHNICAL_COMPLETION_VERIFIED",
     "experiment_id": experiment_id,
     "slurm_job_id": job_id,
@@ -752,7 +752,7 @@ verification = {
     "manifest_sha256": sha256(run / "manifest.sha256.json"),
     "completion_sha256": sha256(run / "completion.marker.json"),
 }
-target = status / "seq13_A16_verification.json"
+target = status / "seq14_A16_verification.json"
 data = (json.dumps(verification, sort_keys=True, separators=(",", ":")) + "\n").encode()
 descriptor = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
 try:
@@ -762,9 +762,9 @@ finally:
 print(json.dumps(verification, sort_keys=True))
 PY
 
-FINAL_STATUS="SEQ13_A16_TECHNICAL_COMPLETE"
+FINAL_STATUS="SEQ14_A16_TECHNICAL_COMPLETE"
 echo '=== FINAL SLURM ACCOUNTING ==='
 JOB_CSV="$(IFS=,; printf '%s' "${JOB_IDS[*]}")"
 sacct --units=K -j "$JOB_CSV" \
   --format=JobID,JobName,Partition,AllocCPUS,ReqMem,State,ExitCode,Elapsed,Start,End,MaxRSS,MaxVMSize,AveRSS
-echo "DAILY_CAMELS_UKF_KNET_PARITY_SEQ13_A16_TECHNICAL_COMPLETE probe=${PROBE_JOB_ID} tests=${TEST_JOB_ID} train=${TRAIN_JOB_ID} train_exit_class=${TRAIN_EXIT_CLASS}"
+echo "DAILY_CAMELS_UKF_KNET_PARITY_SEQ14_A16_TECHNICAL_COMPLETE probe=${PROBE_JOB_ID} tests=${TEST_JOB_ID} train=${TRAIN_JOB_ID} train_exit_class=${TRAIN_EXIT_CLASS}"
