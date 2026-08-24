@@ -1,0 +1,65 @@
+### channel=kalmannet-tukf20 seq=9
+### host=login4
+### started=2026-08-24T21:44:46+0800
+### ---------- output ----------
+=== TUKF20 PORTABLE PACKAGE IMMUTABLE GATES ===
+{"status": "PORTABILITY_FAULT_RECONFIRMED", "unsafe_member_count": 31}
+=== TUKF20 PORTABLE PACKAGE DEPLOYMENT BUNDLE GATE ===
+tar: configs/tukf20_hpc_portable_package_retry1_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-24-tukf20-portable-package-recovery.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/tukf20_hbv_rolling_origin_joint_learning/submit_verifier_recovery_portable_package_retry1_cpu1.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: portable_package_recovery_payload_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_tukf20_hpc_portable_package_retry1_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/package_tukf20_hpc_verifier_recovery_portable_retry1.py: implausibly old time stamp 1970-01-01 08:00:00
+TUKF20_PORTABLE_PACKAGE_DEPLOYMENT_MEMBERS_VERIFIED=5
+=== TUKF20 UNIQUE PORTABLE PACKAGE SUBMISSION ===
+Submitted batch job 211149
+TUKF20_PORTABLE_PACKAGE_JOB_ID=211149
+             JOBID|   PARTITION|                          NAME|     STATE|      TIME|TIME_LIMIT|NODELIST(REASON)
+            211149|     hcpu48y|       tukf20-portable-pack-r1|   PENDING|      0:00|     30:00|(None)
+=== TUKF20 PORTABLE PACKAGE WAIT ===
+=== TUKF20 PORTABLE PACKAGE ACCOUNTING AND VALIDATION ===
+{
+  "archive_bytes": 16129575,
+  "archive_sha256": "bc92b8744261847f22fc0bf1f6c7504bc1ad3c303f57da11eaa8f5acbfbe80e6",
+  "checks": {
+    "archive_bytes": true,
+    "archive_hash": true,
+    "member_count": true,
+    "no_plotting": true,
+    "no_training": true,
+    "no_verification": true,
+    "outputs_checks": true,
+    "outputs_job": true,
+    "outputs_status": true,
+    "payload_members": true,
+    "payload_rewrites": true,
+    "rewrite_count": true,
+    "source_file_count": true
+  },
+  "member_count": 2676,
+  "rewrite_count": 31
+}
+=== TUKF20 PORTABLE PACKAGE MAILBOX RETRIEVAL ===
+{
+  "archive_bytes": 16129575,
+  "archive_member_count": 2676,
+  "archive_sha256": "bc92b8744261847f22fc0bf1f6c7504bc1ad3c303f57da11eaa8f5acbfbe80e6",
+  "first_packaging_job_id": 211139,
+  "formal_training_rerun": false,
+  "independent_verification_rerun": false,
+  "plotting_rerun": false,
+  "portable_packaging_job_id": 211149,
+  "retrieved_file_count": 10,
+  "rewrite_count": 31,
+  "slurm_exit_code": "0:0",
+  "slurm_state": "COMPLETED",
+  "source_formal_job_id": 210748,
+  "status": "PORTABLE_PACKAGE_SLURM_COMPLETED",
+  "technical_verification_is_not_scientific_success": true,
+  "verifier_recovery_job_id": 211130
+}
+TUKF20_PORTABLE_PACKAGE_AND_RETRIEVAL_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-24T21:45:13+0800

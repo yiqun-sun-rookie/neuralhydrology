@@ -1,0 +1,21 @@
+{
+  "archive_bytes": 10341,
+  "archive_name": "tukf20_hpc_portable_package_retry1_payload_v1.tar.gz",
+  "archive_sha256": "7fa9db38fdb72d2f76c625259df33f4c57d09dac48cde95dd6266c2ac28f0a94",
+  "formal_training_rerun_forbidden": true,
+  "independent_verification_rerun_forbidden": true,
+  "member_count": 5,
+  "members": {
+    "configs/tukf20_hpc_portable_package_retry1_v1.json": "28c71b5f393f69ff62e5604a91f4e2de36a2dc52b8a56a6b231691edbe2c5cb5",
+    "docs/superpowers/plans/2026-08-24-tukf20-portable-package-recovery.md": "e9566e11a08bde768f263c371649c20de2a0169c4fa92230ee371437b75d1752",
+    "hpc/tukf20_hbv_rolling_origin_joint_learning/submit_verifier_recovery_portable_package_retry1_cpu1.slurm": "a64abc90470951112ed07698de38050444690b771b6092492fac6709a808e2a4",
+    "scripts/build_tukf20_hpc_portable_package_retry1_bundle.py": "5bd624a2fb44e1b1dfb7048c4778e7dbc1f9528310bf451cdae75ee58c272322",
+    "scripts/package_tukf20_hpc_verifier_recovery_portable_retry1.py": "a0a425590c74a63822c156ed06319259b8599af86532cd92cc9c9fd14441a280"
+  },
+  "payload_manifest_name": "portable_package_recovery_payload_manifest.json",
+  "payload_manifest_sha256": "ed6aaa134d63b5b21f0da8aabe4ea26a0df1324a1d187de357c37311bd645042",
+  "plotting_rerun_forbidden": true,
+  "recovery_id": "TUKF20_HPC_PORTABLE_PACKAGE_RETRY1_V1",
+  "schema_version": "tukf20_hpc_portable_package_retry1_bundle_manifest_v1",
+  "scientific_experiment_id": "TUKF20_HBV_ROLLING_ORIGIN_JOINT_LEARNING_V1"
+}

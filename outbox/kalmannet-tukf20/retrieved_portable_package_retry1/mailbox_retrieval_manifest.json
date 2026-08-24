@@ -1,0 +1,56 @@
+{
+  "first_packaging_job_id": 211139,
+  "formal_training_rerun": false,
+  "independent_verification_rerun": false,
+  "members": {
+    "deployment_bundle_manifest.sha256.json": {
+      "bytes": 1473,
+      "sha256": "12f62dbf391032ce5594499b7170fa5916a84d5f19593860f1995e5cb427171c"
+    },
+    "package_submission_receipt.json": {
+      "bytes": 976,
+      "sha256": "678ff80d5bea6a8adf05fca83f1130af90e45cd5865532fc619aec80560e3e59"
+    },
+    "packaging_outputs_complete.json": {
+      "bytes": 2662,
+      "sha256": "775a5c5a26893cb3946926c53e5551b79edb1dd9083387254af823e777ba529e"
+    },
+    "packaging_sacct_snapshot.txt": {
+      "bytes": 112,
+      "sha256": "ceac96aa7e3fb41a799b762eafcf3f63bf4597a70391a8daf1b6afe73aabc08b"
+    },
+    "packaging_slurm_completion.json": {
+      "bytes": 1811,
+      "sha256": "76680b1e26f20d90203f429c34653da3e2a0bae66227bb32592e00441296f278"
+    },
+    "portable-package-211149.err": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "portable-package-211149.out": {
+      "bytes": 635,
+      "sha256": "b0080f7b9e28d8e9320b929e038873f2b119174441798f19c7edb2d1dc287edc"
+    },
+    "tukf20_hpc_portable_package_retry1_v1.json": {
+      "bytes": 5835,
+      "sha256": "28c71b5f393f69ff62e5604a91f4e2de36a2dc52b8a56a6b231691edbe2c5cb5"
+    },
+    "tukf20_hpc_verifier_recovery_portable_retry1_result_v1.tar.gz": {
+      "bytes": 16129575,
+      "sha256": "bc92b8744261847f22fc0bf1f6c7504bc1ad3c303f57da11eaa8f5acbfbe80e6"
+    },
+    "tukf20_hpc_verifier_recovery_portable_retry1_result_v1.tar.gz.sha256.json": {
+      "bytes": 1297988,
+      "sha256": "98bd2b001389c9db8a5293e8e6dd925638ea8e5f6a8d5deb87fd3efcff56f1c8"
+    }
+  },
+  "plotting_rerun": false,
+  "portable_packaging_job_id": 211149,
+  "recorded_at_utc": "2026-08-24T13:45:12.940416+00:00",
+  "recovery_id": "TUKF20_HPC_PORTABLE_PACKAGE_RETRY1_V1",
+  "schema_version": "tukf20_hpc_portable_package_retry1_mailbox_retrieval_v1",
+  "scientific_experiment_id": "TUKF20_HBV_ROLLING_ORIGIN_JOINT_LEARNING_V1",
+  "source_formal_job_id": 210748,
+  "technical_verification_is_not_scientific_success": true,
+  "verifier_recovery_job_id": 211130
+}
