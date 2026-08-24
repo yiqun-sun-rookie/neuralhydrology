@@ -32,6 +32,12 @@ for f in $MD/best_metrics.json $MD/eval_val_per_station.csv; do
   [ -f "$f" ] && echo "$(stat -c'%y  %s bytes' $f)  $f" || echo "absent: $f"
 done
 
+echo "=== D2. WHICH 17 ATTRIBUTES (armG vs armF must differ) ==="
+grep -iE 'attribute|static_feature|attrs? *=' $OUT 2>/dev/null | head -12 || true
+for f in $RUN/stage_static_feature_stats_armG.json $RUN/configs/stage_static_feature_stats_armG.json $MD/static_feature_stats.json; do
+  if [ -f "$f" ]; then echo "-- $f --"; python -c "import json,sys;d=json.load(open('$f'));k=d if isinstance(d,list) else list(d.keys());print(len(k));print(sorted(map(str,k)))" 2>/dev/null | head -6 || true; fi
+done
+
 echo "=== E. PAIRED VERDICT ==="
 if [ -f $MD/eval_val_per_station.csv ]; then
   source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
@@ -99,4 +105,4 @@ for s in 43 44; do
 done
 squeue -u sunyiq -o '%.10i %.28j %.9T %.10M %.20R' 2>&1 | grep -iE 'armG|JOBID' | head -10 || true
 
-echo "=== END seq=87 ==="
+echo "=== END seq=88 ==="
