@@ -1,0 +1,16 @@
+### channel=kalmannet-tukf20 seq=2
+### host=login4
+### started=2026-08-24T16:00:27+0800
+### ---------- output ----------
+=== TUKF20 SMOKE SUBMISSION EVIDENCE ===
+TUKF20_SMOKE_SUBMISSION_EVIDENCE_VERIFIED
+=== TUKF20 SMOKE LIVE STATUS ===
+slurm_load_jobs error: Invalid job id specified
+210745|tukf20-smoke|hcpu48y|1|COMPLETED|0:0|00:03:14|2026-08-24T15:47:04|2026-08-24T15:50:18
+=== TUKF20 SMOKE LOG TAIL ===
+{"checks": {"all_four_modes_exercised_state_update": true, "available_memory": true, "balance_gate": true, "deployment_configuration_binding": true, "environment_imports": true, "finite_resident_memory": true, "float64": true, "formal_figure_absent": true, "formal_result_absent": true, "formal_runtime_projection": true, "free_storage": true, "frozen_group_invariance": true, "independent_preflight": true, "mode_masks": true, "one_step_per_active_mode": true, "payload_integrity": true, "scientific_contract": true, "scientific_source_hashes": true, "sealed_test_boundary": true, "single_torch_thread": true, "slurm_allocation": true, "smoke_runtime": true, "thread_environment": true, "truth_generation_deterministic": true}, "status": "HPC_SMOKE_PASS"}
+{"job_id": 210745, "smoke_checks": 24, "status": "HPC_SMOKE_SLURM_COMPLETED"}
+TUKF20_SMOKE_GATE_FULLY_COMPLETED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-24T16:00:32+0800
