@@ -1,0 +1,192 @@
+### channel=kalmannet-daily-camels seq=11
+### host=login4
+### started=2026-08-25T05:05:41+0800
+### ---------- output ----------
+=== VERIFY IMMUTABLE PAYLOAD AND REPLAY GATES ===
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_knet_near_zero_stable_lr_strict_smoke_a13.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_knet_same_segment_post_step_diagnostic_a14.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_ukf_knet_parity_exact_replay_dtype_repair_v3.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_full_diagonal_search_head_to_head_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_replay_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_train_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/nn_kalman_clamp_5.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_daily_camels_ukf_knet_parity_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_da.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_differentiable_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_daily_camels_ukf_knet_parity.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf06_full_diagonal_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/conventional_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_native_knet_io.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_ukf_adapter.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/conftest.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_hpc_preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_run_daily_camels_ukf_knet_parity_entry.py: implausibly old time stamp 1970-01-01 08:00:00
+{
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "experiment_id": "DAILY_CAMELS_KNET_SAME_SEGMENT_POST_STEP_DIAGNOSTIC_V1_20260825_A14",
+  "initialization_mode": "causal_shared_spinup",
+  "member_count": 39,
+  "nse_gate_target_count_per_lead": 712,
+  "numpy_imported": false,
+  "replay_gate_requirements": {},
+  "selection_objective_target_count_per_lead": 728,
+  "status": "BUNDLE_VERIFIED",
+  "torch_imported": false
+}
+=== SUBMIT READ-ONLY A14 GPU PROBE WITH PARTITION-COMPATIBLE MEMORY AND MEASURED-PEAK ADMISSION ===
+submitted label=probe_A14 job_id=211280 scheduler_memory_request=0n runtime_host_min_bytes=2800353280 runtime_gpu_min_free_mib=822
+accounting job_id=211280 state=COMPLETED exit_code=0:0
+{"available_host_memory_bytes": 252994764800, "experiment_id": "DAILY_CAMELS_KNET_SAME_SEGMENT_POST_STEP_DIAGNOSTIC_V1_20260825_A14", "gpu": {"cuda_visible_devices": "0", "device_index": "0", "device_name": "NVIDIA GeForce RTX 3090", "driver_version": "580.76.05", "memory_free_mib": 24125, "memory_total_mib": 24576, "visible_device_count": 1}, "gpu_admission_min_free_mib": 822, "gpu_admission_safety_factor_over_A13_incremental_peak": 2.0, "host_admission_min_bytes": 2800353280, "host_admission_safety_factor_over_A13_process_peak": 2.0, "hostname": "ngu011", "probe_gate": "PASS", "probe_job_id": "211280"}
+=== SUBMIT ONE-EPOCH ONE-STEP REAL BACKPROPAGATION RESOURCE SMOKE ===
+submitted label=train_A14 job_id=211281 scheduler_memory_request=0n runtime_host_min_bytes=2800353280 runtime_gpu_min_free_mib=822
+accounting job_id=211281 state=FAILED exit_code=2:0
+train_exit_class=scientific_gate_fail_after_technical_completion
+{"best_epoch": 0, "best_nse_by_lead": {"1": 0.6957813132588915, "2": 0.6957818940541705, "3": 0.6958141411358361}, "best_objective": 0.40192019589669764, "epoch_zero_objective": 0.40192019589669764, "experiment_id": "DAILY_CAMELS_KNET_SAME_SEGMENT_POST_STEP_DIAGNOSTIC_V1_20260825_A14", "last_parameter_hash_changed": true, "objective_improvement": 0.0, "optimizer_steps": 1, "resource_summary": {"cgroup_resource_log_sha256": "328e104d73673eed0142558c29a692febe4f22cbc82c56ae0c3380ea8634c516", "completion_sha256": "17cff7d6f0a6e5169462b76fca968df4519994123b1d6771f9711705cb666720", "epoch_history_sha256": "94b5f3928861f8c1f7354a92103dca6bd903020542b3118afa89130a5145001e", "experiment_id": "DAILY_CAMELS_KNET_SAME_SEGMENT_POST_STEP_DIAGNOSTIC_V1_20260825_A14", "gpu_admission_min_free_mib": 822, "gpu_admission_safety_factor_over_A13_incremental_peak": 2.0, "gpu_free_before_bytes": 25296896000, "gpu_incremental_peak_used_bytes": 430964736, "gpu_name": "NVIDIA GeForce RTX 3090", "gpu_peak_basis_bytes": 430964736, "gpu_resource_log_sha256": "aa62a0b1434a22780484cca909aea600613d68d917b1b8ddc0c2504fdb092ee4", "gpu_sampled_peak_used_bytes": 430964736, "gpu_torch_peak_allocated_bytes": 32517120, "gpu_torch_peak_reserved_bytes": 50331648, "gpu_total_bytes": 25769803776, "gpu_used_before_bytes": 0, "gpu_uuid": "GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da", "host_admission_min_bytes": 2800353280, "host_admission_safety_factor_over_A13_process_peak": 2.0, "host_current_cgroup_peak_bytes": 266777956352, "host_parent_cgroup_peak_bytes_record_only": 266781007872, "host_peak_basis_bytes": 1403367424, "host_peak_basis_excludes_parent_cgroup": true, "host_process_peak_rss_bytes": 1403367424, "identity_sha256": "5b2a68b222a37c395743e2d32c8b9fef15677aeb8cca2399b65169d5af05c2a4", "resource_sample_count": 50, "resource_sample_interval_seconds": 1, "result_manifest_sha256": "cf038e8c8f7d8ed93ffa7c1786be7c926aa06b42231b1adb72e2135a0d924100", "result_summary_sha256": "2a1a02dad7a0e5258bb40d718ab38a345a5044195a21b75657d44f9f6e07ff19", "sacct_resource_log_sha256": "b95ca3af6d2d4bf52ec9fec94fef20c8ac1fec6122f1f526cc3849614f6d102e", "schema_version": "daily_camels_ukf_knet_resource_smoke_v2", "scientific_gate_passed": false, "slurm_job_id": "211281", "slurm_requested_memory": "0n_partition_constraint", "slurm_step_max_rss_bytes": 1402318848, "status": "RESOURCE_SMOKE_TECHNICAL_PASS", "training_available_host_memory_before_bytes": 252953686016, "training_cuda_visible_devices": "0", "training_exit_class": "scientific_gate_fail_after_technical_completion", "training_hostname": "ngu011", "training_visible_device_count": 1}, "same_segment_after_step_objective": 0.03641838248782432, "same_segment_before_step_objective": 0.041894322475829145, "same_segment_objective_improvement": 0.005475939988004823, "same_segment_strict_objective_decrease": true, "sampled_forecast_events": 306, "training_status": "TRAINING_COMPLETE_GATE_FAIL"}
+=== FINAL SLURM ACCOUNTING WITH JOB STEPS ===
+       JobID    JobName  Partition  AllocCPUS     ReqMem      State ExitCode    Elapsed               Start                 End     MaxRSS  MaxVMSize     AveRSS 
+------------ ---------- ---------- ---------- ---------- ---------- -------- ---------- ------------------- ------------------- ---------- ---------- ---------- 
+211280       daily-par+     hgpu2p          2         0n  COMPLETED      0:0   00:00:13 2026-08-25T05:06:06 2026-08-25T05:06:19                                  
+211280.batch      batch                     2         0n  COMPLETED      0:0   00:00:13 2026-08-25T05:06:06 2026-08-25T05:06:19      3156K    251280K      3156K 
+211280.exte+     extern                     2         0n  COMPLETED      0:0   00:00:13 2026-08-25T05:06:06 2026-08-25T05:06:19      2640K    250920K      2640K 
+211280.0         python                     2         0n  COMPLETED      0:0   00:00:07 2026-08-25T05:06:09 2026-08-25T05:06:16      3000K    319912K      3000K 
+211280.1         python                     2         0n  COMPLETED      0:0   00:00:03 2026-08-25T05:06:16 2026-08-25T05:06:19      3196K    319912K      3196K 
+211281       daily-par+     hgpu2p          4         0n     FAILED      2:0   00:01:15 2026-08-25T05:06:37 2026-08-25T05:07:52                                  
+211281.batch      batch                     4         0n     FAILED      2:0   00:01:15 2026-08-25T05:06:37 2026-08-25T05:07:52     15432K    304972K     15432K 
+211281.exte+     extern                     4         0n  COMPLETED      0:0   00:01:15 2026-08-25T05:06:37 2026-08-25T05:07:52      1792K    250920K      1792K 
+211281.0         python                     4         0n  COMPLETED      0:0   00:00:04 2026-08-25T05:06:41 2026-08-25T05:06:45      3024K    319916K      3024K 
+211281.1         python                     4         0n     FAILED      2:0   00:01:07 2026-08-25T05:06:45 2026-08-25T05:07:52   1369452K  10247040K   1369452K 
+DAILY_CAMELS_UKF_KNET_PARITY_SEQ11_TECHNICAL_COMPLETE probe=211280 train=211281 train_exit_class=scientific_gate_fail_after_technical_completion final_status=SEQ11_TECHNICAL_COMPLETE_SCIENTIFIC_GATE_FAIL
+evidence_archive=/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_KNET_SAME_SEGMENT_POST_STEP_DIAGNOSTIC_V1_A14_SEQ11_evidence.tar.gz
+evidence_archive_sha256=d4ade5ee92f643d95349e03f59b55c37bf61a5d102e20ced04fe1eca26f83ea9
+evidence_archive_size=4714772
+evidence_status=SEQ11_TECHNICAL_COMPLETE_SCIENTIFIC_GATE_FAIL command_exit_code=0 all_jobs_terminal=1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T05:07:39+0800
