@@ -1,29 +1,41 @@
 #!/bin/bash
-# nature1st-attr-swap seq=93 -- SUBMIT armI (user authorised this training round).
-# armI = armF minus gageii_HydroMod_Dams_RAW_DIS_NEAREST_DAM, 16 attributes.
-# Isolates what deleting distance-to-nearest-dam alone costs, since that is the only
-# straight deletion separating armG (China-supplyable, 0.6299) from armF (0.6436).
-# Pre-registered vs armF, paired: <= -0.015 it IS the main cause; >= -0.005 it is not.
+# nature1st-attr-swap seq=94 -- READ-ONLY status of armI (job 211317).
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
+J=211317
 cd "$RUN" || { echo RUN_DIR_MISSING; exit 1; }
+date "+wallclock %F %T %z"
+echo "=== A. STATE ==="
+squeue -j $J -o '%.10i %.24j %.10T %.10M %.22R' 2>&1
+sacct -j $J -X --format=JobID%10,JobName%22,State%12,ExitCode%8,Elapsed%11,NodeList%9 2>&1
 
-echo "=== A. GUARD ==="
-EXIST=$(squeue -u $USER -h -o '%j' 2>/dev/null | grep -c 'q_armI' || true)
-echo "armI jobs already queued: $EXIST"
-if [ "$EXIST" != "0" ]; then echo "ALREADY SUBMITTED -- refusing"; exit 0; fi
-if [ -d models/q_lstm_armI_hpc_s42 ]; then echo 'OUTPUT DIR EXISTS -- refusing'; exit 0; fi
-mkdir -p logs/attr_swap
-sha256sum data/interim/stage_static_feature_stats_armI.json 2>&1 | cut -c1-16,65-
+echo "=== B. GUARD (must say 16 attributes) ==="
+f=logs/attr_swap/armI_no_neardam-${J}.out
+e=logs/attr_swap/armI_no_neardam-${J}.err
+if [ ! -f "$f" ]; then echo "(no stdout log)"; else
+  grep -E "\[guard\]" "$f" 2>/dev/null | head -3 || true
+  echo "log bytes: $(stat -c%s "$f")  last touched: $(stat -c%y "$f" | cut -c1-19)"
+fi
 
-echo "=== B. SUBMIT ==="
-out=$(sbatch scripts/hpc_train_q_armI_no_neardam.sbatch 2>&1); echo "$out"
-JID=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
-if [ -z "$JID" ]; then echo "SUBMIT_FAILED -- no job id"; exit 1; fi
-echo "SUBMITTED jobid=$JID"
+echo "=== C. ERRORS ==="
+for g in "$f" "$e"; do [ -f "$g" ] && { echo "-- $g ($(stat -c%s "$g") bytes) --"; grep -E "RuntimeError|Traceback|CUDA|FATAL|Error|refusing|Killed|out of memory" "$g" 2>/dev/null | head -10 || true; }; done
 
-echo "=== C. QUEUE ==="
-sleep 20
-squeue -j $JID -o '%.10i %.24j %.10T %.8M %.22R' 2>&1
-sinfo -p hgpu2p -o '%.10P %.6a %.6D %.6t %N' 2>&1 | head -6
-echo "=== END seq=93 ==="
+echo "=== D. PROGRESS ==="
+[ -f "$f" ] && { grep -E "^Epoch|Best val median NSE|Done\." "$f" 2>/dev/null | tail -10 || true; }
+
+echo "=== E. RESULT? ==="
+if [ -f models/q_lstm_armI_hpc_s42/best_metrics.json ]; then cat models/q_lstm_armI_hpc_s42/best_metrics.json 2>&1; echo; else echo '(not finished)'; fi
+ls -la models/q_lstm_armI_hpc_s42/eval_val_per_station.csv 2>&1 | head -2
+
+echo "=== F. WHOLE CAMPAIGN ROLL CALL ==="
+for d in q_lstm_control_hpc_s42 q_lstm_hydroatlas_hpc_s42 q_lstm_usminus4_hpc_s42 \
+         q_lstm_globalplus4_hpc_s42 q_lstm_armE_hpc_s42 q_lstm_armF_hpc_s42 \
+         q_lstm_armG_hpc_s42 q_lstm_armI_hpc_s42 ; do
+  if [ -f models/$d/best_metrics.json ]; then
+    m=$(python -c "import json,sys;print(f'{json.load(open(sys.argv[1]))[\"median_nse\"]:.4f}')" models/$d/best_metrics.json 2>/dev/null)
+    printf '  %-30s %s
+' "$d" "$m"
+  else printf '  %-30s (running or absent)
+' "$d"; fi
+done
+echo "=== END seq=94 ==="
