@@ -1,0 +1,17 @@
+### channel=kuwei-recal-aux seq=2
+### host=login4
+### started=2026-08-25T18:26:17+0800
+### ---------- output ----------
+=== A. payload v2 ===
+laos_code_v2.tar.gz: OK
+unpacked v2
+=== B. write gate slurm ===
+written
+=== C. submit ===
+Submitted batch job 212027
+     JOBID         NAME    STATE NODELIST(REASON)
+    212027   kuwei-gate  PENDING (Resources)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T18:26:18+0800
