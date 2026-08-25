@@ -1,0 +1,61 @@
+### channel=kalmannet-daily-camels seq=22
+### host=login4
+### started=2026-08-25T15:33:34+0800
+### ---------- output ----------
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_official_kalmannet_tukf06_causal_fair_development_v3.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_official_kalmannet_tukf06_causal_fair_iterations_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_full_diagonal_search_head_to_head_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_official_kalmannet_causal_fair/preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_official_kalmannet_causal_fair/submit_resource_smoke_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_official_kalmannet_causal_fair/verify_smoke.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/01435000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/01440400.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/01487000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02102908.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02178400.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/03049000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/03076600.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/04027000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/04105700.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/05503800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/06803510.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/08070200.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/08086290.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/08109700.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/08190500.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/09035800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/09513780.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/12175500.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/12447390.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/14185900.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/prepared_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/nn_kalman_clamp_5.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: results/tukf06_full_diagonal_search_head_to_head_v1/selection_manifest.sha256.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_daily_camels_official_kalmannet_causal_fair_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/prepare_daily_camels_official_kalmannet_data.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_hbv_native_shortlead_recovery.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/data/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/data/hbvlite_prior.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/hbv_shortlead_audit.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/hbv_shortlead_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/hbv_shortlead_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/official_kalmannet_tsp_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py: implausibly old time stamp 1970-01-01 08:00:00
+evidence_archive=/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_OFFICIAL_KALMANNET_CAUSAL_FAIR_SHARED_A33_SEQ22_evidence.tar.gz
+evidence_archive_sha256=debd88aa5e8f003fcea977f66c596323fb11e13c3bce43f4392a80dd3d8f78b2
+evidence_archive_size=16493574
+evidence_status=SEQ22_A33_TRAINING_FAILED_HARD_STOP command_exit_code=56 training_job_id=211382
+### ---------- end ----------
+### exit_code=56
+### finished=2026-08-25T15:47:20+0800
