@@ -1,0 +1,40 @@
+### channel=id29-nearing2022-da seq=350
+### host=login4
+### started=2026-08-25T14:04:36+0800
+### ---------- output ----------
+2026-08-25T14:04:36+0800
+=== N22 JOBS ===
+202228_[616-      N22-hyper   PENDING        0:00  1-00:00:00 (JobArrayTaskLimit)
+211001_[21-2     N22-relong   PENDING        0:00  3-12:00:00 (JobArrayTaskLimit)
+202226_[0-11 N22-eval-later   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202229   N22-agg-eval   PENDING        0:00  1-00:00:00 (Dependency)
+      202230  N22-agg-hyper   PENDING        0:00  1-00:00:00 (Dependency)
+      202294     N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315       N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-5   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+      202293   N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+  202228_615      N22-hyper   RUNNING     1:04:56    22:55:04 ngu104
+  202228_614      N22-hyper   RUNNING     2:19:13    21:40:47 ngu104
+   211001_16     N22-relong   RUNNING    20:59:15  2-15:00:45 ngu104
+   211001_20     N22-relong   RUNNING    20:59:15  2-15:00:45 ngu102
+=== FAILURES AND TIMEOUTS ===
+202215_16|N22-time|TIMEOUT|0:0|2-00:00:03|2026-08-20T16:18:43
+202215_20|N22-time|TIMEOUT|0:0|2-00:00:22|2026-08-22T16:19:07
+202215_21|N22-time|TIMEOUT|0:0|2-00:00:15|2026-08-23T13:05:19
+202215_22|N22-time|TIMEOUT|0:0|2-00:00:10|2026-08-23T22:06:54
+=== LOG IDLE SECONDS ===
+  202228_615     idle=162s node=ngu104
+  202228_614     idle=37s node=ngu104
+  211001_16      idle=2s node=ngu104
+  211001_20      idle=3s node=ngu102
+=== RUNNING PROGRESS ===
+=== ROLE COUNTS ===
+{"missing_by_type": {"aggregation": 9, "evaluation": 600, "hyperparameter": 224, "training": 4}, "missing_total": 837}
+MISSING_TRAINING_COORDINATES: 4
+    N22-TS-AR-L08-H075-S0
+    N22-TS-AR-L10-H050-S0
+    N22-TS-AR-L10-H075-S0
+    N22-TS-AR-L10-H100-S0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T14:05:21+0800
