@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+exec bash /data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-daily-camels/seq26_a34_seq25_evidence_audit.sh
+
 set -Eeuo pipefail
 umask 077
 
