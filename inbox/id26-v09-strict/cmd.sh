@@ -1,82 +1,114 @@
 #!/bin/bash
-# id26-v09-strict seq=63 : verify the completed training audit and submit state diagnostics once.
-set -euo pipefail
+# id26-v09-strict seq=64: read-only status and artifact query for state diagnostics job 204847.
+set -o pipefail
 export LC_ALL=C
+
 ROOT=/data1/home/sunyiq/v09_strict
 AUDIT_PARENT=$ROOT/audit_v09
-AUDIT_REPO=$AUDIT_PARENT/neuralhydrology
 TRAIN_REPO=$ROOT/codetest/neuralhydrology
-STRICT_REPO=$ROOT/neuralhydrology
 FORMAL_ROOT=$TRAIN_REPO/results/26_historical_band_experts/formal_v09
-TRAINING_JOBID_FILE=$AUDIT_PARENT/training_audit_attempt_03_jobid.txt
-STATE_JOBID_FILE=$AUDIT_PARENT/state_diagnostics_jobid.txt
-REPORT=$FORMAL_ROOT/training_external_audit.json
-EXPECTED_REPORT_SHA=af6e424d6b88f53f5ad51f2ea76c4bfeb4a8bce408363c5909e952ec3ff80d9b
-export PATH=$ROOT/gitenv/bin:$PATH
+STATE_ROOT=$FORMAL_ROOT/state_diagnostics
+BUILDING_ROOT=$FORMAL_ROOT/state_diagnostics.building
+EXTERNAL_AUDIT=$FORMAL_ROOT/state_diagnostics_external_audit.json
+JOBID_FILE=$AUDIT_PARENT/state_diagnostics_jobid.txt
+JOBID=204847
 
-echo "=== A TRAINING AUDIT PASS GATE ==="
-TRAINING_JID=$(tr -d '[:space:]' < "$TRAINING_JOBID_FILE")
-test "$TRAINING_JID" = 202777
-IFS='|' read -r TRAINING_STATE TRAINING_EXIT TRAINING_ELAPSED <<< "$(sacct -n -X -j "$TRAINING_JID" --starttime 2026-08-12 --format=State,ExitCode,Elapsed -P)"
-echo "training_audit_jobid=$TRAINING_JID state=$TRAINING_STATE exit_code=$TRAINING_EXIT elapsed=$TRAINING_ELAPSED"
-test "$TRAINING_STATE" = COMPLETED
-test "$TRAINING_EXIT" = 0:0
-test -f "$REPORT"
-set -- $(sha256sum "$REPORT")
-echo "training_external_audit_sha256=$1"
-test "$1" = "$EXPECTED_REPORT_SHA"
+echo "=== A JOB ID AND SCHEDULER ==="
+if [ -f "$JOBID_FILE" ]; then
+  RECORDED_JOBID=$(tr -d '[:space:]' < "$JOBID_FILE")
+  echo "recorded_jobid=$RECORDED_JOBID"
+else
+  echo "recorded_jobid_file=missing"
+fi
+squeue -j "$JOBID" -o '%.12i %.18j %.12T %.12M %.24R' 2>&1 || true
+sacct -X -j "$JOBID" --starttime 2026-08-18 --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList -P 2>&1 || true
 
-python - "$REPORT" <<'PY'
+echo "=== B LOG FILES ==="
+for f in "$ROOT/logs/state_diagnostics_${JOBID}.out" "$ROOT/logs/state_diagnostics_${JOBID}.err"; do
+  if [ -f "$f" ]; then
+    stat -c '%n|bytes=%s|mtime=%y' "$f" 2>&1 || true
+    echo "--- tail $f ---"
+    tail -n 80 "$f" 2>&1 || true
+  else
+    echo "$f|missing"
+  fi
+done
+
+echo "=== C OUTPUT INVENTORY ==="
+for p in "$STATE_ROOT" "$BUILDING_ROOT" "$EXTERNAL_AUDIT"; do
+  if [ -e "$p" ]; then
+    echo "$p|present"
+  else
+    echo "$p|missing"
+  fi
+done
+
+if [ -d "$STATE_ROOT" ]; then
+  echo "seed_dir_count=$(find "$STATE_ROOT" -mindepth 1 -maxdepth 1 -type d -name 'E09-CONTINUOUS_s*' | wc -l)"
+  echo "npy_file_count=$(find "$STATE_ROOT" -mindepth 2 -maxdepth 2 -type f -name '*.npy' | wc -l)"
+  echo "child_manifest_count=$(find "$STATE_ROOT" -mindepth 2 -maxdepth 2 -type f -name 'manifest.json' | wc -l)"
+  echo "child_summary_count=$(find "$STATE_ROOT" -mindepth 2 -maxdepth 2 -type f -name 'summary.json' | wc -l)"
+  if [ -f "$STATE_ROOT/manifest.json" ]; then
+    sha256sum "$STATE_ROOT/manifest.json" 2>&1 || true
+    python - "$STATE_ROOT" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+children = manifest.get("children", [])
+child_manifests = []
+for child in children:
+    path = root / child.get("relative_path", "") / "manifest.json"
+    if path.is_file():
+        child_manifests.append(json.loads(path.read_text(encoding="utf-8")))
+
+print(json.dumps({
+    "schema": manifest.get("schema"),
+    "status": manifest.get("status"),
+    "seed_count": manifest.get("seed_count"),
+    "seeds": manifest.get("seeds"),
+    "child_count": len(children),
+    "child_manifest_count": len(child_manifests),
+    "array_count_from_root": sum(int(child.get("array_count", 0)) for child in children),
+    "array_count_from_children": sum(len(child.get("arrays", [])) for child in child_manifests),
+    "training_target_reads": manifest.get("training_target_reads"),
+    "formal_evaluation_observation_reads": manifest.get("formal_evaluation_observation_reads"),
+    "recent_path_executed": manifest.get("recent_path_executed"),
+    "flow_head_executed": manifest.get("flow_head_executed"),
+    "formal_period_predictions_generated": manifest.get("formal_period_predictions_generated"),
+    "official_score_called": manifest.get("official_score_called"),
+    "training_external_audit_sha256": manifest.get("training_external_audit_sha256"),
+    "environment_sha256": manifest.get("environment_sha256"),
+    "diagnostic_source_sha256": manifest.get("diagnostic_source_sha256"),
+}, sort_keys=True))
+PY
+  else
+    echo "root_manifest=missing"
+  fi
+fi
+
+if [ -d "$BUILDING_ROOT" ]; then
+  echo "building_seed_dir_count=$(find "$BUILDING_ROOT" -mindepth 1 -maxdepth 1 -type d -name 'E09-CONTINUOUS_s*' | wc -l)"
+  echo "building_npy_file_count=$(find "$BUILDING_ROOT" -mindepth 2 -maxdepth 2 -type f -name '*.npy' | wc -l)"
+fi
+
+if [ -f "$EXTERNAL_AUDIT" ]; then
+  sha256sum "$EXTERNAL_AUDIT" 2>&1 || true
+  python - "$EXTERNAL_AUDIT" <<'PY'
 import json
 import sys
 from pathlib import Path
 
 data = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-runs = data.get("runs", [])
-coverage = data.get("coverage", {})
-assert data.get("status") == "complete_training_audit"
-assert coverage.get("audited_runs") == 24
-assert coverage.get("expected_runs") == 24
-assert coverage.get("passed_runs") == 24
-assert len(runs) == 24
-assert data.get("training_progress", {}).get("completed_run_count") == 24
-assert sum(len(run.get("checkpoints", [])) for run in runs) == 72
-assert sum(run.get("nonfinite_tensor_count", 0) for run in runs) == 0
-assert data.get("all_checkpoint_tensors_finite") is True
-assert data.get("formal_evaluation_observation_reads") == 0
-assert data.get("formal_period_predictions_generated") is False
-assert data.get("official_score_called") is False
-assert data.get("validation_metrics_computed") is False
-assert data.get("source_context", {}).get("training_git_commit") == "bb519b8b9980725ac1d5f4e298d76ae80ea2c58d"
-assert data.get("audit_source_context", {}).get("git_commit") == "880a066d4b775e76a2e9b0358c393666c8737c6b"
-assert data.get("audit_source_context", {}).get("tracked_source_clean") is True
-pre_seal = data.get("pre_seal_evidence", {})
-assert pre_seal.get("canonical_four_workload_resource_preflight_report_present") is False
-assert "canonical_four_workload_resource_preflight_report_missing" in pre_seal.get("known_blockers", [])
-print("training_audit_gate=passed runs=24 checkpoints=72 nonfinite=0 prohibited_reads=0 predictions=false scoring=false")
-print("pre_seal_evidence=missing_canonical_four_workload_resource_preflight_report")
+keys = [
+    "schema", "status", "seed_count", "array_count",
+    "raw_bytes_match_count", "file_sha256_match_count",
+    "formal_evaluation_observation_reads", "official_score_called",
+]
+print(json.dumps({key: data.get(key) for key in keys}, sort_keys=True))
 PY
+fi
 
-echo "=== B FROZEN AND OUTPUT PRECONDITIONS ==="
-TRAIN_HEAD=$(git -C "$TRAIN_REPO" rev-parse HEAD)
-STRICT_HEAD=$(git -C "$STRICT_REPO" rev-parse HEAD)
-AUDIT_HEAD=$(git -C "$AUDIT_REPO" rev-parse HEAD)
-echo "training_head=$TRAIN_HEAD"
-echo "strict_head=$STRICT_HEAD"
-echo "audit_head=$AUDIT_HEAD"
-test "$TRAIN_HEAD" = bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
-test "$STRICT_HEAD" = f94183209bf44ed6e672e1c23f98020905804e6d
-test "$AUDIT_HEAD" = 880a066d4b775e76a2e9b0358c393666c8737c6b
-test -z "$(git -C "$AUDIT_REPO" status --porcelain --untracked-files=all)"
-test ! -e "$STATE_JOBID_FILE"
-test ! -e "$FORMAL_ROOT/state_diagnostics"
-test ! -e "$FORMAL_ROOT/state_diagnostics.building"
-test ! -e "$FORMAL_ROOT/state_diagnostics_external_audit.json"
-test ! -e "$FORMAL_ROOT/training_seal.json"
-
-echo "=== C SUBMIT STATE DIAGNOSTICS ==="
-STATE_JID=$(sbatch --parsable "$AUDIT_REPO/src/26_historical_band_experts/hpc/state_diagnostics_formal_v09.slurm")
-printf '%s\n' "$STATE_JID" > "$STATE_JOBID_FILE"
-echo "STATE_DIAGNOSTICS_JOBID=$STATE_JID"
-squeue -j "$STATE_JID" -o '%.12i %.18j %.10T %.12M %.24R' || true
 echo "=== END ==="
