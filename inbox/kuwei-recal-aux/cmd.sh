@@ -1,16 +1,22 @@
 #!/bin/bash
-# SHORT diagnostic only. No sleep loops (a previous long wait blocked the whole mailbox).
 set -o pipefail
-echo "=== A. why is the gate pending? ==="
-scontrol show job 212027 2>&1 | grep -E 'JobId|JobState|Reason|Partition|NumCPUs|TimeLimit|Priority|QOS|NodeList' | head -12 || true
-echo "=== B. my queue ==="
-squeue -u ${USER} -o "%.10i %.14j %.12P %.8T %.10M %.6D %R" 2>&1 | head -12 || true
-echo "=== C. account limits ==="
-sacctmgr -n show assoc user=${USER} format=Account,Partition,QOS,MaxJobs,MaxSubmit,GrpTRES,MaxTRES 2>&1 | head -10 || echo "(sacctmgr unavailable)"
-echo "=== D. partition state right now ==="
-sinfo -p hcpu48 -o "%20P %10a %12l %6D %10t %N" 2>&1 | head -8 || true
-echo "=== E. what the successful probe used ==="
-sacct -j 211961 --format=JobID,Partition,ReqCPUS,Timelimit,State,Elapsed,NodeList%10 2>&1 | head -4 || true
-echo "=== F. gate job resources as submitted ==="
-sacct -j 212027 --format=JobID,Partition,ReqCPUS,Timelimit,State,Reason%30 2>&1 | head -4 || true
+echo "=== A. all CPU partitions right now ==="
+sinfo -o "%18P %8a %6D %10t %N" 2>&1 | grep -E 'PARTITION|hcpu' | head -12 || true
+echo "=== B. idle node counts ==="
+for P in hcpu48 hcpu48y; do
+  N=$(sinfo -h -p $P -t idle -o "%D" 2>/dev/null | paste -sd+ | bc 2>/dev/null)
+  echo "$P idle nodes: ${N:-0}"
+done
+echo "=== C. do hcpu48 and hcpu48y run the same OS? (must match for numba comparability) ==="
+sinfo -h -p hcpu48y -t idle -o "%N" 2>&1 | head -2 || true
+echo "=== D. queue depth ahead of me on hcpu48 ==="
+squeue -p hcpu48 -h -t PENDING -o "%i" 2>/dev/null | wc -l
+squeue -p hcpu48 -h -t RUNNING -o "%i" 2>/dev/null | wc -l
+echo "=== E. resubmit the gate to BOTH cpu partitions, whole node, shorter walltime ==="
+ROOT=~/kuwei_paired
+scancel 212027 2>&1 && echo "cancelled 212027" || true
+sed -i 's|^#SBATCH -p hcpu48$|#SBATCH -p hcpu48,hcpu48y|; s|^#SBATCH -t 02:00:00$|#SBATCH -t 01:30:00|' $ROOT/gate/gate.slurm
+grep -E '^#SBATCH' $ROOT/gate/gate.slurm | head -8
+cd $ROOT/gate && sbatch gate.slurm 2>&1 | tee $ROOT/gate/gate_jobid.txt || echo "sbatch FAILED"
+squeue -u ${USER} -n kuwei-gate -o "%.10i %.12j %.10P %.8T %R" 2>&1 | head -4 || true
 echo "=== DONE ==="
