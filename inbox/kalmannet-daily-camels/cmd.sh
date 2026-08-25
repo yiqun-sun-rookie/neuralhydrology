@@ -4,20 +4,22 @@ umask 077
 
 EXPECTED_USER="sunyiq"
 MAILBOX_ROOT="/data1/home/sunyiq/hpc_mailbox"
-ARCHIVE="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/official-tsp-gru-causal-fair-shared-a33-v22/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_SHARED_SMOKE_V1_20260825_A33.tar.gz"
-ARCHIVE_SHA256="a9be4b8c226206e2ebcaa48e38659fa061e752557a51dbc491e325db0d0f2ac2"
-ARCHIVE_SIZE=1174330
-EXPERIMENT_ID="DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_SHARED_SMOKE_V1_20260825_A33"
-RUN_BASE="/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825"
-SOURCE_DIRECTORY="${RUN_BASE}/source_A33_seq22"
-RUN_DIRECTORY="${RUN_BASE}/${EXPERIMENT_ID}"
+PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/native-full-state-a20-contract-a34-v23"
+ARCHIVE="${PAYLOAD_DIRECTORY}/DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_MASKED_NSE_SMOKE_V1_20260825_A34.tar.gz"
+OUTER_MANIFEST="${PAYLOAD_DIRECTORY}/bundle_manifest.sha256.json"
+ARCHIVE_SHA256="12daf111148c4d54609fed746fc8344344c1d3e53c41988655666199606d4958"
+ARCHIVE_SIZE=244202
+EXPERIMENT_ID="DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_MASKED_NSE_SMOKE_V1_20260825_A34"
+RUN_BASE="/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_20260825"
+SOURCE_DIRECTORY="${RUN_BASE}/source_A34_seq23"
+RUN_DIRECTORY="${RUN_BASE}/runs/${EXPERIMENT_ID}"
 STATUS_DIRECTORY="${RUN_BASE}/status"
-STAGING_DIRECTORY="/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_staging_20260825"
+STAGING_DIRECTORY="/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_staging_20260825"
 OUTBOX_DIRECTORY="${MAILBOX_ROOT}/outbox/kalmannet-daily-camels"
-EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/DAILY_CAMELS_OFFICIAL_KALMANNET_CAUSAL_FAIR_SHARED_A33_SEQ22_evidence.tar.gz"
+EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_A34_SEQ23_evidence.tar.gz"
 NAMESPACE_OWNED=0
 SAFE_TO_PACKAGE=0
-FINAL_STATUS="SEQ22_A33_STARTED"
+FINAL_STATUS="SEQ23_A34_STARTED"
 TRAINING_JOB_ID="NOT_SUBMITTED"
 
 sha256_file() { sha256sum "$1" | awk '{print $1}'; }
@@ -68,11 +70,30 @@ if [[ "${USER-}" != "$EXPECTED_USER" || "$ACTUAL_USER" != "$EXPECTED_USER" || "$
   echo "fixed-user check failed" >&2
   exit 50
 fi
-[[ -f "$ARCHIVE" && ! -L "$ARCHIVE" ]] || { echo "A33 archive absent or symbolic" >&2; exit 51; }
-[[ "$(stat -c '%s' "$ARCHIVE")" = "$ARCHIVE_SIZE" ]] || { echo "A33 archive size differs" >&2; exit 52; }
-[[ "$(sha256_file "$ARCHIVE")" = "$ARCHIVE_SHA256" ]] || { echo "A33 archive hash differs" >&2; exit 53; }
+[[ -f "$ARCHIVE" && ! -L "$ARCHIVE" ]] || { echo "A34 archive absent or symbolic" >&2; exit 51; }
+[[ -f "$OUTER_MANIFEST" && ! -L "$OUTER_MANIFEST" ]] || { echo "A34 outer manifest absent or symbolic" >&2; exit 52; }
+[[ "$(stat -c '%s' "$ARCHIVE")" = "$ARCHIVE_SIZE" ]] || { echo "A34 archive size differs" >&2; exit 53; }
+[[ "$(sha256_file "$ARCHIVE")" = "$ARCHIVE_SHA256" ]] || { echo "A34 archive hash differs" >&2; exit 54; }
+python - "$OUTER_MANIFEST" "$EXPERIMENT_ID" "$ARCHIVE_SHA256" "$ARCHIVE_SIZE" <<'PY'
+import json
+from pathlib import Path
+import sys
+
+manifest = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+if (
+    manifest.get("schema_version")
+    != "daily_camels_native_full_state_outer_bundle_manifest_v1"
+    or manifest.get("experiment_id") != sys.argv[2]
+    or manifest.get("archive_sha256") != sys.argv[3]
+    or int(manifest.get("archive_size_bytes", -1)) != int(sys.argv[4])
+    or int(manifest.get("file_count", -1)) != 34
+    or manifest.get("daily_only") is not True
+    or manifest.get("formal_evaluation_enabled") is not False
+):
+    raise SystemExit("A34 outer manifest identity differs")
+PY
 for path in "$RUN_BASE" "$STAGING_DIRECTORY" "$EVIDENCE_ARCHIVE"; do
-  [[ ! -e "$path" && ! -L "$path" ]] || { echo "isolated A33 path already exists: $path" >&2; exit 54; }
+  [[ ! -e "$path" && ! -L "$path" ]] || { echo "isolated A34 path already exists: $path" >&2; exit 55; }
 done
 
 mkdir "$RUN_BASE" "$STAGING_DIRECTORY"
@@ -80,33 +101,51 @@ mkdir "$SOURCE_DIRECTORY" "$STATUS_DIRECTORY" "$RUN_BASE/logs"
 NAMESPACE_OWNED=1
 SAFE_TO_PACKAGE=1
 trap on_exit EXIT
-trap 'FINAL_STATUS="SEQ22_A33_INTERRUPTED"; exit 143' INT TERM
+trap 'FINAL_STATUS="SEQ23_A34_INTERRUPTED"; exit 143' INT TERM
 date -u +%Y-%m-%dT%H:%M:%SZ > "${STATUS_DIRECTORY}/started_time_utc.txt"
 {
   printf 'archive=%s\n' "$ARCHIVE"
   printf 'archive_sha256=%s\n' "$ARCHIVE_SHA256"
   printf 'archive_size_bytes=%s\n' "$ARCHIVE_SIZE"
+  printf 'outer_manifest=%s\n' "$OUTER_MANIFEST"
+  printf 'outer_manifest_sha256=%s\n' "$(sha256_file "$OUTER_MANIFEST")"
 } > "${STATUS_DIRECTORY}/payload_archive_identity.txt"
-FINAL_STATUS="SEQ22_A33_NAMESPACE_OWNED"
+FINAL_STATUS="SEQ23_A34_NAMESPACE_OWNED"
 tar -xzf "$ARCHIVE" -C "$SOURCE_DIRECTORY"
 set +u
 source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh"
 conda activate nh_final
 set -u
 export PYTHONDONTWRITEBYTECODE=1
+export PYTHONPATH="${SOURCE_DIRECTORY}/src:${SOURCE_DIRECTORY}"
 cd "$SOURCE_DIRECTORY"
-python -u hpc/daily_camels_official_kalmannet_causal_fair/preflight.py --bundle-root "$SOURCE_DIRECTORY" --offline-bundle-check > "${STATUS_DIRECTORY}/offline-preflight.json"
-FINAL_STATUS="SEQ22_A33_OFFLINE_BUNDLE_VERIFIED"
+python - "$SOURCE_DIRECTORY" > "${STATUS_DIRECTORY}/offline-bundle-verification.json" <<'PY'
+import json
+from pathlib import Path
+import sys
+
+from hpc.daily_camels_native_kalmannet_full_state_masked_nse.preflight import verify_bundle
+
+manifest = verify_bundle(Path(sys.argv[1]))
+print(json.dumps({
+    "status": "OFFLINE_BUNDLE_VERIFIED",
+    "experiment_id": manifest["experiment_id"],
+    "file_count": manifest["file_count"],
+    "daily_only": manifest["daily_only"],
+    "formal_evaluation_enabled": manifest["formal_evaluation_enabled"],
+}, sort_keys=True, separators=(",", ":")))
+PY
+FINAL_STATUS="SEQ23_A34_OFFLINE_BUNDLE_VERIFIED"
 
 SAFE_TO_PACKAGE=0
-if ! TRAINING_JOB_ID="$(sbatch --parsable hpc/daily_camels_official_kalmannet_causal_fair/submit_resource_smoke_gpu.slurm)"; then
+if ! TRAINING_JOB_ID="$(sbatch --parsable hpc/daily_camels_native_kalmannet_full_state_masked_nse/submit_smoke_gpu.slurm)"; then
   SAFE_TO_PACKAGE=1
-  FINAL_STATUS="SEQ22_A33_SUBMISSION_REJECTED_HARD_STOP"
-  exit 55
+  FINAL_STATUS="SEQ23_A34_SUBMISSION_REJECTED_HARD_STOP"
+  exit 56
 fi
-[[ "$TRAINING_JOB_ID" =~ ^[0-9]+$ ]] || { FINAL_STATUS="SEQ22_A33_SUBMISSION_IDENTITY_HARD_STOP"; exit 58; }
+[[ "$TRAINING_JOB_ID" =~ ^[0-9]+$ ]] || { FINAL_STATUS="SEQ23_A34_SUBMISSION_IDENTITY_HARD_STOP"; exit 57; }
 printf '%s\n' "$TRAINING_JOB_ID" > "${STATUS_DIRECTORY}/training_job_id.txt"
-FINAL_STATUS="SEQ22_A33_SUBMITTED"
+FINAL_STATUS="SEQ23_A34_SUBMITTED"
 
 TERMINAL_STATE=""
 for attempt in $(seq 1 660); do
@@ -121,42 +160,116 @@ case "$TERMINAL_STATE" in
     SAFE_TO_PACKAGE=1
     ;;
   *)
-    FINAL_STATUS="SEQ22_A33_MONITOR_TIMEOUT_JOB_LEFT_RUNNING_NO_EVIDENCE"
-    exit 57
+    FINAL_STATUS="SEQ23_A34_MONITOR_TIMEOUT_JOB_LEFT_RUNNING_NO_EVIDENCE"
+    exit 58
     ;;
 esac
-sacct -j "$TRAINING_JOB_ID" --units=K --parsable2 --format=JobIDRaw,JobName,Partition,AllocCPUS,State,ExitCode,Elapsed,ReqMem,AllocTRES,MaxRSS,MaxVMSize > "${STATUS_DIRECTORY}/seq22_A33_sacct_resources.txt"
+sacct -j "$TRAINING_JOB_ID" --units=K --parsable2 --format=JobIDRaw,JobName,Partition,AllocCPUS,State,ExitCode,Elapsed,ReqMem,AllocTRES,MaxRSS,MaxVMSize > "${STATUS_DIRECTORY}/seq23_A34_sacct_resources.txt"
 printf '%s\n' "$TERMINAL_STATE" > "${STATUS_DIRECTORY}/training_terminal_state.txt"
-if [[ "$TERMINAL_STATE" != "COMPLETED" ]]; then
-  FINAL_STATUS="SEQ22_A33_TRAINING_${TERMINAL_STATE:-UNKNOWN}_HARD_STOP"
-  exit 56
-fi
-FINAL_STATUS="SEQ22_A33_TRAINING_COMPLETED"
 
-PRIMARY_VERIFICATION="${STATUS_DIRECTORY}/train-independent-verification-${TRAINING_JOB_ID}.json"
-REPEAT_VERIFICATION="${STATUS_DIRECTORY}/train-independent-verification-repeat-${TRAINING_JOB_ID}.json"
-for verification in "$PRIMARY_VERIFICATION" "$REPEAT_VERIFICATION"; do
-  [[ -f "$verification" && ! -L "$verification" ]] || { echo "scheduled A33 verification evidence absent or symbolic: $verification" >&2; exit 59; }
-done
-[[ "$(sha256_file "$PRIMARY_VERIFICATION")" = "$(sha256_file "$REPEAT_VERIFICATION")" ]] || { echo "scheduled A33 verification repetitions differ" >&2; exit 60; }
-FINAL_STATUS="SEQ22_A33_SCHEDULED_VERIFICATIONS_MATCH"
-python - "$PRIMARY_VERIFICATION" <<'PY'
+WORKFLOW_STATUS_FILE="${STATUS_DIRECTORY}/workflow-status-${TRAINING_JOB_ID}.json"
+if [[ "$TERMINAL_STATE" != "COMPLETED" ]]; then
+  if [[ -f "$WORKFLOW_STATUS_FILE" && ! -L "$WORKFLOW_STATUS_FILE" ]] && python - "$WORKFLOW_STATUS_FILE" <<'PY'
 import json
 from pathlib import Path
 import sys
-report = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-required_true = (
-    "training_effect_passed",
-    "reported_gate_passed",
-    "recomputed_gate_passed",
-    "all_leads_median_nse_at_least_0_60",
-    "complete_metric_population_verified",
-)
-if report.get("status") != "TECHNICAL_EVIDENCE_VERIFIED" or any(
-    report.get(name) is not True for name in required_true
-):
-    raise SystemExit("A33 scheduled verification gate differs")
-print(json.dumps(report, sort_keys=True))
+
+workflow = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+if workflow.get("status") != "RECOVERABLE_STOP" or int(workflow.get("recoverable_stop_evidence_exit_code", -1)) != 0:
+    raise SystemExit(1)
 PY
-FINAL_STATUS="SEQ22_A33_SHARED_DEVELOPMENT_GATES_VERIFIED"
-echo "DAILY_CAMELS_OFFICIAL_KALMANNET_A33_SHARED_DEVELOPMENT_GATES_PASS job=${TRAINING_JOB_ID}"
+  then
+    FINAL_STATUS="SEQ23_A34_VERIFIED_RECOVERABLE_STOP"
+    exit 75
+  fi
+  FINAL_STATUS="SEQ23_A34_TRAINING_${TERMINAL_STATE:-UNKNOWN}_HARD_STOP"
+  exit 59
+fi
+FINAL_STATUS="SEQ23_A34_TRAINING_COMPLETED"
+
+VERIFICATION_REPORT="${STATUS_DIRECTORY}/independent-verification-${TRAINING_JOB_ID}.json"
+JOB_EVIDENCE_MANIFEST="${STATUS_DIRECTORY}/job-evidence-manifest-${TRAINING_JOB_ID}.json"
+for path in "$WORKFLOW_STATUS_FILE" "$VERIFICATION_REPORT" "$JOB_EVIDENCE_MANIFEST" "${RUN_DIRECTORY}/result_summary.json" "${RUN_DIRECTORY}/manifest.sha256.json"; do
+  [[ -f "$path" && ! -L "$path" ]] || { echo "scheduled A34 evidence absent or symbolic: $path" >&2; exit 60; }
+done
+python - "$RUN_BASE" "$WORKFLOW_STATUS_FILE" "$VERIFICATION_REPORT" "$JOB_EVIDENCE_MANIFEST" "${RUN_DIRECTORY}/result_summary.json" <<'PY'
+from hashlib import sha256
+import json
+from pathlib import Path
+import sys
+
+remote_root = Path(sys.argv[1]).resolve()
+workflow = json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
+verification = json.loads(Path(sys.argv[3]).read_text(encoding="utf-8"))
+evidence = json.loads(Path(sys.argv[4]).read_text(encoding="utf-8"))
+summary = json.loads(Path(sys.argv[5]).read_text(encoding="utf-8"))
+experiment_id = "DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_MASKED_NSE_SMOKE_V1_20260825_A34"
+
+if any(document.get("experiment_id") != experiment_id for document in (verification, evidence, summary)):
+    raise SystemExit("A34 scheduled evidence identity differs")
+status = workflow.get("status")
+if status == "VERIFIED_SCIENTIFIC_PASS":
+    expected = (0, 0, "VERIFIED_PASS", True)
+elif status == "VERIFIED_SCIENTIFIC_HARD_STOP":
+    expected = (3, 2, "VERIFIED_HARD_STOP", False)
+else:
+    raise SystemExit(f"unexpected completed A34 workflow status: {status}")
+training_exit, verification_exit, verification_status, scientific_passed = expected
+if (
+    int(workflow.get("training_exit_code", -1)) != training_exit
+    or int(workflow.get("verification_exit_code", -1)) != verification_exit
+    or verification.get("status") != verification_status
+    or verification.get("scientific_passed") is not scientific_passed
+    or summary.get("science_gate", {}).get("passed") is not scientific_passed
+    or verification.get("daily_only") is not True
+    or verification.get("formal_evaluation") is not False
+    or verification.get("reserved_evaluation_accessed") is not False
+    or int(verification.get("optimizer_steps", -1)) != 8
+    or int(verification.get("forecast_error_events", -1)) != 2160
+):
+    raise SystemExit("A34 workflow, verifier, and result summary differ")
+if int(verification.get("selected_epoch", -1)) != int(summary.get("science_gate", {}).get("selected_epoch", -2)):
+    raise SystemExit("A34 selected epoch binding differs")
+files = evidence.get("files")
+if not isinstance(files, dict) or int(evidence.get("file_count", -1)) != len(files):
+    raise SystemExit("A34 job evidence manifest is incomplete")
+for relative, record in files.items():
+    relative_path = Path(str(relative))
+    if relative_path.is_absolute() or ".." in relative_path.parts:
+        raise SystemExit(f"unsafe A34 evidence member: {relative}")
+    path = (remote_root / relative_path).resolve()
+    try:
+        path.relative_to(remote_root)
+    except ValueError as exc:
+        raise SystemExit(f"escaping A34 evidence member: {relative}") from exc
+    if not path.is_file() or path.is_symlink():
+        raise SystemExit(f"missing A34 evidence member: {relative}")
+    content = path.read_bytes()
+    if sha256(content).hexdigest() != record.get("sha256") or len(content) != int(record.get("size_bytes", -1)):
+        raise SystemExit(f"changed A34 evidence member: {relative}")
+print(json.dumps({
+    "workflow_status": status,
+    "scientific_passed": scientific_passed,
+    "selected_epoch": verification["selected_epoch"],
+    "epoch_validation_losses": verification["epoch_validation_losses"],
+    "reasons": verification["reasons"],
+    "optimizer_steps": verification["optimizer_steps"],
+    "forecast_error_events": verification["forecast_error_events"],
+}, sort_keys=True, separators=(",", ":")))
+PY
+
+FINAL_STATUS="SEQ23_A34_SCHEDULED_EVIDENCE_VERIFIED"
+WORKFLOW_STATUS="$(python - "$WORKFLOW_STATUS_FILE" <<'PY'
+import json
+from pathlib import Path
+import sys
+print(json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))["status"])
+PY
+)"
+if [[ "$WORKFLOW_STATUS" = "VERIFIED_SCIENTIFIC_PASS" ]]; then
+  FINAL_STATUS="SEQ23_A34_VERIFIED_SCIENTIFIC_PASS"
+  echo "DAILY_CAMELS_NATIVE_KALMANNET_A34_VERIFIED_SCIENTIFIC_PASS job=${TRAINING_JOB_ID}"
+else
+  FINAL_STATUS="SEQ23_A34_VERIFIED_SCIENTIFIC_HARD_STOP"
+  echo "DAILY_CAMELS_NATIVE_KALMANNET_A34_VERIFIED_SCIENTIFIC_HARD_STOP job=${TRAINING_JOB_ID}"
+fi
