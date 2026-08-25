@@ -1,5 +1,5 @@
 #!/bin/bash
-# nature1st-attr-swap seq=95 -- READ-ONLY watchdog for armI (job 211317). NO sbatch, NO compute.
+# nature1st-attr-swap seq=96 -- READ-ONLY watchdog for armI (job 211317). NO sbatch, NO compute.
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
 J=211317
@@ -98,4 +98,4 @@ PYEOF
 else
   echo "(armI eval_val_per_station.csv absent -- training not finished)"
 fi
-echo "=== END seq=95 ==="
+echo "=== END seq=96 ==="
