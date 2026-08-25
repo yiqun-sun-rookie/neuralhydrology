@@ -1,114 +1,144 @@
 #!/bin/bash
-# id26-v09-strict seq=64: read-only status and artifact query for state diagnostics job 204847.
-set -o pipefail
+# id26-v09-strict seq=65: preserve failed state diagnostics attempt 01, reconstruct the exact deterministic-prefix fix, and submit attempt 02 once.
+set -euo pipefail
 export LC_ALL=C
 
 ROOT=/data1/home/sunyiq/v09_strict
 AUDIT_PARENT=$ROOT/audit_v09
+AUDIT_REPO=$AUDIT_PARENT/neuralhydrology
 TRAIN_REPO=$ROOT/codetest/neuralhydrology
+STRICT_REPO=$ROOT/neuralhydrology
 FORMAL_ROOT=$TRAIN_REPO/results/26_historical_band_experts/formal_v09
-STATE_ROOT=$FORMAL_ROOT/state_diagnostics
+ATTEMPT_01_FILE=$AUDIT_PARENT/state_diagnostics_jobid.txt
+ATTEMPT_02_FILE=$AUDIT_PARENT/state_diagnostics_attempt_02_jobid.txt
 BUILDING_ROOT=$FORMAL_ROOT/state_diagnostics.building
-EXTERNAL_AUDIT=$FORMAL_ROOT/state_diagnostics_external_audit.json
-JOBID_FILE=$AUDIT_PARENT/state_diagnostics_jobid.txt
-JOBID=204847
+FAILED_ROOT=$FORMAL_ROOT/state_diagnostics.attempt_01.job_204847.failed
+PARENT=880a066d4b775e76a2e9b0358c393666c8737c6b
+COMMIT=d69d2a7af509b141c7e8361f49f6fdeceed963af
+EXPECTED_TREE=a0b5c46a37fcbdf16040e72f0dc94d53d6e1c5e0
+INDEX_FILE=$AUDIT_PARENT/transport_seq65.index
+export PATH=$ROOT/gitenv/bin:$PATH
 
-echo "=== A JOB ID AND SCHEDULER ==="
-if [ -f "$JOBID_FILE" ]; then
-  RECORDED_JOBID=$(tr -d '[:space:]' < "$JOBID_FILE")
-  echo "recorded_jobid=$RECORDED_JOBID"
-else
-  echo "recorded_jobid_file=missing"
-fi
-squeue -j "$JOBID" -o '%.12i %.18j %.12T %.12M %.24R' 2>&1 || true
-sacct -X -j "$JOBID" --starttime 2026-08-18 --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList -P 2>&1 || true
+echo "=== A PRESERVE FAILED ATTEMPT 01 ==="
+JID1=$(tr -d '[:space:]' < "$ATTEMPT_01_FILE")
+test "$JID1" = 204847
+IFS='|' read -r STATE1 EXIT1 ELAPSED1 <<< "$(sacct -n -X -j "$JID1" --starttime 2026-08-18 --format=State,ExitCode,Elapsed -P)"
+echo "attempt_01_jobid=$JID1 state=$STATE1 exit_code=$EXIT1 elapsed=$ELAPSED1"
+test "$STATE1" = FAILED
+test "$EXIT1" = 1:0
+test -f "$ROOT/logs/state_diagnostics_204847.out"
+test -f "$ROOT/logs/state_diagnostics_204847.err"
+test ! -e "$FORMAL_ROOT/state_diagnostics"
+test -d "$BUILDING_ROOT"
+test ! -e "$FAILED_ROOT"
+test ! -e "$ATTEMPT_02_FILE"
+test ! -e "$FORMAL_ROOT/state_diagnostics_external_audit.json"
+test ! -e "$FORMAL_ROOT/training_seal.json"
+echo "attempt_01_building_inventory:"
+find "$BUILDING_ROOT" -mindepth 1 -maxdepth 2 -print
+mv -- "$BUILDING_ROOT" "$FAILED_ROOT"
+test -d "$FAILED_ROOT"
+test ! -e "$BUILDING_ROOT"
+echo "attempt_01_archived=$FAILED_ROOT"
 
-echo "=== B LOG FILES ==="
-for f in "$ROOT/logs/state_diagnostics_${JOBID}.out" "$ROOT/logs/state_diagnostics_${JOBID}.err"; do
-  if [ -f "$f" ]; then
-    stat -c '%n|bytes=%s|mtime=%y' "$f" 2>&1 || true
-    echo "--- tail $f ---"
-    tail -n 80 "$f" 2>&1 || true
-  else
-    echo "$f|missing"
-  fi
-done
+echo "=== B FROZEN CHECKOUTS AND TRAINING AUDIT ==="
+TRAIN_HEAD=$(git -C "$TRAIN_REPO" rev-parse HEAD)
+STRICT_HEAD=$(git -C "$STRICT_REPO" rev-parse HEAD)
+echo "training_head=$TRAIN_HEAD"
+echo "strict_head=$STRICT_HEAD"
+test "$TRAIN_HEAD" = bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
+test "$STRICT_HEAD" = f94183209bf44ed6e672e1c23f98020905804e6d
+test "$(sha256sum "$FORMAL_ROOT/training_external_audit.json" | cut -d' ' -f1)" = af6e424d6b88f53f5ad51f2ea76c4bfeb4a8bce408363c5909e952ec3ff80d9b
 
-echo "=== C OUTPUT INVENTORY ==="
-for p in "$STATE_ROOT" "$BUILDING_ROOT" "$EXTERNAL_AUDIT"; do
-  if [ -e "$p" ]; then
-    echo "$p|present"
-  else
-    echo "$p|missing"
-  fi
-done
+echo "=== C EXACT OFFLINE FIX RECONSTRUCTION ==="
+test "$(git -C "$AUDIT_REPO" rev-parse HEAD)" = "$PARENT"
+test -z "$(git -C "$AUDIT_REPO" status --porcelain --untracked-files=all)"
+git -C "$AUDIT_REPO" cat-file -e "$PARENT^{commit}"
+test ! -e "$INDEX_FILE"
+GIT_INDEX_FILE="$INDEX_FILE" git -C "$AUDIT_REPO" read-tree "$PARENT"
+GIT_INDEX_FILE="$INDEX_FILE" git -C "$AUDIT_REPO" apply --cached --unidiff-zero --whitespace=nowarn - <<'ID26_PATCH_65'
+diff --git a/src/26_historical_band_experts/bands_formal_v09.py b/src/26_historical_band_experts/bands_formal_v09.py
+index a5f145f5092b27237cf1bb931696317ed7f06ae2..af019bdd31d8880422a037cf71f34ec85580f57a 100644
+--- a/src/26_historical_band_experts/bands_formal_v09.py
++++ b/src/26_historical_band_experts/bands_formal_v09.py
+@@ -83,0 +84,10 @@ def _age_coordinate(low_lag: int, high_lag_exclusive: int) -> float:
++def _deterministic_cumsum_dim1_v09(values: torch.Tensor) -> torch.Tensor:
++    """Compute the dimension-one prefix sum with deterministic CUDA operations."""
++    running = torch.zeros_like(values[:, 0])
++    cumulative = []
++    for item in values.unbind(dim=1):
++        running = running + item
++        cumulative.append(running)
++    return torch.stack(cumulative, dim=1)
++
++
+@@ -102 +112 @@ def split_windows_v09(windows: torch.Tensor) -> dict[str, torch.Tensor]:
+-            torch.cumsum(windows, dim=1),
++            _deterministic_cumsum_dim1_v09(windows),
+diff --git a/src/26_historical_band_experts/tests/test_bands_formal_v09.py b/src/26_historical_band_experts/tests/test_bands_formal_v09.py
+index b02c3d11d2d77f5d67b5a61107834524097fcce3..01e1fcbe9d90d4922b353b415afcee60cd72f15e 100644
+--- a/src/26_historical_band_experts/tests/test_bands_formal_v09.py
++++ b/src/26_historical_band_experts/tests/test_bands_formal_v09.py
+@@ -103,0 +104,36 @@ def test_v09_split_is_causal_chronological_and_uses_exact_bin_means():
++def test_v09_split_does_not_call_torch_cumsum(monkeypatch):
++    from bands_formal_v09 import split_windows_v09
++
++    def reject_cumsum(*_args, **_kwargs):
++        raise AssertionError("split_windows_v09 must not call the nondeterministic CUDA cumsum kernel")
++
++    monkeypatch.setattr(torch, "cumsum", reject_cumsum)
++    windows = torch.arange(3_562 * 5, dtype=torch.float32).reshape(1, 3_562, 5)
++    dynamic = split_windows_v09(windows)
++
++    assert dynamic["recent"].shape == (1, 270, 5)
++    assert dynamic["history"].shape == (1, 120, 7)
++
++
++@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is required for the strict determinism regression")
++def test_v09_cuda_prefix_sum_is_strictly_deterministic_and_matches_native_cumsum():
++    from bands_formal_v09 import _deterministic_cumsum_dim1_v09
++
++    deterministic_before = torch.are_deterministic_algorithms_enabled()
++    warn_only_before = torch.is_deterministic_algorithms_warn_only_enabled()
++    try:
++        torch.manual_seed(26_090)
++        values = torch.randn(4, 3_562, 5, device="cuda", dtype=torch.float32)
++        torch.use_deterministic_algorithms(False)
++        native = torch.cumsum(values, dim=1)
++
++        torch.use_deterministic_algorithms(True)
++        first = _deterministic_cumsum_dim1_v09(values)
++        second = _deterministic_cumsum_dim1_v09(values)
++
++        assert torch.equal(first, second)
++        assert torch.equal(first, native)
++    finally:
++        torch.use_deterministic_algorithms(deterministic_before, warn_only=warn_only_before)
++
++
+ID26_PATCH_65
+TREE=$(GIT_INDEX_FILE="$INDEX_FILE" git -C "$AUDIT_REPO" write-tree)
+echo "reconstructed_tree=$TREE"
+test "$TREE" = "$EXPECTED_TREE"
+export GIT_AUTHOR_NAME='yiqun.sun'
+export GIT_AUTHOR_EMAIL='44900555+yiqun-sun-rookie@users.noreply.github.com'
+export GIT_AUTHOR_DATE='1787648129 +0800'
+export GIT_COMMITTER_NAME='yiqun.sun'
+export GIT_COMMITTER_EMAIL='44900555+yiqun-sun-rookie@users.noreply.github.com'
+export GIT_COMMITTER_DATE='1787648129 +0800'
+RECONSTRUCTED_COMMIT=$(git -C "$AUDIT_REPO" commit-tree "$TREE" -p "$PARENT" -m 'Fix: Make version 09 CUDA prefix sums deterministic')
+echo "reconstructed_commit=$RECONSTRUCTED_COMMIT"
+test "$RECONSTRUCTED_COMMIT" = "$COMMIT"
+test "$(git -C "$AUDIT_REPO" rev-parse "$COMMIT^{tree}")" = "$EXPECTED_TREE"
+git -C "$AUDIT_REPO" checkout -q --detach "$COMMIT"
+test "$(git -C "$AUDIT_REPO" rev-parse HEAD)" = "$COMMIT"
+test -z "$(git -C "$AUDIT_REPO" status --porcelain --untracked-files=all)"
+echo "audit_head=$(git -C "$AUDIT_REPO" rev-parse HEAD)"
+sha256sum "$INDEX_FILE"
 
-if [ -d "$STATE_ROOT" ]; then
-  echo "seed_dir_count=$(find "$STATE_ROOT" -mindepth 1 -maxdepth 1 -type d -name 'E09-CONTINUOUS_s*' | wc -l)"
-  echo "npy_file_count=$(find "$STATE_ROOT" -mindepth 2 -maxdepth 2 -type f -name '*.npy' | wc -l)"
-  echo "child_manifest_count=$(find "$STATE_ROOT" -mindepth 2 -maxdepth 2 -type f -name 'manifest.json' | wc -l)"
-  echo "child_summary_count=$(find "$STATE_ROOT" -mindepth 2 -maxdepth 2 -type f -name 'summary.json' | wc -l)"
-  if [ -f "$STATE_ROOT/manifest.json" ]; then
-    sha256sum "$STATE_ROOT/manifest.json" 2>&1 || true
-    python - "$STATE_ROOT" <<'PY'
-import json
-import sys
-from pathlib import Path
-
-root = Path(sys.argv[1])
-manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
-children = manifest.get("children", [])
-child_manifests = []
-for child in children:
-    path = root / child.get("relative_path", "") / "manifest.json"
-    if path.is_file():
-        child_manifests.append(json.loads(path.read_text(encoding="utf-8")))
-
-print(json.dumps({
-    "schema": manifest.get("schema"),
-    "status": manifest.get("status"),
-    "seed_count": manifest.get("seed_count"),
-    "seeds": manifest.get("seeds"),
-    "child_count": len(children),
-    "child_manifest_count": len(child_manifests),
-    "array_count_from_root": sum(int(child.get("array_count", 0)) for child in children),
-    "array_count_from_children": sum(len(child.get("arrays", [])) for child in child_manifests),
-    "training_target_reads": manifest.get("training_target_reads"),
-    "formal_evaluation_observation_reads": manifest.get("formal_evaluation_observation_reads"),
-    "recent_path_executed": manifest.get("recent_path_executed"),
-    "flow_head_executed": manifest.get("flow_head_executed"),
-    "formal_period_predictions_generated": manifest.get("formal_period_predictions_generated"),
-    "official_score_called": manifest.get("official_score_called"),
-    "training_external_audit_sha256": manifest.get("training_external_audit_sha256"),
-    "environment_sha256": manifest.get("environment_sha256"),
-    "diagnostic_source_sha256": manifest.get("diagnostic_source_sha256"),
-}, sort_keys=True))
-PY
-  else
-    echo "root_manifest=missing"
-  fi
-fi
-
-if [ -d "$BUILDING_ROOT" ]; then
-  echo "building_seed_dir_count=$(find "$BUILDING_ROOT" -mindepth 1 -maxdepth 1 -type d -name 'E09-CONTINUOUS_s*' | wc -l)"
-  echo "building_npy_file_count=$(find "$BUILDING_ROOT" -mindepth 2 -maxdepth 2 -type f -name '*.npy' | wc -l)"
-fi
-
-if [ -f "$EXTERNAL_AUDIT" ]; then
-  sha256sum "$EXTERNAL_AUDIT" 2>&1 || true
-  python - "$EXTERNAL_AUDIT" <<'PY'
-import json
-import sys
-from pathlib import Path
-
-data = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-keys = [
-    "schema", "status", "seed_count", "array_count",
-    "raw_bytes_match_count", "file_sha256_match_count",
-    "formal_evaluation_observation_reads", "official_score_called",
-]
-print(json.dumps({key: data.get(key) for key in keys}, sort_keys=True))
-PY
-fi
-
+echo "=== D SUBMIT STATE DIAGNOSTICS ATTEMPT 02 ==="
+JID2=$(sbatch --parsable "$AUDIT_REPO/src/26_historical_band_experts/hpc/state_diagnostics_formal_v09.slurm")
+printf '%s\n' "$JID2" > "$ATTEMPT_02_FILE"
+echo "STATE_DIAGNOSTICS_ATTEMPT_02_JOBID=$JID2"
+squeue -j "$JID2" -o '%.12i %.18j %.12T %.12M %.24R' || true
 echo "=== END ==="
