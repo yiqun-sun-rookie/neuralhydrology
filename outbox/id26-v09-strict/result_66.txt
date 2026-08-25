@@ -1,0 +1,27 @@
+### channel=id26-v09-strict seq=66
+### host=login4
+### started=2026-08-25T17:10:43+0800
+### ---------- output ----------
+=== A JOB ID AND SCHEDULER ===
+recorded_jobid=211643
+       JOBID               NAME        STATE         TIME         NODELIST(REASON)
+      211643          v09states      RUNNING         6:31                   ngu008
+JobIDRaw|JobName|State|ExitCode|Elapsed|Start|End|NodeList
+211643|v09states|RUNNING|0:0|00:06:53|2026-08-25T17:04:12|Unknown|ngu008
+=== B LOG FILES ===
+/data1/home/sunyiq/v09_strict/logs/state_diagnostics_211643.out|bytes=174|mtime=2026-08-25 17:04:00.000000000 +0800
+--- tail /data1/home/sunyiq/v09_strict/logs/state_diagnostics_211643.out ---
+audit_commit=d69d2a7af509b141c7e8361f49f6fdeceed963af node=ngu008 start=2026-08-25T17:03:38+08:00
+0, NVIDIA GeForce RTX 3090, 16904 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+/data1/home/sunyiq/v09_strict/logs/state_diagnostics_211643.err|bytes=0|mtime=2026-08-25 17:03:51.000000000 +0800
+--- tail /data1/home/sunyiq/v09_strict/logs/state_diagnostics_211643.err ---
+=== C OUTPUT INVENTORY ===
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics|missing
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics.building|present
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics.attempt_01.job_204847.failed|present
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics.building|seed_dirs=0|npy_files=0|manifests=0|summaries=0
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T17:10:44+0800
