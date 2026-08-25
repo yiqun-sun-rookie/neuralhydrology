@@ -1,0 +1,22 @@
+### channel=nature1st-attr-swap seq=93
+### host=login4
+### started=2026-08-25T12:33:26+0800
+### ---------- output ----------
+=== A. GUARD ===
+armI jobs already queued: 0
+e33407f426178af6  data/interim/stage_static_feature_stats_armI.json
+=== B. SUBMIT ===
+Submitted batch job 211317
+SUBMITTED jobid=211317
+=== C. QUEUE ===
+     JOBID                     NAME      STATE     TIME       NODELIST(REASON)
+    211317        q_armI_no_neardam    RUNNING  INVALID                 ngu011
+ PARTITION  AVAIL  NODES  STATE NODELIST
+    hgpu2p     up      1  down* ngu002
+    hgpu2p     up      3    mix ngu[001,010-011]
+    hgpu2p     up      2  alloc ngu[004-005]
+    hgpu2p     up      3   idle ngu[006-008]
+=== END seq=93 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T12:33:47+0800
