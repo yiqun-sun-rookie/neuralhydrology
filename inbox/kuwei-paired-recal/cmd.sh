@@ -1,38 +1,72 @@
 #!/bin/bash
-# kuwei paired rainfall recalibration -- reconnaissance only, no computation here
+# Build a dedicated env whose versions match the machine where determinism was verified.
+# Login node: this is network/IO only (pip download+install), no computation.
 set -o pipefail
 
-echo "=== A. host / date ==="
-hostname; date; echo "PWD=$(pwd)"
+ROOT=~/kuwei_paired
+VENV=$ROOT/venv
+mkdir -p $ROOT
 
-echo "=== B. outbound network (decides whether HPC can clone by itself) ==="
-getent hosts github.com >/dev/null && echo DNS_OK || echo DNS_FAIL
-timeout 25 ssh -o ConnectTimeout=15 -T git@github.com 2>&1 | head -1 || true
+echo "=== A. base python from nh_final ==="
+source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || true
+conda activate nh_final 2>/dev/null || echo "(activate failed)"
+which python; python -V
 
-echo "=== C. does any relevant repo already exist here? ==="
-for d in ~/forecast_system_lite ~/laos_forecast ~/fsl ~/kuwei; do
-  if [ -d "$d" ]; then echo "PRESENT $d"; else echo "absent  $d"; fi
-done
+echo "=== B. create venv (idempotent) ==="
+if [ -x "$VENV/bin/python" ]; then
+  echo "venv already present"
+else
+  python -m venv $VENV 2>&1 | tail -3 || true
+fi
+source $VENV/bin/activate || { echo "FATAL venv activate failed"; exit 1; }
+python -V
 
-echo "=== D. home quota / free space ==="
-df -h ~ 2>/dev/null | tail -2 || true
-quota -s 2>/dev/null | head -5 || echo "(no quota cmd)"
+echo "=== C. pin the versions the local determinism gate was verified on ==="
+python -m pip install --quiet --upgrade pip 2>&1 | tail -2 || true
+python -m pip install --quiet \
+  "numpy==1.26.4" "scipy==1.17.0" "pandas==2.3.3" "numba==0.61.2" "pyyaml" \
+  2>&1 | tail -15 || echo "(pip install reported an issue)"
 
-echo "=== E. conda env + the versions that decide determinism ==="
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
-source $HOME/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
-source $HOME/anaconda3/etc/profile.d/conda.sh 2>/dev/null || echo "(conda.sh not found)"
-conda env list 2>/dev/null | head -10 || true
-conda activate nh_final 2>/dev/null && {
-  python -c "import sys,numpy,scipy,pandas;print('python',sys.version.split()[0]);print('numpy ',numpy.__version__);print('scipy ',scipy.__version__);print('pandas',pandas.__version__)" 2>&1 || true
-  python -c "import numba;print('numba ',numba.__version__)" 2>&1 || echo "numba MISSING"
-  python -c "import yaml;print('pyyaml OK')" 2>&1 || echo "pyyaml MISSING"
-} || echo "(nh_final activate failed)"
+echo "=== D. verify ==="
+python - <<'PY' 2>&1 || true
+import sys
+mods = {}
+for name in ("numpy","scipy","pandas","numba","yaml"):
+    try:
+        m = __import__(name)
+        mods[name] = getattr(m, "__version__", "n/a")
+    except Exception as e:
+        mods[name] = f"IMPORT FAILED: {e}"
+print("python", sys.version.split()[0])
+for k, v in mods.items():
+    print(f"{k:8s} {v}")
+target = {"numpy":"1.26.4","scipy":"1.17.0","pandas":"2.3.3","numba":"0.61.2"}
+bad = {k: (mods.get(k), v) for k, v in target.items() if mods.get(k) != v}
+print("MATCH_LOCAL:", "YES" if not bad else f"NO -> {bad}")
+PY
 
-echo "=== F. CPU partitions (this job is pure single-thread CPU, no GPU needed) ==="
-sinfo -o "%20P %10a %10l %6D %10t %N" 2>&1 | head -20 || true
+echo "=== E. numba can actually compile on this node ==="
+python - <<'PY' 2>&1 || true
+try:
+    import numpy as np, numba, time
+    @numba.njit(cache=False, fastmath=True)
+    def f(x):
+        s = 0.0
+        for i in range(x.size):
+            s += x[i] * 1.0000001
+        return s
+    a = np.arange(1000, dtype=np.float64)
+    t0 = time.time(); v1 = f(a); t1 = time.time()
+    v2 = f(a)
+    print(f"numba compile+run OK, value={v1!r}, bitwise-repeat={v1==v2}, compile_sec={t1-t0:.1f}")
+except Exception as e:
+    print("numba smoke FAILED:", e)
+PY
 
-echo "=== G. my running/queued jobs ==="
-squeue -u ${USER} -o "%.10i %.14j %.10P %.8T %.10M %R" 2>&1 | head -15 || true
+echo "=== F. cpu model of this login node (compare later with the compute node) ==="
+grep -m1 'model name' /proc/cpuinfo || true
 
+echo "=== G. workspace ==="
+df -h $ROOT 2>/dev/null | tail -1 || true
+ls -la $ROOT | head -10 || true
 echo "=== DONE ==="
