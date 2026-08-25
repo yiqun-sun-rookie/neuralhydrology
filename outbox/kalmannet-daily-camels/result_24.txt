@@ -1,0 +1,46 @@
+### channel=kalmannet-daily-camels seq=24
+### host=login4
+### started=2026-08-25T17:40:54+0800
+### ---------- output ----------
+tar: artifacts/a20_seq16_hpc_result_20260825/extracted/DAILY_CAMELS_NATIVE_KALMANNET_MASKED_NSE_SMOKE_V3_20260825_A20/result_summary.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_native_kalmannet_full_state_masked_nse_smoke_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/plans/2026-08-25-daily-camels-physical-loss-a20-handoff.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/superpowers/plans/2026-08-25-daily-camels-native-full-state-a20-contract-smoke.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_native_kalmannet_full_state_masked_nse/preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_native_kalmannet_full_state_masked_nse/submit_smoke_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_native_kalmannet_full_state_masked_nse/verify_result.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/basin_04105700.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/basin_09035800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/nn_kalman_clamp_5.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_daily_camels_native_kalmannet_full_state_masked_nse_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_daily_camels_native_kalmannet_full_state_masked_nse.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_masked_nse_loss_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_masked_nse_loss_torch.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_native_knet_full_state_masked_nse_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_native_knet_full_state_masked_nse_data.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_native_knet_full_state_masked_nse_training.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_native_knet_io.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_native_knet_masked_nse_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_native_knet_masked_nse_data.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_native_knet_masked_nse_training.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_native_knet_full_state_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_native_knet_full_state_masked_nse_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_native_knet_full_state_masked_nse_training.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_native_knet_full_state_result_verifier.py: implausibly old time stamp 1970-01-01 08:00:00
+evidence_archive=/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_A34_INFRA_RETRY1_SEQ24_evidence.tar.gz
+evidence_archive_sha256=8f1c3a6de6c469fd09d34a6ba11b3836c50ba5f114cd2cec5ce1f3f637eb1e25
+evidence_archive_size=253733
+evidence_status=SEQ24_A34_INFRA_RETRY1_TRAINING_FAILED_HARD_STOP command_exit_code=59 training_job_id=211960
+### ---------- end ----------
+### exit_code=59
+### finished=2026-08-25T18:16:57+0800
