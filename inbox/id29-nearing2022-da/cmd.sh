@@ -3,8 +3,13 @@ ROOT=/data1/home/sunyiq/nearing2022_da
 date --iso-8601=seconds
 echo "=== N22 JOBS ==="
 squeue -u sunyiq -h -o '%.12i %.14j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22|retime|re214' || echo 'no N22 jobs in queue'
-echo "=== RECENT TERMINAL STATES ==="
-sacct -X -n -P -S $(date -d '3 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22|retime|re214' | grep -vE '\|(RUNNING|PENDING)\|' | tail -20 || true
+echo "=== FAILURES AND TIMEOUTS ==="
+sacct -X -n -P -S $(date -d '7 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22|retime|re214|re075|relong' | grep -E '\|(TIMEOUT|FAILED|NODE_FAIL|OUT_OF_MEMORY)' || echo '  none'
+echo "=== LOG IDLE SECONDS ==="
+for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-' | awk '{print $1}'); do
+  SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
+  [ -n "$SO" ] && [ -f "$SO" ] && printf '  %-14s idle=%ss node=%s\n' "$J" "$(( $(date +%s) - $(stat -c %Y "$SO") ))" "$(squeue -h -j "$J" -o '%N' 2>/dev/null)"
+done
 echo "=== RUNNING PROGRESS ==="
 for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-(time|retime|re214)' | awk '{print $1}'); do
   SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
@@ -27,5 +32,8 @@ m = {}
 for row in c['missing']:
     m[row['coordinate_type']] = m.get(row['coordinate_type'], 0) + 1
 print(json.dumps({'missing_by_type': m, 'missing_total': len(c['missing'])}, sort_keys=True))
+tr = sorted({r['coordinate_id'] for r in c['missing'] if r['coordinate_type'] == 'training'})
+print('MISSING_TRAINING_COORDINATES:', len(tr))
+for k in tr: print('   ', k)
 PY
 exit 0
