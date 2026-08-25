@@ -1,15 +1,16 @@
 #!/bin/bash
+# SHORT diagnostic only. No sleep loops (a previous long wait blocked the whole mailbox).
 set -o pipefail
-ROOT=~/kuwei_paired
-echo "=== gate job ==="
-J=$(grep -oE '[0-9]+' $ROOT/gate/gate_jobid.txt 2>/dev/null | tail -1); echo "jobid=$J"
-sacct -j $J --format=JobID,State,ExitCode,Elapsed,NodeList%10 2>&1 | head -4 || true
-echo "=== gate stdout tail ==="
-G=$(ls -t $ROOT/gate/kuwei-gate-*.out 2>/dev/null | head -1)
-[ -n "$G" ] && { echo "file=$G size=$(stat -c%s $G)"; tail -25 "$G"; } || echo "(none)"
-echo "=== gate json ==="
-[ -f $ROOT/gate/out/determinism_gate.json ] && grep -E 'all_identical|trace_digest|population_sha256|objective_calls|seconds_per' $ROOT/gate/out/determinism_gate.json || echo "(no json yet)"
-echo "=== formal job (if launched) ==="
-squeue -u ${USER} -n kuwei-formal -o "%.10i %.12j %.8T %.10M %R" 2>&1 | head -4 || true
-[ -f $ROOT/formal/formal_jobid.txt ] && cat $ROOT/formal/formal_jobid.txt || echo "(not launched yet)"
+echo "=== A. why is the gate pending? ==="
+scontrol show job 212027 2>&1 | grep -E 'JobId|JobState|Reason|Partition|NumCPUs|TimeLimit|Priority|QOS|NodeList' | head -12 || true
+echo "=== B. my queue ==="
+squeue -u ${USER} -o "%.10i %.14j %.12P %.8T %.10M %.6D %R" 2>&1 | head -12 || true
+echo "=== C. account limits ==="
+sacctmgr -n show assoc user=${USER} format=Account,Partition,QOS,MaxJobs,MaxSubmit,GrpTRES,MaxTRES 2>&1 | head -10 || echo "(sacctmgr unavailable)"
+echo "=== D. partition state right now ==="
+sinfo -p hcpu48 -o "%20P %10a %12l %6D %10t %N" 2>&1 | head -8 || true
+echo "=== E. what the successful probe used ==="
+sacct -j 211961 --format=JobID,Partition,ReqCPUS,Timelimit,State,Elapsed,NodeList%10 2>&1 | head -4 || true
+echo "=== F. gate job resources as submitted ==="
+sacct -j 212027 --format=JobID,Partition,ReqCPUS,Timelimit,State,Reason%30 2>&1 | head -4 || true
 echo "=== DONE ==="
