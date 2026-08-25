@@ -1,39 +1,99 @@
 #!/bin/bash
-# nature1st-attr-swap seq=91 -- READ-ONLY roll call. What, if anything, is running?
+# nature1st-attr-swap seq=92 -- build armI (armF minus distance-to-nearest-dam, 16 attrs).
+# NO sbatch this round: build and verify first, submit in the next one.
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
-echo "=== A. MY QUEUE RIGHT NOW ==="
-date "+wallclock %F %T %z"
-squeue -u $USER -o '%.10i %.26j %.9T %.11M %.20R' 2>&1 | head -25
-echo "-- total lines above (1 = header only = nothing queued) --"
-squeue -u $USER -h 2>&1 | wc -l
+cd "$RUN" || { echo RUN_DIR_MISSING; exit 1; }
 
-echo "=== B. ANY ATTRIBUTE-SWAP ARM ANYWHERE? ==="
-squeue -u $USER -h -o '%i %j %T' 2>&1 | grep -Ei 'arm|attr|q_ctrl|q_treat' || echo '  none'
+echo "=== A. INSTALL SBATCH (new only) ==="
+if [ -f "scripts/hpc_train_q_armI_no_neardam.sbatch" ]; then echo "EXISTS, not overwriting"; else
+base64 -d > 'scripts/hpc_train_q_armI_no_neardam.sbatch' <<'B64_ARMI'
+IyEvdXNyL2Jpbi9lbnYgYmFzaAojU0JBVENIIC1KIHFfYXJtSV9ub19uZWFyZGFtCiNTQkFUQ0ggLXAgaGdwdTJwCiNTQkFUQ0gg
+LU4gMQojU0JBVENIIC1uIDEKI1NCQVRDSCAtLWNwdXMtcGVyLXRhc2s9NAojU0JBVENIIC0tZ3Jlcz1ncHU6MQojU0JBVENIIC0t
+ZXhjbHVkZT1uZ3UwMDIgICAjIGRvY3VtZW50ZWQgYmFkIG5vZGU6IG52aWRpYS1zbWkgc2VlcyAxIG9mIDIgY2FyZHMsCiAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICMgdG9yY2ggcmVwb3J0cyBDVURBIHVua25vd24gZXJyb3IuIE1VU1QgYmUgYSBkaXJlY3Rp
+dmU6CiAgICAgICAgICAgICAgICAgICAgICAgICAgICMgb24gdGhlIGNvbW1hbmQgbGluZSB0aGUgeGJhdGNoIHdyYXBwZXIgc2ls
+ZW50bHkgZHJvcHMgaXQuCiNTQkFUQ0ggLXQgMjQ6MDA6MDAKI1NCQVRDSCAtbyBsb2dzL2F0dHJfc3dhcC9hcm1JX25vX25lYXJk
+YW0tJWoub3V0CiNTQkFUQ0ggLWUgbG9ncy9hdHRyX3N3YXAvYXJtSV9ub19uZWFyZGFtLSVqLmVycgoKIyBBUk0gSTogYXJtRiBt
+aW51cyBPTkUgYXR0cmlidXRlIC0tIGdhZ2VpaV9IeWRyb01vZF9EYW1zX1JBV19ESVNfTkVBUkVTVF9EQU0uIDE2IGxlZnQuCiMK
+IyBXSFkgVEhJUyBBUk0uIGFybUYgKDE3IGF0dHJpYnV0ZXM6IHRoZSAxMyBnbG9iYWwgb25lcyBwbHVzIGJhc2luIGFyZWEsIGRh
+bSBzdG9yYWdlLAojIGRpc3RhbmNlIHRvIG5lYXJlc3QgZGFtLCBzb2lsIHBlcm1lYWJpbGl0eSkgbWF0Y2hlZCB0aGUgMTIgVVMt
+cHJvcHJpZXRhcnkgY29udHJvbDoKIyBwYWlyZWQgLTAuMDA0NiwgOTUlIENJIFstMC4wMTM4LCArMC4wMDI5XS4gYXJtRyAtLSB0
+aGUgc2V0IENoaW5hIGNhbiBhY3R1YWxseSBzdXBwbHkgLS0KIyB0aGVuIGxvc3QgdGhhdCBwYXJpdHk6IC0wLjAyNTAgWy0wLjAz
+NTUsIC0wLjAxMzRdIHBhaXJlZCBhZ2FpbnN0IGFybUYsIGFuZCBpdCBsYW5kZWQKIyBJTkNPTkNMVVNJVkUgYWdhaW5zdCBhcm1D
+ICgtMC4wMjc2LCAzMS44JSBvZiBzdGF0aW9ucyBkcm9wcGluZyBtb3JlIHRoYW4gMC4xMCkuCiMKIyBhcm1HIGRpZmZlcnMgZnJv
+bSBhcm1GIGluIGZvdXIgd2F5cywgYnV0IG9ubHkgT05FIG9mIHRoZW0gaXMgYSBzdHJhaWdodCBkZWxldGlvbjoKIyBkaXN0YW5j
+ZSB0byBuZWFyZXN0IGRhbSBoYXMgbm8gZ2xvYmFsIGFuYWxvZ3VlIHdvcnRoIHVzaW5nIChiZXN0IGNvcnJlbGF0ZSArMC4zNTMs
+CiMgYWdhaW5zdCArMC42MDYgZm9yIGRhbSBzdG9yYWdlIGFuZCAtMC41MTIgZm9yIHBlcm1lYWJpbGl0eSkuIFRoZSBvdGhlciB0
+aHJlZSBhcmUKIyBzdWJzdGl0dXRpb25zLCBub3QgcmVtb3ZhbHMuIFNvIHRoaXMgYXJtIHJlbW92ZXMgdGhhdCBzaW5nbGUgY29s
+dW1uIGZyb20gYXJtRiBhbmQKIyBjaGFuZ2VzIE5PVEhJTkcgZWxzZSAtLSBpdCBpc29sYXRlcyB3aGF0IHRoZSBkZWxldGlvbiBh
+bG9uZSBjb3N0cy4KIwojIOKaoO+4jyBhcm1JIElTIEEgRElBR05PU1RJQyBBUk0sIE5PVCBBIERFUExPWUFCTEUgU0VULiBJdCBz
+dGlsbCBlYXRzIHR3byBVUy1kYXRhYmFzZQojIGNvbHVtbnMgKGRhbSBzdG9yYWdlIGZyb20gdGhlIE5hdGlvbmFsIEludmVudG9y
+eSBvZiBEYW1zLCBzb2lsIHBlcm1lYWJpbGl0eSBmcm9tIHRoZQojIFVTIHNvaWwgZGF0YWJhc2UpLiBDaGluYSBjYW5ub3Qgc3Vw
+cGx5IGl0LiBJdHMgb25seSBqb2IgaXMgdG8gYXR0cmlidXRlIGFybUcncyBsb3NzLgojCiMgUFJFLVJFR0lTVEVSRUQsIHBhaXJl
+ZCBwZXItc3RhdGlvbiBhZ2FpbnN0IGFybUYsIHdyaXR0ZW4gYmVmb3JlIHRoZSBydW46CiMgICBkaXN0YW5jZS10by1uZWFyZXN0
+LWRhbSBJUyB0aGUgbWFpbiBjYXVzZSA6IHBhaXJlZCBtZWRpYW4gPD0gLTAuMDE1CiMgICAgICAgKHRoYXQgaXMgYXQgbGVhc3Qg
+NjAlIG9mIHRoZSAtMC4wMjUwIGdhcCBhcm1HIHNob3dzIGFnYWluc3QgYXJtRikKIyAgIGl0IGlzIE5PVCB0aGUgbWFpbiBjYXVz
+ZSAgICAgICAgICAgICAgICAgIDogcGFpcmVkIG1lZGlhbiA+PSAtMC4wMDUKIyAgICAgICAoYXQgbW9zdCAyMCUgb2YgdGhhdCBn
+YXAgLS0gdGhlIGNvc3QgdGhlbiBsaXZlcyBpbiB0aGUgdGhyZWUgc3Vic3RpdHV0aW9ucykKIyAgIGluIGJldHdlZW4gICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIDogcGFydGlhbGx5IGV4cGxhaW5zIGl0OyBzcGxpdCBmdXJ0aGVyCiMKIyBTRUNPTkRB
+UlksIHBhaXJlZCBhZ2FpbnN0IGFybUc6IGlmIHxwYWlyZWQgbWVkaWFufCA8PSAwLjAwNSB0aGVuIHRoZSB0aHJlZQojIHN1YnN0
+aXR1dGlvbnMgKGRhbSBzdG9yYWdlIC0+IGxrdl9tY191c3UsIHBlcm1lYWJpbGl0eSAtPiBjbGF5L3NhbmQsIHNsb3BlIGhhbmRs
+aW5nKQojIGNvc3Qgbm90aGluZyBhbmQgdGhlIGVudGlyZSBDaGluYSBwZW5hbHR5IGlzIHRoaXMgb25lIGRlbGV0ZWQgY29sdW1u
+LgojCiMgSWYgdGhlIGRlbGV0aW9uIElTIHRoZSBjYXVzZSwgdGhlIHF1ZXN0aW9uIGJlY29tZXMgImNhbiBDaGluYSBzdXBwbHkg
+YSBkYW0tZGlzdGFuY2UKIyBjb2x1bW4gYXQgYWxsIiAtLSBnbG9iYWxseSB0aGVyZSBpcyBHUmFuRCwgYW5kIENoaW5hIGhhcyBp
+dHMgb3duIHJlc2Vydm9pciByZWdpc3RyeS4KIyBUaGF0IGlzIGEgZGF0YS1zb3VyY2luZyBwcm9ibGVtLCBub3QgYSBkZWFkIGVu
+ZC4KIwojIFNhbWUgNDAtZXBvY2ggY2FwIGFuZCBzYW1lIGZyb3plbiBjb250cmFjdCBhcyBldmVyeSBvdGhlciBhcm0gb2YgdGhp
+cyBjYW1wYWlnbiAtLQojIGNoYW5nZSB0aGUgY2FwIGluIG9uZSBhbmQgeW91IG11c3QgY2hhbmdlIGl0IGluIGFsbCwgb3IgdGhl
+IGNvbXBhcmlzb24gaXMgdm9pZC4KCnNldCAtZW8gcGlwZWZhaWwKCnNvdXJjZSAvZGF0YTEvaG9tZS8ke1VTRVJ9L21pbmljb25k
+YTMvZXRjL3Byb2ZpbGUuZC9jb25kYS5zaCB8fCBzb3VyY2UgJEhPTUUvbWluaWNvbmRhMy9ldGMvcHJvZmlsZS5kL2NvbmRhLnNo
+CmNvbmRhIGFjdGl2YXRlICIke0NPTkRBX0VOVjotbmhfZmluYWx9IgoKZXhwb3J0IE1LTF9USFJFQURJTkdfTEFZRVI9R05VCmV4
+cG9ydCBNS0xfU0VSVklDRV9GT1JDRV9JTlRFTD0xCmV4cG9ydCBDVURBX0RFVklDRV9PUkRFUj1QQ0lfQlVTX0lECgpjZCAke1NM
+VVJNX1NVQk1JVF9ESVJ9CmV4cG9ydCBQWVRIT05QQVRIPSQocHdkKTokUFlUSE9OUEFUSApta2RpciAtcCBsb2dzL2F0dHJfc3dh
+cAoKZWNobyAiWyQoZGF0ZSldIEpvYiAkU0xVUk1fSk9CX0lEIG9uICQoaG9zdG5hbWUpIgpweXRob24gLWMgImltcG9ydCB0b3Jj
+aDsgcHJpbnQoZidQeVRvcmNoIHt0b3JjaC5fX3ZlcnNpb25fX30sIENVREEge3RvcmNoLmN1ZGEuaXNfYXZhaWxhYmxlKCl9Jyki
+CgojIEZhaWwgZmFzdCBpZiB0aGlzIG5vZGUgaGFzIG5vIHVzYWJsZSBHUFUuIFdpdGhvdXQgdGhpcyB0aGUgdHJhaW5pbmcgc2ls
+ZW50bHkgZmFsbHMKIyBiYWNrIHRvIENQVSBhbmQgYnVybnMgZGF5cyBwcm9kdWNpbmcgbm90aGluZyAtLSBqb2JzIDIwNTg0OCAv
+IDIwNTg1NCBvbiAyMDI2LTA4LTE5LgpweXRob24gLSA8PCdQWUNISycgfHwgeyBlY2hvICJbRkFUQUxdIG5vIHVzYWJsZSBHUFUg
+b24gJChob3N0bmFtZSkgLS0gcmVmdXNpbmcgdG8gdHJhaW4gb24gQ1BVIjsgZXhpdCAxOyB9CmltcG9ydCBzeXMsIHRvcmNoCnN5
+cy5leGl0KDAgaWYgdG9yY2guY3VkYS5pc19hdmFpbGFibGUoKSBlbHNlIDEpClBZQ0hLCgpzcnVuIHB5dGhvbiAtdSBzY3JpcHRz
+L2NoYWluX3RyYWluX3FfYXR0cnNldC5weSBcCiAgLS1zdGF0aWMgZGF0YS9pbnRlcmltL3N0YWdlX3N0YXRpY19mZWF0dXJlX3N0
+YXRzX2FybUkuanNvbiBcCiAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRhaW5fc3Rh
+dGlvbnNfYXJtSS5jc3YgXAogIC0tb3V0cHV0X2RpciBtb2RlbHMvcV9sc3RtX2FybUlfaHBjX3M0MiAtLXNlZWQgNDIgLS1lcG9j
+aHMgNDAgLS1udW1fd29ya2VycyA0CgplY2hvICJbJChkYXRlKV0gdHJhaW5pbmcgZG9uZSIKc3J1biBweXRob24gLXUgc2NyaXB0
+cy9jaGFpbl9ldmFsX3FfYXR0cnNldC5weSBcCiAgLS1zdGF0aWMgZGF0YS9pbnRlcmltL3N0YWdlX3N0YXRpY19mZWF0dXJlX3N0
+YXRzX2FybUkuanNvbiBcCiAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRhaW5fc3Rh
+dGlvbnNfYXJtSS5jc3YgXAogIC0tbW9kZWxfZGlyIG1vZGVscy9xX2xzdG1fYXJtSV9ocGNfczQyIC0tc3Vic2V0IHZhbCAtLW1h
+eF9ob3VycyA0MzgwMAplY2hvICJbJChkYXRlKV0gRG9uZSAoZXhpdDogJD8pIgo=
+B64_ARMI
+chmod 755 'scripts/hpc_train_q_armI_no_neardam.sbatch'
+fi
+printf "  %-48s %s  expect 8d337cb0a5145eb4
+" "armI.sbatch" "$(sha256sum 'scripts/hpc_train_q_armI_no_neardam.sbatch' | cut -c1-16)"
 
-echo "=== C. THE EIGHT ARMS -- WHAT EXISTS ON DISK ==="
-cd "$RUN" || exit 1
-for d in q_lstm_control_hpc_s42 q_lstm_hydroatlas_hpc_s42 q_lstm_usminus4_hpc_s42 \
-         q_lstm_globalplus4_hpc_s42 q_lstm_armE_hpc_s42 q_lstm_armF_hpc_s42 \
-         q_lstm_armG_hpc_s42 q_lstm_armH_hpc_s42 q_lstm_armG_hpc_s43 q_lstm_armG_hpc_s44 ; do
-  if [ -f models/$d/best_metrics.json ]; then
-    m=$(python -c "import json,sys;print(f'{json.load(open(sys.argv[1]))[\"median_nse\"]:.4f}')" models/$d/best_metrics.json 2>/dev/null)
-    printf '  %-30s DONE  median=%s
-' "$d" "$m"
-  elif [ -d models/$d ]; then printf '  %-30s DIR EXISTS but no best_metrics
-' "$d"
-  else printf '  %-30s absent
-' "$d"; fi
-done
+echo "=== B. BUILD armI ==="
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null
+conda activate nh_final 2>/dev/null
+python -u scripts/chain_prepare_attrset.py --name armI --attrs 'slp_dg_uav,ele_mt_sav,ele_mt_smn,ele_mt_smx,urb_pc_use,dor_pc_pva,cly_pc_uav,snd_pc_uav,kar_pc_use,swc_pc_syr,gwt_cm_sav,ari_ix_uav,for_pc_use,gageii_BasinID_DRAIN_SQKM,gageii_HydroMod_Dams_STOR_NID_2009,gageii_Soils_PERMAVE' 2>&1 | tail -24
 
-echo "=== D. RECENT JOBS (last 3 days) ==="
-sacct -S $(date -d '3 days ago' +%F) -u $USER -X --format=JobID%10,JobName%26,State%12,Elapsed%11,End%17 2>&1 | grep -Ei 'arm|attr|q_ctrl|q_treat|JobID|^---' || echo '  no attribute-swap jobs in window'
+echo "=== C. FINGERPRINTS (must match workstation) ==="
+sha256sum data/interim/stage_static_feature_stats_armI.json \
+          data/processed/station_meta/trainable_mountain_stations_armI.csv 2>&1 | cut -c1-16,65-
+echo "workstation: stats e33407f426178af6 / meta db7e394a06d42a88"
 
-echo "=== E. ATTRIBUTE FILES READY TO SUBMIT ==="
-for f in stage_static_feature_stats_armH.json stage_static_feature_stats_armG.json ; do
-  [ -f data/interim/$f ] && printf '  %-46s present
-' "$f" || printf '  %-46s ABSENT
-' "$f"
-done
-ls -1 scripts/hpc_train_q_arm*.sbatch 2>&1 | head -6
-echo "=== END seq=91 ==="
+echo "=== D. armI IS armF MINUS EXACTLY ONE COLUMN? ==="
+python - <<'PY' 2>&1
+import json
+F=list(json.load(open('data/interim/stage_static_feature_stats_armF.json')))
+I=list(json.load(open('data/interim/stage_static_feature_stats_armI.json')))
+print('armF', len(F), 'armI', len(I))
+print('removed :', sorted(set(F)-set(I)))
+print('added   :', sorted(set(I)-set(F)), '(must be empty)')
+print('order preserved:', I == [x for x in F if x in set(I)])
+for k in I:
+    a=json.load(open('data/interim/stage_static_feature_stats_armF.json'))[k]
+    b=json.load(open('data/interim/stage_static_feature_stats_armI.json'))[k]
+    if a != b: print('CONSTANT DRIFT', k, a, b)
+print('all shared constants identical to armF: OK')
+PY
+echo "=== END seq=92 ==="
