@@ -1,0 +1,49 @@
+### channel=nature1st-attr-swap seq=94
+### host=login4
+### started=2026-08-25T13:10:07+0800
+### ---------- output ----------
+wallclock 2026-08-25 13:10:07 +0800
+=== A. STATE ===
+     JOBID                     NAME      STATE       TIME       NODELIST(REASON)
+    211317        q_armI_no_neardam    RUNNING      36:18                 ngu011
+     JobID                JobName        State ExitCode     Elapsed  NodeList 
+---------- ---------------------- ------------ -------- ----------- --------- 
+    211317      q_armI_no_neardam      RUNNING      0:0    00:36:40    ngu011 
+=== B. GUARD (must say 16 attributes) ===
+  [guard] train: 16 attributes, 2908 stations in meta -- attribute set verified
+  [guard] val: 16 attributes, 2908 stations in meta -- attribute set verified
+log bytes: 2311  last touched: 2026-08-25 13:05:25
+=== C. ERRORS ===
+-- logs/attr_swap/armI_no_neardam-211317.out (2311 bytes) --
+PyTorch 2.4.0, CUDA True
+-- logs/attr_swap/armI_no_neardam-211317.err (4332072 bytes) --
+=== D. PROGRESS ===
+Epoch 1: loss=0.9942  val_median_NSE(phys)=0.5182  val_RMSE_qspec=0.0834  NSE>0=0.83  lr=5.00e-04
+Epoch 2: loss=0.7088  val_median_NSE(phys)=0.5546  val_RMSE_qspec=0.0797  NSE>0=0.83  lr=5.00e-04
+=== E. RESULT? ===
+{
+  "epoch": 2,
+  "train_loss": 0.7087808208668797,
+  "median_nse": 0.5546112667156593,
+  "mean_nse": -114.96843615019048,
+  "p25_nse": 0.2202099041950814,
+  "p75_nse": 0.6980825633107922,
+  "frac_nse_gt0": 0.8259860788863109,
+  "global_rmse_qspec_mmph": 0.07973390687699385,
+  "n_stations": 431,
+  "space": "physical_qcms_per_station_NSE"
+}
+ls: cannot access models/q_lstm_armI_hpc_s42/eval_val_per_station.csv: No such file or directory
+=== F. WHOLE CAMPAIGN ROLL CALL ===
+  q_lstm_control_hpc_s42         0.6432
+  q_lstm_hydroatlas_hpc_s42      0.5983
+  q_lstm_usminus4_hpc_s42        0.6466
+  q_lstm_globalplus4_hpc_s42     0.6059
+  q_lstm_armE_hpc_s42            0.5819
+  q_lstm_armF_hpc_s42            0.6436
+  q_lstm_armG_hpc_s42            0.6299
+  q_lstm_armI_hpc_s42            0.5546
+=== END seq=94 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T13:10:09+0800
