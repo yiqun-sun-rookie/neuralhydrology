@@ -1,0 +1,24 @@
+### channel=id26-v09-strict seq=65
+### host=login4
+### started=2026-08-25T17:03:41+0800
+### ---------- output ----------
+=== A PRESERVE FAILED ATTEMPT 01 ===
+attempt_01_jobid=204847 state=FAILED exit_code=1:0 elapsed=00:01:14
+attempt_01_building_inventory:
+attempt_01_archived=/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics.attempt_01.job_204847.failed
+=== B FROZEN CHECKOUTS AND TRAINING AUDIT ===
+training_head=bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
+strict_head=f94183209bf44ed6e672e1c23f98020905804e6d
+=== C EXACT OFFLINE FIX RECONSTRUCTION ===
+reconstructed_tree=a0b5c46a37fcbdf16040e72f0dc94d53d6e1c5e0
+reconstructed_commit=d69d2a7af509b141c7e8361f49f6fdeceed963af
+audit_head=d69d2a7af509b141c7e8361f49f6fdeceed963af
+5aae6ece286592d8a9715d8ff788c433b9c51e762e7672e3ab6afc173f06f740  /data1/home/sunyiq/v09_strict/audit_v09/transport_seq65.index
+=== D SUBMIT STATE DIAGNOSTICS ATTEMPT 02 ===
+STATE_DIAGNOSTICS_ATTEMPT_02_JOBID=211643
+       JOBID               NAME        STATE         TIME         NODELIST(REASON)
+      211643          v09states      PENDING         0:00               (Priority)
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T17:03:46+0800
