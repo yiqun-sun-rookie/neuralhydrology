@@ -101,6 +101,42 @@ def test_v09_split_is_causal_chronological_and_uses_exact_bin_means():
     assert dynamic["history"][0, 0, 6] > dynamic["history"][0, -1, 6]
 
 
+def test_v09_split_does_not_call_torch_cumsum(monkeypatch):
+    from bands_formal_v09 import split_windows_v09
+
+    def reject_cumsum(*_args, **_kwargs):
+        raise AssertionError("split_windows_v09 must not call the nondeterministic CUDA cumsum kernel")
+
+    monkeypatch.setattr(torch, "cumsum", reject_cumsum)
+    windows = torch.arange(3_562 * 5, dtype=torch.float32).reshape(1, 3_562, 5)
+    dynamic = split_windows_v09(windows)
+
+    assert dynamic["recent"].shape == (1, 270, 5)
+    assert dynamic["history"].shape == (1, 120, 7)
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is required for the strict determinism regression")
+def test_v09_cuda_prefix_sum_is_strictly_deterministic_and_matches_native_cumsum():
+    from bands_formal_v09 import _deterministic_cumsum_dim1_v09
+
+    deterministic_before = torch.are_deterministic_algorithms_enabled()
+    warn_only_before = torch.is_deterministic_algorithms_warn_only_enabled()
+    try:
+        torch.manual_seed(26_090)
+        values = torch.randn(4, 3_562, 5, device="cuda", dtype=torch.float32)
+        torch.use_deterministic_algorithms(False)
+        native = torch.cumsum(values, dim=1)
+
+        torch.use_deterministic_algorithms(True)
+        first = _deterministic_cumsum_dim1_v09(values)
+        second = _deterministic_cumsum_dim1_v09(values)
+
+        assert torch.equal(first, second)
+        assert torch.equal(first, native)
+    finally:
+        torch.use_deterministic_algorithms(deterministic_before, warn_only=warn_only_before)
+
+
 def test_v09_split_rejects_a_batch_above_the_frozen_memory_bound():
     from bands_formal_v09 import split_windows_v09
 

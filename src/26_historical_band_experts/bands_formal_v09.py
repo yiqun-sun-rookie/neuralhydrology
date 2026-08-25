@@ -81,6 +81,16 @@ def _age_coordinate(low_lag: int, high_lag_exclusive: int) -> float:
     return float((np.log(midpoint) - np.log(270.0)) / (np.log(3561.0) - np.log(270.0)))
 
 
+def _deterministic_cumsum_dim1_v09(values: torch.Tensor) -> torch.Tensor:
+    """Compute the dimension-one prefix sum with deterministic CUDA operations."""
+    running = torch.zeros_like(values[:, 0])
+    cumulative = []
+    for item in values.unbind(dim=1):
+        running = running + item
+        cumulative.append(running)
+    return torch.stack(cumulative, dim=1)
+
+
 def split_windows_v09(windows: torch.Tensor) -> dict[str, torch.Tensor]:
     """Split a bounded chronological window batch into recent days and history bins."""
     if windows.ndim != 3 or tuple(windows.shape[1:]) != (_WINDOW_DAYS, _FEATURES):
@@ -99,7 +109,7 @@ def split_windows_v09(windows: torch.Tensor) -> dict[str, torch.Tensor]:
                 dtype=windows.dtype,
                 device=windows.device,
             ),
-            torch.cumsum(windows, dim=1),
+            _deterministic_cumsum_dim1_v09(windows),
         ),
         dim=1,
     )
