@@ -1,0 +1,45 @@
+### channel=kuwei-paired-recal seq=3
+### host=login4
+### started=2026-08-25T17:36:43+0800
+### ---------- output ----------
+=== A. payload integrity ===
+fsl_code.tar.gz: OK
+laos_code.tar.gz: OK
+=== B. unpack ===
+fsl unpacked
+laos unpacked
+fsl top: basins scripts src tools 
+laos top: basins data docs tests 
+=== C. key files present with expected sizes ===
+OK   50K optimize_eval.py
+OK   35K dataio.py
+OK   38K hydromod_numba.py
+OK   14K event_peak_evaluation.py
+OK   23 sub_area.csv
+OK   2.2M grid_hybrid_current.csv
+OK   2.8M discharge_clean.csv
+=== D. verify the two arm inputs survived transfer bit-for-bit ===
+58f3221e00451a63090e54c2adcd0fa668021bfe0f5b024f46216b72b3f6a0f5  grid_hybrid_current.csv
+34868836c259c0967747ad023fe47c7755bb8b6630d38c1427bac4ef867588f1  grid_hybrid_suspect_excluded.csv
+expected current : 58f3221e00451a63090e54c2adcd0fa668021bfe0f5b024f46216b72b3f6a0f5
+expected excluded: 34868836c259c0967747ad023fe47c7755bb8b6630d38c1427bac4ef867588f1
+=== E. can the stock env import the model chain at all? ===
+python 3.11.13
+numpy 2.3.3 | scipy 1.16.2 | numba 0.63.1
+IMPORT OK   src.runtime.semi_distributed.core.optimization_config
+IMPORT OK   src.runtime.semi_distributed.core.dataio
+IMPORT OK   src.runtime.semi_distributed.core.optimizer_facade
+IMPORT OK   src.runtime.semi_distributed.core.optimize_eval
+IMPORT OK   src.runtime.semi_distributed.entry_points
+IMPORT OK   src.kernels.semi_distributed.core.hydromod_numba
+IMPORT OK   src.kernels.semi_distributed.core.simulate_flood_distributed_fast
+RESULT 7/7 imports succeeded
+=== F. compute-node OS/glibc (where the real run must happen) ===
+NODE=icn201
+CentOS Linux release 7.6.1810 (Core) 
+ldd (GNU libc) 2.17
+model name	: Intel(R) Xeon(R) Gold 6271 CPU @ 2.60GHz
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T17:37:13+0800
