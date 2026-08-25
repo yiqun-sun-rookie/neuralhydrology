@@ -1,0 +1,44 @@
+### channel=id26-v09-strict seq=64
+### host=login4
+### started=2026-08-25T16:46:29+0800
+### ---------- output ----------
+=== A JOB ID AND SCHEDULER ===
+recorded_jobid=204847
+slurm_load_jobs error: Invalid job id specified
+JobIDRaw|JobName|State|ExitCode|Elapsed|Start|End|NodeList
+204847|v09states|FAILED|1:0|00:01:14|2026-08-18T20:38:28|2026-08-18T20:39:42|ngu010
+=== B LOG FILES ===
+/data1/home/sunyiq/v09_strict/logs/state_diagnostics_204847.out|bytes=174|mtime=2026-08-18 20:38:29.000000000 +0800
+--- tail /data1/home/sunyiq/v09_strict/logs/state_diagnostics_204847.out ---
+audit_commit=880a066d4b775e76a2e9b0358c393666c8737c6b node=ngu010 start=2026-08-18T20:38:33+08:00
+0, NVIDIA GeForce RTX 3090, 20364 MiB
+1, NVIDIA GeForce RTX 3090, 24125 MiB
+/data1/home/sunyiq/v09_strict/logs/state_diagnostics_204847.err|bytes=1790|mtime=2026-08-18 20:39:32.000000000 +0800
+--- tail /data1/home/sunyiq/v09_strict/logs/state_diagnostics_204847.err ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/v09_strict/audit_v09/neuralhydrology/src/26_historical_band_experts/state_diagnostics_formal_v09.py", line 709, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/v09_strict/audit_v09/neuralhydrology/src/26_historical_band_experts/state_diagnostics_formal_v09.py", line 697, in main
+    report = write_history_state_diagnostics_v09(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/v09_strict/audit_v09/neuralhydrology/src/26_historical_band_experts/state_diagnostics_formal_v09.py", line 620, in write_history_state_diagnostics_v09
+    "panel_states": state_norms_for_keys_v09(inputs, model, panel_keys, device=device),
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/v09_strict/audit_v09/neuralhydrology/src/26_historical_band_experts/state_diagnostics_formal_v09.py", line 476, in state_norms_for_keys_v09
+    dynamic = split_windows_v09(torch.from_numpy(normalized).to(device))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/v09_strict/audit_v09/neuralhydrology/src/26_historical_band_experts/bands_formal_v09.py", line 102, in split_windows_v09
+    torch.cumsum(windows, dim=1),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: cumsum_cuda_kernel does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation, or you can use the 'warn_only=True' option, if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.
+=== C OUTPUT INVENTORY ===
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics|missing
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics.building|present
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics_external_audit.json|missing
+building_seed_dir_count=0
+building_npy_file_count=0
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T16:46:30+0800
