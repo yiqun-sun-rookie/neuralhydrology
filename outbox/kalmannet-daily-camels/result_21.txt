@@ -1,0 +1,105 @@
+### channel=kalmannet-daily-camels seq=21
+### host=login4
+### started=2026-08-25T14:44:05+0800
+### ---------- output ----------
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_official_kalmannet_tukf06_causal_fair_development_v3.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_official_kalmannet_tukf06_causal_fair_iterations_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_full_diagonal_search_head_to_head_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_official_kalmannet_causal_fair/preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_official_kalmannet_causal_fair/submit_resource_smoke_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_official_kalmannet_causal_fair/verify_smoke.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/01435000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/01440400.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/01487000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02092500.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02102908.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/02178400.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/03049000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/03076600.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/04027000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/04105700.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/05503800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/06803510.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/08070200.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/08086290.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/08109700.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/08190500.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/09035800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/09513780.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/12175500.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/12447390.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/14185900.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/prepared_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/nn_kalman_clamp_5.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: results/tukf06_full_diagonal_search_head_to_head_v1/selection_manifest.sha256.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_daily_camels_official_kalmannet_causal_fair_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/prepare_daily_camels_official_kalmannet_data.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_hbv_native_shortlead_recovery.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/data/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/data/hbvlite_prior.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/hbv_shortlead_audit.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/hbv_shortlead_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/hbv_shortlead_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/official_kalmannet_tsp_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py: implausibly old time stamp 1970-01-01 08:00:00
+{
+  "all_leads_median_nse_at_least_0_60": true,
+  "basin_id": "09035800",
+  "best_epoch": 4,
+  "best_model_sha256": "d81d26124a04532db1061b4da018fa94815c0a1e5cc1e5c2b9694ef0caa64098",
+  "cuda_peak_allocated_bytes": 149399552,
+  "cuda_peak_reserved_bytes": 184549376,
+  "experiment_id": "DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_RESOURCE_SMOKE_V4_20260825_A32",
+  "future_derived_state_member_read_count": 0,
+  "job_id": "211378",
+  "manifest_sha256": "43171c5753fc0553a661fafc71fd8420f3408b0e01774fd98153a3ce518714b5",
+  "optimizer_steps": 16,
+  "predictions_sha256": "aa0c23675001333179e75c54ee46b9c8550f6cb4cf6fbd7609c1cad1bbc5cf4f",
+  "process_peak_resident_memory_bytes": 1289154560,
+  "recomputed_metrics": {
+    "1": {
+      "gain": 0.2675772005395064,
+      "method_nse": 0.9627299187051735,
+      "open_loop_nse": 0.6951527181656671,
+      "target_count": 712
+    },
+    "2": {
+      "gain": 0.24311683790902883,
+      "method_nse": 0.9380181023543266,
+      "open_loop_nse": 0.6949012644452978,
+      "target_count": 712
+    },
+    "3": {
+      "gain": 0.21980225264978992,
+      "method_nse": 0.9145011885109171,
+      "open_loop_nse": 0.6946989358611272,
+      "target_count": 712
+    }
+  },
+  "reported_gate_passed": true,
+  "reserved_evaluation_data_accessed": false,
+  "schema_version": "daily_camels_official_kalmannet_a32_verification_v2",
+  "selection_score_improvement_over_epoch_zero": 0.21980225264978992,
+  "status": "TECHNICAL_EVIDENCE_VERIFIED",
+  "training_effect_passed": true,
+  "validation_loss_improvement_over_epoch_zero": 0.029972242349876783
+}
+{"all_leads_median_nse_at_least_0_60": true, "basin_id": "09035800", "best_epoch": 4, "best_model_sha256": "d81d26124a04532db1061b4da018fa94815c0a1e5cc1e5c2b9694ef0caa64098", "cuda_peak_allocated_bytes": 149399552, "cuda_peak_reserved_bytes": 184549376, "experiment_id": "DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_RESOURCE_SMOKE_V4_20260825_A32", "future_derived_state_member_read_count": 0, "job_id": "211378", "manifest_sha256": "43171c5753fc0553a661fafc71fd8420f3408b0e01774fd98153a3ce518714b5", "optimizer_steps": 16, "predictions_sha256": "aa0c23675001333179e75c54ee46b9c8550f6cb4cf6fbd7609c1cad1bbc5cf4f", "process_peak_resident_memory_bytes": 1289154560, "recomputed_metrics": {"1": {"gain": 0.2675772005395064, "method_nse": 0.9627299187051735, "open_loop_nse": 0.6951527181656671, "target_count": 712}, "2": {"gain": 0.24311683790902883, "method_nse": 0.9380181023543266, "open_loop_nse": 0.6949012644452978, "target_count": 712}, "3": {"gain": 0.21980225264978992, "method_nse": 0.9145011885109171, "open_loop_nse": 0.6946989358611272, "target_count": 712}}, "reported_gate_passed": true, "reserved_evaluation_data_accessed": false, "schema_version": "daily_camels_official_kalmannet_a32_verification_v2", "selection_score_improvement_over_epoch_zero": 0.21980225264978992, "status": "TECHNICAL_EVIDENCE_VERIFIED", "training_effect_passed": true, "validation_loss_improvement_over_epoch_zero": 0.029972242349876783}
+DAILY_CAMELS_OFFICIAL_KALMANNET_A32_RESOURCE_AND_POST_ZERO_TRAINING_EFFECT_PASS job=211378
+evidence_archive=/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_OFFICIAL_KALMANNET_CAUSAL_FAIR_A32_SEQ21_evidence.tar.gz
+evidence_archive_sha256=76ca8259f14de4b66a8d09cc1831e447f2a2f0840b1df812523f94c33b4bfbf3
+evidence_archive_size=16213253
+evidence_status=SEQ21_A32_RESOURCE_AND_POST_ZERO_TRAINING_EFFECT_VERIFIED command_exit_code=0 training_job_id=211378
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T14:46:25+0800
