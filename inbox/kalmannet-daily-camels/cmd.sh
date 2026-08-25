@@ -1,143 +1,65 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
+umask 077
 
-MAILBOX_ROOT="/data1/home/${USER}/hpc_mailbox"
-PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/parity-ten-epoch-full-coverage-v14"
-BASE="/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824"
-SOURCE_A16="${BASE}/source_A16_seq15"
-RUN_PARENT="${BASE}/runs"
+EXPECTED_USER="sunyiq"
+MAILBOX_ROOT="/data1/home/sunyiq/hpc_mailbox"
+PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/masked-nse-physical-evidence-a20-v16"
+EXPERIMENT_ID="DAILY_CAMELS_NATIVE_KALMANNET_MASKED_NSE_SMOKE_V3_20260825_A20"
+ARCHIVE="${PAYLOAD_DIRECTORY}/${EXPERIMENT_ID}.tar.gz"
+ARCHIVE_SHA256="44f6df340807d81662e7ccf905e533df61bfbbd4897335303b3e30ddf681a520"
+ARCHIVE_SIZE=211055
+OUTER_MANIFEST="${PAYLOAD_DIRECTORY}/bundle_manifest.sha256.json"
+OUTER_MANIFEST_SHA256="83e81d0d64f2dab1313df4c5313af98d197f55d9f54981d72b1c161da2bd6455"
+OUTER_MANIFEST_SIZE=5412
+INTERNAL_MANIFEST_SHA256="6be4ec56bbb04055b9316532ebe0ae30fa5fc44f573e2297aa6439c1665cb974"
+CONFIG_SHA256="6c2dd29b92505bd394bce2c18af6a6a429264aecabd6b1b2b7099219b7c240b8"
+VERIFY_RESULT_SHA256="d3d7191f091e994b207c10a975ea95b9cb06b8b7206c9b86a565c92f22546c63"
+
+BASE="/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_v3_20260825"
+SOURCE_DIRECTORY="${BASE}/source_A20_seq16"
+TRANSPORT_DIRECTORY="${BASE}/transport"
 STATUS_DIRECTORY="${BASE}/status"
 LOG_DIRECTORY="${BASE}/logs"
+PRIVATE_EVIDENCE_DIRECTORY="${BASE}/private_evidence_staging"
+RUN_DIRECTORY="${BASE}/${EXPERIMENT_ID}"
 OUTBOX_DIRECTORY="${MAILBOX_ROOT}/outbox/kalmannet-daily-camels"
-
-A05_ID="DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05"
-A06_ID="DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06"
-A16_ID="DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16"
-A16_ARCHIVE="${PAYLOAD_DIRECTORY}/${A16_ID}.tar.gz"
-A16_SHA256="bd83f21b3cd5b9f2a7011fa8f4dedae7c90d59046a0979c2f5cd8fe9155d688d"
-A16_SIZE=227861
-A16_OUTER_MANIFEST="${PAYLOAD_DIRECTORY}/A16_bundle_manifest.sha256.json"
-A16_OUTER_MANIFEST_SHA256="f206732d7a12a2c494ec04b0c7134a0f5df54f367e24338b4b1ce4f9227eb32d"
-A16_OUTER_MANIFEST_SIZE=8272
-A16_INTERNAL_MANIFEST_SHA256="0521fa6ae6989218bf4f7f916c012018cb003f7c65e50caeeb8fa991da9fc875"
-A16_CONFIG_SHA256="d8d3bf5275c1c509ce6591cd1c6d8c164e512f81e04d9ed1916262a2f3a5f22a"
-HOST_ADMISSION_MIN_BYTES=2813952000
-GPU_ADMISSION_MIN_FREE_MIB=826
-EXACT_REPLAY_GATE="${STATUS_DIRECTORY}/replay_gate_${A05_ID}.json"
-CAUSAL_REPLAY_GATE="${STATUS_DIRECTORY}/replay_gate_${A06_ID}.json"
-
-EVIDENCE_NAME="DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_A16_SEQ15_evidence.tar.gz"
+EVIDENCE_NAME="DAILY_CAMELS_NATIVE_KALMANNET_MASKED_NSE_A20_SEQ16_evidence.tar.gz"
 EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/${EVIDENCE_NAME}"
+
 START_EPOCH="$(date +%s)"
-SOFT_DEADLINE_EPOCH="$((START_EPOCH + 9000))"
-NAMESPACE_VERIFIED=0
-ALL_SUBMITTED_JOBS_TERMINAL=0
-FINAL_STATUS="SEQ15_A16_STARTED"
-declare -a JOB_IDS=()
+SOFT_DEADLINE_EPOCH="$((START_EPOCH + 5400))"
+ATTEMPT_ID="$(date -u +%Y%m%dT%H%M%SZ)-$$"
+NAMESPACE_OWNED=0
+ALL_SUBMITTED_JOBS_TERMINAL=1
+JOB_COUNT=0
+JOB_IDS_CSV=""
+PROBE_JOB_ID=""
+TRAIN_JOB_ID=""
+FINAL_STATUS="SEQ16_A20_STARTED"
 
-package_evidence() {
-  local command_exit_code="$1"
-  set +e
-  if [[ "$NAMESPACE_VERIFIED" -ne 1 ]]; then
-    printf 'evidence_archive=NOT_CREATED namespace_not_verified=1 status=%s exit_code=%s\n' \
-      "$FINAL_STATUS" "$command_exit_code"
-    return 0
-  fi
-  mkdir -p "$OUTBOX_DIRECTORY"
-  if [[ -e "$EVIDENCE_ARCHIVE" ]]; then
-    printf 'evidence_archive=NOT_REPLACED existing=%s status=%s exit_code=%s\n' \
-      "$EVIDENCE_ARCHIVE" "$FINAL_STATUS" "$command_exit_code"
-    return 0
-  fi
+sha256_file() {
+  sha256sum "$1" | awk '{print $1}'
+}
 
-  local snapshot="${BASE}/seq15_snapshot_$$"
-  mkdir -p "$snapshot/status" "$snapshot/logs" "$snapshot/source"
-  printf '%s\n' "$FINAL_STATUS" > "${snapshot}/final_status.txt"
-  printf '%s\n' "$command_exit_code" > "${snapshot}/command_exit_code.txt"
-  printf '%s\n' "${JOB_IDS[@]:-}" > "${snapshot}/submitted_job_ids.txt"
-  date -u +%Y-%m-%dT%H:%M:%SZ > "${snapshot}/snapshot_time_utc.txt"
-  if [[ "${#JOB_IDS[@]}" -gt 0 ]]; then
-    local job_csv
-    job_csv="$(IFS=,; printf '%s' "${JOB_IDS[*]}")"
-    squeue -h -j "$job_csv" -o '%i|%T|%R|%M|%l' \
-      > "${snapshot}/squeue_snapshot.txt" 2>&1 || true
-    sacct -P --units=K -j "$job_csv" \
-      --format=JobIDRaw,JobName,Partition,AllocCPUS,ReqMem,AllocTRES,State,ExitCode,Elapsed,Start,End,MaxRSS,MaxVMSize,AveRSS \
-      > "${snapshot}/sacct_snapshot.txt" 2>&1 || true
-  fi
+verify_regular_identity() {
+  local path="$1" expected_sha="$2" expected_size="$3"
+  [[ -f "$path" && ! -L "$path" ]] || return 1
+  [[ "$(stat -c '%s' "$path")" = "$expected_size" ]] || return 1
+  [[ "$(sha256_file "$path")" = "$expected_sha" ]]
+}
 
-  local candidate
-  for candidate in \
-    "${STATUS_DIRECTORY}"/seq15_* \
-    "${STATUS_DIRECTORY}"/probe-"${A16_ID}"-*.json \
-    "${STATUS_DIRECTORY}"/entry-probe-"${A16_ID}"-*.json \
-    "${STATUS_DIRECTORY}"/train-preflight-"${A16_ID}"-*.json \
-    "${STATUS_DIRECTORY}"/train-gpu-resources-"${A16_ID}"-*.csv \
-    "${STATUS_DIRECTORY}"/train-cgroup-resources-"${A16_ID}"-*.txt \
-    "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE"; do
-    [[ -f "$candidate" && ! -L "$candidate" ]] || continue
-    cp -p "$candidate" "${snapshot}/status/"
-  done
-  for job_id in "${JOB_IDS[@]:-}"; do
-    for candidate in "${LOG_DIRECTORY}"/*-"${job_id}".out "${LOG_DIRECTORY}"/*-"${job_id}".err; do
-      [[ -f "$candidate" && ! -L "$candidate" ]] || continue
-      cp -p "$candidate" "${snapshot}/logs/"
-    done
-  done
-  if [[ -f "${SOURCE_A16}/bundle_manifest.json" && ! -L "${SOURCE_A16}/bundle_manifest.json" ]]; then
-    cp -p "${SOURCE_A16}/bundle_manifest.json" "${snapshot}/source/"
-  fi
-  if [[ "$ALL_SUBMITTED_JOBS_TERMINAL" -eq 1 && \
-        -d "${RUN_PARENT}/${A16_ID}" && ! -L "${RUN_PARENT}/${A16_ID}" ]]; then
-    if find "${RUN_PARENT}/${A16_ID}" -type l -print -quit | grep -q .; then
-      printf 'evidence_archive=CREATE_FAILED symbolic_run_member=1 status=%s exit_code=%s\n' \
-        "$FINAL_STATUS" "$command_exit_code"
-      return 0
-    fi
-    cp -a "${RUN_PARENT}/${A16_ID}" "${snapshot}/run"
-  fi
-
-  local temporary_archive="${OUTBOX_DIRECTORY}/.${EVIDENCE_NAME}.$$"
-  tar -czf "$temporary_archive" -C "$BASE" "$(basename "$snapshot")"
-  if [[ -s "$temporary_archive" && ! -e "$EVIDENCE_ARCHIVE" ]]; then
-    mv "$temporary_archive" "$EVIDENCE_ARCHIVE"
-    printf 'evidence_archive=%s\n' "$EVIDENCE_ARCHIVE"
-    printf 'evidence_archive_sha256=%s\n' "$(sha256sum "$EVIDENCE_ARCHIVE" | awk '{print $1}')"
-    printf 'evidence_archive_size=%s\n' "$(stat -c '%s' "$EVIDENCE_ARCHIVE")"
-    printf 'evidence_status=%s command_exit_code=%s all_jobs_terminal=%s\n' \
-      "$FINAL_STATUS" "$command_exit_code" "$ALL_SUBMITTED_JOBS_TERMINAL"
+register_job_id() {
+  local job_id="$1"
+  case "$job_id" in
+    ''|*[!0-9]*) return 1 ;;
+  esac
+  if [[ -z "$JOB_IDS_CSV" ]]; then
+    JOB_IDS_CSV="$job_id"
   else
-    printf 'evidence_archive=CREATE_FAILED status=%s exit_code=%s\n' \
-      "$FINAL_STATUS" "$command_exit_code"
+    JOB_IDS_CSV="${JOB_IDS_CSV},${job_id}"
   fi
-}
-
-on_exit() {
-  local command_exit_code="$?"
-  trap - EXIT INT TERM
-  package_evidence "$command_exit_code"
-  exit "$command_exit_code"
-}
-trap on_exit EXIT
-trap 'FINAL_STATUS="SEQ15_A16_INTERRUPTED_PARTIAL_PENDING"; exit 143' INT TERM
-
-archive_identity_check() {
-  local path="$1" expected_sha256="$2" expected_size="$3"
-  local actual_sha256 actual_size
-  [[ -f "$path" && ! -L "$path" ]] || {
-    echo "payload member absent or symbolic: $path" >&2
-    return 60
-  }
-  actual_sha256="$(sha256sum "$path" | awk '{print $1}')"
-  actual_size="$(stat -c '%s' "$path")"
-  [[ "$actual_sha256" = "$expected_sha256" ]] || {
-    echo "payload SHA-256 differs: $path" >&2
-    return 61
-  }
-  [[ "$actual_size" = "$expected_size" ]] || {
-    echo "payload size differs: $path" >&2
-    return 62
-  }
+  JOB_COUNT=$((JOB_COUNT + 1))
 }
 
 accounting_record_once() {
@@ -175,668 +97,567 @@ require_completed_zero() {
   [[ "$state" = "COMPLETED" && "$exit_code" = "0:0" ]]
 }
 
-classify_tests_completion() {
-  local job_id="$1" record state exit_code
-  record="$(accounting_record_once "$job_id" || true)"
-  state="${record%%|*}"
-  exit_code="${record#*|}"
-  state="${state%%+*}"
-  printf 'accounting label=tests_A16 job_id=%s state=%s exit_code=%s\n' \
-    "$job_id" "${state:-UNKNOWN}" "${exit_code:-UNKNOWN}"
-  if [[ "$state" = "COMPLETED" && "$exit_code" = "0:0" ]]; then
-    TEST_EXIT_CLASS="passed"
+cancel_known_jobs() {
+  local cancel_deadline live
+  if [[ -n "$TRAIN_JOB_ID" ]]; then
+    scancel "$TRAIN_JOB_ID" 2>/dev/null || true
+  fi
+  if [[ -n "$PROBE_JOB_ID" ]]; then
+    scancel "$PROBE_JOB_ID" 2>/dev/null || true
+  fi
+  if [[ "$JOB_COUNT" -eq 0 ]]; then
+    ALL_SUBMITTED_JOBS_TERMINAL=1
     return 0
   fi
-  if [[ "$state" = "FAILED" && "$exit_code" = "77:0" ]]; then
-    TEST_EXIT_CLASS="skipped_pytest_unavailable"
-    return 0
-  fi
-  TEST_EXIT_CLASS="failed_or_ambiguous"
-  return 1
-}
-
-classify_train_completion() {
-  local job_id="$1" record state exit_code
-  record="$(accounting_record_once "$job_id" || true)"
-  state="${record%%|*}"
-  exit_code="${record#*|}"
-  state="${state%%+*}"
-  printf 'accounting label=train_A16 job_id=%s state=%s exit_code=%s\n' \
-    "$job_id" "${state:-UNKNOWN}" "${exit_code:-UNKNOWN}"
-  if [[ "$state" = "COMPLETED" && "$exit_code" = "0:0" ]]; then
-    TRAIN_EXIT_CLASS="scientific_gate_pass"
-    return 0
-  fi
-  if [[ "$state" = "FAILED" && "$exit_code" = "2:0" ]]; then
-    TRAIN_EXIT_CLASS="scientific_gate_fail_after_technical_completion"
-    return 0
-  fi
-  TRAIN_EXIT_CLASS="technical_or_scheduler_failure"
-  return 1
-}
-
-require_lock_cleared() {
-  local lock_path="$1" attempt
-  for attempt in 1 2 3 4 5 6 7 8 9 10; do
-    [[ ! -e "$lock_path" ]] && return 0
-    sleep 1
+  cancel_deadline="$(( $(date +%s) + 180 ))"
+  while (( $(date +%s) < cancel_deadline )); do
+    live="$(squeue -h -j "$JOB_IDS_CSV" -o '%i' 2>/dev/null || true)"
+    if [[ -z "$live" ]]; then
+      ALL_SUBMITTED_JOBS_TERMINAL=1
+      return 0
+    fi
+    sleep 5
   done
-  echo "phase owner lock remains after terminal accounting: $lock_path" >&2
+  ALL_SUBMITTED_JOBS_TERMINAL=0
   return 1
 }
 
-submit_probe() {
-  local raw job_id
-  raw="$(cd "$SOURCE_A16" && sbatch --parsable --mem=0 \
-    hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm)"
-  job_id="${raw%%;*}"
-  case "$job_id" in
-    ''|*[!0-9]*) echo "invalid Slurm probe job id: ${raw}" >&2; return 63 ;;
-  esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq15_probe_A16_job_id.txt"
-  JOB_IDS+=("$job_id")
-  SUBMITTED_JOB_ID="$job_id"
+publish_no_replace() {
+  local source="$1" destination="$2"
+  python - "$source" "$destination" <<'PY'
+import os
+from pathlib import Path
+import stat
+import sys
+
+source, destination = map(Path, sys.argv[1:3])
+source_record = os.stat(source, follow_symlinks=False)
+parent_record = os.stat(destination.parent, follow_symlinks=False)
+if not stat.S_ISREG(source_record.st_mode):
+    raise SystemExit("publication source is not a regular file")
+if not stat.S_ISDIR(parent_record.st_mode):
+    raise SystemExit("publication parent is not a real directory")
+if source_record.st_dev != parent_record.st_dev:
+    raise SystemExit("evidence staging and outbox are on different filesystems")
+if os.path.lexists(destination):
+    raise SystemExit("evidence destination already exists")
+os.link(source, destination, follow_symlinks=False)
+published = os.stat(destination, follow_symlinks=False)
+if (
+    published.st_dev != source_record.st_dev
+    or published.st_ino != source_record.st_ino
+    or published.st_size != source_record.st_size
+):
+    raise SystemExit("published evidence identity differs")
+directory_fd = os.open(
+    str(destination.parent),
+    os.O_RDONLY | getattr(os, "O_DIRECTORY", 0),
+)
+try:
+    os.fsync(directory_fd)
+finally:
+    os.close(directory_fd)
+PY
 }
 
-submit_tests() {
-  local raw job_id
-  raw="$(sbatch --parsable --mem=0 -p hgpu2p -N 1 -n 1 --cpus-per-task=2 \
-    --gres=gpu:1 -t 00:15:00 --exclude=ngu002 -J daily-parity-tests \
-    -o "${LOG_DIRECTORY}/tests-%j.out" -e "${LOG_DIRECTORY}/tests-%j.err" \
-    --chdir="$SOURCE_A16" \
-    --wrap="set -euo pipefail; set +u; source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh; conda activate nh_final; set -u; export PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 NUMEXPR_NUM_THREADS=2; python -c 'import importlib.util,sys; available=importlib.util.find_spec(\"pytest\") is not None; print(\"pytest_available=\" + str(available).lower()); sys.exit(0 if available else 77)'; python -m pytest -q -p no:cacheprovider --maxfail=1 tests/test_daily_camels_ukf_knet_parity_contract.py tests/test_daily_camels_ukf_knet_parity_runner.py tests/test_knet_native_hbvlite_full_state.py tests/test_run_daily_camels_ukf_knet_parity_entry.py tests/test_daily_camels_ukf_knet_parity_hpc_preflight.py")"
-  job_id="${raw%%;*}"
-  case "$job_id" in
-    ''|*[!0-9]*) echo "invalid Slurm test job id: ${raw}" >&2; return 64 ;;
-  esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq15_tests_A16_job_id.txt"
-  JOB_IDS+=("$job_id")
-  SUBMITTED_JOB_ID="$job_id"
+package_evidence() {
+  local command_exit_code="$1"
+  local snapshot snapshot_name temporary_archive evidence_destination
+  local candidate
+  if [[ "$NAMESPACE_OWNED" -ne 1 ]]; then
+    printf 'evidence_archive=NOT_CREATED namespace_not_owned=1 status=%s exit_code=%s\n' \
+      "$FINAL_STATUS" "$command_exit_code"
+    return 0
+  fi
+  mkdir -p "$OUTBOX_DIRECTORY" || return 91
+  snapshot="${BASE}/seq16_A20_snapshot_$$"
+  snapshot_name="$(basename "$snapshot")"
+  mkdir "$snapshot" || return 92
+  mkdir "$snapshot/status" "$snapshot/logs" "$snapshot/source" "$snapshot/transport" || return 93
+  printf '%s\n' "$FINAL_STATUS" > "${snapshot}/final_status.txt" || return 94
+  printf '%s\n' "$command_exit_code" > "${snapshot}/command_exit_code.txt" || return 95
+  printf '%s\n' "$JOB_COUNT" > "${snapshot}/submitted_job_count.txt" || return 96
+  if [[ "$JOB_COUNT" -gt 0 ]]; then
+    printf '%s\n' "$JOB_IDS_CSV" > "${snapshot}/submitted_job_ids.txt" || return 97
+    squeue -h -j "$JOB_IDS_CSV" -o '%i|%T|%R|%M|%l' \
+      > "${snapshot}/squeue_snapshot.txt" 2>&1 || true
+    sacct -P --units=K -j "$JOB_IDS_CSV" \
+      --format=JobIDRaw,JobName,Partition,AllocCPUS,ReqMem,AllocTRES,State,ExitCode,Elapsed,Start,End,MaxRSS,MaxVMSize,AveRSS \
+      > "${snapshot}/sacct_snapshot.txt" 2>&1 || true
+  else
+    : > "${snapshot}/submitted_job_ids.txt"
+  fi
+  date -u +%Y-%m-%dT%H:%M:%SZ > "${snapshot}/snapshot_time_utc.txt" || return 98
+  for candidate in "${STATUS_DIRECTORY}"/*; do
+    [[ -f "$candidate" && ! -L "$candidate" ]] || continue
+    cp -p -- "$candidate" "${snapshot}/status/" || return 99
+  done
+  for candidate in "${LOG_DIRECTORY}"/*; do
+    [[ -f "$candidate" && ! -L "$candidate" ]] || continue
+    cp -p -- "$candidate" "${snapshot}/logs/" || return 100
+  done
+  if [[ -f "${SOURCE_DIRECTORY}/bundle_manifest.json" && ! -L "${SOURCE_DIRECTORY}/bundle_manifest.json" ]]; then
+    cp -p -- "${SOURCE_DIRECTORY}/bundle_manifest.json" "${snapshot}/source/" || return 101
+  fi
+  if [[ -f "${TRANSPORT_DIRECTORY}/bundle_manifest.sha256.json" && ! -L "${TRANSPORT_DIRECTORY}/bundle_manifest.sha256.json" ]]; then
+    cp -p -- "${TRANSPORT_DIRECTORY}/bundle_manifest.sha256.json" "${snapshot}/transport/" || return 102
+  fi
+  if find "$snapshot" -type l -print -quit | grep -q .; then
+    return 103
+  fi
+
+  temporary_archive="$(mktemp "${PRIVATE_EVIDENCE_DIRECTORY}/evidence.XXXXXX.tar.gz")" || return 104
+  if [[ "$ALL_SUBMITTED_JOBS_TERMINAL" -eq 1 ]]; then
+    evidence_destination="$EVIDENCE_ARCHIVE"
+    if [[ -d "$RUN_DIRECTORY" && ! -L "$RUN_DIRECTORY" ]]; then
+      if find "$RUN_DIRECTORY" -type l -print -quit | grep -q .; then
+        return 105
+      fi
+      tar -czf "$temporary_archive" -C "$BASE" "$snapshot_name" "$EXPERIMENT_ID" || return 106
+    else
+      tar -czf "$temporary_archive" -C "$BASE" "$snapshot_name" || return 107
+    fi
+  else
+    evidence_destination="${OUTBOX_DIRECTORY}/${EXPERIMENT_ID}.partial-pending.${ATTEMPT_ID}.tar.gz"
+    tar -czf "$temporary_archive" -C "$BASE" "$snapshot_name" || return 108
+  fi
+  [[ -s "$temporary_archive" ]] || return 109
+  gzip -t "$temporary_archive" || return 110
+  tar -tzf "$temporary_archive" >/dev/null || return 111
+  publish_no_replace "$temporary_archive" "$evidence_destination" || return 112
+  printf 'evidence_archive=%s\n' "$evidence_destination"
+  printf 'evidence_archive_sha256=%s\n' "$(sha256_file "$evidence_destination")"
+  printf 'evidence_archive_size=%s\n' "$(stat -c '%s' "$evidence_destination")"
+  printf 'evidence_status=%s command_exit_code=%s all_jobs_terminal=%s\n' \
+    "$FINAL_STATUS" "$command_exit_code" "$ALL_SUBMITTED_JOBS_TERMINAL"
+  rm -- "$temporary_archive" || return 113
+  return 0
 }
 
-submit_train() {
-  local raw job_id
-  raw="$(cd "$SOURCE_A16" && sbatch --parsable --mem=0 \
-    --export=ALL,PARITY_EXACT_REPLAY_GATE="${EXACT_REPLAY_GATE}",PARITY_CAUSAL_REPLAY_GATE="${CAUSAL_REPLAY_GATE}",PARITY_HOST_ADMISSION_MIN_BYTES="${HOST_ADMISSION_MIN_BYTES}",PARITY_GPU_ADMISSION_MIN_FREE_MIB="${GPU_ADMISSION_MIN_FREE_MIB}" \
-    hpc/daily_camels_ukf_knet_parity/submit_train_gpu.slurm)"
-  job_id="${raw%%;*}"
-  case "$job_id" in
-    ''|*[!0-9]*) echo "invalid Slurm training job id: ${raw}" >&2; return 65 ;;
-  esac
-  printf '%s\n' "$job_id" > "${STATUS_DIRECTORY}/seq15_train_A16_job_id.txt"
-  JOB_IDS+=("$job_id")
-  SUBMITTED_JOB_ID="$job_id"
+on_exit() {
+  local main_exit_code="$?" package_exit_code=0
+  trap - EXIT INT TERM
+  set +e
+  package_evidence "$main_exit_code"
+  package_exit_code="$?"
+  if [[ "$main_exit_code" -eq 0 && "$package_exit_code" -ne 0 ]]; then
+    printf 'main workflow succeeded but evidence packaging failed: %s\n' \
+      "$package_exit_code" >&2
+    exit 90
+  fi
+  if [[ "$main_exit_code" -ne 0 && "$package_exit_code" -ne 0 ]]; then
+    printf 'main failure=%s; additional evidence failure=%s\n' \
+      "$main_exit_code" "$package_exit_code" >&2
+  fi
+  exit "$main_exit_code"
 }
 
-test ! -e "$EVIDENCE_ARCHIVE" || {
-  echo "refusing to replace existing seq15 evidence: $EVIDENCE_ARCHIVE" >&2
-  exit 66
+on_signal() {
+  FINAL_STATUS="SEQ16_A20_INTERRUPTED_CANCELLING_OWN_JOBS"
+  cancel_known_jobs || true
+  exit 143
 }
-[[ -d "$BASE" && ! -L "$BASE" ]] || {
-  echo "daily parity root is absent or symbolic: $BASE" >&2
-  exit 67
-}
-for required_directory in "$RUN_PARENT" "$STATUS_DIRECTORY" "$LOG_DIRECTORY"; do
-  [[ -d "$required_directory" && ! -L "$required_directory" ]] || {
-    echo "daily parity directory is absent or symbolic: $required_directory" >&2
-    exit 68
-  }
-done
-[[ ! -e "$SOURCE_A16" ]] || {
-  echo "seq15 source directory already exists; refusing to replace it" >&2
-  exit 69
-}
-[[ ! -e "${RUN_PARENT}/${A16_ID}" ]] || {
-  echo "A16 run directory already exists; refusing duplicate submission" >&2
-  exit 70
-}
-if find "$STATUS_DIRECTORY" -maxdepth 1 -type f -name 'seq15_*' -print -quit | grep -q .; then
-  echo "seq15 already recorded status evidence; refusing duplicate submission" >&2
-  exit 71
+
+ACTUAL_USER="$(id -un)"
+ACTUAL_UID="$(id -u)"
+EXPECTED_UID="$(id -u "$EXPECTED_USER")"
+if [[ "${USER-}" != "$EXPECTED_USER" || "$ACTUAL_USER" != "$EXPECTED_USER" || "$ACTUAL_UID" != "$EXPECTED_UID" ]]; then
+  printf 'fixed-user check failed: env=%s actual=%s uid=%s expected_uid=%s\n' \
+    "${USER-UNSET}" "$ACTUAL_USER" "$ACTUAL_UID" "$EXPECTED_UID" >&2
+  exit 50
 fi
-for phase in probe replay train; do
-  [[ ! -e "${STATUS_DIRECTORY}/locks/${A16_ID}.${phase}.lock" ]] || {
-    echo "A16 phase lock already exists: ${phase}" >&2
-    exit 72
+
+trap on_exit EXIT
+trap on_signal INT TERM
+
+test ! -e "$BASE" || {
+  echo "isolated A20 base already exists; refusing overwrite or duplicate: $BASE" >&2
+  exit 60
+}
+test ! -e "$EVIDENCE_ARCHIVE" || {
+  echo "A20 evidence archive already exists; refusing replacement" >&2
+  exit 61
+}
+for path in "$ARCHIVE" "$OUTER_MANIFEST"; do
+  [[ -f "$path" && ! -L "$path" ]] || {
+    echo "payload member absent or symbolic: $path" >&2
+    exit 62
   }
 done
-for gate in "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE"; do
-  [[ -f "$gate" && ! -L "$gate" ]] || {
-    echo "required replay gate is absent or symbolic: $gate" >&2
-    exit 73
-  }
-done
-NAMESPACE_VERIFIED=1
-FINAL_STATUS="SEQ15_A16_NAMESPACE_ABSENCE_VERIFIED"
+verify_regular_identity "$ARCHIVE" "$ARCHIVE_SHA256" "$ARCHIVE_SIZE" || {
+  echo "A20 archive identity differs" >&2
+  exit 63
+}
+verify_regular_identity "$OUTER_MANIFEST" "$OUTER_MANIFEST_SHA256" "$OUTER_MANIFEST_SIZE" || {
+  echo "A20 outer manifest identity differs" >&2
+  exit 64
+}
 
-archive_identity_check "$A16_ARCHIVE" "$A16_SHA256" "$A16_SIZE"
-archive_identity_check "$A16_OUTER_MANIFEST" "$A16_OUTER_MANIFEST_SHA256" "$A16_OUTER_MANIFEST_SIZE"
-mkdir "$SOURCE_A16"
-tar -xzf "$A16_ARCHIVE" -C "$SOURCE_A16"
+mkdir "$BASE"
+NAMESPACE_OWNED=1
+mkdir "$SOURCE_DIRECTORY" "$TRANSPORT_DIRECTORY" "$STATUS_DIRECTORY" \
+  "$LOG_DIRECTORY" "$PRIVATE_EVIDENCE_DIRECTORY"
+COPIED_ARCHIVE="${TRANSPORT_DIRECTORY}/${EXPERIMENT_ID}.tar.gz"
+COPIED_OUTER_MANIFEST="${TRANSPORT_DIRECTORY}/bundle_manifest.sha256.json"
+cp -p -- "$ARCHIVE" "$COPIED_ARCHIVE"
+cp -p -- "$OUTER_MANIFEST" "$COPIED_OUTER_MANIFEST"
+verify_regular_identity "$COPIED_ARCHIVE" "$ARCHIVE_SHA256" "$ARCHIVE_SIZE" || exit 71
+verify_regular_identity "$COPIED_OUTER_MANIFEST" "$OUTER_MANIFEST_SHA256" "$OUTER_MANIFEST_SIZE" || exit 72
 
-set +u
-source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh"
-conda activate nh_final
-set -u
-export PYTHONDONTWRITEBYTECODE=1
-
-python - "$SOURCE_A16" "$A16_ARCHIVE" "$A16_OUTER_MANIFEST" \
-  "$A16_ID" "$A05_ID" "$A06_ID" "$EXACT_REPLAY_GATE" "$CAUSAL_REPLAY_GATE" \
-  "$A16_SHA256" "$A16_OUTER_MANIFEST_SHA256" \
-  "$A16_INTERNAL_MANIFEST_SHA256" "$A16_CONFIG_SHA256" <<'PY'
-import hashlib
+python - "$COPIED_ARCHIVE" "$COPIED_OUTER_MANIFEST" "$SOURCE_DIRECTORY" \
+  "$INTERNAL_MANIFEST_SHA256" <<'PY'
+from hashlib import sha256
 import json
-import math
+import os
+from pathlib import Path, PurePosixPath
+import sys
+import tarfile
+
+archive, outer_path, destination = map(Path, sys.argv[1:4])
+internal_manifest_sha = sys.argv[4]
+root = destination.resolve(strict=True)
+if any(root.iterdir()):
+    raise SystemExit("safe extraction destination is not empty")
+outer = json.loads(outer_path.read_text(encoding="utf-8"))
+expected_hash = dict(outer["member_sha256"])
+expected_size = {name: int(size) for name, size in outer["member_size"].items()}
+if outer.get("member_count") != len(expected_hash) or set(expected_hash) != set(expected_size):
+    raise SystemExit("outer manifest member geometry differs")
+expected_names = set(expected_hash) | {"bundle_manifest.json"}
+with tarfile.open(archive, "r:gz") as bundle:
+    members = bundle.getmembers()
+    names = [member.name for member in members]
+    if names != sorted(names) or len(names) != len(set(names)) or set(names) != expected_names:
+        raise SystemExit("archive contains unordered, duplicate, missing, or extra members")
+    for member in members:
+        relative = PurePosixPath(member.name)
+        if (
+            not member.isfile()
+            or relative.is_absolute()
+            or member.name != relative.as_posix()
+            or ".." in relative.parts
+            or "\\" in member.name
+        ):
+            raise SystemExit(f"unsafe archive member: {member.name!r}")
+        wanted_size = expected_size.get(member.name, member.size)
+        wanted_hash = expected_hash.get(member.name, internal_manifest_sha)
+        if member.size != wanted_size:
+            raise SystemExit(f"archive member size differs: {member.name}")
+        target = root.joinpath(*relative.parts)
+        target.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+        source = bundle.extractfile(member)
+        if source is None:
+            raise SystemExit(f"archive member is unreadable: {member.name}")
+        descriptor = os.open(
+            target,
+            os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0),
+            0o600,
+        )
+        digest = sha256()
+        byte_count = 0
+        try:
+            with os.fdopen(descriptor, "wb") as output:
+                while True:
+                    block = source.read(1024 * 1024)
+                    if not block:
+                        break
+                    output.write(block)
+                    digest.update(block)
+                    byte_count += len(block)
+                output.flush()
+                os.fsync(output.fileno())
+        finally:
+            source.close()
+        if byte_count != wanted_size or digest.hexdigest() != wanted_hash:
+            raise SystemExit(f"archive member identity differs: {member.name}")
+internal = json.loads((root / "bundle_manifest.json").read_text(encoding="utf-8"))
+if (
+    internal.get("member_count") != outer["member_count"]
+    or internal.get("member_sha256") != expected_hash
+    or internal.get("member_size") != expected_size
+):
+    raise SystemExit("inner and outer manifests differ")
+PY
+
+python - "$SOURCE_DIRECTORY" "$COPIED_OUTER_MANIFEST" "$EXPERIMENT_ID" \
+  "$ARCHIVE_SHA256" "$INTERNAL_MANIFEST_SHA256" "$CONFIG_SHA256" \
+  "$VERIFY_RESULT_SHA256" <<'PY'
+from hashlib import sha256
+import json
 from pathlib import Path
 import sys
 
 source = Path(sys.argv[1])
-archive_path, outer_path = map(Path, sys.argv[2:4])
-active_id, exact_id, causal_id = sys.argv[4:7]
-exact_gate_path, causal_gate_path = map(Path, sys.argv[7:9])
-archive_sha, outer_sha, internal_sha, config_sha = sys.argv[9:13]
+outer_path = Path(sys.argv[2])
+experiment_id, archive_sha, internal_sha, config_sha, verifier_sha = sys.argv[3:8]
 
-def sha256(path):
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
+def digest(path):
+    return sha256(path.read_bytes()).hexdigest()
 
-internal_path = source / "bundle_manifest.json"
-if [sha256(archive_path), sha256(outer_path), sha256(internal_path)] != [
-    archive_sha, outer_sha, internal_sha
-]:
-    raise SystemExit("seq15 A16 archive or manifest identity differs")
 outer = json.loads(outer_path.read_text(encoding="utf-8"))
-manifest = json.loads(internal_path.read_text(encoding="utf-8"))
-active_member = manifest["active_config_member"]
-active_path = source / active_member
+internal_path = source / "bundle_manifest.json"
+internal = json.loads(internal_path.read_text(encoding="utf-8"))
+config_member = "configs/daily_camels_native_kalmannet_masked_nse_smoke_v3.json"
+verifier_member = "hpc/daily_camels_native_kalmannet_masked_nse/verify_result.py"
+config = json.loads((source / config_member).read_text(encoding="utf-8"))
+loss = config.get("loss_contract", {})
 if (
-    outer.get("experiment_id") != active_id
+    outer.get("schema_version") != "daily_camels_native_kalmannet_masked_nse_hpc_archive_v1"
+    or outer.get("experiment_id") != experiment_id
     or outer.get("archive_sha256") != archive_sha
     or outer.get("internal_manifest_sha256") != internal_sha
+    or digest(internal_path) != internal_sha
     or outer.get("reserved_data_member_count") != 0
-    or manifest.get("reserved_data_member_count") != 0
-    or manifest.get("member_sha256", {}).get(active_member) != config_sha
-    or sha256(active_path) != config_sha
-):
-    raise SystemExit("seq15 A16 bundle inventory differs")
-config = json.loads(active_path.read_text(encoding="utf-8"))
-optimization = config.get("optimization", {})
-model = config.get("model", {})
-reference = config.get("reference", {})
-expected_starts = [
-    0, 100, 201, 301, 401, 501, 602, 702, 802, 903, 1003, 1103, 1204,
-    1304, 1404, 1504, 1605, 1705, 1805, 1906, 2006, 2106, 2206, 2307, 2407,
-]
-if (
-    config.get("experiment_id") != active_id
-    or config.get("basin_id") != "09035800"
+    or internal.get("schema_version") != "daily_camels_native_kalmannet_masked_nse_hpc_bundle_v3"
+    or internal.get("experiment_id") != experiment_id
+    or internal.get("purpose") != "daily_development_smoke_only"
+    or internal.get("member_count") != 25
+    or internal.get("input_archive_count") != 2
+    or internal.get("reserved_data_member_count") != 0
+    or internal.get("member_sha256", {}).get(config_member) != config_sha
+    or internal.get("member_sha256", {}).get(verifier_member) != verifier_sha
+    or config.get("schema_version") != "daily_camels_native_kalmannet_masked_nse_smoke_v3"
+    or config.get("experiment_id") != experiment_id
     or config.get("data", {}).get("cadence") != "daily"
-    or config.get("initialization", {}).get("execution_mode") != "causal_shared_spinup"
-    or config.get("execution_policy", {}).get("allow_training") is not True
-    or model.get("official_knet_sha256")
-       != "934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843"
-    or model.get("correction_scope") != "full_eighteen_dimensional_state_correction"
-    or optimization.get("training_objective") != "physical_unit_multilead_mse"
-    or optimization.get("checkpoint_objective") != "physical_unit_multilead_mse"
-    or optimization.get("training_epochs") != 10
-    or optimization.get("steps_per_epoch") != 1
-    or optimization.get("segments_per_optimizer_step") != 25
-    or optimization.get("fixed_training_segment_start_indices") != expected_starts
-    or not math.isclose(float(optimization.get("learning_rate")), 0.0005, rel_tol=0.0, abs_tol=0.0)
-    or reference.get("reference_status")
-       != "frozen_from_seq6_causal_replay_and_seq12_a15_full_coverage"
-    or reference.get("a15_one_step_best_checkpoint_objective") != 0.28580983607261695
-    or reference.get("a15_one_step_best_nse_by_lead")
-       != [0.7931683983822845, 0.7837451386292139, 0.7756788158494483]
+    or loss.get("contract_name") != "daily_camels_physical_masked_nse_equal_basin_lead_v2"
+    or loss.get("formula")
+       != "mean_equal_complete_basin_lead_events((prediction_physical-target_physical)^2/(basin_training_population_std_original_units+0.1)^2)"
+    or loss.get("training_statistics_start_index") != 0
+    or loss.get("training_statistics_stop_index_exclusive") != 2557
+    or loss.get("population_standard_deviation_ddof") != 0
+    or loss.get("loss_epsilon_original_discharge_units") != 0.1
+    or loss.get("tukf09_compatibility_diagnostic")
+       != "primary_loss/global_training_population_std^2"
+    or loss.get("result_cell_evidence")
+       != {
+           "fields": ["event_count", "physical_mse", "primary_loss"],
+           "training_events_per_basin_lead": 45,
+           "validation_events_per_basin_lead": 109,
+       }
+    or config.get("checkpoint_selection", {}).get("metric")
+       != "negative_shared_masked_nse_validation_loss"
 ):
-    raise SystemExit("seq15 A16 scientific or optimization contract differs")
-requirements = config.get("replay_gate_requirements", {})
-for name, path, expected_id in (
-    ("exact", exact_gate_path, exact_id),
-    ("causal", causal_gate_path, causal_id),
-):
-    receipt = json.loads(path.read_text(encoding="utf-8"))
-    requirement = requirements.get(name, {})
-    if (
-        receipt.get("status") != "REPLAY_PASS"
-        or receipt.get("experiment_id") != expected_id
-        or sha256(path) != requirement.get("receipt_sha256")
-    ):
-        raise SystemExit(f"seq15 A16 replay gate differs: {name}")
+    raise SystemExit("A20 bundle or scientific identity differs")
 print(json.dumps({
-    "status": "SEQ15_A16_OFFLINE_IDENTITY_PASS",
-    "experiment_id": active_id,
-    "training_epochs": 10,
-    "expected_optimizer_steps": 10,
-    "expected_forecast_target_events": 76500,
-    "correction_scope": model["correction_scope"],
+    "status": "SEQ16_A20_OFFLINE_IDENTITY_PASS",
+    "experiment_id": experiment_id,
+    "member_count": internal["member_count"],
+    "reserved_data_member_count": internal["reserved_data_member_count"],
+    "loss_contract": loss["contract_name"],
 }, sort_keys=True))
 PY
 
-python -u "${SOURCE_A16}/hpc/daily_camels_ukf_knet_parity/preflight.py" \
-  --bundle-root "$SOURCE_A16" --phase probe --offline-bundle-check \
-  --report "${STATUS_DIRECTORY}/seq15_offline_A16.json"
-FINAL_STATUS="SEQ15_A16_OFFLINE_BUNDLE_VERIFIED"
+export PYTHONDONTWRITEBYTECODE=1
+python -u "${SOURCE_DIRECTORY}/hpc/daily_camels_native_kalmannet_masked_nse/preflight.py" \
+  --bundle-root "$SOURCE_DIRECTORY" --offline-bundle-check \
+  > "${STATUS_DIRECTORY}/seq16_A20_offline_bundle_check.json"
+FINAL_STATUS="SEQ16_A20_OFFLINE_BUNDLE_VERIFIED"
 
-echo '=== SUBMIT READ-ONLY A16 SCHEDULED GPU PROBE ==='
-submit_probe
-PROBE_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ15_A16_PROBE_SUBMITTED"
+echo '=== SUBMIT READ-ONLY A20 GPU PROBE ==='
+PROBE_RAW="$(cd "$SOURCE_DIRECTORY" && sbatch --parsable --mem=0 \
+  hpc/daily_camels_native_kalmannet_masked_nse/submit_probe_gpu.slurm)"
+PROBE_JOB_ID="${PROBE_RAW%%;*}"
+register_job_id "$PROBE_JOB_ID" || {
+  echo "invalid A20 probe job id: $PROBE_RAW" >&2
+  exit 73
+}
+ALL_SUBMITTED_JOBS_TERMINAL=0
+printf '%s\n' "$PROBE_JOB_ID" > "${STATUS_DIRECTORY}/seq16_A20_probe_job_id.txt"
+FINAL_STATUS="SEQ16_A20_PROBE_SUBMITTED"
 if ! wait_for_job "$PROBE_JOB_ID"; then
-  FINAL_STATUS="SEQ15_A16_PROBE_PARTIAL_PENDING"
-  echo "soft deadline reached while probe is pending; no tests or training submitted" >&2
+  FINAL_STATUS="SEQ16_A20_PROBE_SOFT_STOP_CANCELLING"
+  cancel_known_jobs || true
   exit 74
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
-require_completed_zero "$PROBE_JOB_ID" "probe_A16" || {
-  FINAL_STATUS="SEQ15_A16_PROBE_HARD_STOP"
+require_completed_zero "$PROBE_JOB_ID" "probe_A20" || {
+  FINAL_STATUS="SEQ16_A20_PROBE_HARD_STOP"
   exit 75
 }
-require_lock_cleared "${STATUS_DIRECTORY}/locks/${A16_ID}.probe.lock" || {
-  FINAL_STATUS="SEQ15_A16_PROBE_LOCK_HARD_STOP"
-  exit 76
-}
-python - "$STATUS_DIRECTORY" "$A16_ID" "$PROBE_JOB_ID" \
-  "$HOST_ADMISSION_MIN_BYTES" "$GPU_ADMISSION_MIN_FREE_MIB" <<'PY'
+
+FINAL_STATUS="SEQ16_A20_PROBE_COMPLETED_AWAITING_VERIFICATION"
+if ! python - "$STATUS_DIRECTORY" "$EXPERIMENT_ID" "$PROBE_JOB_ID" "$RUN_DIRECTORY" <<'PY'
 import json
 from pathlib import Path
 import sys
 
-status, experiment_id, job_id = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
-host_min, gpu_min = int(sys.argv[4]), int(sys.argv[5])
-scheduled = json.loads(
-    (status / f"probe-{experiment_id}-{job_id}.json").read_text(encoding="utf-8")
-)
-entry = json.loads(
-    (status / f"entry-probe-{experiment_id}-{job_id}.json").read_text(encoding="utf-8")
-)
-if (
-    scheduled.get("status") != "PREFLIGHT_PASS"
-    or scheduled.get("phase") != "probe"
-    or scheduled.get("experiment_id") != experiment_id
-    or scheduled.get("run_directory_absent") is not True
-    or scheduled.get("array_members_materialized") != 0
-    or scheduled.get("reserved_data_member_count") != 0
-    or scheduled.get("torch_imported") is not False
-    or scheduled.get("numpy_imported") is not False
-    or int(scheduled.get("available_host_memory_bytes") or 0) < host_min
-    or int(scheduled.get("cuda_probe_without_torch_import", {}).get("memory_free_mib") or 0)
-       < gpu_min
-    or entry.get("status") != "PREFLIGHT_PASS"
-    or entry.get("phase") != "probe"
-    or entry.get("run_directory_absent") is not True
-    or entry.get("correction_scope") != "full_eighteen_dimensional_state_correction"
-    or entry.get("reserved_evaluation_period_access_authorized") is not False
-    or entry.get("array_members_materialized") != 0
-    or entry.get("numerical_frameworks_imported_by_entry") != 0
-):
-    raise SystemExit("seq15 A16 scheduled probe evidence differs")
+status, experiment_id, job_id, run_directory = Path(sys.argv[1]), *sys.argv[2:5]
+report = json.loads((status / f"probe-{job_id}.json").read_text(encoding="utf-8"))
+required = {
+    "status": "PREFLIGHT_PASS",
+    "experiment_id": experiment_id,
+    "cuda_available": True,
+    "cuda_device_count": 1,
+    "run_root_absent": True,
+    "array_members_materialized": 0,
+    "reserved_data_member_count": 0,
+    "input_archive_count": 2,
+    "configuration_contract_validated": True,
+    "runtime_interface_gap_count": 0,
+}
+for key, expected in required.items():
+    if report.get(key) != expected:
+        raise SystemExit(f"A20 probe admission mismatch: {key}")
+if report.get("run_root") != run_directory:
+    raise SystemExit("A20 probe checked a different run directory")
+if int(report.get("available_host_memory_bytes") or 0) < 4 * 1024**3:
+    raise SystemExit("A20 probe has less than 4 GiB available host memory")
+if int(report.get("cuda_free_bytes") or 0) < 1024**3:
+    raise SystemExit("A20 probe has less than 1 GiB free graphics memory")
 print(json.dumps({
-    "status": "SEQ15_A16_PROBE_PASS",
+    "status": "SEQ16_A20_PROBE_PASS",
     "job_id": job_id,
-    "hostname": scheduled["hostname"],
-    "available_host_memory_bytes": scheduled["available_host_memory_bytes"],
-    "gpu": scheduled["cuda_probe_without_torch_import"],
+    "host": report["hostname"],
+    "available_host_memory_bytes": report["available_host_memory_bytes"],
+    "cuda_free_bytes": report["cuda_free_bytes"],
 }, sort_keys=True))
 PY
-FINAL_STATUS="SEQ15_A16_PROBE_PASS"
+then
+  FINAL_STATUS="SEQ16_A20_PROBE_VERIFICATION_HARD_STOP"
+  exit 76
+fi
+FINAL_STATUS="SEQ16_A20_PROBE_PASS"
 
-echo '=== SUBMIT ISOLATED NUMERICAL CONTRACT TESTS ==='
-ALL_SUBMITTED_JOBS_TERMINAL=0
-submit_tests
-TEST_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ15_A16_TESTS_SUBMITTED"
-if ! wait_for_job "$TEST_JOB_ID"; then
-  FINAL_STATUS="SEQ15_A16_TESTS_PARTIAL_PENDING"
-  echo "soft deadline reached while tests are pending; no training submitted" >&2
+echo '=== SUBMIT UNIQUE PHYSICAL-LOSS EVIDENCE-COMPLETE TRAINING SMOKE ==='
+TRAIN_RAW="$(cd "$SOURCE_DIRECTORY" && sbatch --parsable --mem=0 \
+  hpc/daily_camels_native_kalmannet_masked_nse/submit_smoke_gpu.slurm)"
+TRAIN_JOB_ID="${TRAIN_RAW%%;*}"
+register_job_id "$TRAIN_JOB_ID" || {
+  echo "invalid A20 training job id: $TRAIN_RAW" >&2
   exit 77
-fi
-ALL_SUBMITTED_JOBS_TERMINAL=1
-classify_tests_completion "$TEST_JOB_ID" || {
-  FINAL_STATUS="SEQ15_A16_TESTS_HARD_STOP"
-  exit 78
 }
-python - "$STATUS_DIRECTORY" "$A16_ID" "$PROBE_JOB_ID" "$TEST_JOB_ID" \
-  "$TEST_EXIT_CLASS" <<'PY'
-import json
-import os
-from pathlib import Path
-import sys
-
-status = Path(sys.argv[1])
-experiment_id, probe_job_id, test_job_id, test_exit_class = sys.argv[2:6]
-probe_path = status / f"probe-{experiment_id}-{probe_job_id}.json"
-probe = json.loads(probe_path.read_text(encoding="utf-8"))
-packages = probe.get("package_availability_without_import", {})
-pytest_report = packages.get("pytest", {})
-pytest_available = pytest_report.get("available")
-if test_exit_class == "passed" and pytest_available is True:
-    pass
-elif test_exit_class == "skipped_pytest_unavailable" and pytest_available is False:
-    pass
-else:
-    raise SystemExit("seq15 A16 pytest availability and test exit class disagree")
-attestation = {
-    "status": "SEQ15_A16_TEST_ATTESTATION_PASS",
-    "experiment_id": experiment_id,
-    "probe_job_id": probe_job_id,
-    "test_job_id": test_job_id,
-    "pytest_available": pytest_available,
-    "test_exit_class": test_exit_class,
-}
-target = status / "seq15_A16_test_attestation.json"
-data = (json.dumps(attestation, sort_keys=True, separators=(",", ":")) + "\n").encode()
-descriptor = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-try:
-    os.write(descriptor, data)
-finally:
-    os.close(descriptor)
-print(json.dumps(attestation, sort_keys=True))
-PY
-FINAL_STATUS="SEQ15_A16_TESTS_PASS_OR_ATTESTED_SKIP"
-
-echo '=== SUBMIT TEN-EPOCH FULL-TRAINING-COVERAGE CONVERGENCE DIAGNOSTIC ==='
 ALL_SUBMITTED_JOBS_TERMINAL=0
-submit_train
-TRAIN_JOB_ID="$SUBMITTED_JOB_ID"
-FINAL_STATUS="SEQ15_A16_TRAIN_SUBMITTED"
+printf '%s\n' "$TRAIN_JOB_ID" > "${STATUS_DIRECTORY}/seq16_A20_train_job_id.txt"
+FINAL_STATUS="SEQ16_A20_TRAIN_SUBMITTED"
 if ! wait_for_job "$TRAIN_JOB_ID"; then
-  FINAL_STATUS="SEQ15_A16_TRAIN_PARTIAL_PENDING"
-  echo "soft deadline reached while training is pending; the job was not cancelled" >&2
-  exit 79
+  FINAL_STATUS="SEQ16_A20_TRAIN_SOFT_STOP_CANCELLING"
+  cancel_known_jobs || true
+  exit 78
 fi
 ALL_SUBMITTED_JOBS_TERMINAL=1
-if ! classify_train_completion "$TRAIN_JOB_ID"; then
-  FINAL_STATUS="SEQ15_A16_TRAIN_HARD_STOP"
-  exit 80
-fi
-require_lock_cleared "${STATUS_DIRECTORY}/locks/${A16_ID}.train.lock" || {
-  FINAL_STATUS="SEQ15_A16_TRAIN_LOCK_HARD_STOP"
-  exit 81
-}
 sacct -P --units=K -j "$TRAIN_JOB_ID" \
   --format=JobIDRaw,JobName,Partition,AllocCPUS,ReqMem,AllocTRES,State,ExitCode,Elapsed,Start,End,MaxRSS,MaxVMSize,AveRSS \
-  > "${STATUS_DIRECTORY}/seq15_train_A16_sacct_resources.txt"
+  > "${STATUS_DIRECTORY}/seq16_A20_train_sacct_resources.txt"
+if ! require_completed_zero "$TRAIN_JOB_ID" "train_A20"; then
+  FINAL_STATUS="SEQ16_A20_TRAIN_TECHNICAL_OR_SCIENTIFIC_HARD_STOP"
+  exit 79
+fi
 
-python - "$RUN_PARENT" "$STATUS_DIRECTORY" "$A16_ID" "$TRAIN_JOB_ID" \
-  "$TRAIN_EXIT_CLASS" "$TEST_JOB_ID" "$TEST_EXIT_CLASS" \
-  "$HOST_ADMISSION_MIN_BYTES" "$GPU_ADMISSION_MIN_FREE_MIB" <<'PY'
-import hashlib
+FINAL_STATUS="SEQ16_A20_TRAIN_COMPLETED_AWAITING_RESULT_VERIFICATION"
+if ! python -u "${SOURCE_DIRECTORY}/hpc/daily_camels_native_kalmannet_masked_nse/verify_result.py" \
+  --run-directory "$RUN_DIRECTORY" \
+  --experiment-id "$EXPERIMENT_ID" \
+  --configuration-sha256 "$CONFIG_SHA256" \
+  --training-job-id "$TRAIN_JOB_ID" \
+  --output "${STATUS_DIRECTORY}/seq16_A20_result_verification.json"; then
+  FINAL_STATUS="SEQ16_A20_RESULT_VERIFICATION_HARD_STOP"
+  exit 80
+fi
+
+FINAL_STATUS="SEQ16_A20_RESULT_VERIFIED_AWAITING_RESOURCE_VERIFICATION"
+if ! python - "$STATUS_DIRECTORY" "$RUN_DIRECTORY" "$EXPERIMENT_ID" "$TRAIN_JOB_ID" <<'PY'
 import json
 import math
 import os
 from pathlib import Path
+import re
 import sys
 
-run_parent, status = map(Path, sys.argv[1:3])
-experiment_id, job_id, exit_class, test_job_id, test_exit_class = sys.argv[3:8]
-host_min, gpu_min = int(sys.argv[8]), int(sys.argv[9])
-run = run_parent / experiment_id
-
-def sha256(path):
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
-
-required = [
-    run / "result_summary.json",
-    run / "manifest.sha256.json",
-    run / "completion.marker.json",
-    run / "epoch_history.json",
-    run / "experiment_identity.json",
-]
-if any(not path.is_file() or path.is_symlink() for path in required):
-    raise SystemExit("A16 completed run is missing a required regular file")
-if (run / "failure.json").exists() or any(path.is_symlink() for path in run.rglob("*")):
-    raise SystemExit("A16 completed run contains failure evidence or symbolic members")
-
+status, run = map(Path, sys.argv[1:3])
+experiment_id, job_id = sys.argv[3:5]
+preflight = json.loads(
+    (status / f"train-preflight-{job_id}.json").read_text(encoding="utf-8")
+)
 summary = json.loads((run / "result_summary.json").read_text(encoding="utf-8"))
-manifest = json.loads((run / "manifest.sha256.json").read_text(encoding="utf-8"))
-completion = json.loads((run / "completion.marker.json").read_text(encoding="utf-8"))
-history = json.loads((run / "epoch_history.json").read_text(encoding="utf-8"))
-identity = json.loads((run / "experiment_identity.json").read_text(encoding="utf-8"))
-test_attestation_path = status / "seq15_A16_test_attestation.json"
-if not test_attestation_path.is_file() or test_attestation_path.is_symlink():
-    raise SystemExit("A16 test attestation is absent or symbolic")
-test_attestation = json.loads(test_attestation_path.read_text(encoding="utf-8"))
 if (
-    test_attestation.get("status") != "SEQ15_A16_TEST_ATTESTATION_PASS"
-    or test_attestation.get("experiment_id") != experiment_id
-    or test_attestation.get("test_job_id") != test_job_id
-    or test_attestation.get("test_exit_class") != test_exit_class
+    preflight.get("status") != "PREFLIGHT_PASS"
+    or preflight.get("experiment_id") != experiment_id
+    or preflight.get("cuda_available") is not True
+    or preflight.get("cuda_device_count") != 1
+    or preflight.get("run_root_absent") is not True
+    or int(preflight.get("available_host_memory_bytes") or 0) < 4 * 1024**3
+    or int(preflight.get("cuda_free_bytes") or 0) < 1024**3
 ):
-    raise SystemExit("A16 test attestation identity differs")
-training = summary.get("training", {})
-manifest_files = manifest.get("files", {})
-for relative, expected_sha in manifest_files.items():
-    path = run / relative
-    if not path.is_file() or path.is_symlink() or sha256(path) != expected_sha:
-        raise SystemExit(f"A16 manifest mismatch: {relative}")
-if (
-    manifest.get("experiment_id") != experiment_id
-    or completion.get("experiment_id") != experiment_id
-    or summary.get("experiment_id") != experiment_id
-    or identity.get("experiment_id") != experiment_id
-    or completion.get("manifest_sha256") != sha256(run / "manifest.sha256.json")
-    or completion.get("summary_sha256") != sha256(run / "result_summary.json")
-):
-    raise SystemExit("A16 completion, manifest, summary, or identity chain differs")
+    raise SystemExit("A20 training-node resource admission differs")
 
-if not isinstance(history, list) or len(history) != 11:
-    raise SystemExit("A16 must contain epoch zero plus ten post-zero epochs")
-if [row.get("epoch") for row in history] != list(range(11)):
-    raise SystemExit("A16 epoch sequence differs")
-epoch_objectives = [
-    float(row["checkpoint_selection_objective_728_origins_without_warmup"])
+history = summary.get("history", [])
+host_values = [
+    int(row["host_resident_memory_bytes"])
     for row in history
+    if row.get("host_resident_memory_bytes") is not None
 ]
-if not all(math.isfinite(value) and value >= 0.0 for value in epoch_objectives):
-    raise SystemExit("A16 checkpoint objective history is invalid")
-expected_best_epoch = min(range(11), key=epoch_objectives.__getitem__)
-expected_best = epoch_objectives[expected_best_epoch]
-epoch_zero = history[0]
-expected_2550 = {"1": 2550, "2": 2550, "3": 2550}
-expected_712 = {"1": 712, "2": 712, "3": 712}
-expected_728 = {"1": 728, "2": 728, "3": 728}
-if (
-    not math.isclose(epoch_objectives[0], 0.40192019589669764, rel_tol=0.0, abs_tol=1e-15)
-    or epoch_zero.get("parameter_sha256")
-       != "b4a375c3195cae48c984e9a18cd470746950fda5a5aceec60b6e594f1a352645"
-    or epoch_zero.get("fixed_window_prediction_sha256")
-       != "17a6f0dbbe145b0262e0b2c1f426c49f1687a29927e8f8348f6ea293e246d91f"
-):
-    raise SystemExit("A16 epoch-zero anchor differs from A15")
-for epoch, row in enumerate(history[1:], start=1):
-    if (
-        row.get("optimizer_steps") != epoch
-        or row.get("epoch_optimizer_step_count") != 1
-        or row.get("sampled_forecast_events") != epoch * 7650
-        or row.get("training_sampled_finite_target_event_count_by_lead") != expected_2550
-        or row.get("target_count_by_lead_after_warmup") != expected_712
-        or row.get("target_count_by_lead_without_warmup") != expected_728
-        or row.get("finite_gradients") is not True
-        or int(row.get("nonzero_gradient_parameter_tensor_count") or 0) <= 0
-        or not math.isfinite(float(row.get("training_objective_physical_unit_multilead_mse")))
-    ):
-        raise SystemExit(f"A16 epoch-{epoch} training-accounting evidence differs")
+gpu_values = [int(row.get("gpu_peak_memory_bytes") or 0) for row in history]
+if not host_values or min(host_values) <= 0:
+    raise SystemExit("A20 measured process host-memory peak is absent")
+if max(host_values) >= 4 * 1024**3:
+    raise SystemExit("A20 process host-memory peak exceeds admission")
+if not gpu_values or max(gpu_values) <= 0:
+    raise SystemExit("A20 measured graphics-memory peak is absent")
+if max(gpu_values) >= int(preflight["cuda_free_bytes"]):
+    raise SystemExit("A20 measured graphics-memory peak exceeds admission")
 
-plan = training.get("training_segment_plan", {})
-replays = training.get("same_segment_step_replays", [])
-if (
-    plan.get("training_epochs") != 10
-    or plan.get("steps_per_epoch") != 1
-    or plan.get("expected_optimizer_step_count") != 10
-    or plan.get("segments_per_optimizer_step") != 25
-    or plan.get("candidate_forecast_target_event_count_all_leads") != 7650
-    or plan.get("total_candidate_forecast_target_event_count_all_epochs") != 76500
-    or plan.get("complete_eligible_issue_coverage") is not True
-    or training.get("optimizer_steps") != 10
-    or training.get("sampled_forecast_events") != 76500
-    or training.get("epoch_checkpoint_count") != 11
-    or training.get("fixed_window_prediction_artifact_count") != 11
-    or training.get("best_epoch") != expected_best_epoch
-    or not math.isclose(float(training.get("best_checkpoint_objective")), expected_best,
-                        rel_tol=0.0, abs_tol=1e-15)
-    or not math.isclose(float(training.get("last_validation_checkpoint_objective")),
-                        epoch_objectives[-1], rel_tol=0.0, abs_tol=1e-15)
-    or len(replays) != 10
-):
-    raise SystemExit("A16 aggregate training-accounting evidence differs")
+lines = (status / "seq16_A20_train_sacct_resources.txt").read_text(
+    encoding="utf-8"
+).splitlines()
+if not lines:
+    raise SystemExit("A20 accounting resource evidence is absent")
+header = lines[0].split("|")
+records = [dict(zip(header, line.split("|"))) for line in lines[1:] if line]
+main = next((row for row in records if row.get("JobIDRaw") == job_id), None)
+if main is None or main.get("State", "").split("+")[0] != "COMPLETED" or main.get("ExitCode") != "0:0":
+    raise SystemExit("A20 main accounting record differs")
 
-expected_starts = [
-    0, 100, 201, 301, 401, 501, 602, 702, 802, 903, 1003, 1103, 1204,
-    1304, 1404, 1504, 1605, 1705, 1805, 1906, 2006, 2106, 2206, 2307, 2407,
-]
-strict_flags = []
-for step, replay in enumerate(replays, start=1):
-    before = float(replay["before_step_objective_physical_unit_multilead_mse"])
-    after = float(replay["after_step_objective_physical_unit_multilead_mse"])
-    strict = after < before
-    constituents = replay.get("training_segment_replays", [])
-    if (
-        replay.get("optimizer_step") != step
-        or replay.get("training_segment_count") != 25
-        or replay.get("training_segment_start_indices") != expected_starts
-        or replay.get("reserved_evaluation_values_used") is not False
-        or replay.get("after_step_recomputed_under_no_grad") is not True
-        or replay.get("identical_target_geometry_before_after") is not True
-        or replay.get("strict_objective_decrease") is not strict
-        or len(constituents) != 25
-    ):
-        raise SystemExit(f"A16 same-training-batch replay differs at step {step}")
-    for start, constituent in zip(expected_starts, constituents, strict=True):
-        if (
-            constituent.get("segment_start_index_global_inclusive") != start
-            or constituent.get("target_count_by_lead_before_step")
-               != {"1": 102, "2": 102, "3": 102}
-            or constituent.get("target_count_by_lead_after_step")
-               != {"1": 102, "2": 102, "3": 102}
-            or constituent.get("reserved_evaluation_values_used") is not False
-            or constituent.get("after_step_recomputed_under_no_grad") is not True
-            or constituent.get("identical_target_geometry_before_after") is not True
-        ):
-            raise SystemExit(f"A16 constituent replay differs at step {step}, start {start}")
-    strict_flags.append(strict)
+def memory_kib(value):
+    text = str(value or "").strip()
+    match = re.fullmatch(r"([0-9]+(?:\.[0-9]+)?)([KMGTP]?)(?:[cn])?", text)
+    if match is None:
+        return None
+    factors = {"": 1, "K": 1, "M": 1024, "G": 1024**2, "T": 1024**3, "P": 1024**4}
+    return float(match.group(1)) * factors[match.group(2)]
 
-access = summary.get("access_ledger", {})
-zero_access_keys = (
-    "evaluation_array_reads",
-    "evaluation_metric_count",
-    "evaluation_output_count",
-    "evaluation_prediction_count",
-)
-if (
-    any(access.get(key) != 0 for key in zero_access_keys)
-    or training.get("access_ledger") != access
-    or summary.get("correction_scope") != "full_eighteen_dimensional_state_correction"
-):
-    raise SystemExit("A16 evaluation isolation or correction scope differs")
+requested_kib = memory_kib(main.get("ReqMem"))
+rss_values = [memory_kib(row.get("MaxRSS")) for row in records]
+rss_values = [value for value in rss_values if value is not None and value > 0]
+if requested_kib != 0:
+    raise SystemExit("A20 partition-compatible requested-memory record is not 0n")
+if not rss_values:
+    raise SystemExit("A20 accounting peak memory is absent")
+if max(rss_values) * 1024 >= 4 * 1024**3:
+    raise SystemExit("A20 accounting peak exceeds admission")
+if max(rss_values) * 1024 >= int(preflight["available_host_memory_bytes"]):
+    raise SystemExit("A20 accounting peak exceeds training-node admission memory")
 
-best_nse = training.get("best_nse_by_lead", {})
-if set(best_nse) != {"1", "2", "3"} or not all(
-    math.isfinite(float(value)) for value in best_nse.values()
-):
-    raise SystemExit("A16 best per-lead NSE inventory differs")
-failed_gates = training.get("failed_gates", [])
-gate_passed = bool(training.get("gate_passed"))
-if (
-    not isinstance(failed_gates, list)
-    or gate_passed != (len(failed_gates) == 0)
-    or (exit_class == "scientific_gate_pass") is not gate_passed
-    or bool(training.get("same_segment_every_optimizer_step_strictly_decreased"))
-       != all(strict_flags)
-):
-    raise SystemExit("A16 entry exit class and scientific gate evidence disagree")
-
-train_preflight = json.loads(
-    next(status.glob(f"train-preflight-{experiment_id}-{job_id}.json")).read_text(
-        encoding="utf-8"
-    )
-)
-resource_admission = train_preflight.get("resource_admission", {})
-if (
-    train_preflight.get("status") != "PREFLIGHT_PASS"
-    or train_preflight.get("phase") != "train"
-    or resource_admission.get("status") != "PASS"
-    or resource_admission.get("host_admission_min_bytes") != host_min
-    or resource_admission.get("gpu_admission_min_free_mib") != gpu_min
-    or int(train_preflight.get("available_host_memory_bytes") or 0) < host_min
-    or int(train_preflight.get("cuda_probe_without_torch_import", {}).get("memory_free_mib") or 0)
-       < gpu_min
-):
-    raise SystemExit("A16 training resource admission differs")
-resources = summary.get("resource_peaks", {})
-if (
-    int(resources.get("host_peak_rss_bytes") or 0) <= 0
-    or int(resources.get("graphics_peak_reserved_bytes") or 0) <= 0
-):
-    raise SystemExit("A16 process resource peaks are absent")
-for path in (
-    next(status.glob(f"train-gpu-resources-{experiment_id}-{job_id}.csv")),
-    next(status.glob(f"train-cgroup-resources-{experiment_id}-{job_id}.txt")),
-    status / "seq15_train_A16_sacct_resources.txt",
-):
-    if not path.is_file() or path.stat().st_size <= 0:
-        raise SystemExit(f"A16 resource receipt is absent: {path.name}")
-
-a15_objective = 0.28580983607261695
-a15_nse = {"1": 0.7931683983822845, "2": 0.7837451386292139, "3": 0.7756788158494483}
-ukf_nse = {key: float(value) for key, value in summary["ukf_recovery_nse_by_lead_712"].items()}
-best_nse_float = {key: float(value) for key, value in best_nse.items()}
 verification = {
-    "schema_version": "daily_camels_knet_a16_seq15_verification_v1",
-    "status": "A16_TECHNICAL_COMPLETION_VERIFIED",
+    "schema_version": "daily_camels_native_knet_resource_verification_v1",
+    "status": "VERIFIED",
     "experiment_id": experiment_id,
-    "slurm_job_id": job_id,
-    "training_exit_class": exit_class,
-    "test_job_id": test_job_id,
-    "test_exit_class": test_exit_class,
-    "test_attestation_sha256": sha256(test_attestation_path),
-    "scientific_gate_passed": gate_passed,
-    "failed_gates": failed_gates,
-    "epoch_count_including_zero": len(history),
-    "optimizer_steps": 10,
-    "sampled_forecast_events": 76500,
-    "best_epoch": expected_best_epoch,
-    "epoch_zero_checkpoint_objective": epoch_objectives[0],
-    "best_checkpoint_objective": expected_best,
-    "objective_improvement": epoch_objectives[0] - expected_best,
-    "beats_a15_best_objective": expected_best < a15_objective,
-    "a15_best_checkpoint_objective": a15_objective,
-    "best_nse_by_lead": best_nse_float,
-    "beats_a15_nse_each_lead": all(best_nse_float[k] > a15_nse[k] for k in a15_nse),
-    "all_nse_above_0_6": all(value > 0.6 for value in best_nse_float.values()),
-    "ukf_nse_by_lead": ukf_nse,
-    "remaining_nse_gap_to_ukf_by_lead": {
-        key: ukf_nse[key] - best_nse_float[key] for key in ukf_nse
-    },
-    "same_training_batch_strict_decrease_count": sum(strict_flags),
-    "same_training_batch_replay_count": len(strict_flags),
-    "reserved_evaluation_access_counts": {key: access[key] for key in zero_access_keys},
-    "host_peak_rss_bytes": int(resources["host_peak_rss_bytes"]),
-    "graphics_peak_reserved_bytes": int(resources["graphics_peak_reserved_bytes"]),
-    "result_summary_sha256": sha256(run / "result_summary.json"),
-    "manifest_sha256": sha256(run / "manifest.sha256.json"),
-    "completion_sha256": sha256(run / "completion.marker.json"),
+    "training_job_id": job_id,
+    "training_node": preflight.get("hostname"),
+    "available_host_memory_bytes_at_admission": int(preflight["available_host_memory_bytes"]),
+    "cuda_free_bytes_at_admission": int(preflight["cuda_free_bytes"]),
+    "process_host_resident_memory_peak_bytes": (
+        max(host_values) if host_values else None
+    ),
+    "process_gpu_peak_memory_bytes": max(gpu_values),
+    "sacct_max_rss_kib": max(rss_values),
+    "requested_memory_kib": requested_kib,
 }
-target = status / "seq15_A16_verification.json"
-data = (json.dumps(verification, sort_keys=True, separators=(",", ":")) + "\n").encode()
+target = status / "seq16_A20_resource_verification.json"
+content = (json.dumps(verification, sort_keys=True, separators=(",", ":")) + "\n").encode()
 descriptor = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
 try:
-    os.write(descriptor, data)
+    os.write(descriptor, content)
 finally:
     os.close(descriptor)
 print(json.dumps(verification, sort_keys=True))
 PY
+then
+  FINAL_STATUS="SEQ16_A20_RESOURCE_VERIFICATION_HARD_STOP"
+  exit 81
+fi
 
-FINAL_STATUS="SEQ15_A16_TECHNICAL_COMPLETE"
-echo '=== FINAL SLURM ACCOUNTING ==='
-JOB_CSV="$(IFS=,; printf '%s' "${JOB_IDS[*]}")"
-sacct --units=K -j "$JOB_CSV" \
+FINAL_STATUS="SEQ16_A20_TECHNICAL_AND_LOSS_IMPROVEMENT_VERIFIED"
+echo '=== FINAL A20 ACCOUNTING ==='
+sacct --units=K -j "$JOB_IDS_CSV" \
   --format=JobID,JobName,Partition,AllocCPUS,ReqMem,State,ExitCode,Elapsed,Start,End,MaxRSS,MaxVMSize,AveRSS
-echo "DAILY_CAMELS_UKF_KNET_PARITY_SEQ15_A16_TECHNICAL_COMPLETE probe=${PROBE_JOB_ID} tests=${TEST_JOB_ID} train=${TRAIN_JOB_ID} train_exit_class=${TRAIN_EXIT_CLASS} test_exit_class=${TEST_EXIT_CLASS}"
+echo "DAILY_CAMELS_NATIVE_KALMANNET_MASKED_NSE_A20_PASS probe=${PROBE_JOB_ID} train=${TRAIN_JOB_ID}"
