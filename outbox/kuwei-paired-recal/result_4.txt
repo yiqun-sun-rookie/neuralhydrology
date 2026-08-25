@@ -1,0 +1,28 @@
+### channel=kuwei-paired-recal seq=4
+### host=login4
+### started=2026-08-25T17:40:54+0800
+### ---------- output ----------
+=== A. isolated runtime data dir (must contain NO timeseries.db) ===
+matrix files copied
+discharge rows: 57720 NaN: 1464
+timeseries.db in runtime dir: 0 (must be 0)
+=== B. generate the Linux run_config ===
+initial_params       -> ABSENT
+workers:             -> ['workers: 1']
+max_iter:            -> ['max_iter: 1']
+end_date:            -> ['end_date: "2022-12-31 23:00:00"']
+exclude_windows      -> ['exclude_windows: [["2022-09-01","2022-10-31"]]']
+meteo_file:          -> ['meteo_file: /data1/home/sunyiq/kuwei_paired/laos/basins/namou_kuwei/dl/highflow_2026_06_17/results/continuous_rainfall_qualification_20260824/grid_hybrid_current.csv']
+data_dir:            -> ['data_dir: /data1/home/sunyiq/kuwei_paired/run_probe/runtime_data']
+obs_discharge_file:  -> ['obs_discharge_file: /data1/home/sunyiq/kuwei_paired/run_probe/runtime_data/namou_kuwei_discharge_hourly/obs_discharge_hourly.csv']
+=== C. write the slurm job ===
+slurm written
+=== D. submit ===
+Submitted batch job 211961
+=== E. queue ===
+     JOBID         NAME  PARTITION    STATE       TIME NODELIST(REASON)
+    211961  kuwei-probe     hcpu48  PENDING       0:00 (None)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T17:41:05+0800
