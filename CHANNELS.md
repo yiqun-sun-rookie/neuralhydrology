@@ -80,3 +80,4 @@ git rm inbox/seq
 - `runner2.sh` 只有在**没有任何 worker 在跑**时才会 `git reset --hard`，
   所以别人的任务跑到一半时你的 push 不会破坏它
 | `nature1st-attr-swap` | nature_1st 属性来源替换实验（12 项美国专有属性 vs 13 项 HydroATLAS 全球属性，对照组与实验组各一次 40 轮训练） | 2026-08-19 | 由 Claude 会话占用；落点 `/data1/home/sunyiq/nature_1st`，**不碰** `~/nature_1st_a02`、`~/neuralhydrology` 与其他通道 |
+| `kuwei-paired-recal` | laos_forecast 库尾流域成对降雨处理重新率定（两种降雨输入各自率定 17 参数 × 3 种子 = 6 次，纯单线程 CPU，无需 GPU） | 2026-08-25 | 由 Claude 会话占用；只碰自己的 channel 与自建落点，**不碰** `~/neuralhydrology`、`~/nature_1st` 及其他通道 |
