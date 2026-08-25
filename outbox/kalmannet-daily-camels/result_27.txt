@@ -1,0 +1,196 @@
+### channel=kalmannet-daily-camels seq=27
+### host=login4
+### started=2026-08-25T23:44:14+0800
+### ---------- output ----------
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_knet_near_zero_stable_lr_strict_smoke_a13.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_knet_official_core_fixed_full_training_coverage_one_step_a35.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/daily_camels_ukf_knet_parity_exact_replay_dtype_repair_v3.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: configs/tukf06_full_diagonal_search_head_to_head_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_official_core/preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_official_core/submit_one_step_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_official_core/verify_result.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_replay_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: hpc/daily_camels_ukf_knet_parity/submit_train_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: knet/dl/nn_kalman_clamp_5.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_daily_camels_ukf_knet_official_core_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/build_daily_camels_ukf_knet_parity_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_da.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_aligned_gr4j_differentiable_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_daily_camels_ukf_knet_official_core.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/run_daily_camels_ukf_knet_parity.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: scripts/tukf06_full_diagonal_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/assimilation/conventional_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_native_knet_io.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_ukf_knet_official_core_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/hbvlite_ukf_adapter.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: src/global_hydrology/models/official_kalmannet_tsp_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/conftest.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_official_core_hpc.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_official_core_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_hpc_preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_daily_camels_ukf_knet_parity_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_official_kalmannet_tsp_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: tests/test_run_daily_camels_ukf_knet_parity_entry.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py: implausibly old time stamp 1970-01-01 08:00:00
+{
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "experiment_id": "DAILY_CAMELS_KNET_OFFICIAL_CORE_FIXED_FULL_TRAINING_COVERAGE_ONE_STEP_V1_20260825_A35",
+  "initialization_mode": "causal_shared_spinup",
+  "member_count": 50,
+  "nse_gate_target_count_per_lead": 712,
+  "numpy_imported": false,
+  "replay_gate_requirements": {
+    "causal": {
+      "active_config_sha256": "1272bc4d9ef3b494d54e31cb3341eedee741f29cc67c5cace5d1b2b693bfde41",
+      "bundle_manifest_sha256": "da9996a70538d00d7d48b26bb29a77af2e02c90d1e5e9eb80ece042f0873ad0f",
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "initialization_mode": "causal_shared_spinup",
+      "receipt_sha256": "0f6080a05a27244eca59c58043f265718102a4c2985684fb674781c8157d6c66"
+    },
+    "exact": {
+      "active_config_sha256": "7eea03913263c024b5bc9bec03e293de20cddff27346fff36087331292fd366f",
+      "bundle_manifest_sha256": "b8c53662f7d8b97e5025453ca1c6c09f8a82ab362e5eca119b5226a796cd5082",
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "initialization_mode": "exact_tukf06_backward_time_diagnostic",
+      "receipt_sha256": "70e73c9f014dc4a4d615e07087fb99a994ba30b8c867eb5ef49141a59a39b687"
+    }
+  },
+  "selection_objective_target_count_per_lead": 728,
+  "status": "BUNDLE_VERIFIED",
+  "torch_imported": false
+}
+{"checkpoint_objective_728": {"epoch_one": 0.21149800461161639, "epoch_zero": 0.4035038814328112, "improvement": 0.1920058768211948, "verification_scope": "artifact_and_checkpoint_chain_not_recomputed_from_712_origin_arrays"}, "execution_attempt_id": "DAILY_CAMELS_KNET_OFFICIAL_CORE_A35_ONE_STEP_SEQ27", "experiment_id": "DAILY_CAMELS_KNET_OFFICIAL_CORE_FIXED_FULL_TRAINING_COVERAGE_ONE_STEP_V1_20260825_A35", "failed_gates": [], "recomputed_712_origin_metrics": {"epoch_one": {"1": {"mse": 0.1974658084641378, "nse": 0.8524024794301808, "target_count": 712}, "2": {"mse": 0.21591935955593766, "nse": 0.8386109992999735, "target_count": 712}, "3": {"mse": 0.23253050910983175, "nse": 0.8261988771064965, "target_count": 712}}, "epoch_zero": {"1": {"mse": 0.40837779322423495, "nse": 0.6947544984902125, "target_count": 712}, "2": {"mse": 0.40860905690461746, "nse": 0.6945850177286568, "target_count": 712}, "3": {"mse": 0.4087896399689652, "nse": 0.6944568748168921, "target_count": 712}}, "ukf": {"1": {"mse": 0.034448973050004016, "nse": 0.9742508181649051, "target_count": 712}, "2": {"mse": 0.05925861624029829, "nse": 0.9557071265978331, "target_count": 712}, "3": {"mse": 0.08384722609754136, "nse": 0.9373297632940933, "target_count": 712}}, "zero_gain": {"1": {"mse": 0.4078450283792944, "nse": 0.6951527181656671, "target_count": 712}, "2": {"mse": 0.40818595627060517, "nse": 0.6949012644452978, "target_count": 712}, "3": {"mse": 0.4084657837307858, "nse": 0.6946989358611272, "target_count": 712}}}, "resource_evidence": {"ambient_cgroup_peak_bytes": 266758647808, "ambient_cgroup_scope": "/user.slice/user-0.slice/session-3.scope", "cgroup_resource_log_sha256": "71c7ad4d4110cdce22cf4bfcad47c60deb7d4441b0894a33225af4e2c88194ce", "cuda_peak_allocated_bytes": 87299072, "cuda_peak_reserved_bytes": 94371840, "external_gpu_max_used_mib": 453, "external_gpu_sample_count": 88, "gpu_resource_log_sha256": "a3d51ea6a8019c5beb221752db5f36948e6ad949994b1851f84039363c1b0676", "host_peak_rss_bytes": 1591431168, "host_task_peak_authority": "result_summary_linux_proc_self_status_VmHWM", "slurm_job_id": "212573"}, "result_class": "scientific_pass", "same_batch_improvement": 0.15594421457568902, "same_batch_strictly_improved": true, "schema_version": "daily_camels_a35_seq27_result_audit_v1", "scientific_passed": true, "selected_epoch": 1, "slurm_job_id": "212573", "slurm_task_max_rss_job_step": "212573.2", "slurm_task_max_rss_kib": 1428308, "status": "SEQ27_A35_TERMINAL_EVIDENCE_VERIFIED"}
+DAILY_CAMELS_A35_OFFICIAL_CORE_VERIFIED_SCIENTIFIC_PASS job=212573
+evidence_archive=/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_KNET_OFFICIAL_CORE_A35_ONE_STEP_SEQ27_evidence.tar.gz
+evidence_archive_sha256=33cc556be77d6d9916350e0330dae8375f7e276be2e857ed93e664f3324cba87
+evidence_archive_size=135569552
+evidence_status=SEQ27_A35_VERIFIED_SCIENTIFIC_PASS command_exit_code=0 training_job_id=212573
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T23:51:08+0800
