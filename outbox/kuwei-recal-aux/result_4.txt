@@ -1,0 +1,46 @@
+### channel=kuwei-recal-aux seq=4
+### host=login4
+### started=2026-08-25T19:46:43+0800
+### ---------- output ----------
+=== A. why is the gate pending? ===
+JobId=212027 JobName=kuwei-gate
+   Priority=207557 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Priority Dependency=(null)
+   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A
+   Partition=hcpu48 AllocNode:Sid=login04:46106
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:*
+=== B. my queue ===
+     JOBID           NAME    PARTITION    STATE       TIME  NODES NODELIST(REASON)
+202228_[62      N22-hyper hgpu4,hgpu8,  PENDING       0:00      1 (JobArrayTaskLimit)
+211001_[21     N22-relong hgpu4,hgpu8,  PENDING       0:00      1 (JobArrayTaskLimit)
+    212027     kuwei-gate       hcpu48  PENDING       0:00      1 (Priority)
+    212355 daily-knet-a34       hgpu2p  PENDING       0:00      1 (Priority)
+202226_[0- N22-eval-later hgpu4,hgpu8,  PENDING       0:00      1 (DependencyNeverSatisfied)
+    202229   N22-agg-eval hgpu4,hgpu8,  PENDING       0:00      1 (Dependency)
+    202230  N22-agg-hyper hgpu4,hgpu8,  PENDING       0:00      1 (Dependency)
+    202294     N22-export hgpu4,hgpu8,  PENDING       0:00      1 (Dependency)
+    202315       N22-gate hgpu4,hgpu8,  PENDING       0:00      1 (Dependency)
+    202507 N22-mask-iso-5 hgpu4,hgpu8,  PENDING       0:00      1 (DependencyNeverSatisfied)
+    202293   N22-manifest hgpu4,hgpu8,  PENDING       0:00      1 (JobHeldUser)
+=== C. account limits ===
+  g_sunyiq                      qos_sunyiq                                               
+=== D. partition state right now ===
+PARTITION            AVAIL      TIMELIMIT    NODES  STATE      NODELIST
+hcpu48*              up         infinite     15     alloc$     icn[202,204-207,210-212,214,216-217,220-221,246,249]
+hcpu48*              up         infinite     16     down*      icn[203,215,218,224,230,233-237,239,242-243,245,247,256]
+hcpu48*              up         infinite     33     alloc      icn[201,208-209,213,219,222-223,225-229,231-232,238,240-241,244,248,250-255,257-264]
+=== E. what the successful probe used ===
+       JobID  Partition  ReqCPUS  Timelimit      State    Elapsed   NodeList 
+------------ ---------- -------- ---------- ---------- ---------- ---------- 
+211961           hcpu48        2   01:30:00  COMPLETED   00:17:20     icn201 
+211961.batch                  48             COMPLETED   00:17:20     icn201 
+=== F. gate job resources as submitted ===
+       JobID  Partition  ReqCPUS  Timelimit      State                         Reason 
+------------ ---------- -------- ---------- ---------- ------------------------------ 
+212027           hcpu48        2   02:00:00    PENDING                           None 
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T19:46:44+0800
