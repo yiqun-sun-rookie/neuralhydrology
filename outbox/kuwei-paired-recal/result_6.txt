@@ -1,0 +1,31 @@
+### channel=kuwei-paired-recal seq=6
+### host=login4
+### started=2026-08-25T18:30:27+0800
+### ---------- output ----------
+=== A. wait for gate job 212027 ===
+  t=300s state=PENDING
+  t=600s state=PENDING
+  t=900s state=PENDING
+  t=1200s state=PENDING
+  t=1500s state=PENDING
+  t=1800s state=PENDING
+  t=2100s state=PENDING
+  t=2400s state=PENDING
+  t=2700s state=PENDING
+  t=3000s state=PENDING
+  t=3300s state=PENDING
+  t=3600s state=PENDING
+  t=3900s state=PENDING
+  t=4200s state=PENDING
+       JobID      State ExitCode    Elapsed   NodeList 
+------------ ---------- -------- ---------- ---------- 
+212027          PENDING      0:0   00:00:00 None assi+ 
+=== B. gate verdict ===
+(no gate stdout)
+GATE_VERDICT=FAIL
+=== C. launch six formal runs only if the gate passed ===
+gate did not pass -> NOT launching formal runs
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T19:43:50+0800
