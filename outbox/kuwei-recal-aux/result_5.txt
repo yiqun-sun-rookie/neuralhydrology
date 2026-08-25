@@ -1,0 +1,39 @@
+### channel=kuwei-recal-aux seq=5
+### host=login4
+### started=2026-08-25T21:29:13+0800
+### ---------- output ----------
+=== A. all CPU partitions right now ===
+PARTITION          AVAIL    NODES  STATE      NODELIST
+hcpu48*            up       15     alloc$     icn[202,204-207,210-212,214,216-217,220-221,246,249]
+hcpu48*            up       16     down*      icn[203,215,218,224,230,233-237,239,242-243,245,247,256]
+hcpu48*            up       33     alloc      icn[201,208-209,213,219,222-223,225-229,231-232,238,240-241,244,248,250-255,257-264]
+hcpu48y            up       1      down$      icn281
+hcpu48y            up       1      maint      icn280
+hcpu48y            up       2      down*      icn[278-279]
+hcpu48y            up       2      mix        icn[274,277]
+hcpu48y            up       6      idle       icn[270-273,275-276]
+=== B. idle node counts ===
+hcpu48 idle nodes: 0
+hcpu48y idle nodes: 6
+=== C. do hcpu48 and hcpu48y run the same OS? (must match for numba comparability) ===
+icn[270-273,275-276]
+=== D. queue depth ahead of me on hcpu48 ===
+1
+0
+=== E. resubmit the gate to BOTH cpu partitions, whole node, shorter walltime ===
+cancelled 212027
+#SBATCH -J kuwei-gate
+#SBATCH -p hcpu48,hcpu48y
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --cpus-per-task=2
+#SBATCH -t 01:30:00
+#SBATCH -o %x-%j.out
+#SBATCH -e %x-%j.err
+Submitted batch job 212437
+     JOBID         NAME  PARTITION    STATE NODELIST(REASON)
+    212437   kuwei-gate    hcpu48y  RUNNING icn275
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T21:29:14+0800
