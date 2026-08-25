@@ -1,0 +1,75 @@
+### channel=kuwei-paired-recal seq=1
+### host=login4
+### started=2026-08-25T17:23:22+0800
+### ---------- output ----------
+=== A. host / date ===
+login4
+Tue Aug 25 17:23:22 CST 2026
+PWD=/data1/home/sunyiq/hpc_mailbox
+=== B. outbound network (decides whether HPC can clone by itself) ===
+DNS_OK
+Hi yiqun-sun-rookie! You've successfully authenticated, but GitHub does not provide shell access.
+=== C. does any relevant repo already exist here? ===
+absent  /data1/home/sunyiq/forecast_system_lite
+absent  /data1/home/sunyiq/laos_forecast
+absent  /data1/home/sunyiq/fsl
+absent  /data1/home/sunyiq/kuwei
+=== D. home quota / free space ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  596T  359T  63% /data1
+=== E. conda env + the versions that decide determinism ===
+# conda environments:
+#
+base                     /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final              *  /data1/home/sunyiq/miniconda3/envs/nh_final
+                         /data1/home/sunyiq/v09_strict/gitenv
+
+python 3.11.13
+numpy  2.3.3
+scipy  1.16.2
+pandas 2.3.2
+numba  0.63.1
+pyyaml OK
+=== F. CPU partitions (this job is pure single-thread CPU, no GPU needed) ===
+PARTITION            AVAIL      TIMELIMIT  NODES  STATE      NODELIST
+hcpu48*              up         infinite   15     alloc$     icn[202,204-207,210-212,214,216-217,220-221,246,249]
+hcpu48*              up         infinite   16     down*      icn[203,215,218,224,230,233-237,239,242-243,245,247,256]
+hcpu48*              up         infinite   1      alloc      icn226
+hcpu48*              up         infinite   32     idle       icn[201,208-209,213,219,222-223,225,227-229,231-232,238,240-241,244,248,250-255,257-264]
+hcpu48y              up         infinite   1      down$      icn281
+hcpu48y              up         infinite   1      maint      icn280
+hcpu48y              up         infinite   2      down*      icn[278-279]
+hcpu48y              up         infinite   2      mix        icn[274,277]
+hcpu48y              up         infinite   6      idle       icn[270-273,275-276]
+hgpu8                up         infinite   3      mix        ngu[201-203]
+hgpu4                up         infinite   1      down*      ngu103
+hgpu4                up         infinite   2      mix        ngu[102,104]
+hgpu4                up         infinite   1      idle       ngu101
+hgpu2                up         infinite   1      mix        ngu009
+hgpu2                up         infinite   1      alloc      ngu003
+hgpu2p               up         infinite   1      down*      ngu002
+hgpu2p               up         infinite   6      mix        ngu[001,006-008,010-011]
+hgpu2p               up         infinite   2      alloc      ngu[004-005]
+=== G. my running/queued jobs ===
+     JOBID           NAME  PARTITION    STATE       TIME NODELIST(REASON)
+202228_[62      N22-hyper hgpu4,hgpu  PENDING       0:00 (JobArrayTaskLimit)
+211001_[21     N22-relong hgpu4,hgpu  PENDING       0:00 (JobArrayTaskLimit)
+202226_[0- N22-eval-later hgpu4,hgpu  PENDING       0:00 (DependencyNeverSatisfied)
+    202229   N22-agg-eval hgpu4,hgpu  PENDING       0:00 (Dependency)
+    202230  N22-agg-hyper hgpu4,hgpu  PENDING       0:00 (Dependency)
+    202294     N22-export hgpu4,hgpu  PENDING       0:00 (Dependency)
+    202315       N22-gate hgpu4,hgpu  PENDING       0:00 (Dependency)
+    202507 N22-mask-iso-5 hgpu4,hgpu  PENDING       0:00 (DependencyNeverSatisfied)
+    202293   N22-manifest hgpu4,hgpu  PENDING       0:00 (JobHeldUser)
+202228_619      N22-hyper      hgpu4  RUNNING      16:24 ngu104
+202228_618      N22-hyper      hgpu4  RUNNING      51:22 ngu104
+    211643      v09states     hgpu2p  RUNNING      19:57 ngu008
+ 211001_16     N22-relong      hgpu4  RUNNING 1-00:18:48 ngu104
+ 211001_20     N22-relong      hgpu4  RUNNING 1-00:18:48 ngu102
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T17:24:09+0800
