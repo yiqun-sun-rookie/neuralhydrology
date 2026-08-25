@@ -1,0 +1,199 @@
+### channel=kalmannet-daily-camels seq=26
+### host=login4
+### started=2026-08-25T22:18:19+0800
+### ---------- output ----------
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/artifacts/a20_seq16_hpc_result_20260825/extracted/DAILY_CAMELS_NATIVE_KALMANNET_MASKED_NSE_SMOKE_V3_20260825_A20/result_summary.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/hpc/daily_camels_native_kalmannet_full_state_masked_nse/preflight.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/hpc/daily_camels_native_kalmannet_full_state_masked_nse/submit_smoke_gpu.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/hpc/daily_camels_native_kalmannet_full_state_masked_nse/verify_result.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/configs/daily_camels_native_kalmannet_full_state_masked_nse_smoke_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/docs/plans/2026-08-25-daily-camels-physical-loss-a20-handoff.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/docs/superpowers/plans/2026-08-25-daily-camels-native-full-state-a20-contract-smoke.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/inputs/basin_04105700.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/inputs/basin_09035800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/knet/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/knet/dl/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/knet/dl/nn_kalman_clamp_5.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/scripts/run_daily_camels_native_kalmannet_full_state_masked_nse.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/scripts/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/scripts/build_daily_camels_native_kalmannet_full_state_masked_nse_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/experiments/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_masked_nse_loss_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_masked_nse_loss_torch.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_io.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_masked_nse_training.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_full_state_masked_nse_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_full_state_masked_nse_data.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_full_state_masked_nse_training.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_masked_nse_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_masked_nse_data.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/models/knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/tests/test_daily_camels_native_knet_full_state_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/tests/test_daily_camels_native_knet_full_state_masked_nse_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/tests/test_daily_camels_native_knet_full_state_result_verifier.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/tests/test_daily_camels_native_knet_full_state_masked_nse_training.py: implausibly old time stamp 1970-01-01 08:00:00
+SEQ26_A34_SEQ25_EVIDENCE_AUDIT_IDENTITY
+archive=/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_A34_INFRA_RETRY2_SEQ25_evidence.tar.gz
+archive_sha256=f384bfe61f43435449c130d3d589137f20eb9cedcd86518500bdd85ec165e41d
+archive_size=255424
+expected_job_id=212355
+SEQ26_A34_SEQ25_EVIDENCE_FILE_MANIFEST_BEGIN
+logs/smoke-212355.err	94
+logs/smoke-212355.out	1703
+source_A34_infra_retry2_seq25/artifacts/a20_seq16_hpc_result_20260825/extracted/DAILY_CAMELS_NATIVE_KALMANNET_MASKED_NSE_SMOKE_V3_20260825_A20/result_summary.json	38850
+source_A34_infra_retry2_seq25/bundle_manifest.json	8791
+source_A34_infra_retry2_seq25/configs/daily_camels_native_kalmannet_full_state_masked_nse_smoke_v1.json	8502
+source_A34_infra_retry2_seq25/docs/plans/2026-08-25-daily-camels-physical-loss-a20-handoff.md	12241
+source_A34_infra_retry2_seq25/docs/superpowers/plans/2026-08-25-daily-camels-native-full-state-a20-contract-smoke.md	9577
+source_A34_infra_retry2_seq25/hpc/daily_camels_native_kalmannet_full_state_masked_nse/preflight.py	11027
+source_A34_infra_retry2_seq25/hpc/daily_camels_native_kalmannet_full_state_masked_nse/submit_smoke_gpu.slurm	19894
+source_A34_infra_retry2_seq25/hpc/daily_camels_native_kalmannet_full_state_masked_nse/verify_result.py	28350
+source_A34_infra_retry2_seq25/inputs/basin_04105700.npz	64438
+source_A34_infra_retry2_seq25/inputs/basin_09035800.npz	57411
+source_A34_infra_retry2_seq25/knet/__init__.py	0
+source_A34_infra_retry2_seq25/knet/dl/__init__.py	0
+source_A34_infra_retry2_seq25/knet/dl/nn_kalman_clamp_5.py	32576
+source_A34_infra_retry2_seq25/scripts/__init__.py	0
+source_A34_infra_retry2_seq25/scripts/build_daily_camels_native_kalmannet_full_state_masked_nse_hpc_bundle.py	10525
+source_A34_infra_retry2_seq25/scripts/run_daily_camels_native_kalmannet_full_state_masked_nse.py	45636
+source_A34_infra_retry2_seq25/src/global_hydrology/__init__.py	0
+source_A34_infra_retry2_seq25/src/global_hydrology/experiments/__init__.py	0
+source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_masked_nse_loss_contract.py	18199
+source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_masked_nse_loss_torch.py	5163
+source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_full_state_masked_nse_contract.py	27001
+source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_full_state_masked_nse_data.py	7035
+source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_full_state_masked_nse_training.py	38725
+source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_io.py	36400
+source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_masked_nse_contract.py	15698
+source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_masked_nse_data.py	15581
+source_A34_infra_retry2_seq25/src/global_hydrology/experiments/daily_camels_native_knet_masked_nse_training.py	49096
+source_A34_infra_retry2_seq25/src/global_hydrology/models/__init__.py	0
+source_A34_infra_retry2_seq25/src/global_hydrology/models/differentiable_hbv_lite.py	13452
+source_A34_infra_retry2_seq25/src/global_hydrology/models/hbvlite_system_model.py	12281
+source_A34_infra_retry2_seq25/src/global_hydrology/models/knet_native_hbvlite_full_state.py	19942
+source_A34_infra_retry2_seq25/tests/test_daily_camels_native_knet_full_state_hpc_bundle.py	5299
+source_A34_infra_retry2_seq25/tests/test_daily_camels_native_knet_full_state_masked_nse_contract.py	3129
+source_A34_infra_retry2_seq25/tests/test_daily_camels_native_knet_full_state_masked_nse_training.py	6276
+source_A34_infra_retry2_seq25/tests/test_daily_camels_native_knet_full_state_result_verifier.py	4971
+status/attempt-stop-baseline-212355.json	175
+status/cgroup-resources-212355.txt	489
+status/command_exit_code.txt	3
+status/entry-preflight-212355.json	2870
+status/final_status.txt	49
+status/finished_time_utc.txt	21
+status/gpu-resources-212355.csv	1536
+status/job-evidence-manifest-212355.json	1740
+status/offline-bundle-verification.json	197
+status/payload_archive_identity.txt	553
+status/preflight-212355.json	1187
+status/runtime-selfcheck-212355.log	516
+status/seq25_A34_infra_retry2_sacct_resources.txt	576
+status/started_time_utc.txt	21
+status/training_job_id.txt	7
+status/training_terminal_state.txt	7
+status/workflow-status-212355.json	390
+SEQ26_A34_SEQ25_EVIDENCE_FILE_MANIFEST_END
+
+SEQ26_FILE_BEGIN	logs/smoke-212355.err	94
+/var/spool/slurm/d/job212355/slurm_script: line 313: /usr/bin/time: No such file or directory
+
+SEQ26_FILE_END	logs/smoke-212355.err
+
+SEQ26_FILE_BEGIN	logs/smoke-212355.out	1703
+{"bundle_file_count":34,"bundle_root":"/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25","cuda_free_memory_bytes":25296896000,"daily_input_member_count":2,"embedded_prior_state_arrays_are_present_in_the_frozen_npz_but_forbidden_from_materialization":true,"experiment_id":"DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_MASKED_NSE_SMOKE_V1_20260825_A34","forbidden_bundle_path_member_count":0,"formal_evaluation_enabled":false,"host_free_memory_bytes":261773398016,"hourly_member_count":0,"minimum_cuda_free_memory_bytes":738197504,"minimum_host_free_memory_bytes":5734154240,"reserved_evaluation_member_count":0,"resource_threshold_provenance":{"cuda":"four_times_A32_measured_reserved_peak_184549376_bytes","future_runs_must_use_fresh_A34_peak":true,"host":"four_times_A33_measured_process_peak_1433538560_bytes"},"resume_checkpoint":null,"run_directory":"/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry2_20260825/runs/DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_MASKED_NSE_SMOKE_V1_20260825_A34","run_directory_previously_absent":true,"scheduler_visible_cuda_device_id":"1","status":"BUNDLE_AND_RESOURCE_ADMISSION_VERIFIED"}
+{"cuda_device_name":"NVIDIA GeForce RTX 3090","entry_identity_sha256":"09093af3af57d1bd88b2a646e5bac620d3c1a73ba81dc2e059362212e9cdbfe8","frozen_loss_probe":0.8264462351799011,"model_class":"NativeHBVFullStateKalmanNet","numpy_version":"2.3.3","pytest_required_on_compute_node":false,"status":"RUNTIME_IMPORT_CUDA_AND_LOSS_SELFCHECK_PASSED","torch_version":"2.4.0","training_class":"A20ProjectionNativeHBVFullStateKalmanNet","verifier_module":"hpc.daily_camels_native_kalmannet_full_state_masked_nse.verify_result"}
+
+SEQ26_FILE_END	logs/smoke-212355.out
+
+SEQ26_FILE_BEGIN	status/cgroup-resources-212355.txt	489
+recorded_at_utc=2026-08-25T13:28:11Z
+slurm_job_id=212355
+process_cgroup_relative=/user.slice/user-0.slice/session-3.scope
+current_directory=/sys/fs/cgroup/user.slice/user-0.slice/session-3.scope
+current_memory_current=198034944000
+current_memory_peak=266758647808
+current_memory_max=max
+parent_directory=/sys/fs/cgroup/user.slice/user-0.slice
+parent_memory_current=198093316096
+parent_memory_peak=266763583488
+parent_memory_max=max
+JobID|MaxRSS|AveRSS|MaxVMSize
+212355.batch|6M|6M|251332K
+
+SEQ26_FILE_END	status/cgroup-resources-212355.txt
+
+SEQ26_FILE_BEGIN	status/command_exit_code.txt	3
+59
+
+SEQ26_FILE_END	status/command_exit_code.txt
+
+SEQ26_FILE_BEGIN	status/final_status.txt	49
+SEQ25_A34_INFRA_RETRY2_TRAINING_FAILED_HARD_STOP
+
+SEQ26_FILE_END	status/final_status.txt
+
+SEQ26_FILE_BEGIN	status/gpu-resources-212355.csv	1536
+timestamp,uuid,name,memory.total_MiB,memory.used_MiB,memory.free_MiB,utilization.gpu_percent
+2026/08/25 21:27:58.625, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:27:59.661, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:28:00.700, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:28:01.733, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:28:02.772, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:28:03.809, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:28:04.849, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:28:05.885, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:28:06.923, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:28:07.963, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:28:09.000, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:28:10.038, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 0
+2026/08/25 21:28:11.069, GPU-2e87b9fc-d77e-bddc-5533-8b442a3ab5e8, NVIDIA GeForce RTX 3090, 24576, 0, 24125, 5
+
+SEQ26_FILE_END	status/gpu-resources-212355.csv
+
+SEQ26_FILE_BEGIN	status/job-evidence-manifest-212355.json	1740
+{"execution_attempt_id":"DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_A34_INFRA_RETRY2_SEQ25","experiment_id":"DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_MASKED_NSE_SMOKE_V1_20260825_A34","file_count":11,"files":{"status/attempt-stop-baseline-212355.json":{"sha256":"a8c56b80ae577ecebe9ded285f0bbcd883fc52258d27802d37670bfcb0ce9733","size_bytes":175},"status/cgroup-resources-212355.txt":{"sha256":"38fdd1648691727d83828458e57fd6cca03109306f74645aca8abe6161c6c84e","size_bytes":489},"status/entry-preflight-212355.json":{"sha256":"dfc582d8caa4e9a8bc40ac905930ce8499189b31e9a17db708334829b893f888","size_bytes":2870},"status/gpu-resources-212355.csv":{"sha256":"5e4ec1295a6c8e22539fa35830936ddc5cae137edce40f60afd524f5e8ac9ae2","size_bytes":1536},"status/offline-bundle-verification.json":{"sha256":"7ac255b422f75e13e522c0803474d567e8f02e78128e529189e9473c03af7037","size_bytes":197},"status/payload_archive_identity.txt":{"sha256":"edf26fe1636a4b8a7e3124851ae060b0aee11d40b0e85a7b55a19015a34b33a4","size_bytes":553},"status/preflight-212355.json":{"sha256":"eb468ed594fccb5009c2c1a55ea0e965cecdf83578889d8d79b9078b0122dee5","size_bytes":1187},"status/runtime-selfcheck-212355.log":{"sha256":"563ae917b7d1dcdf512b71003cb35cf28308f01244cd2bd52ae8e10cc9ca8a9c","size_bytes":516},"status/started_time_utc.txt":{"sha256":"6dda603ec646dfcda97bc48eb20c92ebe27ecab8b43b3c00eb11e67f5c2f82dd","size_bytes":21},"status/training_job_id.txt":{"sha256":"a2d5e79fd57654db9930fbba08adb840338cb082872faa8bbc11238b0980fff7","size_bytes":7},"status/workflow-status-212355.json":{"sha256":"bbd04fd9743454b3b9c28ee210c763652b2e8dcf94ce66927214d8341f82434e","size_bytes":390}},"schema_version":"daily_camels_native_full_state_job_evidence_v1","slurm_job_id":"212355"}
+
+SEQ26_FILE_END	status/job-evidence-manifest-212355.json
+
+SEQ26_FILE_BEGIN	status/runtime-selfcheck-212355.log	516
+{"cuda_device_name":"NVIDIA GeForce RTX 3090","entry_identity_sha256":"09093af3af57d1bd88b2a646e5bac620d3c1a73ba81dc2e059362212e9cdbfe8","frozen_loss_probe":0.8264462351799011,"model_class":"NativeHBVFullStateKalmanNet","numpy_version":"2.3.3","pytest_required_on_compute_node":false,"status":"RUNTIME_IMPORT_CUDA_AND_LOSS_SELFCHECK_PASSED","torch_version":"2.4.0","training_class":"A20ProjectionNativeHBVFullStateKalmanNet","verifier_module":"hpc.daily_camels_native_kalmannet_full_state_masked_nse.verify_result"}
+
+SEQ26_FILE_END	status/runtime-selfcheck-212355.log
+
+SEQ26_FILE_BEGIN	status/seq25_A34_infra_retry2_sacct_resources.txt	576
+JobIDRaw|JobName|Partition|AllocCPUS|State|ExitCode|Elapsed|ReqMem|AllocTRES|MaxRSS|MaxVMSize
+212355|daily-knet-a34r2|hgpu2p|2|FAILED|40:0|00:00:20|0n|billing=2,cpu=2,node=1||
+212355.batch|batch||2|FAILED|40:0|00:00:20|0n|cpu=2,mem=0,node=1|6144K|251332K
+212355.extern|extern||2|COMPLETED|0:0|00:00:20|0n|billing=2,cpu=2,node=1|1676K|250920K
+212355.0|python||2|COMPLETED|0:0|00:00:01|0n|cpu=2,mem=0,node=1|3084K|319932K
+212355.1|python||2|COMPLETED|0:0|00:00:02|0n|cpu=2,mem=0,node=1|3072K|319932K
+212355.2|python||2|COMPLETED|0:0|00:00:12|0n|cpu=2,mem=0,node=1|3072K|319932K
+
+SEQ26_FILE_END	status/seq25_A34_infra_retry2_sacct_resources.txt
+
+SEQ26_FILE_BEGIN	status/workflow-status-212355.json	390
+{"batch_shell_received_sigterm":false,"execution_attempt_id":"DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_A34_INFRA_RETRY2_SEQ25","recoverable_stop_evidence_exit_code":-1,"schema_version":"daily_camels_native_full_state_workflow_status_v1","sigterm_forward_command_exit_code":-1,"slurm_job_id":"212355","status":"INFRASTRUCTURE_HARD_STOP","training_exit_code":127,"verification_exit_code":-1}
+
+SEQ26_FILE_END	status/workflow-status-212355.json
+
+SEQ26_LIVE_SACCT_BEGIN
+JobIDRaw|JobName|Partition|AllocCPUS|State|ExitCode|Elapsed|ReqMem|AllocTRES|MaxRSS|MaxVMSize
+212355|daily-knet-a34r2|hgpu2p|2|FAILED|40:0|00:00:20|0n|billing=2,cpu=2,node=1||
+212355.batch|batch||2|FAILED|40:0|00:00:20|0n|cpu=2,mem=0,node=1|6144K|251332K
+212355.extern|extern||2|COMPLETED|0:0|00:00:20|0n|billing=2,cpu=2,node=1|1676K|250920K
+212355.0|python||2|COMPLETED|0:0|00:00:01|0n|cpu=2,mem=0,node=1|3084K|319932K
+212355.1|python||2|COMPLETED|0:0|00:00:02|0n|cpu=2,mem=0,node=1|3072K|319932K
+212355.2|python||2|COMPLETED|0:0|00:00:12|0n|cpu=2,mem=0,node=1|3072K|319932K
+SEQ26_LIVE_SACCT_END
+SEQ26_LIVE_SQUEUE_BEGIN
+slurm_load_jobs error: Invalid job id specified
+SEQ26_LIVE_SQUEUE_END
+SEQ26_A34_SEQ25_EVIDENCE_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T22:18:22+0800
