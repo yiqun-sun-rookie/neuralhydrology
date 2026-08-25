@@ -1,0 +1,48 @@
+### channel=kuwei-paired-recal seq=2
+### host=login4
+### started=2026-08-25T17:29:39+0800
+### ---------- output ----------
+=== A. base python from nh_final ===
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+Python 3.11.13
+=== B. create venv (idempotent) ===
+Python 3.11.13
+=== C. pin the versions the local determinism gate was verified on ===
+            A full log can be found at /tmp/pip-install-m5q4k15i/numpy_3a061165bccf452eb721e1aa16d9bdf0/.mesonpy-rz0tp1j5/meson-logs/meson-log.txt
+            [end of output]
+      
+        note: This error originates from a subprocess, and is likely not a problem with pip.
+      error: metadata-generation-failed
+      
+      × Encountered error while generating package metadata.
+      ╰─> numpy
+      
+      note: This is an issue with the package mentioned above, not pip.
+      hint: See above for details.
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+ERROR: Failed to build 'scipy' when installing build dependencies for scipy
+(pip install reported an issue)
+=== D. verify ===
+python 3.11.13
+numpy    IMPORT FAILED: No module named 'numpy'
+scipy    IMPORT FAILED: No module named 'scipy'
+pandas   IMPORT FAILED: No module named 'pandas'
+numba    IMPORT FAILED: No module named 'numba'
+yaml     IMPORT FAILED: No module named 'yaml'
+MATCH_LOCAL: NO -> {'numpy': ("IMPORT FAILED: No module named 'numpy'", '1.26.4'), 'scipy': ("IMPORT FAILED: No module named 'scipy'", '1.17.0'), 'pandas': ("IMPORT FAILED: No module named 'pandas'", '2.3.3'), 'numba': ("IMPORT FAILED: No module named 'numba'", '0.61.2')}
+=== E. numba can actually compile on this node ===
+numba smoke FAILED: No module named 'numpy'
+=== F. cpu model of this login node (compare later with the compute node) ===
+model name	: Intel(R) Xeon(R) Silver 4410Y
+=== G. workspace ===
+hhjt_parastor_hhjt_parastor  954T  596T  359T  63% /data1
+total 12
+drwxr-xr-x.  3 sunyiq g_sunyiq 4096 Aug 25 17:29 .
+drwx------. 69 sunyiq g_sunyiq 4096 Aug 25 17:31 ..
+drwxr-xr-x.  5 sunyiq g_sunyiq 4096 Aug 25 17:29 venv
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T17:31:22+0800
