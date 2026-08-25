@@ -1,0 +1,50 @@
+### channel=nature1st-attr-swap seq=91
+### host=login4
+### started=2026-08-25T12:24:52+0800
+### ---------- output ----------
+=== A. MY QUEUE RIGHT NOW ===
+wallclock 2026-08-25 12:24:52 +0800
+     JOBID                       NAME     STATE        TIME     NODELIST(REASON)
+202228_[61                  N22-hyper   PENDING        0:00  (JobArrayTaskLimit)
+211001_[21                 N22-relong   PENDING        0:00  (JobArrayTaskLimit)
+202226_[0-             N22-eval-later   PENDING        0:00 (DependencyNeverSati
+    202229               N22-agg-eval   PENDING        0:00         (Dependency)
+    202230              N22-agg-hyper   PENDING        0:00         (Dependency)
+    202294                 N22-export   PENDING        0:00         (Dependency)
+    202315                   N22-gate   PENDING        0:00         (Dependency)
+    202507           N22-mask-iso-531   PENDING        0:00 (DependencyNeverSati
+    202293               N22-manifest   PENDING        0:00        (JobHeldUser)
+202228_614                  N22-hyper   RUNNING       39:29               ngu104
+202228_613                  N22-hyper   RUNNING     1:29:10               ngu104
+ 211001_16                 N22-relong   RUNNING    19:19:31               ngu104
+ 211001_20                 N22-relong   RUNNING    19:19:31               ngu102
+-- total lines above (1 = header only = nothing queued) --
+13
+=== B. ANY ATTRIBUTE-SWAP ARM ANYWHERE? ===
+  none
+=== C. THE EIGHT ARMS -- WHAT EXISTS ON DISK ===
+  q_lstm_control_hpc_s42         DONE  median=0.6432
+  q_lstm_hydroatlas_hpc_s42      DONE  median=0.5983
+  q_lstm_usminus4_hpc_s42        DONE  median=0.6466
+  q_lstm_globalplus4_hpc_s42     DONE  median=0.6059
+  q_lstm_armE_hpc_s42            DONE  median=0.5819
+  q_lstm_armF_hpc_s42            DONE  median=0.6436
+  q_lstm_armG_hpc_s42            DONE  median=0.6299
+  q_lstm_armH_hpc_s42            absent
+  q_lstm_armG_hpc_s43            absent
+  q_lstm_armG_hpc_s44            absent
+=== D. RECENT JOBS (last 3 days) ===
+     JobID                    JobName        State     Elapsed               End 
+---------- -------------------------- ------------ ----------- ----------------- 
+    207826    q_armG_china_supplyable    COMPLETED    09:55:16 2026-08-22T03:42: 
+=== E. ATTRIBUTE FILES READY TO SUBMIT ===
+  stage_static_feature_stats_armH.json           present
+  stage_static_feature_stats_armG.json           present
+scripts/hpc_train_q_armE_minus4.sbatch
+scripts/hpc_train_q_armF_plus4.sbatch
+scripts/hpc_train_q_armG_china_supplyable.sbatch
+scripts/hpc_train_q_armH_china_supplyable_log.sbatch
+=== END seq=91 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T12:24:54+0800
