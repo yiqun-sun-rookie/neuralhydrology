@@ -1,0 +1,50 @@
+### channel=kuwei-recal-aux seq=1
+### host=login4
+### started=2026-08-25T18:19:44+0800
+### ---------- output ----------
+=== A. job state ===
+jobid=211961
+slurm_load_jobs error: Invalid job id specified
+       JobID      State ExitCode    Elapsed     NodeList 
+------------ ---------- -------- ---------- ------------ 
+211961        COMPLETED      0:0   00:17:20       icn201 
+211961.batch  COMPLETED      0:0   00:17:20       icn201 
+211961.exte+  COMPLETED      0:0   00:17:21       icn201 
+=== B. probe stdout ===
+file=/data1/home/sunyiq/kuwei_paired/run_probe/kuwei-probe-211961.out size=4219
+[Tue Aug 25 17:41:32 CST 2026] node=icn201 cpu= Intel(R) Xeon(R) Gold 6271 CPU @ 2.60GHz
+numpy 2.3.3 scipy 1.16.2 numba 0.63.1
+[SPINUP] eval_start_date=2018-01-01: 目标流量从 48960 步裁剪到 43824 步 (预热 5136 步)
+[EXCLUDE_WINDOWS] [['2022-09-01', '2022-10-31']]: 目标流量从 43824 步剔除到 42360 步 (删 1464 步)
+[CALMAP] active_params=17 vector_size=17 bounds=17
+[EvalOpt] Iter=1 Convergence=0.000000 LastNSE=-1.5512 BestNSE=-0.0781
+[PLOT] NSE=0.023063, T=48960
+================= Optimization DONE =================
+最优 NSE: -0.0781
+--- tail 12 ---
+  basin_params: {'area': [1796.4599609375]}
+  xaj_params: {'dt': np.float32(0.04166667), 'kc': np.float64(1.7767400368006099), 'ki': np.float64(0.508290694930...
+  msk_params: {}
+  pdd_params: {'pdd_factor_snow': np.float32(0.0), 'pdd_factor_ice': np.float32(0.0), 'refreeze_snow': np.float32(...
+  msk_layers: [{'index': [0], 'names': array(['kuwei'], dtype=object), 'segmented': True, 'K': 12, 'X': 0.2, 'dt_h...
+[AREA] sum=1796.460 mean=1796.460 min=1796.460 max=1796.460
+
+[SAVE] 参数和初始条件已保存到 /data1/home/sunyiq/kuwei_paired/run_probe/out/best_params_namou_kuwei_nse-0.0781_20260825_175848.pkl
+[SAVE] 参数已保存到 /data1/home/sunyiq/kuwei_paired/run_probe/out/best_params_namou_kuwei_nse-0.0781_20260825_175848.yml
+[SAVE] 摘要已保存到 /data1/home/sunyiq/kuwei_paired/run_probe/out/summary_namou_kuwei_20260825_175848.json
+[SAVE] 面积明细已保存到 /data1/home/sunyiq/kuwei_paired/run_probe/out/areas_namou_kuwei_20260825_175848.csv
+[Tue Aug 25 17:58:49 CST 2026] exit=0
+=== C. probe stderr ===
+file=/data1/home/sunyiq/kuwei_paired/run_probe/kuwei-probe-211961.err
+
+real	17m4.210s
+user	16m34.161s
+sys	0m5.580s
+=== D. produced parameter files ===
+-rw-r--r--. 1 sunyiq g_sunyiq 1062 Aug 25 17:58 /data1/home/sunyiq/kuwei_paired/run_probe/out/best_params_namou_kuwei_nse-0.0781_20260825_175848.yml
+=== E. is the main channel's seq=5 result sitting in staging? ===
+-rw-r--r--. 1 sunyiq g_sunyiq 3417 Aug 25 18:17 /data1/home/sunyiq/.hpc_mailbox_staging/kuwei-paired-recal/result_5.txt
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T18:19:44+0800
