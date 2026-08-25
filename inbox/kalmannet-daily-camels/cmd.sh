@@ -4,22 +4,23 @@ umask 077
 
 EXPECTED_USER="sunyiq"
 MAILBOX_ROOT="/data1/home/sunyiq/hpc_mailbox"
-PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/native-full-state-a20-contract-a34-v23"
+PAYLOAD_DIRECTORY="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/native-full-state-a20-contract-a34-infra-retry1-v24"
 ARCHIVE="${PAYLOAD_DIRECTORY}/DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_MASKED_NSE_SMOKE_V1_20260825_A34.tar.gz"
 OUTER_MANIFEST="${PAYLOAD_DIRECTORY}/bundle_manifest.sha256.json"
-ARCHIVE_SHA256="12daf111148c4d54609fed746fc8344344c1d3e53c41988655666199606d4958"
-ARCHIVE_SIZE=244202
+ARCHIVE_SHA256="650fee2da79ebff5b6db17119e869bc57350e9b4bec8e9dc26553ecaa925ccc1"
+ARCHIVE_SIZE=244351
 EXPERIMENT_ID="DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_MASKED_NSE_SMOKE_V1_20260825_A34"
-RUN_BASE="/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_20260825"
-SOURCE_DIRECTORY="${RUN_BASE}/source_A34_seq23"
+EXECUTION_ATTEMPT_ID="DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_A34_INFRA_RETRY1_SEQ24"
+RUN_BASE="/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry1_20260825"
+SOURCE_DIRECTORY="${RUN_BASE}/source_A34_infra_retry1_seq24"
 RUN_DIRECTORY="${RUN_BASE}/runs/${EXPERIMENT_ID}"
 STATUS_DIRECTORY="${RUN_BASE}/status"
-STAGING_DIRECTORY="/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_staging_20260825"
+STAGING_DIRECTORY="/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry1_staging_20260825"
 OUTBOX_DIRECTORY="${MAILBOX_ROOT}/outbox/kalmannet-daily-camels"
-EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_A34_SEQ23_evidence.tar.gz"
+EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_A34_INFRA_RETRY1_SEQ24_evidence.tar.gz"
 NAMESPACE_OWNED=0
 SAFE_TO_PACKAGE=0
-FINAL_STATUS="SEQ23_A34_STARTED"
+FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_STARTED"
 TRAINING_JOB_ID="NOT_SUBMITTED"
 
 sha256_file() { sha256sum "$1" | awk '{print $1}'; }
@@ -101,7 +102,7 @@ mkdir "$SOURCE_DIRECTORY" "$STATUS_DIRECTORY" "$RUN_BASE/logs"
 NAMESPACE_OWNED=1
 SAFE_TO_PACKAGE=1
 trap on_exit EXIT
-trap 'FINAL_STATUS="SEQ23_A34_INTERRUPTED"; exit 143' INT TERM
+trap 'FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_INTERRUPTED"; exit 143' INT TERM
 date -u +%Y-%m-%dT%H:%M:%SZ > "${STATUS_DIRECTORY}/started_time_utc.txt"
 {
   printf 'archive=%s\n' "$ARCHIVE"
@@ -110,7 +111,7 @@ date -u +%Y-%m-%dT%H:%M:%SZ > "${STATUS_DIRECTORY}/started_time_utc.txt"
   printf 'outer_manifest=%s\n' "$OUTER_MANIFEST"
   printf 'outer_manifest_sha256=%s\n' "$(sha256_file "$OUTER_MANIFEST")"
 } > "${STATUS_DIRECTORY}/payload_archive_identity.txt"
-FINAL_STATUS="SEQ23_A34_NAMESPACE_OWNED"
+FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_NAMESPACE_OWNED"
 tar -xzf "$ARCHIVE" -C "$SOURCE_DIRECTORY"
 set +u
 source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh"
@@ -135,17 +136,17 @@ print(json.dumps({
     "formal_evaluation_enabled": manifest["formal_evaluation_enabled"],
 }, sort_keys=True, separators=(",", ":")))
 PY
-FINAL_STATUS="SEQ23_A34_OFFLINE_BUNDLE_VERIFIED"
+FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_OFFLINE_BUNDLE_VERIFIED"
 
 SAFE_TO_PACKAGE=0
 if ! TRAINING_JOB_ID="$(sbatch --parsable hpc/daily_camels_native_kalmannet_full_state_masked_nse/submit_smoke_gpu.slurm)"; then
   SAFE_TO_PACKAGE=1
-  FINAL_STATUS="SEQ23_A34_SUBMISSION_REJECTED_HARD_STOP"
+  FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_SUBMISSION_REJECTED_HARD_STOP"
   exit 56
 fi
-[[ "$TRAINING_JOB_ID" =~ ^[0-9]+$ ]] || { FINAL_STATUS="SEQ23_A34_SUBMISSION_IDENTITY_HARD_STOP"; exit 57; }
+[[ "$TRAINING_JOB_ID" =~ ^[0-9]+$ ]] || { FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_SUBMISSION_IDENTITY_HARD_STOP"; exit 57; }
 printf '%s\n' "$TRAINING_JOB_ID" > "${STATUS_DIRECTORY}/training_job_id.txt"
-FINAL_STATUS="SEQ23_A34_SUBMITTED"
+FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_SUBMITTED"
 
 TERMINAL_STATE=""
 for attempt in $(seq 1 660); do
@@ -160,11 +161,11 @@ case "$TERMINAL_STATE" in
     SAFE_TO_PACKAGE=1
     ;;
   *)
-    FINAL_STATUS="SEQ23_A34_MONITOR_TIMEOUT_JOB_LEFT_RUNNING_NO_EVIDENCE"
+    FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_MONITOR_TIMEOUT_JOB_LEFT_RUNNING_NO_EVIDENCE"
     exit 58
     ;;
 esac
-sacct -j "$TRAINING_JOB_ID" --units=K --parsable2 --format=JobIDRaw,JobName,Partition,AllocCPUS,State,ExitCode,Elapsed,ReqMem,AllocTRES,MaxRSS,MaxVMSize > "${STATUS_DIRECTORY}/seq23_A34_sacct_resources.txt"
+sacct -j "$TRAINING_JOB_ID" --units=K --parsable2 --format=JobIDRaw,JobName,Partition,AllocCPUS,State,ExitCode,Elapsed,ReqMem,AllocTRES,MaxRSS,MaxVMSize > "${STATUS_DIRECTORY}/seq24_A34_infra_retry1_sacct_resources.txt"
 printf '%s\n' "$TERMINAL_STATE" > "${STATUS_DIRECTORY}/training_terminal_state.txt"
 
 WORKFLOW_STATUS_FILE="${STATUS_DIRECTORY}/workflow-status-${TRAINING_JOB_ID}.json"
@@ -179,20 +180,20 @@ if workflow.get("status") != "RECOVERABLE_STOP" or int(workflow.get("recoverable
     raise SystemExit(1)
 PY
   then
-    FINAL_STATUS="SEQ23_A34_VERIFIED_RECOVERABLE_STOP"
+    FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_VERIFIED_RECOVERABLE_STOP"
     exit 75
   fi
-  FINAL_STATUS="SEQ23_A34_TRAINING_${TERMINAL_STATE:-UNKNOWN}_HARD_STOP"
+  FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_TRAINING_${TERMINAL_STATE:-UNKNOWN}_HARD_STOP"
   exit 59
 fi
-FINAL_STATUS="SEQ23_A34_TRAINING_COMPLETED"
+FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_TRAINING_COMPLETED"
 
 VERIFICATION_REPORT="${STATUS_DIRECTORY}/independent-verification-${TRAINING_JOB_ID}.json"
 JOB_EVIDENCE_MANIFEST="${STATUS_DIRECTORY}/job-evidence-manifest-${TRAINING_JOB_ID}.json"
 for path in "$WORKFLOW_STATUS_FILE" "$VERIFICATION_REPORT" "$JOB_EVIDENCE_MANIFEST" "${RUN_DIRECTORY}/result_summary.json" "${RUN_DIRECTORY}/manifest.sha256.json"; do
   [[ -f "$path" && ! -L "$path" ]] || { echo "scheduled A34 evidence absent or symbolic: $path" >&2; exit 60; }
 done
-python - "$RUN_BASE" "$WORKFLOW_STATUS_FILE" "$VERIFICATION_REPORT" "$JOB_EVIDENCE_MANIFEST" "${RUN_DIRECTORY}/result_summary.json" <<'PY'
+python - "$RUN_BASE" "$WORKFLOW_STATUS_FILE" "$VERIFICATION_REPORT" "$JOB_EVIDENCE_MANIFEST" "${RUN_DIRECTORY}/result_summary.json" "$EXECUTION_ATTEMPT_ID" <<'PY'
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -204,9 +205,15 @@ verification = json.loads(Path(sys.argv[3]).read_text(encoding="utf-8"))
 evidence = json.loads(Path(sys.argv[4]).read_text(encoding="utf-8"))
 summary = json.loads(Path(sys.argv[5]).read_text(encoding="utf-8"))
 experiment_id = "DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_MASKED_NSE_SMOKE_V1_20260825_A34"
+execution_attempt_id = sys.argv[6]
 
 if any(document.get("experiment_id") != experiment_id for document in (verification, evidence, summary)):
     raise SystemExit("A34 scheduled evidence identity differs")
+if (
+    workflow.get("execution_attempt_id") != execution_attempt_id
+    or evidence.get("execution_attempt_id") != execution_attempt_id
+):
+    raise SystemExit("A34 execution attempt identity differs")
 status = workflow.get("status")
 if status == "VERIFIED_SCIENTIFIC_PASS":
     expected = (0, 0, "VERIFIED_PASS", True)
@@ -258,7 +265,7 @@ print(json.dumps({
 }, sort_keys=True, separators=(",", ":")))
 PY
 
-FINAL_STATUS="SEQ23_A34_SCHEDULED_EVIDENCE_VERIFIED"
+FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_SCHEDULED_EVIDENCE_VERIFIED"
 WORKFLOW_STATUS="$(python - "$WORKFLOW_STATUS_FILE" <<'PY'
 import json
 from pathlib import Path
@@ -267,9 +274,9 @@ print(json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))["status"])
 PY
 )"
 if [[ "$WORKFLOW_STATUS" = "VERIFIED_SCIENTIFIC_PASS" ]]; then
-  FINAL_STATUS="SEQ23_A34_VERIFIED_SCIENTIFIC_PASS"
-  echo "DAILY_CAMELS_NATIVE_KALMANNET_A34_VERIFIED_SCIENTIFIC_PASS job=${TRAINING_JOB_ID}"
+  FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_VERIFIED_SCIENTIFIC_PASS"
+  echo "DAILY_CAMELS_NATIVE_KALMANNET_A34_INFRA_RETRY1_VERIFIED_SCIENTIFIC_PASS job=${TRAINING_JOB_ID}"
 else
-  FINAL_STATUS="SEQ23_A34_VERIFIED_SCIENTIFIC_HARD_STOP"
-  echo "DAILY_CAMELS_NATIVE_KALMANNET_A34_VERIFIED_SCIENTIFIC_HARD_STOP job=${TRAINING_JOB_ID}"
+  FINAL_STATUS="SEQ24_A34_INFRA_RETRY1_VERIFIED_SCIENTIFIC_HARD_STOP"
+  echo "DAILY_CAMELS_NATIVE_KALMANNET_A34_INFRA_RETRY1_VERIFIED_SCIENTIFIC_HARD_STOP job=${TRAINING_JOB_ID}"
 fi
