@@ -1,0 +1,18 @@
+### channel=kalmannet-daily-camels seq=16
+### host=login4
+### started=2026-08-25T09:16:35+0800
+### ---------- output ----------
+{"experiment_id": "DAILY_CAMELS_NATIVE_KALMANNET_MASKED_NSE_SMOKE_V3_20260825_A20", "loss_contract": "daily_camels_physical_masked_nse_equal_basin_lead_v2", "member_count": 25, "reserved_data_member_count": 0, "status": "SEQ16_A20_OFFLINE_IDENTITY_PASS"}
+=== SUBMIT READ-ONLY A20 GPU PROBE ===
+accounting label=probe_A20 job_id=211294 state=COMPLETED exit_code=0:0
+{"available_host_memory_bytes": 252457304064, "cuda_free_bytes": 25018957824, "host": "ngu011", "job_id": "211294", "status": "SEQ16_A20_PROBE_PASS"}
+=== SUBMIT UNIQUE PHYSICAL-LOSS EVIDENCE-COMPLETE TRAINING SMOKE ===
+accounting label=train_A20 job_id=211295 state=COMPLETED exit_code=0:0
+{"error":"validation basin selection differs: expected -0.4793388744195302, got -0.4793388843536377","error_type":"ValueError","status":"VERIFICATION_FAILED"}
+evidence_archive=/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_NATIVE_KALMANNET_MASKED_NSE_A20_SEQ16_evidence.tar.gz
+evidence_archive_sha256=cce4039ce5ffb2793a0c859e5b2f0e541de0d81cf1a715d4eb362bc97a5e9342
+evidence_archive_size=6359368
+evidence_status=SEQ16_A20_RESULT_VERIFICATION_HARD_STOP command_exit_code=80 all_jobs_terminal=1
+### ---------- end ----------
+### exit_code=80
+### finished=2026-08-25T09:18:32+0800
