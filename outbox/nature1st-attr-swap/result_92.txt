@@ -1,0 +1,45 @@
+### channel=nature1st-attr-swap seq=92
+### host=login4
+### started=2026-08-25T12:30:00+0800
+### ---------- output ----------
+=== A. INSTALL SBATCH (new only) ===
+  armI.sbatch                                      8d337cb0a5145eb4  expect 8d337cb0a5145eb4
+=== B. BUILD armI ===
+stats -> /data1/home/sunyiq/nature_1st/data/interim/stage_static_feature_stats_armI.json
+meta  -> /data1/home/sunyiq/nature_1st/data/processed/station_meta/trainable_mountain_stations_armI.csv   [newly built (mixed-source block)]  rows=2908 cols=17
+sources: 3 US, 13 global
+global constants reproduce a TRAIN-ONLY recompute (max diff 1.93e-12)
+------------------------------------------------------------------------------
+  slp_dg_uav                                   [global]  mean=     47.9688  std=    47.7772
+  ele_mt_sav                                   [global]  mean=    596.0441  std=   541.7659
+  ele_mt_smn                                   [global]  mean=    405.7108  std=   428.1587
+  ele_mt_smx                                   [global]  mean=    899.6106  std=   788.4181
+  urb_pc_use                                   [global]  mean=      4.1641  std=    10.6638
+  dor_pc_pva                                   [global]  mean=     90.7982  std=   309.8561
+  cly_pc_uav                                   [global]  mean=     15.4176  std=     6.8863
+  snd_pc_uav                                   [global]  mean=     32.8248  std=    12.6136
+  kar_pc_use                                   [global]  mean=     23.3657  std=    31.6706
+  swc_pc_syr                                   [global]  mean=     71.9797  std=    18.5536
+  gwt_cm_sav                                   [global]  mean=    320.3672  std=   235.3583
+  ari_ix_uav                                   [global]  mean=     78.7257  std=    49.0803
+  for_pc_use                                   [global]  mean=     46.4542  std=    34.3749
+  gageii_BasinID_DRAIN_SQKM                    [    US]  mean=   1286.6501  std=  1922.5203
+  gageii_HydroMod_Dams_STOR_NID_2009           [    US]  mean=     84.8591  std=   257.2286
+  gageii_Soils_PERMAVE                         [    US]  mean=      2.6978  std=     2.0670
+------------------------------------------------------------------------------
+mean/std inherited from the parent arms; val/test stations contributed nothing.
+==============================================================================
+=== C. FINGERPRINTS (must match workstation) ===
+e33407f426178af6  data/interim/stage_static_feature_stats_armI.json
+db7e394a06d42a88  data/processed/station_meta/trainable_mountain_stations_armI.csv
+workstation: stats e33407f426178af6 / meta db7e394a06d42a88
+=== D. armI IS armF MINUS EXACTLY ONE COLUMN? ===
+armF 17 armI 16
+removed : ['gageii_HydroMod_Dams_RAW_DIS_NEAREST_DAM']
+added   : [] (must be empty)
+order preserved: True
+all shared constants identical to armF: OK
+=== END seq=92 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-25T12:30:14+0800
