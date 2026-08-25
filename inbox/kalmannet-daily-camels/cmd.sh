@@ -4,20 +4,20 @@ umask 077
 
 EXPECTED_USER="sunyiq"
 MAILBOX_ROOT="/data1/home/sunyiq/hpc_mailbox"
-ARCHIVE="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/official-tsp-gru-causal-fair-a32-no-usr-bin-time-v21/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_RESOURCE_SMOKE_V4_20260825_A32.tar.gz"
-ARCHIVE_SHA256="9b400ad1bf9ce756ff5a278198c28ebf7991792c874508d526b766b25ac56800"
-ARCHIVE_SIZE=1171424
-EXPERIMENT_ID="DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_RESOURCE_SMOKE_V4_20260825_A32"
-RUN_BASE="/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825"
-SOURCE_DIRECTORY="${RUN_BASE}/source_A32_seq21"
+ARCHIVE="${MAILBOX_ROOT}/payload/kalmannet-daily-camels/official-tsp-gru-causal-fair-shared-a33-v22/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_SHARED_SMOKE_V1_20260825_A33.tar.gz"
+ARCHIVE_SHA256="a9be4b8c226206e2ebcaa48e38659fa061e752557a51dbc491e325db0d0f2ac2"
+ARCHIVE_SIZE=1174330
+EXPERIMENT_ID="DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_SHARED_SMOKE_V1_20260825_A33"
+RUN_BASE="/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825"
+SOURCE_DIRECTORY="${RUN_BASE}/source_A33_seq22"
 RUN_DIRECTORY="${RUN_BASE}/${EXPERIMENT_ID}"
 STATUS_DIRECTORY="${RUN_BASE}/status"
-STAGING_DIRECTORY="/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_staging_20260825"
+STAGING_DIRECTORY="/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_staging_20260825"
 OUTBOX_DIRECTORY="${MAILBOX_ROOT}/outbox/kalmannet-daily-camels"
-EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/DAILY_CAMELS_OFFICIAL_KALMANNET_CAUSAL_FAIR_A32_SEQ21_evidence.tar.gz"
+EVIDENCE_ARCHIVE="${OUTBOX_DIRECTORY}/DAILY_CAMELS_OFFICIAL_KALMANNET_CAUSAL_FAIR_SHARED_A33_SEQ22_evidence.tar.gz"
 NAMESPACE_OWNED=0
 SAFE_TO_PACKAGE=0
-FINAL_STATUS="SEQ21_A32_STARTED"
+FINAL_STATUS="SEQ22_A33_STARTED"
 TRAINING_JOB_ID="NOT_SUBMITTED"
 
 sha256_file() { sha256sum "$1" | awk '{print $1}'; }
@@ -68,11 +68,11 @@ if [[ "${USER-}" != "$EXPECTED_USER" || "$ACTUAL_USER" != "$EXPECTED_USER" || "$
   echo "fixed-user check failed" >&2
   exit 50
 fi
-[[ -f "$ARCHIVE" && ! -L "$ARCHIVE" ]] || { echo "A32 archive absent or symbolic" >&2; exit 51; }
-[[ "$(stat -c '%s' "$ARCHIVE")" = "$ARCHIVE_SIZE" ]] || { echo "A32 archive size differs" >&2; exit 52; }
-[[ "$(sha256_file "$ARCHIVE")" = "$ARCHIVE_SHA256" ]] || { echo "A32 archive hash differs" >&2; exit 53; }
+[[ -f "$ARCHIVE" && ! -L "$ARCHIVE" ]] || { echo "A33 archive absent or symbolic" >&2; exit 51; }
+[[ "$(stat -c '%s' "$ARCHIVE")" = "$ARCHIVE_SIZE" ]] || { echo "A33 archive size differs" >&2; exit 52; }
+[[ "$(sha256_file "$ARCHIVE")" = "$ARCHIVE_SHA256" ]] || { echo "A33 archive hash differs" >&2; exit 53; }
 for path in "$RUN_BASE" "$STAGING_DIRECTORY" "$EVIDENCE_ARCHIVE"; do
-  [[ ! -e "$path" && ! -L "$path" ]] || { echo "isolated A32 path already exists: $path" >&2; exit 54; }
+  [[ ! -e "$path" && ! -L "$path" ]] || { echo "isolated A33 path already exists: $path" >&2; exit 54; }
 done
 
 mkdir "$RUN_BASE" "$STAGING_DIRECTORY"
@@ -80,14 +80,14 @@ mkdir "$SOURCE_DIRECTORY" "$STATUS_DIRECTORY" "$RUN_BASE/logs"
 NAMESPACE_OWNED=1
 SAFE_TO_PACKAGE=1
 trap on_exit EXIT
-trap 'FINAL_STATUS="SEQ21_A32_INTERRUPTED"; exit 143' INT TERM
+trap 'FINAL_STATUS="SEQ22_A33_INTERRUPTED"; exit 143' INT TERM
 date -u +%Y-%m-%dT%H:%M:%SZ > "${STATUS_DIRECTORY}/started_time_utc.txt"
 {
   printf 'archive=%s\n' "$ARCHIVE"
   printf 'archive_sha256=%s\n' "$ARCHIVE_SHA256"
   printf 'archive_size_bytes=%s\n' "$ARCHIVE_SIZE"
 } > "${STATUS_DIRECTORY}/payload_archive_identity.txt"
-FINAL_STATUS="SEQ21_A32_NAMESPACE_OWNED"
+FINAL_STATUS="SEQ22_A33_NAMESPACE_OWNED"
 tar -xzf "$ARCHIVE" -C "$SOURCE_DIRECTORY"
 set +u
 source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh"
@@ -96,17 +96,17 @@ set -u
 export PYTHONDONTWRITEBYTECODE=1
 cd "$SOURCE_DIRECTORY"
 python -u hpc/daily_camels_official_kalmannet_causal_fair/preflight.py --bundle-root "$SOURCE_DIRECTORY" --offline-bundle-check > "${STATUS_DIRECTORY}/offline-preflight.json"
-FINAL_STATUS="SEQ21_A32_OFFLINE_BUNDLE_VERIFIED"
+FINAL_STATUS="SEQ22_A33_OFFLINE_BUNDLE_VERIFIED"
 
 SAFE_TO_PACKAGE=0
 if ! TRAINING_JOB_ID="$(sbatch --parsable hpc/daily_camels_official_kalmannet_causal_fair/submit_resource_smoke_gpu.slurm)"; then
   SAFE_TO_PACKAGE=1
-  FINAL_STATUS="SEQ21_A32_SUBMISSION_REJECTED_HARD_STOP"
+  FINAL_STATUS="SEQ22_A33_SUBMISSION_REJECTED_HARD_STOP"
   exit 55
 fi
-[[ "$TRAINING_JOB_ID" =~ ^[0-9]+$ ]] || { FINAL_STATUS="SEQ21_A32_SUBMISSION_IDENTITY_HARD_STOP"; exit 58; }
+[[ "$TRAINING_JOB_ID" =~ ^[0-9]+$ ]] || { FINAL_STATUS="SEQ22_A33_SUBMISSION_IDENTITY_HARD_STOP"; exit 58; }
 printf '%s\n' "$TRAINING_JOB_ID" > "${STATUS_DIRECTORY}/training_job_id.txt"
-FINAL_STATUS="SEQ21_A32_SUBMITTED"
+FINAL_STATUS="SEQ22_A33_SUBMITTED"
 
 TERMINAL_STATE=""
 for attempt in $(seq 1 660); do
@@ -121,28 +121,42 @@ case "$TERMINAL_STATE" in
     SAFE_TO_PACKAGE=1
     ;;
   *)
-    FINAL_STATUS="SEQ21_A32_MONITOR_TIMEOUT_JOB_LEFT_RUNNING_NO_EVIDENCE"
+    FINAL_STATUS="SEQ22_A33_MONITOR_TIMEOUT_JOB_LEFT_RUNNING_NO_EVIDENCE"
     exit 57
     ;;
 esac
-sacct -j "$TRAINING_JOB_ID" --units=K --parsable2 --format=JobIDRaw,JobName,Partition,AllocCPUS,State,ExitCode,Elapsed,ReqMem,MaxRSS,MaxVMSize > "${STATUS_DIRECTORY}/seq21_A32_sacct_resources.txt"
+sacct -j "$TRAINING_JOB_ID" --units=K --parsable2 --format=JobIDRaw,JobName,Partition,AllocCPUS,State,ExitCode,Elapsed,ReqMem,AllocTRES,MaxRSS,MaxVMSize > "${STATUS_DIRECTORY}/seq22_A33_sacct_resources.txt"
 printf '%s\n' "$TERMINAL_STATE" > "${STATUS_DIRECTORY}/training_terminal_state.txt"
 if [[ "$TERMINAL_STATE" != "COMPLETED" ]]; then
-  FINAL_STATUS="SEQ21_A32_TRAINING_${TERMINAL_STATE:-UNKNOWN}_HARD_STOP"
+  FINAL_STATUS="SEQ22_A33_TRAINING_${TERMINAL_STATE:-UNKNOWN}_HARD_STOP"
   exit 56
 fi
-FINAL_STATUS="SEQ21_A32_TRAINING_COMPLETED"
+FINAL_STATUS="SEQ22_A33_TRAINING_COMPLETED"
 
-python -u hpc/daily_camels_official_kalmannet_causal_fair/verify_smoke.py --run-directory "$RUN_DIRECTORY" --status-directory "$STATUS_DIRECTORY" --job-id "$TRAINING_JOB_ID" --output "${STATUS_DIRECTORY}/independent_verification.json"
-FINAL_STATUS="SEQ21_A32_INDEPENDENTLY_VERIFIED"
-python - "$STATUS_DIRECTORY/independent_verification.json" <<'PY'
+PRIMARY_VERIFICATION="${STATUS_DIRECTORY}/train-independent-verification-${TRAINING_JOB_ID}.json"
+REPEAT_VERIFICATION="${STATUS_DIRECTORY}/train-independent-verification-repeat-${TRAINING_JOB_ID}.json"
+for verification in "$PRIMARY_VERIFICATION" "$REPEAT_VERIFICATION"; do
+  [[ -f "$verification" && ! -L "$verification" ]] || { echo "scheduled A33 verification evidence absent or symbolic: $verification" >&2; exit 59; }
+done
+[[ "$(sha256_file "$PRIMARY_VERIFICATION")" = "$(sha256_file "$REPEAT_VERIFICATION")" ]] || { echo "scheduled A33 verification repetitions differ" >&2; exit 60; }
+FINAL_STATUS="SEQ22_A33_SCHEDULED_VERIFICATIONS_MATCH"
+python - "$PRIMARY_VERIFICATION" <<'PY'
 import json
 from pathlib import Path
 import sys
 report = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-if report.get("status") != "TECHNICAL_EVIDENCE_VERIFIED":
-    raise SystemExit("A32 independent verification status differs")
+required_true = (
+    "training_effect_passed",
+    "reported_gate_passed",
+    "recomputed_gate_passed",
+    "all_leads_median_nse_at_least_0_60",
+    "complete_metric_population_verified",
+)
+if report.get("status") != "TECHNICAL_EVIDENCE_VERIFIED" or any(
+    report.get(name) is not True for name in required_true
+):
+    raise SystemExit("A33 scheduled verification gate differs")
 print(json.dumps(report, sort_keys=True))
 PY
-FINAL_STATUS="SEQ21_A32_RESOURCE_AND_POST_ZERO_TRAINING_EFFECT_VERIFIED"
-echo "DAILY_CAMELS_OFFICIAL_KALMANNET_A32_RESOURCE_AND_POST_ZERO_TRAINING_EFFECT_PASS job=${TRAINING_JOB_ID}"
+FINAL_STATUS="SEQ22_A33_SHARED_DEVELOPMENT_GATES_VERIFIED"
+echo "DAILY_CAMELS_OFFICIAL_KALMANNET_A33_SHARED_DEVELOPMENT_GATES_PASS job=${TRAINING_JOB_ID}"
