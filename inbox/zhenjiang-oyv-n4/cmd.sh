@@ -1,25 +1,19 @@
 #!/bin/bash
+# Independent audit, structural checks first (no graphics processor needed).
 set -o pipefail
-R=/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact
-echo "=== XULIUJING RANKING ==="
-grep '^xuliujing' "$R/n4_station_ranking.csv" 2>/dev/null | sed 's/^/  /'
-echo "=== NANJING PAIR AND FAILURE COST (against complete_observation) ==="
-python - <<'PYEOF' 2>&1 | sed 's/^/  /'
-import csv
-p="/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact/n4_cost_summary.csv"
-rows=list(csv.DictReader(open(p,encoding="utf-8-sig")))
-for tgt in ("nanjing","xuliujing"):
-    for h in (1,6):
-        r=[x for x in rows if x["measured_against"]=="complete_observation"
-           and x["target"]==tgt and x["condition"]=="hidden_target"
-           and int(x["horizon_hours"])==h]
-        if r: print("%s H=%d  failure cost vs full six = %.5f m (folds +%s/%s)"%(
-            tgt,h,float(r[0]["median_cost_m"]),r[0]["positive_fold_years"],r[0]["fold_count"]))
-    for cond in ("hidden_target_both_nearest","endpoints_only"):
-        r=[x for x in rows if x["measured_against"]=="hidden_target"
-           and x["target"]==tgt and x["condition"]==cond and int(x["horizon_hours"])==1]
-        if r: print("  %s %s H=1 = %.5f m"%(tgt,cond,float(r[0]["median_cost_m"])))
-PYEOF
-echo "=== ABLATION vs INFORMATION ORDERING ==="
-head -12 "$R/n4_information_comparison.csv" 2>/dev/null | sed 's/^/  /'
+ROOT=/data1/home/sunyiq/zhenjiang_oyv_v1
+cd "$ROOT/repo" || exit 1
+source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || source $HOME/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final || { echo CONDA_FAILED; exit 1; }
+export PYTHONPATH="$ROOT/pysite:${PYTHONPATH:-}"
+echo "  audit script: $(sha256sum scripts/analysis/independent_audit_zhenjiang_oyv_n4.py | cut -d' ' -f1)"
+rm -rf "$ROOT/n4_audit_structural"
+python -u scripts/analysis/independent_audit_zhenjiang_oyv_n4.py \
+  --task-root "$ROOT/n4_tasks" \
+  --impact-root "$ROOT/n4_impact" \
+  --output-root "$ROOT/n4_audit_structural" 2>&1 | tail -30
+echo "=== MISMATCH SAMPLE ==="
+head -8 "$ROOT/n4_audit_structural/audit_mismatches.csv" 2>/dev/null | sed 's/^/  /'
+echo "=== COST COMPARISON SAMPLE ==="
+head -6 "$ROOT/n4_audit_structural/audit_cost_comparison.csv" 2>/dev/null | sed 's/^/  /'
 echo "=== DONE ==="
