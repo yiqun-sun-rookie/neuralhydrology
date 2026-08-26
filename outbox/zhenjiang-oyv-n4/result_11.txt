@@ -1,0 +1,24 @@
+### channel=zhenjiang-oyv-n4 seq=11
+### host=login4
+### started=2026-08-26T15:38:02+0800
+### ---------- output ----------
+=== A. SYNC ===
+  head: 2504716 Test node-family equivalence directly instead of citing it
+  verifier identity ok
+=== B. PICK A FINISHED LADDER TASK ===
+  reference exists: zhenjiang_ladder_v2__fold_2017__zhenjiang__complete_observation__seed_17
+  reference sha256: d1f1a1153628499f2b7af7ae7365f7140c33bfed02f41694fafc20ccc59131e2
+=== C. WRITE THE EQUIVALENCE LAUNCHER ===
+  written
+=== D. SUBMIT TO hgpu2 NODES ===
+  ngu009 -> 212919
+  ngu003 -> 212920
+EQUIV_JOB_IDS= 212919 212920
+  (not waiting here; a long wait loop gets killed by runner restarts)
+=== E. IMMEDIATE STATE ===
+--------- --------- -------- ----------- 
+--------- --------- -------- ----------- 
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T15:38:43+0800
