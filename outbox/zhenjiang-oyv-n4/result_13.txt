@@ -1,0 +1,61 @@
+### channel=zhenjiang-oyv-n4 seq=13
+### host=login4
+### started=2026-08-26T15:44:54+0800
+### ---------- output ----------
+=== WAIT FOR THE TWO EQUIVALENCE JOBS (max 15 min) ===
+=== STATE ===
+   212919 eq_ngu009   ngu009    COMPLETED     0:0  00:04:36 
+   212920 eq_ngu003 None as+      PENDING     0:0  00:00:00 
+=== VERDICTS ===
+  ======== job 212919 ========
+      "best_epoch": 11,
+      "best_inner_validation_mae_m": 0.03810398129548183,
+      "completed_epochs": 15,
+      "condition": "complete_observation",
+      "elapsed_seconds": 253.778,
+      "kept_stations": [
+        "datong",
+        "nanjing",
+        "zhenjiang",
+        "jiangyin",
+        "xuliujing",
+        "wusongkou"
+      ],
+      "node_name": "ngu009",
+      "task_id": "zhenjiang_ladder_v2__fold_2017__zhenjiang__complete_observation__seed_17",
+      "test_sample_count": 7022
+    }
+    {
+      "fields_differing_from_frozen_expectation": {
+        "graphics_processor_driver_version": {
+          "expected": "580.76.05",
+          "observed": "535.104.05"
+        },
+        "graphics_processor_total_memory_bytes": {
+          "expected": 25296044032,
+          "observed": 25438126080
+        },
+        "operating_system": {
+          "expected": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+          "observed": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17"
+        }
+      },
+      "graphics_processor_capability": [
+        8,
+        6
+      ],
+      "graphics_processor_driver_version": "535.104.05",
+      "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+      "node_name": "ngu009",
+      "operating_system": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17",
+      "produced_sha256": "d1f1a1153628499f2b7af7ae7365f7140c33bfed02f41694fafc20ccc59131e2",
+      "reference_sha256": "d1f1a1153628499f2b7af7ae7365f7140c33bfed02f41694fafc20ccc59131e2",
+      "task_id": "zhenjiang_ladder_v2__fold_2017__zhenjiang__complete_observation__seed_17",
+      "verdict": "IDENTICAL"
+    }
+  ======== job 212920 ========
+    (no stdout)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:00:35+0800
