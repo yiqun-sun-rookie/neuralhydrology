@@ -1,0 +1,17 @@
+### channel=kalmannet-tukf23 seq=8
+### host=login4
+### started=2026-08-26T17:48:49+0800
+### ---------- output ----------
+=== VERIFY V2 PAYLOAD ===
+actual=66b950660dd865134273a43ed86810cb9bbe559cadd2b760df0bf51686cdb080
+=== CLEAN REDEPLOY ===
+extracted v2
+differentiable_ukf_hbvlite.py
+run_aligned_gr4j_da.py
+run_aligned_gr4j_differentiable_ukf.py
+=== SUBMIT ANCHOR GATE (v2) ===
+Submitted batch job 213212
+anchor_job_v2=213212
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T17:48:50+0800
