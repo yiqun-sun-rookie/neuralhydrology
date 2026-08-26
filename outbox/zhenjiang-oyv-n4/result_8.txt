@@ -1,0 +1,52 @@
+### channel=zhenjiang-oyv-n4 seq=8
+### host=login4
+### started=2026-08-26T15:22:32+0800
+### ---------- output ----------
+=== A. THE EXISTING NODE TEST LAUNCHER ===
+#!/usr/bin/env bash
+# 单节点 GPU 健康测试。由 cmd.sh 用 --nodelist 指定具体节点提交。
+# 同时验证铁律 1(不写--mem) / 2(set -eo) / 3(MKL)。
+#SBATCH -J nodetest
+#SBATCH -p hgpu2p
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1
+#SBATCH -t 00:05:00
+#SBATCH -o /data1/home/sunyiq/hpc_mailbox/outbox/nodetest_%j.out
+#SBATCH -e /data1/home/sunyiq/hpc_mailbox/outbox/nodetest_%j.err
+
+set -eo pipefail
+
+echo "=== NODE: $(hostname) JOB: $SLURM_JOB_ID ==="
+echo "=== GRES: ${CUDA_VISIBLE_DEVICES:-none} ==="
+
+echo "--- nvidia-smi ---"
+nvidia-smi --query-gpu=index,name,memory.total,driver_version --format=csv,noheader 2>&1 || echo "NVIDIA_SMI_FAILED rc=$?"
+
+echo "--- conda ---"
+source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh || \
+source $HOME/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final || { echo "CONDA_ACTIVATE_FAILED"; exit 1; }
+=== B. SUBMIT PROBES TO THE IDLE hgpu8 NODES ===
+  ngu201 -> job 212909
+  ngu203 -> job 212910
+  ngu202 -> job 212911
+=== C. WAIT (max 4 min; these nodes are idle so it should be quick) ===
+  all settled at t=50s
+=== D. PROBE RESULTS ===
+  ---- job 212909 ----
+---------- ---------- --------- ------------ -------- --------- 
+    212909  nt_ngu201    ngu201    COMPLETED      0:0  00:00:31 
+  ---- job 212910 ----
+---------- ---------- --------- ------------ -------- --------- 
+    212910  nt_ngu203    ngu203    COMPLETED      0:0  00:00:27 
+  ---- job 212911 ----
+---------- ---------- --------- ------------ -------- --------- 
+    212911  nt_ngu202    ngu202    COMPLETED      0:0  00:00:28 
+=== E. CLEAN UP ONLY MY OWN PROBE LOGS ===
+  done
+=== F. DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T15:23:15+0800
