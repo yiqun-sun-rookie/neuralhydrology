@@ -18,20 +18,19 @@ for INDEX in $(seq 1 120); do
 done
 
 echo "=== ACCOUNTING ==="
-sacct -j "${JOB_ID}" -X --format=JobID%12,JobName%24,NodeList%12,State%18,ExitCode%10,Elapsed%12
-FINAL_STATE=$(sacct -j "${JOB_ID}" -X -n -P --format=State | sed -n '1s/|.*//p')
-echo "final_state=${FINAL_STATE}"
+ACCOUNTING=$(sacct -j "${JOB_ID}" -X --format=JobIDRaw,JobName%24,NodeList%12,State%18,ExitCode%10,Elapsed%12)
+echo "${ACCOUNTING}"
+echo "${ACCOUNTING}" | awk -v job_id="${JOB_ID}" \
+    '$1 == job_id && $4 ~ /^COMPLETED/ && $5 == "0:0" { found = 1 } END { exit !found }' || {
+    echo "JOB_NOT_COMPLETED_SUCCESSFULLY"
+    exit 3
+}
 
 echo "=== EXACT LOGS ==="
 echo "stdout=${STDOUT}"
 tail -80 "${STDOUT}" 2>/dev/null || true
 echo "stderr=${STDERR}"
 tail -80 "${STDERR}" 2>/dev/null || true
-
-case "${FINAL_STATE}" in
-    COMPLETED*) ;;
-    *) echo "JOB_NOT_COMPLETED_SUCCESSFULLY"; exit 3 ;;
-esac
 
 echo "=== VERIFY RESULT PACKAGE ==="
 [ -d "${RESULT_DIR}" ] || { echo "RESULT_DIRECTORY_MISSING=${RESULT_DIR}"; exit 1; }
