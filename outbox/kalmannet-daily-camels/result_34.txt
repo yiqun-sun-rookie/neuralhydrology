@@ -1,0 +1,664 @@
+### channel=kalmannet-daily-camels seq=34
+### host=login4
+### started=2026-08-27T00:03:27+0800
+### ---------- output ----------
+SEQ34_A37_PROBE_IDENTITY experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37 execution_attempt_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_PROBE1_SEQ31 job_id=213858 run_base=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826
+SEQ34_A37_PROBE_SACCT_BEGIN
+JobIDRaw|JobName|Partition|AllocCPUS|State|ExitCode|Elapsed|ReqMem|AllocTRES|MaxRSS|MaxVMSize
+213858|daily-knet-a37-probe|hgpu2p|2|FAILED|1:0|00:00:20|0n|billing=2,cpu=2,node=1||
+213858.batch|batch||2|FAILED|1:0|00:00:20|0n|cpu=2,mem=0,node=1|3004K|251280K
+213858.extern|extern||2|COMPLETED|0:0|00:00:20|0n|billing=2,cpu=2,node=1|2192K|250920K
+213858.0|python||2|COMPLETED|0:0|00:00:06|0n|cpu=2,mem=0,node=1|2956K|319916K
+213858.1|python||2|FAILED|1:0|00:00:01|0n|cpu=2,mem=0,node=1|3004K|319916K
+SEQ34_A37_PROBE_SACCT_END
+SEQ34_A37_PROBE_SQUEUE_BEGIN exit_code=1
+slurm_load_jobs error: Invalid job id specified
+SEQ34_A37_PROBE_SQUEUE_END
+SEQ34_FILE_BEGIN	status/probe-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-213858.json	5802	ca6f057b3e60fcabd265ba584aca95a2304c7032d5cb6fde8d8763e1877c6256
+{
+  "active_config_member": "configs/daily_camels_knet_fixed_full_training_coverage_epoch10_to40_resume_a37.json",
+  "active_config_sha256": "70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984",
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "available_host_memory_bytes": 250469281792,
+  "bundle_manifest_sha256": "ca9f1a636fc56c2717f79365afec1df5dd2c522c80fa786b2dcc1267d9d63e78",
+  "bundle_root": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/source_A37_probe1_seq31",
+  "continuation": {
+    "checkpoint_path": "artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt",
+    "checkpoint_sha256": "b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e",
+    "completed_epoch": 10,
+    "enabled": true,
+    "source_device": "cuda",
+    "source_experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16"
+  },
+  "cuda_probe_without_torch_import": {
+    "cuda_visible_devices": "1",
+    "device_index": "1",
+    "device_name": "NVIDIA GeForce RTX 3090",
+    "driver_version": "580.76.05",
+    "memory_free_mib": 24125,
+    "memory_total_mib": 24576,
+    "visible_device_count": 1
+  },
+  "cuda_visible_devices": "1",
+  "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "hostname": "ngu011",
+  "initialization_mode": "causal_shared_spinup",
+  "nse_gate": {
+    "common_target_count_per_lead": 712,
+    "filter_warmup_days": 16,
+    "minimum_exclusive": 0.6
+  },
+  "numpy_imported": false,
+  "owner": {
+    "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+    "hostname": "ngu011",
+    "phase": "probe",
+    "pid": 3879822,
+    "slurm_job_id": "213858"
+  },
+  "package_availability_without_import": {
+    "numpy": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.3.3"
+    },
+    "pytest": {
+      "available": false,
+      "required_for_scientific_runtime": false,
+      "version": null
+    },
+    "torch": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.4.0"
+    }
+  },
+  "phase": "probe",
+  "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+  "replay_gate_receipt_sha256": {},
+  "replay_gates": {},
+  "reserved_data_member_count": 0,
+  "resource_admission": {
+    "checked_on_allocated_training_node_before_training": false,
+    "required": false,
+    "status": "NOT_REQUIRED"
+  },
+  "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "run_directory_absent": true,
+  "run_parent": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/runs",
+  "selection_objective": {
+    "common_target_count_per_lead": 728,
+    "filter_warmup_days": 0,
+    "name": "physical_unit_multilead_mse"
+  },
+  "slurm_job_id": "213858",
+  "slurm_job_name": "daily-knet-a37-probe",
+  "status": "PREFLIGHT_PASS",
+  "torch_imported": false
+}
+
+SEQ34_FILE_END	status/probe-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-213858.json
+SEQ34_FILE_MISSING_OR_NONREGULAR	status/entry-probe-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-213858.json
+SEQ34_FILE_BEGIN	status/seq31_offline_A37.json	4498	33ca7a0bfc56f2010823e5e60ca14f7cf86c665c25ab494787b9674f479dd3d4
+{
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "continuation": {
+    "checkpoint_path": "artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt",
+    "checkpoint_sha256": "b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e",
+    "completed_epoch": 10,
+    "enabled": true,
+    "source_device": "cuda",
+    "source_experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16"
+  },
+  "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "initialization_mode": "causal_shared_spinup",
+  "member_count": 46,
+  "nse_gate_target_count_per_lead": 712,
+  "numpy_imported": false,
+  "replay_gate_requirements": {
+    "causal": {
+      "active_config_sha256": "1272bc4d9ef3b494d54e31cb3341eedee741f29cc67c5cace5d1b2b693bfde41",
+      "bundle_manifest_sha256": "da9996a70538d00d7d48b26bb29a77af2e02c90d1e5e9eb80ece042f0873ad0f",
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "initialization_mode": "causal_shared_spinup",
+      "receipt_sha256": "0f6080a05a27244eca59c58043f265718102a4c2985684fb674781c8157d6c66"
+    },
+    "exact": {
+      "active_config_sha256": "7eea03913263c024b5bc9bec03e293de20cddff27346fff36087331292fd366f",
+      "bundle_manifest_sha256": "b8c53662f7d8b97e5025453ca1c6c09f8a82ab362e5eca119b5226a796cd5082",
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "initialization_mode": "exact_tukf06_backward_time_diagnostic",
+      "receipt_sha256": "70e73c9f014dc4a4d615e07087fb99a994ba30b8c867eb5ef49141a59a39b687"
+    }
+  },
+  "selection_objective_target_count_per_lead": 728,
+  "status": "BUNDLE_VERIFIED",
+  "torch_imported": false
+}
+
+SEQ34_FILE_END	status/seq31_offline_A37.json
+SEQ34_FILE_BEGIN	status/seq31_submission_identity.txt	727	5ec91edaf14742a83666f98004a38376ef9104216f0d94cf5d91e6a093fb2b8c
+experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37
+execution_attempt_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_PROBE1_SEQ31
+archive=/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-a37-resume-v31/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37.tar.gz
+archive_sha256=da8edf299bf96366e3163a403637601e40a5b8bb9529f1150d6830340dcf5db8
+archive_size=1815327
+outer_manifest=/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-a37-resume-v31/A37_bundle_manifest.sha256.json
+outer_manifest_sha256=3e08f11ba380c38bfd9ee09a8acc3f2c2995616290c3f32587bcb793b00cdbe0
+a34_job_id=212886
+a34_terminal_state=FAILED
+
+SEQ34_FILE_END	status/seq31_submission_identity.txt
+SEQ34_FILE_BEGIN	status/seq31_probe_job_id.txt	7	02cad6f1645986c9eedf8c989dcfb12a730e89165999ac1cd9c8ce1a80c1a6ae
+213858
+
+SEQ34_FILE_END	status/seq31_probe_job_id.txt
+SEQ34_FILE_BEGIN	status/seq31_probe_submitted_time_utc.txt	21	23ce331c35e82515b337c5d8973dafcd2f2c28abd533a241bfe5d2ef4c5442fc
+2026-08-26T11:50:52Z
+
+SEQ34_FILE_END	status/seq31_probe_submitted_time_utc.txt
+SEQ34_FILE_BEGIN	status/seq31_pre_submission_squeue.txt	5568	ccbaa42ed1b0c43a8324f39eca130d436af45ab027ce137a04ee73b5b025e186
+202228|N22-hyper|PENDING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+211001|N22-relong|PENDING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+213599|zj_oyv_n4|PENDING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213598|zj_oyv_n4|PENDING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+202226|N22-eval-later|PENDING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+202229|N22-agg-eval|PENDING|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+202230|N22-agg-hyper|PENDING|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+202294|N22-export|PENDING|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_export.slurm
+202315|N22-gate|PENDING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm
+202507|N22-mask-iso-531|PENDING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/run_author_v13_warmup_isolation_all531.slurm
+202293|N22-manifest|PENDING|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_manifest.slurm
+213435|N22-hyper|RUNNING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+213401|N22-hyper|RUNNING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+212744|N22-relong|RUNNING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+213855|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213854|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213853|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213852|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213851|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213850|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213849|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213848|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213847|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213846|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213845|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213844|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213843|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213842|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213841|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213840|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213839|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213838|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213837|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213836|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+211003|N22-relong|RUNNING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+
+SEQ34_FILE_END	status/seq31_pre_submission_squeue.txt
+SEQ34_FILE_BEGIN	status/seq31_immediate_pre_submission_squeue.txt	5568	eacaf97d0fdf8f54e2163cda1b0ca08684b186041e5440ead8fb9a219ac39bcb
+202228|N22-hyper|PENDING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+211001|N22-relong|PENDING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+213599|zj_oyv_n4|PENDING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213598|zj_oyv_n4|PENDING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+202226|N22-eval-later|PENDING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+202229|N22-agg-eval|PENDING|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+202230|N22-agg-hyper|PENDING|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+202294|N22-export|PENDING|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_export.slurm
+202315|N22-gate|PENDING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm
+202507|N22-mask-iso-531|PENDING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/run_author_v13_warmup_isolation_all531.slurm
+202293|N22-manifest|PENDING|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_manifest.slurm
+213435|N22-hyper|RUNNING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+213401|N22-hyper|RUNNING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+212744|N22-relong|RUNNING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+213856|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213857|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213855|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213854|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213853|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213852|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213851|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213850|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213849|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213848|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213847|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213846|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213845|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213844|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213843|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213841|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213840|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213839|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213838|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+213836|zj_oyv_n4|RUNNING|/data1/home/sunyiq/zhenjiang_oyv_v1/repo|/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+211003|N22-relong|RUNNING|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+
+SEQ34_FILE_END	status/seq31_immediate_pre_submission_squeue.txt
+SEQ34_FILE_BEGIN	status/seq31_post_submission_squeue.txt	287	c64d69b334837d3952d1da953f9ef60842fb23d2b0ffcbf554bb15e51b403d83
+213858|daily-knet-a37-probe|PENDING|(Priority)|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/source_A37_probe1_seq31|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/source_A37_probe1_seq31/hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm
+
+SEQ34_FILE_END	status/seq31_post_submission_squeue.txt
+SEQ34_FILE_BEGIN	logs/probe-213858.out	5802	ca6f057b3e60fcabd265ba584aca95a2304c7032d5cb6fde8d8763e1877c6256
+{
+  "active_config_member": "configs/daily_camels_knet_fixed_full_training_coverage_epoch10_to40_resume_a37.json",
+  "active_config_sha256": "70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984",
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "available_host_memory_bytes": 250469281792,
+  "bundle_manifest_sha256": "ca9f1a636fc56c2717f79365afec1df5dd2c522c80fa786b2dcc1267d9d63e78",
+  "bundle_root": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/source_A37_probe1_seq31",
+  "continuation": {
+    "checkpoint_path": "artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt",
+    "checkpoint_sha256": "b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e",
+    "completed_epoch": 10,
+    "enabled": true,
+    "source_device": "cuda",
+    "source_experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16"
+  },
+  "cuda_probe_without_torch_import": {
+    "cuda_visible_devices": "1",
+    "device_index": "1",
+    "device_name": "NVIDIA GeForce RTX 3090",
+    "driver_version": "580.76.05",
+    "memory_free_mib": 24125,
+    "memory_total_mib": 24576,
+    "visible_device_count": 1
+  },
+  "cuda_visible_devices": "1",
+  "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "hostname": "ngu011",
+  "initialization_mode": "causal_shared_spinup",
+  "nse_gate": {
+    "common_target_count_per_lead": 712,
+    "filter_warmup_days": 16,
+    "minimum_exclusive": 0.6
+  },
+  "numpy_imported": false,
+  "owner": {
+    "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+    "hostname": "ngu011",
+    "phase": "probe",
+    "pid": 3879822,
+    "slurm_job_id": "213858"
+  },
+  "package_availability_without_import": {
+    "numpy": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.3.3"
+    },
+    "pytest": {
+      "available": false,
+      "required_for_scientific_runtime": false,
+      "version": null
+    },
+    "torch": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.4.0"
+    }
+  },
+  "phase": "probe",
+  "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+  "replay_gate_receipt_sha256": {},
+  "replay_gates": {},
+  "reserved_data_member_count": 0,
+  "resource_admission": {
+    "checked_on_allocated_training_node_before_training": false,
+    "required": false,
+    "status": "NOT_REQUIRED"
+  },
+  "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "run_directory_absent": true,
+  "run_parent": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/runs",
+  "selection_objective": {
+    "common_target_count_per_lead": 728,
+    "filter_warmup_days": 0,
+    "name": "physical_unit_multilead_mse"
+  },
+  "slurm_job_id": "213858",
+  "slurm_job_name": "daily-knet-a37-probe",
+  "status": "PREFLIGHT_PASS",
+  "torch_imported": false
+}
+
+SEQ34_FILE_END	logs/probe-213858.out
+SEQ34_FILE_BEGIN	logs/probe-213858.err	1458	7d7c59b1dec48f395be369c5817ea4c283beccf913bb4fd663dafb400824e649
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/source_A37_probe1_seq31/scripts/run_daily_camels_ukf_knet_parity.py", line 3563, in <module>
+srun: error: ngu011: task 0: Exited with exit code 1
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/source_A37_probe1_seq31/scripts/run_daily_camels_ukf_knet_parity.py", line 3559, in main
+    return execute(build_parser().parse_args(argv))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/source_A37_probe1_seq31/scripts/run_daily_camels_ukf_knet_parity.py", line 3545, in execute
+    preflight = standard_preflight(
+                ^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/source_A37_probe1_seq31/scripts/run_daily_camels_ukf_knet_parity.py", line 1011, in standard_preflight
+    continuation = _continuation_spec(configuration, root, resume)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826/source_A37_probe1_seq31/scripts/run_daily_camels_ukf_knet_parity.py", line 437, in _continuation_spec
+    raise ValueError("continuation requires an explicit --resume checkpoint")
+ValueError: continuation requires an explicit --resume checkpoint
+
+SEQ34_FILE_END	logs/probe-213858.err
+SEQ34_A37_PROBE_LOCK_CLEARED=true
+SEQ34_A37_RUN_DIRECTORY_ABSENT=true
+SEQ34_A37_PROBE_TERMINAL state=FAILED exit_code=1:0 job_id=213858
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T00:03:28+0800
