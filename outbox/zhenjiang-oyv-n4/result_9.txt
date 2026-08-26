@@ -1,0 +1,19 @@
+### channel=zhenjiang-oyv-n4 seq=9
+### host=login4
+### started=2026-08-26T15:27:03+0800
+### ---------- output ----------
+=== PROBE LOGS ===
+  ================ job 212909 ================
+    (stdout missing)
+  ================ job 212910 ================
+    (stdout missing)
+  ================ job 212911 ================
+    (stdout missing)
+=== CURRENT hgpu8 STATE ===
+ PARTITION  AVAIL   NODELIST      STATE  CPUS       GRES
+     hgpu8     up     ngu202      mixed    64      gpu:8
+     hgpu8     up ngu[201,20       idle    64      gpu:8
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T15:27:03+0800
