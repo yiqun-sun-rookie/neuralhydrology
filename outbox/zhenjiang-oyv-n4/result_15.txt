@@ -1,0 +1,66 @@
+### channel=zhenjiang-oyv-n4 seq=15
+### host=login4
+### started=2026-08-26T16:10:16+0800
+### ---------- output ----------
+=== A. ARRAY OUTCOMES ===
+  ---- 212898 ----
+212898|COMPLETED|0:0|00:00:53|ngu008
+          1 COMPLETED
+  ---- 212901 ----
+212901_0|COMPLETED|0:0|00:02:35|ngu008
+212901_1|COMPLETED|0:0|00:03:57|ngu008
+212901_2|COMPLETED|0:0|00:02:35|ngu008
+         10 COMPLETED
+          2 CANCELLED by 2272
+  ---- 212902 ----
+212902_[0-719%16]|CANCELLED by 2272|0:0|00:00:00|None assigned
+          1 CANCELLED by 2272
+=== B. TASK DIRECTORY INVENTORY ===
+  n4_tasks dirs   : 10
+  n4_smoke dirs   : 1
+  complete (5 artefacts):
+    complete = 10  partial = 0
+    by node: {'ngu008': 10}
+    complete by target: {'nanjing': 10}
+=== C. WHICH GLOBAL INDICES ARE MISSING ===
+  total 1440 missing 1430
+  first 10 missing: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+  last 10 missing: [1430, 1431, 1432, 1433, 1434, 1435, 1436, 1437, 1438, 1439]
+  missing in half one (0-719): 710
+  missing in half two (720-1439): 720
+  written missing_indices.txt
+=== D. SAMPLE RUN IDENTITY ===
+    task_id = zhenjiang_oyv_n4__fold_2017__nanjing__complete_observation__seed_109
+    target = nanjing
+    condition = complete_observation
+    test_year = 2017
+    seed = 109
+    test_sample_count = 7022
+    node_name = ngu008
+    graphics_processor_name = NVIDIA GeForce RTX 3090
+    graphics_processor_driver_version = 580.76.05
+    operating_system = Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34
+    fold_isolation_findings = 0
+=== E. QUEUE NOW ===
+  202228_[642-659%2]    N22-hyper hgpu4,hgpu8,   PENDING
+       211001_[22%2]   N22-relong hgpu4,hgpu8,   PENDING
+              212915    pr_ngu001       hgpu2p   PENDING
+              212920    eq_ngu003        hgpu2   PENDING
+    202226_[0-119%4] N22-eval-lat hgpu4,hgpu8,   PENDING
+              202229 N22-agg-eval hgpu4,hgpu8,   PENDING
+              202230 N22-agg-hype hgpu4,hgpu8,   PENDING
+              202294   N22-export hgpu4,hgpu8,   PENDING
+              202315     N22-gate hgpu4,hgpu8,   PENDING
+              202507 N22-mask-iso hgpu4,hgpu8,   PENDING
+              202293 N22-manifest hgpu4,hgpu8,   PENDING
+          202228_641    N22-hyper        hgpu4   RUNNING
+ PARTITION  NODES  STATE                       NODELIST
+     hgpu2      1    mix                         ngu009
+     hgpu2      1  alloc                         ngu003
+    hgpu2p      1  down*                         ngu002
+    hgpu2p      7    mix   ngu[001,004,006-008,010-011]
+    hgpu2p      1  alloc                         ngu005
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:10:47+0800
