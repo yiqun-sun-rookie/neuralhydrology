@@ -1,0 +1,20 @@
+### channel=zhenjiang-oyv-n4 seq=19
+### host=login4
+### started=2026-08-26T16:34:46+0800
+### ---------- output ----------
+=== A. SYNC ===
+  head: a67a9a6 Measure the card model's effect on the reported error, not on the bytes
+  script identity ok
+=== B. WRITE THE LAUNCHER ===
+=== C. SUBMIT TO THE IDLE A800 NODES, AND A 3090 CONTROL ===
+  hgpu8/ngu201 -> 212942
+  hgpu8/ngu203 -> 212943
+PLATFORM_JOB_IDS= 212942 212943
+=== D. IMMEDIATE STATE ===
+   212942  pf_ngu201   ngu201      FAILED 
+   212943  pf_ngu203   ngu203      FAILED 
+  n4_tasks: 15 / 1440
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:35:37+0800
