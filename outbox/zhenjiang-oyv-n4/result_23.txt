@@ -1,0 +1,24 @@
+### channel=zhenjiang-oyv-n4 seq=23
+### host=login4
+### started=2026-08-26T16:49:55+0800
+### ---------- output ----------
+  task files written: 263 and 263 bytes
+=== SUBMIT ===
+  ngu201 -> 212950
+  ngu203 -> 212951
+PLATFORM_JOB_IDS= 212950 212951
+   212950    pf_zj   ngu201     RUNNING     0:0  00:01:00 
+   212951    pf_jy   ngu203     RUNNING     0:0  00:01:00 
+  -- 212950 head --
+    NODE=ngu201
+    0, NVIDIA A800-SXM4-80GB, 535.104.05
+    TASK_COUNT=6
+  -- 212951 head --
+    NODE=ngu203
+    0, NVIDIA A800-SXM4-80GB, 535.104.05
+    TASK_COUNT=6
+  n4_tasks: 20 / 1440
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:50:57+0800
