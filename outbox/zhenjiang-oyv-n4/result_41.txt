@@ -1,0 +1,44 @@
+### channel=zhenjiang-oyv-n4 seq=41
+### host=login4
+### started=2026-08-26T19:05:14+0800
+### ---------- output ----------
+=== A. SYNC ===
+  head: 6cbe094 Move the family to the idle A800 nodes, on a measured licence
+  ok  scripts/analysis/zhenjiang_oyv_n4_contract.py
+  ok  scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+  ok  docs/records/ZHENJIANG_OYV_N4_LADDER_V3_PREREGISTRATION.json
+#SBATCH -p hgpu8
+#SBATCH -t 00:50:00
+=== B. CONTRACT SELF-CHECK UNDER THE A800 PIN ===
+  "conditions_per_target": 9,
+  "new_task_count": 1440,
+  "prediction_count": 7,
+  "finding_count": 0,
+  "findings": []
+}
+=== C. CANCEL THE 3090 ARRAYS (both mine) ===
+  212932 states:  COMPLETED     PENDING     RUNNING  
+  212933 states:    PENDING  
+  still mine in queue:
+    none
+=== D. SET THE 3090 RUNS ASIDE ===
+  n4_tasks held 53 runs, all RTX 3090; the family must be uniform
+  moved aside, not deleted
+=== E. SUBMIT BOTH HALVES ON hgpu8 ===
+Submitted batch job 213598
+Submitted batch job 213599
+  half one = 213598   half two = 213599
+=== F. STATE ===
+    213598       1 PENDING
+    213598      16 RUNNING
+    213599       1 PENDING
+    213599       4 RUNNING
+  running now: 24
+  n4_tasks   : 0 / 1440
+N4_HALF_1=213598
+N4_HALF_2=213599
+STATUS=RUNNING_ON_A800
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T19:07:01+0800
