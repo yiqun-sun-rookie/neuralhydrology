@@ -1,63 +1,78 @@
 #!/bin/bash
 set -o pipefail
 
+JOB_ID=212908
 MAILBOX=/data1/home/sunyiq/hpc_mailbox
-ARCHIVE=${MAILBOX}/payload/id18-weight-merge/oe01-safe-output-ensemble-v1/OE01_SAFE_OUTPUT_ENSEMBLE_20260826.tar.gz
-EXPECTED_ARCHIVE_SHA=e05e601fe36f66c18688eae7516d044b2578d28faff3bf255af0e2d4b7a3775f
 LANDING=/data1/home/sunyiq/id18_output_ensemble_20260826
-SLURM_SCRIPT=${LANDING}/src/lstm_fair_531/hpc/submit_oe01_output_ensemble_screen.slurm
+RESULT_DIR=${LANDING}/results/OE01_objective_output_ensemble_screen_20260826
+STDOUT=${LANDING}/logs/oe01-${JOB_ID}.out
+STDERR=${LANDING}/logs/oe01-${JOB_ID}.err
+RESULT_ARCHIVE=${MAILBOX}/outbox/id18-weight-merge/OE01_OUTPUT_ENSEMBLE_JOB${JOB_ID}_RESULTS.tar.gz
 
-echo "=== OE01 PAYLOAD IDENTITY ==="
-date -Is
-hostname
-echo "archive=${ARCHIVE}"
-echo "landing=${LANDING}"
+echo "=== WAIT FOR JOB ${JOB_ID} ==="
+for INDEX in $(seq 1 120); do
+    STATE=$(squeue -h -j "${JOB_ID}" -o '%T' 2>/dev/null)
+    [ $((INDEX % 6)) -eq 0 ] && echo "elapsed_seconds=$((INDEX * 10)) queue_state=${STATE:-absent}"
+    [ -z "${STATE}" ] && break
+    sleep 10
+done
 
-echo "=== VERIFY OUTER ARCHIVE ==="
-[ -f "${ARCHIVE}" ] || { echo "ARCHIVE_MISSING=${ARCHIVE}"; exit 1; }
-ACTUAL_ARCHIVE_SHA=$(sha256sum "${ARCHIVE}" | awk '{print $1}')
-echo "expected_archive_sha256=${EXPECTED_ARCHIVE_SHA}"
-echo "actual_archive_sha256=${ACTUAL_ARCHIVE_SHA}"
-[ "${ACTUAL_ARCHIVE_SHA}" = "${EXPECTED_ARCHIVE_SHA}" ] || { echo "ARCHIVE_HASH_MISMATCH"; exit 1; }
+echo "=== ACCOUNTING ==="
+sacct -j "${JOB_ID}" -X --format=JobID%12,JobName%24,NodeList%12,State%18,ExitCode%10,Elapsed%12
+FINAL_STATE=$(sacct -j "${JOB_ID}" -X -n -P --format=State | sed -n '1s/|.*//p')
+echo "final_state=${FINAL_STATE}"
 
-echo "=== CREATE ISOLATED LANDING ==="
-[ ! -e "${LANDING}" ] || { echo "LANDING_ALREADY_EXISTS=${LANDING}"; exit 2; }
-mkdir -p "${LANDING}" "${LANDING}/logs" || exit 1
-tar -xzf "${ARCHIVE}" -C "${LANDING}" || exit 1
+echo "=== EXACT LOGS ==="
+echo "stdout=${STDOUT}"
+tail -80 "${STDOUT}" 2>/dev/null || true
+echo "stderr=${STDERR}"
+tail -80 "${STDERR}" 2>/dev/null || true
 
-echo "=== VERIFY INTERNAL MANIFEST ==="
-cd "${LANDING}" || exit 1
-sha256sum -c bundle_manifest.sha256 || exit 1
-sed -i 's/\r$//' "${SLURM_SCRIPT}" || exit 1
+case "${FINAL_STATE}" in
+    COMPLETED*) ;;
+    *) echo "JOB_NOT_COMPLETED_SUCCESSFULLY"; exit 3 ;;
+esac
 
-echo "=== LIGHTWEIGHT CONTRACT CHECK ==="
+echo "=== VERIFY RESULT PACKAGE ==="
+[ -d "${RESULT_DIR}" ] || { echo "RESULT_DIRECTORY_MISSING=${RESULT_DIR}"; exit 1; }
 source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh || \
 source ${HOME}/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final || { echo "CONDA_FAILED"; exit 1; }
-export PYTHONPATH="${LANDING}:${PYTHONPATH:-}"
 python - <<'PY' || exit 1
+import hashlib
 import json
 from pathlib import Path
-from src.lstm_fair_531.scripts.build_oe01_safe_prediction_snapshot import load_contract, sha256_file
 
-root = Path("/data1/home/sunyiq/id18_output_ensemble_20260826")
-contract = load_contract(root / "src/lstm_fair_531/configs/oe01_objective_output_ensemble_screen_20260826.json")
-manifest = json.loads((root / "input/safe_predictions_manifest.json").read_text(encoding="utf-8"))
-snapshot = root / "input/safe_predictions.npz"
-assert contract["safe_period"] == {"start": "2005-10-01", "end": "2008-09-30"}
-assert manifest["date_start"] == "2005-10-01" and manifest["date_end"] == "2008-09-30"
-assert manifest["basin_count"] == 531 and manifest["date_count"] == 1096
-assert manifest["npz_sha256"] == sha256_file(snapshot)
-print("CONTRACT_OK", contract["experiment_id"], manifest["basin_count"], manifest["date_count"])
-print("SNAPSHOT_SHA256", manifest["npz_sha256"])
+result = Path("/data1/home/sunyiq/id18_output_ensemble_20260826/results/OE01_objective_output_ensemble_screen_20260826")
+manifest = json.loads((result / "analysis_manifest.json").read_text(encoding="utf-8"))
+for name, expected in manifest["outputs"].items():
+    digest = hashlib.sha256((result / name).read_bytes()).hexdigest()
+    if digest != expected:
+        raise SystemExit(f"HASH_MISMATCH {name} {digest} {expected}")
+print("OUTPUT_HASHES_OK", len(manifest["outputs"]))
+print("DECISION", manifest["decision"])
+print("BASINS", manifest["basin_count"], "DATES", manifest["date_count"])
 PY
 
-echo "=== SUBMIT ==="
-SUBMIT_OUTPUT=$(sbatch "${SLURM_SCRIPT}" 2>&1)
-echo "${SUBMIT_OUTPUT}"
-JOB_ID=$(echo "${SUBMIT_OUTPUT}" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
-[ -n "${JOB_ID}" ] || { echo "SUBMIT_FAILED"; exit 1; }
-echo "JOB_ID=${JOB_ID}"
-squeue -j "${JOB_ID}" -o '%.18i %.22j %.10P %.8T %.10M %.20R' || true
-echo "=== SUBMISSION COMPLETE ==="
+echo "=== DECISION ==="
+cat "${RESULT_DIR}/decision.json"
+echo "=== METHOD SUMMARY ==="
+cat "${RESULT_DIR}/method_summary.csv"
+echo "=== PAIRED COMPARISONS ==="
+cat "${RESULT_DIR}/paired_comparisons.csv"
+
+echo "=== PACKAGE RESULT ==="
+[ ! -e "${RESULT_ARCHIVE}" ] || { echo "RESULT_ARCHIVE_ALREADY_EXISTS=${RESULT_ARCHIVE}"; exit 2; }
+cd "${LANDING}" || exit 1
+tar -czf "${RESULT_ARCHIVE}" \
+    results/OE01_objective_output_ensemble_screen_20260826 \
+    logs/oe01-${JOB_ID}.out \
+    logs/oe01-${JOB_ID}.err \
+    input/safe_predictions_manifest.json \
+    src/lstm_fair_531/configs/oe01_objective_output_ensemble_screen_20260826.json \
+    src/lstm_fair_531/scripts/run_oe01_output_ensemble_screen.py \
+    src/lstm_fair_531/scripts/build_oe01_safe_prediction_snapshot.py \
+    bundle_manifest.sha256 || exit 1
+sha256sum "${RESULT_ARCHIVE}"
+echo "=== MONITOR COMPLETE ==="
 exit 0
