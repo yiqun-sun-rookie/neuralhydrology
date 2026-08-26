@@ -1,0 +1,20 @@
+### channel=zhenjiang-oyv-n4 seq=12
+### host=login4
+### started=2026-08-26T15:42:00+0800
+### ---------- output ----------
+=== STATE ===
+   212919 eq_ngu009   ngu009      RUNNING     0:0  00:03:32 
+   212920 eq_ngu003 None as+      PENDING     0:0  00:00:00 
+=== VERDICTS ===
+  ======== job 212919 ========
+    NODE=ngu009
+    NVIDIA GeForce RTX 3090, 535.104.05
+    NVIDIA GeForce RTX 3090, 535.104.05
+  ======== job 212920 ========
+    (no stdout yet)
+=== SCRATCH DIRS PRESENT ===
+/data1/home/sunyiq/zhenjiang_oyv_v1/equiv_scratch_ngu009_212919
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T15:42:01+0800
