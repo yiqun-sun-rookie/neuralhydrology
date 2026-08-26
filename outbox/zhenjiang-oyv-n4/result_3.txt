@@ -1,0 +1,24 @@
+### channel=zhenjiang-oyv-n4 seq=3
+### host=login4
+### started=2026-08-26T14:02:33+0800
+### ---------- output ----------
+=== A. HOST ===
+login4
+2026-08-26T06:02:33Z
+=== B. WAIT FOR SMOKE JOB 212898 (max 25 min) ===
+  t=60s state=PENDING
+  t=120s state=PENDING
+  t=180s state=PENDING
+  t=240s state=PENDING
+  t=300s state=PENDING
+  t=360s state=PENDING
+  t=420s state=PENDING
+  t=480s state=PENDING
+  t=540s state=PENDING
+  t=600s state=PENDING
+  t=660s state=PENDING
+  t=720s state=PENDING
+  t=780s state=PENDING
+  t=840s state=PENDING
+  t=900s state=PENDING
+  t=960s state=PENDING
