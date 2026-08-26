@@ -1,0 +1,29 @@
+### channel=zhenjiang-oyv-n4 seq=102
+### host=login4
+### started=2026-08-27T03:00:52+0800
+### ---------- output ----------
+  audit script: 81b86e956b3303768360ef74f06345aef24e578c2ec0e88a513744ecb4302b5e
+{
+  "expected_task_count": 1440,
+  "mismatch_count": 0,
+  "mismatch_kinds": {},
+  "pinned_card": "NVIDIA A800-SXM4-80GB",
+  "prediction_packages_read": 1440,
+  "task_directories_found": 1440,
+  "tasks_replayed": 0,
+  "verdict": "reproducible",
+  "written_utc": "2026-08-26T19:02:31.313364+00:00"
+}
+=== MISMATCH SAMPLE ===
+  ﻿kind,task_id,detail
+=== COST COMPARISON SAMPLE ===
+  ﻿target,arm,horizon_hours,impact_cost_m,audit_cost_m
+  nanjing,hidden_target_minus_datong,1,0.0137105661800401,0.0137105661800401
+  nanjing,hidden_target_minus_datong,3,0.0142426358780581,0.0142426358780581
+  nanjing,hidden_target_minus_datong,6,0.013540548311359583,0.013540548311359583
+  nanjing,hidden_target_minus_datong,12,-0.0014239507720056055,-0.0014239507720056055
+  nanjing,hidden_target_minus_datong,24,-0.006958103603009129,-0.006958103603009129
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T03:02:31+0800
