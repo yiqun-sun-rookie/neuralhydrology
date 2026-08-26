@@ -1,0 +1,28 @@
+### channel=id18-weight-merge seq=3
+### host=login4
+### started=2026-08-26T15:14:24+0800
+### ---------- output ----------
+=== WAIT FOR JOB 212908 ===
+=== ACCOUNTING ===
+       JobID                  JobName     NodeList              State   ExitCode      Elapsed 
+------------ ------------------------ ------------ ------------------ ---------- ------------ 
+      212908 id18-oe01-output-ensemb+       ngu010          COMPLETED        0:0     00:00:13 
+final_state=
+=== EXACT LOGS ===
+stdout=/data1/home/sunyiq/id18_output_ensemble_20260826/logs/oe01-212908.out
+==========================================
+[2026-08-26T15:08:14+08:00] ID18 safe output-ensemble screen
+==========================================
+[INFO] job=212908 node=ngu010
+[INFO] python=Python 3.11.13
+[INFO] numpy 2.3.3 pandas 2.3.2
+decision=STOP_SCREEN
+passing_candidates=none
+manifest=results/OE01_objective_output_ensemble_screen_20260826/analysis_manifest.json
+[2026-08-26T15:08:26+08:00] completed
+stderr=/data1/home/sunyiq/id18_output_ensemble_20260826/logs/oe01-212908.err
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+JOB_NOT_COMPLETED_SUCCESSFULLY
+### ---------- end ----------
+### exit_code=3
+### finished=2026-08-26T15:14:25+0800
