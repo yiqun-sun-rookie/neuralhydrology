@@ -1,0 +1,32 @@
+### channel=id18-weight-merge seq=2
+### host=login4
+### started=2026-08-26T15:07:25+0800
+### ---------- output ----------
+=== OE01 PAYLOAD IDENTITY ===
+2026-08-26T15:07:25+0800
+login4
+archive=/data1/home/sunyiq/hpc_mailbox/payload/id18-weight-merge/oe01-safe-output-ensemble-v1/OE01_SAFE_OUTPUT_ENSEMBLE_20260826.tar.gz
+landing=/data1/home/sunyiq/id18_output_ensemble_20260826
+=== VERIFY OUTER ARCHIVE ===
+expected_archive_sha256=e05e601fe36f66c18688eae7516d044b2578d28faff3bf255af0e2d4b7a3775f
+actual_archive_sha256=e05e601fe36f66c18688eae7516d044b2578d28faff3bf255af0e2d4b7a3775f
+=== CREATE ISOLATED LANDING ===
+=== VERIFY INTERNAL MANIFEST ===
+src/lstm_fair_531/scripts/run_oe01_output_ensemble_screen.py: OK
+src/lstm_fair_531/scripts/build_oe01_safe_prediction_snapshot.py: OK
+src/lstm_fair_531/configs/oe01_objective_output_ensemble_screen_20260826.json: OK
+src/lstm_fair_531/hpc/submit_oe01_output_ensemble_screen.slurm: OK
+input/safe_predictions.npz: OK
+input/safe_predictions_manifest.json: OK
+=== LIGHTWEIGHT CONTRACT CHECK ===
+CONTRACT_OK OE01_objective_output_ensemble_screen_20260826 531 1096
+SNAPSHOT_SHA256 2692a76aed14750ad8f121e6e70331d4a822527afeaacf0bfc64e01d0bf97bda
+=== SUBMIT ===
+Submitted batch job 212908
+JOB_ID=212908
+             JOBID                   NAME  PARTITION    STATE       TIME     NODELIST(REASON)
+            212908 id18-oe01-output-ensem     hgpu2p  PENDING       0:00           (Priority)
+=== SUBMISSION COMPLETE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T15:07:40+0800
