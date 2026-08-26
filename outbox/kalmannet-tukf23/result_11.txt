@@ -1,0 +1,22 @@
+### channel=kalmannet-tukf23 seq=11
+### host=login4
+### started=2026-08-26T18:47:50+0800
+### ---------- output ----------
+=== ARRAY 213224 STATE ===
+    108      COMPLETED 
+=== FAILURES ===
+none
+=== TRAIN RECORDS ===
+108
+     27 all_frozen
+     27 filter_only
+     27 hydrology_only
+     27 joint
+=== ELAPSED SAMPLE ===
+-------------- ------------ ---------- 
+     213224_40    COMPLETED   00:34:23 
+     213224_80    COMPLETED   00:30:17 
+    213224_100    COMPLETED   00:34:47 
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:47:50+0800
