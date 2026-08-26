@@ -1,0 +1,103 @@
+### channel=kalmannet-tukf23 seq=1
+### host=login4
+### started=2026-08-26T16:24:42+0800
+### ---------- output ----------
+=== PARTITIONS (all, real occupancy) ===
+   PARTITION  AVAIL  TIMELIMIT  NODES    STATE                       NODELIST
+     hcpu48*     up   infinite     15   alloc$ icn[202,204-207,210-212,214,21
+     hcpu48*     up   infinite     16    down* icn[203,215,218,224,230,233-23
+     hcpu48*     up   infinite     26    alloc icn[201,208-209,213,219,222-22
+     hcpu48*     up   infinite      7     idle       icn[240-241,248,250-253]
+     hcpu48y     up   infinite      1    down$                         icn281
+     hcpu48y     up   infinite      1    maint                         icn280
+     hcpu48y     up   infinite      2    down*                   icn[278-279]
+     hcpu48y     up   infinite      2      mix                   icn[274,277]
+     hcpu48y     up   infinite      6     idle           icn[270-273,275-276]
+       hgpu8     up   infinite      1      mix                         ngu202
+       hgpu8     up   infinite      2     idle                   ngu[201,203]
+       hgpu4     up   infinite      1    down*                         ngu103
+       hgpu4     up   infinite      3      mix               ngu[101-102,104]
+       hgpu2     up   infinite      1      mix                         ngu009
+       hgpu2     up   infinite      1    alloc                         ngu003
+      hgpu2p     up   infinite      1    down*                         ngu002
+      hgpu2p     up   infinite      7      mix   ngu[001,004,006-008,010-011]
+      hgpu2p     up   infinite      1    alloc                         ngu005
+=== DOWN REASONS ===
+REASON               USER      TIMESTAMP           NODELIST
+Not responding       root      2026-05-12T05:03:18 icn203
+Not responding       root      2026-05-13T15:59:40 icn215
+Not responding       root      2026-01-16T00:43:13 icn218
+Not responding       root      2026-01-19T17:07:05 icn224
+Not responding       root      2026-01-10T07:47:14 icn230
+Not responding       root      2026-04-25T01:51:39 icn[233,243,245]
+Not responding       root      2026-01-19T22:24:09 icn234
+Not responding       root      2026-03-10T05:52:38 icn[235,237,247]
+Not responding       root      2026-05-09T19:59:37 icn236
+Not responding       root      2026-04-24T20:16:32 icn239
+Not responding       root      2025-11-04T11:55:53 icn242
+Not responding       root      2026-01-20T14:12:40 icn256
+Not responding       root      2026-05-06T18:55:06 icn281
+Not responding       root      2026-05-05T20:28:13 icn278
+Not responding       root      2026-02-28T11:10:15 icn279
+Not responding       root      2026-01-13T10:39:13 ngu103
+Not responding       root      2026-08-23T06:23:18 ngu002
+=== CPU NODE OS SAMPLE (scontrol, read-only) ===
+NodeName=icn201 Arch=x86_64 CoresPerSocket=24     CPUAlloc=48 CPUTot=48 CPULoad=48.62    OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018     State=ALLOCATED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hcpu48  
+NodeName=icn230 Arch=x86_64 CoresPerSocket=24     CPUAlloc=0 CPUTot=48 CPULoad=61.42    OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018     State=DOWN* ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hcpu48  
+NodeName=icn260 Arch=x86_64 CoresPerSocket=24     CPUAlloc=48 CPUTot=48 CPULoad=48.44    OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018     State=ALLOCATED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hcpu48  
+NodeName=icn270 Arch=x86_64 CoresPerSocket=24     CPUAlloc=0 CPUTot=48 CPULoad=0.08    OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018     State=IDLE ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hcpu48y  
+NodeName=icn275 Arch=x86_64 CoresPerSocket=24     CPUAlloc=0 CPUTot=48 CPULoad=0.09    OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018     State=IDLE ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hcpu48y  
+NodeName=icn281 Arch=x86_64 CoresPerSocket=24     CPUAlloc=0 CPUTot=48 CPULoad=1.29    OS=Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018     State=DOWN$ ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hcpu48y  
+=== CPU IDLE COUNTS ===
+7 idle of hcpu48
+6 idle of hcpu48y
+=== NEW PARTITIONS FROM UPGRADED MANUAL (hcpu64/hcpu128/hcore40) ===
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+=== PRIOR KALMANNET DEPLOY DIRS ===
+/data1/home/sunyiq/kalmannet_tukf06_20260809
+/data1/home/sunyiq/kalmannet_tukf19_20260823
+/data1/home/sunyiq/kalmannet_tukf19_20260823_retry1
+/data1/home/sunyiq/kalmannet_tukf19_20260823_retry2
+/data1/home/sunyiq/kalmannet_tukf19_20260823_retry3
+/data1/home/sunyiq/kalmannet_tukf19_20260823_retry4
+/data1/home/sunyiq/kalmannet_tukf20_20260824
+/data1/home/sunyiq/kalmannet_tukf20_20260824_verifier_recovery1
+/data1/home/sunyiq/kalmannet_tukf20_20260824_verifier_recovery1_package_submission
+/data1/home/sunyiq/kalmannet_tukf20_20260824_verifier_recovery1_portable_package_retry1
+24M	/data1/home/sunyiq/kalmannet_tukf19_20260823_retry4
+=== CAMELS DATA ON HPC ===
+basin_mean_forcing
+camels_attributes_v2.0
+demo
+full
+raw
+usgs_streamflow
+daymet
+maurer
+nldas
+01
+02
+03
+04
+=== PRIOR V5 CSV ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01_BEST/summary/: No such file or directory
+=== NH_FINAL VERSIONS ===
+torch 2.4.0 numpy 2.3.3 pandas 2.3.2
+=== DISK ===
+hhjt_parastor_hhjt_parastor  954T  596T  359T  63% /data1
+=== MY RUNNING JOBS ===
+202228_[642-659%2] hgpu4,hgp N22-hype   sunyiq PD       0:00      1 (JobArrayTaskLimit)
+     211001_[22%2] hgpu4,hgp N22-relo   sunyiq PD       0:00      1 (JobArrayTaskLimit)
+  212933_[0-719%8] hgpu2p,hg zj_oyv_n   sunyiq PD       0:00      1 (Priority)
+ 212932_[13-719%8] hgpu2p,hg zj_oyv_n   sunyiq PD       0:00      1 (Resources)
+  202226_[0-119%4] hgpu4,hgp N22-eval   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+            202229 hgpu4,hgp N22-agg-   sunyiq PD       0:00      1 (Dependency)
+            202230 hgpu4,hgp N22-agg-   sunyiq PD       0:00      1 (Dependency)
+            202294 hgpu4,hgp N22-expo   sunyiq PD       0:00      1 (Dependency)
+            202315 hgpu4,hgp N22-gate   sunyiq PD       0:00      1 (Dependency)
+            202507 hgpu4,hgp N22-mask   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:25:16+0800
