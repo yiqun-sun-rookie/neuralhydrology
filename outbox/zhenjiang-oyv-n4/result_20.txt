@@ -1,0 +1,43 @@
+### channel=zhenjiang-oyv-n4 seq=20
+### host=login4
+### started=2026-08-26T16:38:23+0800
+### ---------- output ----------
+=== WHY DID THEY FAIL ===
+  ==== 212942 ====
+       JobID        State  ExitCode   Elapsed  NodeList 
+------------ ------------ --------- --------- --------- 
+      212942       FAILED      13:0  00:00:08    ngu201 
+212942.batch       FAILED      13:0  00:00:08    ngu201 
+  -- stdout --
+    NODE=ngu201
+    NVIDIA A800-SXM4-80GB, 535.104.05
+  -- stderr --
+  ==== 212943 ====
+       JobID        State  ExitCode   Elapsed  NodeList 
+------------ ------------ --------- --------- --------- 
+      212943       FAILED      13:0  00:00:01    ngu203 
+212943.batch       FAILED      13:0  00:00:01    ngu203 
+  -- stdout --
+    NODE=ngu203
+    NVIDIA A800-SXM4-80GB, 535.104.05
+  -- stderr --
+=== REFERENCE TASK NAMES PRESENT? ===
+zhenjiang_ladder_v2__fold_2017__jiangyin__complete_observation__seed_109
+zhenjiang_ladder_v2__fold_2017__jiangyin__complete_observation__seed_127
+zhenjiang_ladder_v2__fold_2017__jiangyin__complete_observation__seed_139
+zhenjiang_ladder_v2__fold_2017__jiangyin__complete_observation__seed_17
+zhenjiang_ladder_v2__fold_2017__jiangyin__complete_observation__seed_29
+  count: 960
+  looking for the twelve:
+    ok  zhenjiang_ladder_v2__fold_2017__zhenjiang__complete_observation__seed_17
+    ok  zhenjiang_ladder_v2__fold_2017__zhenjiang__hidden_target_minus_nanjing__seed_17
+    ok  zhenjiang_ladder_v2__fold_2017__jiangyin__hidden_target_minus_xuliujing__seed_17
+=== n4 PROGRESS ===
+  n4_tasks: 16 / 1440
+   212933_[0-719%20]    zj_oyv_n4   PENDING
+  212932_[17-719%20]    zj_oyv_n4   PENDING
+           212932_16    zj_oyv_n4   RUNNING
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:38:23+0800
