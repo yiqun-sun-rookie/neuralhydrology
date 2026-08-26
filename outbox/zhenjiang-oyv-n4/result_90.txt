@@ -1,0 +1,36 @@
+### channel=zhenjiang-oyv-n4 seq=90
+### host=login4
+### started=2026-08-26T22:22:42+0800
+### ---------- output ----------
+=== WHY IS 213599 NOT STARTING ===
+   213599_[103-719%16]   PENDING             Priority  2026-08-27T14:59:00           
+   213598_[597-719%16]   PENDING            Resources  2026-08-27T06:39:00           
+            213598_596   RUNNING                 None  2026-08-26T22:22:23     ngu203
+            213598_595   RUNNING                 None  2026-08-26T22:22:22     ngu203
+            213598_594   RUNNING                 None  2026-08-26T22:21:59     ngu202
+            213598_593   RUNNING                 None  2026-08-26T22:21:58     ngu203
+            213598_592   RUNNING                 None  2026-08-26T22:21:35     ngu202
+            213598_591   RUNNING                 None  2026-08-26T22:21:04     ngu202
+            213598_590   RUNNING                 None  2026-08-26T22:21:01     ngu203
+            213598_589   RUNNING                 None  2026-08-26T22:20:19     ngu203
+            213598_588   RUNNING                 None  2026-08-26T22:19:27     ngu202
+            213598_587   RUNNING                 None  2026-08-26T22:19:22     ngu203
+            213598_586   RUNNING                 None  2026-08-26T22:19:14     ngu203
+            213598_583   RUNNING                 None  2026-08-26T22:18:19     ngu203
+=== hgpu8 OCCUPANCY ===
+ NODELIST       STATE CPUS(A       GRES
+   ngu201       maint 0/64/0      gpu:8
+   ngu202       mixed 42/22/      gpu:8
+   ngu203       mixed 32/32/      gpu:8
+  my running on hgpu8: 12
+=== MY LIMITS (would a cap explain it?) ===
+g_sunyiq|||||
+ArrayTaskThrottle=16
+JobState=PENDING
+Reason=Priority
+=== PROGRESS ===
+  n4_tasks: 688 / 1440
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T22:22:43+0800
