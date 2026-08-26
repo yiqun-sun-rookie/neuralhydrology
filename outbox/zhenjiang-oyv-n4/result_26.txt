@@ -1,0 +1,20 @@
+### channel=zhenjiang-oyv-n4 seq=26
+### host=login4
+### started=2026-08-26T17:29:44+0800
+### ---------- output ----------
+=== A. SYNC ===
+  head: 4178fcf Ask whether the card moves the ladder cost, not the individual run
+  ok
+=== B. LAUNCHER ===
+=== C. SUBMIT ===
+Submitted batch job 213141
+PLATFORM_CONTROL_ARRAY=213141
+=== D. STATE ===
+          1 PENDING
+         16 RUNNING
+  scratch dirs: 0 / 160
+  n4_tasks    : 30 / 1440
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T17:30:51+0800
