@@ -1,0 +1,20 @@
+### channel=probe seq=11
+### host=login4
+### started=2026-08-26T19:33:24+0800
+### ---------- output ----------
+=== tukf23 STAGING ===
+-rw-r--r--.  1 sunyiq g_sunyiq 2637 Aug 26 17:38 result_6.txt
+-rw-r--r--.  1 sunyiq g_sunyiq 2714 Aug 26 17:41 result_7.txt
+-rw-r--r--.  1 sunyiq g_sunyiq  511 Aug 26 17:48 result_8.txt
+-rw-r--r--.  1 sunyiq g_sunyiq  441 Aug 26 17:54 result_9.txt
+no staged result_15
+=== READOUT JOB ===
+    108      COMPLETED 
+=== READOUT FILES ===
+108
+108
+=== WORKERS ===
+none
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T19:33:25+0800
