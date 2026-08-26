@@ -1,0 +1,24 @@
+### channel=id18-weight-merge seq=14
+### host=login4
+### started=2026-08-26T18:16:56+0800
+### ---------- output ----------
+=== TM01 A800 NO-PYTEST RETRY PREFLIGHT ===
+2026-08-26T18:16:56+0800
+login4
+=== FAILED RETRY JOB ===
+       JobID                JobName  Partition   NodeList          State ExitCode    Elapsed                Start                  End 
+------------ ---------------------- ---------- ---------- -------------- -------- ---------- -------------------- -------------------- 
+      213377          id18_tm01_a8r      hgpu8     ngu203         FAILED      1:0   00:00:03  2026-08-26T18:06:48  2026-08-26T18:06:51 
+#SBATCH -p hgpu8
+#SBATCH -o /data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_no_pytest_%j.out
+#SBATCH -e /data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_no_pytest_%j.err
+python -u -X utf8 -m src.lstm_fair_531.scripts.execute_tm01_hpc_screen \
+no_pytest_slurm_sha256=8712242cac23d273a552cb66a463f759804f4ff4acdabab76817e8f0642410ef
+Submitted batch job 213416
+A800_NO_PYTEST_JOB_ID=213416
+             JOBID                   NAME      STATE         TIME     NODELIST(REASON)
+            213416          id18_tm01_a8n    RUNNING      INVALID               ngu203
+=== TM01 A800 NO-PYTEST RETRY SUBMITTED ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:16:56+0800
