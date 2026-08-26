@@ -1,76 +1,63 @@
 #!/bin/bash
 set -o pipefail
 
-ROOT=/data1/home/sunyiq
-REPO=${ROOT}/neuralhydrology
-LANDING=${ROOT}/id18_weight_merge_20260826
+MAILBOX=/data1/home/sunyiq/hpc_mailbox
+ARCHIVE=${MAILBOX}/payload/id18-weight-merge/oe01-safe-output-ensemble-v1/OE01_SAFE_OUTPUT_ENSEMBLE_20260826.tar.gz
+EXPECTED_ARCHIVE_SHA=e05e601fe36f66c18688eae7516d044b2578d28faff3bf255af0e2d4b7a3775f
+LANDING=/data1/home/sunyiq/id18_output_ensemble_20260826
+SLURM_SCRIPT=${LANDING}/src/lstm_fair_531/hpc/submit_oe01_output_ensemble_screen.slurm
 
-echo "=== AUDIT IDENTITY ==="
+echo "=== OE01 PAYLOAD IDENTITY ==="
 date -Is
 hostname
-echo "user=${USER:-unknown}"
+echo "archive=${ARCHIVE}"
+echo "landing=${LANDING}"
 
-echo "=== RUNNER ==="
-pgrep -af hpc_runner_active || true
+echo "=== VERIFY OUTER ARCHIVE ==="
+[ -f "${ARCHIVE}" ] || { echo "ARCHIVE_MISSING=${ARCHIVE}"; exit 1; }
+ACTUAL_ARCHIVE_SHA=$(sha256sum "${ARCHIVE}" | awk '{print $1}')
+echo "expected_archive_sha256=${EXPECTED_ARCHIVE_SHA}"
+echo "actual_archive_sha256=${ACTUAL_ARCHIVE_SHA}"
+[ "${ACTUAL_ARCHIVE_SHA}" = "${EXPECTED_ARCHIVE_SHA}" ] || { echo "ARCHIVE_HASH_MISMATCH"; exit 1; }
 
-echo "=== QUEUE SNAPSHOT ==="
-sinfo -o '%.12P %.6a %.20l %.6D %.20N %.10T' || true
-squeue -u "${USER:-sunyiq}" -o '%.18i %.22j %.10P %.8T %.10M %.20R' || true
+echo "=== CREATE ISOLATED LANDING ==="
+[ ! -e "${LANDING}" ] || { echo "LANDING_ALREADY_EXISTS=${LANDING}"; exit 2; }
+mkdir -p "${LANDING}" "${LANDING}/logs" || exit 1
+tar -xzf "${ARCHIVE}" -C "${LANDING}" || exit 1
 
-echo "=== SHARED REPOSITORY READ-ONLY IDENTITY ==="
-if [ -d "${REPO}/.git" ]; then
-    (
-        cd "${REPO}" || exit 1
-        echo "branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo unknown)"
-        echo "commit=$(git rev-parse HEAD 2>/dev/null || echo unknown)"
-        echo "tracked_or_untracked_change_count=$(git status --porcelain 2>/dev/null | wc -l)"
-        echo "remote=$(git config --get remote.origin.url 2>/dev/null || echo unknown)"
-    )
-else
-    echo "REPOSITORY_MISSING=${REPO}"
-fi
+echo "=== VERIFY INTERNAL MANIFEST ==="
+cd "${LANDING}" || exit 1
+sha256sum -c bundle_manifest.sha256 || exit 1
+sed -i 's/\r$//' "${SLURM_SCRIPT}" || exit 1
 
-echo "=== EXACT E01 SOURCE CHECKPOINTS ==="
-CHECKPOINTS=(
-"${REPO}/runs/e01_loss/nse/E01_internal_holdout_nse_s100_2026_0731_2240_ep30/model_epoch030.pt"
-"${REPO}/runs/e01_loss/nse/E01_internal_holdout_nse_s200_2026_0801_1739_ep30/model_epoch030.pt"
-"${REPO}/runs/e01_loss/nse/E01_internal_holdout_nse_s300_2026_0801_1936_ep30/model_epoch030.pt"
-"${REPO}/runs/e01_loss/flow_regime_nse/E01_internal_holdout_flow_regime_nse_s100_2026_0801_0937_ep30/model_epoch030.pt"
-"${REPO}/runs/e01_loss/flow_regime_nse/E01_internal_holdout_flow_regime_nse_s200_2026_0801_1837_ep30/model_epoch030.pt"
-"${REPO}/runs/e01_loss/flow_regime_nse/E01_internal_holdout_flow_regime_nse_s300_2026_0801_2106_ep30/model_epoch030.pt"
-)
-FOUND=0
-for CKPT in "${CHECKPOINTS[@]}"; do
-    if [ -f "${CKPT}" ]; then
-        FOUND=$((FOUND + 1))
-        sha256sum "${CKPT}"
-        CFG=$(dirname "${CKPT}")/config.yml
-        if [ -f "${CFG}" ]; then
-            echo "CONFIG=${CFG}"
-            grep -E '^(data_dir|train_start_date|train_end_date|validation_start_date|validation_end_date|test_start_date|test_end_date|loss|seed):' "${CFG}" || true
-        else
-            echo "CONFIG_MISSING=${CFG}"
-        fi
-    else
-        echo "CHECKPOINT_MISSING=${CKPT}"
-    fi
-done
-echo "checkpoint_count=${FOUND}/6"
+echo "=== LIGHTWEIGHT CONTRACT CHECK ==="
+source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh || \
+source ${HOME}/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final || { echo "CONDA_FAILED"; exit 1; }
+export PYTHONPATH="${LANDING}:${PYTHONPATH:-}"
+python - <<'PY' || exit 1
+import json
+from pathlib import Path
+from src.lstm_fair_531.scripts.build_oe01_safe_prediction_snapshot import load_contract, sha256_file
 
-echo "=== SHALLOW TASK DIRECTORY CANDIDATES ==="
-find "${ROOT}" -maxdepth 2 -type d \( -iname '*id18*' -o -iname '*e01*' -o -iname '*holdout*' -o -iname '*post2000*' -o -iname '*safe*data*' \) -print 2>/dev/null | sort
+root = Path("/data1/home/sunyiq/id18_output_ensemble_20260826")
+contract = load_contract(root / "src/lstm_fair_531/configs/oe01_objective_output_ensemble_screen_20260826.json")
+manifest = json.loads((root / "input/safe_predictions_manifest.json").read_text(encoding="utf-8"))
+snapshot = root / "input/safe_predictions.npz"
+assert contract["safe_period"] == {"start": "2005-10-01", "end": "2008-09-30"}
+assert manifest["date_start"] == "2005-10-01" and manifest["date_end"] == "2008-09-30"
+assert manifest["basin_count"] == 531 and manifest["date_count"] == 1096
+assert manifest["npz_sha256"] == sha256_file(snapshot)
+print("CONTRACT_OK", contract["experiment_id"], manifest["basin_count"], manifest["date_count"])
+print("SNAPSHOT_SHA256", manifest["npz_sha256"])
+PY
 
-echo "=== SAFE-DATA MANIFEST NAME CANDIDATES ==="
-find "${ROOT}" -maxdepth 6 -type f \( -iname '*manifest*.json' -o -iname '*manifest*.sha256' -o -iname '*manifest*.sha256.json' \) -print 2>/dev/null \
-    | grep -Ei 'id18|e01|holdout|post.?2000|safe|camels' \
-    | sort || true
-
-echo "=== LANDING DIRECTORY MUST BE ABSENT ==="
-if [ -e "${LANDING}" ]; then
-    echo "LANDING_ALREADY_EXISTS=${LANDING}"
-else
-    echo "LANDING_ABSENT=${LANDING}"
-fi
-
-echo "=== AUDIT COMPLETE: NO HYDROLOGICAL DATA FILE WAS OPENED ==="
+echo "=== SUBMIT ==="
+SUBMIT_OUTPUT=$(sbatch "${SLURM_SCRIPT}" 2>&1)
+echo "${SUBMIT_OUTPUT}"
+JOB_ID=$(echo "${SUBMIT_OUTPUT}" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
+[ -n "${JOB_ID}" ] || { echo "SUBMIT_FAILED"; exit 1; }
+echo "JOB_ID=${JOB_ID}"
+squeue -j "${JOB_ID}" -o '%.18i %.22j %.10P %.8T %.10M %.20R' || true
+echo "=== SUBMISSION COMPLETE ==="
 exit 0
