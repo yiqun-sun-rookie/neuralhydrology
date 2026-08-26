@@ -1,0 +1,44 @@
+### channel=zhenjiang-oyv-n4 seq=6
+### host=login4
+### started=2026-08-26T14:30:17+0800
+### ---------- output ----------
+=== A. HOST AND SCHEDULER LIMIT ===
+login4
+2026-08-26T06:30:17Z
+MaxArraySize            = 1001
+MaxJobCount             = 100000
+=== B. SYNC ===
+before: 8db1b9b Add the four-target ladder: Nanjing and Xuliujing
+after : 6feca7a Split the n4 array in two: this scheduler enforces MaxArraySize
+  launcher identity ok
+#SBATCH --array=0-719%16
+=== C. GUARDS ===
+  n4_tasks absent -> ok
+  smoke 212898 state=PENDING
+=== D. SUBMIT HALF ONE (offset 0) ===
+Submitted batch job 212901
+  half one array id = 212901
+=== E. SUBMIT HALF TWO (offset 720) ===
+Submitted batch job 212902
+  half two array id = 212902
+=== F. QUEUE ===
+  my entries: 17
+  202228_[641-659%2]    N22-hyper   PENDING JobArrayTa
+       211001_[22%2]   N22-relong   PENDING JobArrayTa
+              212886 daily-knet-a   PENDING   Priority
+              212898  zj_n4_smoke   PENDING   Priority
+   212901_[0-719%16]    zj_oyv_n4   PENDING   Priority
+   212902_[0-719%16]    zj_oyv_n4   PENDING   Priority
+    202226_[0-119%4] N22-eval-lat   PENDING Dependency
+              202229 N22-agg-eval   PENDING Dependency
+              202230 N22-agg-hype   PENDING Dependency
+              202294   N22-export   PENDING Dependency
+  smoke est start: 2026-08-29T17:42:57
+ARRAY_HALF_1=212901
+ARRAY_HALF_2=212902
+SMOKE_JOB_ID=212898
+STATUS=ARRAYS_QUEUED
+=== G. DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T14:31:02+0800
