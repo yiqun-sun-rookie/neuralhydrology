@@ -1,0 +1,74 @@
+### channel=zhenjiang-oyv-n4 seq=29
+### host=login4
+### started=2026-08-26T18:55:02+0800
+### ---------- output ----------
+PROGRESS n4=51/1440 platform_control=160/160
+CONTROL_STATES     160 COMPLETED 
+ARRAY 212932      41 COMPLETED       1 PENDING 
+ARRAY 212933       1 PENDING 
+TROUBLE none
+CONTROL_COMPLETE running the cost comparison
+{
+  "arm_pair": "hidden_target_minus_nanjing minus complete_observation at zhenjiang",
+  "control_task_count": 160,
+  "effect_floor_m": 0.01,
+  "largest_absolute_cost_difference_m": 0.007382,
+  "per_horizon": {
+    "1": {
+      "difference_m": -8.7e-05,
+      "rerun_cost_m": 0.010585,
+      "rerun_fold_range_m": [
+        0.003901,
+        0.019298
+      ],
+      "stored_cost_m": 0.010672,
+      "stored_fold_range_m": [
+        0.006489,
+        0.022098
+      ]
+    },
+    "3": {
+      "difference_m": -0.000822,
+      "rerun_cost_m": 0.011114,
+      "rerun_fold_range_m": [
+        0.006846,
+        0.019452
+      ],
+      "stored_cost_m": 0.011936,
+      "stored_fold_range_m": [
+        0.009215,
+        0.017981
+      ]
+    },
+    "6": {
+      "difference_m": -0.002406,
+      "rerun_cost_m": 0.010018,
+      "rerun_fold_range_m": [
+        0.007643,
+        0.018938
+      ],
+      "stored_cost_m": 0.012424,
+      "stored_fold_range_m": [
+        0.007767,
+        0.021285
+      ]
+    },
+    "12": {
+      "difference_m": 0.007382,
+      "rerun_cost_m": 0.017791,
+      "rerun_fold_range_m": [
+        0.007222,
+        0.034988
+      ],
+      "stored_cost_m": 0.010408,
+      "stored_fold_range_m": [
+        -0.008941,
+        0.02718
+      ]
+    },
+    "24": {
+      "difference_m": 0.002733,
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:55:39+0800
