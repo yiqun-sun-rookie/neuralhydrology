@@ -1,0 +1,17 @@
+### channel=kalmannet-tukf23 seq=10
+### host=login4
+### started=2026-08-26T18:05:50+0800
+### ---------- output ----------
+=== ARRAY 213224 STATE ===
+     27      COMPLETED 
+     81        RUNNING 
+=== EARLY FAILURES ===
+none
+=== ERR SAMPLE (first trainable) ===
+=== OUT SAMPLE ===
+cell index=27 mode=hydrology_only basin=01047000
+=== TRAIN RECORDS ===
+27
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:05:53+0800
