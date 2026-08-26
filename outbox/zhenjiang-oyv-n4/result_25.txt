@@ -1,0 +1,36 @@
+### channel=zhenjiang-oyv-n4 seq=25
+### host=login4
+### started=2026-08-26T17:10:05+0800
+### ---------- output ----------
+=== WAIT (max 20 min) ===
+  settled t=870s
+   212950    pf_zj   ngu201   COMPLETED     0:0  00:34:58 
+   212951    pf_jy   ngu203   COMPLETED     0:0  00:26:23 
+=== SUMMARY LINES ONLY ===
+  ==== 212950 ====
+      "node_name": "ngu201",
+      "effect_floor_m": 0.01,
+      "failures": 0,
+      "graphics_processor_name": "NVIDIA A800-SXM4-80GB",
+      "largest_absolute_mae_difference_m": 0.043706,
+      "node_name": "ngu201",
+      "ratio_of_worst_difference_to_floor": 4.3706,
+      "tasks_compared": 6
+    -- per-task worst differences --
+    parse failed: Extra data: line 202 column 1 (char 5308)
+  ==== 212951 ====
+      "node_name": "ngu203",
+      "effect_floor_m": 0.01,
+      "failures": 0,
+      "graphics_processor_name": "NVIDIA A800-SXM4-80GB",
+      "largest_absolute_mae_difference_m": 0.076158,
+      "node_name": "ngu203",
+      "ratio_of_worst_difference_to_floor": 7.6158,
+      "tasks_compared": 6
+    -- per-task worst differences --
+    parse failed: Extra data: line 202 column 1 (char 5305)
+  n4_tasks: 28 / 1440
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T17:25:05+0800
