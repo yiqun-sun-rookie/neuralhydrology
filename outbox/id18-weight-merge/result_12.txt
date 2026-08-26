@@ -1,0 +1,23 @@
+### channel=id18-weight-merge seq=12
+### host=login4
+### started=2026-08-26T18:06:25+0800
+### ---------- output ----------
+=== TM01 A800 RETRY PREFLIGHT ===
+2026-08-26T18:06:25+0800
+login4
+=== FAILED SOURCE JOB ===
+       JobID                JobName  Partition   NodeList          State ExitCode    Elapsed                Start                  End 
+------------ ---------------------- ---------- ---------- -------------- -------- ---------- -------------------- -------------------- 
+      213139         id18_tm01_ties      hgpu8     ngu203         FAILED      1:0   00:00:03  2026-08-26T17:57:06  2026-08-26T17:57:09 
+#SBATCH -p hgpu8
+#SBATCH -o /data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_retry_%j.out
+#SBATCH -e /data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_retry_%j.err
+retry_slurm_sha256=7cec1677bc14963a62d095bd7ec0057613a470d156d5b5f2e611022f4217f511
+Submitted batch job 213377
+A800_RETRY_JOB_ID=213377
+             JOBID                   NAME      STATE         TIME     NODELIST(REASON)
+            213377          id18_tm01_a8r    PENDING         0:00               (None)
+=== TM01 A800 RETRY SUBMITTED ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:06:25+0800
