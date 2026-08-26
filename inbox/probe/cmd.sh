@@ -1,11 +1,13 @@
 #!/bin/bash
 set -o pipefail
-echo "=== RECOVER tukf23 result_4 from staging ==="
-cd ~/hpc_mailbox || exit 1
-git fetch -q origin "+hpc-mailbox:refs/remotes/origin/hpc-mailbox" && \
-git reset -q --hard refs/remotes/origin/hpc-mailbox && \
-mkdir -p outbox/kalmannet-tukf23 && \
-cp -f ~/.hpc_mailbox_staging/kalmannet-tukf23/result_4.txt outbox/kalmannet-tukf23/ && \
-git add outbox/kalmannet-tukf23 && \
-git commit -q -m "mailbox[kalmannet-tukf23]: result seq=4 (recovered from staging)" && \
-git push -q origin HEAD:hpc-mailbox && echo RECOVERED || echo RECOVER_FAILED
+ROOT=/data1/home/sunyiq/kalmannet_tukf23_20260826
+echo "=== tukf23 STAGING ==="
+ls -la ~/.hpc_mailbox_staging/kalmannet-tukf23/ 2>&1 | tail -4
+tail -c 900 ~/.hpc_mailbox_staging/kalmannet-tukf23/result_15.txt 2>/dev/null || echo "no staged result_15"
+echo "=== READOUT JOB ==="
+sacct -j 213487 -X -n --format=State%14 2>&1 | sort | uniq -c
+echo "=== READOUT FILES ==="
+ls $ROOT/results/readout/*.json 2>/dev/null | wc -l
+ls $ROOT/results/readout/*.npz 2>/dev/null | wc -l
+echo "=== WORKERS ==="
+ps -eo pid,etimes,args 2>/dev/null | grep -E "cmd_15|kalmannet-tukf23" | grep -v grep || echo none
