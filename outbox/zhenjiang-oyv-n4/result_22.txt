@@ -1,0 +1,44 @@
+### channel=zhenjiang-oyv-n4 seq=22
+### host=login4
+### started=2026-08-26T16:46:25+0800
+### ---------- output ----------
+  ======== 212946 ========
+       JobID        State  ExitCode   Elapsed 
+------------ ------------ --------- --------- 
+      212946       FAILED       1:0  00:00:25 
+212946.batch       FAILED       1:0  00:00:25 
+  -- stdout (full) --
+    NODE=ngu201
+    0, NVIDIA A800-SXM4-80GB, 535.104.05
+  -- stderr (full) --
+    Traceback (most recent call last):
+      File "/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/analysis/measure_platform_effect_v1.py", line 174, in <module>
+        sys.exit(main())
+                 ^^^^^^
+      File "/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/analysis/measure_platform_effect_v1.py", line 95, in main
+        year, target, condition, seed = chunk.split(",")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ValueError: not enough values to unpack (expected 4, got 1)
+  ======== 212947 ========
+       JobID        State  ExitCode   Elapsed 
+------------ ------------ --------- --------- 
+      212947       FAILED       1:0  00:00:11 
+212947.batch       FAILED       1:0  00:00:11 
+  -- stdout (full) --
+    NODE=ngu203
+    0, NVIDIA A800-SXM4-80GB, 535.104.05
+  -- stderr (full) --
+    Traceback (most recent call last):
+      File "/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/analysis/measure_platform_effect_v1.py", line 174, in <module>
+        sys.exit(main())
+                 ^^^^^^
+      File "/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/analysis/measure_platform_effect_v1.py", line 95, in main
+        year, target, condition, seed = chunk.split(",")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ValueError: not enough values to unpack (expected 4, got 1)
+=== n4 ===
+  n4_tasks: 18 / 1440
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:46:25+0800
