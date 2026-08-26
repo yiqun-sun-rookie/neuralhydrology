@@ -1,17 +1,14 @@
 #!/bin/bash
 set -o pipefail
 ROOT=/data1/home/sunyiq/kalmannet_tukf23_20260826
-echo "=== PACK TRAIN RESULTS ==="
-cd $ROOT || exit 1
-tar -czf /tmp/tukf23_train_results_v2.tar.gz -C $ROOT/results train anchor
-sha256sum /tmp/tukf23_train_results_v2.tar.gz
-echo "=== COMMIT PAYLOAD BACK ==="
+echo "=== INSTALL SEAL ==="
 cd ~/hpc_mailbox || exit 1
-git fetch -q origin "+hpc-mailbox:refs/remotes/origin/hpc-mailbox" && \
-git reset -q --hard refs/remotes/origin/hpc-mailbox && \
-mkdir -p payload/kalmannet-tukf23 && \
-cp -f /tmp/tukf23_train_results_v2.tar.gz payload/kalmannet-tukf23/ && \
-git add payload/kalmannet-tukf23/tukf23_train_results_v2.tar.gz && \
-git commit -q -m "mailbox[kalmannet-tukf23]: train results payload v2" && \
-git push -q origin HEAD:hpc-mailbox && echo PAYLOAD_PUSHED || echo PAYLOAD_PUSH_FAILED
-rm -f /tmp/tukf23_train_results_v2.tar.gz
+ACTUAL=$(sha256sum payload/kalmannet-tukf23/checkpoint_seal.json | cut -d' ' -f1)
+echo "actual=$ACTUAL"
+[ "$ACTUAL" = "491a85123b3a54820d3f3bb1ee54cba71d71ab13a1bb0cc8a1e63d0402e71295" ] || { echo "SEAL_HASH_MISMATCH"; exit 1; }
+cp -f payload/kalmannet-tukf23/checkpoint_seal.json $ROOT/results/checkpoint_seal.json && echo "seal installed"
+echo "=== SUBMIT READOUT ARRAY (108 cells, test segment unsealing) ==="
+out=$(sbatch --array=0-107 $ROOT/slurm/tukf23_readout.slurm 2>&1); echo "$out"
+JID=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
+[ -n "$JID" ] || { echo "SUBMIT_FAILED"; exit 1; }
+echo "readout_array=$JID"
