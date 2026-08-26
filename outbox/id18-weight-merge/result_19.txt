@@ -1,0 +1,23 @@
+### channel=id18-weight-merge seq=19
+### host=login4
+### started=2026-08-26T18:49:40+0800
+### ---------- output ----------
+=== TM01 COMPACT RETRIEVAL PREFLIGHT ===
+2026-08-26T18:49:40+0800
+       JobID                JobName  Partition   NodeList          State ExitCode    Elapsed                Start                  End 
+------------ ---------------------- ---------- ---------- -------------- -------- ---------- -------------------- -------------------- 
+      213416          id18_tm01_a8n      hgpu8     ngu203      COMPLETED      0:0   00:24:41  2026-08-26T18:17:19  2026-08-26T18:42:00 
+source_sha256=1f47dcd098051cc4476dff0cbbc63e1a5cee4a3ddbe65fbb5390686a188b715b source_size=71017
+=== ARCHIVE MEMBER AUDIT ===
+analysis/
+analysis/per_seed_per_basin_metrics.csv
+analysis/ensemble_per_basin_metrics.csv
+analysis/method_summary.csv
+analysis/paired_comparisons.csv
+analysis/decision.json
+protocol/
+protocol/execution_manifest.json
+TM01_COMPACT_READY path=/data1/home/sunyiq/hpc_mailbox/outbox/id18-weight-merge/tm01_compact_results_213416.tar.gz sha256=1f47dcd098051cc4476dff0cbbc63e1a5cee4a3ddbe65fbb5390686a188b715b size=71017
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:49:41+0800
