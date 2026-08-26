@@ -1,0 +1,118 @@
+### channel=id18-weight-merge seq=4
+### host=login4
+### started=2026-08-26T15:18:30+0800
+### ---------- output ----------
+=== WAIT FOR JOB 212908 ===
+=== ACCOUNTING ===
+    JobIDRaw                  JobName     NodeList              State   ExitCode      Elapsed 
+------------ ------------------------ ------------ ------------------ ---------- ------------ 
+212908       id18-oe01-output-ensemb+       ngu010          COMPLETED        0:0     00:00:13 
+=== EXACT LOGS ===
+stdout=/data1/home/sunyiq/id18_output_ensemble_20260826/logs/oe01-212908.out
+==========================================
+[2026-08-26T15:08:14+08:00] ID18 safe output-ensemble screen
+==========================================
+[INFO] job=212908 node=ngu010
+[INFO] python=Python 3.11.13
+[INFO] numpy 2.3.3 pandas 2.3.2
+decision=STOP_SCREEN
+passing_candidates=none
+manifest=results/OE01_objective_output_ensemble_screen_20260826/analysis_manifest.json
+[2026-08-26T15:08:26+08:00] completed
+stderr=/data1/home/sunyiq/id18_output_ensemble_20260826/logs/oe01-212908.err
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+=== VERIFY RESULT PACKAGE ===
+OUTPUT_HASHES_OK 4
+DECISION STOP_SCREEN
+BASINS 531 DATES 1096
+=== DECISION ===
+{
+  "decision": "STOP_SCREEN",
+  "passing_candidates": [],
+  "primary_metric": "nse",
+  "required_comparators": [
+    "nse_endpoint",
+    "flow_regime_nse_endpoint"
+  ],
+  "candidate_details": {
+    "equal_endpoint_blend": {
+      "passes": false,
+      "reasons": [
+        "95% interval lower bound is not positive against nse_endpoint"
+      ]
+    },
+    "same_seed_midpoint_then_median": {
+      "passes": false,
+      "reasons": [
+        "non-positive median difference against nse_endpoint",
+        "95% interval lower bound is not positive against nse_endpoint"
+      ]
+    },
+    "seed_consistency_soft_blend": {
+      "passes": false,
+      "reasons": [
+        "non-positive median difference against nse_endpoint",
+        "95% interval lower bound is not positive against nse_endpoint"
+      ]
+    },
+    "seed_consistency_hard_switch": {
+      "passes": false,
+      "reasons": [
+        "non-positive median difference against nse_endpoint",
+        "95% interval lower bound is not positive against nse_endpoint"
+      ]
+    }
+  },
+  "interpretation_boundary": "Exploratory E01 internal-holdout result only; not external confirmation, causal evidence, hydrological novelty, or publication readiness."
+}=== METHOD SUMMARY ===
+method,metric,basin_count,median,mean
+equal_endpoint_blend,nse,531,0.7076647618572529,0.5457487041050431
+equal_endpoint_blend,mae,531,0.39512227302485103,0.5462085056155901
+equal_endpoint_blend,high_flow_mae_q90,531,1.6699854173812376,2.2474594492772653
+flow_regime_nse_endpoint,nse,531,0.6782230244251282,0.4866200494628516
+flow_regime_nse_endpoint,mae,531,0.4498685285756306,0.6152239872314375
+flow_regime_nse_endpoint,high_flow_mae_q90,531,1.6976299550251532,2.2742077137796834
+nse_endpoint,nse,531,0.7076688908956854,0.5591003374097842
+nse_endpoint,mae,531,0.3707527392568293,0.5151255887984283
+nse_endpoint,high_flow_mae_q90,531,1.7625498444355603,2.326499598382395
+same_seed_midpoint_then_median,nse,531,0.7022983360667673,0.540483109954245
+same_seed_midpoint_then_median,mae,531,0.40019814325794917,0.5475289990248198
+same_seed_midpoint_then_median,high_flow_mae_q90,531,1.6712054973746648,2.2453104288420356
+seed_consistency_hard_switch,nse,531,0.6921097484274533,0.5310506998807532
+seed_consistency_hard_switch,mae,531,0.3983490057761128,0.5523087490865156
+seed_consistency_hard_switch,high_flow_mae_q90,531,1.7701205151830723,2.3078455956691557
+seed_consistency_soft_blend,nse,531,0.7037470171899884,0.5436964993770248
+seed_consistency_soft_blend,mae,531,0.3916442271137051,0.5440404574938269
+seed_consistency_soft_blend,high_flow_mae_q90,531,1.7059542305887576,2.2705732779549073
+=== PAIRED COMPARISONS ===
+candidate,comparator,metric,positive_means,basin_count,candidate_median,comparator_median,median_difference,ci_lower,ci_upper
+equal_endpoint_blend,nse_endpoint,nse,candidate_better,531,0.7076647618572529,0.7076688908956854,0.0013855406475661303,-0.001007392465107948,0.004819973233961439
+equal_endpoint_blend,nse_endpoint,mae,candidate_better,531,0.39512227302485103,0.3707527392568293,-0.018290468092032663,-0.020723989396298548,-0.015085535166046382
+equal_endpoint_blend,nse_endpoint,high_flow_mae_q90,candidate_better,531,1.6699854173812376,1.7625498444355603,0.05490180874120132,0.04129584560716082,0.0695823527687165
+equal_endpoint_blend,flow_regime_nse_endpoint,nse,candidate_better,531,0.7076647618572529,0.6782230244251282,0.023887664042083312,0.020985333269259724,0.027853094107256338
+equal_endpoint_blend,flow_regime_nse_endpoint,mae,candidate_better,531,0.39512227302485103,0.4498685285756306,0.046347665469031574,0.04346723649351636,0.05200885550811263
+equal_endpoint_blend,flow_regime_nse_endpoint,high_flow_mae_q90,candidate_better,531,1.6699854173812376,1.6976299550251532,0.012943649646596889,0.005682205026113163,0.023894668223381377
+same_seed_midpoint_then_median,nse_endpoint,nse,candidate_better,531,0.7022983360667673,0.7076688908956854,-0.0004970743559007396,-0.003487979344252712,0.0019041349930097873
+same_seed_midpoint_then_median,nse_endpoint,mae,candidate_better,531,0.40019814325794917,0.3707527392568293,-0.018021624298571792,-0.02144710172732084,-0.015141796939481589
+same_seed_midpoint_then_median,nse_endpoint,high_flow_mae_q90,candidate_better,531,1.6712054973746648,1.7625498444355603,0.05545927383359728,0.040956819047227366,0.06975104807251209
+same_seed_midpoint_then_median,flow_regime_nse_endpoint,nse,candidate_better,531,0.7022983360667673,0.6782230244251282,0.023671466900799465,0.02081666353018452,0.026785723770385905
+same_seed_midpoint_then_median,flow_regime_nse_endpoint,mae,candidate_better,531,0.40019814325794917,0.4498685285756306,0.04640430685178809,0.041186261602959906,0.05289056378859558
+same_seed_midpoint_then_median,flow_regime_nse_endpoint,high_flow_mae_q90,candidate_better,531,1.6712054973746648,1.6976299550251532,0.023529947627262793,0.009581643832078157,0.03023736461377069
+seed_consistency_soft_blend,nse_endpoint,nse,candidate_better,531,0.7037470171899884,0.7076688908956854,-0.002282390515059629,-0.005510953171227628,0.000783393871764182
+seed_consistency_soft_blend,nse_endpoint,mae,candidate_better,531,0.3916442271137051,0.3707527392568293,-0.017740821350664737,-0.01941440842864703,-0.013762012459250267
+seed_consistency_soft_blend,nse_endpoint,high_flow_mae_q90,candidate_better,531,1.7059542305887576,1.7625498444355603,0.04223865593480325,0.033580232603748206,0.0520488156535035
+seed_consistency_soft_blend,flow_regime_nse_endpoint,nse,candidate_better,531,0.7037470171899884,0.6782230244251282,0.02083684705389266,0.017212167884125495,0.024474318353656654
+seed_consistency_soft_blend,flow_regime_nse_endpoint,mae,candidate_better,531,0.3916442271137051,0.4498685285756306,0.047858707098547004,0.042654977937573724,0.052023088065417666
+seed_consistency_soft_blend,flow_regime_nse_endpoint,high_flow_mae_q90,candidate_better,531,1.7059542305887576,1.6976299550251532,0.0014131227703567673,-0.006252509142849139,0.008494256917600973
+seed_consistency_hard_switch,nse_endpoint,nse,candidate_better,531,0.6921097484274533,0.7076688908956854,-0.009069026135223646,-0.012054719545482206,-0.00687408926121591
+seed_consistency_hard_switch,nse_endpoint,mae,candidate_better,531,0.3983490057761128,0.3707527392568293,-0.023816850858316474,-0.027825625643654484,-0.020973086957592146
+seed_consistency_hard_switch,nse_endpoint,high_flow_mae_q90,candidate_better,531,1.7701205151830723,1.7625498444355603,0.008095530971466314,0.003335692764541265,0.02008349284086297
+seed_consistency_hard_switch,flow_regime_nse_endpoint,nse,candidate_better,531,0.6921097484274533,0.6782230244251282,0.012805840205127761,0.009765554701087753,0.01691959533604226
+seed_consistency_hard_switch,flow_regime_nse_endpoint,mae,candidate_better,531,0.3983490057761128,0.4498685285756306,0.039393061944836105,0.034116536707781975,0.044098863293010326
+seed_consistency_hard_switch,flow_regime_nse_endpoint,high_flow_mae_q90,candidate_better,531,1.7701205151830723,1.6976299550251532,-0.017200191895760608,-0.03456066118808293,-0.00852220214340399
+=== PACKAGE RESULT ===
+7eee884b074a88084aa392c7e3320bd340c454ae763264c6f3dffb3cb6fa8349  /data1/home/sunyiq/hpc_mailbox/outbox/id18-weight-merge/OE01_OUTPUT_ENSEMBLE_JOB212908_RESULTS.tar.gz
+=== MONITOR COMPLETE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T15:18:35+0800
