@@ -1,0 +1,45 @@
+### channel=zhenjiang-oyv-n4 seq=14
+### host=login4
+### started=2026-08-26T16:05:37+0800
+### ---------- output ----------
+=== A. SYNC ===
+  head: 4f143c6 Narrow the runtime equality set on measured evidence, and open hgpu2
+  ok  scripts/analysis/zhenjiang_oyv_n4_contract.py
+  ok  scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+  ok  docs/records/ZHENJIANG_OYV_N4_LADDER_V2_PREREGISTRATION.json
+#SBATCH -p hgpu2p,hgpu2
+=== B. CONTRACT SELF-CHECK UNDER THE NARROWED SET ===
+  "experiment_id": "zhenjiang_oyv_n4_ladder_v1",
+  "parent_experiment_id": "zhenjiang_gauge_failure_ladder_v2",
+  "targets": [
+    "nanjing",
+    "xuliujing"
+  ],
+  "conditions_per_target": 9,
+  "new_task_count": 1440,
+  "prediction_count": 7,
+  "finding_count": 0,
+  "findings": []
+}
+=== C. CANCEL THE OLD, hgpu2p-ONLY SUBMISSIONS (all mine) ===
+  212898 was COMPLETED
+  212901 was COMPLETED
+  212902 was PENDING
+  after cancel, my queue:
+  202228_[642-659%2]    N22-hyper   PENDING
+       211001_[22%2]   N22-relong   PENDING
+              212915    pr_ngu001   PENDING
+              212920    eq_ngu003   PENDING
+    202226_[0-119%4] N22-eval-lat   PENDING
+              202229 N22-agg-eval   PENDING
+              202230 N22-agg-hype   PENDING
+              202294   N22-export   PENDING
+              202315     N22-gate   PENDING
+              202507 N22-mask-iso   PENDING
+              202293 N22-manifest   PENDING
+          202228_641    N22-hyper   RUNNING
+=== D. GUARD ===
+  n4_tasks exists -> stop
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-26T16:06:40+0800
