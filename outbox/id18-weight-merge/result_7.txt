@@ -1,0 +1,22 @@
+### channel=id18-weight-merge seq=7
+### host=login4
+### started=2026-08-26T17:25:32+0800
+### ---------- output ----------
+=== TM01 DEPLOYMENT PREFLIGHT ===
+2026-08-26T17:25:32+0800
+login4
+/data1/home/sunyiq/hpc_mailbox
+archive_sha256=9f859f768bd49862c8238ac087641a2d1eeda7a6c44d9ce47750c02f02d1b91f
+=== PAYLOAD MANIFEST VERIFY ===
+PAYLOAD_MANIFEST_OK 154
+CONTRACT_SHA256 ce078e83e23c8ca366c69341ac09dbaa71112d1119a4197734304d32d1f4e943
+PINNED_CODE_COMMIT 9aa9d1ce
+=== SUBMIT TM01 COMPUTE JOB ===
+Submitted batch job 213139
+JOB_ID=213139
+             JOBID                   NAME      STATE         TIME     NODELIST(REASON)
+            213139         id18_tm01_ties    PENDING         0:00           (Priority)
+=== TM01 SUBMITTED ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T17:25:37+0800
