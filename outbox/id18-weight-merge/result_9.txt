@@ -1,0 +1,20 @@
+### channel=id18-weight-merge seq=9
+### host=login4
+### started=2026-08-26T17:52:25+0800
+### ---------- output ----------
+=== TM01 A800 SWITCH PREFLIGHT ===
+2026-08-26T17:52:25+0800
+login4
+recorded_job_id=213139
+BEFORE JobId=213139 JobName=id18_tm01_ties UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=202657 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=01:00:00 TimeMin=N/A SubmitTime=2026-08-26T17:26:00 EligibleTime=2026-08-26T17:26:00 AccrueTime=2026-08-26T17:26:00 StartTime=2026-08-29T17:42:57 EndTime=2026-08-29T18:42:57 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-26T17:52:40 Partition=hgpu2p AllocNode:Sid=login04:721 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/id18_ties_merge_20260826/payload/code/src/lstm_fair_531/hpc/submit_tm01_sign_aware_task_vector_merge.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/hpc_mailbox/outbox/id18-weight-merge/tm01_slurm_213139.err StdIn=/dev/null StdOut=/data1/home/sunyiq/hpc_mailbox/outbox/id18-weight-merge/tm01_slurm_213139.out Power= TresPerNode=gpu:1
+current_state=PENDING current_partition=hgpu2p
+=== LIVE HGPU8 STATE ===
+ PARTITION     NODELIST    STATE     CPUS             GRES                         REASON
+     hgpu8       ngu201    mixed       64            gpu:8                           none
+     hgpu8       ngu202    mixed       64            gpu:8                           none
+     hgpu8       ngu203    mixed       64            gpu:8                           none
+Update of this parameter is not supported: StdErr=/data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_slurm_213139.err
+Request aborted
+### ---------- end ----------
+### exit_code=6
+### finished=2026-08-26T17:52:28+0800
