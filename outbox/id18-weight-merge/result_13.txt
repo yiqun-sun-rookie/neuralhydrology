@@ -1,0 +1,25 @@
+### channel=id18-weight-merge seq=13
+### host=login4
+### started=2026-08-26T18:11:08+0800
+### ---------- output ----------
+=== TM01 A800 RETRY STATUS ===
+2026-08-26T18:11:08+0800
+login4
+retry_job_id=213377
+slurm_load_jobs error: Invalid job id specified
+estimated_start=
+       JobID                JobName  Partition   NodeList          State ExitCode    Elapsed                Start                  End 
+------------ ---------------------- ---------- ---------- -------------- -------- ---------- -------------------- -------------------- 
+      213377          id18_tm01_a8r      hgpu8     ngu203         FAILED      1:0   00:00:03  2026-08-26T18:06:48  2026-08-26T18:06:51 
+=== TASK-SCOPED ARTIFACTS ===
+/data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_retry_213377.out size=30 mtime=2026-08-26 18:06:27.000000000 +0800
+/data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_retry_213377.err size=79 mtime=2026-08-26 18:06:28.000000000 +0800
+ABSENT /data1/home/sunyiq/id18_ties_merge_20260826/tm01_compact_results.tar.gz
+=== STDOUT TAIL ===
+CUDA_OK NVIDIA A800-SXM4-80GB
+=== STDERR TAIL ===
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python: No module named pytest
+=== TM01 A800 RETRY STATUS COMPLETE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:11:09+0800
