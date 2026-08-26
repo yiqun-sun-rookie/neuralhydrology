@@ -1,52 +1,21 @@
 #!/bin/bash
-# Inventory: what actually completed before the cancel, and what is missing.
+# Resume the family: submit exactly the missing indices, on both 3090 partitions.
+#
+# Ten tasks of half one already completed cleanly on ngu008 before the earlier
+# cancel, so the missing set in half one is the contiguous range 10..719 and in
+# half two it is all of 0..719. The command line overrides the script's own
+# --array, which is what makes a resume possible without editing the launcher.
 set -o pipefail
 ROOT=/data1/home/sunyiq/zhenjiang_oyv_v1
 
-echo "=== A. ARRAY OUTCOMES ==="
-for j in 212898 212901 212902; do
-  echo "  ---- $j ----"
-  sacct -j "$j" -X -n -P -o JobID,State,ExitCode,Elapsed,NodeList 2>/dev/null | head -3
-  sacct -j "$j" -X -n -P -o State 2>/dev/null | sort | uniq -c | sort -rn | sed 's/^/    /'
+echo "=== A. CANCEL MY REDUNDANT PROBES ==="
+for j in 212915 212920; do
+  st=$(sacct -j "$j" -X -n -o State 2>/dev/null | head -1 | awk '{print $1}')
+  echo "  $j ($st) -> cancel"
+  scancel "$j" 2>&1 || true
 done
 
-echo "=== B. TASK DIRECTORY INVENTORY ==="
-echo "  n4_tasks dirs   : $(ls -1 "$ROOT/n4_tasks" 2>/dev/null | wc -l)"
-echo "  n4_smoke dirs   : $(ls -1 "$ROOT/n4_smoke" 2>/dev/null | wc -l)"
-echo "  complete (5 artefacts):"
-python - <<'PYEOF'
-import os, json
-root = "/data1/home/sunyiq/zhenjiang_oyv_v1/n4_tasks"
-need = {"best_state.pt","training_history.csv","test_predictions.npz","run_identity.json","completion_manifest.json"}
-if not os.path.isdir(root):
-    print("    (n4_tasks absent)"); raise SystemExit
-names = sorted(os.listdir(root))
-full, partial = [], []
-nodes = {}
-for n in names:
-    have = set(os.listdir(os.path.join(root, n)))
-    (full if need <= have else partial).append(n)
-    try:
-        d = json.load(open(os.path.join(root, n, "run_identity.json"), encoding="utf-8"))
-        nd = d.get("runtime_environment", {}).get("node_name", "?")
-        nodes[nd] = nodes.get(nd, 0) + 1
-    except Exception:
-        pass
-print("    complete =", len(full), " partial =", len(partial))
-if partial: print("    partial examples:", partial[:5])
-print("    by node:", nodes)
-import re
-def parse(n):
-    m = re.match(r"zhenjiang_oyv_n4__fold_(\d+)__(\w+?)__(.+)__seed_(\d+)$", n)
-    return m.groups() if m else None
-tg = {}
-for n in full:
-    p = parse(n)
-    if p: tg[p[1]] = tg.get(p[1], 0) + 1
-print("    complete by target:", tg)
-PYEOF
-
-echo "=== C. WHICH GLOBAL INDICES ARE MISSING ==="
+echo "=== B. RECONFIRM THE MISSING SET ==="
 cd "$ROOT/repo" || exit 1
 source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || source $HOME/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final || { echo CONDA_FAILED; exit 1; }
@@ -57,35 +26,49 @@ sys.path.insert(0, "scripts/analysis"); sys.path.insert(0, "scripts/modeling")
 import zhenjiang_oyv_n4_contract as c
 root = "/data1/home/sunyiq/zhenjiang_oyv_v1/n4_tasks"
 need = {"best_state.pt","training_history.csv","test_predictions.npz","run_identity.json","completion_manifest.json"}
-tasks = c.enumerate_tasks()
-missing = []
-for i, t in enumerate(tasks):
-    d = os.path.join(root, str(t["task_id"]))
-    if not os.path.isdir(d) or not need <= set(os.listdir(d)):
-        missing.append(i)
-print("  total", len(tasks), "missing", len(missing))
-if missing:
-    print("  first 10 missing:", missing[:10])
-    print("  last 10 missing:", missing[-10:])
-    lo = [m for m in missing if m < 720]; hi = [m for m in missing if m >= 720]
-    print("  missing in half one (0-719):", len(lo))
-    print("  missing in half two (720-1439):", len(hi))
-open("/data1/home/sunyiq/zhenjiang_oyv_v1/missing_indices.txt","w").write(",".join(str(m) for m in missing))
-print("  written missing_indices.txt")
+missing = [i for i, t in enumerate(c.enumerate_tasks())
+           if not (os.path.isdir(os.path.join(root, str(t["task_id"])))
+                   and need <= set(os.listdir(os.path.join(root, str(t["task_id"])))))]
+lo = [m for m in missing if m < 720]
+hi = [m - 720 for m in missing if m >= 720]
+def contiguous(v):
+    return bool(v) and v == list(range(v[0], v[-1] + 1))
+print("  missing total:", len(missing))
+print("  half one local range:", (lo[0], lo[-1]) if lo else None, "contiguous:", contiguous(lo), "count:", len(lo))
+print("  half two local range:", (hi[0], hi[-1]) if hi else None, "contiguous:", contiguous(hi), "count:", len(hi))
+with open("/data1/home/sunyiq/zhenjiang_oyv_v1/resume_spec.txt", "w") as f:
+    f.write("%s %s %s %s\n" % (
+        ("%d-%d" % (lo[0], lo[-1])) if contiguous(lo) else "NONCONTIGUOUS",
+        len(lo),
+        ("%d-%d" % (hi[0], hi[-1])) if contiguous(hi) else "NONCONTIGUOUS",
+        len(hi)))
 PYEOF
+read R1 N1 R2 N2 < "$ROOT/resume_spec.txt"
+echo "  half one array spec: $R1 ($N1 tasks)"
+echo "  half two array spec: $R2 ($N2 tasks)"
+case "$R1$R2" in *NONCONTIGUOUS*) echo "  missing set is not contiguous; refusing to guess"; exit 1;; esac
 
-echo "=== D. SAMPLE RUN IDENTITY ==="
-S=$(ls -d "$ROOT/n4_tasks"/*/ 2>/dev/null | head -1)
-[ -n "$S" ] && python - "$S/run_identity.json" <<'PYEOF' 2>&1 | sed 's/^/    /'
-import json,sys
-d=json.load(open(sys.argv[1],encoding="utf-8"))
-for k in ("task_id","target","condition","test_year","seed","test_sample_count"): print(k,"=",d.get(k))
-rt=d.get("runtime_environment",{})
-for k in ("node_name","graphics_processor_name","graphics_processor_driver_version","operating_system"): print(k,"=",rt.get(k))
-print("fold_isolation_findings =", d.get("fold_isolation",{}).get("finding_count"))
-PYEOF
+echo "=== C. SUBMIT ==="
+# Concurrency 8 per half, 16 in flight in total: the same footprint the finished
+# family ran at, now spread over two partitions instead of one.
+o1=$(sbatch --array="${R1}%8" --export=ALL,N4_INDEX_OFFSET=0 scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm 2>&1); echo "$o1"
+A1=$(echo "$o1" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
+[ -n "$A1" ] || { echo SUBMIT_FAILED_1; exit 1; }
+o2=$(sbatch --array="${R2}%8" --export=ALL,N4_INDEX_OFFSET=720 scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm 2>&1); echo "$o2"
+A2=$(echo "$o2" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
+[ -n "$A2" ] || { echo "SUBMIT_FAILED_2, cancelling $A1"; scancel "$A1" 2>&1 || true; exit 1; }
+echo "  half one = $A1   half two = $A2"
 
-echo "=== E. QUEUE NOW ==="
-squeue -u "$USER" -h -o "%.20i %.12j %.12P %.9T" 2>/dev/null | head -12 || true
-sinfo -p hgpu2p,hgpu2 -o "%.10P %.6D %.6t %.30N" 2>&1 | head -8 || true
+echo "=== D. TIDY MY OWN THROWAWAY ROOTS ==="
+rm -rf "$ROOT/n4_smoke" "$ROOT"/equiv_scratch_* 2>/dev/null
+echo "  smoke and equivalence scratch cleared"
+
+echo "=== E. STATE ==="
+sleep 30
+squeue -u "$USER" -h -o "%.20i %.12j %.14P %.9T" 2>/dev/null | head -10 || true
+echo "  running now : $(squeue -u "$USER" -h -t RUNNING -o '%i' 2>/dev/null | wc -l)"
+echo "  n4_tasks now: $(ls -1 "$ROOT/n4_tasks" 2>/dev/null | wc -l)"
+echo "RESUME_HALF_1=$A1"
+echo "RESUME_HALF_2=$A2"
+echo "STATUS=RESUMED"
 echo "=== DONE ==="
