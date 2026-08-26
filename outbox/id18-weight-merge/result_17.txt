@@ -1,0 +1,53 @@
+### channel=id18-weight-merge seq=17
+### host=login4
+### started=2026-08-26T18:39:12+0800
+### ---------- output ----------
+=== TM01 A800 PROGRESS ===
+2026-08-26T18:39:12+0800
+job_id=213416
+             JOBID                   NAME      STATE         TIME     NODELIST(REASON)
+            213416          id18_tm01_a8n    RUNNING        21:53               ngu203
+       JobID                JobName  Partition   NodeList          State ExitCode    Elapsed                Start                  End 
+------------ ---------------------- ---------- ---------- -------------- -------- ---------- -------------------- -------------------- 
+      213416          id18_tm01_a8n      hgpu8     ngu203        RUNNING      0:0   00:22:16  2026-08-26T18:17:19              Unknown 
+=== PROGRESS COUNTS ===
+evaluation_logs=19
+prediction_artifacts=19
+saved_checkpoints=19
+dense_midpoint/s100.log size=4295 mtime=2026-08-26T18:20:25.0000000000
+dense_midpoint/s200.log size=4295 mtime=2026-08-26T18:28:02.0000000000
+dense_midpoint/s300.log size=4295 mtime=2026-08-26T18:36:49.0000000000
+endpoint_flow_regime_nse/s100.log size=4355 mtime=2026-08-26T18:19:21.0000000000
+endpoint_flow_regime_nse/s200.log size=4355 mtime=2026-08-26T18:26:57.0000000000
+endpoint_flow_regime_nse/s300.log size=4355 mtime=2026-08-26T18:35:45.0000000000
+endpoint_nse/s100.log size=4283 mtime=2026-08-26T18:18:17.0000000000
+endpoint_nse/s200.log size=4283 mtime=2026-08-26T18:25:47.0000000000
+endpoint_nse/s300.log size=4283 mtime=2026-08-26T18:34:29.0000000000
+ties_full/s100.log size=4265 mtime=2026-08-26T18:24:44.0000000000
+ties_full/s200.log size=4265 mtime=2026-08-26T18:33:20.0000000000
+ties_no_disjoint/s100.log size=4307 mtime=2026-08-26T18:23:37.0000000000
+ties_no_disjoint/s200.log size=4307 mtime=2026-08-26T18:31:55.0000000000
+ties_no_elect/s100.log size=4289 mtime=2026-08-26T18:22:30.0000000000
+ties_no_elect/s200.log size=4289 mtime=2026-08-26T18:30:28.0000000000
+ties_no_elect/s300.log size=4289 mtime=2026-08-26T18:39:04.0000000000
+ties_no_trim/s100.log size=4283 mtime=2026-08-26T18:21:31.0000000000
+ties_no_trim/s200.log size=4283 mtime=2026-08-26T18:29:16.0000000000
+ties_no_trim/s300.log size=4283 mtime=2026-08-26T18:37:56.0000000000
+=== LATEST EVALUATION LOG TAIL ===
+latest_log=/data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/logs/ties_no_elect/s300.log
+COMMAND /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -X utf8 -m neuralhydrology.nh_run evaluate --run-dir /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_no_elect/s300 --period test --epoch 30 --gpu 0
+2026-08-26 18:38:33,153: Logging to /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_no_elect/s300/output.log initialized.
+2026-08-26 18:38:34,002: Using the model weights from /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_no_elect/s300/model_epoch030.pt
+/data1/home/sunyiq/id18_ties_merge_20260826/payload/code/neuralhydrology/evaluation/tester.py:143: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(weight_file, map_location=self.device))
+  0%|          | 0/24 [00:00<?, ?it/s]# Evaluation:   0%|          | 0/24 [00:00<?, ?it/s]# Evaluation:   4%|▍         | 1/24 [00:04<01:37,  4.25s/it]# Evaluation:   8%|▊         | 2/24 [00:04<00:42,  1.95s/it]# Evaluation:  12%|█▎        | 3/24 [00:04<00:25,  1.21s/it]# Evaluation:  17%|█▋        | 4/24 [00:05<00:17,  1.16it/s]# Evaluation:  21%|██        | 5/24 [00:05<00:12,  1.49it/s]# Evaluation:  25%|██▌       | 6/24 [00:05<00:09,  1.80it/s]# Evaluation:  29%|██▉       | 7/24 [00:06<00:08,  2.08it/s]# Evaluation:  33%|███▎      | 8/24 [00:06<00:07,  2.01it/s]# Evaluation:  38%|███▊      | 9/24 [00:07<00:06,  2.25it/s]# Evaluation:  42%|████▏     | 10/24 [00:07<00:05,  2.46it/s]# Evaluation:  46%|████▌     | 11/24 [00:07<00:04,  2.60it/s]# Evaluation:  50%|█████     | 12/24 [00:08<00:04,  2.71it/s]# Evaluation:  54%|█████▍    | 13/24 [00:08<00:03,  2.80it/s]# Evaluation:  58%|█████▊    | 14/24 [00:08<00:03,  2.86it/s]# Evaluation:  62%|██████▎   | 15/24 [00:09<00:03,  2.91it/s]# Evaluation:  67%|██████▋   | 16/24 [00:09<00:02,  2.94it/s]# Evaluation:  71%|███████   | 17/24 [00:09<00:02,  2.95it/s]# Evaluation:  75%|███████▌  | 18/24 [00:10<00:02,  2.98it/s]# Evaluation:  79%|███████▉  | 19/24 [00:10<00:01,  2.99it/s]# Evaluation:  83%|████████▎ | 20/24 [00:10<00:01,  3.00it/s]# Evaluation:  88%|████████▊ | 21/24 [00:11<00:00,  3.01it/s]# Evaluation:  92%|█████████▏| 22/24 [00:11<00:00,  3.01it/s]# Evaluation:  96%|█████████▌| 23/24 [00:11<00:00,  3.00it/s]# Evaluation: 100%|██████████| 24/24 [00:12<00:00,  3.00it/s]# Evaluation: 100%|██████████| 24/24 [00:12<00:00,  1.99it/s]
+2026-08-26 18:38:46,120: Stored metrics at /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_no_elect/s300/test/model_epoch030/test_metrics.csv
+2026-08-26 18:38:46,157: Stored results at /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_no_elect/s300/test/model_epoch030/test_results.p
+2026-08-26 18:39:04,363: Stored states at /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_no_elect/s300/test/model_epoch030/test_all_output.p
+/data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_no_pytest_213416.out size=30 mtime=2026-08-26 18:16:58.000000000 +0800
+/data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_no_pytest_213416.err size=0 mtime=2026-08-26 18:16:56.000000000 +0800
+ABSENT /data1/home/sunyiq/id18_ties_merge_20260826/tm01_compact_results.tar.gz
+=== TM01 A800 PROGRESS COMPLETE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:39:12+0800
