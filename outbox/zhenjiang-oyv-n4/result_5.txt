@@ -1,0 +1,18 @@
+### channel=zhenjiang-oyv-n4 seq=5
+### host=login4
+### started=2026-08-26T14:26:07+0800
+### ---------- output ----------
+=== A. HOST ===
+login4
+2026-08-26T06:26:07Z
+=== B. PRE-SUBMIT GUARDS ===
+  n4_tasks absent -> ok
+  smoke 212898 state=PENDING
+=== C. SUBMIT THE FORMAL ARRAY ===
+  repo head: 8db1b9b Add the four-target ladder: Nanjing and Xuliujing
+sbatch: error: Batch job submission failed: Invalid job array specification
+SUBMIT_FAILED
+STATUS=SUBMIT_FAILED
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-26T14:26:07+0800
