@@ -1,12 +1,17 @@
 #!/bin/bash
 set -o pipefail
 ROOT=/data1/home/sunyiq/kalmannet_tukf23_20260826
-echo "=== ARRAY 213224 STATE ==="
-sacct -j 213224 -X -n --format=State%14 2>&1 | sort | uniq -c
-echo "=== FAILURES ==="
-sacct -j 213224 -X -n -P --format=JobID,State,ExitCode 2>&1 | grep -E 'FAILED|TIMEOUT|OUT_OF_MEM|NODE_FAIL' | head -8 || echo none
-echo "=== TRAIN RECORDS ==="
-ls $ROOT/results/train/ 2>/dev/null | wc -l
-ls $ROOT/results/train/ 2>/dev/null | sed 's/^[0-9]*_//;s/\.json//' | sort | uniq -c
-echo "=== ELAPSED SAMPLE ==="
-sacct -j 213224_40,213224_80,213224_100 -X --format=JobID%14,State%12,Elapsed%10 2>&1 | tail -4
+echo "=== PACK TRAIN RESULTS ==="
+cd $ROOT || exit 1
+tar -czf /tmp/tukf23_train_results_v2.tar.gz -C $ROOT/results train anchor
+sha256sum /tmp/tukf23_train_results_v2.tar.gz
+echo "=== COMMIT PAYLOAD BACK ==="
+cd ~/hpc_mailbox || exit 1
+git fetch -q origin "+hpc-mailbox:refs/remotes/origin/hpc-mailbox" && \
+git reset -q --hard refs/remotes/origin/hpc-mailbox && \
+mkdir -p payload/kalmannet-tukf23 && \
+cp -f /tmp/tukf23_train_results_v2.tar.gz payload/kalmannet-tukf23/ && \
+git add payload/kalmannet-tukf23/tukf23_train_results_v2.tar.gz && \
+git commit -q -m "mailbox[kalmannet-tukf23]: train results payload v2" && \
+git push -q origin HEAD:hpc-mailbox && echo PAYLOAD_PUSHED || echo PAYLOAD_PUSH_FAILED
+rm -f /tmp/tukf23_train_results_v2.tar.gz
