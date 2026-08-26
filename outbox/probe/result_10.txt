@@ -1,0 +1,20 @@
+### channel=probe seq=10
+### host=login4
+### started=2026-08-26T17:15:27+0800
+### ---------- output ----------
+=== RECOVER tukf23 result_4 from staging ===
+# On branch hpc-mailbox
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	inbox/autoresearch-64/hbv_lite_64_prospective_seq62.slurm
+#	payload/id29-nearing2022-da/closure_v12.tar.gz
+#	payload/id29-nearing2022-da/closure_v13.tar.gz
+#	payload/id29-nearing2022-da/gate_preflight_v1.tar.gz
+#	runner.log
+#	runner2.log
+nothing added to commit but untracked files present (use "git add" to track)
+RECOVER_FAILED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T17:15:43+0800
