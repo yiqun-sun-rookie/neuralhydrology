@@ -1,0 +1,55 @@
+### channel=zhenjiang-oyv-n4 seq=101
+### host=login4
+### started=2026-08-27T02:58:32+0800
+### ---------- output ----------
+=== XULIUJING RANKING ===
+  xuliujing,1,1,wusongkou,0.029024,0.019172,0.038715,8,8
+  xuliujing,1,2,jiangyin,0.003925,-0.000648,0.011246,6,8
+  xuliujing,1,3,zhenjiang,0.001421,-0.003028,0.006113,6,8
+  xuliujing,1,4,nanjing,0.00097,-0.002106,0.00373,5,8
+  xuliujing,1,5,datong,2e-06,-0.001868,0.005737,4,8
+  xuliujing,3,1,wusongkou,0.025739,0.016849,0.03108,8,8
+  xuliujing,3,2,jiangyin,0.003222,-0.000975,0.009915,7,8
+  xuliujing,3,3,datong,0.000804,-0.0041,0.004255,6,8
+  xuliujing,3,4,zhenjiang,0.000584,-0.003318,0.005982,5,8
+  xuliujing,3,5,nanjing,0.000493,-0.001989,0.004917,5,8
+  xuliujing,6,1,wusongkou,0.011914,0.008458,0.014,8,8
+  xuliujing,6,2,jiangyin,0.002564,-0.002751,0.006661,7,8
+  xuliujing,6,3,datong,0.000147,-0.003814,0.002757,4,8
+  xuliujing,6,4,nanjing,-0.000172,-0.002388,0.002955,3,8
+  xuliujing,6,5,zhenjiang,-0.000299,-0.004345,0.001913,4,8
+  xuliujing,12,1,datong,-0.000141,-0.007845,0.008241,4,8
+  xuliujing,12,2,zhenjiang,-0.000497,-0.012274,0.003187,4,8
+  xuliujing,12,3,nanjing,-0.008664,-0.015206,0.012371,2,8
+  xuliujing,12,4,jiangyin,-0.009007,-0.022269,0.002586,2,8
+  xuliujing,12,5,wusongkou,-0.03331,-0.044663,-0.018842,0,8
+  xuliujing,24,1,nanjing,0.010845,-0.005299,0.019501,7,8
+  xuliujing,24,2,zhenjiang,0.00577,-0.003694,0.016606,6,8
+  xuliujing,24,3,jiangyin,0.000926,-0.017161,0.01354,5,8
+  xuliujing,24,4,datong,-0.001659,-0.006223,0.016897,3,8
+  xuliujing,24,5,wusongkou,-0.02493,-0.046933,0.003395,1,8
+=== NANJING PAIR AND FAILURE COST (against complete_observation) ===
+  nanjing H=1  failure cost vs full six = 0.00847 m (folds +8/8)
+  nanjing H=6  failure cost vs full six = 0.00746 m (folds +7/8)
+    nanjing hidden_target_both_nearest H=1 = 0.08457 m
+    nanjing endpoints_only H=1 = 0.03100 m
+  xuliujing H=1  failure cost vs full six = 0.00578 m (folds +8/8)
+  xuliujing H=6  failure cost vs full six = 0.00180 m (folds +8/8)
+    xuliujing hidden_target_both_nearest H=1 = 0.05608 m
+    xuliujing endpoints_only H=1 = 0.00585 m
+=== ABLATION vs INFORMATION ORDERING ===
+  target,horizon_hours,ablation_order,ablation_top,marginal_mi_order,marginal_mi_top,unique_cmi_order,unique_cmi_top,ablation_agrees_with_marginal_top,ablation_agrees_with_unique_top
+  nanjing,1,datong|zhenjiang|jiangyin|wusongkou|xuliujing,datong,zhenjiang|datong|jiangyin|xuliujing|wusongkou,zhenjiang,zhenjiang|datong|jiangyin|xuliujing|wusongkou,zhenjiang,False,False
+  nanjing,3,datong|zhenjiang|jiangyin|wusongkou|xuliujing,datong,zhenjiang|datong|jiangyin|xuliujing|wusongkou,zhenjiang,zhenjiang|datong|jiangyin|xuliujing|wusongkou,zhenjiang,False,False
+  nanjing,6,datong|zhenjiang|jiangyin|xuliujing|wusongkou,datong,zhenjiang|datong|jiangyin|xuliujing|wusongkou,zhenjiang,zhenjiang|datong|jiangyin|xuliujing|wusongkou,zhenjiang,False,False
+  nanjing,12,xuliujing|zhenjiang|datong|wusongkou|jiangyin,xuliujing,zhenjiang|datong|jiangyin|xuliujing|wusongkou,zhenjiang,zhenjiang|datong|wusongkou|jiangyin|xuliujing,zhenjiang,False,False
+  nanjing,24,xuliujing|wusongkou|zhenjiang|datong|jiangyin,xuliujing,zhenjiang|datong|jiangyin|xuliujing|wusongkou,zhenjiang,zhenjiang|datong|xuliujing|wusongkou|jiangyin,zhenjiang,False,False
+  xuliujing,1,wusongkou|jiangyin|zhenjiang|nanjing|datong,wusongkou,jiangyin|wusongkou|zhenjiang|nanjing|datong,jiangyin,wusongkou|jiangyin|zhenjiang|nanjing|datong,wusongkou,False,True
+  xuliujing,3,wusongkou|jiangyin|datong|zhenjiang|nanjing,wusongkou,jiangyin|wusongkou|zhenjiang|nanjing|datong,jiangyin,wusongkou|jiangyin|zhenjiang|nanjing|datong,wusongkou,False,True
+  xuliujing,6,wusongkou|jiangyin|datong|nanjing|zhenjiang,wusongkou,jiangyin|zhenjiang|nanjing|wusongkou|datong,jiangyin,jiangyin|wusongkou|nanjing|zhenjiang|datong,jiangyin,False,False
+  xuliujing,12,datong|zhenjiang|nanjing|jiangyin|wusongkou,datong,jiangyin|zhenjiang|nanjing|datong|wusongkou,jiangyin,jiangyin|wusongkou|zhenjiang|nanjing|datong,jiangyin,False,False
+  xuliujing,24,nanjing|zhenjiang|jiangyin|datong|wusongkou,nanjing,jiangyin|zhenjiang|nanjing|datong|wusongkou,jiangyin,jiangyin|wusongkou|zhenjiang|nanjing|datong,jiangyin,False,False
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T02:58:32+0800
