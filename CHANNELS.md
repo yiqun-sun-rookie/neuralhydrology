@@ -31,6 +31,7 @@ outbox/<channel>/result_<seq>.txt   结果
 | `nature1st-hrrr` | nature_1st 小时流量预报战役：HRRR 预报气象可行性探测 | 2026-08-07 | 由 Claude 会话占用；**只读探测阶段**，落点未定，绝不碰 `a02` / `default` / `id26-v09-strict` |
 | `id17-film-gate` | ID17 实体感知闸门：EA-LSTM vs FiLM-LSTM 多折多种子 PUB 对比 | 2026-08-05 | 由 Claude 会话占用；计划落点 `~/id17_film_gate`（`~/neuralhydrology` 的本地 clone），**不碰 `~/neuralhydrology` 的 git 状态**（78 个未提交文件），不碰其他 channel |
 | `id18-loss-arm` | ID18 目标函数响应独立确认实验 | 2026-08-09 | 落点 `/data1/home/sunyiq/id18_e04_20260809`；不碰 `~/neuralhydrology` 的 Git 状态或其他实验 |
+| `id18-weight-merge` | ID18 同种子同轮次长短期记忆网络检查点插值筛选 | 2026-08-26 | 先做只读资格审计；仅在安全数据清单证明物理排除 1989-10-01 至 1999-09-30 后，才可使用独立落点 `/data1/home/sunyiq/id18_weight_merge_20260826` 提交作业；不碰 `~/neuralhydrology` 的 Git 状态、既有实验或其他通道 |
 | `autoresearch-64` | 统一自动科研纵向：64 流域数据底座 + 单候选运行 | 2026-08-08 | 工作目录 `~/autoresearch64`，不碰 `~/neuralhydrology` 与 `~/adv531` |
 | `camels-g2-design` | CAMELS-US 531 流域参数切换辨认第二阶段冻结前探索性设计运行 | 2026-08-08 | 工作目录 `~/camels_g2_design_20260808`；只用设计种子 0/1，不碰 `~/neuralhydrology` 的 git 状态或其他实验 |
 | `id29-nearing2022-da` | 复现 Nearing 2022 变分同化 vs 自回归（CAMELS-US 531，三条臂） | 2026-08-08 | 由 Claude 会话占用；落点待定，**不碰 `~/neuralhydrology`** |
