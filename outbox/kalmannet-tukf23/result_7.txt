@@ -1,0 +1,40 @@
+### channel=kalmannet-tukf23 seq=7
+### host=login4
+### started=2026-08-26T17:41:54+0800
+### ---------- output ----------
+=== ERR OF TASK 27 ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf23_20260826/bundle/worktree/scripts/tukf23_four_mode_worker.py", line 310, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf23_20260826/bundle/worktree/scripts/tukf23_four_mode_worker.py", line 295, in main
+    record = stage_train(contract, a.basin, a.mode, out_root)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf23_20260826/bundle/worktree/scripts/tukf23_four_mode_worker.py", line 133, in stage_train
+    score0 = selection_score(contract, model, prep)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf23_20260826/bundle/worktree/scripts/tukf23_four_mode_worker.py", line 49, in selection_score
+    loss, _ = t17.rolling_origin_objective(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf23_20260826/bundle/worktree/scripts/tukf17_hbv_rolling_origin_state_hydrology_common.py", line 1121, in rolling_origin_objective
+    trace = rollout_state_update_trace(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf23_20260826/bundle/worktree/scripts/tukf17_hbv_rolling_origin_state_hydrology_common.py", line 911, in rollout_state_update_trace
+    modules = predecessor_modules(_predecessor_contract_for_model(model))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf23_20260826/bundle/worktree/scripts/tukf17_hbv_rolling_origin_state_hydrology_common.py", line 213, in predecessor_modules
+    _activate_predecessor_imports(contract)
+  File "/data1/home/sunyiq/kalmannet_tukf23_20260826/bundle/worktree/scripts/tukf17_hbv_rolling_origin_state_hydrology_common.py", line 203, in _activate_predecessor_imports
+    root = predecessor_root(contract)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf23_20260826/bundle/worktree/scripts/tukf17_hbv_rolling_origin_state_hydrology_common.py", line 181, in predecessor_root
+    raise FileNotFoundError(f"read-only predecessor root is missing: {root}")
+FileNotFoundError: read-only predecessor root is missing: /data1/home/sunyiq/kalmannet_tukf23_20260826/G:/github/pycharm/projects/kalmannet
+=== OUT OF TASK 27 ===
+cell index=27 mode=hydrology_only basin=01047000
+=== ERR FILE LIST SAMPLE ===
+tukf23_train_213028_27.err
+tukf23_train_213028_27.out
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T17:41:54+0800
