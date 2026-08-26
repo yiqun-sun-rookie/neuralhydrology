@@ -1,0 +1,98 @@
+### channel=id18-weight-merge seq=18
+### host=login4
+### started=2026-08-26T18:43:50+0800
+### ---------- output ----------
+=== TM01 A800 PROGRESS ===
+2026-08-26T18:43:50+0800
+job_id=213416
+slurm_load_jobs error: Invalid job id specified
+       JobID                JobName  Partition   NodeList          State ExitCode    Elapsed                Start                  End 
+------------ ---------------------- ---------- ---------- -------------- -------- ---------- -------------------- -------------------- 
+      213416          id18_tm01_a8n      hgpu8     ngu203      COMPLETED      0:0   00:24:41  2026-08-26T18:17:19  2026-08-26T18:42:00 
+=== PROGRESS COUNTS ===
+evaluation_logs=21
+prediction_artifacts=21
+saved_checkpoints=21
+dense_midpoint/s100.log size=4295 mtime=2026-08-26T18:20:25.0000000000
+dense_midpoint/s200.log size=4295 mtime=2026-08-26T18:28:02.0000000000
+dense_midpoint/s300.log size=4295 mtime=2026-08-26T18:36:49.0000000000
+endpoint_flow_regime_nse/s100.log size=4355 mtime=2026-08-26T18:19:21.0000000000
+endpoint_flow_regime_nse/s200.log size=4355 mtime=2026-08-26T18:26:57.0000000000
+endpoint_flow_regime_nse/s300.log size=4355 mtime=2026-08-26T18:35:45.0000000000
+endpoint_nse/s100.log size=4283 mtime=2026-08-26T18:18:17.0000000000
+endpoint_nse/s200.log size=4283 mtime=2026-08-26T18:25:47.0000000000
+endpoint_nse/s300.log size=4283 mtime=2026-08-26T18:34:29.0000000000
+ties_full/s100.log size=4265 mtime=2026-08-26T18:24:44.0000000000
+ties_full/s200.log size=4265 mtime=2026-08-26T18:33:20.0000000000
+ties_full/s300.log size=4265 mtime=2026-08-26T18:41:23.0000000000
+ties_no_disjoint/s100.log size=4307 mtime=2026-08-26T18:23:37.0000000000
+ties_no_disjoint/s200.log size=4307 mtime=2026-08-26T18:31:55.0000000000
+ties_no_disjoint/s300.log size=4307 mtime=2026-08-26T18:40:14.0000000000
+ties_no_elect/s100.log size=4289 mtime=2026-08-26T18:22:30.0000000000
+ties_no_elect/s200.log size=4289 mtime=2026-08-26T18:30:28.0000000000
+ties_no_elect/s300.log size=4289 mtime=2026-08-26T18:39:04.0000000000
+ties_no_trim/s100.log size=4283 mtime=2026-08-26T18:21:31.0000000000
+ties_no_trim/s200.log size=4283 mtime=2026-08-26T18:29:16.0000000000
+ties_no_trim/s300.log size=4283 mtime=2026-08-26T18:37:56.0000000000
+=== LATEST EVALUATION LOG TAIL ===
+latest_log=/data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/logs/ties_full/s300.log
+COMMAND /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -X utf8 -m neuralhydrology.nh_run evaluate --run-dir /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_full/s300 --period test --epoch 30 --gpu 0
+2026-08-26 18:40:51,927: Logging to /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_full/s300/output.log initialized.
+2026-08-26 18:40:52,968: Using the model weights from /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_full/s300/model_epoch030.pt
+/data1/home/sunyiq/id18_ties_merge_20260826/payload/code/neuralhydrology/evaluation/tester.py:143: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(weight_file, map_location=self.device))
+  0%|          | 0/24 [00:00<?, ?it/s]# Evaluation:   0%|          | 0/24 [00:00<?, ?it/s]# Evaluation:   4%|▍         | 1/24 [00:04<01:38,  4.27s/it]# Evaluation:   8%|▊         | 2/24 [00:04<00:43,  1.98s/it]# Evaluation:  12%|█▎        | 3/24 [00:04<00:25,  1.23s/it]# Evaluation:  17%|█▋        | 4/24 [00:05<00:17,  1.15it/s]# Evaluation:  21%|██        | 5/24 [00:05<00:12,  1.48it/s]# Evaluation:  25%|██▌       | 6/24 [00:05<00:10,  1.79it/s]# Evaluation:  29%|██▉       | 7/24 [00:06<00:08,  2.07it/s]# Evaluation:  33%|███▎      | 8/24 [00:06<00:08,  1.98it/s]# Evaluation:  38%|███▊      | 9/24 [00:07<00:06,  2.22it/s]# Evaluation:  42%|████▏     | 10/24 [00:07<00:05,  2.42it/s]# Evaluation:  46%|████▌     | 11/24 [00:07<00:05,  2.58it/s]# Evaluation:  50%|█████     | 12/24 [00:08<00:04,  2.70it/s]# Evaluation:  54%|█████▍    | 13/24 [00:08<00:03,  2.77it/s]# Evaluation:  58%|█████▊    | 14/24 [00:08<00:03,  2.84it/s]# Evaluation:  62%|██████▎   | 15/24 [00:09<00:03,  2.89it/s]# Evaluation:  67%|██████▋   | 16/24 [00:09<00:02,  2.93it/s]# Evaluation:  71%|███████   | 17/24 [00:09<00:02,  2.88it/s]# Evaluation:  75%|███████▌  | 18/24 [00:10<00:02,  2.84it/s]# Evaluation:  79%|███████▉  | 19/24 [00:10<00:01,  2.89it/s]# Evaluation:  83%|████████▎ | 20/24 [00:10<00:01,  2.94it/s]# Evaluation:  88%|████████▊ | 21/24 [00:11<00:01,  2.96it/s]# Evaluation:  92%|█████████▏| 22/24 [00:11<00:00,  2.97it/s]# Evaluation:  96%|█████████▌| 23/24 [00:11<00:00,  2.97it/s]# Evaluation: 100%|██████████| 24/24 [00:12<00:00,  2.99it/s]# Evaluation: 100%|██████████| 24/24 [00:12<00:00,  1.97it/s]
+2026-08-26 18:41:05,218: Stored metrics at /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_full/s300/test/model_epoch030/test_metrics.csv
+2026-08-26 18:41:05,232: Stored results at /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_full/s300/test/model_epoch030/test_results.p
+2026-08-26 18:41:23,429: Stored states at /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_full/s300/test/model_epoch030/test_all_output.p
+/data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_no_pytest_213416.out size=487 mtime=2026-08-26 18:41:37.000000000 +0800
+/data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_no_pytest_213416.err size=0 mtime=2026-08-26 18:16:56.000000000 +0800
+/data1/home/sunyiq/id18_ties_merge_20260826/tm01_compact_results.tar.gz size=71017 mtime=2026-08-26 18:41:36.000000000 +0800
+=== DECISION ===
+{
+  "verdict": "NO_CONFLICT_RESOLUTION_SIGNAL",
+  "primary_gate_passed": false,
+  "comparisons": [
+    {
+      "candidate": "ties_full",
+      "comparator": "dense_midpoint",
+      "passes": false,
+      "median_difference": -0.8772336647043476,
+      "ci_lower": -3.265512459225405,
+      "ci_upper": -0.18817429406922193
+    },
+    {
+      "candidate": "ties_full",
+      "comparator": "ties_no_elect",
+      "passes": false,
+      "median_difference": -0.5756082249774502,
+      "ci_lower": -2.0307517301515396,
+      "ci_upper": -0.2581479564334941
+    }
+  ]
+}
+=== PAIRED COMPARISONS ===
+candidate,comparator,metric,basin_count,median_difference,ci_lower,ci_upper
+ties_full,dense_midpoint,nse,24,-0.8772336647043476,-3.265512459225405,-0.18817429406922193
+ties_full,ties_no_elect,nse,24,-0.5756082249774502,-2.0307517301515396,-0.2581479564334941
+=== METHOD SUMMARY ===
+method,median_nse,median_kge,median_correlation,median_variability_ratio,median_mean_ratio,median_rmse,median_high_flow_mae_q90,median_low_flow_mae_q10,median_peak_timing_error_days,median_peak_magnitude_relative_error,median_paired_day_count
+endpoint_nse,0.7221274161965139,0.7395046764263747,0.8633559113331377,0.8460348782103746,0.979060171019969,1.0837062281022987,1.741522728200914,0.07122419980098678,0.0,-0.2627682116760832,1096.0
+endpoint_flow_regime_nse,0.6758970186014652,0.645894700247014,0.8450479531349377,0.8953614155381555,1.103178476979608,1.1687467554161453,1.9736736054191217,0.08898797402608921,0.0,-0.22667723185644661,1096.0
+dense_midpoint,-0.6930610669131847,-0.7069879365357348,0.5354164224501963,0.8944246138155545,2.3749150131715417,2.5478146291392703,2.5949767131372017,1.9487541738940561,-1.0,-0.5069005225053408,1096.0
+ties_no_trim,-1.0650285769032926,-1.358662572850969,0.4666008956115709,1.2051058602654208,2.7058809570309217,3.717477817807602,3.933445120611088,1.9451462503424395,0.0,-0.33098168515204296,1096.0
+ties_no_elect,-1.4741854703765167,-0.34635310419482035,0.45987222033054787,1.285034206299445,1.180679993883854,3.3190592994277797,3.903720591795474,1.9145773352821145,-1.0,-0.34014963923276886,1096.0
+ties_no_disjoint,-0.29948326204645526,-0.9740937743999174,0.40353071919333433,0.8754884108144663,0.5473983160400033,2.6147026257637926,3.097761065318066,1.5117927404448275,-1.0,-0.6602666212216858,1096.0
+ties_full,-2.241649081634127,-0.9588270444702219,0.3816740964777105,1.5047713114837287,0.627829051808942,3.72998749584791,3.741331753346027,2.6483791708229836,-1.0,-0.3600020163706316,1096.0
+=== EXECUTION MANIFEST GUARDS ===
+  "status": "COMPLETE",
+  "sealed_period_opened": false,
+  "base_provenance": "RECONSTRUCTED_NOT_SAVED",
+    "gpu": "NVIDIA A800-SXM4-80GB"
+      "base_provenance": "RECONSTRUCTED_NOT_SAVED",
+      "base_provenance": "RECONSTRUCTED_NOT_SAVED",
+      "base_provenance": "RECONSTRUCTED_NOT_SAVED",
+=== TM01 A800 PROGRESS COMPLETE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:43:50+0800
