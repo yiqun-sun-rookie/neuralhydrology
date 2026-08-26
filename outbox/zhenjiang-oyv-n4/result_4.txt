@@ -1,0 +1,26 @@
+### channel=zhenjiang-oyv-n4 seq=4
+### host=login4
+### started=2026-08-26T14:22:03+0800
+### ---------- output ----------
+=== A. HOST ===
+login4
+2026-08-26T06:22:03Z
+=== B. SMOKE JOB 212898 ===
+       JobID      JobName   NodeList        State ExitCode    Elapsed 
+------------ ------------ ---------- ------------ -------- ---------- 
+      212898  zj_n4_smoke None assi+      PENDING      0:0   00:00:00 
+  state=PENDING
+  reason: Priority
+  est start: 2026-08-29T17:42:57
+=== C. PARTITION LOAD ===
+ PARTITION  AVAIL                   NODELIST      STATE
+    hgpu2p     up                     ngu002      down*
+    hgpu2p     up ngu[001,004,006-008,010-01      mixed
+    hgpu2p     up                     ngu005  allocated
+  my entries in queue: 15
+  total queue length : 15
+=== SMOKE NOT COMPLETE YET - NOTHING SUBMITTED ===
+STATUS=WAITING
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T14:22:03+0800
