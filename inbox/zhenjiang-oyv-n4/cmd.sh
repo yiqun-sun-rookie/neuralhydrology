@@ -1,37 +1,36 @@
 #!/bin/bash
-# Open the throttle: fill every RTX 3090 the scheduler will give us.
-#
-# The cap of eight per half was politeness, not a requirement. The two 3090
-# partitions hold twenty cards in total, so the throttle is lifted to twenty per
-# half and the scheduler decides what actually fits. A800 and A40 stay excluded,
-# not because they are busy or oversized but because a different card model
-# produces different numbers, and the other half of this experiment already ran
-# on 3090.
+# How many RTX 3090 cards are actually free, and what is blocking my tasks?
 set -o pipefail
 ROOT=/data1/home/sunyiq/zhenjiang_oyv_v1
 
-echo "=== A. BEFORE ==="
-squeue -u "$USER" -h -o "%.20i %.12j %.14P %.9T" 2>/dev/null | grep zj_oyv_n4 || true
-echo "  my running: $(squeue -u "$USER" -h -t RUNNING -o '%i' 2>/dev/null | wc -l)"
-echo "  n4_tasks  : $(ls -1 "$ROOT/n4_tasks" 2>/dev/null | wc -l) / 1440"
-
-echo "=== B. RAISE THE ARRAY THROTTLE ==="
-for j in 212932 212933; do
-  out=$(scontrol update JobId="$j" ArrayTaskThrottle=20 2>&1)
-  if [ -z "$out" ]; then echo "  $j throttle -> 20"; else echo "  $j: $out"; fi
+echo "=== A. PER-NODE GPU ALLOCATION (the 3090 nodes) ==="
+printf "  %-8s %-11s %-10s %-40s\n" NODE STATE CFG ALLOC
+for n in ngu001 ngu004 ngu005 ngu006 ngu007 ngu008 ngu010 ngu011 ngu003 ngu009; do
+  info=$(scontrol show node "$n" 2>/dev/null)
+  st=$(echo "$info" | grep -oE 'State=[A-Z+]*' | head -1 | cut -d= -f2)
+  cfg=$(echo "$info" | grep -oE 'CfgTRES=[^ ]*' | head -1 | cut -d= -f2)
+  alloc=$(echo "$info" | grep -oE 'AllocTRES=[^ ]*' | head -1 | cut -d= -f2)
+  printf "  %-8s %-11s %-10s %-40s\n" "$n" "${st:-?}" "${cfg:-?}" "${alloc:-none}"
 done
 
-echo "=== C. 3090 CAPACITY RIGHT NOW ==="
-sinfo -p hgpu2p,hgpu2 -o "%.10P %.8N %.10T %.10G" 2>&1 | head -14 || true
-echo "  --- per-node free gpus (alloc/total) ---"
-scontrol show node ngu001 ngu004 ngu005 ngu006 ngu007 ngu008 ngu009 ngu010 ngu011 ngu003 2>/dev/null \
-  | grep -E 'NodeName=|AllocTRES=|State=' | paste - - - 2>/dev/null | sed 's/^/    /' | head -12 || true
+echo "=== B. WHY IS MY ARRAY NOT STARTING MORE TASKS ==="
+for j in 212932 212933; do
+  echo "  ---- $j ----"
+  squeue -j "$j" -h -o "  %.20i %.9T %.20r %.20S" 2>/dev/null | head -3 || true
+done
 
-echo "=== D. AFTER (give the scheduler a moment) ==="
-sleep 45
-squeue -u "$USER" -h -o "%.20i %.12j %.14P %.9T" 2>/dev/null | grep zj_oyv_n4 || true
-echo "  my running: $(squeue -u "$USER" -h -t RUNNING -o '%i' 2>/dev/null | wc -l)"
-echo "  n4_tasks  : $(ls -1 "$ROOT/n4_tasks" 2>/dev/null | wc -l) / 1440"
-echo "  nodes in use by me:"
-squeue -u "$USER" -h -t RUNNING -o "%N" 2>/dev/null | tr ',' '\n' | sort | uniq -c | sed 's/^/    /' || true
+echo "=== C. GPU TRES ACROSS THE TWO PARTITIONS ==="
+sinfo -p hgpu2p,hgpu2 -N -o "%.9N %.9P %.11T %.5C %.12G" 2>&1 || true
+echo "  legend for %C is allocated/idle/other/total cpus"
+
+echo "=== D. HOW MANY OF MY TASKS ARE RUNNING, AND WHERE ==="
+squeue -u "$USER" -h -t RUNNING -o "%.20i %.12j %.10P %.10N" 2>/dev/null || true
+
+echo "=== E. THROUGHPUT SO FAR ==="
+echo "  n4_tasks: $(ls -1 "$ROOT/n4_tasks" 2>/dev/null | wc -l) / 1440"
+sacct -j 212932 -X -n -P -o State 2>/dev/null | sort | uniq -c | sed 's/^/    212932 /'
+sacct -j 212933 -X -n -P -o State 2>/dev/null | sort | uniq -c | sed 's/^/    212933 /'
+
+echo "=== F. IDLE CAPACITY ON THE OTHER PARTITIONS (for reference only) ==="
+sinfo -p hgpu4,hgpu8 -N -o "%.9N %.9P %.11T %.5C %.12G" 2>&1 || true
 echo "=== DONE ==="
