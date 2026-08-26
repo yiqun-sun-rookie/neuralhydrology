@@ -1,0 +1,47 @@
+### channel=kalmannet-tukf23 seq=4
+### host=login4
+### started=2026-08-26T17:08:52+0800
+### ---------- output ----------
+=== JOB STATE ===
+       JobID          State ExitCode    Elapsed   NodeList 
+------------ -------------- -------- ---------- ---------- 
+      212954      COMPLETED      0:0   00:02:53     icn277 
+=== ANCHOR RESULTS ===
+27
+01047000 delta=2.720695023716857e-07 passed=true
+01440000 delta=4.410157926626468e-07 passed=true
+01543000 delta=4.752915978567529e-07 passed=true
+01545600 delta=2.795118855258849e-07 passed=true
+01568000 delta=1.987464526287397e-07 passed=true
+01596500 delta=2.6988297208152545e-07 passed=true
+01644000 delta=2.38220976944703e-07 passed=true
+02111180 delta=1.21008562947722e-07 passed=true
+02143040 delta=3.9706829491059636e-07 passed=true
+02196000 delta=2.950891021535895e-07 passed=true
+02221525 delta=4.496816596866182e-08 passed=true
+02374500 delta=3.923480453860151e-07 passed=true
+02479560 delta=1.227360951761014e-07 passed=true
+03050000 delta=2.9990552508074586e-07 passed=true
+03076600 delta=2.1731262833668552e-07 passed=true
+03384450 delta=3.9662289652575566e-07 passed=true
+03500000 delta=1.7021167397768266e-07 passed=true
+04015330 delta=3.487352095987717e-08 passed=true
+06311000 delta=1.5072685255468343e-07 passed=true
+06803530 delta=3.5617132476684077e-07 passed=true
+06910800 delta=3.1290121527138837e-07 passed=true
+11523200 delta=1.924906372074986e-07 passed=true
+12040500 delta=4.0082050045686657e-07 passed=true
+12073500 delta=8.642543514181256e-08 passed=true
+12167000 delta=4.733905331066879e-07 passed=true
+12488500 delta=2.740841441584152e-07 passed=true
+14182500 delta=4.942103154492727e-07 passed=true
+=== JOB LOG TAIL ===
+{"basin_id": "12040500", "anchor_delta": 4.0082050045686657e-07, "passed": true, "seconds": 2.5221059173345566}
+{"basin_id": "12073500", "anchor_delta": 8.642543514181256e-08, "passed": true, "seconds": 2.677536118775606}
+{"basin_id": "12167000", "anchor_delta": 4.733905331066879e-07, "passed": true, "seconds": 2.560170892626047}
+{"basin_id": "12488500", "anchor_delta": 2.740841441584152e-07, "passed": true, "seconds": 2.532952658832073}
+{"basin_id": "14182500", "anchor_delta": 4.942103154492727e-07, "passed": true, "seconds": 2.5692749321460724}
+anchor_stage_fail=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T17:08:53+0800
