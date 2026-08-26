@@ -1,0 +1,61 @@
+### channel=zhenjiang-oyv-n4 seq=18
+### host=login4
+### started=2026-08-26T16:30:11+0800
+### ---------- output ----------
+=== A. PER-NODE GPU ALLOCATION (the 3090 nodes) ===
+  NODE     STATE       CFG        ALLOC                                   
+  ngu001   MIXED       cpu        cpu                                     
+  ngu004   MIXED       cpu        cpu                                     
+  ngu005   ALLOCATED   cpu        cpu                                     
+  ngu006   MIXED       cpu        cpu                                     
+  ngu007   MIXED       cpu        cpu                                     
+  ngu008   MIXED       cpu        cpu                                     
+  ngu010   MIXED       cpu        cpu                                     
+  ngu011   MIXED       cpu        cpu                                     
+  ngu003   ALLOCATED   cpu        cpu                                     
+  ngu009   MIXED       cpu        cpu                                     
+=== B. WHY IS MY ARRAY NOT STARTING MORE TASKS ===
+  ---- 212932 ----
+    212932_[15-719%20]   PENDING            Resources  2026-08-27T02:29:00
+             212932_14   RUNNING                 None  2026-08-26T16:29:29
+  ---- 212933 ----
+     212933_[0-719%20]   PENDING             Priority  2026-08-27T12:29:00
+=== C. GPU TRES ACROSS THE TWO PARTITIONS ===
+ NODELIST PARTITION       STATE CPUS(         GRES
+   ngu001    hgpu2p       mixed 2/94/        gpu:2
+   ngu002    hgpu2p       down* 0/0/9        gpu:2
+   ngu003     hgpu2   allocated 96/0/        gpu:2
+   ngu004    hgpu2p       mixed 2/94/        gpu:2
+   ngu005    hgpu2p   allocated 96/0/        gpu:2
+   ngu006    hgpu2p       mixed 2/94/        gpu:2
+   ngu007    hgpu2p       mixed 2/94/        gpu:2
+   ngu008    hgpu2p       mixed 20/76        gpu:2
+   ngu009     hgpu2       mixed 12/84        gpu:2
+   ngu010    hgpu2p       mixed 1/31/        gpu:2
+   ngu011    hgpu2p       mixed 1/31/        gpu:2
+  legend for %C is allocated/idle/other/total cpus
+=== D. HOW MANY OF MY TASKS ARE RUNNING, AND WHERE ===
+          202228_641    N22-hyper      hgpu4     ngu104
+          202228_640    N22-hyper      hgpu4     ngu104
+           211001_21   N22-relong      hgpu4     ngu102
+           212932_14    zj_oyv_n4      hgpu2     ngu009
+           211001_20   N22-relong      hgpu4     ngu102
+=== E. THROUGHPUT SO FAR ===
+  n4_tasks: 14 / 1440
+    212932       4 COMPLETED
+    212932       1 PENDING
+    212932       1 RUNNING
+    212933       1 PENDING
+=== F. IDLE CAPACITY ON THE OTHER PARTITIONS (for reference only) ===
+ NODELIST PARTITION       STATE CPUS(         GRES
+   ngu101     hgpu4       mixed 8/88/        gpu:4
+   ngu102     hgpu4       mixed 16/80        gpu:4
+   ngu103     hgpu4       down* 0/0/9        gpu:4
+   ngu104     hgpu4       mixed 10/86        gpu:4
+   ngu201     hgpu8        idle 0/64/        gpu:8
+   ngu202     hgpu8       mixed 28/36        gpu:8
+   ngu203     hgpu8        idle 0/64/        gpu:8
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:30:12+0800
