@@ -1,0 +1,39 @@
+### channel=zhenjiang-oyv-n4 seq=16
+### host=login4
+### started=2026-08-26T16:14:19+0800
+### ---------- output ----------
+=== A. CANCEL MY REDUNDANT PROBES ===
+  212915 (PENDING) -> cancel
+  212920 (PENDING) -> cancel
+=== B. RECONFIRM THE MISSING SET ===
+  missing total: 1430
+  half one local range: (10, 719) contiguous: True count: 710
+  half two local range: (0, 719) contiguous: True count: 720
+  half one array spec: 10-719 (710 tasks)
+  half two array spec: 0-719 (720 tasks)
+=== C. SUBMIT ===
+Submitted batch job 212932
+Submitted batch job 212933
+  half one = 212932   half two = 212933
+=== D. TIDY MY OWN THROWAWAY ROOTS ===
+  smoke and equivalence scratch cleared
+=== E. STATE ===
+  202228_[642-659%2]    N22-hyper hgpu4,hgpu8,hg   PENDING
+       211001_[22%2]   N22-relong hgpu4,hgpu8,hg   PENDING
+    212933_[0-719%8]    zj_oyv_n4   hgpu2p,hgpu2   PENDING
+   212932_[11-719%8]    zj_oyv_n4   hgpu2p,hgpu2   PENDING
+    202226_[0-119%4] N22-eval-lat hgpu4,hgpu8,hg   PENDING
+              202229 N22-agg-eval hgpu4,hgpu8,hg   PENDING
+              202230 N22-agg-hype hgpu4,hgpu8,hg   PENDING
+              202294   N22-export hgpu4,hgpu8,hg   PENDING
+              202315     N22-gate hgpu4,hgpu8,hg   PENDING
+              202507 N22-mask-iso hgpu4,hgpu8,hg   PENDING
+  running now : 5
+  n4_tasks now: 10
+RESUME_HALF_1=212932
+RESUME_HALF_2=212933
+STATUS=RESUMED
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:15:18+0800
