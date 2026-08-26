@@ -1,0 +1,107 @@
+### channel=zhenjiang-oyv-n4 seq=24
+### host=login4
+### started=2026-08-26T16:55:47+0800
+### ---------- output ----------
+=== WAIT FOR THE TWO A800 PROBES (max 12 min) ===
+=== STATE ===
+   212950    pf_zj   ngu201     RUNNING     0:0  00:18:21 
+   212951    pf_jy   ngu203     RUNNING     0:0  00:18:20 
+=== RESULTS ===
+  ============ 212950 ============
+    NODE=ngu201
+    0, NVIDIA A800-SXM4-80GB, 535.104.05
+    TASK_COUNT=6
+    {
+      "best_epoch": 12,
+      "best_inner_validation_mae_m": 0.037111745526146794,
+      "completed_epochs": 16,
+      "condition": "complete_observation",
+      "elapsed_seconds": 372.901,
+      "kept_stations": [
+        "datong",
+        "nanjing",
+        "zhenjiang",
+        "jiangyin",
+        "xuliujing",
+        "wusongkou"
+      ],
+      "node_name": "ngu201",
+      "task_id": "zhenjiang_ladder_v2__fold_2017__zhenjiang__complete_observation__seed_17",
+      "test_sample_count": 7022
+    }
+    {
+      "best_epoch": 9,
+      "best_inner_validation_mae_m": 0.05078643330550178,
+      "completed_epochs": 13,
+      "condition": "hidden_target_minus_nanjing",
+      "elapsed_seconds": 286.369,
+      "kept_stations": [
+        "datong",
+        "jiangyin",
+        "xuliujing",
+        "wusongkou"
+      ],
+      "node_name": "ngu201",
+      "task_id": "zhenjiang_ladder_v2__fold_2017__zhenjiang__hidden_target_minus_nanjing__seed_17",
+      "test_sample_count": 7022
+    }
+  ============ 212951 ============
+    NODE=ngu203
+    0, NVIDIA A800-SXM4-80GB, 535.104.05
+    TASK_COUNT=6
+    {
+      "best_epoch": 4,
+      "best_inner_validation_mae_m": 0.06138617023555944,
+      "completed_epochs": 8,
+      "condition": "complete_observation",
+      "elapsed_seconds": 196.838,
+      "kept_stations": [
+        "datong",
+        "nanjing",
+        "zhenjiang",
+        "jiangyin",
+        "xuliujing",
+        "wusongkou"
+      ],
+      "node_name": "ngu203",
+      "task_id": "zhenjiang_ladder_v2__fold_2017__jiangyin__complete_observation__seed_17",
+      "test_sample_count": 7022
+    }
+    {
+      "best_epoch": 11,
+      "best_inner_validation_mae_m": 0.060619738054032694,
+      "completed_epochs": 15,
+      "condition": "hidden_target_minus_xuliujing",
+      "elapsed_seconds": 326.781,
+      "kept_stations": [
+        "datong",
+        "nanjing",
+        "zhenjiang",
+        "wusongkou"
+      ],
+      "node_name": "ngu203",
+      "task_id": "zhenjiang_ladder_v2__fold_2017__jiangyin__hidden_target_minus_xuliujing__seed_17",
+      "test_sample_count": 7022
+    }
+    {
+      "best_epoch": 10,
+      "best_inner_validation_mae_m": 0.05985657699190978,
+      "completed_epochs": 14,
+      "condition": "hidden_target_minus_wusongkou",
+      "elapsed_seconds": 305.173,
+      "kept_stations": [
+        "datong",
+        "nanjing",
+        "zhenjiang",
+        "xuliujing"
+      ],
+      "node_name": "ngu203",
+      "task_id": "zhenjiang_ladder_v2__fold_2017__jiangyin__hidden_target_minus_wusongkou__seed_17",
+      "test_sample_count": 7022
+    }
+=== n4 PROGRESS ===
+  n4_tasks: 24 / 1440
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T17:08:17+0800
