@@ -1,0 +1,35 @@
+### channel=zhenjiang-oyv-n4 seq=17
+### host=login4
+### started=2026-08-26T16:25:49+0800
+### ---------- output ----------
+=== A. BEFORE ===
+    212933_[0-719%8]    zj_oyv_n4   hgpu2p,hgpu2   PENDING
+   212932_[13-719%8]    zj_oyv_n4   hgpu2p,hgpu2   PENDING
+           212932_12    zj_oyv_n4          hgpu2   RUNNING
+  my running: 5
+  n4_tasks  : 12 / 1440
+=== B. RAISE THE ARRAY THROTTLE ===
+  212932 throttle -> 20
+  212933 throttle -> 20
+=== C. 3090 CAPACITY RIGHT NOW ===
+ PARTITION NODELIST      STATE       GRES
+     hgpu2   ngu009      mixed      gpu:2
+     hgpu2   ngu003  allocated      gpu:2
+    hgpu2p   ngu002      down*      gpu:2
+    hgpu2p ngu[001,      mixed      gpu:2
+    hgpu2p   ngu005  allocated      gpu:2
+  --- per-node free gpus (alloc/total) ---
+=== D. AFTER (give the scheduler a moment) ===
+   212933_[0-719%20]    zj_oyv_n4   hgpu2p,hgpu2   PENDING
+  212932_[14-719%20]    zj_oyv_n4   hgpu2p,hgpu2   PENDING
+           212932_13    zj_oyv_n4          hgpu2   RUNNING
+  my running: 5
+  n4_tasks  : 13 / 1440
+  nodes in use by me:
+          1 ngu009
+          2 ngu102
+          2 ngu104
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:26:34+0800
