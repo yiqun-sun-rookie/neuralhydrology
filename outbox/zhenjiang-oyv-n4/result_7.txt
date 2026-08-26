@@ -1,0 +1,142 @@
+### channel=zhenjiang-oyv-n4 seq=7
+### host=login4
+### started=2026-08-26T15:18:30+0800
+### ---------- output ----------
+=== A. ALL PARTITIONS ===
+ PARTITION  AVAIL    TIMELIMIT  NODES  STATE                       NODELIST
+   hcpu48*     up     infinite     15 alloc$ icn[202,204-207,210-212,214,21
+   hcpu48*     up     infinite     16  down* icn[203,215,218,224,230,233-23
+   hcpu48*     up     infinite     26  alloc icn[201,208-209,213,219,222-22
+   hcpu48*     up     infinite      7   idle       icn[240-241,248,250-253]
+   hcpu48y     up     infinite      1  down$                         icn281
+   hcpu48y     up     infinite      1  maint                         icn280
+   hcpu48y     up     infinite      2  down*                   icn[278-279]
+   hcpu48y     up     infinite      2    mix                   icn[274,277]
+   hcpu48y     up     infinite      6   idle           icn[270-273,275-276]
+     hgpu8     up     infinite      1    mix                         ngu202
+     hgpu8     up     infinite      2   idle                   ngu[201,203]
+     hgpu4     up     infinite      1  down*                         ngu103
+     hgpu4     up     infinite      3    mix               ngu[101-102,104]
+     hgpu2     up     infinite      1    mix                         ngu009
+     hgpu2     up     infinite      1  alloc                         ngu003
+    hgpu2p     up     infinite      1  down*                         ngu002
+    hgpu2p     up     infinite      7    mix   ngu[001,004,006-008,010-011]
+    hgpu2p     up     infinite      1  alloc                         ngu005
+=== B. NODE DETAIL (gres, cpus, state) ===
+  NODELIST  PARTITION      STATE  CPUS           GRES                         REASON
+    icn201    hcpu48*  allocated    48         (null)                           none
+    icn202    hcpu48* allocated$    48         (null)                           none
+    icn203    hcpu48*      down*    48         (null)                 Not responding
+    icn204    hcpu48* allocated$    48         (null)                           none
+    icn205    hcpu48* allocated$    48         (null)                           none
+    icn206    hcpu48* allocated$    48         (null)                           none
+    icn207    hcpu48* allocated$    48         (null)                           none
+    icn208    hcpu48*  allocated    48         (null)                           none
+    icn209    hcpu48*  allocated    48         (null)                           none
+    icn210    hcpu48* allocated$    48         (null)                           none
+    icn211    hcpu48* allocated$    48         (null)                           none
+    icn212    hcpu48* allocated$    48         (null)                           none
+    icn213    hcpu48*  allocated    48         (null)                           none
+    icn214    hcpu48* allocated$    48         (null)                           none
+    icn215    hcpu48*      down*    48         (null)                 Not responding
+    icn216    hcpu48* allocated$    48         (null)                           none
+    icn217    hcpu48* allocated$    48         (null)                           none
+    icn218    hcpu48*      down*    48         (null)                 Not responding
+    icn219    hcpu48*  allocated    48         (null)                           none
+    icn220    hcpu48* allocated$    48         (null)                           none
+    icn221    hcpu48* allocated$    48         (null)                           none
+    icn222    hcpu48*  allocated    48         (null)                           none
+    icn223    hcpu48*  allocated    48         (null)                           none
+    icn224    hcpu48*      down*    48         (null)                 Not responding
+    icn225    hcpu48*  allocated    48         (null)                           none
+    icn226    hcpu48*  allocated    48         (null)                           none
+    icn227    hcpu48*  allocated    48         (null)                           none
+    icn228    hcpu48*  allocated    48         (null)                           none
+    icn229    hcpu48*  allocated    48         (null)                           none
+    icn230    hcpu48*      down*    48         (null)                 Not responding
+    icn231    hcpu48*  allocated    48         (null)                           none
+    icn232    hcpu48*  allocated    48         (null)                           none
+    icn233    hcpu48*      down*    48         (null)                 Not responding
+    icn234    hcpu48*      down*    48         (null)                 Not responding
+    icn235    hcpu48*      down*    48         (null)                 Not responding
+    icn236    hcpu48*      down*    48         (null)                 Not responding
+    icn237    hcpu48*      down*    48         (null)                 Not responding
+    icn238    hcpu48*  allocated    48         (null)                           none
+    icn239    hcpu48*      down*    48         (null)                 Not responding
+=== C. WHO IS RUNNING WHAT ===
+  -- all running jobs, cluster wide --
+         JOBID       USER           NAME  PARTITION    TIME_LEFT       TIME    NODES     NODELIST(REASON)
+    202228_640     sunyiq      N22-hyper      hgpu4     23:06:32      53:28        1               ngu104
+    202228_639     sunyiq      N22-hyper      hgpu4     22:07:37    1:52:23        1               ngu104
+     211001_21     sunyiq     N22-relong      hgpu4   3-03:10:36    8:49:24        1               ngu102
+     211001_20     sunyiq     N22-relong      hgpu4   1-13:46:50 1-22:13:10        1               ngu102
+  -- running count by user --
+      4 sunyiq
+  -- pending count by user --
+     13 sunyiq
+=== D. MY PENDING JOBS AND WHY ===
+               JOBID           NAME  PARTITION       REASON           START_TIME
+  202228_[641-659%2]      N22-hyper hgpu4,hgpu JobArrayTask                  N/A
+       211001_[22%2]     N22-relong hgpu4,hgpu JobArrayTask                  N/A
+              212886 daily-knet-a34     hgpu2p     Priority  2026-08-29T17:42:57
+              212898    zj_n4_smoke     hgpu2p     Priority  2026-08-29T17:42:57
+   212901_[0-719%16]      zj_oyv_n4     hgpu2p     Priority  2026-08-29T17:42:57
+   212902_[0-719%16]      zj_oyv_n4     hgpu2p     Priority  2026-08-29T17:42:57
+    202226_[0-119%4] N22-eval-later hgpu4,hgpu DependencyNe                  N/A
+              202229   N22-agg-eval hgpu4,hgpu   Dependency                  N/A
+              202230  N22-agg-hyper hgpu4,hgpu   Dependency                  N/A
+              202294     N22-export hgpu4,hgpu   Dependency                  N/A
+              202315       N22-gate hgpu4,hgpu   Dependency                  N/A
+              202507 N22-mask-iso-5 hgpu4,hgpu DependencyNe                  N/A
+              202293   N22-manifest hgpu4,hgpu  JobHeldUser                  N/A
+=== E. MY LIMITS ===
+g_sunyiq||||||qos_sunyiq
+PartitionName=hcpu48
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   State=UP TotalCPUs=3072 TotalNodes=64 SelectTypeParameters=NONE
+PartitionName=hcpu48y
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   State=UP TotalCPUs=576 TotalNodes=12 SelectTypeParameters=NONE
+PartitionName=hgpu8
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   State=UP TotalCPUs=192 TotalNodes=3 SelectTypeParameters=NONE
+PartitionName=hgpu4
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   State=UP TotalCPUs=384 TotalNodes=4 SelectTypeParameters=NONE
+PartitionName=hgpu2
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   State=UP TotalCPUs=192 TotalNodes=2 SelectTypeParameters=NONE
+PartitionName=hgpu2p
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   State=UP TotalCPUs=736 TotalNodes=9 SelectTypeParameters=NONE
+=== F. GRES DETAIL PER NODE (does it name the card?) ===
+  -- ngu001 --
+    NodeName=ngu001 Arch=x86_64 CoresPerSocket=24 
+       Gres=gpu:2
+       OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024 
+       State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+       CfgTRES=cpu=96,mem=1M,billing=96
+  -- ngu003 --
+    NodeName=ngu003 Arch=x86_64 CoresPerSocket=24 
+       Gres=gpu:2
+       OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+       State=ALLOCATED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+       CfgTRES=cpu=96,mem=1M,billing=96
+  -- ngu101 --
+    NodeName=ngu101 Arch=x86_64 CoresPerSocket=24 
+       Gres=gpu:4
+       OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+       State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+       CfgTRES=cpu=96,mem=1M,billing=96
+  -- ngu201 --
+    NodeName=ngu201 Arch=x86_64 CoresPerSocket=16 
+       Gres=gpu:8
+       OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+       State=IDLE ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+       CfgTRES=cpu=64,mem=1M,billing=64
+=== G. NODE TEST LAUNCHER AVAILABLE? ===
+-rw-r--r--. 1 sunyiq g_sunyiq 1721 Aug  6 15:23 /data1/home/sunyiq/hpc_mailbox/inbox/node_test.slurm
+=== H. DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T15:18:31+0800
