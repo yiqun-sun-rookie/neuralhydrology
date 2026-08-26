@@ -1,63 +1,91 @@
 #!/bin/bash
-# Replace the hgpu2p-only submission with one that may also land on hgpu2.
+# Inventory: what actually completed before the cancel, and what is missing.
 set -o pipefail
 ROOT=/data1/home/sunyiq/zhenjiang_oyv_v1
 
-echo "=== A. SYNC ==="
-cd "$ROOT/repo" || exit 1
-D=$(git status --porcelain | grep -v '^?? ' | head -3)
-[ -n "$D" ] && { echo "tracked dirty:"; echo "$D"; exit 1; }
-timeout 180 git fetch -q origin "+refs/heads/main:refs/remotes/origin/main" || { echo FETCH_FAILED; exit 1; }
-git reset -q --hard refs/remotes/origin/main
-echo "  head: $(git log --oneline -1)"
-FAIL=0
-chk() { g=$(sha256sum "$1" | cut -d' ' -f1); if [ "$g" = "$2" ]; then echo "  ok  $1"; else echo "  MISMATCH $1"; echo "    want $2"; echo "    got  $g"; FAIL=1; fi; }
-chk scripts/analysis/zhenjiang_oyv_n4_contract.py 05f708683bd480ea51fc5c89b9af84964e11bae65cb3847747b0dff50445e766
-chk scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm fece098729a70e2bced9f58c930a47bc78822499b54ffa0ffe5640b77fe377a1
-chk docs/records/ZHENJIANG_OYV_N4_LADDER_V2_PREREGISTRATION.json e3218ab0900901df7f60704084a3b66c2eb45f20f808ca911fbce1457568cb54
-[ "$FAIL" -eq 0 ] || { echo IDENTITY_FAILED; exit 1; }
-grep -E '^#SBATCH -p' scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm
+echo "=== A. ARRAY OUTCOMES ==="
+for j in 212898 212901 212902; do
+  echo "  ---- $j ----"
+  sacct -j "$j" -X -n -P -o JobID,State,ExitCode,Elapsed,NodeList 2>/dev/null | head -3
+  sacct -j "$j" -X -n -P -o State 2>/dev/null | sort | uniq -c | sort -rn | sed 's/^/    /'
+done
 
-echo "=== B. CONTRACT SELF-CHECK UNDER THE NARROWED SET ==="
+echo "=== B. TASK DIRECTORY INVENTORY ==="
+echo "  n4_tasks dirs   : $(ls -1 "$ROOT/n4_tasks" 2>/dev/null | wc -l)"
+echo "  n4_smoke dirs   : $(ls -1 "$ROOT/n4_smoke" 2>/dev/null | wc -l)"
+echo "  complete (5 artefacts):"
+python - <<'PYEOF'
+import os, json
+root = "/data1/home/sunyiq/zhenjiang_oyv_v1/n4_tasks"
+need = {"best_state.pt","training_history.csv","test_predictions.npz","run_identity.json","completion_manifest.json"}
+if not os.path.isdir(root):
+    print("    (n4_tasks absent)"); raise SystemExit
+names = sorted(os.listdir(root))
+full, partial = [], []
+nodes = {}
+for n in names:
+    have = set(os.listdir(os.path.join(root, n)))
+    (full if need <= have else partial).append(n)
+    try:
+        d = json.load(open(os.path.join(root, n, "run_identity.json"), encoding="utf-8"))
+        nd = d.get("runtime_environment", {}).get("node_name", "?")
+        nodes[nd] = nodes.get(nd, 0) + 1
+    except Exception:
+        pass
+print("    complete =", len(full), " partial =", len(partial))
+if partial: print("    partial examples:", partial[:5])
+print("    by node:", nodes)
+import re
+def parse(n):
+    m = re.match(r"zhenjiang_oyv_n4__fold_(\d+)__(\w+?)__(.+)__seed_(\d+)$", n)
+    return m.groups() if m else None
+tg = {}
+for n in full:
+    p = parse(n)
+    if p: tg[p[1]] = tg.get(p[1], 0) + 1
+print("    complete by target:", tg)
+PYEOF
+
+echo "=== C. WHICH GLOBAL INDICES ARE MISSING ==="
+cd "$ROOT/repo" || exit 1
 source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || source $HOME/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final || { echo CONDA_FAILED; exit 1; }
 export PYTHONPATH="$ROOT/pysite:${PYTHONPATH:-}"
-python -u scripts/analysis/zhenjiang_oyv_n4_contract.py 2>&1 | tail -12
+python - <<'PYEOF'
+import os, sys
+sys.path.insert(0, "scripts/analysis"); sys.path.insert(0, "scripts/modeling")
+import zhenjiang_oyv_n4_contract as c
+root = "/data1/home/sunyiq/zhenjiang_oyv_v1/n4_tasks"
+need = {"best_state.pt","training_history.csv","test_predictions.npz","run_identity.json","completion_manifest.json"}
+tasks = c.enumerate_tasks()
+missing = []
+for i, t in enumerate(tasks):
+    d = os.path.join(root, str(t["task_id"]))
+    if not os.path.isdir(d) or not need <= set(os.listdir(d)):
+        missing.append(i)
+print("  total", len(tasks), "missing", len(missing))
+if missing:
+    print("  first 10 missing:", missing[:10])
+    print("  last 10 missing:", missing[-10:])
+    lo = [m for m in missing if m < 720]; hi = [m for m in missing if m >= 720]
+    print("  missing in half one (0-719):", len(lo))
+    print("  missing in half two (720-1439):", len(hi))
+open("/data1/home/sunyiq/zhenjiang_oyv_v1/missing_indices.txt","w").write(",".join(str(m) for m in missing))
+print("  written missing_indices.txt")
+PYEOF
 
-echo "=== C. CANCEL THE OLD, hgpu2p-ONLY SUBMISSIONS (all mine) ==="
-for j in 212898 212901 212902; do
-  st=$(sacct -j "$j" -X -n -o State 2>/dev/null | head -1 | awk '{print $1}')
-  echo "  $j was $st"
-  scancel "$j" 2>&1 || true
-done
-sleep 8
-echo "  after cancel, my queue:"
-squeue -u "$USER" -h -o "%.20i %.12j %.9T" 2>/dev/null | head -12 || true
+echo "=== D. SAMPLE RUN IDENTITY ==="
+S=$(ls -d "$ROOT/n4_tasks"/*/ 2>/dev/null | head -1)
+[ -n "$S" ] && python - "$S/run_identity.json" <<'PYEOF' 2>&1 | sed 's/^/    /'
+import json,sys
+d=json.load(open(sys.argv[1],encoding="utf-8"))
+for k in ("task_id","target","condition","test_year","seed","test_sample_count"): print(k,"=",d.get(k))
+rt=d.get("runtime_environment",{})
+for k in ("node_name","graphics_processor_name","graphics_processor_driver_version","operating_system"): print(k,"=",rt.get(k))
+print("fold_isolation_findings =", d.get("fold_isolation",{}).get("finding_count"))
+PYEOF
 
-echo "=== D. GUARD ==="
-if [ -e "$ROOT/n4_tasks" ]; then echo "  n4_tasks exists -> stop"; exit 1; fi
-echo "  n4_tasks absent -> ok"
-rm -rf "$ROOT/n4_smoke"
-
-echo "=== E. RESUBMIT BOTH HALVES ON hgpu2p,hgpu2 ==="
-o1=$(sbatch --export=ALL,N4_INDEX_OFFSET=0 scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm 2>&1); echo "$o1"
-A1=$(echo "$o1" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
-[ -n "$A1" ] || { echo SUBMIT_FAILED_1; exit 1; }
-o2=$(sbatch --export=ALL,N4_INDEX_OFFSET=720 scripts/modeling/hpc/submit_zhenjiang_oyv_n4.slurm 2>&1); echo "$o2"
-A2=$(echo "$o2" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
-[ -n "$A2" ] || { echo "SUBMIT_FAILED_2, cancelling $A1"; scancel "$A1" 2>&1 || true; exit 1; }
-echo "  half one = $A1   half two = $A2"
-
-echo "=== F. QUEUE AND ESTIMATE ==="
-sleep 25
-squeue -u "$USER" -h -o "%.20i %.12j %.14P %.9T %.11r" 2>/dev/null | head -12 || true
-echo "  half one est start: $(squeue -j "$A1" -h --start -o '%S' 2>/dev/null | head -1)"
-echo "  running now: $(squeue -u "$USER" -h -t RUNNING -o '%i' 2>/dev/null | wc -l)"
-echo "ARRAY_HALF_1=$A1"
-echo "ARRAY_HALF_2=$A2"
-echo "STATUS=RESUBMITTED_TWO_PARTITIONS"
-
-echo "=== G. TIDY MY OWN SCRATCH ==="
-rm -rf "$ROOT"/equiv_scratch_* 2>/dev/null
-echo "  equivalence scratch cleared"
+echo "=== E. QUEUE NOW ==="
+squeue -u "$USER" -h -o "%.20i %.12j %.12P %.9T" 2>/dev/null | head -12 || true
+sinfo -p hgpu2p,hgpu2 -o "%.10P %.6D %.6t %.30N" 2>&1 | head -8 || true
 echo "=== DONE ==="
