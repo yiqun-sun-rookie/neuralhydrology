@@ -1,0 +1,65 @@
+### channel=zhenjiang-oyv-n4 seq=2
+### host=login4
+### started=2026-08-26T13:46:57+0800
+### ---------- output ----------
+=== A. HOST ===
+login4
+2026-08-26T05:46:57Z
+=== B. REPO WORKING TREE ===
+  untracked (tolerated; git reset --hard never touches these):
+    ?? docs/records/ZHENJIANG_OYV_LEAVE_ONE_YEAR_OUT_DIRECTION_VALIDATION_V1_STATIC_AUDIT.json
+  no tracked modifications -> safe to sync
+=== C. SYNC ===
+before: 91b7bce Give the ladder family its own evaluation comparison
+after : 8db1b9b Add the four-target ladder: Nanjing and Xuliujing
+=== D. IDENTITY OF THE NEW FILES ===
+  ok       scripts/analysis/zhenjiang_oyv_n4_contract.py
+  ok       scripts/analysis/zhenjiang_oyv_n4_impact.py
+  ok       scripts/modeling/zhenjiang_oyv_n4_training.py
+  ok       docs/records/ZHENJIANG_OYV_N4_LADDER_V1_PREREGISTRATION.json
+=== E. OUTPUT ROOTS MUST NOT EXIST ===
+  absent  /data1/home/sunyiq/zhenjiang_oyv_v1/n4_tasks
+  absent  /data1/home/sunyiq/zhenjiang_oyv_v1/n4_smoke
+=== F. CERTIFIED INPUT ===
+  ok   datong
+  ok   nanjing
+  ok   zhenjiang
+  ok   jiangyin
+  ok   xuliujing
+  ok   wusongkou
+=== G. ENVIRONMENT AND CONTRACT ===
+  py 3.11.13 torch 2.4.0 numpy 2.3.3 pandas 2.3.2 sklearn 1.7.2
+{
+  "experiment_id": "zhenjiang_oyv_n4_ladder_v1",
+  "parent_experiment_id": "zhenjiang_gauge_failure_ladder_v2",
+  "targets": [
+    "nanjing",
+    "xuliujing"
+  ],
+  "conditions_per_target": 9,
+  "new_task_count": 1440,
+  "prediction_count": 7,
+  "finding_count": 0,
+  "findings": []
+}
+  task_count 1440
+  index 0    zhenjiang_oyv_n4__fold_2017__nanjing__complete_observation__seed_17
+  index 1439 zhenjiang_oyv_n4__fold_2024__xuliujing__endpoints_only__seed_139
+=== H. SMOKE TEST SUBMIT ===
+Submitted batch job 212898
+  jobid=212898
+=== I. WAIT (max 12 min) ===
+=== J. RESULT ===
+       JobID      JobName  NodeList        State ExitCode    Elapsed 
+------------ ------------ --------- ------------ -------- ---------- 
+      212898  zj_n4_smoke None ass+      PENDING      0:0   00:00:00 
+--- log tail ---
+  (no stdout log)
+--- err tail ---
+  (no stderr log)
+--- artefacts ---
+  (none)
+=== K. DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T14:00:16+0800
