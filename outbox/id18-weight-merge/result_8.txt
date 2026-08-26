@@ -1,0 +1,24 @@
+### channel=id18-weight-merge seq=8
+### host=login4
+### started=2026-08-26T17:30:18+0800
+### ---------- output ----------
+=== TM01 JOB STATUS ===
+2026-08-26T17:30:18+0800
+login4
+recorded_job_id=213139
+=== SQUEUE ===
+             JOBID                   NAME      STATE         TIME     NODELIST(REASON)
+            213139         id18_tm01_ties    PENDING         0:00           (Priority)
+estimated_start=2026-08-29T17:42:57
+=== SACCT ===
+       JobID                JobName  Partition   NodeList          State ExitCode    Elapsed                Start                  End 
+------------ ---------------------- ---------- ---------- -------------- -------- ---------- -------------------- -------------------- 
+      213139         id18_tm01_ties     hgpu2p None assi+        PENDING      0:0   00:00:00              Unknown              Unknown 
+=== TASK-SCOPED ARTIFACTS ===
+ABSENT /data1/home/sunyiq/hpc_mailbox/outbox/id18-weight-merge/tm01_slurm_213139.out
+ABSENT /data1/home/sunyiq/hpc_mailbox/outbox/id18-weight-merge/tm01_slurm_213139.err
+ABSENT /data1/home/sunyiq/id18_ties_merge_20260826/tm01_compact_results.tar.gz
+=== TM01 STATUS CHECK COMPLETE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T17:30:18+0800
