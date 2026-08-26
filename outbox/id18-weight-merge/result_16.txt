@@ -1,0 +1,41 @@
+### channel=id18-weight-merge seq=16
+### host=login4
+### started=2026-08-26T18:28:49+0800
+### ---------- output ----------
+=== TM01 A800 PROGRESS ===
+2026-08-26T18:28:49+0800
+job_id=213416
+             JOBID                   NAME      STATE         TIME     NODELIST(REASON)
+            213416          id18_tm01_a8n    RUNNING        11:30               ngu203
+       JobID                JobName  Partition   NodeList          State ExitCode    Elapsed                Start                  End 
+------------ ---------------------- ---------- ---------- -------------- -------- ---------- -------------------- -------------------- 
+      213416          id18_tm01_a8n      hgpu8     ngu203        RUNNING      0:0   00:11:53  2026-08-26T18:17:19              Unknown 
+=== PROGRESS COUNTS ===
+evaluation_logs=11
+prediction_artifacts=10
+saved_checkpoints=11
+dense_midpoint/s100.log size=4295 mtime=2026-08-26T18:20:25.0000000000
+dense_midpoint/s200.log size=4295 mtime=2026-08-26T18:28:02.0000000000
+endpoint_flow_regime_nse/s100.log size=4355 mtime=2026-08-26T18:19:21.0000000000
+endpoint_flow_regime_nse/s200.log size=4355 mtime=2026-08-26T18:26:57.0000000000
+endpoint_nse/s100.log size=4283 mtime=2026-08-26T18:18:17.0000000000
+endpoint_nse/s200.log size=4283 mtime=2026-08-26T18:25:47.0000000000
+ties_full/s100.log size=4265 mtime=2026-08-26T18:24:44.0000000000
+ties_no_disjoint/s100.log size=4307 mtime=2026-08-26T18:23:37.0000000000
+ties_no_elect/s100.log size=4289 mtime=2026-08-26T18:22:30.0000000000
+ties_no_trim/s100.log size=4283 mtime=2026-08-26T18:21:31.0000000000
+ties_no_trim/s200.log size=1819 mtime=2026-08-26T18:28:45.0000000000
+=== LATEST EVALUATION LOG TAIL ===
+latest_log=/data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/logs/ties_no_trim/s200.log
+COMMAND /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -X utf8 -m neuralhydrology.nh_run evaluate --run-dir /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_no_trim/s200 --period test --epoch 30 --gpu 0
+2026-08-26 18:28:45,051: Logging to /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_no_trim/s200/output.log initialized.
+2026-08-26 18:28:45,638: Using the model weights from /data1/home/sunyiq/id18_ties_merge_20260826/results/TM01_reconstructed_base_sign_aware_merge_screen_20260826/runs/ties_no_trim/s200/model_epoch030.pt
+/data1/home/sunyiq/id18_ties_merge_20260826/payload/code/neuralhydrology/evaluation/tester.py:143: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(weight_file, map_location=self.device))
+  0%|          | 0/24 [00:00<?, ?it/s]# Evaluation:   0%|          | 0/24 [00:00<?, ?it/s]/data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_no_pytest_213416.out size=30 mtime=2026-08-26 18:16:58.000000000 +0800
+/data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_a800_no_pytest_213416.err size=0 mtime=2026-08-26 18:16:56.000000000 +0800
+ABSENT /data1/home/sunyiq/id18_ties_merge_20260826/tm01_compact_results.tar.gz
+=== TM01 A800 PROGRESS COMPLETE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:28:49+0800
