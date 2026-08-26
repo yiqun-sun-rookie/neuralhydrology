@@ -1,0 +1,27 @@
+### channel=kalmannet-tukf23 seq=3
+### host=login4
+### started=2026-08-26T16:55:13+0800
+### ---------- output ----------
+=== PAYLOAD VERIFY ===
+expected=d46abd8a929e6b581b0d34d4a025c352e10df957e01ff064f200f3461d8a3712
+actual=d46abd8a929e6b581b0d34d4a025c352e10df957e01ff064f200f3461d8a3712
+=== EXTRACT ===
+extracted
+tukf17_hbv_rolling_origin_state_hydrology_common.py
+tukf21_real_camels_rolling_origin_common.py
+tukf23_four_mode_worker.py
+tukf23_real_camels_four_mode_common.py
+tukf23_anchor.slurm
+tukf23_readout.slurm
+tukf23_train.slurm
+=== SUBMIT ANCHOR SMOKE ===
+Submitted batch job 212954
+anchor_job=212954
+202228_[642-659%2] hgpu4,hgp N22-hype   sunyiq PD       0:00      1 (JobArrayTaskLimit)
+     211001_[22%2] hgpu4,hgp N22-relo   sunyiq PD       0:00      1 (JobArrayTaskLimit)
+ 212933_[0-719%20] hgpu2p,hg zj_oyv_n   sunyiq PD       0:00      1 (Priority)
+212932_[22-719%20] hgpu2p,hg zj_oyv_n   sunyiq PD       0:00      1 (Resources)
+  202226_[0-119%4] hgpu4,hgp N22-eval   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:55:13+0800
