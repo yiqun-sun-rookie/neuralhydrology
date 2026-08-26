@@ -1,0 +1,39 @@
+### channel=id29-nearing2022-da seq=363
+### host=login4
+### started=2026-08-26T14:17:55+0800
+### ---------- output ----------
+2026-08-26T14:17:55+0800
+=== N22 JOBS ===
+202228_[640-      N22-hyper   PENDING        0:00  1-00:00:00 (JobArrayTaskLimit)
+211001_[22%2     N22-relong   PENDING        0:00  3-12:00:00 (JobArrayTaskLimit)
+202226_[0-11 N22-eval-later   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202229   N22-agg-eval   PENDING        0:00  1-00:00:00 (Dependency)
+      202230  N22-agg-hyper   PENDING        0:00  1-00:00:00 (Dependency)
+      202294     N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315       N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-5   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+      202293   N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+  202228_639      N22-hyper   RUNNING       51:48    23:08:12 ngu104
+  202228_638      N22-hyper   RUNNING     2:21:01    21:38:59 ngu101
+   211001_21     N22-relong   RUNNING     7:48:49  3-04:11:11 ngu102
+   211001_20     N22-relong   RUNNING  1-21:12:35  1-14:47:25 ngu102
+=== FAILURES AND TIMEOUTS (never truncate, never tail) ===
+202215_16|N22-time|TIMEOUT|0:0|2-00:00:03|2026-08-20T16:18:43
+202215_20|N22-time|TIMEOUT|0:0|2-00:00:22|2026-08-22T16:19:07
+202215_21|N22-time|TIMEOUT|0:0|2-00:00:15|2026-08-23T13:05:19
+202215_22|N22-time|TIMEOUT|0:0|2-00:00:10|2026-08-23T22:06:54
+=== LOG IDLE SECONDS PER RUNNING JOB (stall detector) ===
+  202228_639     idle=87s node=ngu104
+  202228_638     idle=144s node=ngu101
+  211001_21      idle=28s node=ngu102
+  211001_20      idle=8s node=ngu102
+=== RUNNING PROGRESS ===
+=== ROLE COUNTS ===
+{"missing_by_type": {"aggregation": 9, "evaluation": 600, "hyperparameter": 104, "training": 3}, "missing_total": 716}
+MISSING_TRAINING_COORDINATES: 3
+    N22-TS-AR-L10-H050-S0
+    N22-TS-AR-L10-H075-S0
+    N22-TS-AR-L10-H100-S0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T14:18:29+0800
