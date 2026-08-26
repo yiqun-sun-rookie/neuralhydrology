@@ -1,0 +1,43 @@
+### channel=kalmannet-tukf23 seq=2
+### host=login4
+### started=2026-08-26T16:28:18+0800
+### ---------- output ----------
+=== V5 CSV SEARCH ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/results/10_global_conceptual_model_benchmark/: No such file or directory
+=== MAURER REGION DIRS ===
+01
+02
+03
+04
+05
+06
+07
+08
+09
+10
+11
+12
+13
+14
+15
+16
+17
+18
+=== 27 BASIN FILE CHECK ===
+ok=27 missing=0
+=== SAMPLE FILE HEAD ===
+  44.98
+ 613.00
+ 913874993
+Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SRAD(W/m2)	SWE(mm)	Tmax(C)	Tmin(C)	Vp(Pa)
+=== ATTRS ===
+camels_clim.txt
+camels_geol.txt
+camels_hydro.txt
+camels_name.txt
+camels_soil.txt
+camels_topo.txt
+camels_vege.txt
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:28:19+0800
