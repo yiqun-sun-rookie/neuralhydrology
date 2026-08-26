@@ -1,0 +1,17 @@
+### channel=kalmannet-daily-camels seq=29
+### host=login4
+### started=2026-08-26T14:55:25+0800
+### ---------- output ----------
+SEQ29_A34_JOB212886_IDENTITY experiment_id=DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_MASKED_NSE_SMOKE_V1_20260825_A34 execution_attempt_id=DAILY_CAMELS_NATIVE_KALMANNET_FULL_STATE_A34_INFRA_RETRY3_SEQ28 job_id=212886 run_base=/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry3_20260826
+SEQ29_LIVE_SACCT_BEGIN
+JobIDRaw|JobName|Partition|AllocCPUS|State|ExitCode|Elapsed|ReqMem|AllocTRES|MaxRSS|MaxVMSize
+212886|daily-knet-a34r3|hgpu2p|2|PENDING|0:0|00:00:00|0n|||
+SEQ29_LIVE_SACCT_END exit_code=0
+SEQ29_LIVE_SQUEUE_BEGIN
+JOBID|NAME|STATE|TIME|NODELIST(REASON)
+212886|daily-knet-a34r3|PENDING|0:00|(Priority)
+SEQ29_LIVE_SQUEUE_END exit_code=0
+SEQ29_A34_JOB212886_NON_TERMINAL_STATUS_ONLY state=PENDING sacct_exit=0 squeue_exit=0
+### ---------- end ----------
+### exit_code=75
+### finished=2026-08-26T14:55:25+0800
