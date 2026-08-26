@@ -1,0 +1,71 @@
+### channel=zhenjiang-oyv-n4 seq=10
+### host=login4
+### started=2026-08-26T15:31:09+0800
+### ---------- output ----------
+=== SUBMIT ===
+  hgpu8/ngu201 -> 212913
+  hgpu8/ngu203 -> 212914
+  hgpu2p/ngu001 -> 212915
+=== WAIT (max 3 min) ===
+=== RESULTS ===
+  ============ job 212913 ============
+   212913  pr_ngu201    ngu201   COMPLETED     0:0  00:00:17 
+    NODE=ngu201
+    OS=3.10.0-1160.el7.x86_64
+    NAME="CentOS Linux"
+    GLIBC=ldd (GNU libc) 2.17
+    --- nvidia-smi ---
+    0, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    1, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    2, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    3, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    4, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    5, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    6, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    7, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    python  = 3.11.13
+    platform= Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17
+    torch   = 2.4.0 cuda 12.1 cudnn 90100
+    numpy   = 2.3.3 pandas 2.3.2 scipy 1.16.2 psutil 7.0.0
+    cuda_ok = True
+    gpu_name= NVIDIA A800-SXM4-80GB
+    gpu_cap = [8, 0]
+    gpu_mem = 85174583296
+    threadpool_rows = 2
+        openmp openmp None num_threads= 32
+        blas mkl 2022.1-Product num_threads= 32
+    PROBE_DONE
+  ============ job 212914 ============
+   212914  pr_ngu203    ngu203   COMPLETED     0:0  00:00:11 
+    NODE=ngu203
+    OS=3.10.0-1160.el7.x86_64
+    NAME="CentOS Linux"
+    GLIBC=ldd (GNU libc) 2.17
+    --- nvidia-smi ---
+    0, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    1, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    2, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    3, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    4, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    5, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    6, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    7, NVIDIA A800-SXM4-80GB, 81920 MiB, 535.104.05
+    python  = 3.11.13
+    platform= Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17
+    torch   = 2.4.0 cuda 12.1 cudnn 90100
+    numpy   = 2.3.3 pandas 2.3.2 scipy 1.16.2 psutil 7.0.0
+    cuda_ok = True
+    gpu_name= NVIDIA A800-SXM4-80GB
+    gpu_cap = [8, 0]
+    gpu_mem = 85174583296
+    threadpool_rows = 2
+        openmp openmp None num_threads= 32
+        blas mkl 2022.1-Product num_threads= 32
+    PROBE_DONE
+  ============ job 212915 ============
+   212915  pr_ngu001 None ass+     PENDING     0:0  00:00:00 
+    (no stdout)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T15:34:24+0800
