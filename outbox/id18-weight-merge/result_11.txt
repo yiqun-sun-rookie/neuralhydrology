@@ -1,0 +1,28 @@
+### channel=id18-weight-merge seq=11
+### host=login4
+### started=2026-08-26T18:01:29+0800
+### ---------- output ----------
+=== TM01 A800 STATUS ===
+2026-08-26T18:01:29+0800
+login4
+slurm_load_jobs error: Invalid job id specified
+estimated_start=
+       JobID                JobName  Partition   NodeList          State ExitCode    Elapsed                Start                  End 
+------------ ---------------------- ---------- ---------- -------------- -------- ---------- -------------------- -------------------- 
+      213139         id18_tm01_ties      hgpu8     ngu203         FAILED      1:0   00:00:03  2026-08-26T17:57:06  2026-08-26T17:57:09 
+slurm_load_jobs error: Invalid job id specified
+=== LIVE HGPU8 STATE ===
+ PARTITION     NODELIST    STATE     CPUS             GRES                         REASON
+     hgpu8       ngu201    mixed       64            gpu:8                           none
+     hgpu8       ngu202    mixed       64            gpu:8                           none
+     hgpu8       ngu203    mixed       64            gpu:8                           none
+=== TASK-SCOPED ARTIFACTS ===
+/data1/home/sunyiq/id18_ties_merge_20260826/logs/tm01_slurm_213139.out size=30 mtime=2026-08-26 17:56:45.000000000 +0800
+ABSENT /data1/home/sunyiq/hpc_mailbox/outbox/id18-weight-merge/tm01_slurm_213139.err
+ABSENT /data1/home/sunyiq/id18_ties_merge_20260826/tm01_compact_results.tar.gz
+=== STDOUT TAIL ===
+CUDA_OK NVIDIA A800-SXM4-80GB
+=== TM01 A800 STATUS COMPLETE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:01:29+0800
