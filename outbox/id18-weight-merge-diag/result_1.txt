@@ -1,0 +1,19 @@
+### channel=id18-weight-merge-diag seq=1
+### host=login4
+### started=2026-08-26T15:36:49+0800
+### ---------- output ----------
+=== ID18 SEQ6 READ-ONLY DIAGNOSTIC ===
+2026-08-26T15:36:49+0800
+login4
+STAGED_RESULT_ABSENT
+PERSISTENT_ARCHIVE_ABSENT
+=== STAGED RESULT TAIL ===
+=== RELATED PROCESSES ===
+12251 bash /data1/home/sunyiq/.hpc_runner_active.sh
+48171 bash /data1/home/sunyiq/.hpc_runner_active.sh
+48210 bash /data1/home/sunyiq/.hpc_runner_active.sh
+=== MAILBOX EXACT STATUS ===
+=== DIAGNOSTIC COMPLETE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T15:36:49+0800
