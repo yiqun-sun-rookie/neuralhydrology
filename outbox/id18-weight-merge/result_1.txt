@@ -1,0 +1,218 @@
+### channel=id18-weight-merge seq=1
+### host=login4
+### started=2026-08-26T13:46:57+0800
+### ---------- output ----------
+=== AUDIT IDENTITY ===
+2026-08-26T13:46:57+0800
+login4
+user=sunyiq
+=== RUNNER ===
+17062 bash /data1/home/sunyiq/.hpc_runner_active.sh
+17096 bash /data1/home/sunyiq/.hpc_runner_active.sh
+47306 bash /data1/home/sunyiq/.hpc_runner_active.sh
+=== QUEUE SNAPSHOT ===
+   PARTITION  AVAIL            TIMELIMIT  NODES             NODELIST      STATE
+     hcpu48*     up             infinite     15 icn[202,204-207,210- allocated$
+     hcpu48*     up             infinite     16 icn[203,215,218,224,      down*
+     hcpu48*     up             infinite     25 icn[201,208-209,213,  allocated
+     hcpu48*     up             infinite      8 icn[238,240-241,248,       idle
+     hcpu48y     up             infinite      1               icn281      down$
+     hcpu48y     up             infinite      1               icn280      maint
+     hcpu48y     up             infinite      2         icn[278-279]      down*
+     hcpu48y     up             infinite      2         icn[274,277]      mixed
+     hcpu48y     up             infinite      6 icn[270-273,275-276]       idle
+       hgpu8     up             infinite      3         ngu[201-203]      mixed
+       hgpu4     up             infinite      1               ngu103      down*
+       hgpu4     up             infinite      3     ngu[101-102,104]      mixed
+       hgpu2     up             infinite      1               ngu009      mixed
+       hgpu2     up             infinite      1               ngu003  allocated
+      hgpu2p     up             infinite      1               ngu002      down*
+      hgpu2p     up             infinite      7 ngu[001,004,006-008,      mixed
+      hgpu2p     up             infinite      1               ngu005  allocated
+             JOBID                   NAME  PARTITION    STATE       TIME     NODELIST(REASON)
+202228_[640-659%2]              N22-hyper hgpu4,hgpu  PENDING       0:00  (JobArrayTaskLimit)
+     211001_[22%2]             N22-relong hgpu4,hgpu  PENDING       0:00  (JobArrayTaskLimit)
+            212886       daily-knet-a34r3     hgpu2p  PENDING       0:00           (Priority)
+  202226_[0-119%4]         N22-eval-later hgpu4,hgpu  PENDING       0:00 (DependencyNeverSati
+            202229           N22-agg-eval hgpu4,hgpu  PENDING       0:00         (Dependency)
+            202230          N22-agg-hyper hgpu4,hgpu  PENDING       0:00         (Dependency)
+            202294             N22-export hgpu4,hgpu  PENDING       0:00         (Dependency)
+            202315               N22-gate hgpu4,hgpu  PENDING       0:00         (Dependency)
+            202507       N22-mask-iso-531 hgpu4,hgpu  PENDING       0:00 (DependencyNeverSati
+            202293           N22-manifest hgpu4,hgpu  PENDING       0:00        (JobHeldUser)
+        202228_639              N22-hyper      hgpu4  RUNNING      20:49               ngu104
+        202228_638              N22-hyper      hgpu4  RUNNING    1:50:02               ngu101
+         211001_21             N22-relong      hgpu4  RUNNING    7:17:50               ngu102
+         211001_20             N22-relong      hgpu4  RUNNING 1-20:41:36               ngu102
+=== SHARED REPOSITORY READ-ONLY IDENTITY ===
+branch=migration/reorg-v1
+commit=96703cee48718aa789e72a8148c827601857dd44
+tracked_or_untracked_change_count=78
+remote=git@github.com:yiqun-sun-rookie/neuralhydrology.git
+=== EXACT E01 SOURCE CHECKPOINTS ===
+CHECKPOINT_MISSING=/data1/home/sunyiq/neuralhydrology/runs/e01_loss/nse/E01_internal_holdout_nse_s100_2026_0731_2240_ep30/model_epoch030.pt
+CHECKPOINT_MISSING=/data1/home/sunyiq/neuralhydrology/runs/e01_loss/nse/E01_internal_holdout_nse_s200_2026_0801_1739_ep30/model_epoch030.pt
+CHECKPOINT_MISSING=/data1/home/sunyiq/neuralhydrology/runs/e01_loss/nse/E01_internal_holdout_nse_s300_2026_0801_1936_ep30/model_epoch030.pt
+CHECKPOINT_MISSING=/data1/home/sunyiq/neuralhydrology/runs/e01_loss/flow_regime_nse/E01_internal_holdout_flow_regime_nse_s100_2026_0801_0937_ep30/model_epoch030.pt
+CHECKPOINT_MISSING=/data1/home/sunyiq/neuralhydrology/runs/e01_loss/flow_regime_nse/E01_internal_holdout_flow_regime_nse_s200_2026_0801_1837_ep30/model_epoch030.pt
+CHECKPOINT_MISSING=/data1/home/sunyiq/neuralhydrology/runs/e01_loss/flow_regime_nse/E01_internal_holdout_flow_regime_nse_s300_2026_0801_2106_ep30/model_epoch030.pt
+checkpoint_count=0/6
+=== SHALLOW TASK DIRECTORY CANDIDATES ===
+/data1/home/sunyiq/.hpc_mailbox_staging/id18-loss-arm
+/data1/home/sunyiq/.hpc_mailbox_staging/id18-weight-merge
+/data1/home/sunyiq/id18_e04_20260809
+=== SAFE-DATA MANIFEST NAME CANDIDATES ===
+/data1/home/sunyiq/camels_g2_design_20260808/repo/draft/papers/10_18_conceptual_lstm_package/MANIFEST.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v02/contract_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v02/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/contract_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/formal_contract_sixteen_v05/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/formal_reproduction_session_v01/session_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_reproduction_sharded_v01/aggregation_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/formal_result_sixteen_v01/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/g2_spacing_inputs_v01/manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/g3_ideal_inputs_v01/manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_contract_six_v02/contract_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_contract_six_v02/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_contract_six_v03/contract_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_contract_six_v03/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_result_six_reproduction_v01/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_result_six_reproduction_v01/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_result_six_reproduction_v02/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_result_six_reproduction_v02/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_result_six_v01/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_result_six_v01/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_result_six_v02/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/pilot_result_six_v02/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_contract_04015330_v03/contract_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_contract_04015330_v03/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_contract_04015330_v05/contract_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_contract_04015330_v05/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_contract_04015330_v06/contract_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_contract_04015330_v06/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_result_04015330_reproduction_v01/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_result_04015330_reproduction_v01/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_result_04015330_reproduction_v02/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_result_04015330_reproduction_v02/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_result_04015330_v02/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_result_04015330_v02/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_result_04015330_v03/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/smoke_result_04015330_v03/snapshot_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/state_correction_sixteen_v02/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/state_correction_smoke_v02/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/state_correction_smoke_v05/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/state_correction_smoke_v06/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/results/23_hbv_multilead_joint_uncertainty/state_correction_smoke_v07/result_manifest.json
+/data1/home/sunyiq/camels_g2_design_20260808/repo/src/fair_benchmark/frozen/MANIFEST.sha256
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/masked-nse-physical-evidence-a20-v16/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/native-full-state-a20-contract-a34-infra-retry1-v24/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/native-full-state-a20-contract-a34-infra-retry2-v25/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/native-full-state-a20-contract-a34-infra-retry3-v28/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/native-full-state-a20-contract-a34-v23/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/official-core-a35-one-step-v27/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/official-tsp-gru-causal-fair-a29-objective-gated-v18/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/official-tsp-gru-causal-fair-a30-conda-repair-v19/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/official-tsp-gru-causal-fair-a31-partition-default-v20/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/official-tsp-gru-causal-fair-a32-no-usr-bin-time-v21/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/official-tsp-gru-causal-fair-shared-a33-v22/bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-dtype-repair-v5/A05_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-dtype-repair-v5/A06_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-failclosed-v3/A01_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-failclosed-v3/A02_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-full-training-coverage-v13/A15_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-near-zero-npz-resource-repair-v9/A12_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-repair-v4/A03_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-repair-v4/A04_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-same-segment-diagnostic-v12/A14_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-stable-lr-smoke-v10/A13_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-ten-epoch-full-coverage-v14/A16_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-train-resource-smoke-v7/A07_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-v1/A01_bundle_manifest.sha256.json
+/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-daily-camels/parity-v1/A02_bundle_manifest.sha256.json
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531/E04_daymet_post2008_objective_confirmation_482/analysis_confirmation_20260809/analysis_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_20260824/DAILY_CAMELS_NATIVE_KALMANNET_SMOKE_V1_20260824_A01/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_20260824/source/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_20260824/_transport/bundle_manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_20260825/source_A34_seq23/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry1_20260825/source_A34_infra_retry1_seq24/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry2_20260825/source_A34_infra_retry2_seq25/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry2_20260825/status/job-evidence-manifest-212355.json
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry3_20260826/source_A34_infra_retry3_seq28/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_v3_20260825/DAILY_CAMELS_NATIVE_KALMANNET_MASKED_NSE_SMOKE_V3_20260825_A20/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_v3_20260825/seq16_A20_snapshot_46112/source/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_v3_20260825/seq16_A20_snapshot_46112/transport/bundle_manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_v3_20260825/source_A20_seq16/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_v3_20260825/transport/bundle_manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_core_a35_20260825/runs/DAILY_CAMELS_KNET_OFFICIAL_CORE_FIXED_FULL_TRAINING_COVERAGE_ONE_STEP_V1_20260825_A35/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_core_a35_20260825/source_seq27/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a29_20260825/source_A29_seq18/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a29_20260825/source_A29_seq18/inputs/prepared_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a29_20260825/source_A29_seq18/results/tukf06_full_diagonal_search_head_to_head_v1/selection_manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a30_20260825/source_A30_seq19/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a30_20260825/source_A30_seq19/inputs/prepared_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a30_20260825/source_A30_seq19/results/tukf06_full_diagonal_search_head_to_head_v1/selection_manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a31_20260825/source_A31_seq20/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a31_20260825/source_A31_seq20/inputs/prepared_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a31_20260825/source_A31_seq20/results/tukf06_full_diagonal_search_head_to_head_v1/selection_manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_RESOURCE_SMOKE_V4_20260825_A32/manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_RESOURCE_SMOKE_V4_20260825_A32/prepared_data_snapshot/prepared_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_RESOURCE_SMOKE_V4_20260825_A32/source_snapshot/results/tukf06_full_diagonal_search_head_to_head_v1/selection_manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_RESOURCE_SMOKE_V4_20260825_A32/source_snapshot/source_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825/source_A32_seq21/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825/source_A32_seq21/inputs/prepared_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825/source_A32_seq21/results/tukf06_full_diagonal_search_head_to_head_v1/selection_manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_SHARED_SMOKE_V1_20260825_A33/manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_SHARED_SMOKE_V1_20260825_A33/prepared_data_snapshot/prepared_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_SHARED_SMOKE_V1_20260825_A33/source_snapshot/results/tukf06_full_diagonal_search_head_to_head_v1/selection_manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_SHARED_SMOKE_V1_20260825_A33/source_snapshot/source_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825/source_A33_seq22/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825/source_A33_seq22/inputs/prepared_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825/source_A33_seq22/results/tukf06_full_diagonal_search_head_to_head_v1/selection_manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_ACCUMULATION_SMOKE_V1_20260825_A15/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_KNET_NEAR_ZERO_STABLE_LR_STRICT_SMOKE_V1_20260825_A13/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_KNET_NEAR_ZERO_STRICT_SMOKE_V4_20260825_A12/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_KNET_SAME_SEGMENT_POST_STEP_DIAGNOSTIC_V1_20260825_A14/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq10_snapshot_44732/source/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq11_snapshot_13836/run/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq11_snapshot_13836/source/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq12_snapshot_7876/run/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq12_snapshot_7876/source/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq13_snapshot_9494/source/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq14_snapshot_22156/source/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq15_snapshot_2831/run/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq15_snapshot_2831/source/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq8_snapshot_31232/run/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq8_snapshot_31232/source/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq9_snapshot_10329/run/manifest.sha256.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/seq9_snapshot_10329/source/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A01/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A01_seq4/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A02/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A02_seq4/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A03_seq5/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A04_seq5/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A05_seq6/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A06_seq6/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A07_seq7/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A12_seq8/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A13_seq9/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A14_seq10/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A14_seq11/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A15_seq12/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A16_seq13/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A16_seq14/bundle_manifest.json
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/source_A16_seq15/bundle_manifest.json
+/data1/home/sunyiq/nearing2022_da/closure_20260810/provenance/hpc_camels_us_manifest_v2.json
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/provenance/hpc_camels_us_manifest_v2.json
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/provenance/local_camels_us_manifest_v2.json
+=== LANDING DIRECTORY MUST BE ABSENT ===
+LANDING_ABSENT=/data1/home/sunyiq/id18_weight_merge_20260826
+=== AUDIT COMPLETE: NO HYDROLOGICAL DATA FILE WAS OPENED ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T13:48:58+0800
