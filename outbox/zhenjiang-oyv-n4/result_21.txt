@@ -1,0 +1,16 @@
+### channel=zhenjiang-oyv-n4 seq=21
+### host=login4
+### started=2026-08-26T16:42:22+0800
+### ---------- output ----------
+  launcher rewritten (no head, --id=0 instead)
+=== SUBMIT: six zhenjiang tasks on ngu201, six jiangyin tasks on ngu203 ===
+  ngu201 -> 212946
+  ngu203 -> 212947
+PLATFORM_JOB_IDS= 212946 212947
+   212946    pf_zj   ngu201      FAILED  00:00:25 
+   212947    pf_jy   ngu203      FAILED  00:00:11 
+  n4_tasks: 17 / 1440
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T16:43:02+0800
