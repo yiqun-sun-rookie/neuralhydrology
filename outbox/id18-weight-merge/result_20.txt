@@ -1,0 +1,13 @@
+### channel=id18-weight-merge seq=20
+### host=login4
+### started=2026-08-26T18:54:26+0800
+### ---------- output ----------
+=== TM01 BASE64 RETRIEVAL ===
+2026-08-26T18:54:26+0800
+       JobID                JobName  Partition   NodeList          State ExitCode    Elapsed 
+------------ ---------------------- ---------- ---------- -------------- -------- ---------- 
+      213416          id18_tm01_a8n      hgpu8     ngu203      COMPLETED      0:0   00:24:41 
+TM01_BASE64_READY path=/data1/home/sunyiq/hpc_mailbox/outbox/id18-weight-merge/tm01_compact_results_213416.tar.gz.b64.txt text_size=95938 decoded_sha256=1f47dcd098051cc4476dff0cbbc63e1a5cee4a3ddbe65fbb5390686a188b715b
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-26T18:54:26+0800
