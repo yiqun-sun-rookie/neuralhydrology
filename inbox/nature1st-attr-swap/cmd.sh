@@ -1,37 +1,108 @@
 #!/bin/bash
-# nature1st-attr-swap seq=103 -- let armJ (215195) also use partition hgpu2.
-# MEASURED, not assumed: ngu009 (hgpu2) reports NVIDIA GeForce RTX 3090 / 24576 MiB /
-# driver 535.104.05 -- identical to ngu010 (hgpu2p), where earlier arms ran. ngu101
-# (hgpu4) reports NVIDIA A40 / 46068 MiB, a DIFFERENT card, so hgpu4 and hgpu8 stay out:
-# the effects being judged are 0.005-0.030 wide and must not absorb a hardware change.
-# This is scontrol update on a PENDING job -- no cancel, no resubmit, priority/age kept,
-# job id and log paths unchanged. No new machine time is consumed by the change itself.
+# nature1st-attr-swap seq=104 -- install the seed-43/44 replicate scripts. NOT submitted
+# here: they fire only if the seed-42 run (215195) lands INCONCLUSIVE against armC.
+# User granted standing authorisation for this campaign's GPU submissions on 2026-08-27.
 set -o pipefail
-date "+wallclock %F %T %z"
+RUN=/data1/home/sunyiq/nature_1st
+cd "$RUN" || { echo RUN_DIR_MISSING; exit 1; }
 
-echo "=== A. BEFORE ==="
-squeue -j 215195 -o '%.10i %.22j %.9T %.12P %.20S %.20R' 2>&1
-scontrol show job 215195 2>&1 | grep -E 'Partition=|ExcNodeList|JobState|Reason' | head -4 || true
+echo "=== A. INSTALL ==="
+if [ -f "scripts/hpc_train_q_armJ_s43.sbatch" ]; then echo "  EXISTS, not overwriting: scripts/hpc_train_q_armJ_s43.sbatch"; else
+base64 -d > 'scripts/hpc_train_q_armJ_s43.sbatch' <<'B64_hpc_train_q_armJ_s43'
+IyEvdXNyL2Jpbi9lbnYgYmFzaAojU0JBVENIIC1KIHFfYXJtSl9jaGluYV9taW4xNV9zNDMKI1NCQVRDSCAtcCBoZ3B1MnAsaGdw
+dTIsaGdwdTQKI1NCQVRDSCAtTiAxCiNTQkFUQ0ggLW4gMQojU0JBVENIIC0tY3B1cy1wZXItdGFzaz00CiNTQkFUQ0ggLS1ncmVz
+PWdwdToxCiNTQkFUQ0ggLS1leGNsdWRlPW5ndTAwMgojU0JBVENIIC10IDI0OjAwOjAwCiNTQkFUQ0ggLW8gbG9ncy9hdHRyX3N3
+YXAvYXJtSl9jaGluYV9taW4xNV9zNDMtJWoub3V0CiNTQkFUQ0ggLWUgbG9ncy9hdHRyX3N3YXAvYXJtSl9jaGluYV9taW4xNV9z
+NDMtJWouZXJyCgojIGFybUogcmVwbGljYXRlLCBzZWVkIDQzLiBGaXJlZCBvbmx5IHdoZW4gdGhlIHNlZWQtNDIgcnVuIGxhbmRz
+IElOQ09OQ0xVU0lWRSBhZ2FpbnN0CiMgYXJtQyAtLSB0aGUgcHJlLXJlZ2lzdGVyZWQgcnVsZSBzYXlzIGEgc2luZ2xlIHNlZWQg
+bWF5IG5vdCBzZXR0bGUgaXQuCiMKIyBJZGVudGljYWwgYXR0cmlidXRlIGZpbGVzLCBpZGVudGljYWwgZnJvemVuIGNvbnRyYWN0
+LCBPTkxZIC0tc2VlZCBkaWZmZXJzLgojCiMgUGFydGl0aW9uIGxpc3QgaW5jbHVkZXMgaGdwdTQgKEE0MCkuIFJUWCAzMDkwIGFu
+ZCBBNDAgYXJlIHRoZSBzYW1lIEdBMTAyIEFtcGVyZSBkaWUsCiMgY29tcHV0ZSBjYXBhYmlsaXR5IDguNiwgc2FtZSBkcml2ZXIg
+NTM1LjEwNC4wNSwgc2FtZSBQeVRvcmNoIDIuNC4wIC0tIHRoZSBlYXJsaWVyIGJhbgojIG9uIEE0MCB3YXMgd2l0aGRyYXduIDIw
+MjYtMDgtMjcgYXMgYSBtaXMtYXBwbGllZCBhbmFsb2d5LiBSZXNpZHVhbCBjdUROTiBrZXJuZWwtY2hvaWNlCiMgZHJpZnQgaXMg
+dW5tZWFzdXJlZCBidXQgZXN0aW1hdGVkIGF0IDAuMDAxLTAuMDA1LCBhbiBvcmRlciBiZWxvdyB0aGUgc2VlZCBzcHJlYWQgdGhl
+c2UKIyB0d28gcnVucyBleGlzdCB0byBtZWFzdXJlLiBMZXR0aW5nIGJvdGggc2VlZHMgc3RhcnQgYXQgb25jZSBiZWF0cyBhIHR3
+by1kYXkgcXVldWUgd2FpdC4KIwojIE5PVEUgT04gV0hBVCBUSElTIERPRVMgQU5EIERPRVMgTk9UIE1FQVNVUkU6IGl0IGJvdW5k
+cyBhcm1KJ3Mgb3duIHNlZWQgc3ByZWFkLiBhcm1DCiMgKDAuNjQ2NiksIHRoZSBjb21wYXJpc29uIGJhc2VsaW5lLCBpcyBBTFNP
+IHNpbmdsZS1zZWVkIGFuZCBpdHMgc3ByZWFkIHN0YXlzIHVubWVhc3VyZWQuCiMgQSBmdWxseSBjbGVhbiBhbnN3ZXIgbmVlZHMg
+cmVwbGljYXRlcyBvbiBib3RoIHNpZGVzOyB0aGlzIGlzIHRoZSBwcmUtcmVnaXN0ZXJlZCBoYWxmLgoKc2V0IC1lbyBwaXBlZmFp
+bAoKc291cmNlIC9kYXRhMS9ob21lLyR7VVNFUn0vbWluaWNvbmRhMy9ldGMvcHJvZmlsZS5kL2NvbmRhLnNoIHx8IHNvdXJjZSAk
+SE9NRS9taW5pY29uZGEzL2V0Yy9wcm9maWxlLmQvY29uZGEuc2gKY29uZGEgYWN0aXZhdGUgIiR7Q09OREFfRU5WOi1uaF9maW5h
+bH0iCgpleHBvcnQgTUtMX1RIUkVBRElOR19MQVlFUj1HTlUKZXhwb3J0IE1LTF9TRVJWSUNFX0ZPUkNFX0lOVEVMPTEKZXhwb3J0
+IENVREFfREVWSUNFX09SREVSPVBDSV9CVVNfSUQKCmNkICR7U0xVUk1fU1VCTUlUX0RJUn0KZXhwb3J0IFBZVEhPTlBBVEg9JChw
+d2QpOiRQWVRIT05QQVRICm1rZGlyIC1wIGxvZ3MvYXR0cl9zd2FwCgplY2hvICJbJChkYXRlKV0gSm9iICRTTFVSTV9KT0JfSUQg
+b24gJChob3N0bmFtZSkiCnB5dGhvbiAtYyAiaW1wb3J0IHRvcmNoOyBwcmludChmJ1B5VG9yY2gge3RvcmNoLl9fdmVyc2lvbl9f
+fSwgQ1VEQSB7dG9yY2guY3VkYS5pc19hdmFpbGFibGUoKX0nLCB0b3JjaC5jdWRhLmdldF9kZXZpY2VfbmFtZSgwKSBpZiB0b3Jj
+aC5jdWRhLmlzX2F2YWlsYWJsZSgpIGVsc2UgJycpIgoKcHl0aG9uIC0gPDwnUFlDSEsnIHx8IHsgZWNobyAiW0ZBVEFMXSBubyB1
+c2FibGUgR1BVIG9uICQoaG9zdG5hbWUpIC0tIHJlZnVzaW5nIHRvIHRyYWluIG9uIENQVSI7IGV4aXQgMTsgfQppbXBvcnQgc3lz
+LCB0b3JjaApzeXMuZXhpdCgwIGlmIHRvcmNoLmN1ZGEuaXNfYXZhaWxhYmxlKCkgZWxzZSAxKQpQWUNISwoKc3J1biBweXRob24g
+LXUgc2NyaXB0cy9jaGFpbl90cmFpbl9xX2F0dHJzZXQucHkgICAtLXN0YXRpYyBkYXRhL2ludGVyaW0vc3RhZ2Vfc3RhdGljX2Zl
+YXR1cmVfc3RhdHNfYXJtSi5qc29uICAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRh
+aW5fc3RhdGlvbnNfYXJtSi5jc3YgICAtLW91dHB1dF9kaXIgbW9kZWxzL3FfbHN0bV9hcm1KX2hwY19zNDMgLS1zZWVkIDQzIC0t
+ZXBvY2hzIDQwIC0tbnVtX3dvcmtlcnMgNAoKZWNobyAiWyQoZGF0ZSldIHRyYWluaW5nIGRvbmUiCnNydW4gcHl0aG9uIC11IHNj
+cmlwdHMvY2hhaW5fZXZhbF9xX2F0dHJzZXQucHkgICAtLXN0YXRpYyBkYXRhL2ludGVyaW0vc3RhZ2Vfc3RhdGljX2ZlYXR1cmVf
+c3RhdHNfYXJtSi5qc29uICAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRhaW5fc3Rh
+dGlvbnNfYXJtSi5jc3YgICAtLW1vZGVsX2RpciBtb2RlbHMvcV9sc3RtX2FybUpfaHBjX3M0MyAtLXN1YnNldCB2YWwgLS1tYXhf
+aG91cnMgNDM4MDAKZWNobyAiWyQoZGF0ZSldIERvbmUgKGV4aXQ6ICQ/KSIK
+B64_hpc_train_q_armJ_s43
+chmod 755 'scripts/hpc_train_q_armJ_s43.sbatch'
+fi
+printf "  %-44s %s  expect cbf8ed5c8f1550c2
+" "hpc_train_q_armJ_s43.sbatch" "$(sha256sum 'scripts/hpc_train_q_armJ_s43.sbatch' | cut -c1-16)"
+if [ -f "scripts/hpc_train_q_armJ_s44.sbatch" ]; then echo "  EXISTS, not overwriting: scripts/hpc_train_q_armJ_s44.sbatch"; else
+base64 -d > 'scripts/hpc_train_q_armJ_s44.sbatch' <<'B64_hpc_train_q_armJ_s44'
+IyEvdXNyL2Jpbi9lbnYgYmFzaAojU0JBVENIIC1KIHFfYXJtSl9jaGluYV9taW4xNV9zNDQKI1NCQVRDSCAtcCBoZ3B1MnAsaGdw
+dTIsaGdwdTQKI1NCQVRDSCAtTiAxCiNTQkFUQ0ggLW4gMQojU0JBVENIIC0tY3B1cy1wZXItdGFzaz00CiNTQkFUQ0ggLS1ncmVz
+PWdwdToxCiNTQkFUQ0ggLS1leGNsdWRlPW5ndTAwMgojU0JBVENIIC10IDI0OjAwOjAwCiNTQkFUQ0ggLW8gbG9ncy9hdHRyX3N3
+YXAvYXJtSl9jaGluYV9taW4xNV9zNDQtJWoub3V0CiNTQkFUQ0ggLWUgbG9ncy9hdHRyX3N3YXAvYXJtSl9jaGluYV9taW4xNV9z
+NDQtJWouZXJyCgojIGFybUogcmVwbGljYXRlLCBzZWVkIDQ0LiBGaXJlZCBvbmx5IHdoZW4gdGhlIHNlZWQtNDIgcnVuIGxhbmRz
+IElOQ09OQ0xVU0lWRSBhZ2FpbnN0CiMgYXJtQyAtLSB0aGUgcHJlLXJlZ2lzdGVyZWQgcnVsZSBzYXlzIGEgc2luZ2xlIHNlZWQg
+bWF5IG5vdCBzZXR0bGUgaXQuCiMKIyBJZGVudGljYWwgYXR0cmlidXRlIGZpbGVzLCBpZGVudGljYWwgZnJvemVuIGNvbnRyYWN0
+LCBPTkxZIC0tc2VlZCBkaWZmZXJzLgojCiMgUGFydGl0aW9uIGxpc3QgaW5jbHVkZXMgaGdwdTQgKEE0MCkuIFJUWCAzMDkwIGFu
+ZCBBNDAgYXJlIHRoZSBzYW1lIEdBMTAyIEFtcGVyZSBkaWUsCiMgY29tcHV0ZSBjYXBhYmlsaXR5IDguNiwgc2FtZSBkcml2ZXIg
+NTM1LjEwNC4wNSwgc2FtZSBQeVRvcmNoIDIuNC4wIC0tIHRoZSBlYXJsaWVyIGJhbgojIG9uIEE0MCB3YXMgd2l0aGRyYXduIDIw
+MjYtMDgtMjcgYXMgYSBtaXMtYXBwbGllZCBhbmFsb2d5LiBSZXNpZHVhbCBjdUROTiBrZXJuZWwtY2hvaWNlCiMgZHJpZnQgaXMg
+dW5tZWFzdXJlZCBidXQgZXN0aW1hdGVkIGF0IDAuMDAxLTAuMDA1LCBhbiBvcmRlciBiZWxvdyB0aGUgc2VlZCBzcHJlYWQgdGhl
+c2UKIyB0d28gcnVucyBleGlzdCB0byBtZWFzdXJlLiBMZXR0aW5nIGJvdGggc2VlZHMgc3RhcnQgYXQgb25jZSBiZWF0cyBhIHR3
+by1kYXkgcXVldWUgd2FpdC4KIwojIE5PVEUgT04gV0hBVCBUSElTIERPRVMgQU5EIERPRVMgTk9UIE1FQVNVUkU6IGl0IGJvdW5k
+cyBhcm1KJ3Mgb3duIHNlZWQgc3ByZWFkLiBhcm1DCiMgKDAuNjQ2NiksIHRoZSBjb21wYXJpc29uIGJhc2VsaW5lLCBpcyBBTFNP
+IHNpbmdsZS1zZWVkIGFuZCBpdHMgc3ByZWFkIHN0YXlzIHVubWVhc3VyZWQuCiMgQSBmdWxseSBjbGVhbiBhbnN3ZXIgbmVlZHMg
+cmVwbGljYXRlcyBvbiBib3RoIHNpZGVzOyB0aGlzIGlzIHRoZSBwcmUtcmVnaXN0ZXJlZCBoYWxmLgoKc2V0IC1lbyBwaXBlZmFp
+bAoKc291cmNlIC9kYXRhMS9ob21lLyR7VVNFUn0vbWluaWNvbmRhMy9ldGMvcHJvZmlsZS5kL2NvbmRhLnNoIHx8IHNvdXJjZSAk
+SE9NRS9taW5pY29uZGEzL2V0Yy9wcm9maWxlLmQvY29uZGEuc2gKY29uZGEgYWN0aXZhdGUgIiR7Q09OREFfRU5WOi1uaF9maW5h
+bH0iCgpleHBvcnQgTUtMX1RIUkVBRElOR19MQVlFUj1HTlUKZXhwb3J0IE1LTF9TRVJWSUNFX0ZPUkNFX0lOVEVMPTEKZXhwb3J0
+IENVREFfREVWSUNFX09SREVSPVBDSV9CVVNfSUQKCmNkICR7U0xVUk1fU1VCTUlUX0RJUn0KZXhwb3J0IFBZVEhPTlBBVEg9JChw
+d2QpOiRQWVRIT05QQVRICm1rZGlyIC1wIGxvZ3MvYXR0cl9zd2FwCgplY2hvICJbJChkYXRlKV0gSm9iICRTTFVSTV9KT0JfSUQg
+b24gJChob3N0bmFtZSkiCnB5dGhvbiAtYyAiaW1wb3J0IHRvcmNoOyBwcmludChmJ1B5VG9yY2gge3RvcmNoLl9fdmVyc2lvbl9f
+fSwgQ1VEQSB7dG9yY2guY3VkYS5pc19hdmFpbGFibGUoKX0nLCB0b3JjaC5jdWRhLmdldF9kZXZpY2VfbmFtZSgwKSBpZiB0b3Jj
+aC5jdWRhLmlzX2F2YWlsYWJsZSgpIGVsc2UgJycpIgoKcHl0aG9uIC0gPDwnUFlDSEsnIHx8IHsgZWNobyAiW0ZBVEFMXSBubyB1
+c2FibGUgR1BVIG9uICQoaG9zdG5hbWUpIC0tIHJlZnVzaW5nIHRvIHRyYWluIG9uIENQVSI7IGV4aXQgMTsgfQppbXBvcnQgc3lz
+LCB0b3JjaApzeXMuZXhpdCgwIGlmIHRvcmNoLmN1ZGEuaXNfYXZhaWxhYmxlKCkgZWxzZSAxKQpQWUNISwoKc3J1biBweXRob24g
+LXUgc2NyaXB0cy9jaGFpbl90cmFpbl9xX2F0dHJzZXQucHkgICAtLXN0YXRpYyBkYXRhL2ludGVyaW0vc3RhZ2Vfc3RhdGljX2Zl
+YXR1cmVfc3RhdHNfYXJtSi5qc29uICAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRh
+aW5fc3RhdGlvbnNfYXJtSi5jc3YgICAtLW91dHB1dF9kaXIgbW9kZWxzL3FfbHN0bV9hcm1KX2hwY19zNDQgLS1zZWVkIDQ0IC0t
+ZXBvY2hzIDQwIC0tbnVtX3dvcmtlcnMgNAoKZWNobyAiWyQoZGF0ZSldIHRyYWluaW5nIGRvbmUiCnNydW4gcHl0aG9uIC11IHNj
+cmlwdHMvY2hhaW5fZXZhbF9xX2F0dHJzZXQucHkgICAtLXN0YXRpYyBkYXRhL2ludGVyaW0vc3RhZ2Vfc3RhdGljX2ZlYXR1cmVf
+c3RhdHNfYXJtSi5qc29uICAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRhaW5fc3Rh
+dGlvbnNfYXJtSi5jc3YgICAtLW1vZGVsX2RpciBtb2RlbHMvcV9sc3RtX2FybUpfaHBjX3M0NCAtLXN1YnNldCB2YWwgLS1tYXhf
+aG91cnMgNDM4MDAKZWNobyAiWyQoZGF0ZSldIERvbmUgKGV4aXQ6ICQ/KSIK
+B64_hpc_train_q_armJ_s44
+chmod 755 'scripts/hpc_train_q_armJ_s44.sbatch'
+fi
+printf "  %-44s %s  expect 1f3dba3695439a6d
+" "hpc_train_q_armJ_s44.sbatch" "$(sha256sum 'scripts/hpc_train_q_armJ_s44.sbatch' | cut -c1-16)"
 
-echo "=== B. WIDEN PARTITION LIST ==="
-scontrol update JobId=215195 Partition=hgpu2p,hgpu2 2>&1 && echo '  update accepted' || echo '  UPDATE REFUSED'
+echo "=== B. SANITY: seeds and output dirs distinct, attribute files shared ==="
+grep -hE '^#SBATCH -J|^#SBATCH -p|--seed|--output_dir' scripts/hpc_train_q_armJ_s4*.sbatch 2>&1 | sed 's/  */ /g' | head -12
 
-echo "=== C. AFTER (wait 30s for the scheduler to re-evaluate) ==="
-sleep 30
-squeue -j 215195 -o '%.10i %.22j %.9T %.12P %.10M %.9N %.24R %.20S' 2>&1
-scontrol show job 215195 2>&1 | grep -E 'Partition=|JobState|Reason|StartTime|NodeList' | head -5 || true
+echo "=== C. armJ SEED 42 PROGRESS ==="
+squeue -j 215195 -o '%.10i %.9T %.10P %.10M %.9N' 2>&1
+f=logs/attr_swap/armJ_china_min15-215195.out
+if [ -f "$f" ]; then
+  echo "  log $(stat -c%s "$f") bytes, touched $(stat -c%y "$f" | cut -c1-19)"
+  grep -E "\[guard\]|^Epoch|Best val median NSE|Done\." "$f" 2>/dev/null | tail -6 || true
+else echo '  (no log yet)'; fi
 
-echo "=== D. IF STILL PENDING, WAIT A BIT MORE ==="
-for i in $(seq 1 12); do
-  ST=$(squeue -j 215195 -h -o '%T' 2>/dev/null)
-  [ "$ST" = 'RUNNING' ] && { echo "  started at t=$((i*10))s"; break; }
-  [ -z "$ST" ] && { echo '  no longer in queue'; break; }
-  [ $((i % 3)) -eq 0 ] && echo "  t=$((i*10))s state=$ST"
-  sleep 10
-done
-squeue -j 215195 -o '%.10i %.9T %.12P %.10M %.9N %.24R' 2>&1
-
-echo "=== E. GUARD CHECK IF IT STARTED ==="
-f=$(ls /data1/home/sunyiq/nature_1st/logs/attr_swap/armJ_china_min15-215195.out 2>/dev/null | head -1)
-if [ -n "$f" ]; then echo "  log: $f ($(stat -c%s "$f") bytes)"; grep -E "\[guard\]|PyTorch|Epoch" "$f" 2>/dev/null | head -5 || true; else echo "  (no log yet)"; fi
-echo "=== END seq=103 ==="
+echo "=== D. IDLE GPU CAPACITY (for the parallel seed runs) ==="
+sinfo -p hgpu2p,hgpu2,hgpu4 -o '%.10P %.8t %.6D %N' 2>&1 | head -10
+echo "=== END seq=104 ==="
