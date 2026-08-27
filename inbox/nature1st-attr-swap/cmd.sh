@@ -1,39 +1,30 @@
 #!/bin/bash
-# nature1st-attr-swap seq=99 -- READ-ONLY. Two questions:
-#  (1) do hgpu4 / hgpu2 / hgpu8 carry the SAME gpu model as hgpu2p? If not, moving
-#      armJ there breaks comparability with the eight arms already run on hgpu2p.
-#  (2) what is job 215178 (my own job blocking armJ), and are hgpu2p's GPUs actually
-#      all busy, or only its CPUs partly used?
+# nature1st-attr-swap seq=100 -- READ-ONLY. Did armJ start? And can I identify the
+# GPU model on the idle nodes WITHOUT submitting anything?
 set -o pipefail
 date "+wallclock %F %T %z"
 
-echo "=== A. GPU MODEL PER PARTITION (the decisive question) ==="
-for n in ngu001 ngu004 ngu005 ngu006 ngu007 ngu008 ngu010 ngu011 ngu003 ngu009 ngu101 ngu102 ngu104 ngu201 ngu202 ngu203 ; do
-  line=$(scontrol show node $n 2>/dev/null | tr '
-' ' ')
-  part=$(echo "$line" | grep -oE 'Partitions=[^ ]+' | cut -d= -f2)
-  gres=$(echo "$line" | grep -oE 'Gres=[^ ]+' | cut -d= -f2)
-  st=$(echo "$line"   | grep -oE 'State=[^ ]+' | cut -d= -f2)
-  agres=$(echo "$line"| grep -oE 'AllocTRES=[^ ]*' | cut -d= -f2)
-  printf '  %-8s %-10s %-14s %-12s alloc=%s
-' "$n" "$part" "$gres" "$st" "${agres:-none}"
+echo "=== A. armJ NOW ==="
+squeue -j 215195 -o '%.10i %.22j %.9T %.10M %.9N %.26R %.20S' 2>&1
+sacct -j 215195 -X --format=JobID%10,State%12,Elapsed%11,NodeList%9 2>&1
+
+echo "=== B. WHOLE hgpu2p QUEUE (is anything ahead of me?) ==="
+squeue -p hgpu2p -o '%.10i %.9u %.9T %.10M %.9N %.18R %.10Q' 2>&1 | head -12
+echo '-- gpu allocation per hgpu2p node --'
+scontrol show node ngu001 ngu004 ngu005 ngu006 ngu007 ngu008 ngu010 ngu011 2>&1 | grep -E 'NodeName|AllocTRES|State=' | paste - - - 2>/dev/null | head -10 || true
+
+echo "=== C. GPU MODEL WITHOUT SUBMITTING: any record on shared filesystem? ==="
+echo '-- old node-test outputs that may name the card --'
+grep -ril 'NVIDIA\|GeForce\|RTX\|A100\|A800\|V100\|Tesla' /data1/home/sunyiq/hpc_mailbox/outbox/*.out 2>/dev/null | head -5 || echo '  (none)'
+for f in $(ls -t /data1/home/sunyiq/hpc_mailbox/outbox/slurm_*.out 2>/dev/null | head -8); do
+  hit=$(grep -m1 -E 'NVIDIA|GeForce|RTX|A100|A800|V100|Tesla' "$f" 2>/dev/null || true)
+  [ -n "$hit" ] && printf '  %-52s %s
+' "$(basename $f)" "$hit"
 done
+echo '-- any nvidia-smi capture anywhere in my logs --'
+grep -rh -m1 -E 'NVIDIA-SMI|Product Name|GeForce RTX|A800|A100' /data1/home/sunyiq/nature_1st/logs/attr_swap/*.err 2>/dev/null | head -3 || echo '  (nothing in arm logs)'
 
-echo "=== B. WHICH NODES DID THE EIGHT FINISHED ARMS RUN ON? ==="
-sacct -S 2026-08-18 -u $USER -X --format=JobID%10,JobName%24,State%11,NodeList%9,Elapsed%11 2>&1 | grep -E 'q_ctrl|q_treat|q_arm|JobID|^---' | head -14 || true
-
-echo "=== C. ARE hgpu2p GPUs ACTUALLY ALL TAKEN? ==="
-echo '-- gres alloc vs total, per hgpu2p node --'
-sinfo -p hgpu2p -N -o '%.9N %.8t %.16G %.34e' 2>&1 | head -12
-echo '-- running jobs in hgpu2p and their gpu request --'
-squeue -p hgpu2p -t RUNNING -o '%.10i %.9u %.20j %.10M %.8N %.14b' 2>&1 | head -15
-
-echo "=== D. WHAT IS JOB 215178 (blocking armJ)? ==="
-scontrol show job 215178 2>&1 | grep -E 'JobName|JobState|Reason|Partition|StartTime|TRES=|NumNodes|TimeLimit|WorkDir' | head -10 || true
-
-echo "=== E. IF I ALSO OFFERED hgpu4/hgpu2, WHEN WOULD armJ START? (simulation, no change) ==="
-echo '-- current estimate on hgpu2p only --'
-squeue -j 215195 -o '%.10i %.9T %.20S %.24R' 2>&1
-echo '-- idle GPU capacity elsewhere right now --'
-sinfo -p hgpu4,hgpu2,hgpu8 -N -o '%.9N %.10P %.8t %.16G %.14C' 2>&1 | head -14
-echo "=== END seq=99 ==="
+echo "=== D. DOES SLURM RECORD A GPU TYPE ANYWHERE? ==="
+scontrol show config 2>&1 | grep -iE 'GresTypes|AccountingStorageTRES' | head -4 || true
+sacct -j 206175,211317 -X --format=JobID%10,NodeList%9,AllocTRES%60 2>&1 | head -6
+echo "=== END seq=100 ==="
