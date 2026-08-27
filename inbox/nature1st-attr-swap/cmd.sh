@@ -1,101 +1,118 @@
 #!/bin/bash
-# nature1st-attr-swap seq=96 -- READ-ONLY watchdog for armI (job 211317). NO sbatch, NO compute.
+# nature1st-attr-swap seq=97 -- build armJ (15 attrs, fully China-supplyable) AND submit.
+# armJ = armI minus its two US-database columns (dam storage, soil permeability),
+# plus global lake/reservoir volume. Slope handling left exactly as armI had it.
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
-J=211317
 cd "$RUN" || { echo RUN_DIR_MISSING; exit 1; }
-date "+wallclock %F %T %z"
-echo "=== A. STATE ==="
-squeue -j $J -o '%.10i %.24j %.10T %.10M %.22R' 2>&1
-sacct -j $J -X --format=JobID%10,JobName%22,State%12,ExitCode%8,Elapsed%11,NodeList%9 2>&1
 
-echo "=== B. GUARD (must say 16 attributes) ==="
-f=logs/attr_swap/armI_no_neardam-${J}.out
-e=logs/attr_swap/armI_no_neardam-${J}.err
-if [ ! -f "$f" ]; then echo "(no stdout log)"; else
-  grep -E "\[guard\]" "$f" 2>/dev/null | head -4 || true
-  echo "log bytes: $(stat -c%s "$f")  last touched: $(stat -c%y "$f" | cut -c1-19)"
+echo "=== A. INSTALL SBATCH ==="
+if [ -f "scripts/hpc_train_q_armJ_china_min15.sbatch" ]; then echo "EXISTS, not overwriting"; else
+base64 -d > 'scripts/hpc_train_q_armJ_china_min15.sbatch' <<'B64_ARMJ'
+IyEvdXNyL2Jpbi9lbnYgYmFzaAojU0JBVENIIC1KIHFfYXJtSl9jaGluYV9taW4xNQojU0JBVENIIC1wIGhncHUycAojU0JBVENI
+IC1OIDEKI1NCQVRDSCAtbiAxCiNTQkFUQ0ggLS1jcHVzLXBlci10YXNrPTQKI1NCQVRDSCAtLWdyZXM9Z3B1OjEKI1NCQVRDSCAt
+LWV4Y2x1ZGU9bmd1MDAyICAgIyBkb2N1bWVudGVkIGJhZCBub2RlOiBudmlkaWEtc21pIHNlZXMgMSBvZiAyIGNhcmRzLAogICAg
+ICAgICAgICAgICAgICAgICAgICAgICAjIHRvcmNoIHJlcG9ydHMgQ1VEQSB1bmtub3duIGVycm9yLiBNVVNUIGJlIGEgZGlyZWN0
+aXZlOgogICAgICAgICAgICAgICAgICAgICAgICAgICAjIG9uIHRoZSBjb21tYW5kIGxpbmUgdGhlIHhiYXRjaCB3cmFwcGVyIHNp
+bGVudGx5IGRyb3BzIGl0LgojU0JBVENIIC10IDI0OjAwOjAwCiNTQkFUQ0ggLW8gbG9ncy9hdHRyX3N3YXAvYXJtSl9jaGluYV9t
+aW4xNS0lai5vdXQKI1NCQVRDSCAtZSBsb2dzL2F0dHJfc3dhcC9hcm1KX2NoaW5hX21pbjE1LSVqLmVycgoKIyBBUk0gSjogdGhl
+IGZpcnN0IGF0dHJpYnV0ZSBzZXQgaW4gdGhpcyBjYW1wYWlnbiB0aGF0IENoaW5hIGNhbiBwb3B1bGF0ZSBFTkQgVE8gRU5ELgoj
+IDE1IGF0dHJpYnV0ZXMgPSBhcm1JJ3MgMTYgd2l0aCBpdHMgdHdvIFVTLWRhdGFiYXNlIGNvbHVtbnMgc3dhcHBlZCBvdXQgYW5k
+IG5vdGhpbmcKIyBlbHNlIHRvdWNoZWQuCiMKIyAgIHJlbW92ZWQgIGdhZ2VpaV9IeWRyb01vZF9EYW1zX1NUT1JfTklEXzIwMDkg
+IChVUyBOYXRpb25hbCBJbnZlbnRvcnkgb2YgRGFtcykKIyAgIHJlbW92ZWQgIGdhZ2VpaV9Tb2lsc19QRVJNQVZFICAgICAgICAg
+ICAgICAgIChVUyBzb2lsIGRhdGFiYXNlKQojICAgYWRkZWQgICAgbGt2X21jX3VzdSAgICAgICAgICAgICAgICAgICAgICAgICAg
+KEh5ZHJvQVRMQVMgbGFrZS9yZXNlcnZvaXIgdm9sdW1lLCBnbG9iYWwpCiMKIyBnYWdlaWlfQmFzaW5JRF9EUkFJTl9TUUtNIHN0
+YXlzOiBpdCBpcyBhIFVTIGNvbHVtbiBvbmx5IGJ5IHByb3ZlbmFuY2UuIENoaW5hIGNvbXB1dGVzCiMgdGhlIHNhbWUgcXVhbnRp
+dHkgaXRzZWxmIC0tIGNoaW5hX2ZvdW5kYXRpb24vZGVsaW5lYXRlLnB5IHB1dHMgOTkuMyUgb2YgNjAwIHNhbXBsZQojIGJhc2lu
+cyB3aXRoaW4gMSUgb2YgdGhlIGxheWVyJ3Mgb3duIHVwc3RyZWFtLWFyZWEgdHJ1dGguCiMKIyBXSFkgVEhJUyBBUk0sIEFORCBX
+SFkgTk9XLgojICAgYXJtRiAoMTcpIHRpZWQgdGhlIFVTLXByb3ByaWV0YXJ5IGNvbnRyb2w6IHBhaXJlZCAtMC4wMDQ2IFstMC4w
+MTM4LCArMC4wMDI5XS4KIyAgIGFybUkgKDE2KSA9IGFybUYgbWludXMgZGlzdGFuY2UtdG8tbmVhcmVzdC1kYW0uIEl0IGNvc3Qg
+Tk9USElORyAocGFpcmVkICswLjAwMTEKIyAgICAgWy0wLjAwNTgsICswLjAxNDZdIHZzIGFybUYpIGFuZCBpdCBQQVNTRUQgdGhl
+IHN1ZmZpY2llbmN5IHJ1bGUgYWdhaW5zdCBhcm1DOgojICAgICBwYWlyZWQgLTAuMDA0OCBbLTAuMDExOCwgKzAuMDA0OF0sIDE1
+LjUlIG9mIHN0YXRpb25zIGRyb3BwaW5nIG1vcmUgdGhhbiAwLjEwLgojICAgYXJtRyAoMTcpLCB0aGUgZWFybGllciBDaGluYSBh
+dHRlbXB0LCBGQUlMRUQgdGhhdCBydWxlICgtMC4wMjc2LCAzMS44JSkgLS0gYnV0IGl0CiMgICAgIGNoYW5nZWQgdGhyZWUgdGhp
+bmdzIGF0IG9uY2UsIGluY2x1ZGluZyByZXBsYWNpbmcgdGhlIGdsb2JhbCBzbG9wZSBjb2x1bW4gd2l0aAojICAgICB0aHJlZSBz
+dWJzdGl0dXRlcy4gYXJtSSB2cyBhcm1HIGlzICswLjAyNTYgWyswLjAxMzYsICswLjAzNzNdLCBhbmQgaW4gdGhlIGFyaWQKIyAg
+ICAgc3RyYXR1bSAtLSBleGFjdGx5IENoaW5hJ3MgdGFyZ2V0IHJlZ2lvbiAtLSBpdCBpcyArMC4wNTQwIChuPTE3OCkuCiMgICBT
+byB0aGUgc3VzcGljaW9uIGlzIHRoYXQgYXJtRydzIGxvc3MgY2FtZSBmcm9tIHRoZSBzbG9wZSByZXdyaXRlLCBub3QgZnJvbSB0
+aGUKIyAgIGRhbS9zb2lsIHN1YnN0aXR1dGlvbnMuIGFybUogbGVhdmVzIHNsb3BlIGFsb25lIGFuZCBjaGFuZ2VzIG9ubHkgd2hh
+dCBDaGluYSBtdXN0LgojCiMgUFJFLVJFR0lTVEVSRUQsIHdyaXR0ZW4gYmVmb3JlIHRoZSBydW4sIG5vdCB0byBiZSByZW5lZ290
+aWF0ZWQgYWZ0ZXIgc2VlaW5nIG51bWJlcnMuCiMKIyBQUklNQVJZIC0tIHBhaXJlZCBwZXItc3RhdGlvbiBhZ2FpbnN0IGFybUMg
+KDAuNjQ2NiksIHRoZSBzYW1lIHJ1bGUgYXJtRyBmYWlsZWQgYW5kCiMgYXJtSSBwYXNzZWQ6CiMgICBnb29kIGVub3VnaCA6IHBh
+aXJlZCBtZWRpYW4gPj0gLTAuMDEwIEFORCBzaGFyZSBkcm9wcGluZyA+MC4xMCA8PSAyMCUKIyAgIHJlamVjdGVkICAgIDogcGFp
+cmVkIG1lZGlhbiA8ICAtMC4wMzAgT1IgIHRoYXQgc2hhcmUgPiAzNSUKIyAgIG90aGVyd2lzZSB1bmRlY2lkZWQgLT4gc2VlZHMg
+NDMvNDQ7IGEgc2luZ2xlIHNlZWQgbWF5IE5PVCBzZXR0bGUgaXQKIwojIFNFQ09OREFSWSAtLSBwYWlyZWQgYWdhaW5zdCBhcm1J
+ICgwLjYzODMpLCB3aGF0IHRoZSB0d28gc3dhcHMgY29zdDoKIyAgIHRoZSBzd2FwcyBhcmUgZnJlZSAgICAgIDogfHBhaXJlZCBt
+ZWRpYW58IDw9IDAuMDA1CiMgICB0aGUgc3dhcHMgY29zdCByZWFsIHNraWxsOiBwYWlyZWQgbWVkaWFuIDw9IC0wLjAxNQojCiMg
+VEhJUkQgLS0gcGFpcmVkIGFnYWluc3QgYXJtRyAoMC42Mjk5KSwgZG9lcyBsZWF2aW5nIHNsb3BlIGFsb25lIGhlbHA6CiMgICA+
+PSArMC4wMTUgY29uZmlybXMgdGhlIHNsb3BlIHJld3JpdGUgd2FzIGFybUcncyBwcm9ibGVtCiMgICA8PSArMC4wMDUgbWVhbnMg
+c2xvcGUgd2FzIG5vdCBpdCwgYW5kIHRoZSBsb3NzIGlzIGluIHRoZSBkYW0vc29pbCBzdWJzdGl0dXRpb25zCiMgICAgIGFmdGVy
+IGFsbCAtLSB3aGljaCBhcm1KIHdvdWxkIHRoZW4gYWxzbyBjYXJyeS4KIwojIElmIGFybUogcGFzc2VzIHRoZSBwcmltYXJ5IHJ1
+bGUsIHRoZSBhdHRyaWJ1dGUgcXVlc3Rpb24gZm9yIENoaW5hIGlzIENMT1NFRDogZXZlcnkKIyBvbmUgb2YgaXRzIDE1IGNvbHVt
+bnMgaXMgb2J0YWluYWJsZSBpbiBDaGluYSB1bmRlciB0aGUgc2FtZSBkZWZpbml0aW9uIGFzIGhlcmUuCiMKIyBTYW1lIDQwLWVw
+b2NoIGNhcCBhbmQgc2FtZSBmcm96ZW4gY29udHJhY3QgYXMgZXZlcnkgb3RoZXIgYXJtIG9mIHRoaXMgY2FtcGFpZ24gLS0KIyBj
+aGFuZ2UgdGhlIGNhcCBpbiBvbmUgYW5kIHlvdSBtdXN0IGNoYW5nZSBpdCBpbiBhbGwsIG9yIHRoZSBjb21wYXJpc29uIGlzIHZv
+aWQuCgpzZXQgLWVvIHBpcGVmYWlsCgpzb3VyY2UgL2RhdGExL2hvbWUvJHtVU0VSfS9taW5pY29uZGEzL2V0Yy9wcm9maWxlLmQv
+Y29uZGEuc2ggfHwgc291cmNlICRIT01FL21pbmljb25kYTMvZXRjL3Byb2ZpbGUuZC9jb25kYS5zaApjb25kYSBhY3RpdmF0ZSAi
+JHtDT05EQV9FTlY6LW5oX2ZpbmFsfSIKCmV4cG9ydCBNS0xfVEhSRUFESU5HX0xBWUVSPUdOVQpleHBvcnQgTUtMX1NFUlZJQ0Vf
+Rk9SQ0VfSU5URUw9MQpleHBvcnQgQ1VEQV9ERVZJQ0VfT1JERVI9UENJX0JVU19JRAoKY2QgJHtTTFVSTV9TVUJNSVRfRElSfQpl
+eHBvcnQgUFlUSE9OUEFUSD0kKHB3ZCk6JFBZVEhPTlBBVEgKbWtkaXIgLXAgbG9ncy9hdHRyX3N3YXAKCmVjaG8gIlskKGRhdGUp
+XSBKb2IgJFNMVVJNX0pPQl9JRCBvbiAkKGhvc3RuYW1lKSIKcHl0aG9uIC1jICJpbXBvcnQgdG9yY2g7IHByaW50KGYnUHlUb3Jj
+aCB7dG9yY2guX192ZXJzaW9uX199LCBDVURBIHt0b3JjaC5jdWRhLmlzX2F2YWlsYWJsZSgpfScpIgoKIyBGYWlsIGZhc3QgaWYg
+dGhpcyBub2RlIGhhcyBubyB1c2FibGUgR1BVLiBXaXRob3V0IHRoaXMgdGhlIHRyYWluaW5nIHNpbGVudGx5IGZhbGxzCiMgYmFj
+ayB0byBDUFUgYW5kIGJ1cm5zIGRheXMgcHJvZHVjaW5nIG5vdGhpbmcgLS0gam9icyAyMDU4NDggLyAyMDU4NTQgb24gMjAyNi0w
+OC0xOS4KcHl0aG9uIC0gPDwnUFlDSEsnIHx8IHsgZWNobyAiW0ZBVEFMXSBubyB1c2FibGUgR1BVIG9uICQoaG9zdG5hbWUpIC0t
+IHJlZnVzaW5nIHRvIHRyYWluIG9uIENQVSI7IGV4aXQgMTsgfQppbXBvcnQgc3lzLCB0b3JjaApzeXMuZXhpdCgwIGlmIHRvcmNo
+LmN1ZGEuaXNfYXZhaWxhYmxlKCkgZWxzZSAxKQpQWUNISwoKc3J1biBweXRob24gLXUgc2NyaXB0cy9jaGFpbl90cmFpbl9xX2F0
+dHJzZXQucHkgXAogIC0tc3RhdGljIGRhdGEvaW50ZXJpbS9zdGFnZV9zdGF0aWNfZmVhdHVyZV9zdGF0c19hcm1KLmpzb24gXAog
+IC0tbWV0YSBkYXRhL3Byb2Nlc3NlZC9zdGF0aW9uX21ldGEvdHJhaW5hYmxlX21vdW50YWluX3N0YXRpb25zX2FybUouY3N2IFwK
+ICAtLW91dHB1dF9kaXIgbW9kZWxzL3FfbHN0bV9hcm1KX2hwY19zNDIgLS1zZWVkIDQyIC0tZXBvY2hzIDQwIC0tbnVtX3dvcmtl
+cnMgNAoKZWNobyAiWyQoZGF0ZSldIHRyYWluaW5nIGRvbmUiCnNydW4gcHl0aG9uIC11IHNjcmlwdHMvY2hhaW5fZXZhbF9xX2F0
+dHJzZXQucHkgXAogIC0tc3RhdGljIGRhdGEvaW50ZXJpbS9zdGFnZV9zdGF0aWNfZmVhdHVyZV9zdGF0c19hcm1KLmpzb24gXAog
+IC0tbWV0YSBkYXRhL3Byb2Nlc3NlZC9zdGF0aW9uX21ldGEvdHJhaW5hYmxlX21vdW50YWluX3N0YXRpb25zX2FybUouY3N2IFwK
+ICAtLW1vZGVsX2RpciBtb2RlbHMvcV9sc3RtX2FybUpfaHBjX3M0MiAtLXN1YnNldCB2YWwgLS1tYXhfaG91cnMgNDM4MDAKZWNo
+byAiWyQoZGF0ZSldIERvbmUgKGV4aXQ6ICQ/KSIK
+B64_ARMJ
+chmod 755 'scripts/hpc_train_q_armJ_china_min15.sbatch'
+fi
+printf "  sbatch %s  expect 21bf4532f1bc1dc5
+" "$(sha256sum 'scripts/hpc_train_q_armJ_china_min15.sbatch' | cut -c1-16)"
+
+echo "=== B. BUILD armJ ==="
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null
+conda activate nh_final 2>/dev/null
+if [ -f data/interim/stage_static_feature_stats_armJ.json ]; then echo '(already built)'; else
+python -u scripts/chain_prepare_attrset_extended.py --name armJ --attrs 'slp_dg_uav,ele_mt_sav,ele_mt_smn,ele_mt_smx,urb_pc_use,dor_pc_pva,cly_pc_uav,snd_pc_uav,kar_pc_use,swc_pc_syr,gwt_cm_sav,ari_ix_uav,for_pc_use,gageii_BasinID_DRAIN_SQKM,lkv_mc_usu' 2>&1 | tail -22
 fi
 
-echo "=== C. ERRORS ==="
-for g in "$f" "$e"; do [ -f "$g" ] && { echo "-- $g ($(stat -c%s "$g") bytes, touched $(stat -c%y "$g" | cut -c1-19)) --"; grep -E "RuntimeError|Traceback|CUDA|FATAL|Killed|out of memory" "$g" 2>/dev/null | head -10 || true; }; done
+echo "=== C. FINGERPRINTS vs WORKSTATION ==="
+sha256sum data/interim/stage_static_feature_stats_armJ.json \
+          data/processed/station_meta/trainable_mountain_stations_armJ.csv 2>&1 | cut -c1-16,65-
+echo "workstation: stats 92a904034fc892e7 / meta afb20a4ebb36cd5a"
 
-echo "=== D. PROGRESS ==="
-[ -f "$f" ] && { grep -E "^Epoch|Best val median NSE|Done\." "$f" 2>/dev/null | tail -10 || true; }
+echo "=== D. armJ IS armI MINUS 2 PLUS 1? ==="
+python - <<'PY' 2>&1
+import json
+I=json.load(open('data/interim/stage_static_feature_stats_armI.json'))
+J=json.load(open('data/interim/stage_static_feature_stats_armJ.json'))
+G=json.load(open('data/interim/stage_static_feature_stats_armG.json'))
+print('armI', len(I), '-> armJ', len(J))
+print('removed:', [k for k in I if k not in J])
+print('added  :', [k for k in J if k not in I])
+print('shared order preserved:', [k for k in I if k in J] == [k for k in J if k in I])
+drift=[k for k in J if k in I and I[k]!=J[k]]
+print('constant drift vs armI:', drift or 'none')
+print('lkv_mc_usu matches armG:', G['lkv_mc_usu']==J['lkv_mc_usu'])
+PY
 
-echo "=== E. RESULT? (best-so-far if still running) ==="
-if [ -f models/q_lstm_armI_hpc_s42/best_metrics.json ]; then cat models/q_lstm_armI_hpc_s42/best_metrics.json 2>&1; echo; else echo '(no best_metrics.json)'; fi
-ls -la models/q_lstm_armI_hpc_s42/eval_val_per_station.csv 2>&1 | head -2
-
-echo "=== F. WHOLE CAMPAIGN ROLL CALL ==="
-for d in q_lstm_control_hpc_s42 q_lstm_hydroatlas_hpc_s42 q_lstm_usminus4_hpc_s42 \
-         q_lstm_globalplus4_hpc_s42 q_lstm_armE_hpc_s42 q_lstm_armF_hpc_s42 \
-         q_lstm_armG_hpc_s42 q_lstm_armI_hpc_s42 ; do
-  if [ -f models/$d/best_metrics.json ]; then
-    m=$(python -c "import json,sys;print(f'{json.load(open(sys.argv[1]))[\"median_nse\"]:.4f}')" models/$d/best_metrics.json 2>/dev/null)
-    printf '  %-30s %s\n' "$d" "$m"
-  else printf '  %-30s (running or absent)\n' "$d"; fi
-done
-
-echo "=== G. PAIRED ANALYSIS (only if armI eval csv exists) ==="
-if [ -f models/q_lstm_armI_hpc_s42/eval_val_per_station.csv ]; then
-  source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null || true
-  conda activate nh_final 2>/dev/null || true
-  python - <<'PYEOF' 2>&1
-import os
-import numpy as np, pandas as pd
-
-BASE = "models"
-def load(tag):
-    p = os.path.join(BASE, tag, "eval_val_per_station.csv")
-    if not os.path.exists(p):
-        return None
-    d = pd.read_csv(p)
-    cols = {c.lower(): c for c in d.columns}
-    s = cols.get("station"); n = cols.get("nse"); st = cols.get("stratum")
-    if s is None or n is None:
-        print(f"  !! {tag}: unexpected columns {list(d.columns)}")
-        return None
-    out = d[[s, n] + ([st] if st else [])].copy()
-    out.columns = ["station", "nse"] + (["stratum"] if st else [])
-    if st is None:
-        out["stratum"] = "ALL"
-    return out.drop_duplicates("station")
-
-REF = load("q_lstm_armI_hpc_s42")
-if REF is None:
-    print("armI csv unreadable")
-else:
-    print(f"armI stations={len(REF)}  median={REF.nse.median():.4f}")
-    rng = np.random.default_rng(0)
-    for name, tag in [("armF", "q_lstm_armF_hpc_s42"),
-                      ("armG", "q_lstm_armG_hpc_s42"),
-                      ("armC", "q_lstm_usminus4_hpc_s42")]:
-        O = load(tag)
-        if O is None:
-            print(f"\n--- armI vs {name}: csv missing ---")
-            continue
-        m = REF.merge(O[["station", "nse"]], on="station", suffixes=("_I", "_O"))
-        d = (m.nse_I - m.nse_O).values
-        n = len(d)
-        pm = float(np.median(d))
-        boot = np.array([np.median(rng.choice(d, n, replace=True)) for _ in range(5000)])
-        lo, hi = np.percentile(boot, [2.5, 97.5])
-        print(f"\n--- armI vs {name}  (n={n} paired) ---")
-        print(f"  median armI = {m.nse_I.median():.4f}   median {name} = {m.nse_O.median():.4f}"
-              f"   group-median diff = {m.nse_I.median()-m.nse_O.median():+.4f}")
-        print(f"  PAIRED median diff = {pm:+.4f}   95% CI [{lo:+.4f}, {hi:+.4f}]")
-        print(f"  worse={int((d<0).sum())}  better={int((d>0).sum())}"
-              f"   drop>0.10: {100*(d<-0.10).mean():.1f}%   gain>0.10: {100*(d>0.10).mean():.1f}%")
-        if "stratum" in m.columns or "stratum" in REF.columns:
-            mm = m.copy()
-            mm["stratum"] = REF.set_index("station").loc[mm.station, "stratum"].values
-            mm["d"] = mm.nse_I - mm.nse_O
-            print("  by stratum (paired median diff, n):")
-            for k, g in mm.groupby("stratum"):
-                print(f"    {str(k):<24} {g.d.median():+.4f}  (n={len(g)})")
-PYEOF
-else
-  echo "(armI eval_val_per_station.csv absent -- training not finished)"
-fi
-echo "=== END seq=96 ==="
+echo "=== E. SUBMIT ==="
+EXIST=$(squeue -u $USER -h -o '%j' 2>/dev/null | grep -c 'q_armJ' || true)
+if [ "$EXIST" != "0" ]; then echo "ALREADY QUEUED -- refusing"; exit 0; fi
+if [ -d models/q_lstm_armJ_hpc_s42 ]; then echo 'OUTPUT DIR EXISTS -- refusing'; exit 0; fi
+out=$(sbatch scripts/hpc_train_q_armJ_china_min15.sbatch 2>&1); echo "$out"
+JID=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
+[ -n "$JID" ] || { echo "SUBMIT_FAILED"; exit 1; }
+echo "SUBMITTED jobid=$JID"
+sleep 20
+squeue -j $JID -o '%.10i %.24j %.10T %.8M %.22R' 2>&1
+echo "=== END seq=97 ==="
