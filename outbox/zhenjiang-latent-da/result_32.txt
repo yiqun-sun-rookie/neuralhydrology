@@ -1,0 +1,509 @@
+### channel=zhenjiang-latent-da seq=32
+### host=login4
+### started=2026-08-27T14:44:30+0800
+### ---------- output ----------
+COLLECT_START 2026-08-27T14:44:30+0800
+SACCT
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|Start|End|NodeList|AllocTRES|ReqTRES|MaxRSS|MaxVMSize
+215189|zlda-smoke01|hgpu4|COMPLETED|0:0|00:01:52|2026-08-27T14:33:03|2026-08-27T14:34:55|ngu104|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1||
+215189.batch|batch||COMPLETED|0:0|00:01:52|2026-08-27T14:33:03|2026-08-27T14:34:55|ngu104|cpu=4,mem=0,node=1||603272K|9530860K
+215189.extern|extern||COMPLETED|0:0|00:01:52|2026-08-27T14:33:03|2026-08-27T14:34:55|ngu104|billing=4,cpu=4,node=1||1372K|316356K
+FILE_BEGIN completion_manifest.json
+{
+  "artifacts": [
+    {
+      "byte_count": 1014,
+      "relative_path": "config_snapshot.json",
+      "sha256": "59e5f731579401480474caeffb15521ec0381481281a69f5cc3f9cb3a9e0b613"
+    },
+    {
+      "byte_count": 6333,
+      "relative_path": "fold_astronomical_tide/fold_tide_metadata.json",
+      "sha256": "ab4c83526d6c6d0f69dae19986737892c6cfa31405c35132e8d4b744aff0724a"
+    },
+    {
+      "byte_count": 586766,
+      "relative_path": "fold_astronomical_tide/fold_tide_series.npz",
+      "sha256": "b6b4bd32cf114eec607d8cdca9688ebc2fc09c3b9b3da891a16fb735e64ac136"
+    },
+    {
+      "byte_count": 1530,
+      "relative_path": "registry_snapshot.json",
+      "sha256": "37295950e624aa92f028aa7917193632d642282c762f0539e68bd494d74317ee"
+    },
+    {
+      "byte_count": 4963,
+      "relative_path": "run_identity.json",
+      "sha256": "c89ee9d967a4ff7742451f19850f579da8f112a81adc28a915073fed032772e6"
+    },
+    {
+      "byte_count": 13088,
+      "relative_path": "stage_one/best_backbone_state.pt",
+      "sha256": "92968041eec5793a23a459d42bf1eb21e1e05586a2f07ce4b2d8ea3d69ebd2e5"
+    },
+    {
+      "byte_count": 144,
+      "relative_path": "stage_one/training_history.csv",
+      "sha256": "5f6446dc9df23af76278ced001e7bf2eec748e55ada25ba218c7512ab66b5d7d"
+    },
+    {
+      "byte_count": 8733713,
+      "relative_path": "stage_two/best_full_model_state.pt",
+      "sha256": "800eb906d2027a7d6800fa384829d86bf1ad1df061610e25236436e70a1b1c49"
+    },
+    {
+      "byte_count": 143,
+      "relative_path": "stage_two/training_history.csv",
+      "sha256": "c72caa1d5a828e32eb0d637687ed53eaafb84bc4d6877392074a1c349b58f0b6"
+    }
+  ],
+  "experiment_id": "ZLDA-SMOKE-01",
+  "held_out_target_score_count": 0,
+  "schema_version": 1,
+  "scientific_result": false,
+  "status": "technical_smoke_completed"
+}
+
+FILE_END completion_manifest.json
+FILE_BEGIN run_identity.json
+{
+  "active_loader_materializes_full_aligned_target_array": true,
+  "active_loader_opens_full_target_files": true,
+  "availability_mode": "cyclic_one_station_only",
+  "config_sha256": "59e5f731579401480474caeffb15521ec0381481281a69f5cc3f9cb3a9e0b613",
+  "elapsed_seconds": 30.14888277091086,
+  "experiment_id": "ZLDA-SMOKE-01",
+  "experiment_type": "technical_hpc_real_data_smoke",
+  "fold_tide_model_sha256": "02ab84738ec7f81aba314343c7e79227a52d3319420ddefe8de5ef8f5c2d3d3b",
+  "fold_tide_series_sha256": "66216c96d7789e98ec779b47ee6323ad500e3eb7638da2c4c27c5950ae3bfc67",
+  "held_out_record_construction_count": 0,
+  "held_out_target_score_count": 0,
+  "held_out_target_values_used_for_training_validation_selection_or_metrics": false,
+  "inner_validation_sample_count": 7756,
+  "inner_validation_year": 2023,
+  "input_identity": {
+    "realtime_features/datong_realtime_features.csv": {
+      "byte_count": 6560619,
+      "sha256": "b8e57f0014c54945f0a005b339538bb649f07b05dd1bd22eca4d0e8bce3f1231"
+    },
+    "realtime_features/jiangyin_realtime_features.csv": {
+      "byte_count": 7011140,
+      "sha256": "6f1f993a0970ef81d6c70cc5638cb3a94ed75838e14d2fb83ac7770604d57545"
+    },
+    "realtime_features/nanjing_realtime_features.csv": {
+      "byte_count": 7011887,
+      "sha256": "9ce1fba0c45397ed8da004046936286561dce63e8e7a27dbb510271ab52ea2ef"
+    },
+    "realtime_features/wusongkou_realtime_features.csv": {
+      "byte_count": 7008668,
+      "sha256": "1f54d30b2ade2f2566936495122572d869c101fe66808e6fa271fec2cdefa2b9"
+    },
+    "realtime_features/xuliujing_realtime_features.csv": {
+      "byte_count": 7011762,
+      "sha256": "56ca1e2678e6590a7074513ed6fc6d864d1dab87e6422f6480fd5781e69a1ec9"
+    },
+    "realtime_features/zhenjiang_realtime_features.csv": {
+      "byte_count": 7067428,
+      "sha256": "1243900735450fc6feb09c85bee1697a022d1f30e199a95281aca64be17b2038"
+    },
+    "retrospective_targets/datong_retrospective_targets.csv": {
+      "byte_count": 6561614,
+      "sha256": "62e0b15dc893cf47e10bfcce799ae0c67b19acf6d29ec8bb0d66361165afeca5"
+    },
+    "retrospective_targets/jiangyin_retrospective_targets.csv": {
+      "byte_count": 7012506,
+      "sha256": "74131ec13929c959362491fb99d02f6d0fb76d9b44a12321190d9e0b9e37b55c"
+    },
+    "retrospective_targets/nanjing_retrospective_targets.csv": {
+      "byte_count": 7013326,
+      "sha256": "7be7c401805cde5590174a70d0115a638d6ec6d6bba13d126b31388ab2af761b"
+    },
+    "retrospective_targets/wusongkou_retrospective_targets.csv": {
+      "byte_count": 7009883,
+      "sha256": "820ee19b451ed67a33f12f0e6932a4c86cd937d21bf34603ff40e04301e21831"
+    },
+    "retrospective_targets/xuliujing_retrospective_targets.csv": {
+      "byte_count": 7013202,
+      "sha256": "f924509dfe54070494f4ad3b26b1642c7a7f8ce2a3de1a00af12edd494a7128c"
+    },
+    "retrospective_targets/zhenjiang_retrospective_targets.csv": {
+      "byte_count": 7067982,
+      "sha256": "8893304d96dbd83327eb44163500c85f53067a432d4da59e3775c7af85037b29"
+    }
+  },
+  "kalmannet_source_sha256": "0cad52635723eaf8c4bbfc331a2d0614520363c71953f650794b4794d7aab33d",
+  "loader_global_tide_member_used_by_latent_adapter": false,
+  "loader_global_tide_model_sha256": "ce8512f28e87ab6d62814b064d91ca358b98efd7ee27b4f831322ea93775516d",
+  "normalization": {
+    "station_mean_m": [
+      8.655572405363841,
+      5.32960111175257,
+      4.581431907034885,
+      3.3020605878779428,
+      2.7543660336144606,
+      2.2407637009038206
+    ],
+    "station_standard_deviation_m": [
+      2.822210873210807,
+      1.5960425197385801,
+      1.2469091194385176,
+      0.8720470844036088,
+      0.8889177354103733,
+      0.8905546601232363
+    ],
+    "tide_mean_m": 2.239981568778654,
+    "tide_standard_deviation_m": 0.8584481368388099
+  },
+  "runtime": {
+    "cuda_runtime_version": "12.1",
+    "device": "cuda:0",
+    "graphics_processor_capability": [
+      8,
+      6
+    ],
+    "graphics_processor_name": "NVIDIA A40",
+    "graphics_processor_total_memory_bytes": 47622258688,
+    "node_name": "ngu104",
+    "numpy_version": "2.3.3",
+    "pandas_version": "2.3.2",
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17",
+    "python_version": "3.11.13",
+    "slurm_job_id": "215189",
+    "slurm_job_name": "zlda-smoke01",
+    "torch_version": "2.4.0"
+  },
+  "schema_version": 1,
+  "scientific_result": false,
+  "stage_one": {
+    "best_epoch": 1,
+    "best_validation_loss_m": 1.9684446454048157,
+    "completed_epochs": 1,
+    "total_training_batches": 2,
+    "total_validation_batches": 2
+  },
+  "stage_two": {
+    "best_epoch": 1,
+    "best_validation_loss_m": 1.9359247088432312,
+    "completed_epochs": 1,
+    "total_training_batches": 2,
+    "total_validation_batches": 2
+  },
+  "test_split_access": "forbidden",
+  "test_year": 2024,
+  "training_sample_count": 43733,
+  "training_years": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022
+  ],
+  "written_utc": "2026-08-27T06:34:12.912419+00:00"
+}
+
+FILE_END run_identity.json
+FILE_BEGIN config_snapshot.json
+{
+  "availability": {
+    "available_station_count_per_sample": 1,
+    "mode": "cyclic_one_station_only",
+    "observed_station_hours": 24
+  },
+  "experiment_id": "ZLDA-SMOKE-01",
+  "experiment_type": "technical_hpc_real_data_smoke",
+  "output_relative_path": "results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01",
+  "schema_version": 1,
+  "scientific_result": false,
+  "seed": 20260827,
+  "test_split_access": "forbidden",
+  "test_year": 2024,
+  "training": {
+    "adam_betas": [
+      0.9,
+      0.999
+    ],
+    "adam_epsilon": 1e-08,
+    "batch_size": 32,
+    "gradient_clip_norm": 1.0,
+    "stage_one": {
+      "learning_rate": 0.001,
+      "maximum_epochs": 1,
+      "maximum_training_batches_per_epoch": 2,
+      "maximum_validation_batches": 2,
+      "weight_decay": 0.0001
+    },
+    "stage_two": {
+      "learning_rate": 0.001,
+      "maximum_epochs": 1,
+      "maximum_training_batches_per_epoch": 2,
+      "maximum_validation_batches": 2,
+      "weight_decay": 0.0001
+    }
+  }
+}
+
+FILE_END config_snapshot.json
+FILE_BEGIN registry_snapshot.json
+{
+  "experiments": [
+    {
+      "base_config": "ZHENJIANG_LATENT_GRU_KALMANNET_DA_V1_FROZEN_DESIGN_2026-08-27.md",
+      "best_checkpoint": null,
+      "changed_factor": "not_applicable_integration_smoke",
+      "config_path": "docs/records/ZHENJIANG_LATENT_GRU_KALMANNET_HPC_SMOKE_V1_CONFIG.json",
+      "config_sha256": "59e5f731579401480474caeffb15521ec0381481281a69f5cc3f9cb3a9e0b613",
+      "exp_id": "ZLDA-SMOKE-01",
+      "fixed_factors": {
+        "analysis_hours": 24,
+        "forecast_hours": 24,
+        "latent_state_dimension": 16,
+        "maximum_epochs_per_stage": 1,
+        "maximum_training_batches_per_epoch": 2,
+        "station_count": 6,
+        "test_split_access": "forbidden",
+        "warmup_hours": 24
+      },
+      "hypothesis": "The fold-isolated two-stage real-data pipeline can complete finite forward, backward, validation, checkpoint, and manifest operations on one high-performance-computing graphics processor.",
+      "metrics_path": null,
+      "notes": "Technical integration smoke only. It cannot support forecast-benefit, cross-station-benefit, model-selection, novelty, or publication claims.",
+      "paper_name": "not_applicable_technical_smoke",
+      "run_dir": "results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01",
+      "seeds": [
+        20260827
+      ],
+      "status": "authorized_not_submitted",
+      "type": "technical_hpc_real_data_smoke"
+    }
+  ],
+  "registry_id": "zhenjiang_latent_gru_kalmannet_experiment_registry_v1",
+  "schema_version": 1
+}
+
+FILE_END registry_snapshot.json
+FILE_BEGIN fold_astronomical_tide/completion_manifest.json
+{"artifacts":[{"byte_count":586766,"relative_path":"fold_tide_series.npz","sha256":"b6b4bd32cf114eec607d8cdca9688ebc2fc09c3b9b3da891a16fb735e64ac136"},{"byte_count":6333,"relative_path":"fold_tide_metadata.json","sha256":"ab4c83526d6c6d0f69dae19986737892c6cfa31405c35132e8d4b744aff0724a"}],"model_sha256":"02ab84738ec7f81aba314343c7e79227a52d3319420ddefe8de5ef8f5c2d3d3b","schema_version":1,"series_sha256":"66216c96d7789e98ec779b47ee6323ad500e3eb7638da2c4c27c5950ae3bfc67","status":"completed","test_year":2024,"training_years":[2017,2018,2019,2020,2021,2022]}
+
+FILE_END fold_astronomical_tide/completion_manifest.json
+FILE_BEGIN fold_astronomical_tide/fold_tide_metadata.json
+{"inner_validation_values_used_for_fit":false,"input_identity":{"realtime_features/datong_realtime_features.csv":{"byte_count":6560619,"sha256":"b8e57f0014c54945f0a005b339538bb649f07b05dd1bd22eca4d0e8bce3f1231"},"realtime_features/jiangyin_realtime_features.csv":{"byte_count":7011140,"sha256":"6f1f993a0970ef81d6c70cc5638cb3a94ed75838e14d2fb83ac7770604d57545"},"realtime_features/nanjing_realtime_features.csv":{"byte_count":7011887,"sha256":"9ce1fba0c45397ed8da004046936286561dce63e8e7a27dbb510271ab52ea2ef"},"realtime_features/wusongkou_realtime_features.csv":{"byte_count":7008668,"sha256":"1f54d30b2ade2f2566936495122572d869c101fe66808e6fa271fec2cdefa2b9"},"realtime_features/xuliujing_realtime_features.csv":{"byte_count":7011762,"sha256":"56ca1e2678e6590a7074513ed6fc6d864d1dab87e6422f6480fd5781e69a1ec9"},"realtime_features/zhenjiang_realtime_features.csv":{"byte_count":7067428,"sha256":"1243900735450fc6feb09c85bee1697a022d1f30e199a95281aca64be17b2038"},"retrospective_targets/datong_retrospective_targets.csv":{"byte_count":6561614,"sha256":"62e0b15dc893cf47e10bfcce799ae0c67b19acf6d29ec8bb0d66361165afeca5"},"retrospective_targets/jiangyin_retrospective_targets.csv":{"byte_count":7012506,"sha256":"74131ec13929c959362491fb99d02f6d0fb76d9b44a12321190d9e0b9e37b55c"},"retrospective_targets/nanjing_retrospective_targets.csv":{"byte_count":7013326,"sha256":"7be7c401805cde5590174a70d0115a638d6ec6d6bba13d126b31388ab2af761b"},"retrospective_targets/wusongkou_retrospective_targets.csv":{"byte_count":7009883,"sha256":"820ee19b451ed67a33f12f0e6932a4c86cd937d21bf34603ff40e04301e21831"},"retrospective_targets/xuliujing_retrospective_targets.csv":{"byte_count":7013202,"sha256":"f924509dfe54070494f4ad3b26b1642c7a7f8ce2a3de1a00af12edd494a7128c"},"retrospective_targets/zhenjiang_retrospective_targets.csv":{"byte_count":7067982,"sha256":"8893304d96dbd83327eb44163500c85f53067a432d4da59e3775c7af85037b29"}},"model":{"constituents":[{"amplitude_m":2.227379772044254,"constituent":"Z0","index":0,"phase_degrees":0.0},{"amplitude_m":1.0030082894240577,"constituent":"M2","index":1,"phase_degrees":143.33594022479156},{"amplitude_m":0.4415196442427935,"constituent":"S2","index":2,"phase_degrees":182.35326479564173},{"amplitude_m":0.17165868830572148,"constituent":"N2","index":3,"phase_degrees":133.41256871156202},{"amplitude_m":0.2296173174683976,"constituent":"K1","index":4,"phase_degrees":93.60776323664959},{"amplitude_m":0.15576169472933968,"constituent":"M4","index":5,"phase_degrees":211.6130688063053},{"amplitude_m":0.1450078306572683,"constituent":"O1","index":6,"phase_degrees":52.52060366371524},{"amplitude_m":0.028528690530146176,"constituent":"M6","index":7,"phase_degrees":216.70814025056234},{"amplitude_m":0.019448469858547254,"constituent":"MK3","index":8,"phase_degrees":157.40473029766235},{"amplitude_m":0.019441249083311303,"constituent":"S4","index":9,"phase_degrees":305.5423812442259},{"amplitude_m":0.054339526796359804,"constituent":"MN4","index":10,"phase_degrees":198.9861602188215},{"amplitude_m":0.040358646104829185,"constituent":"nu2","index":11,"phase_degrees":126.0242716748939},{"amplitude_m":0.002479580907323675,"constituent":"S6","index":12,"phase_degrees":49.85572062213861},{"amplitude_m":0.036466251676902,"constituent":"mu2","index":13,"phase_degrees":220.79339490892568},{"amplitude_m":0.023174104764737045,"constituent":"2N2","index":14,"phase_degrees":118.7704133517558},{"amplitude_m":0.008829294135319025,"constituent":"OO1","index":15,"phase_degrees":185.0823721859689},{"amplitude_m":0.024406228788476807,"constituent":"lambda2","index":16,"phase_degrees":134.1994229073794},{"amplitude_m":0.01957597333827339,"constituent":"S1","index":17,"phase_degrees":0.23137957579399931},{"amplitude_m":0.005647869959457536,"constituent":"M1","index":18,"phase_degrees":72.93048330468368},{"amplitude_m":0.010051360526914828,"constituent":"J1","index":19,"phase_degrees":176.21304058844373},{"amplitude_m":0.03578145203239752,"constituent":"Mm","index":20,"phase_degrees":9.13070766081786},{"amplitude_m":0.0552988012443702,"constituent":"Ssa","index":21,"phase_degrees":327.95845857197634},{"amplitude_m":0.25559283425902485,"constituent":"Sa","index":22,"phase_degrees":134.43559626610545},{"amplitude_m":0.10219021820697774,"constituent":"MSF","index":23,"phase_degrees":47.72532300770853},{"amplitude_m":0.02618144126686672,"constituent":"Mf","index":24,"phase_degrees":4.440174925629823},{"amplitude_m":0.00772181554443997,"constituent":"rho1","index":25,"phase_degrees":354.9057165958582},{"amplitude_m":0.02087823416236271,"constituent":"Q1","index":26,"phase_degrees":39.67352278339248},{"amplitude_m":0.03576974207456021,"constituent":"T2","index":27,"phase_degrees":211.1163609328997},{"amplitude_m":0.017952498805778504,"constituent":"R2","index":28,"phase_degrees":185.43181179674107},{"amplitude_m":0.005319113452483129,"constituent":"2Q1","index":29,"phase_degrees":18.274887566183192},{"amplitude_m":0.06628446161287599,"constituent":"P1","index":30,"phase_degrees":98.10763884693375},{"amplitude_m":0.025233907065385548,"constituent":"2SM2","index":31,"phase_degrees":22.039394038840197},{"amplitude_m":0.007912434148457013,"constituent":"M3","index":32,"phase_degrees":150.26432115360512},{"amplitude_m":0.04546588356784361,"constituent":"L2","index":33,"phase_degrees":143.13182632766},{"amplitude_m":0.009813721847952967,"constituent":"2MK3","index":34,"phase_degrees":88.95754596057438},{"amplitude_m":0.12613745491630404,"constituent":"K2","index":35,"phase_degrees":176.82212498432284},{"amplitude_m":0.013799736811187836,"constituent":"M8","index":36,"phase_degrees":250.0112165911952},{"amplitude_m":0.13016640675398805,"constituent":"MS4","index":37,"phase_degrees":253.31952432090782}],"fit_available_hour_count":52068,"fit_years":[2017,2018,2019,2020,2021,2022],"full_axis_hour_count":73312,"inner_validation_year":2023,"model_type":"fold_training_year_harmonic_astronomical_tide","station_slug":"wusongkou","test_year":2024},"model_sha256":"02ab84738ec7f81aba314343c7e79227a52d3319420ddefe8de5ef8f5c2d3d3b","retrospective_target_values_used_for_fit":false,"schema_version":1,"series_dtype":"little_endian_float64","series_sha256":"66216c96d7789e98ec779b47ee6323ad500e3eb7638da2c4c27c5950ae3bfc67","series_shape":[73312],"test_year_values_used_for_fit":false}
+
+FILE_END fold_astronomical_tide/fold_tide_metadata.json
+FILE_BEGIN stage_one/training_history.csv
+epoch,training_loss_m,validation_loss_m,training_batch_count,validation_batch_count,improved
+1,1.1125525832176208,1.9684446454048157,2,2,True
+
+FILE_END stage_one/training_history.csv
+FILE_BEGIN stage_two/training_history.csv
+epoch,training_loss_m,validation_loss_m,training_batch_count,validation_batch_count,improved
+1,1.006221204996109,1.9359247088432312,2,2,True
+
+FILE_END stage_two/training_history.csv
+ARTIFACT_SHA256
+f641becd35e69a3b6f20eecc7e675f57ba670accec7b85daab18ae940f5d3d30  /data1/home/sunyiq/zhenjiang_latent_da_20260827/run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01/completion_manifest.json
+59e5f731579401480474caeffb15521ec0381481281a69f5cc3f9cb3a9e0b613  /data1/home/sunyiq/zhenjiang_latent_da_20260827/run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01/config_snapshot.json
+d145c621dbb52d98673594f2ee22c79a9e43ce5cb00e75f6297759fb48629fa3  /data1/home/sunyiq/zhenjiang_latent_da_20260827/run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01/fold_astronomical_tide/completion_manifest.json
+ab4c83526d6c6d0f69dae19986737892c6cfa31405c35132e8d4b744aff0724a  /data1/home/sunyiq/zhenjiang_latent_da_20260827/run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01/fold_astronomical_tide/fold_tide_metadata.json
+b6b4bd32cf114eec607d8cdca9688ebc2fc09c3b9b3da891a16fb735e64ac136  /data1/home/sunyiq/zhenjiang_latent_da_20260827/run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01/fold_astronomical_tide/fold_tide_series.npz
+37295950e624aa92f028aa7917193632d642282c762f0539e68bd494d74317ee  /data1/home/sunyiq/zhenjiang_latent_da_20260827/run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01/registry_snapshot.json
+c89ee9d967a4ff7742451f19850f579da8f112a81adc28a915073fed032772e6  /data1/home/sunyiq/zhenjiang_latent_da_20260827/run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01/run_identity.json
+92968041eec5793a23a459d42bf1eb21e1e05586a2f07ce4b2d8ea3d69ebd2e5  /data1/home/sunyiq/zhenjiang_latent_da_20260827/run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01/stage_one/best_backbone_state.pt
+5f6446dc9df23af76278ced001e7bf2eec748e55ada25ba218c7512ab66b5d7d  /data1/home/sunyiq/zhenjiang_latent_da_20260827/run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01/stage_one/training_history.csv
+800eb906d2027a7d6800fa384829d86bf1ad1df061610e25236436e70a1b1c49  /data1/home/sunyiq/zhenjiang_latent_da_20260827/run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01/stage_two/best_full_model_state.pt
+c72caa1d5a828e32eb0d637687ed53eaafb84bc4d6877392074a1c349b58f0b6  /data1/home/sunyiq/zhenjiang_latent_da_20260827/run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01/stage_two/training_history.csv
+SLURM_STDOUT
+==========================================
+[2026-08-27T14:32:40+0800] ZLDA-SMOKE-01
+==========================================
+[INFO] job_id=215189 node=ngu104 project=/data1/home/sunyiq/zhenjiang_latent_da_20260827/run
+[INFO] input_dir=/data1/home/sunyiq/zhenjiang_oyv_v1/repo/data/processed/water_level_model_input_v7_beijing_realtime_verified
+[INFO] kalmannet_source=/data1/home/sunyiq/zhenjiang_latent_da_20260827/external/KalmanNet_nn.py
+NVIDIA A40, GPU-d6513a7a-f24f-45ba-4b0a-034208e7836d, 46068 MiB, 535.104.05
+NVIDIA A40, GPU-4f94140e-b9c9-4839-4793-d5dcf4b7c136, 46068 MiB, 535.104.05
+NVIDIA A40, GPU-6a54b5c7-4653-d3fe-85c0-8e3263a3c6d5, 46068 MiB, 535.104.05
+NVIDIA A40, GPU-4865db69-8ac0-95e9-96fb-5d862ad4cb16, 46068 MiB, 535.104.05
+python_preflight=passed
+numpy=2.3.3
+pandas=2.3.2
+scipy=1.16.2
+torch=2.4.0
+cuda=12.1
+cuda_available=true
+[INFO] built_in_preflight=passed local_cpu_test_count=93
+[2026-08-27T14:33:28+0800] stage_one_and_stage_two_smoke_start
+{
+  "active_loader_materializes_full_aligned_target_array": true,
+  "active_loader_opens_full_target_files": true,
+  "availability_mode": "cyclic_one_station_only",
+  "config_sha256": "59e5f731579401480474caeffb15521ec0381481281a69f5cc3f9cb3a9e0b613",
+  "elapsed_seconds": 30.14888277091086,
+  "experiment_id": "ZLDA-SMOKE-01",
+  "experiment_type": "technical_hpc_real_data_smoke",
+  "fold_tide_model_sha256": "02ab84738ec7f81aba314343c7e79227a52d3319420ddefe8de5ef8f5c2d3d3b",
+  "fold_tide_series_sha256": "66216c96d7789e98ec779b47ee6323ad500e3eb7638da2c4c27c5950ae3bfc67",
+  "held_out_record_construction_count": 0,
+  "held_out_target_score_count": 0,
+  "held_out_target_values_used_for_training_validation_selection_or_metrics": false,
+  "inner_validation_sample_count": 7756,
+  "inner_validation_year": 2023,
+  "input_identity": {
+    "realtime_features/datong_realtime_features.csv": {
+      "byte_count": 6560619,
+      "sha256": "b8e57f0014c54945f0a005b339538bb649f07b05dd1bd22eca4d0e8bce3f1231"
+    },
+    "realtime_features/jiangyin_realtime_features.csv": {
+      "byte_count": 7011140,
+      "sha256": "6f1f993a0970ef81d6c70cc5638cb3a94ed75838e14d2fb83ac7770604d57545"
+    },
+    "realtime_features/nanjing_realtime_features.csv": {
+      "byte_count": 7011887,
+      "sha256": "9ce1fba0c45397ed8da004046936286561dce63e8e7a27dbb510271ab52ea2ef"
+    },
+    "realtime_features/wusongkou_realtime_features.csv": {
+      "byte_count": 7008668,
+      "sha256": "1f54d30b2ade2f2566936495122572d869c101fe66808e6fa271fec2cdefa2b9"
+    },
+    "realtime_features/xuliujing_realtime_features.csv": {
+      "byte_count": 7011762,
+      "sha256": "56ca1e2678e6590a7074513ed6fc6d864d1dab87e6422f6480fd5781e69a1ec9"
+    },
+    "realtime_features/zhenjiang_realtime_features.csv": {
+      "byte_count": 7067428,
+      "sha256": "1243900735450fc6feb09c85bee1697a022d1f30e199a95281aca64be17b2038"
+    },
+    "retrospective_targets/datong_retrospective_targets.csv": {
+      "byte_count": 6561614,
+      "sha256": "62e0b15dc893cf47e10bfcce799ae0c67b19acf6d29ec8bb0d66361165afeca5"
+    },
+    "retrospective_targets/jiangyin_retrospective_targets.csv": {
+      "byte_count": 7012506,
+      "sha256": "74131ec13929c959362491fb99d02f6d0fb76d9b44a12321190d9e0b9e37b55c"
+    },
+    "retrospective_targets/nanjing_retrospective_targets.csv": {
+      "byte_count": 7013326,
+      "sha256": "7be7c401805cde5590174a70d0115a638d6ec6d6bba13d126b31388ab2af761b"
+    },
+    "retrospective_targets/wusongkou_retrospective_targets.csv": {
+      "byte_count": 7009883,
+      "sha256": "820ee19b451ed67a33f12f0e6932a4c86cd937d21bf34603ff40e04301e21831"
+    },
+    "retrospective_targets/xuliujing_retrospective_targets.csv": {
+      "byte_count": 7013202,
+      "sha256": "f924509dfe54070494f4ad3b26b1642c7a7f8ce2a3de1a00af12edd494a7128c"
+    },
+    "retrospective_targets/zhenjiang_retrospective_targets.csv": {
+      "byte_count": 7067982,
+      "sha256": "8893304d96dbd83327eb44163500c85f53067a432d4da59e3775c7af85037b29"
+    }
+  },
+  "kalmannet_source_sha256": "0cad52635723eaf8c4bbfc331a2d0614520363c71953f650794b4794d7aab33d",
+  "loader_global_tide_member_used_by_latent_adapter": false,
+  "loader_global_tide_model_sha256": "ce8512f28e87ab6d62814b064d91ca358b98efd7ee27b4f831322ea93775516d",
+  "normalization": {
+    "station_mean_m": [
+      8.655572405363841,
+      5.32960111175257,
+      4.581431907034885,
+      3.3020605878779428,
+      2.7543660336144606,
+      2.2407637009038206
+    ],
+    "station_standard_deviation_m": [
+      2.822210873210807,
+      1.5960425197385801,
+      1.2469091194385176,
+      0.8720470844036088,
+      0.8889177354103733,
+      0.8905546601232363
+    ],
+    "tide_mean_m": 2.239981568778654,
+    "tide_standard_deviation_m": 0.8584481368388099
+  },
+  "runtime": {
+    "cuda_runtime_version": "12.1",
+    "device": "cuda:0",
+    "graphics_processor_capability": [
+      8,
+      6
+    ],
+    "graphics_processor_name": "NVIDIA A40",
+    "graphics_processor_total_memory_bytes": 47622258688,
+    "node_name": "ngu104",
+    "numpy_version": "2.3.3",
+    "pandas_version": "2.3.2",
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17",
+    "python_version": "3.11.13",
+    "slurm_job_id": "215189",
+    "slurm_job_name": "zlda-smoke01",
+    "torch_version": "2.4.0"
+  },
+  "schema_version": 1,
+  "scientific_result": false,
+  "stage_one": {
+    "best_epoch": 1,
+    "best_validation_loss_m": 1.9684446454048157,
+    "completed_epochs": 1,
+    "total_training_batches": 2,
+    "total_validation_batches": 2
+  },
+  "stage_two": {
+    "best_epoch": 1,
+    "best_validation_loss_m": 1.9359247088432312,
+    "completed_epochs": 1,
+    "total_training_batches": 2,
+    "total_validation_batches": 2
+  },
+  "test_split_access": "forbidden",
+  "test_year": 2024,
+  "training_sample_count": 43733,
+  "training_years": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022
+  ],
+  "written_utc": "2026-08-27T06:34:12.912419+00:00"
+}
+{
+  "artifact_count": 9,
+  "experiment_id": "ZLDA-SMOKE-01",
+  "held_out_target_score_count": 0,
+  "verification_status": "passed"
+}
+[2026-08-27T14:34:29+0800] ZLDA-SMOKE-01 completed
+JobId=215189 JobName=zlda-smoke01
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:01:27 TimeLimit=00:20:00 TimeMin=N/A
+   SubmitTime=2026-08-27T14:17:23 EligibleTime=2026-08-27T14:17:23
+   AccrueTime=2026-08-27T14:17:23
+   StartTime=2026-08-27T14:33:03 EndTime=2026-08-27T14:53:03 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-27T14:33:03
+   Partition=hgpu4 AllocNode:Sid=login04:721
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=ngu104
+   BatchHost=ngu104
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/zhenjiang_latent_da_20260827/run/scripts/hpc/zhenjiang_latent_gru_kalmannet_smoke_v1.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.out
+   Power=
+   TresPerNode=gpu:1
+
+SLURM_STDERR
+EVIDENCE_ARCHIVE ccbdac29694bf2b8db66a0e0a992af4f65e7a39382bd55f8e68e79644683bcf0  /data1/home/sunyiq/hpc_mailbox/outbox/zhenjiang-latent-da/ZLDA-SMOKE-01_job215189_small_evidence.tar.gz bytes=6749
+COLLECT_END 2026-08-27T14:44:31+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T14:44:31+0800
