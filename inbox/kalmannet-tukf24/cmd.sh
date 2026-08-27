@@ -1,12 +1,11 @@
 #!/bin/bash
 set -o pipefail
 ROOT=/data1/home/sunyiq/kalmannet_tukf24_20260827
-echo "=== INSTALL SEAL ==="
+echo "=== INSTALL SEAL (corrected file-bytes hash) ==="
 cp -f payload/kalmannet-tukf24/tukf24_checkpoint_seal.json $ROOT/results/checkpoint_seal.json
-sha256sum $ROOT/results/checkpoint_seal.json
-echo "expect d91ff31be732b3c19d7f5dd175cddbff40624f79524033b06a828f9a46216127"
 S=$(sha256sum $ROOT/results/checkpoint_seal.json | cut -d' ' -f1)
-[ "$S" = "d91ff31be732b3c19d7f5dd175cddbff40624f79524033b06a828f9a46216127" ] || { echo SEAL_HASH_MISMATCH; exit 1; }
+echo "file sha $S"
+[ "$S" = "49f35e7d46995c4265f2efac76cda8c41930415236a927bd24af38890f881acf" ] || { echo SEAL_HASH_MISMATCH; exit 1; }
 echo "=== SINGLE UNSEALING: SBATCH BOTH READOUT ARRAYS ==="
 cd $ROOT
 sbatch --array=0-107 $ROOT/slurm/tukf24_readout_new.slurm
