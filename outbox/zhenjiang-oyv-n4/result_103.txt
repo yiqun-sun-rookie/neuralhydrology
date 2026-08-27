@@ -1,0 +1,17 @@
+### channel=zhenjiang-oyv-n4 seq=103
+### host=login4
+### started=2026-08-27T10:48:11+0800
+### ---------- output ----------
+=== A. SYNC ===
+  head: 41ea738 Replay under the frozen deterministic settings
+  audit identity ok
+=== B. LAUNCHER ===
+=== C. SUBMIT ===
+Submitted batch job 215161
+REPLAY_ARRAY=215161
+          1 PENDING
+         12 RUNNING
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T10:49:08+0800
