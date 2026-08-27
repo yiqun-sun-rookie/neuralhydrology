@@ -1,0 +1,17 @@
+### channel=kalmannet-tukf24 seq=2
+### host=login4
+### started=2026-08-27T17:09:16+0800
+### ---------- output ----------
+=== JOB STATE ===
+       JobID      State    Elapsed ExitCode 
+------------ ---------- ---------- -------- 
+215261           FAILED   00:01:48      1:0 
+215261.batch     FAILED   00:01:48      1:0 
+215261.exte+  COMPLETED   00:01:48      0:0 
+=== ANCHOR LOG TAIL ===
+anchor_stage_fail=1
+=== ANCHOR RECORDS ===
+basins=0 fails=0 worst=0.000000e+00
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T17:09:18+0800
