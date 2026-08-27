@@ -1,0 +1,30 @@
+### channel=id30-modern-moe-execution seq=33
+### host=login4
+### started=2026-08-27T18:32:47+0800
+### ---------- output ----------
+=== SUBMIT STRICT SEQUENTIAL DENSE-TO-MOE CHAIN ===
+2026-08-27T18:32:47+0800
+login4
+{"b01_job_id": "215314", "b01_status": "RUNNING", "downstream_bindings": 0, "downstream_invocations": 0, "post_dense_artifacts": 0}
+B01=215314
+D01=215425 dependency=afterok:215314
+D02=215426 dependency=afterok:215425
+D03=215427 dependency=afterok:215426
+SELECT=215428 dependency=afterok:215427
+M01=215429 dependency=afterok:215428
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215425        hgpu2                id30_dev_s100  PENDING       0:00                   (Dependency)
+            215426        hgpu2                id30_dev_s100  PENDING       0:00                   (Dependency)
+            215427        hgpu2                id30_dev_s100  PENDING       0:00                   (Dependency)
+            215428        hgpu2                  id30_select  PENDING       0:00                   (Dependency)
+            215429        hgpu2                id30_m01_s100  PENDING       0:00                   (Dependency)
+            215314        hgpu2                id30_dev_s100  RUNNING      17:37                         ngu009
+job_id=215425 state=PENDING dependency=afterok:215314
+job_id=215426 state=PENDING dependency=afterok:215425
+job_id=215427 state=PENDING dependency=afterok:215426
+job_id=215428 state=PENDING dependency=afterok:215427
+job_id=215429 state=PENDING dependency=afterok:215428
+2026-08-27T18:32:48+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T18:32:48+0800
