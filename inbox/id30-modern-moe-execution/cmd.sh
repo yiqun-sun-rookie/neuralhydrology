@@ -45,7 +45,7 @@ allowed_changes = {
     "src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json",
 }
 status_lines = subprocess.check_output(
-    ["git", "status", "--porcelain=v1", "--untracked-files=no"], cwd=root, text=True
+    ["git", "status", "--porcelain", "--untracked-files=no"], cwd=root, text=True
 ).splitlines()
 changed_paths = {line[3:] for line in status_lines if line.strip()}
 unexpected = sorted(changed_paths - allowed_changes)
