@@ -1,58 +1,40 @@
-#!/bin/bash
-set -eo pipefail
+#!/usr/bin/env bash
+set -o pipefail
 
-JOB_ID=215189
-ROOT="/data1/home/sunyiq/zhenjiang_latent_da_20260827"
-RUN_REL="run/results/runtime/zhenjiang_latent_gru_kalmannet_hpc_smoke_v1/ZLDA-SMOKE-01"
-RUN_DIR="${ROOT}/${RUN_REL}"
-MAILBOX_OUT="${HOME}/hpc_mailbox/outbox/zhenjiang-latent-da"
-ARCHIVE_NAME="ZLDA-SMOKE-01_job215189_small_evidence.tar.gz"
+REMOTE_ROOT="/data1/home/sunyiq/zhenjiang_pure_gru_20260827"
+INPUT_DIR="/data1/home/sunyiq/zhenjiang_oyv_v1/repo/data/processed/water_level_model_input_v7_beijing_realtime_verified"
 
-test -f "${RUN_DIR}/completion_manifest.json"
-test -f "${RUN_DIR}/run_identity.json"
+echo "=== IDENTITY ==="
+id -un
+hostname
+date -Is
 
-echo "COLLECT_START $(date -Is)"
-echo "SACCT"
-sacct -j "${JOB_ID}" -P \
-  --format=JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,Start,End,NodeList,AllocTRES,ReqTRES,MaxRSS,MaxVMSize
+echo "=== PATHS ==="
+if [ -e "${REMOTE_ROOT}" ] || [ -L "${REMOTE_ROOT}" ]; then
+  echo "REMOTE_ROOT_EXISTS"
+else
+  echo "REMOTE_ROOT_ABSENT"
+fi
+if [ -d "${INPUT_DIR}" ]; then
+  echo "INPUT_DIR_EXISTS"
+  find "${INPUT_DIR}" -maxdepth 2 -type f | wc -l
+else
+  echo "INPUT_DIR_MISSING"
+fi
 
-for relative_path in \
-  completion_manifest.json \
-  run_identity.json \
-  config_snapshot.json \
-  registry_snapshot.json \
-  fold_astronomical_tide/completion_manifest.json \
-  fold_astronomical_tide/fold_tide_metadata.json \
-  stage_one/training_history.csv \
-  stage_two/training_history.csv
-do
-  echo "FILE_BEGIN ${relative_path}"
-  cat "${RUN_DIR}/${relative_path}"
-  echo
-  echo "FILE_END ${relative_path}"
-done
+echo "=== RUNTIME ==="
+source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh"
+conda activate nh_final
+python - <<'PY'
+import numpy
+import pandas
+import torch
+print("python_runtime=passed")
+print("numpy=" + numpy.__version__)
+print("pandas=" + pandas.__version__)
+print("torch=" + torch.__version__)
+PY
 
-echo "ARTIFACT_SHA256"
-find "${RUN_DIR}" -type f -print0 | sort -z | xargs -0 sha256sum
-
-echo "SLURM_STDOUT"
-cat "${ROOT}/logs/zlda-smoke01-${JOB_ID}.out"
-echo "SLURM_STDERR"
-cat "${ROOT}/logs/zlda-smoke01-${JOB_ID}.err"
-
-TMP_DIR="$(mktemp -d "${HOME}/zlda_evidence_XXXXXX")"
-tar -czf "${TMP_DIR}/${ARCHIVE_NAME}" -C "${ROOT}" \
-  "logs/zlda-smoke01-${JOB_ID}.out" \
-  "logs/zlda-smoke01-${JOB_ID}.err" \
-  "${RUN_REL}/completion_manifest.json" \
-  "${RUN_REL}/run_identity.json" \
-  "${RUN_REL}/config_snapshot.json" \
-  "${RUN_REL}/registry_snapshot.json" \
-  "${RUN_REL}/fold_astronomical_tide/completion_manifest.json" \
-  "${RUN_REL}/fold_astronomical_tide/fold_tide_metadata.json" \
-  "${RUN_REL}/stage_one/training_history.csv" \
-  "${RUN_REL}/stage_two/training_history.csv"
-mkdir -p "${MAILBOX_OUT}"
-cp -f "${TMP_DIR}/${ARCHIVE_NAME}" "${MAILBOX_OUT}/${ARCHIVE_NAME}"
-echo "EVIDENCE_ARCHIVE $(sha256sum "${MAILBOX_OUT}/${ARCHIVE_NAME}") bytes=$(stat -c '%s' "${MAILBOX_OUT}/${ARCHIVE_NAME}")"
-echo "COLLECT_END $(date -Is)"
+echo "=== QUEUE ==="
+sinfo -p hgpu2p -h -o '%P|%a|%l|%D|%t|%N' | head -20 || true
+echo "PROBE_COMPLETED"
