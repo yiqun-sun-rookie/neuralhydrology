@@ -1,0 +1,89 @@
+### channel=id30-modern-moe-audit-aux seq=2
+### host=login4
+### started=2026-08-27T13:55:48+0800
+### ---------- output ----------
+=== REMOTE IDENTITY AND TIME ===
+2026-08-27T13:55:48+0800
+login4
+sunyiq
+=== DISCOVERED LONG SHORT-TERM MEMORY RESULT ROOTS ===
+--- root=/data1/home/sunyiq/adv531/results/18_lstm_fair_531 ---
+resolved=/data1/home/sunyiq/adv531/results/18_lstm_fair_531
+epoch030_checkpoint_count=1
+config_snapshot_count=1
+scaler_count=0
+validation_result_pickle_count=0
+test_result_pickle_count=1
+CHECKPOINT path=/data1/home/sunyiq/adv531/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/model_epoch030.pt bytes=1191301 sha256=f7a4242f233304a309f6e4b225e539ca5b4f76089dbe3b7a96c88ce5a18d5654
+run_directories:
+lstm_cudalstm_maurer_s100_2026_0616_1513_ep30
+--- root=/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531 ---
+resolved=/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531
+epoch030_checkpoint_count=0
+config_snapshot_count=0
+scaler_count=0
+validation_result_pickle_count=0
+test_result_pickle_count=0
+run_directories:
+E04_daymet_post2008_objective_confirmation_482
+--- root=/data1/home/sunyiq/v09_strict/neuralhydrology/results/18_lstm_fair_531 ---
+resolved=/data1/home/sunyiq/v09_strict/neuralhydrology/results/18_lstm_fair_531
+epoch030_checkpoint_count=8
+config_snapshot_count=8
+scaler_count=0
+validation_result_pickle_count=0
+test_result_pickle_count=0
+CHECKPOINT path=/data1/home/sunyiq/v09_strict/neuralhydrology/results/18_lstm_fair_531/lstm_cudalstm_maurer_s100_2026_0616_1513_ep30/model_epoch030.pt bytes=1191301 sha256=f7a4242f233304a309f6e4b225e539ca5b4f76089dbe3b7a96c88ce5a18d5654
+CHECKPOINT path=/data1/home/sunyiq/v09_strict/neuralhydrology/results/18_lstm_fair_531/lstm_cudalstm_maurer_s200_2026_0616_1831_ep30/model_epoch030.pt bytes=1191301 sha256=fcc4b7322173f156ee5f05b9377ac865ef7f16a96237097253d0f7f9936e5b61
+CHECKPOINT path=/data1/home/sunyiq/v09_strict/neuralhydrology/results/18_lstm_fair_531/lstm_cudalstm_maurer_s300_2026_0616_2016_ep30/model_epoch030.pt bytes=1191301 sha256=f2fc10468e1926507d2395f1f8f50bf8af5ecb04f5fc4c3cbff8d49482d579c9
+CHECKPOINT path=/data1/home/sunyiq/v09_strict/neuralhydrology/results/18_lstm_fair_531/lstm_cudalstm_maurer_s400_2026_0616_2209_ep30/model_epoch030.pt bytes=1191301 sha256=536cb3f927983dfb261cbb0f83d2bfce3fb84900bf1967e0177a1d2ac9fa3fc5
+CHECKPOINT path=/data1/home/sunyiq/v09_strict/neuralhydrology/results/18_lstm_fair_531/lstm_cudalstm_maurer_s500_2026_0616_2341_ep30/model_epoch030.pt bytes=1191301 sha256=cd24cd14465d4e70b2a279026970ab65e6a22fb305414e6083164cae382a1966
+CHECKPOINT path=/data1/home/sunyiq/v09_strict/neuralhydrology/results/18_lstm_fair_531/lstm_cudalstm_maurer_s600_2026_0617_0112_ep30/model_epoch030.pt bytes=1191301 sha256=daf3e05a264cb574736a1451ed7ecb53f8846975ad5bd359db6b021703c4e34b
+CHECKPOINT path=/data1/home/sunyiq/v09_strict/neuralhydrology/results/18_lstm_fair_531/lstm_cudalstm_maurer_s700_2026_0617_0243_ep30/model_epoch030.pt bytes=1191301 sha256=aa922f3abe8aff6884d72f83e70ea2a1744bd38687c03ff095cc2846b0343424
+CHECKPOINT path=/data1/home/sunyiq/v09_strict/neuralhydrology/results/18_lstm_fair_531/lstm_cudalstm_maurer_s800_2026_0617_0414_ep30/model_epoch030.pt bytes=1191301 sha256=80a30be47fe23a73d51e1d519a42c04d004cd7608959de1e004928a616cdf963
+run_directories:
+lstm_cudalstm_maurer_s100_2026_0616_1513_ep30
+lstm_cudalstm_maurer_s200_2026_0616_1831_ep30
+lstm_cudalstm_maurer_s300_2026_0616_2016_ep30
+lstm_cudalstm_maurer_s400_2026_0616_2209_ep30
+lstm_cudalstm_maurer_s500_2026_0616_2341_ep30
+lstm_cudalstm_maurer_s600_2026_0617_0112_ep30
+lstm_cudalstm_maurer_s700_2026_0617_0243_ep30
+lstm_cudalstm_maurer_s800_2026_0617_0414_ep30
+=== ADVERSARIAL CLONE READINESS ===
+path=/data1/home/sunyiq/adv531
+branch=unknown
+commit=unknown
+change_count=0
+FOUND data/camels_us resolved=/data1/home/sunyiq/adv531/data/camels_us
+MISSING src/lstm_fair_531
+MISSING src/modern_transformer_moe
+MISSING src/fair_benchmark/frozen/track0_forcing_only_basins.txt
+MISSING src/fair_benchmark/frozen/bundle/track0_statics.csv
+=== SINGLE OLDER 531-BASIN EPOCH-30 MODEL CONFIGURATION ===
+root=/data1/home/sunyiq/neuralhydrology/results/05_full_531_basins/reproduce_531_nse074_2025_1129_2145_ep30
+FOUND file=/data1/home/sunyiq/neuralhydrology/results/05_full_531_basins/reproduce_531_nse074_2025_1129_2145_ep30/model_epoch030.pt bytes=308101 sha256=f513441019f4030ea2d417c7147d8b5c9eb8e97e0fb81c7058e9e82524989081
+FOUND file=/data1/home/sunyiq/neuralhydrology/results/05_full_531_basins/reproduce_531_nse074_2025_1129_2145_ep30/config.yml bytes=1716 sha256=8b0b33be7f29752cd5889eb3def17a82f9402441e44e7aced0a5996e0e9e43a6
+FOUND file=/data1/home/sunyiq/neuralhydrology/results/05_full_531_basins/reproduce_531_nse074_2025_1129_2145_ep30/train_data/train_data_scaler.yml bytes=2094 sha256=b9c26843e76c94811e173ae831aa94fc86c8f47beb41cc9fa6fea33c865ceb7e
+--- selected configuration fields ---
+batch_size: 256
+data_dir: data\camels_us\full
+dataset: camels_us
+dynamic_inputs:
+epochs: 30
+hidden_size: 128
+model: cudalstm
+seed: 159193
+seq_length: 365
+static_attributes:
+test_end_date: 30/09/2005
+test_start_date: 01/10/2000
+train_end_date: 30/09/1995
+train_start_date: 01/10/1990
+validation_end_date: 30/09/2000
+validation_start_date: 01/10/1995
+=== EXACT INVENTORY COMPLETE ===
+No checkpoint or result payload was opened, no file was modified, and no job was submitted.
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T13:55:50+0800
