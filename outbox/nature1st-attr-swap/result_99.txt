@@ -1,0 +1,71 @@
+### channel=nature1st-attr-swap seq=99
+### host=login4
+### started=2026-08-27T15:51:21+0800
+### ---------- output ----------
+wallclock 2026-08-27 15:51:21 +0800
+=== A. GPU MODEL PER PARTITION (the decisive question) ===
+  ngu001   hgpu2p     gpu:2          MIXED        alloc=cpu
+  ngu004   hgpu2p     gpu:2          MIXED        alloc=cpu
+  ngu005   hgpu2p     gpu:2          ALLOCATED    alloc=cpu
+  ngu006   hgpu2p     gpu:2          MIXED        alloc=cpu
+  ngu007   hgpu2p     gpu:2          MIXED        alloc=cpu
+  ngu008   hgpu2p     gpu:2          MIXED        alloc=cpu
+  ngu010   hgpu2p     gpu:2          MIXED        alloc=cpu
+  ngu011   hgpu2p     gpu:2          MIXED        alloc=cpu
+  ngu003   hgpu2      gpu:2          ALLOCATED    alloc=cpu
+  ngu009   hgpu2      gpu:2          IDLE         alloc=none
+  ngu101   hgpu4      gpu:4          IDLE         alloc=none
+  ngu102   hgpu4      gpu:4          MIXED        alloc=cpu
+  ngu104   hgpu4      gpu:4          MIXED        alloc=cpu
+  ngu201   hgpu8      gpu:8          IDLE         alloc=none
+  ngu202   hgpu8      gpu:8          MIXED        alloc=cpu
+  ngu203   hgpu8      gpu:8          MIXED$       alloc=cpu
+=== B. WHICH NODES DID THE EIGHT FINISHED ARMS RUN ON? ===
+     JobID                  JobName       State  NodeList     Elapsed 
+---------- ------------------------ ----------- --------- ----------- 
+    205848          q_ctrl_us_attrs CANCELLED +    ngu002    00:10:14 
+    205854     q_treat_global_attrs CANCELLED +    ngu002    00:08:44 
+    205886          q_ctrl_us_attrs      FAILED    ngu004    00:00:25 
+    205887     q_treat_global_attrs      FAILED    ngu008    00:00:23 
+    206175          q_ctrl_us_attrs   COMPLETED    ngu008    05:16:08 
+    206176     q_treat_global_attrs   COMPLETED    ngu008    03:26:25 
+    206409      q_armC_us_minus_net   COMPLETED    ngu008    06:11:21 
+    206410   q_armD_global_plus_net   COMPLETED    ngu008    04:00:08 
+    206718       q_armE_minus_lowR2   COMPLETED    ngu011    03:02:21 
+    206719 q_armF_global_plus_lowR2   COMPLETED    ngu011    06:06:13 
+    207826  q_armG_china_supplyable   COMPLETED    ngu007    09:55:16 
+    211317        q_armI_no_neardam   COMPLETED    ngu011    03:48:24 
+=== C. ARE hgpu2p GPUs ACTUALLY ALL TAKEN? ===
+-- gres alloc vs total, per hgpu2p node --
+ NODELIST    STATE             GRES                           FREE_MEM
+   ngu001      mix            gpu:2                              18228
+   ngu002    down*            gpu:2                             244218
+   ngu004      mix            gpu:2                              27474
+   ngu005    alloc            gpu:2                              16580
+   ngu006      mix            gpu:2                               8924
+   ngu007      mix            gpu:2                              10700
+   ngu008      mix            gpu:2                              15339
+   ngu010      mix            gpu:2                              57740
+   ngu011      mix            gpu:2                              18609
+-- running jobs in hgpu2p and their gpu request --
+     JOBID      USER                 NAME       TIME NODELIST  TRES_PER_NODE
+=== D. WHAT IS JOB 215178 (blocking armJ)? ===
+=== E. IF I ALSO OFFERED hgpu4/hgpu2, WHEN WOULD armJ START? (simulation, no change) ===
+-- current estimate on hgpu2p only --
+     JOBID     STATE           START_TIME         NODELIST(REASON)
+    215195   PENDING  2026-08-29T17:42:57               (Priority)
+-- idle GPU capacity elsewhere right now --
+ NODELIST  PARTITION    STATE             GRES  CPUS(A/I/O/T)
+   ngu003      hgpu2    alloc            gpu:2      96/0/0/96
+   ngu009      hgpu2     idle            gpu:2      0/96/0/96
+   ngu101      hgpu4     idle            gpu:4      0/96/0/96
+   ngu102      hgpu4      mix            gpu:4     16/80/0/96
+   ngu103      hgpu4    down*            gpu:4      0/0/96/96
+   ngu104      hgpu4      mix            gpu:4      4/92/0/96
+   ngu201      hgpu8     idle            gpu:8      0/64/0/64
+   ngu202      hgpu8      mix            gpu:8     42/22/0/64
+   ngu203      hgpu8     mix$            gpu:8     32/32/0/64
+=== END seq=99 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T15:51:26+0800
