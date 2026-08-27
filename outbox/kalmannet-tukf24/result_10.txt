@@ -1,0 +1,16 @@
+### channel=kalmannet-tukf24 seq=10
+### host=login4
+### started=2026-08-27T19:25:35+0800
+### ---------- output ----------
+=== PACK TRAIN RESULTS ===
+train_json=108 anchor_json=27
+54b21fa09dd0f9e5ae4b87e2257c1e988ae445ab15fdbfb82088f6a2b04aa655  /tmp/tukf24_train_results_v1.tar.gz
+fatal: Unable to create '/data1/home/sunyiq/hpc_mailbox/.git/index.lock': File exists.
+
+If no other git process is currently running, this probably means a
+git process crashed in this repository earlier. Make sure no other git
+process is running and remove the file manually to continue.
+PAYLOAD_PUSH_FAILED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T19:25:53+0800
