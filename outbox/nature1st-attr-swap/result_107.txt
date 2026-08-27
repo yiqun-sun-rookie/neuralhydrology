@@ -1,0 +1,55 @@
+### channel=nature1st-attr-swap seq=107
+### host=login4
+### started=2026-08-27T23:29:04+0800
+### ---------- output ----------
+pwd=/data1/home/sunyiq/nature_1st  date=2026-08-27 23:29:04
+=== A. QUEUE / ACCOUNTING (all armJ seeds) ===
+--- squeue ---
+      JOBID                       NAME     STATE       TIME  NODELIST
+     215195         q_armJ_china_min15   RUNNING    7:18:44    ngu009
+--- sacct ---
+      JobID                    JobName        State ExitCode     Elapsed  NodeList 
+     215195         q_armJ_china_min15      RUNNING      0:0    07:19:09    ngu009 
+=== B. LOGS ===
+--- armJ_china_min15-215195.out
+    bytes=4021  mtime=2026-08-27 23:25:51.000000000 +0800
+    [guard] (MUST say 15 attributes):
+        [guard] train: 15 attributes, 2908 stations in meta -- attribute set verified
+        [guard] val: 15 attributes, 2908 stations in meta -- attribute set verified
+    [errors]:
+      PyTorch 2.4.0, CUDA True
+    [progress, last 8]:
+      Epoch 9: loss=0.4795  val_median_NSE(phys)=0.6092  val_RMSE_qspec=0.0780  NSE>0=0.87  lr=5.00e-04
+      Epoch 10: loss=0.4631  val_median_NSE(phys)=0.5814  val_RMSE_qspec=0.0796  NSE>0=0.85  lr=5.00e-04
+      Epoch 11: loss=0.4471  val_median_NSE(phys)=0.6056  val_RMSE_qspec=0.0778  NSE>0=0.85  lr=5.00e-04
+      Epoch 12: loss=0.4330  val_median_NSE(phys)=0.5959  val_RMSE_qspec=0.0787  NSE>0=0.85  lr=5.00e-04
+      Epoch 13: loss=0.3964  val_median_NSE(phys)=0.6242  val_RMSE_qspec=0.0758  NSE>0=0.84  lr=2.50e-04
+      Epoch 14: loss=0.3830  val_median_NSE(phys)=0.6072  val_RMSE_qspec=0.0769  NSE>0=0.85  lr=2.50e-04
+      Epoch 15: loss=0.3750  val_median_NSE(phys)=0.6314  val_RMSE_qspec=0.0756  NSE>0=0.86  lr=2.50e-04
+      Epoch 16: loss=0.3649  val_median_NSE(phys)=0.6162  val_RMSE_qspec=0.0752  NSE>0=0.86  lr=2.50e-04
+    [Done. marker]:
+      Done_lines=0
+=== C. OUTPUT DIRS / COMPLETION ===
+  s42: dir EXISTS
+    eval_val_per_station.csv absent
+    best_metrics.json [INTERIM unless Done./COMPLETED]:
+      {  "epoch": 15,  "train_loss": 0.3749900932956119,  "median_nse": 0.6314108813700723,  "mean_nse": -124.31066207175442,  "p25_nse": 0.3190332768622069,  "p75_nse": 0.7538805228823497,  "frac_nse_gt0": 0.8584686774941995,  "global_rmse_qspec_mmph": 0.07560789877163904,  "n_stations": 431,  "space": "physical_qcms_per_station_NSE"}
+
+  s43: no output dir
+  s44: no output dir
+=== D. PAIRED ANALYSIS (only if armJ eval csv exists) ===
+  armJ s42 eval_val_per_station.csv not present yet -- training not finished, skipping.
+=== E. GPU CAPACITY ===
+ PARTITION    STATE  NODES             NODELIST
+     hgpu4    down*      1               ngu103
+     hgpu4      mix      2         ngu[102,104]
+     hgpu4     idle      1               ngu101
+     hgpu2      mix      1               ngu009
+     hgpu2    alloc      1               ngu003
+    hgpu2p    down*      1               ngu002
+    hgpu2p      mix      7 ngu[001,004,006-008,
+    hgpu2p    alloc      1               ngu005
+=== END seq=107 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T23:29:05+0800
