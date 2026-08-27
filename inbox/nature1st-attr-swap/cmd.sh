@@ -1,108 +1,131 @@
 #!/bin/bash
-# nature1st-attr-swap seq=104 -- install the seed-43/44 replicate scripts. NOT submitted
-# here: they fire only if the seed-42 run (215195) lands INCONCLUSIVE against armC.
-# User granted standing authorisation for this campaign's GPU submissions on 2026-08-27.
+# nature1st-attr-swap seq=105 -- armJ (china min15) watchdog, seeds 42/43/44
+# NO set -e. pipefail only. Every grep/tail guarded with || true.
 set -o pipefail
+
 RUN=/data1/home/sunyiq/nature_1st
-cd "$RUN" || { echo RUN_DIR_MISSING; exit 1; }
+cd "$RUN" || { echo "FATAL: cannot cd $RUN"; exit 1; }
+echo "pwd=$(pwd)  date=$(date '+%F %T')"
 
-echo "=== A. INSTALL ==="
-if [ -f "scripts/hpc_train_q_armJ_s43.sbatch" ]; then echo "  EXISTS, not overwriting: scripts/hpc_train_q_armJ_s43.sbatch"; else
-base64 -d > 'scripts/hpc_train_q_armJ_s43.sbatch' <<'B64_hpc_train_q_armJ_s43'
-IyEvdXNyL2Jpbi9lbnYgYmFzaAojU0JBVENIIC1KIHFfYXJtSl9jaGluYV9taW4xNV9zNDMKI1NCQVRDSCAtcCBoZ3B1MnAsaGdw
-dTIsaGdwdTQKI1NCQVRDSCAtTiAxCiNTQkFUQ0ggLW4gMQojU0JBVENIIC0tY3B1cy1wZXItdGFzaz00CiNTQkFUQ0ggLS1ncmVz
-PWdwdToxCiNTQkFUQ0ggLS1leGNsdWRlPW5ndTAwMgojU0JBVENIIC10IDI0OjAwOjAwCiNTQkFUQ0ggLW8gbG9ncy9hdHRyX3N3
-YXAvYXJtSl9jaGluYV9taW4xNV9zNDMtJWoub3V0CiNTQkFUQ0ggLWUgbG9ncy9hdHRyX3N3YXAvYXJtSl9jaGluYV9taW4xNV9z
-NDMtJWouZXJyCgojIGFybUogcmVwbGljYXRlLCBzZWVkIDQzLiBGaXJlZCBvbmx5IHdoZW4gdGhlIHNlZWQtNDIgcnVuIGxhbmRz
-IElOQ09OQ0xVU0lWRSBhZ2FpbnN0CiMgYXJtQyAtLSB0aGUgcHJlLXJlZ2lzdGVyZWQgcnVsZSBzYXlzIGEgc2luZ2xlIHNlZWQg
-bWF5IG5vdCBzZXR0bGUgaXQuCiMKIyBJZGVudGljYWwgYXR0cmlidXRlIGZpbGVzLCBpZGVudGljYWwgZnJvemVuIGNvbnRyYWN0
-LCBPTkxZIC0tc2VlZCBkaWZmZXJzLgojCiMgUGFydGl0aW9uIGxpc3QgaW5jbHVkZXMgaGdwdTQgKEE0MCkuIFJUWCAzMDkwIGFu
-ZCBBNDAgYXJlIHRoZSBzYW1lIEdBMTAyIEFtcGVyZSBkaWUsCiMgY29tcHV0ZSBjYXBhYmlsaXR5IDguNiwgc2FtZSBkcml2ZXIg
-NTM1LjEwNC4wNSwgc2FtZSBQeVRvcmNoIDIuNC4wIC0tIHRoZSBlYXJsaWVyIGJhbgojIG9uIEE0MCB3YXMgd2l0aGRyYXduIDIw
-MjYtMDgtMjcgYXMgYSBtaXMtYXBwbGllZCBhbmFsb2d5LiBSZXNpZHVhbCBjdUROTiBrZXJuZWwtY2hvaWNlCiMgZHJpZnQgaXMg
-dW5tZWFzdXJlZCBidXQgZXN0aW1hdGVkIGF0IDAuMDAxLTAuMDA1LCBhbiBvcmRlciBiZWxvdyB0aGUgc2VlZCBzcHJlYWQgdGhl
-c2UKIyB0d28gcnVucyBleGlzdCB0byBtZWFzdXJlLiBMZXR0aW5nIGJvdGggc2VlZHMgc3RhcnQgYXQgb25jZSBiZWF0cyBhIHR3
-by1kYXkgcXVldWUgd2FpdC4KIwojIE5PVEUgT04gV0hBVCBUSElTIERPRVMgQU5EIERPRVMgTk9UIE1FQVNVUkU6IGl0IGJvdW5k
-cyBhcm1KJ3Mgb3duIHNlZWQgc3ByZWFkLiBhcm1DCiMgKDAuNjQ2NiksIHRoZSBjb21wYXJpc29uIGJhc2VsaW5lLCBpcyBBTFNP
-IHNpbmdsZS1zZWVkIGFuZCBpdHMgc3ByZWFkIHN0YXlzIHVubWVhc3VyZWQuCiMgQSBmdWxseSBjbGVhbiBhbnN3ZXIgbmVlZHMg
-cmVwbGljYXRlcyBvbiBib3RoIHNpZGVzOyB0aGlzIGlzIHRoZSBwcmUtcmVnaXN0ZXJlZCBoYWxmLgoKc2V0IC1lbyBwaXBlZmFp
-bAoKc291cmNlIC9kYXRhMS9ob21lLyR7VVNFUn0vbWluaWNvbmRhMy9ldGMvcHJvZmlsZS5kL2NvbmRhLnNoIHx8IHNvdXJjZSAk
-SE9NRS9taW5pY29uZGEzL2V0Yy9wcm9maWxlLmQvY29uZGEuc2gKY29uZGEgYWN0aXZhdGUgIiR7Q09OREFfRU5WOi1uaF9maW5h
-bH0iCgpleHBvcnQgTUtMX1RIUkVBRElOR19MQVlFUj1HTlUKZXhwb3J0IE1LTF9TRVJWSUNFX0ZPUkNFX0lOVEVMPTEKZXhwb3J0
-IENVREFfREVWSUNFX09SREVSPVBDSV9CVVNfSUQKCmNkICR7U0xVUk1fU1VCTUlUX0RJUn0KZXhwb3J0IFBZVEhPTlBBVEg9JChw
-d2QpOiRQWVRIT05QQVRICm1rZGlyIC1wIGxvZ3MvYXR0cl9zd2FwCgplY2hvICJbJChkYXRlKV0gSm9iICRTTFVSTV9KT0JfSUQg
-b24gJChob3N0bmFtZSkiCnB5dGhvbiAtYyAiaW1wb3J0IHRvcmNoOyBwcmludChmJ1B5VG9yY2gge3RvcmNoLl9fdmVyc2lvbl9f
-fSwgQ1VEQSB7dG9yY2guY3VkYS5pc19hdmFpbGFibGUoKX0nLCB0b3JjaC5jdWRhLmdldF9kZXZpY2VfbmFtZSgwKSBpZiB0b3Jj
-aC5jdWRhLmlzX2F2YWlsYWJsZSgpIGVsc2UgJycpIgoKcHl0aG9uIC0gPDwnUFlDSEsnIHx8IHsgZWNobyAiW0ZBVEFMXSBubyB1
-c2FibGUgR1BVIG9uICQoaG9zdG5hbWUpIC0tIHJlZnVzaW5nIHRvIHRyYWluIG9uIENQVSI7IGV4aXQgMTsgfQppbXBvcnQgc3lz
-LCB0b3JjaApzeXMuZXhpdCgwIGlmIHRvcmNoLmN1ZGEuaXNfYXZhaWxhYmxlKCkgZWxzZSAxKQpQWUNISwoKc3J1biBweXRob24g
-LXUgc2NyaXB0cy9jaGFpbl90cmFpbl9xX2F0dHJzZXQucHkgICAtLXN0YXRpYyBkYXRhL2ludGVyaW0vc3RhZ2Vfc3RhdGljX2Zl
-YXR1cmVfc3RhdHNfYXJtSi5qc29uICAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRh
-aW5fc3RhdGlvbnNfYXJtSi5jc3YgICAtLW91dHB1dF9kaXIgbW9kZWxzL3FfbHN0bV9hcm1KX2hwY19zNDMgLS1zZWVkIDQzIC0t
-ZXBvY2hzIDQwIC0tbnVtX3dvcmtlcnMgNAoKZWNobyAiWyQoZGF0ZSldIHRyYWluaW5nIGRvbmUiCnNydW4gcHl0aG9uIC11IHNj
-cmlwdHMvY2hhaW5fZXZhbF9xX2F0dHJzZXQucHkgICAtLXN0YXRpYyBkYXRhL2ludGVyaW0vc3RhZ2Vfc3RhdGljX2ZlYXR1cmVf
-c3RhdHNfYXJtSi5qc29uICAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRhaW5fc3Rh
-dGlvbnNfYXJtSi5jc3YgICAtLW1vZGVsX2RpciBtb2RlbHMvcV9sc3RtX2FybUpfaHBjX3M0MyAtLXN1YnNldCB2YWwgLS1tYXhf
-aG91cnMgNDM4MDAKZWNobyAiWyQoZGF0ZSldIERvbmUgKGV4aXQ6ICQ/KSIK
-B64_hpc_train_q_armJ_s43
-chmod 755 'scripts/hpc_train_q_armJ_s43.sbatch'
+echo "=== A. QUEUE / ACCOUNTING (all armJ seeds) ==="
+echo "--- squeue ---"
+squeue -u "$USER" -o '%.11i %.26j %.9T %.10M %.9N' 2>&1 | grep -Ei 'armJ|JOBID' || true
+echo "--- sacct ---"
+sacct -S 2026-08-27 -u "$USER" -X --format=JobID%11,JobName%26,State%12,ExitCode%8,Elapsed%11,NodeList%9 2>&1 | grep -Ei 'armJ|JobID' || true
+
+echo "=== B. LOGS ==="
+found_log=0
+for f in "$RUN"/logs/attr_swap/armJ_china_min15*.out; do
+  [ -f "$f" ] || continue
+  found_log=1
+  echo "--- $(basename "$f")"
+  stat -c '    bytes=%s  mtime=%y' "$f" 2>/dev/null || true
+  echo "    [guard] (MUST say 15 attributes):"
+  grep '\[guard\]' "$f" 2>/dev/null | tail -4 | sed 's/^/      /' || true
+  echo "    [errors]:"
+  ec=$(grep -Ec 'RuntimeError|Traceback|CUDA|FATAL|Killed|out of memory' "$f" 2>/dev/null || true)
+  if [ "${ec:-0}" != "0" ]; then
+    grep -E 'RuntimeError|Traceback|CUDA|FATAL|Killed|out of memory' "$f" 2>/dev/null | tail -8 | sed 's/^/      /' || true
+  else
+    echo "      none"
+  fi
+  echo "    [progress, last 8]:"
+  grep -E '^Epoch|Best val median NSE|Done\.' "$f" 2>/dev/null | tail -8 | sed 's/^/      /' || true
+  echo "    [Done. marker]:"
+  grep -c '^Done\.' "$f" 2>/dev/null | sed 's/^/      Done_lines=/' || true
+done
+[ "$found_log" = "0" ] && echo "  (no armJ log files matched)"
+
+echo "=== C. OUTPUT DIRS / COMPLETION ==="
+for S in 42 43 44; do
+  d="$RUN/models/q_lstm_armJ_hpc_s${S}"
+  if [ -d "$d" ]; then
+    echo "  s${S}: dir EXISTS"
+    if [ -f "$d/eval_val_per_station.csv" ]; then
+      echo "    eval_val_per_station.csv PRESENT ($(stat -c '%s bytes, %y' "$d/eval_val_per_station.csv" 2>/dev/null))"
+    else
+      echo "    eval_val_per_station.csv absent"
+    fi
+    if [ -f "$d/best_metrics.json" ]; then
+      echo "    best_metrics.json [INTERIM unless Done./COMPLETED]:"
+      tr -d '\n' < "$d/best_metrics.json" 2>/dev/null | cut -c1-400 | sed 's/^/      /' || true
+      echo ""
+    fi
+  else
+    echo "  s${S}: no output dir"
+  fi
+done
+
+echo "=== D. PAIRED ANALYSIS (only if armJ eval csv exists) ==="
+if [ -f "$RUN/models/q_lstm_armJ_hpc_s42/eval_val_per_station.csv" ]; then
+  source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null || true
+  conda activate nh_final 2>/dev/null || true
+  python - <<'PYEOF' 2>&1
+import os
+try:
+    import numpy as np, pandas as pd
+except Exception as e:
+    print("  IMPORT FAIL:", e); raise SystemExit(0)
+
+RUN = "/data1/home/sunyiq/nature_1st"
+BASE = [("armC  best-US-8", "q_lstm_usminus4_hpc_s42"),
+        ("armI  16-item",   "q_lstm_armI_hpc_s42"),
+        ("armG",            "q_lstm_armG_hpc_s42")]
+
+def load(d):
+    p = os.path.join(RUN, "models", d, "eval_val_per_station.csv")
+    if not os.path.exists(p):
+        return None
+    try:
+        return pd.read_csv(p)
+    except Exception as e:
+        print("  read fail", d, e); return None
+
+def boot_ci(diff, n=5000):
+    rng = np.random.default_rng(0)
+    k = len(diff)
+    if k == 0: return (float('nan'), float('nan'))
+    idx = rng.integers(0, k, size=(n, k))
+    b = np.median(diff[idx], axis=1)
+    return float(np.percentile(b, 2.5)), float(np.percentile(b, 97.5))
+
+for seed in (42, 43, 44):
+    tgt = load(f"q_lstm_armJ_hpc_s{seed}")
+    if tgt is None:
+        continue
+    print(f"\n#### armJ seed {seed}: n={len(tgt)}  median_NSE={tgt['nse'].median():.4f}")
+    for label, d in BASE:
+        b = load(d)
+        if b is None:
+            print(f"  vs {label}: baseline MISSING ({d})"); continue
+        cols = ['station', 'nse'] + (['stratum'] if 'stratum' in tgt.columns else [])
+        m = tgt[cols].merge(b[['station', 'nse']], on='station', suffixes=('_J', '_B'))
+        if len(m) == 0:
+            print(f"  vs {label}: no overlapping stations"); continue
+        diff = (m['nse_J'] - m['nse_B']).values.astype(float)
+        diff = diff[np.isfinite(diff)]
+        mj, mb = m['nse_J'].median(), m['nse_B'].median()
+        pmd = float(np.median(diff))
+        lo, hi = boot_ci(diff)
+        worse = int((diff < 0).sum()); better = int((diff > 0).sum())
+        d10 = float((diff < -0.10).mean() * 100.0)
+        u10 = float((diff > 0.10).mean() * 100.0)
+        print(f"  vs {label}  (paired n={len(diff)})")
+        print(f"    median armJ={mj:.4f}  median base={mb:.4f}  diff_of_medians={mj-mb:+.4f}")
+        print(f"    PAIRED median diff = {pmd:+.4f}   95%CI [{lo:+.4f}, {hi:+.4f}]")
+        print(f"    worse={worse}  better={better}   drop>0.10 = {d10:.1f}%   gain>0.10 = {u10:.1f}%")
+        if 'stratum' in m.columns:
+            for s, g in m.groupby('stratum'):
+                sd = (g['nse_J'] - g['nse_B']).values.astype(float)
+                sd = sd[np.isfinite(sd)]
+                if len(sd) == 0: continue
+                print(f"      stratum {s!s:>14}  n={len(sd):4d}  paired_med={np.median(sd):+.4f}  drop>0.10={100.0*(sd<-0.10).mean():.1f}%")
+PYEOF
+else
+  echo "  armJ s42 eval_val_per_station.csv not present yet -- training not finished, skipping."
 fi
-printf "  %-44s %s  expect cbf8ed5c8f1550c2
-" "hpc_train_q_armJ_s43.sbatch" "$(sha256sum 'scripts/hpc_train_q_armJ_s43.sbatch' | cut -c1-16)"
-if [ -f "scripts/hpc_train_q_armJ_s44.sbatch" ]; then echo "  EXISTS, not overwriting: scripts/hpc_train_q_armJ_s44.sbatch"; else
-base64 -d > 'scripts/hpc_train_q_armJ_s44.sbatch' <<'B64_hpc_train_q_armJ_s44'
-IyEvdXNyL2Jpbi9lbnYgYmFzaAojU0JBVENIIC1KIHFfYXJtSl9jaGluYV9taW4xNV9zNDQKI1NCQVRDSCAtcCBoZ3B1MnAsaGdw
-dTIsaGdwdTQKI1NCQVRDSCAtTiAxCiNTQkFUQ0ggLW4gMQojU0JBVENIIC0tY3B1cy1wZXItdGFzaz00CiNTQkFUQ0ggLS1ncmVz
-PWdwdToxCiNTQkFUQ0ggLS1leGNsdWRlPW5ndTAwMgojU0JBVENIIC10IDI0OjAwOjAwCiNTQkFUQ0ggLW8gbG9ncy9hdHRyX3N3
-YXAvYXJtSl9jaGluYV9taW4xNV9zNDQtJWoub3V0CiNTQkFUQ0ggLWUgbG9ncy9hdHRyX3N3YXAvYXJtSl9jaGluYV9taW4xNV9z
-NDQtJWouZXJyCgojIGFybUogcmVwbGljYXRlLCBzZWVkIDQ0LiBGaXJlZCBvbmx5IHdoZW4gdGhlIHNlZWQtNDIgcnVuIGxhbmRz
-IElOQ09OQ0xVU0lWRSBhZ2FpbnN0CiMgYXJtQyAtLSB0aGUgcHJlLXJlZ2lzdGVyZWQgcnVsZSBzYXlzIGEgc2luZ2xlIHNlZWQg
-bWF5IG5vdCBzZXR0bGUgaXQuCiMKIyBJZGVudGljYWwgYXR0cmlidXRlIGZpbGVzLCBpZGVudGljYWwgZnJvemVuIGNvbnRyYWN0
-LCBPTkxZIC0tc2VlZCBkaWZmZXJzLgojCiMgUGFydGl0aW9uIGxpc3QgaW5jbHVkZXMgaGdwdTQgKEE0MCkuIFJUWCAzMDkwIGFu
-ZCBBNDAgYXJlIHRoZSBzYW1lIEdBMTAyIEFtcGVyZSBkaWUsCiMgY29tcHV0ZSBjYXBhYmlsaXR5IDguNiwgc2FtZSBkcml2ZXIg
-NTM1LjEwNC4wNSwgc2FtZSBQeVRvcmNoIDIuNC4wIC0tIHRoZSBlYXJsaWVyIGJhbgojIG9uIEE0MCB3YXMgd2l0aGRyYXduIDIw
-MjYtMDgtMjcgYXMgYSBtaXMtYXBwbGllZCBhbmFsb2d5LiBSZXNpZHVhbCBjdUROTiBrZXJuZWwtY2hvaWNlCiMgZHJpZnQgaXMg
-dW5tZWFzdXJlZCBidXQgZXN0aW1hdGVkIGF0IDAuMDAxLTAuMDA1LCBhbiBvcmRlciBiZWxvdyB0aGUgc2VlZCBzcHJlYWQgdGhl
-c2UKIyB0d28gcnVucyBleGlzdCB0byBtZWFzdXJlLiBMZXR0aW5nIGJvdGggc2VlZHMgc3RhcnQgYXQgb25jZSBiZWF0cyBhIHR3
-by1kYXkgcXVldWUgd2FpdC4KIwojIE5PVEUgT04gV0hBVCBUSElTIERPRVMgQU5EIERPRVMgTk9UIE1FQVNVUkU6IGl0IGJvdW5k
-cyBhcm1KJ3Mgb3duIHNlZWQgc3ByZWFkLiBhcm1DCiMgKDAuNjQ2NiksIHRoZSBjb21wYXJpc29uIGJhc2VsaW5lLCBpcyBBTFNP
-IHNpbmdsZS1zZWVkIGFuZCBpdHMgc3ByZWFkIHN0YXlzIHVubWVhc3VyZWQuCiMgQSBmdWxseSBjbGVhbiBhbnN3ZXIgbmVlZHMg
-cmVwbGljYXRlcyBvbiBib3RoIHNpZGVzOyB0aGlzIGlzIHRoZSBwcmUtcmVnaXN0ZXJlZCBoYWxmLgoKc2V0IC1lbyBwaXBlZmFp
-bAoKc291cmNlIC9kYXRhMS9ob21lLyR7VVNFUn0vbWluaWNvbmRhMy9ldGMvcHJvZmlsZS5kL2NvbmRhLnNoIHx8IHNvdXJjZSAk
-SE9NRS9taW5pY29uZGEzL2V0Yy9wcm9maWxlLmQvY29uZGEuc2gKY29uZGEgYWN0aXZhdGUgIiR7Q09OREFfRU5WOi1uaF9maW5h
-bH0iCgpleHBvcnQgTUtMX1RIUkVBRElOR19MQVlFUj1HTlUKZXhwb3J0IE1LTF9TRVJWSUNFX0ZPUkNFX0lOVEVMPTEKZXhwb3J0
-IENVREFfREVWSUNFX09SREVSPVBDSV9CVVNfSUQKCmNkICR7U0xVUk1fU1VCTUlUX0RJUn0KZXhwb3J0IFBZVEhPTlBBVEg9JChw
-d2QpOiRQWVRIT05QQVRICm1rZGlyIC1wIGxvZ3MvYXR0cl9zd2FwCgplY2hvICJbJChkYXRlKV0gSm9iICRTTFVSTV9KT0JfSUQg
-b24gJChob3N0bmFtZSkiCnB5dGhvbiAtYyAiaW1wb3J0IHRvcmNoOyBwcmludChmJ1B5VG9yY2gge3RvcmNoLl9fdmVyc2lvbl9f
-fSwgQ1VEQSB7dG9yY2guY3VkYS5pc19hdmFpbGFibGUoKX0nLCB0b3JjaC5jdWRhLmdldF9kZXZpY2VfbmFtZSgwKSBpZiB0b3Jj
-aC5jdWRhLmlzX2F2YWlsYWJsZSgpIGVsc2UgJycpIgoKcHl0aG9uIC0gPDwnUFlDSEsnIHx8IHsgZWNobyAiW0ZBVEFMXSBubyB1
-c2FibGUgR1BVIG9uICQoaG9zdG5hbWUpIC0tIHJlZnVzaW5nIHRvIHRyYWluIG9uIENQVSI7IGV4aXQgMTsgfQppbXBvcnQgc3lz
-LCB0b3JjaApzeXMuZXhpdCgwIGlmIHRvcmNoLmN1ZGEuaXNfYXZhaWxhYmxlKCkgZWxzZSAxKQpQWUNISwoKc3J1biBweXRob24g
-LXUgc2NyaXB0cy9jaGFpbl90cmFpbl9xX2F0dHJzZXQucHkgICAtLXN0YXRpYyBkYXRhL2ludGVyaW0vc3RhZ2Vfc3RhdGljX2Zl
-YXR1cmVfc3RhdHNfYXJtSi5qc29uICAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRh
-aW5fc3RhdGlvbnNfYXJtSi5jc3YgICAtLW91dHB1dF9kaXIgbW9kZWxzL3FfbHN0bV9hcm1KX2hwY19zNDQgLS1zZWVkIDQ0IC0t
-ZXBvY2hzIDQwIC0tbnVtX3dvcmtlcnMgNAoKZWNobyAiWyQoZGF0ZSldIHRyYWluaW5nIGRvbmUiCnNydW4gcHl0aG9uIC11IHNj
-cmlwdHMvY2hhaW5fZXZhbF9xX2F0dHJzZXQucHkgICAtLXN0YXRpYyBkYXRhL2ludGVyaW0vc3RhZ2Vfc3RhdGljX2ZlYXR1cmVf
-c3RhdHNfYXJtSi5qc29uICAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRhaW5fc3Rh
-dGlvbnNfYXJtSi5jc3YgICAtLW1vZGVsX2RpciBtb2RlbHMvcV9sc3RtX2FybUpfaHBjX3M0NCAtLXN1YnNldCB2YWwgLS1tYXhf
-aG91cnMgNDM4MDAKZWNobyAiWyQoZGF0ZSldIERvbmUgKGV4aXQ6ICQ/KSIK
-B64_hpc_train_q_armJ_s44
-chmod 755 'scripts/hpc_train_q_armJ_s44.sbatch'
-fi
-printf "  %-44s %s  expect 1f3dba3695439a6d
-" "hpc_train_q_armJ_s44.sbatch" "$(sha256sum 'scripts/hpc_train_q_armJ_s44.sbatch' | cut -c1-16)"
 
-echo "=== B. SANITY: seeds and output dirs distinct, attribute files shared ==="
-grep -hE '^#SBATCH -J|^#SBATCH -p|--seed|--output_dir' scripts/hpc_train_q_armJ_s4*.sbatch 2>&1 | sed 's/  */ /g' | head -12
+echo "=== E. GPU CAPACITY ==="
+sinfo -p hgpu2p,hgpu2,hgpu4 -o '%.10P %.8t %.6D %.20N' 2>&1 | head -20 || true
 
-echo "=== C. armJ SEED 42 PROGRESS ==="
-squeue -j 215195 -o '%.10i %.9T %.10P %.10M %.9N' 2>&1
-f=logs/attr_swap/armJ_china_min15-215195.out
-if [ -f "$f" ]; then
-  echo "  log $(stat -c%s "$f") bytes, touched $(stat -c%y "$f" | cut -c1-19)"
-  grep -E "\[guard\]|^Epoch|Best val median NSE|Done\." "$f" 2>/dev/null | tail -6 || true
-else echo '  (no log yet)'; fi
-
-echo "=== D. IDLE GPU CAPACITY (for the parallel seed runs) ==="
-sinfo -p hgpu2p,hgpu2,hgpu4 -o '%.10P %.8t %.6D %N' 2>&1 | head -10
-echo "=== END seq=104 ==="
+echo "=== END seq=105 ==="
