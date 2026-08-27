@@ -1,0 +1,155 @@
+### channel=kalmannet-daily-camels seq=46
+### host=login4
+### started=2026-08-27T14:52:12+0800
+### ---------- output ----------
+SEQ46_A37_GPU_AUDIT_IDENTITY experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37 execution_attempt_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_PROBE2_SEQ35 job_id=215178
+SEQ46_A37_PROBE2_SACCT_BEGIN
+JobIDRaw|JobName|Partition|AllocCPUS|State|ExitCode|Elapsed|ReqMem|AllocTRES|MaxRSS|MaxVMSize
+215178|daily-knet-a37-probe|hgpu2p|2|PENDING|0:0|00:00:00|0n|||
+SEQ46_A37_PROBE2_SACCT_END
+SEQ46_A37_PROBE2_SQUEUE_BEGIN
+JOBID|NAME|PARTITION|STATE|TIME|NODES|NODELIST(REASON)|TRES_PER_NODE
+215178|daily-knet-a37-probe|hgpu2p|PENDING|0:00|1|(Priority)|gpu:1
+SEQ46_A37_PROBE2_SQUEUE_END
+SEQ46_GPU_PARTITIONS_BEGIN
+hcpu48*|up|infinite|15|alloc$|(null)|720/0/0/720|1
+hcpu48*|up|infinite|16|down*|(null)|0/0/768/768|1
+hcpu48*|up|infinite|20|alloc|(null)|960/0/0/960|1
+hcpu48*|up|infinite|13|idle|(null)|0/624/0/624|1
+hcpu48y|up|infinite|1|down$|(null)|0/0/48/48|1
+hcpu48y|up|infinite|1|maint|(null)|0/48/0/48|1
+hcpu48y|up|infinite|2|down*|(null)|0/0/96/96|1
+hcpu48y|up|infinite|2|mix|(null)|6/90/0/96|1
+hcpu48y|up|infinite|6|idle|(null)|0/288/0/288|1
+hgpu8|up|infinite|1|mix$|gpu:8|32/32/0/64|1
+hgpu8|up|infinite|1|mix|gpu:8|42/22/0/64|1
+hgpu8|up|infinite|1|idle|gpu:8|0/64/0/64|1
+hgpu4|up|infinite|1|down*|gpu:4|0/0/96/96|1
+hgpu4|up|infinite|2|mix|gpu:4|24/168/0/192|1
+hgpu4|up|infinite|1|idle|gpu:4|0/96/0/96|1
+hgpu2|up|infinite|1|alloc|gpu:2|96/0/0/96|1
+hgpu2|up|infinite|1|idle|gpu:2|0/96/0/96|1
+hgpu2p|up|infinite|1|down*|gpu:2|0/0/96/96|1
+hgpu2p|up|infinite|7|mix|gpu:2|37/507/0/544|1
+hgpu2p|up|infinite|1|alloc|gpu:2|96/0/0/96|1
+SEQ46_GPU_PARTITIONS_END exit_code=0
+SEQ46_GPU_NODES_BEGIN
+icn201|hcpu48*|allocated|(null)|(null)|1|48|75016
+icn202|hcpu48*|allocated$|(null)|(null)|1|48|41424
+icn203|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn204|hcpu48*|allocated$|(null)|(null)|1|48|42247
+icn205|hcpu48*|allocated$|(null)|(null)|1|48|35139
+icn206|hcpu48*|allocated$|(null)|(null)|1|48|46165
+icn207|hcpu48*|allocated$|(null)|(null)|1|48|46215
+icn208|hcpu48*|idle|(null)|(null)|1|48|75277
+icn209|hcpu48*|allocated|(null)|(null)|1|48|40920
+icn210|hcpu48*|allocated$|(null)|(null)|1|48|41971
+icn211|hcpu48*|allocated$|(null)|(null)|1|48|46081
+icn212|hcpu48*|allocated$|(null)|(null)|1|48|47013
+icn213|hcpu48*|idle|(null)|(null)|1|48|75398
+icn214|hcpu48*|allocated$|(null)|(null)|1|48|42142
+icn215|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn216|hcpu48*|allocated$|(null)|(null)|1|48|41176
+icn217|hcpu48*|allocated$|(null)|(null)|1|48|43751
+icn218|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn219|hcpu48*|allocated|(null)|(null)|1|48|39318
+icn220|hcpu48*|allocated$|(null)|(null)|1|48|47018
+icn221|hcpu48*|allocated$|(null)|(null)|1|48|34599
+icn222|hcpu48*|allocated|(null)|(null)|1|48|39016
+icn223|hcpu48*|idle|(null)|(null)|1|48|74109
+icn224|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn225|hcpu48*|idle|(null)|(null)|1|48|75320
+icn226|hcpu48*|allocated|(null)|(null)|1|48|54733
+icn227|hcpu48*|allocated|(null)|(null)|1|48|38985
+icn228|hcpu48*|allocated|(null)|(null)|1|48|33785
+icn229|hcpu48*|allocated|(null)|(null)|1|48|30371
+icn230|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn231|hcpu48*|allocated|(null)|(null)|1|48|38868
+icn232|hcpu48*|allocated|(null)|(null)|1|48|38892
+icn233|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn234|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn235|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn236|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn237|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn238|hcpu48*|idle|(null)|(null)|1|48|69665
+icn239|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn240|hcpu48*|idle|(null)|(null)|1|48|65025
+icn241|hcpu48*|idle|(null)|(null)|1|48|66813
+icn242|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn243|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn244|hcpu48*|idle|(null)|(null)|1|48|75254
+icn245|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn246|hcpu48*|allocated$|(null)|(null)|1|48|51587
+icn247|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn248|hcpu48*|idle|(null)|(null)|1|48|68400
+icn249|hcpu48*|allocated$|(null)|(null)|1|48|46811
+icn250|hcpu48*|idle|(null)|(null)|1|48|69243
+icn251|hcpu48*|idle|(null)|(null)|1|48|67242
+icn252|hcpu48*|idle|(null)|(null)|1|48|70997
+icn253|hcpu48*|idle|(null)|(null)|1|48|66018
+icn254|hcpu48*|allocated|(null)|(null)|1|48|34125
+icn255|hcpu48*|allocated|(null)|(null)|1|48|39110
+icn256|hcpu48*|down*|(null)|(null)|1|48|N/A
+icn257|hcpu48*|allocated|(null)|(null)|1|48|26782
+icn258|hcpu48*|allocated|(null)|(null)|1|48|28924
+icn259|hcpu48*|allocated|(null)|(null)|1|48|37812
+icn260|hcpu48*|allocated|(null)|(null)|1|48|30613
+icn261|hcpu48*|allocated|(null)|(null)|1|48|28309
+icn262|hcpu48*|allocated|(null)|(null)|1|48|37864
+icn263|hcpu48*|allocated|(null)|(null)|1|48|27362
+icn264|hcpu48*|allocated|(null)|(null)|1|48|37916
+icn270|hcpu48y|idle|(null)|(null)|1|48|231545
+icn271|hcpu48y|idle|(null)|(null)|1|48|231061
+icn272|hcpu48y|idle|(null)|(null)|1|48|229168
+icn273|hcpu48y|idle|(null)|(null)|1|48|197326
+icn274|hcpu48y|mixed|(null)|(null)|1|48|232355
+icn275|hcpu48y|idle|(null)|(null)|1|48|227068
+icn276|hcpu48y|idle|(null)|(null)|1|48|227004
+icn277|hcpu48y|mixed|(null)|(null)|1|48|178688
+icn278|hcpu48y|down*|(null)|(null)|1|48|N/A
+icn279|hcpu48y|down*|(null)|(null)|1|48|N/A
+icn280|hcpu48y|maint|(null)|(null)|1|48|225902
+icn281|hcpu48y|down$|(null)|(null)|1|48|N/A
+ngu001|hgpu2p|mixed|(null)|gpu:2|1|96|18498
+ngu002|hgpu2p|down*|(null)|gpu:2|1|96|244218
+ngu003|hgpu2|allocated|(null)|gpu:2|1|96|687
+ngu004|hgpu2p|mixed|(null)|gpu:2|1|96|27636
+ngu005|hgpu2p|allocated|(null)|gpu:2|1|96|16537
+ngu006|hgpu2p|mixed|(null)|gpu:2|1|96|9080
+ngu007|hgpu2p|mixed|(null)|gpu:2|1|96|11264
+ngu008|hgpu2p|mixed|(null)|gpu:2|1|96|15373
+ngu009|hgpu2|idle|(null)|gpu:2|1|96|3493
+ngu010|hgpu2p|mixed|(null)|gpu:2|1|32|58954
+ngu011|hgpu2p|mixed|(null)|gpu:2|1|32|19397
+ngu101|hgpu4|idle|(null)|gpu:4|1|96|14395
+ngu102|hgpu4|mixed|(null)|gpu:4|1|96|16389
+ngu103|hgpu4|down*|(null)|gpu:4|1|96|N/A
+ngu104|hgpu4|mixed|(null)|gpu:4|1|96|14029
+ngu201|hgpu8|idle|(null)|gpu:8|1|64|26410
+ngu202|hgpu8|mixed|(null)|gpu:8|1|64|672080
+ngu203|hgpu8|mixed$|(null)|gpu:8|1|64|480357
+SEQ46_GPU_NODES_END exit_code=0
+SEQ46_GPU_TRES_BEGIN
+NodeName=ngu001 Arch=x86_64 CoresPerSocket=24  CPUAlloc=2 CPUTot=96 CPULoad=5.63 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu001 NodeHostName=ngu001 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=18498 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-01-22T15:59:04 SlurmdStartTime=2026-01-22T16:05:49 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=2 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu002 Arch=x86_64 CoresPerSocket=24  CPUAlloc=0 CPUTot=96 CPULoad=0.06 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu002 NodeHostName=ngu002 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=244218 Sockets=2 Boards=1 State=DOWN* ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-08-21T11:38:58 SlurmdStartTime=2026-08-21T19:16:21 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES= CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s Reason=Not responding [root@2026-08-23T06:23:18]
+NodeName=ngu003 Arch=x86_64 CoresPerSocket=24  CPUAlloc=96 CPUTot=96 CPULoad=1.02 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu003 NodeHostName=ngu003 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=687 Sockets=2 Boards=1 State=ALLOCATED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2  BootTime=2025-05-14T10:50:58 SlurmdStartTime=2025-05-14T13:40:04 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=96 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu004 Arch=x86_64 CoresPerSocket=24  CPUAlloc=2 CPUTot=96 CPULoad=5.80 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu004 NodeHostName=ngu004 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=27636 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-01-22T16:11:50 SlurmdStartTime=2026-01-22T20:17:27 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=2 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu005 Arch=x86_64 CoresPerSocket=24  CPUAlloc=96 CPUTot=96 CPULoad=1.01 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu005 NodeHostName=ngu005 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=16537 Sockets=2 Boards=1 State=ALLOCATED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-01-22T16:20:05 SlurmdStartTime=2026-01-22T20:18:04 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=96 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu006 Arch=x86_64 CoresPerSocket=24  CPUAlloc=2 CPUTot=96 CPULoad=5.52 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu006 NodeHostName=ngu006 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=9080 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-01-22T16:22:50 SlurmdStartTime=2026-01-22T20:17:55 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=2 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu007 Arch=x86_64 CoresPerSocket=24  CPUAlloc=2 CPUTot=96 CPULoad=5.53 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu007 NodeHostName=ngu007 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=11264 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-01-22T16:33:04 SlurmdStartTime=2026-01-22T20:18:31 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=2 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu008 Arch=x86_64 CoresPerSocket=24  CPUAlloc=20 CPUTot=96 CPULoad=10.43 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu008 NodeHostName=ngu008 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=15373 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-02-28T10:30:12 SlurmdStartTime=2026-02-28T11:16:51 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=20 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu009 Arch=x86_64 CoresPerSocket=24  CPUAlloc=0 CPUTot=96 CPULoad=0.03 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu009 NodeHostName=ngu009 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=3493 Sockets=2 Boards=1 State=IDLE ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2  BootTime=2025-05-09T20:37:43 SlurmdStartTime=2025-08-28T14:44:59 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES= CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu010 Arch=x86_64 CoresPerSocket=16  CPUAlloc=1 CPUTot=32 CPULoad=5.31 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu010 NodeHostName=ngu010 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=58954 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-02-28T10:53:12 SlurmdStartTime=2026-02-28T11:20:01 CfgTRES=cpu=32,mem=1M,billing=32 AllocTRES=cpu=1 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu011 Arch=x86_64 CoresPerSocket=16  CPUAlloc=8 CPUTot=32 CPULoad=6.00 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu011 NodeHostName=ngu011 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=19397 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-02-28T10:52:03 SlurmdStartTime=2026-02-28T11:41:27 CfgTRES=cpu=32,mem=1M,billing=32 AllocTRES=cpu=8 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu101 Arch=x86_64 CoresPerSocket=24  CPUAlloc=0 CPUTot=96 CPULoad=0.10 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:4 NodeAddr=ngu101 NodeHostName=ngu101 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=14395 Sockets=2 Boards=1 State=IDLE ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu4  BootTime=2024-03-12T17:17:02 SlurmdStartTime=2024-10-31T20:39:21 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES= CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu102 Arch=x86_64 CoresPerSocket=24  CPUAlloc=16 CPUTot=96 CPULoad=3.44 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:4 NodeAddr=ngu102 NodeHostName=ngu102 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=16389 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu4  BootTime=2024-03-12T17:22:35 SlurmdStartTime=2026-05-20T17:19:48 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=16 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu103 Arch=x86_64 CoresPerSocket=24  CPUAlloc=0 CPUTot=96 CPULoad=0.03 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:4 NodeAddr=ngu103 NodeHostName=ngu103  OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=N/A Sockets=2 Boards=1 State=DOWN* ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu4  BootTime=2024-03-12T17:14:44 SlurmdStartTime=2025-08-26T16:31:22 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES= CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s Reason=Not responding [root@2026-01-13T10:39:13]
+NodeName=ngu104 Arch=x86_64 CoresPerSocket=24  CPUAlloc=8 CPUTot=96 CPULoad=1.95 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:4 NodeAddr=ngu104 NodeHostName=ngu104 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=14029 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu4  BootTime=2026-03-16T17:57:25 SlurmdStartTime=2026-03-17T11:02:03 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=8 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu201 Arch=x86_64 CoresPerSocket=16  CPUAlloc=0 CPUTot=64 CPULoad=0.02 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu201 NodeHostName=ngu201 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=26410 Sockets=2 Boards=1 State=IDLE ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2026-04-28T14:14:09 SlurmdStartTime=2026-04-28T14:14:06 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES= CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu202 Arch=x86_64 CoresPerSocket=16  CPUAlloc=42 CPUTot=64 CPULoad=5.22 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu202 NodeHostName=ngu202 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=672080 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2026-01-22T14:56:14 SlurmdStartTime=2026-01-22T15:10:38 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES=cpu=42 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu203 Arch=x86_64 CoresPerSocket=16  CPUAlloc=32 CPUTot=64 CPULoad=0.94 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu203 NodeHostName=ngu203 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=480357 Sockets=2 Boards=1 State=MIXED$ ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2025-07-23T15:13:08 SlurmdStartTime=2025-07-23T15:41:12 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES=cpu=32 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+SEQ46_GPU_TRES_END exit_code=0
+SEQ46_A37_GPU_AUDIT_COMPLETE job_id=215178
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T14:52:12+0800
