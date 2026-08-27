@@ -1,30 +1,34 @@
 #!/bin/bash
-# nature1st-attr-swap seq=100 -- READ-ONLY. Did armJ start? And can I identify the
-# GPU model on the idle nodes WITHOUT submitting anything?
+# nature1st-attr-swap seq=101 -- READ-ONLY. armJ is alone in the hgpu2p queue yet
+# still PENDING(Priority) with a start estimate two days out. Find the real constraint,
+# and read the GPU model out of an old node-test log.
 set -o pipefail
 date "+wallclock %F %T %z"
 
-echo "=== A. armJ NOW ==="
-squeue -j 215195 -o '%.10i %.22j %.9T %.10M %.9N %.26R %.20S' 2>&1
-sacct -j 215195 -X --format=JobID%10,State%12,Elapsed%11,NodeList%9 2>&1
+echo "=== A. GPU MODEL FROM THE OLD NODE TEST ==="
+f=/data1/home/sunyiq/hpc_mailbox/outbox/slurm_201451.out
+[ -f "$f" ] && { echo "-- $f --"; grep -E "NVIDIA-SMI|Driver|GeForce|RTX|A100|A800|V100|Tesla|hostname|Node|^\|" "$f" 2>/dev/null | head -18 || true; } || echo "  (missing)"
+echo '-- which node did that test run on --'
+sacct -j 201451 -X --format=JobID%10,JobName%18,State%12,NodeList%9,End%18 2>&1 | head -4
 
-echo "=== B. WHOLE hgpu2p QUEUE (is anything ahead of me?) ==="
-squeue -p hgpu2p -o '%.10i %.9u %.9T %.10M %.9N %.18R %.10Q' 2>&1 | head -12
-echo '-- gpu allocation per hgpu2p node --'
-scontrol show node ngu001 ngu004 ngu005 ngu006 ngu007 ngu008 ngu010 ngu011 2>&1 | grep -E 'NodeName|AllocTRES|State=' | paste - - - 2>/dev/null | head -10 || true
+echo "=== B. WHY WONT armJ START? ==="
+echo '-- my running jobs cluster-wide, by partition --'
+squeue -u $USER -t RUNNING -o '%.11i %.10P %.16j %.9N %.10M' 2>&1 | head -20
+echo '-- count --'
+squeue -u $USER -t RUNNING -h 2>&1 | wc -l
+echo '-- priority breakdown for armJ (sprio) --'
+sprio -j 215195 2>&1 | head -5 || echo '  (sprio unavailable)'
+echo '-- my association limits (max jobs / max gpus?) --'
+sacctmgr -n show assoc user=$USER format=Account,Partition,GrpTRES%30,MaxJobs,MaxSubmit,GrpJobs,QOS%25 2>&1 | head -12 || true
+echo '-- qos limits --'
+sacctmgr -n show qos format=Name,MaxJobsPU,MaxSubmitPU,MaxTRESPU%30,GrpTRES%25 2>&1 | head -10 || true
 
-echo "=== C. GPU MODEL WITHOUT SUBMITTING: any record on shared filesystem? ==="
-echo '-- old node-test outputs that may name the card --'
-grep -ril 'NVIDIA\|GeForce\|RTX\|A100\|A800\|V100\|Tesla' /data1/home/sunyiq/hpc_mailbox/outbox/*.out 2>/dev/null | head -5 || echo '  (none)'
-for f in $(ls -t /data1/home/sunyiq/hpc_mailbox/outbox/slurm_*.out 2>/dev/null | head -8); do
-  hit=$(grep -m1 -E 'NVIDIA|GeForce|RTX|A100|A800|V100|Tesla' "$f" 2>/dev/null || true)
-  [ -n "$hit" ] && printf '  %-52s %s
-' "$(basename $f)" "$hit"
+echo "=== C. PARTITION CONFIG (hgpu2p vs hgpu2) ==="
+for p in hgpu2p hgpu2 hgpu4; do
+  echo "-- $p --"
+  scontrol show partition $p 2>&1 | grep -E 'PartitionName|AllowGroups|AllowAccounts|MaxNodes|MaxTime|State=|TotalNodes|Nodes=|PriorityTier|QoS' | head -6 || true
 done
-echo '-- any nvidia-smi capture anywhere in my logs --'
-grep -rh -m1 -E 'NVIDIA-SMI|Product Name|GeForce RTX|A800|A100' /data1/home/sunyiq/nature_1st/logs/attr_swap/*.err 2>/dev/null | head -3 || echo '  (nothing in arm logs)'
 
-echo "=== D. DOES SLURM RECORD A GPU TYPE ANYWHERE? ==="
-scontrol show config 2>&1 | grep -iE 'GresTypes|AccountingStorageTRES' | head -4 || true
-sacct -j 206175,211317 -X --format=JobID%10,NodeList%9,AllocTRES%60 2>&1 | head -6
-echo "=== END seq=100 ==="
+echo "=== D. WHO HOLDS THE hgpu2p GPUs RIGHT NOW ==="
+squeue -w ngu001,ngu004,ngu005,ngu006,ngu007,ngu008,ngu010,ngu011 -o '%.11i %.9u %.10P %.16j %.9T %.10M %.9N' 2>&1 | head -20
+echo "=== END seq=101 ==="
