@@ -3,15 +3,15 @@ ROOT=/data1/home/sunyiq/nearing2022_da
 date --iso-8601=seconds
 echo "=== N22 JOBS ==="
 squeue -u sunyiq -h -o '%.12i %.14j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22|retime|re214' || echo 'no N22 jobs in queue'
-echo "=== FAILURES AND TIMEOUTS ==="
+echo "=== FAILURES AND TIMEOUTS (never truncate, never tail) ==="
 sacct -X -n -P -S $(date -d '7 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22|retime|re214|re075|relong' | grep -E '\|(TIMEOUT|FAILED|NODE_FAIL|OUT_OF_MEMORY)' || echo '  none'
-echo "=== LOG IDLE SECONDS PER RUNNING JOB ==="
+echo "=== LOG IDLE SECONDS PER RUNNING JOB (stall detector) ==="
 for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-' | awk '{print $1}'); do
   SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
   [ -n "$SO" ] && [ -f "$SO" ] && printf '  %-14s idle=%ss node=%s\n' "$J" "$(( $(date +%s) - $(stat -c %Y "$SO") ))" "$(squeue -h -j "$J" -o '%N' 2>/dev/null)"
 done
 echo "=== RUNNING PROGRESS ==="
-for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-' | awk '{print $1}'); do
+for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-(time|retime|re214)' | awk '{print $1}'); do
   SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
   [ -n "$SO" ] && [ -f "$SO" ] && { printf -- '--- %s log=%s ---\n' "$J" "$(stat -c %s "$SO")"; tail -c 120000 "$SO" 2>/dev/null | tr '\r' '\n' | grep -iE '^# Epoch' | tail -1 || true; }
 done
