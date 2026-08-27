@@ -1,5 +1,5 @@
 #!/bin/bash
-# nature1st-attr-swap seq=106 -- armJ (china min15) watchdog, seeds 42/43/44
+# nature1st-attr-swap seq=107 -- armJ (china min15) watchdog, seeds 42/43/44
 # NO set -e. pipefail only. Every grep/tail guarded with || true.
 set -o pipefail
 
@@ -128,4 +128,4 @@ fi
 echo "=== E. GPU CAPACITY ==="
 sinfo -p hgpu2p,hgpu2,hgpu4 -o '%.10P %.8t %.6D %.20N' 2>&1 | head -20 || true
 
-echo "=== END seq=106 ==="
+echo "=== END seq=107 ==="
