@@ -1,0 +1,38 @@
+### channel=nature1st-attr-swap seq=102
+### host=login4
+### started=2026-08-27T16:02:10+0800
+### ---------- output ----------
+=== A. WRITE PROBE SCRIPTS ===
+  wrote inbox/gpucheck_ngu009.slurm
+  wrote inbox/gpucheck_ngu101.slurm
+=== B. SUBMIT BOTH ===
+  ngu009 -> Submitted batch job 215200
+  ngu101 -> Submitted batch job 215201
+  jobids: 215200 215201
+=== C. WAIT (max 4 min) ===
+=== D. RESULTS ===
+---- job 215200 ----
+     JobID          JobName        State ExitCode    Elapsed NodeList 
+---------- ---------------- ------------ -------- ---------- -------- 
+host=ngu009
+0, NVIDIA GeForce RTX 3090, 535.104.05, 24576 MiB
+1, NVIDIA GeForce RTX 3090, 535.104.05, 24576 MiB
+torch 2.4.0 cuda True | NVIDIA GeForce RTX 3090
+---- job 215201 ----
+     JobID          JobName        State ExitCode    Elapsed NodeList 
+---------- ---------------- ------------ -------- ---------- -------- 
+host=ngu101
+0, NVIDIA A40, 535.104.05, 46068 MiB
+1, NVIDIA A40, 535.104.05, 46068 MiB
+2, NVIDIA A40, 535.104.05, 46068 MiB
+3, NVIDIA A40, 535.104.05, 46068 MiB
+torch 2.4.0 cuda True | NVIDIA A40
+=== E. REFERENCE: hgpu2p card, measured earlier on ngu010 ===
+  torch 2.4.0 cuda True NVIDIA GeForce RTX 3090   (job 201451, 2026-08-06)
+=== F. armJ STILL PENDING? ===
+     JOBID     STATE           START_TIME     NODELIST(REASON)
+    215195   PENDING  2026-08-29T17:42:57           (Priority)
+=== END seq=102 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:02:30+0800
