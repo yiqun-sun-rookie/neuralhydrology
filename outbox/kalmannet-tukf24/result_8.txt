@@ -1,0 +1,12 @@
+### channel=kalmannet-tukf24 seq=8
+### host=login4
+### started=2026-08-27T18:29:19+0800
+### ---------- output ----------
+=== SBATCH FORMAL TRAIN ARRAY (0-107, smoke cells resume-skip) ===
+Submitted batch job 215316
+=== QUEUE SNAPSHOT ===
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+    215316_[0-107]   hcpu48y tukf24_t   sunyiq PD       0:00      1 (None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T18:29:19+0800
