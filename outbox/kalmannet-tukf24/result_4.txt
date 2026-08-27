@@ -1,0 +1,13 @@
+### channel=kalmannet-tukf24 seq=4
+### host=login4
+### started=2026-08-27T17:16:59+0800
+### ---------- output ----------
+=== REDEPLOY v2 ===
+ad9d41cce1d4c1f277b3eee0781b6315a66a77bc37a430c66183ce4691266644  payload/kalmannet-tukf24/tukf24_hpc_payload_v2.tar.gz
+=== VERIFY MANIFEST v2 ===
+manifest_files=135 mismatches=0
+=== SBATCH ANCHOR GATE v2 ===
+Submitted batch job 215263
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T17:17:00+0800
