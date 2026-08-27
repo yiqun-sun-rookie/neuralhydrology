@@ -1,39 +1,39 @@
 #!/bin/bash
 set -eo pipefail
+umask 077
 
-echo "=== HOST AND RUNNER HEALTH ==="
-date -Is
-hostname
-pwd
+echo "=== VERIFY DEPLOYMENT PAYLOAD ==="
+PAYLOAD="$HOME/hpc_mailbox/payload/id30-modern-moe-execution/id30_safe_data_code_20260827_v01.tar.gz"
+EXPECTED=10bcbd891c06345beb1792c83ce9490a6cd0593dbe0428854582b06a82be41d8
+ACTUAL=$(sha256sum "$PAYLOAD" | awk '{print $1}')
+echo "expected=$EXPECTED"
+echo "actual=$ACTUAL"
+test "$ACTUAL" = "$EXPECTED"
 
-echo "=== TARGET DIRECTORY ==="
+echo "=== CREATE ISOLATED DEPLOYMENT ==="
 TARGET=/data1/home/sunyiq/id30_modern_transformer_moe_20260827
-if [ -e "$TARGET" ]; then
-  find "$TARGET" -maxdepth 2 -type f -printf '%p %s\n' | sort | head -40 || true
-else
-  echo "TARGET_ABSENT"
-fi
+test ! -e "$TARGET"
+mkdir -p "$TARGET/repo" "$TARGET/deployment"
+cp "$PAYLOAD" "$TARGET/deployment/"
+tar -xzf "$PAYLOAD" -C "$TARGET/repo"
+printf '%s  %s\n' "$EXPECTED" "id30_safe_data_code_20260827_v01.tar.gz" > "$TARGET/deployment/payload.sha256"
 
-echo "=== DATA AND ENVIRONMENT ==="
-RAW=/data1/home/sunyiq/neuralhydrology/data/camels_us
-test -d "$RAW/basin_mean_forcing/maurer" && echo "MAURER_READY" || echo "MAURER_MISSING"
-test -d "$RAW/usgs_streamflow" && echo "TRAINING_SOURCE_READY" || echo "TRAINING_SOURCE_MISSING"
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-python - <<'PY'
-import importlib.util
-import platform
+echo "=== FREEZE DEPLOYED SOURCE ==="
+cd "$TARGET/repo"
+sed -i 's/\r$//' src/modern_transformer_moe/hpc/*.slurm
+git init -q
+git config user.name "Codex HPC deployment"
+git config user.email "codex-hpc@local.invalid"
+git add .
+git commit -q -m "Freeze ID30 modern Transformer MoE deployment v01"
+git rev-parse HEAD | tee "$TARGET/deployment/repository_commit.txt"
+git status --short
 
-import pandas
-import torch
+echo "=== SUBMIT CANDIDATE-SAFE DATA BUILD ==="
+mkdir -p logs/30_modern_transformer_moe
+JOB_ID=$(sbatch --parsable src/modern_transformer_moe/hpc/submit_prepare_track0_bundles.slurm)
+printf '%s\n' "$JOB_ID" | tee "$TARGET/deployment/safe_data_job_id.txt"
+squeue -j "${JOB_ID%%;*}" -o '%.18i %.12P %.28j %.8T %.10M %.30R' || true
 
-print("python", platform.python_version())
-print("pandas", pandas.__version__)
-print("torch", torch.__version__)
-print("pyarrow", bool(importlib.util.find_spec("pyarrow")))
-print("cuda", torch.cuda.is_available())
-PY
-
-echo "=== SCHEDULER ==="
-sinfo -h -o '%P %a %l %D %t %G' | head -30 || true
-squeue -u sunyiq -h -o '%i %P %j %T %M %R' | head -40 || true
+echo "=== DEPLOYMENT COMPLETE ==="
+date -Is
