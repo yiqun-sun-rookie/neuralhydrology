@@ -6,6 +6,12 @@ ROOT="/data1/home/sunyiq/zhenjiang_latent_da_20260827"
 echo "MONITOR_START $(date -Is)"
 echo "SQUEUE"
 squeue -j "${JOB_ID}" -h -o '%i|%j|%T|%P|%M|%R' || true
+echo "GPU_PARTITION_NODES"
+sinfo -p hgpu2p,hgpu4,hgpu8 -N -h -o '%N|%P|%T|%G|%E' || true
+echo "GPU_QUEUE_HEAD"
+squeue -p hgpu2p,hgpu4,hgpu8 -h -o '%i|%u|%j|%T|%P|%M|%R' | head -40 || true
+echo "PRIORITY"
+sprio -j "${JOB_ID}" -l || true
 echo "SACCT"
 sacct -j "${JOB_ID}" -X -n -P \
   --format=JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,AllocTRES || true
