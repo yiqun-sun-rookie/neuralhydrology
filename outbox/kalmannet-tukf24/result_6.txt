@@ -1,0 +1,11 @@
+### channel=kalmannet-tukf24 seq=6
+### host=login4
+### started=2026-08-27T17:26:54+0800
+### ---------- output ----------
+=== SBATCH TRAIN TIMING SMOKE (basin 01047000 x 4 modes) ===
+Submitted batch job 215264
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+215264_[0,27,54,81   hcpu48y tukf24_t   sunyiq PD       0:00      1 (None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T17:26:54+0800
