@@ -1,0 +1,37 @@
+### channel=nature1st-attr-swap seq=109
+### host=login4
+### started=2026-08-28T02:31:40+0800
+### ---------- output ----------
+pwd=/data1/home/sunyiq/nature_1st  date=2026-08-28 02:31:40
+=== A. VERIFY SBATCH SCRIPTS (sha256 first 16) ===
+  s43: present  sha256_16=cbf8ed5c8f1550c2
+  s44: present  sha256_16=1f3dba3695439a6d
+  expected: s43=cbf8ed5c8f1550c2  s44=1f3dba3695439a6d
+=== B. SUBMIT (dedup-guarded; script path only, no CLI options) ===
+  s43: Submitted batch job 215729
+  s43: SUBMIT_OK
+  s44: Submitted batch job 215730
+  s44: SUBMIT_OK
+=== C. QUEUE AFTER SUBMIT ===
+      JOBID                       NAME     STATE       TIME  NODELIST PARTITION
+     215730     q_armJ_china_min15_s44   PENDING       0:00           hgpu2p,hg
+     215729     q_armJ_china_min15_s43   RUNNING    INVALID    ngu009     hgpu2
+=== D. SACCT (all armJ) ===
+      JobID                    JobName        State ExitCode     Elapsed  NodeList 
+     215195         q_armJ_china_min15    COMPLETED      0:0    09:15:50    ngu009 
+=== E. CONFIRM s42 FINAL (sanity re-read) ===
+  Done. Best val median NSE: 0.6314 at epoch 15
+=== F. GPU CAPACITY ===
+ PARTITION    STATE  NODES             NODELIST
+     hgpu4    down*      1               ngu103
+     hgpu4      mix      2         ngu[102,104]
+     hgpu4     idle      1               ngu101
+     hgpu2      mix      1               ngu009
+     hgpu2    alloc      1               ngu003
+    hgpu2p    down*      1               ngu002
+    hgpu2p      mix      7 ngu[001,004,006-008,
+    hgpu2p    alloc      1               ngu005
+=== END seq=109 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T02:31:42+0800
