@@ -1,0 +1,124 @@
+### channel=nature1st-attr-swap seq=98
+### host=login4
+### started=2026-08-27T15:47:17+0800
+### ---------- output ----------
+wallclock 2026-08-27 15:47:17 +0800
+=== A. ALL GPU PARTITIONS I CAN USE ===
+   PARTITION  AVAIL   TIMELIMIT  NODES    STATE  CPUS(A/I/O/T) NODELIST
+     hcpu48*     up    infinite     15   alloc$    720/0/0/720 icn[202,204-207,210-212,214,216-217,220-221,246,249]
+     hcpu48*     up    infinite     16    down*    0/0/768/768 icn[203,215,218,224,230,233-237,239,242-243,245,247,256]
+     hcpu48*     up    infinite     20    alloc    960/0/0/960 icn[201,209,219,222,226-229,231-232,254-255,257-264]
+     hcpu48*     up    infinite     13     idle    0/624/0/624 icn[208,213,223,225,238,240-241,244,248,250-253]
+     hcpu48y     up    infinite      1    down$      0/0/48/48 icn281
+     hcpu48y     up    infinite      1    maint      0/48/0/48 icn280
+     hcpu48y     up    infinite      2    down*      0/0/96/96 icn[278-279]
+     hcpu48y     up    infinite      2      mix      6/90/0/96 icn[274,277]
+     hcpu48y     up    infinite      6     idle    0/288/0/288 icn[270-273,275-276]
+       hgpu8     up    infinite      1     mix$     32/32/0/64 ngu203
+       hgpu8     up    infinite      1      mix     42/22/0/64 ngu202
+       hgpu8     up    infinite      1     idle      0/64/0/64 ngu201
+       hgpu4     up    infinite      1    down*      0/0/96/96 ngu103
+       hgpu4     up    infinite      2      mix   20/172/0/192 ngu[102,104]
+       hgpu4     up    infinite      1     idle      0/96/0/96 ngu101
+       hgpu2     up    infinite      1    alloc      96/0/0/96 ngu003
+       hgpu2     up    infinite      1     idle      0/96/0/96 ngu009
+      hgpu2p     up    infinite      1    down*      0/0/96/96 ngu002
+      hgpu2p     up    infinite      7      mix   37/507/0/544 ngu[001,004,006-008,010-011]
+      hgpu2p     up    infinite      1    alloc      96/0/0/96 ngu005
+=== B. NODE-BY-NODE, WITH GPU COUNT AND FREE CPUS ===
+ NODELIST    PARTITION    STATE   FREE_MEM  CPUS(A/I/O/T)                     GRES                         REASON
+   icn201      hcpu48*    alloc      75015      48/0/0/48                   (null)                           none
+   icn202      hcpu48*   alloc$      41438      48/0/0/48                   (null)                           none
+   icn203      hcpu48*    down*        N/A      0/0/48/48                   (null)                 Not responding
+   icn204      hcpu48*   alloc$      42242      48/0/0/48                   (null)                           none
+   icn205      hcpu48*   alloc$      35132      48/0/0/48                   (null)                           none
+   icn206      hcpu48*   alloc$      46159      48/0/0/48                   (null)                           none
+   icn207      hcpu48*   alloc$      46200      48/0/0/48                   (null)                           none
+   icn208      hcpu48*     idle      75267      0/48/0/48                   (null)                           none
+   icn209      hcpu48*    alloc      39047      48/0/0/48                   (null)                           none
+   icn210      hcpu48*   alloc$      41965      48/0/0/48                   (null)                           none
+   icn211      hcpu48*   alloc$      46070      48/0/0/48                   (null)                           none
+   icn212      hcpu48*   alloc$      47029      48/0/0/48                   (null)                           none
+   icn213      hcpu48*     idle      75391      0/48/0/48                   (null)                           none
+   icn214      hcpu48*   alloc$      42131      48/0/0/48                   (null)                           none
+   icn215      hcpu48*    down*        N/A      0/0/48/48                   (null)                 Not responding
+   icn216      hcpu48*   alloc$      41165      48/0/0/48                   (null)                           none
+   icn217      hcpu48*   alloc$      43747      48/0/0/48                   (null)                           none
+   icn218      hcpu48*    down*        N/A      0/0/48/48                   (null)                 Not responding
+   icn219      hcpu48*    alloc      41807      48/0/0/48                   (null)                           none
+   icn220      hcpu48*   alloc$      47008      48/0/0/48                   (null)                           none
+   icn221      hcpu48*   alloc$      34599      48/0/0/48                   (null)                           none
+   icn222      hcpu48*    alloc      39016      48/0/0/48                   (null)                           none
+   icn223      hcpu48*     idle      74108      0/48/0/48                   (null)                           none
+   icn224      hcpu48*    down*        N/A      0/0/48/48                   (null)                 Not responding
+   icn225      hcpu48*     idle      75313      0/48/0/48                   (null)                           none
+   icn226      hcpu48*    alloc      54700      48/0/0/48                   (null)                           none
+   icn227      hcpu48*    alloc      39036      48/0/0/48                   (null)                           none
+   icn228      hcpu48*    alloc      30713      48/0/0/48                   (null)                           none
+   icn229      hcpu48*    alloc      30109      48/0/0/48                   (null)                           none
+   icn230      hcpu48*    down*        N/A      0/0/48/48                   (null)                 Not responding
+   icn231      hcpu48*    alloc      37506      48/0/0/48                   (null)                           none
+   icn232      hcpu48*    alloc      37572      48/0/0/48                   (null)                           none
+   icn233      hcpu48*    down*        N/A      0/0/48/48                   (null)                 Not responding
+   icn234      hcpu48*    down*        N/A      0/0/48/48                   (null)                 Not responding
+   icn235      hcpu48*    down*        N/A      0/0/48/48                   (null)                 Not responding
+   icn236      hcpu48*    down*        N/A      0/0/48/48                   (null)                 Not responding
+   icn237      hcpu48*    down*        N/A      0/0/48/48                   (null)                 Not responding
+   icn238      hcpu48*     idle      69662      0/48/0/48                   (null)                           none
+   icn239      hcpu48*    down*        N/A      0/0/48/48                   (null)                 Not responding
+=== C. ngu002 IN DETAIL (why is it excluded?) ===
+NodeName=ngu002 Arch=x86_64 CoresPerSocket=24 
+   CPUAlloc=0 CPUTot=96 CPULoad=0.06
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:2
+   NodeAddr=ngu002 NodeHostName=ngu002 Version=19.05.4
+   OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024 
+   RealMemory=1 AllocMem=0 FreeMem=244218 Sockets=2 Boards=1
+   State=DOWN* ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu2p 
+   BootTime=2026-08-21T11:38:58 SlurmdStartTime=2026-08-21T19:16:21
+   CfgTRES=cpu=96,mem=1M,billing=96
+   AllocTRES=
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   Reason=Not responding [root@2026-08-23T06:23:18]
+
+=== D. HAS ANYTHING RUN SUCCESSFULLY ON ngu002 LATELY? ===
+-- my jobs on ngu002, last 30 days --
+       JobID                JobName          State ExitCode     Elapsed               End  NodeList 
+------------ ---------------------- -------------- -------- ----------- ----------------- --------- 
+      201420              nt_ngu002         FAILED      2:0    00:00:37 2026-08-06T15:24:    ngu002 
+      201423              nt_ngu002         FAILED      2:0    00:00:12 2026-08-06T15:25:    ngu002 
+      201697           a02_nodetest         FAILED      1:0    00:00:18 2026-08-07T14:28:    ngu002 
+      205848        q_ctrl_us_attrs CANCELLED by +      0:0    00:10:14 2026-08-19T20:51:    ngu002 
+      205854   q_treat_global_attrs CANCELLED by +      0:0    00:08:44 2026-08-19T20:51:    ngu002 
+=== E. MY PENDING JOB 215195 -- WHY IS IT WAITING, AND WOULD ngu002 HELP? ===
+     JOBID                   NAME     STATE       TIME               NODELIST(REASON)           START_TIME     PRIORITY
+    215195     q_armJ_china_min15   PENDING       0:00                     (Priority)  2026-08-29T17:42:57       202388
+-- what it asked for --
+   JobState=PENDING Reason=Priority Dependency=(null)
+   StartTime=2026-08-29T17:42:57 EndTime=2026-08-30T17:42:57 Deadline=N/A
+   Partition=hgpu2p AllocNode:Sid=login04:721
+   ReqNodeList=(null) ExcNodeList=ngu002
+   TRES=cpu=4,node=1,billing=4
+=== F. WHO IS AHEAD OF ME IN hgpu2p ===
+     JOBID      USER     STATE       TIME     NODELIST(REASON)   PRIORITY
+    215178    sunyiq   PENDING       0:00           (Priority)     229153
+    215195    sunyiq   PENDING       0:00           (Priority)     202388
+=== G. OTHER PARTITIONS -- ANY IDLE GPU NODES? ===
+     hcpu48*     idle     13 icn[208,213,223,225,238,240-241,244,248,250-253]
+     hcpu48y      mix      2 icn[274,277]
+     hcpu48y     idle      6 icn[270-273,275-276]
+       hgpu8     mix$      1 ngu203
+       hgpu8      mix      1 ngu202
+       hgpu8     idle      1 ngu201
+       hgpu4      mix      2 ngu[102,104]
+       hgpu4     idle      1 ngu101
+       hgpu2     idle      1 ngu009
+      hgpu2p      mix      7 ngu[001,004,006-008,010-011]
+=== END seq=98 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T15:47:23+0800
