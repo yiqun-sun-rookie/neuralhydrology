@@ -1,0 +1,37 @@
+### channel=kalmannet-daily-camels seq=48
+### host=login4
+### started=2026-08-27T15:25:02+0800
+### ---------- output ----------
+SEQ48_A37_HGPU8_CAPACITY_IDENTITY user=sunyiq old_probe_job_id=215178
+SEQ48_OLD_PROBE_STATUS_BEGIN
+JOBID|NAME|PARTITION|STATE|TIME|NODES|NODELIST(REASON)|TRES_PER_NODE
+215178|daily-knet-a37-probe|hgpu2p|PENDING|0:00|1|(Priority)|gpu:1
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|AllocTRES
+215178|daily-knet-a37-probe|hgpu2p|PENDING|0:0|00:00:00|
+SEQ48_OLD_PROBE_STATUS_END
+SEQ48_HGPU8_QUEUE_BEGIN
+NODELIST|PARTITION|STATE|GRES|CPUS(A/I/O/T)|MEMORY|FREE_MEM
+ngu201|hgpu8|idle|gpu:8|0/64/0/64|1|26411
+ngu202|hgpu8|mix|gpu:8|42/22/0/64|1|671939
+ngu203|hgpu8|mix$|gpu:8|32/32/0/64|1|480557
+JOBID|NAME|USER|STATE|TIME|NODES|NODELIST(REASON)|TRES_PER_NODE
+202226_[0-119%4]|N22-eval-later|sunyiq|PENDING|0:00|1|(DependencyNeverSatisfied)|gpu:1
+202229|N22-agg-eval|sunyiq|PENDING|0:00|1|(Dependency)|N/A
+202294|N22-export|sunyiq|PENDING|0:00|1|(Dependency)|N/A
+202315|N22-gate|sunyiq|PENDING|0:00|1|(Dependency)|N/A
+202507|N22-mask-iso-531|sunyiq|PENDING|0:00|1|(DependencyNeverSatisfied)|gpu:1
+202293|N22-manifest|sunyiq|PENDING|0:00|1|(JobHeldUser)|N/A
+SEQ48_HGPU8_QUEUE_END
+SEQ48_NODE_BEGIN name=ngu201
+NodeName=ngu201 Arch=x86_64 CoresPerSocket=16  CPUAlloc=0 CPUTot=64 CPULoad=0.01 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu201 NodeHostName=ngu201 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=26411 Sockets=2 Boards=1 State=IDLE ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2026-04-28T14:14:09 SlurmdStartTime=2026-04-28T14:14:06 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES= CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+SEQ48_NODE_END name=ngu201
+SEQ48_NODE_BEGIN name=ngu202
+NodeName=ngu202 Arch=x86_64 CoresPerSocket=16  CPUAlloc=42 CPUTot=64 CPULoad=5.31 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu202 NodeHostName=ngu202 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=671939 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2026-01-22T14:56:15 SlurmdStartTime=2026-01-22T15:10:38 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES=cpu=42 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+SEQ48_NODE_END name=ngu202
+SEQ48_NODE_BEGIN name=ngu203
+NodeName=ngu203 Arch=x86_64 CoresPerSocket=16  CPUAlloc=32 CPUTot=64 CPULoad=0.07 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu203 NodeHostName=ngu203 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=480557 Sockets=2 Boards=1 State=MIXED$ ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2025-07-23T15:13:09 SlurmdStartTime=2025-07-23T15:41:12 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES=cpu=32 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+SEQ48_NODE_END name=ngu203
+SEQ48_A37_HGPU8_CAPACITY_AUDIT_COMPLETE old_probe_job_id=215178
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T15:25:02+0800
