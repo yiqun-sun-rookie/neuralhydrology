@@ -1,0 +1,23 @@
+### channel=id30-modern-moe-execution seq=30
+### host=login4
+### started=2026-08-27T18:12:27+0800
+### ---------- output ----------
+=== B01 DEVELOPMENT SUBMISSION PREFLIGHT ===
+2026-08-27T18:12:27+0800
+login4
+{"duplicate_bindings": 0, "duplicate_invocations": 0, "gate_job_id": "215269", "gate_reports": ["B01", "D01", "D02", "D03"], "tracked_changes": []}
+CONFIG AUDIT: PASS (4 runnable configs; M01 is gated on dense validation selection; no training launched)
+{
+  "generated_at_utc": "2026-08-27T10:14:39.998788+00:00",
+  "host": "login4",
+  "records": [],
+  "schema_version": 1
+}
+submitted_job_id=215314
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215314        hgpu2                id30_dev_s100  PENDING       0:00                         (None)
+job_record=/data1/home/sunyiq/id30_modern_transformer_moe_20260827/deployment/development_B01_s100_job_id_v01.txt
+2026-08-27T18:14:45+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T18:14:45+0800
