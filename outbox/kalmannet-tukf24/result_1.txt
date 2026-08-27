@@ -1,0 +1,23 @@
+### channel=kalmannet-tukf24 seq=1
+### host=login4
+### started=2026-08-27T17:01:33+0800
+### ---------- output ----------
+=== DEPLOY ===
+f87fcd74d1b3715c6f180baa145bd228bd42c8518ffac21a107e9c8934357ec4  payload/kalmannet-tukf24/tukf24_hpc_payload_v1.tar.gz
+=== VERIFY MANIFEST ===
+manifest_files=134 mismatches=0
+=== SBATCH ANCHOR GATE ===
+Submitted batch job 215261
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+  202226_[0-119%4] hgpu4,hgp N22-eval   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+            202229 hgpu4,hgp N22-agg-   sunyiq PD       0:00      1 (Dependency)
+            202294 hgpu4,hgp N22-expo   sunyiq PD       0:00      1 (Dependency)
+            202315 hgpu4,hgp N22-gate   sunyiq PD       0:00      1 (Dependency)
+            202507 hgpu4,hgp N22-mask   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+            215261   hcpu48y tukf24_a   sunyiq PD       0:00      1 (None)
+            202293 hgpu4,hgp N22-mani   sunyiq PD       0:00      1 (JobHeldUser)
+         211001_22     hgpu4 N22-relo   sunyiq  R    5:22:22      1 ngu102
+         211001_21     hgpu4 N22-relo   sunyiq  R 1-10:32:27      1 ngu102
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T17:01:34+0800
