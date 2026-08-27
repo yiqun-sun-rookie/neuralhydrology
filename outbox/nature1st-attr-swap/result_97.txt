@@ -1,0 +1,49 @@
+### channel=nature1st-attr-swap seq=97
+### host=login4
+### started=2026-08-27T15:23:01+0800
+### ---------- output ----------
+=== A. INSTALL SBATCH ===
+  sbatch 21bf4532f1bc1dc5  expect 21bf4532f1bc1dc5
+=== B. BUILD armJ ===
+meta  -> /data1/home/sunyiq/nature_1st/data/processed/station_meta/trainable_mountain_stations_armJ.csv
+raw HydroATLAS: /data1/home/sunyiq/neuralhydrology/data/camelsh/attributes_gageii/attributes_hydroATLAS.csv
+sources: 14 inherited, 1 fitted here on the 2020 TRAIN stations only (val 431 / test 434 contributed nothing)
+inherited global constants reproduce a train-only recompute (max diff 1.93e-12)
+--------------------------------------------------------------------------------------
+  attribute                  source                  mean          std   max |z|
+  slp_dg_uav                 global/inherit       47.9688      47.7772       4.6
+  ele_mt_sav                 global/inherit      596.0441     541.7659       4.6
+  ele_mt_smn                 global/inherit      405.7108     428.1587       4.9
+  ele_mt_smx                 global/inherit      899.6106     788.4181       3.8
+  urb_pc_use                 global/inherit        4.1641      10.6638       8.3
+  dor_pc_pva                 global/inherit       90.7982     309.8561      16.7
+  cly_pc_uav                 global/inherit       15.4176       6.8863       3.3
+  snd_pc_uav                 global/inherit       32.8248      12.6136       2.6
+  kar_pc_use                 global/inherit       23.3657      31.6706       2.4
+  swc_pc_syr                 global/inherit       71.9797      18.5536       3.4
+  gwt_cm_sav                 global/inherit      320.3672     235.3583       3.5
+  ari_ix_uav                 global/inherit       78.7257      49.0803       6.6
+  for_pc_use                 global/inherit       46.4542      34.3749       1.6
+  gageii_BasinID_DRAIN_SQKM  US/inherit         1286.6501    1922.5203       4.5
+  lkv_mc_usu                 newHA/fit           413.4654    6351.0428      37.8
+======================================================================================
+=== C. FINGERPRINTS vs WORKSTATION ===
+92a904034fc892e7  data/interim/stage_static_feature_stats_armJ.json
+afb20a4ebb36cd5a  data/processed/station_meta/trainable_mountain_stations_armJ.csv
+workstation: stats 92a904034fc892e7 / meta afb20a4ebb36cd5a
+=== D. armJ IS armI MINUS 2 PLUS 1? ===
+armI 16 -> armJ 15
+removed: ['gageii_HydroMod_Dams_STOR_NID_2009', 'gageii_Soils_PERMAVE']
+added  : ['lkv_mc_usu']
+shared order preserved: True
+constant drift vs armI: none
+lkv_mc_usu matches armG: True
+=== E. SUBMIT ===
+Submitted batch job 215195
+SUBMITTED jobid=215195
+     JOBID                     NAME      STATE     TIME       NODELIST(REASON)
+    215195       q_armJ_china_min15    PENDING     0:00             (Priority)
+=== END seq=97 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T15:23:38+0800
