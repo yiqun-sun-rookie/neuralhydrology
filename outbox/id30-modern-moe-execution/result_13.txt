@@ -1,0 +1,60 @@
+### channel=id30-modern-moe-execution seq=13
+### host=login4
+### started=2026-08-27T16:36:39+0800
+### ---------- output ----------
+=== LIVE GPU PARTITION INVENTORY ===
+2026-08-27T16:36:39+0800
+login4
+ PARTITION  AVAIL  NODES  STATE                       NODELIST         GRES
+     hgpu8     up      1   mix$                         ngu203        gpu:8
+     hgpu8     up      1    mix                         ngu202        gpu:8
+     hgpu8     up      1   idle                         ngu201        gpu:8
+     hgpu4     up      1  down*                         ngu103        gpu:4
+     hgpu4     up      2    mix                   ngu[102,104]        gpu:4
+     hgpu4     up      1   idle                         ngu101        gpu:4
+     hgpu2     up      1    mix                         ngu009        gpu:2
+     hgpu2     up      1  alloc                         ngu003        gpu:2
+    hgpu2p     up      1  down*                         ngu002        gpu:2
+    hgpu2p     up      7    mix   ngu[001,004,006-008,010-011]        gpu:2
+    hgpu2p     up      1  alloc                         ngu005        gpu:2
+=== NODE DETAIL ===
+    NODELIST  PARTITION      STATE     CPUS         GRES                         REASON
+      ngu001     hgpu2p      mixed       96        gpu:2                           none
+      ngu002     hgpu2p      down*       96        gpu:2                 Not responding
+      ngu003      hgpu2  allocated       96        gpu:2                           none
+      ngu004     hgpu2p      mixed       96        gpu:2                           none
+      ngu005     hgpu2p  allocated       96        gpu:2                           none
+      ngu006     hgpu2p      mixed       96        gpu:2                           none
+      ngu007     hgpu2p      mixed       96        gpu:2                           none
+      ngu008     hgpu2p      mixed       96        gpu:2                           none
+      ngu009      hgpu2      mixed       96        gpu:2                           none
+      ngu010     hgpu2p      mixed       32        gpu:2                           none
+      ngu011     hgpu2p      mixed       32        gpu:2                           none
+      ngu101      hgpu4       idle       96        gpu:4                           none
+      ngu102      hgpu4      mixed       96        gpu:4                           none
+      ngu103      hgpu4      down*       96        gpu:4                 Not responding
+      ngu104      hgpu4      mixed       96        gpu:4                           none
+      ngu201      hgpu8       idle       64        gpu:8                           none
+      ngu202      hgpu8      mixed       64        gpu:8                           none
+      ngu203      hgpu8     mixed$       64        gpu:8                           none
+=== QUEUED GPU JOBS ===
+             JOBID  PARTITION                     NAME       USER    STATE       TIME           TIME_LIMIT               NODELIST(REASON)
+            215205     hgpu2p               id30_gates     sunyiq  PENDING       0:00             12:00:00                     (Priority)
+  202226_[0-119%4] hgpu4,hgpu           N22-eval-later     sunyiq  PENDING       0:00           1-00:00:00     (DependencyNeverSatisfied)
+            202229 hgpu4,hgpu             N22-agg-eval     sunyiq  PENDING       0:00           1-00:00:00                   (Dependency)
+            202294 hgpu4,hgpu               N22-export     sunyiq  PENDING       0:00              4:00:00                   (Dependency)
+            202315 hgpu4,hgpu                 N22-gate     sunyiq  PENDING       0:00              2:00:00                   (Dependency)
+            202507 hgpu4,hgpu         N22-mask-iso-531     sunyiq  PENDING       0:00              2:00:00     (DependencyNeverSatisfied)
+            202293 hgpu4,hgpu             N22-manifest     sunyiq  PENDING       0:00           1-00:00:00                  (JobHeldUser)
+         211001_22      hgpu4               N22-relong     sunyiq  RUNNING    4:57:27           3-12:00:00                         ngu102
+         211001_21      hgpu4               N22-relong     sunyiq  RUNNING 1-10:07:32           3-12:00:00                         ngu102
+            215195      hgpu2       q_armJ_china_min15     sunyiq  RUNNING      26:19           1-00:00:00                         ngu009
+=== CURRENT JOB ESTIMATE ===
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215205       hgpu2p                   id30_gates  PENDING       0:00                     (Priority)
+             JOBID    PARTITION                         NAME          START_TIME               NODELIST(REASON)
+            215205       hgpu2p                   id30_gates 2026-08-29T17:42:57                     (Priority)
+215205|id30_gates|hgpu2p|PENDING|0:0|00:00:00|None assigned
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:36:39+0800
