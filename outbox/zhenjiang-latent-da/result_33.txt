@@ -1,0 +1,25 @@
+### channel=zhenjiang-latent-da seq=33
+### host=login4
+### started=2026-08-27T15:40:49+0800
+### ---------- output ----------
+=== IDENTITY ===
+sunyiq
+login4
+2026-08-27T15:40:49+0800
+=== PATHS ===
+REMOTE_ROOT_ABSENT
+INPUT_DIR_EXISTS
+13
+=== RUNTIME ===
+python_runtime=passed
+numpy=2.3.3
+pandas=2.3.2
+torch=2.4.0
+=== QUEUE ===
+hgpu2p|up|infinite|1|down*|ngu002
+hgpu2p|up|infinite|7|mix|ngu[001,004,006-008,010-011]
+hgpu2p|up|infinite|1|alloc|ngu005
+PROBE_COMPLETED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T15:41:22+0800
