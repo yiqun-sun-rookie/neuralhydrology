@@ -1,0 +1,46 @@
+### channel=kalmannet-tukf24 seq=14
+### host=login4
+### started=2026-08-27T19:58:52+0800
+### ---------- output ----------
+=== READOUT ARRAYS STATE ===
+    648 COMPLETED
+=== COUNTS ===
+new_json=108 new_npz=108 old_json=108 old_npz=108
+=== PACK AND PUSH ===
+e34a60125064f2767e91d85bd9638eeef2304190170ec1be4e94cb6aab31c34a  /tmp/tukf24_readout_results_v1.tar.gz
+--- push attempt 1 ---
+remote: To git@github.com:yiqun-sun-rookie/neuralhydrology.git
+ ! [remote rejected] HEAD -> hpc-mailbox (cannot lock ref 'refs/heads/hpc-mailbox': is at 38220ce7aa72b3cf8c0d1d46dd4ef0ce0d133a57 but expected 73be5ff845a7521e5a19512f79158b933a38f878)
+error: failed to push some refs to 'git@github.com:yiqun-sun-rookie/neuralhydrology.git'
+--- push attempt 2 ---
+# On branch hpc-mailbox
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	inbox/autoresearch-64/hbv_lite_64_prospective_seq62.slurm
+#	inbox/gpucheck_ngu009.slurm
+#	inbox/gpucheck_ngu101.slurm
+#	payload/id29-nearing2022-da/closure_v12.tar.gz
+#	payload/id29-nearing2022-da/closure_v13.tar.gz
+#	payload/id29-nearing2022-da/gate_preflight_v1.tar.gz
+#	runner.log
+#	runner2.log
+nothing added to commit but untracked files present (use "git add" to track)
+--- push attempt 3 ---
+# On branch hpc-mailbox
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	inbox/autoresearch-64/hbv_lite_64_prospective_seq62.slurm
+#	inbox/gpucheck_ngu009.slurm
+#	inbox/gpucheck_ngu101.slurm
+#	payload/id29-nearing2022-da/closure_v12.tar.gz
+#	payload/id29-nearing2022-da/closure_v13.tar.gz
+#	payload/id29-nearing2022-da/gate_preflight_v1.tar.gz
+#	runner.log
+#	runner2.log
+nothing added to commit but untracked files present (use "git add" to track)
+PAYLOAD_PUSH_FAILED
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-27T20:00:38+0800
