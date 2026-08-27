@@ -1,0 +1,1015 @@
+### channel=kalmannet-daily-camels seq=53
+### host=login4
+### started=2026-08-27T16:54:08+0800
+### ---------- output ----------
+SEQ53_A37_A800_SACCT_BEGIN
+JobIDRaw|JobName|User|Partition|State|ExitCode|Elapsed|NodeList|AllocCPUS|ReqMem|AllocTRES|ReqTRES|MaxRSS|MaxVMSize|AveRSS
+215207|daily-knet-a37-a800|sunyiq|hgpu8|FAILED|1:0|00:01:09|ngu202|4|0n|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1|||
+215207.batch|batch|||FAILED|1:0|00:01:09|ngu202|4|0n|cpu=4,mem=0,node=1||8260K|628540K|8260K
+215207.extern|extern|||COMPLETED|0:0|00:01:10|ngu202|4|0n|billing=4,cpu=4,node=1||1356K|185280K|1356K
+215207.0|python|||COMPLETED|0:0|00:00:01|ngu202|4|0n|cpu=4,mem=0,node=1||1384K|253900K|1384K
+215207.1|python|||FAILED|1:0|00:01:05|ngu202|4|0n|cpu=4,mem=0,node=1||772328K|10362376K|772328K
+SEQ53_A37_A800_SACCT_END
+SEQ53_A37_A800_FILE_INVENTORY_BEGIN
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/logs/probe-215199.err|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/logs/probe-215199.out|size=6096|sha256=ab96914138152524a0f40706f193b61e6cb9a9baa12af5afd134b7a495d04551
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/logs/train-215207.err|size=1865|sha256=4cf9e1fc52da0dfe8f6ae294d541bc8d6f1223c15a5f777b01d397eb2fb1b6fc
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/logs/train-215207.out|size=12447|sha256=28ba81c76a504667ba8290bc3da24c39207f6ac66b4556367ec60b3551576e62
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/events.jsonl|size=609|sha256=2af8fa225b8c5ba1129761039cad01eb812220b207e875e65e72d6572400e09d
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/experiment_identity.json|size=3250|sha256=26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/failure.json|size=448|sha256=3b628bdce5a41741a025b6c8bf707488268ba5413e10f744749a779b286aec6c
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/owner_evidence.json|size=423|sha256=a724d12d9a1fb83e87a00dd2efc4f9c1e6a3a2a274bc8a783fcee947d8e097c5
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/preflight.json|size=5548|sha256=78142cef463bb4bee69e197e23d72ddaced9d1b548f3d943f1a56b48ccedb6c1
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/replay_evidence.json|size=95195|sha256=512760960869b5ab6fb32d1e601f32ab94fbe0519cfaf1eb1a59f7bae1b72fc0
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/replay_predictions.npz|size=63953|sha256=6d9a8b910865ca923b31f67d496ba4aee058bb3fc27d2c529226f0bf275ec097
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/seq49_a37_a800_probe_wrapper.slurm|size=2335|sha256=949839e5007a5748f9ae9d82b0cd77d95d874ba255216b51fbd086ebf64b4d02
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/seq51_a37_a800_train_wrapper.slurm|size=2868|sha256=7506bb514f3cfbb8328c2d1f58d4c52f7bdb04012e2592be6ffa0f714b8b8b0f
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt|size=2244424|sha256=b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/bundle_manifest.json|size=14669|sha256=b0d374d72d5105735c9455271ec0f778831fa7ad2ec64c7ef4841299651cb13e
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/configs/daily_camels_knet_fixed_full_training_coverage_accumulation_a15.json|size=7956|sha256=ddfb3ad510ba1c6edfdf304a55c3d981a3d139a1cc91e104bf2bb26efe3fd763
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/configs/daily_camels_knet_fixed_full_training_coverage_epoch10_to40_resume_a37.json|size=9704|sha256=70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/configs/daily_camels_knet_fixed_full_training_coverage_forty_epoch_a17.json|size=8727|sha256=cd222bfcdf2b0e8c4c815aa917a4a23770c24120a390e8558ed4322bd064c742
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/configs/daily_camels_knet_fixed_full_training_coverage_ten_epoch_a16.json|size=8326|sha256=d8d3bf5275c1c509ce6591cd1c6d8c164e512f81e04d9ed1916262a2f3a5f22a
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/configs/daily_camels_knet_near_zero_stable_lr_strict_smoke_a13.json|size=6910|sha256=31b9a4207c483730249bb379f04d113bc0f6459f1390ba90b7a4121b46a65fe1
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/configs/daily_camels_knet_near_zero_strict_smoke_a12.json|size=6902|sha256=d951ba1fec7e1b337a8650f001281414f94443aa7947458983150ee7e207bf13
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/configs/daily_camels_knet_same_segment_post_step_diagnostic_a14.json|size=7062|sha256=8a0dcc965d3744de81ee39c797338ddae69144d6820d7bf713d9aa8ae4628d27
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/configs/daily_camels_ukf_knet_parity_causal_replay_dtype_repair_v3.json|size=5779|sha256=1272bc4d9ef3b494d54e31cb3341eedee741f29cc67c5cace5d1b2b693bfde41
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/configs/daily_camels_ukf_knet_parity_exact_replay_dtype_repair_v3.json|size=5712|sha256=7eea03913263c024b5bc9bec03e293de20cddff27346fff36087331292fd366f
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/configs/tukf06_full_diagonal_search_head_to_head_v1.json|size=9402|sha256=4b19eda7cf4ce7dcd9c0940693577077d6a6faf3b18912b03178164613cac7a3
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/hpc/daily_camels_ukf_knet_parity/preflight.py|size=51171|sha256=e57489f66a01b33640195ca9415baf8600f15e236044972e32aa7206a11e64c8
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm|size=4006|sha256=4094e0c1480481c352d4e42cf5ae4e732e18323dd772f063033e2c25e2f2ede0
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/hpc/daily_camels_ukf_knet_parity/submit_replay_gpu.slurm|size=3793|sha256=381cdd7f323f67cad73a37eb9c2fbfcd0d77264fa1ace68abff5c854eeb36faf
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/hpc/daily_camels_ukf_knet_parity/submit_train_gpu.slurm|size=8909|sha256=c502c2c35ec8091c728978ce5ab2b7631271ac9fc83bec413f908c0d64e66a82
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/knet/dl/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/knet/dl/nn_kalman_clamp_5.py|size=32576|sha256=934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/knet/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json|size=12327|sha256=8b4888a62052f8d9f0018e907c665d30a72c4c7c29081763db0f4d46904ec3a2
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz|size=57411|sha256=71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/build_daily_camels_ukf_knet_parity_hpc_bundle.py|size=39524|sha256=997183ad92c4de6b053b38d583578f1d265e38881e09dc702f571eb83b123161
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/differentiable_ukf_hbvlite.py|size=10927|sha256=5d4d0fce3018aef42d6ef81ac32fa97541654f0a878c0508f5594ff2ec73c02d
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/run_aligned_gr4j_da.py|size=95582|sha256=02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/run_aligned_gr4j_differentiable_ukf.py|size=15817|sha256=a8bae71dc1007c3b0502e81e50e766328202996aaf370987a347041ddde0d23f
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/run_daily_camels_ukf_knet_parity.py|size=149981|sha256=0ebdfb44e0ec215b0a8eac33b94cd0571b8a80a7a0d9691d72386613c4902a3a
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/tukf06_full_diagonal_common.py|size=25652|sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/assimilation/conventional_ukf.py|size=17331|sha256=2c1a17f0d48962ab8ac7c68c0ae8edaf0ad616f938a6466f0925d27ee9258c3a
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/assimilation/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/experiments/daily_camels_native_knet_io.py|size=36400|sha256=2db6c61276b4d2900321e58d04d639fecaf3957d557c4c5b5b4121fd01c3e918
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py|size=22399|sha256=bd70eadf8d2be311b5e623517e75f7d7b815dbde18603a219f6b1e3085223d52
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py|size=54622|sha256=2fd983a4af52ee02fd677e8ee51894d8208b836d6e9759b3ff2ac3a82c89ea69
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/experiments/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/models/differentiable_hbv_lite.py|size=13452|sha256=d7a04be86f19cddd8b9703e432fafb999a38215cb85de8983fe39a40bda0d6ea
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/models/hbvlite_system_model.py|size=12281|sha256=0d32d0f8dc656bdfbea81ba9f61eba0775ecc770d4466ff0442597d7c8d7a597
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/models/hbvlite_ukf_adapter.py|size=7308|sha256=2bf82d8ee0da909982769dd585657feed37a4ad46249f3b1fe9a72e1ccbc377a
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/models/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/src/global_hydrology/models/knet_native_hbvlite_full_state.py|size=19942|sha256=3eb80fc1346a3e86170cac28fecad29951fe938193967e6a8cf6ae705edc22da
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/tests/conftest.py|size=272|sha256=a616fc2b24e329c616aa322d0da2621365ca9079021fada2334df6d128f3f7c6
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/tests/test_daily_camels_ukf_knet_parity_contract.py|size=18231|sha256=3706b6249b7bf94ac1244fd1e6b0db180122952e22fba4142a73f844b583df96
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/tests/test_daily_camels_ukf_knet_parity_hpc_preflight.py|size=26164|sha256=da090b6c5c269dc5d592d7a3a5610ced40b5f0bd391f44e4a6899068e6c74c09
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/tests/test_daily_camels_ukf_knet_parity_runner.py|size=35143|sha256=969ad9a4f4d0e4a0055819ba026b46d6ea57cdf0cf5e43b8a166d5fef81eaf3e
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/tests/test_differentiable_ukf_hbvlite.py|size=8138|sha256=4fed6091a788739330fdcf6b76eaf60114c103c166af5bbb7384d793adf284ef
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/tests/test_knet_native_hbvlite_full_state.py|size=14784|sha256=5f70703ef34fc7e981dd4c91855c678ceaedc1416a28a7d3b61e77d9fc7f5057
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/tests/test_run_daily_camels_ukf_knet_parity_entry.py|size=35069|sha256=a1dd45bfd9ace287da1aae9532094e0483e6b1daecb80dcb667c6a6cbe713d55
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/entry-probe-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215199.json|size=5548|sha256=d3dbf57e2ac11ea16bb23494eb5b574ded1fdcf68d25db64be59ab3e8a9305af
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/locks/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37.submission.lock/owner.txt|size=276|sha256=2e680c801e9b286e503c61beb36bc72a722a899611702626e8f1f8689eccfcf2
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/probe-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215199.json|size=5821|sha256=abd4eb4e7e69ee71e2e375245bf46a2c52508855d7d175c5817cb1246c8d5ad4
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq49_a800_probe_job_id.txt|size=7|sha256=1243a938880a4333406f233488128272f52f4b9363581ba11bf16e0b18c1b49b
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq49_a800_probe_submitted_time_utc.txt|size=21|sha256=fe4d74d1ac6cc01541bd6747824a7807eb0be705f80f5b540dda651381606963
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq49_offline_reused_A37.json|size=4498|sha256=33ca7a0bfc56f2010823e5e60ca14f7cf86c665c25ab494787b9674f479dd3d4
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq49_old_probe_terminal_sacct.txt|size=127|sha256=d847087476d29741d3dee257592f28802a1b5760b2f365c8bfdb1057987a0a6b
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq49_post_cancel_squeue.txt|size=1634|sha256=583ada628ceb94beb7eae7eec53fc5f99deeb196b2b73da30bae885a605c0fde
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq49_post_submission_sacct.txt|size=60|sha256=97cbbae4d3e2d15d6c5cf2adb5e39702a09a59add19e6bc1a42778445d162c24
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq49_post_submission_squeue.txt|size=268|sha256=95d61e1d2fa75ab8507135cc77e9d617081a551b7d64f52f8107fe3fa3758a43
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq49_pre_cancel_hgpu8_candidate_nodes.txt|size=147|sha256=1e9494bfb3d4992bca5d98587fd04a6f4e63dcfc10a8d4e6ab9c6167ed449dee
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq49_pre_cancel_squeue.txt|size=1924|sha256=59650c42b3fe922ad4c8fbca358ca3e0efccdcdb1bc780151954f142ff936036
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq49_submission_identity.txt|size=427|sha256=91ba7fafd3d9a50754c157105bee15f7c6d6a36b70e27aa65b636cb2dcce9d77
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_a800_training_job_id.txt|size=7|sha256=4f1ea85b1acf74db8550f17d2e0111451b9870dc84b38a4fd7ce9987fa9e36c4
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_a800_training_submitted_time_utc.txt|size=21|sha256=9940cdff8466cbfe5804dfce951a620d1094287b617fb5115c4d32587aadd0d3
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_a800_train_submission_identity.txt|size=1003|sha256=be5c0d0c1e7e3cc55419fb91b6a559e147be369550d98bdccec2890d5ab4a984
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_offline_train_bundle_verification.json|size=4498|sha256=33ca7a0bfc56f2010823e5e60ca14f7cf86c665c25ab494787b9674f479dd3d4
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_post_submission_sacct.txt|size=82|sha256=43e48b1bcc9a97296d907ea8ede9ea08d4fa112f2162f0577796bdf8394e77d3
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_post_submission_squeue.txt|size=2114|sha256=7d3c8aab12a5a61a5fac3d07a7b3ccfb422746f8ffee573fe62d4f96ca3a8f6f
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_pre_submission_hgpu8_candidate_nodes.txt|size=87|sha256=38ad8dec453deea111716c799d6c717059c2d452885d33d3717106ef4e25f5c8
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_pre_submission_squeue.txt|size=1858|sha256=7fc378da9a30006e6bf89b7fba93a46065479769a95d83dd16581b77116a054a
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/train-cgroup-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215207.txt|size=129|sha256=e1717198f0a9cdad86c3272ba0eafe5e25fcce4c3314d3f9d4cc051a7a152c62
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/train-gpu-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215207.csv|size=7093|sha256=ab695d21b014cfe8197092d1b2cb4ecb6f5f0a32f6ecf1e5bd22cee566502b36
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/train-preflight-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215207.json|size=12166|sha256=3dabb9ef7cdcedc6d92cd66a309fc6a83bb39f7b06a5a64f5fde5b4f1c9c3243
+SEQ53_A37_A800_FILE_INVENTORY_END
+SEQ53_A37_A800_LOCKS_BEGIN
+d|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/locks/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37.submission.lock
+f|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/locks/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37.submission.lock/owner.txt
+SEQ53_A37_A800_LOCKS_END
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/logs/train-215207.out size=12447 sha256=28ba81c76a504667ba8290bc3da24c39207f6ac66b4556367ec60b3551576e62
+A37_A800_TRAIN_WRAPPER_STAGE timestamp_utc=2026-08-27T08:27:33Z stage=allocated job_id=215207 hostname=ngu202 partition=hgpu8 gpu_index=0 gpu_uuid= GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6 gpu_name= NVIDIA A800-SXM4-80GB gpu_total_mib= 81920 gpu_free_mib= 81226 driver= 535.104.05
+{
+  "active_config_member": "configs/daily_camels_knet_fixed_full_training_coverage_epoch10_to40_resume_a37.json",
+  "active_config_sha256": "70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984",
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "available_host_memory_bytes": 715225178112,
+  "bundle_manifest_sha256": "b0d374d72d5105735c9455271ec0f778831fa7ad2ec64c7ef4841299651cb13e",
+  "bundle_root": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49",
+  "continuation": {
+    "checkpoint_path": "artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt",
+    "checkpoint_sha256": "b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e",
+    "completed_epoch": 10,
+    "enabled": true,
+    "source_device": "cuda",
+    "source_experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16"
+  },
+  "cuda_probe_without_torch_import": {
+    "cuda_visible_devices": "0",
+    "device_index": "0",
+    "device_name": "NVIDIA A800-SXM4-80GB",
+    "driver_version": "535.104.05",
+    "memory_free_mib": 81226,
+    "memory_total_mib": 81920,
+    "visible_device_count": 1
+  },
+  "cuda_visible_devices": "0",
+  "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "hostname": "ngu202",
+  "initialization_mode": "causal_shared_spinup",
+  "nse_gate": {
+    "common_target_count_per_lead": 712,
+    "filter_warmup_days": 16,
+    "minimum_exclusive": 0.6
+  },
+  "numpy_imported": false,
+  "owner": {
+    "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+    "hostname": "ngu202",
+    "phase": "train",
+    "pid": 55435,
+    "slurm_job_id": "215207"
+  },
+  "package_availability_without_import": {
+    "numpy": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.3.3"
+    },
+    "pytest": {
+      "available": false,
+      "required_for_scientific_runtime": false,
+      "version": null
+    },
+    "torch": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.4.0"
+    }
+  },
+  "phase": "train",
+  "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+  "replay_gate_receipt_sha256": {
+    "causal": "0f6080a05a27244eca59c58043f265718102a4c2985684fb674781c8157d6c66",
+    "exact": "70e73c9f014dc4a4d615e07087fb99a994ba30b8c867eb5ef49141a59a39b687"
+  },
+  "replay_gates": {
+    "causal": {
+      "active_config_member": "configs/daily_camels_ukf_knet_parity_causal_replay_dtype_repair_v3.json",
+      "active_config_sha256": "1272bc4d9ef3b494d54e31cb3341eedee741f29cc67c5cace5d1b2b693bfde41",
+      "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+      "array_members_materialized_by_sealer": 0,
+      "bundle_manifest_sha256": "da9996a70538d00d7d48b26bb29a77af2e02c90d1e5e9eb80ece042f0873ad0f",
+      "entry_exit_code": 0,
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "hostname": "ngu008",
+      "initialization_mode": "causal_shared_spinup",
+      "nse_gate_target_count_per_lead": 712,
+      "numpy_imported_by_sealer": false,
+      "pytest_exit_code": 77,
+      "remote_test_status": "skipped_pytest_unavailable",
+      "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "run_member_count": 9,
+      "run_member_sha256": {
+        "completion.marker.json": "8f3f3b1b3d863a9ae502f8f46e38df438d8e8052c363a43d67e239acb501bc70",
+        "events.jsonl": "da7d472046e28281271656a9ad4595665f812717a3e30a22129e04add97ecf95",
+        "experiment_identity.json": "6380c133adc04f3af3819262cfac6406a2f3fe366039e5a92d61756b0485b963",
+        "manifest.sha256.json": "5ab7320a6cb8197b87d24122484ed8e24c7c6b548972f9245ff39c13a8ac2daf",
+        "owner_evidence.json": "64177d6e6b6cd5f5aef7ea859f804af59b7c698e58aeb133dc90b64ced677944",
+        "preflight.json": "6e55a39bd14aaeff9b7082325438da3ccde601cdf8c2371e96f333fe943dd065",
+        "replay_evidence.json": "c39ebcc48d53f492addd4fda31cc591bde7996fb76501fa2cb096a141aee3d14",
+        "replay_predictions.npz": "3e1764004c47fa54a49dab25b8264bc6fd9acaba6e286b2fccd6a9537d268c31",
+        "result_summary.json": "77391d8c6fc486398cbfb5f4ce53aeeb26212ebdbe58f6ea5156d523dc0e9b07"
+      },
+      "selection_objective": "physical_unit_multilead_mse",
+      "selection_objective_target_count_per_lead": 728,
+      "slurm_job_id": "211203",
+      "status": "REPLAY_PASS",
+      "torch_imported_by_sealer": false,
+      "ukf_replay_contract_passed": true,
+      "verified_replay_metrics": {
+        "completion_marker_sha256": "8f3f3b1b3d863a9ae502f8f46e38df438d8e8052c363a43d67e239acb501bc70",
+        "replay_evidence_sha256": "c39ebcc48d53f492addd4fda31cc591bde7996fb76501fa2cb096a141aee3d14",
+        "replay_predictions_sha256": "3e1764004c47fa54a49dab25b8264bc6fd9acaba6e286b2fccd6a9537d268c31",
+        "result_summary_sha256": "77391d8c6fc486398cbfb5f4ce53aeeb26212ebdbe58f6ea5156d523dc0e9b07",
+        "ukf_checkpoint_objective_728": 0.05968865108185378,
+        "ukf_nse_by_lead_712": {
+          "1": 0.9742508181649051,
+          "2": 0.9557071265978331,
+          "3": 0.9373297632940933
+        },
+        "zero_gain_maximum_open_loop_difference": 0.0
+      },
+      "zero_gain_contract_passed": true
+    },
+    "exact": {
+      "active_config_member": "configs/daily_camels_ukf_knet_parity_exact_replay_dtype_repair_v3.json",
+      "active_config_sha256": "7eea03913263c024b5bc9bec03e293de20cddff27346fff36087331292fd366f",
+      "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+      "array_members_materialized_by_sealer": 0,
+      "bundle_manifest_sha256": "b8c53662f7d8b97e5025453ca1c6c09f8a82ab362e5eca119b5226a796cd5082",
+      "entry_exit_code": 0,
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "hostname": "ngu001",
+      "initialization_mode": "exact_tukf06_backward_time_diagnostic",
+      "nse_gate_target_count_per_lead": 712,
+      "numpy_imported_by_sealer": false,
+      "pytest_exit_code": 77,
+      "remote_test_status": "skipped_pytest_unavailable",
+      "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "run_member_count": 9,
+      "run_member_sha256": {
+        "completion.marker.json": "e449619ea7b5527d71a886cfdfefe3f76c149ab917f37e13e46a65eb27f280d3",
+        "events.jsonl": "cdf70db8620d3684759d14106d05c6938e382c8375761a6048829522f442cfb7",
+        "experiment_identity.json": "da372749d922476700de6c00b2b3db83779a051822f561cd41cae4718213fa56",
+        "manifest.sha256.json": "be74ad15cdddf76a45d7b708e102336c1f228045e81ad6b477f6a89565432d0b",
+        "owner_evidence.json": "0cb7d05dc69a217f1b04870b464f77ef24f00ee3acafc1efd075aae3f1adb1d3",
+        "preflight.json": "deeb216b21255109e9ccbd18da0ddc004befcd288a34f61c57c347261a74490b",
+        "replay_evidence.json": "bf0c6abbc6e251d0b62fa6e5b2cd1924ea45a6b65a3f29cf32dcb7215d2a49ab",
+        "replay_predictions.npz": "377e4e660db87b35031589828691818982b106bc27871db65663ee93483098a3",
+        "result_summary.json": "7ec17da36329d73d7bd720747677aec59b0b93a1ac6f4fc271f18caf889a80e3"
+      },
+      "selection_objective": "physical_unit_multilead_mse",
+      "selection_objective_target_count_per_lead": 728,
+      "slurm_job_id": "211202",
+      "status": "REPLAY_PASS",
+      "torch_imported_by_sealer": false,
+      "ukf_replay_contract_passed": true,
+      "verified_replay_metrics": {
+        "completion_marker_sha256": "e449619ea7b5527d71a886cfdfefe3f76c149ab917f37e13e46a65eb27f280d3",
+        "replay_evidence_sha256": "bf0c6abbc6e251d0b62fa6e5b2cd1924ea45a6b65a3f29cf32dcb7215d2a49ab",
+        "replay_predictions_sha256": "377e4e660db87b35031589828691818982b106bc27871db65663ee93483098a3",
+        "result_summary_sha256": "7ec17da36329d73d7bd720747677aec59b0b93a1ac6f4fc271f18caf889a80e3",
+        "ukf_checkpoint_objective_728": 0.06461047253887697,
+        "ukf_nse_by_lead_712": {
+          "1": 0.9717833415469129,
+          "2": 0.951004752529,
+          "3": 0.929935402542523
+        },
+        "zero_gain_maximum_open_loop_difference": 0.0
+      },
+      "zero_gain_contract_passed": true
+    }
+  },
+  "reserved_data_member_count": 0,
+  "resource_admission": {
+    "available_host_memory_bytes": 715225178112,
+    "checked_on_allocated_training_node_before_training": true,
+    "gpu_admission_min_free_mib": 822,
+    "gpu_memory_free_mib": 81226,
+    "host_admission_min_bytes": 2800353280,
+    "required": true,
+    "status": "PASS"
+  },
+  "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "run_directory_absent": true,
+  "run_parent": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs",
+  "selection_objective": {
+    "common_target_count_per_lead": 728,
+    "filter_warmup_days": 0,
+    "name": "physical_unit_multilead_mse"
+  },
+  "slurm_job_id": "215207",
+  "slurm_job_name": "daily-knet-a37-a800",
+  "status": "PREFLIGHT_PASS",
+  "torch_imported": false
+}
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/logs/train-215207.out
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/logs/train-215207.err size=1865 sha256=4cf9e1fc52da0dfe8f6ae294d541bc8d6f1223c15a5f777b01d397eb2fb1b6fc
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/run_daily_camels_ukf_knet_parity.py", line 3563, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/run_daily_camels_ukf_knet_parity.py", line 3559, in main
+    return execute(build_parser().parse_args(argv))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/run_daily_camels_ukf_knet_parity.py", line 3555, in execute
+    return _execute_numerical(preflight, report, device=arguments.device)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/run_daily_camels_ukf_knet_parity.py", line 3419, in _execute_numerical
+    training = execute_training(
+               ^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/run_daily_camels_ukf_knet_parity.py", line 2549, in execute_training
+    epoch_zero_reproducibility = _epoch_zero_reproducibility_evidence(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/scripts/run_daily_camels_ukf_knet_parity.py", line 975, in _epoch_zero_reproducibility_evidence
+    raise RuntimeError("epoch-zero checkpoint objective differs from its anchor")
+RuntimeError: epoch-zero checkpoint objective differs from its anchor
+srun: error: ngu202: task 0: Exited with exit code 1
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/logs/train-215207.err
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/train-preflight-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215207.json size=12166 sha256=3dabb9ef7cdcedc6d92cd66a309fc6a83bb39f7b06a5a64f5fde5b4f1c9c3243
+{
+  "active_config_member": "configs/daily_camels_knet_fixed_full_training_coverage_epoch10_to40_resume_a37.json",
+  "active_config_sha256": "70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984",
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "available_host_memory_bytes": 715225178112,
+  "bundle_manifest_sha256": "b0d374d72d5105735c9455271ec0f778831fa7ad2ec64c7ef4841299651cb13e",
+  "bundle_root": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49",
+  "continuation": {
+    "checkpoint_path": "artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt",
+    "checkpoint_sha256": "b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e",
+    "completed_epoch": 10,
+    "enabled": true,
+    "source_device": "cuda",
+    "source_experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16"
+  },
+  "cuda_probe_without_torch_import": {
+    "cuda_visible_devices": "0",
+    "device_index": "0",
+    "device_name": "NVIDIA A800-SXM4-80GB",
+    "driver_version": "535.104.05",
+    "memory_free_mib": 81226,
+    "memory_total_mib": 81920,
+    "visible_device_count": 1
+  },
+  "cuda_visible_devices": "0",
+  "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "hostname": "ngu202",
+  "initialization_mode": "causal_shared_spinup",
+  "nse_gate": {
+    "common_target_count_per_lead": 712,
+    "filter_warmup_days": 16,
+    "minimum_exclusive": 0.6
+  },
+  "numpy_imported": false,
+  "owner": {
+    "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+    "hostname": "ngu202",
+    "phase": "train",
+    "pid": 55435,
+    "slurm_job_id": "215207"
+  },
+  "package_availability_without_import": {
+    "numpy": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.3.3"
+    },
+    "pytest": {
+      "available": false,
+      "required_for_scientific_runtime": false,
+      "version": null
+    },
+    "torch": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.4.0"
+    }
+  },
+  "phase": "train",
+  "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+  "replay_gate_receipt_sha256": {
+    "causal": "0f6080a05a27244eca59c58043f265718102a4c2985684fb674781c8157d6c66",
+    "exact": "70e73c9f014dc4a4d615e07087fb99a994ba30b8c867eb5ef49141a59a39b687"
+  },
+  "replay_gates": {
+    "causal": {
+      "active_config_member": "configs/daily_camels_ukf_knet_parity_causal_replay_dtype_repair_v3.json",
+      "active_config_sha256": "1272bc4d9ef3b494d54e31cb3341eedee741f29cc67c5cace5d1b2b693bfde41",
+      "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+      "array_members_materialized_by_sealer": 0,
+      "bundle_manifest_sha256": "da9996a70538d00d7d48b26bb29a77af2e02c90d1e5e9eb80ece042f0873ad0f",
+      "entry_exit_code": 0,
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "hostname": "ngu008",
+      "initialization_mode": "causal_shared_spinup",
+      "nse_gate_target_count_per_lead": 712,
+      "numpy_imported_by_sealer": false,
+      "pytest_exit_code": 77,
+      "remote_test_status": "skipped_pytest_unavailable",
+      "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "run_member_count": 9,
+      "run_member_sha256": {
+        "completion.marker.json": "8f3f3b1b3d863a9ae502f8f46e38df438d8e8052c363a43d67e239acb501bc70",
+        "events.jsonl": "da7d472046e28281271656a9ad4595665f812717a3e30a22129e04add97ecf95",
+        "experiment_identity.json": "6380c133adc04f3af3819262cfac6406a2f3fe366039e5a92d61756b0485b963",
+        "manifest.sha256.json": "5ab7320a6cb8197b87d24122484ed8e24c7c6b548972f9245ff39c13a8ac2daf",
+        "owner_evidence.json": "64177d6e6b6cd5f5aef7ea859f804af59b7c698e58aeb133dc90b64ced677944",
+        "preflight.json": "6e55a39bd14aaeff9b7082325438da3ccde601cdf8c2371e96f333fe943dd065",
+        "replay_evidence.json": "c39ebcc48d53f492addd4fda31cc591bde7996fb76501fa2cb096a141aee3d14",
+        "replay_predictions.npz": "3e1764004c47fa54a49dab25b8264bc6fd9acaba6e286b2fccd6a9537d268c31",
+        "result_summary.json": "77391d8c6fc486398cbfb5f4ce53aeeb26212ebdbe58f6ea5156d523dc0e9b07"
+      },
+      "selection_objective": "physical_unit_multilead_mse",
+      "selection_objective_target_count_per_lead": 728,
+      "slurm_job_id": "211203",
+      "status": "REPLAY_PASS",
+      "torch_imported_by_sealer": false,
+      "ukf_replay_contract_passed": true,
+      "verified_replay_metrics": {
+        "completion_marker_sha256": "8f3f3b1b3d863a9ae502f8f46e38df438d8e8052c363a43d67e239acb501bc70",
+        "replay_evidence_sha256": "c39ebcc48d53f492addd4fda31cc591bde7996fb76501fa2cb096a141aee3d14",
+        "replay_predictions_sha256": "3e1764004c47fa54a49dab25b8264bc6fd9acaba6e286b2fccd6a9537d268c31",
+        "result_summary_sha256": "77391d8c6fc486398cbfb5f4ce53aeeb26212ebdbe58f6ea5156d523dc0e9b07",
+        "ukf_checkpoint_objective_728": 0.05968865108185378,
+        "ukf_nse_by_lead_712": {
+          "1": 0.9742508181649051,
+          "2": 0.9557071265978331,
+          "3": 0.9373297632940933
+        },
+        "zero_gain_maximum_open_loop_difference": 0.0
+      },
+      "zero_gain_contract_passed": true
+    },
+    "exact": {
+      "active_config_member": "configs/daily_camels_ukf_knet_parity_exact_replay_dtype_repair_v3.json",
+      "active_config_sha256": "7eea03913263c024b5bc9bec03e293de20cddff27346fff36087331292fd366f",
+      "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+      "array_members_materialized_by_sealer": 0,
+      "bundle_manifest_sha256": "b8c53662f7d8b97e5025453ca1c6c09f8a82ab362e5eca119b5226a796cd5082",
+      "entry_exit_code": 0,
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "hostname": "ngu001",
+      "initialization_mode": "exact_tukf06_backward_time_diagnostic",
+      "nse_gate_target_count_per_lead": 712,
+      "numpy_imported_by_sealer": false,
+      "pytest_exit_code": 77,
+      "remote_test_status": "skipped_pytest_unavailable",
+      "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "run_member_count": 9,
+      "run_member_sha256": {
+        "completion.marker.json": "e449619ea7b5527d71a886cfdfefe3f76c149ab917f37e13e46a65eb27f280d3",
+        "events.jsonl": "cdf70db8620d3684759d14106d05c6938e382c8375761a6048829522f442cfb7",
+        "experiment_identity.json": "da372749d922476700de6c00b2b3db83779a051822f561cd41cae4718213fa56",
+        "manifest.sha256.json": "be74ad15cdddf76a45d7b708e102336c1f228045e81ad6b477f6a89565432d0b",
+        "owner_evidence.json": "0cb7d05dc69a217f1b04870b464f77ef24f00ee3acafc1efd075aae3f1adb1d3",
+        "preflight.json": "deeb216b21255109e9ccbd18da0ddc004befcd288a34f61c57c347261a74490b",
+        "replay_evidence.json": "bf0c6abbc6e251d0b62fa6e5b2cd1924ea45a6b65a3f29cf32dcb7215d2a49ab",
+        "replay_predictions.npz": "377e4e660db87b35031589828691818982b106bc27871db65663ee93483098a3",
+        "result_summary.json": "7ec17da36329d73d7bd720747677aec59b0b93a1ac6f4fc271f18caf889a80e3"
+      },
+      "selection_objective": "physical_unit_multilead_mse",
+      "selection_objective_target_count_per_lead": 728,
+      "slurm_job_id": "211202",
+      "status": "REPLAY_PASS",
+      "torch_imported_by_sealer": false,
+      "ukf_replay_contract_passed": true,
+      "verified_replay_metrics": {
+        "completion_marker_sha256": "e449619ea7b5527d71a886cfdfefe3f76c149ab917f37e13e46a65eb27f280d3",
+        "replay_evidence_sha256": "bf0c6abbc6e251d0b62fa6e5b2cd1924ea45a6b65a3f29cf32dcb7215d2a49ab",
+        "replay_predictions_sha256": "377e4e660db87b35031589828691818982b106bc27871db65663ee93483098a3",
+        "result_summary_sha256": "7ec17da36329d73d7bd720747677aec59b0b93a1ac6f4fc271f18caf889a80e3",
+        "ukf_checkpoint_objective_728": 0.06461047253887697,
+        "ukf_nse_by_lead_712": {
+          "1": 0.9717833415469129,
+          "2": 0.951004752529,
+          "3": 0.929935402542523
+        },
+        "zero_gain_maximum_open_loop_difference": 0.0
+      },
+      "zero_gain_contract_passed": true
+    }
+  },
+  "reserved_data_member_count": 0,
+  "resource_admission": {
+    "available_host_memory_bytes": 715225178112,
+    "checked_on_allocated_training_node_before_training": true,
+    "gpu_admission_min_free_mib": 822,
+    "gpu_memory_free_mib": 81226,
+    "host_admission_min_bytes": 2800353280,
+    "required": true,
+    "status": "PASS"
+  },
+  "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "run_directory_absent": true,
+  "run_parent": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs",
+  "selection_objective": {
+    "common_target_count_per_lead": 728,
+    "filter_warmup_days": 0,
+    "name": "physical_unit_multilead_mse"
+  },
+  "slurm_job_id": "215207",
+  "slurm_job_name": "daily-knet-a37-a800",
+  "status": "PREFLIGHT_PASS",
+  "torch_imported": false
+}
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/train-preflight-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215207.json
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/train-gpu-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215207.csv size=7093 sha256=ab695d21b014cfe8197092d1b2cb4ecb6f5f0a32f6ecf1e5bd22cee566502b36
+2026/08/27 16:27:36.038, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:37.068, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:38.091, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:39.118, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:40.147, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:41.175, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:42.205, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:43.226, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:44.253, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:45.280, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:46.309, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:47.337, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:48.364, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:49.392, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:50.420, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:51.447, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 16:27:52.475, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 5, 81223, 0
+2026/08/27 16:27:53.503, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 501, 80727, 0
+2026/08/27 16:27:54.530, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 501, 80727, 40
+2026/08/27 16:27:55.557, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 501, 80727, 0
+2026/08/27 16:27:56.583, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 535, 80693, 0
+2026/08/27 16:27:57.610, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 563, 80665, 0
+2026/08/27 16:27:58.645, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 563, 80665, 15
+2026/08/27 16:27:59.673, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 563, 80665, 0
+2026/08/27 16:28:00.701, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 563, 80665, 38
+2026/08/27 16:28:01.728, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:02.755, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 27
+2026/08/27 16:28:03.783, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 40
+2026/08/27 16:28:04.812, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 38
+2026/08/27 16:28:05.840, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 39
+2026/08/27 16:28:06.867, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 39
+2026/08/27 16:28:07.895, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 38
+2026/08/27 16:28:08.922, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 35
+2026/08/27 16:28:09.950, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 39
+2026/08/27 16:28:10.977, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 40
+2026/08/27 16:28:11.999, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 36
+2026/08/27 16:28:13.026, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 27
+2026/08/27 16:28:14.053, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 27
+2026/08/27 16:28:15.082, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 24
+2026/08/27 16:28:16.108, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 40
+2026/08/27 16:28:17.136, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 28
+2026/08/27 16:28:18.164, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:19.191, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:20.219, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:21.249, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:22.277, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:23.303, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:24.330, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:25.358, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:26.386, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:27.413, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:28.440, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:29.468, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:30.496, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:31.525, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 16:28:32.552, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 34
+2026/08/27 16:28:33.575, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 40
+2026/08/27 16:28:34.604, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 38
+2026/08/27 16:28:35.633, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 14
+2026/08/27 16:28:36.661, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 28
+2026/08/27 16:28:37.687, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 5
+2026/08/27 16:28:38.715, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 0
+2026/08/27 16:28:39.743, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 0
+2026/08/27 16:28:40.769, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 0
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/train-gpu-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215207.csv
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/train-cgroup-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215207.txt size=129 sha256=e1717198f0a9cdad86c3272ba0eafe5e25fcce4c3314d3f9d4cc051a7a152c62
+recorded_at_utc=2026-08-27T08:28:41Z
+slurm_job_id=215207
+process_cgroup_relative=unavailable
+cgroup_v2_memory_status=unavailable
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/train-cgroup-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215207.txt
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_offline_train_bundle_verification.json size=4498 sha256=33ca7a0bfc56f2010823e5e60ca14f7cf86c665c25ab494787b9674f479dd3d4
+{
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "continuation": {
+    "checkpoint_path": "artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt",
+    "checkpoint_sha256": "b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e",
+    "completed_epoch": 10,
+    "enabled": true,
+    "source_device": "cuda",
+    "source_experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16"
+  },
+  "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "initialization_mode": "causal_shared_spinup",
+  "member_count": 46,
+  "nse_gate_target_count_per_lead": 712,
+  "numpy_imported": false,
+  "replay_gate_requirements": {
+    "causal": {
+      "active_config_sha256": "1272bc4d9ef3b494d54e31cb3341eedee741f29cc67c5cace5d1b2b693bfde41",
+      "bundle_manifest_sha256": "da9996a70538d00d7d48b26bb29a77af2e02c90d1e5e9eb80ece042f0873ad0f",
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "initialization_mode": "causal_shared_spinup",
+      "receipt_sha256": "0f6080a05a27244eca59c58043f265718102a4c2985684fb674781c8157d6c66"
+    },
+    "exact": {
+      "active_config_sha256": "7eea03913263c024b5bc9bec03e293de20cddff27346fff36087331292fd366f",
+      "bundle_manifest_sha256": "b8c53662f7d8b97e5025453ca1c6c09f8a82ab362e5eca119b5226a796cd5082",
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "initialization_mode": "exact_tukf06_backward_time_diagnostic",
+      "receipt_sha256": "70e73c9f014dc4a4d615e07087fb99a994ba30b8c867eb5ef49141a59a39b687"
+    }
+  },
+  "selection_objective_target_count_per_lead": 728,
+  "status": "BUNDLE_VERIFIED",
+  "torch_imported": false
+}
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_offline_train_bundle_verification.json
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_a800_train_submission_identity.txt size=1003 sha256=be5c0d0c1e7e3cc55419fb91b6a559e147be369550d98bdccec2890d5ab4a984
+experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37
+execution_attempt_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_A800_TRAIN1_SEQ51
+source_checkpoint_sha256=b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e
+source_completed_epoch=10
+target_total_epochs=40
+source_optimizer_steps=10
+target_total_optimizer_steps=40
+source_sampled_forecast_events=76500
+target_total_sampled_forecast_events=306000
+run_base=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827
+source_directory=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49
+target_partition=hgpu8
+approved_nodes=ngu202,ngu203
+excluded_node=ngu201
+wrapper_sha256=7506bb514f3cfbb8328c2d1f58d4c52f7bdb04012e2592be6ffa0f714b8b8b0f
+control_script_sha256=68f2f30c74b72e85ae265f0d87f94b3acf7fdf860a22015d36d5376a177c47af
+control_script_size_bytes=16308
+host_admission_min_bytes=2800353280
+gpu_admission_min_free_mib=822
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_a800_train_submission_identity.txt
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_a800_training_job_id.txt size=7 sha256=4f1ea85b1acf74db8550f17d2e0111451b9870dc84b38a4fd7ce9987fa9e36c4
+215207
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_a800_training_job_id.txt
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_a800_training_submitted_time_utc.txt size=21 sha256=9940cdff8466cbfe5804dfce951a620d1094287b617fb5115c4d32587aadd0d3
+2026-08-27T08:27:32Z
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_a800_training_submitted_time_utc.txt
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_pre_submission_squeue.txt size=1858 sha256=7fc378da9a30006e6bf89b7fba93a46065479769a95d83dd16581b77116a054a
+215205|id30_gates|hgpu2p|PENDING|sunyiq|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/hpc/submit_preselection_gates.slurm
+202226|N22-eval-later|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+202229|N22-agg-eval|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+202294|N22-export|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_export.slurm
+202315|N22-gate|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm
+202507|N22-mask-iso-531|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/run_author_v13_warmup_isolation_all531.slurm
+202293|N22-manifest|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_manifest.slurm
+211001|N22-relong|hgpu4|RUNNING|sunyiq|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+212744|N22-relong|hgpu4|RUNNING|sunyiq|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+215195|q_armJ_china_min15|hgpu2|RUNNING|sunyiq|/data1/home/sunyiq/nature_1st|/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_armJ_china_min15.sbatch
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_pre_submission_squeue.txt
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_post_submission_squeue.txt size=2114 sha256=7d3c8aab12a5a61a5fac3d07a7b3ccfb422746f8ffee573fe62d4f96ca3a8f6f
+215205|id30_gates|hgpu2p|PENDING|sunyiq|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/hpc/submit_preselection_gates.slurm
+202226|N22-eval-later|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+202229|N22-agg-eval|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+202294|N22-export|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_export.slurm
+202315|N22-gate|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm
+202507|N22-mask-iso-531|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/run_author_v13_warmup_isolation_all531.slurm
+215207|daily-knet-a37-a800|hgpu8|PENDING|sunyiq|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/seq51_a37_a800_train_wrapper.slurm
+202293|N22-manifest|hgpu4,hgpu8,hgpu2|PENDING|sunyiq|/data1/home/sunyiq/nearing2022_da|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_manifest.slurm
+211001|N22-relong|hgpu4|RUNNING|sunyiq|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+212744|N22-relong|hgpu4|RUNNING|sunyiq|/data1/home/sunyiq/hpc_mailbox|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_training_array.slurm
+215195|q_armJ_china_min15|hgpu2|RUNNING|sunyiq|/data1/home/sunyiq/nature_1st|/data1/home/sunyiq/nature_1st/scripts/hpc_train_q_armJ_china_min15.sbatch
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_post_submission_squeue.txt
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_post_submission_sacct.txt size=82 sha256=43e48b1bcc9a97296d907ea8ede9ea08d4fa112f2162f0577796bdf8394e77d3
+JobIDRaw|JobName|User|Partition|State|ExitCode|Elapsed|NodeList|AllocTRES|ReqTRES
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_post_submission_sacct.txt
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_pre_submission_hgpu8_candidate_nodes.txt size=87 sha256=38ad8dec453deea111716c799d6c717059c2d452885d33d3717106ef4e25f5c8
+ngu202|hgpu8|mix|gpu:8|40/24/0/64|1|671925
+ngu203|hgpu8|mix$|gpu:8|32/32/0/64|1|480541
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/seq51_pre_submission_hgpu8_candidate_nodes.txt
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/locks/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37.submission.lock/owner.txt size=276 sha256=2e680c801e9b286e503c61beb36bc72a722a899611702626e8f1f8689eccfcf2
+experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37
+execution_attempt_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_A800_TRAIN1_SEQ51
+owner_user=sunyiq
+owner_host=login4
+owner_pid=29575
+acquired_at_utc=2026-08-27T08:27:27Z
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/status/locks/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37.submission.lock/owner.txt
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/events.jsonl size=609 sha256=2af8fa225b8c5ba1129761039cad01eb812220b207e875e65e72d6572400e09d
+{"array_members_materialized":0,"event_type":"preflight_completed","identity_sha256":"26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4","recorded_at_utc":"2026-08-27T08:27:36.529220Z","sequence":0}
+{"event_type":"ukf_and_zero_gain_replay_completed","recorded_at_utc":"2026-08-27T08:28:15.067063Z","recovery_ukf_checkpoint_objective_728":0.05968865108183612,"replay_evidence_sha256":"512760960869b5ab6fb32d1e601f32ab94fbe0519cfaf1eb1a59f7bae1b72fc0","replay_predictions_sha256":"6d9a8b910865ca923b31f67d496ba4aee058bb3fc27d2c529226f0bf275ec097","reserved_evaluation_operations":0,"sequence":1}
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/events.jsonl
+SEQ53_A37_A800_CONTENT_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/epoch_history.json
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/experiment_identity.json size=3250 sha256=26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4
+{"configuration_sha256":"70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984","continuation":{"checkpoint_path":"artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt","checkpoint_schema_version":"daily_camels_ukf_knet_parity_checkpoint_v1","checkpoint_sha256":"b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e","completed_epoch":10,"optimizer_steps":10,"parameter_sha256":"c1597f7f1c5c30a6c12ce05e27dc6a45d0b9dd330422fed07a3346b0430cfbca","sampled_forecast_events":76500,"schema_version":"daily_camels_ukf_knet_parity_continuation_v1","source_configuration_path":"configs/daily_camels_knet_fixed_full_training_coverage_ten_epoch_a16.json","source_configuration_sha256":"d8d3bf5275c1c509ce6591cd1c6d8c164e512f81e04d9ed1916262a2f3a5f22a","source_device":"cuda","source_epoch_history_sha256":"7d418f55eed64e0f4e30335d38b4e56998bd8b1c89be44c94fe8b718a8a605c2","source_evidence_archive_sha256":"c6ee59e9dbd233858ef3bd310eca41e76d23152aa42d7fba6d5e1d1d414123d9","source_experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16","source_identity_sha256":"c46df764b85fe7ca64cdb899f897b99c14bfe2dc0aa6ba33bacc8f1ca1c0f3a3","source_result_summary_sha256":"07cf27a7f3d18d1a3428f829e2486fcd874157ab678d1f75ddebdfc709b8c71b"},"correction_scope":"full_eighteen_dimensional_state_correction","experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37","gain_initialization":"near_zero_fc2_head","initialization_mode":"causal_shared_spinup","input_sha256":{"configs/tukf06_full_diagonal_search_head_to_head_v1.json":"4b19eda7cf4ce7dcd9c0940693577077d6a6faf3b18912b03178164613cac7a3","results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json":"8b4888a62052f8d9f0018e907c665d30a72c4c7c29081763db0f4d46904ec3a2","results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz":"71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd"},"phase":"train","schema_version":"daily_camels_ukf_knet_parity_run_identity_v1","source_sha256":{"knet/dl/nn_kalman_clamp_5.py":"934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843","scripts/differentiable_ukf_hbvlite.py":"5d4d0fce3018aef42d6ef81ac32fa97541654f0a878c0508f5594ff2ec73c02d","scripts/tukf06_full_diagonal_common.py":"2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02","src/global_hydrology/experiments/daily_camels_native_knet_io.py":"2db6c61276b4d2900321e58d04d639fecaf3957d557c4c5b5b4121fd01c3e918","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py":"bd70eadf8d2be311b5e623517e75f7d7b815dbde18603a219f6b1e3085223d52","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py":"2fd983a4af52ee02fd677e8ee51894d8208b836d6e9759b3ff2ac3a82c89ea69","src/global_hydrology/models/differentiable_hbv_lite.py":"d7a04be86f19cddd8b9703e432fafb999a38215cb85de8983fe39a40bda0d6ea","src/global_hydrology/models/hbvlite_system_model.py":"0d32d0f8dc656bdfbea81ba9f61eba0775ecc770d4466ff0442597d7c8d7a597","src/global_hydrology/models/knet_native_hbvlite_full_state.py":"3eb80fc1346a3e86170cac28fecad29951fe938193967e6a8cf6ae705edc22da"}}
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/experiment_identity.json
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/owner_evidence.json size=423 sha256=a724d12d9a1fb83e87a00dd2efc4f9c1e6a3a2a274bc8a783fcee947d8e097c5
+{"acquired_at_utc":"2026-08-27T08:27:36.494887Z","host_name":"ngu202","identity":{"device":"cuda","experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37","identity_sha256":"26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4","phase":"train"},"owner_token":"1962edee32de4839a87f402539ed345d","process_id":55472,"schema_version":"daily_camels_native_knet_owner_v1"}
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/owner_evidence.json
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/preflight.json size=5548 sha256=78142cef463bb4bee69e197e23d72ddaced9d1b548f3d943f1a56b48ccedb6c1
+{"array_members_materialized":0,"configuration_path":"/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/configs/daily_camels_knet_fixed_full_training_coverage_epoch10_to40_resume_a37.json","configuration_sha256":"70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984","continuation":{"checkpoint_path":"artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt","checkpoint_schema_version":"daily_camels_ukf_knet_parity_checkpoint_v1","checkpoint_sha256":"b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e","completed_epoch":10,"optimizer_steps":10,"parameter_sha256":"c1597f7f1c5c30a6c12ce05e27dc6a45d0b9dd330422fed07a3346b0430cfbca","sampled_forecast_events":76500,"schema_version":"daily_camels_ukf_knet_parity_continuation_v1","source_configuration_path":"configs/daily_camels_knet_fixed_full_training_coverage_ten_epoch_a16.json","source_configuration_sha256":"d8d3bf5275c1c509ce6591cd1c6d8c164e512f81e04d9ed1916262a2f3a5f22a","source_device":"cuda","source_epoch_history_sha256":"7d418f55eed64e0f4e30335d38b4e56998bd8b1c89be44c94fe8b718a8a605c2","source_evidence_archive_sha256":"c6ee59e9dbd233858ef3bd310eca41e76d23152aa42d7fba6d5e1d1d414123d9","source_experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16","source_identity_sha256":"c46df764b85fe7ca64cdb899f897b99c14bfe2dc0aa6ba33bacc8f1ca1c0f3a3","source_result_summary_sha256":"07cf27a7f3d18d1a3428f829e2486fcd874157ab678d1f75ddebdfc709b8c71b"},"correction_scope":"full_eighteen_dimensional_state_correction","declared_source_sha256":{"knet/dl/nn_kalman_clamp_5.py":"934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843","scripts/differentiable_ukf_hbvlite.py":"5d4d0fce3018aef42d6ef81ac32fa97541654f0a878c0508f5594ff2ec73c02d","scripts/tukf06_full_diagonal_common.py":"2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py":"bd70eadf8d2be311b5e623517e75f7d7b815dbde18603a219f6b1e3085223d52","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py":"2fd983a4af52ee02fd677e8ee51894d8208b836d6e9759b3ff2ac3a82c89ea69","src/global_hydrology/models/differentiable_hbv_lite.py":"d7a04be86f19cddd8b9703e432fafb999a38215cb85de8983fe39a40bda0d6ea","src/global_hydrology/models/hbvlite_system_model.py":"0d32d0f8dc656bdfbea81ba9f61eba0775ecc770d4466ff0442597d7c8d7a597","src/global_hydrology/models/knet_native_hbvlite_full_state.py":"3eb80fc1346a3e86170cac28fecad29951fe938193967e6a8cf6ae705edc22da"},"device_requested":"cuda","experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37","gain_initialization":"near_zero_fc2_head","graphics_driver_probe":{"available":true,"devices":[{"index":0,"memory_free_mib":81226,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":1,"memory_free_mib":78007,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":2,"memory_free_mib":53373,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":3,"memory_free_mib":53307,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":4,"memory_free_mib":78007,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":5,"memory_free_mib":78007,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":6,"memory_free_mib":81226,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":7,"memory_free_mib":81226,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"}],"returncode":0,"stderr":""},"host_name":"ngu202","host_resources":{"disk_free_bytes":393292461023232,"disk_total_bytes":1048866010951680,"host_memory_available_bytes":715212120064,"host_memory_total_bytes":1081636241408},"identity_sha256":"26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4","initialization_mode":"causal_shared_spinup","input_sha256":{"configs/tukf06_full_diagonal_search_head_to_head_v1.json":"4b19eda7cf4ce7dcd9c0940693577077d6a6faf3b18912b03178164613cac7a3","results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json":"8b4888a62052f8d9f0018e907c665d30a72c4c7c29081763db0f4d46904ec3a2","results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz":"71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd"},"integration_source_sha256":{"src/global_hydrology/experiments/daily_camels_native_knet_io.py":"2db6c61276b4d2900321e58d04d639fecaf3957d557c4c5b5b4121fd01c3e918","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py":"bd70eadf8d2be311b5e623517e75f7d7b815dbde18603a219f6b1e3085223d52","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py":"2fd983a4af52ee02fd677e8ee51894d8208b836d6e9759b3ff2ac3a82c89ea69"},"numerical_frameworks_imported_by_entry":0,"phase":"train","process_id":55472,"python_version":"3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]","recorded_at_utc":"2026-08-27T08:27:36.399614Z","reserved_evaluation_period_access_authorized":false,"run_directory":"/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37","run_directory_absent":true,"run_parent":"/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs","schema_version":"daily_camels_ukf_knet_parity_preflight_v1","scientific_claim_allowed":true,"status":"PREFLIGHT_PASS"}
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/preflight.json
+SEQ53_A37_A800_CONTENT_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/result_summary.json
+SEQ53_A37_A800_CONTENT_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/completion.marker.json
+SEQ53_A37_A800_CONTENT_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/feature_diagnostics.json
+SEQ53_A37_A800_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/replay_evidence.json size=95195 sha256=512760960869b5ab6fb32d1e601f32ab94fbe0519cfaf1eb1a59f7bae1b72fc0
+{"access_ledger":{"archive_member_reads":{"base_observation_variance":1,"dates_ns":1,"forcing":1,"observations":1,"parameters":1,"state_dimension":1},"date_requests":1,"evaluation_array_reads":0,"evaluation_metric_count":0,"evaluation_output_count":0,"evaluation_prediction_count":0},"covariance_roles":{"covariances_are_identical":false,"interpretation":"UKF initial state uncertainty and KalmanNet recurrent hidden-state prior are model-specific quantities; parity does not require equality","knet_hidden_prior_state_covariance_diagonal":[10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0],"ukf_initial_covariance_diagonal":[0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001]},"diagnostic_limitation":"physical_parameters_were_calibrated_on_the_complete_development_period_so_this_is_a_conditional_filter_comparison_not_an_independent_validation","experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37","identity_sha256":"26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4","initialization":{"backward_time_leakage":false,"mode":"causal_shared_spinup","scientific_claim_allowed":true,"used_archive_members":["base_observation_variance","dates_ns","forcing","observations","parameters","state_dimension"]},"recovery_reference":{"actual_checkpoint_objective_728":0.05968865108183612,"actual_nse_by_lead_712":{"1":0.9742508181649119,"2":0.9557071265978458,"3":0.9373297632941142},"candidate_for_new_frozen_causal_config":false,"expected_checkpoint_objective_728":0.05968865108185378,"expected_nse_by_lead_712":{"1":0.9742508181649051,"2":0.9557071265978331,"3":0.9373297632940933},"objective_match":true,"reference_was_frozen_before_replay":true},"schema_version":"daily_camels_ukf_knet_parity_replay_v1","scientific_claim_allowed":true,"windows":{"diagnostic":{"first_date":"2006-10-01","global_end_exclusive":2685,"global_start_index":2557,"identical_ukf_knet_geometry":true,"last_date":"2007-02-05","ukf":{"checkpoint_objective_without_warmup":0.01619187969339124,"gate_objective_after_16_day_warmup":0.006516726233632149,"geometry":{"1":{"finite_mask_sha256":"de8902f80d8b686ff2a2895e75711583ffab50ee669d3405b1a1bd8068b3a8ff","finite_target_count":109,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124],"target_indices_global":[2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682],"target_indices_local":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125]},"2":{"finite_mask_sha256":"de8902f80d8b686ff2a2895e75711583ffab50ee669d3405b1a1bd8068b3a8ff","finite_target_count":109,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124],"target_indices_global":[2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683],"target_indices_local":[18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126]},"3":{"finite_mask_sha256":"de8902f80d8b686ff2a2895e75711583ffab50ee669d3405b1a1bd8068b3a8ff","finite_target_count":109,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124],"target_indices_global":[2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684],"target_indices_local":[19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127]}},"maximum_open_loop_difference":null,"metadata":{"initialization_mode":"causal_shared_spinup","method":"backpropagation","selection_path":"/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json","selection_validation_objective":0.06461047253890023,"theta_log":[-2.627609234025056,-2.3025850929940455,-2.3025850929940455,-2.3025850929940455,-2.3025850929940455,-10.112338321601335,-10.13456896974021,-10.220020780595597,-10.942372197595661,-10.153347546528929,-10.177167253070422,-10.240821728786798,-10.891903516123099,-11.512925464970229,-11.512925464970229,-11.512925464970229,-11.512925464970229,-11.512925464970229,-4.65209386601331]},"mse_by_lead_after_warmup":{"1":0.004731895861296457,"2":0.00649905178379606,"3":0.008319231055803929},"nse_by_lead_after_warmup":{"1":-1.3346845018769438,"2":-2.189951577402999,"3":-3.0636495262033456},"target_count_by_lead_after_warmup":{"1":109,"2":109,"3":109},"target_count_by_lead_without_warmup":{"1":125,"2":125,"3":125}},"zero_gain_knet":{"checkpoint_objective_without_warmup":0.08465721408032256,"gate_objective_after_16_day_warmup":0.07119784542424444,"geometry":{"1":{"finite_mask_sha256":"de8902f80d8b686ff2a2895e75711583ffab50ee669d3405b1a1bd8068b3a8ff","finite_target_count":109,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124],"target_indices_global":[2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682],"target_indices_local":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125]},"2":{"finite_mask_sha256":"de8902f80d8b686ff2a2895e75711583ffab50ee669d3405b1a1bd8068b3a8ff","finite_target_count":109,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124],"target_indices_global":[2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683],"target_indices_local":[18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126]},"3":{"finite_mask_sha256":"de8902f80d8b686ff2a2895e75711583ffab50ee669d3405b1a1bd8068b3a8ff","finite_target_count":109,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124],"target_indices_global":[2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684],"target_indices_local":[19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127]}},"maximum_open_loop_difference":0.0,"metadata":{"initialization_mode":"causal_shared_spinup","state_dimension":18,"zero_gain":true},"mse_by_lead_after_warmup":{"1":0.07221938472715361,"2":0.07123764641177814,"3":0.07013650513380154},"nse_by_lead_after_warmup":{"1":-34.632542050783414,"2":-33.96581502986524,"3":-33.259197027313384},"target_count_by_lead_after_warmup":{"1":109,"2":109,"3":109},"target_count_by_lead_without_warmup":{"1":125,"2":125,"3":125}}},"recovery":{"first_date":"2006-10-01","global_end_exclusive":3288,"global_start_index":2557,"identical_ukf_knet_geometry":true,"last_date":"2008-09-30","ukf":{"checkpoint_objective_without_warmup":0.05968865108183612,"gate_objective_after_16_day_warmup":0.05918493846259648,"geometry":{"1":{"finite_mask_sha256":"cd3f4a42e3998bb2c6ddd3d22546b7e6bd8f07901f5e9f2fdc3815034fa85c55","finite_target_count":712,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727],"target_indices_global":[2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284,3285],"target_indices_local":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727,728]},"2":{"finite_mask_sha256":"cd3f4a42e3998bb2c6ddd3d22546b7e6bd8f07901f5e9f2fdc3815034fa85c55","finite_target_count":712,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727],"target_indices_global":[2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284,3285,3286],"target_indices_local":[18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727,728,729]},"3":{"finite_mask_sha256":"cd3f4a42e3998bb2c6ddd3d22546b7e6bd8f07901f5e9f2fdc3815034fa85c55","finite_target_count":712,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727],"target_indices_global":[2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284,3285,3286,3287],"target_indices_local":[19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727,728,729,730]}},"maximum_open_loop_difference":null,"metadata":{"initialization_mode":"causal_shared_spinup","method":"backpropagation","selection_path":"/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/source_A37_a800_probe1_seq49/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json","selection_validation_objective":0.06461047253890023,"theta_log":[-2.627609234025056,-2.3025850929940455,-2.3025850929940455,-2.3025850929940455,-2.3025850929940455,-10.112338321601335,-10.13456896974021,-10.220020780595597,-10.942372197595661,-10.153347546528929,-10.177167253070422,-10.240821728786798,-10.891903516123099,-11.512925464970229,-11.512925464970229,-11.512925464970229,-11.512925464970229,-11.512925464970229,-4.65209386601331]},"mse_by_lead_after_warmup":{"1":0.034448973049994815,"2":0.059258616240281205,"3":0.08384722609751341},"nse_by_lead_after_warmup":{"1":0.9742508181649119,"2":0.9557071265978458,"3":0.9373297632941142},"target_count_by_lead_after_warmup":{"1":712,"2":712,"3":712},"target_count_by_lead_without_warmup":{"1":728,"2":728,"3":728}},"zero_gain_knet":{"checkpoint_objective_without_warmup":0.4030707229457147,"gate_objective_after_16_day_warmup":0.4081655894602285,"geometry":{"1":{"finite_mask_sha256":"cd3f4a42e3998bb2c6ddd3d22546b7e6bd8f07901f5e9f2fdc3815034fa85c55","finite_target_count":712,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727],"target_indices_global":[2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284,3285],"target_indices_local":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727,728]},"2":{"finite_mask_sha256":"cd3f4a42e3998bb2c6ddd3d22546b7e6bd8f07901f5e9f2fdc3815034fa85c55","finite_target_count":712,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727],"target_indices_global":[2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284,3285,3286],"target_indices_local":[18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727,728,729]},"3":{"finite_mask_sha256":"cd3f4a42e3998bb2c6ddd3d22546b7e6bd8f07901f5e9f2fdc3815034fa85c55","finite_target_count":712,"issue_indices_global":[2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284],"issue_indices_local":[16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727],"target_indices_global":[2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600,2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660,2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2733,2734,2735,2736,2737,2738,2739,2740,2741,2742,2743,2744,2745,2746,2747,2748,2749,2750,2751,2752,2753,2754,2755,2756,2757,2758,2759,2760,2761,2762,2763,2764,2765,2766,2767,2768,2769,2770,2771,2772,2773,2774,2775,2776,2777,2778,2779,2780,2781,2782,2783,2784,2785,2786,2787,2788,2789,2790,2791,2792,2793,2794,2795,2796,2797,2798,2799,2800,2801,2802,2803,2804,2805,2806,2807,2808,2809,2810,2811,2812,2813,2814,2815,2816,2817,2818,2819,2820,2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880,2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940,2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060,3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120,3121,3122,3123,3124,3125,3126,3127,3128,3129,3130,3131,3132,3133,3134,3135,3136,3137,3138,3139,3140,3141,3142,3143,3144,3145,3146,3147,3148,3149,3150,3151,3152,3153,3154,3155,3156,3157,3158,3159,3160,3161,3162,3163,3164,3165,3166,3167,3168,3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184,3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200,3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280,3281,3282,3283,3284,3285,3286,3287],"target_indices_local":[19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426,427,428,429,430,431,432,433,434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,491,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522,523,524,525,526,527,528,529,530,531,532,533,534,535,536,537,538,539,540,541,542,543,544,545,546,547,548,549,550,551,552,553,554,555,556,557,558,559,560,561,562,563,564,565,566,567,568,569,570,571,572,573,574,575,576,577,578,579,580,581,582,583,584,585,586,587,588,589,590,591,592,593,594,595,596,597,598,599,600,601,602,603,604,605,606,607,608,609,610,611,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,628,629,630,631,632,633,634,635,636,637,638,639,640,641,642,643,644,645,646,647,648,649,650,651,652,653,654,655,656,657,658,659,660,661,662,663,664,665,666,667,668,669,670,671,672,673,674,675,676,677,678,679,680,681,682,683,684,685,686,687,688,689,690,691,692,693,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,723,724,725,726,727,728,729,730]}},"maximum_open_loop_difference":0.0,"metadata":{"initialization_mode":"causal_shared_spinup","state_dimension":18,"zero_gain":true},"mse_by_lead_after_warmup":{"1":0.4078450283792944,"2":0.40818595627060517,"3":0.4084657837307858},"nse_by_lead_after_warmup":{"1":0.6951527181656671,"2":0.6949012644452977,"3":0.6946989358611273},"target_count_by_lead_after_warmup":{"1":712,"2":712,"3":712},"target_count_by_lead_without_warmup":{"1":728,"2":728,"3":728}}}}}
+SEQ53_A37_A800_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/replay_evidence.json
+SEQ53_A37_A800_CONTENT_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/manifest.sha256.json
+SEQ53_A37_A800_TERMINAL_COLLECTED experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37 execution_attempt_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_A800_TRAIN1_SEQ51 job_id=215207 reserved_named_path_count=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:54:14+0800
