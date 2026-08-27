@@ -1,0 +1,31 @@
+### channel=nature1st-attr-swap seq=100
+### host=login4
+### started=2026-08-27T15:55:08+0800
+### ---------- output ----------
+wallclock 2026-08-27 15:55:08 +0800
+=== A. armJ NOW ===
+     JOBID                   NAME     STATE       TIME  NODELIST           NODELIST(REASON)           START_TIME
+    215195     q_armJ_china_min15   PENDING       0:00                           (Priority)  2026-08-29T17:42:57
+     JobID        State     Elapsed  NodeList 
+---------- ------------ ----------- --------- 
+    215195      PENDING    00:00:00 None ass+ 
+=== B. WHOLE hgpu2p QUEUE (is anything ahead of me?) ===
+     JOBID      USER     STATE       TIME  NODELIST   NODELIST(REASON)   PRIORITY
+    215195    sunyiq   PENDING       0:00                   (Priority)     202884
+-- gpu allocation per hgpu2p node --
+=== C. GPU MODEL WITHOUT SUBMITTING: any record on shared filesystem? ===
+-- old node-test outputs that may name the card --
+/data1/home/sunyiq/hpc_mailbox/outbox/slurm_201451.out
+-- any nvidia-smi capture anywhere in my logs --
+  (nothing in arm logs)
+=== D. DOES SLURM RECORD A GPU TYPE ANYWHERE? ===
+AccountingStorageTRES   = cpu,mem,energy,node,billing,fs/disk,vmem,pages
+GresTypes               = gpu,dcu
+     JobID  NodeList                                                    AllocTRES 
+---------- ---------        ----------------------------------------------------- 
+    206175    ngu008                                       billing=4,cpu=4,node=1 
+    211317    ngu011                                       billing=4,cpu=4,node=1 
+=== END seq=100 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T15:55:11+0800
