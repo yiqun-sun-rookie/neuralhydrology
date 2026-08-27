@@ -1,0 +1,37 @@
+### channel=nature1st-attr-swap seq=104
+### host=login4
+### started=2026-08-27T16:56:28+0800
+### ---------- output ----------
+=== A. INSTALL ===
+  hpc_train_q_armJ_s43.sbatch                  cbf8ed5c8f1550c2  expect cbf8ed5c8f1550c2
+  hpc_train_q_armJ_s44.sbatch                  1f3dba3695439a6d  expect 1f3dba3695439a6d
+=== B. SANITY: seeds and output dirs distinct, attribute files shared ===
+#SBATCH -J q_armJ_china_min15_s43
+#SBATCH -p hgpu2p,hgpu2,hgpu4
+# Identical attribute files, identical frozen contract, ONLY --seed differs.
+srun python -u scripts/chain_train_q_attrset.py --static data/interim/stage_static_feature_stats_armJ.json --meta data/processed/station_meta/trainable_mountain_stations_armJ.csv --output_dir models/q_lstm_armJ_hpc_s43 --seed 43 --epochs 40 --num_workers 4
+#SBATCH -J q_armJ_china_min15_s44
+#SBATCH -p hgpu2p,hgpu2,hgpu4
+# Identical attribute files, identical frozen contract, ONLY --seed differs.
+srun python -u scripts/chain_train_q_attrset.py --static data/interim/stage_static_feature_stats_armJ.json --meta data/processed/station_meta/trainable_mountain_stations_armJ.csv --output_dir models/q_lstm_armJ_hpc_s44 --seed 44 --epochs 40 --num_workers 4
+=== C. armJ SEED 42 PROGRESS ===
+     JOBID     STATE  PARTITION       TIME  NODELIST
+    215195   RUNNING      hgpu2      46:08    ngu009
+  log 2133 bytes, touched 2026-08-27 16:42:19
+  [guard] train: 15 attributes, 2908 stations in meta -- attribute set verified
+  [guard] val: 15 attributes, 2908 stations in meta -- attribute set verified
+Epoch 1: loss=1.0728  val_median_NSE(phys)=0.3261  val_RMSE_qspec=0.0962  NSE>0=0.78  lr=5.00e-04
+=== D. IDLE GPU CAPACITY (for the parallel seed runs) ===
+ PARTITION    STATE  NODES NODELIST
+     hgpu4    down*      1 ngu103
+     hgpu4      mix      2 ngu[102,104]
+     hgpu4     idle      1 ngu101
+     hgpu2      mix      1 ngu009
+     hgpu2    alloc      1 ngu003
+    hgpu2p    down*      1 ngu002
+    hgpu2p      mix      7 ngu[001,004,006-008,010-011]
+    hgpu2p    alloc      1 ngu005
+=== END seq=104 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:56:28+0800
