@@ -1,0 +1,79 @@
+### channel=nature1st-attr-swap seq=108
+### host=login4
+### started=2026-08-28T02:29:53+0800
+### ---------- output ----------
+pwd=/data1/home/sunyiq/nature_1st  date=2026-08-28 02:29:53
+=== A. QUEUE / ACCOUNTING (all armJ seeds) ===
+--- squeue ---
+      JOBID                       NAME     STATE       TIME  NODELIST
+--- sacct ---
+      JobID                    JobName        State ExitCode     Elapsed  NodeList 
+     215195         q_armJ_china_min15    COMPLETED      0:0    09:15:50    ngu009 
+=== B. LOGS ===
+--- armJ_china_min15-215195.out
+    bytes=6030  mtime=2026-08-28 01:25:44.000000000 +0800
+    [guard] (MUST say 15 attributes):
+        [guard] train: 15 attributes, 2908 stations in meta -- attribute set verified
+        [guard] val: 15 attributes, 2908 stations in meta -- attribute set verified
+    [errors]:
+      PyTorch 2.4.0, CUDA True
+    [progress, last 8]:
+      Epoch 14: loss=0.3830  val_median_NSE(phys)=0.6072  val_RMSE_qspec=0.0769  NSE>0=0.85  lr=2.50e-04
+      Epoch 15: loss=0.3750  val_median_NSE(phys)=0.6314  val_RMSE_qspec=0.0756  NSE>0=0.86  lr=2.50e-04
+      Epoch 16: loss=0.3649  val_median_NSE(phys)=0.6162  val_RMSE_qspec=0.0752  NSE>0=0.86  lr=2.50e-04
+      Epoch 17: loss=0.3594  val_median_NSE(phys)=0.6173  val_RMSE_qspec=0.0761  NSE>0=0.86  lr=2.50e-04
+      Epoch 18: loss=0.3525  val_median_NSE(phys)=0.6233  val_RMSE_qspec=0.0756  NSE>0=0.86  lr=2.50e-04
+      Epoch 19: loss=0.3306  val_median_NSE(phys)=0.6240  val_RMSE_qspec=0.0755  NSE>0=0.86  lr=1.25e-04
+      Epoch 20: loss=0.3214  val_median_NSE(phys)=0.6288  val_RMSE_qspec=0.0749  NSE>0=0.86  lr=1.25e-04
+      Done. Best val median NSE: 0.6314 at epoch 15
+    [Done. marker]:
+      Done_lines=1
+=== C. OUTPUT DIRS / COMPLETION ===
+  s42: dir EXISTS
+    eval_val_per_station.csv PRESENT (35136 bytes, 2026-08-28 01:25:44.000000000 +0800)
+    best_metrics.json [INTERIM unless Done./COMPLETED]:
+      {  "epoch": 15,  "train_loss": 0.3749900932956119,  "median_nse": 0.6314108813700723,  "mean_nse": -124.31066207175442,  "p25_nse": 0.3190332768622069,  "p75_nse": 0.7538805228823497,  "frac_nse_gt0": 0.8584686774941995,  "global_rmse_qspec_mmph": 0.07560789877163904,  "n_stations": 431,  "space": "physical_qcms_per_station_NSE"}
+
+  s43: no output dir
+  s44: no output dir
+=== D. PAIRED ANALYSIS (only if armJ eval csv exists) ===
+
+#### armJ seed 42: n=431  median_NSE=0.6314
+  vs armC  best-US-8  (paired n=431)
+    median armJ=0.6314  median base=0.6466  diff_of_medians=-0.0152
+    PAIRED median diff = -0.0098   95%CI [-0.0227, +0.0057]
+    worse=228  better=203   drop>0.10 = 20.9%   gain>0.10 = 17.6%
+      stratum           arid  n= 178  paired_med=+0.0149  drop>0.10=24.7%
+      stratum          humid  n=  18  paired_med=-0.0263  drop>0.10=16.7%
+      stratum   intermediate  n= 208  paired_med=-0.0222  drop>0.10=16.8%
+      stratum           snow  n=  27  paired_med=-0.0024  drop>0.10=29.6%
+  vs armI  16-item  (paired n=431)
+    median armJ=0.6314  median base=0.6383  diff_of_medians=-0.0069
+    PAIRED median diff = -0.0054   95%CI [-0.0177, +0.0032]
+    worse=228  better=203   drop>0.10 = 22.7%   gain>0.10 = 14.6%
+      stratum           arid  n= 178  paired_med=-0.0209  drop>0.10=27.0%
+      stratum          humid  n=  18  paired_med=-0.0024  drop>0.10=22.2%
+      stratum   intermediate  n= 208  paired_med=-0.0037  drop>0.10=18.3%
+      stratum           snow  n=  27  paired_med=+0.0137  drop>0.10=29.6%
+  vs armG  (paired n=431)
+    median armJ=0.6314  median base=0.6299  diff_of_medians=+0.0015
+    PAIRED median diff = +0.0184   95%CI [+0.0109, +0.0325]
+    worse=172  better=259   drop>0.10 = 11.1%   gain>0.10 = 27.6%
+      stratum           arid  n= 178  paired_med=+0.0672  drop>0.10=11.2%
+      stratum          humid  n=  18  paired_med=+0.0096  drop>0.10=16.7%
+      stratum   intermediate  n= 208  paired_med=+0.0051  drop>0.10=9.1%
+      stratum           snow  n=  27  paired_med=+0.0076  drop>0.10=22.2%
+=== E. GPU CAPACITY ===
+ PARTITION    STATE  NODES             NODELIST
+     hgpu4    down*      1               ngu103
+     hgpu4      mix      2         ngu[102,104]
+     hgpu4     idle      1               ngu101
+     hgpu2      mix      1               ngu009
+     hgpu2    alloc      1               ngu003
+    hgpu2p    down*      1               ngu002
+    hgpu2p      mix      7 ngu[001,004,006-008,
+    hgpu2p    alloc      1               ngu005
+=== END seq=108 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T02:29:56+0800
