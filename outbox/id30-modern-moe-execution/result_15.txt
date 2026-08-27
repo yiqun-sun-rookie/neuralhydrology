@@ -1,0 +1,21 @@
+### channel=id30-modern-moe-execution seq=15
+### host=login4
+### started=2026-08-27T16:44:59+0800
+### ---------- output ----------
+=== PRESELECTION GATE STATUS ===
+2026-08-27T16:44:59+0800
+login4
+job_id=215205
+slurm_load_jobs error: Invalid job id specified
+215205|id30_gates|hgpu2|FAILED|1:0|00:00:03|ngu009|
+215205.batch|batch||FAILED|1:0|00:00:03|ngu009|1612K
+215205.extern|extern||COMPLETED|0:0|00:00:03|ngu009|1172K
+=== LOG TAILS ===
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/preselection-gates-215205.out
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/preselection-gates-215205.err
+/data1/home/sunyiq/miniconda3/envs/nh_final/etc/conda/activate.d/libblas_mkl_activate.sh: line 1: MKL_INTERFACE_LAYER: unbound variable
+=== RESOURCE REPORT SUMMARY ===
+NO_PROBE_REPORTS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:44:59+0800
