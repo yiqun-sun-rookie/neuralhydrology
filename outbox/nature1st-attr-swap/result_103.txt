@@ -1,0 +1,32 @@
+### channel=nature1st-attr-swap seq=103
+### host=login4
+### started=2026-08-27T16:09:54+0800
+### ---------- output ----------
+wallclock 2026-08-27 16:09:54 +0800
+=== A. BEFORE ===
+     JOBID                   NAME     STATE    PARTITION           START_TIME     NODELIST(REASON)
+    215195     q_armJ_china_min15   PENDING       hgpu2p  2026-08-29T17:42:57           (Priority)
+   JobState=PENDING Reason=Priority Dependency=(null)
+   Partition=hgpu2p AllocNode:Sid=login04:721
+   ReqNodeList=(null) ExcNodeList=ngu002
+=== B. WIDEN PARTITION LIST ===
+  update accepted
+=== C. AFTER (wait 30s for the scheduler to re-evaluate) ===
+     JOBID                   NAME     STATE    PARTITION       TIME  NODELIST         NODELIST(REASON)           START_TIME
+    215195     q_armJ_china_min15   RUNNING        hgpu2       0:04    ngu009                   ngu009  2026-08-27T16:10:20
+   JobState=RUNNING Reason=None Dependency=(null)
+   StartTime=2026-08-27T16:10:20 EndTime=2026-08-28T16:10:20 Deadline=N/A
+   Partition=hgpu2 AllocNode:Sid=login04:721
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=ngu009
+=== D. IF STILL PENDING, WAIT A BIT MORE ===
+  started at t=10s
+     JOBID     STATE    PARTITION       TIME  NODELIST         NODELIST(REASON)
+    215195   RUNNING        hgpu2       0:04    ngu009                   ngu009
+=== E. GUARD CHECK IF IT STARTED ===
+  log: /data1/home/sunyiq/nature_1st/logs/attr_swap/armJ_china_min15-215195.out (77 bytes)
+PyTorch 2.4.0, CUDA True
+=== END seq=103 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:10:24+0800
