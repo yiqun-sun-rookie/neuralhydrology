@@ -1,0 +1,19 @@
+### channel=id30-modern-moe-execution seq=9
+### host=login4
+### started=2026-08-27T16:20:51+0800
+### ---------- output ----------
+=== VERIFY SAFE-DATA GATE ===
+2026-08-27T16:20:51+0800
+login4
+expected_commit=e8d0131cc2cb627d8aee583510a8ceb998331aee
+actual_commit=e8d0131cc2cb627d8aee583510a8ceb998331aee
+SAFE_DATA_GATE_PASS
+=== SUBMIT PRESELECTION GATES ===
+215205
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215205       hgpu2p                   id30_gates  PENDING       0:00                     (Priority)
+=== COMPLETE ===
+2026-08-27T16:20:52+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:20:52+0800
