@@ -1,0 +1,32 @@
+### channel=id30-modern-moe-execution seq=3
+### host=login4
+### started=2026-08-27T15:25:02+0800
+### ---------- output ----------
+=== SAFE DATA JOB STATUS ===
+2026-08-27T15:25:02+0800
+login4
+job_id=215194
+slurm_load_jobs error: Invalid job id specified
+215194|id30_safe_data|hgpu2p|FAILED|1:0|00:00:42|ngu011
+215194.batch|batch||FAILED|1:0|00:00:42|ngu011
+215194.extern|extern||COMPLETED|0:0|00:00:42|ngu011
+=== LOG TAILS ===
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/prepare-track0-215194.out
+=== PRE-FLIGHT ===
+2026-08-27T15:16:37+08:00
+ngu011
+Python 3.11.13
+pyarrow 20.0.0
+torch 2.4.0
+=== FOCUSED TESTS ===
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/prepare-track0-215194.err
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python: No module named pytest
+=== PUBLISHED PRODUCTS ===
+ABSENT /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01
+ABSENT /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01
+ABSENT /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json
+ABSENT /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json
+ABSENT /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/_reports/track0_bundle_audit.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T15:25:02+0800
