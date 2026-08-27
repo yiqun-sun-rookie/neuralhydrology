@@ -1,0 +1,15 @@
+### channel=kalmannet-tukf24 seq=13
+### host=login4
+### started=2026-08-27T19:42:46+0800
+### ---------- output ----------
+=== INSTALL SEAL (corrected file-bytes hash) ===
+file sha 49f35e7d46995c4265f2efac76cda8c41930415236a927bd24af38890f881acf
+=== SINGLE UNSEALING: SBATCH BOTH READOUT ARRAYS ===
+Submitted batch job 215433
+Submitted batch job 215434
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+    215433_[0-107]   hcpu48y tukf24_r   sunyiq PD       0:00      1 (None)
+    215434_[0-107]   hcpu48y tukf24_r   sunyiq PD       0:00      1 (None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T19:42:46+0800
