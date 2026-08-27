@@ -6,7 +6,7 @@
     "held_out_target_scoring":  false,
     "local_graphics_processor_used":  false,
     "remote_root":  "/data1/home/sunyiq/zhenjiang_latent_da_20260827",
-    "source_file_count":  29,
+    "source_file_count":  22,
     "source_files":  [
                          {
                              "relative_path":  "docs/records/ZHENJIANG_LATENT_GRU_KALMANNET_HPC_SMOKE_V1_CONFIG.json",
@@ -45,8 +45,8 @@
                          },
                          {
                              "relative_path":  "scripts/hpc/zhenjiang_latent_gru_kalmannet_smoke_v1.slurm",
-                             "byte_count":  4090,
-                             "sha256":  "cf91ce9b3486f2b88d41cd0053f4adb80cb5b2e0ff7ab1a6ab457479e60a6f23"
+                             "byte_count":  4185,
+                             "sha256":  "2dd40703f14983b64455cc1e484d9e59c2348f158c6653b387c4ed9854187df0"
                          },
                          {
                              "relative_path":  "scripts/modeling/water_level_joint_encoder_decoder_v2.py",
@@ -92,41 +92,6 @@
                              "relative_path":  "scripts/modeling/zhenjiang_oyv_v1_data.py",
                              "byte_count":  20985,
                              "sha256":  "db928572ca8ea45bc531402b660b6e79599f609f6297f9c29e97217b7e981dc8"
-                         },
-                         {
-                             "relative_path":  "tests/test_zhenjiang_kalmannet_gain_adapter_v1.py",
-                             "byte_count":  6736,
-                             "sha256":  "86dadab05be9084062e9135b05ca5e3e816ecf0434383caee99cbaac8e57c69a"
-                         },
-                         {
-                             "relative_path":  "tests/test_zhenjiang_latent_gru_kalmannet_data_v1.py",
-                             "byte_count":  12354,
-                             "sha256":  "9f7fafb59528824397b63a789e643cc32c3f001721c33cb0b5642f72e5d79786"
-                         },
-                         {
-                             "relative_path":  "tests/test_zhenjiang_latent_gru_kalmannet_experiment_v1.py",
-                             "byte_count":  4094,
-                             "sha256":  "8a274c0f2a6911ce8d6618477c29fb47d0744636eb07fa56fbd6a8ad08fe00f7"
-                         },
-                         {
-                             "relative_path":  "tests/test_zhenjiang_latent_gru_kalmannet_fold_tide_v1.py",
-                             "byte_count":  6364,
-                             "sha256":  "f5dae6346a5dcfea74eb8bf9976e07532049468ea8cc8bf8c1e2a5e4360fd56c"
-                         },
-                         {
-                             "relative_path":  "tests/test_zhenjiang_latent_gru_kalmannet_runner_v1.py",
-                             "byte_count":  8038,
-                             "sha256":  "49af2401648d06f142ec12dfbe4e49aaa74e5b82c0afdc29ee31c48bda2dbd0a"
-                         },
-                         {
-                             "relative_path":  "tests/test_zhenjiang_latent_gru_kalmannet_training_v1.py",
-                             "byte_count":  8593,
-                             "sha256":  "59edfb97e2856ac0c61e75a4503eb27527c39d6a73b157c204d970251c0a7fe1"
-                         },
-                         {
-                             "relative_path":  "tests/test_zhenjiang_latent_gru_kalmannet_v1.py",
-                             "byte_count":  17759,
-                             "sha256":  "8fcdc6b3e4eac9174d62094bdb5586304af7ee11d098490f4ae33281914ccd85"
                          },
                          {
                              "relative_path":  "third_party/pytides/__init__.py",
