@@ -1,0 +1,141 @@
+### channel=zhenjiang-latent-da seq=28
+### host=login4
+### started=2026-08-27T14:38:29+0800
+### ---------- output ----------
+MONITOR_START 2026-08-27T14:38:29+0800
+SQUEUE
+slurm_load_jobs error: Invalid job id specified
+GPU_PARTITION_NODES
+ngu001|hgpu2p|mixed|gpu:2|none
+ngu002|hgpu2p|down*|gpu:2|Not responding
+ngu004|hgpu2p|mixed|gpu:2|none
+ngu005|hgpu2p|allocated|gpu:2|none
+ngu006|hgpu2p|mixed|gpu:2|none
+ngu007|hgpu2p|mixed|gpu:2|none
+ngu008|hgpu2p|mixed|gpu:2|none
+ngu010|hgpu2p|mixed|gpu:2|none
+ngu011|hgpu2p|mixed|gpu:2|none
+ngu101|hgpu4|idle|gpu:4|none
+ngu102|hgpu4|mixed|gpu:4|none
+ngu103|hgpu4|down*|gpu:4|Not responding
+ngu104|hgpu4|mixed|gpu:4|none
+ngu201|hgpu8|idle|gpu:8|none
+ngu202|hgpu8|mixed|gpu:8|none
+ngu203|hgpu8|mixed$|gpu:8|none
+GPU_QUEUE_HEAD
+215178|sunyiq|daily-knet-a37-probe|PENDING|hgpu2p|0:00|(Priority)
+202226_[0-119%4]|sunyiq|N22-eval-later|PENDING|hgpu4,hgpu8,hgpu2|0:00|(DependencyNeverSatisfied)
+202229|sunyiq|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202230|sunyiq|N22-agg-hyper|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202294|sunyiq|N22-export|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202315|sunyiq|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202507|sunyiq|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|0:00|(DependencyNeverSatisfied)
+202293|sunyiq|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|0:00|(JobHeldUser)
+202228_659|sunyiq|N22-hyper|RUNNING|hgpu4|2:31:54|ngu104
+211001_22|sunyiq|N22-relong|RUNNING|hgpu4|2:59:17|ngu102
+211001_21|sunyiq|N22-relong|RUNNING|hgpu4|1-08:09:22|ngu102
+PRIORITY
+Unable to find jobs matching user/id(s) specified
+SACCT
+215189|zlda-smoke01|hgpu4|COMPLETED|0:0|00:01:52|billing=4,cpu=4,node=1
+SCONTROL
+slurm_load_jobs error: Invalid job id specified
+LOGS
+LOG_FILE /data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.out bytes=7489 modified=2026-08-27 14:34:30.000000000 +0800
+    "device": "cuda:0",
+    "graphics_processor_capability": [
+      8,
+      6
+    ],
+    "graphics_processor_name": "NVIDIA A40",
+    "graphics_processor_total_memory_bytes": 47622258688,
+    "node_name": "ngu104",
+    "numpy_version": "2.3.3",
+    "pandas_version": "2.3.2",
+    "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17",
+    "python_version": "3.11.13",
+    "slurm_job_id": "215189",
+    "slurm_job_name": "zlda-smoke01",
+    "torch_version": "2.4.0"
+  },
+  "schema_version": 1,
+  "scientific_result": false,
+  "stage_one": {
+    "best_epoch": 1,
+    "best_validation_loss_m": 1.9684446454048157,
+    "completed_epochs": 1,
+    "total_training_batches": 2,
+    "total_validation_batches": 2
+  },
+  "stage_two": {
+    "best_epoch": 1,
+    "best_validation_loss_m": 1.9359247088432312,
+    "completed_epochs": 1,
+    "total_training_batches": 2,
+    "total_validation_batches": 2
+  },
+  "test_split_access": "forbidden",
+  "test_year": 2024,
+  "training_sample_count": 43733,
+  "training_years": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022
+  ],
+  "written_utc": "2026-08-27T06:34:12.912419+00:00"
+}
+{
+  "artifact_count": 9,
+  "experiment_id": "ZLDA-SMOKE-01",
+  "held_out_target_score_count": 0,
+  "verification_status": "passed"
+}
+[2026-08-27T14:34:29+0800] ZLDA-SMOKE-01 completed
+JobId=215189 JobName=zlda-smoke01
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:01:27 TimeLimit=00:20:00 TimeMin=N/A
+   SubmitTime=2026-08-27T14:17:23 EligibleTime=2026-08-27T14:17:23
+   AccrueTime=2026-08-27T14:17:23
+   StartTime=2026-08-27T14:33:03 EndTime=2026-08-27T14:53:03 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-27T14:33:03
+   Partition=hgpu4 AllocNode:Sid=login04:721
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=ngu104
+   BatchHost=ngu104
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/zhenjiang_latent_da_20260827/run/scripts/hpc/zhenjiang_latent_gru_kalmannet_smoke_v1.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.out
+   Power=
+   TresPerNode=gpu:1
+
+LOG_FILE /data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.err bytes=0 modified=2026-08-27 14:32:38.000000000 +0800
+RESULT_FILES
+ZLDA-SMOKE-01/completion_manifest.json|1809
+ZLDA-SMOKE-01/config_snapshot.json|1014
+ZLDA-SMOKE-01/fold_astronomical_tide/completion_manifest.json|562
+ZLDA-SMOKE-01/fold_astronomical_tide/fold_tide_metadata.json|6333
+ZLDA-SMOKE-01/fold_astronomical_tide/fold_tide_series.npz|586766
+ZLDA-SMOKE-01/registry_snapshot.json|1530
+ZLDA-SMOKE-01/run_identity.json|4963
+ZLDA-SMOKE-01/stage_one/best_backbone_state.pt|13088
+ZLDA-SMOKE-01/stage_one/training_history.csv|144
+ZLDA-SMOKE-01/stage_two/best_full_model_state.pt|8733713
+ZLDA-SMOKE-01/stage_two/training_history.csv|143
+MONITOR_END 2026-08-27T14:38:29+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T14:38:29+0800
