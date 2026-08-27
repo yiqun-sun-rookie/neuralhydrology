@@ -1,0 +1,23 @@
+### channel=id30-modern-moe-execution seq=16
+### host=login4
+### started=2026-08-27T16:52:24+0800
+### ---------- output ----------
+=== VERIFY CONTROLLED RETRY PRECONDITIONS ===
+2026-08-27T16:52:24+0800
+login4
+failed_job_id=215205 failed_state=FAILED
+expected_payload=1ce1de67779939db3fc408286de546cebe4adfc1acd0ed11d5faf6b63a0d2e6d
+actual_payload=1ce1de67779939db3fc408286de546cebe4adfc1acd0ed11d5faf6b63a0d2e6d
+expected_base=e8d0131cc2cb627d8aee583510a8ceb998331aee
+actual_base=e8d0131cc2cb627d8aee583510a8ceb998331aee
+=== INSTALL AND FREEZE V04 SHELL-COMPATIBILITY OVERLAY ===
+v04_commit=457d3ac08eb1f4afe1cb7e8d0d18f588646bfb41
+=== SUBMIT CONTROLLED PRESELECTION RETRY ===
+215254
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215254        hgpu2                   id30_gates  RUNNING    INVALID                         ngu009
+=== COMPLETE ===
+2026-08-27T16:52:28+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:52:28+0800
