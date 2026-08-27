@@ -1,0 +1,200 @@
+### channel=id30-modern-moe-execution seq=18
+### host=login4
+### started=2026-08-27T17:02:54+0800
+### ---------- output ----------
+=== PRESELECTION RETRY STATUS ===
+2026-08-27T17:02:54+0800
+login4
+job_id=215254
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+215254|id30_gates|hgpu2|FAILED|1:0|00:10:14|ngu009|
+215254.batch|batch||FAILED|1:0|00:10:14|ngu009|1270804K
+215254.extern|extern||COMPLETED|0:0|00:10:14|ngu009|1364K
+=== LOG TAILS ===
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/preselection-gates-215254.out
+=== COMPUTE NODE AND CUDA ===
+2026-08-27T16:52:56+0800
+ngu009
+NVIDIA GeForce RTX 3090, 24576 MiB, 535.104.05
+NVIDIA GeForce RTX 3090, 24576 MiB, 535.104.05
+torch 2.4.0
+cuda_device NVIDIA GeForce RTX 3090
+cuda_memory_bytes 25438126080
+=== STATIC AND CPU TECHNICAL GATES ===
+CONFIG AUDIT: PASS (4 runnable configs; M01 is gated on dense validation selection; no training launched)
+REMOTE_PYTEST_UNAVAILABLE_LOCAL_103_TEST_GATE_RETAINED
+2026-08-27 16:57:11,329: Logging to /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215254_2026_0827_1657_ep1/output.log initialized.
+2026-08-27 16:57:11,329: ### Folder structure created at /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215254_2026_0827_1657_ep1
+2026-08-27 16:57:11,329: ### Run configurations for modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215254
+2026-08-27 16:57:11,329: batch_size: 2
+2026-08-27 16:57:11,330: cache_validation_data: False
+2026-08-27 16:57:11,330: clip_gradient_norm: 1.0
+2026-08-27 16:57:11,330: data_dir: data/camels_us_track0_development_forcing_v01
+2026-08-27 16:57:11,330: dataset: camels_us_track0_bundle
+2026-08-27 16:57:11,330: device: cpu
+2026-08-27 16:57:11,330: dynamic_inputs: ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)']
+2026-08-27 16:57:11,330: dynamics_embedding: {'type': 'fc', 'hiddens': [32], 'activation': 'linear', 'dropout': 0.0}
+2026-08-27 16:57:11,330: epochs: 1
+2026-08-27 16:57:11,330: experiment_name: modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215254
+2026-08-27 16:57:11,330: forcings: ['maurer']
+2026-08-27 16:57:11,331: head: regression
+2026-08-27 16:57:11,331: learning_rate: {0: 0.001}
+2026-08-27 16:57:11,331: log_interval: 1
+2026-08-27 16:57:11,331: log_n_figures: 0
+2026-08-27 16:57:11,331: log_tensorboard: False
+2026-08-27 16:57:11,331: loss: NSE
+2026-08-27 16:57:11,331: max_updates_per_epoch: 1
+2026-08-27 16:57:11,331: metrics: []
+2026-08-27 16:57:11,331: model: modern_transformer
+2026-08-27 16:57:11,331: num_workers: 0
+2026-08-27 16:57:11,331: number_of_basins: 4
+2026-08-27 16:57:11,331: optimizer: AdamW
+2026-08-27 16:57:11,331: output_activation: linear
+2026-08-27 16:57:11,331: output_dropout: 0.0
+2026-08-27 16:57:11,332: predict_last_n: 1
+2026-08-27 16:57:11,332: regularization: []
+2026-08-27 16:57:11,332: run_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215254_2026_0827_1657_ep1
+2026-08-27 16:57:11,332: save_all_output: False
+2026-08-27 16:57:11,332: save_git_diff: False
+2026-08-27 16:57:11,332: save_train_data: False
+2026-08-27 16:57:11,332: save_validation_results: False
+2026-08-27 16:57:11,332: save_weights_every: 1
+2026-08-27 16:57:11,332: seed: 100
+2026-08-27 16:57:11,332: seq_length: 270
+2026-08-27 16:57:11,332: static_attributes: ['p_mean', 'pet_mean', 'aridity', 'p_seasonality', 'frac_snow', 'high_prec_freq', 'high_prec_dur', 'low_prec_freq', 'low_prec_dur', 'elev_mean', 'slope_mean', 'area_gages2', 'frac_forest', 'lai_max', 'lai_diff', 'gvf_max', 'gvf_diff', 'soil_depth_pelletier', 'soil_depth_statsgo', 'soil_porosity', 'soil_conductivity', 'max_water_content', 'sand_frac', 'silt_frac', 'clay_frac', 'carbonate_rocks_frac', 'geol_permeability']
+2026-08-27 16:57:11,332: statics_embedding: {'type': 'fc', 'hiddens': [32], 'activation': 'linear', 'dropout': 0.0}
+2026-08-27 16:57:11,332: target_variables: ['QObs(mm/d)']
+2026-08-27 16:57:11,332: track0_supervision_dir: data/camels_us_track0_supervision_v01
+2026-08-27 16:57:11,333: train_basin_file: src/modern_transformer_moe/configs/smoke/smoke_basins.txt
+2026-08-27 16:57:11,333: train_end_date: 2001-09-30 00:00:00
+2026-08-27 16:57:11,333: train_start_date: 1999-10-01 00:00:00
+2026-08-27 16:57:11,333: transformer_dim_feedforward: 256
+2026-08-27 16:57:11,333: transformer_dropout: 0.0
+2026-08-27 16:57:11,333: transformer_nheads: 4
+2026-08-27 16:57:11,333: transformer_nlayers: 2
+2026-08-27 16:57:11,333: validate_every: None
+2026-08-27 16:57:11,333: validation_basin_file: src/modern_transformer_moe/configs/smoke/smoke_basins.txt
+2026-08-27 16:57:11,333: validation_end_date: 2001-09-30 00:00:00
+2026-08-27 16:57:11,333: validation_start_date: 2000-10-01 00:00:00
+2026-08-27 16:57:11,333: verbose: 0
+2026-08-27 16:57:11,334: train_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215254_2026_0827_1657_ep1/train_data
+2026-08-27 16:57:11,334: img_log_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215254_2026_0827_1657_ep1/img_log
+2026-08-27 16:57:11,365: ### Device cpu will be used for training
+2026-08-27 16:57:15,478: Epoch 1 average loss: avg_loss: 0.16133, avg_total_loss: 0.16133
+dense: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215254_2026_0827_1657_ep1
+2026-08-27 16:58:03,623: Logging to /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215254_2026_0827_1658_ep1/output.log initialized.
+2026-08-27 16:58:03,624: ### Folder structure created at /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215254_2026_0827_1658_ep1
+2026-08-27 16:58:03,624: ### Run configurations for modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215254
+2026-08-27 16:58:03,624: batch_size: 2
+2026-08-27 16:58:03,624: cache_validation_data: False
+2026-08-27 16:58:03,624: clip_gradient_norm: 1.0
+2026-08-27 16:58:03,624: data_dir: data/camels_us_track0_development_forcing_v01
+2026-08-27 16:58:03,625: dataset: camels_us_track0_bundle
+2026-08-27 16:58:03,625: device: cpu
+2026-08-27 16:58:03,625: dynamic_inputs: ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)']
+2026-08-27 16:58:03,625: dynamics_embedding: {'type': 'fc', 'hiddens': [32], 'activation': 'linear', 'dropout': 0.0}
+2026-08-27 16:58:03,625: epochs: 1
+2026-08-27 16:58:03,625: experiment_name: modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215254
+2026-08-27 16:58:03,625: forcings: ['maurer']
+2026-08-27 16:58:03,625: head: regression
+2026-08-27 16:58:03,625: learning_rate: {0: 0.001}
+2026-08-27 16:58:03,625: log_interval: 1
+2026-08-27 16:58:03,626: log_n_figures: 0
+2026-08-27 16:58:03,626: log_tensorboard: False
+2026-08-27 16:58:03,626: loss: NSE
+2026-08-27 16:58:03,626: max_updates_per_epoch: 1
+2026-08-27 16:58:03,626: metrics: []
+2026-08-27 16:58:03,626: model: modern_transformer_moe
+2026-08-27 16:58:03,626: num_workers: 0
+2026-08-27 16:58:03,626: number_of_basins: 4
+2026-08-27 16:58:03,626: optimizer: AdamW
+2026-08-27 16:58:03,626: output_activation: linear
+2026-08-27 16:58:03,626: output_dropout: 0.0
+2026-08-27 16:58:03,627: predict_last_n: 1
+2026-08-27 16:58:03,627: regularization: [['moe_router', 0.01]]
+2026-08-27 16:58:03,627: run_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215254_2026_0827_1658_ep1
+2026-08-27 16:58:03,627: save_all_output: False
+2026-08-27 16:58:03,627: save_git_diff: False
+2026-08-27 16:58:03,627: save_train_data: False
+2026-08-27 16:58:03,627: save_validation_results: False
+2026-08-27 16:58:03,627: save_weights_every: 1
+2026-08-27 16:58:03,627: seed: 100
+2026-08-27 16:58:03,627: seq_length: 270
+2026-08-27 16:58:03,627: static_attributes: ['p_mean', 'pet_mean', 'aridity', 'p_seasonality', 'frac_snow', 'high_prec_freq', 'high_prec_dur', 'low_prec_freq', 'low_prec_dur', 'elev_mean', 'slope_mean', 'area_gages2', 'frac_forest', 'lai_max', 'lai_diff', 'gvf_max', 'gvf_diff', 'soil_depth_pelletier', 'soil_depth_statsgo', 'soil_porosity', 'soil_conductivity', 'max_water_content', 'sand_frac', 'silt_frac', 'clay_frac', 'carbonate_rocks_frac', 'geol_permeability']
+2026-08-27 16:58:03,628: statics_embedding: {'type': 'fc', 'hiddens': [32], 'activation': 'linear', 'dropout': 0.0}
+2026-08-27 16:58:03,628: target_variables: ['QObs(mm/d)']
+2026-08-27 16:58:03,628: track0_supervision_dir: data/camels_us_track0_supervision_v01
+2026-08-27 16:58:03,628: train_basin_file: src/modern_transformer_moe/configs/smoke/smoke_basins.txt
+2026-08-27 16:58:03,628: train_end_date: 2001-09-30 00:00:00
+2026-08-27 16:58:03,628: train_start_date: 1999-10-01 00:00:00
+2026-08-27 16:58:03,628: transformer_dim_feedforward: 256
+2026-08-27 16:58:03,628: transformer_dropout: 0.0
+2026-08-27 16:58:03,628: transformer_moe_first_layer: 1
+2026-08-27 16:58:03,628: transformer_moe_num_experts: 8
+2026-08-27 16:58:03,629: transformer_moe_routed_dim: 96
+2026-08-27 16:58:03,629: transformer_moe_router_jitter: 0.0
+2026-08-27 16:58:03,629: transformer_moe_shared_dim: 64
+2026-08-27 16:58:03,629: transformer_moe_top_k: 2
+2026-08-27 16:58:03,629: transformer_nheads: 4
+2026-08-27 16:58:03,629: transformer_nlayers: 2
+2026-08-27 16:58:03,629: validate_every: None
+2026-08-27 16:58:03,629: validation_basin_file: src/modern_transformer_moe/configs/smoke/smoke_basins.txt
+2026-08-27 16:58:03,629: validation_end_date: 2001-09-30 00:00:00
+2026-08-27 16:58:03,629: validation_start_date: 2000-10-01 00:00:00
+2026-08-27 16:58:03,629: verbose: 0
+2026-08-27 16:58:03,630: train_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215254_2026_0827_1658_ep1/train_data
+2026-08-27 16:58:03,630: img_log_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215254_2026_0827_1658_ep1/img_log
+2026-08-27 16:58:03,661: ### Device cpu will be used for training
+2026-08-27 16:58:08,190: Epoch 1 average loss: avg_loss: 0.15259, avg_moe_router: 1.16459, avg_total_loss: 0.16424
+moe: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215254_2026_0827_1658_ep1
+manifest: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215254/run_manifest.json
+{
+  "overall_status": "CPU_TECHNICAL_PASS_GPU_RESOURCE_GATE_NOT_RUN",
+  "report": "results/30_modern_transformer_moe/_reports/smoke_slurm215254.json"
+}
+=== FULL-SIZE ACTUAL-DATA GPU RESOURCE GATES ===
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/preselection-gates-215254.err
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/scripts/run_full_size_gpu_probe.py", line 363, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/scripts/run_full_size_gpu_probe.py", line 351, in main
+    report = run_probe(
+             ^^^^^^^^^^
+  File "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/scripts/run_full_size_gpu_probe.py", line 235, in run_probe
+    _atomic_json(report_path, report, create=True)
+  File "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/scripts/run_full_size_gpu_probe.py", line 61, in _atomic_json
+    json.dump(value, file, indent=2, sort_keys=True)
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/__init__.py", line 179, in dump
+    for chunk in iterable:
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 432, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type PosixPath is not JSON serializable
+=== RESOURCE REPORT SUMMARY ===
+Traceback (most recent call last):
+  File "<stdin>", line 12, in <module>
+  File "/data1/home/sunyiq/miniconda3/lib/python3.11/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/lib/python3.11/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/lib/python3.11/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 30 column 18 (char 617)
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-27T17:02:55+0800
