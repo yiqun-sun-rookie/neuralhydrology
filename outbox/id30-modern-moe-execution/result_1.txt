@@ -1,0 +1,53 @@
+### channel=id30-modern-moe-execution seq=1
+### host=login4
+### started=2026-08-27T14:42:01+0800
+### ---------- output ----------
+=== HOST AND RUNNER HEALTH ===
+2026-08-27T14:42:01+0800
+login4
+/data1/home/sunyiq/hpc_mailbox
+=== TARGET DIRECTORY ===
+TARGET_ABSENT
+=== DATA AND ENVIRONMENT ===
+MAURER_READY
+TRAINING_SOURCE_READY
+python 3.11.13
+pandas 2.3.2
+torch 2.4.0
+pyarrow True
+cuda False
+=== SCHEDULER ===
+hcpu48* up infinite 15 alloc$ (null)
+hcpu48* up infinite 16 down* (null)
+hcpu48* up infinite 20 alloc (null)
+hcpu48* up infinite 13 idle (null)
+hcpu48y up infinite 1 down$ (null)
+hcpu48y up infinite 1 maint (null)
+hcpu48y up infinite 2 down* (null)
+hcpu48y up infinite 2 mix (null)
+hcpu48y up infinite 6 idle (null)
+hgpu8 up infinite 1 mix$ gpu:8
+hgpu8 up infinite 1 mix gpu:8
+hgpu8 up infinite 1 idle gpu:8
+hgpu4 up infinite 1 down* gpu:4
+hgpu4 up infinite 2 mix gpu:4
+hgpu4 up infinite 1 idle gpu:4
+hgpu2 up infinite 1 alloc gpu:2
+hgpu2 up infinite 1 idle gpu:2
+hgpu2p up infinite 1 down* gpu:2
+hgpu2p up infinite 7 mix gpu:2
+hgpu2p up infinite 1 alloc gpu:2
+215178 hgpu2p daily-knet-a37-probe PENDING 0:00 (Priority)
+202226_[0-119%4] hgpu4,hgpu8,hgpu2 N22-eval-later PENDING 0:00 (DependencyNeverSatisfied)
+202229 hgpu4,hgpu8,hgpu2 N22-agg-eval PENDING 0:00 (Dependency)
+202230 hgpu4,hgpu8,hgpu2 N22-agg-hyper PENDING 0:00 (Dependency)
+202294 hgpu4,hgpu8,hgpu2 N22-export PENDING 0:00 (Dependency)
+202315 hgpu4,hgpu8,hgpu2 N22-gate PENDING 0:00 (Dependency)
+202507 hgpu4,hgpu8,hgpu2 N22-mask-iso-531 PENDING 0:00 (DependencyNeverSatisfied)
+202293 hgpu4,hgpu8,hgpu2 N22-manifest PENDING 0:00 (JobHeldUser)
+202228_659 hgpu4 N22-hyper RUNNING 2:35:55 ngu104
+211001_22 hgpu4 N22-relong RUNNING 3:03:18 ngu102
+211001_21 hgpu4 N22-relong RUNNING 1-08:13:23 ngu102
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T14:42:30+0800
