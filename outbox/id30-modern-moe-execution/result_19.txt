@@ -1,0 +1,24 @@
+### channel=id30-modern-moe-execution seq=19
+### host=login4
+### started=2026-08-27T17:08:37+0800
+### ---------- output ----------
+=== VERIFY SECOND CONTROLLED RETRY PRECONDITIONS ===
+2026-08-27T17:08:37+0800
+login4
+failed_job_id=215254 failed_state=FAILED
+preserved_failed_report=617 9b758f9e65e93e6cdeab90cf5074aee6eeae5ecc54d8d99cbc1fa4586aee2fe3 /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/_gpu_resource_probes/id30_B01_s100_slurm215254/probe_report.json
+expected_payload=0fe843d535fad7ab7a471b3ef38a7a1e5ec01982675965b19231840308722583
+actual_payload=0fe843d535fad7ab7a471b3ef38a7a1e5ec01982675965b19231840308722583
+expected_base=457d3ac08eb1f4afe1cb7e8d0d18f588646bfb41
+actual_base=457d3ac08eb1f4afe1cb7e8d0d18f588646bfb41
+=== INSTALL AND FREEZE V05 PROBE-JSON OVERLAY ===
+v05_commit=230a81f3f6c59e9c680263ec2bec586f0195cac1
+=== SUBMIT SECOND CONTROLLED PRESELECTION RETRY ===
+215262
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215262        hgpu2                   id30_gates  RUNNING    INVALID                         ngu009
+=== COMPLETE ===
+2026-08-27T17:08:40+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T17:08:40+0800
