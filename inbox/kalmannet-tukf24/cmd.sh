@@ -1,22 +1,21 @@
 #!/bin/bash
 set -o pipefail
 ROOT=/data1/home/sunyiq/kalmannet_tukf24_20260827
-echo "=== REDEPLOY v2 ==="
-sha256sum payload/kalmannet-tukf24/tukf24_hpc_payload_v2.tar.gz
-rm -rf $ROOT/bundle $ROOT/slurm $ROOT/bundle_manifest.sha256.json
-tar -xzf payload/kalmannet-tukf24/tukf24_hpc_payload_v2.tar.gz -C $ROOT
-echo "=== VERIFY MANIFEST v2 ==="
+echo "=== JOB STATE ==="
+sacct -j 215263 --format=JobID,State,Elapsed,ExitCode 2>/dev/null | head -6 || true
+echo "=== ANCHOR LOG TAIL ==="
+tail -3 $ROOT/logs/tukf24_anchor_215263*.out 2>/dev/null || true
+echo "=== ANCHOR RECORDS ==="
 python3 - <<'PYEOF'
-import hashlib, json
+import json, glob
 root = "/data1/home/sunyiq/kalmannet_tukf24_20260827"
-manifest = json.load(open(f"{root}/bundle_manifest.sha256.json"))
-bad = 0
-for rel, sha in manifest.items():
-    actual = hashlib.sha256(open(f"{root}/{rel}", "rb").read()).hexdigest()
-    if actual != sha:
-        print("MISMATCH", rel); bad += 1
-print(f"manifest_files={len(manifest)} mismatches={bad}")
-raise SystemExit(1 if bad else 0)
+files = sorted(glob.glob(f"{root}/results/anchor/*.json"))
+worst = 0.0; fails = 0
+for f in files:
+    d = json.load(open(f))
+    delta = d["anchor_delta"]; worst = max(worst, delta)
+    ok = delta <= d["tolerance"]
+    fails += 0 if ok else 1
+    print(f'{d["basin_id"]} {delta:.6e} {"OK" if ok else "FAIL"}')
+print(f"basins={len(files)} fails={fails} worst={worst:.6e}")
 PYEOF
-echo "=== SBATCH ANCHOR GATE v2 ==="
-cd $ROOT && sbatch $ROOT/slurm/tukf24_anchor.slurm
