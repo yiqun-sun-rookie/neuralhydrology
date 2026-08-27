@@ -21,7 +21,7 @@ do
   echo "resolved=$(readlink -f "$root" 2>/dev/null || echo unresolved)"
   echo "epoch030_checkpoint_count=$(find "$root" -maxdepth 4 -type f -name 'model_epoch030.pt' 2>/dev/null | wc -l)"
   echo "config_snapshot_count=$(find "$root" -maxdepth 4 -type f -name 'config.yml' 2>/dev/null | wc -l)"
-  echo "scaler_count=$(find "$root" -maxdepth 4 -type f -name 'train_data/train_data_scaler.yml' 2>/dev/null | wc -l)"
+  echo "scaler_count=$(find "$root" -maxdepth 4 -type f -path '*/train_data/train_data_scaler.yml' 2>/dev/null | wc -l)"
   echo "validation_result_pickle_count=$(find "$root" -maxdepth 6 -type f -name 'validation_results.p' 2>/dev/null | wc -l)"
   echo "test_result_pickle_count=$(find "$root" -maxdepth 6 -type f -name 'test_results.p' 2>/dev/null | wc -l)"
   find "$root" -maxdepth 4 -type f -name 'model_epoch030.pt' -print 2>/dev/null | sort | while IFS= read -r f

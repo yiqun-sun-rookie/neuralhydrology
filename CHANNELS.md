@@ -46,6 +46,7 @@ outbox/<channel>/result_<seq>.txt   结果
 | `zhenjiang-latent-da` | 镇江六站共享抽象潜在状态门控循环单元与 KalmanNet 数据同化：独立部署、烟测和后续冻结训练 | 2026-08-27 | 独立落点 `/data1/home/sunyiq/zhenjiang_latent_da_20260827`；先只读探测与短时烟测，不读取留出年份目标作模型选择，不碰 `zhenjiang_oyv_v1` 既有结果、`~/neuralhydrology`、其他通道或其他实验 |
 | `id30-modern-moe-audit` | CAMELS-US 现代因果 Transformer 与稀疏混合专家实验的远程数据和既有模型只读盘点 | 2026-08-27 | 只读检查 `/data1/home/sunyiq/neuralhydrology` 的数据目录、配置、检查点、内部验证产物和作业状态；不读取封存评估答案，不改远程仓库，不提交训练，不碰其他通道或实验 |
 | `id30-modern-moe-audit-aux` | CAMELS-US 现代因果 Transformer 与稀疏混合专家远程盘点的辅助只读通道 | 2026-08-27 | 主通道在首次回执后静默延迟时，仅执行限深的目录和检查点查询；不读取结果内容，不改远程仓库，不提交训练，不碰其他通道或实验 |
+| `id30-modern-moe-checkpoints` | CAMELS-US 现代因果 Transformer 与稀疏混合专家盘点中的现有长短期记忆网络检查点核对 | 2026-08-27 | 两个已用盘点通道在首次回执后均未释放；本通道仅精确统计三个已发现结果根的检查点、配置和缩放器，不打开模型或结果载荷，不改远程仓库，不提交训练 |
 
 **迁移方法**（`default` → 自己的 channel，随时可做，不影响正在跑的）：
 
