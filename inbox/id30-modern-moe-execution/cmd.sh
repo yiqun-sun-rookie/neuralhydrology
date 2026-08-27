@@ -1,41 +1,26 @@
 #!/bin/bash
 set -eo pipefail
 
-TARGET=/data1/home/sunyiq/id30_modern_transformer_moe_20260827
-ROOT="$TARGET/repo"
-JOB_ID=$(tr -d '[:space:]' < "$TARGET/deployment/safe_data_job_id.txt")
-JOB_ID=${JOB_ID%%;*}
-
-echo "=== SAFE DATA JOB STATUS ==="
+echo "=== AVAILABLE PYTHON ENVIRONMENTS ==="
 date -Is
 hostname
-echo "job_id=$JOB_ID"
-squeue -j "$JOB_ID" -o '%.18i %.12P %.28j %.8T %.10M %.30R' || true
-sacct -j "$JOB_ID" --format=JobID,JobName,Partition,State,ExitCode,Elapsed,NodeList -n -P || true
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda env list
 
-echo "=== LOG TAILS ==="
-for log in "$ROOT"/logs/30_modern_transformer_moe/prepare-track0-"$JOB_ID".out \
-           "$ROOT"/logs/30_modern_transformer_moe/prepare-track0-"$JOB_ID".err; do
-  echo "--- $log"
-  if [ -f "$log" ]; then
-    tail -80 "$log"
-  else
-    echo "NOT_CREATED"
-  fi
+echo "=== DEPENDENCY MATRIX ==="
+for python_bin in /data1/home/sunyiq/miniconda3/bin/python /data1/home/sunyiq/miniconda3/envs/*/bin/python; do
+  [ -x "$python_bin" ] || continue
+  echo "--- $python_bin"
+  "$python_bin" - <<'PY'
+import importlib.util
+import platform
+
+names = ("pytest", "torch", "pandas", "pyarrow", "ruamel.yaml", "xarray")
+print("python", platform.python_version())
+for name in names:
+    print(name, bool(importlib.util.find_spec(name)))
+PY
 done
 
-echo "=== PUBLISHED PRODUCTS ==="
-for path in \
-  "$ROOT/data/camels_us_track0_development_forcing_v01" \
-  "$ROOT/data/camels_us_track0_supervision_v01" \
-  "$ROOT/src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json" \
-  "$ROOT/src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json" \
-  "$ROOT/results/30_modern_transformer_moe/_reports/track0_bundle_audit.json"; do
-  if [ -d "$path" ]; then
-    echo "DIRECTORY $(find "$path" -type f | wc -l) $path"
-  elif [ -f "$path" ]; then
-    echo "FILE $(stat -c '%s' "$path") $path"
-  else
-    echo "ABSENT $path"
-  fi
-done
+echo "=== LOCAL CONDA PACKAGE CACHE ==="
+find /data1/home/sunyiq/miniconda3/pkgs -maxdepth 1 -iname 'pytest-*' -printf '%f\n' | sort | tail -20 || true
