@@ -1,0 +1,44 @@
+### channel=id30-modern-moe-control seq=1
+### host=login4
+### started=2026-08-27T15:52:41+0800
+### ---------- output ----------
+=== CONTROL CHANNEL HEALTH ===
+2026-08-27T15:52:41+0800
+login4
+12251 bash /data1/home/sunyiq/.hpc_runner_active.sh
+23640 bash /data1/home/sunyiq/.hpc_runner_active.sh
+23706 bash /data1/home/sunyiq/.hpc_runner_active.sh
+=== MAIN CHANNEL STAGING ===
+/data1/home/sunyiq/.hpc_mailbox_staging/id30-modern-moe-execution/result_5.txt 950 bytes 2026-08-27 15:40:50.000000000 +0800
+### channel=id30-modern-moe-execution seq=5
+### host=login4
+### started=2026-08-27T15:40:49+0800
+### ---------- output ----------
+=== VERIFY V02 OVERLAY ===
+2026-08-27T15:40:49+0800
+login4
+expected_payload=dc4ce6fae2d50cb4a623d79144b981b6d58f5ecb0618aefcc0a797c7438dca29
+actual_payload=dc4ce6fae2d50cb4a623d79144b981b6d58f5ecb0618aefcc0a797c7438dca29
+expected_base=188ddf24671ce323ff2a4a27ddde561855ac3395
+actual_base=188ddf24671ce323ff2a4a27ddde561855ac3395
+=== INSTALL AND FREEZE V02 OVERLAY ===
+v02_commit=fe10599f888dd8a4e3e1e014b94f1ccf81ec0df1
+=== RESUBMIT CANDIDATE-SAFE DATA BUILD ===
+215197
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215197       hgpu2p               id30_safe_data  PENDING       0:00                     (Priority)
+=== COMPLETE ===
+2026-08-27T15:40:50+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T15:40:50+0800
+=== TARGET STATE ===
+Unknown option: -C
+usage: git [--version] [--help] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+### ---------- end ----------
+### exit_code=129
+### finished=2026-08-27T15:52:41+0800
