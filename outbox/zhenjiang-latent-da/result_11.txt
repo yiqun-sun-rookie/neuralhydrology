@@ -1,0 +1,27 @@
+### channel=zhenjiang-latent-da seq=11
+### host=login4
+### started=2026-08-27T14:23:22+0800
+### ---------- output ----------
+MONITOR_START 2026-08-27T14:23:22+0800
+SQUEUE
+215189|zlda-smoke01|PENDING|hgpu2p|0:00|(Priority)
+SACCT
+215189|zlda-smoke01|hgpu2p|PENDING|0:0|00:00:00|
+SCONTROL
+JobId=215189
+JobName=zlda-smoke01
+JobState=PENDING
+Reason=Priority
+RunTime=00:00:00
+TimeLimit=00:20:00
+NodeList=(null)
+StdErr=/data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.err
+StdOut=/data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.out
+LOGS
+LOG_MISSING /data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.out
+LOG_MISSING /data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.err
+RESULT_FILES
+MONITOR_END 2026-08-27T14:23:24+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T14:23:24+0800
