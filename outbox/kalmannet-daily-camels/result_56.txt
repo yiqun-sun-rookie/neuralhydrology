@@ -1,0 +1,945 @@
+### channel=kalmannet-daily-camels seq=56
+### host=login4
+### started=2026-08-27T18:16:00+0800
+### ---------- output ----------
+SEQ56_A37_A800_DIAGNOSTIC_SACCT_BEGIN
+JobIDRaw|JobName|User|Partition|State|ExitCode|Elapsed|NodeList|AllocCPUS|ReqMem|AllocTRES|ReqTRES|MaxRSS|MaxVMSize|AveRSS
+215268|daily-knet-a37-diag|sunyiq|hgpu8|FAILED|1:0|00:01:08|ngu202|4|0n|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1|||
+215268.batch|batch|||FAILED|1:0|00:01:08|ngu202|4|0n|cpu=4,mem=0,node=1||8268K|628540K|8268K
+215268.extern|extern|||COMPLETED|0:0|00:01:08|ngu202|4|0n|billing=4,cpu=4,node=1||1160K|185280K|1160K
+215268.0|python|||COMPLETED|0:0|00:00:01|ngu202|4|0n|cpu=4,mem=0,node=1||1384K|253900K|1384K
+215268.1|python|||FAILED|1:0|00:01:03|ngu202|4|0n|cpu=4,mem=0,node=1||765044K|10363908K|765044K
+SEQ56_A37_A800_DIAGNOSTIC_SACCT_END
+SEQ56_A37_A800_DIAGNOSTIC_FILE_INVENTORY_BEGIN
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/logs/diag-215268.err|size=2379|sha256=692378b6f5162e010ee432bd5357c62e4c1b1fe0db0b7f91ee1480fcad2e328a
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/logs/diag-215268.out|size=12335|sha256=1f7750dba6b328cb2b0c399c9d4d7d567e302cd3860d836adf7e9fc92c9b2e1f
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/events.jsonl|size=609|sha256=4bfb6524fb6a57b699011e38dec8ecec99811c1c4e92b259dc49c77546db905a
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/experiment_identity.json|size=3250|sha256=26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/failure.json|size=1062|sha256=2a658ab2e152d6b303ecaa69cefa2bce68b941956c40341410f7e45e62980484
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/owner_evidence.json|size=423|sha256=a037e3742493e2153747f65cda115c5a7c28c3e73132387aa3eb6139040e6ca2
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/preflight.json|size=5544|sha256=4c8c787ad9eafd0d249b3ac2525f4b0201e4fdb5ce67c919a1b9ffd0ad9b7e49
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/replay_evidence.json|size=95191|sha256=32f35b516b7bbcfe7cbe05d332da3103bd6ffc32f33f67d3468af6f3f99b968a
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/replay_predictions.npz|size=63953|sha256=6d9a8b910865ca923b31f67d496ba4aee058bb3fc27d2c529226f0bf275ec097
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/seq54_a37_a800_diag_wrapper.slurm|size=2340|sha256=db1942427e54d5470b986eaa793a76e52d7a5c6827b8d68c25282bed082ecf5b
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt|size=2244424|sha256=b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/bundle_manifest.json|size=14669|sha256=5bceec596643a9c384e08f473ad7fbd860d7aaabc054b46b8478d777eb371996
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/configs/daily_camels_knet_fixed_full_training_coverage_accumulation_a15.json|size=7956|sha256=ddfb3ad510ba1c6edfdf304a55c3d981a3d139a1cc91e104bf2bb26efe3fd763
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/configs/daily_camels_knet_fixed_full_training_coverage_epoch10_to40_resume_a37.json|size=9704|sha256=70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/configs/daily_camels_knet_fixed_full_training_coverage_forty_epoch_a17.json|size=8727|sha256=cd222bfcdf2b0e8c4c815aa917a4a23770c24120a390e8558ed4322bd064c742
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/configs/daily_camels_knet_fixed_full_training_coverage_ten_epoch_a16.json|size=8326|sha256=d8d3bf5275c1c509ce6591cd1c6d8c164e512f81e04d9ed1916262a2f3a5f22a
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/configs/daily_camels_knet_near_zero_stable_lr_strict_smoke_a13.json|size=6910|sha256=31b9a4207c483730249bb379f04d113bc0f6459f1390ba90b7a4121b46a65fe1
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/configs/daily_camels_knet_near_zero_strict_smoke_a12.json|size=6902|sha256=d951ba1fec7e1b337a8650f001281414f94443aa7947458983150ee7e207bf13
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/configs/daily_camels_knet_same_segment_post_step_diagnostic_a14.json|size=7062|sha256=8a0dcc965d3744de81ee39c797338ddae69144d6820d7bf713d9aa8ae4628d27
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/configs/daily_camels_ukf_knet_parity_causal_replay_dtype_repair_v3.json|size=5779|sha256=1272bc4d9ef3b494d54e31cb3341eedee741f29cc67c5cace5d1b2b693bfde41
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/configs/daily_camels_ukf_knet_parity_exact_replay_dtype_repair_v3.json|size=5712|sha256=7eea03913263c024b5bc9bec03e293de20cddff27346fff36087331292fd366f
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/configs/tukf06_full_diagonal_search_head_to_head_v1.json|size=9402|sha256=4b19eda7cf4ce7dcd9c0940693577077d6a6faf3b18912b03178164613cac7a3
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/hpc/daily_camels_ukf_knet_parity/preflight.py|size=51171|sha256=e57489f66a01b33640195ca9415baf8600f15e236044972e32aa7206a11e64c8
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/hpc/daily_camels_ukf_knet_parity/submit_probe_gpu.slurm|size=4006|sha256=4094e0c1480481c352d4e42cf5ae4e732e18323dd772f063033e2c25e2f2ede0
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/hpc/daily_camels_ukf_knet_parity/submit_replay_gpu.slurm|size=3793|sha256=381cdd7f323f67cad73a37eb9c2fbfcd0d77264fa1ace68abff5c854eeb36faf
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/hpc/daily_camels_ukf_knet_parity/submit_train_gpu.slurm|size=8909|sha256=c502c2c35ec8091c728978ce5ab2b7631271ac9fc83bec413f908c0d64e66a82
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/knet/dl/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/knet/dl/nn_kalman_clamp_5.py|size=32576|sha256=934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/knet/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json|size=12327|sha256=8b4888a62052f8d9f0018e907c665d30a72c4c7c29081763db0f4d46904ec3a2
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz|size=57411|sha256=71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/build_daily_camels_ukf_knet_parity_hpc_bundle.py|size=39524|sha256=997183ad92c4de6b053b38d583578f1d265e38881e09dc702f571eb83b123161
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/differentiable_ukf_hbvlite.py|size=10927|sha256=5d4d0fce3018aef42d6ef81ac32fa97541654f0a878c0508f5594ff2ec73c02d
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/run_aligned_gr4j_da.py|size=95582|sha256=02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/run_aligned_gr4j_differentiable_ukf.py|size=15817|sha256=a8bae71dc1007c3b0502e81e50e766328202996aaf370987a347041ddde0d23f
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/run_daily_camels_ukf_knet_parity.py|size=150935|sha256=99c9fd92603014d6fc05a0618704918243411a62f2ef88d0c18578256a288cc6
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/tukf06_full_diagonal_common.py|size=25652|sha256=2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/assimilation/conventional_ukf.py|size=17331|sha256=2c1a17f0d48962ab8ac7c68c0ae8edaf0ad616f938a6466f0925d27ee9258c3a
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/assimilation/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/experiments/daily_camels_native_knet_io.py|size=36400|sha256=2db6c61276b4d2900321e58d04d639fecaf3957d557c4c5b5b4121fd01c3e918
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py|size=22399|sha256=bd70eadf8d2be311b5e623517e75f7d7b815dbde18603a219f6b1e3085223d52
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py|size=54622|sha256=2fd983a4af52ee02fd677e8ee51894d8208b836d6e9759b3ff2ac3a82c89ea69
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/experiments/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/models/differentiable_hbv_lite.py|size=13452|sha256=d7a04be86f19cddd8b9703e432fafb999a38215cb85de8983fe39a40bda0d6ea
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/models/hbvlite_system_model.py|size=12281|sha256=0d32d0f8dc656bdfbea81ba9f61eba0775ecc770d4466ff0442597d7c8d7a597
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/models/hbvlite_ukf_adapter.py|size=7308|sha256=2bf82d8ee0da909982769dd585657feed37a4ad46249f3b1fe9a72e1ccbc377a
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/models/__init__.py|size=0|sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/src/global_hydrology/models/knet_native_hbvlite_full_state.py|size=19942|sha256=3eb80fc1346a3e86170cac28fecad29951fe938193967e6a8cf6ae705edc22da
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/tests/conftest.py|size=272|sha256=a616fc2b24e329c616aa322d0da2621365ca9079021fada2334df6d128f3f7c6
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/tests/test_daily_camels_ukf_knet_parity_contract.py|size=18231|sha256=3706b6249b7bf94ac1244fd1e6b0db180122952e22fba4142a73f844b583df96
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/tests/test_daily_camels_ukf_knet_parity_hpc_preflight.py|size=26164|sha256=da090b6c5c269dc5d592d7a3a5610ced40b5f0bd391f44e4a6899068e6c74c09
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/tests/test_daily_camels_ukf_knet_parity_runner.py|size=35143|sha256=969ad9a4f4d0e4a0055819ba026b46d6ea57cdf0cf5e43b8a166d5fef81eaf3e
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/tests/test_differentiable_ukf_hbvlite.py|size=8138|sha256=4fed6091a788739330fdcf6b76eaf60114c103c166af5bbb7384d793adf284ef
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/tests/test_knet_native_hbvlite_full_state.py|size=14784|sha256=5f70703ef34fc7e981dd4c91855c678ceaedc1416a28a7d3b61e77d9fc7f5057
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/tests/test_run_daily_camels_ukf_knet_parity_entry.py|size=36075|sha256=514c94b2982a649cbf75c6b8d44f3a1bef4fb77447885a635e45bdfdc681feb0
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/locks/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_A800_DIAG1_SEQ54.submission.lock/owner.txt|size=241|sha256=6e2ed16bee1c838f886f8941d956bfd5d446b003e00871e8fc1979b05938ed4d
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_diagnostic_job_id.txt|size=7|sha256=eabaa3160f8b4c9b3b46547b1aea38c8369b3d6474210eb6c7d0a5adaa3bb54b
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_diagnostic_submitted_time_utc.txt|size=21|sha256=1e14c98369d2e06101f85166c4a5c57aa1ab394cca1b585a16c2d306607df45e
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_offline_bundle_verification.json|size=4498|sha256=33ca7a0bfc56f2010823e5e60ca14f7cf86c665c25ab494787b9674f479dd3d4
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_post_submission_sacct.txt|size=74|sha256=f89e80437dea3014d41c0c5758d9ef722c4cac4f1aa427f646954b39278fe214
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_post_submission_squeue.txt|size=258|sha256=bc5671c16c157ebcd49333a398278350b8db9a8abd7fdc0ff3530cc901435d20
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/train-cgroup-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215268.txt|size=129|sha256=b05b406d8f617898e924d533de6c516f4c0b122f11a088fbbbeb68b708d37066
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/train-gpu-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215268.csv|size=6872|sha256=d1f7df0dc2ca41600ccb304fdd24400c34ec9bfb7aba27971ff468a0cceb975f
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/train-preflight-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215268.json|size=12162|sha256=630109a28a0b7ea46451a6835dc46971257c81c201cd2c30573c41fac22c498d
+SEQ56_A37_A800_DIAGNOSTIC_FILE_INVENTORY_END
+SEQ56_A37_A800_DIAGNOSTIC_LOCKS_BEGIN
+d|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/locks/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_A800_DIAG1_SEQ54.submission.lock
+f|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/locks/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_A800_DIAG1_SEQ54.submission.lock/owner.txt
+SEQ56_A37_A800_DIAGNOSTIC_LOCKS_END
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/logs/diag-215268.out size=12335 sha256=1f7750dba6b328cb2b0c399c9d4d7d567e302cd3860d836adf7e9fc92c9b2e1f
+A37_A800_DIAGNOSTIC_ALLOCATED job_id=215268 hostname=ngu202 partition=hgpu8 gpu=0, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 81226, 535.104.05
+{
+  "active_config_member": "configs/daily_camels_knet_fixed_full_training_coverage_epoch10_to40_resume_a37.json",
+  "active_config_sha256": "70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984",
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "available_host_memory_bytes": 715241459712,
+  "bundle_manifest_sha256": "5bceec596643a9c384e08f473ad7fbd860d7aaabc054b46b8478d777eb371996",
+  "bundle_root": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54",
+  "continuation": {
+    "checkpoint_path": "artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt",
+    "checkpoint_sha256": "b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e",
+    "completed_epoch": 10,
+    "enabled": true,
+    "source_device": "cuda",
+    "source_experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16"
+  },
+  "cuda_probe_without_torch_import": {
+    "cuda_visible_devices": "0",
+    "device_index": "0",
+    "device_name": "NVIDIA A800-SXM4-80GB",
+    "driver_version": "535.104.05",
+    "memory_free_mib": 81226,
+    "memory_total_mib": 81920,
+    "visible_device_count": 1
+  },
+  "cuda_visible_devices": "0",
+  "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "hostname": "ngu202",
+  "initialization_mode": "causal_shared_spinup",
+  "nse_gate": {
+    "common_target_count_per_lead": 712,
+    "filter_warmup_days": 16,
+    "minimum_exclusive": 0.6
+  },
+  "numpy_imported": false,
+  "owner": {
+    "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+    "hostname": "ngu202",
+    "phase": "train",
+    "pid": 14657,
+    "slurm_job_id": "215268"
+  },
+  "package_availability_without_import": {
+    "numpy": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.3.3"
+    },
+    "pytest": {
+      "available": false,
+      "required_for_scientific_runtime": false,
+      "version": null
+    },
+    "torch": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.4.0"
+    }
+  },
+  "phase": "train",
+  "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+  "replay_gate_receipt_sha256": {
+    "causal": "0f6080a05a27244eca59c58043f265718102a4c2985684fb674781c8157d6c66",
+    "exact": "70e73c9f014dc4a4d615e07087fb99a994ba30b8c867eb5ef49141a59a39b687"
+  },
+  "replay_gates": {
+    "causal": {
+      "active_config_member": "configs/daily_camels_ukf_knet_parity_causal_replay_dtype_repair_v3.json",
+      "active_config_sha256": "1272bc4d9ef3b494d54e31cb3341eedee741f29cc67c5cace5d1b2b693bfde41",
+      "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+      "array_members_materialized_by_sealer": 0,
+      "bundle_manifest_sha256": "da9996a70538d00d7d48b26bb29a77af2e02c90d1e5e9eb80ece042f0873ad0f",
+      "entry_exit_code": 0,
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "hostname": "ngu008",
+      "initialization_mode": "causal_shared_spinup",
+      "nse_gate_target_count_per_lead": 712,
+      "numpy_imported_by_sealer": false,
+      "pytest_exit_code": 77,
+      "remote_test_status": "skipped_pytest_unavailable",
+      "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "run_member_count": 9,
+      "run_member_sha256": {
+        "completion.marker.json": "8f3f3b1b3d863a9ae502f8f46e38df438d8e8052c363a43d67e239acb501bc70",
+        "events.jsonl": "da7d472046e28281271656a9ad4595665f812717a3e30a22129e04add97ecf95",
+        "experiment_identity.json": "6380c133adc04f3af3819262cfac6406a2f3fe366039e5a92d61756b0485b963",
+        "manifest.sha256.json": "5ab7320a6cb8197b87d24122484ed8e24c7c6b548972f9245ff39c13a8ac2daf",
+        "owner_evidence.json": "64177d6e6b6cd5f5aef7ea859f804af59b7c698e58aeb133dc90b64ced677944",
+        "preflight.json": "6e55a39bd14aaeff9b7082325438da3ccde601cdf8c2371e96f333fe943dd065",
+        "replay_evidence.json": "c39ebcc48d53f492addd4fda31cc591bde7996fb76501fa2cb096a141aee3d14",
+        "replay_predictions.npz": "3e1764004c47fa54a49dab25b8264bc6fd9acaba6e286b2fccd6a9537d268c31",
+        "result_summary.json": "77391d8c6fc486398cbfb5f4ce53aeeb26212ebdbe58f6ea5156d523dc0e9b07"
+      },
+      "selection_objective": "physical_unit_multilead_mse",
+      "selection_objective_target_count_per_lead": 728,
+      "slurm_job_id": "211203",
+      "status": "REPLAY_PASS",
+      "torch_imported_by_sealer": false,
+      "ukf_replay_contract_passed": true,
+      "verified_replay_metrics": {
+        "completion_marker_sha256": "8f3f3b1b3d863a9ae502f8f46e38df438d8e8052c363a43d67e239acb501bc70",
+        "replay_evidence_sha256": "c39ebcc48d53f492addd4fda31cc591bde7996fb76501fa2cb096a141aee3d14",
+        "replay_predictions_sha256": "3e1764004c47fa54a49dab25b8264bc6fd9acaba6e286b2fccd6a9537d268c31",
+        "result_summary_sha256": "77391d8c6fc486398cbfb5f4ce53aeeb26212ebdbe58f6ea5156d523dc0e9b07",
+        "ukf_checkpoint_objective_728": 0.05968865108185378,
+        "ukf_nse_by_lead_712": {
+          "1": 0.9742508181649051,
+          "2": 0.9557071265978331,
+          "3": 0.9373297632940933
+        },
+        "zero_gain_maximum_open_loop_difference": 0.0
+      },
+      "zero_gain_contract_passed": true
+    },
+    "exact": {
+      "active_config_member": "configs/daily_camels_ukf_knet_parity_exact_replay_dtype_repair_v3.json",
+      "active_config_sha256": "7eea03913263c024b5bc9bec03e293de20cddff27346fff36087331292fd366f",
+      "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+      "array_members_materialized_by_sealer": 0,
+      "bundle_manifest_sha256": "b8c53662f7d8b97e5025453ca1c6c09f8a82ab362e5eca119b5226a796cd5082",
+      "entry_exit_code": 0,
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "hostname": "ngu001",
+      "initialization_mode": "exact_tukf06_backward_time_diagnostic",
+      "nse_gate_target_count_per_lead": 712,
+      "numpy_imported_by_sealer": false,
+      "pytest_exit_code": 77,
+      "remote_test_status": "skipped_pytest_unavailable",
+      "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "run_member_count": 9,
+      "run_member_sha256": {
+        "completion.marker.json": "e449619ea7b5527d71a886cfdfefe3f76c149ab917f37e13e46a65eb27f280d3",
+        "events.jsonl": "cdf70db8620d3684759d14106d05c6938e382c8375761a6048829522f442cfb7",
+        "experiment_identity.json": "da372749d922476700de6c00b2b3db83779a051822f561cd41cae4718213fa56",
+        "manifest.sha256.json": "be74ad15cdddf76a45d7b708e102336c1f228045e81ad6b477f6a89565432d0b",
+        "owner_evidence.json": "0cb7d05dc69a217f1b04870b464f77ef24f00ee3acafc1efd075aae3f1adb1d3",
+        "preflight.json": "deeb216b21255109e9ccbd18da0ddc004befcd288a34f61c57c347261a74490b",
+        "replay_evidence.json": "bf0c6abbc6e251d0b62fa6e5b2cd1924ea45a6b65a3f29cf32dcb7215d2a49ab",
+        "replay_predictions.npz": "377e4e660db87b35031589828691818982b106bc27871db65663ee93483098a3",
+        "result_summary.json": "7ec17da36329d73d7bd720747677aec59b0b93a1ac6f4fc271f18caf889a80e3"
+      },
+      "selection_objective": "physical_unit_multilead_mse",
+      "selection_objective_target_count_per_lead": 728,
+      "slurm_job_id": "211202",
+      "status": "REPLAY_PASS",
+      "torch_imported_by_sealer": false,
+      "ukf_replay_contract_passed": true,
+      "verified_replay_metrics": {
+        "completion_marker_sha256": "e449619ea7b5527d71a886cfdfefe3f76c149ab917f37e13e46a65eb27f280d3",
+        "replay_evidence_sha256": "bf0c6abbc6e251d0b62fa6e5b2cd1924ea45a6b65a3f29cf32dcb7215d2a49ab",
+        "replay_predictions_sha256": "377e4e660db87b35031589828691818982b106bc27871db65663ee93483098a3",
+        "result_summary_sha256": "7ec17da36329d73d7bd720747677aec59b0b93a1ac6f4fc271f18caf889a80e3",
+        "ukf_checkpoint_objective_728": 0.06461047253887697,
+        "ukf_nse_by_lead_712": {
+          "1": 0.9717833415469129,
+          "2": 0.951004752529,
+          "3": 0.929935402542523
+        },
+        "zero_gain_maximum_open_loop_difference": 0.0
+      },
+      "zero_gain_contract_passed": true
+    }
+  },
+  "reserved_data_member_count": 0,
+  "resource_admission": {
+    "available_host_memory_bytes": 715241459712,
+    "checked_on_allocated_training_node_before_training": true,
+    "gpu_admission_min_free_mib": 822,
+    "gpu_memory_free_mib": 81226,
+    "host_admission_min_bytes": 2800353280,
+    "required": true,
+    "status": "PASS"
+  },
+  "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "run_directory_absent": true,
+  "run_parent": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs",
+  "selection_objective": {
+    "common_target_count_per_lead": 728,
+    "filter_warmup_days": 0,
+    "name": "physical_unit_multilead_mse"
+  },
+  "slurm_job_id": "215268",
+  "slurm_job_name": "daily-knet-a37-diag",
+  "status": "PREFLIGHT_PASS",
+  "torch_imported": false
+}
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/logs/diag-215268.out
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/logs/diag-215268.err size=2379 sha256=692378b6f5162e010ee432bd5357c62e4c1b1fe0db0b7f91ee1480fcad2e328a
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/run_daily_camels_ukf_knet_parity.py", line 3585, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/run_daily_camels_ukf_knet_parity.py", line 3581, in main
+    return execute(build_parser().parse_args(argv))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/run_daily_camels_ukf_knet_parity.py", line 3577, in execute
+    return _execute_numerical(preflight, report, device=arguments.device)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/run_daily_camels_ukf_knet_parity.py", line 3441, in _execute_numerical
+    training = execute_training(
+               ^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/run_daily_camels_ukf_knet_parity.py", line 2571, in execute_training
+    epoch_zero_reproducibility = _epoch_zero_reproducibility_evidence(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/scripts/run_daily_camels_ukf_knet_parity.py", line 1004, in _epoch_zero_reproducibility_evidence
+    raise RuntimeError(
+RuntimeError: epoch-zero reproducibility mismatch: {"absolute_objective_delta":2.2920620956767834e-10,"actual_objective":0.40192019612590385,"actual_parameter_sha256":"b4a375c3195cae48c984e9a18cd470746950fda5a5aceec60b6e594f1a352645","actual_prediction_sha256":"0a53b0124662928babe79d7c5959f05538b17c37139bf6cfb5dd3d42f8eb0849","expected_objective":0.40192019589669764,"expected_parameter_sha256":"b4a375c3195cae48c984e9a18cd470746950fda5a5aceec60b6e594f1a352645","expected_prediction_sha256":"17a6f0dbbe145b0262e0b2c1f426c49f1687a29927e8f8348f6ea293e246d91f","mismatched_fields":["objective","prediction_sha256"],"objective_absolute_tolerance":1e-12}
+
+srun: error: ngu202: task 0: Exited with exit code 1
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/logs/diag-215268.err
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/train-preflight-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215268.json size=12162 sha256=630109a28a0b7ea46451a6835dc46971257c81c201cd2c30573c41fac22c498d
+{
+  "active_config_member": "configs/daily_camels_knet_fixed_full_training_coverage_epoch10_to40_resume_a37.json",
+  "active_config_sha256": "70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984",
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "available_host_memory_bytes": 715241459712,
+  "bundle_manifest_sha256": "5bceec596643a9c384e08f473ad7fbd860d7aaabc054b46b8478d777eb371996",
+  "bundle_root": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54",
+  "continuation": {
+    "checkpoint_path": "artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt",
+    "checkpoint_sha256": "b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e",
+    "completed_epoch": 10,
+    "enabled": true,
+    "source_device": "cuda",
+    "source_experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16"
+  },
+  "cuda_probe_without_torch_import": {
+    "cuda_visible_devices": "0",
+    "device_index": "0",
+    "device_name": "NVIDIA A800-SXM4-80GB",
+    "driver_version": "535.104.05",
+    "memory_free_mib": 81226,
+    "memory_total_mib": 81920,
+    "visible_device_count": 1
+  },
+  "cuda_visible_devices": "0",
+  "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "hostname": "ngu202",
+  "initialization_mode": "causal_shared_spinup",
+  "nse_gate": {
+    "common_target_count_per_lead": 712,
+    "filter_warmup_days": 16,
+    "minimum_exclusive": 0.6
+  },
+  "numpy_imported": false,
+  "owner": {
+    "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+    "hostname": "ngu202",
+    "phase": "train",
+    "pid": 14657,
+    "slurm_job_id": "215268"
+  },
+  "package_availability_without_import": {
+    "numpy": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.3.3"
+    },
+    "pytest": {
+      "available": false,
+      "required_for_scientific_runtime": false,
+      "version": null
+    },
+    "torch": {
+      "available": true,
+      "required_for_scientific_runtime": true,
+      "version": "2.4.0"
+    }
+  },
+  "phase": "train",
+  "python_version": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+  "replay_gate_receipt_sha256": {
+    "causal": "0f6080a05a27244eca59c58043f265718102a4c2985684fb674781c8157d6c66",
+    "exact": "70e73c9f014dc4a4d615e07087fb99a994ba30b8c867eb5ef49141a59a39b687"
+  },
+  "replay_gates": {
+    "causal": {
+      "active_config_member": "configs/daily_camels_ukf_knet_parity_causal_replay_dtype_repair_v3.json",
+      "active_config_sha256": "1272bc4d9ef3b494d54e31cb3341eedee741f29cc67c5cace5d1b2b693bfde41",
+      "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+      "array_members_materialized_by_sealer": 0,
+      "bundle_manifest_sha256": "da9996a70538d00d7d48b26bb29a77af2e02c90d1e5e9eb80ece042f0873ad0f",
+      "entry_exit_code": 0,
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "hostname": "ngu008",
+      "initialization_mode": "causal_shared_spinup",
+      "nse_gate_target_count_per_lead": 712,
+      "numpy_imported_by_sealer": false,
+      "pytest_exit_code": 77,
+      "remote_test_status": "skipped_pytest_unavailable",
+      "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "run_member_count": 9,
+      "run_member_sha256": {
+        "completion.marker.json": "8f3f3b1b3d863a9ae502f8f46e38df438d8e8052c363a43d67e239acb501bc70",
+        "events.jsonl": "da7d472046e28281271656a9ad4595665f812717a3e30a22129e04add97ecf95",
+        "experiment_identity.json": "6380c133adc04f3af3819262cfac6406a2f3fe366039e5a92d61756b0485b963",
+        "manifest.sha256.json": "5ab7320a6cb8197b87d24122484ed8e24c7c6b548972f9245ff39c13a8ac2daf",
+        "owner_evidence.json": "64177d6e6b6cd5f5aef7ea859f804af59b7c698e58aeb133dc90b64ced677944",
+        "preflight.json": "6e55a39bd14aaeff9b7082325438da3ccde601cdf8c2371e96f333fe943dd065",
+        "replay_evidence.json": "c39ebcc48d53f492addd4fda31cc591bde7996fb76501fa2cb096a141aee3d14",
+        "replay_predictions.npz": "3e1764004c47fa54a49dab25b8264bc6fd9acaba6e286b2fccd6a9537d268c31",
+        "result_summary.json": "77391d8c6fc486398cbfb5f4ce53aeeb26212ebdbe58f6ea5156d523dc0e9b07"
+      },
+      "selection_objective": "physical_unit_multilead_mse",
+      "selection_objective_target_count_per_lead": 728,
+      "slurm_job_id": "211203",
+      "status": "REPLAY_PASS",
+      "torch_imported_by_sealer": false,
+      "ukf_replay_contract_passed": true,
+      "verified_replay_metrics": {
+        "completion_marker_sha256": "8f3f3b1b3d863a9ae502f8f46e38df438d8e8052c363a43d67e239acb501bc70",
+        "replay_evidence_sha256": "c39ebcc48d53f492addd4fda31cc591bde7996fb76501fa2cb096a141aee3d14",
+        "replay_predictions_sha256": "3e1764004c47fa54a49dab25b8264bc6fd9acaba6e286b2fccd6a9537d268c31",
+        "result_summary_sha256": "77391d8c6fc486398cbfb5f4ce53aeeb26212ebdbe58f6ea5156d523dc0e9b07",
+        "ukf_checkpoint_objective_728": 0.05968865108185378,
+        "ukf_nse_by_lead_712": {
+          "1": 0.9742508181649051,
+          "2": 0.9557071265978331,
+          "3": 0.9373297632940933
+        },
+        "zero_gain_maximum_open_loop_difference": 0.0
+      },
+      "zero_gain_contract_passed": true
+    },
+    "exact": {
+      "active_config_member": "configs/daily_camels_ukf_knet_parity_exact_replay_dtype_repair_v3.json",
+      "active_config_sha256": "7eea03913263c024b5bc9bec03e293de20cddff27346fff36087331292fd366f",
+      "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+      "array_members_materialized_by_sealer": 0,
+      "bundle_manifest_sha256": "b8c53662f7d8b97e5025453ca1c6c09f8a82ab362e5eca119b5226a796cd5082",
+      "entry_exit_code": 0,
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "hostname": "ngu001",
+      "initialization_mode": "exact_tukf06_backward_time_diagnostic",
+      "nse_gate_target_count_per_lead": 712,
+      "numpy_imported_by_sealer": false,
+      "pytest_exit_code": 77,
+      "remote_test_status": "skipped_pytest_unavailable",
+      "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824/runs/DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "run_member_count": 9,
+      "run_member_sha256": {
+        "completion.marker.json": "e449619ea7b5527d71a886cfdfefe3f76c149ab917f37e13e46a65eb27f280d3",
+        "events.jsonl": "cdf70db8620d3684759d14106d05c6938e382c8375761a6048829522f442cfb7",
+        "experiment_identity.json": "da372749d922476700de6c00b2b3db83779a051822f561cd41cae4718213fa56",
+        "manifest.sha256.json": "be74ad15cdddf76a45d7b708e102336c1f228045e81ad6b477f6a89565432d0b",
+        "owner_evidence.json": "0cb7d05dc69a217f1b04870b464f77ef24f00ee3acafc1efd075aae3f1adb1d3",
+        "preflight.json": "deeb216b21255109e9ccbd18da0ddc004befcd288a34f61c57c347261a74490b",
+        "replay_evidence.json": "bf0c6abbc6e251d0b62fa6e5b2cd1924ea45a6b65a3f29cf32dcb7215d2a49ab",
+        "replay_predictions.npz": "377e4e660db87b35031589828691818982b106bc27871db65663ee93483098a3",
+        "result_summary.json": "7ec17da36329d73d7bd720747677aec59b0b93a1ac6f4fc271f18caf889a80e3"
+      },
+      "selection_objective": "physical_unit_multilead_mse",
+      "selection_objective_target_count_per_lead": 728,
+      "slurm_job_id": "211202",
+      "status": "REPLAY_PASS",
+      "torch_imported_by_sealer": false,
+      "ukf_replay_contract_passed": true,
+      "verified_replay_metrics": {
+        "completion_marker_sha256": "e449619ea7b5527d71a886cfdfefe3f76c149ab917f37e13e46a65eb27f280d3",
+        "replay_evidence_sha256": "bf0c6abbc6e251d0b62fa6e5b2cd1924ea45a6b65a3f29cf32dcb7215d2a49ab",
+        "replay_predictions_sha256": "377e4e660db87b35031589828691818982b106bc27871db65663ee93483098a3",
+        "result_summary_sha256": "7ec17da36329d73d7bd720747677aec59b0b93a1ac6f4fc271f18caf889a80e3",
+        "ukf_checkpoint_objective_728": 0.06461047253887697,
+        "ukf_nse_by_lead_712": {
+          "1": 0.9717833415469129,
+          "2": 0.951004752529,
+          "3": 0.929935402542523
+        },
+        "zero_gain_maximum_open_loop_difference": 0.0
+      },
+      "zero_gain_contract_passed": true
+    }
+  },
+  "reserved_data_member_count": 0,
+  "resource_admission": {
+    "available_host_memory_bytes": 715241459712,
+    "checked_on_allocated_training_node_before_training": true,
+    "gpu_admission_min_free_mib": 822,
+    "gpu_memory_free_mib": 81226,
+    "host_admission_min_bytes": 2800353280,
+    "required": true,
+    "status": "PASS"
+  },
+  "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "run_directory_absent": true,
+  "run_parent": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs",
+  "selection_objective": {
+    "common_target_count_per_lead": 728,
+    "filter_warmup_days": 0,
+    "name": "physical_unit_multilead_mse"
+  },
+  "slurm_job_id": "215268",
+  "slurm_job_name": "daily-knet-a37-diag",
+  "status": "PREFLIGHT_PASS",
+  "torch_imported": false
+}
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/train-preflight-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215268.json
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/train-gpu-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215268.csv size=6872 sha256=d1f7df0dc2ca41600ccb304fdd24400c34ec9bfb7aba27971ff468a0cceb975f
+2026/08/27 17:30:40.328, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:41.357, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:42.386, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:43.412, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:44.432, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:45.461, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:46.490, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:47.517, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:48.545, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:49.572, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:50.600, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:51.630, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:52.659, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:53.687, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:54.715, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:55.745, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:56.773, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+2026/08/27 17:30:57.800, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 501, 80727, 2
+2026/08/27 17:30:58.828, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 501, 80727, 23
+2026/08/27 17:30:59.855, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 501, 80727, 40
+2026/08/27 17:31:00.884, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 501, 80727, 0
+2026/08/27 17:31:01.911, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 563, 80665, 0
+2026/08/27 17:31:02.938, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 563, 80665, 38
+2026/08/27 17:31:03.966, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 563, 80665, 38
+2026/08/27 17:31:04.985, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 563, 80665, 40
+2026/08/27 17:31:06.012, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:07.039, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 25
+2026/08/27 17:31:08.066, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 39
+2026/08/27 17:31:09.095, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 36
+2026/08/27 17:31:10.122, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 38
+2026/08/27 17:31:11.150, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 38
+2026/08/27 17:31:12.177, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 39
+2026/08/27 17:31:13.203, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 39
+2026/08/27 17:31:14.231, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 39
+2026/08/27 17:31:15.258, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 37
+2026/08/27 17:31:16.285, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 39
+2026/08/27 17:31:17.319, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 27
+2026/08/27 17:31:18.347, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 6
+2026/08/27 17:31:19.376, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 40
+2026/08/27 17:31:20.402, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 31
+2026/08/27 17:31:21.428, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 40
+2026/08/27 17:31:22.455, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:23.484, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:24.512, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:25.539, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:26.567, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:27.595, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:28.621, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:29.650, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:30.677, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:31.706, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:32.736, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:33.763, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:34.790, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 0
+2026/08/27 17:31:35.816, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 47
+2026/08/27 17:31:36.842, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 36
+2026/08/27 17:31:37.868, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 39
+2026/08/27 17:31:38.894, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 28
+2026/08/27 17:31:39.921, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 569, 80659, 27
+2026/08/27 17:31:40.948, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 1
+2026/08/27 17:31:41.976, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 0
+2026/08/27 17:31:43.005, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 0
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/train-gpu-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215268.csv
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/train-cgroup-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215268.txt size=129 sha256=b05b406d8f617898e924d533de6c516f4c0b122f11a088fbbbeb68b708d37066
+recorded_at_utc=2026-08-27T09:31:43Z
+slurm_job_id=215268
+process_cgroup_relative=unavailable
+cgroup_v2_memory_status=unavailable
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/train-cgroup-resources-DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37-215268.txt
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_offline_bundle_verification.json size=4498 sha256=33ca7a0bfc56f2010823e5e60ca14f7cf86c665c25ab494787b9674f479dd3d4
+{
+  "archive_probe": {
+    "archive_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+    "archive_sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+    "array_members_materialized": 0,
+    "array_payloads_materialized": 0,
+    "npy_headers": {
+      "base_observation_variance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      },
+      "dates_ns": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "forcing": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288,
+          3
+        ]
+      },
+      "initial_covariance": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18,
+          18
+        ]
+      },
+      "initial_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          18
+        ]
+      },
+      "initial_storage_state": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          5
+        ]
+      },
+      "observations": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          3288
+        ]
+      },
+      "parameters": {
+        "array_payload_materialized": false,
+        "descriptor": "<f8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1,
+          13
+        ]
+      },
+      "state_dimension": {
+        "array_payload_materialized": false,
+        "descriptor": "<i8",
+        "fortran_order": false,
+        "header_bytes_read": 128,
+        "npy_version": "1.0",
+        "shape": [
+          1
+        ]
+      }
+    },
+    "npy_member_count": 9
+  },
+  "array_members_materialized": 0,
+  "continuation": {
+    "checkpoint_path": "artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt",
+    "checkpoint_sha256": "b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e",
+    "completed_epoch": 10,
+    "enabled": true,
+    "source_device": "cuda",
+    "source_experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16"
+  },
+  "experiment_id": "DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37",
+  "initialization_mode": "causal_shared_spinup",
+  "member_count": 46,
+  "nse_gate_target_count_per_lead": 712,
+  "numpy_imported": false,
+  "replay_gate_requirements": {
+    "causal": {
+      "active_config_sha256": "1272bc4d9ef3b494d54e31cb3341eedee741f29cc67c5cace5d1b2b693bfde41",
+      "bundle_manifest_sha256": "da9996a70538d00d7d48b26bb29a77af2e02c90d1e5e9eb80ece042f0873ad0f",
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_CAUSAL_REPLAY_DTYPE_REPAIR_V3_20260825_A06",
+      "initialization_mode": "causal_shared_spinup",
+      "receipt_sha256": "0f6080a05a27244eca59c58043f265718102a4c2985684fb674781c8157d6c66"
+    },
+    "exact": {
+      "active_config_sha256": "7eea03913263c024b5bc9bec03e293de20cddff27346fff36087331292fd366f",
+      "bundle_manifest_sha256": "b8c53662f7d8b97e5025453ca1c6c09f8a82ab362e5eca119b5226a796cd5082",
+      "experiment_id": "DAILY_CAMELS_UKF_PARITY_KNET_FULL_STATE_EXACT_REPLAY_DTYPE_REPAIR_V3_20260825_A05",
+      "initialization_mode": "exact_tukf06_backward_time_diagnostic",
+      "receipt_sha256": "70e73c9f014dc4a4d615e07087fb99a994ba30b8c867eb5ef49141a59a39b687"
+    }
+  },
+  "selection_objective_target_count_per_lead": 728,
+  "status": "BUNDLE_VERIFIED",
+  "torch_imported": false
+}
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_offline_bundle_verification.json
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_diagnostic_job_id.txt size=7 sha256=eabaa3160f8b4c9b3b46547b1aea38c8369b3d6474210eb6c7d0a5adaa3bb54b
+215268
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_diagnostic_job_id.txt
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_diagnostic_submitted_time_utc.txt size=21 sha256=1e14c98369d2e06101f85166c4a5c57aa1ab394cca1b585a16c2d306607df45e
+2026-08-27T09:30:36Z
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_diagnostic_submitted_time_utc.txt
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_post_submission_squeue.txt size=258 sha256=bc5671c16c157ebcd49333a398278350b8db9a8abd7fdc0ff3530cc901435d20
+215268|daily-knet-a37-diag|hgpu8|PENDING|(None)|gpu:1|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/seq54_a37_a800_diag_wrapper.slurm
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_post_submission_squeue.txt
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_post_submission_sacct.txt size=74 sha256=f89e80437dea3014d41c0c5758d9ef722c4cac4f1aa427f646954b39278fe214
+JobIDRaw|JobName|User|Partition|State|ExitCode|Elapsed|NodeList|AllocTRES
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/seq54_post_submission_sacct.txt
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/locks/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_A800_DIAG1_SEQ54.submission.lock/owner.txt size=241 sha256=6e2ed16bee1c838f886f8941d956bfd5d446b003e00871e8fc1979b05938ed4d
+experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37
+execution_attempt_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_A800_DIAG1_SEQ54
+owner_user=sunyiq
+acquired_at_utc=2026-08-27T09:30:36Z
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/status/locks/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_A800_DIAG1_SEQ54.submission.lock/owner.txt
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/events.jsonl size=609 sha256=4bfb6524fb6a57b699011e38dec8ecec99811c1c4e92b259dc49c77546db905a
+{"array_members_materialized":0,"event_type":"preflight_completed","identity_sha256":"26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4","recorded_at_utc":"2026-08-27T09:30:40.830344Z","sequence":0}
+{"event_type":"ukf_and_zero_gain_replay_completed","recorded_at_utc":"2026-08-27T09:31:19.517223Z","recovery_ukf_checkpoint_objective_728":0.05968865108183612,"replay_evidence_sha256":"32f35b516b7bbcfe7cbe05d332da3103bd6ffc32f33f67d3468af6f3f99b968a","replay_predictions_sha256":"6d9a8b910865ca923b31f67d496ba4aee058bb3fc27d2c529226f0bf275ec097","reserved_evaluation_operations":0,"sequence":1}
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/events.jsonl
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/experiment_identity.json size=3250 sha256=26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4
+{"configuration_sha256":"70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984","continuation":{"checkpoint_path":"artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt","checkpoint_schema_version":"daily_camels_ukf_knet_parity_checkpoint_v1","checkpoint_sha256":"b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e","completed_epoch":10,"optimizer_steps":10,"parameter_sha256":"c1597f7f1c5c30a6c12ce05e27dc6a45d0b9dd330422fed07a3346b0430cfbca","sampled_forecast_events":76500,"schema_version":"daily_camels_ukf_knet_parity_continuation_v1","source_configuration_path":"configs/daily_camels_knet_fixed_full_training_coverage_ten_epoch_a16.json","source_configuration_sha256":"d8d3bf5275c1c509ce6591cd1c6d8c164e512f81e04d9ed1916262a2f3a5f22a","source_device":"cuda","source_epoch_history_sha256":"7d418f55eed64e0f4e30335d38b4e56998bd8b1c89be44c94fe8b718a8a605c2","source_evidence_archive_sha256":"c6ee59e9dbd233858ef3bd310eca41e76d23152aa42d7fba6d5e1d1d414123d9","source_experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16","source_identity_sha256":"c46df764b85fe7ca64cdb899f897b99c14bfe2dc0aa6ba33bacc8f1ca1c0f3a3","source_result_summary_sha256":"07cf27a7f3d18d1a3428f829e2486fcd874157ab678d1f75ddebdfc709b8c71b"},"correction_scope":"full_eighteen_dimensional_state_correction","experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37","gain_initialization":"near_zero_fc2_head","initialization_mode":"causal_shared_spinup","input_sha256":{"configs/tukf06_full_diagonal_search_head_to_head_v1.json":"4b19eda7cf4ce7dcd9c0940693577077d6a6faf3b18912b03178164613cac7a3","results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json":"8b4888a62052f8d9f0018e907c665d30a72c4c7c29081763db0f4d46904ec3a2","results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz":"71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd"},"phase":"train","schema_version":"daily_camels_ukf_knet_parity_run_identity_v1","source_sha256":{"knet/dl/nn_kalman_clamp_5.py":"934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843","scripts/differentiable_ukf_hbvlite.py":"5d4d0fce3018aef42d6ef81ac32fa97541654f0a878c0508f5594ff2ec73c02d","scripts/tukf06_full_diagonal_common.py":"2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02","src/global_hydrology/experiments/daily_camels_native_knet_io.py":"2db6c61276b4d2900321e58d04d639fecaf3957d557c4c5b5b4121fd01c3e918","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py":"bd70eadf8d2be311b5e623517e75f7d7b815dbde18603a219f6b1e3085223d52","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py":"2fd983a4af52ee02fd677e8ee51894d8208b836d6e9759b3ff2ac3a82c89ea69","src/global_hydrology/models/differentiable_hbv_lite.py":"d7a04be86f19cddd8b9703e432fafb999a38215cb85de8983fe39a40bda0d6ea","src/global_hydrology/models/hbvlite_system_model.py":"0d32d0f8dc656bdfbea81ba9f61eba0775ecc770d4466ff0442597d7c8d7a597","src/global_hydrology/models/knet_native_hbvlite_full_state.py":"3eb80fc1346a3e86170cac28fecad29951fe938193967e6a8cf6ae705edc22da"}}
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/experiment_identity.json
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/owner_evidence.json size=423 sha256=a037e3742493e2153747f65cda115c5a7c28c3e73132387aa3eb6139040e6ca2
+{"acquired_at_utc":"2026-08-27T09:30:40.792206Z","host_name":"ngu202","identity":{"device":"cuda","experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37","identity_sha256":"26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4","phase":"train"},"owner_token":"9cec4d0166d64183b3d641848b36c942","process_id":14693,"schema_version":"daily_camels_native_knet_owner_v1"}
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/owner_evidence.json
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/preflight.json size=5544 sha256=4c8c787ad9eafd0d249b3ac2525f4b0201e4fdb5ce67c919a1b9ffd0ad9b7e49
+{"array_members_materialized":0,"configuration_path":"/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/source_A37_a800_diag1_seq54/configs/daily_camels_knet_fixed_full_training_coverage_epoch10_to40_resume_a37.json","configuration_sha256":"70a522e9306c80d6c3010a3fbcf7fda3b4f53d850498698e1ef15f1028441984","continuation":{"checkpoint_path":"artifacts/daily_camels_ukf_knet_parity_seq15_failure_evidence/ff2084c4/seq15_snapshot_2831/run/checkpoints/epoch_010.pt","checkpoint_schema_version":"daily_camels_ukf_knet_parity_checkpoint_v1","checkpoint_sha256":"b2b93f531c7ad4922e14d5479564e82e5a6dca553835bbc8cc8af61db4a8d81e","completed_epoch":10,"optimizer_steps":10,"parameter_sha256":"c1597f7f1c5c30a6c12ce05e27dc6a45d0b9dd330422fed07a3346b0430cfbca","sampled_forecast_events":76500,"schema_version":"daily_camels_ukf_knet_parity_continuation_v1","source_configuration_path":"configs/daily_camels_knet_fixed_full_training_coverage_ten_epoch_a16.json","source_configuration_sha256":"d8d3bf5275c1c509ce6591cd1c6d8c164e512f81e04d9ed1916262a2f3a5f22a","source_device":"cuda","source_epoch_history_sha256":"7d418f55eed64e0f4e30335d38b4e56998bd8b1c89be44c94fe8b718a8a605c2","source_evidence_archive_sha256":"c6ee59e9dbd233858ef3bd310eca41e76d23152aa42d7fba6d5e1d1d414123d9","source_experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_TEN_EPOCH_V1_20260825_A16","source_identity_sha256":"c46df764b85fe7ca64cdb899f897b99c14bfe2dc0aa6ba33bacc8f1ca1c0f3a3","source_result_summary_sha256":"07cf27a7f3d18d1a3428f829e2486fcd874157ab678d1f75ddebdfc709b8c71b"},"correction_scope":"full_eighteen_dimensional_state_correction","declared_source_sha256":{"knet/dl/nn_kalman_clamp_5.py":"934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843","scripts/differentiable_ukf_hbvlite.py":"5d4d0fce3018aef42d6ef81ac32fa97541654f0a878c0508f5594ff2ec73c02d","scripts/tukf06_full_diagonal_common.py":"2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py":"bd70eadf8d2be311b5e623517e75f7d7b815dbde18603a219f6b1e3085223d52","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py":"2fd983a4af52ee02fd677e8ee51894d8208b836d6e9759b3ff2ac3a82c89ea69","src/global_hydrology/models/differentiable_hbv_lite.py":"d7a04be86f19cddd8b9703e432fafb999a38215cb85de8983fe39a40bda0d6ea","src/global_hydrology/models/hbvlite_system_model.py":"0d32d0f8dc656bdfbea81ba9f61eba0775ecc770d4466ff0442597d7c8d7a597","src/global_hydrology/models/knet_native_hbvlite_full_state.py":"3eb80fc1346a3e86170cac28fecad29951fe938193967e6a8cf6ae705edc22da"},"device_requested":"cuda","experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37","gain_initialization":"near_zero_fc2_head","graphics_driver_probe":{"available":true,"devices":[{"index":0,"memory_free_mib":81226,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":1,"memory_free_mib":78007,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":2,"memory_free_mib":53373,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":3,"memory_free_mib":53307,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":4,"memory_free_mib":78007,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":5,"memory_free_mib":78007,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":6,"memory_free_mib":81226,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"},{"index":7,"memory_free_mib":81226,"memory_total_mib":81920,"name":"NVIDIA A800-SXM4-80GB"}],"returncode":0,"stderr":""},"host_name":"ngu202","host_resources":{"disk_free_bytes":393285077671936,"disk_total_bytes":1048866010951680,"host_memory_available_bytes":715233198080,"host_memory_total_bytes":1081636241408},"identity_sha256":"26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4","initialization_mode":"causal_shared_spinup","input_sha256":{"configs/tukf06_full_diagonal_search_head_to_head_v1.json":"4b19eda7cf4ce7dcd9c0940693577077d6a6faf3b18912b03178164613cac7a3","results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json":"8b4888a62052f8d9f0018e907c665d30a72c4c7c29081763db0f4d46904ec3a2","results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz":"71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd"},"integration_source_sha256":{"src/global_hydrology/experiments/daily_camels_native_knet_io.py":"2db6c61276b4d2900321e58d04d639fecaf3957d557c4c5b5b4121fd01c3e918","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py":"bd70eadf8d2be311b5e623517e75f7d7b815dbde18603a219f6b1e3085223d52","src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py":"2fd983a4af52ee02fd677e8ee51894d8208b836d6e9759b3ff2ac3a82c89ea69"},"numerical_frameworks_imported_by_entry":0,"phase":"train","process_id":14693,"python_version":"3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]","recorded_at_utc":"2026-08-27T09:30:40.702133Z","reserved_evaluation_period_access_authorized":false,"run_directory":"/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37","run_directory_absent":true,"run_parent":"/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs","schema_version":"daily_camels_ukf_knet_parity_preflight_v1","scientific_claim_allowed":true,"status":"PREFLIGHT_PASS"}
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/preflight.json
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/failure.json size=1062 sha256=2a658ab2e152d6b303ecaa69cefa2bce68b941956c40341410f7e45e62980484
+{"error_message":"epoch-zero reproducibility mismatch: {\"absolute_objective_delta\":2.2920620956767834e-10,\"actual_objective\":0.40192019612590385,\"actual_parameter_sha256\":\"b4a375c3195cae48c984e9a18cd470746950fda5a5aceec60b6e594f1a352645\",\"actual_prediction_sha256\":\"0a53b0124662928babe79d7c5959f05538b17c37139bf6cfb5dd3d42f8eb0849\",\"expected_objective\":0.40192019589669764,\"expected_parameter_sha256\":\"b4a375c3195cae48c984e9a18cd470746950fda5a5aceec60b6e594f1a352645\",\"expected_prediction_sha256\":\"17a6f0dbbe145b0262e0b2c1f426c49f1687a29927e8f8348f6ea293e246d91f\",\"mismatched_fields\":[\"objective\",\"prediction_sha256\"],\"objective_absolute_tolerance\":1e-12}\n","error_type":"RuntimeError","experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37","failed_at_utc":"2026-08-27T09:31:40.193286Z","identity_sha256":"26fc85ad2d3cf4faac056aa804ac9228c76462ffe5db49ad3df54d3ceb005dd4","phase":"train","schema_version":"daily_camels_ukf_knet_parity_failure_v1","status":"FAILED_EVIDENCE_PRESERVED"}
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_END path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/failure.json
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/result_summary.json
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/completion.marker.json
+SEQ56_A37_A800_DIAGNOSTIC_CONTENT_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37/manifest.sha256.json
+SEQ56_A37_A800_DIAGNOSTIC_TERMINAL_COLLECTED experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37 execution_attempt_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_A800_DIAG1_SEQ54 job_id=215268 terminal_state=FAILED terminal_exit_code=1:0 reserved_named_path_count=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T18:16:02+0800
