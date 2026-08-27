@@ -1,0 +1,38 @@
+### channel=id30-modern-moe-execution seq=4
+### host=login4
+### started=2026-08-27T15:29:03+0800
+### ---------- output ----------
+=== AVAILABLE PYTHON ENVIRONMENTS ===
+2026-08-27T15:29:03+0800
+login4
+# conda environments:
+#
+base                  *  /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+                         /data1/home/sunyiq/v09_strict/gitenv
+
+=== DEPENDENCY MATRIX ===
+--- /data1/home/sunyiq/miniconda3/bin/python
+python 3.11.5
+pytest False
+torch False
+pandas False
+pyarrow False
+ruamel.yaml True
+xarray False
+--- /data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python
+python 3.11.13
+pytest False
+torch True
+pandas True
+pyarrow False
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+  File "<frozen importlib.util>", line 95, in find_spec
+ModuleNotFoundError: No module named 'ruamel'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-27T15:29:11+0800
