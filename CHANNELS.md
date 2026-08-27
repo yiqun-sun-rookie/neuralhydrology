@@ -22,6 +22,8 @@ outbox/<channel>/result_<seq>.txt   结果
 
 ## 已登记的 channel
 
+| `id30-modern-moe-execution` | CAMELS-US 现代因果注意力模型与稀疏混合专家模型的安全数据构建、资源探针和开发期训练 | 2026-08-27 | 独立落点 `/data1/home/sunyiq/id30_modern_transformer_moe_20260827`；仅操作本通道和该目录，不碰 `~/neuralhydrology`、封存评估答案、其他通道或既有实验 |
+
 | channel | 用途 | 登记时间 | 备注 |
 |---|---|---|---|
 | `default` | v1 遗留的 `inbox/cmd.sh` + `inbox/seq` | 2026-08-06 | **当前被 ID05 对抗攻击任务占用**（`~/adv531`，已跑到 seq=15）。该任务建议迁到 `inbox/adv531/`，迁移前别人不要碰 |
