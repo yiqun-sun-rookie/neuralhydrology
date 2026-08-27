@@ -1,0 +1,27 @@
+### channel=kalmannet-tukf24 seq=7
+### host=login4
+### started=2026-08-27T18:22:00+0800
+### ---------- output ----------
+=== SMOKE ARRAY STATE ===
+       JobID      State    Elapsed ExitCode 
+------------ ---------- ---------- -------- 
+215264_0      COMPLETED   00:00:06      0:0 
+215264_0.ba+  COMPLETED   00:00:06      0:0 
+215264_0.ex+  COMPLETED   00:00:07      0:0 
+215264_27     COMPLETED   00:33:25      0:0 
+215264_27.b+  COMPLETED   00:33:25      0:0 
+215264_27.e+  COMPLETED   00:33:25      0:0 
+215264_54     COMPLETED   00:27:34      0:0 
+215264_54.b+  COMPLETED   00:27:34      0:0 
+215264_54.e+  COMPLETED   00:27:34      0:0 
+215264_81     COMPLETED   00:31:32      0:0 
+215264_81.b+  COMPLETED   00:31:32      0:0 
+215264_81.e+  COMPLETED   00:31:32      0:0 
+=== COMPLETED TRAIN RECORDS ===
+01047000_all_frozen update=0 score=None seconds=2.5
+01047000_filter_only update=24 score=2.2816428244427827 seconds=1649.8
+01047000_hydrology_only update=68 score=1.6333134301994776 seconds=2001.0
+01047000_joint update=192 score=1.551085220275774 seconds=1887.3
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T18:22:00+0800
