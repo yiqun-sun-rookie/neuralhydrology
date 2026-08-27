@@ -1,0 +1,47 @@
+### channel=zhenjiang-latent-da seq=1
+### host=login4
+### started=2026-08-27T13:27:01+0800
+### ---------- output ----------
+PROBE_START 2026-08-27T13:27:01+0800
+HOST login4
+USER sunyiq
+RUNNER_PROCESSES
+sunyiq   12251     1  0 Aug26 ?        00:00:38 bash /data1/home/sunyiq/.hpc_runner_active.sh
+sunyiq   43442 12251  0 13:27 ?        00:00:00 bash /data1/home/sunyiq/.hpc_runner_active.sh
+sunyiq   43540 12251  0 13:27 ?        00:00:00 bash /data1/home/sunyiq/.hpc_runner_active.sh
+PARTITIONS
+hgpu8|up|infinite|3|gpu:8
+hgpu4|up|infinite|4|gpu:4
+hgpu2p|up|infinite|9|gpu:2
+USER_QUEUE
+215178|daily-knet-a37-probe|PENDING|hgpu2p|0:00|(Priority)
+202226_[0-119%4]|N22-eval-later|PENDING|hgpu4,hgpu8,hgpu2|0:00|(DependencyNeverSatisfied)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202230|N22-agg-hyper|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|0:00|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|0:00|(JobHeldUser)
+202228_659|N22-hyper|RUNNING|hgpu4|1:20:26|ngu104
+202228_658|N22-hyper|RUNNING|hgpu4|2:22:06|ngu104
+211001_22|N22-relong|RUNNING|hgpu4|1:47:49|ngu102
+211001_21|N22-relong|RUNNING|hgpu4|1-06:57:54|ngu102
+CANDIDATE_ZHENJIANG_ROOTS
+FOUND /data1/home/sunyiq/zhenjiang_oyv_v1
+/data1/home/sunyiq/zhenjiang_oyv_v1/repo/scripts/modeling/zhenjiang_oyv_v1_data.py
+FOUND /data1/home/sunyiq/zhenjiang_oyv_qual_20260819
+MISSING /data1/home/sunyiq/zhenjiang_latent_da_20260827
+KALMANNET_SOURCE_CANDIDATES
+/data1/home/sunyiq/kalmannet_daily_camels_official_core_a35_20260825/source_seq27/third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a29_20260825/source_A29_seq18/third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a30_20260825/source_A30_seq19/third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a31_20260825/source_A31_seq20/third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_RESOURCE_SMOKE_V4_20260825_A32/source_snapshot/third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825/source_A32_seq21/third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_SHARED_SMOKE_V1_20260825_A33/source_snapshot/third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825/source_A33_seq22/third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py
+NH_FINAL_RUNTIME
+/data1/home/sunyiq/.hpc_mailbox_staging/zhenjiang-latent-da/cmd_1.sh: line 38: /data1/home/sunyiq/anaconda3/etc/profile.d/conda.sh: No such file or directory
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-27T13:29:59+0800
