@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-exec bash /data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-daily-camels/seq45_a37_probe215178_status_collect.sh
+exec bash /data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-daily-camels/seq46_a37_probe215178_gpu_partition_audit.sh
 
 set -Eeuo pipefail
 umask 077
