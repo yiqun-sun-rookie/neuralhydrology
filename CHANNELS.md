@@ -91,3 +91,4 @@ git rm inbox/seq
 | `kuwei-paired-recal` | laos_forecast 库尾流域成对降雨处理重新率定（两种降雨输入各自率定 17 参数 × 3 种子 = 6 次，纯单线程 CPU，无需 GPU） | 2026-08-25 | 由 Claude 会话占用；只碰自己的 channel 与自建落点，**不碰** `~/neuralhydrology`、`~/nature_1st` 及其他通道 |
 | `kuwei-recal-aux` | 同上任务的辅助只读通道（主通道 `kuwei-paired-recal` 卡住时用来查作业状态，不写任何东西） | 2026-08-25 | 由同一 Claude 会话占用 |
 | `kalmannet-tukf23` | TUKF23 真实流域四方式正式实验：CPU 分区探测与部署 | 2026-08-26 | 由 Claude 会话占用；计划落点 `/data1/home/sunyiq/kalmannet_tukf23_20260826`；只操作本通道与该独立目录，不碰 `~/neuralhydrology` 的 Git 状态及其他实验 |
+| `kalmannet-tukf24` | TUKF24 预报时段拉长第二步：1–10 日损失重训部署 | 2026-08-27 | 由 Claude 会话占用；落点 `/data1/home/sunyiq/kalmannet_tukf24_20260827`；只操作本通道与该独立目录，不碰 TUKF23 落点、`~/neuralhydrology` 的 Git 状态及其他实验 |
