@@ -1,0 +1,22 @@
+### channel=id30-modern-moe-execution seq=7
+### host=login4
+### started=2026-08-27T16:07:35+0800
+### ---------- output ----------
+=== VERIFY V03 OVERLAY ===
+2026-08-27T16:07:35+0800
+login4
+expected_payload=11a54b43decae1bf21ad68a03736d7f3e0f24c8a266210e8b544f6c2bae5cd03
+actual_payload=11a54b43decae1bf21ad68a03736d7f3e0f24c8a266210e8b544f6c2bae5cd03
+expected_base=fe10599f888dd8a4e3e1e014b94f1ccf81ec0df1
+actual_base=fe10599f888dd8a4e3e1e014b94f1ccf81ec0df1
+=== INSTALL AND FREEZE V03 OVERLAY ===
+v03_commit=e8d0131cc2cb627d8aee583510a8ceb998331aee
+=== RESUBMIT CANDIDATE-SAFE DATA BUILD ===
+215202
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215202       hgpu2p               id30_safe_data  PENDING       0:00                     (Priority)
+=== COMPLETE ===
+2026-08-27T16:07:36+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:07:36+0800
