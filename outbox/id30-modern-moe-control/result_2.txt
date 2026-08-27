@@ -1,0 +1,37 @@
+### channel=id30-modern-moe-control seq=2
+### host=login4
+### started=2026-08-27T15:59:49+0800
+### ---------- output ----------
+=== SAFE DATA FAST STATUS ===
+2026-08-27T15:59:49+0800
+login4
+job_id=215197
+slurm_load_jobs error: Invalid job id specified
+215197|id30_safe_data|hgpu2p|FAILED|1:0|00:01:00|ngu011
+215197.batch|batch||FAILED|1:0|00:01:00|ngu011
+215197.extern|extern||COMPLETED|0:0|00:01:01|ngu011
+=== LOG TAIL ===
+=== PRE-FLIGHT ===
+2026-08-27T15:38:37+08:00
+ngu011
+Python 3.11.13
+pyarrow 20.0.0
+torch 2.4.0
+=== FOCUSED TESTS ===
+REMOTE_PYTEST_UNAVAILABLE_LOCAL_103_TEST_GATE_RETAINED
+=== FORCING BUNDLE ===
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/scripts/build_track0_development_forcing_bundle.py", line 152, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/scripts/build_track0_development_forcing_bundle.py", line 138, in main
+    manifest = build_forcing_bundle(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/scripts/build_track0_development_forcing_bundle.py", line 66, in build_forcing_bundle
+    raise ValueError(f"Maurer forcing for basin {basin} is missing {missing_columns}.")
+ValueError: Maurer forcing for basin 02108000 is missing ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)'].
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T15:59:49+0800
