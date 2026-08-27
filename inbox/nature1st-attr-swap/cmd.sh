@@ -1,34 +1,70 @@
 #!/bin/bash
-# nature1st-attr-swap seq=101 -- READ-ONLY. armJ is alone in the hgpu2p queue yet
-# still PENDING(Priority) with a start estimate two days out. Find the real constraint,
-# and read the GPU model out of an old node-test log.
+# nature1st-attr-swap seq=102 -- 30-second GPU identity probe on the two idle nodes.
+# NOT a training run: 1 cpu, 1 gpu, 5-minute wall limit, prints nvidia-smi and exits.
+# Purpose: armJ (215195) is stuck behind other users' invisible jobs in hgpu2p with a
+# two-day start estimate, while ngu009 (hgpu2) and ngu101 (hgpu4) sit fully idle.
+# Moving armJ there is only safe if the card is the same RTX 3090 the other eight arms
+# ran on. SLURM does not record the model, so measure it.
 set -o pipefail
-date "+wallclock %F %T %z"
+cd ~/hpc_mailbox || exit 1
+mkdir -p inbox outbox
 
-echo "=== A. GPU MODEL FROM THE OLD NODE TEST ==="
-f=/data1/home/sunyiq/hpc_mailbox/outbox/slurm_201451.out
-[ -f "$f" ] && { echo "-- $f --"; grep -E "NVIDIA-SMI|Driver|GeForce|RTX|A100|A800|V100|Tesla|hostname|Node|^\|" "$f" 2>/dev/null | head -18 || true; } || echo "  (missing)"
-echo '-- which node did that test run on --'
-sacct -j 201451 -X --format=JobID%10,JobName%18,State%12,NodeList%9,End%18 2>&1 | head -4
-
-echo "=== B. WHY WONT armJ START? ==="
-echo '-- my running jobs cluster-wide, by partition --'
-squeue -u $USER -t RUNNING -o '%.11i %.10P %.16j %.9N %.10M' 2>&1 | head -20
-echo '-- count --'
-squeue -u $USER -t RUNNING -h 2>&1 | wc -l
-echo '-- priority breakdown for armJ (sprio) --'
-sprio -j 215195 2>&1 | head -5 || echo '  (sprio unavailable)'
-echo '-- my association limits (max jobs / max gpus?) --'
-sacctmgr -n show assoc user=$USER format=Account,Partition,GrpTRES%30,MaxJobs,MaxSubmit,GrpJobs,QOS%25 2>&1 | head -12 || true
-echo '-- qos limits --'
-sacctmgr -n show qos format=Name,MaxJobsPU,MaxSubmitPU,MaxTRESPU%30,GrpTRES%25 2>&1 | head -10 || true
-
-echo "=== C. PARTITION CONFIG (hgpu2p vs hgpu2) ==="
-for p in hgpu2p hgpu2 hgpu4; do
-  echo "-- $p --"
-  scontrol show partition $p 2>&1 | grep -E 'PartitionName|AllowGroups|AllowAccounts|MaxNodes|MaxTime|State=|TotalNodes|Nodes=|PriorityTier|QoS' | head -6 || true
+echo "=== A. WRITE PROBE SCRIPTS ==="
+for spec in 'ngu009:hgpu2' 'ngu101:hgpu4'; do
+  N=${spec%%:*}; P=${spec##*:}
+  cat > inbox/gpucheck_${N}.slurm <<SL
+#!/usr/bin/env bash
+#SBATCH -J gpucheck_${N}
+#SBATCH -p ${P}
+#SBATCH --nodelist=${N}
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --cpus-per-task=1
+#SBATCH --gres=gpu:1
+#SBATCH -t 00:05:00
+#SBATCH -o /data1/home/sunyiq/hpc_mailbox/outbox/slurm_%j.out
+#SBATCH -e /data1/home/sunyiq/hpc_mailbox/outbox/slurm_%j.err
+set -eo pipefail
+echo "host=\$(hostname)"
+nvidia-smi --query-gpu=index,name,driver_version,memory.total --format=csv,noheader || echo NVIDIA_SMI_FAILED
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+python -c "import torch;print('torch',torch.__version__,'cuda',torch.cuda.is_available(),'|',torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'NO GPU')"
+SL
+  echo "  wrote inbox/gpucheck_${N}.slurm"
 done
 
-echo "=== D. WHO HOLDS THE hgpu2p GPUs RIGHT NOW ==="
-squeue -w ngu001,ngu004,ngu005,ngu006,ngu007,ngu008,ngu010,ngu011 -o '%.11i %.9u %.10P %.16j %.9T %.10M %.9N' 2>&1 | head -20
-echo "=== END seq=101 ==="
+echo "=== B. SUBMIT BOTH ==="
+JIDS=''
+for N in ngu009 ngu101; do
+  out=$(sbatch inbox/gpucheck_${N}.slurm 2>&1); echo "  $N -> $out"
+  j=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
+  [ -n "$j" ] && JIDS="$JIDS $j"
+done
+echo "  jobids:$JIDS"
+[ -n "$JIDS" ] || { echo "SUBMIT_FAILED for both"; exit 1; }
+
+echo "=== C. WAIT (max 4 min) ==="
+for i in $(seq 1 24); do
+  LEFT=0
+  for j in $JIDS; do squeue -j $j -h -o '%i' 2>/dev/null | grep -q . && LEFT=$((LEFT+1)); done
+  [ $((i % 4)) -eq 0 ] && echo "  t=$((i*10))s still queued/running: $LEFT"
+  [ "$LEFT" -eq 0 ] && break
+  sleep 10
+done
+
+echo "=== D. RESULTS ==="
+for j in $JIDS; do
+  echo "---- job $j ----"
+  sacct -j $j -X --format=JobID%10,JobName%16,State%12,ExitCode%8,Elapsed%10,NodeList%8 2>&1 | tail -2
+  [ -f outbox/slurm_${j}.out ] && cat outbox/slurm_${j}.out 2>&1 | head -12 || echo '  (no stdout)'
+  [ -s outbox/slurm_${j}.err ] && { echo '  -- stderr --'; head -6 outbox/slurm_${j}.err; } || true
+  rm -f outbox/slurm_${j}.out outbox/slurm_${j}.err
+done
+
+echo "=== E. REFERENCE: hgpu2p card, measured earlier on ngu010 ==="
+echo "  torch 2.4.0 cuda True NVIDIA GeForce RTX 3090   (job 201451, 2026-08-06)"
+
+echo "=== F. armJ STILL PENDING? ==="
+squeue -j 215195 -o '%.10i %.9T %.20S %.20R' 2>&1
+echo "=== END seq=102 ==="
