@@ -1,0 +1,14 @@
+### channel=kalmannet-daily-camels seq=67
+### host=login4
+### started=2026-08-27T22:30:54+0800
+### ---------- output ----------
+slurm_load_jobs error: Invalid job id specified
+JobIDRaw|JobName|User|Partition|State|ExitCode|Elapsed|NodeList|AllocTRES|ReqTRES
+215699|daily-knet-a37|sunyiq|hgpu8|FAILED|2:0|00:21:33|ngu202|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+215699.batch|batch|||FAILED|2:0|00:21:33|ngu202|cpu=4,mem=0,node=1|
+215699.extern|extern|||COMPLETED|0:0|00:21:33|ngu202|billing=4,cpu=4,node=1|
+215699.0|python|||COMPLETED|0:0|00:00:01|ngu202|cpu=4,mem=0,node=1|
+215699.1|python|||FAILED|2:0|00:21:30|ngu202|cpu=4,mem=0,node=1|
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T22:30:54+0800
