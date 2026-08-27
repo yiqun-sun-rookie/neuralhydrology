@@ -1,0 +1,32 @@
+### channel=id30-modern-moe-execution seq=20
+### host=login4
+### started=2026-08-27T17:12:57+0800
+### ---------- output ----------
+=== PRESELECTION SECOND RETRY STATUS ===
+2026-08-27T17:12:57+0800
+login4
+job_id=215262
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215262        hgpu2                   id30_gates  RUNNING       3:54                         ngu009
+215262|id30_gates|hgpu2|RUNNING|0:0|00:04:19|ngu009|
+215262.batch|batch||RUNNING|0:0|00:04:19|ngu009|
+215262.extern|extern||RUNNING|0:0|00:04:19|ngu009|
+=== LOG TAILS ===
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/preselection-gates-215262.out
+=== COMPUTE NODE AND CUDA ===
+2026-08-27T17:09:07+0800
+ngu009
+NVIDIA GeForce RTX 3090, 24576 MiB, 535.104.05
+NVIDIA GeForce RTX 3090, 24576 MiB, 535.104.05
+torch 2.4.0
+cuda_device NVIDIA GeForce RTX 3090
+cuda_memory_bytes 25438126080
+=== STATIC AND CPU TECHNICAL GATES ===
+CONFIG AUDIT: PASS (4 runnable configs; M01 is gated on dense validation selection; no training launched)
+REMOTE_PYTEST_UNAVAILABLE_LOCAL_103_TEST_GATE_RETAINED
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/preselection-gates-215262.err
+=== RESOURCE REPORT SUMMARY ===
+NO_PROBE_REPORTS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T17:12:57+0800
