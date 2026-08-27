@@ -1,0 +1,19 @@
+### channel=id30-modern-moe-execution seq=2
+### host=login4
+### started=2026-08-27T15:18:41+0800
+### ---------- output ----------
+=== VERIFY DEPLOYMENT PAYLOAD ===
+expected=10bcbd891c06345beb1792c83ce9490a6cd0593dbe0428854582b06a82be41d8
+actual=10bcbd891c06345beb1792c83ce9490a6cd0593dbe0428854582b06a82be41d8
+=== CREATE ISOLATED DEPLOYMENT ===
+=== FREEZE DEPLOYED SOURCE ===
+188ddf24671ce323ff2a4a27ddde561855ac3395
+=== SUBMIT CANDIDATE-SAFE DATA BUILD ===
+215194
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215194       hgpu2p               id30_safe_data  PENDING       0:00                     (Priority)
+=== DEPLOYMENT COMPLETE ===
+2026-08-27T15:18:44+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T15:18:44+0800
