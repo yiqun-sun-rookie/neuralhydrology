@@ -1,0 +1,11 @@
+### channel=kalmannet-tukf24 seq=12
+### host=login4
+### started=2026-08-27T19:38:46+0800
+### ---------- output ----------
+=== INSTALL SEAL ===
+49f35e7d46995c4265f2efac76cda8c41930415236a927bd24af38890f881acf  /data1/home/sunyiq/kalmannet_tukf24_20260827/results/checkpoint_seal.json
+expect d91ff31be732b3c19d7f5dd175cddbff40624f79524033b06a828f9a46216127
+SEAL_HASH_MISMATCH
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-27T19:38:46+0800
