@@ -39,7 +39,7 @@ bindings = json.loads(bindings_path.read_text(encoding="utf-8"))
 records = [record for record in bindings["records"] if record["role"] == "B01" and record["seed"] == 100]
 print(json.dumps({"matching_binding_count": len(records), "records": records}, sort_keys=True))
 
-invocation_path = root / "results/30_modern_transformer_moe/_development_invocations" / run_id / "invocation_manifest.json"
+invocation_path = root / "results/30_modern_transformer_moe/_development_invocations" / run_id / "run_manifest.json"
 if invocation_path.is_file():
     manifest = json.loads(invocation_path.read_text(encoding="utf-8"))
     keys = (
