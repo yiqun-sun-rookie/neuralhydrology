@@ -3,119 +3,81 @@ set -eo pipefail
 
 TARGET=/data1/home/sunyiq/id30_modern_transformer_moe_20260827
 ROOT="$TARGET/repo"
-B01_RECORD="$TARGET/deployment/development_B01_s100_job_id_v01.txt"
-D01_RECORD="$TARGET/deployment/development_D01_s100_job_id_v01.txt"
-D02_RECORD="$TARGET/deployment/development_D02_s100_job_id_v01.txt"
-D03_RECORD="$TARGET/deployment/development_D03_s100_job_id_v01.txt"
-SELECT_RECORD="$TARGET/deployment/dense_selection_job_id_v01.txt"
-M01_RECORD="$TARGET/deployment/development_M01_s100_job_id_v01.txt"
 
-echo "=== SUBMIT STRICT SEQUENTIAL DENSE-TO-MOE CHAIN ==="
+declare -A RECORDS=(
+  [B01]="$TARGET/deployment/development_B01_s100_job_id_v01.txt"
+  [D01]="$TARGET/deployment/development_D01_s100_job_id_v01.txt"
+  [D02]="$TARGET/deployment/development_D02_s100_job_id_v01.txt"
+  [D03]="$TARGET/deployment/development_D03_s100_job_id_v01.txt"
+  [SELECT]="$TARGET/deployment/dense_selection_job_id_v01.txt"
+  [M01]="$TARGET/deployment/development_M01_s100_job_id_v01.txt"
+)
+
+echo "=== ID30 SEED-100 CHAIN STATUS ==="
 date -Is
 hostname
-cd "$ROOT"
-
-B01_SUBMISSION=$(tr -d '[:space:]' < "$B01_RECORD")
-B01_JOB=$(printf '%s' "$B01_SUBMISSION" | cut -d';' -f1)
-case "$B01_JOB" in
-  *[!0-9]*|'') echo "Invalid B01 job record: $B01_SUBMISSION" >&2; exit 1 ;;
-esac
-
-for record in "$D01_RECORD" "$D02_RECORD" "$D03_RECORD" "$SELECT_RECORD" "$M01_RECORD"; do
-  if [ -e "$record" ]; then
-    echo "Refusing to overwrite existing downstream job record: $record" >&2
-    cat "$record"
-    exit 1
-  fi
+JOB_LIST=
+for role in B01 D01 D02 D03 SELECT M01; do
+  submission=$(tr -d '[:space:]' < "${RECORDS[$role]}")
+  job_id=$(printf '%s' "$submission" | cut -d';' -f1)
+  echo "$role=$job_id"
+  if [ -z "$JOB_LIST" ]; then JOB_LIST=$job_id; else JOB_LIST="$JOB_LIST,$job_id"; fi
 done
+squeue -j "$JOB_LIST" -o '%.18i %.12P %.28j %.8T %.10M %.30R' || true
+sacct -j "$JOB_LIST" --format=JobID,JobName,Partition,State,ExitCode,Elapsed,NodeList,MaxRSS -n -P || true
 
-python - "$ROOT" "$B01_JOB" <<'PY'
+echo "=== REGISTRY, HEARTBEAT, AND MILESTONES ==="
+python - "$ROOT" <<'PY'
 import json
+import re
 import sys
 from pathlib import Path
 
 root = Path(sys.argv[1])
-b01_job = sys.argv[2]
 bindings_path = root / "src/modern_transformer_moe/registry/development_run_bindings.json"
 bindings = json.loads(bindings_path.read_text(encoding="utf-8"))
-records = bindings["records"]
+summary = []
+for record in bindings["records"]:
+    if record["seed"] != 100 or record["role"] not in {"B01", "D01", "D02", "D03", "M01"}:
+        continue
+    item = {
+        "role": record["role"],
+        "seed": record["seed"],
+        "run_id": record["run_id"],
+        "status": record["status"],
+        "run_dir": record["run_dir"],
+        "metrics_artifact_path": record["metrics_artifact_path"],
+        "failure_stage": record["failure_stage"],
+        "failure_reason": record["failure_reason"],
+    }
+    manifest_path = root / record["invocation_manifest_path"]
+    if manifest_path.is_file():
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        item["manifest_status"] = manifest.get("status")
+        item["last_heartbeat_at_utc"] = manifest.get("last_heartbeat_at_utc")
+        item["child_process"] = manifest.get("child_process")
+        stdout_path = manifest_path.parent / "training_stdout.log"
+        stderr_path = manifest_path.parent / "training_stderr.log"
+        item["training_stdout_bytes"] = stdout_path.stat().st_size if stdout_path.is_file() else 0
+        item["training_stderr_bytes"] = stderr_path.stat().st_size if stderr_path.is_file() else 0
+        if stdout_path.is_file():
+            text = stdout_path.read_text(encoding="utf-8", errors="replace").replace("\r", "\n")
+            ansi = re.compile(r"\x1b\[[0-9;?]*[ -/]*[@-~]")
+            milestones = []
+            for raw_line in text.splitlines():
+                line = ansi.sub("", raw_line).strip()
+                if not line or re.search(r"\d+%\|", line):
+                    continue
+                lowered = line.lower()
+                if any(token in lowered for token in ("epoch", "average loss", "median nse", "starting training", "finished training", "validation metrics")):
+                    milestones.append(line[:600])
+            item["latest_milestones"] = milestones[-20:]
+    summary.append(item)
+print(json.dumps({"records": sorted(summary, key=lambda item: item["role"])}, indent=2, sort_keys=True))
 
-b01 = [record for record in records if record["role"] == "B01" and record["seed"] == 100]
-if len(b01) != 1 or b01[0]["run_id"] != f"id30_B01_s100_slurm{b01_job}" or b01[0]["status"] != "RUNNING":
-    raise RuntimeError(f"B01 is not the unique live upstream run: {b01}")
-
-unexpected = [record for record in records if record["role"] in {"D01", "D02", "D03", "M01"} and record["seed"] == 100]
-if unexpected:
-    raise RuntimeError(f"Downstream seed-100 bindings already exist: {unexpected}")
-
-invocation_root = root / "results/30_modern_transformer_moe/_development_invocations"
-existing = []
-if invocation_root.exists():
-    for role in ("D01", "D02", "D03", "M01"):
-        existing.extend(invocation_root.glob(f"id30_{role}_s100_slurm*"))
-if existing:
-    raise RuntimeError(f"Downstream seed-100 invocation directories already exist: {sorted(existing)}")
-
-for path in (
-    root / "results/30_modern_transformer_moe/dense_selection_report.json",
-    root / "results/30_modern_transformer_moe/single_seed_dense_gate.json",
-    root / "src/modern_transformer_moe/configs/moe_selected_s100.yml",
-):
-    if path.exists():
-        raise RuntimeError(f"Post-dense artifact exists before dense runs complete: {path}")
-
+checkpoints = sorted((root / "results/30_modern_transformer_moe/B01").glob("**/model_epoch*.pt"))
 print(json.dumps({
-    "b01_job_id": b01_job,
-    "b01_status": b01[0]["status"],
-    "downstream_bindings": 0,
-    "downstream_invocations": 0,
-    "post_dense_artifacts": 0,
-}, sort_keys=True))
+    "b01_checkpoint_count": len(checkpoints),
+    "latest_b01_checkpoints": [str(path.relative_to(root)) for path in checkpoints[-5:]],
+}, indent=2, sort_keys=True))
 PY
-
-B01_STATE=$(squeue -h -j "$B01_JOB" -o '%T')
-if [ "$B01_STATE" != "RUNNING" ]; then
-  echo "B01 must be RUNNING before the dependency chain is created; state=$B01_STATE" >&2
-  exit 1
-fi
-
-submit_and_record() {
-  local dependency=$1
-  local record=$2
-  shift 2
-  local submission
-  local job_id
-  submission=$(sbatch --partition=hgpu2 --nodelist=ngu009 --dependency="afterok:${dependency}" --parsable "$@")
-  job_id=$(printf '%s' "$submission" | cut -d';' -f1)
-  case "$job_id" in
-    *[!0-9]*|'') echo "Unexpected sbatch response: $submission" >&2; exit 1 ;;
-  esac
-  umask 077
-  printf '%s\n' "$submission" > "$record.tmp"
-  mv "$record.tmp" "$record"
-  printf '%s\n' "$job_id"
-}
-
-D01_JOB=$(submit_and_record "$B01_JOB" "$D01_RECORD" \
-  src/modern_transformer_moe/hpc/submit_seed100_development.slurm 215269 D01)
-D02_JOB=$(submit_and_record "$D01_JOB" "$D02_RECORD" \
-  src/modern_transformer_moe/hpc/submit_seed100_development.slurm 215269 D02)
-D03_JOB=$(submit_and_record "$D02_JOB" "$D03_RECORD" \
-  src/modern_transformer_moe/hpc/submit_seed100_development.slurm 215269 D03)
-SELECT_JOB=$(submit_and_record "$D03_JOB" "$SELECT_RECORD" \
-  src/modern_transformer_moe/hpc/submit_dense_selection.slurm)
-M01_JOB=$(submit_and_record "$SELECT_JOB" "$M01_RECORD" \
-  src/modern_transformer_moe/hpc/submit_m01_development.slurm)
-
-echo "B01=$B01_JOB"
-echo "D01=$D01_JOB dependency=afterok:$B01_JOB"
-echo "D02=$D02_JOB dependency=afterok:$D01_JOB"
-echo "D03=$D03_JOB dependency=afterok:$D02_JOB"
-echo "SELECT=$SELECT_JOB dependency=afterok:$D03_JOB"
-echo "M01=$M01_JOB dependency=afterok:$SELECT_JOB"
-squeue -j "$B01_JOB,$D01_JOB,$D02_JOB,$D03_JOB,$SELECT_JOB,$M01_JOB" \
-  -o '%.18i %.12P %.28j %.8T %.10M %.30R'
-for job_id in "$D01_JOB" "$D02_JOB" "$D03_JOB" "$SELECT_JOB" "$M01_JOB"; do
-  scontrol show job -o "$job_id" | sed -n 's/.*JobId=\([^ ]*\).*JobState=\([^ ]*\).*Dependency=\([^ ]*\).*/job_id=\1 state=\2 dependency=\3/p'
-done
-date -Is
