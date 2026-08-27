@@ -1,0 +1,43 @@
+### channel=zhenjiang-latent-da seq=2
+### host=login4
+### started=2026-08-27T13:52:17+0800
+### ---------- output ----------
+PROBE2_START 2026-08-27T13:52:17+0800
+HOST login4
+NEW_ROOT_EXISTS=false
+PATH_CHECKS
+FOUND /data1/home/sunyiq/zhenjiang_oyv_v1/repo
+FOUND /data1/home/sunyiq/zhenjiang_oyv_v1/repo/data/processed/water_level_model_input_v7_beijing_realtime_verified
+FOUND /data1/home/sunyiq/zhenjiang_oyv_v1/repo/results/modeling/wusongkou_astronomical_tide_v1_validation/tide_model.json
+FOUND /data1/home/sunyiq/kalmannet_daily_camels_official_core_a35_20260825/source_seq27/third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py
+INPUT_FILES
+dataset_config.json|2854
+realtime_features/datong_realtime_features.csv|6560619
+realtime_features/jiangyin_realtime_features.csv|7011140
+realtime_features/nanjing_realtime_features.csv|7011887
+realtime_features/wusongkou_realtime_features.csv|7008668
+realtime_features/xuliujing_realtime_features.csv|7011762
+realtime_features/zhenjiang_realtime_features.csv|7067428
+retrospective_targets/datong_retrospective_targets.csv|6561614
+retrospective_targets/jiangyin_retrospective_targets.csv|7012506
+retrospective_targets/nanjing_retrospective_targets.csv|7013326
+retrospective_targets/wusongkou_retrospective_targets.csv|7009883
+retrospective_targets/xuliujing_retrospective_targets.csv|7013202
+retrospective_targets/zhenjiang_retrospective_targets.csv|7067982
+INPUT_FILE_COUNT=13
+INPUT_TOTAL_BYTES=83352871
+SMALL_FILE_DIGESTS
+ce8512f28e87ab6d62814b064d91ca358b98efd7ee27b4f831322ea93775516d  /data1/home/sunyiq/zhenjiang_oyv_v1/repo/results/modeling/wusongkou_astronomical_tide_v1_validation/tide_model.json
+0cad52635723eaf8c4bbfc331a2d0614520363c71953f650794b4794d7aab33d  /data1/home/sunyiq/kalmannet_daily_camels_official_core_a35_20260825/source_seq27/third_party/KalmanNet_TSP_828a2cf/KNet/KalmanNet_nn.py
+NH_FINAL_RUNTIME
+python=3.11.13
+platform=Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17
+numpy=2.3.3
+pandas=2.3.2
+scipy=1.16.2
+torch=2.4.0
+pytest_available=false
+PROBE2_END 2026-08-27T13:52:44+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T13:52:44+0800
