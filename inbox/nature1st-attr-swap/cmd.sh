@@ -1,32 +1,39 @@
 #!/bin/bash
-# nature1st-attr-swap seq=98 -- READ-ONLY node audit. Is ngu002 (and any other
-# excluded/unused node) actually usable right now? Our sbatch files all carry
-# '#SBATCH --exclude=ngu002' on the strength of a note, not a fresh measurement.
-# NO sbatch, NO scontrol update, nothing that changes state.
+# nature1st-attr-swap seq=99 -- READ-ONLY. Two questions:
+#  (1) do hgpu4 / hgpu2 / hgpu8 carry the SAME gpu model as hgpu2p? If not, moving
+#      armJ there breaks comparability with the eight arms already run on hgpu2p.
+#  (2) what is job 215178 (my own job blocking armJ), and are hgpu2p's GPUs actually
+#      all busy, or only its CPUs partly used?
 set -o pipefail
 date "+wallclock %F %T %z"
 
-echo "=== A. ALL GPU PARTITIONS I CAN USE ==="
-sinfo -o '%.12P %.6a %.11l %.6D %.8t %.14C %N' 2>&1 | head -25
+echo "=== A. GPU MODEL PER PARTITION (the decisive question) ==="
+for n in ngu001 ngu004 ngu005 ngu006 ngu007 ngu008 ngu010 ngu011 ngu003 ngu009 ngu101 ngu102 ngu104 ngu201 ngu202 ngu203 ; do
+  line=$(scontrol show node $n 2>/dev/null | tr '
+' ' ')
+  part=$(echo "$line" | grep -oE 'Partitions=[^ ]+' | cut -d= -f2)
+  gres=$(echo "$line" | grep -oE 'Gres=[^ ]+' | cut -d= -f2)
+  st=$(echo "$line"   | grep -oE 'State=[^ ]+' | cut -d= -f2)
+  agres=$(echo "$line"| grep -oE 'AllocTRES=[^ ]*' | cut -d= -f2)
+  printf '  %-8s %-10s %-14s %-12s alloc=%s
+' "$n" "$part" "$gres" "$st" "${agres:-none}"
+done
 
-echo "=== B. NODE-BY-NODE, WITH GPU COUNT AND FREE CPUS ==="
-sinfo -N -o '%.9N %.12P %.8t %.10e %.14C %.24G %.30E' 2>&1 | head -40
+echo "=== B. WHICH NODES DID THE EIGHT FINISHED ARMS RUN ON? ==="
+sacct -S 2026-08-18 -u $USER -X --format=JobID%10,JobName%24,State%11,NodeList%9,Elapsed%11 2>&1 | grep -E 'q_ctrl|q_treat|q_arm|JobID|^---' | head -14 || true
 
-echo "=== C. ngu002 IN DETAIL (why is it excluded?) ==="
-scontrol show node ngu002 2>&1 | head -30
+echo "=== C. ARE hgpu2p GPUs ACTUALLY ALL TAKEN? ==="
+echo '-- gres alloc vs total, per hgpu2p node --'
+sinfo -p hgpu2p -N -o '%.9N %.8t %.16G %.34e' 2>&1 | head -12
+echo '-- running jobs in hgpu2p and their gpu request --'
+squeue -p hgpu2p -t RUNNING -o '%.10i %.9u %.20j %.10M %.8N %.14b' 2>&1 | head -15
 
-echo "=== D. HAS ANYTHING RUN SUCCESSFULLY ON ngu002 LATELY? ==="
-echo '-- my jobs on ngu002, last 30 days --'
-sacct -S $(date -d '30 days ago' +%F) -u $USER -X --format=JobID%12,JobName%22,State%14,ExitCode%8,Elapsed%11,End%17,NodeList%9 2>&1 | grep -E 'ngu002|JobID|^---' | head -20 || echo '  (none of my jobs landed on ngu002)'
+echo "=== D. WHAT IS JOB 215178 (blocking armJ)? ==="
+scontrol show job 215178 2>&1 | grep -E 'JobName|JobState|Reason|Partition|StartTime|TRES=|NumNodes|TimeLimit|WorkDir' | head -10 || true
 
-echo "=== E. MY PENDING JOB 215195 -- WHY IS IT WAITING, AND WOULD ngu002 HELP? ==="
-squeue -j 215195 -o '%.10i %.22j %.9T %.10M %.30R %.20S %.12Q' 2>&1
-echo '-- what it asked for --'
-scontrol show job 215195 2>&1 | grep -E 'ExcNodeList|ReqNodeList|TRES=|Partition|JobState|Reason|StartTime' | head -8 || true
-
-echo "=== F. WHO IS AHEAD OF ME IN hgpu2p ==="
-squeue -p hgpu2p -o '%.10i %.9u %.9T %.10M %.20R %.10Q' 2>&1 | head -15
-
-echo "=== G. OTHER PARTITIONS -- ANY IDLE GPU NODES? ==="
-sinfo -o '%.12P %.8t %.6D %N' 2>&1 | grep -Ei 'idle|mix' | head -15 || true
-echo "=== END seq=98 ==="
+echo "=== E. IF I ALSO OFFERED hgpu4/hgpu2, WHEN WOULD armJ START? (simulation, no change) ==="
+echo '-- current estimate on hgpu2p only --'
+squeue -j 215195 -o '%.10i %.9T %.20S %.24R' 2>&1
+echo '-- idle GPU capacity elsewhere right now --'
+sinfo -p hgpu4,hgpu2,hgpu8 -N -o '%.9N %.10P %.8t %.16G %.14C' 2>&1 | head -14
+echo "=== END seq=99 ==="
