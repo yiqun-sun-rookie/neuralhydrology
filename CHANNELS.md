@@ -43,6 +43,7 @@ outbox/<channel>/result_<seq>.txt   结果
 | `kalmannet-tukf20` | 八状态水文模型在每日状态更新内部联合学习水文参数与滤波噪声的正式比较 | 2026-08-24 | 独立落点 `/data1/home/sunyiq/kalmannet_tukf20_20260824`；仅操作本通道和该目录，不碰原超算仓库、其他通道、旧实验或旧证据 |
 | `kalmannet-daily-camels` | CAMELS 日尺度原生卡尔曼网络恢复与小规模训练冒烟 | 2026-08-24 | 独立落点 `/data1/home/sunyiq/kalmannet_daily_camels_20260824`；先独立显卡探针，探针通过前不训练；不碰小时尺度、其他通道、旧实验或旧证据 |
 | `zhenjiang-oyv-n4` | 镇江六站四目标站观测条件阶梯（南京、徐六泾）：1440 次训练与预登记预测判定 | 2026-08-25 | 由 Claude 会话占用；落点 `/data1/home/sunyiq/zhenjiang_oyv_v1/`（沿用 OYV 部署包，新子目录 `n4_tasks/`）；**不碰** `tasks/`、`ladder_tasks/`、`independent_audit*/`、`ladder_audit/` 等已冻结产物，不碰 `~/neuralhydrology`、其他通道或其他会话的作业 |
+| `zhenjiang-latent-da` | 镇江六站共享抽象潜在状态门控循环单元与 KalmanNet 数据同化：独立部署、烟测和后续冻结训练 | 2026-08-27 | 独立落点 `/data1/home/sunyiq/zhenjiang_latent_da_20260827`；先只读探测与短时烟测，不读取留出年份目标作模型选择，不碰 `zhenjiang_oyv_v1` 既有结果、`~/neuralhydrology`、其他通道或其他实验 |
 
 **迁移方法**（`default` → 自己的 channel，随时可做，不影响正在跑的）：
 
