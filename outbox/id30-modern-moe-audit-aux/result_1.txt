@@ -1,0 +1,92 @@
+### channel=id30-modern-moe-audit-aux seq=1
+### host=login4
+### started=2026-08-27T13:49:25+0800
+### ---------- output ----------
+=== REMOTE IDENTITY AND TIME ===
+2026-08-27T13:49:25+0800
+login4
+sunyiq
+=== RELEVANT HOME-LEVEL DIRECTORIES ===
+camels_g2_design_20260808
+kalmannet_daily_camels_20260824
+kalmannet_daily_camels_full_state_a34_20260825
+kalmannet_daily_camels_full_state_a34_retry1_20260825
+kalmannet_daily_camels_full_state_a34_retry1_staging_20260825
+kalmannet_daily_camels_full_state_a34_retry2_20260825
+kalmannet_daily_camels_full_state_a34_retry2_staging_20260825
+kalmannet_daily_camels_full_state_a34_retry3_20260826
+kalmannet_daily_camels_full_state_a34_retry3_staging_20260826
+kalmannet_daily_camels_full_state_a34_staging_20260825
+kalmannet_daily_camels_knet_a37_resume1_20260826
+kalmannet_daily_camels_masked_nse_a20_result_audit_v2_20260825
+kalmannet_daily_camels_masked_nse_a20_result_audit_v2_staging_20260825
+kalmannet_daily_camels_masked_nse_v3_20260825
+kalmannet_daily_camels_official_core_a35_20260825
+kalmannet_daily_camels_official_core_a35_seq27_staging_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a29_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a29_staging_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a30_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a30_staging_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a31_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a31_staging_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_staging_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_staging_20260825
+kalmannet_daily_camels_parity_20260824
+neuralhydrology
+neuralhydrology_backup_20260304
+neuralhydrology_messy_backup
+=== EXACT EXPERIMENT ROOT SEARCH, LIMITED TO FOUR LEVELS ===
+/data1/home/sunyiq/adv531/results/18_lstm_fair_531
+/data1/home/sunyiq/id18_e04_20260809/results/18_lstm_fair_531
+/data1/home/sunyiq/v09_strict/neuralhydrology/results/18_lstm_fair_531
+=== EPOCH-30 CHECKPOINTS UNDER STANDARD RUN AND RESULT ROOTS ===
+ROOT path=/data1/home/sunyiq/neuralhydrology/runs resolved=/data1/home/sunyiq/neuralhydrology/runs
+  epoch030_checkpoint_count=0
+ROOT path=/data1/home/sunyiq/neuralhydrology/results resolved=/data1/home/sunyiq/neuralhydrology/results
+  epoch030_checkpoint_count=2
+/data1/home/sunyiq/neuralhydrology/results/01_caravan_global/caravan_global_pretrain_hpc_2026_0202_2101_ep30/model_epoch030.pt
+/data1/home/sunyiq/neuralhydrology/results/05_full_531_basins/reproduce_531_nse074_2025_1129_2145_ep30/model_epoch030.pt
+MISSING root=/data1/home/sunyiq/runs
+MISSING root=/data1/home/sunyiq/results
+=== CAMELS-RELATED RESULT INVENTORY ===
+ROOT /data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us
+  all_checkpoint_count=6
+  configuration_snapshot_count=4
+  test_result_pickle_count=0
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us/mamba_daily_benchmark_2026_0124_2237_ep30/config.yml
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us/mamba_daily_benchmark_2026_0125_1413_ep30/config.yml
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us/mamba_daily_benchmark_2026_0125_1413_ep30/model_epoch001.pt
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us/mamba_daily_benchmark_2026_0129_2132_ep30/config.yml
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us/mamba_daily_benchmark_2026_0129_2132_ep30/continue_training_from_epoch004/config.yml
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us/mamba_daily_benchmark_2026_0129_2132_ep30/continue_training_from_epoch004/model_epoch005.pt
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us/mamba_daily_benchmark_2026_0129_2132_ep30/model_epoch001.pt
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us/mamba_daily_benchmark_2026_0129_2132_ep30/model_epoch002.pt
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us/mamba_daily_benchmark_2026_0129_2132_ep30/model_epoch003.pt
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us/mamba_daily_benchmark_2026_0129_2132_ep30/model_epoch004.pt
+ROOT /data1/home/sunyiq/neuralhydrology/results/03_mamba_camelsh
+  all_checkpoint_count=1
+  configuration_snapshot_count=1
+  test_result_pickle_count=0
+/data1/home/sunyiq/neuralhydrology/results/03_mamba_camelsh/camelsh_mamba_mini_benchmark_2026_0204_1502_ep10/config.yml
+/data1/home/sunyiq/neuralhydrology/results/03_mamba_camelsh/camelsh_mamba_mini_benchmark_2026_0204_1502_ep10/model_epoch005.pt
+ROOT /data1/home/sunyiq/neuralhydrology/runs
+  all_checkpoint_count=0
+  configuration_snapshot_count=1
+  test_result_pickle_count=0
+/data1/home/sunyiq/neuralhydrology/runs/caravan_global_pretrain_hpc_2026_0123_1441_ep30/config.yml
+=== RELEVANT ARCHIVES, LIMITED TO THREE LEVELS ===
+/data1/home/sunyiq/kalmannet_daily_camels_20260824/_transport/DAILY_CAMELS_NATIVE_KALMANNET_SMOKE_V1_20260824_A01.tar.gz|189987 bytes
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_v3_20260825/transport/DAILY_CAMELS_NATIVE_KALMANNET_MASKED_NSE_SMOKE_V3_20260825_A20.tar.gz|211055 bytes
+=== SOURCE TREE PRESENCE FOR OLDER CAMELS MODELS ===
+MISSING src/lstm_fair_531
+MISSING src/modern_transformer_moe
+MISSING src/adversarial/baseline_531
+MISSING src/02_mamba_camels_us
+MISSING src/_archive/02_mamba_camels_us
+=== BOUNDED SEARCH COMPLETE ===
+No files were modified, no result pickle was opened, and no job was submitted.
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T13:49:29+0800
