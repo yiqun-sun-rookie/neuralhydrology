@@ -1,4 +1,5 @@
 #!/bin/bash
+exec bash inbox/id30-modern-moe-audit/audit_deep.sh
 # Read-only inventory for the CAMELS-US modern causal Transformer and sparse mixture-of-experts work.
 set -o pipefail
 
