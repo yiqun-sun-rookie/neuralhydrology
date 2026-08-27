@@ -1,0 +1,49 @@
+### channel=nature1st-attr-swap seq=105
+### host=login4
+### started=2026-08-27T17:30:30+0800
+### ---------- output ----------
+pwd=/data1/home/sunyiq/nature_1st  date=2026-08-27 17:30:30
+=== A. QUEUE / ACCOUNTING (all armJ seeds) ===
+--- squeue ---
+      JOBID                       NAME     STATE       TIME  NODELIST
+     215195         q_armJ_china_min15   RUNNING    1:20:10    ngu009
+--- sacct ---
+      JobID                    JobName        State ExitCode     Elapsed  NodeList 
+     215195         q_armJ_china_min15      RUNNING      0:0    01:20:36    ngu009 
+=== B. LOGS ===
+--- armJ_china_min15-215195.out
+    bytes=2260  mtime=2026-08-27 17:09:22.000000000 +0800
+    [guard] (MUST say 15 attributes):
+        [guard] train: 15 attributes, 2908 stations in meta -- attribute set verified
+        [guard] val: 15 attributes, 2908 stations in meta -- attribute set verified
+    [errors]:
+      PyTorch 2.4.0, CUDA True
+    [progress, last 8]:
+      Epoch 1: loss=1.0728  val_median_NSE(phys)=0.3261  val_RMSE_qspec=0.0962  NSE>0=0.78  lr=5.00e-04
+      Epoch 2: loss=0.8768  val_median_NSE(phys)=0.5217  val_RMSE_qspec=0.0852  NSE>0=0.84  lr=5.00e-04
+    [Done. marker]:
+      Done_lines=0
+=== C. OUTPUT DIRS / COMPLETION ===
+  s42: dir EXISTS
+    eval_val_per_station.csv absent
+    best_metrics.json [INTERIM unless Done./COMPLETED]:
+      {  "epoch": 2,  "train_loss": 0.8768454027477579,  "median_nse": 0.5217155199382697,  "mean_nse": -62.31302923384513,  "p25_nse": 0.2560739583745541,  "p75_nse": 0.656219945059738,  "frac_nse_gt0": 0.8422273781902552,  "global_rmse_qspec_mmph": 0.08524142671942408,  "n_stations": 431,  "space": "physical_qcms_per_station_NSE"}
+
+  s43: no output dir
+  s44: no output dir
+=== D. PAIRED ANALYSIS (only if armJ eval csv exists) ===
+  armJ s42 eval_val_per_station.csv not present yet -- training not finished, skipping.
+=== E. GPU CAPACITY ===
+ PARTITION    STATE  NODES             NODELIST
+     hgpu4    down*      1               ngu103
+     hgpu4      mix      2         ngu[102,104]
+     hgpu4     idle      1               ngu101
+     hgpu2      mix      1               ngu009
+     hgpu2    alloc      1               ngu003
+    hgpu2p    down*      1               ngu002
+    hgpu2p      mix      7 ngu[001,004,006-008,
+    hgpu2p    alloc      1               ngu005
+=== END seq=105 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T17:30:31+0800
