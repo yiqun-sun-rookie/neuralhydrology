@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-exec bash /data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-daily-camels/seq48_a37_hgpu8_node_capacity_audit.sh
+exec bash /data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-daily-camels/seq49_a37_cancel_old_submit_a800_probe1.sh
 
 set -Eeuo pipefail
 umask 077
