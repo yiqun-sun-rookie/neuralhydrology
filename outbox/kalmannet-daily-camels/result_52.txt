@@ -1,0 +1,19 @@
+### channel=kalmannet-daily-camels seq=52
+### host=login4
+### started=2026-08-27T16:33:50+0800
+### ---------- output ----------
+SEQ52_A37_A800_SQUEUE_BEGIN
+slurm_load_jobs error: Invalid job id specified
+SEQ52_A37_A800_SQUEUE_END
+SEQ52_A37_A800_SACCT_BEGIN
+JobIDRaw|JobName|User|Partition|State|ExitCode|Elapsed|NodeList|AllocCPUS|ReqMem|AllocTRES|ReqTRES|MaxRSS|MaxVMSize
+215207|daily-knet-a37-a800|sunyiq|hgpu8|FAILED|1:0|00:01:09|ngu202|4|0n|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1||
+215207.batch|batch|||FAILED|1:0|00:01:09|ngu202|4|0n|cpu=4,mem=0,node=1||8260K|628540K
+215207.extern|extern|||COMPLETED|0:0|00:01:10|ngu202|4|0n|billing=4,cpu=4,node=1||1356K|185280K
+215207.0|python|||COMPLETED|0:0|00:00:01|ngu202|4|0n|cpu=4,mem=0,node=1||1384K|253900K
+215207.1|python|||FAILED|1:0|00:01:05|ngu202|4|0n|cpu=4,mem=0,node=1||772328K|10362376K
+SEQ52_A37_A800_SACCT_END
+SEQ52_A37_A800_STATUS_QUERIED experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37 execution_attempt_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_A800_TRAIN1_SEQ51 job_id=215207
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:33:53+0800
