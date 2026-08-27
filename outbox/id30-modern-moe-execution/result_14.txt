@@ -1,0 +1,22 @@
+### channel=id30-modern-moe-execution seq=14
+### host=login4
+### started=2026-08-27T16:40:55+0800
+### ---------- output ----------
+=== VERIFY PENDING JOB ===
+2026-08-27T16:40:55+0800
+login4
+job_id=215205 state=PENDING partition=hgpu2p
+=== MOVE TO RTX 3090 EQUIVALENT PARTITION ===
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215205        hgpu2                   id30_gates  RUNNING    INVALID                         ngu009
+             JOBID    PARTITION                         NAME          START_TIME               NODELIST(REASON)
+JobId=215205
+JobState=RUNNING
+Partition=hgpu2
+ExcNodeList=ngu002
+NodeList=ngu009
+=== COMPLETE ===
+2026-08-27T16:40:58+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:40:58+0800
