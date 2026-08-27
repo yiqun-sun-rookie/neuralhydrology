@@ -1,0 +1,34 @@
+### channel=id30-modern-moe-execution seq=29
+### host=login4
+### started=2026-08-27T18:07:49+0800
+### ---------- output ----------
+=== B01 DEVELOPMENT SUBMISSION PREFLIGHT ===
+2026-08-27T18:07:49+0800
+login4
+error: option `porcelain' takes no value
+usage: git status [options] [--] <pathspec>...
+
+    -v, --verbose         be verbose
+    -s, --short           show status concisely
+    -b, --branch          show branch information
+    --porcelain           machine-readable output
+    --long                show status in long format (default)
+    -z, --null            terminate entries with NUL
+    -u, --untracked-files[=<mode>]
+                          show untracked files, optional modes: all, normal, no. (Default: all)
+    --ignored             show ignored files
+    --ignore-submodules[=<when>]
+                          ignore changes to submodules, optional when: all, dirty, untracked. (Default: all)
+    --column[=<style>]    list untracked files in columns
+
+Traceback (most recent call last):
+  File "<stdin>", line 12, in <module>
+  File "/data1/home/sunyiq/miniconda3/lib/python3.11/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'status', '--porcelain=v1', '--untracked-files=no']' returned non-zero exit status 129.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-27T18:07:50+0800
