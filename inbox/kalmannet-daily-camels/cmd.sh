@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-exec bash /data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-daily-camels/seq52_a37_a800_job215207_status.sh
+exec bash /data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-daily-camels/seq53_a37_a800_job215207_terminal_collect.sh
 
 set -Eeuo pipefail
 umask 077
