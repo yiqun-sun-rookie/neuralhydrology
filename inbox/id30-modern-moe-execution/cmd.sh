@@ -11,6 +11,7 @@ date -Is
 hostname
 echo "job_id=$JOB_NUM"
 squeue -j "$JOB_NUM" -o '%.18i %.12P %.28j %.8T %.10M %.30R' || true
+squeue --start -j "$JOB_NUM" -o '%.18i %.12P %.28j %.19S %.30R' || true
 sacct -j "$JOB_NUM" --format=JobID,JobName,Partition,State,ExitCode,Elapsed,NodeList,MaxRSS -n -P || true
 
 echo "=== LOG TAILS ==="
