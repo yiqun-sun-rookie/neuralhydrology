@@ -1,0 +1,14 @@
+### channel=kalmannet-daily-camels seq=66
+### host=login4
+### started=2026-08-27T22:19:26+0800
+### ---------- output ----------
+215699|daily-knet-a37|hgpu8|RUNNING|ngu202|gpu:1|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train4_20260827/source_A37_a800_train4_seq65|/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train4_20260827/seq65_a37_a800_train4_wrapper.slurm
+JobIDRaw|JobName|User|Partition|State|ExitCode|Elapsed|NodeList|AllocTRES|ReqTRES
+215699|daily-knet-a37|sunyiq|hgpu8|RUNNING|0:0|00:20:53|ngu202|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+215699.batch|batch|||RUNNING|0:0|00:20:53|ngu202|cpu=4,mem=0,node=1|
+215699.extern|extern|||RUNNING|0:0|00:20:53|ngu202|billing=4,cpu=4,node=1|
+215699.0|python|||COMPLETED|0:0|00:00:01|ngu202|cpu=4,mem=0,node=1|
+215699.1|python|||RUNNING|0:0|00:20:51|ngu202|cpu=4,mem=0,node=1|
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T22:19:26+0800
