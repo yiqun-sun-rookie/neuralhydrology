@@ -1,0 +1,17 @@
+### channel=kalmannet-daily-camels seq=43
+### host=login4
+### started=2026-08-27T13:44:03+0800
+### ---------- output ----------
+SEQ43_A37_PROBE2_IDENTITY experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH10_TO40_RESUME_V1_20260826_A37 execution_attempt_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A37_PROBE2_SEQ35 job_id=215178 run_base=/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826
+SEQ43_A37_PROBE2_SACCT_BEGIN
+JobIDRaw|JobName|Partition|AllocCPUS|State|ExitCode|Elapsed|ReqMem|AllocTRES|MaxRSS|MaxVMSize
+215178|daily-knet-a37-probe|hgpu2p|2|PENDING|0:0|00:00:00|0n|||
+SEQ43_A37_PROBE2_SACCT_END
+SEQ43_A37_PROBE2_SQUEUE_BEGIN exit_code=0
+JOBID|NAME|STATE|TIME|NODELIST(REASON)
+215178|daily-knet-a37-probe|PENDING|0:00|(Priority)
+SEQ43_A37_PROBE2_SQUEUE_END
+SEQ43_A37_PROBE2_NON_TERMINAL state=PENDING exit_code=0:0 job_id=215178
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T13:44:04+0800
