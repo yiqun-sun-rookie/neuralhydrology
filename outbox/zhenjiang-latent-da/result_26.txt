@@ -1,0 +1,61 @@
+### channel=zhenjiang-latent-da seq=26
+### host=login4
+### started=2026-08-27T14:32:37+0800
+### ---------- output ----------
+MONITOR_START 2026-08-27T14:32:37+0800
+PARTITION_UPDATE requested=hgpu4
+SQUEUE
+215189|zlda-smoke01|PENDING|hgpu4|0:00|(Priority)
+GPU_PARTITION_NODES
+ngu001|hgpu2p|mixed|gpu:2|none
+ngu002|hgpu2p|down*|gpu:2|Not responding
+ngu004|hgpu2p|mixed|gpu:2|none
+ngu005|hgpu2p|allocated|gpu:2|none
+ngu006|hgpu2p|mixed|gpu:2|none
+ngu007|hgpu2p|mixed|gpu:2|none
+ngu008|hgpu2p|mixed|gpu:2|none
+ngu010|hgpu2p|mixed|gpu:2|none
+ngu011|hgpu2p|mixed|gpu:2|none
+ngu101|hgpu4|idle|gpu:4|none
+ngu102|hgpu4|mixed|gpu:4|none
+ngu103|hgpu4|down*|gpu:4|Not responding
+ngu104|hgpu4|mixed|gpu:4|none
+ngu201|hgpu8|idle|gpu:8|none
+ngu202|hgpu8|mixed|gpu:8|none
+ngu203|hgpu8|mixed$|gpu:8|none
+GPU_QUEUE_HEAD
+215178|sunyiq|daily-knet-a37-probe|PENDING|hgpu2p|0:00|(Priority)
+215189|sunyiq|zlda-smoke01|PENDING|hgpu4|0:00|(Priority)
+202226_[0-119%4]|sunyiq|N22-eval-later|PENDING|hgpu4,hgpu8,hgpu2|0:00|(DependencyNeverSatisfied)
+202229|sunyiq|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202230|sunyiq|N22-agg-hyper|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202294|sunyiq|N22-export|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202315|sunyiq|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)
+202507|sunyiq|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|0:00|(DependencyNeverSatisfied)
+202293|sunyiq|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|0:00|(JobHeldUser)
+202228_659|sunyiq|N22-hyper|RUNNING|hgpu4|2:26:02|ngu104
+211001_22|sunyiq|N22-relong|RUNNING|hgpu4|2:53:25|ngu102
+211001_21|sunyiq|N22-relong|RUNNING|hgpu4|1-08:03:30|ngu102
+PRIORITY
+          JOBID PARTITION     USER   PRIORITY       SITE        AGE      ASSOC  FAIRSHARE    JOBSIZE  PARTITION        QOS        NICE                 TRES
+         215189 hgpu4       sunyiq     200005          0          0          0          0          6          0     200000           0                     
+SACCT
+215189|zlda-smoke01|hgpu4|PENDING|0:0|00:00:00|
+SCONTROL
+JobId=215189
+JobName=zlda-smoke01
+JobState=PENDING
+Reason=Priority
+RunTime=00:00:00
+TimeLimit=00:20:00
+NodeList=(null)
+StdErr=/data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.err
+StdOut=/data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.out
+LOGS
+LOG_MISSING /data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.out
+LOG_MISSING /data1/home/sunyiq/zhenjiang_latent_da_20260827/logs/zlda-smoke01-215189.err
+RESULT_FILES
+MONITOR_END 2026-08-27T14:32:37+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T14:32:37+0800
