@@ -1,70 +1,37 @@
 #!/bin/bash
-# nature1st-attr-swap seq=102 -- 30-second GPU identity probe on the two idle nodes.
-# NOT a training run: 1 cpu, 1 gpu, 5-minute wall limit, prints nvidia-smi and exits.
-# Purpose: armJ (215195) is stuck behind other users' invisible jobs in hgpu2p with a
-# two-day start estimate, while ngu009 (hgpu2) and ngu101 (hgpu4) sit fully idle.
-# Moving armJ there is only safe if the card is the same RTX 3090 the other eight arms
-# ran on. SLURM does not record the model, so measure it.
+# nature1st-attr-swap seq=103 -- let armJ (215195) also use partition hgpu2.
+# MEASURED, not assumed: ngu009 (hgpu2) reports NVIDIA GeForce RTX 3090 / 24576 MiB /
+# driver 535.104.05 -- identical to ngu010 (hgpu2p), where earlier arms ran. ngu101
+# (hgpu4) reports NVIDIA A40 / 46068 MiB, a DIFFERENT card, so hgpu4 and hgpu8 stay out:
+# the effects being judged are 0.005-0.030 wide and must not absorb a hardware change.
+# This is scontrol update on a PENDING job -- no cancel, no resubmit, priority/age kept,
+# job id and log paths unchanged. No new machine time is consumed by the change itself.
 set -o pipefail
-cd ~/hpc_mailbox || exit 1
-mkdir -p inbox outbox
+date "+wallclock %F %T %z"
 
-echo "=== A. WRITE PROBE SCRIPTS ==="
-for spec in 'ngu009:hgpu2' 'ngu101:hgpu4'; do
-  N=${spec%%:*}; P=${spec##*:}
-  cat > inbox/gpucheck_${N}.slurm <<SL
-#!/usr/bin/env bash
-#SBATCH -J gpucheck_${N}
-#SBATCH -p ${P}
-#SBATCH --nodelist=${N}
-#SBATCH -N 1
-#SBATCH -n 1
-#SBATCH --cpus-per-task=1
-#SBATCH --gres=gpu:1
-#SBATCH -t 00:05:00
-#SBATCH -o /data1/home/sunyiq/hpc_mailbox/outbox/slurm_%j.out
-#SBATCH -e /data1/home/sunyiq/hpc_mailbox/outbox/slurm_%j.err
-set -eo pipefail
-echo "host=\$(hostname)"
-nvidia-smi --query-gpu=index,name,driver_version,memory.total --format=csv,noheader || echo NVIDIA_SMI_FAILED
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-python -c "import torch;print('torch',torch.__version__,'cuda',torch.cuda.is_available(),'|',torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'NO GPU')"
-SL
-  echo "  wrote inbox/gpucheck_${N}.slurm"
-done
+echo "=== A. BEFORE ==="
+squeue -j 215195 -o '%.10i %.22j %.9T %.12P %.20S %.20R' 2>&1
+scontrol show job 215195 2>&1 | grep -E 'Partition=|ExcNodeList|JobState|Reason' | head -4 || true
 
-echo "=== B. SUBMIT BOTH ==="
-JIDS=''
-for N in ngu009 ngu101; do
-  out=$(sbatch inbox/gpucheck_${N}.slurm 2>&1); echo "  $N -> $out"
-  j=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
-  [ -n "$j" ] && JIDS="$JIDS $j"
-done
-echo "  jobids:$JIDS"
-[ -n "$JIDS" ] || { echo "SUBMIT_FAILED for both"; exit 1; }
+echo "=== B. WIDEN PARTITION LIST ==="
+scontrol update JobId=215195 Partition=hgpu2p,hgpu2 2>&1 && echo '  update accepted' || echo '  UPDATE REFUSED'
 
-echo "=== C. WAIT (max 4 min) ==="
-for i in $(seq 1 24); do
-  LEFT=0
-  for j in $JIDS; do squeue -j $j -h -o '%i' 2>/dev/null | grep -q . && LEFT=$((LEFT+1)); done
-  [ $((i % 4)) -eq 0 ] && echo "  t=$((i*10))s still queued/running: $LEFT"
-  [ "$LEFT" -eq 0 ] && break
+echo "=== C. AFTER (wait 30s for the scheduler to re-evaluate) ==="
+sleep 30
+squeue -j 215195 -o '%.10i %.22j %.9T %.12P %.10M %.9N %.24R %.20S' 2>&1
+scontrol show job 215195 2>&1 | grep -E 'Partition=|JobState|Reason|StartTime|NodeList' | head -5 || true
+
+echo "=== D. IF STILL PENDING, WAIT A BIT MORE ==="
+for i in $(seq 1 12); do
+  ST=$(squeue -j 215195 -h -o '%T' 2>/dev/null)
+  [ "$ST" = 'RUNNING' ] && { echo "  started at t=$((i*10))s"; break; }
+  [ -z "$ST" ] && { echo '  no longer in queue'; break; }
+  [ $((i % 3)) -eq 0 ] && echo "  t=$((i*10))s state=$ST"
   sleep 10
 done
+squeue -j 215195 -o '%.10i %.9T %.12P %.10M %.9N %.24R' 2>&1
 
-echo "=== D. RESULTS ==="
-for j in $JIDS; do
-  echo "---- job $j ----"
-  sacct -j $j -X --format=JobID%10,JobName%16,State%12,ExitCode%8,Elapsed%10,NodeList%8 2>&1 | tail -2
-  [ -f outbox/slurm_${j}.out ] && cat outbox/slurm_${j}.out 2>&1 | head -12 || echo '  (no stdout)'
-  [ -s outbox/slurm_${j}.err ] && { echo '  -- stderr --'; head -6 outbox/slurm_${j}.err; } || true
-  rm -f outbox/slurm_${j}.out outbox/slurm_${j}.err
-done
-
-echo "=== E. REFERENCE: hgpu2p card, measured earlier on ngu010 ==="
-echo "  torch 2.4.0 cuda True NVIDIA GeForce RTX 3090   (job 201451, 2026-08-06)"
-
-echo "=== F. armJ STILL PENDING? ==="
-squeue -j 215195 -o '%.10i %.9T %.20S %.20R' 2>&1
-echo "=== END seq=102 ==="
+echo "=== E. GUARD CHECK IF IT STARTED ==="
+f=$(ls /data1/home/sunyiq/nature_1st/logs/attr_swap/armJ_china_min15-215195.out 2>/dev/null | head -1)
+if [ -n "$f" ]; then echo "  log: $f ($(stat -c%s "$f") bytes)"; grep -E "\[guard\]|PyTorch|Epoch" "$f" 2>/dev/null | head -5 || true; else echo "  (no log yet)"; fi
+echo "=== END seq=103 ==="
