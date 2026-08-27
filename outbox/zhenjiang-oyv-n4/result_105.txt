@@ -1,0 +1,25 @@
+### channel=zhenjiang-oyv-n4 seq=105
+### host=login4
+### started=2026-08-27T13:36:13+0800
+### ---------- output ----------
+  === absolute forecast error, full six stations available ===
+    nanjing    H=1   MAE = 0.0458 m   (n=80 runs, spread 0.0254-0.0720)
+    nanjing    H=3   MAE = 0.0453 m   (n=80 runs, spread 0.0250-0.0759)
+    nanjing    H=6   MAE = 0.0493 m   (n=80 runs, spread 0.0312-0.0795)
+    nanjing    H=12  MAE = 0.3026 m   (n=80 runs, spread 0.2267-0.5128)
+    nanjing    H=24  MAE = 0.3080 m   (n=80 runs, spread 0.2169-0.4984)
+    xuliujing  H=1   MAE = 0.0398 m   (n=80 runs, spread 0.0294-0.0727)
+    xuliujing  H=3   MAE = 0.0570 m   (n=80 runs, spread 0.0432-0.0829)
+    xuliujing  H=6   MAE = 0.0789 m   (n=80 runs, spread 0.0692-0.0950)
+    xuliujing  H=12  MAE = 0.7617 m   (n=80 runs, spread 0.5976-0.9776)
+    xuliujing  H=24  MAE = 0.7920 m   (n=80 runs, spread 0.5638-0.9456)
+  
+  === same but target station itself already failed (hidden_target) ===
+    nanjing    H=1   MAE = 0.0542 m
+    nanjing    H=6   MAE = 0.0558 m
+    xuliujing  H=1   MAE = 0.0456 m
+    xuliujing  H=6   MAE = 0.0807 m
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T13:36:14+0800
