@@ -1,0 +1,36 @@
+### channel=id30-modern-moe-execution seq=31
+### host=login4
+### started=2026-08-27T18:19:09+0800
+### ---------- output ----------
+=== B01 DEVELOPMENT STATUS ===
+2026-08-27T18:19:09+0800
+login4
+job_id=215314
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215314        hgpu2                id30_dev_s100  RUNNING       3:58                         ngu009
+215314|id30_dev_s100|hgpu2|RUNNING|0:0|00:04:23|ngu009|
+215314.batch|batch||RUNNING|0:0|00:04:23|ngu009|
+215314.extern|extern||RUNNING|0:0|00:04:23|ngu009|
+=== SLURM LOG TAILS ===
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/development-215314.out
+=== PRE-FLIGHT ===
+2026-08-27T18:15:13+0800
+ngu009
+NVIDIA GeForce RTX 3090, 24576 MiB, 535.104.05
+NVIDIA GeForce RTX 3090, 24576 MiB, 535.104.05
+BOUND_PRESELECTION_GATES_PASS slurm215269
+CONFIG AUDIT: PASS (4 runnable configs; M01 is gated on dense validation selection; no training launched)
+{
+  "generated_at_utc": "2026-08-27T10:17:01.484488+00:00",
+  "host": "ngu009",
+  "records": [],
+  "schema_version": 1
+}
+=== DEVELOPMENT RUN B01 ===
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/development-215314.err
+=== B01 RUN STATE ===
+{"matching_binding_count": 1, "records": [{"config_path": "src/modern_transformer_moe/configs/baseline_lstm_s100.yml", "config_sha256": "1d12bb7fe555617eea0c6763eb2a4ac8d7f2add16c14922b9bc2e7e55593f113", "created_at_utc": "2026-08-27T10:17:54.983308+00:00", "failure_reason": "not_applicable", "failure_stage": "not_applicable", "history": [], "invocation_manifest_path": "results/30_modern_transformer_moe/_development_invocations/id30_B01_s100_slurm215314/run_manifest.json", "invocation_manifest_sha256": "not_bound", "metrics_artifact_path": "not_bound", "metrics_artifact_sha256": "not_bound", "provenance_path": "not_applicable", "provenance_sha256": "not_applicable", "role": "B01", "run_dir": "not_bound", "run_id": "id30_B01_s100_slurm215314", "seed": 100, "status": "RUNNING", "updated_at_utc": "2026-08-27T10:17:54.983308+00:00"}]}
+{"invocation_manifest": "NOT_CREATED", "expected_run_id": "id30_B01_s100_slurm215314"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T18:19:09+0800
