@@ -1,0 +1,21 @@
+### channel=id30-modern-moe-execution seq=10
+### host=login4
+### started=2026-08-27T16:24:17+0800
+### ---------- output ----------
+=== PRESELECTION GATE STATUS ===
+2026-08-27T16:24:17+0800
+login4
+job_id=215205
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215205       hgpu2p                   id30_gates  PENDING       0:00                     (Priority)
+215205|id30_gates|hgpu2p|PENDING|0:0|00:00:00|None assigned|
+=== LOG TAILS ===
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/preselection-gates-215205.out
+NOT_CREATED
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/preselection-gates-215205.err
+NOT_CREATED
+=== RESOURCE REPORT SUMMARY ===
+NO_PROBE_REPORTS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T16:24:18+0800
