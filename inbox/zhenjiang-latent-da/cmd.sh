@@ -4,13 +4,6 @@ set -eo pipefail
 JOB_ID=215189
 ROOT="/data1/home/sunyiq/zhenjiang_latent_da_20260827"
 echo "MONITOR_START $(date -Is)"
-CURRENT_STATE="$(squeue -j "${JOB_ID}" -h -o '%T' | head -1)"
-if [ "${CURRENT_STATE}" = "PENDING" ]; then
-  scontrol update jobid="${JOB_ID}" partition=hgpu4
-  echo "PARTITION_UPDATE requested=hgpu4"
-else
-  echo "PARTITION_UPDATE skipped current_state=${CURRENT_STATE}"
-fi
 echo "SQUEUE"
 squeue -j "${JOB_ID}" -h -o '%i|%j|%T|%P|%M|%R' || true
 echo "GPU_PARTITION_NODES"
