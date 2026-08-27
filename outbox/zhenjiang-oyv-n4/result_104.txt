@@ -1,0 +1,31 @@
+### channel=zhenjiang-oyv-n4 seq=104
+### host=login4
+### started=2026-08-27T11:05:59+0800
+### ---------- output ----------
+=== WAIT FOR ARRAY 215161 (max 20 min) ===
+  settled t=10s
+       16 COMPLETED
+=== SHARD VERDICTS ===
+  shard 0: reproducible 90 0
+  shard 1: reproducible 90 0
+  shard 2: reproducible 90 0
+  shard 3: reproducible 90 0
+  shard 4: reproducible 90 0
+  shard 5: reproducible 90 0
+  shard 6: reproducible 90 0
+  shard 7: reproducible 90 0
+  shard 8: reproducible 90 0
+  shard 9: reproducible 90 0
+  shard 10: reproducible 90 0
+  shard 11: reproducible 90 0
+  shard 12: reproducible 90 0
+  shard 13: reproducible 90 0
+  shard 14: reproducible 90 0
+  shard 15: reproducible 90 0
+SHARDS_REPRODUCIBLE=16/16 TOTAL_REPLAYED=1440 TOTAL_MISMATCH=0
+=== ANY MISMATCH DETAIL ===
+  (none printed = clean)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T11:06:00+0800
