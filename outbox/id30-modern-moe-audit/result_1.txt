@@ -1,0 +1,68 @@
+### channel=id30-modern-moe-audit seq=1
+### host=login4
+### started=2026-08-27T13:37:34+0800
+### ---------- output ----------
+=== REMOTE IDENTITY AND TIME ===
+2026-08-27T13:37:34+0800
+login4
+sunyiq
+=== PROJECT REPOSITORY ===
+path=/data1/home/sunyiq/neuralhydrology
+branch=migration/reorg-v1
+commit=96703cee48718aa789e72a8148c827601857dd44
+tracked_and_untracked_change_count=78
+=== STORAGE ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  597T  358T  63% /data1
+=== DATA ROOT CANDIDATES ===
+FOUND path=/data1/home/sunyiq/neuralhydrology/data/camels_us resolved=/data1/home/sunyiq/neuralhydrology/data/camels_us
+  maurer_forcing_directory=yes files=675
+  camels_attribute_directory=yes
+  supervised_streamflow_target_directory=yes contents_not_read
+MISSING path=/data1/home/sunyiq/neuralhydrology/data/CAMELS_US
+MISSING path=/data1/home/sunyiq/data/camels_us
+MISSING path=/data1/home/sunyiq/data/camels_us
+=== REPOSITORY DATA LINKS AND TOP-LEVEL ENTRIES ===
+d /data1/home/sunyiq/neuralhydrology/data/camelsh -> 
+d /data1/home/sunyiq/neuralhydrology/data/camels_us -> 
+d /data1/home/sunyiq/neuralhydrology/data/Caravan -> 
+d /data1/home/sunyiq/neuralhydrology/data/namou_kuwei_hourly -> 
+=== FROZEN ALLOWED INPUT MANIFESTS ===
+MISSING file=src/fair_benchmark/frozen/track0_forcing_only_basins.txt
+MISSING file=src/adversarial/baseline_531/data/531_basin_list.txt
+MISSING file=src/fair_benchmark/frozen/bundle/track0_statics.csv
+MISSING file=src/fair_benchmark/frozen/MANIFEST.sha256
+=== HISTORICAL LONG SHORT-TERM MEMORY CHECKPOINTS ===
+MISSING /data1/home/sunyiq/neuralhydrology/results/18_lstm_fair_531
+=== MODERN TRANSFORMER AND MIXTURE-OF-EXPERTS SOURCE ===
+MISSING file=src/modern_transformer_moe/README.md
+MISSING file=src/modern_transformer_moe/registry/experiments.csv
+MISSING file=src/modern_transformer_moe/registry/development_run_bindings.json
+MISSING file=src/modern_transformer_moe/configs/baseline_lstm_s100.yml
+MISSING file=src/modern_transformer_moe/configs/dense_d128_l4_s100.yml
+MISSING file=src/modern_transformer_moe/configs/dense_d256_l4_s100.yml
+MISSING file=src/modern_transformer_moe/configs/dense_d256_l8_s100.yml
+MISSING file=src/modern_transformer_moe/configs/moe_selected_s100.yml
+=== MODERN TRANSFORMER AND MIXTURE-OF-EXPERTS RESULT ARTIFACTS ===
+MISSING /data1/home/sunyiq/neuralhydrology/results/30_modern_transformer_moe
+=== OTHER TOP-LEVEL RELEVANT RESULT DIRECTORIES ===
+/data1/home/sunyiq/neuralhydrology/results/02_mamba_camels_us
+/data1/home/sunyiq/neuralhydrology/results/03_mamba_camelsh
+=== CURRENT USER JOBS ===
+215178|PENDING|hgpu2p|daily-knet-a37-probe|0:00|(Priority)
+202226_[0-119%4]|PENDING|hgpu4,hgpu8,hgpu2|N22-eval-later|0:00|(DependencyNeverSatisfied)
+202229|PENDING|hgpu4,hgpu8,hgpu2|N22-agg-eval|0:00|(Dependency)
+202230|PENDING|hgpu4,hgpu8,hgpu2|N22-agg-hyper|0:00|(Dependency)
+202294|PENDING|hgpu4,hgpu8,hgpu2|N22-export|0:00|(Dependency)
+202315|PENDING|hgpu4,hgpu8,hgpu2|N22-gate|0:00|(Dependency)
+202507|PENDING|hgpu4,hgpu8,hgpu2|N22-mask-iso-531|0:00|(DependencyNeverSatisfied)
+202293|PENDING|hgpu4,hgpu8,hgpu2|N22-manifest|0:00|(JobHeldUser)
+202228_659|RUNNING|hgpu4|N22-hyper|1:31:00|ngu104
+202228_658|RUNNING|hgpu4|N22-hyper|2:32:40|ngu104
+211001_22|RUNNING|hgpu4|N22-relong|1:58:23|ngu102
+211001_21|RUNNING|hgpu4|N22-relong|1-07:08:28|ngu102
+=== AUDIT COMPLETE ===
+No repository files were modified, no sealed evaluation answer was read, and no job was submitted.
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T13:37:35+0800
