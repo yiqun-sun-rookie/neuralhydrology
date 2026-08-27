@@ -1,0 +1,250 @@
+### channel=id30-modern-moe-execution seq=22
+### host=login4
+### started=2026-08-27T17:26:20+0800
+### ---------- output ----------
+=== PRESELECTION SECOND RETRY STATUS ===
+2026-08-27T17:26:20+0800
+login4
+job_id=215262
+slurm_load_jobs error: Invalid job id specified
+215262|id30_gates|hgpu2|FAILED|1:0|00:13:04|ngu009|
+215262.batch|batch||FAILED|1:0|00:13:04|ngu009|2303624K
+215262.extern|extern||COMPLETED|0:0|00:13:05|ngu009|1364K
+=== LOG TAILS ===
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/preselection-gates-215262.out
+=== COMPUTE NODE AND CUDA ===
+2026-08-27T17:09:07+0800
+ngu009
+NVIDIA GeForce RTX 3090, 24576 MiB, 535.104.05
+NVIDIA GeForce RTX 3090, 24576 MiB, 535.104.05
+torch 2.4.0
+cuda_device NVIDIA GeForce RTX 3090
+cuda_memory_bytes 25438126080
+=== STATIC AND CPU TECHNICAL GATES ===
+CONFIG AUDIT: PASS (4 runnable configs; M01 is gated on dense validation selection; no training launched)
+REMOTE_PYTEST_UNAVAILABLE_LOCAL_103_TEST_GATE_RETAINED
+2026-08-27 17:13:26,396: Logging to /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215262_2026_0827_1713_ep1/output.log initialized.
+2026-08-27 17:13:26,397: ### Folder structure created at /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215262_2026_0827_1713_ep1
+2026-08-27 17:13:26,397: ### Run configurations for modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215262
+2026-08-27 17:13:26,397: batch_size: 2
+2026-08-27 17:13:26,397: cache_validation_data: False
+2026-08-27 17:13:26,397: clip_gradient_norm: 1.0
+2026-08-27 17:13:26,397: data_dir: data/camels_us_track0_development_forcing_v01
+2026-08-27 17:13:26,397: dataset: camels_us_track0_bundle
+2026-08-27 17:13:26,398: device: cpu
+2026-08-27 17:13:26,398: dynamic_inputs: ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)']
+2026-08-27 17:13:26,398: dynamics_embedding: {'type': 'fc', 'hiddens': [32], 'activation': 'linear', 'dropout': 0.0}
+2026-08-27 17:13:26,398: epochs: 1
+2026-08-27 17:13:26,398: experiment_name: modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215262
+2026-08-27 17:13:26,398: forcings: ['maurer']
+2026-08-27 17:13:26,398: head: regression
+2026-08-27 17:13:26,398: learning_rate: {0: 0.001}
+2026-08-27 17:13:26,398: log_interval: 1
+2026-08-27 17:13:26,398: log_n_figures: 0
+2026-08-27 17:13:26,398: log_tensorboard: False
+2026-08-27 17:13:26,398: loss: NSE
+2026-08-27 17:13:26,398: max_updates_per_epoch: 1
+2026-08-27 17:13:26,399: metrics: []
+2026-08-27 17:13:26,399: model: modern_transformer
+2026-08-27 17:13:26,399: num_workers: 0
+2026-08-27 17:13:26,399: number_of_basins: 4
+2026-08-27 17:13:26,399: optimizer: AdamW
+2026-08-27 17:13:26,399: output_activation: linear
+2026-08-27 17:13:26,399: output_dropout: 0.0
+2026-08-27 17:13:26,399: predict_last_n: 1
+2026-08-27 17:13:26,399: regularization: []
+2026-08-27 17:13:26,399: run_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215262_2026_0827_1713_ep1
+2026-08-27 17:13:26,399: save_all_output: False
+2026-08-27 17:13:26,399: save_git_diff: False
+2026-08-27 17:13:26,400: save_train_data: False
+2026-08-27 17:13:26,400: save_validation_results: False
+2026-08-27 17:13:26,400: save_weights_every: 1
+2026-08-27 17:13:26,400: seed: 100
+2026-08-27 17:13:26,400: seq_length: 270
+2026-08-27 17:13:26,400: static_attributes: ['p_mean', 'pet_mean', 'aridity', 'p_seasonality', 'frac_snow', 'high_prec_freq', 'high_prec_dur', 'low_prec_freq', 'low_prec_dur', 'elev_mean', 'slope_mean', 'area_gages2', 'frac_forest', 'lai_max', 'lai_diff', 'gvf_max', 'gvf_diff', 'soil_depth_pelletier', 'soil_depth_statsgo', 'soil_porosity', 'soil_conductivity', 'max_water_content', 'sand_frac', 'silt_frac', 'clay_frac', 'carbonate_rocks_frac', 'geol_permeability']
+2026-08-27 17:13:26,400: statics_embedding: {'type': 'fc', 'hiddens': [32], 'activation': 'linear', 'dropout': 0.0}
+2026-08-27 17:13:26,400: target_variables: ['QObs(mm/d)']
+2026-08-27 17:13:26,400: track0_supervision_dir: data/camels_us_track0_supervision_v01
+2026-08-27 17:13:26,400: train_basin_file: src/modern_transformer_moe/configs/smoke/smoke_basins.txt
+2026-08-27 17:13:26,401: train_end_date: 2001-09-30 00:00:00
+2026-08-27 17:13:26,401: train_start_date: 1999-10-01 00:00:00
+2026-08-27 17:13:26,401: transformer_dim_feedforward: 256
+2026-08-27 17:13:26,401: transformer_dropout: 0.0
+2026-08-27 17:13:26,401: transformer_nheads: 4
+2026-08-27 17:13:26,401: transformer_nlayers: 2
+2026-08-27 17:13:26,401: validate_every: None
+2026-08-27 17:13:26,401: validation_basin_file: src/modern_transformer_moe/configs/smoke/smoke_basins.txt
+2026-08-27 17:13:26,401: validation_end_date: 2001-09-30 00:00:00
+2026-08-27 17:13:26,401: validation_start_date: 2000-10-01 00:00:00
+2026-08-27 17:13:26,402: verbose: 0
+2026-08-27 17:13:26,402: train_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215262_2026_0827_1713_ep1/train_data
+2026-08-27 17:13:26,402: img_log_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215262_2026_0827_1713_ep1/img_log
+2026-08-27 17:13:26,439: ### Device cpu will be used for training
+2026-08-27 17:13:30,561: Epoch 1 average loss: avg_loss: 0.16133, avg_total_loss: 0.16133
+dense: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/dense/modern_transformer_smoke_dense_cpu_s100_id30_smoke_slurm215262_2026_0827_1713_ep1
+2026-08-27 17:14:17,783: Logging to /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215262_2026_0827_1714_ep1/output.log initialized.
+2026-08-27 17:14:17,783: ### Folder structure created at /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215262_2026_0827_1714_ep1
+2026-08-27 17:14:17,783: ### Run configurations for modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215262
+2026-08-27 17:14:17,784: batch_size: 2
+2026-08-27 17:14:17,784: cache_validation_data: False
+2026-08-27 17:14:17,784: clip_gradient_norm: 1.0
+2026-08-27 17:14:17,784: data_dir: data/camels_us_track0_development_forcing_v01
+2026-08-27 17:14:17,784: dataset: camels_us_track0_bundle
+2026-08-27 17:14:17,784: device: cpu
+2026-08-27 17:14:17,784: dynamic_inputs: ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)']
+2026-08-27 17:14:17,785: dynamics_embedding: {'type': 'fc', 'hiddens': [32], 'activation': 'linear', 'dropout': 0.0}
+2026-08-27 17:14:17,785: epochs: 1
+2026-08-27 17:14:17,785: experiment_name: modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215262
+2026-08-27 17:14:17,785: forcings: ['maurer']
+2026-08-27 17:14:17,785: head: regression
+2026-08-27 17:14:17,785: learning_rate: {0: 0.001}
+2026-08-27 17:14:17,785: log_interval: 1
+2026-08-27 17:14:17,785: log_n_figures: 0
+2026-08-27 17:14:17,785: log_tensorboard: False
+2026-08-27 17:14:17,785: loss: NSE
+2026-08-27 17:14:17,785: max_updates_per_epoch: 1
+2026-08-27 17:14:17,785: metrics: []
+2026-08-27 17:14:17,786: model: modern_transformer_moe
+2026-08-27 17:14:17,786: num_workers: 0
+2026-08-27 17:14:17,786: number_of_basins: 4
+2026-08-27 17:14:17,786: optimizer: AdamW
+2026-08-27 17:14:17,786: output_activation: linear
+2026-08-27 17:14:17,786: output_dropout: 0.0
+2026-08-27 17:14:17,786: predict_last_n: 1
+2026-08-27 17:14:17,786: regularization: [['moe_router', 0.01]]
+2026-08-27 17:14:17,786: run_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215262_2026_0827_1714_ep1
+2026-08-27 17:14:17,786: save_all_output: False
+2026-08-27 17:14:17,786: save_git_diff: False
+2026-08-27 17:14:17,787: save_train_data: False
+2026-08-27 17:14:17,787: save_validation_results: False
+2026-08-27 17:14:17,787: save_weights_every: 1
+2026-08-27 17:14:17,787: seed: 100
+2026-08-27 17:14:17,787: seq_length: 270
+2026-08-27 17:14:17,787: static_attributes: ['p_mean', 'pet_mean', 'aridity', 'p_seasonality', 'frac_snow', 'high_prec_freq', 'high_prec_dur', 'low_prec_freq', 'low_prec_dur', 'elev_mean', 'slope_mean', 'area_gages2', 'frac_forest', 'lai_max', 'lai_diff', 'gvf_max', 'gvf_diff', 'soil_depth_pelletier', 'soil_depth_statsgo', 'soil_porosity', 'soil_conductivity', 'max_water_content', 'sand_frac', 'silt_frac', 'clay_frac', 'carbonate_rocks_frac', 'geol_permeability']
+2026-08-27 17:14:17,787: statics_embedding: {'type': 'fc', 'hiddens': [32], 'activation': 'linear', 'dropout': 0.0}
+2026-08-27 17:14:17,787: target_variables: ['QObs(mm/d)']
+2026-08-27 17:14:17,787: track0_supervision_dir: data/camels_us_track0_supervision_v01
+2026-08-27 17:14:17,787: train_basin_file: src/modern_transformer_moe/configs/smoke/smoke_basins.txt
+2026-08-27 17:14:17,788: train_end_date: 2001-09-30 00:00:00
+2026-08-27 17:14:17,788: train_start_date: 1999-10-01 00:00:00
+2026-08-27 17:14:17,788: transformer_dim_feedforward: 256
+2026-08-27 17:14:17,788: transformer_dropout: 0.0
+2026-08-27 17:14:17,788: transformer_moe_first_layer: 1
+2026-08-27 17:14:17,788: transformer_moe_num_experts: 8
+2026-08-27 17:14:17,788: transformer_moe_routed_dim: 96
+2026-08-27 17:14:17,788: transformer_moe_router_jitter: 0.0
+2026-08-27 17:14:17,788: transformer_moe_shared_dim: 64
+2026-08-27 17:14:17,788: transformer_moe_top_k: 2
+2026-08-27 17:14:17,788: transformer_nheads: 4
+2026-08-27 17:14:17,788: transformer_nlayers: 2
+2026-08-27 17:14:17,789: validate_every: None
+2026-08-27 17:14:17,789: validation_basin_file: src/modern_transformer_moe/configs/smoke/smoke_basins.txt
+2026-08-27 17:14:17,789: validation_end_date: 2001-09-30 00:00:00
+2026-08-27 17:14:17,789: validation_start_date: 2000-10-01 00:00:00
+2026-08-27 17:14:17,789: verbose: 0
+2026-08-27 17:14:17,789: train_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215262_2026_0827_1714_ep1/train_data
+2026-08-27 17:14:17,789: img_log_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215262_2026_0827_1714_ep1/img_log
+2026-08-27 17:14:17,823: ### Device cpu will be used for training
+2026-08-27 17:14:21,835: Epoch 1 average loss: avg_loss: 0.15259, avg_moe_router: 1.16459, avg_total_loss: 0.16424
+moe: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/runs/moe/modern_transformer_smoke_moe_cpu_s100_id30_smoke_slurm215262_2026_0827_1714_ep1
+manifest: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/smoke/invocations/id30_smoke_slurm215262/run_manifest.json
+{
+  "overall_status": "CPU_TECHNICAL_PASS_GPU_RESOURCE_GATE_NOT_RUN",
+  "report": "results/30_modern_transformer_moe/_reports/smoke_slurm215262.json"
+}
+=== FULL-SIZE ACTUAL-DATA GPU RESOURCE GATES ===
+2026-08-27 17:19:12,577: Logging to /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/_gpu_resource_probes/id30_B01_s100_slurm215262/training/modern_transformer_moe_B01_lstm_s100_id30_B01_s100_slurm215262_2026_0827_1719_ep1/output.log initialized.
+2026-08-27 17:19:12,577: ### Folder structure created at /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/_gpu_resource_probes/id30_B01_s100_slurm215262/training/modern_transformer_moe_B01_lstm_s100_id30_B01_s100_slurm215262_2026_0827_1719_ep1
+2026-08-27 17:19:12,577: ### Run configurations for modern_transformer_moe_B01_lstm_s100_id30_B01_s100_slurm215262
+2026-08-27 17:19:12,577: batch_size: 256
+2026-08-27 17:19:12,577: cache_validation_data: False
+2026-08-27 17:19:12,577: clip_gradient_norm: 1.0
+2026-08-27 17:19:12,577: data_dir: data/camels_us_track0_development_forcing_v01
+2026-08-27 17:19:12,577: dataset: camels_us_track0_bundle
+2026-08-27 17:19:12,578: device: cuda:0
+2026-08-27 17:19:12,578: dynamic_inputs: ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)']
+2026-08-27 17:19:12,578: epochs: 1
+2026-08-27 17:19:12,578: experiment_name: modern_transformer_moe_B01_lstm_s100_id30_B01_s100_slurm215262
+2026-08-27 17:19:12,578: forcings: ['maurer']
+2026-08-27 17:19:12,578: head: regression
+2026-08-27 17:19:12,578: hidden_size: 256
+2026-08-27 17:19:12,578: initial_forget_bias: 5
+2026-08-27 17:19:12,578: learning_rate: {0: 0.001, 11: 0.0005, 21: 0.0001}
+2026-08-27 17:19:12,578: log_interval: 1
+2026-08-27 17:19:12,578: log_n_figures: 0
+2026-08-27 17:19:12,578: log_tensorboard: False
+2026-08-27 17:19:12,578: loss: NSE
+2026-08-27 17:19:12,578: max_updates_per_epoch: 1
+2026-08-27 17:19:12,578: metrics: []
+2026-08-27 17:19:12,578: model: cudalstm
+2026-08-27 17:19:12,578: num_workers: 4
+2026-08-27 17:19:12,579: number_of_basins: 531
+2026-08-27 17:19:12,579: optimizer: Adam
+2026-08-27 17:19:12,579: output_activation: linear
+2026-08-27 17:19:12,579: output_dropout: 0.4
+2026-08-27 17:19:12,579: predict_last_n: 1
+2026-08-27 17:19:12,579: run_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/_gpu_resource_probes/id30_B01_s100_slurm215262/training/modern_transformer_moe_B01_lstm_s100_id30_B01_s100_slurm215262_2026_0827_1719_ep1
+2026-08-27 17:19:12,579: save_all_output: False
+2026-08-27 17:19:12,579: save_git_diff: False
+2026-08-27 17:19:12,579: save_train_data: False
+2026-08-27 17:19:12,579: save_validation_results: False
+2026-08-27 17:19:12,579: save_weights_every: 1
+2026-08-27 17:19:12,579: seed: 100
+2026-08-27 17:19:12,579: seq_length: 270
+2026-08-27 17:19:12,579: static_attributes: ['p_mean', 'pet_mean', 'aridity', 'p_seasonality', 'frac_snow', 'high_prec_freq', 'high_prec_dur', 'low_prec_freq', 'low_prec_dur', 'elev_mean', 'slope_mean', 'area_gages2', 'frac_forest', 'lai_max', 'lai_diff', 'gvf_max', 'gvf_diff', 'soil_depth_pelletier', 'soil_depth_statsgo', 'soil_porosity', 'soil_conductivity', 'max_water_content', 'sand_frac', 'silt_frac', 'clay_frac', 'carbonate_rocks_frac', 'geol_permeability']
+2026-08-27 17:19:12,579: target_variables: ['QObs(mm/d)']
+2026-08-27 17:19:12,579: track0_supervision_dir: data/camels_us_track0_supervision_v01
+2026-08-27 17:19:12,579: train_basin_file: src/fair_benchmark/frozen/track0_forcing_only_basins.txt
+2026-08-27 17:19:12,579: train_end_date: 2006-09-30 00:00:00
+2026-08-27 17:19:12,580: train_start_date: 1999-10-01 00:00:00
+2026-08-27 17:19:12,580: validate_every: None
+2026-08-27 17:19:12,580: validate_n_random_basins: 531
+2026-08-27 17:19:12,580: validation_basin_file: src/fair_benchmark/frozen/track0_forcing_only_basins.txt
+2026-08-27 17:19:12,580: validation_end_date: 2008-09-30 00:00:00
+2026-08-27 17:19:12,580: validation_start_date: 2006-10-01 00:00:00
+2026-08-27 17:19:12,580: train_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/_gpu_resource_probes/id30_B01_s100_slurm215262/training/modern_transformer_moe_B01_lstm_s100_id30_B01_s100_slurm215262_2026_0827_1719_ep1/train_data
+2026-08-27 17:19:12,580: img_log_dir: /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/_gpu_resource_probes/id30_B01_s100_slurm215262/training/modern_transformer_moe_B01_lstm_s100_id30_B01_s100_slurm215262_2026_0827_1719_ep1/img_log
+2026-08-27 17:19:12,611: ### Device cuda:0 will be used for training
+2026-08-27 17:19:12,747: Loading basin data into xarray data set.
+  0%|          | 0/531 [00:00<?, ?it/s]  0%|          | 1/531 [00:00<01:17,  6.80it/s]  0%|          | 2/531 [00:00<01:05,  8.04it/s]  1%|          | 3/531 [00:00<01:02,  8.40it/s]  1%|          | 5/531 [00:00<00:56,  9.36it/s]  1%|          | 6/531 [00:00<00:55,  9.53it/s]  2%|▏         | 8/531 [00:00<00:51, 10.10it/s]  2%|▏         | 10/531 [00:00<00:46, 11.13it/s]  2%|▏         | 12/531 [00:01<00:43, 11.84it/s]  3%|▎         | 14/531 [00:01<00:42, 12.10it/s]  3%|▎         | 16/531 [00:01<00:41, 12.35it/s]  3%|▎         | 18/531 [00:01<00:41, 12.43it/s]  4%|▍         | 20/531 [00:01<00:41, 12.26it/s]  4%|▍         | 22/531 [00:01<00:40, 12.51it/s]  5%|▍         | 24/531 [00:02<00:39, 12.87it/s]  5%|▍         | 26/531 [00:02<00:39, 12.94it/s]  5%|▌         | 28/531 [00:02<00:38, 12.98it/s]  6%|▌         | 30/531 [00:02<00:37, 13.29it/s]  6%|▌         | 32/531 [00:02<00:37, 13.18it/s]  6%|▋         | 34/531 [00:02<00:37, 13.21it/s]  7%|▋         | 36/531 [00:03<00:55,  8.90it/s]  7%|▋         | 38/531 [00:03<00:49,  9.87it/s]  8%|▊         | 40/531 [00:03<00:46, 10.61it/s]  8%|▊         | 42/531 [00:03<00:42, 11.41it/s]  8%|▊         | 44/531 [00:03<00:40, 12.05it/s]  9%|▊         | 46/531 [00:03<00:39, 12.27it/s]  9%|▉         | 48/531 [00:04<00:37, 12.72it/s]  9%|▉         | 50/531 [00:04<00:37, 12.97it/s] 10%|▉         | 52/531 [00:04<00:36, 13.05it/s] 10%|█         | 54/531 [00:04<00:41, 11.42it/s] 11%|█         | 56/531 [00:04<00:42, 11.22it/s] 11%|█         | 58/531 [00:05<00:42, 11.07it/s] 11%|█▏        | 60/531 [00:05<00:41, 11.26it/s] 12%|█▏        | 62/531 [00:05<00:40, 11.45it/s] 12%|█▏        | 64/531 [00:05<00:39, 11.84it/s] 12%|█▏        | 66/531 [00:05<00:38, 11.97it/s] 13%|█▎        | 68/531 [00:05<00:38, 12.09it/s] 13%|█▎        | 70/531 [00:06<00:37, 12.24it/s] 14%|█▎        | 72/531 [00:06<00:36, 12.46it/s] 14%|█▍        | 74/531 [00:06<00:36, 12.43it/s] 14%|█▍        | 76/531 [00:06<00:36, 12.64it/s] 15%|█▍        | 78/531 [00:06<00:35, 12.70it/s] 15%|█▌        | 80/531 [00:06<00:35, 12.56it/s] 15%|█▌        | 82/531 [00:06<00:36, 12.20it/s] 16%|█▌        | 84/531 [00:07<00:35, 12.50it/s] 16%|█▌        | 86/531 [00:07<00:34, 12.72it/s] 17%|█▋        | 88/531 [00:07<00:34, 13.01it/s] 17%|█▋        | 90/531 [00:07<00:36, 12.18it/s] 17%|█▋        | 92/531 [00:07<00:36, 12.10it/s] 18%|█▊        | 94/531 [00:07<00:37, 11.71it/s] 18%|█▊        | 96/531 [00:08<00:37, 11.66it/s] 18%|█▊        | 98/531 [00:08<00:35, 12.13it/s] 19%|█▉        | 100/531 [00:08<00:34, 12.40it/s] 19%|█▉        | 102/531 [00:08<00:35, 12.21it/s] 20%|█▉        | 104/531 [00:08<00:35, 12.19it/s] 20%|█▉        | 106/531 [00:09<00:50,  8.44it/s] 20%|██        | 108/531 [00:09<00:45,  9.28it/s] 21%|██        | 110/531 [00:09<00:40, 10.32it/s] 21%|██        | 112/531 [00:09<00:37, 11.10it/s] 21%|██▏       | 114/531 [00:09<00:36, 11.48it/s] 22%|██▏       | 116/531 [00:09<00:35, 11.78it/s] 22%|██▏       | 118/531 [00:10<00:34, 11.93it/s] 23%|██▎       | 120/531 [00:10<00:33, 12.19it/s] 23%|██▎       | 122/531 [00:10<00:32, 12.45it/s] 23%|██▎       | 124/531 [00:10<00:35, 11.44it/s] 24%|██▎       | 126/531 [00:10<00:36, 11.04it/s] 24%|██▍       | 128/531 [00:10<00:34, 11.60it/s] 24%|██▍       | 130/531 [00:11<00:34, 11.64it/s] 25%|██▍       | 132/531 [00:11<00:35, 11.33it/s] 25%|██▌       | 134/531 [00:11<00:34, 11.58it/s] 26%|██▌       | 136/531 [00:11<00:32, 11.97it/s] 26%|██▌       | 138/531 [00:11<00:33, 11.73it/s] 26%|██▋       | 140/531 [00:11<00:32, 12.05it/s] 27%|██▋       | 142/531 [00:12<00:31, 12.23it/s] 27%|██▋       | 144/531 [00:12<00:31, 12.17it/s] 27%|██▋       | 146/531 [00:12<00:31, 12.29it/s] 28%|██▊       | 148/531 [00:12<00:30, 12.49it/s] 28%|██▊       | 150/531 [00:12<00:30, 12.68it/s] 29%|██▊       | 152/531 [00:12<00:29, 12.84it/s] 29%|██▉       | 154/531 [00:13<00:29, 12.65it/s] 29%|██▉       | 156/531 [00:13<00:29, 12.74it/s] 30%|██▉       | 158/531 [00:13<00:29, 12.59it/s] 30%|███       | 160/531 [00:13<00:29, 12.37it/s] 31%|███       | 162/531 [00:13<00:30, 12.28it/s] 31%|███       | 164/531 [00:13<00:29, 12.57it/s] 31%|███▏      | 166/531 [00:14<00:29, 12.56it/s] 32%|███▏      | 168/531 [00:14<00:28, 12.76it/s] 32%|███▏      | 170/531 [00:14<00:27, 12.90it/s] 32%|███▏      | 172/531 [00:14<00:27, 12.85it/s] 33%|███▎      | 174/531 [00:14<00:27, 13.07it/s] 33%|███▎      | 176/531 [00:14<00:28, 12.49it/s] 34%|███▎      | 178/531 [00:15<00:29, 12.04it/s] 34%|███▍      | 180/531 [00:15<00:28, 12.15it/s] 34%|███▍      | 182/531 [00:15<00:28, 12.12it/s] 35%|███▍      | 184/531 [00:15<00:28, 11.98it/s] 35%|███▌      | 186/531 [00:15<00:29, 11.89it/s] 35%|███▌      | 188/531 [00:16<00:41,  8.22it/s] 36%|███▌      | 190/531 [00:16<00:36,  9.26it/s] 36%|███▌      | 192/531 [00:16<00:33, 10.03it/s] 37%|███▋      | 194/531 [00:16<00:31, 10.81it/s] 37%|███▋      | 196/531 [00:16<00:30, 11.17it/s] 37%|███▋      | 198/531 [00:16<00:27, 11.95it/s] 38%|███▊      | 200/531 [00:17<00:26, 12.33it/s] 38%|███▊      | 202/531 [00:17<00:25, 12.94it/s] 38%|███▊      | 204/531 [00:17<00:24, 13.28it/s] 39%|███▉      | 206/531 [00:17<00:24, 13.28it/s] 39%|███▉      | 208/531 [00:17<00:25, 12.88it/s] 40%|███▉      | 210/531 [00:17<00:28, 11.45it/s] 40%|███▉      | 212/531 [00:17<00:26, 12.20it/s] 40%|████      | 214/531 [00:18<00:25, 12.66it/s] 41%|████      | 216/531 [00:18<00:23, 13.21it/s] 41%|████      | 218/531 [00:18<00:23, 13.20it/s] 41%|████▏     | 220/531 [00:18<00:23, 13.24it/s] 42%|████▏     | 222/531 [00:18<00:22, 13.55it/s] 42%|████▏     | 224/531 [00:18<00:23, 13.12it/s] 43%|████▎     | 226/531 [00:19<00:25, 12.08it/s] 43%|████▎     | 228/531 [00:19<00:24, 12.51it/s] 43%|████▎     | 230/531 [00:19<00:23, 12.55it/s] 44%|████▎     | 232/531 [00:19<00:25, 11.96it/s] 44%|████▍     | 234/531 [00:19<00:24, 12.01it/s] 44%|████▍     | 236/531 [00:19<00:24, 11.93it/s] 45%|████▍     | 238/531 [00:20<00:24, 11.84it/s] 45%|████▌     | 240/531 [00:20<00:24, 11.70it/s] 46%|████▌     | 242/531 [00:20<00:23, 12.05it/s] 46%|████▌     | 244/531 [00:20<00:23, 12.45it/s] 46%|████▋     | 246/531 [00:20<00:31,  9.08it/s] 47%|████▋     | 248/531 [00:21<00:28, 10.01it/s] 47%|████▋     | 250/531 [00:21<00:26, 10.70it/s] 47%|████▋     | 252/531 [00:21<00:26, 10.60it/s] 48%|████▊     | 254/531 [00:21<00:24, 11.26it/s] 48%|████▊     | 256/531 [00:21<00:23, 11.91it/s] 49%|████▊     | 258/531 [00:21<00:22, 12.21it/s] 49%|████▉     | 260/531 [00:21<00:21, 12.73it/s] 49%|████▉     | 262/531 [00:22<00:21, 12.79it/s] 50%|████▉     | 264/531 [00:22<00:21, 12.42it/s] 50%|█████     | 266/531 [00:22<00:22, 11.88it/s] 50%|█████     | 268/531 [00:22<00:22, 11.51it/s] 51%|█████     | 270/531 [00:22<00:22, 11.54it/s] 51%|█████     | 272/531 [00:23<00:21, 12.00it/s] 52%|█████▏    | 274/531 [00:23<00:20, 12.42it/s] 52%|█████▏    | 276/531 [00:23<00:19, 12.82it/s] 52%|█████▏    | 278/531 [00:23<00:19, 13.06it/s] 53%|█████▎    | 280/531 [00:23<00:19, 13.02it/s] 53%|█████▎    | 282/531 [00:23<00:18, 13.29it/s] 53%|█████▎    | 284/531 [00:23<00:18, 13.27it/s] 54%|█████▍    | 286/531 [00:24<00:18, 13.17it/s] 54%|█████▍    | 288/531 [00:24<00:19, 12.25it/s] 55%|█████▍    | 290/531 [00:24<00:20, 11.77it/s] 55%|█████▍    | 292/531 [00:24<00:20, 11.45it/s] 55%|█████▌    | 294/531 [00:24<00:22, 10.67it/s] 56%|█████▌    | 296/531 [00:25<00:22, 10.66it/s] 56%|█████▌    | 298/531 [00:25<00:22, 10.58it/s] 56%|█████▋    | 300/531 [00:25<00:22, 10.44it/s] 57%|█████▋    | 302/531 [00:25<00:21, 10.52it/s] 57%|█████▋    | 304/531 [00:25<00:21, 10.32it/s] 58%|█████▊    | 306/531 [00:25<00:21, 10.28it/s] 58%|█████▊    | 308/531 [00:26<00:23,  9.69it/s] 58%|█████▊    | 309/531 [00:26<00:22,  9.68it/s] 58%|█████▊    | 310/531 [00:26<00:22,  9.63it/s] 59%|█████▉    | 312/531 [00:26<00:22,  9.87it/s] 59%|█████▉    | 314/531 [00:26<00:21, 10.01it/s] 59%|█████▉    | 315/531 [00:26<00:22,  9.81it/s] 60%|█████▉    | 316/531 [00:27<00:34,  6.28it/s] 60%|█████▉    | 318/531 [00:27<00:28,  7.39it/s] 60%|██████    | 320/531 [00:27<00:25,  8.31it/s] 61%|██████    | 322/531 [00:27<00:23,  9.02it/s] 61%|██████    | 324/531 [00:28<00:22,  9.01it/s] 61%|██████▏   | 326/531 [00:28<00:21,  9.53it/s] 62%|██████▏   | 328/531 [00:28<00:20,  9.99it/s] 62%|██████▏   | 330/531 [00:28<00:19, 10.19it/s] 63%|██████▎   | 332/531 [00:28<00:18, 10.65it/s] 63%|██████▎   | 334/531 [00:28<00:17, 11.03it/s] 63%|██████▎   | 336/531 [00:29<00:19, 10.13it/s] 64%|██████▎   | 338/531 [00:29<00:18, 10.26it/s] 64%|██████▍   | 340/531 [00:29<00:18, 10.36it/s] 64%|██████▍   | 342/531 [00:29<00:17, 10.50it/s] 65%|██████▍   | 344/531 [00:29<00:17, 10.67it/s] 65%|██████▌   | 346/531 [00:30<00:17, 10.40it/s] 66%|██████▌   | 348/531 [00:30<00:18, 10.13it/s] 66%|██████▌   | 350/531 [00:30<00:17, 10.26it/s] 66%|██████▋   | 352/531 [00:30<00:16, 10.67it/s] 67%|██████▋   | 354/531 [00:30<00:16, 10.80it/s] 67%|██████▋   | 356/531 [00:31<00:16, 10.66it/s] 67%|██████▋   | 358/531 [00:31<00:17, 10.15it/s] 68%|██████▊   | 360/531 [00:31<00:16, 10.14it/s] 68%|██████▊   | 362/531 [00:31<00:15, 10.73it/s] 69%|██████▊   | 364/531 [00:31<00:15, 10.93it/s] 69%|██████▉   | 366/531 [00:31<00:14, 11.49it/s] 69%|██████▉   | 368/531 [00:32<00:13, 12.06it/s] 70%|██████▉   | 370/531 [00:32<00:12, 12.62it/s] 70%|███████   | 372/531 [00:32<00:13, 12.03it/s] 70%|███████   | 374/531 [00:32<00:12, 12.58it/s] 71%|███████   | 376/531 [00:32<00:12, 12.75it/s] 71%|███████   | 378/531 [00:32<00:12, 12.64it/s] 72%|███████▏  | 380/531 [00:33<00:12, 12.43it/s] 72%|███████▏  | 382/531 [00:33<00:11, 12.65it/s] 72%|███████▏  | 384/531 [00:33<00:11, 12.74it/s] 73%|███████▎  | 386/531 [00:33<00:11, 13.04it/s] 73%|███████▎  | 388/531 [00:33<00:10, 13.20it/s] 73%|███████▎  | 390/531 [00:33<00:10, 13.59it/s] 74%|███████▍  | 392/531 [00:33<00:10, 13.66it/s] 74%|███████▍  | 394/531 [00:34<00:10, 13.68it/s] 75%|███████▍  | 396/531 [00:34<00:09, 13.70it/s] 75%|███████▍  | 398/531 [00:34<00:09, 14.06it/s] 75%|███████▌  | 400/531 [00:34<00:16,  7.98it/s] 76%|███████▌  | 402/531 [00:35<00:13,  9.30it/s] 76%|███████▌  | 404/531 [00:35<00:12, 10.38it/s] 76%|███████▋  | 406/531 [00:35<00:11, 11.08it/s] 77%|███████▋  | 408/531 [00:35<00:10, 11.89it/s] 77%|███████▋  | 410/531 [00:35<00:10, 11.37it/s] 78%|███████▊  | 412/531 [00:35<00:10, 11.76it/s] 78%|███████▊  | 414/531 [00:35<00:09, 12.07it/s] 78%|███████▊  | 416/531 [00:36<00:09, 12.73it/s] 79%|███████▊  | 418/531 [00:36<00:08, 13.06it/s] 79%|███████▉  | 420/531 [00:36<00:08, 13.00it/s] 79%|███████▉  | 422/531 [00:36<00:09, 11.91it/s] 80%|███████▉  | 424/531 [00:36<00:09, 10.98it/s] 80%|████████  | 426/531 [00:36<00:09, 11.11it/s] 81%|████████  | 428/531 [00:37<00:08, 11.77it/s] 81%|████████  | 430/531 [00:37<00:08, 12.05it/s] 81%|████████▏ | 432/531 [00:37<00:07, 12.61it/s] 82%|████████▏ | 434/531 [00:37<00:07, 12.84it/s] 82%|████████▏ | 436/531 [00:37<00:08, 11.51it/s] 82%|████████▏ | 438/531 [00:37<00:07, 11.78it/s] 83%|████████▎ | 440/531 [00:38<00:07, 12.11it/s] 83%|████████▎ | 442/531 [00:38<00:07, 12.37it/s] 84%|████████▎ | 444/531 [00:38<00:06, 12.52it/s] 84%|████████▍ | 446/531 [00:38<00:06, 12.55it/s] 84%|████████▍ | 448/531 [00:38<00:06, 12.79it/s] 85%|████████▍ | 450/531 [00:38<00:06, 11.90it/s] 85%|████████▌ | 452/531 [00:39<00:06, 11.69it/s] 85%|████████▌ | 454/531 [00:39<00:06, 12.22it/s] 86%|████████▌ | 456/531 [00:39<00:05, 12.82it/s] 86%|████████▋ | 458/531 [00:39<00:05, 13.26it/s] 87%|████████▋ | 460/531 [00:40<00:09,  7.68it/s] 87%|████████▋ | 462/531 [00:40<00:07,  8.68it/s] 87%|████████▋ | 464/531 [00:40<00:06,  9.84it/s] 88%|████████▊ | 466/531 [00:40<00:06, 10.42it/s] 88%|████████▊ | 468/531 [00:40<00:05, 11.23it/s] 89%|████████▊ | 470/531 [00:40<00:05, 11.79it/s] 89%|████████▉ | 472/531 [00:40<00:04, 12.31it/s] 89%|████████▉ | 474/531 [00:41<00:04, 12.04it/s] 90%|████████▉ | 476/531 [00:41<00:04, 12.40it/s] 90%|█████████ | 478/531 [00:41<00:04, 12.69it/s] 90%|█████████ | 480/531 [00:41<00:03, 12.97it/s] 91%|█████████ | 482/531 [00:41<00:03, 12.28it/s] 91%|█████████ | 484/531 [00:41<00:03, 12.33it/s] 92%|█████████▏| 486/531 [00:42<00:03, 12.62it/s] 92%|█████████▏| 488/531 [00:42<00:03, 12.06it/s] 92%|█████████▏| 490/531 [00:42<00:03, 12.45it/s] 93%|█████████▎| 492/531 [00:42<00:03, 12.88it/s] 93%|█████████▎| 494/531 [00:42<00:02, 12.46it/s] 93%|█████████▎| 496/531 [00:42<00:02, 12.32it/s] 94%|█████████▍| 498/531 [00:43<00:02, 12.27it/s] 94%|█████████▍| 500/531 [00:43<00:02, 11.94it/s] 95%|█████████▍| 502/531 [00:43<00:02, 12.10it/s] 95%|█████████▍| 504/531 [00:43<00:02, 12.57it/s] 95%|█████████▌| 506/531 [00:43<00:01, 12.67it/s] 96%|█████████▌| 508/531 [00:43<00:01, 11.94it/s] 96%|█████████▌| 510/531 [00:44<00:01, 12.54it/s] 96%|█████████▋| 512/531 [00:44<00:01, 12.74it/s] 97%|█████████▋| 514/531 [00:44<00:01, 12.13it/s] 97%|█████████▋| 516/531 [00:44<00:01, 12.51it/s] 98%|█████████▊| 518/531 [00:44<00:01, 12.57it/s] 98%|█████████▊| 520/531 [00:44<00:00, 12.99it/s] 98%|█████████▊| 522/531 [00:44<00:00, 13.04it/s] 99%|█████████▊| 524/531 [00:45<00:00, 12.40it/s] 99%|█████████▉| 526/531 [00:45<00:00, 12.90it/s] 99%|█████████▉| 528/531 [00:45<00:00, 11.72it/s]100%|█████████▉| 530/531 [00:45<00:00, 12.33it/s]100%|██████████| 531/531 [00:45<00:00, 11.62it/s]
+2026-08-27 17:19:59,147: Calculating target variable stds per basin
+  0%|          | 0/531 [00:00<?, ?it/s] 31%|███       | 164/531 [00:00<00:00, 1638.53it/s] 63%|██████▎   | 335/531 [00:00<00:00, 1675.93it/s] 95%|█████████▌| 506/531 [00:00<00:00, 1690.99it/s]100%|██████████| 531/531 [00:00<00:00, 1682.51it/s]
+2026-08-27 17:19:59,638: Create lookup table and convert to pytorch tensor
+  0%|          | 0/531 [00:00<?, ?it/s]  0%|          | 1/531 [00:03<32:10,  3.64s/it]  1%|          | 6/531 [00:03<04:05,  2.14it/s]  2%|▏         | 11/531 [00:03<01:54,  4.54it/s]  3%|▎         | 16/531 [00:03<01:08,  7.53it/s]  4%|▍         | 21/531 [00:04<00:45, 11.09it/s]  5%|▍         | 26/531 [00:04<00:44, 11.39it/s]  6%|▌         | 31/531 [00:04<00:32, 15.16it/s]  7%|▋         | 36/531 [00:04<00:25, 19.27it/s]  8%|▊         | 41/531 [00:04<00:20, 23.47it/s]  9%|▊         | 46/531 [00:04<00:17, 27.49it/s] 10%|▉         | 51/531 [00:05<00:26, 18.08it/s] 11%|█         | 56/531 [00:05<00:21, 22.02it/s] 11%|█▏        | 61/531 [00:05<00:18, 25.95it/s] 12%|█▏        | 66/531 [00:05<00:15, 29.65it/s] 13%|█▎        | 71/531 [00:05<00:13, 32.89it/s] 14%|█▍        | 76/531 [00:06<00:12, 35.62it/s] 15%|█▌        | 81/531 [00:06<00:11, 37.78it/s] 16%|█▌        | 86/531 [00:06<00:11, 39.42it/s] 17%|█▋        | 91/531 [00:06<00:23, 18.50it/s] 18%|█▊        | 96/531 [00:06<00:19, 22.34it/s] 19%|█▉        | 101/531 [00:07<00:16, 25.99it/s] 20%|█▉        | 106/531 [00:07<00:14, 29.49it/s] 21%|██        | 111/531 [00:07<00:12, 32.58it/s] 22%|██▏       | 116/531 [00:07<00:11, 35.14it/s] 23%|██▎       | 121/531 [00:07<00:11, 37.19it/s] 24%|██▎       | 126/531 [00:07<00:10, 38.77it/s] 25%|██▍       | 131/531 [00:07<00:10, 39.94it/s] 26%|██▌       | 136/531 [00:08<00:24, 16.22it/s] 27%|██▋       | 141/531 [00:08<00:19, 19.96it/s] 27%|██▋       | 146/531 [00:08<00:16, 23.78it/s] 28%|██▊       | 151/531 [00:08<00:13, 27.52it/s] 29%|██▉       | 156/531 [00:08<00:12, 30.86it/s] 30%|███       | 161/531 [00:09<00:10, 33.78it/s] 31%|███▏      | 166/531 [00:09<00:10, 36.21it/s] 32%|███▏      | 171/531 [00:09<00:09, 38.05it/s] 33%|███▎      | 176/531 [00:09<00:08, 39.46it/s] 34%|███▍      | 181/531 [00:09<00:08, 40.51it/s] 35%|███▌      | 186/531 [00:09<00:08, 41.21it/s] 36%|███▌      | 191/531 [00:10<00:23, 14.20it/s] 37%|███▋      | 196/531 [00:10<00:18, 17.72it/s] 38%|███▊      | 201/531 [00:10<00:15, 21.53it/s] 39%|███▉      | 206/531 [00:10<00:12, 25.30it/s] 40%|███▉      | 211/531 [00:11<00:11, 28.85it/s] 41%|████      | 216/531 [00:11<00:09, 32.04it/s] 42%|████▏     | 221/531 [00:11<00:08, 34.73it/s] 43%|████▎     | 226/531 [00:11<00:08, 36.84it/s] 44%|████▎     | 231/531 [00:11<00:07, 38.57it/s] 44%|████▍     | 236/531 [00:11<00:07, 39.87it/s] 45%|████▌     | 241/531 [00:11<00:07, 40.82it/s] 46%|████▋     | 246/531 [00:11<00:06, 41.50it/s] 47%|████▋     | 251/531 [00:11<00:06, 41.98it/s] 48%|████▊     | 256/531 [00:12<00:06, 42.42it/s] 49%|████▉     | 261/531 [00:12<00:06, 42.23it/s] 50%|█████     | 266/531 [00:13<00:22, 11.93it/s] 51%|█████     | 271/531 [00:13<00:17, 15.24it/s] 52%|█████▏    | 276/531 [00:13<00:13, 18.92it/s] 53%|█████▎    | 281/531 [00:13<00:10, 22.76it/s] 54%|█████▍    | 286/531 [00:13<00:09, 26.46it/s] 55%|█████▍    | 291/531 [00:13<00:08, 29.85it/s] 56%|█████▌    | 296/531 [00:14<00:07, 32.80it/s] 57%|█████▋    | 301/531 [00:14<00:06, 35.30it/s] 58%|█████▊    | 306/531 [00:14<00:06, 37.15it/s] 59%|█████▊    | 311/531 [00:14<00:05, 38.63it/s] 60%|█████▉    | 316/531 [00:14<00:05, 39.92it/s] 60%|██████    | 321/531 [00:14<00:05, 40.85it/s] 61%|██████▏   | 326/531 [00:14<00:04, 41.39it/s] 62%|██████▏   | 331/531 [00:14<00:04, 41.86it/s] 63%|██████▎   | 336/531 [00:14<00:04, 42.15it/s] 64%|██████▍   | 341/531 [00:15<00:04, 42.24it/s] 65%|██████▌   | 346/531 [00:15<00:04, 42.34it/s] 66%|██████▌   | 351/531 [00:15<00:04, 42.52it/s] 67%|██████▋   | 356/531 [00:16<00:16, 10.31it/s] 68%|██████▊   | 361/531 [00:16<00:12, 13.35it/s] 69%|██████▉   | 366/531 [00:16<00:09, 16.84it/s] 70%|██████▉   | 371/531 [00:17<00:07, 20.61it/s] 71%|███████   | 376/531 [00:17<00:06, 24.31it/s] 72%|███████▏  | 381/531 [00:17<00:05, 27.88it/s] 73%|███████▎  | 386/531 [00:17<00:04, 31.17it/s] 74%|███████▎  | 391/531 [00:17<00:04, 34.05it/s] 75%|███████▍  | 396/531 [00:17<00:03, 36.33it/s] 76%|███████▌  | 401/531 [00:17<00:03, 38.05it/s] 76%|███████▋  | 406/531 [00:17<00:03, 39.52it/s] 77%|███████▋  | 411/531 [00:17<00:02, 40.54it/s] 78%|███████▊  | 416/531 [00:18<00:02, 41.13it/s] 79%|███████▉  | 421/531 [00:18<00:02, 41.73it/s] 80%|████████  | 426/531 [00:18<00:02, 42.17it/s] 81%|████████  | 431/531 [00:18<00:02, 42.45it/s] 82%|████████▏ | 436/531 [00:18<00:02, 42.63it/s] 83%|████████▎ | 441/531 [00:18<00:02, 42.84it/s] 84%|████████▍ | 446/531 [00:18<00:01, 42.91it/s] 85%|████████▍ | 451/531 [00:18<00:01, 43.08it/s] 86%|████████▌ | 456/531 [00:18<00:01, 43.09it/s] 87%|████████▋ | 461/531 [00:19<00:01, 43.27it/s] 88%|████████▊ | 466/531 [00:20<00:07,  8.71it/s] 89%|████████▊ | 471/531 [00:20<00:05, 11.45it/s] 90%|████████▉ | 476/531 [00:20<00:03, 14.71it/s] 91%|█████████ | 481/531 [00:21<00:02, 18.27it/s] 92%|█████████▏| 486/531 [00:21<00:02, 22.10it/s] 92%|█████████▏| 491/531 [00:21<00:01, 25.89it/s] 93%|█████████▎| 496/531 [00:21<00:01, 29.44it/s] 94%|█████████▍| 501/531 [00:21<00:00, 32.55it/s] 95%|█████████▌| 506/531 [00:21<00:00, 35.13it/s] 96%|█████████▌| 511/531 [00:21<00:00, 37.17it/s] 97%|█████████▋| 516/531 [00:21<00:00, 38.82it/s] 98%|█████████▊| 521/531 [00:22<00:00, 39.99it/s] 99%|█████████▉| 526/531 [00:22<00:00, 40.37it/s]100%|██████████| 531/531 [00:22<00:00, 41.22it/s]100%|██████████| 531/531 [00:22<00:00, 23.86it/s]
+  0%|          | 0/1 [00:00<?, ?it/s]# Epoch 1:   0%|          | 0/1 [00:00<?, ?it/s]# Epoch 1:   0%|          | 0/1 [00:01<?, ?it/s, Loss: 0.4769]# Epoch 1: 100%|##########| 1/1 [00:01<00:00,  1.72s/it, Loss: 0.4769]# Epoch 1: 100%|##########| 1/1 [00:01<00:00,  1.88s/it, Loss: 0.4769]
+2026-08-27 17:22:06,256: Uncaught exception
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/scripts/run_full_size_gpu_probe.py", line 368, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/scripts/run_full_size_gpu_probe.py", line 363, in main
+    print(json.dumps(report, indent=2))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 202, in encode
+    chunks = list(chunks)
+             ^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 432, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type PosixPath is not JSON serializable
+--- /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/preselection-gates-215262.err
+=== RESOURCE REPORT SUMMARY ===
+{"checks": {"configured_batch_and_sequence_observed": true, "finite_gradients": true, "finite_loss": true, "nonzero_gradients": true, "one_forward_call": true, "optimizer_state_exists": true, "optimizer_step_exactly_one": true, "peak_reserved_below_12_gib": true}, "error": null, "error_type": null, "experiment_id": "B01", "failure_stage": null, "overall_status": "PASS", "path": "results/30_modern_transformer_moe/_gpu_resource_probes/id30_B01_s100_slurm215262/probe_report.json", "peak_reserved_bytes": 1176502272, "status": "COMPLETE", "total_parameters": 297217}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-27T17:26:20+0800
