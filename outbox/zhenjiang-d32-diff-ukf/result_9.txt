@@ -1,0 +1,17 @@
+### channel=zhenjiang-d32-diff-ukf seq=9
+### host=login4
+### started=2026-08-28T16:34:39+0800
+### ---------- output ----------
+{
+  "status": "technical_pass",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "e1ce8c0ec2843b153f709c1a3bdcca743edd82e6fc2ece26d5f44b724c42819d"
+}
+FORMAL_SUBMISSION_GATE=PASS|single_hours_with_margin=11.577178|three_serial_hours_with_margin=34.731535
+Submitted batch job 215862
+FORMAL_ARRAY_SUBMISSION=ACCEPTED
+FORMAL_ARRAY_JOB_ID=215862
+215862_[0-2%1]|hgpu2p|zhd32-dukf-formal|PENDING|0:00|3-00:00:00|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T16:34:42+0800
