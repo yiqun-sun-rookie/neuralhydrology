@@ -1,0 +1,9 @@
+### channel=id31-hydrologic-dynamic-tokens seq=12
+### host=login4
+### started=2026-08-28T20:08:39+0800
+### ---------- output ----------
+src/hydrologic_dynamic_tokens/hpc/submit_gpu_resource_probe.slurm
+/data1/home/sunyiq/miniconda3/envs/nh_final/etc/conda/activate.d/libblas_mkl_activate.sh: line 1: MKL_INTERFACE_LAYER: unbound variable
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-28T20:08:39+0800
