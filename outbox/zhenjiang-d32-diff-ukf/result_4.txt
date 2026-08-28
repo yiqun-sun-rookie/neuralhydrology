@@ -1,0 +1,56 @@
+### channel=zhenjiang-d32-diff-ukf seq=4
+### host=login4
+### started=2026-08-28T15:28:21+0800
+### ---------- output ----------
+SMOKE_JOB_ID=215811
+=== SQUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== SACCT ===
+JobIDRaw|JobName|Partition|State|ExitCode|ElapsedRaw|NodeList|AllocTRES|MaxRSS
+215811|zhd32-dukf-smoke|hgpu2p|FAILED|127:0|143|ngu011|billing=4,cpu=4,node=1|
+215811.batch|batch||FAILED|127:0|143|ngu011|cpu=4,mem=0,node=1|1270880K
+215811.extern|extern||COMPLETED|0:0|143|ngu011|billing=4,cpu=4,node=1|2644K
+=== STDOUT_TAIL ===
+{
+  "status": "verified_pre2024_only",
+  "verified_file_count": 13,
+  "manifest_sha256": "49258c2509a9c5baeb0650c02327d6ea6b04fc8ff19b9a2eb263e65c320c3b12"
+}
+[2026-08-28T15:22:03+08:00] experiment_id=ZHD32-DUKF-HPC-SMOKE-V1
+[INFO] job_id=215811 node=ngu011 output=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828/runs/smoke/ZHD32-DUKF-HPC-SMOKE-V1/attempt_001
+NVIDIA GeForce RTX 3090, GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da, 24576 MiB, 580.76.05
+NVIDIA GeForce RTX 3090, GPU-7b2fa2ee-6930-2a2e-e9f5-7736fd478efd, 24576 MiB, 580.76.05
+cuda_preflight=passed name=NVIDIA GeForce RTX 3090 capability=(8, 6) bytes=25296044032
+torch=2.4.0 cuda=12.1
+bundle_identity_check=passed source_file_count=34
+{
+  "status": "complete",
+  "output": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828/runs/smoke/ZHD32-DUKF-HPC-SMOKE-V1/attempt_001"
+}
+{
+  "status": "technical_pass",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "6d1ede83ea6c2ef74ed14a0ee81edf422b09890120def012de4108ce8486368d"
+}
+[2026-08-28T15:23:39+08:00] ZHD32-DUKF-HPC-SMOKE-V1 completed
+=== STDERR_TAIL ===
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+=== ATTEMPT_STATE ===
+PRESENT|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828/runs/smoke/ZHD32-DUKF-HPC-SMOKE-V1/attempt_001
+115642|last_checkpoint.pt
+1215|best_noise_parameters.json
+1306|best_noise_parameters.csv
+1853|run_identity.json
+1983|frozen_config.json
+2097|completion_manifest.json
+2153|noise_parameter_history.csv
+457|training_history.csv
+470|gradient_history.csv
+5038|data_identity.json
+637|gpu_technical_preflight.json
+778|selection_validation_summary.json
+94130|best_checkpoint.pt
+ABSENT|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828/runs/smoke/ZHD32-DUKF-HPC-SMOKE-V1/attempt_001.partial
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T15:28:21+0800
