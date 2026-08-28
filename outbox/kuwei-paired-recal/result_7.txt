@@ -1,0 +1,18 @@
+### channel=kuwei-paired-recal seq=7
+### host=login4
+### started=2026-08-28T14:55:50+0800
+### ---------- output ----------
+=== A. payload v3 ===
+laos_jdl_v3.tar.gz: OK
+unpacked v3
+kuwei_joint_da_learning.py
+torch_xaj_mirror.py
+=== B. write gate slurm ===
+=== C. submit ===
+Submitted batch job 215803
+     JOBID           NAME  PARTITION    STATE NODELIST(REASON)
+    215803 kuwei-jdl-gate hcpu48,hcp  PENDING (None)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T14:55:50+0800
