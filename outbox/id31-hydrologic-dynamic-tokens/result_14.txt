@@ -1,0 +1,16 @@
+### channel=id31-hydrologic-dynamic-tokens seq=14
+### host=login4
+### started=2026-08-28T20:15:29+0800
+### ---------- output ----------
+ID31 STATIC CONFIG AUDIT: PASS (five planned runs; no data read; no training launched)
+=== SUBMISSION COMMAND ===
+sbatch is /usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch
+sbatch src/hydrologic_dynamic_tokens/hpc/submit_gpu_resource_probe.slurm
+Submitted batch job 215878
+ID31_GPU_PROBE_JOB_ID=215878
+             JOBID    PARTITION                           NAME ST       TIME     NODELIST(REASON)
+            215878       hgpu2p                 id31_gpu_probe PD       0:00           (Priority)
+ID31_GPU_PROBE_SUBMISSION_PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T20:15:29+0800
