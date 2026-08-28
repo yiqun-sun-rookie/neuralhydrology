@@ -1,0 +1,167 @@
+### channel=id30-modern-moe-status-refresh seq=1
+### host=login4
+### started=2026-08-28T18:37:29+0800
+### ---------- output ----------
+=== ID30 READ-ONLY STATUS REFRESH ===
+2026-08-28T18:37:29+0800
+login4
+root=/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo
+=== SCHEDULER STATE ===
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215428        hgpu2                  id30_select  PENDING       0:00                   (Dependency)
+            215429        hgpu2                id30_m01_s100  PENDING       0:00                   (Dependency)
+            215427        hgpu2                id30_dev_s100  RUNNING    3:36:32                         ngu009
+215314|id30_dev_s100|hgpu2|COMPLETED|0:0|01:34:55|ngu009|
+215314.batch|batch||COMPLETED|0:0|01:34:55|ngu009|10372760K
+215314.extern|extern||COMPLETED|0:0|01:34:55|ngu009|1364K
+215425|id30_dev_s100|hgpu2|COMPLETED|0:0|06:33:38|ngu009|
+215425.batch|batch||COMPLETED|0:0|06:33:38|ngu009|10454300K
+215425.extern|extern||COMPLETED|0:0|06:33:38|ngu009|1364K
+215426|id30_dev_s100|hgpu2|COMPLETED|0:0|12:37:12|ngu009|
+215426.batch|batch||COMPLETED|0:0|12:37:12|ngu009|10414152K
+215426.extern|extern||COMPLETED|0:0|12:37:12|ngu009|1168K
+215427|id30_dev_s100|hgpu2|RUNNING|0:0|03:36:59|ngu009|
+215427.batch|batch||RUNNING|0:0|03:36:59|ngu009|
+215427.extern|extern||RUNNING|0:0|03:36:59|ngu009|
+215428|id30_select|hgpu2|PENDING|0:0|00:00:00|None assigned|
+215429|id30_m01_s100|hgpu2|PENDING|0:0|00:00:00|None assigned|
+=== REGISTERED DEVELOPMENT STATE ===
+{
+  "generated_at_utc": "2026-08-28T10:38:38.397477+00:00",
+  "host": "login4",
+  "records": [
+    {
+      "binding_status": "COMPLETE",
+      "classification": "COMPLETE",
+      "run_id": "id30_B01_s100_slurm215314"
+    },
+    {
+      "binding_status": "COMPLETE",
+      "classification": "COMPLETE",
+      "run_id": "id30_D01_s100_slurm215425"
+    },
+    {
+      "binding_status": "COMPLETE",
+      "classification": "COMPLETE",
+      "run_id": "id30_D02_s100_slurm215426"
+    },
+    {
+      "binding_status": "RUNNING",
+      "child_identity_alive": null,
+      "classification": "RUNNING_ALIVE",
+      "heartbeat_age_seconds": -11.242127,
+      "heartbeat_stale": false,
+      "manifest_exists": true,
+      "manifest_path": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/results/30_modern_transformer_moe/_development_invocations/id30_D03_s100_slurm215427/run_manifest.json",
+      "reason": "active_or_not_jointly_disproved",
+      "run_id": "id30_D03_s100_slurm215427",
+      "runner_identity_alive": null,
+      "slurm_job_active": true
+    }
+  ],
+  "schema_version": 1
+}
+=== HASH-BOUND INTERNAL-VALIDATION ARTIFACTS ===
+{
+  "bindings_path": "src/modern_transformer_moe/registry/development_run_bindings.json",
+  "bindings_sha256": "15458f71ce0c49731aee5a35981eea02bfb00f743fdeb0d05c00e7d4d2718066",
+  "records": [
+    {
+      "actual_metrics_artifact_sha256": "9c17f5530c76458281a4d98d6aa3cf8a02576feee18fdfc8b6c936bea8d713e4",
+      "checkpoint_path": "results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/model_epoch030.pt",
+      "checkpoint_sha256": "fb9ccc6985f1f1cc9f67ae114d7e21c1393afd503d1ec14e50560c371f201859",
+      "epoch": 30,
+      "failure_reason": "not_applicable",
+      "failure_stage": "not_applicable",
+      "median_nse": 0.7054023146629333,
+      "metric": "NSE",
+      "metrics_artifact_path": "results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/epoch030_metrics.json",
+      "recorded_metrics_artifact_sha256": "9c17f5530c76458281a4d98d6aa3cf8a02576feee18fdfc8b6c936bea8d713e4",
+      "role": "B01",
+      "run_config_path": "results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/config.yml",
+      "run_config_sha256": "2f8b51c2ce5268608a0e01d29e4a9ac88badfd423b326b9d4eb7b335db7b0a9b",
+      "run_dir": "results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30",
+      "run_id": "id30_B01_s100_slurm215314",
+      "seed": 100,
+      "status": "COMPLETE",
+      "validation_metrics_path": "results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch030/validation_metrics.csv",
+      "validation_metrics_sha256": "981171c7bbaa2daeb0ace35ec1797f2a9409072fed4f89b8f1d9bf5bd58a59f9",
+      "validation_results_path": "results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch030/validation_results.p",
+      "validation_results_sha256": "6acd404661983ad494f1ddb8eee9609b4a71e184c1f9a02d55cba949185ecc16"
+    },
+    {
+      "actual_metrics_artifact_sha256": "9d9e8a1294cba3f7e37c89295cfc17a7484762d85b2ecbef0907f1c758f19b16",
+      "checkpoint_path": "results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/model_epoch030.pt",
+      "checkpoint_sha256": "8177a319e0b6eafab9a61e6add6cfa86e1c401df063137e0ef52e5988ca3917d",
+      "epoch": 30,
+      "failure_reason": "not_applicable",
+      "failure_stage": "not_applicable",
+      "median_nse": 0.671033501625061,
+      "metric": "NSE",
+      "metrics_artifact_path": "results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/epoch030_metrics.json",
+      "recorded_metrics_artifact_sha256": "9d9e8a1294cba3f7e37c89295cfc17a7484762d85b2ecbef0907f1c758f19b16",
+      "role": "D01",
+      "run_config_path": "results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/config.yml",
+      "run_config_sha256": "efab824140951d9e2867437245502d7b30bf0b97608e916ba1b7e4c87d74033b",
+      "run_dir": "results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30",
+      "run_id": "id30_D01_s100_slurm215425",
+      "seed": 100,
+      "status": "COMPLETE",
+      "validation_metrics_path": "results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch030/validation_metrics.csv",
+      "validation_metrics_sha256": "26cb602a68c48cc24c8c7f2d60773232d9b460721422b9179a0964385937d1b7",
+      "validation_results_path": "results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch030/validation_results.p",
+      "validation_results_sha256": "e5b61d5d32f3c869ca97652838a47e2f9381d415f76b4ae4856a5b72910d1bd3"
+    },
+    {
+      "actual_metrics_artifact_sha256": "8f7ffcf172631e16ffda1ccbdf5e7ea9ed5ca29e258689b97ba8da18c2e47474",
+      "checkpoint_path": "results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/model_epoch030.pt",
+      "checkpoint_sha256": "04b9078c358805c39a13aa65a82bc37cec20f74ca9781e84e1028de8c16bf074",
+      "epoch": 30,
+      "failure_reason": "not_applicable",
+      "failure_stage": "not_applicable",
+      "median_nse": 0.6477595567703247,
+      "metric": "NSE",
+      "metrics_artifact_path": "results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/epoch030_metrics.json",
+      "recorded_metrics_artifact_sha256": "8f7ffcf172631e16ffda1ccbdf5e7ea9ed5ca29e258689b97ba8da18c2e47474",
+      "role": "D02",
+      "run_config_path": "results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/config.yml",
+      "run_config_sha256": "f14b88b180cedd53520a8b5d6e5d90f8ff730a2c415547e166d727aed27a9b97",
+      "run_dir": "results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30",
+      "run_id": "id30_D02_s100_slurm215426",
+      "seed": 100,
+      "status": "COMPLETE",
+      "validation_metrics_path": "results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch030/validation_metrics.csv",
+      "validation_metrics_sha256": "f26db6963463007fb76b281ad75f3aae04f3ceae387c48bf3b5f9dc80a27b015",
+      "validation_results_path": "results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch030/validation_results.p",
+      "validation_results_sha256": "bbf5dc86b60a985991ffcd6d9fd3864276f1d14701f41f7437a8c8feff3ac24a"
+    },
+    {
+      "failure_reason": "not_applicable",
+      "failure_stage": "not_applicable",
+      "metrics_artifact_path": "not_bound",
+      "recorded_metrics_artifact_sha256": "not_bound",
+      "role": "D03",
+      "run_dir": "not_bound",
+      "run_id": "id30_D03_s100_slurm215427",
+      "seed": 100,
+      "status": "RUNNING"
+    },
+    {
+      "binding_count": 0,
+      "role": "M01"
+    }
+  ]
+}
+{"selection_report": "ABSENT"}
+{"single_seed_gate": "ABSENT"}
+{"generated_m01_config": "ABSENT"}
+{
+  "experiment_registry_path": "src/modern_transformer_moe/registry/experiments.csv",
+  "experiment_registry_sha256": "b5aa60fc721469a0bd9c61a1a4967d4d4f738605e36e9fc93671ae5133768c5f",
+  "rows": []
+}
+=== READ-ONLY REFRESH COMPLETE ===
+2026-08-28T18:38:39+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T18:38:39+0800
