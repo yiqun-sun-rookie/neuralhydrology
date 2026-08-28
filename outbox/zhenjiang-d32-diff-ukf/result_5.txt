@@ -1,0 +1,26 @@
+### channel=zhenjiang-d32-diff-ukf seq=5
+### host=login4
+### started=2026-08-28T16:02:04+0800
+### ---------- output ----------
+PRESERVED_PRE2024_GATE=PASS
+V4_ARCHIVE_SAFETY_AND_IDENTITY=PASS
+V4_EXTRACTED_BUNDLE_IDENTITY=PASS
+{
+  "status": "complete",
+  "output": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1"
+}
+{
+  "status": "verified_pre2024_only",
+  "verified_file_count": 13,
+  "manifest_sha256": "946ab3822024f78f3a334c914e39ba8dd72c72ed45e0e40e5a7aee3e16649f78"
+}
+PRE2024_MANIFEST_SHA256=946ab3822024f78f3a334c914e39ba8dd72c72ed45e0e40e5a7aee3e16649f78
+V4_DEPLOYMENT_STATUS=PASS
+PRESERVED_FAILED_JOB_ID=215811
+PRESERVED_ROOT=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828
+REMOTE_ROOT=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2
+INPUT_DIR=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1
+62ade1f8d092c02e4cd9d3516b271103ca21171f9fdba6ef2aa329fe2d37b7e3  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/bundles/zhenjiang_d32_gru_differentiable_ukf_hpc_v4.tar.gz
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T16:02:33+0800
