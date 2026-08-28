@@ -94,3 +94,4 @@ git rm inbox/seq
 | `kalmannet-tukf23` | TUKF23 真实流域四方式正式实验：CPU 分区探测与部署 | 2026-08-26 | 由 Claude 会话占用；计划落点 `/data1/home/sunyiq/kalmannet_tukf23_20260826`；只操作本通道与该独立目录，不碰 `~/neuralhydrology` 的 Git 状态及其他实验 |
 | `kalmannet-tukf24` | TUKF24 预报时段拉长第二步：1–10 日损失重训部署 | 2026-08-27 | 由 Claude 会话占用；落点 `/data1/home/sunyiq/kalmannet_tukf24_20260827`；只操作本通道与该独立目录，不碰 TUKF23 落点、`~/neuralhydrology` 的 Git 状态及其他实验 |
 | `id30-modern-moe-status-refresh` | CAMELS-US 现代因果 Transformer 与稀疏混合专家种子100顺序链的只读状态刷新 | 2026-08-28 | 仅查询隔离落点 `/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo` 的既有作业、开发期登记和内部验证产物；不提交作业、不修改远程文件、不访问封存评估答案 |
+| `id31-hydrologic-dynamic-tokens` | CAMELS-US 基于允许气象输入自适应划分连续时间词元的因果 Transformer：隔离部署、图形处理器资源探针和开发期公平对照 | 2026-08-28 | 独立落点 `/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828`；仅使用 ID30 已审计的候选安全气象与监督数据包；先探针后训练；不修改 ID30、不访问封存评估、不调用正式评分服务 |
