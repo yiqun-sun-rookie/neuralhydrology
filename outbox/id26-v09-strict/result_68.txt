@@ -1,0 +1,21 @@
+### channel=id26-v09-strict seq=68
+### host=login4
+### started=2026-08-28T19:13:30+0800
+### ---------- output ----------
+=== A IMMUTABLE PREFLIGHT ===
+audit_head=d69d2a7af509b141c7e8361f49f6fdeceed963af
+state_job=211643|COMPLETED|0:0
+state_manifest_sha256=4df6c29afee9df2d36af8a8a99bea40ab6b66103c4696470fa13a2fbf868e77d
+state_diagnostics_gate=PASS|seeds=8|arrays=64|prohibited_reads=0|predictions=false|score=false
+=== B SUBMIT INDEPENDENT REPLAY ===
+Submitted batch job 215874
+audit_jobid=215874
+audit_jobid_file=/data1/home/sunyiq/v09_strict/audit_v09/state_diagnostics_audit_attempt_01_jobid.txt
+=== C IMMEDIATE SCHEDULER SNAPSHOT ===
+       JOBID               NAME        STATE         TIME         NODELIST(REASON)
+      215874      v09stateaudit      PENDING         0:00               (Priority)
+JobIDRaw|JobName|State|ExitCode|Elapsed|Start|End|NodeList
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T19:13:41+0800
