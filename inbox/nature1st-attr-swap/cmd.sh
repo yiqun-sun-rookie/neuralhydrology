@@ -1,5 +1,5 @@
 #!/bin/bash
-# nature1st-attr-swap seq=112 -- armJ (china min15) watchdog, seeds 42/43/44
+# nature1st-attr-swap seq=113 -- armJ (china min15) watchdog, seeds 42/43/44
 # s42=215195 COMPLETED (INCONCLUSIVE). Watching 215729 (s43) and 215730 (s44, A40).
 # NO submission this round -- both follow-up seeds already submitted and running.
 # NO set -e. pipefail only. Every grep/tail guarded with || true.
@@ -157,4 +157,4 @@ fi
 echo "=== E. GPU CAPACITY ==="
 sinfo -p hgpu2p,hgpu2,hgpu4 -o '%.10P %.8t %.6D %.20N' 2>&1 | head -20 || true
 
-echo "=== END seq=112 ==="
+echo "=== END seq=113 ==="
