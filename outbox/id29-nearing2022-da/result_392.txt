@@ -1,0 +1,27 @@
+### channel=id29-nearing2022-da seq=392
+### host=login4
+### started=2026-08-29T00:05:13+0800
+### ---------- output ----------
+2026-08-29T00:05:13+0800
+=== N22 JOBS ===
+202226_[0-11 N22-eval-later   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202229   N22-agg-eval   PENDING        0:00  1-00:00:00 (Dependency)
+      202294     N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315       N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-5   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+      202293   N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+   211001_22     N22-relong   RUNNING  1-12:26:01  1-23:33:59 ngu102
+=== FAILURES AND TIMEOUTS (never truncate, never tail) ===
+202215_20|N22-time|TIMEOUT|0:0|2-00:00:22|2026-08-22T16:19:07
+202215_21|N22-time|TIMEOUT|0:0|2-00:00:15|2026-08-23T13:05:19
+202215_22|N22-time|TIMEOUT|0:0|2-00:00:10|2026-08-23T22:06:54
+=== LOG IDLE SECONDS PER RUNNING JOB (stall detector) ===
+  211001_22      idle=20s node=ngu102
+=== RUNNING PROGRESS ===
+=== ROLE COUNTS ===
+{"missing_by_type": {"aggregation": 6, "evaluation": 600, "training": 1}, "missing_total": 607}
+MISSING_TRAINING_COORDINATES: 1
+    N22-TS-AR-L10-H100-S0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-29T00:05:50+0800
