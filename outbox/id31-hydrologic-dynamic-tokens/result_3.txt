@@ -1,0 +1,19 @@
+### channel=id31-hydrologic-dynamic-tokens seq=3
+### host=login4
+### started=2026-08-28T19:28:26+0800
+### ---------- output ----------
+SAFE_DATA_LINK data/camels_us_track0_development_forcing_v01 -> /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01
+SAFE_DATA_LINK data/camels_us_track0_supervision_v01 -> /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01
+ID31 STATIC CONFIG AUDIT: PASS (five planned runs; no data read; no training launched)
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+  File "/data1/home/sunyiq/.id31_hydrologic_dynamic_tokens_20260828.staging_seq2/repo/src/hydrologic_dynamic_tokens/scripts/run_development.py", line 26, in <module>
+    from src.modern_transformer_moe.scripts.candidate_safe_data import (
+  File "/data1/home/sunyiq/.id31_hydrologic_dynamic_tokens_20260828.staging_seq2/repo/src/modern_transformer_moe/scripts/candidate_safe_data.py", line 9, in <module>
+    from src.modern_transformer_moe.scripts.audit_track0_supervision_bundle import audit_bundles
+  File "/data1/home/sunyiq/.id31_hydrologic_dynamic_tokens_20260828.staging_seq2/repo/src/modern_transformer_moe/scripts/audit_track0_supervision_bundle.py", line 9, in <module>
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-28T19:28:28+0800
