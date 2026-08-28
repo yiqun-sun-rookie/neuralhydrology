@@ -1,0 +1,35 @@
+### channel=id31-hydrologic-dynamic-tokens seq=11
+### host=login4
+### started=2026-08-28T20:00:06+0800
+### ---------- output ----------
+=== SLURM STATUS ===
+slurm_load_jobs error: Invalid job id specified
+slurm_load_jobs error: Invalid job id specified
+Unable to find jobs matching user/id(s) specified
+215876|id31_gpu_probe|hgpu2p|FAILED|1:0|00:03:14|ngu011
+215876.batch|batch||FAILED|1:0|00:03:14|ngu011
+215876.extern|extern||COMPLETED|0:0|00:03:14|ngu011
+=== PROBE REPORT ===
+PROBE_REPORT_PENDING
+=== STDOUT TAIL ===
+=== ID31 COMPUTE NODE AND HARD CUDA GATE ===
+2026-08-28T19:53:11+08:00
+ngu011
+NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+torch 2.4.0
+cuda_device NVIDIA GeForce RTX 3090
+cuda_memory_bytes 25296044032
+=== STATIC CONTRACT ===
+ID31 STATIC CONFIG AUDIT: PASS (five planned runs; no data read; no training launched)
+=== ACTUAL SAFE-DATA FULL-BATCH ONE-UPDATE PROBE (DL01) ===
+=== STDERR TAIL ===
+Traceback (most recent call last):
+  File "<stdin>", line 75, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/cuda/memory.py", line 322, in reset_peak_memory_stats
+    return torch._C._cuda_resetPeakMemoryStats(device)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Invalid device argument 
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T20:00:06+0800
