@@ -1,0 +1,36 @@
+### channel=zhenjiang-d32-diff-ukf seq=8
+### host=login4
+### started=2026-08-28T16:27:52+0800
+### ---------- output ----------
+SCHEDULER_GATE=PASS|job=215855|state=COMPLETED|exit=0:0|elapsed_seconds=91|node=ngu011
+JobIDRaw|JobName|Partition|State|ExitCode|ElapsedRaw|NodeList|AllocTRES|MaxRSS
+215855|zhd32-dukf-smoke|hgpu2p|COMPLETED|0:0|91|ngu011|billing=4,cpu=4,node=1|
+215855.batch|batch||COMPLETED|0:0|91|ngu011|cpu=4,mem=0,node=1|457088K
+215855.extern|extern||COMPLETED|0:0|91|ngu011|billing=4,cpu=4,node=1|2404K
+{
+  "status": "technical_pass",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "e1ce8c0ec2843b153f709c1a3bdcca743edd82e6fc2ece26d5f44b724c42819d"
+}
+SMOKE_STRICT_GATE=PASS
+{
+  "completion_manifest_sha256": "e1ce8c0ec2843b153f709c1a3bdcca743edd82e6fc2ece26d5f44b724c42819d",
+  "conservative_seconds_per_batch": 0.98033825494349,
+  "epoch_seconds_for_four_batches": 1.7999567911028862,
+  "formal_batches_per_epoch": 1696,
+  "gate": "PASS",
+  "held_out_target_access": false,
+  "margin_fraction": 0.25,
+  "maximum_epochs": 20,
+  "node": "ngu011",
+  "preflight_forward_backward_seconds": 0.98033825494349,
+  "projected_single_model_hours_with_margin": 11.577178351004195,
+  "projected_three_model_serial_hours_with_margin": 34.731535053012585,
+  "scheduler_elapsed_seconds": 91,
+  "scientific_conclusion": false,
+  "technical_only": true
+}
+FORMAL_OUTPUT_ABSENCE_GATE=PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T16:28:19+0800
