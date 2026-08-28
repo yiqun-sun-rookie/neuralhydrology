@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-exec bash /data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-daily-camels/seq70_a38_submit_a800_train1.sh
+exec bash /data1/home/sunyiq/hpc_mailbox/inbox/kalmannet-daily-camels/seq71_a38_job215801_status.sh
