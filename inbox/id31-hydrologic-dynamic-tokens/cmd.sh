@@ -2,43 +2,101 @@
 set -eo pipefail
 
 SOURCE=/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo
+TARGET=/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828
+STAGE=/data1/home/sunyiq/.id31_hydrologic_dynamic_tokens_20260828.staging_seq2
+PAYLOAD="$HOME/hpc_mailbox/payload/id31-hydrologic-dynamic-tokens/id31_hydrologic_dynamic_tokens_code_20260828_v01.tar.gz"
+EXPECTED_PAYLOAD_SHA256=0f1f158e21f3726008647d4f1a98561aca499380908f46538339d734822f2092
+EXPECTED_SOURCE_REVISION=eef5ecf460775b679eabda36ca4df090c14d4e36
 
 test -d "$SOURCE/.git"
-cd "$SOURCE"
+test -f "$PAYLOAD"
+test ! -e "$TARGET"
+test ! -e "$STAGE"
 
-echo "=== SOURCE REVISION AND WORKTREE ==="
-git rev-parse HEAD
-git status --porcelain
+actual_payload_sha256=$(sha256sum "$PAYLOAD" | awk '{print $1}')
+test "$actual_payload_sha256" = "$EXPECTED_PAYLOAD_SHA256"
 
-echo "=== REQUIRED SOURCE FILES ==="
-required_files=(
-  neuralhydrology/modelzoo/__init__.py
-  neuralhydrology/modelzoo/modern_causal_transformer.py
-  neuralhydrology/training/__init__.py
-  neuralhydrology/training/regularization.py
-  neuralhydrology/utils/config.py
-  neuralhydrology/datasetzoo/camelsus_track0_bundle.py
-  src/modern_transformer_moe/scripts/audit_configs.py
-  src/modern_transformer_moe/scripts/candidate_safe_data.py
+python - "$PAYLOAD" <<'PY'
+import sys
+import tarfile
+from pathlib import PurePosixPath
+
+with tarfile.open(sys.argv[1], "r:gz") as archive:
+    members = archive.getmembers()
+if not members:
+    raise ValueError("ID31 payload is empty")
+for member in members:
+    path = PurePosixPath(member.name)
+    if path.is_absolute() or ".." in path.parts:
+        raise ValueError(f"Unsafe payload member: {member.name}")
+print("PAYLOAD_MEMBER_COUNT", len(members))
+PY
+
+mkdir -p "$STAGE"
+git clone --no-hardlinks --local "$SOURCE" "$STAGE/repo"
+test "$(git -C "$STAGE/repo" rev-parse HEAD)" = "$EXPECTED_SOURCE_REVISION"
+
+cd "$STAGE/repo"
+test "$(sha256sum neuralhydrology/modelzoo/__init__.py | awk '{print $1}')" = \
+  49fd889aa309948270c66ebedc0578bff8502f37eee1ccf9354227871c4bd30d
+test "$(sha256sum neuralhydrology/training/__init__.py | awk '{print $1}')" = \
+  f41ec3daf713ed9b4021de6d2b0e25460bdf9996f4be38532ecf28dd244ecc15
+test "$(sha256sum neuralhydrology/training/regularization.py | awk '{print $1}')" = \
+  91414cc017b2903322de8069ca0879b86b1deefe73756c22058abdbc633d682c
+test "$(sha256sum neuralhydrology/utils/config.py | awk '{print $1}')" = \
+  8732ceb341ce81362aebfe0855f7ab6b677d5657badffc2e1e4f89f1c0f550bc
+
+cp "$SOURCE/src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json" \
+   src/modern_transformer_moe/registry/
+cp "$SOURCE/src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json" \
+   src/modern_transformer_moe/registry/
+
+mkdir -p data
+ln -s "$SOURCE/data/camels_us_track0_development_forcing_v01" \
+      data/camels_us_track0_development_forcing_v01
+ln -s "$SOURCE/data/camels_us_track0_supervision_v01" \
+      data/camels_us_track0_supervision_v01
+
+tar -xzf "$PAYLOAD"
+mkdir -p logs/31_hydrologic_dynamic_tokens
+mkdir -p results/31_hydrologic_dynamic_tokens/_reports
+mkdir -p results/31_hydrologic_dynamic_tokens/_gpu_resource_probes
+
+python - <<'PY'
+import json
+from pathlib import Path
+
+pairs = (
+    (
+        Path("data/camels_us_track0_development_forcing_v01"),
+        Path("src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json"),
+    ),
+    (
+        Path("data/camels_us_track0_supervision_v01"),
+        Path("src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json"),
+    ),
 )
-for path in "${required_files[@]}"; do
-  test -f "$path"
-  git ls-files --error-unmatch "$path" >/dev/null
-  sha256sum "$path"
-done
+for configured_path, manifest_path in pairs:
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    actual = configured_path.resolve()
+    expected = Path(manifest["output_dir"]).resolve()
+    if actual != expected:
+        raise ValueError(f"Safe-data link mismatch: {actual} != {expected}")
+    print("SAFE_DATA_LINK", configured_path, "->", actual)
+PY
 
-echo "=== CANDIDATE-SAFE DATA ROOTS ==="
-for path in \
-  data/camels_us_track0_development_forcing_v01 \
-  data/camels_us_track0_supervision_v01; do
-  test -d "$path"
-  printf '%s -> %s\n' "$path" "$(readlink -f "$path")"
-done
+python -m src.hydrologic_dynamic_tokens.scripts.audit_configs
+python - <<'PY'
+import json
+from src.hydrologic_dynamic_tokens.scripts.run_development import capture_source_integrity
 
-echo "=== CANDIDATE-SAFE MANIFESTS ==="
-find data/camels_us_track0_development_forcing_v01 \
-     data/camels_us_track0_supervision_v01 \
-     -maxdepth 2 -type f \( -iname '*manifest*' -o -iname '*.sha256' \) \
-     -print0 | sort -z | xargs -0 -r sha256sum
+print(json.dumps(capture_source_integrity("DL01"), indent=2, sort_keys=True))
+PY
+bash -n src/hydrologic_dynamic_tokens/hpc/submit_gpu_resource_probe.slurm
+bash -n src/hydrologic_dynamic_tokens/hpc/submit_development_experiment.slurm
 
-echo "ID31_READ_ONLY_PREFLIGHT_PASS"
+cd /data1/home/sunyiq
+mv "$STAGE" "$TARGET"
+test -d "$TARGET/repo/.git"
+test -d "$TARGET/repo/logs/31_hydrologic_dynamic_tokens"
+echo "ID31_DEPLOYMENT_PASS"
