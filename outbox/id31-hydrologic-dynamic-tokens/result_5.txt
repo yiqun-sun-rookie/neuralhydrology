@@ -1,0 +1,15 @@
+### channel=id31-hydrologic-dynamic-tokens seq=5
+### host=login4
+### started=2026-08-28T19:37:34+0800
+### ---------- output ----------
+=== SUBMISSION COMMAND ===
+sbatch is /usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch
+sbatch src/hydrologic_dynamic_tokens/hpc/submit_gpu_resource_probe.slurm
+Submitted batch job 215876
+ID31_GPU_PROBE_JOB_ID=215876
+             JOBID    PARTITION                           NAME ST       TIME     NODELIST(REASON)
+            215876       hgpu2p                 id31_gpu_probe PD       0:00           (Priority)
+ID31_GPU_PROBE_SUBMISSION_PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T19:37:34+0800
