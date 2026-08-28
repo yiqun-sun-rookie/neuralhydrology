@@ -1,0 +1,46 @@
+### channel=zhenjiang-d32-diff-ukf seq=10
+### host=login4
+### started=2026-08-28T16:38:41+0800
+### ---------- output ----------
+FORMAL_ARRAY_JOB_ID=215862
+=== SQUEUE ===
+215862_[1-2%1]|hgpu2p|zhd32-dukf-formal|PENDING|0:00|3-00:00:00|(JobArrayTaskLimit)
+215862_0|hgpu2p|zhd32-dukf-formal|RUNNING|3:18|3-00:00:00|ngu011
+=== SACCT ===
+JobIDRaw|JobName|Partition|State|ExitCode|ElapsedRaw|NodeList|AllocTRES|MaxRSS
+215863|zhd32-dukf-formal|hgpu2p|RUNNING|0:0|225|ngu011|billing=4,cpu=4,node=1|
+215863.batch|batch||RUNNING|0:0|225|ngu011|cpu=4,mem=0,node=1|
+215863.extern|extern||RUNNING|0:0|225|ngu011|billing=4,cpu=4,node=1|
+215862|zhd32-dukf-formal|hgpu2p|PENDING|0:0|0|None assigned||
+=== FORMAL_LOG_TAILS ===
+--- /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/logs/zhd32-dukf-formal-215862_0.out ---
+{
+  "status": "verified_pre2024_only",
+  "verified_file_count": 13,
+  "manifest_sha256": "946ab3822024f78f3a334c914e39ba8dd72c72ed45e0e40e5a7aee3e16649f78"
+}
+[2026-08-28T16:32:44+08:00] experiment_id=ZHD32-DUKF-S17-V1
+[INFO] job_id=215863 array_task=0 node=ngu011 output=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/formal/ZHD32-DUKF-S17-V1/attempt_001
+NVIDIA GeForce RTX 3090, GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da, 24576 MiB, 580.76.05
+NVIDIA GeForce RTX 3090, GPU-7b2fa2ee-6930-2a2e-e9f5-7736fd478efd, 24576 MiB, 580.76.05
+cuda_preflight=passed name=NVIDIA GeForce RTX 3090 capability=(8, 6) bytes=25296044032
+torch=2.4.0 cuda=12.1
+bundle_identity_check=passed source_file_count=34
+{
+  "status": "technical_pass",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "e1ce8c0ec2843b153f709c1a3bdcca743edd82e6fc2ece26d5f44b724c42819d"
+}
+smoke_status_gate=technical_pass
+--- /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/logs/zhd32-dukf-formal-215862_0.err ---
+=== FORMAL_ATTEMPTS ===
+PARTIAL_DIRECTORY|ZHD32-DUKF-S17-V1
+1550|run_identity.json
+1987|frozen_config.json
+5044|data_identity.json
+638|gpu_technical_preflight.json
+ABSENT|ZHD32-DUKF-S29-V1
+ABSENT|ZHD32-DUKF-S43-V1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T16:38:41+0800
