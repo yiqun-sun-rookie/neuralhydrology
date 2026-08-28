@@ -1,0 +1,9 @@
+### channel=kalmannet-daily-camels seq=77
+### host=login4
+### started=2026-08-28T18:27:43+0800
+### ---------- output ----------
+SEQ77_A38_GPU_COVERAGE_DIAGNOSTIC {"completion_marker_cluster_time":"2026-08-28T15:14:48.371534","coverage_seconds":4747.581,"experiment_id":"DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38","first_minus_step_start_seconds":-26.215,"first_timestamp":"2026-08-28T13:55:45.785000","gpu_log_sha256":"3b822bf9962e5232a15cae2f00fecefde2ad1f4502c14beb38e35193af8bec8e","gpu_log_size":523025,"gpu_name":"NVIDIA A800-SXM4-80GB","gpu_uuid":"GPU-82b5e390-a535-cc27-b14f-abaa72472f81","job_id":"215801","last_minus_completion_marker_seconds":4.994466,"last_timestamp":"2026-08-28T15:14:53.366000","maximum_sample_gap_seconds":1.04,"maximum_used_mib":3820.0,"maximum_utilization_percent":100.0,"minimum_free_mib":77408.0,"row_count":4620,"step_end_minus_last_seconds":26.634,"total_mib":81920.0,"training_step_elapsed_seconds":4748,"training_step_end":"2026-08-28T15:15:20","training_step_start":"2026-08-28T13:56:12"}
+SEQ77_A38_GPU_COVERAGE_DIAGNOSTIC_COMPLETE experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38 job_id=215801 training_lock_present=0 run_owner_lock_present=0 submission_lock_present=1 failed_archive75_present=0 failed_archive76_present=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T18:27:44+0800
