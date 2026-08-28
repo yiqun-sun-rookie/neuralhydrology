@@ -1,0 +1,105 @@
+### channel=id26-v09-strict seq=67
+### host=login4
+### started=2026-08-28T17:55:43+0800
+### ---------- output ----------
+=== A JOB ID AND SCHEDULER ===
+recorded_jobid=211643
+slurm_load_jobs error: Invalid job id specified
+JobIDRaw|JobName|State|ExitCode|Elapsed|Start|End|NodeList
+211643|v09states|COMPLETED|0:0|01:12:27|2026-08-25T17:04:12|2026-08-25T18:16:39|ngu008
+=== B LOG FILES ===
+/data1/home/sunyiq/v09_strict/logs/state_diagnostics_211643.out|bytes=10072|mtime=2026-08-25 18:16:17.000000000 +0800
+--- tail /data1/home/sunyiq/v09_strict/logs/state_diagnostics_211643.out ---
+        "size_bytes": 33115
+      },
+      {
+        "relative_path": "src/26_historical_band_experts/train_formal_v09.py",
+        "sha256": "89a59a1f00e404a6f1ad648613c6e1a6d1ccc77328e035882dcdad10e44fbbe4",
+        "size_bytes": 20507
+      },
+      {
+        "relative_path": "src/26_historical_band_experts/configs/formal_v09_protocol.json",
+        "sha256": "2a018755422eb102259eba11558bc190ba11034d3390f64df7bbc54e8756a0f7",
+        "size_bytes": 11536
+      },
+      {
+        "relative_path": "src/26_historical_band_experts/configs/formal_v09_run_order.json",
+        "sha256": "563429a17cf3a9b12e702ab854eb3a8c23c6729aa89442e239138cb6880c1fb6",
+        "size_bytes": 3093
+      },
+      {
+        "relative_path": "docs/technical/historical_multiscale_formal_v09_state_diagnostics_preregistration.md",
+        "sha256": "e5e19790d6cdbcbb551983b46bb960012d3a040627ff55122176541fe8562bc0",
+        "size_bytes": 12171
+      }
+    ],
+    "schema": "historical_multiscale_formal_v09_state_diagnostic_source_v1",
+    "tree_sha256": "dac25923278eb22784735edc6a7fd852e08debd3a9771b36b640aeb60ce03b59"
+  },
+  "diagnostic_source_sha256": "6bf4f32f89150d94b3a8cc54aef3d1b5646ebb37913dde7aae99323d60192230",
+  "environment": {
+    "cublas_workspace_config": ":4096:8",
+    "cuda": "12.1",
+    "cuda_matmul_allow_tf32": false,
+    "cudnn": 90100,
+    "cudnn_allow_tf32": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": true,
+    "device": "cuda:0",
+    "device_capability": [
+      8,
+      6
+    ],
+    "device_name": "NVIDIA GeForce RTX 3090",
+    "device_total_memory_bytes": 25296044032,
+    "driver_version": "580.76.05",
+    "numpy": "2.3.3",
+    "python": "3.11.13",
+    "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11",
+    "torch": "2.4.0"
+  },
+  "environment_sha256": "557fa51ed89047dfe0f603318eacbcc9f8319064cff6dc45b965b4194d8a63a8",
+  "flow_head_executed": false,
+  "formal_evaluation_observation_reads": 0,
+  "formal_period_predictions_generated": false,
+  "input_bindings": {
+    "input_external_audit_sha256": "e18be463df4cc6fe6c21a1e39c675f77db3e8c833109c1e9cfb557e37a832cd6",
+    "input_seal_sha256": "a5a64e43312ac303bf03ea3840e2cf126563527c6b82b8b94035c34978c25b3a",
+    "trusted_source_audit_sha256": "81e3658fe27e8f658e59d81015ce3d1b2a3baef11045a3e22bd76254ef5d8387"
+  },
+  "official_score_called": false,
+  "recent_path_executed": false,
+  "run_order_canonical_sha256": "fa589d2c7a10733f8febe15f2769979a8599403f2903d885a74b479803ed7dd2",
+  "schema": "historical_multiscale_formal_v09_state_diagnostics_root_v1",
+  "seed_count": 8,
+  "seeds": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800
+  ],
+  "state_diagnostics_preregistration_sha256": "e5e19790d6cdbcbb551983b46bb960012d3a040627ff55122176541fe8562bc0",
+  "status": "state_diagnostics_complete",
+  "training_external_audit_sha256": "af6e424d6b88f53f5ad51f2ea76c4bfeb4a8bce408363c5909e952ec3ff80d9b",
+  "training_source_context_sha256": "02d6fbb4d6ffcd818795a9cb1aa114c31e1d48704613cf8b12f91beb55f58793",
+  "training_target_reads": 0
+}
+end=2026-08-25T18:15:55+08:00
+/data1/home/sunyiq/v09_strict/logs/state_diagnostics_211643.err|bytes=0|mtime=2026-08-25 17:03:51.000000000 +0800
+--- tail /data1/home/sunyiq/v09_strict/logs/state_diagnostics_211643.err ---
+=== C OUTPUT INVENTORY ===
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics|present
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics.building|missing
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics.attempt_01.job_204847.failed|present
+/data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics|seed_dirs=8|npy_files=64|manifests=8|summaries=8
+4df6c29afee9df2d36af8a8a99bea40ab6b66103c4696470fa13a2fbf868e77d  /data1/home/sunyiq/v09_strict/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09/state_diagnostics/manifest.json
+{"array_count_from_children": 64, "array_count_from_root": 64, "child_count": 8, "child_manifest_count": 8, "diagnostic_source_sha256": "6bf4f32f89150d94b3a8cc54aef3d1b5646ebb37913dde7aae99323d60192230", "environment_sha256": "557fa51ed89047dfe0f603318eacbcc9f8319064cff6dc45b965b4194d8a63a8", "flow_head_executed": false, "formal_evaluation_observation_reads": 0, "formal_period_predictions_generated": false, "nonfinite_positions": 0, "official_score_called": false, "recent_path_executed": false, "schema": "historical_multiscale_formal_v09_state_diagnostics_root_v1", "seed_count": 8, "seeds": [100, 200, 300, 400, 500, 600, 700, 800], "status": "state_diagnostics_complete", "training_external_audit_sha256": "af6e424d6b88f53f5ad51f2ea76c4bfeb4a8bce408363c5909e952ec3ff80d9b", "training_target_reads": 0}
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T17:55:45+0800
