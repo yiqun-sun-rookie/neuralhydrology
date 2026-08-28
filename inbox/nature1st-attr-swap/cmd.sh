@@ -1,7 +1,7 @@
 #!/bin/bash
-# nature1st-attr-swap seq=113 -- armJ (china min15) watchdog, seeds 42/43/44
-# s42=215195 COMPLETED (INCONCLUSIVE). Watching 215729 (s43) and 215730 (s44, A40).
-# NO submission this round -- both follow-up seeds already submitted and running.
+# nature1st-attr-swap seq=114 -- armJ (china min15) watchdog, seeds 42/43/44
+# s42=215195 COMPLETED (INCONCLUSIVE), s44=215730 COMPLETED (INCONCLUSIVE, A40).
+# Waiting on 215729 (s43). NO submission this round -- all three seeds already exist.
 # NO set -e. pipefail only. Every grep/tail guarded with || true.
 set -o pipefail
 
@@ -157,4 +157,4 @@ fi
 echo "=== E. GPU CAPACITY ==="
 sinfo -p hgpu2p,hgpu2,hgpu4 -o '%.10P %.8t %.6D %.20N' 2>&1 | head -20 || true
 
-echo "=== END seq=113 ==="
+echo "=== END seq=114 ==="
