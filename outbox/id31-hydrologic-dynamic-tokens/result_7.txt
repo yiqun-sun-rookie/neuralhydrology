@@ -1,0 +1,17 @@
+### channel=id31-hydrologic-dynamic-tokens seq=7
+### host=login4
+### started=2026-08-28T19:44:28+0800
+### ---------- output ----------
+=== SLURM STATUS ===
+             JOBID    PARTITION                           NAME ST       TIME     NODELIST(REASON)
+            215876       hgpu2p                 id31_gpu_probe PD       0:00           (Priority)
+215876|id31_gpu_probe|hgpu2p|PENDING|0:0|00:00:00|None assigned
+=== PROBE REPORT ===
+PROBE_REPORT_PENDING
+=== STDOUT TAIL ===
+STDOUT_PENDING
+=== STDERR TAIL ===
+STDERR_PENDING
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T19:44:29+0800
