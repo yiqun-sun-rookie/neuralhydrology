@@ -1,0 +1,168 @@
+### channel=id30-modern-moe-execution seq=35
+### host=login4
+### started=2026-08-28T11:04:24+0800
+### ---------- output ----------
+=== ID30 SEED-100 CHAIN STATUS ===
+2026-08-28T11:04:24+0800
+login4
+B01=215314
+D01=215425
+D02=215426
+D03=215427
+SELECT=215428
+M01=215429
+             JOBID    PARTITION                         NAME    STATE       TIME               NODELIST(REASON)
+            215427        hgpu2                id30_dev_s100  PENDING       0:00                   (Dependency)
+            215428        hgpu2                  id30_select  PENDING       0:00                   (Dependency)
+            215429        hgpu2                id30_m01_s100  PENDING       0:00                   (Dependency)
+            215426        hgpu2                id30_dev_s100  RUNNING    8:40:39                         ngu009
+215314|id30_dev_s100|hgpu2|COMPLETED|0:0|01:34:55|ngu009|
+215314.batch|batch||COMPLETED|0:0|01:34:55|ngu009|10372760K
+215314.extern|extern||COMPLETED|0:0|01:34:55|ngu009|1364K
+215425|id30_dev_s100|hgpu2|COMPLETED|0:0|06:33:38|ngu009|
+215425.batch|batch||COMPLETED|0:0|06:33:38|ngu009|10454300K
+215425.extern|extern||COMPLETED|0:0|06:33:38|ngu009|1364K
+215426|id30_dev_s100|hgpu2|RUNNING|0:0|08:41:05|ngu009|
+215426.batch|batch||RUNNING|0:0|08:41:05|ngu009|
+215426.extern|extern||RUNNING|0:0|08:41:05|ngu009|
+215427|id30_dev_s100|hgpu2|PENDING|0:0|00:00:00|None assigned|
+215428|id30_select|hgpu2|PENDING|0:0|00:00:00|None assigned|
+215429|id30_m01_s100|hgpu2|PENDING|0:0|00:00:00|None assigned|
+=== REGISTRY, HEARTBEAT, AND MILESTONES ===
+{
+  "records": [
+    {
+      "child_process": {
+        "process_id": 87022,
+        "process_start_time_epoch_seconds": 1787825974.59,
+        "return_code": 0
+      },
+      "failure_reason": "not_applicable",
+      "failure_stage": "not_applicable",
+      "last_heartbeat_at_utc": "2026-08-27T11:46:25.677071+00:00",
+      "latest_milestones": [
+        "2026-08-27 19:34:39,159: Epoch 26 average loss: avg_loss: 0.01027, avg_total_loss: 0.01027",
+        "2026-08-27 19:35:09,058: Stored metrics at results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch026/validation_metrics.csv",
+        "2026-08-27 19:35:09,165: Stored results at results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch026/validation_results.p",
+        "2026-08-27 19:35:09,173: Epoch 26 average validation loss: 0.02620 -- Median validation metrics: avg_loss: 0.02620, NSE: 0.70361",
+        "2026-08-27 19:37:22,689: Epoch 27 average loss: avg_loss: 0.01019, avg_total_loss: 0.01019",
+        "2026-08-27 19:37:50,740: Stored metrics at results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch027/validation_metrics.csv",
+        "2026-08-27 19:37:50,839: Stored results at results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch027/validation_results.p",
+        "2026-08-27 19:37:50,848: Epoch 27 average validation loss: 0.02660 -- Median validation metrics: avg_loss: 0.02660, NSE: 0.70516",
+        "2026-08-27 19:40:16,420: Epoch 28 average loss: avg_loss: 0.01010, avg_total_loss: 0.01010",
+        "2026-08-27 19:40:46,202: Stored metrics at results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch028/validation_metrics.csv",
+        "2026-08-27 19:40:46,307: Stored results at results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch028/validation_results.p",
+        "2026-08-27 19:40:46,315: Epoch 28 average validation loss: 0.02687 -- Median validation metrics: avg_loss: 0.02687, NSE: 0.71096",
+        "2026-08-27 19:42:59,695: Epoch 29 average loss: avg_loss: 0.00996, avg_total_loss: 0.00996",
+        "2026-08-27 19:43:27,875: Stored metrics at results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch029/validation_metrics.csv",
+        "2026-08-27 19:43:28,060: Stored results at results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch029/validation_results.p",
+        "2026-08-27 19:43:28,072: Epoch 29 average validation loss: 0.02663 -- Median validation metrics: avg_loss: 0.02663, NSE: 0.70759",
+        "2026-08-27 19:45:53,227: Epoch 30 average loss: avg_loss: 0.00980, avg_total_loss: 0.00980",
+        "2026-08-27 19:46:23,494: Stored metrics at results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch030/validation_metrics.csv",
+        "2026-08-27 19:46:23,601: Stored results at results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/validation/model_epoch030/validation_results.p",
+        "2026-08-27 19:46:23,611: Epoch 30 average validation loss: 0.02704 -- Median validation metrics: avg_loss: 0.02704, NSE: 0.70540"
+      ],
+      "manifest_status": "COMPLETE",
+      "metrics_artifact_path": "results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/epoch030_metrics.json",
+      "role": "B01",
+      "run_dir": "results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30",
+      "run_id": "id30_B01_s100_slurm215314",
+      "seed": 100,
+      "status": "COMPLETE",
+      "training_stderr_bytes": 0,
+      "training_stdout_bytes": 15714237
+    },
+    {
+      "child_process": {
+        "process_id": 10906,
+        "process_start_time_epoch_seconds": 1787831654.87,
+        "return_code": 0
+      },
+      "failure_reason": "not_applicable",
+      "failure_stage": "not_applicable",
+      "last_heartbeat_at_utc": "2026-08-27T18:20:00.827585+00:00",
+      "latest_milestones": [
+        "2026-08-28 01:27:03,824: Epoch 26 average loss: avg_loss: 0.01253, avg_total_loss: 0.01253",
+        "2026-08-28 01:28:13,743: Stored metrics at results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch026/validation_metrics.csv",
+        "2026-08-28 01:28:13,847: Stored results at results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch026/validation_results.p",
+        "2026-08-28 01:28:13,854: Epoch 26 average validation loss: 0.02694 -- Median validation metrics: avg_loss: 0.02694, NSE: 0.68210",
+        "2026-08-28 01:39:55,668: Epoch 27 average loss: avg_loss: 0.01248, avg_total_loss: 0.01248",
+        "2026-08-28 01:41:06,212: Stored metrics at results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch027/validation_metrics.csv",
+        "2026-08-28 01:41:06,327: Stored results at results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch027/validation_results.p",
+        "2026-08-28 01:41:06,335: Epoch 27 average validation loss: 0.02729 -- Median validation metrics: avg_loss: 0.02729, NSE: 0.67769",
+        "2026-08-28 01:53:10,473: Epoch 28 average loss: avg_loss: 0.01231, avg_total_loss: 0.01231",
+        "2026-08-28 01:54:20,831: Stored metrics at results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch028/validation_metrics.csv",
+        "2026-08-28 01:54:20,941: Stored results at results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch028/validation_results.p",
+        "2026-08-28 01:54:20,948: Epoch 28 average validation loss: 0.02833 -- Median validation metrics: avg_loss: 0.02833, NSE: 0.67100",
+        "2026-08-28 02:05:49,777: Epoch 29 average loss: avg_loss: 0.01219, avg_total_loss: 0.01219",
+        "2026-08-28 02:07:00,224: Stored metrics at results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch029/validation_metrics.csv",
+        "2026-08-28 02:07:00,331: Stored results at results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch029/validation_results.p",
+        "2026-08-28 02:07:00,338: Epoch 29 average validation loss: 0.02907 -- Median validation metrics: avg_loss: 0.02907, NSE: 0.67503",
+        "2026-08-28 02:18:48,420: Epoch 30 average loss: avg_loss: 0.01200, avg_total_loss: 0.01200",
+        "2026-08-28 02:19:58,514: Stored metrics at results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch030/validation_metrics.csv",
+        "2026-08-28 02:19:58,611: Stored results at results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/validation/model_epoch030/validation_results.p",
+        "2026-08-28 02:19:58,618: Epoch 30 average validation loss: 0.02832 -- Median validation metrics: avg_loss: 0.02832, NSE: 0.67103"
+      ],
+      "manifest_status": "COMPLETE",
+      "metrics_artifact_path": "results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30/epoch030_metrics.json",
+      "role": "D01",
+      "run_dir": "results/30_modern_transformer_moe/D01/modern_transformer_moe_D01_dense_d128_l4_s100_2026_0827_1955_ep30",
+      "run_id": "id30_D01_s100_slurm215425",
+      "seed": 100,
+      "status": "COMPLETE",
+      "training_stderr_bytes": 0,
+      "training_stdout_bytes": 64811344
+    },
+    {
+      "child_process": {
+        "process_id": 73879,
+        "process_start_time_epoch_seconds": 1787855272.59
+      },
+      "failure_reason": "not_applicable",
+      "failure_stage": "not_applicable",
+      "last_heartbeat_at_utc": "2026-08-28T03:04:51.440733+00:00",
+      "latest_milestones": [
+        "2026-08-28 09:06:04,313: Epoch 16 average loss: avg_loss: 0.01587, avg_total_loss: 0.01587",
+        "2026-08-28 09:08:17,502: Stored metrics at results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch016/validation_metrics.csv",
+        "2026-08-28 09:08:17,689: Stored results at results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch016/validation_results.p",
+        "2026-08-28 09:08:17,699: Epoch 16 average validation loss: 0.02876 -- Median validation metrics: avg_loss: 0.02876, NSE: 0.64084",
+        "2026-08-28 09:31:03,573: Epoch 17 average loss: avg_loss: 0.01550, avg_total_loss: 0.01550",
+        "2026-08-28 09:33:16,807: Stored metrics at results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch017/validation_metrics.csv",
+        "2026-08-28 09:33:16,928: Stored results at results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch017/validation_results.p",
+        "2026-08-28 09:33:16,936: Epoch 17 average validation loss: 0.02846 -- Median validation metrics: avg_loss: 0.02846, NSE: 0.65891",
+        "2026-08-28 09:55:54,292: Epoch 18 average loss: avg_loss: 0.01521, avg_total_loss: 0.01521",
+        "2026-08-28 09:58:07,743: Stored metrics at results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch018/validation_metrics.csv",
+        "2026-08-28 09:58:07,851: Stored results at results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch018/validation_results.p",
+        "2026-08-28 09:58:07,859: Epoch 18 average validation loss: 0.02973 -- Median validation metrics: avg_loss: 0.02973, NSE: 0.64846",
+        "2026-08-28 10:20:42,742: Epoch 19 average loss: avg_loss: 0.01492, avg_total_loss: 0.01492",
+        "2026-08-28 10:22:55,923: Stored metrics at results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch019/validation_metrics.csv",
+        "2026-08-28 10:22:56,033: Stored results at results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch019/validation_results.p",
+        "2026-08-28 10:22:56,040: Epoch 19 average validation loss: 0.02907 -- Median validation metrics: avg_loss: 0.02907, NSE: 0.66370",
+        "2026-08-28 10:45:40,415: Epoch 20 average loss: avg_loss: 0.01454, avg_total_loss: 0.01454",
+        "2026-08-28 10:47:53,907: Stored metrics at results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch020/validation_metrics.csv",
+        "2026-08-28 10:47:54,017: Stored results at results/30_modern_transformer_moe/D02/modern_transformer_moe_D02_dense_d256_l4_s100_2026_0828_0228_ep30/validation/model_epoch020/validation_results.p",
+        "2026-08-28 10:47:54,025: Epoch 20 average validation loss: 0.02908 -- Median validation metrics: avg_loss: 0.02908, NSE: 0.64689"
+      ],
+      "manifest_status": "RUNNING",
+      "metrics_artifact_path": "not_bound",
+      "role": "D02",
+      "run_dir": "not_bound",
+      "run_id": "id30_D02_s100_slurm215426",
+      "seed": 100,
+      "status": "RUNNING",
+      "training_stderr_bytes": 0,
+      "training_stdout_bytes": 53018486
+    }
+  ]
+}
+{
+  "b01_checkpoint_count": 3,
+  "latest_b01_checkpoints": [
+    "results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/model_epoch010.pt",
+    "results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/model_epoch020.pt",
+    "results/30_modern_transformer_moe/B01/modern_transformer_moe_B01_lstm_s100_2026_0827_1820_ep30/model_epoch030.pt"
+  ]
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T11:04:28+0800
