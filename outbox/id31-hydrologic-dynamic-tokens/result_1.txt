@@ -1,0 +1,27 @@
+### channel=id31-hydrologic-dynamic-tokens seq=1
+### host=login4
+### started=2026-08-28T18:49:35+0800
+### ---------- output ----------
+=== SOURCE REVISION AND WORKTREE ===
+eef5ecf460775b679eabda36ca4df090c14d4e36
+ M src/modern_transformer_moe/registry/development_run_bindings.json
+ M src/modern_transformer_moe/registry/experiments.csv
+?? src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json
+?? src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json
+=== REQUIRED SOURCE FILES ===
+49fd889aa309948270c66ebedc0578bff8502f37eee1ccf9354227871c4bd30d  neuralhydrology/modelzoo/__init__.py
+04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede  neuralhydrology/modelzoo/modern_causal_transformer.py
+f41ec3daf713ed9b4021de6d2b0e25460bdf9996f4be38532ecf28dd244ecc15  neuralhydrology/training/__init__.py
+91414cc017b2903322de8069ca0879b86b1deefe73756c22058abdbc633d682c  neuralhydrology/training/regularization.py
+8732ceb341ce81362aebfe0855f7ab6b677d5657badffc2e1e4f89f1c0f550bc  neuralhydrology/utils/config.py
+f6e6d09fd0b24f9232f28f14c65d0041d091e866f9ac8ae44da7e6a4c84925e7  neuralhydrology/datasetzoo/camelsus_track0_bundle.py
+dae61e6e50d93c61ebbcec9c6be37ed747b39c30548dfd839362b486d673837e  src/modern_transformer_moe/scripts/audit_configs.py
+fba68f71280546236d22567b461f33cd741f4d36dede13e1620c799b733ad3eb  src/modern_transformer_moe/scripts/candidate_safe_data.py
+=== CANDIDATE-SAFE DATA ROOTS ===
+data/camels_us_track0_development_forcing_v01 -> /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01
+data/camels_us_track0_supervision_v01 -> /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01
+=== CANDIDATE-SAFE MANIFESTS ===
+ID31_READ_ONLY_PREFLIGHT_PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T18:49:35+0800
