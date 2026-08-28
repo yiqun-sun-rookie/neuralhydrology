@@ -1,6 +1,7 @@
 #!/bin/bash
-# nature1st-attr-swap seq=110 -- armJ (china min15) watchdog, seeds 42/43/44
-# Focus this round: jobs 215729 (s43) and 215730 (s44), submitted 2026-08-28 02:31.
+# nature1st-attr-swap seq=111 -- armJ (china min15) watchdog, seeds 42/43/44
+# s42=215195 COMPLETED. Focus: 215729 (s43, ngu009) and 215730 (s44, ngu102/A40).
+# NO submission this round -- both follow-up seeds already queued/running.
 # NO set -e. pipefail only. Every grep/tail guarded with || true.
 set -o pipefail
 
@@ -120,6 +121,9 @@ for seed in (42, 43, 44):
         print(f"    median armJ={mj:.4f}  median base={mb:.4f}  diff_of_medians={mj-mb:+.4f}")
         print(f"    PAIRED median diff = {pmd:+.4f}   95%CI [{lo:+.4f}, {hi:+.4f}]")
         print(f"    worse={worse}  better={better}   drop>0.10 = {d10:.1f}%   gain>0.10 = {u10:.1f}%")
+        if label.startswith("armC"):
+            verdict = "SUFFICIENT" if (pmd >= -0.010 and d10 <= 20.0) else ("VETO" if (pmd < -0.030 or d10 > 35.0) else "INCONCLUSIVE")
+            print(f"    >>> PRIMARY CRITERION seed {seed}: {verdict}  (need pmd>=-0.010 AND drop<=20.0%)")
         if 'stratum' in m.columns:
             for s, g in m.groupby('stratum'):
                 sd = (g['nse_J'] - g['nse_B']).values.astype(float)
@@ -127,7 +131,6 @@ for seed in (42, 43, 44):
                 if len(sd) == 0: continue
                 print(f"      stratum {s!s:>14}  n={len(sd):4d}  paired_med={np.median(sd):+.4f}  drop>0.10={100.0*(sd<-0.10).mean():.1f}%")
 
-# Seed-pooled view against armC, only when more than one seed has landed
 if len(avail) > 1:
     print(f"\n#### SEED-POOLED vs armC (seeds available: {avail})")
     b = load("q_lstm_usminus4_hpc_s42")
@@ -141,8 +144,11 @@ if len(avail) > 1:
             meds.append((seed, float(np.median(dd)), float((dd < -0.10).mean() * 100.0)))
         for seed, pm, dr in meds:
             print(f"    seed {seed}: paired_med={pm:+.4f}  drop>0.10={dr:.1f}%")
-        print(f"    mean of per-seed paired medians = {np.mean([x[1] for x in meds]):+.4f}")
-        print(f"    mean of per-seed drop>0.10      = {np.mean([x[2] for x in meds]):.1f}%")
+        mp = float(np.mean([x[1] for x in meds])); md = float(np.mean([x[2] for x in meds]))
+        print(f"    mean of per-seed paired medians = {mp:+.4f}")
+        print(f"    mean of per-seed drop>0.10      = {md:.1f}%")
+        agg = "SUFFICIENT" if (mp >= -0.010 and md <= 20.0) else ("VETO" if (mp < -0.030 or md > 35.0) else "INCONCLUSIVE")
+        print(f"    >>> PRIMARY CRITERION on seed-mean: {agg}")
 PYEOF
 else
   echo "  armJ s42 eval_val_per_station.csv not present -- unexpected, s42 already COMPLETED."
@@ -151,4 +157,4 @@ fi
 echo "=== E. GPU CAPACITY ==="
 sinfo -p hgpu2p,hgpu2,hgpu4 -o '%.10P %.8t %.6D %.20N' 2>&1 | head -20 || true
 
-echo "=== END seq=110 ==="
+echo "=== END seq=111 ==="
