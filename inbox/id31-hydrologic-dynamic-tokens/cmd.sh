@@ -2,28 +2,27 @@
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo
-SCRIPT=src/hydrologic_dynamic_tokens/hpc/submit_gpu_resource_probe.slurm
-EXPECTED_SHA=2a2df8a54a3c38e5b356024c91188d5db5d64e14b96e899efb4a42928bf2607f
+JOB_ID=215878
+REPORT="$ROOT/results/31_hydrologic_dynamic_tokens/_gpu_resource_probes/slurm${JOB_ID}/probe_report.json"
+STDOUT="$ROOT/logs/31_hydrologic_dynamic_tokens/gpu-probe-${JOB_ID}.out"
+STDERR="$ROOT/logs/31_hydrologic_dynamic_tokens/gpu-probe-${JOB_ID}.err"
 
 test -d "$ROOT/.git"
-cd "$ROOT"
-test -f "$SCRIPT"
-test "$(sha256sum "$SCRIPT" | awk '{print $1}')" = "$EXPECTED_SHA"
-bash -n "$SCRIPT"
-
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-python -m src.hydrologic_dynamic_tokens.scripts.audit_configs
-
-echo "=== SUBMISSION COMMAND ==="
-type -a sbatch
-echo "sbatch $SCRIPT"
-SUBMISSION="$(sbatch "$SCRIPT")"
-echo "$SUBMISSION"
-test "$(printf '%s\n' "$SUBMISSION" | grep -Ec '^Submitted batch job [0-9]+$')" -eq 1
-JOB_ID="$(printf '%s\n' "$SUBMISSION" | sed -n 's/^Submitted batch job \([0-9][0-9]*\)$/\1/p')"
-test -n "$JOB_ID"
-test "$JOB_ID" != "215876"
-echo "ID31_GPU_PROBE_JOB_ID=$JOB_ID"
+echo "=== SLURM STATUS ==="
 squeue -j "$JOB_ID" -o '%.18i %.12P %.30j %.2t %.10M %.20R' || true
-echo "ID31_GPU_PROBE_SUBMISSION_PASS"
+squeue --start -j "$JOB_ID" -o '%.18i %.12P %.30j %.19S %.20R' || true
+sprio -j "$JOB_ID" || true
+sacct -j "$JOB_ID" --format=JobID,JobName%30,Partition,State,ExitCode,Elapsed,NodeList -n -P || true
+
+echo "=== PROBE REPORT ==="
+if [ -f "$REPORT" ]; then
+  sha256sum "$REPORT"
+  cat "$REPORT"
+else
+  echo "PROBE_REPORT_PENDING"
+fi
+
+echo "=== STDOUT TAIL ==="
+if [ -f "$STDOUT" ]; then tail -n 120 "$STDOUT"; else echo "STDOUT_PENDING"; fi
+echo "=== STDERR TAIL ==="
+if [ -f "$STDERR" ]; then tail -n 120 "$STDERR"; else echo "STDERR_PENDING"; fi
