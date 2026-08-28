@@ -1,0 +1,55 @@
+### channel=zhenjiang-d32-diff-ukf seq=7
+### host=login4
+### started=2026-08-28T16:14:39+0800
+### ---------- output ----------
+SMOKE_RERUN_JOB_ID=215855
+=== SQUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== SACCT ===
+JobIDRaw|JobName|Partition|State|ExitCode|ElapsedRaw|NodeList|AllocTRES|MaxRSS
+215855|zhd32-dukf-smoke|hgpu2p|COMPLETED|0:0|91|ngu011|billing=4,cpu=4,node=1|
+215855.batch|batch||COMPLETED|0:0|91|ngu011|cpu=4,mem=0,node=1|457088K
+215855.extern|extern||COMPLETED|0:0|91|ngu011|billing=4,cpu=4,node=1|2404K
+=== STDOUT_TAIL ===
+{
+  "status": "verified_pre2024_only",
+  "verified_file_count": 13,
+  "manifest_sha256": "946ab3822024f78f3a334c914e39ba8dd72c72ed45e0e40e5a7aee3e16649f78"
+}
+[2026-08-28T16:07:11+08:00] experiment_id=ZHD32-DUKF-HPC-SMOKE-V1
+[INFO] job_id=215855 node=ngu011 output=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/smoke/ZHD32-DUKF-HPC-SMOKE-V1/attempt_001
+NVIDIA GeForce RTX 3090, GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da, 24576 MiB, 580.76.05
+NVIDIA GeForce RTX 3090, GPU-7b2fa2ee-6930-2a2e-e9f5-7736fd478efd, 24576 MiB, 580.76.05
+cuda_preflight=passed name=NVIDIA GeForce RTX 3090 capability=(8, 6) bytes=25296044032
+torch=2.4.0 cuda=12.1
+bundle_identity_check=passed source_file_count=34
+{
+  "status": "complete",
+  "output": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/smoke/ZHD32-DUKF-HPC-SMOKE-V1/attempt_001"
+}
+{
+  "status": "technical_pass",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "e1ce8c0ec2843b153f709c1a3bdcca743edd82e6fc2ece26d5f44b724c42819d"
+}
+[2026-08-28T16:08:22+08:00] ZHD32-DUKF-HPC-SMOKE-V1 completed
+=== STDERR_TAIL ===
+=== ATTEMPT_STATE ===
+PRESENT|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/smoke/ZHD32-DUKF-HPC-SMOKE-V1/attempt_001
+115642|last_checkpoint.pt
+1215|best_noise_parameters.json
+1306|best_noise_parameters.csv
+1853|run_identity.json
+1983|frozen_config.json
+2097|completion_manifest.json
+2153|noise_parameter_history.csv
+457|training_history.csv
+470|gradient_history.csv
+5044|data_identity.json
+636|gpu_technical_preflight.json
+778|selection_validation_summary.json
+94130|best_checkpoint.pt
+ABSENT|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/smoke/ZHD32-DUKF-HPC-SMOKE-V1/attempt_001.partial
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T16:14:40+0800
