@@ -1,5 +1,5 @@
 #!/bin/bash
-# id26-v09-strict seq=66: read-only status and artifact query for state diagnostics attempt 02 job 211643.
+# id26-v09-strict seq=67: read-only terminal status and artifact query for state diagnostics attempt 02 job 211643.
 set -o pipefail
 export LC_ALL=C
 
