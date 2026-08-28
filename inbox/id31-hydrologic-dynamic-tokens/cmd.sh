@@ -10,6 +10,8 @@ STDERR="$ROOT/logs/31_hydrologic_dynamic_tokens/gpu-probe-${JOB_ID}.err"
 test -d "$ROOT/.git"
 echo "=== SLURM STATUS ==="
 squeue -j "$JOB_ID" -o '%.18i %.12P %.30j %.2t %.10M %.20R' || true
+squeue --start -j "$JOB_ID" -o '%.18i %.12P %.30j %.19S %.20R' || true
+sprio -j "$JOB_ID" || true
 sacct -j "$JOB_ID" --format=JobID,JobName%30,Partition,State,ExitCode,Elapsed,NodeList -n -P || true
 
 echo "=== PROBE REPORT ==="
