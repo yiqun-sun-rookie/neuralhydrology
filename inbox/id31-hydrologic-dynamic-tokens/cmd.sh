@@ -11,32 +11,16 @@ EXPECTED_SOURCE_REVISION=eef5ecf460775b679eabda36ca4df090c14d4e36
 test -d "$SOURCE/.git"
 test -f "$PAYLOAD"
 test ! -e "$TARGET"
-test ! -e "$STAGE"
+test -d "$STAGE/repo/.git"
+test ! -e "$STAGE/repo/src/hydrologic_dynamic_tokens"
+test ! -e "$STAGE/repo/data/camels_us_track0_development_forcing_v01"
+test ! -e "$STAGE/repo/data/camels_us_track0_supervision_v01"
 
 actual_payload_sha256=$(sha256sum "$PAYLOAD" | awk '{print $1}')
 test "$actual_payload_sha256" = "$EXPECTED_PAYLOAD_SHA256"
 
-python - "$PAYLOAD" <<'PY'
-import sys
-import tarfile
-from pathlib import PurePosixPath
-
-with tarfile.open(sys.argv[1], "r:gz") as archive:
-    members = archive.getmembers()
-if not members:
-    raise ValueError("ID31 payload is empty")
-for member in members:
-    path = PurePosixPath(member.name)
-    if path.is_absolute() or ".." in path.parts:
-        raise ValueError(f"Unsafe payload member: {member.name}")
-print("PAYLOAD_MEMBER_COUNT", len(members))
-PY
-
-mkdir -p "$STAGE"
-git clone --no-hardlinks --local "$SOURCE" "$STAGE/repo"
-test "$(git -C "$STAGE/repo" rev-parse HEAD)" = "$EXPECTED_SOURCE_REVISION"
-
 cd "$STAGE/repo"
+test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE_REVISION"
 test "$(sha256sum neuralhydrology/modelzoo/__init__.py | awk '{print $1}')" = \
   49fd889aa309948270c66ebedc0578bff8502f37eee1ccf9354227871c4bd30d
 test "$(sha256sum neuralhydrology/training/__init__.py | awk '{print $1}')" = \
