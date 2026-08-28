@@ -1,0 +1,24 @@
+### channel=id31-hydrologic-dynamic-tokens seq=17
+### host=login4
+### started=2026-08-28T20:33:12+0800
+### ---------- output ----------
+ID31 STATIC CONFIG AUDIT: PASS (five planned runs; no data read; no training launched)
+BOUND_PROBE_AND_SOURCE_PASS slurm215878
+JOB_SCRIPT_SHA256 DT08 4bbc012a0e7fe92bd96036a0d8cb34618e820c4794b889e3022be378513ebca0 results/31_hydrologic_dynamic_tokens/_submissions/slurm215878/submit_DT08_slurm215878.slurm
+JOB_SCRIPT_SHA256 DL01 ec9ab572e833c814bbf831f1038231f26390741db9371cb2db05cf1d86e58578 results/31_hydrologic_dynamic_tokens/_submissions/slurm215878/submit_DL01_slurm215878.slurm
+=== SUBMIT DT08 ===
+sbatch results/31_hydrologic_dynamic_tokens/_submissions/slurm215878/submit_DT08_slurm215878.slurm
+Submitted batch job 215879
+ID31_DT08_JOB_ID=215879
+             JOBID    PARTITION                           NAME ST       TIME     NODELIST(REASON)
+            215879       hgpu2p               id31_development PD       0:00           (Priority)
+=== SUBMIT DL01 ===
+sbatch results/31_hydrologic_dynamic_tokens/_submissions/slurm215878/submit_DL01_slurm215878.slurm
+Submitted batch job 215880
+ID31_DL01_JOB_ID=215880
+             JOBID    PARTITION                           NAME ST       TIME     NODELIST(REASON)
+            215880       hgpu2p               id31_development PD       0:00           (Priority)
+ID31_DT08_DL01_SUBMISSION_PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T20:33:17+0800
