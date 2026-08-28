@@ -1,0 +1,19 @@
+### channel=kalmannet-daily-camels seq=74
+### host=login4
+### started=2026-08-28T15:39:11+0800
+### ---------- output ----------
+SEQ74_A38_STATUS_QUERY experiment_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38 execution_attempt_id=DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_A38_A800_TRAIN1_SEQ70 job_id=215801 run_base=/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_a800_train1_20260828
+SEQ74_SQUEUE_BEGIN
+slurm_load_jobs error: Invalid job id specified
+SEQ74_SQUEUE_END
+SEQ74_SACCT_BEGIN
+JobIDRaw|JobName|User|Partition|State|ExitCode|Elapsed|Start|End|NodeList|AllocTRES|ReqTRES
+215801|daily-knet-a38|sunyiq|hgpu8|COMPLETED|0:0|01:19:11|2026-08-28T13:56:10|2026-08-28T15:15:21|ngu202|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+215801.batch|batch|||COMPLETED|0:0|01:19:11|2026-08-28T13:56:10|2026-08-28T15:15:21|ngu202|cpu=4,mem=0,node=1|
+215801.extern|extern|||COMPLETED|0:0|01:19:11|2026-08-28T13:56:10|2026-08-28T15:15:21|ngu202|billing=4,cpu=4,node=1|
+215801.0|python|||COMPLETED|0:0|00:00:01|2026-08-28T13:56:11|2026-08-28T13:56:12|ngu202|cpu=4,mem=0,node=1|
+215801.1|python|||COMPLETED|0:0|01:19:08|2026-08-28T13:56:12|2026-08-28T15:15:20|ngu202|cpu=4,mem=0,node=1|
+SEQ74_SACCT_END
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-28T15:39:11+0800
