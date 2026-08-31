@@ -1,34 +1,24 @@
 #!/bin/bash
-# Submit exactly one v2r3 compute preparation job after the login4 offline
-# runtime-input publication passed. No training or formal evaluation is submitted.
-set -o pipefail
+# Read-only state and, if terminal, strict evidence audit for v2r3 preparation job 217185.
+set -eo pipefail
 umask 077
 
 ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901
 PROJECT_ROOT="${ROOT}/bundle/kalmannet"
-SOURCE_ROOT=/data1/home/sunyiq/neuralhydrology/data/camels_us
 RESULTS_ROOT="${PROJECT_ROOT}/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
 STAGED_ROOT="${PROJECT_ROOT}/G:/github/pycharm/projects/neuralhydrology/data/camels_us"
-PREPARE_SCRIPT="${PROJECT_ROOT}/hpc/tukf09_455_basin_revision_a800_exclusive_v2r3/probe_gpu.slurm"
-PREPARE_SCRIPT_SHA=1956333c219cd5d703875dc4125a03bff8eb973ec4ccde69c23788226d651423
-STAGE_TOOL="${PROJECT_ROOT}/hpc/tukf09_455_basin_revision_a800_exclusive_v2r3/stage_and_train.py"
-STAGE_TOOL_SHA=13ca4129a82f587ee12370c837ab7dbe1ea6eb5c19a1c927292d2d81f922de6d
-EXECUTION_CONFIG="${PROJECT_ROOT}/configs/tukf09_455_basin_zero_validation_target_variance_hpc_execution_a800_exclusive_v2r3.json"
-EXECUTION_CONFIG_SHA=51082760aaf8718281270e3b681406ea6b6e83ff2c2c76e4aea0a5174a3b269b
-DEPLOYMENT_SUMMARY="${ROOT}/status/deployment_summary.json"
-DEPLOYMENT_SUMMARY_SHA=c3b09942506b061d3a31387a820e6cf4dd48c8db2ba7bc13999767d9c4f9bd72
-OFFLINE_ROOT="${ROOT}/offline_inputs_v2r3"
-OFFLINE_MANIFEST="${OFFLINE_ROOT}/manifest.json"
-OFFLINE_MANIFEST_SHA=0e9cbcec8ad25db938ceed10460357c248e8f9e59a681cd9c84fef8387fbb339
-OFFLINE_IDENTITY_SHA=c354a618962b3d2462a34459396f58d89686adc2fa18281db7d90ce0d9d3a137
-ALLOCATION_JOB_ID=217180
-ALLOCATION_STDOUT="${ROOT}/logs/allocation-probe-${ALLOCATION_JOB_ID}.out"
-ALLOCATION_STDOUT_SHA=50164697ba9e3e6f1f6edaaa000eab2eb856290aca57b25f4c1c07421232e64c
-ALLOCATION_STDERR="${ROOT}/logs/allocation-probe-${ALLOCATION_JOB_ID}.err"
-EMPTY_SHA=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+RUNTIME_ROOT="${ROOT}/runtime_v2r3"
+PRIVATE_MANIFEST="${RUNTIME_ROOT}/evidence/private_runtime_manifest.json"
+INITIAL_BUNDLE="${ROOT}/status/initial_bundle_verification.json"
+STAGED_MANIFEST="${ROOT}/status/staged_training_sources.json"
+PREPARATION_PROBE="${ROOT}/status/preparation_probe.json"
+FILTER_SEAL="${RESULTS_ROOT}/control/filter_rebinding/independent/manifest.final.sha256.json"
+JOB_ID=217185
 JOB_NAME=tukf09-455-v2r3-prepare
 JOB_ID_FILE="${ROOT}/status/preparation_job_id.txt"
 SUBMISSION_LOCK="${ROOT}/status/preparation_submission.lock"
+STDOUT="${ROOT}/logs/prepare-${JOB_ID}.out"
+STDERR="${ROOT}/logs/prepare-${JOB_ID}.err"
 PYTHON=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
 export PYTHONNOUSERSITE=1
 export PYTHONDONTWRITEBYTECODE=1
@@ -39,126 +29,200 @@ fail() {
   exit 1
 }
 
-echo "=== FROZEN DEPLOYMENT, ALLOCATION, AND OFFLINE-INPUT GATES ==="
-for item in "${ROOT}" "${PROJECT_ROOT}" "${SOURCE_ROOT}" "${ROOT}/logs" "${ROOT}/status" "${OFFLINE_ROOT}" "${OFFLINE_ROOT}/wheelhouse" "${OFFLINE_ROOT}/sourcehouse"; do
+echo "=== FROZEN PREPARATION SUBMISSION EVIDENCE ==="
+for item in "${ROOT}" "${PROJECT_ROOT}" "${ROOT}/logs" "${ROOT}/status" "${SUBMISSION_LOCK}"; do
   [[ -d "${item}" && ! -L "${item}" ]] || fail "required directory missing, linked, or irregular: ${item}"
 done
-for item in \
-  "${PREPARE_SCRIPT}" \
-  "${STAGE_TOOL}" \
-  "${EXECUTION_CONFIG}" \
-  "${DEPLOYMENT_SUMMARY}" \
-  "${OFFLINE_MANIFEST}" \
-  "${ROOT}/status/offline_inputs_download.lock" \
-  "${ALLOCATION_STDOUT}" \
-  "${ALLOCATION_STDERR}"; do
-  [[ -f "${item}" && ! -L "${item}" ]] || fail "required file missing, linked, or irregular: ${item}"
-  [[ "$(stat -c '%h' "${item}")" -eq 1 ]] || fail "required file hard-link count changed: ${item}"
-done
-[[ "$(sha256sum "${PREPARE_SCRIPT}" | awk '{print $1}')" = "${PREPARE_SCRIPT_SHA}" ]] || fail "preparation wrapper hash mismatch"
-[[ "$(sha256sum "${STAGE_TOOL}" | awk '{print $1}')" = "${STAGE_TOOL_SHA}" ]] || fail "preparation controller hash mismatch"
-[[ "$(sha256sum "${EXECUTION_CONFIG}" | awk '{print $1}')" = "${EXECUTION_CONFIG_SHA}" ]] || fail "execution config hash mismatch"
-[[ "$(sha256sum "${DEPLOYMENT_SUMMARY}" | awk '{print $1}')" = "${DEPLOYMENT_SUMMARY_SHA}" ]] || fail "deployment summary hash mismatch"
-[[ "$(sha256sum "${OFFLINE_MANIFEST}" | awk '{print $1}')" = "${OFFLINE_MANIFEST_SHA}" ]] || fail "offline input manifest hash mismatch"
-[[ "$(sha256sum "${ALLOCATION_STDOUT}" | awk '{print $1}')" = "${ALLOCATION_STDOUT_SHA}" ]] || fail "allocation standard output hash mismatch"
-[[ "$(sha256sum "${ALLOCATION_STDERR}" | awk '{print $1}')" = "${EMPTY_SHA}" ]] || fail "allocation standard error hash mismatch"
-sacct -j "${ALLOCATION_JOB_ID}" -n -P --format=JobIDRaw,JobName,State,ExitCode | \
-  awk -F'|' -v id="${ALLOCATION_JOB_ID}" '$1==id && $2=="tukf09-455-v2r3-map" && $3=="COMPLETED" && $4=="0:0" {ok=1} END {exit(ok ? 0 : 1)}' || fail "package allocation probe is not completed with exit code 0:0"
+[[ -f "${JOB_ID_FILE}" && ! -L "${JOB_ID_FILE}" ]] || fail "preparation job id record missing, linked, or irregular"
+[[ "$(stat -c '%h' "${JOB_ID_FILE}")" -eq 1 ]] || fail "preparation job id record hard-link count changed"
+[[ "$(tr -d '\r\n' < "${JOB_ID_FILE}")" = "${JOB_ID}" ]] || fail "preparation job id record mismatch"
 
-"${PYTHON}" -B "${STAGE_TOOL}" verify-offline-inputs \
-  --manifest "${OFFLINE_MANIFEST}" \
-  --wheelhouse "${OFFLINE_ROOT}/wheelhouse" \
-  --sourcehouse "${OFFLINE_ROOT}/sourcehouse" >/dev/null || fail "offline inputs failed strict re-verification"
-if ! "${PYTHON}" -B - "${OFFLINE_MANIFEST}" "${OFFLINE_IDENTITY_SHA}" <<'PY'
+echo "=== SLURM STATE ==="
+sacct_output=$(sacct -j "${JOB_ID}" -n -P --format=JobIDRaw,JobName,Partition,State,ExitCode,NodeList,Elapsed,Start,End 2>&1) || fail "sacct failed: ${sacct_output}"
+printf '%s\n' "${sacct_output}"
+job_row=$(printf '%s\n' "${sacct_output}" | awk -F'|' -v id="${JOB_ID}" '$1==id {print; found=1} END {exit(found ? 0 : 1)}') || fail "exact preparation job row missing"
+state=$(printf '%s\n' "${job_row}" | awk -F'|' 'NR==1 {print $4}')
+exit_code=$(printf '%s\n' "${job_row}" | awk -F'|' 'NR==1 {print $5}')
+recorded_name=$(printf '%s\n' "${job_row}" | awk -F'|' 'NR==1 {print $2}')
+[[ "${recorded_name}" = "${JOB_NAME}" ]] || fail "preparation job name mismatch"
+squeue -j "${JOB_ID}" -o '%.18i %.30j %.10P %.10T %.24R %.10M %.20S' 2>&1 || true
+
+echo "=== FORMAL EVALUATION HOLD ==="
+for name in selection evaluation independent formal_evaluation formal_evaluation_independent; do
+  [[ ! -e "${RESULTS_ROOT}/${name}" && ! -L "${RESULTS_ROOT}/${name}" ]] || fail "forbidden evaluation output exists: ${name}"
+done
+for item in "${ROOT}/status/hpc_technical_admission.json" "${ROOT}/status/training_submission.lock" "${ROOT}/status/training_job_id.txt"; do
+  [[ ! -e "${item}" && ! -L "${item}" ]] || fail "downstream technical admission or training evidence exists prematurely: ${item}"
+done
+
+case "${state}" in
+  PENDING|RUNNING|CONFIGURING|COMPLETING)
+    echo "TUKF09_455_A800_EXCLUSIVE_V2R3_PREPARATION_NOT_TERMINAL state=${state} exit_code=${exit_code}"
+    exit 0
+    ;;
+  COMPLETED)
+    [[ "${exit_code}" = "0:0" ]] || fail "completed preparation job has nonzero exit code: ${exit_code}"
+    ;;
+  *)
+    echo "=== PRESERVED TERMINAL NONPASS EVIDENCE ==="
+    for log in "${STDOUT}" "${STDERR}"; do
+      if [[ -f "${log}" && ! -L "${log}" ]]; then
+        echo "LOG=${log} SIZE=$(stat -c '%s' "${log}") SHA256=$(sha256sum "${log}" | awk '{print $1}')"
+        tail -c 20000 "${log}"
+      fi
+    done
+    for item in "${ROOT}/runtime_v2r3.pending.${JOB_ID}" "${RUNTIME_ROOT}" "${INITIAL_BUNDLE}" "${STAGED_MANIFEST}" "${PREPARATION_PROBE}" "${STAGED_ROOT}" "${FILTER_SEAL}"; do
+      if [[ -e "${item}" || -L "${item}" ]]; then
+        stat -c 'PRESERVED=%F|%s|%h|%n' "${item}" || true
+      fi
+    done
+    echo "TUKF09_455_A800_EXCLUSIVE_V2R3_PREPARATION_TERMINAL_NONPASS state=${state} exit_code=${exit_code}"
+    exit 0
+    ;;
+esac
+
+echo "=== TERMINAL LOG EVIDENCE ==="
+for item in "${STDOUT}" "${STDERR}"; do
+  [[ -f "${item}" && ! -L "${item}" ]] || fail "terminal preparation log missing, linked, or irregular: ${item}"
+  [[ "$(stat -c '%h' "${item}")" -eq 1 ]] || fail "terminal preparation log hard-link count changed: ${item}"
+done
+[[ ! -s "${STDERR}" ]] || fail "preparation Slurm standard error is not empty"
+[[ "$(tail -n 1 "${STDOUT}")" = "TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED" ]] || fail "preparation completion marker missing"
+echo "STDOUT_SIZE=$(stat -c '%s' "${STDOUT}")"
+echo "STDOUT_SHA256=$(sha256sum "${STDOUT}" | awk '{print $1}')"
+echo "STDERR_SHA256=$(sha256sum "${STDERR}" | awk '{print $1}')"
+echo "STDOUT_LAST_LINE=$(tail -n 1 "${STDOUT}")"
+
+echo "=== STRICT PREPARATION ARTIFACT GATES ==="
+for item in "${RUNTIME_ROOT}" "${RUNTIME_ROOT}/pysite" "${RUNTIME_ROOT}/wheelhouse" "${STAGED_ROOT}"; do
+  [[ -d "${item}" && ! -L "${item}" ]] || fail "prepared directory missing, linked, or irregular: ${item}"
+done
+for item in "${PRIVATE_MANIFEST}" "${INITIAL_BUNDLE}" "${STAGED_MANIFEST}" "${PREPARATION_PROBE}" "${FILTER_SEAL}" "${ROOT}/status/preparation.lock"; do
+  [[ -f "${item}" && ! -L "${item}" ]] || fail "prepared evidence missing, linked, or irregular: ${item}"
+  [[ "$(stat -c '%h' "${item}")" -eq 1 ]] || fail "prepared evidence hard-link count changed: ${item}"
+done
+[[ ! -e "${ROOT}/runtime_v2r3.pending.${JOB_ID}" && ! -L "${ROOT}/runtime_v2r3.pending.${JOB_ID}" ]] || fail "runtime pending directory remains after successful job"
+if compgen -G "${ROOT}/status/staged_training_sources.pending-*" >/dev/null; then
+  fail "staged-data pending directory remains after successful job"
+fi
+
+if ! "${PYTHON}" -B - "${PROJECT_ROOT}" "${ROOT}" "${JOB_ID}" <<'PY'
+import importlib.util
 import json
 from pathlib import Path
 import sys
 
-manifest = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-assert manifest["identity_sha256"] == sys.argv[2]
-assert manifest["status"] == "LOGIN4_LOCKED_RUNTIME_INPUTS_FROZEN_FOR_OFFLINE_SLURM_INSTALLATION"
-assert manifest["acquisition_host_shortname"] == "login4"
-assert manifest["total_file_count"] == 24
-assert manifest["total_bytes"] == 2817756909
-assert manifest["download_only_no_build_no_install"] is True
-assert manifest["shared_nh_final_modified"] is False
-assert manifest["scientific_contract_changed"] is False
-assert manifest["formal_evaluation_authorized"] is False
-assert manifest["evaluation_array_reads"] == 0
-assert manifest["evaluation_outputs"] == 0
-assert manifest["download_evidence"]["download_stderr"]["sha256"] == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-assert manifest["download_evidence"]["shared_environment_before"]["sha256"] == "2ef463380324c6ab679ea1e08cb220987edf258baffa5d83c89e4f0326c4917f"
-assert manifest["download_evidence"]["shared_environment_after"]["sha256"] == "2ef463380324c6ab679ea1e08cb220987edf258baffa5d83c89e4f0326c4917f"
+project = Path(sys.argv[1])
+root = Path(sys.argv[2])
+job_id = sys.argv[3]
+stage_path = project / "hpc/tukf09_455_basin_revision_a800_exclusive_v2r3/stage_and_train.py"
+spec = importlib.util.spec_from_file_location("tukf09_stage_v2r3_audit", stage_path)
+assert spec is not None and spec.loader is not None
+stage = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(stage)
+
+runtime = root / "runtime_v2r3"
+private_path = runtime / "evidence/private_runtime_manifest.json"
+initial_path = root / "status/initial_bundle_verification.json"
+staged_path = root / "status/staged_training_sources.json"
+probe_path = root / "status/preparation_probe.json"
+filter_seal = project / "results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/filter_rebinding/independent/manifest.final.sha256.json"
+
+private = stage.verify_private_runtime_manifest(
+    manifest_path=private_path,
+    pysite=runtime / "pysite",
+    wheelhouse=runtime / "wheelhouse",
+    import_check=False,
+)
+initial = stage.read_json(initial_path, root=root, canonical=True)
+staged = stage.read_json(staged_path, root=root, canonical=True)
+probe = stage.read_json(probe_path, root=root, canonical=True)
+stage._verify_payload_identity(initial, label="initial bundle verification")
+stage._verify_payload_identity(staged, label="staged training sources")
+stage._verify_payload_identity(probe, label="preparation probe")
+
+assert initial["status"] == "STRICT_PRISTINE_A800_EXCLUSIVE_V2R3_BUNDLE_VERIFIED_BEFORE_RUNTIME_MUTATION"
+assert initial["member_count"] == 2808
+assert initial["admitted_executable_count"] == 30
+assert initial["admitted_test_count"] == 12
+assert initial["formal_evaluation_output_count"] == 0
+assert initial["mutable_file_count_at_verification"] == 0
+assert initial["mutable_directory_count_at_verification"] == 0
+assert initial["scientific_contract_changed"] is False
+
+assert staged["status"] == "STAGED_455_TRAINING_VALIDATION_SOURCE_FILES_EVALUATION_HOLD"
+assert len(staged["ordered_basin_ids"]) == 455
+assert len(staged["file_sha256"]) == 911
+assert len(staged["file_size"]) == 911
+assert staged["file_count"] == 911
+assert staged["evaluation_array_reads"] == 0
+records = {
+    name: {"sha256": staged["file_sha256"][name], "size_bytes": staged["file_size"][name]}
+    for name in staged["file_sha256"]
+}
+verified_stage = stage.verify_staged_training_sources(
+    destination_root=project / "G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    records=records,
+)
+assert verified_stage["file_count"] == 911
+assert verified_stage["total_size_bytes"] == staged["total_size_bytes"]
+
+assert private["status"] == "PRIVATE_RUNTIME_FROZEN_NOT_A_SCIENTIFIC_CONTRACT_CHANGE"
+assert private["target_versions"] == {"numpy": "1.26.4", "psutil": "5.9.0", "torch": "2.2.2"}
+assert private["private_dependency_closure_complete"] is True
+assert private["shared_nh_final_modified"] is False
+assert private["offline_input_manifest_sha256"] == "0e9cbcec8ad25db938ceed10460357c248e8f9e59a681cd9c84fef8387fbb339"
+assert private["offline_input_identity_sha256"] == "c354a618962b3d2462a34459396f58d89686adc2fa18281db7d90ce0d9d3a137"
+assert private["offline_input_total_file_count"] == 24
+assert private["offline_input_total_bytes"] == 2817756909
+
+assert probe["status"] == "HPC_A800_EXCLUSIVE_V2R3_PREPARED_FILTERS_455_NEURAL_0_OF_9_EVALUATION_HOLD"
+assert probe["filter_unit_count"] == 455
+assert probe["neural_model_unit_count"] == 0
+assert probe["evaluation_array_reads"] == 0
+assert probe["evaluation_predictions"] == 0
+assert probe["evaluation_metrics"] == 0
+assert probe["evaluation_outputs"] == 0
+assert probe["scientific_contract_changed"] is False
+assert probe["bundle_manifest_sha256"] == "b64829885d5330feb2c66cc7558b1ea3ea38b1def4ae889566480cb369381f6b"
+assert probe["initial_bundle_verification_sha256"] == stage.sha256_file(initial_path)
+assert probe["initial_bundle_verification_identity_sha256"] == initial["identity_sha256"]
+assert probe["private_runtime_manifest_sha256"] == stage.sha256_file(private_path)
+assert probe["private_runtime_identity_sha256"] == private["identity_sha256"]
+assert probe["staged_sources_manifest_sha256"] == stage.sha256_file(staged_path)
+assert probe["staged_sources_identity_sha256"] == staged["identity_sha256"]
+assert probe["remote_filter_installation_final_sha256"] == stage.sha256_file(filter_seal)
+runtime_identity = probe["runtime"]
+assert runtime_identity["slurm_job_id"] == job_id
+assert runtime_identity["cuda_available"] is True
+assert runtime_identity["cuda_device_count"] == 1
+assert runtime_identity["cuda_device_name"] == "NVIDIA A800-SXM4-80GB"
+assert runtime_identity["cuda_compute_capability"] == [8, 0]
+assert runtime_identity["torch_base_version"] == "2.2.2"
+assert runtime_identity["numpy_version"] == "1.26.4"
+assert runtime_identity["psutil_version"] == "5.9.0"
+assert runtime_identity["exclusive_node_runtime_evidence_passed"] is True
+assert runtime_identity["slurm_job_node_count"] == 1
+assert runtime_identity["slurm_cpus_on_node"] == 64
+assert runtime_identity["slurm_cpus_per_task"] == 4
+assert runtime_identity["slurm_gpu_allocation_variable_present"] is True
+assert runtime_identity["nvidia_gpu_uuid"] == runtime_identity["torch_process_gpu_uuid"]
+
+print(json.dumps({
+    "filter_unit_count": probe["filter_unit_count"],
+    "initial_bundle_sha256": stage.sha256_file(initial_path),
+    "preparation_probe_identity_sha256": probe["identity_sha256"],
+    "preparation_probe_sha256": stage.sha256_file(probe_path),
+    "private_runtime_identity_sha256": private["identity_sha256"],
+    "private_runtime_manifest_sha256": stage.sha256_file(private_path),
+    "remote_filter_seal_sha256": stage.sha256_file(filter_seal),
+    "staged_file_count": staged["file_count"],
+    "staged_sources_identity_sha256": staged["identity_sha256"],
+    "staged_sources_manifest_sha256": stage.sha256_file(staged_path),
+}, sort_keys=True))
 PY
 then
-  fail "offline input manifest failed semantic verification"
+  fail "completed preparation artifacts failed strict semantic verification"
 fi
-cmp --silent "${OFFLINE_ROOT}/evidence/shared-environment-before.json" "${OFFLINE_ROOT}/evidence/shared-environment-after.json" || fail "shared environment snapshots differ"
 
-echo "=== PRISTINE PREPARATION TARGET GATES ==="
-for item in \
-  "${ROOT}/runtime_v2r3" \
-  "${ROOT}/status/initial_bundle_verification.json" \
-  "${ROOT}/status/staged_training_sources.json" \
-  "${ROOT}/status/preparation_probe.json" \
-  "${ROOT}/status/hpc_technical_admission.json" \
-  "${ROOT}/status/preparation.lock" \
-  "${SUBMISSION_LOCK}" \
-  "${JOB_ID_FILE}" \
-  "${ROOT}/status/training_submission.lock" \
-  "${ROOT}/status/training_job_id.txt" \
-  "${STAGED_ROOT}"; do
-  [[ ! -e "${item}" && ! -L "${item}" ]] || fail "preparation target already exists or is linked: ${item}"
-done
-if compgen -G "${ROOT}/runtime_v2r3.pending.*" >/dev/null; then
-  fail "a pending private runtime already exists"
-fi
-if compgen -G "${ROOT}/status/staged_training_sources.pending-*" >/dev/null; then
-  fail "a pending staged-data tree already exists"
-fi
-if compgen -G "${ROOT}/logs/prepare-*.out" >/dev/null || compgen -G "${ROOT}/logs/prepare-*.err" >/dev/null; then
-  fail "preparation logs already exist"
-fi
-for name in selection evaluation independent formal_evaluation formal_evaluation_independent; do
-  [[ ! -e "${RESULTS_ROOT}/${name}" && ! -L "${RESULTS_ROOT}/${name}" ]] || fail "forbidden evaluation output exists: ${name}"
-done
-
-echo "=== SAME-NAME JOB GATE ==="
-squeue_output=$(squeue -u "${USER}" -h -o '%i|%j|%T' 2>&1)
-squeue_rc=$?
-[[ "${squeue_rc}" -eq 0 ]] || fail "cannot inspect current jobs: ${squeue_output}"
-same_name=$(printf '%s\n' "${squeue_output}" | awk -F'|' -v name="${JOB_NAME}" '$2==name {print $0}')
-[[ -z "${same_name}" ]] || fail "same-name preparation job already exists: ${same_name}"
-
-echo "=== ATOMIC PREPARATION SUBMISSION LOCK ==="
-mkdir "${SUBMISSION_LOCK}" || fail "cannot acquire the preparation submission lock"
-[[ -d "${SUBMISSION_LOCK}" && ! -L "${SUBMISSION_LOCK}" ]] || fail "preparation submission lock is linked or irregular"
-[[ ! -e "${JOB_ID_FILE}" && ! -L "${JOB_ID_FILE}" ]] || fail "preparation job id record appeared after lock acquisition"
-squeue_output=$(squeue -u "${USER}" -h -o '%i|%j|%T' 2>&1)
-squeue_rc=$?
-[[ "${squeue_rc}" -eq 0 ]] || fail "cannot recheck current jobs after lock acquisition: ${squeue_output}"
-same_name=$(printf '%s\n' "${squeue_output}" | awk -F'|' -v name="${JOB_NAME}" '$2==name {print $0}')
-[[ -z "${same_name}" ]] || fail "same-name preparation job appeared after lock acquisition: ${same_name}"
-
-echo "=== EXACTLY ONE OFFLINE PREPARATION SUBMISSION ==="
-submit_output=$(sbatch "${PREPARE_SCRIPT}" 2>&1)
-submit_rc=$?
-printf '%s\n' "${submit_output}"
-job_ids=$(printf '%s\n' "${submit_output}" | sed -n 's/^Submitted batch job \([0-9][0-9]*\)$/\1/p')
-job_id_count=$(printf '%s\n' "${job_ids}" | awk 'NF{count++} END{print count+0}')
-[[ "${submit_rc}" -eq 0 && "${job_id_count}" -eq 1 ]] || fail "preparation submission not proven exactly once (wrapper_rc=${submit_rc}, parsed_count=${job_id_count})"
-job_id=$(printf '%s\n' "${job_ids}" | awk 'NF{print; exit}')
-case "${job_id}" in
-  ''|*[!0-9]*) fail "invalid preparation job id" ;;
-esac
-pending="${JOB_ID_FILE}.pending.$$"
-( set -o noclobber; printf '%s\n' "${job_id}" > "${pending}" ) || fail "cannot write pending preparation job id"
-ln "${pending}" "${JOB_ID_FILE}" || fail "preparation job id target appeared concurrently"
-rm "${pending}" || fail "cannot remove pending preparation job id link"
-[[ -f "${JOB_ID_FILE}" && ! -L "${JOB_ID_FILE}" && "$(stat -c '%h' "${JOB_ID_FILE}")" -eq 1 ]] || fail "published preparation job id record is irregular"
-[[ "$(tr -d '\r\n' < "${JOB_ID_FILE}")" = "${job_id}" ]] || fail "published preparation job id record differs"
-
-echo "=== IMMEDIATE STATE ==="
-echo "PREPARATION_JOB_ID=${job_id}"
-squeue -j "${job_id}" -o '%.18i %.30j %.10P %.10T %.24R %.10M %.20S' 2>&1 || true
-echo "TUKF09_455_A800_EXCLUSIVE_V2R3_OFFLINE_PREPARATION_SUBMITTED_ONCE"
+echo "TUKF09_455_A800_EXCLUSIVE_V2R3_PREPARATION_COMPLETED_STRICTLY_VERIFIED_ADMISSION_NOT_CREATED"
