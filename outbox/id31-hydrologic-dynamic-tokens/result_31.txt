@@ -1,0 +1,127 @@
+### channel=id31-hydrologic-dynamic-tokens seq=31
+### host=login4
+### started=2026-08-31T12:23:01+0800
+### ---------- output ----------
+=== ID31 DL01 RETRY 216549: SCHEDULER ===
+             JOBID                     NAME    PARTITION ST       TIME TIME_LIMIT               NODELIST(REASON)
+            216549         id31_development        hgpu2  R       2:47 7-00:00:00                         ngu003
+216549|id31_development|hgpu2|RUNNING|0:0|00:03:19|2026-08-31T12:20:14|Unknown|ngu003
+216549.batch|batch||RUNNING|0:0|00:03:19|2026-08-31T12:20:14|Unknown|ngu003
+216549.extern|extern||RUNNING|0:0|00:03:19|2026-08-31T12:20:14|Unknown|ngu003
+=== RUN MANIFEST ===
+43d9feed6b5a99ad90a189b321dc8cdc9c8df2dfabdf7ff1fc224561a41af440  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/_invocations/id31_DL01_s100_slurm216549/run_manifest.json
+{
+  "candidate_safe_data_before": {
+    "audit": {
+      "basin_count": 531,
+      "forcing_date_max": "2008-09-30",
+      "forcing_date_min": "1999-01-05",
+      "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+      "forcing_row_count": 1888767,
+      "status": "PASS",
+      "supervision_date_max": "2008-09-30",
+      "supervision_date_min": "1999-10-01",
+      "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+      "supervision_row_count": 1745928
+    },
+    "forcing_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01",
+    "forcing_file_sha256": "0226ee6297a5488e9b284a483bd320879f107fbf749222944da453ddd0f0448d",
+    "forcing_manifest_path": "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json",
+    "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+    "statics_file_sha256": "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2",
+    "status": "PASS",
+    "supervision_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01",
+    "supervision_manifest_path": "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json",
+    "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+    "target_tree_sha256": "17709a37f5ea8e8a4e140b422b8c010d030d600cf673b52a5cc557ecb99d57a6"
+  },
+  "command": [
+    "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "-u",
+    "-m",
+    "neuralhydrology.nh_run",
+    "train",
+    "--config-file",
+    "src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml",
+    "--gpu",
+    "0"
+  ],
+  "config_path": "src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml",
+  "config_sha256": "1f38ed828fb002a0b967c341d0109ff95ead50a7ad241925c5259343a1521b4e",
+  "data_access_log": "results/31_hydrologic_dynamic_tokens/_invocations/id31_DL01_s100_slurm216549/data_access.jsonl",
+  "date_contract": {
+    "train_end_date": "30/09/2006",
+    "train_start_date": "01/10/1999",
+    "validation_end_date": "30/09/2008",
+    "validation_start_date": "01/10/2006"
+  },
+  "experiment_id": "DL01",
+  "formal_evaluation_authorized": false,
+  "gpu": 0,
+  "mode": "execute",
+  "required_flags": [
+    "--execute",
+    "--operator-approved-heavy-compute"
+  ],
+  "run_id": "id31_DL01_s100_slurm216549",
+  "run_root": "results/31_hydrologic_dynamic_tokens/DL01",
+  "seed": 100,
+  "slurm_job_id": "216549",
+  "source_integrity_before": {
+    "experiment_id": "DL01",
+    "implementation_files": {
+      "neuralhydrology/modelzoo/__init__.py": "2182ece8ad07c13d4632f9c8ddc910e66bd0efeff3ac3ba893416cb9724c8054",
+      "neuralhydrology/modelzoo/hydrologic_dynamic_token_transformer.py": "4594305ff15df760b08f14dd12936c8cb5aa701ebf5f7e23cd4f0d254238e459",
+      "neuralhydrology/modelzoo/hydrologic_dynamic_tokenizer.py": "53123019686896c05c80314ba0fdbedfbc0556a91a7c05d2e78a699ea46d3089",
+      "neuralhydrology/modelzoo/modern_causal_transformer.py": "04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede",
+      "neuralhydrology/training/__init__.py": "07506ca22cf462d95e573fafc286a67975668c20be826fda13736268fdf8c498",
+      "neuralhydrology/training/regularization.py": "e8eb71123f99eecccd0316901ace54bd933f8e3565325696c1e0e11ea2b3b027",
+      "neuralhydrology/utils/config.py": "568819bf26057b29ed455a532de28decfbee1a1710b545e635e00afdc300e43a",
+      "src/hydrologic_dynamic_tokens/hpc/submit_development_experiment.slurm": "99e6b130fb2d10c0d229aa0befc3f820c5dfce4cbf431261c2d93a9a51258baa",
+      "src/hydrologic_dynamic_tokens/hpc/submit_gpu_resource_probe.slurm": "2a2df8a54a3c38e5b356024c91188d5db5d64e14b96e899efb4a42928bf2607f",
+      "src/hydrologic_dynamic_tokens/registry/experiments.csv": "a7c99e9788f3d6f134f8087d1723c885d77f23e82ab59cba5a57d909e1460867",
+      "src/hydrologic_dynamic_tokens/scripts/audit_configs.py": "56787d9cdc60b2d2f7bed5a716518ab54c4595c8ccac1b4a16c79ac28ad91005",
+      "src/hydrologic_dynamic_tokens/scripts/run_development.py": "e7ac0be6e70f52b70e43c4ade692e37bdefc2fa05cc107f21ac95f47993937d8"
+    },
+    "schema_version": 1,
+    "source_config_path": "src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml",
+    "source_config_sha256": "1f38ed828fb002a0b967c341d0109ff95ead50a7ad241925c5259343a1521b4e"
+  },
+  "started_at_utc": "2026-08-31T04:22:16.389296+00:00",
+  "status": "RUNNING"
+}
+=== STDOUT TAIL ===
+=== ID31 PRE-FLIGHT ===
+2026-08-31T12:20:18+0800
+ngu003
+NVIDIA GeForce RTX 3090, 24576 MiB, 535.104.05
+NVIDIA GeForce RTX 3090, 24576 MiB, 535.104.05
+BOUND_GPU_RESOURCE_PROBE_PASS results/31_hydrologic_dynamic_tokens/_gpu_resource_probes/slurm216548/probe_report.json
+ID31 STATIC CONFIG AUDIT: PASS (five planned runs; no data read; no training launched)
+=== ID31 DEVELOPMENT RUN DL01 ===
+=== STDERR TAIL ===
+=== CURRENT SOURCE INTEGRITY ===
+{
+  "experiment_id": "DL01",
+  "implementation_files": {
+    "neuralhydrology/modelzoo/__init__.py": "2182ece8ad07c13d4632f9c8ddc910e66bd0efeff3ac3ba893416cb9724c8054",
+    "neuralhydrology/modelzoo/hydrologic_dynamic_token_transformer.py": "4594305ff15df760b08f14dd12936c8cb5aa701ebf5f7e23cd4f0d254238e459",
+    "neuralhydrology/modelzoo/hydrologic_dynamic_tokenizer.py": "53123019686896c05c80314ba0fdbedfbc0556a91a7c05d2e78a699ea46d3089",
+    "neuralhydrology/modelzoo/modern_causal_transformer.py": "04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede",
+    "neuralhydrology/training/__init__.py": "07506ca22cf462d95e573fafc286a67975668c20be826fda13736268fdf8c498",
+    "neuralhydrology/training/regularization.py": "e8eb71123f99eecccd0316901ace54bd933f8e3565325696c1e0e11ea2b3b027",
+    "neuralhydrology/utils/config.py": "568819bf26057b29ed455a532de28decfbee1a1710b545e635e00afdc300e43a",
+    "src/hydrologic_dynamic_tokens/hpc/submit_development_experiment.slurm": "99e6b130fb2d10c0d229aa0befc3f820c5dfce4cbf431261c2d93a9a51258baa",
+    "src/hydrologic_dynamic_tokens/hpc/submit_gpu_resource_probe.slurm": "2a2df8a54a3c38e5b356024c91188d5db5d64e14b96e899efb4a42928bf2607f",
+    "src/hydrologic_dynamic_tokens/registry/experiments.csv": "a7c99e9788f3d6f134f8087d1723c885d77f23e82ab59cba5a57d909e1460867",
+    "src/hydrologic_dynamic_tokens/scripts/audit_configs.py": "56787d9cdc60b2d2f7bed5a716518ab54c4595c8ccac1b4a16c79ac28ad91005",
+    "src/hydrologic_dynamic_tokens/scripts/run_development.py": "e7ac0be6e70f52b70e43c4ade692e37bdefc2fa05cc107f21ac95f47993937d8"
+  },
+  "schema_version": 1,
+  "source_config_path": "src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml",
+  "source_config_sha256": "1f38ed828fb002a0b967c341d0109ff95ead50a7ad241925c5259343a1521b4e"
+}
+ID31_DL01_RETRY_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T12:23:07+0800
