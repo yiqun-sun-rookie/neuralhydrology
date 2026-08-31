@@ -1,203 +1,110 @@
 #!/bin/bash
-# Deploy the immutable A800-exclusive v2 transport payload into its unique root.
-set -eo pipefail
+# Submit exactly one package-native allocation probe before mutable preparation.
+set -o pipefail
 umask 077
 
 ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831
-MAILBOX_ROOT="$(pwd -P)"
-PAYLOAD="${MAILBOX_ROOT}/payload/kalmannet-tukf09-455/a800-exclusive-v2"
-ARCHIVE_NAME=tukf09_455_basin_zero_validation_target_variance_revision_v1_hpc_execution_a800_exclusive_v2_formal_training.tar.gz
-BUILDER_NAME=build_tukf09_455_a800_exclusive_hpc_bundle_v2.py
-ARCHIVE_SHA=e08f7daee8f3b61bab520c044568fbce4ee306cbbbdc2a1d3fa45e95357102f7
-ARCHIVE_SIZE=9892748
-OUTER_SHA=91aeb7c48ca9046a953071a02010be0f7ce80326bd989c281762f9fe72ab5ac3
-BUILDER_SHA=c109ed26ccae9bbf2980269a85230b8f6992e407f58a240b0fc48cd3b5ad7898
+PROJECT_ROOT="${ROOT}/bundle/kalmannet"
+PROBE_SCRIPT="${PROJECT_ROOT}/hpc/tukf09_455_basin_revision_a800_exclusive_v2/allocation_probe.slurm"
+PROBE_SCRIPT_SHA=0dbee5218b46fb31336e779c6ceb86d1904e3549f22b9bfe5b60ba8bbb02cbb7
+EXECUTION_CONFIG="${PROJECT_ROOT}/configs/tukf09_455_basin_zero_validation_target_variance_hpc_execution_a800_exclusive_v2.json"
+EXECUTION_CONFIG_SHA=c19d48f679d1eef0c3a21ce67c41a800980d1f51a00360e8adb5d8d9d1d71221
+DEPLOYMENT_SUMMARY_SHA=5b7452d455f2a95b35fdfbd14b0ae4ef9746df7e75743cd89fed93e87603025a
 SEMANTICS_PROBE_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_a800_exclusive_semantics_probe_v1_20260831_01a055e6
-SEMANTICS_PROBE_JOB_ID=217122
 SEMANTICS_PROBE_JSON_SHA=ba5f627b18369e634a558ec9f1edb8cd511464184e5ff33e7bff6acceabefc86
+SEMANTICS_PROBE_JOB_ID=217122
+JOB_NAME=tukf09-455-a800-v2-map
+JOB_ID_FILE="${ROOT}/status/allocation_probe_job_id.txt"
 
-test -d "${SEMANTICS_PROBE_ROOT}"
-test ! -L "${SEMANTICS_PROBE_ROOT}"
-test -f "${SEMANTICS_PROBE_ROOT}/status/allocation_probe.json"
-test ! -L "${SEMANTICS_PROBE_ROOT}/status/allocation_probe.json"
-test "$(stat -c '%h' "${SEMANTICS_PROBE_ROOT}/status/allocation_probe.json")" -eq 1
-test "$(sha256sum "${SEMANTICS_PROBE_ROOT}/status/allocation_probe.json" | awk '{print $1}')" = "${SEMANTICS_PROBE_JSON_SHA}"
-test "$(tr -d '\r\n' < "${SEMANTICS_PROBE_ROOT}/status/submitted_job_id.txt")" = "${SEMANTICS_PROBE_JOB_ID}"
-sacct -j "${SEMANTICS_PROBE_JOB_ID}" -n -P --format=JobIDRaw,State,ExitCode | \
-  awk -F'|' -v id="${SEMANTICS_PROBE_JOB_ID}" '$1==id && $2=="COMPLETED" && $3=="0:0" {ok=1} END {exit(ok ? 0 : 1)}'
+fail() {
+  echo "FATAL: $*" >&2
+  exit 1
+}
 
-test -d "${PAYLOAD}"
-test ! -L "${PAYLOAD}"
-test "$(find "${PAYLOAD}" -mindepth 1 -maxdepth 1 | wc -l)" -eq 3
-for name in "${ARCHIVE_NAME}" bundle_manifest.sha256.json "${BUILDER_NAME}"; do
-  test -f "${PAYLOAD}/${name}"
-  test ! -L "${PAYLOAD}/${name}"
-  test "$(stat -c '%h' "${PAYLOAD}/${name}")" -eq 1
+echo "=== IMMUTABLE DEPLOYMENT GATES ==="
+[[ -d "${ROOT}" && ! -L "${ROOT}" ]] || fail "deployed root missing, linked, or irregular"
+[[ -d "${PROJECT_ROOT}" && ! -L "${PROJECT_ROOT}" ]] || fail "deployed project root missing, linked, or irregular"
+for item in "${PROBE_SCRIPT}" "${EXECUTION_CONFIG}" "${ROOT}/status/deployment_summary.json"; do
+  [[ -f "${item}" && ! -L "${item}" ]] || fail "required deployed file missing, linked, or irregular: ${item}"
+  [[ "$(stat -c '%h' "${item}")" -eq 1 ]] || fail "required deployed file hard-link count changed: ${item}"
 done
-test "$(stat -c '%s' "${PAYLOAD}/${ARCHIVE_NAME}")" -eq "${ARCHIVE_SIZE}"
-test "$(sha256sum "${PAYLOAD}/${ARCHIVE_NAME}" | awk '{print $1}')" = "${ARCHIVE_SHA}"
-test "$(sha256sum "${PAYLOAD}/bundle_manifest.sha256.json" | awk '{print $1}')" = "${OUTER_SHA}"
-test "$(sha256sum "${PAYLOAD}/${BUILDER_NAME}" | awk '{print $1}')" = "${BUILDER_SHA}"
+[[ "$(sha256sum "${PROBE_SCRIPT}" | awk '{print $1}')" = "${PROBE_SCRIPT_SHA}" ]] || fail "package allocation probe hash mismatch"
+[[ "$(sha256sum "${EXECUTION_CONFIG}" | awk '{print $1}')" = "${EXECUTION_CONFIG_SHA}" ]] || fail "execution config hash mismatch"
+[[ "$(sha256sum "${ROOT}/status/deployment_summary.json" | awk '{print $1}')" = "${DEPLOYMENT_SUMMARY_SHA}" ]] || fail "deployment summary hash mismatch"
+[[ -f "${SEMANTICS_PROBE_ROOT}/status/allocation_probe.json" && ! -L "${SEMANTICS_PROBE_ROOT}/status/allocation_probe.json" ]] || fail "independent route semantics evidence missing or linked"
+[[ "$(sha256sum "${SEMANTICS_PROBE_ROOT}/status/allocation_probe.json" | awk '{print $1}')" = "${SEMANTICS_PROBE_JSON_SHA}" ]] || fail "independent route semantics evidence hash mismatch"
+sacct -j "${SEMANTICS_PROBE_JOB_ID}" -n -P --format=JobIDRaw,State,ExitCode | \
+  awk -F'|' -v id="${SEMANTICS_PROBE_JOB_ID}" '$1==id && $2=="COMPLETED" && $3=="0:0" {ok=1} END {exit(ok ? 0 : 1)}' || fail "independent route semantics job is not completed with exit code 0:0"
 
 source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh" || \
-source "${HOME}/miniconda3/etc/profile.d/conda.sh"
-conda activate nh_final || { echo "CONDA_FAILED" >&2; exit 62; }
-export PYTHONNOUSERSITE=1
-export PYTHONDONTWRITEBYTECODE=1
-unset PYTHONOPTIMIZE
+source "${HOME}/miniconda3/etc/profile.d/conda.sh" || fail "cannot load conda"
+conda activate nh_final || fail "cannot activate nh_final"
 PYTHON="${CONDA_PREFIX}/bin/python"
-
-"${PYTHON}" -B - "${PAYLOAD}/bundle_manifest.sha256.json" "${ARCHIVE_SHA}" "${ARCHIVE_SIZE}" "${BUILDER_SHA}" <<'PY'
+if ! "${PYTHON}" -B - "${ROOT}/status/deployment_summary.json" "${SEMANTICS_PROBE_ROOT}/status/allocation_probe.json" <<'PY'
 import json
+import os
 from pathlib import Path
 import sys
 
-outer = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-archive_sha = sys.argv[2]
-archive_size = int(sys.argv[3])
-builder_sha = sys.argv[4]
-builder_member = "kalmannet/scripts/build_tukf09_455_a800_exclusive_hpc_bundle_v2.py"
-assert outer["schema_version"] == "tukf09_455_a800_exclusive_training_hpc_archive_manifest_v2"
-assert outer["archive_name"] == "tukf09_455_basin_zero_validation_target_variance_revision_v1_hpc_execution_a800_exclusive_v2_formal_training.tar.gz"
-assert outer["experiment_id"] == "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1"
-assert outer["purpose"] == "formal_training_only_no_formal_evaluation"
-assert outer["archive_sha256"] == archive_sha
-assert outer["archive_size"] == archive_size
-assert outer["member_count"] == 2807
-assert outer["admitted_executable_count"] == 30
-assert outer["admitted_test_count"] == 12
-assert outer["artifact_file_count"] == 2751
-assert outer["config_file_count"] == 6
-assert outer["non_admitted_wrapper_count"] == 8
-assert outer["member_sha256"][builder_member] == builder_sha
-assert outer["scientific_contract_sha256"] == "7710594dcc5cce7f087cb70492a6f827c3925a98ea7fa051d26c5ef1660304e1"
-assert outer["preflight_final_manifest_sha256"] == "f7e0a3f0708d0498cbaeaa77a044687f20d017ffa316170cd4770fc920b144aa"
-assert outer["filter_migration_final_manifest_sha256"] == "029521f6c35980ce40fb0afeb14e2734042734c73f6ed0a33a5c0040311c3eb5"
-assert outer["training_admission"] == {
-    "path": "kalmannet/artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/training_admission/training_admission.json",
-    "record_sha256": "ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4",
-    "sha256": "6ba3cdd742fc2bdf039c51afc75485c8292f0b999d7fe426cb2ccf69057c1b79",
-}
-assert outer["local_results_file_count"] == 0
-assert outer["camels_raw_file_count"] == 0
-assert outer["neural_checkpoint_count"] == 0
-assert outer["formal_selection_output_count"] == 0
-assert outer["formal_evaluation_output_count"] == 0
+summary = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+probe = json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
+assert summary["archive_sha256"] == "e08f7daee8f3b61bab520c044568fbce4ee306cbbbdc2a1d3fa45e95357102f7"
+assert summary["bundle_manifest_sha256"] == "9f133931bbd2e840fff74358a12d4be2222e359982751cae389a21be8cf317e8"
+assert summary["member_count"] == 2807
+assert summary["formal_evaluation_authorized"] is False
+assert summary["remote_root"] == "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831"
+assert summary["status"] == "A800_EXCLUSIVE_V2_DEPLOYED_STRICT_BUNDLE_VERIFIED_FORMAL_EVALUATION_HOLD"
+assert probe["status"] == "PASS"
+assert probe["errors"] == []
+assert probe["normalized_allocation"]["exclusive_node_runtime_evidence_passed"] is True
+assert probe["pytorch"]["visible_device_count"] == 1
+assert probe["pytorch"]["current_process_gpu_uuid"] == probe["nvidia_slurm_selected_gpu"]["uuid"]
+root = Path(summary["remote_root"])
+for relative in (
+    "runtime_v2",
+    "status/initial_bundle_verification.json",
+    "status/staged_training_sources.json",
+    "status/preparation_probe.json",
+    "status/hpc_technical_admission.json",
+    "status/preparation.lock",
+    "status/allocation_probe_job_id.txt",
+):
+    assert not os.path.lexists(root / relative), f"pre-allocation output already exists: {relative}"
+project = root / "bundle" / "kalmannet"
+results = project / "results" / "tukf09_455_basin_zero_validation_target_variance_revision_v1"
+for name in ("selection", "evaluation", "formal_evaluation"):
+    assert not os.path.lexists(results / name), f"forbidden output exists before allocation probe: {name}"
 PY
-
-"${PYTHON}" -B - "${SEMANTICS_PROBE_ROOT}/status/allocation_probe.json" <<'PY'
-import json
-from pathlib import Path
-import sys
-
-record = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-assert record["schema_version"] == "tukf09_455_a800_exclusive_semantics_probe_v1"
-assert record["status"] == "PASS"
-assert record["errors"] == []
-assert record["hostname"] == "ngu201"
-allocation = record["normalized_allocation"]
-assert allocation["exclusive_node_runtime_evidence_passed"] is True
-assert allocation["job_cpus_per_node"] == 64
-assert allocation["cpu_repeat"] == 1
-assert allocation["node_count"] == 1
-assert allocation["slurm_gpu_identifier_source"] == "SLURM_JOB_GPUS"
-assert allocation["slurm_selected_gpu_identifier"] == "0"
-selected = record["nvidia_slurm_selected_gpu"]
-assert selected["name"] == "NVIDIA A800-SXM4-80GB"
-assert int(selected["memory_total_mib"]) == 81920
-inventory = record["nvidia_smi_inventory"]
-assert len(inventory) == 8
-assert sorted(item["index"] for item in inventory) == list(range(8))
-assert len({item["uuid"] for item in inventory}) == 8
-assert all(item["name"] == "NVIDIA A800-SXM4-80GB" for item in inventory)
-assert all(item["memory_total_mib"] == 81920 for item in inventory)
-assert record["preexisting_compute_processes"] == []
-pytorch = record["pytorch"]
-assert pytorch["cuda_available"] is True
-assert pytorch["visible_device_count"] == 1
-assert len(pytorch["visible_devices"]) == 1
-assert pytorch["visible_devices"][0]["name"] == "NVIDIA A800-SXM4-80GB"
-assert pytorch["visible_devices"][0]["capability"] == [8, 0]
-assert pytorch["current_process_gpu_uuid"] == selected["uuid"]
-environment = record["slurm_environment"]
-assert environment["SLURM_JOB_CPUS_PER_NODE"] in {"64", "64(x1)"}
-assert environment["SLURM_CPUS_ON_NODE"] == "64"
-assert environment["SLURM_CPUS_PER_TASK"] == "4"
-assert environment["SLURM_JOB_GPUS"] == "0"
-assert environment["CUDA_VISIBLE_DEVICES"] == "0"
-print("TUKF09_455_A800_EXCLUSIVE_ROUTE_SEMANTICS_PROBE_VERIFIED")
-PY
-
-if [[ -e "${ROOT}" || -L "${ROOT}" ]]; then
-  echo "REFUSING_EXISTING_REMOTE_ROOT=${ROOT}" >&2
-  exit 61
+then
+  fail "deployed bundle or independent route evidence failed semantic verification"
 fi
-mkdir "${ROOT}"
-mkdir "${ROOT}/incoming" "${ROOT}/logs" "${ROOT}/status"
-cp --no-clobber "${PAYLOAD}/${ARCHIVE_NAME}" "${ROOT}/incoming/${ARCHIVE_NAME}"
-cp --no-clobber "${PAYLOAD}/bundle_manifest.sha256.json" "${ROOT}/incoming/bundle_manifest.sha256.json"
-cp --no-clobber "${PAYLOAD}/${BUILDER_NAME}" "${ROOT}/incoming/${BUILDER_NAME}"
-for name in "${ARCHIVE_NAME}" bundle_manifest.sha256.json "${BUILDER_NAME}"; do
-  test -f "${ROOT}/incoming/${name}"
-  test ! -L "${ROOT}/incoming/${name}"
-  test "$(stat -c '%h' "${ROOT}/incoming/${name}")" -eq 1
-done
-test "$(stat -c '%s' "${ROOT}/incoming/${ARCHIVE_NAME}")" -eq "${ARCHIVE_SIZE}"
-test "$(sha256sum "${ROOT}/incoming/${ARCHIVE_NAME}" | awk '{print $1}')" = "${ARCHIVE_SHA}"
-test "$(sha256sum "${ROOT}/incoming/bundle_manifest.sha256.json" | awk '{print $1}')" = "${OUTER_SHA}"
-test "$(sha256sum "${ROOT}/incoming/${BUILDER_NAME}" | awk '{print $1}')" = "${BUILDER_SHA}"
 
-"${PYTHON}" -B "${ROOT}/incoming/${BUILDER_NAME}" \
-  --archive "${ROOT}/incoming/${ARCHIVE_NAME}" \
-  --extract-to "${ROOT}/bundle" \
-  > "${ROOT}/status/deployment_extract_verification.json"
-"${PYTHON}" -B "${ROOT}/bundle/kalmannet/scripts/${BUILDER_NAME}" \
-  --verify-extracted "${ROOT}/bundle" \
-  > "${ROOT}/status/deployment_strict_verification.json"
+[[ ! -e "${JOB_ID_FILE}" && ! -L "${JOB_ID_FILE}" ]] || fail "allocation-probe job id record already exists"
 
-"${PYTHON}" -B - "${ROOT}" "${ARCHIVE_SHA}" "${ARCHIVE_SIZE}" "${BUILDER_SHA}" <<'PY'
-import hashlib
-import json
-from pathlib import Path
-import sys
+echo "=== SAME-NAME JOB GATE ==="
+squeue_output=$(squeue -u "${USER}" -h -o '%i|%j|%T' 2>&1)
+squeue_rc=$?
+[[ "${squeue_rc}" -eq 0 ]] || fail "cannot inspect current jobs: ${squeue_output}"
+same_name=$(printf '%s\n' "${squeue_output}" | awk -F'|' -v name="${JOB_NAME}" '$2==name {print $0}')
+[[ -z "${same_name}" ]] || fail "same-name allocation probe already exists: ${same_name}"
 
-root = Path(sys.argv[1])
-archive_sha = sys.argv[2]
-archive_size = int(sys.argv[3])
-builder_sha = sys.argv[4]
-outer = json.loads((root / "incoming/bundle_manifest.sha256.json").read_text(encoding="utf-8"))
-extracted = json.loads((root / "status/deployment_extract_verification.json").read_text(encoding="utf-8"))
-strict = json.loads((root / "status/deployment_strict_verification.json").read_text(encoding="utf-8"))
-assert outer["archive_sha256"] == archive_sha
-assert outer["archive_size"] == archive_size
-assert outer["member_count"] == 2807
-assert extracted["status"] == "TUKF09_455_A800_EXCLUSIVE_V2_HPC_BUNDLE_VERIFIED"
-assert extracted["member_count"] == 2807
-assert extracted["reused"] is False
-assert strict["status"] == "TUKF09_455_A800_EXCLUSIVE_V2_HPC_BUNDLE_VERIFIED"
-assert strict["member_count"] == 2807
-assert strict["admitted_executable_count"] == 30
-assert strict["admitted_test_count"] == 12
-assert strict["artifact_file_count"] == 2751
-assert strict["formal_evaluation_output_count"] == 0
-builder = root / "bundle/kalmannet/scripts/build_tukf09_455_a800_exclusive_hpc_bundle_v2.py"
-manifest = root / "bundle/bundle_manifest.json"
-assert builder.is_file() and not builder.is_symlink()
-assert hashlib.sha256(builder.read_bytes()).hexdigest() == builder_sha
-assert manifest.is_file() and not manifest.is_symlink()
-summary = {
-    "archive_sha256": archive_sha,
-    "bundle_manifest_sha256": hashlib.sha256(manifest.read_bytes()).hexdigest(),
-    "formal_evaluation_authorized": False,
-    "member_count": strict["member_count"],
-    "remote_root": str(root),
-    "status": "A800_EXCLUSIVE_V2_DEPLOYED_STRICT_BUNDLE_VERIFIED_FORMAL_EVALUATION_HOLD",
-}
-summary_path = root / "status/deployment_summary.json"
-with summary_path.open("x", encoding="utf-8", newline="\n") as handle:
-    json.dump(summary, handle, ensure_ascii=True, indent=2, sort_keys=True)
-    handle.write("\n")
-print(json.dumps(summary, sort_keys=True))
-PY
+echo "=== EXACTLY ONE PACKAGE ALLOCATION PROBE SUBMISSION ==="
+submit_output=$(sbatch "${PROBE_SCRIPT}" 2>&1)
+submit_rc=$?
+printf '%s\n' "${submit_output}"
+job_ids=$(printf '%s\n' "${submit_output}" | sed -n 's/^Submitted batch job \([0-9][0-9]*\)$/\1/p')
+job_id_count=$(printf '%s\n' "${job_ids}" | awk 'NF{count++} END{print count+0}')
+[[ "${submit_rc}" -eq 0 && "${job_id_count}" -eq 1 ]] || fail "allocation-probe submission not proven exactly once (wrapper_rc=${submit_rc}, parsed_count=${job_id_count})"
+job_id=$(printf '%s\n' "${job_ids}" | awk 'NF{print; exit}')
+case "${job_id}" in
+  ''|*[!0-9]*) fail "invalid allocation-probe job id" ;;
+esac
+pending="${JOB_ID_FILE}.pending.$$"
+( set -o noclobber; printf '%s\n' "${job_id}" > "${pending}" ) || fail "cannot write pending allocation-probe job id"
+ln "${pending}" "${JOB_ID_FILE}" || fail "allocation-probe job id target appeared concurrently"
+rm -f "${pending}" || fail "cannot remove pending allocation-probe job id link"
 
-echo "TUKF09_455_A800_EXCLUSIVE_V2_DEPLOYMENT_COMPLETED"
+echo "=== IMMEDIATE STATE ==="
+echo "ALLOCATION_PROBE_JOB_ID=${job_id}"
+squeue -j "${job_id}" -o '%.18i %.30j %.10P %.10T %.24R %.10M %.20S' 2>&1 || true
+echo "TUKF09_455_A800_EXCLUSIVE_V2_ALLOCATION_PROBE_SUBMITTED_ONCE"
