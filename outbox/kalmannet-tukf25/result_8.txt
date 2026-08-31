@@ -1,0 +1,14 @@
+### channel=kalmannet-tukf25 seq=8
+### host=login4
+### started=2026-08-31T15:16:09+0800
+### ---------- output ----------
+=== INSTALL SEAL (verify bytes) ===
+expect=2d83786e3a231d3d9dd35b1b96e781227a5fd7f77533afc5e9890afe8d438c31
+actual=2d83786e3a231d3d9dd35b1b96e781227a5fd7f77533afc5e9890afe8d438c31
+seal installed
+=== SBATCH READOUT ARRAY 108 (single unsealing) ===
+Submitted batch job 216851
+SEQ8_OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T15:16:09+0800
