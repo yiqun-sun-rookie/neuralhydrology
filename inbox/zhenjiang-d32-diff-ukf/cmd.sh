@@ -51,7 +51,7 @@ grep -qx '#SBATCH --gres=gpu:1' "${SCRIPT}" || \
   fatal "precheck graphics-processor contract changed"
 grep -qx '#SBATCH --cpus-per-task=4' "${SCRIPT}" || \
   fatal "precheck central-processing-unit contract changed"
-grep -q -- '--max-batches 2' "${SCRIPT}" || \
+grep -q -- '--maximum-batches 2' "${SCRIPT}" || \
   fatal "precheck two-batch limit changed"
 
 for SEED in 17 29 43; do
