@@ -9,6 +9,8 @@ echo "SMOKE_JOB_ID=${JOB_ID}"
 echo "QUERY_TIME=$(date -Is)"
 echo "=== SQUEUE ==="
 squeue -j "${JOB_ID}" -o '%i|%j|%T|%P|%N|%M|%l|%R' || true
+echo "=== ESTIMATED_START ==="
+squeue --start -j "${JOB_ID}" -o '%i|%S|%R' || true
 
 available_fields="$(sacct --helpformat)"
 fields=()
