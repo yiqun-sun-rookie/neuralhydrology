@@ -2,7 +2,7 @@
 set -eo pipefail
 
 ROOT=/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo
-EVIDENCE="$ROOT/results/31_hydrologic_dynamic_tokens/_patches/eval_scalar_fix_validation_20260831_seq20"
+EVIDENCE="$ROOT/results/31_hydrologic_dynamic_tokens/_patches/eval_scalar_fix_validation_20260831_seq21"
 SEQ19_EVIDENCE="$ROOT/results/31_hydrologic_dynamic_tokens/_patches/eval_scalar_fix_20260831_seq19"
 FAILED_MANIFEST="$ROOT/results/31_hydrologic_dynamic_tokens/_invocations/id31_DL01_s100_slurm215880/run_manifest.json"
 EXPECTED_FAILED_MANIFEST_SHA256=31a5978ab9169b96e23d034b519669c87798b4be54adff83a31c7883fe770350
@@ -33,6 +33,7 @@ conda activate nh_final
 
 python - <<'PY' | tee "$EVIDENCE/eval_mode_regression.json"
 import json
+from pathlib import Path
 
 import torch
 
@@ -41,7 +42,7 @@ from neuralhydrology.training import get_loss_obj, get_regularization_obj
 from neuralhydrology.utils.config import Config
 from src.hydrologic_dynamic_tokens.scripts.run_smoke import _synthetic_batch
 
-config = Config("src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml")
+config = Config(Path("src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml"))
 device = torch.device("cpu")
 data, shape_contract = _synthetic_batch(config, device)
 model = get_model(config).to(device)
