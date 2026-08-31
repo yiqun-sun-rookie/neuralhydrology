@@ -1,0 +1,33 @@
+### channel=id29-nearing2022-da seq=395
+### host=login4
+### started=2026-08-31T13:31:58+0800
+### ---------- output ----------
+2026-08-31T13:31:58+0800
+=== A. PENDING JOBS AND THEIR DEPENDENCY FIELDS ===
+202226_[0-   N22-eval-later    PENDING | dep=afterok:202214,afterok:202215_*
+    202229     N22-agg-eval    PENDING | dep=afterok:202226_*
+    202294       N22-export    PENDING | dep=afterok:202293
+    202315         N22-gate    PENDING | dep=afterok:202229
+    202507 N22-mask-iso-531    PENDING | dep=afterok:202506
+    215429    id30_m01_s100    PENDING | dep=afterok:215428
+    202293     N22-manifest    PENDING | dep=afterok:202229
+    216552 zhd32_dukf_dev_s    RUNNING | dep=
+    216687 q_armC_us_minus_    RUNNING | dep=
+    216688 q_armC_us_minus_    RUNNING | dep=
+    216549 id31_development    RUNNING | dep=
+=== B. 202230 agg-hyper FINAL STATE ===
+202230|N22-agg-hyper|COMPLETED|0:0|00:03:44|2026-08-27T14:55:47
+=== C. 202228 hyper array state summary ===
+    660 COMPLETED
+=== D. SERVER-SIDE FINGERPRINTS (eval script / batch / registry) ===
+49f8e764da499077d5e4fcb4f42513b8714013afc3af3a75cc495a7dce585f8d  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
+aeb77ec81f38552f7ee849de45677701eecdf498990c0dba41e2d8d00c08a560  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/time_split_pending_source_evaluation_batch.txt
+37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/evaluation_registry.csv
+120
+=== E. 202226 timelimit and state ===
+202226_[0-119%4]|N22-eval-later|PENDING|1-00:00:00
+=== F. existing rebuild jobs (idempotence pre-check) ===
+0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:32:00+0800
