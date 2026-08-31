@@ -1,0 +1,25 @@
+### channel=kalmannet-tukf25 seq=2
+### host=login4
+### started=2026-08-31T14:00:25+0800
+### ---------- output ----------
+=== ANCHOR JOB 216697 ===
+       JobID          State ExitCode    Elapsed 
+------------ -------------- -------- ---------- 
+      216697      COMPLETED      0:0   00:03:01 
+=== ANCHOR RECORDS ===
+27
+=== GATE VERDICT ===
+pass: True  passed: 27 / 27
+max_delta: 4.867e-07 13161500
+missing: []
+=== ANCHOR LOG TAIL ===
+{"basin_id": "13161500", "anchor_delta": 4.86733680138407e-07, "passed": true, "seconds": 2.531250461935997}
+{"basin_id": "14303200", "anchor_delta": 6.594747159471837e-08, "passed": true, "seconds": 2.5095839723944664}
+{"basin_id": "14309500", "anchor_delta": 5.544958781023013e-08, "passed": true, "seconds": 2.5218890085816383}
+{"basin_id": "14316700", "anchor_delta": 3.3345952432650705e-07, "passed": true, "seconds": 2.5666836462914944}
+{"passed_count": 27, "required": 27, "pass": true, "missing": []}
+anchor_stage_fail=0
+SEQ2_OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T14:00:26+0800
