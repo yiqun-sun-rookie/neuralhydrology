@@ -1,6 +1,65 @@
 #!/bin/bash
 set -eo pipefail
 
+JOB_ID=217168
+EVALUATION_ROOT="/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3"
+SUMMARY="${EVALUATION_ROOT}/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
+AUDIT="${EVALUATION_ROOT}/audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
+OUT_LOG="${EVALUATION_ROOT}/logs/aggregate_audit_v3_${JOB_ID}.out"
+ERR_LOG="${EVALUATION_ROOT}/logs/aggregate_audit_v3_${JOB_ID}.err"
+
+echo "QUERY_TIME=$(date -Is)"
+echo "=== AGGREGATE_AUDIT_QUEUE ==="
+squeue -j "${JOB_ID}" -o '%i|%j|%T|%P|%N|%M|%l|%R' || true
+echo "=== AGGREGATE_AUDIT_ESTIMATED_START ==="
+squeue --start -j "${JOB_ID}" -o '%i|%S|%R' || true
+echo "=== AGGREGATE_AUDIT_SCHEDULER_IDENTITY ==="
+scontrol show job -o "${JOB_ID}" || true
+echo "=== AGGREGATE_AUDIT_ACCOUNTING ==="
+sacct -X -j "${JOB_ID}" -P \
+  --format=JobID,JobName,Partition,State,ExitCode,Elapsed,Start,End,NodeList,AllocTRES,MaxRSS || true
+echo "=== OUTPUT_EXISTENCE ==="
+for TARGET in "${SUMMARY}" "${SUMMARY}.partial" "${AUDIT}" "${AUDIT}.partial"; do
+  if [ -e "${TARGET}" ]; then
+    printf 'exists|%s\n' "${TARGET}"
+  else
+    printf 'absent|%s\n' "${TARGET}"
+  fi
+done
+echo "=== STANDARD_OUTPUT_TAIL ==="
+if [ -f "${OUT_LOG}" ]; then tail -n 160 "${OUT_LOG}"; else echo absent; fi
+echo "=== STANDARD_ERROR_TAIL ==="
+if [ -f "${ERR_LOG}" ]; then tail -n 160 "${ERR_LOG}"; else echo absent; fi
+
+ACCOUNTING="$(
+  sacct -X -n -j "${JOB_ID}" -P --format=JobID,State,ExitCode |
+    awk -F'|' -v job="${JOB_ID}" '$1 == job {print $2 "|" $3}'
+)"
+if [ "${ACCOUNTING}" = "COMPLETED|0:0" ]; then
+  test -d "${SUMMARY}"
+  test ! -e "${SUMMARY}.partial"
+  test -d "${AUDIT}"
+  test ! -e "${AUDIT}.partial"
+  echo "=== COMPLETED_RESULT_IDENTITIES ==="
+  sha256sum \
+    "${SUMMARY}/completion_manifest.json" \
+    "${SUMMARY}/development_gate.json" \
+    "${SUMMARY}/bootstrap_condition_summary.csv" \
+    "${AUDIT}/independent_audit.json"
+  echo "=== DEVELOPMENT_GATE ==="
+  cat "${SUMMARY}/development_gate.json"
+  echo "=== INDEPENDENT_AUDIT ==="
+  cat "${AUDIT}/independent_audit.json"
+  echo "=== BOOTSTRAP_CONDITION_SUMMARY ==="
+  cat "${SUMMARY}/bootstrap_condition_summary.csv"
+  echo "=== HOLM_PRIMARY_FAMILY ==="
+  cat "${SUMMARY}/holm_primary_family.csv"
+  echo "=== WINDOW_CONDITION_SEED_METRICS ==="
+  cat "${SUMMARY}/window_condition_seed_metrics.csv"
+  echo "AGGREGATE_AUDIT_FINAL_GATE=PASS"
+fi
+exit 0
+
 FAILED_JOB_ID=217148
 EVALUATION_ROOT="/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3"
 SUMMARY="${EVALUATION_ROOT}/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
