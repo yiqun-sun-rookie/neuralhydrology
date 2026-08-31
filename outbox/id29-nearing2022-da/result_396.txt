@@ -1,0 +1,20 @@
+### channel=id29-nearing2022-da seq=396
+### host=login4
+### started=2026-08-31T13:35:30+0800
+### ---------- output ----------
+2026-08-31T13:35:30+0800
+=== 1. IDEMPOTENCE GUARD ===
+existing N22-evalfix jobs: 0
+=== 2. CANCEL DEAD 202226 ONLY ===
+=== 3. SUBMIT FRESH EVAL ARRAY (same script, same batch, no dependency) ===
+Submitted batch job 216692
+=== 4. QUEUE AFTER SUBMIT ===
+      202229     N22-agg-eval    PENDING        0:00 (DependencyNeverSatisfied)
+      202294       N22-export    PENDING        0:00 (Dependency)
+      202315         N22-gate    PENDING        0:00 (Dependency)
+      202507 N22-mask-iso-531    PENDING        0:00 (DependencyNeverSatisfied)
+216692_[0-11      N22-evalfix    PENDING        0:00 (None)
+      202293     N22-manifest    PENDING        0:00 (JobHeldUser)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:35:34+0800
