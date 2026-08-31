@@ -1,0 +1,53 @@
+### channel=id29-nearing2022-da seq=397
+### host=login4
+### started=2026-08-31T15:05:16+0800
+### ---------- output ----------
+2026-08-31T15:05:16+0800
+=== N22 JOBS ===
+216692_[12-1      N22-evalfix   PENDING        0:00  1-00:00:00 (JobArrayTaskLimit)
+      202229     N22-agg-eval   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202294       N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315         N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-531   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+      202293     N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+   216692_11      N22-evalfix   RUNNING       18:36    23:41:24 ngu102
+    216692_9      N22-evalfix   RUNNING       19:06    23:40:54 ngu102
+   216692_10      N22-evalfix   RUNNING       19:06    23:40:54 ngu102
+    216692_8      N22-evalfix   RUNNING       19:07    23:40:53 ngu102
+=== FAILURES AND TIMEOUTS ===
+  none
+=== EVAL ARRAY 216692 STATE SUMMARY ===
+      8 COMPLETED
+      1 PENDING
+      4 RUNNING
+=== FAILED ARRAY TASK IDS ===
+  none
+
+=== LOG IDLE SECONDS PER RUNNING JOB ===
+  216692_11      idle=1s node=ngu102
+  216692_9       idle=1s node=ngu102
+  216692_10      idle=1s node=ngu102
+  216692_8       idle=1s node=ngu102
+=== AGGREGATION AND GATE ARTIFACTS ===
+  MISSING aggregation/evaluations/time_split_vs_author.csv
+  MISSING aggregation/evaluations/basin_split_vs_author.csv
+  PRESENT aggregation/hyperparameters/scores.csv (115432 bytes)
+  MISSING aggregation/final_reproduction_gate.json
+=== ROLE COUNTS ===
+{"missing_by_type": {"aggregation": 6, "evaluation": 548}, "missing_total": 554}
+MISSING_TRAINING_COORDINATES: 0
+MISSING_EVALUATION_COORDINATES: 112
+    N22-EVAL-TS-AR-L01-TR050-TE075-S0
+    N22-EVAL-TS-AR-L01-TR050-TE100-S0
+    N22-EVAL-TS-AR-L01-TR075-TE000-S0
+    N22-EVAL-TS-AR-L01-TR075-TE025-S0
+    N22-EVAL-TS-AR-L01-TR075-TE050-S0
+    N22-EVAL-TS-AR-L01-TR075-TE075-S0
+    N22-EVAL-TS-AR-L01-TR075-TE100-S0
+    N22-EVAL-TS-AR-L01-TR100-TE000-S0
+    N22-EVAL-TS-AR-L01-TR100-TE025-S0
+    N22-EVAL-TS-AR-L01-TR100-TE050-S0
+    ... 另有 102 个
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T15:05:53+0800
