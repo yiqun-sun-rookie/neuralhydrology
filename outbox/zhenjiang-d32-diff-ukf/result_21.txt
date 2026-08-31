@@ -1,0 +1,40 @@
+### channel=zhenjiang-d32-diff-ukf seq=21
+### host=login4
+### started=2026-08-31T13:28:33+0800
+### ---------- output ----------
+SMOKE_JOB_ID=216552
+QUERY_TIME=2026-08-31T13:28:33+0800
+=== SQUEUE ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+216552|zhd32_dukf_dev_smoke|PENDING|hgpu2p||0:00|2:00:00|(Priority)
+=== ESTIMATED_START ===
+JOBID|START_TIME|NODELIST(REASON)
+216552|2026-09-02T01:09:15|(Priority)
+=== SACCT ===
+JobIDRaw|JobID|JobName|Partition|State|ExitCode|ElapsedRaw|Elapsed|Start|End|NodeList|AllocTRES|MaxRSS
+216552|216552|zhd32_dukf_dev_smoke|hgpu2p|PENDING|0:0|0|00:00:00|Unknown|Unknown|None assigned||
+=== PARTITION_NODES ===
+NODELIST|STATE|GRES|CPUS(A/I/O/T)
+ngu001|mixed|gpu:2|2/94/0/96
+ngu002|idle|gpu:2|0/96/0/96
+ngu004|mixed|gpu:2|2/94/0/96
+ngu005|mixed|gpu:2|2/94/0/96
+ngu006|mixed|gpu:2|2/94/0/96
+ngu007|mixed|gpu:2|2/94/0/96
+ngu008|mixed|gpu:2|8/88/0/96
+ngu010|mixed|gpu:2|1/31/0/32
+ngu011|mixed|gpu:2|5/27/0/32
+=== JOB_PRIORITY ===
+          JOBID PARTITION   PRIORITY       SITE        AGE    JOBSIZE        QOS
+         216552 hgpu2p        201510          0       1505          6     200000
+=== OUTPUT_EXISTENCE ===
+seed=17 final=false partial=false
+seed=29 final=false partial=false
+seed=43 final=false partial=false
+=== STDOUT_TAIL ===
+absent
+=== STDERR_TAIL ===
+absent
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:28:33+0800
