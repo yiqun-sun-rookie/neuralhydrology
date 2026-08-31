@@ -1,0 +1,65 @@
+### channel=kalmannet-daily-camels seq=102
+### host=login4
+### started=2026-08-31T20:23:05+0800
+### ---------- output ----------
+SEQ102_A39_RECOLLECT_DISPATCH_VERIFIED job_id=217038
+SEQ102_A39_GPU_RESOURCE_SUMMARY samples=95 max_raw_gap_seconds=1.046 max_epoch_gap_seconds=2 epoch_last_to_end_seconds=1 epoch_span_difference_seconds=0 raw_timestamp_last_to_end_seconds_diagnostic=0.068 peak_gpu_mib=581 min_free_gpu_mib=80647 continuous_evaluator_coverage=true
+SEQ102_A39_HOST_MEMORY_RESOURCE_SUMMARY slurm_max_rss_bytes=876630016 slurm_max_vm_size_bytes=10428399616 cgroup_peak_status=unavailable slurm_step_accounting_fallback=true
+SEQ102_A39_METRIC basin=09035800 system=knet_epoch75 lead_days=1 origins=3284 nse=0.96552326590152016 mse=0.089469524624213745
+SEQ102_A39_METRIC basin=09035800 system=knet_epoch75 lead_days=2 origins=3284 nse=0.93995592608197842 mse=0.15581809124219437
+SEQ102_A39_METRIC basin=09035800 system=knet_epoch75 lead_days=3 origins=3284 nse=0.91534879534274871 mse=0.21967377655374493
+SEQ102_A39_METRIC basin=09035800 system=strict_zero_gain_knet lead_days=1 origins=3284 nse=0.79066665353747245 mse=0.54323460402312251
+SEQ102_A39_METRIC basin=09035800 system=strict_zero_gain_knet lead_days=2 origins=3284 nse=0.79063338873229116 mse=0.54331932543620143
+SEQ102_A39_METRIC basin=09035800 system=strict_zero_gain_knet lead_days=3 origins=3284 nse=0.79060307672869334 mse=0.54339466425776795
+SEQ102_A39_METRIC basin=09035800 system=same_forcing_open_loop lead_days=1 origins=3284 nse=0.79066665353747245 mse=0.54323460402312251
+SEQ102_A39_METRIC basin=09035800 system=same_forcing_open_loop lead_days=2 origins=3284 nse=0.79063338873229116 mse=0.54331932543620143
+SEQ102_A39_METRIC basin=09035800 system=same_forcing_open_loop lead_days=3 origins=3284 nse=0.79060307672869334 mse=0.54339466425776795
+SEQ102_A39_METRIC basin=09035800 system=default_noise_ukf lead_days=1 origins=3284 nse=0.85498979018104282 mse=0.37631158743460125
+SEQ102_A39_METRIC basin=09035800 system=default_noise_ukf lead_days=2 origins=3284 nse=0.84296293748130058 mse=0.40752090488318315
+SEQ102_A39_METRIC basin=09035800 system=default_noise_ukf lead_days=3 origins=3284 nse=0.83262178257355335 mse=0.4343541864971171
+SEQ102_A39_METRIC basin=09035800 system=sampled_search_ukf lead_days=1 origins=3284 nse=0.93720896588222136 mse=0.16294710389717992
+SEQ102_A39_METRIC basin=09035800 system=sampled_search_ukf lead_days=2 origins=3284 nse=0.92093883575526891 mse=0.20516861865200942
+SEQ102_A39_METRIC basin=09035800 system=sampled_search_ukf lead_days=3 origins=3284 nse=0.90574511996162599 mse=0.24459575667569866
+SEQ102_A39_METRIC basin=09035800 system=backpropagation_selected_ukf lead_days=1 origins=3284 nse=0.96529640400212913 mse=0.090058247043103043
+SEQ102_A39_METRIC basin=09035800 system=backpropagation_selected_ukf lead_days=2 origins=3284 nse=0.94554653025596891 mse=0.14131012710120047
+SEQ102_A39_METRIC basin=09035800 system=backpropagation_selected_ukf lead_days=3 origins=3284 nse=0.92558906563918864 mse=0.19309980329419946
+SEQ102_A39_METRIC basin=09035800 system=persistence lead_days=1 origins=3284 nse=0.98738425311137035 mse=0.032738741253188236
+SEQ102_A39_METRIC basin=09035800 system=persistence lead_days=2 origins=3284 nse=0.96266894176126516 mse=0.096876408598667502
+SEQ102_A39_METRIC basin=09035800 system=persistence lead_days=3 origins=3284 nse=0.93293534662588096 mse=0.17403586563961088
+SEQ102_A39_METRIC basin=09035800 system=second_order_autoregression lead_days=1 origins=3284 nse=0.9903425039275543 mse=0.025061874485960183
+SEQ102_A39_METRIC basin=09035800 system=second_order_autoregression lead_days=2 origins=3284 nse=0.96879223697565253 mse=0.080986078210343648
+SEQ102_A39_METRIC basin=09035800 system=second_order_autoregression lead_days=3 origins=3284 nse=0.94296236608337347 mse=0.14801528813307932
+SEQ102_A39_INDEPENDENT_TERMINAL_VALIDATION capability=PASS comparison=NO_DISCERNIBLE_ADVANTAGE scale_up=GO convergence=UNKNOWN_NOT_ESTABLISHED_BY_SINGLE_CHECKPOINT_FORMAL_EVALUATION one_basin_only=true protected_array_reads=0 prediction_array_reads=0
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/safe_reports/independent_verification.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/safe_reports/verification_exit.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/safe_reports/slurm_stderr.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/safe_reports/result_summary.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/safe_reports/access_ledger.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/safe_reports/evaluation_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/safe_reports/evaluation_exit.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/safe_reports/slurm_stdout.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/safe_reports/terminal_scientific_summary.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/safe_reports: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/lock_evidence/submission_owner.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/lock_evidence/submission_bound.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/lock_evidence: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/sequence_100_terminal_diagnostic.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/sequence_101_failed_collection.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/terminal_status.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/resource_evidence/preflight.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/resource_evidence/cgroup_resources.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/resource_evidence/evaluation_start.epoch: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/resource_evidence/slurm_user_active_queue.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/resource_evidence/resource_summary.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/resource_evidence/gpu_resources.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/resource_evidence/evaluation_end.epoch: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/resource_evidence/slurm_accounting.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/resource_evidence/slurm_user_active_queue.stderr.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/resource_evidence: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/artifact_identities.txt: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102/manifest.sha256: implausibly old time stamp 1970-01-01 08:00:00
+tar: DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102: implausibly old time stamp 1970-01-01 08:00:00
+SEQ102_A39_TERMINAL_COLLECTED experiment_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39 execution_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98 job_id=217038 slurm_main_state=FAILED slurm_main_exit=72:0 node=ngu202 partition=hgpu8 gpu=NVIDIA_A800-SXM4-80GB archive=/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_KNET_A39_JOB217038_TERMINAL_EVIDENCE_SEQ102.tar.gz archive_size=21543 archive_sha256=aa7bb869532b22cc6feb066dcc57e90628998c8d0fbb36b4b25e2efc8e2a4826 archive_member_count=29 forbidden_archive_member_count=0 evaluator_exit=0 independent_verifier_exit=0 runtime_evaluation_lock_present=false persistent_submission_lock_present=true protected_array_reads=0 prediction_array_reads=0 cleanup_only_failure_class=discrete_sampler_phase_at_evaluator_end
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T20:23:06+0800
