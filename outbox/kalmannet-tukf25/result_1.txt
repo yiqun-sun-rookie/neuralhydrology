@@ -1,0 +1,37 @@
+### channel=kalmannet-tukf25 seq=1
+### host=login4
+### started=2026-08-31T13:54:35+0800
+### ---------- output ----------
+=== GUARD ===
+=== DEPLOY ===
+254fd593591cda5749b20699773e074a7cf6521bfd1289650d8d095e88fe9b32  payload/kalmannet-tukf25/tukf25_hpc_payload_v1.tar.gz
+=== VERIFY MANIFEST ===
+manifest_files=29 mismatches=0
+=== DATA ROOT CHECK ===
+/data1/home/sunyiq/neuralhydrology/data/camels_us
+=== PARTITION hcpu48y ===
+ PARTITION  AVAIL  NODES  STATE                       NODELIST
+   hcpu48y     up      1  down$                         icn281
+   hcpu48y     up      1  maint                         icn280
+   hcpu48y     up      2  down*                   icn[278-279]
+   hcpu48y     up      2    mix                   icn[274,277]
+   hcpu48y     up      6   idle           icn[270-273,275-276]
+=== MY QUEUE BEFORE ===
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+  216692_[4-119%4] hgpu4,hgp N22-eval   sunyiq PD       0:00      1 (JobArrayTaskLimit)
+            202229 hgpu4,hgp N22-agg-   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+            202294 hgpu4,hgp N22-expo   sunyiq PD       0:00      1 (Dependency)
+            202315 hgpu4,hgp N22-gate   sunyiq PD       0:00      1 (Dependency)
+            202507 hgpu4,hgp N22-mask   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+            215429     hgpu2 id30_m01   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+            202293 hgpu4,hgp N22-mani   sunyiq PD       0:00      1 (JobHeldUser)
+          216692_0     hgpu4 N22-eval   sunyiq  R      18:01      1 ngu104
+          216692_1     hgpu4 N22-eval   sunyiq  R      18:01      1 ngu104
+          216692_2     hgpu4 N22-eval   sunyiq  R      18:01      1 ngu102
+          216692_3     hgpu4 N22-eval   sunyiq  R      18:01      1 ngu102
+=== SBATCH ANCHOR GATE ===
+Submitted batch job 216697
+SEQ1_OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:54:35+0800
