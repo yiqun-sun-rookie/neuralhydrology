@@ -1,32 +1,39 @@
 #!/bin/bash
 set -eo pipefail
 
+JOB_ID=216552
 EVALUATION_ROOT="/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831"
-SCRIPT="${EVALUATION_ROOT}/run/scripts/hpc/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_smoke_v1.slurm"
-EXPECTED_SCRIPT_SHA="60d612817ad4faa6a4f05109c046e041c71b48d2aa113f5acee0b5c8744095ee"
 
-fatal() {
-  echo "[FATAL] $1" >&2
-  exit 1
-}
+echo "SMOKE_JOB_ID=${JOB_ID}"
+echo "QUERY_TIME=$(date -Is)"
+echo "=== SQUEUE ==="
+squeue -j "${JOB_ID}" -o '%i|%j|%T|%P|%N|%M|%l|%R' || true
 
-[ -d "${EVALUATION_ROOT}" ] || fatal "evaluation root is absent"
-[ -f "${SCRIPT}" ] || fatal "smoke job script is absent"
-[ ! -L "${SCRIPT}" ] || fatal "smoke job script is symbolic"
-[ "$(sha256sum "${SCRIPT}" | awk '{print $1}')" = "${EXPECTED_SCRIPT_SHA}" ] || \
-  fatal "smoke job script identity changed"
+available_fields="$(sacct --helpformat)"
+fields=()
+for candidate in JobIDRaw JobID JobName Partition State ExitCode ElapsedRaw Elapsed Start End NodeList AllocTRES MaxRSS; do
+  if printf '%s\n' "${available_fields}" | tr ' ' '\n' | grep -qx "${candidate}"; then
+    fields+=("${candidate}")
+  fi
+done
+FORMAT="$(IFS=,; echo "${fields[*]}")"
+echo "=== SACCT ==="
+if [ -n "${FORMAT}" ]; then
+  sacct -j "${JOB_ID}" -P --format="${FORMAT}" || true
+fi
 
+echo "=== OUTPUT_EXISTENCE ==="
 for SEED in 17 29 43; do
   ATTEMPT="${EVALUATION_ROOT}/smoke/ZHD32-DUKF-DEV-EVAL-S${SEED}-V1/attempt_001"
-  [ ! -e "${ATTEMPT}" ] || fatal "smoke attempt already exists: ${ATTEMPT}"
-  [ ! -e "${ATTEMPT}.partial" ] || fatal "partial smoke attempt already exists: ${ATTEMPT}.partial"
+  printf 'seed=%s final=%s partial=%s\n' \
+    "${SEED}" \
+    "$(test -d "${ATTEMPT}" && echo true || echo false)" \
+    "$(test -d "${ATTEMPT}.partial" && echo true || echo false)"
 done
 
-EXISTING="$(squeue -h -u "${USER}" -n zhd32_dukf_dev_smoke -o '%i|%T|%j')"
-[ -z "${EXISTING}" ] || fatal "smoke job is already queued: ${EXISTING}"
-
-JOB_ID="$(sbatch --parsable "${SCRIPT}")"
-[ -n "${JOB_ID}" ] || fatal "scheduler returned no smoke job identifier"
-echo "SMOKE_SUBMISSION_STATUS=PASS"
-echo "SMOKE_JOB_ID=${JOB_ID}"
-squeue -j "${JOB_ID%%;*}" -o '%i|%j|%T|%P|%N|%M|%l'
+OUT_LOG="${EVALUATION_ROOT}/logs/smoke_${JOB_ID}.out"
+ERR_LOG="${EVALUATION_ROOT}/logs/smoke_${JOB_ID}.err"
+echo "=== STDOUT_TAIL ==="
+if [ -f "${OUT_LOG}" ]; then tail -n 80 "${OUT_LOG}"; else echo absent; fi
+echo "=== STDERR_TAIL ==="
+if [ -f "${ERR_LOG}" ]; then tail -n 80 "${ERR_LOG}"; else echo absent; fi
