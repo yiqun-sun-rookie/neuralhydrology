@@ -29,6 +29,22 @@ echo "=== ALTERNATIVE RTX 3090 NODE RESOURCE DETAIL ==="
 for node in ngu003 ngu009; do
   scontrol show node "${node}" -o || true
 done
+echo "=== A800 PARTITION NODES ==="
+sinfo -p hgpu8 -N -o '%N|%t|%G|%C' || true
+echo "=== A800 PARTITION DETAIL ==="
+scontrol show partition hgpu8 -o || true
+echo "=== A800 NODE RESOURCE DETAIL ==="
+for node in ngu201 ngu202 ngu203; do
+  scontrol show node "${node}" -o || true
+done
+echo "=== A40 PARTITION NODES ==="
+sinfo -p hgpu4 -N -o '%N|%t|%G|%C' || true
+echo "=== A40 PARTITION DETAIL ==="
+scontrol show partition hgpu4 -o || true
+echo "=== A40 NODE RESOURCE DETAIL ==="
+for node in ngu101 ngu102 ngu103 ngu104; do
+  scontrol show node "${node}" -o || true
+done
 echo "=== SACCT ==="
 sacct -j "${JOB_ID}" --format=JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,NodeList -P || true
 echo "=== STDOUT ==="
