@@ -1,0 +1,110 @@
+### channel=kuwei-recal-aux seq=7
+### host=login4
+### started=2026-08-31T13:19:59+0800
+### ---------- output ----------
+=== A. sacct 215803 ===
+         JobID            JobName      Partition                  State  ExitCode               Submit                Start                  End      Elapsed 
+-------------- ------------------ -------------- ---------------------- --------- -------------------- -------------------- -------------------- ------------ 
+        215803    kuwei-jdl-gates         hcpu48              COMPLETED       0:0  2026-08-28T14:56:17  2026-08-28T14:56:17  2026-08-28T15:09:45     00:13:28 
+  215803.batch              batch                             COMPLETED       0:0  2026-08-28T14:56:17  2026-08-28T14:56:17  2026-08-28T15:09:45     00:13:28 
+ 215803.extern             extern                             COMPLETED       0:0  2026-08-28T14:56:17  2026-08-28T14:56:17  2026-08-28T15:09:45     00:13:28 
+=== B. squeue any kuwei job ===
+     JOBID               NAME      PARTITION      STATE NODELIST(REASON)
+    216552 zhd32_dukf_dev_smo         hgpu2p    PENDING (Priority)
+202226_[0-     N22-eval-later hgpu4,hgpu8,hg    PENDING (DependencyNeverSatisfied)
+    202229       N22-agg-eval hgpu4,hgpu8,hg    PENDING (Dependency)
+    202294         N22-export hgpu4,hgpu8,hg    PENDING (Dependency)
+    202315           N22-gate hgpu4,hgpu8,hg    PENDING (Dependency)
+    202507   N22-mask-iso-531 hgpu4,hgpu8,hg    PENDING (DependencyNeverSatisfied)
+    215429      id30_m01_s100          hgpu2    PENDING (DependencyNeverSatisfied)
+    202293       N22-manifest hgpu4,hgpu8,hg    PENDING (JobHeldUser)
+    216549   id31_development          hgpu2    RUNNING ngu003
+=== C. job output files ===
+-rw-r--r--. 1 sunyiq g_sunyiq 197 Aug 28 14:57 /data1/home/sunyiq/kuwei_paired/jdl_gate/kuwei-jdl-gates-215803.err
+-rw-r--r--. 1 sunyiq g_sunyiq 648 Aug 28 15:09 /data1/home/sunyiq/kuwei_paired/jdl_gate/kuwei-jdl-gates-215803.out
+=== D. stdout tail ===
+[Fri Aug 28 14:55:55 CST 2026] node=icn213
+torch 2.4.0 numpy 2.3.3 pandas 2.3.2
+[gate] equivalence: True (max diff 0.00e+00)
+[WARN] numba 未安装，使用纯 Python 版本 hydromod，可能会变慢。建议安装 numba 以加速。
+[gate] anchor seed 20260824: False (vs authority 3.60e-02, fastmath context 2.99e-02)
+[gate] anchor seed 20260825: False (vs authority 7.04e-04, fastmath context 2.02e+00)
+[gate] anchor seed 20260826: False (vs authority 4.27e-04, fastmath context 3.39e-03)
+[gate] timing: projected 2.58 h/run, family 5.16 h @6 procs
+[gate] determinism: True
+{
+  "all_passed": false
+}
+[Fri Aug 28 15:09:18 CST 2026] gates exit=0
+=== E. stderr tail ===
+/data1/home/sunyiq/kuwei_paired/fsl/src/kernels/semi_distributed/core/hydromod_numba.py:641: RuntimeWarning: invalid value encountered in power
+  pe + w - wm + wm * np.power(1 - tmp / wmm, 1 + b),
+=== F. gate json on HPC ===
+total 10
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Aug 28 15:09 .
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Aug 28 15:09 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 1663 Aug 28 15:09 phase0_gates.json
+{
+  "all_passed": false,
+  "anchor": {
+    "gate": "anchor",
+    "passed": false,
+    "replicates": [
+      {
+        "context_fastmath_gap_vs_eval2023": 0.02994537353515625,
+        "max_abs_diff_vs_authority": 0.036029815673828125,
+        "passed": false,
+        "seed": 20260824
+      },
+      {
+        "context_fastmath_gap_vs_eval2023": 2.023972749710083,
+        "max_abs_diff_vs_authority": 0.0007038116455078125,
+        "passed": false,
+        "seed": 20260825
+      },
+      {
+        "context_fastmath_gap_vs_eval2023": 0.003387451171875,
+        "max_abs_diff_vs_authority": 0.00042724609375,
+        "passed": false,
+        "seed": 20260826
+      }
+    ]
+  },
+  "created_utc": "2026-08-28T06:56:26.605123+00:00",
+  "determinism": {
+    "gate": "determinism",
+    "passed": true,
+    "runs": [
+      {
+        "best": 340.3573303222656,
+        "losses": [
+          72.24403381347656,
+          11.425451278686523,
+          41.15943908691406
+        ]
+      },
+      {
+        "best": 340.3573303222656,
+        "losses": [
+          72.24403381347656,
+          11.425451278686523,
+          41.15943908691406
+        ]
+      }
+    ]
+  },
+  "equivalence": {
+    "gate": "equivalence",
+    "hours": 2000,
+    "max_abs_diff": 0.0,
+    "passed": true
+  },
+  "family": "kuwei_joint_da_learning_20260826",
+  "timing": {
+    "filter_seconds_per_hour_step": 0.00187,
+    "gate": "timing",
+    "hpc_threshold_wall_hours": 48,
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:20:00+0800
