@@ -1,0 +1,115 @@
+### channel=zhenjiang-d32-diff-ukf seq=45
+### host=login4
+### started=2026-09-01T01:15:33+0800
+### ---------- output ----------
+QUERY_TIME=2026-09-01T01:15:33+0800
+=== RELEVANT_QUEUE ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+=== CPU_PARTITIONS ===
+PARTITION|AVAIL|TIMELIMIT|NODES|STATE|NODELIST
+hcpu48*|up|infinite|10|alloc$|icn[202,204-207,210-212,216-217]
+hcpu48*|up|infinite|5|maint|icn[214,220-221,246,249]
+hcpu48*|up|infinite|14|down*|icn[203,215,218,230,233,235-237,239,242-243,245,247,256]
+hcpu48*|up|infinite|35|alloc|icn[201,208-209,213,219,222-229,231-232,234,238,240-241,244,248,250-255,257-264]
+hcpu48y|up|infinite|1|down$|icn281
+hcpu48y|up|infinite|1|maint|icn280
+hcpu48y|up|infinite|2|down*|icn[278-279]
+hcpu48y|up|infinite|2|mix|icn[274,277]
+hcpu48y|up|infinite|6|idle|icn[270-273,275-276]
+=== CPU_NODES ===
+NODELIST|PARTITION|STATE|CPUS|MEMORY
+icn201|hcpu48*|alloc|48|1
+icn202|hcpu48*|alloc$|48|1
+icn203|hcpu48*|down*|48|1
+icn204|hcpu48*|alloc$|48|1
+icn205|hcpu48*|alloc$|48|1
+icn206|hcpu48*|alloc$|48|1
+icn207|hcpu48*|alloc$|48|1
+icn208|hcpu48*|alloc|48|1
+icn209|hcpu48*|alloc|48|1
+icn210|hcpu48*|alloc$|48|1
+icn211|hcpu48*|alloc$|48|1
+icn212|hcpu48*|alloc$|48|1
+icn213|hcpu48*|alloc|48|1
+icn214|hcpu48*|maint|48|1
+icn215|hcpu48*|down*|48|1
+icn216|hcpu48*|alloc$|48|1
+icn217|hcpu48*|alloc$|48|1
+icn218|hcpu48*|down*|48|1
+icn219|hcpu48*|alloc|48|1
+icn220|hcpu48*|maint|48|1
+icn221|hcpu48*|maint|48|1
+icn222|hcpu48*|alloc|48|1
+icn223|hcpu48*|alloc|48|1
+icn224|hcpu48*|alloc|48|1
+icn225|hcpu48*|alloc|48|1
+icn226|hcpu48*|alloc|48|1
+icn227|hcpu48*|alloc|48|1
+icn228|hcpu48*|alloc|48|1
+icn229|hcpu48*|alloc|48|1
+icn230|hcpu48*|down*|48|1
+icn231|hcpu48*|alloc|48|1
+icn232|hcpu48*|alloc|48|1
+icn233|hcpu48*|down*|48|1
+icn234|hcpu48*|alloc|48|1
+icn235|hcpu48*|down*|48|1
+icn236|hcpu48*|down*|48|1
+icn237|hcpu48*|down*|48|1
+icn238|hcpu48*|alloc|48|1
+icn239|hcpu48*|down*|48|1
+icn240|hcpu48*|alloc|48|1
+icn241|hcpu48*|alloc|48|1
+icn242|hcpu48*|down*|48|1
+icn243|hcpu48*|down*|48|1
+icn244|hcpu48*|alloc|48|1
+icn245|hcpu48*|down*|48|1
+icn246|hcpu48*|maint|48|1
+icn247|hcpu48*|down*|48|1
+icn248|hcpu48*|alloc|48|1
+icn249|hcpu48*|maint|48|1
+icn250|hcpu48*|alloc|48|1
+icn251|hcpu48*|alloc|48|1
+icn252|hcpu48*|alloc|48|1
+icn253|hcpu48*|alloc|48|1
+icn254|hcpu48*|alloc|48|1
+icn255|hcpu48*|alloc|48|1
+icn256|hcpu48*|down*|48|1
+icn257|hcpu48*|alloc|48|1
+icn258|hcpu48*|alloc|48|1
+icn259|hcpu48*|alloc|48|1
+icn260|hcpu48*|alloc|48|1
+icn261|hcpu48*|alloc|48|1
+icn262|hcpu48*|alloc|48|1
+icn263|hcpu48*|alloc|48|1
+icn264|hcpu48*|alloc|48|1
+icn270|hcpu48y|idle|48|1
+icn271|hcpu48y|idle|48|1
+icn272|hcpu48y|idle|48|1
+icn273|hcpu48y|idle|48|1
+icn274|hcpu48y|mix|48|1
+icn275|hcpu48y|idle|48|1
+icn276|hcpu48y|idle|48|1
+icn277|hcpu48y|mix|48|1
+icn278|hcpu48y|down*|48|1
+icn279|hcpu48y|down*|48|1
+icn280|hcpu48y|maint|48|1
+icn281|hcpu48y|down$|48|1
+=== IMMUTABLE_INPUTS ===
+7ce4e50faac807bbf3557eb0befc6e05769bba263390b3a1be0a55b0097d5b04  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/run/docs/records/ZHENJIANG_D32_GRU_DIFFERENTIABLE_UKF_V1_DEVELOPMENT_EVALUATION_REGISTRY_R3.json
+0c79ce193e30a93b7871b63c2c94f74983e5aa949d4b8ab2245d743dec581d0b  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/run/scripts/analysis/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py
+0b632ea2b6d10dee2a9dd6480b6aab442e8c6159bf0e371ae0829288c9984efe  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/run/scripts/analysis/audit_zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py
+ac1cf76bbe62972bc06c90508e1bc8cde2262816cf0e4bfb67b9f81180215fe7  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/workers/ZHD32-DUKF-DEV-EVAL-S17-V1/attempt_001/completion_manifest.json
+ba532274d0f3b2a588767232ee558c97c0d48143bae319a43e49a606185b21c6  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/workers/ZHD32-DUKF-DEV-EVAL-S29-V1/attempt_001/completion_manifest.json
+5386e099f6266a9e41a09c809004a05ba533c6542bb1da593d7ec1c8fee0e724  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/workers/ZHD32-DUKF-DEV-EVAL-S43-V1/attempt_001/completion_manifest.json
+=== CREATE_ONLY_TARGETS ===
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001.partial
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001.partial
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/jobs/aggregate_audit_v1.slurm
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/jobs/aggregate_audit_job_id.txt
+sbatch: error: Memory specification can not be satisfied
+sbatch: error: Batch job submission failed: Requested node configuration is not available
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-01T01:15:33+0800
