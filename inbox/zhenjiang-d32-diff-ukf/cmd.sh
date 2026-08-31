@@ -1,6 +1,75 @@
 #!/bin/bash
 set -eo pipefail
 
+FAILED_JOB_ID=217148
+EVALUATION_ROOT="/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3"
+SUMMARY="${EVALUATION_ROOT}/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
+AUDIT="${EVALUATION_ROOT}/audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
+FAILED_JOB_SCRIPT="${EVALUATION_ROOT}/jobs/aggregate_audit_v2.slurm"
+JOB_SCRIPT="${EVALUATION_ROOT}/jobs/aggregate_audit_v3.slurm"
+JOB_RECORD="${EVALUATION_ROOT}/jobs/aggregate_audit_v3_job_id.txt"
+SOURCE_SCRIPT="${HOME}/hpc_mailbox/inbox/zhenjiang-d32-diff-ukf/aggregate_audit_v3.slurm"
+EXPECTED_SCRIPT_BYTES=5494
+EXPECTED_SCRIPT_SHA256="eea4ae32a40aa8f1ab3f09c9bf3b8c197129b3b2e7d5bcd815b7b800ad6c3f11"
+
+echo "QUERY_TIME=$(date -Is)"
+echo "=== FAILED_JOB_ACCOUNTING ==="
+sacct -X -j "${FAILED_JOB_ID}" -P \
+  --format=JobID,JobName,Partition,State,ExitCode,Elapsed,Start,End,NodeList,AllocTRES || true
+FAILED_ACCOUNTING="$(
+  sacct -X -n -j "${FAILED_JOB_ID}" -P --format=JobID,State,ExitCode |
+    awk -F'|' -v job="${FAILED_JOB_ID}" '$1 == job {print $2 "|" $3}'
+)"
+if [ "${FAILED_ACCOUNTING}" != "FAILED|1:0" ]; then
+  echo "failed job accounting identity changed: ${FAILED_ACCOUNTING}" >&2
+  exit 2
+fi
+if [ -n "$(squeue -h -u "${USER}" -n zhd32_dukf_aggregate 2>/dev/null)" ]; then
+  echo "another aggregate job is still queued or running" >&2
+  exit 2
+fi
+
+echo "=== PRESERVED_FAILED_SCRIPT ==="
+test -f "${FAILED_JOB_SCRIPT}"
+test ! -L "${FAILED_JOB_SCRIPT}"
+sha256sum "${FAILED_JOB_SCRIPT}"
+
+echo "=== CREATE_ONLY_TARGETS ==="
+for TARGET in "${SUMMARY}" "${SUMMARY}.partial" "${AUDIT}" "${AUDIT}.partial" "${JOB_SCRIPT}" "${JOB_RECORD}"; do
+  if [ -e "${TARGET}" ]; then
+    printf 'exists|%s\n' "${TARGET}"
+    echo "create-only target already exists: ${TARGET}" >&2
+    exit 2
+  fi
+  printf 'absent|%s\n' "${TARGET}"
+done
+
+if [ ! -f "${SOURCE_SCRIPT}" ] || [ -L "${SOURCE_SCRIPT}" ]; then
+  echo "mailbox aggregation script is absent or symbolic" >&2
+  exit 2
+fi
+ACTUAL_SCRIPT_BYTES="$(stat -c '%s' "${SOURCE_SCRIPT}")"
+ACTUAL_SCRIPT_SHA256="$(sha256sum "${SOURCE_SCRIPT}" | awk '{print $1}')"
+if [ "${ACTUAL_SCRIPT_BYTES}" != "${EXPECTED_SCRIPT_BYTES}" ] || \
+   [ "${ACTUAL_SCRIPT_SHA256}" != "${EXPECTED_SCRIPT_SHA256}" ]; then
+  echo "mailbox aggregation script identity changed" >&2
+  exit 2
+fi
+
+install -m 0555 "${SOURCE_SCRIPT}" "${JOB_SCRIPT}"
+test "$(stat -c '%s' "${JOB_SCRIPT}")" = "${EXPECTED_SCRIPT_BYTES}"
+test "$(sha256sum "${JOB_SCRIPT}" | awk '{print $1}')" = "${EXPECTED_SCRIPT_SHA256}"
+JOB_ID="$(sbatch --parsable "${JOB_SCRIPT}")"
+case "${JOB_ID}" in
+  ''|*[!0-9]*)
+    echo "scheduler returned an invalid job identifier: ${JOB_ID}" >&2
+    exit 2
+    ;;
+esac
+echo "AGGREGATE_AUDIT_JOB_ID=${JOB_ID}"
+scontrol show job -o "${JOB_ID}"
+exit 0
+
 JOB_ID=217148
 EVALUATION_ROOT="/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3"
 SUMMARY="${EVALUATION_ROOT}/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
