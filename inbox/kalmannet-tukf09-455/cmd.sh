@@ -1,37 +1,26 @@
 #!/bin/bash
-# Read-only status and log collection for the dual-GPU feasibility probe.
+# Read-only admission check for the new A800-exclusive remote root.
 set -o pipefail
 
-PROBE_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_dual_gpu_allocation_probe_v1_20260831
-PROBE_JOB_ID=217074
-OLD_JOB_ID=217060
+NEW_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831
 
-echo "=== DUAL GPU PROBE SQUEUE ==="
-squeue -h -j "${PROBE_JOB_ID}" -o 'job_id=%A name=%j state=%T elapsed=%M limit=%l partition=%P node=%R' || true
-echo "=== DUAL GPU PROBE ESTIMATED START ==="
-squeue --start -j "${PROBE_JOB_ID}" -o 'job_id=%A state=%T start=%S node=%R' || true
-echo "=== DUAL GPU PROBE DETAIL ==="
-scontrol show job -o "${PROBE_JOB_ID}" || true
-echo "=== DUAL GPU PROBE ACCOUNTING ==="
-sacct -j "${PROBE_JOB_ID}" --format=JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,NodeList -P || true
-echo "=== DUAL GPU PROBE STDOUT ==="
-if [[ -f "${PROBE_ROOT}/logs/dual-gpu-probe-${PROBE_JOB_ID}.out" ]]; then
-  cat "${PROBE_ROOT}/logs/dual-gpu-probe-${PROBE_JOB_ID}.out"
+echo "=== NEW A800 ROOT ==="
+if [[ -e "${NEW_ROOT}" || -L "${NEW_ROOT}" ]]; then
+  echo "NEW_A800_ROOT_ALREADY_EXISTS"
+  ls -ld "${NEW_ROOT}" || true
+  find "${NEW_ROOT}" -mindepth 1 -maxdepth 2 -printf '%y|%p|%s\n' 2>/dev/null | sort | head -n 200 || true
 else
-  echo "STDOUT_NOT_YET_PRESENT"
+  echo "NEW_A800_ROOT_CONFIRMED_ABSENT"
 fi
-echo "=== DUAL GPU PROBE STDERR ==="
-if [[ -f "${PROBE_ROOT}/logs/dual-gpu-probe-${PROBE_JOB_ID}.err" ]]; then
-  cat "${PROBE_ROOT}/logs/dual-gpu-probe-${PROBE_JOB_ID}.err"
-else
-  echo "STDERR_NOT_YET_PRESENT"
-fi
-echo "=== OLD EXCLUSIVE PROBE STATUS ==="
-squeue -h -j "${OLD_JOB_ID}" -o 'job_id=%A name=%j state=%T elapsed=%M limit=%l partition=%P node=%R' || true
-sacct -j "${OLD_JOB_ID}" --format=JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,NodeList -P || true
-echo "=== CURRENT HGPU2P NODES ==="
-sinfo -p hgpu2p -N -o '%N|%t|%G|%C' || true
-for node in ngu001 ngu004 ngu005 ngu006 ngu007 ngu008 ngu010 ngu011; do
+echo "=== PENDING PROBE JOBS ==="
+for job_id in 217060 217074; do
+  squeue -h -j "${job_id}" -o 'job_id=%A name=%j state=%T elapsed=%M limit=%l partition=%P node=%R' || true
+  sacct -j "${job_id}" --format=JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,NodeList -P || true
+done
+echo "=== A800 PARTITION ==="
+sinfo -p hgpu8 -N -o '%N|%t|%G|%C' || true
+scontrol show partition hgpu8 -o || true
+for node in ngu201 ngu202 ngu203; do
   scontrol show node "${node}" -o || true
 done
-echo "TUKF09_455_DUAL_GPU_ALLOCATION_MAPPING_STATUS_COLLECTED"
+echo "TUKF09_455_A800_EXCLUSIVE_V2_REMOTE_ADMISSION_CHECK_COMPLETED"
