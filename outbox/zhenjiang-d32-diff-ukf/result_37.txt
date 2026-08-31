@@ -1,0 +1,35 @@
+### channel=zhenjiang-d32-diff-ukf seq=37
+### host=login4
+### started=2026-08-31T18:07:08+0800
+### ---------- output ----------
+QUERY_TIME=2026-08-31T18:07:08+0800
+=== ARRAY_QUEUE ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+217013_[0-2%1]|zhd32_dukf_dev_eval|PENDING|hgpu2p||0:00|2:00:00|(Priority)
+=== ARRAY_ESTIMATED_START ===
+JOBID|START_TIME|NODELIST(REASON)
+217013_[0-2%1]|2026-09-02T01:09:15|(Priority)
+=== ARRAY_SCHEDULER_IDENTITY ===
+JobId=217013 ArrayJobId=217013 ArrayTaskId=0-2%1 ArrayTaskThrottle=1 JobName=zhd32_dukf_dev_eval UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=204708 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A SubmitTime=2026-08-31T17:15:19 EligibleTime=2026-08-31T17:15:20 AccrueTime=2026-08-31T17:15:20 StartTime=2026-09-02T01:09:15 EndTime=2026-09-02T03:09:15 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-31T18:07:13 Partition=hgpu2p AllocNode:Sid=login04:721 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/run/scripts/hpc/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_formal_v1.slurm WorkDir=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/run StdErr=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/logs/formal_217013_4294967294.err StdIn=/dev/null StdOut=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/logs/formal_217013_4294967294.out Power= TresPerNode=gpu:1
+=== ARRAY_ACCOUNTING ===
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|Start|End|NodeList|AllocTRES
+217013|zhd32_dukf_dev_eval|hgpu2p|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned|
+=== WORKER_OUTPUT_EXISTENCE ===
+index=0 seed=17 final=false partial=false
+index=1 seed=29 final=false partial=false
+index=2 seed=43 final=false partial=false
+=== INDEX_0_STANDARD_OUTPUT_TAIL ===
+absent
+=== INDEX_0_STANDARD_ERROR_TAIL ===
+absent
+=== INDEX_1_STANDARD_OUTPUT_TAIL ===
+absent
+=== INDEX_1_STANDARD_ERROR_TAIL ===
+absent
+=== INDEX_2_STANDARD_OUTPUT_TAIL ===
+absent
+=== INDEX_2_STANDARD_ERROR_TAIL ===
+absent
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T18:07:08+0800
