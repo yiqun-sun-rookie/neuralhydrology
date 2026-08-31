@@ -1,19 +1,13 @@
 #!/bin/bash
 set -o pipefail
 ROOT=/data1/home/sunyiq/kalmannet_tukf25_20260831
-echo "=== PRECONDITION ==="
-python3 -c "
-import json
-v = json.load(open('$ROOT/results/anchor_gate_verdict.json'))
-assert v['pass'] and v['passed_count'] == 27, 'anchor gate not green'
-print('anchor gate green 27/27')
-"
-[ $? -eq 0 ] || { echo "PRECONDITION_FAILED"; exit 1; }
-echo "=== SBATCH TRAIN ARRAY 108 ==="
-out=$(sbatch $ROOT/slurm/tukf25_train.slurm 2>&1); echo "$out"
-echo "$out" | grep -qE 'Submitted batch job [0-9]+' || { echo "SUBMIT_FAILED"; exit 1; }
-JID=$(echo "$out" | grep -oE '[0-9]+' | head -1)
-echo "train_job_id=$JID"
-echo "=== QUEUE SNAPSHOT ==="
-squeue -u $USER 2>/dev/null | grep -E "tukf25|JOBID" | head -8 || true
-echo "SEQ3_OK"
+echo "=== TRAIN ARRAY 216699 STATES ==="
+sacct -j 216699 --format=State --noheader 2>/dev/null | awk '{print $1}' | sort | uniq -c || true
+echo "=== TRAIN RECORDS ==="
+ls $ROOT/results/train/*.json 2>/dev/null | wc -l
+echo "=== FAILURES (never truncate) ==="
+sacct -j 216699 -X -n -P --format=JobID,State,ExitCode,Elapsed 2>/dev/null | grep -E '(FAILED|TIMEOUT|NODE_FAIL|OUT_OF_MEMORY|CANCELLED)' || echo "  none"
+echo "=== SAMPLE ERR TAIL ==="
+E=$(ls -t $ROOT/logs/tukf25_train_*.err 2>/dev/null | head -1)
+[ -n "$E" ] && tail -3 "$E" || echo "no err files yet"
+echo "SEQ4_OK"
