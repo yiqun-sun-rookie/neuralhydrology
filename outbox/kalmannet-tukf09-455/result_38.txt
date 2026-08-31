@@ -1,0 +1,18 @@
+### channel=kalmannet-tukf09-455 seq=38
+### host=login4
+### started=2026-09-01T06:35:44+0800
+### ---------- output ----------
+=== FROZEN DEPLOYMENT, ALLOCATION, AND OFFLINE-INPUT GATES ===
+=== PRISTINE PREPARATION TARGET GATES ===
+=== SAME-NAME JOB GATE ===
+=== ATOMIC PREPARATION SUBMISSION LOCK ===
+=== EXACTLY ONE OFFLINE PREPARATION SUBMISSION ===
+Submitted batch job 217185
+=== IMMEDIATE STATE ===
+PREPARATION_JOB_ID=217185
+             JOBID                           NAME  PARTITION      STATE         NODELIST(REASON)       TIME           START_TIME
+            217185        tukf09-455-v2r3-prepare      hgpu8    PENDING                   (None)       0:00                  N/A
+TUKF09_455_A800_EXCLUSIVE_V2R3_OFFLINE_PREPARATION_SUBMITTED_ONCE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T06:35:48+0800
