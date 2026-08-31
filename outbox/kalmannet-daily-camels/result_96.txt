@@ -1,0 +1,12 @@
+### channel=kalmannet-daily-camels seq=96
+### host=login4
+### started=2026-08-31T17:04:19+0800
+### ---------- output ----------
+SEQ96_A39_STATUS_DISPATCH_VERIFIED job_id=216974
+SEQ96_A39_STATUS_QUERY job_id=216974
+slurm_load_jobs error: Invalid job id specified
+216974|daily-knet-a39-s94|sunyiq|hgpu8|FAILED|2:0|00:00:26|2026-08-31T16:22:54|2026-08-31T16:23:20|ngu202
+SEQ96_A39_STATUS_QUERY_COMPLETE job_id=216974 squeue_exit=1 sacct_exit=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T17:04:19+0800
