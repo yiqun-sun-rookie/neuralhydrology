@@ -1,0 +1,10 @@
+### channel=kalmannet-daily-camels seq=91
+### host=login4
+### started=2026-08-31T15:06:29+0800
+### ---------- output ----------
+SEQ91_A39_STATIC_CHECK_PASS
+SEQ91_A39_DISPATCH_VERIFIED
+SEQ91_A39_FORMAL_EVALUATION_SUBMITTED experiment_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39 execution_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL3_SEQ91 job_id=216847 archive_sha256=bc4119187c70183dd90d599f7871e2e8033b4005c6be06b5a2ce4a5b74addca6 manifest_sha256=ea825788518b5df9cf6335e20453210740a1e23f54d15eef608128a2641421c3 slurm_sha256=09ec7afc08924a60dda7694359cb2143675cbf11e6b8cd1274365b7f0b524961 preflight_sha256=4d67e635544389118787ebea6972abc4639ec6cb4ba66b8db14a52d57cd57bc6 result90_sha256=dacc0fb4c28ac48942f892df3015b7f92f0b2c9df9e04cf387534d55ac93d74d reconstructed_sha256=89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d receipt_sha256=ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56 root=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation3_20260831 source_root=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation3_20260831/source_A39_formal_evaluation_seq91
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T15:06:33+0800
