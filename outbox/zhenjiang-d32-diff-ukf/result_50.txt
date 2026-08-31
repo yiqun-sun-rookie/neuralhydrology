@@ -1,0 +1,53 @@
+### channel=zhenjiang-d32-diff-ukf seq=50
+### host=login4
+### started=2026-09-01T06:20:46+0800
+### ---------- output ----------
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/run_identity.json
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/worker_identity_audit.json
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/lead_condition_seed_metrics.csv
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/window_condition_seed_metrics.csv
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/analysis_diagnostics.csv
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/state_decay_diagnostics.csv
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/target_station_lead_metrics.csv
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/bootstrap_condition_summary.csv
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/holm_primary_family.csv
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/development_gate.json
+summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/completion_manifest.json
+audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/
+audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001/independent_audit.json
+jobs/aggregate_audit_v1.slurm
+jobs/aggregate_audit_v2.slurm
+jobs/aggregate_audit_v3.slurm
+logs/aggregate_audit_v2_217148.out
+logs/aggregate_audit_v2_217148.err
+logs/aggregate_audit_v3_217168.out
+logs/aggregate_audit_v3_217168.err
+run/bundle_manifest.json
+run/docs/records/ZHENJIANG_D32_GRU_DIFFERENTIABLE_UKF_V1_DEVELOPMENT_EVALUATION_REGISTRY_R3.json
+run/docs/records/ZHENJIANG_D32_GRU_DIFFERENTIABLE_UKF_V1_DEVELOPMENT_EVALUATION_CONTRACT_2026-08-31.json
+run/scripts/analysis/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py
+run/scripts/analysis/audit_zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py
+workers/ZHD32-DUKF-DEV-EVAL-S17-V1/attempt_001/completion_manifest.json
+workers/ZHD32-DUKF-DEV-EVAL-S17-V1/attempt_001/worker_summary.json
+workers/ZHD32-DUKF-DEV-EVAL-S17-V1/attempt_001/data_identity.json
+workers/ZHD32-DUKF-DEV-EVAL-S17-V1/attempt_001/checkpoint_identity.json
+workers/ZHD32-DUKF-DEV-EVAL-S17-V1/attempt_001/run_identity.json
+workers/ZHD32-DUKF-DEV-EVAL-S29-V1/attempt_001/completion_manifest.json
+workers/ZHD32-DUKF-DEV-EVAL-S29-V1/attempt_001/worker_summary.json
+workers/ZHD32-DUKF-DEV-EVAL-S29-V1/attempt_001/data_identity.json
+workers/ZHD32-DUKF-DEV-EVAL-S29-V1/attempt_001/checkpoint_identity.json
+workers/ZHD32-DUKF-DEV-EVAL-S29-V1/attempt_001/run_identity.json
+workers/ZHD32-DUKF-DEV-EVAL-S43-V1/attempt_001/completion_manifest.json
+workers/ZHD32-DUKF-DEV-EVAL-S43-V1/attempt_001/worker_summary.json
+workers/ZHD32-DUKF-DEV-EVAL-S43-V1/attempt_001/data_identity.json
+workers/ZHD32-DUKF-DEV-EVAL-S43-V1/attempt_001/checkpoint_identity.json
+workers/ZHD32-DUKF-DEV-EVAL-S43-V1/attempt_001/run_identity.json
+=== RESULT_BUNDLE_IDENTITY ===
+bytes=443800 path=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/retrieval/zhenjiang_d32_dukf_2023_development_evaluation_r3_result_bundle_v1.tar.gz
+bytes=443800 path=/data1/home/sunyiq/hpc_mailbox/outbox/zhenjiang-d32-diff-ukf/zhenjiang_d32_dukf_2023_development_evaluation_r3_result_bundle_v1.tar.gz
+7982c6bf888d55b9bbb7b4428844e4b50d038dfeb11813807c20ea732460f490  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/retrieval/zhenjiang_d32_dukf_2023_development_evaluation_r3_result_bundle_v1.tar.gz
+7982c6bf888d55b9bbb7b4428844e4b50d038dfeb11813807c20ea732460f490  /data1/home/sunyiq/hpc_mailbox/outbox/zhenjiang-d32-diff-ukf/zhenjiang_d32_dukf_2023_development_evaluation_r3_result_bundle_v1.tar.gz
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T06:20:47+0800
