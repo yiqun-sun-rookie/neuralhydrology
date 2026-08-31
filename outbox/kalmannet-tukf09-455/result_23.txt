@@ -1,0 +1,56 @@
+### channel=kalmannet-tukf09-455 seq=23
+### host=login4
+### started=2026-09-01T02:29:42+0800
+### ---------- output ----------
+=== FIXED IDENTITY ===
+REMOTE_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831
+PREPARATION_JOB_ID=217149
+ROOT_STATUS=REGULAR_DIRECTORY
+PREPARE_SCRIPT_SHA256=ec25ba56c16226ddbccc5c2d58459daccefc8d165e4216cb897703bc79223ac8
+PREPARE_SCRIPT_SHA_STATUS=MATCH
+PREPARATION_JOB_ID_FILE=217149
+=== SLURM QUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== SLURM ACCOUNTING ===
+217149|tukf09-455-a800-v2-prepare|hgpu8|FAILED|13:0|00:01:40|ngu201|2026-09-01T02:24:34|2026-09-01T02:26:14
+217149.batch|batch||FAILED|13:0|00:01:40|ngu201|2026-09-01T02:24:34|2026-09-01T02:26:14
+217149.extern|extern||COMPLETED|0:0|00:01:40|ngu201|2026-09-01T02:24:34|2026-09-01T02:26:14
+=== EXACT STANDARD OUTPUT ===
+STDOUT_SIZE_BYTES=1331 STDOUT_LINKS=1 STDOUT_MODE=600
+ca71574f0fecc9e6a5f16ac13883d1b4d269c6577b8bb1c1a35e3d03032ceb58  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/logs/prepare-217149.out
+{"admitted_executable_count": 30, "admitted_test_count": 12, "bundle_manifest_sha256": "9f133931bbd2e840fff74358a12d4be2222e359982751cae389a21be8cf317e8", "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1", "formal_evaluation_output_count": 0, "identity_sha256": "f446d30085b861b4885e2befc8249bf8553399fc3b1ed7e36cf48546f73b58ad", "member_count": 2807, "mutable_directory_count_at_verification": 0, "mutable_file_count_at_verification": 0, "schema_version": "tukf09_455_hpc_initial_bundle_verification_a800_exclusive_v2", "scientific_contract_changed": false, "status": "STRICT_PRISTINE_A800_EXCLUSIVE_V2_BUNDLE_VERIFIED_BEFORE_RUNTIME_MUTATION", "strict_verifier_sha256": "c109ed26ccae9bbf2980269a85230b8f6992e407f58a240b0fc48cd3b5ad7898"}
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2807,
+  "mutable_directory_count": 0,
+  "mutable_file_count": 0,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+=== EXACT STANDARD ERROR ===
+STDERR_SIZE_BYTES=0 STDERR_LINKS=1 STDERR_MODE=600
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/logs/prepare-217149.err
+=== ALLOWED PREPARATION ARTIFACT STATUS ===
+ARTIFACT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/status/initial_bundle_verification.json SIZE_BYTES=745 LINKS=1 MODE=600
+b1b4c0f39187cb6c46cf4234f7da4131b33f2ffa35c523abf02eab6fdf38d0b9  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/status/initial_bundle_verification.json
+ARTIFACT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2/evidence/private_runtime_manifest.json
+ARTIFACT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/status/staged_training_sources.json
+ARTIFACT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/filter_rebinding/independent/manifest.final.sha256.json
+ARTIFACT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/status/preparation_probe.json
+DIRECTORY_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2
+DIRECTORY_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1
+=== FORMAL EVALUATION HOLD ===
+FORBIDDEN_OUTPUT_ABSENT=selection
+FORBIDDEN_OUTPUT_ABSENT=evaluation
+FORBIDDEN_OUTPUT_ABSENT=formal_evaluation
+TUKF09_455_A800_EXCLUSIVE_V2_PREPARATION_READONLY_STATUS_CAPTURED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T02:29:42+0800
