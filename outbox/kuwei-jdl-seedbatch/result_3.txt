@@ -1,0 +1,82 @@
+### channel=kuwei-jdl-seedbatch seq=3
+### host=login4
+### started=2026-08-31T14:10:43+0800
+### ---------- output ----------
+=== A. sacct ===
+         JobID            JobName      Partition                State  ExitCode                Start                  End      Elapsed 
+-------------- ------------------ -------------- -------------------- --------- -------------------- -------------------- ------------ 
+        216698   kuwei-jdl-anchor        hcpu48y            COMPLETED       0:0  2026-08-31T13:58:05  2026-08-31T14:01:43     00:03:38 
+  216698.batch              batch                           COMPLETED       0:0  2026-08-31T13:58:05  2026-08-31T14:01:43     00:03:38 
+ 216698.extern             extern                           COMPLETED       0:0  2026-08-31T13:58:05  2026-08-31T14:01:43     00:03:38 
+=== B. squeue ===
+     JOBID               NAME      PARTITION      STATE NODELIST(REASON)
+=== C. stdout tail ===
+  "machine": {
+    "numpy": "2.3.3",
+    "platform": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17",
+    "torch": "2.4.0"
+  },
+  "replicates": {
+    "20260824": {
+      "anchor_gate_here_mirror_vs_authority": 0.036029815673828125,
+      "anchor_gate_reference_mirror_vs_authority": 0.0,
+      "authority_here_vs_authority_reference": 0.000965118408203125,
+      "mirror_here_vs_mirror_reference": 0.03605079650878906,
+      "which_side_moved": "mirror (torch)"
+    },
+    "20260825": {
+      "anchor_gate_here_mirror_vs_authority": 0.0007038116455078125,
+      "anchor_gate_reference_mirror_vs_authority": 0.0,
+      "authority_here_vs_authority_reference": 0.0011720657348632812,
+      "mirror_here_vs_mirror_reference": 0.00046825408935546875,
+      "which_side_moved": "both"
+    },
+    "20260826": {
+      "anchor_gate_here_mirror_vs_authority": 0.00042724609375,
+      "anchor_gate_reference_mirror_vs_authority": 0.0,
+      "authority_here_vs_authority_reference": 0.0005550384521484375,
+      "mirror_here_vs_mirror_reference": 0.0006084442138671875,
+      "which_side_moved": "both"
+    }
+  }
+}
+[Mon Aug 31 14:01:11 CST 2026] done
+=== D. stderr tail ===
+/data1/home/sunyiq/kuwei_jdl_seedbatch_20260831/fsl/src/kernels/semi_distributed/core/hydromod_numba.py:641: RuntimeWarning: invalid value encountered in power
+  pe + w - wm + wm * np.power(1 - tmp / wmm, 1 + b),
+=== E. decomposition json ===
+{
+  "hours": 57720,
+  "machine": {
+    "numpy": "2.3.3",
+    "platform": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17",
+    "torch": "2.4.0"
+  },
+  "replicates": {
+    "20260824": {
+      "anchor_gate_here_mirror_vs_authority": 0.036029815673828125,
+      "anchor_gate_reference_mirror_vs_authority": 0.0,
+      "authority_here_vs_authority_reference": 0.000965118408203125,
+      "mirror_here_vs_mirror_reference": 0.03605079650878906,
+      "which_side_moved": "mirror (torch)"
+    },
+    "20260825": {
+      "anchor_gate_here_mirror_vs_authority": 0.0007038116455078125,
+      "anchor_gate_reference_mirror_vs_authority": 0.0,
+      "authority_here_vs_authority_reference": 0.0011720657348632812,
+      "mirror_here_vs_mirror_reference": 0.00046825408935546875,
+      "which_side_moved": "both"
+    },
+    "20260826": {
+      "anchor_gate_here_mirror_vs_authority": 0.00042724609375,
+      "anchor_gate_reference_mirror_vs_authority": 0.0,
+      "authority_here_vs_authority_reference": 0.0005550384521484375,
+      "mirror_here_vs_mirror_reference": 0.0006084442138671875,
+      "which_side_moved": "both"
+    }
+  }
+}
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T14:10:43+0800
