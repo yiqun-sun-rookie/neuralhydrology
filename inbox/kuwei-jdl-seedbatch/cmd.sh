@@ -1,50 +1,23 @@
 #!/bin/bash
-# Step 2 of 3: stage-1 learning-seed stability batch, 16 single-core tasks.
-# Criterion registered BEFORE this runs: docs/experiments/kuwei_jdl_seedbatch_20260831/
-# PREREGISTRATION.md, sha256 462e8452e6e57774d843f2bc27d9f9d04b8d7b8db54d88cd7fbc461b7b4b4b8b
-# Fixed start replicate 20260826 (smallest measured cross-machine drift, 6.08e-4 m3/s).
-# Login node writes the array script and submits; no computation here.
+# Unpack the stage-1 evaluator (payload v2) and report array job 216811 status.
+# Read-only with respect to the running array; no submission, no waiting loops.
 set -o pipefail
 ROOT=$HOME/kuwei_jdl_seedbatch_20260831
-mkdir -p $ROOT/logs
-echo "=== A. landing check ==="
-ls $ROOT/laos/basins/namou_kuwei/dl/highflow_2026_06_17/scripts/kuwei_joint_da_learning.py 2>&1 || true
-ls -d $ROOT/fsl/src/kernels/semi_distributed/core 2>&1 || true
-echo "=== B. write array slurm ==="
-cat > $ROOT/seedbatch_stage1.slurm <<'SLURM'
-#!/usr/bin/env bash
-#SBATCH -J kuwei-jdl-s1
-#SBATCH -p hcpu48,hcpu48y
-#SBATCH -N 1
-#SBATCH -n 1
-#SBATCH --cpus-per-task=1
-#SBATCH -a 0-15
-#SBATCH -t 08:00:00
-#SBATCH -o logs/kuwei-jdl-s1-%A_%a.out
-#SBATCH -e logs/kuwei-jdl-s1-%A_%a.err
-set -eo pipefail
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final
-export MKL_THREADING_LAYER=GNU
-export MKL_SERVICE_FORCE_INTEL=1
-export OMP_NUM_THREADS=1
-ROOT=$HOME/kuwei_jdl_seedbatch_20260831
-export KUWEI_LAOS_ROOT=$ROOT/laos
-export KUWEI_FSL_ROOT=$ROOT/fsl
-SCR=$ROOT/laos/basins/namou_kuwei/dl/highflow_2026_06_17/scripts
-I=${SLURM_ARRAY_TASK_ID}
-if   [ $I -eq 0 ];  then ARM=all_frozen; LS=0
-elif [ $I -le 5 ];  then ARM=hydro_only; LS=$(( I - 1 ))
-elif [ $I -le 10 ]; then ARM=joint;      LS=$(( I - 6 ))
-else                     ARM=noise_only; LS=$(( I - 11 ))
-fi
-echo "[$(date)] task=$I arm=$ARM learning_seed=$LS node=$(hostname)"
-python -c "import torch,numpy;print('torch',torch.__version__,'numpy',numpy.__version__)"
-cd $SCR
-python -u kuwei_joint_da_learning.py --run $ARM 20260826 --learning-seed $LS
-echo "[$(date)] task=$I done"
-SLURM
-echo "=== C. submit ==="
-cd $ROOT && sbatch seedbatch_stage1.slurm 2>&1 | tee $ROOT/stage1_jobid.txt || echo "sbatch FAILED"
-squeue -u ${USER} -n kuwei-jdl-s1 -o "%.14i %.14j %.14P %.10T %R" 2>&1 | head -6 || true
+SRC=$HOME/hpc_mailbox/payload/kuwei-jdl-seedbatch/v2
+echo "=== A. unpack evaluator ==="
+cd $SRC && sha256sum -c bundle_manifest.sha256 2>&1 | head -2 || true
+tar -xzf $SRC/laos_jdl_seedbatch_v2_tools.tar.gz -C $ROOT/laos 2>&1 | head -3
+ls -la $ROOT/laos/basins/namou_kuwei/dl/highflow_2026_06_17/scripts/kuwei_jdl_seedbatch_evaluate.py 2>&1 || true
+echo "=== B. array state counts ==="
+sacct -j 216811 -X --format=State%20 --noheader 2>&1 | sort | uniq -c || true
+echo "=== C. squeue ==="
+squeue -u ${USER} -n kuwei-jdl-s1 -o "%.14i %.12T %R" 2>&1 | head -8 || true
+echo "=== D. task 0 (all_frozen) log ==="
+tail -12 $ROOT/logs/kuwei-jdl-s1-216811_0.out 2>&1 || true
+echo "=== E. task 1 (hydro_only ls0) log ==="
+tail -8 $ROOT/logs/kuwei-jdl-s1-216811_1.out 2>&1 || true
+echo "=== F. any stderr so far ==="
+tail -6 $ROOT/logs/kuwei-jdl-s1-216811_1.err 2>&1 || true
+echo "=== G. run dirs produced so far ==="
+ls $ROOT/laos/basins/namou_kuwei/dl/highflow_2026_06_17/results/kuwei_joint_da_learning_20260826/runs/ 2>&1 | head -20 || true
 echo "=== DONE ==="

@@ -1,0 +1,48 @@
+### channel=kuwei-jdl-seedbatch seq=5
+### host=login4
+### started=2026-08-31T14:22:14+0800
+### ---------- output ----------
+=== A. unpack evaluator ===
+laos_jdl_seedbatch_v2_tools.tar.gz: OK
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/scripts/kuwei_jdl_seedbatch_evaluate.py: implausibly old time stamp 1970-01-01 08:00:00
+-rw-r--r--. 1 sunyiq g_sunyiq 5693 Jan  1  1970 /data1/home/sunyiq/kuwei_jdl_seedbatch_20260831/laos/basins/namou_kuwei/dl/highflow_2026_06_17/scripts/kuwei_jdl_seedbatch_evaluate.py
+=== B. array state counts ===
+      1            COMPLETED 
+      1              PENDING 
+      5              RUNNING 
+=== C. squeue ===
+         JOBID        STATE NODELIST(REASON)
+ 216811_[6-15]      PENDING (Resources)
+      216811_5      RUNNING icn276
+      216811_1      RUNNING icn270
+      216811_2      RUNNING icn271
+      216811_3      RUNNING icn272
+      216811_4      RUNNING icn273
+=== D. task 0 (all_frozen) log ===
+[Mon Aug 31 14:12:35 CST 2026] task=0 arm=all_frozen learning_seed=0 node=icn276
+torch 2.4.0 numpy 2.3.3
+[all_frozen/20260826] update=0 selection_mse=324.4957 best=324.4957@0
+{
+  "arm": "all_frozen",
+  "seed": "20260826",
+  "best_update": 0,
+  "best_selection_mse": 324.49566650390625,
+  "elapsed_seconds": 96.9
+}
+[Mon Aug 31 14:14:18 CST 2026] task=0 done
+=== E. task 1 (hydro_only ls0) log ===
+[hydro_only/20260826] update=1 window@10292 loss=1077.4778 origins=116
+[hydro_only/20260826] update=2 window@26337 loss=19.5743 origins=116
+[hydro_only/20260826] update=3 window@26716 loss=530.8909 origins=116
+[hydro_only/20260826] update=4 window@23521 loss=0.1246 origins=116
+[hydro_only/20260826] update=5 window@29867 loss=41.2975 origins=116
+[hydro_only/20260826] update=6 window@27730 loss=1105.1863 origins=116
+[hydro_only/20260826] update=7 window@13700 loss=9709.3877 origins=116
+[hydro_only/20260826] update=8 window@23926 loss=0.0658 origins=116
+=== F. any stderr so far ===
+=== G. run dirs produced so far ===
+all_frozen_seed20260826
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T14:22:14+0800
