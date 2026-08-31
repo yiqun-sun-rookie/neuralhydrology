@@ -1,0 +1,59 @@
+### channel=kalmannet-tukf09-455 seq=24
+### host=login4
+### started=2026-09-01T02:34:16+0800
+### ---------- output ----------
+=== FIXED FAILED JOB ===
+REMOTE_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831
+PREPARATION_JOB_ID=217149
+217149|tukf09-455-a800-v2-prepare|hgpu8|FAILED|13:0|00:01:40|ngu201|2026-09-01T02:24:34|2026-09-01T02:26:14
+217149.batch|batch||FAILED|13:0|00:01:40|ngu201|2026-09-01T02:24:34|2026-09-01T02:26:14
+217149.extern|extern||COMPLETED|0:0|00:01:40|ngu201|2026-09-01T02:24:34|2026-09-01T02:26:14
+=== PREPARATION LOCK AND PENDING ROOT ===
+FILE=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/status/preparation.lock SIZE_BYTES=0 LINKS=1 MODE=600 MTIME=2026-09-01 02:24:01.000000000 +0800
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/status/preparation.lock
+FILE=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/status/initial_bundle_verification.json SIZE_BYTES=745 LINKS=1 MODE=600 MTIME=2026-09-01 02:25:05.000000000 +0800
+b1b4c0f39187cb6c46cf4234f7da4131b33f2ffa35c523abf02eab6fdf38d0b9  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/status/initial_bundle_verification.json
+PENDING=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149 LINKS=7 MODE=700 MTIME=2026-09-01 02:25:36.000000000 +0800
+25354	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/built_wheels|4096|2|700
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence|4096|2|700
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/pysite.pending|4096|2|700
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/sourcehouse|4096|2|700
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/wheelhouse|4096|2|700
+f|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/pip-command.txt|523|1|600
+f|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/pip-stderr.log|0|1|600
+f|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/pip-stdout.log|255|1|600
+=== EXACT PIP AND RUNTIME EVIDENCE ===
+EVIDENCE=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/pip-command.txt SIZE_BYTES=523 LINKS=1 MODE=600 MTIME=2026-09-01 02:25:36.000000000 +0800
+4d3f1b3e1571e4e2204a8a066ab5feaffed3904eb535ba1f273108a8b52682a8  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/pip-command.txt
+python -m pip download --no-cache-dir --no-deps --only-binary=:all: --require-hashes --dest WHEELHOUSE --requirement runtime-binary.lock
+python -m pip download --no-cache-dir --no-deps --no-binary=:all: --require-hashes --dest SOURCEHOUSE --requirement psutil-source.lock
+python -m pip wheel --no-cache-dir --no-index --no-deps --no-build-isolation --wheel-dir BUILDHOUSE psutil-5.9.0.tar.gz
+python -m pip install --no-cache-dir --no-index --no-deps --ignore-installed --no-compile --target PYSITE_PENDING WHEELHOUSE/*.whl
+EVIDENCE=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/pip-stdout.log SIZE_BYTES=255 LINKS=1 MODE=600 MTIME=2026-09-01 02:25:41.000000000 +0800
+37cf0cb26683b2a97c6484d52c2c90f0a5bb10356cfd097a0d599e7999a9b8ab  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/pip-stdout.log
+Python 3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]
+pip 25.2 from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip (python 3.11)
+gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-44)
+ldd (GNU libc) 2.17
+EVIDENCE=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/pip-stderr.log SIZE_BYTES=0 LINKS=1 MODE=600 MTIME=2026-09-01 02:25:36.000000000 +0800
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/pip-stderr.log
+EVIDENCE_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/runtime-import-check.txt
+EVIDENCE_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/psutil-built-wheel.sha256
+EVIDENCE_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/pip-install-report.json
+EVIDENCE_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/evidence/private_runtime_manifest.json
+=== DOWNLOADED OR BUILT FILE INVENTORY ===
+DIRECTORY=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/wheelhouse
+DIRECTORY=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/sourcehouse
+DIRECTORY=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/built_wheels
+DIRECTORY=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/pysite.pending
+DIRECTORY_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2.pending.217149/pysite
+=== UNPUBLISHED LATER-STAGE OUTPUTS ===
+LATER_STAGE_OUTPUT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/runtime_v2
+LATER_STAGE_OUTPUT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/status/staged_training_sources.json
+LATER_STAGE_OUTPUT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/status/preparation_probe.json
+LATER_STAGE_OUTPUT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831/status/hpc_technical_admission.json
+TUKF09_455_A800_EXCLUSIVE_V2_FAILED_PREPARATION_FORENSICS_CAPTURED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T02:34:16+0800
