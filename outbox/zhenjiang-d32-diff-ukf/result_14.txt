@@ -1,0 +1,12 @@
+### channel=zhenjiang-d32-diff-ukf seq=14
+### host=login4
+### started=2026-08-31T12:04:07+0800
+### ---------- output ----------
+QUERY_TIME=2026-08-31T12:04:07+0800
+TRAINING_ROOT_EXISTS=true
+INPUT_ROOT_EXISTS=true
+EVALUATION_ROOT_EXISTS=false
+sha256sum: /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/completion_manifest.json: No such file or directory
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-31T12:04:07+0800
