@@ -13,6 +13,7 @@ cd "$ROOT"
 
 echo "=== ID31 GPU PROBE ${JOB_ID}: SCHEDULER ==="
 squeue -j "$JOB_ID" -o '%.18i %.24j %.2t %.10M %.30R' || true
+squeue --start -j "$JOB_ID" -o '%.18i %.24j %.19S %.30R' || true
 sacct -j "$JOB_ID" --format=JobID,JobName%24,Partition,State,ExitCode,Elapsed,Start,End,NodeList -n -P || true
 
 echo "=== PROBE REPORT ==="
