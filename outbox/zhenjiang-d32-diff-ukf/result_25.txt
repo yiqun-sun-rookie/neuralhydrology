@@ -1,0 +1,37 @@
+### channel=zhenjiang-d32-diff-ukf seq=25
+### host=login4
+### started=2026-08-31T14:24:33+0800
+### ---------- output ----------
+QUERY_TIME=2026-08-31T14:24:33+0800
+=== SQUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== ESTIMATED_START ===
+slurm_load_jobs error: Invalid job id specified
+=== SACCT ===
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|Start|End|NodeList
+216818|zhd32_dukf_dev_smoke|hgpu2p|FAILED|1:0|00:00:55|2026-08-31T14:21:07|2026-08-31T14:22:02|ngu001
+216818.batch|batch||FAILED|1:0|00:00:55|2026-08-31T14:21:07|2026-08-31T14:22:02|ngu001
+216818.extern|extern||COMPLETED|0:0|00:00:56|2026-08-31T14:21:07|2026-08-31T14:22:03|ngu001
+=== OUTPUT_EXISTENCE ===
+seed=17 final=false partial=true
+seed=29 final=false partial=false
+seed=43 final=false partial=false
+=== STDOUT_TAIL ===
+registered_common_runtime_gate=pass
+bundle_and_training_identity_gate=pass
+common_runtime_import_and_tide_gate=pass
+graphics_processor_identity_gate=pass
+=== STDERR_TAIL ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r2/run/scripts/analysis/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py", line 1855, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r2/run/scripts/analysis/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py", line 1837, in main
+    output = execute_seed_evaluation(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r2/run/scripts/analysis/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py", line 1073, in execute_seed_evaluation
+    raise RuntimeError("target normalization mean changed")
+RuntimeError: target normalization mean changed
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T14:24:33+0800
