@@ -1,0 +1,97 @@
+### channel=kalmannet-tukf09-455 seq=1
+### host=login4
+### started=2026-08-31T16:19:02+0800
+### ---------- output ----------
+=== RUNNER ===
+12251 bash /data1/home/sunyiq/.hpc_runner_active.sh
+28982 bash /data1/home/sunyiq/.hpc_runner_active.sh
+29079 bash /data1/home/sunyiq/.hpc_runner_active.sh
+=== UNIQUE ROOT ===
+ROOT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_20260831
+=== SHARED DATA READINESS ===
+PRESENT directory 4096 /data1/home/sunyiq/neuralhydrology/data/camels_us
+PRESENT directory 4096 /data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/maurer
+PRESENT directory 4096 /data1/home/sunyiq/neuralhydrology/data/camels_us/usgs_streamflow
+PRESENT regular file 38677 /data1/home/sunyiq/neuralhydrology/data/camels_us/camels_attributes_v2.0/camels_topo.txt
+PRESENT regular file 624068 /data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/maurer/01/01022500_lump_maurer_forcing_leap.txt
+PRESENT regular file 400012 /data1/home/sunyiq/neuralhydrology/data/camels_us/usgs_streamflow/01/01022500_streamflow_qc.txt
+=== PARTITIONS ===
+ PARTITION  AVAIL  NODES  STATE                       NODELIST
+   hcpu48*     up     10 alloc$ icn[202,204-207,210-212,216-21
+   hcpu48*     up      5  maint       icn[214,220-221,246,249]
+   hcpu48*     up     16  down* icn[203,215,218,224,230,233-23
+   hcpu48*     up     33  alloc icn[201,208-209,213,219,222-22
+   hcpu48y     up      1  down$                         icn281
+   hcpu48y     up      1  maint                         icn280
+   hcpu48y     up      2  down*                   icn[278-279]
+   hcpu48y     up      2    mix                   icn[274,277]
+   hcpu48y     up      6  alloc           icn[270-273,275-276]
+     hgpu8     up      1  maint                         ngu203
+     hgpu8     up      1  drain                         ngu201
+     hgpu8     up      1    mix                         ngu202
+     hgpu4     up      1  down*                         ngu103
+     hgpu4     up      2    mix                   ngu[102,104]
+     hgpu4     up      1   idle                         ngu101
+     hgpu2     up      2    mix                   ngu[003,009]
+    hgpu2p     up      8    mix       ngu[001,004-008,010-011]
+    hgpu2p     up      1  alloc                         ngu002
+REASON               USER      TIMESTAMP           NODELIST
+Not responding       root      2026-05-12T05:03:18 icn203
+Not responding       root      2026-05-13T15:59:40 icn215
+Not responding       root      2026-01-16T00:43:13 icn218
+Not responding       root      2026-01-19T17:07:05 icn224
+Not responding       root      2026-01-10T07:47:14 icn230
+Not responding       root      2026-04-25T01:51:39 icn[233,243,245]
+Not responding       root      2026-01-19T22:24:09 icn234
+Not responding       root      2026-03-10T05:52:38 icn[235,237,247]
+Not responding       root      2026-05-09T19:59:37 icn236
+Not responding       root      2026-04-24T20:16:32 icn239
+Not responding       root      2025-11-04T11:55:53 icn242
+Not responding       root      2026-01-20T14:12:40 icn256
+Not responding       root      2026-05-06T18:55:06 icn281
+Not responding       root      2026-05-05T20:28:13 icn278
+Not responding       root      2026-02-28T11:10:15 icn279
+Kill task failed     root      2026-08-29T16:25:26 ngu201
+Not responding       root      2026-01-13T10:39:13 ngu103
+=== OWN JOBS ===
+             JOBID                     NAME  PARTITION    STATE       TIME         NODELIST(REASON)
+ 216692_[20-119%4]              N22-evalfix hgpu4,hgpu  PENDING       0:00      (JobArrayTaskLimit)
+     216811_[7-15]             kuwei-jdl-s1 hcpu48,hcp  PENDING       0:00              (Resources)
+            202229             N22-agg-eval hgpu4,hgpu  PENDING       0:00 (DependencyNeverSatisfie
+            202294               N22-export hgpu4,hgpu  PENDING       0:00             (Dependency)
+            202315                 N22-gate hgpu4,hgpu  PENDING       0:00             (Dependency)
+            202507         N22-mask-iso-531 hgpu4,hgpu  PENDING       0:00 (DependencyNeverSatisfie
+            215429            id30_m01_s100      hgpu2  PENDING       0:00 (DependencyNeverSatisfie
+            202293             N22-manifest hgpu4,hgpu  PENDING       0:00            (JobHeldUser)
+         216692_19              N22-evalfix      hgpu4  RUNNING      20:34                   ngu102
+         216692_18              N22-evalfix      hgpu4  RUNNING      20:53                   ngu102
+         216692_16              N22-evalfix      hgpu4  RUNNING      20:54                   ngu102
+         216692_17              N22-evalfix      hgpu4  RUNNING      20:54                   ngu102
+          216811_6             kuwei-jdl-s1    hcpu48y  RUNNING    1:15:50                   icn275
+          216811_5             kuwei-jdl-s1    hcpu48y  RUNNING    2:04:09                   icn276
+          216811_1             kuwei-jdl-s1    hcpu48y  RUNNING    2:05:55                   icn270
+          216811_2             kuwei-jdl-s1    hcpu48y  RUNNING    2:05:55                   icn271
+          216811_3             kuwei-jdl-s1    hcpu48y  RUNNING    2:05:55                   icn272
+          216811_4             kuwei-jdl-s1    hcpu48y  RUNNING    2:05:55                   icn273
+            216687  q_armC_us_minus_net_s43      hgpu2  RUNNING    2:57:09                   ngu003
+            216688  q_armC_us_minus_net_s44      hgpu2  RUNNING    2:57:09                   ngu009
+            216549         id31_development      hgpu2  RUNNING    3:58:48                   ngu003
+=== STORAGE ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  597T  358T  63% /data1
+=== CONDA ENVIRONMENTS ===
+# conda environments:
+#
+base                  *  /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+                         /data1/home/sunyiq/v09_strict/gitenv
+
+=== CANDIDATE TORCH 2.2.2 INSTALLATIONS ===
+=== CANDIDATE TORCH 2.2.2 WHEEL ===
+=== SNAPSHOT COMPLETE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T16:21:48+0800
