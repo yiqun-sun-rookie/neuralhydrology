@@ -1,0 +1,37 @@
+### channel=kalmannet-daily-camels seq=101
+### host=login4
+### started=2026-08-31T20:05:53+0800
+### ---------- output ----------
+SEQ101_A39_RECOLLECT_DISPATCH_VERIFIED job_id=217038
+SEQ101_A39_GPU_RESOURCE_SUMMARY samples=95 max_raw_gap_seconds=1.046 max_epoch_gap_seconds=2 epoch_last_to_end_seconds=1 epoch_span_difference_seconds=0 raw_timestamp_last_to_end_seconds_diagnostic=0.068 peak_gpu_mib=581 min_free_gpu_mib=80647 continuous_evaluator_coverage=true
+SEQ101_A39_HOST_MEMORY_RESOURCE_SUMMARY slurm_max_rss_bytes=876630016 slurm_max_vm_size_bytes=10428399616 cgroup_peak_status=unavailable slurm_step_accounting_fallback=true
+SEQ101_A39_METRIC basin=09035800 system=knet_epoch75 lead_days=1 origins=3284 nse=0.96552326590152016 mse=0.089469524624213745
+SEQ101_A39_METRIC basin=09035800 system=knet_epoch75 lead_days=2 origins=3284 nse=0.93995592608197842 mse=0.15581809124219437
+SEQ101_A39_METRIC basin=09035800 system=knet_epoch75 lead_days=3 origins=3284 nse=0.91534879534274871 mse=0.21967377655374493
+SEQ101_A39_METRIC basin=09035800 system=strict_zero_gain_knet lead_days=1 origins=3284 nse=0.79066665353747245 mse=0.54323460402312251
+SEQ101_A39_METRIC basin=09035800 system=strict_zero_gain_knet lead_days=2 origins=3284 nse=0.79063338873229116 mse=0.54331932543620143
+SEQ101_A39_METRIC basin=09035800 system=strict_zero_gain_knet lead_days=3 origins=3284 nse=0.79060307672869334 mse=0.54339466425776795
+SEQ101_A39_METRIC basin=09035800 system=same_forcing_open_loop lead_days=1 origins=3284 nse=0.79066665353747245 mse=0.54323460402312251
+SEQ101_A39_METRIC basin=09035800 system=same_forcing_open_loop lead_days=2 origins=3284 nse=0.79063338873229116 mse=0.54331932543620143
+SEQ101_A39_METRIC basin=09035800 system=same_forcing_open_loop lead_days=3 origins=3284 nse=0.79060307672869334 mse=0.54339466425776795
+SEQ101_A39_METRIC basin=09035800 system=default_noise_ukf lead_days=1 origins=3284 nse=0.85498979018104282 mse=0.37631158743460125
+SEQ101_A39_METRIC basin=09035800 system=default_noise_ukf lead_days=2 origins=3284 nse=0.84296293748130058 mse=0.40752090488318315
+SEQ101_A39_METRIC basin=09035800 system=default_noise_ukf lead_days=3 origins=3284 nse=0.83262178257355335 mse=0.4343541864971171
+SEQ101_A39_METRIC basin=09035800 system=sampled_search_ukf lead_days=1 origins=3284 nse=0.93720896588222136 mse=0.16294710389717992
+SEQ101_A39_METRIC basin=09035800 system=sampled_search_ukf lead_days=2 origins=3284 nse=0.92093883575526891 mse=0.20516861865200942
+SEQ101_A39_METRIC basin=09035800 system=sampled_search_ukf lead_days=3 origins=3284 nse=0.90574511996162599 mse=0.24459575667569866
+SEQ101_A39_METRIC basin=09035800 system=backpropagation_selected_ukf lead_days=1 origins=3284 nse=0.96529640400212913 mse=0.090058247043103043
+SEQ101_A39_METRIC basin=09035800 system=backpropagation_selected_ukf lead_days=2 origins=3284 nse=0.94554653025596891 mse=0.14131012710120047
+SEQ101_A39_METRIC basin=09035800 system=backpropagation_selected_ukf lead_days=3 origins=3284 nse=0.92558906563918864 mse=0.19309980329419946
+SEQ101_A39_METRIC basin=09035800 system=persistence lead_days=1 origins=3284 nse=0.98738425311137035 mse=0.032738741253188236
+SEQ101_A39_METRIC basin=09035800 system=persistence lead_days=2 origins=3284 nse=0.96266894176126516 mse=0.096876408598667502
+SEQ101_A39_METRIC basin=09035800 system=persistence lead_days=3 origins=3284 nse=0.93293534662588096 mse=0.17403586563961088
+SEQ101_A39_METRIC basin=09035800 system=second_order_autoregression lead_days=1 origins=3284 nse=0.9903425039275543 mse=0.025061874485960183
+SEQ101_A39_METRIC basin=09035800 system=second_order_autoregression lead_days=2 origins=3284 nse=0.96879223697565253 mse=0.080986078210343648
+SEQ101_A39_METRIC basin=09035800 system=second_order_autoregression lead_days=3 origins=3284 nse=0.94296236608337347 mse=0.14801528813307932
+SEQ101_A39_INDEPENDENT_TERMINAL_VALIDATION capability=PASS comparison=NO_DISCERNIBLE_ADVANTAGE scale_up=GO convergence=UNKNOWN_NOT_ESTABLISHED_BY_SINGLE_CHECKPOINT_FORMAL_EVALUATION one_basin_only=true protected_array_reads=0 prediction_array_reads=0
+tar: unrecognized option '--sort=name'
+Try `tar --help' or `tar --usage' for more information.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-31T20:05:54+0800
