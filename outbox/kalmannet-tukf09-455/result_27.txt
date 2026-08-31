@@ -1,0 +1,29 @@
+### channel=kalmannet-tukf09-455 seq=27
+### host=login4
+### started=2026-09-01T03:44:26+0800
+### ---------- output ----------
+=== FIXED IDENTITY ===
+REMOTE_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901
+ALLOCATION_PROBE_JOB_ID=217162
+ROOT_STATUS=REGULAR_DIRECTORY
+PROBE_SCRIPT_SHA256=5dc332b67998b6a2fa3b5a37f3db40694ff21cea832ff61750a527f136a4597b
+PROBE_SCRIPT_SHA_STATUS=MATCH
+ALLOCATION_PROBE_JOB_ID_FILE=217162
+=== SLURM QUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== SLURM ACCOUNTING ===
+217162|tukf09-455-v2r1-map|hgpu8|COMPLETED|0:0|00:00:13|ngu201|2026-09-01T03:39:48|2026-09-01T03:40:01
+217162.batch|batch||COMPLETED|0:0|00:00:13|ngu201|2026-09-01T03:39:48|2026-09-01T03:40:01
+217162.extern|extern||COMPLETED|0:0|00:00:13|ngu201|2026-09-01T03:39:48|2026-09-01T03:40:01
+=== EXACT STANDARD OUTPUT ===
+STDOUT_SIZE_BYTES=850 STDOUT_LINKS=1 STDOUT_MODE=600
+8004a5be9c9f31b664fb15c387dd22cf9dc68dc79d1ec12c31ae398a1af55e5c  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/logs/allocation-probe-217162.out
+{"cuda_available": true, "cuda_device_count": 1, "cuda_device_names": ["NVIDIA A800-SXM4-80GB"], "cuda_visible_devices": "0", "exclusive_node_runtime_evidence_passed": true, "hostname": "ngu201", "nvidia_selected_device": "GPU-611fb575-b571-2134-d202-ac44b14cb625, NVIDIA A800-SXM4-80GB", "nvidia_selected_gpu_uuid": "GPU-611fb575-b571-2134-d202-ac44b14cb625", "selected_global_gpu_id": "0", "slurm_cpus_on_node": 64, "slurm_cpus_per_task": 4, "slurm_gpu_allocation_variable_present": true, "slurm_gpus_on_node": "", "slurm_job_cpus_per_node_normalized": 64, "slurm_job_cpus_per_node_raw": "64", "slurm_job_gpus": "0", "slurm_job_id": "217162", "slurm_job_node_count": 1, "slurm_step_gpus": "", "status": "GPU_ALLOCATION_MAPPING_PASS", "torch_process_gpu_uuid": "GPU-611fb575-b571-2134-d202-ac44b14cb625"}
+TUKF09_455_GPU_ALLOCATION_MAPPING_COMPLETED
+=== EXACT STANDARD ERROR ===
+STDERR_SIZE_BYTES=0 STDERR_LINKS=1 STDERR_MODE=600
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/logs/allocation-probe-217162.err
+TUKF09_455_A800_EXCLUSIVE_V2R1_ALLOCATION_PROBE_READONLY_STATUS_CAPTURED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T03:44:26+0800
