@@ -9,7 +9,7 @@ printf 'QUERY_TIME=%s\n' "$(date --iso-8601=seconds)"
 printf 'TRAINING_ROOT_EXISTS=%s\n' "$(test -d "${TRAINING_ROOT}" && echo true || echo false)"
 printf 'INPUT_ROOT_EXISTS=%s\n' "$(test -d "${INPUT_ROOT}" && echo true || echo false)"
 printf 'EVALUATION_ROOT_EXISTS=%s\n' "$(test -e "${EVALUATION_ROOT}" && echo true || echo false)"
-sha256sum "${INPUT_ROOT}/completion_manifest.json"
+sha256sum "${INPUT_ROOT}/pre2024_input_manifest.json"
 
 echo '=== USER_QUEUE ==='
 squeue -u "${USER}" -o '%i|%j|%T|%P|%N|%M|%l' || true
