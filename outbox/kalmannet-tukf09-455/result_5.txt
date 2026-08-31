@@ -1,0 +1,17 @@
+### channel=kalmannet-tukf09-455 seq=5
+### host=login4
+### started=2026-08-31T20:24:18+0800
+### ---------- output ----------
+=== SQUEUE ===
+job_id=217060 name=tukf09-455-gpu-map state=PENDING elapsed=0:00 limit=5:00 partition=hgpu2p node=(Priority)
+=== SACCT ===
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|NodeList
+217060|tukf09-455-gpu-map|hgpu2p|PENDING|0:0|00:00:00|None assigned
+=== STDOUT ===
+STDOUT_NOT_YET_PRESENT
+=== STDERR ===
+STDERR_NOT_YET_PRESENT
+TUKF09_455_GPU_ALLOCATION_MAPPING_STATUS_COLLECTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T20:24:18+0800
