@@ -1,0 +1,26 @@
+### channel=nature1st-attr-swap seq=115
+### host=login4
+### started=2026-08-31T13:21:09+0800
+### ---------- output ----------
+=== A. INSTALL ===
+  hpc_train_q_armC_s43.sbatch        2ff7680f104d8e95  expect 2ff7680f104d8e95
+  hpc_train_q_armC_s44.sbatch        bccf3d9912f4f713  expect bccf3d9912f4f713
+=== B. PREFLIGHT: same attribute files as the seed-42 baseline ===
+4a76ef9583427918  data/interim/stage_static_feature_stats_us_minus_network.json
+41394def463a0366  data/processed/station_meta/trainable_mountain_stations.csv
+  armC attrs: 8
+=== C. SUBMIT ===
+  s43: Submitted batch job 216687
+  s44: Submitted batch job 216688
+=== D. QUEUE ===
+      JOBID                       NAME     STATE      TIME  NODELIST  PARTITION   NODELIST(REASON)
+     216687    q_armC_us_minus_net_s43   RUNNING   INVALID    ngu003      hgpu2             ngu003
+     216688    q_armC_us_minus_net_s44   RUNNING   INVALID    ngu009      hgpu2             ngu009
+=== E. armJ THREE-SEED SUMMARY (for the record) ===
+  armJ s42: median=0.6314 epoch=15
+  armJ s43: median=0.6320 epoch=23
+  armJ s44: median=0.6405 epoch=21
+=== END seq=115 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:21:34+0800
