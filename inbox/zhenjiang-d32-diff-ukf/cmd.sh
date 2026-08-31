@@ -47,7 +47,7 @@ grep -qx '#SBATCH --partition=hgpu2p' "${SCRIPT}" || \
   fatal "precheck partition changed"
 grep -qx '#SBATCH --exclude=ngu002' "${SCRIPT}" || \
   fatal "precheck excluded-node contract changed"
-grep -qx '#SBATCH --gres=gpu:rtx3090:1' "${SCRIPT}" || \
+grep -qx '#SBATCH --gres=gpu:1' "${SCRIPT}" || \
   fatal "precheck graphics-processor contract changed"
 grep -qx '#SBATCH --cpus-per-task=4' "${SCRIPT}" || \
   fatal "precheck central-processing-unit contract changed"
