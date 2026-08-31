@@ -1,0 +1,16 @@
+### channel=kuwei-jdl-seedbatch seq=4
+### host=login4
+### started=2026-08-31T14:12:25+0800
+### ---------- output ----------
+=== A. landing check ===
+/data1/home/sunyiq/kuwei_jdl_seedbatch_20260831/laos/basins/namou_kuwei/dl/highflow_2026_06_17/scripts/kuwei_joint_da_learning.py
+/data1/home/sunyiq/kuwei_jdl_seedbatch_20260831/fsl/src/kernels/semi_distributed/core
+=== B. write array slurm ===
+=== C. submit ===
+Submitted batch job 216811
+         JOBID           NAME      PARTITION      STATE NODELIST(REASON)
+ 216811_[0-15]   kuwei-jdl-s1 hcpu48,hcpu48y    PENDING (Resources)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T14:12:25+0800
