@@ -1,0 +1,38 @@
+### channel=kalmannet-daily-camels seq=85
+### host=login4
+### started=2026-08-31T13:04:06+0800
+### ---------- output ----------
+SEQ85_A39_DISPATCH_VERIFIED job_id=216551 script_sha256=b2155174500da500d3b21366585fd73290ba5b158d8b3d099c7f0ffad4d67356 result84_sha256=4ceecc36882f1669462634a1ebe8b208391dd705cd59696b113536f9fa60baf3
+216551|daily-knet-a39-s83|sunyiq|hgpu8|FAILED|20:0|00:00:05|2026-08-31T12:53:15|2026-08-31T12:53:20|ngu202|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1||
+SEQ85_FILE_BEGIN label=slurm_stdout path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation1_20260831/logs/evaluation-216551.out size=0 sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+SEQ85_FILE_END label=slurm_stdout
+SEQ85_FILE_BEGIN label=slurm_stderr path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation1_20260831/logs/evaluation-216551.err size=116 sha256=e2b9d270be54346420eab671ce8f3362fcad887cf894be2c009950765387258c
+required A39 bundle member is absent, non-regular, or symbolic: /data1/home/sunyiq/hpc_mailbox/bundle_manifest.json
+
+SEQ85_FILE_END label=slurm_stderr
+SEQ85_FILE_BEGIN label=sbatch_stdout path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation1_20260831/status/sbatch.stdout size=7 sha256=0c09ee15a8c16724b39b010088897a2f64e29fa4c1df448d97e186977641a61a
+216551
+
+SEQ85_FILE_END label=sbatch_stdout
+SEQ85_FILE_BEGIN label=sbatch_stderr path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation1_20260831/status/sbatch.stderr size=0 sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+SEQ85_FILE_END label=sbatch_stderr
+SEQ85_FILE_BEGIN label=sbatch_exit path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation1_20260831/status/sbatch.exit size=2 sha256=9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+0
+
+SEQ85_FILE_END label=sbatch_exit
+SEQ85_FILE_BEGIN label=submitted_job_id path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation1_20260831/status/submitted_job_id.txt size=7 sha256=0c09ee15a8c16724b39b010088897a2f64e29fa4c1df448d97e186977641a61a
+216551
+
+SEQ85_FILE_END label=submitted_job_id
+SEQ85_FILE_BEGIN label=submission_owner path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation1_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL1_SEQ83.submission.lock/owner.json size=750 sha256=e7f462afc82918b2a291643f6587d794fb014be838a3af6322625833445e3328
+{"archive_sha256": "7d103b0fc096dd841c42f809f0c02b23e0cfa5733dab15242ce68c6ea7a60a47", "controller_sha256": "815fa9232b496098a6f81de06856693a95a3960289e09766a1b8f8ee9f7eaa23", "created_at_utc": "2026-08-31T04:52:43.362371+00:00", "evaluation_only": true, "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL1_SEQ83", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "mailbox_sequence": 83, "owner_host": "login4", "owner_pid": 47333, "owner_user": "sunyiq", "persistent": true, "slurm_sha256": "a72e4a3d7b72aa04d03822aac4dab766e02f09361928c15f53b48034fcdecb53", "state": "PREPARED", "submission_token": "df7bb91652823a495be3a45e1afc69cf192422ea25de20def3d19cea982d0f0e"}
+
+SEQ85_FILE_END label=submission_owner
+SEQ85_FILE_ABSENT label=submission_bound path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation1_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL1_SEQ83.submission.lock/bound.json
+SEQ85_PATH_STATE evaluation_exists=false verification_exists=false runtime_lock_exists=false submission_lock_exists=true
+SEQ85_A39_TERMINAL_DIAGNOSTIC_COMPLETE job_id=216551
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:04:06+0800
