@@ -40,6 +40,15 @@ else:
 PY
 if test -f "$MANIFEST"; then sha256sum "$MANIFEST"; fi
 
+echo "=== BOUND SOURCE HASHES ==="
+for path in \
+  "$ROOT/neuralhydrology/training/regularization.py" \
+  "$ROOT/test/test_hydrologic_dynamic_token_transformer.py" \
+  "$ROOT/src/31_hydrologic_dynamic_tokens/configs/maurer/dl01_learned_end_to_end.yml" \
+  "$ROOT/src/31_hydrologic_dynamic_tokens/registry/experiment_registry.yml"; do
+  if test -f "$path"; then sha256sum "$path"; else echo "SOURCE_MISSING $path"; fi
+done
+
 LATEST_OUTPUT=$(find "$RUN_ROOT" -type f -name output.log -printf '%T@ %p\n' 2>/dev/null | sort -nr | head -n 1 | cut -d' ' -f2-)
 echo "=== COMPACT TRAINING PROGRESS ==="
 if test -n "$LATEST_OUTPUT" && test -f "$LATEST_OUTPUT"; then
