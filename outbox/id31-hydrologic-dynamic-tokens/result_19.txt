@@ -1,0 +1,9 @@
+### channel=id31-hydrologic-dynamic-tokens seq=19
+### host=login4
+### started=2026-08-31T11:23:25+0800
+### ---------- output ----------
+PAYLOAD_MEMBERS_PASS ['neuralhydrology/training/regularization.py', 'test/test_hydrologic_dynamic_token_transformer.py']
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python: No module named pytest
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-31T11:23:29+0800
