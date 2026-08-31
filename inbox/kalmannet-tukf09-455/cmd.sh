@@ -15,6 +15,12 @@ echo "=== JOB DETAIL ==="
 scontrol show job -o "${JOB_ID}" || true
 echo "=== PARTITION NODES ==="
 sinfo -p hgpu2p -N -o '%N|%t|%G|%C' || true
+echo "=== PARTITION DETAIL ==="
+scontrol show partition hgpu2p -o || true
+echo "=== NODE RESOURCE DETAIL ==="
+for node in ngu001 ngu002 ngu004 ngu005 ngu006 ngu007 ngu008 ngu010 ngu011; do
+  scontrol show node "${node}" -o || true
+done
 echo "=== SACCT ==="
 sacct -j "${JOB_ID}" --format=JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,NodeList -P || true
 echo "=== STDOUT ==="
