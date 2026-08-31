@@ -1,0 +1,45 @@
+### channel=kalmannet-tukf09-455 seq=13
+### host=login4
+### started=2026-08-31T21:29:05+0800
+### ---------- output ----------
+=== DUAL GPU PROBE SQUEUE ===
+job_id=217074 name=tukf09-455-dual-gpu-map state=PENDING elapsed=0:00 limit=5:00 partition=hgpu2p node=(Priority)
+=== DUAL GPU PROBE ESTIMATED START ===
+job_id=JOBID state=STATE start=START_TIME node=NODELIST(REASON)
+job_id=217074 state=PENDING start=2027-08-30T11:06:49 node=(Priority)
+=== DUAL GPU PROBE DETAIL ===
+JobId=217074 JobName=tukf09-455-dual-gpu-map UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200344 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:05:00 TimeMin=N/A SubmitTime=2026-08-31T21:24:19 EligibleTime=2026-08-31T21:24:19 AccrueTime=2026-08-31T21:24:19 StartTime=2027-08-30T11:06:49 EndTime=2027-08-30T11:11:49 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-31T21:29:29 Partition=hgpu2p AllocNode:Sid=login04:721 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/kalmannet_tukf09_455_dual_gpu_allocation_probe_v1_20260831/dual_gpu_allocation_probe.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/kalmannet_tukf09_455_dual_gpu_allocation_probe_v1_20260831/logs/dual-gpu-probe-217074.err StdIn=/dev/null StdOut=/data1/home/sunyiq/kalmannet_tukf09_455_dual_gpu_allocation_probe_v1_20260831/logs/dual-gpu-probe-217074.out Power= TresPerNode=gpu:2
+=== DUAL GPU PROBE ACCOUNTING ===
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|NodeList
+217074|tukf09-455-dual-gpu-map|hgpu2p|PENDING|0:0|00:00:00|None assigned
+=== DUAL GPU PROBE STDOUT ===
+STDOUT_NOT_YET_PRESENT
+=== DUAL GPU PROBE STDERR ===
+STDERR_NOT_YET_PRESENT
+=== OLD EXCLUSIVE PROBE STATUS ===
+job_id=217060 name=tukf09-455-gpu-map state=PENDING elapsed=0:00 limit=5:00 partition=hgpu2p node=(Priority)
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|NodeList
+217060|tukf09-455-gpu-map|hgpu2p|PENDING|0:0|00:00:00|None assigned
+=== CURRENT HGPU2P NODES ===
+NODELIST|STATE|GRES|CPUS(A/I/O/T)
+ngu001|mix|gpu:2|2/94/0/96
+ngu002|alloc|gpu:2|96/0/0/96
+ngu004|mix|gpu:2|2/94/0/96
+ngu005|mix|gpu:2|2/94/0/96
+ngu006|mix|gpu:2|2/94/0/96
+ngu007|mix|gpu:2|2/94/0/96
+ngu008|mix|gpu:2|20/76/0/96
+ngu010|mix|gpu:2|1/31/0/32
+ngu011|mix|gpu:2|5/27/0/32
+NodeName=ngu001 Arch=x86_64 CoresPerSocket=24  CPUAlloc=2 CPUTot=96 CPULoad=5.59 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu001 NodeHostName=ngu001 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=16941 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-01-22T15:59:04 SlurmdStartTime=2026-01-22T16:05:49 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=2 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu004 Arch=x86_64 CoresPerSocket=24  CPUAlloc=2 CPUTot=96 CPULoad=5.90 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu004 NodeHostName=ngu004 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=24344 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-01-22T16:11:50 SlurmdStartTime=2026-01-22T20:17:27 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=2 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu005 Arch=x86_64 CoresPerSocket=24  CPUAlloc=2 CPUTot=96 CPULoad=5.35 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu005 NodeHostName=ngu005 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=19924 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-01-22T16:20:05 SlurmdStartTime=2026-01-22T20:18:04 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=2 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu006 Arch=x86_64 CoresPerSocket=24  CPUAlloc=2 CPUTot=96 CPULoad=5.69 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu006 NodeHostName=ngu006 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=10093 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-01-22T16:22:50 SlurmdStartTime=2026-01-22T20:17:55 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=2 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu007 Arch=x86_64 CoresPerSocket=24  CPUAlloc=2 CPUTot=96 CPULoad=5.71 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu007 NodeHostName=ngu007 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=8392 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-01-22T16:33:04 SlurmdStartTime=2026-01-22T20:18:31 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=2 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu008 Arch=x86_64 CoresPerSocket=24  CPUAlloc=20 CPUTot=96 CPULoad=12.84 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu008 NodeHostName=ngu008 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=12352 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-02-28T10:30:12 SlurmdStartTime=2026-02-28T11:16:51 CfgTRES=cpu=96,mem=1M,billing=96 AllocTRES=cpu=20 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu010 Arch=x86_64 CoresPerSocket=16  CPUAlloc=1 CPUTot=32 CPULoad=5.72 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu010 NodeHostName=ngu010 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=52399 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-02-28T10:53:13 SlurmdStartTime=2026-02-28T11:20:01 CfgTRES=cpu=32,mem=1M,billing=32 AllocTRES=cpu=1 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu011 Arch=x86_64 CoresPerSocket=16  CPUAlloc=5 CPUTot=32 CPULoad=10.01 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:2 NodeAddr=ngu011 NodeHostName=ngu011 Version=19.05.4 OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024  RealMemory=1 AllocMem=0 FreeMem=8135 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu2p  BootTime=2026-02-28T10:52:07 SlurmdStartTime=2026-02-28T11:41:27 CfgTRES=cpu=32,mem=1M,billing=32 AllocTRES=cpu=5 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+TUKF09_455_DUAL_GPU_ALLOCATION_MAPPING_STATUS_COLLECTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T21:29:06+0800
