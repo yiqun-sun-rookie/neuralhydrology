@@ -1,0 +1,26 @@
+### channel=kalmannet-tukf09-455 seq=14
+### host=login4
+### started=2026-08-31T22:06:46+0800
+### ---------- output ----------
+=== NEW A800 ROOT ===
+NEW_A800_ROOT_CONFIRMED_ABSENT
+=== PENDING PROBE JOBS ===
+job_id=217060 name=tukf09-455-gpu-map state=PENDING elapsed=0:00 limit=5:00 partition=hgpu2p node=(Resources)
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|NodeList
+217060|tukf09-455-gpu-map|hgpu2p|PENDING|0:0|00:00:00|None assigned
+job_id=217074 name=tukf09-455-dual-gpu-map state=PENDING elapsed=0:00 limit=5:00 partition=hgpu2p node=(Priority)
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|NodeList
+217074|tukf09-455-dual-gpu-map|hgpu2p|PENDING|0:0|00:00:00|None assigned
+=== A800 PARTITION ===
+NODELIST|STATE|GRES|CPUS(A/I/O/T)
+ngu201|idle|gpu:8|0/64/0/64
+ngu202|mix|gpu:8|2/62/0/64
+ngu203|maint|gpu:8|0/64/0/64
+PartitionName=hgpu8 AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=ngu[201-203] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=192 TotalNodes=3 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+NodeName=ngu201 Arch=x86_64 CoresPerSocket=16  CPUAlloc=0 CPUTot=64 CPULoad=0.01 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu201 NodeHostName=ngu201 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=1001345 Sockets=2 Boards=1 State=IDLE ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2026-04-28T14:14:14 SlurmdStartTime=2026-04-28T14:14:06 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES= CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu202 Arch=x86_64 CoresPerSocket=16  CPUAlloc=2 CPUTot=64 CPULoad=1.63 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu202 NodeHostName=ngu202 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=681783 Sockets=2 Boards=1 State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2026-01-22T14:56:21 SlurmdStartTime=2026-01-22T15:10:38 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES=cpu=2 CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+NodeName=ngu203 Arch=x86_64 CoresPerSocket=16  CPUAlloc=0 CPUTot=64 CPULoad=0.10 AvailableFeatures=(null) ActiveFeatures=(null) Gres=gpu:8 NodeAddr=ngu203 NodeHostName=ngu203 Version=19.05.4 OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020  RealMemory=1 AllocMem=0 FreeMem=668658 Sockets=2 Boards=1 State=MAINT ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A Partitions=hgpu8  BootTime=2025-07-23T15:13:15 SlurmdStartTime=2025-07-23T15:41:12 CfgTRES=cpu=64,mem=1M,billing=64 AllocTRES= CapWatts=n/a CurrentWatts=0 AveWatts=0 ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s 
+TUKF09_455_A800_EXCLUSIVE_V2_REMOTE_ADMISSION_CHECK_COMPLETED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T22:06:47+0800
