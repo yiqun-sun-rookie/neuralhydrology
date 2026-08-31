@@ -1,0 +1,219 @@
+### channel=kalmannet-daily-camels seq=97
+### host=login4
+### started=2026-08-31T17:31:14+0800
+### ---------- output ----------
+SEQ97_A39_TERMINAL_DIAGNOSTIC_DISPATCH_VERIFIED job_id=216974
+SEQ97_A39_TERMINAL_DIAGNOSTIC experiment_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39 execution_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94 job_id=216974
+216974|daily-knet-a39-s94|sunyiq|hgpu8|FAILED|2:0|00:00:26|2026-08-31T16:22:54|2026-08-31T16:23:20|ngu202||
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/source_A39_formal_evaluation_seq94
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/logs
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/locks
+DIRECTORY_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/inputs
+DIRECTORY_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/evaluation
+DIRECTORY_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/verification
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94.submission.lock
+DIRECTORY_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94.evaluation.lock
+FILE_BEGIN label=slurm_stdout path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/logs/evaluation-216974.out size=6140 sha256=7806a951a09a6d176973f7f55003a327e87dbd9103b8ddf7767a1175332cf9bd
+{"a38_member_identity_receipt": {"canonical_member_inventory_sha256": "e6af63ceb2c40f932afd295651104b3268f80ac41ccbccb95f7a0de240a55fe6", "container_byte_identity_reproduced": false, "member_content_identity_verified": true, "opened_as": "json_text_contract_only", "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/external_evidence/member_identity_verification.json", "sha256": "ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56", "size": 1278}, "a38_original_terminal_evidence_identity": {"available_at_runtime": false, "historical_path": "/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_KNET_A38_JOB215801_TERMINAL_EVIDENCE_SEQ82.tar.gz", "sha256": "72feda409ea3490ccd9a289b1313c9beb276c1cc267a15111dc19e63d5815317", "size": 13900887}, "a38_reconstructed_terminal_evidence_archive": {"opened_as": "opaque_bytes_only", "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/external_evidence/DAILY_CAMELS_KNET_A38_JOB215801_TERMINAL_EVIDENCE_RECONSTRUCT_SEQ89.tar.gz", "sha256": "89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d", "size": 13900887}, "bundle_manifest_sha256": "d88b2b1e4579eb2ad6adbdf3160f2c3c1fe6d01a99aae7bec82c99dc2705b7f8", "bundle_member_count": 38, "checkpoint": {"opened_as": "opaque_bytes_only", "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_a800_train1_20260828/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38/checkpoints/epoch_075.pt", "sha256": "7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b", "size": 4260296}, "config_identity": {"checkpoint_sha256": "7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b", "completed_epoch": 75, "evaluation_archive_sha256": "59c0acc1afce14da7fe479fc5cdb6c6c4d2b18758d076c32950c5f2b3cfd3596", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "output_root": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/evaluation"}, "diagnostic_mode": false, "evaluation_archive": {"opened_as": "opaque_bytes_only", "path": "/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/results/tukf06_full_diagonal_search_head_to_head_v1/evaluation/basin_09035800.npz", "sha256": "59c0acc1afce14da7fe479fc5cdb6c6c4d2b18758d076c32950c5f2b3cfd3596", "size": 444684}, "evaluation_array_payloads_materialized": 0, "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "formal_evaluation": true, "numpy_imported": false, "optimizer_updates_allowed": false, "resource_admission": {"available_host_memory_bytes": 718268964864, "gpu_count": 1, "gpu_count_evidence": {"cuda_visible_devices": "3", "fixed_slurm_request": "--gres=gpu:1", "nvidia_smi_visible_row_count": 1, "slurm_gpus_on_node_parsed_count": null, "slurm_gpus_on_node_raw": null, "slurm_gpus_on_node_required": false}, "gpu_free_memory_min_mib": 4584, "gpu_free_mib": 81226, "gpu_name": "NVIDIA A800-SXM4-80GB", "gpu_total_mib": 81920, "host_memory_min_bytes": 2800353280, "hostname": "ngu202", "nodes": 1, "partition": "hgpu8", "slurm_job_id": "216974", "status": "PASS", "tasks": 1}, "runtime_lock": {"created_at_utc": "2026-08-31T08:22:25.245790+00:00", "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "hostname": "ngu202", "persistent": false, "phase": "formal_evaluation", "pid": 49917, "slurm_job_id": "216974"}, "schema_version": "daily_camels_knet_formal_evaluation_preflight_v1", "status": "PASS", "submission_lock": {"bound": {"created_at_utc": "2026-08-31T08:22:25.137583+00:00", "evaluation_only": true, "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "hostname": "ngu202", "persistent": true, "pid": 49915, "slurm_job_id": "216974", "state": "BOUND", "submission_token": "00ae298e699c5ea81bbb0cc25886f94d30fc8e32a1f23c30202d88f3a5a1bb3f"}, "owner": {"archive_sha256": "d427c9aca30e26b0f51f722c6ff67763e15e8be5398e744f54e6828193c223bb", "controller_sha256": "051fe22b834399e7e22a056448309d49454461cdc4e206be4b76b4a6652bec73", "created_at_utc": "2026-08-31T08:22:07.345195+00:00", "eval3_diagnostic_result93_sha256": "8270074aacfa7bef826cd47ada87e352a4bb44529fdefbed19dcb3b080d2d1a5", "eval3_repair_reason": "fixed one-GPU request and runtime visibility proofs remain strict; unreliable optional Slurm GPU-count field is recorded but no longer mandatory", "eval3_submission_result91_sha256": "8a6790e87027a45160a21a9c3cc45a009702e88785da49dcaf6c624ffdd3fb38", "eval3_terminal_result92_sha256": "f15f30f8587be56c69c0f76fb7f6b77f5c9b2a9963d6d6a5fd46fbb4d71b5c4e", "evaluation_only": true, "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "mailbox_sequence": 94, "member_identity_receipt_sha256": "ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56", "member_identity_result90_sha256": "dacc0fb4c28ac48942f892df3015b7f92f0b2c9df9e04cf387534d55ac93d74d", "owner_host": "login4", "owner_pid": 32302, "owner_user": "sunyiq", "persistent": true, "prior_failed_job_id": "216847", "prior_failure_class": "recoverable_preflight_gpu_count_field_misinterpretation", "reconstructed_terminal_evidence_sha256": "89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d", "slurm_sha256": "fa0e3100bf1c069cf7006d0cf01740126d2d2253063dacb579cefdc433ac43df", "state": "PREPARED", "submission_token": "00ae298e699c5ea81bbb0cc25886f94d30fc8e32a1f23c30202d88f3a5a1bb3f", "transport_repair_reason": "original container missing; all 33 reconstructed members independently matched original inventory"}}, "torch_imported": false, "training_enabled": false}
+FILE_END label=slurm_stdout
+FILE_BEGIN label=slurm_stderr path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/logs/evaluation-216974.err size=328 sha256=07380cbc1704f90d847edc62729f577633523022d3f88f99dd1aabefc2e18561
+A39_FORMAL_EVALUATION_TECHNICAL_ERROR: checkpoint identity hash differs: actual='5f1f3fa3a15a0430bc5ee90e51ecf976604a5a1b2d084a7e215c6387aa26a2c4' expected='1d4a5d9e8e1dc1be3d4382784db0125872addeb8d4ea789375b6413ebb524d0d'
+srun: error: ngu202: task 0: Exited with exit code 2
+A39 formal evaluator failed technically with exit 2
+FILE_END label=slurm_stderr
+FILE_BEGIN label=submitted_job_id path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/submitted_job_id.txt size=7 sha256=8c11072caab2e9bd5e8550c562a51c447f7ee7994528121cb8b94cd9c186d217
+216974
+FILE_END label=submitted_job_id
+FILE_BEGIN label=sbatch_stdout path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/sbatch.stdout size=7 sha256=8c11072caab2e9bd5e8550c562a51c447f7ee7994528121cb8b94cd9c186d217
+216974
+FILE_END label=sbatch_stdout
+FILE_BEGIN label=sbatch_stderr path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/sbatch.stderr size=0 sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+FILE_END label=sbatch_stderr
+FILE_BEGIN label=sbatch_exit path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/sbatch.exit size=2 sha256=9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+0
+FILE_END label=sbatch_exit
+FILE_BEGIN label=submission_owner path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94.submission.lock/owner.json size=1789 sha256=106b0ea2dcc86c985e95a3390d303e6088119b7fb86bd03fc1b327f3db9ece35
+{"archive_sha256": "d427c9aca30e26b0f51f722c6ff67763e15e8be5398e744f54e6828193c223bb", "controller_sha256": "051fe22b834399e7e22a056448309d49454461cdc4e206be4b76b4a6652bec73", "created_at_utc": "2026-08-31T08:22:07.345195+00:00", "eval3_diagnostic_result93_sha256": "8270074aacfa7bef826cd47ada87e352a4bb44529fdefbed19dcb3b080d2d1a5", "eval3_repair_reason": "fixed one-GPU request and runtime visibility proofs remain strict; unreliable optional Slurm GPU-count field is recorded but no longer mandatory", "eval3_submission_result91_sha256": "8a6790e87027a45160a21a9c3cc45a009702e88785da49dcaf6c624ffdd3fb38", "eval3_terminal_result92_sha256": "f15f30f8587be56c69c0f76fb7f6b77f5c9b2a9963d6d6a5fd46fbb4d71b5c4e", "evaluation_only": true, "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "mailbox_sequence": 94, "member_identity_receipt_sha256": "ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56", "member_identity_result90_sha256": "dacc0fb4c28ac48942f892df3015b7f92f0b2c9df9e04cf387534d55ac93d74d", "owner_host": "login4", "owner_pid": 32302, "owner_user": "sunyiq", "persistent": true, "prior_failed_job_id": "216847", "prior_failure_class": "recoverable_preflight_gpu_count_field_misinterpretation", "reconstructed_terminal_evidence_sha256": "89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d", "slurm_sha256": "fa0e3100bf1c069cf7006d0cf01740126d2d2253063dacb579cefdc433ac43df", "state": "PREPARED", "submission_token": "00ae298e699c5ea81bbb0cc25886f94d30fc8e32a1f23c30202d88f3a5a1bb3f", "transport_repair_reason": "original container missing; all 33 reconstructed members independently matched original inventory"}
+FILE_END label=submission_owner
+FILE_BEGIN label=submission_bound path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94.submission.lock/bound.json size=458 sha256=03995d1af4e9639511e950fe537c3d0843674d1d7322d335fab678cdb715d470
+{"created_at_utc": "2026-08-31T08:22:25.137583+00:00", "evaluation_only": true, "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "hostname": "ngu202", "persistent": true, "pid": 49915, "slurm_job_id": "216974", "state": "BOUND", "submission_token": "00ae298e699c5ea81bbb0cc25886f94d30fc8e32a1f23c30202d88f3a5a1bb3f"}
+FILE_END label=submission_bound
+FILE_ABSENT label=runtime_owner path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94.evaluation.lock/owner.json
+FILE_BEGIN label=preflight_report path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/preflight-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94-216974.json size=6688 sha256=3490d7300f81d33bd6662ca8108954ac398e3bbfff2fff425c56b1e64e100486
+{
+  "a38_member_identity_receipt": {
+    "canonical_member_inventory_sha256": "e6af63ceb2c40f932afd295651104b3268f80ac41ccbccb95f7a0de240a55fe6",
+    "container_byte_identity_reproduced": false,
+    "member_content_identity_verified": true,
+    "opened_as": "json_text_contract_only",
+    "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/external_evidence/member_identity_verification.json",
+    "sha256": "ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56",
+    "size": 1278
+  },
+  "a38_original_terminal_evidence_identity": {
+    "available_at_runtime": false,
+    "historical_path": "/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_KNET_A38_JOB215801_TERMINAL_EVIDENCE_SEQ82.tar.gz",
+    "sha256": "72feda409ea3490ccd9a289b1313c9beb276c1cc267a15111dc19e63d5815317",
+    "size": 13900887
+  },
+  "a38_reconstructed_terminal_evidence_archive": {
+    "opened_as": "opaque_bytes_only",
+    "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/external_evidence/DAILY_CAMELS_KNET_A38_JOB215801_TERMINAL_EVIDENCE_RECONSTRUCT_SEQ89.tar.gz",
+    "sha256": "89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d",
+    "size": 13900887
+  },
+  "bundle_manifest_sha256": "d88b2b1e4579eb2ad6adbdf3160f2c3c1fe6d01a99aae7bec82c99dc2705b7f8",
+  "bundle_member_count": 38,
+  "checkpoint": {
+    "opened_as": "opaque_bytes_only",
+    "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_a800_train1_20260828/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38/checkpoints/epoch_075.pt",
+    "sha256": "7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b",
+    "size": 4260296
+  },
+  "config_identity": {
+    "checkpoint_sha256": "7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b",
+    "completed_epoch": 75,
+    "evaluation_archive_sha256": "59c0acc1afce14da7fe479fc5cdb6c6c4d2b18758d076c32950c5f2b3cfd3596",
+    "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+    "output_root": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/evaluation"
+  },
+  "diagnostic_mode": false,
+  "evaluation_archive": {
+    "opened_as": "opaque_bytes_only",
+    "path": "/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/results/tukf06_full_diagonal_search_head_to_head_v1/evaluation/basin_09035800.npz",
+    "sha256": "59c0acc1afce14da7fe479fc5cdb6c6c4d2b18758d076c32950c5f2b3cfd3596",
+    "size": 444684
+  },
+  "evaluation_array_payloads_materialized": 0,
+  "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94",
+  "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+  "formal_evaluation": true,
+  "numpy_imported": false,
+  "optimizer_updates_allowed": false,
+  "resource_admission": {
+    "available_host_memory_bytes": 718268964864,
+    "gpu_count": 1,
+    "gpu_count_evidence": {
+      "cuda_visible_devices": "3",
+      "fixed_slurm_request": "--gres=gpu:1",
+      "nvidia_smi_visible_row_count": 1,
+      "slurm_gpus_on_node_parsed_count": null,
+      "slurm_gpus_on_node_raw": null,
+      "slurm_gpus_on_node_required": false
+    },
+    "gpu_free_memory_min_mib": 4584,
+    "gpu_free_mib": 81226,
+    "gpu_name": "NVIDIA A800-SXM4-80GB",
+    "gpu_total_mib": 81920,
+    "host_memory_min_bytes": 2800353280,
+    "hostname": "ngu202",
+    "nodes": 1,
+    "partition": "hgpu8",
+    "slurm_job_id": "216974",
+    "status": "PASS",
+    "tasks": 1
+  },
+  "runtime_lock": {
+    "created_at_utc": "2026-08-31T08:22:25.245790+00:00",
+    "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94",
+    "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+    "hostname": "ngu202",
+    "persistent": false,
+    "phase": "formal_evaluation",
+    "pid": 49917,
+    "slurm_job_id": "216974"
+  },
+  "schema_version": "daily_camels_knet_formal_evaluation_preflight_v1",
+  "status": "PASS",
+  "submission_lock": {
+    "bound": {
+      "created_at_utc": "2026-08-31T08:22:25.137583+00:00",
+      "evaluation_only": true,
+      "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94",
+      "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+      "hostname": "ngu202",
+      "persistent": true,
+      "pid": 49915,
+      "slurm_job_id": "216974",
+      "state": "BOUND",
+      "submission_token": "00ae298e699c5ea81bbb0cc25886f94d30fc8e32a1f23c30202d88f3a5a1bb3f"
+    },
+    "owner": {
+      "archive_sha256": "d427c9aca30e26b0f51f722c6ff67763e15e8be5398e744f54e6828193c223bb",
+      "controller_sha256": "051fe22b834399e7e22a056448309d49454461cdc4e206be4b76b4a6652bec73",
+      "created_at_utc": "2026-08-31T08:22:07.345195+00:00",
+      "eval3_diagnostic_result93_sha256": "8270074aacfa7bef826cd47ada87e352a4bb44529fdefbed19dcb3b080d2d1a5",
+      "eval3_repair_reason": "fixed one-GPU request and runtime visibility proofs remain strict; unreliable optional Slurm GPU-count field is recorded but no longer mandatory",
+      "eval3_submission_result91_sha256": "8a6790e87027a45160a21a9c3cc45a009702e88785da49dcaf6c624ffdd3fb38",
+      "eval3_terminal_result92_sha256": "f15f30f8587be56c69c0f76fb7f6b77f5c9b2a9963d6d6a5fd46fbb4d71b5c4e",
+      "evaluation_only": true,
+      "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94",
+      "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+      "mailbox_sequence": 94,
+      "member_identity_receipt_sha256": "ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56",
+      "member_identity_result90_sha256": "dacc0fb4c28ac48942f892df3015b7f92f0b2c9df9e04cf387534d55ac93d74d",
+      "owner_host": "login4",
+      "owner_pid": 32302,
+      "owner_user": "sunyiq",
+      "persistent": true,
+      "prior_failed_job_id": "216847",
+      "prior_failure_class": "recoverable_preflight_gpu_count_field_misinterpretation",
+      "reconstructed_terminal_evidence_sha256": "89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d",
+      "slurm_sha256": "fa0e3100bf1c069cf7006d0cf01740126d2d2253063dacb579cefdc433ac43df",
+      "state": "PREPARED",
+      "submission_token": "00ae298e699c5ea81bbb0cc25886f94d30fc8e32a1f23c30202d88f3a5a1bb3f",
+      "transport_repair_reason": "original container missing; all 33 reconstructed members independently matched original inventory"
+    }
+  },
+  "torch_imported": false,
+  "training_enabled": false
+}
+FILE_END label=preflight_report
+FILE_BEGIN label=resource_summary path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/resource-summary-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94-216974.json size=1045 sha256=82b17e5690d86071e99bd996d69d8d67776702b685b1a2ce3a03273bdb426c9d
+{
+  "cgroup": {
+    "cgroup_v2_memory_status": "unavailable",
+    "process_cgroup_relative": "unavailable",
+    "recorded_at_utc": "2026-08-31T08:22:48Z",
+    "slurm_job_id": "216974"
+  },
+  "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94",
+  "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+  "gpu_sampling": {
+    "adjacent_gap_at_most_10_seconds": true,
+    "covers_evaluation_end": false,
+    "covers_evaluation_start": true,
+    "evaluation_end_epoch_seconds": 1788164568,
+    "evaluation_start_epoch_seconds": 1788164547,
+    "first_sample_epoch_seconds": 1788164546,
+    "gpu_name_values": [
+      "NVIDIA A800-SXM4-80GB"
+    ],
+    "last_sample_epoch_seconds": 1788164567,
+    "maximum_adjacent_gap_seconds": 2,
+    "minimum_free_memory_mib": 80727,
+    "peak_used_memory_mib": 501,
+    "sample_count": 21
+  },
+  "schema_version": "daily_camels_knet_formal_evaluation_resources_v1",
+  "slurm_job_id": "216974",
+  "technical_entry_exit_code": 2
+}
+FILE_END label=resource_summary
+FILE_BEGIN label=evaluation_exit path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/evaluation-exit-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94-216974.txt size=2 sha256=53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3
+2
+FILE_END label=evaluation_exit
+FILE_ABSENT label=verification_exit path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/status/verification-exit-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94-216974.txt
+FILE_ABSENT label=result_summary path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/evaluation/result_summary.json
+FILE_ABSENT label=access_ledger path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/evaluation/access_ledger.json
+FILE_ABSENT label=independent_verification path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/verification/independent_verification.json
+IDENTITY_ABSENT label=predictions path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/evaluation/predictions.npz
+IDENTITY_FILE label=epoch75_checkpoint path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_a800_train1_20260828/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38/checkpoints/epoch_075.pt size=4260296 sha256=7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b
+IDENTITY_ABSENT label=reconstructed_evidence path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/inputs/DAILY_CAMELS_KNET_A38_JOB215801_TERMINAL_EVIDENCE_RECONSTRUCT_SEQ89.tar.gz
+IDENTITY_ABSENT label=member_identity_receipt path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/inputs/member_identity_verification.json
+SEQ97_A39_TERMINAL_DIAGNOSTIC_COMPLETE job_id=216974
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T17:31:14+0800
