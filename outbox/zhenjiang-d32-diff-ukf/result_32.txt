@@ -1,0 +1,27 @@
+### channel=zhenjiang-d32-diff-ukf seq=32
+### host=login4
+### started=2026-08-31T15:54:33+0800
+### ---------- output ----------
+QUERY_TIME=2026-08-31T15:54:33+0800
+=== SQUEUE ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+216963|zhd32_dukf_dev_smoke|PENDING|hgpu2p||0:00|2:00:00|(Priority)
+=== ESTIMATED_START ===
+JOBID|START_TIME|NODELIST(REASON)
+216963|2026-09-02T01:09:15|(Priority)
+=== SCHEDULER_IDENTITY ===
+JobId=216963 JobName=zhd32_dukf_dev_smoke UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200172 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A SubmitTime=2026-08-31T15:51:03 EligibleTime=2026-08-31T15:51:03 AccrueTime=2026-08-31T15:51:03 StartTime=2026-09-02T01:09:15 EndTime=2026-09-02T03:09:15 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-31T15:54:54 Partition=hgpu2p AllocNode:Sid=login04:721 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/run/scripts/hpc/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_smoke_v1.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/logs/smoke_216963.err StdIn=/dev/null StdOut=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/logs/smoke_216963.out Power= TresPerNode=gpu:1
+=== ACCOUNTING ===
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|Start|End|NodeList
+216963|zhd32_dukf_dev_smoke|hgpu2p|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+=== OUTPUT_EXISTENCE ===
+seed=17 final=false partial=false
+seed=29 final=false partial=false
+seed=43 final=false partial=false
+=== STANDARD_OUTPUT_TAIL ===
+absent
+=== STANDARD_ERROR_TAIL ===
+absent
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T15:54:33+0800
