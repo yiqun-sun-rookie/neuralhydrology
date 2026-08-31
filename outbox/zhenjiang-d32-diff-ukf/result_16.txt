@@ -1,0 +1,25 @@
+### channel=zhenjiang-d32-diff-ukf seq=16
+### host=login4
+### started=2026-08-31T13:07:30+0800
+### ---------- output ----------
+ARCHIVE_SAFETY_AND_IDENTITY=PASS
+EXTRACTED_BUNDLE_AND_TRAINING_IDENTITIES=PASS
+DEPLOYMENT_STATUS=PASS
+EVALUATION_ROOT=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831
+TRAINING_ROOT=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2
+INPUT_ROOT=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1
+e43bbd68a2893c4b7e9707c68820d2cb87e77e9c34018c392ea0a2f31ac40f69  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831/bundles/zhenjiang_d32_gru_differentiable_ukf_dev_eval_20260831_v1.tar.gz
+094894c6a0c83e5e384c17227f0add9760b9f994afe2d3b6e4d1f91f7877f71d  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831/run/docs/records/ZHENJIANG_D32_GRU_DIFFERENTIABLE_UKF_V1_DEVELOPMENT_EVALUATION_REGISTRY.json
+=== USER_QUEUE_UNCHANGED_BY_DEPLOYMENT ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT
+202226_[0-119%4]|N22-eval-later|PENDING|hgpu4,hgpu8,hgpu2||0:00|1-00:00:00
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2||0:00|1-00:00:00
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2||0:00|4:00:00
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2||0:00|2:00:00
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2||0:00|2:00:00
+215429|id30_m01_s100|PENDING|hgpu2||0:00|7-00:00:00
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2||0:00|1-00:00:00
+216549|id31_development|RUNNING|hgpu2|ngu003|47:20|7-00:00:00
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:07:34+0800
