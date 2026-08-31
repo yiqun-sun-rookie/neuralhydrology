@@ -1,0 +1,20 @@
+### channel=kalmannet-tukf09-455 seq=4
+### host=login4
+### started=2026-08-31T20:19:38+0800
+### ---------- output ----------
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2807,
+  "status": "TUKF09_455_HPC_BUNDLE_VERIFIED"
+}
+Submitted batch job 217060
+ALLOCATION_PROBE_JOB_ID=217060
+job_id=217060 state=PENDING partition=hgpu2p node=(Priority)
+TUKF09_455_GPU_ALLOCATION_MAPPING_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T20:19:42+0800
