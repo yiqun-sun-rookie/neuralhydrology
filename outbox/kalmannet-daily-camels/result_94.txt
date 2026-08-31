@@ -1,0 +1,10 @@
+### channel=kalmannet-daily-camels seq=94
+### host=login4
+### started=2026-08-31T16:22:04+0800
+### ---------- output ----------
+SEQ94_A39_STATIC_CHECK_PASS
+SEQ94_A39_DISPATCH_VERIFIED
+SEQ94_A39_FORMAL_EVALUATION_SUBMITTED experiment_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39 execution_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL4_SEQ94 job_id=216974 archive_sha256=d427c9aca30e26b0f51f722c6ff67763e15e8be5398e744f54e6828193c223bb manifest_sha256=9678376298f9d91addc3cf98dfac0b212142e61b6dbd45e55a1a699578e5f0e8 slurm_sha256=fa0e3100bf1c069cf7006d0cf01740126d2d2253063dacb579cefdc433ac43df preflight_sha256=5fd6712492b20e094826c9ec11b362f3595fd519f31cc85876d4d533bad93b77 result90_sha256=dacc0fb4c28ac48942f892df3015b7f92f0b2c9df9e04cf387534d55ac93d74d result91_sha256=8a6790e87027a45160a21a9c3cc45a009702e88785da49dcaf6c624ffdd3fb38 result92_sha256=f15f30f8587be56c69c0f76fb7f6b77f5c9b2a9963d6d6a5fd46fbb4d71b5c4e result93_sha256=8270074aacfa7bef826cd47ada87e352a4bb44529fdefbed19dcb3b080d2d1a5 reconstructed_sha256=89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d receipt_sha256=ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56 root=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831 source_root=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831/source_A39_formal_evaluation_seq94
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T16:22:08+0800
