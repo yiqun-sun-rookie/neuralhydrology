@@ -22,6 +22,10 @@ echo "=== SACCT ==="
 if [ -n "${FORMAT}" ]; then
   sacct -j "${JOB_ID}" -P --format="${FORMAT}" || true
 fi
+echo "=== PARTITION_NODES ==="
+sinfo -p hgpu2p -N -o '%N|%T|%G|%C' || true
+echo "=== JOB_PRIORITY ==="
+sprio -j "${JOB_ID}" || true
 
 ALL_COMPLETE=true
 echo "=== OUTPUT_EXISTENCE ==="
