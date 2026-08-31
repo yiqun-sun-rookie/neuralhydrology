@@ -1,0 +1,35 @@
+### channel=zhenjiang-d32-diff-ukf seq=35
+### host=login4
+### started=2026-08-31T17:14:37+0800
+### ---------- output ----------
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "4785bca17e36eadbe0b2c95b23f18915dafa54fa6fd9ecbb858b85c0727701a4"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "37b191baf3140b954fc91c8ec4bf6c93e9d6cdeb082b36ca042d17995cd66079"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "c02d0169ee97e50563201aac28d79013e627162efa70d2b488d033633242fc3a"
+}
+REVISION_THREE_FORMAL_SUBMISSION_PRECHECK_GATE=PASS
+REVISION_THREE_FORMAL_ARRAY_SUBMISSION_STATUS=PASS
+REVISION_THREE_FORMAL_ARRAY_JOB_ID=217013
+job_id=217013
+submitted_at=2026-08-31T17:14:47+0800
+precheck_job_id=216963
+script_sha256=7677dd63400f54e844f8f447423c3a327a9ea5f7e277ce4bb12ec67883f033de
+registry_sha256=7ce4e50faac807bbf3557eb0befc6e05769bba263390b3a1be0a55b0097d5b04
+array=0-2%1
+excluded_node=ngu002
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+217013_[0-2%1]|zhd32_dukf_dev_eval|PENDING|hgpu2p||0:00|2:00:00|(None)
+JobId=217013 ArrayJobId=217013 ArrayTaskId=0-2%1 ArrayTaskThrottle=1 JobName=zhd32_dukf_dev_eval UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A SubmitTime=2026-08-31T17:15:19 EligibleTime=Unknown AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-31T17:15:19 Partition=hgpu2p AllocNode:Sid=login04:721 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/run/scripts/hpc/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_formal_v1.slurm WorkDir=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/run StdErr=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/logs/formal_217013_4294967294.err StdIn=/dev/null StdOut=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/logs/formal_217013_4294967294.out Power= TresPerNode=gpu:1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T17:14:47+0800
