@@ -1,0 +1,16 @@
+### channel=kalmannet-tukf25 seq=3
+### host=login4
+### started=2026-08-31T14:04:26+0800
+### ---------- output ----------
+=== PRECONDITION ===
+anchor gate green 27/27
+=== SBATCH TRAIN ARRAY 108 ===
+Submitted batch job 216699
+train_job_id=216699
+=== QUEUE SNAPSHOT ===
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+    216699_[0-107]   hcpu48y tukf25_t   sunyiq PD       0:00      1 (None)
+SEQ3_OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T14:04:26+0800
