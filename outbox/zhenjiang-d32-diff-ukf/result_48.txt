@@ -1,0 +1,22 @@
+### channel=zhenjiang-d32-diff-ukf seq=48
+### host=login4
+### started=2026-09-01T04:20:52+0800
+### ---------- output ----------
+QUERY_TIME=2026-09-01T04:20:52+0800
+=== FAILED_JOB_ACCOUNTING ===
+JobID|JobName|Partition|State|ExitCode|Elapsed|Start|End|NodeList|AllocTRES
+217148|zhd32_dukf_aggregate|hcpu48y|FAILED|1:0|00:00:01|2026-09-01T02:19:20|2026-09-01T02:19:21|icn275|billing=48,cpu=48,node=1
+=== PRESERVED_FAILED_SCRIPT ===
+6016bdb2ac993ba25a09275953f8ae8a56c310dac13f03fc6f6c895019cf2e09  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/jobs/aggregate_audit_v2.slurm
+=== CREATE_ONLY_TARGETS ===
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001.partial
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001.partial
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/jobs/aggregate_audit_v3.slurm
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/jobs/aggregate_audit_v3_job_id.txt
+AGGREGATE_AUDIT_JOB_ID=217168
+JobId=217168 JobName=zhd32_dukf_aggregate UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=01:00:00 TimeMin=N/A SubmitTime=2026-09-01T04:21:25 EligibleTime=2026-09-01T04:21:25 AccrueTime=Unknown StartTime=Unknown EndTime=Unknown Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-01T04:21:25 Partition=hcpu48,hcpu48y AllocNode:Sid=login04:721 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/jobs/aggregate_audit_v3.slurm WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/logs/aggregate_audit_v3_217168.err StdIn=/dev/null StdOut=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/logs/aggregate_audit_v3_217168.out Power=
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T04:20:53+0800
