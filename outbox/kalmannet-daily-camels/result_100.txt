@@ -1,0 +1,866 @@
+### channel=kalmannet-daily-camels seq=100
+### host=login4
+### started=2026-08-31T18:58:34+0800
+### ---------- output ----------
+SEQ100_A39_TERMINAL_DIAGNOSTIC_DISPATCH_VERIFIED job_id=217038
+SEQ100_A39_TERMINAL_DIAGNOSTIC experiment_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39 execution_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98 job_id=217038
+217038|daily-knet-a39-s98|sunyiq|hgpu8|FAILED|72:0|00:01:42|2026-08-31T18:44:47|2026-08-31T18:46:29|ngu202||
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/source_A39_formal_evaluation_seq98
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/logs
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/locks
+DIRECTORY_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/inputs
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/evaluation
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/verification
+DIRECTORY_PRESENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98.submission.lock
+DIRECTORY_ABSENT path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98.evaluation.lock
+FILE_BEGIN label=slurm_stdout path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/logs/evaluation-217038.out size=7381 sha256=7c731eed371430a82d22743c27df8359599875697bf34c8e5503b94fcd262212
+{"a38_member_identity_receipt": {"canonical_member_inventory_sha256": "e6af63ceb2c40f932afd295651104b3268f80ac41ccbccb95f7a0de240a55fe6", "container_byte_identity_reproduced": false, "member_content_identity_verified": true, "opened_as": "json_text_contract_only", "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/external_evidence/member_identity_verification.json", "sha256": "ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56", "size": 1278}, "a38_original_terminal_evidence_identity": {"available_at_runtime": false, "historical_path": "/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_KNET_A38_JOB215801_TERMINAL_EVIDENCE_SEQ82.tar.gz", "sha256": "72feda409ea3490ccd9a289b1313c9beb276c1cc267a15111dc19e63d5815317", "size": 13900887}, "a38_reconstructed_terminal_evidence_archive": {"opened_as": "opaque_bytes_only", "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/external_evidence/DAILY_CAMELS_KNET_A38_JOB215801_TERMINAL_EVIDENCE_RECONSTRUCT_SEQ89.tar.gz", "sha256": "89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d", "size": 13900887}, "bundle_manifest_sha256": "daffb66462669be33733c8b69a1d5b39de2d86862efa900dbf46371e3eee234c", "bundle_member_count": 38, "checkpoint": {"opened_as": "opaque_bytes_only", "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_a800_train1_20260828/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38/checkpoints/epoch_075.pt", "sha256": "7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b", "size": 4260296}, "config_identity": {"checkpoint_sha256": "7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b", "completed_epoch": 75, "evaluation_archive_sha256": "59c0acc1afce14da7fe479fc5cdb6c6c4d2b18758d076c32950c5f2b3cfd3596", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "output_root": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/evaluation"}, "diagnostic_mode": false, "evaluation_archive": {"opened_as": "opaque_bytes_only", "path": "/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/results/tukf06_full_diagonal_search_head_to_head_v1/evaluation/basin_09035800.npz", "sha256": "59c0acc1afce14da7fe479fc5cdb6c6c4d2b18758d076c32950c5f2b3cfd3596", "size": 444684}, "evaluation_array_payloads_materialized": 0, "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "formal_evaluation": true, "numpy_imported": false, "optimizer_updates_allowed": false, "resource_admission": {"available_host_memory_bytes": 723113013248, "gpu_count": 1, "gpu_count_evidence": {"cuda_visible_devices": "0", "fixed_slurm_request": "--gres=gpu:1", "nvidia_smi_visible_row_count": 1, "slurm_gpus_on_node_parsed_count": null, "slurm_gpus_on_node_raw": null, "slurm_gpus_on_node_required": false}, "gpu_free_memory_min_mib": 4584, "gpu_free_mib": 81226, "gpu_name": "NVIDIA A800-SXM4-80GB", "gpu_total_mib": 81920, "host_memory_min_bytes": 2800353280, "hostname": "ngu202", "nodes": 1, "partition": "hgpu8", "slurm_job_id": "217038", "status": "PASS", "tasks": 1}, "runtime_lock": {"created_at_utc": "2026-08-31T10:44:18.547375+00:00", "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "hostname": "ngu202", "persistent": false, "phase": "formal_evaluation", "pid": 38205, "slurm_job_id": "217038"}, "schema_version": "daily_camels_knet_formal_evaluation_preflight_v1", "status": "PASS", "submission_lock": {"bound": {"created_at_utc": "2026-08-31T10:44:18.496116+00:00", "evaluation_only": true, "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "hostname": "ngu202", "persistent": true, "pid": 38203, "slurm_job_id": "217038", "state": "BOUND", "submission_token": "bd450dbffdfdfc6ffe570e6ceba9f48e99a786d794a0db5bb68a79d3f49ea6b2"}, "owner": {"archive_sha256": "8c4ac568c808ad9d0a58177fbb7ab5a091cfe534c4363146104db56c52ffe5de", "controller_sha256": "c1496c38863d0ed7b71f0931750da894ec2b293560f2e8fa6b2cf09ef493c196", "created_at_utc": "2026-08-31T10:43:48.242746+00:00", "eval1_diagnostic_result85_sha256": "a3ef9061e9b9634c10792700407c077d4e34529f58dc6052a68eea5594e10a2a", "eval2_diagnostic_result88_sha256": "3d275a97832907159085ee83a20b2649cf9e0a8e69ccfbe4684a288dca748bfb", "eval3_diagnostic_result93_sha256": "8270074aacfa7bef826cd47ada87e352a4bb44529fdefbed19dcb3b080d2d1a5", "eval3_repair_reason": "fixed one-GPU request and runtime visibility proofs remain strict; unreliable optional Slurm GPU-count field is recorded but no longer mandatory", "eval3_submission_result91_sha256": "8a6790e87027a45160a21a9c3cc45a009702e88785da49dcaf6c624ffdd3fb38", "eval3_terminal_result92_sha256": "f15f30f8587be56c69c0f76fb7f6b77f5c9b2a9963d6d6a5fd46fbb4d71b5c4e", "eval4_diagnostic_result97_sha256": "1348ab73108bfb5b3c7f9dc69aefe610c55c82d46d8ad42f91cffd168b3fb104", "eval4_repair_reason": "checkpoint identity validation now uses the trainer's compact canonical JSON bytes while formal output formatting remains unchanged", "eval4_submission_result94_sha256": "9e5016900324873d62f3e43601ef59b48f4002a900c4bcc57e53b82eccab6013", "eval4_terminal_result96_sha256": "1a3c0e598d4368e01e1cecdf2f5ab7781e4ce16802a372650eca72b3e514d1a0", "evaluation_only": true, "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "mailbox_sequence": 98, "member_identity_receipt_sha256": "ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56", "member_identity_result90_sha256": "dacc0fb4c28ac48942f892df3015b7f92f0b2c9df9e04cf387534d55ac93d74d", "owner_host": "login4", "owner_pid": 2997, "owner_user": "sunyiq", "persistent": true, "prior_failed_job_id": "216974", "prior_failure_class": "recoverable_checkpoint_identity_canonicalization_mismatch", "reconstructed_terminal_evidence_sha256": "89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d", "slurm_sha256": "c499f3175da8c36f553e99c09c88e417820c0292d4be1fea1382108ab6770276", "state": "PREPARED", "submission_token": "bd450dbffdfdfc6ffe570e6ceba9f48e99a786d794a0db5bb68a79d3f49ea6b2", "transport_repair_reason": "original container missing; all 33 reconstructed members independently matched original inventory"}}, "torch_imported": false, "training_enabled": false}
+A39_FORMAL_EVALUATION_COMPLETE capability=PASS comparison=NO_DISCERNIBLE_ADVANTAGE scale_up=GO convergence=UNKNOWN_NOT_ESTABLISHED_BY_SINGLE_CHECKPOINT_FORMAL_EVALUATION
+INDEPENDENT_VERIFICATION_PASS capability=PASS comparison=NO_DISCERNIBLE_ADVANTAGE scale_up=GO
+A39_FORMAL_EVALUATION_TECHNICALLY_COMPLETE experiment_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39 execution_id=DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98 slurm_job_id=217038; scientific status is recorded only in result_summary.json
+FILE_END label=slurm_stdout
+FILE_BEGIN label=slurm_stderr path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/logs/evaluation-217038.err size=147 sha256=8483a4189b2cdeaf207284bfad987504b2ca1423389eb282796374ff524212a8
+Traceback (most recent call last):
+  File "<stdin>", line 72, in <module>
+RuntimeError: successful A39 entry lacks complete A800 resource coverage
+FILE_END label=slurm_stderr
+FILE_BEGIN label=submitted_job_id path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/submitted_job_id.txt size=7 sha256=4c1e45c88cb946a92b12a8fa169716d30c5bd16eb3f0f6bb37fcce57cae0397f
+217038
+FILE_END label=submitted_job_id
+FILE_BEGIN label=sbatch_stdout path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/sbatch.stdout size=7 sha256=4c1e45c88cb946a92b12a8fa169716d30c5bd16eb3f0f6bb37fcce57cae0397f
+217038
+FILE_END label=sbatch_stdout
+FILE_BEGIN label=sbatch_stderr path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/sbatch.stderr size=0 sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+FILE_END label=sbatch_stderr
+FILE_BEGIN label=sbatch_exit path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/sbatch.exit size=2 sha256=9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+0
+FILE_END label=sbatch_exit
+FILE_BEGIN label=submission_owner path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98.submission.lock/owner.json size=2466 sha256=df418fd2fd2c266e7f73332ce242cab4252aa2a7db3f10d7db9c23ae3bc8c705
+{"archive_sha256": "8c4ac568c808ad9d0a58177fbb7ab5a091cfe534c4363146104db56c52ffe5de", "controller_sha256": "c1496c38863d0ed7b71f0931750da894ec2b293560f2e8fa6b2cf09ef493c196", "created_at_utc": "2026-08-31T10:43:48.242746+00:00", "eval1_diagnostic_result85_sha256": "a3ef9061e9b9634c10792700407c077d4e34529f58dc6052a68eea5594e10a2a", "eval2_diagnostic_result88_sha256": "3d275a97832907159085ee83a20b2649cf9e0a8e69ccfbe4684a288dca748bfb", "eval3_diagnostic_result93_sha256": "8270074aacfa7bef826cd47ada87e352a4bb44529fdefbed19dcb3b080d2d1a5", "eval3_repair_reason": "fixed one-GPU request and runtime visibility proofs remain strict; unreliable optional Slurm GPU-count field is recorded but no longer mandatory", "eval3_submission_result91_sha256": "8a6790e87027a45160a21a9c3cc45a009702e88785da49dcaf6c624ffdd3fb38", "eval3_terminal_result92_sha256": "f15f30f8587be56c69c0f76fb7f6b77f5c9b2a9963d6d6a5fd46fbb4d71b5c4e", "eval4_diagnostic_result97_sha256": "1348ab73108bfb5b3c7f9dc69aefe610c55c82d46d8ad42f91cffd168b3fb104", "eval4_repair_reason": "checkpoint identity validation now uses the trainer's compact canonical JSON bytes while formal output formatting remains unchanged", "eval4_submission_result94_sha256": "9e5016900324873d62f3e43601ef59b48f4002a900c4bcc57e53b82eccab6013", "eval4_terminal_result96_sha256": "1a3c0e598d4368e01e1cecdf2f5ab7781e4ce16802a372650eca72b3e514d1a0", "evaluation_only": true, "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "mailbox_sequence": 98, "member_identity_receipt_sha256": "ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56", "member_identity_result90_sha256": "dacc0fb4c28ac48942f892df3015b7f92f0b2c9df9e04cf387534d55ac93d74d", "owner_host": "login4", "owner_pid": 2997, "owner_user": "sunyiq", "persistent": true, "prior_failed_job_id": "216974", "prior_failure_class": "recoverable_checkpoint_identity_canonicalization_mismatch", "reconstructed_terminal_evidence_sha256": "89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d", "slurm_sha256": "c499f3175da8c36f553e99c09c88e417820c0292d4be1fea1382108ab6770276", "state": "PREPARED", "submission_token": "bd450dbffdfdfc6ffe570e6ceba9f48e99a786d794a0db5bb68a79d3f49ea6b2", "transport_repair_reason": "original container missing; all 33 reconstructed members independently matched original inventory"}
+FILE_END label=submission_owner
+FILE_BEGIN label=submission_bound path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98.submission.lock/bound.json size=458 sha256=21ca698195dd07cd16f2d9af37c58424cf0e343ee56332ffb81f8b8f4502c623
+{"created_at_utc": "2026-08-31T10:44:18.496116+00:00", "evaluation_only": true, "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98", "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39", "hostname": "ngu202", "persistent": true, "pid": 38203, "slurm_job_id": "217038", "state": "BOUND", "submission_token": "bd450dbffdfdfc6ffe570e6ceba9f48e99a786d794a0db5bb68a79d3f49ea6b2"}
+FILE_END label=submission_bound
+FILE_ABSENT label=runtime_owner path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/locks/DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98.evaluation.lock/owner.json
+FILE_BEGIN label=preflight_report path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/preflight-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98-217038.json size=7401 sha256=c7b8a054bc6a87b83e3ddaae831bc86e380cb898c441e00f325466f3b84c9280
+{
+  "a38_member_identity_receipt": {
+    "canonical_member_inventory_sha256": "e6af63ceb2c40f932afd295651104b3268f80ac41ccbccb95f7a0de240a55fe6",
+    "container_byte_identity_reproduced": false,
+    "member_content_identity_verified": true,
+    "opened_as": "json_text_contract_only",
+    "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/external_evidence/member_identity_verification.json",
+    "sha256": "ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56",
+    "size": 1278
+  },
+  "a38_original_terminal_evidence_identity": {
+    "available_at_runtime": false,
+    "historical_path": "/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_KNET_A38_JOB215801_TERMINAL_EVIDENCE_SEQ82.tar.gz",
+    "sha256": "72feda409ea3490ccd9a289b1313c9beb276c1cc267a15111dc19e63d5815317",
+    "size": 13900887
+  },
+  "a38_reconstructed_terminal_evidence_archive": {
+    "opened_as": "opaque_bytes_only",
+    "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/external_evidence/DAILY_CAMELS_KNET_A38_JOB215801_TERMINAL_EVIDENCE_RECONSTRUCT_SEQ89.tar.gz",
+    "sha256": "89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d",
+    "size": 13900887
+  },
+  "bundle_manifest_sha256": "daffb66462669be33733c8b69a1d5b39de2d86862efa900dbf46371e3eee234c",
+  "bundle_member_count": 38,
+  "checkpoint": {
+    "opened_as": "opaque_bytes_only",
+    "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_a800_train1_20260828/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38/checkpoints/epoch_075.pt",
+    "sha256": "7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b",
+    "size": 4260296
+  },
+  "config_identity": {
+    "checkpoint_sha256": "7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b",
+    "completed_epoch": 75,
+    "evaluation_archive_sha256": "59c0acc1afce14da7fe479fc5cdb6c6c4d2b18758d076c32950c5f2b3cfd3596",
+    "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+    "output_root": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/evaluation"
+  },
+  "diagnostic_mode": false,
+  "evaluation_archive": {
+    "opened_as": "opaque_bytes_only",
+    "path": "/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/results/tukf06_full_diagonal_search_head_to_head_v1/evaluation/basin_09035800.npz",
+    "sha256": "59c0acc1afce14da7fe479fc5cdb6c6c4d2b18758d076c32950c5f2b3cfd3596",
+    "size": 444684
+  },
+  "evaluation_array_payloads_materialized": 0,
+  "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98",
+  "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+  "formal_evaluation": true,
+  "numpy_imported": false,
+  "optimizer_updates_allowed": false,
+  "resource_admission": {
+    "available_host_memory_bytes": 723113013248,
+    "gpu_count": 1,
+    "gpu_count_evidence": {
+      "cuda_visible_devices": "0",
+      "fixed_slurm_request": "--gres=gpu:1",
+      "nvidia_smi_visible_row_count": 1,
+      "slurm_gpus_on_node_parsed_count": null,
+      "slurm_gpus_on_node_raw": null,
+      "slurm_gpus_on_node_required": false
+    },
+    "gpu_free_memory_min_mib": 4584,
+    "gpu_free_mib": 81226,
+    "gpu_name": "NVIDIA A800-SXM4-80GB",
+    "gpu_total_mib": 81920,
+    "host_memory_min_bytes": 2800353280,
+    "hostname": "ngu202",
+    "nodes": 1,
+    "partition": "hgpu8",
+    "slurm_job_id": "217038",
+    "status": "PASS",
+    "tasks": 1
+  },
+  "runtime_lock": {
+    "created_at_utc": "2026-08-31T10:44:18.547375+00:00",
+    "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98",
+    "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+    "hostname": "ngu202",
+    "persistent": false,
+    "phase": "formal_evaluation",
+    "pid": 38205,
+    "slurm_job_id": "217038"
+  },
+  "schema_version": "daily_camels_knet_formal_evaluation_preflight_v1",
+  "status": "PASS",
+  "submission_lock": {
+    "bound": {
+      "created_at_utc": "2026-08-31T10:44:18.496116+00:00",
+      "evaluation_only": true,
+      "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98",
+      "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+      "hostname": "ngu202",
+      "persistent": true,
+      "pid": 38203,
+      "slurm_job_id": "217038",
+      "state": "BOUND",
+      "submission_token": "bd450dbffdfdfc6ffe570e6ceba9f48e99a786d794a0db5bb68a79d3f49ea6b2"
+    },
+    "owner": {
+      "archive_sha256": "8c4ac568c808ad9d0a58177fbb7ab5a091cfe534c4363146104db56c52ffe5de",
+      "controller_sha256": "c1496c38863d0ed7b71f0931750da894ec2b293560f2e8fa6b2cf09ef493c196",
+      "created_at_utc": "2026-08-31T10:43:48.242746+00:00",
+      "eval1_diagnostic_result85_sha256": "a3ef9061e9b9634c10792700407c077d4e34529f58dc6052a68eea5594e10a2a",
+      "eval2_diagnostic_result88_sha256": "3d275a97832907159085ee83a20b2649cf9e0a8e69ccfbe4684a288dca748bfb",
+      "eval3_diagnostic_result93_sha256": "8270074aacfa7bef826cd47ada87e352a4bb44529fdefbed19dcb3b080d2d1a5",
+      "eval3_repair_reason": "fixed one-GPU request and runtime visibility proofs remain strict; unreliable optional Slurm GPU-count field is recorded but no longer mandatory",
+      "eval3_submission_result91_sha256": "8a6790e87027a45160a21a9c3cc45a009702e88785da49dcaf6c624ffdd3fb38",
+      "eval3_terminal_result92_sha256": "f15f30f8587be56c69c0f76fb7f6b77f5c9b2a9963d6d6a5fd46fbb4d71b5c4e",
+      "eval4_diagnostic_result97_sha256": "1348ab73108bfb5b3c7f9dc69aefe610c55c82d46d8ad42f91cffd168b3fb104",
+      "eval4_repair_reason": "checkpoint identity validation now uses the trainer's compact canonical JSON bytes while formal output formatting remains unchanged",
+      "eval4_submission_result94_sha256": "9e5016900324873d62f3e43601ef59b48f4002a900c4bcc57e53b82eccab6013",
+      "eval4_terminal_result96_sha256": "1a3c0e598d4368e01e1cecdf2f5ab7781e4ce16802a372650eca72b3e514d1a0",
+      "evaluation_only": true,
+      "execution_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98",
+      "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+      "mailbox_sequence": 98,
+      "member_identity_receipt_sha256": "ac2fc24c15edb7b9d5e22ced035141c4fa256e79f8067ea9225be9613abe8f56",
+      "member_identity_result90_sha256": "dacc0fb4c28ac48942f892df3015b7f92f0b2c9df9e04cf387534d55ac93d74d",
+      "owner_host": "login4",
+      "owner_pid": 2997,
+      "owner_user": "sunyiq",
+      "persistent": true,
+      "prior_failed_job_id": "216974",
+      "prior_failure_class": "recoverable_checkpoint_identity_canonicalization_mismatch",
+      "reconstructed_terminal_evidence_sha256": "89975d9d69d477d625ae11713a96edf618cb6189284e280f3008bfe0f785676d",
+      "slurm_sha256": "c499f3175da8c36f553e99c09c88e417820c0292d4be1fea1382108ab6770276",
+      "state": "PREPARED",
+      "submission_token": "bd450dbffdfdfc6ffe570e6ceba9f48e99a786d794a0db5bb68a79d3f49ea6b2",
+      "transport_repair_reason": "original container missing; all 33 reconstructed members independently matched original inventory"
+    }
+  },
+  "torch_imported": false,
+  "training_enabled": false
+}
+FILE_END label=preflight_report
+FILE_BEGIN label=gpu_resource_log path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/gpu-resources-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98-217038.csv size=11735 sha256=15707f5f947e439d1c244d641cc3d22ac2416b821835cb3fa9be97c36b82645e
+epoch_seconds,timestamp,uuid,name,memory_total_mib,memory_used_mib,memory_free_mib,utilization_gpu_percent
+1788173060,2026/08/31 18:44:20.217, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173061,2026/08/31 18:44:21.246, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173062,2026/08/31 18:44:22.272, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173063,2026/08/31 18:44:23.300, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173064,2026/08/31 18:44:24.334, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173065,2026/08/31 18:44:25.368, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173066,2026/08/31 18:44:26.399, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173067,2026/08/31 18:44:27.427, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173068,2026/08/31 18:44:28.457, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173069,2026/08/31 18:44:29.487, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173070,2026/08/31 18:44:30.517, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173071,2026/08/31 18:44:31.546, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173072,2026/08/31 18:44:32.574, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173073,2026/08/31 18:44:33.604, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173074,2026/08/31 18:44:34.633, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173075,2026/08/31 18:44:35.663, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173076,2026/08/31 18:44:36.692, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 2, 81226, 0
+1788173077,2026/08/31 18:44:37.723, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 501, 80727, 0
+1788173078,2026/08/31 18:44:38.753, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 503, 80725, 0
+1788173079,2026/08/31 18:44:39.780, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 503, 80725, 40
+1788173080,2026/08/31 18:44:40.808, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 507, 80721, 0
+1788173081,2026/08/31 18:44:41.839, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 507, 80721, 38
+1788173082,2026/08/31 18:44:42.868, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 0
+1788173083,2026/08/31 18:44:43.895, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 27
+1788173084,2026/08/31 18:44:44.925, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 28
+1788173085,2026/08/31 18:44:45.952, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 28
+1788173086,2026/08/31 18:44:46.979, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 27
+1788173087,2026/08/31 18:44:48.006, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 537, 80691, 27
+1788173089,2026/08/31 18:44:49.034, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 539, 80689, 28
+1788173090,2026/08/31 18:44:50.065, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 539, 80689, 28
+1788173091,2026/08/31 18:44:51.093, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 541, 80687, 29
+1788173092,2026/08/31 18:44:52.124, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 541, 80687, 25
+1788173093,2026/08/31 18:44:53.152, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 543, 80685, 24
+1788173094,2026/08/31 18:44:54.183, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 543, 80685, 29
+1788173095,2026/08/31 18:44:55.209, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 543, 80685, 29
+1788173096,2026/08/31 18:44:56.239, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 543, 80685, 27
+1788173097,2026/08/31 18:44:57.269, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 543, 80685, 27
+1788173098,2026/08/31 18:44:58.299, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 543, 80685, 25
+1788173099,2026/08/31 18:44:59.327, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 543, 80685, 25
+1788173100,2026/08/31 18:45:00.356, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 543, 80685, 27
+1788173101,2026/08/31 18:45:01.385, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 543, 80685, 27
+1788173102,2026/08/31 18:45:02.415, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 543, 80685, 27
+1788173103,2026/08/31 18:45:03.444, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 545, 80683, 40
+1788173104,2026/08/31 18:45:04.471, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 545, 80683, 40
+1788173105,2026/08/31 18:45:05.500, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 577, 80651, 0
+1788173106,2026/08/31 18:45:06.531, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 39
+1788173107,2026/08/31 18:45:07.559, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 40
+1788173108,2026/08/31 18:45:08.585, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 40
+1788173109,2026/08/31 18:45:09.613, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 35
+1788173110,2026/08/31 18:45:10.640, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 34
+1788173111,2026/08/31 18:45:11.669, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 39
+1788173112,2026/08/31 18:45:12.698, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 40
+1788173113,2026/08/31 18:45:13.726, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 38
+1788173114,2026/08/31 18:45:14.754, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 40
+1788173115,2026/08/31 18:45:15.783, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 39
+1788173116,2026/08/31 18:45:16.811, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 40
+1788173117,2026/08/31 18:45:17.840, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 39
+1788173118,2026/08/31 18:45:18.867, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 39
+1788173119,2026/08/31 18:45:19.895, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 40
+1788173120,2026/08/31 18:45:20.923, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 579, 80649, 39
+1788173121,2026/08/31 18:45:21.950, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173122,2026/08/31 18:45:22.979, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173123,2026/08/31 18:45:24.007, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173125,2026/08/31 18:45:25.033, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173126,2026/08/31 18:45:26.060, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 40
+1788173127,2026/08/31 18:45:27.089, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 40
+1788173128,2026/08/31 18:45:28.120, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 37
+1788173129,2026/08/31 18:45:29.149, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 41
+1788173130,2026/08/31 18:45:30.178, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 34
+1788173131,2026/08/31 18:45:31.224, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 34
+1788173132,2026/08/31 18:45:32.254, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 37
+1788173133,2026/08/31 18:45:33.283, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173134,2026/08/31 18:45:34.310, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173135,2026/08/31 18:45:35.338, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173136,2026/08/31 18:45:36.364, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173137,2026/08/31 18:45:37.392, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173138,2026/08/31 18:45:38.419, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173139,2026/08/31 18:45:39.447, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173140,2026/08/31 18:45:40.474, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173141,2026/08/31 18:45:41.503, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173142,2026/08/31 18:45:42.532, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173143,2026/08/31 18:45:43.562, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173144,2026/08/31 18:45:44.594, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 40
+1788173145,2026/08/31 18:45:45.623, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 38
+1788173146,2026/08/31 18:45:46.650, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173147,2026/08/31 18:45:47.680, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173148,2026/08/31 18:45:48.707, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173149,2026/08/31 18:45:49.736, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 42
+1788173150,2026/08/31 18:45:50.762, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 38
+1788173151,2026/08/31 18:45:51.791, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173152,2026/08/31 18:45:52.820, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 40
+1788173153,2026/08/31 18:45:53.849, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 39
+1788173154,2026/08/31 18:45:54.876, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 40
+1788173155,2026/08/31 18:45:55.902, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 581, 80647, 40
+1788173156,2026/08/31 18:45:56.932, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 549, 80679, 1
+FILE_END label=gpu_resource_log
+FILE_BEGIN label=cgroup_resource_log path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/cgroup-resources-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98-217038.txt size=129 sha256=0da11f7ec0716501b00f806c180553f05d27ce9b6dc07f8df691b78a979774af
+recorded_at_utc=2026-08-31T10:45:57Z
+slurm_job_id=217038
+process_cgroup_relative=unavailable
+cgroup_v2_memory_status=unavailable
+FILE_END label=cgroup_resource_log
+FILE_ABSENT label=resource_summary path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/resource-summary-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98-217038.json
+FILE_BEGIN label=evaluation_start path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/evaluation-start-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98-217038.epoch size=11 sha256=3a85737c39354113fa7d1e62a9e1c9d18fa76a25e6cdcea2bbc95e1f0e9baa2a
+1788173061
+FILE_END label=evaluation_start
+FILE_BEGIN label=evaluation_end path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/evaluation-end-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98-217038.epoch size=11 sha256=6f281b7361d587a611647207ccfa9e5d6dddce00b6df7c27fbc2f461bbe8f1f8
+1788173157
+FILE_END label=evaluation_end
+FILE_BEGIN label=evaluation_exit path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/evaluation-exit-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98-217038.txt size=2 sha256=9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+0
+FILE_END label=evaluation_exit
+FILE_BEGIN label=verification_exit path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/status/verification-exit-DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_A39_A800_EVAL5_SEQ98-217038.txt size=2 sha256=9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+0
+FILE_END label=verification_exit
+FILE_BEGIN label=result_summary path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/evaluation/result_summary.json size=8948 sha256=0c5be30d87618ffe52584b48f9ad889568babede7ad9b414235eda98d7bff994
+{
+  "access_ledger_sha256": "7d01a372818603a2ab38d58ae10f6eb8c53894b08bb6d84d9375564e4507c757",
+  "basin_id": "09035800",
+  "checkpoint": {
+    "epoch": 75,
+    "file_sha256": "7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b",
+    "parameter_sha256": "5a288a2ac6d2985253b37616d983d6dfaf0638b18169bba8fcd0439e5b922fce",
+    "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_a800_train1_20260828/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38/checkpoints/epoch_075.pt"
+  },
+  "comparisons": {
+    "candidate_minus_backpropagation_selected_ukf_nse_by_lead": {
+      "1": 0.00022686189939102874,
+      "2": -0.005590604173990488,
+      "3": -0.010240270296439924
+    },
+    "candidate_minus_backpropagation_selected_ukf_nse_equal_lead_mean": -0.005201337523679794,
+    "candidate_minus_same_forcing_open_loop_nse_by_lead": {
+      "1": 0.1748566123640477,
+      "2": 0.14932253734968726,
+      "3": 0.12474571861405537
+    },
+    "candidate_minus_strict_zero_gain_nse_by_lead": {
+      "1": 0.1748566123640477,
+      "2": 0.14932253734968726,
+      "3": 0.12474571861405537
+    }
+  },
+  "configuration": {
+    "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/source_A39_formal_evaluation_seq98/configs/daily_camels_knet_epoch75_formal_evaluation_a39.json",
+    "sha256": "573f5a7f58fec05445bd284c3ec550846b5c74900ea7459994ed778405d154ff"
+  },
+  "decisions": {
+    "capability_gate": {
+      "failed_conditions": [],
+      "status": "PASS"
+    },
+    "comparison_status": "NO_DISCERNIBLE_ADVANTAGE",
+    "convergence_status": "UNKNOWN_NOT_ESTABLISHED_BY_SINGLE_CHECKPOINT_FORMAL_EVALUATION",
+    "scale_up_readiness": "GO"
+  },
+  "evaluation_period": [
+    "1989-10-01",
+    "1999-09-30"
+  ],
+  "evaluation_period_role": "reused_historical_benchmark",
+  "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+  "inputs": {
+    "development_archive": {
+      "allowed_members": [
+        "dates_ns",
+        "forcing",
+        "observations",
+        "parameters",
+        "base_observation_variance",
+        "state_dimension"
+      ],
+      "forbidden_initialization_members": [
+        "initial_storage_state",
+        "initial_state",
+        "initial_covariance"
+      ],
+      "logical_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+      "path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+      "sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+      "size_bytes": 57411
+    },
+    "evaluation_archive": {
+      "expected_archive_members": [
+        "dates_ns",
+        "target",
+        "forcing",
+        "common_mask_lead_1",
+        "same_forcing_open_loop_lead_1",
+        "default_noise_filter_lead_1",
+        "sampling_search_filter_lead_1",
+        "backpropagation_filter_lead_1",
+        "persistence_lead_1",
+        "second_order_autoregression_lead_1",
+        "common_mask_lead_2",
+        "same_forcing_open_loop_lead_2",
+        "default_noise_filter_lead_2",
+        "sampling_search_filter_lead_2",
+        "backpropagation_filter_lead_2",
+        "persistence_lead_2",
+        "second_order_autoregression_lead_2",
+        "common_mask_lead_3",
+        "same_forcing_open_loop_lead_3",
+        "default_noise_filter_lead_3",
+        "sampling_search_filter_lead_3",
+        "backpropagation_filter_lead_3",
+        "persistence_lead_3",
+        "second_order_autoregression_lead_3"
+      ],
+      "path": "/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/results/tukf06_full_diagonal_search_head_to_head_v1/evaluation/basin_09035800.npz",
+      "sha256": "59c0acc1afce14da7fe479fc5cdb6c6c4d2b18758d076c32950c5f2b3cfd3596",
+      "size_bytes": 444684,
+      "stored_baseline_prediction_reads": 0
+    },
+    "selection": {
+      "evaluation_period_read": false,
+      "logical_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json",
+      "path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json",
+      "sha256": "8b4888a62052f8d9f0018e907c665d30a72c4c7c29081763db0f4d46904ec3a2",
+      "size_bytes": 12327
+    }
+  },
+  "leads_days": [
+    1,
+    2,
+    3
+  ],
+  "manifest_members_expected": [
+    "predictions.npz",
+    "result_summary.json",
+    "access_ledger.json"
+  ],
+  "metrics": {
+    "common_issue_geometry": {
+      "issue_end_index_exclusive": 3649,
+      "issue_start_index_inclusive": 365,
+      "nominal_common_issue_count": 3284,
+      "target_index_interval_by_lead": {
+        "1": {
+          "end_exclusive": 3650,
+          "start_inclusive": 366
+        },
+        "2": {
+          "end_exclusive": 3651,
+          "start_inclusive": 367
+        },
+        "3": {
+          "end_exclusive": 3652,
+          "start_inclusive": 368
+        }
+      }
+    },
+    "equal_lead_mean_mse_by_system": {
+      "backpropagation_selected_ukf": 0.14148939247950099,
+      "default_noise_ukf": 0.4060622262716338,
+      "knet_epoch75": 0.1549871308067177,
+      "persistence": 0.1012170051638222,
+      "same_forcing_open_loop": 0.5433161979056974,
+      "sampled_search_ukf": 0.20423715974162934,
+      "second_order_autoregression": 0.08468774694312771,
+      "strict_zero_gain_knet": 0.5433161979056974
+    },
+    "equal_lead_mean_nse_by_system": {
+      "backpropagation_selected_ukf": 0.9454773332990957,
+      "default_noise_ukf": 0.8435248367452989,
+      "knet_epoch75": 0.9402759957754158,
+      "persistence": 0.9609961804995054,
+      "same_forcing_open_loop": 0.7906343729994857,
+      "sampled_search_ukf": 0.9212976405330388,
+      "second_order_autoregression": 0.9673657023288601,
+      "strict_zero_gain_knet": 0.7906343729994857
+    },
+    "mse_by_system_and_lead": {
+      "backpropagation_selected_ukf": {
+        "1": 0.09005824704310304,
+        "2": 0.14131012710120047,
+        "3": 0.19309980329419946
+      },
+      "default_noise_ukf": {
+        "1": 0.37631158743460125,
+        "2": 0.40752090488318315,
+        "3": 0.4343541864971171
+      },
+      "knet_epoch75": {
+        "1": 0.08946952462421374,
+        "2": 0.15581809124219437,
+        "3": 0.21967377655374493
+      },
+      "persistence": {
+        "1": 0.032738741253188236,
+        "2": 0.0968764085986675,
+        "3": 0.17403586563961088
+      },
+      "same_forcing_open_loop": {
+        "1": 0.5432346040231225,
+        "2": 0.5433193254362014,
+        "3": 0.543394664257768
+      },
+      "sampled_search_ukf": {
+        "1": 0.16294710389717992,
+        "2": 0.20516861865200942,
+        "3": 0.24459575667569866
+      },
+      "second_order_autoregression": {
+        "1": 0.025061874485960183,
+        "2": 0.08098607821034365,
+        "3": 0.14801528813307932
+      },
+      "strict_zero_gain_knet": {
+        "1": 0.5432346040231225,
+        "2": 0.5433193254362014,
+        "3": 0.543394664257768
+      }
+    },
+    "nse_by_system_and_lead": {
+      "backpropagation_selected_ukf": {
+        "1": 0.9652964040021291,
+        "2": 0.9455465302559689,
+        "3": 0.9255890656391886
+      },
+      "default_noise_ukf": {
+        "1": 0.8549897901810428,
+        "2": 0.8429629374813006,
+        "3": 0.8326217825735533
+      },
+      "knet_epoch75": {
+        "1": 0.9655232659015202,
+        "2": 0.9399559260819784,
+        "3": 0.9153487953427487
+      },
+      "persistence": {
+        "1": 0.9873842531113703,
+        "2": 0.9626689417612652,
+        "3": 0.932935346625881
+      },
+      "same_forcing_open_loop": {
+        "1": 0.7906666535374725,
+        "2": 0.7906333887322912,
+        "3": 0.7906030767286933
+      },
+      "sampled_search_ukf": {
+        "1": 0.9372089658822214,
+        "2": 0.9209388357552689,
+        "3": 0.905745119961626
+      },
+      "second_order_autoregression": {
+        "1": 0.9903425039275543,
+        "2": 0.9687922369756525,
+        "3": 0.9429623660833735
+      },
+      "strict_zero_gain_knet": {
+        "1": 0.7906666535374725,
+        "2": 0.7906333887322912,
+        "3": 0.7906030767286933
+      }
+    },
+    "target_count_by_lead": {
+      "1": 3284,
+      "2": 3284,
+      "3": 3284
+    }
+  },
+  "predictions": {
+    "file_sha256": "5ba30d6cc64d875e5621e65b33a41eaeaaee3cf3d7b06f19012dd09d86494de3",
+    "path": "predictions.npz",
+    "semantic_sha256": "1e619b1d815949e871fc63d5faa4375264e9f627a1d32a3b5399f5b9538f8b50"
+  },
+  "schema_version": "daily_camels_knet_epoch75_formal_evaluation_result_v1",
+  "scientific_role": "single_basin_formal_evaluation_reused_historical_benchmark",
+  "status": "FORMAL_EVALUATION_COMPLETE",
+  "systems": [
+    "knet_epoch75",
+    "strict_zero_gain_knet",
+    "same_forcing_open_loop",
+    "default_noise_ukf",
+    "sampled_search_ukf",
+    "backpropagation_selected_ukf",
+    "persistence",
+    "second_order_autoregression"
+  ],
+  "warmup_days": 365
+}
+FILE_END label=result_summary
+FILE_BEGIN label=access_ledger path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/evaluation/access_ledger.json size=660 sha256=7d01a372818603a2ab38d58ae10f6eb8c53894b08bb6d84d9375564e4507c757
+{
+  "checkpoint_writes": 0,
+  "evaluation_archive": {
+    "array_reads": {
+      "dates_ns": 1,
+      "forcing": 1,
+      "target": 1
+    },
+    "authorized_read_count": 1,
+    "open_count": 1
+  },
+  "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+  "optimizer_steps": 0,
+  "parameter_sha256_after": "5a288a2ac6d2985253b37616d983d6dfaf0638b18169bba8fcd0439e5b922fce",
+  "parameter_sha256_before": "5a288a2ac6d2985253b37616d983d6dfaf0638b18169bba8fcd0439e5b922fce",
+  "schema_version": "daily_camels_knet_epoch75_formal_evaluation_access_ledger_v1",
+  "stored_baseline_prediction_reads": 0,
+  "training_events": 0
+}
+FILE_END label=access_ledger
+FILE_ABSENT label=failure path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/evaluation/failure.json
+FILE_ABSENT label=completion_marker path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/evaluation/completion.marker.json
+FILE_BEGIN label=independent_verification path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/verification/independent_verification.json size=9944 sha256=735fb1facd3db4fbd6fdeb90a5c8a870f826ec2eb1d1927cae3a3af2f69f11bc
+{
+  "access_ledger": {
+    "checkpoint_writes": 0,
+    "evaluation_archive": {
+      "array_reads": {
+        "dates_ns": 1,
+        "forcing": 1,
+        "target": 1
+      },
+      "authorized_read_count": 1,
+      "open_count": 1
+    },
+    "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+    "optimizer_steps": 0,
+    "parameter_sha256_after": "5a288a2ac6d2985253b37616d983d6dfaf0638b18169bba8fcd0439e5b922fce",
+    "parameter_sha256_before": "5a288a2ac6d2985253b37616d983d6dfaf0638b18169bba8fcd0439e5b922fce",
+    "schema_version": "daily_camels_knet_epoch75_formal_evaluation_access_ledger_v1",
+    "stored_baseline_prediction_reads": 0,
+    "training_events": 0
+  },
+  "access_ledger_sha256": "7d01a372818603a2ab38d58ae10f6eb8c53894b08bb6d84d9375564e4507c757",
+  "basin_id": "09035800",
+  "checkpoint": {
+    "epoch": 75,
+    "file_sha256": "7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b",
+    "parameter_sha256": "5a288a2ac6d2985253b37616d983d6dfaf0638b18169bba8fcd0439e5b922fce",
+    "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_a800_train1_20260828/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38/checkpoints/epoch_075.pt"
+  },
+  "comparison_status": "NO_DISCERNIBLE_ADVANTAGE",
+  "configuration": {
+    "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/source_A39_formal_evaluation_seq98/configs/daily_camels_knet_epoch75_formal_evaluation_a39.json",
+    "sha256": "573f5a7f58fec05445bd284c3ec550846b5c74900ea7459994ed778405d154ff"
+  },
+  "configuration_sha256": "573f5a7f58fec05445bd284c3ec550846b5c74900ea7459994ed778405d154ff",
+  "convergence_status": "UNKNOWN_NOT_ESTABLISHED_BY_SINGLE_CHECKPOINT_FORMAL_EVALUATION",
+  "evaluation_manifest_sha256": "5ab6e6c5a208701870f1c8903d2aef47a2e7cde468b22f4172f9e48167e042a2",
+  "evaluation_period_role": "reused_historical_benchmark",
+  "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+  "inputs": {
+    "development_archive": {
+      "allowed_members": [
+        "dates_ns",
+        "forcing",
+        "observations",
+        "parameters",
+        "base_observation_variance",
+        "state_dimension"
+      ],
+      "forbidden_initialization_members": [
+        "initial_storage_state",
+        "initial_state",
+        "initial_covariance"
+      ],
+      "logical_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+      "path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09035800.npz",
+      "sha256": "71e6d163507ae405204bedf63d2c6c06e2c3ea303cea1a0481cfa4d5f280f5fd",
+      "size_bytes": 57411
+    },
+    "evaluation_archive": {
+      "expected_archive_members": [
+        "dates_ns",
+        "target",
+        "forcing",
+        "common_mask_lead_1",
+        "same_forcing_open_loop_lead_1",
+        "default_noise_filter_lead_1",
+        "sampling_search_filter_lead_1",
+        "backpropagation_filter_lead_1",
+        "persistence_lead_1",
+        "second_order_autoregression_lead_1",
+        "common_mask_lead_2",
+        "same_forcing_open_loop_lead_2",
+        "default_noise_filter_lead_2",
+        "sampling_search_filter_lead_2",
+        "backpropagation_filter_lead_2",
+        "persistence_lead_2",
+        "second_order_autoregression_lead_2",
+        "common_mask_lead_3",
+        "same_forcing_open_loop_lead_3",
+        "default_noise_filter_lead_3",
+        "sampling_search_filter_lead_3",
+        "backpropagation_filter_lead_3",
+        "persistence_lead_3",
+        "second_order_autoregression_lead_3"
+      ],
+      "path": "/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/results/tukf06_full_diagonal_search_head_to_head_v1/evaluation/basin_09035800.npz",
+      "sha256": "59c0acc1afce14da7fe479fc5cdb6c6c4d2b18758d076c32950c5f2b3cfd3596",
+      "size_bytes": 444684,
+      "stored_baseline_prediction_reads": 0
+    },
+    "selection": {
+      "evaluation_period_read": false,
+      "logical_path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json",
+      "path": "results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09035800.json",
+      "sha256": "8b4888a62052f8d9f0018e907c665d30a72c4c7c29081763db0f4d46904ec3a2",
+      "size_bytes": 12327
+    }
+  },
+  "manifest_member_count": 3,
+  "prediction_archive_sha256": "5ba30d6cc64d875e5621e65b33a41eaeaaee3cf3d7b06f19012dd09d86494de3",
+  "prediction_semantic_sha256": "1e619b1d815949e871fc63d5faa4375264e9f627a1d32a3b5399f5b9538f8b50",
+  "recomputed": {
+    "comparisons": {
+      "candidate_minus_backpropagation_selected_ukf_nse_by_lead": {
+        "1": 0.00022686189939102874,
+        "2": -0.005590604173990488,
+        "3": -0.010240270296439924
+      },
+      "candidate_minus_backpropagation_selected_ukf_nse_equal_lead_mean": -0.005201337523679794,
+      "candidate_minus_same_forcing_open_loop_nse_by_lead": {
+        "1": 0.1748566123640477,
+        "2": 0.14932253734968726,
+        "3": 0.12474571861405537
+      },
+      "candidate_minus_strict_zero_gain_nse_by_lead": {
+        "1": 0.1748566123640477,
+        "2": 0.14932253734968726,
+        "3": 0.12474571861405537
+      }
+    },
+    "decisions": {
+      "capability_gate": {
+        "failed_conditions": [],
+        "status": "PASS"
+      },
+      "comparison_status": "NO_DISCERNIBLE_ADVANTAGE",
+      "convergence_status": "UNKNOWN_NOT_ESTABLISHED_BY_SINGLE_CHECKPOINT_FORMAL_EVALUATION",
+      "scale_up_readiness": "GO"
+    },
+    "metrics": {
+      "common_issue_geometry": {
+        "issue_end_index_exclusive": 3649,
+        "issue_start_index_inclusive": 365,
+        "nominal_common_issue_count": 3284,
+        "target_index_interval_by_lead": {
+          "1": {
+            "end_exclusive": 3650,
+            "start_inclusive": 366
+          },
+          "2": {
+            "end_exclusive": 3651,
+            "start_inclusive": 367
+          },
+          "3": {
+            "end_exclusive": 3652,
+            "start_inclusive": 368
+          }
+        }
+      },
+      "equal_lead_mean_mse_by_system": {
+        "backpropagation_selected_ukf": 0.14148939247950099,
+        "default_noise_ukf": 0.4060622262716338,
+        "knet_epoch75": 0.1549871308067177,
+        "persistence": 0.1012170051638222,
+        "same_forcing_open_loop": 0.5433161979056974,
+        "sampled_search_ukf": 0.20423715974162934,
+        "second_order_autoregression": 0.08468774694312771,
+        "strict_zero_gain_knet": 0.5433161979056974
+      },
+      "equal_lead_mean_nse_by_system": {
+        "backpropagation_selected_ukf": 0.9454773332990957,
+        "default_noise_ukf": 0.8435248367452989,
+        "knet_epoch75": 0.9402759957754158,
+        "persistence": 0.9609961804995054,
+        "same_forcing_open_loop": 0.7906343729994857,
+        "sampled_search_ukf": 0.9212976405330388,
+        "second_order_autoregression": 0.9673657023288601,
+        "strict_zero_gain_knet": 0.7906343729994857
+      },
+      "mse_by_system_and_lead": {
+        "backpropagation_selected_ukf": {
+          "1": 0.09005824704310304,
+          "2": 0.14131012710120047,
+          "3": 0.19309980329419946
+        },
+        "default_noise_ukf": {
+          "1": 0.37631158743460125,
+          "2": 0.40752090488318315,
+          "3": 0.4343541864971171
+        },
+        "knet_epoch75": {
+          "1": 0.08946952462421374,
+          "2": 0.15581809124219437,
+          "3": 0.21967377655374493
+        },
+        "persistence": {
+          "1": 0.032738741253188236,
+          "2": 0.0968764085986675,
+          "3": 0.17403586563961088
+        },
+        "same_forcing_open_loop": {
+          "1": 0.5432346040231225,
+          "2": 0.5433193254362014,
+          "3": 0.543394664257768
+        },
+        "sampled_search_ukf": {
+          "1": 0.16294710389717992,
+          "2": 0.20516861865200942,
+          "3": 0.24459575667569866
+        },
+        "second_order_autoregression": {
+          "1": 0.025061874485960183,
+          "2": 0.08098607821034365,
+          "3": 0.14801528813307932
+        },
+        "strict_zero_gain_knet": {
+          "1": 0.5432346040231225,
+          "2": 0.5433193254362014,
+          "3": 0.543394664257768
+        }
+      },
+      "nse_by_system_and_lead": {
+        "backpropagation_selected_ukf": {
+          "1": 0.9652964040021291,
+          "2": 0.9455465302559689,
+          "3": 0.9255890656391886
+        },
+        "default_noise_ukf": {
+          "1": 0.8549897901810428,
+          "2": 0.8429629374813006,
+          "3": 0.8326217825735533
+        },
+        "knet_epoch75": {
+          "1": 0.9655232659015202,
+          "2": 0.9399559260819784,
+          "3": 0.9153487953427487
+        },
+        "persistence": {
+          "1": 0.9873842531113703,
+          "2": 0.9626689417612652,
+          "3": 0.932935346625881
+        },
+        "same_forcing_open_loop": {
+          "1": 0.7906666535374725,
+          "2": 0.7906333887322912,
+          "3": 0.7906030767286933
+        },
+        "sampled_search_ukf": {
+          "1": 0.9372089658822214,
+          "2": 0.9209388357552689,
+          "3": 0.905745119961626
+        },
+        "second_order_autoregression": {
+          "1": 0.9903425039275543,
+          "2": 0.9687922369756525,
+          "3": 0.9429623660833735
+        },
+        "strict_zero_gain_knet": {
+          "1": 0.7906666535374725,
+          "2": 0.7906333887322912,
+          "3": 0.7906030767286933
+        }
+      },
+      "target_count_by_lead": {
+        "1": 3284,
+        "2": 3284,
+        "3": 3284
+      }
+    }
+  },
+  "result_summary_sha256": "0c5be30d87618ffe52584b48f9ad889568babede7ad9b414235eda98d7bff994",
+  "scale_up_readiness": "GO",
+  "schema_version": "daily_camels_knet_epoch75_formal_evaluation_independent_verification_v1",
+  "scientific_capability_gate": "PASS",
+  "technical_verification": "PASS"
+}
+FILE_END label=independent_verification
+IDENTITY_FILE label=predictions path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/evaluation/predictions.npz size=866624 sha256=5ba30d6cc64d875e5621e65b33a41eaeaaee3cf3d7b06f19012dd09d86494de3
+IDENTITY_FILE label=epoch75_checkpoint path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_a800_train1_20260828/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38/checkpoints/epoch_075.pt size=4260296 sha256=7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b
+IDENTITY_ABSENT label=reconstructed_evidence path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/inputs/DAILY_CAMELS_KNET_A38_JOB215801_TERMINAL_EVIDENCE_RECONSTRUCT_SEQ89.tar.gz
+IDENTITY_ABSENT label=member_identity_receipt path=/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831/inputs/member_identity_verification.json
+SEQ100_A39_TERMINAL_DIAGNOSTIC_COMPLETE job_id=217038
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T18:58:34+0800
