@@ -1,0 +1,38 @@
+### channel=zhenjiang-d32-diff-ukf seq=28
+### host=login4
+### started=2026-08-31T15:38:26+0800
+### ---------- output ----------
+REVISION_THREE_ARCHIVE_SAFETY_AND_IDENTITY=PASS
+REVISION_THREE_EXTRACTED_BUNDLE_AND_TRAINING_IDENTITIES=PASS
+REVISION_THREE_DEPLOYMENT_STATUS=PASS
+EVALUATION_ROOT=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3
+TRAINING_ROOT=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2
+INPUT_ROOT=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1
+9258a4160bb435cb6bd79c60d6f7e43465a1ced6d67f4718eb367acb0596f2a1  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/bundles/zhenjiang_d32_gru_differentiable_ukf_dev_eval_20260831_r3.tar.gz
+7ce4e50faac807bbf3557eb0befc6e05769bba263390b3a1be0a55b0097d5b04  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/run/docs/records/ZHENJIANG_D32_GRU_DIFFERENTIABLE_UKF_V1_DEVELOPMENT_EVALUATION_REGISTRY_R3.json
+=== USER_QUEUE_UNCHANGED_BY_DEPLOYMENT ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT
+216692_[16-119%4]|N22-evalfix|PENDING|hgpu4,hgpu8,hgpu2||0:00|1-00:00:00
+216811_[7-15]|kuwei-jdl-s1|PENDING|hcpu48,hcpu48y||0:00|8:00:00
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2||0:00|1-00:00:00
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2||0:00|4:00:00
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2||0:00|2:00:00
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2||0:00|2:00:00
+215429|id30_m01_s100|PENDING|hgpu2||0:00|7-00:00:00
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2||0:00|1-00:00:00
+216692_15|N22-evalfix|RUNNING|hgpu4|ngu102|16:14|1-00:00:00
+216692_12|N22-evalfix|RUNNING|hgpu4|ngu102|16:38|1-00:00:00
+216692_13|N22-evalfix|RUNNING|hgpu4|ngu102|16:38|1-00:00:00
+216692_14|N22-evalfix|RUNNING|hgpu4|ngu102|16:38|1-00:00:00
+216811_6|kuwei-jdl-s1|RUNNING|hcpu48y|icn275|35:18|8:00:00
+216811_5|kuwei-jdl-s1|RUNNING|hcpu48y|icn276|1:23:37|8:00:00
+216811_1|kuwei-jdl-s1|RUNNING|hcpu48y|icn270|1:25:23|8:00:00
+216811_2|kuwei-jdl-s1|RUNNING|hcpu48y|icn271|1:25:23|8:00:00
+216811_3|kuwei-jdl-s1|RUNNING|hcpu48y|icn272|1:25:23|8:00:00
+216811_4|kuwei-jdl-s1|RUNNING|hcpu48y|icn273|1:25:23|8:00:00
+216687|q_armC_us_minus_net_s43|RUNNING|hgpu2|ngu003|2:16:37|1-00:00:00
+216688|q_armC_us_minus_net_s44|RUNNING|hgpu2|ngu009|2:16:37|1-00:00:00
+216549|id31_development|RUNNING|hgpu2|ngu003|3:18:16|7-00:00:00
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T15:38:30+0800
