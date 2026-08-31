@@ -1,6 +1,21 @@
 #!/bin/bash
 set -eo pipefail
 
+PACKAGE="/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/retrieval/zhenjiang_d32_dukf_2023_development_evaluation_r3_result_bundle_v1.tar.gz"
+EXPECTED_BYTES=443800
+EXPECTED_SHA256="7982c6bf888d55b9bbb7b4428844e4b50d038dfeb11813807c20ea732460f490"
+test -f "${PACKAGE}"
+test ! -L "${PACKAGE}"
+test "$(stat -c '%s' "${PACKAGE}")" = "${EXPECTED_BYTES}"
+test "$(sha256sum "${PACKAGE}" | awk '{print $1}')" = "${EXPECTED_SHA256}"
+echo "RESULT_BUNDLE_BYTES=${EXPECTED_BYTES}"
+echo "RESULT_BUNDLE_SHA256=${EXPECTED_SHA256}"
+echo "RESULT_BUNDLE_BASE64_BEGIN"
+base64 -w 0 "${PACKAGE}"
+echo
+echo "RESULT_BUNDLE_BASE64_END"
+exit 0
+
 JOB_ID=217168
 EVALUATION_ROOT="/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3"
 RESULT_NAME="zhenjiang_d32_dukf_2023_development_evaluation_r3_result_bundle_v1.tar.gz"
