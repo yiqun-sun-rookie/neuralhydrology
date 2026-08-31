@@ -1,0 +1,35 @@
+### channel=kuwei-jdl-seedbatch seq=6
+### host=login4
+### started=2026-08-31T15:08:45+0800
+### ---------- output ----------
+=== A. array state counts ===
+      1            COMPLETED 
+      1              PENDING 
+      6              RUNNING 
+=== B. per-task elapsed (completed only) ===
+        216811_0    COMPLETED   00:01:43 
+        216811_1      RUNNING   00:56:10 
+        216811_2      RUNNING   00:56:10 
+        216811_3      RUNNING   00:56:10 
+        216811_4      RUNNING   00:56:10 
+        216811_5      RUNNING   00:54:24 
+        216811_6      RUNNING   00:06:05 
+   216811_[7-15]      PENDING   00:00:00 
+=== C. still queued/running ===
+         JOBID        STATE NODELIST(REASON)
+ 216811_[7-15]      PENDING (Resources)
+      216811_6      RUNNING icn275
+      216811_5      RUNNING icn276
+      216811_1      RUNNING icn270
+      216811_2      RUNNING icn271
+      216811_3      RUNNING icn272
+      216811_4      RUNNING icn273
+=== D. finished run directories ===
+all_frozen_seed20260826
+=== E. manifests written ===
+1
+=== F. any failed task stderr ===
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T15:08:45+0800
