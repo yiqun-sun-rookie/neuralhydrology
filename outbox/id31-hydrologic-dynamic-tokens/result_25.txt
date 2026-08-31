@@ -1,0 +1,17 @@
+### channel=id31-hydrologic-dynamic-tokens seq=25
+### host=login4
+### started=2026-08-31T11:49:13+0800
+### ---------- output ----------
+=== PREVIOUS IDENTICAL-PROBE DURATION ===
+215878|id31_gpu_probe|hgpu2p|COMPLETED|0:0|00:05:00|2026-08-28T20:16:09|2026-08-28T20:21:09|ngu011
+215878.batch|batch||COMPLETED|0:0|00:05:00|2026-08-28T20:16:09|2026-08-28T20:21:09|ngu011
+215878.extern|extern||COMPLETED|0:0|00:05:00|2026-08-28T20:16:09|2026-08-28T20:21:09|ngu011
+216541|id31_gpu_probe|hgpu2p|PENDING|12:00:00
+216541|id31_gpu_probe|hgpu2p|PENDING|30:00
+JobId=216541 JobName=id31_gpu_probe UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=201222 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-08-31T11:37:29 EligibleTime=2026-08-31T11:37:29 AccrueTime=2026-08-31T11:37:29 StartTime=2026-09-02T01:09:15 EndTime=2026-09-02T01:39:15 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-31T11:49:33 Partition=hgpu2p AllocNode:Sid=login04:721 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/hydrologic_dynamic_tokens/hpc/submit_gpu_resource_probe.slurm WorkDir=/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo StdErr=/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/logs/31_hydrologic_dynamic_tokens/gpu-probe-216541.err StdIn=/dev/null StdOut=/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/logs/31_hydrologic_dynamic_tokens/gpu-probe-216541.out Power= TresPerNode=gpu:1
+             JOBID                     NAME TIME_LIMIT          START_TIME               NODELIST(REASON)
+            216541           id31_gpu_probe      30:00 2026-09-02T01:09:15                     (Priority)
+ID31_GPU_PROBE_TIMELIMIT_UPDATED 216541 00:30:00
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T11:49:15+0800
