@@ -1,0 +1,13 @@
+### channel=kalmannet-daily-camels seq=95
+### host=login4
+### started=2026-08-31T16:42:39+0800
+### ---------- output ----------
+SEQ95_A39_STATUS_DISPATCH_VERIFIED job_id=216974
+SEQ95_A39_STATUS_QUERY job_id=216974
+slurm_load_jobs error: Invalid job id specified
+sacct: error: Unknown arguments:
+sacct: error:  +
+SEQ95_A39_STATUS_QUERY_COMPLETE job_id=216974 squeue_exit=1 sacct_exit=1
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-31T16:42:40+0800
