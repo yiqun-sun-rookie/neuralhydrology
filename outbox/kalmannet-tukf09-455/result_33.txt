@@ -1,0 +1,34 @@
+### channel=kalmannet-tukf09-455 seq=33
+### host=login4
+### started=2026-09-01T05:29:23+0800
+### ---------- output ----------
+=== V2R2 PARTIAL ROOT INVENTORY ===
+16384	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901/incoming|4096|2|700
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901/logs|4096|2|700
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901/status|4096|2|700
+ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901/bundle
+ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901/offline_inputs_v2r2
+ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901/runtime_v2r2
+ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901/status/allocation_probe.json
+ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901/status/preparation_probe.json
+ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901/status/hpc_technical_admission.json
+ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901/results
+=== COPY IMPLEMENTATION ===
+cp (GNU coreutils) 8.22
+Copyright (C) 2013 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by Torbjörn Granlund, David MacKenzie, and Jim Meyering.
+      --reflink[=WHEN]         control clone/CoW copies. See below
+When --reflink[=always] is specified, perform a lightweight copy, where the
+fails, or if --reflink=auto is specified, fall back to a standard copy.
+=== JOB ABSENCE ===
+NO_V2R2_SLURM_JOB
+=== PREDECESSOR FREEZE ===
+TUKF09_455_A800_EXCLUSIVE_V2R2_DEPLOYMENT_COMPATIBILITY_STOP_FROZEN
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T05:29:23+0800
