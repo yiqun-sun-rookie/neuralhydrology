@@ -6,8 +6,9 @@ RUN_ROOT="${EVALUATION_ROOT}/run"
 REGISTRY="${RUN_ROOT}/docs/records/ZHENJIANG_D32_GRU_DIFFERENTIABLE_UKF_V1_DEVELOPMENT_EVALUATION_REGISTRY_R3.json"
 SUMMARY="${EVALUATION_ROOT}/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
 AUDIT="${EVALUATION_ROOT}/audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
-JOB_SCRIPT="${EVALUATION_ROOT}/jobs/aggregate_audit_v1.slurm"
-JOB_RECORD="${EVALUATION_ROOT}/jobs/aggregate_audit_job_id.txt"
+FAILED_JOB_SCRIPT="${EVALUATION_ROOT}/jobs/aggregate_audit_v1.slurm"
+JOB_SCRIPT="${EVALUATION_ROOT}/jobs/aggregate_audit_v2.slurm"
+JOB_RECORD="${EVALUATION_ROOT}/jobs/aggregate_audit_v2_job_id.txt"
 
 echo "QUERY_TIME=$(date -Is)"
 echo "=== RELEVANT_QUEUE ==="
@@ -28,6 +29,9 @@ for SEED in 17 29 43; do
   test ! -e "${ATTEMPT}.partial"
   sha256sum "${ATTEMPT}/completion_manifest.json"
 done
+if [ -f "${FAILED_JOB_SCRIPT}" ] && [ ! -L "${FAILED_JOB_SCRIPT}" ]; then
+  sha256sum "${FAILED_JOB_SCRIPT}"
+fi
 echo "=== CREATE_ONLY_TARGETS ==="
 for TARGET in "${SUMMARY}" "${SUMMARY}.partial" "${AUDIT}" "${AUDIT}.partial" "${JOB_SCRIPT}" "${JOB_RECORD}"; do
   if [ -e "${TARGET}" ]; then
@@ -44,9 +48,9 @@ for TARGET in "${SUMMARY}" "${SUMMARY}.partial" "${AUDIT}" "${AUDIT}.partial" "$
   fi
 done
 
-SOURCE_SCRIPT="${HOME}/hpc_mailbox/inbox/zhenjiang-d32-diff-ukf/aggregate_audit_v1.slurm"
-EXPECTED_SCRIPT_BYTES=5506
-EXPECTED_SCRIPT_SHA256="f2fc1cd57a66712c6fb33a566b9809546dd77193dbe55169fe45f116df24d456"
+SOURCE_SCRIPT="${HOME}/hpc_mailbox/inbox/zhenjiang-d32-diff-ukf/aggregate_audit_v2.slurm"
+EXPECTED_SCRIPT_BYTES=5494
+EXPECTED_SCRIPT_SHA256="6016bdb2ac993ba25a09275953f8ae8a56c310dac13f03fc6f6c895019cf2e09"
 if [ ! -f "${SOURCE_SCRIPT}" ] || [ -L "${SOURCE_SCRIPT}" ]; then
   echo "mailbox aggregation script is absent or symbolic" >&2
   exit 2
