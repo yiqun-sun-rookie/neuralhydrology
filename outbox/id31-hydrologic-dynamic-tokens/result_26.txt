@@ -1,0 +1,50 @@
+### channel=id31-hydrologic-dynamic-tokens seq=26
+### host=login4
+### started=2026-08-31T11:53:12+0800
+### ---------- output ----------
+=== CURRENT PROBE ===
+             JOBID                     NAME    PARTITION ST TIME_LIMIT          START_TIME               NODELIST(REASON)
+            216541           id31_gpu_probe       hgpu2p PD      30:00 2026-09-02T01:09:15                     (Priority)
+JobId=216541 JobName=id31_gpu_probe UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=201518 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A SubmitTime=2026-08-31T11:37:29 EligibleTime=2026-08-31T11:37:29 AccrueTime=2026-08-31T11:37:29 StartTime=2026-09-02T01:09:15 EndTime=2026-09-02T01:39:15 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-31T11:53:33 Partition=hgpu2p AllocNode:Sid=login04:721 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/hydrologic_dynamic_tokens/hpc/submit_gpu_resource_probe.slurm WorkDir=/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo StdErr=/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/logs/31_hydrologic_dynamic_tokens/gpu-probe-216541.err StdIn=/dev/null StdOut=/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/logs/31_hydrologic_dynamic_tokens/gpu-probe-216541.out Power= TresPerNode=gpu:1
+=== RTX-3090 PARTITION LIVE INVENTORY ===
+--- PARTITION hgpu2p ---
+PARTITION   |NODELIST        |STATE   |GRES                    |CPUS(A/I/O/T)       
+hgpu2p      |ngu001          |mix     |gpu:2                   |2/94/0/96           
+hgpu2p      |ngu002          |idle    |gpu:2                   |0/96/0/96           
+hgpu2p      |ngu004          |mix     |gpu:2                   |2/94/0/96           
+hgpu2p      |ngu005          |mix     |gpu:2                   |2/94/0/96           
+hgpu2p      |ngu006          |mix     |gpu:2                   |2/94/0/96           
+hgpu2p      |ngu007          |mix     |gpu:2                   |2/94/0/96           
+hgpu2p      |ngu008          |mix     |gpu:2                   |8/88/0/96           
+hgpu2p      |ngu010          |mix     |gpu:2                   |1/31/0/32           
+hgpu2p      |ngu011          |mix     |gpu:2                   |5/27/0/32           
+PartitionName=hgpu2p AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=ngu[001-002,004-008,010-011] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=736 TotalNodes=9 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+--- PARTITION hgpu2 ---
+PARTITION   |NODELIST        |STATE   |GRES                    |CPUS(A/I/O/T)       
+hgpu2       |ngu003          |idle    |gpu:2                   |0/96/0/96           
+hgpu2       |ngu009          |idle    |gpu:2                   |0/96/0/96           
+PartitionName=hgpu2 AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL AllocNodes=ALL Default=NO QoS=N/A DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED Nodes=ngu[003,009] PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO OverTimeLimit=NONE PreemptMode=OFF State=UP TotalCPUs=192 TotalNodes=2 SelectTypeParameters=NONE JobDefaults=(null) DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+=== USER GPU JOBS ===
+             JOBID                     NAME    PARTITION ST       TIME TIME_LIMIT               NODELIST(REASON)
+            216541           id31_gpu_probe       hgpu2p PD       0:00      30:00                     (Priority)
+  202226_[0-119%4]           N22-eval-later hgpu4,hgpu8, PD       0:00 1-00:00:00     (DependencyNeverSatisfied)
+            202229             N22-agg-eval hgpu4,hgpu8, PD       0:00 1-00:00:00                   (Dependency)
+            202294               N22-export hgpu4,hgpu8, PD       0:00    4:00:00                   (Dependency)
+            202315                 N22-gate hgpu4,hgpu8, PD       0:00    2:00:00                   (Dependency)
+            202507         N22-mask-iso-531 hgpu4,hgpu8, PD       0:00    2:00:00     (DependencyNeverSatisfied)
+            215429            id30_m01_s100        hgpu2 PD       0:00 7-00:00:00     (DependencyNeverSatisfied)
+            202293             N22-manifest hgpu4,hgpu8, PD       0:00 1-00:00:00                  (JobHeldUser)
+=== PARTITION QUEUE SUMMARY ===
+             JOBID                     NAME    PARTITION ST       TIME TIME_LIMIT               NODELIST(REASON)
+            216541           id31_gpu_probe       hgpu2p PD       0:00      30:00                     (Priority)
+  202226_[0-119%4]           N22-eval-later hgpu4,hgpu8, PD       0:00 1-00:00:00     (DependencyNeverSatisfied)
+            202229             N22-agg-eval hgpu4,hgpu8, PD       0:00 1-00:00:00                   (Dependency)
+            202294               N22-export hgpu4,hgpu8, PD       0:00    4:00:00                   (Dependency)
+            202315                 N22-gate hgpu4,hgpu8, PD       0:00    2:00:00                   (Dependency)
+            202507         N22-mask-iso-531 hgpu4,hgpu8, PD       0:00    2:00:00     (DependencyNeverSatisfied)
+            215429            id30_m01_s100        hgpu2 PD       0:00 7-00:00:00     (DependencyNeverSatisfied)
+            202293             N22-manifest hgpu4,hgpu8, PD       0:00 1-00:00:00                  (JobHeldUser)
+ID31_GPU_PARTITION_SURVEY_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T11:53:12+0800
