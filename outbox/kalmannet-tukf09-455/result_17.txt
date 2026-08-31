@@ -1,0 +1,16 @@
+### channel=kalmannet-tukf09-455 seq=17
+### host=login4
+### started=2026-09-01T00:33:46+0800
+### ---------- output ----------
+=== PRE-SUBMISSION GATES ===
+=== EXACTLY ONE SUBMISSION ===
+Submitted batch job 217122
+=== IMMEDIATE STATE (NO WAIT) ===
+PROBE_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_a800_exclusive_semantics_probe_v1_20260831_01a055e6
+JOB_ID=217122
+             JOBID                 NAME  PARTITION      STATE         NODELIST(REASON)       TIME           START_TIME
+            217122          t455a8sem01      hgpu8    PENDING                   (None)       0:00                  N/A
+TUKF09_455_A800_EXCLUSIVE_SEMANTICS_PROBE_SUBMITTED_ONCE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T00:33:46+0800
