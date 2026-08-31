@@ -1,0 +1,31 @@
+{
+  "archive_name": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39.tar.gz",
+  "archive_sha256": "7d103b0fc096dd841c42f809f0c02b23e0cfa5733dab15242ce68c6ea7a60a47",
+  "archive_size": 223131,
+  "checkpoint_member_count": 0,
+  "experiment_id": "DAILY_CAMELS_KNET_EPOCH75_SINGLE_BASIN_FORMAL_EVALUATION_V1_20260831_A39",
+  "external_artifacts": {
+    "a38_terminal_evidence_archive": {
+      "opened_as": "opaque_bytes_only",
+      "packaged": false,
+      "path": "/data1/home/sunyiq/hpc_mailbox/outbox/kalmannet-daily-camels/DAILY_CAMELS_KNET_A38_JOB215801_TERMINAL_EVIDENCE_SEQ82.tar.gz",
+      "sha256": "72feda409ea3490ccd9a289b1313c9beb276c1cc267a15111dc19e63d5815317",
+      "size": 13900887
+    },
+    "checkpoint": {
+      "path": "/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_a800_train1_20260828/runs/DAILY_CAMELS_KNET_FIXED_FULL_TRAINING_COVERAGE_EPOCH40_TO80_RESUME_STEP_MONOTONICITY_DIAGNOSTIC_V1_20260828_A38/checkpoints/epoch_075.pt",
+      "sha256": "7cc97138669531688dcd65d606d154330f260346c7c9c6e704cb1be5307a241b",
+      "size": 4260296
+    },
+    "evaluation_archive": {
+      "packaged": false,
+      "path": "/data1/home/sunyiq/kalmannet_tukf06_20260809/retry2/results/tukf06_full_diagonal_search_head_to_head_v1/evaluation/basin_09035800.npz",
+      "sha256": "59c0acc1afce14da7fe479fc5cdb6c6c4d2b18758d076c32950c5f2b3cfd3596",
+      "size": 444684
+    }
+  },
+  "historical_evaluation_array_member_count": 0,
+  "internal_manifest_sha256": "907c11e81218470bb177cf9304e41f080fa471ac20ce9b9475f5ddafc29aec5c",
+  "member_count": 38,
+  "schema_version": "daily_camels_knet_formal_evaluation_hpc_archive_v1"
+}
