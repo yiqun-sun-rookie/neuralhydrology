@@ -1,0 +1,28 @@
+### channel=zhenjiang-d32-diff-ukf seq=47
+### host=login4
+### started=2026-09-01T03:18:40+0800
+### ---------- output ----------
+QUERY_TIME=2026-09-01T03:18:40+0800
+=== AGGREGATE_AUDIT_QUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== AGGREGATE_AUDIT_ESTIMATED_START ===
+slurm_load_jobs error: Invalid job id specified
+=== AGGREGATE_AUDIT_SCHEDULER_IDENTITY ===
+slurm_load_jobs error: Invalid job id specified
+=== AGGREGATE_AUDIT_ACCOUNTING ===
+JobID|JobName|Partition|State|ExitCode|Elapsed|Start|End|NodeList|AllocTRES|MaxRSS
+217148|zhd32_dukf_aggregate|hcpu48y|FAILED|1:0|00:00:01|2026-09-01T02:19:20|2026-09-01T02:19:21|icn275|billing=48,cpu=48,node=1|
+=== OUTPUT_EXISTENCE ===
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001.partial
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001
+absent|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001.partial
+=== STANDARD_OUTPUT_TAIL ===
+aggregate_audit_started=2026-09-01T02:18:48+0800
+scheduler_job_id=217148
+scheduler_node=icn275
+=== STANDARD_ERROR_TAIL ===
+/data1/home/sunyiq/miniconda3/envs/nh_final/etc/conda/activate.d/libblas_mkl_activate.sh: line 1: MKL_INTERFACE_LAYER: unbound variable
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T03:18:40+0800
