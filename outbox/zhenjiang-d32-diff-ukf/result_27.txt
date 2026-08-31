@@ -1,0 +1,68 @@
+### channel=zhenjiang-d32-diff-ukf seq=27
+### host=login4
+### started=2026-08-31T14:45:52+0800
+### ---------- output ----------
+DIAGNOSTIC_TIME_RUNTIME=python:3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0] numpy:2.3.3 platform:Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17
+TRAINING_DATA_IDENTITY seed=17 sha256=d8491b3e9a61a6c6102f14a15401e1e4d2e8078d3c553c46fb008c6f929eb74f keys=['astronomical_dependency_identities', 'input_content_identities', 'input_directory', 'last_loaded_target_time_beijing', 'schema_version', 'target_standard_deviation_m', 'test_target_counters', 'tide_model_path', 'training_base_sample_count', 'validation_base_sample_count']
+TRAINING_TARGET_MEAN seed=17 present=False value=None
+TRAINING_TARGET_SCALE seed=17 value=[2.8172526359558105, 1.5940370559692383, 1.2461224794387817, 0.8721858859062195, 0.8888617753982544, 0.8898535370826721]
+TRAINING_ENVIRONMENT seed=17 value={"cuda_available": true, "cuda_device_capability": [8, 6], "cuda_device_name": "NVIDIA GeForce RTX 3090", "cuda_matmul_allow_tf32": false, "cuda_runtime": "12.1", "cudnn_allow_tf32": false, "cudnn_benchmark": false, "cudnn_deterministic": true, "deterministic_algorithms_enabled": true, "device": "cuda:0", "numpy": "2.3.3", "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34", "processor": "x86_64", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "torch": "2.4.0"}
+TRAINING_DATA_IDENTITY seed=29 sha256=d8491b3e9a61a6c6102f14a15401e1e4d2e8078d3c553c46fb008c6f929eb74f keys=['astronomical_dependency_identities', 'input_content_identities', 'input_directory', 'last_loaded_target_time_beijing', 'schema_version', 'target_standard_deviation_m', 'test_target_counters', 'tide_model_path', 'training_base_sample_count', 'validation_base_sample_count']
+TRAINING_TARGET_MEAN seed=29 present=False value=None
+TRAINING_TARGET_SCALE seed=29 value=[2.8172526359558105, 1.5940370559692383, 1.2461224794387817, 0.8721858859062195, 0.8888617753982544, 0.8898535370826721]
+TRAINING_ENVIRONMENT seed=29 value={"cuda_available": true, "cuda_device_capability": [8, 6], "cuda_device_name": "NVIDIA GeForce RTX 3090", "cuda_matmul_allow_tf32": false, "cuda_runtime": "12.1", "cudnn_allow_tf32": false, "cudnn_benchmark": false, "cudnn_deterministic": true, "deterministic_algorithms_enabled": true, "device": "cuda:0", "numpy": "2.3.3", "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34", "processor": "x86_64", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "torch": "2.4.0"}
+TRAINING_DATA_IDENTITY seed=43 sha256=d8491b3e9a61a6c6102f14a15401e1e4d2e8078d3c553c46fb008c6f929eb74f keys=['astronomical_dependency_identities', 'input_content_identities', 'input_directory', 'last_loaded_target_time_beijing', 'schema_version', 'target_standard_deviation_m', 'test_target_counters', 'tide_model_path', 'training_base_sample_count', 'validation_base_sample_count']
+TRAINING_TARGET_MEAN seed=43 present=False value=None
+TRAINING_TARGET_SCALE seed=43 value=[2.8172526359558105, 1.5940370559692383, 1.2461224794387817, 0.8721858859062195, 0.8888617753982544, 0.8898535370826721]
+TRAINING_ENVIRONMENT seed=43 value={"cuda_available": true, "cuda_device_capability": [8, 6], "cuda_device_name": "NVIDIA GeForce RTX 3090", "cuda_matmul_allow_tf32": false, "cuda_runtime": "12.1", "cudnn_allow_tf32": false, "cudnn_benchmark": false, "cudnn_deterministic": true, "deterministic_algorithms_enabled": true, "device": "cuda:0", "numpy": "2.3.3", "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34", "processor": "x86_64", "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]", "torch": "2.4.0"}
+FAILED_EVALUATION_RUN_IDENTITY sha256=93885524f582b7e265abec4711ead897d852d3aa8e5efaef0193ffb3a0e7330f value={
+  "schema_version": "1.0",
+  "experiment_id": "ZHD32-DUKF-DEV-EVAL-S17-V1",
+  "attempt_id": "attempt_001",
+  "seed": 17,
+  "started_utc": "2026-08-31T06:21:48.520168+00:00",
+  "run_type": "2023_development_smoke",
+  "registry_path": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r2/run/docs/records/ZHENJIANG_D32_GRU_DIFFERENTIABLE_UKF_V1_DEVELOPMENT_EVALUATION_REGISTRY_R2.json",
+  "registry_sha256": "446db662812f1b7bf83c095dc5f279566a7b4ddfd3e7549acdabd76ceb9cbed3",
+  "source_training_experiment_id": "ZHD32-DUKF-S17-V1",
+  "training_attempt": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/formal/ZHD32-DUKF-S17-V1/attempt_001",
+  "training_completion_manifest_sha256": "227ecc29f0baad251089d8f3f77556126279d35e0575ea367f9f0136abcaca3a",
+  "environment": {
+    "python": "3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]",
+    "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+    "torch": "2.4.0",
+    "numpy": "2.3.3",
+    "device": "cuda:0",
+    "cuda_available": true,
+    "cuda_runtime": "12.1",
+    "deterministic_algorithms_enabled": true,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "cuda_device_name": "NVIDIA GeForce RTX 3090",
+    "cuda_device_capability": [
+      8,
+      6
+    ]
+  },
+  "authorization": {
+    "development_2023_target_scoring": true,
+    "held_out_target_access": false,
+    "training": false,
+    "parameter_change": false,
+    "scientific_conclusion": false
+  }
+}
+CURRENT_TARGET_MEAN_REPR=[8.603047370910645, 5.2991557121276855, 4.558730125427246, 3.29065203666687, 2.747354745864868, 2.236428737640381]
+CURRENT_TARGET_MEAN_FLOAT32_BITS=[1091151381, 1084854959, 1083302174, 1079155211, 1076876457, 1074733478]
+CURRENT_TARGET_SCALE_REPR=[2.8172526359558105, 1.5940370559692383, 1.2461224794387817, 0.8721858859062195, 0.8888617753982544, 0.8898535370826721]
+CURRENT_TARGET_SCALE_FLOAT32_BITS=[1077169630, 1070336360, 1067417841, 1063208851, 1063488626, 1063505265]
+CURRENT_TARGET_SCALE_EQUALS_TRAINING=True
+CURRENT_INPUT_IDENTITIES_EQUAL_TRAINING=True
+CURRENT_ASTRONOMICAL_IDENTITIES_EQUAL_TRAINING=True
+NORMALIZATION_REFERENCE_COUNT=0
+NORMALIZATION_SCHEMA_DIAGNOSIS=PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T14:46:23+0800
