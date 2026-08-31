@@ -1,0 +1,41 @@
+### channel=kuwei-jdl-seedbatch seq=8
+### host=login4
+### started=2026-08-31T17:23:11+0800
+### ---------- output ----------
+=== A. state counts ===
+      6            COMPLETED 
+      1              PENDING 
+      6              RUNNING 
+=== B. per-task ===
+        216811_0    COMPLETED   00:01:43 
+        216811_1    COMPLETED   02:52:50 
+        216811_2    COMPLETED   02:38:26 
+        216811_3    COMPLETED   02:45:35 
+        216811_4    COMPLETED   02:45:41 
+        216811_5    COMPLETED   02:44:15 
+        216811_6      RUNNING   02:20:31 
+        216811_7      RUNNING   00:32:10 
+        216811_8      RUNNING   00:25:01 
+        216811_9      RUNNING   00:24:55 
+       216811_10      RUNNING   00:24:35 
+       216811_11      RUNNING   00:17:46 
+  216811_[12-15]      PENDING   00:00:00 
+=== C. finished run dirs ===
+all_frozen_seed20260826
+hydro_only_seed20260826
+hydro_only_seed20260826_ls1
+hydro_only_seed20260826_ls2
+hydro_only_seed20260826_ls3
+hydro_only_seed20260826_ls4
+=== D. selection scores of finished runs ===
+all_frozen_seed20260826      arm=all_frozen   ls=0  best_update=0    best_selection_mse=324.495667  elapsed=97s
+hydro_only_seed20260826      arm=hydro_only   ls=0  best_update=192  best_selection_mse=286.430145  elapsed=10363s
+hydro_only_seed20260826_ls1  arm=hydro_only   ls=1  best_update=192  best_selection_mse=275.581207  elapsed=9472s
+hydro_only_seed20260826_ls2  arm=hydro_only   ls=2  best_update=192  best_selection_mse=282.597076  elapsed=9901s
+hydro_only_seed20260826_ls3  arm=hydro_only   ls=3  best_update=192  best_selection_mse=276.417480  elapsed=9907s
+hydro_only_seed20260826_ls4  arm=hydro_only   ls=4  best_update=192  best_selection_mse=275.563293  elapsed=9849s
+=== E. failures ===
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T17:23:12+0800
