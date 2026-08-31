@@ -36,6 +36,43 @@ for TARGET in "${SUMMARY}" "${SUMMARY}.partial" "${AUDIT}" "${AUDIT}.partial" "$
     printf 'absent|%s\n' "${TARGET}"
   fi
 done
+
+for TARGET in "${SUMMARY}" "${SUMMARY}.partial" "${AUDIT}" "${AUDIT}.partial" "${JOB_SCRIPT}" "${JOB_RECORD}"; do
+  if [ -e "${TARGET}" ]; then
+    echo "create-only target already exists: ${TARGET}" >&2
+    exit 2
+  fi
+done
+
+SOURCE_SCRIPT="${HOME}/hpc_mailbox/inbox/zhenjiang-d32-diff-ukf/aggregate_audit_v1.slurm"
+EXPECTED_SCRIPT_BYTES=5506
+EXPECTED_SCRIPT_SHA256="f2fc1cd57a66712c6fb33a566b9809546dd77193dbe55169fe45f116df24d456"
+if [ ! -f "${SOURCE_SCRIPT}" ] || [ -L "${SOURCE_SCRIPT}" ]; then
+  echo "mailbox aggregation script is absent or symbolic" >&2
+  exit 2
+fi
+ACTUAL_SCRIPT_BYTES="$(stat -c '%s' "${SOURCE_SCRIPT}")"
+ACTUAL_SCRIPT_SHA256="$(sha256sum "${SOURCE_SCRIPT}" | awk '{print $1}')"
+if [ "${ACTUAL_SCRIPT_BYTES}" != "${EXPECTED_SCRIPT_BYTES}" ] || \
+   [ "${ACTUAL_SCRIPT_SHA256}" != "${EXPECTED_SCRIPT_SHA256}" ]; then
+  echo "mailbox aggregation script identity changed" >&2
+  exit 2
+fi
+
+mkdir -p "${EVALUATION_ROOT}/jobs" "${EVALUATION_ROOT}/logs"
+install -m 0555 "${SOURCE_SCRIPT}" "${JOB_SCRIPT}"
+test "$(stat -c '%s' "${JOB_SCRIPT}")" = "${EXPECTED_SCRIPT_BYTES}"
+test "$(sha256sum "${JOB_SCRIPT}" | awk '{print $1}')" = "${EXPECTED_SCRIPT_SHA256}"
+
+JOB_ID="$(sbatch --parsable "${JOB_SCRIPT}")"
+case "${JOB_ID}" in
+  ''|*[!0-9]*)
+    echo "scheduler returned an invalid job identifier: ${JOB_ID}" >&2
+    exit 2
+    ;;
+esac
+echo "AGGREGATE_AUDIT_JOB_ID=${JOB_ID}"
+scontrol show job -o "${JOB_ID}"
 exit 0
 
 JOB_ID=217013
