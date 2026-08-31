@@ -1,0 +1,18 @@
+### channel=kalmannet-tukf25 seq=9
+### host=login4
+### started=2026-08-31T15:24:43+0800
+### ---------- output ----------
+=== READOUT ARRAY 216851 STATES ===
+    324 COMPLETED
+=== FAILURES ===
+  none
+readout_json=108 readout_npz=108
+=== PACK AND PUSH READOUT RESULTS ===
+522885fbb24bdb1861c762af814a51e126b2032cf35545df7603a065e3544a26  /tmp/tukf25_readout_results_v1.tar.gz
+--- push attempt 1 ---
+error: Ref refs/remotes/origin/hpc-mailbox is at d6f0b3db366528922e91e7e2b825cf6c87900fe7 but expected 7eac2f9db26b08579e4514ea997e41908a69cc2c
+--- push attempt 2 ---
+remote: READOUT_PAYLOAD_PUSHED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T15:25:44+0800
