@@ -1,0 +1,30 @@
+### channel=kuwei-jdl-seedbatch seq=7
+### host=login4
+### started=2026-08-31T16:03:05+0800
+### ---------- output ----------
+=== A. state counts ===
+      1            COMPLETED 
+      1              PENDING 
+      6              RUNNING 
+=== B. per-task ===
+        216811_0    COMPLETED   00:01:43 
+        216811_1      RUNNING   01:50:30 
+        216811_2      RUNNING   01:50:30 
+        216811_3      RUNNING   01:50:30 
+        216811_4      RUNNING   01:50:30 
+        216811_5      RUNNING   01:48:44 
+        216811_6      RUNNING   01:00:25 
+   216811_[7-15]      PENDING   00:00:00 
+=== C. run dirs ===
+all_frozen_seed20260826
+=== D. manifests ===
+1
+=== E. progress of task 1 ===
+[hydro_only/20260826] update=115 window@26404 loss=23.0853 origins=116
+[hydro_only/20260826] update=116 window@28353 loss=986.6865 origins=116
+[hydro_only/20260826] update=117 window@19684 loss=480.2992 origins=116
+=== F. failures ===
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T16:03:05+0800
