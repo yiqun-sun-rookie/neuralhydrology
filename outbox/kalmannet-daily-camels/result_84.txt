@@ -1,0 +1,12 @@
+### channel=kalmannet-daily-camels seq=84
+### host=login4
+### started=2026-08-31T12:57:14+0800
+### ---------- output ----------
+SEQ84_A39_DISPATCH_VERIFIED job_id=216551 script_sha256=e7e94dce0979efd734f2599c373d7dcad623367fc7d3ea820ce36462e5b5d320 result83_sha256=7e34bc7c4a13314130f291442f0dfeddb0b64d8c421c8fbb157fa0dad97b8afd
+slurm_load_jobs error: Invalid job id specified
+SEQ84_A39_SQUEUE_EXIT job_id=216551 exit_code=1
+216551|daily-knet-a39-s83|sunyiq|hgpu8|FAILED|20:0|00:00:05|2026-08-31T12:53:15|2026-08-31T12:53:20|ngu202|billing=4,cpu=4,node=1|billing=4,cpu=4,node=1
+SEQ84_A39_STATUS_COMPLETE job_id=216551
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T12:57:14+0800
