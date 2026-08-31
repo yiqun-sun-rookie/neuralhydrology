@@ -1,20 +1,46 @@
-#!/bin/bash
-# seq=396 重建断链评价数组: 取消永不满足的 202226, 以同一脚本+同一批次文件免依赖重提
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
-cd "$ROOT"
 date --iso-8601=seconds
-echo "=== 1. IDEMPOTENCE GUARD ==="
-N=$(squeue -u sunyiq -h -o '%j' 2>/dev/null | grep -c 'N22-evalfix' || true)
-echo "existing N22-evalfix jobs: $N"
-if [ "$N" != "0" ]; then echo "ABORT: rebuild already queued"; exit 0; fi
-echo "=== 2. CANCEL DEAD 202226 ONLY ==="
-scancel 202226 2>&1 || true
-sleep 3
-squeue -j 202226 -h 2>/dev/null || echo "202226 gone"
-echo "=== 3. SUBMIT FRESH EVAL ARRAY (same script, same batch, no dependency) ==="
-sbatch --job-name=N22-evalfix --array=0-119%4 --exclude=ngu002,ngu101 \
-  --export=ALL,REGISTRY_REL=src/29_nearing2022_da_ar/registry/evaluation_registry.csv,BATCH_FILE_REL=src/29_nearing2022_da_ar/registry/time_split_pending_source_evaluation_batch.txt,REGISTRY_KIND=evaluation \
-  src/29_nearing2022_da_ar/hpc/run_registered_evaluation_array.slurm
-echo "=== 4. QUEUE AFTER SUBMIT ==="
-squeue -u sunyiq -h -o '%.12i %.16j %.10T %.11M %R' 2>/dev/null | grep -E 'N22' || true
+echo "=== N22 JOBS ==="
+squeue -u sunyiq -h -o '%.12i %.16j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22' || echo 'no N22 jobs in queue'
+echo "=== FAILURES AND TIMEOUTS ==="
+sacct -X -n -P -S $(date -d '7 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22' | grep -E '\|(TIMEOUT|FAILED|NODE_FAIL|OUT_OF_MEMORY|CANCELLED)' || echo '  none'
+echo "=== EVAL ARRAY 216692 STATE SUMMARY ==="
+sacct -j 216692 -X -n -P --format=State 2>/dev/null | sort | uniq -c || echo '  not found'
+echo "=== FAILED ARRAY TASK IDS ==="
+sacct -j 216692 -X -n -P --format=JobID,State 2>/dev/null | grep -E '\|(FAILED|TIMEOUT|NODE_FAIL|OUT_OF_MEMORY)' | sed 's/216692_//;s/|.*//' | tr '\n' ',' || echo '  none'
+echo
+echo "=== LOG IDLE SECONDS PER RUNNING JOB ==="
+for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-' | awk '{print $1}'); do
+  SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
+  [ -n "$SO" ] && [ -f "$SO" ] && printf '  %-14s idle=%ss node=%s\n' "$J" "$(( $(date +%s) - $(stat -c %Y "$SO") ))" "$(squeue -h -j "$J" -o '%N' 2>/dev/null)"
+done
+echo "=== AGGREGATION AND GATE ARTIFACTS ==="
+for F in aggregation/evaluations/time_split_vs_author.csv aggregation/evaluations/basin_split_vs_author.csv aggregation/hyperparameters/scores.csv aggregation/final_reproduction_gate.json; do
+  P="$ROOT/closure_20260810/$F"
+  [ -f "$P" ] && echo "  PRESENT $F ($(stat -c %s "$P") bytes)" || echo "  MISSING $F"
+done
+echo "=== ROLE COUNTS ==="
+source ~/miniconda3/etc/profile.d/conda.sh && conda activate nh_final 2>/dev/null
+cd "$ROOT"
+python - <<'PY' 2>/dev/null || echo "recount unavailable"
+import json, sys
+from pathlib import Path
+root = Path('/data1/home/sunyiq/nearing2022_da')
+sys.path.insert(0, str(root / 'src/29_nearing2022_da_ar/scripts'))
+from verify_registered_closure import audit_registered_closure
+reg = root / 'src/29_nearing2022_da_ar/registry'
+agg = root / 'closure_20260810/aggregation'
+c = audit_registered_closure(root, reg/'experiment_registry.csv', reg/'evaluation_registry.csv',
+                             reg/'assimilation_hyperparameter_registry.csv', agg/'evaluations', agg/'hyperparameters')
+m = {}
+for row in c['missing']:
+    m[row['coordinate_type']] = m.get(row['coordinate_type'], 0) + 1
+print(json.dumps({'missing_by_type': m, 'missing_total': len(c['missing'])}, sort_keys=True))
+for kind in ('training', 'evaluation'):
+    ids = sorted({r['coordinate_id'] for r in c['missing'] if r['coordinate_type'] == kind})
+    print(f'MISSING_{kind.upper()}_COORDINATES:', len(ids))
+    for k in ids[:10]: print('   ', k)
+    if len(ids) > 10: print(f'    ... 另有 {len(ids)-10} 个')
+PY
+exit 0
