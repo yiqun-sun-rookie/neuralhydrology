@@ -1,0 +1,14 @@
+### channel=kalmannet-tukf09-455 seq=42
+### host=login4
+### started=2026-09-01T07:31:42+0800
+### ---------- output ----------
+SUMMARY={"actual_total_bytes_for_regular_files": 464792200, "candidate_root": "/data1/home/sunyiq/adv531/data/camels_us", "candidate_root_device": 41, "candidate_root_inode": 7112601615, "candidate_root_mode": "drwxr-xr-x", "exact_file_count": 911, "expected_file_count": 911, "expected_total_bytes": 464792200, "formal_evaluation_array_reads": 0, "irregular_parent_count": 2, "mismatch_count": 0, "mismatch_identity_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945", "mismatch_kind_counts": {}, "ordered_basin_count": 455, "required_parent_directory_count": 40}
+IRREGULAR_PARENTS=[{"mode": "lrwxr-xr-x", "path": "/data1/home/sunyiq/adv531/data/camels_us/camels_attributes_v2.0", "reason": "linked_or_not_directory"}, {"mode": "lrwxr-xr-x", "path": "/data1/home/sunyiq/adv531/data/camels_us/usgs_streamflow", "reason": "linked_or_not_directory"}]
+MISMATCH_RECORDS_BEGIN
+MISMATCH_RECORDS_END
+Traceback (most recent call last):
+  File "<stdin>", line 131, in <module>
+RuntimeError: candidate source root did not pass the frozen 911-file gate
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-01T07:31:58+0800
