@@ -1,0 +1,78 @@
+### channel=zhenjiang-d32-diff-ukf seq=34
+### host=login4
+### started=2026-08-31T17:06:01+0800
+### ---------- output ----------
+QUERY_TIME=2026-08-31T17:06:01+0800
+=== SQUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== ESTIMATED_START ===
+slurm_load_jobs error: Invalid job id specified
+=== SCHEDULER_IDENTITY ===
+slurm_load_jobs error: Invalid job id specified
+=== ACCOUNTING ===
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|Start|End|NodeList
+216963|zhd32_dukf_dev_smoke|hgpu2p|COMPLETED|0:0|00:01:52|2026-08-31T16:04:21|2026-08-31T16:06:13|ngu008
+216963.batch|batch||COMPLETED|0:0|00:01:52|2026-08-31T16:04:21|2026-08-31T16:06:13|ngu008
+216963.extern|extern||COMPLETED|0:0|00:01:52|2026-08-31T16:04:21|2026-08-31T16:06:13|ngu008
+=== OUTPUT_EXISTENCE ===
+seed=17 final=true partial=false
+seed=29 final=true partial=false
+seed=43 final=true partial=false
+=== STANDARD_OUTPUT_TAIL ===
+registered_common_runtime_gate=pass
+bundle_and_training_identity_gate=pass
+common_runtime_import_and_tide_gate=pass
+graphics_processor_identity_gate=pass
+{
+  "status": "complete",
+  "output": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/smoke/ZHD32-DUKF-DEV-EVAL-S17-V1/attempt_001"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "4785bca17e36eadbe0b2c95b23f18915dafa54fa6fd9ecbb858b85c0727701a4"
+}
+smoke_seed_complete=17
+{
+  "status": "complete",
+  "output": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/smoke/ZHD32-DUKF-DEV-EVAL-S29-V1/attempt_001"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "37b191baf3140b954fc91c8ec4bf6c93e9d6cdeb082b36ca042d17995cd66079"
+}
+smoke_seed_complete=29
+{
+  "status": "complete",
+  "output": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/smoke/ZHD32-DUKF-DEV-EVAL-S43-V1/attempt_001"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "c02d0169ee97e50563201aac28d79013e627162efa70d2b488d033633242fc3a"
+}
+smoke_seed_complete=43
+=== STANDARD_ERROR_TAIL ===
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "4785bca17e36eadbe0b2c95b23f18915dafa54fa6fd9ecbb858b85c0727701a4"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "37b191baf3140b954fc91c8ec4bf6c93e9d6cdeb082b36ca042d17995cd66079"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "c02d0169ee97e50563201aac28d79013e627162efa70d2b488d033633242fc3a"
+}
+REVISION_THREE_PRECHECK_SEED_GATE=PASS seed=17 samples=64 checkpoint=5b4c5eb740cad744f1b4fae56b79e7fa9c29479156bafb0f5b461fa6b47ea793 normalization=hash_verified_input_replay_under_matching_python_numpy
+REVISION_THREE_PRECHECK_SEED_GATE=PASS seed=29 samples=64 checkpoint=2ff685a1d03d5039927c79d27c61dfca823b2f5c08fdc0942454d2f77c637b4e normalization=hash_verified_input_replay_under_matching_python_numpy
+REVISION_THREE_PRECHECK_SEED_GATE=PASS seed=43 samples=64 checkpoint=8127d41ea20cde9dbeeca88cdb183093450defc77a3d6cdda5b3c1faebd10d70 normalization=hash_verified_input_replay_under_matching_python_numpy
+REVISION_THREE_THREE_SEED_PRECHECK_GATE=PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T17:06:31+0800
