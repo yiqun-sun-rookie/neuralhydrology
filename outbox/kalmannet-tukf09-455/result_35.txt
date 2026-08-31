@@ -1,0 +1,17 @@
+### channel=kalmannet-tukf09-455 seq=35
+### host=login4
+### started=2026-09-01T06:00:12+0800
+### ---------- output ----------
+=== IMMUTABLE DEPLOYMENT GATES ===
+=== SAME-NAME JOB GATE ===
+=== ATOMIC ALLOCATION SUBMISSION LOCK ===
+=== EXACTLY ONE PACKAGE ALLOCATION PROBE SUBMISSION ===
+Submitted batch job 217180
+=== IMMEDIATE STATE ===
+ALLOCATION_PROBE_JOB_ID=217180
+             JOBID                           NAME  PARTITION      STATE         NODELIST(REASON)       TIME           START_TIME
+            217180            tukf09-455-v2r3-map      hgpu8    PENDING                   (None)       0:00                  N/A
+TUKF09_455_A800_EXCLUSIVE_V2R3_ALLOCATION_PROBE_SUBMITTED_ONCE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T06:00:13+0800
