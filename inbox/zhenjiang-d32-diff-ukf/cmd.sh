@@ -3,6 +3,75 @@ set -eo pipefail
 
 JOB_ID=217168
 EVALUATION_ROOT="/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3"
+RESULT_NAME="zhenjiang_d32_dukf_2023_development_evaluation_r3_result_bundle_v1.tar.gz"
+RETRIEVAL_ROOT="${EVALUATION_ROOT}/retrieval"
+PACKAGE="${RETRIEVAL_ROOT}/${RESULT_NAME}"
+PARTIAL="${PACKAGE}.partial"
+MAILBOX_COPY="${HOME}/hpc_mailbox/outbox/zhenjiang-d32-diff-ukf/${RESULT_NAME}"
+SUMMARY_REL="summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
+AUDIT_REL="audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
+
+ACCOUNTING="$(
+  sacct -X -n -j "${JOB_ID}" -P --format=JobID,State,ExitCode |
+    awk -F'|' -v job="${JOB_ID}" '$1 == job {print $2 "|" $3}'
+)"
+if [ "${ACCOUNTING}" != "COMPLETED|0:0" ]; then
+  echo "aggregate audit job is not complete: ${ACCOUNTING}" >&2
+  exit 2
+fi
+test -d "${EVALUATION_ROOT}/${SUMMARY_REL}"
+test ! -e "${EVALUATION_ROOT}/${SUMMARY_REL}.partial"
+test -d "${EVALUATION_ROOT}/${AUDIT_REL}"
+test ! -e "${EVALUATION_ROOT}/${AUDIT_REL}.partial"
+for TARGET in "${PACKAGE}" "${PARTIAL}" "${MAILBOX_COPY}"; do
+  if [ -e "${TARGET}" ]; then
+    echo "create-only retrieval target already exists: ${TARGET}" >&2
+    exit 2
+  fi
+done
+
+FILES=(
+  "${SUMMARY_REL}"
+  "${AUDIT_REL}"
+  "jobs/aggregate_audit_v1.slurm"
+  "jobs/aggregate_audit_v2.slurm"
+  "jobs/aggregate_audit_v3.slurm"
+  "logs/aggregate_audit_v2_217148.out"
+  "logs/aggregate_audit_v2_217148.err"
+  "logs/aggregate_audit_v3_217168.out"
+  "logs/aggregate_audit_v3_217168.err"
+  "run/bundle_manifest.json"
+  "run/docs/records/ZHENJIANG_D32_GRU_DIFFERENTIABLE_UKF_V1_DEVELOPMENT_EVALUATION_REGISTRY_R3.json"
+  "run/docs/records/ZHENJIANG_D32_GRU_DIFFERENTIABLE_UKF_V1_DEVELOPMENT_EVALUATION_CONTRACT_2026-08-31.json"
+  "run/scripts/analysis/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py"
+  "run/scripts/analysis/audit_zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py"
+)
+for SEED in 17 29 43; do
+  WORKER_REL="workers/ZHD32-DUKF-DEV-EVAL-S${SEED}-V1/attempt_001"
+  FILES+=(
+    "${WORKER_REL}/completion_manifest.json"
+    "${WORKER_REL}/worker_summary.json"
+    "${WORKER_REL}/data_identity.json"
+    "${WORKER_REL}/checkpoint_identity.json"
+    "${WORKER_REL}/run_identity.json"
+  )
+done
+for RELATIVE in "${FILES[@]}"; do
+  test -e "${EVALUATION_ROOT}/${RELATIVE}"
+done
+
+mkdir -p "${RETRIEVAL_ROOT}"
+tar -czf "${PARTIAL}" -C "${EVALUATION_ROOT}" "${FILES[@]}"
+tar -tzf "${PARTIAL}"
+mv "${PARTIAL}" "${PACKAGE}"
+install -m 0444 "${PACKAGE}" "${MAILBOX_COPY}"
+echo "=== RESULT_BUNDLE_IDENTITY ==="
+stat -c 'bytes=%s path=%n' "${PACKAGE}" "${MAILBOX_COPY}"
+sha256sum "${PACKAGE}" "${MAILBOX_COPY}"
+exit 0
+
+JOB_ID=217168
+EVALUATION_ROOT="/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3"
 SUMMARY="${EVALUATION_ROOT}/summary/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
 AUDIT="${EVALUATION_ROOT}/audit/ZHD32-DUKF-DEV-EVAL-SUMMARY-V1/attempt_001"
 OUT_LOG="${EVALUATION_ROOT}/logs/aggregate_audit_v3_${JOB_ID}.out"
