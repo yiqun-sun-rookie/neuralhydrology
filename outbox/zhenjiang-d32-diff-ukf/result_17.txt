@@ -1,0 +1,11 @@
+### channel=zhenjiang-d32-diff-ukf seq=17
+### host=login4
+### started=2026-08-31T13:12:02+0800
+### ---------- output ----------
+SMOKE_SUBMISSION_STATUS=PASS
+SMOKE_JOB_ID=216552
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT
+216552|zhd32_dukf_dev_smoke|PENDING|hgpu2p||0:00|2:00:00
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:12:02+0800
