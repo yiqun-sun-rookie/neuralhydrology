@@ -1,0 +1,12 @@
+### channel=id31-hydrologic-dynamic-tokens seq=20
+### host=login4
+### started=2026-08-31T11:27:58+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 10, in <module>
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/utils/config.py", line 50, in __init__
+    raise ValueError(f'Cannot create a config from input of type {type(yml_path_or_dict)}.')
+ValueError: Cannot create a config from input of type <class 'str'>.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-08-31T11:29:00+0800
