@@ -1,0 +1,61 @@
+### channel=zhenjiang-d32-diff-ukf seq=12
+### host=login4
+### started=2026-08-31T10:50:21+0800
+### ---------- output ----------
+FORMAL_ARRAY_JOB_ID=215862
+QUERY_TIME=2026-08-31T10:50:22+0800
+SLURM_VERSION=slurm 19.05.4
+=== RELEVANT_SUPPORTED_FIELDS ===
+AllocTRES
+Elapsed
+ElapsedRaw
+End
+ExitCode
+JobID
+JobIDRaw
+JobName
+MaxRSS
+NodeList
+Partition
+Start
+State
+TRESUsageInMax
+ACCOUNTING_FORMAT=JobIDRaw,JobID,JobName,Partition,State,ExitCode,ElapsedRaw,Elapsed,Start,End,NodeList,AllocTRES,MaxRSS,TRESUsageInMax
+=== ACTUAL_JOB_IDS_FROM_IMMUTABLE_LOGS ===
+215862,215863,215871
+=== ACCOUNTING_BY_ARRAY_ROOT ===
+JobIDRaw|JobID|JobName|Partition|State|ExitCode|ElapsedRaw|Elapsed|Start|End|NodeList|AllocTRES|MaxRSS|TRESUsageInMax
+215863|215862_0|zhd32-dukf-formal|hgpu2p|COMPLETED|0:0|4929|01:22:09|2026-08-28T16:35:23|2026-08-28T17:57:32|ngu011|billing=4,cpu=4,node=1||
+215863.batch|215862_0.batch|batch||COMPLETED|0:0|4929|01:22:09|2026-08-28T16:35:23|2026-08-28T17:57:32|ngu011|cpu=4,mem=0,node=1|1401896K|cpu=01:20:08,energy=0,fs/disk=687415825,mem=1401896K,pages=30,vmem=11412200K
+215863.extern|215862_0.extern|extern||COMPLETED|0:0|4929|01:22:09|2026-08-28T16:35:23|2026-08-28T17:57:32|ngu011|billing=4,cpu=4,node=1|2448K|cpu=00:00:00,energy=0,fs/disk=7206,mem=2448K,pages=0,vmem=250920K
+215871|215862_1|zhd32-dukf-formal|hgpu2p|COMPLETED|0:0|3912|01:05:12|2026-08-28T17:58:01|2026-08-28T19:03:13|ngu011|billing=4,cpu=4,node=1||
+215871.batch|215862_1.batch|batch||COMPLETED|0:0|3912|01:05:12|2026-08-28T17:58:01|2026-08-28T19:03:13|ngu011|cpu=4,mem=0,node=1|1410504K|cpu=01:03:12,energy=0,fs/disk=677732857,mem=1410504K,pages=2,vmem=11406876K
+215871.extern|215862_1.extern|extern||COMPLETED|0:0|3912|01:05:12|2026-08-28T17:58:01|2026-08-28T19:03:13|ngu011|billing=4,cpu=4,node=1|2404K|cpu=00:00:00,energy=0,fs/disk=7206,mem=2404K,pages=0,vmem=250920K
+215862|215862_2|zhd32-dukf-formal|hgpu2p|COMPLETED|0:0|3139|00:52:19|2026-08-28T19:03:32|2026-08-28T19:55:51|ngu011|billing=4,cpu=4,node=1||
+215862.batch|215862_2.batch|batch||COMPLETED|0:0|3139|00:52:19|2026-08-28T19:03:32|2026-08-28T19:55:51|ngu011|cpu=4,mem=0,node=1|1405384K|cpu=00:50:16,energy=0,fs/disk=666780668,mem=1405384K,pages=0,vmem=11412072K
+215862.extern|215862_2.extern|extern||COMPLETED|0:0|3140|00:52:20|2026-08-28T19:03:32|2026-08-28T19:55:52|ngu011|billing=4,cpu=4,node=1|2192K|cpu=00:00:00,energy=0,fs/disk=7206,mem=2192K,pages=0,vmem=250920K
+=== ACCOUNTING_BY_ACTUAL_JOB_IDS ===
+JobIDRaw|JobID|JobName|Partition|State|ExitCode|ElapsedRaw|Elapsed|Start|End|NodeList|AllocTRES|MaxRSS|TRESUsageInMax
+215863|215862_0|zhd32-dukf-formal|hgpu2p|COMPLETED|0:0|4929|01:22:09|2026-08-28T16:35:23|2026-08-28T17:57:32|ngu011|billing=4,cpu=4,node=1||
+215863.batch|215862_0.batch|batch||COMPLETED|0:0|4929|01:22:09|2026-08-28T16:35:23|2026-08-28T17:57:32|ngu011|cpu=4,mem=0,node=1|1401896K|cpu=01:20:08,energy=0,fs/disk=687415825,mem=1401896K,pages=30,vmem=11412200K
+215863.extern|215862_0.extern|extern||COMPLETED|0:0|4929|01:22:09|2026-08-28T16:35:23|2026-08-28T17:57:32|ngu011|billing=4,cpu=4,node=1|2448K|cpu=00:00:00,energy=0,fs/disk=7206,mem=2448K,pages=0,vmem=250920K
+215871|215862_1|zhd32-dukf-formal|hgpu2p|COMPLETED|0:0|3912|01:05:12|2026-08-28T17:58:01|2026-08-28T19:03:13|ngu011|billing=4,cpu=4,node=1||
+215871.batch|215862_1.batch|batch||COMPLETED|0:0|3912|01:05:12|2026-08-28T17:58:01|2026-08-28T19:03:13|ngu011|cpu=4,mem=0,node=1|1410504K|cpu=01:03:12,energy=0,fs/disk=677732857,mem=1410504K,pages=2,vmem=11406876K
+215871.extern|215862_1.extern|extern||COMPLETED|0:0|3912|01:05:12|2026-08-28T17:58:01|2026-08-28T19:03:13|ngu011|billing=4,cpu=4,node=1|2404K|cpu=00:00:00,energy=0,fs/disk=7206,mem=2404K,pages=0,vmem=250920K
+215862|215862_2|zhd32-dukf-formal|hgpu2p|COMPLETED|0:0|3139|00:52:19|2026-08-28T19:03:32|2026-08-28T19:55:51|ngu011|billing=4,cpu=4,node=1||
+215862.batch|215862_2.batch|batch||COMPLETED|0:0|3139|00:52:19|2026-08-28T19:03:32|2026-08-28T19:55:51|ngu011|cpu=4,mem=0,node=1|1405384K|cpu=00:50:16,energy=0,fs/disk=666780668,mem=1405384K,pages=0,vmem=11412072K
+215862.extern|215862_2.extern|extern||COMPLETED|0:0|3140|00:52:20|2026-08-28T19:03:32|2026-08-28T19:55:52|ngu011|billing=4,cpu=4,node=1|2192K|cpu=00:00:00,energy=0,fs/disk=7206,mem=2192K,pages=0,vmem=250920K
+=== ACCOUNTING_BY_JOB_NAME ===
+JobIDRaw|JobID|JobName|Partition|State|ExitCode|ElapsedRaw|Elapsed|Start|End|NodeList|AllocTRES|MaxRSS|TRESUsageInMax
+215863|215862_0|zhd32-dukf-formal|hgpu2p|COMPLETED|0:0|4929|01:22:09|2026-08-28T16:35:23|2026-08-28T17:57:32|ngu011|billing=4,cpu=4,node=1||
+215863.batch|215862_0.batch|batch||COMPLETED|0:0|4929|01:22:09|2026-08-28T16:35:23|2026-08-28T17:57:32|ngu011|cpu=4,mem=0,node=1|1401896K|cpu=01:20:08,energy=0,fs/disk=687415825,mem=1401896K,pages=30,vmem=11412200K
+215863.extern|215862_0.extern|extern||COMPLETED|0:0|4929|01:22:09|2026-08-28T16:35:23|2026-08-28T17:57:32|ngu011|billing=4,cpu=4,node=1|2448K|cpu=00:00:00,energy=0,fs/disk=7206,mem=2448K,pages=0,vmem=250920K
+215871|215862_1|zhd32-dukf-formal|hgpu2p|COMPLETED|0:0|3912|01:05:12|2026-08-28T17:58:01|2026-08-28T19:03:13|ngu011|billing=4,cpu=4,node=1||
+215871.batch|215862_1.batch|batch||COMPLETED|0:0|3912|01:05:12|2026-08-28T17:58:01|2026-08-28T19:03:13|ngu011|cpu=4,mem=0,node=1|1410504K|cpu=01:03:12,energy=0,fs/disk=677732857,mem=1410504K,pages=2,vmem=11406876K
+215871.extern|215862_1.extern|extern||COMPLETED|0:0|3912|01:05:12|2026-08-28T17:58:01|2026-08-28T19:03:13|ngu011|billing=4,cpu=4,node=1|2404K|cpu=00:00:00,energy=0,fs/disk=7206,mem=2404K,pages=0,vmem=250920K
+215862|215862_2|zhd32-dukf-formal|hgpu2p|COMPLETED|0:0|3139|00:52:19|2026-08-28T19:03:32|2026-08-28T19:55:51|ngu011|billing=4,cpu=4,node=1||
+215862.batch|215862_2.batch|batch||COMPLETED|0:0|3139|00:52:19|2026-08-28T19:03:32|2026-08-28T19:55:51|ngu011|cpu=4,mem=0,node=1|1405384K|cpu=00:50:16,energy=0,fs/disk=666780668,mem=1405384K,pages=0,vmem=11412072K
+215862.extern|215862_2.extern|extern||COMPLETED|0:0|3140|00:52:20|2026-08-28T19:03:32|2026-08-28T19:55:52|ngu011|billing=4,cpu=4,node=1|2192K|cpu=00:00:00,energy=0,fs/disk=7206,mem=2192K,pages=0,vmem=250920K
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T10:50:25+0800
