@@ -1,0 +1,228 @@
+### channel=kalmannet-tukf09-455 seq=30
+### host=login4
+### started=2026-09-01T04:08:21+0800
+### ---------- output ----------
+=== FIXED FAILED JOB ===
+REMOTE_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901
+PREPARATION_JOB_ID=217163
+217163|tukf09-455-v2r1-prepare|hgpu8|FAILED|2:0|00:04:21|ngu201|2026-09-01T03:58:40|2026-09-01T04:03:01
+217163.batch|batch||FAILED|2:0|00:04:21|ngu201|2026-09-01T03:58:40|2026-09-01T04:03:01
+217163.extern|extern||COMPLETED|0:0|00:04:21|ngu201|2026-09-01T03:58:40|2026-09-01T04:03:01
+=== LOCKS, JOB ID, AND INITIAL VERIFICATION ===
+DIRECTORY=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/status/preparation_submission.lock LINKS=2 MODE=700 MTIME=2026-09-01 03:58:07.000000000 +0800
+FILE=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/status/preparation.lock SIZE_BYTES=0 LINKS=1 MODE=600 MTIME=2026-09-01 03:58:07.000000000 +0800
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/status/preparation.lock
+FILE=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/status/preparation_job_id.txt SIZE_BYTES=7 LINKS=1 MODE=600 MTIME=2026-09-01 03:58:07.000000000 +0800
+b8af41c5f2d61c918da8343f7391a7ce75791c5d33a36b19ad533ccb6638c903  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/status/preparation_job_id.txt
+217163
+FILE=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/status/initial_bundle_verification.json SIZE_BYTES=749 LINKS=1 MODE=600 MTIME=2026-09-01 03:59:18.000000000 +0800
+e1439af9226a3e94d7b8951e4f471e8c678990e3fbeb366c2e919cf9a3eae6b7  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/status/initial_bundle_verification.json
+{"admitted_executable_count":30,"admitted_test_count":12,"bundle_manifest_sha256":"ca7bc5b7bdd9a451d691130c6881cd146c3d89d2ef01385237faac0f91c46ad4","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","formal_evaluation_output_count":0,"identity_sha256":"4bc681e1d304d6a767762886b748eea0fdae23b4bdb7f18f9f47a2c2870540bc","member_count":2807,"mutable_directory_count_at_verification":0,"mutable_file_count_at_verification":0,"schema_version":"tukf09_455_hpc_initial_bundle_verification_a800_exclusive_v2r1","scientific_contract_changed":false,"status":"STRICT_PRISTINE_A800_EXCLUSIVE_V2R1_BUNDLE_VERIFIED_BEFORE_RUNTIME_MUTATION","strict_verifier_sha256":"b570841f2df32e3bd247e93e876a24a4d648c44f50a41680657ee77ab7dc05ec"}
+=== FAILED PENDING ROOT INVENTORY ===
+PENDING=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163 LINKS=7 MODE=700 MTIME=2026-09-01 03:59:50.000000000 +0800
+37683	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/built_wheels|4096|2|700
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence|4096|2|700
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/pysite.pending|4096|2|700
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/sourcehouse|4096|2|700
+d|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/wheelhouse|4096|2|700
+f|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/pip-command.txt|523|1|600
+f|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/pip-stderr.log|11549|1|600
+f|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/pip-stdout.log|1035|1|600
+=== EXACT RUNTIME EVIDENCE ===
+EVIDENCE=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/pip-command.txt SIZE_BYTES=523 LINKS=1 MODE=600 MTIME=2026-09-01 03:59:50.000000000 +0800
+4d3f1b3e1571e4e2204a8a066ab5feaffed3904eb535ba1f273108a8b52682a8  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/pip-command.txt
+python -m pip download --no-cache-dir --no-deps --only-binary=:all: --require-hashes --dest WHEELHOUSE --requirement runtime-binary.lock
+python -m pip download --no-cache-dir --no-deps --no-binary=:all: --require-hashes --dest SOURCEHOUSE --requirement psutil-source.lock
+python -m pip wheel --no-cache-dir --no-index --no-deps --no-build-isolation --wheel-dir BUILDHOUSE psutil-5.9.0.tar.gz
+python -m pip install --no-cache-dir --no-index --no-deps --ignore-installed --no-compile --target PYSITE_PENDING WHEELHOUSE/*.whl
+EVIDENCE=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/pip-stdout.log SIZE_BYTES=1035 LINKS=1 MODE=600 MTIME=2026-09-01 04:00:04.000000000 +0800
+f2b4b652eb10ebbf157a9d08a1871328059ced1aa941a8a7d41e14de9ce5be84  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/pip-stdout.log
+Python 3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]
+pip 25.2 from /data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip (python 3.11)
+gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-44)
+Copyright (C) 2015 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+ldd (GNU libc) 2.17
+Copyright (C) 2012 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Written by Roland McGrath and Ulrich Drepper.
+Collecting torch@ https://download.pytorch.org/whl/cu121/torch-2.2.2%2Bcu121-cp311-cp311-linux_x86_64.whl (from -r /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r1/runtime-binary.lock (line 1))
+EVIDENCE=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/pip-stderr.log SIZE_BYTES=11549 LINKS=1 MODE=600 MTIME=2026-09-01 04:02:28.000000000 +0800
+f9e8fe66ce1f3834235bba544f558c7cf0e45ac077dda75e119a97f0311dc71c  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/pip-stderr.log
+  WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2ae95c3e9fd0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /whl/cu121/torch-2.2.2%2Bcu121-cp311-cp311-linux_x86_64.whl
+  WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2ae95cabea10>: Failed to establish a new connection: [Errno -2] Name or service not known')': /whl/cu121/torch-2.2.2%2Bcu121-cp311-cp311-linux_x86_64.whl
+  WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2ae95cabf5d0>: Failed to establish a new connection: [Errno -2] Name or service not known')': /whl/cu121/torch-2.2.2%2Bcu121-cp311-cp311-linux_x86_64.whl
+  WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2ae95cad0150>: Failed to establish a new connection: [Errno -2] Name or service not known')': /whl/cu121/torch-2.2.2%2Bcu121-cp311-cp311-linux_x86_64.whl
+  WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2ae95cad0d10>: Failed to establish a new connection: [Errno -2] Name or service not known')': /whl/cu121/torch-2.2.2%2Bcu121-cp311-cp311-linux_x86_64.whl
+ERROR: Exception:
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/connection.py", line 174, in _new_conn
+    conn = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/util/connection.py", line 72, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/socket.py", line 974, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno -2] Name or service not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/connectionpool.py", line 716, in urlopen
+    httplib_response = self._make_request(
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/connectionpool.py", line 404, in _make_request
+    self._validate_conn(conn)
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/connectionpool.py", line 1061, in _validate_conn
+    conn.connect()
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/connection.py", line 363, in connect
+    self.sock = conn = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/connection.py", line 186, in _new_conn
+    raise NewConnectionError(
+pip._vendor.urllib3.exceptions.NewConnectionError: <pip._vendor.urllib3.connection.HTTPSConnection object at 0x2ae95cad1890>: Failed to establish a new connection: [Errno -2] Name or service not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/requests/adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/connectionpool.py", line 830, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/connectionpool.py", line 830, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/connectionpool.py", line 830, in urlopen
+    return self.urlopen(
+           ^^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/connectionpool.py", line 802, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/urllib3/util/retry.py", line 594, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+pip._vendor.urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='download.pytorch.org', port=443): Max retries exceeded with url: /whl/cu121/torch-2.2.2%2Bcu121-cp311-cp311-linux_x86_64.whl (Caused by NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2ae95cad1890>: Failed to establish a new connection: [Errno -2] Name or service not known'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/cli/base_command.py", line 107, in _run_wrapper
+    status = _inner_run()
+             ^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/cli/base_command.py", line 98, in _inner_run
+    return self.run(options, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/cli/req_command.py", line 71, in wrapper
+    return func(self, options, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/commands/download.py", line 131, in run
+    requirement_set = resolver.resolve(reqs, check_supported_wheels=True)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/resolution/resolvelib/resolver.py", line 79, in resolve
+    collected = self.factory.collect_root_requirements(root_reqs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/resolution/resolvelib/factory.py", line 538, in collect_root_requirements
+    reqs = list(
+           ^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/resolution/resolvelib/factory.py", line 494, in _make_requirements_from_install_req
+    cand = self._make_base_candidate_from_link(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/resolution/resolvelib/factory.py", line 226, in _make_base_candidate_from_link
+    self._link_candidate_cache[link] = LinkCandidate(
+                                       ^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 309, in __init__
+    super().__init__(
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 162, in __init__
+    self.dist = self._prepare()
+                ^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 239, in _prepare
+    dist = self._prepare_distribution()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 320, in _prepare_distribution
+    return preparer.prepare_linked_requirement(self._ireq, parallel_builds=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/operations/prepare.py", line 537, in prepare_linked_requirement
+    return self._prepare_linked_requirement(req, parallel_builds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/operations/prepare.py", line 608, in _prepare_linked_requirement
+    local_file = unpack_url(
+                 ^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/operations/prepare.py", line 180, in unpack_url
+    file = get_http_url(
+           ^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/operations/prepare.py", line 121, in get_http_url
+    from_path, content_type = download(link, temp_dir.path)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/network/download.py", line 189, in __call__
+    resp = self._http_get(link)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/network/download.py", line 334, in _http_get
+    resp = self._session.get(target_url, headers=headers, stream=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/requests/sessions.py", line 602, in get
+    return self.request("GET", url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_internal/network/session.py", line 528, in request
+    return super().request(method, url, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pip/_vendor/requests/adapters.py", line 700, in send
+    raise ConnectionError(e, request=request)
+pip._vendor.requests.exceptions.ConnectionError: HTTPSConnectionPool(host='download.pytorch.org', port=443): Max retries exceeded with url: /whl/cu121/torch-2.2.2%2Bcu121-cp311-cp311-linux_x86_64.whl (Caused by NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x2ae95cad1890>: Failed to establish a new connection: [Errno -2] Name or service not known'))
+EVIDENCE_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/runtime-import-check.txt
+EVIDENCE_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/psutil-built-wheel.sha256
+EVIDENCE_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/pip-install-report.json
+EVIDENCE_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/evidence/private_runtime_manifest.json
+=== DOWNLOADED, BUILT, OR INSTALLED FILE INVENTORY ===
+DIRECTORY=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/wheelhouse
+DIRECTORY=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/sourcehouse
+DIRECTORY=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/built_wheels
+DIRECTORY=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/pysite.pending
+DIRECTORY_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1.pending.217163/pysite
+=== EXACT SLURM LOGS ===
+LOG=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/logs/prepare-217163.out SIZE_BYTES=1337 LINKS=1 MODE=600 MTIME=2026-09-01 03:59:50.000000000 +0800
+3e5abfb0698e75b0d9f5c28c3bd98102384ad02c4ddd8386624443a8a6e8ec93  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/logs/prepare-217163.out
+{"admitted_executable_count": 30, "admitted_test_count": 12, "bundle_manifest_sha256": "ca7bc5b7bdd9a451d691130c6881cd146c3d89d2ef01385237faac0f91c46ad4", "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1", "formal_evaluation_output_count": 0, "identity_sha256": "4bc681e1d304d6a767762886b748eea0fdae23b4bdb7f18f9f47a2c2870540bc", "member_count": 2807, "mutable_directory_count_at_verification": 0, "mutable_file_count_at_verification": 0, "schema_version": "tukf09_455_hpc_initial_bundle_verification_a800_exclusive_v2r1", "scientific_contract_changed": false, "status": "STRICT_PRISTINE_A800_EXCLUSIVE_V2R1_BUNDLE_VERIFIED_BEFORE_RUNTIME_MUTATION", "strict_verifier_sha256": "b570841f2df32e3bd247e93e876a24a4d648c44f50a41680657ee77ab7dc05ec"}
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2807,
+  "mutable_directory_count": 0,
+  "mutable_file_count": 0,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R1_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+LOG=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/logs/prepare-217163.err SIZE_BYTES=0 LINKS=1 MODE=600 MTIME=2026-09-01 03:58:07.000000000 +0800
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/logs/prepare-217163.err
+=== UNPUBLISHED LATER-STAGE OUTPUTS ===
+LATER_STAGE_OUTPUT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/runtime_v2r1
+LATER_STAGE_OUTPUT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/status/staged_training_sources.json
+LATER_STAGE_OUTPUT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/status/preparation_probe.json
+LATER_STAGE_OUTPUT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/status/hpc_technical_admission.json
+LATER_STAGE_OUTPUT_ABSENT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1
+FORBIDDEN_OUTPUT_ABSENT=selection
+FORBIDDEN_OUTPUT_ABSENT=evaluation
+FORBIDDEN_OUTPUT_ABSENT=formal_evaluation
+TUKF09_455_A800_EXCLUSIVE_V2R1_FAILED_PREPARATION_FORENSICS_CAPTURED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T04:08:22+0800
