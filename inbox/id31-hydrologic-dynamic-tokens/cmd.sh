@@ -44,8 +44,8 @@ echo "=== BOUND SOURCE HASHES ==="
 for path in \
   "$ROOT/neuralhydrology/training/regularization.py" \
   "$ROOT/test/test_hydrologic_dynamic_token_transformer.py" \
-  "$ROOT/src/31_hydrologic_dynamic_tokens/configs/maurer/dl01_learned_end_to_end.yml" \
-  "$ROOT/src/31_hydrologic_dynamic_tokens/registry/experiment_registry.yml"; do
+  "$ROOT/src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml" \
+  "$ROOT/src/hydrologic_dynamic_tokens/registry/experiments.csv"; do
   if test -f "$path"; then sha256sum "$path"; else echo "SOURCE_MISSING $path"; fi
 done
 
