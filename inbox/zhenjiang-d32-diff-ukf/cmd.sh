@@ -16,7 +16,7 @@ echo "=== ARRAY_SCHEDULER_IDENTITY ==="
 scontrol show job -o "${JOB_ID}" || true
 echo "=== ARRAY_ACCOUNTING ==="
 sacct -X -j "${JOB_ID}" -P \
-  --format=JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,Start,End,NodeList,AllocTRES || true
+  --format=JobID,JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,Start,End,NodeList,AllocTRES || true
 
 SEEDS=(17 29 43)
 ALL_COMPLETE=true
@@ -46,7 +46,7 @@ if [ "${ALL_COMPLETE}" = true ]; then
   for INDEX in 0 1 2; do
     TASK_ID="${JOB_ID}_${INDEX}"
     ACCOUNTING="$(
-      sacct -X -n -j "${TASK_ID}" -P --format=JobIDRaw,State,ExitCode |
+      sacct -X -n -j "${JOB_ID}" -P --format=JobID,State,ExitCode |
         awk -F'|' -v task="${TASK_ID}" '$1 == task {print $2 "|" $3}'
     )"
     [ "${ACCOUNTING}" = "COMPLETED|0:0" ] || {
