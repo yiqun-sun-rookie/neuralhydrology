@@ -1,58 +1,60 @@
 #!/bin/bash
-# Read-only cluster collision, capacity, data, and environment snapshot.
+# Read-only Python environment and private-wheel-source audit.
 set -o pipefail
 
 ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_20260831
-DATA=/data1/home/sunyiq/neuralhydrology/data/camels_us
+CONDA_ROOT=/data1/home/${USER}/miniconda3
 
-echo "=== RUNNER ==="
-pgrep -af hpc_runner_active || true
-
-echo "=== UNIQUE ROOT ==="
+echo "=== UNIQUE ROOT RECHECK ==="
 if [ -e "$ROOT" ]; then
   echo "ROOT_EXISTS=$ROOT"
 else
   echo "ROOT_ABSENT=$ROOT"
 fi
 
-echo "=== SHARED DATA READINESS ==="
-for path in \
-  "$DATA" \
-  "$DATA/basin_mean_forcing/maurer" \
-  "$DATA/usgs_streamflow" \
-  "$DATA/camels_attributes_v2.0/camels_topo.txt" \
-  "$DATA/basin_mean_forcing/maurer/01/01022500_lump_maurer_forcing_leap.txt" \
-  "$DATA/usgs_streamflow/01/01022500_streamflow_qc.txt"
-do
-  if [ -e "$path" ]; then
-    stat -c 'PRESENT %F %s %n' "$path" || true
-  else
-    echo "MISSING $path"
+echo "=== INSTALLED ENVIRONMENT VERSIONS ==="
+for name in knet_clean neuralhydrology nh_clean nh_final; do
+  python_path="$CONDA_ROOT/envs/$name/bin/python"
+  echo "--- $name ---"
+  if [ ! -x "$python_path" ]; then
+    echo "MISSING_PYTHON=$python_path"
+    continue
   fi
+  "$python_path" - <<'PY' 2>&1 || true
+import importlib
+import json
+import platform
+import sys
+
+record = {
+    "python": platform.python_version(),
+    "python_executable": sys.executable,
+}
+for module_name in ("numpy", "torch", "psutil"):
+    try:
+        module = importlib.import_module(module_name)
+        record[module_name] = str(module.__version__)
+    except Exception as error:
+        record[module_name] = f"ERROR:{type(error).__name__}:{error}"
+print(json.dumps(record, sort_keys=True))
+PY
 done
 
-echo "=== PARTITIONS ==="
-sinfo -o '%.10P %.6a %.6D %.6t %.30N' || true
-sinfo -R || true
+echo "=== PRIVATE PYTORCH WHEEL SOURCE ==="
+timeout 45 curl -sSIL -m 40 -o /dev/null \
+  -w 'torch_2_2_2_cu121_http=%{http_code} bytes=%{size_download} total=%{time_total}\n' \
+  'https://download.pytorch.org/whl/cu121/torch-2.2.2%2Bcu121-cp311-cp311-linux_x86_64.whl' || true
 
-echo "=== OWN JOBS ==="
-squeue -u "$USER" -o '%.18i %.24j %.10P %.8T %.10M %.24R' || true
-
-echo "=== STORAGE ==="
-df -h /data1 || true
-
-echo "=== CONDA ENVIRONMENTS ==="
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || \
-source "$HOME/miniconda3/etc/profile.d/conda.sh" 2>/dev/null || true
-conda env list 2>&1 || true
-
-echo "=== CANDIDATE TORCH 2.2.2 INSTALLATIONS ==="
-for prefix in /data1/home/${USER}/miniconda3/envs "$HOME/miniconda3/envs"; do
-  [ -d "$prefix" ] || continue
-  find "$prefix" -path '*/site-packages/torch/version.py' -type f -exec grep -l "__version__ = '2.2.2" {} \; 2>/dev/null || true
+echo "=== PYPI WHEEL SOURCES ==="
+for url in \
+  'https://pypi.org/simple/numpy/' \
+  'https://pypi.org/simple/psutil/'
+do
+  timeout 45 curl -sSIL -m 40 -o /dev/null \
+    -w "$url http=%{http_code} total=%{time_total}\n" "$url" || true
 done
 
-echo "=== CANDIDATE TORCH 2.2.2 WHEEL ==="
-find "$HOME/.cache/pip" -type f -iname 'torch*2.2.2*.whl' -print -quit 2>/dev/null || true
+echo "=== CURRENT GPU PARTITION STATE ==="
+sinfo -o '%.10P %.6a %.6D %.6t %.30N' | grep -E 'PARTITION|hgpu2p' || true
 
-echo "=== SNAPSHOT COMPLETE ==="
+echo "=== AUDIT COMPLETE ==="
