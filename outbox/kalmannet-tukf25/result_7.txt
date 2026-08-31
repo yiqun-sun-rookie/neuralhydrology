@@ -1,0 +1,18 @@
+### channel=kalmannet-tukf25 seq=7
+### host=login4
+### started=2026-08-31T15:13:18+0800
+### ---------- output ----------
+=== TRAIN ARRAY 216699 STATES ===
+    324 COMPLETED
+=== FAILURES ===
+  none
+train_records=108
+=== SELECTED_UPDATE QUICK DIST ===
+selected_update==0 by mode: {'all_frozen': 27, 'filter_only': 4, 'joint': 6, 'hydrology_only': 9}
+=== PACK AND PUSH TRAIN RESULTS ===
+58c383ed433f326af590bb9994d6c6d3d9f87a1f2cf08e375cb60f0cfca1a77f  /tmp/tukf25_train_results_v1.tar.gz
+--- push attempt 1 ---
+remote: TRAIN_PAYLOAD_PUSHED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T15:13:49+0800
