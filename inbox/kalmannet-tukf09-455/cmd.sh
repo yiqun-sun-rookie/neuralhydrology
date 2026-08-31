@@ -7,6 +7,14 @@ JOB_ID=217060
 
 echo "=== SQUEUE ==="
 squeue -h -j "${JOB_ID}" -o 'job_id=%A name=%j state=%T elapsed=%M limit=%l partition=%P node=%R' || true
+echo "=== ESTIMATED START ==="
+squeue --start -j "${JOB_ID}" -o 'job_id=%A state=%T start=%S node=%R' || true
+echo "=== PRIORITY ==="
+sprio -j "${JOB_ID}" || true
+echo "=== JOB DETAIL ==="
+scontrol show job -o "${JOB_ID}" || true
+echo "=== PARTITION NODES ==="
+sinfo -p hgpu2p -N -o '%N|%t|%G|%C' || true
 echo "=== SACCT ==="
 sacct -j "${JOB_ID}" --format=JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,NodeList -P || true
 echo "=== STDOUT ==="
