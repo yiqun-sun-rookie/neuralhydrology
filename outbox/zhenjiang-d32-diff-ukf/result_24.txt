@@ -1,0 +1,11 @@
+### channel=zhenjiang-d32-diff-ukf seq=24
+### host=login4
+### started=2026-08-31T14:20:31+0800
+### ---------- output ----------
+REVISION_TWO_SMOKE_SUBMISSION_STATUS=PASS
+REVISION_TWO_SMOKE_JOB_ID=216818
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+216818|zhd32_dukf_dev_smoke|PENDING|hgpu2p||0:00|2:00:00|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T14:20:31+0800
