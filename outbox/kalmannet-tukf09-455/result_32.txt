@@ -1,0 +1,12 @@
+### channel=kalmannet-tukf09-455 seq=32
+### host=login4
+### started=2026-09-01T05:23:08+0800
+### ---------- output ----------
+cp: invalid argument ‘never’ for ‘--reflink’
+Valid arguments are:
+  - ‘auto’
+  - ‘always’
+Try 'cp --help' for more information.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-01T05:23:09+0800
