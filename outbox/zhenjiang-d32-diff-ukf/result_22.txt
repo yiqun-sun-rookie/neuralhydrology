@@ -1,0 +1,42 @@
+### channel=zhenjiang-d32-diff-ukf seq=22
+### host=login4
+### started=2026-08-31T13:38:26+0800
+### ---------- output ----------
+QUERY_TIME=2026-08-31T13:38:26+0800
+=== SQUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== ESTIMATED_START ===
+slurm_load_jobs error: Invalid job id specified
+=== SACCT ===
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|Start|End|NodeList
+216552|zhd32_dukf_dev_smoke|hgpu2p|FAILED|1:0|00:00:47|2026-08-31T13:32:11|2026-08-31T13:32:58|ngu006
+216552.batch|batch||FAILED|1:0|00:00:47|2026-08-31T13:32:11|2026-08-31T13:32:58|ngu006
+216552.extern|extern||COMPLETED|0:0|00:00:47|2026-08-31T13:32:11|2026-08-31T13:32:58|ngu006
+=== OUTPUT_EXISTENCE ===
+seed=17 final=false partial=true
+seed=29 final=false partial=false
+seed=43 final=false partial=false
+=== LOG_EXISTENCE_AND_TAIL ===
+log=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831/logs/smoke_216552.out exists=true size=77
+bundle_and_training_identity_gate=pass
+graphics_processor_identity_gate=pass
+log=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831/logs/smoke_216552.err exists=true size=1473
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831/run/scripts/analysis/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py", line 1855, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831/run/scripts/analysis/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py", line 1837, in main
+    output = execute_seed_evaluation(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831/run/scripts/analysis/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_v1.py", line 1043, in execute_seed_evaluation
+    data = load_joint_water_level_data(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831/run/scripts/modeling/water_level_joint_encoder_decoder_v2.py", line 584, in load_joint_water_level_data
+    frozen_tide = load_frozen_astronomical_tide(tide_model_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831/run/scripts/astronomical_tide/wusongkou_astronomical_tide_realtime_v2.py", line 316, in load_frozen_astronomical_tide
+    raise ValueError("only the accepted tide_model.json path is allowed")
+ValueError: only the accepted tide_model.json path is allowed
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:38:26+0800
