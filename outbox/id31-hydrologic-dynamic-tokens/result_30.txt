@@ -1,0 +1,64 @@
+### channel=id31-hydrologic-dynamic-tokens seq=30
+### host=login4
+### started=2026-08-31T12:19:35+0800
+### ---------- output ----------
+{
+  "all_checks_passed": true,
+  "check_count": 13,
+  "device_name": "NVIDIA GeForce RTX 3090",
+  "formal_evaluation_accessed": false,
+  "probe_id": "slurm216548",
+  "source_before_equals_after_equals_current": true,
+  "status": "PASS"
+}
+216548|id31_gpu_probe|hgpu2|COMPLETED|0:0|00:05:30|ngu003
+216541|id31_gpu_probe|hgpu2p|PENDING|30:00
+216541|id31_gpu_probe|hgpu2p|CANCELLED by 2272|0:0|00:00:00|None assigned
+{
+  "canonical_path": "src/hydrologic_dynamic_tokens/hpc/submit_development_experiment.slurm",
+  "canonical_sha256": "99e6b130fb2d10c0d229aa0befc3f820c5dfce4cbf431261c2d93a9a51258baa",
+  "changes": [
+    {
+      "canonical": "#SBATCH --partition=hgpu2p",
+      "derived": "#SBATCH --partition=hgpu2",
+      "line": 3
+    },
+    {
+      "canonical": "PROBE_JOB_ID=\"__PROBE_JOB_ID__\"",
+      "derived": "PROBE_JOB_ID=\"216548\"",
+      "line": 16
+    },
+    {
+      "canonical": "EXPERIMENT_ID=\"__EXPERIMENT_ID__\"",
+      "derived": "EXPERIMENT_ID=\"DL01\"",
+      "line": 17
+    }
+  ],
+  "derived_path": "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/_submissions/slurm216548_hgpu2_DL01_seq30/submit_DL01_slurm216548_hgpu2.slurm",
+  "derived_sha256": "4350c2fa460cf0411ae58981b163847c2a1805743d221a630858338c643c51aa"
+}
+ID31 STATIC CONFIG AUDIT: PASS (five planned runs; no data read; no training launched)
+             JOBID                     NAME    PARTITION ST       TIME TIME_LIMIT               NODELIST(REASON)
+            216549         id31_development        hgpu2 PD       0:00 7-00:00:00                         (None)
+             JOBID                     NAME    PARTITION TIME_LIMIT          START_TIME               NODELIST(REASON)
+            216549         id31_development        hgpu2 7-00:00:00                 N/A                         (None)
+{
+  "bound_probe_job_id": "216548",
+  "bound_probe_report_sha256": "079e940fa74c4b3917bb6310881c14dee91c6c88f8700f29d59c1e0518841dce",
+  "derived_script_sha256": "4350c2fa460cf0411ae58981b163847c2a1805743d221a630858338c643c51aa",
+  "development_job_id": "216549",
+  "device_contract": "NVIDIA GeForce RTX 3090",
+  "experiment_id": "DL01",
+  "formal_evaluation_accessed": false,
+  "partition": "hgpu2",
+  "restart_mode": "full retraining from initialization; no state reused from failed job 215880",
+  "run_id": "id31_DL01_s100_slurm216549",
+  "schema_version": 1,
+  "seed": 100,
+  "status": "SUBMITTED",
+  "submitted_at_utc": "2026-08-31T04:19:42.847767+00:00"
+}
+ID31_DL01_RETRY_SUBMITTED 216549 PROBE 216548
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T12:19:42+0800
