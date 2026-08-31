@@ -1,0 +1,23 @@
+### channel=zhenjiang-d32-diff-ukf seq=18
+### host=login4
+### started=2026-08-31T13:14:52+0800
+### ---------- output ----------
+SMOKE_JOB_ID=216552
+QUERY_TIME=2026-08-31T13:14:52+0800
+=== SQUEUE ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+216552|zhd32_dukf_dev_smoke|PENDING|hgpu2p||0:00|2:00:00|(Priority)
+=== SACCT ===
+JobIDRaw|JobID|JobName|Partition|State|ExitCode|ElapsedRaw|Elapsed|Start|End|NodeList|AllocTRES|MaxRSS
+216552|216552|zhd32_dukf_dev_smoke|hgpu2p|PENDING|0:0|0|00:00:00|Unknown|Unknown|None assigned||
+=== OUTPUT_EXISTENCE ===
+seed=17 final=false partial=false
+seed=29 final=false partial=false
+seed=43 final=false partial=false
+=== STDOUT_TAIL ===
+absent
+=== STDERR_TAIL ===
+absent
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:14:52+0800
