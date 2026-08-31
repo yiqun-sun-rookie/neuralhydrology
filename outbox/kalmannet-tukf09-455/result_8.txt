@@ -1,0 +1,36 @@
+### channel=kalmannet-tukf09-455 seq=8
+### host=login4
+### started=2026-08-31T20:42:06+0800
+### ---------- output ----------
+=== SQUEUE ===
+job_id=217060 name=tukf09-455-gpu-map state=PENDING elapsed=0:00 limit=5:00 partition=hgpu2p node=(Priority)
+=== ESTIMATED START ===
+job_id=JOBID state=STATE start=START_TIME node=NODELIST(REASON)
+job_id=217060 state=PENDING start=2027-08-30T11:06:49 node=(Priority)
+=== PRIORITY ===
+          JOBID PARTITION   PRIORITY       SITE        AGE    JOBSIZE        QOS
+         217060 hgpu2p        201744          0       1736          8     200000
+=== JOB DETAIL ===
+JobId=217060 JobName=tukf09-455-gpu-map UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=201744 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=00:05:00 TimeMin=N/A SubmitTime=2026-08-31T20:20:14 EligibleTime=2026-08-31T20:20:14 AccrueTime=2026-08-31T20:20:14 StartTime=2027-08-30T11:06:49 EndTime=2027-08-30T11:11:49 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-31T20:42:27 Partition=hgpu2p AllocNode:Sid=login04:721 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=NO Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_20260831/bundle/kalmannet/hpc/tukf09_455_basin_revision/allocation_probe.slurm WorkDir=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_20260831/bundle/kalmannet StdErr=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_20260831/logs/allocation-probe-217060.err StdIn=/dev/null StdOut=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_20260831/logs/allocation-probe-217060.out Power= TresPerNode=gpu:1
+=== PARTITION NODES ===
+NODELIST|STATE|GRES|CPUS(A/I/O/T)
+ngu001|mix|gpu:2|2/94/0/96
+ngu002|alloc|gpu:2|96/0/0/96
+ngu004|mix|gpu:2|2/94/0/96
+ngu005|mix|gpu:2|2/94/0/96
+ngu006|mix|gpu:2|2/94/0/96
+ngu007|mix|gpu:2|2/94/0/96
+ngu008|mix|gpu:2|20/76/0/96
+ngu010|mix|gpu:2|1/31/0/32
+ngu011|mix|gpu:2|5/27/0/32
+=== SACCT ===
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|NodeList
+217060|tukf09-455-gpu-map|hgpu2p|PENDING|0:0|00:00:00|None assigned
+=== STDOUT ===
+STDOUT_NOT_YET_PRESENT
+=== STDERR ===
+STDERR_NOT_YET_PRESENT
+TUKF09_455_GPU_ALLOCATION_MAPPING_STATUS_COLLECTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T20:42:08+0800
