@@ -1,0 +1,49 @@
+### channel=kuwei-jdl-seedbatch seq=1
+### host=login4
+### started=2026-08-31T13:57:30+0800
+### ---------- output ----------
+=== A. verify payload ===
+laos_jdl_seedbatch_v1.tar.gz: OK
+=== B. unpack ===
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/scripts/kuwei_joint_da_learning.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/scripts/torch_xaj_mirror.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/scripts/kuwei_jdl_anchor_decompose.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/scripts/kuwei_jdl_independent_recompute.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/configs/kuwei_joint_da_learning_20260826.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/experiments/kuwei_joint_da_learning_20260826/CONTRACT_LOCK.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: docs/experiments/kuwei_joint_da_learning_20260826/PREREGISTRATION.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/continuous_rainfall_qualification_20260824/grid_hybrid_current.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: data/03_final/namou_kuwei/discharge_clean.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/paired_rain_recalibration_20260824/current_input_seed20260824/fsl_output/best_params_namou_kuwei_nse0.6583_20260826_024201.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/paired_rain_recalibration_20260824/current_input_seed20260824/eval2023/best_series.npy: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/paired_rain_recalibration_20260824/current_input_seed20260825/fsl_output/best_params_namou_kuwei_nse0.6644_20260826_042155.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/paired_rain_recalibration_20260824/current_input_seed20260825/eval2023/best_series.npy: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/paired_rain_recalibration_20260824/current_input_seed20260826/fsl_output/best_params_namou_kuwei_nse0.6588_20260826_023253.yml: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/paired_rain_recalibration_20260824/current_input_seed20260826/eval2023/best_series.npy: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/kuwei_jdl_anchor_decomposition_20260831/local/mirror_20260824.npy: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/kuwei_jdl_anchor_decomposition_20260831/local/authority_20260824.npy: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/kuwei_jdl_anchor_decomposition_20260831/local/mirror_20260825.npy: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/kuwei_jdl_anchor_decomposition_20260831/local/authority_20260825.npy: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/kuwei_jdl_anchor_decomposition_20260831/local/mirror_20260826.npy: implausibly old time stamp 1970-01-01 08:00:00
+tar: basins/namou_kuwei/dl/highflow_2026_06_17/results/kuwei_jdl_anchor_decomposition_20260831/local/authority_20260826.npy: implausibly old time stamp 1970-01-01 08:00:00
+laos unpacked
+fsl unpacked
+kuwei_jdl_anchor_decompose.py
+kuwei_jdl_independent_recompute.py
+kuwei_joint_da_learning.py
+torch_xaj_mirror.py
+authority_20260824.npy
+authority_20260825.npy
+authority_20260826.npy
+mirror_20260824.npy
+mirror_20260825.npy
+mirror_20260826.npy
+=== C. write slurm ===
+=== D. submit ===
+Submitted batch job 216698
+     JOBID               NAME      PARTITION    STATE NODELIST(REASON)
+    216698   kuwei-jdl-anchor hcpu48,hcpu48y  PENDING (Resources)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T13:57:31+0800
