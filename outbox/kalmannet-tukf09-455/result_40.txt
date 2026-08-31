@@ -1,0 +1,105 @@
+### channel=kalmannet-tukf09-455 seq=40
+### host=login4
+### started=2026-09-01T07:05:27+0800
+### ---------- output ----------
+=== FROZEN FAILED JOB EVIDENCE ===
+217185|tukf09-455-v2r3-prepare|hgpu8|FAILED|1:0|ngu201|00:08:15|2026-09-01T06:36:21|2026-09-01T06:44:36
+=== PRESERVED V2R3 ROOT BOUNDARY ===
+DIRECTORY=2817822118|30|0|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/offline_inputs_v2r3
+DIRECTORY=7852132016|14100|0|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/runtime_v2r3
+DIRECTORY=4096|0|0|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/status/preparation_submission.lock
+FILE=705|c3b09942506b061d3a31387a820e6cf4dd48c8db2ba7bc13999767d9c4f9bd72|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/status/deployment_summary.json
+FILE=7|0ca08c8f6d94defed7010c70d9ab3c6ebe980160a9f1167261a049a4f0b59f3c|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/status/allocation_probe_job_id.txt
+FILE=0|e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/status/offline_inputs_download.lock
+FILE=7|fc96ca982667489db61c339a755b3506be77c46fe13d1eb85539e43a1510aebb|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/status/preparation_job_id.txt
+FILE=0|e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/status/preparation.lock
+FILE=749|036befb2f1aa2590093bc400633275f1250f8947a137aca1d6b5db1a0bc11a25|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/status/initial_bundle_verification.json
+FILE=2394527|17cfe0ef195ebc84012036e417ad9c1006d951e8e2ae2bea1d5b850dd8fead64|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/runtime_v2r3/evidence/private_runtime_manifest.json
+PENDING_STAGE_BYTES=60576562
+PENDING_STAGE_FILES=97
+PENDING_STAGE_SYMLINKS=0
+=== COMPLETE 911-FILE TRAINING-VALIDATION SOURCE HASH AUDIT ===
+{"actual_total_bytes_for_regular_files": 464792149, "exact_file_count": 908, "expected_file_count": 911, "expected_total_bytes": 464792200, "formal_evaluation_array_reads": 0, "mismatch_count": 3, "mismatch_identity_sha256": "352933512117b6fb2ef5f4f04a1958c795546ccddd3da9380e57cb1e149f6c64", "mismatch_kind_counts": {"size_and_sha256": 3}, "mismatch_prefix_counts": {"basin_mean_forcing": 3}, "ordered_basin_count": 455, "target_mismatch": {"actual_sha256": "0ee2bfd1096abc3acd1cee801fbef85c63f485846a1687010283285f46afc32e", "actual_size": 627947, "expected_sha256": "1d7efcfdcf87cda0485a7f6442f7d85aaacaf0b33e0e1c01dddeb73896f26a1a", "expected_size": 627964, "path": "basin_mean_forcing/maurer/03/02108000_lump_maurer_forcing_leap.txt", "reason": "size_and_sha256"}}
+MISMATCH_RECORDS_BEGIN
+{"actual_sha256": "0ee2bfd1096abc3acd1cee801fbef85c63f485846a1687010283285f46afc32e", "actual_size": 627947, "expected_sha256": "1d7efcfdcf87cda0485a7f6442f7d85aaacaf0b33e0e1c01dddeb73896f26a1a", "expected_size": 627964, "path": "basin_mean_forcing/maurer/03/02108000_lump_maurer_forcing_leap.txt", "reason": "size_and_sha256"}
+{"actual_sha256": "eb6d5aec95af48377011f80fb2ebd17b0a6ceddf099d6e9db3c133431defb376", "actual_size": 625278, "expected_sha256": "60d14109d2e24cd0a461798fce6a9214aa0b022b349e13de2fafcbbbf995431b", "expected_size": 625295, "path": "basin_mean_forcing/maurer/09/05120500_lump_maurer_forcing_leap.txt", "reason": "size_and_sha256"}
+{"actual_sha256": "04abd5f678d2c476e1a2552562cacb79436948ece284f985da240a1af0cd4742", "actual_size": 617704, "expected_sha256": "d51780287addd95ad0f874da42fc3a2e2fa47e43437f3b0c85b2375f238116af", "expected_size": 617721, "path": "basin_mean_forcing/maurer/15/09492400_lump_maurer_forcing_leap.txt", "reason": "size_and_sha256"}
+MISMATCH_RECORDS_END
+TARGET_NAME_CANDIDATES=[{"matches_expected": false, "path": "/data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/maurer/03/02108000_lump_maurer_forcing_leap.txt", "sha256": "0ee2bfd1096abc3acd1cee801fbef85c63f485846a1687010283285f46afc32e", "size": 627947}, {"matches_expected": false, "path": "/data1/home/sunyiq/neuralhydrology/data/camels_us/full/basin_mean_forcing/maurer/03/02108000_lump_maurer_forcing_leap.txt", "sha256": "0ee2bfd1096abc3acd1cee801fbef85c63f485846a1687010283285f46afc32e", "size": 627947}]
+=== TOP-LEVEL DATA-ROUTE DIRECTORY NAMES ===
+/data1/home/sunyiq/.hpc_mailbox_staging/camels-g2-design
+/data1/home/sunyiq/.hpc_mailbox_staging/kalmannet-daily-camels
+/data1/home/sunyiq/adv531/data
+/data1/home/sunyiq/adv531/neuralhydrology
+/data1/home/sunyiq/camels_g2_design_20260808
+/data1/home/sunyiq/filters/data
+/data1/home/sunyiq/id17_film_gate/neuralhydrology
+/data1/home/sunyiq/id18_e04_20260809/neuralhydrology
+/data1/home/sunyiq/id23_dlimm/neuralhydrology
+/data1/home/sunyiq/kalmannet/data
+/data1/home/sunyiq/kalmannet_daily_camels_20260824
+/data1/home/sunyiq/kalmannet_daily_camels_20260824/DAILY_CAMELS_NATIVE_KALMANNET_SMOKE_V1_20260824_A01
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry1_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry1_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry2_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry2_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry3_20260826
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_retry3_staging_20260826
+/data1/home/sunyiq/kalmannet_daily_camels_full_state_a34_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_diag1_20260827
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_portability_probe2_20260827
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_probe1_20260827
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train2_20260827
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train3_20260827
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_a800_train4_20260827
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a37_resume1_20260826
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_a800_train1_20260828
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_terminal_evidence_reconstruct_seq89_20260831
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a38_terminal_evidence_verify_seq90_20260831
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation1_20260831
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation2_20260831
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation3_20260831
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831
+/data1/home/sunyiq/kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_a20_result_audit_v2_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_a20_result_audit_v2_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_v3_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_masked_nse_v3_20260825/DAILY_CAMELS_NATIVE_KALMANNET_MASKED_NSE_SMOKE_V3_20260825_A20
+/data1/home/sunyiq/kalmannet_daily_camels_official_core_a35_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_core_a35_seq27_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a29_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a29_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a30_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a30_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a31_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a31_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_RESOURCE_SMOKE_V4_20260825_A32
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825/DAILY_CAMELS_OFFICIAL_KALMANNET_TUKF06_CAUSAL_FAIR_SHARED_SMOKE_V1_20260825_A33
+/data1/home/sunyiq/kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_staging_20260825
+/data1/home/sunyiq/kalmannet_daily_camels_parity_20260824
+/data1/home/sunyiq/knet_project/data
+/data1/home/sunyiq/nature_1st/data
+/data1/home/sunyiq/nature_1st_a02/data
+/data1/home/sunyiq/nearing2022_da/data
+/data1/home/sunyiq/nearing2022_da/neuralhydrology
+/data1/home/sunyiq/neuralhydrology
+/data1/home/sunyiq/neuralhydrology/data
+/data1/home/sunyiq/neuralhydrology/neuralhydrology
+/data1/home/sunyiq/neuralhydrology/neuralhydrology.egg-info
+/data1/home/sunyiq/neuralhydrology_backup_20260304
+/data1/home/sunyiq/neuralhydrology_backup_20260304/data
+/data1/home/sunyiq/neuralhydrology_backup_20260304/neuralhydrology
+/data1/home/sunyiq/neuralhydrology_backup_20260304/neuralhydrology.egg-info
+/data1/home/sunyiq/neuralhydrology_messy_backup
+/data1/home/sunyiq/neuralhydrology_messy_backup/data
+/data1/home/sunyiq/neuralhydrology_messy_backup/neuralhydrology
+/data1/home/sunyiq/neuralhydrology_messy_backup/neuralhydrology.egg-info
+/data1/home/sunyiq/v09_strict/neuralhydrology
+TUKF09_455_A800_EXCLUSIVE_V2R3_PREPARATION_FAILURE_FORENSICS_COMPLETED_NO_RETRY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T07:05:55+0800
