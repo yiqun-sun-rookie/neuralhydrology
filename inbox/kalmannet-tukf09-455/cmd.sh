@@ -1,113 +1,119 @@
 #!/bin/bash
-# Read-only forensic capture for failed v2r1 preparation job 217163.
+# Read-only login-node network and installed-runtime probe after compute-node DNS failure.
 set -o pipefail
 
 ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901
 JOB_ID=217163
 PENDING="${ROOT}/runtime_v2r1.pending.${JOB_ID}"
-EVIDENCE="${PENDING}/evidence"
-RESULTS_ROOT="${ROOT}/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+TORCH_URL='https://download.pytorch.org/whl/cu121/torch-2.2.2%2Bcu121-cp311-cp311-linux_x86_64.whl'
+PYPI_URL='https://pypi.org/simple/numpy/'
+PYTORCH_INDEX_URL='https://download.pytorch.org/whl/cu121/'
 
-echo "=== FIXED FAILED JOB ==="
-echo "REMOTE_ROOT=${ROOT}"
-echo "PREPARATION_JOB_ID=${JOB_ID}"
-sacct -j "${JOB_ID}" -n -P --format=JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,NodeList,Start,End 2>&1 || true
-
-echo "=== LOCKS, JOB ID, AND INITIAL VERIFICATION ==="
+echo "=== FIXED FAILED PREPARATION EVIDENCE ==="
+sacct -j "${JOB_ID}" -n -P --format=JobIDRaw,JobName,State,ExitCode,Elapsed,NodeList 2>&1 || true
 for item in \
   "${ROOT}/status/preparation_submission.lock" \
   "${ROOT}/status/preparation.lock" \
   "${ROOT}/status/preparation_job_id.txt" \
-  "${ROOT}/status/initial_bundle_verification.json"; do
+  "${ROOT}/status/initial_bundle_verification.json" \
+  "${PENDING}/evidence/pip-stdout.log" \
+  "${PENDING}/evidence/pip-stderr.log"; do
   if [[ -f "${item}" && ! -L "${item}" ]]; then
     stat -c 'FILE=%n SIZE_BYTES=%s LINKS=%h MODE=%a MTIME=%y' "${item}" 2>&1 || true
     sha256sum "${item}" 2>&1 || true
-    case "${item}" in
-      *.json|*.txt) cat "${item}" ;;
-    esac
   elif [[ -d "${item}" && ! -L "${item}" ]]; then
     stat -c 'DIRECTORY=%n LINKS=%h MODE=%a MTIME=%y' "${item}" 2>&1 || true
-  elif [[ -e "${item}" || -L "${item}" ]]; then
-    echo "IRREGULAR=${item}"
   else
-    echo "ABSENT=${item}"
+    echo "MISSING_OR_IRREGULAR=${item}"
   fi
 done
 
-echo "=== FAILED PENDING ROOT INVENTORY ==="
-if [[ -d "${PENDING}" && ! -L "${PENDING}" ]]; then
-  stat -c 'PENDING=%n LINKS=%h MODE=%a MTIME=%y' "${PENDING}" 2>&1 || true
-  du -sb "${PENDING}" 2>&1 || true
-  find "${PENDING}" -mindepth 1 -maxdepth 3 -printf '%y|%p|%s|%n|%m\n' 2>&1 | sort || true
-else
-  echo "PENDING_ROOT_ABSENT_OR_IRREGULAR=${PENDING}"
-fi
+echo "=== LOGIN NODE IDENTITY AND STORAGE ==="
+hostname 2>&1 || true
+uname -a 2>&1 || true
+getconf GNU_LIBC_VERSION 2>&1 || true
+df -B1 "${ROOT}" 2>&1 || true
+command -v curl 2>&1 || true
+curl --version 2>&1 || true
 
-echo "=== EXACT RUNTIME EVIDENCE ==="
-for name in \
-  pip-command.txt \
-  pip-stdout.log \
-  pip-stderr.log \
-  runtime-import-check.txt \
-  psutil-built-wheel.sha256 \
-  pip-install-report.json \
-  private_runtime_manifest.json; do
-  item="${EVIDENCE}/${name}"
-  if [[ -f "${item}" && ! -L "${item}" ]]; then
-    stat -c 'EVIDENCE=%n SIZE_BYTES=%s LINKS=%h MODE=%a MTIME=%y' "${item}" 2>&1 || true
-    sha256sum "${item}" 2>&1 || true
-    cat "${item}"
-  elif [[ -e "${item}" || -L "${item}" ]]; then
-    echo "EVIDENCE_IRREGULAR=${item}"
-  else
-    echo "EVIDENCE_ABSENT=${item}"
-  fi
+echo "=== LOGIN NODE DNS ==="
+for host in download.pytorch.org pypi.org files.pythonhosted.org; do
+  echo "DNS_HOST=${host}"
+  getent hosts "${host}" 2>&1 || true
 done
 
-echo "=== DOWNLOADED, BUILT, OR INSTALLED FILE INVENTORY ==="
-for directory in \
-  "${PENDING}/wheelhouse" \
-  "${PENDING}/sourcehouse" \
-  "${PENDING}/built_wheels" \
-  "${PENDING}/pysite.pending" \
-  "${PENDING}/pysite"; do
-  if [[ -d "${directory}" && ! -L "${directory}" ]]; then
-    echo "DIRECTORY=${directory}"
-    find "${directory}" -type f -printf '%p|%s|%m\n' 2>&1 | sort || true
-    while IFS= read -r file; do
-      sha256sum "${file}" 2>&1 || true
-    done < <(find "${directory}" -type f -print 2>/dev/null | sort)
-  elif [[ -e "${directory}" || -L "${directory}" ]]; then
-    echo "DIRECTORY_IRREGULAR=${directory}"
-  else
-    echo "DIRECTORY_ABSENT=${directory}"
-  fi
-done
+echo "=== LOGIN NODE APPLICATION-LAYER NETWORK ==="
+echo "PYTORCH_WHEEL_HEAD=${TORCH_URL}"
+timeout 150 curl -sSIL --connect-timeout 30 --max-time 120 \
+  -o /dev/null \
+  -w 'PYTORCH_WHEEL_HTTP=%{http_code} REMOTE_IP=%{remote_ip} SIZE_DOWNLOAD=%{size_download} TIME_CONNECT=%{time_connect} TIME_TOTAL=%{time_total}\n' \
+  "${TORCH_URL}" 2>&1 || true
+echo "PYTORCH_INDEX_GET=${PYTORCH_INDEX_URL}"
+timeout 150 curl -sSL --connect-timeout 30 --max-time 120 \
+  -o /dev/null \
+  -w 'PYTORCH_INDEX_HTTP=%{http_code} REMOTE_IP=%{remote_ip} SIZE_DOWNLOAD=%{size_download} TIME_CONNECT=%{time_connect} TIME_TOTAL=%{time_total}\n' \
+  "${PYTORCH_INDEX_URL}" 2>&1 || true
+echo "PYPI_NUMPY_GET=${PYPI_URL}"
+timeout 150 curl -sSL --connect-timeout 30 --max-time 120 \
+  -o /dev/null \
+  -w 'PYPI_NUMPY_HTTP=%{http_code} REMOTE_IP=%{remote_ip} SIZE_DOWNLOAD=%{size_download} TIME_CONNECT=%{time_connect} TIME_TOTAL=%{time_total}\n' \
+  "${PYPI_URL}" 2>&1 || true
 
-echo "=== EXACT SLURM LOGS ==="
-for item in "${ROOT}/logs/prepare-${JOB_ID}.out" "${ROOT}/logs/prepare-${JOB_ID}.err"; do
-  if [[ -f "${item}" && ! -L "${item}" ]]; then
-    stat -c 'LOG=%n SIZE_BYTES=%s LINKS=%h MODE=%a MTIME=%y' "${item}" 2>&1 || true
-    sha256sum "${item}" 2>&1 || true
-    cat "${item}"
-  else
-    echo "LOG_ABSENT_OR_IRREGULAR=${item}"
-  fi
-done
+echo "=== SHARED NH_FINAL PACKAGE VERSIONS ==="
+source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh" 2>&1 || \
+source "${HOME}/miniconda3/etc/profile.d/conda.sh" 2>&1 || true
+conda activate nh_final 2>&1 || true
+export PYTHONNOUSERSITE=1
+export PYTHONDONTWRITEBYTECODE=1
+PYTHON="${CONDA_PREFIX:-/data1/home/${USER}/miniconda3/envs/nh_final}/bin/python"
+"${PYTHON}" -B - <<'PY' 2>&1 || true
+import importlib.metadata
+import json
+import platform
+import sys
 
-echo "=== UNPUBLISHED LATER-STAGE OUTPUTS ==="
-for item in \
-  "${ROOT}/runtime_v2r1" \
-  "${ROOT}/status/staged_training_sources.json" \
-  "${ROOT}/status/preparation_probe.json" \
-  "${ROOT}/status/hpc_technical_admission.json" \
-  "${RESULTS_ROOT}"; do
-  if [[ -e "${item}" || -L "${item}" ]]; then
-    echo "LATER_STAGE_OUTPUT_PRESENT=${item}"
-  else
-    echo "LATER_STAGE_OUTPUT_ABSENT=${item}"
-  fi
-done
+names = [
+    "torch",
+    "numpy",
+    "filelock",
+    "typing-extensions",
+    "sympy",
+    "networkx",
+    "jinja2",
+    "fsspec",
+    "MarkupSafe",
+    "mpmath",
+    "nvidia-cuda-nvrtc-cu12",
+    "nvidia-cuda-runtime-cu12",
+    "nvidia-cuda-cupti-cu12",
+    "nvidia-cudnn-cu12",
+    "nvidia-cublas-cu12",
+    "nvidia-cufft-cu12",
+    "nvidia-curand-cu12",
+    "nvidia-cusolver-cu12",
+    "nvidia-cusparse-cu12",
+    "nvidia-nccl-cu12",
+    "nvidia-nvtx-cu12",
+    "nvidia-nvjitlink-cu12",
+    "triton",
+    "psutil",
+]
+versions = {}
+for name in names:
+    try:
+        versions[name] = importlib.metadata.version(name)
+    except importlib.metadata.PackageNotFoundError:
+        versions[name] = None
+print(json.dumps({
+    "executable": sys.executable,
+    "platform": platform.platform(),
+    "python": sys.version,
+    "versions": versions,
+}, sort_keys=True))
+PY
+
+echo "=== FORMAL EVALUATION HOLD ==="
+RESULTS_ROOT="${ROOT}/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
 for name in selection evaluation formal_evaluation; do
   if [[ -e "${RESULTS_ROOT}/${name}" || -L "${RESULTS_ROOT}/${name}" ]]; then
     echo "FORBIDDEN_OUTPUT_PRESENT=${name}"
@@ -115,4 +121,4 @@ for name in selection evaluation formal_evaluation; do
     echo "FORBIDDEN_OUTPUT_ABSENT=${name}"
   fi
 done
-echo "TUKF09_455_A800_EXCLUSIVE_V2R1_FAILED_PREPARATION_FORENSICS_CAPTURED"
+echo "TUKF09_455_V2R1_LOGIN_NETWORK_AND_RUNTIME_READONLY_PROBE_COMPLETED"
