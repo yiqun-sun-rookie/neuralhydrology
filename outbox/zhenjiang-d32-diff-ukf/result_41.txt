@@ -1,0 +1,110 @@
+### channel=zhenjiang-d32-diff-ukf seq=41
+### host=login4
+### started=2026-08-31T22:10:48+0800
+### ---------- output ----------
+QUERY_TIME=2026-08-31T22:10:48+0800
+=== ARRAY_QUEUE ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+217013_2|zhd32_dukf_dev_eval|RUNNING|hgpu2p|ngu010|1:10|2:00:00|ngu010
+=== ARRAY_ESTIMATED_START ===
+JOBID|START_TIME|NODELIST(REASON)
+=== ARRAY_SCHEDULER_IDENTITY ===
+JobId=217013 ArrayJobId=217013 ArrayTaskId=2 ArrayTaskThrottle=1 JobName=zhd32_dukf_dev_eval UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=229013 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=RUNNING Reason=None Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:01:10 TimeLimit=02:00:00 TimeMin=N/A SubmitTime=2026-08-31T17:15:19 EligibleTime=2026-08-31T22:09:38 AccrueTime=2026-08-31T17:15:20 StartTime=2026-08-31T22:09:38 EndTime=2026-09-01T00:09:38 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-31T22:09:38 Partition=hgpu2p AllocNode:Sid=login04:721 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=ngu010 BatchHost=ngu010 NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/run/scripts/hpc/zhenjiang_d32_gru_differentiable_ukf_development_evaluation_formal_v1.slurm WorkDir=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/run StdErr=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/logs/formal_217013_2.err StdIn=/dev/null StdOut=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/logs/formal_217013_2.out Power= TresPerNode=gpu:1
+=== ARRAY_ACCOUNTING ===
+JobIDRaw|JobName|Partition|State|ExitCode|Elapsed|Start|End|NodeList|AllocTRES
+217085|zhd32_dukf_dev_eval|hgpu2p|COMPLETED|0:0|00:03:41|2026-08-31T22:02:14|2026-08-31T22:05:55|ngu010|billing=4,cpu=4,node=1
+217086|zhd32_dukf_dev_eval|hgpu2p|COMPLETED|0:0|00:03:41|2026-08-31T22:05:55|2026-08-31T22:09:36|ngu010|billing=4,cpu=4,node=1
+217013|zhd32_dukf_dev_eval|hgpu2p|RUNNING|0:0|00:01:42|2026-08-31T22:09:38|Unknown|ngu010|billing=4,cpu=4,node=1
+=== WORKER_OUTPUT_EXISTENCE ===
+index=0 seed=17 final=true partial=false
+index=1 seed=29 final=true partial=false
+index=2 seed=43 final=false partial=true
+=== INDEX_0_STANDARD_OUTPUT_TAIL ===
+registered_common_runtime_gate=pass
+bundle_and_training_identity_gate=pass
+common_runtime_import_and_tide_gate=pass
+graphics_processor_identity_gate=pass
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "4785bca17e36eadbe0b2c95b23f18915dafa54fa6fd9ecbb858b85c0727701a4"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "37b191baf3140b954fc91c8ec4bf6c93e9d6cdeb082b36ca042d17995cd66079"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "c02d0169ee97e50563201aac28d79013e627162efa70d2b488d033633242fc3a"
+}
+three_seed_smoke_gate=completed_2023_development_smoke
+{
+  "status": "complete",
+  "output": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/workers/ZHD32-DUKF-DEV-EVAL-S17-V1/attempt_001"
+}
+{
+  "status": "completed_2023_development_worker",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "ac1cf76bbe62972bc06c90508e1bc8cde2262816cf0e4bfb67b9f81180215fe7"
+}
+formal_seed_complete=17
+=== INDEX_0_STANDARD_ERROR_TAIL ===
+=== INDEX_1_STANDARD_OUTPUT_TAIL ===
+registered_common_runtime_gate=pass
+bundle_and_training_identity_gate=pass
+common_runtime_import_and_tide_gate=pass
+graphics_processor_identity_gate=pass
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "4785bca17e36eadbe0b2c95b23f18915dafa54fa6fd9ecbb858b85c0727701a4"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "37b191baf3140b954fc91c8ec4bf6c93e9d6cdeb082b36ca042d17995cd66079"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "c02d0169ee97e50563201aac28d79013e627162efa70d2b488d033633242fc3a"
+}
+three_seed_smoke_gate=completed_2023_development_smoke
+{
+  "status": "complete",
+  "output": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3/workers/ZHD32-DUKF-DEV-EVAL-S29-V1/attempt_001"
+}
+{
+  "status": "completed_2023_development_worker",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "ba532274d0f3b2a588767232ee558c97c0d48143bae319a43e49a606185b21c6"
+}
+formal_seed_complete=29
+=== INDEX_1_STANDARD_ERROR_TAIL ===
+=== INDEX_2_STANDARD_OUTPUT_TAIL ===
+registered_common_runtime_gate=pass
+bundle_and_training_identity_gate=pass
+common_runtime_import_and_tide_gate=pass
+graphics_processor_identity_gate=pass
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "4785bca17e36eadbe0b2c95b23f18915dafa54fa6fd9ecbb858b85c0727701a4"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "37b191baf3140b954fc91c8ec4bf6c93e9d6cdeb082b36ca042d17995cd66079"
+}
+{
+  "status": "completed_2023_development_smoke",
+  "verified_file_count": 8,
+  "completion_manifest_sha256": "c02d0169ee97e50563201aac28d79013e627162efa70d2b488d033633242fc3a"
+}
+three_seed_smoke_gate=completed_2023_development_smoke
+=== INDEX_2_STANDARD_ERROR_TAIL ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T22:10:48+0800
