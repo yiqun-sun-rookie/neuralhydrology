@@ -1,0 +1,169 @@
+### channel=zhenjiang-d32-diff-ukf seq=11
+### host=login4
+### started=2026-08-31T10:37:49+0800
+### ---------- output ----------
+FORMAL_ARRAY_JOB_ID=215862
+QUERY_TIME=2026-08-31T10:37:49+0800
+=== SQUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== SACCT ===
+sacct: error: Invalid field requested: "ArrayTaskID"
+=== FORMAL_ATTEMPTS ===
+COMPLETE_DIRECTORY|ZHD32-DUKF-S17-V1|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/formal/ZHD32-DUKF-S17-V1/attempt_001
+115578|last_checkpoint.pt
+1220|best_noise_parameters.json
+1317|best_noise_parameters.csv
+1441499|gradient_history.csv
+1443|training_history.csv
+16870|noise_parameter_history.csv
+1869|run_identity.json
+1987|frozen_config.json
+2123|completion_manifest.json
+5044|data_identity.json
+638|gpu_technical_preflight.json
+792|selection_validation_summary.json
+94066|best_checkpoint.pt
+COMPLETE_DIRECTORY|ZHD32-DUKF-S29-V1|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/formal/ZHD32-DUKF-S29-V1/attempt_001
+1080163|gradient_history.csv
+115578|last_checkpoint.pt
+1166|training_history.csv
+1221|best_noise_parameters.json
+12675|noise_parameter_history.csv
+1318|best_noise_parameters.csv
+1869|run_identity.json
+1987|frozen_config.json
+2123|completion_manifest.json
+5044|data_identity.json
+638|gpu_technical_preflight.json
+792|selection_validation_summary.json
+94066|best_checkpoint.pt
+COMPLETE_DIRECTORY|ZHD32-DUKF-S43-V1|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/formal/ZHD32-DUKF-S43-V1/attempt_001
+1026|training_history.csv
+10586|noise_parameter_history.csv
+115514|last_checkpoint.pt
+1212|best_noise_parameters.json
+1309|best_noise_parameters.csv
+1869|run_identity.json
+1987|frozen_config.json
+2122|completion_manifest.json
+5044|data_identity.json
+638|gpu_technical_preflight.json
+792|selection_validation_summary.json
+900780|gradient_history.csv
+94066|best_checkpoint.pt
+=== COMPLETED_OUTPUT_VERIFICATION ===
+VERIFY_OUTPUT|ZHD32-DUKF-S17-V1
+{
+  "status": "early_stopped_development_training",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "227ecc29f0baad251089d8f3f77556126279d35e0575ea367f9f0136abcaca3a"
+}
+COMPLETED_SUMMARY|{"backbone_unchanged": true, "best_epoch": 4, "best_validation_mae_m": 0.07592632800605222, "completed_epoch": 8, "completed_utc": "2026-08-28T09:54:14.250272+00:00", "completion_status": "early_stopped_development_training", "experiment_id": "ZHD32-DUKF-S17-V1", "held_out_target_access": false, "history_row_count": 8, "input_content_identity_count": 13, "last_history_row": {"best_epoch_after": "4", "best_validation_mae_m_after": "0.07592632800605222", "epoch": "8", "epoch_seconds": "598.8357107620686", "material_improvement": "False", "no_improvement_count_after": "4", "spectral_floor_matrix_count": "0", "training_base_sample_count": "46182", "training_mae_m": "0.0715962592091838", "training_valid_cell_count": "31865580", "validation_assimilation_mae_m": "0.07592651706289723", "validation_base_sample_count": "8046", "validation_open_loop_mae_m": "0.07613937886014129", "validation_valid_cell_count": "5551740"}, "last_loaded_target_time_beijing": "2023-12-31T23:00:00+08:00", "manifest_file_count": 12, "manifest_sha256": "227ecc29f0baad251089d8f3f77556126279d35e0575ea367f9f0136abcaca3a", "manifest_status": "early_stopped_development_training", "scientific_conclusion_authorized": false, "test_target_counters": {"test_target_rows_read": 0, "test_target_values_loaded": 0, "test_target_values_parsed": 0}, "training_base_sample_count": 46182, "validation_base_sample_count": 8046}
+VERIFY_OUTPUT|ZHD32-DUKF-S29-V1
+{
+  "status": "early_stopped_development_training",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "86f0d69cd808c8e3abe7d571b7040832e5185c776a40336f01b3e8c0a9afd325"
+}
+COMPLETED_SUMMARY|{"backbone_unchanged": true, "best_epoch": 2, "best_validation_mae_m": 0.07518224278667479, "completed_epoch": 6, "completed_utc": "2026-08-28T10:59:55.887007+00:00", "completion_status": "early_stopped_development_training", "experiment_id": "ZHD32-DUKF-S29-V1", "held_out_target_access": false, "history_row_count": 6, "input_content_identity_count": 13, "last_history_row": {"best_epoch_after": "2", "best_validation_mae_m_after": "0.07518224278667479", "epoch": "6", "epoch_seconds": "656.0252812094986", "material_improvement": "False", "no_improvement_count_after": "4", "spectral_floor_matrix_count": "0", "training_base_sample_count": "46182", "training_mae_m": "0.07410307853286278", "training_valid_cell_count": "31865580", "validation_assimilation_mae_m": "0.07512036781920382", "validation_base_sample_count": "8046", "validation_open_loop_mae_m": "0.07514384366858844", "validation_valid_cell_count": "5551740"}, "last_loaded_target_time_beijing": "2023-12-31T23:00:00+08:00", "manifest_file_count": 12, "manifest_sha256": "86f0d69cd808c8e3abe7d571b7040832e5185c776a40336f01b3e8c0a9afd325", "manifest_status": "early_stopped_development_training", "scientific_conclusion_authorized": false, "test_target_counters": {"test_target_rows_read": 0, "test_target_values_loaded": 0, "test_target_values_parsed": 0}, "training_base_sample_count": 46182, "validation_base_sample_count": 8046}
+VERIFY_OUTPUT|ZHD32-DUKF-S43-V1
+{
+  "status": "early_stopped_development_training",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "4744228abe50b491e4c0be9b3d40e2750be1a6794d67e09131e61db102b72824"
+}
+COMPLETED_SUMMARY|{"backbone_unchanged": true, "best_epoch": 1, "best_validation_mae_m": 0.07307514934666186, "completed_epoch": 5, "completed_utc": "2026-08-28T11:52:34.089957+00:00", "completion_status": "early_stopped_development_training", "experiment_id": "ZHD32-DUKF-S43-V1", "held_out_target_access": false, "history_row_count": 5, "input_content_identity_count": 13, "last_history_row": {"best_epoch_after": "1", "best_validation_mae_m_after": "0.07307514934666186", "epoch": "5", "epoch_seconds": "597.4396431855857", "material_improvement": "False", "no_improvement_count_after": "4", "spectral_floor_matrix_count": "0", "training_base_sample_count": "46182", "training_mae_m": "0.07089397423374358", "training_valid_cell_count": "31865580", "validation_assimilation_mae_m": "0.07302394374257133", "validation_base_sample_count": "8046", "validation_open_loop_mae_m": "0.07328925944206072", "validation_valid_cell_count": "5551740"}, "last_loaded_target_time_beijing": "2023-12-31T23:00:00+08:00", "manifest_file_count": 12, "manifest_sha256": "4744228abe50b491e4c0be9b3d40e2750be1a6794d67e09131e61db102b72824", "manifest_status": "early_stopped_development_training", "scientific_conclusion_authorized": false, "test_target_counters": {"test_target_rows_read": 0, "test_target_values_loaded": 0, "test_target_values_parsed": 0}, "training_base_sample_count": 46182, "validation_base_sample_count": 8046}
+=== FORMAL_LOG_TAILS ===
+--- /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/logs/zhd32-dukf-formal-215862_0.out ---
+{
+  "status": "verified_pre2024_only",
+  "verified_file_count": 13,
+  "manifest_sha256": "946ab3822024f78f3a334c914e39ba8dd72c72ed45e0e40e5a7aee3e16649f78"
+}
+[2026-08-28T16:32:44+08:00] experiment_id=ZHD32-DUKF-S17-V1
+[INFO] job_id=215863 array_task=0 node=ngu011 output=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/formal/ZHD32-DUKF-S17-V1/attempt_001
+NVIDIA GeForce RTX 3090, GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da, 24576 MiB, 580.76.05
+NVIDIA GeForce RTX 3090, GPU-7b2fa2ee-6930-2a2e-e9f5-7736fd478efd, 24576 MiB, 580.76.05
+cuda_preflight=passed name=NVIDIA GeForce RTX 3090 capability=(8, 6) bytes=25296044032
+torch=2.4.0 cuda=12.1
+bundle_identity_check=passed source_file_count=34
+{
+  "status": "technical_pass",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "e1ce8c0ec2843b153f709c1a3bdcca743edd82e6fc2ece26d5f44b724c42819d"
+}
+smoke_status_gate=technical_pass
+{
+  "status": "complete",
+  "output": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/formal/ZHD32-DUKF-S17-V1/attempt_001"
+}
+{
+  "status": "early_stopped_development_training",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "227ecc29f0baad251089d8f3f77556126279d35e0575ea367f9f0136abcaca3a"
+}
+[2026-08-28T17:54:32+08:00] ZHD32-DUKF-S17-V1 completed
+--- /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/logs/zhd32-dukf-formal-215862_1.out ---
+{
+  "status": "verified_pre2024_only",
+  "verified_file_count": 13,
+  "manifest_sha256": "946ab3822024f78f3a334c914e39ba8dd72c72ed45e0e40e5a7aee3e16649f78"
+}
+[2026-08-28T17:55:17+08:00] experiment_id=ZHD32-DUKF-S29-V1
+[INFO] job_id=215871 array_task=1 node=ngu011 output=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/formal/ZHD32-DUKF-S29-V1/attempt_001
+NVIDIA GeForce RTX 3090, GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da, 24576 MiB, 580.76.05
+NVIDIA GeForce RTX 3090, GPU-7b2fa2ee-6930-2a2e-e9f5-7736fd478efd, 24576 MiB, 580.76.05
+cuda_preflight=passed name=NVIDIA GeForce RTX 3090 capability=(8, 6) bytes=25296044032
+torch=2.4.0 cuda=12.1
+bundle_identity_check=passed source_file_count=34
+{
+  "status": "technical_pass",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "e1ce8c0ec2843b153f709c1a3bdcca743edd82e6fc2ece26d5f44b724c42819d"
+}
+smoke_status_gate=technical_pass
+{
+  "status": "complete",
+  "output": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/formal/ZHD32-DUKF-S29-V1/attempt_001"
+}
+{
+  "status": "early_stopped_development_training",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "86f0d69cd808c8e3abe7d571b7040832e5185c776a40336f01b3e8c0a9afd325"
+}
+[2026-08-28T19:00:13+08:00] ZHD32-DUKF-S29-V1 completed
+--- /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/logs/zhd32-dukf-formal-215862_2.out ---
+{
+  "status": "verified_pre2024_only",
+  "verified_file_count": 13,
+  "manifest_sha256": "946ab3822024f78f3a334c914e39ba8dd72c72ed45e0e40e5a7aee3e16649f78"
+}
+[2026-08-28T19:00:50+08:00] experiment_id=ZHD32-DUKF-S43-V1
+[INFO] job_id=215862 array_task=2 node=ngu011 output=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/formal/ZHD32-DUKF-S43-V1/attempt_001
+NVIDIA GeForce RTX 3090, GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da, 24576 MiB, 580.76.05
+NVIDIA GeForce RTX 3090, GPU-7b2fa2ee-6930-2a2e-e9f5-7736fd478efd, 24576 MiB, 580.76.05
+cuda_preflight=passed name=NVIDIA GeForce RTX 3090 capability=(8, 6) bytes=25296044032
+torch=2.4.0 cuda=12.1
+bundle_identity_check=passed source_file_count=34
+{
+  "status": "technical_pass",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "e1ce8c0ec2843b153f709c1a3bdcca743edd82e6fc2ece26d5f44b724c42819d"
+}
+smoke_status_gate=technical_pass
+{
+  "status": "complete",
+  "output": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/runs/formal/ZHD32-DUKF-S43-V1/attempt_001"
+}
+{
+  "status": "early_stopped_development_training",
+  "verified_file_count": 12,
+  "completion_manifest_sha256": "4744228abe50b491e4c0be9b3d40e2750be1a6794d67e09131e61db102b72824"
+}
+[2026-08-28T19:52:52+08:00] ZHD32-DUKF-S43-V1 completed
+--- /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/logs/zhd32-dukf-formal-215862_0.err ---
+--- /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/logs/zhd32-dukf-formal-215862_1.err ---
+--- /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/logs/zhd32-dukf-formal-215862_2.err ---
+### ---------- end ----------
+### exit_code=0
+### finished=2026-08-31T10:38:07+0800
