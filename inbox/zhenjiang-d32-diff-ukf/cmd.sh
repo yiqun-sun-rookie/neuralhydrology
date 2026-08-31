@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eo pipefail
 
+exec bash "$(dirname "$0")/cmd_44.sh"
+
 JOB_ID=217013
 EVALUATION_ROOT="/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3"
 TRAINING_ROOT="/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2"
