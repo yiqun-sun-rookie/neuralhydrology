@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "migration_id": "zhenjiang_six_source_four_target_d32_gru_ukf_20260901_r1",
+  "scientific_result": false,
+  "formal_jobs_submitted": false,
+  "heldout_2024_target_access_authorized": false,
+  "development_2023_evaluation_authorized": true,
+  "remote_root": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1",
+  "source_input_root_read_only": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1",
+  "isolated_input_root": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1/inputs/pre2024-four-target-v1",
+  "registry_path": "docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "registry_sha256": "7518428f1e980bf1853296080ef93fd739678a538389cbb3716a731822d17106",
+  "source_file_count": 38,
+  "source_files": [
+    {
+      "path": "docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_PREREGISTRATION.json",
+      "byte_count": 2810,
+      "sha256": "6527f62dbc907e1ea67e8192da8fa1ca1f10ca282c1113caafc35a6edf7ac804"
+    },
+    {
+      "path": "scripts/analysis/zhenjiang_six_source_four_target_d32_gru_ukf_contract_v1.py",
+      "byte_count": 7936,
+      "sha256": "a2a0ac334e46dd5e84e7d16d9d2bd9bdd5547f19149c1dda9bf2519aca97f4ca"
+    },
+    {
+      "path": "scripts/modeling/zhenjiang_six_source_four_target_data_v1.py",
+      "byte_count": 41084,
+      "sha256": "adf740d8e5cbc9198b02f58f302799fe71df2ddc5c89d44efec4f737943f0825"
+    },
+    {
+      "path": "scripts/modeling/zhenjiang_six_source_four_target_d32_gru_v1.py",
+      "byte_count": 6760,
+      "sha256": "fdb90828d46c3f0e26ee1bfd4d8ae6edadb6d96bb8b553a995eaf59a61992209"
+    },
+    {
+      "path": "scripts/modeling/train_zhenjiang_six_source_four_target_d32_gru_v1.py",
+      "byte_count": 20282,
+      "sha256": "3c3c70e86f98611e3f27d27f9aee752d38c4294c07e78b73a6d29b707e3d66ea"
+    },
+    {
+      "path": "scripts/modeling/fit_zhenjiang_six_source_four_target_realtime_observation_head_v1.py",
+      "byte_count": 21923,
+      "sha256": "a06f130f4fbade36e59f7abaf111f4e1028276876e97baa85d589078b970ec5c"
+    },
+    {
+      "path": "scripts/modeling/zhenjiang_six_source_four_target_d32_gru_differentiable_ukf_v1.py",
+      "byte_count": 33041,
+      "sha256": "6ff7a1aae81ac4f2705e9b5370fbd538373f1b7c7ee3f0cdc27bc973c67999a8"
+    },
+    {
+      "path": "scripts/modeling/zhenjiang_six_source_four_target_d32_gru_differentiable_ukf_training_v1.py",
+      "byte_count": 9022,
+      "sha256": "46a9dbb2101ae3a8d34842e3bc859e8b595025235c73ce27fc5f6d921d9655fc"
+    },
+    {
+      "path": "scripts/modeling/zhenjiang_six_source_four_target_d32_gru_differentiable_ukf_runner_v1.py",
+      "byte_count": 76017,
+      "sha256": "5be9e373f2f5966ee7b6af0a5c8621d9717b91a846230d0f7680506837be15af"
+    },
+    {
+      "path": "scripts/modeling/register_zhenjiang_six_source_four_target_d32_gru_ukf_v1.py",
+      "byte_count": 13532,
+      "sha256": "7a36f9fbdc6d214a08be280f906f214bb2691517f7110c1425574861df2a4194"
+    },
+    {
+      "path": "scripts/analysis/zhenjiang_six_source_four_target_base_qualification_v1.py",
+      "byte_count": 9748,
+      "sha256": "28915418dd5e5decaa37b50d100114112449e35ddffd2cbf28fd7a33d5e7a25d"
+    },
+    {
+      "path": "scripts/analysis/zhenjiang_six_source_four_target_d32_gru_ukf_metrics_v1.py",
+      "byte_count": 34963,
+      "sha256": "dfc92294924ccad0ff95a0605819300ed83508cea4e5139bf5c5c32407f54235"
+    },
+    {
+      "path": "scripts/analysis/zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.py",
+      "byte_count": 129641,
+      "sha256": "f64e5ffcc47061d97f66e28e15ec45f7412b1d8a59455771180c4ef47eab9281"
+    },
+    {
+      "path": "scripts/analysis/audit_zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.py",
+      "byte_count": 89569,
+      "sha256": "b27eb143a7b1bd45b764e2f463381d70c0dd8436706c060288bc8e64f84bbbeb"
+    },
+    {
+      "path": "scripts/astronomical_tide/wusongkou_astronomical_tide_realtime_v2.py",
+      "byte_count": 14978,
+      "sha256": "6a8e45b8988809899ae84febd2e4790a6369acaad88f346bc7f2ddca7f40f5f5"
+    },
+    {
+      "path": "third_party/pytides/tide.py",
+      "byte_count": 13956,
+      "sha256": "fbdc9ec80a4bc9741520e73751038ab06db836add2425dbcc420873fde5dcbce"
+    },
+    {
+      "path": "third_party/pytides/astro.py",
+      "byte_count": 6036,
+      "sha256": "d29a2197c24a3e243590f0e7dcf52a2a4266a0951abab08244957711cabaa5bd"
+    },
+    {
+      "path": "third_party/pytides/constituent.py",
+      "byte_count": 6405,
+      "sha256": "fed8fa1a14663391f2f706e8ca70eedddd188321221a7fd8120ddcd01b11846a"
+    },
+    {
+      "path": "third_party/pytides/nodal_corrections.py",
+      "byte_count": 3708,
+      "sha256": "ae6af6c135fe88f90752fd6cf522d6976e5f8f8a29341d719627124dd254989b"
+    },
+    {
+      "path": "results/modeling/wusongkou_astronomical_tide_v1_validation/tide_model.json",
+      "byte_count": 6197,
+      "sha256": "ce8512f28e87ab6d62814b064d91ca358b98efd7ee27b4f831322ea93775516d"
+    },
+    {
+      "path": "scripts/hpc/build_zhenjiang_six_source_four_target_d32_gru_ukf_hpc_payload_v1.ps1",
+      "byte_count": 19006,
+      "sha256": "d75e03f92086c1db104ecf01ba40a3ec15764f543d2e5d94a0f5881b3e57ff34"
+    },
+    {
+      "path": "scripts/hpc/zhenjiang_six_source_four_target_d32_gru_base_v1.slurm",
+      "byte_count": 7049,
+      "sha256": "ba9a09a946e40e0bfa6617e9a65f98ce73c3c6cd4e225ec49c1f9e9cd30bc07f"
+    },
+    {
+      "path": "scripts/hpc/zhenjiang_six_source_four_target_d32_gru_differentiable_ukf_v1.slurm",
+      "byte_count": 5546,
+      "sha256": "dc07cdb3fe84295a965fa7e4bed6a22feb8ea357450f817b18147f5e0d49311a"
+    },
+    {
+      "path": "scripts/hpc/zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.slurm",
+      "byte_count": 5876,
+      "sha256": "f6610e7fef25c75807a53a17084fadc03e9bd934c0f5819e68ac662fbaf9cf67"
+    },
+    {
+      "path": "tests/test_zhenjiang_six_source_four_target_base_qualification_v1.py",
+      "byte_count": 5111,
+      "sha256": "594a2fb1e5f870cd87e7bad694f1164009f90a20a423cf867c424057432cf712"
+    },
+    {
+      "path": "tests/test_zhenjiang_six_source_four_target_d32_gru_ukf_contract_v1.py",
+      "byte_count": 3431,
+      "sha256": "b95fbe6e0d8d0564bca20acc76a712178dcef8fa526664f872adc8f0007ab1f7"
+    },
+    {
+      "path": "tests/test_zhenjiang_six_source_four_target_data_v1.py",
+      "byte_count": 16426,
+      "sha256": "6aea604e1130cd74a1071b376f14588f903fb2824b6e80c76002de416f3aa2da"
+    },
+    {
+      "path": "tests/test_zhenjiang_six_source_four_target_d32_gru_v1.py",
+      "byte_count": 3791,
+      "sha256": "27c971d1ebd4f045886f9779f841294b009036222e22229f2286277674bd9c8b"
+    },
+    {
+      "path": "tests/test_train_zhenjiang_six_source_four_target_d32_gru_v1.py",
+      "byte_count": 6381,
+      "sha256": "e756f478cb10e5575471da256d473ea29fd2f92e2d3dea894b46a9c07c2be6d3"
+    },
+    {
+      "path": "tests/test_fit_zhenjiang_six_source_four_target_realtime_observation_head_v1.py",
+      "byte_count": 7104,
+      "sha256": "0deb45d1eb17cba2eeeeff9bc76354d8891c3d181177fc19c8dcdb31244e4a70"
+    },
+    {
+      "path": "tests/test_zhenjiang_six_source_four_target_d32_gru_differentiable_ukf_v1.py",
+      "byte_count": 8509,
+      "sha256": "11b8b1805bceeb3c859a92874fdc3562a5618c9a8191c91ddfac2d49fd971a02"
+    },
+    {
+      "path": "tests/test_zhenjiang_six_source_four_target_d32_gru_differentiable_ukf_training_v1.py",
+      "byte_count": 4391,
+      "sha256": "1991f8a07118b523630514a3b86a03747d6dd4afaaff9dca23018e986b2e6e37"
+    },
+    {
+      "path": "tests/test_zhenjiang_six_source_four_target_d32_gru_differentiable_ukf_runner_v1.py",
+      "byte_count": 11315,
+      "sha256": "ffd875df04c8d3cae5ef6691a29091315ddce1500072c1e640ba563aa53724b7"
+    },
+    {
+      "path": "tests/test_zhenjiang_six_source_four_target_d32_gru_ukf_metrics_v1.py",
+      "byte_count": 9813,
+      "sha256": "9508b4b1dcc989ea2995b0ae33861c1b6a427458e3a27bd763fa78a0083480d4"
+    },
+    {
+      "path": "tests/test_zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.py",
+      "byte_count": 36669,
+      "sha256": "fa2183dae7cf345e1f071dc53402cfdc3c942f69b716b5654190792e1766b633"
+    },
+    {
+      "path": "tests/test_audit_zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.py",
+      "byte_count": 18944,
+      "sha256": "047b7b111caf6c47d918eeb45bfde159f6c8948cb03539b35407e14b8a6a7a5d"
+    },
+    {
+      "path": "tests/test_zhenjiang_six_source_four_target_d32_gru_ukf_hpc_v1.py",
+      "byte_count": 11171,
+      "sha256": "4df951bec65fbb781170b46174d0b7b795f28c1b8ed8f8c5fcc4642fbe8f4956"
+    },
+    {
+      "path": "docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+      "byte_count": 22214,
+      "sha256": "7518428f1e980bf1853296080ef93fd739678a538389cbb3716a731822d17106"
+    }
+  ],
+  "excluded_source_roots": [
+    ".hpc_mailbox*",
+    ".git*",
+    "__pycache__",
+    "migration_packages",
+    "results_except_accepted_tide_model",
+    "logs",
+    "data",
+    "archive"
+  ]
+}

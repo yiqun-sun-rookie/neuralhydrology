@@ -1,67 +1,155 @@
 #!/bin/bash
-set -o pipefail
+set -eo pipefail
 
-ROOT=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1
-SOURCE=/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1
+CHANNEL="zhenjiang-six-source-four-target-ukf"
+ROOT="/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1"
+PAYLOAD_DIR="${HOME}/hpc_mailbox/inbox/${CHANNEL}/payload_20260901_r1"
+ARCHIVE="${PAYLOAD_DIR}/zhenjiang_six_source_four_target_d32_gru_ukf_20260901_r1.tar.gz"
+OUTER_MANIFEST="${PAYLOAD_DIR}/manifest.sha256.json"
+IDENTITY="${PAYLOAD_DIR}/bundle_identity.json"
+EXPECTED_ARCHIVE_SHA="57ca7c687dc846c8e6da538f5a684109442db500fa42528bb396a0625428e803"
+EXPECTED_MANIFEST_SHA="bf649c5cac46019800ba4ba1e63e1d41d13b6231cf4cd77ac5d86f341b536cc9"
+EXPECTED_REGISTRY_SHA="7518428f1e980bf1853296080ef93fd739678a538389cbb3716a731822d17106"
+EXPECTED_IDENTITY_SHA="a3ed1608a1dc5f8a8943809246718af911a6b50296b4478fb79a76eeb62dc8e6"
+EXTRACT_ROOT=""
 
-printf '=== CANDIDATE_ROOT ===\n'
-if [ -e "$ROOT" ] || [ -L "$ROOT" ]; then
-  stat -c 'COLLISION|%F|%s|%n' "$ROOT"
-else
-  echo 'ABSENT_SAFE_TO_CREATE_LATER'
-fi
-for candidate in "${ROOT}.partial" "${ROOT}.staging"; do
-  if [ -e "$candidate" ] || [ -L "$candidate" ]; then
-    stat -c 'STAGING_COLLISION|%F|%s|%n' "$candidate"
-  else
-    printf 'ABSENT|%s\n' "$candidate"
+fatal() {
+  echo "[FATAL] $1"
+  exit 1
+}
+
+cleanup() {
+  if [ -n "${EXTRACT_ROOT}" ] && [ -d "${EXTRACT_ROOT}" ]; then
+    case "${EXTRACT_ROOT}" in
+      "/data1/home/${USER}/.zsf4t_deploy_20260901_r1."*) rm -rf -- "${EXTRACT_ROOT}" ;;
+      *) echo "[WARN] refusing unsafe temporary cleanup: ${EXTRACT_ROOT}" ;;
+    esac
   fi
+}
+trap cleanup EXIT
+
+printf '=== EXCLUSIVE_ROOT_PREFLIGHT ===\n'
+for candidate in "${ROOT}" "${ROOT}.partial" "${ROOT}.staging"; do
+  if [ -e "${candidate}" ] || [ -L "${candidate}" ]; then
+    fatal "exclusive destination already exists: ${candidate}"
+  fi
+  printf 'ABSENT|%s\n' "${candidate}"
 done
 
-printf '=== IMMUTABLE_SOURCE ===\n'
-for relative in \
-  dataset_config.json \
-  realtime_features/datong_realtime_features.csv \
-  realtime_features/nanjing_realtime_features.csv \
-  realtime_features/zhenjiang_realtime_features.csv \
-  realtime_features/jiangyin_realtime_features.csv \
-  realtime_features/xuliujing_realtime_features.csv \
-  realtime_features/wusongkou_realtime_features.csv \
-  retrospective_targets/nanjing_retrospective_targets.csv \
-  retrospective_targets/zhenjiang_retrospective_targets.csv \
-  retrospective_targets/jiangyin_retrospective_targets.csv \
-  retrospective_targets/xuliujing_retrospective_targets.csv
+for file in "${ARCHIVE}" "${OUTER_MANIFEST}" "${IDENTITY}"; do
+  [ -f "${file}" ] && [ ! -L "${file}" ] || fatal "payload member is absent or linked: ${file}"
+done
+[ "$(sha256sum "${ARCHIVE}" | awk '{print $1}')" = "${EXPECTED_ARCHIVE_SHA}" ] || fatal "archive SHA-256 mismatch"
+[ "$(sha256sum "${OUTER_MANIFEST}" | awk '{print $1}')" = "${EXPECTED_MANIFEST_SHA}" ] || fatal "manifest SHA-256 mismatch"
+[ "$(sha256sum "${IDENTITY}" | awk '{print $1}')" = "${EXPECTED_IDENTITY_SHA}" ] || fatal "identity SHA-256 mismatch"
+
+python - "${ARCHIVE}" "${OUTER_MANIFEST}" "${IDENTITY}" <<'PY'
+from __future__ import annotations
+import hashlib
+import json
+from pathlib import PurePosixPath
+import sys
+import tarfile
+
+archive, manifest_path, identity_path = sys.argv[1:]
+expected_archive_sha = "57ca7c687dc846c8e6da538f5a684109442db500fa42528bb396a0625428e803"
+expected_manifest_sha = "bf649c5cac46019800ba4ba1e63e1d41d13b6231cf4cd77ac5d86f341b536cc9"
+expected_registry_sha = "7518428f1e980bf1853296080ef93fd739678a538389cbb3716a731822d17106"
+
+identity = json.load(open(identity_path, encoding="utf-8"))
+manifest_bytes = open(manifest_path, "rb").read()
+manifest = json.loads(manifest_bytes)
+if (
+    identity.get("archive_sha256") != expected_archive_sha
+    or identity.get("manifest_sha256") != expected_manifest_sha
+    or identity.get("registry_sha256") != expected_registry_sha
+    or identity.get("archive_member_count") != 40
+    or identity.get("submitted_job_count") != 0
+    or hashlib.sha256(manifest_bytes).hexdigest() != expected_manifest_sha
+    or manifest.get("source_file_count") != 38
+    or manifest.get("registry_sha256") != expected_registry_sha
+    or manifest.get("formal_jobs_submitted") is not False
+    or manifest.get("heldout_2024_target_access_authorized") is not False
+):
+    raise SystemExit("outer frozen bundle identity drift")
+with tarfile.open(archive, "r:gz") as handle:
+    members = handle.getmembers()
+    regular = [item for item in members if item.isfile()]
+    if len(regular) != 40 or any(item.issym() or item.islnk() for item in members):
+        raise SystemExit("archive count or link contract drift")
+    for item in members:
+        normalized = item.name.removeprefix("./")
+        path = PurePosixPath(normalized)
+        if path.is_absolute() or ".." in path.parts:
+            raise SystemExit("unsafe archive member: " + item.name)
+    by_name = {item.name.removeprefix("./"): item for item in regular}
+    internal = handle.extractfile(by_name["bundle_manifest.json"]).read()
+    if internal != manifest_bytes:
+        raise SystemExit("inner and outer manifest identities differ")
+print("bundle_identity_preflight=passed")
+PY
+
+EXTRACT_ROOT=$(mktemp -d "/data1/home/${USER}/.zsf4t_deploy_20260901_r1.XXXXXX")
+case "${EXTRACT_ROOT}" in
+  "/data1/home/${USER}/.zsf4t_deploy_20260901_r1."*) ;;
+  *) fatal "mktemp returned an unsafe path" ;;
+esac
+tar -xzf "${ARCHIVE}" -C "${EXTRACT_ROOT}"
+[ -f "${EXTRACT_ROOT}/deploy_exclusive_root.sh" ] || fatal "deploy script was not extracted"
+bash -n "${EXTRACT_ROOT}/deploy_exclusive_root.sh"
+for script in \
+  zhenjiang_six_source_four_target_d32_gru_base_v1.slurm \
+  zhenjiang_six_source_four_target_d32_gru_differentiable_ukf_v1.slurm \
+  zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.slurm
 do
-  path="$SOURCE/$relative"
-  if [ -f "$path" ] && [ ! -L "$path" ]; then
-    sha256sum "$path"
-    stat -c 'BYTES|%s|%n' "$path"
-  else
-    printf 'MISSING_OR_SYMLINK|%s\n' "$path"
-  fi
+  bash -n "${EXTRACT_ROOT}/run/scripts/hpc/${script}"
 done
+bash "${EXTRACT_ROOT}/deploy_exclusive_root.sh" "${EXTRACT_ROOT}"
 
-printf '=== STORAGE_AND_QUEUE ===\n'
-df -h /data1
-sinfo -p hgpu2p,hgpu8 -o '%P|%a|%l|%D|%t|%N' || true
-squeue -u "$USER" -o '%i|%j|%T|%P|%N|%M|%l|%R' || true
+printf '=== DEPLOYED_ROOT_VERIFICATION ===\n'
+[ -d "${ROOT}" ] || fatal "exclusive root was not published"
+[ ! -e "${ROOT}.partial" ] && [ ! -e "${ROOT}.staging" ] || fatal "partial or staging root remains"
+[ "$(find "${ROOT}" -mindepth 1 -maxdepth 1 -printf '%f\n' | sort | tr '\n' ' ')" = "evidence inputs jobs logs run runs " ] || fatal "top-level allow-list drift"
+[ -z "$(find "${ROOT}" -type l -print -quit)" ] || fatal "deployed root contains a symbolic link"
+[ "$(sha256sum "${ROOT}/jobs/bundle_manifest.json" | awk '{print $1}')" = "${EXPECTED_MANIFEST_SHA}" ] || fatal "retained bundle manifest changed"
+[ "$(sha256sum "${ROOT}/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json" | awk '{print $1}')" = "${EXPECTED_REGISTRY_SHA}" ] || fatal "deployed registry changed"
 
-printf '=== ENVIRONMENT ===\n'
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh
+source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh"
 conda activate nh_final
-python - <<'PY'
+export PYTHONDONTWRITEBYTECODE=1
+export MKL_THREADING_LAYER=GNU
+export MKL_SERVICE_FORCE_INTEL=1
+export PYTHONPATH="${ROOT}/run/scripts/modeling:${ROOT}/run/scripts/analysis:${ROOT}/run/scripts/astronomical_tide:${ROOT}/run/third_party/pytides:${PYTHONPATH:-}"
+cd "${ROOT}/run"
+python scripts/modeling/register_zhenjiang_six_source_four_target_d32_gru_ukf_v1.py --validate-only
+python scripts/analysis/zhenjiang_six_source_four_target_d32_gru_ukf_contract_v1.py --self-check
+python - "${ROOT}" <<'PY'
+from pathlib import Path
+import json
 import sys
 
-import numpy
-import pandas
-import scipy
-import torch
+from zhenjiang_six_source_four_target_d32_gru_differentiable_ukf_runner_v1 import (
+    verify_isolated_input_manifest,
+)
 
-print('python=' + sys.version.split()[0])
-print('numpy=' + numpy.__version__)
-print('pandas=' + pandas.__version__)
-print('scipy=' + scipy.__version__)
-print('torch=' + torch.__version__)
-print('torch_compiled_cuda=' + str(torch.version.cuda))
+root = Path(sys.argv[1])
+registry = json.loads(
+    (
+        root
+        / "run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json"
+    ).read_text(encoding="utf-8")
+)
+identity = verify_isolated_input_manifest(
+    root / "inputs/pre2024-four-target-v1", registry
+)
+if identity.get("file_count") != 11:
+    raise SystemExit("isolated input verification did not return eleven files")
+print("isolated_input_prefix_verification=passed")
 PY
-exit 0
+
+echo "ARCHIVE_SHA=${EXPECTED_ARCHIVE_SHA}"
+echo "MANIFEST_SHA=${EXPECTED_MANIFEST_SHA}"
+echo "REGISTRY_SHA=${EXPECTED_REGISTRY_SHA}"
+echo "FORMAL_JOBS_SUBMITTED=0"
+echo "HELDOUT_2024_TARGET_ACCESS_AUTHORIZED=false"
+echo "[DONE] deployed create-only root=${ROOT}"
