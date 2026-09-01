@@ -1,0 +1,40 @@
+### channel=kalmannet-tukf09-455 seq=67
+### host=login4
+### started=2026-09-01T18:32:31+0800
+### ---------- output ----------
+=== FROZEN SEQUENCE 66 SUBMISSION EVIDENCE ===
+=== FROZEN PREPARATION JOB RECORD ===
+=== COMPLETED SLURM STATE ===
+217817|tukf09-455-v2r5-prepare|hgpu8|COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+217817.batch|batch||COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+217817.extern|extern||COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+=== FORMAL EVALUATION AND TRAINING HOLD ===
+=== TERMINAL LOG EVIDENCE ===
+STDOUT_SIZE=2465173
+STDOUT_SHA256=d3b9880c33868793bf61638912299a8ef3173e139fa9e669f2345189d88a4210
+STDERR_SIZE=0
+STDERR_SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+=== STRICT PREPARATION ARTIFACT GATES ===
+=== REPAIRED RUNTIME BUNDLE VERIFICATION ===
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "mutable_directory_count": 501,
+  "mutable_file_count": 3649,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R5_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+=== INDEPENDENT PREPARATION PAYLOAD AUDIT ===
+Traceback (most recent call last):
+  File "<stdin>", line 41, in <module>
+KeyError: 'hpc_identity'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-01T18:34:07+0800
