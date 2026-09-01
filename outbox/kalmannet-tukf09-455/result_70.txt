@@ -1,0 +1,41 @@
+### channel=kalmannet-tukf09-455 seq=70
+### host=login4
+### started=2026-09-01T19:06:27+0800
+### ---------- output ----------
+=== FROZEN SEQUENCE 69 TECHNICAL ADMISSION EVIDENCE ===
+=== PREPARATION JOB REMAINS COMPLETED ===
+217817|tukf09-455-v2r5-prepare|hgpu8|COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+217817.batch|batch||COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+217817.extern|extern||COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+=== FROZEN TRAINING SUBMISSION GATES ===
+=== REPAIRED RUNTIME BUNDLE VERIFICATION ===
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "mutable_directory_count": 501,
+  "mutable_file_count": 3649,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R5_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+=== INDEPENDENT TECHNICAL ADMISSION REVERIFICATION ===
+{"admission_identity_sha256": "948a161ea7bcf78febc05374724cd20563fdebf89178f21cf676d38a9806158a", "admission_sha256": "12ee428324ce43c7fbbff59115022e1005a05fff800fd3203c2203cb8428514e", "formal_evaluation_authorized": false, "neural_model_parallelism": 1, "neural_model_unit_count": 9, "ordered_basin_count": 455, "status": "HPC_A800_EXCLUSIVE_V2R5_TECHNICAL_EXECUTION_ADMITTED_FORMAL_EVALUATION_HOLD"}
+=== FORMAL EVALUATION AND PRISTINE TRAINING HOLD ===
+=== SAME-NAME TRAINING JOB GATE ===
+=== EXCLUSIVE TRAINING SUBMISSION LOCK ===
+=== EXACTLY ONE NEURAL TRAINING SUBMISSION ===
+Submitted batch job 217939
+=== IMMEDIATE TRAINING STATE ===
+TRAINING_JOB_ID=217939
+             JOBID                           NAME  PARTITION      STATE         NODELIST(REASON)       TIME           START_TIME
+            217939         tukf09-455-v2r5-neural      hgpu8    PENDING              (Resources)       0:00                  N/A
+TUKF09_455_A800_EXCLUSIVE_V2R5_NEURAL_TRAINING_SUBMITTED_ONCE_FORMAL_EVALUATION_HOLD
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T19:07:19+0800
