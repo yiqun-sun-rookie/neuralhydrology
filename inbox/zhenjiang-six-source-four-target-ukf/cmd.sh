@@ -13,10 +13,10 @@ printf '=== SQUEUE ===\n'
 squeue -j "${IDS_CSV}" -o '%i|%j|%T|%P|%N|%M|%l|%R' || true
 
 printf '=== START_ESTIMATE ===\n'
-squeue --start -j '217803,217804' -o '%i|%j|%T|%S|%R' 2>&1 || true
+squeue --start -j '217805' -o '%i|%j|%T|%S|%R' 2>&1 || true
 
 printf '=== PRIORITY_DETAIL ===\n'
-sprio -j '217803,217804' 2>&1 || true
+sprio -j '217805' 2>&1 || true
 
 printf '=== SACCT ===\n'
 sacct -j "${IDS_CSV}" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList -P -n || true
