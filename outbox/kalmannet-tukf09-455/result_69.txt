@@ -1,0 +1,47 @@
+### channel=kalmannet-tukf09-455 seq=69
+### host=login4
+### started=2026-09-01T18:50:56+0800
+### ---------- output ----------
+=== FROZEN SEQUENCE 66 SUBMISSION EVIDENCE ===
+=== FROZEN SEQUENCE 67 READ-ONLY AUDIT-LAYER FAILURE EVIDENCE ===
+=== FROZEN SEQUENCE 68 STRICT PREPARATION PASS EVIDENCE ===
+=== FROZEN PREPARATION JOB RECORD ===
+=== COMPLETED SLURM STATE ===
+217817|tukf09-455-v2r5-prepare|hgpu8|COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+217817.batch|batch||COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+217817.extern|extern||COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+=== FORMAL EVALUATION AND TRAINING HOLD ===
+=== TERMINAL LOG EVIDENCE ===
+STDOUT_SIZE=2465173
+STDOUT_SHA256=d3b9880c33868793bf61638912299a8ef3173e139fa9e669f2345189d88a4210
+STDERR_SIZE=0
+STDERR_SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+=== STRICT PREPARATION ARTIFACT GATES ===
+=== REPAIRED RUNTIME BUNDLE VERIFICATION ===
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "mutable_directory_count": 501,
+  "mutable_file_count": 3649,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R5_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+=== INDEPENDENT PREPARATION PAYLOAD AUDIT ===
+{"filter_unit_count": 455, "initial_bundle_sha256": "8bd135e5b5b0cc61fe328aaba1afe3521f3293e629697d32a1c2234794d4f27f", "local_filter_seal_provenance_sha256": "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0", "preparation_probe_identity_sha256": "a4d8c035a17640472d389796fecc84d2a4e194236551c37b59f280457920c4da", "preparation_probe_sha256": "59007f5d207f6dd5d9a1225f11d817fd3aabf04ff1690511705fe4546c4222fe", "private_runtime_identity_sha256": "08083e4f7bafdb9fa32e3982f70fe47ff5952fc188964032a5df4633210b024a", "private_runtime_manifest_sha256": "4207579e6a7af408da933ff1075d537186878cbbcb4b0f17e8778b6a47a98aee", "remote_filter_seal_sha256": "7ecfa4d5a61f37a2fc40e75b9e1bbec4be6c39ba7b0b87ec8705bcca277faaa0", "staged_file_count": 911, "staged_sources_identity_sha256": "75cdddfde1b15181dbcace5357fc540781005bfb3d2ff7777a204ff1c51fed8e", "staged_sources_manifest_sha256": "fecab69d1ce6fa0b23c2f5b22203a31d87b1c53264fe41a2092c8a2f87e5c0b9"}
+TUKF09_455_A800_EXCLUSIVE_V2R5_PREPARATION_COMPLETED_STRICTLY_VERIFIED_AFTER_READ_ONLY_AUDIT_LAYER_FIX_ADMISSION_NOT_CREATED_FORMAL_EVALUATION_HOLD
+=== CREATE EXCLUSIVE HPC TECHNICAL ADMISSION ONLY ===
+{"admitted_runtime": {"cuda_available": true, "cuda_compute_capability": [8, 0], "cuda_device_count": 1, "cuda_device_name": "NVIDIA A800-SXM4-80GB", "cuda_device_total_memory_bytes": 85174583296, "cuda_visible_devices": "0", "cudnn_version": 8902, "exclusive_node_runtime_evidence_passed": true, "hostname": "ngu201", "logical_cpu_count": 64, "machine": "x86_64", "numpy_version": "1.26.4", "nvidia_driver_version": "535.104.05", "nvidia_gpu_uuid": "GPU-611fb575-b571-2134-d202-ac44b14cb625", "nvidia_reported_memory_total_mib": 81920, "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17", "psutil_version": "5.9.0", "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "python_version": "3.11.13", "schema_version": "tukf09_455_hpc_runtime_identity_a800_exclusive_v2r5", "selected_global_gpu_id": "0", "slurm_cpus_on_node": 64, "slurm_cpus_per_task": 4, "slurm_global_gpu_id": "0", "slurm_gpu_allocation_variable_present": true, "slurm_gpus_on_node": "", "slurm_job_cpus_per_node_normalized": 64, "slurm_job_cpus_per_node_raw": "64", "slurm_job_gpus": "0", "slurm_job_id": "217817", "slurm_job_node_count": 1, "slurm_step_gpus": "", "tensorfloat32": {"cuda_matmul": false, "cudnn": false}, "torch_base_version": "2.2.2", "torch_cuda_runtime_version": "12.1", "torch_process_gpu_uuid": "GPU-611fb575-b571-2134-d202-ac44b14cb625", "torch_version": "2.2.2+cu121"}, "bitwise_equivalence_to_rtx3090_claimed": false, "bundle_manifest_sha256": "f7c18d0a95849ee1d7d0a64c7a8724b6cf1fc0b84967503bd7ec1b484b239e76", "evaluation_array_reads": 0, "evaluation_metrics": 0, "evaluation_outputs": 0, "evaluation_predictions": 0, "exclusive_node_required": true, "exclusive_node_runtime_evidence_passed": true, "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1", "formal_evaluation_authorized": false, "identity_sha256": "948a161ea7bcf78febc05374724cd20563fdebf89178f21cf676d38a9806158a", "initial_bundle_verification_identity_sha256": "f12f515270c0bda53b2a8ee5687987f407dd60ad67a3358f44b239a450b46514", "initial_bundle_verification_sha256": "8bd135e5b5b0cc61fe328aaba1afe3521f3293e629697d32a1c2234794d4f27f", "local_filter_installation_final_sha256": "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0", "neural_model_order": ["lead_1_seed_0", "lead_1_seed_1", "lead_1_seed_2", "lead_2_seed_0", "lead_2_seed_1", "lead_2_seed_2", "lead_3_seed_0", "lead_3_seed_1", "lead_3_seed_2"], "neural_model_parallelism": 1, "offline_input_identity_sha256": "28f30e3ff15639e2d68fcc683deb5a242675f3597541d0f928a5ec37a40aae53", "offline_input_manifest_sha256": "2507f0ea14c4880c4aad9a3ccd5a2e6e1c5e5be1ee18bd0093c52d5db85acf82", "ordered_basin_count": 455, "original_training_admission_changed": false, "original_training_admission_file_sha256": "6ba3cdd742fc2bdf039c51afc75485c8292f0b999d7fe426cb2ccf69057c1b79", "original_training_admission_record_sha256": "ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4", "preparation_probe_identity_sha256": "a4d8c035a17640472d389796fecc84d2a4e194236551c37b59f280457920c4da", "preparation_probe_sha256": "59007f5d207f6dd5d9a1225f11d817fd3aabf04ff1690511705fe4546c4222fe", "private_runtime_identity_sha256": "08083e4f7bafdb9fa32e3982f70fe47ff5952fc188964032a5df4633210b024a", "private_runtime_manifest_sha256": "4207579e6a7af408da933ff1075d537186878cbbcb4b0f17e8778b6a47a98aee", "remote_filter_installation_final_sha256": "7ecfa4d5a61f37a2fc40e75b9e1bbec4be6c39ba7b0b87ec8705bcca277faaa0", "schema_version": "tukf09_455_hpc_technical_admission_a800_exclusive_v2r5", "scientific_contract_changed": false, "scientific_contract_sha256": "7710594dcc5cce7f087cb70492a6f827c3925a98ea7fa051d26c5ef1660304e1", "source_capsule_data_file_count": 911, "source_capsule_data_identity_sha256": "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da", "source_capsule_data_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901/data/camels_us", "source_capsule_data_total_bytes": 464792200, "source_capsule_deployment_mailbox_sequence": 45, "source_capsule_deployment_result_sha256": "78da4a712fdbee06dac78f50f92390c341a3ac83b5da25fee099acb12943b5eb", "source_capsule_directory_count": 44, "source_capsule_evidence_file_count": 3, "source_capsule_manifest_sha256": "d5de91725d0da93f3aa4a234f5c103131fad8ef4b3c86f919236b9e42a318547", "source_capsule_manifest_sha256_record_sha256": "8725143e54efbb47aa73b8c960efee73aaf28fee85f54d331784d0373106ec69", "source_capsule_post_publication_audit_command_sha256": "3028bfac9f7a09fb060c23caca47578d40518c5b3adb301018dcaaef7b9ce3d4", "source_capsule_post_publication_audit_mailbox_sequence": 47, "source_capsule_post_publication_audit_result_sha256": "8d522b19230c8e33bbf2b87025ffd74f45e3c5f498c77530a9cafc76558db02e", "source_capsule_ready_sha256": "10331991ee26049554a3d18682c907bfb343877311ca053ac696ccfa1c6a8b93", "source_capsule_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901", "staged_sources_identity_sha256": "75cdddfde1b15181dbcace5357fc540781005bfb3d2ff7777a204ff1c51fed8e", "staged_sources_manifest_sha256": "fecab69d1ce6fa0b23c2f5b22203a31d87b1c53264fe41a2092c8a2f87e5c0b9", "status": "HPC_A800_EXCLUSIVE_V2R5_TECHNICAL_EXECUTION_ADMITTED_FORMAL_EVALUATION_HOLD"}
+{"admission_identity_sha256": "948a161ea7bcf78febc05374724cd20563fdebf89178f21cf676d38a9806158a", "admission_sha256": "12ee428324ce43c7fbbff59115022e1005a05fff800fd3203c2203cb8428514e", "evaluation_array_reads": 0, "evaluation_metrics": 0, "evaluation_outputs": 0, "evaluation_predictions": 0, "formal_evaluation_authorized": false, "neural_model_unit_count": 9, "ordered_basin_count": 455, "status": "HPC_A800_EXCLUSIVE_V2R5_TECHNICAL_EXECUTION_ADMITTED_FORMAL_EVALUATION_HOLD"}
+ADMISSION_SIZE=5203
+ADMISSION_SHA256=12ee428324ce43c7fbbff59115022e1005a05fff800fd3203c2203cb8428514e
+TUKF09_455_A800_EXCLUSIVE_V2R5_TECHNICAL_ADMISSION_CREATED_AND_VERIFIED_TRAINING_NOT_SUBMITTED_FORMAL_EVALUATION_HOLD
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T18:53:15+0800
