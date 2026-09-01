@@ -1,0 +1,15 @@
+### channel=kalmannet-tukf09-455 seq=49
+### host=login4
+### started=2026-09-01T11:40:16+0800
+### ---------- output ----------
+=== SEQUENCE 48 DEPLOYMENT EVIDENCE ===
+=== IMMUTABLE DEPLOYMENT AND CONTRACT GATES ===
+=== SAME-NAME JOB GATE ===
+=== EXCLUSIVE ALLOCATION SUBMISSION LOCK ===
+=== EXACTLY ONE PACKAGE ALLOCATION PROBE SUBMISSION ===
+Submitted batch job 217219
+sync: invalid option -- 'f'
+Try 'sync --help' for more information.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-01T11:40:18+0800
