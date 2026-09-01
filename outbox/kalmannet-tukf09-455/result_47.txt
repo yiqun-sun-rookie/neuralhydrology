@@ -1,0 +1,39 @@
+### channel=kalmannet-tukf09-455 seq=47
+### host=login4
+### started=2026-09-01T09:37:50+0800
+### ---------- output ----------
+FILESYSTEM_TYPE=nfs
+SUMMARY={"audit_command_sha256": "3028bfac9f7a09fb060c23caca47578d40518c5b3adb301018dcaaef7b9ce3d4", "capsule_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901", "data_file_count": 911, "data_identity_sha256": "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da", "data_total_bytes": 464792200, "directory_count": 44, "evidence_file_count": 3, "formal_evaluation_array_reads": 0, "formal_evaluation_metrics": 0, "formal_evaluation_outputs": 0, "formal_evaluation_predictions": 0, "hard_link_count_above_one": 0, "manifest_sha256": "d5de91725d0da93f3aa4a234f5c103131fad8ef4b3c86f919236b9e42a318547", "manifest_sha_record_sha256": "8725143e54efbb47aa73b8c960efee73aaf28fee85f54d331784d0373106ec69", "manifest_sha_record_size": 95, "manifest_size": 569601, "ordered_basin_count": 455, "ordered_basin_newline_sha256": "38987bce45fa38ff68f5b067db17e8cb3212d98fecdd106f57d268a130ee8fbd", "population_registry_sha256": "38d5d11851a4a46df8456065fa75d052f76723705f603afb26534121236b00df", "population_registry_size": 35088, "raw_manifest_bound_file_count": 910, "raw_source_manifest_sha256": "a8b68a43490d5192e2f9340a40aae56c95cfc77037e81bf559ac887a21bbae0d", "raw_source_manifest_size": 159995, "ready_sha256": "10331991ee26049554a3d18682c907bfb343877311ca053ac696ccfa1c6a8b93", "ready_size": 1236, "symbolic_link_count": 0, "topography_bound_file_count": 1, "total_file_count": 914, "tree_total_bytes": 465363132}
+CAPSULE_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901
+CAPSULE_DATA_FILE_COUNT=911
+CAPSULE_EVIDENCE_FILE_COUNT=3
+CAPSULE_TOTAL_FILE_COUNT=914
+CAPSULE_DIRECTORY_COUNT=44
+CAPSULE_DATA_TOTAL_BYTES=464792200
+CAPSULE_TREE_TOTAL_BYTES=465363132
+CAPSULE_DATA_IDENTITY_SHA256=dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da
+CAPSULE_MANIFEST_SIZE=569601
+CAPSULE_MANIFEST_SHA256=d5de91725d0da93f3aa4a234f5c103131fad8ef4b3c86f919236b9e42a318547
+CAPSULE_MANIFEST_SHA_RECORD_SIZE=95
+CAPSULE_MANIFEST_SHA_RECORD_SHA256=8725143e54efbb47aa73b8c960efee73aaf28fee85f54d331784d0373106ec69
+CAPSULE_READY_SIZE=1236
+CAPSULE_READY_SHA256=10331991ee26049554a3d18682c907bfb343877311ca053ac696ccfa1c6a8b93
+ORIGINAL_RAW_MANIFEST_SIZE=159995
+ORIGINAL_RAW_MANIFEST_SHA256=a8b68a43490d5192e2f9340a40aae56c95cfc77037e81bf559ac887a21bbae0d
+ORIGINAL_RAW_MANIFEST_BOUND_FILE_COUNT=910
+POPULATION_REGISTRY_SIZE=35088
+POPULATION_REGISTRY_SHA256=38d5d11851a4a46df8456065fa75d052f76723705f603afb26534121236b00df
+TOPOGRAPHY_BOUND_FILE_COUNT=1
+ORDERED_BASIN_COUNT=455
+ORDERED_BASIN_NEWLINE_SHA256=38987bce45fa38ff68f5b067db17e8cb3212d98fecdd106f57d268a130ee8fbd
+CAPSULE_SYMBOLIC_LINK_COUNT=0
+CAPSULE_HARD_LINK_COUNT_ABOVE_ONE=0
+FORMAL_EVALUATION_ARRAY_READS=0
+FORMAL_EVALUATION_PREDICTIONS=0
+FORMAL_EVALUATION_METRICS=0
+FORMAL_EVALUATION_OUTPUTS=0
+AUDIT_COMMAND_SHA256=3028bfac9f7a09fb060c23caca47578d40518c5b3adb301018dcaaef7b9ce3d4
+TUKF09_455_TRAINING_SOURCE_CAPSULE_V2_POST_PUBLICATION_READ_ONLY_AUDIT_911_OF_911_PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T09:38:10+0800
