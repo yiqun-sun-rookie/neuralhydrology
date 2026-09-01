@@ -2,21 +2,29 @@
 set -euo pipefail
 
 REMOTE_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901"
-PROBE_EXECUTION_ID="DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE1_SEQ2"
+FAILED_PROBE_DIRECTORY="${REMOTE_ROOT}/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE1_SEQ2"
+PROBE_EXECUTION_ID="DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE2_SEQ3"
 PROBE_DIRECTORY="${REMOTE_ROOT}/probes/${PROBE_EXECUTION_ID}"
 PROBE_WRAPPER="${PROBE_DIRECTORY}/submit_a800_probe.slurm"
 PROBE_REPORT="${PROBE_DIRECTORY}/probe_receipt.json"
-JOB_NAME="kdpp-a800-probe-s2"
+JOB_NAME="kdpp-a800-probe-s3"
 
 echo '=== SUBMISSION IDENTITY ==='
 date --iso-8601=seconds
 hostname
-echo 'channel=kalmannet-daily-perbasin sequence=2 purpose=single-A800-probe-only'
+echo 'channel=kalmannet-daily-perbasin sequence=3 purpose=single-A800-probe-retry-without-invalid-memory-request'
 
-if [[ -e "${REMOTE_ROOT}" ]]; then
-  echo "refusing unexpected pre-existing remote root: ${REMOTE_ROOT}" >&2
-  find "${REMOTE_ROOT}" -maxdepth 2 -mindepth 1 -printf '%y|%p\n' | sort || true
+if [[ ! -d "${FAILED_PROBE_DIRECTORY}" ]]; then
+  echo 'failed sequence-2 probe directory is absent' >&2
   exit 30
+fi
+if [[ -e "${FAILED_PROBE_DIRECTORY}/submission_receipt.txt" || -e "${FAILED_PROBE_DIRECTORY}/probe_receipt.json" ]]; then
+  echo 'sequence-2 evidence unexpectedly claims a submitted or completed probe' >&2
+  exit 31
+fi
+if [[ -e "${PROBE_DIRECTORY}" ]]; then
+  echo "refusing pre-existing retry directory: ${PROBE_DIRECTORY}" >&2
+  exit 32
 fi
 
 ACTIVE_BEFORE="$(squeue -h -u sunyiq -o '%i|%j|%T|%N' | awk -F'|' -v name="${JOB_NAME}" '$2 == name {count++} END {print count+0}')"
@@ -25,7 +33,7 @@ echo "exact_job_name_active_before=${ACTIVE_BEFORE}"
 echo "exact_job_name_historical_before=${HISTORICAL_BEFORE}"
 if [[ "${ACTIVE_BEFORE}" != "0" || "${HISTORICAL_BEFORE}" != "0" ]]; then
   echo 'duplicate probe identity detected before submission' >&2
-  exit 31
+  exit 33
 fi
 
 mkdir -p "${PROBE_DIRECTORY}"
@@ -38,7 +46,6 @@ cat > "${PROBE_WRAPPER}" <<'SLURM'
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
 #SBATCH --gres=gpu:1
-#SBATCH --mem=8G
 #SBATCH --time=00:05:00
 
 set -euo pipefail
@@ -149,24 +156,24 @@ JOB_ID="$(sbatch \
   --export="ALL,PROBE_REPORT=${PROBE_REPORT}" \
   "${PROBE_WRAPPER}")"
 case "${JOB_ID}" in
-  ''|*[!0-9]*) echo "invalid Slurm job identifier: ${JOB_ID}" >&2; exit 32 ;;
+  ''|*[!0-9]*) echo "invalid Slurm job identifier: ${JOB_ID}" >&2; exit 34 ;;
 esac
 
 ACTIVE_AFTER="$(squeue -h -j "${JOB_ID}" -o '%i|%j|%T|%N' | wc -l | tr -d ' ')"
 EXACT_NAME_AFTER="$(squeue -h -u sunyiq -o '%i|%j|%T|%N' | awk -F'|' -v name="${JOB_NAME}" '$2 == name {count++} END {print count+0}')"
 if [[ "${ACTIVE_AFTER}" != "1" || "${EXACT_NAME_AFTER}" != "1" ]]; then
   echo 'post-submission uniqueness proof failed' >&2
-  exit 33
+  exit 35
 fi
 
 RECEIPT="${PROBE_DIRECTORY}/submission_receipt.txt"
 if [[ -e "${RECEIPT}" ]]; then
   echo 'refusing to replace probe submission receipt' >&2
-  exit 34
+  exit 36
 fi
 {
   printf 'channel=kalmannet-daily-perbasin\n'
-  printf 'sequence=2\n'
+  printf 'sequence=3\n'
   printf 'execution_id=%s\n' "${PROBE_EXECUTION_ID}"
   printf 'job_name=%s\n' "${JOB_NAME}"
   printf 'job_id=%s\n' "${JOB_ID}"
