@@ -1,0 +1,35 @@
+### channel=kalmannet-tukf09-455 seq=59
+### host=login4
+### started=2026-09-01T15:02:57+0800
+### ---------- output ----------
+=== FROZEN SEQUENCE 58 SINGLE-SUBMISSION EVIDENCE ===
+=== IMMUTABLE TRAINING JOB RECORD ===
+=== FORMAL EVALUATION HOLD ===
+=== SLURM TRAINING STATE ===
+217409|tukf09-455-v2r4-neural|hgpu8|FAILED|1:0|ngu202|00:00:08|2026-09-01T14:45:37|2026-09-01T14:45:45
+217409.batch|batch||FAILED|1:0|ngu202|00:00:08|2026-09-01T14:45:37|2026-09-01T14:45:45
+217409.extern|extern||COMPLETED|0:0|ngu202|00:00:09|2026-09-01T14:45:37|2026-09-01T14:45:46
+slurm_load_jobs error: Invalid job id specified
+=== READ-ONLY TRAINING ARTIFACT SNAPSHOT ===
+LOG=training-217409.out SIZE=0 SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+LOG=training-217409.err SIZE=1668 SHA256=255f1041ddcdbaeeb0dd87ea2ff40c4b28462c3703e86baf59e18b7e74f4faf9
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r4_20260901/bundle/kalmannet/scripts/build_tukf09_455_a800_exclusive_hpc_bundle_v2r4.py", line 1253, in <module>
+    main()
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r4_20260901/bundle/kalmannet/scripts/build_tukf09_455_a800_exclusive_hpc_bundle_v2r4.py", line 1230, in main
+    payload = verify_runtime_bundle(args.verify_runtime)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r4_20260901/bundle/kalmannet/scripts/build_tukf09_455_a800_exclusive_hpc_bundle_v2r4.py", line 1140, in verify_runtime_bundle
+    expected_sources = bundle_member_sources(root=root / "kalmannet")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r4_20260901/bundle/kalmannet/scripts/build_tukf09_455_a800_exclusive_hpc_bundle_v2r4.py", line 669, in bundle_member_sources
+    _validate_config_anchors(project_root, admission)
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r4_20260901/bundle/kalmannet/scripts/build_tukf09_455_a800_exclusive_hpc_bundle_v2r4.py", line 661, in _validate_config_anchors
+    raise RuntimeError("local filter installation final manifest changed")
+RuntimeError: local filter installation final manifest changed
+NEURAL_OUTPUT_ROOT=ABSENT
+TRAINING_VERIFICATION=ABSENT
+TUKF09_455_A800_EXCLUSIVE_V2R4_NEURAL_TRAINING_TERMINAL_NONPASS state=FAILED exit_code=1:0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T15:02:57+0800
