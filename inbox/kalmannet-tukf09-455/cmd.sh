@@ -9,6 +9,7 @@ CAPSULE_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_targe
 V1_PENDING_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v1_20260901.pending.seq43
 V2R3_PROJECT_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/bundle/kalmannet
 RAW_MANIFEST="${V2R3_PROJECT_ROOT}/artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/preflight/raw_source_manifest.sha256.json"
+POPULATION_REGISTRY="${V2R3_PROJECT_ROOT}/artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/preflight/population_registry.json"
 PYTHON=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
 COMMAND_SHA256="$(sha256sum "${BASH_SOURCE[0]}" | awk '{print $1}')"
 export PYTHONNOUSERSITE=1
@@ -17,11 +18,12 @@ export PYTHONDONTWRITEBYTECODE=1
 [[ -x "${PYTHON}" ]] || { echo "FATAL: bootstrap Python is unavailable" >&2; exit 1; }
 [[ -d "${CAPSULE_ROOT}" && ! -L "${CAPSULE_ROOT}" ]] || { echo "FATAL: capsule root is absent or linked" >&2; exit 1; }
 [[ -f "${RAW_MANIFEST}" && ! -L "${RAW_MANIFEST}" ]] || { echo "FATAL: raw manifest is absent or linked" >&2; exit 1; }
+[[ -f "${POPULATION_REGISTRY}" && ! -L "${POPULATION_REGISTRY}" ]] || { echo "FATAL: population registry is absent or linked" >&2; exit 1; }
 FILESYSTEM_TYPE="$(stat --file-system --format=%T -- "${CAPSULE_ROOT}")"
 [[ "${FILESYSTEM_TYPE}" == nfs* ]] || { echo "FATAL: capsule is not on NFS: ${FILESYSTEM_TYPE}" >&2; exit 1; }
 echo "FILESYSTEM_TYPE=${FILESYSTEM_TYPE}"
 
-"${PYTHON}" -B - "${CAPSULE_ROOT}" "${V1_PENDING_ROOT}" "${RAW_MANIFEST}" "${COMMAND_SHA256}" <<'PY'
+"${PYTHON}" -B - "${CAPSULE_ROOT}" "${V1_PENDING_ROOT}" "${RAW_MANIFEST}" "${POPULATION_REGISTRY}" "${COMMAND_SHA256}" <<'PY'
 from __future__ import annotations
 
 from hashlib import sha256
@@ -35,7 +37,8 @@ from typing import Any
 capsule_root = Path(sys.argv[1])
 v1_pending_root = Path(sys.argv[2])
 raw_manifest_path = Path(sys.argv[3])
-audit_command_sha256 = sys.argv[4]
+population_registry_path = Path(sys.argv[4])
+audit_command_sha256 = sys.argv[5]
 data_root = capsule_root / "data" / "camels_us"
 manifest_path = capsule_root / "evidence" / "source_capsule_manifest.json"
 manifest_sha_path = capsule_root / "evidence" / "source_capsule_manifest.sha256"
@@ -58,6 +61,8 @@ EXPECTED_RAW_SIZE = 159995
 EXPECTED_RAW_SHA = "a8b68a43490d5192e2f9340a40aae56c95cfc77037e81bf559ac887a21bbae0d"
 EXPECTED_RAW_AGGREGATE = "970ac27630a46ef7c72308fd9f57ec51c6861d48a56fd250efe5eeb0176c0729"
 EXPECTED_PARENT_RAW_SHA = "85ee1210f09f6665ad92b877105d3c68d79f53189938488bfc3edcbc23939903"
+EXPECTED_POPULATION_SIZE = 35088
+EXPECTED_POPULATION_SHA = "38d5d11851a4a46df8456065fa75d052f76723705f603afb26534121236b00df"
 EXPECTED_BASIN_SHA = "38987bce45fa38ff68f5b067db17e8cb3212d98fecdd106f57d268a130ee8fbd"
 EXPECTED_TOPOGRAPHY = "camels_attributes_v2.0/camels_topo.txt"
 EXPECTED_TOPOGRAPHY_SIZE = 38677
@@ -137,6 +142,7 @@ ready, ready_bytes = read_json_verified(ready_path, "capsule READY", EXPECTED_RE
 sha_record_info, _ = digest_stable(manifest_sha_path, "manifest SHA record", EXPECTED_SHA_RECORD_SIZE, EXPECTED_SHA_RECORD_SHA)
 require(manifest_sha_path.read_bytes() == (EXPECTED_MANIFEST_SHA + "  source_capsule_manifest.json\n").encode("ascii"), "manifest SHA record text changed")
 raw_manifest, raw_bytes = read_json_verified(raw_manifest_path, "frozen raw manifest", EXPECTED_RAW_SIZE, EXPECTED_RAW_SHA, None)
+population, population_bytes = read_json_verified(population_registry_path, "frozen population registry", EXPECTED_POPULATION_SIZE, EXPECTED_POPULATION_SHA, None)
 
 manifest_expected = {
     "schema_version": "tukf09_455_training_source_capsule_v2",
@@ -212,6 +218,12 @@ require(raw_manifest.get("aggregate_sha256") == EXPECTED_RAW_AGGREGATE, "raw man
 require(raw_manifest.get("derived_from_parent_file_sha256") == EXPECTED_PARENT_RAW_SHA, "raw manifest parent binding changed")
 raw_files = raw_manifest.get("files")
 require(isinstance(raw_files, dict) and len(raw_files) == 1020, "raw manifest records changed")
+eligible = population.get("eligible")
+require(isinstance(eligible, list) and len(eligible) == 455 and len(set(eligible)) == 455, "population registry eligible list changed")
+require(population.get("eligible_ordered_newline_utf8_sha256") == EXPECTED_BASIN_SHA, "population registry recorded basin hash changed")
+require(sha256("".join(f"{basin}\n" for basin in eligible).encode("ascii")).hexdigest() == EXPECTED_BASIN_SHA, "population registry ordered basin bytes changed")
+require(population.get("eligible_compact_json_sha256") == "75ef2cee206fb15ee3f31ae0bbfcf594661c5ccdda0b28de9ff65634332c8902", "population registry compact basin hash changed")
+require(population.get("validation_metric_undefined") == ["08202700"] and "08202700" not in eligible, "zero-variance basin exclusion changed")
 
 rows = manifest.get("files")
 require(isinstance(rows, list) and len(rows) == EXPECTED_DATA_COUNT, "capsule manifest records changed")
@@ -251,7 +263,7 @@ for record in rows:
 require([row["relative_path"] for row in rows] == sorted(records), "capsule record order changed")
 require(raw_bound == 910 and topography_bound == 1, "raw or topography binding count changed")
 require(forcing_basins == streamflow_basins and len(forcing_basins) == 455, "forcing and streamflow basin populations differ")
-require(sha256(("\n".join(sorted(forcing_basins)) + "\n").encode("ascii")).hexdigest() == EXPECTED_BASIN_SHA, "ordered basin identity changed")
+require(set(eligible) == forcing_basins, "capsule basin set differs from the frozen ordered population")
 identity_rows = [{"relative_path": name, "size_bytes": records[name]["size_bytes"], "sha256": records[name]["sha256"]} for name in sorted(records)]
 identity = sha256(json.dumps(identity_rows, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 require(identity == EXPECTED_DATA_IDENTITY, "capsule data identity changed")
@@ -322,6 +334,8 @@ summary = {
     "ready_sha256": EXPECTED_READY_SHA,
     "raw_source_manifest_size": len(raw_bytes),
     "raw_source_manifest_sha256": EXPECTED_RAW_SHA,
+    "population_registry_size": len(population_bytes),
+    "population_registry_sha256": EXPECTED_POPULATION_SHA,
     "raw_manifest_bound_file_count": raw_bound,
     "topography_bound_file_count": topography_bound,
     "ordered_basin_count": len(forcing_basins),
@@ -351,6 +365,8 @@ print("CAPSULE_READY_SHA256=" + EXPECTED_READY_SHA)
 print("ORIGINAL_RAW_MANIFEST_SIZE=159995")
 print("ORIGINAL_RAW_MANIFEST_SHA256=" + EXPECTED_RAW_SHA)
 print("ORIGINAL_RAW_MANIFEST_BOUND_FILE_COUNT=910")
+print("POPULATION_REGISTRY_SIZE=35088")
+print("POPULATION_REGISTRY_SHA256=" + EXPECTED_POPULATION_SHA)
 print("TOPOGRAPHY_BOUND_FILE_COUNT=1")
 print("ORDERED_BASIN_COUNT=455")
 print("ORDERED_BASIN_NEWLINE_SHA256=" + EXPECTED_BASIN_SHA)
