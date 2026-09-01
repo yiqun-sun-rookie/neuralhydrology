@@ -1,0 +1,9 @@
+### channel=kalmannet-tukf09-455 seq=48
+### host=login4
+### started=2026-09-01T11:04:17+0800
+### ---------- output ----------
+{"archive_sha256": "0f6b3087a976831cb87fc95b3f449318e72f1b198c7c4c13eed04808d43bda7b", "bundle_manifest_sha256": "97eccb8c689e1c1b22577ba8823a8fb0802a14f10db213f861c5b9e3b504bdc1", "command_sha256": "9a00f000d675740be6be866065b28452107edca2acd558a2806614c496e4e460", "deployment_mailbox_sequence": 48, "evaluation_array_reads": 0, "evaluation_metrics": 0, "evaluation_outputs": 0, "evaluation_predictions": 0, "formal_evaluation_authorized": false, "member_count": 2808, "neural_model_units": 0, "offline_runtime_input_file_count": 0, "outer_manifest_sha256": "0db32e49a6f803f375ad9497e1ab4b694a91a4a858074452a79a401a5521ce84", "remote_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r4_20260901", "slurm_job_submitted": false, "source_capsule_data_identity_sha256": "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da", "source_capsule_post_publication_audit_mailbox_sequence": 47, "status": "A800_EXCLUSIVE_V2R4_DEPLOYED_STRICT_BUNDLE_AND_SOURCE_CAPSULE_VERIFIED_FORMAL_EVALUATION_HOLD"}
+TUKF09_455_A800_EXCLUSIVE_V2R4_DEPLOYMENT_COMPLETED_NO_JOB_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T11:05:00+0800
