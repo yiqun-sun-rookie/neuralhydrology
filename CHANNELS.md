@@ -51,6 +51,7 @@ outbox/<channel>/result_<seq>.txt   结果
 | `id30-modern-moe-audit-aux` | CAMELS-US 现代因果 Transformer 与稀疏混合专家远程盘点的辅助只读通道 | 2026-08-27 | 主通道在首次回执后静默延迟时，仅执行限深的目录和检查点查询；不读取结果内容，不改远程仓库，不提交训练，不碰其他通道或实验 |
 | `id30-modern-moe-checkpoints` | CAMELS-US 现代因果 Transformer 与稀疏混合专家盘点中的现有长短期记忆网络检查点核对 | 2026-08-27 | 两个已用盘点通道在首次回执后均未释放；本通道仅精确统计三个已发现结果根的检查点、配置和缩放器，不打开模型或结果载荷，不改远程仓库，不提交训练 |
 | `kalmannet-tukf25` | 反向切分新抽27流域四臂正式验证：部署、锚点门、训练阵列、封条单次开封读出与取回 | 2026-08-31 | 独立落点 `/data1/home/sunyiq/kalmannet_tukf25_20260831`；仅操作本通道和该目录，不碰 `~/neuralhydrology`、其他通道、其他实验或既有证据 |
+| `kalmannet-tukf26` | 训练年份探针：正向切分 2 年对 6.4 年，联合学习过拟合是否随数据量收窄 | 2026-08-31 | 独立落点 `/data1/home/sunyiq/kalmannet_tukf26_20260831`；仅操作本通道和该目录，不碰 `~/neuralhydrology`、其他通道、其他实验或既有证据 |
 | `kalmannet-tukf09-455` | 全对角噪声无迹卡尔曼滤波与三个随机种子长短期记忆网络的455流域修订实验：隔离部署、训练与核验 | 2026-08-31 | 独立落点 `/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_20260831`；仅操作本通道和该目录，不覆盖原456流域实验，不碰 `~/neuralhydrology`、其他通道、其他实验或既有证据；正式评价仍受独立门禁约束 |
 
 **迁移方法**（`default` → 自己的 channel，随时可做，不影响正在跑的）：
