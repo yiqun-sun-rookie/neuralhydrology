@@ -16,6 +16,18 @@ PREPARATION_PROBE="${ROOT}/status/preparation_probe.json"
 PREPARATION_FAILED="${ROOT}/status/PREPARATION_FAILED.json"
 FILTER_SEAL="${RESULTS_ROOT}/control/filter_rebinding/independent/manifest.final.sha256.json"
 ADMISSION="${ROOT}/status/hpc_technical_admission.json"
+ADMISSION_SHA=b485c75a86e3f39b616b9dc0292696ba24c275038a520177759c27b1c4522930
+ADMISSION_IDENTITY_SHA=d97dce65ae36af7576c13cd1f30dad90f1e2f392cbf10a8f2b5e59b5af6a17f0
+TRAINING_SCRIPT="${PROJECT_ROOT}/hpc/tukf09_455_basin_revision_a800_exclusive_v2r4/submit_training_gpu.slurm"
+TRAINING_SCRIPT_SHA=27283ab2b4a543ce2cce464afd0a9ad86536d0ed5948eba6ba1b313147ac8fba
+STAGE_TOOL="${PROJECT_ROOT}/hpc/tukf09_455_basin_revision_a800_exclusive_v2r4/stage_and_train.py"
+STAGE_TOOL_SHA=b5d06b6cc320d22a3248958f1670840ff9cca1d7c82dfb058746dfd1d173ae1b
+VERIFIER="${PROJECT_ROOT}/hpc/tukf09_455_basin_revision_a800_exclusive_v2r4/verify_result.py"
+VERIFIER_SHA=5034b598df9bf84b2ee6c57ea572cf853f11b703feccef821ed3260c867f2941
+EXECUTION_CONFIG="${PROJECT_ROOT}/configs/tukf09_455_basin_zero_validation_target_variance_hpc_execution_a800_exclusive_v2r4.json"
+EXECUTION_CONFIG_SHA=54bb8226621c440983d1a8f4d1291b9980488296bc9658085abef47efe56b3f6
+BUNDLE_MANIFEST="${ROOT}/bundle/bundle_manifest.json"
+BUNDLE_MANIFEST_SHA=97eccb8c689e1c1b22577ba8823a8fb0802a14f10db213f861c5b9e3b504bdc1
 JOB_ID=217228
 JOB_NAME=tukf09-455-v2r4-prepare
 JOB_ID_FILE="${ROOT}/status/preparation_job_id.txt"
@@ -53,6 +65,15 @@ RESULT_56_SIZE=2439
 RESULT_56_SHA=d7ef61f383a287f516b4d0d5e60975f17553fbbb009379d08f6c14f2b6b9b3d5
 INSPECTION_56_COMMIT=16248b98bebc2e83b55502006614814c4f6329fc
 INSPECTION_56_COMMAND_SHA=fb91c928a30a12e5e4a09ff459ac8f282a3d686184cc708d0d5c253944719bca
+RESULT_57="${MAILBOX_ROOT}/outbox/kalmannet-tukf09-455/result_57.txt"
+RESULT_57_COMMIT=70fe8fcdadcc5b45d95d6575cac88d8d678bdfc2
+RESULT_57_SIZE=8621
+RESULT_57_SHA=0e56523d1851ec983ccad5675b01bc9737c95e0fa84060afa501aeee910eb697
+ADMISSION_57_COMMIT=f319f61c06d56f1f220218ec90e51cae5ecf75af
+ADMISSION_57_COMMAND_SHA=dec78df4e26e2c6dfc10824e78a15eb978c8bb690762a665c355d1aea152396c
+TRAINING_JOB_NAME=tukf09-455-v2r4-neural
+TRAINING_JOB_ID_FILE="${ROOT}/status/training_job_id.txt"
+TRAINING_SUBMISSION_LOCK="${ROOT}/status/training_submission.lock"
 PYTHON=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
 export PYTHONNOUSERSITE=1
 export PYTHONDWRITEBYTECODE=1
@@ -152,6 +173,45 @@ assert summary["local_filter_seal_sha256"] == "b378ffbfde4d24ded8fbb42fdf10fef59
 assert summary["actual_remote_filter_seal_sha256"] == "6e150cd9feba58ec35562e7fc46e7052f9e433cc5a50ae185593f1960703a55f"
 PY
 
+echo "=== FROZEN SEQUENCE 57 TECHNICAL ADMISSION EVIDENCE ==="
+[[ -f "${RESULT_57}" && ! -L "${RESULT_57}" ]] || fail "sequence 57 result is missing, linked, or irregular"
+[[ "$(stat -c '%h' "${RESULT_57}")" -eq 1 ]] || fail "sequence 57 result hard-link count changed"
+[[ "$(stat -c '%s' "${RESULT_57}")" -eq "${RESULT_57_SIZE}" ]] || fail "sequence 57 result size changed"
+[[ "$(sha256sum "${RESULT_57}" | awk '{print $1}')" = "${RESULT_57_SHA}" ]] || fail "sequence 57 result hash changed"
+[[ "$(git log -1 --format=%H -- outbox/kalmannet-tukf09-455/result_57.txt)" = "${RESULT_57_COMMIT}" ]] || fail "sequence 57 result commit changed"
+[[ "$(git diff-tree --no-commit-id --name-only -r "${RESULT_57_COMMIT}")" = "outbox/kalmannet-tukf09-455/result_57.txt" ]] || fail "sequence 57 result commit surface changed"
+git merge-base --is-ancestor "${ADMISSION_57_COMMIT}" "${RESULT_57_COMMIT}" || fail "sequence 57 command is not an ancestor of its result"
+[[ "$(git log -1 --format=%H "${RESULT_57_COMMIT}^" -- inbox/kalmannet-tukf09-455/cmd.sh)" = "${ADMISSION_57_COMMIT}" ]] || fail "sequence 57 command lineage changed"
+[[ "$(git show "${ADMISSION_57_COMMIT}:inbox/kalmannet-tukf09-455/cmd.sh" | sha256sum | awk '{print $1}')" = "${ADMISSION_57_COMMAND_SHA}" ]] || fail "sequence 57 technical admission command hash changed"
+
+"${PYTHON}" -B - "${RESULT_57}" <<'PY'
+from pathlib import Path
+import json
+import sys
+
+lines = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+assert lines[0] == "### channel=kalmannet-tukf09-455 seq=57"
+assert lines[1] == "### host=login4"
+assert lines[-2] == "### exit_code=0"
+assert lines[-1].startswith("### finished=")
+assert "ADMISSION_SIZE=5203" in lines
+assert "ADMISSION_SHA256=b485c75a86e3f39b616b9dc0292696ba24c275038a520177759c27b1c4522930" in lines
+assert "TUKF09_455_A800_EXCLUSIVE_V2R4_TECHNICAL_ADMISSION_CREATED_AND_VERIFIED_TRAINING_NOT_SUBMITTED_EVALUATION_HOLD" in lines
+summary = next(json.loads(line) for line in lines if line.startswith('{"admission_identity_sha256"'))
+assert summary == {
+    "admission_identity_sha256": "d97dce65ae36af7576c13cd1f30dad90f1e2f392cbf10a8f2b5e59b5af6a17f0",
+    "admission_sha256": "b485c75a86e3f39b616b9dc0292696ba24c275038a520177759c27b1c4522930",
+    "evaluation_array_reads": 0,
+    "evaluation_metrics": 0,
+    "evaluation_outputs": 0,
+    "evaluation_predictions": 0,
+    "formal_evaluation_authorized": False,
+    "neural_model_unit_count": 9,
+    "ordered_basin_count": 455,
+    "status": "HPC_A800_EXCLUSIVE_V2R4_TECHNICAL_EXECUTION_ADMITTED_FORMAL_EVALUATION_HOLD",
+}
+PY
+
 echo "=== FROZEN SEQUENCE 55 DIAGNOSTIC EVIDENCE ==="
 [[ -f "${RESULT_55}" && ! -L "${RESULT_55}" ]] || fail "sequence 55 result is missing, linked, or irregular"
 [[ "$(stat -c '%h' "${RESULT_55}")" -eq 1 ]] || fail "sequence 55 result hard-link count changed"
@@ -233,8 +293,10 @@ echo "=== FORMAL EVALUATION HOLD ==="
 for name in selection evaluation independent formal_evaluation formal_evaluation_independent; do
   [[ ! -e "${RESULTS_ROOT}/${name}" && ! -L "${RESULTS_ROOT}/${name}" ]] || fail "forbidden evaluation output exists: ${name}"
 done
-for item in "${ADMISSION}" "${ROOT}/status/training_submission.lock" "${ROOT}/status/training_job_id.txt"; do
-  [[ ! -e "${item}" && ! -L "${item}" ]] || fail "technical admission or training evidence exists prematurely: ${item}"
+[[ -f "${ADMISSION}" && ! -L "${ADMISSION}" ]] || fail "technical admission is missing, linked, or irregular"
+[[ "$(stat -c '%h' "${ADMISSION}")" -eq 1 ]] || fail "technical admission hard-link count changed"
+for item in "${TRAINING_SUBMISSION_LOCK}" "${TRAINING_JOB_ID_FILE}"; do
+  [[ ! -e "${item}" && ! -L "${item}" ]] || fail "training submission evidence exists prematurely: ${item}"
 done
 
 case "${state}" in
@@ -457,7 +519,7 @@ PY
 
 echo "TUKF09_455_A800_EXCLUSIVE_V2R4_PREPARATION_COMPLETED_STRICTLY_VERIFIED_ADMISSION_NOT_CREATED"
 
-echo "=== CREATE EXCLUSIVE HPC TECHNICAL ADMISSION ==="
+echo "=== REVERIFY EXISTING EXCLUSIVE HPC TECHNICAL ADMISSION ==="
 "${PYTHON}" -B "${PROJECT_ROOT}/hpc/tukf09_455_basin_revision_a800_exclusive_v2r4/stage_and_train.py" admit \
   --project-root "${PROJECT_ROOT}" \
   --probe "${PREPARATION_PROBE}" \
@@ -467,6 +529,7 @@ echo "=== CREATE EXCLUSIVE HPC TECHNICAL ADMISSION ==="
 
 [[ -f "${ADMISSION}" && ! -L "${ADMISSION}" ]] || fail "HPC technical admission was not created as a regular unlinked file"
 [[ "$(stat -c '%h' "${ADMISSION}")" -eq 1 ]] || fail "HPC technical admission hard-link count changed"
+[[ "$(sha256sum "${ADMISSION}" | awk '{print $1}')" = "${ADMISSION_SHA}" ]] || fail "HPC technical admission hash changed"
 [[ ! -e "${ROOT}/status/training_submission.lock" && ! -L "${ROOT}/status/training_submission.lock" ]] || fail "training submission lock exists prematurely"
 [[ ! -e "${ROOT}/status/training_job_id.txt" && ! -L "${ROOT}/status/training_job_id.txt" ]] || fail "training job id exists prematurely"
 
@@ -536,3 +599,110 @@ done
 echo "ADMISSION_SIZE=$(stat -c '%s' "${ADMISSION}")"
 echo "ADMISSION_SHA256=$(sha256sum "${ADMISSION}" | awk '{print $1}')"
 echo "TUKF09_455_A800_EXCLUSIVE_V2R4_TECHNICAL_ADMISSION_CREATED_AND_VERIFIED_TRAINING_NOT_SUBMITTED_EVALUATION_HOLD"
+
+echo "=== FROZEN TRAINING SUBMISSION GATES ==="
+for item in \
+  "${TRAINING_SCRIPT}" \
+  "${STAGE_TOOL}" \
+  "${VERIFIER}" \
+  "${EXECUTION_CONFIG}" \
+  "${BUNDLE_MANIFEST}" \
+  "${ADMISSION}" \
+  "${PRIVATE_MANIFEST}" \
+  "${PREPARATION_PROBE}" \
+  "${STAGED_MANIFEST}" \
+  "${INITIAL_BUNDLE}" \
+  "${FILTER_SEAL}"; do
+  [[ -f "${item}" && ! -L "${item}" ]] || fail "required training evidence is missing, linked, or irregular: ${item}"
+  [[ "$(stat -c '%h' "${item}")" -eq 1 ]] || fail "required training evidence hard-link count changed: ${item}"
+done
+[[ "$(sha256sum "${TRAINING_SCRIPT}" | awk '{print $1}')" = "${TRAINING_SCRIPT_SHA}" ]] || fail "training Slurm wrapper hash changed"
+[[ "$(sha256sum "${STAGE_TOOL}" | awk '{print $1}')" = "${STAGE_TOOL_SHA}" ]] || fail "training controller hash changed"
+[[ "$(sha256sum "${VERIFIER}" | awk '{print $1}')" = "${VERIFIER_SHA}" ]] || fail "training result verifier hash changed"
+[[ "$(sha256sum "${EXECUTION_CONFIG}" | awk '{print $1}')" = "${EXECUTION_CONFIG_SHA}" ]] || fail "HPC execution config hash changed"
+[[ "$(sha256sum "${BUNDLE_MANIFEST}" | awk '{print $1}')" = "${BUNDLE_MANIFEST_SHA}" ]] || fail "bundle manifest hash changed"
+[[ "$(sha256sum "${ADMISSION}" | awk '{print $1}')" = "${ADMISSION_SHA}" ]] || fail "technical admission hash changed before submission"
+[[ "$(sha256sum "${PRIVATE_MANIFEST}" | awk '{print $1}')" = "431bb24aa9112158bd3b6289bccd28d212a22754b865f1d27c54c72387525188" ]] || fail "private runtime manifest hash changed"
+[[ "$(sha256sum "${PREPARATION_PROBE}" | awk '{print $1}')" = "28649e6d68e8f699ba583d9feb0ea4c3a17f99981341ec1102ed5cb459b98210" ]] || fail "preparation probe hash changed"
+[[ "$(sha256sum "${STAGED_MANIFEST}" | awk '{print $1}')" = "3bf1a5b5f6dca172f0bd8ad0e1228d94799d5fda1ae9216c68338a0084a3f197" ]] || fail "staged source manifest hash changed"
+[[ "$(sha256sum "${INITIAL_BUNDLE}" | awk '{print $1}')" = "07bd84ca563711de09bb06897f3ceb9b8a324b9c6d090e02c664d910a95a77d5" ]] || fail "initial bundle verification hash changed"
+[[ "$(sha256sum "${FILTER_SEAL}" | awk '{print $1}')" = "6e150cd9feba58ec35562e7fc46e7052f9e433cc5a50ae185593f1960703a55f" ]] || fail "remote filter seal hash changed"
+[[ ! -e "${RESULTS_ROOT}/neural" && ! -L "${RESULTS_ROOT}/neural" ]] || fail "neural training output already exists"
+[[ ! -e "${TRAINING_SUBMISSION_LOCK}" && ! -L "${TRAINING_SUBMISSION_LOCK}" ]] || fail "training submission lock already exists"
+[[ ! -e "${TRAINING_JOB_ID_FILE}" && ! -L "${TRAINING_JOB_ID_FILE}" ]] || fail "training job id record already exists"
+if compgen -G "${ROOT}/logs/training-*.out" >/dev/null || compgen -G "${ROOT}/logs/training-*.err" >/dev/null; then
+  fail "training logs already exist"
+fi
+if compgen -G "${ROOT}/status/training_verification.*.json" >/dev/null; then
+  fail "training verification already exists"
+fi
+for name in selection evaluation independent formal_evaluation formal_evaluation_independent; do
+  [[ ! -e "${RESULTS_ROOT}/${name}" && ! -L "${RESULTS_ROOT}/${name}" ]] || fail "forbidden evaluation output exists before training submission: ${name}"
+done
+
+echo "=== SAME-NAME TRAINING JOB GATE ==="
+set +e
+squeue_output=$(squeue -u "${USER}" -h -o '%i|%j|%T' 2>&1)
+squeue_rc=$?
+set -e
+[[ "${squeue_rc}" -eq 0 ]] || fail "cannot inspect current jobs: ${squeue_output}"
+same_name=$(printf '%s\n' "${squeue_output}" | awk -F'|' -v name="${TRAINING_JOB_NAME}" '$2==name {print $0}')
+[[ -z "${same_name}" ]] || fail "same-name training job already exists: ${same_name}"
+
+echo "=== EXCLUSIVE TRAINING SUBMISSION LOCK ==="
+mkdir "${TRAINING_SUBMISSION_LOCK}" || fail "cannot acquire the training submission lock"
+[[ -d "${TRAINING_SUBMISSION_LOCK}" && ! -L "${TRAINING_SUBMISSION_LOCK}" ]] || fail "training submission lock is linked or irregular"
+[[ ! -e "${TRAINING_JOB_ID_FILE}" && ! -L "${TRAINING_JOB_ID_FILE}" ]] || fail "training job id record appeared after lock acquisition"
+set +e
+squeue_output=$(squeue -u "${USER}" -h -o '%i|%j|%T' 2>&1)
+squeue_rc=$?
+set -e
+[[ "${squeue_rc}" -eq 0 ]] || fail "cannot recheck current jobs after lock acquisition: ${squeue_output}"
+same_name=$(printf '%s\n' "${squeue_output}" | awk -F'|' -v name="${TRAINING_JOB_NAME}" '$2==name {print $0}')
+[[ -z "${same_name}" ]] || fail "same-name training job appeared after lock acquisition: ${same_name}"
+
+echo "=== EXACTLY ONE NEURAL TRAINING SUBMISSION ==="
+set +e
+submit_output=$(sbatch "${TRAINING_SCRIPT}" 2>&1)
+submit_rc=$?
+set -e
+printf '%s\n' "${submit_output}"
+job_ids=$(printf '%s\n' "${submit_output}" | sed -n 's/^Submitted batch job \([0-9][0-9]*\)$/\1/p')
+job_id_count=$(printf '%s\n' "${job_ids}" | awk 'NF{count++} END{print count+0}')
+[[ "${submit_rc}" -eq 0 && "${job_id_count}" -eq 1 ]] || fail "training submission not proven exactly once (sbatch_rc=${submit_rc}, parsed_count=${job_id_count})"
+training_job_id=$(printf '%s\n' "${job_ids}" | awk 'NF{print; exit}')
+[[ "${training_job_id}" =~ ^[0-9]+$ ]] || fail "invalid training job id"
+
+"${PYTHON}" -B - "${TRAINING_JOB_ID_FILE}" "${training_job_id}" <<'PY'
+import os
+from pathlib import Path
+import stat
+import sys
+
+path = Path(sys.argv[1])
+content = (sys.argv[2] + "\n").encode("ascii")
+fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+try:
+    remaining = memoryview(content)
+    while remaining:
+        written = os.write(fd, remaining)
+        assert written > 0
+        remaining = remaining[written:]
+    os.fsync(fd)
+finally:
+    os.close(fd)
+info = os.lstat(path)
+assert stat.S_ISREG(info.st_mode) and info.st_nlink == 1
+assert path.read_bytes() == content
+directory_fd = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY)
+try:
+    os.fsync(directory_fd)
+finally:
+    os.close(directory_fd)
+PY
+chmod 0444 "${TRAINING_JOB_ID_FILE}"
+
+echo "=== IMMEDIATE TRAINING STATE ==="
+echo "TRAINING_JOB_ID=${training_job_id}"
+squeue -j "${training_job_id}" -o '%.18i %.30j %.10P %.10T %.24R %.10M %.20S' 2>&1 || true
+echo "TUKF09_455_A800_EXCLUSIVE_V2R4_NEURAL_TRAINING_SUBMITTED_ONCE_FORMAL_EVALUATION_HOLD"
