@@ -1,0 +1,70 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=6
+### host=login4
+### started=2026-09-01T17:40:48+0800
+### ---------- output ----------
+=== SNAPSHOT_TIME ===
+2026-09-01T17:40:48+0800
+=== SQUEUE ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+217803_[0-2%3]|zsf4t-upstream-v1|PENDING|hgpu2p||0:00|3-00:00:00|(Priority)
+217804|zsf4t-dev2023-v1|PENDING|hgpu2p||0:00|1-00:00:00|(Priority)
+217805_[0-2%3]|zsf4t-upstream-v1|PENDING|hgpu2p||0:00|3-00:00:00|(Dependency)
+217806_[0-2%3]|zsf4t-upstream-v1|PENDING|hgpu2p||0:00|3-00:00:00|(Dependency)
+217807_[0-2%3]|zsf4t-upstream-v1|PENDING|hgpu2p||0:00|3-00:00:00|(Dependency)
+217808_[0-2%3]|zsf4t-filter-v1|PENDING|hgpu2p||0:00|3-00:00:00|(Dependency)
+217809_[0-2%3]|zsf4t-filter-v1|PENDING|hgpu2p||0:00|3-00:00:00|(Dependency)
+217810|zsf4t-dev2023-v1|PENDING|hgpu2p||0:00|1-00:00:00|(Dependency)
+=== SACCT ===
+217804|zsf4t-dev2023-v1|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+217810|zsf4t-dev2023-v1|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+217803|zsf4t-upstream-v1|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+217805|zsf4t-upstream-v1|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+217806|zsf4t-upstream-v1|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+217807|zsf4t-upstream-v1|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+217808|zsf4t-filter-v1|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+217809|zsf4t-filter-v1|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+=== SCONTROL_DEPENDENCIES ===
+JOB|217803|STATE=PENDING|REASON=Priority|DEPENDENCY=(null)
+JOB|217804|STATE=PENDING|REASON=Priority|DEPENDENCY=(null)
+JOB|217805|STATE=PENDING|REASON=Dependency|DEPENDENCY=afterok:217803_*
+JOB|217806|STATE=PENDING|REASON=Dependency|DEPENDENCY=afterok:217805_*
+JOB|217807|STATE=PENDING|REASON=Dependency|DEPENDENCY=afterok:217806_*
+JOB|217808|STATE=PENDING|REASON=Dependency|DEPENDENCY=afterok:217807_*
+JOB|217809|STATE=PENDING|REASON=Dependency|DEPENDENCY=afterok:217808_*
+JOB|217810|STATE=PENDING|REASON=Dependency|DEPENDENCY=afterok:217809_*,afterok:217804
+=== REGISTERED_OUTPUTS_AND_FAILURE_EVIDENCE ===
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s17/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s17/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s17/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s17/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s29/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s29/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s29/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s29/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s29/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s43/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s43/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s43/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s43/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s43/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/development_evaluation_smoke/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/evidence/development_2023/evaluation/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/evidence/development_2023/independent_audit/attempt_001
+=== LOG_TAILS_AND_ERROR_SCAN ===
+=== SAFETY_SENTINELS ===
+R1_STAGING_PRESERVED=true|type=directory|bytes=4096|mtime=2026-09-01 16:44:49.000000000 +0800|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1.staging
+R2_ROOT_PRESENT=true
+HELDOUT_2024_TARGET_ACCESS_AUTHORIZED=false
+BOUNDARY_TARGET_BYTES_READ=0
+HELDOUT_2024_TARGET_BYTES_READ=0
+LATER_THAN_2023_BYTES_READ=0
+TARGET_ACCESS_SAFETY_CHECK=PASS
+=== SNAPSHOT_END ===
+2026-09-01T17:40:49+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T17:40:49+0800
