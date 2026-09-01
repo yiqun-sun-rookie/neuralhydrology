@@ -1,0 +1,1258 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=53
+### host=login4
+### started=2026-09-01T21:55:18+0800
+### ---------- output ----------
+=== SNAPSHOT_TIME ===
+2026-09-01T21:55:18+0800
+=== SQUEUE ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+217810|zsf4t-dev2023-v1|PENDING|hgpu2p||0:00|1-00:00:00|(Dependency)
+217809_0|zsf4t-filter-v1|RUNNING|hgpu2p|ngu005|2:11:02|3-00:00:00|ngu005
+=== START_ESTIMATE ===
+JOBID|NAME|STATE|START_TIME|NODELIST(REASON)
+=== PRIORITY_DETAIL ===
+Unable to find jobs matching user/id(s) specified
+=== SACCT ===
+217804|zsf4t-dev2023-v1|COMPLETED|0:0|00:00:30|2026-09-01T19:22:47|2026-09-01T19:23:17|ngu007
+217804.batch|batch|COMPLETED|0:0|00:00:30|2026-09-01T19:22:47|2026-09-01T19:23:17|ngu007
+217804.extern|extern|COMPLETED|0:0|00:00:30|2026-09-01T19:22:47|2026-09-01T19:23:17|ngu007
+217810|zsf4t-dev2023-v1|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+217940|zsf4t-upstream-v1|COMPLETED|0:0|00:01:08|2026-09-01T19:19:44|2026-09-01T19:20:52|ngu007
+217940.batch|batch|COMPLETED|0:0|00:01:08|2026-09-01T19:19:44|2026-09-01T19:20:52|ngu007
+217940.extern|extern|COMPLETED|0:0|00:01:08|2026-09-01T19:19:44|2026-09-01T19:20:52|ngu007
+217943|zsf4t-upstream-v1|COMPLETED|0:0|00:01:03|2026-09-01T19:20:52|2026-09-01T19:21:55|ngu007
+217943.batch|batch|COMPLETED|0:0|00:01:03|2026-09-01T19:20:52|2026-09-01T19:21:55|ngu007
+217943.extern|extern|COMPLETED|0:0|00:01:03|2026-09-01T19:20:52|2026-09-01T19:21:55|ngu007
+217803|zsf4t-upstream-v1|COMPLETED|0:0|00:00:52|2026-09-01T19:21:55|2026-09-01T19:22:47|ngu007
+217803.batch|batch|COMPLETED|0:0|00:00:52|2026-09-01T19:21:55|2026-09-01T19:22:47|ngu007
+217803.extern|extern|COMPLETED|0:0|00:00:52|2026-09-01T19:21:55|2026-09-01T19:22:47|ngu007
+217944|zsf4t-upstream-v1|COMPLETED|0:0|00:07:52|2026-09-01T19:27:08|2026-09-01T19:35:00|ngu007
+217944.batch|batch|COMPLETED|0:0|00:07:52|2026-09-01T19:27:08|2026-09-01T19:35:00|ngu007
+217944.extern|extern|COMPLETED|0:0|00:07:52|2026-09-01T19:27:08|2026-09-01T19:35:00|ngu007
+217946|zsf4t-upstream-v1|COMPLETED|0:0|00:08:42|2026-09-01T19:32:28|2026-09-01T19:41:10|ngu005
+217946.batch|batch|COMPLETED|0:0|00:08:42|2026-09-01T19:32:28|2026-09-01T19:41:10|ngu005
+217946.extern|extern|COMPLETED|0:0|00:08:42|2026-09-01T19:32:28|2026-09-01T19:41:10|ngu005
+217805|zsf4t-upstream-v1|COMPLETED|0:0|00:07:43|2026-09-01T19:32:28|2026-09-01T19:40:11|ngu005
+217805.batch|batch|COMPLETED|0:0|00:07:43|2026-09-01T19:32:28|2026-09-01T19:40:11|ngu005
+217805.extern|extern|COMPLETED|0:0|00:07:43|2026-09-01T19:32:28|2026-09-01T19:40:11|ngu005
+217952|zsf4t-upstream-v1|COMPLETED|0:0|00:00:47|2026-09-01T19:41:10|2026-09-01T19:41:57|ngu005
+217952.batch|batch|COMPLETED|0:0|00:00:47|2026-09-01T19:41:10|2026-09-01T19:41:57|ngu005
+217952.extern|extern|COMPLETED|0:0|00:00:47|2026-09-01T19:41:10|2026-09-01T19:41:57|ngu005
+217953|zsf4t-upstream-v1|COMPLETED|0:0|00:00:47|2026-09-01T19:41:10|2026-09-01T19:41:57|ngu005
+217953.batch|batch|COMPLETED|0:0|00:00:47|2026-09-01T19:41:10|2026-09-01T19:41:57|ngu005
+217953.extern|extern|COMPLETED|0:0|00:00:47|2026-09-01T19:41:10|2026-09-01T19:41:57|ngu005
+217806|zsf4t-upstream-v1|COMPLETED|0:0|00:00:46|2026-09-01T19:41:10|2026-09-01T19:41:56|ngu007
+217806.batch|batch|COMPLETED|0:0|00:00:46|2026-09-01T19:41:10|2026-09-01T19:41:56|ngu007
+217806.extern|extern|COMPLETED|0:0|00:00:46|2026-09-01T19:41:10|2026-09-01T19:41:56|ngu007
+217954|zsf4t-upstream-v1|COMPLETED|0:0|00:01:03|2026-09-01T19:41:57|2026-09-01T19:43:00|ngu005
+217954.batch|batch|COMPLETED|0:0|00:01:03|2026-09-01T19:41:57|2026-09-01T19:43:00|ngu005
+217954.extern|extern|COMPLETED|0:0|00:01:03|2026-09-01T19:41:57|2026-09-01T19:43:00|ngu005
+217955|zsf4t-upstream-v1|COMPLETED|0:0|00:01:03|2026-09-01T19:41:57|2026-09-01T19:43:00|ngu005
+217955.batch|batch|COMPLETED|0:0|00:01:03|2026-09-01T19:41:57|2026-09-01T19:43:00|ngu005
+217955.extern|extern|COMPLETED|0:0|00:01:03|2026-09-01T19:41:57|2026-09-01T19:43:00|ngu005
+217807|zsf4t-upstream-v1|COMPLETED|0:0|00:01:10|2026-09-01T19:41:57|2026-09-01T19:43:07|ngu007
+217807.batch|batch|COMPLETED|0:0|00:01:10|2026-09-01T19:41:57|2026-09-01T19:43:07|ngu007
+217807.extern|extern|COMPLETED|0:0|00:01:10|2026-09-01T19:41:57|2026-09-01T19:43:07|ngu007
+217956|zsf4t-filter-v1|COMPLETED|0:0|00:01:00|2026-09-01T19:43:07|2026-09-01T19:44:07|ngu005
+217956.batch|batch|COMPLETED|0:0|00:01:00|2026-09-01T19:43:07|2026-09-01T19:44:07|ngu005
+217956.extern|extern|COMPLETED|0:0|00:01:00|2026-09-01T19:43:07|2026-09-01T19:44:07|ngu005
+217957|zsf4t-filter-v1|COMPLETED|0:0|00:01:00|2026-09-01T19:43:07|2026-09-01T19:44:07|ngu005
+217957.batch|batch|COMPLETED|0:0|00:01:00|2026-09-01T19:43:07|2026-09-01T19:44:07|ngu005
+217957.extern|extern|COMPLETED|0:0|00:01:00|2026-09-01T19:43:07|2026-09-01T19:44:07|ngu005
+217808|zsf4t-filter-v1|COMPLETED|0:0|00:01:09|2026-09-01T19:43:07|2026-09-01T19:44:16|ngu007
+217808.batch|batch|COMPLETED|0:0|00:01:09|2026-09-01T19:43:07|2026-09-01T19:44:16|ngu007
+217808.extern|extern|COMPLETED|0:0|00:01:09|2026-09-01T19:43:07|2026-09-01T19:44:16|ngu007
+217958|zsf4t-filter-v1|RUNNING|0:0|02:11:35|2026-09-01T19:44:16|Unknown|ngu005
+217958.batch|batch|RUNNING|0:0|02:11:35|2026-09-01T19:44:16|Unknown|ngu005
+217958.extern|extern|RUNNING|0:0|02:11:35|2026-09-01T19:44:16|Unknown|ngu005
+217959|zsf4t-filter-v1|COMPLETED|0:0|01:57:32|2026-09-01T19:44:16|2026-09-01T21:41:48|ngu005
+217959.batch|batch|COMPLETED|0:0|01:57:32|2026-09-01T19:44:16|2026-09-01T21:41:48|ngu005
+217959.extern|extern|COMPLETED|0:0|01:57:32|2026-09-01T19:44:16|2026-09-01T21:41:48|ngu005
+217809|zsf4t-filter-v1|COMPLETED|0:0|01:53:39|2026-09-01T19:44:16|2026-09-01T21:37:55|ngu007
+217809.batch|batch|COMPLETED|0:0|01:53:39|2026-09-01T19:44:16|2026-09-01T21:37:55|ngu007
+217809.extern|extern|COMPLETED|0:0|01:53:39|2026-09-01T19:44:16|2026-09-01T21:37:55|ngu007
+=== SCONTROL_DEPENDENCIES ===
+JOB|217809|STATE=COMPLETED|REASON=None|DEPENDENCY=(null)
+JOB|217809|STATE=RUNNING|REASON=None|DEPENDENCY=(null)
+JOB|217810|STATE=PENDING|REASON=Dependency|DEPENDENCY=afterok:217809_*
+=== REGISTERED_OUTPUTS_AND_FAILURE_EVIDENCE ===
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s17/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s17/attempt_001/completion_manifest.json|bytes=397|mtime=2026-09-01 19:20:18.000000000 +0800
+{
+  "created_utc": "2026-09-01T11:20:45.585698+00:00",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 354,
+      "path": "report.json",
+      "sha256": "301b192d85a3e5ed7fdbb9eb301fc3e603c38db1bbf6aeaa75ff33b11e86f4f8"
+    }
+  ],
+  "schema_version": 1,
+  "status": "technical_pass",
+  "verified_artifact_count": 1
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001/completion_manifest.json|bytes=1076|mtime=2026-09-01 19:34:12.000000000 +0800
+{
+  "base_stage_trainable_parameter_count": 19396,
+  "best_epoch": 21,
+  "best_selection_mean_absolute_error_m": 0.08579720141105439,
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_V1",
+  "files": {
+    "best_checkpoint.pt": {
+      "byte_count": 84668,
+      "sha256": "3bf21456566460361b0f80d70d1b49984d43a8044ff4f96a02774334f651e358"
+    },
+    "last_checkpoint.pt": {
+      "byte_count": 84668,
+      "sha256": "08c80d648c17ab119f98a2fea68f5ad9394728bd7559c6e9092ea60af362e01f"
+    },
+    "run_identity.json": {
+      "byte_count": 4113,
+      "sha256": "964ed834f4036ddf3d5ec2576b6ebd67de219d5346e7d1ae828a21fb47d71b7c"
+    },
+    "training_history.json": {
+      "byte_count": 4404,
+      "sha256": "094d262877cccca487c6839510aa5f921e142693807c7213498fe85b2a861c67"
+    }
+  },
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001",
+  "realtime_observation_head_fitted": false,
+  "schema_version": 1,
+  "seed": 17,
+  "status": "complete",
+  "total_parameter_count": 19594
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s17/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s17/attempt_001/completion_manifest.json|bytes=397|mtime=2026-09-01 19:41:22.000000000 +0800
+{
+  "created_utc": "2026-09-01T11:41:54.691215+00:00",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 383,
+      "path": "report.json",
+      "sha256": "22cc97a5e66f1d23ff9f14f071ab6eb92427a9dd42d0286791045b928330ef36"
+    }
+  ],
+  "schema_version": 1,
+  "status": "technical_pass",
+  "verified_artifact_count": 1
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s17/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s17/attempt_001/completion_manifest.json|bytes=667|mtime=2026-09-01 19:42:13.000000000 +0800
+{
+  "base_checkpoint_sha256": "3bf21456566460361b0f80d70d1b49984d43a8044ff4f96a02774334f651e358",
+  "files": {
+    "realtime_observation_head.pt": {
+      "byte_count": 2756,
+      "sha256": "68f20980b36857d24b1d97ec56983349fa3d6e6f79799a3a00e14334f3037644"
+    },
+    "ridge_candidate_diagnostics.json": {
+      "byte_count": 12953,
+      "sha256": "5cd103b5a48ffd23cdd5ffd7911460b5354bfca874ef6c4d1b05e2806472ef11"
+    },
+    "run_identity.json": {
+      "byte_count": 4397,
+      "sha256": "0feedd3ecd3773bc7ec01bafeb19742ea7fb6bcdf7ad97ef31e6c5e1bc786283"
+    }
+  },
+  "schema_version": 1,
+  "seed": 17,
+  "selected_ridge_strength": 1.0,
+  "status": "complete"
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s17/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s17/attempt_001/completion_manifest.json|bytes=412|mtime=2026-09-01 19:43:32.000000000 +0800
+{
+  "created_utc": "2026-09-01T11:44:04.726517+00:00",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 5118,
+      "path": "report.json",
+      "sha256": "66b6e673eb95988b78768f051586a2ae46a27bbc4f393700d32c8e74d8264be7"
+    }
+  ],
+  "schema_version": 1,
+  "status": "technical_pass_real_batch_32",
+  "verified_artifact_count": 1
+}
+PARTIAL|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001.partial
+PARTIAL_FILE|run_identity.json|bytes=5221|mtime=2026-09-01T19:44:30.0000000000+0800
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s29/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s29/attempt_001/completion_manifest.json|bytes=397|mtime=2026-09-01 19:21:21.000000000 +0800
+{
+  "created_utc": "2026-09-01T11:21:48.540816+00:00",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 354,
+      "path": "report.json",
+      "sha256": "baf8faf50750c6eb7f4769c75ec4e379be8804a9ae923566158694b2db7413c5"
+    }
+  ],
+  "schema_version": 1,
+  "status": "technical_pass",
+  "verified_artifact_count": 1
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s29/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s29/attempt_001/completion_manifest.json|bytes=1076|mtime=2026-09-01 19:40:19.000000000 +0800
+{
+  "base_stage_trainable_parameter_count": 19396,
+  "best_epoch": 23,
+  "best_selection_mean_absolute_error_m": 0.08505393614029735,
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_V1",
+  "files": {
+    "best_checkpoint.pt": {
+      "byte_count": 84668,
+      "sha256": "b74d5f5e99489eeaeea4d3703262f87b8e234128f12a71f47dc2f0be2239a076"
+    },
+    "last_checkpoint.pt": {
+      "byte_count": 84668,
+      "sha256": "3ab518e6571da88401e0b413416e3c9a863eb41d8b116e4a2085d520575747f0"
+    },
+    "run_identity.json": {
+      "byte_count": 4113,
+      "sha256": "6df8c13d79a383d97f2bfeb3276cdb89e5ba9b32cd690af098a3f84652b9615b"
+    },
+    "training_history.json": {
+      "byte_count": 4751,
+      "sha256": "ef840b83649e71f7a32e9125b8ba52b98f0199d6aef52d0042333003c9026f30"
+    }
+  },
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s29/attempt_001",
+  "realtime_observation_head_fitted": false,
+  "schema_version": 1,
+  "seed": 29,
+  "status": "complete",
+  "total_parameter_count": 19594
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s29/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s29/attempt_001/completion_manifest.json|bytes=397|mtime=2026-09-01 19:41:22.000000000 +0800
+{
+  "created_utc": "2026-09-01T11:41:54.691187+00:00",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 383,
+      "path": "report.json",
+      "sha256": "daa82ae2b29041902213aabe988f4d77b557e672ecba52c107108fcec3c15b9f"
+    }
+  ],
+  "schema_version": 1,
+  "status": "technical_pass",
+  "verified_artifact_count": 1
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s29/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s29/attempt_001/completion_manifest.json|bytes=667|mtime=2026-09-01 19:42:13.000000000 +0800
+{
+  "base_checkpoint_sha256": "b74d5f5e99489eeaeea4d3703262f87b8e234128f12a71f47dc2f0be2239a076",
+  "files": {
+    "realtime_observation_head.pt": {
+      "byte_count": 2756,
+      "sha256": "046ceaf705885a69baa6a692cba7b8b3302d724cd2bf4526ae530b63c49da483"
+    },
+    "ridge_candidate_diagnostics.json": {
+      "byte_count": 13005,
+      "sha256": "696d7ee9000e04731eff597d3e3761648a153664e1b934da3751a6b0fb4cba32"
+    },
+    "run_identity.json": {
+      "byte_count": 4397,
+      "sha256": "306ff71e5bd6477bb7f4ef7f72ca96d02dd598deeafd1ea9dc45e3b61bb94f32"
+    }
+  },
+  "schema_version": 1,
+  "seed": 29,
+  "selected_ridge_strength": 1.0,
+  "status": "complete"
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s29/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s29/attempt_001/completion_manifest.json|bytes=412|mtime=2026-09-01 19:43:32.000000000 +0800
+{
+  "created_utc": "2026-09-01T11:44:04.725687+00:00",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 5117,
+      "path": "report.json",
+      "sha256": "2e53d5b4fd1a541d949bfb195c02e5aa28fde152e73c128cd450453e80793362"
+    }
+  ],
+  "schema_version": 1,
+  "status": "technical_pass_real_batch_32",
+  "verified_artifact_count": 1
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001/completion_manifest.json|bytes=1228|mtime=2026-09-01 21:40:59.000000000 +0800
+{
+  "created_utc": "2026-09-01T13:41:31.590900+00:00",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 2994,
+      "path": "best_filter_checkpoint.pt",
+      "sha256": "0889c38d5c16b91d70b763857a824d3efabe0dcc6378a1c1377c264578771c98"
+    },
+    {
+      "byte_count": 1292677,
+      "path": "gradient_history.json",
+      "sha256": "9cf5fc8f146d574f8011c37f2b390ea539be41e75ab13a80a4bf2ffd12c98bfc"
+    },
+    {
+      "byte_count": 2994,
+      "path": "last_filter_checkpoint.pt",
+      "sha256": "4f86878f3656ee05a9cd641904486ed45156700a05edb32f640884cf98f874ab"
+    },
+    {
+      "byte_count": 5221,
+      "path": "run_identity.json",
+      "sha256": "7a2bdd9702ceb2f6a8891ac8850144a64b27e894851d7df563fc916befb7943a"
+    },
+    {
+      "byte_count": 3981,
+      "path": "summary.json",
+      "sha256": "c5f36a06cb64ad818c4da960dbbca503d77ad1d648bd18b9a530dce8b59bab3f"
+    },
+    {
+      "byte_count": 2124,
+      "path": "training_history.json",
+      "sha256": "5d2009becf04db94670a1ce24100af46af65bd334e7a9dcd1566ff7575204ba0"
+    }
+  ],
+  "schema_version": 1,
+  "status": "complete_2022_selected_training",
+  "verified_artifact_count": 6
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s43/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s43/attempt_001/completion_manifest.json|bytes=397|mtime=2026-09-01 19:22:13.000000000 +0800
+{
+  "created_utc": "2026-09-01T11:22:41.163333+00:00",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 354,
+      "path": "report.json",
+      "sha256": "231a092260085ab3da4c33a65381b1e0b120aab33b80e23615e40ee1044f7a08"
+    }
+  ],
+  "schema_version": 1,
+  "status": "technical_pass",
+  "verified_artifact_count": 1
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s43/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s43/attempt_001/completion_manifest.json|bytes=1076|mtime=2026-09-01 19:39:19.000000000 +0800
+{
+  "base_stage_trainable_parameter_count": 19396,
+  "best_epoch": 20,
+  "best_selection_mean_absolute_error_m": 0.08645389424664433,
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_V1",
+  "files": {
+    "best_checkpoint.pt": {
+      "byte_count": 84668,
+      "sha256": "31d33aca917ff0567d1733d12d9c317c27ff5b2c120450e5a3cc5ef7e78a196a"
+    },
+    "last_checkpoint.pt": {
+      "byte_count": 84668,
+      "sha256": "ab33524fdd962198aceee45c1da00646ae3b9d394071cec9ca34086a3dbb0194"
+    },
+    "run_identity.json": {
+      "byte_count": 4113,
+      "sha256": "cadfb28873c3a47ab9e0c0ea86b40c5b65765b0b37c220e712a95d87a9ddf612"
+    },
+    "training_history.json": {
+      "byte_count": 4223,
+      "sha256": "ac984013f7dbf29a185f88337f0a92693202b74d41e5883bf7643b433f7acc48"
+    }
+  },
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s43/attempt_001",
+  "realtime_observation_head_fitted": false,
+  "schema_version": 1,
+  "seed": 43,
+  "status": "complete",
+  "total_parameter_count": 19594
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s43/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s43/attempt_001/completion_manifest.json|bytes=397|mtime=2026-09-01 19:41:22.000000000 +0800
+{
+  "created_utc": "2026-09-01T11:41:50.366839+00:00",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 383,
+      "path": "report.json",
+      "sha256": "e52f52da00f729bab09309ff683dee9e8b81b27b09563cfa0079e155725dde6f"
+    }
+  ],
+  "schema_version": 1,
+  "status": "technical_pass",
+  "verified_artifact_count": 1
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s43/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s43/attempt_001/completion_manifest.json|bytes=667|mtime=2026-09-01 19:42:22.000000000 +0800
+{
+  "base_checkpoint_sha256": "31d33aca917ff0567d1733d12d9c317c27ff5b2c120450e5a3cc5ef7e78a196a",
+  "files": {
+    "realtime_observation_head.pt": {
+      "byte_count": 2756,
+      "sha256": "2df0aeb7a336812eb5b1f140b7cc6a2523fc449d18f93cf012ea8b28be117670"
+    },
+    "ridge_candidate_diagnostics.json": {
+      "byte_count": 12985,
+      "sha256": "a6664762364756c1cc48aec6f0d18f32e79b213fb79c670a70fc16ca01ecbab9"
+    },
+    "run_identity.json": {
+      "byte_count": 4397,
+      "sha256": "b5b82a91404af87c2131d2f79a7297ea613f244bf280e60d3217e3695d99dc19"
+    }
+  },
+  "schema_version": 1,
+  "seed": 43,
+  "selected_ridge_strength": 1.0,
+  "status": "complete"
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s43/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s43/attempt_001/completion_manifest.json|bytes=412|mtime=2026-09-01 19:43:41.000000000 +0800
+{
+  "created_utc": "2026-09-01T11:44:09.085945+00:00",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 5118,
+      "path": "report.json",
+      "sha256": "eb33cf0ed4838c5a4f45fdf50d8a7606a3912859c1499b62581666f9f8b048fd"
+    }
+  ],
+  "schema_version": 1,
+  "status": "technical_pass_real_batch_32",
+  "verified_artifact_count": 1
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001/completion_manifest.json|bytes=1228|mtime=2026-09-01 21:37:06.000000000 +0800
+{
+  "created_utc": "2026-09-01T13:37:34.124586+00:00",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 2994,
+      "path": "best_filter_checkpoint.pt",
+      "sha256": "68afab8a264ed453b8e449e741a6a3278b2ac8131260afa04a1a2669d99cb866"
+    },
+    {
+      "byte_count": 1295542,
+      "path": "gradient_history.json",
+      "sha256": "d3503b147ba765ea0b5948eb0b074f4328b725ae41115c816f08abe078db07a5"
+    },
+    {
+      "byte_count": 2994,
+      "path": "last_filter_checkpoint.pt",
+      "sha256": "59d6401394a62a769846eaf3c6e3042b3e549b18ad40d5e3a024bf93753a3514"
+    },
+    {
+      "byte_count": 5221,
+      "path": "run_identity.json",
+      "sha256": "54072dbf7bcdfdcea0fd375b521a8342a9307dff672beec9f7801479760c7b19"
+    },
+    {
+      "byte_count": 3981,
+      "path": "summary.json",
+      "sha256": "39a51e2c437a5da7fdc9d7aa1db69ba7d03a0e478584de7a06bfa3dd50b12e8b"
+    },
+    {
+      "byte_count": 2126,
+      "path": "training_history.json",
+      "sha256": "ed00f2cf5c066202bb66a7fdd3d9eec2653e388e7ddd0b2df6b7f1308a19e5ba"
+    }
+  ],
+  "schema_version": 1,
+  "status": "complete_2022_selected_training",
+  "verified_artifact_count": 6
+}
+PUBLISHED|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/development_evaluation_smoke/attempt_001
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/development_evaluation_smoke/attempt_001/completion_manifest.json|bytes=373|mtime=2026-09-01 19:22:43.000000000 +0800
+{
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "files": [
+    {
+      "byte_count": 287,
+      "path": "report.json",
+      "sha256": "453b5885956be0d77bab10fa20189746e2a4620172c54c82b3b323f5dbb10f8f"
+    }
+  ],
+  "schema_version": 1,
+  "status": "technical_pass_development_evaluation_smoke",
+  "verified_artifact_count": 1
+}
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/evidence/development_2023/evaluation/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/evidence/development_2023/independent_audit/attempt_001
+=== BASE_OUTPUT_DEEP_VERIFICATION ===
+BASE_PATH_STATE|seed=17|final=true|partial=false
+BASE_FILE_SET|seed=17|ordinary_files=5|links=0|subdirectories=0|exact=true|names=best_checkpoint.pt,completion_manifest.json,last_checkpoint.pt,run_identity.json,training_history.json
+BASE_FILE|seed=17|name=best_checkpoint.pt|bytes=84668|sha256=3bf21456566460361b0f80d70d1b49984d43a8044ff4f96a02774334f651e358|registered_match=true
+BASE_FILE|seed=17|name=completion_manifest.json|bytes=1076|sha256=1822e9e99ffd339256810393410c899290e9cb6149a18be6c9a9b9075d3c9784|registered_match=true
+BASE_FILE|seed=17|name=last_checkpoint.pt|bytes=84668|sha256=08c80d648c17ab119f98a2fea68f5ad9394728bd7559c6e9092ea60af362e01f|registered_match=true
+BASE_FILE|seed=17|name=run_identity.json|bytes=4113|sha256=964ed834f4036ddf3d5ec2576b6ebd67de219d5346e7d1ae828a21fb47d71b7c|registered_match=true
+BASE_FILE|seed=17|name=training_history.json|bytes=4404|sha256=094d262877cccca487c6839510aa5f921e142693807c7213498fe85b2a861c67|registered_match=true
+BASE_MANIFEST_CHECK|seed=17|status=complete|registered_files=4|all_registered_match=true
+BASE_IDENTITY|seed=17|task_id=ZSF4T-D32-GRU-BASE-S17-V1|stage=base_training|registered_output_path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001|registry_sha256=704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8|input_manifest_sha256=4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c
+BASE_ACCESS_AUDIT|seed=17|opened_paths=11|prefix_bytes=46826115|target_rows_by_period={"boundary_target":0,"development_gate":0,"heldout_or_later":0,"selection":35040,"training":175296}|astronomical_tide_model_open_count=1|forbidden_counters_integer_zero=true
+BASE_PATH_STATE|seed=29|final=true|partial=false
+BASE_FILE_SET|seed=29|ordinary_files=5|links=0|subdirectories=0|exact=true|names=best_checkpoint.pt,completion_manifest.json,last_checkpoint.pt,run_identity.json,training_history.json
+BASE_FILE|seed=29|name=best_checkpoint.pt|bytes=84668|sha256=b74d5f5e99489eeaeea4d3703262f87b8e234128f12a71f47dc2f0be2239a076|registered_match=true
+BASE_FILE|seed=29|name=completion_manifest.json|bytes=1076|sha256=5ba4ffd714c9feacf4eea10d2b301849de16f1257860bdd3565f6253b1f8a8dc|registered_match=true
+BASE_FILE|seed=29|name=last_checkpoint.pt|bytes=84668|sha256=3ab518e6571da88401e0b413416e3c9a863eb41d8b116e4a2085d520575747f0|registered_match=true
+BASE_FILE|seed=29|name=run_identity.json|bytes=4113|sha256=6df8c13d79a383d97f2bfeb3276cdb89e5ba9b32cd690af098a3f84652b9615b|registered_match=true
+BASE_FILE|seed=29|name=training_history.json|bytes=4751|sha256=ef840b83649e71f7a32e9125b8ba52b98f0199d6aef52d0042333003c9026f30|registered_match=true
+BASE_MANIFEST_CHECK|seed=29|status=complete|registered_files=4|all_registered_match=true
+BASE_IDENTITY|seed=29|task_id=ZSF4T-D32-GRU-BASE-S29-V1|stage=base_training|registered_output_path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s29/attempt_001|registry_sha256=704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8|input_manifest_sha256=4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c
+BASE_ACCESS_AUDIT|seed=29|opened_paths=11|prefix_bytes=46826115|target_rows_by_period={"boundary_target":0,"development_gate":0,"heldout_or_later":0,"selection":35040,"training":175296}|astronomical_tide_model_open_count=1|forbidden_counters_integer_zero=true
+BASE_PATH_STATE|seed=43|final=true|partial=false
+BASE_FILE_SET|seed=43|ordinary_files=5|links=0|subdirectories=0|exact=true|names=best_checkpoint.pt,completion_manifest.json,last_checkpoint.pt,run_identity.json,training_history.json
+BASE_FILE|seed=43|name=best_checkpoint.pt|bytes=84668|sha256=31d33aca917ff0567d1733d12d9c317c27ff5b2c120450e5a3cc5ef7e78a196a|registered_match=true
+BASE_FILE|seed=43|name=completion_manifest.json|bytes=1076|sha256=00486f72ee9e2685c1bfc570b235e72a8afaa8a1341486fa6a388e57dd8fe7f4|registered_match=true
+BASE_FILE|seed=43|name=last_checkpoint.pt|bytes=84668|sha256=ab33524fdd962198aceee45c1da00646ae3b9d394071cec9ca34086a3dbb0194|registered_match=true
+BASE_FILE|seed=43|name=run_identity.json|bytes=4113|sha256=cadfb28873c3a47ab9e0c0ea86b40c5b65765b0b37c220e712a95d87a9ddf612|registered_match=true
+BASE_FILE|seed=43|name=training_history.json|bytes=4223|sha256=ac984013f7dbf29a185f88337f0a92693202b74d41e5883bf7643b433f7acc48|registered_match=true
+BASE_MANIFEST_CHECK|seed=43|status=complete|registered_files=4|all_registered_match=true
+BASE_IDENTITY|seed=43|task_id=ZSF4T-D32-GRU-BASE-S43-V1|stage=base_training|registered_output_path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s43/attempt_001|registry_sha256=704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8|input_manifest_sha256=4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c
+BASE_ACCESS_AUDIT|seed=43|opened_paths=11|prefix_bytes=46826115|target_rows_by_period={"boundary_target":0,"development_gate":0,"heldout_or_later":0,"selection":35040,"training":175296}|astronomical_tide_model_open_count=1|forbidden_counters_integer_zero=true
+=== FILTER_OUTPUT_DEEP_VERIFICATION ===
+FILTER_PATH_STATE|seed=17|final=false|partial=true
+FILTER_PATH_STATE|seed=29|final=true|partial=false
+FILTER_FILE_SET|seed=29|ordinary_files=7|links=0|subdirectories=0|exact=true|names=best_filter_checkpoint.pt,completion_manifest.json,gradient_history.json,last_filter_checkpoint.pt,run_identity.json,summary.json,training_history.json
+FILTER_FILE|seed=29|name=best_filter_checkpoint.pt|bytes=2994|sha256=0889c38d5c16b91d70b763857a824d3efabe0dcc6378a1c1377c264578771c98|registered_match=true
+FILTER_FILE|seed=29|name=completion_manifest.json|bytes=1228|sha256=2d4025c62f4285d454a5e5541679f8d142ba3ffb615718cee3df164604c09bdd|registered_match=true
+FILTER_FILE|seed=29|name=gradient_history.json|bytes=1292677|sha256=9cf5fc8f146d574f8011c37f2b390ea539be41e75ab13a80a4bf2ffd12c98bfc|registered_match=true
+FILTER_FILE|seed=29|name=last_filter_checkpoint.pt|bytes=2994|sha256=4f86878f3656ee05a9cd641904486ed45156700a05edb32f640884cf98f874ab|registered_match=true
+FILTER_FILE|seed=29|name=run_identity.json|bytes=5221|sha256=7a2bdd9702ceb2f6a8891ac8850144a64b27e894851d7df563fc916befb7943a|registered_match=true
+FILTER_FILE|seed=29|name=summary.json|bytes=3981|sha256=c5f36a06cb64ad818c4da960dbbca503d77ad1d648bd18b9a530dce8b59bab3f|registered_match=true
+FILTER_FILE|seed=29|name=training_history.json|bytes=2124|sha256=5d2009becf04db94670a1ce24100af46af65bd334e7a9dcd1566ff7575204ba0|registered_match=true
+FILTER_MANIFEST_CHECK|seed=29|status=complete_2022_selected_training|registered_files=6|verified_artifact_count=6|all_registered_match=true
+FILTER_IDENTITY|seed=29|task_id=ZSF4T-D32-GRU-DUKF-S29-V1|base_checkpoint_sha256=b74d5f5e99489eeaeea4d3703262f87b8e234128f12a71f47dc2f0be2239a076|observation_head_sha256=046ceaf705885a69baa6a692cba7b8b3302d724cd2bf4526ae530b63c49da483|registry_sha256=704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8|input_manifest_sha256=4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c|training_samples=39361|selection_samples=8136
+FILTER_ACCESS_AUDIT|seed=29|opened_paths=11|prefix_bytes=46826115|target_rows_by_period={"boundary_target":0,"development_gate":0,"heldout_or_later":0,"selection":35040,"training":175296}|astronomical_tide_model_open_count=1|forbidden_counters_integer_zero=true
+FILTER_SUMMARY|seed=29|status=complete_2022_selected_training|best_epoch=1|best_selection_mae_m=0.08672173441800762|completed_epoch=5|history_epochs=5|training_cells_per_base_sample=552|station_specific_checkpoint_count=0
+FILTER_PATH_STATE|seed=43|final=true|partial=false
+FILTER_FILE_SET|seed=43|ordinary_files=7|links=0|subdirectories=0|exact=true|names=best_filter_checkpoint.pt,completion_manifest.json,gradient_history.json,last_filter_checkpoint.pt,run_identity.json,summary.json,training_history.json
+FILTER_FILE|seed=43|name=best_filter_checkpoint.pt|bytes=2994|sha256=68afab8a264ed453b8e449e741a6a3278b2ac8131260afa04a1a2669d99cb866|registered_match=true
+FILTER_FILE|seed=43|name=completion_manifest.json|bytes=1228|sha256=0f28742bd77a35d0db0eb95eb2eacf2b6c1d1c1d7801bdc73e67dd21c4eecd95|registered_match=true
+FILTER_FILE|seed=43|name=gradient_history.json|bytes=1295542|sha256=d3503b147ba765ea0b5948eb0b074f4328b725ae41115c816f08abe078db07a5|registered_match=true
+FILTER_FILE|seed=43|name=last_filter_checkpoint.pt|bytes=2994|sha256=59d6401394a62a769846eaf3c6e3042b3e549b18ad40d5e3a024bf93753a3514|registered_match=true
+FILTER_FILE|seed=43|name=run_identity.json|bytes=5221|sha256=54072dbf7bcdfdcea0fd375b521a8342a9307dff672beec9f7801479760c7b19|registered_match=true
+FILTER_FILE|seed=43|name=summary.json|bytes=3981|sha256=39a51e2c437a5da7fdc9d7aa1db69ba7d03a0e478584de7a06bfa3dd50b12e8b|registered_match=true
+FILTER_FILE|seed=43|name=training_history.json|bytes=2126|sha256=ed00f2cf5c066202bb66a7fdd3d9eec2653e388e7ddd0b2df6b7f1308a19e5ba|registered_match=true
+FILTER_MANIFEST_CHECK|seed=43|status=complete_2022_selected_training|registered_files=6|verified_artifact_count=6|all_registered_match=true
+FILTER_IDENTITY|seed=43|task_id=ZSF4T-D32-GRU-DUKF-S43-V1|base_checkpoint_sha256=31d33aca917ff0567d1733d12d9c317c27ff5b2c120450e5a3cc5ef7e78a196a|observation_head_sha256=2df0aeb7a336812eb5b1f140b7cc6a2523fc449d18f93cf012ea8b28be117670|registry_sha256=704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8|input_manifest_sha256=4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c|training_samples=39361|selection_samples=8136
+FILTER_ACCESS_AUDIT|seed=43|opened_paths=11|prefix_bytes=46826115|target_rows_by_period={"boundary_target":0,"development_gate":0,"heldout_or_later":0,"selection":35040,"training":175296}|astronomical_tide_model_open_count=1|forbidden_counters_integer_zero=true
+FILTER_SUMMARY|seed=43|status=complete_2022_selected_training|best_epoch=1|best_selection_mae_m=0.08853771250622687|completed_epoch=5|history_epochs=5|training_cells_per_base_sample=552|station_specific_checkpoint_count=0
+=== LOG_TAILS_AND_ERROR_SCAN ===
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_0.out|bytes=1044|mtime=2026-09-01 19:20:18.000000000 +0800
+[2026-09-01T19:19:39+08:00] mode=preflight stage=base seed=17 job=217940 node=ngu007
+NVIDIA GeForce RTX 3090, GPU-da531c06-4253-0e92-0304-4426bc7cd241, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+[DONE] retained synthetic smoke=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s17/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_0.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_1.out|bytes=1044|mtime=2026-09-01 19:21:21.000000000 +0800
+[2026-09-01T19:20:47+08:00] mode=preflight stage=base seed=29 job=217943 node=ngu007
+NVIDIA GeForce RTX 3090, GPU-da531c06-4253-0e92-0304-4426bc7cd241, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+[DONE] retained synthetic smoke=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s29/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_1.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_2.out|bytes=1044|mtime=2026-09-01 19:22:14.000000000 +0800
+[2026-09-01T19:21:51+08:00] mode=preflight stage=base seed=43 job=217803 node=ngu007
+NVIDIA GeForce RTX 3090, GPU-da531c06-4253-0e92-0304-4426bc7cd241, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+[DONE] retained synthetic smoke=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base_smoke/s43/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_2.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_0.err|bytes=0|mtime=2026-09-01 19:19:10.000000000 +0800
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_0.err
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_1.err|bytes=0|mtime=2026-09-01 19:20:18.000000000 +0800
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_1.err
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_2.err|bytes=0|mtime=2026-09-01 19:21:22.000000000 +0800
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217803_2.err
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/development-2023-217804.out|bytes=1487|mtime=2026-09-01 19:22:43.000000000 +0800
+[2026-09-01T19:22:42+08:00] mode=preflight stage=development_2023_once job=217804 node=ngu007
+NVIDIA GeForce RTX 3090, GPU-da531c06-4253-0e92-0304-4426bc7cd241, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+{
+  "completion_manifest_sha256": "3bb42adcb7dd9feec01a889dc5dd0b5225afa1a6985bce34861f2b593da3457a",
+  "formal_output_created": false,
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/development_evaluation_smoke/attempt_001",
+  "real_data_opened": false,
+  "status": "technical_pass_development_evaluation_smoke",
+  "verified_file_count": 1
+}
+[DONE] retained development-evaluation smoke=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/development_evaluation_smoke/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/development-2023-217804.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/development-2023-217804.err|bytes=0|mtime=2026-09-01 19:22:14.000000000 +0800
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/development-2023-217804.err
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_0.out|bytes=1284|mtime=2026-09-01 19:34:26.000000000 +0800
+[2026-09-01T19:27:03+08:00] mode=formal stage=base seed=17 job=217944 node=ngu007
+NVIDIA GeForce RTX 3090, GPU-da531c06-4253-0e92-0304-4426bc7cd241, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+{
+  "best_epoch": 21,
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001",
+  "seed": 17,
+  "stage": "base_training",
+  "status": "complete"
+}
+published_upstream_completion=verified
+[DONE] formal base=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_0.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_1.out|bytes=1284|mtime=2026-09-01 19:40:37.000000000 +0800
+[2026-09-01T19:32:27+08:00] mode=formal stage=base seed=29 job=217946 node=ngu005
+NVIDIA GeForce RTX 3090, GPU-cdccb08a-bef2-1a64-2c4c-a69585516e61, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+{
+  "best_epoch": 23,
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s29/attempt_001",
+  "seed": 29,
+  "stage": "base_training",
+  "status": "complete"
+}
+published_upstream_completion=verified
+[DONE] formal base=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s29/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_1.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_2.out|bytes=1284|mtime=2026-09-01 19:39:38.000000000 +0800
+[2026-09-01T19:32:27+08:00] mode=formal stage=base seed=43 job=217805 node=ngu005
+NVIDIA GeForce RTX 3090, GPU-cdccb08a-bef2-1a64-2c4c-a69585516e61, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+{
+  "best_epoch": 20,
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s43/attempt_001",
+  "seed": 43,
+  "stage": "base_training",
+  "status": "complete"
+}
+published_upstream_completion=verified
+[DONE] formal base=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s43/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_2.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_0.err|bytes=124|mtime=2026-09-01 19:34:26.000000000 +0800
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_0.err
+1:scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_1.err|bytes=124|mtime=2026-09-01 19:40:37.000000000 +0800
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_1.err
+1:scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_2.err|bytes=124|mtime=2026-09-01 19:39:38.000000000 +0800
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217805_2.err
+1:scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_0.out|bytes=1068|mtime=2026-09-01 19:41:23.000000000 +0800
+[2026-09-01T19:41:10+08:00] mode=preflight stage=observation_head seed=17 job=217952 node=ngu005
+NVIDIA GeForce RTX 3090, GPU-cdccb08a-bef2-1a64-2c4c-a69585516e61, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+[DONE] retained synthetic smoke=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s17/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_0.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_1.out|bytes=1068|mtime=2026-09-01 19:41:23.000000000 +0800
+[2026-09-01T19:41:10+08:00] mode=preflight stage=observation_head seed=29 job=217953 node=ngu005
+NVIDIA GeForce RTX 3090, GPU-cdccb08a-bef2-1a64-2c4c-a69585516e61, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+[DONE] retained synthetic smoke=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s29/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_1.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_2.out|bytes=1068|mtime=2026-09-01 19:41:23.000000000 +0800
+[2026-09-01T19:41:06+08:00] mode=preflight stage=observation_head seed=43 job=217806 node=ngu007
+NVIDIA GeForce RTX 3090, GPU-da531c06-4253-0e92-0304-4426bc7cd241, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+[DONE] retained synthetic smoke=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head_smoke/s43/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_2.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_0.err|bytes=0|mtime=2026-09-01 19:40:37.000000000 +0800
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_0.err
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_1.err|bytes=0|mtime=2026-09-01 19:40:37.000000000 +0800
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_1.err
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_2.err|bytes=0|mtime=2026-09-01 19:40:37.000000000 +0800
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217806_2.err
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_0.out|bytes=1349|mtime=2026-09-01 19:42:26.000000000 +0800
+[2026-09-01T19:41:56+08:00] mode=formal stage=observation_head seed=17 job=217954 node=ngu005
+NVIDIA GeForce RTX 3090, GPU-cdccb08a-bef2-1a64-2c4c-a69585516e61, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+{
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s17/attempt_001",
+  "seed": 17,
+  "selected_ridge_strength": 1.0,
+  "stage": "observation_head",
+  "status": "complete"
+}
+published_upstream_completion=verified
+[DONE] formal observation_head=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s17/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_0.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_1.out|bytes=1349|mtime=2026-09-01 19:42:26.000000000 +0800
+[2026-09-01T19:41:56+08:00] mode=formal stage=observation_head seed=29 job=217955 node=ngu005
+NVIDIA GeForce RTX 3090, GPU-cdccb08a-bef2-1a64-2c4c-a69585516e61, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+{
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s29/attempt_001",
+  "seed": 29,
+  "selected_ridge_strength": 1.0,
+  "stage": "observation_head",
+  "status": "complete"
+}
+published_upstream_completion=verified
+[DONE] formal observation_head=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s29/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_1.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_2.out|bytes=1349|mtime=2026-09-01 19:42:34.000000000 +0800
+[2026-09-01T19:41:51+08:00] mode=formal stage=observation_head seed=43 job=217807 node=ngu007
+NVIDIA GeForce RTX 3090, GPU-da531c06-4253-0e92-0304-4426bc7cd241, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+{
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s43/attempt_001",
+  "seed": 43,
+  "selected_ridge_strength": 1.0,
+  "stage": "observation_head",
+  "status": "complete"
+}
+published_upstream_completion=verified
+[DONE] formal observation_head=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s43/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_2.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_0.err|bytes=124|mtime=2026-09-01 19:42:26.000000000 +0800
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_0.err
+1:scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_1.err|bytes=124|mtime=2026-09-01 19:42:26.000000000 +0800
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_1.err
+1:scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_2.err|bytes=124|mtime=2026-09-01 19:42:34.000000000 +0800
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/upstream-217807_2.err
+1:scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_0.out|bytes=6474|mtime=2026-09-01 19:43:33.000000000 +0800
+    ],
+    "rows_parsed_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52584,
+      "realtime_features/jiangyin_realtime_features.csv": 52584,
+      "realtime_features/nanjing_realtime_features.csv": 52584,
+      "realtime_features/wusongkou_realtime_features.csv": 52584,
+      "realtime_features/xuliujing_realtime_features.csv": 52584,
+      "realtime_features/zhenjiang_realtime_features.csv": 52584,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52584,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52584,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52584,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52584
+    },
+    "target_rows_by_period": {
+      "boundary_target": 0,
+      "development_gate": 0,
+      "heldout_or_later": 0,
+      "selection": 35040,
+      "training": 175296
+    },
+    "values_loaded_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52497,
+      "realtime_features/jiangyin_realtime_features.csv": 52430,
+      "realtime_features/nanjing_realtime_features.csv": 52457,
+      "realtime_features/wusongkou_realtime_features.csv": 52068,
+      "realtime_features/xuliujing_realtime_features.csv": 52496,
+      "realtime_features/zhenjiang_realtime_features.csv": 52534,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52418,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52452,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52496,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52534
+    }
+  },
+  "device": "cuda:0",
+  "device_type": "cuda",
+  "execution_mode": "real_batch_smoke",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "formal_filter_result_created": false,
+  "forward_backward_optimizer_step_count": 1,
+  "gradient_scalar_count": 38,
+  "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+  "mae_m": 0.07851103621311817,
+  "observation_head_sha256": "68f20980b36857d24b1d97ec56983349fa3d6e6f79799a3a00e14334f3037644",
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s17/attempt_001",
+  "peak_gpu_memory_allocated_bytes": 877284352,
+  "peak_gpu_memory_reserved_bytes": 985661440,
+  "registered_output_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s17/attempt_001",
+  "registry_sha256": "704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8",
+  "schema_version": 1,
+  "seed": 17,
+  "stage": "filter",
+  "status": "technical_pass_real_batch_32",
+  "step_seconds": 2.2947865650057793,
+  "task_id": "ZSF4T-D32-GRU-DUKF-S17-V1",
+  "training_selection_input_manifest_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/four_target_input_manifest.json",
+  "training_selection_input_manifest_sha256": "4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c",
+  "valid_cell_count": 17664,
+  "verified_file_count": 1
+}
+[DONE] retained real-data batch-32 filter smoke=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s17/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_0.out
+34:      "realtime_features/nanjing_realtime_features.csv": 4673779,
+39:      "retrospective_targets/nanjing_retrospective_targets.csv": 4674734,
+56:      "realtime_features/nanjing_realtime_features.csv",
+61:      "retrospective_targets/nanjing_retrospective_targets.csv",
+68:      "realtime_features/nanjing_realtime_features.csv": 52584,
+73:      "retrospective_targets/nanjing_retrospective_targets.csv": 52584,
+87:      "realtime_features/nanjing_realtime_features.csv": 52457,
+92:      "retrospective_targets/nanjing_retrospective_targets.csv": 52452,
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_1.out|bytes=6473|mtime=2026-09-01 19:43:34.000000000 +0800
+    ],
+    "rows_parsed_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52584,
+      "realtime_features/jiangyin_realtime_features.csv": 52584,
+      "realtime_features/nanjing_realtime_features.csv": 52584,
+      "realtime_features/wusongkou_realtime_features.csv": 52584,
+      "realtime_features/xuliujing_realtime_features.csv": 52584,
+      "realtime_features/zhenjiang_realtime_features.csv": 52584,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52584,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52584,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52584,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52584
+    },
+    "target_rows_by_period": {
+      "boundary_target": 0,
+      "development_gate": 0,
+      "heldout_or_later": 0,
+      "selection": 35040,
+      "training": 175296
+    },
+    "values_loaded_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52497,
+      "realtime_features/jiangyin_realtime_features.csv": 52430,
+      "realtime_features/nanjing_realtime_features.csv": 52457,
+      "realtime_features/wusongkou_realtime_features.csv": 52068,
+      "realtime_features/xuliujing_realtime_features.csv": 52496,
+      "realtime_features/zhenjiang_realtime_features.csv": 52534,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52418,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52452,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52496,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52534
+    }
+  },
+  "device": "cuda:0",
+  "device_type": "cuda",
+  "execution_mode": "real_batch_smoke",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "formal_filter_result_created": false,
+  "forward_backward_optimizer_step_count": 1,
+  "gradient_scalar_count": 38,
+  "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+  "mae_m": 0.08202034180126447,
+  "observation_head_sha256": "046ceaf705885a69baa6a692cba7b8b3302d724cd2bf4526ae530b63c49da483",
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s29/attempt_001",
+  "peak_gpu_memory_allocated_bytes": 877284352,
+  "peak_gpu_memory_reserved_bytes": 985661440,
+  "registered_output_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s29/attempt_001",
+  "registry_sha256": "704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8",
+  "schema_version": 1,
+  "seed": 29,
+  "stage": "filter",
+  "status": "technical_pass_real_batch_32",
+  "step_seconds": 2.295162294059992,
+  "task_id": "ZSF4T-D32-GRU-DUKF-S29-V1",
+  "training_selection_input_manifest_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/four_target_input_manifest.json",
+  "training_selection_input_manifest_sha256": "4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c",
+  "valid_cell_count": 17664,
+  "verified_file_count": 1
+}
+[DONE] retained real-data batch-32 filter smoke=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s29/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_1.out
+34:      "realtime_features/nanjing_realtime_features.csv": 4673779,
+39:      "retrospective_targets/nanjing_retrospective_targets.csv": 4674734,
+56:      "realtime_features/nanjing_realtime_features.csv",
+61:      "retrospective_targets/nanjing_retrospective_targets.csv",
+68:      "realtime_features/nanjing_realtime_features.csv": 52584,
+73:      "retrospective_targets/nanjing_retrospective_targets.csv": 52584,
+87:      "realtime_features/nanjing_realtime_features.csv": 52457,
+92:      "retrospective_targets/nanjing_retrospective_targets.csv": 52452,
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_2.out|bytes=6474|mtime=2026-09-01 19:43:42.000000000 +0800
+    ],
+    "rows_parsed_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52584,
+      "realtime_features/jiangyin_realtime_features.csv": 52584,
+      "realtime_features/nanjing_realtime_features.csv": 52584,
+      "realtime_features/wusongkou_realtime_features.csv": 52584,
+      "realtime_features/xuliujing_realtime_features.csv": 52584,
+      "realtime_features/zhenjiang_realtime_features.csv": 52584,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52584,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52584,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52584,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52584
+    },
+    "target_rows_by_period": {
+      "boundary_target": 0,
+      "development_gate": 0,
+      "heldout_or_later": 0,
+      "selection": 35040,
+      "training": 175296
+    },
+    "values_loaded_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52497,
+      "realtime_features/jiangyin_realtime_features.csv": 52430,
+      "realtime_features/nanjing_realtime_features.csv": 52457,
+      "realtime_features/wusongkou_realtime_features.csv": 52068,
+      "realtime_features/xuliujing_realtime_features.csv": 52496,
+      "realtime_features/zhenjiang_realtime_features.csv": 52534,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52418,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52452,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52496,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52534
+    }
+  },
+  "device": "cuda:0",
+  "device_type": "cuda",
+  "execution_mode": "real_batch_smoke",
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "formal_filter_result_created": false,
+  "forward_backward_optimizer_step_count": 1,
+  "gradient_scalar_count": 38,
+  "graphics_processor_name": "NVIDIA GeForce RTX 3090",
+  "mae_m": 0.08148257900495187,
+  "observation_head_sha256": "2df0aeb7a336812eb5b1f140b7cc6a2523fc449d18f93cf012ea8b28be117670",
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s43/attempt_001",
+  "peak_gpu_memory_allocated_bytes": 877284352,
+  "peak_gpu_memory_reserved_bytes": 985661440,
+  "registered_output_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s43/attempt_001",
+  "registry_sha256": "704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8",
+  "schema_version": 1,
+  "seed": 43,
+  "stage": "filter",
+  "status": "technical_pass_real_batch_32",
+  "step_seconds": 2.2153351940214634,
+  "task_id": "ZSF4T-D32-GRU-DUKF-S43-V1",
+  "training_selection_input_manifest_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/four_target_input_manifest.json",
+  "training_selection_input_manifest_sha256": "4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c",
+  "valid_cell_count": 17664,
+  "verified_file_count": 1
+}
+[DONE] retained real-data batch-32 filter smoke=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter_real_batch_smoke/s43/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_2.out
+34:      "realtime_features/nanjing_realtime_features.csv": 4673779,
+39:      "retrospective_targets/nanjing_retrospective_targets.csv": 4674734,
+56:      "realtime_features/nanjing_realtime_features.csv",
+61:      "retrospective_targets/nanjing_retrospective_targets.csv",
+68:      "realtime_features/nanjing_realtime_features.csv": 52584,
+73:      "retrospective_targets/nanjing_retrospective_targets.csv": 52584,
+87:      "realtime_features/nanjing_realtime_features.csv": 52457,
+92:      "retrospective_targets/nanjing_retrospective_targets.csv": 52452,
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_0.err|bytes=0|mtime=2026-09-01 19:42:34.000000000 +0800
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_0.err
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_1.err|bytes=0|mtime=2026-09-01 19:42:34.000000000 +0800
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_1.err
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_2.err|bytes=0|mtime=2026-09-01 19:42:34.000000000 +0800
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217808_2.err
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_0.out|bytes=896|mtime=2026-09-01 19:44:10.000000000 +0800
+[2026-09-01T19:44:16+08:00] mode=formal stage=filter seed=17 job=217958 node=ngu005
+NVIDIA GeForce RTX 3090, GPU-cdccb08a-bef2-1a64-2c4c-a69585516e61, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_0.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_1.out|bytes=1586|mtime=2026-09-01 21:41:14.000000000 +0800
+[2026-09-01T19:44:16+08:00] mode=formal stage=filter seed=29 job=217959 node=ngu005
+NVIDIA GeForce RTX 3090, GPU-cdccb08a-bef2-1a64-2c4c-a69585516e61, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+{
+  "best_epoch": 1,
+  "best_selection_mae_m": 0.08672173441800762,
+  "completion_manifest_sha256": "2d4025c62f4285d454a5e5541679f8d142ba3ffb615718cee3df164604c09bdd",
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001",
+  "status": "complete_2022_selected_training",
+  "verified_file_count": 6
+}
+{
+  "completion_manifest_sha256": "2d4025c62f4285d454a5e5541679f8d142ba3ffb615718cee3df164604c09bdd",
+  "status": "complete_2022_selected_training",
+  "verified_file_count": 6
+}
+[DONE] formal filter=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_1.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_2.out|bytes=1586|mtime=2026-09-01 21:37:21.000000000 +0800
+[2026-09-01T19:44:12+08:00] mode=formal stage=filter seed=43 job=217809 node=ngu007
+NVIDIA GeForce RTX 3090, GPU-da531c06-4253-0e92-0304-4426bc7cd241, 24576 MiB, 580.76.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+{
+  "best_epoch": 1,
+  "best_selection_mae_m": 0.08853771250622687,
+  "completion_manifest_sha256": "0f28742bd77a35d0db0eb95eb2eacf2b6c1d1c1d7801bdc73e67dd21c4eecd95",
+  "output_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001",
+  "status": "complete_2022_selected_training",
+  "verified_file_count": 6
+}
+{
+  "completion_manifest_sha256": "0f28742bd77a35d0db0eb95eb2eacf2b6c1d1c1d7801bdc73e67dd21c4eecd95",
+  "status": "complete_2022_selected_training",
+  "verified_file_count": 6
+}
+[DONE] formal filter=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_2.out
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_0.err|bytes=0|mtime=2026-09-01 19:43:43.000000000 +0800
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_0.err
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_1.err|bytes=124|mtime=2026-09-01 21:41:14.000000000 +0800
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_1.err
+1:scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+LOG|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_2.err|bytes=124|mtime=2026-09-01 21:37:21.000000000 +0800
+scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+--- ERROR_SCAN /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/filter-217809_2.err
+1:scontrol: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+=== SAFETY_SENTINELS ===
+R1_STAGING_PRESERVED=true|type=directory|bytes=4096|mtime=2026-09-01 16:44:49.000000000 +0800|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1.staging
+R2_ROOT_PRESENT=true
+HELDOUT_2024_TARGET_ACCESS_AUTHORIZED=false
+BOUNDARY_TARGET_BYTES_READ=0
+HELDOUT_2024_TARGET_BYTES_READ=0
+LATER_THAN_2023_BYTES_READ=0
+TARGET_ACCESS_SAFETY_CHECK=PASS
+=== SNAPSHOT_END ===
+2026-09-01T21:55:19+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T21:55:19+0800
