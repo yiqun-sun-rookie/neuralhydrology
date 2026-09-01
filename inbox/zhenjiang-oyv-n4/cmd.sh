@@ -1,11 +1,9 @@
 #!/bin/bash
-# Read-only: base64 the six small n4_impact tables into the result body.
+# Read-only: locate the finished (Zhenjiang/Jiangyin) family's impact products.
 set -o pipefail
-SRC=/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact
-echo "pwd=$(pwd)"
-for f in n4_station_ranking.csv n4_prediction_verdicts.csv n4_information_comparison.csv n4_summary.json completion_manifest.json n4_cost_summary.csv; do
-  echo "===BEGIN $f==="
-  base64 -w 200 "$SRC/$f"
-  echo "===END $f==="
-done
+ROOT=/data1/home/sunyiq/zhenjiang_oyv_v1
+echo "--- top level ---"
+ls -la "$ROOT" | head -50
+echo "--- candidate files: ranking / cost_summary / verdict, <200k ---"
+find "$ROOT" -maxdepth 3 -type f \( -name "*ranking*" -o -name "*cost_summary*" -o -name "*verdict*" -o -name "*impact*summary*" \) -size -200k 2>/dev/null | xargs -r ls -la | head -40
 echo "=== DONE ==="
