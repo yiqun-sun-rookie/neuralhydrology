@@ -1,0 +1,13 @@
+### channel=kalmannet-tukf09-455 seq=61
+### host=login4
+### started=2026-09-01T16:18:25+0800
+### ---------- output ----------
+=== PRESERVED V2R4 FAILURE EVIDENCE ===
+=== NEW ROOT AND SAME-NAME JOB GATES ===
+=== EXACT PAYLOAD GATE ===
+=== EXCLUSIVE V2R5 ROOT RESERVATION ===
+{"archive_sha256": "41b07596b8d2a092cdc5878787c10525e31a18e0d549f523dee1717b8c3d974c", "bundle_manifest_sha256": "f7c18d0a95849ee1d7d0a64c7a8724b6cf1fc0b84967503bd7ec1b484b239e76", "command_sha256": "21b1c0541fbfb5f5b26e3fc435256ec213772843fb19b258eda1df1527bab5ea", "deployment_mailbox_sequence": 61, "evaluation_array_reads": 0, "evaluation_metrics": 0, "evaluation_outputs": 0, "evaluation_predictions": 0, "formal_evaluation_authorized": false, "member_count": 2808, "neural_model_units": 0, "offline_runtime_input_file_count": 0, "outer_manifest_sha256": "918f7dedc6990da454ce308993918714c32512524699a00237c45afe2725391b", "preserved_failed_v2r4_job_id": 217409, "remote_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901", "slurm_job_submitted": false, "source_capsule_data_identity_sha256": "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da", "source_capsule_post_publication_audit_mailbox_sequence": 47, "status": "A800_EXCLUSIVE_V2R5_RUNTIME_PORTABILITY_REPAIR_DEPLOYED_STRICT_BUNDLE_AND_SOURCE_CAPSULE_VERIFIED_FORMAL_EVALUATION_HOLD"}
+TUKF09_455_A800_EXCLUSIVE_V2R5_DEPLOYMENT_COMPLETED_NO_JOB_SUBMITTED_FORMAL_EVALUATION_HOLD
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T16:19:05+0800
