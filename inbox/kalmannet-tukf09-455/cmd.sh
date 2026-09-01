@@ -40,6 +40,12 @@ RESULT_54_SIZE=1144
 RESULT_54_SHA=80639f0725fe8111639b3988c855bd019249acb9b20d1df6dea117b34ea9942c
 INSPECTION_54_COMMIT=ebb56d54ffd11f8ec0c6a90a8c16ce6793198e21
 INSPECTION_54_COMMAND_SHA=d387b558c3ae1e705223d92cf3b704454cb521d535c0fe0ac4df612cac493fcb
+RESULT_55="${MAILBOX_ROOT}/outbox/kalmannet-tukf09-455/result_55.txt"
+RESULT_55_COMMIT=b34410b954094246072e0b89b57fee1490030d7b
+RESULT_55_SIZE=1191
+RESULT_55_SHA=455796383b0c3cd0492981ff5610d5ccd564a738f303b1c4f22cd9ae45b7edd7
+INSPECTION_55_COMMIT=21616744e91d451ceba4ee8fb38cdf845bc50d4e
+INSPECTION_55_COMMAND_SHA=752bda702140c87d0f700d89da893c9076f76b66c558467a2b4b7f469a1af3c9
 PYTHON=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
 export PYTHONNOUSERSITE=1
 export PYTHONDWRITEBYTECODE=1
@@ -102,6 +108,35 @@ assert "STDERR_SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b78
 assert "STDOUT_LAST_LINE=TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED" in lines
 assert "=== STRICT PREPARATION ARTIFACT GATES ===" in lines
 assert "KeyError: 'data_file_count'" in lines
+assert not any(line.startswith("FATAL:") for line in lines)
+PY
+
+echo "=== FROZEN SEQUENCE 55 DIAGNOSTIC EVIDENCE ==="
+[[ -f "${RESULT_55}" && ! -L "${RESULT_55}" ]] || fail "sequence 55 result is missing, linked, or irregular"
+[[ "$(stat -c '%h' "${RESULT_55}")" -eq 1 ]] || fail "sequence 55 result hard-link count changed"
+[[ "$(stat -c '%s' "${RESULT_55}")" -eq "${RESULT_55_SIZE}" ]] || fail "sequence 55 result size changed"
+[[ "$(sha256sum "${RESULT_55}" | awk '{print $1}')" = "${RESULT_55_SHA}" ]] || fail "sequence 55 result hash changed"
+[[ "$(git log -1 --format=%H -- outbox/kalmannet-tukf09-455/result_55.txt)" = "${RESULT_55_COMMIT}" ]] || fail "sequence 55 result commit changed"
+[[ "$(git diff-tree --no-commit-id --name-only -r "${RESULT_55_COMMIT}")" = "outbox/kalmannet-tukf09-455/result_55.txt" ]] || fail "sequence 55 result commit surface changed"
+git merge-base --is-ancestor "${INSPECTION_55_COMMIT}" "${RESULT_55_COMMIT}" || fail "sequence 55 command is not an ancestor of its result"
+[[ "$(git show "${INSPECTION_55_COMMIT}:inbox/kalmannet-tukf09-455/cmd.sh" | sha256sum | awk '{print $1}')" = "${INSPECTION_55_COMMAND_SHA}" ]] || fail "sequence 55 diagnostic command hash changed"
+
+"${PYTHON}" -B - "${RESULT_55}" "${JOB_ID}" <<'PY'
+from pathlib import Path
+import sys
+
+lines = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+job_id = sys.argv[2]
+assert lines[0] == "### channel=kalmannet-tukf09-455 seq=55"
+assert lines[1] == "### host=login4"
+assert lines[-2] == "### exit_code=1"
+assert lines[-1].startswith("### finished=")
+assert any(line.startswith(f"{job_id}|tukf09-455-v2r4-prepare|hgpu8|COMPLETED|0:0|") for line in lines)
+assert "STDERR_SIZE=0" in lines
+assert "STDOUT_LAST_LINE=TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED" in lines
+assert "=== STRICT PREPARATION ARTIFACT GATES ===" in lines
+assert '  File "<stdin>", line 110, in <module>' in lines
+assert "AssertionError" in lines
 assert not any(line.startswith("FATAL:") for line in lines)
 PY
 
@@ -327,7 +362,7 @@ assert probe["staged_sources_identity_sha256"] == staged["identity_sha256"]
 actual_remote_filter_seal_sha256 = stage.sha256_file(filter_seal)
 probe_remote_filter_seal_sha256 = probe["remote_filter_installation_final_sha256"]
 local_filter_seal_sha256 = config["scientific_identity"]["local_filter_installation_final_manifest"]["sha256"]
-assert actual_remote_filter_seal_sha256 != probe_remote_filter_seal_sha256
+assert actual_remote_filter_seal_sha256 == probe_remote_filter_seal_sha256
 assert local_filter_seal_sha256 == "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0"
 filter_spec = importlib.util.spec_from_file_location("tukf09_filter_verifier_v2r4_audit", filter_verifier_path)
 assert filter_spec is not None and filter_spec.loader is not None
@@ -379,4 +414,4 @@ print(json.dumps({
 }, sort_keys=True))
 PY
 
-echo "TUKF09_455_A800_EXCLUSIVE_V2R4_FILTER_SEAL_DRIFT_DIAGNOSED_ADMISSION_NOT_CREATED"
+echo "TUKF09_455_A800_EXCLUSIVE_V2R4_PREPARATION_COMPLETED_STRICTLY_VERIFIED_ADMISSION_NOT_CREATED"
