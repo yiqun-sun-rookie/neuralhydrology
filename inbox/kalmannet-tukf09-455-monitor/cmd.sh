@@ -10,6 +10,8 @@ JOB_ID_FILE="${ROOT}/status/training_job_id.txt"
 SUBMISSION_LOCK="${ROOT}/status/training_submission.lock"
 STDOUT="${ROOT}/logs/training-${JOB_ID}.out"
 STDERR="${ROOT}/logs/training-${JOB_ID}.err"
+INNER_LOG_ROOT="${RESULTS_ROOT}/logs/formal_training_sequence"
+NEURAL_CONTROL_ROOT="${RESULTS_ROOT}/control/neural"
 
 echo "=== SNAPSHOT TIME ==="
 date --iso-8601=seconds 2>&1 || date 2>&1
@@ -46,6 +48,34 @@ for item in "${STDOUT}" "${STDERR}"; do
     echo "LOG_ABSENT_OR_IRREGULAR|${item}"
   fi
 done
+
+echo "=== INNER CONTROLLER LOG SNAPSHOT ==="
+for name in \
+  verify_filter_rebinding_controller.stdout.log \
+  verify_filter_rebinding_controller.stderr.log \
+  neural_controller.stdout.log \
+  neural_controller.stderr.log; do
+  item="${INNER_LOG_ROOT}/${name}"
+  if [[ -f "${item}" && ! -L "${item}" ]]; then
+    stat -c '%n|type=%F|mode=%a|links=%h|size=%s|mtime=%Y' "${item}" 2>&1 || true
+    echo "INNER_LOG_SHA256=$(sha256sum "${item}" | awk '{print $1}')"
+    echo "--- tail ${name} ---"
+    tail -n 400 "${item}" 2>&1 || true
+  else
+    echo "INNER_LOG_ABSENT_OR_IRREGULAR|${item}"
+  fi
+done
+
+echo "=== NEURAL CONTROLLER CONTROL SNAPSHOT ==="
+if [[ -d "${NEURAL_CONTROL_ROOT}" && ! -L "${NEURAL_CONTROL_ROOT}" ]]; then
+  find "${NEURAL_CONTROL_ROOT}" -mindepth 1 -maxdepth 2 -printf '%y|%m|%n|%s|%p\n' 2>&1 | LC_ALL=C sort || true
+  if [[ -f "${NEURAL_CONTROL_ROOT}/events.jsonl" && ! -L "${NEURAL_CONTROL_ROOT}/events.jsonl" ]]; then
+    echo "NEURAL_EVENTS_SHA256=$(sha256sum "${NEURAL_CONTROL_ROOT}/events.jsonl" | awk '{print $1}')"
+    tail -n 100 "${NEURAL_CONTROL_ROOT}/events.jsonl" 2>&1 || true
+  fi
+else
+  echo "NEURAL_CONTROL_ROOT_ABSENT_OR_IRREGULAR"
+fi
 
 echo "=== NEURAL UNIT SNAPSHOT ==="
 NEURAL_ROOT="${RESULTS_ROOT}/neural"
