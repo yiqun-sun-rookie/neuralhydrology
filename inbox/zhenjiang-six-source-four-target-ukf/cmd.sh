@@ -178,6 +178,133 @@ for seed in (17, 29, 43):
     )
 PY
 
+printf '=== FILTER_OUTPUT_DEEP_VERIFICATION ===\n'
+python - "${ROOT}" <<'PY' || true
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+root = Path(sys.argv[1])
+expected_names = {
+    "best_filter_checkpoint.pt",
+    "last_filter_checkpoint.pt",
+    "run_identity.json",
+    "training_history.json",
+    "gradient_history.json",
+    "summary.json",
+    "completion_manifest.json",
+}
+for seed in (17, 29, 43):
+    final = root / f"runs/filter/s{seed}/attempt_001"
+    partial = Path(f"{final}.partial")
+    print(
+        "FILTER_PATH_STATE"
+        f"|seed={seed}|final={str(final.is_dir()).lower()}"
+        f"|partial={str(partial.exists()).lower()}"
+    )
+    if not final.is_dir():
+        continue
+    entries = sorted(final.rglob("*"))
+    files = [path for path in entries if path.is_file() and not path.is_symlink()]
+    links = [path for path in entries if path.is_symlink()]
+    directories = [path for path in entries if path.is_dir() and path != final]
+    relative_names = {path.relative_to(final).as_posix() for path in files}
+    print(
+        "FILTER_FILE_SET"
+        f"|seed={seed}|ordinary_files={len(files)}|links={len(links)}"
+        f"|subdirectories={len(directories)}"
+        f"|exact={str(relative_names == expected_names).lower()}"
+        f"|names={','.join(sorted(relative_names))}"
+    )
+    manifest_path = final / "completion_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    registered_rows = manifest.get("files", [])
+    registered = {
+        row.get("path"): row for row in registered_rows if isinstance(row, dict)
+    }
+    all_registered_match = True
+    for path in files:
+        relative = path.relative_to(final).as_posix()
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        row = registered.get(relative)
+        matches = (
+            relative == "completion_manifest.json"
+            or (
+                isinstance(row, dict)
+                and row.get("byte_count") == path.stat().st_size
+                and row.get("sha256") == digest
+            )
+        )
+        if relative != "completion_manifest.json":
+            all_registered_match = all_registered_match and matches
+        print(
+            "FILTER_FILE"
+            f"|seed={seed}|name={relative}|bytes={path.stat().st_size}"
+            f"|sha256={digest}|registered_match={str(matches).lower()}"
+        )
+    print(
+        "FILTER_MANIFEST_CHECK"
+        f"|seed={seed}|status={manifest.get('status')}"
+        f"|registered_files={len(registered_rows)}"
+        f"|verified_artifact_count={manifest.get('verified_artifact_count')}"
+        f"|all_registered_match={str(all_registered_match).lower()}"
+    )
+    identity = json.loads((final / "run_identity.json").read_text(encoding="utf-8"))
+    audit = identity.get("data_access_audit", {})
+    forbidden_fields = (
+        "development_feature_bytes_read",
+        "development_feature_rows_parsed",
+        "development_feature_values_loaded",
+        "development_target_bytes_read",
+        "development_target_rows_parsed",
+        "development_target_values_loaded",
+        "heldout_target_bytes_read",
+        "heldout_target_rows_parsed",
+        "heldout_target_values_loaded",
+        "boundary_target_bytes_read",
+        "boundary_target_rows_parsed",
+        "boundary_target_values_loaded",
+    )
+    forbidden_zero = all(
+        type(audit.get(name)) is int and audit.get(name) == 0
+        for name in forbidden_fields
+    )
+    summary = json.loads((final / "summary.json").read_text(encoding="utf-8"))
+    history = json.loads((final / "training_history.json").read_text(encoding="utf-8"))
+    epochs = history.get("epochs", [])
+    print(
+        "FILTER_IDENTITY"
+        f"|seed={seed}|task_id={identity.get('task_id')}"
+        f"|base_checkpoint_sha256={identity.get('base_checkpoint_sha256')}"
+        f"|observation_head_sha256={identity.get('observation_head_sha256')}"
+        f"|registry_sha256={identity.get('registry_sha256')}"
+        f"|input_manifest_sha256={identity.get('training_selection_input_manifest_sha256')}"
+        f"|training_samples={identity.get('training_sample_count')}"
+        f"|selection_samples={identity.get('selection_sample_count')}"
+    )
+    print(
+        "FILTER_ACCESS_AUDIT"
+        f"|seed={seed}|opened_paths={len(audit.get('opened_paths', []))}"
+        f"|prefix_bytes={sum(audit.get('bytes_read_by_path', {}).values())}"
+        f"|target_rows_by_period={json.dumps(audit.get('target_rows_by_period', {}), sort_keys=True, separators=(',', ':'))}"
+        f"|astronomical_tide_model_open_count={audit.get('astronomical_tide_model_open_count')}"
+        f"|forbidden_counters_integer_zero={str(forbidden_zero).lower()}"
+    )
+    print(
+        "FILTER_SUMMARY"
+        f"|seed={seed}|status={summary.get('status')}"
+        f"|best_epoch={summary.get('best_epoch')}"
+        f"|best_selection_mae_m={summary.get('best_selection_mae_m')}"
+        f"|completed_epoch={summary.get('completed_epoch')}"
+        f"|history_epochs={len(epochs)}"
+        f"|training_cells_per_base_sample={summary.get('training_cells_per_base_sample')}"
+        f"|station_specific_checkpoint_count={summary.get('station_specific_checkpoint_count')}"
+    )
+PY
+
 printf '=== LOG_TAILS_AND_ERROR_SCAN ===\n'
 for job_id in ${IDS_SPACE}; do
   for file in "${ROOT}/logs/"*"${job_id}"*.out "${ROOT}/logs/"*"${job_id}"*.err; do
