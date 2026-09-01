@@ -1,0 +1,292 @@
+### channel=kalmannet-wrr-lr-boundary seq=8
+### host=login4
+### started=2026-09-02T05:34:17+0800
+### ---------- output ----------
+=== TIME_AND_HOST ===
+2026-09-02T05:34:17+0800
+login4
+=== QUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== ACCOUNTING ===
+217799|knet-lr-common|hgpu2p|COMPLETED|0:0|05:21:05|2026-09-01T19:10:52|2026-09-02T00:31:57|ngu011|None
+=== JOB_DETAIL ===
+slurm_load_jobs error: Invalid job id specified
+=== SLURM_LOGS ===
+/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/logs/slurm-217799.out|bytes=21969|mtime=2026-09-02 00:31:23.000000000 +0800
+[PerfSummary] [Train] Epoch 22/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.13s ct=539.90s
+[PerfSummary] [Validate] Epoch 22/200 cls=ComputeBound data=1.8% comp=98.2% dt=0.56s ct=30.90s
+[INFO] Best model updated (epoch 21). val_bp_loss=0.000013
+[INFO] Checkpoint saved (model improved) → /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/results/checkpoints/checkpoint_epoch_21.pt
+[EpochSummary] 22/200 train_bp=0.000050 val_bp=0.000013 val_nse=0.961317 lr=0.005
+[EpochStart] 23/200 lr=0.005
+[PerfSummary] [Train] Epoch 23/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.14s ct=539.75s
+[PerfSummary] [Validate] Epoch 23/200 cls=ComputeBound data=2.0% comp=98.0% dt=0.64s ct=30.82s
+[INFO] Best model updated (epoch 22). val_bp_loss=0.000013
+[INFO] Checkpoint saved (model improved) → /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/results/checkpoints/checkpoint_epoch_22.pt
+[EpochSummary] 23/200 train_bp=0.000050 val_bp=0.000013 val_nse=0.962096 lr=0.005
+[EpochStart] 24/200 lr=0.005
+[PerfSummary] [Train] Epoch 24/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.20s ct=539.64s
+[PerfSummary] [Validate] Epoch 24/200 cls=ComputeBound data=2.1% comp=97.9% dt=0.65s ct=30.89s
+[EpochSummary] 24/200 train_bp=0.000050 val_bp=0.000013 val_nse=0.962625 lr=0.005
+[EpochStart] 25/200 lr=0.005
+[PerfSummary] [Train] Epoch 25/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.19s ct=540.21s
+[PerfSummary] [Validate] Epoch 25/200 cls=ComputeBound data=1.8% comp=98.2% dt=0.55s ct=30.94s
+[EpochSummary] 25/200 train_bp=0.000049 val_bp=0.000013 val_nse=0.962923 lr=0.005
+[EpochStart] 26/200 lr=0.005
+[PerfSummary] [Train] Epoch 26/200 cls=ComputeBound data=0.7% comp=99.3% dt=4.06s ct=540.09s
+[PerfSummary] [Validate] Epoch 26/200 cls=ComputeBound data=1.7% comp=98.3% dt=0.55s ct=30.91s
+[EpochSummary] 26/200 train_bp=0.000049 val_bp=0.000013 val_nse=0.963121 lr=0.005
+[EpochStart] 27/200 lr=0.005
+Warning: high gradient norm 3.829350709915161 detected at epoch 26
+Warning: high gradient norm 11379.318359375 detected at epoch 26
+[SafeTrain] Grad explosion 1.14e+04 at epoch 26
+[PerfSummary] [Train] Epoch 27/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.14s ct=540.28s
+[PerfSummary] [Validate] Epoch 27/200 cls=ComputeBound data=2.0% comp=98.0% dt=0.64s ct=30.90s
+[EpochSummary] 27/200 train_bp=0.000070 val_bp=0.000013 val_nse=0.963216 lr=0.0025
+[EpochStart] 28/200 lr=0.0025
+[PerfSummary] [Train] Epoch 28/200 cls=ComputeBound data=0.7% comp=99.3% dt=4.01s ct=540.24s
+[PerfSummary] [Validate] Epoch 28/200 cls=ComputeBound data=1.4% comp=98.6% dt=0.45s ct=31.04s
+[EpochSummary] 28/200 train_bp=0.000049 val_bp=0.000013 val_nse=0.963480 lr=0.0025
+[EpochStart] 29/200 lr=0.0025
+[PerfSummary] [Train] Epoch 29/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.19s ct=540.39s
+[PerfSummary] [Validate] Epoch 29/200 cls=ComputeBound data=1.7% comp=98.3% dt=0.55s ct=30.92s
+[EpochSummary] 29/200 train_bp=0.000049 val_bp=0.000013 val_nse=0.963639 lr=0.00125
+[EpochStart] 30/200 lr=0.00125
+[PerfSummary] [Train] Epoch 30/200 cls=ComputeBound data=0.7% comp=99.3% dt=4.00s ct=541.63s
+[PerfSummary] [Validate] Epoch 30/200 cls=ComputeBound data=1.5% comp=98.5% dt=0.46s ct=31.11s
+[EpochSummary] 30/200 train_bp=0.000048 val_bp=0.000013 val_nse=0.963712 lr=0.00125
+[EpochStart] 31/200 lr=0.00125
+[PerfSummary] [Train] Epoch 31/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.10s ct=541.41s
+[PerfSummary] [Validate] Epoch 31/200 cls=ComputeBound data=1.4% comp=98.6% dt=0.46s ct=31.16s
+[EpochSummary] 31/200 train_bp=0.000048 val_bp=0.000013 val_nse=0.963997 lr=0.00125
+[EpochStart] 32/200 lr=0.00125
+[PerfSummary] [Train] Epoch 32/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.14s ct=540.95s
+[PerfSummary] [Validate] Epoch 32/200 cls=ComputeBound data=1.8% comp=98.2% dt=0.55s ct=30.93s
+[EpochSummary] 32/200 train_bp=0.000048 val_bp=0.000013 val_nse=0.963980 lr=0.00125
+[EpochStart] 33/200 lr=0.00125
+[PerfSummary] [Train] Epoch 33/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.16s ct=540.91s
+[PerfSummary] [Validate] Epoch 33/200 cls=ComputeBound data=1.8% comp=98.2% dt=0.55s ct=30.95s
+[EarlyStop] 10 epochs 无显著改进，终止训练
+[EpochSummary] 33/200 train_bp=0.000048 val_bp=0.000013 val_nse=0.964163 lr=0.00125
+[INFO] Early stopping triggered at epoch 32.
+[Done] idx=0 nse=0.964163 [SUCCESS]
+
+=== 网格搜索结束 ===
+结果汇总: /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/summary.csv
+{
+  "experiment_family": "WRR-HLRB-HPCBRIDGE-20260901",
+  "created_at": "2026-09-02T00:28:54",
+  "slurm_job_id": "217799",
+  "comparison_contract": "Repeat the locally completed learning-rate 0.01 once on HPC using the same training and validation contract",
+  "local_common_control": {
+    "learning_rate": 0.01,
+    "validation_nse": 0.9599600380703273
+  },
+  "hpc_common_control": {
+    "learning_rate": 0.01,
+    "validation_nse": 0.964163209624965,
+    "metrics_path": "/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/metrics.json"
+  },
+  "hpc_control_minus_local_control_nse": 0.004203171554637786,
+  "absolute_anchor_gap_nse": 0.004203171554637786,
+  "held_out_test_loaded": false,
+  "interpretation_limit": "One common control is a practical environment check; it does not prove universal equivalence between GPU types or replace the local hyperparameter batch."
+}
+finished=2026-09-02T00:28:54+08:00
+/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/logs/slurm-217799.err|bytes=0|mtime=2026-09-01 19:10:19.000000000 +0800
+=== INTERNAL_LOGS ===
+/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/logs/WRR-HLRB-HPCBRIDGE-20260901-C0_smoke_seeded_standard.stdout.log|bytes=3498|mtime=2026-09-01 19:12:53.000000000 +0800
+[Launcher] run_id=WRR-HLRB-HPCBRIDGE-20260901-C0 mode=smoke_seeded_standard
+[Launcher] combo={'index': 0, 'lr': 0.01, 'hidden_size': 32, 'num_layers': 1, 'in_out_mult': 10}
+[Launcher] data_guard=train+val only; hashes verified
+[HB] grid_search_knet.py start @ 19:09:11
+[ArgvDebug] raw_argv=['/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/grid_search_knet.py', '--config', '/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/base_config.yaml', '--combos-file', '/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/combos.jsonl', '--outdir', '/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/smoke_seeded_standard', '--device', 'cuda', '--groups', '0', '--ignore-shards', '--auto-suffix-outdir', '--require-gpu', '--resume', '--minimal', '--epochs', '1']
+[Config] 使用配置文件: /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/base_config.yaml
+[Info] auto-suffix-outdir 启用 → 使用目录: /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/smoke_seeded_standard_gpu
+[combos-file] 已加载 6 个组合
+[Info] 使用 combos-file: /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/combos.jsonl
+=== 参数轴取值 ===
+lr: [0.01, 0.015, 0.02, 0.03, 0.05, 0.1] (共 6)
+hidden_size: [32] (共 1)
+num_layers: [1] (共 1)
+in_out_mult: [10] (共 1)
+总组合数: 6 (来自 combos-file)
+训练轮次: 1 (可用 --epochs 覆盖)
+[Shard] 已忽略分片过滤 (ignore-shards)
+[Groups] 仅保留用户指定索引: [0] (原 6 -> 1)
+总组合: 6 | 分片 0/1 (ignored) → 本分片 1 组
+  idx=0 params={'lr': 0.01, 'hidden_size': 32, 'num_layers': 1, 'in_out_mult': 10}
+[Run] idx=0 uid=73387252 params={'lr': 0.01, 'hidden_size': 32, 'num_layers': 1, 'in_out_mult': 10} resume=False config_hash=8b37fc4e9397
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+Walrus Using device: cuda
+[Perf] cudnn.benchmark=True
+[Perf] set_float32_matmul_precision=high
+[EpochStart] 1/1 lr=0.01
+[LoaderProbe] steps=20 avg_fetch=81.4ms max_fetch=223.5ms
+[FastMode] Early break after 1 batches (MAX_TRAIN_BATCHES=1).
+[PerfSummary] [Train] Epoch 1/1 cls=ComputeBound data=0.3% comp=99.7% dt=0.07s ct=22.97s
+[FastMode] Early break after 1 batches (MAX_VAL_BATCHES=1).
+[PerfSummary] [Validate] Epoch 1/1 cls=ComputeBound data=4.8% comp=95.2% dt=0.24s ct=4.82s
+[INFO] Best model updated (epoch 0). val_bp_loss=0.000790
+[INFO] Checkpoint saved (model improved) → /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/smoke_seeded_standard_gpu/idx0000_lr0p01_hs32_nl1_mult10/results/checkpoints/checkpoint_epoch_0.pt
+[EpochSummary] 1/1 train_bp=0.000885 val_bp=0.000790 val_nse=-4.440609 lr=0.01
+[Done] idx=0 nse=-4.440609 [SUCCESS]
+
+=== 网格搜索结束 ===
+结果汇总: /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/smoke_seeded_standard_gpu/summary.csv
+/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/logs/WRR-HLRB-HPCBRIDGE-20260901-C0_formal.stdout.log|bytes=16591|mtime=2026-09-02 00:31:21.000000000 +0800
+[EpochStart] 18/200 lr=0.005
+[PerfSummary] [Train] Epoch 18/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.22s ct=539.87s
+[PerfSummary] [Validate] Epoch 18/200 cls=ComputeBound data=1.8% comp=98.2% dt=0.56s ct=31.14s
+[INFO] Best model updated (epoch 17). val_bp_loss=0.000013
+[INFO] Checkpoint saved (model improved) → /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/results/checkpoints/checkpoint_epoch_17.pt
+[EpochSummary] 18/200 train_bp=0.000050 val_bp=0.000013 val_nse=0.958870 lr=0.005
+[EpochStart] 19/200 lr=0.005
+[PerfSummary] [Train] Epoch 19/200 cls=ComputeBound data=0.7% comp=99.3% dt=4.05s ct=541.23s
+[PerfSummary] [Validate] Epoch 19/200 cls=ComputeBound data=2.0% comp=98.0% dt=0.65s ct=31.07s
+[EpochSummary] 19/200 train_bp=0.000050 val_bp=0.000013 val_nse=0.959302 lr=0.005
+[EpochStart] 20/200 lr=0.005
+[PerfSummary] [Train] Epoch 20/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.16s ct=541.53s
+[PerfSummary] [Validate] Epoch 20/200 cls=ComputeBound data=2.1% comp=97.9% dt=0.66s ct=31.00s
+[INFO] Interval checkpoint saved (every 20 epochs) → /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/results/checkpoints/checkpoint_epoch_19.pt
+[EpochSummary] 20/200 train_bp=0.000049 val_bp=0.000013 val_nse=0.960048 lr=0.005
+[EpochStart] 21/200 lr=0.005
+[PerfSummary] [Train] Epoch 21/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.16s ct=539.77s
+[PerfSummary] [Validate] Epoch 21/200 cls=ComputeBound data=2.0% comp=98.0% dt=0.64s ct=30.97s
+[EpochSummary] 21/200 train_bp=0.000050 val_bp=0.000013 val_nse=0.960558 lr=0.005
+[EpochStart] 22/200 lr=0.005
+[PerfSummary] [Train] Epoch 22/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.13s ct=539.90s
+[PerfSummary] [Validate] Epoch 22/200 cls=ComputeBound data=1.8% comp=98.2% dt=0.56s ct=30.90s
+[INFO] Best model updated (epoch 21). val_bp_loss=0.000013
+[INFO] Checkpoint saved (model improved) → /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/results/checkpoints/checkpoint_epoch_21.pt
+[EpochSummary] 22/200 train_bp=0.000050 val_bp=0.000013 val_nse=0.961317 lr=0.005
+[EpochStart] 23/200 lr=0.005
+[PerfSummary] [Train] Epoch 23/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.14s ct=539.75s
+[PerfSummary] [Validate] Epoch 23/200 cls=ComputeBound data=2.0% comp=98.0% dt=0.64s ct=30.82s
+[INFO] Best model updated (epoch 22). val_bp_loss=0.000013
+[INFO] Checkpoint saved (model improved) → /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/results/checkpoints/checkpoint_epoch_22.pt
+[EpochSummary] 23/200 train_bp=0.000050 val_bp=0.000013 val_nse=0.962096 lr=0.005
+[EpochStart] 24/200 lr=0.005
+[PerfSummary] [Train] Epoch 24/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.20s ct=539.64s
+[PerfSummary] [Validate] Epoch 24/200 cls=ComputeBound data=2.1% comp=97.9% dt=0.65s ct=30.89s
+[EpochSummary] 24/200 train_bp=0.000050 val_bp=0.000013 val_nse=0.962625 lr=0.005
+[EpochStart] 25/200 lr=0.005
+[PerfSummary] [Train] Epoch 25/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.19s ct=540.21s
+[PerfSummary] [Validate] Epoch 25/200 cls=ComputeBound data=1.8% comp=98.2% dt=0.55s ct=30.94s
+[EpochSummary] 25/200 train_bp=0.000049 val_bp=0.000013 val_nse=0.962923 lr=0.005
+[EpochStart] 26/200 lr=0.005
+[PerfSummary] [Train] Epoch 26/200 cls=ComputeBound data=0.7% comp=99.3% dt=4.06s ct=540.09s
+[PerfSummary] [Validate] Epoch 26/200 cls=ComputeBound data=1.7% comp=98.3% dt=0.55s ct=30.91s
+[EpochSummary] 26/200 train_bp=0.000049 val_bp=0.000013 val_nse=0.963121 lr=0.005
+[EpochStart] 27/200 lr=0.005
+Warning: high gradient norm 3.829350709915161 detected at epoch 26
+Warning: high gradient norm 11379.318359375 detected at epoch 26
+[SafeTrain] Grad explosion 1.14e+04 at epoch 26
+[PerfSummary] [Train] Epoch 27/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.14s ct=540.28s
+[PerfSummary] [Validate] Epoch 27/200 cls=ComputeBound data=2.0% comp=98.0% dt=0.64s ct=30.90s
+[EpochSummary] 27/200 train_bp=0.000070 val_bp=0.000013 val_nse=0.963216 lr=0.0025
+[EpochStart] 28/200 lr=0.0025
+[PerfSummary] [Train] Epoch 28/200 cls=ComputeBound data=0.7% comp=99.3% dt=4.01s ct=540.24s
+[PerfSummary] [Validate] Epoch 28/200 cls=ComputeBound data=1.4% comp=98.6% dt=0.45s ct=31.04s
+[EpochSummary] 28/200 train_bp=0.000049 val_bp=0.000013 val_nse=0.963480 lr=0.0025
+[EpochStart] 29/200 lr=0.0025
+[PerfSummary] [Train] Epoch 29/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.19s ct=540.39s
+[PerfSummary] [Validate] Epoch 29/200 cls=ComputeBound data=1.7% comp=98.3% dt=0.55s ct=30.92s
+[EpochSummary] 29/200 train_bp=0.000049 val_bp=0.000013 val_nse=0.963639 lr=0.00125
+[EpochStart] 30/200 lr=0.00125
+[PerfSummary] [Train] Epoch 30/200 cls=ComputeBound data=0.7% comp=99.3% dt=4.00s ct=541.63s
+[PerfSummary] [Validate] Epoch 30/200 cls=ComputeBound data=1.5% comp=98.5% dt=0.46s ct=31.11s
+[EpochSummary] 30/200 train_bp=0.000048 val_bp=0.000013 val_nse=0.963712 lr=0.00125
+[EpochStart] 31/200 lr=0.00125
+[PerfSummary] [Train] Epoch 31/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.10s ct=541.41s
+[PerfSummary] [Validate] Epoch 31/200 cls=ComputeBound data=1.4% comp=98.6% dt=0.46s ct=31.16s
+[EpochSummary] 31/200 train_bp=0.000048 val_bp=0.000013 val_nse=0.963997 lr=0.00125
+[EpochStart] 32/200 lr=0.00125
+[PerfSummary] [Train] Epoch 32/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.14s ct=540.95s
+[PerfSummary] [Validate] Epoch 32/200 cls=ComputeBound data=1.8% comp=98.2% dt=0.55s ct=30.93s
+[EpochSummary] 32/200 train_bp=0.000048 val_bp=0.000013 val_nse=0.963980 lr=0.00125
+[EpochStart] 33/200 lr=0.00125
+[PerfSummary] [Train] Epoch 33/200 cls=ComputeBound data=0.8% comp=99.2% dt=4.16s ct=540.91s
+[PerfSummary] [Validate] Epoch 33/200 cls=ComputeBound data=1.8% comp=98.2% dt=0.55s ct=30.95s
+[EarlyStop] 10 epochs 无显著改进，终止训练
+[EpochSummary] 33/200 train_bp=0.000048 val_bp=0.000013 val_nse=0.964163 lr=0.00125
+[INFO] Early stopping triggered at epoch 32.
+[Done] idx=0 nse=0.964163 [SUCCESS]
+
+=== 网格搜索结束 ===
+结果汇总: /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/summary.csv
+=== RUNTIME_AND_REGISTRY ===
+/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/hpc_runtime.json|bytes=374|mtime=2026-09-01 19:11:09.000000000 +0800
+{
+  "slurm_job_id": "217799",
+  "slurm_job_node": "ngu011",
+  "cuda_visible_devices": "1",
+  "python": "3.11.13",
+  "platform": "Linux-5.14.0-503.14.1.el9_5.x86_64-x86_64-with-glibc2.34",
+  "torch": "2.4.0",
+  "cuda_build": "12.1",
+  "cudnn": 90100,
+  "numpy": "2.3.3",
+  "pyyaml": "6.0.2",
+  "optuna": "4.5.0",
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "gpu_count_visible": 1
+}/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/registry.csv|bytes=368|mtime=2026-09-02 00:31:21.000000000 +0800
+run_id,index,initial_learning_rate,hidden_size,num_layers,in_out_mult,role,status,nse,duration_sec,metrics_path,completed_at
+WRR-HLRB-HPCBRIDGE-20260901-C0,0,0.01,32,1,10,common_control,ok,0.964163209624965,19062.23,experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/metrics.json,2026-09-02T00:28:52
+=== FORMAL_ARTIFACTS ===
+/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/metrics.json|bytes=800|mtime=2026-09-02 00:31:21.000000000 +0800
+{
+  "global_index": 0,
+  "uid": "73387252",
+  "lr": 0.01,
+  "hidden_size": 32,
+  "num_layers": 1,
+  "in_out_mult": 10,
+  "neg_nse": -0.964163209624965,
+  "nse": 0.964163209624965,
+  "model_path": "/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/results/best_model.pt",
+  "config_path": "/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/config_used.yaml",
+  "trained_epochs": 200,
+  "best_epoch": 22,
+  "duration_sec": 19062.23,
+  "config_hash": "2bc8bdedf2a7",
+  "combos_hash": "4236609fbbfd",
+  "status": "ok",
+  "time": "2026-09-02T00:28:52"
+}/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/bridge_summary.json|bytes=1000|mtime=2026-09-02 00:31:23.000000000 +0800
+{
+  "experiment_family": "WRR-HLRB-HPCBRIDGE-20260901",
+  "created_at": "2026-09-02T00:28:54",
+  "slurm_job_id": "217799",
+  "comparison_contract": "Repeat the locally completed learning-rate 0.01 once on HPC using the same training and validation contract",
+  "local_common_control": {
+    "learning_rate": 0.01,
+    "validation_nse": 0.9599600380703273
+  },
+  "hpc_common_control": {
+    "learning_rate": 0.01,
+    "validation_nse": 0.964163209624965,
+    "metrics_path": "/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs/formal_gpu/idx0000_lr0p01_hs32_nl1_mult10/metrics.json"
+  },
+  "hpc_control_minus_local_control_nse": 0.004203171554637786,
+  "absolute_anchor_gap_nse": 0.004203171554637786,
+  "held_out_test_loaded": false,
+  "interpretation_limit": "One common control is a practical environment check; it does not prove universal equivalence between GPU types or replace the local hyperparameter batch."
+}=== CHECKPOINTS ===
+checkpoint_epoch_0.pt|bytes=643095|mtime=2026-09-01T19:23:35.0000000000+0800
+checkpoint_epoch_10.pt|bytes=643276|mtime=2026-09-01T20:59:53.0000000000+0800
+checkpoint_epoch_17.pt|bytes=643276|mtime=2026-09-01T22:07:09.0000000000+0800
+checkpoint_epoch_19.pt|bytes=643276|mtime=2026-09-01T22:26:25.0000000000+0800
+checkpoint_epoch_1.pt|bytes=643095|mtime=2026-09-01T19:33:15.0000000000+0800
+checkpoint_epoch_21.pt|bytes=643276|mtime=2026-09-01T22:45:37.0000000000+0800
+checkpoint_epoch_22.pt|bytes=643276|mtime=2026-09-01T22:55:13.0000000000+0800
+checkpoint_epoch_2.pt|bytes=643095|mtime=2026-09-01T19:42:54.0000000000+0800
+checkpoint_epoch_3.pt|bytes=643095|mtime=2026-09-01T19:52:33.0000000000+0800
+checkpoint_epoch_5.pt|bytes=643095|mtime=2026-09-01T20:11:49.0000000000+0800
+checkpoint_epoch_7.pt|bytes=643095|mtime=2026-09-01T20:31:03.0000000000+0800
+checkpoint_epoch_9.pt|bytes=643095|mtime=2026-09-01T20:50:16.0000000000+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T05:34:18+0800
