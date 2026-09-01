@@ -1,0 +1,63 @@
+### channel=kalmannet-daily-perbasin seq=11
+### host=login4
+### started=2026-09-01T14:56:07+0800
+### ---------- output ----------
+=== READ-ONLY 04105700 PROGRESS QUERY ===
+2026-09-01T14:56:07+0800
+login4
+channel=kalmannet-daily-perbasin sequence=11 purpose=read-only-first-pilot-progress-query
+signals_sent=0 submissions_created=0 files_modified=0
+=== SQUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== SACCT ===
+217410|kdpp-04105700-s10|hgpu8|FAILED|1:0|00:00:03|2026-09-01T14:52:11|2026-09-01T14:52:14|ngu202|billing=4,cpu=4,node=1
+=== EXACT JOB COUNTS ===
+active_exact_name=0
+historical_exact_name=1
+=== SUBMISSION RECEIPT ===
+3813faffc8b5c4cf2298e6906d7735d234b61e283b195a6a27215e0d969a1ab8  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN2_SEQ10.submission_receipt.txt
+channel=kalmannet-daily-perbasin
+sequence=10
+basin_id=04105700
+state_dimension=7
+execution_id=DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN2_SEQ10
+job_name=kdpp-04105700-s10
+job_id=217410
+configuration_sha256=eb6cf615a40cc6dcee9da34713621d52cbf3ef3a34b3eb02a3be3b4537f8ad55
+deployment_receipt_sha256=1c1a3bdba89d16002980fe1a65d7282af508472cec011a073eb2f5dc22e72523
+probe_receipt_sha256=be039638e7b8625aa48ed3c044fff53c4d8c63504605d48c63ff1924167d4f65
+active_exact_before=0
+historical_exact_before=0
+active_three_pilot_training_before=0
+active_job_after=1
+active_exact_after=1
+submission_count=1
+signals_sent=0
+formal_evaluation_access_count=0
+=== STATUS MEMBER: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN2_SEQ10.slurm-217410.out ===
+bytes=339 modified=2026-09-01 14:51:40.000000000 +0800
+e938542cafe6ef9b4507c3dfbca2f225219805a7c5cd78a84bdea4c47307f5b7  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN2_SEQ10.slurm-217410.out
+{"experiment_ids": ["DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V1_20260901_A40", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_V1_20260901_A41", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_V1_20260901_A42"], "historical_evaluation_member_count": 0, "member_count": 49, "state_dimensions": [7, 11, 18], "status": "DEPLOYED_BUNDLE_VERIFIED"}
+=== STATUS MEMBER: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN2_SEQ10.slurm-217410.err ===
+bytes=79 modified=2026-09-01 14:51:40.000000000 +0800
+bc9ebfbc4f7f167056075c7785483ff7cd4002d9ef21f627ab90c4be2279ede6  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN2_SEQ10.slurm-217410.err
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python: No module named pytest
+=== STATUS MEMBER: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN2_SEQ10.entry.json ===
+MISSING
+=== STATUS MEMBER: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN2_SEQ10.audit.json ===
+MISSING
+=== STATUS MEMBER: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN2_SEQ10.cgroup.txt ===
+bytes=129 modified=2026-09-01 14:51:40.000000000 +0800
+006476bc2f626efe5cbcaec550f40aca28905fb12ea146d9f563810b0ed3c28d  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN2_SEQ10.cgroup.txt
+recorded_at_utc=2026-09-01T06:51:40Z
+slurm_job_id=217410
+process_cgroup_relative=unavailable
+cgroup_v2_memory_status=unavailable
+=== GPU RESOURCE LOG ===
+MISSING
+=== RUN DIRECTORY ===
+MISSING
+=== QUERY COMPLETE: READ ONLY, NO SUBMISSION OR SIGNAL ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T14:56:08+0800
