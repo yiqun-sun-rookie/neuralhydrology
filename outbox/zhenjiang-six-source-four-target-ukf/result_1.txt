@@ -1,0 +1,165 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=1
+### host=login4
+### started=2026-09-01T15:05:17+0800
+### ---------- output ----------
+=== CANDIDATE_ROOT ===
+ABSENT_SAFE_TO_CREATE_LATER
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1.partial
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1.staging
+=== IMMUTABLE_SOURCE ===
+63b2d3a33b249e1f598db2a1ffb2096c9d9006b366e4e913d594f74a6881d492  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/dataset_config.json
+BYTES|2854|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/dataset_config.json
+2024937a062df6df6d09eca8789e29aaf85e8734688836f702a3e37f8046e65c  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/datong_realtime_features.csv
+BYTES|5485506|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/datong_realtime_features.csv
+405efee1787da935392c2175f9cd7dde5dd8a0a2b7960005ced76723c5ea94f9  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/nanjing_realtime_features.csv
+BYTES|5452340|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/nanjing_realtime_features.csv
+fc35c509496d00599e85e021cfc7231a4f7201a750a3d444332daca746b7fa6b  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/zhenjiang_realtime_features.csv
+BYTES|5490493|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/zhenjiang_realtime_features.csv
+b3c3ccc8815cf7062f4d0858084c120daa42f5a00459ae885a230afc81821485  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/jiangyin_realtime_features.csv
+BYTES|5451807|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/jiangyin_realtime_features.csv
+23ae019c407523493d475a7d1119177d152877fc3359de3d4943a63134d6133a  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/xuliujing_realtime_features.csv
+BYTES|5452448|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/xuliujing_realtime_features.csv
+43d62a572c81f5f2e14b732022947cb4eeca32b8654d813ed34722f511a27316  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/wusongkou_realtime_features.csv
+BYTES|5449542|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/realtime_features/wusongkou_realtime_features.csv
+a9c650aef6b232baa423d2d2cdd1e2b30981608aca42e292fb944994f2b60f55  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/retrospective_targets/nanjing_retrospective_targets.csv
+BYTES|5453455|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/retrospective_targets/nanjing_retrospective_targets.csv
+abb38bd543989c0fd0c17f597a36a33799c7816bdad021c9b36268322b169946  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/retrospective_targets/zhenjiang_retrospective_targets.csv
+BYTES|5491015|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/retrospective_targets/zhenjiang_retrospective_targets.csv
+5c07b7b61e1cf8301adcc9268d1a73fa5957ec2f1acdc86832dae3eb3dff5e76  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/retrospective_targets/jiangyin_retrospective_targets.csv
+BYTES|5452821|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/retrospective_targets/jiangyin_retrospective_targets.csv
+b676d2ca3e2f5af64c6eeb690fe39b77e9de25a96ab023a35e08fa60044a554a  /data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/retrospective_targets/xuliujing_retrospective_targets.csv
+BYTES|5453528|/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1/retrospective_targets/xuliujing_retrospective_targets.csv
+=== STORAGE_AND_QUEUE ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  598T  357T  63% /data1
+PARTITION|AVAIL|TIMELIMIT|NODES|STATE|NODELIST
+hgpu8|up|infinite|1|maint|ngu203
+hgpu8|up|infinite|1|mix|ngu201
+hgpu8|up|infinite|1|idle|ngu202
+hgpu2p|up|infinite|8|mix|ngu[001,004-008,010-011]
+hgpu2p|up|infinite|1|alloc|ngu002
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2||0:00|1-00:00:00|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2||0:00|4:00:00|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2||0:00|2:00:00|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2||0:00|2:00:00|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2||0:00|7-00:00:00|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2||0:00|1-00:00:00|(JobHeldUser)
+217272_88|tukf26_train|RUNNING|hcpu48y|icn276|36:22|8:00:00|icn276
+217272_89|tukf26_train|RUNNING|hcpu48y|icn276|36:22|8:00:00|icn276
+217272_90|tukf26_train|RUNNING|hcpu48y|icn276|36:22|8:00:00|icn276
+217272_91|tukf26_train|RUNNING|hcpu48y|icn276|36:22|8:00:00|icn276
+217272_92|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_93|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_94|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_95|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_96|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_97|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_98|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_99|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_100|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_101|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_102|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_103|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_104|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_105|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_106|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_107|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_108|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_109|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_110|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_111|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_112|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_113|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_114|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_115|tukf26_train|RUNNING|hcpu48y|icn270|36:22|8:00:00|icn270
+217272_116|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_117|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_118|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_119|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_120|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_121|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_122|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_123|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_124|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_125|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_126|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_127|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_128|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_129|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_130|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_131|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_132|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_133|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_134|tukf26_train|RUNNING|hcpu48y|icn271|36:22|8:00:00|icn271
+217272_28|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_29|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_30|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_31|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_32|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_33|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_34|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_35|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_36|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_37|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_38|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_39|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_40|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_41|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_42|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_43|tukf26_train|RUNNING|hcpu48y|icn274|36:23|8:00:00|icn274
+217272_44|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_45|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_46|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_47|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_48|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_49|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_50|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_51|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_52|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_53|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_54|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_55|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_56|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_57|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_58|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_59|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_60|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_61|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_62|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_63|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_64|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_65|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_66|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_67|tukf26_train|RUNNING|hcpu48y|icn275|36:23|8:00:00|icn275
+217272_68|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_69|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_70|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_71|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_72|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_73|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_74|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_75|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_76|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_77|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_78|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_79|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_80|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_81|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_82|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_83|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_84|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_85|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_86|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+217272_87|tukf26_train|RUNNING|hcpu48y|icn276|36:23|8:00:00|icn276
+216549|id31_development|RUNNING|hgpu2|ngu003|1-02:45:04|7-00:00:00|ngu003
+=== ENVIRONMENT ===
+python=3.11.13
+numpy=2.3.3
+pandas=2.3.2
+scipy=1.16.2
+torch=2.4.0
+torch_compiled_cuda=12.1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T15:05:31+0800
