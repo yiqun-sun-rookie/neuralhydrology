@@ -1,14 +1,8 @@
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
-cd "$ROOT"
 date --iso-8601=seconds
-if [ -f "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json" ]; then
-  echo "gate artifact already PRESENT, skip"; exit 0
-fi
-N=$(squeue -u sunyiq -h -o '%j' 2>/dev/null | grep -c 'N22-gate2' || true)
-echo "existing N22-gate2 count=$N"
-if [ "$N" = "0" ]; then
-  sbatch --job-name=N22-gate2 --exclude=ngu002,ngu101 src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm
-fi
-squeue -u sunyiq -h -o '%.12i %.16j %.9T %R' 2>/dev/null | grep -E 'N22-gate2' || echo 'gate2 not in queue'
+sacct -j 217227 -X -n -P --format=JobID,State,ExitCode,Elapsed 2>/dev/null || echo 'no sacct'
+squeue -h -j 217227 -o '%.12i %.9T %R' 2>/dev/null || echo 'not in queue'
+P="$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
+if [ -f "$P" ]; then echo "GATE PRESENT ($(stat -c %s "$P") bytes)"; cat "$P"; else echo "GATE MISSING"; fi
 exit 0
