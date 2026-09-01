@@ -31,6 +31,12 @@ RESULT_66_COMMAND_COMMIT=fc4126e00c9a456b330a3b9dc3a2584a2c2cdd68
 RESULT_66_COMMAND_SHA=5fbf5877ae8cad8e20b8f06752ddbb93ec4957425e5e964fe1606336f02fd09b
 RESULT_66_SIZE=913
 RESULT_66_SHA=a83cd6f965fced3f390cb586144a6e446df0ad4bdbcf34bd9adc5e229fc84025
+RESULT_67="${MAILBOX_ROOT}/outbox/kalmannet-tukf09-455/result_67.txt"
+RESULT_67_COMMIT=0ea97b080e3c49d61d668e70e562b14aeaf1a7bb
+RESULT_67_COMMAND_COMMIT=1a28d50250ffa104b7798fe76c83772fcb52227e
+RESULT_67_COMMAND_SHA=6d03ca93a82b351387a47a3b26c275427fdc7ec1dc521162e753a59ab4e5ef84
+RESULT_67_SIZE=1680
+RESULT_67_SHA=2b6e1bc9aa0e865624463be06a90c33cbde2485a94a7acbba9a12e40f5069f25
 BUILDER="${PROJECT_ROOT}/scripts/build_tukf09_455_a800_exclusive_hpc_bundle_v2r5.py"
 STAGE_TOOL="${PROJECT_ROOT}/hpc/tukf09_455_basin_revision_a800_exclusive_v2r5/stage_and_train.py"
 CONFIG="${PROJECT_ROOT}/configs/tukf09_455_basin_zero_validation_target_variance_hpc_execution_a800_exclusive_v2r5.json"
@@ -70,6 +76,34 @@ assert lines.count(f"Submitted batch job {job_id}") == 1
 assert f"PREPARATION_JOB_ID={job_id}" in lines
 assert "TUKF09_455_A800_EXCLUSIVE_V2R5_OFFLINE_PREPARATION_SUBMITTED_ONCE_FORMAL_EVALUATION_HOLD" in lines
 assert not any(line.startswith("FATAL:") for line in lines)
+PY
+
+echo "=== FROZEN SEQUENCE 67 READ-ONLY AUDIT-LAYER FAILURE EVIDENCE ==="
+[[ -f "${RESULT_67}" && ! -L "${RESULT_67}" ]] || fail "sequence 67 result missing or linked"
+[[ "$(stat -c '%h' "${RESULT_67}")" -eq 1 ]] || fail "sequence 67 result hard-link count changed"
+[[ "$(stat -c '%s' "${RESULT_67}")" -eq "${RESULT_67_SIZE}" ]] || fail "sequence 67 result size changed"
+[[ "$(sha256sum "${RESULT_67}" | awk '{print $1}')" = "${RESULT_67_SHA}" ]] || fail "sequence 67 result hash changed"
+[[ "$(git log -1 --format=%H -- outbox/kalmannet-tukf09-455/result_67.txt)" = "${RESULT_67_COMMIT}" ]] || fail "sequence 67 result commit changed"
+git merge-base --is-ancestor "${RESULT_67_COMMAND_COMMIT}" "${RESULT_67_COMMIT}" || fail "sequence 67 command is not an ancestor of its result"
+[[ "$(git log -1 --format=%H "${RESULT_67_COMMIT}^" -- inbox/kalmannet-tukf09-455/cmd.sh)" = "${RESULT_67_COMMAND_COMMIT}" ]] || fail "sequence 67 command was not the last channel command before its result"
+[[ "$(git diff-tree --no-commit-id --name-only -r "${RESULT_67_COMMIT}")" = "outbox/kalmannet-tukf09-455/result_67.txt" ]] || fail "sequence 67 result commit surface changed"
+[[ "$(git show "${RESULT_67_COMMAND_COMMIT}:inbox/kalmannet-tukf09-455/cmd.sh" | sha256sum | awk '{print $1}')" = "${RESULT_67_COMMAND_SHA}" ]] || fail "sequence 67 command hash changed"
+
+"${PYTHON}" -B - "${RESULT_67}" <<'PY'
+from pathlib import Path
+import sys
+
+lines = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+assert lines[0] == "### channel=kalmannet-tukf09-455 seq=67"
+assert lines[1] == "### host=login4"
+assert lines[-2] == "### exit_code=1"
+assert lines[-1].startswith("### finished=")
+assert "=== REPAIRED RUNTIME BUNDLE VERIFICATION ===" in lines
+assert '  "status": "TUKF09_455_A800_EXCLUSIVE_V2R5_HPC_RUNTIME_BUNDLE_VERIFIED"' in lines
+assert "=== INDEPENDENT PREPARATION PAYLOAD AUDIT ===" in lines
+assert "KeyError: 'hpc_identity'" in lines
+assert not any(line.startswith("FATAL:") for line in lines)
+assert "TUKF09_455_A800_EXCLUSIVE_V2R5_PREPARATION_COMPLETED_STRICTLY_VERIFIED_ADMISSION_NOT_CREATED_FORMAL_EVALUATION_HOLD" not in lines
 PY
 
 echo "=== FROZEN PREPARATION JOB RECORD ==="
@@ -177,7 +211,7 @@ assert config["experiment_id"] == "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIA
 assert config["technical_retry"]["revision"] == "v2r5"
 assert config["scientific_identity"]["ordered_basin_count"] == 455
 assert config["scientific_identity"]["excluded_basins"] == ["08202700"]
-assert config["hpc_identity"]["local_filter_installation_final_manifest"]["sha256"] == "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0"
+assert config["scientific_identity"]["local_filter_installation_final_manifest"]["sha256"] == "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0"
 assert config["execution_route"]["formal_evaluation_access"] is False
 
 assert initial["status"] == "STRICT_PRISTINE_A800_EXCLUSIVE_V2R5_BUNDLE_VERIFIED_BEFORE_RUNTIME_MUTATION"
@@ -236,7 +270,7 @@ assert probe["private_runtime_identity_sha256"] == private["identity_sha256"] ==
 assert probe["staged_sources_manifest_sha256"] == stage.sha256_file(staged_path) == "fecab69d1ce6fa0b23c2f5b22203a31d87b1c53264fe41a2092c8a2f87e5c0b9"
 assert probe["staged_sources_identity_sha256"] == staged["identity_sha256"] == "75cdddfde1b15181dbcace5357fc540781005bfb3d2ff7777a204ff1c51fed8e"
 assert probe["remote_filter_installation_final_sha256"] == stage.sha256_file(filter_seal) == "7ecfa4d5a61f37a2fc40e75b9e1bbec4be6c39ba7b0b87ec8705bcca277faaa0"
-assert stage.sha256_file(filter_seal) != config["hpc_identity"]["local_filter_installation_final_manifest"]["sha256"]
+assert stage.sha256_file(filter_seal) != config["scientific_identity"]["local_filter_installation_final_manifest"]["sha256"]
 
 runtime_identity = probe["runtime"]
 assert runtime_identity["slurm_job_id"] == job_id
@@ -257,7 +291,7 @@ assert runtime_identity["nvidia_gpu_uuid"] == runtime_identity["torch_process_gp
 print(json.dumps({
     "filter_unit_count": probe["filter_unit_count"],
     "initial_bundle_sha256": stage.sha256_file(initial_path),
-    "local_filter_seal_provenance_sha256": config["hpc_identity"]["local_filter_installation_final_manifest"]["sha256"],
+    "local_filter_seal_provenance_sha256": config["scientific_identity"]["local_filter_installation_final_manifest"]["sha256"],
     "preparation_probe_identity_sha256": probe["identity_sha256"],
     "preparation_probe_sha256": stage.sha256_file(probe_path),
     "private_runtime_identity_sha256": private["identity_sha256"],
@@ -269,4 +303,4 @@ print(json.dumps({
 }, sort_keys=True))
 PY
 
-echo "TUKF09_455_A800_EXCLUSIVE_V2R5_PREPARATION_COMPLETED_STRICTLY_VERIFIED_ADMISSION_NOT_CREATED_FORMAL_EVALUATION_HOLD"
+echo "TUKF09_455_A800_EXCLUSIVE_V2R5_PREPARATION_COMPLETED_STRICTLY_VERIFIED_AFTER_READ_ONLY_AUDIT_LAYER_FIX_ADMISSION_NOT_CREATED_FORMAL_EVALUATION_HOLD"
