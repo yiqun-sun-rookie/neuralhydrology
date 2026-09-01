@@ -15,6 +15,7 @@ STAGED_MANIFEST="${ROOT}/status/staged_training_sources.json"
 PREPARATION_PROBE="${ROOT}/status/preparation_probe.json"
 PREPARATION_FAILED="${ROOT}/status/PREPARATION_FAILED.json"
 FILTER_SEAL="${RESULTS_ROOT}/control/filter_rebinding/independent/manifest.final.sha256.json"
+ADMISSION="${ROOT}/status/hpc_technical_admission.json"
 JOB_ID=217228
 JOB_NAME=tukf09-455-v2r4-prepare
 JOB_ID_FILE="${ROOT}/status/preparation_job_id.txt"
@@ -46,6 +47,12 @@ RESULT_55_SIZE=1191
 RESULT_55_SHA=455796383b0c3cd0492981ff5610d5ccd564a738f303b1c4f22cd9ae45b7edd7
 INSPECTION_55_COMMIT=21616744e91d451ceba4ee8fb38cdf845bc50d4e
 INSPECTION_55_COMMAND_SHA=752bda702140c87d0f700d89da893c9076f76b66c558467a2b4b7f469a1af3c9
+RESULT_56="${MAILBOX_ROOT}/outbox/kalmannet-tukf09-455/result_56.txt"
+RESULT_56_COMMIT=08b42196a3ddb1fa710852192f69d40cf10d6835
+RESULT_56_SIZE=2439
+RESULT_56_SHA=d7ef61f383a287f516b4d0d5e60975f17553fbbb009379d08f6c14f2b6b9b3d5
+INSPECTION_56_COMMIT=16248b98bebc2e83b55502006614814c4f6329fc
+INSPECTION_56_COMMAND_SHA=fb91c928a30a12e5e4a09ff459ac8f282a3d686184cc708d0d5c253944719bca
 PYTHON=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
 export PYTHONNOUSERSITE=1
 export PYTHONDWRITEBYTECODE=1
@@ -109,6 +116,40 @@ assert "STDOUT_LAST_LINE=TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED" in lines
 assert "=== STRICT PREPARATION ARTIFACT GATES ===" in lines
 assert "KeyError: 'data_file_count'" in lines
 assert not any(line.startswith("FATAL:") for line in lines)
+PY
+
+echo "=== FROZEN SEQUENCE 56 STRICT PREPARATION EVIDENCE ==="
+[[ -f "${RESULT_56}" && ! -L "${RESULT_56}" ]] || fail "sequence 56 result is missing, linked, or irregular"
+[[ "$(stat -c '%h' "${RESULT_56}")" -eq 1 ]] || fail "sequence 56 result hard-link count changed"
+[[ "$(stat -c '%s' "${RESULT_56}")" -eq "${RESULT_56_SIZE}" ]] || fail "sequence 56 result size changed"
+[[ "$(sha256sum "${RESULT_56}" | awk '{print $1}')" = "${RESULT_56_SHA}" ]] || fail "sequence 56 result hash changed"
+[[ "$(git log -1 --format=%H -- outbox/kalmannet-tukf09-455/result_56.txt)" = "${RESULT_56_COMMIT}" ]] || fail "sequence 56 result commit changed"
+[[ "$(git diff-tree --no-commit-id --name-only -r "${RESULT_56_COMMIT}")" = "outbox/kalmannet-tukf09-455/result_56.txt" ]] || fail "sequence 56 result commit surface changed"
+git merge-base --is-ancestor "${INSPECTION_56_COMMIT}" "${RESULT_56_COMMIT}" || fail "sequence 56 command is not an ancestor of its result"
+[[ "$(git show "${INSPECTION_56_COMMIT}:inbox/kalmannet-tukf09-455/cmd.sh" | sha256sum | awk '{print $1}')" = "${INSPECTION_56_COMMAND_SHA}" ]] || fail "sequence 56 strict preparation command hash changed"
+
+"${PYTHON}" -B - "${RESULT_56}" "${JOB_ID}" <<'PY'
+from pathlib import Path
+import json
+import sys
+
+lines = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+job_id = sys.argv[2]
+assert lines[0] == "### channel=kalmannet-tukf09-455 seq=56"
+assert lines[1] == "### host=login4"
+assert lines[-2] == "### exit_code=0"
+assert lines[-1].startswith("### finished=")
+assert any(line.startswith(f"{job_id}|tukf09-455-v2r4-prepare|hgpu8|COMPLETED|0:0|") for line in lines)
+assert "STDERR_SIZE=0" in lines
+assert "STDOUT_LAST_LINE=TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED" in lines
+assert "TUKF09_455_A800_EXCLUSIVE_V2R4_PREPARATION_COMPLETED_STRICTLY_VERIFIED_ADMISSION_NOT_CREATED" in lines
+summary = next(json.loads(line) for line in lines if line.startswith('{"actual_remote_filter_seal_sha256"'))
+assert summary["filter_unit_count"] == 455
+assert summary["staged_file_count"] == 911
+assert summary["remote_filter_seal_matches_probe"] is True
+assert summary["remote_filter_verification_status"] == "FILTER_REBINDING_INDEPENDENTLY_VERIFIED_EVALUATION_HOLD"
+assert summary["local_filter_seal_sha256"] == "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0"
+assert summary["actual_remote_filter_seal_sha256"] == "6e150cd9feba58ec35562e7fc46e7052f9e433cc5a50ae185593f1960703a55f"
 PY
 
 echo "=== FROZEN SEQUENCE 55 DIAGNOSTIC EVIDENCE ==="
@@ -192,7 +233,7 @@ echo "=== FORMAL EVALUATION HOLD ==="
 for name in selection evaluation independent formal_evaluation formal_evaluation_independent; do
   [[ ! -e "${RESULTS_ROOT}/${name}" && ! -L "${RESULTS_ROOT}/${name}" ]] || fail "forbidden evaluation output exists: ${name}"
 done
-for item in "${ROOT}/status/hpc_technical_admission.json" "${ROOT}/status/training_submission.lock" "${ROOT}/status/training_job_id.txt"; do
+for item in "${ADMISSION}" "${ROOT}/status/training_submission.lock" "${ROOT}/status/training_job_id.txt"; do
   [[ ! -e "${item}" && ! -L "${item}" ]] || fail "technical admission or training evidence exists prematurely: ${item}"
 done
 
@@ -415,3 +456,83 @@ print(json.dumps({
 PY
 
 echo "TUKF09_455_A800_EXCLUSIVE_V2R4_PREPARATION_COMPLETED_STRICTLY_VERIFIED_ADMISSION_NOT_CREATED"
+
+echo "=== CREATE EXCLUSIVE HPC TECHNICAL ADMISSION ==="
+"${PYTHON}" -B "${PROJECT_ROOT}/hpc/tukf09_455_basin_revision_a800_exclusive_v2r4/stage_and_train.py" admit \
+  --project-root "${PROJECT_ROOT}" \
+  --probe "${PREPARATION_PROBE}" \
+  --private-manifest "${PRIVATE_MANIFEST}" \
+  --output "${ADMISSION}" \
+  --authorize-hpc-technical-execution
+
+[[ -f "${ADMISSION}" && ! -L "${ADMISSION}" ]] || fail "HPC technical admission was not created as a regular unlinked file"
+[[ "$(stat -c '%h' "${ADMISSION}")" -eq 1 ]] || fail "HPC technical admission hard-link count changed"
+[[ ! -e "${ROOT}/status/training_submission.lock" && ! -L "${ROOT}/status/training_submission.lock" ]] || fail "training submission lock exists prematurely"
+[[ ! -e "${ROOT}/status/training_job_id.txt" && ! -L "${ROOT}/status/training_job_id.txt" ]] || fail "training job id exists prematurely"
+
+"${PYTHON}" -B - "${PROJECT_ROOT}" "${ADMISSION}" "${PRIVATE_MANIFEST}" "${PREPARATION_PROBE}" "${STAGED_MANIFEST}" <<'PY'
+import importlib.util
+import json
+from pathlib import Path
+import sys
+
+project = Path(sys.argv[1])
+admission_path = Path(sys.argv[2])
+private_path = Path(sys.argv[3])
+probe_path = Path(sys.argv[4])
+staged_path = Path(sys.argv[5])
+stage_path = project / "hpc/tukf09_455_basin_revision_a800_exclusive_v2r4/stage_and_train.py"
+spec = importlib.util.spec_from_file_location("tukf09_stage_v2r4_admission_audit", stage_path)
+assert spec is not None and spec.loader is not None
+stage = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(stage)
+config = stage.load_execution_config(project / "configs/tukf09_455_basin_zero_validation_target_variance_hpc_execution_a800_exclusive_v2r4.json")
+admission = stage.read_json(admission_path, root=Path(config["remote_layout"]["remote_root"]), canonical=True)
+stage._verify_payload_identity(admission, label="HPC technical admission")
+stage.require_zero_evaluation(admission, label="HPC technical admission")
+verified = stage.verify_hpc_technical_admission(
+    project_root=project,
+    admission_path=admission_path,
+    private_manifest=private_path,
+    probe_path=probe_path,
+    staged_manifest=staged_path,
+    current_runtime=admission["admitted_runtime"],
+)
+science = config["scientific_identity"]
+assert admission["status"] == "HPC_A800_EXCLUSIVE_V2R4_TECHNICAL_EXECUTION_ADMITTED_FORMAL_EVALUATION_HOLD"
+assert admission["scientific_contract_sha256"] == "7710594dcc5cce7f087cb70492a6f827c3925a98ea7fa051d26c5ef1660304e1"
+assert admission["original_training_admission_file_sha256"] == "6ba3cdd742fc2bdf039c51afc75485c8292f0b999d7fe426cb2ccf69057c1b79"
+assert admission["original_training_admission_record_sha256"] == "ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4"
+assert admission["local_filter_installation_final_sha256"] == "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0"
+assert admission["remote_filter_installation_final_sha256"] == "6e150cd9feba58ec35562e7fc46e7052f9e433cc5a50ae185593f1960703a55f"
+assert admission["ordered_basin_count"] == 455
+assert admission["neural_model_order"] == [f"lead_{lead}_seed_{seed}" for lead in (1, 2, 3) for seed in (0, 1, 2)]
+assert admission["neural_model_parallelism"] == 1
+assert admission["exclusive_node_required"] is True
+assert admission["exclusive_node_runtime_evidence_passed"] is True
+assert admission["formal_evaluation_authorized"] is False
+assert admission["scientific_contract_changed"] is False
+assert admission["original_training_admission_changed"] is False
+assert admission["bitwise_equivalence_to_rtx3090_claimed"] is False
+assert verified["identity_sha256"] == admission["identity_sha256"]
+assert science["formal_training_execution"]["sha256"] == "0daf464f6bb1cfc11f04806b7caf5195ea42c3aef8187d8248474993ca108319"
+print(json.dumps({
+    "admission_identity_sha256": admission["identity_sha256"],
+    "admission_sha256": stage.sha256_file(admission_path),
+    "evaluation_array_reads": admission["evaluation_array_reads"],
+    "evaluation_metrics": admission["evaluation_metrics"],
+    "evaluation_outputs": admission["evaluation_outputs"],
+    "evaluation_predictions": admission["evaluation_predictions"],
+    "formal_evaluation_authorized": admission["formal_evaluation_authorized"],
+    "neural_model_unit_count": len(admission["neural_model_order"]),
+    "ordered_basin_count": admission["ordered_basin_count"],
+    "status": admission["status"],
+}, sort_keys=True))
+PY
+
+for name in selection evaluation independent formal_evaluation formal_evaluation_independent; do
+  [[ ! -e "${RESULTS_ROOT}/${name}" && ! -L "${RESULTS_ROOT}/${name}" ]] || fail "forbidden evaluation output appeared after admission: ${name}"
+done
+echo "ADMISSION_SIZE=$(stat -c '%s' "${ADMISSION}")"
+echo "ADMISSION_SHA256=$(sha256sum "${ADMISSION}" | awk '{print $1}')"
+echo "TUKF09_455_A800_EXCLUSIVE_V2R4_TECHNICAL_ADMISSION_CREATED_AND_VERIFIED_TRAINING_NOT_SUBMITTED_EVALUATION_HOLD"
