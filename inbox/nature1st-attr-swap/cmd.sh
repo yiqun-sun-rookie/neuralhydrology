@@ -1,124 +1,63 @@
 #!/bin/bash
-# nature1st-attr-swap seq=115 -- install AND submit armC seeds 43/44.
-# armC (0.6466) is the baseline every sufficiency verdict is measured against, and it
-# has only ever been run once. armJ's three seeds spread 0.0099 in paired median --
-# as wide as the sufficiency threshold itself -- so the unreplicated baseline is now
-# the campaign's largest unquantified risk. Standing authorisation granted 2026-08-27.
+# nature1st-attr-swap seq=116 -- READ-ONLY. armC baseline replicates (216687/216688).
 set -o pipefail
 RUN=/data1/home/sunyiq/nature_1st
 cd "$RUN" || { echo RUN_DIR_MISSING; exit 1; }
+date "+wallclock %F %T %z"
 
-echo "=== A. INSTALL ==="
-if [ -f "scripts/hpc_train_q_armC_s43.sbatch" ]; then echo "  EXISTS: scripts/hpc_train_q_armC_s43.sbatch"; else
-base64 -d > 'scripts/hpc_train_q_armC_s43.sbatch' <<'B64_hpc_train_q_armC_s43'
-IyEvdXNyL2Jpbi9lbnYgYmFzaAojU0JBVENIIC1KIHFfYXJtQ191c19taW51c19uZXRfczQzCiNTQkFUQ0ggLXAgaGdwdTJwLGhn
-cHUyLGhncHU0CiNTQkFUQ0ggLU4gMQojU0JBVENIIC1uIDEKI1NCQVRDSCAtLWNwdXMtcGVyLXRhc2s9NAojU0JBVENIIC0tZ3Jl
-cz1ncHU6MQojU0JBVENIIC0tZXhjbHVkZT1uZ3UwMDIKI1NCQVRDSCAtdCAyNDowMDowMAojU0JBVENIIC1vIGxvZ3MvYXR0cl9z
-d2FwL2FybUNfdXNfbWludXNfbmV0X3M0My0lai5vdXQKI1NCQVRDSCAtZSBsb2dzL2F0dHJfc3dhcC9hcm1DX3VzX21pbnVzX25l
-dF9zNDMtJWouZXJyCgojIGFybUMgcmVwbGljYXRlLCBzZWVkIDQzLiBhcm1DICgwLjY0NjYsIHNlZWQgNDIpIGlzIHRoZSBCQVNF
-TElORSBldmVyeSBzdWZmaWNpZW5jeQojIHZlcmRpY3QgaW4gdGhpcyBjYW1wYWlnbiBpcyBtZWFzdXJlZCBhZ2FpbnN0IC0tIGFu
-ZCBpdCBoYXMgb25seSBldmVyIGJlZW4gcnVuIG9uY2UuCiMKIyBXSFkgVEhJUyBNQVRURVJTIE5PVy4gYXJtSidzIHRocmVlIHNl
-ZWRzIGdhdmUgcGFpcmVkIG1lZGlhbnMgdnMgYXJtQyBvZgojIC0wLjAwOTggLyAtMC4wMTYwIC8gLTAuMDA2MTogYSBzcHJlYWQg
-b2YgMC4wMDk5LCBpLmUuIEFTIFdJREUgQVMgdGhlIGVudGlyZQojIHN1ZmZpY2llbmN5IHRocmVzaG9sZCAoLTAuMDEwKS4gSWYg
-YXJtQydzIG93biBzZWVkIHNwcmVhZCBpcyBjb21wYXJhYmxlLCB0aGVuIHRoZQojIH4wLjAxMSBnYXAgYmV0d2VlbiB0aGUgQ2hp
-bmEtc3VwcGx5YWJsZSBzZXQgYW5kIHRoaXMgYmFzZWxpbmUgaXMgcm91Z2hseSBvbmUgc2VlZAojIHNpZ21hIGFuZCB0aGUgdHdv
-IGFyZSBub3QgZGlzdGluZ3Vpc2hhYmxlLiBJZiBhcm1DIGlzIGluc3RlYWQgc3RhYmxlLCB0aGUgZ2FwIGlzIHJlYWwuCiMgRWl0
-aGVyIGFuc3dlciBjaGFuZ2VzIHdoYXQgd2UgY29uY2x1ZGUsIGFuZCBuZWl0aGVyIGNhbiBiZSBoYWQgZnJvbSBhIHNpbmdsZSBk
-cmF3LgojCiMgRXZlcnkgc3VmZmljaWVuY3kvdmV0byBjYWxsIGFscmVhZHkgbWFkZSAoYXJtSSBwYXNzZWQgYXQgLTAuMDA0OCwg
-YXJtRyBmYWlsZWQgYXQKIyAtMC4wMjc2LCB0aGUgMTMtY29sdW1uIGdsb2JhbCBzZXQgZmFpbGVkIGF0IC0wLjAzMDkpIHJlc3Rz
-IG9uIHRoaXMgb25lIHVucmVwbGljYXRlZAojIGJhc2VsaW5lLiBUaGVzZSB0d28gcnVucyBib3VuZCBob3cgbXVjaCBvZiB0aGF0
-IHJlc3RzIG9uIGx1Y2suCiMKIyBBdHRyaWJ1dGUgZmlsZXMgdW5jaGFuZ2VkIGFuZCBzaGFyZWQgd2l0aCB0aGUgc2VlZC00MiBy
-dW47IE9OTFkgLS1zZWVkIGRpZmZlcnMuCiMgYXJtQyBpcyBhIHB1cmUtVVMgYmxvY2ssIHNvIGl0IHJldXNlcyB0cmFpbmFibGVf
-bW91bnRhaW5fc3RhdGlvbnMuY3N2IHVudG91Y2hlZC4KCnNldCAtZW8gcGlwZWZhaWwKCnNvdXJjZSAvZGF0YTEvaG9tZS8ke1VT
-RVJ9L21pbmljb25kYTMvZXRjL3Byb2ZpbGUuZC9jb25kYS5zaCB8fCBzb3VyY2UgJEhPTUUvbWluaWNvbmRhMy9ldGMvcHJvZmls
-ZS5kL2NvbmRhLnNoCmNvbmRhIGFjdGl2YXRlICIke0NPTkRBX0VOVjotbmhfZmluYWx9IgoKZXhwb3J0IE1LTF9USFJFQURJTkdf
-TEFZRVI9R05VCmV4cG9ydCBNS0xfU0VSVklDRV9GT1JDRV9JTlRFTD0xCmV4cG9ydCBDVURBX0RFVklDRV9PUkRFUj1QQ0lfQlVT
-X0lECgpjZCAke1NMVVJNX1NVQk1JVF9ESVJ9CmV4cG9ydCBQWVRIT05QQVRIPSQocHdkKTokUFlUSE9OUEFUSApta2RpciAtcCBs
-b2dzL2F0dHJfc3dhcAoKZWNobyAiWyQoZGF0ZSldIEpvYiAkU0xVUk1fSk9CX0lEIG9uICQoaG9zdG5hbWUpIgpweXRob24gLWMg
-ImltcG9ydCB0b3JjaDsgcHJpbnQoZidQeVRvcmNoIHt0b3JjaC5fX3ZlcnNpb25fX30sIENVREEge3RvcmNoLmN1ZGEuaXNfYXZh
-aWxhYmxlKCl9JywgdG9yY2guY3VkYS5nZXRfZGV2aWNlX25hbWUoMCkgaWYgdG9yY2guY3VkYS5pc19hdmFpbGFibGUoKSBlbHNl
-ICcnKSIKCnB5dGhvbiAtIDw8J1BZQ0hLJyB8fCB7IGVjaG8gIltGQVRBTF0gbm8gdXNhYmxlIEdQVSBvbiAkKGhvc3RuYW1lKSAt
-LSByZWZ1c2luZyB0byB0cmFpbiBvbiBDUFUiOyBleGl0IDE7IH0KaW1wb3J0IHN5cywgdG9yY2gKc3lzLmV4aXQoMCBpZiB0b3Jj
-aC5jdWRhLmlzX2F2YWlsYWJsZSgpIGVsc2UgMSkKUFlDSEsKCnNydW4gcHl0aG9uIC11IHNjcmlwdHMvY2hhaW5fdHJhaW5fcV9h
-dHRyc2V0LnB5ICAgLS1zdGF0aWMgZGF0YS9pbnRlcmltL3N0YWdlX3N0YXRpY19mZWF0dXJlX3N0YXRzX3VzX21pbnVzX25ldHdv
-cmsuanNvbiAgIC0tbWV0YSBkYXRhL3Byb2Nlc3NlZC9zdGF0aW9uX21ldGEvdHJhaW5hYmxlX21vdW50YWluX3N0YXRpb25zLmNz
-diAgIC0tb3V0cHV0X2RpciBtb2RlbHMvcV9sc3RtX3VzbWludXM0X2hwY19zNDMgLS1zZWVkIDQzIC0tZXBvY2hzIDQwIC0tbnVt
-X3dvcmtlcnMgNAoKZWNobyAiWyQoZGF0ZSldIHRyYWluaW5nIGRvbmUiCnNydW4gcHl0aG9uIC11IHNjcmlwdHMvY2hhaW5fZXZh
-bF9xX2F0dHJzZXQucHkgICAtLXN0YXRpYyBkYXRhL2ludGVyaW0vc3RhZ2Vfc3RhdGljX2ZlYXR1cmVfc3RhdHNfdXNfbWludXNf
-bmV0d29yay5qc29uICAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRhaW5fc3RhdGlv
-bnMuY3N2ICAgLS1tb2RlbF9kaXIgbW9kZWxzL3FfbHN0bV91c21pbnVzNF9ocGNfczQzIC0tc3Vic2V0IHZhbCAtLW1heF9ob3Vy
-cyA0MzgwMAplY2hvICJbJChkYXRlKV0gRG9uZSAoZXhpdDogJD8pIgo=
-B64_hpc_train_q_armC_s43
-chmod 755 'scripts/hpc_train_q_armC_s43.sbatch'
-fi
-printf "  %-34s %s  expect 2ff7680f104d8e95
-" "hpc_train_q_armC_s43.sbatch" "$(sha256sum 'scripts/hpc_train_q_armC_s43.sbatch' | cut -c1-16)"
-if [ -f "scripts/hpc_train_q_armC_s44.sbatch" ]; then echo "  EXISTS: scripts/hpc_train_q_armC_s44.sbatch"; else
-base64 -d > 'scripts/hpc_train_q_armC_s44.sbatch' <<'B64_hpc_train_q_armC_s44'
-IyEvdXNyL2Jpbi9lbnYgYmFzaAojU0JBVENIIC1KIHFfYXJtQ191c19taW51c19uZXRfczQ0CiNTQkFUQ0ggLXAgaGdwdTJwLGhn
-cHUyLGhncHU0CiNTQkFUQ0ggLU4gMQojU0JBVENIIC1uIDEKI1NCQVRDSCAtLWNwdXMtcGVyLXRhc2s9NAojU0JBVENIIC0tZ3Jl
-cz1ncHU6MQojU0JBVENIIC0tZXhjbHVkZT1uZ3UwMDIKI1NCQVRDSCAtdCAyNDowMDowMAojU0JBVENIIC1vIGxvZ3MvYXR0cl9z
-d2FwL2FybUNfdXNfbWludXNfbmV0X3M0NC0lai5vdXQKI1NCQVRDSCAtZSBsb2dzL2F0dHJfc3dhcC9hcm1DX3VzX21pbnVzX25l
-dF9zNDQtJWouZXJyCgojIGFybUMgcmVwbGljYXRlLCBzZWVkIDQ0LiBhcm1DICgwLjY0NjYsIHNlZWQgNDIpIGlzIHRoZSBCQVNF
-TElORSBldmVyeSBzdWZmaWNpZW5jeQojIHZlcmRpY3QgaW4gdGhpcyBjYW1wYWlnbiBpcyBtZWFzdXJlZCBhZ2FpbnN0IC0tIGFu
-ZCBpdCBoYXMgb25seSBldmVyIGJlZW4gcnVuIG9uY2UuCiMKIyBXSFkgVEhJUyBNQVRURVJTIE5PVy4gYXJtSidzIHRocmVlIHNl
-ZWRzIGdhdmUgcGFpcmVkIG1lZGlhbnMgdnMgYXJtQyBvZgojIC0wLjAwOTggLyAtMC4wMTYwIC8gLTAuMDA2MTogYSBzcHJlYWQg
-b2YgMC4wMDk5LCBpLmUuIEFTIFdJREUgQVMgdGhlIGVudGlyZQojIHN1ZmZpY2llbmN5IHRocmVzaG9sZCAoLTAuMDEwKS4gSWYg
-YXJtQydzIG93biBzZWVkIHNwcmVhZCBpcyBjb21wYXJhYmxlLCB0aGVuIHRoZQojIH4wLjAxMSBnYXAgYmV0d2VlbiB0aGUgQ2hp
-bmEtc3VwcGx5YWJsZSBzZXQgYW5kIHRoaXMgYmFzZWxpbmUgaXMgcm91Z2hseSBvbmUgc2VlZAojIHNpZ21hIGFuZCB0aGUgdHdv
-IGFyZSBub3QgZGlzdGluZ3Vpc2hhYmxlLiBJZiBhcm1DIGlzIGluc3RlYWQgc3RhYmxlLCB0aGUgZ2FwIGlzIHJlYWwuCiMgRWl0
-aGVyIGFuc3dlciBjaGFuZ2VzIHdoYXQgd2UgY29uY2x1ZGUsIGFuZCBuZWl0aGVyIGNhbiBiZSBoYWQgZnJvbSBhIHNpbmdsZSBk
-cmF3LgojCiMgRXZlcnkgc3VmZmljaWVuY3kvdmV0byBjYWxsIGFscmVhZHkgbWFkZSAoYXJtSSBwYXNzZWQgYXQgLTAuMDA0OCwg
-YXJtRyBmYWlsZWQgYXQKIyAtMC4wMjc2LCB0aGUgMTMtY29sdW1uIGdsb2JhbCBzZXQgZmFpbGVkIGF0IC0wLjAzMDkpIHJlc3Rz
-IG9uIHRoaXMgb25lIHVucmVwbGljYXRlZAojIGJhc2VsaW5lLiBUaGVzZSB0d28gcnVucyBib3VuZCBob3cgbXVjaCBvZiB0aGF0
-IHJlc3RzIG9uIGx1Y2suCiMKIyBBdHRyaWJ1dGUgZmlsZXMgdW5jaGFuZ2VkIGFuZCBzaGFyZWQgd2l0aCB0aGUgc2VlZC00MiBy
-dW47IE9OTFkgLS1zZWVkIGRpZmZlcnMuCiMgYXJtQyBpcyBhIHB1cmUtVVMgYmxvY2ssIHNvIGl0IHJldXNlcyB0cmFpbmFibGVf
-bW91bnRhaW5fc3RhdGlvbnMuY3N2IHVudG91Y2hlZC4KCnNldCAtZW8gcGlwZWZhaWwKCnNvdXJjZSAvZGF0YTEvaG9tZS8ke1VT
-RVJ9L21pbmljb25kYTMvZXRjL3Byb2ZpbGUuZC9jb25kYS5zaCB8fCBzb3VyY2UgJEhPTUUvbWluaWNvbmRhMy9ldGMvcHJvZmls
-ZS5kL2NvbmRhLnNoCmNvbmRhIGFjdGl2YXRlICIke0NPTkRBX0VOVjotbmhfZmluYWx9IgoKZXhwb3J0IE1LTF9USFJFQURJTkdf
-TEFZRVI9R05VCmV4cG9ydCBNS0xfU0VSVklDRV9GT1JDRV9JTlRFTD0xCmV4cG9ydCBDVURBX0RFVklDRV9PUkRFUj1QQ0lfQlVT
-X0lECgpjZCAke1NMVVJNX1NVQk1JVF9ESVJ9CmV4cG9ydCBQWVRIT05QQVRIPSQocHdkKTokUFlUSE9OUEFUSApta2RpciAtcCBs
-b2dzL2F0dHJfc3dhcAoKZWNobyAiWyQoZGF0ZSldIEpvYiAkU0xVUk1fSk9CX0lEIG9uICQoaG9zdG5hbWUpIgpweXRob24gLWMg
-ImltcG9ydCB0b3JjaDsgcHJpbnQoZidQeVRvcmNoIHt0b3JjaC5fX3ZlcnNpb25fX30sIENVREEge3RvcmNoLmN1ZGEuaXNfYXZh
-aWxhYmxlKCl9JywgdG9yY2guY3VkYS5nZXRfZGV2aWNlX25hbWUoMCkgaWYgdG9yY2guY3VkYS5pc19hdmFpbGFibGUoKSBlbHNl
-ICcnKSIKCnB5dGhvbiAtIDw8J1BZQ0hLJyB8fCB7IGVjaG8gIltGQVRBTF0gbm8gdXNhYmxlIEdQVSBvbiAkKGhvc3RuYW1lKSAt
-LSByZWZ1c2luZyB0byB0cmFpbiBvbiBDUFUiOyBleGl0IDE7IH0KaW1wb3J0IHN5cywgdG9yY2gKc3lzLmV4aXQoMCBpZiB0b3Jj
-aC5jdWRhLmlzX2F2YWlsYWJsZSgpIGVsc2UgMSkKUFlDSEsKCnNydW4gcHl0aG9uIC11IHNjcmlwdHMvY2hhaW5fdHJhaW5fcV9h
-dHRyc2V0LnB5ICAgLS1zdGF0aWMgZGF0YS9pbnRlcmltL3N0YWdlX3N0YXRpY19mZWF0dXJlX3N0YXRzX3VzX21pbnVzX25ldHdv
-cmsuanNvbiAgIC0tbWV0YSBkYXRhL3Byb2Nlc3NlZC9zdGF0aW9uX21ldGEvdHJhaW5hYmxlX21vdW50YWluX3N0YXRpb25zLmNz
-diAgIC0tb3V0cHV0X2RpciBtb2RlbHMvcV9sc3RtX3VzbWludXM0X2hwY19zNDQgLS1zZWVkIDQ0IC0tZXBvY2hzIDQwIC0tbnVt
-X3dvcmtlcnMgNAoKZWNobyAiWyQoZGF0ZSldIHRyYWluaW5nIGRvbmUiCnNydW4gcHl0aG9uIC11IHNjcmlwdHMvY2hhaW5fZXZh
-bF9xX2F0dHJzZXQucHkgICAtLXN0YXRpYyBkYXRhL2ludGVyaW0vc3RhZ2Vfc3RhdGljX2ZlYXR1cmVfc3RhdHNfdXNfbWludXNf
-bmV0d29yay5qc29uICAgLS1tZXRhIGRhdGEvcHJvY2Vzc2VkL3N0YXRpb25fbWV0YS90cmFpbmFibGVfbW91bnRhaW5fc3RhdGlv
-bnMuY3N2ICAgLS1tb2RlbF9kaXIgbW9kZWxzL3FfbHN0bV91c21pbnVzNF9ocGNfczQ0IC0tc3Vic2V0IHZhbCAtLW1heF9ob3Vy
-cyA0MzgwMAplY2hvICJbJChkYXRlKV0gRG9uZSAoZXhpdDogJD8pIgo=
-B64_hpc_train_q_armC_s44
-chmod 755 'scripts/hpc_train_q_armC_s44.sbatch'
-fi
-printf "  %-34s %s  expect bccf3d9912f4f713
-" "hpc_train_q_armC_s44.sbatch" "$(sha256sum 'scripts/hpc_train_q_armC_s44.sbatch' | cut -c1-16)"
+echo "=== A. STATE ==="
+squeue -u $USER -o '%.11i %.26j %.9T %.10M %.9N %.9P' 2>&1 | grep -Ei 'armC|armJ|JOBID' || echo '  (none queued)'
+sacct -j 216687,216688 -X --format=JobID%10,JobName%24,State%12,ExitCode%8,Elapsed%11,NodeList%9 2>&1
 
-echo "=== B. PREFLIGHT: same attribute files as the seed-42 baseline ==="
-sha256sum data/interim/stage_static_feature_stats_us_minus_network.json \
-          data/processed/station_meta/trainable_mountain_stations.csv 2>&1 | cut -c1-16,65-
-python -c "import json;k=list(json.load(open('data/interim/stage_static_feature_stats_us_minus_network.json')));print('  armC attrs:',len(k))" 2>&1
-
-echo "=== C. SUBMIT ==="
-for S in 43 44; do
-  n=$(squeue -u $USER -h -o '%j' 2>/dev/null | grep -c "q_armC_us_minus_net_s${S}" || true)
-  [ "$n" != "0" ] && { echo "  s${S} already queued"; continue; }
-  [ -d models/q_lstm_usminus4_hpc_s${S} ] && { echo "  s${S} output dir exists -- skip"; continue; }
-  out=$(sbatch scripts/hpc_train_q_armC_s${S}.sbatch 2>&1); echo "  s${S}: $out"
-  echo "$out" | grep -qE 'Submitted batch job [0-9]+' || echo "  !! s${S} SUBMIT FAILED"
+echo "=== B. LOGS ==="
+for spec in '216687:s43' '216688:s44'; do
+  J=${spec%%:*}; S=${spec##*:}
+  f=logs/attr_swap/armC_us_minus_net_${S}-${J}.out
+  echo "--- armC $S (job $J) ---"
+  if [ ! -f "$f" ]; then echo "  (no log)"; continue; fi
+  echo "  bytes=$(stat -c%s "$f")  mtime=$(stat -c%y "$f" | cut -c1-19)"
+  grep -E "\[guard\]" "$f" 2>/dev/null | head -2 || true
+  grep -E "PyTorch .*CUDA" "$f" 2>/dev/null | head -1 || true
+  grep -E "RuntimeError|Traceback|CUDA error|FATAL|Killed|out of memory" "$f" 2>/dev/null | head -4 || echo "  errors: none"
+  grep -E "^Epoch|Best val median NSE|Done\." "$f" 2>/dev/null | tail -5 || true
 done
 
-echo "=== D. QUEUE ==="
-sleep 25
-squeue -u $USER -o '%.11i %.26j %.9T %.9M %.9N %.10P %.18R' 2>&1 | grep -Ei 'armC|armJ|JOBID' || true
-
-echo "=== E. armJ THREE-SEED SUMMARY (for the record) ==="
+echo "=== C. RESULTS SO FAR ==="
 for S in 42 43 44; do
-  d=models/q_lstm_armJ_hpc_s${S}
-  [ -f $d/best_metrics.json ] && python -c "import json,sys;m=json.load(open(sys.argv[1]));print(f'  armJ s${S}: median={m[\"median_nse\"]:.4f} epoch={m[\"epoch\"]}')" $d/best_metrics.json 2>&1 || echo "  armJ s${S}: absent"
+  d=models/q_lstm_usminus4_hpc_s${S}
+  if [ -f $d/best_metrics.json ]; then
+    dn=$(ls $d/eval_val_per_station.csv 2>/dev/null | wc -l)
+    python -c "import json,sys;m=json.load(open(sys.argv[1]));print(f'  armC s${S}: median={m[\"median_nse\"]:.4f} epoch={m[\"epoch\"]} perstation_csv=${dn}')" $d/best_metrics.json 2>&1
+  else echo "  armC s${S}: absent"; fi
 done
-echo "=== END seq=115 ==="
+
+echo "=== D. PAIRED: armC SEED SPREAD (the whole point) ==="
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null
+conda activate nh_final 2>/dev/null
+python - <<'PY' 2>&1
+import os, itertools
+import numpy as np, pandas as pd
+R='/data1/home/sunyiq/nature_1st/models'
+def load(d):
+    p=os.path.join(R,d,'eval_val_per_station.csv')
+    return pd.read_csv(p).set_index('station') if os.path.exists(p) else None
+C={s:load(f'q_lstm_usminus4_hpc_s{s}') for s in (42,43,44)}
+have=[s for s in (42,43,44) if C[s] is not None]
+print('armC seeds with per-station scores:', have)
+for s in have: print(f'  armC s{s}: median={C[s].nse.median():.4f}')
+rng=np.random.default_rng(0)
+def paired(A,B,la,lb):
+    j=B[['nse','stratum']].join(A[['nse']],lsuffix='_b',rsuffix='_a').dropna(subset=['nse_b','nse_a'])
+    d=(j.nse_b-j.nse_a).values
+    bs=[np.median(rng.choice(d,len(d),replace=True)) for _ in range(5000)]
+    print(f'  [{lb} vs {la}] paired_med={np.median(d):+.4f} 95%CI [{np.percentile(bs,2.5):+.4f},{np.percentile(bs,97.5):+.4f}]  drop>0.10={(d<-0.10).mean()*100:.1f}%')
+if len(have)>=2:
+    print('--- armC seed-vs-seed (this IS the baseline noise) ---')
+    for x,y in itertools.combinations(have,2): paired(C[x],C[y],f'armC_s{x}',f'armC_s{y}')
+print('--- armJ seeds vs EACH armC seed ---')
+J={s:load(f'q_lstm_armJ_hpc_s{s}') for s in (42,43,44)}
+for cs in have:
+    for js in (42,43,44):
+        if J[js] is not None: paired(C[cs],J[js],f'armC_s{cs}',f'armJ_s{js}')
+PY
+echo "=== END seq=116 ==="
