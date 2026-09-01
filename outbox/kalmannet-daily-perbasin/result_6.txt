@@ -1,0 +1,58 @@
+### channel=kalmannet-daily-perbasin seq=6
+### host=login4
+### started=2026-09-01T14:23:40+0800
+### ---------- output ----------
+=== READ-ONLY TERMINAL PROBE QUERY ===
+2026-09-01T14:23:40+0800
+login4
+channel=kalmannet-daily-perbasin sequence=6 purpose=read-only-terminal-probe-query
+signals_sent=0 submissions_created=0 files_modified=0
+=== SQUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== SACCT ===
+217269|kdpp-a800-probe-s5|hgpu8|COMPLETED|0:0|00:00:06|2026-09-01T14:17:19|2026-09-01T14:17:25|ngu202|billing=2,cpu=2,node=1
+=== EXACT NAME COUNTS ===
+active_exact_name=0
+historical_exact_name=1
+=== submission_receipt.txt ===
+ab4df856b2d5340740e5b7db85da0d7d328de5d500ddc24d067e446967c8c9ff  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE3_SEQ5/submission_receipt.txt
+channel=kalmannet-daily-perbasin
+sequence=5
+execution_id=DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE3_SEQ5
+job_name=kdpp-a800-probe-s5
+job_id=217269
+active_before=0
+historical_before=0
+active_after=1
+exact_name_after=1
+submission_count=1
+signals_sent=0
+=== slurm-217269.out ===
+7e0944a14bce7736678556abca68ae9841dec51251db450feea3435ad38eb428  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE3_SEQ5/slurm-217269.out
+0, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+1, GPU-fd1b1a7e-390d-4349-386e-017b06cc01f8, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+2, GPU-17d33582-136f-9e43-2c62-2afaff1475ff, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+3, GPU-99b30d93-fc05-833a-28af-fdc4ac99acca, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+4, GPU-82b5e390-a535-cc27-b14f-abaa72472f81, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+5, GPU-f3759903-156c-c443-7af1-f2b12ff6dd45, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+6, GPU-0e3208f9-45a0-4974-b8b7-49f42b642d7b, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+7, GPU-d3700f33-087d-65e8-f6c4-3c4f90c3e9d6, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+{"cuda_matrix_identity_exact": true, "cuda_runtime_version": "12.1", "formal_evaluation_access_count": 0, "gpu_free_bytes": 84617789440, "gpu_name": "NVIDIA A800-SXM4-80GB", "gpu_total_bytes": 85174583296, "hostname": "ngu202", "numpy_version": "2.3.3", "optimizer_steps": 0, "platform": "Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17", "purpose": "resource_and_environment_probe_only_no_training", "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "python_version": "3.11.13", "recorded_at_utc": "2026-09-01T06:16:51.049618+00:00", "schema_version": "daily_camels_knet_per_basin_a800_probe_v1", "slurm_job_id": "217269", "status": "PASS", "torch_version": "2.4.0", "training_forecast_error_events": 0, "visible_gpu_count": 1}
+=== slurm-217269.err ===
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE3_SEQ5/slurm-217269.err
+=== probe_receipt.json ===
+be039638e7b8625aa48ed3c044fff53c4d8c63504605d48c63ff1924167d4f65  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE3_SEQ5/probe_receipt.json
+{"cuda_matrix_identity_exact":true,"cuda_runtime_version":"12.1","formal_evaluation_access_count":0,"gpu_free_bytes":84617789440,"gpu_name":"NVIDIA A800-SXM4-80GB","gpu_total_bytes":85174583296,"hostname":"ngu202","numpy_version":"2.3.3","optimizer_steps":0,"platform":"Linux-3.10.0-1160.el7.x86_64-x86_64-with-glibc2.17","purpose":"resource_and_environment_probe_only_no_training","python_executable":"/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python","python_version":"3.11.13","recorded_at_utc":"2026-09-01T06:16:51.049618+00:00","schema_version":"daily_camels_knet_per_basin_a800_probe_v1","slurm_job_id":"217269","status":"PASS","torch_version":"2.4.0","training_forecast_error_events":0,"visible_gpu_count":1}
+=== CURRENT USER JOBS ===
+JOBID|NAME|PARTITION|STATE|NODELIST(REASON)|TIME|START_TIME|NODELIST
+202229|N22-agg-eval|hgpu4,hgpu8,hgpu2|PENDING|(DependencyNeverSatisfied)|0:00|N/A|
+202294|N22-export|hgpu4,hgpu8,hgpu2|PENDING|(Dependency)|0:00|N/A|
+202315|N22-gate|hgpu4,hgpu8,hgpu2|PENDING|(Dependency)|0:00|N/A|
+202507|N22-mask-iso-531|hgpu4,hgpu8,hgpu2|PENDING|(DependencyNeverSatisfied)|0:00|N/A|
+215429|id30_m01_s100|hgpu2|PENDING|(DependencyNeverSatisfied)|0:00|N/A|
+202293|N22-manifest|hgpu4,hgpu8,hgpu2|PENDING|(JobHeldUser)|0:00|N/A|
+216549|id31_development|hgpu2|RUNNING|ngu003|1-02:03:26|2026-08-31T12:20:14|ngu003
+=== QUERY COMPLETE: READ ONLY, NO TRAINING OR SIGNAL ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T14:23:40+0800
