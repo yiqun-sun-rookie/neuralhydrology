@@ -1,0 +1,11 @@
+### channel=kalmannet-tukf09-455 seq=43
+### host=login4
+### started=2026-09-01T08:00:52+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 288, in <module>
+  File "<stdin>", line 91, in rename_noreplace
+OSError: [Errno 22] Invalid argument: '/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v1_20260901'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-01T08:01:02+0800
