@@ -1,0 +1,23 @@
+### channel=kalmannet-wrr-lr-boundary seq=2
+### host=login4
+### started=2026-09-01T16:10:18+0800
+### ---------- output ----------
+=== DATA_SHA256 ===
+3a4f94a2562278f09b67853ac77e060766296007cb8f8a762756ffe792792440  /data1/home/sunyiq/knet_project/data/processed/high_flow_aug/train_win800_19990101_01-20070527_03.pt
+2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403  /data1/home/sunyiq/knet_project/data/processed/high_flow_aug/val_win800_20070527_04-20090314_13.pt
+=== KNET_CLEAN_RUNTIME ===
+python 3.11.13 | packaged by conda-forge | (main, Jun  4 2025, 14:48:23) [GCC 13.3.0]
+platform Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17
+torch 2.4.0
+cuda_build 12.1
+cudnn 90100
+numpy 2.3.3
+pyyaml 6.0.2
+optuna 4.5.0
+cuda_on_login False
+=== EXACT_DATA_METADATA ===
+/data1/home/sunyiq/knet_project/data/processed/high_flow_aug/train_win800_19990101_01-20070527_03.pt|bytes=4381521|mtime=2025-10-24 17:59:39.000000000 +0800
+/data1/home/sunyiq/knet_project/data/processed/high_flow_aug/val_win800_20070527_04-20090314_13.pt|bytes=570687|mtime=2025-10-24 17:59:45.000000000 +0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T16:10:38+0800
