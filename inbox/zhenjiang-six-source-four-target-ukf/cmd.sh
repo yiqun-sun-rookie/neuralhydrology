@@ -305,6 +305,298 @@ for seed in (17, 29, 43):
     )
 PY
 
+printf '=== DEVELOPMENT_EVALUATION_DEEP_VERIFICATION ===\n'
+python - "${ROOT}" <<'PY' || true
+from __future__ import annotations
+
+import csv
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+
+def load_json(path: Path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_csv(path: Path):
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
+def digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def compact(value) -> str:
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+root = Path(sys.argv[1])
+evaluation = root / "evidence/development_2023/evaluation/attempt_001"
+evaluation_partial = Path(f"{evaluation}.partial")
+audit_directory = root / "evidence/development_2023/independent_audit/attempt_001"
+audit_partial = Path(f"{audit_directory}.partial")
+print(
+    "EVAL_PATH_STATE"
+    f"|final={str(evaluation.is_dir()).lower()}"
+    f"|partial={str(evaluation_partial.exists()).lower()}"
+)
+print(
+    "INDEPENDENT_AUDIT_PATH_STATE"
+    f"|final={str(audit_directory.is_dir()).lower()}"
+    f"|partial={str(audit_partial.exists()).lower()}"
+)
+
+if evaluation.is_dir():
+    expected_names = {
+        "development_access_started.json",
+        "future_sufficient_statistics.csv",
+        "analysis_observation_sufficient_statistics.csv",
+        "analysis_target_sufficient_statistics.csv",
+        "state_difference_sufficient_statistics.csv",
+        "base_qualification_sufficient_statistics.csv",
+        "observation_head_qualification_sufficient_statistics.csv",
+        "base_observation_head_qualification.json",
+        "observation_dependency_perturbation_evidence.npz",
+        "base_and_three_branch_forecast_metrics.csv",
+        "source_target_lead_metrics.csv",
+        "source_target_window_metrics.csv",
+        "six_source_four_target_gain_matrix.csv",
+        "internal_four_by_four_gain_matrix.csv",
+        "boundary_to_internal_gain_matrix.csv",
+        "analysis_realtime_observation_diagnostics.csv",
+        "analysis_target_space_gain_matrix.csv",
+        "forecast_movement_matrix.csv",
+        "reciprocal_direction_summary.csv",
+        "bootstrap_summary.json",
+        "development_gate_decision.json",
+        "sufficient_grid_identity.json",
+        "state_difference_diagnostics.csv",
+        "completion_manifest.json",
+    }
+    entries = sorted(evaluation.rglob("*"))
+    files = [path for path in entries if path.is_file() and not path.is_symlink()]
+    links = [path for path in entries if path.is_symlink()]
+    directories = [path for path in entries if path.is_dir() and path != evaluation]
+    names = {path.relative_to(evaluation).as_posix() for path in files}
+    print(
+        "EVAL_FILE_SET"
+        f"|ordinary_files={len(files)}|links={len(links)}"
+        f"|subdirectories={len(directories)}|exact={str(names == expected_names).lower()}"
+        f"|names={','.join(sorted(names))}"
+    )
+    manifest_path = evaluation / "completion_manifest.json"
+    manifest = load_json(manifest_path)
+    registered_rows = manifest.get("files", [])
+    registered = {
+        row.get("name"): row for row in registered_rows if isinstance(row, dict)
+    }
+    registered_match = True
+    for name, row in sorted(registered.items()):
+        path = evaluation / name
+        matches = bool(
+            path.is_file()
+            and not path.is_symlink()
+            and path.stat().st_size == row.get("byte_count")
+            and digest(path) == row.get("sha256")
+        )
+        registered_match = registered_match and matches
+        print(
+            "EVAL_FILE"
+            f"|name={name}|bytes={path.stat().st_size if path.is_file() else None}"
+            f"|sha256={digest(path) if path.is_file() else None}"
+            f"|registered_match={str(matches).lower()}"
+        )
+    access = manifest.get("development_data_access_audit", {})
+    forbidden_fields = (
+        "heldout_target_bytes_read",
+        "heldout_target_rows_parsed",
+        "heldout_target_values_loaded",
+        "boundary_target_bytes_read",
+        "boundary_target_rows_parsed",
+        "boundary_target_values_loaded",
+    )
+    forbidden_zero = all(
+        type(access.get(name)) is int and access.get(name) == 0
+        for name in forbidden_fields
+    )
+    artifact_identities = manifest.get("frozen_artifact_identities", [])
+    frozen_paths = {
+        value
+        for row in artifact_identities
+        if isinstance(row, dict)
+        for key, value in row.items()
+        if key.endswith("_path") and isinstance(value, str)
+    }
+    print(
+        "EVAL_MANIFEST_CHECK"
+        f"|status={manifest.get('status')}"
+        f"|manifest_sha256={digest(manifest_path)}"
+        f"|file_count_excluding_manifest={manifest.get('file_count_excluding_manifest')}"
+        f"|registered_files={len(registered_rows)}"
+        f"|all_registered_match={str(registered_match).lower()}"
+        f"|synthetic_test_mode={manifest.get('synthetic_test_mode')}"
+        f"|real_target_loader_present={manifest.get('real_target_loader_present')}"
+        f"|development_loader_call_count={manifest.get('development_loader_call_count')}"
+        f"|development_dataset_instance_count={manifest.get('development_dataset_instance_count')}"
+        f"|seed_evaluation_count={manifest.get('seed_evaluation_count')}"
+        f"|development_access_started_before_loader={manifest.get('development_access_started_before_loader')}"
+        f"|dependency_evidence_contains_target_values={manifest.get('dependency_evidence_contains_target_values')}"
+        f"|held_out_2024_target_access_count={manifest.get('held_out_2024_target_access_count')}"
+        f"|boundary_future_target_access_count={manifest.get('boundary_future_target_access_count')}"
+        f"|frozen_seed_identity_count={len(artifact_identities)}"
+        f"|frozen_unique_artifact_path_count={len(frozen_paths)}"
+    )
+    print(
+        "EVAL_ACCESS_AUDIT"
+        f"|opened_paths={len(access.get('opened_paths', []))}"
+        f"|development_feature_rows_parsed={access.get('development_feature_rows_parsed')}"
+        f"|development_target_rows_parsed={access.get('development_target_rows_parsed')}"
+        f"|astronomical_tide_model_open_count={access.get('astronomical_tide_model_open_count')}"
+        f"|target_rows_by_period={compact(access.get('target_rows_by_period', {}))}"
+        f"|forbidden_counters_integer_zero={str(forbidden_zero).lower()}"
+    )
+    marker = load_json(evaluation / "development_access_started.json")
+    print(
+        "EVAL_ACCESS_MARKER"
+        f"|status={marker.get('status')}|claimed_at_utc={marker.get('claimed_at_utc')}"
+        f"|frozen_artifact_count={marker.get('frozen_artifact_count')}"
+        f"|held_out_2024_target_access_authorized={marker.get('held_out_2024_target_access_authorized')}"
+        f"|boundary_future_target_access_authorized={marker.get('boundary_future_target_access_authorized')}"
+        f"|sha256_matches_manifest={str(digest(evaluation / 'development_access_started.json') == manifest.get('development_access_marker_sha256')).lower()}"
+    )
+    qualification = load_json(evaluation / "base_observation_head_qualification.json")
+    print(
+        "QUALIFICATION_SUMMARY"
+        f"|passed={qualification.get('passed')}"
+        f"|gates={compact(qualification.get('gates', {}))}"
+        f"|target_pooled_count={len(qualification.get('target_pooled_results', []))}"
+        f"|observation_pooled_count={len(qualification.get('observation_head_pooled_results', []))}"
+        f"|target_seed_diagnostic_count={len(qualification.get('target_seed_results', []))}"
+        f"|observation_seed_diagnostic_count={len(qualification.get('observation_head_seed_results', []))}"
+        f"|design_diagnostic_count={len(qualification.get('observation_head_design_diagnostics', []))}"
+    )
+    for row in qualification.get("target_pooled_results", []):
+        print("QUALIFICATION_TARGET|" + compact(row))
+    for row in qualification.get("observation_head_pooled_results", []):
+        print("QUALIFICATION_OBSERVATION_HEAD|" + compact(row))
+    for row in qualification.get("observation_head_design_diagnostics", []):
+        print("QUALIFICATION_OBSERVATION_HEAD_DESIGN|" + compact(row))
+    observation_rows = load_csv(evaluation / "analysis_realtime_observation_diagnostics.csv")
+    print(f"ANALYSIS_UPDATE_ROW_COUNT|count={len(observation_rows)}")
+    for row in observation_rows:
+        print("ANALYSIS_UPDATE|" + compact(row))
+    decision = load_json(evaluation / "development_gate_decision.json")
+    forecast = decision.get("forecast_direction_decision", {})
+    print(
+        "DEVELOPMENT_GATE_DECISION"
+        f"|status={decision.get('status')}"
+        f"|identity_gate_pass={decision.get('identity_gate_pass')}"
+        f"|base_observation_head_qualification_pass={decision.get('base_observation_head_qualification_pass')}"
+        f"|analysis_observation_update_pass={decision.get('analysis_observation_update_pass')}"
+        f"|self_forecast_gate_pass={decision.get('self_forecast_gate_pass')}"
+        f"|cross_station_gate_pass={decision.get('cross_station_gate_pass')}"
+        f"|cross_station_status={decision.get('cross_station_status')}"
+        f"|forecast_direction_gate_pass={decision.get('forecast_direction_gate_pass')}"
+        f"|practical_magnitude_gate={decision.get('practical_magnitude_gate')}"
+    )
+    print("FORECAST_DIRECTION_GATES|" + compact(forecast.get("gates", {})))
+    for row in forecast.get("self_cells", []):
+        print("SELF_FORECAST_GATE_CELL|" + compact(row))
+    for row in forecast.get("adjacent_directions", []):
+        print("ADJACENT_DIRECTION_GATE_CELL|" + compact(row))
+    matrix_rows = load_csv(evaluation / "six_source_four_target_gain_matrix.csv")
+    matrix_contract = bool(
+        len(matrix_rows) == 24
+        and all(row.get("scope") == "pooled_three_seeds" for row in matrix_rows)
+        and all(row.get("window_name") == "post_update_1_to_6" for row in matrix_rows)
+    )
+    print(f"GAIN_MATRIX_ROW_COUNT|count={len(matrix_rows)}|contract={str(matrix_contract).lower()}")
+    for row in matrix_rows:
+        print("GAIN_MATRIX_CELL|" + compact(row))
+    bootstrap = load_json(evaluation / "bootstrap_summary.json")
+    print("BOOTSTRAP_SAMPLING|" + compact(bootstrap.get("sampling", {})))
+    for name in ("cross_20_macro", "internal_12_macro", "boundary_8_macro"):
+        print("BOOTSTRAP_MACRO|key=" + name + "|" + compact(bootstrap.get(name, {})))
+    for row in bootstrap.get("target_column_cross_macros", []):
+        print("BOOTSTRAP_TARGET_COLUMN|" + compact(row))
+    for row in bootstrap.get("cell_summaries", []):
+        print("BOOTSTRAP_CELL|" + compact(row))
+    window_rows = load_csv(evaluation / "source_target_window_metrics.csv")
+    selected_self_seed_rows = [
+        row for row in window_rows
+        if row.get("window_name") == "post_update_1_to_6"
+        and row.get("scope") in {"seed_17", "seed_29", "seed_43"}
+        and row.get("is_self", "").lower() == "true"
+    ]
+    print(f"SELF_SEED_WINDOW_ROW_COUNT|count={len(selected_self_seed_rows)}")
+    for row in selected_self_seed_rows:
+        print("SELF_SEED_WINDOW|" + compact(row))
+    reciprocal_rows = load_csv(evaluation / "reciprocal_direction_summary.csv")
+    print(f"RECIPROCAL_DIRECTION_ROW_COUNT|count={len(reciprocal_rows)}")
+    for row in reciprocal_rows:
+        print("RECIPROCAL_DIRECTION|" + compact(row))
+
+if audit_directory.is_dir():
+    entries = sorted(audit_directory.rglob("*"))
+    files = [path for path in entries if path.is_file() and not path.is_symlink()]
+    links = [path for path in entries if path.is_symlink()]
+    directories = [path for path in entries if path.is_dir() and path != audit_directory]
+    names = {path.relative_to(audit_directory).as_posix() for path in files}
+    print(
+        "INDEPENDENT_AUDIT_FILE_SET"
+        f"|ordinary_files={len(files)}|links={len(links)}|subdirectories={len(directories)}"
+        f"|exact={str(names == {'completion_manifest.json', 'independent_audit_report.json'}).lower()}"
+        f"|names={','.join(sorted(names))}"
+    )
+    audit_manifest_path = audit_directory / "completion_manifest.json"
+    audit_report_path = audit_directory / "independent_audit_report.json"
+    audit_manifest = load_json(audit_manifest_path)
+    audit_report = load_json(audit_report_path)
+    rows = audit_manifest.get("files", [])
+    row = rows[0] if len(rows) == 1 and isinstance(rows[0], dict) else {}
+    report_hash = digest(audit_report_path)
+    evaluation_manifest_hash = (
+        digest(evaluation / "completion_manifest.json") if evaluation.is_dir() else None
+    )
+    print(
+        "INDEPENDENT_AUDIT_MANIFEST_CHECK"
+        f"|status={audit_manifest.get('status')}"
+        f"|manifest_sha256={digest(audit_manifest_path)}"
+        f"|file_count_excluding_manifest={audit_manifest.get('file_count_excluding_manifest')}"
+        f"|report_name={row.get('name')}"
+        f"|report_bytes_match={str(row.get('byte_count') == audit_report_path.stat().st_size).lower()}"
+        f"|report_sha256={report_hash}"
+        f"|report_sha256_match={str(row.get('sha256') == report_hash).lower()}"
+        f"|evaluation_manifest_sha256={audit_manifest.get('evaluation_manifest_sha256')}"
+        f"|evaluation_manifest_sha256_match={str(audit_manifest.get('evaluation_manifest_sha256') == evaluation_manifest_hash).lower()}"
+        f"|held_out_2024_target_access_count={audit_manifest.get('held_out_2024_target_access_count')}"
+        f"|boundary_future_target_access_count={audit_manifest.get('boundary_future_target_access_count')}"
+    )
+    print(
+        "INDEPENDENT_AUDIT_REPORT"
+        f"|status={audit_report.get('status')}"
+        f"|evaluation_manifest_sha256={audit_report.get('evaluation_manifest_sha256')}"
+        f"|evaluation_manifest_sha256_match={str(audit_report.get('evaluation_manifest_sha256') == evaluation_manifest_hash).lower()}"
+        f"|manifest_file_count={audit_report.get('manifest_file_count')}"
+        f"|future_sufficient_row_count={audit_report.get('future_sufficient_row_count')}"
+        f"|source_target_lead_row_count={audit_report.get('source_target_lead_row_count')}"
+        f"|bootstrap_repeat_count={audit_report.get('bootstrap_repeat_count')}"
+        f"|holm_internal_direction_count={audit_report.get('holm_internal_direction_count')}"
+        f"|holm_boundary_direction_count={audit_report.get('holm_boundary_direction_count')}"
+        f"|exact_key_boolean_and_count_mismatch_count={audit_report.get('exact_key_boolean_and_count_mismatch_count')}"
+        f"|float64_numeric_mismatch_count={audit_report.get('float64_numeric_mismatch_count')}"
+        f"|main_metrics_module_imported={audit_report.get('main_metrics_module_imported')}"
+        f"|base_observation_head_qualification_reconstructed={audit_report.get('base_observation_head_qualification_reconstructed')}"
+    )
+    print(
+        "INDEPENDENT_AUDIT_DEPENDENCY_PERTURBATION|"
+        + compact(audit_report.get("dependency_perturbation_audit", {}))
+    )
+PY
+
 printf '=== LOG_TAILS_AND_ERROR_SCAN ===\n'
 for job_id in ${IDS_SPACE}; do
   for file in "${ROOT}/logs/"*"${job_id}"*.out "${ROOT}/logs/"*"${job_id}"*.err; do
