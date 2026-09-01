@@ -13,7 +13,7 @@ EXPECTED_SUBMISSION_RECEIPT_SHA256="8d3c249cec64c5e4c9230ea995fbb528dc5658c59247
 echo '=== READ-ONLY 04105700 FRAMEWORK-FREE PROGRESS QUERY ==='
 date --iso-8601=seconds
 hostname
-echo 'channel=kalmannet-daily-perbasin sequence=14 purpose=read-only-first-pilot-runtime-gate-and-training-progress'
+echo 'channel=kalmannet-daily-perbasin sequence=15 purpose=read-only-first-pilot-mid-training-progress'
 echo 'signals_sent=0 submissions_created=0 files_modified=0'
 
 if [[ ! -f "${SUBMISSION_RECEIPT}" ]] || \
