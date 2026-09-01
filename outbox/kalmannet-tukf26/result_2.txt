@@ -1,0 +1,15 @@
+### channel=kalmannet-tukf26 seq=2
+### host=login4
+### started=2026-09-01T14:19:38+0800
+### ---------- output ----------
+=== ANCHOR JOB 217266 ===
+COMPLETED|0:0|00:02:32
+=== ANCHOR GATE VERDICT ===
+pass: True passed: 27 / 27
+max_delta: 4.86733680138407e-07
+=== SBATCH TIMING CELL (y6 joint, 6 updates, this platform) ===
+Submitted batch job 217271
+SEQ2_OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T14:19:40+0800
