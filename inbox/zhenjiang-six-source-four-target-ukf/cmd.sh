@@ -13,10 +13,10 @@ printf '=== SQUEUE ===\n'
 squeue -j "${IDS_CSV}" -o '%i|%j|%T|%P|%N|%M|%l|%R' || true
 
 printf '=== START_ESTIMATE ===\n'
-squeue --start -j '217805' -o '%i|%j|%T|%S|%R' 2>&1 || true
+squeue --start -j '217809' -o '%i|%j|%T|%S|%R' 2>&1 || true
 
 printf '=== PRIORITY_DETAIL ===\n'
-sprio -j '217805' 2>&1 || true
+sprio -j '217809' 2>&1 || true
 
 printf '=== SACCT ===\n'
 sacct -j "${IDS_CSV}" --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList -P -n || true
@@ -72,6 +72,111 @@ do
     printf 'ABSENT|%s\n' "${path}"
   fi
 done
+
+printf '=== BASE_OUTPUT_DEEP_VERIFICATION ===\n'
+python - "${ROOT}" <<'PY' || true
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+root = Path(sys.argv[1])
+expected_names = {
+    "best_checkpoint.pt",
+    "last_checkpoint.pt",
+    "run_identity.json",
+    "training_history.json",
+    "completion_manifest.json",
+}
+for seed in (17, 29, 43):
+    final = root / f"runs/base/s{seed}/attempt_001"
+    partial = Path(f"{final}.partial")
+    print(
+        "BASE_PATH_STATE"
+        f"|seed={seed}|final={str(final.is_dir()).lower()}"
+        f"|partial={str(partial.exists()).lower()}"
+    )
+    if not final.is_dir():
+        continue
+    entries = sorted(final.rglob("*"))
+    files = [path for path in entries if path.is_file() and not path.is_symlink()]
+    links = [path for path in entries if path.is_symlink()]
+    directories = [path for path in entries if path.is_dir() and path != final]
+    relative_names = {path.relative_to(final).as_posix() for path in files}
+    print(
+        "BASE_FILE_SET"
+        f"|seed={seed}|ordinary_files={len(files)}|links={len(links)}"
+        f"|subdirectories={len(directories)}"
+        f"|exact={str(relative_names == expected_names).lower()}"
+        f"|names={','.join(sorted(relative_names))}"
+    )
+    manifest_path = final / "completion_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    registered = manifest.get("files", {})
+    all_registered_match = True
+    for path in files:
+        relative = path.relative_to(final).as_posix()
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        row = registered.get(relative)
+        matches = (
+            relative == "completion_manifest.json"
+            or (
+                isinstance(row, dict)
+                and row.get("byte_count") == path.stat().st_size
+                and row.get("sha256") == digest
+            )
+        )
+        if relative != "completion_manifest.json":
+            all_registered_match = all_registered_match and matches
+        print(
+            "BASE_FILE"
+            f"|seed={seed}|name={relative}|bytes={path.stat().st_size}"
+            f"|sha256={digest}|registered_match={str(matches).lower()}"
+        )
+    print(
+        "BASE_MANIFEST_CHECK"
+        f"|seed={seed}|status={manifest.get('status')}"
+        f"|registered_files={len(registered)}"
+        f"|all_registered_match={str(all_registered_match).lower()}"
+    )
+    identity = json.loads((final / "run_identity.json").read_text(encoding="utf-8"))
+    audit = identity.get("data_access_audit", {})
+    periods = audit.get("target_rows_by_period", {})
+    forbidden_fields = (
+        "development_feature_bytes_read",
+        "development_feature_rows_parsed",
+        "development_feature_values_loaded",
+        "development_target_bytes_read",
+        "development_target_rows_parsed",
+        "development_target_values_loaded",
+        "heldout_target_bytes_read",
+        "heldout_target_rows_parsed",
+        "heldout_target_values_loaded",
+        "boundary_target_bytes_read",
+        "boundary_target_rows_parsed",
+        "boundary_target_values_loaded",
+    )
+    forbidden_values = {name: audit.get(name) for name in forbidden_fields}
+    forbidden_zero = all(type(value) is int and value == 0 for value in forbidden_values.values())
+    total_prefix_bytes = sum(audit.get("bytes_read_by_path", {}).values())
+    print(
+        "BASE_IDENTITY"
+        f"|seed={seed}|task_id={identity.get('task_id')}|stage={identity.get('stage')}"
+        f"|registered_output_path={identity.get('registered_output_path')}"
+        f"|registry_sha256={identity.get('registry_sha256')}"
+        f"|input_manifest_sha256={identity.get('training_selection_input_manifest_sha256')}"
+    )
+    print(
+        "BASE_ACCESS_AUDIT"
+        f"|seed={seed}|opened_paths={len(audit.get('opened_paths', []))}"
+        f"|prefix_bytes={total_prefix_bytes}"
+        f"|target_rows_by_period={json.dumps(periods, sort_keys=True, separators=(',', ':'))}"
+        f"|astronomical_tide_model_open_count={audit.get('astronomical_tide_model_open_count')}"
+        f"|forbidden_counters_integer_zero={str(forbidden_zero).lower()}"
+    )
+PY
 
 printf '=== LOG_TAILS_AND_ERROR_SCAN ===\n'
 for job_id in ${IDS_SPACE}; do
