@@ -28,6 +28,12 @@ RESULT_52_SIZE=890
 RESULT_52_SHA=494c96538fd8cd60e1cbfb17775cfa77b3eb20844c55fbbb9f4713370ad1f5b5
 SUBMISSION_COMMIT=8fa2fad8bf45052b5ffd151f9a303a6bb8e09d1f
 SUBMISSION_COMMAND_SHA=b49982edfb884865462dffffa0dd44a2f4f0a06b867b9fdbecc73aacd75d915c
+RESULT_53="${MAILBOX_ROOT}/outbox/kalmannet-tukf09-455/result_53.txt"
+RESULT_53_COMMIT=34609eb1546351904c042fb26e23ee28cac288dc
+RESULT_53_SIZE=1109
+RESULT_53_SHA=4fe2bf937e4a6e9065b404b8a2eff72ed7131be08ba40bc321ca2a22c2a2f24b
+INSPECTION_53_COMMIT=2d0785fa89afb0bea55336273a7b7d0aa5265e28
+INSPECTION_53_COMMAND_SHA=b6060fa1fb119101f13dca945c13159da7aba710741fce728ff4df870de76cf4
 PYTHON=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
 export PYTHONNOUSERSITE=1
 export PYTHONDWRITEBYTECODE=1
@@ -62,6 +68,35 @@ assert lines[-1].startswith("### finished=")
 assert lines.count(f"Submitted batch job {job_id}") == 1
 assert f"PREPARATION_JOB_ID={job_id}" in lines
 assert "TUKF09_455_A800_EXCLUSIVE_V2R4_OFFLINE_PREPARATION_SUBMITTED_ONCE" in lines
+PY
+
+echo "=== FROZEN SEQUENCE 53 INSPECTION EVIDENCE ==="
+[[ -f "${RESULT_53}" && ! -L "${RESULT_53}" ]] || fail "sequence 53 result is missing, linked, or irregular"
+[[ "$(stat -c '%h' "${RESULT_53}")" -eq 1 ]] || fail "sequence 53 result hard-link count changed"
+[[ "$(stat -c '%s' "${RESULT_53}")" -eq "${RESULT_53_SIZE}" ]] || fail "sequence 53 result size changed"
+[[ "$(sha256sum "${RESULT_53}" | awk '{print $1}')" = "${RESULT_53_SHA}" ]] || fail "sequence 53 result hash changed"
+[[ "$(git log -1 --format=%H -- outbox/kalmannet-tukf09-455/result_53.txt)" = "${RESULT_53_COMMIT}" ]] || fail "sequence 53 result commit changed"
+[[ "$(git diff-tree --no-commit-id --name-only -r "${RESULT_53_COMMIT}")" = "outbox/kalmannet-tukf09-455/result_53.txt" ]] || fail "sequence 53 result commit surface changed"
+git merge-base --is-ancestor "${INSPECTION_53_COMMIT}" "${RESULT_53_COMMIT}" || fail "sequence 53 command is not an ancestor of its result"
+[[ "$(git show "${INSPECTION_53_COMMIT}:inbox/kalmannet-tukf09-455/cmd.sh" | sha256sum | awk '{print $1}')" = "${INSPECTION_53_COMMAND_SHA}" ]] || fail "sequence 53 inspection command hash changed"
+
+"${PYTHON}" -B - "${RESULT_53}" "${JOB_ID}" <<'PY'
+from pathlib import Path
+import sys
+
+lines = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+job_id = sys.argv[2]
+assert lines[0] == "### channel=kalmannet-tukf09-455 seq=53"
+assert lines[1] == "### host=login4"
+assert lines[-2] == "### exit_code=1"
+assert lines[-1].startswith("### finished=")
+assert any(line.startswith(f"{job_id}|tukf09-455-v2r4-prepare|hgpu8|COMPLETED|0:0|") for line in lines)
+assert "STDERR_SIZE=0" in lines
+assert "STDERR_SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" in lines
+assert "STDOUT_LAST_LINE=TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED" in lines
+assert "=== STRICT PREPARATION ARTIFACT GATES ===" in lines
+assert "KeyError: 'data_file_count'" in lines
+assert not any(line.startswith("FATAL:") for line in lines)
 PY
 
 echo "=== FROZEN PREPARATION JOB RECORD ==="
@@ -210,11 +245,11 @@ capsule = stage.verify_source_capsule_evidence(
     config=config,
     label="staged training source manifest",
 )
-assert capsule["data_file_count"] == 911
-assert capsule["evidence_file_count"] == 3
-assert capsule["directory_count"] == 44
-assert capsule["data_total_bytes"] == 464792200
-assert capsule["data_identity_sha256"] == "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da"
+assert capsule["source_capsule_data_file_count"] == 911
+assert capsule["source_capsule_evidence_file_count"] == 3
+assert capsule["source_capsule_directory_count"] == 44
+assert capsule["source_capsule_data_total_bytes"] == 464792200
+assert capsule["source_capsule_data_identity_sha256"] == "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da"
 records = {
     name: {"sha256": staged["file_sha256"][name], "size_bytes": staged["file_size"][name]}
     for name in staged["file_sha256"]
