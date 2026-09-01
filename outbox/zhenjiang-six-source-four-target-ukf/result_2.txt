@@ -1,0 +1,17 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=2
+### host=login4
+### started=2026-09-01T16:44:48+0800
+### ---------- output ----------
+=== EXCLUSIVE_ROOT_PREFLIGHT ===
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1.partial
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1.staging
+bundle_identity_preflight=passed
+cp: invalid argument ‘never’ for ‘--reflink’
+Valid arguments are:
+  - ‘auto’
+  - ‘always’
+Try 'cp --help' for more information.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-01T16:44:49+0800
