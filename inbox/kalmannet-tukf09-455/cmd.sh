@@ -1,392 +1,365 @@
 #!/bin/bash
-# Publish a new read-only 911-file source capsule under an exclusively created
-# root. Exact READY.json plus root mode 0555 is the validity gate on this NFS;
-# changing the root from 0700 to 0555 is the final atomic publication step.
-# The preserved v1 pending capsule is read only; no job or evaluation is run.
-set -eo pipefail
+# Independent read-only post-publication audit of source capsule v2. This
+# command does not submit a job, mutate a file, train, predict, score, or read
+# any formal-evaluation array.
+set -euo pipefail
 umask 077
 
-V1_PENDING=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v1_20260901.pending.seq43
-V1_DATA="${V1_PENDING}/data/camels_us"
-V1_MANIFEST="${V1_PENDING}/evidence/source_capsule_manifest.json"
-V2_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901
+CAPSULE_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901
+V1_PENDING_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v1_20260901.pending.seq43
+V2R3_PROJECT_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901/bundle/kalmannet
+RAW_MANIFEST="${V2R3_PROJECT_ROOT}/artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/preflight/raw_source_manifest.sha256.json"
 PYTHON=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
 COMMAND_SHA256="$(sha256sum "${BASH_SOURCE[0]}" | awk '{print $1}')"
 export PYTHONNOUSERSITE=1
 export PYTHONDONTWRITEBYTECODE=1
 
-[[ -d "${V1_PENDING}" && ! -L "${V1_PENDING}" ]] || { echo "FATAL: preserved v1 pending root is absent or linked" >&2; exit 1; }
-[[ -d "${V1_DATA}" && ! -L "${V1_DATA}" ]] || { echo "FATAL: preserved v1 data root is absent or linked" >&2; exit 1; }
-[[ -f "${V1_MANIFEST}" && ! -L "${V1_MANIFEST}" ]] || { echo "FATAL: preserved v1 manifest is absent or linked" >&2; exit 1; }
-[[ ! -e "${V2_ROOT}" && ! -L "${V2_ROOT}" ]] || { echo "FATAL: v2 capsule root already exists" >&2; exit 1; }
 [[ -x "${PYTHON}" ]] || { echo "FATAL: bootstrap Python is unavailable" >&2; exit 1; }
+[[ -d "${CAPSULE_ROOT}" && ! -L "${CAPSULE_ROOT}" ]] || { echo "FATAL: capsule root is absent or linked" >&2; exit 1; }
+[[ -f "${RAW_MANIFEST}" && ! -L "${RAW_MANIFEST}" ]] || { echo "FATAL: raw manifest is absent or linked" >&2; exit 1; }
+FILESYSTEM_TYPE="$(stat --file-system --format=%T -- "${CAPSULE_ROOT}")"
+[[ "${FILESYSTEM_TYPE}" == nfs* ]] || { echo "FATAL: capsule is not on NFS: ${FILESYSTEM_TYPE}" >&2; exit 1; }
+echo "FILESYSTEM_TYPE=${FILESYSTEM_TYPE}"
 
-"${PYTHON}" -B - "${V1_PENDING}" "${V1_DATA}" "${V1_MANIFEST}" "${V2_ROOT}" "${COMMAND_SHA256}" <<'PY'
+"${PYTHON}" -B - "${CAPSULE_ROOT}" "${V1_PENDING_ROOT}" "${RAW_MANIFEST}" "${COMMAND_SHA256}" <<'PY'
 from __future__ import annotations
 
 from hashlib import sha256
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import stat
 import sys
+from typing import Any
 
-source_capsule_root = Path(sys.argv[1])
-source_data_root = Path(sys.argv[2])
-source_manifest_path = Path(sys.argv[3])
-capsule_root = Path(sys.argv[4])
-command_sha256 = sys.argv[5]
-data_relative = Path("data/camels_us")
-evidence_relative = Path("evidence")
-data_root = capsule_root / data_relative
-evidence_root = capsule_root / evidence_relative
-manifest_relative = evidence_relative / "source_capsule_manifest.json"
-manifest_sha_relative = evidence_relative / "source_capsule_manifest.sha256"
-ready_relative = evidence_relative / "READY.json"
+capsule_root = Path(sys.argv[1])
+v1_pending_root = Path(sys.argv[2])
+raw_manifest_path = Path(sys.argv[3])
+audit_command_sha256 = sys.argv[4]
+data_root = capsule_root / "data" / "camels_us"
+manifest_path = capsule_root / "evidence" / "source_capsule_manifest.json"
+manifest_sha_path = capsule_root / "evidence" / "source_capsule_manifest.sha256"
+ready_path = capsule_root / "evidence" / "READY.json"
 
-expected_v1_manifest_size = 626974
-expected_v1_manifest_sha = "2b0347a897dfadfa46d89e6c6643669deba9bbf681a4ba5e71cb891e09a710e2"
-expected_data_identity_sha = "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da"
-if len(command_sha256) != 64 or any(character not in "0123456789abcdef" for character in command_sha256):
-    raise RuntimeError("mailbox command SHA-256 is invalid")
+EXPECTED_MANIFEST_SIZE = 569601
+EXPECTED_MANIFEST_SHA = "d5de91725d0da93f3aa4a234f5c103131fad8ef4b3c86f919236b9e42a318547"
+EXPECTED_SHA_RECORD_SIZE = 95
+EXPECTED_SHA_RECORD_SHA = "8725143e54efbb47aa73b8c960efee73aaf28fee85f54d331784d0373106ec69"
+EXPECTED_READY_SIZE = 1236
+EXPECTED_READY_SHA = "10331991ee26049554a3d18682c907bfb343877311ca053ac696ccfa1c6a8b93"
+EXPECTED_DATA_COUNT = 911
+EXPECTED_EVIDENCE_COUNT = 3
+EXPECTED_TOTAL_FILE_COUNT = 914
+EXPECTED_DIRECTORY_COUNT = 44
+EXPECTED_DATA_TOTAL_BYTES = 464792200
+EXPECTED_TREE_TOTAL_BYTES = 465363132
+EXPECTED_DATA_IDENTITY = "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da"
+EXPECTED_RAW_SIZE = 159995
+EXPECTED_RAW_SHA = "a8b68a43490d5192e2f9340a40aae56c95cfc77037e81bf559ac887a21bbae0d"
+EXPECTED_RAW_AGGREGATE = "970ac27630a46ef7c72308fd9f57ec51c6861d48a56fd250efe5eeb0176c0729"
+EXPECTED_PARENT_RAW_SHA = "85ee1210f09f6665ad92b877105d3c68d79f53189938488bfc3edcbc23939903"
+EXPECTED_BASIN_SHA = "38987bce45fa38ff68f5b067db17e8cb3212d98fecdd106f57d268a130ee8fbd"
+EXPECTED_TOPOGRAPHY = "camels_attributes_v2.0/camels_topo.txt"
+EXPECTED_TOPOGRAPHY_SIZE = 38677
+EXPECTED_TOPOGRAPHY_SHA = "b64ca9923bcaccf21dde33137903797919e8d6732edd7849f8534e0ddcbec8e8"
+ZERO_KEYS = (
+    "formal_evaluation_array_reads",
+    "formal_evaluation_predictions",
+    "formal_evaluation_metrics",
+    "formal_evaluation_outputs",
+)
 
-def require_absent(path: Path, *, label: str) -> None:
-    try:
-        os.lstat(path)
-    except FileNotFoundError:
-        return
-    raise RuntimeError(f"{label} already exists: {path}")
 
-def direct_directory(path: Path, *, label: str, mode: int | None = None) -> os.stat_result:
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        raise RuntimeError(message)
+
+
+def signature(info: os.stat_result) -> tuple[int, ...]:
+    return (
+        info.st_dev,
+        info.st_ino,
+        info.st_mode,
+        info.st_nlink,
+        info.st_size,
+        info.st_mtime_ns,
+        info.st_ctime_ns,
+    )
+
+
+def direct_directory(path: Path, label: str) -> os.stat_result:
     info = os.lstat(path)
-    if stat.S_ISLNK(info.st_mode) or not stat.S_ISDIR(info.st_mode):
-        raise RuntimeError(f"{label} is linked or non-directory: {path}")
-    if mode is not None and stat.S_IMODE(info.st_mode) != mode:
-        raise RuntimeError(f"{label} mode is not {oct(mode)}: {path}")
+    require(not stat.S_ISLNK(info.st_mode) and stat.S_ISDIR(info.st_mode), f"{label} is linked or non-directory: {path}")
+    require(stat.S_IMODE(info.st_mode) == 0o555, f"{label} mode changed: {path}")
     return info
 
-def direct_file(path: Path, *, label: str, mode: int | None = None) -> os.stat_result:
+
+def direct_file(path: Path, label: str, mode: int | None = 0o444) -> os.stat_result:
     info = os.lstat(path)
-    if stat.S_ISLNK(info.st_mode) or not stat.S_ISREG(info.st_mode) or info.st_nlink != 1:
-        raise RuntimeError(f"{label} is linked, non-regular, or multiply linked: {path}")
-    if mode is not None and stat.S_IMODE(info.st_mode) != mode:
-        raise RuntimeError(f"{label} mode is not {oct(mode)}: {path}")
+    require(not stat.S_ISLNK(info.st_mode) and stat.S_ISREG(info.st_mode) and info.st_nlink == 1, f"{label} is linked, irregular, or multiply linked: {path}")
+    if mode is not None:
+        require(stat.S_IMODE(info.st_mode) == mode, f"{label} mode changed: {path}")
     return info
 
-def digest(path: Path) -> str:
+
+def digest_stable(path: Path, label: str, size: int, expected: str, mode: int | None = 0o444) -> tuple[os.stat_result, str]:
+    before = direct_file(path, label, mode)
+    require(before.st_size == size, f"{label} size changed: {path}")
     value = sha256()
     with path.open("rb") as handle:
         for block in iter(lambda: handle.read(4 * 1024 * 1024), b""):
             value.update(block)
-    return value.hexdigest()
+    after = direct_file(path, label + " after read", mode)
+    require(signature(before) == signature(after), f"{label} changed while read: {path}")
+    actual = value.hexdigest()
+    require(actual == expected, f"{label} SHA-256 changed: {path}")
+    return after, actual
 
-def fsync_directory(path: Path) -> None:
-    descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0))
-    try:
-        os.fsync(descriptor)
-    finally:
-        os.close(descriptor)
 
-def fsync_file(path: Path) -> None:
-    descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0))
-    try:
-        os.fsync(descriptor)
-    finally:
-        os.close(descriptor)
+def read_json_verified(path: Path, label: str, size: int, expected: str, mode: int | None = 0o444) -> tuple[dict[str, Any], bytes]:
+    digest_stable(path, label, size, expected, mode)
+    before = os.lstat(path)
+    raw = path.read_bytes()
+    after = os.lstat(path)
+    require(signature(before) == signature(after) and len(raw) == size and sha256(raw).hexdigest() == expected, f"{label} changed during JSON read")
+    value = json.loads(raw)
+    require(isinstance(value, dict), f"{label} is not a JSON object")
+    return value, raw
 
-def exclusive_write(path: Path, payload: bytes) -> None:
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    descriptor = os.open(path, flags, 0o600)
-    try:
-        with os.fdopen(descriptor, "wb", closefd=False) as handle:
-            handle.write(payload)
-            handle.flush()
-            os.fsync(handle.fileno())
-    finally:
-        os.close(descriptor)
 
-def copy_verified(source: Path, destination: Path, *, size: int, expected_sha: str) -> dict[str, object]:
-    before = direct_file(source, label="v1 source file", mode=0o444)
-    if before.st_size != size or digest(source) != expected_sha:
-        raise RuntimeError(f"v1 source file differs: {source}")
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    descriptor = os.open(destination, flags, 0o600)
-    copied = 0
-    try:
-        with source.open("rb") as input_handle, os.fdopen(descriptor, "wb", closefd=False) as output_handle:
-            for block in iter(lambda: input_handle.read(4 * 1024 * 1024), b""):
-                output_handle.write(block)
-                copied += len(block)
-            output_handle.flush()
-            os.fsync(output_handle.fileno())
-    finally:
-        os.close(descriptor)
-    after = direct_file(source, label="v1 source file after copy", mode=0o444)
-    if (
-        before.st_dev != after.st_dev
-        or before.st_ino != after.st_ino
-        or before.st_size != after.st_size
-        or before.st_mtime_ns != after.st_mtime_ns
-    ):
-        raise RuntimeError(f"v1 source file changed while copying: {source}")
-    destination_info = direct_file(destination, label="v2 capsule file", mode=0o600)
-    if copied != size or destination_info.st_size != size or digest(destination) != expected_sha:
-        raise RuntimeError(f"v2 capsule file differs after copy: {destination}")
-    if before.st_dev == destination_info.st_dev and before.st_ino == destination_info.st_ino:
-        raise RuntimeError(f"v2 capsule file aliases v1 source: {destination}")
-    os.chmod(destination, 0o444)
-    fsync_file(destination)
-    return {
-        "source_device": before.st_dev,
-        "source_inode": before.st_ino,
-        "source_mtime_ns": before.st_mtime_ns,
-        "destination_device": destination_info.st_dev,
-        "destination_inode": destination_info.st_ino,
-    }
+require(len(audit_command_sha256) == 64 and all(c in "0123456789abcdef" for c in audit_command_sha256), "audit command SHA-256 is invalid")
+root_before = direct_directory(capsule_root, "capsule root")
+direct_directory(data_root, "capsule data root")
+direct_directory(capsule_root / "evidence", "capsule evidence root")
 
-require_absent(capsule_root, label="v2 capsule root")
-direct_directory(source_capsule_root, label="preserved v1 pending root", mode=0o555)
-direct_directory(source_data_root, label="preserved v1 data root", mode=0o555)
-source_manifest_info = direct_file(source_manifest_path, label="preserved v1 manifest", mode=0o444)
-source_manifest_bytes = source_manifest_path.read_bytes()
-if source_manifest_info.st_size != expected_v1_manifest_size or sha256(source_manifest_bytes).hexdigest() != expected_v1_manifest_sha:
-    raise RuntimeError("preserved v1 manifest differs from sequence 44 evidence")
-source_manifest = json.loads(source_manifest_bytes)
-if (
-    source_manifest.get("schema_version") != "tukf09_455_training_source_capsule_v1"
-    or source_manifest.get("file_count") != 911
-    or source_manifest.get("total_bytes") != 464792200
-    or source_manifest.get("data_identity_sha256") != expected_data_identity_sha
-):
-    raise RuntimeError("preserved v1 manifest identity differs")
-source_records = source_manifest.get("files")
-if not isinstance(source_records, list) or len(source_records) != 911:
-    raise RuntimeError("preserved v1 manifest file records differ")
+manifest, manifest_bytes = read_json_verified(manifest_path, "capsule manifest", EXPECTED_MANIFEST_SIZE, EXPECTED_MANIFEST_SHA)
+ready, ready_bytes = read_json_verified(ready_path, "capsule READY", EXPECTED_READY_SIZE, EXPECTED_READY_SHA)
+sha_record_info, _ = digest_stable(manifest_sha_path, "manifest SHA record", EXPECTED_SHA_RECORD_SIZE, EXPECTED_SHA_RECORD_SHA)
+require(manifest_sha_path.read_bytes() == (EXPECTED_MANIFEST_SHA + "  source_capsule_manifest.json\n").encode("ascii"), "manifest SHA record text changed")
+raw_manifest, raw_bytes = read_json_verified(raw_manifest_path, "frozen raw manifest", EXPECTED_RAW_SIZE, EXPECTED_RAW_SHA, None)
 
-records: dict[str, dict[str, object]] = {}
-for record in source_records:
-    if not isinstance(record, dict):
-        raise RuntimeError("v1 file record is not an object")
-    relative = str(record.get("relative_path", ""))
-    parts = Path(relative).parts
-    if not relative or Path(relative).is_absolute() or ".." in parts or relative in records:
-        raise RuntimeError(f"unsafe or duplicate v1 path: {relative}")
-    records[relative] = record
-
-# os.mkdir is an atomic no-clobber reservation on this NFS. The root remains
-# invalid until the exact READY.json and read-only modes pass every gate below.
-os.mkdir(capsule_root, 0o700)
-os.makedirs(data_root, mode=0o700, exist_ok=False)
-os.mkdir(evidence_root, 0o700)
-
-file_records: list[dict[str, object]] = []
-copied_total = 0
-for relative, record in sorted(records.items()):
-    expected_size = int(record["size_bytes"])
-    expected_sha = str(record["sha256"])
-    source = source_data_root.joinpath(*relative.split("/"))
-    destination = data_root.joinpath(*relative.split("/"))
-    destination.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
-    provenance = copy_verified(source, destination, size=expected_size, expected_sha=expected_sha)
-    copied_total += expected_size
-    file_records.append({
-        "relative_path": relative,
-        "size_bytes": expected_size,
-        "sha256": expected_sha,
-        "source_path": str(source),
-        **provenance,
-    })
-if len(file_records) != 911 or copied_total != 464792200:
-    raise RuntimeError("v2 copied count or byte total differs")
-
-identity_rows = [
-    {"relative_path": row["relative_path"], "size_bytes": row["size_bytes"], "sha256": row["sha256"]}
-    for row in file_records
-]
-identity_sha = sha256(
-    json.dumps(identity_rows, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
-).hexdigest()
-if identity_sha != expected_data_identity_sha:
-    raise RuntimeError("v2 data identity differs from v1 and sequence 44")
-
-manifest = {
+manifest_expected = {
     "schema_version": "tukf09_455_training_source_capsule_v2",
     "purpose": "read_only_training_validation_source_only_no_formal_evaluation",
-    "scientific_identity": source_manifest["scientific_identity"],
-    "raw_source_manifest_relative_path": source_manifest["raw_source_manifest_relative_path"],
-    "raw_source_manifest_size": source_manifest["raw_source_manifest_size"],
-    "raw_source_manifest_sha256": source_manifest["raw_source_manifest_sha256"],
-    "source_capsule_v1_pending_root": str(source_capsule_root),
-    "source_capsule_v1_manifest_size": expected_v1_manifest_size,
-    "source_capsule_v1_manifest_sha256": expected_v1_manifest_sha,
+    "raw_source_manifest_relative_path": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/preflight/raw_source_manifest.sha256.json",
+    "raw_source_manifest_size": EXPECTED_RAW_SIZE,
+    "raw_source_manifest_sha256": EXPECTED_RAW_SHA,
+    "source_capsule_v1_pending_root": os.fspath(v1_pending_root),
+    "source_capsule_v1_manifest_size": 626974,
+    "source_capsule_v1_manifest_sha256": "2b0347a897dfadfa46d89e6c6643669deba9bbf681a4ba5e71cb891e09a710e2",
     "source_capsule_v1_forensics_mailbox_sequence": 44,
     "source_capsule_v1_forensics_result_commit": "d0763cc84443825f4c850607104567c8881a4bbb",
     "source_capsule_v1_forensics_result_size": 1086,
     "source_capsule_v1_forensics_result_sha256": "01cbb87426d3faae7c1dee70cc1692aea961862669720f2a9cf2394399d2e9db",
     "capsule_deployment_mailbox_sequence": 45,
-    "capsule_deployment_command_sha256": command_sha256,
-    "capsule_root": str(capsule_root),
-    "capsule_data_root": str(data_root),
+    "capsule_deployment_command_sha256": "5956de9ae96f5db93b0e86d69f0b2ce26394c59931e08acde890c0620bbf3cd9",
+    "capsule_root": os.fspath(capsule_root),
+    "capsule_data_root": os.fspath(data_root),
     "ordered_basin_count": 455,
-    "file_count": 911,
-    "total_bytes": copied_total,
-    "data_identity_sha256": identity_sha,
+    "file_count": EXPECTED_DATA_COUNT,
+    "total_bytes": EXPECTED_DATA_TOTAL_BYTES,
+    "data_identity_sha256": EXPECTED_DATA_IDENTITY,
     "copy_mode": "python_exclusive_buffered_ordinary_byte_copy_with_fsync",
     "publication_mode": "exclusive_root_reservation_then_exact_ready_json_then_root_mode_0555_final_gate",
     "destination_symbolic_link_count": 0,
     "destination_hard_link_count_above_one": 0,
-    "formal_evaluation_array_reads": 0,
-    "formal_evaluation_predictions": 0,
-    "formal_evaluation_metrics": 0,
-    "formal_evaluation_outputs": 0,
-    "files": file_records,
 }
-manifest_bytes = (json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")
-manifest_path = capsule_root / manifest_relative
-manifest_sha_path = capsule_root / manifest_sha_relative
-exclusive_write(manifest_path, manifest_bytes)
-manifest_sha = sha256(manifest_bytes).hexdigest()
-exclusive_write(manifest_sha_path, (manifest_sha + "  source_capsule_manifest.json\n").encode("ascii"))
-os.chmod(manifest_path, 0o444)
-os.chmod(manifest_sha_path, 0o444)
-fsync_file(manifest_path)
-fsync_file(manifest_sha_path)
+for key, expected in manifest_expected.items():
+    require(manifest.get(key) == expected, f"manifest field changed: {key}")
+expected_science = {
+    "scientific_contract": {"path": "configs/tukf09_455_basin_zero_validation_target_variance_revision_v1.json", "sha256": "7710594dcc5cce7f087cb70492a6f827c3925a98ea7fa051d26c5ef1660304e1"},
+    "formal_training_execution": {"path": "configs/tukf09_455_basin_zero_validation_target_variance_formal_training_execution_v1.json", "sha256": "0daf464f6bb1cfc11f04806b7caf5195ea42c3aef8187d8248474993ca108319"},
+    "independent_preflight_final_manifest": {"path": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/preflight/independent/manifest.final.sha256.json", "sha256": "f7e0a3f0708d0498cbaeaa77a044687f20d017ffa316170cd4770fc920b144aa"},
+    "filter_migration_final_manifest": {"path": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/filter_migration_v1/independent/manifest.final.sha256.json", "sha256": "029521f6c35980ce40fb0afeb14e2734042734c73f6ed0a33a5c0040311c3eb5"},
+    "all_scope_authorization": {"path": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/authorizations/all_scope_authorization.json", "sha256": "941ed64cb5d1c60e5525188e431bff69645d0b215e54d3939d5510ae63d2fb97"},
+    "original_training_admission": {"path": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/training_admission/training_admission.json", "file_sha256": "6ba3cdd742fc2bdf039c51afc75485c8292f0b999d7fe426cb2ccf69057c1b79", "record_sha256": "ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4"},
+    "local_filter_installation_final_manifest": {"path": "results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/filter_rebinding/independent/manifest.final.sha256.json", "sha256": "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0"},
+    "ordered_basin_count": 455,
+    "ordered_basin_newline_sha256": EXPECTED_BASIN_SHA,
+    "ordered_basin_compact_json_sha256": "75ef2cee206fb15ee3f31ae0bbfcf594661c5ccdda0b28de9ff65634332c8902",
+    "excluded_basins": ["08202700"],
+}
+require(manifest.get("scientific_identity") == expected_science, "capsule scientific identity changed")
 
-# Verify the complete pre-publication surface before creating READY.json.
-verified_total = 0
-for relative, record in sorted(records.items()):
-    path = data_root.joinpath(*relative.split("/"))
-    info = direct_file(path, label="v2 pre-ready file", mode=0o444)
-    expected_size = int(record["size_bytes"])
-    expected_sha = str(record["sha256"])
-    if info.st_size != expected_size or digest(path) != expected_sha:
-        raise RuntimeError(f"v2 pre-ready file differs: {relative}")
-    verified_total += info.st_size
-if verified_total != 464792200:
-    raise RuntimeError("v2 pre-ready byte total differs")
-
-# Freeze every data directory before READY. The evidence directory and capsule
-# root deliberately remain 0700, so no READY file can be valid until the final
-# root-mode transition after its exact payload is durable.
-pre_ready_directories = [
-    Path(directory)
-    for directory, _names, _files in os.walk(data_root, topdown=False, followlinks=False)
-]
-pre_ready_directories.append(data_root.parent)
-for directory in pre_ready_directories:
-    os.chmod(directory, 0o555)
-    fsync_directory(directory)
-
-ready = {
+ready_expected = {
     "schema_version": "tukf09_455_training_source_capsule_ready_v2",
     "status": "READY",
-    "capsule_root": str(capsule_root),
-    "capsule_data_root": str(data_root),
-    "manifest_relative_path": manifest_relative.as_posix(),
-    "manifest_size": len(manifest_bytes),
-    "manifest_sha256": manifest_sha,
-    "data_file_count": 911,
-    "data_total_bytes": verified_total,
-    "data_identity_sha256": identity_sha,
+    "capsule_root": os.fspath(capsule_root),
+    "capsule_data_root": os.fspath(data_root),
+    "manifest_relative_path": "evidence/source_capsule_manifest.json",
+    "manifest_size": EXPECTED_MANIFEST_SIZE,
+    "manifest_sha256": EXPECTED_MANIFEST_SHA,
+    "data_file_count": EXPECTED_DATA_COUNT,
+    "data_total_bytes": EXPECTED_DATA_TOTAL_BYTES,
+    "data_identity_sha256": EXPECTED_DATA_IDENTITY,
     "deployment_mailbox_sequence": 45,
-    "deployment_command_sha256": command_sha256,
+    "deployment_command_sha256": "5956de9ae96f5db93b0e86d69f0b2ce26394c59931e08acde890c0620bbf3cd9",
     "validity_gate": "exact_ready_json_and_manifest_and_911_files_and_all_directories_mode_0555",
     "required_capsule_root_mode": "0555",
     "required_all_directory_mode": "0555",
     "required_all_file_mode": "0444",
+}
+for key, expected in ready_expected.items():
+    require(ready.get(key) == expected, f"READY field changed: {key}")
+for label, document in (("manifest", manifest), ("READY", ready)):
+    for key in ZERO_KEYS:
+        require(type(document.get(key)) is int and document[key] == 0, f"{label} evaluation count changed: {key}")
+
+require(raw_manifest.get("schema_version") == "tukf09_455_basin_inherited_raw_source_manifest_v1", "raw manifest schema changed")
+require(raw_manifest.get("experiment_id") == "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1", "raw manifest experiment changed")
+require(raw_manifest.get("file_count") == 1020, "raw manifest file count changed")
+require(raw_manifest.get("aggregate_sha256") == EXPECTED_RAW_AGGREGATE, "raw manifest aggregate changed")
+require(raw_manifest.get("derived_from_parent_file_sha256") == EXPECTED_PARENT_RAW_SHA, "raw manifest parent binding changed")
+raw_files = raw_manifest.get("files")
+require(isinstance(raw_files, dict) and len(raw_files) == 1020, "raw manifest records changed")
+
+rows = manifest.get("files")
+require(isinstance(rows, list) and len(rows) == EXPECTED_DATA_COUNT, "capsule manifest records changed")
+records: dict[str, dict[str, Any]] = {}
+forcing_basins: set[str] = set()
+streamflow_basins: set[str] = set()
+raw_bound = 0
+topography_bound = 0
+for record in rows:
+    require(isinstance(record, dict), "capsule record is not an object")
+    relative = record.get("relative_path")
+    size = record.get("size_bytes")
+    value = record.get("sha256")
+    require(isinstance(relative, str) and relative, "capsule path is invalid")
+    pure = PurePosixPath(relative)
+    require(not pure.is_absolute() and ".." not in pure.parts and "\\" not in relative and pure.as_posix() == relative and relative not in records, f"unsafe or duplicate capsule path: {relative}")
+    require(type(size) is int and size > 0, f"invalid capsule size: {relative}")
+    require(isinstance(value, str) and len(value) == 64 and all(c in "0123456789abcdef" for c in value), f"invalid capsule SHA: {relative}")
+    expected_source = v1_pending_root / "data" / "camels_us"
+    expected_source = expected_source.joinpath(*pure.parts)
+    require(record.get("source_path") == os.fspath(expected_source), f"v1 source binding changed: {relative}")
+    if relative == EXPECTED_TOPOGRAPHY:
+        require(size == EXPECTED_TOPOGRAPHY_SIZE and value == EXPECTED_TOPOGRAPHY_SHA, "topography identity changed")
+        topography_bound += 1
+    else:
+        raw = raw_files.get(relative)
+        require(isinstance(raw, dict) and raw.get("size_bytes") == size and raw.get("sha256") == value, f"raw binding changed: {relative}")
+        raw_bound += 1
+        name = pure.name
+        if relative.startswith("basin_mean_forcing/maurer/") and name.endswith("_lump_maurer_forcing_leap.txt"):
+            forcing_basins.add(name.split("_", 1)[0])
+        elif relative.startswith("usgs_streamflow/") and name.endswith("_streamflow_qc.txt"):
+            streamflow_basins.add(name.split("_", 1)[0])
+        else:
+            raise RuntimeError(f"unexpected capsule data class: {relative}")
+    records[relative] = record
+require([row["relative_path"] for row in rows] == sorted(records), "capsule record order changed")
+require(raw_bound == 910 and topography_bound == 1, "raw or topography binding count changed")
+require(forcing_basins == streamflow_basins and len(forcing_basins) == 455, "forcing and streamflow basin populations differ")
+require(sha256(("\n".join(sorted(forcing_basins)) + "\n").encode("ascii")).hexdigest() == EXPECTED_BASIN_SHA, "ordered basin identity changed")
+identity_rows = [{"relative_path": name, "size_bytes": records[name]["size_bytes"], "sha256": records[name]["sha256"]} for name in sorted(records)]
+identity = sha256(json.dumps(identity_rows, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+require(identity == EXPECTED_DATA_IDENTITY, "capsule data identity changed")
+
+actual_files: dict[str, os.stat_result] = {}
+actual_directories: set[str] = set()
+symbolic_links = 0
+hard_links = 0
+for directory, names, filenames in os.walk(capsule_root, topdown=True, followlinks=False):
+    directory_path = Path(directory)
+    direct_directory(directory_path, "capsule directory")
+    actual_directories.add("." if directory_path == capsule_root else directory_path.relative_to(capsule_root).as_posix())
+    for name in names:
+        info = os.lstat(directory_path / name)
+        if stat.S_ISLNK(info.st_mode):
+            symbolic_links += 1
+        else:
+            require(stat.S_ISDIR(info.st_mode), f"non-directory in directory position: {directory_path / name}")
+    for name in filenames:
+        path = directory_path / name
+        info = os.lstat(path)
+        if stat.S_ISLNK(info.st_mode):
+            symbolic_links += 1
+            continue
+        if stat.S_ISREG(info.st_mode) and info.st_nlink > 1:
+            hard_links += 1
+        actual_files[path.relative_to(capsule_root).as_posix()] = direct_file(path, "capsule file")
+require(symbolic_links == 0 and hard_links == 0, "capsule contains symbolic or multiple hard links")
+expected_files = {f"data/camels_us/{name}" for name in records}
+expected_files.update({"evidence/source_capsule_manifest.json", "evidence/source_capsule_manifest.sha256", "evidence/READY.json"})
+require(set(actual_files) == expected_files and len(actual_files) == EXPECTED_TOTAL_FILE_COUNT, "capsule file surface changed")
+expected_directories = {".", "data", "data/camels_us", "evidence"}
+for relative in records:
+    cursor = PurePosixPath("data/camels_us") / PurePosixPath(relative)
+    for parent in cursor.parents:
+        if parent == PurePosixPath("."):
+            break
+        expected_directories.add(parent.as_posix())
+require(actual_directories == expected_directories and len(actual_directories) == EXPECTED_DIRECTORY_COUNT, "capsule directory surface changed")
+
+data_total = 0
+for relative, record in sorted(records.items()):
+    path = data_root.joinpath(*PurePosixPath(relative).parts)
+    info, _ = digest_stable(path, "capsule data file", record["size_bytes"], record["sha256"])
+    require(info.st_dev == record.get("destination_device") and info.st_ino == record.get("destination_inode"), f"destination inode changed: {relative}")
+    data_total += info.st_size
+require(data_total == EXPECTED_DATA_TOTAL_BYTES, "capsule data byte total changed")
+tree_total = sum(info.st_size for info in actual_files.values())
+require(tree_total == EXPECTED_TREE_TOTAL_BYTES, "capsule tree byte total changed")
+root_after = direct_directory(capsule_root, "capsule root after audit")
+require(root_before.st_dev == root_after.st_dev and root_before.st_ino == root_after.st_ino and root_before.st_mtime_ns == root_after.st_mtime_ns, "capsule root changed during audit")
+
+summary = {
+    "audit_command_sha256": audit_command_sha256,
+    "capsule_root": os.fspath(capsule_root),
+    "data_file_count": EXPECTED_DATA_COUNT,
+    "evidence_file_count": EXPECTED_EVIDENCE_COUNT,
+    "total_file_count": EXPECTED_TOTAL_FILE_COUNT,
+    "directory_count": EXPECTED_DIRECTORY_COUNT,
+    "data_total_bytes": data_total,
+    "tree_total_bytes": tree_total,
+    "data_identity_sha256": identity,
+    "manifest_size": len(manifest_bytes),
+    "manifest_sha256": EXPECTED_MANIFEST_SHA,
+    "manifest_sha_record_size": sha_record_info.st_size,
+    "manifest_sha_record_sha256": EXPECTED_SHA_RECORD_SHA,
+    "ready_size": len(ready_bytes),
+    "ready_sha256": EXPECTED_READY_SHA,
+    "raw_source_manifest_size": len(raw_bytes),
+    "raw_source_manifest_sha256": EXPECTED_RAW_SHA,
+    "raw_manifest_bound_file_count": raw_bound,
+    "topography_bound_file_count": topography_bound,
+    "ordered_basin_count": len(forcing_basins),
+    "ordered_basin_newline_sha256": EXPECTED_BASIN_SHA,
+    "symbolic_link_count": symbolic_links,
+    "hard_link_count_above_one": hard_links,
     "formal_evaluation_array_reads": 0,
     "formal_evaluation_predictions": 0,
     "formal_evaluation_metrics": 0,
     "formal_evaluation_outputs": 0,
 }
-ready_bytes = (json.dumps(ready, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")
-ready_path = capsule_root / ready_relative
-exclusive_write(ready_path, ready_bytes)
-ready_sha = sha256(ready_bytes).hexdigest()
-os.chmod(ready_path, 0o444)
-fsync_file(ready_path)
-
-# No content is written after READY. Freeze evidence, then change the capsule
-# root to 0555 last; that last metadata transition is the publication instant.
-os.chmod(evidence_root, 0o555)
-fsync_directory(evidence_root)
-os.chmod(capsule_root, 0o555)
-fsync_directory(capsule_root)
-fsync_directory(capsule_root.parent)
-
-tree_files: list[Path] = []
-tree_links: list[Path] = []
-tree_directories: list[Path] = []
-for directory, names, filenames in os.walk(capsule_root, topdown=True, followlinks=False):
-    directory_path = Path(directory)
-    direct_directory(directory_path, label="published v2 directory", mode=0o555)
-    tree_directories.append(directory_path)
-    for name in names:
-        candidate = directory_path / name
-        if stat.S_ISLNK(os.lstat(candidate).st_mode):
-            tree_links.append(candidate)
-    for name in filenames:
-        candidate = directory_path / name
-        info = os.lstat(candidate)
-        if stat.S_ISLNK(info.st_mode):
-            tree_links.append(candidate)
-            continue
-        direct_file(candidate, label="published v2 file", mode=0o444)
-        tree_files.append(candidate)
-if tree_links:
-    raise RuntimeError(f"published v2 capsule contains links: {tree_links[:3]}")
-expected_files = {
-    (data_relative / Path(relative)).as_posix()
-    for relative in records
-}
-expected_files.update({manifest_relative.as_posix(), manifest_sha_relative.as_posix(), ready_relative.as_posix()})
-actual_files = {path.relative_to(capsule_root).as_posix() for path in tree_files}
-if actual_files != expected_files:
-    raise RuntimeError("published v2 surface is not exactly 911 data plus 3 evidence files")
-expected_directories = {".", "data", "data/camels_us", "evidence"}
-for relative in records:
-    cursor = data_relative / Path(relative)
-    for parent in cursor.parents:
-        if parent == Path("."):
-            break
-        expected_directories.add(parent.as_posix())
-actual_directories = {
-    "." if path == capsule_root else path.relative_to(capsule_root).as_posix()
-    for path in tree_directories
-}
-if actual_directories != expected_directories:
-    raise RuntimeError("published v2 directory surface contains missing or extra directories")
-if digest(manifest_path) != manifest_sha:
-    raise RuntimeError("published v2 manifest changed")
-if manifest_sha_path.read_text(encoding="ascii") != manifest_sha + "  source_capsule_manifest.json\n":
-    raise RuntimeError("published v2 manifest hash record changed")
-if ready_path.read_bytes() != ready_bytes or digest(ready_path) != ready_sha:
-    raise RuntimeError("published v2 READY gate changed")
-
-published_total = 0
-for relative, record in sorted(records.items()):
-    path = data_root.joinpath(*relative.split("/"))
-    info = direct_file(path, label="published v2 data file", mode=0o444)
-    if info.st_size != int(record["size_bytes"]) or digest(path) != str(record["sha256"]):
-        raise RuntimeError(f"published v2 data file changed: {relative}")
-    published_total += info.st_size
-if published_total != 464792200:
-    raise RuntimeError("published v2 byte total changed")
-
-print("CAPSULE_ROOT=" + str(capsule_root))
-print("CAPSULE_DATA_ROOT=" + str(data_root))
+print("SUMMARY=" + json.dumps(summary, ensure_ascii=False, sort_keys=True))
+print("CAPSULE_ROOT=" + os.fspath(capsule_root))
 print("CAPSULE_DATA_FILE_COUNT=911")
 print("CAPSULE_EVIDENCE_FILE_COUNT=3")
-print("CAPSULE_TOTAL_BYTES=464792200")
-print("CAPSULE_DATA_IDENTITY_SHA256=" + identity_sha)
-print("CAPSULE_MANIFEST_SIZE=" + str(len(manifest_bytes)))
-print("CAPSULE_MANIFEST_SHA256=" + manifest_sha)
-print("CAPSULE_READY_SIZE=" + str(len(ready_bytes)))
-print("CAPSULE_READY_SHA256=" + ready_sha)
-print("CAPSULE_DEPLOYMENT_COMMAND_SHA256=" + command_sha256)
-print("CAPSULE_DIRECTORY_COUNT=" + str(len(tree_directories)))
+print("CAPSULE_TOTAL_FILE_COUNT=914")
+print("CAPSULE_DIRECTORY_COUNT=44")
+print("CAPSULE_DATA_TOTAL_BYTES=464792200")
+print("CAPSULE_TREE_TOTAL_BYTES=465363132")
+print("CAPSULE_DATA_IDENTITY_SHA256=" + identity)
+print("CAPSULE_MANIFEST_SIZE=569601")
+print("CAPSULE_MANIFEST_SHA256=" + EXPECTED_MANIFEST_SHA)
+print("CAPSULE_MANIFEST_SHA_RECORD_SIZE=95")
+print("CAPSULE_MANIFEST_SHA_RECORD_SHA256=" + EXPECTED_SHA_RECORD_SHA)
+print("CAPSULE_READY_SIZE=1236")
+print("CAPSULE_READY_SHA256=" + EXPECTED_READY_SHA)
+print("ORIGINAL_RAW_MANIFEST_SIZE=159995")
+print("ORIGINAL_RAW_MANIFEST_SHA256=" + EXPECTED_RAW_SHA)
+print("ORIGINAL_RAW_MANIFEST_BOUND_FILE_COUNT=910")
+print("TOPOGRAPHY_BOUND_FILE_COUNT=1")
+print("ORDERED_BASIN_COUNT=455")
+print("ORDERED_BASIN_NEWLINE_SHA256=" + EXPECTED_BASIN_SHA)
 print("CAPSULE_SYMBOLIC_LINK_COUNT=0")
 print("CAPSULE_HARD_LINK_COUNT_ABOVE_ONE=0")
 print("FORMAL_EVALUATION_ARRAY_READS=0")
-print("TUKF09_455_TRAINING_SOURCE_CAPSULE_V2_READY_911_OF_911_PASS")
+print("FORMAL_EVALUATION_PREDICTIONS=0")
+print("FORMAL_EVALUATION_METRICS=0")
+print("FORMAL_EVALUATION_OUTPUTS=0")
+print("AUDIT_COMMAND_SHA256=" + audit_command_sha256)
+print("TUKF09_455_TRAINING_SOURCE_CAPSULE_V2_POST_PUBLICATION_READ_ONLY_AUDIT_911_OF_911_PASS")
 PY
