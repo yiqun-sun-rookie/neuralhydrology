@@ -1,0 +1,12 @@
+### channel=kalmannet-tukf09-455 seq=46
+### host=login4
+### started=2026-09-01T09:29:17+0800
+### ---------- output ----------
+FILESYSTEM_TYPE=nfs
+Traceback (most recent call last):
+  File "<stdin>", line 230, in <module>
+  File "<stdin>", line 51, in require
+RuntimeError: ordered basin identity changed
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-01T09:29:18+0800
