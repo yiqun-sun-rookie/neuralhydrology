@@ -1,0 +1,67 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=3
+### host=login4
+### started=2026-09-01T17:05:29+0800
+### ---------- output ----------
+=== FAILED_R1_PRESERVATION ===
+PRESERVED_R1_STAGING|directory|4096|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1.staging
+=== EXCLUSIVE_ROOT_PREFLIGHT ===
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2.partial
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2.staging
+bundle_identity_preflight=passed
+[DONE] exclusive root published: /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2
+[DONE] copied exactly eleven registered 2017-2023 files; 2024 and boundary targets were not copied
+=== DEPLOYED_ROOT_VERIFICATION ===
+{
+  "base_training_task_count": 3,
+  "duplicate_task_identifier_count": 0,
+  "filter_training_task_count": 3,
+  "formal_result_created": false,
+  "heldout_2024_target_access_authorized": false,
+  "input_file_count": 11,
+  "observation_head_task_count": 3,
+  "payload_file_count": 37,
+  "post_training_task_count": 2,
+  "registry_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+  "status": "valid_authorized_pending_submission",
+  "training_selection_prefix_byte_count": 46826115,
+  "training_selection_prefix_file_count": 11
+}
+{
+  "adjacent_direction_count": 8,
+  "boundary_cell_count": 8,
+  "cross_cell_count": 20,
+  "development_year": 2023,
+  "experiment_family": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1",
+  "finding_count": 0,
+  "findings": [],
+  "heldout_year": 2024,
+  "internal_cross_cell_count": 12,
+  "random_seeds": [
+    17,
+    29,
+    43
+  ],
+  "selection_year": 2022,
+  "self_cell_count": 4,
+  "source_count": 6,
+  "target_count": 4,
+  "total_cell_count": 24,
+  "training_years": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021
+  ]
+}
+isolated_input_prefix_verification=passed
+ARCHIVE_SHA=56935861d76557f2c6047b3b580030d6dad4d042b3549796fc1f2079f72b8776
+MANIFEST_SHA=f458886b60b123386be7e906eed8e4e80f8aa248998f1f8c3d15db17b3dd2688
+REGISTRY_SHA=704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8
+FORMAL_JOBS_SUBMITTED=0
+HELDOUT_2024_TARGET_ACCESS_AUTHORIZED=false
+[DONE] deployed create-only root=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T17:06:03+0800
