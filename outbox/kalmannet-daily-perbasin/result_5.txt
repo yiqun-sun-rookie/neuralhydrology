@@ -1,0 +1,43 @@
+### channel=kalmannet-daily-perbasin seq=5
+### host=login4
+### started=2026-09-01T14:16:45+0800
+### ---------- output ----------
+=== SUBMISSION IDENTITY ===
+2026-09-01T14:16:45+0800
+login4
+channel=kalmannet-daily-perbasin sequence=5 purpose=single-A800-probe-retry-with-indexed-memory-query
+exact_job_name_active_before=0
+exact_job_name_historical_before=0
+=== WRAPPER EVIDENCE ===
+5e91e1397e443e7c0f5711f7755f973e5cfa510a089308fc7b02cfe2a4ebcc9b  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE2_SEQ3/submit_a800_probe.slurm
+0513eaab85aa1c863156c145b574dd6ffec5765c9be73ec0685a4f0ee117ed68  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE3_SEQ5/submit_a800_probe.slurm
+--- /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE2_SEQ3/submit_a800_probe.slurm	2026-09-01 14:02:26.000000000 +0800
++++ /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE3_SEQ5/submit_a800_probe.slurm	2026-09-01 14:16:45.000000000 +0800
+@@ -73,7 +73,7 @@
+ torch.cuda.synchronize(device)
+ if not torch.equal(product, left):
+     raise RuntimeError("CUDA matrix identity probe differs")
+-free_bytes, total_bytes = torch.cuda.mem_get_info(device)
++free_bytes, total_bytes = torch.cuda.mem_get_info(0)
+ receipt = {
+     "schema_version": "daily_camels_knet_per_basin_a800_probe_v1",
+     "status": "PASS",
+=== SUBMISSION RECEIPT ===
+channel=kalmannet-daily-perbasin
+sequence=5
+execution_id=DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE3_SEQ5
+job_name=kdpp-a800-probe-s5
+job_id=217269
+active_before=0
+historical_before=0
+active_after=1
+exact_name_after=1
+submission_count=1
+signals_sent=0
+=== CURRENT JOB ===
+JOBID|NAME|PARTITION|STATE|NODELIST(REASON)|TIME|START_TIME|NODELIST
+217269|kdpp-a800-probe-s5|hgpu8|RUNNING|ngu202|INVALID|2026-09-01T14:17:19|ngu202
+=== SUBMISSION COMPLETE: EXACTLY ONE PROBE, NO TRAINING OR SIGNAL ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T14:16:47+0800
