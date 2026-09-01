@@ -1,0 +1,27 @@
+### channel=kalmannet-tukf09-455 seq=56
+### host=login4
+### started=2026-09-01T13:58:24+0800
+### ---------- output ----------
+=== FROZEN SEQUENCE 52 SUBMISSION EVIDENCE ===
+=== FROZEN SEQUENCE 53 INSPECTION EVIDENCE ===
+=== FROZEN SEQUENCE 55 DIAGNOSTIC EVIDENCE ===
+=== FROZEN SEQUENCE 54 INSPECTION EVIDENCE ===
+=== FROZEN PREPARATION JOB RECORD ===
+=== SLURM STATE ===
+217228|tukf09-455-v2r4-prepare|hgpu8|COMPLETED|0:0|ngu202|00:07:44|2026-09-01T12:38:28|2026-09-01T12:46:12
+217228.batch|batch||COMPLETED|0:0|ngu202|00:07:44|2026-09-01T12:38:28|2026-09-01T12:46:12
+217228.extern|extern||COMPLETED|0:0|ngu202|00:07:45|2026-09-01T12:38:28|2026-09-01T12:46:13
+slurm_load_jobs error: Invalid job id specified
+=== FORMAL EVALUATION HOLD ===
+=== TERMINAL LOG EVIDENCE ===
+STDOUT_SIZE=2465173
+STDOUT_SHA256=f9de1e0672b6f198d9bcf2a9fbe0cb5f28f489bda1b35cb91c265f3060ef2262
+STDERR_SIZE=0
+STDERR_SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+STDOUT_LAST_LINE=TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED
+=== STRICT PREPARATION ARTIFACT GATES ===
+{"actual_remote_filter_seal_sha256": "6e150cd9feba58ec35562e7fc46e7052f9e433cc5a50ae185593f1960703a55f", "filter_unit_count": 455, "initial_bundle_sha256": "07bd84ca563711de09bb06897f3ceb9b8a324b9c6d090e02c664d910a95a77d5", "local_filter_seal_sha256": "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0", "preparation_probe_identity_sha256": "dd4b9e9595a1a23f7f602b5dd4997d0099ff335730b9b66e1b1c992057a6bafe", "preparation_probe_sha256": "28649e6d68e8f699ba583d9feb0ea4c3a17f99981341ec1102ed5cb459b98210", "private_runtime_identity_sha256": "1c1843fa1dd879cea95d9cd2876b5fe5f3a1608b7802a5ffa6b82ef66f7b8411", "private_runtime_manifest_sha256": "431bb24aa9112158bd3b6289bccd28d212a22754b865f1d27c54c72387525188", "probe_remote_filter_seal_sha256": "6e150cd9feba58ec35562e7fc46e7052f9e433cc5a50ae185593f1960703a55f", "remote_filter_seal_matches_probe": true, "remote_filter_verification_status": "FILTER_REBINDING_INDEPENDENTLY_VERIFIED_EVALUATION_HOLD", "staged_file_count": 911, "staged_sources_identity_sha256": "81a32844af94361240ec84467be8fb5707b21b2b3d34861fb265cf2a79b3a950", "staged_sources_manifest_sha256": "3bf1a5b5f6dca172f0bd8ad0e1228d94799d5fda1ae9216c68338a0084a3f197"}
+TUKF09_455_A800_EXCLUSIVE_V2R4_PREPARATION_COMPLETED_STRICTLY_VERIFIED_ADMISSION_NOT_CREATED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T14:00:25+0800
