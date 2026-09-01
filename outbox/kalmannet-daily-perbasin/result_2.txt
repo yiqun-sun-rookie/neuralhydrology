@@ -1,0 +1,15 @@
+### channel=kalmannet-daily-perbasin seq=2
+### host=login4
+### started=2026-09-01T13:52:40+0800
+### ---------- output ----------
+=== SUBMISSION IDENTITY ===
+2026-09-01T13:52:40+0800
+login4
+channel=kalmannet-daily-perbasin sequence=2 purpose=single-A800-probe-only
+exact_job_name_active_before=0
+exact_job_name_historical_before=0
+sbatch: error: Memory specification can not be satisfied
+sbatch: error: Batch job submission failed: Requested node configuration is not available
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-01T13:52:40+0800
