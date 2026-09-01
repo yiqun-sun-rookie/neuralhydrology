@@ -1,0 +1,97 @@
+data:
+  window_size: 800
+  inputs_path: /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/data/processed
+  results_path: /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/runs
+  base_path: /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo
+  dataset_path:
+    train: /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/data/processed/high_flow_aug/train_win800_19990101_01-20070527_03.pt
+    val: /data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901/repo/data/processed/high_flow_aug/val_win800_20070527_04-20090314_13.pt
+dataloader:
+  batch_size: 2048
+  num_workers: 0
+  pin_memory: false
+  shuffle:
+    train: true
+    val: false
+training:
+  train_epochs: 200
+  learning_rate: 0.01
+  weight_decay: 0.01
+  log_interval: 100
+  batch_display_interval: 50
+  forecast_lead_time: 12
+  early_stopping:
+    patience: 10
+    rel_delta: 0.001
+    monitor: val_bp_loss
+    mode: min
+loss:
+  lambda_upd: 0.05
+  high_flow_thr: 0.0863
+  alpha_hf: 2.0
+  delta_thr: 0.002
+  beta_rise: 1.0
+  gamma_slope: 0.0
+  use_log: false
+model:
+  type: knet
+  knet:
+    activation: relu
+    in_mult: 10
+    out_mult: 10
+    hidden_size: 32
+    num_layers: 1
+    dropout: 0.0
+    clamp_scale:
+      enable: true
+      obs_diff_clamp: [-0.01, 0.01]
+      obs_diff_scale: 0.01
+      obs_innov_diff_clamp: [-0.01, 0.01]
+      obs_innov_diff_scale: 0.01
+      fw_update_diff_clamp:
+        - [-10, 10]
+        - [-10, 10]
+        - [-10, 10]
+        - [-300, 300]
+        - [-0.5, 0.5]
+      fw_update_diff_scale: [10, 10, 10, 300, 0.5]
+system_model:
+  state0: [140.0, 1000.0, 4.0, 1200.0, 0.1]
+  p0_scale: 0.001
+  q_diag: [140.0, 1000.0, 4.0, 1200.0, 0.0]
+  q_scale: 0.001
+  r: 0.00015
+  walrus_params:
+    cw: ${external_params.cw}
+    cv: ${external_params.cv}
+    cg: ${external_params.cg}
+    cq: ${external_params.cq}
+    cd: ${external_params.cd}
+    cs: ${external_params.cs}
+runtime:
+  device: cuda
+  cudnn_benchmark: true
+  seed: 42
+  ckpt_interval: 20
+  use_amp: false
+  use_torch_compile: false
+grid:
+  force_run_indices: []
+  resume_strict_config_hash: true
+instrumentation:
+  perf_interval: 50
+  perf_gpu: false
+  mem_advice: false
+  no_tqdm: false
+  bottleneck_analysis: true
+  loader_probe_steps: 20
+  metrics_interval: 10
+search_space_grid:
+  lr:
+    values: [0.01]
+  hidden_size:
+    values: [32]
+  num_layers:
+    values: [1]
+  in_out_mult:
+    values: [10]

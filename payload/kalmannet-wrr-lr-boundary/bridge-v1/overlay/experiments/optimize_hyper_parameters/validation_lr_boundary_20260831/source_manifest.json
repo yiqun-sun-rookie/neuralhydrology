@@ -1,0 +1,62 @@
+{
+  "experiment_family": "WRR-HLRB-HPCBRIDGE-20260901",
+  "created_date": "2026-09-01",
+  "purpose": "Repeat one locally completed common-control learning rate on one HPC GPU",
+  "local_reference": {
+    "experiment_family": "WRR-HLRB-20260831",
+    "common_control_learning_rate": 0.01,
+    "common_control_validation_nse": 0.9599600380703273,
+    "source_git_branch": "p02-hbvlite-ukf-da",
+    "source_git_commit": "07f44006947284fb4b2891345e2f7b28a4d428f7"
+  },
+  "datasets": {
+    "train": {
+      "bytes": 4381521,
+      "sha256": "3A4F94A2562278F09B67853AC77E060766296007CB8F8A762756FFE792792440"
+    },
+    "validation": {
+      "bytes": 570687,
+      "sha256": "2E195FC974B5CC8CDB35DF3CB7FD72A202AF033ECC415ACC03A87020B00BD403"
+    }
+  },
+  "source_sha256": {
+    "experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/run_one_lr.py": "76F36662B65875AE60C5F1213D30913C836AEF2B78AC36D99CF4A49103CD1689",
+    "experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/base_config.yaml": "8004339F4638E0AC901E9EDAA06BDB01E20CAA8EFF988A052128A88B3995FB21",
+    "experiments/optimize_hyper_parameters/validation_lr_boundary_20260831/combos.jsonl": "9681DA8A393762B235D8C315238946D6C324EB32A894D486C2BB9A6ED2679071",
+    "experiments/optimize_hyper_parameters/grid_search_knet.py": "DBA875AEDAC492D4F88C2A90CA0F4D529B7D6437960497D139AA3E6458D3B56D",
+    "experiments/optimize_hyper_parameters/train_and_eval.py": "8B4F6B25CD0335D46292DA0F31974209584845F75B81C014BF1318561773304B",
+    "knet/pipelines/pipeline_clean_based_on_11.py": "CD25E990860725D1F662B3839BEE7AB879F833B184152FBDF33066C56C4D8F92",
+    "knet/pipelines/train_clean_based_on_11.py": "579D0EBA2F5FDFCD22D0C0281F792179ED18AA10C1FA9D48581A82F83B96B946",
+    "knet/dl/nn_kalman_clamp_5.py": "934570D3C840E9D57B8FBDDF3A018DC29E190CDD712FC9DAAF442E383F74D843",
+    "knet/modules/pipeline/walrus_batch_speedup.py": "703ADBB37C7BD3804F7F218664C9636F4A3C5A303687FDBB33FC6172B0DAFFD2",
+    "knet/modules/pipeline/core_fun.py": "E45C1DDEEC0105BDB62F0255FE50D0ECB23006415A89CEB7EDE7886E41A3741E",
+    "knet/modules/utils/metrics.py": "77AB10316846A8CB35A0BF71DD3D161C0FC81A7389677D72832A7CB0B4971DEF",
+    "knet/modules/utils/metricsV2.py": "AC3BF1415199DCD57439BCEFEC9F8A8C9DAD84A23EBE0410E162EA2F5CB319B7",
+    "knet/utils/model_initialization_use_script_mdl_1.py": "DA6AD85293C34FCA3AEE9C4BFFBE0C80A3F77143F1F617A3A42EBA8E3C3FBBFA",
+    "hydrologic/params.py": "B981E5920A6BD1170ECB414A6C8ECDC1313789B1D391A3D9D379E81552752AF4"
+  },
+  "runtime_contract": {
+    "seed": 42,
+    "deterministic_algorithms": false,
+    "cudnn_deterministic": false,
+    "cudnn_benchmark": true,
+    "required_gpu_partition": "hgpu2p",
+    "required_gpu_model": "NVIDIA GeForce RTX 3090",
+    "formal_learning_rates": [0.01],
+    "formal_run_count": 1
+  },
+  "runtime_preflight": {
+    "shared": {
+      "python": "3.11.13",
+      "pytorch": "2.4.0",
+      "cuda_build": "12.1",
+      "cudnn": 90100,
+      "pyyaml": "6.0.2",
+      "optuna": "4.5.0"
+    },
+    "local_numpy": "2.3.2",
+    "hpc_numpy": "2.3.3",
+    "known_runtime_difference": "NumPy patch version differs; the common-control run is the empirical bridge check."
+  },
+  "held_out_test_policy": "No test path is present; the launcher accepts exactly train and validation and blocks held-out test loads."
+}
