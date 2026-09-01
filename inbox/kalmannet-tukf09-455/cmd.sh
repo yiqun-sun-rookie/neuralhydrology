@@ -18,9 +18,15 @@ DEPLOYMENT_SUMMARY_SHA=cb20074c651bc3cb206642c21a89a6c053e3be13fe62ed844f8b4cff6
 MAILBOX_ROOT="$(pwd -P)"
 RESULT_61="${MAILBOX_ROOT}/outbox/kalmannet-tukf09-455/result_61.txt"
 RESULT_61_COMMIT=3d14c340e4b0bbdffabff0c98b18254203329d17
-RESULT_61_PARENT=0ef2f86a902fcc9a13192fd234e696e996b142fb
+RESULT_61_COMMAND_COMMIT=0ef2f86a902fcc9a13192fd234e696e996b142fb
 RESULT_61_SIZE=1588
 RESULT_61_SHA=3df3bbdfdfc49beb220a618ee439525f5431250e15e5f3a62790a256c3957d2d
+RESULT_62="${MAILBOX_ROOT}/outbox/kalmannet-tukf09-455/result_62.txt"
+RESULT_62_COMMIT=3ce9a6551d261a2b9036d0001dfa2e6471a75271
+RESULT_62_COMMAND_COMMIT=5a2834fa9b5acf7417bb409be948f3c7f341695c
+RESULT_62_COMMAND_SHA=0396a10f3f128de6bda31ad6bf594fe9441b044ab4819a3630017612b1bcf285
+RESULT_62_SIZE=298
+RESULT_62_SHA=2521c2e8b6c814dde2f64451435fd100951efb7fe3d0e191a34fd8b3acb8c4c4
 JOB_NAME=tukf09-455-v2r5-map
 JOB_ID_FILE="${ROOT}/status/allocation_probe_job_id.txt"
 SUBMISSION_LOCK="${ROOT}/status/allocation_probe_submission.lock"
@@ -38,7 +44,8 @@ echo "=== FROZEN SEQUENCE 61 DEPLOYMENT EVIDENCE ==="
 [[ "$(stat -c '%s' "${RESULT_61}")" -eq "${RESULT_61_SIZE}" ]] || fail "sequence 61 result size changed"
 [[ "$(sha256sum "${RESULT_61}" | awk '{print $1}')" = "${RESULT_61_SHA}" ]] || fail "sequence 61 result hash changed"
 [[ "$(git log -1 --format=%H -- outbox/kalmannet-tukf09-455/result_61.txt)" = "${RESULT_61_COMMIT}" ]] || fail "sequence 61 result commit changed"
-[[ "$(git rev-parse "${RESULT_61_COMMIT}^")" = "${RESULT_61_PARENT}" ]] || fail "sequence 61 result parent changed"
+git merge-base --is-ancestor "${RESULT_61_COMMAND_COMMIT}" "${RESULT_61_COMMIT}" || fail "sequence 61 command is not an ancestor of its result"
+[[ "$(git log -1 --format=%H "${RESULT_61_COMMIT}^" -- inbox/kalmannet-tukf09-455/cmd.sh)" = "${RESULT_61_COMMAND_COMMIT}" ]] || fail "sequence 61 command was not the last channel command before its result"
 [[ "$(git diff-tree --no-commit-id --name-only -r "${RESULT_61_COMMIT}")" = "outbox/kalmannet-tukf09-455/result_61.txt" ]] || fail "sequence 61 result commit surface changed"
 
 "${PYTHON}" -B - "${RESULT_61}" "${ROOT}" <<'PY'
@@ -75,6 +82,36 @@ assert records == [{
     "source_capsule_post_publication_audit_mailbox_sequence": 47,
     "status": "A800_EXCLUSIVE_V2R5_RUNTIME_PORTABILITY_REPAIR_DEPLOYED_STRICT_BUNDLE_AND_SOURCE_CAPSULE_VERIFIED_FORMAL_EVALUATION_HOLD",
 }]
+PY
+
+echo "=== FROZEN SEQUENCE 62 PRE-SUBMISSION FAILURE EVIDENCE ==="
+[[ -f "${RESULT_62}" && ! -L "${RESULT_62}" ]] || fail "sequence 62 result missing or linked"
+[[ "$(stat -c '%h' "${RESULT_62}")" -eq 1 ]] || fail "sequence 62 result hard-link count changed"
+[[ "$(stat -c '%s' "${RESULT_62}")" -eq "${RESULT_62_SIZE}" ]] || fail "sequence 62 result size changed"
+[[ "$(sha256sum "${RESULT_62}" | awk '{print $1}')" = "${RESULT_62_SHA}" ]] || fail "sequence 62 result hash changed"
+[[ "$(git log -1 --format=%H -- outbox/kalmannet-tukf09-455/result_62.txt)" = "${RESULT_62_COMMIT}" ]] || fail "sequence 62 result commit changed"
+git merge-base --is-ancestor "${RESULT_62_COMMAND_COMMIT}" "${RESULT_62_COMMIT}" || fail "sequence 62 command is not an ancestor of its result"
+[[ "$(git log -1 --format=%H "${RESULT_62_COMMIT}^" -- inbox/kalmannet-tukf09-455/cmd.sh)" = "${RESULT_62_COMMAND_COMMIT}" ]] || fail "sequence 62 command was not the last channel command before its result"
+[[ "$(git diff-tree --no-commit-id --name-only -r "${RESULT_62_COMMIT}")" = "outbox/kalmannet-tukf09-455/result_62.txt" ]] || fail "sequence 62 result commit surface changed"
+[[ "$(git show "${RESULT_62_COMMAND_COMMIT}:inbox/kalmannet-tukf09-455/cmd.sh" | sha256sum | awk '{print $1}')" = "${RESULT_62_COMMAND_SHA}" ]] || fail "sequence 62 command hash changed"
+
+"${PYTHON}" -B - "${RESULT_62}" <<'PY'
+from pathlib import Path
+import sys
+
+lines = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+assert len(lines) == 9
+assert lines[0] == "### channel=kalmannet-tukf09-455 seq=62"
+assert lines[1] == "### host=login4"
+assert lines[2].startswith("### started=")
+assert lines[3] == "### ---------- output ----------"
+assert lines[4] == "=== FROZEN SEQUENCE 61 DEPLOYMENT EVIDENCE ==="
+assert lines[5] == "FATAL: sequence 61 result parent changed"
+assert lines[6] == "### ---------- end ----------"
+assert lines[7] == "### exit_code=1"
+assert lines[8].startswith("### finished=")
+assert "Submitted batch job" not in "\n".join(lines)
+assert "ALLOCATION_PROBE_JOB_ID=" not in "\n".join(lines)
 PY
 
 echo "=== IMMUTABLE DEPLOYMENT AND CONTRACT GATES ==="
