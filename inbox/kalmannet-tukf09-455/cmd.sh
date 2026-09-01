@@ -34,6 +34,12 @@ RESULT_53_SIZE=1109
 RESULT_53_SHA=4fe2bf937e4a6e9065b404b8a2eff72ed7131be08ba40bc321ca2a22c2a2f24b
 INSPECTION_53_COMMIT=2d0785fa89afb0bea55336273a7b7d0aa5265e28
 INSPECTION_53_COMMAND_SHA=b6060fa1fb119101f13dca945c13159da7aba710741fce728ff4df870de76cf4
+RESULT_54="${MAILBOX_ROOT}/outbox/kalmannet-tukf09-455/result_54.txt"
+RESULT_54_COMMIT=42067c4618f342c4240af5cbd2d33413cf647a01
+RESULT_54_SIZE=1144
+RESULT_54_SHA=80639f0725fe8111639b3988c855bd019249acb9b20d1df6dea117b34ea9942c
+INSPECTION_54_COMMIT=ebb56d54ffd11f8ec0c6a90a8c16ce6793198e21
+INSPECTION_54_COMMAND_SHA=d387b558c3ae1e705223d92cf3b704454cb521d535c0fe0ac4df612cac493fcb
 PYTHON=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
 export PYTHONNOUSERSITE=1
 export PYTHONDWRITEBYTECODE=1
@@ -96,6 +102,35 @@ assert "STDERR_SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b78
 assert "STDOUT_LAST_LINE=TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED" in lines
 assert "=== STRICT PREPARATION ARTIFACT GATES ===" in lines
 assert "KeyError: 'data_file_count'" in lines
+assert not any(line.startswith("FATAL:") for line in lines)
+PY
+
+echo "=== FROZEN SEQUENCE 54 INSPECTION EVIDENCE ==="
+[[ -f "${RESULT_54}" && ! -L "${RESULT_54}" ]] || fail "sequence 54 result is missing, linked, or irregular"
+[[ "$(stat -c '%h' "${RESULT_54}")" -eq 1 ]] || fail "sequence 54 result hard-link count changed"
+[[ "$(stat -c '%s' "${RESULT_54}")" -eq "${RESULT_54_SIZE}" ]] || fail "sequence 54 result size changed"
+[[ "$(sha256sum "${RESULT_54}" | awk '{print $1}')" = "${RESULT_54_SHA}" ]] || fail "sequence 54 result hash changed"
+[[ "$(git log -1 --format=%H -- outbox/kalmannet-tukf09-455/result_54.txt)" = "${RESULT_54_COMMIT}" ]] || fail "sequence 54 result commit changed"
+[[ "$(git diff-tree --no-commit-id --name-only -r "${RESULT_54_COMMIT}")" = "outbox/kalmannet-tukf09-455/result_54.txt" ]] || fail "sequence 54 result commit surface changed"
+git merge-base --is-ancestor "${INSPECTION_54_COMMIT}" "${RESULT_54_COMMIT}" || fail "sequence 54 command is not an ancestor of its result"
+[[ "$(git show "${INSPECTION_54_COMMIT}:inbox/kalmannet-tukf09-455/cmd.sh" | sha256sum | awk '{print $1}')" = "${INSPECTION_54_COMMAND_SHA}" ]] || fail "sequence 54 inspection command hash changed"
+
+"${PYTHON}" -B - "${RESULT_54}" "${JOB_ID}" <<'PY'
+from pathlib import Path
+import sys
+
+lines = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+job_id = sys.argv[2]
+assert lines[0] == "### channel=kalmannet-tukf09-455 seq=54"
+assert lines[1] == "### host=login4"
+assert lines[-2] == "### exit_code=1"
+assert lines[-1].startswith("### finished=")
+assert any(line.startswith(f"{job_id}|tukf09-455-v2r4-prepare|hgpu8|COMPLETED|0:0|") for line in lines)
+assert "STDERR_SIZE=0" in lines
+assert "STDOUT_LAST_LINE=TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED" in lines
+assert "=== STRICT PREPARATION ARTIFACT GATES ===" in lines
+assert '  File "<stdin>", line 107, in <module>' in lines
+assert "AssertionError" in lines
 assert not any(line.startswith("FATAL:") for line in lines)
 PY
 
@@ -204,6 +239,7 @@ initial_path = root / "status/initial_bundle_verification.json"
 staged_path = root / "status/staged_training_sources.json"
 probe_path = root / "status/preparation_probe.json"
 filter_seal = project / "results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/filter_rebinding/independent/manifest.final.sha256.json"
+filter_verifier_path = project / "scripts/verify_tukf09_455_filter_installation.py"
 
 private = stage.verify_private_runtime_manifest(
     manifest_path=private_path,
@@ -288,8 +324,27 @@ assert probe["private_runtime_manifest_sha256"] == stage.sha256_file(private_pat
 assert probe["private_runtime_identity_sha256"] == private["identity_sha256"]
 assert probe["staged_sources_manifest_sha256"] == stage.sha256_file(staged_path)
 assert probe["staged_sources_identity_sha256"] == staged["identity_sha256"]
-assert probe["remote_filter_installation_final_sha256"] == stage.sha256_file(filter_seal)
-assert stage.sha256_file(filter_seal) == "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0"
+actual_remote_filter_seal_sha256 = stage.sha256_file(filter_seal)
+probe_remote_filter_seal_sha256 = probe["remote_filter_installation_final_sha256"]
+local_filter_seal_sha256 = config["scientific_identity"]["local_filter_installation_final_manifest"]["sha256"]
+assert actual_remote_filter_seal_sha256 != probe_remote_filter_seal_sha256
+assert local_filter_seal_sha256 == "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0"
+filter_spec = importlib.util.spec_from_file_location("tukf09_filter_verifier_v2r4_audit", filter_verifier_path)
+assert filter_spec is not None and filter_spec.loader is not None
+filter_verifier = importlib.util.module_from_spec(filter_spec)
+filter_spec.loader.exec_module(filter_verifier)
+filter_verification = filter_verifier.verify_filter_installation_independently(
+    migration_root=project / "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/filter_migration_v1",
+    results_root=project / "results/tukf09_455_basin_zero_validation_target_variance_revision_v1",
+    training_admission_path=project / "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/training_admission/training_admission.json",
+    authorize=True,
+    publish=False,
+)
+assert filter_verification["status"] == "FILTER_REBINDING_INDEPENDENTLY_VERIFIED_EVALUATION_HOLD"
+assert filter_verification["unit_count"] == 455
+assert filter_verification["unit_file_count"] == 2730
+assert filter_verification["new_filter_optimization_count"] == 0
+assert filter_verification["evaluation_access_count"] == 0
 runtime_identity = probe["runtime"]
 assert runtime_identity["slurm_job_id"] == job_id
 assert runtime_identity["cuda_available"] is True
@@ -307,17 +362,21 @@ assert runtime_identity["slurm_gpu_allocation_variable_present"] is True
 assert runtime_identity["nvidia_gpu_uuid"] == runtime_identity["torch_process_gpu_uuid"]
 
 print(json.dumps({
+    "actual_remote_filter_seal_sha256": actual_remote_filter_seal_sha256,
     "filter_unit_count": probe["filter_unit_count"],
     "initial_bundle_sha256": stage.sha256_file(initial_path),
     "preparation_probe_identity_sha256": probe["identity_sha256"],
     "preparation_probe_sha256": stage.sha256_file(probe_path),
     "private_runtime_identity_sha256": private["identity_sha256"],
     "private_runtime_manifest_sha256": stage.sha256_file(private_path),
-    "remote_filter_seal_sha256": stage.sha256_file(filter_seal),
+    "local_filter_seal_sha256": local_filter_seal_sha256,
+    "probe_remote_filter_seal_sha256": probe_remote_filter_seal_sha256,
+    "remote_filter_seal_matches_probe": actual_remote_filter_seal_sha256 == probe_remote_filter_seal_sha256,
+    "remote_filter_verification_status": filter_verification["status"],
     "staged_file_count": staged["file_count"],
     "staged_sources_identity_sha256": staged["identity_sha256"],
     "staged_sources_manifest_sha256": stage.sha256_file(staged_path),
 }, sort_keys=True))
 PY
 
-echo "TUKF09_455_A800_EXCLUSIVE_V2R4_PREPARATION_COMPLETED_STRICTLY_VERIFIED_ADMISSION_NOT_CREATED"
+echo "TUKF09_455_A800_EXCLUSIVE_V2R4_FILTER_SEAL_DRIFT_DIAGNOSED_ADMISSION_NOT_CREATED"
