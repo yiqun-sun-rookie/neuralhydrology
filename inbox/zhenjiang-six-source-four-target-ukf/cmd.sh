@@ -720,6 +720,79 @@ if audit_directory.is_dir():
     )
 PY
 
+printf '=== FAILED_DEVELOPMENT_ATTEMPT_FORENSICS ===\n'
+python - "${ROOT}" <<'PY' || true
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+
+def digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def compact(value) -> str:
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+root = Path(sys.argv[1])
+partial = root / "evidence/development_2023/evaluation/attempt_001.partial"
+evaluation = root / "evidence/development_2023/evaluation/attempt_001"
+audit = root / "evidence/development_2023/independent_audit/attempt_001"
+audit_partial = Path(f"{audit}.partial")
+print(
+    "FAILED_ATTEMPT_PATH_STATE"
+    f"|partial={str(partial.is_dir()).lower()}"
+    f"|evaluation_final={str(evaluation.exists()).lower()}"
+    f"|audit_final={str(audit.exists()).lower()}"
+    f"|audit_partial={str(audit_partial.exists()).lower()}"
+)
+if partial.is_dir():
+    entries = sorted(partial.rglob("*"))
+    files = [path for path in entries if path.is_file() and not path.is_symlink()]
+    links = [path for path in entries if path.is_symlink()]
+    directories = [path for path in entries if path.is_dir() and path != partial]
+    print(
+        "FAILED_ATTEMPT_FILE_SET"
+        f"|ordinary_files={len(files)}"
+        f"|links={len(links)}"
+        f"|subdirectories={len(directories)}"
+        f"|names={','.join(path.relative_to(partial).as_posix() for path in files)}"
+    )
+    for path in files:
+        relative = path.relative_to(partial).as_posix()
+        print(
+            "FAILED_ATTEMPT_FILE"
+            f"|name={relative}|bytes={path.stat().st_size}|sha256={digest(path)}"
+        )
+    marker = partial / "development_access_started.json"
+    if marker.is_file():
+        print("FAILED_ATTEMPT_MARKER_JSON|" + compact(json.loads(marker.read_text(encoding="utf-8"))))
+
+for label, path in (
+    (
+        "DEPLOYED_EVALUATION_SCRIPT",
+        root / "run/scripts/analysis/zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.py",
+    ),
+    (
+        "DEPLOYED_REGISTRY",
+        root / "run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json",
+    ),
+    ("FAILED_JOB_STDOUT", root / "logs/development-2023-217810.out"),
+    ("FAILED_JOB_STDERR", root / "logs/development-2023-217810.err"),
+):
+    if path.is_file():
+        print(
+            f"FORENSIC_ARTIFACT|label={label}|path={path}"
+            f"|bytes={path.stat().st_size}|sha256={digest(path)}"
+        )
+    else:
+        print(f"FORENSIC_ARTIFACT_MISSING|label={label}|path={path}")
+PY
+
 printf '=== LOG_TAILS_AND_ERROR_SCAN ===\n'
 for job_id in ${IDS_SPACE}; do
   for file in "${ROOT}/logs/"*"${job_id}"*.out "${ROOT}/logs/"*"${job_id}"*.err; do
