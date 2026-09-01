@@ -1,0 +1,40 @@
+### channel=kalmannet-tukf09-455 seq=68
+### host=login4
+### started=2026-09-01T18:41:44+0800
+### ---------- output ----------
+=== FROZEN SEQUENCE 66 SUBMISSION EVIDENCE ===
+=== FROZEN SEQUENCE 67 READ-ONLY AUDIT-LAYER FAILURE EVIDENCE ===
+=== FROZEN PREPARATION JOB RECORD ===
+=== COMPLETED SLURM STATE ===
+217817|tukf09-455-v2r5-prepare|hgpu8|COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+217817.batch|batch||COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+217817.extern|extern||COMPLETED|0:0|ngu201|00:13:32|2026-09-01T18:03:21|2026-09-01T18:16:53
+=== FORMAL EVALUATION AND TRAINING HOLD ===
+=== TERMINAL LOG EVIDENCE ===
+STDOUT_SIZE=2465173
+STDOUT_SHA256=d3b9880c33868793bf61638912299a8ef3173e139fa9e669f2345189d88a4210
+STDERR_SIZE=0
+STDERR_SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+=== STRICT PREPARATION ARTIFACT GATES ===
+=== REPAIRED RUNTIME BUNDLE VERIFICATION ===
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "mutable_directory_count": 501,
+  "mutable_file_count": 3649,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R5_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+=== INDEPENDENT PREPARATION PAYLOAD AUDIT ===
+{"filter_unit_count": 455, "initial_bundle_sha256": "8bd135e5b5b0cc61fe328aaba1afe3521f3293e629697d32a1c2234794d4f27f", "local_filter_seal_provenance_sha256": "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0", "preparation_probe_identity_sha256": "a4d8c035a17640472d389796fecc84d2a4e194236551c37b59f280457920c4da", "preparation_probe_sha256": "59007f5d207f6dd5d9a1225f11d817fd3aabf04ff1690511705fe4546c4222fe", "private_runtime_identity_sha256": "08083e4f7bafdb9fa32e3982f70fe47ff5952fc188964032a5df4633210b024a", "private_runtime_manifest_sha256": "4207579e6a7af408da933ff1075d537186878cbbcb4b0f17e8778b6a47a98aee", "remote_filter_seal_sha256": "7ecfa4d5a61f37a2fc40e75b9e1bbec4be6c39ba7b0b87ec8705bcca277faaa0", "staged_file_count": 911, "staged_sources_identity_sha256": "75cdddfde1b15181dbcace5357fc540781005bfb3d2ff7777a204ff1c51fed8e", "staged_sources_manifest_sha256": "fecab69d1ce6fa0b23c2f5b22203a31d87b1c53264fe41a2092c8a2f87e5c0b9"}
+TUKF09_455_A800_EXCLUSIVE_V2R5_PREPARATION_COMPLETED_STRICTLY_VERIFIED_AFTER_READ_ONLY_AUDIT_LAYER_FIX_ADMISSION_NOT_CREATED_FORMAL_EVALUATION_HOLD
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T18:43:33+0800
