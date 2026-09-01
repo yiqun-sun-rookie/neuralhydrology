@@ -312,6 +312,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import math
 from pathlib import Path
 import sys
 
@@ -331,6 +332,12 @@ def digest(path: Path) -> str:
 
 def compact(value) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def as_bool(value) -> bool:
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().lower() == "true"
 
 
 root = Path(sys.argv[1])
@@ -393,6 +400,7 @@ if evaluation.is_dir():
     registered = {
         row.get("name"): row for row in registered_rows if isinstance(row, dict)
     }
+    registered_set_exact = set(registered) == names - {"completion_manifest.json"}
     registered_match = True
     for name, row in sorted(registered.items()):
         path = evaluation / name
@@ -436,6 +444,7 @@ if evaluation.is_dir():
         f"|manifest_sha256={digest(manifest_path)}"
         f"|file_count_excluding_manifest={manifest.get('file_count_excluding_manifest')}"
         f"|registered_files={len(registered_rows)}"
+        f"|registered_set_exact={str(registered_set_exact).lower()}"
         f"|all_registered_match={str(registered_match).lower()}"
         f"|synthetic_test_mode={manifest.get('synthetic_test_mode')}"
         f"|real_target_loader_present={manifest.get('real_target_loader_present')}"
@@ -457,6 +466,7 @@ if evaluation.is_dir():
         f"|astronomical_tide_model_open_count={access.get('astronomical_tide_model_open_count')}"
         f"|target_rows_by_period={compact(access.get('target_rows_by_period', {}))}"
         f"|forbidden_counters_integer_zero={str(forbidden_zero).lower()}"
+        f"|forbidden_period_rows_integer_zero={str(all(type(access.get('target_rows_by_period', {}).get(name)) is int and access.get('target_rows_by_period', {}).get(name) == 0 for name in ('heldout_or_later', 'boundary_target'))).lower()}"
     )
     marker = load_json(evaluation / "development_access_started.json")
     print(
@@ -508,15 +518,106 @@ if evaluation.is_dir():
     for row in forecast.get("adjacent_directions", []):
         print("ADJACENT_DIRECTION_GATE_CELL|" + compact(row))
     matrix_rows = load_csv(evaluation / "six_source_four_target_gain_matrix.csv")
+    matrix_keys = {
+        (int(row["source_index"]), int(row["target_index"])) for row in matrix_rows
+    }
+    expected_matrix_keys = {(source, target) for source in range(6) for target in range(4)}
+    expected_self_keys = {(1, 0), (2, 1), (3, 2), (4, 3)}
+    matrix_self_keys = {
+        (int(row["source_index"]), int(row["target_index"]))
+        for row in matrix_rows if as_bool(row.get("is_self"))
+    }
+    matrix_internal_cross_count = sum(
+        1 for row in matrix_rows
+        if int(row["source_index"]) in range(1, 5) and not as_bool(row.get("is_self"))
+    )
+    matrix_boundary_count = sum(
+        1 for row in matrix_rows if as_bool(row.get("is_boundary_source"))
+    )
+    matrix_numeric_consistency = all(
+        math.isclose(float(row["measurement_update_gain_mm"]), 1000.0 * float(row["measurement_update_gain_m"]), rel_tol=1e-10, abs_tol=1e-9)
+        and math.isclose(float(row["total_gain_m"]), float(row["base_mae_m"]) - float(row["updated_mae_m"]), rel_tol=1e-10, abs_tol=1e-12)
+        and math.isclose(float(row["covariance_propagation_gain_m"]) + float(row["measurement_update_gain_m"]), float(row["total_gain_m"]), rel_tol=1e-10, abs_tol=1e-12)
+        and (
+            float(row["prior_mae_m"]) == 0.0
+            or math.isclose(float(row["measurement_update_relative_gain_percent"]), 100.0 * float(row["measurement_update_gain_m"]) / float(row["prior_mae_m"]), rel_tol=1e-10, abs_tol=1e-9)
+        )
+        for row in matrix_rows
+    )
     matrix_contract = bool(
         len(matrix_rows) == 24
+        and len(matrix_keys) == 24
+        and matrix_keys == expected_matrix_keys
+        and matrix_self_keys == expected_self_keys
+        and matrix_internal_cross_count == 12
+        and matrix_boundary_count == 8
         and all(row.get("scope") == "pooled_three_seeds" for row in matrix_rows)
         and all(row.get("window_name") == "post_update_1_to_6" for row in matrix_rows)
+        and matrix_numeric_consistency
     )
-    print(f"GAIN_MATRIX_ROW_COUNT|count={len(matrix_rows)}|contract={str(matrix_contract).lower()}")
+    print(
+        "GAIN_MATRIX_ROW_COUNT"
+        f"|count={len(matrix_rows)}|unique_key_count={len(matrix_keys)}"
+        f"|self_count={len(matrix_self_keys)}|internal_cross_count={matrix_internal_cross_count}"
+        f"|boundary_count={matrix_boundary_count}|numeric_consistency={str(matrix_numeric_consistency).lower()}"
+        f"|contract={str(matrix_contract).lower()}"
+    )
     for row in matrix_rows:
         print("GAIN_MATRIX_CELL|" + compact(row))
     bootstrap = load_json(evaluation / "bootstrap_summary.json")
+    bootstrap_cells = bootstrap.get("cell_summaries", [])
+    bootstrap_keys = {
+        (int(row["source_index"]), int(row["target_index"])) for row in bootstrap_cells
+    }
+    matrix_lookup = {
+        (int(row["source_index"]), int(row["target_index"])): row for row in matrix_rows
+    }
+    bootstrap_interval_order = all(
+        float(row["measurement_gain_two_sided_95_lower_m"])
+        <= float(row["measurement_gain_two_sided_95_upper_m"])
+        for row in bootstrap_cells
+    )
+    bootstrap_matrix_match = all(
+        key in matrix_lookup
+        and math.isclose(
+            float(row["point_measurement_update_gain_m"]),
+            float(matrix_lookup[key]["measurement_update_gain_m"]),
+            rel_tol=1e-10,
+            abs_tol=1e-12,
+        )
+        for key, row in {
+            (int(value["source_index"]), int(value["target_index"])): value
+            for value in bootstrap_cells
+        }.items()
+    )
+    cross_bootstrap_rows = [row for row in bootstrap_cells if not as_bool(row.get("is_self"))]
+    bootstrap_holm_contract = bool(
+        len(cross_bootstrap_rows) == 20
+        and all(
+            all(name in row for name in ("holm_family", "holm_adjusted_one_sided_p_value", "holm_reject_at_0_05", "direction_stable_support"))
+            for row in cross_bootstrap_rows
+        )
+    )
+    bootstrap_contract = bool(
+        len(bootstrap_cells) == 24
+        and len(bootstrap_keys) == 24
+        and bootstrap_keys == matrix_keys
+        and bootstrap_interval_order
+        and bootstrap_matrix_match
+        and bootstrap_holm_contract
+        and bootstrap.get("cross_20_macro", {}).get("cell_count") == 20
+        and bootstrap.get("internal_12_macro", {}).get("cell_count") == 12
+        and bootstrap.get("boundary_8_macro", {}).get("cell_count") == 8
+        and len(bootstrap.get("target_column_cross_macros", [])) == 4
+    )
+    print(
+        "BOOTSTRAP_CONSISTENCY"
+        f"|cell_count={len(bootstrap_cells)}|unique_key_count={len(bootstrap_keys)}"
+        f"|interval_order={str(bootstrap_interval_order).lower()}"
+        f"|matrix_point_gain_match={str(bootstrap_matrix_match).lower()}"
+        f"|holm_cross_cell_contract={str(bootstrap_holm_contract).lower()}"
+        f"|contract={str(bootstrap_contract).lower()}"
+    )
     print("BOOTSTRAP_SAMPLING|" + compact(bootstrap.get("sampling", {})))
     for name in ("cross_20_macro", "internal_12_macro", "boundary_8_macro"):
         print("BOOTSTRAP_MACRO|key=" + name + "|" + compact(bootstrap.get(name, {})))
@@ -538,6 +639,28 @@ if evaluation.is_dir():
     print(f"RECIPROCAL_DIRECTION_ROW_COUNT|count={len(reciprocal_rows)}")
     for row in reciprocal_rows:
         print("RECIPROCAL_DIRECTION|" + compact(row))
+    decision_gates = forecast.get("gates", {})
+    self_gate_reconstructed = all(bool(row.get("pass")) for row in forecast.get("self_cells", [])) and len(forecast.get("self_cells", [])) == 4
+    cross_gate_reconstructed = bool(decision_gates) and all(
+        bool(value) for name, value in decision_gates.items() if name != "four_self_cells_pass"
+    )
+    analysis_gate_reconstructed = len(observation_rows) == 6 and all(as_bool(row.get("pass")) for row in observation_rows)
+    decision_consistency = bool(
+        decision.get("self_forecast_gate_pass") == self_gate_reconstructed
+        and decision.get("cross_station_gate_pass") == cross_gate_reconstructed
+        and decision.get("forecast_direction_gate_pass") == (self_gate_reconstructed and cross_gate_reconstructed)
+        and decision.get("analysis_observation_update_pass") == analysis_gate_reconstructed
+        and decision.get("base_observation_head_qualification_pass") == qualification.get("passed")
+        and len(qualification.get("target_pooled_results", [])) == 4
+        and len(qualification.get("observation_head_pooled_results", [])) == 6
+    )
+    print(
+        "DEVELOPMENT_DECISION_CONSISTENCY"
+        f"|self_gate_reconstructed={str(self_gate_reconstructed).lower()}"
+        f"|cross_gate_reconstructed={str(cross_gate_reconstructed).lower()}"
+        f"|analysis_gate_reconstructed={str(analysis_gate_reconstructed).lower()}"
+        f"|contract={str(decision_consistency).lower()}"
+    )
 
 if audit_directory.is_dir():
     entries = sorted(audit_directory.rglob("*"))
