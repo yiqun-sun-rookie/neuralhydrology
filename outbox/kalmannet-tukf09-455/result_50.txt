@@ -1,0 +1,22 @@
+### channel=kalmannet-tukf09-455 seq=50
+### host=login4
+### started=2026-09-01T11:57:58+0800
+### ---------- output ----------
+=== FROZEN SEQUENCE 49 SUBMISSION EVIDENCE ===
+=== FROZEN JOB RECORD ===
+=== SLURM STATE ===
+217219|tukf09-455-v2r4-map|hgpu8|COMPLETED|0:0|ngu202|00:00:11|2026-09-01T11:40:51|2026-09-01T11:41:02
+217219.batch|batch||COMPLETED|0:0|ngu202|00:00:11|2026-09-01T11:40:51|2026-09-01T11:41:02
+217219.extern|extern||COMPLETED|0:0|ngu202|00:00:12|2026-09-01T11:40:51|2026-09-01T11:41:03
+slurm_load_jobs error: Invalid job id specified
+=== ZERO-DOWNSTREAM-OUTPUT GATE ===
+STDOUT_SIZE=850
+STDOUT_SHA256=b5bd6d28c1b878ec14c3513ac0965fc701ba8c8625659a7234898ef87489fe02
+STDERR_SIZE=0
+STDERR_SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+{"cuda_available": true, "cuda_device_count": 1, "cuda_device_names": ["NVIDIA A800-SXM4-80GB"], "cuda_visible_devices": "0", "exclusive_node_runtime_evidence_passed": true, "hostname": "ngu202", "nvidia_selected_device": "GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB", "nvidia_selected_gpu_uuid": "GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6", "selected_global_gpu_id": "0", "slurm_cpus_on_node": 64, "slurm_cpus_per_task": 4, "slurm_gpu_allocation_variable_present": true, "slurm_gpus_on_node": "", "slurm_job_cpus_per_node_normalized": 64, "slurm_job_cpus_per_node_raw": "64", "slurm_job_gpus": "0", "slurm_job_id": "217219", "slurm_job_node_count": 1, "slurm_step_gpus": "", "status": "GPU_ALLOCATION_MAPPING_PASS", "torch_process_gpu_uuid": "GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6"}
+TUKF09_455_GPU_ALLOCATION_MAPPING_COMPLETED
+TUKF09_455_A800_EXCLUSIVE_V2R4_ALLOCATION_PROBE_COMPLETED_VERIFIED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T11:57:58+0800
