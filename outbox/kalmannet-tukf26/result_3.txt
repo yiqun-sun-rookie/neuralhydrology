@@ -1,0 +1,17 @@
+### channel=kalmannet-tukf26 seq=3
+### host=login4
+### started=2026-09-01T14:28:20+0800
+### ---------- output ----------
+=== TIMING JOB 217271 ===
+COMPLETED|0:0|00:02:37
+{"basin_id": "01552500", "mode": "joint", "variant": "y6", "selected_update": 0, "peak_rss_mb": 2241.3203125, "seconds": 153.300000064075, "timing_probe": {"selection_query_s": 6.638123117387295, "update_s": 23.266510359942913}}
+=== SELF-CHECK + LAUNCH DECISION ===
+per_update_s=23.3 per_query_s=6.6 peak_rss_mb=2241 est_y6_cell_min=80
+LAUNCH_OK
+=== SBATCH TRAIN ARRAY 135 ===
+Submitted batch job 217272
+1
+SEQ3_OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T14:28:21+0800
