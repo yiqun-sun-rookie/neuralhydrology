@@ -41,6 +41,6 @@ for kind in ('training', 'evaluation'):
     ids = sorted({r['coordinate_id'] for r in c['missing'] if r['coordinate_type'] == kind})
     print(f'MISSING_{kind.upper()}_COORDINATES:', len(ids))
     for k in ids[:10]: print('   ', k)
-    if len(ids) > 10: print(f'    ... 另有 {len(ids)-10} 个')
+    if len(ids) > 10: print(f'    ... plus {len(ids)-10} more')
 PY
 exit 0
