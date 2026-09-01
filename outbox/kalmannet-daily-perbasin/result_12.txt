@@ -1,0 +1,32 @@
+### channel=kalmannet-daily-perbasin seq=12
+### host=login4
+### started=2026-09-01T15:06:25+0800
+### ---------- output ----------
+=== FRAMEWORK-FREE BUNDLE DEPLOYMENT IDENTITY ===
+2026-09-01T15:06:25+0800
+login4
+channel=kalmannet-daily-perbasin sequence=12 purpose=deploy-framework-free-runtime-gate-bundle-only
+signals_sent=0 submissions_created=0 optimizer_steps=0 formal_evaluation_access_count=0
+=== DEPLOYMENT RECEIPT ===
+7d6d5fb9aee79e1effd4ffb1a83edbc0ec756d811054f604b1cb7db878787e27  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_BUNDLE_DEPLOY3_SEQ12/deployment_receipt.txt
+channel=kalmannet-daily-perbasin
+sequence=12
+execution_id=DAILY_CAMELS_KNET_PER_BASIN_BUNDLE_DEPLOY3_SEQ12
+deployment_directory=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_BUNDLE_DEPLOY3_SEQ12
+source_directory=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_BUNDLE_DEPLOY3_SEQ12/source
+archive_sha256=e4fc894489f64b6552c3c6363676de49bfc15607eb8a49bd0ab89d641b49a67a
+archive_size_bytes=344044
+manifest_sha256=7c80bde3db930cfd69f015f3d575bf074ffca6eda5b400731a286ffa0f0bbd86
+payload_member_count=50
+extracted_file_count=51
+probe_receipt_sha256=be039638e7b8625aa48ed3c044fff53c4d8c63504605d48c63ff1924167d4f65
+failed_job_stderr_sha256=bc9ebfbc4f7f167056075c7785483ff7cd4002d9ef21f627ab90c4be2279ede6
+inspection_json={"experiment_ids": ["DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V1_20260901_A40", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_V1_20260901_A41", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_V1_20260901_A42"], "historical_evaluation_member_count": 0, "member_count": 50, "state_dimensions": [7, 11, 18], "status": "DEPLOYED_BUNDLE_VERIFIED"}
+submissions_created=0
+signals_sent=0
+optimizer_steps=0
+formal_evaluation_access_count=0
+=== FRAMEWORK-FREE BUNDLE DEPLOYMENT COMPLETE: NO TRAINING OR SIGNAL ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T15:06:26+0800
