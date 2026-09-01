@@ -10,10 +10,10 @@ RUN_DIRECTORY="${REMOTE_ROOT}/runs/${EXECUTION_ID}"
 SUBMISSION_RECEIPT="${STATUS_DIRECTORY}/${EXECUTION_ID}.submission_receipt.txt"
 EXPECTED_SUBMISSION_RECEIPT_SHA256="d32816710805b425961c3437599870bfc32ffa672625e92acd3f00bb3401fe6f"
 
-echo '=== READ-ONLY 09035800 RUNTIME-GATE AND PROGRESS QUERY ==='
+echo '=== READ-ONLY 09035800 MID-RUN OR TERMINAL QUERY ==='
 date --iso-8601=seconds
 hostname
-echo 'channel=kalmannet-daily-perbasin sequence=25 purpose=read-only-third-pilot-runtime-gate-and-initial-progress'
+echo 'channel=kalmannet-daily-perbasin sequence=26 purpose=read-only-third-pilot-mid-run-or-terminal-progress'
 echo 'signals_sent=0 submissions_created=0 files_modified=0'
 
 if [[ ! -f "${SUBMISSION_RECEIPT}" ]] || \
