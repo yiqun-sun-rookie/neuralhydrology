@@ -1,110 +1,202 @@
 #!/usr/bin/env bash
 set -euo pipefail
+umask 077
 
 REMOTE_ROOT="/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901"
-EXECUTION_ID="DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN3_SEQ13"
-JOB_ID="217415"
-JOB_NAME="kdpp-04105700-s13"
+DEPLOYMENT_ID="DAILY_CAMELS_KNET_PER_BASIN_BUNDLE_DEPLOY3_SEQ12"
+SOURCE_DIRECTORY="${REMOTE_ROOT}/deployments/${DEPLOYMENT_ID}/source"
+DEPLOYMENT_RECEIPT="${REMOTE_ROOT}/deployments/${DEPLOYMENT_ID}/deployment_receipt.txt"
+EXPECTED_DEPLOYMENT_RECEIPT_SHA256="7d6d5fb9aee79e1effd4ffb1a83edbc0ec756d811054f604b1cb7db878787e27"
+PROBE_RECEIPT="${REMOTE_ROOT}/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE3_SEQ5/probe_receipt.json"
+EXPECTED_PROBE_SHA256="be039638e7b8625aa48ed3c044fff53c4d8c63504605d48c63ff1924167d4f65"
+PREVIOUS_EXECUTION_ID="DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN3_SEQ13"
+PREVIOUS_JOB_ID="217415"
+PREVIOUS_AUDIT="${REMOTE_ROOT}/status/${PREVIOUS_EXECUTION_ID}.audit.json"
+EXPECTED_PREVIOUS_AUDIT_SHA256="0116685e956d304251d4623e2f900f3d46a6447f0909209b862d26a7a90510ec"
+BASIN_ID="08070200"
+STATE_DIMENSION="11"
+CONFIG_RELATIVE="configs/daily_camels_knet_per_basin_pilot_08070200.json"
+CONFIG_PATH="${SOURCE_DIRECTORY}/${CONFIG_RELATIVE}"
+EXPECTED_CONFIG_SHA256="2c11e9d61edd7a7f02343e0b0d1e305dd80629a658b0f4f8e684ba0efb305d95"
+EXECUTION_ID="DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_A800_TRAIN1_SEQ18"
+JOB_NAME="kdpp-08070200-s18"
 STATUS_DIRECTORY="${REMOTE_ROOT}/status"
 RUN_DIRECTORY="${REMOTE_ROOT}/runs/${EXECUTION_ID}"
+AUDIT_REPORT="${STATUS_DIRECTORY}/${EXECUTION_ID}.audit.json"
 SUBMISSION_RECEIPT="${STATUS_DIRECTORY}/${EXECUTION_ID}.submission_receipt.txt"
-EXPECTED_SUBMISSION_RECEIPT_SHA256="8d3c249cec64c5e4c9230ea995fbb528dc5658c59247e77b1dbf10401dfa6a2d"
+STDOUT_PATTERN="${STATUS_DIRECTORY}/${EXECUTION_ID}.slurm-%j.out"
+STDERR_PATTERN="${STATUS_DIRECTORY}/${EXECUTION_ID}.slurm-%j.err"
+WRAPPER="${SOURCE_DIRECTORY}/hpc/daily_camels_knet_per_basin/submit_train_gpu.slurm"
 
-echo '=== READ-ONLY 04105700 FRAMEWORK-FREE PROGRESS QUERY ==='
+echo '=== SECOND PILOT SUBMISSION IDENTITY ==='
 date --iso-8601=seconds
 hostname
-echo 'channel=kalmannet-daily-perbasin sequence=17 purpose=read-only-first-pilot-final-epochs-progress'
-echo 'signals_sent=0 submissions_created=0 files_modified=0'
+echo 'channel=kalmannet-daily-perbasin sequence=18 purpose=submit-once-08070200-after-verified-04105700-terminal-state'
+echo "basin_id=${BASIN_ID} state_dimension=${STATE_DIMENSION}"
 
-if [[ ! -f "${SUBMISSION_RECEIPT}" ]] || \
-   [[ "$(sha256sum "${SUBMISSION_RECEIPT}" | awk '{print $1}')" != "${EXPECTED_SUBMISSION_RECEIPT_SHA256}" ]]; then
-  echo '04105700 submission receipt is absent or changed' >&2
-  exit 120
+if [[ ! -f "${DEPLOYMENT_RECEIPT}" ]] || \
+   [[ "$(sha256sum "${DEPLOYMENT_RECEIPT}" | awk '{print $1}')" != "${EXPECTED_DEPLOYMENT_RECEIPT_SHA256}" ]]; then
+  echo 'framework-free deployment receipt is absent or changed' >&2
+  exit 130
 fi
-
-echo '=== SQUEUE ==='
-squeue -j "${JOB_ID}" -o '%i|%j|%P|%T|%R|%M|%S|%N' || true
-echo '=== SACCT ==='
-sacct -j "${JOB_ID}" -X \
-  --format=JobIDRaw,JobName,Partition,State,ExitCode,Elapsed,Start,End,NodeList,AllocTRES \
-  -n -P || true
-echo '=== EXACT JOB COUNTS ==='
-squeue -h -u sunyiq -o '%i|%j|%T|%N' | \
-  awk -F'|' -v name="${JOB_NAME}" '$2 == name {count++} END {print "active_exact_name=" count+0}'
-sacct -u sunyiq -S 2026-09-01T00:00:00 -X --format=JobIDRaw,JobName,State -n -P | \
-  awk -F'|' -v name="${JOB_NAME}" '$2 == name {count++} END {print "historical_exact_name=" count+0}'
-
-for member in \
-  "${STATUS_DIRECTORY}/${EXECUTION_ID}.slurm-${JOB_ID}.out" \
-  "${STATUS_DIRECTORY}/${EXECUTION_ID}.slurm-${JOB_ID}.err" \
-  "${STATUS_DIRECTORY}/${EXECUTION_ID}.entry.json" \
-  "${STATUS_DIRECTORY}/${EXECUTION_ID}.audit.json" \
-  "${STATUS_DIRECTORY}/${EXECUTION_ID}.cgroup.txt"
-do
-  echo "=== STATUS MEMBER: ${member} ==="
-  if [[ -f "${member}" ]]; then
-    stat -c 'bytes=%s modified=%y' "${member}"
-    sha256sum "${member}"
-    tail -n 100 "${member}"
-  else
-    echo 'MISSING'
-  fi
-done
-
-GPU_LOG="${STATUS_DIRECTORY}/${EXECUTION_ID}.gpu.csv"
-echo '=== GPU RESOURCE LOG ==='
-if [[ -f "${GPU_LOG}" ]]; then
-  stat -c 'bytes=%s modified=%y' "${GPU_LOG}"
-  awk -F',' 'BEGIN {max=-1; rows=0} {value=$5+0; if (value>max) max=value; rows++} END {print "rows=" rows " peak_memory_used_mib=" max}' "${GPU_LOG}"
-  tail -n 5 "${GPU_LOG}"
-else
-  echo 'MISSING'
+if [[ ! -f "${PROBE_RECEIPT}" ]] || \
+   [[ "$(sha256sum "${PROBE_RECEIPT}" | awk '{print $1}')" != "${EXPECTED_PROBE_SHA256}" ]]; then
+  echo 'passing A800 probe receipt is absent or changed' >&2
+  exit 131
 fi
-
-echo '=== RUN DIRECTORY PROGRESS ==='
-if [[ -d "${RUN_DIRECTORY}" ]]; then
-  du -sh "${RUN_DIRECTORY}"
-  printf 'checkpoint_files='; find "${RUN_DIRECTORY}/checkpoints" -maxdepth 1 -type f 2>/dev/null | wc -l
-  printf 'prediction_files='; find "${RUN_DIRECTORY}/predictions" -maxdepth 1 -type f 2>/dev/null | wc -l
-  find "${RUN_DIRECTORY}" -maxdepth 2 -type f -printf '%P|%s|%TY-%Tm-%TdT%TH:%TM:%TS\n' | sort | tail -n 20
-  if [[ -f "${RUN_DIRECTORY}/epoch_history.json" ]]; then
-    python - "${RUN_DIRECTORY}/epoch_history.json" <<'PY'
+if [[ ! -f "${CONFIG_PATH}" ]] || \
+   [[ "$(sha256sum "${CONFIG_PATH}" | awk '{print $1}')" != "${EXPECTED_CONFIG_SHA256}" ]]; then
+  echo '08070200 frozen configuration is absent or changed' >&2
+  exit 132
+fi
+if [[ ! -f "${WRAPPER}" ]] || grep -F -q 'pytest' "${WRAPPER}" || \
+   ! grep -F -q 'scripts/check_daily_camels_knet_per_basin_runtime.py' "${WRAPPER}"; then
+  echo 'framework-free training wrapper is absent or changed' >&2
+  exit 133
+fi
+if [[ ! -f "${PREVIOUS_AUDIT}" ]] || \
+   [[ "$(sha256sum "${PREVIOUS_AUDIT}" | awk '{print $1}')" != "${EXPECTED_PREVIOUS_AUDIT_SHA256}" ]] || \
+   ! sacct -j "${PREVIOUS_JOB_ID}" -X --format=JobIDRaw,State,ExitCode -n -P | \
+     grep -F -x -q "${PREVIOUS_JOB_ID}|COMPLETED|0:0"; then
+  echo '04105700 is not in its verified terminal state' >&2
+  exit 134
+fi
+python - "${PREVIOUS_AUDIT}" <<'PY'
 import json
 from pathlib import Path
 import sys
 
-history = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-best = min(history, key=lambda row: row["checkpoint_objective_728"])
-last = history[-1]
-print(
-    json.dumps(
-        {
-            "history_rows": len(history),
-            "last_completed_epoch": last["epoch"],
-            "last_checkpoint_objective_728": last["checkpoint_objective_728"],
-            "best_epoch_so_far": best["epoch"],
-            "best_checkpoint_objective_728_so_far": best["checkpoint_objective_728"],
-            "optimizer_steps": last["optimizer_steps"],
-            "training_forecast_error_events": last["training_forecast_error_events"],
-        },
-        sort_keys=True,
-    )
-)
+audit = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+expected = {
+    "verification_status": "PASS",
+    "basin_id": "04105700",
+    "state_dimension": 7,
+    "last_epoch": 80,
+    "optimizer_steps": 80,
+    "training_forecast_error_events": 612000,
+    "formal_evaluation_access_count": 0,
+    "technical_success": True,
+    "independent_reporting_score_recomputation": True,
+}
+for key, value in expected.items():
+    if audit.get(key) != value:
+        raise SystemExit(f"previous audit mismatch for {key}: {audit.get(key)!r}")
 PY
+
+mkdir -p "${STATUS_DIRECTORY}" "${REMOTE_ROOT}/runs"
+for target in \
+  "${RUN_DIRECTORY}" \
+  "${AUDIT_REPORT}" \
+  "${SUBMISSION_RECEIPT}" \
+  "${STATUS_DIRECTORY}/${EXECUTION_ID}.gpu.csv" \
+  "${STATUS_DIRECTORY}/${EXECUTION_ID}.cgroup.txt" \
+  "${STATUS_DIRECTORY}/${EXECUTION_ID}.entry.json" \
+  "${STATUS_DIRECTORY}/locks/${EXECUTION_ID}.lock"
+do
+  if [[ -e "${target}" ]]; then
+    echo "refusing pre-existing execution target: ${target}" >&2
+    exit 135
   fi
-  for final_member in result_summary.json completion.marker.json; do
-    if [[ -f "${RUN_DIRECTORY}/${final_member}" ]]; then
-      echo "=== FINAL MEMBER: ${final_member} ==="
-      sha256sum "${RUN_DIRECTORY}/${final_member}"
-      cat "${RUN_DIRECTORY}/${final_member}"
-    fi
-  done
-  if [[ -f "${RUN_DIRECTORY}/manifest.sha256.json" ]]; then
-    echo '=== FINAL MANIFEST HASH ==='
-    sha256sum "${RUN_DIRECTORY}/manifest.sha256.json"
-  fi
-else
-  echo 'MISSING'
+done
+if find "${STATUS_DIRECTORY}" -maxdepth 1 -type f \
+  \( -name "${EXECUTION_ID}.slurm-*.out" -o -name "${EXECUTION_ID}.slurm-*.err" \) \
+  -print -quit | grep -q .; then
+  echo 'refusing pre-existing Slurm output for this execution identity' >&2
+  exit 136
 fi
 
-echo '=== QUERY COMPLETE: READ ONLY, NO SUBMISSION OR SIGNAL ==='
+set +u
+source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh"
+conda activate nh_final
+set -u
+export PYTHONDONTWRITEBYTECODE=1
+export PYTHONPATH="${SOURCE_DIRECTORY}/src:${SOURCE_DIRECTORY}"
+python -u "${SOURCE_DIRECTORY}/scripts/build_daily_camels_knet_per_basin_hpc_bundle.py" \
+  --inspect-root "${SOURCE_DIRECTORY}"
+python - "${CONFIG_PATH}" "${REMOTE_ROOT}/runs" "${EXECUTION_ID}" "${SOURCE_DIRECTORY}" <<'PY'
+from pathlib import Path
+import sys
+
+from scripts.run_daily_camels_knet_per_basin_pilot import standard_preflight
+
+preflight = standard_preflight(
+    Path(sys.argv[1]),
+    output_parent=Path(sys.argv[2]),
+    execution_id=sys.argv[3],
+    repository_root=Path(sys.argv[4]),
+)
+print(
+    "preflight_status=PASS "
+    f"basin_id={preflight.basin_specification.basin_id} "
+    f"state_dimension={preflight.basin_specification.state_dimension} "
+    f"configuration_sha256={preflight.configuration_sha256} "
+    f"run_directory={preflight.run_directory}"
+)
+PY
+
+echo '=== LIVE GPU RESOURCE STATE BEFORE SUBMISSION ==='
+sinfo -N -n ngu201,ngu202,ngu203 -o '%N|%P|%T|%G|%C|%m'
+squeue -u sunyiq -p hgpu8,hgpu4,hgpu2 -o '%i|%j|%P|%T|%R|%M|%S|%N'
+ACTIVE_EXACT_BEFORE="$(squeue -h -u sunyiq -o '%i|%j|%T|%N' | awk -F'|' -v name="${JOB_NAME}" '$2 == name {count++} END {print count+0}')"
+HISTORICAL_EXACT_BEFORE="$(sacct -u sunyiq -S 2026-09-01T00:00:00 -X --format=JobIDRaw,JobName,State -n -P | awk -F'|' -v name="${JOB_NAME}" '$2 == name {count++} END {print count+0}')"
+ACTIVE_PILOT_TRAINING_BEFORE="$(squeue -h -u sunyiq -o '%i|%j|%T|%N' | awk -F'|' '$2 ~ /^kdpp-(04105700|08070200|09035800)-s/ {count++} END {print count+0}')"
+echo "active_exact_before=${ACTIVE_EXACT_BEFORE}"
+echo "historical_exact_before=${HISTORICAL_EXACT_BEFORE}"
+echo "active_three_pilot_training_before=${ACTIVE_PILOT_TRAINING_BEFORE}"
+if [[ "${ACTIVE_EXACT_BEFORE}" != "0" || "${HISTORICAL_EXACT_BEFORE}" != "0" || \
+      "${ACTIVE_PILOT_TRAINING_BEFORE}" != "0" ]]; then
+  echo 'duplicate or concurrent pilot training detected before submission' >&2
+  exit 137
+fi
+
+cd "${SOURCE_DIRECTORY}"
+JOB_ID="$(sbatch \
+  --parsable \
+  --job-name="${JOB_NAME}" \
+  --output="${STDOUT_PATTERN}" \
+  --error="${STDERR_PATTERN}" \
+  --export="ALL,PILOT_REMOTE_ROOT=${REMOTE_ROOT},PILOT_CONFIG_RELATIVE=${CONFIG_RELATIVE},PILOT_EXECUTION_ID=${EXECUTION_ID},PILOT_AUDIT_REPORT=${AUDIT_REPORT}" \
+  "${WRAPPER}")"
+case "${JOB_ID}" in
+  ''|*[!0-9]*) echo "invalid Slurm job identifier: ${JOB_ID}" >&2; exit 138 ;;
+esac
+
+ACTIVE_JOB_AFTER="$(squeue -h -j "${JOB_ID}" -o '%i|%j|%T|%N' | wc -l | tr -d ' ')"
+ACTIVE_EXACT_AFTER="$(squeue -h -u sunyiq -o '%i|%j|%T|%N' | awk -F'|' -v name="${JOB_NAME}" '$2 == name {count++} END {print count+0}')"
+if [[ "${ACTIVE_JOB_AFTER}" != "1" || "${ACTIVE_EXACT_AFTER}" != "1" ]]; then
+  echo 'post-submission uniqueness proof failed' >&2
+  exit 139
+fi
+
+if [[ -e "${SUBMISSION_RECEIPT}" ]]; then
+  echo 'refusing to replace pilot submission receipt' >&2
+  exit 140
+fi
+{
+  printf 'channel=kalmannet-daily-perbasin\n'
+  printf 'sequence=18\n'
+  printf 'basin_id=%s\n' "${BASIN_ID}"
+  printf 'state_dimension=%s\n' "${STATE_DIMENSION}"
+  printf 'execution_id=%s\n' "${EXECUTION_ID}"
+  printf 'job_name=%s\n' "${JOB_NAME}"
+  printf 'job_id=%s\n' "${JOB_ID}"
+  printf 'configuration_sha256=%s\n' "${EXPECTED_CONFIG_SHA256}"
+  printf 'deployment_receipt_sha256=%s\n' "${EXPECTED_DEPLOYMENT_RECEIPT_SHA256}"
+  printf 'probe_receipt_sha256=%s\n' "${EXPECTED_PROBE_SHA256}"
+  printf 'previous_audit_sha256=%s\n' "${EXPECTED_PREVIOUS_AUDIT_SHA256}"
+  printf 'active_exact_before=%s\n' "${ACTIVE_EXACT_BEFORE}"
+  printf 'historical_exact_before=%s\n' "${HISTORICAL_EXACT_BEFORE}"
+  printf 'active_three_pilot_training_before=%s\n' "${ACTIVE_PILOT_TRAINING_BEFORE}"
+  printf 'active_job_after=%s\n' "${ACTIVE_JOB_AFTER}"
+  printf 'active_exact_after=%s\n' "${ACTIVE_EXACT_AFTER}"
+  printf 'submission_count=1\n'
+  printf 'signals_sent=0\n'
+  printf 'formal_evaluation_access_count=0\n'
+} > "${SUBMISSION_RECEIPT}"
+
+echo '=== SUBMISSION RECEIPT ==='
+sha256sum "${SUBMISSION_RECEIPT}"
+cat "${SUBMISSION_RECEIPT}"
+echo '=== CURRENT SECOND PILOT JOB ==='
+squeue -j "${JOB_ID}" -o '%i|%j|%P|%T|%R|%M|%S|%N'
+echo '=== SUBMISSION COMPLETE: EXACTLY ONE 08070200 TRAINING JOB, NO SIGNAL ==='
