@@ -1,0 +1,54 @@
+### channel=kalmannet-daily-perbasin seq=13
+### host=login4
+### started=2026-09-01T15:16:38+0800
+### ---------- output ----------
+=== FRAMEWORK-FREE FIRST PILOT SUBMISSION IDENTITY ===
+2026-09-01T15:16:38+0800
+login4
+channel=kalmannet-daily-perbasin sequence=13 purpose=submit-once-04105700-after-framework-free-runtime-gate-repair
+basin_id=04105700 state_dimension=7
+{"experiment_ids": ["DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V1_20260901_A40", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_V1_20260901_A41", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_V1_20260901_A42"], "historical_evaluation_member_count": 0, "member_count": 50, "state_dimensions": [7, 11, 18], "status": "DEPLOYED_BUNDLE_VERIFIED"}
+preflight_status=PASS basin_id=04105700 state_dimension=7 configuration_sha256=eb6cf615a40cc6dcee9da34713621d52cbf3ef3a34b3eb02a3be3b4537f8ad55 run_directory=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runs/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN3_SEQ13
+=== LIVE GPU RESOURCE STATE BEFORE SUBMISSION ===
+NODELIST|PARTITION|STATE|GRES|CPUS(A/I/O/T)|MEMORY
+ngu201|hgpu8|mixed|gpu:8|2/62/0/64|1
+ngu202|hgpu8|idle|gpu:8|0/64/0/64|1
+ngu203|hgpu8|maint|gpu:8|0/64/0/64|1
+JOBID|NAME|PARTITION|STATE|NODELIST(REASON)|TIME|START_TIME|NODELIST
+202229|N22-agg-eval|hgpu4,hgpu8,hgpu2|PENDING|(DependencyNeverSatisfied)|0:00|N/A|
+202294|N22-export|hgpu4,hgpu8,hgpu2|PENDING|(Dependency)|0:00|N/A|
+202315|N22-gate|hgpu4,hgpu8,hgpu2|PENDING|(Dependency)|0:00|N/A|
+202507|N22-mask-iso-531|hgpu4,hgpu8,hgpu2|PENDING|(DependencyNeverSatisfied)|0:00|N/A|
+215429|id30_m01_s100|hgpu2|PENDING|(DependencyNeverSatisfied)|0:00|N/A|
+202293|N22-manifest|hgpu4,hgpu8,hgpu2|PENDING|(JobHeldUser)|0:00|N/A|
+216549|id31_development|hgpu2|RUNNING|ngu003|1-02:56:25|2026-08-31T12:20:14|ngu003
+active_exact_before=0
+historical_exact_before=0
+active_three_pilot_training_before=0
+=== SUBMISSION RECEIPT ===
+8d3c249cec64c5e4c9230ea995fbb528dc5658c59247e77b1dbf10401dfa6a2d  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN3_SEQ13.submission_receipt.txt
+channel=kalmannet-daily-perbasin
+sequence=13
+basin_id=04105700
+state_dimension=7
+execution_id=DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN3_SEQ13
+job_name=kdpp-04105700-s13
+job_id=217415
+configuration_sha256=eb6cf615a40cc6dcee9da34713621d52cbf3ef3a34b3eb02a3be3b4537f8ad55
+deployment_receipt_sha256=7d6d5fb9aee79e1effd4ffb1a83edbc0ec756d811054f604b1cb7db878787e27
+probe_receipt_sha256=be039638e7b8625aa48ed3c044fff53c4d8c63504605d48c63ff1924167d4f65
+active_exact_before=0
+historical_exact_before=0
+active_three_pilot_training_before=0
+active_job_after=1
+active_exact_after=1
+submission_count=1
+signals_sent=0
+formal_evaluation_access_count=0
+=== CURRENT PILOT JOB ===
+JOBID|NAME|PARTITION|STATE|NODELIST(REASON)|TIME|START_TIME|NODELIST
+217415|kdpp-04105700-s13|hgpu8|PENDING|(None)|0:00|N/A|
+=== SUBMISSION COMPLETE: EXACTLY ONE 04105700 TRAINING JOB, NO SIGNAL ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T15:16:40+0800
