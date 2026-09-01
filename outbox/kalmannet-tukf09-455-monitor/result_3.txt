@@ -1,0 +1,75 @@
+### channel=kalmannet-tukf09-455-monitor seq=3
+### host=login4
+### started=2026-09-01T19:32:52+0800
+### ---------- output ----------
+=== SNAPSHOT TIME ===
+2026-09-01T19:32:53+0800
+login4
+=== SLURM STATE ===
+217939|tukf09-455-v2r5-neural|hgpu8|FAILED|1:0|ngu201|00:04:20|2026-09-01T19:22:02|2026-09-01T19:26:22
+217939.batch|batch||FAILED|1:0|ngu201|00:04:20|2026-09-01T19:22:02|2026-09-01T19:26:22
+217939.extern|extern||COMPLETED|0:0|ngu201|00:04:20|2026-09-01T19:22:02|2026-09-01T19:26:22
+slurm_load_jobs error: Invalid job id specified
+JobID|AveCPU|AveRSS|MaxRSS|MaxVMSize
+sstat: error: couldn't get info for job 217939
+=== UNIQUE SUBMISSION EVIDENCE ===
+PRESENT|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/status/training_submission.lock|type=directory|mode=700|links=2|size=4096|mtime=1788260839
+PRESENT|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/status/training_job_id.txt|type=regular file|mode=444|links=1|size=7|mtime=1788260839
+JOB_ID_FILE_CONTENT=217939
+=== TRAINING LOG SNAPSHOT ===
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.out|type=regular file|mode=600|links=1|size=568|mtime=1788261727
+LOG_SHA256=11b47e27e4b7e3fd403ffb3a8f2b8003c6ebf6540e52d0c1ab439be6293d2f77
+--- tail training-217939.out ---
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "mutable_directory_count": 501,
+  "mutable_file_count": 3649,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R5_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.err|type=regular file|mode=600|links=1|size=1278|mtime=1788261948
+LOG_SHA256=b5e19ea076beff9d423c3ab02e6d8efd6918548b843c22503aa77a44c768c92e
+--- tail training-217939.err ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 791, in <module>
+    main()
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 771, in main
+    result = run_sequence(execute_formal_training=arguments.execute_formal_training)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 710, in run_sequence
+    _run_stage(
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 575, in _run_stage
+    raise RuntimeError(f"formal training {stage} controller failed with exit code {exit_code}")
+RuntimeError: formal training neural controller failed with exit code 1
+=== NEURAL UNIT SNAPSHOT ===
+NEURAL_ROOT=absent
+NEURAL_UNIT_DIRECTORY_COUNT=0
+NEURAL_COMPLETE_MANIFEST_COUNT=0
+=== TRAINING EVENT AND VERIFICATION SNAPSHOT ===
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/formal_training_sequence/events.jsonl|type=regular file|mode=600|links=1|size=4470|mtime=1788261948
+{"controller_process_id":38035,"event":"sequence_started","event_at_utc":"2026-09-01T11:25:01.993864+00:00","execution_id":"afcb39a156a948c9bd6b8a75d1a07999","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":1,"stage_controller_source_sha256":{"neural":"f586fef6eda41244ca7228c75c27bee6d625e9adfbf532a8b1f71201025d7f82","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"training_admission_record_sha256":"ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4","training_stages":["verify_filter_rebinding","neural"]}
+{"event":"stage_started","event_at_utc":"2026-09-01T11:25:02.055203+00:00","execution_id":"afcb39a156a948c9bd6b8a75d1a07999","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":2,"stage":"verify_filter_rebinding","stage_controller_source_sha256":{"neural":"f586fef6eda41244ca7228c75c27bee6d625e9adfbf532a8b1f71201025d7f82","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"stage_process_id":38143,"stage_started_at_utc":"2026-09-01T11:25:02.051917+00:00","training_admission_record_sha256":"ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4"}
+{"completion_status":"FILTER_REBINDING_VERIFIED_EVALUATION_HOLD","event":"stage_completed","event_at_utc":"2026-09-01T11:25:52.869976+00:00","execution_id":"afcb39a156a948c9bd6b8a75d1a07999","exit_code":0,"experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":3,"stage":"verify_filter_rebinding","stage_controller_source_sha256":{"neural":"f586fef6eda41244ca7228c75c27bee6d625e9adfbf532a8b1f71201025d7f82","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"stage_ended_at_utc":"2026-09-01T11:25:52.865525+00:00","stage_process_id":38143,"stage_started_at_utc":"2026-09-01T11:25:02.051917+00:00","training_admission_record_sha256":"ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4"}
+{"event":"stage_started","event_at_utc":"2026-09-01T11:25:53.084715+00:00","execution_id":"afcb39a156a948c9bd6b8a75d1a07999","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":4,"stage":"neural","stage_controller_source_sha256":{"neural":"f586fef6eda41244ca7228c75c27bee6d625e9adfbf532a8b1f71201025d7f82","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"stage_process_id":38171,"stage_started_at_utc":"2026-09-01T11:25:53.072496+00:00","training_admission_record_sha256":"ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4"}
+{"error":"controller returned a nonzero exit code","event":"stage_failed","event_at_utc":"2026-09-01T11:26:22.421773+00:00","execution_id":"afcb39a156a948c9bd6b8a75d1a07999","exit_code":1,"experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":5,"stage":"neural","stage_controller_source_sha256":{"neural":"f586fef6eda41244ca7228c75c27bee6d625e9adfbf532a8b1f71201025d7f82","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"stage_ended_at_utc":"2026-09-01T11:26:22.421707+00:00","stage_process_id":38171,"stage_started_at_utc":"2026-09-01T11:25:53.072496+00:00","training_admission_record_sha256":"ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4"}
+{"completed_stages":["verify_filter_rebinding"],"controller_process_id":38035,"error":"RuntimeError: formal training neural controller failed with exit code 1","evaluation_access_count":0,"event":"sequence_failed","event_at_utc":"2026-09-01T11:26:22.445329+00:00","execution_id":"afcb39a156a948c9bd6b8a75d1a07999","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":6,"stage_controller_source_sha256":{"neural":"f586fef6eda41244ca7228c75c27bee6d625e9adfbf532a8b1f71201025d7f82","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"training_admission_record_sha256":"ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4"}
+TRAINING_VERIFICATION_FILE_COUNT=0
+=== FORMAL EVALUATION HOLD SNAPSHOT ===
+ABSENT|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/selection
+ABSENT|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/evaluation
+ABSENT|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/independent
+ABSENT|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/formal_evaluation
+ABSENT|/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/formal_evaluation_independent
+FORMAL_EVALUATION_OUTPUT_COUNT=0
+TUKF09_455_V2R5_NEURAL_JOB_READ_ONLY_SNAPSHOT_COMPLETED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T19:32:53+0800
