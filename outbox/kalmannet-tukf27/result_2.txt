@@ -1,0 +1,14 @@
+### channel=kalmannet-tukf27 seq=2
+### host=login4
+### started=2026-09-01T16:57:25+0800
+### ---------- output ----------
+=== ANCHOR JOB 217684 ===
+COMPLETED|0:0|00:07:28
+anchor pass: True 27 / 27
+prior_sim records: 27
+=== SBATCH TRAIN ARRAY 108 ===
+Submitted batch job 217690
+SEQ2_OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T16:57:26+0800
