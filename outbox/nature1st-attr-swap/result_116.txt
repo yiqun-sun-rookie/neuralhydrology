@@ -1,0 +1,61 @@
+### channel=nature1st-attr-swap seq=116
+### host=login4
+### started=2026-09-01T11:24:19+0800
+### ---------- output ----------
+wallclock 2026-09-01 11:24:19 +0800
+=== A. STATE ===
+      JOBID                       NAME     STATE       TIME  NODELIST PARTITION
+     JobID                  JobName        State ExitCode     Elapsed  NodeList 
+---------- ------------------------ ------------ -------- ----------- --------- 
+    216687  q_armC_us_minus_net_s43    COMPLETED      0:0    10:53:20    ngu003 
+    216688  q_armC_us_minus_net_s44    COMPLETED      0:0    12:56:58    ngu009 
+=== B. LOGS ===
+--- armC s43 (job 216687) ---
+  bytes=6720  mtime=2026-09-01 00:14:40
+  [guard] train: 8 attributes, 2908 stations in meta -- attribute set verified
+  [guard] val: 8 attributes, 2908 stations in meta -- attribute set verified
+PyTorch 2.4.0, CUDA True NVIDIA GeForce RTX 3090
+  errors: none
+Epoch 22: loss=0.2924  val_median_NSE(phys)=0.6266  val_RMSE_qspec=0.0726  NSE>0=0.86  lr=2.50e-04
+Epoch 23: loss=0.2875  val_median_NSE(phys)=0.6189  val_RMSE_qspec=0.0729  NSE>0=0.85  lr=2.50e-04
+Epoch 24: loss=0.2659  val_median_NSE(phys)=0.6362  val_RMSE_qspec=0.0732  NSE>0=0.85  lr=1.25e-04
+Epoch 25: loss=0.2592  val_median_NSE(phys)=0.6383  val_RMSE_qspec=0.0725  NSE>0=0.85  lr=1.25e-04
+Done. Best val median NSE: 0.6397 at epoch 20
+--- armC s44 (job 216688) ---
+  bytes=7227  mtime=2026-09-01 02:18:19
+  [guard] train: 8 attributes, 2908 stations in meta -- attribute set verified
+  [guard] val: 8 attributes, 2908 stations in meta -- attribute set verified
+PyTorch 2.4.0, CUDA True NVIDIA GeForce RTX 3090
+  errors: none
+Epoch 26: loss=0.2776  val_median_NSE(phys)=0.6333  val_RMSE_qspec=0.0713  NSE>0=0.82  lr=2.50e-04
+Epoch 27: loss=0.2722  val_median_NSE(phys)=0.6341  val_RMSE_qspec=0.0721  NSE>0=0.83  lr=2.50e-04
+Epoch 28: loss=0.2537  val_median_NSE(phys)=0.6332  val_RMSE_qspec=0.0715  NSE>0=0.83  lr=1.25e-04
+Epoch 29: loss=0.2475  val_median_NSE(phys)=0.6377  val_RMSE_qspec=0.0717  NSE>0=0.83  lr=1.25e-04
+Done. Best val median NSE: 0.6495 at epoch 24
+=== C. RESULTS SO FAR ===
+  armC s42: median=0.6466 epoch=19 perstation_csv=1
+  armC s43: median=0.6397 epoch=20 perstation_csv=1
+  armC s44: median=0.6495 epoch=24 perstation_csv=1
+=== D. PAIRED: armC SEED SPREAD (the whole point) ===
+armC seeds with per-station scores: [42, 43, 44]
+  armC s42: median=0.6466
+  armC s43: median=0.6397
+  armC s44: median=0.6495
+--- armC seed-vs-seed (this IS the baseline noise) ---
+  [armC_s43 vs armC_s42] paired_med=-0.0048 95%CI [-0.0145,+0.0024]  drop>0.10=20.4%
+  [armC_s44 vs armC_s42] paired_med=-0.0046 95%CI [-0.0145,+0.0070]  drop>0.10=20.6%
+  [armC_s44 vs armC_s43] paired_med=-0.0019 95%CI [-0.0082,+0.0069]  drop>0.10=16.2%
+--- armJ seeds vs EACH armC seed ---
+  [armJ_s42 vs armC_s42] paired_med=-0.0098 95%CI [-0.0227,+0.0057]  drop>0.10=20.9%
+  [armJ_s43 vs armC_s42] paired_med=-0.0160 95%CI [-0.0265,-0.0049]  drop>0.10=24.6%
+  [armJ_s44 vs armC_s42] paired_med=-0.0061 95%CI [-0.0162,+0.0074]  drop>0.10=24.4%
+  [armJ_s42 vs armC_s43] paired_med=-0.0030 95%CI [-0.0193,+0.0074]  drop>0.10=19.0%
+  [armJ_s43 vs armC_s43] paired_med=-0.0089 95%CI [-0.0215,+0.0032]  drop>0.10=23.4%
+  [armJ_s44 vs armC_s43] paired_med=+0.0036 95%CI [-0.0063,+0.0130]  drop>0.10=20.4%
+  [armJ_s42 vs armC_s44] paired_med=-0.0079 95%CI [-0.0176,+0.0056]  drop>0.10=21.1%
+  [armJ_s43 vs armC_s44] paired_med=-0.0106 95%CI [-0.0204,+0.0006]  drop>0.10=22.3%
+  [armJ_s44 vs armC_s44] paired_med=-0.0041 95%CI [-0.0174,+0.0043]  drop>0.10=22.3%
+=== END seq=116 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T11:24:37+0800
