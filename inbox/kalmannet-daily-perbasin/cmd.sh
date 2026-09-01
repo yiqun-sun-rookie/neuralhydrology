@@ -13,9 +13,10 @@ BASIN_ID="04105700"
 STATE_DIMENSION="7"
 CONFIG_RELATIVE="configs/daily_camels_knet_per_basin_pilot_04105700.json"
 CONFIG_PATH="${SOURCE_DIRECTORY}/${CONFIG_RELATIVE}"
-EXPECTED_CONFIG_SHA256="6f3ee034335f9b15faa415b793246e95fcb7ba7bde61af993a55c319c39d5684"
-EXECUTION_ID="DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN1_SEQ9"
-JOB_NAME="kdpp-04105700-s9"
+EXPECTED_CONFIG_SHA256="eb6cf615a40cc6dcee9da34713621d52cbf3ef3a34b3eb02a3be3b4537f8ad55"
+FAILED_EXECUTION_ID="DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN1_SEQ9"
+EXECUTION_ID="DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN2_SEQ10"
+JOB_NAME="kdpp-04105700-s10"
 STATUS_DIRECTORY="${REMOTE_ROOT}/status"
 RUN_DIRECTORY="${REMOTE_ROOT}/runs/${EXECUTION_ID}"
 AUDIT_REPORT="${STATUS_DIRECTORY}/${EXECUTION_ID}.audit.json"
@@ -27,7 +28,7 @@ WRAPPER="${SOURCE_DIRECTORY}/hpc/daily_camels_knet_per_basin/submit_train_gpu.sl
 echo '=== FIRST PILOT SUBMISSION IDENTITY ==='
 date --iso-8601=seconds
 hostname
-echo 'channel=kalmannet-daily-perbasin sequence=9 purpose=submit-once-04105700-seven-state-development-training'
+echo 'channel=kalmannet-daily-perbasin sequence=10 purpose=retry-submit-once-04105700-with-final-bundle-config-hash'
 echo "basin_id=${BASIN_ID} state_dimension=${STATE_DIMENSION}"
 
 if [[ ! -f "${DEPLOYMENT_RECEIPT}" ]] || \
@@ -49,6 +50,16 @@ if [[ ! -f "${WRAPPER}" ]]; then
   echo 'training wrapper is absent' >&2
   exit 63
 fi
+for failed_target in \
+  "${REMOTE_ROOT}/runs/${FAILED_EXECUTION_ID}" \
+  "${REMOTE_ROOT}/status/${FAILED_EXECUTION_ID}.audit.json" \
+  "${REMOTE_ROOT}/status/${FAILED_EXECUTION_ID}.submission_receipt.txt"
+do
+  if [[ -e "${failed_target}" ]]; then
+    echo "sequence-9 pre-submission failure unexpectedly created: ${failed_target}" >&2
+    exit 70
+  fi
+done
 
 mkdir -p "${STATUS_DIRECTORY}" "${REMOTE_ROOT}/runs"
 for target in \
@@ -141,7 +152,7 @@ if [[ -e "${SUBMISSION_RECEIPT}" ]]; then
 fi
 {
   printf 'channel=kalmannet-daily-perbasin\n'
-  printf 'sequence=9\n'
+  printf 'sequence=10\n'
   printf 'basin_id=%s\n' "${BASIN_ID}"
   printf 'state_dimension=%s\n' "${STATE_DIMENSION}"
   printf 'execution_id=%s\n' "${EXECUTION_ID}"
