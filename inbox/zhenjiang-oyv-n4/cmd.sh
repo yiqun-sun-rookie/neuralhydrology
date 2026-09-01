@@ -1,9 +1,11 @@
 #!/bin/bash
-# Read-only: locate the finished (Zhenjiang/Jiangyin) family's impact products.
+# Read-only: base64 the finished-family (zhenjiang/jiangyin) impact tables.
 set -o pipefail
-ROOT=/data1/home/sunyiq/zhenjiang_oyv_v1
-echo "--- top level ---"
-ls -la "$ROOT" | head -50
-echo "--- candidate files: ranking / cost_summary / verdict, <200k ---"
-find "$ROOT" -maxdepth 3 -type f \( -name "*ranking*" -o -name "*cost_summary*" -o -name "*verdict*" -o -name "*impact*summary*" \) -size -200k 2>/dev/null | xargs -r ls -la | head -40
+SRC=/data1/home/sunyiq/zhenjiang_oyv_v1/ladder_impact
+sha256sum "$SRC"/ladder_cost_summary.csv "$SRC"/station_ranking.csv
+for f in station_ranking.csv ladder_cost_summary.csv; do
+  echo "===BEGIN $f==="
+  base64 -w 200 "$SRC/$f"
+  echo "===END $f==="
+done
 echo "=== DONE ==="
