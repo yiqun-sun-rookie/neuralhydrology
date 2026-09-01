@@ -1,0 +1,35 @@
+### channel=kalmannet-tukf27 seq=5
+### host=login4
+### started=2026-09-01T18:59:39+0800
+### ---------- output ----------
+=== READOUT 217822 ===
+    324 COMPLETED
+  none
+da_readout=108/108 sim_readout=54/54
+=== PACK ===
+9e9438043337a712cb95c15b0285e2031f13af979da0da314ff552f516d27e77  /tmp/tukf27_results_v1.tar.gz
+remote: To git@github.com:yiqun-sun-rookie/neuralhydrology.git
+ ! [remote rejected] HEAD -> hpc-mailbox (cannot lock ref 'refs/heads/hpc-mailbox': is at 3ceb849d937812bd5ceebc005a2615b8cee1db4a but expected a4f2176548063714fcac862272c12e3847b97eb3)
+error: failed to push some refs to 'git@github.com:yiqun-sun-rookie/neuralhydrology.git'
+# On branch hpc-mailbox
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	inbox/autoresearch-64/hbv_lite_64_prospective_seq62.slurm
+#	inbox/gpucheck_ngu009.slurm
+#	inbox/gpucheck_ngu101.slurm
+#	payload/id29-nearing2022-da/closure_v12.tar.gz
+#	payload/id29-nearing2022-da/closure_v13.tar.gz
+#	payload/id29-nearing2022-da/gate_preflight_v1.tar.gz
+#	runner.log
+#	runner2.log
+nothing added to commit but untracked files present (use "git add" to track)
+fatal: Unable to create '/data1/home/sunyiq/hpc_mailbox/.git/index.lock': File exists.
+
+If no other git process is currently running, this probably means a
+git process crashed in this repository earlier. Make sure no other git
+process is running and remove the file manually to continue.
+PUSH_FAILED
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-01T19:01:16+0800
