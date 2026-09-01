@@ -1,0 +1,57 @@
+### channel=kalmannet-daily-perbasin seq=1
+### host=login4
+### started=2026-09-01T13:04:41+0800
+### ---------- output ----------
+=== QUERY IDENTITY ===
+2026-09-01T13:04:41+0800
+login4
+channel=kalmannet-daily-perbasin sequence=1 purpose=read-only-current-job-and-resource-audit
+=== CURRENT USER QUEUE ===
+JOBID|NAME|PARTITION|STATE|NODELIST(REASON)|TIME|START_TIME|NODELIST
+202229|N22-agg-eval|hgpu4,hgpu8,hgpu2|PENDING|(DependencyNeverSatisfied)|0:00|N/A|
+202294|N22-export|hgpu4,hgpu8,hgpu2|PENDING|(Dependency)|0:00|N/A|
+202315|N22-gate|hgpu4,hgpu8,hgpu2|PENDING|(Dependency)|0:00|N/A|
+202507|N22-mask-iso-531|hgpu4,hgpu8,hgpu2|PENDING|(DependencyNeverSatisfied)|0:00|N/A|
+215429|id30_m01_s100|hgpu2|PENDING|(DependencyNeverSatisfied)|0:00|N/A|
+202293|N22-manifest|hgpu4,hgpu8,hgpu2|PENDING|(JobHeldUser)|0:00|N/A|
+216549|id31_development|hgpu2|RUNNING|ngu003|1-00:44:27|2026-08-31T12:20:14|ngu003
+squeue_exit=0
+=== CURRENT USER ACTIVE ACCOUNTING ===
+sacct: fatal: job state CONFIGURING is not supported / accounted
+active_sacct_exit=1
+=== JOB 217228 ACCOUNTING ===
+217228|tukf09-455-v2r4-prepare|hgpu8|COMPLETED|0:0|2026-09-01T12:38:27|2026-09-01T12:38:28|2026-09-01T12:46:12|00:07:44|ngu202
+job_217228_sacct_exit=0
+=== NODE STATE NGU201 NGU202 NGU203 ===
+NODELIST|PARTITION|STATE|GRES|CPUS(A/I/O/T)|MEMORY|FREE_MEM
+ngu201|hgpu8|mix|gpu:8|2/62/0/64|1|969530
+ngu202|hgpu8|idle|gpu:8|0/64/0/64|1|681866
+ngu203|hgpu8|maint|gpu:8|0/64/0/64|1|668589
+target_node_sinfo_exit=0
+=== PARTITION STATE ===
+PARTITION|AVAIL|TIMELIMIT|NODES|STATE|GRES
+hcpu48*|up|infinite|10|alloc$|(null)
+hcpu48*|up|infinite|5|maint|(null)
+hcpu48*|up|infinite|14|down*|(null)
+hcpu48*|up|infinite|10|alloc|(null)
+hcpu48*|up|infinite|25|idle|(null)
+hcpu48y|up|infinite|1|down$|(null)
+hcpu48y|up|infinite|1|maint|(null)
+hcpu48y|up|infinite|2|down*|(null)
+hcpu48y|up|infinite|2|mix|(null)
+hcpu48y|up|infinite|6|idle|(null)
+hgpu8|up|infinite|1|maint|gpu:8
+hgpu8|up|infinite|1|mix|gpu:8
+hgpu8|up|infinite|1|idle|gpu:8
+hgpu4|up|infinite|1|down*|gpu:4
+hgpu4|up|infinite|1|mix|gpu:4
+hgpu4|up|infinite|2|idle|gpu:4
+hgpu2|up|infinite|2|mix|gpu:2
+hgpu2p|up|infinite|3|mix|gpu:2
+hgpu2p|up|infinite|1|alloc|gpu:2
+hgpu2p|up|infinite|5|idle|gpu:2
+partition_sinfo_exit=0
+=== QUERY COMPLETE: NO SUBMISSION OR SIGNAL COMMAND EXECUTED ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T13:04:41+0800
