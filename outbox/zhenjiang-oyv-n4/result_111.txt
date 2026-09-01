@@ -1,0 +1,38 @@
+### channel=zhenjiang-oyv-n4 seq=111
+### host=login4
+### started=2026-09-01T15:39:33+0800
+### ---------- output ----------
+--- source listing ---
+total 3087
+drwxr-xr-x.  2 sunyiq g_sunyiq    4096 Aug 27 02:56 .
+drwxr-xr-x. 40 sunyiq g_sunyiq    4096 Aug 27 10:54 ..
+-rw-r--r--.  1 sunyiq g_sunyiq    1268 Aug 27 02:56 completion_manifest.json
+-rw-r--r--.  1 sunyiq g_sunyiq  110194 Aug 27 02:56 n4_cost_summary.csv
+-rw-r--r--.  1 sunyiq g_sunyiq  642972 Aug 27 02:56 n4_fold_costs.csv
+-rw-r--r--.  1 sunyiq g_sunyiq    2041 Aug 27 02:56 n4_information_comparison.csv
+-rw-r--r--.  1 sunyiq g_sunyiq    2264 Aug 27 02:56 n4_prediction_verdicts.csv
+-rw-r--r--.  1 sunyiq g_sunyiq    2832 Aug 27 02:56 n4_station_ranking.csv
+-rw-r--r--.  1 sunyiq g_sunyiq     563 Aug 27 02:56 n4_summary.json
+-rw-r--r--.  1 sunyiq g_sunyiq 2388562 Aug 27 02:56 n4_task_errors.csv
+--- copying files under 5MB ---
+‘/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact/n4_task_errors.csv’ -> ‘outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_task_errors.csv’
+‘/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact/n4_fold_costs.csv’ -> ‘outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_fold_costs.csv’
+‘/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact/n4_prediction_verdicts.csv’ -> ‘outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_prediction_verdicts.csv’
+‘/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact/n4_cost_summary.csv’ -> ‘outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_cost_summary.csv’
+‘/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact/n4_station_ranking.csv’ -> ‘outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_station_ranking.csv’
+‘/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact/n4_information_comparison.csv’ -> ‘outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_information_comparison.csv’
+‘/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact/n4_summary.json’ -> ‘outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_summary.json’
+‘/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact/completion_manifest.json’ -> ‘outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/completion_manifest.json’
+--- exported hashes ---
+c726e075c81d79ce4a4750546498b403da6d4f0b2fac3bbb34e1a6e58d6e7dcc  outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/completion_manifest.json
+54f031ad46c5be691d1596b9d1a8a905fc0e77b94534a2778a268ba7abbb8da4  outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_cost_summary.csv
+6763c410c9165227b1b17f164e21e9c29d70f66c552cde25b27d5c1970dea858  outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_fold_costs.csv
+ea109bc41dd73c9636c01a91848e54894c6af89ccb9f8d71fa54ac5f8aefe752  outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_information_comparison.csv
+fdc204cd08acb96312d415631edb378f96a6ce5bcd3a2b7604f7a07118c7770f  outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_prediction_verdicts.csv
+76e90e56eaba83d9ced8fa1bc7e62812c93c2cbb064a49333beb5f7ae72c6770  outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_station_ranking.csv
+fddc00a8a2b494546987af90fe8256115ba2de200ca73d89dacf061227817dc2  outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_summary.json
+e4fbf1ba2f4722908cc01f5236c6a59e9775a4295961934a28ad61547a95c2ee  outbox/zhenjiang-oyv-n4/n4_impact_export_20260901/n4_task_errors.csv
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T15:39:33+0800
