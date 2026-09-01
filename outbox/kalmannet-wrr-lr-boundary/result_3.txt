@@ -1,0 +1,16 @@
+### channel=kalmannet-wrr-lr-boundary seq=3
+### host=login4
+### started=2026-09-01T17:07:03+0800
+### ---------- output ----------
+=== DEPLOYED ===
+root=/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901
+bundle_sha256=687cb1220be270e0e329c99989e3d7a18e1c83d6cd32c61c42b35fa1747a6fd8
+train_target=/data1/home/sunyiq/knet_project/data/processed/high_flow_aug/train_win800_19990101_01-20070527_03.pt
+validation_target=/data1/home/sunyiq/knet_project/data/processed/high_flow_aug/val_win800_20070527_04-20090314_13.pt
+Submitted batch job 217799
+job_id=217799
+JOBID|NAME|STATE|PARTITION|TIME|NODELIST(REASON)
+217799|knet-lr-common|PENDING|hgpu2p|0:00|(Priority)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T17:07:03+0800
