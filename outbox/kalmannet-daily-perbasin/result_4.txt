@@ -1,0 +1,56 @@
+### channel=kalmannet-daily-perbasin seq=4
+### host=login4
+### started=2026-09-01T14:12:11+0800
+### ---------- output ----------
+=== QUERY IDENTITY ===
+2026-09-01T14:12:11+0800
+login4
+channel=kalmannet-daily-perbasin sequence=4 purpose=read-only-probe-terminal-check
+=== SLURM QUEUE ===
+slurm_load_jobs error: Invalid job id specified
+squeue_exit=1
+=== SLURM ACCOUNTING ===
+217245|kdpp-a800-probe-s3|hgpu8|FAILED|1:0|2026-09-01T14:03:00|2026-09-01T14:03:01|2026-09-01T14:03:21|00:00:20|ngu202
+sacct_exit=0
+=== SUBMISSION RECEIPT ===
+58cc0b4f61c2499a70d834039355dab4c5af195ce01574b4fb6329159c368d69  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE2_SEQ3/submission_receipt.txt
+channel=kalmannet-daily-perbasin
+sequence=3
+execution_id=DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE2_SEQ3
+job_name=kdpp-a800-probe-s3
+job_id=217245
+active_before=0
+historical_before=0
+active_after=1
+exact_name_after=1
+submission_count=1
+signals_sent=0
+=== PROBE RECEIPT ===
+probe_receipt_missing
+=== PROBE STANDARD OUTPUT ===
+ef999d533f0ad1800ba7dd60e31f66919f562612350579b20875337f19e3b035  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE2_SEQ3/slurm-217245.out
+0, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+1, GPU-fd1b1a7e-390d-4349-386e-017b06cc01f8, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+2, GPU-17d33582-136f-9e43-2c62-2afaff1475ff, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+3, GPU-99b30d93-fc05-833a-28af-fdc4ac99acca, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+4, GPU-82b5e390-a535-cc27-b14f-abaa72472f81, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+5, GPU-f3759903-156c-c443-7af1-f2b12ff6dd45, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+6, GPU-0e3208f9-45a0-4974-b8b7-49f42b642d7b, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+7, GPU-d3700f33-087d-65e8-f6c4-3c4f90c3e9d6, NVIDIA A800-SXM4-80GB, 81920, 81226, 0
+=== PROBE STANDARD ERROR ===
+2c7588dec136798d4935df41870d456ef22d662ebc0d76bc22f305f2b185ed14  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/probes/DAILY_CAMELS_KNET_PER_BASIN_PILOT_A800_PROBE2_SEQ3/slurm-217245.err
+Traceback (most recent call last):
+  File "<stdin>", line 30, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/cuda/memory.py", line 684, in mem_get_info
+    device = _get_device_index(device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/cuda/_utils.py", line 38, in _get_device_index
+    return _torch_get_device_index(device, optional, allow_cpu)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/_utils.py", line 803, in _get_device_index
+    raise ValueError(
+ValueError: Expected a torch.device with a specified index or an integer, but got:cuda
+=== QUERY COMPLETE: NO SUBMISSION, TRAINING, FILE MODIFICATION, OR SIGNAL ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T14:12:11+0800
