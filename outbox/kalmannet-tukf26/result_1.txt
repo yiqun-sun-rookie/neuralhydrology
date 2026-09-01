@@ -1,0 +1,30 @@
+### channel=kalmannet-tukf26 seq=1
+### host=login4
+### started=2026-09-01T14:09:16+0800
+### ---------- output ----------
+=== DEPLOY ===
+d795013a77a5696832f0ffad6f71e08eefc834e0a0a479b131ca751a29a3e414  payload/kalmannet-tukf26/tukf26_hpc_payload_v1.tar.gz
+=== VERIFY MANIFEST ===
+manifest_files=33 mismatches=0
+=== FIX EOL + SBATCH ANCHOR ===
+Submitted batch job 217266
+=== PARTITION STATE ===
+ PARTITION  AVAIL  NODES      STATE
+   hcpu48y     up      1      down$
+   hcpu48y     up      1      maint
+   hcpu48y     up      2      down*
+   hcpu48y     up      2      mixed
+   hcpu48y     up      6       idle
+             JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+            202229 hgpu4,hgp N22-agg-   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+            202294 hgpu4,hgp N22-expo   sunyiq PD       0:00      1 (Dependency)
+            202315 hgpu4,hgp N22-gate   sunyiq PD       0:00      1 (Dependency)
+            202507 hgpu4,hgp N22-mask   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+            215429     hgpu2 id30_m01   sunyiq PD       0:00      1 (DependencyNeverSatisfied)
+            217266   hcpu48y tukf26_a   sunyiq PD       0:00      1 (None)
+            202293 hgpu4,hgp N22-mani   sunyiq PD       0:00      1 (JobHeldUser)
+            216549     hgpu2 id31_dev   sunyiq  R 1-01:49:03      1 ngu003
+SEQ1_OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T14:09:17+0800
