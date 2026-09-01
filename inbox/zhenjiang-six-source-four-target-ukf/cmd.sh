@@ -2,12 +2,13 @@
 set -eo pipefail
 
 CHANNEL="zhenjiang-six-source-four-target-ukf"
-ROOT="/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1"
-PAYLOAD_DIR="${HOME}/hpc_mailbox/inbox/${CHANNEL}/payload_20260901_r1"
-ARCHIVE="${PAYLOAD_DIR}/zhenjiang_six_source_four_target_d32_gru_ukf_20260901_r1.tar.gz"
-EXPECTED_ARCHIVE_SHA="57ca7c687dc846c8e6da538f5a684109442db500fa42528bb396a0625428e803"
-EXPECTED_MANIFEST_SHA="bf649c5cac46019800ba4ba1e63e1d41d13b6231cf4cd77ac5d86f341b536cc9"
-EXPECTED_REGISTRY_SHA="7518428f1e980bf1853296080ef93fd739678a538389cbb3716a731822d17106"
+ROOT="/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2"
+FAILED_R1_ROOT="/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1"
+PAYLOAD_DIR="${HOME}/hpc_mailbox/inbox/${CHANNEL}/payload_20260901_r2"
+ARCHIVE="${PAYLOAD_DIR}/zhenjiang_six_source_four_target_d32_gru_ukf_20260901_r2.tar.gz"
+EXPECTED_ARCHIVE_SHA="56935861d76557f2c6047b3b580030d6dad4d042b3549796fc1f2079f72b8776"
+EXPECTED_MANIFEST_SHA="f458886b60b123386be7e906eed8e4e80f8aa248998f1f8c3d15db17b3dd2688"
+EXPECTED_REGISTRY_SHA="704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8"
 EXTRACT_ROOT=""
 
 fatal() {
@@ -18,12 +19,18 @@ fatal() {
 cleanup() {
   if [ -n "${EXTRACT_ROOT}" ] && [ -d "${EXTRACT_ROOT}" ]; then
     case "${EXTRACT_ROOT}" in
-      "/data1/home/${USER}/.zsf4t_deploy_20260901_r1."*) rm -rf -- "${EXTRACT_ROOT}" ;;
+      "/data1/home/${USER}/.zsf4t_deploy_20260901_r2."*) rm -rf -- "${EXTRACT_ROOT}" ;;
       *) echo "[WARN] refusing unsafe temporary cleanup: ${EXTRACT_ROOT}" ;;
     esac
   fi
 }
 trap cleanup EXIT
+
+printf '=== FAILED_R1_PRESERVATION ===\n'
+[ ! -e "${FAILED_R1_ROOT}" ] && [ ! -L "${FAILED_R1_ROOT}" ] || fatal "failed r1 formal root unexpectedly exists"
+[ ! -e "${FAILED_R1_ROOT}.partial" ] && [ ! -L "${FAILED_R1_ROOT}.partial" ] || fatal "failed r1 partial root unexpectedly exists"
+[ -d "${FAILED_R1_ROOT}.staging" ] && [ ! -L "${FAILED_R1_ROOT}.staging" ] || fatal "failed r1 staging evidence is absent or linked"
+stat -c 'PRESERVED_R1_STAGING|%F|%s|%n' "${FAILED_R1_ROOT}.staging"
 
 printf '=== EXCLUSIVE_ROOT_PREFLIGHT ===\n'
 for candidate in "${ROOT}" "${ROOT}.partial" "${ROOT}.staging"; do
@@ -34,7 +41,7 @@ for candidate in "${ROOT}" "${ROOT}.partial" "${ROOT}.staging"; do
 done
 
 [ -f "${ARCHIVE}" ] && [ ! -L "${ARCHIVE}" ] || fatal "archive is absent or linked"
-[ "$(stat -c '%s' "${ARCHIVE}")" = "162290" ] || fatal "archive byte count mismatch"
+[ "$(stat -c '%s' "${ARCHIVE}")" = "162650" ] || fatal "archive byte count mismatch"
 [ "$(sha256sum "${ARCHIVE}" | awk '{print $1}')" = "${EXPECTED_ARCHIVE_SHA}" ] || fatal "archive SHA-256 mismatch"
 
 python - "${ARCHIVE}" <<'PY'
@@ -46,8 +53,8 @@ import sys
 import tarfile
 
 archive = sys.argv[1]
-expected_manifest_sha = "bf649c5cac46019800ba4ba1e63e1d41d13b6231cf4cd77ac5d86f341b536cc9"
-expected_registry_sha = "7518428f1e980bf1853296080ef93fd739678a538389cbb3716a731822d17106"
+expected_manifest_sha = "f458886b60b123386be7e906eed8e4e80f8aa248998f1f8c3d15db17b3dd2688"
+expected_registry_sha = "704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8"
 
 with tarfile.open(archive, "r:gz") as handle:
     members = handle.getmembers()
@@ -73,9 +80,9 @@ with tarfile.open(archive, "r:gz") as handle:
 print("bundle_identity_preflight=passed")
 PY
 
-EXTRACT_ROOT=$(mktemp -d "/data1/home/${USER}/.zsf4t_deploy_20260901_r1.XXXXXX")
+EXTRACT_ROOT=$(mktemp -d "/data1/home/${USER}/.zsf4t_deploy_20260901_r2.XXXXXX")
 case "${EXTRACT_ROOT}" in
-  "/data1/home/${USER}/.zsf4t_deploy_20260901_r1."*) ;;
+  "/data1/home/${USER}/.zsf4t_deploy_20260901_r2."*) ;;
   *) fatal "mktemp returned an unsafe path" ;;
 esac
 tar -xzf "${ARCHIVE}" -C "${EXTRACT_ROOT}"
