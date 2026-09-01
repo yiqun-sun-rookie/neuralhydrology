@@ -5,12 +5,9 @@ CHANNEL="zhenjiang-six-source-four-target-ukf"
 ROOT="/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1"
 PAYLOAD_DIR="${HOME}/hpc_mailbox/inbox/${CHANNEL}/payload_20260901_r1"
 ARCHIVE="${PAYLOAD_DIR}/zhenjiang_six_source_four_target_d32_gru_ukf_20260901_r1.tar.gz"
-OUTER_MANIFEST="${PAYLOAD_DIR}/manifest.sha256.json"
-IDENTITY="${PAYLOAD_DIR}/bundle_identity.json"
 EXPECTED_ARCHIVE_SHA="57ca7c687dc846c8e6da538f5a684109442db500fa42528bb396a0625428e803"
 EXPECTED_MANIFEST_SHA="bf649c5cac46019800ba4ba1e63e1d41d13b6231cf4cd77ac5d86f341b536cc9"
 EXPECTED_REGISTRY_SHA="7518428f1e980bf1853296080ef93fd739678a538389cbb3716a731822d17106"
-EXPECTED_IDENTITY_SHA="a3ed1608a1dc5f8a8943809246718af911a6b50296b4478fb79a76eeb62dc8e6"
 EXTRACT_ROOT=""
 
 fatal() {
@@ -36,14 +33,11 @@ for candidate in "${ROOT}" "${ROOT}.partial" "${ROOT}.staging"; do
   printf 'ABSENT|%s\n' "${candidate}"
 done
 
-for file in "${ARCHIVE}" "${OUTER_MANIFEST}" "${IDENTITY}"; do
-  [ -f "${file}" ] && [ ! -L "${file}" ] || fatal "payload member is absent or linked: ${file}"
-done
+[ -f "${ARCHIVE}" ] && [ ! -L "${ARCHIVE}" ] || fatal "archive is absent or linked"
+[ "$(stat -c '%s' "${ARCHIVE}")" = "162290" ] || fatal "archive byte count mismatch"
 [ "$(sha256sum "${ARCHIVE}" | awk '{print $1}')" = "${EXPECTED_ARCHIVE_SHA}" ] || fatal "archive SHA-256 mismatch"
-[ "$(sha256sum "${OUTER_MANIFEST}" | awk '{print $1}')" = "${EXPECTED_MANIFEST_SHA}" ] || fatal "manifest SHA-256 mismatch"
-[ "$(sha256sum "${IDENTITY}" | awk '{print $1}')" = "${EXPECTED_IDENTITY_SHA}" ] || fatal "identity SHA-256 mismatch"
 
-python - "${ARCHIVE}" "${OUTER_MANIFEST}" "${IDENTITY}" <<'PY'
+python - "${ARCHIVE}" <<'PY'
 from __future__ import annotations
 import hashlib
 import json
@@ -51,27 +45,10 @@ from pathlib import PurePosixPath
 import sys
 import tarfile
 
-archive, manifest_path, identity_path = sys.argv[1:]
-expected_archive_sha = "57ca7c687dc846c8e6da538f5a684109442db500fa42528bb396a0625428e803"
+archive = sys.argv[1]
 expected_manifest_sha = "bf649c5cac46019800ba4ba1e63e1d41d13b6231cf4cd77ac5d86f341b536cc9"
 expected_registry_sha = "7518428f1e980bf1853296080ef93fd739678a538389cbb3716a731822d17106"
 
-identity = json.load(open(identity_path, encoding="utf-8"))
-manifest_bytes = open(manifest_path, "rb").read()
-manifest = json.loads(manifest_bytes)
-if (
-    identity.get("archive_sha256") != expected_archive_sha
-    or identity.get("manifest_sha256") != expected_manifest_sha
-    or identity.get("registry_sha256") != expected_registry_sha
-    or identity.get("archive_member_count") != 40
-    or identity.get("submitted_job_count") != 0
-    or hashlib.sha256(manifest_bytes).hexdigest() != expected_manifest_sha
-    or manifest.get("source_file_count") != 38
-    or manifest.get("registry_sha256") != expected_registry_sha
-    or manifest.get("formal_jobs_submitted") is not False
-    or manifest.get("heldout_2024_target_access_authorized") is not False
-):
-    raise SystemExit("outer frozen bundle identity drift")
 with tarfile.open(archive, "r:gz") as handle:
     members = handle.getmembers()
     regular = [item for item in members if item.isfile()]
@@ -83,9 +60,16 @@ with tarfile.open(archive, "r:gz") as handle:
         if path.is_absolute() or ".." in path.parts:
             raise SystemExit("unsafe archive member: " + item.name)
     by_name = {item.name.removeprefix("./"): item for item in regular}
-    internal = handle.extractfile(by_name["bundle_manifest.json"]).read()
-    if internal != manifest_bytes:
-        raise SystemExit("inner and outer manifest identities differ")
+    manifest_bytes = handle.extractfile(by_name["bundle_manifest.json"]).read()
+    manifest = json.loads(manifest_bytes)
+    if (
+        hashlib.sha256(manifest_bytes).hexdigest() != expected_manifest_sha
+        or manifest.get("source_file_count") != 38
+        or manifest.get("registry_sha256") != expected_registry_sha
+        or manifest.get("formal_jobs_submitted") is not False
+        or manifest.get("heldout_2024_target_access_authorized") is not False
+    ):
+        raise SystemExit("inner frozen bundle identity drift")
 print("bundle_identity_preflight=passed")
 PY
 
