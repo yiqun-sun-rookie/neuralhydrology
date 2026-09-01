@@ -1,0 +1,71 @@
+### channel=kalmannet-daily-perbasin seq=27
+### host=login4
+### started=2026-09-01T18:15:17+0800
+### ---------- output ----------
+=== READ-ONLY 09035800 LATE-RUN OR TERMINAL QUERY ===
+2026-09-01T18:15:17+0800
+login4
+channel=kalmannet-daily-perbasin sequence=27 purpose=read-only-third-pilot-late-run-or-terminal-progress
+signals_sent=0 submissions_created=0 files_modified=0
+=== SQUEUE ===
+JOBID|NAME|PARTITION|STATE|NODELIST(REASON)|TIME|START_TIME|NODELIST
+217812|kdpp-09035800-s24|hgpu8|RUNNING|ngu202|41:54|2026-09-01T17:33:23|ngu202
+=== SACCT ===
+217812|kdpp-09035800-s24|hgpu8|RUNNING|0:0|00:42:28|2026-09-01T17:33:23|Unknown|ngu202|billing=4,cpu=4,node=1
+=== EXACT JOB COUNTS ===
+active_exact_name=1
+historical_exact_name=1
+=== STATUS MEMBER: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24.slurm-217812.out ===
+bytes=938 modified=2026-09-01 17:33:21.000000000 +0800
+5611dd6676ed3a466f3260665a253710d203657a28733a6d5c6b4895fd7cae0c  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24.slurm-217812.out
+{"experiment_ids": ["DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V1_20260901_A40", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_V1_20260901_A41", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_V1_20260901_A42"], "historical_evaluation_member_count": 0, "member_count": 50, "state_dimensions": [7, 11, 18], "status": "DEPLOYED_BUNDLE_VERIFIED"}
+{"basin_id": "09035800", "causal_future_observation_test": true, "checkpoint_restore_test": true, "device": "cuda", "exact_active_mask_no_padding": true, "finite_nonzero_gradient_test": true, "formal_evaluation_access_count": 0, "gpu_name": "NVIDIA A800-SXM4-80GB", "optimizer_steps": 0, "schema_version": "daily_camels_knet_per_basin_runtime_gate_v1", "segment_objective": 0.02303260138699481, "segment_target_count_by_lead": {"1": 102, "2": 102, "3": 102}, "state_dimension": 18, "status": "PASS", "temporary_checkpoint_sha256": "b1c5ba73dad006b9826786653742d64a6ebba060ce27e16743fe02cb34c69ad0"}
+=== STATUS MEMBER: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24.slurm-217812.err ===
+bytes=1001 modified=2026-09-01 17:33:21.000000000 +0800
+a0d7a0b0037e72b09d8a6ebd9a740fca814a6a34553945699316597bad7e3f83  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24.slurm-217812.err
+/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/storage.py:414: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  return torch.load(io.BytesIO(b))
+=== STATUS MEMBER: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24.entry.json ===
+bytes=0 modified=2026-09-01 17:33:24.000000000 +0800
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24.entry.json
+=== STATUS MEMBER: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24.audit.json ===
+MISSING
+=== STATUS MEMBER: /data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24.cgroup.txt ===
+MISSING
+=== GPU RESOURCE LOG ===
+bytes=274318 modified=2026-09-01 18:15:17.000000000 +0800
+rows=2450 peak_memory_used_mib=605
+2026/09/01 18:15:13.838, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 605, 80623, 28
+2026/09/01 18:15:14.863, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 605, 80623, 28
+2026/09/01 18:15:15.889, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 605, 80623, 28
+2026/09/01 18:15:16.915, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 605, 80623, 24
+2026/09/01 18:15:17.939, GPU-d48887d5-4f5e-9df1-a0bb-23d1fed0f3d6, NVIDIA A800-SXM4-80GB, 81920, 605, 80623, 22
+=== RUN DIRECTORY PROGRESS ===
+86M	/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runs/DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24
+checkpoint_files=59
+prediction_files=59
+predictions/epoch_040.npz|30208|2026-09-01T18:03:05.0000000000
+predictions/epoch_041.npz|30217|2026-09-01T18:03:46.0000000000
+predictions/epoch_042.npz|30215|2026-09-01T18:04:26.0000000000
+predictions/epoch_043.npz|30210|2026-09-01T18:05:06.0000000000
+predictions/epoch_044.npz|30200|2026-09-01T18:05:46.0000000000
+predictions/epoch_045.npz|30208|2026-09-01T18:06:27.0000000000
+predictions/epoch_046.npz|30202|2026-09-01T18:07:07.0000000000
+predictions/epoch_047.npz|30212|2026-09-01T18:07:48.0000000000
+predictions/epoch_048.npz|30215|2026-09-01T18:08:28.0000000000
+predictions/epoch_049.npz|30201|2026-09-01T18:09:07.0000000000
+predictions/epoch_050.npz|30210|2026-09-01T18:09:47.0000000000
+predictions/epoch_051.npz|30214|2026-09-01T18:10:27.0000000000
+predictions/epoch_052.npz|30203|2026-09-01T18:11:07.0000000000
+predictions/epoch_053.npz|30202|2026-09-01T18:11:47.0000000000
+predictions/epoch_054.npz|30208|2026-09-01T18:12:27.0000000000
+predictions/epoch_055.npz|30216|2026-09-01T18:13:07.0000000000
+predictions/epoch_056.npz|30212|2026-09-01T18:13:47.0000000000
+predictions/epoch_057.npz|30204|2026-09-01T18:14:27.0000000000
+predictions/epoch_058.npz|30201|2026-09-01T18:15:07.0000000000
+preflight.json|2988|2026-09-01T17:33:29.0000000000
+{"best_checkpoint_objective_728_so_far": 0.04367822671910568, "best_epoch_so_far": 58, "epoch_zero_checkpoint_objective_728": 0.40192019612590385, "history_rows": 59, "last_checkpoint_objective_728": 0.04367822671910568, "last_completed_epoch": 58, "optimizer_steps": 58, "training_forecast_error_events": 443700}
+=== QUERY COMPLETE: READ ONLY, NO SUBMISSION OR SIGNAL ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T18:15:18+0800
