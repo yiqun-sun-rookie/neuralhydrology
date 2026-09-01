@@ -1,0 +1,19 @@
+### channel=kalmannet-tukf09-455 seq=63
+### host=login4
+### started=2026-09-01T16:34:30+0800
+### ---------- output ----------
+=== FROZEN SEQUENCE 61 DEPLOYMENT EVIDENCE ===
+=== FROZEN SEQUENCE 62 PRE-SUBMISSION FAILURE EVIDENCE ===
+=== IMMUTABLE DEPLOYMENT AND CONTRACT GATES ===
+=== SAME-NAME JOB GATE ===
+=== EXCLUSIVE ALLOCATION SUBMISSION LOCK ===
+=== EXACTLY ONE PACKAGE ALLOCATION PROBE SUBMISSION ===
+Submitted batch job 217678
+=== IMMEDIATE STATE ===
+ALLOCATION_PROBE_JOB_ID=217678
+             JOBID                           NAME  PARTITION      STATE         NODELIST(REASON)       TIME           START_TIME
+            217678            tukf09-455-v2r5-map      hgpu8    PENDING                   (None)       0:00                  N/A
+TUKF09_455_A800_EXCLUSIVE_V2R5_ALLOCATION_PROBE_SUBMITTED_ONCE_FORMAL_EVALUATION_HOLD
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-01T16:34:31+0800
