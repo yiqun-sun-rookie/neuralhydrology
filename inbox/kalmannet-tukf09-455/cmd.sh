@@ -1,6 +1,7 @@
 #!/bin/bash
-# Read-only strict audit of the one completed v2r5 preparation job. This
-# command submits, cancels, or mutates nothing and creates no admission.
+# Freeze the passed sequence 68 read-only audit, repeat the strict gates, then
+# create and independently verify only the v2r5 HPC technical admission.
+# This command submits no job and keeps formal evaluation closed.
 set -euo pipefail
 umask 077
 
@@ -15,6 +16,7 @@ STAGED_MANIFEST="${ROOT}/status/staged_training_sources.json"
 PREPARATION_PROBE="${ROOT}/status/preparation_probe.json"
 PREPARATION_FAILED="${ROOT}/status/PREPARATION_FAILED.json"
 FILTER_SEAL="${RESULTS_ROOT}/control/filter_rebinding/independent/manifest.final.sha256.json"
+ADMISSION="${ROOT}/status/hpc_technical_admission.json"
 JOB_ID=217817
 JOB_NAME=tukf09-455-v2r5-prepare
 JOB_ID_FILE="${ROOT}/status/preparation_job_id.txt"
@@ -37,6 +39,12 @@ RESULT_67_COMMAND_COMMIT=1a28d50250ffa104b7798fe76c83772fcb52227e
 RESULT_67_COMMAND_SHA=6d03ca93a82b351387a47a3b26c275427fdc7ec1dc521162e753a59ab4e5ef84
 RESULT_67_SIZE=1680
 RESULT_67_SHA=2b6e1bc9aa0e865624463be06a90c33cbde2485a94a7acbba9a12e40f5069f25
+RESULT_68="${MAILBOX_ROOT}/outbox/kalmannet-tukf09-455/result_68.txt"
+RESULT_68_COMMIT=ec9a9ebea56b926fa9e8b5ebae56519fd53bfc6c
+RESULT_68_COMMAND_COMMIT=6c22af09600c99567504039ea4e131f65f58bb07
+RESULT_68_COMMAND_SHA=6239f5e9f6704656eb9ce063ae053b3ee63c853f4629b4ca42cf4273a7c2dd19
+RESULT_68_SIZE=2756
+RESULT_68_SHA=450142fab24b9c06c802dcbd30e46a6fac01f9faa43713743022a9cfb2fb57c4
 BUILDER="${PROJECT_ROOT}/scripts/build_tukf09_455_a800_exclusive_hpc_bundle_v2r5.py"
 STAGE_TOOL="${PROJECT_ROOT}/hpc/tukf09_455_basin_revision_a800_exclusive_v2r5/stage_and_train.py"
 CONFIG="${PROJECT_ROOT}/configs/tukf09_455_basin_zero_validation_target_variance_hpc_execution_a800_exclusive_v2r5.json"
@@ -106,6 +114,39 @@ assert not any(line.startswith("FATAL:") for line in lines)
 assert "TUKF09_455_A800_EXCLUSIVE_V2R5_PREPARATION_COMPLETED_STRICTLY_VERIFIED_ADMISSION_NOT_CREATED_FORMAL_EVALUATION_HOLD" not in lines
 PY
 
+echo "=== FROZEN SEQUENCE 68 STRICT PREPARATION PASS EVIDENCE ==="
+[[ -f "${RESULT_68}" && ! -L "${RESULT_68}" ]] || fail "sequence 68 result missing or linked"
+[[ "$(stat -c '%h' "${RESULT_68}")" -eq 1 ]] || fail "sequence 68 result hard-link count changed"
+[[ "$(stat -c '%s' "${RESULT_68}")" -eq "${RESULT_68_SIZE}" ]] || fail "sequence 68 result size changed"
+[[ "$(sha256sum "${RESULT_68}" | awk '{print $1}')" = "${RESULT_68_SHA}" ]] || fail "sequence 68 result hash changed"
+[[ "$(git log -1 --format=%H -- outbox/kalmannet-tukf09-455/result_68.txt)" = "${RESULT_68_COMMIT}" ]] || fail "sequence 68 result commit changed"
+git merge-base --is-ancestor "${RESULT_68_COMMAND_COMMIT}" "${RESULT_68_COMMIT}" || fail "sequence 68 command is not an ancestor of its result"
+[[ "$(git log -1 --format=%H "${RESULT_68_COMMIT}^" -- inbox/kalmannet-tukf09-455/cmd.sh)" = "${RESULT_68_COMMAND_COMMIT}" ]] || fail "sequence 68 command was not the last channel command before its result"
+[[ "$(git diff-tree --no-commit-id --name-only -r "${RESULT_68_COMMIT}")" = "outbox/kalmannet-tukf09-455/result_68.txt" ]] || fail "sequence 68 result commit surface changed"
+[[ "$(git show "${RESULT_68_COMMAND_COMMIT}:inbox/kalmannet-tukf09-455/cmd.sh" | sha256sum | awk '{print $1}')" = "${RESULT_68_COMMAND_SHA}" ]] || fail "sequence 68 command hash changed"
+
+"${PYTHON}" -B - "${RESULT_68}" <<'PY'
+from pathlib import Path
+import json
+import sys
+
+lines = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+assert lines[0] == "### channel=kalmannet-tukf09-455 seq=68"
+assert lines[1] == "### host=login4"
+assert lines[-2] == "### exit_code=0"
+assert lines[-1].startswith("### finished=")
+assert "=== REPAIRED RUNTIME BUNDLE VERIFICATION ===" in lines
+assert '  "status": "TUKF09_455_A800_EXCLUSIVE_V2R5_HPC_RUNTIME_BUNDLE_VERIFIED"' in lines
+assert "=== INDEPENDENT PREPARATION PAYLOAD AUDIT ===" in lines
+summary = next(json.loads(line) for line in lines if line.startswith('{"filter_unit_count"'))
+assert summary["filter_unit_count"] == 455
+assert summary["local_filter_seal_provenance_sha256"] == "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0"
+assert summary["remote_filter_seal_sha256"] == "7ecfa4d5a61f37a2fc40e75b9e1bbec4be6c39ba7b0b87ec8705bcca277faaa0"
+assert summary["staged_file_count"] == 911
+assert "TUKF09_455_A800_EXCLUSIVE_V2R5_PREPARATION_COMPLETED_STRICTLY_VERIFIED_AFTER_READ_ONLY_AUDIT_LAYER_FIX_ADMISSION_NOT_CREATED_FORMAL_EVALUATION_HOLD" in lines
+assert not any(line.startswith("FATAL:") for line in lines)
+PY
+
 echo "=== FROZEN PREPARATION JOB RECORD ==="
 for item in "${ROOT}" "${PROJECT_ROOT}" "${ROOT}/logs" "${ROOT}/status" "${SUBMISSION_LOCK}"; do
   [[ -d "${item}" && ! -L "${item}" ]] || fail "required directory missing or linked: ${item}"
@@ -131,7 +172,7 @@ echo "=== FORMAL EVALUATION AND TRAINING HOLD ==="
 for name in selection evaluation independent formal_evaluation formal_evaluation_independent; do
   [[ ! -e "${RESULTS_ROOT}/${name}" && ! -L "${RESULTS_ROOT}/${name}" ]] || fail "forbidden evaluation output exists: ${name}"
 done
-for item in "${ROOT}/status/hpc_technical_admission.json" "${ROOT}/status/training_submission.lock" "${ROOT}/status/training_job_id.txt"; do
+for item in "${ADMISSION}" "${ROOT}/status/training_submission.lock" "${ROOT}/status/training_job_id.txt"; do
   [[ ! -e "${item}" && ! -L "${item}" ]] || fail "technical admission or training evidence exists prematurely: ${item}"
 done
 
@@ -304,3 +345,96 @@ print(json.dumps({
 PY
 
 echo "TUKF09_455_A800_EXCLUSIVE_V2R5_PREPARATION_COMPLETED_STRICTLY_VERIFIED_AFTER_READ_ONLY_AUDIT_LAYER_FIX_ADMISSION_NOT_CREATED_FORMAL_EVALUATION_HOLD"
+
+echo "=== CREATE EXCLUSIVE HPC TECHNICAL ADMISSION ONLY ==="
+"${PYTHON}" -B "${STAGE_TOOL}" admit \
+  --project-root "${PROJECT_ROOT}" \
+  --probe "${PREPARATION_PROBE}" \
+  --private-manifest "${PRIVATE_MANIFEST}" \
+  --output "${ADMISSION}" \
+  --authorize-hpc-technical-execution
+
+[[ -f "${ADMISSION}" && ! -L "${ADMISSION}" ]] || fail "HPC technical admission was not created as a regular unlinked file"
+[[ "$(stat -c '%h' "${ADMISSION}")" -eq 1 ]] || fail "HPC technical admission hard-link count changed"
+[[ ! -e "${ROOT}/status/training_submission.lock" && ! -L "${ROOT}/status/training_submission.lock" ]] || fail "training submission lock exists prematurely"
+[[ ! -e "${ROOT}/status/training_job_id.txt" && ! -L "${ROOT}/status/training_job_id.txt" ]] || fail "training job id exists prematurely"
+
+"${PYTHON}" -B - "${PROJECT_ROOT}" "${ADMISSION}" "${PRIVATE_MANIFEST}" "${PREPARATION_PROBE}" "${STAGED_MANIFEST}" <<'PY'
+import importlib.util
+import json
+from pathlib import Path
+import sys
+
+project = Path(sys.argv[1])
+admission_path = Path(sys.argv[2])
+private_path = Path(sys.argv[3])
+probe_path = Path(sys.argv[4])
+staged_path = Path(sys.argv[5])
+stage_path = project / "hpc/tukf09_455_basin_revision_a800_exclusive_v2r5/stage_and_train.py"
+spec = importlib.util.spec_from_file_location("tukf09_stage_v2r5_admission_audit", stage_path)
+assert spec is not None and spec.loader is not None
+stage = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(stage)
+config_path = project / "configs/tukf09_455_basin_zero_validation_target_variance_hpc_execution_a800_exclusive_v2r5.json"
+config = stage.load_execution_config(config_path)
+admission = stage.read_json(admission_path, root=Path(config["remote_layout"]["remote_root"]), canonical=True)
+stage._verify_payload_identity(admission, label="HPC technical admission")
+stage.require_zero_evaluation(admission, label="HPC technical admission")
+verified = stage.verify_hpc_technical_admission(
+    project_root=project,
+    admission_path=admission_path,
+    private_manifest=private_path,
+    probe_path=probe_path,
+    staged_manifest=staged_path,
+    current_runtime=admission["admitted_runtime"],
+    config_path=config_path,
+)
+science = config["scientific_identity"]
+assert admission["status"] == "HPC_A800_EXCLUSIVE_V2R5_TECHNICAL_EXECUTION_ADMITTED_FORMAL_EVALUATION_HOLD"
+assert admission["scientific_contract_sha256"] == "7710594dcc5cce7f087cb70492a6f827c3925a98ea7fa051d26c5ef1660304e1"
+assert admission["original_training_admission_file_sha256"] == "6ba3cdd742fc2bdf039c51afc75485c8292f0b999d7fe426cb2ccf69057c1b79"
+assert admission["original_training_admission_record_sha256"] == "ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4"
+assert admission["local_filter_installation_final_sha256"] == "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0"
+assert admission["remote_filter_installation_final_sha256"] == "7ecfa4d5a61f37a2fc40e75b9e1bbec4be6c39ba7b0b87ec8705bcca277faaa0"
+assert admission["bundle_manifest_sha256"] == "f7c18d0a95849ee1d7d0a64c7a8724b6cf1fc0b84967503bd7ec1b484b239e76"
+assert admission["initial_bundle_verification_sha256"] == "8bd135e5b5b0cc61fe328aaba1afe3521f3293e629697d32a1c2234794d4f27f"
+assert admission["initial_bundle_verification_identity_sha256"] == "f12f515270c0bda53b2a8ee5687987f407dd60ad67a3358f44b239a450b46514"
+assert admission["private_runtime_manifest_sha256"] == "4207579e6a7af408da933ff1075d537186878cbbcb4b0f17e8778b6a47a98aee"
+assert admission["private_runtime_identity_sha256"] == "08083e4f7bafdb9fa32e3982f70fe47ff5952fc188964032a5df4633210b024a"
+assert admission["offline_input_manifest_sha256"] == "2507f0ea14c4880c4aad9a3ccd5a2e6e1c5e5be1ee18bd0093c52d5db85acf82"
+assert admission["offline_input_identity_sha256"] == "28f30e3ff15639e2d68fcc683deb5a242675f3597541d0f928a5ec37a40aae53"
+assert admission["staged_sources_manifest_sha256"] == "fecab69d1ce6fa0b23c2f5b22203a31d87b1c53264fe41a2092c8a2f87e5c0b9"
+assert admission["staged_sources_identity_sha256"] == "75cdddfde1b15181dbcace5357fc540781005bfb3d2ff7777a204ff1c51fed8e"
+assert admission["preparation_probe_sha256"] == "59007f5d207f6dd5d9a1225f11d817fd3aabf04ff1690511705fe4546c4222fe"
+assert admission["preparation_probe_identity_sha256"] == "a4d8c035a17640472d389796fecc84d2a4e194236551c37b59f280457920c4da"
+assert admission["ordered_basin_count"] == 455
+assert admission["neural_model_order"] == [f"lead_{lead}_seed_{seed}" for lead in (1, 2, 3) for seed in (0, 1, 2)]
+assert admission["neural_model_parallelism"] == 1
+assert admission["exclusive_node_required"] is True
+assert admission["exclusive_node_runtime_evidence_passed"] is True
+assert admission["formal_evaluation_authorized"] is False
+assert admission["scientific_contract_changed"] is False
+assert admission["original_training_admission_changed"] is False
+assert admission["bitwise_equivalence_to_rtx3090_claimed"] is False
+assert verified["identity_sha256"] == admission["identity_sha256"]
+assert science["formal_training_execution"]["sha256"] == "0daf464f6bb1cfc11f04806b7caf5195ea42c3aef8187d8248474993ca108319"
+print(json.dumps({
+    "admission_identity_sha256": admission["identity_sha256"],
+    "admission_sha256": stage.sha256_file(admission_path),
+    "evaluation_array_reads": admission["evaluation_array_reads"],
+    "evaluation_metrics": admission["evaluation_metrics"],
+    "evaluation_outputs": admission["evaluation_outputs"],
+    "evaluation_predictions": admission["evaluation_predictions"],
+    "formal_evaluation_authorized": admission["formal_evaluation_authorized"],
+    "neural_model_unit_count": len(admission["neural_model_order"]),
+    "ordered_basin_count": admission["ordered_basin_count"],
+    "status": admission["status"],
+}, sort_keys=True))
+PY
+
+for name in selection evaluation independent formal_evaluation formal_evaluation_independent; do
+  [[ ! -e "${RESULTS_ROOT}/${name}" && ! -L "${RESULTS_ROOT}/${name}" ]] || fail "forbidden evaluation output appeared after admission: ${name}"
+done
+echo "ADMISSION_SIZE=$(stat -c '%s' "${ADMISSION}")"
+echo "ADMISSION_SHA256=$(sha256sum "${ADMISSION}" | awk '{print $1}')"
+echo "TUKF09_455_A800_EXCLUSIVE_V2R5_TECHNICAL_ADMISSION_CREATED_AND_VERIFIED_TRAINING_NOT_SUBMITTED_FORMAL_EVALUATION_HOLD"
