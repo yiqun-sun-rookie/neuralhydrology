@@ -1,0 +1,26 @@
+### channel=kalmannet-tukf09-455 seq=54
+### host=login4
+### started=2026-09-01T13:22:19+0800
+### ---------- output ----------
+=== FROZEN SEQUENCE 52 SUBMISSION EVIDENCE ===
+=== FROZEN SEQUENCE 53 INSPECTION EVIDENCE ===
+=== FROZEN PREPARATION JOB RECORD ===
+=== SLURM STATE ===
+217228|tukf09-455-v2r4-prepare|hgpu8|COMPLETED|0:0|ngu202|00:07:44|2026-09-01T12:38:28|2026-09-01T12:46:12
+217228.batch|batch||COMPLETED|0:0|ngu202|00:07:44|2026-09-01T12:38:28|2026-09-01T12:46:12
+217228.extern|extern||COMPLETED|0:0|ngu202|00:07:45|2026-09-01T12:38:28|2026-09-01T12:46:13
+slurm_load_jobs error: Invalid job id specified
+=== FORMAL EVALUATION HOLD ===
+=== TERMINAL LOG EVIDENCE ===
+STDOUT_SIZE=2465173
+STDOUT_SHA256=f9de1e0672b6f198d9bcf2a9fbe0cb5f28f489bda1b35cb91c265f3060ef2262
+STDERR_SIZE=0
+STDERR_SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+STDOUT_LAST_LINE=TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED
+=== STRICT PREPARATION ARTIFACT GATES ===
+Traceback (most recent call last):
+  File "<stdin>", line 107, in <module>
+AssertionError
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-01T13:23:56+0800
