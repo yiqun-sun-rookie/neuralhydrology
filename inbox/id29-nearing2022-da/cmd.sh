@@ -10,12 +10,12 @@ sacct -j 216692 -X -n -P --format=State 2>/dev/null | sort | uniq -c || echo '  
 echo "=== FAILED ARRAY TASK IDS ==="
 sacct -j 216692 -X -n -P --format=JobID,State 2>/dev/null | grep -E '\|(FAILED|TIMEOUT|NODE_FAIL|OUT_OF_MEMORY)' | sed 's/216692_//;s/|.*//' | tr '\n' ',' || echo '  none'
 echo
-echo "=== LOG IDLE SECONDS PER RUNNING JOB ==="
+echo "=== LOG IDLE SECONDS ==="
 for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-' | awk '{print $1}'); do
   SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
   [ -n "$SO" ] && [ -f "$SO" ] && printf '  %-14s idle=%ss node=%s\n' "$J" "$(( $(date +%s) - $(stat -c %Y "$SO") ))" "$(squeue -h -j "$J" -o '%N' 2>/dev/null)"
 done
-echo "=== AGGREGATION AND GATE ARTIFACTS ==="
+echo "=== ARTIFACTS ==="
 for F in aggregation/evaluations/time_split_vs_author.csv aggregation/evaluations/basin_split_vs_author.csv aggregation/hyperparameters/scores.csv aggregation/final_reproduction_gate.json; do
   P="$ROOT/closure_20260810/$F"
   [ -f "$P" ] && echo "  PRESENT $F ($(stat -c %s "$P") bytes)" || echo "  MISSING $F"
