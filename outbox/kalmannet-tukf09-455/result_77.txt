@@ -1,0 +1,44 @@
+### channel=kalmannet-tukf09-455 seq=77
+### host=login4
+### started=2026-09-02T17:30:35+0800
+### ---------- output ----------
+PREPARATION_JOB_ID=218635
+=== SLURM STATE ===
+     JobID                    JobName Partitio        State ExitCode  NodeList    Elapsed                Start                  End 
+---------- -------------------------- -------- ------------ -------- --------- ---------- -------------------- -------------------- 
+    218635    tukf09-455-v2r6-prepare    hgpu8      PENDING      0:0 None ass+   00:00:00              Unknown              Unknown 
+PENDING (Priority) 0:00
+=== STATUS TREE ===
+total 24
+drwxr-xr-x.   6 sunyiq g_sunyiq 4096 Sep  2 17:15 .
+drwx------. 130 sunyiq g_sunyiq 4096 Sep  2 17:30 ..
+drwxr-xr-x.   3 sunyiq g_sunyiq 4096 Sep  2 17:09 bundle
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  2 17:12 logs
+drwxr-xr-x.   5 sunyiq g_sunyiq 4096 Sep  2 17:15 offline_inputs_v2r6
+drwxr-xr-x.   3 sunyiq g_sunyiq 4096 Sep  2 17:22 status
+total 13
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Sep  2 17:22 .
+drwxr-xr-x. 6 sunyiq g_sunyiq 4096 Sep  2 17:15 ..
+-rw-r--r--. 1 sunyiq g_sunyiq   61 Sep  2 17:12 offline_inputs_download.launched
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  2 17:12 offline_inputs_download.lock
+-rw-r--r--. 1 sunyiq g_sunyiq    6 Sep  2 17:22 preparation_job_id.txt
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  2 17:22 preparation_submission.lock
+=== PREPARATION MARKERS ===
+ABSENT  PREPARATION_FAILED.json
+ABSENT  staged_training_sources.json
+ABSENT  preparation_probe.json
+ABSENT  hpc_technical_admission.json
+ABSENT  initial_bundle_verification.json
+=== PRIVATE RUNTIME ===
+RUNTIME_ABSENT
+NO_PENDING_RUNTIME
+=== RESULT ROOT INSIDE THE BUNDLE ===
+RESULT_ROOT_ABSENT
+=== JOB LOG TAIL ===
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/logs/prepare-218635.out’ for reading: No such file or directory
+--- stderr ---
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/logs/prepare-218635.err’ for reading: No such file or directory
+TUKF09_455_V2R6_PREPARATION_STATUS_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T17:30:35+0800
