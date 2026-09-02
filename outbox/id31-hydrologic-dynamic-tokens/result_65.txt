@@ -1,0 +1,11 @@
+### channel=id31-hydrologic-dynamic-tokens seq=65
+### host=login4
+### started=2026-09-02T11:56:45+0800
+### ---------- output ----------
+=== DT08 EXACT INTERNAL VALIDATION ===
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+ModuleNotFoundError: No module named 'pandas'
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-02T11:56:45+0800
