@@ -1,76 +1,47 @@
 #!/bin/bash
-# id26-v09-strict seq=69: read-only status and evidence query for independent state replay audit job 215874.
 set -o pipefail
-export LC_ALL=C
-
 ROOT=/data1/home/sunyiq/v09_strict
-AUDIT_PARENT=$ROOT/audit_v09
-TRAIN_REPO=$ROOT/codetest/neuralhydrology
-FORMAL_ROOT=$TRAIN_REPO/results/26_historical_band_experts/formal_v09
-REPORT=$FORMAL_ROOT/state_diagnostics_external_audit.json
-JOBID_FILE=$AUDIT_PARENT/state_diagnostics_audit_attempt_01_jobid.txt
-JOBID=215874
+FORMAL=$ROOT/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09
 
-echo "=== A JOB ID AND SCHEDULER ==="
-if [ -f "$JOBID_FILE" ]; then
-  echo "recorded_jobid=$(tr -d '[:space:]' < "$JOBID_FILE")"
+echo "=== A PREDICT CODE AREA ==="
+mkdir -p $ROOT/predict_v09
+cd $ROOT/predict_v09 || exit 1
+if [ -d neuralhydrology/.git ]; then
+  cd neuralhydrology || exit 1
+  git fetch origin "+codex/historical-band-experts-pilot:refs/remotes/origin/codex/historical-band-experts-pilot" -q
+  git reset -q --hard refs/remotes/origin/codex/historical-band-experts-pilot
+  echo "mode=updated_existing"
 else
-  echo "recorded_jobid_file=missing"
+  git clone -q --depth 1 --branch codex/historical-band-experts-pilot --single-branch \
+    git@github.com:yiqun-sun-rookie/neuralhydrology.git neuralhydrology
+  cd neuralhydrology || exit 1
+  echo "mode=fresh_clone"
 fi
-squeue -j "$JOBID" -o '%.12i %.18j %.12T %.12M %.24R' 2>&1 || true
-sacct -X -j "$JOBID" --starttime 2026-08-28 --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList -P 2>&1 || true
+echo "head=$(git rev-parse HEAD)"
+echo "clean=[$(git status --porcelain --untracked-files=all)]"
 
-echo "=== B LOG FILES ==="
-for f in "$ROOT/logs/state_diagnostics_audit_${JOBID}.out" "$ROOT/logs/state_diagnostics_audit_${JOBID}.err"; do
-  if [ -f "$f" ]; then
-    stat -c '%n|bytes=%s|mtime=%y' "$f" 2>&1 || true
-    echo "--- tail $f ---"
-    tail -n 100 "$f" 2>&1 || true
-  else
-    echo "$f|missing"
-  fi
+echo "=== B LINE ENDINGS ==="
+sed -i 's/\r$//' src/26_historical_band_experts/hpc/predict_formal_v09.slurm
+echo "predictor_bytes=$(wc -c < src/26_historical_band_experts/predict_formal_v09.py)"
+echo "slurm_bytes=$(wc -c < src/26_historical_band_experts/hpc/predict_formal_v09.slurm)"
+
+echo "=== C PRECONDITIONS ==="
+for p in predictions predictions.building; do
+  if [ -e "$FORMAL/$p" ]; then echo "$p=PRESENT_BLOCKER"; else echo "$p=absent_ok"; fi
 done
+for f in training_external_audit.json state_diagnostics_external_audit.json; do
+  if [ -f "$FORMAL/$f" ]; then echo "$f=present"; else echo "$f=MISSING_BLOCKER"; fi
+done
+for d in state_diagnostics input_attempt_01; do
+  if [ -d "$FORMAL/$d" ]; then echo "$d=present"; else echo "$d=MISSING_BLOCKER"; fi
+done
+echo "final_checkpoints=$(ls $FORMAL/*/seed_*/checkpoint_epoch030.pt 2>/dev/null | wc -l)"
 
-echo "=== C EXTERNAL AUDIT REPORT ==="
-if [ -f "$REPORT" ]; then
-  stat -c '%n|bytes=%s|mtime=%y' "$REPORT" 2>&1 || true
-  sha256sum "$REPORT" 2>&1 || true
-  python - "$REPORT" <<'PY'
-import json
-import sys
-from pathlib import Path
+echo "=== D FROZEN AREAS UNTOUCHED ==="
+cd $ROOT/codetest/neuralhydrology && echo "codetest_head=$(git rev-parse HEAD)"
+cd $ROOT/audit_v09/neuralhydrology && echo "audit_head=$(git rev-parse HEAD)"
 
-path = Path(sys.argv[1])
-report = json.loads(path.read_text(encoding="utf-8"))
-seeds = report.get("seeds", [])
-print(json.dumps({
-    "schema": report.get("schema"),
-    "status": report.get("status"),
-    "seed_count": report.get("seed_count"),
-    "array_count": report.get("array_count"),
-    "raw_array_sha256_matches": report.get("raw_array_sha256_matches"),
-    "npy_file_sha256_matches": report.get("npy_file_sha256_matches"),
-    "seed_records": len(seeds) if isinstance(seeds, list) else None,
-    "seed_array_count_sum": sum(int(seed.get("array_count", 0)) for seed in seeds) if isinstance(seeds, list) else None,
-    "seed_raw_match_sum": sum(int(seed.get("raw_array_sha256_matches", 0)) for seed in seeds) if isinstance(seeds, list) else None,
-    "seed_npy_match_sum": sum(int(seed.get("npy_file_sha256_matches", 0)) for seed in seeds) if isinstance(seeds, list) else None,
-    "training_target_reads": report.get("training_target_reads"),
-    "formal_evaluation_observation_reads": report.get("formal_evaluation_observation_reads"),
-    "recent_path_executed": report.get("recent_path_executed"),
-    "flow_head_executed": report.get("flow_head_executed"),
-    "formal_period_predictions_generated": report.get("formal_period_predictions_generated"),
-    "official_score_called": report.get("official_score_called"),
-    "diagnostic_root_manifest_sha256": report.get("diagnostic_root_manifest_sha256"),
-    "training_external_audit_sha256": report.get("training_external_audit_sha256"),
-    "run_order_canonical_sha256": report.get("run_order_canonical_sha256"),
-    "state_diagnostics_preregistration_sha256": report.get("state_diagnostics_preregistration_sha256"),
-    "environment_sha256": report.get("environment_sha256"),
-    "diagnostic_source_tree_sha256": report.get("diagnostic_source_tree_sha256"),
-    "diagnostic_source_sha256": report.get("diagnostic_source_sha256"),
-    "environment": report.get("environment"),
-}, sort_keys=True))
-PY
-else
-  echo "$REPORT|missing"
-fi
+echo "=== E RESOURCES ==="
+df -h /data1 | tail -1
+sinfo -o "%.10P %.6a %.6D %.6t %.28N" -p hgpu2p
 echo "=== END ==="
