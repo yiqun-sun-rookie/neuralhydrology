@@ -1,0 +1,50 @@
+### channel=id32-transformer-inductive-bias seq=2
+### host=login4
+### started=2026-09-02T20:05:02+0800
+### ---------- output ----------
+=== A. PRE-SUBMIT AUDIT ===
+2026-09-02T20:05:02+0800
+ID32 CONFIG AUDIT: PASS (6 arms; one factor each; no data read; no training launched)
+=== B. PARTITION STATE (sinfo, not squeue) ===
+ PARTITION  AVAIL  NODES  STATE                       NODELIST
+    hgpu2p     up      1  down*                         ngu002
+    hgpu2p     up      6    mix           ngu[001,005-008,011]
+    hgpu2p     up      1  alloc                         ngu010
+    hgpu2p     up      1   idle                         ngu004
+=== C. SUBMIT SIX ARMS ===
+  R01 -> job 218680
+  T02 -> job 218681
+  T03 -> job 218682
+  T04 -> job 218683
+  T05 -> job 218684
+  L01 -> job 218685
+SUBMITTED: R01:218680 T02:218681 T03:218682 T04:218683 T05:218684 L01:218685
+FAILED:
+=== D. QUEUE STATE ===
+     JOBID           NAME  PARTITION ST        TIME     NODELIST(REASON)
+    218635 tukf09-455-v2r      hgpu8 PD        0:00          (Resources)
+218659_[6-      wrrhp-ext     hgpu2p PD        0:00  (JobArrayTaskLimit)
+    202229   N22-agg-eval hgpu4,hgpu PD        0:00 (DependencyNeverSati
+    202294     N22-export hgpu4,hgpu PD        0:00         (Dependency)
+    202315       N22-gate hgpu4,hgpu PD        0:00         (Dependency)
+    202507 N22-mask-iso-5 hgpu4,hgpu PD        0:00 (DependencyNeverSati
+    215429  id30_m01_s100      hgpu2 PD        0:00 (DependencyNeverSati
+    218680       id32_R01     hgpu2p PD        0:00               (None)
+    218681       id32_T02     hgpu2p PD        0:00               (None)
+    218682       id32_T03     hgpu2p PD        0:00               (None)
+    218683       id32_T04     hgpu2p PD        0:00               (None)
+    218684       id32_T05     hgpu2p PD        0:00               (None)
+    218685       id32_L01     hgpu2p PD        0:00               (None)
+    202293   N22-manifest hgpu4,hgpu PD        0:00        (JobHeldUser)
+  218659_5      wrrhp-ext     hgpu2p  R     1:23:08               ngu005
+    218676  id29-trlen-L3     hgpu2p  R       23:44               ngu001
+    218675  id29-trlen-L2     hgpu2p  R       23:45               ngu010
+  218659_1      wrrhp-ext     hgpu2p  R     1:32:56               ngu010
+  218659_2      wrrhp-ext     hgpu2p  R     1:32:56               ngu011
+=== E. ISOLATION RECHECK ===
+ID31 DL01 epoch30 checkpoint: 135832304f6d6ffcb2cfe69703a5143504bbb9654158515f4e39ebe0d2061b18
+ID30 D01 epoch30 metrics:     26cb602a68c48cc24c8c7f2d60773232d9b460721422b9179a0964385937d1b7
+ID32_SUBMIT_SEQ2_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T20:05:06+0800
