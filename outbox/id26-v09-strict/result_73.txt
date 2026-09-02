@@ -1,0 +1,47 @@
+### channel=id26-v09-strict seq=73
+### host=login4
+### started=2026-09-02T20:52:08+0800
+### ---------- output ----------
+=== A ALL GPU PARTITIONS (real node state, not squeue) ===
+ PARTITION  AVAIL  NODES    STATE                         NODELIST
+     hgpu8     up      1    maint                           ngu203
+     hgpu8     up      2      mix                     ngu[201-202]
+     hgpu4     up      1    down*                           ngu103
+     hgpu4     up      1      mix                           ngu104
+     hgpu4     up      2     idle                     ngu[101-102]
+     hgpu2     up      2     idle                     ngu[003,009]
+    hgpu2p     up      1    down*                           ngu002
+    hgpu2p     up      7      mix             ngu[001,004-008,011]
+    hgpu2p     up      1    alloc                           ngu010
+=== B IDLE NODES ONLY ===
+hgpu8 mix ngu[201-202]
+hgpu4 mix ngu104
+hgpu4 idle ngu[101-102]
+hgpu2 idle ngu[003,009]
+hgpu2p mix ngu[001,004-008,011]
+=== C DOWN REASONS ===
+Not responding       root      2026-05-12T05:03:18 icn203
+Not responding       root      2026-05-13T15:59:40 icn215
+Not responding       root      2026-01-16T00:43:13 icn218
+Not responding       root      2026-01-10T07:47:14 icn230
+Not responding       root      2026-04-25T01:51:39 icn[233,243,245]
+Not responding       root      2026-03-10T05:52:38 icn[235,237,247]
+Not responding       root      2026-05-09T19:59:37 icn236
+Not responding       root      2026-04-24T20:16:32 icn239
+=== D MY QUEUE ===
+     JOBID         NAME  PARTITION      STATE       TIME           START_TIME               REASON
+    218635 tukf09-455-v      hgpu8    PENDING       0:00  2027-09-02T16:37:09            Resources
+218659_[7-    wrrhp-ext     hgpu2p    PENDING       0:00                  N/A    JobArrayTaskLimit
+    218683     id32_T04     hgpu2p    PENDING       0:00  2026-09-03T18:32:10            Resources
+    218684     id32_T05     hgpu2p    PENDING       0:00  2026-09-03T18:32:10             Priority
+    218685     id32_L01     hgpu2p    PENDING       0:00  2026-09-03T18:32:10             Priority
+    218690   v09predict     hgpu2p    PENDING       0:00  2026-09-04T20:05:42             Priority
+    202229 N22-agg-eval hgpu4,hgpu    PENDING       0:00                  N/A DependencyNeverSatis
+    202294   N22-export hgpu4,hgpu    PENDING       0:00                  N/A           Dependency
+    202315     N22-gate hgpu4,hgpu    PENDING       0:00                  N/A           Dependency
+    202507 N22-mask-iso hgpu4,hgpu    PENDING       0:00                  N/A DependencyNeverSatis
+    215429 id30_m01_s10      hgpu2    PENDING       0:00                  N/A DependencyNeverSatis
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T20:52:08+0800
