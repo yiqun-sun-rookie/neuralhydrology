@@ -1,0 +1,28 @@
+### channel=kalmannet-tukf09-455 seq=76
+### host=login4
+### started=2026-09-02T17:22:37+0800
+### ---------- output ----------
+=== PRECONDITIONS ===
+JOB_SCRIPT_PRESENT
+dd2b1d8e13f94a12c3ec9b47f87e8ed3548a3b2c01c99a3e2cfdc815c36114b5  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r6/probe_gpu.slurm
+OFFLINE_INPUTS_PRESENT
+c605dc3e00e5c6d0b19c0d82cf55be2124e0417923c4eff1f7d0e96e7bf33af0  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/offline_inputs_v2r6/manifest.json
+PRIVATE_RUNTIME_ABSENT_AS_EXPECTED
+TECHNICAL_ADMISSION_ABSENT_AS_EXPECTED
+NO_TRAINING_JOB_YET
+=== SINGLE PREPARATION SUBMISSION LOCK ===
+PREPARATION_LOCK_ACQUIRED
+=== SUBMIT EXACTLY ONE PREPARATION JOB ===
+Submitted batch job 218635
+PREPARATION_JOB_ID=218635
+=== IMMEDIATE STATE ===
+     JOBID                       NAME PARTITIO      STATE         NODELIST(REASON)     TIME
+    218635    tukf09-455-v2r6-prepare    hgpu8    PENDING              (Resources)     0:00
+N/A
+ PARTITION  AVAIL  NODES  STATE                       NODELIST
+     hgpu8     up      1  maint                         ngu203
+     hgpu8     up      2    mix                   ngu[201-202]
+TUKF09_455_V2R6_PREPARATION_SUBMITTED_ONCE_NO_TRAINING_NO_FORMAL_EVALUATION
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T17:22:37+0800
