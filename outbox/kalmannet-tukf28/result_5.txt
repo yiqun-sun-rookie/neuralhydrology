@@ -1,0 +1,23 @@
+### channel=kalmannet-tukf28 seq=5
+### host=login4
+### started=2026-09-02T22:31:55+0800
+### ---------- output ----------
+=== WAIT FOR READOUT ARRAY 218826 (max 60 min) ===
+    189 COMPLETED
+=== COUNTS ===
+readout_json=189 / 189
+readout_npz=189 / 189
+train_json=189 / 189
+=== BASELINE RE-READ SELF-CHECK ===
+  ref_all_frozen       max_dev=0.000e+00  {'bitwise': 27}
+  ref_filter_only      max_dev=0.000e+00  {'bitwise': 27}
+  ref_hydrology_only   max_dev=0.000e+00  {'bitwise': 27}
+  ref_joint            max_dev=0.000e+00  {'bitwise': 27}
+  cells with a baseline check: 108
+=== PACK ===
+34c307772c8a05e405abe9d8b8b1f2eb810eef5f309a37e6746043f202c7773d  /tmp/tukf28_results_v1.tar.gz
+remote: RESULTS_PUSHED
+SEQ5_OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T22:32:34+0800
