@@ -1,0 +1,157 @@
+### channel=kalmannet-wrr-hp-extension seq=1
+### host=login4
+### started=2026-09-02T16:42:06+0800
+### ---------- output ----------
+=== TIME_AND_HOST ===
+2026-09-02T16:42:06+0800
+login4
+=== RUNNER ===
+12251 bash /data1/home/sunyiq/.hpc_runner_active.sh
+25020 bash /data1/home/sunyiq/.hpc_runner_active.sh
+25158 bash /data1/home/sunyiq/.hpc_runner_active.sh
+=== GPU_PARTITIONS ===
+hgpu8|up|infinite|1|maint|ngu203|gpu:8
+hgpu8|up|infinite|1|mix|ngu201|gpu:8
+hgpu8|up|infinite|1|idle|ngu202|gpu:8
+hgpu4|up|infinite|1|down*|ngu103|gpu:4
+hgpu4|up|infinite|3|mix|ngu[101-102,104]|gpu:4
+hgpu2|up|infinite|2|idle|ngu[003,009]|gpu:2
+hgpu2p|up|infinite|1|down*|ngu002|gpu:2
+hgpu2p|up|infinite|8|mix|ngu[001,004-008,010-011]|gpu:2
+ PARTITION  AVAIL  NODES  STATE                       NODELIST
+   hcpu48*     up     10 alloc$ icn[202,204-207,210-212,216-21
+   hcpu48*     up      5  maint       icn[214,220-221,246,249]
+   hcpu48*     up     14  down* icn[203,215,218,230,233,235-23
+   hcpu48*     up     27  alloc icn[201,208-209,213,219,222-22
+   hcpu48*     up      8   idle           icn[255,257,259-264]
+   hcpu48y     up      1  down$                         icn281
+   hcpu48y     up      1  maint                         icn280
+   hcpu48y     up      2  down*                   icn[278-279]
+   hcpu48y     up      2    mix                   icn[274,277]
+   hcpu48y     up      6   idle           icn[270-273,275-276]
+     hgpu8     up      1  maint                         ngu203
+     hgpu8     up      1    mix                         ngu201
+     hgpu8     up      1   idle                         ngu202
+     hgpu4     up      1  down*                         ngu103
+     hgpu4     up      3    mix               ngu[101-102,104]
+     hgpu2     up      2   idle                   ngu[003,009]
+    hgpu2p     up      1  down*                         ngu002
+    hgpu2p     up      8    mix       ngu[001,004-008,010-011]
+=== OWN_JOBS_NOW ===
+JOBID|NAME|STATE|PARTITION|TIME|TIME_LIMIT|NODELIST(REASON)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|0:00|1-00:00:00|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|0:00|4:00:00|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|0:00|2:00:00|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|0:00|2:00:00|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|0:00|7-00:00:00|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|0:00|1-00:00:00|(JobHeldUser)
+=== OWN_JOBS_LAST_3_DAYS ===
+217822_51|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:15|2026-09-01T18:48:22|icn274
+217822_52|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:16|2026-09-01T18:48:23|icn274
+217822_53|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:16|2026-09-01T18:48:23|icn274
+217822_54|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:32|icn274
+217822_55|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:32|icn274
+217822_56|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:33|icn274
+217822_57|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:32|icn274
+217822_58|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:33|icn274
+217822_59|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:47|icn274
+217822_60|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:47|icn274
+217822_61|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:47|icn274
+217822_62|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:47|icn274
+217822_63|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_64|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:47|icn274
+217822_65|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:47|icn274
+217822_66|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_67|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:47|icn274
+217822_68|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:47|icn274
+217822_69|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_70|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_71|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_72|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_73|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_74|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:47|icn274
+217822_75|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_76|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_77|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_78|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:47|icn274
+217822_79|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_80|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_81|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:47|icn274
+217822_82|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_83|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_84|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_85|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:27|2026-09-01T18:48:49|icn274
+217822_86|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_87|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_88|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn274
+217822_89|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_90|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:27|2026-09-01T18:48:49|icn275
+217822_91|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:47|icn275
+217822_92|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_93|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_94|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:25|2026-09-01T18:48:47|icn275
+217822_95|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_96|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:27|2026-09-01T18:48:49|icn275
+217822_97|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_98|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_99|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_100|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_101|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_102|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_103|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_104|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_105|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_106|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217822_107|tukf27_readout|hcpu48y|COMPLETED|0:0|00:00:26|2026-09-01T18:48:48|icn275
+217939|tukf09-455-v2r5-neural|hgpu8|FAILED|1:0|00:04:20|2026-09-01T19:26:22|ngu201
+218505|zsf4t-rec002|hgpu2p|COMPLETED|0:0|00:12:14|2026-09-02T11:58:17|ngu006
+218580|tukf09-455-pmon-probe|hgpu8|COMPLETED|0:0|00:00:01|2026-09-02T16:23:17|ngu202
+=== LIMITS ===
+MaxArraySize            = 1001
+MaxJobCount             = 100000
+g_sunyiq||qos_sunyiq||||
+Unknown field 'maxsubmitpu'
+=== ROOTS ===
+EXISTS=/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901
+11M	/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901
+MISSING=/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
+EXISTS=/data1/home/sunyiq/kalmannet
+5.2T	/data1/home/sunyiq/kalmannet
+EXISTS=/data1/home/sunyiq/knet_project
+586G	/data1/home/sunyiq/knet_project
+=== OLD_ROOT_TREE ===
+total 19
+drwxr-xr-x.   4 sunyiq g_sunyiq 4096 Sep  1 17:07 .
+drwx------. 127 sunyiq g_sunyiq 4096 Sep  2 16:42 ..
+-rwx------.   1 sunyiq g_sunyiq 2464 Sep  1 17:07 hpc_bridge.slurm
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  1 19:10 logs
+drwxr-xr-x.   6 sunyiq g_sunyiq 4096 Sep  1 17:07 repo
+data
+experiments
+hydrologic
+knet
+=== OLD_ROOT_SOURCE_HASHES ===
+579d0eba2f5fdfcd22d0c0281f792179ed18aa10c1fa9d48581a82f83b96b946  knet/pipelines/train_clean_based_on_11.py
+cd25e990860725d1f662b3839bee7ab879f833b184152fbdf33066c56c4d8f92  knet/pipelines/pipeline_clean_based_on_11.py
+934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843  knet/dl/nn_kalman_clamp_5.py
+e45c1ddeec0105bdb62f0255fe50d0ecb23006415a89ceb7ede7886e41a3741e  knet/modules/pipeline/core_fun.py
+703adbb37c7bd3804f7f218664c9636f4a3c5a303687fdbb33fc6172b0daffd2  knet/modules/pipeline/walrus_batch_speedup.py
+77ab10316846a8cb35a0bf71dd3d161c0fc81a7389677d72832a7cb0b4971def  knet/modules/utils/metrics.py
+ac3bf1415199dcd57439bcefec9f8a8c9dad84a23ebe0410e162ea2f5cb319b7  knet/modules/utils/metricsV2.py
+da6ad85293c34fca3aee9c4bffbe0c80a3f77143f1f617a3a42eba8e3c3fbbfa  knet/utils/model_initialization_use_script_mdl_1.py
+b981e5920a6bd1170ecb414a6c8ecdc1313789b1d391a3d9d379e81552752af4  hydrologic/params.py
+dba875aedac492d4f88c2a90ca0f4d529b7d6437960497d139aa3e6458d3b56d  experiments/optimize_hyper_parameters/grid_search_knet.py
+8b4f6b25cd0335d46292da0f31974209584845f75b81c014bf1318561773304b  experiments/optimize_hyper_parameters/train_and_eval.py
+=== DATA ===
+3a4f94a2562278f09b67853ac77e060766296007cb8f8a762756ffe792792440  /data1/home/sunyiq/knet_project/data/processed/high_flow_aug/train_win800_19990101_01-20070527_03.pt
+2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403  /data1/home/sunyiq/knet_project/data/processed/high_flow_aug/val_win800_20070527_04-20090314_13.pt
+=== DISK ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  599T  356T  63% /data1
+/data1/home/sunyiq/.hpc_mailbox_staging/kalmannet-wrr-hp-extension/cmd_1.sh: line 29: lfs: command not found
+=== CONDA ===
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T16:42:46+0800
