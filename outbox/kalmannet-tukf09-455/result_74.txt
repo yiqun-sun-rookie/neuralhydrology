@@ -1,0 +1,28 @@
+### channel=kalmannet-tukf09-455 seq=74
+### host=login4
+### started=2026-09-02T17:12:22+0800
+### ---------- output ----------
+=== PRECONDITIONS ===
+login4
+SCRIPT_PRESENT
+dadbc03b4b4c72ac2ba220187fb0a7813ddf7f17827759c1aeaec543a0ad63ae  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r6/download_runtime_inputs_login.sh
+FINAL_ABSENT_AS_EXPECTED
+=== LAUNCH ONCE, DETACHED ===
+LAUNCHED pid=19748
+=== EARLY STATE ===
+total 24
+drwxr-xr-x.   6 sunyiq g_sunyiq 4096 Sep  2 17:12 .
+drwx------. 130 sunyiq g_sunyiq 4096 Sep  2 17:12 ..
+drwxr-xr-x.   3 sunyiq g_sunyiq 4096 Sep  2 17:09 bundle
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  2 17:12 logs
+drwxr-xr-x.   5 sunyiq g_sunyiq 4096 Sep  2 17:12 offline_inputs_v2r6.pending.a20260902
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  2 17:12 status
+--- pending tree ---
+29K	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/offline_inputs_v2r6.pending.a20260902
+--- launcher log tail ---
+iq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "werkzeug", "version": "3.1.3"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "wheel", "version": "0.45.1"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "xarray", "version": "2025.12.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "zipp", "version": "3.23.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "zstandard", "version": "0.24.0"}], "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1", "formal_evaluation_authorized": false, "hostname": "login4", "identity_sha256": "dd6679b92b85bba5a3f3cf15b7e479481494f7139c7b6434315e8b85dd630e5a", "libc": ["glibc", "2.17"], "machine": "x86_64", "pip_version": "25.2", "platform": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17", "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "python_executable_resolved": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11", "python_executable_sha256": "45140eba20e770e6f8b46fb1e1295da8a5e494b3686a22ea9beeff050bb5b48e", "python_executable_size": 25382192, "python_version": "3.11.13", "schema_version": "tukf09_455_hpc_shared_environment_snapshot_a800_exclusive_v2r6", "scientific_contract_changed": false, "status": "SHARED_BOOTSTRAP_ENVIRONMENT_READ_ONLY_SNAPSHOT"}
+--- download stderr tail ---
+TUKF09_455_V2R6_OFFLINE_INPUT_DOWNLOAD_LAUNCHED_NO_JOB_SUBMITTED_FORMAL_EVALUATION_HOLD
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T17:12:30+0800
