@@ -1,0 +1,44 @@
+### channel=kalmannet-tukf28 seq=1
+### host=login4
+### started=2026-09-02T20:41:08+0800
+### ---------- output ----------
+=== RESOURCES (hcpu48y) ===
+PARTITION AVAIL TIMELIMIT NODES STATE CPUS(A/I/O/T) MEMORY
+hcpu48y up infinite 1 down$ 0/0/48/48 1
+hcpu48y up infinite 1 maint 0/48/0/48 1
+hcpu48y up infinite 2 down* 0/0/96/96 1
+hcpu48y up infinite 2 mix 7/89/0/96 1
+hcpu48y up infinite 6 idle 0/288/0/288 1
+--- my jobs ---
+218635 tukf09-455-v2r6-prepare PENDING hgpu8
+218659_[7-16%6] wrrhp-ext PENDING hgpu2p
+218683 id32_T04 PENDING hgpu2p
+218684 id32_T05 PENDING hgpu2p
+218685 id32_L01 PENDING hgpu2p
+202229 N22-agg-eval PENDING hgpu4,hgpu8,hgpu2
+202294 N22-export PENDING hgpu4,hgpu8,hgpu2
+202315 N22-gate PENDING hgpu4,hgpu8,hgpu2
+202507 N22-mask-iso-531 PENDING hgpu4,hgpu8,hgpu2
+215429 id30_m01_s100 PENDING hgpu2
+218690 v09predict PENDING hgpu2p
+202293 N22-manifest PENDING hgpu4,hgpu8,hgpu2
+218659_6 wrrhp-ext RUNNING hgpu2p
+218676 id29-trlen-L3 RUNNING hgpu2p
+218675 id29-trlen-L2 RUNNING hgpu2p
+218680 id32_R01 RUNNING hgpu2p
+218681 id32_T02 RUNNING hgpu2p
+218682 id32_T03 RUNNING hgpu2p
+218659_1 wrrhp-ext RUNNING hgpu2p
+218659_2 wrrhp-ext RUNNING hgpu2p
+--- queue depth on hcpu48y ---
+--- disk ---
+hhjt_parastor_hhjt_parastor  954T  599T  356T  63% /data1
+=== DEPLOY ===
+sha256sum: /data1/home/sunyiq/payload/kalmannet-tukf28/tukf28_hpc_payload_v1.tar.gz: No such file or directory
+tar (child): /data1/home/sunyiq/payload/kalmannet-tukf28/tukf28_hpc_payload_v1.tar.gz: Cannot open: No such file or directory
+tar (child): Error is not recoverable: exiting now
+tar: Child returned status 2
+tar: Error is not recoverable: exiting now
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-02T20:41:08+0800
