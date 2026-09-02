@@ -1,0 +1,52 @@
+### channel=id29-transferable-noise seq=9
+### host=login4
+### started=2026-09-02T19:40:20+0800
+### ---------- output ----------
+=== PAYLOAD ===
+-rw-r--r--. 1 sunyiq g_sunyiq 959180 Sep  2 19:40 /data1/home/sunyiq/hpc_mailbox/payload/id29-transferable-noise/id29_transferable_noise_20260902_v2.tar.gz
+ee5b57986a135979d15bdbc04d75bc4e59f211ad62afbfa265a4b4e39f8c8fff  /data1/home/sunyiq/hpc_mailbox/payload/id29-transferable-noise/id29_transferable_noise_20260902_v2.tar.gz
+=== EXTRACT TO STAGE ===
+STAGE_MANIFEST_OK (196 files)
+=== UPDATE LANDING (src + docs only) ===
+untouched dirs:
+data
+pysite
+results
+hpc scripts:
+id29_391_extra_cells.slurm
+id29_denorm_control.slurm
+id29_training_length_L2.slurm
+id29_training_length_L3.slurm
+r_pert_a0.slurm
+r_pert_main.slurm
+=== IMPORT CHECK ===
+import OK; lengths {'L1': 840, 'L2': 1826, 'L3': 3652}
+windows {'L1': ('1989-10-01', 1260), 'L2': ('1987-01-19', 2246), 'L3': ('1982-01-19', 4072)}
+=== SUBMIT L2 ===
+Submitted batch job 218675
+=== SUBMIT L3 ===
+Submitted batch job 218676
+JOBS trlen_L2=218675 trlen_L3=218676
+=== QUEUE (own jobs) ===
+    JOBID  PARTITION               NAME  ST       TIME  CPUS NODELIST(REASON)
+   218635      hgpu8 tukf09-455-v2r6-pr  PD       0:00     4   (Priority)
+218659_[6     hgpu2p          wrrhp-ext  PD       0:00     4 (JobArrayTas
+   218675     hgpu2p      id29-trlen-L2  PD       0:00    24       (None)
+   218676     hgpu2p      id29-trlen-L3  PD       0:00    24       (None)
+   202229 hgpu4,hgpu       N22-agg-eval  PD       0:00     4 (DependencyN
+   202294 hgpu4,hgpu         N22-export  PD       0:00     4 (Dependency)
+   202315 hgpu4,hgpu           N22-gate  PD       0:00     2 (Dependency)
+   202507 hgpu4,hgpu   N22-mask-iso-531  PD       0:00     4 (DependencyN
+   215429      hgpu2      id30_m01_s100  PD       0:00     4 (DependencyN
+   202293 hgpu4,hgpu       N22-manifest  PD       0:00     4 (JobHeldUser
+ 218659_5     hgpu2p          wrrhp-ext   R      58:47     4       ngu005
+   218673     hcpu48     kuwei-jdl-eval   R      13:02    48       icn255
+ 218659_1     hgpu2p          wrrhp-ext   R    1:08:35     4       ngu010
+ 218659_2     hgpu2p          wrrhp-ext   R    1:08:35     4       ngu011
+ 218659_3     hgpu2p          wrrhp-ext   R    1:08:35     4       ngu011
+ 218659_4     hgpu2p          wrrhp-ext   R    1:08:35     4       ngu001
+ 218659_0     hgpu2p          wrrhp-ext   R    1:08:36     4       ngu010
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T19:40:45+0800
