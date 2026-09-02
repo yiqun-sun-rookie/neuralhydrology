@@ -1,0 +1,31 @@
+### channel=id29-nearing2022-da seq=423
+### host=login4
+### started=2026-09-03T00:04:30+0800
+### ---------- output ----------
+2026-09-03T00:04:30+0800
+=== N22 JOBS ===
+      202229     N22-agg-eval   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202294       N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315         N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-531   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+      202293     N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+=== FAILURES AND TIMEOUTS ===
+  none
+=== EVAL ARRAY 216692 STATE SUMMARY ===
+    120 COMPLETED
+=== FAILED ARRAY TASK IDS ===
+  none
+
+=== LOG IDLE SECONDS ===
+=== ARTIFACTS ===
+  PRESENT aggregation/evaluations/time_split_vs_author.csv (128198 bytes)
+  PRESENT aggregation/evaluations/basin_split_vs_author.csv (1695 bytes)
+  PRESENT aggregation/hyperparameters/scores.csv (115432 bytes)
+  PRESENT aggregation/final_reproduction_gate.json (3000 bytes)
+=== ROLE COUNTS ===
+{"missing_by_type": {}, "missing_total": 0}
+MISSING_TRAINING_COORDINATES: 0
+MISSING_EVALUATION_COORDINATES: 0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T00:05:07+0800
