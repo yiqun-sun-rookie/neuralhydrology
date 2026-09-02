@@ -1,0 +1,190 @@
+### channel=id29-transferable-noise seq=8
+### host=login4
+### started=2026-09-02T18:21:18+0800
+### ---------- output ----------
+=== FILE results/23_camels_switch_confirmation/noise_axis_391_global_card_confirmation_20260901_local/extra_cells/02297155.json ===
+{
+ "basin_id": "02297155",
+ "status": "success",
+ "cells": {
+  "m0.1_c0": {
+   "status": "success",
+   "nse_score": 0.58123461006486,
+   "nse_full": 0.5649882533913643,
+   "seconds": 18.451660327613354
+  },
+  "m0.3_c0": {
+   "status": "success",
+   "nse_score": 0.5998100764510594,
+   "nse_full": 0.582160098944032,
+   "seconds": 18.38274573907256
+  },
+  "m3_c0": {
+   "status": "success",
+   "nse_score": 0.31244769057398647,
+   "nse_full": 0.38786159491046546,
+   "seconds": 18.38157942891121
+  },
+  "m10_c0": {
+   "status": "failed",
+   "error": "ValueError: covariance must be positive semidefinite; minimum eigenvalue is -4.536317507687044e-05"
+  }
+ }
+}
+=== END FILE ===
+=== FILE results/23_camels_switch_confirmation/noise_axis_391_global_card_confirmation_20260901_local/extra_cells/05489000.json ===
+{
+ "basin_id": "05489000",
+ "status": "success",
+ "cells": {
+  "m0.1_c0": {
+   "status": "success",
+   "nse_score": 0.6409579678102965,
+   "nse_full": 0.5431141449851244,
+   "seconds": 18.38603488728404
+  },
+  "m0.3_c0": {
+   "status": "success",
+   "nse_score": 0.6488415678903937,
+   "nse_full": 0.5432518193642071,
+   "seconds": 18.354702971875668
+  },
+  "m3_c0": {
+   "status": "success",
+   "nse_score": 0.6491556477974878,
+   "nse_full": 0.49383860492028564,
+   "seconds": 18.351216103881598
+  },
+  "m10_c0": {
+   "status": "failed",
+   "error": "ValueError: covariance must be positive semidefinite; minimum eigenvalue is -0.00045334813721325997"
+  }
+ }
+}
+=== END FILE ===
+=== FILE results/23_camels_switch_confirmation/noise_axis_391_global_card_confirmation_20260901_local/extra_cells/06889200.json ===
+{
+ "basin_id": "06889200",
+ "status": "success",
+ "cells": {
+  "m0.1_c0": {
+   "status": "success",
+   "nse_score": 0.5781514853489476,
+   "nse_full": 0.5463665211633204,
+   "seconds": 18.266371849924326
+  },
+  "m0.3_c0": {
+   "status": "success",
+   "nse_score": 0.5785818266815441,
+   "nse_full": 0.493097355009502,
+   "seconds": 18.21182607114315
+  },
+  "m3_c0": {
+   "status": "success",
+   "nse_score": 0.5563761194742647,
+   "nse_full": -0.044571628074378866,
+   "seconds": 18.237537249922752
+  },
+  "m10_c0": {
+   "status": "failed",
+   "error": "ValueError: covariance must be positive semidefinite; minimum eigenvalue is -0.0005673470251878871"
+  }
+ }
+}
+=== END FILE ===
+=== FILE results/23_camels_switch_confirmation/noise_axis_391_global_card_confirmation_20260901_local/extra_cells/06910800.json ===
+{
+ "basin_id": "06910800",
+ "status": "success",
+ "cells": {
+  "m0.1_c0": {
+   "status": "success",
+   "nse_score": 0.671014688149824,
+   "nse_full": 0.3288675092583815,
+   "seconds": 18.231503304094076
+  },
+  "m0.3_c0": {
+   "status": "success",
+   "nse_score": 0.6576434880399231,
+   "nse_full": 0.26906168127221375,
+   "seconds": 18.249398577958345
+  },
+  "m3_c0": {
+   "status": "success",
+   "nse_score": 0.6252645915213044,
+   "nse_full": 0.1623262605221556,
+   "seconds": 18.327899631112814
+  },
+  "m10_c0": {
+   "status": "failed",
+   "error": "ValueError: covariance must be positive semidefinite; minimum eigenvalue is -7.693674124056715e-05"
+  }
+ }
+}
+=== END FILE ===
+=== FILE results/23_camels_switch_confirmation/noise_axis_391_global_card_confirmation_20260901_local/extra_cells/08066200.json ===
+{
+ "basin_id": "08066200",
+ "status": "success",
+ "cells": {
+  "m0.1_c0": {
+   "status": "success",
+   "nse_score": 0.5053784335086524,
+   "nse_full": 0.550780199835684,
+   "seconds": 18.414047852158546
+  },
+  "m0.3_c0": {
+   "status": "success",
+   "nse_score": 0.4888757783152452,
+   "nse_full": 0.5397497470136094,
+   "seconds": 18.293178610503674
+  },
+  "m3_c0": {
+   "status": "success",
+   "nse_score": 0.42317513806742935,
+   "nse_full": 0.4931579369291871,
+   "seconds": 18.376520559191704
+  },
+  "m10_c0": {
+   "status": "failed",
+   "error": "ValueError: covariance must be positive semidefinite; minimum eigenvalue is -0.001065183377646048"
+  }
+ }
+}
+=== END FILE ===
+=== FILE results/23_camels_switch_confirmation/noise_axis_391_global_card_confirmation_20260901_local/extra_cells/08164600.json ===
+{
+ "basin_id": "08164600",
+ "status": "success",
+ "cells": {
+  "m0.1_c0": {
+   "status": "success",
+   "nse_score": 0.575667226405058,
+   "nse_full": 0.5256022027921712,
+   "seconds": 18.370831690728664
+  },
+  "m0.3_c0": {
+   "status": "success",
+   "nse_score": 0.5674410577456915,
+   "nse_full": 0.52449612272362,
+   "seconds": 18.352991852909327
+  },
+  "m3_c0": {
+   "status": "success",
+   "nse_score": -0.9313547003199107,
+   "nse_full": 0.06069908788804401,
+   "seconds": 18.452170856297016
+  },
+  "m10_c0": {
+   "status": "failed",
+   "error": "ValueError: covariance must be positive semidefinite; minimum eigenvalue is -0.0021026296256341473"
+  }
+ }
+}
+=== END FILE ===
+json count: 391
+failed-arm count across all JSONs: 6
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T18:21:20+0800
