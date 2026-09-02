@@ -1,0 +1,55 @@
+### channel=id29-transferable-noise seq=11
+### host=login4
+### started=2026-09-02T22:29:38+0800
+### ---------- output ----------
+=== SACCT ===
+     JobID          JobName  NodeList        State ExitCode    Elapsed 
+---------- ---------------- --------- ------------ -------- ---------- 
+    218675    id29-trlen-L2    ngu010      RUNNING      0:0   02:48:52 
+    218676    id29-trlen-L3    ngu001      RUNNING      0:0   02:48:51 
+=== PROGRESS ===
+L2 learn 24/46  borrow 0/46
+L3 learn 0/46  borrow 0/46
+=== MISSING results/23_camels_switch_confirmation/noise_axis_training_length_20260902_hpc/summary.json ===
+=== FILE results/23_camels_switch_confirmation/noise_axis_training_length_20260902_hpc/p0_report.json ===
+{
+ "rows": [
+  {
+   "basin_id": "01144000",
+   "new": 0.7629909227257806,
+   "registered": 0.7629909227257815,
+   "abs_diff": 8.881784197001252e-16
+  },
+  {
+   "basin_id": "01435000",
+   "new": 0.6446844894272886,
+   "registered": 0.6446844894272898,
+   "abs_diff": 1.2212453270876722e-15
+  }
+ ],
+ "worst_abs_diff": 1.2212453270876722e-15,
+ "tolerance": 1e-08,
+ "passed": true
+}
+=== END FILE ===
+=== LOG TAILS ===
+--- logs/id29-trlen-L2_218675.out ---
+  19/46 03473000 success  elapsed 95.7 min  eta 136.1 min
+  20/46 04015330 success  elapsed 95.7 min  eta 124.5 min
+  21/46 04196800 success  elapsed 95.7 min  eta 114.0 min
+  22/46 04233000 success  elapsed 95.7 min  eta 104.4 min
+  23/46 05399500 success  elapsed 95.7 min  eta 95.7 min
+  24/46 05501000 success  elapsed 95.7 min  eta 87.8 min
+--- logs/id29-trlen-L3_218676.out ---
+  excluded 04197170 -- L=3652: ValueError: basin 04197170: observations contain non-finite days
+  excluded 05488200 -- L=3652: ValueError: basin 05488200: observations contain non-finite days
+  excluded 08070200 -- L=3652: ValueError: basin 08070200: observations contain non-finite days
+  excluded 14306340 -- L=3652: ValueError: basin 14306340: observations contain non-finite days
+=== LEARN L3 ===
+[L3 train_days=3652] basins 46; pending 46; workers 24
+--- logs/id29-trlen-L2_218675.err (0 bytes) ---
+--- logs/id29-trlen-L3_218676.err (0 bytes) ---
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T22:29:38+0800

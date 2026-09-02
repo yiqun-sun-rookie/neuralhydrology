@@ -1,0 +1,45 @@
+### channel=id32-transformer-inductive-bias seq=3
+### host=login4
+### started=2026-09-02T22:29:38+0800
+### ---------- output ----------
+=== A. SACCT ===
+     JobID      JobName        State ExitCode    Elapsed   NodeList 
+---------- ------------ ------------ -------- ---------- ---------- 
+    218680     id32_R01      RUNNING      0:0   02:24:31     ngu005 
+    218681     id32_T02      RUNNING      0:0   02:24:31     ngu004 
+    218682     id32_T03      RUNNING      0:0   02:24:31     ngu004 
+    218683     id32_T04      RUNNING      0:0   01:07:31     ngu006 
+    218684     id32_T05      RUNNING      0:0   00:10:02     ngu007 
+    218685     id32_L01      PENDING      0:0   00:00:00 None assi+ 
+=== B. PROGRESS ===
+--- R01 dir=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_R01_s100_slurm218680
+--- T02 dir=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_T02_s100_slurm218681
+--- T03 dir=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_T03_s100_slurm218682
+--- T04 dir=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_T04_s100_slurm218683
+--- T05 dir=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_T05_s100_slurm218684
+--- L01 dir=none
+=== C. MANIFEST ===
+--- R01
+      "status": "PASS",
+    "status": "PASS",
+  "status": "RUNNING"
+--- T02
+      "status": "PASS",
+    "status": "PASS",
+  "status": "RUNNING"
+--- T03
+      "status": "PASS",
+    "status": "PASS",
+  "status": "RUNNING"
+--- T04
+      "status": "PASS",
+    "status": "PASS",
+  "status": "RUNNING"
+--- T05
+      "status": "PASS",
+    "status": "PASS",
+  "status": "RUNNING"
+ID32_WATCH_SEQ3_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T22:29:38+0800
