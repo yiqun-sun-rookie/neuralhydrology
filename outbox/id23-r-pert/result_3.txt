@@ -1,0 +1,90 @@
+### channel=id23-r-pert seq=3
+### host=login4
+### started=2026-09-02T16:53:02+0800
+### ---------- output ----------
+=== BUNDLE CHECK ===
+-rw-r--r--. 1 sunyiq g_sunyiq 2431468 Sep  2 16:52 /data1/home/sunyiq/hpc_mailbox/inbox/id23-r-pert/payload/r_pert_bundle_20260902.tar.gz
+expect=c14f971e3626d87212112cdbb261d95e2bccea8d0361333f623c9c7620722ab2
+got   =c14f971e3626d87212112cdbb261d95e2bccea8d0361333f623c9c7620722ab2
+=== DEPLOY ===
+extracted files: 281
+--- verify manifest ---
+manifest_rc=0
+=== CAMELS DATA LINK ===
+total 8
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  2 16:47 .
+drwxr-xr-x. 7 sunyiq g_sunyiq 4096 Sep  2 16:51 ..
+lrwxr-xr-x. 1 sunyiq g_sunyiq   49 Sep  2 16:47 camels_us -> /data1/home/sunyiq/neuralhydrology/data/camels_us
+basin_mean_forcing
+camels_attributes_v2.0
+demo
+full
+raw
+=== ENV SELF-CHECK (light, login node) ===
+python 3.11.13 numpy 2.3.3 pandas 2.3.2
+cma 4.4.4
+RESULTS       /data1/home/sunyiq/id23_r_perturbation/results/23_camels_switch_confirmation True
+PARAMETER_TAB True
+G1_CSV        True
+basins 52 control npz dir exists True
+R sources OK 0.0625 100.0
+selfcheck_rc=0
+=== SUBMIT G0 (A0 parity gate) ===
+jobid=218612
+=== WAIT (max ~11 min) ===
+=== RESULT ===
+     JobID      JobName   NodeList        State ExitCode    Elapsed 
+---------- ------------ ---------- ------------ -------- ---------- 
+    218612    r_pert_a0     icn255       FAILED      1:0   00:00:38 
+--- log tail ---
+=== host icn255  job 218612  started 2026-09-02T16:53:09+0800 ===
+stage a0: 52 units, 52 pending, 48 workers, output /data1/home/sunyiq/id23_r_perturbation/results/23_camels_switch_confirmation/noise_axis_r_perturbation_hpc
+  [50/52] done=50 failed=0 elapsed=0.6 min
+  [52/52] done=52 failed=0 elapsed=0.6 min
+stage a0 finished: done=52 failed=0 wall=0.6 min
+G0 verdict: FAIL (max|diff|=3.591e-02)
+--- stderr tail ---
+--- G0 verdict ---
+{
+ "arm": "A0",
+ "preregistration_sha256": "c9773ba120960831d387c21a1168da9fb0f5e869b3ed801f648292c2232a2f5a",
+ "platform": "hpc_linux",
+ "is_registered_g0": true,
+ "n_basins": 52,
+ "max_abs_forecast_diff_over_all_basins": 0.03590617033583943,
+ "n_basins_bitwise": 0,
+ "n_basins_within_degraded_gate": 10,
+ "max_nse_abs_diff": 3.0358975433686375e-05,
+ "verdict": "FAIL",
+ "failing_basins": [
+  "01144000",
+  "01435000",
+  "01552500",
+  "01568000",
+  "01667500",
+  "02014000",
+  "02027000",
+  "02028500",
+  "02046000",
+  "02096846",
+  "02193340",
+  "02202600",
+  "02221525",
+  "02349900",
+  "02371500",
+  "02430085",
+  "03241500",
+  "03384450",
+  "03473000",
+  "04015330",
+  "04196800",
+  "04197170",
+  "04233000",
+  "05399500",
+  "05488200",
+  "05501000",
+  "06278300",
+  "06892000",
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T16:53:49+0800
