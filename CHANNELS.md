@@ -55,6 +55,7 @@ outbox/<channel>/result_<seq>.txt   结果
 | `kalmannet-tukf27` | 开环隔离探针：同一套参数学习机制去掉每日同化直接学，2×2 定位病灶 | 2026-09-01 | 独立落点 `/data1/home/sunyiq/kalmannet_tukf27_20260901`；仅操作本通道和该目录，不碰 `~/neuralhydrology`、其他通道、其他实验或既有证据 |
 | `kalmannet-tukf09-455` | 全对角噪声无迹卡尔曼滤波与三个随机种子长短期记忆网络的455流域修订实验：隔离部署、训练与核验 | 2026-08-31 | 独立落点 `/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_20260831`；仅操作本通道和该目录，不覆盖原456流域实验，不碰 `~/neuralhydrology`、其他通道、其他实验或既有证据；正式评价仍受独立门禁约束 |
 | `id29-transferable-noise` | 可迁移滤波噪声线(拟 ID29):反归一化对照(52 开发流域 52×52 绝对噪声互借)与 391 保留流域追加 4 个手拍网格臂;纯 CPU 滤波 | 2026-09-02 | 独立落点 `/data1/home/sunyiq/id29_transferable_noise_20260902`;仅操作本通道与该目录,只读引用 `~/neuralhydrology/data/camels_us`(符号链接),不碰 `~/neuralhydrology` 的 Git 状态、其他通道、其他实验或既有证据;作业日志写入落点不写信箱 |
+| `id23-param-probe` | ID23 参数轴多候选价值探针:第 0.5 段开环 oracle 空间杀门(纯 numpy HBV 开环模拟,零率定零训练,CPU) | 2026-09-02 | 独立落点 `/data1/home/sunyiq/id23_param_probe`;作业名前缀 `par_probe_*`;仅操作本通道与该目录,只读引用 `~/neuralhydrology/data/camels_us`;**不碰** `id23-r-pert` / `id29-transferable-noise` 两个姊妹通道及其落点、`~/neuralhydrology` 的 Git 状态、其他通道或既有证据;禁止 `scancel -u`,只按 manifest 逐个 job ID 取消 |
 
 **迁移方法**（`default` → 自己的 channel，随时可做，不影响正在跑的）：
 
