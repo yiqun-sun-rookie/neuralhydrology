@@ -1,0 +1,65 @@
+### channel=kuwei-jdl-seedbatch seq=10
+### host=login4
+### started=2026-09-02T19:27:04+0800
+### ---------- output ----------
+=== A. final state counts ===
+     16            COMPLETED 
+=== B. per-task ===
+        216811_0    COMPLETED      0:0   00:01:43 
+        216811_1    COMPLETED      0:0   02:52:50 
+        216811_2    COMPLETED      0:0   02:38:26 
+        216811_3    COMPLETED      0:0   02:45:35 
+        216811_4    COMPLETED      0:0   02:45:41 
+        216811_5    COMPLETED      0:0   02:44:15 
+        216811_6    COMPLETED      0:0   02:42:01 
+        216811_7    COMPLETED      0:0   02:48:13 
+        216811_8    COMPLETED      0:0   02:49:18 
+        216811_9    COMPLETED      0:0   02:45:20 
+       216811_10    COMPLETED      0:0   02:40:33 
+       216811_11    COMPLETED      0:0   02:33:35 
+       216811_12    COMPLETED      0:0   02:41:54 
+       216811_13    COMPLETED      0:0   02:40:21 
+       216811_14    COMPLETED      0:0   02:36:48 
+       216811_15    COMPLETED      0:0   02:40:46 
+=== C. run dirs + manifest count ===
+all_frozen_seed20260826
+hydro_only_seed20260826
+hydro_only_seed20260826_ls1
+hydro_only_seed20260826_ls2
+hydro_only_seed20260826_ls3
+hydro_only_seed20260826_ls4
+joint_seed20260826
+joint_seed20260826_ls1
+joint_seed20260826_ls2
+joint_seed20260826_ls3
+joint_seed20260826_ls4
+noise_only_seed20260826
+noise_only_seed20260826_ls1
+noise_only_seed20260826_ls2
+noise_only_seed20260826_ls3
+noise_only_seed20260826_ls4
+manifests: 16
+=== D. selection scores ===
+all_frozen_seed20260826        arm=all_frozen  ls=0  upd=0    sel_mse=324.495667
+hydro_only_seed20260826        arm=hydro_only  ls=0  upd=192  sel_mse=286.430145
+hydro_only_seed20260826_ls1    arm=hydro_only  ls=1  upd=192  sel_mse=275.581207
+hydro_only_seed20260826_ls2    arm=hydro_only  ls=2  upd=192  sel_mse=282.597076
+hydro_only_seed20260826_ls3    arm=hydro_only  ls=3  upd=192  sel_mse=276.417480
+hydro_only_seed20260826_ls4    arm=hydro_only  ls=4  upd=192  sel_mse=275.563293
+joint_seed20260826             arm=joint       ls=0  upd=176  sel_mse=278.765411
+joint_seed20260826_ls1         arm=joint       ls=1  upd=144  sel_mse=287.794861
+joint_seed20260826_ls2         arm=joint       ls=2  upd=104  sel_mse=285.006012
+joint_seed20260826_ls3         arm=joint       ls=3  upd=144  sel_mse=274.335754
+joint_seed20260826_ls4         arm=joint       ls=4  upd=152  sel_mse=277.677399
+noise_only_seed20260826        arm=noise_only  ls=0  upd=128  sel_mse=298.000519
+noise_only_seed20260826_ls1    arm=noise_only  ls=1  upd=96   sel_mse=300.734283
+noise_only_seed20260826_ls2    arm=noise_only  ls=2  upd=88   sel_mse=297.180695
+noise_only_seed20260826_ls3    arm=noise_only  ls=3  upd=112  sel_mse=302.829803
+noise_only_seed20260826_ls4    arm=noise_only  ls=4  upd=160  sel_mse=300.159882
+=== E. failures ===
+=== F. evaluation ===
+Submitted batch job 218673
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T19:27:07+0800
