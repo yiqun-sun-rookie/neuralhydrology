@@ -1,0 +1,19 @@
+### channel=kuwei-jdl-seedbatch seq=11
+### host=login4
+### started=2026-09-02T19:33:23+0800
+### ---------- output ----------
+=== A. sacct 218673 ===
+        218673          RUNNING      0:0   00:06:16 
+=== B. stdout ===
+[Wed Sep  2 19:27:11 CST 2026] node=icn255
+[baseline] all_frozen mse=123.2162 nse24=0.7573
+[stage1] hydro_only|ls0: mse=112.9788 ratio=0.9169 nse24=0.7589
+=== C. stderr ===
+=== D. verdict json ===
+Traceback (most recent call last):
+  File "<string>", line 4, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/data1/home/sunyiq/kuwei_jdl_seedbatch_20260831/laos/basins/namou_kuwei/dl/highflow_2026_06_17/results/kuwei_joint_da_learning_20260826/seedbatch_stage1_2023.json'
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T19:33:24+0800
