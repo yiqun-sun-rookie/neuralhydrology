@@ -1,0 +1,59 @@
+### channel=kalmannet-tukf09-455 seq=80
+### host=login4
+### started=2026-09-02T20:29:36+0800
+### ---------- output ----------
+TIME=2026-09-02T20:29:36+0800
+PREPARATION_JOB_ID=218635
+=== SLURM ===
+     JobID        State ExitCode  NodeList    Elapsed                Start                  End 
+---------- ------------ -------- --------- ---------- -------------------- -------------------- 
+    218635      PENDING      0:0 None ass+   00:00:00              Unknown              Unknown 
+QUEUE PENDING | (Resources) | elapsed=0:00 | start=2027-09-02T16:37:09
+=== PARTITION ===
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)
+     hgpu8     up      1    maint                   ngu203            0/64/0/64
+     hgpu8     up      2      mix             ngu[201-202]          78/50/0/128
+=== MY QUEUED OR RUNNING JOBS ===
+    218635      tukf09-455-v2r6-prepare     hgpu8   PENDING    (Resources)      0:00
+218659_[7-                    wrrhp-ext    hgpu2p   PENDING (JobArrayTaskL      0:00
+    218683                     id32_T04    hgpu2p   PENDING    (Resources)      0:00
+    218684                     id32_T05    hgpu2p   PENDING     (Priority)      0:00
+    218685                     id32_L01    hgpu2p   PENDING     (Priority)      0:00
+    202229                 N22-agg-eval hgpu4,hgp   PENDING (DependencyNev      0:00
+    202294                   N22-export hgpu4,hgp   PENDING   (Dependency)      0:00
+    202315                     N22-gate hgpu4,hgp   PENDING   (Dependency)      0:00
+    202507             N22-mask-iso-531 hgpu4,hgp   PENDING (DependencyNev      0:00
+    215429                id30_m01_s100     hgpu2   PENDING (DependencyNev      0:00
+    202293                 N22-manifest hgpu4,hgp   PENDING  (JobHeldUser)      0:00
+  218659_6                    wrrhp-ext    hgpu2p   RUNNING         ngu005     19:47
+    218676                id29-trlen-L3    hgpu2p   RUNNING         ngu001     48:14
+    218675                id29-trlen-L2    hgpu2p   RUNNING         ngu010     48:15
+    218680                     id32_R01    hgpu2p   RUNNING         ngu005     23:54
+    218681                     id32_T02    hgpu2p   RUNNING         ngu004     23:54
+    218682                     id32_T03    hgpu2p   RUNNING         ngu004     23:54
+  218659_1                    wrrhp-ext    hgpu2p   RUNNING         ngu010   1:57:26
+  218659_2                    wrrhp-ext    hgpu2p   RUNNING         ngu011   1:57:26
+  218659_3                    wrrhp-ext    hgpu2p   RUNNING         ngu011   1:57:26
+  218659_4                    wrrhp-ext    hgpu2p   RUNNING         ngu001   1:57:26
+  218659_0                    wrrhp-ext    hgpu2p   RUNNING         ngu010   1:57:27
+=== STATUS MARKERS ===
+ABSENT  PREPARATION_FAILED.json
+ABSENT  initial_bundle_verification.json
+ABSENT  staged_training_sources.json
+ABSENT  preparation_probe.json
+ABSENT  hpc_technical_admission.json
+ABSENT  training_job_id.txt
+=== PRIVATE RUNTIME ===
+ABSENT
+NO_PENDING_RUNTIME
+=== RESULT ROOT IN BUNDLE ===
+RESULT_ROOT_ABSENT
+=== LOG TAILS ===
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/logs/prepare-218635.out’ for reading: No such file or directory
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/logs/prepare-218635.err’ for reading: No such file or directory
+=== FROZEN V2R5 EVIDENCE UNCHANGED ===
+11b47e27e4b7e3fd403ffb3a8f2b8003c6ebf6540e52d0c1ab439be6293d2f77  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.out
+TUKF09_455_V2R6_SCHEDULED_STATUS_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T20:29:36+0800
