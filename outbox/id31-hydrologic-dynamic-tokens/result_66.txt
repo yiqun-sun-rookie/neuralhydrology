@@ -1,0 +1,128 @@
+### channel=id31-hydrologic-dynamic-tokens seq=66
+### host=login4
+### started=2026-09-02T12:00:48+0800
+### ---------- output ----------
+=== DT08 EXACT INTERNAL VALIDATION ===
+DT08_METRICS_PATH /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DT08/hydrologic_dynamic_tokens_DT08_fixed_08_s100_2026_0828_2034_ep30/validation/model_epoch030/validation_metrics.csv
+DT08_ROW_COUNT 531
+DT08_COLUMNS ['basin', 'NSE']
+DT08_MEDIAN_NSE 0.4365038275718689
+DT08_NSE_NON_NULL 531
+2f5420df782a3565f33d31fd800723dd378c2bad96b3fc496eb067ff5a3dee72  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DT08/hydrologic_dynamic_tokens_DT08_fixed_08_s100_2026_0828_2034_ep30/validation/model_epoch030/validation_metrics.csv
+732eb614a7063b978003aa1cc32f4614546b4a3065882b6b2c069412ac53c70b  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DT08/hydrologic_dynamic_tokens_DT08_fixed_08_s100_2026_0828_2034_ep30/model_epoch030.pt
+=== CURRENT DL01 ===
+             JOBID                     NAME    PARTITION ST         TIME   TIME_LIMIT               NODELIST(REASON)
+            216549         id31_development        hgpu2  R   1-23:40:35   7-00:00:00                         ngu003
+216549|id31_development|hgpu2|RUNNING|0:0|1-23:40:35|2026-08-31T12:20:14|Unknown|ngu003
+216549.batch|batch||RUNNING|0:0|1-23:40:35|2026-08-31T12:20:14|Unknown|ngu003
+216549.extern|extern||RUNNING|0:0|1-23:40:35|2026-08-31T12:20:14|Unknown|ngu003
+{
+  "candidate_safe_data_before": {
+    "audit": {
+      "basin_count": 531,
+      "forcing_date_max": "2008-09-30",
+      "forcing_date_min": "1999-01-05",
+      "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+      "forcing_row_count": 1888767,
+      "status": "PASS",
+      "supervision_date_max": "2008-09-30",
+      "supervision_date_min": "1999-10-01",
+      "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+      "supervision_row_count": 1745928
+    },
+    "forcing_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01",
+    "forcing_file_sha256": "0226ee6297a5488e9b284a483bd320879f107fbf749222944da453ddd0f0448d",
+    "forcing_manifest_path": "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json",
+    "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+    "statics_file_sha256": "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2",
+    "status": "PASS",
+    "supervision_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01",
+    "supervision_manifest_path": "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json",
+    "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+    "target_tree_sha256": "17709a37f5ea8e8a4e140b422b8c010d030d600cf673b52a5cc557ecb99d57a6"
+  },
+  "command": [
+    "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "-u",
+    "-m",
+    "neuralhydrology.nh_run",
+    "train",
+    "--config-file",
+    "src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml",
+    "--gpu",
+    "0"
+  ],
+  "config_path": "src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml",
+  "config_sha256": "1f38ed828fb002a0b967c341d0109ff95ead50a7ad241925c5259343a1521b4e",
+  "data_access_log": "results/31_hydrologic_dynamic_tokens/_invocations/id31_DL01_s100_slurm216549/data_access.jsonl",
+  "date_contract": {
+    "train_end_date": "30/09/2006",
+    "train_start_date": "01/10/1999",
+    "validation_end_date": "30/09/2008",
+    "validation_start_date": "01/10/2006"
+  },
+  "experiment_id": "DL01",
+  "formal_evaluation_authorized": false,
+  "gpu": 0,
+  "mode": "execute",
+  "required_flags": [
+    "--execute",
+    "--operator-approved-heavy-compute"
+  ],
+  "run_id": "id31_DL01_s100_slurm216549",
+  "run_root": "results/31_hydrologic_dynamic_tokens/DL01",
+  "seed": 100,
+  "slurm_job_id": "216549",
+  "source_integrity_before": {
+    "experiment_id": "DL01",
+    "implementation_files": {
+      "neuralhydrology/modelzoo/__init__.py": "2182ece8ad07c13d4632f9c8ddc910e66bd0efeff3ac3ba893416cb9724c8054",
+      "neuralhydrology/modelzoo/hydrologic_dynamic_token_transformer.py": "4594305ff15df760b08f14dd12936c8cb5aa701ebf5f7e23cd4f0d254238e459",
+      "neuralhydrology/modelzoo/hydrologic_dynamic_tokenizer.py": "53123019686896c05c80314ba0fdbedfbc0556a91a7c05d2e78a699ea46d3089",
+      "neuralhydrology/modelzoo/modern_causal_transformer.py": "04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede",
+      "neuralhydrology/training/__init__.py": "07506ca22cf462d95e573fafc286a67975668c20be826fda13736268fdf8c498",
+      "neuralhydrology/training/regularization.py": "e8eb71123f99eecccd0316901ace54bd933f8e3565325696c1e0e11ea2b3b027",
+      "neuralhydrology/utils/config.py": "568819bf26057b29ed455a532de28decfbee1a1710b545e635e00afdc300e43a",
+      "src/hydrologic_dynamic_tokens/hpc/submit_development_experiment.slurm": "99e6b130fb2d10c0d229aa0befc3f820c5dfce4cbf431261c2d93a9a51258baa",
+      "src/hydrologic_dynamic_tokens/hpc/submit_gpu_resource_probe.slurm": "2a2df8a54a3c38e5b356024c91188d5db5d64e14b96e899efb4a42928bf2607f",
+      "src/hydrologic_dynamic_tokens/registry/experiments.csv": "a7c99e9788f3d6f134f8087d1723c885d77f23e82ab59cba5a57d909e1460867",
+      "src/hydrologic_dynamic_tokens/scripts/audit_configs.py": "56787d9cdc60b2d2f7bed5a716518ab54c4595c8ccac1b4a16c79ac28ad91005",
+      "src/hydrologic_dynamic_tokens/scripts/run_development.py": "e7ac0be6e70f52b70e43c4ade692e37bdefc2fa05cc107f21ac95f47993937d8"
+    },
+    "schema_version": 1,
+    "source_config_path": "src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml",
+    "source_config_sha256": "1f38ed828fb002a0b967c341d0109ff95ead50a7ad241925c5259343a1521b4e"
+  },
+  "started_at_utc": "2026-08-31T04:22:16.389296+00:00",
+  "status": "RUNNING"
+}
+43d9feed6b5a99ad90a189b321dc8cdc9c8df2dfabdf7ff1fc224561a41af440  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/_invocations/id31_DL01_s100_slurm216549/run_manifest.json
+DL01_OUTPUT /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/output.log
+2026-09-01 22:52:57,592: Epoch 21 average loss: avg_loss: 0.02208, avg_dynamic_token_count: 1.00210, avg_total_loss: 0.03210
+2026-09-01 23:05:10,347: Epoch 21 average validation loss: 0.03968 -- Median validation metrics: avg_loss: 0.02964, avg_dynamic_token_count: 1.00408, NSE: 0.60273
+2026-09-02 00:27:57,902: Epoch 22 average loss: avg_loss: 0.02199, avg_dynamic_token_count: 1.00697, avg_total_loss: 0.03206
+2026-09-02 00:40:13,452: Epoch 22 average validation loss: 0.03958 -- Median validation metrics: avg_loss: 0.02995, avg_dynamic_token_count: 0.96239, NSE: 0.61043
+2026-09-02 02:03:14,715: Epoch 23 average loss: avg_loss: 0.02170, avg_dynamic_token_count: 0.99929, avg_total_loss: 0.03169
+2026-09-02 02:15:26,980: Epoch 23 average validation loss: 0.04084 -- Median validation metrics: avg_loss: 0.02948, avg_dynamic_token_count: 1.13590, NSE: 0.61616
+2026-09-02 03:44:42,449: Epoch 24 average loss: avg_loss: 0.02153, avg_dynamic_token_count: 0.96320, avg_total_loss: 0.03116
+2026-09-02 03:56:57,343: Epoch 24 average validation loss: 0.04092 -- Median validation metrics: avg_loss: 0.02981, avg_dynamic_token_count: 1.11138, NSE: 0.60807
+2026-09-02 05:19:57,653: Epoch 25 average loss: avg_loss: 0.02160, avg_dynamic_token_count: 0.99598, avg_total_loss: 0.03156
+2026-09-02 05:32:15,245: Epoch 25 average validation loss: 0.04167 -- Median validation metrics: avg_loss: 0.03129, avg_dynamic_token_count: 1.03775, NSE: 0.60276
+2026-09-02 06:55:09,024: Epoch 26 average loss: avg_loss: 0.02147, avg_dynamic_token_count: 1.00557, avg_total_loss: 0.03152
+2026-09-02 07:07:23,425: Epoch 26 average validation loss: 0.03824 -- Median validation metrics: avg_loss: 0.02966, avg_dynamic_token_count: 0.85825, NSE: 0.60510
+2026-09-02 08:30:11,420: Epoch 27 average loss: avg_loss: 0.02151, avg_dynamic_token_count: 0.98442, avg_total_loss: 0.03135
+2026-09-02 08:42:25,504: Epoch 27 average validation loss: 0.03824 -- Median validation metrics: avg_loss: 0.02939, avg_dynamic_token_count: 0.88516, NSE: 0.60468
+2026-09-02 10:10:49,454: Epoch 28 average loss: avg_loss: 0.02161, avg_dynamic_token_count: 0.98944, avg_total_loss: 0.03151
+2026-09-02 10:23:10,160: Epoch 28 average validation loss: 0.03909 -- Median validation metrics: avg_loss: 0.02910, avg_dynamic_token_count: 0.99882, NSE: 0.60639
+2026-09-02 11:45:55,468: Epoch 29 average loss: avg_loss: 0.02131, avg_dynamic_token_count: 1.00005, avg_total_loss: 0.03131
+2026-09-02 11:58:08,202: Epoch 29 average validation loss: 0.03884 -- Median validation metrics: avg_loss: 0.02916, avg_dynamic_token_count: 0.96786, NSE: 0.60494
+d0ef383860bfa43bf9dd6cef88437fe13270d7de486cab5c73a5c8cf17d00240  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/output.log
+STDERR_EMPTY
+e8eb71123f99eecccd0316901ace54bd933f8e3565325696c1e0e11ea2b3b027  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/training/regularization.py
+45e497b85dad61f70b882a1ec3359b03d1cba2fed624934d1c03d61a467cb435  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/test/test_hydrologic_dynamic_token_transformer.py
+1f38ed828fb002a0b967c341d0109ff95ead50a7ad241925c5259343a1521b4e  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml
+a7c99e9788f3d6f134f8087d1723c885d77f23e82ab59cba5a57d909e1460867  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/hydrologic_dynamic_tokens/registry/experiments.csv
+ID31_HANDOFF_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T12:00:49+0800
