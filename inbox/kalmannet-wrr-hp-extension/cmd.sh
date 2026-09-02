@@ -1,19 +1,22 @@
 #!/bin/bash
 set -o pipefail
+ROOT=/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
+EXP="$ROOT/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902"
 echo "=== TIME ==="; date -Is
-echo "=== ALL_MY_JOBS ==="
-squeue -u "$USER" -o '%i|%j|%T|%P|%M|%R|%S' 2>&1 || true
-echo "=== RUNNING_COUNT_BY_JOBNAME ==="
-squeue -u "$USER" -h -t RUNNING -o '%j' 2>/dev/null | sort | uniq -c || true
-echo "=== PENDING_COUNT_BY_JOBNAME ==="
-squeue -u "$USER" -h -t PENDING -o '%j|%R' 2>/dev/null | sort | uniq -c || true
-echo "=== PARTITION_STATE ==="
-sinfo -o "%.10P %.6a %.6D %.6t %.30N" 2>&1 | grep -E 'PARTITION|hgpu' || true
-echo "=== GPU_ALLOC_DETAIL (hgpu2p nodes: who holds the cards) ==="
-for n in ngu001 ngu004 ngu005 ngu006 ngu007 ngu008 ngu010 ngu011; do
-  echo -n "$n: "; scontrol show node "$n" 2>/dev/null | tr '\n' ' ' | grep -oE 'CPUAlloc=[0-9]+ .*AllocTRES=[^ ]*' | head -1 || echo "?"
+echo "=== EPOCH_PROGRESS ==="
+for f in "$EXP"/runs/formal_seed*_gpu/idx*/results/epoch_log.jsonl; do
+  [ -f "$f" ] || continue
+  cell=$(echo "$f" | sed 's#.*/idx#idx#; s#/results/.*##')
+  echo "$cell epochs=$(wc -l < "$f") last=$(tail -n 1 "$f" | cut -c1-260)"
 done
-echo "=== JOBS_STARTED_TODAY (mine, any partition) ==="
-sacct -X -n -P -u "$USER" -S "$(date +%Y-%m-%d)" --format=JobID,JobName,Partition,State,Elapsed,Start,NodeList 2>&1 | tail -30 || true
-echo "=== MY_ARRAY_ONLY ==="
-squeue -j 218659 -h -o '%i|%T|%R' 2>&1 | sort | uniq -c || true
+echo "=== SLURM_OUT_TAILS ==="
+for f in "$ROOT"/logs/slurm-*.out; do
+  [ -f "$f" ] || continue
+  echo "--- $(basename "$f") $(stat -c %s "$f")B"
+  grep -aE 'EpochSummary|EarlyStop|FATAL|Traceback|Error|CONDA_FAILED|SHA256_MISMATCH|Launcher\] M\(' "$f" | tail -n 2 || true
+done
+echo "=== NONEMPTY_ERR ==="
+for f in "$ROOT"/logs/slurm-*.err; do
+  [ -f "$f" ] && [ -s "$f" ] && { echo "--- $(basename "$f")"; tail -n 4 "$f"; } || true
+done
+echo "(err scan done)"
