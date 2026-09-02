@@ -1,0 +1,109 @@
+### channel=id29-transferable-noise seq=13
+### host=login4
+### started=2026-09-03T04:48:49+0800
+### ---------- output ----------
+=== SACCT ===
+     JobID          JobName  NodeList        State ExitCode    Elapsed 
+---------- ---------------- --------- ------------ -------- ---------- 
+    218675    id29-trlen-L2    ngu010    COMPLETED      0:0   03:26:26 
+    218676    id29-trlen-L3    ngu001    COMPLETED      0:0   08:29:50 
+=== PROGRESS ===
+L2 learn 46/46  borrow 46/46
+L3 learn 46/46  borrow 46/46
+=== RESETTLE (idempotent, read-only over the JSONs) ===
+settle returned nonzero
+=== FILE results/23_camels_switch_confirmation/noise_axis_training_length_20260902_hpc/summary.json ===
+{
+ "preregistration": "docs/plans/2026-09-02-noise-axis-training-length-sensitivity-prereg-v01.md",
+ "n_frozen_basins": 46,
+ "train_days": {
+  "L1": 840,
+  "L2": 1826,
+  "L3": 3652
+ },
+ "lengths": {
+  "L1": {
+   "n_basins": 46,
+   "own_gain_median": 0.023890210130350586,
+   "own_wins_vs_m1c0": 38,
+   "borrowed_gain_median": 0.041847112962676736,
+   "borrowed_wins_vs_m1c0": 36,
+   "oracle_gain_median": 0.05498027651575149,
+   "headroom": 0.013133163553074756,
+   "gap_own_minus_borrowed_median": 0.0005638346318141418,
+   "gap_own_wins": 24,
+   "gap_own_losses": 22,
+   "median_m1c0_nse": 0.7046707693263612,
+   "median_own_nse": 0.7536704839261921,
+   "median_borrowed_nse": 0.7806601715838893,
+   "source": "registered step-2 / transfer artefacts, restricted to the frozen basin set"
+  },
+  "L2": {
+   "n_basins": 46,
+   "own_gain_median": 0.03104872456889618,
+   "own_wins_vs_m1c0": 42,
+   "borrowed_gain_median": 0.02567562335193302,
+   "borrowed_wins_vs_m1c0": 33,
+   "oracle_gain_median": 0.05089467707632883,
+   "headroom": 0.025219053724395812,
+   "gap_own_minus_borrowed_median": 0.008204227175234724,
+   "gap_own_wins": 28,
+   "gap_own_losses": 18,
+   "e2_donor_top": {
+    "14222500": 39,
+    "14137000": 4,
+    "04233000": 2
+   },
+   "median_m1c0_nse": 0.7046708444042854,
+   "median_own_nse": 0.7678621370995096,
+   "median_borrowed_nse": 0.7775585348680665
+  },
+  "L3": {
+   "n_basins": 46,
+   "own_gain_median": 0.038041259641142244,
+   "own_wins_vs_m1c0": 40,
+   "borrowed_gain_median": 0.03630286222340873,
+   "borrowed_wins_vs_m1c0": 37,
+   "oracle_gain_median": 0.060120391618722846,
+   "headroom": 0.02381752939531412,
+   "gap_own_minus_borrowed_median": 0.0045219471657552135,
+   "gap_own_wins": 25,
+   "gap_own_losses": 21,
+   "e2_donor_top": {
+    "02014000": 44,
+    "14222500": 2
+   },
+   "median_m1c0_nse": 0.7046708473542933,
+   "median_own_nse": 0.779813431985594,
+   "median_borrowed_nse": 0.7608970631898786
+  }
+ },
+ "gap_curve": {
+  "L1": 0.0005638346318141418,
+  "L2": 0.008204227175234724,
+  "L3": 0.0045219471657552135
+ },
+ "verdict": "B_zero_premium_holds_at_ten_years"
+}
+=== END FILE ===
+=== PER-BASIN own/m1c0 (L2,L3) ===
+L2: 46/46 success; winners: 
+   median own_nse 0.76786  median m1c0 0.70467
+   exact-boundary params: 56 / 276
+L3: 46/46 success; winners: 
+   median own_nse 0.77981  median m1c0 0.70467
+   exact-boundary params: 49 / 276
+=== LOG TAILS ===
+--- logs/id29-trlen-L3_218676.out ---
+  "L3": 0.0045219471657552135
+ },
+ "verdict": "B_zero_premium_holds_at_ten_years"
+}
+=== DONE ===
+2026-09-03 04:11:07 +0800
+--- logs/id29-trlen-L2_218675.err (0 bytes) ---
+--- logs/id29-trlen-L3_218676.err (0 bytes) ---
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T04:48:55+0800
