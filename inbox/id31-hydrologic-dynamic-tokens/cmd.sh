@@ -6,16 +6,18 @@ DT08_DIR="$ROOT/results/31_hydrologic_dynamic_tokens/DT08/hydrologic_dynamic_tok
 DT08_METRICS="$DT08_DIR/validation/model_epoch030/validation_metrics.csv"
 echo "=== DT08 EXACT INTERNAL VALIDATION ==="
 python - "$DT08_METRICS" <<'PY'
-import sys
-import pandas as pd
+import csv, statistics, sys
 p=sys.argv[1]
-df=pd.read_csv(p, dtype={"basin": str})
-col="NSE" if "NSE" in df.columns else "nse"
-print("DT08_METRICS_PATH", p)
-print("DT08_ROW_COUNT", len(df))
-print("DT08_COLUMNS", list(df.columns))
-print("DT08_MEDIAN_NSE", repr(float(df[col].median())))
-print("DT08_NSE_NON_NULL", int(df[col].notna().sum()))
+with open(p, newline='', encoding='utf-8') as f:
+    rows=list(csv.DictReader(f))
+cols=list(rows[0]) if rows else []
+col='NSE' if 'NSE' in cols else 'nse'
+vals=[float(r[col]) for r in rows if r.get(col) not in ('', None)]
+print('DT08_METRICS_PATH', p)
+print('DT08_ROW_COUNT', len(rows))
+print('DT08_COLUMNS', cols)
+print('DT08_MEDIAN_NSE', repr(float(statistics.median(vals))))
+print('DT08_NSE_NON_NULL', len(vals))
 PY
 sha256sum "$DT08_METRICS" "$DT08_DIR/model_epoch030.pt"
 echo "=== CURRENT DL01 ==="
