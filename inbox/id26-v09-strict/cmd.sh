@@ -1,19 +1,20 @@
 #!/bin/bash
 set -o pipefail
 ROOT=/data1/home/sunyiq/v09_strict
+FORMAL=$ROOT/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09
 JID=$(cat $ROOT/predict_v09/predict_attempt_01_jobid.txt 2>/dev/null || echo "")
 
-echo "=== A BEFORE ==="
-squeue -j "$JID" -h -o "%i %P %T %r %S" 2>&1 || true
-
-echo "=== B MOVE TO hgpu2 (same RTX 3090 model, two idle nodes) ==="
-scontrol update jobid="$JID" partition=hgpu2 2>&1 && echo "update_rc=ok" || echo "update_rc=FAILED"
-
-echo "=== C AFTER ==="
-sleep 8
-squeue -j "$JID" -h -o "%i %P %T %r %S %N" 2>&1 || true
+echo "=== A JOB ==="
 sacct -j "$JID" -X -P --format=JobID,State,Partition,NodeList,Elapsed 2>&1 | head -3
 
-echo "=== D ONLY MY JOB TOUCHED ==="
-squeue -u "$USER" -h -o "%.10i %.12j %.9P %.9T" 2>&1 | head -12
+echo "=== B STARTUP LOG ==="
+f=$ROOT/logs/predict_${JID}.out
+if [ -f "$f" ]; then echo "out_bytes=$(wc -c < $f)"; head -8 "$f"; else echo "out absent"; fi
+e=$ROOT/logs/predict_${JID}.err
+if [ -f "$e" ]; then echo "err_bytes=$(wc -c < $e)"; tail -8 "$e"; else echo "err absent"; fi
+
+echo "=== C PROGRESS ==="
+if [ -e "$FORMAL/predictions.building" ]; then echo "building=present"; else echo "building=absent"; fi
+echo "seed_csv=$(ls $FORMAL/predictions.building/seeds/*.csv 2>/dev/null | wc -l)"
+echo "idle_seconds=$(( $(date +%s) - $(stat -c %Y "$f" 2>/dev/null || date +%s) ))"
 echo "=== END ==="
