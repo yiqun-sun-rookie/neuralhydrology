@@ -1,0 +1,80 @@
+### channel=id23-r-pert seq=2
+### host=login4
+### started=2026-09-02T16:47:49+0800
+### ---------- output ----------
+=== BUNDLE CHECK ===
+-rw-r--r--. 1 sunyiq g_sunyiq 2364331 Sep  2 16:47 /data1/home/sunyiq/hpc_mailbox/inbox/id23-r-pert/payload/r_pert_bundle_20260902.tar.gz
+expect=6e8e43a62083b9ecfa2316cd7e4aa6a6b87861ebffec8ecb4839c0afd72b74d8
+got   =6e8e43a62083b9ecfa2316cd7e4aa6a6b87861ebffec8ecb4839c0afd72b74d8
+=== DEPLOY ===
+extracted files: 255
+--- verify manifest ---
+./BUNDLE_MANIFEST.sha256: FAILED
+sha256sum: WARNING: 1 computed checksum did NOT match
+=== CAMELS DATA LINK ===
+total 8
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  2 16:47 .
+drwxr-xr-x. 7 sunyiq g_sunyiq 4096 Sep  2 16:47 ..
+lrwxr-xr-x. 1 sunyiq g_sunyiq   49 Sep  2 16:47 camels_us -> /data1/home/sunyiq/neuralhydrology/data/camels_us
+basin_mean_forcing
+camels_attributes_v2.0
+demo
+full
+raw
+=== ENV SELF-CHECK (light, login node) ===
+python 3.11.13 numpy 2.3.3 pandas 2.3.2
+cma 4.4.4
+RESULTS       /data1/home/sunyiq/id23_r_perturbation/results/23_camels_switch_confirmation True
+PARAMETER_TAB True
+G1_CSV        True
+basins 52 control npz dir exists True
+R sources OK 0.0625 100.0
+selfcheck_rc=0
+=== SUBMIT G0 (A0 parity gate) ===
+jobid=218606
+=== WAIT (max ~11 min) ===
+=== RESULT ===
+     JobID      JobName   NodeList        State ExitCode    Elapsed 
+---------- ------------ ---------- ------------ -------- ---------- 
+--- log tail ---
+  UNIT FAILED ('14137000',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('01435000',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('11481200',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('01552500',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('12025700',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('02430085',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('11451100',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('02221525',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('08271000',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('05399500',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('01510000',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('11476600',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('06892000',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('11381500',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('04015330',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('11148900',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('04233000',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('02028500',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('14158790',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('14222500',): ModuleNotFoundError: No module named 'hydroagent'
+  [50/52] done=0 failed=50 elapsed=0.0 min
+  UNIT FAILED ('14316700',): ModuleNotFoundError: No module named 'hydroagent'
+  UNIT FAILED ('14306340',): ModuleNotFoundError: No module named 'hydroagent'
+  [52/52] done=0 failed=52 elapsed=0.0 min
+stage a0 finished: done=0 failed=52 wall=0.0 min
+--- stderr tail ---
+              ^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/id23_r_perturbation/src/camels_switch_confirmation/scripts/run_noise_axis_r_perturbation_hpc.py", line 307, in summarize_a0
+    n_bitwise = int(frame["passes_bitwise"].sum())
+                    ~~~~~^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/core/frame.py", line 4107, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/core/indexes/range.py", line 417, in get_loc
+    raise KeyError(key)
+KeyError: 'passes_bitwise'
+--- G0 verdict ---
+cat: /data1/home/sunyiq/id23_r_perturbation/results/23_camels_switch_confirmation/noise_axis_r_perturbation_hpc/a0_summary.json: No such file or directory
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-02T16:48:39+0800
