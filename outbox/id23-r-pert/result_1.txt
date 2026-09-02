@@ -1,0 +1,115 @@
+### channel=id23-r-pert seq=1
+### host=login4
+### started=2026-09-02T16:40:22+0800
+### ---------- output ----------
+=== WHO/WHERE ===
+sunyiq
+login4
+2026-09-02T16:40:22+0800
+/data1/home/sunyiq/hpc_mailbox
+=== HOME TOP LEVEL ===
+a02_results
+adv531
+autoresearch64
+camels_g2_design_20260808
+code
+filters
+hpc
+hpc_mailbox
+id17_film_gate
+id18_e04_20260809
+id18_output_ensemble_20260826
+id18_ties_merge_20260826
+id23_dlimm
+id30_modern_transformer_moe_20260827
+id31_hydrologic_dynamic_tokens_20260828
+kalmannet
+kalmannet_daily_camels_20260824
+kalmannet_daily_camels_full_state_a34_20260825
+kalmannet_daily_camels_full_state_a34_retry1_20260825
+kalmannet_daily_camels_full_state_a34_retry1_staging_20260825
+kalmannet_daily_camels_full_state_a34_retry2_20260825
+kalmannet_daily_camels_full_state_a34_retry2_staging_20260825
+kalmannet_daily_camels_full_state_a34_retry3_20260826
+kalmannet_daily_camels_full_state_a34_retry3_staging_20260826
+kalmannet_daily_camels_full_state_a34_staging_20260825
+kalmannet_daily_camels_knet_a37_a800_diag1_20260827
+kalmannet_daily_camels_knet_a37_a800_portability_probe2_20260827
+kalmannet_daily_camels_knet_a37_a800_probe1_20260827
+kalmannet_daily_camels_knet_a37_a800_train2_20260827
+kalmannet_daily_camels_knet_a37_a800_train3_20260827
+kalmannet_daily_camels_knet_a37_a800_train4_20260827
+kalmannet_daily_camels_knet_a37_resume1_20260826
+kalmannet_daily_camels_knet_a38_a800_train1_20260828
+kalmannet_daily_camels_knet_a38_terminal_evidence_reconstruct_seq89_20260831
+kalmannet_daily_camels_knet_a38_terminal_evidence_verify_seq90_20260831
+kalmannet_daily_camels_knet_a39_formal_evaluation1_20260831
+kalmannet_daily_camels_knet_a39_formal_evaluation2_20260831
+kalmannet_daily_camels_knet_a39_formal_evaluation3_20260831
+kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831
+kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831
+=== TARGET DIR (prereg 6.2: ~/id23_r_perturbation) ===
+ls: cannot access /data1/home/sunyiq/id23_r_perturbation: No such file or directory
+=== CONDA ENVS ===
+# conda environments:
+#
+base                  *  /data1/home/sunyiq/miniconda3
+knet_clean               /data1/home/sunyiq/miniconda3/envs/knet_clean
+neuralhydrology          /data1/home/sunyiq/miniconda3/envs/neuralhydrology
+nh_clean                 /data1/home/sunyiq/miniconda3/envs/nh_clean
+nh_final                 /data1/home/sunyiq/miniconda3/envs/nh_final
+                         /data1/home/sunyiq/v09_strict/gitenv
+
+=== PY DEPS IN nh_final ===
+python 3.11.13
+numpy 2.3.3
+pandas 2.3.2
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'cma'
+psutil 7.0.0
+=== CPU QUEUE STATE ===
+PARTITION    NODES  STATE    CPUS   MEMORY    
+hcpu48*      10     allocate 48     1         
+hcpu48*      5      maint    48     1         
+hcpu48*      14     down*    48     1         
+hcpu48*      27     allocate 48     1         
+hcpu48*      8      idle     48     1         
+--- my jobs ---
+     JOBID         NAME PARTITION    STATE       TIME
+    202229 N22-agg-eval hgpu4,hgp  PENDING       0:00
+    202294   N22-export hgpu4,hgp  PENDING       0:00
+    202315     N22-gate hgpu4,hgp  PENDING       0:00
+    202507 N22-mask-iso hgpu4,hgp  PENDING       0:00
+    215429 id30_m01_s10     hgpu2  PENDING       0:00
+    202293 N22-manifest hgpu4,hgp  PENDING       0:00
+=== EXISTING neuralhydrology CLONE (read-only peek, git untouched) ===
+/data1/home/sunyiq/neuralhydrology
+adversarial
+caravan_global
+full_531_basins
+global_hourly_model
+haihe_river
+hbv_camels_us_531
+hydroagent
+mamba_camelsh
+mamba_camels_us
+mts_mamba_global_transfer
+namou_kuwei
+README.md
+templates
+test_data
+--- camels_switch_confirmation present? ---
+ls: cannot access /data1/home/sunyiq/neuralhydrology/src/camels_switch_confirmation: No such file or directory
+--- stage3 frozen products present? ---
+ls: cannot access /data1/home/sunyiq/neuralhydrology/results/23_camels_switch_confirmation/online_noise_real_obs_stage3_01_20260818_local: No such file or directory
+ls: cannot access /data1/home/sunyiq/neuralhydrology/results/23_camels_switch_confirmation/noise_axis_step2_learned_q_20260827_local: No such file or directory
+--- camels data present? ---
+/data1/home/sunyiq/neuralhydrology/data/camels_us
+18G	/data1/home/sunyiq/neuralhydrology/data/camels_us
+=== DISK ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  599T  356T  63% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T16:40:49+0800
