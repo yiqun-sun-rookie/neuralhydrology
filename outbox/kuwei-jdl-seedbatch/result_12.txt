@@ -1,0 +1,70 @@
+### channel=kuwei-jdl-seedbatch seq=12
+### host=login4
+### started=2026-09-02T20:21:06+0800
+### ---------- output ----------
+=== A. sacct 218673 ===
+        218673        COMPLETED      0:0   00:32:17 
+=== B. stdout ===
+[Wed Sep  2 19:27:11 CST 2026] node=icn255
+[baseline] all_frozen mse=123.2162 nse24=0.7573
+[stage1] hydro_only|ls0: mse=112.9788 ratio=0.9169 nse24=0.7589
+[stage1] hydro_only|ls1: mse=112.7000 ratio=0.9147 nse24=0.7602
+[stage1] hydro_only|ls2: mse=113.4044 ratio=0.9204 nse24=0.7639
+[stage1] hydro_only|ls3: mse=113.3306 ratio=0.9198 nse24=0.7657
+[stage1] hydro_only|ls4: mse=113.0947 ratio=0.9179 nse24=0.7573
+[stage1] joint|ls0: mse=134.5709 ratio=1.0922 nse24=0.7214
+[stage1] joint|ls1: mse=134.3453 ratio=1.0903 nse24=0.7173
+[stage1] joint|ls2: mse=126.9186 ratio=1.0300 nse24=0.7282
+[stage1] joint|ls3: mse=129.6924 ratio=1.0526 nse24=0.7243
+[stage1] joint|ls4: mse=132.0813 ratio=1.0719 nse24=0.7254
+[stage1] noise_only|ls0: mse=130.7334 ratio=1.0610 nse24=0.7278
+[stage1] noise_only|ls1: mse=134.3075 ratio=1.0900 nse24=0.7198
+[stage1] noise_only|ls2: mse=132.0942 ratio=1.0721 nse24=0.7184
+[stage1] noise_only|ls3: mse=138.8164 ratio=1.1266 nse24=0.7098
+[stage1] noise_only|ls4: mse=139.1259 ratio=1.1291 nse24=0.7122
+{
+  "verdict": "LEARNING_SEED_NOISE_SMALL__REMAINING_27_RUNS_JUSTIFIED",
+  "hydro_only_spread": 0.0057175182284243675,
+  "hydro_only_median": 0.917856131590782,
+  "joint_spread": 0.06210428868665252,
+  "noise_only_spread": 0.06811214407459865
+}
+[Wed Sep  2 19:59:24 CST 2026] done
+=== C. stderr ===
+=== D. verdict json (full) ===
+VERDICT: LEARNING_SEED_NOISE_SMALL__REMAINING_27_RUNS_JUSTIFIED
+hydro_only spread (registered readout): 0.0057175182284243675
+
+hydro_only  ls0=0.91692  ls1=0.91465  ls2=0.92037  ls3=0.91977  ls4=0.91786
+           spread=0.00572 median=0.91786 min=0.91465 max=0.92037
+joint       ls0=1.09215  ls1=1.09032  ls2=1.03005  ls3=1.05256  ls4=1.07195
+           spread=0.06210 median=1.07195 min=1.03005 max=1.09215
+noise_only  ls0=1.06101  ls1=1.09001  ls2=1.07205  ls3=1.12661  ls4=1.12912
+           spread=0.06811 median=1.09001 min=1.06101 max=1.12912
+
+baseline all_frozen combined_mse = 123.2161636352539
+env = {'numpy': '2.3.3', 'torch': '2.4.0'}
+
+nse24 per run:
+   all_frozen|ls0         mse= 123.2162  nse24=0.7573
+   hydro_only|ls0         mse= 112.9788  nse24=0.7589
+   hydro_only|ls1         mse= 112.7000  nse24=0.7602
+   hydro_only|ls2         mse= 113.4044  nse24=0.7639
+   hydro_only|ls3         mse= 113.3306  nse24=0.7657
+   hydro_only|ls4         mse= 113.0947  nse24=0.7573
+   joint|ls0              mse= 134.5709  nse24=0.7214
+   joint|ls1              mse= 134.3453  nse24=0.7173
+   joint|ls2              mse= 126.9186  nse24=0.7282
+   joint|ls3              mse= 129.6924  nse24=0.7243
+   joint|ls4              mse= 132.0813  nse24=0.7254
+   noise_only|ls0         mse= 130.7334  nse24=0.7278
+   noise_only|ls1         mse= 134.3075  nse24=0.7198
+   noise_only|ls2         mse= 132.0942  nse24=0.7184
+   noise_only|ls3         mse= 138.8164  nse24=0.7098
+   noise_only|ls4         mse= 139.1259  nse24=0.7122
+=== E. sha256 ===
+45c0c456c9701c2a7e2ab7e5997ad767ad9eff9eb0f1039e2ec6d2cf8790fc8b  /data1/home/sunyiq/kuwei_jdl_seedbatch_20260831/laos/basins/namou_kuwei/dl/highflow_2026_06_17/results/kuwei_joint_da_learning_20260826/seedbatch_stage1_2023.json
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T20:21:07+0800
