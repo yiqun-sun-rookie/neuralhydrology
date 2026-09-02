@@ -1,78 +1,59 @@
 #!/bin/bash
-# id23-r-pert seq=3 : redeploy with the missing hydroagent package, resubmit G0.
-# Boundaries (prereg 6.2): only ~/id23_r_perturbation and this channel are touched.
-# ~/neuralhydrology is read ONLY through a symlink to its CAMELS data; its git is untouched.
-# Job names are r_pert_*; NO account-wide scancel is ever issued.
+# id23-r-pert seq=4 : READ-ONLY G0 failure forensics. No job submission, no compute.
 set -o pipefail
 DEST=/data1/home/$USER/id23_r_perturbation
-SRC=/data1/home/$USER/hpc_mailbox/inbox/id23-r-pert/payload/r_pert_bundle_20260902.tar.gz
-EXPECT=c14f971e3626d87212112cdbb261d95e2bccea8d0361333f623c9c7620722ab2
-
-echo "=== BUNDLE CHECK ==="
-ls -la "$SRC" 2>&1 | head -2
-GOT=$(sha256sum "$SRC" 2>/dev/null | awk '{print $1}')
-echo "expect=$EXPECT"
-echo "got   =$GOT"
-if [ "$GOT" != "$EXPECT" ]; then echo "SHA_MISMATCH_ABORT"; exit 1; fi
-
-echo "=== DEPLOY ==="
-rm -rf "$DEST/src" "$DEST/vendor" "$DEST/BUNDLE_MANIFEST.sha256"
-mkdir -p "$DEST" /data1/home/$USER/logs/id23_r_perturbation
-tar xzf "$SRC" -C "$DEST"
-echo "extracted files: $(find "$DEST" -type f | wc -l)"
-echo "--- verify manifest ---"
-cd "$DEST" && sha256sum -c BUNDLE_MANIFEST.sha256 --quiet 2>&1 | head -5; echo "manifest_rc=$?"
-
-echo "=== CAMELS DATA LINK ==="
-mkdir -p "$DEST/data"
-[ -e "$DEST/data/camels_us" ] || ln -s /data1/home/$USER/neuralhydrology/data/camels_us "$DEST/data/camels_us"
-ls -la "$DEST/data/" | head -4
-ls "$DEST/data/camels_us" | head -5
-
-echo "=== ENV SELF-CHECK (light, login node) ==="
 source /data1/home/$USER/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final || { echo "CONDA_FAILED"; exit 1; }
+conda activate nh_final
 cd "$DEST"
 export PYTHONPATH="$DEST/src:$DEST/vendor:$PYTHONPATH"
-export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 MKL_THREADING_LAYER=GNU MKL_SERVICE_FORCE_INTEL=1
-python - <<'PYCHK'
-import sys, numpy, pandas
-print("python", sys.version.split()[0], "numpy", numpy.__version__, "pandas", pandas.__version__)
-import cma; print("cma", cma.__version__)
-from camels_switch_confirmation import run_online_noise_pilot as p
-print("RESULTS      ", p.RESULTS, p.RESULTS.exists())
-print("PARAMETER_TAB", p.PARAMETER_TABLE.exists())
-from camels_switch_confirmation import run_online_noise_real_obs as r
-print("G1_CSV       ", r.G1_CSV.exists())
-from camels_switch_confirmation.scripts.run_noise_axis_r_perturbation_hpc import admitted_basins, CONTROL_DIR
-b = admitted_basins(); print("basins", len(b), "control npz dir exists", CONTROL_DIR.exists())
-from camels_switch_confirmation.noise_axis_filtering import ShapePerturbedR, LegacyConstantR
-print("R sources OK", LegacyConstantR().observation_variance(0.25,0,float('nan')),
-      ShapePerturbedR().observation_variance(0.25,1,100.0))
-PYCHK
-RC=$?
-echo "selfcheck_rc=$RC"
-if [ $RC -ne 0 ]; then echo "SELFCHECK_FAILED_NO_SUBMIT"; exit 1; fi
 
-echo "=== SUBMIT G0 (A0 parity gate) ==="
-cd "$DEST"
-JID=$(sbatch --parsable src/camels_switch_confirmation/hpc/r_pert_a0.slurm 2>&1)
-echo "jobid=$JID"
-echo "$JID" > "$DEST/LAST_A0_JOBID"
-
-echo "=== WAIT (max ~11 min) ==="
-for i in $(seq 1 66); do
-    ST=$(squeue -j "$JID" -h -o "%T" 2>/dev/null)
-    [ -z "$ST" ] && break
-    [ $((i % 6)) -eq 0 ] && echo "t=$((i*10))s state=$ST"
-    sleep 10
+echo "=== BLAS / LAPACK BUILD ==="
+python -c "
+import numpy as np
+print('numpy', np.__version__)
+try:
+    cfg = np.show_config('dicts')
+    for k, v in cfg.get('Build Dependencies', {}).items():
+        if k in ('blas', 'lapack'):
+            print(k, v.get('name'), v.get('version'))
+except Exception as e:
+    print('show_config dicts unavailable:', e); np.show_config()
+"
+echo "=== PER-BASIN DIFF DISTRIBUTION ==="
+python -c "
+import pandas as pd, numpy as np
+f = pd.read_csv('results/23_camels_switch_confirmation/noise_axis_r_perturbation_hpc/a0_parity_per_basin.csv')
+d = f['max_abs_forecast_diff']
+print('n', len(f))
+print('max|diff| quantiles:')
+for q in (0.0,0.25,0.5,0.75,0.9,1.0):
+    print(f'  q{q:.2f} {d.quantile(q):.3e}')
+print('within 1e-9 :', int((d<=1e-9).sum()))
+print('within 1e-6 :', int((d<=1e-6).sum()))
+print('within 1e-3 :', int((d<=1e-3).sum()))
+print('bitwise days: median', int(f['n_days_bitwise_identical'].median()), 'of 1260')
+print()
+print('NSE impact (this is what the degraded gate cares about):')
+n = f['nse_abs_diff']
+print('  max ', f'{n.max():.3e}', ' median ', f'{n.median():.3e}')
+print('  basins with |dNSE| > 1e-4 :', int((n>1e-4).sum()))
+print('  basins with |dNSE| > 1e-3 :', int((n>1e-3).sum()))
+print()
+print('posterior deviation max:', f['posterior_max_deviation'].max())
+print()
+print('worst 5 by max|diff|:')
+print(f.nlargest(5,'max_abs_forecast_diff')[['basin_id','max_abs_forecast_diff','nse_abs_diff','n_days_bitwise_identical']].to_string(index=False))
+print()
+print('calibration on HPC (compare to local: mean-z2 median 187.2, terciles 6.7/32.4/525):')
+print('  z2_mean median   ', round(f['z2_mean'].median(),3))
+print('  z2_median median ', round(f['z2_median'].median(),4))
+print('  terciles         ', round(f['z2_mean_low'].median(),2), round(f['z2_mean_mid'].median(),2), round(f['z2_mean_high'].median(),2))
+print('  |err|/sigma      ', round(f['abs_error_median_over_sigma'].median(),4))
+"
+echo "=== IS numpy 1.26 AVAILABLE IN ANY ENV? ==="
+for e in nh_final nh_clean neuralhydrology knet_clean; do
+  V=$(conda run -n $e python -c "import numpy;print(numpy.__version__)" 2>/dev/null | tail -1)
+  echo "  $e : ${V:-unavailable}"
 done
-
-echo "=== RESULT ==="
-sacct -j "$JID" -X --format=JobID%10,JobName%12,NodeList%10,State%12,ExitCode%8,Elapsed%10 2>&1 | head -5
-echo "--- log tail ---"
-tail -25 /data1/home/$USER/logs/id23_r_perturbation/r_pert_a0-${JID}.out 2>&1
-echo "--- stderr tail ---"
-tail -10 /data1/home/$USER/logs/id23_r_perturbation/r_pert_a0-${JID}.err 2>&1
-echo "--- G0 verdict ---"
-cat "$DEST/results/23_camels_switch_confirmation/noise_axis_r_perturbation_hpc/a0_summary.json" 2>&1 | head -40
+echo "=== NO JOBS SUBMITTED THIS ROUND ==="
+squeue -u $USER -o "%.10i %.14j %.9P %.8T" 2>&1 | grep -i r_pert || echo "  no r_pert_* jobs in queue"
