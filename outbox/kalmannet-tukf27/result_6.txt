@@ -1,0 +1,30 @@
+### channel=kalmannet-tukf27 seq=6
+### host=login4
+### started=2026-09-02T11:03:46+0800
+### ---------- output ----------
+=== TUKF25/26/27 JOB FINAL STATES ===
+  job 216699 : COMPLETED
+  job 216851 : COMPLETED
+  job 217266 : COMPLETED
+  job 217271 : COMPLETED
+  job 217272 : COMPLETED
+  job 217426 : COMPLETED
+  job 217684 : COMPLETED
+  job 217690 : COMPLETED
+  job 217822 : COMPLETED
+=== MY RUNNING/PENDING JOBS ===
+202229 N22-agg-eval PENDING
+202294 N22-export PENDING
+202315 N22-gate PENDING
+202507 N22-mask-iso-531 PENDING
+215429 id30_m01_s100 PENDING
+202293 N22-manifest PENDING
+216549 id31_development RUNNING
+=== LANDING DIRS ===
+  kalmannet_tukf25_20260831: exists, 17M
+  kalmannet_tukf26_20260831: exists, 9.8M
+  kalmannet_tukf27_20260901: exists, 8.7M
+DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T11:03:50+0800
