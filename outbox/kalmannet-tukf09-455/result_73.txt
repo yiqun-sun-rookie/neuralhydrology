@@ -1,0 +1,65 @@
+### channel=kalmannet-tukf09-455 seq=73
+### host=login4
+### started=2026-09-02T17:09:30+0800
+### ---------- output ----------
+=== SCOPE GUARD ===
+NEW_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902
+SCOPE_GUARD_OK
+=== FROZEN FAILURE EVIDENCE UNCHANGED, READ ONLY ===
+drwx------. 8 sunyiq g_sunyiq 4096 Sep  1 12:42 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r4_20260901
+drwx------. 8 sunyiq g_sunyiq 4096 Sep  1 18:11 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901
+V2R5_JOB_ID_FILE=217939
+11b47e27e4b7e3fd403ffb3a8f2b8003c6ebf6540e52d0c1ab439be6293d2f77  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.out
+b5e19ea076beff9d423c3ab02e6d8efd6918548b843c22503aa77a44c768c92e  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.err
+=== PAYLOAD EXACT GATE ===
+ARCHIVE_SHA256=a9d4effadaef3e836d657cd317051052377841b8a54c237ec9dc2457cc205e12
+ARCHIVE_SIZE=9914609
+MANIFEST_SHA256=f09046c1d1df3aeff19fdd0a034a6b5ba2199c18813c2906bed93d5beeb2bd64
+BUILDER_SHA256=f86d917f953e5c4a9781774d6c29f0fbac42ecbb74014e034e19e83c03b016a2
+PAYLOAD_EXACT_GATE_PASS
+=== EXCLUSIVE NEW ROOT RESERVATION ===
+NEW_ROOT_RESERVED
+=== EXTRACT ===
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "destination": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/bundle",
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "reused": false,
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R6_HPC_BUNDLE_VERIFIED"
+}
+=== STRICT EXTRACTED VERIFICATION ===
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R6_HPC_BUNDLE_VERIFIED"
+}
+=== SURFACE ===
+total 20
+drwxr-xr-x.   5 sunyiq g_sunyiq 4096 Sep  2 17:09 .
+drwx------. 130 sunyiq g_sunyiq 4096 Sep  2 17:09 ..
+drwxr-xr-x.   3 sunyiq g_sunyiq 4096 Sep  2 17:09 bundle
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  2 17:09 logs
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  2 17:09 status
+total 1013
+drwxr-xr-x. 3 sunyiq g_sunyiq    4096 Sep  2 17:09 .
+drwxr-xr-x. 5 sunyiq g_sunyiq    4096 Sep  2 17:09 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 1024948 Sep  2 17:09 bundle_manifest.json
+drwxr-xr-x. 8 sunyiq g_sunyiq    4096 Sep  2 17:09 kalmannet
+2809
+PROJECT_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/bundle/kalmannet
+4bdb4527e2f89c2765a71472411890535896cf1f405bf8cd7cf5c89ea5709ecd  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py
+a38118aa4b273a2e650b454f30c4f83dd5b0540bd91054f8e52cfc1313549f63  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/bundle/kalmannet/artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/training_admission/training_admission.json
+=== MUTABLE TREES MUST STILL BE ABSENT ===
+RESULTS_ABSENT_AS_REQUIRED
+TUKF09_455_A800_EXCLUSIVE_V2R6_DEPLOYED_NO_JOB_SUBMITTED_FORMAL_EVALUATION_HOLD
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T17:09:55+0800
