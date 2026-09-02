@@ -1,0 +1,2417 @@
+### channel=id32-transformer-inductive-bias seq=6
+### host=login4
+### started=2026-09-03T06:09:03+0800
+### ---------- output ----------
+=== A. SACCT ===
+     JobID      JobName        State ExitCode    Elapsed   NodeList 
+---------- ------------ ------------ -------- ---------- ---------- 
+    218680     id32_R01    COMPLETED      0:0   05:47:18     ngu005 
+    218681     id32_T02    COMPLETED      0:0   05:56:11     ngu004 
+    218682     id32_T03    COMPLETED      0:0   06:52:46     ngu004 
+    218683     id32_T04    COMPLETED      0:0   05:50:44     ngu006 
+    218684     id32_T05    COMPLETED      0:0   07:00:02     ngu007 
+    218685     id32_L01    COMPLETED      0:0   01:15:17     ngu005 
+=== B. MANIFEST T04 T05 ===
+--- T04 manifest=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_T04_s100_slurm218683/run_manifest.json
+{
+  "candidate_safe_data_after": {
+    "audit": {
+      "basin_count": 531,
+      "forcing_date_max": "2008-09-30",
+      "forcing_date_min": "1999-01-05",
+      "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+      "forcing_row_count": 1888767,
+      "status": "PASS",
+      "supervision_date_max": "2008-09-30",
+      "supervision_date_min": "1999-10-01",
+      "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+      "supervision_row_count": 1745928
+    },
+    "forcing_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01",
+    "forcing_file_sha256": "0226ee6297a5488e9b284a483bd320879f107fbf749222944da453ddd0f0448d",
+    "forcing_manifest_path": "/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json",
+    "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+    "statics_file_sha256": "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2",
+    "status": "PASS",
+    "supervision_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01",
+    "supervision_manifest_path": "/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json",
+    "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+    "target_tree_sha256": "17709a37f5ea8e8a4e140b422b8c010d030d600cf673b52a5cc557ecb99d57a6"
+  },
+  "candidate_safe_data_before": {
+    "audit": {
+      "basin_count": 531,
+      "forcing_date_max": "2008-09-30",
+      "forcing_date_min": "1999-01-05",
+      "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+      "forcing_row_count": 1888767,
+      "status": "PASS",
+      "supervision_date_max": "2008-09-30",
+      "supervision_date_min": "1999-10-01",
+      "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+      "supervision_row_count": 1745928
+    },
+    "forcing_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01",
+    "forcing_file_sha256": "0226ee6297a5488e9b284a483bd320879f107fbf749222944da453ddd0f0448d",
+    "forcing_manifest_path": "/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json",
+    "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+    "statics_file_sha256": "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2",
+    "status": "PASS",
+    "supervision_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01",
+    "supervision_manifest_path": "/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json",
+    "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+    "target_tree_sha256": "17709a37f5ea8e8a4e140b422b8c010d030d600cf673b52a5cc557ecb99d57a6"
+  },
+  "command": [
+    "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "-u",
+    "-m",
+    "neuralhydrology.nh_run",
+    "train",
+    "--config-file",
+    "src/transformer_inductive_bias/configs/local_convolution_s100.yml",
+    "--gpu",
+    "0"
+  ],
+  "completed_at_utc": "2026-09-02T19:13:25.887954+00:00",
+  "config_path": "src/transformer_inductive_bias/configs/local_convolution_s100.yml",
+  "config_sha256": "feaee80560eada15c08edf45ad92e157ca549a00408e343229b2744f5b6105df",
+  "data_access": {
+    "log_sha256": "553fe581b4e5c66f310be84e97f8d81924356a8617d023d99a61aa2e13e47669",
+    "record_count": 2656,
+    "status": "PASS",
+    "unique_path_count": 533,
+    "unique_paths": [
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01/track0_forcing.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01/track0_statics.csv",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01022500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01031500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01047000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01052500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01054200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01055000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01057000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01073000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01078000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01123000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01134500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01137500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01139000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01139800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01142500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01144000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01162500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01169000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01170100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01181000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01187300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01195100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01333000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01350000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01350080.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01350140.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01365000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01411300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01413500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01414500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01415000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01423000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01434025.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01435000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01439500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01440000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01440400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01451800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01466500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01484100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01487000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01491000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01510000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01516500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01518862.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01532000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01539000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01542810.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01543000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01543500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01544500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01545600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01547700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01548500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01549500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01550000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01552000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01552500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01557500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01567500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01568000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01580000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01583500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01586610.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01591400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01594950.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01596500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01605500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01606500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01632000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01632900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01634500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01638480.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01639500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01644000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01664000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01666500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01667500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01669000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01669520.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02011400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02013000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02014000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02015700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02016000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02017500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02018000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02027000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02027500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02028500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02038850.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02046000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02051500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02053200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02053800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02055100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02056900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02059500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02064000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02065500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02069700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02070000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02074500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02077200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02081500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02082950.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02092500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02096846.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02102908.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02108000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02111180.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02111500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02112120.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02112360.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02118500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02125000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02128000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02137727.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02140991.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02143000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02143040.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02149000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02152100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02177000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02178400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02193340.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02196000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02198100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02202600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02212600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02215100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02216180.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02221525.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02231000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02245500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02246000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02296500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02297155.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02297310.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02298123.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02298608.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02299950.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02300700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02342933.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02349900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02350900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02361000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02363000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02369800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02371500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02372250.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02374500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02381600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02384540.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02395120.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02415000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02427250.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02430085.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02450250.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02464000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02464360.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02465493.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02469800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02472000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02472500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02479155.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02479300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02479560.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02481000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02481510.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03010655.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03011800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03015500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03021350.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03026500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03028000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03049000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03049800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03050000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03069500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03070500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03076600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03078000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03140000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03144000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03170000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03173000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03180500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03182500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03186500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03237280.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03237500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03238500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03241500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03280700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03281500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03285000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03291780.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03338780.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03340800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03346000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03364500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03366500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03368000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03384450.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03439000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03455500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03456500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03460000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03463300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03471500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03473000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03479000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03488000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03498500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03500000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03500240.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03504000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03574500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03592718.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03604000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04015330.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04024430.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04027000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04040500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04043050.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04045500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04057510.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04057800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04059500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04063700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04074950.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04105700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04115265.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04122200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04122500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04127918.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04127997.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04161580.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04185000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04196800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04197100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04197170.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04213000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04213075.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04216418.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04221000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04224775.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04233000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04256000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04296000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05057200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05120500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05291000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05362000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05393500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05399500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05408000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05413500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05414000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05444000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05454000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05458000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05466500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05487980.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05488200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05489000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05495000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05495500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05501000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05503800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05507600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05508805.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05525500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05556500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05584500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05591550.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05592050.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05592575.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05593575.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05593900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05595730.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06221400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06224000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06278300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06280300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06289000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06291500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06311000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06332515.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06339100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06344600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06350000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06352000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06404000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06406000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06409000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06431500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06440200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06447500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06470800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06477500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06479215.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06601000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06614800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06622700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06623800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06632400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06746095.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06803510.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06803530.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06814000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06847900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06853800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06876700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06878000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06879650.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06885500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06888500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06889200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06889500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06892000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06903400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06906800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06910800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06911900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06917000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06918460.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06919500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06921070.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06921200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07057500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07060710.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07066000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07083000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07142300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07145700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07167500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07180500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07184000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07195800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07196900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07197000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07208500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07261000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07263295.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07291000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07299670.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07301410.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07315200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07315700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07335700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07340300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07346045.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07359610.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07362100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07362587.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07375000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08013000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08014500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08023080.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08050800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08066200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08066300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08070000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08070200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08082700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08086212.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08086290.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08101000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08103900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08104900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08109700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08150800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08158700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08158810.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08164300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08164600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08165300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08171300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08175000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08176900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08178880.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08189500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08190000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08190500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08194200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08195000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08196000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08198500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08200000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08202700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08267500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08269000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08271000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08324000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08377900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08378500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08380500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09035800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09035900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09047700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09065500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09066000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09066200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09066300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09081600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09107000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09210500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09223000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09306242.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09312600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09352900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09378170.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09386900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09404450.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09430600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09447800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09484600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09492400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09494000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09497980.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09505350.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09505800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09508300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09510200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09512280.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09513780.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10234500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10244950.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10259000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10336645.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10336660.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10343500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11124500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11141280.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11143000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11148900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11151300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11176400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11230500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11237500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11264500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11266500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11284400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11381500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11451100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11468500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11473900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11475560.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11476600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11478500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11480390.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11481200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11482500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11522500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11523200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11528700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11532500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12010000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12013500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12020000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12025700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12035000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12040500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12041200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12048000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12054000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12056500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12073500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12082500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12092000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12114500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12115000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12117000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12143600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12144000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12145500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12147500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12167000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12175500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12178100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12186000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12189500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12375900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12377150.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12381400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12383500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12390700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12411000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12447390.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12451000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12488500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13011500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13011900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13018300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13023000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13161500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13235000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13240000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13313000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13331500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14020000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14096850.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14137000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14138800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14138870.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14138900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14139800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14141500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14154500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14158790.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14166500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14182500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14185000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14185900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14187000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14216500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14222500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14236200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14301000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14303200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14305500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14306340.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14306500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14308990.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14309500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14316700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14325000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14362250.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14400000.parquet"
+    ]
+  },
+  "data_access_log": "results/32_transformer_inductive_bias/_invocations/id32_T04_s100_slurm218683/data_access.jsonl",
+  "date_contract": {
+    "train_end_date": "30/09/2006",
+    "train_start_date": "01/10/1999",
+    "validation_end_date": "30/09/2008",
+    "validation_start_date": "01/10/2006"
+  },
+  "experiment_id": "T04",
+  "formal_evaluation_authorized": false,
+  "gpu": 0,
+  "median_nse_epoch030": 0.6798624992370605,
+  "metrics_artifact_path": "results/32_transformer_inductive_bias/T04/transformer_inductive_bias_T04_2026_0902_2127_ep30/epoch030_metrics.json",
+  "metrics_artifact_sha256": "75b0f70a6de57e64635d8552e4de7833ea04b08d3d2bbb92ef9dec0105551ffd",
+  "mode": "execute",
+  "required_flags": [
+    "--execute",
+    "--operator-approved-heavy-compute"
+  ],
+  "run_dir": "results/32_transformer_inductive_bias/T04/transformer_inductive_bias_T04_2026_0902_2127_ep30",
+  "run_id": "id32_T04_s100_slurm218683",
+  "run_root": "results/32_transformer_inductive_bias/T04",
+  "seed": 100,
+  "slurm_job_id": "218683",
+  "source_integrity_after": {
+    "config_file": {
+      "src/transformer_inductive_bias/configs/local_convolution_s100.yml": "feaee80560eada15c08edf45ad92e157ca549a00408e343229b2744f5b6105df"
+    },
+    "experiment_id": "T04",
+    "implementation_files": {
+      "neuralhydrology/modelzoo/__init__.py": "097ca1587cef59ce6f4690b46addb81d8d342dc4adfe67b80bee8c59d20c132d",
+      "neuralhydrology/modelzoo/cudalstm.py": "78b9977e20ac59318060c7771e180bc9a9498dfe753ed13652b733ca922b58dd",
+      "neuralhydrology/modelzoo/modern_causal_transformer.py": "04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede",
+      "neuralhydrology/modelzoo/recency_biased_transformer.py": "89b4854f0d187992fbf63b6cda8c2acf99a985cfe21f3f461a1cf7fcb2756b53",
+      "neuralhydrology/utils/config.py": "677036cc5e54d42603268b60496164599e5e705a8d0437c006a5e051a282dc56",
+      "src/transformer_inductive_bias/hpc/submit_ablation_arm.slurm": "567b08971f3c2bdaff22c72c1d58d091460e247dfc171ba21354ed6102a8d2e0",
+      "src/transformer_inductive_bias/registry/experiments.csv": "e6107755ae7c918bcd5807668742bd2a09694b8cdbaced60858b041c3fac4a0d",
+      "src/transformer_inductive_bias/scripts/audit_configs.py": "02869eddca61755d4c7a585295014de53917d7b66a1524c589c7ba0417ee3914",
+      "src/transformer_inductive_bias/scripts/run_development.py": "53a1699c571774668c15ad8ddaec355e5d4e261f78bff4ded0c8753fa0acf30a"
+    }
+  },
+  "source_integrity_before": {
+    "config_file": {
+      "src/transformer_inductive_bias/configs/local_convolution_s100.yml": "feaee80560eada15c08edf45ad92e157ca549a00408e343229b2744f5b6105df"
+    },
+    "experiment_id": "T04",
+    "implementation_files": {
+      "neuralhydrology/modelzoo/__init__.py": "097ca1587cef59ce6f4690b46addb81d8d342dc4adfe67b80bee8c59d20c132d",
+      "neuralhydrology/modelzoo/cudalstm.py": "78b9977e20ac59318060c7771e180bc9a9498dfe753ed13652b733ca922b58dd",
+      "neuralhydrology/modelzoo/modern_causal_transformer.py": "04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede",
+      "neuralhydrology/modelzoo/recency_biased_transformer.py": "89b4854f0d187992fbf63b6cda8c2acf99a985cfe21f3f461a1cf7fcb2756b53",
+      "neuralhydrology/utils/config.py": "677036cc5e54d42603268b60496164599e5e705a8d0437c006a5e051a282dc56",
+      "src/transformer_inductive_bias/hpc/submit_ablation_arm.slurm": "567b08971f3c2bdaff22c72c1d58d091460e247dfc171ba21354ed6102a8d2e0",
+      "src/transformer_inductive_bias/registry/experiments.csv": "e6107755ae7c918bcd5807668742bd2a09694b8cdbaced60858b041c3fac4a0d",
+      "src/transformer_inductive_bias/scripts/audit_configs.py": "02869eddca61755d4c7a585295014de53917d7b66a1524c589c7ba0417ee3914",
+      "src/transformer_inductive_bias/scripts/run_development.py": "53a1699c571774668c15ad8ddaec355e5d4e261f78bff4ded0c8753fa0acf30a"
+    }
+  },
+  "started_at_utc": "2026-09-02T13:26:10.741266+00:00",
+  "status": "COMPLETE",
+  "training_return_code": 0
+}--- T05 manifest=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_T05_s100_slurm218684/run_manifest.json
+{
+  "candidate_safe_data_after": {
+    "audit": {
+      "basin_count": 531,
+      "forcing_date_max": "2008-09-30",
+      "forcing_date_min": "1999-01-05",
+      "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+      "forcing_row_count": 1888767,
+      "status": "PASS",
+      "supervision_date_max": "2008-09-30",
+      "supervision_date_min": "1999-10-01",
+      "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+      "supervision_row_count": 1745928
+    },
+    "forcing_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01",
+    "forcing_file_sha256": "0226ee6297a5488e9b284a483bd320879f107fbf749222944da453ddd0f0448d",
+    "forcing_manifest_path": "/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json",
+    "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+    "statics_file_sha256": "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2",
+    "status": "PASS",
+    "supervision_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01",
+    "supervision_manifest_path": "/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json",
+    "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+    "target_tree_sha256": "17709a37f5ea8e8a4e140b422b8c010d030d600cf673b52a5cc557ecb99d57a6"
+  },
+  "candidate_safe_data_before": {
+    "audit": {
+      "basin_count": 531,
+      "forcing_date_max": "2008-09-30",
+      "forcing_date_min": "1999-01-05",
+      "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+      "forcing_row_count": 1888767,
+      "status": "PASS",
+      "supervision_date_max": "2008-09-30",
+      "supervision_date_min": "1999-10-01",
+      "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+      "supervision_row_count": 1745928
+    },
+    "forcing_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01",
+    "forcing_file_sha256": "0226ee6297a5488e9b284a483bd320879f107fbf749222944da453ddd0f0448d",
+    "forcing_manifest_path": "/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json",
+    "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+    "statics_file_sha256": "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2",
+    "status": "PASS",
+    "supervision_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01",
+    "supervision_manifest_path": "/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json",
+    "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+    "target_tree_sha256": "17709a37f5ea8e8a4e140b422b8c010d030d600cf673b52a5cc557ecb99d57a6"
+  },
+  "command": [
+    "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "-u",
+    "-m",
+    "neuralhydrology.nh_run",
+    "train",
+    "--config-file",
+    "src/transformer_inductive_bias/configs/ema_plus_decay_s100.yml",
+    "--gpu",
+    "0"
+  ],
+  "completed_at_utc": "2026-09-02T21:20:05.915543+00:00",
+  "config_path": "src/transformer_inductive_bias/configs/ema_plus_decay_s100.yml",
+  "config_sha256": "7760d1d395fa6f0cd386b4cdfedcad373b120dae060ac7d759671ca47599f6a5",
+  "data_access": {
+    "log_sha256": "3c290e1a8752b3b0133ea41635819dc9a805064327775a420ba6998b4d097e4b",
+    "record_count": 2656,
+    "status": "PASS",
+    "unique_path_count": 533,
+    "unique_paths": [
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01/track0_forcing.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01/track0_statics.csv",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01022500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01031500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01047000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01052500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01054200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01055000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01057000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01073000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01078000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01123000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01134500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01137500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01139000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01139800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01142500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01144000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01162500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01169000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01170100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01181000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01187300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01195100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01333000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01350000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01350080.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01350140.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01365000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01411300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01413500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01414500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01415000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01423000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01434025.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01435000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01439500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01440000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01440400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01451800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01466500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01484100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01487000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01491000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01510000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01516500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01518862.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01532000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01539000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01542810.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01543000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01543500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01544500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01545600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01547700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01548500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01549500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01550000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01552000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01552500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01557500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01567500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01568000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01580000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01583500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01586610.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01591400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01594950.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01596500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01605500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01606500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01632000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01632900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01634500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01638480.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01639500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01644000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01664000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01666500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01667500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01669000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01669520.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02011400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02013000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02014000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02015700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02016000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02017500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02018000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02027000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02027500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02028500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02038850.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02046000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02051500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02053200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02053800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02055100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02056900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02059500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02064000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02065500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02069700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02070000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02074500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02077200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02081500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02082950.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02092500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02096846.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02102908.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02108000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02111180.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02111500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02112120.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02112360.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02118500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02125000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02128000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02137727.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02140991.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02143000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02143040.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02149000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02152100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02177000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02178400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02193340.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02196000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02198100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02202600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02212600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02215100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02216180.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02221525.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02231000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02245500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02246000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02296500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02297155.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02297310.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02298123.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02298608.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02299950.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02300700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02342933.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02349900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02350900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02361000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02363000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02369800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02371500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02372250.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02374500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02381600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02384540.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02395120.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02415000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02427250.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02430085.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02450250.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02464000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02464360.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02465493.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02469800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02472000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02472500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02479155.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02479300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02479560.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02481000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/02481510.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03010655.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03011800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03015500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03021350.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03026500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03028000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03049000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03049800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03050000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03069500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03070500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03076600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03078000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03140000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03144000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03170000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03173000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03180500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03182500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03186500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03237280.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03237500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03238500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03241500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03280700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03281500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03285000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03291780.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03338780.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03340800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03346000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03364500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03366500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03368000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03384450.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03439000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03455500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03456500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03460000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03463300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03471500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03473000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03479000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03488000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03498500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03500000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03500240.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03504000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03574500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03592718.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/03604000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04015330.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04024430.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04027000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04040500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04043050.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04045500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04057510.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04057800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04059500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04063700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04074950.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04105700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04115265.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04122200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04122500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04127918.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04127997.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04161580.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04185000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04196800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04197100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04197170.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04213000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04213075.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04216418.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04221000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04224775.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04233000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04256000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/04296000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05057200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05120500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05291000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05362000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05393500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05399500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05408000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05413500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05414000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05444000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05454000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05458000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05466500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05487980.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05488200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05489000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05495000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05495500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05501000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05503800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05507600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05508805.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05525500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05556500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05584500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05591550.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05592050.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05592575.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05593575.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05593900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/05595730.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06221400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06224000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06278300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06280300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06289000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06291500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06311000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06332515.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06339100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06344600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06350000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06352000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06404000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06406000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06409000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06431500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06440200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06447500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06470800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06477500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06479215.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06601000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06614800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06622700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06623800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06632400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06746095.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06803510.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06803530.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06814000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06847900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06853800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06876700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06878000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06879650.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06885500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06888500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06889200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06889500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06892000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06903400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06906800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06910800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06911900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06917000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06918460.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06919500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06921070.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/06921200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07057500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07060710.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07066000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07083000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07142300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07145700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07167500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07180500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07184000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07195800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07196900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07197000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07208500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07261000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07263295.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07291000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07299670.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07301410.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07315200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07315700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07335700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07340300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07346045.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07359610.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07362100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07362587.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/07375000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08013000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08014500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08023080.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08050800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08066200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08066300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08070000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08070200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08082700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08086212.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08086290.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08101000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08103900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08104900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08109700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08150800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08158700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08158810.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08164300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08164600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08165300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08171300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08175000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08176900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08178880.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08189500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08190000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08190500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08194200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08195000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08196000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08198500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08200000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08202700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08267500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08269000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08271000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08324000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08377900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08378500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/08380500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09035800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09035900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09047700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09065500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09066000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09066200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09066300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09081600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09107000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09210500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09223000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09306242.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09312600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09352900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09378170.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09386900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09404450.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09430600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09447800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09484600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09492400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09494000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09497980.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09505350.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09505800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09508300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09510200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09512280.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/09513780.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10234500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10244950.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10259000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10336645.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10336660.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/10343500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11124500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11141280.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11143000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11148900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11151300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11176400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11230500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11237500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11264500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11266500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11284400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11381500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11451100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11468500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11473900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11475560.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11476600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11478500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11480390.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11481200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11482500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11522500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11523200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11528700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/11532500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12010000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12013500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12020000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12025700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12035000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12040500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12041200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12048000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12054000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12056500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12073500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12082500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12092000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12114500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12115000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12117000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12143600.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12144000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12145500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12147500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12167000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12175500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12178100.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12186000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12189500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12375900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12377150.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12381400.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12383500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12390700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12411000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12447390.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12451000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/12488500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13011500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13011900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13018300.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13023000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13161500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13235000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13240000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13313000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/13331500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14020000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14096850.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14137000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14138800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14138870.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14138900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14139800.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14141500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14154500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14158790.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14166500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14182500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14185000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14185900.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14187000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14216500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14222500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14236200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14301000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14303200.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14305500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14306340.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14306500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14308990.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14309500.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14316700.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14325000.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14362250.parquet",
+      "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/14400000.parquet"
+    ]
+  },
+  "data_access_log": "results/32_transformer_inductive_bias/_invocations/id32_T05_s100_slurm218684/data_access.jsonl",
+  "date_contract": {
+    "train_end_date": "30/09/2006",
+    "train_start_date": "01/10/1999",
+    "validation_end_date": "30/09/2008",
+    "validation_start_date": "01/10/2006"
+  },
+  "experiment_id": "T05",
+  "formal_evaluation_authorized": false,
+  "gpu": 0,
+  "median_nse_epoch030": 0.6879998445510864,
+  "metrics_artifact_path": "results/32_transformer_inductive_bias/T05/transformer_inductive_bias_T05_2026_0902_2224_ep30/epoch030_metrics.json",
+  "metrics_artifact_sha256": "8c72f021b73018d85ca555bd6f663c1908892d502be9c2d35148bfeed18e65e8",
+  "mode": "execute",
+  "required_flags": [
+    "--execute",
+    "--operator-approved-heavy-compute"
+  ],
+  "run_dir": "results/32_transformer_inductive_bias/T05/transformer_inductive_bias_T05_2026_0902_2224_ep30",
+  "run_id": "id32_T05_s100_slurm218684",
+  "run_root": "results/32_transformer_inductive_bias/T05",
+  "seed": 100,
+  "slurm_job_id": "218684",
+  "source_integrity_after": {
+    "config_file": {
+      "src/transformer_inductive_bias/configs/ema_plus_decay_s100.yml": "7760d1d395fa6f0cd386b4cdfedcad373b120dae060ac7d759671ca47599f6a5"
+    },
+    "experiment_id": "T05",
+    "implementation_files": {
+      "neuralhydrology/modelzoo/__init__.py": "097ca1587cef59ce6f4690b46addb81d8d342dc4adfe67b80bee8c59d20c132d",
+      "neuralhydrology/modelzoo/cudalstm.py": "78b9977e20ac59318060c7771e180bc9a9498dfe753ed13652b733ca922b58dd",
+      "neuralhydrology/modelzoo/modern_causal_transformer.py": "04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede",
+      "neuralhydrology/modelzoo/recency_biased_transformer.py": "89b4854f0d187992fbf63b6cda8c2acf99a985cfe21f3f461a1cf7fcb2756b53",
+      "neuralhydrology/utils/config.py": "677036cc5e54d42603268b60496164599e5e705a8d0437c006a5e051a282dc56",
+      "src/transformer_inductive_bias/hpc/submit_ablation_arm.slurm": "567b08971f3c2bdaff22c72c1d58d091460e247dfc171ba21354ed6102a8d2e0",
+      "src/transformer_inductive_bias/registry/experiments.csv": "e6107755ae7c918bcd5807668742bd2a09694b8cdbaced60858b041c3fac4a0d",
+      "src/transformer_inductive_bias/scripts/audit_configs.py": "02869eddca61755d4c7a585295014de53917d7b66a1524c589c7ba0417ee3914",
+      "src/transformer_inductive_bias/scripts/run_development.py": "53a1699c571774668c15ad8ddaec355e5d4e261f78bff4ded0c8753fa0acf30a"
+    }
+  },
+  "source_integrity_before": {
+    "config_file": {
+      "src/transformer_inductive_bias/configs/ema_plus_decay_s100.yml": "7760d1d395fa6f0cd386b4cdfedcad373b120dae060ac7d759671ca47599f6a5"
+    },
+    "experiment_id": "T05",
+    "implementation_files": {
+      "neuralhydrology/modelzoo/__init__.py": "097ca1587cef59ce6f4690b46addb81d8d342dc4adfe67b80bee8c59d20c132d",
+      "neuralhydrology/modelzoo/cudalstm.py": "78b9977e20ac59318060c7771e180bc9a9498dfe753ed13652b733ca922b58dd",
+      "neuralhydrology/modelzoo/modern_causal_transformer.py": "04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede",
+      "neuralhydrology/modelzoo/recency_biased_transformer.py": "89b4854f0d187992fbf63b6cda8c2acf99a985cfe21f3f461a1cf7fcb2756b53",
+      "neuralhydrology/utils/config.py": "677036cc5e54d42603268b60496164599e5e705a8d0437c006a5e051a282dc56",
+      "src/transformer_inductive_bias/hpc/submit_ablation_arm.slurm": "567b08971f3c2bdaff22c72c1d58d091460e247dfc171ba21354ed6102a8d2e0",
+      "src/transformer_inductive_bias/registry/experiments.csv": "e6107755ae7c918bcd5807668742bd2a09694b8cdbaced60858b041c3fac4a0d",
+      "src/transformer_inductive_bias/scripts/audit_configs.py": "02869eddca61755d4c7a585295014de53917d7b66a1524c589c7ba0417ee3914",
+      "src/transformer_inductive_bias/scripts/run_development.py": "53a1699c571774668c15ad8ddaec355e5d4e261f78bff4ded0c8753fa0acf30a"
+    }
+  },
+  "started_at_utc": "2026-09-02T14:23:35.809400+00:00",
+  "status": "COMPLETE",
+  "training_return_code": 0
+}=== C. VALIDATION TABLES T04 T05 ===
+<<<BEGIN T04 /data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/T04/transformer_inductive_bias_T04_2026_0902_2127_ep30/validation/model_epoch030/validation_metrics.csv
+basin,NSE
+01022500,0.7799802422523499
+01031500,0.7628998756408691
+01047000,0.7062782049179077
+01052500,0.7293829917907715
+01054200,0.5979533195495605
+01055000,0.6514266729354858
+01057000,0.7333487272262573
+01073000,0.7302696704864502
+01078000,0.7107689380645752
+01123000,0.7596908807754517
+01134500,0.7337995767593384
+01137500,0.6888012290000916
+01139000,0.7173863053321838
+01139800,0.668626070022583
+01142500,0.5712290406227112
+01144000,0.7112457752227783
+01162500,0.7700435519218445
+01169000,0.6946636438369751
+01170100,0.7168921232223511
+01181000,0.6648168563842773
+01187300,0.8006076216697693
+01195100,0.7313554286956787
+01333000,0.46942925453186035
+01350000,0.6116912364959717
+01350080,0.5567666292190552
+01350140,0.6290419101715088
+01365000,0.6953796148300171
+01411300,0.46024084091186523
+01413500,0.5076767206192017
+01414500,0.5413264036178589
+01415000,0.504362940788269
+01423000,0.3669500946998596
+01434025,0.4947589039802551
+01435000,0.6438705921173096
+01439500,0.7178457975387573
+01440000,0.7947061061859131
+01440400,0.6371884346008301
+01451800,0.7057703137397766
+01466500,0.7528570890426636
+01484100,0.8410654664039612
+01487000,0.907311201095581
+01491000,0.8370327353477478
+01510000,0.7240957617759705
+01516500,0.6200664639472961
+01518862,0.6436773538589478
+01532000,0.7812713980674744
+01539000,0.8208591341972351
+01542810,0.7096830010414124
+01543000,0.7966341972351074
+01543500,0.821857750415802
+01544500,0.7735633254051208
+01545600,0.6928671598434448
+01547700,0.599827229976654
+01548500,0.826053261756897
+01549500,0.7618197798728943
+01550000,0.7481368780136108
+01552000,0.7954293489456177
+01552500,0.6646320819854736
+01557500,0.771869957447052
+01567500,0.7759615182876587
+01568000,0.8553690314292908
+01580000,0.6074410676956177
+01583500,0.6008530259132385
+01586610,0.5442522168159485
+01591400,0.4400264024734497
+01594950,0.7794689536094666
+01596500,0.7430284023284912
+01605500,0.6750049591064453
+01606500,0.7375039458274841
+01632000,0.525906503200531
+01632900,0.635322093963623
+01634500,0.6099588871002197
+01638480,0.5250397324562073
+01639500,0.6352554559707642
+01644000,0.8015505075454712
+01664000,0.8097862601280212
+01666500,0.43461179733276367
+01667500,0.7256919145584106
+01669000,0.8445278406143188
+01669520,0.6402686834335327
+02011400,0.8541146516799927
+02013000,0.7647995948791504
+02014000,0.8101796507835388
+02015700,0.6690677404403687
+02016000,0.8064415454864502
+02017500,0.6858850717544556
+02018000,0.7140264511108398
+02027000,0.6662092208862305
+02027500,0.5035780668258667
+02028500,0.7608699798583984
+02038850,0.5516553521156311
+02046000,0.7056360244750977
+02051500,0.7931832075119019
+02053200,0.802268385887146
+02053800,0.7587999105453491
+02055100,0.6263023614883423
+02056900,0.7514040470123291
+02059500,0.7126538157463074
+02064000,0.7743738293647766
+02065500,-0.003091096878051758
+02069700,0.6047407984733582
+02070000,0.5475718975067139
+02074500,0.5905845165252686
+02077200,0.7379335761070251
+02081500,0.6846464276313782
+02082950,0.6882201433181763
+02092500,0.8918853998184204
+02096846,0.5884068012237549
+02102908,0.6917725801467896
+02108000,0.7616842985153198
+02111180,0.659386396408081
+02111500,0.5817339420318604
+02112120,0.48138511180877686
+02112360,0.6357146501541138
+02118500,0.4697161912918091
+02125000,0.8061904907226562
+02128000,0.7544049024581909
+02137727,0.7443910837173462
+02140991,0.7061247825622559
+02143000,0.614596962928772
+02143040,0.5012340545654297
+02149000,0.7054733037948608
+02152100,0.5242609977722168
+02177000,0.6671463847160339
+02178400,0.7730082273483276
+02193340,0.7911471724510193
+02196000,0.8846409916877747
+02198100,0.6419461965560913
+02202600,0.8614195585250854
+02212600,0.6408816576004028
+02215100,0.6785681843757629
+02216180,0.6190314292907715
+02221525,0.5730019807815552
+02231000,0.706484317779541
+02245500,0.5689443349838257
+02246000,0.7797204256057739
+02296500,0.6184529066085815
+02297155,-9.98355484008789
+02297310,-3.439818859100342
+02298123,0.6476430892944336
+02298608,-0.17720186710357666
+02299950,0.5825361013412476
+02300700,-0.01735854148864746
+02342933,0.3872300982475281
+02349900,0.46367543935775757
+02350900,0.8325337171554565
+02361000,0.789119303226471
+02363000,0.6967753171920776
+02369800,0.5748084783554077
+02371500,0.529248058795929
+02372250,0.3799309730529785
+02374500,-0.04806232452392578
+02381600,0.2001645565032959
+02384540,0.5900747179985046
+02395120,0.3361680507659912
+02415000,0.6245139837265015
+02427250,0.6262547969818115
+02430085,0.6059980988502502
+02450250,0.5485506057739258
+02464000,0.7565935850143433
+02464360,0.7292824983596802
+02465493,-0.4518852233886719
+02469800,0.8011443018913269
+02472000,0.8176829814910889
+02472500,0.6511273980140686
+02479155,0.7761273980140686
+02479300,0.7481623888015747
+02479560,0.6594212055206299
+02481000,0.5910447835922241
+02481510,0.7467362880706787
+03010655,0.7661357522010803
+03011800,0.7275030016899109
+03015500,0.7474261522293091
+03021350,0.6900410652160645
+03026500,0.8101804852485657
+03028000,0.8066273331642151
+03049000,0.8627256155014038
+03049800,0.5517991781234741
+03050000,0.8359425663948059
+03069500,0.8546137809753418
+03070500,0.7437372207641602
+03076600,0.6707679033279419
+03078000,0.7370825409889221
+03140000,0.76280277967453
+03144000,0.7672020792961121
+03170000,0.7928949594497681
+03173000,0.7745975255966187
+03180500,0.7711049914360046
+03182500,0.7989535331726074
+03186500,0.749786913394928
+03237280,0.4466444253921509
+03237500,0.6426551938056946
+03238500,0.6514995694160461
+03241500,0.7790091633796692
+03280700,0.7263106107711792
+03281500,0.7734414339065552
+03285000,0.7509734034538269
+03291780,0.6798624992370605
+03338780,0.2270246148109436
+03340800,0.8537447452545166
+03346000,0.7487151622772217
+03364500,0.47956693172454834
+03366500,0.5483841300010681
+03368000,0.7774698734283447
+03384450,0.6487023234367371
+03439000,0.691497802734375
+03455500,0.1809535026550293
+03456500,0.544219970703125
+03460000,0.7500780820846558
+03463300,0.6268993020057678
+03471500,0.6237733364105225
+03473000,0.7699285745620728
+03479000,0.43990856409072876
+03488000,0.7876600623130798
+03498500,0.7624870538711548
+03500000,0.7881461381912231
+03500240,0.4197443723678589
+03504000,0.7015221118927002
+03574500,0.5031687617301941
+03592718,0.020304739475250244
+03604000,0.8410928845405579
+04015330,0.6978521347045898
+04024430,0.45373624563217163
+04027000,0.6350681185722351
+04040500,0.7506322860717773
+04043050,0.7897911667823792
+04045500,0.917741596698761
+04057510,0.8289086818695068
+04057800,0.47082120180130005
+04059500,0.8528522253036499
+04063700,0.6836174726486206
+04074950,0.8266474008560181
+04105700,0.20711183547973633
+04115265,0.7253028154373169
+04122200,0.7958208322525024
+04122500,0.7015778422355652
+04127918,0.7254668474197388
+04127997,0.7446445226669312
+04161580,0.693453311920166
+04185000,0.6941598653793335
+04196800,0.5510947704315186
+04197100,0.605309009552002
+04197170,0.722210168838501
+04213000,0.6216031908988953
+04213075,0.48838794231414795
+04216418,0.689842700958252
+04221000,0.7921355962753296
+04224775,0.7371532917022705
+04233000,0.7432177662849426
+04256000,0.7221903204917908
+04296000,0.6223616600036621
+05057200,0.3240552544593811
+05120500,-22.47301483154297
+05291000,0.2571239471435547
+05362000,0.8002033233642578
+05393500,0.8008934259414673
+05399500,0.7408207654953003
+05408000,0.6001778841018677
+05413500,0.6111880540847778
+05414000,0.3501684069633484
+05444000,0.29161959886550903
+05454000,0.43815863132476807
+05458000,0.5492268204689026
+05466500,0.3034191131591797
+05487980,0.6750725507736206
+05488200,0.6587570905685425
+05489000,0.6174647808074951
+05495000,0.5896044373512268
+05495500,0.3631923794746399
+05501000,0.7112712860107422
+05503800,0.7480146288871765
+05507600,0.6805557608604431
+05508805,0.6981068849563599
+05525500,0.6430583000183105
+05556500,0.6957138776779175
+05584500,-0.12540864944458008
+05591550,0.6649614572525024
+05592050,0.4938839077949524
+05592575,0.656104564666748
+05593575,0.8687417507171631
+05593900,0.6755503416061401
+05595730,0.8568799495697021
+06221400,0.8841209411621094
+06224000,0.913331925868988
+06278300,0.6239280104637146
+06280300,0.8269197940826416
+06289000,0.3583977222442627
+06291500,0.4309542775154114
+06311000,0.5602965950965881
+06332515,0.28247469663619995
+06339100,0.5334429144859314
+06344600,0.05147826671600342
+06350000,-0.35368669033050537
+06352000,0.009621262550354004
+06404000,0.4626706838607788
+06406000,0.05635625123977661
+06409000,-5.844252109527588
+06431500,0.48886948823928833
+06440200,0.4641590714454651
+06447500,0.5456616878509521
+06470800,0.7049726843833923
+06477500,-1.1152489185333252
+06479215,-0.017225265502929688
+06601000,0.10484397411346436
+06614800,0.8306047916412354
+06622700,0.758734405040741
+06623800,0.8505167961120605
+06632400,0.7628263831138611
+06746095,0.655701756477356
+06803510,0.39113539457321167
+06803530,0.31140977144241333
+06814000,0.6678152084350586
+06847900,0.07407903671264648
+06853800,0.171092689037323
+06876700,0.35652416944503784
+06878000,0.7488129734992981
+06879650,0.18657612800598145
+06885500,0.7127636671066284
+06888500,0.733299732208252
+06889200,0.5074343681335449
+06889500,0.5968426465988159
+06892000,0.7973862290382385
+06903400,0.618669867515564
+06906800,0.6927337050437927
+06910800,0.7886642217636108
+06911900,0.7888625264167786
+06917000,0.5831931829452515
+06918460,0.31425946950912476
+06919500,0.787940502166748
+06921070,0.6370513439178467
+06921200,0.6667091846466064
+07057500,0.8952542543411255
+07060710,0.5483725070953369
+07066000,0.8098815083503723
+07083000,0.8334399461746216
+07142300,-0.14678955078125
+07145700,0.7446205615997314
+07167500,0.5091323256492615
+07180500,0.5881713628768921
+07184000,0.6834656596183777
+07195800,-0.18594002723693848
+07196900,0.6797207593917847
+07197000,0.7628938555717468
+07208500,0.550560474395752
+07261000,0.8172446489334106
+07263295,0.5504821538925171
+07291000,0.6178295612335205
+07299670,0.28290224075317383
+07301410,0.06245589256286621
+07315200,0.3023982048034668
+07315700,0.5246331691741943
+07335700,0.4687729477882385
+07340300,0.715111255645752
+07346045,0.7579308152198792
+07359610,0.5546542406082153
+07362100,0.5458693504333496
+07362587,0.4227020740509033
+07375000,0.5986822247505188
+08013000,0.7654301524162292
+08014500,0.3432955741882324
+08023080,0.5679762363433838
+08050800,0.5824911594390869
+08066200,0.7961946129798889
+08066300,0.633368194103241
+08070000,0.5344578623771667
+08070200,0.585734486579895
+08082700,0.1406458020210266
+08086212,0.6560612916946411
+08086290,0.5785529613494873
+08101000,0.5489542484283447
+08103900,0.6070008873939514
+08104900,0.7084238529205322
+08109700,0.40599489212036133
+08150800,-0.7090356349945068
+08158700,0.19130569696426392
+08158810,0.46941959857940674
+08164300,0.42481470108032227
+08164600,0.3814976215362549
+08165300,-37.319400787353516
+08171300,0.4331086277961731
+08175000,0.5319660902023315
+08176900,0.22536343336105347
+08178880,-0.1760118007659912
+08189500,0.3950647711753845
+08190000,-0.9348264932632446
+08190500,-1.8390262126922607
+08194200,-0.714299201965332
+08195000,-0.22660112380981445
+08196000,0.17019498348236084
+08198500,0.5239424705505371
+08200000,0.2660503387451172
+08202700,0.23202455043792725
+08267500,0.07091718912124634
+08269000,0.26204872131347656
+08271000,0.37606602907180786
+08324000,-0.2295072078704834
+08377900,0.7892358303070068
+08378500,0.7245229482650757
+08380500,0.15207427740097046
+09035800,0.8903495073318481
+09035900,0.9421460032463074
+09047700,0.8576453328132629
+09065500,0.9567149877548218
+09066000,0.9123783707618713
+09066200,0.8912782669067383
+09066300,0.8943679332733154
+09081600,0.9134901762008667
+09107000,0.832150936126709
+09210500,0.6399424076080322
+09223000,0.7444475889205933
+09306242,-0.03667569160461426
+09312600,0.5920846462249756
+09352900,0.7360005378723145
+09378170,-0.8479430675506592
+09386900,0.08132350444793701
+09404450,0.5111101865768433
+09430600,0.03564661741256714
+09447800,-0.979341983795166
+09484600,0.10162591934204102
+09492400,0.3026196360588074
+09494000,0.6373040676116943
+09497980,0.4195477366447449
+09505350,-0.6570961475372314
+09505800,0.08289951086044312
+09508300,0.22302454710006714
+09510200,0.5857099890708923
+09512280,0.1609022617340088
+09513780,-0.7162317037582397
+10234500,0.49860692024230957
+10244950,0.09889614582061768
+10259000,0.3894128203392029
+10336645,0.7613891363143921
+10336660,0.9400414824485779
+10343500,0.6031491160392761
+11124500,0.7326574325561523
+11141280,-1.7972488403320312
+11143000,0.18026715517044067
+11148900,0.3227921724319458
+11151300,-2.4153590202331543
+11176400,0.5331723690032959
+11230500,0.8208300471305847
+11237500,0.8474103212356567
+11264500,0.8918246626853943
+11266500,0.9350122213363647
+11284400,0.3772655129432678
+11381500,0.6804237365722656
+11451100,0.7484828233718872
+11468500,0.8209531307220459
+11473900,0.7909179329872131
+11475560,0.530884325504303
+11476600,0.7589294910430908
+11478500,0.6446599960327148
+11480390,0.456365168094635
+11481200,0.7618042230606079
+11482500,0.718124270439148
+11522500,0.7775546312332153
+11523200,0.6899714469909668
+11528700,0.603420615196228
+11532500,0.855755627155304
+12010000,0.861869215965271
+12013500,0.8095804452896118
+12020000,0.29371023178100586
+12025700,0.867969810962677
+12035000,0.8511967658996582
+12040500,0.706720232963562
+12041200,0.6812378168106079
+12048000,0.6404606103897095
+12054000,0.669678807258606
+12056500,0.58632892370224
+12073500,0.6589135527610779
+12082500,0.6768161058425903
+12092000,0.7056442499160767
+12114500,0.6645716428756714
+12115000,0.6955876350402832
+12117000,0.7949883937835693
+12143600,0.6956757307052612
+12144000,0.7435355186462402
+12145500,0.8365782499313354
+12147500,0.7099217176437378
+12167000,0.6448159217834473
+12175500,0.7994858026504517
+12178100,0.709770917892456
+12186000,0.6928659677505493
+12189500,0.6936050653457642
+12375900,0.7429085969924927
+12377150,0.8564228415489197
+12381400,0.8774136900901794
+12383500,0.828193724155426
+12390700,0.7879445552825928
+12411000,0.623752772808075
+12447390,0.7933105230331421
+12451000,0.8447116017341614
+12488500,0.7626021504402161
+13011500,0.9051434993743896
+13011900,0.8313241600990295
+13018300,0.5701724290847778
+13023000,0.897726833820343
+13161500,0.7681783437728882
+13235000,0.7368282079696655
+13240000,0.8749117851257324
+13313000,0.9302844405174255
+13331500,0.7796019315719604
+14020000,0.41976243257522583
+14096850,-0.8014684915542603
+14137000,0.7044386863708496
+14138800,0.7041018009185791
+14138870,0.7482568025588989
+14138900,0.6774468421936035
+14139800,0.7237604260444641
+14141500,0.7089915871620178
+14154500,0.7552376389503479
+14158790,0.6520402431488037
+14166500,0.9079310297966003
+14182500,0.7367098331451416
+14185000,0.7926127910614014
+14185900,0.7767001986503601
+14187000,0.8723578453063965
+14216500,0.6854102611541748
+14222500,0.8337106704711914
+14236200,0.7961105108261108
+14301000,0.9112398624420166
+14303200,0.7825626134872437
+14305500,0.8163319826126099
+14306340,0.809893012046814
+14306500,0.8501582145690918
+14308990,0.7495869398117065
+14309500,0.714387059211731
+14316700,0.5967608690261841
+14325000,0.6769261360168457
+14362250,-0.537867546081543
+14400000,0.8174912333488464
+<<<END T04
+<<<BEGIN T05 /data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/T05/transformer_inductive_bias_T05_2026_0902_2224_ep30/validation/model_epoch030/validation_metrics.csv
+basin,NSE
+01022500,0.7846555709838867
+01031500,0.8037289381027222
+01047000,0.7898401618003845
+01052500,0.8443253040313721
+01054200,0.6838597059249878
+01055000,0.7021788358688354
+01057000,0.8021222352981567
+01073000,0.8182982206344604
+01078000,0.8525474667549133
+01123000,0.6812914609909058
+01134500,0.7640417218208313
+01137500,0.7853740453720093
+01139000,0.7531452178955078
+01139800,0.8174005150794983
+01142500,0.6563729047775269
+01144000,0.7665395736694336
+01162500,0.4957085847854614
+01169000,0.588946521282196
+01170100,0.6197052597999573
+01181000,0.5153615474700928
+01187300,0.6569921970367432
+01195100,0.6410027742385864
+01333000,0.4904118776321411
+01350000,0.6857035756111145
+01350080,0.6811185479164124
+01350140,0.697668194770813
+01365000,0.7617469429969788
+01411300,0.4861736297607422
+01413500,0.7028194069862366
+01414500,0.6673048734664917
+01415000,0.6526957750320435
+01423000,0.7339380383491516
+01434025,0.6556494235992432
+01435000,0.7292084693908691
+01439500,0.7059857249259949
+01440000,0.7232159376144409
+01440400,0.6962917447090149
+01451800,0.7050774097442627
+01466500,0.7665748000144958
+01484100,0.7266504168510437
+01487000,0.9328699111938477
+01491000,0.7536114454269409
+01510000,0.6488119959831238
+01516500,0.643679678440094
+01518862,0.6991792321205139
+01532000,0.7605034708976746
+01539000,0.8525541424751282
+01542810,0.7373784184455872
+01543000,0.8559606671333313
+01543500,0.8804141879081726
+01544500,0.8444163203239441
+01545600,0.7674080729484558
+01547700,0.7131296992301941
+01548500,0.8872165679931641
+01549500,0.7545926570892334
+01550000,0.8147889971733093
+01552000,0.7707955241203308
+01552500,0.6516745090484619
+01557500,0.8157232403755188
+01567500,0.7693364024162292
+01568000,0.8375402688980103
+01580000,0.673858642578125
+01583500,0.5527676343917847
+01586610,0.5326849818229675
+01591400,0.47466087341308594
+01594950,0.7678335905075073
+01596500,0.770643949508667
+01605500,0.6805473566055298
+01606500,0.7327001094818115
+01632000,0.42400437593460083
+01632900,0.5834672451019287
+01634500,0.37851983308792114
+01638480,0.5114325284957886
+01639500,0.6292147636413574
+01644000,0.8130536079406738
+01664000,0.7685045003890991
+01666500,0.646762490272522
+01667500,0.7917405962944031
+01669000,0.7532572746276855
+01669520,0.6358305811882019
+02011400,0.8439912796020508
+02013000,0.6976657509803772
+02014000,0.6251376271247864
+02015700,0.7016825079917908
+02016000,0.8343656659126282
+02017500,0.5654879808425903
+02018000,0.7582725286483765
+02027000,0.6789619326591492
+02027500,0.5373363494873047
+02028500,0.7767857313156128
+02038850,0.5696678161621094
+02046000,0.7461603879928589
+02051500,0.7539085149765015
+02053200,0.7466471195220947
+02053800,0.7748850584030151
+02055100,0.7273037433624268
+02056900,0.7585889101028442
+02059500,0.7175971269607544
+02064000,0.7749768495559692
+02065500,0.28673142194747925
+02069700,0.6148228645324707
+02070000,0.6190643310546875
+02074500,0.5054222345352173
+02077200,0.5661923885345459
+02081500,0.7113360166549683
+02082950,0.7932471036911011
+02092500,0.8713018894195557
+02096846,0.5263709425926208
+02102908,0.7333343029022217
+02108000,0.7888047695159912
+02111180,0.5179399251937866
+02111500,0.47933030128479004
+02112120,0.5321953892707825
+02112360,0.7080854177474976
+02118500,0.5315877199172974
+02125000,0.8463025093078613
+02128000,0.7851884365081787
+02137727,0.7195793986320496
+02140991,0.6950198411941528
+02143000,0.7073555588722229
+02143040,0.5722246170043945
+02149000,0.7189400792121887
+02152100,0.6204414963722229
+02177000,0.39705896377563477
+02178400,0.7547485828399658
+02193340,0.8266919255256653
+02196000,0.8260819315910339
+02198100,0.6402081251144409
+02202600,0.8459216356277466
+02212600,0.6247115731239319
+02215100,0.8218053579330444
+02216180,0.659433126449585
+02221525,0.6118602752685547
+02231000,0.9699428677558899
+02245500,0.3559623956680298
+02246000,0.785746693611145
+02296500,0.7968223094940186
+02297155,-2.774874687194824
+02297310,-2.666656255722046
+02298123,0.6233924031257629
+02298608,-0.5573937892913818
+02299950,0.4760969281196594
+02300700,-0.656838059425354
+02342933,0.2899951934814453
+02349900,0.4738238453865051
+02350900,0.8602348566055298
+02361000,0.5440250635147095
+02363000,0.8233116269111633
+02369800,0.48108744621276855
+02371500,0.0750228762626648
+02372250,-0.44748926162719727
+02374500,0.4369696378707886
+02381600,0.5358004570007324
+02384540,0.6477444171905518
+02395120,0.18409866094589233
+02415000,0.5946499705314636
+02427250,0.7012359499931335
+02430085,0.5775922536849976
+02450250,0.6319675445556641
+02464000,0.7487595081329346
+02464360,0.6348068118095398
+02465493,-1.5611233711242676
+02469800,0.7374746799468994
+02472000,0.81034255027771
+02472500,0.6416014432907104
+02479155,0.6353472471237183
+02479300,0.78093022108078
+02479560,0.6879998445510864
+02481000,0.4091201424598694
+02481510,0.6083039045333862
+03010655,0.7759095430374146
+03011800,0.749884843826294
+03015500,0.7428486347198486
+03021350,0.6126741766929626
+03026500,0.8020819425582886
+03028000,0.8097692131996155
+03049000,0.8358754515647888
+03049800,0.569435715675354
+03050000,0.8141168355941772
+03069500,0.8492303490638733
+03070500,0.76605224609375
+03076600,0.7198376655578613
+03078000,0.7656235098838806
+03140000,0.7989291548728943
+03144000,0.8322370052337646
+03170000,0.6568735837936401
+03173000,0.8346623182296753
+03180500,0.8265473246574402
+03182500,0.8677144646644592
+03186500,0.8456397652626038
+03237280,0.6325111389160156
+03237500,0.5881185531616211
+03238500,0.6357790231704712
+03241500,0.7765507102012634
+03280700,0.7231072187423706
+03281500,0.8110359907150269
+03285000,0.6601723432540894
+03291780,0.5594894886016846
+03338780,0.48092782497406006
+03340800,0.794752836227417
+03346000,0.7243834733963013
+03364500,0.6753517985343933
+03366500,0.5671489238739014
+03368000,0.6746780276298523
+03384450,0.7179116606712341
+03439000,0.7154024839401245
+03455500,0.3800477385520935
+03456500,0.45281535387039185
+03460000,0.7013012170791626
+03463300,0.4618416428565979
+03471500,0.6590367555618286
+03473000,0.8299991488456726
+03479000,0.3998297452926636
+03488000,0.7418185472488403
+03498500,0.7834739089012146
+03500000,0.6635985374450684
+03500240,0.5001596212387085
+03504000,0.6248547434806824
+03574500,0.7270917892456055
+03592718,-0.021622300148010254
+03604000,0.6900419592857361
+04015330,0.7122028470039368
+04024430,0.5806545615196228
+04027000,0.5690666437149048
+04040500,0.8936088681221008
+04043050,0.826008677482605
+04045500,0.7537517547607422
+04057510,0.7350215911865234
+04057800,0.444987952709198
+04059500,0.850821316242218
+04063700,0.7345378398895264
+04074950,0.8118122816085815
+04105700,0.18781590461730957
+04115265,0.6951333284378052
+04122200,0.7622044086456299
+04122500,0.6902021765708923
+04127918,0.541964054107666
+04127997,0.8187835812568665
+04161580,0.7357078194618225
+04185000,0.794192910194397
+04196800,0.5812051892280579
+04197100,0.6928033828735352
+04197170,0.7541706562042236
+04213000,0.6144727468490601
+04213075,0.26065558195114136
+04216418,0.610620379447937
+04221000,0.740553617477417
+04224775,0.7145280838012695
+04233000,0.7834572196006775
+04256000,0.7137327194213867
+04296000,0.6973652839660645
+05057200,0.11733311414718628
+05120500,-45.83317565917969
+05291000,0.33982759714126587
+05362000,0.8297837376594543
+05393500,0.8241402506828308
+05399500,0.8194719552993774
+05408000,0.6820248961448669
+05413500,0.6817049384117126
+05414000,0.4603326916694641
+05444000,0.33649545907974243
+05454000,0.36536163091659546
+05458000,0.6310055255889893
+05466500,0.48145198822021484
+05487980,0.6109025478363037
+05488200,0.5795135498046875
+05489000,0.5414273738861084
+05495000,0.634715735912323
+05495500,0.5045465230941772
+05501000,0.7264708876609802
+05503800,0.8025782108306885
+05507600,0.8384289741516113
+05508805,0.874761164188385
+05525500,0.7857183814048767
+05556500,0.7401916980743408
+05584500,0.22856736183166504
+05591550,0.7261477708816528
+05592050,0.588121771812439
+05592575,0.6295273303985596
+05593575,0.792963981628418
+05593900,0.7362856268882751
+05595730,0.7606208324432373
+06221400,0.7733064889907837
+06224000,0.8902849555015564
+06278300,0.7369400858879089
+06280300,0.8865994811058044
+06289000,0.5980483293533325
+06291500,0.7219774127006531
+06311000,0.6712577939033508
+06332515,0.09485328197479248
+06339100,0.7016637921333313
+06344600,-1.1845755577087402
+06350000,-1.4074578285217285
+06352000,-0.05839359760284424
+06404000,0.29834073781967163
+06406000,-0.012858986854553223
+06409000,-4.57683801651001
+06431500,0.5584918856620789
+06440200,0.434143602848053
+06447500,0.1848086714744568
+06470800,0.773227870464325
+06477500,-1.4565460681915283
+06479215,0.4867899417877197
+06601000,0.0015611052513122559
+06614800,0.8876199126243591
+06622700,0.8352528810501099
+06623800,0.9303529262542725
+06632400,0.8889334201812744
+06746095,0.8525303602218628
+06803510,0.5320377945899963
+06803530,0.6378861665725708
+06814000,0.5929121971130371
+06847900,-0.19280731678009033
+06853800,0.20025110244750977
+06876700,0.3485456109046936
+06878000,0.7374105453491211
+06879650,0.528285801410675
+06885500,0.6606283187866211
+06888500,0.5547202825546265
+06889200,0.772357702255249
+06889500,0.6819694638252258
+06892000,0.7855730652809143
+06903400,0.4927155375480652
+06906800,0.7079736590385437
+06910800,0.8402866125106812
+06911900,0.7657496929168701
+06917000,0.5377494096755981
+06918460,0.16361004114151
+06919500,0.7830637097358704
+06921070,0.6383302211761475
+06921200,0.687564492225647
+07057500,0.8554195165634155
+07060710,0.6253796815872192
+07066000,0.8760746717453003
+07083000,0.9011279344558716
+07142300,0.39832228422164917
+07145700,0.8227864503860474
+07167500,0.6732399463653564
+07180500,0.7128856182098389
+07184000,0.5520417094230652
+07195800,0.31317174434661865
+07196900,0.6856504678726196
+07197000,0.7733221054077148
+07208500,0.6722887754440308
+07261000,0.9022136330604553
+07263295,0.7306580543518066
+07291000,0.6134647130966187
+07299670,0.24760878086090088
+07301410,-0.15873980522155762
+07315200,0.44180727005004883
+07315700,0.5015779137611389
+07335700,0.6120835542678833
+07340300,0.8034189939498901
+07346045,0.5895869135856628
+07359610,0.7734402418136597
+07362100,0.47700607776641846
+07362587,0.5063291788101196
+07375000,0.5886499285697937
+08013000,0.74317467212677
+08014500,0.26388442516326904
+08023080,0.30641692876815796
+08050800,0.6597914695739746
+08066200,0.7552738189697266
+08066300,0.7786432504653931
+08070000,0.5525704622268677
+08070200,0.4919753670692444
+08082700,0.24474942684173584
+08086212,0.3444972634315491
+08086290,0.4534072279930115
+08101000,0.44734519720077515
+08103900,0.5782747268676758
+08104900,0.20572572946548462
+08109700,0.5924163460731506
+08150800,0.21571844816207886
+08158700,0.6203517913818359
+08158810,0.4851553440093994
+08164300,0.5973097681999207
+08164600,0.3922308683395386
+08165300,-5.9921135902404785
+08171300,0.6381353139877319
+08175000,0.30382513999938965
+08176900,0.12257063388824463
+08178880,-0.016495585441589355
+08189500,-0.4206351041793823
+08190000,-0.09658265113830566
+08190500,-0.2189112901687622
+08194200,0.24148452281951904
+08195000,0.2369680404663086
+08196000,0.07275998592376709
+08198500,0.4791114926338196
+08200000,0.5134762525558472
+08202700,0.7042845487594604
+08267500,0.3115415573120117
+08269000,0.20806586742401123
+08271000,0.6015186309814453
+08324000,0.48433899879455566
+08377900,0.8330783843994141
+08378500,0.750663161277771
+08380500,0.32199788093566895
+09035800,0.4988871216773987
+09035900,0.8784577250480652
+09047700,0.3289477229118347
+09065500,0.906484842300415
+09066000,0.9067139625549316
+09066200,0.8869666457176208
+09066300,0.8166240453720093
+09081600,0.9203677773475647
+09107000,0.8852596879005432
+09210500,0.33280104398727417
+09223000,0.7367229461669922
+09306242,-2.3099453449249268
+09312600,0.6197047233581543
+09352900,0.75257807970047
+09378170,0.5527216196060181
+09386900,-0.04724287986755371
+09404450,-0.48718929290771484
+09430600,0.04320633411407471
+09447800,-4.093417644500732
+09484600,-0.18170714378356934
+09492400,0.3457314372062683
+09494000,0.3373759388923645
+09497980,0.7400370836257935
+09505350,0.4052959680557251
+09505800,0.3151978850364685
+09508300,0.2690618634223938
+09510200,0.4320470094680786
+09512280,0.37805503606796265
+09513780,0.14311951398849487
+10234500,0.6001032590866089
+10244950,-0.632121205329895
+10259000,0.4215672016143799
+10336645,0.741098940372467
+10336660,0.9145516157150269
+10343500,0.547992467880249
+11124500,0.5416810512542725
+11141280,-1.6508510112762451
+11143000,0.16545134782791138
+11148900,0.4470493793487549
+11151300,0.3858700394630432
+11176400,0.4935877323150635
+11230500,0.5788460969924927
+11237500,0.8707678318023682
+11264500,0.9259921312332153
+11266500,0.9132433533668518
+11284400,0.5381425619125366
+11381500,0.6425663232803345
+11451100,0.7408172488212585
+11468500,0.8860504031181335
+11473900,0.6556512117385864
+11475560,0.6719741821289062
+11476600,0.7901902198791504
+11478500,0.6591203212738037
+11480390,0.5373055934906006
+11481200,0.8112565875053406
+11482500,0.8386164307594299
+11522500,0.6274274587631226
+11523200,0.6569159030914307
+11528700,0.6176242232322693
+11532500,0.8863560557365417
+12010000,0.8605028986930847
+12013500,0.8319103121757507
+12020000,0.28343653678894043
+12025700,0.8209100961685181
+12035000,0.8123306632041931
+12040500,0.7264416813850403
+12041200,0.7266891002655029
+12048000,0.7661519050598145
+12054000,0.7151888012886047
+12056500,0.6205039024353027
+12073500,0.7146059274673462
+12082500,0.6664887070655823
+12092000,0.6052083373069763
+12114500,0.5470232963562012
+12115000,0.6425162553787231
+12117000,0.7473948001861572
+12143600,0.702156662940979
+12144000,0.7463809847831726
+12145500,0.8650017976760864
+12147500,0.7401777505874634
+12167000,0.6507458686828613
+12175500,0.7851606607437134
+12178100,0.7292987108230591
+12186000,0.7345379590988159
+12189500,0.7437323927879333
+12375900,0.7697207927703857
+12377150,0.9057835340499878
+12381400,0.8335769176483154
+12383500,0.90412437915802
+12390700,0.7946569323539734
+12411000,0.6602843999862671
+12447390,0.48192501068115234
+12451000,0.88718181848526
+12488500,0.7179949283599854
+13011500,0.8856076002120972
+13011900,0.8362345099449158
+13018300,0.4710208773612976
+13023000,0.8395875692367554
+13161500,0.7935707569122314
+13235000,0.849368691444397
+13240000,0.8734756708145142
+13313000,0.8649375438690186
+13331500,0.7738927602767944
+14020000,0.5968317985534668
+14096850,-0.1306840181350708
+14137000,0.7447439432144165
+14138800,0.7343286275863647
+14138870,0.7772013545036316
+14138900,0.719550609588623
+14139800,0.7513903379440308
+14141500,0.7721500992774963
+14154500,0.7903479337692261
+14158790,0.6607217788696289
+14166500,0.8883525729179382
+14182500,0.6494977474212646
+14185000,0.839005708694458
+14185900,0.8026386499404907
+14187000,0.8447622060775757
+14216500,0.5971795320510864
+14222500,0.8100632429122925
+14236200,0.7513520121574402
+14301000,0.9082416296005249
+14303200,0.7339336276054382
+14305500,0.7827661037445068
+14306340,0.8161972761154175
+14306500,0.8837454319000244
+14308990,0.8244420289993286
+14309500,0.7265844345092773
+14316700,0.7421241402626038
+14325000,0.6577845811843872
+14362250,0.43534690141677856
+14400000,0.7843348979949951
+<<<END T05
+ID32_WATCH_SEQ6_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T06:09:03+0800
