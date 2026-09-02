@@ -1,0 +1,1006 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=62
+### host=login4
+### started=2026-09-02T19:29:57+0800
+### ---------- output ----------
+=== SNAPSHOT_TIME ===
+2026-09-02T19:29:57+0800
+=== FILTER_ARTIFACTS ===
+2994|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001/best_filter_checkpoint.pt
+2994|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001/best_filter_checkpoint.pt
+2994|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001/best_filter_checkpoint.pt
+=== TRAINING_SUMMARY ===
+SUMMARY|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001/summary.json
+{
+  "best_epoch": 2,
+  "best_selection_mae_m": 0.08745786170628896,
+  "completed_epoch": 6,
+  "data_access_audit": {
+    "astronomical_tide_model_open_count": 1,
+    "boundary_target_bytes_read": 0,
+    "boundary_target_rows_parsed": 0,
+    "boundary_target_values_loaded": 0,
+    "bytes_read_by_path": {
+      "dataset_config.json": 2854,
+      "realtime_features/datong_realtime_features.csv": 4701303,
+      "realtime_features/jiangyin_realtime_features.csv": 4673156,
+      "realtime_features/nanjing_realtime_features.csv": 4673779,
+      "realtime_features/wusongkou_realtime_features.csv": 4671049,
+      "realtime_features/xuliujing_realtime_features.csv": 4673755,
+      "realtime_features/zhenjiang_realtime_features.csv": 4703128,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 4674038,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 4674734,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 4674687,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 4703632
+    },
+    "development_feature_bytes_read": 0,
+    "development_feature_rows_parsed": 0,
+    "development_feature_values_loaded": 0,
+    "development_target_bytes_read": 0,
+    "development_target_rows_parsed": 0,
+    "development_target_values_loaded": 0,
+    "heldout_target_bytes_read": 0,
+    "heldout_target_rows_parsed": 0,
+    "heldout_target_values_loaded": 0,
+    "opened_paths": [
+      "dataset_config.json",
+      "realtime_features/datong_realtime_features.csv",
+      "realtime_features/jiangyin_realtime_features.csv",
+      "realtime_features/nanjing_realtime_features.csv",
+      "realtime_features/wusongkou_realtime_features.csv",
+      "realtime_features/xuliujing_realtime_features.csv",
+      "realtime_features/zhenjiang_realtime_features.csv",
+      "retrospective_targets/jiangyin_retrospective_targets.csv",
+      "retrospective_targets/nanjing_retrospective_targets.csv",
+      "retrospective_targets/xuliujing_retrospective_targets.csv",
+      "retrospective_targets/zhenjiang_retrospective_targets.csv"
+    ],
+    "rows_parsed_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52584,
+      "realtime_features/jiangyin_realtime_features.csv": 52584,
+      "realtime_features/nanjing_realtime_features.csv": 52584,
+      "realtime_features/wusongkou_realtime_features.csv": 52584,
+      "realtime_features/xuliujing_realtime_features.csv": 52584,
+      "realtime_features/zhenjiang_realtime_features.csv": 52584,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52584,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52584,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52584,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52584
+    },
+    "target_rows_by_period": {
+      "boundary_target": 0,
+      "development_gate": 0,
+      "heldout_or_later": 0,
+      "selection": 35040,
+      "training": 175296
+    },
+    "values_loaded_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52497,
+      "realtime_features/jiangyin_realtime_features.csv": 52430,
+      "realtime_features/nanjing_realtime_features.csv": 52457,
+      "realtime_features/wusongkou_realtime_features.csv": 52068,
+      "realtime_features/xuliujing_realtime_features.csv": 52496,
+      "realtime_features/zhenjiang_realtime_features.csv": 52534,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52418,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52452,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52496,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52534
+    }
+  },
+  "schema_version": 1,
+  "seed": 17,
+  "station_specific_checkpoint_count": 0,
+  "status": "complete_2022_selected_training",
+  "training_cells_per_base_sample": 552,
+  "training_selection_input_manifest_sha256": "4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c"
+}
+
+SUMMARY|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001/summary.json
+{
+  "best_epoch": 1,
+  "best_selection_mae_m": 0.08672173441800762,
+  "completed_epoch": 5,
+  "data_access_audit": {
+    "astronomical_tide_model_open_count": 1,
+    "boundary_target_bytes_read": 0,
+    "boundary_target_rows_parsed": 0,
+    "boundary_target_values_loaded": 0,
+    "bytes_read_by_path": {
+      "dataset_config.json": 2854,
+      "realtime_features/datong_realtime_features.csv": 4701303,
+      "realtime_features/jiangyin_realtime_features.csv": 4673156,
+      "realtime_features/nanjing_realtime_features.csv": 4673779,
+      "realtime_features/wusongkou_realtime_features.csv": 4671049,
+      "realtime_features/xuliujing_realtime_features.csv": 4673755,
+      "realtime_features/zhenjiang_realtime_features.csv": 4703128,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 4674038,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 4674734,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 4674687,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 4703632
+    },
+    "development_feature_bytes_read": 0,
+    "development_feature_rows_parsed": 0,
+    "development_feature_values_loaded": 0,
+    "development_target_bytes_read": 0,
+    "development_target_rows_parsed": 0,
+    "development_target_values_loaded": 0,
+    "heldout_target_bytes_read": 0,
+    "heldout_target_rows_parsed": 0,
+    "heldout_target_values_loaded": 0,
+    "opened_paths": [
+      "dataset_config.json",
+      "realtime_features/datong_realtime_features.csv",
+      "realtime_features/jiangyin_realtime_features.csv",
+      "realtime_features/nanjing_realtime_features.csv",
+      "realtime_features/wusongkou_realtime_features.csv",
+      "realtime_features/xuliujing_realtime_features.csv",
+      "realtime_features/zhenjiang_realtime_features.csv",
+      "retrospective_targets/jiangyin_retrospective_targets.csv",
+      "retrospective_targets/nanjing_retrospective_targets.csv",
+      "retrospective_targets/xuliujing_retrospective_targets.csv",
+      "retrospective_targets/zhenjiang_retrospective_targets.csv"
+    ],
+    "rows_parsed_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52584,
+      "realtime_features/jiangyin_realtime_features.csv": 52584,
+      "realtime_features/nanjing_realtime_features.csv": 52584,
+      "realtime_features/wusongkou_realtime_features.csv": 52584,
+      "realtime_features/xuliujing_realtime_features.csv": 52584,
+      "realtime_features/zhenjiang_realtime_features.csv": 52584,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52584,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52584,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52584,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52584
+    },
+    "target_rows_by_period": {
+      "boundary_target": 0,
+      "development_gate": 0,
+      "heldout_or_later": 0,
+      "selection": 35040,
+      "training": 175296
+    },
+    "values_loaded_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52497,
+      "realtime_features/jiangyin_realtime_features.csv": 52430,
+      "realtime_features/nanjing_realtime_features.csv": 52457,
+      "realtime_features/wusongkou_realtime_features.csv": 52068,
+      "realtime_features/xuliujing_realtime_features.csv": 52496,
+      "realtime_features/zhenjiang_realtime_features.csv": 52534,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52418,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52452,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52496,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52534
+    }
+  },
+  "schema_version": 1,
+  "seed": 29,
+  "station_specific_checkpoint_count": 0,
+  "status": "complete_2022_selected_training",
+  "training_cells_per_base_sample": 552,
+  "training_selection_input_manifest_sha256": "4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c"
+}
+
+SUMMARY|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001/summary.json
+{
+  "best_epoch": 1,
+  "best_selection_mae_m": 0.08853771250622687,
+  "completed_epoch": 5,
+  "data_access_audit": {
+    "astronomical_tide_model_open_count": 1,
+    "boundary_target_bytes_read": 0,
+    "boundary_target_rows_parsed": 0,
+    "boundary_target_values_loaded": 0,
+    "bytes_read_by_path": {
+      "dataset_config.json": 2854,
+      "realtime_features/datong_realtime_features.csv": 4701303,
+      "realtime_features/jiangyin_realtime_features.csv": 4673156,
+      "realtime_features/nanjing_realtime_features.csv": 4673779,
+      "realtime_features/wusongkou_realtime_features.csv": 4671049,
+      "realtime_features/xuliujing_realtime_features.csv": 4673755,
+      "realtime_features/zhenjiang_realtime_features.csv": 4703128,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 4674038,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 4674734,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 4674687,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 4703632
+    },
+    "development_feature_bytes_read": 0,
+    "development_feature_rows_parsed": 0,
+    "development_feature_values_loaded": 0,
+    "development_target_bytes_read": 0,
+    "development_target_rows_parsed": 0,
+    "development_target_values_loaded": 0,
+    "heldout_target_bytes_read": 0,
+    "heldout_target_rows_parsed": 0,
+    "heldout_target_values_loaded": 0,
+    "opened_paths": [
+      "dataset_config.json",
+      "realtime_features/datong_realtime_features.csv",
+      "realtime_features/jiangyin_realtime_features.csv",
+      "realtime_features/nanjing_realtime_features.csv",
+      "realtime_features/wusongkou_realtime_features.csv",
+      "realtime_features/xuliujing_realtime_features.csv",
+      "realtime_features/zhenjiang_realtime_features.csv",
+      "retrospective_targets/jiangyin_retrospective_targets.csv",
+      "retrospective_targets/nanjing_retrospective_targets.csv",
+      "retrospective_targets/xuliujing_retrospective_targets.csv",
+      "retrospective_targets/zhenjiang_retrospective_targets.csv"
+    ],
+    "rows_parsed_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52584,
+      "realtime_features/jiangyin_realtime_features.csv": 52584,
+      "realtime_features/nanjing_realtime_features.csv": 52584,
+      "realtime_features/wusongkou_realtime_features.csv": 52584,
+      "realtime_features/xuliujing_realtime_features.csv": 52584,
+      "realtime_features/zhenjiang_realtime_features.csv": 52584,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52584,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52584,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52584,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52584
+    },
+    "target_rows_by_period": {
+      "boundary_target": 0,
+      "development_gate": 0,
+      "heldout_or_later": 0,
+      "selection": 35040,
+      "training": 175296
+    },
+    "values_loaded_by_path": {
+      "realtime_features/datong_realtime_features.csv": 52497,
+      "realtime_features/jiangyin_realtime_features.csv": 52430,
+      "realtime_features/nanjing_realtime_features.csv": 52457,
+      "realtime_features/wusongkou_realtime_features.csv": 52068,
+      "realtime_features/xuliujing_realtime_features.csv": 52496,
+      "realtime_features/zhenjiang_realtime_features.csv": 52534,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 52418,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 52452,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 52496,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 52534
+    }
+  },
+  "schema_version": 1,
+  "seed": 43,
+  "station_specific_checkpoint_count": 0,
+  "status": "complete_2022_selected_training",
+  "training_cells_per_base_sample": 552,
+  "training_selection_input_manifest_sha256": "4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c"
+}
+
+=== TRAINING_HISTORY ===
+HISTORY|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001/training_history.json
+[
+  {
+    "epoch": 1,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.1515744192722937,
+    "training_smooth_absolute_error_m": 0.2728459834143906
+  },
+  {
+    "epoch": 2,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.12755728088336396,
+    "training_smooth_absolute_error_m": 0.07520050912572786
+  },
+  {
+    "epoch": 3,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.11415639700400404,
+    "training_smooth_absolute_error_m": 0.0641392457725772
+  },
+  {
+    "epoch": 4,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.11133484244932702,
+    "training_smooth_absolute_error_m": 0.05876639698497927
+  },
+  {
+    "epoch": 5,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.10601141788028803,
+    "training_smooth_absolute_error_m": 0.05493265817481219
+  },
+  {
+    "epoch": 6,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.10616018482209502,
+    "training_smooth_absolute_error_m": 0.052972475647281234
+  },
+  {
+    "epoch": 7,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.11185517087603193,
+    "training_smooth_absolute_error_m": 0.05103964653082008
+  },
+  {
+    "epoch": 8,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.0999103975624227,
+    "training_smooth_absolute_error_m": 0.049909518584244965
+  },
+  {
+    "epoch": 9,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09908115336325317,
+    "training_smooth_absolute_error_m": 0.04911964265121647
+  },
+  {
+    "epoch": 10,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09888874675671963,
+    "training_smooth_absolute_error_m": 0.04775715742470359
+  },
+  {
+    "epoch": 11,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.0983005717167187,
+    "training_smooth_absolute_error_m": 0.04681517424214792
+  },
+  {
+    "epoch": 12,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.10484826717170408,
+    "training_smooth_absolute_error_m": 0.045954669152741476
+  },
+  {
+    "epoch": 13,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.10157291727431755,
+    "training_smooth_absolute_error_m": 0.044960809493151094
+  },
+  {
+    "epoch": 14,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09373216158599003,
+    "training_smooth_absolute_error_m": 0.04369442513579765
+  },
+  {
+    "epoch": 15,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.09802526046080262,
+    "training_smooth_absolute_error_m": 0.04310155858370282
+  },
+  {
+    "epoch": 16,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.09388193424628703,
+    "training_smooth_absolute_error_m": 0.042483808637259965
+  },
+  {
+    "epoch": 17,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09153212269420742,
+    "training_smooth_absolute_error_m": 0.04157122635445025
+  },
+  {
+    "epoch": 18,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09114403796563263,
+    "training_smooth_absolute_error_m": 0.04086847657343984
+  },
+  {
+    "epoch": 19,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.08814236923187765,
+    "training_smooth_absolute_error_m": 0.04037936969086198
+  },
+  {
+    "epoch": 20,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.08651519134293928,
+    "training_smooth_absolute_error_m": 0.03979558072380452
+  },
+  {
+    "epoch": 21,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.08579720141105439,
+    "training_smooth_absolute_error_m": 0.03948639824729152
+  },
+  {
+    "epoch": 22,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.08840848453237908,
+    "training_smooth_absolute_error_m": 0.03888036553731681
+  },
+  {
+    "epoch": 23,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.08730023128405746,
+    "training_smooth_absolute_error_m": 0.03832115343652962
+  },
+  {
+    "epoch": 24,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.08606292981860755,
+    "training_smooth_absolute_error_m": 0.037717053757837446
+  },
+  {
+    "epoch": 25,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.08847668189683612,
+    "training_smooth_absolute_error_m": 0.03755505763421261
+  }
+]
+HISTORY|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s29/attempt_001/training_history.json
+[
+  {
+    "epoch": 1,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.146502321331433,
+    "training_smooth_absolute_error_m": 0.26678618552260114
+  },
+  {
+    "epoch": 2,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.12539978278968733,
+    "training_smooth_absolute_error_m": 0.07372136060018657
+  },
+  {
+    "epoch": 3,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.11881896707903006,
+    "training_smooth_absolute_error_m": 0.06450938796457573
+  },
+  {
+    "epoch": 4,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.113767001324894,
+    "training_smooth_absolute_error_m": 0.06014330774394491
+  },
+  {
+    "epoch": 5,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.10904151000026327,
+    "training_smooth_absolute_error_m": 0.0562313957211448
+  },
+  {
+    "epoch": 6,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.10671011903800952,
+    "training_smooth_absolute_error_m": 0.0535024024606277
+  },
+  {
+    "epoch": 7,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.10417144840094192,
+    "training_smooth_absolute_error_m": 0.05178382269233715
+  },
+  {
+    "epoch": 8,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.10436921524477959,
+    "training_smooth_absolute_error_m": 0.050216501786006736
+  },
+  {
+    "epoch": 9,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.10020070144755845,
+    "training_smooth_absolute_error_m": 0.048911676571374685
+  },
+  {
+    "epoch": 10,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.10121219105815857,
+    "training_smooth_absolute_error_m": 0.047847354858193754
+  },
+  {
+    "epoch": 11,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.0977552350487173,
+    "training_smooth_absolute_error_m": 0.04656764935059231
+  },
+  {
+    "epoch": 12,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.0951260073151365,
+    "training_smooth_absolute_error_m": 0.0458465385587231
+  },
+  {
+    "epoch": 13,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.09559396586235294,
+    "training_smooth_absolute_error_m": 0.04517334746422829
+  },
+  {
+    "epoch": 14,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09454142699590162,
+    "training_smooth_absolute_error_m": 0.04396689735373121
+  },
+  {
+    "epoch": 15,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09409530293312435,
+    "training_smooth_absolute_error_m": 0.043172895462644634
+  },
+  {
+    "epoch": 16,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09376639289880963,
+    "training_smooth_absolute_error_m": 0.04271534391895707
+  },
+  {
+    "epoch": 17,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09235164705787241,
+    "training_smooth_absolute_error_m": 0.04202540849198329
+  },
+  {
+    "epoch": 18,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.09665828820175126,
+    "training_smooth_absolute_error_m": 0.041593873258433875
+  },
+  {
+    "epoch": 19,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09071925029485822,
+    "training_smooth_absolute_error_m": 0.04079688545241847
+  },
+  {
+    "epoch": 20,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.09113979152053038,
+    "training_smooth_absolute_error_m": 0.04033294865282328
+  },
+  {
+    "epoch": 21,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.08906432762571102,
+    "training_smooth_absolute_error_m": 0.03973387614686683
+  },
+  {
+    "epoch": 22,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.09156453019476296,
+    "training_smooth_absolute_error_m": 0.03936558040008554
+  },
+  {
+    "epoch": 23,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.08505393614029735,
+    "training_smooth_absolute_error_m": 0.03896824909328862
+  },
+  {
+    "epoch": 24,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.08931312948631404,
+    "training_smooth_absolute_error_m": 0.038385304358539304
+  },
+  {
+    "epoch": 25,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.0917343511146938,
+    "training_smooth_absolute_error_m": 0.03748840054594023
+  },
+  {
+    "epoch": 26,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.08534067789088387,
+    "training_smooth_absolute_error_m": 0.03776383058537588
+  },
+  {
+    "epoch": 27,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.08599851491684915,
+    "training_smooth_absolute_error_m": 0.03682831412441577
+  }
+]
+HISTORY|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s43/attempt_001/training_history.json
+[
+  {
+    "epoch": 1,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.15222666029928553,
+    "training_smooth_absolute_error_m": 0.2815670235590731
+  },
+  {
+    "epoch": 2,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.130187258412509,
+    "training_smooth_absolute_error_m": 0.07732732500542604
+  },
+  {
+    "epoch": 3,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.11444640331524625,
+    "training_smooth_absolute_error_m": 0.06349678816814369
+  },
+  {
+    "epoch": 4,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.10963807735861969,
+    "training_smooth_absolute_error_m": 0.05759419020552649
+  },
+  {
+    "epoch": 5,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.10732164854926775,
+    "training_smooth_absolute_error_m": 0.05471790918603638
+  },
+  {
+    "epoch": 6,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.10454396895212019,
+    "training_smooth_absolute_error_m": 0.05245989458865198
+  },
+  {
+    "epoch": 7,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.10273485651019361,
+    "training_smooth_absolute_error_m": 0.05162942406183905
+  },
+  {
+    "epoch": 8,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.100442768588921,
+    "training_smooth_absolute_error_m": 0.0495717659528649
+  },
+  {
+    "epoch": 9,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.10188559069863229,
+    "training_smooth_absolute_error_m": 0.04832937651151471
+  },
+  {
+    "epoch": 10,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09723707716100062,
+    "training_smooth_absolute_error_m": 0.04691656451762638
+  },
+  {
+    "epoch": 11,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09626231041942335,
+    "training_smooth_absolute_error_m": 0.04621522503713746
+  },
+  {
+    "epoch": 12,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09518265145913533,
+    "training_smooth_absolute_error_m": 0.045740082562305426
+  },
+  {
+    "epoch": 13,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.09672666369637908,
+    "training_smooth_absolute_error_m": 0.04423848329815124
+  },
+  {
+    "epoch": 14,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09314992544261091,
+    "training_smooth_absolute_error_m": 0.04357636083611288
+  },
+  {
+    "epoch": 15,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.09419057276240336,
+    "training_smooth_absolute_error_m": 0.04290010591457547
+  },
+  {
+    "epoch": 16,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09181865431448938,
+    "training_smooth_absolute_error_m": 0.04205011654975103
+  },
+  {
+    "epoch": 17,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.09149487086570837,
+    "training_smooth_absolute_error_m": 0.041698944200859296
+  },
+  {
+    "epoch": 18,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.08816035666726761,
+    "training_smooth_absolute_error_m": 0.04078505506287993
+  },
+  {
+    "epoch": 19,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.09208658201817176,
+    "training_smooth_absolute_error_m": 0.040798695093914095
+  },
+  {
+    "epoch": 20,
+    "selected_as_best": true,
+    "selection_mean_absolute_error_m": 0.08645389424664433,
+    "training_smooth_absolute_error_m": 0.03993512005966405
+  },
+  {
+    "epoch": 21,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.08894109296157922,
+    "training_smooth_absolute_error_m": 0.039482456986251156
+  },
+  {
+    "epoch": 22,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.08753911044628102,
+    "training_smooth_absolute_error_m": 0.03942230831753675
+  },
+  {
+    "epoch": 23,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.09142848977258032,
+    "training_smooth_absolute_error_m": 0.03863739148610778
+  },
+  {
+    "epoch": 24,
+    "selected_as_best": false,
+    "selection_mean_absolute_error_m": 0.08657728043277707,
+    "training_smooth_absolute_error_m": 0.03834620241128155
+  }
+]
+HISTORY|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001/training_history.json
+{
+  "epochs": [
+    {
+      "best_epoch_after": 1,
+      "epoch": 1,
+      "epoch_seconds": 1386.9513871595263,
+      "selected_as_best": true,
+      "selection_absolute_error_sum_m": 393362.7786446362,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08758772485603353,
+      "training_absolute_error_sum_m": 1579949.5516753092,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07271734581659903
+    },
+    {
+      "best_epoch_after": 2,
+      "epoch": 2,
+      "epoch_seconds": 1356.9585610330105,
+      "selected_as_best": true,
+      "selection_absolute_error_sum_m": 392779.5538889865,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08745786170628896,
+      "training_absolute_error_sum_m": 1574590.2564901535,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07247068368685003
+    },
+    {
+      "best_epoch_after": 2,
+      "epoch": 3,
+      "epoch_seconds": 1367.3242309093475,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 392593.52548105636,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08741643987917726,
+      "training_absolute_error_sum_m": 1573105.4765864667,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.0724023465341837
+    },
+    {
+      "best_epoch_after": 2,
+      "epoch": 4,
+      "epoch_seconds": 1375.7310179024935,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 392504.38253726973,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08739659095584967,
+      "training_absolute_error_sum_m": 1572646.9534842332,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07238124295973435
+    },
+    {
+      "best_epoch_after": 2,
+      "epoch": 5,
+      "epoch_seconds": 1382.3373886421323,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 392490.7691496736,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08739355974468313,
+      "training_absolute_error_sum_m": 1572400.1647730903,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07236988448310908
+    },
+    {
+      "best_epoch_after": 2,
+      "epoch": 6,
+      "epoch_seconds": 1388.640142288059,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 392423.0622780251,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08737848386265575,
+      "training_absolute_error_sum_m": 1572247.3440198202,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07236285089171896
+    }
+  ]
+}
+
+HISTORY|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001/training_history.json
+{
+  "epochs": [
+    {
+      "best_epoch_after": 1,
+      "epoch": 1,
+      "epoch_seconds": 1378.5282165929675,
+      "selected_as_best": true,
+      "selection_absolute_error_sum_m": 389473.55323615036,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08672173441800762,
+      "training_absolute_error_sum_m": 1593083.9596927974,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.0733218583397307
+    },
+    {
+      "best_epoch_after": 1,
+      "epoch": 2,
+      "epoch_seconds": 1391.098499957472,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 390089.21558297693,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08685882025115094,
+      "training_absolute_error_sum_m": 1583784.9090268551,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07289386854580064
+    },
+    {
+      "best_epoch_after": 1,
+      "epoch": 3,
+      "epoch_seconds": 1398.2936048433185,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 390100.544925469,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.0868613428877268,
+      "training_absolute_error_sum_m": 1582416.5534397436,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07283088983466234
+    },
+    {
+      "best_epoch_after": 1,
+      "epoch": 4,
+      "epoch_seconds": 1403.0360808633268,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 390174.33462423284,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08687777319629542,
+      "training_absolute_error_sum_m": 1581857.980279528,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07280518144567473
+    },
+    {
+      "best_epoch_after": 1,
+      "epoch": 5,
+      "epoch_seconds": 1409.36901274696,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 390242.5213651067,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08689295592791803,
+      "training_absolute_error_sum_m": 1581458.054009179,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.0727867747966325
+    }
+  ]
+}
+
+HISTORY|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001/training_history.json
+{
+  "epochs": [
+    {
+      "best_epoch_after": 1,
+      "epoch": 1,
+      "epoch_seconds": 1408.381148789078,
+      "selected_as_best": true,
+      "selection_absolute_error_sum_m": 397629.24158076535,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08853771250622687,
+      "training_absolute_error_sum_m": 1602450.6289897065,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07375296028832826
+    },
+    {
+      "best_epoch_after": 1,
+      "epoch": 2,
+      "epoch_seconds": 1343.5697164349258,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 397688.5303280117,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08855091397510699,
+      "training_absolute_error_sum_m": 1600222.2917134454,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07365040082866572
+    },
+    {
+      "best_epoch_after": 1,
+      "epoch": 3,
+      "epoch_seconds": 1329.9859077446163,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 397816.9260697732,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08857950308295508,
+      "training_absolute_error_sum_m": 1599368.483860363,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07361110423160179
+    },
+    {
+      "best_epoch_after": 1,
+      "epoch": 4,
+      "epoch_seconds": 1328.4626144766808,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 397987.5333631493,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08861749118320733,
+      "training_absolute_error_sum_m": 1598951.2263694257,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07359189991129239
+    },
+    {
+      "best_epoch_after": 1,
+      "epoch": 5,
+      "epoch_seconds": 1328.491137176752,
+      "selected_as_best": false,
+      "selection_absolute_error_sum_m": 397945.7069631662,
+      "selection_cell_count": 4491072,
+      "selection_mae_m": 0.08860817795020125,
+      "training_absolute_error_sum_m": 1598706.70629403,
+      "training_cell_count": 21727272,
+      "training_mae_m": 0.07358064584886818
+    }
+  ]
+}
+
+=== GRADIENT_ZERO_SUMMARY ===
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001/gradient_history.json|batch_rows=7386
+  epoch=1 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=2 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=3 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=4 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=5 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=6 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001/gradient_history.json|batch_rows=6155
+  epoch=1 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=2 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=3 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=4 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=5 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001/gradient_history.json|batch_rows=6155
+  epoch=1 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=2 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=3 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=4 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+  epoch=5 batches=1231 zero_grad_of_38 min=0 max=0 mean=0.00
+=== LEARNED_Q_AND_R ===
+<stdin>:10: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+checkpoint_count=3 torch=2.4.0
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001/best_filter_checkpoint.pt
+  seed=17 epoch=2 selection_mae_m=0.08745786170628896
+  Q_dim=32 initial_sd=0.031623
+  Q_sd=0.023737, 0.067150, 0.013570, 0.013491, 0.021972, 0.035878, 0.021778, 0.024840, 0.012987, 0.032913, 0.013851, 0.118154, 0.019047, 0.018522, 0.032281, 0.018049, 0.014197, 0.014546, 0.031598, 0.024412, 0.017912, 0.029991, 0.020153, 0.013471, 0.012819, 0.013936, 0.016144, 0.032240, 0.168906, 0.034642, 0.023189, 0.057413
+  Q_sd_over_initial min=0.4054 max=5.3413 mean=1.0018
+  Q_at_variance_floor_count=0
+  R_dim=6 initial_sd=0.100000
+  R_sd=0.178968, 0.127906, 0.133925, 0.188962, 0.042057, 0.081877
+  R_sd_over_initial min=0.4206 max=1.8896 mean=1.2562
+  R_at_variance_floor_count=0
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001/best_filter_checkpoint.pt
+  seed=29 epoch=1 selection_mae_m=0.08672173441800762
+  Q_dim=32 initial_sd=0.031623
+  Q_sd=0.038168, 0.020865, 0.029413, 0.015631, 0.028093, 0.016799, 0.016388, 0.017215, 0.019268, 0.064844, 0.018650, 0.088101, 0.018248, 0.016872, 0.020114, 0.016583, 0.017323, 0.016732, 0.070511, 0.016808, 0.060676, 0.016112, 0.016571, 0.016139, 0.017738, 0.019233, 0.017220, 0.062111, 0.016459, 0.019143, 0.041271, 0.017706
+  Q_sd_over_initial min=0.4943 max=2.7860 mean=0.8765
+  Q_at_variance_floor_count=0
+  R_dim=6 initial_sd=0.100000
+  R_sd=0.158305, 0.130507, 0.154003, 0.159725, 0.077250, 0.055973
+  R_sd_over_initial min=0.5597 max=1.5972 mean=1.2263
+  R_at_variance_floor_count=0
+FILE|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001/best_filter_checkpoint.pt
+  seed=43 epoch=1 selection_mae_m=0.08853771250622687
+  Q_dim=32 initial_sd=0.031623
+  Q_sd=0.025374, 0.031426, 0.029424, 0.034424, 0.018657, 0.026159, 0.020084, 0.028537, 0.016405, 0.025366, 0.017249, 0.029390, 0.025426, 0.022052, 0.022783, 0.040701, 0.026087, 0.019572, 0.019156, 0.022724, 0.024612, 0.031924, 0.046917, 0.045865, 0.025915, 0.028651, 0.019294, 0.045623, 0.019113, 0.030612, 0.028061, 0.016459
+  Q_sd_over_initial min=0.5188 max=1.4836 mean=0.8539
+  Q_at_variance_floor_count=0
+  R_dim=6 initial_sd=0.100000
+  R_sd=0.152165, 0.133072, 0.126194, 0.151643, 0.061901, 0.056846
+  R_sd_over_initial min=0.5685 max=1.5216 mean=1.1364
+  R_at_variance_floor_count=0
+=== ORIGINAL_R2_SAFETY ===
+ORIGINAL_IDENTITY|match=true|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+ORIGINAL_IDENTITY|match=true|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/evidence/development_2023/evaluation/attempt_001.partial/development_access_started.json
+ORIGINAL_IDENTITY|match=true|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/scripts/analysis/zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.py
+HELD_OUT_2024_TARGET_ACCESS_AUTHORIZED=false
+BOUNDARY_FUTURE_TARGET_ACCESS_AUTHORIZED=false
+=== SNAPSHOT_END ===
+2026-09-02T19:30:06+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T19:30:06+0800
