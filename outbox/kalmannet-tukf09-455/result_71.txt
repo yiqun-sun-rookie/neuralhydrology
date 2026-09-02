@@ -1,0 +1,38 @@
+### channel=kalmannet-tukf09-455 seq=71
+### host=login4
+### started=2026-09-02T16:22:40+0800
+### ---------- output ----------
+=== SCOPE GUARD ===
+DIAG_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902
+SCOPE_GUARD_OK_DIAGNOSTIC_ROOT_IS_DISJOINT
+=== FROZEN FAILURE EVIDENCE, READ ONLY ===
+drwx------. 8 sunyiq g_sunyiq 4096 Sep  1 12:42 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r4_20260901
+drwx------. 8 sunyiq g_sunyiq 4096 Sep  1 18:11 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901
+-r--r--r--. 1 sunyiq g_sunyiq 7 Sep  1 19:07 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/status/training_job_id.txt
+JOB_ID_FILE_CONTENT=217939
+11b47e27e4b7e3fd403ffb3a8f2b8003c6ebf6540e52d0c1ab439be6293d2f77  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.out
+b5e19ea076beff9d423c3ab02e6d8efd6918548b843c22503aa77a44c768c92e  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.err
+=== DIAGNOSTIC ROOT ===
+DIAGNOSTIC_ROOT_CREATED
+=== SINGLE SUBMISSION LOCK ===
+SUBMISSION_LOCK_ACQUIRED
+=== WRITE PROBE JOB SCRIPT ===
+3917 /data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/job/pmon_probe.slurm
+808af05ea3353040479f2f3053ca573cee1aadc4308adac03dd7b87ec1f98c8d  /data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/job/pmon_probe.slurm
+=== SUBMIT EXACTLY ONE JOB ===
+Submitted batch job 218580
+PMON_PROBE_JOB_ID=218580
+=== IMMEDIATE STATE ===
+     JOBID                       NAME PARTITIO      STATE         NODELIST(REASON)     TIME
+    218580      tukf09-455-pmon-probe    hgpu8    PENDING                   (None)     0:00
+--- estimated start time ---
+N/A
+--- partition occupancy ---
+ PARTITION  AVAIL  NODES  STATE                       NODELIST
+     hgpu8     up      1  maint                         ngu203
+     hgpu8     up      1    mix                         ngu201
+     hgpu8     up      1   idle                         ngu202
+TUKF09_455_PMON_PROBE_SUBMITTED_ONCE_NO_TRAINING_NO_FORMAL_EVALUATION
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T16:22:41+0800
