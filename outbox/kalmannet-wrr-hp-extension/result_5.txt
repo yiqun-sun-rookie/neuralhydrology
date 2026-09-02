@@ -1,0 +1,37 @@
+### channel=kalmannet-wrr-hp-extension seq=5
+### host=login4
+### started=2026-09-02T19:26:30+0800
+### ---------- output ----------
+=== TIME ===
+2026-09-02T19:26:30+0800
+=== EPOCH_PROGRESS ===
+idx0000_lr0p01_hs16_nl2_mult5 epochs=5 last={"epoch_zero_based": 4, "lr_used_this_epoch": 0.01, "lr_next_epoch": 0.01, "train_bp_loss": 6.047944727001465e-05, "val_bp_loss": 1.6609245274865576e-05, "val_screening_nse": 0.9458099747382159, "val_nse_high": 0.34058004651514356, "monitor": "val_bp_loss", "m
+idx0001_lr0p02_hs16_nl2_mult5 epochs=5 last={"epoch_zero_based": 4, "lr_used_this_epoch": 0.02, "lr_next_epoch": 0.02, "train_bp_loss": 5.946594752763182e-05, "val_bp_loss": 1.6097773515344667e-05, "val_screening_nse": 0.9471893516869115, "val_nse_high": 0.34810474721681406, "monitor": "val_bp_loss", "m
+idx0002_lr0p05_hs16_nl2_mult5 epochs=5 last={"epoch_zero_based": 4, "lr_used_this_epoch": 0.05, "lr_next_epoch": 0.05, "train_bp_loss": 5.8786270148370073e-05, "val_bp_loss": 1.628768042187587e-05, "val_screening_nse": 0.9471000133054789, "val_nse_high": 0.3516247389321175, "monitor": "val_bp_loss", "mo
+idx0003_lr0p01_hs32_nl1_mult10 epochs=5 last={"epoch_zero_based": 4, "lr_used_this_epoch": 0.01, "lr_next_epoch": 0.01, "train_bp_loss": 6.288040426881589e-05, "val_bp_loss": 1.598849605602841e-05, "val_screening_nse": 0.9474780749746219, "val_nse_high": 0.35639369519596165, "monitor": "val_bp_loss", "mo
+idx0004_lr0p02_hs32_nl1_mult10 epochs=4 last={"epoch_zero_based": 3, "lr_used_this_epoch": 0.02, "lr_next_epoch": 0.02, "train_bp_loss": 6.038954632207476e-05, "val_bp_loss": 1.684197315150779e-05, "val_screening_nse": 0.9471058373465876, "val_nse_high": 0.3545529794546558, "monitor": "val_bp_loss", "mon
+idx0005_lr0p05_hs32_nl1_mult10 epochs=3 last={"epoch_zero_based": 2, "lr_used_this_epoch": 0.0125, "lr_next_epoch": 0.0125, "train_bp_loss": 0.003975994419306517, "val_bp_loss": 0.000469264350401567, "val_screening_nse": 0.8992612869377106, "val_nse_high": -0.0755159139824181, "monitor": "val_bp_loss", "
+=== SLURM_OUT_TAILS ===
+--- slurm-218659_0.out 4259B
+[EpochSummary] 4/200 train_bp=0.000061 val_bp=0.000016 val_nse=0.945210 lr=0.01
+[EpochSummary] 5/200 train_bp=0.000060 val_bp=0.000017 val_nse=0.945810 lr=0.01
+--- slurm-218659_1.out 4587B
+[EpochSummary] 4/200 train_bp=0.000062 val_bp=0.000016 val_nse=0.946433 lr=0.02
+[EpochSummary] 5/200 train_bp=0.000059 val_bp=0.000016 val_nse=0.947189 lr=0.02
+--- slurm-218659_2.out 4587B
+[EpochSummary] 4/200 train_bp=0.000060 val_bp=0.000016 val_nse=0.946258 lr=0.05
+[EpochSummary] 5/200 train_bp=0.000059 val_bp=0.000016 val_nse=0.947100 lr=0.05
+--- slurm-218659_3.out 4588B
+[EpochSummary] 4/200 train_bp=0.000062 val_bp=0.000023 val_nse=0.944621 lr=0.01
+[EpochSummary] 5/200 train_bp=0.000063 val_bp=0.000016 val_nse=0.947478 lr=0.01
+--- slurm-218659_4.out 4164B
+[EpochSummary] 3/200 train_bp=0.000061 val_bp=0.000016 val_nse=0.946718 lr=0.02
+[EpochSummary] 4/200 train_bp=0.000060 val_bp=0.000017 val_nse=0.947106 lr=0.02
+--- slurm-218659_5.out 14671B
+[EpochSummary] 2/200 train_bp=0.004425 val_bp=0.000395 val_nse=0.897851 lr=0.025
+[EpochSummary] 3/200 train_bp=0.003976 val_bp=0.000469 val_nse=0.899261 lr=0.0125
+=== NONEMPTY_ERR ===
+(err scan done)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T19:26:30+0800
