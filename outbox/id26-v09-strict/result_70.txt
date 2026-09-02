@@ -1,0 +1,32 @@
+### channel=id26-v09-strict seq=70
+### host=login4
+### started=2026-09-02T20:37:03+0800
+### ---------- output ----------
+=== A PREDICT CODE AREA ===
+mode=fresh_clone
+head=4f47847d7236ba292aac5796ff81ab61329cffd4
+clean=[]
+=== B LINE ENDINGS ===
+predictor_bytes=27174
+slurm_bytes=2005
+=== C PRECONDITIONS ===
+predictions=absent_ok
+predictions.building=absent_ok
+training_external_audit.json=present
+state_diagnostics_external_audit.json=present
+state_diagnostics=present
+input_attempt_01=present
+final_checkpoints=24
+=== D FROZEN AREAS UNTOUCHED ===
+codetest_head=bb519b8b9980725ac1d5f4e298d76ae80ea2c58d
+audit_head=d69d2a7af509b141c7e8361f49f6fdeceed963af
+=== E RESOURCES ===
+hhjt_parastor_hhjt_parastor  954T  599T  356T  63% /data1
+ PARTITION  AVAIL  NODES  STATE                     NODELIST
+    hgpu2p     up      1  down*                       ngu002
+    hgpu2p     up      7    mix         ngu[001,004-008,011]
+    hgpu2p     up      1  alloc                       ngu010
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T20:37:54+0800
