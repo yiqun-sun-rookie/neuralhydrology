@@ -1,12 +1,12 @@
 #!/bin/bash
-# id23-r-pert seq=2 : deploy bundle into ~/id23_r_perturbation, self-check, submit G0 (A0).
+# id23-r-pert seq=3 : redeploy with the missing hydroagent package, resubmit G0.
 # Boundaries (prereg 6.2): only ~/id23_r_perturbation and this channel are touched.
 # ~/neuralhydrology is read ONLY through a symlink to its CAMELS data; its git is untouched.
 # Job names are r_pert_*; NO account-wide scancel is ever issued.
 set -o pipefail
 DEST=/data1/home/$USER/id23_r_perturbation
 SRC=/data1/home/$USER/hpc_mailbox/inbox/id23-r-pert/payload/r_pert_bundle_20260902.tar.gz
-EXPECT=6e8e43a62083b9ecfa2316cd7e4aa6a6b87861ebffec8ecb4839c0afd72b74d8
+EXPECT=c14f971e3626d87212112cdbb261d95e2bccea8d0361333f623c9c7620722ab2
 
 echo "=== BUNDLE CHECK ==="
 ls -la "$SRC" 2>&1 | head -2
@@ -16,11 +16,12 @@ echo "got   =$GOT"
 if [ "$GOT" != "$EXPECT" ]; then echo "SHA_MISMATCH_ABORT"; exit 1; fi
 
 echo "=== DEPLOY ==="
+rm -rf "$DEST/src" "$DEST/vendor" "$DEST/BUNDLE_MANIFEST.sha256"
 mkdir -p "$DEST" /data1/home/$USER/logs/id23_r_perturbation
 tar xzf "$SRC" -C "$DEST"
 echo "extracted files: $(find "$DEST" -type f | wc -l)"
 echo "--- verify manifest ---"
-cd "$DEST" && sha256sum -c BUNDLE_MANIFEST.sha256 --quiet 2>&1 | head -5 && echo "MANIFEST_OK"
+cd "$DEST" && sha256sum -c BUNDLE_MANIFEST.sha256 --quiet 2>&1 | head -5; echo "manifest_rc=$?"
 
 echo "=== CAMELS DATA LINK ==="
 mkdir -p "$DEST/data"
