@@ -1,0 +1,16 @@
+### channel=kalmannet-tukf28 seq=2
+### host=login4
+### started=2026-09-02T20:46:15+0800
+### ---------- output ----------
+=== DEPLOY ===
+ca202bccd37548bb2060a86cb0de753b305b6b8043262b4175024a021583e8c3  /data1/home/sunyiq/hpc_mailbox/payload/kalmannet-tukf28/tukf28_hpc_payload_v1.tar.gz
+=== VERIFY MANIFEST ===
+manifest_files=146 mismatches=0
+=== SOURCE RECORDS ===
+source_json=108
+=== SBATCH ANCHOR ===
+Submitted batch job 218693
+SEQ2_OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T20:46:16+0800
