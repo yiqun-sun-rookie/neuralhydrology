@@ -104,3 +104,4 @@ git rm inbox/seq
 | `zhenjiang-six-source-four-target-ukf` | 镇江六个实时观测来源、四个内部预报目标的共享32维门控循环单元可微无迹卡尔曼滤波重新训练与2023冻结开发评价 | 2026-09-01 | 独立落点 `/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1`；只操作本通道与该新建目录，旧镇江目录和通道只读，不复制大通或吴淞口未来目标，不访问2024年及以后目标，不碰 `~/neuralhydrology`、其他通道、作业或实验 |
 | `kalmannet-wrr-lr-boundary` | 《水资源研究》论文学习率上边界核查：本地原批次继续运行，超算只重复本地已完成的学习率0.01作为公共核验 | 2026-09-01 | 独立落点 `/data1/home/sunyiq/kalmannet_wrr_lr_boundary_20260901`；超算不得运行其他学习率，不读取保留测试集，不碰 `~/neuralhydrology`、其他通道、作业、实验或既有证据 |
 | `kalmannet-tukf09-455-monitor` | 455 流域修订实验新版超算运行依赖下载的只读辅助监控 | 2026-09-01 | 只读取 v2r5 独立落点的进程、文件计数、字节数和下游零输出门控；不写实验目录、不提交或结束作业、不访问正式评价、不触碰主通道或其他实验 |
+| `id23-r-pert` | ID23 噪声轴观测噪声(R)扰动稳健性检验:A0 平价门 + A1/A1m/A2/A3/A4 五臂 | 2026-09-02 | 由 Claude 会话占用;独立落点 `/data1/home/sunyiq/id23_r_perturbation`,作业名前缀 `r_pert_*`;**不碰 `~/neuralhydrology` 的 git 状态**、不碰 `id23-dlimm` 或任何其他通道;⛔ 禁用 `scancel -u` 等账号级批量取消 |
