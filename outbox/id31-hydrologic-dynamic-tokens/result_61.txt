@@ -1,0 +1,155 @@
+### channel=id31-hydrologic-dynamic-tokens seq=61
+### host=login4
+### started=2026-09-02T10:53:30+0800
+### ---------- output ----------
+=== SCHEDULER ===
+2026-09-02T10:53:30+0800
+             JOBID                     NAME    PARTITION ST         TIME   TIME_LIMIT               NODELIST(REASON)
+            216549         id31_development        hgpu2  R   1-22:33:16   7-00:00:00                         ngu003
+216549|id31_development|hgpu2|RUNNING|0:0|1-22:33:50|2026-08-31T12:20:14|Unknown|ngu003
+216549.batch|batch||RUNNING|0:0|1-22:33:50|2026-08-31T12:20:14|Unknown|ngu003
+216549.extern|extern||RUNNING|0:0|1-22:33:50|2026-08-31T12:20:14|Unknown|ngu003
+=== MANIFEST STATUS ===
+{
+  "finished_at_utc": null,
+  "path": "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/_invocations/id31_DL01_s100_slurm216549/run_manifest.json",
+  "return_code": null,
+  "run_id": "id31_DL01_s100_slurm216549",
+  "seed": 100,
+  "sha256_note": "reported separately below",
+  "started_at_utc": "2026-08-31T04:22:16.389296+00:00",
+  "status": "RUNNING"
+}
+43d9feed6b5a99ad90a189b321dc8cdc9c8df2dfabdf7ff1fc224561a41af440  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/_invocations/id31_DL01_s100_slurm216549/run_manifest.json
+=== BOUND SOURCE HASHES ===
+e8eb71123f99eecccd0316901ace54bd933f8e3565325696c1e0e11ea2b3b027  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/training/regularization.py
+45e497b85dad61f70b882a1ec3359b03d1cba2fed624934d1c03d61a467cb435  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/test/test_hydrologic_dynamic_token_transformer.py
+1f38ed828fb002a0b967c341d0109ff95ead50a7ad241925c5259343a1521b4e  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml
+a7c99e9788f3d6f134f8087d1723c885d77f23e82ab59cba5a57d909e1460867  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/hydrologic_dynamic_tokens/registry/experiments.csv
+=== COMPACT TRAINING PROGRESS ===
+ACTIVE_OUTPUT /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/output.log
+2026-08-31 13:49:31,146: Epoch 1 average loss: avg_loss: 0.04119, avg_dynamic_token_count: 1.18805, avg_total_loss: 0.05307
+2026-08-31 15:29:42,891: Epoch 2 average loss: avg_loss: 0.03423, avg_dynamic_token_count: 1.48501, avg_total_loss: 0.04908
+2026-08-31 17:09:00,627: Epoch 3 average loss: avg_loss: 0.03143, avg_dynamic_token_count: 1.60444, avg_total_loss: 0.04748
+2026-08-31 18:48:20,222: Epoch 4 average loss: avg_loss: 0.03043, avg_dynamic_token_count: 1.63454, avg_total_loss: 0.04678
+2026-08-31 20:27:39,286: Epoch 5 average loss: avg_loss: 0.02939, avg_dynamic_token_count: 1.47662, avg_total_loss: 0.04415
+2026-08-31 22:06:58,869: Epoch 6 average loss: avg_loss: 0.02916, avg_dynamic_token_count: 1.48854, avg_total_loss: 0.04404
+2026-08-31 23:46:16,082: Epoch 7 average loss: avg_loss: 0.02838, avg_dynamic_token_count: 1.42770, avg_total_loss: 0.04266
+2026-09-01 01:22:00,468: Epoch 8 average loss: avg_loss: 0.02816, avg_dynamic_token_count: 1.48394, avg_total_loss: 0.04300
+2026-09-01 02:57:06,328: Epoch 9 average loss: avg_loss: 0.02758, avg_dynamic_token_count: 1.52710, avg_total_loss: 0.04285
+2026-09-01 04:32:14,363: Epoch 10 average loss: avg_loss: 0.02729, avg_dynamic_token_count: 1.43532, avg_total_loss: 0.04165
+2026-09-01 06:12:54,485: Epoch 11 average loss: avg_loss: 0.02443, avg_dynamic_token_count: 1.29137, avg_total_loss: 0.03735
+2026-09-01 07:53:37,959: Epoch 12 average loss: avg_loss: 0.02397, avg_dynamic_token_count: 1.24320, avg_total_loss: 0.03640
+2026-09-01 09:34:14,010: Epoch 13 average loss: avg_loss: 0.02381, avg_dynamic_token_count: 1.18813, avg_total_loss: 0.03569
+2026-09-01 11:15:48,045: Epoch 14 average loss: avg_loss: 0.02329, avg_dynamic_token_count: 1.30814, avg_total_loss: 0.03637
+2026-09-01 12:56:13,853: Epoch 15 average loss: avg_loss: 0.02359, avg_dynamic_token_count: 1.15650, avg_total_loss: 0.03515
+2026-09-01 14:37:56,345: Epoch 16 average loss: avg_loss: 0.02319, avg_dynamic_token_count: 1.12576, avg_total_loss: 0.03445
+2026-09-01 16:19:44,247: Epoch 17 average loss: avg_loss: 0.02318, avg_dynamic_token_count: 1.08926, avg_total_loss: 0.03408
+2026-09-01 18:00:24,710: Epoch 18 average loss: avg_loss: 0.02301, avg_dynamic_token_count: 1.08925, avg_total_loss: 0.03390
+2026-09-01 19:41:53,850: Epoch 19 average loss: avg_loss: 0.02310, avg_dynamic_token_count: 1.09456, avg_total_loss: 0.03404
+2026-09-01 21:17:39,914: Epoch 20 average loss: avg_loss: 0.02296, avg_dynamic_token_count: 1.11552, avg_total_loss: 0.03411
+2026-09-01 22:52:57,592: Epoch 21 average loss: avg_loss: 0.02208, avg_dynamic_token_count: 1.00210, avg_total_loss: 0.03210
+2026-09-02 00:27:57,902: Epoch 22 average loss: avg_loss: 0.02199, avg_dynamic_token_count: 1.00697, avg_total_loss: 0.03206
+2026-09-02 02:03:14,715: Epoch 23 average loss: avg_loss: 0.02170, avg_dynamic_token_count: 0.99929, avg_total_loss: 0.03169
+2026-09-02 03:44:42,449: Epoch 24 average loss: avg_loss: 0.02153, avg_dynamic_token_count: 0.96320, avg_total_loss: 0.03116
+2026-09-02 05:19:57,653: Epoch 25 average loss: avg_loss: 0.02160, avg_dynamic_token_count: 0.99598, avg_total_loss: 0.03156
+2026-09-02 06:55:09,024: Epoch 26 average loss: avg_loss: 0.02147, avg_dynamic_token_count: 1.00557, avg_total_loss: 0.03152
+2026-09-02 08:30:11,420: Epoch 27 average loss: avg_loss: 0.02151, avg_dynamic_token_count: 0.98442, avg_total_loss: 0.03135
+2026-09-02 10:10:49,454: Epoch 28 average loss: avg_loss: 0.02161, avg_dynamic_token_count: 0.98944, avg_total_loss: 0.03151
+LAST_TIMESTAMPED_LINES
+2026-09-01 23:05:10,338: Stored results at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch021/validation_results.p
+2026-09-01 23:05:10,347: Epoch 21 average validation loss: 0.03968 -- Median validation metrics: avg_loss: 0.02964, avg_dynamic_token_count: 1.00408, NSE: 0.60273
+2026-09-02 00:27:57,902: Epoch 22 average loss: avg_loss: 0.02199, avg_dynamic_token_count: 1.00697, avg_total_loss: 0.03206
+2026-09-02 00:40:13,330: Stored metrics at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch022/validation_metrics.csv
+2026-09-02 00:40:13,444: Stored results at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch022/validation_results.p
+2026-09-02 00:40:13,452: Epoch 22 average validation loss: 0.03958 -- Median validation metrics: avg_loss: 0.02995, avg_dynamic_token_count: 0.96239, NSE: 0.61043
+2026-09-02 02:03:14,715: Epoch 23 average loss: avg_loss: 0.02170, avg_dynamic_token_count: 0.99929, avg_total_loss: 0.03169
+2026-09-02 02:15:26,853: Stored metrics at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch023/validation_metrics.csv
+2026-09-02 02:15:26,971: Stored results at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch023/validation_results.p
+2026-09-02 02:15:26,980: Epoch 23 average validation loss: 0.04084 -- Median validation metrics: avg_loss: 0.02948, avg_dynamic_token_count: 1.13590, NSE: 0.61616
+2026-09-02 03:44:42,449: Epoch 24 average loss: avg_loss: 0.02153, avg_dynamic_token_count: 0.96320, avg_total_loss: 0.03116
+2026-09-02 03:56:57,219: Stored metrics at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch024/validation_metrics.csv
+2026-09-02 03:56:57,334: Stored results at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch024/validation_results.p
+2026-09-02 03:56:57,343: Epoch 24 average validation loss: 0.04092 -- Median validation metrics: avg_loss: 0.02981, avg_dynamic_token_count: 1.11138, NSE: 0.60807
+2026-09-02 05:19:57,653: Epoch 25 average loss: avg_loss: 0.02160, avg_dynamic_token_count: 0.99598, avg_total_loss: 0.03156
+2026-09-02 05:32:15,123: Stored metrics at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch025/validation_metrics.csv
+2026-09-02 05:32:15,236: Stored results at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch025/validation_results.p
+2026-09-02 05:32:15,245: Epoch 25 average validation loss: 0.04167 -- Median validation metrics: avg_loss: 0.03129, avg_dynamic_token_count: 1.03775, NSE: 0.60276
+2026-09-02 06:55:09,024: Epoch 26 average loss: avg_loss: 0.02147, avg_dynamic_token_count: 1.00557, avg_total_loss: 0.03152
+2026-09-02 07:07:23,307: Stored metrics at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch026/validation_metrics.csv
+2026-09-02 07:07:23,416: Stored results at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch026/validation_results.p
+2026-09-02 07:07:23,425: Epoch 26 average validation loss: 0.03824 -- Median validation metrics: avg_loss: 0.02966, avg_dynamic_token_count: 0.85825, NSE: 0.60510
+2026-09-02 08:30:11,420: Epoch 27 average loss: avg_loss: 0.02151, avg_dynamic_token_count: 0.98442, avg_total_loss: 0.03135
+2026-09-02 08:42:25,388: Stored metrics at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch027/validation_metrics.csv
+2026-09-02 08:42:25,495: Stored results at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch027/validation_results.p
+2026-09-02 08:42:25,504: Epoch 27 average validation loss: 0.03824 -- Median validation metrics: avg_loss: 0.02939, avg_dynamic_token_count: 0.88516, NSE: 0.60468
+2026-09-02 10:10:49,454: Epoch 28 average loss: avg_loss: 0.02161, avg_dynamic_token_count: 0.98944, avg_total_loss: 0.03151
+2026-09-02 10:23:10,042: Stored metrics at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch028/validation_metrics.csv
+2026-09-02 10:23:10,150: Stored results at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch028/validation_results.p
+2026-09-02 10:23:10,160: Epoch 28 average validation loss: 0.03909 -- Median validation metrics: avg_loss: 0.02910, avg_dynamic_token_count: 0.99882, NSE: 0.60639
+=== NEW-RUN METRICS AND CHECKPOINTS ===
+NEW_RUN_DIR /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30
+2026-08-31T14:02:44.0000000000+0800 15069 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch001/validation_metrics.csv
+2026-08-31T14:02:44.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch001/validation_results.p
+2026-08-31T15:41:32.0000000000+0800 14978 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch002/validation_metrics.csv
+2026-08-31T15:41:33.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch002/validation_results.p
+2026-08-31T17:20:51.0000000000+0800 14954 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch003/validation_metrics.csv
+2026-08-31T17:20:53.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch003/validation_results.p
+2026-08-31T19:00:12.0000000000+0800 14980 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch004/validation_metrics.csv
+2026-08-31T19:00:12.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch004/validation_results.p
+2026-08-31T20:39:30.0000000000+0800 14998 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch005/validation_metrics.csv
+2026-08-31T20:39:30.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch005/validation_results.p
+2026-08-31T22:18:51.0000000000+0800 14951 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch006/validation_metrics.csv
+2026-08-31T22:18:51.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch006/validation_results.p
+2026-08-31T23:58:05.0000000000+0800 14937 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch007/validation_metrics.csv
+2026-08-31T23:58:05.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch007/validation_results.p
+2026-09-01T01:33:41.0000000000+0800 14942 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch008/validation_metrics.csv
+2026-09-01T01:33:41.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch008/validation_results.p
+2026-09-01T03:08:46.0000000000+0800 14950 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch009/validation_metrics.csv
+2026-09-01T03:08:46.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch009/validation_results.p
+2026-09-01T04:31:41.0000000000+0800 4669050 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/model_epoch010.pt
+2026-09-01T04:43:54.0000000000+0800 14963 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch010/validation_metrics.csv
+2026-09-01T04:43:54.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch010/validation_results.p
+2026-09-01T06:24:35.0000000000+0800 14936 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch011/validation_metrics.csv
+2026-09-01T06:24:36.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch011/validation_results.p
+2026-09-01T08:05:21.0000000000+0800 14932 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch012/validation_metrics.csv
+2026-09-01T08:05:21.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch012/validation_results.p
+2026-09-01T09:45:56.0000000000+0800 14922 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch013/validation_metrics.csv
+2026-09-01T09:45:56.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch013/validation_results.p
+2026-09-01T11:27:28.0000000000+0800 14947 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch014/validation_metrics.csv
+2026-09-01T11:27:28.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch014/validation_results.p
+2026-09-01T13:07:55.0000000000+0800 14937 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch015/validation_metrics.csv
+2026-09-01T13:07:55.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch015/validation_results.p
+2026-09-01T14:49:37.0000000000+0800 14922 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch016/validation_metrics.csv
+2026-09-01T14:49:38.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch016/validation_results.p
+2026-09-01T16:31:27.0000000000+0800 14913 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch017/validation_metrics.csv
+2026-09-01T16:31:27.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch017/validation_results.p
+2026-09-01T18:12:08.0000000000+0800 14939 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch018/validation_metrics.csv
+2026-09-01T18:12:08.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch018/validation_results.p
+2026-09-01T19:53:36.0000000000+0800 14956 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch019/validation_metrics.csv
+2026-09-01T19:53:36.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch019/validation_results.p
+2026-09-01T21:17:06.0000000000+0800 4669050 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/model_epoch020.pt
+2026-09-01T21:29:21.0000000000+0800 14946 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch020/validation_metrics.csv
+2026-09-01T21:29:22.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch020/validation_results.p
+2026-09-01T23:04:36.0000000000+0800 14915 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch021/validation_metrics.csv
+2026-09-01T23:04:36.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch021/validation_results.p
+2026-09-02T00:39:38.0000000000+0800 14913 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch022/validation_metrics.csv
+2026-09-02T00:39:39.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch022/validation_results.p
+2026-09-02T02:14:52.0000000000+0800 14924 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch023/validation_metrics.csv
+2026-09-02T02:14:52.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch023/validation_results.p
+2026-09-02T03:56:22.0000000000+0800 14933 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch024/validation_metrics.csv
+2026-09-02T03:56:22.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch024/validation_results.p
+2026-09-02T05:31:40.0000000000+0800 14927 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch025/validation_metrics.csv
+2026-09-02T05:31:40.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch025/validation_results.p
+2026-09-02T07:06:48.0000000000+0800 14933 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch026/validation_metrics.csv
+2026-09-02T07:06:49.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch026/validation_results.p
+2026-09-02T08:41:50.0000000000+0800 14908 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch027/validation_metrics.csv
+2026-09-02T08:41:51.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch027/validation_results.p
+2026-09-02T10:22:35.0000000000+0800 14908 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch028/validation_metrics.csv
+2026-09-02T10:22:35.0000000000+0800 9739983 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/validation/model_epoch028/validation_results.p
+=== STDERR ===
+STDERR_EMPTY
+ID31_DL01_COMPACT_PROGRESS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T10:53:31+0800
