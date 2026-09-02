@@ -1,0 +1,38 @@
+### channel=id29-transferable-noise seq=10
+### host=login4
+### started=2026-09-02T20:24:55+0800
+### ---------- output ----------
+=== SACCT ===
+     JobID          JobName  NodeList        State ExitCode    Elapsed AllocC 
+---------- ---------------- --------- ------------ -------- ---------- ------ 
+    218675    id29-trlen-L2    ngu010      RUNNING      0:0   00:44:10     24 
+    218676    id29-trlen-L3    ngu001      RUNNING      0:0   00:44:09     24 
+=== PROGRESS COUNTS ===
+L2 learn: 0 / 46   borrow: 0 / 46
+L3 learn: 0 / 46   borrow: 0 / 46
+frozen list rows: 52
+=== LOG TAILS ===
+--- logs/id29-trlen-L2_218675.out ---
+  excluded 02096846 -- L=1826: ValueError: basin 02096846: observations contain non-finite days
+  excluded 02193340 -- L=3652: ValueError: basin 02193340: observations contain non-finite days
+  excluded 04197170 -- L=3652: ValueError: basin 04197170: observations contain non-finite days
+  excluded 05488200 -- L=3652: ValueError: basin 05488200: observations contain non-finite days
+  excluded 08070200 -- L=3652: ValueError: basin 08070200: observations contain non-finite days
+  excluded 14306340 -- L=3652: ValueError: basin 14306340: observations contain non-finite days
+=== LEARN L2 ===
+[L2 train_days=1826] basins 46; pending 46; workers 24
+--- logs/id29-trlen-L3_218676.out ---
+  excluded 02096846 -- L=1826: ValueError: basin 02096846: observations contain non-finite days
+  excluded 02193340 -- L=3652: ValueError: basin 02193340: observations contain non-finite days
+  excluded 04197170 -- L=3652: ValueError: basin 04197170: observations contain non-finite days
+  excluded 05488200 -- L=3652: ValueError: basin 05488200: observations contain non-finite days
+  excluded 08070200 -- L=3652: ValueError: basin 08070200: observations contain non-finite days
+  excluded 14306340 -- L=3652: ValueError: basin 14306340: observations contain non-finite days
+=== LEARN L3 ===
+[L3 train_days=3652] basins 46; pending 46; workers 24
+--- logs/id29-trlen-L2_218675.err (0 bytes) ---
+--- logs/id29-trlen-L3_218676.err (0 bytes) ---
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T20:24:56+0800
