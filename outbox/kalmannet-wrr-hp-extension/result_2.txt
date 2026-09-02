@@ -1,0 +1,20 @@
+### channel=kalmannet-wrr-hp-extension seq=2
+### host=login4
+### started=2026-09-02T18:31:33+0800
+### ---------- output ----------
+=== PAYLOAD_CHECK ===
+payload_ok
+=== DEPLOY ===
+=== DEPLOYED_SOURCE_CHECK (62 files) ===
+deployed_tree_ok
+train_win800_19990101_01-20070527_03.pt
+val_win800_20070527_04-20090314_13.pt
+root=/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
+=== SUBMIT ===
+Submitted batch job 218659
+job_id=218659
+JOBID|NAME|STATE|PARTITION|TIME|NODELIST(REASON)
+218659_[0-16%6]|wrrhp-ext|PENDING|hgpu2p|0:00|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T18:31:34+0800
