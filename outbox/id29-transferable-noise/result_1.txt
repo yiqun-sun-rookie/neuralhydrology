@@ -1,0 +1,103 @@
+### channel=id29-transferable-noise seq=1
+### host=login4
+### started=2026-09-02T17:33:00+0800
+### ---------- output ----------
+=== HOST/TIME ===
+login4
+2026-09-02 17:33:00 +0800
+=== MY JOBS (squeue -u, own jobs only) ===
+    JOBID    PARTITION                       NAME  ST       TIME  CPUS NODELIST(REASON)
+   218635        hgpu8    tukf09-455-v2r6-prepare  PD       0:00     4   (Priority)
+   202229 hgpu4,hgpu8,               N22-agg-eval  PD       0:00     4 (DependencyN
+   202294 hgpu4,hgpu8,                 N22-export  PD       0:00     4 (Dependency)
+   202315 hgpu4,hgpu8,                   N22-gate  PD       0:00     2 (Dependency)
+   202507 hgpu4,hgpu8,           N22-mask-iso-531  PD       0:00     4 (DependencyN
+   215429        hgpu2              id30_m01_s100  PD       0:00     4 (DependencyN
+   202293 hgpu4,hgpu8,               N22-manifest  PD       0:00     4 (JobHeldUser
+=== PARTITION SUMMARY (sinfo) ===
+ PARTITION  AVAIL  NODES  STATE                       NODELIST
+   hcpu48*     up     10 alloc$ icn[202,204-207,210-212,216-21
+   hcpu48*     up      5  maint       icn[214,220-221,246,249]
+   hcpu48*     up     14  down* icn[203,215,218,230,233,235-23
+   hcpu48*     up     28  alloc icn[201,208-209,213,219,222-22
+   hcpu48*     up      7   idle               icn[257,259-264]
+   hcpu48y     up      1  down$                         icn281
+   hcpu48y     up      1  maint                         icn280
+   hcpu48y     up      2  down*                   icn[278-279]
+   hcpu48y     up      2    mix                   icn[274,277]
+   hcpu48y     up      6   idle           icn[270-273,275-276]
+     hgpu8     up      1  maint                         ngu203
+     hgpu8     up      2    mix                   ngu[201-202]
+     hgpu4     up      1  down*                         ngu103
+     hgpu4     up      3    mix               ngu[101-102,104]
+     hgpu2     up      2   idle                   ngu[003,009]
+    hgpu2p     up      1  down*                         ngu002
+    hgpu2p     up      8    mix       ngu[001,004-008,010-011]
+=== hgpu2p PER-NODE CPU (alloc/idle/other/total) ===
+  NODELIST  STATE  CPUS          CPUS(A/I/O/T) CPU_LOAD
+    ngu001    mix    96              2/94/0/96     5.41
+    ngu002  down*    96              0/0/96/96     0.10
+    ngu004    mix    96              2/94/0/96     3.86
+    ngu005    mix    96              2/94/0/96     3.61
+    ngu006    mix    96              8/88/0/96     2.31
+    ngu007    mix    96              2/94/0/96     5.59
+    ngu008    mix    96              8/88/0/96     2.84
+    ngu010    mix    32              1/31/0/32     5.85
+    ngu011    mix    32              1/31/0/32    84.26
+=== CAMELS DATA CANDIDATES ===
+DIR /data1/home/sunyiq/neuralhydrology/data/camels_us
+basin_mean_forcing
+camels_attributes_v2.0
+demo
+full
+raw
+usgs_streamflow
+-- basin_mean_forcing --
+daymet
+maurer
+nldas
+-- maurer sample --
+01
+02
+03
+-- maurer_extended sample --
+ls: cannot access /data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/maurer_extended: No such file or directory
+-- usgs_streamflow sample --
+01
+02
+03
+-- attributes --
+camels_clim.txt
+camels_geol.txt
+camels_hydro.txt
+camels_name.txt
+camels_soil.txt
+camels_topo.txt
+camels_vege.txt
+=== other camels_us dirs under home (maxdepth 3) ===
+/data1/home/sunyiq/nearing2022_da/data/camels_us
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v1_20260901.pending.seq43/data/camels_us
+/data1/home/sunyiq/neuralhydrology_backup_20260304/data/camels_us
+/data1/home/sunyiq/neuralhydrology_backup_20260304/experiments/camels_us
+/data1/home/sunyiq/neuralhydrology_backup_20260304/configs/camels_us
+/data1/home/sunyiq/neuralhydrology_messy_backup/configs/camels_us
+/data1/home/sunyiq/neuralhydrology/configs/camels_us
+/data1/home/sunyiq/neuralhydrology/data/camels_us
+/data1/home/sunyiq/neuralhydrology/experiments/camels_us
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901/data/camels_us
+=== PYTHON ENV nh_final (import check only) ===
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'numpy'
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'scipy'
+scipy MISSING
+=== DISK ===
+hhjt_parastor_hhjt_parastor  954T  599T  356T  63% /data1
+=== LANDING DIR (expect: not yet) ===
+ls: cannot access /data1/home/sunyiq/id29_transferable_noise_20260902: No such file or directory
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T17:33:24+0800
