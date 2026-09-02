@@ -1,14 +1,19 @@
 #!/bin/bash
 set -o pipefail
-echo "=== A ALL GPU PARTITIONS (real node state, not squeue) ==="
-sinfo -o "%.10P %.6a %.6D %.8t %.32N" -p hgpu2p,hgpu2,hgpu4,hgpu8 2>&1
+ROOT=/data1/home/sunyiq/v09_strict
+JID=$(cat $ROOT/predict_v09/predict_attempt_01_jobid.txt 2>/dev/null || echo "")
 
-echo "=== B IDLE NODES ONLY ==="
-sinfo -h -o "%P %t %N" -p hgpu2p,hgpu2,hgpu4,hgpu8 2>&1 | grep -E ' (idle|mix) ' || echo "  none idle or mix"
+echo "=== A BEFORE ==="
+squeue -j "$JID" -h -o "%i %P %T %r %S" 2>&1 || true
 
-echo "=== C DOWN REASONS ==="
-sinfo -R -h 2>&1 | head -8 || true
+echo "=== B MOVE TO hgpu2 (same RTX 3090 model, two idle nodes) ==="
+scontrol update jobid="$JID" partition=hgpu2 2>&1 && echo "update_rc=ok" || echo "update_rc=FAILED"
 
-echo "=== D MY QUEUE ==="
-squeue -u "$USER" -o "%.10i %.12j %.10P %.10T %.10M %.20S %.20r" 2>&1 | head -12
+echo "=== C AFTER ==="
+sleep 8
+squeue -j "$JID" -h -o "%i %P %T %r %S %N" 2>&1 || true
+sacct -j "$JID" -X -P --format=JobID,State,Partition,NodeList,Elapsed 2>&1 | head -3
+
+echo "=== D ONLY MY JOB TOUCHED ==="
+squeue -u "$USER" -h -o "%.10i %.12j %.9P %.9T" 2>&1 | head -12
 echo "=== END ==="
