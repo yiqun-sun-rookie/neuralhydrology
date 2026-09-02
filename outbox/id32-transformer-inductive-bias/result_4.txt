@@ -1,0 +1,53 @@
+### channel=id32-transformer-inductive-bias seq=4
+### host=login4
+### started=2026-09-03T00:09:47+0800
+### ---------- output ----------
+=== A. SACCT ===
+     JobID      JobName        State ExitCode    Elapsed   NodeList 
+---------- ------------ ------------ -------- ---------- ---------- 
+    218680     id32_R01      RUNNING      0:0   04:04:41     ngu005 
+    218681     id32_T02      RUNNING      0:0   04:04:41     ngu004 
+    218682     id32_T03      RUNNING      0:0   04:04:41     ngu004 
+    218683     id32_T04      RUNNING      0:0   02:47:41     ngu006 
+    218684     id32_T05      RUNNING      0:0   01:50:12     ngu007 
+    218685     id32_L01      PENDING      0:0   00:00:00 None assi+ 
+=== B. MANIFEST ===
+--- R01 manifest=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_R01_s100_slurm218680/run_manifest.json
+      "status": "PASS",
+    "status": "PASS",
+  "status": "RUNNING"
+--- T02 manifest=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_T02_s100_slurm218681/run_manifest.json
+      "status": "PASS",
+    "status": "PASS",
+  "status": "RUNNING"
+--- T03 manifest=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_T03_s100_slurm218682/run_manifest.json
+      "status": "PASS",
+    "status": "PASS",
+  "status": "RUNNING"
+--- T04 manifest=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_T04_s100_slurm218683/run_manifest.json
+      "status": "PASS",
+    "status": "PASS",
+  "status": "RUNNING"
+--- T05 manifest=/data1/home/sunyiq/id32_transformer_inductive_bias_20260902/repo/results/32_transformer_inductive_bias/_invocations/id32_T05_s100_slurm218684/run_manifest.json
+      "status": "PASS",
+    "status": "PASS",
+  "status": "RUNNING"
+--- L01 manifest=none
+=== C. PROGRESS ===
+--- R01
+--- T02
+--- T03
+--- T04
+--- T05
+--- L01
+=== D. VALIDATION TABLES (finished arms only) ===
+--- R01: no epoch-30 validation table yet
+--- T02: no epoch-30 validation table yet
+--- T03: no epoch-30 validation table yet
+--- T04: no epoch-30 validation table yet
+--- T05: no epoch-30 validation table yet
+--- L01: no epoch-30 validation table yet
+ID32_WATCH_SEQ4_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T00:09:47+0800
