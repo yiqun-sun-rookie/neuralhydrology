@@ -1,0 +1,39 @@
+### channel=kalmannet-tukf09-455 seq=75
+### host=login4
+### started=2026-09-02T17:19:45+0800
+### ---------- output ----------
+=== LAUNCH MARK ===
+pid=19748 attempt=a20260902 started=2026-09-02T17:12:22+0800
+=== PROCESS ===
+DOWNLOADER_NOT_RUNNING
+PIP_NOT_RUNNING
+=== TREE ===
+total 24
+drwxr-xr-x.   6 sunyiq g_sunyiq 4096 Sep  2 17:15 .
+drwx------. 130 sunyiq g_sunyiq 4096 Sep  2 17:19 ..
+drwxr-xr-x.   3 sunyiq g_sunyiq 4096 Sep  2 17:09 bundle
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  2 17:12 logs
+drwxr-xr-x.   5 sunyiq g_sunyiq 4096 Sep  2 17:15 offline_inputs_v2r6
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  2 17:12 status
+=== SIZE AND FILE COUNT ===
+2.7G	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/offline_inputs_v2r6
+23
+1
+=== FINAL PUBLISHED? ===
+FINAL_PRESENT
+total 27
+drwxr-xr-x. 5 sunyiq g_sunyiq 4096 Sep  2 17:15 .
+drwxr-xr-x. 6 sunyiq g_sunyiq 4096 Sep  2 17:15 ..
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  2 17:15 evidence
+-rw-r--r--. 1 sunyiq g_sunyiq 6797 Sep  2 17:15 manifest.json
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  2 17:14 sourcehouse
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  2 17:14 wheelhouse
+c605dc3e00e5c6d0b19c0d82cf55be2124e0417923c4eff1f7d0e96e7bf33af0  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/offline_inputs_v2r6/manifest.json
+=== LAUNCHER LOG TAIL ===
+lock", "psutil_source_lock_sha256": "c021239b1cdeafff41591adec793c79820ad66ec5418dba2570ea8ff2ae60d68", "publication_mode": "pending_directory_then_no_clobber_atomic_rename", "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "python_executable_resolved": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11", "python_executable_sha256": "45140eba20e770e6f8b46fb1e1295da8a5e494b3686a22ea9beeff050bb5b48e", "python_executable_size": 25382192, "python_version": "3.11.13", "runtime_binary_lock_path": "hpc/tukf09_455_basin_revision_a800_exclusive_v2r6/runtime-binary.lock", "runtime_binary_lock_sha256": "8bfc922ce4165eb7793f0b4f1afe9a185644858875af6a3bfd21992a23046d9f", "schema_version": "tukf09_455_hpc_offline_runtime_inputs_a800_exclusive_v2r6", "scientific_contract_changed": false, "shared_environment_inventory_sha256": "95780f8970b311a5fa79f8636c6faf443c72c62132a86612d485165fd9d562e0", "shared_nh_final_modified": false, "source_archive_count": 1, "status": "LOGIN4_LOCKED_RUNTIME_INPUTS_FROZEN_FOR_OFFLINE_SLURM_INSTALLATION", "symbolic_links_present": false, "total_bytes": 2817756909, "total_file_count": 24}
+TUKF09_455_OFFLINE_RUNTIME_INPUTS_PUBLISHED
+=== DOWNLOAD STDERR TAIL ===
+TUKF09_455_V2R6_DOWNLOAD_STATUS_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T17:19:46+0800
