@@ -1,0 +1,82 @@
+### channel=kalmannet-wrr-hp-extension seq=4
+### host=login4
+### started=2026-09-02T19:24:44+0800
+### ---------- output ----------
+=== TIME ===
+2026-09-02T19:24:44+0800
+=== ALL_MY_JOBS ===
+JOBID|NAME|STATE|PARTITION|TIME|NODELIST(REASON)|START_TIME
+218635|tukf09-455-v2r6-prepare|PENDING|hgpu8|0:00|(Priority)|2027-09-02T16:37:09
+218659_[6-16%6]|wrrhp-ext|PENDING|hgpu2p|0:00|(JobArrayTaskLimit)|N/A
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|0:00|(DependencyNeverSatisfied)|N/A
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)|N/A
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)|N/A
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|0:00|(DependencyNeverSatisfied)|N/A
+215429|id30_m01_s100|PENDING|hgpu2|0:00|(DependencyNeverSatisfied)|N/A
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|0:00|(JobHeldUser)|N/A
+218659_5|wrrhp-ext|RUNNING|hgpu2p|42:46|ngu005|2026-09-02T18:41:58
+218659_1|wrrhp-ext|RUNNING|hgpu2p|52:34|ngu010|2026-09-02T18:32:10
+218659_2|wrrhp-ext|RUNNING|hgpu2p|52:34|ngu011|2026-09-02T18:32:10
+218659_3|wrrhp-ext|RUNNING|hgpu2p|52:34|ngu011|2026-09-02T18:32:10
+218659_4|wrrhp-ext|RUNNING|hgpu2p|52:34|ngu001|2026-09-02T18:32:10
+218659_0|wrrhp-ext|RUNNING|hgpu2p|52:35|ngu010|2026-09-02T18:32:09
+=== RUNNING_COUNT_BY_JOBNAME ===
+      6 wrrhp-ext
+=== PENDING_COUNT_BY_JOBNAME ===
+      1 id30_m01_s100|(DependencyNeverSatisfied)
+      1 N22-agg-eval|(DependencyNeverSatisfied)
+      1 N22-export|(Dependency)
+      1 N22-gate|(Dependency)
+      1 N22-manifest|(JobHeldUser)
+      1 N22-mask-iso-531|(DependencyNeverSatisfied)
+      1 tukf09-455-v2r6-prepare|(Priority)
+      1 wrrhp-ext|(JobArrayTaskLimit)
+=== PARTITION_STATE ===
+ PARTITION  AVAIL  NODES  STATE                       NODELIST
+     hgpu8     up      1  maint                         ngu203
+     hgpu8     up      2    mix                   ngu[201-202]
+     hgpu4     up      1  down*                         ngu103
+     hgpu4     up      2    mix                   ngu[102,104]
+     hgpu4     up      1   idle                         ngu101
+     hgpu2     up      2   idle                   ngu[003,009]
+    hgpu2p     up      1  down*                         ngu002
+    hgpu2p     up      7    mix       ngu[001,005-008,010-011]
+    hgpu2p     up      1   idle                         ngu004
+=== GPU_ALLOC_DETAIL (hgpu2p nodes: who holds the cards) ===
+ngu001: CPUAlloc=8 CPUTot=96 CPULoad=2.00    AvailableFeatures=(null)    ActiveFeatures=(null)    Gres=gpu:2    NodeAddr=ngu001 NodeHostName=ngu001 Version=19.05.4    OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024     RealMemory=1 AllocMem=0 FreeMem=17244 Sockets=2 Boards=1    State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hgpu2p     BootTime=2026-01-22T15:59:03 SlurmdStartTime=2026-01-22T16:05:49    CfgTRES=cpu=96,mem=1M,billing=96    AllocTRES=cpu=8
+ngu004: CPUAlloc=0 CPUTot=96 CPULoad=0.00    AvailableFeatures=(null)    ActiveFeatures=(null)    Gres=gpu:2    NodeAddr=ngu004 NodeHostName=ngu004 Version=19.05.4    OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024     RealMemory=1 AllocMem=0 FreeMem=24447 Sockets=2 Boards=1    State=IDLE ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hgpu2p     BootTime=2026-01-22T16:11:50 SlurmdStartTime=2026-01-22T20:17:27    CfgTRES=cpu=96,mem=1M,billing=96    AllocTRES=
+ngu005: CPUAlloc=4 CPUTot=96 CPULoad=1.00    AvailableFeatures=(null)    ActiveFeatures=(null)    Gres=gpu:2    NodeAddr=ngu005 NodeHostName=ngu005 Version=19.05.4    OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024     RealMemory=1 AllocMem=0 FreeMem=24671 Sockets=2 Boards=1    State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hgpu2p     BootTime=2026-01-22T16:20:05 SlurmdStartTime=2026-01-22T20:18:04    CfgTRES=cpu=96,mem=1M,billing=96    AllocTRES=cpu=4
+ngu006: CPUAlloc=8 CPUTot=96 CPULoad=2.77    AvailableFeatures=(null)    ActiveFeatures=(null)    Gres=gpu:2    NodeAddr=ngu006 NodeHostName=ngu006 Version=19.05.4    OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024     RealMemory=1 AllocMem=0 FreeMem=12981 Sockets=2 Boards=1    State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hgpu2p     BootTime=2026-01-22T16:22:49 SlurmdStartTime=2026-01-22T20:17:55    CfgTRES=cpu=96,mem=1M,billing=96    AllocTRES=cpu=8
+ngu007: CPUAlloc=6 CPUTot=96 CPULoad=3.68    AvailableFeatures=(null)    ActiveFeatures=(null)    Gres=gpu:2    NodeAddr=ngu007 NodeHostName=ngu007 Version=19.05.4    OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024     RealMemory=1 AllocMem=0 FreeMem=13457 Sockets=2 Boards=1    State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hgpu2p     BootTime=2026-01-22T16:33:03 SlurmdStartTime=2026-01-22T20:18:31    CfgTRES=cpu=96,mem=1M,billing=96    AllocTRES=cpu=6
+ngu008: CPUAlloc=8 CPUTot=96 CPULoad=2.92    AvailableFeatures=(null)    ActiveFeatures=(null)    Gres=gpu:2    NodeAddr=ngu008 NodeHostName=ngu008 Version=19.05.4    OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024     RealMemory=1 AllocMem=0 FreeMem=9470 Sockets=2 Boards=1    State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hgpu2p     BootTime=2026-02-28T10:30:11 SlurmdStartTime=2026-02-28T11:16:51    CfgTRES=cpu=96,mem=1M,billing=96    AllocTRES=cpu=8
+ngu010: CPUAlloc=8 CPUTot=32 CPULoad=2.03    AvailableFeatures=(null)    ActiveFeatures=(null)    Gres=gpu:2    NodeAddr=ngu010 NodeHostName=ngu010 Version=19.05.4    OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024     RealMemory=1 AllocMem=0 FreeMem=34360 Sockets=2 Boards=1    State=MIXED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hgpu2p     BootTime=2026-02-28T10:53:12 SlurmdStartTime=2026-02-28T11:20:01    CfgTRES=cpu=32,mem=1M,billing=32    AllocTRES=cpu=8
+ngu011: CPUAlloc=8 CPUTot=32 CPULoad=11.00    AvailableFeatures=(null)    ActiveFeatures=(null)    Gres=gpu:2    NodeAddr=ngu011 NodeHostName=ngu011 Version=19.05.4    OS=Linux 5.14.0-503.14.1.el9_5.x86_64 #1 SMP PREEMPT_DYNAMIC Fri Nov 15 12:04:32 UTC 2024     RealMemory=1 AllocMem=0 FreeMem=6018 Sockets=2 Boards=1    State=MIXED ThreadsPerCore=1 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A    Partitions=hgpu2p     BootTime=2026-02-28T10:52:07 SlurmdStartTime=2026-02-28T11:41:27    CfgTRES=cpu=32,mem=1M,billing=32    AllocTRES=cpu=8
+=== JOBS_STARTED_TODAY (mine, any partition) ===
+216549|id31_development|hgpu2|COMPLETED|2-01:21:04|2026-08-31T12:20:14|ngu003
+217799|knet-lr-common|hgpu2p|COMPLETED|05:21:05|2026-09-01T19:10:52|ngu011
+218505|zsf4t-rec002|hgpu2p|COMPLETED|00:12:14|2026-09-02T11:46:03|ngu006
+218580|tukf09-455-pmon-probe|hgpu8|COMPLETED|00:00:01|2026-09-02T16:23:16|ngu202
+218606|r_pert_a0|hcpu48|FAILED|00:00:19|2026-09-02T16:48:54|icn255
+218612|r_pert_a0|hcpu48|FAILED|00:00:38|2026-09-02T16:53:44|icn255
+218635|tukf09-455-v2r6-prepare|hgpu8|PENDING|00:00:00|Unknown|None assigned
+218643|id29-denorm|hgpu2p|FAILED|00:00:36|2026-09-02T17:44:10|ngu010
+218644|id29-extra4|hgpu2p|FAILED|00:00:35|2026-09-02T17:44:10|ngu001
+218649|id29-denorm|hgpu2p|COMPLETED|00:20:27|2026-09-02T17:53:40|ngu010
+218650|id29-extra4|hgpu2p|COMPLETED|00:22:42|2026-09-02T17:53:40|ngu001
+218659_0|wrrhp-ext|hgpu2p|RUNNING|00:53:10|2026-09-02T18:32:09|ngu010
+218659_1|wrrhp-ext|hgpu2p|RUNNING|00:53:09|2026-09-02T18:32:10|ngu010
+218659_2|wrrhp-ext|hgpu2p|RUNNING|00:53:09|2026-09-02T18:32:10|ngu011
+218659_3|wrrhp-ext|hgpu2p|RUNNING|00:53:09|2026-09-02T18:32:10|ngu011
+218659_4|wrrhp-ext|hgpu2p|RUNNING|00:53:09|2026-09-02T18:32:10|ngu001
+218659_5|wrrhp-ext|hgpu2p|RUNNING|00:43:21|2026-09-02T18:41:58|ngu005
+=== MY_ARRAY_ONLY ===
+      1 218659_0|RUNNING|ngu010
+      1 218659_1|RUNNING|ngu010
+      1 218659_2|RUNNING|ngu011
+      1 218659_3|RUNNING|ngu011
+      1 218659_4|RUNNING|ngu001
+      1 218659_5|RUNNING|ngu005
+      1 218659_[6-16%6]|PENDING|(JobArrayTaskLimit)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T19:24:44+0800
