@@ -10,8 +10,6 @@ sacct -j "$JID" -X --format=JobID%10,State%12,ExitCode%8,NodeList%9,Elapsed%10,S
 squeue -j "$JID" -h -o "QUEUE %T | %R | elapsed=%M | start=%S" 2>&1
 echo "=== PARTITION ==="
 sinfo -p hgpu8 -o "%.10P %.6a %.6D %.8t %.24N %.20C" 2>&1
-echo "=== MY QUEUED OR RUNNING JOBS ==="
-squeue -u "$USER" -h -o "%.10i %.28j %.9P %.9T %.14R %.9M" 2>&1
 echo "=== STATUS MARKERS ==="
 for f in PREPARATION_FAILED.json initial_bundle_verification.json staged_training_sources.json preparation_probe.json hpc_technical_admission.json training_job_id.txt; do
   if [ -f "$ROOT/status/$f" ]; then echo "PRESENT $f  $(wc -c < "$ROOT/status/$f") bytes  $(sha256sum "$ROOT/status/$f" | cut -d' ' -f1)"; else echo "ABSENT  $f"; fi
