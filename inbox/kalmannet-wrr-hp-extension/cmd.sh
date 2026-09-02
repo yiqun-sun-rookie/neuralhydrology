@@ -1,117 +1,41 @@
 #!/bin/bash
-set -eo pipefail
+set -o pipefail
 ROOT=/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
-REPO="$ROOT/repo"
-MAILBOX=/data1/home/sunyiq/hpc_mailbox
-PAYLOAD="$MAILBOX/payload/kalmannet-wrr-hp-extension/v1"
-BUNDLE="$PAYLOAD/source_bundle.tar.gz"
-OVERLAY="$PAYLOAD/overlay.tar.gz"
-JOB_SCRIPT="$PAYLOAD/hpc_array.slurm"
-TRAIN_SOURCE=/data1/home/sunyiq/knet_project/data/processed/high_flow_aug/train_win800_19990101_01-20070527_03.pt
-VAL_SOURCE=/data1/home/sunyiq/knet_project/data/processed/high_flow_aug/val_win800_20070527_04-20090314_13.pt
-
-assert_sha256() {
-  expected="$1"; path="$2"
-  actual="$(sha256sum "$path" | awk '{print $1}')"
-  if [ "$actual" != "$expected" ]; then echo "SHA256_MISMATCH path=$path expected=$expected actual=$actual" >&2; exit 1; fi
-}
-
-echo "=== PAYLOAD_CHECK ==="
-test -f "$BUNDLE"; test -f "$OVERLAY"; test -f "$JOB_SCRIPT"
-assert_sha256 c4ee7774e665b06858117cd3b481a58fbafae5240c23f1a16792e886ac69f7a1 "$BUNDLE"
-assert_sha256 4967de6ab68c192c9cddb541361b6ee1966cba50ff3f88f74cb0dd4afc69535d "$OVERLAY"
-assert_sha256 8dc56aa86b7e4c99c89735e85308207c2ad3a3ba46c3d478f67620213f8b7644 "$JOB_SCRIPT"
-assert_sha256 3a4f94a2562278f09b67853ac77e060766296007cb8f8a762756ffe792792440 "$TRAIN_SOURCE"
-assert_sha256 2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403 "$VAL_SOURCE"
-echo payload_ok
-
-echo "=== DEPLOY ==="
-if [ -e "$ROOT" ]; then echo "DEPLOY_TARGET_ALREADY_EXISTS=$ROOT" >&2; exit 1; fi
-mkdir -p "$REPO" "$ROOT/logs"
-tar -xzf "$BUNDLE" -C "$REPO"
-tar -xzf "$OVERLAY" -C "$REPO"
-cp "$JOB_SCRIPT" "$ROOT/hpc_array.slurm"
-sed -i 's/\r$//' "$ROOT/hpc_array.slurm"
-chmod 700 "$ROOT/hpc_array.slurm"
-DATA_DIR="$REPO/data/processed/high_flow_aug"
-mkdir -p "$DATA_DIR"
-ln -s "$TRAIN_SOURCE" "$DATA_DIR/train_win800_19990101_01-20070527_03.pt"
-ln -s "$VAL_SOURCE" "$DATA_DIR/val_win800_20070527_04-20090314_13.pt"
-assert_sha256 3a4f94a2562278f09b67853ac77e060766296007cb8f8a762756ffe792792440 "$DATA_DIR/train_win800_19990101_01-20070527_03.pt"
-assert_sha256 2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403 "$DATA_DIR/val_win800_20070527_04-20090314_13.pt"
-echo "=== DEPLOYED_SOURCE_CHECK (62 files) ==="
-assert_sha256 15c7e09ef6b56ee07d057720f80cafbb2584062f73995bffe85a1673bc766024 "$REPO/experiments/__init__.py"
-assert_sha256 dba875aedac492d4f88c2a90ca0f4d529b7d6437960497d139aa3e6458d3b56d "$REPO/experiments/optimize_hyper_parameters/grid_search_knet.py"
-assert_sha256 8b4f6b25cd0335d46292da0f31974209584845f75b81c014bf1318561773304b "$REPO/experiments/optimize_hyper_parameters/train_and_eval.py"
-assert_sha256 46a6cdb401ffc7cfd84398b4d0bb89ba2c7dfda4f846c196ae51d5ff749659a7 "$REPO/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/README.md"
-assert_sha256 de3cdb625d849370ea6fcc8c911d2d62f0e5cdea16e9ac371e9d16cbe388dd64 "$REPO/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/base_config.yaml"
-assert_sha256 3a048a19d2e9523954cc6dcf811ee74deb33f75fa8306b023d6b041b6eb1593e "$REPO/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/combos.jsonl"
-assert_sha256 4a3f2e433858eb4865cbeabcde37cbcea26a15c752061e6b425c746563af3bb9 "$REPO/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/registry.csv"
-assert_sha256 76d0cf147274fcbe10b059a902591fe93024ebbd30771ce20261d361b1316e6a "$REPO/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/rescore_checkpoints.py"
-assert_sha256 c71621dca168a9f7a2b8c87e3f3d8a5bce392037c58ef6bbc1123c6cb09c2626 "$REPO/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/run_one_cell.py"
-assert_sha256 a7cdb0d489c21fd1634b75de50d779fe9532bdc84be6e26afa87005a8f956a05 "$REPO/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/summarize.py"
-assert_sha256 52405030c0481827af8b367bf33f28768dfffddac32ad648ba72afce522063bf "$REPO/hydrologic/data_augmentation.py"
-assert_sha256 7af27a10901c45331bca5c714887b788e4dafb9d9e53f04866d55dd9edacbb18 "$REPO/hydrologic/data_handler.py"
-assert_sha256 f676434fc5183c7bd92d2bf6af988d677484ba694c60ab6b20ba98228862f021 "$REPO/hydrologic/data_loader.py"
-assert_sha256 9c7b9131be2b0e2bfb4c85a61f7c420699ea726e13c69d235ac43071bc8ae4f3 "$REPO/hydrologic/data_utils.py"
-assert_sha256 10a958a69e3217b46088255bbb5e9d20a35e20866a63a1e572aacb0d0bd350c7 "$REPO/hydrologic/dataset.py"
-assert_sha256 46c0470801af993d1dd38115888d682835f774037dc436754204e2ef74833bbc "$REPO/hydrologic/dataset_new.py"
-assert_sha256 b1761ad072b44b3e92a0ff98fb3e5eb2e2de75e3758dd86b9fd190d04c02face "$REPO/hydrologic/load_data.py"
-assert_sha256 9bc5ddd75c037b9c22fcfe51203a07e47ca95a43492f2f59ae7e42e94067116b "$REPO/hydrologic/math.py"
-assert_sha256 95fec732f90ae9549a2bc75a1b68d55dbe1f0392a72af986d08732d32bf6240b "$REPO/hydrologic/open_loop_walrus.py"
-assert_sha256 5a794b067890967916775005cd930d557459f69506464499b8a920022d42b664 "$REPO/hydrologic/open_loop_walrus_batch.py"
-assert_sha256 c3433a2b51f8dc6f353f315a7ce60652e87a9b0d92060ff6fa5c1d5db8b49f56 "$REPO/hydrologic/optimize_open_loop_walrus.py"
-assert_sha256 b981e5920a6bd1170ecb414a6c8ecdc1313789b1d391a3d9d379e81552752af4 "$REPO/hydrologic/params.py"
-assert_sha256 6280b194f51583b5878edb6beaa0f85c3b632cd07ffa3d1ba35f393a4a7d3953 "$REPO/hydrologic/process_data.py"
-assert_sha256 62ba0eb3708de43cc16a3b4a20f31a24c7e4ab3bc50651728dc38e16d845e599 "$REPO/hydrologic/rearrange_data.py"
-assert_sha256 1d7974a31b489b165fe32915ab0527f70d3c669eb814858c4e7a56ce78fa4a7a "$REPO/hydrologic/split_data.py"
-assert_sha256 1ea8aac1357ac1de1996cb520d09fbaf022b1c3eef15f15872b89a406138b77d "$REPO/hydrologic/utils.py"
-assert_sha256 4ca00e7d99e971949257b75ecfb21faf2252f59f3867196fb95bdbc8a05d775b "$REPO/knet/__init__.py"
-assert_sha256 934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843 "$REPO/knet/dl/nn_kalman_clamp_5.py"
-assert_sha256 5a55f84eb56c2fc637f2a70b64dc92162d2d434960ae047343a2e1dc5d592725 "$REPO/knet/dl/nn_kalman_clamp_5_block_renamed.py"
-assert_sha256 4e0d9b89371008c2d080f1de1621e48434b5dc3406057b31a856ca2f961fb36b "$REPO/knet/dl/nn_kalman_clamp_5_compile.py"
-assert_sha256 96fbe856e4d6e958afc05a7218fb0b59eb120f0944ee38b78420a5d296eb085c "$REPO/knet/modules/data_preprocessor/check_data_loader.py"
-assert_sha256 09a520f07391add5038bd2342260b9b16f4dd6dc3c7aff6205db39fefff3eb84 "$REPO/knet/modules/data_preprocessor/compute_clamp_and_scale_for_states_qobs.py"
-assert_sha256 5ba3235a022493bba3668d1a66d8c97708fc4e7c149e12ab5e0b1aff62a03dc7 "$REPO/knet/modules/data_preprocessor/prepare_data_for_train_nn_add_data_augmentation1.py"
-assert_sha256 51f0a93f4719d6889beb2d7ba99f8b62a847683cf8cad700c8583b32ae28a1fb "$REPO/knet/modules/data_preprocessor/utils.py"
-assert_sha256 05cffd9ce6ff64c7645a1de943885dae27942812c22c9f7ebbe685eaaba785fd "$REPO/knet/modules/data_preprocessor/windowed_time_series.py"
-assert_sha256 7cbf754cf18d71b1a2ffb3b5281635ca39a43f5ffdba40af6fc064743033f56e "$REPO/knet/modules/nn/nn_kalman.py"
-assert_sha256 c33e68c56602003d14706e219654d33a753bf49e6c32a8726aa2fa4d4fa80522 "$REPO/knet/modules/nn/nn_state_scale_12.py"
-assert_sha256 af49acc31f98a22bf3fd6317b94d9ee7487cc845cd36dfca5032ed0210d4f13f "$REPO/knet/modules/nn/utils.py"
-assert_sha256 e45c1ddeec0105bdb62f0255fe50d0ecb23006415a89ceb7ede7886e41a3741e "$REPO/knet/modules/pipeline/core_fun.py"
-assert_sha256 ab81d7d2767f95f2ab5c54696701294e180283ba6fa0dd8348ef19d805fe2cdb "$REPO/knet/modules/pipeline/openloop.py"
-assert_sha256 18625af3364d89a500d2deb0ee0417870d05dc98cf56aeca4b52104254e8f5e7 "$REPO/knet/modules/pipeline/pipeline_state_scale_12.py"
-assert_sha256 f7f288a7f23c5e0267e9a2e81e0a61d64180fc314287e1b18740b8275e3f5bea "$REPO/knet/modules/pipeline/script_system_model.py"
-assert_sha256 17cdb1bfb5b3ee38a34d6bb660f161c179d6d1ea52affd4514619eee5a64e465 "$REPO/knet/modules/pipeline/system_model.py"
-assert_sha256 570f8f3a5e337b2bcce7f25f82e406a30844f3074b89bcbda8d84a9e04755a5d "$REPO/knet/modules/pipeline/test_kf.py"
-assert_sha256 426663e0505faeb4a0a3ba2cd70267b0e7baa781328e4c3e45bc550176116806 "$REPO/knet/modules/pipeline/train_composite_loss_11.py"
-assert_sha256 7cf90054fdffacc72135e3e946150f25e1e60ea3826c80d7907ddde7b9520f19 "$REPO/knet/modules/pipeline/utils.py"
-assert_sha256 703adbb37c7bd3804f7f218664c9636f4a3c5a303687fdbb33fc6172b0daffd2 "$REPO/knet/modules/pipeline/walrus_batch_speedup.py"
-assert_sha256 422ad2b67b15cc17252884b4fb9da00d9ecc94672e0cf14a0d87140542f4c130 "$REPO/knet/modules/utils/imports_12.py"
-assert_sha256 2afac7b6db912b92db224d01ea3d48e568df02361e46af7b4bf9d5922a517878 "$REPO/knet/modules/utils/initializations.py"
-assert_sha256 77ab10316846a8cb35a0bf71dd3d161c0fc81a7389677d72832a7cb0b4971def "$REPO/knet/modules/utils/metrics.py"
-assert_sha256 ac3bf1415199dcd57439bcefec9f8a8c9dad84a23ebe0410e162ea2f5cb319b7 "$REPO/knet/modules/utils/metricsV2.py"
-assert_sha256 08a8c6f49f11d285cebe3287002227b29e23e631294106247c257fb5b2171660 "$REPO/knet/modules/utils/print_utils.py"
-assert_sha256 84fb778f2699abcf5ce5f44228c33be102eeaa8822e813119d63d495e5d6e890 "$REPO/knet/pipelines/__pycache__/train_clean_based_on_11.cpython-311.pyc"
-assert_sha256 516e0f5ee73d019a68d4999be29582b9788bc70fb597e9d536ae44a1a46bda95 "$REPO/knet/pipelines/openloop.py"
-assert_sha256 cd25e990860725d1f662b3839bee7ab879f833b184152fbdf33066c56c4d8f92 "$REPO/knet/pipelines/pipeline_clean_based_on_11.py"
-assert_sha256 3def75ccb071ed39847f3c0d02779d92608dccdc3db52f40d51e98f9155f83a9 "$REPO/knet/pipelines/test_kf.py"
-assert_sha256 e022a781f27c90e93c72ed5c7cc8cefb6008e62e14e1b464d6dbba6c2fa48293 "$REPO/knet/pipelines/test_update_save_8.py"
-assert_sha256 8aef76e4462754337f2d0b1bb35f1dde7141293175dfbb78c756f3356ec009ff "$REPO/knet/pipelines/train_clean_based_on_11.py"
-assert_sha256 bd57c086297dacf54ffa1d4046981d090d3f6270bd37bab82a2531deb2efc83e "$REPO/knet/utils/config.py"
-assert_sha256 da6ad85293c34fca3aee9c4bffbe0c80a3f77143f1f617a3a42eba8e3c3fbbfa "$REPO/knet/utils/model_initialization_use_script_mdl_1.py"
-assert_sha256 a3f179beb4208a2d7fbd46b725ce1ccbb1241a65fa5e046d7cf5ac8fab6d0658 "$REPO/knet/utils/prepare_data.py"
-assert_sha256 0aae76bf55caf0d4f2be0fb795c75cc5c840c15aba4bd9e56cb1d418a74d3a91 "$REPO/knet/utils/train_config_8.py"
-echo deployed_tree_ok
-ls "$REPO/data/processed/high_flow_aug"
-echo "root=$ROOT"
-
-echo "=== SUBMIT ==="
-cd "$ROOT"
-SUBMIT_OUTPUT="$(sbatch "$ROOT/hpc_array.slurm" 2>&1)"
-echo "$SUBMIT_OUTPUT"
-if ! printf '%s\n' "$SUBMIT_OUTPUT" | grep -qE '^Submitted batch job [0-9]+$'; then echo "SUBMIT_FAILED" >&2; exit 1; fi
-JOB_ID="$(printf '%s\n' "$SUBMIT_OUTPUT" | awk '/^Submitted batch job [0-9]+$/ {print $4; exit}')"
-echo "job_id=$JOB_ID"
-printf '%s' "$JOB_ID" > "$ROOT/array_job_id.txt"
-squeue -j "$JOB_ID" -o '%i|%j|%T|%P|%M|%R' || true
+EXP="$ROOT/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902"
+JOB_ID=218659
+echo "=== TIME_AND_HOST ==="; date -Is; hostname
+echo "=== QUEUE (job $JOB_ID) ==="
+squeue -j "$JOB_ID" -o '%i|%j|%T|%P|%M|%l|%R' 2>&1 || true
+echo "=== ACCOUNTING ==="
+sacct -j "$JOB_ID" -X -n -P --format=JobID,JobName,Partition,State,ExitCode,Elapsed,Start,End,NodeList 2>&1 || true
+echo "=== FAULTS (never truncated) ==="
+sacct -j "$JOB_ID" -X -n -P --format=JobID,State,ExitCode,NodeList,Elapsed 2>/dev/null | grep -E '\|(TIMEOUT|FAILED|NODE_FAIL|OUT_OF_MEMORY|CANCELLED)' || echo none
+echo "=== REGISTRY ==="
+cat "$EXP/registry.csv" 2>&1 || true
+echo "=== CELL_METRICS ==="
+for f in "$EXP"/runs/formal_seed*_gpu/idx*/cell_metrics.json; do
+  [ -f "$f" ] || continue
+  echo "--- $f"
+  python3 - "$f" <<'PY' 2>/dev/null || cat "$f" | head -40
+import json, sys
+c = json.load(open(sys.argv[1]))
+vs = c.get("validation_scoring", {}); el = c.get("epoch_log_summary", {})
+print(json.dumps({"run_id": c["run_id"], "combo": c["combo"], "train_seconds": c.get("train_seconds"),
+  "M_leads_1_12": vs.get("pooled_mean_leads_1_12_corrected_def"), "M_slots_0_11": vs.get("pooled_mean_slots_0_11_current_def"),
+  "best_epoch": vs.get("best_epoch_zero_based"), "lr_at_best": el.get("lr_at_best_epoch"), "rollbacks": el.get("grad_explosion_rollbacks_total"),
+  "stop_epoch": el.get("stop_epoch_zero_based")}))
+PY
+done
+echo "=== EPOCH_PROGRESS (last line of each epoch_log) ==="
+for f in "$EXP"/runs/formal_seed*_gpu/idx*/results/epoch_log.jsonl; do
+  [ -f "$f" ] || continue
+  echo "--- $f"; tail -n 1 "$f"
+done
+echo "=== SLURM_LOG_TAILS ==="
+for f in "$ROOT"/logs/slurm-*.out; do
+  [ -f "$f" ] || continue
+  echo "--- $f ($(stat -c %s "$f") bytes)"; grep -E 'EpochSummary|EarlyStop|Done|Fail|FATAL|Traceback|Error|SHA256|Launcher\] cell' "$f" | tail -n 4 || true
+done
+for f in "$ROOT"/logs/slurm-*.err; do
+  [ -f "$f" ] && [ -s "$f" ] && { echo "--- $f"; tail -n 5 "$f"; } || true
+done
