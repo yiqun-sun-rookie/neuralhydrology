@@ -1,0 +1,148 @@
+### channel=kalmannet-tukf09-455 seq=72
+### host=login4
+### started=2026-09-02T16:27:48+0800
+### ---------- output ----------
+PROBE_JOB_ID=218580
+=== JOB STATE ===
+     JobID                  JobName Partitio          State ExitCode   NodeList    Elapsed                Start                  End 
+---------- ------------------------ -------- -------------- -------- ---------- ---------- -------------------- -------------------- 
+    218580    tukf09-455-pmon-probe    hgpu8      COMPLETED      0:0     ngu202   00:00:01  2026-09-02T16:23:16  2026-09-02T16:23:17 
+--- still queued or running? ---
+slurm_load_jobs error: Invalid job id specified
+=== JOB STANDARD OUTPUT ===
+-rw-r--r--. 1 sunyiq g_sunyiq 6044 Sep  2 16:22 /data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/logs/pmon-probe-218580.out
+c804bade49d0ecbba950f8b5e4d3a3e52b9286a1f0e4d0f3fd88b5244e7eabf1  /data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/logs/pmon-probe-218580.out
+--- begin ---
+=== IDENTITY ===
+2026-09-02T08:22:41Z
+ngu202
+SLURM_JOB_ID=218580
+SLURM_JOB_NODELIST=ngu202
+SLURM_JOB_CPUS_PER_NODE=64
+SLURM_CPUS_ON_NODE=64
+SLURM_CPUS_PER_TASK=4
+SLURM_JOB_GPUS=0
+SLURM_STEP_GPUS=
+CUDA_VISIBLE_DEVICES=0
+--- operating system ---
+NAME="CentOS Linux"
+VERSION="7 (Core)"
+ID="centos"
+ID_LIKE="rhel fedora"
+VERSION_ID="7"
+PRETTY_NAME="CentOS Linux 7 (Core)"
+ANSI_COLOR="0;31"
+CPE_NAME="cpe:/o:centos:centos:7"
+HOME_URL="https://www.centos.org/"
+BUG_REPORT_URL="https://bugs.centos.org/"
+
+CENTOS_MANTISBT_PROJECT="CentOS-7"
+CENTOS_MANTISBT_PROJECT_VERSION="7"
+REDHAT_SUPPORT_PRODUCT="centos"
+REDHAT_SUPPORT_PRODUCT_VERSION="7"
+
+=== GPU INVENTORY (no head: SIGPIPE would kill an 8-GPU job) ===
+gpu_inventory_return_code=0
+index, name, driver_version, memory.total [MiB]
+0, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB
+1, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB
+2, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB
+3, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB
+4, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB
+5, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB
+6, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB
+7, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB
+=== VERBATIM PROBE CAPTURE: the exact command the frozen controller runs ===
+PMON_COMMAND=nvidia-smi pmon -c 1
+PMON_RETURN_CODE=0
+PMON_STDOUT_BYTES=681
+PMON_STDOUT_SHA256=16c2b7b18ee3f2ed87c2f2ce8eeed5fecd0f25050c4bea50eac5648e5093de25
+PMON_STDERR_BYTES=0
+PMON_STDERR_SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+--- PROBE STANDARD OUTPUT, EVERY BYTE VISIBLE ---
+# gpu         pid  type    sm    mem    enc    dec    command$
+# Idx           #   C/G     %      %      %      %    name$
+    0          -     -      -      -      -      -    -              $
+    1          -     -      -      -      -      -    -              $
+    2          -     -      -      -      -      -    -              $
+    3          -     -      -      -      -      -    -              $
+    4          -     -      -      -      -      -    -              $
+    5          -     -      -      -      -      -    -              $
+    6          -     -      -      -      -      -    -              $
+    7          -     -      -      -      -      -    -              $
+--- PROBE STANDARD ERROR, EVERY BYTE VISIBLE ---
+=== FROZEN PARSER SIMULATION ===
+frozen rule: skip blank and hash-leading lines, then python split(maxsplit=9), require exactly 10 fields
+DATA_LINE raw_tokens=8 python_field_count=8 verdict=RAISE_graphics_process_probe_output_changed content=|0          -     -      -      -      -      -    -|
+DATA_LINE raw_tokens=8 python_field_count=8 verdict=RAISE_graphics_process_probe_output_changed content=|1          -     -      -      -      -      -    -|
+DATA_LINE raw_tokens=8 python_field_count=8 verdict=RAISE_graphics_process_probe_output_changed content=|2          -     -      -      -      -      -    -|
+DATA_LINE raw_tokens=8 python_field_count=8 verdict=RAISE_graphics_process_probe_output_changed content=|3          -     -      -      -      -      -    -|
+DATA_LINE raw_tokens=8 python_field_count=8 verdict=RAISE_graphics_process_probe_output_changed content=|4          -     -      -      -      -      -    -|
+DATA_LINE raw_tokens=8 python_field_count=8 verdict=RAISE_graphics_process_probe_output_changed content=|5          -     -      -      -      -      -    -|
+DATA_LINE raw_tokens=8 python_field_count=8 verdict=RAISE_graphics_process_probe_output_changed content=|6          -     -      -      -      -      -    -|
+DATA_LINE raw_tokens=8 python_field_count=8 verdict=RAISE_graphics_process_probe_output_changed content=|7          -     -      -      -      -      -    -|
+PARSER_SUMMARY data_lines=8 failing_lines=8
+TOKEN_HISTOGRAM tokens=8 lines=8
+=== OUTER WRAPPER GATES (the ones job 217939 already passed) ===
+OUTER_HEADER_GATE=PASS
+OUTER_COMPUTE_PROCESS_GATE=NODE_IDLE
+=== COMPUTE APPLICATION CROSS CHECK ===
+pid, process_name, used_gpu_memory [MiB]
+=== PROBE HELP: the column set this driver supports ===
+
+    Process statistics are displayed in scrolling format per sampling
+    interval. This tool lists the statistics for all the compute and 
+    graphics processes running on each device. Metrics to be monitored
+     can be adjusted based on the width of terminal window. Monitoring
+    is limited to a maximum of 4 devices. If no devices are specified,
+    then up to first four supported devices under natural enumeration
+    (starting with GPU index 0) are used for monitoring purpose.
+    It is supported on Tesla, GRID, Quadro and limited GeForce products
+    for Kepler or newer GPUs under x64 and ppc64 bare metal Linux.
+    Note: On MIG-enabled GPUs, querying the utilization of encoder,
+    decoder, jpeg, ofa, gpu, and memory is not currently supported.
+
+    Usage: nvidia-smi pmon [options]
+
+    Options include:
+    [-i | --id]:          Comma separated Enumeration index, PCI bus ID or UUID
+    [-d | --delay]:       Collection delay/interval in seconds [default=1sec, max=10secs]
+    [-c | --count]:       Collect specified number of samples and exit
+    [-s | --select]:      One or more metrics [default=u]
+                          Can be any of the following:
+                              u - Utilization
+                              m - FB memory usage
+    [-o | --options]:     One or more from the following:
+                              D - Include Date (YYYYMMDD) in scrolling output
+                              T - Include Time (HH:MM:SS) in scrolling output
+    [-f | --filename]:    Log to a specified file, rather than to stdout
+    [-h | --help]:        Display help information
+
+
+=== CAPTURE MANIFEST ===
+16c2b7b18ee3f2ed87c2f2ce8eeed5fecd0f25050c4bea50eac5648e5093de25  pmon_stdout.txt
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  pmon_stderr.txt
+52f8a0efccaf5fa085f9414751eb1a9a0e8b97d548afed0069eecd70bf64076d  gpu_inventory.csv
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  gpu_inventory.err
+TUKF09_455_PMON_PROBE_CAPTURE_COMPLETED
+--- end ---
+=== JOB STANDARD ERROR ===
+-rw-r--r--. 1 sunyiq g_sunyiq 0 Sep  2 16:22 /data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/logs/pmon-probe-218580.err
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/logs/pmon-probe-218580.err
+--- begin ---
+--- end ---
+=== CAPTURE DIRECTORY ===
+/data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/capture_218580:
+total 2
+-rw-r--r--. 1 sunyiq g_sunyiq 432 Sep  2 16:22 gpu_inventory.csv
+-rw-r--r--. 1 sunyiq g_sunyiq   0 Sep  2 16:22 gpu_inventory.err
+-rw-r--r--. 1 sunyiq g_sunyiq   0 Sep  2 16:22 pmon_stderr.txt
+-rw-r--r--. 1 sunyiq g_sunyiq 681 Sep  2 16:22 pmon_stdout.txt
+=== FROZEN EVIDENCE STILL UNCHANGED ===
+JOB_ID_FILE_CONTENT=217939
+11b47e27e4b7e3fd403ffb3a8f2b8003c6ebf6540e52d0c1ab439be6293d2f77  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.out
+b5e19ea076beff9d423c3ab02e6d8efd6918548b843c22503aa77a44c768c92e  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.err
+TUKF09_455_PMON_PROBE_READBACK_COMPLETED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T16:27:48+0800
