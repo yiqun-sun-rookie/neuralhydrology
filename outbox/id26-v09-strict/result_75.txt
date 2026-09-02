@@ -1,0 +1,21 @@
+### channel=id26-v09-strict seq=75
+### host=login4
+### started=2026-09-02T22:29:38+0800
+### ---------- output ----------
+=== A JOB ===
+JobID|State|Partition|NodeList|Elapsed
+218690|RUNNING|hgpu2|ngu003|01:34:33
+=== B STARTUP LOG ===
+out_bytes=175
+predict_commit=2944ecba297a76459da74a71b893e79c603eec7e node=ngu003 start=2026-09-02T20:55:46+0800
+0, NVIDIA GeForce RTX 3090, 24257 MiB
+1, NVIDIA GeForce RTX 3090, 24257 MiB
+err_bytes=0
+=== C PROGRESS ===
+building=present
+seed_csv=12
+idle_seconds=5667
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T22:29:38+0800
