@@ -1,0 +1,72 @@
+### channel=id32-transformer-inductive-bias seq=1
+### host=login4
+### started=2026-09-02T20:01:32+0800
+### ---------- output ----------
+=== A. PRECONDITIONS ===
+2026-09-02T20:01:32+0800
+hhjt_parastor_hhjt_parastor  954T  599T  356T  63% /data1
+payload:
+f864492c2d162855fab1cdd8820d0ae78ef820e82bd12e79bed855d0c0157a9d  /data1/home/sunyiq/hpc_mailbox/payload/id32-transformer-inductive-bias/id32_deploy_v01.tar.gz
+PAYLOAD_HASH_OK
+=== B. HOW ID31 GETS ITS DATA (to copy the same arrangement) ===
+total 8
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Aug 28 19:28 .
+drwxr-xr-x. 9 sunyiq g_sunyiq 4096 Aug 28 19:28 ..
+lrwxr-xr-x. 1 sunyiq g_sunyiq  106 Aug 28 19:28 camels_us_track0_development_forcing_v01 -> /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01
+lrwxr-xr-x. 1 sunyiq g_sunyiq   98 Aug 28 19:28 camels_us_track0_supervision_v01 -> /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01
+-- is data a symlink? --
+/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/data
+/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01
+=== C. CREATE THE ISOLATED ID32 ROOT ===
+copied skeleton; top level:
+neuralhydrology
+requirements-cpu.txt
+requirements-gpu.txt
+requirements.txt
+setup.cfg
+setup.py
+src
+test
+=== D. LINK THE AUDITED DATA BUNDLE (read-only, shared with ID30) ===
+  linked camels_us_track0_development_forcing_v01
+  linked camels_us_track0_supervision_v01
+total 8
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  2 20:01 .
+drwxr-xr-x. 6 sunyiq g_sunyiq 4096 Sep  2 20:01 ..
+lrwxr-xr-x. 1 sunyiq g_sunyiq  106 Sep  2 20:01 camels_us_track0_development_forcing_v01 -> /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01
+lrwxr-xr-x. 1 sunyiq g_sunyiq   98 Sep  2 20:01 camels_us_track0_supervision_v01 -> /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01
+=== E. OVERLAY THE ID32 PAYLOAD ===
+payload extracted
+fair_benchmark
+modern_transformer_moe
+transformer_inductive_bias
+=== F. VERIFY DEPLOYED HASHES ===
+89b4854f0d187992fbf63b6cda8c2acf99a985cfe21f3f461a1cf7fcb2756b53  neuralhydrology/modelzoo/recency_biased_transformer.py
+02869eddca61755d4c7a585295014de53917d7b66a1524c589c7ba0417ee3914  src/transformer_inductive_bias/scripts/audit_configs.py
+53a1699c571774668c15ad8ddaec355e5d4e261f78bff4ded0c8753fa0acf30a  src/transformer_inductive_bias/scripts/run_development.py
+e6107755ae7c918bcd5807668742bd2a09694b8cdbaced60858b041c3fac4a0d  src/transformer_inductive_bias/registry/experiments.csv
+567b08971f3c2bdaff22c72c1d58d091460e247dfc171ba21354ed6102a8d2e0  src/transformer_inductive_bias/hpc/submit_ablation_arm.slurm
+=== G. AUDIT AND TESTS UNDER nh_final ===
+ID32 CONFIG AUDIT: PASS (6 arms; one factor each; no data read; no training launched)
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python: No module named pytest
+-- plan mode, read only --
+{
+  "command": [
+    "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "-u",
+    "-m",
+    "neuralhydrology.nh_run",
+    "train",
+    "--config-file",
+    "src/transformer_inductive_bias/configs/recipe_dropout_s100.yml",
+    "--gpu",
+    "0"
+  ],
+=== H. UNTOUCHED CHECK ===
+ID30 root still present: yes
+ID31 root still present: yes
+ID31 DL01 epoch30 checkpoint intact: 135832304f6d6ffcb2cfe69703a5143504bbb9654158515f4e39ebe0d2061b18
+ID32_DEPLOY_SEQ1_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T20:02:09+0800
