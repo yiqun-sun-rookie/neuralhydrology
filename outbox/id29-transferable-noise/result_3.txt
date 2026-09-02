@@ -1,0 +1,59 @@
+### channel=id29-transferable-noise seq=3
+### host=login4
+### started=2026-09-02T17:46:48+0800
+### ---------- output ----------
+=== WAIT (max 8 min) ===
+=== SACCT ===
+     JobID        JobName Partitio  NodeList        State ExitCode    Elapsed AllocC 
+---------- -------------- -------- --------- ------------ -------- ---------- ------ 
+    218643    id29-denorm   hgpu2p    ngu010       FAILED      5:0   00:00:36     24 
+    218644    id29-extra4   hgpu2p    ngu001       FAILED      5:0   00:00:35     24 
+=== LOG TAILS ===
+--- /data1/home/sunyiq/id29_transferable_noise_20260902/logs/id29-denorm_218643.out ---
+=== ENV ===
+ngu010
+2026-09-02 17:44:08 +0800
+python 3.11.13 numpy 2.3.3 pandas 2.3.2
+=== P0 ===
+P0_FAILED_STOP
+--- /data1/home/sunyiq/id29_transferable_noise_20260902/logs/id29-extra4_218644.out ---
+=== ENV ===
+ngu001
+2026-09-02 17:44:10 +0800
+python 3.11.13 numpy 2.3.3 pandas 2.3.2
+=== P0 (dev-window replication through the same builder) ===
+P0_FAILED_STOP
+--- /data1/home/sunyiq/id29_transferable_noise_20260902/logs/id29-denorm_218643.err (1456 bytes) ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/id29_transferable_noise_20260902/src/camels_switch_confirmation/scripts/run_noise_axis_denormalized_transfer.py", line 32, in <module>
+    from camels_switch_confirmation import noise_axis_denormalized_transfer as dn  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/id29_transferable_noise_20260902/src/camels_switch_confirmation/noise_axis_denormalized_transfer.py", line 19, in <module>
+    from camels_switch_confirmation import noise_axis_391_confirmation as conf
+  File "/data1/home/sunyiq/id29_transferable_noise_20260902/src/camels_switch_confirmation/noise_axis_391_confirmation.py", line 36, in <module>
+    from camels_switch_confirmation.run_real_case_hindcast import assert_data_request_allowed
+  File "/data1/home/sunyiq/id29_transferable_noise_20260902/src/camels_switch_confirmation/run_real_case_hindcast.py", line 25, in <module>
+    from camels_switch_confirmation.real_case_center_calibration import (
+  File "/data1/home/sunyiq/id29_transferable_noise_20260902/src/camels_switch_confirmation/real_case_center_calibration.py", line 21, in <module>
+    from scl_hydro.hbv_lite_cma_calibrate import calibrate_hbv_lite_cma
+  File "/data1/home/sunyiq/id29_transferable_noise_20260902/src/scl_hydro/hbv_lite_cma_calibrate.py", line 18, in <module>
+    import cma
+ModuleNotFoundError: No module named 'cma'
+--- /data1/home/sunyiq/id29_transferable_noise_20260902/logs/id29-extra4_218644.err (1216 bytes) ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/id29_transferable_noise_20260902/src/camels_switch_confirmation/scripts/run_noise_axis_391_confirmation.py", line 36, in <module>
+    from camels_switch_confirmation import noise_axis_391_confirmation as conf  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/id29_transferable_noise_20260902/src/camels_switch_confirmation/noise_axis_391_confirmation.py", line 36, in <module>
+    from camels_switch_confirmation.run_real_case_hindcast import assert_data_request_allowed
+  File "/data1/home/sunyiq/id29_transferable_noise_20260902/src/camels_switch_confirmation/run_real_case_hindcast.py", line 25, in <module>
+    from camels_switch_confirmation.real_case_center_calibration import (
+  File "/data1/home/sunyiq/id29_transferable_noise_20260902/src/camels_switch_confirmation/real_case_center_calibration.py", line 21, in <module>
+    from scl_hydro.hbv_lite_cma_calibrate import calibrate_hbv_lite_cma
+  File "/data1/home/sunyiq/id29_transferable_noise_20260902/src/scl_hydro/hbv_lite_cma_calibrate.py", line 18, in <module>
+    import cma
+ModuleNotFoundError: No module named 'cma'
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T17:46:49+0800
