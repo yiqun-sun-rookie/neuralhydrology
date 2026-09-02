@@ -1,0 +1,39 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=59
+### host=login4
+### started=2026-09-02T11:38:19+0800
+### ---------- output ----------
+=== SNAPSHOT_TIME ===
+2026-09-02T11:38:19+0800
+=== SQUEUE ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+218505|zsf4t-rec002|PENDING|hgpu2p||0:00|1-00:00:00|(Priority)
+=== SACCT ===
+218505|zsf4t-rec002|PENDING|0:0|00:00:00|Unknown|Unknown|None assigned
+=== SCONTROL ===
+JobId=218505 JobName=zsf4t-rec002 UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A Priority=200524 Nice=0 Account=g_sunyiq QOS=qos_sunyiq JobState=PENDING Reason=Priority Dependency=(null) Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0 RunTime=00:00:00 TimeLimit=1-00:00:00 TimeMin=N/A SubmitTime=2026-09-02T11:32:30 EligibleTime=2026-09-02T11:32:30 AccrueTime=2026-09-02T11:32:30 StartTime=2026-09-07T03:41:47 EndTime=2026-09-08T03:41:47 Deadline=N/A SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-02T11:38:32 Partition=hgpu2p AllocNode:Sid=login04:721 ReqNodeList=(null) ExcNodeList=ngu002 NodeList=(null) NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:* TRES=cpu=4,node=1,billing=4 Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=* MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0 Features=(null) DelayBoot=00:00:00 OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null) Command=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/run/scripts/hpc/zhenjiang_six_source_four_target_d32_gru_ukf_development_recovery_v1.slurm CONFIRM_ZHENJIANG_SIX_SOURCE_FOUR_TARGET_UKF_2023_TECHNICAL_RECOVERY_ATTEMPT_002_20260902 WorkDir=/data1/home/sunyiq/hpc_mailbox StdErr=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/logs/development-recovery-attempt-002-218505.err StdIn=/dev/null StdOut=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/logs/development-recovery-attempt-002-218505.out Power= TresPerNode=gpu:1
+=== RECOVERY_PATH_STATE ===
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/evaluation/attempt_002
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/evaluation/attempt_002.partial
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/independent_audit/attempt_002
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/independent_audit/attempt_002.partial
+=== LOGS ===
+LOG_ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/logs/development-recovery-attempt-002-218505.out
+LOG_ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/logs/development-recovery-attempt-002-218505.err
+=== COMPLETION_SUMMARY ===
+EVALUATION_COMPLETE=false
+AUDIT_COMPLETE=false
+=== ORIGINAL_R2_SAFETY ===
+ORIGINAL_IDENTITY|match=true|sha256=704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+ORIGINAL_IDENTITY|match=true|sha256=badf3ee5f8cf3f0d9c5e5771b11385a45a6f22d6355fc43357bc44f2bd364c9e|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/evidence/development_2023/evaluation/attempt_001.partial/development_access_started.json
+ORIGINAL_IDENTITY|match=true|sha256=bcd7cc658a9a1790f07cce392a9b60d9f3338b722af8520f2a20bb61998111c8|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/development-2023-217810.out
+ORIGINAL_IDENTITY|match=true|sha256=7ebac31811938324b27f10743850a0b32e981d1b8eb5f0dcc750ce089b60f185|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/development-2023-217810.err
+ORIGINAL_IDENTITY|match=true|sha256=f64e5ffcc47061d97f66e28e15ec45f7412b1d8a59455771180c4ef47eab9281|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/scripts/analysis/zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.py
+ORIGINAL_EVALUATION_FINAL_ABSENT=true
+ORIGINAL_AUDIT_FINAL_ABSENT=true
+HELD_OUT_2024_TARGET_ACCESS_AUTHORIZED=false
+BOUNDARY_FUTURE_TARGET_ACCESS_AUTHORIZED=false
+=== SNAPSHOT_END ===
+2026-09-02T11:38:20+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T11:38:20+0800
