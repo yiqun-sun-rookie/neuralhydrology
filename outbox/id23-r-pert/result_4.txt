@@ -1,0 +1,52 @@
+### channel=id23-r-pert seq=4
+### host=login4
+### started=2026-09-02T16:56:27+0800
+### ---------- output ----------
+=== BLAS / LAPACK BUILD ===
+numpy 2.3.3
+blas blas 3.9.0
+lapack lapack 3.9.0
+=== PER-BASIN DIFF DISTRIBUTION ===
+n 52
+max|diff| quantiles:
+  q0.00 1.712e-13
+  q0.25 3.187e-08
+  q0.50 3.659e-07
+  q0.75 1.140e-05
+  q0.90 6.217e-04
+  q1.00 3.591e-02
+within 1e-9 : 10
+within 1e-6 : 28
+within 1e-3 : 47
+bitwise days: median 0 of 1260
+
+NSE impact (this is what the degraded gate cares about):
+  max  3.036e-05  median  4.826e-10
+  basins with |dNSE| > 1e-4 : 0
+  basins with |dNSE| > 1e-3 : 0
+
+posterior deviation max: 0.0
+
+worst 5 by max|diff|:
+ basin_id  max_abs_forecast_diff  nse_abs_diff  n_days_bitwise_identical
+  5399500               0.035906  7.354265e-06                         0
+  6892000               0.011474  3.035898e-05                         0
+  9505350               0.006532  4.885349e-06                         1
+  4015330               0.005644  8.436173e-06                         0
+ 11451100               0.003486  5.417993e-07                         4
+
+calibration on HPC (compare to local: mean-z2 median 187.2, terciles 6.7/32.4/525):
+  z2_mean median    187.248
+  z2_median median  4.8498
+  terciles          6.73 32.41 524.56
+  |err|/sigma       2.5455
+=== IS numpy 1.26 AVAILABLE IN ANY ENV? ===
+  nh_final : unavailable
+  nh_clean : unavailable
+  neuralhydrology : unavailable
+  knet_clean : unavailable
+=== NO JOBS SUBMITTED THIS ROUND ===
+  no r_pert_* jobs in queue
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T16:56:46+0800
