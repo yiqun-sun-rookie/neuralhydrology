@@ -1,0 +1,34 @@
+### channel=id26-v09-strict seq=76
+### host=login4
+### started=2026-09-02T23:58:46+0800
+### ---------- output ----------
+=== A JOB ===
+JobID|State|ExitCode|Elapsed|NodeList
+218690|COMPLETED|0:0|03:02:03|ngu003
+=== B OUTPUT STATE ===
+predictions=present
+predictions.building=absent
+seed_csv=24
+ens_csv=3
+building_seed_csv=0
+=== C ERR TAIL ===
+err_bytes=0
+=== D MANIFEST KEY FIELDS ===
+manifest_sha256=61577c75ecd2798551bd98007b968416eeabc6ada353134103d30c629fc027eb
+status formal_predictions_complete
+eval {"basin_count": 531, "dates_per_basin": 3652, "end_date": "1999-09-30", "rows_per_file": 1939212, "start_date": "1989-10-01", "start_index_in_sealed_dates": 3561}
+seed_records 24
+ens B09-CLASSIC rows 1939212 sha 0051ed0228b00284 seeds 8
+ens B09-CAPACITY rows 1939212 sha 87d3b45845ede525 seeds 8
+ens E09-CONTINUOUS rows 1939212 sha d7943c4a1506bd62 seeds 8
+training_target_reads 0
+formal_evaluation_observation_reads 0
+official_score_called False
+holdout_nonce_drawn False
+score_ledger_appended False
+denorm {"applied_in": "float64", "center": 1.499961962320709, "scale": 3.6244367178040595}
+device NVIDIA GeForce RTX 3090 535.104.05
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T23:58:46+0800
