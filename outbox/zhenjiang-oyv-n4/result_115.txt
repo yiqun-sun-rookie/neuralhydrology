@@ -1,0 +1,37 @@
+### channel=zhenjiang-oyv-n4 seq=115
+### host=login4
+### started=2026-09-02T15:28:58+0800
+### ---------- output ----------
+=== inventory before delete ===
+already absent
+=== deleting ===
+=== verify ===
+OK: removed
+--- canonical results MUST be intact ---
+/data1/home/sunyiq/zhenjiang_oyv_v1/ladder_impact:
+total 3364
+drwxr-xr-x.  2 sunyiq g_sunyiq    4096 Aug 21 00:45 .
+drwxr-xr-x. 40 sunyiq g_sunyiq    4096 Aug 27 10:54 ..
+-rw-r--r--.  1 sunyiq g_sunyiq     984 Aug 21 00:45 completion_manifest.json
+-rw-r--r--.  1 sunyiq g_sunyiq  104054 Aug 21 00:45 ladder_cost_summary.csv
+-rw-r--r--.  1 sunyiq g_sunyiq  608632 Aug 21 00:45 ladder_fold_costs.csv
+-rw-r--r--.  1 sunyiq g_sunyiq    3002 Aug 21 00:45 ladder_summary.json
+-rw-r--r--.  1 sunyiq g_sunyiq 2715610 Aug 21 00:45 ladder_task_errors.csv
+-rw-r--r--.  1 sunyiq g_sunyiq    2907 Aug 21 00:45 station_ranking.csv
+
+/data1/home/sunyiq/zhenjiang_oyv_v1/n4_impact:
+total 3087
+drwxr-xr-x.  2 sunyiq g_sunyiq    4096 Aug 27 02:56 .
+drwxr-xr-x. 40 sunyiq g_sunyiq    4096 Aug 27 10:54 ..
+-rw-r--r--.  1 sunyiq g_sunyiq    1268 Aug 27 02:56 completion_manifest.json
+-rw-r--r--.  1 sunyiq g_sunyiq  110194 Aug 27 02:56 n4_cost_summary.csv
+-rw-r--r--.  1 sunyiq g_sunyiq  642972 Aug 27 02:56 n4_fold_costs.csv
+-rw-r--r--.  1 sunyiq g_sunyiq    2041 Aug 27 02:56 n4_information_comparison.csv
+-rw-r--r--.  1 sunyiq g_sunyiq    2264 Aug 27 02:56 n4_prediction_verdicts.csv
+-rw-r--r--.  1 sunyiq g_sunyiq    2832 Aug 27 02:56 n4_station_ranking.csv
+-rw-r--r--.  1 sunyiq g_sunyiq     563 Aug 27 02:56 n4_summary.json
+-rw-r--r--.  1 sunyiq g_sunyiq 2388562 Aug 27 02:56 n4_task_errors.csv
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T15:29:00+0800
