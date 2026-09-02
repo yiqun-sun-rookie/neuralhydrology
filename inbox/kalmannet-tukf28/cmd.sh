@@ -1,61 +1,56 @@
 #!/bin/bash
 set -o pipefail
 ROOT=/data1/home/sunyiq/kalmannet_tukf28_20260902
-JOB=218694
+JOB=218826
 
-states() { sacct -j $JOB -n -P -X --format=State 2>/dev/null | sed 's/ .*//' | sort | uniq -c; }
-bad() { sacct -j $JOB -n -P -X --format=JobID,State,ExitCode 2>/dev/null \
-        | grep -E "FAILED|CANCELLED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL" | head -10; }
-
-echo "=== EARLY CHECK (t+6 min) ==="
-sleep 360
-states
-B=$(bad); if [ -n "$B" ]; then echo "EARLY FAILURES:"; echo "$B"
-  echo "--- first error log ---"
-  ls -t $ROOT/logs/tukf28_train_*.err 2>/dev/null | head -1 | xargs -r tail -25
-  echo "EARLY_FAIL"; exit 1
-fi
-echo "no early failures"
-
-echo "=== WAIT FOR TRAIN ARRAY (max 100 min more) ==="
-for i in $(seq 1 100); do
+echo "=== WAIT FOR READOUT ARRAY $JOB (max 60 min) ==="
+for i in $(seq 1 60); do
   R=$(squeue -j $JOB -h -o "%T" 2>/dev/null | wc -l)
   [ "$R" -eq 0 ] && break
   sleep 60
 done
-echo "still in queue: ${R:-?}"
-states
-B=$(bad); if [ -n "$B" ]; then echo "FAILURES:"; echo "$B"; fi
+sacct -j $JOB -n -P -X --format=State 2>/dev/null | sed 's/ .*//' | sort | uniq -c
+sacct -j $JOB -n -P -X --format=JobID,State,ExitCode 2>/dev/null \
+  | grep -E "FAILED|CANCELLED|TIMEOUT|OUT_OF_MEMORY|NODE_FAIL" | head -10
 
-echo "=== TRAIN RECORDS ==="
-echo "train_json=$(ls $ROOT/results/train/*.json 2>/dev/null | wc -l) / 54"
+echo "=== COUNTS ==="
+echo "readout_json=$(ls $ROOT/results/readout/*.json 2>/dev/null | wc -l) / 189"
+echo "readout_npz=$(ls $ROOT/results/readout/*.npz 2>/dev/null | wc -l) / 189"
+echo "train_json=$(ls $ROOT/results/train/*.json 2>/dev/null | wc -l) / 189"
+
+echo "=== BASELINE RE-READ SELF-CHECK ==="
 python - <<'PY'
-import glob, json, statistics as st
+import glob, json
 rows = [json.load(open(p)) for p in glob.glob(
-    '/data1/home/sunyiq/kalmannet_tukf28_20260902/results/train/*.json')]
-if not rows:
-    print('NO RECORDS'); raise SystemExit(1)
-for mode in ('sequential_leash', 'sequential_free'):
-    d = [r for r in rows if r['mode'] == mode]
-    if not d: continue
-    zero = sum(1 for r in d if r['selected_update'] == 0)
-    down = sum(1 for r in d if r['train_loss_trace'][-1] < r['train_loss_trace'][0])
-    repro = {}
-    for r in d: repro[r['start_reproduction']] = repro.get(r['start_reproduction'], 0) + 1
-    hits = [r['leash_hits'] for r in d if r['leash_hits'] is not None]
-    print('%-18s n=%2d  zero_update=%d  loss_down=%d  drift_med=%.3f  rss_max=%.0fMB  start_repro=%s%s'
-          % (mode, len(d), zero, down,
-             st.median([r['drift_at_checkpoint'] for r in d]),
-             max(r['peak_rss_mb'] or 0 for r in d), repro,
-             '  leash_hit_basins=%d' % sum(1 for h in hits if h > 0) if hits else ''))
-    if any(not r.get('noise_frozen_verified') for r in d):
-        print('  ** NOISE FROZEN CHECK FAILED **')
+    '/data1/home/sunyiq/kalmannet_tukf28_20260902/results/readout/*.json')]
+agg = {}
+for r in rows:
+    d = r.get('baseline_relative_deviation')
+    if d is None: continue
+    a = agg.setdefault(r['mode'], {'max': 0.0, 'kinds': {}})
+    a['max'] = max(a['max'], d)
+    a['kinds'][r['baseline_reproduction']] = a['kinds'].get(r['baseline_reproduction'], 0) + 1
+for m in sorted(agg):
+    print('  %-20s max_dev=%.3e  %s' % (m, agg[m]['max'], agg[m]['kinds']))
+print('  cells with a baseline check: %d' % sum(sum(a['kinds'].values()) for a in agg.values()))
 PY
 
-if [ "$(ls $ROOT/results/train/*.json 2>/dev/null | wc -l)" -ne 54 ]; then
-  echo "TRAIN_INCOMPLETE"; exit 1
-fi
-echo "=== SBATCH READOUT ARRAY 189 ==="
-cd $ROOT || exit 1
-sbatch $ROOT/slurm/tukf28_readout.slurm || exit 1
-echo SEQ4_OK
+echo "=== PACK ==="
+tar -czf /tmp/tukf28_results_v1.tar.gz -C $ROOT/results train readout anchor anchor_gate_verdict.json || exit 1
+sha256sum /tmp/tukf28_results_v1.tar.gz
+cd ~/hpc_mailbox || exit 1
+OK=""
+for attempt in 1 2 3; do
+  for i in $(seq 1 30); do [ -e .git/index.lock ] || break; sleep 2; done
+  git fetch -q origin "+hpc-mailbox:refs/remotes/origin/hpc-mailbox" && \
+  git reset -q --hard refs/remotes/origin/hpc-mailbox && \
+  mkdir -p payload/kalmannet-tukf28 && \
+  cp -f /tmp/tukf28_results_v1.tar.gz payload/kalmannet-tukf28/ && \
+  git add payload/kalmannet-tukf28/tukf28_results_v1.tar.gz && \
+  git commit -q -m "mailbox[kalmannet-tukf28]: results payload v1" && \
+  git push -q origin HEAD:hpc-mailbox && OK=1 && break
+  sleep 10
+done
+rm -f /tmp/tukf28_results_v1.tar.gz
+[ -n "$OK" ] && echo RESULTS_PUSHED || { echo PUSH_FAILED; exit 1; }
+echo SEQ5_OK
