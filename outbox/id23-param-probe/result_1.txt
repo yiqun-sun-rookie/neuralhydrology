@@ -1,0 +1,56 @@
+### channel=id23-param-probe seq=1
+### host=login4
+### started=2026-09-02T18:17:47+0800
+### ---------- output ----------
+=== WHOAMI / HOST ===
+sunyiq
+login4
+Wed Sep  2 18:17:47 CST 2026
+=== RUNNING JOBS (do not disturb) ===
+     JOBID               NAME  PARTITION    STATE        TIME  NODES NODELIST(REASON)
+    218635 tukf09-455-v2r6-pr      hgpu8  PENDING        0:00      1 (Priority)
+    202229       N22-agg-eval hgpu4,hgpu  PENDING        0:00      1 (DependencyNeverSatisfied)
+    202294         N22-export hgpu4,hgpu  PENDING        0:00      1 (Dependency)
+    202315           N22-gate hgpu4,hgpu  PENDING        0:00      1 (Dependency)
+    202507   N22-mask-iso-531 hgpu4,hgpu  PENDING        0:00      1 (DependencyNeverSatisfied)
+    215429      id30_m01_s100      hgpu2  PENDING        0:00      1 (DependencyNeverSatisfied)
+    202293       N22-manifest hgpu4,hgpu  PENDING        0:00      1 (JobHeldUser)
+job_count=7
+=== MY LANDING DIR (must be absent or empty) ===
+ls: cannot access /data1/home/sunyiq/id23_param_probe: No such file or directory
+ls: cannot access /data1/home/sunyiq/id23_param_probe: No such file or directory
+=== SISTER LINE DIRS (must NOT touch) ===
+drwxr-xr-x. 8 sunyiq g_sunyiq 4096 Sep  2 17:52 /data1/home/sunyiq/id29_transferable_noise_20260902
+=== CONDA ENV / NUMPY ===
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'numpy'
+=== CAMELS-US DATA ===
+/data1/home/sunyiq/neuralhydrology/data/camels_us
+basin_mean_forcing
+camels_attributes_v2.0
+demo
+full
+raw
+usgs_streamflow
+=== DISK ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  599T  356T  63% /data1
+quota:
+6.5T	/data1/home/sunyiq/
+=== PARTITIONS ===
+   PARTITION  AVAIL  TIMELIMIT  NODES  STATE NODELIST
+     hcpu48*     up   infinite     10 alloc$ icn[202,204-207,210-212,216-217]
+     hcpu48*     up   infinite      5  maint icn[214,220-221,246,249]
+     hcpu48*     up   infinite     14  down* icn[203,215,218,230,233,235-237,239,242-243,245,247,256]
+     hcpu48*     up   infinite     27  alloc icn[201,208-209,213,219,222-229,231-232,234,238,240-241,244,248,250-254,258]
+     hcpu48*     up   infinite      8   idle icn[255,257,259-264]
+     hcpu48y     up   infinite      1  down$ icn281
+     hcpu48y     up   infinite      1  maint icn280
+     hcpu48y     up   infinite      2  down* icn[278-279]
+     hcpu48y     up   infinite      2    mix icn[274,277]
+     hcpu48y     up   infinite      6   idle icn[270-273,275-276]
+       hgpu8     up   infinite      1  maint ngu203
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T18:31:07+0800
