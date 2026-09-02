@@ -1,28 +1,15 @@
 #!/bin/bash
 set -o pipefail
-ROOT=/data1/home/sunyiq/kalmannet_tukf27_20260901
-echo "=== READOUT 217822 ==="
-sacct -j 217822 --format=State --noheader 2>/dev/null | awk '{print $1}' | sort | uniq -c || true
-sacct -j 217822 -X -n -P --format=JobID,State,ExitCode 2>/dev/null | grep -E '(FAILED|TIMEOUT|NODE_FAIL|OUT_OF_MEMORY|CANCELLED)' || echo "  none"
-NR=$(ls $ROOT/results/readout/*.json 2>/dev/null | wc -l)
-NS=$(ls $ROOT/results/sim_readout/*.json 2>/dev/null | wc -l)
-echo "da_readout=$NR/108 sim_readout=$NS/54"
-[ "$NR" = "108" ] && [ "$NS" = "54" ] || { echo "NOT_COMPLETE_YET"; exit 0; }
-echo "=== PACK ==="
-tar -czf /tmp/tukf27_results_v1.tar.gz -C $ROOT/results train readout sim_readout prior_sim anchor anchor_gate_verdict.json
-sha256sum /tmp/tukf27_results_v1.tar.gz
-cd ~/hpc_mailbox || exit 1
-OK=""
-for attempt in 1 2 3; do
-  for i in $(seq 1 30); do [ -e .git/index.lock ] || break; sleep 2; done
-  git fetch -q origin "+hpc-mailbox:refs/remotes/origin/hpc-mailbox" && \
-  git reset -q --hard refs/remotes/origin/hpc-mailbox && \
-  mkdir -p payload/kalmannet-tukf27 && \
-  cp -f /tmp/tukf27_results_v1.tar.gz payload/kalmannet-tukf27/ && \
-  git add payload/kalmannet-tukf27/tukf27_results_v1.tar.gz && \
-  git commit -q -m "mailbox[kalmannet-tukf27]: results payload v1" && \
-  git push -q origin HEAD:hpc-mailbox && OK=1 && break
-  sleep 10
+echo "=== TUKF25/26/27 JOB FINAL STATES ==="
+for j in 216699 216851 217266 217271 217272 217426 217684 217690 217822; do
+  s=$(sacct -j $j -X -n -P --format=State 2>/dev/null | head -1)
+  echo "  job $j : ${s:-unknown}"
 done
-rm -f /tmp/tukf27_results_v1.tar.gz
-[ -n "$OK" ] && echo RESULTS_PUSHED || { echo PUSH_FAILED; exit 1; }
+echo "=== MY RUNNING/PENDING JOBS ==="
+squeue -u $USER -h -o "%i %j %T" 2>/dev/null | head -20 || true
+echo "=== LANDING DIRS ==="
+for d in kalmannet_tukf25_20260831 kalmannet_tukf26_20260831 kalmannet_tukf27_20260901; do
+  p=/data1/home/sunyiq/$d
+  [ -d "$p" ] && echo "  $d: exists, $(du -sh $p 2>/dev/null | cut -f1)" || echo "  $d: MISSING"
+done
+echo "DONE"
