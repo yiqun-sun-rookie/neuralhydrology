@@ -1,0 +1,20 @@
+### channel=kalmannet-tukf28 seq=4
+### host=login4
+### started=2026-09-02T20:52:08+0800
+### ---------- output ----------
+=== EARLY CHECK (t+6 min) ===
+     54 RUNNING
+no early failures
+=== WAIT FOR TRAIN ARRAY (max 100 min more) ===
+still in queue: 0
+     54 COMPLETED
+=== TRAIN RECORDS ===
+train_json=54 / 54
+sequential_leash   n=27  zero_update=11  loss_down=27  drift_med=0.055  rss_max=2457MB  start_repro={'bitwise': 27}  leash_hit_basins=27
+sequential_free    n=27  zero_update=10  loss_down=26  drift_med=0.152  rss_max=2455MB  start_repro={'bitwise': 27}
+=== SBATCH READOUT ARRAY 189 ===
+Submitted batch job 218826
+SEQ4_OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T22:29:12+0800
