@@ -1,0 +1,164 @@
+### channel=id31-hydrologic-dynamic-tokens seq=69
+### host=login4
+### started=2026-09-02T15:26:02+0800
+### ---------- output ----------
+=== A. FULL RUN MANIFEST (all keys, values truncated) ===
+  candidate_safe_data_after          {"audit": {"basin_count": 531, "forcing_date_max": "2008-09-30", "forcing_date_min": "1999-01-05", "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c", "forcing_row_count": 1888767, "status": "PASS", "supervision_date_max": "2008-09-30", "supervision_date_min": "1999-10-01", "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e", "supervision_row_count": 1745928}, "forcing_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01", "forcing_file_sha256": "0226ee6297a5488e9b284a483bd320879f107fbf749222944da453ddd0f0448d", "forcing_manifest_path": "/data1 ...TRUNCATED(len=1523)
+  candidate_safe_data_before         {"audit": {"basin_count": 531, "forcing_date_max": "2008-09-30", "forcing_date_min": "1999-01-05", "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c", "forcing_row_count": 1888767, "status": "PASS", "supervision_date_max": "2008-09-30", "supervision_date_min": "1999-10-01", "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e", "supervision_row_count": 1745928}, "forcing_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01", "forcing_file_sha256": "0226ee6297a5488e9b284a483bd320879f107fbf749222944da453ddd0f0448d", "forcing_manifest_path": "/data1 ...TRUNCATED(len=1523)
+  command                            ["/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "-u", "-m", "neuralhydrology.nh_run", "train", "--config-file", "src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml", "--gpu", "0"]
+  completed_at_utc                   2026-09-02T05:40:49.655700+00:00
+  config_path                        src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml
+  config_sha256                      1f38ed828fb002a0b967c341d0109ff95ead50a7ad241925c5259343a1521b4e
+  data_access                        {"log_sha256": "fa899f3a94e12cf55d71404af84cbe0a1a9b90d9264b17d6beeb17920cede6d1", "record_count": 2656, "status": "PASS", "unique_path_count": 533, "unique_paths": ["/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01/track0_forcing.parquet", "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01/track0_statics.csv", "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01022500.parquet", "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01/targets/01031500.parquet", "/data1/home/sunyi ...TRUNCATED(len=67865)
+  data_access_log                    results/31_hydrologic_dynamic_tokens/_invocations/id31_DL01_s100_slurm216549/data_access.jsonl
+  date_contract                      {"train_end_date": "30/09/2006", "train_start_date": "01/10/1999", "validation_end_date": "30/09/2008", "validation_start_date": "01/10/2006"}
+  experiment_id                      DL01
+  formal_evaluation_authorized       false
+  gpu                                0
+  metrics_artifact_path              results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/epoch030_metrics.json
+  metrics_artifact_sha256            4be8a1fbe0a5f6fb45a694d91bcd6332c6fc19bda4dcf5540d47cf02f7fb98b7
+  mode                               execute
+  required_flags                     ["--execute", "--operator-approved-heavy-compute"]
+  run_dir                            results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30
+  run_id                             id31_DL01_s100_slurm216549
+  run_root                           results/31_hydrologic_dynamic_tokens/DL01
+  seed                               100
+  slurm_job_id                       216549
+  source_integrity_after             {"experiment_id": "DL01", "implementation_files": {"neuralhydrology/modelzoo/__init__.py": "2182ece8ad07c13d4632f9c8ddc910e66bd0efeff3ac3ba893416cb9724c8054", "neuralhydrology/modelzoo/hydrologic_dynamic_token_transformer.py": "4594305ff15df760b08f14dd12936c8cb5aa701ebf5f7e23cd4f0d254238e459", "neuralhydrology/modelzoo/hydrologic_dynamic_tokenizer.py": "53123019686896c05c80314ba0fdbedfbc0556a91a7c05d2e78a699ea46d3089", "neuralhydrology/modelzoo/modern_causal_transformer.py": "04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede", "neuralhydrology/training/__init__.py": "07506ca22cf462d95e573fafc286a67975668c20be826fda13736268fdf8c498", "neuralhydrology/training/regularization.py" ...TRUNCATED(len=1735)
+  source_integrity_before            {"experiment_id": "DL01", "implementation_files": {"neuralhydrology/modelzoo/__init__.py": "2182ece8ad07c13d4632f9c8ddc910e66bd0efeff3ac3ba893416cb9724c8054", "neuralhydrology/modelzoo/hydrologic_dynamic_token_transformer.py": "4594305ff15df760b08f14dd12936c8cb5aa701ebf5f7e23cd4f0d254238e459", "neuralhydrology/modelzoo/hydrologic_dynamic_tokenizer.py": "53123019686896c05c80314ba0fdbedfbc0556a91a7c05d2e78a699ea46d3089", "neuralhydrology/modelzoo/modern_causal_transformer.py": "04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede", "neuralhydrology/training/__init__.py": "07506ca22cf462d95e573fafc286a67975668c20be826fda13736268fdf8c498", "neuralhydrology/training/regularization.py" ...TRUNCATED(len=1735)
+  started_at_utc                     2026-08-31T04:22:16.389296+00:00
+  status                             COMPLETE
+  training_return_code               0
+=== B. METRICS ARTIFACT ===
+metrics_artifact_path: results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/epoch030_metrics.json
+metrics_artifact_sha256: 4be8a1fbe0a5f6fb45a694d91bcd6332c6fc19bda4dcf5540d47cf02f7fb98b7
+-- artifact head --
+{
+  "basin_count": 531,
+  "basin_nse": {
+    "01022500": 0.7563284635543823,
+    "01031500": 0.6466488838195801,
+    "01047000": 0.7114279866218567,
+    "01052500": 0.5672518014907837,
+    "01054200": 0.49480724334716797,
+    "01055000": 0.5284467339515686,
+    "01057000": 0.7041720151901245,
+    "01073000": 0.7278735637664795,
+    "01078000": 0.824993908405304,
+    "01123000": 0.6008160710334778,
+    "01134500": 0.7684774398803711,
+    "01137500": 0.7125439643859863,
+    "01139000": 0.722952127456665,
+    "01139800": 0.7086977362632751,
+    "01142500": 0.6560599207878113,
+    "01144000": 0.7471559047698975,
+    "01162500": 0.6900832056999207,
+    "01169000": 0.5973694324493408,
+    "01170100": 0.6424171924591064,
+    "01181000": 0.5419565439224243,
+    "01187300": 0.5347008109092712,
+    "01195100": 0.5632169246673584,
+    "01333000": 0.4474717378616333,
+    "01350000": 0.6074550151824951,
+    "01350080": 0.6616792678833008,
+    "01350140": 0.5677534937858582,
+    "01365000": 0.5597898364067078,
+    "01411300": 0.7636785507202148,
+    "01413500": 0.6165667772293091,
+    "01414500": 0.4771418571472168,
+    "01415000": 0.6480068564414978,
+    "01423000": 0.551618218421936,
+    "01434025": 0.5781848430633545,
+    "01435000": 0.5182487964630127,
+    "01439500": 0.7030643224716187,
+    "01440000": 0.6828781366348267,
+    "01440400": 0.5978050231933594,
+    "01451800": 0.6644341349601746,
+    "01466500": 0.7634385824203491,
+    "01484100": 0.5835109949111938,
+    "01487000": 0.8445680737495422,
+    "01491000": 0.6898171901702881,
+    "01510000": 0.6334587335586548,
+    "01516500": 0.4998543858528137,
+    "01518862": 0.500738799571991,
+    "01532000": 0.437744677066803,
+    "01539000": 0.6696135997772217,
+    "01542810": 0.5778946876525879,
+    "01543000": 0.6770007610321045,
+    "01543500": 0.8201689124107361,
+    "01544500": 0.7698703408241272,
+    "01545600": 0.8243907690048218,
+    "01547700": 0.6246330738067627,
+    "01548500": 0.79166179895401,
+    "01549500": 0.7206058502197266,
+    "01550000": 0.776078462600708,
+    "01552000": 0.5671774744987488,
+    "01552500": 0.6645920872688293,
+    "01557500": 0.6800174713134766,
+    "01567500": 0.6447605490684509,
+    "01568000": 0.669662356376648,
+    "01580000": 0.5062297582626343,
+    "01583500": 0.3799578547477722,
+    "01586610": 0.5179411172866821,
+    "01591400": 0.22917306423187256,
+    "01594950": 0.7850497961044312,
+    "01596500": 0.6790041923522949,
+    "01605500": 0.47130876779556274,
+    "01606500": 0
+4be8a1fbe0a5f6fb45a694d91bcd6332c6fc19bda4dcf5540d47cf02f7fb98b7  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/epoch030_metrics.json
+=== C. TOKEN DIAGNOSTICS IN TRAINING LOG ===
+32:2026-08-31 12:23:07,152: dynamic_token_boundary_hidden_size: 64
+33:2026-08-31 12:23:07,152: dynamic_token_boundary_kernel_size: 15
+34:2026-08-31 12:23:07,152: dynamic_token_boundary_temperature: 0.25
+36:2026-08-31 12:23:07,152: dynamic_token_detach_boundary_gradient: False
+39:2026-08-31 12:23:07,152: regularization: [['dynamic_token_count', 0.01]]
+-- distinct metric key names seen in epoch lines --
+     61 loss:
+     60 avg_loss:
+     60 avg_dynamic_token_count:
+     31 metrics:
+     30 avg_total_loss:
+      2 cuda:
+      1 validation_start_date:
+      1 validation_end_date:
+      1 validation_basin_file:
+      1 validate_n_random_basins:
+      1 validate_every:
+      1 transformer_nlayers:
+      1 transformer_nheads:
+      1 transformer_dropout:
+      1 transformer_dim_feedforward:
+      1 train_start_date:
+      1 train_end_date:
+      1 train_dir:
+      1 train_basin_file:
+      1 target_variables:
+=== D. WHAT IS IN THE EPOCH-30 VALIDATION DIR ===
+total 9535
+drwxr-xr-x.  2 sunyiq g_sunyiq    4096 Sep  2 13:37 .
+drwxr-xr-x. 32 sunyiq g_sunyiq    4096 Sep  2 13:37 ..
+-rw-r--r--.  1 sunyiq g_sunyiq   14909 Sep  2 13:37 validation_metrics.csv
+-rw-r--r--.  1 sunyiq g_sunyiq 9739983 Sep  2 13:37 validation_results.p
+=== E. ARM INVENTORY (which arms actually have runs) ===
+DT00 : NO_DIR
+DT04 : NO_DIR
+DT08 : dir_exists run_subdirs=1
+    hydrologic_dynamic_tokens_DT08_fixed_08_s100_2026_0828_2034_ep30
+DT16 : NO_DIR
+DR01 : NO_DIR
+DL00 : NO_DIR
+DL01 : dir_exists run_subdirs=2
+    hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0828_2038_ep30
+    hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30
+-- invocation records --
+  id31_DL01_s100_slurm215880
+  id31_DL01_s100_slurm216549
+  id31_DT08_s100_slurm215879
+=== F. EPOCH-30 CHECKPOINT PRESENT FOR RESTART-FREE INFERENCE ===
+-rw-r--r--. 1 sunyiq g_sunyiq 4669050 Sep  1 04:31 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/model_epoch010.pt
+-rw-r--r--. 1 sunyiq g_sunyiq 4669050 Sep  1 21:17 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/model_epoch020.pt
+-rw-r--r--. 1 sunyiq g_sunyiq 4669050 Sep  2 13:25 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0831_1223_ep30/model_epoch030.pt
+ID31_SEQ69_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T15:26:02+0800
