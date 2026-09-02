@@ -1,0 +1,40 @@
+### channel=id29-transferable-noise seq=4
+### host=login4
+### started=2026-09-02T17:51:55+0800
+### ---------- output ----------
+=== ENV BEFORE ===
+python 3.11.13 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+numba present 0.63.1
+cma ABSENT
+=== PIP INSTALL cma -> pysite ===
+Downloading cma-4.4.4-py3-none-any.whl (328 kB)
+Installing collected packages: cma
+Successfully installed cma-4.4.4
+cma via pysite 4.4.4
+=== IMPORT CHAIN CHECK (login node, import only) ===
+import chain OK
+=== PATCH SLURM PYTHONPATH ===
+27:export PYTHONPATH="$ROOT/src:$ROOT/pysite:${PYTHONPATH:-}"
+04d00c21a6a45d0ae5dad7bd17ad1db8406cd41044a7dd50dc9254d288aef6fd  src/camels_switch_confirmation/hpc/id29_denorm_control.slurm
+27:export PYTHONPATH="$ROOT/src:$ROOT/pysite:${PYTHONPATH:-}"
+1607680179602be67d6c25ea722267deebe365a6e232223eb630c9f83f10bf51  src/camels_switch_confirmation/hpc/id29_391_extra_cells.slurm
+=== SUBMIT denorm ===
+Submitted batch job 218649
+=== SUBMIT extra4 ===
+Submitted batch job 218650
+JOBS denorm=218649 extra4=218650
+=== QUEUE (own jobs) ===
+    JOBID    PARTITION                   NAME  ST       TIME  CPUS NODELIST(REASON)
+   218635        hgpu8 tukf09-455-v2r6-prepar  PD       0:00     4     (Priority)
+   218649       hgpu2p            id29-denorm  PD       0:00    24     (Priority)
+   218650       hgpu2p            id29-extra4  PD       0:00    24     (Priority)
+   202229 hgpu4,hgpu8,           N22-agg-eval  PD       0:00     4 (DependencyNev
+   202294 hgpu4,hgpu8,             N22-export  PD       0:00     4   (Dependency)
+   202315 hgpu4,hgpu8,               N22-gate  PD       0:00     2   (Dependency)
+   202507 hgpu4,hgpu8,       N22-mask-iso-531  PD       0:00     4 (DependencyNev
+   215429        hgpu2          id30_m01_s100  PD       0:00     4 (DependencyNev
+   202293 hgpu4,hgpu8,           N22-manifest  PD       0:00     4  (JobHeldUser)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T17:52:49+0800
