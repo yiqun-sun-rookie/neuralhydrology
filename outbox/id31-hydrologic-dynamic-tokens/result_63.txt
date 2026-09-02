@@ -1,0 +1,238 @@
+### channel=id31-hydrologic-dynamic-tokens seq=63
+### host=login4
+### started=2026-09-02T11:48:40+0800
+### ---------- output ----------
+=== OLD SCHEDULER ===
+215880|id31_development|hgpu2p|FAILED|1:0|01:23:03|2026-08-28T20:35:09|2026-08-28T21:58:12|ngu006
+215880.batch|batch||FAILED|1:0|01:23:03|2026-08-28T20:35:09|2026-08-28T21:58:12|ngu006
+215880.extern|extern||COMPLETED|0:0|01:23:04|2026-08-28T20:35:09|2026-08-28T21:58:13|ngu006
+=== OLD MANIFEST ===
+{
+  "candidate_safe_data_before": {
+    "audit": {
+      "basin_count": 531,
+      "forcing_date_max": "2008-09-30",
+      "forcing_date_min": "1999-01-05",
+      "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+      "forcing_row_count": 1888767,
+      "status": "PASS",
+      "supervision_date_max": "2008-09-30",
+      "supervision_date_min": "1999-10-01",
+      "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+      "supervision_row_count": 1745928
+    },
+    "forcing_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01",
+    "forcing_file_sha256": "0226ee6297a5488e9b284a483bd320879f107fbf749222944da453ddd0f0448d",
+    "forcing_manifest_path": "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json",
+    "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+    "statics_file_sha256": "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2",
+    "status": "PASS",
+    "supervision_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01",
+    "supervision_manifest_path": "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json",
+    "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+    "target_tree_sha256": "17709a37f5ea8e8a4e140b422b8c010d030d600cf673b52a5cc557ecb99d57a6"
+  },
+  "command": [
+    "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "-u",
+    "-m",
+    "neuralhydrology.nh_run",
+    "train",
+    "--config-file",
+    "src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml",
+    "--gpu",
+    "0"
+  ],
+  "config_path": "src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml",
+  "config_sha256": "1f38ed828fb002a0b967c341d0109ff95ead50a7ad241925c5259343a1521b4e",
+  "data_access_log": "results/31_hydrologic_dynamic_tokens/_invocations/id31_DL01_s100_slurm215880/data_access.jsonl",
+  "date_contract": {
+    "train_end_date": "30/09/2006",
+    "train_start_date": "01/10/1999",
+    "validation_end_date": "30/09/2008",
+    "validation_start_date": "01/10/2006"
+  },
+  "error": "NeuralHydrology training returned 1",
+  "error_type": "RuntimeError",
+  "experiment_id": "DL01",
+  "failed_at_utc": "2026-08-28T13:58:13.202560+00:00",
+  "formal_evaluation_authorized": false,
+  "gpu": 0,
+  "mode": "execute",
+  "required_flags": [
+    "--execute",
+    "--operator-approved-heavy-compute"
+  ],
+  "run_id": "id31_DL01_s100_slurm215880",
+  "run_root": "results/31_hydrologic_dynamic_tokens/DL01",
+  "seed": 100,
+  "slurm_job_id": "215880",
+  "source_integrity_before": {
+    "experiment_id": "DL01",
+    "implementation_files": {
+      "neuralhydrology/modelzoo/__init__.py": "2182ece8ad07c13d4632f9c8ddc910e66bd0efeff3ac3ba893416cb9724c8054",
+      "neuralhydrology/modelzoo/hydrologic_dynamic_token_transformer.py": "4594305ff15df760b08f14dd12936c8cb5aa701ebf5f7e23cd4f0d254238e459",
+      "neuralhydrology/modelzoo/hydrologic_dynamic_tokenizer.py": "53123019686896c05c80314ba0fdbedfbc0556a91a7c05d2e78a699ea46d3089",
+      "neuralhydrology/modelzoo/modern_causal_transformer.py": "04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede",
+      "neuralhydrology/training/__init__.py": "07506ca22cf462d95e573fafc286a67975668c20be826fda13736268fdf8c498",
+      "neuralhydrology/training/regularization.py": "24a1312de194684808ff0f508f89237b758336e026efd27f6f37b30565d5e926",
+      "neuralhydrology/utils/config.py": "568819bf26057b29ed455a532de28decfbee1a1710b545e635e00afdc300e43a",
+      "src/hydrologic_dynamic_tokens/hpc/submit_development_experiment.slurm": "99e6b130fb2d10c0d229aa0befc3f820c5dfce4cbf431261c2d93a9a51258baa",
+      "src/hydrologic_dynamic_tokens/hpc/submit_gpu_resource_probe.slurm": "2a2df8a54a3c38e5b356024c91188d5db5d64e14b96e899efb4a42928bf2607f",
+      "src/hydrologic_dynamic_tokens/registry/experiments.csv": "a7c99e9788f3d6f134f8087d1723c885d77f23e82ab59cba5a57d909e1460867",
+      "src/hydrologic_dynamic_tokens/scripts/audit_configs.py": "56787d9cdc60b2d2f7bed5a716518ab54c4595c8ccac1b4a16c79ac28ad91005",
+      "src/hydrologic_dynamic_tokens/scripts/run_development.py": "e7ac0be6e70f52b70e43c4ade692e37bdefc2fa05cc107f21ac95f47993937d8"
+    },
+    "schema_version": 1,
+    "source_config_path": "src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml",
+    "source_config_sha256": "1f38ed828fb002a0b967c341d0109ff95ead50a7ad241925c5259343a1521b4e"
+  },
+  "started_at_utc": "2026-08-28T12:37:15.455425+00:00",
+  "status": "FAILED",
+  "training_return_code": 1
+}
+31a5978ab9169b96e23d034b519669c87798b4be54adff83a31c7883fe770350  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/_invocations/id31_DL01_s100_slurm215880/run_manifest.json
+=== OLD STDERR ===
+940 /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/logs/31_hydrologic_dynamic_tokens/development-215880.err
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/hydrologic_dynamic_tokens/scripts/run_development.py", line 317, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/hydrologic_dynamic_tokens/scripts/run_development.py", line 309, in main
+    result = execute(args.experiment_id, args.gpu, args.run_id) if args.execute else plan(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/hydrologic_dynamic_tokens/scripts/run_development.py", line 264, in execute
+    raise RuntimeError(f"NeuralHydrology training returned {completed.returncode}")
+RuntimeError: NeuralHydrology training returned 1
+=== MATCHING OLD OUTPUT ===
+OLD_OUTPUT /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0828_2038_ep30/output.log
+2026-08-28 20:38:12,165: Logging to results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0828_2038_ep30/output.log initialized.
+2026-08-28 20:38:12,165: ### Folder structure created at results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0828_2038_ep30
+2026-08-28 20:38:12,165: ### Run configurations for hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100
+2026-08-28 20:38:12,165: experiment_name: hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100
+2026-08-28 20:38:12,165: run_dir: results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0828_2038_ep30
+2026-08-28 20:38:12,165: dataset: camels_us_track0_bundle
+2026-08-28 20:38:12,165: data_dir: data/camels_us_track0_development_forcing_v01
+2026-08-28 20:38:12,165: track0_supervision_dir: data/camels_us_track0_supervision_v01
+2026-08-28 20:38:12,165: number_of_basins: 531
+2026-08-28 20:38:12,165: train_basin_file: src/fair_benchmark/frozen/track0_forcing_only_basins.txt
+2026-08-28 20:38:12,165: validation_basin_file: src/fair_benchmark/frozen/track0_forcing_only_basins.txt
+2026-08-28 20:38:12,165: train_start_date: 1999-10-01 00:00:00
+2026-08-28 20:38:12,165: train_end_date: 2006-09-30 00:00:00
+2026-08-28 20:38:12,165: validation_start_date: 2006-10-01 00:00:00
+2026-08-28 20:38:12,165: validation_end_date: 2008-09-30 00:00:00
+2026-08-28 20:38:12,165: device: cuda:0
+2026-08-28 20:38:12,165: model: hydrologic_dynamic_token_transformer
+2026-08-28 20:38:12,165: head: regression
+2026-08-28 20:38:12,165: output_dropout: 0.0
+2026-08-28 20:38:12,165: output_activation: linear
+2026-08-28 20:38:12,165: dynamics_embedding: {'type': 'fc', 'hiddens': [64], 'activation': 'linear', 'dropout': 0.0}
+2026-08-28 20:38:12,165: statics_embedding: {'type': 'fc', 'hiddens': [64], 'activation': 'linear', 'dropout': 0.0}
+2026-08-28 20:38:12,165: transformer_nheads: 4
+2026-08-28 20:38:12,165: transformer_nlayers: 4
+2026-08-28 20:38:12,165: transformer_dim_feedforward: 512
+2026-08-28 20:38:12,165: transformer_dropout: 0.1
+2026-08-28 20:38:12,165: dynamic_token_mode: learned
+2026-08-28 20:38:12,166: dynamic_token_fixed_length: 8
+2026-08-28 20:38:12,166: dynamic_token_min_length: 2
+2026-08-28 20:38:12,166: dynamic_token_max_length: 30
+2026-08-28 20:38:12,166: dynamic_token_target_count: 34
+2026-08-28 20:38:12,166: dynamic_token_boundary_hidden_size: 64
+2026-08-28 20:38:12,166: dynamic_token_boundary_kernel_size: 15
+2026-08-28 20:38:12,166: dynamic_token_boundary_temperature: 0.25
+2026-08-28 20:38:12,166: dynamic_token_sum_inputs: ['PRCP(mm/day)']
+2026-08-28 20:38:12,166: dynamic_token_detach_boundary_gradient: False
+2026-08-28 20:38:12,166: optimizer: AdamW
+2026-08-28 20:38:12,166: loss: NSE
+2026-08-28 20:38:12,166: regularization: [['dynamic_token_count', 0.01]]
+2026-08-28 20:38:12,166: learning_rate: {0: 0.0003, 11: 0.0001, 21: 3e-05}
+2026-08-28 20:38:12,166: batch_size: 64
+2026-08-28 20:38:12,166: epochs: 30
+2026-08-28 20:38:12,166: seq_length: 270
+2026-08-28 20:38:12,166: predict_last_n: 1
+2026-08-28 20:38:12,166: clip_gradient_norm: 1.0
+2026-08-28 20:38:12,166: seed: 100
+2026-08-28 20:38:12,166: forcings: ['maurer']
+2026-08-28 20:38:12,166: dynamic_inputs: ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)']
+2026-08-28 20:38:12,166: target_variables: ['QObs(mm/d)']
+2026-08-28 20:38:12,166: static_attributes: ['p_mean', 'pet_mean', 'aridity', 'p_seasonality', 'frac_snow', 'high_prec_freq', 'high_prec_dur', 'low_prec_freq', 'low_prec_dur', 'elev_mean', 'slope_mean', 'area_gages2', 'frac_forest', 'lai_max', 'lai_diff', 'gvf_max', 'gvf_diff', 'soil_depth_pelletier', 'soil_depth_statsgo', 'soil_porosity', 'soil_conductivity', 'max_water_content', 'sand_frac', 'silt_frac', 'clay_frac', 'carbonate_rocks_frac', 'geol_permeability']
+2026-08-28 20:38:12,166: validate_every: 1
+2026-08-28 20:38:12,166: validate_n_random_basins: 531
+2026-08-28 20:38:12,166: cache_validation_data: True
+2026-08-28 20:38:12,166: metrics: ['NSE']
+2026-08-28 20:38:12,166: num_workers: 4
+2026-08-28 20:38:12,166: log_interval: 5
+2026-08-28 20:38:12,166: log_tensorboard: False
+2026-08-28 20:38:12,166: log_n_figures: 0
+2026-08-28 20:38:12,166: save_weights_every: 10
+2026-08-28 20:38:12,166: save_validation_results: True
+2026-08-28 20:38:12,166: save_all_output: False
+2026-08-28 20:38:12,166: save_train_data: False
+2026-08-28 20:38:12,166: train_dir: results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0828_2038_ep30/train_data
+2026-08-28 20:38:12,166: img_log_dir: results/31_hydrologic_dynamic_tokens/DL01/hydrologic_dynamic_tokens_DL01_learned_end_to_end_s100_2026_0828_2038_ep30/img_log
+2026-08-28 20:38:12,228: ### Device cuda:0 will be used for training
+2026-08-28 20:38:12,322: Loading basin data into xarray data set.
+2026-08-28 20:38:49,573: Calculating target variable stds per basin
+2026-08-28 20:38:50,018: Create lookup table and convert to pytorch tensor
+2026-08-28 21:58:09,178: Epoch 1 average loss: avg_loss: 0.04189, avg_dynamic_token_count: 1.13459, avg_total_loss: 0.05323
+2026-08-28 21:58:10,109: Uncaught exception
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/nh_run.py", line 187, in <module>
+    _main()
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/nh_run.py", line 46, in _main
+    start_run(config_file=Path(args["config_file"]), gpu=args["gpu"])
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/nh_run.py", line 84, in start_run
+    start_training(config)
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/training/train.py", line 20, in start_training
+    trainer.train_and_validate()
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/training/basetrainer.py", line 248, in train_and_validate
+    self.validator.evaluate(epoch=epoch,
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/evaluation/tester.py", line 244, in evaluate
+    y_hat, y, dates, all_losses, all_output[basin] = self._evaluate(model, loader, ds.frequencies,
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/evaluation/tester.py", line 483, in _evaluate
+    predictions, loss = self._get_predictions_and_loss(model, data)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/evaluation/tester.py", line 536, in _get_predictions_and_loss
+    _, all_losses = self.loss_obj(predictions, data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/training/loss.py", line 130, in forward
+    total_loss += reg_module.weight * reg_out
+RuntimeError: output with shape [] doesn't match the broadcast shape [1]
+=== FIXED SOURCE ===
+e8eb71123f99eecccd0316901ace54bd933f8e3565325696c1e0e11ea2b3b027  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/neuralhydrology/training/regularization.py
+45e497b85dad61f70b882a1ec3359b03d1cba2fed624934d1c03d61a467cb435  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/test/test_hydrologic_dynamic_token_transformer.py
+1f38ed828fb002a0b967c341d0109ff95ead50a7ad241925c5259343a1521b4e  /data1/home/sunyiq/id31_hydrologic_dynamic_tokens_20260828/repo/src/hydrologic_dynamic_tokens/configs/learned_end_to_end_s100.yml
+class DynamicTokenCountRegularization(BaseRegularization):
+    """Keep the learned number of time tokens near the preregistered target count."""
+
+    def __init__(self, cfg: Config, weight: float = 1.0):
+        super().__init__(cfg, name="dynamic_token_count", weight=weight)
+
+    def forward(self, prediction: Dict[str, torch.Tensor], ground_truth: Dict[str, torch.Tensor],
+                other_model_data: Dict[str, torch.Tensor]) -> torch.Tensor:
+        if "dynamic_token_count_loss" not in other_model_data:
+            raise ValueError(
+                "dynamic_token_count regularization requires model output 'dynamic_token_count_loss'.")
+        # Evaluation keeps a length-one model output so the tester can concatenate diagnostics across batches.
+        # Loss regularizers, however, must be scalar because they are added to a scalar prediction loss.
+        return other_model_data["dynamic_token_count_loss"].mean()
+
+
+class TiedFrequencyMSERegularization(BaseRegularization):
+    """Regularization that penalizes inconsistent predictions across frequencies.
+
+ID31_OLD_FAILURE_AUDIT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T11:48:40+0800
