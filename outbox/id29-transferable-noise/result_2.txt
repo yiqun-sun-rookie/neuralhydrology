@@ -1,0 +1,44 @@
+### channel=id29-transferable-noise seq=2
+### host=login4
+### started=2026-09-02T17:43:22+0800
+### ---------- output ----------
+=== PAYLOAD ===
+-rw-r--r--. 1 sunyiq g_sunyiq 946466 Sep  2 17:43 /data1/home/sunyiq/hpc_mailbox/payload/id29-transferable-noise/id29_transferable_noise_20260902.tar.gz
+02c014790c29404928d9df49d8a06fa291c4947ffa32ddbe74545ced847ce046  /data1/home/sunyiq/hpc_mailbox/payload/id29-transferable-noise/id29_transferable_noise_20260902.tar.gz
+=== DEPLOY ===
+=== MANIFEST CHECK ===
+MANIFEST_OK (188 files)
+=== LAYOUT ===
+id29_391_extra_cells.slurm
+id29_denorm_control.slurm
+r_pert_a0.slurm
+r_pert_main.slurm
+drwxr-xr-x. 7 sunyiq g_sunyiq 4096 Sep  2 17:43 ..
+lrwxr-xr-x. 1 sunyiq g_sunyiq   49 Sep  2 17:43 camels_us -> /data1/home/sunyiq/neuralhydrology/data/camels_us
+01
+02
+03
+joint_param_noise_real_case_unseal.credential.json
+real_regime_parameter_domain_initialization_v04.freeze.json
+real_regime_parameter_k2_memory_v05.freeze.json
+real_regime_parameter_output_functional_stability_v03.freeze.json
+=== SUBMIT denorm ===
+Submitted batch job 218643
+=== SUBMIT extra4 ===
+Submitted batch job 218644
+JOBS denorm=218643 extra4=218644
+=== QUEUE (own jobs) ===
+    JOBID    PARTITION                   NAME  ST       TIME  CPUS NODELIST(REASON)
+   218635        hgpu8 tukf09-455-v2r6-prepar  PD       0:00     4     (Priority)
+   218643       hgpu2p            id29-denorm  PD       0:00    24     (Priority)
+   218644       hgpu2p            id29-extra4  PD       0:00    24     (Priority)
+   202229 hgpu4,hgpu8,           N22-agg-eval  PD       0:00     4 (DependencyNev
+   202294 hgpu4,hgpu8,             N22-export  PD       0:00     4   (Dependency)
+   202315 hgpu4,hgpu8,               N22-gate  PD       0:00     2   (Dependency)
+   202507 hgpu4,hgpu8,       N22-mask-iso-531  PD       0:00     4 (DependencyNev
+   215429        hgpu2          id30_m01_s100  PD       0:00     4 (DependencyNev
+   202293 hgpu4,hgpu8,           N22-manifest  PD       0:00     4  (JobHeldUser)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T17:43:23+0800
