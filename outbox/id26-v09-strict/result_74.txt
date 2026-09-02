@@ -1,0 +1,29 @@
+### channel=id26-v09-strict seq=74
+### host=login4
+### started=2026-09-02T20:55:05+0800
+### ---------- output ----------
+=== A BEFORE ===
+218690 hgpu2p PENDING Priority 2026-09-04T20:05:42
+=== B MOVE TO hgpu2 (same RTX 3090 model, two idle nodes) ===
+update_rc=ok
+=== C AFTER ===
+218690 hgpu2 RUNNING None 2026-09-02T20:55:40 ngu003
+JobID|State|Partition|NodeList|Elapsed
+218690|RUNNING|hgpu2|ngu003|00:00:08
+=== D ONLY MY JOB TOUCHED ===
+    218635 tukf09-455-v     hgpu8   PENDING
+218659_[7-    wrrhp-ext    hgpu2p   PENDING
+    218683     id32_T04    hgpu2p   PENDING
+    218684     id32_T05    hgpu2p   PENDING
+    218685     id32_L01    hgpu2p   PENDING
+    202229 N22-agg-eval hgpu4,hgp   PENDING
+    202294   N22-export hgpu4,hgp   PENDING
+    202315     N22-gate hgpu4,hgp   PENDING
+    202507 N22-mask-iso hgpu4,hgp   PENDING
+    215429 id30_m01_s10     hgpu2   PENDING
+    202293 N22-manifest hgpu4,hgp   PENDING
+  218659_6    wrrhp-ext    hgpu2p   RUNNING
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-02T20:55:13+0800
