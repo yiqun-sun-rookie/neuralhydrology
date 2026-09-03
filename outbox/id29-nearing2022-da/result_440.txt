@@ -1,0 +1,21 @@
+### channel=id29-nearing2022-da seq=440
+### host=login4
+### started=2026-09-03T18:11:38+0800
+### ---------- output ----------
+=== 需要的脚本是否在服务器上 ===
+MISSING                    src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm
+MISSING                    src/29_nearing2022_da_ar/hpc/analyze_warmup_target_pair.slurm
+MISSING                    src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py
+MISSING                    src/29_nearing2022_da_ar/scripts/analyze_warmup_target_pair.py
+OK   f7f67ce1968ce080  src/29_nearing2022_da_ar/scripts/score_reproduction_matrix.py
+OK   6e47896c2b3011fe  src/29_nearing2022_da_ar/scripts/prepare_evaluation_run.py
+OK   3b0caef6076d457e  src/29_nearing2022_da_ar/scripts/verify_registered_closure.py
+=== 仿真参考结果(打分要用)是否存在 ===
+registry row found: True
+run_dir: /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/nearing2022_simulation_seed0_2026_0808_1535_ep30
+test_results.p exists: True
+=== 磁盘余量 ===
+hhjt_parastor_hhjt_parastor  954T  599T  356T  63% /data1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T18:11:38+0800
