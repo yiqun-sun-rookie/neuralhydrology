@@ -1,0 +1,53 @@
+### channel=kalmannet-wrr-hp-extension seq=11
+### host=login4
+### started=2026-09-03T17:48:57+0800
+### ---------- output ----------
+=== TIME ===
+2026-09-03T17:48:57+0800
+=== JOBS ===
+218659_13|RUNNING|16:04:08|ngu005
+218659_16|RUNNING|10:41:29|ngu001
+=== ACCOUNTING (terminal states only) ===
+218659_0|COMPLETED|0:0|05:03:30|2026-09-02T23:35:39
+218659_10|COMPLETED|0:0|08:13:55|2026-09-03T07:07:28
+218659_11|COMPLETED|0:0|03:49:12|2026-09-03T03:24:51
+218659_12|COMPLETED|0:0|08:32:11|2026-09-03T09:45:51
+218659_14|COMPLETED|0:0|09:09:58|2026-09-03T12:34:50
+218659_15|COMPLETED|0:0|10:16:40|2026-09-03T15:18:31
+218659_1|COMPLETED|0:0|03:55:13|2026-09-02T22:27:23
+218659_2|COMPLETED|0:0|03:40:59|2026-09-02T22:13:09
+218659_3|COMPLETED|0:0|02:49:10|2026-09-02T21:21:20
+218659_4|COMPLETED|0:0|04:21:23|2026-09-02T22:53:33
+218659_5|FAILED|1:0|01:27:51|2026-09-02T20:09:49
+218659_6|COMPLETED|0:0|05:35:00|2026-09-03T01:44:49
+218659_7|COMPLETED|0:0|03:52:20|2026-09-03T01:13:40
+218659_8|COMPLETED|0:0|06:48:42|2026-09-03T05:01:51
+218659_9|COMPLETED|0:0|10:06:29|2026-09-03T08:33:52
+219190_17|FAILED|1:0|02:24:24|2026-09-03T14:10:36
+=== FAULTS ===
+218659_5|FAILED|1:0|ngu005
+219190_17|FAILED|1:0|ngu011
+=== ALL CELL METRICS ===
+ 0 anchor                   lr=0.01   hs=16  nl=2 mult=5   seed=42 M=0.982289 best_ep=18 lr@best=0.005 roll=0 stop_ep=28
+ 1 lr_extension             lr=0.02   hs=16  nl=2 mult=5   seed=42 M=0.982633 best_ep=11 lr@best=0.02 roll=0 stop_ep=21
+ 2 lr_extension             lr=0.05   hs=16  nl=2 mult=5   seed=42 M=0.982755 best_ep=10 lr@best=0.025 roll=240 stop_ep=20
+ 3 anchor                   lr=0.01   hs=32  nl=1 mult=10  seed=42 M=0.982326 best_ep=6 lr@best=0.01 roll=0 stop_ep=16
+ 4 lr_extension             lr=0.02   hs=32  nl=1 mult=10  seed=42 M=0.983428 best_ep=10 lr@best=0.02 roll=2 stop_ep=20
+ 6 anchor                   lr=0.01   hs=16  nl=1 mult=5   seed=42 M=0.98281 best_ep=16 lr@best=0.01 roll=0 stop_ep=26
+ 7 lr_extension             lr=0.02   hs=16  nl=1 mult=5   seed=42 M=0.98323 best_ep=13 lr@best=0.02 roll=0 stop_ep=23
+ 8 lr_extension             lr=0.05   hs=16  nl=1 mult=5   seed=42 M=0.984128 best_ep=31 lr@best=0.0125 roll=310 stop_ep=41
+ 9 anchor                   lr=0.01   hs=16  nl=1 mult=10  seed=42 M=0.984289 best_ep=53 lr@best=0.00125 roll=1 stop_ep=63
+10 lr_extension             lr=0.02   hs=16  nl=1 mult=10  seed=42 M=0.984294 best_ep=29 lr@best=0.005 roll=2 stop_ep=39
+11 lr_extension             lr=0.05   hs=16  nl=1 mult=10  seed=42 M=0.984013 best_ep=13 lr@best=0.0125 roll=13 stop_ep=23
+12 probe_hidden64           lr=0.01   hs=64  nl=1 mult=10  seed=42 M=0.984523 best_ep=38 lr@best=0.0025 roll=2 stop_ep=48
+14 probe_hidden64_mult15    lr=0.01   hs=64  nl=1 mult=15  seed=42 M=0.984767 best_ep=44 lr@best=0.0025 roll=3 stop_ep=54
+15 replicate_seed43         lr=0.01   hs=32  nl=1 mult=10  seed=43 M=0.984237 best_ep=48 lr@best=0.005 roll=1 stop_ep=58
+=== STILL-RUNNING PROGRESS ===
+idx0005_lr0p05_hs32_nl1_mult10   ep=  7 lr_now=0.00078125  nse=0.8997 best_ep=0 no_improve=6 roll=304
+idx0013_lr0p01_hs32_nl1_mult15   ep= 75 lr_now=0.000625    nse=0.9577 best_ep=69 no_improve=5 roll=0
+idx0017_lr0p05_hs32_nl1_mult10   ep= 12 lr_now=0.003125    nse=-103.5534 best_ep=7 no_improve=4 roll=133
+idx0016_lr0p01_hs32_nl1_mult10   ep= 52 lr_now=0.00125     nse=0.9568 best_ep=42 no_improve=9 roll=1
+(done)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T17:48:59+0800
