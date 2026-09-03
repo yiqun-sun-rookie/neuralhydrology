@@ -1,0 +1,19 @@
+### channel=id26-v09-strict seq=77
+### host=login4
+### started=2026-09-03T13:16:17+0800
+### ---------- output ----------
+=== A STAGE ANSWER KEY (isolated dir, NOT the formal root) ===
+answer_key_sha256=576d548253064699ade1e312ea875097d070557e3eef334874c310df61d8fd1e
+answer_key=verified
+scoring_dir_is_outside_formal_root=YES
+=== B SYNC SCORER ===
+head=04a80731c06e466d181eea35a58e6825be80bf01
+clean=[]
+=== C SUBMIT ===
+Submitted batch job 219210
+jobid=219210
+219210 hgpu2 PENDING None
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T13:16:51+0800
