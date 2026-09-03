@@ -1,0 +1,112 @@
+### channel=id23-param-probe seq=7
+### host=login4
+### started=2026-09-03T13:18:01+0800
+### ---------- output ----------
+total 189
+drwxr-xr-x. 2 sunyiq g_sunyiq   4096 Sep  3 13:15 .
+drwxr-xr-x. 9 sunyiq g_sunyiq   4096 Sep  3 13:14 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 102729 Sep  3 13:15 basin_results_main.csv
+-rw-r--r--. 1 sunyiq g_sunyiq  57087 Sep  3 13:15 basin_results_sub.csv
+-rw-r--r--. 1 sunyiq g_sunyiq   6517 Sep  3 13:15 calibration_reproduction_main.csv
+-rw-r--r--. 1 sunyiq g_sunyiq   3616 Sep  3 13:15 calibration_reproduction_sub.csv
+-rw-r--r--. 1 sunyiq g_sunyiq   6836 Sep  3 13:15 summary_main.json
+-rw-r--r--. 1 sunyiq g_sunyiq   6844 Sep  3 13:15 summary_sub.json
+
+################ WINDOW = main  (rows=360) ################
+
+--- water_year | nse  (n=90) ---
+  oracle_gain      median=+0.01230  >0.01: 54/90
+  pick_one_gain    median=+0.00000  >0.01: 9/90
+  switch_increment median=+0.01093  >0.01: 51/90
+  causal_regret    median=+0.00823  (vs best fixed; >=0 is a loss)
+  basins that ever switch: 90/90   median segs switched: 5.0 of 9
+  ROBUSTNESS center_nse>0 only (n=80): oracle_gain median=+0.01036  switch_increment median=+0.01024
+  center NSE: min=-7.937 median=+0.665  n_negative=10
+  candidate_collapse: 29/90   clipped_any: 21/90
+
+--- water_year | log_nse  (n=90) ---
+  oracle_gain      median=+0.03395  >0.01: 75/90
+  pick_one_gain    median=+0.01805  >0.01: 59/90
+  switch_increment median=+0.00514  >0.01: 29/90
+  causal_regret    median=+0.00539  (vs best fixed; >=0 is a loss)
+  basins that ever switch: 89/90   median segs switched: 8.0 of 9
+  ROBUSTNESS center_nse>0 only (n=41): oracle_gain median=+0.03320  switch_increment median=+0.00363
+  center NSE: min=-23.205 median=-0.128  n_negative=49
+  candidate_collapse: 29/90   clipped_any: 21/90
+
+--- block90 | nse  (n=90) ---
+  oracle_gain      median=+0.03082  >0.01: 83/90
+  pick_one_gain    median=+0.00000  >0.01: 9/90
+  switch_increment median=+0.03039  >0.01: 82/90
+  causal_regret    median=+0.01834  (vs best fixed; >=0 is a loss)
+  basins that ever switch: 90/90   median segs switched: 29.0 of 37
+  ROBUSTNESS center_nse>0 only (n=80): oracle_gain median=+0.02861  switch_increment median=+0.02799
+  center NSE: min=-7.937 median=+0.665  n_negative=10
+  candidate_collapse: 29/90   clipped_any: 21/90
+
+--- block90 | log_nse  (n=90) ---
+  oracle_gain      median=+0.04960  >0.01: 85/90
+  pick_one_gain    median=+0.01805  >0.01: 59/90
+  switch_increment median=+0.02245  >0.01: 62/90
+  causal_regret    median=+0.00467  (vs best fixed; >=0 is a loss)
+  basins that ever switch: 90/90   median segs switched: 32.0 of 37
+  ROBUSTNESS center_nse>0 only (n=41): oracle_gain median=+0.04753  switch_increment median=+0.02514
+  center NSE: min=-23.205 median=-0.128  n_negative=49
+  candidate_collapse: 29/90   clipped_any: 21/90
+
+  worst probe-window center vs table _cal_nse (different warmups by design):
+    06404000  probe=-7.9373 table=0.4575  |diff|=8.3948
+    09312600  probe=-0.2748 table=0.7035  |diff|=0.9783
+    04127997  probe=-1.2427 table=-0.522  |diff|=0.7207
+    04105700  probe=-0.4148 table=0.2845  |diff|=0.6993
+
+################ WINDOW = sub  (rows=208) ################
+
+--- water_year | nse  (n=52) ---
+  oracle_gain      median=+0.02051  >0.01: 36/52
+  pick_one_gain    median=+0.00127  >0.01: 19/52
+  switch_increment median=+0.00570  >0.01: 20/52
+  causal_regret    median=+0.00833  (vs best fixed; >=0 is a loss)
+  basins that ever switch: 47/52   median segs switched: 2.0 of 3
+  ROBUSTNESS center_nse>0 only (n=52): oracle_gain median=+0.02051  switch_increment median=+0.00570
+  center NSE: min=+0.171 median=+0.647  n_negative=0
+  candidate_collapse: 12/52   clipped_any: 0/52
+
+--- water_year | log_nse  (n=52) ---
+  oracle_gain      median=+0.02441  >0.01: 35/52
+  pick_one_gain    median=+0.01715  >0.01: 27/52
+  switch_increment median=+0.00221  >0.01: 14/52
+  causal_regret    median=+0.02202  (vs best fixed; >=0 is a loss)
+  basins that ever switch: 44/52   median segs switched: 2.0 of 3
+  ROBUSTNESS center_nse>0 only (n=43): oracle_gain median=+0.01821  switch_increment median=+0.00210
+  center NSE: min=-1.071 median=+0.452  n_negative=9
+  candidate_collapse: 12/52   clipped_any: 0/52
+
+--- block90 | nse  (n=52) ---
+  oracle_gain      median=+0.03746  >0.01: 48/52
+  pick_one_gain    median=+0.00127  >0.01: 19/52
+  switch_increment median=+0.02219  >0.01: 44/52
+  causal_regret    median=+0.01430  (vs best fixed; >=0 is a loss)
+  basins that ever switch: 52/52   median segs switched: 7.0 of 10
+  ROBUSTNESS center_nse>0 only (n=52): oracle_gain median=+0.03746  switch_increment median=+0.02219
+  center NSE: min=+0.171 median=+0.647  n_negative=0
+  candidate_collapse: 12/52   clipped_any: 0/52
+
+--- block90 | log_nse  (n=52) ---
+  oracle_gain      median=+0.05848  >0.01: 48/52
+  pick_one_gain    median=+0.01715  >0.01: 27/52
+  switch_increment median=+0.02439  >0.01: 42/52
+  causal_regret    median=+0.02195  (vs best fixed; >=0 is a loss)
+  basins that ever switch: 52/52   median segs switched: 7.0 of 10
+  ROBUSTNESS center_nse>0 only (n=43): oracle_gain median=+0.05139  switch_increment median=+0.02433
+  center NSE: min=-1.071 median=+0.452  n_negative=9
+  candidate_collapse: 12/52   clipped_any: 0/52
+
+  worst probe-window center vs table _cal_nse (different warmups by design):
+    05399500  probe=+0.1710 table=0.6206  |diff|=0.4496
+    13161500  probe=+0.4222 table=0.8347  |diff|=0.4125
+    11522500  probe=+0.4379 table=0.7847  |diff|=0.3468
+    02202600  probe=+0.5197 table=0.8384  |diff|=0.3187
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T13:18:08+0800
