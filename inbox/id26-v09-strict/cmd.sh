@@ -1,43 +1,34 @@
 #!/bin/bash
 set -o pipefail
 ROOT=/data1/home/sunyiq/v09_strict
-FORMAL=$ROOT/codetest/neuralhydrology/results/26_historical_band_experts/formal_v09
-JID=$(cat $ROOT/predict_v09/predict_attempt_01_jobid.txt 2>/dev/null || echo "")
+SCORING=$ROOT/diagnostic_scoring
+PREDICT_REPO=$ROOT/predict_v09/neuralhydrology
+EXPECT=576d548253064699ade1e312ea875097d070557e3eef334874c310df61d8fd1e
 
-echo "=== A JOB ==="
-sacct -j "$JID" -X -P --format=JobID,State,ExitCode,Elapsed,NodeList 2>&1 | head -3
+echo "=== A STAGE ANSWER KEY (isolated dir, NOT the formal root) ==="
+mkdir -p $SCORING
+cp -f /data1/home/sunyiq/hpc_mailbox/payload/id26-v09-strict/track0_forcing_only_obs_eval.parquet $SCORING/
+GOT=$(sha256sum $SCORING/track0_forcing_only_obs_eval.parquet | cut -d' ' -f1)
+echo "answer_key_sha256=$GOT"
+if [ "$GOT" != "$EXPECT" ]; then echo "ANSWER_KEY_HASH_DRIFT"; exit 1; fi
+echo "answer_key=verified"
+echo "scoring_dir_is_outside_formal_root=$(case $SCORING in *results/26_historical_band_experts*) echo NO;; *) echo YES;; esac)"
 
-echo "=== B OUTPUT STATE ==="
-for p in predictions predictions.building; do
-  if [ -e "$FORMAL/$p" ]; then echo "$p=present"; else echo "$p=absent"; fi
-done
-echo "seed_csv=$(ls $FORMAL/predictions/seeds/*.csv 2>/dev/null | wc -l)"
-echo "ens_csv=$(ls $FORMAL/predictions/ensembles/*.csv 2>/dev/null | wc -l)"
-echo "building_seed_csv=$(ls $FORMAL/predictions.building/seeds/*.csv 2>/dev/null | wc -l)"
+echo "=== B SYNC SCORER ==="
+cd $PREDICT_REPO || exit 1
+git fetch origin "+codex/historical-band-experts-pilot:refs/remotes/origin/codex/historical-band-experts-pilot" -q
+git reset -q --hard refs/remotes/origin/codex/historical-band-experts-pilot
+sed -i 's/\r$//' src/26_historical_band_experts/hpc/diagnostic_score_v09.slurm
+echo "head=$(git rev-parse HEAD)"
+echo "clean=[$(git status --porcelain --untracked-files=all)]"
 
-echo "=== C ERR TAIL ==="
-e=$ROOT/logs/predict_${JID}.err
-if [ -f "$e" ]; then echo "err_bytes=$(wc -c < $e)"; tail -15 "$e"; else echo "err absent"; fi
-
-echo "=== D MANIFEST KEY FIELDS ==="
-M=$FORMAL/predictions/manifest.json
-if [ -f "$M" ]; then
-  echo "manifest_sha256=$(sha256sum $M | cut -d' ' -f1)"
-  python - "$M" <<'PY'
-import json,sys
-m=json.load(open(sys.argv[1]))
-print("status",m.get("status"))
-print("eval",json.dumps(m.get("evaluation_period"),sort_keys=True))
-print("seed_records",len(m.get("seed_predictions",[])))
-for e in m.get("ensembles",[]):
-    print("ens",e["family"],"rows",e["rows"],"sha",e["sha256"][:16],"seeds",len(e["seed_order"]))
-for k in ("training_target_reads","formal_evaluation_observation_reads","official_score_called",
-          "holdout_nonce_drawn","score_ledger_appended"):
-    print(k,m.get(k))
-print("denorm",json.dumps(m.get("target_denormalization"),sort_keys=True))
-print("device",m["environment"].get("device_name"),m["environment"].get("driver_version"))
-PY
-else
-  echo "manifest absent"
-fi
+echo "=== C SUBMIT ==="
+rm -f $SCORING/diagnostic_score.json
+out=$(sbatch src/26_historical_band_experts/hpc/diagnostic_score_v09.slurm 2>&1)
+echo "$out"
+JID=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
+if [ -z "$JID" ]; then echo "SUBMIT_FAILED"; exit 1; fi
+echo "$JID" > $SCORING/score_jobid.txt
+echo "jobid=$JID"
+squeue -j "$JID" -h -o "%i %P %T %r" 2>&1 || true
 echo "=== END ==="
