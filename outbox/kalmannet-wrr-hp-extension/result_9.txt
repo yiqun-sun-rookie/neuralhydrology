@@ -1,0 +1,25 @@
+### channel=kalmannet-wrr-hp-extension seq=9
+### host=login4
+### started=2026-09-03T11:38:56+0800
+### ---------- output ----------
+=== PAYLOAD_CHECK ===
+payload_ok
+=== PRE_STATE ===
+combos lines before: 17
+218659_13|RUNNING
+218659_14|RUNNING
+218659_15|RUNNING
+218659_16|RUNNING
+=== INSTALL ===
+combos lines after: 18
+{"index": 17, "run_id": "WRR-HPEXT-20260902-I17", "role": "divergence_check_seed43", "lr": 0.05, "hidden_size": 32, "num_layers": 1, "in_out_mult": 10, "seed": 43}
+=== VERIFY_DEPLOYED_TREE ===
+checked 62 files, mismatches=0
+=== SUBMIT ===
+Submitted batch job 219190
+divcheck_job_id=219190
+JOBID|NAME|STATE|PARTITION|NODELIST(REASON)
+219190_[17]|wrrhp-div|PENDING|hgpu2p|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T11:38:57+0800
