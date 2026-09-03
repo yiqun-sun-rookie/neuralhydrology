@@ -1,0 +1,697 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=66
+### host=login4
+### started=2026-09-03T14:24:15+0800
+### ---------- output ----------
+=== SNAPSHOT_TIME ===
+2026-09-03T14:24:15+0800
+=== JOB_219223 ===
+219224|zsf4t-qr-value|COMPLETED|0:0|00:08:12|2026-09-03T13:20:25|2026-09-03T13:28:37|ngu003
+219225|zsf4t-qr-value|COMPLETED|0:0|00:08:13|2026-09-03T13:20:25|2026-09-03T13:28:38|ngu003
+219223|zsf4t-qr-value|COMPLETED|0:0|00:08:17|2026-09-03T13:20:25|2026-09-03T13:28:42|ngu009
+=== RESULT_FILES ===
+FILE|s17|completion_manifest.json|bytes=621
+FILE|s17|qr_learning_value.json|bytes=6257
+FILE|s17|selection_block_sums.csv|bytes=4510
+FILE|s29|completion_manifest.json|bytes=621
+FILE|s29|qr_learning_value.json|bytes=6253
+FILE|s29|selection_block_sums.csv|bytes=4513
+FILE|s43|completion_manifest.json|bytes=621
+FILE|s43|qr_learning_value.json|bytes=6267
+FILE|s43|selection_block_sums.csv|bytes=4513
+=== RESULTS ===
+SEED_17_JSON={
+  "base_checkpoint_sha256": "3bf21456566460361b0f80d70d1b49984d43a8044ff4f96a02774334f651e358",
+  "boundary_future_target_access_count": 0,
+  "completed_utc": "2026-09-03T05:28:36.579398+00:00",
+  "cuda_version": "12.1",
+  "development_gate_dataset_length": 0,
+  "device_name": "NVIDIA GeForce RTX 3090",
+  "diagnostic_id": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_UKF_QR_LEARNING_VALUE_DIAGNOSTIC_V1",
+  "evaluation_batch_size": 32,
+  "filter_checkpoint_epoch": 2,
+  "filter_checkpoint_selection_mae_m": 0.08745786170628896,
+  "filter_checkpoint_sha256": "88a7a3650fe03bc297a292dc6fe709b4fa8bb20194f479741dd92ca51ccc0dc0",
+  "held_out_2024_target_access_count": 0,
+  "initial_decomposition": {
+    "full_measurement_update_gain_m": 0.00016886813798515365,
+    "full_propagation_gain_m": -0.000320009077623723,
+    "full_total_gain_m": -0.00015114093963856934,
+    "short_measurement_update_gain_m": 0.0005431918779868344,
+    "short_propagation_gain_m": -1.6752303025696635e-05,
+    "short_total_gain_m": 0.0005264395749611378
+  },
+  "initial_noise": {
+    "observation_standard_deviation": [
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "process_standard_deviation": [
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379
+    ]
+  },
+  "initial_pass": {
+    "base_full_absolute_error_sum_m": 65579.06208432578,
+    "base_full_cell_count": 748512,
+    "base_full_mae_m": 0.08761257279018343,
+    "base_short_absolute_error_sum_m": 12716.62061040965,
+    "base_short_cell_count": 195264,
+    "base_short_mae_m": 0.06512526943220281,
+    "batch_count": 255,
+    "nonempty_block_count": 52,
+    "origin_count": 8136,
+    "prior_full_absolute_error_sum_m": 65818.59271903607,
+    "prior_full_cell_count": 748512,
+    "prior_full_mae_m": 0.08793258186780716,
+    "prior_short_absolute_error_sum_m": 12719.891732107659,
+    "prior_short_cell_count": 195264,
+    "prior_short_mae_m": 0.06514202173522851,
+    "short_window_leads": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "updated_full_absolute_error_sum_m": 394153.15734801913,
+    "updated_full_cell_count": 4491072,
+    "updated_full_mae_m": 0.087763713729822,
+    "updated_short_absolute_error_sum_m": 75682.95547946663,
+    "updated_short_cell_count": 1171584,
+    "updated_short_mae_m": 0.06459882985724168
+  },
+  "learned_decomposition": {
+    "full_measurement_update_gain_m": 0.00030181451087131494,
+    "full_propagation_gain_m": -0.00014710342697683843,
+    "full_total_gain_m": 0.00015471108389447652,
+    "short_measurement_update_gain_m": 0.0007115335181976518,
+    "short_propagation_gain_m": 0.00015021495716834032,
+    "short_total_gain_m": 0.0008617484753659921
+  },
+  "learned_noise": {
+    "observation_standard_deviation": [
+      0.1789678919684505,
+      0.12790625935433522,
+      0.13392465212720794,
+      0.1889615562955699,
+      0.0420569969663648,
+      0.08187718841268027
+    ],
+    "process_standard_deviation": [
+      0.02373650874634564,
+      0.06714974019280075,
+      0.01356998559435619,
+      0.013491202100094767,
+      0.02197172361448691,
+      0.03587775595374335,
+      0.02177846283426002,
+      0.02483996753650752,
+      0.012986655455719566,
+      0.0329132897538416,
+      0.013851042120015743,
+      0.11815372306565951,
+      0.01904695812505929,
+      0.018521778771656932,
+      0.032281122001576394,
+      0.018049124937968147,
+      0.014197490558912795,
+      0.014546041122873074,
+      0.03159799925045929,
+      0.024412461066882014,
+      0.017912049027793163,
+      0.029991481734876747,
+      0.020152648016387175,
+      0.013470999592002642,
+      0.012818597762167943,
+      0.013935960945266309,
+      0.01614375921640188,
+      0.03223955952818062,
+      0.16890640463915996,
+      0.03464191709681669,
+      0.02318898047403175,
+      0.057413038422506626
+    ]
+  },
+  "learned_pass": {
+    "base_full_absolute_error_sum_m": 65579.06208432578,
+    "base_full_cell_count": 748512,
+    "base_full_mae_m": 0.08761257279018343,
+    "base_short_absolute_error_sum_m": 12716.62061040965,
+    "base_short_cell_count": 195264,
+    "base_short_mae_m": 0.06512526943220281,
+    "batch_count": 255,
+    "nonempty_block_count": 52,
+    "origin_count": 8136,
+    "prior_full_absolute_error_sum_m": 65689.17076465907,
+    "prior_full_cell_count": 748512,
+    "prior_full_mae_m": 0.08775967621716027,
+    "prior_short_absolute_error_sum_m": 12687.289037013132,
+    "prior_short_cell_count": 195264,
+    "prior_short_mae_m": 0.06497505447503447,
+    "short_window_leads": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "updated_full_absolute_error_sum_m": 392779.5538889865,
+    "updated_full_cell_count": 4491072,
+    "updated_full_mae_m": 0.08745786170628896,
+    "updated_short_absolute_error_sum_m": 75290.11293669471,
+    "updated_short_cell_count": 1171584,
+    "updated_short_mae_m": 0.06426352095683682
+  },
+  "learning_improvement": {
+    "full_updated_mae_improvement_m": 0.00030585202353304586,
+    "short_updated_mae_improvement_m": 0.0003353089004048543
+  },
+  "observation_head_sha256": "68f20980b36857d24b1d97ec56983349fa3d6e6f79799a3a00e14334f3037644",
+  "schema_version": 1,
+  "seed": 17,
+  "selection_block_anchor_beijing": "2022-01-01T00:00:00+08:00",
+  "selection_block_days": 7,
+  "selection_year": 2022,
+  "short_window_leads": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "status": "completed_qr_learning_value_diagnostic",
+  "torch_version": "2.4.0"
+}
+
+SEED_29_JSON={
+  "base_checkpoint_sha256": "b74d5f5e99489eeaeea4d3703262f87b8e234128f12a71f47dc2f0be2239a076",
+  "boundary_future_target_access_count": 0,
+  "completed_utc": "2026-09-03T05:28:38.048534+00:00",
+  "cuda_version": "12.1",
+  "development_gate_dataset_length": 0,
+  "device_name": "NVIDIA GeForce RTX 3090",
+  "diagnostic_id": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_UKF_QR_LEARNING_VALUE_DIAGNOSTIC_V1",
+  "evaluation_batch_size": 32,
+  "filter_checkpoint_epoch": 1,
+  "filter_checkpoint_selection_mae_m": 0.08672173441800762,
+  "filter_checkpoint_sha256": "0889c38d5c16b91d70b763857a824d3efabe0dcc6378a1c1377c264578771c98",
+  "held_out_2024_target_access_count": 0,
+  "initial_decomposition": {
+    "full_measurement_update_gain_m": 0.0003206306018736643,
+    "full_propagation_gain_m": -0.00027819672775496185,
+    "full_total_gain_m": 4.2433874118702475e-05,
+    "short_measurement_update_gain_m": 0.0006456771018890084,
+    "short_propagation_gain_m": 2.5869041361786804e-05,
+    "short_total_gain_m": 0.0006715461432507952
+  },
+  "initial_noise": {
+    "observation_standard_deviation": [
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "process_standard_deviation": [
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379
+    ]
+  },
+  "initial_pass": {
+    "base_full_absolute_error_sum_m": 64962.25139781924,
+    "base_full_cell_count": 748512,
+    "base_full_mae_m": 0.08678852362797021,
+    "base_short_absolute_error_sum_m": 12681.72124604398,
+    "base_short_cell_count": 195264,
+    "base_short_mae_m": 0.06494654030463362,
+    "batch_count": 255,
+    "nonempty_block_count": 52,
+    "origin_count": 8136,
+    "prior_full_absolute_error_sum_m": 65170.484986904565,
+    "prior_full_cell_count": 748512,
+    "prior_full_mae_m": 0.08706672035572517,
+    "prior_short_absolute_error_sum_m": 12676.669953551513,
+    "prior_short_cell_count": 195264,
+    "prior_short_mae_m": 0.06492067126327183,
+    "short_window_leads": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "updated_full_absolute_error_sum_m": 389582.9348030094,
+    "updated_full_cell_count": 4491072,
+    "updated_full_mae_m": 0.08674608975385151,
+    "updated_short_absolute_error_sum_m": 75303.55475956954,
+    "updated_short_cell_count": 1171584,
+    "updated_short_mae_m": 0.06427499416138283
+  },
+  "learned_decomposition": {
+    "full_measurement_update_gain_m": 0.0004299502498391755,
+    "full_propagation_gain_m": -0.0003631610398765889,
+    "full_total_gain_m": 6.678920996258664e-05,
+    "short_measurement_update_gain_m": 0.0006358773129057499,
+    "short_propagation_gain_m": 4.32142730051599e-05,
+    "short_total_gain_m": 0.0006790915859109098
+  },
+  "learned_noise": {
+    "observation_standard_deviation": [
+      0.15830526249554777,
+      0.13050729905943995,
+      0.154003130582839,
+      0.15972488965630594,
+      0.07725024910140514,
+      0.05597277507931
+    ],
+    "process_standard_deviation": [
+      0.03816765099872307,
+      0.020864805703843824,
+      0.029412926523203185,
+      0.015630562838285816,
+      0.02809344588545836,
+      0.016799358487756735,
+      0.016387579600373892,
+      0.017215380954776458,
+      0.019268229242826597,
+      0.06484375618532022,
+      0.018650134677739388,
+      0.08810052788435338,
+      0.01824754980606025,
+      0.01687198836550049,
+      0.02011381281987722,
+      0.01658309882123257,
+      0.01732259375322629,
+      0.016731832434611446,
+      0.07051129851444199,
+      0.01680787894136016,
+      0.06067637654664262,
+      0.016111884705294108,
+      0.01657067247011681,
+      0.016139283284885248,
+      0.017737879943791026,
+      0.019233364179185954,
+      0.017219843171872716,
+      0.06211114406774889,
+      0.016459164921010072,
+      0.019143052304654528,
+      0.04127111015370975,
+      0.01770612557464678
+    ]
+  },
+  "learned_pass": {
+    "base_full_absolute_error_sum_m": 64962.25139781924,
+    "base_full_cell_count": 748512,
+    "base_full_mae_m": 0.08678852362797021,
+    "base_short_absolute_error_sum_m": 12681.72124604398,
+    "base_short_cell_count": 195264,
+    "base_short_mae_m": 0.06494654030463362,
+    "batch_count": 255,
+    "nonempty_block_count": 52,
+    "origin_count": 8136,
+    "prior_full_absolute_error_sum_m": 65234.081794099344,
+    "prior_full_cell_count": 748512,
+    "prior_full_mae_m": 0.0871516846678468,
+    "prior_short_absolute_error_sum_m": 12673.283054239899,
+    "prior_short_cell_count": 195264,
+    "prior_short_mae_m": 0.06490332603162846,
+    "short_window_leads": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "updated_full_absolute_error_sum_m": 389473.55323615036,
+    "updated_full_cell_count": 4491072,
+    "updated_full_mae_m": 0.08672173441800762,
+    "updated_short_absolute_error_sum_m": 75294.71463967604,
+    "updated_short_cell_count": 1171584,
+    "updated_short_mae_m": 0.06426744871872271
+  },
+  "learning_improvement": {
+    "full_updated_mae_improvement_m": 2.4355335843884163e-05,
+    "short_updated_mae_improvement_m": 7.545442660114587e-06
+  },
+  "observation_head_sha256": "046ceaf705885a69baa6a692cba7b8b3302d724cd2bf4526ae530b63c49da483",
+  "schema_version": 1,
+  "seed": 29,
+  "selection_block_anchor_beijing": "2022-01-01T00:00:00+08:00",
+  "selection_block_days": 7,
+  "selection_year": 2022,
+  "short_window_leads": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "status": "completed_qr_learning_value_diagnostic",
+  "torch_version": "2.4.0"
+}
+
+SEED_43_JSON={
+  "base_checkpoint_sha256": "31d33aca917ff0567d1733d12d9c317c27ff5b2c120450e5a3cc5ef7e78a196a",
+  "boundary_future_target_access_count": 0,
+  "completed_utc": "2026-09-03T05:28:41.591582+00:00",
+  "cuda_version": "12.1",
+  "development_gate_dataset_length": 0,
+  "device_name": "NVIDIA GeForce RTX 3090",
+  "diagnostic_id": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_UKF_QR_LEARNING_VALUE_DIAGNOSTIC_V1",
+  "evaluation_batch_size": 32,
+  "filter_checkpoint_epoch": 1,
+  "filter_checkpoint_selection_mae_m": 0.08853771250622687,
+  "filter_checkpoint_sha256": "68afab8a264ed453b8e449e741a6a3278b2ac8131260afa04a1a2669d99cb866",
+  "held_out_2024_target_access_count": 0,
+  "initial_decomposition": {
+    "full_measurement_update_gain_m": 0.00015558227364831367,
+    "full_propagation_gain_m": -0.0005320403904104237,
+    "full_total_gain_m": -0.00037645811676211005,
+    "short_measurement_update_gain_m": 0.0003608315468603407,
+    "short_propagation_gain_m": -8.016680676457832e-05,
+    "short_total_gain_m": 0.00028066474009576237
+  },
+  "initial_noise": {
+    "observation_standard_deviation": [
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "process_standard_deviation": [
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379,
+      0.03162277660168379
+    ]
+  },
+  "initial_pass": {
+    "base_full_absolute_error_sum_m": 66120.43426552837,
+    "base_full_cell_count": 748512,
+    "base_full_mae_m": 0.08833583732195124,
+    "base_short_absolute_error_sum_m": 12582.868713003352,
+    "base_short_cell_count": 195264,
+    "base_short_mae_m": 0.06444028962329643,
+    "batch_count": 255,
+    "nonempty_block_count": 52,
+    "origin_count": 8136,
+    "prior_full_absolute_error_sum_m": 66518.67288223526,
+    "prior_full_cell_count": 748512,
+    "prior_full_mae_m": 0.08886787771236167,
+    "prior_short_absolute_error_sum_m": 12598.522404359432,
+    "prior_short_cell_count": 195264,
+    "prior_short_mae_m": 0.064520456430061,
+    "short_window_leads": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "updated_full_absolute_error_sum_m": 398413.3061005333,
+    "updated_full_cell_count": 4491072,
+    "updated_full_mae_m": 0.08871229543871335,
+    "updated_short_absolute_error_sum_m": 75168.38995915977,
+    "updated_short_cell_count": 1171584,
+    "updated_short_mae_m": 0.06415962488320066
+  },
+  "learned_decomposition": {
+    "full_measurement_update_gain_m": 0.00022213133376976224,
+    "full_propagation_gain_m": -0.0004240065180453889,
+    "full_total_gain_m": -0.00020187518427562667,
+    "short_measurement_update_gain_m": 0.0003872941284533138,
+    "short_propagation_gain_m": -6.50093596106377e-05,
+    "short_total_gain_m": 0.0003222847688426761
+  },
+  "learned_noise": {
+    "observation_standard_deviation": [
+      0.15216491274672553,
+      0.13307160608918592,
+      0.12619359175781295,
+      0.15164336936847111,
+      0.06190091455531642,
+      0.056846219646429365
+    ],
+    "process_standard_deviation": [
+      0.02537358695316723,
+      0.03142629463438557,
+      0.029424166798109778,
+      0.034423969566514404,
+      0.018657326072082363,
+      0.026159270315607892,
+      0.020084423133584033,
+      0.028537093531570135,
+      0.016404782183728744,
+      0.02536631428084269,
+      0.017248501339036094,
+      0.0293903191319796,
+      0.025426289433280548,
+      0.022052430297184705,
+      0.022782582109289094,
+      0.04070053310040316,
+      0.026087126287107916,
+      0.019572318550849194,
+      0.01915583057319607,
+      0.022724473724401558,
+      0.024612150392345135,
+      0.03192391102718154,
+      0.04691679635437349,
+      0.0458654566773532,
+      0.025915009549824005,
+      0.02865075333560894,
+      0.019294284194104856,
+      0.045622609815440904,
+      0.019112541324703334,
+      0.030611552833797823,
+      0.028060615613446388,
+      0.01645890669713839
+    ]
+  },
+  "learned_pass": {
+    "base_full_absolute_error_sum_m": 66120.43426552837,
+    "base_full_cell_count": 748512,
+    "base_full_mae_m": 0.08833583732195124,
+    "base_short_absolute_error_sum_m": 12582.868713003352,
+    "base_short_cell_count": 195264,
+    "base_short_mae_m": 0.06444028962329643,
+    "batch_count": 255,
+    "nonempty_block_count": 52,
+    "origin_count": 8136,
+    "prior_full_absolute_error_sum_m": 66437.80823236356,
+    "prior_full_cell_count": 748512,
+    "prior_full_mae_m": 0.08875984383999663,
+    "prior_short_absolute_error_sum_m": 12595.562700598366,
+    "prior_short_cell_count": 195264,
+    "prior_short_mae_m": 0.06450529898290706,
+    "short_window_leads": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "updated_full_absolute_error_sum_m": 397629.24158076535,
+    "updated_full_cell_count": 4491072,
+    "updated_full_mae_m": 0.08853771250622687,
+    "updated_short_absolute_error_sum_m": 75119.62859940034,
+    "updated_short_cell_count": 1171584,
+    "updated_short_mae_m": 0.06411800485445375
+  },
+  "learning_improvement": {
+    "full_updated_mae_improvement_m": 0.00017458293248648338,
+    "short_updated_mae_improvement_m": 4.162002874691373e-05
+  },
+  "observation_head_sha256": "2df0aeb7a336812eb5b1f140b7cc6a2523fc449d18f93cf012ea8b28be117670",
+  "schema_version": 1,
+  "seed": 43,
+  "selection_block_anchor_beijing": "2022-01-01T00:00:00+08:00",
+  "selection_block_days": 7,
+  "selection_year": 2022,
+  "short_window_leads": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "status": "completed_qr_learning_value_diagnostic",
+  "torch_version": "2.4.0"
+}
+
+=== BLOCK_CSV_HEAD ===
+CSV|s17|lines=105
+seed,pass,block_id,origin_count,cell_count,updated_short_absolute_error_sum_m
+17,initial,0,145,20880,1255.186246017149
+17,initial,1,168,24192,1793.7198911948742
+CSV|s29|lines=105
+seed,pass,block_id,origin_count,cell_count,updated_short_absolute_error_sum_m
+29,initial,0,145,20880,1231.7041012531174
+29,initial,1,168,24192,1670.5643067355111
+CSV|s43|lines=105
+seed,pass,block_id,origin_count,cell_count,updated_short_absolute_error_sum_m
+43,initial,0,145,20880,1260.8912046496475
+43,initial,1,168,24192,1752.3316823156938
+=== ERR_TAILS ===
+ERR|qr-value-219223_0.err|bytes=0
+ERR|qr-value-219223_1.err|bytes=0
+ERR|qr-value-219223_2.err|bytes=0
+=== OUT_TAILS ===
+OUT|qr-value-219223_0.out|bytes=2493
+torch=2.4.0 cuda=12.1
+=== FROZEN_ROOT_IDENTITY_BEFORE ===
+704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+3bf21456566460361b0f80d70d1b49984d43a8044ff4f96a02774334f651e358  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001/best_checkpoint.pt
+68f20980b36857d24b1d97ec56983349fa3d6e6f79799a3a00e14334f3037644  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s17/attempt_001/realtime_observation_head.pt
+88a7a3650fe03bc297a292dc6fe709b4fa8bb20194f479741dd92ca51ccc0dc0  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001/best_filter_checkpoint.pt
+{"full_improvement_m": 0.00030585202353304586, "nonempty_block_count": 52, "seed": 17, "short_improvement_m": 0.0003353089004048543, "short_initial_updated_mae_m": 0.06459882985724168, "short_learned_updated_mae_m": 0.06426352095683682, "status": "completed_qr_learning_value_diagnostic"}
+=== FROZEN_ROOT_IDENTITY_AFTER ===
+704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+3bf21456566460361b0f80d70d1b49984d43a8044ff4f96a02774334f651e358  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001/best_checkpoint.pt
+68f20980b36857d24b1d97ec56983349fa3d6e6f79799a3a00e14334f3037644  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s17/attempt_001/realtime_observation_head.pt
+88a7a3650fe03bc297a292dc6fe709b4fa8bb20194f479741dd92ca51ccc0dc0  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001/best_filter_checkpoint.pt
+=== FROZEN_ROOT_PYCACHE_CHECK ===
+[DONE] qr learning value diagnostic=/data1/home/sunyiq/zhenjiang_six_source_four_target_ukf_qr_learning_value_20260903/runs/qr_learning_value/s17/attempt_001
+OUT|qr-value-219223_1.out|bytes=2493
+torch=2.4.0 cuda=12.1
+=== FROZEN_ROOT_IDENTITY_BEFORE ===
+704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+b74d5f5e99489eeaeea4d3703262f87b8e234128f12a71f47dc2f0be2239a076  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s29/attempt_001/best_checkpoint.pt
+046ceaf705885a69baa6a692cba7b8b3302d724cd2bf4526ae530b63c49da483  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s29/attempt_001/realtime_observation_head.pt
+0889c38d5c16b91d70b763857a824d3efabe0dcc6378a1c1377c264578771c98  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001/best_filter_checkpoint.pt
+{"full_improvement_m": 2.4355335843884163e-05, "nonempty_block_count": 52, "seed": 29, "short_improvement_m": 7.545442660114587e-06, "short_initial_updated_mae_m": 0.06427499416138283, "short_learned_updated_mae_m": 0.06426744871872271, "status": "completed_qr_learning_value_diagnostic"}
+=== FROZEN_ROOT_IDENTITY_AFTER ===
+704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+b74d5f5e99489eeaeea4d3703262f87b8e234128f12a71f47dc2f0be2239a076  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s29/attempt_001/best_checkpoint.pt
+046ceaf705885a69baa6a692cba7b8b3302d724cd2bf4526ae530b63c49da483  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s29/attempt_001/realtime_observation_head.pt
+0889c38d5c16b91d70b763857a824d3efabe0dcc6378a1c1377c264578771c98  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001/best_filter_checkpoint.pt
+=== FROZEN_ROOT_PYCACHE_CHECK ===
+[DONE] qr learning value diagnostic=/data1/home/sunyiq/zhenjiang_six_source_four_target_ukf_qr_learning_value_20260903/runs/qr_learning_value/s29/attempt_001
+OUT|qr-value-219223_2.out|bytes=2493
+torch=2.4.0 cuda=12.1
+=== FROZEN_ROOT_IDENTITY_BEFORE ===
+704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+31d33aca917ff0567d1733d12d9c317c27ff5b2c120450e5a3cc5ef7e78a196a  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s43/attempt_001/best_checkpoint.pt
+2df0aeb7a336812eb5b1f140b7cc6a2523fc449d18f93cf012ea8b28be117670  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s43/attempt_001/realtime_observation_head.pt
+68afab8a264ed453b8e449e741a6a3278b2ac8131260afa04a1a2669d99cb866  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001/best_filter_checkpoint.pt
+{"full_improvement_m": 0.00017458293248648338, "nonempty_block_count": 52, "seed": 43, "short_improvement_m": 4.162002874691373e-05, "short_initial_updated_mae_m": 0.06415962488320066, "short_learned_updated_mae_m": 0.06411800485445375, "status": "completed_qr_learning_value_diagnostic"}
+=== FROZEN_ROOT_IDENTITY_AFTER ===
+704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+31d33aca917ff0567d1733d12d9c317c27ff5b2c120450e5a3cc5ef7e78a196a  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s43/attempt_001/best_checkpoint.pt
+2df0aeb7a336812eb5b1f140b7cc6a2523fc449d18f93cf012ea8b28be117670  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s43/attempt_001/realtime_observation_head.pt
+68afab8a264ed453b8e449e741a6a3278b2ac8131260afa04a1a2669d99cb866  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001/best_filter_checkpoint.pt
+=== FROZEN_ROOT_PYCACHE_CHECK ===
+[DONE] qr learning value diagnostic=/data1/home/sunyiq/zhenjiang_six_source_four_target_ukf_qr_learning_value_20260903/runs/qr_learning_value/s43/attempt_001
+=== FROZEN_ROOT_UNCHANGED ===
+IDENTITY|match=true|path=ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+IDENTITY|match=true|path=development_access_started.json
+IDENTITY|match=true|path=zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.py
+pycache_check=done
+=== SNAPSHOT_END ===
+2026-09-03T14:24:15+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T14:24:15+0800
