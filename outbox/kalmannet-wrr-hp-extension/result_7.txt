@@ -1,0 +1,72 @@
+### channel=kalmannet-wrr-hp-extension seq=7
+### host=login4
+### started=2026-09-03T11:28:01+0800
+### ---------- output ----------
+=== FAILED_CELL_ERROR ===
+[Fail] idx=5 uid=a25c846e 错误: Exceeded max NaN recoveries in this epoch
+[Traceback]
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/grid_search_knet.py", line 920, in main
+    val_metric, best_model_path = train_and_eval(
+                                  ^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/train_and_eval.py", line 637, in train_and_eval
+    _ , _, val_bp_loss, val_disp_loss = pipe.train(
+                                        ^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/knet/pipelines/pipeline_clean_based_on_11.py", line 44, in train
+    return train_nn(
+           ^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/knet/pipelines/train_clean_based_on_11.py", line 246, in train_nn
+    train_avg_bp_loss, train_avg_display_loss = run_one_epoch(
+                                                ^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/knet/pipelines/train_clean_based_on_11.py", line 319, in run_one_epoch
+    raise RuntimeError("Exceeded max NaN recoveries in this epoch")
+RuntimeError: Exceeded max NaN recoveries in this epoch
+
+--- error.txt ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/grid_search_knet.py", line 920, in main
+    val_metric, best_model_path = train_and_eval(
+                                  ^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/train_and_eval.py", line 637, in train_and_eval
+    _ , _, val_bp_loss, val_disp_loss = pipe.train(
+                                        ^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/knet/pipelines/pipeline_clean_based_on_11.py", line 44, in train
+    return train_nn(
+           ^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/knet/pipelines/train_clean_based_on_11.py", line 246, in train_nn
+    train_avg_bp_loss, train_avg_display_loss = run_one_epoch(
+                                                ^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/knet/pipelines/train_clean_based_on_11.py", line 319, in run_one_epoch
+    raise RuntimeError("Exceeded max NaN recoveries in this epoch")
+RuntimeError: Exceeded max NaN recoveries in this epoch
+--- FAILED tag ---
+[FAILED] 训练失败
+索引: 5
+错误: Exceeded max NaN recoveries in this epoch
+耗时: 5229.3秒
+失败时间: 2026-09-02 20:09:46
+状态: 失败
+详细错误信息请查看: error.txt
+=== EPOCH_TRAIL (all epochs of the failed cell) ===
+ep=  0 lr=0.05        train=0.000187335 val=5.95506e-05 nse=0.9443 rollbacks=   0 nan=  0 improved=True
+ep=  1 lr=0.025       train=0.00442493 val=0.000394988 nse=0.8979 rollbacks=   8 nan=  0 improved=False
+ep=  2 lr=0.0125      train=0.00397599 val=0.000469264 nse=0.8993 rollbacks=  59 nan=  0 improved=False
+ep=  3 lr=0.00625     train=0.000823236 val=0.000504366 nse=0.8998 rollbacks=  59 nan=  0 improved=False
+ep=  4 lr=0.003125    train=0.00094937 val=0.000525311 nse=0.8998 rollbacks=  59 nan=  0 improved=False
+ep=  5 lr=0.0015625   train=0.00636379 val=0.000542793 nse=0.8997 rollbacks=  59 nan=  0 improved=False
+ep=  6 lr=0.00078125  train=inf val=0.000542793 nse=0.8997 rollbacks=  60 nan=  0 improved=False
+=== ROLLBACK/NAN LINES IN LOG ===
+307
+[Fail] idx=5 uid=a25c846e 错误: Exceeded max NaN recoveries in this epoch
+[Traceback]
+Traceback (most recent call last):
+    raise RuntimeError("Exceeded max NaN recoveries in this epoch")
+RuntimeError: Exceeded max NaN recoveries in this epoch
+=== ARRAY_NOW ===
+218659_13|RUNNING|9:43:13
+218659_14|RUNNING|8:03:10
+218659_15|RUNNING|6:26:11
+218659_16|RUNNING|4:20:34
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T11:28:02+0800
