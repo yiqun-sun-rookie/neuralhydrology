@@ -1,0 +1,82 @@
+### channel=kuwei-jdl-seedbatch seq=15
+### host=login4
+### started=2026-09-03T17:51:24+0800
+### ---------- output ----------
+=== A. file ===
+-rw-r--r--. 1 sunyiq g_sunyiq 1663 Aug 28 15:09 /data1/home/sunyiq/kuwei_paired/laos/basins/namou_kuwei/dl/highflow_2026_06_17/results/kuwei_joint_da_learning_20260826/gates/phase0_gates.json
+d86fc6c5c7eaa720249b98e9027c92419c3c31caf29bf83e561869cdf87b0b6f  /data1/home/sunyiq/kuwei_paired/laos/basins/namou_kuwei/dl/highflow_2026_06_17/results/kuwei_joint_da_learning_20260826/gates/phase0_gates.json
+=== BEGIN JSON ===
+{
+  "all_passed": false,
+  "anchor": {
+    "gate": "anchor",
+    "passed": false,
+    "replicates": [
+      {
+        "context_fastmath_gap_vs_eval2023": 0.02994537353515625,
+        "max_abs_diff_vs_authority": 0.036029815673828125,
+        "passed": false,
+        "seed": 20260824
+      },
+      {
+        "context_fastmath_gap_vs_eval2023": 2.023972749710083,
+        "max_abs_diff_vs_authority": 0.0007038116455078125,
+        "passed": false,
+        "seed": 20260825
+      },
+      {
+        "context_fastmath_gap_vs_eval2023": 0.003387451171875,
+        "max_abs_diff_vs_authority": 0.00042724609375,
+        "passed": false,
+        "seed": 20260826
+      }
+    ]
+  },
+  "created_utc": "2026-08-28T06:56:26.605123+00:00",
+  "determinism": {
+    "gate": "determinism",
+    "passed": true,
+    "runs": [
+      {
+        "best": 340.3573303222656,
+        "losses": [
+          72.24403381347656,
+          11.425451278686523,
+          41.15943908691406
+        ]
+      },
+      {
+        "best": 340.3573303222656,
+        "losses": [
+          72.24403381347656,
+          11.425451278686523,
+          41.15943908691406
+        ]
+      }
+    ]
+  },
+  "equivalence": {
+    "gate": "equivalence",
+    "hours": 2000,
+    "max_abs_diff": 0.0,
+    "passed": true
+  },
+  "family": "kuwei_joint_da_learning_20260826",
+  "timing": {
+    "filter_seconds_per_hour_step": 0.00187,
+    "gate": "timing",
+    "hpc_threshold_wall_hours": 48,
+    "passed": true,
+    "projected_family_hours_6_parallel": 5.16,
+    "projected_run_hours": 2.58,
+    "projected_selection_eval_seconds": 91.4,
+    "projected_update_seconds": 36.0,
+    "warmup_rollout_seconds": 4.32
+  }
+}
+
+=== END JSON ===
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T17:51:24+0800
