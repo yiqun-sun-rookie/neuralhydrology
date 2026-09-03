@@ -1,0 +1,37 @@
+### channel=id23-param-probe seq=3
+### host=login4
+### started=2026-09-03T13:02:29+0800
+### ---------- output ----------
+=== CONDA ENV (activate NOT piped this time) ===
+which python: /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+python 3.11.13
+numpy 2.3.3
+pandas 2.3.2
+numba 0.63.1
+pytest MISSING (ModuleNotFoundError)
+=== CPU PARTITION HEADROOM ===
+ PARTITION  STATE  NODES NODELIST
+   hcpu48* alloc$     13 icn[202,204-207,210-212,214,216-217,220-221]
+   hcpu48*  maint      2 icn[246,249]
+   hcpu48*  down*     14 icn[203,215,218,230,233,235-237,239,242-243,245,247,256]
+   hcpu48*  alloc     27 icn[201,208-209,213,219,222-229,231-232,234,238,240-241,244,250-255,258]
+   hcpu48*   idle      8 icn[248,257,259-264]
+   hcpu48y  down$      1 icn281
+   hcpu48y  maint      1 icn280
+   hcpu48y  down*      2 icn[278-279]
+   hcpu48y    mix      2 icn[274,277]
+   hcpu48y   idle      6 icn[270-273,275-276]
+=== DATA SPOT CHECK (read-only) ===
+daymet
+maurer
+nldas
+01
+02
+03
+04
+/data1/home/sunyiq/neuralhydrology/data/camels_us/usgs_streamflow/12/08190500_streamflow_qc.txt
+=== MY LANDING DIR ===
+ls: cannot access /data1/home/sunyiq/id23_param_probe: No such file or directory
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T13:02:47+0800
