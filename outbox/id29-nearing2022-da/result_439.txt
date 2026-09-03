@@ -1,0 +1,41 @@
+### channel=id29-nearing2022-da seq=439
+### host=login4
+### started=2026-09-03T18:09:21+0800
+### ---------- output ----------
+=== 1. 放置分析合同(内容来自本地冻结副本,散列必须自证) ===
+5bb3da898bba8b01b290a2a3efe70a943235fd103e9913711d19a6290869a114  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_analysis_contract.json
+必须等于 5bb3da898bba8b01b290a2a3efe70a943235fd103e9913711d19a6290869a114
+=== 2. 备份原脚本 ===
+cp: cannot stat ‘/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm’: No such file or directory
+backup already exists
+sha256sum: /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm.orig_20260903: No such file or directory
+=== 3. 四处定点修复 ===
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+  File "/data1/home/sunyiq/miniconda3/lib/python3.11/pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm'
+=== 4. 差异 ===
+diff: /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm.orig_20260903: No such file or directory
+diff: /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm: No such file or directory
+=== 5. 修复后的脚本散列与语法检查 ===
+sha256sum: /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm: No such file or directory
+bash: /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm: No such file or directory
+=== 6. 逐条复检准入条件 ===
+OK   /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol.json
+OK   /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_analysis_contract.json
+OK   /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2
+OK   /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2
+202510|COMPLETED|0:0
+202511|COMPLETED|0:0
+OK   warmup_pair 不存在
+=== 7. 未提交任何作业 ===
+0
+0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T18:09:21+0800
