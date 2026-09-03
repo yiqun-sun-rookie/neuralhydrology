@@ -1,8 +1,10 @@
 #!/bin/bash
 set -eo pipefail
 ROOT=/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
-EXP="$ROOT/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902"
-PAY=/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-hp-extension/v2-divcheck
+REPO="$ROOT/repo"
+EXP="$REPO/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902"
+TAR=/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-hp-extension/v2/divcheck_addendum.tar.gz
+STAMP=$(date +%Y%m%dT%H%M%S)
 
 assert_sha256() {
   a="$(sha256sum "$2" | awk '{print $1}')"
@@ -10,39 +12,38 @@ assert_sha256() {
 }
 
 echo "=== PAYLOAD_CHECK ==="
-assert_sha256 bc2841d968314f0f9b30a28a64aa3ac94f100cd1545feb85b624dff58efaddfa "$PAY/combos.jsonl"
-assert_sha256 762f284f9fa033fb2e23ba86b5387e813c87fa76451e5fc40410e6ae8c7fded0 "$PAY/registry.csv"
-assert_sha256 f6f04298895e7a95e4a2fb88a160a98ba2b2c0fab1967cfa4ff6b8efc14904ad "$PAY/source_manifest.json"
-assert_sha256 f79dd590c91083eeebfdf7b802564924386959a1410d64543631e66b5457c7c4 "$PAY/hpc_single17.slurm"
+assert_sha256 b5e7e7e18f765c149529961ae62963aaca11c26a47393e069cfaf5cc70569b9b "$TAR"
 echo payload_ok
 
 echo "=== PRE_STATE ==="
-echo "old combos lines: $(wc -l < "$EXP/combos.jsonl")"
+echo "combos lines before: $(wc -l < "$EXP/combos.jsonl")"
 squeue -j 218659 -h -o '%i|%T' 2>&1 | sort || true
 
-echo "=== INSTALL (only the three guarded files change; runs/ logs/ audits/ untouched) ==="
-cp -p "$EXP/combos.jsonl" "$EXP/combos.jsonl.bak_$(date +%Y%m%dT%H%M%S)"
-cp -p "$EXP/source_manifest.json" "$EXP/source_manifest.json.bak_$(date +%Y%m%dT%H%M%S)"
-cp -f "$PAY/combos.jsonl" "$EXP/combos.jsonl"
-cp -f "$PAY/registry.csv" "$EXP/registry.csv"
-cp -f "$PAY/source_manifest.json" "$EXP/source_manifest.json"
-cp -f "$PAY/hpc_single17.slurm" "$ROOT/hpc_single17.slurm"
+echo "=== INSTALL ==="
+cp -p "$EXP/combos.jsonl" "$EXP/combos.jsonl.bak_$STAMP"
+cp -p "$EXP/source_manifest.json" "$EXP/source_manifest.json.bak_$STAMP"
+mkdir -p "$ROOT/stage_$STAMP"
+tar -xzf "$TAR" -C "$ROOT/stage_$STAMP"
+assert_sha256 bc2841d968314f0f9b30a28a64aa3ac94f100cd1545feb85b624dff58efaddfa "$ROOT/stage_$STAMP/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/combos.jsonl"
+assert_sha256 f6f04298895e7a95e4a2fb88a160a98ba2b2c0fab1967cfa4ff6b8efc14904ad "$ROOT/stage_$STAMP/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/source_manifest.json"
+assert_sha256 f79dd590c91083eeebfdf7b802564924386959a1410d64543631e66b5457c7c4 "$ROOT/stage_$STAMP/hpc_single17.slurm"
+cp -f "$ROOT/stage_$STAMP/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/combos.jsonl" "$EXP/combos.jsonl"
+cp -f "$ROOT/stage_$STAMP/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/registry.csv" "$EXP/registry.csv"
+cp -f "$ROOT/stage_$STAMP/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/source_manifest.json" "$EXP/source_manifest.json"
+cp -f "$ROOT/stage_$STAMP/hpc_single17.slurm" "$ROOT/hpc_single17.slurm"
 sed -i 's/\r$//' "$ROOT/hpc_single17.slurm"
 chmod 700 "$ROOT/hpc_single17.slurm"
-echo "new combos lines: $(wc -l < "$EXP/combos.jsonl")"
+echo "combos lines after: $(wc -l < "$EXP/combos.jsonl")"
 tail -n 1 "$EXP/combos.jsonl"
 
-echo "=== VERIFY_DEPLOYED_TREE_AGAINST_NEW_MANIFEST ==="
-cd "$ROOT/repo"
+echo "=== VERIFY_DEPLOYED_TREE ==="
+cd "$REPO"
 python3 - <<'PY'
 import hashlib, json, sys
 from pathlib import Path
 m = json.loads(Path("experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/source_manifest.json").read_text())
-bad = []
-for rel, exp in m["source_sha256"].items():
-    h = hashlib.sha256(Path(rel).read_bytes()).hexdigest()
-    if h.lower() != exp.lower():
-        bad.append((rel, exp, h))
+bad = [(r, e, hashlib.sha256(Path(r).read_bytes()).hexdigest()) for r, e in m["source_sha256"].items()
+       if hashlib.sha256(Path(r).read_bytes()).hexdigest().lower() != e.lower()]
 print(f"checked {len(m['source_sha256'])} files, mismatches={len(bad)}")
 for b in bad: print("MISMATCH", b)
 sys.exit(1 if bad else 0)
