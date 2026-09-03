@@ -1,0 +1,43 @@
+### channel=id23-param-probe seq=8
+### host=login4
+### started=2026-09-03T13:21:28+0800
+### ---------- output ----------
+
+########## main ##########
+
+--- water_year | nse  (n=90) ---
+  oracle_gain      median=+0.01230  95% CI [+0.00976, +0.01711]   win/loss/tie = 90/0/0
+  switch_increment median=+0.01093  95% CI [+0.00877, +0.01495]
+  NO-COLLAPSE subset (n=61): oracle_gain median=+0.01046   switch_increment median=+0.01026
+  COLLAPSED subset  (n=29): oracle_gain median=+0.01401
+  oracle segment picks: center=310 (38%)  x0.5=221 (27%)  x2.0=279 (34%)   total segments=810
+  basins needing BOTH x0.5 and x2.0 segments: 74/90   one direction only: 16   never leaves center: 0
+
+--- block90 | nse  (n=90) ---
+  oracle_gain      median=+0.03082  95% CI [+0.02689, +0.03585]   win/loss/tie = 90/0/0
+  switch_increment median=+0.03039  95% CI [+0.02520, +0.03491]
+  NO-COLLAPSE subset (n=61): oracle_gain median=+0.03075   switch_increment median=+0.03075
+  COLLAPSED subset  (n=29): oracle_gain median=+0.03088
+  oracle segment picks: center=754 (23%)  x0.5=1393 (42%)  x2.0=1183 (36%)   total segments=3330
+  basins needing BOTH x0.5 and x2.0 segments: 90/90   one direction only: 0   never leaves center: 0
+
+########## sub ##########
+
+--- water_year | nse  (n=52) ---
+  oracle_gain      median=+0.02051  95% CI [+0.01295, +0.02569]   win/loss/tie = 47/0/5
+  switch_increment median=+0.00570  95% CI [+0.00246, +0.01057]
+  NO-COLLAPSE subset (n=40): oracle_gain median=+0.02134   switch_increment median=+0.00528
+  COLLAPSED subset  (n=12): oracle_gain median=+0.01441
+  oracle segment picks: center=62 (40%)  x0.5=44 (28%)  x2.0=50 (32%)   total segments=156
+  basins needing BOTH x0.5 and x2.0 segments: 11/52   one direction only: 36   never leaves center: 5
+
+--- block90 | nse  (n=52) ---
+  oracle_gain      median=+0.03746  95% CI [+0.02683, +0.04796]   win/loss/tie = 52/0/0
+  switch_increment median=+0.02219  95% CI [+0.01773, +0.03283]
+  NO-COLLAPSE subset (n=40): oracle_gain median=+0.03834   switch_increment median=+0.02207
+  COLLAPSED subset  (n=12): oracle_gain median=+0.02779
+  oracle segment picks: center=155 (30%)  x0.5=195 (38%)  x2.0=170 (33%)   total segments=520
+  basins needing BOTH x0.5 and x2.0 segments: 44/52   one direction only: 8   never leaves center: 0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T13:21:29+0800
