@@ -1,0 +1,40 @@
+### channel=id26-v09-strict seq=78
+### host=login4
+### started=2026-09-03T13:19:46+0800
+### ---------- output ----------
+=== A WAIT (max 3 min, short on purpose so the push lock is not held) ===
+terminal=COMPLETED at t=20s
+JobID|State|ExitCode|Elapsed|NodeList
+219210|COMPLETED|0:0|00:00:27|ngu003
+=== B ERR ===
+err_bytes=628
+Unknown option: -C
+usage: git [--version] [--help] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+Unknown option: -C
+usage: git [--version] [--help] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+=== C REPORT ===
+report_sha256=324b1d037ce466064629eda314b6e9d2deed52bccd032ccca1448b4c30773775
+status diagnostic_score_complete diagnostic_only True qualifying False
+median_nse {"baseline": 0.758415966999558, "capacity_control": 0.75732702767511, "challenger": 0.7586060036118609}
+coverage {"baseline": {"basins": 531, "finite": 531, "nonfinite": 0}, "capacity_control": {"basins": 531, "finite": 531, "nonfinite": 0}, "challenger": {"basins": 531, "finite": 531, "nonfinite": 0}}
+primary_comparison_challenger_vs_capacity {"baseline_median": 0.75732702767511, "challenger_median": 0.7586060036118609, "ci_high": 0.003703421785674177, "ci_low": 0.0005798578261307918, "median_paired_delta": 0.0024809212971433903, "n": 531, "wilcoxon_p": 0.05262888566962617, "win_rate": 0.5574387947269304}
+descriptive_challenger_vs_classic {"baseline_median": 0.758415966999558, "challenger_median": 0.7586060036118609, "ci_high": 0.0011773899021699785, "ci_low": -0.001539193621234114, "median_paired_delta": -3.979684194899136e-05, "n": 531, "wilcoxon_p": 0.3665445736937457, "win_rate": 0.4971751412429379}
+descriptive_capacity_vs_classic {"baseline_median": 0.758415966999558, "challenger_median": 0.75732702767511, "ci_high": -0.0004940081855108192, "ci_low": -0.0036928935075423164, "median_paired_delta": -0.0015740358023543788, "n": 531, "wilcoxon_p": 0.0017372430383617138, "win_rate": 0.4463276836158192}
+gate_checks {"ci_low_above_zero": true, "effect_at_least_min": false, "wilcoxon_below_max": false}
+all_pass False
+official_score_called False
+postseal_holdout_drawn False
+score_ledger_appended False
+one_call_authorization_consumed False
+=== END ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T13:19:46+0800
