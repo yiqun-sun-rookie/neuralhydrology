@@ -1,32 +1,27 @@
 #!/bin/bash
-# ID23 parameter-axis multicandidate value probe -- read-only reconnaissance.
-# No sbatch, no writes outside ~/id23_param_probe (which is only probed, not created).
-echo "=== WHOAMI / HOST ==="
-whoami; hostname; date
-
-echo "=== RUNNING JOBS (do not disturb) ==="
-squeue -u "$USER" -o "%.10i %.18j %.10P %.8T %.11M %.6D %R" 2>&1 | head -40
-echo "job_count=$(squeue -u "$USER" -h -o '%i' 2>/dev/null | wc -l)"
-
-echo "=== MY LANDING DIR (must be absent or empty) ==="
-ls -ld ~/id23_param_probe 2>&1 | head -3
-ls -la ~/id23_param_probe 2>&1 | head -10
-
-echo "=== SISTER LINE DIRS (must NOT touch) ==="
-ls -ld /data1/home/sunyiq/id29_transferable_noise_20260902 2>&1 | head -2
-
-echo "=== CONDA ENV / NUMPY ==="
+# Env check for the parameter-axis open-loop probe. Read-only, no sbatch.
+echo "=== CONDA ENV (activate NOT piped this time) ==="
 source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || source $HOME/miniconda3/etc/profile.d/conda.sh 2>/dev/null
-conda activate nh_final 2>&1 | head -2
-python -c "import sys,numpy; print('python', sys.version.split()[0]); print('numpy', numpy.__version__)" 2>&1 | head -5
+conda activate nh_final
+echo "which python: $(which python)"
+python - <<'PY' 2>&1 | head -20
+import sys
+print("python", sys.version.split()[0])
+for mod in ("numpy", "pandas", "numba", "pytest"):
+    try:
+        m = __import__(mod)
+        print(f"{mod} {getattr(m, '__version__', '?')}")
+    except Exception as exc:
+        print(f"{mod} MISSING ({type(exc).__name__})")
+PY
 
-echo "=== CAMELS-US DATA ==="
-ls -d ~/neuralhydrology/data/camels_us 2>&1 | head -2
-ls ~/neuralhydrology/data/camels_us 2>&1 | head -10
+echo "=== CPU PARTITION HEADROOM ==="
+sinfo -p hcpu48,hcpu48y -o "%.10P %.6t %.6D %N" 2>&1 | head -12
 
-echo "=== DISK ==="
-df -h /data1 2>&1 | tail -2
-echo "quota:"; du -sh ~/ 2>/dev/null | tail -1
+echo "=== DATA SPOT CHECK (read-only) ==="
+ls ~/neuralhydrology/data/camels_us/basin_mean_forcing/ 2>&1 | head -6
+ls ~/neuralhydrology/data/camels_us/basin_mean_forcing/maurer/ 2>&1 | head -4
+find ~/neuralhydrology/data/camels_us/usgs_streamflow -name "08190500_streamflow_qc.txt" 2>/dev/null | head -2
 
-echo "=== PARTITIONS ==="
-sinfo -o "%.12P %.6a %.10l %.6D %.6t %N" 2>&1 | head -12
+echo "=== MY LANDING DIR ==="
+ls -ld ~/id23_param_probe 2>&1 | head -2
