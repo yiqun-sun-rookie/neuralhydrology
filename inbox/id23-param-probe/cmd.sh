@@ -1,9 +1,12 @@
 #!/bin/bash
-# Ship the artifact tarball as base64 text (precedent: outbox/id18-weight-merge/*.tar.gz.b64.txt).
+# Untracked files in outbox/ do not survive the runner; embed the artifact as base64 in this result.
 set -o pipefail
-SRC=~/hpc_mailbox/outbox/id23-param-probe/artifacts/parameter_axis_probe_v01_out_20260903.tar.gz
-DST=~/hpc_mailbox/outbox/id23-param-probe/parameter_axis_probe_v01_out_20260903.tar.gz.b64.txt
-sha256sum "$SRC"
-base64 -w 76 "$SRC" > "$DST"
-wc -c "$DST"
-echo "b64 sha256: $(sha256sum "$DST" | cut -d' ' -f1)"
+ROOT=/data1/home/sunyiq/id23_param_probe
+TMP=$(mktemp -d)
+tar czf "$TMP/out.tar.gz" -C "$ROOT" out
+echo "TAR_SHA256 $(sha256sum "$TMP/out.tar.gz" | cut -d' ' -f1)"
+echo "TAR_BYTES $(wc -c < "$TMP/out.tar.gz")"
+echo "=====BEGIN_B64====="
+base64 -w 76 "$TMP/out.tar.gz"
+echo "=====END_B64====="
+rm -rf "$TMP"
