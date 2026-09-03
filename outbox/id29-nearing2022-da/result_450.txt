@@ -1,0 +1,57 @@
+### channel=id29-nearing2022-da seq=450
+### host=login4
+### started=2026-09-04T03:09:04+0800
+### ---------- output ----------
+analyze_warmup_target_pair.slurm
+run_author_v13_warmup_isolation_all531_v2.slurm
+run_warmup_target_pair.slurm
+run_warmup_target_replacement_verifier.slurm
+=== SBATCH HEADER ===
+#!/bin/bash
+#SBATCH --job-name=N22-warm-pair
+#SBATCH --partition=hgpu4,hgpu8,hgpu2
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1
+#SBATCH --exclude=ngu002,ngu101
+#SBATCH --array=0-1%1
+#SBATCH --time=3-12:00:00
+#SBATCH --output=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%A_%a.out
+#SBATCH --error=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%A_%a.err
+
+set -eo pipefail
+
+ROOT=/data1/home/sunyiq/nearing2022_da
+PAIR_ROOT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
+DATA_AUDIT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2"
+MASK_AUDIT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2"
+PROTOCOL="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol.json"
+ANALYSIS_CONTRACT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_analysis_contract.json"
+PREPARE="$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py"
+SCORER="$ROOT/src/29_nearing2022_da_ar/scripts/score_reproduction_matrix.py"
+SELF="$ROOT/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm"
+EXPECTED_PROTOCOL_SHA256=16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1
+EXPECTED_ANALYSIS_SHA256=5bb3da898bba8b01b290a2a3efe70a943235fd103e9913711d19a6290869a114
+EXPECTED_PREPARE_SHA256=31f856df60b0daacea873386880581f975480c842fae0d605a5abe4b40a1b664
+EXPECTED_SCORER_SHA256=f7f67ce1968ce080083c33fb8ee9e2fd58c485acba28edce8fb3913c2885dfcc
+
+case "${SLURM_ARRAY_TASK_ID:?Submit as the frozen 0-1 array}" in
+  0)
+    ARM=control
+    EXPERIMENT_ID=N22-DIAG-WARMUP-CONTROL-S0-R1
+    FINAL="$PAIR_ROOT/control_seed0_repeat1"
+    ;;
+  1)
+    ARM=masked
+    EXPERIMENT_ID=N22-DIAG-WARMUP-MASKED-S0-R1
+    FINAL="$PAIR_ROOT/masked_seed0_repeat1"
+    ;;
+=== SEARCH LOGS TREE ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T03:09:04+0800
