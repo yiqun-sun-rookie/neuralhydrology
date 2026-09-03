@@ -1,37 +1,31 @@
 #!/bin/bash
-# Redeploy bundle b (adds hydroagent.experiment_logger) and re-run the import gate.
+# Submit the parameter-axis open-loop probe (CPU only), wait, report.
 set -o pipefail
 ROOT=/data1/home/sunyiq/id23_param_probe
-PAY=~/hpc_mailbox/inbox/id23-param-probe/payload
+cd "$ROOT" || exit 1
 
-echo "=== GUARD: only redeploy while no results exist ==="
-if [ -n "$(ls -A $ROOT/out 2>/dev/null)" ]; then echo "REFUSE: $ROOT/out is not empty"; ls -la "$ROOT/out"; exit 1; fi
+echo "=== SUBMIT ==="
+JID=$(sbatch --parsable par_probe.slurm 2>&1)
+echo "jobid=$JID"
+# Run manifest: the ONLY job ids this line may ever cancel individually.
+printf '%s\t%s\tpar_probe_v01\n' "$(date -Iseconds)" "$JID" >> "$ROOT/run_manifest.tsv"
+squeue -j "$JID" -o "%.10i %.16j %.10P %.8T %R" 2>&1 | head -4
 
-cd "$PAY" || exit 1
-sha256sum -c par_probe_bundle_20260903b.tar.gz.sha256 || exit 1
+echo "=== WAIT (max 10 min) ==="
+for i in $(seq 1 60); do
+    STATE=$(squeue -j "$JID" -h -o "%T" 2>/dev/null)
+    [ -z "$STATE" ] && { echo "t=${i}0s finished"; break; }
+    [ $((i % 3)) -eq 0 ] && echo "t=${i}0s state=$STATE"
+    sleep 10
+done
 
-echo "=== REDEPLOY ==="
-tar xzf "$PAY/par_probe_bundle_20260903b.tar.gz" -C "$ROOT"
-sed -i 's/\r$//' "$ROOT"/par_probe.slurm "$ROOT"/src/*/*.py "$ROOT"/src/*/*/*.py 2>/dev/null
-ls "$ROOT/src/hydroagent/"
+echo "=== ACCOUNTING ==="
+sacct -j "$JID" -X --format=JobID%10,JobName%14,Partition%9,NodeList%9,State%12,ExitCode%8,Elapsed%10,MaxRSS%10,AllocTRES%28 2>&1 | head -6
 
-echo "=== IMPORT + INPUT CHECK ==="
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || source $HOME/miniconda3/etc/profile.d/conda.sh 2>/dev/null
-conda activate nh_final
-cd "$ROOT"
-PYTHONPATH="$ROOT/src" python - <<'PY' 2>&1 | head -25
-import hashlib, sys
-from pathlib import Path
-ROOT = Path("/data1/home/sunyiq/id23_param_probe")
-sys.path.insert(0, str(ROOT / "src"))
-from camels_switch_confirmation.scripts import run_parameter_axis_probe as r
-print("import OK; fc_bounds =", r.FC_BOUNDS)
-h = hashlib.sha256((ROOT / r.CENTER_TABLE).read_bytes()).hexdigest()
-print("center table sha256 matches:", h == r.CENTER_TABLE_SHA256)
-print("design90 basins:", len(r.load_basin_list(ROOT, "design90")))
-print("admitted52 basins:", len(r.load_basin_list(ROOT, "admitted52")))
-centers = r.load_center_table(ROOT)
-gate = r.verify_center_protocol(r.load_basin_list(ROOT, "design90"), centers, ROOT / "data/camels_us", n_check=3)
-print("center-protocol gate max|diff| =", round(gate["max_abs_diff"], 6), "over", gate["n_checked"], "basins")
-PY
-echo "=== READY (still not submitted) ==="
+echo "=== JOB LOG ==="
+tail -60 "$ROOT/logs/par_probe_${JID}.out" 2>&1
+echo "=== STDERR (if any) ==="
+tail -15 "$ROOT/logs/par_probe_${JID}.err" 2>&1
+
+echo "=== OUTPUT FILES ==="
+ls -la "$ROOT/out" 2>&1
