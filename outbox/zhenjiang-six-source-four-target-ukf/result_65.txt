@@ -1,0 +1,76 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=65
+### host=login4
+### started=2026-09-03T13:23:45+0800
+### ---------- output ----------
+=== SNAPSHOT_TIME ===
+2026-09-03T13:23:45+0800
+=== JOB_219223 ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|NODELIST(REASON)
+219223_2|zsf4t-qr-value|RUNNING|hgpu2|ngu009|3:20|ngu009
+219223_1|zsf4t-qr-value|RUNNING|hgpu2|ngu003|3:20|ngu003
+219223_0|zsf4t-qr-value|RUNNING|hgpu2|ngu003|3:20|ngu003
+219224|zsf4t-qr-value|RUNNING|0:0|00:03:57|2026-09-03T13:20:25|Unknown|ngu003
+219224.batch|batch|RUNNING|0:0|00:03:57|2026-09-03T13:20:25|Unknown|ngu003
+219224.extern|extern|RUNNING|0:0|00:03:57|2026-09-03T13:20:25|Unknown|ngu003
+219225|zsf4t-qr-value|RUNNING|0:0|00:03:57|2026-09-03T13:20:25|Unknown|ngu003
+219225.batch|batch|RUNNING|0:0|00:03:57|2026-09-03T13:20:25|Unknown|ngu003
+219225.extern|extern|RUNNING|0:0|00:03:57|2026-09-03T13:20:25|Unknown|ngu003
+219223|zsf4t-qr-value|RUNNING|0:0|00:03:57|2026-09-03T13:20:25|Unknown|ngu009
+219223.batch|batch|RUNNING|0:0|00:03:57|2026-09-03T13:20:25|Unknown|ngu009
+219223.extern|extern|RUNNING|0:0|00:03:57|2026-09-03T13:20:25|Unknown|ngu009
+=== MY_OTHER_JOBS_UNTOUCHED ===
+218635|tukf09-455-v2r6-prepare|PENDING|hgpu8|
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|
+215429|id30_m01_s100|PENDING|hgpu2|
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|
+218659_16|wrrhp-ext|RUNNING|hgpu2p|ngu001
+218659_15|wrrhp-ext|RUNNING|hgpu2p|ngu011
+218659_13|wrrhp-ext|RUNNING|hgpu2p|ngu005
+219190_17|wrrhp-div|RUNNING|hgpu2p|ngu011
+=== RESULT_DIRS ===
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_ukf_qr_learning_value_20260903/runs/qr_learning_value/s17/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_ukf_qr_learning_value_20260903/runs/qr_learning_value/s29/attempt_001
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_ukf_qr_learning_value_20260903/runs/qr_learning_value/s43/attempt_001
+=== LOGS ===
+LOG|qr-value-219223_0.out|bytes=1121
+[2026-09-03T13:20:28+0800] stage=qr_learning_value seed=17 job=219224 node=ngu003
+NVIDIA GeForce RTX 3090, GPU-a6bf0667-7b22-b0c6-656a-366d9d6db485, 24576 MiB, 535.104.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+=== FROZEN_ROOT_IDENTITY_BEFORE ===
+704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+3bf21456566460361b0f80d70d1b49984d43a8044ff4f96a02774334f651e358  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001/best_checkpoint.pt
+68f20980b36857d24b1d97ec56983349fa3d6e6f79799a3a00e14334f3037644  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s17/attempt_001/realtime_observation_head.pt
+88a7a3650fe03bc297a292dc6fe709b4fa8bb20194f479741dd92ca51ccc0dc0  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001/best_filter_checkpoint.pt
+LOG|qr-value-219223_1.out|bytes=1121
+[2026-09-03T13:20:28+0800] stage=qr_learning_value seed=29 job=219225 node=ngu003
+NVIDIA GeForce RTX 3090, GPU-a6bf0667-7b22-b0c6-656a-366d9d6db485, 24576 MiB, 535.104.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+=== FROZEN_ROOT_IDENTITY_BEFORE ===
+704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+b74d5f5e99489eeaeea4d3703262f87b8e234128f12a71f47dc2f0be2239a076  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s29/attempt_001/best_checkpoint.pt
+046ceaf705885a69baa6a692cba7b8b3302d724cd2bf4526ae530b63c49da483  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s29/attempt_001/realtime_observation_head.pt
+0889c38d5c16b91d70b763857a824d3efabe0dcc6378a1c1377c264578771c98  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s29/attempt_001/best_filter_checkpoint.pt
+LOG|qr-value-219223_2.out|bytes=1121
+[2026-09-03T13:20:29+0800] stage=qr_learning_value seed=43 job=219223 node=ngu009
+NVIDIA GeForce RTX 3090, GPU-e1cf022c-7c6e-9b31-3873-620b7b7d262f, 24576 MiB, 535.104.05
+graphics_processor_preflight=passed
+torch=2.4.0 cuda=12.1
+=== FROZEN_ROOT_IDENTITY_BEFORE ===
+704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+31d33aca917ff0567d1733d12d9c317c27ff5b2c120450e5a3cc5ef7e78a196a  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s43/attempt_001/best_checkpoint.pt
+2df0aeb7a336812eb5b1f140b7cc6a2523fc449d18f93cf012ea8b28be117670  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head/s43/attempt_001/realtime_observation_head.pt
+68afab8a264ed453b8e449e741a6a3278b2ac8131260afa04a1a2669d99cb866  /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s43/attempt_001/best_filter_checkpoint.pt
+LOG|qr-value-219223_0.err|bytes=0
+LOG|qr-value-219223_1.err|bytes=0
+LOG|qr-value-219223_2.err|bytes=0
+=== SUMMARY_IF_DONE ===
+=== SNAPSHOT_END ===
+2026-09-03T13:23:45+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T13:23:45+0800
