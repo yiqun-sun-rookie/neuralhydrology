@@ -1,0 +1,204 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=63
+### host=login4
+### started=2026-09-03T13:08:50+0800
+### ---------- output ----------
+=== SNAPSHOT_TIME ===
+2026-09-03T13:08:50+0800
+=== MY_RUNNING_AND_QUEUED_JOBS ===
+JOBID|NAME|STATE|PARTITION|NODELIST|TIME|TIME_LIMIT|NODELIST(REASON)
+218635|tukf09-455-v2r6-prepare|PENDING|hgpu8||0:00|4:00:00|(Resources)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2||0:00|1-00:00:00|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2||0:00|4:00:00|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2||0:00|2:00:00|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2||0:00|2:00:00|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2||0:00|7-00:00:00|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2||0:00|1-00:00:00|(JobHeldUser)
+218659_16|wrrhp-ext|RUNNING|hgpu2p|ngu001|6:01:22|1-00:00:00|ngu001
+218659_15|wrrhp-ext|RUNNING|hgpu2p|ngu011|8:06:59|1-00:00:00|ngu011
+218659_13|wrrhp-ext|RUNNING|hgpu2p|ngu005|11:24:01|1-00:00:00|ngu005
+219190_17|wrrhp-div|RUNNING|hgpu2p|ngu011|1:22:38|1-00:00:00|ngu011
+job_line_count=11
+=== RECENT_TERMINAL_STATES_7D ===
+217149|tukf09-455-a800-v2-prepare|FAILED|13:0|00:01:40|2026-09-01T02:26:14
+217163|tukf09-455-v2r1-prepare|FAILED|2:0|00:04:21|2026-09-01T04:03:01
+217185|tukf09-455-v2r3-prepare|FAILED|1:0|00:08:15|2026-09-01T06:44:36
+217242|kdpp-a800-probe-s2|FAILED|1:0|00:00:00|2026-09-01T13:53:14
+217245|kdpp-a800-probe-s3|FAILED|1:0|00:00:20|2026-09-01T14:03:21
+217409|tukf09-455-v2r4-neural|FAILED|1:0|00:00:08|2026-09-01T14:45:45
+217410|kdpp-04105700-s10|FAILED|1:0|00:00:03|2026-09-01T14:52:14
+217562|kdpp-08070200-s18|FAILED|1:0|00:40:20|2026-09-01T16:57:36
+217810|zsf4t-dev2023-v1|FAILED|1:0|00:11:52|2026-09-01T22:14:58
+217939|tukf09-455-v2r5-neural|FAILED|1:0|00:04:20|2026-09-01T19:26:22
+218606|r_pert_a0|FAILED|1:0|00:00:19|2026-09-02T16:49:13
+218612|r_pert_a0|FAILED|1:0|00:00:38|2026-09-02T16:54:22
+218643|id29-denorm|FAILED|5:0|00:00:36|2026-09-02T17:44:46
+218644|id29-extra4|FAILED|5:0|00:00:35|2026-09-02T17:44:45
+218659_5|wrrhp-ext|FAILED|1:0|01:27:51|2026-09-02T20:09:49
+=== HOME_TOP_LEVEL_DIRS ===
+a02_results
+.a02_ship
+adv531
+autoresearch64
+.cache
+camels_g2_design_20260808
+.conda
+.config
+filters
+hpc
+hpc_mailbox
+.hpc_mailbox_pushlock
+.hpc_mailbox_staging
+id17_film_gate
+id18_e04_20260809
+id18_output_ensemble_20260826
+id18_ties_merge_20260826
+id23_dlimm
+id23_param_probe
+id23_r_perturbation
+id29_transferable_noise_20260902
+id30_modern_transformer_moe_20260827
+id31_hydrologic_dynamic_tokens_20260828
+id32_transformer_inductive_bias_20260902
+kalmannet
+kalmannet_daily_camels_20260824
+kalmannet_daily_camels_full_state_a34_20260825
+kalmannet_daily_camels_full_state_a34_retry1_20260825
+kalmannet_daily_camels_full_state_a34_retry1_staging_20260825
+kalmannet_daily_camels_full_state_a34_retry2_20260825
+kalmannet_daily_camels_full_state_a34_retry2_staging_20260825
+kalmannet_daily_camels_full_state_a34_retry3_20260826
+kalmannet_daily_camels_full_state_a34_retry3_staging_20260826
+kalmannet_daily_camels_full_state_a34_staging_20260825
+kalmannet_daily_camels_knet_a37_a800_diag1_20260827
+kalmannet_daily_camels_knet_a37_a800_portability_probe2_20260827
+kalmannet_daily_camels_knet_a37_a800_probe1_20260827
+kalmannet_daily_camels_knet_a37_a800_train2_20260827
+kalmannet_daily_camels_knet_a37_a800_train3_20260827
+kalmannet_daily_camels_knet_a37_a800_train4_20260827
+kalmannet_daily_camels_knet_a37_resume1_20260826
+kalmannet_daily_camels_knet_a38_a800_train1_20260828
+kalmannet_daily_camels_knet_a38_terminal_evidence_reconstruct_seq89_20260831
+kalmannet_daily_camels_knet_a38_terminal_evidence_verify_seq90_20260831
+kalmannet_daily_camels_knet_a39_formal_evaluation1_20260831
+kalmannet_daily_camels_knet_a39_formal_evaluation2_20260831
+kalmannet_daily_camels_knet_a39_formal_evaluation3_20260831
+kalmannet_daily_camels_knet_a39_formal_evaluation4_20260831
+kalmannet_daily_camels_knet_a39_formal_evaluation5_20260831
+kalmannet_daily_camels_masked_nse_a20_result_audit_v2_20260825
+kalmannet_daily_camels_masked_nse_a20_result_audit_v2_staging_20260825
+kalmannet_daily_camels_masked_nse_v3_20260825
+kalmannet_daily_camels_official_core_a35_20260825
+kalmannet_daily_camels_official_core_a35_seq27_staging_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a29_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a29_staging_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a30_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a30_staging_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a31_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a31_staging_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a32_staging_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_20260825
+kalmannet_daily_camels_official_tsp_gru_causal_fair_a33_staging_20260825
+kalmannet_daily_camels_parity_20260824
+kalmannet_daily_camels_per_basin_pilots_20260901
+kalmannet_tukf06_20260809
+kalmannet_tukf09_455_a800_exclusive_semantics_probe_v1_20260831_01a055e6
+kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_20260831
+kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2_20260831
+kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r1_20260901
+kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r2_20260901
+kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r3_20260901
+kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r4_20260901
+kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901
+kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902
+kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v1_20260901.pending.seq43
+kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901
+kalmannet_tukf09_455_dual_gpu_allocation_probe_v1_20260831
+kalmannet_tukf09_455_pmon_probe_diagnostics_20260902
+kalmannet_tukf19_20260823
+kalmannet_tukf19_20260823_retry1
+kalmannet_tukf19_20260823_retry2
+kalmannet_tukf19_20260823_retry3
+kalmannet_tukf19_20260823_retry4
+kalmannet_tukf20_20260824
+kalmannet_tukf20_20260824_verifier_recovery1
+kalmannet_tukf20_20260824_verifier_recovery1_package_submission
+kalmannet_tukf20_20260824_verifier_recovery1_portable_package_retry1
+kalmannet_tukf20_20260824_verifier_recovery1_portable_package_retry1_submission
+kalmannet_tukf20_20260824_verifier_recovery1_submission
+kalmannet_tukf23_20260826
+kalmannet_tukf24_20260827
+kalmannet_tukf25_20260831
+kalmannet_tukf26_20260831
+kalmannet_tukf27_20260901
+kalmannet_tukf28_20260902
+kalmannet_wrr_hp_extension_20260902
+kalmannet_wrr_lr_boundary_20260901
+kan_xaj_hpc
+knet_project
+kuwei_jdl_seedbatch_20260831
+kuwei_paired
+.local
+logs
+miniconda3
+.mozilla
+nature_1st
+nature_1st_a02
+nearing2022_da
+neuralhydrology
+neuralhydrology_backup_20260304
+neuralhydrology_messy_backup
+.nv
+perl5
+.pki
+.ssh
+v09_strict
+.vscode
+zhenjiang_d32_differentiable_ukf_20260828
+zhenjiang_d32_differentiable_ukf_20260828_r2
+zhenjiang_d32_differentiable_ukf_dev_eval_20260831
+zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r2
+zhenjiang_d32_differentiable_ukf_dev_eval_20260831_r3
+zhenjiang_latent_da_20260827
+zhenjiang_oyv_qual_20260819
+zhenjiang_oyv_v1
+zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1.staging
+zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2
+zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002
+zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002_payload
+zhenjiang_stage_direction_r2_20260819
+zlda_evidence_uvgvDn
+=== ZHENJIANG_SIX_SOURCE_ROOTS ===
+ROOT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r1.staging|dirs=inputs,runs,logs,jobs,run,evidence,
+ROOT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2|dirs=run,runs,jobs,evidence,inputs,logs,
+ROOT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002|dirs=logs,run,evidence,jobs,
+ROOT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002_payload|dirs=run,
+=== V1_INPUTS_TO_REUSE_READONLY ===
+DIR|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1|entries=4|bytes=54651258
+DIR|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base|entries=3|bytes=565625
+DIR|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/observation_head|entries=3|bytes=91075
+DIR|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter|entries=3|bytes=4224929
+input_manifest=4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c
+=== DISK ===
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  599T  356T  63% /data1
+=== PARTITIONS ===
+ PARTITION  AVAIL  NODES  STATE                     NODELIST
+   hcpu48*     up     13 alloc$ icn[202,204-207,210-212,214,
+   hcpu48*     up      2  maint                 icn[246,249]
+   hcpu48*     up     14  down* icn[203,215,218,230,233,235-
+   hcpu48*     up     27  alloc icn[201,208-209,213,219,222-
+   hcpu48*     up      8   idle         icn[248,257,259-264]
+   hcpu48y     up      1  down$                       icn281
+   hcpu48y     up      1  maint                       icn280
+   hcpu48y     up      2  down*                 icn[278-279]
+   hcpu48y     up      2    mix                 icn[274,277]
+   hcpu48y     up      6   idle         icn[270-273,275-276]
+     hgpu8     up      2    mix                 ngu[201-202]
+=== CONDA_ENV ===
+knet_clean neuralhydrology nh_clean nh_final 
+=== SNAPSHOT_END ===
+2026-09-03T13:08:53+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T13:08:53+0800
