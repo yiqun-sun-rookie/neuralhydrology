@@ -1,0 +1,23 @@
+### channel=kalmannet-wrr-hp-extension seq=10
+### host=login4
+### started=2026-09-03T12:07:33+0800
+### ---------- output ----------
+=== TIME ===
+2026-09-03T12:07:33+0800
+=== DIVCHECK 219190 ===
+JOBID|NAME|STATE|PARTITION|TIME|NODELIST(REASON)|START_TIME
+219190_17|wrrhp-div|RUNNING|hgpu2p|21:21|ngu011|2026-09-03T11:46:12
+219190_17|RUNNING|0:0|00:21:58|2026-09-03T11:46:12|ngu011
+=== DIVCHECK EPOCHS ===
+1
+{"epoch_zero_based": 0, "lr_used_this_epoch": 0.025, "lr_next_epoch": 0.025, "train_bp_loss": 0.00023412771016631165, "val_bp_loss": 2.662886335995143e-05, "val_screening_nse": 0.9036573223663719, "val_nse_high": 0.1963948943529168, "monito
+=== MAIN ARRAY 218659 ===
+218659_13|RUNNING|10:22:45
+218659_14|RUNNING|8:42:42
+218659_15|RUNNING|7:05:43
+218659_16|RUNNING|5:00:06
+=== FINISHED CELLS COUNT ===
+12
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T12:07:34+0800
