@@ -1,0 +1,9 @@
+### channel=kalmannet-wrr-hp-extension seq=8
+### host=login4
+### started=2026-09-03T11:35:29+0800
+### ---------- output ----------
+=== PAYLOAD_CHECK ===
+SHA256_MISMATCH path=/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-hp-extension/v2-divcheck/combos.jsonl expected=bc2841d968314f0f9b30a28a64aa3ac94f100cd1545feb85b624dff58efaddfa actual=07d776c0f5e450732d0a5b741fc2e1b8dc5f9e55b25609cb6dbc5c00fb1ea64b
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-03T11:35:29+0800
