@@ -1,0 +1,21 @@
+### channel=id23-param-probe seq=5
+### host=login4
+### started=2026-09-03T13:08:49+0800
+### ---------- output ----------
+=== GUARD: only redeploy while no results exist ===
+par_probe_bundle_20260903b.tar.gz: OK
+=== REDEPLOY ===
+data_loading.py
+experiment_logger.py
+__init__.py
+__pycache__
+=== IMPORT + INPUT CHECK ===
+import OK; fc_bounds = (50.0, 2500.0)
+center table sha256 matches: True
+design90 basins: 90
+admitted52 basins: 52
+center-protocol gate max|diff| = 5e-05 over 3 basins
+=== READY (still not submitted) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T13:08:57+0800
