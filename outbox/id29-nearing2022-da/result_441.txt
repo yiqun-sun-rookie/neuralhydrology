@@ -1,0 +1,34 @@
+### channel=id29-nearing2022-da seq=441
+### host=login4
+### started=2026-09-03T18:19:07+0800
+### ---------- output ----------
+payload dir: /data1/home/sunyiq/hpc_mailbox/inbox/id29-nearing2022-da/payload
+total 61
+drwxr-xr-x. 2 sunyiq g_sunyiq  4096 Sep  3 18:18 .
+drwxr-xr-x. 3 sunyiq g_sunyiq  4096 Sep  3 18:18 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 14084 Sep  3 18:18 analyze_warmup_target_pair.py
+-rw-r--r--. 1 sunyiq g_sunyiq  8814 Sep  3 18:18 analyze_warmup_target_pair.slurm
+-rw-r--r--. 1 sunyiq g_sunyiq 16826 Sep  3 18:18 prepare_warmup_target_pair.py
+-rw-r--r--. 1 sunyiq g_sunyiq 13400 Sep  3 18:18 run_warmup_target_pair.slurm
+=== 1. 安装四个文件 ===
+=== 2. 散列必须逐一自证 ===
+OK   run_warmup_target_pair.slurm
+OK   analyze_warmup_target_pair.slurm
+OK   prepare_warmup_target_pair.py
+OK   analyze_warmup_target_pair.py
+OK   warmup_target_paired_analysis_contract.json
+OK   warmup_target_paired_retraining_protocol.json
+syntax OK
+=== 3. 幂等保护 + 提交冻结的两臂(串行) ===
+existing N22-warmpair: 0
+Submitted batch job 219423
+=== 4. 队列 ===
+      202229     N22-agg-eval    PENDING  1-00:00:00 (DependencyNeverSatisfied)
+      202294       N22-export    PENDING     4:00:00 (Dependency)
+      202315         N22-gate    PENDING     2:00:00 (Dependency)
+      202507 N22-mask-iso-531    PENDING     2:00:00 (DependencyNeverSatisfied)
+219423_[0-1%     N22-warmpair    PENDING  3-12:00:00 (None)
+      202293     N22-manifest    PENDING  1-00:00:00 (JobHeldUser)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T18:19:09+0800
