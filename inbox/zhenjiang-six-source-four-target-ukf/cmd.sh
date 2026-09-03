@@ -1,39 +1,98 @@
 #!/bin/bash
+# seq=70 read-only forensic sweep for the six-source four-target differentiable UKF family.
+# Submits nothing, writes nothing into any experiment root, reads no 2023/2024 dataset.
 set -o pipefail
-EV="/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/evaluation/attempt_002"
-printf '=== SNAPSHOT_TIME ===\n'; date -Is
-printf '=== PER_STATION_GAIN_AND_CONTRACTION_POOLED ===\n'
-python - "${EV}" <<'PY' 2>&1 || true
-import csv, sys, collections, json
-p = sys.argv[1] + "/analysis_observation_sufficient_statistics.csv"
-agg = collections.defaultdict(lambda: collections.defaultdict(float))
-seeds = set()
-with open(p, newline="") as h:
-    for r in csv.DictReader(h):
-        s = r["source_station"]; seeds.add(r["seed"])
-        a = agg[s]
-        a["cells"] += float(r["cell_count"])
-        a["prior_abs"] += float(r["prior_absolute_residual_sum_m"])
-        a["post_abs"] += float(r["posterior_absolute_residual_sum_m"])
-        a["innov_abs"] += float(r["innovation_absolute_sum_m"])
-        a["k_norm"] += float(r["kalman_gain_norm_sum"])
-        a["post_var"] += float(r["posterior_observation_variance_sum_normalized"])
-        a["near_zero"] += float(r["near_zero_prior_count"])
-print("seeds=" + ",".join(sorted(seeds)))
-order = ["datong","nanjing","zhenjiang","jiangyin","xuliujing","wusongkou"]
-print("station|cells|prior_mae_m|post_mae_m|contraction|mean_K_norm|mean_post_obs_var_norm|near_zero_prior")
-for s in order:
-    a = agg[s]; n = a["cells"] or 1.0
-    print("%s|%d|%.5f|%.5f|%.4f|%.4f|%.5f|%d" % (s, n, a["prior_abs"]/n, a["post_abs"]/n, (a["post_abs"]/n)/(a["prior_abs"]/n), a["k_norm"]/n, a["post_var"]/n, a["near_zero"]))
-PY
-printf '=== EVALUATION_FILE_LIST (confirm no cross-station response product) ===\n'
-python - "${EV}" <<'PY' 2>&1 || true
-import json, sys
-m = json.load(open(sys.argv[1] + "/completion_manifest.json"))
-for f in m.get("files", []):
-    print("FILE|%s|%d" % (f["name"], f["byte_count"]))
-PY
-printf '=== GAIN_MATRIX_COLUMNS_WITH_CROSS ===\n'
-head -n 1 "${EV}/six_source_four_target_gain_matrix.csv" 2>/dev/null | tr ',' '\n' | grep -niE "cross|response|posterior_obs|analysis" || echo "no cross-response columns"
-printf '=== SNAPSHOT_END ===\n'; date -Is
-exit 0
+
+R2=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2
+REC=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002
+QR=/data1/home/sunyiq/zhenjiang_six_source_four_target_ukf_qr_learning_value_20260903
+
+echo "=== A. HOST AND TIME ==="
+hostname
+date '+%Y-%m-%d %H:%M:%S %z'
+
+echo "=== B. FROZEN R2 FIVE FORENSIC HASHES ==="
+for f in \
+  "$R2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json" \
+  "$R2/evidence/development_2023/evaluation/attempt_001.partial/development_access_started.json" \
+  "$R2/logs/development-2023-217810.out" \
+  "$R2/logs/development-2023-217810.err" \
+  "$R2/run/scripts/analysis/zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.py" ; do
+  if [ -f "$f" ]; then
+    printf '%s  %s  %s\n' "$(sha256sum "$f" | cut -d' ' -f1)" "$(stat -c %s "$f")" "${f#$R2/}"
+  else
+    printf 'MISSING  -  %s\n' "${f#$R2/}"
+  fi
+done
+
+echo "=== C. ISOLATED INPUT MANIFEST ==="
+IM="$R2/inputs/pre2024-four-target-v1/four_target_input_manifest.json"
+if [ -f "$IM" ]; then
+  printf '%s  %s bytes\n' "$(sha256sum "$IM" | cut -d' ' -f1)" "$(stat -c %s "$IM")"
+else
+  echo "MISSING $IM"
+fi
+
+echo "=== D. ORIGINAL ATTEMPT_001 DIRECTORIES MUST STILL NOT EXIST ==="
+for d in \
+  "$R2/evidence/development_2023/evaluation/attempt_001" \
+  "$R2/evidence/development_2023/independent_audit/attempt_001" ; do
+  if [ -e "$d" ]; then echo "PRESENT(unexpected)  $d"; else echo "absent(expected)    ${d#$R2/}"; fi
+done
+
+echo "=== E. NEWEST MTIME AND COUNTS IN EACH READ-ONLY ROOT ==="
+for R in "$R2" "$REC"; do
+  echo "--- $R ---"
+  find "$R" -type f -printf '%T@ %TY-%Tm-%Td %TH:%TM:%TS %p\n' 2>/dev/null | sort -n | tail -3
+  echo "file_count=$(find "$R" -type f 2>/dev/null | wc -l)"
+  echo "pycache_dir_count=$(find "$R" -type d -name __pycache__ 2>/dev/null | wc -l)"
+done
+
+echo "=== F. ATTEMPT_002 EVALUATION ARTIFACT SET + HASHES ==="
+EV="$REC/evidence/development_2023/evaluation/attempt_002"
+echo "file_count=$(find "$EV" -type f 2>/dev/null | wc -l)"
+find "$EV" -type f -exec sha256sum {} \; 2>/dev/null | sed "s#$EV/##" | sort -k2
+
+echo "=== G. ATTEMPT_002 INDEPENDENT AUDIT ARTIFACT SET + HASHES ==="
+AU="$REC/evidence/development_2023/independent_audit/attempt_002"
+echo "file_count=$(find "$AU" -type f 2>/dev/null | wc -l)"
+find "$AU" -type f -exec sha256sum {} \; 2>/dev/null | sed "s#$AU/##" | sort -k2
+
+echo "=== H. ACCESS/COMPLETION REGISTRATION FILES (metadata only) ==="
+for j in $(find "$EV" "$AU" -maxdepth 1 -type f -name '*.json' 2>/dev/null | sort); do
+  b=$(basename "$j")
+  case "$b" in
+    *access*|*completion*|*manifest*|*registr*)
+      echo "--- $b ($(stat -c %s "$j") bytes) ---"
+      head -c 2200 "$j"
+      echo
+      ;;
+  esac
+done
+
+echo "=== I. QR DIAGNOSTIC ROOT PRODUCTS ==="
+for S in 17 29 43; do
+  D="$QR/runs/qr_learning_value/s$S/attempt_001"
+  echo "--- seed $S ---"
+  if [ -d "$D" ]; then
+    find "$D" -type f -printf '%10s  %f\n' 2>/dev/null | sort -k2
+    if [ -f "$D/completion_manifest.json" ]; then
+      head -c 1100 "$D/completion_manifest.json"
+      echo
+    fi
+  else
+    echo "MISSING $D"
+  fi
+done
+
+echo "=== J. JOB TERMINAL STATES ==="
+sacct -j 217810,218505,219223 -X --format=JobID%14,JobName%24,NodeList%10,State%16,ExitCode%9,Elapsed%12,End%20 2>&1
+
+echo "=== K. CURRENT OWN QUEUE (PrivateData: own jobs only) ==="
+squeue -u "$USER" -o "%.12i %.26j %.10P %.9T %.11M %.22R" 2>&1
+echo "own_job_lines=$(squeue -u "$USER" -h 2>/dev/null | wc -l)"
+
+echo "=== L. ANY UKF-FAMILY JOB IN FLIGHT? ==="
+squeue -u "$USER" -h -o "%i %j %T" 2>/dev/null | grep -iE 'ukf|six_source|qr_learning' || echo "  none"
+
+echo "=== DONE ==="
