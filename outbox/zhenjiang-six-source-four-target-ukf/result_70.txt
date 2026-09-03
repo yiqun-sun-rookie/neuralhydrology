@@ -1,0 +1,334 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=70
+### host=login4
+### started=2026-09-03T17:23:06+0800
+### ---------- output ----------
+=== A. HOST AND TIME ===
+login4
+2026-09-03 17:23:06 +0800
+=== B. FROZEN R2 FIVE FORENSIC HASHES ===
+704366cb22eef1d3acb58f4f0524a6e50d49ffa442afcf0fca498fbd21154cb8  22214  run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+badf3ee5f8cf3f0d9c5e5771b11385a45a6f22d6355fc43357bc44f2bd364c9e  9140  evidence/development_2023/evaluation/attempt_001.partial/development_access_started.json
+bcd7cc658a9a1790f07cce392a9b60d9f3338b722af8520f2a20bb61998111c8  903  logs/development-2023-217810.out
+7ebac31811938324b27f10743850a0b32e981d1b8eb5f0dcc750ce089b60f185  1644  logs/development-2023-217810.err
+f64e5ffcc47061d97f66e28e15ec45f7412b1d8a59455771180c4ef47eab9281  129641  run/scripts/analysis/zhenjiang_six_source_four_target_d32_gru_ukf_development_evaluation_v1.py
+=== C. ISOLATED INPUT MANIFEST ===
+4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c  3161 bytes
+=== D. ORIGINAL ATTEMPT_001 DIRECTORIES MUST STILL NOT EXIST ===
+absent(expected)    evidence/development_2023/evaluation/attempt_001
+absent(expected)    evidence/development_2023/independent_audit/attempt_001
+=== E. NEWEST MTIME AND COUNTS IN EACH READ-ONLY ROOT ===
+--- /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2 ---
+1788271374.0000000000 2026-09-01 22:02:54.0000000000 /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/development-2023-217810.out
+1788271386.0000000000 2026-09-01 22:03:06.0000000000 /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/evidence/development_2023/evaluation/attempt_001.partial/development_access_started.json
+1788272064.0000000000 2026-09-01 22:14:24.0000000000 /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/logs/development-2023-217810.err
+file_count=163
+pycache_dir_count=0
+--- /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002 ---
+1788321461.0000000000 2026-09-02 11:57:41.0000000000 /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/independent_audit/attempt_002/independent_audit_report.json
+1788321462.0000000000 2026-09-02 11:57:42.0000000000 /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/logs/development-recovery-attempt-002-218505.err
+1788321462.0000000000 2026-09-02 11:57:42.0000000000 /data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/logs/development-recovery-attempt-002-218505.out
+file_count=37
+pycache_dir_count=0
+=== F. ATTEMPT_002 EVALUATION ARTIFACT SET + HASHES ===
+file_count=25
+7b4b81834000e163b4df18a02484636df3acfe8d224063c752eb321038f08787  analysis_observation_sufficient_statistics.csv
+7928ebfe63d61448dccefa5da481c7865fdcd3c87154db74ffe5c9adbf5a1f47  analysis_realtime_observation_diagnostics.csv
+67b8812c979368e4f0c43b898cc98e93803aa2563f58b2c868c0aa16fdb5f5de  analysis_target_space_gain_matrix.csv
+3e5d17c2ea47391183f86cbdb9d44ac93a4f9ed5d302021ff6adaaf7923261dc  analysis_target_sufficient_statistics.csv
+72d1987add0b3771c987d832b334c0ce930d4a7f6d6ba29604144f1c0befdfa3  base_and_three_branch_forecast_metrics.csv
+d84cacce42ac25355d025ec8c9b5b1acf56856b015d35662fb0d025f7d550978  base_observation_head_qualification.json
+4a6b337159b7dba672196e01c9787588096e17ec81a7156acf8cb9701d635ebe  base_qualification_sufficient_statistics.csv
+4d4c805e5486fb9110c1744853122344b30a1bd2ce372ad80e8f6e48b6e881fd  bootstrap_summary.json
+7b9a548b44f9677a4651caa77db71d98f9018c9705512812f1ca56c2c60242aa  boundary_to_internal_gain_matrix.csv
+3a84f89c7d6b08b8e781d41bab04f1f1281e45224b0b1f55121c8e73e3d8d55d  completion_manifest.json
+6750b7698c593bc9e4f1ff6912c911b1a4e5b33de0200fa3e5674d3cf5ac9a46  development_access_started.json
+540a7085d2c2ec04614691825af4c84dfcd701c5de3b17597abf95df07e4f8e9  development_gate_decision.json
+e01433fab7b0fb7cfb4b413b04b4ec6b4c361fbb70175d8496464eb3fe4b428a  forecast_movement_matrix.csv
+9568e60d5caf937be53a9a8b4f7371ec34331a05a340e85c0f3d94bdd0f712a1  future_sufficient_statistics.csv
+45ca18c6b13319e6a35143e61274a6b209c820e6017cc799b470987de0c7f412  internal_four_by_four_gain_matrix.csv
+19129d7472d5a5d9ca9220ebbf2bcbe27a51cff13686b213044dab7d61642b1f  observation_dependency_perturbation_evidence.npz
+87cb41d1c321a2f1a9f50b4748bd9d530ac8b0d2fe1296a264a5d36cff368c10  observation_head_qualification_sufficient_statistics.csv
+47866b68ce9352224e42742debcc07ae0e062cd6e21813e763a6924aaff86c94  reciprocal_direction_summary.csv
+fcdbf17bbe5d1981c0fa610341b68af6e4d84b4b539ef9b8d56d7a0548ae7dec  six_source_four_target_gain_matrix.csv
+dd9ebbcbe4bbc7d828af1c700ed55ad2322b9e8f2326a24aec844b187c724100  source_target_lead_metrics.csv
+980d80ff34ede29de64bf667b23edd0165af52bdddf65d6a435c8ff6cc36e555  source_target_window_metrics.csv
+2f10f257f2750560517c33c8c5adc21a7e7a0106d498df7585565d90c8481457  state_difference_diagnostics.csv
+5659634edb2f33b4620d1cad21d463604caadbf70ffe59de90319b7d0d2e4615  state_difference_sufficient_statistics.csv
+4d54ca6b672783811a49b8b6be0dfd14bdfa1f1aebf6350d9147d89bf27d19b9  sufficient_grid_identity.json
+6917b5257e778d451c57be9d26cdb13169c71e1964fb683a2fe6e582ab20f22c  technical_recovery_access_started.json
+=== G. ATTEMPT_002 INDEPENDENT AUDIT ARTIFACT SET + HASHES ===
+file_count=2
+130cbdce5ba3c306d61f80c188ed443bd07e5c7d07ce6e3cc8061bdff0340460  completion_manifest.json
+f42938e6b33214227cd7913de9205818d0f91d0a1a5ccfc5bf93a15de9807a76  independent_audit_report.json
+=== H. ACCESS/COMPLETION REGISTRATION FILES (metadata only) ===
+--- completion_manifest.json (18396 bytes) ---
+{
+  "authorized_technical_recovery": true,
+  "boundary_future_target_access_count": 0,
+  "cumulative_development_loader_call_count": 2,
+  "current_attempt_development_loader_call_count": 1,
+  "dependency_evidence_contains_target_values": false,
+  "development_access_marker_sha256": "6750b7698c593bc9e4f1ff6912c911b1a4e5b33de0200fa3e5674d3cf5ac9a46",
+  "development_access_started_at_utc": "2026-09-02T03:46:41.358241Z",
+  "development_access_started_before_loader": true,
+  "development_data_access_audit": {
+    "astronomical_tide_model_open_count": 1,
+    "boundary_target_bytes_read": 0,
+    "boundary_target_rows_parsed": 0,
+    "boundary_target_values_loaded": 0,
+    "bytes_read_by_path": {
+      "dataset_config.json": 2854,
+      "realtime_features/datong_realtime_features.csv": 5485506,
+      "realtime_features/jiangyin_realtime_features.csv": 5451807,
+      "realtime_features/nanjing_realtime_features.csv": 5452340,
+      "realtime_features/wusongkou_realtime_features.csv": 5449542,
+      "realtime_features/xuliujing_realtime_features.csv": 5452448,
+      "realtime_features/zhenjiang_realtime_features.csv": 5490493,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 5452821,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 5453455,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 5453528,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 5491015
+    },
+    "development_feature_bytes_read": 4685966,
+    "development_feature_rows_parsed": 52560,
+    "development_feature_values_loaded": 52536,
+    "development_target_bytes_read": 3123728,
+    "development_target_rows_parsed": 35040,
+    "development_target_values_loaded": 35032,
+    "heldout_target_bytes_read": 0,
+    "heldout_target_rows_parsed": 0,
+    "heldout_target_values_loaded": 0,
+    "opened_paths": [
+      "dataset_config.json",
+      "realtime_features/datong_realtime_features.csv",
+      "realtime_features/jiangyin_realtime_features.csv",
+      "realtime_features/nanjing_realtime_features.csv",
+      "realtime_features/wusongkou_realtime_features.csv",
+      "realtime_features/xuliujing_realtime_features.csv",
+      "realtime_features/zh
+--- development_access_started.json (9158 bytes) ---
+{
+  "boundary_future_target_access_authorized": false,
+  "claimed_at_utc": "2026-09-02T03:46:41.358241Z",
+  "evaluation_partial_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/evaluation/attempt_002.partial",
+  "experiment_id": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_2023_DEVELOPMENT_V1",
+  "frozen_artifact_count": 9,
+  "frozen_artifact_identities": [
+    {
+      "base_checkpoint_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001/best_checkpoint.pt",
+      "base_checkpoint_sha256": "3bf21456566460361b0f80d70d1b49984d43a8044ff4f96a02774334f651e358",
+      "filter_checkpoint_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001/best_filter_checkpoint.pt",
+      "filter_checkpoint_sha256": "88a7a3650fe03bc297a292dc6fe709b4fa8bb20194f479741dd92ca51ccc0dc0",
+      "filter_completion_manifest_sha256": "93cfc6bad0e5090b95ab5d768f6f017d42767ce1002c6de31df248a16c8ca816",
+      "observation_head_design_diagnostic": {
+        "augmented_design_condition_number": 229.07650664313434,
+        "augmented_design_rank": 33,
+        "augmented_design_singular_values": [
+          249.40957008122353,
+          199.8193874214187,
+          155.70475543512637,
+          134.2122553465566,
+          54.3851023666099,
+          44.04667700895046,
+          31.611242310186306,
+          28.44274911568177,
+          21.73995754245984,
+          20.790736965576684,
+          16.423601621233765,
+          12.884154323176306,
+          11.555830710990312,
+          10.84746347642001,
+          9.961249724347287,
+          9.17861631988967,
+          8.075273947314983,
+          7.47730028819496,
+          6.762822660320771,
+          6.011347828849701,
+          5.49972751570407,
+          4.473717349927919,
+          4.267443192404411,
+          3.7469945881858226,
+          3.1971733059771434,
+          3.0696236667991315,
+          2.5635157377381086,
+          2.286791843024012,
+          2.0304202048772297,
+          1.8853490087096447,
+     
+--- technical_recovery_access_started.json (11169 bytes) ---
+{
+  "authorized_technical_recovery": true,
+  "boundary_future_target_access_authorized": false,
+  "claimed_at_utc": "2026-09-02T03:46:41.369188Z",
+  "cumulative_development_loader_call_count": 2,
+  "current_attempt_development_loader_call_count": 1,
+  "evaluation_partial_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/evaluation/attempt_002.partial",
+  "frozen_artifact_count": 9,
+  "frozen_artifact_identities": [
+    {
+      "base_checkpoint_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/base/s17/attempt_001/best_checkpoint.pt",
+      "base_checkpoint_sha256": "3bf21456566460361b0f80d70d1b49984d43a8044ff4f96a02774334f651e358",
+      "filter_checkpoint_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/runs/filter/s17/attempt_001/best_filter_checkpoint.pt",
+      "filter_checkpoint_sha256": "88a7a3650fe03bc297a292dc6fe709b4fa8bb20194f479741dd92ca51ccc0dc0",
+      "filter_completion_manifest_sha256": "93cfc6bad0e5090b95ab5d768f6f017d42767ce1002c6de31df248a16c8ca816",
+      "observation_head_design_diagnostic": {
+        "augmented_design_condition_number": 229.07650664313434,
+        "augmented_design_rank": 33,
+        "augmented_design_singular_values": [
+          249.40957008122353,
+          199.8193874214187,
+          155.70475543512637,
+          134.2122553465566,
+          54.3851023666099,
+          44.04667700895046,
+          31.611242310186306,
+          28.44274911568177,
+          21.73995754245984,
+          20.790736965576684,
+          16.423601621233765,
+          12.884154323176306,
+          11.555830710990312,
+          10.84746347642001,
+          9.961249724347287,
+          9.17861631988967,
+          8.075273947314983,
+          7.47730028819496,
+          6.762822660320771,
+          6.011347828849701,
+          5.49972751570407,
+          4.473717349927919,
+          4.267443192404411,
+          3.7469945881858226,
+          3.1971733059771434,
+          3.0696236667991315,
+          2.5635157377381086,
+          2.286791843024012,
+          2.03042020487722
+--- completion_manifest.json (1148 bytes) ---
+{
+  "authorized_technical_recovery_audited": true,
+  "boundary_future_target_access_count": 0,
+  "cumulative_development_loader_call_count": 2,
+  "current_attempt_development_loader_call_count": 1,
+  "evaluation_directory": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/evaluation/attempt_002",
+  "evaluation_manifest_sha256": "3a84f89c7d6b08b8e781d41bab04f1f1281e45224b0b1f55121c8e73e3d8d55d",
+  "file_count_excluding_manifest": 1,
+  "files": [
+    {
+      "byte_count": 1540,
+      "name": "independent_audit_report.json",
+      "sha256": "f42938e6b33214227cd7913de9205818d0f91d0a1a5ccfc5bf93a15de9807a76"
+    }
+  ],
+  "held_out_2024_target_access_count": 0,
+  "original_single_read_contract_satisfied": false,
+  "prior_attempt_scientific_result_file_count": 0,
+  "prior_failed_development_access_attempt_count": 1,
+  "recovery_attempt_number": 2,
+  "recovery_experiment_id": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_2023_DEVELOPMENT_TECHNICAL_RECOVERY_ATTEMPT_002_V1",
+  "schema_version": "1.0",
+  "status": "completed_independent_audit"
+}
+
+=== I. QR DIAGNOSTIC ROOT PRODUCTS ===
+--- seed 17 ---
+       621  completion_manifest.json
+      6257  qr_learning_value.json
+      4510  selection_block_sums.csv
+{
+  "completed_utc": "2026-09-03T05:28:36.630234+00:00",
+  "diagnostic_id": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_UKF_QR_LEARNING_VALUE_DIAGNOSTIC_V1",
+  "file_count_excluding_manifest": 2,
+  "files": [
+    {
+      "byte_count": 6257,
+      "name": "qr_learning_value.json",
+      "sha256": "a2c1fabdd81b1a1935ec938e4aad8be52a2fb5e03152cdb012eed814df22d3fd"
+    },
+    {
+      "byte_count": 4510,
+      "name": "selection_block_sums.csv",
+      "sha256": "65b6ab54b34e98b6ac568ebc2b37e7b32dfe79bb8fdbf5104924d3d68e847d0b"
+    }
+  ],
+  "schema_version": 1,
+  "seed": 17,
+  "status": "completed_qr_learning_value_diagnostic"
+}
+
+--- seed 29 ---
+       621  completion_manifest.json
+      6253  qr_learning_value.json
+      4513  selection_block_sums.csv
+{
+  "completed_utc": "2026-09-03T05:28:38.097166+00:00",
+  "diagnostic_id": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_UKF_QR_LEARNING_VALUE_DIAGNOSTIC_V1",
+  "file_count_excluding_manifest": 2,
+  "files": [
+    {
+      "byte_count": 6253,
+      "name": "qr_learning_value.json",
+      "sha256": "a2cde11030d70fc386fbaadf718c50489a8c08e2a12ec35d465303e4580c97ba"
+    },
+    {
+      "byte_count": 4513,
+      "name": "selection_block_sums.csv",
+      "sha256": "e9a91c04eecef4369865f58a540101cddfccd329a852c5b6ab6d1e1c560b21f4"
+    }
+  ],
+  "schema_version": 1,
+  "seed": 29,
+  "status": "completed_qr_learning_value_diagnostic"
+}
+
+--- seed 43 ---
+       621  completion_manifest.json
+      6267  qr_learning_value.json
+      4513  selection_block_sums.csv
+{
+  "completed_utc": "2026-09-03T05:28:41.639942+00:00",
+  "diagnostic_id": "ZHENJIANG_SIX_SOURCE_FOUR_TARGET_UKF_QR_LEARNING_VALUE_DIAGNOSTIC_V1",
+  "file_count_excluding_manifest": 2,
+  "files": [
+    {
+      "byte_count": 6267,
+      "name": "qr_learning_value.json",
+      "sha256": "f087f1775ca8b47bb60700332cabe351cccaf98a78ea58f5584a3dbcb1093b86"
+    },
+    {
+      "byte_count": 4513,
+      "name": "selection_block_sums.csv",
+      "sha256": "c22c9078f0320008ad1078ce18ea32fe277c5d494ac3ef5b157338c327460295"
+    }
+  ],
+  "schema_version": 1,
+  "seed": 43,
+  "status": "completed_qr_learning_value_diagnostic"
+}
+
+=== J. JOB TERMINAL STATES ===
+         JobID                  JobName   NodeList            State  ExitCode      Elapsed                  End 
+-------------- ------------------------ ---------- ---------------- --------- ------------ -------------------- 
+        217810         zsf4t-dev2023-v1     ngu005           FAILED       1:0     00:11:52  2026-09-01T22:14:58 
+        218505             zsf4t-rec002     ngu006        COMPLETED       0:0     00:12:14  2026-09-02T11:58:17 
+      219223_0           zsf4t-qr-value     ngu003        COMPLETED       0:0     00:08:12  2026-09-03T13:28:37 
+      219223_1           zsf4t-qr-value     ngu003        COMPLETED       0:0     00:08:13  2026-09-03T13:28:38 
+      219223_2           zsf4t-qr-value     ngu009        COMPLETED       0:0     00:08:17  2026-09-03T13:28:42 
+=== K. CURRENT OWN QUEUE (PrivateData: own jobs only) ===
+       JOBID                       NAME  PARTITION     STATE        TIME       NODELIST(REASON)
+      218635    tukf09-455-v2r6-prepare      hgpu8   PENDING        0:00            (Resources)
+      202229               N22-agg-eval hgpu4,hgpu   PENDING        0:00 (DependencyNeverSatisf
+      202294                 N22-export hgpu4,hgpu   PENDING        0:00           (Dependency)
+      202315                   N22-gate hgpu4,hgpu   PENDING        0:00           (Dependency)
+      202507           N22-mask-iso-531 hgpu4,hgpu   PENDING        0:00 (DependencyNeverSatisf
+      215429              id30_m01_s100      hgpu2   PENDING        0:00 (DependencyNeverSatisf
+      202293               N22-manifest hgpu4,hgpu   PENDING        0:00          (JobHeldUser)
+   218659_16                  wrrhp-ext     hgpu2p   RUNNING    10:15:40                 ngu001
+   218659_13                  wrrhp-ext     hgpu2p   RUNNING    15:38:19                 ngu005
+own_job_lines=9
+=== L. ANY UKF-FAMILY JOB IN FLIGHT? ===
+218635 tukf09-455-v2r6-prepare PENDING
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T17:23:08+0800
