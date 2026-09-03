@@ -1,0 +1,47 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=69
+### host=login4
+### started=2026-09-03T15:40:19+0800
+### ---------- output ----------
+=== SNAPSHOT_TIME ===
+2026-09-03T15:40:19+0800
+=== PER_STATION_GAIN_AND_CONTRACTION_POOLED ===
+seeds=17,29,43
+station|cells|prior_mae_m|post_mae_m|contraction|mean_K_norm|mean_post_obs_var_norm|near_zero_prior
+datong|24849|0.08336|0.06663|0.7993|0.1385|0.00517|0
+nanjing|24849|0.03028|0.02491|0.8227|0.2001|0.00301|0
+zhenjiang|24849|0.03664|0.02837|0.7744|0.2492|0.00419|0
+jiangyin|24849|0.03937|0.03091|0.7852|0.1173|0.00566|0
+xuliujing|24849|0.03937|0.01220|0.3099|0.5151|0.00236|1
+wusongkou|24849|0.10494|0.00875|0.0834|0.3027|0.00395|0
+=== EVALUATION_FILE_LIST (confirm no cross-station response product) ===
+FILE|analysis_observation_sufficient_statistics.csv|3131914
+FILE|analysis_realtime_observation_diagnostics.csv|1746
+FILE|analysis_target_space_gain_matrix.csv|3350
+FILE|analysis_target_sufficient_statistics.csv|907068
+FILE|base_and_three_branch_forecast_metrics.csv|44918
+FILE|base_observation_head_qualification.json|19108
+FILE|base_qualification_sufficient_statistics.csv|132836
+FILE|bootstrap_summary.json|27796
+FILE|boundary_to_internal_gain_matrix.csv|5929
+FILE|development_access_started.json|9158
+FILE|development_gate_decision.json|4525
+FILE|forecast_movement_matrix.csv|2183
+FILE|future_sufficient_statistics.csv|24604541
+FILE|internal_four_by_four_gain_matrix.csv|11330
+FILE|observation_dependency_perturbation_evidence.npz|8854
+FILE|observation_head_qualification_sufficient_statistics.csv|152235
+FILE|reciprocal_direction_summary.csv|813
+FILE|six_source_four_target_gain_matrix.csv|16407
+FILE|source_target_lead_metrics.csv|934886
+FILE|source_target_window_metrics.csv|175239
+FILE|state_difference_diagnostics.csv|9365
+FILE|state_difference_sufficient_statistics.csv|3387536
+FILE|sufficient_grid_identity.json|869
+FILE|technical_recovery_access_started.json|11169
+=== GAIN_MATRIX_COLUMNS_WITH_CROSS ===
+no cross-response columns
+=== SNAPSHOT_END ===
+2026-09-03T15:40:20+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T15:40:20+0800
