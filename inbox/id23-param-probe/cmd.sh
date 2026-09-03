@@ -1,27 +1,36 @@
 #!/bin/bash
-# Env check for the parameter-axis open-loop probe. Read-only, no sbatch.
-echo "=== CONDA ENV (activate NOT piped this time) ==="
+# Deploy the parameter-axis open-loop probe into its own landing dir. No sbatch yet.
+set -o pipefail
+ROOT=/data1/home/sunyiq/id23_param_probe
+SRC=~/hpc_mailbox/inbox/id23-param-probe/payload/par_probe_bundle_20260903.tar.gz
+
+echo "=== GUARD: refuse to clobber an existing landing dir ==="
+if [ -e "$ROOT" ]; then echo "REFUSE: $ROOT already exists"; ls -la "$ROOT" | head; exit 1; fi
+
+echo "=== VERIFY BUNDLE ==="
+cd ~/hpc_mailbox/inbox/id23-param-probe/payload || exit 1
+sha256sum -c par_probe_bundle_20260903.tar.gz.sha256 || exit 1
+
+echo "=== DEPLOY ==="
+mkdir -p "$ROOT/logs" "$ROOT/out" "$ROOT/data"
+tar xzf "$SRC" -C "$ROOT"
+ln -s /data1/home/sunyiq/neuralhydrology/data/camels_us "$ROOT/data/camels_us"
+sed -i 's/\r$//' "$ROOT"/par_probe.slurm "$ROOT"/src/*/*.py "$ROOT"/src/*/*/*.py 2>/dev/null
+find "$ROOT" -type f | sed "s|$ROOT/||" | sort
+echo "symlink: $(readlink -f $ROOT/data/camels_us)"
+
+echo "=== IMPORT + INPUT HASH CHECK (login node, no computation) ==="
 source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || source $HOME/miniconda3/etc/profile.d/conda.sh 2>/dev/null
 conda activate nh_final
-echo "which python: $(which python)"
-python - <<'PY' 2>&1 | head -20
-import sys
-print("python", sys.version.split()[0])
-for mod in ("numpy", "pandas", "numba", "pytest"):
-    try:
-        m = __import__(mod)
-        print(f"{mod} {getattr(m, '__version__', '?')}")
-    except Exception as exc:
-        print(f"{mod} MISSING ({type(exc).__name__})")
+cd "$ROOT"
+PYTHONPATH="$ROOT/src" python - <<'PY' 2>&1 | head -20
+import hashlib, sys
+sys.path.insert(0, "/data1/home/sunyiq/id23_param_probe/src")
+from camels_switch_confirmation.scripts import run_parameter_axis_probe as r
+print("import OK; fc_bounds =", r.FC_BOUNDS)
+h = hashlib.sha256(open("/data1/home/sunyiq/id23_param_probe/" + str(r.CENTER_TABLE), "rb").read()).hexdigest()
+print("center table sha256 matches:", h == r.CENTER_TABLE_SHA256)
+print("design90:", len(r.load_basin_list(__import__("pathlib").Path("/data1/home/sunyiq/id23_param_probe"), "design90")))
+print("admitted52:", len(r.load_basin_list(__import__("pathlib").Path("/data1/home/sunyiq/id23_param_probe"), "admitted52")))
 PY
-
-echo "=== CPU PARTITION HEADROOM ==="
-sinfo -p hcpu48,hcpu48y -o "%.10P %.6t %.6D %N" 2>&1 | head -12
-
-echo "=== DATA SPOT CHECK (read-only) ==="
-ls ~/neuralhydrology/data/camels_us/basin_mean_forcing/ 2>&1 | head -6
-ls ~/neuralhydrology/data/camels_us/basin_mean_forcing/maurer/ 2>&1 | head -4
-find ~/neuralhydrology/data/camels_us/usgs_streamflow -name "08190500_streamflow_qc.txt" 2>/dev/null | head -2
-
-echo "=== MY LANDING DIR ==="
-ls -ld ~/id23_param_probe 2>&1 | head -2
+echo "=== READY (not submitted) ==="
