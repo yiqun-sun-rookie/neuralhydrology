@@ -1,0 +1,93 @@
+### channel=kalmannet-tukf09-455 seq=91
+### host=login4
+### started=2026-09-03T18:17:59+0800
+### ---------- output ----------
+NGU203_HEALTH_JOB_ID=219417
+=== JOB STATE ===
+     JobID                    JobName        State ExitCode  NodeList    Elapsed                Start                  End 
+---------- -------------------------- ------------ -------- --------- ---------- -------------------- -------------------- 
+    219417   tukf09-455-ngu203-health    COMPLETED      0:0    ngu203   00:00:17  2026-09-03T18:12:06  2026-09-03T18:12:23 
+slurm_load_jobs error: Invalid job id specified
+=== JOB STDOUT ===
+31a2710724467f28a6189a3033d730e728501795edac7b00c7549fcc27dfd2f1  /data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/node_health_ngu203/logs/health-219417.out
+--- begin ---
+=== ALLOCATION ===
+2026-09-03T10:11:29Z
+ngu203
+SLURM_JOB_ID=219417
+SLURM_JOB_NODELIST=ngu203
+SLURM_JOB_CPUS_PER_NODE=64
+SLURM_CPUS_ON_NODE=64
+SLURM_CPUS_PER_TASK=4
+SLURM_JOB_GPUS=0
+CUDA_VISIBLE_DEVICES=0
+NAME="CentOS Linux"
+VERSION="7 (Core)"
+ID="centos"
+ID_LIKE="rhel fedora"
+VERSION_ID="7"
+PRETTY_NAME="CentOS Linux 7 (Core)"
+ANSI_COLOR="0;31"
+CPE_NAME="cpe:/o:centos:centos:7"
+HOME_URL="https://www.centos.org/"
+BUG_REPORT_URL="https://bugs.centos.org/"
+
+CENTOS_MANTISBT_PROJECT="CentOS-7"
+CENTOS_MANTISBT_PROJECT_VERSION="7"
+REDHAT_SUPPORT_PRODUCT="centos"
+REDHAT_SUPPORT_PRODUCT_VERSION="7"
+
+=== GPU INVENTORY (no head: SIGPIPE would kill an 8-GPU job) ===
+inventory_return_code=0
+index, name, driver_version, memory.total [MiB], uuid
+0, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB, GPU-d912a8cb-5369-be00-9331-436a8a45bf1c
+1, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB, GPU-29954128-a0d6-e668-ddf2-2f03873c61ef
+2, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB, GPU-b30ce8ec-2a99-64d1-5e13-eddb34b1899e
+3, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB, GPU-d4246dc8-58b5-73e5-c0c6-baf9b9be1b11
+4, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB, GPU-c54c8fb9-4e8e-e0d8-2b70-14fe0904c555
+5, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB, GPU-8df94a70-a1b7-ba58-8f9d-01571d74cb2d
+6, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB, GPU-7ea3144b-e93a-649f-7c28-bae116050a0c
+7, NVIDIA A800-SXM4-80GB, 535.104.05, 81920 MiB, GPU-431ead9b-ffe6-4772-b02e-30ce217e7a85
+GPU_COUNT=8
+=== PROBE TABLE FORMAT ON THIS NODE ===
+PMON_RETURN_CODE=0
+PMON_STDOUT_SHA256=16c2b7b18ee3f2ed87c2f2ce8eeed5fecd0f25050c4bea50eac5648e5093de25
+# gpu         pid  type    sm    mem    enc    dec    command$
+# Idx           #   C/G     %      %      %      %    name$
+    0          -     -      -      -      -      -    -              $
+    1          -     -      -      -      -      -    -              $
+    2          -     -      -      -      -      -    -              $
+    3          -     -      -      -      -      -    -              $
+    4          -     -      -      -      -      -    -              $
+    5          -     -      -      -      -      -    -              $
+    6          -     -      -      -      -      -    -              $
+    7          -     -      -      -      -      -    -              $
+PARSER_DATA_LINES=8
+TOKEN_HISTOGRAM tokens=8 lines=8
+=== OTHER COMPUTE PROCESSES ===
+pid, process_name, used_gpu_memory [MiB]
+=== REAL CUDA WORK (the only trustworthy health check) ===
+CUDA_HEALTH_RETURN_CODE=0
+{"compute_capability": [8, 0], "cuda_available": true, "cuda_runtime": "12.1", "cuda_visible_devices": "0", "cudnn_version": 90100, "device_count": 1, "device_name": "NVIDIA A800-SXM4-80GB", "free_memory_bytes": 84496154624, "matmul_checksum": 63507.734375, "matmul_finite": true, "max_absolute_error_against_double_cpu": 0.0005367804357661043, "multi_processor_count": 108, "numerically_sane": true, "reported_total_memory_bytes": 85174583296, "torch_version": "2.4.0", "total_memory_bytes": 85174583296, "verdict": "HEALTHY"}
+=== CAPTURE MANIFEST ===
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./cuda_health.err
+07e5c51ecb265162c9554a5ca780a922277acca948601012a572031e07296fb8  ./cuda_health.json
+2899d6f20294f60d7338c7625c70dff35c52c79b9e336509de0bef02c60f4f56  ./inventory.csv
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./inventory.err
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./pmon_stderr.txt
+16c2b7b18ee3f2ed87c2f2ce8eeed5fecd0f25050c4bea50eac5648e5093de25  ./pmon_stdout.txt
+TUKF09_455_NGU203_HEALTH_PASS
+--- end ---
+=== JOB STDERR ===
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/node_health_ngu203/logs/health-219417.err
+--- begin ---
+--- end ---
+=== PREPARATION JOB STILL UNTOUCHED ===
+218635 PENDING (Resources) start=2026-09-12T18:55:10
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)
+     hgpu8     up      2      mix             ngu[201-202]          34/94/0/128
+     hgpu8     up      1     idle                   ngu203            0/64/0/64
+TUKF09_455_NGU203_HEALTH_READBACK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T18:17:59+0800
