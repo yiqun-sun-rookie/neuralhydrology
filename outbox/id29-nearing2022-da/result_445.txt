@@ -1,0 +1,51 @@
+### channel=id29-nearing2022-da seq=445
+### host=login4
+### started=2026-09-03T21:11:48+0800
+### ---------- output ----------
+===== 219423_0 ERR =====
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 374, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 360, in main
+    gates = validate_entry_gates(args.repo_root, args.protocol, args.data_audit_dir, args.mask_audit_dir)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 94, in validate_entry_gates
+    _require_equal(data_receipt, "slurm_job_id", "202506")
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 40, in _require_equal
+    raise ValueError(f"{key}: expected {expected!r}, got {actual!r}")
+ValueError: slurm_job_id: expected '202506', got '202510'
+===== 219423_0 OUT =====
+203492|TIMEOUT|0:0
+203493|TIMEOUT|0:0
+204694|TIMEOUT|0:0
+206480|TIMEOUT|0:0
+207724|TIMEOUT|0:0
+202215|TIMEOUT|0:0
+202214|TIMEOUT|0:0
+registered_missing_total=0
+===== 219423_1 ERR =====
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 374, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 360, in main
+    gates = validate_entry_gates(args.repo_root, args.protocol, args.data_audit_dir, args.mask_audit_dir)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 94, in validate_entry_gates
+    _require_equal(data_receipt, "slurm_job_id", "202506")
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 40, in _require_equal
+    raise ValueError(f"{key}: expected {expected!r}, got {actual!r}")
+ValueError: slurm_job_id: expected '202506', got '202510'
+===== 219423_1 OUT =====
+203492|TIMEOUT|0:0
+203493|TIMEOUT|0:0
+204694|TIMEOUT|0:0
+206480|TIMEOUT|0:0
+207724|TIMEOUT|0:0
+202215|TIMEOUT|0:0
+202214|TIMEOUT|0:0
+registered_missing_total=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T21:11:49+0800
