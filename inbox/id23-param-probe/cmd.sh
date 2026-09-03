@@ -1,59 +1,63 @@
 #!/bin/bash
-# Read-only digest of the probe outputs: decomposition, outliers, robustness.
 set -o pipefail
 ROOT=/data1/home/sunyiq/id23_param_probe
 source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || source $HOME/miniconda3/etc/profile.d/conda.sh 2>/dev/null
 conda activate nh_final
 cd "$ROOT" || exit 1
-ls -la out/
 python - <<'PY' 2>&1
-import csv, json
+import csv
 import numpy as np
 from pathlib import Path
 ROOT = Path("/data1/home/sunyiq/id23_param_probe")
+rng = np.random.default_rng(20260903)
 
-def med(a):
-    a = np.asarray([x for x in a if np.isfinite(x)], float)
-    return float(np.median(a)) if a.size else float("nan")
+def boot_median(x, n=10000):
+    x = np.asarray([v for v in x if np.isfinite(v)], float)
+    if x.size < 3: return (np.nan, np.nan)
+    idx = rng.integers(0, x.size, size=(n, x.size))
+    meds = np.median(x[idx], axis=1)
+    return float(np.percentile(meds, 2.5)), float(np.percentile(meds, 97.5))
 
-for window in ("main", "sub"):
+def sign_test(x):
+    x = np.asarray([v for v in x if np.isfinite(v)], float)
+    return int((x > 0).sum()), int((x < 0).sum()), int((x == 0).sum())
+
+for window, in (("main",), ("sub",)):
     rows = list(csv.DictReader(open(ROOT / f"out/basin_results_{window}.csv")))
-    for r in rows:
-        for k in ("center","pick_one","oracle","causal","pick_one_gain","switch_increment",
-                  "oracle_gain","causal_regret"):
-            r[k] = float(r[k])
-        r["n_segments_switched"] = int(r["n_segments_switched"])
-    print(f"\n################ WINDOW = {window}  (rows={len(rows)}) ################")
-    for scale in ("water_year","block90"):
-        for metric in ("nse","log_nse"):
-            s = [r for r in rows if r["scale"]==scale and r["metric"]==metric]
-            n = len(s)
-            og = [r["oracle_gain"] for r in s]
-            pg = [r["pick_one_gain"] for r in s]
-            si = [r["switch_increment"] for r in s]
-            cr = [r["causal_regret"] for r in s]
-            healthy = [r for r in s if r["center"] > 0.0]
-            print(f"\n--- {scale} | {metric}  (n={n}) ---")
-            print(f"  oracle_gain      median={med(og):+.5f}  >0.01: {sum(x>0.01 for x in og)}/{n}")
-            print(f"  pick_one_gain    median={med(pg):+.5f}  >0.01: {sum(x>0.01 for x in pg)}/{n}")
-            print(f"  switch_increment median={med(si):+.5f}  >0.01: {sum(x>0.01 for x in si)}/{n}")
-            print(f"  causal_regret    median={med(cr):+.5f}  (vs best fixed; >=0 is a loss)")
-            print(f"  basins that ever switch: {sum(1 for r in s if r['n_segments_switched']>0)}/{n}"
-                  f"   median segs switched: {med([r['n_segments_switched'] for r in s]):.1f}"
-                  f" of {med([float(r['n_segments']) for r in s]):.0f}")
-            print(f"  ROBUSTNESS center_nse>0 only (n={len(healthy)}): "
-                  f"oracle_gain median={med([r['oracle_gain'] for r in healthy]):+.5f}"
-                  f"  switch_increment median={med([r['switch_increment'] for r in healthy]):+.5f}")
-            print(f"  center NSE: min={min(r['center'] for r in s):+.3f} "
-                  f"median={med([r['center'] for r in s]):+.3f}  n_negative={sum(1 for r in s if r['center']<0)}")
-            print(f"  candidate_collapse: {sum(1 for r in s if r['candidate_collapse']=='True')}/{n}"
-                  f"   clipped_any: {sum(1 for r in s if r['clipped_any']=='True')}/{n}")
-    # worst probe-vs-table diagnostics
-    rep = list(csv.DictReader(open(ROOT / f"out/calibration_reproduction_{window}.csv")))
-    for r in rep: r["abs_diff"] = float(r["abs_diff"]); r["center_nse_recomputed"]=float(r["center_nse_recomputed"])
-    rep.sort(key=lambda r: -r["abs_diff"])
-    print("\n  worst probe-window center vs table _cal_nse (different warmups by design):")
-    for r in rep[:4]:
-        print(f"    {r['basin_id']}  probe={r['center_nse_recomputed']:+.4f} "
-              f"table={r['cal_nse_table']}  |diff|={r['abs_diff']:.4f}")
+    print(f"\n########## {window} ##########")
+    for scale in ("water_year", "block90"):
+        s = [r for r in rows if r["scale"] == scale and r["metric"] == "nse"]
+        og = [float(r["oracle_gain"]) for r in s]
+        si = [float(r["switch_increment"]) for r in s]
+        lo, hi = boot_median(og)
+        slo, shi = boot_median(si)
+        pos, neg, zer = sign_test(og)
+        print(f"\n--- {scale} | nse  (n={len(s)}) ---")
+        print(f"  oracle_gain      median={np.median(og):+.5f}  95% CI [{lo:+.5f}, {hi:+.5f}]"
+              f"   win/loss/tie = {pos}/{neg}/{zer}")
+        print(f"  switch_increment median={np.median(si):+.5f}  95% CI [{slo:+.5f}, {shi:+.5f}]")
+        # robustness: drop collapsed candidate sets
+        keep = [r for r in s if r["candidate_collapse"] != "True"]
+        if keep:
+            k_og = [float(r["oracle_gain"]) for r in keep]
+            k_si = [float(r["switch_increment"]) for r in keep]
+            print(f"  NO-COLLAPSE subset (n={len(keep)}): oracle_gain median={np.median(k_og):+.5f}"
+                  f"   switch_increment median={np.median(k_si):+.5f}")
+        drop = [r for r in s if r["candidate_collapse"] == "True"]
+        if drop:
+            d_og = [float(r["oracle_gain"]) for r in drop]
+            print(f"  COLLAPSED subset  (n={len(drop)}): oracle_gain median={np.median(d_og):+.5f}")
+        # attribution: which candidate does the oracle actually pick?
+        p0 = sum(int(r["oracle_picks_cand0"]) for r in s)
+        p1 = sum(int(r["oracle_picks_cand1"]) for r in s)
+        p2 = sum(int(r["oracle_picks_cand2"]) for r in s)
+        tot = p0 + p1 + p2
+        print(f"  oracle segment picks: center={p0} ({100*p0/tot:.0f}%)  x0.5={p1} ({100*p1/tot:.0f}%)"
+              f"  x2.0={p2} ({100*p2/tot:.0f}%)   total segments={tot}")
+        # does the oracle need BOTH directions within one basin (true time variation)?
+        both = sum(1 for r in s if int(r["oracle_picks_cand1"]) > 0 and int(r["oracle_picks_cand2"]) > 0)
+        one = sum(1 for r in s if (int(r["oracle_picks_cand1"]) > 0) != (int(r["oracle_picks_cand2"]) > 0))
+        none = sum(1 for r in s if int(r["oracle_picks_cand1"]) == 0 and int(r["oracle_picks_cand2"]) == 0)
+        print(f"  basins needing BOTH x0.5 and x2.0 segments: {both}/{len(s)}"
+              f"   one direction only: {one}   never leaves center: {none}")
 PY
