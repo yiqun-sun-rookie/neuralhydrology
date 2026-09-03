@@ -1,21 +1,30 @@
 #!/bin/bash
 set -o pipefail
-OUT="/data1/home/sunyiq/zhenjiang_six_source_four_target_ukf_qr_learning_value_20260903"
+EV="/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/evaluation/attempt_002"
 printf '=== SNAPSHOT_TIME ===\n'; date -Is
-for s in 17 29 43; do
-  c="${OUT}/runs/qr_learning_value/s${s}/attempt_001/selection_block_sums.csv"
-  if [ -f "$c" ]; then
-    printf '=== CSV_BEGIN_s%s ===\n' "$s"
-    cat "$c"
-    printf '=== CSV_END_s%s ===\n' "$s"
-  else
-    printf 'CSV_ABSENT|s%s\n' "$s"
-  fi
-done
-printf '=== MANIFESTS ===\n'
-for s in 17 29 43; do
-  m="${OUT}/runs/qr_learning_value/s${s}/attempt_001/completion_manifest.json"
-  [ -f "$m" ] && { printf 'MANIFEST_s%s=' "$s"; cat "$m"; printf '\n'; } || true
-done
+printf '=== STATE_DIFFERENCE_DIAGNOSTICS_CSV ===\n'
+cat "${EV}/state_difference_diagnostics.csv" 2>&1 || true
+printf '=== OBS_SUFFICIENT_STATS_HEADER ===\n'
+head -n 2 "${EV}/analysis_observation_sufficient_statistics.csv" 2>&1 || true
+printf 'rows=%s\n' "$(wc -l < "${EV}/analysis_observation_sufficient_statistics.csv" 2>/dev/null)"
+printf '=== CROSS_RESPONSE_6x6 (posterior_obs_j - prior_obs_j, mean over origins, per assimilated source i) ===\n'
+python - "${EV}" <<'PY' 2>&1 || true
+import csv, sys, collections
+path = sys.argv[1] + "/analysis_observation_sufficient_statistics.csv"
+with open(path, newline="") as h:
+    r = csv.DictReader(h)
+    cols = r.fieldnames
+    print("columns=" + "|".join(cols))
+    acc = collections.defaultdict(lambda: collections.defaultdict(float))
+    cnt = collections.defaultdict(lambda: collections.defaultdict(float))
+    keys = [c for c in cols if "sum" in c or "count" in c]
+    print("sum_like_columns=" + "|".join(keys))
+    n = 0
+    for row in r:
+        n += 1
+        if n > 5:
+            break
+        print("sample_row=" + str({k: row[k] for k in cols[:12]}))
+PY
 printf '=== SNAPSHOT_END ===\n'; date -Is
 exit 0
