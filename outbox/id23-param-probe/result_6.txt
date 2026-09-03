@@ -1,0 +1,91 @@
+### channel=id23-param-probe seq=6
+### host=login4
+### started=2026-09-03T13:14:32+0800
+### ---------- output ----------
+=== SUBMIT ===
+jobid=219209
+     JOBID             NAME  PARTITION    STATE NODELIST(REASON)
+    219209    par_probe_v01     hcpu48  PENDING (None)
+=== WAIT (max 10 min) ===
+t=30s state=RUNNING
+t=60s state=RUNNING
+t=70s finished
+=== ACCOUNTING ===
+     JobID        JobName Partition  NodeList        State ExitCode    Elapsed     MaxRSS                    AllocTRES 
+---------- -------------- --------- --------- ------------ -------- ---------- ---------- ---------------------------- 
+    219209  par_probe_v01    hcpu48    icn248    COMPLETED      0:0   00:00:58                billing=48,cpu=48,node=1 
+=== JOB LOG ===
+[main] 20/90 basins  elapsed=4s
+[main] 30/90 basins  elapsed=7s
+[main] 40/90 basins  elapsed=9s
+[main] 50/90 basins  elapsed=12s
+[main] 60/90 basins  elapsed=14s
+[main] 70/90 basins  elapsed=16s
+[main] 80/90 basins  elapsed=19s
+[main] 90/90 basins  elapsed=21s
+{
+  "n": 90,
+  "max_abs_diff": 8.394759991459598,
+  "median_abs_diff": 0.019020153724349564
+}
+water_year|nse: oracle_gain median=0.012295932994235537 >0.01=54/90
+water_year|log_nse: oracle_gain median=0.033947439332828844 >0.01=75/90
+block90|nse: oracle_gain median=0.03081586302838285 >0.01=83/90
+block90|log_nse: oracle_gain median=0.04960261873343863 >0.01=85/90
+	User time (seconds): 19.32
+	System time (seconds): 1.83
+	Percent of CPU this job got: 70%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:30.07
+	Maximum resident set size (kbytes): 203920
+	Major (requiring I/O) page faults: 101
+	Minor (reclaiming a frame) page faults: 230703
+	Exit status: 0
+=== WINDOW: sub (52 admitted basins, 1990-10-01..1993-03-13) ===
+[sub] center-protocol gate PASSED: max|diff|=0.000036 over 8 basins
+[sub] 10/52 basins  elapsed=1s
+[sub] 20/52 basins  elapsed=2s
+[sub] 30/52 basins  elapsed=3s
+[sub] 40/52 basins  elapsed=4s
+[sub] 50/52 basins  elapsed=5s
+{
+  "n": 52,
+  "max_abs_diff": 0.44957227507486675,
+  "median_abs_diff": 0.07175635488622123
+}
+water_year|nse: oracle_gain median=0.020506188002110404 >0.01=36/52
+water_year|log_nse: oracle_gain median=0.024414428260621568 >0.01=35/52
+block90|nse: oracle_gain median=0.037462673525413326 >0.01=48/52
+block90|log_nse: oracle_gain median=0.058482671384906926 >0.01=48/52
+	User time (seconds): 6.98
+	System time (seconds): 0.71
+	Percent of CPU this job got: 96%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:07.94
+	Maximum resident set size (kbytes): 188904
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 131104
+	Exit status: 0
+=== OUTPUT FILES ===
+total 122
+drwxr-xr-x 2 sunyiq g_sunyiq   4096 Sep  3 13:15 .
+drwxr-xr-x 9 sunyiq g_sunyiq   4096 Sep  3 13:14 ..
+-rw-r--r-- 1 sunyiq g_sunyiq 102729 Sep  3 13:15 basin_results_main.csv
+-rw-r--r-- 1 sunyiq g_sunyiq  57087 Sep  3 13:15 basin_results_sub.csv
+-rw-r--r-- 1 sunyiq g_sunyiq   6517 Sep  3 13:15 calibration_reproduction_main.csv
+-rw-r--r-- 1 sunyiq g_sunyiq   3616 Sep  3 13:15 calibration_reproduction_sub.csv
+-rw-r--r-- 1 sunyiq g_sunyiq   6836 Sep  3 13:15 summary_main.json
+-rw-r--r-- 1 sunyiq g_sunyiq   6844 Sep  3 13:15 summary_sub.json
+=== DONE ===
+=== STDERR (if any) ===
+=== OUTPUT FILES ===
+total 122
+drwxr-xr-x. 2 sunyiq g_sunyiq   4096 Sep  3 13:15 .
+drwxr-xr-x. 9 sunyiq g_sunyiq   4096 Sep  3 13:14 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 102729 Sep  3 13:15 basin_results_main.csv
+-rw-r--r--. 1 sunyiq g_sunyiq  57087 Sep  3 13:15 basin_results_sub.csv
+-rw-r--r--. 1 sunyiq g_sunyiq   6517 Sep  3 13:15 calibration_reproduction_main.csv
+-rw-r--r--. 1 sunyiq g_sunyiq   3616 Sep  3 13:15 calibration_reproduction_sub.csv
+-rw-r--r--. 1 sunyiq g_sunyiq   6836 Sep  3 13:15 summary_main.json
+-rw-r--r--. 1 sunyiq g_sunyiq   6844 Sep  3 13:15 summary_sub.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T13:15:32+0800
