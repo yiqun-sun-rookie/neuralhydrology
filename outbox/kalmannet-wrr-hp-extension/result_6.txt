@@ -1,0 +1,67 @@
+### channel=kalmannet-wrr-hp-extension seq=6
+### host=login4
+### started=2026-09-03T11:23:58+0800
+### ---------- output ----------
+=== TIME ===
+2026-09-03T11:23:58+0800
+=== ARRAY_STATE ===
+218659_13|RUNNING|9:39:09|ngu005
+218659_14|RUNNING|7:59:06|ngu010
+218659_15|RUNNING|6:22:07|ngu011
+218659_16|RUNNING|4:16:30|ngu001
+=== ACCOUNTING (finished tasks) ===
+218659_0|COMPLETED|0:0|05:03:30|2026-09-02T23:35:39|ngu010
+218659_1|COMPLETED|0:0|03:55:13|2026-09-02T22:27:23|ngu010
+218659_2|COMPLETED|0:0|03:40:59|2026-09-02T22:13:09|ngu011
+218659_3|COMPLETED|0:0|02:49:10|2026-09-02T21:21:20|ngu011
+218659_4|COMPLETED|0:0|04:21:23|2026-09-02T22:53:33|ngu001
+218659_5|FAILED|1:0|01:27:51|2026-09-02T20:09:49|ngu005
+218659_6|COMPLETED|0:0|05:35:00|2026-09-03T01:44:49|ngu005
+218659_7|COMPLETED|0:0|03:52:20|2026-09-03T01:13:40|ngu011
+218659_8|COMPLETED|0:0|06:48:42|2026-09-03T05:01:51|ngu011
+218659_9|COMPLETED|0:0|10:06:29|2026-09-03T08:33:52|ngu010
+218659_10|COMPLETED|0:0|08:13:55|2026-09-03T07:07:28|ngu001
+218659_11|COMPLETED|0:0|03:49:12|2026-09-03T03:24:51|ngu010
+218659_12|COMPLETED|0:0|08:32:11|2026-09-03T09:45:51|ngu011
+=== FAULTS ===
+218659_5|FAILED|1:0|ngu005
+=== CELL_METRICS (finished cells) ===
+anchor                   lr=0.01   hs=16  nl=2 mult=5   seed=42 M(1-12)=0.982289 best_ep=18 lr@best=0.005 rollbacks=0 stop_ep=28 secs=18149.6
+lr_extension             lr=0.02   hs=16  nl=2 mult=5   seed=42 M(1-12)=0.982633 best_ep=11 lr@best=0.02 rollbacks=0 stop_ep=21 secs=14050.0
+lr_extension             lr=0.05   hs=16  nl=2 mult=5   seed=42 M(1-12)=0.982755 best_ep=10 lr@best=0.025 rollbacks=240 stop_ep=20 secs=13179.6
+anchor                   lr=0.01   hs=32  nl=1 mult=10  seed=42 M(1-12)=0.982326 best_ep=6 lr@best=0.01 rollbacks=0 stop_ep=16 secs=10069.8
+lr_extension             lr=0.02   hs=32  nl=1 mult=10  seed=42 M(1-12)=0.983428 best_ep=10 lr@best=0.02 rollbacks=2 stop_ep=20 secs=15626.5
+anchor                   lr=0.01   hs=16  nl=1 mult=5   seed=42 M(1-12)=0.98281 best_ep=16 lr@best=0.01 rollbacks=0 stop_ep=26 secs=20029.4
+lr_extension             lr=0.02   hs=16  nl=1 mult=5   seed=42 M(1-12)=0.98323 best_ep=13 lr@best=0.02 rollbacks=0 stop_ep=23 secs=13886.4
+lr_extension             lr=0.05   hs=16  nl=1 mult=5   seed=42 M(1-12)=0.984128 best_ep=31 lr@best=0.0125 rollbacks=310 stop_ep=41 secs=24467.8
+anchor                   lr=0.01   hs=16  nl=1 mult=10  seed=42 M(1-12)=0.984289 best_ep=53 lr@best=0.00125 rollbacks=1 stop_ep=63 secs=36336.8
+lr_extension             lr=0.02   hs=16  nl=1 mult=10  seed=42 M(1-12)=0.984294 best_ep=29 lr@best=0.005 rollbacks=2 stop_ep=39 secs=29576.4
+lr_extension             lr=0.05   hs=16  nl=1 mult=10  seed=42 M(1-12)=0.984013 best_ep=13 lr@best=0.0125 rollbacks=13 stop_ep=23 secs=13699.2
+probe_hidden64           lr=0.01   hs=64  nl=1 mult=10  seed=42 M(1-12)=0.984523 best_ep=38 lr@best=0.0025 rollbacks=2 stop_ep=48 secs=30673.5
+=== EPOCH_PROGRESS (running cells) ===
+idx0000_lr0p01_hs16_nl2_mult5    ep= 29 lr_now=0.0025    nse=0.9531 best_ep=18 no_improve=10 rollbacks=0
+idx0001_lr0p02_hs16_nl2_mult5    ep= 22 lr_now=0.01      nse=0.9442 best_ep=11 no_improve=10 rollbacks=0
+idx0002_lr0p05_hs16_nl2_mult5    ep= 21 lr_now=9.76563e-05 nse=-51.9458 best_ep=10 no_improve=10 rollbacks=240
+idx0003_lr0p01_hs32_nl1_mult10   ep= 17 lr_now=0.005     nse=0.9438 best_ep=6 no_improve=10 rollbacks=0
+idx0004_lr0p02_hs32_nl1_mult10   ep= 21 lr_now=0.0025    nse=0.9339 best_ep=10 no_improve=10 rollbacks=2
+idx0005_lr0p05_hs32_nl1_mult10   ep=  7 lr_now=0.00078125 nse=0.8997 best_ep=0 no_improve=6 rollbacks=304
+idx0006_lr0p01_hs16_nl1_mult5    ep= 27 lr_now=0.005     nse=0.9546 best_ep=16 no_improve=10 rollbacks=0
+idx0007_lr0p02_hs16_nl1_mult5    ep= 24 lr_now=0.01      nse=0.9554 best_ep=13 no_improve=10 rollbacks=0
+idx0008_lr0p05_hs16_nl1_mult5    ep= 42 lr_now=9.76563e-05 nse=0.9436 best_ep=31 no_improve=10 rollbacks=310
+idx0009_lr0p01_hs16_nl1_mult10   ep= 64 lr_now=0.000625  nse=0.9573 best_ep=53 no_improve=10 rollbacks=1
+idx0010_lr0p02_hs16_nl1_mult10   ep= 40 lr_now=0.0025    nse=0.9578 best_ep=29 no_improve=10 rollbacks=2
+idx0011_lr0p05_hs16_nl1_mult10   ep= 24 lr_now=0.000195313 nse=-123.0994 best_ep=13 no_improve=10 rollbacks=13
+idx0012_lr0p01_hs64_nl1_mult10   ep= 49 lr_now=0.000625  nse=0.9573 best_ep=38 no_improve=10 rollbacks=2
+idx0013_lr0p01_hs32_nl1_mult15   ep= 45 lr_now=0.0025    nse=0.9574 best_ep=38 no_improve=6 rollbacks=0
+idx0014_lr0p01_hs64_nl1_mult15   ep= 47 lr_now=0.00125   nse=0.9591 best_ep=44 no_improve=2 rollbacks=2
+idx0015_lr0p01_hs32_nl1_mult10   ep= 38 lr_now=0.005     nse=0.9563 best_ep=36 no_improve=1 rollbacks=0
+idx0016_lr0p01_hs32_nl1_mult10   ep= 20 lr_now=0.0025    nse=0.9558 best_ep=12 no_improve=7 rollbacks=1
+=== NONEMPTY_ERR ===
+--- slurm-218659_5.err
+  File "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/run_one_cell.py", line 379, in main
+    raise RuntimeError(f"Run returned without metrics.json: {metrics_path}")
+RuntimeError: Run returned without metrics.json: /data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed42_gpu/idx0005_lr0p05_hs32_nl1_mult10/metrics.json
+(scan done)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T11:24:02+0800
