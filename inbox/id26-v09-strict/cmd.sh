@@ -2,33 +2,43 @@
 set -o pipefail
 ROOT=/data1/home/sunyiq/v09_strict
 SCORING=$ROOT/diagnostic_scoring
-PREDICT_REPO=$ROOT/predict_v09/neuralhydrology
-EXPECT=576d548253064699ade1e312ea875097d070557e3eef334874c310df61d8fd1e
+JID=$(cat $SCORING/score_jobid.txt 2>/dev/null || echo "")
 
-echo "=== A STAGE ANSWER KEY (isolated dir, NOT the formal root) ==="
-mkdir -p $SCORING
-cp -f /data1/home/sunyiq/hpc_mailbox/payload/id26-v09-strict/track0_forcing_only_obs_eval.parquet $SCORING/
-GOT=$(sha256sum $SCORING/track0_forcing_only_obs_eval.parquet | cut -d' ' -f1)
-echo "answer_key_sha256=$GOT"
-if [ "$GOT" != "$EXPECT" ]; then echo "ANSWER_KEY_HASH_DRIFT"; exit 1; fi
-echo "answer_key=verified"
-echo "scoring_dir_is_outside_formal_root=$(case $SCORING in *results/26_historical_band_experts*) echo NO;; *) echo YES;; esac)"
+echo "=== A WAIT (max 3 min, short on purpose so the push lock is not held) ==="
+for i in $(seq 1 9); do
+  st=$(sacct -j "$JID" -X -n -o State 2>/dev/null | head -1 | tr -d ' ')
+  case "$st" in COMPLETED|FAILED|TIMEOUT|CANCELLED*|NODE_FAIL) echo "terminal=$st at t=$((i*20))s"; break;; esac
+  sleep 20
+done
+sacct -j "$JID" -X -P --format=JobID,State,ExitCode,Elapsed,NodeList 2>&1 | head -3
 
-echo "=== B SYNC SCORER ==="
-cd $PREDICT_REPO || exit 1
-git fetch origin "+codex/historical-band-experts-pilot:refs/remotes/origin/codex/historical-band-experts-pilot" -q
-git reset -q --hard refs/remotes/origin/codex/historical-band-experts-pilot
-sed -i 's/\r$//' src/26_historical_band_experts/hpc/diagnostic_score_v09.slurm
-echo "head=$(git rev-parse HEAD)"
-echo "clean=[$(git status --porcelain --untracked-files=all)]"
+echo "=== B ERR ==="
+e=$ROOT/logs/diagnostic_score_${JID}.err
+if [ -f "$e" ]; then echo "err_bytes=$(wc -c < $e)"; tail -12 "$e"; else echo "err absent"; fi
 
-echo "=== C SUBMIT ==="
-rm -f $SCORING/diagnostic_score.json
-out=$(sbatch src/26_historical_band_experts/hpc/diagnostic_score_v09.slurm 2>&1)
-echo "$out"
-JID=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
-if [ -z "$JID" ]; then echo "SUBMIT_FAILED"; exit 1; fi
-echo "$JID" > $SCORING/score_jobid.txt
-echo "jobid=$JID"
-squeue -j "$JID" -h -o "%i %P %T %r" 2>&1 || true
+echo "=== C REPORT ==="
+R=$SCORING/diagnostic_score.json
+if [ -f "$R" ]; then
+  echo "report_sha256=$(sha256sum $R | cut -d' ' -f1)"
+  python - "$R" <<'PY'
+import json,sys
+r=json.load(open(sys.argv[1]))
+print("status",r["status"],"diagnostic_only",r["diagnostic_only"],"qualifying",r["qualifying"])
+print("median_nse",json.dumps(r["median_nse"],sort_keys=True))
+print("coverage",json.dumps(r["coverage"],sort_keys=True))
+for k in ("primary_comparison_challenger_vs_capacity",
+          "descriptive_challenger_vs_classic",
+          "descriptive_capacity_vs_classic"):
+    print(k,json.dumps(r[k],sort_keys=True))
+print("gate_checks",json.dumps(r["primary_gate_checks"],sort_keys=True))
+print("all_pass",r["all_primary_gate_checks_pass"])
+for k in ("official_score_called","postseal_holdout_drawn","score_ledger_appended",
+          "one_call_authorization_consumed"):
+    print(k,r[k])
+PY
+else
+  echo "report absent"
+  o=$ROOT/logs/diagnostic_score_${JID}.out
+  if [ -f "$o" ]; then tail -20 "$o"; fi
+fi
 echo "=== END ==="
