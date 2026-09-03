@@ -1,23 +1,58 @@
 #!/bin/bash
-set -o pipefail
+set -eo pipefail
 ROOT=/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
 EXP="$ROOT/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902"
-RD="$EXP/runs/formal_seed42_gpu/idx0005_lr0p05_hs32_nl1_mult10"
-echo "=== FAILED_CELL_ERROR ==="
-sed -n '/\[Fail\] idx=5/,/^$/p' "$ROOT/logs/slurm-218659_5.out" | head -40 || true
-echo "--- error.txt ---"
-cat "$RD/error.txt" 2>&1 | tail -25 || true
-echo "--- FAILED tag ---"
-cat "$RD/FAILED" 2>&1 || true
-echo "=== EPOCH_TRAIL (all epochs of the failed cell) ==="
-cat "$RD/results/epoch_log.jsonl" 2>/dev/null | python3 -c "
-import json,sys
-for l in sys.stdin:
-    r=json.loads(l)
-    print(f'ep={r[\"epoch_zero_based\"]:>3} lr={r[\"lr_used_this_epoch\"]:<11g} train={r[\"train_bp_loss\"]:.6g} val={r[\"val_bp_loss\"]:.6g} nse={r[\"val_screening_nse\"]:.4f} rollbacks={r[\"grad_explosion_rollbacks\"]:>4} nan={r[\"nan_inf_skips\"]:>3} improved={r[\"improved\"]}')
-" 2>&1 | tail -15 || true
-echo "=== ROLLBACK/NAN LINES IN LOG ==="
-grep -acE 'Grad explosion|NaN/Inf loss|Exceeded max NaN' "$ROOT/logs/slurm-218659_5.out" || true
-grep -aE 'Exceeded max NaN|RuntimeError|Traceback' "$ROOT/logs/slurm-218659_5.out" | head -5 || true
-echo "=== ARRAY_NOW ==="
-squeue -j 218659 -h -o '%i|%T|%M' 2>&1 | sort || echo "all done"
+PAY=/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-hp-extension/v2-divcheck
+
+assert_sha256() {
+  a="$(sha256sum "$2" | awk '{print $1}')"
+  [ "$a" = "$1" ] || { echo "SHA256_MISMATCH path=$2 expected=$1 actual=$a" >&2; exit 1; }
+}
+
+echo "=== PAYLOAD_CHECK ==="
+assert_sha256 bc2841d968314f0f9b30a28a64aa3ac94f100cd1545feb85b624dff58efaddfa "$PAY/combos.jsonl"
+assert_sha256 762f284f9fa033fb2e23ba86b5387e813c87fa76451e5fc40410e6ae8c7fded0 "$PAY/registry.csv"
+assert_sha256 f6f04298895e7a95e4a2fb88a160a98ba2b2c0fab1967cfa4ff6b8efc14904ad "$PAY/source_manifest.json"
+assert_sha256 f79dd590c91083eeebfdf7b802564924386959a1410d64543631e66b5457c7c4 "$PAY/hpc_single17.slurm"
+echo payload_ok
+
+echo "=== PRE_STATE ==="
+echo "old combos lines: $(wc -l < "$EXP/combos.jsonl")"
+squeue -j 218659 -h -o '%i|%T' 2>&1 | sort || true
+
+echo "=== INSTALL (only the three guarded files change; runs/ logs/ audits/ untouched) ==="
+cp -p "$EXP/combos.jsonl" "$EXP/combos.jsonl.bak_$(date +%Y%m%dT%H%M%S)"
+cp -p "$EXP/source_manifest.json" "$EXP/source_manifest.json.bak_$(date +%Y%m%dT%H%M%S)"
+cp -f "$PAY/combos.jsonl" "$EXP/combos.jsonl"
+cp -f "$PAY/registry.csv" "$EXP/registry.csv"
+cp -f "$PAY/source_manifest.json" "$EXP/source_manifest.json"
+cp -f "$PAY/hpc_single17.slurm" "$ROOT/hpc_single17.slurm"
+sed -i 's/\r$//' "$ROOT/hpc_single17.slurm"
+chmod 700 "$ROOT/hpc_single17.slurm"
+echo "new combos lines: $(wc -l < "$EXP/combos.jsonl")"
+tail -n 1 "$EXP/combos.jsonl"
+
+echo "=== VERIFY_DEPLOYED_TREE_AGAINST_NEW_MANIFEST ==="
+cd "$ROOT/repo"
+python3 - <<'PY'
+import hashlib, json, sys
+from pathlib import Path
+m = json.loads(Path("experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/source_manifest.json").read_text())
+bad = []
+for rel, exp in m["source_sha256"].items():
+    h = hashlib.sha256(Path(rel).read_bytes()).hexdigest()
+    if h.lower() != exp.lower():
+        bad.append((rel, exp, h))
+print(f"checked {len(m['source_sha256'])} files, mismatches={len(bad)}")
+for b in bad: print("MISMATCH", b)
+sys.exit(1 if bad else 0)
+PY
+
+echo "=== SUBMIT ==="
+cd "$ROOT"
+OUT="$(sbatch "$ROOT/hpc_single17.slurm" 2>&1)"; echo "$OUT"
+printf '%s\n' "$OUT" | grep -qE '^Submitted batch job [0-9]+$' || { echo SUBMIT_FAILED >&2; exit 1; }
+JID="$(printf '%s\n' "$OUT" | awk '/^Submitted batch job [0-9]+$/{print $4; exit}')"
+printf '%s' "$JID" > "$ROOT/divcheck_job_id.txt"
+echo "divcheck_job_id=$JID"
+squeue -j "$JID" -o '%i|%j|%T|%P|%R' || true
