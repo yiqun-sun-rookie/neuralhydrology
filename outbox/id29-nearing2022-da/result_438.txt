@@ -1,0 +1,96 @@
+### channel=id29-nearing2022-da seq=438
+### host=login4
+### started=2026-09-03T18:07:00+0800
+### ---------- output ----------
+{
+  "acceptance_frozen_at": "2026-08-10T14:20:39+08:00",
+  "comparison_rows": 1078,
+  "hyperparameter_evaluation_period": "test",
+  "hyperparameter_selection": {
+    "best_eval_id": "N22-HYP-W05-E1000-H20-D010-LR0p1-TCN",
+    "best_nse": 0.801876176878,
+    "coordinates": 660,
+    "maximum_allowed_nse_deficit": 0.005,
+    "released_default_eval_id": "N22-HYP-W05-E0100-H20-D010-LR0p1-TCN",
+    "released_default_exact_best": false,
+    "released_default_nse": 0.801873122122,
+    "released_default_nse_deficit": 3.0547559999316576e-06,
+    "released_default_rank": 2,
+    "within_functional_tolerance": true
+  },
+  "individual_tolerance_failures": 29,
+  "input_artifacts": {
+    "acceptance": {
+      "bytes": 1540,
+      "path": "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/reference/reproduction_acceptance.json",
+      "sha256": "6125cab8935c3ad0ab498865c661c47ea83c837c7627dff2534ba5a5b9185895"
+    },
+    "basin_comparisons": {
+      "bytes": 1695,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/aggregation/evaluations/basin_split_vs_author.csv",
+      "sha256": "53475b029635fb13ba8d2c699bb253db5f7b6dad180360757e325ec81c93af51"
+    },
+    "hyperparameter_scores": {
+      "bytes": 115432,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/aggregation/hyperparameters/scores.csv",
+      "sha256": "0f7a2b68ba6ef240e7e530ee3f57c1a5ec2e17a5ed715b19eb977db839f74b5b"
+    },
+    "time_comparisons": {
+      "bytes": 128198,
+      "path": "/data1/home/sunyiq/nearing2022_da/closure_20260810/aggregation/evaluations/time_split_vs_author.csv",
+      "sha256": "de35104cd0951eaf8a98f87ce2bfeb80c358fa91a60b2c6a7ba55c0bcef5f459"
+    }
+  },
+  "numerical_target": "released_code",
+  "paper_text_hyperparameter_evaluation_period": "validation",
+  "released_code_numerical_status": "NO_GO",
+  "schema": "nearing2022-full-reproduction-gate-v1",
+  "systematic_bias": [
+    {
+      "median_signed_difference": 0.000938778928247,
+      "metric": "NSE",
+      "tolerance": 0.01,
+      "within_tolerance": true
+    },
+    {
+      "median_signed_difference": 0.0007547058379785,
+      "metric": "KGE",
+      "tolerance": 0.01,
+      "within_tolerance": true
+    },
+    {
+      "median_signed_difference": -0.0023351245385099997,
+      "metric": "Alpha-NSE",
+      "tolerance": 0.02,
+      "within_tolerance": true
+    },
+    {
+      "median_signed_difference": 2.2133795624445002e-05,
+      "metric": "Pearson-r",
+      "tolerance": 0.01,
+      "within_tolerance": true
+    },
+    {
+      "median_signed_difference": -0.0001288997570744,
+      "metric": "Beta-NSE",
+      "tolerance": 0.02,
+      "within_tolerance": true
+    },
+    {
+      "median_signed_difference": 0.0,
+      "metric": "Peak-Timing",
+      "tolerance": 0.02,
+      "within_tolerance": true
+    },
+    {
+      "median_signed_difference": 0.0001408054069275,
+      "metric": "Missed-Peaks",
+      "tolerance": 0.02,
+      "within_tolerance": true
+    }
+  ],
+  "systematic_bias_failures": 0
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T18:07:00+0800
