@@ -1,0 +1,20 @@
+### channel=id23-param-probe seq=9
+### host=login4
+### started=2026-09-03T17:31:04+0800
+### ---------- output ----------
+4bf22b991c4e3d6b6cf99ac0d9b0605f9287894c0d835d51d0a832580678c7a3  /data1/home/sunyiq/hpc_mailbox/outbox/id23-param-probe/payload/parameter_axis_probe_v01_out_20260903.tar.gz
+=== per-file sha256 ===
+c5a3c45b0ac535eda7d524ef4f965cb60d4defe6b5809bc03ba7c0199908b75b  basin_results_main.csv
+16f91f1a1e8a40da384170ae4c2fdcca36756e45e5d30fc26dd3af719fe3a6a3  basin_results_sub.csv
+849f98b6e1a86276aaf80ced438188408be4b529369c38580fc56c724b8f428f  calibration_reproduction_main.csv
+56f9c59b944a7d3333148f6ae13188d39788daf1e5d941612971f3fcb322698e  calibration_reproduction_sub.csv
+1449ec7dd8887695dc7a87c7a601cbebc585ae2e2e474ea5110803a1e470b94d  summary_main.json
+5e23b2f8ff377db906bff8a0d4f2b3798014f51999cd828227722c68ab7a333a  summary_sub.json
+total 8
+drwxr-xr-x. 2 sunyiq g_sunyiq  4096 Sep  3 17:31 .
+drwxr-xr-x. 3 sunyiq g_sunyiq  4096 Sep  3 17:31 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 54167 Sep  3 17:31 parameter_axis_probe_v01_out_20260903.tar.gz
+-rw-r--r--. 1 sunyiq g_sunyiq   174 Sep  3 17:31 parameter_axis_probe_v01_out_20260903.tar.gz.sha256
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T17:31:04+0800
