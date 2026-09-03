@@ -1,0 +1,40 @@
+### channel=id29-nearing2022-da seq=436
+### host=login4
+### started=2026-09-03T18:00:06+0800
+### ---------- output ----------
+=== A. 脚本校验的两个合同文件 ===
+16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol.json
+MISSING /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_analysis_contract.json
+期望 PROTOCOL=16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1
+期望 ANALYSIS=5bb3da898bba8b01b290a2a3efe70a943235fd103e9913711d19a6290869a114
+=== B. 审计目录 (脚本指向 _all531, 入口门实际是 _all531_v2) ===
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_all531.slurm
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5_attempt2.slurm
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5.preparing-202503
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_same_checkpoint_te100_first5.slurm
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531.preparing-202506
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2
+=== C. 脚本硬编码的入口门作业 202506/202507 实际状态 ===
+202506|N22-data-port-531|FAILED|1:0
+202507|N22-mask-iso-531|PENDING|0:0
+=== D. 实际满足入口门的 202510/202511 ===
+202510|N22-data-port-v2|COMPLETED|0:0
+202511|N22-mask-iso-v2|COMPLETED|0:0
+=== E. MAIN_JOBS 失败守卫会捕获什么 (非空即阻断) ===
+203492|TIMEOUT|0:0
+203493|TIMEOUT|0:0
+204694|TIMEOUT|0:0
+206480|TIMEOUT|0:0
+207724|TIMEOUT|0:0
+202215|TIMEOUT|0:0
+202214|TIMEOUT|0:0
+--- end of guard output ---
+=== F. 成对重训产物目录是否已存在 ===
+  warmup_pair 不存在(干净)
+=== G. 脚本与准备脚本的服务器侧指纹 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T18:00:08+0800
