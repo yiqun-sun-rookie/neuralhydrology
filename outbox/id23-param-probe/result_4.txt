@@ -1,0 +1,35 @@
+### channel=id23-param-probe seq=4
+### host=login4
+### started=2026-09-03T13:05:23+0800
+### ---------- output ----------
+=== GUARD: refuse to clobber an existing landing dir ===
+=== VERIFY BUNDLE ===
+par_probe_bundle_20260903.tar.gz: OK
+=== DEPLOY ===
+docs/plans/2026-08-10-camels-parfc-state-interaction-design90-coverage-v01.csv
+par_probe.slurm
+results/10_global_conceptual_model_benchmark/camels_us_531_repro_v01/summary/hbv_lite_cma_rising_local_full.csv
+results/23_camels_switch_confirmation/online_noise_real_obs_stage3_01_20260818_local/precheck/admission.csv
+src/camels_switch_confirmation/bank.py
+src/camels_switch_confirmation/__init__.py
+src/camels_switch_confirmation/parameter_axis_openloop_probe.py
+src/camels_switch_confirmation/scripts/run_parameter_axis_probe.py
+src/hydroagent/data_loading.py
+src/hydroagent/__init__.py
+src/scl_hydro/hbv_lite_numpy.py
+src/scl_hydro/__init__.py
+test/test_parameter_axis_probe.py
+symlink: /data1/home/sunyiq/neuralhydrology/data/camels_us
+=== IMPORT + INPUT HASH CHECK (login node, no computation) ===
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+  File "/data1/home/sunyiq/id23_param_probe/src/camels_switch_confirmation/scripts/run_parameter_axis_probe.py", line 39, in <module>
+    from hydroagent.data_loading import load_camels_basin  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/id23_param_probe/src/hydroagent/__init__.py", line 40, in <module>
+    from .experiment_logger import ExperimentLogger
+ModuleNotFoundError: No module named 'hydroagent.experiment_logger'
+=== READY (not submitted) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T13:05:25+0800
