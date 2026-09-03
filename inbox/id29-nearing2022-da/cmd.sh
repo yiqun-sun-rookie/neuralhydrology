@@ -1,5 +1,5 @@
 #!/bin/bash
-# seq=438 修复成对重训脚本的四处过期指向, 只修不提交
+# seq=439 修复成对重训脚本的四处过期指向, 只修不提交
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
 D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics"
