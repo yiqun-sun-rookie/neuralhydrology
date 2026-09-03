@@ -1,0 +1,42 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=64
+### host=login4
+### started=2026-09-03T13:19:46+0800
+### ---------- output ----------
+=== SNAPSHOT_TIME ===
+2026-09-03T13:19:46+0800
+=== PREFLIGHT ===
+preflight=passed
+=== DEPLOY ===
+deployed_python|bytes=21033|sha256=532aebf8a007fcd3db06c114e37eaba5614084e15feb2f31a22a2690b43a542c|expected=532aebf8a007fcd3db06c114e37eaba5614084e15feb2f31a22a2690b43a542c
+deployed_slurm|bytes=5545|sha256=88f36c101322cfdcbe79d67ae56529fdcb35d5d837de06c2ff4dfbc8f0c83014|expected=88f36c101322cfdcbe79d67ae56529fdcb35d5d837de06c2ff4dfbc8f0c83014
+deploy=verified
+=== PARTITION_BEFORE_SUBMIT ===
+ PARTITION  AVAIL  NODES  STATE             NODELIST
+     hgpu2     up      2   idle         ngu[003,009]
+=== MY_JOBS_BEFORE_SUBMIT ===
+218635|tukf09-455-v2r6-prepare|PENDING|hgpu8|
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|
+215429|id30_m01_s100|PENDING|hgpu2|
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|
+218659_16|wrrhp-ext|RUNNING|hgpu2p|ngu001
+218659_15|wrrhp-ext|RUNNING|hgpu2p|ngu011
+218659_13|wrrhp-ext|RUNNING|hgpu2p|ngu005
+219190_17|wrrhp-div|RUNNING|hgpu2p|ngu011
+=== SUBMIT ===
+Submitted batch job 219223
+SUBMITTED_ARRAY_JOB_ID=219223
+=== IMMEDIATE_STATUS ===
+JOBID|NAME|STATE|PARTITION|NODELIST|NODELIST(REASON)
+219223_[0-2%3]|zsf4t-qr-value|PENDING|hgpu2||(None)
+=== ORIGINAL_R2_SAFETY ===
+ORIGINAL_IDENTITY|match=true|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+ORIGINAL_IDENTITY|match=true|path=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/evidence/development_2023/evaluation/attempt_001.partial/development_access_started.json
+HELD_OUT_2024_TARGET_ACCESS_AUTHORIZED=false
+=== SNAPSHOT_END ===
+2026-09-03T13:19:46+0800
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T13:19:46+0800
