@@ -1,15 +1,10 @@
 #!/bin/bash
-# Retrieve the probe artifacts: tar out/ + manifest + slurm log into this channel's outbox.
+# Retry artifact retrieval under outbox/<ch>/artifacts/ (payload/ dirs are not committed by the runner).
 set -o pipefail
 ROOT=/data1/home/sunyiq/id23_param_probe
-OUT=~/hpc_mailbox/outbox/id23-param-probe
-mkdir -p "$OUT/payload"
-cd "$ROOT" || exit 1
-cp logs/par_probe_219209.out out/slurm_219209.out 2>/dev/null
-cp run_manifest.tsv out/ 2>/dev/null
-cp par_probe.slurm out/ 2>/dev/null
-tar czf "$OUT/payload/parameter_axis_probe_v01_out_20260903.tar.gz" -C "$ROOT" out
-sha256sum "$OUT/payload/parameter_axis_probe_v01_out_20260903.tar.gz" | tee "$OUT/payload/parameter_axis_probe_v01_out_20260903.tar.gz.sha256"
-echo "=== per-file sha256 ==="
-(cd "$ROOT/out" && sha256sum *.csv *.json)
-ls -la "$OUT/payload/"
+OUT=~/hpc_mailbox/outbox/id23-param-probe/artifacts
+mkdir -p "$OUT"
+tar czf "$OUT/parameter_axis_probe_v01_out_20260903.tar.gz" -C "$ROOT" out
+sha256sum "$OUT/parameter_axis_probe_v01_out_20260903.tar.gz" | tee "$OUT/parameter_axis_probe_v01_out_20260903.tar.gz.sha256"
+ls -la "$OUT"
+rm -rf ~/hpc_mailbox/outbox/id23-param-probe/payload
