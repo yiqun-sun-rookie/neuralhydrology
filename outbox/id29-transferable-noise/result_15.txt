@@ -1,0 +1,31 @@
+### channel=id29-transferable-noise seq=15
+### host=login4
+### started=2026-09-03T17:50:44+0800
+### ---------- output ----------
+=== LOCATE ===
+/data1/home/sunyiq/id29_transferable_noise_20260902/results/23_camels_switch_confirmation/noise_axis_training_length_20260902_hpc/p0_report.json	378 bytes	2026-09-02 19:41
+=== DIR LISTING (top level) ===
+total 140
+drwxr-xr-x. 4 sunyiq g_sunyiq  4096 Sep  3 04:52 .
+drwxr-xr-x. 8 sunyiq g_sunyiq  4096 Sep  2 19:41 ..
+-rw-r--r--. 1 sunyiq g_sunyiq  1243 Sep  2 19:41 frozen_basin_list.csv
+drwxr-xr-x. 4 sunyiq g_sunyiq  4096 Sep  2 22:52 L2
+-rw-r--r--. 1 sunyiq g_sunyiq 41140 Sep  3 04:52 L2_borrow_matrix_nse_holdout.csv
+-rw-r--r--. 1 sunyiq g_sunyiq 16947 Sep  3 04:52 L2_learn_per_basin.csv
+-rw-r--r--. 1 sunyiq g_sunyiq  1738 Sep  3 04:52 L2_m1c0_per_basin.csv
+drwxr-xr-x. 4 sunyiq g_sunyiq  4096 Sep  3 03:37 L3
+-rw-r--r--. 1 sunyiq g_sunyiq 41124 Sep  3 04:52 L3_borrow_matrix_nse_holdout.csv
+-rw-r--r--. 1 sunyiq g_sunyiq 16944 Sep  3 04:52 L3_learn_per_basin.csv
+-rw-r--r--. 1 sunyiq g_sunyiq  1728 Sep  3 04:52 L3_m1c0_per_basin.csv
+-rw-r--r--. 1 sunyiq g_sunyiq   378 Sep  2 19:41 p0_report.json
+-rw-r--r--. 1 sunyiq g_sunyiq  2109 Sep  3 04:10 summary.json
+=== SHA256 ===
+f7b278fa0bcbcabba35ebb64a370ac05fbb84380a6a7f9fa94d5e80f2f85ee90  /data1/home/sunyiq/id29_transferable_noise_20260902/results/23_camels_switch_confirmation/noise_axis_training_length_20260902_hpc/p0_report.json
+=== B64 /data1/home/sunyiq/id29_transferable_noise_20260902/results/23_camels_switch_confirmation/noise_axis_training_length_20260902_hpc/p0_report.json ===
+ewogInJvd3MiOiBbCiAgewogICAiYmFzaW5faWQiOiAiMDExNDQwMDAiLAogICAibmV3IjogMC43NjI5OTA5MjI3MjU3ODA2LAogICAicmVnaXN0ZXJlZCI6IDAuNzYyOTkwOTIyNzI1NzgxNSwKICAgImFic19kaWZmIjogOC44ODE3ODQxOTcwMDEyNTJlLTE2CiAgfSwKICB7CiAgICJiYXNpbl9pZCI6ICIwMTQzNTAwMCIsCiAgICJuZXciOiAwLjY0NDY4NDQ4OTQyNzI4ODYsCiAgICJyZWdpc3RlcmVkIjogMC42NDQ2ODQ0ODk0MjcyODk4LAogICAiYWJzX2RpZmYiOiAxLjIyMTI0NTMyNzA4NzY3MjJlLTE1CiAgfQogXSwKICJ3b3JzdF9hYnNfZGlmZiI6IDEuMjIxMjQ1MzI3MDg3NjcyMmUtMTUsCiAidG9sZXJhbmNlIjogMWUtMDgsCiAicGFzc2VkIjogdHJ1ZQp9
+=== END B64 ===
+=== CROSS-CHECK: denorm p0 (already retrieved locally) ===
+f10a8d787947bd16313c7dc9f377d2a8781be1d918a6ade2714f42767a404d65  /data1/home/sunyiq/id29_transferable_noise_20260902/results/23_camels_switch_confirmation/noise_axis_denormalized_transfer_control_20260902_hpc/p0_report.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T17:50:44+0800
