@@ -1,0 +1,29 @@
+### channel=kalmannet-tukf09-455 seq=90
+### host=login4
+### started=2026-09-03T18:11:04+0800
+### ---------- output ----------
+SCOPE_GUARD_OK DIAG_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/node_health_ngu203
+=== CURRENT NODE STATE ===
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)
+     hgpu8     up      2      mix             ngu[201-202]          34/94/0/128
+     hgpu8     up      1     idle                   ngu203            0/64/0/64
+--- our preparation job is untouched ---
+218635 PENDING (Resources)
+=== SINGLE SUBMISSION LOCK ===
+LOCK_ACQUIRED
+=== WRITE CUDA HEALTH SCRIPT ===
+9383387aaf000fe0d3e67aba7fdf30df89b4e8b71d77b1fd3d4cea3e61efce22  /data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/node_health_ngu203/job/cuda_health.py
+=== WRITE JOB SCRIPT ===
+2865 /data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/node_health_ngu203/job/ngu203_health.slurm
+6e98364f37e1f3c0727e42cd68814bd571661f2c3cda9f0e68e3c15d28161525  /data1/home/sunyiq/kalmannet_tukf09_455_pmon_probe_diagnostics_20260902/node_health_ngu203/job/ngu203_health.slurm
+=== SUBMIT EXACTLY ONE JOB ===
+Submitted batch job 219417
+NGU203_HEALTH_JOB_ID=219417
+=== IMMEDIATE STATE ===
+     JOBID                         NAME PARTITIO      STATE         NODELIST(REASON)     TIME
+    219417     tukf09-455-ngu203-health    hgpu8    PENDING               (Priority)     0:00
+N/A
+TUKF09_455_NGU203_HEALTH_SUBMITTED_ONCE_NO_TRAINING_NO_FORMAL_EVALUATION
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-03T18:11:04+0800
