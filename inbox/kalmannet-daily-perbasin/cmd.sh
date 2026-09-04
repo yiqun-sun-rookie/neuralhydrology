@@ -10,7 +10,7 @@ EXPECTED_057_SHA256="e4d53ec2e51c74378a4ec87b5bd3d46f271966170cf1ff351c4f9c19fd4
 echo '=== READ-ONLY TASK 0: CORRECTION-CAP REPLAY FALSIFICATION (08070200) ==='
 date --iso-8601=seconds
 hostname
-echo 'channel=kalmannet-daily-perbasin sequence=31 purpose=read-only-cap-replay-no-optimizer'
+echo 'channel=kalmannet-daily-perbasin sequence=32 purpose=read-only-cap-replay-no-optimizer'
 echo 'signals_sent=0 submissions_created=0 files_modified=0 optimizer_steps=0 formal_evaluation_access=0 device=cpu'
 
 if [[ ! -d "${DEPLOY}" ]]; then echo "DEPLOYMENT SOURCE MISSING: ${DEPLOY}" >&2; exit 201; fi
@@ -80,35 +80,43 @@ def build():
 
 printed = {}
 
-def find_model_state(obj, depth=0):
-    if depth > 4:
-        return None
-    if isinstance(obj, dict):
-        if "model_state" in obj:
-            return obj["model_state"]
-        if any(isinstance(k, str) and k.startswith("FC2.") for k in obj):
-            return obj
-        for v in obj.values():
-            r = find_model_state(v, depth + 1)
-            if r is not None:
-                return r
-    if hasattr(obj, "model_state"):
-        return getattr(obj, "model_state")
-    return None
+import io, json, struct, pickle, hashlib
+MAGIC = b"DAILY_CAMELS_KNET_PER_BASIN_CHECKPOINT_V1" + bytes([10])
+
+_orig_torch_load = torch.load
+def _cpu_torch_load(*a, **k):
+    k["map_location"] = "cpu"
+    k.setdefault("weights_only", False)
+    return _orig_torch_load(*a, **k)
+torch.load = _cpu_torch_load
+import torch.storage as _ts
+if hasattr(_ts, "_load_from_bytes"):
+    _ts._load_from_bytes = lambda b: _orig_torch_load(
+        io.BytesIO(b), map_location="cpu", weights_only=False)
 
 def load_params(path):
-    raw = torch.load(str(path), map_location="cpu", weights_only=False)
+    content = Path(path).read_bytes()
+    if not content.startswith(MAGIC):
+        raise RuntimeError("checkpoint magic mismatch: %s" % path)
+    off = len(MAGIC)
+    size = struct.unpack(">Q", content[off:off + 8])[0]
+    off += 8
+    header = json.loads(content[off:off + size].decode("utf-8"))
+    payload = content[off + size:]
     if str(path) not in printed:
         printed[str(path)] = True
-        if isinstance(raw, dict):
-            keys = sorted(k for k in raw if isinstance(k, str))
-            print("  %s top_level_keys=%s" % (Path(path).name, keys[:14]), flush=True)
-        else:
-            print("  %s top_level_type=%s" % (Path(path).name, type(raw).__name__), flush=True)
-    st = find_model_state(raw)
-    if st is None:
-        raise RuntimeError("model_state not found in %s" % path)
-    return st
+        ok = hashlib.sha256(payload).hexdigest() == header.get("payload_sha256")
+        print("  %s completed_epoch=%s optimizer_steps=%s events=%s payload_hash_ok=%s"
+              % (Path(path).name, header.get("completed_epoch"),
+                 header.get("optimizer_steps"),
+                 header.get("training_forecast_error_events"), ok), flush=True)
+    state = pickle.loads(payload)
+    ms = getattr(state, "model_state", None)
+    if ms is None and isinstance(state, dict):
+        ms = state.get("model_state")
+    if ms is None:
+        raise RuntimeError("model_state missing in %s" % path)
+    return {k: (v.detach().cpu() if hasattr(v, "detach") else v) for k, v in ms.items()}
 
 def run_case(ckpt_path, cap_value, label):
     net = build()
