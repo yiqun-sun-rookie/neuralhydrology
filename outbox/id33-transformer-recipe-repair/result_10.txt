@@ -1,0 +1,52 @@
+### channel=id33-transformer-recipe-repair seq=10
+### host=login4
+### started=2026-09-04T20:39:05+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-04T20:39:05+0800
+=== A. EXACTLY WHICH FILES DIFFER FOR L33 (before vs after) ===
+  no source_integrity_after recorded (the run raised before writing it)
+  own config before: {'src/transformer_recipe_repair/configs/l33.yml': '17c4d68e30d877a0571a666894600069e22f0fe4b81f544c874d2e26cdb106fe'}
+  own config after : not recorded
+=== B. IS EACH ARM'S OWN CONFIG STILL AT ITS REGISTERED HASH ===
+17c4d68e30d877a0571a666894600069e22f0fe4b81f544c874d2e26cdb106fe  src/transformer_recipe_repair/configs/l33.yml
+93e1f3f4091302fda8c7f87e6886e0d3c1e5e5273071b6d86dff310be0685f0f  src/transformer_recipe_repair/configs/t1.yml
+29aeeec57d3a8f066e7ea226d7095e9b1b554113ee9221da8c774e3c259a2264  src/transformer_recipe_repair/configs/t2.yml
+c7abda8dd89905bf8b83f67fc928476319854b6942a91854d4eaf3dd9f869e5f  src/transformer_recipe_repair/configs/t3.yml
+befc540665d71336e4cc1e14e41eb2b5f01fcc522aaf35907cdf8b44e1d7b27c  src/transformer_recipe_repair/configs/t4.yml
+11bb38d1f8522e946d432ff6ca5688f9f7c5c9e0e005bc143bee07094a820db0  src/transformer_recipe_repair/configs/t5.yml
+=== C. WILL T1..T5 HIT THE SAME THING? (start time vs my 16:08 deploy) ===
+220490|id33_T1|FAILED|2026-09-04T14:52:31|04:50:57
+220491|id33_T2|FAILED|2026-09-04T15:07:03|04:52:07
+220492|id33_T3|FAILED|2026-09-04T15:08:36|04:55:19
+220493|id33_T4|FAILED|2026-09-04T15:08:36|04:48:43
+220494|id33_T5|RUNNING|2026-09-04T15:22:44|05:17:01
+220495|id33_L33|FAILED|2026-09-04T15:46:39|01:28:36
+=== D. HELD BUT IDLE? log staleness for every running job ===
+  T1 epochs=30 log_idle=3378s OK
+  T2 epochs=30 log_idle=2435s OK
+  T3 epochs=30 log_idle=2151s OK
+  T4 epochs=30 log_idle=2547s OK
+  T5 epochs=25 log_idle=598s OK
+  C1 epochs=15 log_idle=449s OK
+  C2 epochs=15 log_idle=449s OK
+=== E. THROUGHPUT: minutes per epoch, 3090 arms vs A800 calibration ===
+  -- T1 --
+2026-09-04 19:23:26,699: 28
+2026-09-04 19:32:53,710: 29
+2026-09-04 19:42:20,868: 30
+  -- T4 --
+2026-09-04 19:37:25,957: 28
+2026-09-04 19:46:47,901: 29
+2026-09-04 19:56:13,355: 30
+  -- C1 --
+2026-09-04 19:56:59,266: 13
+2026-09-04 20:14:06,938: 14
+2026-09-04 20:31:11,099: 15
+  (ID30 D01 on a 3090 at batch 64 was 12.8 min/epoch)
+=== F. C1 AND C2 SHARE ngu201 - are they contending? ===
+NodeName=ngu201 CPUAlloc=26 CPUTot=64 State=MIXED AllocTRES=cpu=26 
+ID33_SCOPE_SEQ10_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T20:39:07+0800
