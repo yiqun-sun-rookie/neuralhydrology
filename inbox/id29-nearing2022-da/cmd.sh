@@ -1,12 +1,9 @@
 set -o pipefail
-ROOT=/data1/home/sunyiq/nearing2022_da
-echo "=== slurm script header ==="
-sed -n '1,40p' $ROOT/src/29_nearing2022_da_ar/hpc/warmup_target_pair.slurm 2>/dev/null || ls -1 $ROOT/src/29_nearing2022_da_ar/hpc/ 2>/dev/null
-echo "=== find recent log files ==="
-find $ROOT -maxdepth 4 -name '*219423*' -o -maxdepth 4 -name '*220487*' 2>/dev/null | head -20 || true
-echo "=== logs dir tops ==="
-ls -1t /data1/home/sunyiq/nearing2022_da/logs 2>/dev/null | head -20 || echo nologs
-ls -1t ~/logs 2>/dev/null | head -20 || true
-echo "=== newest files under ROOT modified since 09-03 ==="
-find $ROOT -maxdepth 5 -newermt '2026-09-03' -name '*.err' 2>/dev/null | head -20 || true
+L=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs
+for F in N22-warmpair_219423_0.err N22-warmpair_219423_0.out N22-warmpair_219423_1.err; do
+  echo "=== $F ==="; tail -45 "$L/$F" 2>/dev/null || echo missing
+done
+echo "=== replv2 220487 logs ==="
+ls -1t $L 2>/dev/null | grep -i repl | head -5 || echo none
+for F in $(ls -1t $L 2>/dev/null | grep -i repl | head -2); do echo "--- $F"; tail -30 "$L/$F" 2>/dev/null || true; done
 exit 0
