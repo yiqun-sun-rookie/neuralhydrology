@@ -4,11 +4,11 @@ ROOT=/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
 EXP="$ROOT/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902"
 echo "=== TIME ==="; date -Is
 echo "=== JOBS ==="
-squeue -j 218659,219190 -h -o '%i|%T|%M|%R' 2>&1 | sort || echo "all finished"
-echo "=== ACCOUNTING (terminal states only) ==="
-sacct -j 218659,219190 -X -n -P --format=JobID,State,ExitCode,Elapsed,End 2>/dev/null | grep -vE '\|(RUNNING|PENDING)\|' | sort || true
+squeue -j 218659,219190 -h -o '%i|%T|%M|%R' 2>&1 | sort || true
 echo "=== FAULTS ==="
 sacct -j 218659,219190 -X -n -P --format=JobID,State,ExitCode,NodeList 2>/dev/null | grep -E '\|(TIMEOUT|FAILED|NODE_FAIL|OUT_OF_MEMORY|CANCELLED)' || echo none
+echo "=== CELL COUNT ==="
+ls -d "$EXP"/runs/formal_seed*_gpu/idx*/cell_metrics.json 2>/dev/null | wc -l
 echo "=== ALL CELL METRICS ==="
 for f in "$EXP"/runs/formal_seed*_gpu/idx*/cell_metrics.json; do
   [ -f "$f" ] || continue
@@ -16,11 +16,11 @@ for f in "$EXP"/runs/formal_seed*_gpu/idx*/cell_metrics.json; do
 import json,sys
 c=json.load(open(sys.argv[1])); v=c.get("validation_scoring",{}); e=c.get("epoch_log_summary",{}) or {}; b=c["combo"]
 print(f'{b["index"]:>2} {b["role"]:<24} lr={b["lr"]:<6g} hs={b["hidden_size"]:<3} nl={b["num_layers"]} mult={b["in_out_mult"]:<3} seed={b["seed"]} '
-      f'M={v.get("pooled_mean_leads_1_12_corrected_def")} best_ep={v.get("best_epoch_zero_based")} lr@best={e.get("lr_at_best_epoch")} '
-      f'roll={e.get("grad_explosion_rollbacks_total")} stop_ep={e.get("stop_epoch_zero_based")}')
+      f'M={v.get("pooled_mean_leads_1_12_corrected_def")} M_old={v.get("pooled_mean_slots_0_11_current_def")} best_ep={v.get("best_epoch_zero_based")} '
+      f'lr@best={e.get("lr_at_best_epoch")} roll={e.get("grad_explosion_rollbacks_total")} stop_ep={e.get("stop_epoch_zero_based")}')
 PY
 done
-echo "=== STILL-RUNNING PROGRESS ==="
+echo "=== NOT-YET-SCORED CELLS ==="
 for f in "$EXP"/runs/formal_seed*_gpu/idx*/results/epoch_log.jsonl; do
   d=$(dirname "$(dirname "$f")"); [ -f "$d/cell_metrics.json" ] && continue
   cell=$(echo "$f" | sed 's#.*/idx#idx#; s#/results/.*##')
