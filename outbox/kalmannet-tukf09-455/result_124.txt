@@ -1,0 +1,101 @@
+### channel=kalmannet-tukf09-455 seq=124
+### host=login4
+### started=2026-09-04T15:29:12+0800
+### ---------- output ----------
+TIME=2026-09-04T15:29:12+0800  TRAINING_JOB_ID=220503
+     JobID        State ExitCode  NodeList    Elapsed                Start                  End 
+---------- ------------ -------- --------- ---------- -------------------- -------------------- 
+    220503       FAILED      1:0    ngu203   00:02:25  2026-09-04T15:18:26  2026-09-04T15:20:51 
+=== SEQUENCE STAGE LOGS ===
+total 13
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  4 15:20 .
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Sep  4 15:20 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 4472 Sep  4 15:20 neural_controller.stderr.log
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  4 15:20 neural_controller.stdout.log
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  4 15:20 verify_filter_rebinding_controller.stderr.log
+-rw-r--r--. 1 sunyiq g_sunyiq  399 Sep  4 15:20 verify_filter_rebinding_controller.stdout.log
+----- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/neural_controller.stderr.log  4472 bytes  6ba0d3eee836cbfe02775f8682e3ec66b61f884d64fc8a19d22ebb2abcf2fe2e
+_ids(controller_pid)
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py", line 392, in own_job_process_ids
+    parent = cursor.parent()
+             ^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/runtime_v2r9/pysite/psutil/__init__.py", line 556, in parent
+    parent = Process(ppid)
+             ^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/runtime_v2r9/pysite/psutil/__init__.py", line 332, in __init__
+    self._init(pid)
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/runtime_v2r9/pysite/psutil/__init__.py", line 361, in _init
+    self.create_time()
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/runtime_v2r9/pysite/psutil/__init__.py", line 717, in create_time
+    self._create_time = self._proc.create_time()
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/runtime_v2r9/pysite/psutil/_pslinux.py", line 1661, in wrapper
+    return fun(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/runtime_v2r9/pysite/psutil/_pslinux.py", line 1873, in create_time
+    ctime = float(self._parse_stat_file()['create_time'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/runtime_v2r9/pysite/psutil/_pslinux.py", line 1661, in wrapper
+    return fun(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/runtime_v2r9/pysite/psutil/_common.py", line 444, in wrapper
+    return fun(self)
+           ^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/runtime_v2r9/pysite/psutil/_pslinux.py", line 1703, in _parse_stat_file
+    with open_binary("%s/%s/stat" % (self._procfs_path, self.pid)) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/runtime_v2r9/pysite/psutil/_common.py", line 711, in open_binary
+    return open(fname, "rb", **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/proc/1/stat'
+----- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/neural_controller.stdout.log  0 bytes  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+----- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/verify_filter_rebinding_controller.stderr.log  0 bytes  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+----- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/verify_filter_rebinding_controller.stdout.log  399 bytes  e20fcf2cb5f01100a9e509044bc54e8bcb3ae025178e7446505a8a5c8368f184
+{"canonical_unit_count": 455, "completed_unit_count": 455, "evaluation_access_count": 0, "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1", "schema_version": "tukf09_455_filter_rebinding_controller_result_v1", "status": "FILTER_REBINDING_VERIFIED_EVALUATION_HOLD", "training_admission_record_sha256": "3b0f824da60b59ddfef316e38573f176a4e28d07d62d46995b24e1832a5eef88"}
+=== SEQUENCE EVENTS ===
+_at_utc":"2026-09-04T07:20:05.759849+00:00","execution_id":"ac07d51c20644776889ac419210af54a","exit_code":0,"experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":3,"stage":"verify_filter_rebinding","stage_controller_source_sha256":{"neural":"aafb099fbdd4f84e6ab4ee6f066ad19e80e35ed73c47e7783edb12183d8b0bed","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"stage_ended_at_utc":"2026-09-04T07:20:05.759326+00:00","stage_process_id":22620,"stage_started_at_utc":"2026-09-04T07:20:01.857673+00:00","training_admission_record_sha256":"3b0f824da60b59ddfef316e38573f176a4e28d07d62d46995b24e1832a5eef88"}
+{"event":"stage_started","event_at_utc":"2026-09-04T07:20:05.810623+00:00","execution_id":"ac07d51c20644776889ac419210af54a","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":4,"stage":"neural","stage_controller_source_sha256":{"neural":"aafb099fbdd4f84e6ab4ee6f066ad19e80e35ed73c47e7783edb12183d8b0bed","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"stage_process_id":22957,"stage_started_at_utc":"2026-09-04T07:20:05.809288+00:00","training_admission_record_sha256":"3b0f824da60b59ddfef316e38573f176a4e28d07d62d46995b24e1832a5eef88"}
+{"error":"controller returned a nonzero exit code","event":"stage_failed","event_at_utc":"2026-09-04T07:20:13.077460+00:00","execution_id":"ac07d51c20644776889ac419210af54a","exit_code":1,"experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":5,"stage":"neural","stage_controller_source_sha256":{"neural":"aafb099fbdd4f84e6ab4ee6f066ad19e80e35ed73c47e7783edb12183d8b0bed","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"stage_ended_at_utc":"2026-09-04T07:20:13.077272+00:00","stage_process_id":22957,"stage_started_at_utc":"2026-09-04T07:20:05.809288+00:00","training_admission_record_sha256":"3b0f824da60b59ddfef316e38573f176a4e28d07d62d46995b24e1832a5eef88"}
+{"completed_stages":["verify_filter_rebinding"],"controller_process_id":21826,"error":"RuntimeError: formal training neural controller failed with exit code 1","evaluation_access_count":0,"event":"sequence_failed","event_at_utc":"2026-09-04T07:20:13.079472+00:00","execution_id":"ac07d51c20644776889ac419210af54a","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":6,"stage_controller_source_sha256":{"neural":"aafb099fbdd4f84e6ab4ee6f066ad19e80e35ed73c47e7783edb12183d8b0bed","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"training_admission_record_sha256":"3b0f824da60b59ddfef316e38573f176a4e28d07d62d46995b24e1832a5eef88"}
+=== NEURAL CONTROL EVENTS ===
+ls: cannot access /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/neural: No such file or directory
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/neural/events.jsonl’ for reading: No such file or directory
+=== NEURAL TREE ===
+ls: cannot access /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural: No such file or directory
+NEURAL_UNITS=0
+NEURAL_CHECKPOINTS=0
+=== OUTER TRAINING LOGS ===
+OUT 568 bytes
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "mutable_directory_count": 501,
+  "mutable_file_count": 3649,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R9_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+ERR 1278 bytes
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 791, in <module>
+    main()
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 771, in main
+    result = run_sequence(execute_formal_training=arguments.execute_formal_training)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 710, in run_sequence
+    _run_stage(
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 575, in _run_stage
+    raise RuntimeError(f"formal training {stage} controller failed with exit code {exit_code}")
+RuntimeError: formal training neural controller failed with exit code 1
+=== FORMAL EVALUATION STILL CLOSED ===
+SELECTION=ABSENT EVALUATION=ABSENT
+TUKF09_455_V2R9_TRAINING_FORENSICS_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T15:29:13+0800
