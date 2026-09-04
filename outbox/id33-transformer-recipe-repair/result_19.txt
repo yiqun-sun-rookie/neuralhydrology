@@ -1,0 +1,46 @@
+### channel=id33-transformer-recipe-repair seq=19
+### host=login4
+### started=2026-09-05T03:07:35+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-05T03:07:35+0800
+=== A. SACCT CALIBRATION ===
+       JobID        JobName      State ExitCode    Elapsed        NodeList 
+------------ -------------- ---------- -------- ---------- --------------- 
+220658              id33_C1  COMPLETED      0:0   08:40:24          ngu201 
+220659              id33_C2  COMPLETED      0:0   08:40:01          ngu201 
+=== B. C1/C2 LOG LOCATION ===
+results/33_transformer_recipe_repair/T1/transformer_recipe_repair_T1_2026_0904_1457_ep30/output.log
+results/33_transformer_recipe_repair/T4/transformer_recipe_repair_T4_2026_0904_1513_ep30/output.log
+results/33_transformer_recipe_repair/C2/transformer_recipe_repair_C2_2026_0904_1612_ep30/output.log
+results/33_transformer_recipe_repair/C1/transformer_recipe_repair_C1_2026_0904_1612_ep30/output.log
+results/33_transformer_recipe_repair/T2/transformer_recipe_repair_T2_2026_0904_1511_ep30/output.log
+results/33_transformer_recipe_repair/T3/transformer_recipe_repair_T3_2026_0904_1513_ep30/output.log
+results/33_transformer_recipe_repair/T5/transformer_recipe_repair_T5_2026_0904_1523_ep30/output.log
+results/33_transformer_recipe_repair/L33/transformer_recipe_repair_L33_2026_0904_1549_ep30/output.log
+results/33_transformer_recipe_repair/_invocations/id33_C1_slurm220658
+results/33_transformer_recipe_repair/_invocations/id33_C2_slurm220659
+=== C. SLURM LOGS ===
+--- job 220658
+./logs/33_transformer_recipe_repair/calib-220658.out
+./logs/33_transformer_recipe_repair/calib-220658.err
+logs/33_transformer_recipe_repair/calib-220658.out
+logs/33_transformer_recipe_repair/calib-220658.err
+--- job 220659
+./logs/33_transformer_recipe_repair/calib-220659.err
+./logs/33_transformer_recipe_repair/calib-220659.out
+logs/33_transformer_recipe_repair/calib-220659.err
+logs/33_transformer_recipe_repair/calib-220659.out
+=== D. C1/C2 EPOCH DIRS ===
+--- C1
+results/33_transformer_recipe_repair/C1/transformer_recipe_repair_C1_2026_0904_1612_ep30/validation/model_epoch028
+results/33_transformer_recipe_repair/C1/transformer_recipe_repair_C1_2026_0904_1612_ep30/validation/model_epoch029
+results/33_transformer_recipe_repair/C1/transformer_recipe_repair_C1_2026_0904_1612_ep30/validation/model_epoch030
+--- C2
+results/33_transformer_recipe_repair/C2/transformer_recipe_repair_C2_2026_0904_1612_ep30/validation/model_epoch028
+results/33_transformer_recipe_repair/C2/transformer_recipe_repair_C2_2026_0904_1612_ep30/validation/model_epoch029
+results/33_transformer_recipe_repair/C2/transformer_recipe_repair_C2_2026_0904_1612_ep30/validation/model_epoch030
+ID33_WATCH_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T03:07:36+0800
