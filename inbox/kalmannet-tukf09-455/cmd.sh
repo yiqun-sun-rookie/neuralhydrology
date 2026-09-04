@@ -59,9 +59,23 @@ raw_files = raw["files"]
 records = {r["relative_path"]: r for r in manifest["files"]}
 check("record_count", len(records) == len(manifest["files"]) == 911)
 
-# Every capsule file must appear in the frozen raw manifest with the same size and hash.
-missing_in_raw = [name for name in records if name not in raw_files]
-check("every_capsule_file_is_in_the_frozen_raw_manifest", not missing_in_raw)
+# 910 of the 911 files are forcing and discharge files covered by the frozen raw source
+# manifest. The 911th is the catchment topography file, which the execution config pins
+# separately, so it is checked against that instead.
+staging = json.loads(
+    (PROJECT / "configs/tukf09_455_basin_zero_validation_target_variance_hpc_execution_a800_exclusive_v2r7.json")
+    .read_text("utf-8")
+)["data_staging"]
+topography = staging["topography_relative_path"]
+
+missing_in_raw = sorted(name for name in records if name not in raw_files)
+check("exactly_the_topography_file_is_outside_the_raw_manifest", missing_in_raw == [topography])
+check("raw_covered_file_count", len(records) - len(missing_in_raw) == int(staging["staged_raw_file_count"]) == 910)
+check("total_staged_file_count", len(records) == int(staging["total_staged_file_count"]) == 911)
+if topography in records:
+    check("topography_sha256", records[topography]["sha256"] == staging["topography_sha256"])
+    check("topography_size", int(records[topography]["size_bytes"]) == int(staging["topography_size_bytes"]))
+
 mismatched = [
     name for name in records
     if name in raw_files
