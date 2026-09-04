@@ -1,38 +1,46 @@
 #!/bin/bash
-# TUKF09-455 v2r10 status. Read-only, submits nothing, changes nothing.
+# TUKF09-455 v2r10: create the cluster technical admission only. No training job here.
 set -o pipefail
+
 ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904
-JID=$(cat "$ROOT/status/preparation_job_id.txt" 2>/dev/null)
-TID=$(cat "$ROOT/status/training_job_id.txt" 2>/dev/null)
+PROJECT="$ROOT/bundle/kalmannet"
+TOOL="$PROJECT/hpc/tukf09_455_basin_revision_a800_exclusive_v2r10/stage_and_train.py"
+PYSITE="$ROOT/runtime_v2r10/pysite"
+PROBE="$ROOT/status/preparation_probe.json"
+PRIVATE="$ROOT/runtime_v2r10/evidence/private_runtime_manifest.json"
+OUT="$ROOT/status/hpc_technical_admission.json"
+
 echo "TIME=$(date -Is)"
-echo "PREPARATION_JOB_ID=$JID  TRAINING_JOB_ID=$TID"
-sacct -j "$JID" -X --format=JobID%10,State%12,ExitCode%8,NodeList%9,Elapsed%10,Start%20,End%20 2>&1
-[ -n "$TID" ] && sacct -j "$TID" -X --format=JobID%10,State%12,ExitCode%8,NodeList%9,Elapsed%10,Start%20,End%20 2>&1
-squeue -u "$USER" -h -o "%.10i %.26j %.9T %.16R %.10M" 2>&1 | grep tukf09 || echo NO_TUKF09_JOB_IN_QUEUE
-sinfo -p hgpu8 -o "%.10P %.6a %.6D %.8t %.24N %.20C" 2>&1
-echo "=== MARKERS ==="
-for f in PREPARATION_FAILED.json initial_bundle_verification.json staged_training_sources.json preparation_probe.json hpc_technical_admission.json training_job_id.txt training_verification.json; do
-  if [ -f "$ROOT/status/$f" ]; then echo "PRESENT $f  $(sha256sum "$ROOT/status/$f" | cut -d" " -f1)"; else echo "ABSENT  $f"; fi
-done
-ls "$ROOT/status" 2>&1
-if [ -d "$ROOT/runtime_v2r10" ]; then echo "PRIVATE_RUNTIME_PRESENT $(du -sh "$ROOT/runtime_v2r10" | cut -f1)"; else echo PRIVATE_RUNTIME_ABSENT; fi
-RR="$ROOT/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
-if [ -d "$RR" ]; then
-  echo "FILTER_UNITS=$(ls "$RR/filter" 2>/dev/null | wc -l)"
-  echo "NEURAL_UNITS=$(ls "$RR/neural" 2>/dev/null | wc -l)"
-  echo "NEURAL_CHECKPOINTS=$(find "$RR/neural" -type f -name "*.pt" 2>/dev/null | wc -l)"
-  ls "$RR/neural" 2>/dev/null | head -12
-  echo "SELECTION=$(test -e "$RR/selection" && echo PRESENT || echo ABSENT)"
-  echo "EVALUATION=$(test -e "$RR/evaluation" && echo PRESENT || echo ABSENT)"
-else
-  echo RESULT_ROOT_ABSENT
-fi
-echo "=== LOG TAILS ==="
-tail -c 2200 "$ROOT/logs/prepare-$JID.out" 2>&1
-tail -c 900 "$ROOT/logs/prepare-$JID.err" 2>&1
-[ -n "$TID" ] && { tail -c 2200 "$ROOT/logs/training-$TID.out" 2>&1; tail -c 900 "$ROOT/logs/training-$TID.err" 2>&1; }
-echo "=== FROZEN EVIDENCE UNCHANGED ==="
-sha256sum /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.out 2>&1
-echo "CAPSULE_V2_MODE=$(stat -c %a /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901)"
-echo "CAPSULE_V3_MODE=$(stat -c %a /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v3_20260904)"
-echo TUKF09_455_V2R10_STATUS_READ_ONLY
+echo "=== PRECONDITIONS ==="
+test -f "$PROBE" || { echo PREPARATION_PROBE_MISSING; exit 1; }
+test -f "$PRIVATE" || { echo PRIVATE_RUNTIME_MANIFEST_MISSING; exit 1; }
+test ! -e "$ROOT/status/PREPARATION_FAILED.json" || { echo ROOT_FROZEN; exit 1; }
+if [ -e "$OUT" ]; then echo ADMISSION_ALREADY_PRESENT; sha256sum "$OUT"; exit 0; fi
+echo "PREPARATION_PROBE_SHA256=$(sha256sum "$PROBE" | cut -d" " -f1)"
+echo "PRIVATE_RUNTIME_MANIFEST_SHA256=$(sha256sum "$PRIVATE" | cut -d" " -f1)"
+
+echo "=== CREATE TECHNICAL ADMISSION ONLY ==="
+export PYTHONNOUSERSITE=1
+export PYTHONDONTWRITEBYTECODE=1
+export PYTHONPATH="$PYSITE:$PROJECT"
+"$PYSITE/../bin/python" -V 2>/dev/null || true
+PY=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+"$PY" -B "$TOOL" admit \
+  --project-root "$PROJECT" \
+  --probe "$PROBE" \
+  --private-manifest "$PRIVATE" \
+  --output "$OUT" \
+  --authorize-hpc-technical-execution 2>&1
+RC=$?
+echo "ADMIT_RETURN_CODE=$RC"
+if [ "$RC" -ne 0 ]; then echo ADMISSION_NOT_CREATED; exit "$RC"; fi
+
+echo "=== ADMISSION EVIDENCE ==="
+ls -l "$OUT" 2>&1
+sha256sum "$OUT" 2>&1
+
+echo "=== STILL NO TRAINING ==="
+test ! -e "$ROOT/status/training_job_id.txt" && echo NO_TRAINING_JOB_YET || echo TRAINING_JOB_ALREADY_RECORDED
+RR="$PROJECT/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+echo "FILTER_UNITS=$(ls "$RR/filter" 2>/dev/null | wc -l) NEURAL_UNITS=$(ls "$RR/neural" 2>/dev/null | wc -l)"
+echo TUKF09_455_V2R10_TECHNICAL_ADMISSION_CREATED_TRAINING_NOT_SUBMITTED
