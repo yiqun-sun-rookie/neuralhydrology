@@ -1,0 +1,46 @@
+### channel=kalmannet-tukf09-455 seq=120
+### host=login4
+### started=2026-09-04T15:14:12+0800
+### ---------- output ----------
+TIME=2026-09-04T15:14:12+0800
+PREPARATION_JOB_ID=220498  TRAINING_JOB_ID=
+     JobID        State ExitCode  NodeList    Elapsed                Start                  End 
+---------- ------------ -------- --------- ---------- -------------------- -------------------- 
+    220498    COMPLETED      0:0    ngu203   00:08:21  2026-09-04T15:03:56  2026-09-04T15:12:17 
+NO_TUKF09_JOB_IN_QUEUE
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)
+     hgpu8     up      2      mix             ngu[201-202]         26/102/0/128
+     hgpu8     up      1     idle                   ngu203            0/64/0/64
+=== MARKERS ===
+ABSENT  PREPARATION_FAILED.json
+PRESENT initial_bundle_verification.json  08f1cb29ea0304f80d0b4251923fb5944b5cccb622884785339c9daee7315568
+PRESENT staged_training_sources.json  8b95bff6bea58fa23d41f68a2dda6da67ec8916668fe0a9634ac0f0fcc515db6
+PRESENT preparation_probe.json  16c820a65da4375b516589ba065907415556d92e54db4e5cd80a480ab360f400
+ABSENT  hpc_technical_admission.json
+ABSENT  training_job_id.txt
+ABSENT  training_verification.json
+initial_bundle_verification.json
+offline_inputs_download.launched
+offline_inputs_download.lock
+preparation_job_id.txt
+preparation.lock
+preparation_probe.json
+preparation_submission.lock
+staged_training_sources.json
+PRIVATE_RUNTIME_PRESENT 7.4G
+FILTER_UNITS=455
+NEURAL_UNITS=0
+NEURAL_CHECKPOINTS=0
+SELECTION=ABSENT
+EVALUATION=ABSENT
+=== LOG TAILS ===
+64, "slurm_job_cpus_per_node_raw": "64", "slurm_job_gpus": "0", "slurm_job_id": "220498", "slurm_job_node_count": 1, "slurm_step_gpus": "", "tensorfloat32": {"cuda_matmul": false, "cudnn": false}, "torch_base_version": "2.2.2", "torch_cuda_runtime_version": "12.1", "torch_process_gpu_uuid": "GPU-d912a8cb-5369-be00-9331-436a8a45bf1c", "torch_version": "2.2.2+cu121"}, "schema_version": "tukf09_455_hpc_preparation_probe_a800_exclusive_v2r9", "scientific_contract_changed": false, "source_capsule_data_file_count": 911, "source_capsule_data_identity_sha256": "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da", "source_capsule_data_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v4_20260904/data/camels_us", "source_capsule_data_total_bytes": 464792200, "source_capsule_deployment_mailbox_sequence": 116, "source_capsule_deployment_result_sha256": "5db670cb4f0e55d7edfcab25da0a33bc9bd7516de2436fd9b2a231aff697d1a3", "source_capsule_directory_count": 44, "source_capsule_evidence_file_count": 3, "source_capsule_manifest_sha256": "6e669e61feee8131de8c99b15d603bb7fac582db2d23fcc4405ef0c931b49cff", "source_capsule_manifest_sha256_record_sha256": "d3291d56752f645a981ae8fb3eaf0e062288d46b12f44bcd726b06813f8a7dd1", "source_capsule_post_publication_audit_command_sha256": "d8d4bc7fa7b6c631c3444f4b00d0314e2eb479f7dd60d4b7346a6c966535e03f", "source_capsule_post_publication_audit_mailbox_sequence": 117, "source_capsule_post_publication_audit_result_sha256": "1abac05171f6c0df7971763e3a72a9f5f2a1823f1115e08ebabbead6626a8d03", "source_capsule_ready_sha256": "b61cb24bdf5d34f05b5f861bcc13166152a1a02bd2845cb67aecd51967bbeb87", "source_capsule_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v4_20260904", "staged_sources_identity_sha256": "e77b4c9fc4c560daf5b3a9325c88e4ed0c43f032fba6c82c04b2f9d6803d04fd", "staged_sources_manifest_sha256": "8b95bff6bea58fa23d41f68a2dda6da67ec8916668fe0a9634ac0f0fcc515db6", "status": "HPC_A800_EXCLUSIVE_V2R9_PREPARED_FILTERS_455_NEURAL_0_OF_9_EVALUATION_HOLD"}
+TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED
+=== FROZEN EVIDENCE UNCHANGED ===
+11b47e27e4b7e3fd403ffb3a8f2b8003c6ebf6540e52d0c1ab439be6293d2f77  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.out
+CAPSULE_V2_MODE=555
+CAPSULE_V3_MODE=555
+TUKF09_455_V2R9_STATUS_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T15:14:28+0800
