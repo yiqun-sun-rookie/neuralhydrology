@@ -1,0 +1,24 @@
+### channel=kalmannet-tukf09-455 seq=131
+### host=login4
+### started=2026-09-04T16:23:16+0800
+### ---------- output ----------
+TIME=2026-09-04T16:23:16+0800
+=== PRECONDITIONS ===
+ADMISSION_SHA256=3aa7e4db1f0316f1d9a9b624c6e4a9e21f4bde2d31228888fc80c4a169ecfb2c
+EXCLUSIVE_DIRECTIVES=1  EXCLUDE_DIRECTIVES=0
+FILTER_UNITS=455 NEURAL_UNITS=0
+=== SINGLE TRAINING SUBMISSION LOCK ===
+TRAINING_LOCK_ACQUIRED
+=== SUBMIT EXACTLY ONE TRAINING JOB ===
+Submitted batch job 220663
+TRAINING_JOB_ID=220663
+=== IMMEDIATE STATE ===
+     JOBID                       NAME PARTITIO      STATE         NODELIST(REASON)     TIME   TIME_LIMIT
+    220663    tukf09-455-v2r10-neural    hgpu8    PENDING                   (None)     0:00     18:00:00
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)
+     hgpu8     up      2      mix             ngu[201-202]          34/94/0/128
+     hgpu8     up      1     idle                   ngu203            0/64/0/64
+TUKF09_455_V2R10_NEURAL_TRAINING_SUBMITTED_ONCE_FORMAL_EVALUATION_HOLD
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T16:23:16+0800
