@@ -1,0 +1,51 @@
+### channel=kalmannet-tukf09-455 seq=127
+### host=login4
+### started=2026-09-04T15:58:02+0800
+### ---------- output ----------
+TIME=2026-09-04T15:58:03+0800
+=== SCOPE GUARD ===
+NEW_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904
+=== SUPERSEDED EVIDENCE UNTOUCHED ===
+V2R5_JOB=217939
+11b47e27e4b7e3fd403ffb3a8f2b8003c6ebf6540e52d0c1ab439be6293d2f77  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.out
+V2R9_TRAINING_JOB=220503
+CAPSULE_V4_MODE=555
+CAPSULE_V5_MODE=555
+=== PAYLOAD EXACT GATE ===
+ARCHIVE_SHA256=9693cfb4437d82dfd6f179cd93e7075f9ef1f386661e10db09f4e4e43588b162 ARCHIVE_SIZE=9916765
+PAYLOAD_EXACT_GATE_PASS
+=== EXCLUSIVE NEW ROOT RESERVATION ===
+NEW_ROOT_RESERVED
+=== EXTRACT AND STRICTLY VERIFY ===
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "destination": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle",
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "reused": false,
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R10_HPC_BUNDLE_VERIFIED"
+}
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R10_HPC_BUNDLE_VERIFIED"
+}
+=== BOUND TO THE NEW CAPSULE, EXCLUSIVITY INTACT ===
+18:SOURCE_ROOT="/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904/data/camels_us"
+1
+0
+b50af402b7631234fe32adea2e3cabd431394e396dafcdbac471fcb7e2f67c4e  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py
+=== START THE RUNTIME INPUT DOWNLOAD, DETACHED ===
+DOWNLOAD_LAUNCHED pid=46921
+29K	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/offline_inputs_v2r10.pending.a20260904
+TUKF09_455_A800_EXCLUSIVE_V2R10_DEPLOYED_DOWNLOAD_LAUNCHED_NO_JOB_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T15:58:33+0800
