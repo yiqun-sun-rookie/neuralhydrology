@@ -1,0 +1,104 @@
+### channel=id33-transformer-recipe-repair seq=4
+### host=login4
+### started=2026-09-04T15:41:21+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-04T15:41:21+0800
+=== A. ALL GPU PARTITIONS, NODE STATE ===
+ PARTITION  AVAIL    NODES    STATE                         NODELIST  TIMELIMIT
+     hgpu8     up        2      mix                     ngu[201-202]   infinite
+     hgpu8     up        1     idle                           ngu203   infinite
+     hgpu4     up        1    down*                           ngu103   infinite
+     hgpu4     up        3      mix                 ngu[101-102,104]   infinite
+     hgpu2     up        1      mix                           ngu003   infinite
+     hgpu2     up        1     idle                           ngu009   infinite
+    hgpu2p     up        1    down*                           ngu002   infinite
+    hgpu2p     up        7      mix             ngu[001,004-008,011]   infinite
+    hgpu2p     up        1    alloc                           ngu010   infinite
+-- per-node detail with GRES and cpus --
+  NODELIST  PARTITION     STATE  CPUS           GRES                       REASON
+    ngu001     hgpu2p     mixed    96          gpu:2                         none
+    ngu002     hgpu2p     down*    96          gpu:2               Not responding
+    ngu003      hgpu2     mixed    96          gpu:2                         none
+    ngu004     hgpu2p     mixed    96          gpu:2                         none
+    ngu005     hgpu2p     mixed    96          gpu:2                         none
+    ngu006     hgpu2p     mixed    96          gpu:2                         none
+    ngu007     hgpu2p     mixed    96          gpu:2                         none
+    ngu008     hgpu2p     mixed    96          gpu:2                         none
+    ngu009      hgpu2      idle    96          gpu:2                         none
+    ngu010     hgpu2p allocated    32          gpu:2                         none
+    ngu011     hgpu2p     mixed    32          gpu:2                         none
+    ngu101      hgpu4     mixed    96          gpu:4                         none
+    ngu102      hgpu4     mixed    96          gpu:4                         none
+    ngu103      hgpu4     down*    96          gpu:4               Not responding
+    ngu104      hgpu4     mixed    96          gpu:4                         none
+    ngu201      hgpu8     mixed    64          gpu:8                         none
+    ngu202      hgpu8     mixed    64          gpu:8                         none
+    ngu203      hgpu8      idle    64          gpu:8                         none
+-- drained / down reasons --
+REASON               USER      TIMESTAMP           NODELIST
+Not responding       root      2026-05-12T05:03:18 icn203
+Not responding       root      2026-05-13T15:59:40 icn215
+Not responding       root      2026-01-16T00:43:13 icn218
+Not responding       root      2026-01-10T07:47:14 icn230
+Not responding       root      2026-04-25T01:51:39 icn[233,243,245]
+Not responding       root      2026-03-10T05:52:38 icn[235,237,247]
+Not responding       root      2026-05-09T19:59:37 icn236
+Not responding       root      2026-04-24T20:16:32 icn239
+Not responding       root      2025-11-04T11:55:53 icn242
+Not responding       root      2026-01-20T14:12:40 icn256
+Not responding       root      2026-05-06T18:55:06 icn281
+=== B. MY OWN QUEUE, WITH PREDICTED START ===
+    JOBID         NAME PARTITION ST        TIME       NODELIST(REASON)           START_TIME
+   220495     id33_L33    hgpu2p PD        0:00            (Resources)  2026-09-05T11:12:47
+   202229 N22-agg-eval hgpu4,hgp PD        0:00 (DependencyNeverSatisf                  N/A
+   202294   N22-export hgpu4,hgp PD        0:00           (Dependency)                  N/A
+   202315     N22-gate hgpu4,hgp PD        0:00           (Dependency)                  N/A
+   202507 N22-mask-iso hgpu4,hgp PD        0:00 (DependencyNeverSatisf                  N/A
+   215429 id30_m01_s10     hgpu2 PD        0:00 (DependencyNeverSatisf                  N/A
+   202293 N22-manifest hgpu4,hgp PD        0:00          (JobHeldUser)                  N/A
+   220494      id33_T5    hgpu2p  R       18:37                 ngu011  2026-09-04T15:22:44
+   220492      id33_T3    hgpu2p  R       32:45                 ngu005  2026-09-04T15:08:36
+   220493      id33_T4    hgpu2p  R       32:45                 ngu005  2026-09-04T15:08:36
+   220491      id33_T2    hgpu2p  R       34:18                 ngu001  2026-09-04T15:07:03
+   220490      id33_T1    hgpu2p  R       48:50                 ngu004  2026-09-04T14:52:31
+220454_20   wrrhp-tiny    hgpu2p  R     4:05:31                 ngu011  2026-09-04T11:35:50
+220454_22   wrrhp-tiny    hgpu2p  R     4:05:31                 ngu007  2026-09-04T11:35:50
+220434_18  wrrhp-small    hgpu2p  R     4:28:34                 ngu004  2026-09-04T11:12:47
+220434_19  wrrhp-small    hgpu2p  R     4:28:34                 ngu001  2026-09-04T11:12:47
+=== C. WHAT ARE ngu003 / ngu009 DOING (hgpu2, SAME RTX 3090) ===
+NodeName=ngu003
+CPUAlloc=2
+CPUTot=96
+Gres=gpu:2
+RealMemory=1
+AllocMem=0
+State=MIXED
+--
+NodeName=ngu009
+CPUAlloc=0
+CPUTot=96
+Gres=gpu:2
+RealMemory=1
+AllocMem=0
+State=IDLE
+=== D. DOES THE ACCOUNT HAVE A CONCURRENT-JOB LIMIT? ===
+g_sunyiq|||||
+MaxArraySize            = 1001
+MaxJobCount             = 100000
+PreemptType             = preempt/none
+PriorityType            = priority/multifactor
+=== E. HOW MANY OF MY JOBS ARE RUNNING VS PENDING ===
+running=9
+pending=7
+=== F. ID33 T1 PROGRESS ===
+2026-09-04 15:26:27,412: Epoch 3 average loss: avg_loss: 0.03493, avg_total_loss: 0.03493
+2026-09-04 15:27:30,851: Epoch 3 average validation loss: 0.03623 -- Median validation metrics: avg_loss: 0.03623, NSE: 0.52054
+2026-09-04 15:35:57,976: Epoch 4 average loss: avg_loss: 0.03280, avg_total_loss: 0.03280
+2026-09-04 15:36:58,589: Epoch 4 average validation loss: 0.04433 -- Median validation metrics: avg_loss: 0.04433, NSE: 0.53393
+2026-09-04 15:27:30,851: Epoch 3 average validation loss: 0.03623 -- Median validation metrics: avg_loss: 0.03623, NSE: 0.52054
+2026-09-04 15:36:58,589: Epoch 4 average validation loss: 0.04433 -- Median validation metrics: avg_loss: 0.04433, NSE: 0.53393
+ID33_SURVEY_SEQ4_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T15:41:22+0800
