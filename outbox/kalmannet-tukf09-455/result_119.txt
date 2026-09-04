@@ -1,0 +1,33 @@
+### channel=kalmannet-tukf09-455 seq=119
+### host=login4
+### started=2026-09-04T15:03:17+0800
+### ---------- output ----------
+TIME=2026-09-04T15:03:17+0800
+=== DOWNLOAD STATE ===
+DOWNLOADER_NOT_RUNNING
+OFFLINE_INPUTS_PUBLISHED
+2.7G	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/offline_inputs_v2r9
+1bafd3b2cf634c70f4e242864984a9a768c4383167bbf2ce0fd2ddb0960287f0  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/offline_inputs_v2r9/manifest.json
+OFFLINE_FILES=30
+=== SUBMISSION PRECONDITIONS ===
+1
+0
+PRIVATE_RUNTIME_ABSENT_AS_EXPECTED
+NO_TECHNICAL_ADMISSION_YET
+NO_TRAINING_JOB_YET
+NO_PREPARATION_FAILURE_MARKER
+=== SINGLE PREPARATION SUBMISSION LOCK ===
+PREPARATION_LOCK_ACQUIRED
+=== SUBMIT EXACTLY ONE PREPARATION JOB ===
+Submitted batch job 220498
+PREPARATION_JOB_ID=220498
+=== IMMEDIATE STATE ===
+     JOBID                       NAME PARTITIO      STATE         NODELIST(REASON)     TIME
+    220498    tukf09-455-v2r9-prepare    hgpu8    PENDING                   (None)     0:00
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)
+     hgpu8     up      2      mix             ngu[201-202]         26/102/0/128
+     hgpu8     up      1     idle                   ngu203            0/64/0/64
+TUKF09_455_V2R9_PREPARATION_SUBMITTED_ONCE_NO_TRAINING_NO_FORMAL_EVALUATION
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T15:03:17+0800
