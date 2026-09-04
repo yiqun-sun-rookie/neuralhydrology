@@ -1,6 +1,6 @@
 #!/bin/bash
-# seq=460: deploy exact versioned candidates and submit one bounded verifier job
-exec bash "$(dirname "$0")/deploy_submit_replacement_verifier_seq460.sh"
+# seq=461: retry after runner-staging path correction; no server action occurred at seq 460
+exec bash "$HOME/hpc_mailbox/inbox/id29-nearing2022-da/deploy_submit_replacement_verifier_seq460.sh"
 # The previous read-only preflight remains below as preserved, unreachable channel history.
 # seq=459: read-only server preflight for the versioned replacement-chain verifier
 set -o pipefail
