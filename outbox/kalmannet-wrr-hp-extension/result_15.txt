@@ -1,0 +1,25 @@
+### channel=kalmannet-wrr-hp-extension seq=15
+### host=login4
+### started=2026-09-04T11:35:00+0800
+### ---------- output ----------
+=== PAYLOAD_CHECK ===
+payload_ok
+combos lines before: 20
+=== INSTALL ===
+combos lines after: 23
+{"index": 20, "run_id": "WRR-HPEXT-20260902-I20", "role": "tiny_net_seed42", "lr": 0.01, "hidden_size": 8, "num_layers": 1, "in_out_mult": 10, "seed": 42}
+{"index": 21, "run_id": "WRR-HPEXT-20260902-I21", "role": "tiny_net_seed43", "lr": 0.01, "hidden_size": 8, "num_layers": 1, "in_out_mult": 10, "seed": 43}
+{"index": 22, "run_id": "WRR-HPEXT-20260902-I22", "role": "tiny_net_seed44", "lr": 0.01, "hidden_size": 8, "num_layers": 1, "in_out_mult": 10, "seed": 44}
+=== VERIFY_DEPLOYED_TREE ===
+checked 62 files, mismatches=0
+=== RUNNING_JOBS_BEFORE_SUBMIT ===
+220434_19|RUNNING|22:15
+220434_18|RUNNING|22:15
+=== SUBMIT ===
+Submitted batch job 220454
+tiny_job_id=220454
+JOBID|NAME|STATE|PARTITION|NODELIST(REASON)
+220454_[20-22]|wrrhp-tiny|PENDING|hgpu2p|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T11:35:02+0800
