@@ -1,0 +1,37 @@
+### channel=id33-transformer-recipe-repair seq=15
+### host=login4
+### started=2026-09-04T21:13:36+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-04T21:13:36+0800
+=== A. SACCT ===
+     JobID      JobName        State ExitCode     Elapsed  NodeList 
+---------- ------------ ------------ -------- ----------- --------- 
+    220494      id33_T5      RUNNING      0:0    05:51:31    ngu011 
+    220658      id33_C1      RUNNING      0:0    05:04:42    ngu201 
+    220659      id33_C2      RUNNING      0:0    05:04:42    ngu201 
+=== B. T5 EPOCHS ===
+2026-09-04 19:38:22,305: Epoch 21 average validation loss: 0.02524 -- Median validation metrics: avg_loss: 0.02524, NSE: 0.70818
+2026-09-04 19:50:22,853: Epoch 22 average validation loss: 0.02544 -- Median validation metrics: avg_loss: 0.02544, NSE: 0.71528
+2026-09-04 20:02:24,417: Epoch 23 average validation loss: 0.02488 -- Median validation metrics: avg_loss: 0.02488, NSE: 0.72060
+2026-09-04 20:14:23,074: Epoch 24 average validation loss: 0.02506 -- Median validation metrics: avg_loss: 0.02506, NSE: 0.71193
+2026-09-04 20:26:23,395: Epoch 25 average validation loss: 0.02721 -- Median validation metrics: avg_loss: 0.02721, NSE: 0.71202
+2026-09-04 20:38:24,095: Epoch 26 average validation loss: 0.02489 -- Median validation metrics: avg_loss: 0.02489, NSE: 0.71360
+2026-09-04 20:50:25,139: Epoch 27 average validation loss: 0.02541 -- Median validation metrics: avg_loss: 0.02541, NSE: 0.71693
+2026-09-04 21:02:24,037: Epoch 28 average validation loss: 0.02573 -- Median validation metrics: avg_loss: 0.02573, NSE: 0.71236
+=== C. T5 EPOCH30 DUMP ===
+file=
+###ARM T5
+=== D. C1/C2 PROGRESS ===
+--- C1
+2026-09-04 20:32:00,929: Epoch 15 average validation loss: 0.03279 -- Median validation metrics: avg_loss: 0.03279, NSE: 0.64852
+2026-09-04 20:49:09,943: Epoch 16 average validation loss: 0.02980 -- Median validation metrics: avg_loss: 0.02980, NSE: 0.66090
+2026-09-04 21:06:14,717: Epoch 17 average validation loss: 0.03018 -- Median validation metrics: avg_loss: 0.03018, NSE: 0.66293
+--- C2
+2026-09-04 20:32:04,756: Epoch 15 average validation loss: 0.02977 -- Median validation metrics: avg_loss: 0.02977, NSE: 0.66673
+2026-09-04 20:49:15,961: Epoch 16 average validation loss: 0.03418 -- Median validation metrics: avg_loss: 0.03418, NSE: 0.63677
+2026-09-04 21:06:18,326: Epoch 17 average validation loss: 0.03049 -- Median validation metrics: avg_loss: 0.03049, NSE: 0.65205
+ID33_T5_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T21:13:37+0800
