@@ -1,0 +1,36 @@
+### channel=kalmannet-wrr-hp-extension seq=12
+### host=login4
+### started=2026-09-04T10:22:11+0800
+### ---------- output ----------
+=== TIME ===
+2026-09-04T10:22:11+0800
+=== JOBS ===
+=== FAULTS ===
+218659_5|FAILED|1:0|ngu005
+219190_17|FAILED|1:0|ngu011
+=== CELL COUNT ===
+16
+=== ALL CELL METRICS ===
+ 0 anchor                   lr=0.01   hs=16  nl=2 mult=5   seed=42 M=0.982289 M_old=0.985487 best_ep=18 lr@best=0.005 roll=0 stop_ep=28
+ 1 lr_extension             lr=0.02   hs=16  nl=2 mult=5   seed=42 M=0.982633 M_old=0.985712 best_ep=11 lr@best=0.02 roll=0 stop_ep=21
+ 2 lr_extension             lr=0.05   hs=16  nl=2 mult=5   seed=42 M=0.982755 M_old=0.985888 best_ep=10 lr@best=0.025 roll=240 stop_ep=20
+ 3 anchor                   lr=0.01   hs=32  nl=1 mult=10  seed=42 M=0.982326 M_old=0.985508 best_ep=6 lr@best=0.01 roll=0 stop_ep=16
+ 4 lr_extension             lr=0.02   hs=32  nl=1 mult=10  seed=42 M=0.983428 M_old=0.986417 best_ep=10 lr@best=0.02 roll=2 stop_ep=20
+ 6 anchor                   lr=0.01   hs=16  nl=1 mult=5   seed=42 M=0.98281 M_old=0.985842 best_ep=16 lr@best=0.01 roll=0 stop_ep=26
+ 7 lr_extension             lr=0.02   hs=16  nl=1 mult=5   seed=42 M=0.98323 M_old=0.986363 best_ep=13 lr@best=0.02 roll=0 stop_ep=23
+ 8 lr_extension             lr=0.05   hs=16  nl=1 mult=5   seed=42 M=0.984128 M_old=0.986903 best_ep=31 lr@best=0.0125 roll=310 stop_ep=41
+ 9 anchor                   lr=0.01   hs=16  nl=1 mult=10  seed=42 M=0.984289 M_old=0.987261 best_ep=53 lr@best=0.00125 roll=1 stop_ep=63
+10 lr_extension             lr=0.02   hs=16  nl=1 mult=10  seed=42 M=0.984294 M_old=0.987224 best_ep=29 lr@best=0.005 roll=2 stop_ep=39
+11 lr_extension             lr=0.05   hs=16  nl=1 mult=10  seed=42 M=0.984013 M_old=0.986818 best_ep=13 lr@best=0.0125 roll=13 stop_ep=23
+12 probe_hidden64           lr=0.01   hs=64  nl=1 mult=10  seed=42 M=0.984523 M_old=0.987498 best_ep=38 lr@best=0.0025 roll=2 stop_ep=48
+13 probe_mult15             lr=0.01   hs=32  nl=1 mult=15  seed=42 M=0.984217 M_old=0.987193 best_ep=77 lr@best=0.0003125 roll=0 stop_ep=87
+14 probe_hidden64_mult15    lr=0.01   hs=64  nl=1 mult=15  seed=42 M=0.984767 M_old=0.987533 best_ep=44 lr@best=0.0025 roll=3 stop_ep=54
+15 replicate_seed43         lr=0.01   hs=32  nl=1 mult=10  seed=43 M=0.984237 M_old=0.987194 best_ep=48 lr@best=0.005 roll=1 stop_ep=58
+16 replicate_seed44         lr=0.01   hs=32  nl=1 mult=10  seed=44 M=0.983987 M_old=0.987002 best_ep=42 lr@best=0.0025 roll=1 stop_ep=52
+=== NOT-YET-SCORED CELLS ===
+idx0005_lr0p05_hs32_nl1_mult10   ep=  7 lr_now=0.00078125  nse=0.8997 best_ep=0 no_improve=6 roll=304
+idx0017_lr0p05_hs32_nl1_mult10   ep= 12 lr_now=0.003125    nse=-103.5534 best_ep=7 no_improve=4 roll=133
+(done)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T10:22:14+0800
