@@ -1,0 +1,35 @@
+### channel=id33-transformer-recipe-repair seq=1
+### host=login4
+### started=2026-09-04T14:39:19+0800
+### ---------- output ----------
+=== A. PRECONDITIONS ===
+2026-09-04T14:39:19+0800
+hhjt_parastor_hhjt_parastor  954T  599T  356T  63% /data1
+PAYLOAD_HASH_OK
+=== B. CREATE ISOLATED ROOT FROM THE ID32 SKELETON ===
+  linked camels_us_track0_development_forcing_v01
+  linked camels_us_track0_supervision_v01
+=== C. OVERLAY PAYLOAD ===
+extracted
+fair_benchmark
+modern_transformer_moe
+transformer_recipe_repair
+=== D. HASHES ===
+dd093b289d325bed8f1cfda136d8d8e50835346cbe9e917b5c4016a8e1135c89  neuralhydrology/modelzoo/recipe_fixed_transformer.py
+551fe8044c8dab74be6f04fc42c4d09140b05f6dccafdadcd60c4a29f9aab13f  src/transformer_recipe_repair/scripts/audit_configs.py
+5ca251bc23543af64429dfac1a6854024e0cea202380b42a5c2731df355fe3a8  src/transformer_recipe_repair/registry/experiments.csv
+=== E. AUDIT + PLAN UNDER nh_final ===
+ID33 CONFIG AUDIT: PASS (6 arms; one factor each; no data read; no training launched)
+{
+  "command": [
+    "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+    "-u",
+    "-m",
+    "neuralhydrology.nh_run",
+=== F. UNTOUCHED CHECK ===
+26cb602a68c48cc24c8c7f2d60773232d9b460721422b9179a0964385937d1b7
+ID32 root intact
+ID33_DEPLOY_SEQ1_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T14:39:57+0800
