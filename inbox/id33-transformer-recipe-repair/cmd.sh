@@ -1,56 +1,53 @@
 #!/usr/bin/env bash
-# ID33 seq=7 : is anything of mine HELD but not USED? Read-only.
+# ID33 seq=10 : scope the integrity break I caused by deploying mid-flight, and answer
+# "is anything held but idle". Read-only.
 set -o pipefail
-echo "=== STAMP ==="; date -Is
-NOW=$(date +%s)
+echo "=== STAMP ==="; date -Is; NOW=$(date +%s)
+INV=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/results/33_transformer_recipe_repair/_invocations
 
-echo "=== A. WHAT I HOLD (AllocTRES per running job) ==="
-for J in 220490 220491 220492 220493 220494 220495 220658 220659; do
-  line=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | grep -E '^(JobId|JobState|NumCPUs|NumNodes|TRES|StdOut|NodeList)=' | tr '\n' ' ')
-  echo "  $line"
-done
+echo "=== A. EXACTLY WHICH FILES DIFFER FOR L33 (before vs after) ==="
+python - "$INV/id33_L33_s100_slurm220495/run_manifest.json" <<'PY' 2>&1 || true
+import json, sys
+from pathlib import Path
+m = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+b = m.get("source_integrity_before", {}); a = m.get("source_integrity_after", {})
+if not a:
+    print("  no source_integrity_after recorded (the run raised before writing it)")
+bi = b.get("implementation_files", {}); ai = a.get("implementation_files", {})
+if ai:
+    for k in sorted(set(bi) | set(ai)):
+        if bi.get(k) != ai.get(k):
+            print(f"  DIFFERS {k}\n    before={bi.get(k)}\n    after ={ai.get(k)}")
+print("  own config before:", b.get("config_file"))
+print("  own config after :", a.get("config_file", "not recorded"))
+PY
 
-echo "=== B. LOG STALENESS (the documented silent-stall signature) ==="
-for J in 220490 220491 220492 220493 220494 220495 220658 220659; do
-  ST=$(squeue -j "$J" -h -o "%t" 2>/dev/null)
-  SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
-  if [ "$ST" = "R" ] && [ -n "$SO" ] && [ -f "$SO" ]; then
-    AGE=$(( NOW - $(stat -c %Y "$SO") ))
-    FLAG=OK; [ "$AGE" -gt 3600 ] && FLAG="SUSPECT_STALL"
-    echo "  job=$J state=$ST idle_seconds=$AGE $FLAG"
-  else
-    echo "  job=$J state=${ST:-notqueued} (no running stdout to age)"
-  fi
-done
+echo "=== B. IS EACH ARM'S OWN CONFIG STILL AT ITS REGISTERED HASH ==="
+cd /data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
+for f in l33 t1 t2 t3 t4 t5; do sha256sum "src/transformer_recipe_repair/configs/$f.yml" 2>&1; done
 
-echo "=== C. ARE THE TRAINING LOGS ACTUALLY ADVANCING ==="
+echo "=== C. WILL T1..T5 HIT THE SAME THING? (start time vs my 16:08 deploy) ==="
+sacct -j 220490,220491,220492,220493,220494,220495 -X --format=JobID%9,JobName%9,State%10,Start%20,Elapsed%10 -n -P 2>&1 || true
+
+echo "=== D. HELD BUT IDLE? log staleness for every running job ==="
 R=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/results/33_transformer_recipe_repair
-for a in T1 T2 T3 T4 T5 L33 C1 C2; do
+for a in T1 T2 T3 T4 T5 C1 C2; do
   f=$(find "$R/$a" -name output.log -type f 2>/dev/null | head -1)
   if test -n "$f"; then
     AGE=$(( NOW - $(stat -c %Y "$f") ))
     n=$(grep -c 'average validation loss' "$f" 2>/dev/null || true)
-    last=$(grep 'Median validation metrics' "$f" 2>/dev/null | tail -1 | sed 's/.*NSE: //')
-    echo "  $a: epochs=${n:-0} last_NSE=${last:-none} log_idle=${AGE}s"
-  else echo "  $a: no log"; fi
+    FLAG=OK; [ "$AGE" -gt 3600 ] && FLAG=SUSPECT_STALL
+    echo "  $a epochs=${n:-0} log_idle=${AGE}s $FLAG"
+  else echo "  $a no log"; fi
 done
 
-echo "=== D. EPOCH WALL TIME (is the larger batch actually using the card?) ==="
-for a in T1 T4; do
+echo "=== E. THROUGHPUT: minutes per epoch, 3090 arms vs A800 calibration ==="
+for a in T1 T4 C1; do
   f=$(find "$R/$a" -name output.log -type f 2>/dev/null | head -1)
-  test -n "$f" && { echo "  -- $a --"; grep -oE '^[0-9-]+ [0-9:]+.*Epoch [0-9]+ average loss' "$f" 2>/dev/null | awk '{print $1,$2,$NF,$4}' | tail -4 || true; }
+  test -n "$f" && { echo "  -- $a --"; grep -E 'Epoch [0-9]+ average loss' "$f" 2>/dev/null | awk '{print $1, $2, $4}' | tail -3 || true; }
 done
-echo "  (D01 reference at batch 64 was 12.8 min/epoch)"
+echo "  (ID30 D01 on a 3090 at batch 64 was 12.8 min/epoch)"
 
-echo "=== E. DEAD JOBS: DO THEY HOLD ANYTHING? ==="
-for J in 202229 202293 202294 202315 202507 215429; do
-  s=$(squeue -j "$J" -h -o "%i %t %C %b %R" 2>/dev/null)
-  [ -n "$s" ] && echo "  $s" || echo "  $J not in queue"
-done
-echo "  (PD jobs reserve nothing; only R jobs hold resources)"
-
-echo "=== F. NODES I AM ON: HOW MUCH IS FREE BESIDE ME ==="
-for N in ngu001 ngu003 ngu004 ngu005 ngu011; do
-  scontrol show node "$N" 2>/dev/null | tr ' ' '\n' | grep -E '^(NodeName|CPUAlloc|CPUTot|AllocTRES|CfgTRES|State)=' | tr '\n' ' '; echo
-done
-echo ID33_UTILISATION_SEQ7_COMPLETE
+echo "=== F. C1 AND C2 SHARE ngu201 - are they contending? ==="
+scontrol show node ngu201 2>/dev/null | tr ' ' '\n' | grep -E '^(NodeName|CPUAlloc|CPUTot|AllocTRES|State)=' | tr '\n' ' '; echo
+echo ID33_SCOPE_SEQ10_COMPLETE
