@@ -1,0 +1,35 @@
+### channel=id33-transformer-recipe-repair seq=2
+### host=login4
+### started=2026-09-04T14:45:24+0800
+### ---------- output ----------
+=== A. PRE-SUBMIT AUDIT ===
+2026-09-04T14:45:25+0800
+ID33 CONFIG AUDIT: PASS (6 arms; one factor each; no data read; no training launched)
+=== B. PARTITION ===
+ PARTITION  AVAIL  NODES  STATE                       NODELIST
+    hgpu2p     up      1  down*                         ngu002
+    hgpu2p     up      7    mix           ngu[001,004-008,011]
+    hgpu2p     up      1  alloc                         ngu010
+=== C. SUBMIT ===
+  T1 -> 220490
+  T2 -> 220491
+  T3 -> 220492
+  T4 -> 220493
+  T5 -> 220494
+  L33 -> 220495
+SUBMITTED: T1:220490 T2:220491 T3:220492 T4:220493 T5:220494 L33:220495
+FAILED:
+=== D. QUEUE ===
+     JOBID           NAME  PARTITION ST        TIME     NODELIST(REASON)
+    220490        id33_T1     hgpu2p PD        0:00           (Priority)
+    220491        id33_T2     hgpu2p PD        0:00           (Priority)
+    220492        id33_T3     hgpu2p PD        0:00           (Priority)
+    220493        id33_T4     hgpu2p PD        0:00           (Priority)
+    220494        id33_T5     hgpu2p PD        0:00           (Priority)
+    220495       id33_L33     hgpu2p PD        0:00           (Priority)
+=== E. ISOLATION ===
+26cb602a68c48cc24c8c7f2d60773232d9b460721422b9179a0964385937d1b7
+ID33_SUBMIT_SEQ2_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T14:45:25+0800
