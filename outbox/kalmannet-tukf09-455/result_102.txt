@@ -1,0 +1,29 @@
+### channel=kalmannet-tukf09-455 seq=102
+### host=login4
+### started=2026-09-04T11:56:51+0800
+### ---------- output ----------
+=== PRECONDITIONS ===
+login4
+SCRIPT_PRESENT
+3600aac9cdd68289dc7bab0b2b3beb6388933976e997f532c966aa32f07883b6  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r7_20260904/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r7/download_runtime_inputs_login.sh
+FINAL_ABSENT_AS_EXPECTED
+=== LAUNCH ONCE, DETACHED ===
+LAUNCHED pid=17865
+=== EARLY STATE ===
+total 24
+drwxr-xr-x.   6 sunyiq g_sunyiq 4096 Sep  4 11:56 .
+drwx------. 137 sunyiq g_sunyiq 4096 Sep  4 11:56 ..
+drwxr-xr-x.   3 sunyiq g_sunyiq 4096 Sep  4 11:52 bundle
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  4 11:56 logs
+drwxr-xr-x.   5 sunyiq g_sunyiq 4096 Sep  4 11:56 offline_inputs_v2r7.pending.a20260904
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  4 11:56 status
+29K	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r7_20260904/offline_inputs_v2r7.pending.a20260904
+p_version": "25.2", "platform": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17", "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "python_executable_resolved": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11", "python_executable_sha256": "45140eba20e770e6f8b46fb1e1295da8a5e494b3686a22ea9beeff050bb5b48e", "python_executable_size": 25382192, "python_version": "3.11.13", "schema_version": "tukf09_455_hpc_shared_environment_snapshot_a800_exclusive_v2r7", "scientific_contract_changed": false, "status": "SHARED_BOOTSTRAP_ENVIRONMENT_READ_ONLY_SNAPSHOT"}
+=== CANCELLED OLD JOB STAYS CANCELLED ===
+     JobID          State ExitCode 
+---------- -------------- -------- 
+    218635 CANCELLED by +      0:0 
+TUKF09_455_V2R7_OFFLINE_INPUT_DOWNLOAD_LAUNCHED_NO_JOB_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T11:57:00+0800
