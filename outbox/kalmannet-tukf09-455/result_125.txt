@@ -1,0 +1,41 @@
+### channel=kalmannet-tukf09-455 seq=125
+### host=login4
+### started=2026-09-04T15:40:08+0800
+### ---------- output ----------
+TIME=2026-09-04T15:40:08+0800
+TARGET_OK
+DEPLOYMENT_COMMAND_SHA256=b4f756238a8ec732b4c7138e6781ada21fcb542382cf2d5dcf4af7a6e3540f33
+SUPERSEDED_CAPSULE_MODE_BEFORE=555
+=== PUBLISH ===
+COPIED_FILES 911 TOTAL_BYTES 464792200
+DATA_IDENTITY_SHA256 dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da
+MODE_SET files 914 dirs 44
+CAPSULE_ROOT /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904
+CAPSULE_DATA_ROOT /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904/data/camels_us
+MANIFEST_SIZE 541659
+MANIFEST_SHA256 a61b52ad609598d083b87ea869c6674d10f70e88ea15db80da52609bd3d913f6
+MANIFEST_RECORD_SIZE 95
+MANIFEST_RECORD_SHA256 abc39451994261d2760261562ed430b247ba6023e7e9ce68305128547fdb720f
+READY_SIZE 1217
+READY_SHA256 0cc1635707e6651c8f5a942e47dcd8453d11280b66fd2d061638ac3c865eef50
+DATA_FILE_COUNT 911
+TOTAL_FILE_COUNT 914
+DIRECTORY_COUNT 44
+DATA_TOTAL_BYTES 464792200
+PUBLICATION_OK
+PUBLISH_RETURN_CODE=0
+=== SURFACE ===
+dr-xr-xr-x. 4 sunyiq g_sunyiq 4096 Sep  4 15:40 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904
+dr-xr-xr-x. 5 sunyiq g_sunyiq 4096 Sep  4 15:40 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904/data/camels_us
+dr-xr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  4 15:40 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904/evidence
+FILES=914 DIRS=44
+SYMLINKS=0 HARDLINKED=0
+a61b52ad609598d083b87ea869c6674d10f70e88ea15db80da52609bd3d913f6  source_capsule_manifest.json
+=== EARLIER CAPSULES UNTOUCHED ===
+V4_MODE=555
+6e669e61feee8131de8c99b15d603bb7fac582db2d23fcc4405ef0c931b49cff  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v4_20260904/evidence/source_capsule_manifest.json
+V3_MODE=555
+TUKF09_455_TRAINING_SOURCE_CAPSULE_V5_PUBLISHED_NO_JOB_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T15:40:33+0800
