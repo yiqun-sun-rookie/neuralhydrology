@@ -1,0 +1,133 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=72
+### host=login4
+### started=2026-09-04T20:54:31+0800
+### ---------- output ----------
+=== A. PROVENANCE ===
+2026-09-04T20:54:31+0800
+login4
+sunyiq
+=== B. NEW ROOT MUST STILL BE ABSENT ===
+NEW_ROOT|ABSENT|path=/data1/home/sunyiq/zhenjiang_five_source_five_target_single_analysis_ukf_oracle_datong_20260904_r1
+=== C. EXACT INPUT LOCATIONS IN PROTECTED ROOTS ===
+--- ROOT=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2 ---
+FOUND|2854|2026-09-01T17:05:31.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/dataset_config.json
+FOUND|5485506|2026-09-01T17:05:31.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/realtime_features/datong_realtime_features.csv
+FOUND|5452340|2026-09-01T17:05:31.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/realtime_features/nanjing_realtime_features.csv
+FOUND|5490493|2026-09-01T17:05:31.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/realtime_features/zhenjiang_realtime_features.csv
+FOUND|5451807|2026-09-01T17:05:31.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/realtime_features/jiangyin_realtime_features.csv
+FOUND|5452448|2026-09-01T17:05:31.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/realtime_features/xuliujing_realtime_features.csv
+FOUND|5449542|2026-09-01T17:05:31.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/realtime_features/wusongkou_realtime_features.csv
+FOUND|5453455|2026-09-01T17:05:31.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/retrospective_targets/nanjing_retrospective_targets.csv
+FOUND|5491015|2026-09-01T17:05:31.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/retrospective_targets/zhenjiang_retrospective_targets.csv
+FOUND|5452821|2026-09-01T17:05:31.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/retrospective_targets/jiangyin_retrospective_targets.csv
+FOUND|5453528|2026-09-01T17:05:31.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/retrospective_targets/xuliujing_retrospective_targets.csv
+FOUND|6197|2026-07-15T02:41:52.0000000000|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/results/modeling/wusongkou_astronomical_tide_v1_validation/tide_model.json
+--- ROOT=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002 ---
+=== D. ISOLATED INPUT MANIFEST REFERENCES ===
+ABSENT|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/evidence/development_2023/isolated_input_manifest.json
+--- FILE=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json ---
+META|22214|2026-09-01 16:59:54.000000000 +0800|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/docs/records/ZHENJIANG_SIX_SOURCE_FOUR_TARGET_D32_GRU_DIFFERENTIABLE_UKF_V1_REGISTRY.json
+    "source_input_root_read_only": "/data1/home/sunyiq/zhenjiang_d32_differentiable_ukf_20260828_r2/inputs/pre2024-v1",
+    "isolated_input_root": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1",
+    "tide_model_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/run/results/modeling/wusongkou_astronomical_tide_v1_validation/tide_model.json",
+    "remote_root_top_level_allowlist": ["run", "inputs", "runs", "logs", "jobs", "evidence"],
+  "input_files": [
+      "path": "dataset_config.json",
+      "path": "realtime_features/datong_realtime_features.csv",
+      "path": "realtime_features/nanjing_realtime_features.csv",
+      "path": "realtime_features/zhenjiang_realtime_features.csv",
+      "path": "realtime_features/jiangyin_realtime_features.csv",
+      "path": "realtime_features/xuliujing_realtime_features.csv",
+      "path": "realtime_features/wusongkou_realtime_features.csv",
+      "path": "retrospective_targets/nanjing_retrospective_targets.csv",
+      "path": "retrospective_targets/zhenjiang_retrospective_targets.csv",
+      "path": "retrospective_targets/jiangyin_retrospective_targets.csv",
+      "path": "retrospective_targets/xuliujing_retrospective_targets.csv",
+      "path": "dataset_config.json",
+      "path": "realtime_features/datong_realtime_features.csv",
+      "path": "realtime_features/nanjing_realtime_features.csv",
+      "path": "realtime_features/zhenjiang_realtime_features.csv",
+      "path": "realtime_features/jiangyin_realtime_features.csv",
+      "path": "realtime_features/xuliujing_realtime_features.csv",
+      "path": "realtime_features/wusongkou_realtime_features.csv",
+      "path": "retrospective_targets/nanjing_retrospective_targets.csv",
+      "path": "retrospective_targets/zhenjiang_retrospective_targets.csv",
+      "path": "retrospective_targets/jiangyin_retrospective_targets.csv",
+      "path": "retrospective_targets/xuliujing_retrospective_targets.csv",
+      "path": "results/modeling/wusongkou_astronomical_tide_v1_validation/tide_model.json",
+--- FILE=/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/evaluation/attempt_002/completion_manifest.json ---
+META|18396|2026-09-02 11:57:31.000000000 +0800|/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002/evidence/development_2023/evaluation/attempt_002/completion_manifest.json
+    "astronomical_tide_model_open_count": 1,
+      "dataset_config.json": 2854,
+      "realtime_features/datong_realtime_features.csv": 5485506,
+      "realtime_features/jiangyin_realtime_features.csv": 5451807,
+      "realtime_features/nanjing_realtime_features.csv": 5452340,
+      "realtime_features/wusongkou_realtime_features.csv": 5449542,
+      "realtime_features/xuliujing_realtime_features.csv": 5452448,
+      "realtime_features/zhenjiang_realtime_features.csv": 5490493,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 5452821,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 5453455,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 5453528,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 5491015
+      "dataset_config.json",
+      "realtime_features/datong_realtime_features.csv",
+      "realtime_features/jiangyin_realtime_features.csv",
+      "realtime_features/nanjing_realtime_features.csv",
+      "realtime_features/wusongkou_realtime_features.csv",
+      "realtime_features/xuliujing_realtime_features.csv",
+      "realtime_features/zhenjiang_realtime_features.csv",
+      "retrospective_targets/jiangyin_retrospective_targets.csv",
+      "retrospective_targets/nanjing_retrospective_targets.csv",
+      "retrospective_targets/xuliujing_retrospective_targets.csv",
+      "retrospective_targets/zhenjiang_retrospective_targets.csv"
+      "dataset_config.json": 0,
+      "realtime_features/datong_realtime_features.csv": 61344,
+      "realtime_features/jiangyin_realtime_features.csv": 61344,
+      "realtime_features/nanjing_realtime_features.csv": 61344,
+      "realtime_features/wusongkou_realtime_features.csv": 61344,
+      "realtime_features/xuliujing_realtime_features.csv": 61344,
+      "realtime_features/zhenjiang_realtime_features.csv": 61344,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 61344,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 61344,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 61344,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 61344
+      "dataset_config.json": 0,
+      "realtime_features/datong_realtime_features.csv": 61253,
+      "realtime_features/jiangyin_realtime_features.csv": 61186,
+      "realtime_features/nanjing_realtime_features.csv": 61215,
+      "realtime_features/wusongkou_realtime_features.csv": 60816,
+      "realtime_features/xuliujing_realtime_features.csv": 61254,
+      "realtime_features/zhenjiang_realtime_features.csv": 61294,
+      "retrospective_targets/jiangyin_retrospective_targets.csv": 61174,
+      "retrospective_targets/nanjing_retrospective_targets.csv": 61210,
+      "retrospective_targets/xuliujing_retrospective_targets.csv": 61254,
+      "retrospective_targets/zhenjiang_retrospective_targets.csv": 61294
+    "input_manifest_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1/four_target_input_manifest.json",
+    "input_manifest_sha256": "4b8d1dd174ff0455bc3b482563ae82a703fbc36c030a0e9998c73bb0f9c82f7c",
+    "input_root_path": "/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260901_r2/inputs/pre2024-four-target-v1",
+=== E. SHARED ENVIRONMENT LOCATION ONLY ===
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+Python 3.11.13
+=== F. OWN QUEUE, NO CHANGES ===
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|0:00|(DependencyNeverSatisfied)|/data1/home/sunyiq/nearing2022_da
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)|/data1/home/sunyiq/nearing2022_da
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|0:00|(Dependency)|/data1/home/sunyiq/hpc_mailbox
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|0:00|(DependencyNeverSatisfied)|/data1/home/sunyiq/hpc_mailbox
+215429|id30_m01_s100|PENDING|hgpu2|0:00|(DependencyNeverSatisfied)|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|0:00|(JobHeldUser)|/data1/home/sunyiq/nearing2022_da
+220535_25|wrrhp-h4|RUNNING|hgpu2p|1:30:55|ngu001|/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
+220535_24|wrrhp-h4|RUNNING|hgpu2p|1:45:27|ngu010|/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
+220494|id33_T5|RUNNING|hgpu2p|5:31:51|ngu011|/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
+220535_23|wrrhp-h4|RUNNING|hgpu2p|4:32:32|ngu004|/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
+220663|tukf09-455-v2r10-neural|RUNNING|hgpu8|4:30:40|ngu203|/data1/home/sunyiq/hpc_mailbox
+220658|id33_C1|RUNNING|hgpu8|4:45:02|ngu201|/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
+220659|id33_C2|RUNNING|hgpu8|4:45:02|ngu201|/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
+220454_20|wrrhp-tiny|RUNNING|hgpu2p|9:18:45|ngu011|/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
+220454_22|wrrhp-tiny|RUNNING|hgpu2p|9:18:45|ngu007|/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
+=== G. READ-ONLY QUERY COMPLETE ===
+new_root_created=no
+formal_dataset_content_read=no
+job_submitted_or_changed=no
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T20:54:35+0800
