@@ -1,5 +1,44 @@
 #!/bin/bash
-# seq=462: read-only status and artifact check for verifier job 220487
+# seq=463: read-only diagnosis of the mask-audit stdout contract exposed by job 220487
+set -o pipefail
+ROOT=/data1/home/sunyiq/nearing2022_da
+MASK="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2"
+DATA="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2"
+echo "=== EXACT FILE HASHES AND SIZES ==="
+for F in "$MASK/audit.json" "$MASK/audit_stdout.json" "$DATA/audit.json" "$DATA/audit_stdout.json" \
+  "$ROOT/src/29_nearing2022_da_ar/scripts/audit_warmup_target_isolation.py" \
+  "$ROOT/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py"; do
+  stat -c '%s|%n' "$F" 2>/dev/null || true
+  sha256sum "$F" 2>/dev/null || true
+done
+echo "=== PARSED RELATIONSHIPS ==="
+python - "$MASK/audit.json" "$MASK/audit_stdout.json" "$DATA/audit.json" "$DATA/audit_stdout.json" <<'PY'
+import json
+from pathlib import Path
+import sys
+
+mask_audit = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+mask_stdout = json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
+data_audit = json.loads(Path(sys.argv[3]).read_text(encoding="utf-8"))
+data_stdout = json.loads(Path(sys.argv[4]).read_text(encoding="utf-8"))
+print("mask_stdout_equals_full_audit=", mask_stdout == mask_audit)
+print("mask_stdout_equals_conclusion=", mask_stdout == mask_audit.get("conclusion"))
+print("data_stdout_equals_full_audit=", data_stdout == data_audit)
+print("mask_stdout=", json.dumps(mask_stdout, sort_keys=True))
+print("mask_conclusion=", json.dumps(mask_audit.get("conclusion"), sort_keys=True))
+print("mask_schema=", mask_audit.get("schema"))
+print("mask_basin_count=", mask_audit.get("scope", {}).get("basin_count"))
+print("single_mask_restoration=", mask_audit.get("conclusion", {}).get("single_mask_restores_released_training_data_for_scope"))
+print("other_installed_source_files_modified=", mask_audit.get("one_factor_contract", {}).get("other_installed_source_files_modified"))
+print("comparison=", json.dumps(mask_audit.get("author_vs_current_masked"), sort_keys=True))
+PY
+echo "=== GENERATOR PRINT CONTRACT ==="
+grep -n -E 'result = audit|print\(json.dumps\(result\["conclusion"\]' \
+  "$ROOT/src/29_nearing2022_da_ar/scripts/audit_warmup_target_isolation.py" 2>/dev/null || true
+echo "=== JOB EVIDENCE ==="
+sacct -j 220487 -X -n -P --format=JobIDRaw,State,ExitCode,Elapsed,NodeList 2>/dev/null || true
+exit 0
+# seq=462 preserved below
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
 BASE="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904"
