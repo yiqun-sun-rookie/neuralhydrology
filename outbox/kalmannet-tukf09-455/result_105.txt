@@ -1,0 +1,23 @@
+### channel=kalmannet-tukf09-455 seq=105
+### host=login4
+### started=2026-09-04T12:12:26+0800
+### ---------- output ----------
+EQUAL: False
+DIFF local_filter_installation_final_manifest
+   capsule: {"path": "results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/filter_rebinding/independent/manifest.final.sha256.json", "sha256": "b378ffbfde4d24ded8fbb42fdf10fef59eb04100c93879a41b4d538ae36f6ba0"}
+   config : {"path": "results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/filter_rebinding/independent/manifest.final.sha256.json", "sha256": "a5ac72e63cf9c18710b008d1643ed8926dbb6ff729dacb8757b78ff65948101b"}
+DIFF original_training_admission
+   capsule: {"file_sha256": "6ba3cdd742fc2bdf039c51afc75485c8292f0b999d7fe426cb2ccf69057c1b79", "path": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/training_admission/training_admission.json", "record_sha256": "ca43f2ba9e35b47c76808da925508e75770bc00a37f2a89ba1dcf060017531b4"}
+   config : {"path": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/training_admission/training_admission.json", "file_sha256": "a38118aa4b273a2e650b454f30c4f83dd5b0540bd91054f8e52cfc1313549f63", "record_sha256": "01f221fd516ce9d48675f371619542735270134b3bfc7e8fde04a6c6f0747df5"}
+capsule data_identity_sha256: dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da
+capsule file_count: 911 total_bytes: 464792200
+capsule schema: tukf09_455_training_source_capsule_v2 purpose: read_only_training_validation_source_only_no_formal_evaluation
+=== capsule is read-only ===
+dr-xr-xr-x. 4 sunyiq g_sunyiq 4096 Sep  1 08:48 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901
+dr-xr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  1 08:48 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901/evidence
+=== v2r7 failure marker ===
+{"exit_code":1,"experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_455_hpc_preparation_failure_a800_exclusive_v2r7","slurm_job_id":"220467","status":"HPC_A800_EXCLUSIVE_V2R7_PREPARATION_FAILED_ROOT_FROZEN"}
+TUKF09_455_CAPSULE_IDENTITY_DIFF_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T12:12:26+0800
