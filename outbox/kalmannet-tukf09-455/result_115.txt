@@ -1,0 +1,79 @@
+### channel=kalmannet-tukf09-455 seq=115
+### host=login4
+### started=2026-09-04T14:13:58+0800
+### ---------- output ----------
+TIME=2026-09-04T14:13:58+0800  TRAINING_JOB_ID=220481
+     JobID        State ExitCode  NodeList    Elapsed                Start                  End 
+---------- ------------ -------- --------- ---------- -------------------- -------------------- 
+    220481       FAILED      1:0    ngu203   00:02:50  2026-09-04T14:00:49  2026-09-04T14:03:39 
+=== SEQUENCE STAGE LOGS ===
+total 10
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  4 14:02 .
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Sep  4 14:02 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 1305 Sep  4 14:03 neural_controller.stderr.log
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  4 14:02 neural_controller.stdout.log
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  4 14:02 verify_filter_rebinding_controller.stderr.log
+-rw-r--r--. 1 sunyiq g_sunyiq  399 Sep  4 14:02 verify_filter_rebinding_controller.stdout.log
+----- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/neural_controller.stderr.log  1305 bytes  a484dac6184452ceeccafbed4766e85c8eea5e2a719dc2c858835a12bba94c0a
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py", line 1182, in <module>
+    main()
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py", line 1143, in main
+    result = run_controller(
+             ^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py", line 836, in run_controller
+    gate_no_other_graphics_training(
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py", line 380, in gate_no_other_graphics_training
+    raise RuntimeError(f"another graphics-processor compute process is active: {others}")
+RuntimeError: another graphics-processor compute process is active: [{'graphics_processor_index': 0, 'pid': 56215, 'process_type': 'C', 'process_name': 'python'}]
+----- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/neural_controller.stdout.log  0 bytes  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+----- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/verify_filter_rebinding_controller.stderr.log  0 bytes  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+----- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/verify_filter_rebinding_controller.stdout.log  399 bytes  55eb423e0f5a0e207acd2497f23651debbfea8693e40b79dcd0ab297aa60f0f0
+{"canonical_unit_count": 455, "completed_unit_count": 455, "evaluation_access_count": 0, "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1", "schema_version": "tukf09_455_filter_rebinding_controller_result_v1", "status": "FILTER_REBINDING_VERIFIED_EVALUATION_HOLD", "training_admission_record_sha256": "01f221fd516ce9d48675f371619542735270134b3bfc7e8fde04a6c6f0747df5"}
+=== SEQUENCE EVENTS ===
+_at_utc":"2026-09-04T06:02:52.956164+00:00","execution_id":"8837f8344bed48d8ac1dc614839c5040","exit_code":0,"experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":3,"stage":"verify_filter_rebinding","stage_controller_source_sha256":{"neural":"4bdb4527e2f89c2765a71472411890535896cf1f405bf8cd7cf5c89ea5709ecd","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"stage_ended_at_utc":"2026-09-04T06:02:52.955588+00:00","stage_process_id":57045,"stage_started_at_utc":"2026-09-04T06:02:47.156029+00:00","training_admission_record_sha256":"01f221fd516ce9d48675f371619542735270134b3bfc7e8fde04a6c6f0747df5"}
+{"event":"stage_started","event_at_utc":"2026-09-04T06:02:53.007331+00:00","execution_id":"8837f8344bed48d8ac1dc614839c5040","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":4,"stage":"neural","stage_controller_source_sha256":{"neural":"4bdb4527e2f89c2765a71472411890535896cf1f405bf8cd7cf5c89ea5709ecd","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"stage_process_id":57054,"stage_started_at_utc":"2026-09-04T06:02:53.005762+00:00","training_admission_record_sha256":"01f221fd516ce9d48675f371619542735270134b3bfc7e8fde04a6c6f0747df5"}
+{"error":"controller returned a nonzero exit code","event":"stage_failed","event_at_utc":"2026-09-04T06:03:00.854940+00:00","execution_id":"8837f8344bed48d8ac1dc614839c5040","exit_code":1,"experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":5,"stage":"neural","stage_controller_source_sha256":{"neural":"4bdb4527e2f89c2765a71472411890535896cf1f405bf8cd7cf5c89ea5709ecd","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"stage_ended_at_utc":"2026-09-04T06:03:00.854880+00:00","stage_process_id":57054,"stage_started_at_utc":"2026-09-04T06:02:53.005762+00:00","training_admission_record_sha256":"01f221fd516ce9d48675f371619542735270134b3bfc7e8fde04a6c6f0747df5"}
+{"completed_stages":["verify_filter_rebinding"],"controller_process_id":56215,"error":"RuntimeError: formal training neural controller failed with exit code 1","evaluation_access_count":0,"event":"sequence_failed","event_at_utc":"2026-09-04T06:03:00.857218+00:00","execution_id":"8837f8344bed48d8ac1dc614839c5040","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_formal_training_sequence_event_v1","sequence":6,"stage_controller_source_sha256":{"neural":"4bdb4527e2f89c2765a71472411890535896cf1f405bf8cd7cf5c89ea5709ecd","verify_filter_rebinding":"95e9deab1d768e10f71790e7a30be48bb5e1df287dee2f2fc53e4f2c4379f36d"},"training_admission_record_sha256":"01f221fd516ce9d48675f371619542735270134b3bfc7e8fde04a6c6f0747df5"}
+=== NEURAL CONTROL EVENTS ===
+ls: cannot access /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/neural: No such file or directory
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/neural/events.jsonl’ for reading: No such file or directory
+=== NEURAL TREE ===
+ls: cannot access /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural: No such file or directory
+NEURAL_UNITS=0
+NEURAL_CHECKPOINTS=0
+=== OUTER TRAINING LOGS ===
+OUT 568 bytes
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "mutable_directory_count": 501,
+  "mutable_file_count": 3649,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R8_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+ERR 1278 bytes
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 791, in <module>
+    main()
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 771, in main
+    result = run_sequence(execute_formal_training=arguments.execute_formal_training)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 710, in run_sequence
+    _run_stage(
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 575, in _run_stage
+    raise RuntimeError(f"formal training {stage} controller failed with exit code {exit_code}")
+RuntimeError: formal training neural controller failed with exit code 1
+=== FORMAL EVALUATION STILL CLOSED ===
+SELECTION=ABSENT EVALUATION=ABSENT
+TUKF09_455_V2R8_TRAINING_FORENSICS_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T14:13:58+0800
