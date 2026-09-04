@@ -1,0 +1,33 @@
+### channel=kalmannet-wrr-hp-extension seq=17
+### host=login4
+### started=2026-09-04T15:47:08+0800
+### ---------- output ----------
+=== PAYLOAD_CHECK ===
+payload_ok
+combos before: 23
+=== INSTALL ===
+combos after: 26
+{"index": 23, "run_id": "WRR-HPEXT-20260902-I23", "role": "sub_state_dim_seed42", "lr": 0.01, "hidden_size": 4, "num_layers": 1, "in_out_mult": 10, "seed": 42}
+{"index": 24, "run_id": "WRR-HPEXT-20260902-I24", "role": "sub_state_dim_seed43", "lr": 0.01, "hidden_size": 4, "num_layers": 1, "in_out_mult": 10, "seed": 43}
+{"index": 25, "run_id": "WRR-HPEXT-20260902-I25", "role": "sub_state_dim_seed44", "lr": 0.01, "hidden_size": 4, "num_layers": 1, "in_out_mult": 10, "seed": 44}
+=== VERIFY_DEPLOYED_TREE ===
+checked 62 files, mismatches=0
+=== CURRENT_LOAD ===
+220434_18|wrrhp-small
+220434_19|wrrhp-small
+220454_20|wrrhp-tiny
+220454_22|wrrhp-tiny
+220490|id33_T1
+220491|id33_T2
+220492|id33_T3
+220493|id33_T4
+220494|id33_T5
+220495|id33_L33
+=== SUBMIT ===
+Submitted batch job 220535
+h4_job_id=220535
+JOBID|NAME|STATE|PARTITION|NODELIST(REASON)
+220535_[23-25]|wrrhp-h4|PENDING|hgpu2p|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T15:47:10+0800
