@@ -1,0 +1,43 @@
+### channel=id33-transformer-recipe-repair seq=5
+### host=login4
+### started=2026-09-04T15:46:00+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-04T15:46:00+0800
+=== A. BEFORE ===
+    JOBID       NAME      PARTITION ST       NODELIST(REASON)           START_TIME
+   220495   id33_L33         hgpu2p PD            (Resources)  2026-09-05T11:12:47
+-- confirm it is still PENDING before touching it --
+state=PD
+=== B. hgpu2 CAPACITY AND CARD TYPE CHECK ===
+ PARTITION    NODES    STATE             NODELIST
+     hgpu2        1      mix               ngu003
+     hgpu2        1     idle               ngu009
+=== C. WIDEN PARTITION LIST (220495 ONLY) ===
+UPDATE_ISSUED
+=== D. AFTER ===
+    JOBID       NAME      PARTITION ST       NODELIST(REASON)           START_TIME
+   220495   id33_L33   hgpu2p,hgpu2 PD            (Resources)  2026-09-05T11:12:47
+=== E. NOTHING ELSE MOVED ===
+    JOBID         NAME      PARTITION ST        TIME     NODELIST(REASON)
+   220495     id33_L33   hgpu2p,hgpu2 PD        0:00          (Resources)
+   220494      id33_T5         hgpu2p  R       23:16               ngu011
+   220492      id33_T3         hgpu2p  R       37:24               ngu005
+   220493      id33_T4         hgpu2p  R       37:24               ngu005
+   220491      id33_T2         hgpu2p  R       38:57               ngu001
+   220490      id33_T1         hgpu2p  R       53:29               ngu004
+=== F. DEAD JOBS SITTING IN THE QUEUE (report only, do not touch) ===
+   202229   N22-agg-eval     (DependencyNeverSatisfied)
+   202507 N22-mask-iso-5     (DependencyNeverSatisfied)
+   215429  id30_m01_s100     (DependencyNeverSatisfied)
+   202293   N22-manifest                  (JobHeldUser)
+=== G. ID33 PROGRESS ===
+  T1: epochs_validated=4 last_NSE=0.53393
+  T2: epochs_validated=3 last_NSE=0.51462
+  T3: epochs_validated=3 last_NSE=0.54050
+  T4: epochs_validated=3 last_NSE=0.68942
+  T5: epochs_validated=1 last_NSE=0.52340
+ID33_PARTITION_SEQ5_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T15:46:00+0800
