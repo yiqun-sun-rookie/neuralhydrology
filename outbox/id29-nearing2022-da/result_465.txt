@@ -1,0 +1,182 @@
+### channel=id29-nearing2022-da seq=465
+### host=login4
+### started=2026-09-04T14:47:08+0800
+### ---------- output ----------
+=== JOB 220489 STATUS ===
+2026-09-04T14:47:08+0800
+220489|N22-replv2b|COMPLETED|0:0|00:00:08|2026-09-04T14:44:29|2026-09-04T14:44:37|ngu104
+=== JOB 220489 LOGS ===
+--- /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2b_220489.out ---
+5157|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2b_220489.out
+384bb66c621044c3f8cdea5521bed50cc8e3666ebd1f9b59e829b2c0dee950fd  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2b_220489.out
+{"artifact_reproduction_byte_identical": true, "artifact_verification_sha256": "eb38dde0933ab477935832e5e1f2378d26a18a7015c8a2538a3dede7744c0d55", "joint_entry_gate_passed": true, "pair_runner_adaptation_permitted": true, "pair_training_submission_permitted": false, "registered_matrix_modified": false, "repair_scope": "validate mask-isolation stdout against its documented conclusion-only output", "replacement_job_ids": ["202510", "202511"], "scheduler_gate_sha256": "c0c839b4f7550fa51f40694c069b6e9e8ff37f222fac43af341871fb94a112aa", "schema": "nearing2022-warmup-target-replacement-joint-gate-v1", "slurm_wrapper_sha256": "1fac45e6f02f220593bf05f0c52cf67cec5bcc5a88fa5df3bc7a450a5003e801", "supersedes_failed_verification_job_id": "220487", "verification_job_id": "220489", "verifier_sha256": "0b971f3b4d98d70184b0ba4c268e61d5b7173776719c662b52eb4cb3893e7969"}
+{"manifest_sha256": "9193a16a1bb96abab1c6fab0990a6aa99addc4974bc29353ce30839bf87d9d4b"}
+9193a16a1bb96abab1c6fab0990a6aa99addc4974bc29353ce30839bf87d9d4b  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/.replacement_verification_v2.preparing-220489/artifact_manifest.json
+eb38dde0933ab477935832e5e1f2378d26a18a7015c8a2538a3dede7744c0d55  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/.replacement_verification_v2.preparing-220489/artifact_verification_1.json
+eb38dde0933ab477935832e5e1f2378d26a18a7015c8a2538a3dede7744c0d55  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/.replacement_verification_v2.preparing-220489/artifact_verification_2.json
+cdd8383d1e54f211f70a55e1b17d1ed7dceac433a0d311fc57c6cbd315db0e3f  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/.replacement_verification_v2.preparing-220489/artifact_verification_stdout_1.json
+cdd8383d1e54f211f70a55e1b17d1ed7dceac433a0d311fc57c6cbd315db0e3f  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/.replacement_verification_v2.preparing-220489/artifact_verification_stdout_2.json
+6943f1a01f45a638853054388c4adda89e1094e2093db7bc7166fc995687e694  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/.replacement_verification_v2.preparing-220489/joint_gate.json
+1fac45e6f02f220593bf05f0c52cf67cec5bcc5a88fa5df3bc7a450a5003e801  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/.replacement_verification_v2.preparing-220489/run_replacement_verifier_v2_2.slurm
+c0c839b4f7550fa51f40694c069b6e9e8ff37f222fac43af341871fb94a112aa  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/.replacement_verification_v2.preparing-220489/scheduler_gate.json
+62a21e481cd02e2f90c52219e92ee83ce9db1888d75d52015acac72fec71be5d  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/.replacement_verification_v2.preparing-220489/scheduler_rows.txt
+0b971f3b4d98d70184b0ba4c268e61d5b7173776719c662b52eb4cb3893e7969  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/.replacement_verification_v2.preparing-220489/verify_warmup_target_replacement_chain_v2.py
+JobId=220489 JobName=N22-replv2b
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=INVALID TimeLimit=00:30:00 TimeMin=N/A
+   SubmitTime=2026-09-04T14:44:19 EligibleTime=2026-09-04T14:44:19
+   AccrueTime=2026-09-04T14:44:19
+   StartTime=2026-09-04T14:44:29 EndTime=2026-09-04T15:14:29 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-04T14:44:29
+   Partition=hgpu4 AllocNode:Sid=login04:721
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=ngu104
+   BatchHost=ngu104
+   NumNodes=1 NumCPUs=2 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=2,node=1,billing=2
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_pair_v2_20260904/run_replacement_verifier_v2_2.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2b_220489.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2b_220489.out
+   Power=
+
+final=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2
+--- /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2b_220489.err ---
+0|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2b_220489.err
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2b_220489.err
+=== FINAL VERIFICATION OUTPUT ===
+FINAL_PRESENT /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2
+artifact_manifest.json|f|1613
+artifact_verification_1.json|f|10669
+artifact_verification_2.json|f|10669
+artifact_verification_stdout_1.json|f|9379
+artifact_verification_stdout_2.json|f|9379
+joint_gate.json|f|908
+run_replacement_verifier_v2_2.slurm|f|7022
+scheduler_gate.json|f|674
+scheduler_rows.txt|f|136
+verify_warmup_target_replacement_chain_v2.py|f|29988
+9193a16a1bb96abab1c6fab0990a6aa99addc4974bc29353ce30839bf87d9d4b  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2/artifact_manifest.json
+eb38dde0933ab477935832e5e1f2378d26a18a7015c8a2538a3dede7744c0d55  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2/artifact_verification_1.json
+eb38dde0933ab477935832e5e1f2378d26a18a7015c8a2538a3dede7744c0d55  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2/artifact_verification_2.json
+cdd8383d1e54f211f70a55e1b17d1ed7dceac433a0d311fc57c6cbd315db0e3f  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2/artifact_verification_stdout_1.json
+cdd8383d1e54f211f70a55e1b17d1ed7dceac433a0d311fc57c6cbd315db0e3f  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2/artifact_verification_stdout_2.json
+6943f1a01f45a638853054388c4adda89e1094e2093db7bc7166fc995687e694  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2/joint_gate.json
+1fac45e6f02f220593bf05f0c52cf67cec5bcc5a88fa5df3bc7a450a5003e801  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2/run_replacement_verifier_v2_2.slurm
+c0c839b4f7550fa51f40694c069b6e9e8ff37f222fac43af341871fb94a112aa  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2/scheduler_gate.json
+62a21e481cd02e2f90c52219e92ee83ce9db1888d75d52015acac72fec71be5d  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2/scheduler_rows.txt
+0b971f3b4d98d70184b0ba4c268e61d5b7173776719c662b52eb4cb3893e7969  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification_v2/verify_warmup_target_replacement_chain_v2.py
+ARTIFACT_JSON_BYTE_IDENTICAL=yes
+ARTIFACT_STDOUT_BYTE_IDENTICAL=yes
+--- scheduler_gate.json ---
+{
+  "jobs": [
+    {
+      "end": "2026-08-13T06:46:43",
+      "exit_code": "0:0",
+      "job_id": "202510",
+      "node_list": "ngu104",
+      "start": "2026-08-13T06:41:35",
+      "state": "COMPLETED"
+    },
+    {
+      "end": "2026-08-13T06:52:05",
+      "exit_code": "0:0",
+      "job_id": "202511",
+      "node_list": "ngu104",
+      "start": "2026-08-13T06:46:43",
+      "state": "COMPLETED"
+    }
+  ],
+  "registered_matrix_modified": false,
+  "required_submission_dependency": "afterok:202511",
+  "scheduler_gate_passed": true,
+  "schema": "nearing2022-warmup-target-replacement-scheduler-gate-v1",
+  "verification_job_id": "220489",
+  "verification_node": "ngu104"
+}
+--- joint_gate.json ---
+{
+  "artifact_reproduction_byte_identical": true,
+  "artifact_verification_sha256": "eb38dde0933ab477935832e5e1f2378d26a18a7015c8a2538a3dede7744c0d55",
+  "joint_entry_gate_passed": true,
+  "pair_runner_adaptation_permitted": true,
+  "pair_training_submission_permitted": false,
+  "registered_matrix_modified": false,
+  "repair_scope": "validate mask-isolation stdout against its documented conclusion-only output",
+  "replacement_job_ids": [
+    "202510",
+    "202511"
+  ],
+  "scheduler_gate_sha256": "c0c839b4f7550fa51f40694c069b6e9e8ff37f222fac43af341871fb94a112aa",
+  "schema": "nearing2022-warmup-target-replacement-joint-gate-v1",
+  "slurm_wrapper_sha256": "1fac45e6f02f220593bf05f0c52cf67cec5bcc5a88fa5df3bc7a450a5003e801",
+  "supersedes_failed_verification_job_id": "220487",
+  "verification_job_id": "220489",
+  "verifier_sha256": "0b971f3b4d98d70184b0ba4c268e61d5b7173776719c662b52eb4cb3893e7969"
+}
+--- artifact_manifest.json ---
+{
+  "file_count": 9,
+  "files": [
+    {
+      "bytes": 10669,
+      "path": "artifact_verification_1.json",
+      "sha256": "eb38dde0933ab477935832e5e1f2378d26a18a7015c8a2538a3dede7744c0d55"
+    },
+    {
+      "bytes": 10669,
+      "path": "artifact_verification_2.json",
+      "sha256": "eb38dde0933ab477935832e5e1f2378d26a18a7015c8a2538a3dede7744c0d55"
+    },
+    {
+      "bytes": 9379,
+      "path": "artifact_verification_stdout_1.json",
+      "sha256": "cdd8383d1e54f211f70a55e1b17d1ed7dceac433a0d311fc57c6cbd315db0e3f"
+    },
+    {
+      "bytes": 9379,
+      "path": "artifact_verification_stdout_2.json",
+      "sha256": "cdd8383d1e54f211f70a55e1b17d1ed7dceac433a0d311fc57c6cbd315db0e3f"
+    },
+    {
+      "bytes": 908,
+      "path": "joint_gate.json",
+      "sha256": "6943f1a01f45a638853054388c4adda89e1094e2093db7bc7166fc995687e694"
+    },
+    {
+      "bytes": 7022,
+      "path": "run_replacement_verifier_v2_2.slurm",
+      "sha256": "1fac45e6f02f220593bf05f0c52cf67cec5bcc5a88fa5df3bc7a450a5003e801"
+    },
+    {
+      "bytes": 674,
+      "path": "scheduler_gate.json",
+      "sha256": "c0c839b4f7550fa51f40694c069b6e9e8ff37f222fac43af341871fb94a112aa"
+    },
+    {
+      "bytes": 136,
+      "path": "scheduler_rows.txt",
+      "sha256": "62a21e481cd02e2f90c52219e92ee83ce9db1888d75d52015acac72fec71be5d"
+    },
+    {
+      "bytes": 29988,
+      "path": "verify_warmup_target_replacement_chain_v2.py",
+      "sha256": "0b971f3b4d98d70184b0ba4c268e61d5b7173776719c662b52eb4cb3893e7969"
+    }
+  ],
+  "schema": "nearing2022-warmup-target-replacement-verification-manifest-v1",
+  "total_bytes": 78824
+}
+{"artifact_count": 37, "entry_artifact_gate_passed": true, "payloads_equal": true, "registered_matrix_modified": false, "replacement_jobs": null, "schema": "nearing2022-warmup-target-replacement-independent-verification-v2"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T14:47:08+0800
