@@ -1,0 +1,356 @@
+{
+  "authorization_id": "ZJ-5S5T-V2-STAGE-A-HPC-20260904-01",
+  "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+  "dataset_config_document": {
+    "conversion_rule": "time_utc_equals_time_beijing_minus_8_hours",
+    "dataset_version": "water_level_model_input_v7_beijing_realtime_verified",
+    "expected_future_evidence_count": 98,
+    "expected_realtime_input_missing_count": 1136,
+    "expected_retrospective_invalid_count": 152,
+    "expected_retrospective_target_missing_count": 1288,
+    "expected_station_row_count": 467752,
+    "forbidden_realtime_feature_fields": [
+      "TARGET_STAGE",
+      "stage_quality_controlled_m",
+      "is_invalid_observation",
+      "is_missing_for_target",
+      "is_missing_for_model_retrospective",
+      "decision_type",
+      "reason_code",
+      "reason",
+      "evidence_reference",
+      "evidence_time_beijing",
+      "evidence_stage_m",
+      "evidence_difference_m",
+      "evidence_source_file",
+      "evidence_source_sheet",
+      "evidence_source_row",
+      "station_code",
+      "station_name",
+      "source_file",
+      "source_sheet",
+      "source_row"
+    ],
+    "historical_publication_minute_status": "unverified",
+    "interface_time_basis": "coordinated_universal_time_with_utc_plus_00_00_offset",
+    "interface_time_column": "time_utc",
+    "missing_value_filling": "none",
+    "model_time_basis": "beijing_time_with_utc_plus_08_00_offset",
+    "model_time_column": "TIME",
+    "numeric_model_feature_allowlist": [
+      "STAGE"
+    ],
+    "realtime_feature_directory": "realtime_features",
+    "realtime_feature_fields": [
+      "TIME",
+      "STAGE",
+      "time_beijing",
+      "time_utc",
+      "is_missing_for_model"
+    ],
+    "realtime_input_rule": "original_observation_only",
+    "retrospective_evidence_location": "audit_directory_only_not_under_model_dataset",
+    "retrospective_target_directory": "retrospective_targets",
+    "retrospective_target_fields": [
+      "TIME",
+      "TARGET_STAGE",
+      "time_beijing",
+      "time_utc",
+      "is_missing_for_target"
+    ],
+    "source_dataset_version": "water_level_model_input_v1",
+    "source_provenance_location": "audit_directory_only_not_under_model_dataset",
+    "station_metadata": {
+      "datong": {
+        "rows": 73312,
+        "station_code": "datong",
+        "station_name": "\u5927\u901a"
+      },
+      "jiangyin": {
+        "rows": 78888,
+        "station_code": "60117000",
+        "station_name": "\u6c5f\u9634"
+      },
+      "nanjing": {
+        "rows": 78888,
+        "station_code": "60116200",
+        "station_name": "\u5357\u4eac"
+      },
+      "wusongkou": {
+        "rows": 78888,
+        "station_code": "63401750",
+        "station_name": "\u5434\u6dde\u53e3"
+      },
+      "xuliujing": {
+        "rows": 78888,
+        "station_code": "60117400",
+        "station_name": "\u5f90\u516d\u6cfe"
+      },
+      "zhenjiang": {
+        "rows": 78888,
+        "station_code": "60116601",
+        "station_name": "\u9547\u6c5f"
+      }
+    },
+    "target_rule": "retrospective_quality_control_excludes_confirmed_invalid_targets",
+    "water_level_source_time_status": "assumed_beijing_time_by_user_no_file_level_timezone_evidence",
+    "weather_data_included": false
+  },
+  "files": {
+    "dataset_config.json": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\dataset_config.json",
+      "byte_count": 2854,
+      "content_sha256": "63b2d3a33b249e1f598db2a1ffb2096c9d9006b366e4e913d594f74a6881d492",
+      "data_row_count": 0,
+      "verification_scope": "full_file"
+    },
+    "realtime_features/datong_realtime_features.csv": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\realtime_features\\datong_realtime_features.csv",
+      "byte_count": 4701303,
+      "content_sha256": "8771742f9b0fe8ae4f933a99b7ea2d6ac5b6ea038352ab1d20d16dfa02679510",
+      "data_row_count": 52584,
+      "verification_scope": "header_plus_52584_rows"
+    },
+    "realtime_features/jiangyin_realtime_features.csv": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\realtime_features\\jiangyin_realtime_features.csv",
+      "byte_count": 4673156,
+      "content_sha256": "c6568bac636cf8037d808ee9728751aa9e031e0f91b1d1771892acfe5fb2b51a",
+      "data_row_count": 52584,
+      "verification_scope": "header_plus_52584_rows"
+    },
+    "realtime_features/nanjing_realtime_features.csv": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\realtime_features\\nanjing_realtime_features.csv",
+      "byte_count": 4673779,
+      "content_sha256": "a2f6fc0d4978132839d597f06d1912fee35fad526f7ef3dfb0929f78cf82f1fa",
+      "data_row_count": 52584,
+      "verification_scope": "header_plus_52584_rows"
+    },
+    "realtime_features/wusongkou_realtime_features.csv": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\realtime_features\\wusongkou_realtime_features.csv",
+      "byte_count": 4671049,
+      "content_sha256": "b3dc0c759a0adbb34d1011f288528394c0c27a134c59725591e653b82a4d9a5b",
+      "data_row_count": 52584,
+      "verification_scope": "header_plus_52584_rows"
+    },
+    "realtime_features/xuliujing_realtime_features.csv": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\realtime_features\\xuliujing_realtime_features.csv",
+      "byte_count": 4673755,
+      "content_sha256": "cf23dda4b80b81da257872429b61928eec211d2fba47bc73e8643fde80133586",
+      "data_row_count": 52584,
+      "verification_scope": "header_plus_52584_rows"
+    },
+    "realtime_features/zhenjiang_realtime_features.csv": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\realtime_features\\zhenjiang_realtime_features.csv",
+      "byte_count": 4703128,
+      "content_sha256": "4a46bc94cb0d0d735c84043e28eae9d8c2b0610fd478dbefafa017f8d1f45704",
+      "data_row_count": 52584,
+      "verification_scope": "header_plus_52584_rows"
+    },
+    "retrospective_targets/jiangyin_retrospective_targets.csv": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\retrospective_targets\\jiangyin_retrospective_targets.csv",
+      "byte_count": 4674038,
+      "content_sha256": "922157f3294822f86a58d1f590cd0c54eb3b7529beeb957bc53192126b211891",
+      "data_row_count": 52584,
+      "verification_scope": "header_plus_52584_rows"
+    },
+    "retrospective_targets/nanjing_retrospective_targets.csv": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\retrospective_targets\\nanjing_retrospective_targets.csv",
+      "byte_count": 4674734,
+      "content_sha256": "9e0d1bdd950326bc1c11e05bfcc26ecf6ac847a2e15d01c7cdc49d79644c14b4",
+      "data_row_count": 52584,
+      "verification_scope": "header_plus_52584_rows"
+    },
+    "retrospective_targets/wusongkou_retrospective_targets.csv": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\retrospective_targets\\wusongkou_retrospective_targets.csv",
+      "byte_count": 4671875,
+      "content_sha256": "ecba8ddbb6f1fca085194794c55041f45166975fb467074188c9acabb7056d78",
+      "data_row_count": 52584,
+      "verification_scope": "header_plus_52584_rows"
+    },
+    "retrospective_targets/xuliujing_retrospective_targets.csv": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\retrospective_targets\\xuliujing_retrospective_targets.csv",
+      "byte_count": 4674687,
+      "content_sha256": "4344b95978c5308cb22bbd3b39e703e9ac6f8daf7973d2a4089c54ef212eb9f8",
+      "data_row_count": 52584,
+      "verification_scope": "header_plus_52584_rows"
+    },
+    "retrospective_targets/zhenjiang_retrospective_targets.csv": {
+      "absolute_source_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\data\\processed\\water_level_model_input_v7_beijing_realtime_verified\\retrospective_targets\\zhenjiang_retrospective_targets.csv",
+      "byte_count": 4703632,
+      "content_sha256": "17d897dea5b3599717b1ad2bfd9520ae7e1900d1c9247e27b4d542f2701de937",
+      "data_row_count": 52584,
+      "verification_scope": "header_plus_52584_rows"
+    }
+  },
+  "forbidden_2023_data_row_reads": 0,
+  "forbidden_2024_data_row_reads": 0,
+  "materialized_prefix_bundle": {
+    "byte_count": 5778413,
+    "member_count": 12,
+    "path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\migration_packages\\zhenjiang_five_source_five_target_stage_a_hpc_v2_identity_registration\\zhenjiang_2017_2022_prefixes.tar.gz",
+    "sha256": "7d419119c623efc3fc59591acbd4490c654c6e5fe2c07da8fc331681925746fe"
+  },
+  "purpose": "formal_identity_registration_2017_2022",
+  "schema_version": 2,
+  "time_partition": "2017-01-01T00:00:00+08:00_through_2022-12-31T23:00:00+08:00",
+  "usage_ledger_logical_snapshot": [
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 2854,
+      "content_sha256": "63b2d3a33b249e1f598db2a1ffb2096c9d9006b366e4e913d594f74a6881d492",
+      "data_row_count": 0,
+      "event_id": 1,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:54:11.572346+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "dataset_config.json",
+      "reserved_at_utc": "2026-09-04T13:54:11.561373+00:00",
+      "state": "COMPLETED"
+    },
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 4701303,
+      "content_sha256": "8771742f9b0fe8ae4f933a99b7ea2d6ac5b6ea038352ab1d20d16dfa02679510",
+      "data_row_count": 52584,
+      "event_id": 2,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:54:17.645825+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "realtime_features/datong_realtime_features.csv",
+      "reserved_at_utc": "2026-09-04T13:54:11.576364+00:00",
+      "state": "COMPLETED"
+    },
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 4673779,
+      "content_sha256": "a2f6fc0d4978132839d597f06d1912fee35fad526f7ef3dfb0929f78cf82f1fa",
+      "data_row_count": 52584,
+      "event_id": 3,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:54:24.526144+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "realtime_features/nanjing_realtime_features.csv",
+      "reserved_at_utc": "2026-09-04T13:54:17.651835+00:00",
+      "state": "COMPLETED"
+    },
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 4703128,
+      "content_sha256": "4a46bc94cb0d0d735c84043e28eae9d8c2b0610fd478dbefafa017f8d1f45704",
+      "data_row_count": 52584,
+      "event_id": 4,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:54:31.663286+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "realtime_features/zhenjiang_realtime_features.csv",
+      "reserved_at_utc": "2026-09-04T13:54:24.535129+00:00",
+      "state": "COMPLETED"
+    },
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 4673156,
+      "content_sha256": "c6568bac636cf8037d808ee9728751aa9e031e0f91b1d1771892acfe5fb2b51a",
+      "data_row_count": 52584,
+      "event_id": 5,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:54:38.497823+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "realtime_features/jiangyin_realtime_features.csv",
+      "reserved_at_utc": "2026-09-04T13:54:31.672540+00:00",
+      "state": "COMPLETED"
+    },
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 4673755,
+      "content_sha256": "cf23dda4b80b81da257872429b61928eec211d2fba47bc73e8643fde80133586",
+      "data_row_count": 52584,
+      "event_id": 6,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:54:45.193555+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "realtime_features/xuliujing_realtime_features.csv",
+      "reserved_at_utc": "2026-09-04T13:54:38.503134+00:00",
+      "state": "COMPLETED"
+    },
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 4671049,
+      "content_sha256": "b3dc0c759a0adbb34d1011f288528394c0c27a134c59725591e653b82a4d9a5b",
+      "data_row_count": 52584,
+      "event_id": 7,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:54:51.456194+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "realtime_features/wusongkou_realtime_features.csv",
+      "reserved_at_utc": "2026-09-04T13:54:45.197947+00:00",
+      "state": "COMPLETED"
+    },
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 4674734,
+      "content_sha256": "9e0d1bdd950326bc1c11e05bfcc26ecf6ac847a2e15d01c7cdc49d79644c14b4",
+      "data_row_count": 52584,
+      "event_id": 8,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:54:58.055080+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "retrospective_targets/nanjing_retrospective_targets.csv",
+      "reserved_at_utc": "2026-09-04T13:54:51.460421+00:00",
+      "state": "COMPLETED"
+    },
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 4703632,
+      "content_sha256": "17d897dea5b3599717b1ad2bfd9520ae7e1900d1c9247e27b4d542f2701de937",
+      "data_row_count": 52584,
+      "event_id": 9,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:55:05.983874+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "retrospective_targets/zhenjiang_retrospective_targets.csv",
+      "reserved_at_utc": "2026-09-04T13:54:58.064081+00:00",
+      "state": "COMPLETED"
+    },
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 4674038,
+      "content_sha256": "922157f3294822f86a58d1f590cd0c54eb3b7529beeb957bc53192126b211891",
+      "data_row_count": 52584,
+      "event_id": 10,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:55:14.298412+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "retrospective_targets/jiangyin_retrospective_targets.csv",
+      "reserved_at_utc": "2026-09-04T13:55:05.994933+00:00",
+      "state": "COMPLETED"
+    },
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 4674687,
+      "content_sha256": "4344b95978c5308cb22bbd3b39e703e9ac6f8daf7973d2a4089c54ef212eb9f8",
+      "data_row_count": 52584,
+      "event_id": 11,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:55:23.135104+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "retrospective_targets/xuliujing_retrospective_targets.csv",
+      "reserved_at_utc": "2026-09-04T13:55:14.307353+00:00",
+      "state": "COMPLETED"
+    },
+    {
+      "authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+      "byte_count": 4671875,
+      "content_sha256": "ecba8ddbb6f1fca085194794c55041f45166975fb467074188c9acabb7056d78",
+      "data_row_count": 52584,
+      "event_id": 12,
+      "failure": null,
+      "finished_at_utc": "2026-09-04T13:55:31.412729+00:00",
+      "purpose": "formal_identity_registration_2017_2022",
+      "relative_path": "retrospective_targets/wusongkou_retrospective_targets.csv",
+      "reserved_at_utc": "2026-09-04T13:55:23.144157+00:00",
+      "state": "COMPLETED"
+    }
+  ],
+  "usage_ledger_logical_snapshot_sha256": "c0e6724c1405f72b737173d45461a1fe70ba7c3582a158b11e026b9bf847d7f5",
+  "usage_ledger_path": "G:\\github\\pycharm\\projects\\zhenjiang_stage_forecast\\migration_packages\\zhenjiang_five_source_five_target_stage_a_hpc_v2_identity_registration\\identity_registration_usage.sqlite3"
+}
