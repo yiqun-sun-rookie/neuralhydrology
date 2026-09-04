@@ -1,34 +1,56 @@
 #!/usr/bin/env bash
-# ID33 seq=9 : (1) pin down exactly which source files changed under the running arms,
-# (2) return L33 epoch-030 per-basin NSE, (3) return the D01/B01 ID30 baseline per-basin NSE (READ ONLY).
+# ID33 seq=7 : is anything of mine HELD but not USED? Read-only.
 set -o pipefail
-ID33=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
-ID30=/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo
-cd "$ID33" 2>/dev/null || { echo NO_LANDING; exit 0; }
-echo "=== A. STAMP ==="; date -Is
-echo "=== B. WHICH SOURCE FILES DIFFER (L33 before vs after) ==="
-python - <<'PY' 2>&1 || true
-import json,glob
-p=glob.glob('results/33_transformer_recipe_repair/_invocations/id33_L33_s100_slurm220495/run_manifest.json')
-d=json.load(open(p[0]))
-b=d.get('source_integrity_before',{}); a=d.get('source_integrity_after',{})
-bf=b.get('files',{}); af=a.get('files',{})
-for k in sorted(set(bf)|set(af)):
-    if bf.get(k)!=af.get(k):
-        print('DIFF', k); print('   before',bf.get(k)); print('   after ',af.get(k))
-print('config_file before',b.get('config_file'))
-print('config_file after ',a.get('config_file'))
-PY
-echo "=== C. GIT STATE OF LANDING REPO (read only) ==="
-git -C "$ID33" status --porcelain 2>&1 | head -30 || true
-echo "=== D. L33 EPOCH 030 PER-BASIN NSE ==="
-F=$(ls results/33_transformer_recipe_repair/L33/*/validation/model_epoch030/validation_metrics.csv 2>/dev/null | head -1)
-echo "file=$F"; sha256sum "$F" 2>&1 || true; wc -l "$F" 2>&1 || true
-echo "--BEGIN_L33--"; cat "$F" 2>/dev/null || true; echo "--END_L33--"
-echo "=== E. ID30 BASELINE TABLES (read only) ==="
-for ARM in B01 D01; do
-  G=$(ls "$ID30"/results/30_modern_transformer_moe/$ARM/*/validation/model_epoch030/validation_metrics.csv 2>/dev/null | head -1)
-  echo "arm=$ARM file=$G"; sha256sum "$G" 2>&1 || true; wc -l "$G" 2>&1 || true
-  echo "--BEGIN_$ARM--"; cat "$G" 2>/dev/null || true; echo "--END_$ARM--"
+echo "=== STAMP ==="; date -Is
+NOW=$(date +%s)
+
+echo "=== A. WHAT I HOLD (AllocTRES per running job) ==="
+for J in 220490 220491 220492 220493 220494 220495 220658 220659; do
+  line=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | grep -E '^(JobId|JobState|NumCPUs|NumNodes|TRES|StdOut|NodeList)=' | tr '\n' ' ')
+  echo "  $line"
 done
-echo ID33_SEQ9_COMPLETE
+
+echo "=== B. LOG STALENESS (the documented silent-stall signature) ==="
+for J in 220490 220491 220492 220493 220494 220495 220658 220659; do
+  ST=$(squeue -j "$J" -h -o "%t" 2>/dev/null)
+  SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
+  if [ "$ST" = "R" ] && [ -n "$SO" ] && [ -f "$SO" ]; then
+    AGE=$(( NOW - $(stat -c %Y "$SO") ))
+    FLAG=OK; [ "$AGE" -gt 3600 ] && FLAG="SUSPECT_STALL"
+    echo "  job=$J state=$ST idle_seconds=$AGE $FLAG"
+  else
+    echo "  job=$J state=${ST:-notqueued} (no running stdout to age)"
+  fi
+done
+
+echo "=== C. ARE THE TRAINING LOGS ACTUALLY ADVANCING ==="
+R=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/results/33_transformer_recipe_repair
+for a in T1 T2 T3 T4 T5 L33 C1 C2; do
+  f=$(find "$R/$a" -name output.log -type f 2>/dev/null | head -1)
+  if test -n "$f"; then
+    AGE=$(( NOW - $(stat -c %Y "$f") ))
+    n=$(grep -c 'average validation loss' "$f" 2>/dev/null || true)
+    last=$(grep 'Median validation metrics' "$f" 2>/dev/null | tail -1 | sed 's/.*NSE: //')
+    echo "  $a: epochs=${n:-0} last_NSE=${last:-none} log_idle=${AGE}s"
+  else echo "  $a: no log"; fi
+done
+
+echo "=== D. EPOCH WALL TIME (is the larger batch actually using the card?) ==="
+for a in T1 T4; do
+  f=$(find "$R/$a" -name output.log -type f 2>/dev/null | head -1)
+  test -n "$f" && { echo "  -- $a --"; grep -oE '^[0-9-]+ [0-9:]+.*Epoch [0-9]+ average loss' "$f" 2>/dev/null | awk '{print $1,$2,$NF,$4}' | tail -4 || true; }
+done
+echo "  (D01 reference at batch 64 was 12.8 min/epoch)"
+
+echo "=== E. DEAD JOBS: DO THEY HOLD ANYTHING? ==="
+for J in 202229 202293 202294 202315 202507 215429; do
+  s=$(squeue -j "$J" -h -o "%i %t %C %b %R" 2>/dev/null)
+  [ -n "$s" ] && echo "  $s" || echo "  $J not in queue"
+done
+echo "  (PD jobs reserve nothing; only R jobs hold resources)"
+
+echo "=== F. NODES I AM ON: HOW MUCH IS FREE BESIDE ME ==="
+for N in ngu001 ngu003 ngu004 ngu005 ngu011; do
+  scontrol show node "$N" 2>/dev/null | tr ' ' '\n' | grep -E '^(NodeName|CPUAlloc|CPUTot|AllocTRES|CfgTRES|State)=' | tr '\n' ' '; echo
+done
+echo ID33_UTILISATION_SEQ7_COMPLETE
