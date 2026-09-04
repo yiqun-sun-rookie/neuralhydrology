@@ -1,0 +1,67 @@
+### channel=id33-transformer-recipe-repair seq=11
+### host=login4
+### started=2026-09-04T20:43:04+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-04T20:43:04+0800
+=== A. WHAT C1 AND C2 HOLD (full TRES, not truncated) ===
+--- job 220658 ---
+JobId=220658
+JobState=RUNNING
+StartTime=2026-09-04T16:09:33
+NodeList=ngu201
+NumNodes=1
+NumCPUs=4
+TRES=cpu=4,node=1,billing=4
+TresPerNode=gpu:1
+--- job 220659 ---
+JobId=220659
+JobState=RUNNING
+StartTime=2026-09-04T16:09:33
+NodeList=ngu201
+NumNodes=1
+NumCPUs=4
+TRES=cpu=4,node=1,billing=4
+TresPerNode=gpu:1
+=== B. NODE ngu201 TOTALS: how many GPUs exist and how many are allocated ===
+NodeName=ngu201
+CPUAlloc=26
+CPUTot=64
+Gres=gpu:8
+State=MIXED
+CfgTRES=cpu=64,mem=1M,billing=64
+AllocTRES=cpu=26
+=== C. LIVE GPU USE INSIDE MY OWN ALLOCATION ===
+--- job 220658: nvidia-smi from inside the allocation ---
+srun: unrecognized option '--overlap'
+srun: unrecognized option '--overlap'
+Try "srun --help" for more information
+  srun --overlap unavailable on this job
+--- job 220659: nvidia-smi from inside the allocation ---
+srun: unrecognized option '--overlap'
+srun: unrecognized option '--overlap'
+Try "srun --help" for more information
+  srun --overlap unavailable on this job
+=== D. FOR CONTRAST, A 3090 ARM (T5 still running) ===
+srun: unrecognized option '--overlap'
+srun: unrecognized option '--overlap'
+Try "srun --help" for more information
+  unavailable
+=== E. WHO ELSE IS ON ngu201 (count only, PrivateData hides other users) ===
+220658 sunyiq gpu:1
+220659 sunyiq gpu:1
+  visible jobs on ngu201: 2
+=== F. MY TOTAL GPU FOOTPRINT RIGHT NOW ===
+220535_25 wrrhp-h4 gpu:1 1 ngu001
+220535_24 wrrhp-h4 gpu:1 1 ngu010
+220494 id33_T5 gpu:1 1 ngu011
+220535_23 wrrhp-h4 gpu:1 1 ngu004
+220663 tukf09-455-v2r10-neural gpu:1 1 ngu203
+220658 id33_C1 gpu:1 1 ngu201
+220659 id33_C2 gpu:1 1 ngu201
+220454_20 wrrhp-tiny gpu:1 1 ngu011
+220454_22 wrrhp-tiny gpu:1 1 ngu007
+ID33_GPU_FOOTPRINT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T20:43:04+0800
