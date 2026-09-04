@@ -1,0 +1,44 @@
+### channel=id33-transformer-recipe-repair seq=6
+### host=login4
+### started=2026-09-04T16:08:50+0800
+### ---------- output ----------
+=== A. STAMP ===
+2026-09-04T16:08:50+0800
+PAYLOAD_OK
+=== B. TREATMENT ARMS MUST BE UNDISTURBED ===
+    JOBID       NAME      PARTITION ST        TIME NODELIST(REASON)
+   220494    id33_T5         hgpu2p  R       46:06           ngu011
+   220492    id33_T3         hgpu2p  R     1:00:14           ngu005
+   220493    id33_T4         hgpu2p  R     1:00:14           ngu005
+   220491    id33_T2         hgpu2p  R     1:01:47           ngu001
+   220490    id33_T1         hgpu2p  R     1:16:19           ngu004
+   220495   id33_L33          hgpu2  R       22:11           ngu003
+=== C. OVERLAY CALIBRATION DELTA ===
+extracted
+810c88045cf6cef33a61b8350998d7af779fa163ecfad51add82f145243d529c  src/transformer_recipe_repair/configs/c1.yml
+ab392dd3fed78bd4aaaf0599328209cad306734664d7c0f8b56a08096888d6ca  src/transformer_recipe_repair/configs/c2.yml
+cef9a50828b482918d5b380d9c09d662ce568fa5b25363740575560bd88f655e  src/transformer_recipe_repair/hpc/submit_calibration_arm.slurm
+=== D. AUDIT ===
+ID33 CONFIG AUDIT: PASS (8 arms; one factor each; no data read; no training launched)
+=== E. hgpu8 STATE ===
+PARTITIO  NODES    STATE             NODELIST
+   hgpu8      2      mix         ngu[201-202]
+   hgpu8      1    alloc               ngu203
+=== F. SUBMIT C1 AND C2 TO hgpu8 ===
+  C1 -> 220658
+  C2 -> 220659
+SUBMITTED: C1:220658 C2:220659
+=== G. FULL QUEUE AFTER ===
+    JOBID       NAME      PARTITION ST        TIME NODELIST(REASON)
+   220658    id33_C1          hgpu8 PD        0:00           (None)
+   220659    id33_C2          hgpu8 PD        0:00           (None)
+   220494    id33_T5         hgpu2p  R       46:10           ngu011
+   220492    id33_T3         hgpu2p  R     1:00:18           ngu005
+   220493    id33_T4         hgpu2p  R     1:00:18           ngu005
+   220491    id33_T2         hgpu2p  R     1:01:51           ngu001
+   220490    id33_T1         hgpu2p  R     1:16:23           ngu004
+   220495   id33_L33          hgpu2  R       22:15           ngu003
+ID33_CALIB_SEQ6_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T16:08:54+0800
