@@ -1,0 +1,46 @@
+### channel=id29-nearing2022-da seq=461
+### host=login4
+### started=2026-09-04T14:18:02+0800
+### ---------- output ----------
+=== AUTHORIZED ACTION BOUNDARY ===
+deploy_new_files_only=yes
+single_verifier_wall_limit=00:30:00
+paired_training_submission_permitted=no
+=== RECHECK PAYLOAD AND SERVER GATES ===
+=== CREATE NEW VERSIONED PATHS ===
+0533a682b1892f71866222624b96b3df1829ba4aa5d233735af9f115c44fd6ec  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_pair_v2_20260904/prepare_warmup_target_pair_v2.py
+7ff105778ef1ad29ab1628ba62041834bacd4b91d6c675189b9f4328eb2d2e9e  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_pair_v2_20260904/run_replacement_verifier_v2_1.slurm
+=== STATIC WRAPPER CHECKS ===
+=== SUBMIT SINGLE VERIFIER ===
+Submitted batch job 220487
+VERIFIER_JOB_ID=220487
+JobId=220487 JobName=N22-replv2
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Priority Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A
+   SubmitTime=2026-09-04T14:18:41 EligibleTime=2026-09-04T14:18:41
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-04T14:18:41
+   Partition=hgpu4 AllocNode:Sid=login04:721
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=1,node=1,billing=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_pair_v2_20260904/run_replacement_verifier_v2_1.slurm
+   WorkDir=/data1/home/sunyiq/nearing2022_da
+   StdErr=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2_220487.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2_220487.out
+   Power=
+
+220487|N22-replv2|PENDING|0:00|30:00|(Priority)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T14:18:02+0800
