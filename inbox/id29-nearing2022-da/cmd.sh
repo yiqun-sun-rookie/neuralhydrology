@@ -1,4 +1,123 @@
 #!/bin/bash
+# seq=464: deploy the corrected replacement verifier chain and submit the one authorized <=30 minute verifier
+set -eo pipefail
+
+ROOT=/data1/home/sunyiq/nearing2022_da
+CHANNEL=id29-nearing2022-da
+PAYLOAD="$HOME/hpc_mailbox/inbox/$CHANNEL/payload/warmup_pair_v2_20260904_v2"
+FORMAL="$ROOT/results/29_nearing2022_da_ar/formal_closure"
+DEPLOY="$FORMAL/warmup_pair_v2_20260904"
+BASE="$FORMAL/diagnostics/warmup_pair_v2_20260904"
+LOGDIR="$BASE/logs"
+VERIFIER_NAME=verify_warmup_target_replacement_chain_v2.py
+PREPARER_NAME=prepare_warmup_target_pair_v2_1.py
+WRAPPER_NAME=run_replacement_verifier_v2_2.slurm
+VERIFIER_SHA=0b971f3b4d98d70184b0ba4c268e61d5b7173776719c662b52eb4cb3893e7969
+PREPARER_SHA=d0c977139fbb5e988b79349ab13bece04a081bbe6e8fdc34de55679838c6fff0
+WRAPPER_SHA=1fac45e6f02f220593bf05f0c52cf67cec5bcc5a88fa5df3bc7a450a5003e801
+BASEDATASET_SHA=4658816ea3110a1c2efcf54c3dcf00d5c0982459dca4f7ac985beb983b12df0d
+ORIGINAL_VERIFIER_SHA=0bcabc96f9e702f2317464f1f0123c29d49d5f7f0f972a10ea3e01bbf18fe987
+
+check_hash() {
+  file=$1
+  expected=$2
+  actual=$(sha256sum "$file" | awk '{print $1}')
+  test "$actual" = "$expected"
+  printf '%s  %s\n' "$actual" "$file"
+}
+
+echo "=== AUTHORIZED VERIFIER PRECHECK ==="
+date --iso-8601=seconds
+test -d "$ROOT"
+test -d "$PAYLOAD"
+test ! -L "$PAYLOAD"
+test -d "$DEPLOY"
+test ! -L "$DEPLOY"
+test -d "$BASE"
+test ! -L "$BASE"
+test -d "$LOGDIR"
+test ! -L "$LOGDIR"
+
+for name in "$VERIFIER_NAME" "$PREPARER_NAME" "$WRAPPER_NAME"; do
+  test -f "$PAYLOAD/$name"
+  test ! -L "$PAYLOAD/$name"
+  test ! -e "$DEPLOY/$name"
+  if LC_ALL=C grep -q $'\r' "$PAYLOAD/$name"; then
+    echo "CRLF_FORBIDDEN $PAYLOAD/$name"
+    exit 1
+  fi
+done
+check_hash "$PAYLOAD/$VERIFIER_NAME" "$VERIFIER_SHA"
+check_hash "$PAYLOAD/$PREPARER_NAME" "$PREPARER_SHA"
+check_hash "$PAYLOAD/$WRAPPER_NAME" "$WRAPPER_SHA"
+check_hash "$ROOT/neuralhydrology/datasetzoo/basedataset.py" "$BASEDATASET_SHA"
+check_hash "$ROOT/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py" "$ORIGINAL_VERIFIER_SHA"
+
+test -d "$BASE/.replacement_verification.preparing-220487"
+test -f "$LOGDIR/N22-replv2_220487.err"
+grep -Fq 'Mask audit stdout does not reproduce the published audit JSON' "$LOGDIR/N22-replv2_220487.err"
+test ! -e "$BASE/replacement_verification_v2"
+STAGING_COUNT=$(find "$BASE" -maxdepth 1 -name '.replacement_verification_v2.preparing-*' -print | wc -l)
+test "$STAGING_COUNT" -eq 0
+
+for job in 202510 202511; do
+  row=$(sacct -n -X -P -j "$job" --format=JobIDRaw,State,ExitCode | awk -F'|' -v expected="$job" '$1 == expected {print}')
+  test "$(printf '%s\n' "$row" | sed '/^$/d' | wc -l)" -eq 1
+  IFS='|' read -r job_id state exit_code <<<"$row"
+  test "$job_id" = "$job"
+  test "$state" = COMPLETED
+  test "$exit_code" = 0:0
+  echo "replacement_job=$job_id|$state|$exit_code"
+done
+
+CONFLICT=$(squeue -u sunyiq -h -o '%i|%j|%T|%R' | awk -F'|' '$2 == "N22-replv2b" {count++} END {print count+0}')
+test "$CONFLICT" -eq 0
+echo "conflicting_N22_replv2b_jobs=$CONFLICT"
+echo "=== HGPU4 LIVE VIEW ==="
+sinfo -N -p hgpu4 -h -o '%N|%T|%G|%f' || true
+
+echo "=== INSTALL NEW VERSIONED FILES ==="
+install -m 0644 "$PAYLOAD/$VERIFIER_NAME" "$DEPLOY/$VERIFIER_NAME"
+install -m 0644 "$PAYLOAD/$PREPARER_NAME" "$DEPLOY/$PREPARER_NAME"
+install -m 0644 "$PAYLOAD/$WRAPPER_NAME" "$DEPLOY/$WRAPPER_NAME"
+check_hash "$DEPLOY/$VERIFIER_NAME" "$VERIFIER_SHA"
+check_hash "$DEPLOY/$PREPARER_NAME" "$PREPARER_SHA"
+check_hash "$DEPLOY/$WRAPPER_NAME" "$WRAPPER_SHA"
+cmp "$PAYLOAD/$VERIFIER_NAME" "$DEPLOY/$VERIFIER_NAME"
+cmp "$PAYLOAD/$PREPARER_NAME" "$DEPLOY/$PREPARER_NAME"
+cmp "$PAYLOAD/$WRAPPER_NAME" "$DEPLOY/$WRAPPER_NAME"
+bash -n "$DEPLOY/$WRAPPER_NAME"
+python3 - "$DEPLOY/$VERIFIER_NAME" "$DEPLOY/$PREPARER_NAME" <<'PY'
+from pathlib import Path
+import sys
+
+for raw_path in sys.argv[1:]:
+    path = Path(raw_path)
+    compile(path.read_text(encoding="utf-8"), str(path), "exec")
+    print(f"python_compile_ok={path}")
+PY
+grep -Eq '^#SBATCH --partition=hgpu4$' "$DEPLOY/$WRAPPER_NAME"
+grep -Eq '^#SBATCH --time=00:30:00$' "$DEPLOY/$WRAPPER_NAME"
+if grep -Eq '^#SBATCH[[:space:]]+--mem(=|[[:space:]])' "$DEPLOY/$WRAPPER_NAME"; then
+  echo "FORBIDDEN_MEMORY_DIRECTIVE"
+  exit 1
+fi
+if grep -Eq '^[[:space:]]*set[[:space:]]+-[^[:space:]]*u' "$DEPLOY/$WRAPPER_NAME"; then
+  echo "FORBIDDEN_SET_U"
+  exit 1
+fi
+
+echo "=== SUBMIT EXACTLY ONE AUTHORIZED VERIFIER ==="
+SUBMIT_OUTPUT=$(sbatch "$DEPLOY/$WRAPPER_NAME")
+printf '%s\n' "$SUBMIT_OUTPUT"
+JOB_ID=$(printf '%s\n' "$SUBMIT_OUTPUT" | awk '/^Submitted batch job [0-9]+$/ {print $4}')
+test "$(printf '%s\n' "$JOB_ID" | sed '/^$/d' | wc -l)" -eq 1
+test -n "$JOB_ID"
+echo "submitted_job_id=$JOB_ID"
+squeue -j "$JOB_ID" -h -o '%i|%j|%T|%M|%L|%R' || true
+exit 0
+
+# seq=463 preserved below as unreachable channel history
 # seq=463: read-only diagnosis of the mask-audit stdout contract exposed by job 220487
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
