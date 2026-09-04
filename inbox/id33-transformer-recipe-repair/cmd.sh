@@ -2,15 +2,19 @@
 set -o pipefail
 ROOT=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
 echo "=== STAMP ==="; date -Is
-echo "=== CURRENT HASHES OF TRACKED IMPLEMENTATION FILES ==="
+echo "=== A. SACCT SIX ARMS + CALIBRATION ==="
+sacct -j 220490,220491,220492,220493,220494,220495,220658,220659 -X --format=JobID,JobName%14,State,ExitCode,Elapsed,NodeList 2>&1 || true
 cd $ROOT || exit 1
-for f in neuralhydrology/modelzoo/__init__.py neuralhydrology/modelzoo/cudalstm.py neuralhydrology/modelzoo/modern_causal_transformer.py neuralhydrology/modelzoo/recency_biased_transformer.py neuralhydrology/modelzoo/recipe_fixed_transformer.py neuralhydrology/utils/config.py src/transformer_recipe_repair/hpc/submit_repair_arm.slurm src/transformer_recipe_repair/registry/experiments.csv src/transformer_recipe_repair/scripts/audit_configs.py src/transformer_recipe_repair/scripts/run_development.py; do
-  sha256sum "$f" 2>&1 || true
+echo "=== B. C1/C2 LAST EPOCH LINES ==="
+for A in C1 C2; do
+  echo "--- $A"
+  f=$(ls -1t results/33_transformer_recipe_repair/_invocations/id33_${A}_s*/output.log 2>/dev/null | head -1)
+  echo "log=$f"
+  [ -n "$f" ] && tail -c 300000 "$f" | grep -E 'Median validation metrics' | tail -3 || true
 done
-echo "=== CONFIG HASHES ==="
-sha256sum src/transformer_recipe_repair/configs/*.yml 2>&1 || true
-echo "=== T5 MANIFEST TAIL ==="
-grep -E '"(error|status|training_return_code|run_id)"' results/33_transformer_recipe_repair/_invocations/id33_T5_s100_slurm220494/run_manifest.json | head -6 || true
-echo "=== T5 DATA ACCESS ==="
-grep -oE '"status": "[A-Z]+"' results/33_transformer_recipe_repair/_invocations/id33_T5_s100_slurm220494/run_manifest.json | head -4 || true
-echo "ID33_HASHCHECK_COMPLETE"
+echo "=== C. C1/C2 EPOCH30 FILE PRESENCE ==="
+for A in C1 C2; do
+  g=$(ls -1 results/33_transformer_recipe_repair/$A/*/validation/model_epoch030/validation_metrics.csv 2>/dev/null | head -1)
+  echo "$A epoch30=$g"
+done
+echo "ID33_WATCH_COMPLETE"
