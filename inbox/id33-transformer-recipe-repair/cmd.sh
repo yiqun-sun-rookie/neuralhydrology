@@ -2,20 +2,15 @@
 set -o pipefail
 ROOT=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
 echo "=== STAMP ==="; date -Is
-echo "=== A. SACCT ==="
-sacct -j 220494,220658,220659 -X --format=JobID%10,JobName%12,State%12,ExitCode%8,Elapsed%11,NodeList%9 2>&1 || true
-echo "=== B. T5 EPOCHS ==="
-f=$(ls -1 $ROOT/results/33_transformer_recipe_repair/T5/*/output.log 2>/dev/null | head -1)
-grep -E "Median validation" "$f" | tail -8 || true
-echo "=== C. T5 EPOCH30 DUMP ==="
-c=$(ls -1 $ROOT/results/33_transformer_recipe_repair/T5/*/validation/model_epoch030/validation_metrics.csv 2>/dev/null | head -1)
-echo "file=$c"
-echo "###ARM T5"
-awk -F, 'NR==1{for(i=1;i<=NF;i++){if($i=="basin")b=i;if($i=="NSE")n=i};next}{print $b","$n}' "$c" 2>/dev/null | head -540 || true
-echo "=== D. C1/C2 PROGRESS ==="
-for a in C1 C2; do
-  echo "--- $a"
-  g=$(ls -1 $ROOT/results/33_transformer_recipe_repair/$a/*/output.log 2>/dev/null | head -1)
-  grep -E "Median validation" "$g" | tail -3 || true
+echo "=== CURRENT HASHES OF TRACKED IMPLEMENTATION FILES ==="
+cd $ROOT || exit 1
+for f in neuralhydrology/modelzoo/__init__.py neuralhydrology/modelzoo/cudalstm.py neuralhydrology/modelzoo/modern_causal_transformer.py neuralhydrology/modelzoo/recency_biased_transformer.py neuralhydrology/modelzoo/recipe_fixed_transformer.py neuralhydrology/utils/config.py src/transformer_recipe_repair/hpc/submit_repair_arm.slurm src/transformer_recipe_repair/registry/experiments.csv src/transformer_recipe_repair/scripts/audit_configs.py src/transformer_recipe_repair/scripts/run_development.py; do
+  sha256sum "$f" 2>&1 || true
 done
-echo "ID33_T5_COMPLETE"
+echo "=== CONFIG HASHES ==="
+sha256sum src/transformer_recipe_repair/configs/*.yml 2>&1 || true
+echo "=== T5 MANIFEST TAIL ==="
+grep -E '"(error|status|training_return_code|run_id)"' results/33_transformer_recipe_repair/_invocations/id33_T5_s100_slurm220494/run_manifest.json | head -6 || true
+echo "=== T5 DATA ACCESS ==="
+grep -oE '"status": "[A-Z]+"' results/33_transformer_recipe_repair/_invocations/id33_T5_s100_slurm220494/run_manifest.json | head -4 || true
+echo "ID33_HASHCHECK_COMPLETE"
