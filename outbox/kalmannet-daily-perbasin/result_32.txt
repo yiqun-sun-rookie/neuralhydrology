@@ -1,0 +1,37 @@
+### channel=kalmannet-daily-perbasin seq=32
+### host=login4
+### started=2026-09-04T11:56:51+0800
+### ---------- output ----------
+=== READ-ONLY TASK 0: CORRECTION-CAP REPLAY FALSIFICATION (08070200) ===
+2026-09-04T11:56:51+0800
+login4
+channel=kalmannet-daily-perbasin sequence=32 purpose=read-only-cap-replay-no-optimizer
+signals_sent=0 submissions_created=0 files_modified=0 optimizer_steps=0 formal_evaluation_access=0 device=cpu
+4eb5f817d518546f06dcbd05522c4d416877a508e45ff623f162dd71ef9db03f  908882  epoch_049.pt
+e4d53ec2e51c74378a4ec87b5bd3d46f271966170cf1ff351c4f9c19fd4172c8  919971  epoch_057.pt
+epoch_057_identity=MATCHES_REGISTERED_AUDIT
+interpreter=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+python=3.11.13 torch=2.4.0 numpy=2.3.3
+epoch_zero_checkpoint_objective_728 = 0.8455348749210457
+runtime_ready state_dimension=11
+=== TASK 0 CRITERION: cap 3.0 on the 731-day validation rollout ===
+  epoch_057.pt completed_epoch=57 optimizer_steps=57 events=436050 payload_hash_ok=True
+epoch_057 capped               cap=3.0              objective_728=1.125276e+00 finite=True ratio=1.330845e+00  PASS
+      analysis_steps=731 saturated=277 of 8041 (3.4448 percent)
+  epoch_049.pt completed_epoch=49 optimizer_steps=49 events=374850 payload_hash_ok=True
+epoch_049 capped               cap=3.0              objective_728=1.081876e+00 finite=True ratio=1.279516e+00  PASS
+      analysis_steps=731 saturated=266 of 8041 (3.3080 percent)
+TASK_0_VERDICT=PASS  (pre-registered: both finite and ratio < 100)
+=== CONTROLS: same parameters, no cap (must reproduce v1) ===
+epoch_057 uncapped             cap=inf-v1-control   objective_728=2.256003e+243 finite=True ratio=2.668137e+243  FAIL
+      analysis_steps=731 saturated=7839 of 8041 (97.4879 percent)
+epoch_049 uncapped             cap=inf-v1-control   objective_728=8.846300e+131 finite=True ratio=1.046237e+132  FAIL
+      analysis_steps=731 saturated=7839 of 8041 (97.4879 percent)
+v1 recorded: epoch_057 = 2.255994510923417e+243 ; epoch_049 = 8.846818181048675e+131
+=== DIAGNOSIS CLOSURE: epoch-58 no-update forward and backward, full gradient scan ===
+  GRADIENT SCAN UNAVAILABLE: AttributeError: 'NoneType' object has no attribute '__dict__'
+formal_evaluation_access_count=0
+=== QUERY COMPLETE: READ ONLY, NO OPTIMIZER STEP, NO SUBMISSION, NO SIGNAL, NO WRITE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T11:57:07+0800
