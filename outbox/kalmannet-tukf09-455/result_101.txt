@@ -1,0 +1,69 @@
+### channel=kalmannet-tukf09-455 seq=101
+### host=login4
+### started=2026-09-04T11:52:16+0800
+### ---------- output ----------
+=== SCOPE GUARD ===
+NEW_ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r7_20260904
+SCOPE_GUARD_OK
+=== RETIRE THE QUEUED v2r6 PREPARATION JOB ===
+OLD_PREPARATION_JOB_ID=218635
+     JobID        State ExitCode  NodeList    Elapsed 
+---------- ------------ -------- --------- ---------- 
+    218635      PENDING      0:0 None ass+   00:00:00 
+CURRENT_STATE=PENDING
+SCANCEL_ISSUED
+     JobID        State ExitCode 
+---------- ------------ -------- 
+    218635 CANCELLED b+      0:0 
+--- the superseded root itself is left untouched ---
+drwxr-xr-x. 6 sunyiq g_sunyiq 4096 Sep  2 17:15 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902
+V2R6_NEVER_ADMITTED_AS_EXPECTED
+V2R6_NO_TRAINING_EVER_SUBMITTED
+=== FROZEN v2r5 EVIDENCE UNCHANGED ===
+V2R5_JOB_ID_FILE=217939
+11b47e27e4b7e3fd403ffb3a8f2b8003c6ebf6540e52d0c1ab439be6293d2f77  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.out
+b5e19ea076beff9d423c3ab02e6d8efd6918548b843c22503aa77a44c768c92e  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.err
+=== PAYLOAD EXACT GATE ===
+ARCHIVE_SHA256=8a8cbcf31e272d0e48debfbe507a35dea8175ce9059c353dbc213cf358a4c03f
+ARCHIVE_SIZE=9914038
+MANIFEST_SHA256=656f20bc4071c7e48d65dde88b4f142d9ee2d2f68466ea180287c732b10ff4fb
+BUILDER_SHA256=0ece076b1393068f00de3035fd8a9013915a011ac1b70796fc5c842dbd6c2d2c
+PAYLOAD_EXACT_GATE_PASS
+=== EXCLUSIVE NEW ROOT RESERVATION ===
+NEW_ROOT_RESERVED
+=== EXTRACT ===
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "destination": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r7_20260904/bundle",
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "reused": false,
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R7_HPC_BUNDLE_VERIFIED"
+}
+=== STRICT EXTRACTED VERIFICATION ===
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R7_HPC_BUNDLE_VERIFIED"
+}
+=== NODE EXCLUSION IS GONE, EXCLUSIVITY IS NOT ===
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r7_20260904/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r7/probe_gpu.slurm:8:#SBATCH --exclusive
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r7_20260904/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r7/submit_training_gpu.slurm:8:#SBATCH --exclusive
+4bdb4527e2f89c2765a71472411890535896cf1f405bf8cd7cf5c89ea5709ecd  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r7_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py
+a38118aa4b273a2e650b454f30c4f83dd5b0540bd91054f8e52cfc1313549f63  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r7_20260904/bundle/kalmannet/artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/training_admission/training_admission.json
+RESULTS_ABSENT_AS_REQUIRED
+=== PARTITION NOW ===
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)
+     hgpu8     up      2      mix             ngu[201-202]         26/102/0/128
+     hgpu8     up      1     idle                   ngu203            0/64/0/64
+TUKF09_455_A800_EXCLUSIVE_V2R7_DEPLOYED_OLD_JOB_RETIRED_NO_JOB_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T11:52:43+0800
