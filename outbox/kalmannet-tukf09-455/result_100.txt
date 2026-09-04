@@ -1,0 +1,35 @@
+### channel=kalmannet-tukf09-455 seq=100
+### host=login4
+### started=2026-09-04T10:29:40+0800
+### ---------- output ----------
+TIME=2026-09-04T10:29:40+0800
+PREPARATION_JOB_ID=218635
+=== SLURM ===
+     JobID        State ExitCode  NodeList    Elapsed                Start                  End 
+---------- ------------ -------- --------- ---------- -------------------- -------------------- 
+    218635      PENDING      0:0 None ass+   00:00:00              Unknown              Unknown 
+QUEUE PENDING | (Resources) | elapsed=0:00 | start=2026-09-12T18:55:10
+=== PARTITION ===
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)
+     hgpu8     up      2      mix             ngu[201-202]          34/94/0/128
+     hgpu8     up      1     idle                   ngu203            0/64/0/64
+=== STATUS MARKERS ===
+ABSENT  PREPARATION_FAILED.json
+ABSENT  initial_bundle_verification.json
+ABSENT  staged_training_sources.json
+ABSENT  preparation_probe.json
+ABSENT  hpc_technical_admission.json
+ABSENT  training_job_id.txt
+=== PRIVATE RUNTIME ===
+ABSENT
+=== RESULT ROOT IN BUNDLE ===
+RESULT_ROOT_ABSENT
+=== LOG TAILS ===
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/logs/prepare-218635.out’ for reading: No such file or directory
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902/logs/prepare-218635.err’ for reading: No such file or directory
+=== FROZEN V2R5 EVIDENCE UNCHANGED ===
+11b47e27e4b7e3fd403ffb3a8f2b8003c6ebf6540e52d0c1ab439be6293d2f77  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.out
+TUKF09_455_V2R6_SCHEDULED_STATUS_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T10:29:40+0800
