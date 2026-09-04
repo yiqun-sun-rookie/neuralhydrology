@@ -1,0 +1,27 @@
+### channel=id29-nearing2022-da seq=456
+### host=login4
+### started=2026-09-04T11:52:16+0800
+### ---------- output ----------
+=== A. 服务器侧 basedataset.py ===
+-rw-r--r--. 1 sunyiq g_sunyiq 56472 Jul  6 12:28 /data1/home/sunyiq/nearing2022_da/neuralhydrology/datasetzoo/basedataset.py
+4658816ea3110a1c2efcf54c3dcf00d5c0982459dca4f7ac985beb983b12df0d  /data1/home/sunyiq/nearing2022_da/neuralhydrology/datasetzoo/basedataset.py
+旧交接登记(未加掩码)= 4658816ea3110a1c5c0982459dca4f7ac985beb983b12df0d 前16位 4658816ea3110a1c
+本地当前(含掩码+anchornse)= 82552d7113c93556
+=== B. 是否含那条掩码语句 ===
+  NOT PRESENT (未含掩码)
+=== C. 是否含别的项目的 anchornse 功能 ===
+5
+=== D. 时间顺序: 加载器 vs 120 个评价产物 ===
+2026-07-06 12:28:26.000000000 +0800  /data1/home/sunyiq/nearing2022_da/neuralhydrology/datasetzoo/basedataset.py
+2026-08-31 14:09:59.000000000 +0800  /data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR025-TE000-S0/test/model_epoch030/test_results.p
+2026-08-31 14:45:21.000000000 +0800  /data1/home/sunyiq/nearing2022_da/closure_20260810/evaluations/time_split/autoregression/N22-EVAL-TS-AR-L01-TR050-TE000-S0/test/model_epoch030/test_results.p
+--- 汇总与判定产物 ---
+2026-09-01 10:37:33.000000000 +0800  /data1/home/sunyiq/nearing2022_da/closure_20260810/aggregation/evaluations/time_split_vs_author.csv
+2026-09-01 12:08:58.000000000 +0800  /data1/home/sunyiq/nearing2022_da/closure_20260810/aggregation/final_reproduction_gate.json
+=== E. 早期已完成的评价(2026-08-10 那批 60 个之一)作对比 ===
+=== F. 219423 两臂最终状态 ===
+219423_0|FAILED|1:0|00:00:45
+219423_1|FAILED|1:0|00:00:48
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T11:52:16+0800
