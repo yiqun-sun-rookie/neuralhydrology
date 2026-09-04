@@ -10,7 +10,7 @@ EXPECTED_057_SHA256="e4d53ec2e51c74378a4ec87b5bd3d46f271966170cf1ff351c4f9c19fd4
 echo '=== READ-ONLY TASK 0: CORRECTION-CAP REPLAY FALSIFICATION (08070200) ==='
 date --iso-8601=seconds
 hostname
-echo 'channel=kalmannet-daily-perbasin sequence=30 purpose=read-only-cap-replay-no-optimizer'
+echo 'channel=kalmannet-daily-perbasin sequence=31 purpose=read-only-cap-replay-no-optimizer'
 echo 'signals_sent=0 submissions_created=0 files_modified=0 optimizer_steps=0 formal_evaluation_access=0 device=cpu'
 
 if [[ ! -d "${DEPLOY}" ]]; then echo "DEPLOYMENT SOURCE MISSING: ${DEPLOY}" >&2; exit 201; fi
@@ -32,7 +32,18 @@ export OMP_NUM_THREADS=4
 export MKL_NUM_THREADS=4
 cd "${DEPLOY}"
 
-python - "${RUN_DIRECTORY}" "${DEPLOY}" <<'PY'
+PYBIN="/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python"
+if [[ ! -x "${PYBIN}" ]] || ! "${PYBIN}" -c 'import torch' >/dev/null 2>&1; then
+  PYBIN=""
+  for cand in /data1/home/sunyiq/miniconda3/envs/*/bin/python; do
+    if [[ -x "${cand}" ]] && "${cand}" -c 'import torch' >/dev/null 2>&1; then PYBIN="${cand}"; break; fi
+  done
+fi
+if [[ -z "${PYBIN}" ]]; then echo 'no python interpreter with torch was found' >&2; exit 205; fi
+echo "interpreter=${PYBIN}"
+"${PYBIN}" -c 'import sys, torch, numpy; print("python=%s torch=%s numpy=%s" % (sys.version.split()[0], torch.__version__, numpy.__version__))'
+
+"${PYBIN}" - "${RUN_DIRECTORY}" "${DEPLOY}" <<'PY'
 import sys, math, importlib.util
 from pathlib import Path
 
