@@ -1,0 +1,29 @@
+### channel=id33-transformer-recipe-repair seq=18
+### host=login4
+### started=2026-09-05T00:10:41+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-05T00:10:41+0800
+=== A. SACCT SIX ARMS + CALIBRATION ===
+       JobID        JobName      State ExitCode    Elapsed        NodeList 
+------------ -------------- ---------- -------- ---------- --------------- 
+220490              id33_T1     FAILED      1:0   04:50:57          ngu004 
+220491              id33_T2     FAILED      1:0   04:52:07          ngu001 
+220492              id33_T3     FAILED      1:0   04:55:19          ngu005 
+220493              id33_T4     FAILED      1:0   04:48:43          ngu005 
+220494              id33_T5     FAILED      1:0   06:06:48          ngu011 
+220495             id33_L33     FAILED      1:0   01:28:36          ngu003 
+220658              id33_C1    RUNNING      0:0   08:01:48          ngu201 
+220659              id33_C2    RUNNING      0:0   08:01:48          ngu201 
+=== B. C1/C2 LAST EPOCH LINES ===
+--- C1
+log=
+--- C2
+log=
+=== C. C1/C2 EPOCH30 FILE PRESENCE ===
+C1 epoch30=
+C2 epoch30=
+ID33_WATCH_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T00:10:41+0800
