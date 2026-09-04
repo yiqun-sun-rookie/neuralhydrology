@@ -1,0 +1,31 @@
+### channel=kalmannet-daily-perbasin seq=31
+### host=login4
+### started=2026-09-04T11:52:16+0800
+### ---------- output ----------
+=== READ-ONLY TASK 0: CORRECTION-CAP REPLAY FALSIFICATION (08070200) ===
+2026-09-04T11:52:16+0800
+login4
+channel=kalmannet-daily-perbasin sequence=31 purpose=read-only-cap-replay-no-optimizer
+signals_sent=0 submissions_created=0 files_modified=0 optimizer_steps=0 formal_evaluation_access=0 device=cpu
+4eb5f817d518546f06dcbd05522c4d416877a508e45ff623f162dd71ef9db03f  908882  epoch_049.pt
+e4d53ec2e51c74378a4ec87b5bd3d46f271966170cf1ff351c4f9c19fd4172c8  919971  epoch_057.pt
+epoch_057_identity=MATCHES_REGISTERED_AUDIT
+interpreter=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+python=3.11.13 torch=2.4.0 numpy=2.3.3
+epoch_zero_checkpoint_objective_728 = 0.8455348749210457
+runtime_ready state_dimension=11
+=== TASK 0 CRITERION: cap 3.0 on the 731-day validation rollout ===
+Traceback (most recent call last):
+  File "<stdin>", line 105, in <module>
+  File "<stdin>", line 69, in run_case
+  File "<stdin>", line 54, in load_params
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/serialization.py", line 1114, in load
+    return _legacy_load(
+           ^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/serialization.py", line 1338, in _legacy_load
+    magic_number = pickle_module.load(f, **pickle_load_args)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_pickle.UnpicklingError: invalid load key, 'D'.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-04T11:52:43+0800
