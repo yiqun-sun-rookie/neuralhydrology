@@ -1,4 +1,75 @@
 #!/bin/bash
+# seq=466: read-only exact breakdown of the 29 frozen numerical-gate failures
+set -eo pipefail
+ROOT=/data1/home/sunyiq/nearing2022_da
+DETAILS="$ROOT/closure_20260810/aggregation/final_reproduction_differences.csv"
+GATE="$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
+test -f "$DETAILS"
+test ! -L "$DETAILS"
+test -f "$GATE"
+test ! -L "$GATE"
+stat -c '%s|%n' "$DETAILS" "$GATE"
+sha256sum "$DETAILS" "$GATE"
+python3 - "$DETAILS" "$GATE" <<'PY'
+import collections
+import csv
+import json
+from pathlib import Path
+import sys
+
+details_path = Path(sys.argv[1])
+gate_path = Path(sys.argv[2])
+gate = json.loads(gate_path.read_text(encoding="utf-8"))
+with details_path.open("r", encoding="utf-8", newline="") as stream:
+    rows = list(csv.DictReader(stream))
+
+def as_bool(value):
+    return str(value).strip().lower() in {"true", "1", "yes"}
+
+failures = [row for row in rows if not as_bool(row["within_tolerance"])]
+assert len(rows) == int(gate["comparison_rows"]) == 1078
+assert len(failures) == int(gate["individual_tolerance_failures"]) == 29
+for row in failures:
+    assert abs(float(row["difference"])) > float(row["tolerance"])
+
+print("GATE", json.dumps({
+    "status": gate["released_code_numerical_status"],
+    "comparison_rows": gate["comparison_rows"],
+    "individual_tolerance_failures": gate["individual_tolerance_failures"],
+    "systematic_bias_failures": gate["systematic_bias_failures"],
+}, sort_keys=True))
+for fields in (("component",), ("family",), ("metric",), ("component", "family", "metric"), ("coordinate_id",)):
+    counts = collections.Counter(tuple(row[field] for field in fields) for row in failures)
+    print("COUNTS_BY_" + "_".join(fields).upper())
+    for key, count in sorted(counts.items()):
+        print("|".join(key), count, sep="|")
+
+print("FAILURE_ROWS")
+columns = ["component", "coordinate_id", "family", "metric", "reproduction", "author", "difference", "abs_difference", "tolerance"]
+print("|".join(columns))
+for row in sorted(failures, key=lambda item: (item["component"], item["coordinate_id"], item["metric"])):
+    print("|".join(row[column] for column in columns))
+
+print("FAILURE_EXTREMES_BY_METRIC")
+by_metric = collections.defaultdict(list)
+for row in failures:
+    by_metric[row["metric"]].append(row)
+for metric in sorted(by_metric):
+    items = by_metric[metric]
+    worst = max(items, key=lambda item: float(item["abs_difference"]))
+    payload = {
+        "metric": metric,
+        "failure_count": len(items),
+        "maximum_absolute_difference": float(worst["abs_difference"]),
+        "tolerance": float(worst["tolerance"]),
+        "worst_coordinate": worst["coordinate_id"],
+        "worst_difference": float(worst["difference"]),
+    }
+    print(json.dumps(payload, sort_keys=True))
+PY
+exit 0
+
+# seq=465 preserved below as unreachable channel history
 # seq=465: read-only status and artifact inspection for the authorized verifier job 220489
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
