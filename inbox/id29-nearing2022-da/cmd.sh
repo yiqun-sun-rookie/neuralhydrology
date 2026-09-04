@@ -1,6 +1,31 @@
 #!/bin/bash
-# seq=461: retry after runner-staging path correction; no server action occurred at seq 460
-exec bash "$HOME/hpc_mailbox/inbox/id29-nearing2022-da/deploy_submit_replacement_verifier_seq460.sh"
+# seq=462: read-only status and artifact check for verifier job 220487
+set -o pipefail
+ROOT=/data1/home/sunyiq/nearing2022_da
+BASE="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904"
+FINAL="$BASE/replacement_verification"
+LOGDIR="$BASE/logs"
+echo "=== JOB 220487 STATUS ==="
+date --iso-8601=seconds
+sacct -j 220487 -X -n -P --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList 2>/dev/null || true
+squeue -j 220487 -h -o '%i|%j|%T|%M|%L|%R' 2>/dev/null || true
+echo "=== LOGS ==="
+for F in "$LOGDIR/N22-replv2_220487.out" "$LOGDIR/N22-replv2_220487.err"; do
+  if [ -f "$F" ]; then echo "--- $F ---"; tail -100 "$F" || true; else echo "MISSING $F"; fi
+done
+echo "=== OUTPUT PATHS ==="
+if [ -d "$FINAL" ] && [ ! -L "$FINAL" ]; then
+  echo "FINAL_PRESENT"
+  find "$FINAL" -mindepth 1 -maxdepth 1 -printf '%f|%y|%s\n' 2>/dev/null | sort || true
+  sha256sum "$FINAL"/* 2>/dev/null || true
+  for F in scheduler_gate.json joint_gate.json artifact_manifest.json; do
+    if [ -f "$FINAL/$F" ]; then echo "--- $F ---"; cat "$FINAL/$F"; fi
+  done
+else
+  echo "FINAL_ABSENT"
+  find "$BASE" -mindepth 1 -maxdepth 2 -printf '%P|%y|%s\n' 2>/dev/null | sort || true
+fi
+exit 0
 # The previous read-only preflight remains below as preserved, unreachable channel history.
 # seq=459: read-only server preflight for the versioned replacement-chain verifier
 set -o pipefail
