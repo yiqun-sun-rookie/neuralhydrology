@@ -1,0 +1,52 @@
+### channel=id29-nearing2022-da seq=481
+### host=login4
+### started=2026-09-05T03:08:47+0800
+### ---------- output ----------
+=== slurm script header ===
+analyze_warmup_target_pair.slurm
+run_author_v13_training_data_port_all531_v2.slurm
+run_author_v13_warmup_isolation_all531_v2.slurm
+run_partial_registered_results_audit_attempt2.slurm
+run_partial_registered_results_audit_seq205.slurm
+run_partial_registered_results_audit_seq223.slurm
+run_partial_registered_results_audit_seq227.slurm
+run_partial_registered_results_audit_seq231.slurm
+run_partial_registered_results_audit_seq234.slurm
+run_partial_registered_results_audit_seq245.slurm
+run_partial_registered_results_audit_seq249.slurm
+run_partial_registered_results_audit_seq271.slurm
+run_partial_registered_results_audit_seq275.slurm
+run_partial_registered_results_audit.slurm
+run_preclosure_validation.slurm
+run_registered_aggregation.slurm
+run_registered_closure_export.slurm
+run_registered_closure_manifest.slurm
+run_registered_evaluation_array.slurm
+run_registered_numerical_gate.slurm
+run_registered_training_array.slurm
+run_registered_training.slurm
+run_warmup_target_pair.slurm
+run_warmup_target_replacement_verifier.slurm
+=== find recent log files ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+=== logs dir tops ===
+compare_202159.out
+compare_202159.err
+ar_201893.out
+ar_201893.err
+da_201890.out
+da_201890.err
+sim_201858.out
+sim_201858.err
+ar_201859.err
+ar_201859.out
+id23_r_perturbation
+=== newest files under ROOT modified since 09-03 ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T03:08:51+0800
