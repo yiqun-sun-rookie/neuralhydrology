@@ -1,0 +1,32 @@
+### channel=id29-nearing2022-da seq=464
+### host=login4
+### started=2026-09-04T14:43:40+0800
+### ---------- output ----------
+=== AUTHORIZED VERIFIER PRECHECK ===
+2026-09-04T14:43:40+0800
+0b971f3b4d98d70184b0ba4c268e61d5b7173776719c662b52eb4cb3893e7969  /data1/home/sunyiq/hpc_mailbox/inbox/id29-nearing2022-da/payload/warmup_pair_v2_20260904_v2/verify_warmup_target_replacement_chain_v2.py
+d0c977139fbb5e988b79349ab13bece04a081bbe6e8fdc34de55679838c6fff0  /data1/home/sunyiq/hpc_mailbox/inbox/id29-nearing2022-da/payload/warmup_pair_v2_20260904_v2/prepare_warmup_target_pair_v2_1.py
+1fac45e6f02f220593bf05f0c52cf67cec5bcc5a88fa5df3bc7a450a5003e801  /data1/home/sunyiq/hpc_mailbox/inbox/id29-nearing2022-da/payload/warmup_pair_v2_20260904_v2/run_replacement_verifier_v2_2.slurm
+4658816ea3110a1c2efcf54c3dcf00d5c0982459dca4f7ac985beb983b12df0d  /data1/home/sunyiq/nearing2022_da/neuralhydrology/datasetzoo/basedataset.py
+0bcabc96f9e702f2317464f1f0123c29d49d5f7f0f972a10ea3e01bbf18fe987  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py
+replacement_job=202510|COMPLETED|0:0
+replacement_job=202511|COMPLETED|0:0
+conflicting_N22_replv2b_jobs=0
+=== HGPU4 LIVE VIEW ===
+ngu101|mixed|gpu:4|(null)
+ngu102|mixed|gpu:4|(null)
+ngu103|down*|gpu:4|(null)
+ngu104|mixed|gpu:4|(null)
+=== INSTALL NEW VERSIONED FILES ===
+0b971f3b4d98d70184b0ba4c268e61d5b7173776719c662b52eb4cb3893e7969  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_pair_v2_20260904/verify_warmup_target_replacement_chain_v2.py
+d0c977139fbb5e988b79349ab13bece04a081bbe6e8fdc34de55679838c6fff0  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_pair_v2_20260904/prepare_warmup_target_pair_v2_1.py
+1fac45e6f02f220593bf05f0c52cf67cec5bcc5a88fa5df3bc7a450a5003e801  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_pair_v2_20260904/run_replacement_verifier_v2_2.slurm
+python_compile_ok=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_pair_v2_20260904/verify_warmup_target_replacement_chain_v2.py
+python_compile_ok=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_pair_v2_20260904/prepare_warmup_target_pair_v2_1.py
+=== SUBMIT EXACTLY ONE AUTHORIZED VERIFIER ===
+Submitted batch job 220489
+submitted_job_id=220489
+220489|N22-replv2b|PENDING|0:00|30:00|(Priority)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T14:43:41+0800
