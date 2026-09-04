@@ -1,0 +1,31 @@
+### channel=id29-nearing2022-da seq=462
+### host=login4
+### started=2026-09-04T14:22:36+0800
+### ---------- output ----------
+=== JOB 220487 STATUS ===
+2026-09-04T14:22:36+0800
+220487|N22-replv2|FAILED|1:0|00:00:05|2026-09-04T14:18:59|2026-09-04T14:19:04|ngu104
+=== LOGS ===
+--- /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2_220487.out ---
+--- /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2_220487.err ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py", line 629, in <module>
+    main()
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py", line 623, in main
+    result = verify_replacement_chain(args.repo_root)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py", line 562, in verify_replacement_chain
+    raise ValueError("Mask audit stdout does not reproduce the published audit JSON")
+ValueError: Mask audit stdout does not reproduce the published audit JSON
+=== OUTPUT PATHS ===
+FINAL_ABSENT
+logs|d|4096
+logs/N22-replv2_220487.err|f|749
+logs/N22-replv2_220487.out|f|0
+.replacement_verification.preparing-220487/artifact_verification_stdout_1.json|f|0
+.replacement_verification.preparing-220487|d|4096
+.replacement_verification.preparing-220487/scheduler_gate.json|f|674
+.replacement_verification.preparing-220487/scheduler_rows.txt|f|136
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T14:22:36+0800
