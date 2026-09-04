@@ -1,4 +1,67 @@
 #!/bin/bash
+# seq=465: read-only status and artifact inspection for the authorized verifier job 220489
+set -o pipefail
+ROOT=/data1/home/sunyiq/nearing2022_da
+BASE="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904"
+FINAL="$BASE/replacement_verification_v2"
+LOGDIR="$BASE/logs"
+
+echo "=== JOB 220489 STATUS ==="
+date --iso-8601=seconds
+sacct -j 220489 -X -n -P --format=JobIDRaw,JobName,State,ExitCode,Elapsed,Start,End,NodeList 2>/dev/null || true
+squeue -j 220489 -h -o '%i|%j|%T|%M|%L|%R' 2>/dev/null || true
+
+echo "=== JOB 220489 LOGS ==="
+for file in "$LOGDIR/N22-replv2b_220489.out" "$LOGDIR/N22-replv2b_220489.err"; do
+  if [ -f "$file" ] && [ ! -L "$file" ]; then
+    echo "--- $file ---"
+    stat -c '%s|%n' "$file" 2>/dev/null || true
+    sha256sum "$file" 2>/dev/null || true
+    tail -120 "$file" || true
+  else
+    echo "MISSING_OR_NOT_REGULAR $file"
+  fi
+done
+
+echo "=== FINAL VERIFICATION OUTPUT ==="
+if [ -d "$FINAL" ] && [ ! -L "$FINAL" ]; then
+  echo "FINAL_PRESENT $FINAL"
+  find "$FINAL" -mindepth 1 -maxdepth 1 -printf '%f|%y|%s\n' 2>/dev/null | sort || true
+  sha256sum "$FINAL"/* 2>/dev/null || true
+  cmp "$FINAL/artifact_verification_1.json" "$FINAL/artifact_verification_2.json" && \
+    echo "ARTIFACT_JSON_BYTE_IDENTICAL=yes" || echo "ARTIFACT_JSON_BYTE_IDENTICAL=no"
+  cmp "$FINAL/artifact_verification_stdout_1.json" "$FINAL/artifact_verification_stdout_2.json" && \
+    echo "ARTIFACT_STDOUT_BYTE_IDENTICAL=yes" || echo "ARTIFACT_STDOUT_BYTE_IDENTICAL=no"
+  for name in scheduler_gate.json joint_gate.json artifact_manifest.json; do
+    if [ -f "$FINAL/$name" ] && [ ! -L "$FINAL/$name" ]; then
+      echo "--- $name ---"
+      cat "$FINAL/$name"
+    fi
+  done
+  python - "$FINAL/artifact_verification_1.json" "$FINAL/artifact_verification_2.json" <<'PY'
+import json
+from pathlib import Path
+import sys
+
+first = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+second = json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
+summary = {
+    "payloads_equal": first == second,
+    "schema": first.get("schema"),
+    "entry_artifact_gate_passed": first.get("entry_artifact_gate_passed"),
+    "registered_matrix_modified": first.get("registered_matrix_modified"),
+    "replacement_jobs": first.get("replacement_jobs"),
+    "artifact_count": len(first.get("artifacts", [])),
+}
+print(json.dumps(summary, sort_keys=True))
+PY
+else
+  echo "FINAL_ABSENT $FINAL"
+  find "$BASE" -mindepth 1 -maxdepth 2 -printf '%P|%y|%s\n' 2>/dev/null | sort || true
+fi
+exit 0
+
+# seq=464 preserved below as unreachable channel history
 # seq=464: deploy the corrected replacement verifier chain and submit the one authorized <=30 minute verifier
 set -eo pipefail
 
