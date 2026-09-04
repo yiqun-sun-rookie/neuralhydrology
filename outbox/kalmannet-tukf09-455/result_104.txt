@@ -1,0 +1,53 @@
+### channel=kalmannet-tukf09-455 seq=104
+### host=login4
+### started=2026-09-04T12:08:58+0800
+### ---------- output ----------
+TIME=2026-09-04T12:08:58+0800
+PREPARATION_JOB_ID=220467
+     JobID        State ExitCode  NodeList    Elapsed                Start                  End 
+---------- ------------ -------- --------- ---------- -------------------- -------------------- 
+    220467       FAILED      1:0    ngu203   00:00:24  2026-09-04T12:05:02  2026-09-04T12:05:26 
+slurm_load_jobs error: Invalid job id specified
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)
+     hgpu8     up      2      mix             ngu[201-202]         26/102/0/128
+     hgpu8     up      1     idle                   ngu203            0/64/0/64
+=== MARKERS ===
+PRESENT PREPARATION_FAILED.json  627cfbf2e209ff9c820d548f02f2ef729955c2548cd11462461d2c301b751eee
+PRESENT initial_bundle_verification.json  0d519f980d52481dea232cf91cf13400657cb26ce3763f798facee0e079e1603
+ABSENT  staged_training_sources.json
+ABSENT  preparation_probe.json
+ABSENT  hpc_technical_admission.json
+ABSENT  training_job_id.txt
+PRIVATE_RUNTIME_ABSENT
+NO_PENDING_RUNTIME
+RESULT_ROOT_ABSENT
+=== LOG TAIL ===
+{"admitted_executable_count": 30, "admitted_test_count": 12, "bundle_manifest_sha256": "ab3f4b03143b6dfea3ad913ed1514818623512ab86fd39d132c4ed69cb590f63", "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1", "formal_evaluation_output_count": 0, "identity_sha256": "e79fa6a70c6ece265a776ef188e932f815b24f12354816add50837e2e98ea123", "member_count": 2808, "mutable_directory_count_at_verification": 0, "mutable_file_count_at_verification": 0, "schema_version": "tukf09_455_hpc_initial_bundle_verification_a800_exclusive_v2r7", "scientific_contract_changed": false, "status": "STRICT_PRISTINE_A800_EXCLUSIVE_V2R7_BUNDLE_VERIFIED_BEFORE_RUNTIME_MUTATION", "strict_verifier_sha256": "0ece076b1393068f00de3035fd8a9013915a011ac1b70796fc5c842dbd6c2d2c"}
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "mutable_directory_count": 0,
+  "mutable_file_count": 0,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R7_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+age_and_train.py", line 2628, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r7_20260904/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r7/stage_and_train.py", line 2595, in main
+    payload = verify_training_source_capsule(source_root=args.source_root)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r7_20260904/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r7/stage_and_train.py", line 536, in verify_training_source_capsule
+    raise RuntimeError("training source capsule manifest changed identity or scope")
+RuntimeError: training source capsule manifest changed identity or scope
+TUKF09_455_V2R7_PREPARATION_STATUS_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T12:08:58+0800
