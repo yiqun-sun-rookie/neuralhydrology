@@ -1,39 +1,33 @@
 #!/usr/bin/env bash
-# ID33 seq=6 : deploy the calibration delta and submit C1/C2 to hgpu8 (idle A800 capacity).
-# Does not touch the six treatment arms already running on hgpu2p.
+# ID33 seq=7 : read-only status sweep of the six treatment arms (+ C1/C2 calibration arms).
 set -o pipefail
 ID33=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
-PKG=~/hpc_mailbox/payload/id33-transformer-recipe-repair/id33_calib_v01.tar.gz
-EXPECT=94c04ced99c0d3904ed92160b57798352427b303814b934002d1ee6dba17f3ae
 echo "=== A. STAMP ==="; date -Is
-test "$(sha256sum "$PKG" 2>/dev/null | cut -d' ' -f1)" = "$EXPECT" && echo PAYLOAD_OK || { echo PAYLOAD_MISMATCH; exit 1; }
-
-echo "=== B. TREATMENT ARMS MUST BE UNDISTURBED ==="
+echo "=== B. QUEUE ==="
 squeue -u "$USER" -o "%.9i %.10j %.14P %.2t %.11M %.16R" 2>&1 | grep -E 'JOBID|id33' || true
-
-echo "=== C. OVERLAY CALIBRATION DELTA ==="
-cd "$ID33"
-tar -xzf "$PKG" && echo extracted
-sed -i 's/\r$//' src/transformer_recipe_repair/hpc/*.slurm
-sha256sum src/transformer_recipe_repair/configs/c1.yml src/transformer_recipe_repair/configs/c2.yml           src/transformer_recipe_repair/hpc/submit_calibration_arm.slurm 2>&1 || true
-
-echo "=== D. AUDIT ==="
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh; conda activate nh_final
-export MKL_THREADING_LAYER=GNU
-python -m src.transformer_recipe_repair.scripts.audit_configs 2>&1 || { echo AUDIT_FAILED; exit 1; }
-
-echo "=== E. hgpu8 STATE ==="
-sinfo -p hgpu8 -o "%.8P %.6D %.8t %.20N" 2>&1 || true
-
-echo "=== F. SUBMIT C1 AND C2 TO hgpu8 ==="
-SUB=""
-for ARM in C1 C2; do
-  out=$(EXPERIMENT_ID="$ARM" sbatch --export=ALL,EXPERIMENT_ID="$ARM"         --job-name="id33_${ARM}" src/transformer_recipe_repair/hpc/submit_calibration_arm.slurm 2>&1)
-  jid=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
-  if [ -n "$jid" ]; then echo "  $ARM -> $jid"; SUB="$SUB $ARM:$jid"; else echo "  $ARM -> SUBMIT_FAILED"; echo "$out" | head -4; fi
+echo "=== C. SACCT ==="
+sacct -j 220490,220491,220492,220493,220494,220495,220658,220659 -X -o JobID,JobName%12,State,ExitCode,Elapsed,NodeList 2>&1 || true
+echo "=== D. PER-ARM EPOCH PROGRESS ==="
+cd "$ID33" 2>/dev/null || { echo NO_LANDING; exit 0; }
+for INV in $(ls -d results/33_transformer_recipe_repair/_invocations/*/ 2>/dev/null); do
+  echo "--- $INV"
+  python - "$INV" <<'PY' 2>&1 || true
+import json,sys,pathlib
+p=pathlib.Path(sys.argv[1])/'run_manifest.json'
+if p.exists():
+    d=json.load(open(p))
+    print('  status=',d.get('status'),'rc=',d.get('training_return_code'),'data=',(d.get('data_access') or {}).get('status'))
+else:
+    print('  no manifest yet')
+PY
+  LOG=$(ls "$INV"/../../*/*/output.log 2>/dev/null | head -0); true
 done
-echo "SUBMITTED:$SUB"
-
-echo "=== G. FULL QUEUE AFTER ==="
-squeue -u "$USER" -o "%.9i %.10j %.14P %.2t %.11M %.16R" 2>&1 | grep -E 'JOBID|id33' || true
-echo ID33_CALIB_SEQ6_COMPLETE
+echo "=== E. MEDIAN VALIDATION PER EPOCH (all arms) ==="
+for D in $(ls -d results/33_transformer_recipe_repair/*/ 2>/dev/null | grep -v _invocations | grep -v _reports); do
+  echo "--- $D"
+  for R in $(ls -d "$D"*/ 2>/dev/null); do
+    grep -oE 'Epoch [0-9]+ average loss.*|Median validation metrics.*' "$R/output.log" 2>/dev/null | tail -40 || true
+    echo "  epochdirs: $(ls -d "$R"validation/model_epoch* 2>/dev/null | wc -l)"
+  done
+done
+echo ID33_SEQ7_COMPLETE
