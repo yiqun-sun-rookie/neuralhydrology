@@ -1,12 +1,9 @@
 set -o pipefail
-ROOT=/data1/home/sunyiq/nearing2022_da
-for J in 219423_0 219423_1 220487; do
-  echo "=== $J ==="
-  for K in StdErr StdOut; do :; done
-  P=$(sacct -j "$J" -X -n -P --format=JobID,WorkDir 2>/dev/null | head -1)
-  echo "  $P"
+L=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs
+for F in N22-warmpair_219423_0.err N22-warmpair_219423_0.out N22-warmpair_219423_1.err; do
+  echo "=== $F (tail 40) ==="
+  tail -40 "$L/$F" 2>/dev/null || echo "  missing"
 done
-echo "=== LOG FILES (recent) ==="
-ls -1t $ROOT/logs/*.err 2>/dev/null | head -20 || true
-ls -1t $ROOT/logs/29_nearing2022_da_ar/*.err 2>/dev/null | head -20 || true
-find $ROOT -maxdepth 3 -name '*219423*' -o -maxdepth 3 -name '*220487*' 2>/dev/null | head -30 || true
+echo "=== 220487 replv2 log ==="
+ls -1t $L/*repl* 2>/dev/null | head -5 || true
+for F in $(ls -1t $L/*220487* 2>/dev/null | head -2); do echo "--- $F"; tail -30 "$F" 2>/dev/null || true; done
