@@ -1,169 +1,65 @@
 #!/bin/bash
-# TUKF09-455: independent post-publication audit of training source capsule v5.
-# Read-only. Re-hashes all 911 files from disk, checks them against the frozen raw
-# source manifest, checks the frozen population order, modes and surface.
-# Publishes nothing, submits nothing, modifies nothing.
+# TUKF09-455 v2r10: deploy the bundle bound to training source capsule v4 and start
+# the runtime input download. The whole-node process gate now treats this run own
+# process tree as its own and still hard stops on anything outside it. Nothing
+# scientific moves and the whole-node exclusive requirement is unchanged.
+# No preparation or training job is submitted here.
 
 set -o pipefail
 
-CAP=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904
-OLD=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v4_20260904
-PROJECT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet
+R8=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904
+R7=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904
+R5=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901
+CAP3=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904
+CAP2=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v4_20260904
+PAY="$PWD/payload/kalmannet-tukf09-455/a800-exclusive-v2r10-process-view"
 PY=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
-SELF="$PWD/inbox/kalmannet-tukf09-455/cmd.sh"
 
 echo "TIME=$(date -Is)"
-echo "AUDIT_COMMAND_SHA256=$(sha256sum "$SELF" | cut -d" " -f1)"
-test -d "$CAP" || { echo CAPSULE_MISSING; exit 1; }
-test -d "$PROJECT" || { echo PROJECT_MISSING; exit 1; }
+echo "=== SCOPE GUARD ==="
+case "$R8" in *v2r4*|*v2r5*|*v2r6*|*v2r7*|*v2r8*|*v2r9*|*capsule*) echo SCOPE_GUARD_FAILED; exit 1;; esac
+echo "NEW_ROOT=$R8"
 
-echo "=== INDEPENDENT AUDIT ==="
-"$PY" -B - "$CAP" "$PROJECT" <<'AUDIT_EOF'
-import hashlib, json, os, stat, sys
-from pathlib import Path, PurePosixPath
+echo "=== SUPERSEDED EVIDENCE UNTOUCHED ==="
+echo "V2R5_JOB=$(cat "$R5/status/training_job_id.txt" 2>&1)"
+sha256sum "$R5/logs/training-217939.out" 2>&1
+echo "V2R9_TRAINING_JOB=$(cat "$R7/status/training_job_id.txt" 2>&1)"
+echo "CAPSULE_V4_MODE=$(stat -c %a "$CAP2")"
+echo "CAPSULE_V5_MODE=$(stat -c %a "$CAP3")"
 
-CAP = Path(sys.argv[1]); PROJECT = Path(sys.argv[2])
+echo "=== PAYLOAD EXACT GATE ==="
+A=$(sha256sum "$PAY/tukf09_455_basin_zero_validation_target_variance_revision_v1_hpc_execution_a800_exclusive_v2r10_formal_training.tar.gz" | cut -d" " -f1)
+B=$(sha256sum "$PAY/bundle_manifest.sha256.json" | cut -d" " -f1)
+C=$(sha256sum "$PAY/build_tukf09_455_a800_exclusive_hpc_bundle_v2r10.py" | cut -d" " -f1)
+S=$(wc -c < "$PAY/tukf09_455_basin_zero_validation_target_variance_revision_v1_hpc_execution_a800_exclusive_v2r10_formal_training.tar.gz")
+echo "ARCHIVE_SHA256=$A ARCHIVE_SIZE=$S"
+test "$A" = "9693cfb4437d82dfd6f179cd93e7075f9ef1f386661e10db09f4e4e43588b162" || { echo ARCHIVE_HASH_MISMATCH; exit 1; }
+test "$S" = "9916765" || { echo ARCHIVE_SIZE_MISMATCH; exit 1; }
+test "$B" = "97055af4129fca2f3ac31fb4d42a04feeec2d37506116052e78f585f753950ed" || { echo MANIFEST_HASH_MISMATCH; exit 1; }
+test "$C" = "ad054c0c1f79173e59494f826e2f9e261b92c396c692b9f673452692efd4b58c" || { echo BUILDER_HASH_MISMATCH; exit 1; }
+echo PAYLOAD_EXACT_GATE_PASS
 
-manifest_path = CAP / "evidence" / "source_capsule_manifest.json"
-ready_path = CAP / "evidence" / "READY.json"
-record_path = CAP / "evidence" / "source_capsule_manifest.sha256"
-manifest_bytes = manifest_path.read_bytes()
-manifest = json.loads(manifest_bytes.decode("utf-8"))
-ready = json.loads(ready_path.read_bytes().decode("utf-8"))
-data_root = CAP / "data" / "camels_us"
+echo "=== EXCLUSIVE NEW ROOT RESERVATION ==="
+if mkdir "$R8" 2>/dev/null; then echo NEW_ROOT_RESERVED; else echo NEW_ROOT_ALREADY_EXISTS; exit 1; fi
+mkdir -p "$R8/logs" "$R8/status"
 
-failures = []
+echo "=== EXTRACT AND STRICTLY VERIFY ==="
+"$PY" -B "$PAY/build_tukf09_455_a800_exclusive_hpc_bundle_v2r10.py" --archive "$PAY/tukf09_455_basin_zero_validation_target_variance_revision_v1_hpc_execution_a800_exclusive_v2r10_formal_training.tar.gz" --extract-to "$R8/bundle" 2>&1
+"$PY" -B "$PAY/build_tukf09_455_a800_exclusive_hpc_bundle_v2r10.py" --verify-extracted "$R8/bundle" 2>&1
 
-def check(name, condition):
-    if not condition:
-        failures.append(name)
+echo "=== BOUND TO THE NEW CAPSULE, EXCLUSIVITY INTACT ==="
+grep -n "SOURCE_ROOT=" "$R8/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r10/probe_gpu.slurm" 2>&1
+grep -c "SBATCH --exclusive" "$R8/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r10/probe_gpu.slurm" 2>&1
+grep -c "SBATCH --exclude" "$R8/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r10/probe_gpu.slurm" 2>&1
+sha256sum "$R8/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py" 2>&1
 
-check("manifest_sha_record_matches",
-      record_path.read_bytes()
-      == (hashlib.sha256(manifest_bytes).hexdigest() + "  source_capsule_manifest.json" + chr(10)).encode("ascii"))
-check("ready_binds_manifest", ready["manifest_sha256"] == hashlib.sha256(manifest_bytes).hexdigest())
-check("ready_manifest_size", ready["manifest_size"] == len(manifest_bytes))
-check("capsule_root", manifest["capsule_root"] == os.fspath(CAP) == ready["capsule_root"])
-check("capsule_data_root", manifest["capsule_data_root"] == os.fspath(data_root) == ready["capsule_data_root"])
-check("ready_status", ready["status"] == "READY")
+echo "=== START THE RUNTIME INPUT DOWNLOAD, DETACHED ==="
+SCRIPT="$R8/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r10/download_runtime_inputs_login.sh"
+LOG="$R8/logs/offline-inputs-download.log"
+setsid nohup bash "$SCRIPT" a20260904 < /dev/null > "$LOG" 2>&1 &
+printf "pid=%s started=%s\n" "$!" "$(date -Is)" > "$R8/status/offline_inputs_download.launched"
+echo "DOWNLOAD_LAUNCHED pid=$!"
+sleep 8
+du -sh "$R8"/offline_inputs_v2r10* 2>&1
 
-# The frozen raw source manifest is the authority for what the 911 files must be.
-raw_relative = manifest["raw_source_manifest_relative_path"]
-raw_path = PROJECT.joinpath(*PurePosixPath(raw_relative).parts)
-raw_bytes = raw_path.read_bytes()
-check("raw_manifest_size", manifest["raw_source_manifest_size"] == len(raw_bytes))
-check("raw_manifest_sha256", manifest["raw_source_manifest_sha256"] == hashlib.sha256(raw_bytes).hexdigest())
-raw = json.loads(raw_bytes.decode("utf-8"))
-raw_files = raw["files"]
-
-records = {r["relative_path"]: r for r in manifest["files"]}
-check("record_count", len(records) == len(manifest["files"]) == 911)
-
-# 910 of the 911 files are forcing and discharge files covered by the frozen raw source
-# manifest. The 911th is the catchment topography file, which the execution config pins
-# separately, so it is checked against that instead.
-staging = json.loads(
-    (PROJECT / "configs/tukf09_455_basin_zero_validation_target_variance_hpc_execution_a800_exclusive_v2r9.json")
-    .read_text("utf-8")
-)["data_staging"]
-topography = staging["topography_relative_path"]
-
-missing_in_raw = sorted(name for name in records if name not in raw_files)
-check("exactly_the_topography_file_is_outside_the_raw_manifest", missing_in_raw == [topography])
-check("raw_covered_file_count", len(records) - len(missing_in_raw) == int(staging["staged_raw_file_count"]) == 910)
-check("total_staged_file_count", len(records) == int(staging["total_staged_file_count"]) == 911)
-if topography in records:
-    check("topography_sha256", records[topography]["sha256"] == staging["topography_sha256"])
-    check("topography_size", int(records[topography]["size_bytes"]) == int(staging["topography_size_bytes"]))
-
-mismatched = [
-    name for name in records
-    if name in raw_files
-    and (raw_files[name]["sha256"] != records[name]["sha256"]
-         or int(raw_files[name]["size_bytes"]) != int(records[name]["size_bytes"]))
-]
-check("capsule_records_agree_with_the_frozen_raw_manifest", not mismatched)
-
-# Re-hash every file on disk, independently of the manifest that was just written.
-total = 0
-bad = []
-for name, record in sorted(records.items()):
-    path = data_root.joinpath(*PurePosixPath(name).parts)
-    if path.is_symlink() or not path.is_file() or path.stat().st_nlink != 1:
-        bad.append(name); continue
-    if stat.S_IMODE(path.stat().st_mode) != 0o444:
-        bad.append(name); continue
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        while True:
-            chunk = handle.read(1024 * 1024)
-            if not chunk:
-                break
-            digest.update(chunk)
-    if digest.hexdigest() != record["sha256"] or path.stat().st_size != int(record["size_bytes"]):
-        bad.append(name); continue
-    total += path.stat().st_size
-check("all_911_files_rehash_clean", not bad)
-check("total_bytes", total == manifest["total_bytes"] == 464792200)
-
-identity_rows = sorted(
-    ({"relative_path": r["relative_path"], "size_bytes": int(r["size_bytes"]), "sha256": r["sha256"]}
-     for r in manifest["files"]),
-    key=lambda row: row["relative_path"],
-)
-identity = hashlib.sha256(
-    json.dumps(identity_rows, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
-).hexdigest()
-check("data_identity", identity == manifest["data_identity_sha256"] == ready["data_identity_sha256"])
-
-# The population order is the frozen registry order, never a re-sort.
-registry = json.loads(
-    (PROJECT / "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/preflight/population_registry.json")
-    .read_text("utf-8")
-)
-basins = registry["eligible"]
-check("registry_is_a_list_of_455", isinstance(basins, list) and len(basins) == 455)
-if isinstance(basins, list):
-    newline_digest = hashlib.sha256("".join(b + chr(10) for b in basins).encode("utf-8")).hexdigest()
-    check("registry_order_digest", newline_digest == manifest["scientific_identity"]["ordered_basin_newline_sha256"])
-    check("registry_self_digest", newline_digest == registry["eligible_ordered_newline_utf8_sha256"])
-    check("excluded_basin", registry["validation_metric_undefined"] == ["08202700"])
-
-# Modes and surface.
-files = dirs = 0
-for directory, _names, filenames in os.walk(CAP):
-    dpath = Path(directory)
-    if dpath.is_symlink() or stat.S_IMODE(dpath.stat().st_mode) != 0o555:
-        failures.append("directory_mode:" + os.fspath(dpath))
-    dirs += 1
-    for name in filenames:
-        fpath = dpath / name
-        if fpath.is_symlink() or stat.S_IMODE(fpath.stat().st_mode) != 0o444:
-            failures.append("file_mode:" + os.fspath(fpath))
-        files += 1
-check("surface_counts", files == 914 and dirs == 44)
-
-print("REHASHED_FILES", len(records))
-print("REHASH_FAILURES", len(bad))
-print("TOTAL_BYTES", total)
-print("DATA_IDENTITY_SHA256", identity)
-print("FILES", files, "DIRS", dirs)
-print("SCIENTIFIC_IDENTITY_SHA256",
-      hashlib.sha256(json.dumps(manifest["scientific_identity"], ensure_ascii=False, sort_keys=True,
-                                separators=(",", ":")).encode("utf-8")).hexdigest())
-print("FAILURES", json.dumps(sorted(set(failures))[:10], ensure_ascii=False))
-print("AUDIT_STATUS", "PASS" if not failures else "FAIL")
-sys.exit(0 if not failures else 5)
-AUDIT_EOF
-RC=$?
-echo "AUDIT_RETURN_CODE=$RC"
-
-echo "=== EVIDENCE HASHES FOR THE NEXT CONFIG ==="
-sha256sum "$CAP/evidence/source_capsule_manifest.json" "$CAP/evidence/source_capsule_manifest.sha256" "$CAP/evidence/READY.json" 2>&1
-stat -c "%s %n" "$CAP/evidence/source_capsule_manifest.json" "$CAP/evidence/source_capsule_manifest.sha256" "$CAP/evidence/READY.json" 2>&1
-
-echo "=== SUPERSEDED CAPSULE STILL UNTOUCHED ==="
-echo "MODE=$(stat -c %a "$OLD")"
-sha256sum "$OLD/evidence/source_capsule_manifest.json" 2>&1
-
-if [ "$RC" -eq 0 ]; then echo TUKF09_455_CAPSULE_V3_AUDIT_PASS; else echo TUKF09_455_CAPSULE_V3_AUDIT_NONPASS; fi
+echo TUKF09_455_A800_EXCLUSIVE_V2R10_DEPLOYED_DOWNLOAD_LAUNCHED_NO_JOB_SUBMITTED
