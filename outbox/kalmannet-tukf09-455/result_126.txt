@@ -1,0 +1,30 @@
+### channel=kalmannet-tukf09-455 seq=126
+### host=login4
+### started=2026-09-04T15:43:08+0800
+### ---------- output ----------
+TIME=2026-09-04T15:43:08+0800
+AUDIT_COMMAND_SHA256=3c45f0d1bf237ab02453e89a5fefcbd00fe76bd60dbf7bec4584ad52218fead8
+=== INDEPENDENT AUDIT ===
+REHASHED_FILES 911
+REHASH_FAILURES 0
+TOTAL_BYTES 464792200
+DATA_IDENTITY_SHA256 dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da
+FILES 914 DIRS 44
+SCIENTIFIC_IDENTITY_SHA256 f8ca5b2a18711c6ac51fcd986095233406f13cde614a69454c37b3b19588565d
+FAILURES []
+AUDIT_STATUS PASS
+AUDIT_RETURN_CODE=0
+=== EVIDENCE HASHES FOR THE NEXT CONFIG ===
+a61b52ad609598d083b87ea869c6674d10f70e88ea15db80da52609bd3d913f6  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904/evidence/source_capsule_manifest.json
+abc39451994261d2760261562ed430b247ba6023e7e9ce68305128547fdb720f  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904/evidence/source_capsule_manifest.sha256
+0cc1635707e6651c8f5a942e47dcd8453d11280b66fd2d061638ac3c865eef50  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904/evidence/READY.json
+541659 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904/evidence/source_capsule_manifest.json
+95 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904/evidence/source_capsule_manifest.sha256
+1217 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904/evidence/READY.json
+=== SUPERSEDED CAPSULE STILL UNTOUCHED ===
+MODE=555
+6e669e61feee8131de8c99b15d603bb7fac582db2d23fcc4405ef0c931b49cff  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v4_20260904/evidence/source_capsule_manifest.json
+TUKF09_455_CAPSULE_V3_AUDIT_PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T15:43:09+0800
