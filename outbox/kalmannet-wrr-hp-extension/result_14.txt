@@ -1,0 +1,21 @@
+### channel=kalmannet-wrr-hp-extension seq=14
+### host=login4
+### started=2026-09-04T11:12:05+0800
+### ---------- output ----------
+=== PAYLOAD_CHECK ===
+payload_ok
+combos lines before: 18
+=== INSTALL ===
+combos lines after: 20
+{"index": 18, "run_id": "WRR-HPEXT-20260902-I18", "role": "small_net_replicate_seed43", "lr": 0.01, "hidden_size": 16, "num_layers": 1, "in_out_mult": 10, "seed": 43}
+{"index": 19, "run_id": "WRR-HPEXT-20260902-I19", "role": "small_net_replicate_seed44", "lr": 0.01, "hidden_size": 16, "num_layers": 1, "in_out_mult": 10, "seed": 44}
+=== VERIFY_DEPLOYED_TREE ===
+checked 62 files, mismatches=0
+=== SUBMIT ===
+Submitted batch job 220434
+small_job_id=220434
+JOBID|NAME|STATE|PARTITION|NODELIST(REASON)
+220434_[18-19]|wrrhp-small|PENDING|hgpu2p|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T11:12:06+0800
