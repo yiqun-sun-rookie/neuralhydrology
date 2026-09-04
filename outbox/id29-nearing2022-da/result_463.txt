@@ -1,0 +1,36 @@
+### channel=id29-nearing2022-da seq=463
+### host=login4
+### started=2026-09-04T14:26:38+0800
+### ---------- output ----------
+=== EXACT FILE HASHES AND SIZES ===
+3039|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2/audit.json
+1277bef6b3f67dca764247c4a9903421a3cd267b4888d7845e89fe39d91acbca  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2/audit.json
+481|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2/audit_stdout.json
+ee48c4fa0998777d446911524b17785f96853dadc279a980acecfaa4b6534bf6  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_warmup_isolation_all531_v2/audit_stdout.json
+31611|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2/audit.json
+4c510edc9fdb8ea1dc0c325a45aac7079e949c1f605bd60b369f664f7ce20042  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2/audit.json
+24747|/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2/audit_stdout.json
+b7cd6ab97985db7ed6157764c2d8150e482b9de2667c43681752498f5a52be44  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/author_v13_training_data_port_all531_v2/audit_stdout.json
+12662|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_warmup_target_isolation.py
+9f898a80aafb4e207bb56fd095125e9d5d092ec8c96af4d6010bdaeb36a27f8c  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/audit_warmup_target_isolation.py
+29458|/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py
+0bcabc96f9e702f2317464f1f0123c29d49d5f7f0f972a10ea3e01bbf18fe987  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py
+=== PARSED RELATIONSHIPS ===
+mask_stdout_equals_full_audit= False
+mask_stdout_equals_conclusion= True
+data_stdout_equals_full_audit= True
+mask_stdout= {"causal_boundary": "Restoring the released training-data tensors and scaling proves data-path causality only. Its effect on learned checkpoints and paper metrics still requires an isolated paired retraining.", "direct_fact": "The temporary current path differs from the installed current path by exactly the released warmup-target mask statement. No registered output or installed package file is modified.", "single_mask_restores_released_training_data_for_scope": true}
+mask_conclusion= {"causal_boundary": "Restoring the released training-data tensors and scaling proves data-path causality only. Its effect on learned checkpoints and paper metrics still requires an isolated paired retraining.", "direct_fact": "The temporary current path differs from the installed current path by exactly the released warmup-target mask statement. No registered output or installed package file is modified.", "single_mask_restores_released_training_data_for_scope": true}
+mask_schema= nearing2022-warmup-target-isolation-audit-v1
+mask_basin_count= 531
+single_mask_restoration= True
+other_installed_source_files_modified= 0
+comparison= {"author_target_center": 1.5002624988555908, "author_target_scale": 3.6244070529937744, "basins_compared": 531, "bitwise_identical_normalized_dynamic_input_basins": 531, "bitwise_identical_static_attribute_basins": 531, "common_finite_target_values": 1745928, "common_raw_targets_within_1e_5": true, "dataset_length": 1745928, "finite_target_mask_identical": true, "masked_minus_author_target_center": 0.0, "masked_minus_author_target_scale": 0.0, "masked_target_center": 1.5002624988555908, "masked_target_scale": 3.6244070529937744, "maximum_absolute_common_raw_target_difference": 0.0, "maximum_absolute_target_standard_deviation_difference": 0.0, "metadata_identical": true, "per_basin_target_standard_deviations_within_1e_6": 531}
+=== GENERATOR PRINT CONTRACT ===
+265:    result = audit(repo_root, args.basin_count, args.output.resolve(), unmasked_evidence.resolve())
+266:    print(json.dumps(result["conclusion"], indent=2, sort_keys=True))
+=== JOB EVIDENCE ===
+220487|FAILED|1:0|00:00:05|ngu104
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T14:26:39+0800
