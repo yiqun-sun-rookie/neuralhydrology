@@ -1,0 +1,69 @@
+### channel=kalmannet-tukf09-455 seq=133
+### host=login4
+### started=2026-09-04T18:18:31+0800
+### ---------- output ----------
+TIME=2026-09-04T18:18:32+0800
+PREPARATION_JOB_ID=220655  TRAINING_JOB_ID=220663
+     JobID        State ExitCode  NodeList    Elapsed                Start                  End 
+---------- ------------ -------- --------- ---------- -------------------- -------------------- 
+    220655    COMPLETED      0:0    ngu203   00:08:03  2026-09-04T16:06:06  2026-09-04T16:14:09 
+     JobID        State ExitCode  NodeList    Elapsed                Start                  End 
+---------- ------------ -------- --------- ---------- -------------------- -------------------- 
+    220663      RUNNING      0:0    ngu203   01:55:15  2026-09-04T16:23:55              Unknown 
+    220663    tukf09-455-v2r10-neural   RUNNING           ngu203    1:54:37
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)
+     hgpu8     up      2      mix             ngu[201-202]          34/94/0/128
+     hgpu8     up      1    alloc                   ngu203            64/0/0/64
+=== MARKERS ===
+ABSENT  PREPARATION_FAILED.json
+PRESENT initial_bundle_verification.json  597ade88a9165ba43d9f0461b84c88483282b6f89decceb22e8aad3ecbe4e0fa
+PRESENT staged_training_sources.json  404b306bd5d96d284ab0155e03bd7a2ac76b32f9dbdd6ce83b25a3ffaf96a659
+PRESENT preparation_probe.json  76c8777255ff5abe6813164493d66f90701a714cc821e3a1d102217d8f194d7f
+PRESENT hpc_technical_admission.json  3aa7e4db1f0316f1d9a9b624c6e4a9e21f4bde2d31228888fc80c4a169ecfb2c
+PRESENT training_job_id.txt  5fa2beba3d50a719322b5b70f5cd7a5174f9a6d4c42e2e47844e539e807ca421
+ABSENT  training_verification.json
+hpc_technical_admission.json
+initial_bundle_verification.json
+offline_inputs_download.launched
+offline_inputs_download.lock
+preparation_job_id.txt
+preparation.lock
+preparation_probe.json
+preparation_submission.lock
+staged_training_sources.json
+training_job_id.txt
+training_submission.lock
+PRIVATE_RUNTIME_PRESENT 7.4G
+FILTER_UNITS=455
+NEURAL_UNITS=2
+NEURAL_CHECKPOINTS=3
+lead_1_seed_0.pending-48430-0eb57af4a8924a5eb98ac06de7289f45
+shared
+SELECTION=ABSENT
+EVALUATION=ABSENT
+=== LOG TAILS ===
+, "slurm_job_cpus_per_node_raw": "64", "slurm_job_gpus": "0", "slurm_job_id": "220655", "slurm_job_node_count": 1, "slurm_step_gpus": "", "tensorfloat32": {"cuda_matmul": false, "cudnn": false}, "torch_base_version": "2.2.2", "torch_cuda_runtime_version": "12.1", "torch_process_gpu_uuid": "GPU-d912a8cb-5369-be00-9331-436a8a45bf1c", "torch_version": "2.2.2+cu121"}, "schema_version": "tukf09_455_hpc_preparation_probe_a800_exclusive_v2r10", "scientific_contract_changed": false, "source_capsule_data_file_count": 911, "source_capsule_data_identity_sha256": "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da", "source_capsule_data_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904/data/camels_us", "source_capsule_data_total_bytes": 464792200, "source_capsule_deployment_mailbox_sequence": 125, "source_capsule_deployment_result_sha256": "279eef22edf8b273f7f46827cfc48b55507424c779a8091ebb32abda1f842495", "source_capsule_directory_count": 44, "source_capsule_evidence_file_count": 3, "source_capsule_manifest_sha256": "a61b52ad609598d083b87ea869c6674d10f70e88ea15db80da52609bd3d913f6", "source_capsule_manifest_sha256_record_sha256": "abc39451994261d2760261562ed430b247ba6023e7e9ce68305128547fdb720f", "source_capsule_post_publication_audit_command_sha256": "3c45f0d1bf237ab02453e89a5fefcbd00fe76bd60dbf7bec4584ad52218fead8", "source_capsule_post_publication_audit_mailbox_sequence": 126, "source_capsule_post_publication_audit_result_sha256": "644da19f395ddde96875b6ae1c46544dc71d7c44c33a8e467c4e6cf67f94488e", "source_capsule_ready_sha256": "0cc1635707e6651c8f5a942e47dcd8453d11280b66fd2d061638ac3c865eef50", "source_capsule_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904", "staged_sources_identity_sha256": "72626284e0dfc7ecd4e8af927c7216c6dbd340bf6cac8717a2d2c69e531b7911", "staged_sources_manifest_sha256": "404b306bd5d96d284ab0155e03bd7a2ac76b32f9dbdd6ce83b25a3ffaf96a659", "status": "HPC_A800_EXCLUSIVE_V2R10_PREPARED_FILTERS_455_NEURAL_0_OF_9_EVALUATION_HOLD"}
+TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "mutable_directory_count": 501,
+  "mutable_file_count": 3649,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R10_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+=== FROZEN EVIDENCE UNCHANGED ===
+11b47e27e4b7e3fd403ffb3a8f2b8003c6ebf6540e52d0c1ab439be6293d2f77  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901/logs/training-217939.out
+CAPSULE_V2_MODE=555
+CAPSULE_V3_MODE=555
+TUKF09_455_V2R10_STATUS_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T18:18:41+0800
