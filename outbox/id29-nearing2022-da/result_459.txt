@@ -1,0 +1,76 @@
+### channel=id29-nearing2022-da seq=459
+### host=login4
+### started=2026-09-04T14:09:56+0800
+### ---------- output ----------
+=== TIME AND SOURCE REVISION ===
+2026-09-04T14:09:56+0800
+=== REQUIRED SERVER HASHES ===
+4658816ea3110a1c2efcf54c3dcf00d5c0982459dca4f7ac985beb983b12df0d  /data1/home/sunyiq/nearing2022_da/neuralhydrology/datasetzoo/basedataset.py
+0bcabc96f9e702f2317464f1f0123c29d49d5f7f0f972a10ea3e01bbf18fe987  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py
+31f856df60b0daacea873386880581f975480c842fae0d605a5abe4b40a1b664  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py
+16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol.json
+a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_target_paired_retraining_protocol_amendment_01.json
+16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol.json
+a21bae28a26f5797e96232628fdc139f5ffd1e54e31ee2032a7805acb0785ef5  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol_amendment_01.json
+18e6aeeee3321427d0f851d68d2cbbfb02f8d13e477f6f96dd5f22eed1d4d2a1  /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_repair_submission_01.json
+729985706faeb8c45480d3c485dbad72ae51eec94dff69b5c8964e2036591b1a  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/configs/full_reproduction/time_split/autoregression/lead_1_holdout_0.0_seed_0.yml
+cd2d3d466aca736fcd32042d2b0bde3d0b58e42ba37fe552d97480bd914b9e85  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/basin_lists/531_basin_list.txt
+6366d468d671a2af39c2a136b984ca4ee9ebfc1106618b945287bdaabe629d64  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/experiment_registry.csv
+37b312dbd362399a9771f2233d1e1139ea25d5339d1bbc7a806fa75be30b9215  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/evaluation_registry.csv
+7cb7f10ce13c41c1b064148b27a707ccaab56f87fa40c289d6833bc7c57b09a7  /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/registry/assimilation_hyperparameter_registry.csv
+warmup-mask occurrences in clean server source:
+NONE
+=== REPLACEMENT OUTPUT MEMBERS ===
+DIR author_v13_training_data_port_all531_v2
+audit.json|f|31611
+audit_stdout.json|f|24747
+audit_training_data_port.py|f|14478
+audit_training_data_port_v2.py|f|14668
+diagnostic_receipt.json|f|1724
+run_author_v13_training_data_port_all531_v2.slurm|f|8070
+warmup_target_paired_retraining_protocol_amendment_01.json|f|3779
+DIR author_v13_warmup_isolation_all531_v2
+audit.json|f|3039
+audit_stdout.json|f|481
+audit_training_data_port.py|f|14478
+audit_warmup_target_isolation.py|f|12662
+diagnostic_receipt.json|f|1695
+run_author_v13_warmup_isolation_all531_v2.slurm|f|7584
+warmup_target_paired_retraining_protocol_amendment_01.json|f|3779
+warmup_target_paired_retraining_protocol.json|f|7266
+=== REQUIRED JOB STATES ===
+202510|N22-data-port-v2|COMPLETED|0:0|00:05:08|2026-08-13T06:41:35|2026-08-13T06:46:43|ngu104
+202511|N22-mask-iso-v2|COMPLETED|0:0|00:05:22|2026-08-13T06:46:43|2026-08-13T06:52:05|ngu104
+219424|N22-warmpair|FAILED|1:0|00:00:45|2026-09-03T18:19:46|2026-09-03T18:20:31|ngu104
+219423|N22-warmpair|FAILED|1:0|00:00:48|2026-09-03T18:20:31|2026-09-03T18:21:19|ngu104
+=== CURRENT ID29 QUEUE ===
+202229|N22-agg-eval|PENDING|0:00|1-00:00:00|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|0:00|4:00:00|(Dependency)
+202315|N22-gate|PENDING|0:00|2:00:00|(Dependency)
+202507|N22-mask-iso-531|PENDING|0:00|2:00:00|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|0:00|1-00:00:00|(JobHeldUser)
+conflicting N22-replv2 jobs:
+NONE
+=== EXISTING PAIR AND VERSIONED TARGET PATHS ===
+PRESENT /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair
+ABSENT /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/warmup_pair_v2_20260904
+ABSENT /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904
+ABSENT /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/replacement_verification
+=== HGPU4 LIVE VIEW ===
+hgpu4|up|infinite|1|ngu103|down*|gpu:4|(null)
+hgpu4|up|infinite|3|ngu[101-102,104]|mixed|gpu:4|(null)
+ngu101|mixed|gpu:4|(null)
+ngu102|mixed|gpu:4|(null)
+ngu103|down*|gpu:4|(null)
+ngu104|mixed|gpu:4|(null)
+=== PREFLIGHT SENTINELS ===
+basedataset_exact=yes
+verifier_exact=yes
+job202510=COMPLETED|0:0
+job202511=COMPLETED|0:0
+deployment_target_absent=yes
+run_target_absent=yes
+conflicting_job_count=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T14:09:57+0800
