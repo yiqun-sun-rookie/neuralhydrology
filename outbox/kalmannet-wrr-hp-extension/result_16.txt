@@ -1,0 +1,23 @@
+### channel=kalmannet-wrr-hp-extension seq=16
+### host=login4
+### started=2026-09-04T15:38:24+0800
+### ---------- output ----------
+=== TIME ===
+2026-09-04T15:38:24+0800
+=== JOBS ===
+220434_18|RUNNING|4:25:37|ngu004
+220434_19|RUNNING|4:25:37|ngu001
+220454_20|RUNNING|4:02:34|ngu011
+220454_22|RUNNING|4:02:34|ngu007
+=== FAULTS ===
+none
+=== NEW CELLS (18-22) ===
+idx18 RUNNING  ep= 21 lr_now=0.01        nse=0.9538 best_ep=14 no_improve=6 roll=0
+idx19 RUNNING  ep= 21 lr_now=0.01        nse=0.9568 best_ep=20 no_improve=0 roll=0
+idx20 RUNNING  ep= 23 lr_now=0.005       nse=0.9565 best_ep=22 no_improve=0 roll=0
+idx21 tiny_net_seed43             hs=8  seed=43 DONE M=0.982473 best_ep=11 roll=0 stop_ep=21
+idx22 RUNNING  ep= 19 lr_now=0.01        nse=0.9565 best_ep=18 no_improve=0 roll=0
+(done)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T15:38:25+0800
