@@ -1,0 +1,62 @@
+### channel=kalmannet-tukf09-455 seq=135
+### host=login4
+### started=2026-09-04T20:17:55+0800
+### ---------- output ----------
+TIME=2026-09-04T20:17:55+0800  TRAINING_JOB_ID=220663
+     JobID      State    Elapsed  Timelimit                Start 
+---------- ---------- ---------- ---------- -------------------- 
+    220663    RUNNING   03:54:39   18:00:00  2026-09-04T16:23:55 
+=== CHECKPOINT TIMESTAMPS ===
+2026-09-04 16:57:17.0000000000      3271755 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0.pending-48430-0eb57af4a8924a5eb98ac06de7289f45/checkpoints/epoch_001.pt
+2026-09-04 17:27:19.0000000000      3271755 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0.pending-48430-0eb57af4a8924a5eb98ac06de7289f45/checkpoints/epoch_002.pt
+2026-09-04 17:57:24.0000000000      3271755 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0.pending-48430-0eb57af4a8924a5eb98ac06de7289f45/checkpoints/epoch_003.pt
+2026-09-04 18:27:26.0000000000      3271755 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0.pending-48430-0eb57af4a8924a5eb98ac06de7289f45/checkpoints/epoch_004.pt
+2026-09-04 18:57:24.0000000000      3271691 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0.pending-48430-0eb57af4a8924a5eb98ac06de7289f45/checkpoints/epoch_005.pt
+2026-09-04 19:27:24.0000000000      3271755 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0.pending-48430-0eb57af4a8924a5eb98ac06de7289f45/checkpoints/epoch_006.pt
+2026-09-04 19:57:23.0000000000      3271691 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0.pending-48430-0eb57af4a8924a5eb98ac06de7289f45/checkpoints/epoch_007.pt
+CHECKPOINTS=7
+COMPLETE_UNITS=0
+total 16
+drwxr-xr-x. 4 sunyiq g_sunyiq 4096 Sep  4 16:26 .
+drwxr-xr-x. 6 sunyiq g_sunyiq 4096 Sep  4 16:26 ..
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Sep  4 16:57 lead_1_seed_0.pending-48430-0eb57af4a8924a5eb98ac06de7289f45
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  4 16:26 shared
+=== CURRENT UNIT CONTENTS ===
+--- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0.pending-48430-0eb57af4a8924a5eb98ac06de7289f45
+total 141
+drwxr-xr-x. 3 sunyiq g_sunyiq   4096 Sep  4 16:57 .
+drwxr-xr-x. 4 sunyiq g_sunyiq   4096 Sep  4 16:26 ..
+drwxr-xr-x. 2 sunyiq g_sunyiq   4096 Sep  4 19:57 checkpoints
+-rw-r--r--. 1 sunyiq g_sunyiq 131913 Sep  4 16:26 identity.json
+=== SHARED SCALER ===
+total 27
+drwxr-xr-x. 2 sunyiq g_sunyiq  4096 Sep  4 16:26 .
+drwxr-xr-x. 4 sunyiq g_sunyiq  4096 Sep  4 16:26 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 19152 Sep  4 16:26 training_scaler.json
+=== NEURAL EVENT LOG TAIL ===
+{"controller_process_id":48403,"detail":{"filter_installation_final_sha256":"d49ecb71fefa9ef320fa8c4ad7358c7e98a17b4c3ee221bf8633886f99b68ff0","sequence_execution_id":"6fe7f5d762404ee589359a39120be179","source_sha256":{"controller":"b50af402b7631234fe32adea2e3cabd431394e396dafcdbac471fcb7e2f67c4e","frozen_model":"15698ac13a9b0c14296585adc9272a6c75569c3a7a882ea36d3101e7847b8e8a","training_common":"892875226c1aca6cd5550e245ae7c69a32151974e660cf6b45d9b2fc470b00c2","unit_runner":"6b00686fdc2c7f4104cc792b94cd8f8ef05388c552d2a259fe028b2b2f372d32"},"training_admission_record_sha256":"d81cde63b9936ede157bcc6e3020f9a0deb67ea88f89ae701810fa8bbf2e6fb3"},"evaluation_access_count":0,"event_type":"CONTROLLER_STARTED","exit_status":"RUNNING","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_neural_controller_event_v1","sequence_number":1,"timestamp_utc":"2026-09-04T08:25:45.756390+00:00","unit_id":null,"unit_manifest_sha256":null}
+{"controller_process_id":48403,"detail":{"started_at_utc":"2026-09-04T08:25:46.075835+00:00"},"evaluation_access_count":0,"event_type":"UNIT_STARTED","exit_status":"RUNNING","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_neural_controller_event_v1","sequence_number":2,"timestamp_utc":"2026-09-04T08:25:46.075864+00:00","unit_id":"lead_1_seed_0","unit_manifest_sha256":null}
+=== GPU USE ON THE ALLOCATED NODE ===
+       JobID     AveCPU     MaxRSS  MaxVMSize 
+------------ ---------- ---------- ---------- 
+220663.batch   03:52:43   1694244K  20190912K 
+=== TRAINING LOG TAIL ===
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "mutable_directory_count": 501,
+  "mutable_file_count": 3649,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R10_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+TUKF09_455_V2R10_PACE_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T20:17:55+0800
