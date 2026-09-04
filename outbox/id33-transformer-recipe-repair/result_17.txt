@@ -1,0 +1,41 @@
+### channel=id33-transformer-recipe-repair seq=17
+### host=login4
+### started=2026-09-04T21:38:01+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-04T21:38:01+0800
+=== CURRENT HASHES OF TRACKED IMPLEMENTATION FILES ===
+f216281d782077a9d5046dfe78297423edfe424362d7f553844ad030f1e6c306  neuralhydrology/modelzoo/__init__.py
+78b9977e20ac59318060c7771e180bc9a9498dfe753ed13652b733ca922b58dd  neuralhydrology/modelzoo/cudalstm.py
+04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede  neuralhydrology/modelzoo/modern_causal_transformer.py
+f37ce6f0a84373324f5f2c326e0bb1ef5dc1d567f2c3c8d0bcd1609a75e55209  neuralhydrology/modelzoo/recency_biased_transformer.py
+dd093b289d325bed8f1cfda136d8d8e50835346cbe9e917b5c4016a8e1135c89  neuralhydrology/modelzoo/recipe_fixed_transformer.py
+19c9ba52d9b0c35d241ca2eb0479b1cd7e9be0dc625d2c8b29a2de936c78cbd7  neuralhydrology/utils/config.py
+f2190551a3ac2b5824114c80bd0f677112aa2cb2410a8b1fe29efc913da2780d  src/transformer_recipe_repair/hpc/submit_repair_arm.slurm
+b202b1d7e664aa84c38f20647c9478d4ee4a49846cacd4a2c75aeb86a5369b9e  src/transformer_recipe_repair/registry/experiments.csv
+c092fcab7745bcb994ced393f1ce700ecefaf605224b55011bad60e3717b1bbb  src/transformer_recipe_repair/scripts/audit_configs.py
+9d42bd2df9380c51ae9c51abc4c660025967095fda373e7f62918fa803e9fd39  src/transformer_recipe_repair/scripts/run_development.py
+=== CONFIG HASHES ===
+810c88045cf6cef33a61b8350998d7af779fa163ecfad51add82f145243d529c  src/transformer_recipe_repair/configs/c1.yml
+ab392dd3fed78bd4aaaf0599328209cad306734664d7c0f8b56a08096888d6ca  src/transformer_recipe_repair/configs/c2.yml
+17c4d68e30d877a0571a666894600069e22f0fe4b81f544c874d2e26cdb106fe  src/transformer_recipe_repair/configs/l33.yml
+93e1f3f4091302fda8c7f87e6886e0d3c1e5e5273071b6d86dff310be0685f0f  src/transformer_recipe_repair/configs/t1.yml
+29aeeec57d3a8f066e7ea226d7095e9b1b554113ee9221da8c774e3c259a2264  src/transformer_recipe_repair/configs/t2.yml
+c7abda8dd89905bf8b83f67fc928476319854b6942a91854d4eaf3dd9f869e5f  src/transformer_recipe_repair/configs/t3.yml
+befc540665d71336e4cc1e14e41eb2b5f01fcc522aaf35907cdf8b44e1d7b27c  src/transformer_recipe_repair/configs/t4.yml
+11bb38d1f8522e946d432ff6ca5688f9f7c5c9e0e005bc143bee07094a820db0  src/transformer_recipe_repair/configs/t5.yml
+=== T5 MANIFEST TAIL ===
+      "status": "PASS",
+    "status": "PASS",
+  "error": "ID33 source configuration or implementation changed during training",
+  "run_id": "id33_T5_s100_slurm220494",
+  "status": "FAILED",
+  "training_return_code": 0
+=== T5 DATA ACCESS ===
+"status": "PASS"
+"status": "PASS"
+"status": "FAILED"
+ID33_HASHCHECK_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T21:38:02+0800
