@@ -1,200 +1,169 @@
 #!/bin/bash
-# TUKF09-455: publish training source capsule v5. Its frozen scientific identity
-# matches the training admission re-signed after the process gate ancestor walk was
-# made to survive a restricted process view. All 911 files are copied byte for byte
-# from capsule v4 and every hash is checked on the way in. Earlier capsules are only
-# read. No Slurm job, no training, no formal evaluation.
+# TUKF09-455: independent post-publication audit of training source capsule v5.
+# Read-only. Re-hashes all 911 files from disk, checks them against the frozen raw
+# source manifest, checks the frozen population order, modes and surface.
+# Publishes nothing, submits nothing, modifies nothing.
 
 set -o pipefail
 
+CAP=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904
 OLD=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v4_20260904
-NEW=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904
+PROJECT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904/bundle/kalmannet
 PY=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
 SELF="$PWD/inbox/kalmannet-tukf09-455/cmd.sh"
 
 echo "TIME=$(date -Is)"
-test -d "$OLD" || { echo SUPERSEDED_CAPSULE_MISSING; exit 1; }
-case "$NEW" in *capsule_v5_20260904) echo TARGET_OK;; *) echo TARGET_GUARD_FAILED; exit 1;; esac
-CMD_SHA=$(sha256sum "$SELF" | cut -d" " -f1)
-echo "DEPLOYMENT_COMMAND_SHA256=$CMD_SHA"
-echo "SUPERSEDED_CAPSULE_MODE_BEFORE=$(stat -c %a "$OLD")"
+echo "AUDIT_COMMAND_SHA256=$(sha256sum "$SELF" | cut -d" " -f1)"
+test -d "$CAP" || { echo CAPSULE_MISSING; exit 1; }
+test -d "$PROJECT" || { echo PROJECT_MISSING; exit 1; }
 
-echo "=== PUBLISH ==="
-"$PY" -B - "$OLD" "$NEW" 125 "$CMD_SHA" <<'PUBLISH_EOF'
-EMBEDDED_IDENTITY = {
-"all_scope_authorization": {
-"path": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/authorizations/all_scope_authorization.json",
-"sha256": "941ed64cb5d1c60e5525188e431bff69645d0b215e54d3939d5510ae63d2fb97"
-},
-"excluded_basins": [
-"08202700"
-],
-"filter_migration_final_manifest": {
-"path": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/filter_migration_v1/independent/manifest.final.sha256.json",
-"sha256": "029521f6c35980ce40fb0afeb14e2734042734c73f6ed0a33a5c0040311c3eb5"
-},
-"formal_training_execution": {
-"path": "configs/tukf09_455_basin_zero_validation_target_variance_formal_training_execution_v1.json",
-"sha256": "0daf464f6bb1cfc11f04806b7caf5195ea42c3aef8187d8248474993ca108319"
-},
-"independent_preflight_final_manifest": {
-"path": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/preflight/independent/manifest.final.sha256.json",
-"sha256": "f7e0a3f0708d0498cbaeaa77a044687f20d017ffa316170cd4770fc920b144aa"
-},
-"local_filter_installation_final_manifest": {
-"path": "results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/filter_rebinding/independent/manifest.final.sha256.json",
-"sha256": "a8406916d412f366e1c82b7407f138844cd90fe1c2384f9f78f24dc5210967a7"
-},
-"ordered_basin_compact_json_sha256": "75ef2cee206fb15ee3f31ae0bbfcf594661c5ccdda0b28de9ff65634332c8902",
-"ordered_basin_count": 455,
-"ordered_basin_newline_sha256": "38987bce45fa38ff68f5b067db17e8cb3212d98fecdd106f57d268a130ee8fbd",
-"original_training_admission": {
-"file_sha256": "0e50bbf62750cf85b3c1e94ecdafe76621357eec647d71ba1b9caf6d41b0ddd5",
-"path": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/training_admission/training_admission.json",
-"record_sha256": "d81cde63b9936ede157bcc6e3020f9a0deb67ea88f89ae701810fa8bbf2e6fb3"
-},
-"scientific_contract": {
-"path": "configs/tukf09_455_basin_zero_validation_target_variance_revision_v1.json",
-"sha256": "7710594dcc5cce7f087cb70492a6f827c3925a98ea7fa051d26c5ef1660304e1"
-}
-}
-
-import hashlib, json, os, sys
+echo "=== INDEPENDENT AUDIT ==="
+"$PY" -B - "$CAP" "$PROJECT" <<'AUDIT_EOF'
+import hashlib, json, os, stat, sys
 from pathlib import Path, PurePosixPath
 
-OLD = Path(sys.argv[1]); NEW = Path(sys.argv[2])
-SEQ = int(sys.argv[3]); CMD_SHA = sys.argv[4]
-IDENTITY = json.loads(sys.stdin.read()) if False else None
+CAP = Path(sys.argv[1]); PROJECT = Path(sys.argv[2])
 
-manifest = json.loads((OLD / "evidence" / "source_capsule_manifest.json").read_text("utf-8"))
-identity = EMBEDDED_IDENTITY
+manifest_path = CAP / "evidence" / "source_capsule_manifest.json"
+ready_path = CAP / "evidence" / "READY.json"
+record_path = CAP / "evidence" / "source_capsule_manifest.sha256"
+manifest_bytes = manifest_path.read_bytes()
+manifest = json.loads(manifest_bytes.decode("utf-8"))
+ready = json.loads(ready_path.read_bytes().decode("utf-8"))
+data_root = CAP / "data" / "camels_us"
 
-records = manifest["files"]
-assert isinstance(records, list) and len(records) == manifest["file_count"] == 911, "unexpected record count"
+failures = []
 
-new_data_root = NEW / "data" / "camels_us"
-old_data_root = OLD / "data" / "camels_us"
+def check(name, condition):
+    if not condition:
+        failures.append(name)
 
-if NEW.exists():
-    print("NEW_CAPSULE_ALREADY_EXISTS"); sys.exit(1)
-NEW.mkdir(mode=0o755)
-(NEW / "evidence").mkdir(mode=0o755)
+check("manifest_sha_record_matches",
+      record_path.read_bytes()
+      == (hashlib.sha256(manifest_bytes).hexdigest() + "  source_capsule_manifest.json" + chr(10)).encode("ascii"))
+check("ready_binds_manifest", ready["manifest_sha256"] == hashlib.sha256(manifest_bytes).hexdigest())
+check("ready_manifest_size", ready["manifest_size"] == len(manifest_bytes))
+check("capsule_root", manifest["capsule_root"] == os.fspath(CAP) == ready["capsule_root"])
+check("capsule_data_root", manifest["capsule_data_root"] == os.fspath(data_root) == ready["capsule_data_root"])
+check("ready_status", ready["status"] == "READY")
 
+# The frozen raw source manifest is the authority for what the 911 files must be.
+raw_relative = manifest["raw_source_manifest_relative_path"]
+raw_path = PROJECT.joinpath(*PurePosixPath(raw_relative).parts)
+raw_bytes = raw_path.read_bytes()
+check("raw_manifest_size", manifest["raw_source_manifest_size"] == len(raw_bytes))
+check("raw_manifest_sha256", manifest["raw_source_manifest_sha256"] == hashlib.sha256(raw_bytes).hexdigest())
+raw = json.loads(raw_bytes.decode("utf-8"))
+raw_files = raw["files"]
+
+records = {r["relative_path"]: r for r in manifest["files"]}
+check("record_count", len(records) == len(manifest["files"]) == 911)
+
+# 910 of the 911 files are forcing and discharge files covered by the frozen raw source
+# manifest. The 911th is the catchment topography file, which the execution config pins
+# separately, so it is checked against that instead.
+staging = json.loads(
+    (PROJECT / "configs/tukf09_455_basin_zero_validation_target_variance_hpc_execution_a800_exclusive_v2r9.json")
+    .read_text("utf-8")
+)["data_staging"]
+topography = staging["topography_relative_path"]
+
+missing_in_raw = sorted(name for name in records if name not in raw_files)
+check("exactly_the_topography_file_is_outside_the_raw_manifest", missing_in_raw == [topography])
+check("raw_covered_file_count", len(records) - len(missing_in_raw) == int(staging["staged_raw_file_count"]) == 910)
+check("total_staged_file_count", len(records) == int(staging["total_staged_file_count"]) == 911)
+if topography in records:
+    check("topography_sha256", records[topography]["sha256"] == staging["topography_sha256"])
+    check("topography_size", int(records[topography]["size_bytes"]) == int(staging["topography_size_bytes"]))
+
+mismatched = [
+    name for name in records
+    if name in raw_files
+    and (raw_files[name]["sha256"] != records[name]["sha256"]
+         or int(raw_files[name]["size_bytes"]) != int(records[name]["size_bytes"]))
+]
+check("capsule_records_agree_with_the_frozen_raw_manifest", not mismatched)
+
+# Re-hash every file on disk, independently of the manifest that was just written.
 total = 0
-for record in records:
-    rel = PurePosixPath(record["relative_path"])
-    src = old_data_root.joinpath(*rel.parts)
-    dst = new_data_root.joinpath(*rel.parts)
-    if src.is_symlink() or not src.is_file():
-        print("SOURCE_NOT_A_REGULAR_FILE", rel); sys.exit(2)
+bad = []
+for name, record in sorted(records.items()):
+    path = data_root.joinpath(*PurePosixPath(name).parts)
+    if path.is_symlink() or not path.is_file() or path.stat().st_nlink != 1:
+        bad.append(name); continue
+    if stat.S_IMODE(path.stat().st_mode) != 0o444:
+        bad.append(name); continue
     digest = hashlib.sha256()
-    dst.parent.mkdir(parents=True, exist_ok=True)
-    with src.open("rb") as reader, dst.open("xb") as writer:
+    with path.open("rb") as handle:
         while True:
-            chunk = reader.read(1024 * 1024)
+            chunk = handle.read(1024 * 1024)
             if not chunk:
                 break
             digest.update(chunk)
-            writer.write(chunk)
-        writer.flush(); os.fsync(writer.fileno())
-    if digest.hexdigest() != record["sha256"] or dst.stat().st_size != int(record["size_bytes"]):
-        print("COPY_MISMATCH", rel); sys.exit(3)
-    if dst.stat().st_nlink != 1:
-        print("COPIED_FILE_IS_HARD_LINKED", rel); sys.exit(4)
-    total += int(record["size_bytes"])
-print("COPIED_FILES", len(records), "TOTAL_BYTES", total)
-assert total == manifest["total_bytes"], "total byte mismatch"
+    if digest.hexdigest() != record["sha256"] or path.stat().st_size != int(record["size_bytes"]):
+        bad.append(name); continue
+    total += path.stat().st_size
+check("all_911_files_rehash_clean", not bad)
+check("total_bytes", total == manifest["total_bytes"] == 464792200)
 
 identity_rows = sorted(
     ({"relative_path": r["relative_path"], "size_bytes": int(r["size_bytes"]), "sha256": r["sha256"]}
-     for r in records),
+     for r in manifest["files"]),
     key=lambda row: row["relative_path"],
 )
-identity_sha = hashlib.sha256(
+identity = hashlib.sha256(
     json.dumps(identity_rows, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
 ).hexdigest()
-assert identity_sha == manifest["data_identity_sha256"], "identity digest drifted"
-print("DATA_IDENTITY_SHA256", identity_sha)
+check("data_identity", identity == manifest["data_identity_sha256"] == ready["data_identity_sha256"])
 
-new_manifest = dict(manifest)
-new_manifest["scientific_identity"] = identity
-new_manifest["capsule_root"] = os.fspath(NEW)
-new_manifest["capsule_data_root"] = os.fspath(new_data_root)
-new_manifest["capsule_deployment_mailbox_sequence"] = SEQ
-new_manifest["capsule_deployment_command_sha256"] = CMD_SHA
-new_manifest["supersedes_capsule_root"] = os.fspath(OLD)
-new_manifest["supersedes_reason"] = (
-    "the training admission was re-signed when the whole-node process gate ancestor "
-    "walk was made to survive a restricted process view, so the frozen scientific "
-    "identity moved once more"
+# The population order is the frozen registry order, never a re-sort.
+registry = json.loads(
+    (PROJECT / "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/preflight/population_registry.json")
+    .read_text("utf-8")
 )
-new_manifest["data_bytes_identical_to_superseded_capsule"] = True
+basins = registry["eligible"]
+check("registry_is_a_list_of_455", isinstance(basins, list) and len(basins) == 455)
+if isinstance(basins, list):
+    newline_digest = hashlib.sha256("".join(b + chr(10) for b in basins).encode("utf-8")).hexdigest()
+    check("registry_order_digest", newline_digest == manifest["scientific_identity"]["ordered_basin_newline_sha256"])
+    check("registry_self_digest", newline_digest == registry["eligible_ordered_newline_utf8_sha256"])
+    check("excluded_basin", registry["validation_metric_undefined"] == ["08202700"])
 
-newline = chr(10).encode("ascii")
-manifest_bytes = json.dumps(new_manifest, ensure_ascii=False, sort_keys=True, indent=1).encode("utf-8") + newline
-(NEW / "evidence" / "source_capsule_manifest.json").write_bytes(manifest_bytes)
-manifest_sha = hashlib.sha256(manifest_bytes).hexdigest()
-record_bytes = (manifest_sha + "  source_capsule_manifest.json" + chr(10)).encode("ascii")
-(NEW / "evidence" / "source_capsule_manifest.sha256").write_bytes(record_bytes)
-
-ready = {
-    "schema_version": "tukf09_455_training_source_capsule_ready_v2",
-    "status": "READY",
-    "capsule_root": os.fspath(NEW),
-    "capsule_data_root": os.fspath(new_data_root),
-    "manifest_relative_path": "evidence/source_capsule_manifest.json",
-    "manifest_size": len(manifest_bytes),
-    "manifest_sha256": manifest_sha,
-    "data_file_count": len(records),
-    "data_total_bytes": total,
-    "data_identity_sha256": identity_sha,
-    "deployment_mailbox_sequence": SEQ,
-    "deployment_command_sha256": CMD_SHA,
-    "validity_gate": "exact_ready_json_and_manifest_and_911_files_and_all_directories_mode_0555",
-    "required_capsule_root_mode": "0555",
-    "required_all_directory_mode": "0555",
-    "required_all_file_mode": "0444",
-    "formal_evaluation_array_reads": 0,
-    "formal_evaluation_predictions": 0,
-    "formal_evaluation_metrics": 0,
-    "formal_evaluation_outputs": 0,
-}
-ready_bytes = json.dumps(ready, ensure_ascii=False, sort_keys=True, indent=1).encode("utf-8") + newline
-(NEW / "evidence" / "READY.json").write_bytes(ready_bytes)
-
+# Modes and surface.
 files = dirs = 0
-for directory, _names, filenames in os.walk(NEW, topdown=False):
+for directory, _names, filenames in os.walk(CAP):
+    dpath = Path(directory)
+    if dpath.is_symlink() or stat.S_IMODE(dpath.stat().st_mode) != 0o555:
+        failures.append("directory_mode:" + os.fspath(dpath))
+    dirs += 1
     for name in filenames:
-        os.chmod(Path(directory) / name, 0o444); files += 1
-    os.chmod(directory, 0o555); dirs += 1
-print("MODE_SET files", files, "dirs", dirs)
+        fpath = dpath / name
+        if fpath.is_symlink() or stat.S_IMODE(fpath.stat().st_mode) != 0o444:
+            failures.append("file_mode:" + os.fspath(fpath))
+        files += 1
+check("surface_counts", files == 914 and dirs == 44)
 
-print("CAPSULE_ROOT", os.fspath(NEW))
-print("CAPSULE_DATA_ROOT", os.fspath(new_data_root))
-print("MANIFEST_SIZE", len(manifest_bytes))
-print("MANIFEST_SHA256", manifest_sha)
-print("MANIFEST_RECORD_SIZE", len(record_bytes))
-print("MANIFEST_RECORD_SHA256", hashlib.sha256(record_bytes).hexdigest())
-print("READY_SIZE", len(ready_bytes))
-print("READY_SHA256", hashlib.sha256(ready_bytes).hexdigest())
-print("DATA_FILE_COUNT", len(records))
-print("TOTAL_FILE_COUNT", len(records) + 3)
-print("DIRECTORY_COUNT", dirs)
-print("DATA_TOTAL_BYTES", total)
-print("PUBLICATION_OK")
-PUBLISH_EOF
+print("REHASHED_FILES", len(records))
+print("REHASH_FAILURES", len(bad))
+print("TOTAL_BYTES", total)
+print("DATA_IDENTITY_SHA256", identity)
+print("FILES", files, "DIRS", dirs)
+print("SCIENTIFIC_IDENTITY_SHA256",
+      hashlib.sha256(json.dumps(manifest["scientific_identity"], ensure_ascii=False, sort_keys=True,
+                                separators=(",", ":")).encode("utf-8")).hexdigest())
+print("FAILURES", json.dumps(sorted(set(failures))[:10], ensure_ascii=False))
+print("AUDIT_STATUS", "PASS" if not failures else "FAIL")
+sys.exit(0 if not failures else 5)
+AUDIT_EOF
 RC=$?
-echo "PUBLISH_RETURN_CODE=$RC"
-if [ "$RC" -ne 0 ]; then echo PUBLICATION_FAILED; exit "$RC"; fi
+echo "AUDIT_RETURN_CODE=$RC"
 
-echo "=== SURFACE ==="
-ls -ld "$NEW" "$NEW/data/camels_us" "$NEW/evidence" 2>&1
-echo "FILES=$(find "$NEW" -type f | wc -l) DIRS=$(find "$NEW" -type d | wc -l)"
-echo "SYMLINKS=$(find "$NEW" -type l | wc -l) HARDLINKED=$(find "$NEW" -type f -links +1 | wc -l)"
-cat "$NEW/evidence/source_capsule_manifest.sha256"
-echo "=== EARLIER CAPSULES UNTOUCHED ==="
-echo "V4_MODE=$(stat -c %a "$OLD")"
+echo "=== EVIDENCE HASHES FOR THE NEXT CONFIG ==="
+sha256sum "$CAP/evidence/source_capsule_manifest.json" "$CAP/evidence/source_capsule_manifest.sha256" "$CAP/evidence/READY.json" 2>&1
+stat -c "%s %n" "$CAP/evidence/source_capsule_manifest.json" "$CAP/evidence/source_capsule_manifest.sha256" "$CAP/evidence/READY.json" 2>&1
+
+echo "=== SUPERSEDED CAPSULE STILL UNTOUCHED ==="
+echo "MODE=$(stat -c %a "$OLD")"
 sha256sum "$OLD/evidence/source_capsule_manifest.json" 2>&1
-echo "V3_MODE=$(stat -c %a /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v3_20260904)"
 
-echo TUKF09_455_TRAINING_SOURCE_CAPSULE_V5_PUBLISHED_NO_JOB_SUBMITTED
+if [ "$RC" -eq 0 ]; then echo TUKF09_455_CAPSULE_V3_AUDIT_PASS; else echo TUKF09_455_CAPSULE_V3_AUDIT_NONPASS; fi
