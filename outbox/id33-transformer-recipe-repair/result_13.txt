@@ -1,0 +1,144 @@
+### channel=id33-transformer-recipe-repair seq=13
+### host=login4
+### started=2026-09-04T21:09:31+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-04T21:09:31+0800
+=== A. MANIFEST FULL (one failed arm) ===
+{
+ "candidate_safe_data_before": {
+ "audit": {
+ "basin_count": 531,
+ "forcing_date_max": "2008-09-30",
+ "forcing_date_min": "1999-01-05",
+ "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+ "forcing_row_count": 1888767,
+ "status": "PASS",
+ "supervision_date_max": "2008-09-30",
+ "supervision_date_min": "1999-10-01",
+ "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+ "supervision_row_count": 1745928
+ },
+ "forcing_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_development_forcing_v01",
+ "forcing_file_sha256": "0226ee6297a5488e9b284a483bd320879f107fbf749222944da453ddd0f0448d",
+ "forcing_manifest_path": "/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/src/modern_transformer_moe/registry/track0_development_forcing_manifest_v01.json",
+ "forcing_manifest_sha256": "1c1a9103bb4c44ce7473aafe40193aa45439fe85948cb95432bf9b7a50d8833c",
+ "statics_file_sha256": "085e8b5e0e56b42bfe7e6d012ebb6f2f56681059b60c61c04b835b207864a1f2",
+ "status": "PASS",
+ "supervision_dir": "/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/data/camels_us_track0_supervision_v01",
+ "supervision_manifest_path": "/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/src/modern_transformer_moe/registry/track0_supervision_manifest_v01.json",
+ "supervision_manifest_sha256": "613620351819f106d137a8e10a551a4924e367cf37f83fcf545b4f9bdd12412e",
+ "target_tree_sha256": "17709a37f5ea8e8a4e140b422b8c010d030d600cf673b52a5cc557ecb99d57a6"
+ },
+ "command": [
+ "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python",
+ "-u",
+ "-m",
+ "neuralhydrology.nh_run",
+ "train",
+ "--config-file",
+ "src/transformer_recipe_repair/configs/t2.yml",
+ "--gpu",
+ "0"
+ ],
+ "config_path": "src/transformer_recipe_repair/configs/t2.yml",
+ "config_sha256": "29aeeec57d3a8f066e7ea226d7095e9b1b554113ee9221da8c774e3c259a2264",
+ "data_access_log": "results/33_transformer_recipe_repair/_invocations/id33_T2_s100_slurm220491/data_access.jsonl",
+ "date_contract": {
+ "train_end_date": "30/09/2006",
+ "train_start_date": "01/10/1999",
+ "validation_end_date": "30/09/2008",
+ "validation_start_date": "01/10/2006"
+ },
+ "error": "ID33 source configuration or implementation changed during training",
+ "error_type": "RuntimeError",
+ "experiment_id": "T2",
+ "failed_at_utc": "2026-09-04T11:59:05.962618+00:00",
+ "formal_evaluation_authorized": false,
+ "gpu": 0,
+ "mode": "execute",
+ "required_flags": [
+ "--execute",
+ "--operator-approved-heavy-compute"
+ ],
+ "run_id": "id33_T2_s100_slurm220491",
+ "run_root": "results/33_transformer_recipe_repair/T2",
+ "seed": 100,
+ "slurm_job_id": "220491",
+ "source_integrity_before": {
+ "config_file": {
+ "src/transformer_recipe_repair/configs/t2.yml": "29aeeec57d3a8f066e7ea226d7095e9b1b554113ee9221da8c774e3c259a2264"
+ },
+ "experiment_id": "T2",
+ "implementation_files": {
+ "neuralhydrology/modelzoo/__init__.py": "f216281d782077a9d5046dfe78297423edfe424362d7f553844ad030f1e6c306",
+ "neuralhydrology/modelzoo/cudalstm.py": "78b9977e20ac59318060c7771e180bc9a9498dfe753ed13652b733ca922b58dd",
+ "neuralhydrology/modelzoo/modern_causal_transformer.py": "04f0dc3892ee0d7603d948b7673f5ec87da48b9d3d5b79d3e9b49307ba36aede",
+ "neuralhydrology/modelzoo/recency_biased_transformer.py": "f37ce6f0a84373324f5f2c326e0bb1ef5dc1d567f2c3c8d0bcd1609a75e55209",
+ "neuralhydrology/modelzoo/recipe_fixed_transformer.py": "dd093b289d325bed8f1cfda136d8d8e50835346cbe9e917b5c4016a8e1135c89",
+ "neuralhydrology/utils/config.py": "19c9ba52d9b0c35d241ca2eb0479b1cd7e9be0dc625d2c8b29a2de936c78cbd7",
+ "src/transformer_recipe_repair/hpc/submit_repair_arm.slurm": "f2190551a3ac2b5824114c80bd0f677112aa2cb2410a8b1fe29efc913da2780d",
+ "src/transformer_recipe_repair/registry/experiments.csv": "5ca251bc23543af64429dfac1a6854024e0cea202380b42a5c2731df355fe3a8",
+ "src/transformer_recipe_repair/scripts/audit_configs.py": "551fe8044c8dab74be6f04fc42c4d09140b05f6dccafdadcd60c4a29f9aab13f",
+ "src/transformer_recipe_repair/scripts/run_development.py": "411e16c6b17745cc913212187c01b16c730f2fdf03242a38ccc22e7ac26800c6"
+ }
+ },
+ "started_at_utc": "2026-09-04T07:10:31.025932+00:00",
+ "status": "FAILED",
+=== B. FAILURE REASON PER ARM ===
+--- T1
+"error": "ID33 source configuration or implementation changed during training"
+--- T2
+"error": "ID33 source configuration or implementation changed during training"
+--- T3
+"error": "ID33 source configuration or implementation changed during training"
+--- T4
+"error": "ID33 source configuration or implementation changed during training"
+--- L33
+"error": "ID33 source configuration or implementation changed during training"
+=== C. SLURM ERR TAILS ===
+--- job 220490
+  file=
+--- job 220491
+  file=
+--- job 220492
+  file=
+--- job 220493
+  file=
+--- job 220495
+  file=
+=== D. VALIDATION CSV PRESENCE ===
+T1: 30 epoch-dirs with metrics csv
+model_epoch027
+model_epoch028
+model_epoch029
+model_epoch030
+T2: 30 epoch-dirs with metrics csv
+model_epoch027
+model_epoch028
+model_epoch029
+model_epoch030
+T3: 30 epoch-dirs with metrics csv
+model_epoch027
+model_epoch028
+model_epoch029
+model_epoch030
+T4: 30 epoch-dirs with metrics csv
+model_epoch027
+model_epoch028
+model_epoch029
+model_epoch030
+T5: 28 epoch-dirs with metrics csv
+model_epoch025
+model_epoch026
+model_epoch027
+model_epoch028
+L33: 30 epoch-dirs with metrics csv
+model_epoch027
+model_epoch028
+model_epoch029
+model_epoch030
+ID33_DIAG_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-04T21:09:32+0800
