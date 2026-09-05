@@ -1,0 +1,105 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=78
+### host=login4
+### started=2026-09-05T22:26:16+0800
+### ---------- output ----------
+2026-09-05T22:26:16+0800
+login4
+=== SUBMISSION RECEIPT ===
+{
+  "attempt_number": 1,
+  "automatic_cleanup": false,
+  "automatic_requeue": false,
+  "automatic_retry": false,
+  "bundle_manifest_sha256": "22d2db9b8e03bcaa28b85fd6155545a24dfc4b7261232b200c082094cd4fbbcd",
+  "data_authorization_sha256": "f204be80e3f7ad440e77291c387ab57acb3d2db7732946ca9789c4005e999a27",
+  "data_contract_sha256": "0e2cc530d5158cb9535862b10d6489436b73811c84a3d601579ed79de28155b3",
+  "execution_authorization_sha256": "d61afbdc83a0e9577301b278630a6b1501a75c67750ded760d9fdfcffd7eeaf8",
+  "execution_mode": "single_job_sequential_seed_loop",
+  "job_id": "222821",
+  "sbatch_call_count": 1,
+  "sbatch_output": "Submitted batch job 222821",
+  "schema_version": 2,
+  "seed_order": [
+    17,
+    29,
+    43
+  ],
+  "slurm_no_requeue": true,
+  "stage": "stage_a",
+  "status": "submitted"
+}
+=== CURRENT JOB STATE ===
+222821|z5s5t-a-v2|RUNNING|hgpu2p|7:45|ngu008|/data1/home/sunyiq/hpc_mailbox
+JobID|State|ExitCode|Elapsed|NodeList
+222821|RUNNING|0:0|00:08:26|ngu008
+222821.batch|RUNNING|0:0|00:08:26|ngu008
+222821.extern|RUNNING|0:0|00:08:26|ngu008
+
+=== LOG out ===
+[2026-09-05T22:17:49+08:00] stage=stage_a job=222821 node=ngu008
+NVIDIA GeForce RTX 3090, GPU-03bd7b71-83f7-37a7-4277-a9a66dc72161, 24576 MiB, 580.76.05
+expected_environment=python=3.11.13 torch=2.4.0 numpy=2.3.3 pandas=2.3.2 scipy=1.16.2
+graphics_processor_preflight=passed name=NVIDIA GeForce RTX 3090 capability=(8, 6) bytes=25296044032
+torch=2.4.0 cuda=12.1
+[2026-09-05T22:18:02+08:00] seed=17 sequence_index=1 first_attempt=started
+{
+  "authorization_sha256": "f204be80e3f7ad440e77291c387ab57acb3d2db7732946ca9789c4005e999a27",
+  "bundle_manifest_sha256": "22d2db9b8e03bcaa28b85fd6155545a24dfc4b7261232b200c082094cd4fbbcd",
+  "bundle_member_count": 16,
+  "data_contract_sha256": "0e2cc530d5158cb9535862b10d6489436b73811c84a3d601579ed79de28155b3",
+  "execution_authorization_sha256": "d61afbdc83a0e9577301b278630a6b1501a75c67750ded760d9fdfcffd7eeaf8",
+  "experiment_family": "ZHENJIANG_FIVE_SOURCE_FIVE_TARGET_D32_GRU_SINGLE_ANALYSIS_UKF_ORACLE_DATONG_V2",
+  "formal_data_read": false,
+  "output_created": false,
+  "remote_root": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001",
+  "schema_version": 2,
+  "seed": 17,
+  "status": "preflight_passed"
+}
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.890723292
+[TRAINING_PROGRESS] seed=17 epoch=1 training_loss_m=0.261487767 selection_2022_mae_m=0.12951844
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0789614677
+[TRAINING_PROGRESS] seed=17 epoch=2 training_loss_m=0.0740171176 selection_2022_mae_m=0.118464384
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0691307147
+[TRAINING_PROGRESS] seed=17 epoch=3 training_loss_m=0.0663559185 selection_2022_mae_m=0.121822733
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0703943094
+[TRAINING_PROGRESS] seed=17 epoch=4 training_loss_m=0.0634548669 selection_2022_mae_m=0.11340624
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0698484023
+[TRAINING_PROGRESS] seed=17 epoch=5 training_loss_m=0.0608956891 selection_2022_mae_m=0.110514088
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0594760895
+[TRAINING_PROGRESS] seed=17 epoch=6 training_loss_m=0.0602460305 selection_2022_mae_m=0.110789279
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0689854622
+[TRAINING_PROGRESS] seed=17 epoch=7 training_loss_m=0.0588089765 selection_2022_mae_m=0.1094462
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0606568376
+[TRAINING_PROGRESS] seed=17 epoch=8 training_loss_m=0.0571507833 selection_2022_mae_m=0.112065248
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0562998772
+[TRAINING_PROGRESS] seed=17 epoch=9 training_loss_m=0.0566848619 selection_2022_mae_m=0.104405225
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0523019234
+[TRAINING_PROGRESS] seed=17 epoch=10 training_loss_m=0.0558024953 selection_2022_mae_m=0.110348689
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0527111689
+[TRAINING_PROGRESS] seed=17 epoch=11 training_loss_m=0.0555043149 selection_2022_mae_m=0.101609433
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0552253008
+[TRAINING_PROGRESS] seed=17 epoch=12 training_loss_m=0.053484805 selection_2022_mae_m=0.103322432
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0505712271
+[TRAINING_PROGRESS] seed=17 epoch=13 training_loss_m=0.052671827 selection_2022_mae_m=0.0988661307
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0532350699
+[TRAINING_PROGRESS] seed=17 epoch=14 training_loss_m=0.051511887 selection_2022_mae_m=0.0991065782
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0506371975
+[TRAINING_PROGRESS] seed=17 epoch=15 training_loss_m=0.0505048587 selection_2022_mae_m=0.096537658
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0594632824
+[TRAINING_PROGRESS] seed=17 epoch=16 training_loss_m=0.050123566 selection_2022_mae_m=0.0984147309
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0488742709
+[TRAINING_PROGRESS] seed=17 epoch=17 training_loss_m=0.0493168332 selection_2022_mae_m=0.0965498318
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.049856329
+[TRAINING_PROGRESS] seed=17 epoch=18 training_loss_m=0.0489758966 selection_2022_mae_m=0.0933310114
+[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0442346891
+
+=== LOG err ===
+=== ATTEMPT EVIDENCE NAMES ONLY ===
+seed_17/attempt_001/first_attempt_started.json|476 bytes
+seed_17/attempt_001/formal_runner_entered.json|668 bytes
+read_only_status=true data_files_opened=false sbatch_calls=0
+{"baselines": [["ZJ-5S5T-V2-STAGE-A-HPC-DATA-RECOVERY-20260905-01", 0, 36]], "completed_distinct_paths": 12, "events_by_type": [["COMPLETED", 12, 51501333], ["RESERVED", 12, 0]], "partitions": [["2017-2022"]], "raw_formal_data_opened": false}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T22:26:17+0800
