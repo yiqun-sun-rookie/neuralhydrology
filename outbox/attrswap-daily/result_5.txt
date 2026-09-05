@@ -1,0 +1,71 @@
+### channel=attrswap-daily seq=5
+### host=login4
+### started=2026-09-06T01:51:44+0800
+### ---------- output ----------
+wallclock 2026-09-06 01:51:44 +0800
+=== A. QUEUE (attrswap only) ===
+     222826     attrswap_armA_chn23_s200   RUNNING    1:09:35    ngu202    hgpu8                               
+     222827     attrswap_armA_chn23_s300   RUNNING    1:09:35    ngu202    hgpu8                               
+     222828    attrswap_armB_drop23_s100   RUNNING    1:09:35    ngu202    hgpu8                               
+     222829    attrswap_armB_drop23_s200   RUNNING    1:09:35    ngu202    hgpu8                               
+     222830    attrswap_armB_drop23_s300   RUNNING    1:09:35    ngu202    hgpu8                               
+     222825     attrswap_armA_chn23_s100   RUNNING    1:09:48    ngu202    hgpu8                               
+=== B. ACCOUNTING (job ids from logs/job_ids.txt) ===
+    JobID                      JobName        State ExitCode    Elapsed NodeList               Start 
+--------- ---------------------------- ------------ -------- ---------- -------- ------------------- 
+   222824   attrswap_ref27_parity_s900    COMPLETED      0:0   02:04:30   ngu202 2026-09-05T22:37:25 
+   222825     attrswap_armA_chn23_s100      RUNNING      0:0   01:10:29   ngu202 2026-09-06T00:41:56 
+   222826     attrswap_armA_chn23_s200      RUNNING      0:0   01:10:16   ngu202 2026-09-06T00:42:09 
+   222827     attrswap_armA_chn23_s300      RUNNING      0:0   01:10:16   ngu202 2026-09-06T00:42:09 
+   222828    attrswap_armB_drop23_s100      RUNNING      0:0   01:10:16   ngu202 2026-09-06T00:42:09 
+   222829    attrswap_armB_drop23_s200      RUNNING      0:0   01:10:16   ngu202 2026-09-06T00:42:09 
+   222830    attrswap_armB_drop23_s300      RUNNING      0:0   01:10:16   ngu202 2026-09-06T00:42:09 
+=== C. RESULTS SO FAR ===
+  attrswap_ref27_parity_s900: 0.718312 422
+  GATE: CLEAN 0.718312
+=== D. LOG TAILS (last epoch line + any error) ===
+--- slurm_attrswap_armA_chn23_s100_222825.out bytes=11741060 mtime=2026-09-06 01:51:44 ---
+torch 2.4.0 cuda True numpy 2.3.3 pandas 2.3.2 nh /data1/home/sunyiq/attr_swap_daily_2026_09/code_1f9804e/neuralhydrology/__init__.py
+neuralhydrology imported from the archived 1f9804e code
+2026-09-06 00:42:37,608: Create lookup table and convert to pytorch tensor
+2026-09-06 01:48:46,366: Epoch 17 average loss: avg_loss: 0.01386, avg_total_loss: 0.01386
+--- slurm_attrswap_armA_chn23_s200_222826.out bytes=11637111 mtime=2026-09-06 01:51:44 ---
+torch 2.4.0 cuda True numpy 2.3.3 pandas 2.3.2 nh /data1/home/sunyiq/attr_swap_daily_2026_09/code_1f9804e/neuralhydrology/__init__.py
+neuralhydrology imported from the archived 1f9804e code
+2026-09-06 00:42:44,930: Create lookup table and convert to pytorch tensor
+2026-09-06 01:49:09,643: Epoch 17 average loss: avg_loss: 0.01370, avg_total_loss: 0.01370
+--- slurm_attrswap_armA_chn23_s300_222827.out bytes=11499213 mtime=2026-09-06 01:51:45 ---
+torch 2.4.0 cuda True numpy 2.3.3 pandas 2.3.2 nh /data1/home/sunyiq/attr_swap_daily_2026_09/code_1f9804e/neuralhydrology/__init__.py
+neuralhydrology imported from the archived 1f9804e code
+2026-09-06 00:42:43,214: Create lookup table and convert to pytorch tensor
+2026-09-06 01:49:59,175: Epoch 17 average loss: avg_loss: 0.01292, avg_total_loss: 0.01292
+--- slurm_attrswap_armB_drop23_s100_222828.out bytes=11763716 mtime=2026-09-06 01:51:45 ---
+torch 2.4.0 cuda True numpy 2.3.3 pandas 2.3.2 nh /data1/home/sunyiq/attr_swap_daily_2026_09/code_1f9804e/neuralhydrology/__init__.py
+neuralhydrology imported from the archived 1f9804e code
+2026-09-06 00:42:38,855: Create lookup table and convert to pytorch tensor
+2026-09-06 01:48:27,602: Epoch 17 average loss: avg_loss: 0.01278, avg_total_loss: 0.01278
+--- slurm_attrswap_armB_drop23_s200_222829.out bytes=11497710 mtime=2026-09-06 01:51:45 ---
+torch 2.4.0 cuda True numpy 2.3.3 pandas 2.3.2 nh /data1/home/sunyiq/attr_swap_daily_2026_09/code_1f9804e/neuralhydrology/__init__.py
+neuralhydrology imported from the archived 1f9804e code
+2026-09-06 00:42:44,199: Create lookup table and convert to pytorch tensor
+2026-09-06 01:50:18,769: Epoch 17 average loss: avg_loss: 0.01280, avg_total_loss: 0.01280
+--- slurm_attrswap_armB_drop23_s300_222830.out bytes=11689500 mtime=2026-09-06 01:51:46 ---
+torch 2.4.0 cuda True numpy 2.3.3 pandas 2.3.2 nh /data1/home/sunyiq/attr_swap_daily_2026_09/code_1f9804e/neuralhydrology/__init__.py
+neuralhydrology imported from the archived 1f9804e code
+2026-09-06 00:42:44,047: Create lookup table and convert to pytorch tensor
+2026-09-06 01:48:59,921: Epoch 17 average loss: avg_loss: 0.01323, avg_total_loss: 0.01323
+--- slurm_attrswap_ref27_parity_s900_222824.out bytes=19840464 mtime=2026-09-06 00:41:14 ---
+torch 2.4.0 cuda True numpy 2.3.3 pandas 2.3.2 nh /data1/home/sunyiq/attr_swap_daily_2026_09/code_1f9804e/neuralhydrology/__init__.py
+neuralhydrology imported from the archived 1f9804e code
+2026-09-05 22:39:28,430: Create lookup table and convert to pytorch tensor
+2026-09-06 00:36:15,251: Epoch 30 average loss: avg_loss: 0.00970, avg_total_loss: 0.00970
+RESULT attrswap_ref27_parity_s900 public_median_n: 0.718312 422  (full529 median 0.724490)
+PARITY GATE median=0.718312 verdict=CLEAN
+[2026-09-06 00:41:14] DONE attrswap_ref27_parity_s900
+--- slurm_attrswap_ref27_parity_s900_222824.err (stderr, last 3 non-progress lines) ---
+/data1/home/sunyiq/attr_swap_daily_2026_09/code_1f9804e/neuralhydrology/evaluation/tester.py:143: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(weight_file, map_location=self.device))
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-06T01:51:47+0800
