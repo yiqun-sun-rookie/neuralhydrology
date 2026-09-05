@@ -1,0 +1,31 @@
+### channel=kalmannet-daily-perbasin seq=33
+### host=login4
+### started=2026-09-05T21:31:50+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=33 purpose=v2-task6-readonly-current-queue
+2026-09-05T21:31:50+0800
+login4
+training_submissions=0 optimizer_steps=0 formal_evaluation_access=0 signals_sent=0 task_file_writes=0
+=== CURRENT USER JOBS ===
+202229|N22-agg-eval                                                                                                                                                                                            |PENDING|
+202294|N22-export                                                                                                                                                                                              |PENDING|
+202315|N22-gate                                                                                                                                                                                                |PENDING|
+202507|N22-mask-iso-531                                                                                                                                                                                        |PENDING|
+215429|id30_m01_s100                                                                                                                                                                                           |PENDING|
+202293|N22-manifest                                                                                                                                                                                            |PENDING|
+222800|id33_pk                                                                                                                                                                                                 |RUNNING|ngu011
+222801|id33_pk                                                                                                                                                                                                 |RUNNING|ngu004
+related_active_job_count=0
+=== TARGET NODE SCHEDULER STATE ===
+NODELIST|PARTITION|STATE|GRES|CPUS(A/I/O/T)|MEMORY
+ngu202|hgpu8|idle|gpu:8|0/64/0/64|1
+=== EXISTING DEPLOYMENT DIRECTORIES (METADATA ONLY) ===
+DAILY_CAMELS_KNET_PER_BASIN_BUNDLE_DEPLOY1_SEQ7
+DAILY_CAMELS_KNET_PER_BASIN_BUNDLE_DEPLOY2_SEQ8
+DAILY_CAMELS_KNET_PER_BASIN_BUNDLE_DEPLOY3_SEQ12
+=== EXISTING LOCK PATHS (METADATA ONLY) ===
+next_stage_allowed_by_related_queue=true
+TASK6_QUEUE_GATE=PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T21:31:50+0800
