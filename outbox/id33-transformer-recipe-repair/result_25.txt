@@ -1,0 +1,51 @@
+### channel=id33-transformer-recipe-repair seq=25
+### host=login4
+### started=2026-09-06T03:07:53+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-06T03:07:53+0800
+=== A. JOBS ===
+    JobID   JobName       State ExitCod    Elapsed NodeList 
+--------- --------- ----------- ------- ---------- -------- 
+   222800   id33_pk     RUNNING     0:0   05:40:56   ngu011 
+   222801   id33_pk     RUNNING     0:0   05:40:56   ngu004 
+    JOBID       NAME ST        TIME     NODELIST(REASON)
+   222800    id33_pk  R     5:40:14               ngu011
+   222801    id33_pk  R     5:40:14               ngu004
+=== B. PER-ARM EPOCH PROGRESS ===
+  T1: results/33_transformer_recipe_repair/T1/transformer_recipe_repair_T1_2026_0905_2127_ep30/  validation_epochs=11
+NSE: 0.62601
+NSE: 0.58977
+NSE: 0.63310
+  T2: results/33_transformer_recipe_repair/T2/transformer_recipe_repair_T2_2026_0905_2127_ep30/  validation_epochs=11
+NSE: 0.63408
+NSE: 0.62033
+NSE: 0.66215
+  T3: results/33_transformer_recipe_repair/T3/transformer_recipe_repair_T3_2026_0905_2127_ep30/  validation_epochs=11
+NSE: 0.62062
+NSE: 0.62403
+NSE: 0.62995
+  T4: results/33_transformer_recipe_repair/T4/transformer_recipe_repair_T4_2026_0905_2132_ep30/  validation_epochs=15
+NSE: 0.69508
+NSE: 0.69416
+NSE: 0.68779
+  T5: results/33_transformer_recipe_repair/T5/transformer_recipe_repair_T5_2026_0905_2132_ep30/  validation_epochs=12
+NSE: 0.65197
+NSE: 0.66546
+NSE: 0.67133
+  L33: results/33_transformer_recipe_repair/L33/transformer_recipe_repair_L33_2026_0905_2132_ep30/  validation_epochs=30
+NSE: 0.68219
+NSE: 0.68609
+NSE: 0.68452
+=== C. GPU UTILISATION ===
+  logs/33_transformer_recipe_repair/utilisation-222800.csv samples=341
+    gpu_util mean=14.7%  mem mean=3134 MiB
+  logs/33_transformer_recipe_repair/utilisation-222801.csv samples=339
+    gpu_util mean=63.3%  mem mean=16226 MiB
+=== D. ERRORS ===
+-- logs/33_transformer_recipe_repair/packed-222800.err
+-- logs/33_transformer_recipe_repair/packed-222801.err
+DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-06T03:07:54+0800
