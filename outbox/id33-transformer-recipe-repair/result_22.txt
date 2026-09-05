@@ -1,0 +1,63 @@
+### channel=id33-transformer-recipe-repair seq=22
+### host=login4
+### started=2026-09-05T21:21:02+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-05T21:21:02+0800
+=== A. ALL EIGHT JOBS, FINAL STATE ===
+    JobID   JobName       State ExitCod    Elapsed               End NodeList 
+--------- --------- ----------- ------- ---------- ----------------- -------- 
+   220490   id33_T1      FAILED     1:0   04:50:57 2026-09-04T19:43:   ngu004 
+   220491   id33_T2      FAILED     1:0   04:52:07 2026-09-04T19:59:   ngu001 
+   220492   id33_T3      FAILED     1:0   04:55:19 2026-09-04T20:03:   ngu005 
+   220493   id33_T4      FAILED     1:0   04:48:43 2026-09-04T19:57:   ngu005 
+   220494   id33_T5      FAILED     1:0   06:06:48 2026-09-04T21:29:   ngu011 
+   220495  id33_L33      FAILED     1:0   01:28:36 2026-09-04T17:15:   ngu003 
+   220658   id33_C1   COMPLETED     0:0   08:40:24 2026-09-05T00:49:   ngu201 
+   220659   id33_C2   COMPLETED     0:0   08:40:01 2026-09-05T00:49:   ngu201 
+=== B. ANYTHING OF MINE STILL RUNNING ===
+    JOBID           NAME PARTITION ST        TIME NODELIST(REASON)
+   202229   N22-agg-eval hgpu4,hgp PD        0:00 (DependencyNev
+   202294     N22-export hgpu4,hgp PD        0:00   (Dependency)
+   202315       N22-gate hgpu4,hgp PD        0:00   (Dependency)
+   202507 N22-mask-iso-5 hgpu4,hgp PD        0:00 (DependencyNev
+   215429  id30_m01_s100     hgpu2 PD        0:00 (DependencyNev
+   202293   N22-manifest hgpu4,hgp PD        0:00  (JobHeldUser)
+=== C. MANIFEST STATUS PER ARM ===
+  id33_C1_slurm220658                status=COMPLETE  rc=0     med=0.669291079044342
+  id33_C2_slurm220659                status=COMPLETE  rc=0     med=0.6728459596633911
+  id33_L33_s100_slurm220495          status=FAILED    rc=0     med=-
+  id33_T1_s100_slurm220490           status=FAILED    rc=0     med=-
+  id33_T2_s100_slurm220491           status=FAILED    rc=0     med=-
+  id33_T3_s100_slurm220492           status=FAILED    rc=0     med=-
+  id33_T4_s100_slurm220493           status=FAILED    rc=0     med=-
+  id33_T5_s100_slurm220494           status=FAILED    rc=0     med=-
+=== D. EPOCH-30 METRICS PRESENT AND MEDIAN (data validity, independent of manifest) ===
+  T1: basins=531 finite=531 median=0.649651
+  T2: basins=531 finite=531 median=0.698416
+  T3: basins=531 finite=531 median=0.684898
+  T4: basins=531 finite=531 median=0.698296
+  T5: basins=531 finite=531 median=0.710025
+  L33: basins=531 finite=531 median=0.684521
+  C1: basins=531 finite=531 median=0.669291
+  C2: basins=531 finite=531 median=0.672846
+=== E. BEST EPOCH PER ARM (protocol scores ep30, but report the peak too) ===
+  T1 best: 0.65859  ep30: 0.64965
+  T2 best: 0.70446  ep30: 0.69842
+  T3 best: 0.68983  ep30: 0.68490
+  T4 best: 0.69940  ep30: 0.69830
+  T5 best: 0.72060  ep30: 0.71002
+  L33 best: 0.71773  ep30: 0.68452
+  C1 best: 0.68037  ep30: 0.66929
+  C2 best: 0.67285  ep30: 0.67285
+=== F. GPU AVAILABILITY FOR THE RERUN ===
+PARTITION  NODES    STATE                       NODELIST
+    hgpu2      1      mix                         ngu003
+    hgpu2      1     idle                         ngu009
+   hgpu2p      1    down*                         ngu002
+   hgpu2p      1    drain                         ngu005
+   hgpu2p      7      mix   ngu[001,004,006-008,010-011]
+ID33_SNAPSHOT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T21:21:06+0800
