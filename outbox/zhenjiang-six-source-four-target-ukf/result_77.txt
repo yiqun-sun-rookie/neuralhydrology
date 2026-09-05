@@ -1,0 +1,53 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=77
+### host=login4
+### started=2026-09-05T22:17:43+0800
+### ---------- output ----------
+=== A. IMMUTABLE PREFLIGHT ===
+2026-09-05T22:17:43+0800
+login4
+sunyiq
+mailbox_root=/data1/home/sunyiq/hpc_mailbox
+login_package_metadata_preflight=PASS runtime_imports_deferred_to_compute_node=true {"numpy": "2.3.3", "pandas": "2.3.2", "python": "3.11.13", "scipy": "1.16.2", "torch": "2.4.0"}
+archive_header_preflight=PASS code_files=17 prefix_files=12 formal_data_content_inspected=false
+=== B. CREATE NEW ROOT ONCE ===
+tar: inputs/2017_2022/dataset_config.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/2017_2022/realtime_features/datong_realtime_features.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/2017_2022/realtime_features/nanjing_realtime_features.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/2017_2022/realtime_features/zhenjiang_realtime_features.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/2017_2022/realtime_features/jiangyin_realtime_features.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/2017_2022/realtime_features/xuliujing_realtime_features.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/2017_2022/realtime_features/wusongkou_realtime_features.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/2017_2022/retrospective_targets/nanjing_retrospective_targets.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/2017_2022/retrospective_targets/zhenjiang_retrospective_targets.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/2017_2022/retrospective_targets/jiangyin_retrospective_targets.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/2017_2022/retrospective_targets/xuliujing_retrospective_targets.csv: implausibly old time stamp 1970-01-01 08:00:00
+tar: inputs/2017_2022/retrospective_targets/wusongkou_retrospective_targets.csv: implausibly old time stamp 1970-01-01 08:00:00
+deployment_receipt=/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/evidence/deployment/deployment_receipt.json
+=== C. ZERO-DATA-RUN PREFLIGHT ===
+{
+  "authorization_sha256": "f204be80e3f7ad440e77291c387ab57acb3d2db7732946ca9789c4005e999a27",
+  "bundle_manifest_sha256": "22d2db9b8e03bcaa28b85fd6155545a24dfc4b7261232b200c082094cd4fbbcd",
+  "bundle_member_count": 16,
+  "data_contract_sha256": "0e2cc530d5158cb9535862b10d6489436b73811c84a3d601579ed79de28155b3",
+  "execution_authorization_sha256": "d61afbdc83a0e9577301b278630a6b1501a75c67750ded760d9fdfcffd7eeaf8",
+  "experiment_family": "ZHENJIANG_FIVE_SOURCE_FIVE_TARGET_D32_GRU_SINGLE_ANALYSIS_UKF_ORACLE_DATONG_V2",
+  "formal_data_read": false,
+  "output_created": false,
+  "remote_root": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001",
+  "schema_version": 2,
+  "seed": 17,
+  "status": "preflight_passed"
+}
+=== D. SINGLE SBATCH CALL ===
+Submitted batch job 222821
+submission_receipt=/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/evidence/submission/attempt_001/submission_receipt.json
+=== E. SUBMISSION COMPLETE; NO FOLLOW-ON STAGE ===
+stage_a_job_id=222821
+sbatch_call_count=1
+stage_b_submitted=no
+evaluation_started=no
+git_fetch_used=no
+222821|z5s5t-a-v2|PENDING|hgpu2p|0:00|(None)|/data1/home/sunyiq/hpc_mailbox
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T22:17:50+0800
