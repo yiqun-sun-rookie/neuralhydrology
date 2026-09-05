@@ -1,0 +1,42 @@
+### channel=id33-transformer-recipe-repair seq=23
+### host=login4
+### started=2026-09-05T21:26:43+0800
+### ---------- output ----------
+=== A. STAMP ===
+2026-09-05T21:26:43+0800
+=== B. IN-FLIGHT GUARD (the step missing last time) ===
+  running id33 jobs = 0
+  no id33 job in flight; safe to deploy
+=== C. PAYLOAD ===
+PAYLOAD_OK
+extracted
+99f1bcd4e9e1cc2c1e0ea389cb581fbd700b7927aa7df6ec5aa7f62d68410aaf  src/transformer_recipe_repair/hpc/submit_packed_arms.slurm
+7d76b53032a8a0bd830bc8e68b0c875bad3645b0c8f9dacf3cc153639ff78ef7  src/transformer_recipe_repair/scripts/run_development.py
+=== D. PRESERVE THE PREVIOUS RUN DIRECTORIES AS EVIDENCE ===
+  moved T1 aside
+  moved T2 aside
+  moved T3 aside
+  moved T4 aside
+  moved T5 aside
+  moved L33 aside
+  moved id33_T1_s100_slurm220490
+  moved id33_T2_s100_slurm220491
+  moved id33_T3_s100_slurm220492
+  moved id33_T4_s100_slurm220493
+  moved id33_T5_s100_slurm220494
+  moved id33_L33_s100_slurm220495
+  (C1/C2 left in place: their manifests are COMPLETE)
+=== E. AUDIT ===
+ID33 CONFIG AUDIT: PASS (8 arms; one factor each; no data read; no training launched)
+=== F. SUBMIT TWO PACKED JOBS, THREE ARMS PER CARD ===
+  [T1 T2 T3] -> 222800
+  [T4 T5 L33] -> 222801
+SUBMITTED: 222800 222801
+=== G. QUEUE ===
+    JOBID         NAME PARTITION ST        TIME NODELIST(REASON)
+   222800      id33_pk    hgpu2p PD        0:00       (Priority)
+   222801      id33_pk    hgpu2p PD        0:00       (Priority)
+ID33_PACKED_RERUN_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T21:26:45+0800
