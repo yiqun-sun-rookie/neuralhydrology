@@ -1,0 +1,25 @@
+### channel=id33-transformer-recipe-repair seq=21
+### host=login4
+### started=2026-09-05T09:07:24+0800
+### ---------- output ----------
+=== QUEUE ===
+     JOBID             NAME      STATE       TIME NODELIST(REASON)
+    202229     N22-agg-eval    PENDING       0:00 (Dependen
+    202294       N22-export    PENDING       0:00 (Dependen
+    202315         N22-gate    PENDING       0:00 (Dependen
+    202507 N22-mask-iso-531    PENDING       0:00 (Dependen
+    215429    id30_m01_s100    PENDING       0:00 (Dependen
+    202293     N22-manifest    PENDING       0:00 (JobHeldU
+=== ID33 JOBS SINCE 09-03 ===
+220490|id33_T1|FAILED|1:0|04:50:57
+220491|id33_T2|FAILED|1:0|04:52:07
+220492|id33_T3|FAILED|1:0|04:55:19
+220493|id33_T4|FAILED|1:0|04:48:43
+220494|id33_T5|FAILED|1:0|06:06:48
+220495|id33_L33|FAILED|1:0|01:28:36
+220658|id33_C1|COMPLETED|0:0|08:40:24
+220659|id33_C2|COMPLETED|0:0|08:40:01
+ID33_PROBE_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T09:07:25+0800
