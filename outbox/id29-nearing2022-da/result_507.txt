@@ -1,0 +1,46 @@
+### channel=id29-nearing2022-da seq=507
+### host=login4
+### started=2026-09-06T06:09:51+0800
+### ---------- output ----------
+=== SLURM SCRIPT OUTPUT DIRECTIVES ===
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/analyze_warmup_target_pair.slurm:8:#SBATCH --output=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.out
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/analyze_warmup_target_pair.slurm:9:#SBATCH --error=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.err
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_author_v13_warmup_isolation_all531_v2.slurm:10:#SBATCH --output=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.out
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_author_v13_warmup_isolation_all531_v2.slurm:11:#SBATCH --error=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.err
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm:11:#SBATCH --output=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%A_%a.out
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm:12:#SBATCH --error=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%A_%a.err
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_replacement_verifier.slurm:9:#SBATCH --output=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.out
+/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_warmup_target_replacement_verifier.slurm:10:#SBATCH --error=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.err
+=== SLURM SCRIPTS PRESENT ===
+analyze_warmup_target_pair.slurm
+run_author_v13_training_data_port_all531_v2.slurm
+run_author_v13_warmup_isolation_all531_v2.slurm
+run_partial_registered_results_audit_attempt2.slurm
+run_partial_registered_results_audit_seq205.slurm
+run_partial_registered_results_audit_seq223.slurm
+run_partial_registered_results_audit_seq227.slurm
+run_partial_registered_results_audit_seq231.slurm
+run_partial_registered_results_audit_seq234.slurm
+run_partial_registered_results_audit_seq245.slurm
+run_partial_registered_results_audit_seq249.slurm
+run_partial_registered_results_audit_seq271.slurm
+run_partial_registered_results_audit_seq275.slurm
+run_partial_registered_results_audit.slurm
+run_preclosure_validation.slurm
+run_registered_aggregation.slurm
+run_registered_closure_export.slurm
+run_registered_closure_manifest.slurm
+run_registered_evaluation_array.slurm
+run_registered_numerical_gate.slurm
+run_registered_training_array.slurm
+run_registered_training.slurm
+run_warmup_target_pair.slurm
+run_warmup_target_replacement_verifier.slurm
+=== FIND 219423 FILES UNDER ROOT (depth 5) ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-06T06:09:56+0800
