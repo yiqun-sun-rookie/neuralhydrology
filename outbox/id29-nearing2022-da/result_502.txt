@@ -1,0 +1,20 @@
+### channel=id29-nearing2022-da seq=502
+### host=login4
+### started=2026-09-06T03:07:19+0800
+### ---------- output ----------
+=== 219423_0 ===
+219423_0|N22-warmpair|FAILED|1:0|2026-09-03T18:19:46|2026-09-03T18:20:31
+=== 219423_1 ===
+219423_1|N22-warmpair|FAILED|1:0|2026-09-03T18:19:46|2026-09-03T18:21:19
+=== 220487 ===
+220487|N22-replv2|FAILED|1:0|2026-09-04T14:18:41|2026-09-04T14:19:04
+=== LOG FILES (recent N22 logs) ===
+/data1/home/sunyiq/nearing2022_da/logs/compare_202159.err
+/data1/home/sunyiq/nearing2022_da/logs/ar_201893.err
+/data1/home/sunyiq/nearing2022_da/logs/da_201890.err
+/data1/home/sunyiq/nearing2022_da/logs/sim_201858.err
+/data1/home/sunyiq/nearing2022_da/logs/ar_201859.err
+=== SEARCH FOR WARMPAIR/REPL LOGS ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-06T03:07:21+0800
