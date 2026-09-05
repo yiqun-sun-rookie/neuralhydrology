@@ -1,0 +1,45 @@
+### channel=id33-transformer-recipe-repair seq=24
+### host=login4
+### started=2026-09-05T21:42:36+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-05T21:42:36+0800
+=== A. RERUN JOBS ===
+    JobID   JobName       State ExitCod    Elapsed NodeList 
+--------- --------- ----------- ------- ---------- -------- 
+   222800   id33_pk     RUNNING     0:0   00:15:38   ngu011 
+   222801   id33_pk     RUNNING     0:0   00:15:38   ngu004 
+    JOBID       NAME ST        TIME     NODELIST(REASON)           START_TIME
+   222800    id33_pk  R       14:57               ngu011  2026-09-05T21:27:39
+   222801    id33_pk  R       14:57               ngu004  2026-09-05T21:27:39
+=== B. REMOTE FILE HASHES (must match local) ===
+dd093b289d325bed8f1cfda136d8d8e50835346cbe9e917b5c4016a8e1135c89  neuralhydrology/modelzoo/recipe_fixed_transformer.py
+7d76b53032a8a0bd830bc8e68b0c875bad3645b0c8f9dacf3cc153639ff78ef7  src/transformer_recipe_repair/scripts/run_development.py
+c092fcab7745bcb994ced393f1ce700ecefaf605224b55011bad60e3717b1bbb  src/transformer_recipe_repair/scripts/audit_configs.py
+b202b1d7e664aa84c38f20647c9478d4ee4a49846cacd4a2c75aeb86a5369b9e  src/transformer_recipe_repair/registry/experiments.csv
+99f1bcd4e9e1cc2c1e0ea389cb581fbd700b7927aa7df6ec5aa7f62d68410aaf  src/transformer_recipe_repair/hpc/submit_packed_arms.slurm
+=== C. PRESERVED FAILED EVIDENCE ===
+_invocations
+L33
+T1
+T2
+T3
+T4
+T5
+  invocations preserved: 6
+=== D. CALIBRATION ARTIFACTS (COMPLETE manifests) ===
+ab75c33f23745337a85be74bf99607da6b9f75d3785fef6799a5e45d2817cef6  results/33_transformer_recipe_repair/C1/transformer_recipe_repair_C1_2026_0904_1612_ep30/epoch030_metrics.json
+e23c5ec9cc0b2f8c5e76a453225dc694e73e80f1ff35b722427c6ae81872738b  results/33_transformer_recipe_repair/C2/transformer_recipe_repair_C2_2026_0904_1612_ep30/epoch030_metrics.json
+=== E. GPU UTILISATION SAMPLER (is the packed job filling the card) ===
+  logs/33_transformer_recipe_repair/utilisation-222800.csv samples=16
+    gpu_util mean=87.5%  mem mean=18431 MiB of  24576
+  logs/33_transformer_recipe_repair/utilisation-222801.csv samples=14
+    gpu_util mean=62.9%  mem mean=16225 MiB of  24576
+=== F. ID30/ID31/ID32 UNTOUCHED ===
+26cb602a68c48cc24c8c7f2d60773232d9b460721422b9179a0964385937d1b7
+135832304f6d6ffcb2cfe69703a5143504bbb9654158515f4e39ebe0d2061b18
+ID32 root intact
+HANDOFF_FACTS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T21:42:37+0800
