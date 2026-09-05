@@ -1,0 +1,12 @@
+### channel=kalmannet-daily-perbasin seq=34
+### host=login4
+### started=2026-09-05T22:42:49+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=34 purpose=v2-task6-isolated-deployment
+2026-09-05T22:42:49+0800
+login4
+{"experiment_ids": ["DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_V2_20260902_A44", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_V2_20260902_A45"], "formal_evaluation_member_count": 0, "historical_evaluation_member_count": 0, "member_count": 50, "state_dimensions": [7, 11, 18], "status": "DEPLOYED_BUNDLE_VERIFIED"}
+{"archive_bytes": 438532, "archive_sha256": "1b78bbae823d55859391a6cdee3b9fbe8a40203e5140b8795105a8617592b7fd", "deployed_files_including_manifest": 51, "deployment_directory": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_DEPLOY1_SEQ34", "formal_evaluation_member_count": 0, "internal_manifest_sha256": "5abaa07cfc00e2795a91a8cd70bb793e5cf362971fd04a2de44cbf3e15fa587f", "member_mismatches": 0, "optimizer_steps": 0, "payload_members": 50, "request_sequence": 34, "source_root": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_DEPLOY1_SEQ34/source", "source_sha256_modified": false, "status": "TASK6_DEPLOYMENT_PASS", "training_submissions": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T22:42:50+0800
