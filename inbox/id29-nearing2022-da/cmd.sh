@@ -1,12 +1,9 @@
 set -o pipefail
-ROOT=/data1/home/sunyiq/nearing2022_da
-for J in 219423_0 219423_1 220487; do
-  echo "=== JOB $J ==="
-  sacct -j "${J%%_*}" -X -n -P --format=JobID,JobName,State,ExitCode,WorkDir 2>/dev/null | grep "^$J|" || true
-  for F in $(ls -1 $ROOT/logs/*${J}* $ROOT/logs/**/*${J}* 2>/dev/null | head -6); do
-    echo "--- $F"; tail -30 "$F" 2>/dev/null || true
-  done
+L=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs
+for F in N22-warmpair_219423_0.err N22-warmpair_219423_0.out N22-warmpair_219423_1.err; do
+  echo "=== $F ==="; tail -40 "$L/$F" 2>/dev/null || echo missing
 done
-echo "=== SLURM OUT/ERR SEARCH ==="
-find $ROOT -maxdepth 4 -name '*219423*' -o -maxdepth 4 -name '*220487*' 2>/dev/null | head -20 || true
+echo "=== replv2 err ==="
+ls -1t $L | grep -i 'replv2' | head -4 || true
+for F in $(ls -1t $L 2>/dev/null | grep -i 'replv2' | head -2); do echo "--- $F"; tail -30 "$L/$F" 2>/dev/null || true; done
 exit 0
