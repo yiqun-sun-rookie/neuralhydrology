@@ -12,7 +12,13 @@ for a in T1 T2 T3 T4 T5 L33; do
   if [ -z "$d" ]; then echo "  $a: no run dir"; continue; fi
   ep=$(ls -1d "$d"validation/model_epoch* 2>/dev/null | wc -l)
   echo "  $a: $d  validation_epochs=$ep"
-  grep -h "Median validation metrics" -A1 "$d"output.log 2>/dev/null | grep -o "NSE: [0-9.-]*" | tail -3 || true
+  grep -h "Median validation metrics" -A1 "$d"output.log 2>/dev/null | grep -o "NSE: [0-9.-]*" | cat -n || true
+done
+echo "=== B2. MANIFESTS ==="
+for m in results/33_transformer_recipe_repair/_invocations/*slurm2228*/run_manifest.json; do
+  test -f "$m" || continue
+  echo "-- $m"
+  grep -oE '"(status|training_return_code)": *[^,}]*' "$m" || true
 done
 echo "=== C. GPU UTILISATION ==="
 for f in logs/33_transformer_recipe_repair/utilisation-*.csv; do
