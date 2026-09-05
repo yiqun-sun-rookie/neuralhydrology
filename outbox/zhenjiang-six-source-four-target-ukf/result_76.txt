@@ -1,0 +1,12 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=76
+### host=login4
+### started=2026-09-05T21:42:36+0800
+### ---------- output ----------
+2026-09-05T21:42:36+0800
+{"baselines": [["ZJ-5S5T-V2-STAGE-A-HPC-DATA-20260904-01", 0, 36]], "completed_distinct_paths": 12, "events_by_type": [["COMPLETED", 12, 51501333], ["RESERVED", 12, 0]], "partitions": [["2017-2022"]], "raw_formal_data_opened": false}
+{"schema_version":2,"status":"failed","stage":"stage_a","seed":17,"seed_sequence_index":1,"attempt_number":1,"job_id":"222799","node":"ngu011","failed_at_utc":"2026-09-05T13:24:21Z","exit_status":1,"execution_mode":"single_job_sequential_seed_loop","fail_stop_after_first_seed_failure":true,"automatic_requeue":false,"automatic_retry":false,"automatic_cleanup":false}
+
+read_only_evidence_query=true sbatch_calls=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T21:42:40+0800
