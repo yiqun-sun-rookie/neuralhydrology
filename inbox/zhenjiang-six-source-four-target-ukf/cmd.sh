@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -eo pipefail
 umask 027
 
 REMOTE_ROOT="/data1/home/sunyiq/zhenjiang_five_source_five_target_single_analysis_ukf_oracle_datong_20260904_r1"
@@ -7,19 +7,19 @@ PROTECTED_R2="/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable
 PROTECTED_RECOVERY="/data1/home/sunyiq/zhenjiang_six_source_four_target_differentiable_ukf_20260902_recovery_attempt_002"
 TIDE_SOURCE="${PROTECTED_R2}/run/results/modeling/wusongkou_astronomical_tide_v1_validation/tide_model.json"
 MAILBOX_ROOT="$(git rev-parse --show-toplevel)"
-PAYLOAD_ROOT="${MAILBOX_ROOT}/inbox/zhenjiang-six-source-four-target-ukf/payload_20260904_stage_a_v2"
+PAYLOAD_ROOT="${MAILBOX_ROOT}/inbox/zhenjiang-six-source-four-target-ukf/payload_20260905_stage_a_v2_attempt_002"
 CODE_ARCHIVE="${PAYLOAD_ROOT}/zhenjiang_five_source_five_target_stage_a_hpc_v2.tar.gz"
 BUNDLE_MANIFEST_SOURCE="${PAYLOAD_ROOT}/bundle_manifest.json"
 BUNDLE_IDENTITY_SOURCE="${PAYLOAD_ROOT}/bundle_identity.json"
 PREFIX_ARCHIVE="${PAYLOAD_ROOT}/zhenjiang_2017_2022_prefixes.tar.gz"
 IDENTITY_MANIFEST_SOURCE="${PAYLOAD_ROOT}/identity_registration_manifest.json"
 IDENTITY_LEDGER_SOURCE="${PAYLOAD_ROOT}/identity_registration_usage.sqlite3"
-CODE_ARCHIVE_SHA256="f248974f4c3629d3b0ad8238433a7649d8d9615ac81a12169bf1368f0b05d4a3"
-CODE_ARCHIVE_BYTES="69462"
-BUNDLE_MANIFEST_SHA256="e2167fdbf178cef5c4e0d7b6b0e888a830ba76d95965f727dcad415059e7fbf9"
-BUNDLE_MANIFEST_BYTES="4140"
-BUNDLE_IDENTITY_SHA256="f37c3a0db997983a064b6f035c0ba34b4e3fb6119ec70e00261597e8873d380c"
-BUNDLE_IDENTITY_BYTES="643"
+CODE_ARCHIVE_SHA256="f5d5c0f87c9e964e0ac906f1ec7df6b0bc52c9329017db8132064bb84c2f5caa"
+CODE_ARCHIVE_BYTES="70680"
+BUNDLE_MANIFEST_SHA256="087552bf4f7bdc7a464482ab6b293d8fcaa0d889f66e240b2ca50f93c3821f3f"
+BUNDLE_MANIFEST_BYTES="4047"
+BUNDLE_IDENTITY_SHA256="9f2569340fc0e6795b9c4131af633ea9f12ea4358e6e650a4b45a95a55546c8b"
+BUNDLE_IDENTITY_BYTES="633"
 PREFIX_ARCHIVE_SHA256="7d419119c623efc3fc59591acbd4490c654c6e5fe2c07da8fc331681925746fe"
 PREFIX_ARCHIVE_BYTES="5778413"
 IDENTITY_MANIFEST_SHA256="dbeb429521044f52558e009e5b5eeda28a48db9607140abc98a00e1501dd10ce"
@@ -28,7 +28,7 @@ IDENTITY_LEDGER_SHA256="21dd23f935b922ce1bd84ae11ac72680915b2ab0a0776b65fe0ae851
 IDENTITY_LEDGER_BYTES="16384"
 DATA_AUTHORIZATION_SHA256="ab5d0c19c26026e9ab6fd4c412ba0e2573700aeca655042d23ac12b9e8b558c1"
 DATA_CONTRACT_SHA256="26f1b988d0b126be172d612efa9fab0dedf8f3f48e849a3d7ddc331ffda6dc17"
-EXECUTION_AUTHORIZATION_SHA256="684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11"
+EXECUTION_AUTHORIZATION_SHA256="970e1027dba389354309cd51464bed1325db9f893e29263b95459f7d07f33e36"
 TIDE_MODEL_SHA256="ce8512f28e87ab6d62814b064d91ca358b98efd7ee27b4f831322ea93775516d"
 TIDE_MODEL_BYTES="6197"
 CONFIRMATION="CONFIRM_ZHENJIANG_FIVE_SOURCE_FIVE_TARGET_STAGE_A_PAID_HPC_20260904_R1"
@@ -92,10 +92,7 @@ from pathlib import PurePosixPath
 import sys
 import tarfile
 
-import numpy
-import pandas
-import scipy
-import torch
+from importlib.metadata import version
 
 code_archive, prefix_archive, manifest_path, identity_path, registration_path = sys.argv[1:]
 expected_environment = {
@@ -107,10 +104,10 @@ expected_environment = {
 }
 observed_environment = {
     "python": platform.python_version(),
-    "torch": torch.__version__.split("+")[0],
-    "numpy": numpy.__version__,
-    "pandas": pandas.__version__,
-    "scipy": scipy.__version__,
+    "torch": version("torch").split("+")[0],
+    "numpy": version("numpy"),
+    "pandas": version("pandas"),
+    "scipy": version("scipy"),
 }
 if observed_environment != expected_environment:
     raise SystemExit("nh_final environment changed: " + repr(observed_environment))
@@ -159,14 +156,14 @@ for key in ("scientific_result", "formal_data_included", "held_out_2023_or_2024_
 expected_hashes = {
     "authorization_sha256": "ab5d0c19c26026e9ab6fd4c412ba0e2573700aeca655042d23ac12b9e8b558c1",
     "data_contract_sha256": "26f1b988d0b126be172d612efa9fab0dedf8f3f48e849a3d7ddc331ffda6dc17",
-    "execution_authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+    "execution_authorization_sha256": "970e1027dba389354309cd51464bed1325db9f893e29263b95459f7d07f33e36",
 }
 for key, value in expected_hashes.items():
     if manifest.get(key) != value or identity.get(key) != value:
         raise SystemExit("bundle contract hash changed: " + key)
-if identity.get("archive_sha256") != "f248974f4c3629d3b0ad8238433a7649d8d9615ac81a12169bf1368f0b05d4a3":
+if identity.get("archive_sha256") != "f5d5c0f87c9e964e0ac906f1ec7df6b0bc52c9329017db8132064bb84c2f5caa":
     raise SystemExit("bundle identity archive hash changed")
-if identity.get("bundle_manifest_sha256") != hashlib.sha256(manifest_raw).hexdigest():
+if identity.get("manifest_sha256") != hashlib.sha256(manifest_raw).hexdigest():
     raise SystemExit("bundle identity manifest hash changed")
 if len(registration.get("files", {})) != 12:
     raise SystemExit("identity-registration object count changed")
@@ -175,7 +172,7 @@ if registration.get("forbidden_2023_data_row_reads") != 0 or registration.get("f
 prefix = registration.get("materialized_prefix_bundle", {})
 if prefix.get("member_count") != 12 or prefix.get("sha256") != "7d419119c623efc3fc59591acbd4490c654c6e5fe2c07da8fc331681925746fe":
     raise SystemExit("identity-registration prefix identity changed")
-print("environment_preflight=PASS " + json.dumps(observed_environment, sort_keys=True))
+print("login_package_metadata_preflight=PASS runtime_imports_deferred_to_compute_node=true " + json.dumps(observed_environment, sort_keys=True))
 print("archive_header_preflight=PASS code_files=17 prefix_files=12 formal_data_content_inspected=false")
 PY
 
@@ -208,7 +205,7 @@ chmod -R a-w -- "${REMOTE_ROOT}/inputs"
 assert_file_identity "${REMOTE_ROOT}/bundle_manifest.json" "${BUNDLE_MANIFEST_BYTES}" "${BUNDLE_MANIFEST_SHA256}"
 assert_file_identity "${REMOTE_ROOT}/contracts/stage_a_authorization.json" "3491" "${DATA_AUTHORIZATION_SHA256}"
 assert_file_identity "${REMOTE_ROOT}/contracts/stage_a_data_contract.json" "8519" "${DATA_CONTRACT_SHA256}"
-assert_file_identity "${REMOTE_ROOT}/evidence/contracts/paid_hpc_execution_authorization.json" "5148" "${EXECUTION_AUTHORIZATION_SHA256}"
+assert_file_identity "${REMOTE_ROOT}/evidence/contracts/paid_hpc_execution_authorization.json" "6138" "${EXECUTION_AUTHORIZATION_SHA256}"
 assert_file_identity "${REMOTE_ROOT}/inputs/2017_2022/astronomical_tide/wusongkou_tide_model.json" "${TIDE_MODEL_BYTES}" "${TIDE_MODEL_SHA256}"
 assert_file_identity "${REMOTE_ROOT}/evidence/identity_registration/identity_registration_manifest.json" "${IDENTITY_MANIFEST_BYTES}" "${IDENTITY_MANIFEST_SHA256}"
 assert_file_identity "${REMOTE_ROOT}/evidence/identity_registration/identity_registration_usage.sqlite3" "${IDENTITY_LEDGER_BYTES}" "${IDENTITY_LEDGER_SHA256}"
@@ -228,15 +225,15 @@ document = {
     "schema_version": 2,
     "status": "deployed_pre_submission",
     "mailbox_channel": "zhenjiang-six-source-four-target-ukf",
-    "mailbox_sequence": 73,
+    "mailbox_sequence": 74,
     "remote_root": "/data1/home/sunyiq/zhenjiang_five_source_five_target_single_analysis_ukf_oracle_datong_20260904_r1",
-    "code_archive_sha256": "f248974f4c3629d3b0ad8238433a7649d8d9615ac81a12169bf1368f0b05d4a3",
-    "bundle_manifest_sha256": "e2167fdbf178cef5c4e0d7b6b0e888a830ba76d95965f727dcad415059e7fbf9",
+    "code_archive_sha256": "f5d5c0f87c9e964e0ac906f1ec7df6b0bc52c9329017db8132064bb84c2f5caa",
+    "bundle_manifest_sha256": "087552bf4f7bdc7a464482ab6b293d8fcaa0d889f66e240b2ca50f93c3821f3f",
     "prefix_archive_sha256": "7d419119c623efc3fc59591acbd4490c654c6e5fe2c07da8fc331681925746fe",
     "identity_registration_manifest_sha256": "dbeb429521044f52558e009e5b5eeda28a48db9607140abc98a00e1501dd10ce",
     "data_authorization_sha256": "ab5d0c19c26026e9ab6fd4c412ba0e2573700aeca655042d23ac12b9e8b558c1",
     "data_contract_sha256": "26f1b988d0b126be172d612efa9fab0dedf8f3f48e849a3d7ddc331ffda6dc17",
-    "execution_authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+    "execution_authorization_sha256": "970e1027dba389354309cd51464bed1325db9f893e29263b95459f7d07f33e36",
     "protected_hpc_roots_written": False,
     "formal_training_data_content_inspected_before_ledger": False,
     "stage_b_included": False,
@@ -355,10 +352,10 @@ document = {
     "automatic_retry": False,
     "automatic_requeue": False,
     "automatic_cleanup": False,
-    "bundle_manifest_sha256": "e2167fdbf178cef5c4e0d7b6b0e888a830ba76d95965f727dcad415059e7fbf9",
+    "bundle_manifest_sha256": "087552bf4f7bdc7a464482ab6b293d8fcaa0d889f66e240b2ca50f93c3821f3f",
     "data_authorization_sha256": "ab5d0c19c26026e9ab6fd4c412ba0e2573700aeca655042d23ac12b9e8b558c1",
     "data_contract_sha256": "26f1b988d0b126be172d612efa9fab0dedf8f3f48e849a3d7ddc331ffda6dc17",
-    "execution_authorization_sha256": "684ea5a278377547d6cd8532d268f8b6c7e0906f7eb54586e8ce48b64b129e11",
+    "execution_authorization_sha256": "970e1027dba389354309cd51464bed1325db9f893e29263b95459f7d07f33e36",
 }
 with Path(sys.argv[1]).open("x", encoding="utf-8", newline="\n") as handle:
     json.dump(document, handle, indent=2, sort_keys=True, allow_nan=False)

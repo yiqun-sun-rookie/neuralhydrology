@@ -1,0 +1,94 @@
+{
+  "schema_version": 2,
+  "experiment_family": "ZHENJIANG_FIVE_SOURCE_FIVE_TARGET_D32_GRU_SINGLE_ANALYSIS_UKF_ORACLE_DATONG_V2",
+  "remote_root": "/data1/home/sunyiq/zhenjiang_five_source_five_target_single_analysis_ukf_oracle_datong_20260904_r1",
+  "scientific_result": false,
+  "formal_data_included": false,
+  "held_out_2023_or_2024_data_included": false,
+  "authorization_sha256": "ab5d0c19c26026e9ab6fd4c412ba0e2573700aeca655042d23ac12b9e8b558c1",
+  "data_contract_sha256": "26f1b988d0b126be172d612efa9fab0dedf8f3f48e849a3d7ddc331ffda6dc17",
+  "execution_authorization_sha256": "970e1027dba389354309cd51464bed1325db9f893e29263b95459f7d07f33e36",
+  "source_file_count": 16,
+  "source_files": [
+    {
+      "relative_path": "contracts/stage_a_authorization.json",
+      "byte_count": 3491,
+      "sha256": "ab5d0c19c26026e9ab6fd4c412ba0e2573700aeca655042d23ac12b9e8b558c1"
+    },
+    {
+      "relative_path": "contracts/stage_a_data_contract.json",
+      "byte_count": 8519,
+      "sha256": "26f1b988d0b126be172d612efa9fab0dedf8f3f48e849a3d7ddc331ffda6dc17"
+    },
+    {
+      "relative_path": "evidence/contracts/paid_hpc_execution_authorization.json",
+      "byte_count": 6138,
+      "sha256": "970e1027dba389354309cd51464bed1325db9f893e29263b95459f7d07f33e36"
+    },
+    {
+      "relative_path": "run/docs/records/zhenjiang_five_source_five_target_single_analysis_ukf_oracle_datong_v2_registry.json",
+      "byte_count": 25737,
+      "sha256": "d0fdb8a6eb4c88fcadde7cb36ad66c94b20786dc27d98ebb5f14310e43dd3bf3"
+    },
+    {
+      "relative_path": "run/scripts/analysis/zhenjiang_five_source_five_target_single_analysis_contract_v2.py",
+      "byte_count": 17466,
+      "sha256": "ba953d140784a7b0845dd332c64311e344479dbbf5cac98eb57227b97ffdd79a"
+    },
+    {
+      "relative_path": "run/scripts/astronomical_tide/wusongkou_astronomical_tide_realtime_v2.py",
+      "byte_count": 14978,
+      "sha256": "6a8e45b8988809899ae84febd2e4790a6369acaad88f346bc7f2ddca7f40f5f5"
+    },
+    {
+      "relative_path": "run/scripts/hpc/verify_zhenjiang_five_source_five_target_stage_a_hpc_v2.py",
+      "byte_count": 23600,
+      "sha256": "43e1502f679c2ce26d8a23f77f5a5489a00907883685326f42356e32a1c8e15c"
+    },
+    {
+      "relative_path": "run/scripts/hpc/zhenjiang_five_source_five_target_stage_a_v2.slurm",
+      "byte_count": 19891,
+      "sha256": "ffd64568e89428f55dbb2a33b02561b4214ae2e13c3394bea2732147c8334b9e"
+    },
+    {
+      "relative_path": "run/scripts/modeling/run_zhenjiang_five_source_five_target_stage_a_v2.py",
+      "byte_count": 47094,
+      "sha256": "d60b078525b2d2b84cb27f7049e206748e91a8b5c6aa8df0f304b50ed405bb1f"
+    },
+    {
+      "relative_path": "run/scripts/modeling/train_zhenjiang_five_source_five_target_d32_gru_v2.py",
+      "byte_count": 26174,
+      "sha256": "d2ff8313469019e2065131811c1ffb4c698c904a87f70956cea7aa9ee2455c27"
+    },
+    {
+      "relative_path": "run/scripts/modeling/zhenjiang_five_source_five_target_d32_gru_v2.py",
+      "byte_count": 7549,
+      "sha256": "3dc45a73dc333156a4d5bd5429028aaaa6e13380904f79ca2d334c25af6d355a"
+    },
+    {
+      "relative_path": "run/scripts/modeling/zhenjiang_five_source_five_target_data_v2.py",
+      "byte_count": 71264,
+      "sha256": "5126737d395a9cda5a4d7def5714f8582542ad3ace48e0b539bd99acd1f99039"
+    },
+    {
+      "relative_path": "run/third_party/pytides/astro.py",
+      "byte_count": 6036,
+      "sha256": "d29a2197c24a3e243590f0e7dcf52a2a4266a0951abab08244957711cabaa5bd"
+    },
+    {
+      "relative_path": "run/third_party/pytides/constituent.py",
+      "byte_count": 6405,
+      "sha256": "fed8fa1a14663391f2f706e8ca70eedddd188321221a7fd8120ddcd01b11846a"
+    },
+    {
+      "relative_path": "run/third_party/pytides/nodal_corrections.py",
+      "byte_count": 3708,
+      "sha256": "ae6af6c135fe88f90752fd6cf522d6976e5f8f8a29341d719627124dd254989b"
+    },
+    {
+      "relative_path": "run/third_party/pytides/tide.py",
+      "byte_count": 13956,
+      "sha256": "fbdc9ec80a4bc9741520e73751038ab06db836add2425dbcc420873fde5dcbce"
+    }
+  ]
+}
