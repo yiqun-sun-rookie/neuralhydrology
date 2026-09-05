@@ -1,0 +1,20 @@
+### channel=id29-nearing2022-da seq=488
+### host=login4
+### started=2026-09-05T09:07:58+0800
+### ---------- output ----------
+=== find warmpair/replv2 slurm logs ===
+./closure_20260810/logs/N22-warmpair_219423_0.err
+./closure_20260810/logs/N22-warmpair_219423_1.out
+./closure_20260810/logs/N22-warmpair_219423_0.out
+./closure_20260810/logs/N22-warmpair_219423_1.err
+=== slurm script paths ===
+analyze_warmup_target_pair.slurm
+run_author_v13_warmup_isolation_all531_v2.slurm
+run_warmup_target_pair.slurm
+run_warmup_target_replacement_verifier.slurm
+=== output path directive in warmup slurm ===
+src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm
+src/29_nearing2022_da_ar/hpc/analyze_warmup_target_pair.slurm
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T09:07:59+0800
