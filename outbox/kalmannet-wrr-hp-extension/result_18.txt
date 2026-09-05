@@ -1,0 +1,28 @@
+### channel=kalmannet-wrr-hp-extension seq=18
+### host=login4
+### started=2026-09-05T21:30:07+0800
+### ---------- output ----------
+=== TIME ===
+2026-09-05T21:30:07+0800
+=== MY JOBS ===
+=== FAULTS ===
+none
+=== SIZE LADDER (all cells at lr 0.01, mult 10) ===
+hs=32  seed=42 M=0.982326 best_ep=6   stop_ep=16 roll=0
+hs=16  seed=42 M=0.984289 best_ep=53  stop_ep=63 roll=1
+hs=64  seed=42 M=0.984523 best_ep=38  stop_ep=48 roll=2
+hs=8   seed=42 M=0.983964 best_ep=55  stop_ep=65 roll=0
+hs=4   seed=42 M=0.984019 best_ep=42  stop_ep=52 roll=0
+hs=32  seed=43 M=0.984237 best_ep=48  stop_ep=58 roll=1
+hs=16  seed=43 M=0.982702 best_ep=14  stop_ep=24 roll=0
+hs=8   seed=43 M=0.982473 best_ep=11  stop_ep=21 roll=0
+hs=4   seed=43 M=0.982143 best_ep=9   stop_ep=19 roll=0
+hs=32  seed=44 M=0.983987 best_ep=42  stop_ep=52 roll=1
+hs=16  seed=44 M=0.984306 best_ep=29  stop_ep=39 roll=0
+hs=8   seed=44 M=0.984197 best_ep=35  stop_ep=45 roll=0
+hs=4   seed=44 M=0.983904 best_ep=24  stop_ep=34 roll=1
+=== STILL RUNNING (18-25) ===
+(done)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T21:30:09+0800
