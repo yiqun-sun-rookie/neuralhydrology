@@ -1,0 +1,94 @@
+{
+  "schema_version": 2,
+  "experiment_family": "ZHENJIANG_FIVE_SOURCE_FIVE_TARGET_D32_GRU_SINGLE_ANALYSIS_UKF_ORACLE_DATONG_V2",
+  "remote_root": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001",
+  "scientific_result": false,
+  "formal_data_included": false,
+  "held_out_2023_or_2024_data_included": false,
+  "authorization_sha256": "f204be80e3f7ad440e77291c387ab57acb3d2db7732946ca9789c4005e999a27",
+  "data_contract_sha256": "0e2cc530d5158cb9535862b10d6489436b73811c84a3d601579ed79de28155b3",
+  "execution_authorization_sha256": "d61afbdc83a0e9577301b278630a6b1501a75c67750ded760d9fdfcffd7eeaf8",
+  "source_file_count": 16,
+  "source_files": [
+    {
+      "relative_path": "contracts/stage_a_authorization.json",
+      "byte_count": 3080,
+      "sha256": "f204be80e3f7ad440e77291c387ab57acb3d2db7732946ca9789c4005e999a27"
+    },
+    {
+      "relative_path": "contracts/stage_a_data_contract.json",
+      "byte_count": 7994,
+      "sha256": "0e2cc530d5158cb9535862b10d6489436b73811c84a3d601579ed79de28155b3"
+    },
+    {
+      "relative_path": "evidence/contracts/paid_hpc_execution_authorization.json",
+      "byte_count": 6287,
+      "sha256": "d61afbdc83a0e9577301b278630a6b1501a75c67750ded760d9fdfcffd7eeaf8"
+    },
+    {
+      "relative_path": "run/docs/records/zhenjiang_five_source_five_target_single_analysis_ukf_oracle_datong_v2_registry.json",
+      "byte_count": 35661,
+      "sha256": "58bc4a4bede012341cb8859a19ec122910b57d2544d9a900bac2fff8166c0490"
+    },
+    {
+      "relative_path": "run/scripts/analysis/zhenjiang_five_source_five_target_single_analysis_contract_v2.py",
+      "byte_count": 17466,
+      "sha256": "ba953d140784a7b0845dd332c64311e344479dbbf5cac98eb57227b97ffdd79a"
+    },
+    {
+      "relative_path": "run/scripts/astronomical_tide/wusongkou_astronomical_tide_realtime_v2.py",
+      "byte_count": 14978,
+      "sha256": "6a8e45b8988809899ae84febd2e4790a6369acaad88f346bc7f2ddca7f40f5f5"
+    },
+    {
+      "relative_path": "run/scripts/hpc/verify_zhenjiang_five_source_five_target_stage_a_hpc_v2.py",
+      "byte_count": 23297,
+      "sha256": "a0c6119013dc69408d6ed7cb60485543240330305221987beee01cca2d9d6050"
+    },
+    {
+      "relative_path": "run/scripts/hpc/zhenjiang_five_source_five_target_stage_a_v2.slurm",
+      "byte_count": 19796,
+      "sha256": "b6247f8dbe0f3cd1e60e13660b2316bfe57340e1f21b661cea53f00e4681dfce"
+    },
+    {
+      "relative_path": "run/scripts/modeling/run_zhenjiang_five_source_five_target_stage_a_v2.py",
+      "byte_count": 47054,
+      "sha256": "81f4846119447936035fe9b5fcf3169e61df7a0c726db36a1c6f6f878722ffd5"
+    },
+    {
+      "relative_path": "run/scripts/modeling/train_zhenjiang_five_source_five_target_d32_gru_v2.py",
+      "byte_count": 26174,
+      "sha256": "d2ff8313469019e2065131811c1ffb4c698c904a87f70956cea7aa9ee2455c27"
+    },
+    {
+      "relative_path": "run/scripts/modeling/zhenjiang_five_source_five_target_d32_gru_v2.py",
+      "byte_count": 7549,
+      "sha256": "3dc45a73dc333156a4d5bd5429028aaaa6e13380904f79ca2d334c25af6d355a"
+    },
+    {
+      "relative_path": "run/scripts/modeling/zhenjiang_five_source_five_target_data_v2.py",
+      "byte_count": 71264,
+      "sha256": "5126737d395a9cda5a4d7def5714f8582542ad3ace48e0b539bd99acd1f99039"
+    },
+    {
+      "relative_path": "run/third_party/pytides/astro.py",
+      "byte_count": 6036,
+      "sha256": "d29a2197c24a3e243590f0e7dcf52a2a4266a0951abab08244957711cabaa5bd"
+    },
+    {
+      "relative_path": "run/third_party/pytides/constituent.py",
+      "byte_count": 6405,
+      "sha256": "fed8fa1a14663391f2f706e8ca70eedddd188321221a7fd8120ddcd01b11846a"
+    },
+    {
+      "relative_path": "run/third_party/pytides/nodal_corrections.py",
+      "byte_count": 3708,
+      "sha256": "ae6af6c135fe88f90752fd6cf522d6976e5f8f8a29341d719627124dd254989b"
+    },
+    {
+      "relative_path": "run/third_party/pytides/tide.py",
+      "byte_count": 13956,
+      "sha256": "fbdc9ec80a4bc9741520e73751038ab06db836add2425dbcc420873fde5dcbce"
+    }
+  ]
+}
