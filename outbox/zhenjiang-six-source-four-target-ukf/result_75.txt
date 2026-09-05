@@ -1,0 +1,84 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=75
+### host=login4
+### started=2026-09-05T21:30:07+0800
+### ---------- output ----------
+2026-09-05T21:30:07+0800
+login4
+=== SUBMISSION RECEIPT ===
+{
+  "attempt_number": 1,
+  "automatic_cleanup": false,
+  "automatic_requeue": false,
+  "automatic_retry": false,
+  "bundle_manifest_sha256": "087552bf4f7bdc7a464482ab6b293d8fcaa0d889f66e240b2ca50f93c3821f3f",
+  "data_authorization_sha256": "ab5d0c19c26026e9ab6fd4c412ba0e2573700aeca655042d23ac12b9e8b558c1",
+  "data_contract_sha256": "26f1b988d0b126be172d612efa9fab0dedf8f3f48e849a3d7ddc331ffda6dc17",
+  "execution_authorization_sha256": "970e1027dba389354309cd51464bed1325db9f893e29263b95459f7d07f33e36",
+  "execution_mode": "single_job_sequential_seed_loop",
+  "job_id": "222799",
+  "sbatch_call_count": 1,
+  "sbatch_output": "Submitted batch job 222799",
+  "schema_version": 2,
+  "seed_order": [
+    17,
+    29,
+    43
+  ],
+  "slurm_no_requeue": true,
+  "stage": "stage_a",
+  "status": "submitted"
+}
+=== CURRENT JOB STATE ===
+slurm_load_jobs error: Invalid job id specified
+JobID|State|ExitCode|Elapsed|NodeList
+222799|FAILED|1:0|00:01:18|ngu011
+222799.batch|FAILED|1:0|00:01:18|ngu011
+222799.extern|COMPLETED|0:0|00:01:18|ngu011
+
+=== LOG out ===
+[2026-09-05T21:23:06+08:00] stage=stage_a job=222799 node=ngu011
+NVIDIA GeForce RTX 3090, GPU-d258668b-a6f4-3b19-77a4-dc8b8b77d3da, 24576 MiB, 580.76.05
+expected_environment=python=3.11.13 torch=2.4.0 numpy=2.3.3 pandas=2.3.2 scipy=1.16.2
+graphics_processor_preflight=passed name=NVIDIA GeForce RTX 3090 capability=(8, 6) bytes=25296044032
+torch=2.4.0 cuda=12.1
+[2026-09-05T21:23:53+08:00] seed=17 sequence_index=1 first_attempt=started
+{
+  "authorization_sha256": "ab5d0c19c26026e9ab6fd4c412ba0e2573700aeca655042d23ac12b9e8b558c1",
+  "bundle_manifest_sha256": "087552bf4f7bdc7a464482ab6b293d8fcaa0d889f66e240b2ca50f93c3821f3f",
+  "bundle_member_count": 16,
+  "data_contract_sha256": "26f1b988d0b126be172d612efa9fab0dedf8f3f48e849a3d7ddc331ffda6dc17",
+  "execution_authorization_sha256": "970e1027dba389354309cd51464bed1325db9f893e29263b95459f7d07f33e36",
+  "experiment_family": "ZHENJIANG_FIVE_SOURCE_FIVE_TARGET_D32_GRU_SINGLE_ANALYSIS_UKF_ORACLE_DATONG_V2",
+  "formal_data_read": false,
+  "output_created": false,
+  "remote_root": "/data1/home/sunyiq/zhenjiang_five_source_five_target_single_analysis_ukf_oracle_datong_20260904_r1",
+  "schema_version": 2,
+  "seed": 17,
+  "status": "preflight_passed"
+}
+
+=== LOG err ===
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/zhenjiang_five_source_five_target_single_analysis_ukf_oracle_datong_20260904_r1/run/scripts/modeling/run_zhenjiang_five_source_five_target_stage_a_v2.py", line 1213, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_five_source_five_target_single_analysis_ukf_oracle_datong_20260904_r1/run/scripts/modeling/run_zhenjiang_five_source_five_target_stage_a_v2.py", line 1197, in main
+    receipt = run_formal_stage_a(
+              ^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_five_source_five_target_single_analysis_ukf_oracle_datong_20260904_r1/run/scripts/modeling/run_zhenjiang_five_source_five_target_stage_a_v2.py", line 1123, in run_formal_stage_a
+    partitions, scale, input_evidence = _load_formal_partitions(
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/zhenjiang_five_source_five_target_single_analysis_ukf_oracle_datong_20260904_r1/run/scripts/modeling/run_zhenjiang_five_source_five_target_stage_a_v2.py", line 1024, in _load_formal_partitions
+    normalization.explicit_stage.standard_deviation_m,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SpaceNormalization' object has no attribute 'standard_deviation_m'
+[FAILED] stage=stage_a seed=17 index=1 status=1
+=== ATTEMPT EVIDENCE NAMES ONLY ===
+seed_17/attempt_001/first_attempt_started.json|476 bytes
+seed_17/attempt_001/formal_runner_entered.json|668 bytes
+first_stage_failure/failure.json|368 bytes
+job_222799_seed_17_index_1/failure.json|538 bytes
+read_only_status=true data_files_opened=false sbatch_calls=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T21:30:07+0800
