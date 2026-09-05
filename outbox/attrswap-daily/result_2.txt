@@ -1,0 +1,70 @@
+### channel=attrswap-daily seq=2
+### host=login4
+### started=2026-09-05T22:36:31+0800
+### ---------- output ----------
+wallclock 2026-09-05 22:36:31 +0800
+login4
+=== 0. GUARDS ===
+=== 1. CODE: git archive 1f9804e359283f1963bcf0aa9ffab213538c16e8 (read-only on the repo) ===
+commit not in ~/neuralhydrology -> using payload tarball
+CODE MANIFEST OK (142 files byte-identical to local archive)
+camelsus.py 51e2e02b382ec103
+=== 2. DATA SHADOW (streamflow dir symlinked; maurer per-file symlinks + 4 header-fixed copies; attributes copied + chnsupply) ===
+symlinked 671 files, copied+header-fixed 4 files
+maurer/01 28 212d4adcb0f21689 expected 212d4adcb0f21689 MATCH
+maurer/02 75 59b0666bb3dbde86 expected 59b0666bb3dbde86 MATCH
+maurer/03 92 c94970cf20a9bd2e expected c94970cf20a9bd2e MATCH
+maurer/04 31 35eb1cc59b70e6d9 expected 35eb1cc59b70e6d9 MATCH
+maurer/05 45 01110312f5f3a9df expected 01110312f5f3a9df MATCH
+maurer/06 17 47510fb8c74ce954 expected 47510fb8c74ce954 MATCH
+maurer/07 33 ecd471a053e8f615 expected ecd471a053e8f615 MATCH
+maurer/08 12 536f2873384ab107 expected 536f2873384ab107 MATCH
+maurer/09 9 93305e931e5b2f7b expected 93305e931e5b2f7b MATCH
+maurer/10 72 dd4c242c3f1e5a1a expected dd4c242c3f1e5a1a MATCH
+maurer/11 31 253c3d13f171ef31 expected 253c3d13f171ef31 MATCH
+maurer/12 37 787d8ea15ea279f5 expected 787d8ea15ea279f5 MATCH
+maurer/13 7 557f4cf2bb78152b expected 557f4cf2bb78152b MATCH
+maurer/14 17 64174ee436c241a8 expected 64174ee436c241a8 MATCH
+maurer/15 20 765756a147cdf86f expected 765756a147cdf86f MATCH
+maurer/16 18 1dd997ec3b9332ac expected 1dd997ec3b9332ac MATCH
+maurer/17 91 fed6df09ffcebec2 expected fed6df09ffcebec2 MATCH
+maurer/18 40 e0b6380773672575 expected e0b6380773672575 MATCH
+MAURER SHADOW IDENTICAL TO LOCAL: YES
+camels_chnsupply.txt camels_clim.txt camels_geol.txt camels_hydro.txt camels_name.txt camels_soil.txt camels_topo.txt camels_vege.txt 
+chnsupply bb6ee2e36f23182d lines=530 (local LF hash bb6ee2e36f23182d, 530 lines)
+maurer_files=4 streamflow_files=674
+=== 3. CONFIGS / LISTS / SCRIPTS ===
+35ca7016bade85be  configs/attrswap_armA_chn23_s100.yml
+9cac9235fa59108e  configs/attrswap_armA_chn23_s200.yml
+936d5bef17f6e339  configs/attrswap_armA_chn23_s300.yml
+901b5166a55c3757  configs/attrswap_armB_drop23_s100.yml
+47f58b29a11c357d  configs/attrswap_armB_drop23_s200.yml
+f0409393c6174a7b  configs/attrswap_armB_drop23_s300.yml
+33bfcc279b213848  configs/attrswap_ref27_parity_s900.yml
+98018c03b0295a56  basin_lists/basins_529.txt
+44a99ee0a8b42309  basin_lists/holdout_107.txt
+2e509110273e14a6  hpc_gate_median.py
+dad80a5d37e0937f  attrswap_arm.slurm
+basins_529 lines=529 holdout lines=107
+list items in armA s100 config: 31
+=== 4. SUBMIT parity (gate) ===
+Submitted batch job 222824
+=== 5. SUBMIT 6 arms (afterok:222824) ===
+attrswap_armA_chn23_s100 job=222825
+attrswap_armA_chn23_s200 job=222826
+attrswap_armA_chn23_s300 job=222827
+attrswap_armB_drop23_s100 job=222828
+attrswap_armB_drop23_s200 job=222829
+attrswap_armB_drop23_s300 job=222830
+=== 6. QUEUE ===
+     222824   attrswap_ref27_parity_s900   PENDING       0:00              hgpu8                         
+     222825     attrswap_armA_chn23_s100   PENDING       0:00              hgpu8           afterok:222824
+     222826     attrswap_armA_chn23_s200   PENDING       0:00              hgpu8           afterok:222824
+     222827     attrswap_armA_chn23_s300   PENDING       0:00              hgpu8           afterok:222824
+     222828    attrswap_armB_drop23_s100   PENDING       0:00              hgpu8           afterok:222824
+     222829    attrswap_armB_drop23_s200   PENDING       0:00              hgpu8           afterok:222824
+     222830    attrswap_armB_drop23_s300   PENDING       0:00              hgpu8           afterok:222824
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-05T22:36:44+0800
