@@ -1,10 +1,10 @@
 set -o pipefail
-ROOT=/data1/home/sunyiq/nearing2022_da
-echo "=== SLURM SCRIPT OUTPUT DIRECTIVES ==="
-grep -nE '^#SBATCH (--output|--error|-o |-e )' "$ROOT/src/29_nearing2022_da_ar/hpc/"*warmup*.slurm 2>/dev/null || echo none
-echo "=== SLURM SCRIPTS PRESENT ==="
-ls -1 "$ROOT/src/29_nearing2022_da_ar/hpc/" 2>/dev/null | head -40 || true
-echo "=== FIND 219423 FILES UNDER ROOT (depth 5) ==="
-find "$ROOT" -maxdepth 5 -name '*219423*' 2>/dev/null | head -20 || true
-find "$HOME" -maxdepth 2 -name '*219423*' 2>/dev/null | head -20 || true
+L=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs
+for F in N22-warmpair_219423_0.err N22-warmpair_219423_0.out N22-warmpair_219423_1.err; do
+  echo "==== $F ===="
+  tail -40 "$L/$F" 2>/dev/null || echo "  unreadable"
+done
+echo "==== replv2 220487 ===="
+ls -1 "$L" 2>/dev/null | grep 220487 || echo none
+for F in $(ls -1 "$L" 2>/dev/null | grep 220487); do echo "---- $F"; tail -25 "$L/$F" 2>/dev/null || true; done
 exit 0
