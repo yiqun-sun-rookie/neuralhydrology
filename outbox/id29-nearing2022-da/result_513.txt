@@ -1,0 +1,33 @@
+### channel=id29-nearing2022-da seq=513
+### host=login4
+### started=2026-09-06T15:04:24+0800
+### ---------- output ----------
+2026-09-06T15:04:24+0800
+=== N22 JOBS ===
+      202229     N22-agg-eval   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202294       N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315         N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-531   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+      202293     N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+=== FAILURES AND TIMEOUTS ===
+219423_0|N22-warmpair|FAILED|1:0|00:00:45|2026-09-03T18:20:31
+219423_1|N22-warmpair|FAILED|1:0|00:00:48|2026-09-03T18:21:19
+220487|N22-replv2|FAILED|1:0|00:00:05|2026-09-04T14:19:04
+=== WARMPAIR 219423 STATE ===
+219423_0|FAILED|00:00:45
+219423_1|FAILED|00:00:48
+=== LOG IDLE SECONDS PER RUNNING JOB ===
+=== WARMUP PAIR DIRS ===
+  MISSING control_seed0_repeat1
+  MISSING masked_seed0_repeat1
+  MISSING paired_analysis
+=== AGGREGATION AND GATE ARTIFACTS ===
+  PRESENT aggregation/evaluations/time_split_vs_author.csv (128198 bytes)
+  PRESENT aggregation/evaluations/basin_split_vs_author.csv (1695 bytes)
+  PRESENT aggregation/hyperparameters/scores.csv (115432 bytes)
+  PRESENT aggregation/final_reproduction_gate.json (3000 bytes)
+=== ROLE COUNTS ===
+{"missing_by_type": {}, "missing_total": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-06T15:05:06+0800
