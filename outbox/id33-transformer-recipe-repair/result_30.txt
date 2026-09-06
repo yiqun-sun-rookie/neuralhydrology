@@ -1,0 +1,41 @@
+### channel=id33-transformer-recipe-repair seq=30
+### host=login4
+### started=2026-09-06T12:18:26+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-06T12:18:26+0800
+=== A. UTIL HISTOGRAM ===
+-- logs/33_transformer_recipe_repair/utilisation-222800.csv
+     0-  9%:  812 (94.2%)
+   100-109%:   50 (5.8%)
+   first zero-util sample:
+   2026/09/05 21:28:02.802, 0, 18431, 24576
+   last nonzero-util sample:
+   2026/09/05 22:22:06.283, 100, 18431, 24576
+-- logs/33_transformer_recipe_repair/utilisation-222801.csv
+     0-  9%:    1 (0.1%)
+    20- 29%:    3 (0.4%)
+    30- 39%:   15 (2.2%)
+    40- 49%:   38 (5.6%)
+    50- 59%:    7 (1.0%)
+    60- 69%:  607 (89.5%)
+    70- 79%:    7 (1.0%)
+   first zero-util sample:
+   last nonzero-util sample:
+   2026/09/06 08:46:56.931, 67, 16229, 24576
+=== B. ARM TIMELINE (222800 packed) ===
+=== ID33 PACKED PRE-FLIGHT (arms: T1 T2 T3) ===
+=== ID33 PACKED TRAINING: T1 T2 T3 SHARE ONE CARD ===
+=== UTILISATION SUMMARY ===
+=== ID33 PACKED POST-FLIGHT ===
+=== C. RUN DIR MTIMES ===
+  T1 2026-09-06 11:48:43.000000000 +0800
+  T2 2026-09-06 11:48:06.000000000 +0800
+  T3 2026-09-06 11:48:43.000000000 +0800
+  T4 2026-09-06 07:30:17.000000000 +0800
+  T5 2026-09-06 08:45:11.000000000 +0800
+  L33 2026-09-06 01:13:46.000000000 +0800
+DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-06T12:18:27+0800
