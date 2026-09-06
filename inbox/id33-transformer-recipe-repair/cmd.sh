@@ -2,20 +2,28 @@
 set -o pipefail
 echo "=== STAMP ==="; date -Is
 ID33=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
-cd "$ID33"
-echo "=== A. UTIL HISTOGRAM ==="
-for f in logs/33_transformer_recipe_repair/utilisation-222800.csv logs/33_transformer_recipe_repair/utilisation-222801.csv; do
-  test -f "$f" || continue
-  echo "-- $f"
-  awk -F, 'NR>1{b=int($2/10)*10; h[b]++; n++} END{for(i=0;i<=100;i+=10) if(h[i]) printf("   %3d-%3d%%: %4d (%.1f%%)\n",i,i+9,h[i],100*h[i]/n)}' "$f" || true
-  echo "   first zero-util sample:"; awk -F, 'NR>1 && $2+0==0 {print "   "$0; exit}' "$f" || true
-  echo "   last nonzero-util sample:"; awk -F, 'NR>1 && $2+0>0 {l=$0} END{print "   "l}' "$f" || true
+cd "$ID33" || exit 1
+echo "=== A. SACCT ==="
+sacct -j 222800,222801,220658,220659 -X --format=JobID%10,JobName%18,NodeList%10,State%14,ExitCode%8,Elapsed%12,Start%20,End%20 2>&1 || true
+echo "=== B. MANIFESTS ==="
+for d in results/33_transformer_recipe_repair/_invocations/*/; do
+  m="$d/run_manifest.json"
+  [ -f "$m" ] || continue
+  echo "-- $(basename $d)"
+  grep -oE '"(status|training_return_code|source_config_sha256|source_impl_sha256|source_config_sha256_post|source_impl_sha256_post|validation_median_nse)"[^,}]*' "$m" | sed 's/^/   /' || true
+  grep -A4 '"data_access"' "$m" | grep -oE '"status"[^,}]*' | sed 's/^/   data_access /' || true
 done
-echo "=== B. ARM TIMELINE (222800 packed) ==="
-grep -hE "ARM|START|FINISH|=== " logs/33_transformer_recipe_repair/packed-222800.out 2>/dev/null | head -40 || true
-echo "=== C. RUN DIR MTIMES ==="
+echo "=== C. PER-EPOCH MEDIAN NSE ==="
 for a in T1 T2 T3 T4 T5 L33; do
   d=$(ls -1d results/33_transformer_recipe_repair/$a/*/ 2>/dev/null | tail -1)
-  [ -n "$d" ] && echo "  $a $(stat -c '%y' "$d"validation/model_epoch030 2>/dev/null)"
+  [ -n "$d" ] || { echo "-- $a NO_RUNDIR"; continue; }
+  echo "-- $a $d"
+  grep -hE 'Epoch [0-9]+ average validation loss|Median validation metrics|NSE: ' "$d/output.log" 2>/dev/null | tail -40 | sed 's/^/   /' || true
+  echo "   epoch dirs: $(ls -1d $d/validation/model_epoch* 2>/dev/null | wc -l)"
+done
+echo "=== D. ERR TAILS ==="
+for j in 222800 222801; do
+  echo "-- $j"
+  tail -20 logs/33_transformer_recipe_repair/*${j}*.err 2>/dev/null | sed 's/^/   /' || true
 done
 echo DONE
