@@ -1,0 +1,38 @@
+### channel=id29-nearing2022-da seq=515
+### host=login4
+### started=2026-09-06T15:08:34+0800
+### ---------- output ----------
+=== SBATCH DIRECTIVES ===
+analyze_warmup_target_pair.slurm
+run_author_v13_training_data_port_all531_v2.slurm
+run_author_v13_warmup_isolation_all531_v2.slurm
+run_partial_registered_results_audit_attempt2.slurm
+run_partial_registered_results_audit_seq205.slurm
+run_partial_registered_results_audit_seq223.slurm
+run_partial_registered_results_audit_seq227.slurm
+run_partial_registered_results_audit_seq231.slurm
+run_partial_registered_results_audit_seq234.slurm
+run_partial_registered_results_audit_seq245.slurm
+run_partial_registered_results_audit_seq249.slurm
+run_partial_registered_results_audit_seq271.slurm
+run_partial_registered_results_audit_seq275.slurm
+run_partial_registered_results_audit.slurm
+run_preclosure_validation.slurm
+run_registered_aggregation.slurm
+run_registered_closure_export.slurm
+run_registered_closure_manifest.slurm
+run_registered_evaluation_array.slurm
+run_registered_numerical_gate.slurm
+run_registered_training_array.slurm
+run_registered_training.slurm
+run_warmup_target_pair.slurm
+run_warmup_target_replacement_verifier.slurm
+=== SEARCH WHOLE ROOT FOR 219423 LOGS ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+=== 220487 ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-06T15:09:24+0800
