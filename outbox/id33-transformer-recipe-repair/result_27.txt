@@ -1,0 +1,231 @@
+### channel=id33-transformer-recipe-repair seq=27
+### host=login4
+### started=2026-09-06T09:07:42+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-06T09:07:42+0800
+=== A. JOBS ===
+    JobID   JobName       State ExitCod    Elapsed NodeList 
+--------- --------- ----------- ------- ---------- -------- 
+   222800   id33_pk     RUNNING     0:0   11:40:45   ngu011 
+   222801   id33_pk   COMPLETED     0:0   11:20:00   ngu004 
+    JOBID       NAME ST        TIME     NODELIST(REASON)
+   222800    id33_pk  R    11:40:03               ngu011
+=== B. PER-ARM EPOCH PROGRESS ===
+  T1: results/33_transformer_recipe_repair/T1/transformer_recipe_repair_T1_2026_0905_2127_ep30/  validation_epochs=24
+     1	NSE: 0.48667
+     2	NSE: 0.51330
+     3	NSE: 0.55212
+     4	NSE: 0.54898
+     5	NSE: 0.58115
+     6	NSE: 0.57696
+     7	NSE: 0.61328
+     8	NSE: 0.58675
+     9	NSE: 0.62601
+    10	NSE: 0.58977
+    11	NSE: 0.63310
+    12	NSE: 0.62746
+    13	NSE: 0.65670
+    14	NSE: 0.61333
+    15	NSE: 0.64534
+    16	NSE: 0.62259
+    17	NSE: 0.65294
+    18	NSE: 0.64510
+    19	NSE: 0.65293
+    20	NSE: 0.64733
+    21	NSE: 0.67087
+    22	NSE: 0.66398
+    23	NSE: 0.67420
+    24	NSE: 0.66587
+  T2: results/33_transformer_recipe_repair/T2/transformer_recipe_repair_T2_2026_0905_2127_ep30/  validation_epochs=24
+     1	NSE: 0.45363
+     2	NSE: 0.44685
+     3	NSE: 0.51107
+     4	NSE: 0.54889
+     5	NSE: 0.57439
+     6	NSE: 0.59733
+     7	NSE: 0.60071
+     8	NSE: 0.57988
+     9	NSE: 0.63408
+    10	NSE: 0.62033
+    11	NSE: 0.66215
+    12	NSE: 0.66463
+    13	NSE: 0.67973
+    14	NSE: 0.66220
+    15	NSE: 0.67844
+    16	NSE: 0.67499
+    17	NSE: 0.66740
+    18	NSE: 0.67382
+    19	NSE: 0.67590
+    20	NSE: 0.67265
+    21	NSE: 0.69310
+    22	NSE: 0.69209
+    23	NSE: 0.69499
+    24	NSE: 0.69976
+  T3: results/33_transformer_recipe_repair/T3/transformer_recipe_repair_T3_2026_0905_2127_ep30/  validation_epochs=24
+     1	NSE: 0.45561
+     2	NSE: 0.45223
+     3	NSE: 0.48344
+     4	NSE: 0.54361
+     5	NSE: 0.57499
+     6	NSE: 0.58034
+     7	NSE: 0.60386
+     8	NSE: 0.57273
+     9	NSE: 0.62062
+    10	NSE: 0.62403
+    11	NSE: 0.62995
+    12	NSE: 0.63641
+    13	NSE: 0.65202
+    14	NSE: 0.63590
+    15	NSE: 0.67692
+    16	NSE: 0.64809
+    17	NSE: 0.65680
+    18	NSE: 0.65212
+    19	NSE: 0.65454
+    20	NSE: 0.65577
+    21	NSE: 0.68058
+    22	NSE: 0.67553
+    23	NSE: 0.68181
+    24	NSE: 0.68159
+  T4: results/33_transformer_recipe_repair/T4/transformer_recipe_repair_T4_2026_0905_2132_ep30/  validation_epochs=30
+     1	NSE: 0.66455
+     2	NSE: 0.66873
+     3	NSE: 0.68425
+     4	NSE: 0.68563
+     5	NSE: 0.68899
+     6	NSE: 0.67756
+     7	NSE: 0.69016
+     8	NSE: 0.68868
+     9	NSE: 0.68512
+    10	NSE: 0.68219
+    11	NSE: 0.69070
+    12	NSE: 0.68297
+    13	NSE: 0.69508
+    14	NSE: 0.69416
+    15	NSE: 0.68779
+    16	NSE: 0.69249
+    17	NSE: 0.68669
+    18	NSE: 0.68472
+    19	NSE: 0.69364
+    20	NSE: 0.69692
+    21	NSE: 0.69544
+    22	NSE: 0.69498
+    23	NSE: 0.68995
+    24	NSE: 0.69388
+    25	NSE: 0.69800
+    26	NSE: 0.69537
+    27	NSE: 0.69429
+    28	NSE: 0.69463
+    29	NSE: 0.69542
+    30	NSE: 0.69885
+  T5: results/33_transformer_recipe_repair/T5/transformer_recipe_repair_T5_2026_0905_2132_ep30/  validation_epochs=30
+     1	NSE: 0.45217
+     2	NSE: 0.46969
+     3	NSE: 0.57932
+     4	NSE: 0.59137
+     5	NSE: 0.61660
+     6	NSE: 0.61683
+     7	NSE: 0.63802
+     8	NSE: 0.61565
+     9	NSE: 0.65254
+    10	NSE: 0.65197
+    11	NSE: 0.66546
+    12	NSE: 0.67133
+    13	NSE: 0.68937
+    14	NSE: 0.66876
+    15	NSE: 0.68487
+    16	NSE: 0.67091
+    17	NSE: 0.68916
+    18	NSE: 0.68783
+    19	NSE: 0.68618
+    20	NSE: 0.68465
+    21	NSE: 0.70631
+    22	NSE: 0.70192
+    23	NSE: 0.70966
+    24	NSE: 0.70506
+    25	NSE: 0.69573
+    26	NSE: 0.71441
+    27	NSE: 0.71281
+    28	NSE: 0.70344
+    29	NSE: 0.70470
+    30	NSE: 0.70324
+  L33: results/33_transformer_recipe_repair/L33/transformer_recipe_repair_L33_2026_0905_2132_ep30/  validation_epochs=30
+     1	NSE: 0.67570
+     2	NSE: 0.70427
+     3	NSE: 0.71773
+     4	NSE: 0.70075
+     5	NSE: 0.71269
+     6	NSE: 0.71000
+     7	NSE: 0.71137
+     8	NSE: 0.71501
+     9	NSE: 0.70160
+    10	NSE: 0.71166
+    11	NSE: 0.71231
+    12	NSE: 0.71069
+    13	NSE: 0.70684
+    14	NSE: 0.71071
+    15	NSE: 0.70620
+    16	NSE: 0.69737
+    17	NSE: 0.69971
+    18	NSE: 0.68844
+    19	NSE: 0.69648
+    20	NSE: 0.69111
+    21	NSE: 0.68962
+    22	NSE: 0.69236
+    23	NSE: 0.68344
+    24	NSE: 0.68435
+    25	NSE: 0.68308
+    26	NSE: 0.68581
+    27	NSE: 0.68417
+    28	NSE: 0.68219
+    29	NSE: 0.68609
+    30	NSE: 0.68452
+=== B2. MANIFESTS ===
+-- results/33_transformer_recipe_repair/_invocations/id33_L33_s100_slurm222801/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+"status": "COMPLETE"
+"training_return_code": 0
+-- results/33_transformer_recipe_repair/_invocations/id33_T1_s100_slurm222800/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_T2_s100_slurm222800/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_T3_s100_slurm222800/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_T4_s100_slurm222801/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+"status": "COMPLETE"
+"training_return_code": 0
+-- results/33_transformer_recipe_repair/_invocations/id33_T5_s100_slurm222801/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+"status": "COMPLETE"
+"training_return_code": 0
+=== C. GPU UTILISATION ===
+  logs/33_transformer_recipe_repair/utilisation-222800.csv samples=700
+    gpu_util mean=7.1%  mem mean=1527 MiB
+  logs/33_transformer_recipe_repair/utilisation-222801.csv samples=678
+    gpu_util mean=63.4%  mem mean=16227 MiB
+=== D. ERRORS ===
+-- logs/33_transformer_recipe_repair/packed-222800.err
+-- logs/33_transformer_recipe_repair/packed-222801.err
+DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-06T09:07:43+0800
