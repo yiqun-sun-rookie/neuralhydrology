@@ -1,10 +1,10 @@
 set -o pipefail
-ROOT=/data1/home/sunyiq/nearing2022_da
-echo "=== SBATCH DIRECTIVES ==="
-grep -E '^#SBATCH' "$ROOT/src/29_nearing2022_da_ar/hpc/train_warmup_target_pair.slurm" 2>/dev/null || ls "$ROOT/src/29_nearing2022_da_ar/hpc/" 2>/dev/null || true
-echo "=== SEARCH WHOLE ROOT FOR 219423 LOGS ==="
-find "$ROOT" -maxdepth 5 -name '*219423*' 2>/dev/null | head -20 || true
-find ~ -maxdepth 3 -name '*219423*' 2>/dev/null | head -20 || true
-echo "=== 220487 ==="
-find "$ROOT" ~ -maxdepth 4 -name '*220487*' 2>/dev/null | head -10 || true
+L=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs
+for F in N22-warmpair_219423_0.err N22-warmpair_219423_0.out N22-warmpair_219423_1.err; do
+  echo "=== $F ($(stat -c %s "$L/$F" 2>/dev/null) bytes) ==="
+  tail -40 "$L/$F" 2>/dev/null || true
+done
+echo "=== replv2 logs ==="
+ls -t "$L" 2>/dev/null | grep -i 'replv2' | head -5 || echo none
+for F in $(ls -t "$L" 2>/dev/null | grep -i 'replv2' | head -2); do echo "--- $F"; tail -30 "$L/$F" 2>/dev/null || true; done
 exit 0
