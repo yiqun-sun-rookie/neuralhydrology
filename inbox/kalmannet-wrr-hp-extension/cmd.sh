@@ -1,13 +1,56 @@
 #!/usr/bin/env bash
-# Authorized exactly-once deployment of six validation-only replicas.
+# Read-only status for this isolated six-task array; no retry/cancel/training.
 set -euo pipefail
-PAYLOAD=/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-hp-extension/finalist-replication-20260907
-cd "$PAYLOAD"
-sha256sum -c <<'TRANSPORT_HASHES'
-266eab5e5f2b21b992d218aaede11abc6018c11a23c3c5c28a328bd5210a497e  payload/replication.tar.gz
-8e9aa0c3769c050c070c6f48f1faa41aab94994f1a0791e89e35b92a44a8181e  PACKAGE_MANIFEST.json
-da9dd01a449421ad96e76203afb373d88fd427d64e316a4e872767f80e48c6fe  REMOTE_BASELINE.json
-3e62596c1431e2a7878103c4d166815ebc8e46ddd0c5c5d46de3ab1e84078d1e  REMOTE_SOURCE_MANIFEST.json
-1d5cf545f0cdfdfbcdf33cca2adbba80309eef9470b0bd7a72b87230f2880a17  deploy_remote.py
-TRANSPORT_HASHES
-/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B "$PAYLOAD/deploy_remote.py" --payload "$PAYLOAD" --submit
+ROOT=/data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907
+JOB_ID="$(cat "$ROOT/array_job_id.txt")"
+[[ "$JOB_ID" =~ ^[0-9]+$ ]]
+date -Is
+squeue -j "$JOB_ID" -o '%i|%j|%T|%P|%M|%l|%R' || true
+sacct -j "$JOB_ID" -X -n -P --format=JobID,JobName,Partition,State,ExitCode,Elapsed,Start,End,NodeList || true
+python3 - "$ROOT" <<'PY'
+import json, pathlib, sys
+root = pathlib.Path(sys.argv[1])
+exp = root / 'repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902'
+report = {'deployment': json.loads((root / 'DEPLOYMENT_RECEIPT.json').read_text()), 'runs': []}
+combos = [json.loads(s) for s in (exp / 'combos.jsonl').read_text().splitlines() if s.strip()]
+for combo in combos:
+    item = {'index': combo['index'], 'run_id': combo['run_id'], 'seed': combo['seed'],
+            'hidden_size': combo['hidden_size'], 'in_out_mult': combo['in_out_mult'], 'learning_rate': combo['lr']}
+    paths = list(exp.glob('runs/formal_seed%d_gpu/idx%04d_*' % (combo['seed'], combo['index'])))
+    item['run_directory_count'] = len(paths)
+    if len(paths) > 1:
+        raise RuntimeError('Multiple output directories for one authorized run')
+    if paths:
+        run = paths[0]
+        item['run_dir'] = str(run)
+        epoch_path = run / 'results/epoch_log.jsonl'
+        if epoch_path.is_file():
+            # Running writer may have an unfinished final line; never invent a record.
+            lines = epoch_path.read_text().splitlines(keepends=True)
+            complete = [json.loads(s) for s in lines if s.strip() and s.endswith('\n')]
+            item['completed_epochs'] = len(complete)
+            if complete:
+                item['first_epoch'] = complete[0]
+                item['last_epoch'] = complete[-1]
+        cell_path = run / 'cell_metrics.json'
+        if cell_path.is_file():
+            item['cell_metrics'] = json.loads(cell_path.read_text())
+    audits = []
+    for path in exp.glob('audits/*_formal_*.json'):
+        a = json.loads(path.read_text())
+        if a.get('run_id') == combo['run_id']:
+            audits.append({k: a.get(k) for k in ('started_at', 'finished_at', 'launcher_status', 'runtime', 'slurm_job_id', 'slurm_array_task_id', 'hostname', 'held_out_test_loaded')})
+    item['launcher_audits'] = audits
+    report['runs'].append(item)
+print(json.dumps(report, indent=2))
+PY
+for f in "$ROOT"/logs/slurm-*.out; do
+  [ -f "$f" ] || continue
+  printf '\nLOG %s\n' "$f"
+  tail -n 10 "$f"
+done
+for f in "$ROOT"/logs/slurm-*.err; do
+  [ -s "$f" ] || continue
+  printf '\nSTDERR %s\n' "$f"
+  tail -n 12 "$f"
+done
