@@ -1,0 +1,75 @@
+### channel=kalmannet-tukf09-455 seq=138
+### host=login4
+### started=2026-09-07T17:19:17+0800
+### ---------- output ----------
+TIME=2026-09-07T17:19:17+0800  PROBE_JOB_ID=223628
+     JobID        State ExitCode    Elapsed  NodeList                Start                  End 
+---------- ------------ -------- ---------- --------- -------------------- -------------------- 
+    223628    COMPLETED      0:0   00:00:01    ngu201  2026-09-07T17:15:53  2026-09-07T17:15:54 
+=== probe stdout ===
+HOST=ngu201  JOB=223628  START=2026-09-07T17:15:54+0800
+SLURM_JOB_GPUS=6  SLURM_STEP_GPUS=  CUDA_VISIBLE_DEVICES=6
+SLURM_CPUS_ON_NODE=4  SLURM_CPUS_PER_TASK=4  SLURM_JOB_CPUS_PER_NODE=4  SLURM_MEM_PER_NODE=
+nproc=64  taskset=0-63
+=== nvidia-smi -L (cards this job can see) ===
+GPU 0: NVIDIA A800-SXM4-80GB (UUID: GPU-611fb575-b571-2134-d202-ac44b14cb625)
+GPU 1: NVIDIA A800-SXM4-80GB (UUID: GPU-801d0404-2229-1be6-24c8-215552b4f4c0)
+GPU 2: NVIDIA A800-SXM4-80GB (UUID: GPU-9f2cca14-2e1b-7ba0-cf08-9a44d5382122)
+GPU 3: NVIDIA A800-SXM4-80GB (UUID: GPU-b861fe1d-857a-a7b7-908e-cc8f4fd2182e)
+GPU 4: NVIDIA A800-SXM4-80GB (UUID: GPU-79565384-56f0-2aa0-45a3-83af2164ebc0)
+GPU 5: NVIDIA A800-SXM4-80GB (UUID: GPU-bf2b8e45-0c41-0cbc-cbb7-9d9e7d59858b)
+GPU 6: NVIDIA A800-SXM4-80GB (UUID: GPU-c4c6c4d2-6aff-134c-69e9-bd6774e0ae26)
+GPU 7: NVIDIA A800-SXM4-80GB (UUID: GPU-9a549ddb-00b0-58aa-7b63-01955b652044)
+VISIBLE_GPU_COUNT=8
+=== nvidia-smi pmon -c 1 (the exact table the whole-node gate reads) ===
+# gpu         pid  type    sm    mem    enc    dec    command
+# Idx           #   C/G     %      %      %      %    name
+    0      43186     C      0      0      -      -    python         
+    1      43186     C      0      0      -      -    python         
+    2      43186     C      0      0      -      -    python         
+    3       2624     C     77     36      -      -    python3        
+    4       2736     C     31      0      -      -    python3        
+    5      43186     C      0      0      -      -    python         
+    6          -     -      -      -      -      -    -              
+    7          -     -      -      -      -      -    -              
+=== compute apps by gpu ===
+gpu_uuid, pid, process_name, used_gpu_memory [MiB]
+GPU-611fb575-b571-2134-d202-ac44b14cb625, 43186, /work/venv/bin/python, 61400 MiB
+GPU-801d0404-2229-1be6-24c8-215552b4f4c0, 43186, /work/venv/bin/python, 61338 MiB
+GPU-9f2cca14-2e1b-7ba0-cf08-9a44d5382122, 43186, /work/venv/bin/python, 61338 MiB
+GPU-b861fe1d-857a-a7b7-908e-cc8f4fd2182e, 2624, /data1/home/hhu17/.conda/envs/pytorch_2.1.2_cuda_12.1/bin/python3, 17452 MiB
+GPU-79565384-56f0-2aa0-45a3-83af2164ebc0, 2736, /data1/home/hhu17/.conda/envs/pytorch_2.1.2_cuda_12.1/bin/python3, 1644 MiB
+GPU-bf2b8e45-0c41-0cbc-cbb7-9d9e7d59858b, 43186, /work/venv/bin/python, 61338 MiB
+FOREIGN_COMPUTE_PROCESS_COUNT=6
+=== other jobs on this node right now ===
+     JOBID       USER    PARTITION                 NAME    STATE  NODES TRES_PER_N
+    223628     sunyiq        hgpu8 tukf09-455-shared-pr  RUNNING      1      gpu:1
+=== cgroup device view ===
+crw-rw-rw- 1 root root 195,   0 Apr 28 14:12 /dev/nvidia0
+crw-rw-rw- 1 root root 195,   1 Apr 28 14:12 /dev/nvidia1
+crw-rw-rw- 1 root root 195,   2 Apr 28 14:12 /dev/nvidia2
+crw-rw-rw- 1 root root 195,   3 Apr 28 14:12 /dev/nvidia3
+crw-rw-rw- 1 root root 195,   4 Apr 28 14:12 /dev/nvidia4
+crw-rw-rw- 1 root root 195,   5 Apr 28 14:12 /dev/nvidia5
+crw-rw-rw- 1 root root 195,   6 Apr 28 14:12 /dev/nvidia6
+crw-rw-rw- 1 root root 195,   7 Apr 28 14:12 /dev/nvidia7
+crw-rw-rw- 1 root root 195, 255 Apr 28 14:12 /dev/nvidiactl
+crw-rw-rw- 1 root root 195, 254 Apr 28 14:12 /dev/nvidia-modeset
+crw-rw-rw- 1 root root 237,   0 Apr 28 14:12 /dev/nvidia-nvlink
+crw-rw-rw- 1 root root 236,   0 Apr 28 14:12 /dev/nvidia-nvswitch0
+11:devices:/user.slice
+10:cpuset:/
+9:hugetlb:/
+8:pids:/user.slice
+7:blkio:/
+=== memory this job may use ===
+9223372036854771712
+              total        used        free      shared  buff/cache   available
+Mem:           1007          58         383           0         565         946
+END=2026-09-07T17:15:54+0800
+TUKF09_455_SHARED_NODE_PROBE_DONE
+=== probe stderr ===
+TUKF09_455_SHARED_NODE_PROBE_READ
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T17:19:18+0800
