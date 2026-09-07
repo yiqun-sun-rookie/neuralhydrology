@@ -1,0 +1,93 @@
+### channel=kalmannet-daily-perbasin seq=57
+### host=login4
+### started=2026-09-07T17:15:09+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=57 purpose=authorized-historyfix1-first-basin-training
+DEPLOYED_51_FILE_HASH_CHECK=PASS
+{"status": "HISTORYFIX1_PROTECTED_REMOTE_INTEGRITY_PASS", "new_source_files": 51, "old_run_count": 4, "old_failed_job_id": 223514, "old_failure_preserved": true, "formal_access_count": 0}
+{"status": "OLD_RUNTIME_223532_FAILURE_PRESERVED", "frozen_text_files": 14, "all_files": 149, "original_test_support_files": 135, "synthetic_tests_started_in_old_job": 0, "synthetic_toy_updates_actual_in_old_job": 0}
+CURRENT_USER_QUEUE exit_code=0
+202229|N22-agg-eval                                                                                                                                                                                            |PENDING|
+202294|N22-export                                                                                                                                                                                              |PENDING|
+202315|N22-gate                                                                                                                                                                                                |PENDING|
+202507|N22-mask-iso-531                                                                                                                                                                                        |PENDING|
+215429|id30_m01_s100                                                                                                                                                                                           |PENDING|
+202293|N22-manifest                                                                                                                                                                                            |PENDING|
+EXACT_TARGET_NODE exit_code=0
+NodeName=ngu201 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=24 CPUTot=64 CPULoad=5.31
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   GresDrain=N/A
+   GresUsed=gpu:6,dcu:0
+   NodeAddr=ngu201 NodeHostName=ngu201 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=394934 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-04-28T14:14:25 SlurmdStartTime=2026-04-28T14:14:06
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=24
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+{"resource_rule": "one normally allocated GPU and four CPUs; MIXED permitted", "GPUCount": 8, "GPUAllocated": 6, "other_jobs_modified": 0}
+EXACT_PARTITION exit_code=0
+PartitionName=hgpu8
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[201-203]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=192 TotalNodes=3 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+{"PreemptMode": "OFF", "PreemptType": "preempt/none", "PrivateData": "jobs"}
+{"status": "OLD_RUNTIME_223573_FAILURE_AND_USED_ENGINEERING_LEDGER_PRESERVED", "old_runtime_files": 143, "scientific_updates": 0, "synthetic_updates": 0}
+ACCEPTED_RUNTIME_ACCOUNTING exit_code=0
+223590|FAILED|1:0|ngu201
+223590.batch|FAILED|1:0|ngu201
+223590.extern|COMPLETED|0:0|ngu201
+{"status": "READONLY_QUALIFIED_PREREQUISITES_RECHECKED", "original_runtime_job_id": "223590", "original_runtime_job_state": "FAILED", "qualification_sha256": "4615b06aaf8c9e323ad5695ee321e8e3dc52e1ae35e1692b252b528f4d7f9c19", "runtime_file_hashes_rechecked": 16, "all_original_empty_directory_postconditions": true, "new_scientific_training_not_yet_submitted": true}
+{"baseline_sha256": "d9950ebee4154a2e5f3bebcf9e5232f44819b1e13df0d019899606e8040d5611", "pre_submit_baseline": {"accepted_postcheck_result_sha256": "4bc816b95f33b89b6f996575ac29d5faf59b11bb8f79f2940afe936a6d87c9de", "accepted_runtime_files": {"gate_04105700.stderr": {"bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}, "gate_04105700.stdout": {"bytes": 866, "sha256": "785b2bb4eb01b6b2bde465123e4e752fe20d78c6ca7406f98a875e6ca94f099f"}, "gate_08070200.stderr": {"bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}, "gate_08070200.stdout": {"bytes": 869, "sha256": "30ddb7090c1cef673105dfedbb3d426c5c0c23317feb1b78fb7eacafae691b64"}, "gate_09035800.stderr": {"bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}, "gate_09035800.stdout": {"bytes": 868, "sha256": "122419cfa1462a3eef4634fbf9aaf5e475d3e2511513360042aa483d150cc76f"}, "history_binding_junit.xml": {"bytes": 5387, "sha256": "70921cba1e97fcb73d7b6a34a69f21338aa128770d4dba956f47a31ced6caac3"}, "history_binding_pytest.stderr": {"bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}, "history_binding_pytest.stdout": {"bytes": 1823, "sha256": "f6e416ec99358785d6c7b64f9dd4f7abe7ae6246899610dde39be6a413b949ff"}, "pre_submit_baseline.json": {"bytes": 2025, "sha256": "813d3287e02463851712ae44f66a7981b468a99510fbad4b9e2afcab6b38d48d"}, "resource_bind.py": {"bytes": 16968, "sha256": "6d67fe1b965c6af590f2cdc08a49a1d817a2d0e656926c03d76837ff4315c96b"}, "runtime_gate.sh": {"bytes": 22339, "sha256": "8909b749e16cbc7d4a9610f2f1d87b844f2052f663d2cc0579c7b1a2a0a02d08"}, "slurm-223590.stderr": {"bytes": 137, "sha256": "61b12692da340e5bd3a9adea860752fa8f6c439a6c1354bd2a7156ec7c1aa9a8"}, "slurm-223590.stdout": {"bytes": 156333, "sha256": "0d74b9756e2eac5e9538aef72ee47c6114817d02eae1313b277d89d7d8a676ae"}, "submission_receipt.json": {"bytes": 368, "sha256": "77ca770a65b15d0ceb24dee3a5aa7345ced539434fb0335619368fcca75740c9"}, "test_support/test_support_manifest.json": {"bytes": 19284, "sha256": "a3d2a9cdff2a5b2f507afd4426e60297495c3bd417f2129620a082239a44804c"}}, "accepted_runtime_job": "223590", "accepted_runtime_original_exit_code": "1:0", "accepted_runtime_original_state": "FAILED", "accepted_runtime_qualification_sha256": "4615b06aaf8c9e323ad5695ee321e8e3dc52e1ae35e1692b252b528f4d7f9c19", "accepted_runtime_qualification_verifier_sha256": "da3970ab041bfe9e69b7e6c086a108ae70c3a500ecdce8eec0d653eebe2f91e4", "accepted_runtime_result_sha256": "2deac457fe483af6e0abaf399e37aec305354616a4899ff491e753cdda9d6dd4", "archive_sha256": "737d7044e6c239d16a13d28ce1d7bd62fe8f58c6bd304ee89b3a681edc230c38", "audit_report": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_HISTORYFIX1_A800_TRAIN1_SEQ57.audit.json", "basin_id": "04105700", "before_runs": ["DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN3_SEQ13", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_A800_TRAIN1_SEQ41", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_A800_TRAIN1_SEQ18", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24"], "binding_script_sha256": "7743cd6e4d00db1db9d49f1b0688f106488fa538372f58217309355642f11feb", "configuration_sha256": "51230d30efee2683379d4a136804f347131657e3088005a3d90163ec2bc0ab14", "cpus": 4, "deployed_files": 51, "execution_id": "DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_HISTORYFIX1_A800_TRAIN1_SEQ57", "experiment_id": "DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43", "formal_evaluation_access_count": 0, "global_preemption": "OFF", "gpu_name": "NVIDIA A800-SXM4-80GB", "gpus": 1, "new_deployment_training_attempt": 1, "node": "ngu201", "node_wrapper_bytes": 5027, "node_wrapper_sha256": "b0a9f1d51853a83378e301b1d8936101b606bbd5575abd14e7d4001cd0157f76", "original_runtime_failure_preserved": true, "partition": "hgpu8", "previous_failed_training_job": 223514, "previous_failed_training_resumed": false, "recovery_requests_used": 0, "request_sequence": 57, "requeue": false, "resource_scope": "OWN_ASSIGNED_GPU_AND_CPU_SHARED_NODE", "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runs/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_HISTORYFIX1_A800_TRAIN1_SEQ57", "sealed_training_script_sha256": "f7ed33fd12a3db262f5d7f9b730fd841cd9de2f2a21d021536855f5602689bcf", "source_root": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source", "source_sha256": {"configs/tukf06_full_diagonal_search_head_to_head_v1.json": "4b19eda7cf4ce7dcd9c0940693577077d6a6faf3b18912b03178164613cac7a3", "knet/dl/nn_kalman_clamp_5.py": "934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843", "scripts/differentiable_ukf_hbvlite.py": "5d4d0fce3018aef42d6ef81ac32fa97541654f0a878c0508f5594ff2ec73c02d", "scripts/run_aligned_gr4j_da.py": "02785f2377a36454ce21127553e93c58d8c356b6f53ddbc10ee3e2f9370ec926", "scripts/run_aligned_gr4j_differentiable_ukf.py": "a8bae71dc1007c3b0502e81e50e766328202996aaf370987a347041ddde0d23f", "scripts/run_daily_camels_knet_per_basin_pilot.py": "624339220e8e25f7d5b6645450138dd725fb5066f5cbc22b18151d0cc456bc70", "scripts/tukf06_full_diagonal_common.py": "2d0ebdae9447ede8873d19032b2c5d497e8f8bff78aab7d92f1c03daa508cf02", "src/global_hydrology/assimilation/conventional_ukf.py": "2c1a17f0d48962ab8ac7c68c0ae8edaf0ad616f938a6466f0925d27ee9258c3a", "src/global_hydrology/experiments/daily_camels_knet_per_basin_checkpoint.py": "f059b14e61fb76139527bb0117448de2efc182d7970bff990657f4740fd9bb47", "src/global_hydrology/experiments/daily_camels_knet_per_basin_contract.py": "b49807d28f17aa6278f4be25497441e37d36e03a715cf15167f3aa999b1a6a77", "src/global_hydrology/experiments/daily_camels_knet_per_basin_runner.py": "770de40d8d472805515c00131c37f4852012be1e0a42b7a3aeb36689a192daa8", "src/global_hydrology/experiments/daily_camels_native_knet_io.py": "2db6c61276b4d2900321e58d04d639fecaf3957d557c4c5b5b4121fd01c3e918", "src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py": "bd70eadf8d2be311b5e623517e75f7d7b815dbde18603a219f6b1e3085223d52", "src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py": "2fd983a4af52ee02fd677e8ee51894d8208b836d6e9759b3ff2ac3a82c89ea69", "src/global_hydrology/models/differentiable_hbv_lite.py": "d7a04be86f19cddd8b9703e432fafb999a38215cb85de8983fe39a40bda0d6ea", "src/global_hydrology/models/hbvlite_system_model.py": "0d32d0f8dc656bdfbea81ba9f61eba0775ecc770d4466ff0442597d7c8d7a597", "src/global_hydrology/models/hbvlite_ukf_adapter.py": "2bf82d8ee0da909982769dd585657feed37a4ad46249f3b1fe9a72e1ccbc377a", "src/global_hydrology/models/knet_native_hbvlite_full_state.py": "3eb80fc1346a3e86170cac28fecad29951fe938193967e6a8cf6ae705edc22da"}, "state_dimension": 7, "time_limit": "12:00:00", "training_attempt": 2, "training_epochs": 80}}
+SBATCH_FIRST_BASIN_TRAINING_ONCE exit_code=0
+Submitted batch job 223629
+SUBMITTED_TRAINING_CONTROLLER_RECORD exit_code=0
+JobId=223629 JobName=kdpp-v2-train-04105700-historyfix1_seq57
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=12:00:00 TimeMin=N/A
+   SubmitTime=2026-09-07T17:16:01 EligibleTime=2026-09-07T17:16:01
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-07T17:16:01
+   Partition=hgpu8 AllocNode:Sid=login04:46471
+   ReqNodeList=ngu201 ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/train_04105700_historyfix1_seq57/train.sh
+   WorkDir=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source
+   StdErr=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_HISTORYFIX1_A800_TRAIN1_SEQ57.slurm-223629.stderr
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_HISTORYFIX1_A800_TRAIN1_SEQ57.slurm-223629.stdout
+   Power=
+   TresPerNode=gpu:1
+
+DEPLOYED_51_FILE_HASH_CHECK=PASS
+{"audit_report": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/status/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_HISTORYFIX1_A800_TRAIN1_SEQ57.audit.json", "baseline_sha256": "d9950ebee4154a2e5f3bebcf9e5232f44819b1e13df0d019899606e8040d5611", "basin_id": "04105700", "execution_id": "DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_HISTORYFIX1_A800_TRAIN1_SEQ57", "experiment_id": "DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43", "formal_evaluation_access_count": 0, "job_id": "223629", "launch_directory": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/train_04105700_historyfix1_seq57", "node": "ngu201", "node_wrapper_sha256": "b0a9f1d51853a83378e301b1d8936101b606bbd5575abd14e7d4001cd0157f76", "request_sequence": 57, "run_directory": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runs/DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_HISTORYFIX1_A800_TRAIN1_SEQ57", "status": "TRAINING_SUBMITTED_NOT_YET_VERIFIED_RUNNING", "training_submissions": 1}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T17:15:17+0800
