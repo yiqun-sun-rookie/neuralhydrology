@@ -1,0 +1,39 @@
+### channel=attrswap-daily seq=8
+### host=login4
+### started=2026-09-07T17:09:24+0800
+### ---------- output ----------
+wallclock 2026-09-07 17:09:24 +0800
+=== A. ~/neuralhydrology/data top level ===
+total 24
+drwxr-xr-x.  6 sunyiq g_sunyiq 4096 Feb  3  2026 .
+drwxr-xr-x. 32 sunyiq g_sunyiq 4096 Mar  9 17:34 ..
+drwxr-xr-x. 10 sunyiq g_sunyiq 4096 Feb  4  2026 camelsh
+drwxr-xr-x.  8 sunyiq g_sunyiq 4096 Jan 24  2026 camels_us
+drwxr-xr-x.  5 sunyiq g_sunyiq 4096 Mar 12 19:50 Caravan
+drwxr-xr-x.  4 sunyiq g_sunyiq 4096 Jan 20  2026 namou_kuwei_hourly
+=== B. caravan / era5 / haihe candidates (depth 2) ===
+/data1/home/sunyiq/neuralhydrology/data/Caravan
+/data1/home/sunyiq/neuralhydrology/data/Caravan/caravan-long-logo.png
+/data1/home/sunyiq/neuralhydrology/data/Caravan/Caravan
+/data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing
+/data1/home/sunyiq/neuralhydrology/data/camelsh/nldas2_forcing
+=== C. sizes of candidates ===
+=== D. camels_us basin_mean_forcing products ===
+daymet
+maurer
+nldas
+=== E. caravan camels subset (if present) ===
+=== F. attrswap jobs final accounting ===
+    JobID                      JobName      State ExitCode    Elapsed    CPUTime 
+--------- ---------------------------- ---------- -------- ---------- ---------- 
+   222824   attrswap_ref27_parity_s900  COMPLETED      0:0   02:04:30   16:36:00 
+   222825     attrswap_armA_chn23_s100  COMPLETED      0:0   02:01:29   16:11:52 
+   222826     attrswap_armA_chn23_s200  COMPLETED      0:0   02:01:56   16:15:28 
+   222827     attrswap_armA_chn23_s300  COMPLETED      0:0   02:03:24   16:27:12 
+   222828    attrswap_armB_drop23_s100  COMPLETED      0:0   02:01:16   16:10:08 
+   222829    attrswap_armB_drop23_s200  COMPLETED      0:0   02:03:33   16:28:24 
+   222830    attrswap_armB_drop23_s300  COMPLETED      0:0   02:01:38   16:13:04 
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T17:09:24+0800
