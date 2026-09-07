@@ -1,0 +1,60 @@
+### channel=id29-nearing2022-da seq=536
+### host=login4
+### started=2026-09-08T03:11:05+0800
+### ---------- output ----------
+=== find 219423/220487 files ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+=== slurm scripts dir ===
+analyze_warmup_target_pair.slurm
+run_author_v13_training_data_port_all531_v2.slurm
+run_author_v13_warmup_isolation_all531_v2.slurm
+run_partial_registered_results_audit_attempt2.slurm
+run_partial_registered_results_audit_seq205.slurm
+run_partial_registered_results_audit_seq223.slurm
+run_partial_registered_results_audit_seq227.slurm
+run_partial_registered_results_audit_seq231.slurm
+run_partial_registered_results_audit_seq234.slurm
+run_partial_registered_results_audit_seq245.slurm
+run_partial_registered_results_audit_seq249.slurm
+run_partial_registered_results_audit_seq271.slurm
+run_partial_registered_results_audit_seq275.slurm
+run_partial_registered_results_audit.slurm
+run_preclosure_validation.slurm
+run_registered_aggregation.slurm
+run_registered_closure_export.slurm
+run_registered_closure_manifest.slurm
+run_registered_evaluation_array.slurm
+run_registered_numerical_gate.slurm
+run_registered_training_array.slurm
+run_registered_training.slurm
+run_warmup_target_pair.slurm
+run_warmup_target_replacement_verifier.slurm
+=== grep output paths in warmpair slurm ===
+11:#SBATCH --output=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%A_%a.out
+12:#SBATCH --error=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%A_%a.err
+47:WORK="$PAIR_ROOT/.${ARM}.preparing-${SLURM_ARRAY_JOB_ID}-${SLURM_ARRAY_TASK_ID}"
+48:FINAL_WORK="$PAIR_ROOT/.${ARM}.completed-work-${SLURM_ARRAY_JOB_ID}-${SLURM_ARRAY_TASK_ID}"
+50:test ! -e "$WORK"
+51:test ! -e "$FINAL_WORK"
+107:mkdir -p "$PAIR_ROOT" "$ROOT/closure_20260810/logs"
+118:  --work-root "$WORK" \
+119:  --receipt "$WORK/preparation_receipt.json"
+121:EXECUTION_ROOT="$WORK/execution_root"
+122:TRAIN_CONFIG="$WORK/training_config.yml"
+123:TRAIN_PARENT="$WORK/training_outputs"
+159:EVAL_RUN="$WORK/evaluation_test_holdout_1.0"
+241:cp "$WORK/preparation_receipt.json" "$TRAIN_RUN/provenance/"
+242:cp "$WORK/runtime_manifest.json" "$TRAIN_RUN/provenance/"
+253:  "$PREPARE" "$SCORER" "$SELF" "$FINAL_WORK" <<'PY'
+354:mv "$WORK" "$FINAL_WORK"
+356:echo "preserved_work=$FINAL_WORK"
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T03:12:47+0800
