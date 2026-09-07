@@ -1,0 +1,151 @@
+### channel=id29-xinanjiang-transfer seq=6
+### host=login4
+### started=2026-09-07T22:00:49+0800
+### ---------- output ----------
+2026-09-07T22:00:49+0800
+JobID|JobName|State|ExitCode|Elapsed|AllocCPUS|MaxRSS|NodeList
+223694|id29-xaj-technical|COMPLETED|0:0|00:04:12|2||ngu010
+223694.batch|batch|COMPLETED|0:0|00:04:12|2|758668K|ngu010
+223694.extern|extern|COMPLETED|0:0|00:04:12|2|2176K|ngu010
+TEST_SUMMARY {'name': 'pytest', 'errors': '0', 'failures': '0', 'skipped': '0', 'tests': '42', 'time': '33.944', 'timestamp': '2026-09-07T21:55:46.339918+08:00', 'hostname': 'ngu010'}
+CANDIDATES 01144000 96
+BASIN_RESULT 01144000 {
+  "basin_id": "01144000",
+  "context_seconds": 3.9407018572092056,
+  "endpoint": {
+    "anchor": 0,
+    "evaluations": 96,
+    "failed_candidates": 0,
+    "max_candidate_seconds": 2.0470340754836798,
+    "name": "small",
+    "objective": 1.027913131820927,
+    "rho": [
+      0.00020800648269918287,
+      0.0006019226346896504,
+      0.00010000000000000009,
+      0.012593254170685254,
+      0.00010000000000000009,
+      0.0003180392433050023,
+      0.14090266185453312,
+      0.0003797638915098288
+    ]
+  },
+  "historical_nse_registered": 0.740441,
+  "historical_nse_replay": 0.7404408307501569,
+  "max_1260_seconds": 2.986178405582905,
+  "max_candidate_seconds": 2.1024485884117894,
+  "parity_max_absolute": 1.2789769243681803e-13,
+  "status": "success"
+}
+
+CANDIDATES 01435000 96
+BASIN_RESULT 01435000 {
+  "basin_id": "01435000",
+  "context_seconds": 3.9369173999875784,
+  "endpoint": {
+    "anchor": 0,
+    "evaluations": 96,
+    "failed_candidates": 0,
+    "max_candidate_seconds": 2.0696497596800327,
+    "name": "small",
+    "objective": 3.313096321071864,
+    "rho": [
+      0.00022601130455366636,
+      0.0010427551159322178,
+      0.00022131923194168175,
+      0.014001912827647258,
+      0.0012374579062062584,
+      0.0004680226382921918,
+      0.00019752443874139115,
+      0.020800400290525642
+    ]
+  },
+  "historical_nse_registered": 0.647738,
+  "historical_nse_replay": 0.6477381597801843,
+  "max_1260_seconds": 3.1118365675210953,
+  "max_candidate_seconds": 2.123824158372978,
+  "parity_max_absolute": 1.7053025658242404e-13,
+  "status": "success"
+}
+
+PILOT_SUMMARY_SHA256 f5f124944f652809dd33fbc9c0fbb9dac44bd30c3ec146cd760e1d138aa70640
+PILOT_SUMMARY {
+  "basins": [
+    {
+      "basin_id": "01144000",
+      "context_seconds": 3.9407018572092056,
+      "endpoint": {
+        "anchor": 0,
+        "evaluations": 96,
+        "failed_candidates": 0,
+        "max_candidate_seconds": 2.0470340754836798,
+        "name": "small",
+        "objective": 1.027913131820927,
+        "rho": [
+          0.00020800648269918287,
+          0.0006019226346896504,
+          0.00010000000000000009,
+          0.012593254170685254,
+          0.00010000000000000009,
+          0.0003180392433050023,
+          0.14090266185453312,
+          0.0003797638915098288
+        ]
+      },
+      "historical_nse_registered": 0.740441,
+      "historical_nse_replay": 0.7404408307501569,
+      "max_1260_seconds": 2.986178405582905,
+      "max_candidate_seconds": 2.1024485884117894,
+      "parity_max_absolute": 1.2789769243681803e-13,
+      "status": "success"
+    },
+    {
+      "basin_id": "01435000",
+      "context_seconds": 3.9369173999875784,
+      "endpoint": {
+        "anchor": 0,
+        "evaluations": 96,
+        "failed_candidates": 0,
+        "max_candidate_seconds": 2.0696497596800327,
+        "name": "small",
+        "objective": 3.313096321071864,
+        "rho": [
+          0.00022601130455366636,
+          0.0010427551159322178,
+          0.00022131923194168175,
+          0.014001912827647258,
+          0.0012374579062062584,
+          0.0004680226382921918,
+          0.00019752443874139115,
+          0.020800400290525642
+        ]
+      },
+      "historical_nse_registered": 0.647738,
+      "historical_nse_replay": 0.6477381597801843,
+      "max_1260_seconds": 3.1118365675210953,
+      "max_candidate_seconds": 2.123824158372978,
+      "parity_max_absolute": 1.7053025658242404e-13,
+      "status": "success"
+    }
+  ],
+  "estimated_seconds": {
+    "development": 7924.658851772547,
+    "receiver": 2244.533185804795,
+    "receiver_is_extrapolated": true
+  },
+  "resource_gate": true,
+  "status": "success"
+}
+
+LOG_out
+..........................................                               [100%]
+- generated xml file: /data1/home/sunyiq/id29_xinanjiang_transfer_20260907_v01/pilot-tests.xml -
+42 passed in 33.94s
+{"finished": 1, "total": 2, "basin": "01144000", "status": "success"}
+{"finished": 2, "total": 2, "basin": "01435000", "status": "success"}
+{"status": "success", "basins": [{"status": "success", "basin_id": "01144000", "parity_max_absolute": 1.2789769243681803e-13, "historical_nse_replay": 0.7404408307501569, "historical_nse_registered": 0.740441, "endpoint": {"anchor": 0, "name": "small", "rho": [0.00020800648269918287, 0.0006019226346896504, 0.00010000000000000009, 0.012593254170685254, 0.00010000000000000009, 0.0003180392433050023, 0.14090266185453312, 0.0003797638915098288], "objective": 1.027913131820927, "evaluations": 96, "failed_candidates": 0, "max_candidate_seconds": 2.0470340754836798}, "context_seconds": 3.9407018572092056, "max_candidate_seconds": 2.1024485884117894, "max_1260_seconds": 2.986178405582905}, {"status": "success", "basin_id": "01435000", "parity_max_absolute": 1.7053025658242404e-13, "historical_nse_replay": 0.6477381597801843, "historical_nse_registered": 0.647738, "endpoint": {"anchor": 0, "name": "small", "rho": [0.00022601130455366636, 0.0010427551159322178, 0.00022131923194168175, 0.014001912827647258, 0.0012374579062062584, 0.0004680226382921918, 0.00019752443874139115, 0.020800400290525642], "objective": 3.313096321071864, "evaluations": 96, "failed_candidates": 0, "max_candidate_seconds": 2.0696497596800327}, "context_seconds": 3.9369173999875784, "max_candidate_seconds": 2.123824158372978, "max_1260_seconds": 3.1118365675210953}], "estimated_seconds": {"development": 7924.658851772547, "receiver": 2244.533185804795, "receiver_is_extrapolated": true}, "resource_gate": true}
+LOG_err
+STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T22:00:49+0800
