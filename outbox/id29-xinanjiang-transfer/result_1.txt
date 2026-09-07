@@ -1,0 +1,44 @@
+### channel=id29-xinanjiang-transfer seq=1
+### host=login4
+### started=2026-09-07T21:39:21+0800
+### ---------- output ----------
+SECOND_MODEL_READONLY_RESOURCE_PROBE
+2026-09-07T21:39:21+0800
+login4
+ROOT_EXISTS=no
+DATA_EXISTS=yes
+/usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch
+PARTITION AVAIL TIMELIMIT NODES CPUS MEMORY GRES
+hcpu48* up infinite 64 48 1 (null)
+hcpu48y up infinite 12 48 1 (null)
+hgpu8 up infinite 3 64 1 gpu:8
+hgpu4 up infinite 4 96 1 gpu:4
+hgpu2 up infinite 2 96 1 gpu:2
+hgpu2p up infinite 9 32+ 1 gpu:2
+CONDA_CANDIDATES
+/data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+ENV_CANDIDATES
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/importlib/metadata/__init__.py", line 563, in from_name
+    return next(cls.discover(name=name))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "<string>", line 1, in <dictcomp>
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/importlib/metadata/__init__.py", line 1009, in version
+    return distribution(distribution_name).version
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/importlib/metadata/__init__.py", line 982, in distribution
+    return Distribution.from_name(distribution_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/importlib/metadata/__init__.py", line 565, in from_name
+    raise PackageNotFoundError(name)
+importlib.metadata.PackageNotFoundError: No package metadata was found for cma
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-07T21:39:22+0800
