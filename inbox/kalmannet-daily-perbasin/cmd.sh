@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1 PYTHONOPTIMIZE=0
-printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=63 purpose=readonly-second-basin-training-progress'
+printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=64 purpose=readonly-second-basin-training-terminal'
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B -u - <<'PY_PROGRESS'
 import datetime, hashlib, json, pathlib, re, subprocess
 
@@ -31,7 +31,7 @@ require(receipt['request_sequence'] == 62 and receipt['execution_id'] == executi
 require(receipt['submission_exit_code'] == 0 and len(receipt['job_matches']) == 1, 'submission is not unambiguous')
 job_id = receipt['job_matches'][0]
 require(isinstance(job_id, str) and re.fullmatch(r'[0-9]+', job_id), 'invalid job identifier')
-emit({'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'request_sequence': 63, 'job_id': job_id, 'execution_id': execution_id, 'submission_receipt_sha256': hashlib.sha256(receipt_bytes).hexdigest(), 'run_directory': str(run_directory)})
+emit({'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'request_sequence': 64, 'job_id': job_id, 'execution_id': execution_id, 'submission_receipt_sha256': hashlib.sha256(receipt_bytes).hexdigest(), 'run_directory': str(run_directory)})
 
 for label, args in [
     ('QUEUE', ['squeue', '-h', '-j', job_id, '-o', '%i|%j|%T|%M|%R']),
@@ -81,5 +81,5 @@ for path in [status / (execution_id + '.slurm-' + job_id + '.stdout'), status / 
         tail = stream.read(10000).decode('utf-8', errors='replace')
     emit({'section': 'LOG_TAIL', 'path': str(path), 'bytes': info.st_size, 'mtime_ns': info.st_mtime_ns, 'last_lines': tail.splitlines()[-8:]})
 
-emit({'status': 'READONLY_TRAINING_PROGRESS_OBSERVED', 'request_sequence': 63, 'job_id': job_id, 'compute_submissions': 0, 'task_file_writes': 0, 'checkpoint_content_reads': 0, 'formal_evaluation_access_count': 0})
+emit({'status': 'READONLY_TRAINING_TERMINAL_OBSERVED', 'request_sequence': 64, 'job_id': job_id, 'compute_submissions': 0, 'task_file_writes': 0, 'checkpoint_content_reads': 0, 'formal_evaluation_access_count': 0})
 PY_PROGRESS
