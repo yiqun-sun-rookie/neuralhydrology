@@ -1,16 +1,11 @@
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
 cd "$ROOT"
-for J in 219423_0 219423_1 220487; do
-  echo "=== $J ==="
-  scontrol show job "${J%%_*}" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdErr=//p' | head -1 || true
-done
-echo "=== SEARCH LOG FILES ==="
-ls -1t logs/29_nearing2022_da_ar/ 2>/dev/null | grep -E '219423|220487|warmpair|replv2' | head -20 || true
-find "$ROOT/logs" -name '*219423*' -o -name '*220487*' 2>/dev/null | head -20 || true
-echo "=== TAILS ==="
-for F in $(find "$ROOT/logs" -name '*219423*' -o -name '*220487*' 2>/dev/null | head -8); do
-  echo "--- $F ---"
-  tail -n 30 "$F" 2>/dev/null || true
-done
+echo "=== SLURM SCRIPT OUTPUT DIRECTIVES ==="
+grep -nE '^#SBATCH (--output|--error|-o |-e )' src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm 2>/dev/null || echo 'script not found by that name'
+ls -1 src/29_nearing2022_da_ar/hpc/ 2>/dev/null | grep -iE 'warm|repl' || true
+echo "=== FIND LOGS ANYWHERE ==="
+find "$ROOT" -maxdepth 4 \( -name '*219423*' -o -name '*220487*' \) 2>/dev/null | head -20 || true
+echo "=== HOME LOGS ==="
+find ~ -maxdepth 3 \( -name '*219423*' -o -name '*220487*' \) 2>/dev/null | head -20 || true
 exit 0
