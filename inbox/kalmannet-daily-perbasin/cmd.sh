@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -eo pipefail
-printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=55 purpose=readonly-original-runtime-recovery-terminal'
+printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=56 purpose=readonly-postcheck-residual-classification-no-compute'
 export PYTHONDONTWRITEBYTECODE=1 PYTHONOPTIMIZE=0
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B -u - <<'PY_COLLECT'
 import hashlib, json, os, pathlib, re, subprocess, sys, time
 root = pathlib.Path('/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901')
 source = root / 'deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source'
-sequence = 55
+sequence = 56
 sha = lambda b: hashlib.sha256(b).hexdigest()
 def require(value, message):
     if not value: raise RuntimeError(message)
@@ -131,90 +131,62 @@ def verify_old_runtime223573():
     print(json.dumps({'status':'OLD_RUNTIME_223573_FAILURE_AND_USED_ENGINEERING_LEDGER_PRESERVED','old_runtime_files':len(actual),'scientific_updates':0,'synthetic_updates':0}),flush=True)
 verify_old_runtime223573()
 
-import base64, xml.etree.ElementTree as ET
 audit=root/'node_recovery_20260907/historyfix1_runtime_attempt3_seq53'
-expected_job='223590'
-expected_baseline='813d3287e02463851712ae44f66a7981b468a99510fbad4b9e2afcab6b38d48d'
-expected_script='8909b749e16cbc7d4a9610f2f1d87b844f2052f663d2cc0579c7b1a2a0a02d08'
-expected_binding='6d67fe1b965c6af590f2cdc08a49a1d817a2d0e656926c03d76837ff4315c96b'
-require(audit.is_dir() and audit.resolve()==audit and not audit.is_symlink(),'runtime audit missing or linked')
-texts={}
-def read_text(name,expected=None):
+require(audit.is_dir() and not audit.is_symlink() and audit.resolve()==audit,'runtime audit changed')
+text_fingerprints={"pre_submit_baseline.json":{"bytes":2025,"sha256":"813d3287e02463851712ae44f66a7981b468a99510fbad4b9e2afcab6b38d48d"},"submission_receipt.json":{"bytes":368,"sha256":"77ca770a65b15d0ceb24dee3a5aa7345ced539434fb0335619368fcca75740c9"},"runtime_gate.sh":{"bytes":22339,"sha256":"8909b749e16cbc7d4a9610f2f1d87b844f2052f663d2cc0579c7b1a2a0a02d08"},"resource_bind.py":{"bytes":16968,"sha256":"6d67fe1b965c6af590f2cdc08a49a1d817a2d0e656926c03d76837ff4315c96b"},"slurm-223590.stdout":{"bytes":156333,"sha256":"0d74b9756e2eac5e9538aef72ee47c6114817d02eae1313b277d89d7d8a676ae"},"slurm-223590.stderr":{"bytes":137,"sha256":"61b12692da340e5bd3a9adea860752fa8f6c439a6c1354bd2a7156ec7c1aa9a8"},"history_binding_pytest.stdout":{"bytes":1823,"sha256":"f6e416ec99358785d6c7b64f9dd4f7abe7ae6246899610dde39be6a413b949ff"},"history_binding_pytest.stderr":{"bytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"history_binding_junit.xml":{"bytes":5387,"sha256":"70921cba1e97fcb73d7b6a34a69f21338aa128770d4dba956f47a31ced6caac3"},"test_support/test_support_manifest.json":{"bytes":19284,"sha256":"a3d2a9cdff2a5b2f507afd4426e60297495c3bd417f2129620a082239a44804c"},"gate_04105700.stdout":{"bytes":866,"sha256":"785b2bb4eb01b6b2bde465123e4e752fe20d78c6ca7406f98a875e6ca94f099f"},"gate_04105700.stderr":{"bytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"gate_08070200.stdout":{"bytes":869,"sha256":"30ddb7090c1cef673105dfedbb3d426c5c0c23317feb1b78fb7eacafae691b64"},"gate_08070200.stderr":{"bytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"gate_09035800.stdout":{"bytes":868,"sha256":"122419cfa1462a3eef4634fbf9aaf5e475d3e2511513360042aa483d150cc76f"},"gate_09035800.stderr":{"bytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}}
+for name,item in text_fingerprints.items():
     p=audit/name
-    require(p.is_file() and not p.is_symlink() and p.resolve()==p,'missing audit text '+name)
+    require(p.is_file() and not p.is_symlink(),'terminal text missing or linked')
     data=p.read_bytes()
-    require(len(data)<=4*1024**2,'text exceeds bound '+name)
-    if expected: require(sha(data)==expected,'audit text changed '+name)
-    text=data.decode('utf-8');texts[name]=text
-    print(json.dumps({'audit_file':name,'size_bytes':len(data),'sha256':sha(data),'text':text},sort_keys=True),flush=True)
-    return text
-baseline=json.loads(read_text('pre_submit_baseline.json',expected_baseline))
-receipt=json.loads(read_text('submission_receipt.json'))
-read_text('runtime_gate.sh',expected_script)
-read_text('resource_bind.py',expected_binding)
-require(baseline['request_sequence']==53 and baseline['runtime_recovery_attempt']==2 and baseline['new_build_runtime_attempt']==3 and baseline['training_submissions']==0,'runtime baseline differs')
-require(receipt['job_matches']==[expected_job] and receipt['request_sequence']==53 and receipt['submission_exit_code']==0 and receipt['baseline_sha256']==expected_baseline,'job identity differs')
+    require(len(data)==item['bytes'] and sha(data)==item['sha256'],'terminal text changed: '+name)
 ledger=root/'node_recovery_20260907/historyfix1_runtime_attempt3_seq53.json'
-ledger_bytes=ledger.read_bytes()
-require(not ledger.is_symlink() and sha(ledger_bytes)==baseline['runtime_recovery_ledger_sha256'],'fixed recovery ledger changed')
-print(json.dumps({'recovery_ledger_sha256':sha(ledger_bytes),'recovery_ledger':json.loads(ledger_bytes)},sort_keys=True),flush=True)
-queries={}
-for label,args in [('runtime_accounting',['sacct','-n','-P','-j',expected_job,'--format=JobID,JobName%80,State,ExitCode,Elapsed,NodeList,AllocCPUS,ReqCPUS']),
- ('runtime_queue',['squeue','-h','-j',expected_job,'-o','%i|%j|%T|%P|%N|%R']),
- ('runtime_controller',['scontrol','-d','show','job',expected_job]),
- ('current_user_queue',['squeue','-h','-u',str(os.getuid()),'-o','%i|%200j|%T|%N'])]:
-    q=run(args);queries[label]=q
-    print(json.dumps({'query':label,'args':args,'exit_code':q.returncode,'stdout':q.stdout.decode(),'stderr':q.stderr.decode()},sort_keys=True),flush=True)
-names=['slurm-'+expected_job+'.stdout','slurm-'+expected_job+'.stderr','history_binding_pytest.stdout','history_binding_pytest.stderr','history_binding_junit.xml','test_support/test_support_manifest.json']+[f'gate_{basin}.{stream}' for basin in ['04105700','08070200','09035800'] for stream in ['stdout','stderr']]
-for name in names:
-    if (audit/name).is_file(): read_text(name)
-    else: print(json.dumps({'audit_file':name,'exists':False}),flush=True)
-smb=(audit/'test_support/test_support_manifest.json').read_bytes()
-require(sha(smb)=='a3d2a9cdff2a5b2f507afd4426e60297495c3bd417f2129620a082239a44804c','support manifest changed')
-sm=json.loads(smb)
+require(not ledger.is_symlink() and sha(ledger.read_bytes())=='5e54e01e9a249a58593d25bbae89e7ae3f9d3f15e2f79966a575e6ee63f1d2b3','third runtime registration changed')
+q=run(['sacct','-n','-P','-j','223590','--format=JobID,State,ExitCode,Elapsed,NodeList'])
+print(json.dumps({'query':'actual_terminal_accounting','exit_code':q.returncode,'stdout':q.stdout.decode(),'stderr':q.stderr.decode()}),flush=True)
+require(q.returncode==0 and any(x.split('|')[:3]==['223590','FAILED','1:0'] for x in q.stdout.decode().splitlines()),'previous terminal state changed')
+sm=json.loads((audit/'test_support/test_support_manifest.json').read_bytes())
 sf={p.relative_to(audit/'test_support').as_posix():p for p in (audit/'test_support').rglob('*') if p.is_file()}
-require(set(sf)==set(sm['member_sha256'])|{'test_support_manifest.json'},'support file set changed')
+require(set(sf)==set(sm['member_sha256'])|{'test_support_manifest.json'},'support namespace changed')
 for name,h in sm['member_sha256'].items():
-    require(not sf[name].is_symlink() and sha(sf[name].read_bytes())==h,'support file changed '+name)
-support_archive=(audit/'isolated_pytest_support.tar.gz').read_bytes()
-require(len(support_archive)==397630 and sha(support_archive)=='4d96b1169a5ab9aa654125fc339f78baeb6f815089313889f8ffdf5829f8b034','support archive changed')
-synthetic_files=0;synthetic_bytes=0;pytest_current_links=[]
-synthetic_root=audit/'synthetic_tmp'
-for directory,dirnames,filenames in os.walk(audit,followlinks=False):
-    for name in dirnames+filenames:
-        p=pathlib.Path(directory)/name
+    require(not sf[name].is_symlink() and sha(sf[name].read_bytes())==h,'support changed')
+require(sha((audit/'isolated_pytest_support.tar.gz').read_bytes())=='4d96b1169a5ab9aa654125fc339f78baeb6f815089313889f8ffdf5829f8b034','support archive changed')
+residuals=[]
+for name in ('output_parent','tmp','cache'):
+    base=audit/name
+    require(base.is_dir() and not base.is_symlink() and base.resolve()==base,'audit residual root differs')
+    for directory,dirs,files in os.walk(base,followlinks=False):
+        for member in dirs+files:
+            p=pathlib.Path(directory)/member
+            info={'path':p.relative_to(audit).as_posix(),'mtime_ns':p.lstat().st_mtime_ns}
+            if p.is_symlink():
+                info.update(kind='symlink',target=os.readlink(p),contents_followed=False)
+            elif p.is_dir():
+                info.update(kind='directory',children=sorted(x.name for x in p.iterdir()))
+            elif p.is_file():
+                size=p.stat().st_size;info.update(kind='file',size_bytes=size)
+                if size<=32*1024**2:
+                    data=p.read_bytes();info['sha256']=sha(data)
+                    if p.suffix in {'.py','.json','.txt','.log'} and size<=4096:
+                        try: info['bounded_text']=data.decode('utf-8')
+                        except UnicodeDecodeError: info['utf8']=False
+                else: info['sha256_status']='NOT_READ_EXCEEDS_BOUND'
+            else: info.update(kind='other')
+            residuals.append(info)
+print(json.dumps({'post_test_residual_inventory_readonly':residuals,'residual_roots':{n:sorted(x.name for x in (audit/n).iterdir()) for n in ('output_parent','tmp','cache')}}),flush=True)
+require(not list((audit/'output_parent').iterdir()),'numeric runtime unexpectedly retained output')
+synthetic=[]
+links=[]
+base=audit/'synthetic_tmp'
+require(base.is_dir() and not base.is_symlink(),'synthetic root missing or linked')
+for directory,dirs,files in os.walk(base,followlinks=False):
+    for member in dirs+files:
+        p=pathlib.Path(directory)/member
         if p.is_symlink():
-            raw_target=os.readlink(p)
-            target=pathlib.Path(raw_target)
-            if not target.is_absolute(): target=p.parent/target
-            prefix=p.name.removesuffix('current')
-            require(p.parent==synthetic_root and p.name.startswith('test_v2_history_binding_') and p.name.endswith('current'),'unexpected linked runtime member: '+str(p))
-            require(target.parent==synthetic_root and target.name.startswith(prefix) and target.name[len(prefix):].isdigit(),'pytest current link target escapes numbered fixture directory')
-            require(target.is_dir() and not target.is_symlink() and target.resolve()==target,'pytest current link target invalid')
-            pytest_current_links.append({'path':p.relative_to(audit).as_posix(),'target':raw_target,'target_relative':target.relative_to(audit).as_posix(),'followed_for_contents':False})
-            continue
-        if p.is_file() and 'synthetic_tmp' in p.relative_to(audit).parts:
-            synthetic_files+=1;synthetic_bytes+=p.stat().st_size
-print(json.dumps({'support_integrity':'PASS','support_files':len(sf),'synthetic_inventory_metadata_only':{'files':synthetic_files,'bytes':synthetic_bytes},'pytest_current_links_metadata_only':pytest_current_links,'synthetic_checkpoint_contents_returned':0}),flush=True)
+            links.append({'path':p.relative_to(audit).as_posix(),'target':os.readlink(p)})
+        elif p.is_file():
+            synthetic.append({'path':p.relative_to(audit).as_posix(),'size_bytes':p.stat().st_size,'mtime_ns':p.stat().st_mtime_ns})
+require(len(synthetic)==1338 and sum(x['size_bytes'] for x in synthetic)==56767998,'synthetic terminal inventory totals changed')
+print(json.dumps({'synthetic_terminal_file_metadata_only':synthetic,'synthetic_link_metadata_only':links,'synthetic_checkpoint_contents_returned':0}),flush=True)
 require(preserved_snapshot()==json.loads((source.parent/'pre_deploy_preserved_snapshot.json').read_text()),'old protected state changed')
-require(not any((audit/'output_parent').iterdir()),'nontraining output parent not empty')
-rows=[line.split('|') for line in queries['runtime_accounting'].stdout.decode().splitlines() if line.strip()]
-main=[row for row in rows if row[0]==expected_job]
-stdout=texts.get('slurm-'+expected_job+'.stdout','')
-objs=[]
-for line in stdout.splitlines():
-    if line.startswith('{'):
-        try: objs.append(json.loads(line))
-        except json.JSONDecodeError: pass
-cases=[]
-if 'history_binding_junit.xml' in texts:
-    cases=list(ET.fromstring(texts['history_binding_junit.xml']).iter('testcase'))
-print(json.dumps({'status':'EXACT_RUNTIME_EVIDENCE_COLLECTED_FOR_INDEPENDENT_ACCEPTANCE','request_sequence':55,'submission_sequence':53,'job_id':expected_job,
- 'accounting_main':main,'runtime_final_marker_present':'HISTORYFIX1_RUNTIME_AND_SYNTHETIC_GATE_FINISHED real_gpu_optimizer_steps=0 cpu_toy_optimizer_updates=405 scientific_training_submissions=0' in stdout,
- 'resource_binding':[o for o in objs if o.get('status') in ['OWN_ALLOCATED_RESOURCES_BOUND','ACTUAL_ASSIGNED_GPU_AND_CPU_PASS']],
- 'synthetic_acceptance':[o for o in objs if o.get('status')=='HISTORYFIX1_SYNTHETIC_CPU_ENTRYPOINT_PASS'],
- 'junit_cases':[dict(name=x.attrib.get('name'),failure=x.find('failure') is not None,error=x.find('error') is not None,skipped=x.find('skipped') is not None) for x in cases],
- 'all_required_texts_exist':all(name in texts for name in names),'required_stderr_all_exactly_empty':all(texts.get(name) == '' for name in names if name.endswith('.stderr')),
- 'task_file_writes':0,'training_submissions':0,'runtime_submissions':0,'formal_evaluation_access_count':0},sort_keys=True),flush=True)
-
+print(json.dumps({'status':'POSTCHECK_RESIDUAL_READONLY_EVIDENCE_COMPLETE_NOT_RUNTIME_ACCEPTANCE','request_sequence':56,'job_id':'223590','terminal_texts_verified':len(text_fingerprints),'old_failure_preserved':True,'scientific_submissions':0,'compute_submissions':0,'remote_task_file_writes':0,'checkpoint_downloads':0,'formal_evaluation_access_count':0}),flush=True)
 PY_COLLECT
