@@ -1,0 +1,30 @@
+### channel=kalmannet-daily-perbasin seq=35
+### host=login4
+### started=2026-09-07T10:34:19+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=35 purpose=v2-task6-no-update-runtime-gate
+2026-09-07T10:34:19+0800
+login4
+DEPLOYED_51_FILE_HASH_CHECK=PASS
+CURRENT_USER_QUEUE exit_code=0
+202229|N22-agg-eval                                                                                                                                                                                            |PENDING|
+202294|N22-export                                                                                                                                                                                              |PENDING|
+202315|N22-gate                                                                                                                                                                                                |PENDING|
+202507|N22-mask-iso-531                                                                                                                                                                                        |PENDING|
+215429|id30_m01_s100                                                                                                                                                                                           |PENDING|
+202293|N22-manifest                                                                                                                                                                                            |PENDING|
+related_active_job_count=0
+TARGET_NODE_STATE exit_code=0
+NODELIST|PARTITION|STATE|GRES|CPUS(A/I/O/T)|MEMORY
+ngu202|hgpu8|maint|gpu:8|0/64/0/64|1
+{"runtime_script_bytes": 2110, "runtime_script_path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/runtime_gate_audits/V2_TASK6_SEQ35/runtime_gate.sh", "runtime_script_sha256": "d8c562af153d2f61ca0e0b84f74fc5ae1c57a150b851562051b14f6a3dc66f53", "training_submissions": 0}
+SBATCH_NO_TRAINING_RUNTIME_GATE exit_code=1
+223507
+DEPLOYED_51_FILE_HASH_CHECK=PASS
+Traceback (most recent call last):
+  File "<stdin>", line 115, in <module>
+  File "<stdin>", line 7, in require
+RuntimeError: runtime allocation or job failed; no retry
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-07T10:39:11+0800
