@@ -1,17 +1,13 @@
 #!/bin/bash
-# attrswap-daily seq=8 -- READ-ONLY probe for the next experiment (forcing swap): what daily forcing products exist on the HPC.
+# attrswap-daily seq=9 -- READ-ONLY: structure of the Caravan dataset on the HPC (for the forcing-swap plan). No du/find over the whole tree.
 set -o pipefail
 date "+wallclock %F %T %z"
-echo "=== A. ~/neuralhydrology/data top level ==="
-ls -la /data1/home/sunyiq/neuralhydrology/data/ 2>&1 | head -40
-echo "=== B. caravan / era5 / haihe candidates (depth 2) ==="
-find /data1/home/sunyiq/neuralhydrology/data -maxdepth 2 \( -iname "*caravan*" -o -iname "*era5*" -o -iname "*haihe*" -o -iname "*forcing*" \) 2>/dev/null | head -30
-echo "=== C. sizes of candidates ==="
-for d in /data1/home/sunyiq/neuralhydrology/data/caravan* /data1/home/sunyiq/neuralhydrology/data/haihe* /data1/home/sunyiq/neuralhydrology/data/*era5*; do [ -e "$d" ] && du -sh "$d" 2>/dev/null; done
-echo "=== D. camels_us basin_mean_forcing products ==="
-ls /data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/ 2>&1
-echo "=== E. caravan camels subset (if present) ==="
-for d in /data1/home/sunyiq/neuralhydrology/data/caravan*; do [ -d "$d" ] && { find "$d" -maxdepth 3 -type d | head -20; find "$d" -maxdepth 4 -type f -name "*.csv" | head -3; find "$d" -maxdepth 4 -type f -name "*camels*" | head -5; }; done
-echo "=== F. attrswap jobs final accounting ==="
-sacct -j 222824,222825,222826,222827,222828,222829,222830 -X --format=JobID%9,JobName%28,State%10,ExitCode%8,Elapsed%10,CPUTime%10 2>&1
+C=/data1/home/sunyiq/neuralhydrology/data/Caravan/Caravan
+echo "=== A. top ==="; ls -la "$C" 2>&1 | head -20
+echo "=== B. subsets ==="; ls "$C/timeseries/csv" 2>&1 | head -20; ls "$C/attributes" 2>&1 | head -20
+echo "=== C. camels subset ==="; n=$(ls "$C/timeseries/csv/camels" 2>/dev/null | wc -l); echo "camels csv files: $n"; ls "$C/timeseries/csv/camels" 2>/dev/null | head -3
+echo "=== D. sample header + first/last rows ==="; f=$(ls "$C/timeseries/csv/camels"/*.csv 2>/dev/null | head -1); echo "$f"; head -2 "$f" 2>/dev/null | cut -c1-1500; echo "..."; tail -1 "$f" 2>/dev/null | cut -c1-200; echo "rows: $(wc -l < "$f" 2>/dev/null)"
+echo "=== E. attributes files ==="; ls -la "$C/attributes/camels" 2>&1 | head; head -1 "$C/attributes/camels/attributes_other_camels.csv" 2>/dev/null | cut -c1-400
+echo "=== F. readme / version ==="; ls "$C"/*.md "$C"/*.txt 2>/dev/null; head -30 "$C"/README* 2>/dev/null | grep -iE "version|v1\.|era5|release|caravan" | head -8
+echo "=== G. netcdf present? ==="; ls "$C/timeseries" 2>&1; ls "$C/timeseries/netcdf/camels" 2>/dev/null | head -2
 echo "=== DONE ==="
