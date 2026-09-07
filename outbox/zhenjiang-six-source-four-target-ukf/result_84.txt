@@ -1,0 +1,20 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=84
+### host=login4
+### started=2026-09-07T23:01:09+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 13, in <module>
+  File "<frozen runpy>", line 291, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/data1/home/sunyiq/hpc_mailbox/inbox/zhenjiang-six-source-four-target-ukf/payload/matched_legacy_20260907_release_001/hpc_deployment.py", line 427, in <module>
+    main()
+  File "/data1/home/sunyiq/hpc_mailbox/inbox/zhenjiang-six-source-four-target-ukf/payload/matched_legacy_20260907_release_001/hpc_deployment.py", line 416, in main
+    print(json.dumps(_deploy_to_root(root, read_regular(args.archive), manifest)))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/hpc_mailbox/inbox/zhenjiang-six-source-four-target-ukf/payload/matched_legacy_20260907_release_001/hpc_deployment.py", line 328, in _deploy_to_root
+    raise RuntimeError('submission response invalid; uncertain; never resubmit')
+RuntimeError: submission response invalid; uncertain; never resubmit
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-07T23:01:11+0800
