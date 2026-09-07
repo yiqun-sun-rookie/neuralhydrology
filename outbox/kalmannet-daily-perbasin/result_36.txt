@@ -1,0 +1,48 @@
+### channel=kalmannet-daily-perbasin seq=36
+### host=login4
+### started=2026-09-07T10:42:53+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=36 purpose=task6-readonly-failed-allocation-and-maintenance
+2026-09-07T10:42:53+0800
+login4
+training_submissions=0 runtime_submissions=0 task_file_writes=0 signals_sent=0 formal_evaluation_access=0
+=== EXACT FAILED RUNTIME JOB ACCOUNTING ===
+223507|kdpp-v2-runtime-seq35|DEADLINE|1:0|2026-09-07T10:35:04|2026-09-07T10:35:04|2026-09-07T10:39:51|2026-09-07T10:39:51|00:00:00|None assigned||ReqNodeNotAvail
+sacct_exit_code=0
+=== EXACT JOB CONTROLLER RECORD ===
+slurm_load_jobs error: Invalid job id specified
+scontrol_job_exit_code=1
+=== REGISTERED NODE RECORD ===
+NodeName=ngu202 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=0 CPUTot=64 CPULoad=0.10
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu202 NodeHostName=ngu202 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=680499 Sockets=2 Boards=1
+   State=MAINT ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-01-22T14:56:32 SlurmdStartTime=2026-01-22T15:10:38
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+scontrol_node_exit_code=0
+=== REGISTERED NODE STATE AND REASON ===
+NODELIST|PARTITION|STATE|GRES|CPUS(A/I/O/T)|MEMORY|REASON
+ngu202|hgpu8|maint|gpu:8|0/64/0/64|1|none
+REASON               USER      TIMESTAMP           NODELIST
+=== CURRENT RELATED JOBS ===
+=== FAILED REQUEST OUTPUT METADATA ONLY ===
+d|cache|4096
+d|output_parent|4096
+d|tmp|4096
+f|runtime_gate.sh|2110
+READONLY_JOB_AND_MAINTENANCE_QUERY_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T10:42:55+0800
