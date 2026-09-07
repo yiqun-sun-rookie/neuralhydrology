@@ -1,0 +1,18 @@
+### channel=kalmannet-daily-perbasin seq=37
+### host=login4
+### started=2026-09-07T10:55:24+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=37 purpose=readonly-maint-flag-reservation-diagnosis
+2026-09-07T10:55:24+0800
+login4
+training_submissions=0 runtime_submissions=0 task_file_writes=0 signals_sent=0 formal_evaluation_access=0
+{"query": "exact_node", "exit_code": 0, "stdout": "NodeName=ngu202 Arch=x86_64 CoresPerSocket=16 \n   CPUAlloc=0 CPUTot=64 CPULoad=0.06\n   AvailableFeatures=(null)\n   ActiveFeatures=(null)\n   Gres=gpu:8\n   NodeAddr=ngu202 NodeHostName=ngu202 Version=19.05.4\n   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 \n   RealMemory=1 AllocMem=0 FreeMem=680496 Sockets=2 Boards=1\n   State=MAINT ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A\n   Partitions=hgpu8 \n   BootTime=2026-01-22T14:56:32 SlurmdStartTime=2026-01-22T15:10:38\n   CfgTRES=cpu=64,mem=1M,billing=64\n   AllocTRES=\n   CapWatts=n/a\n   CurrentWatts=0 AveWatts=0\n   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s\n   \n\n", "stderr": ""}
+{"query": "node_state_reservation_name_reason", "exit_code": 0, "stdout": "ngu202|hgpu8|maint|%i|none\n", "stderr": "Invalid node format specification: i\n"}
+{"query": "reservation_inventory_status_only", "exit_code": 0, "stderr": ""}
+{"query": "reservation_covering_exact_node", "record": "ReservationName=hhu08_74 StartTime=2026-09-06T09:29:57 EndTime=2027-09-06T09:29:57 Duration=365-00:00:00 Nodes=ngu202 NodeCnt=1 CoreCnt=32 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES TRES=cpu=64 Users=hhu08 Accounts=(null) Licenses=(null) State=ACTIVE BurstBuffer=(null) Watts=n/a"}
+{"matching_reservation_count": 1}
+{"query": "own_jobs_on_exact_node", "exit_code": 0, "stdout": "", "stderr": ""}
+READONLY_MAINT_RESERVATION_DIAGNOSIS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T10:55:25+0800
