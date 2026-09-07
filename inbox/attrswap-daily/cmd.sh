@@ -1,13 +1,19 @@
 #!/bin/bash
-# attrswap-daily seq=9 -- READ-ONLY: structure of the Caravan dataset on the HPC (for the forcing-swap plan). No du/find over the whole tree.
+# attrswap-daily seq=10 -- READ-ONLY: Caravan camels coverage of our 529 basins, variables, dates. Light header reads only.
 set -o pipefail
 date "+wallclock %F %T %z"
-C=/data1/home/sunyiq/neuralhydrology/data/Caravan/Caravan
-echo "=== A. top ==="; ls -la "$C" 2>&1 | head -20
-echo "=== B. subsets ==="; ls "$C/timeseries/csv" 2>&1 | head -20; ls "$C/attributes" 2>&1 | head -20
-echo "=== C. camels subset ==="; n=$(ls "$C/timeseries/csv/camels" 2>/dev/null | wc -l); echo "camels csv files: $n"; ls "$C/timeseries/csv/camels" 2>/dev/null | head -3
-echo "=== D. sample header + first/last rows ==="; f=$(ls "$C/timeseries/csv/camels"/*.csv 2>/dev/null | head -1); echo "$f"; head -2 "$f" 2>/dev/null | cut -c1-1500; echo "..."; tail -1 "$f" 2>/dev/null | cut -c1-200; echo "rows: $(wc -l < "$f" 2>/dev/null)"
-echo "=== E. attributes files ==="; ls -la "$C/attributes/camels" 2>&1 | head; head -1 "$C/attributes/camels/attributes_other_camels.csv" 2>/dev/null | cut -c1-400
-echo "=== F. readme / version ==="; ls "$C"/*.md "$C"/*.txt 2>/dev/null; head -30 "$C"/README* 2>/dev/null | grep -iE "version|v1\.|era5|release|caravan" | head -8
-echo "=== G. netcdf present? ==="; ls "$C/timeseries" 2>&1; ls "$C/timeseries/netcdf/camels" 2>/dev/null | head -2
+C=/data1/home/sunyiq/neuralhydrology/data/Caravan
+B=/data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+echo "=== A. counts ==="; echo "camels nc files: $(ls $C/timeseries/netcdf/camels 2>/dev/null | wc -l)"
+for f in 531_basin_list.txt all_basins.txt camels_clean_basins.txt valid_basins.txt; do echo "$f: $(wc -l < $C/$f) lines; head: $(head -2 $C/$f | tr '\n' ' ')"; done
+echo "=== B. coverage of our 529 ==="; have=0; miss=""; while read b; do [ -z "$b" ] && continue; if [ -f "$C/timeseries/netcdf/camels/camels_${b}.nc" ]; then have=$((have+1)); else miss="$miss $b"; fi; done < "$B"; echo "present: $have / 529"; echo "missing:$miss" | head -c 600; echo
+echo "=== C. variables + dates of one file (nh_final python, header only) ==="
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null; conda activate nh_final 2>/dev/null
+python - <<'PY' 2>&1 | head -60
+import xarray as xr
+ds = xr.open_dataset('/data1/home/sunyiq/neuralhydrology/data/Caravan/timeseries/netcdf/camels/camels_01013500.nc')
+print('dims', dict(ds.sizes)); print('date', str(ds.date.values[0])[:10], '->', str(ds.date.values[-1])[:10])
+for v in ds.data_vars: print(v, ds[v].attrs.get('unit', ds[v].attrs.get('units', '')), '|', float(ds[v].isel(date=slice(0,3650)).mean()) if ds[v].dtype.kind=='f' else '')
+PY
+echo "=== D. attributes_other head (area/lat) ==="; head -3 $C/attributes/camels/attributes_other_camels.csv | cut -c1-300
 echo "=== DONE ==="
