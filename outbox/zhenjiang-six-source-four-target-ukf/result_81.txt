@@ -1,0 +1,31 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=81
+### host=login4
+### started=2026-09-07T12:01:39+0800
+### ---------- output ----------
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: contracts/paid_execution_authorization.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: contracts/stage_b_data_authorization.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: contracts/stage_b_execution_contract.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/docs/records/zhenjiang_stage_b_20260907_001_task1_final_approval.md: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/analysis/zhenjiang_five_source_five_target_single_analysis_contract_v2.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/astronomical_tide/wusongkou_astronomical_tide_realtime_v2.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/hpc/zhenjiang_five_source_five_target_stage_b_v2.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/hpc/zhenjiang_stage_b_hpc_v2.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/modeling/run_zhenjiang_five_source_five_target_stage_a_v2.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/modeling/run_zhenjiang_five_source_five_target_stage_b_v2.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/modeling/train_zhenjiang_five_source_five_target_d32_gru_v2.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/modeling/zhenjiang_five_source_five_target_d32_gru_v2.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/modeling/zhenjiang_five_source_five_target_data_v2.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/modeling/zhenjiang_five_source_five_target_single_analysis_runner_v2.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/modeling/zhenjiang_five_source_five_target_single_analysis_training_v2.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/scripts/modeling/zhenjiang_five_source_five_target_single_analysis_ukf_v2.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/third_party/pytides/astro.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/third_party/pytides/constituent.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/third_party/pytides/nodal_corrections.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: run/third_party/pytides/tide.py: implausibly old time stamp 1970-01-01 08:00:00
+{"archive_sha256": "1b6cab247e8e54994cff7c92d4825dca52aff603ec566602368eed894f2a3a4d", "manifest_sha256": "ed5850dd8239a1fe36e3e6ce9b490b65133bd0fc8121809bb787167db75d68ec", "member_count": 21}
+Submitted batch job 223517
+223517|z5s5t-b-v2|PENDING|hgpu2p|0:00|(None)|/data1/home/sunyiq/hpc_mailbox
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T12:01:44+0800
