@@ -1,0 +1,137 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=85
+### host=login4
+### started=2026-09-07T23:12:14+0800
+### ---------- output ----------
+READ_ONLY_MATCHED_EVIDENCE
+{
+  "checkpoint_reads_by_query": 0,
+  "execution_contract_sha256": "d52fea4d1400fa00a78d9842cc1cf38e292bd31dfc98e19ab8529d1c62234de1",
+  "filesystem_writes_by_query": 0,
+  "finished_at_utc": "2026-09-07T15:12:15.123146Z",
+  "job_identity_status": "unverified_no_scheduler_or_log_query",
+  "job_ids_from_raw_return_or_fixed_root_log_names": [],
+  "kind": "read_only_matched_submission_uncertainty",
+  "metadata": {
+    "app/artifacts/seed_17/completion_manifest.json": {
+      "status": "absent"
+    },
+    "app/artifacts/seed_17/environment_manifest.json": {
+      "status": "absent"
+    },
+    "app/artifacts/seed_29/completion_manifest.json": {
+      "status": "absent"
+    },
+    "app/artifacts/seed_29/environment_manifest.json": {
+      "status": "absent"
+    },
+    "app/artifacts/seed_43/completion_manifest.json": {
+      "status": "absent"
+    },
+    "app/artifacts/seed_43/environment_manifest.json": {
+      "status": "absent"
+    },
+    "evidence/deployment_verified.json": {
+      "byte_count": 429,
+      "sha256": "309e370983a7552683ed215a00a63e6a83c62828cc4ae02ee04c279efac030d6",
+      "status": "read",
+      "value": {
+        "archive": {
+          "byte_count": 80534,
+          "sha256": "daaa9fcadfddf02a124f5ee26048688b1160f385d976a06f641e326a6f371904"
+        },
+        "execution_contract_sha256": "d52fea4d1400fa00a78d9842cc1cf38e292bd31dfc98e19ab8529d1c62234de1",
+        "manifest": {
+          "byte_count": 4019,
+          "sha256": "779c0964542c561ff6cb6fc160d2999cbc3ef0e6fbf99efac71d0cf886819e30"
+        },
+        "schema_version": 1,
+        "verified_at_utc": "2026-09-07T15:01:11.778592Z"
+      }
+    },
+    "evidence/job_attempt_001/completion_receipt.json": {
+      "status": "absent"
+    },
+    "evidence/job_attempt_001/started.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_17/attempt_started.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_17/completion_receipt.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_17/failure.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_29/attempt_started.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_29/completion_receipt.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_29/failure.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_43/attempt_started.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_43/completion_receipt.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_43/failure.json": {
+      "status": "absent"
+    },
+    "evidence/submission_attempt_001.json": {
+      "byte_count": 396,
+      "sha256": "41971126521878d74a52cf7c22590c40391a31449d5d5e3f304972ac90202961",
+      "status": "read",
+      "value": {
+        "attempt_number": 1,
+        "execution_contract_sha256": "d52fea4d1400fa00a78d9842cc1cf38e292bd31dfc98e19ab8529d1c62234de1",
+        "reserved_at_utc": "2026-09-07T15:01:11.782236Z",
+        "schema_version": 1,
+        "script": "/data1/home/sunyiq/zhenjiang_matched_legacy_process_20260907_001/hpc/matched_legacy.slurm",
+        "status": "reserved",
+        "wrapper": "/usr/local/globle/softs/slurm/19.05.4.1/bin/xbatch"
+      }
+    },
+    "evidence/submission_outcome.json": {
+      "byte_count": 90,
+      "sha256": "ee225ee763abb86c9256402a78f3f990d93c1165bc6c92c97429a98af5985123",
+      "status": "read",
+      "value": {
+        "at_utc": "2026-09-07T15:01:11.813958Z",
+        "returncode": 0,
+        "status": "uncertain"
+      }
+    },
+    "evidence/submission_receipt.json": {
+      "status": "absent"
+    }
+  },
+  "new_formal_data_reads_by_query": 0,
+  "new_root_log_names": [],
+  "observed_at_utc": "2026-09-07T15:12:15.006203Z",
+  "raw_submission_return": {
+    "submission_stderr.bin": {
+      "byte_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "read",
+      "text": ""
+    },
+    "submission_stdout.bin": {
+      "byte_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "read",
+      "text": ""
+    }
+  },
+  "root": "/data1/home/sunyiq/zhenjiang_matched_legacy_process_20260907_001",
+  "schema_version": 1,
+  "usage_ledger": {
+    "status": "absent"
+  }
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T23:12:15+0800
