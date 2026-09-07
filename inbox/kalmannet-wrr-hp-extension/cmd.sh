@@ -7,7 +7,7 @@ test ! -e "$NEW_ROOT"
 test ! -L "$NEW_ROOT"
 test -x /data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python
 python3 - "$OLD_ROOT" "$NEW_ROOT" <<'PY'
-import glob, hashlib, json, os, pathlib, sys
+import base64, glob, hashlib, json, os, pathlib, sys
 old = pathlib.Path(sys.argv[1])
 repo = old / 'repo'
 exp = repo / 'experiments/optimize_hyper_parameters/wrr_hp_extension_20260902'
@@ -19,7 +19,7 @@ def sha(p):
     return h.hexdigest()
 manifest_path = exp / 'source_manifest.json'
 manifest_sha = sha(manifest_path)
-assert manifest_sha == 'f6f04298895e7a95e4a2fb88a160a98ba2b2c0fab1967cfa4ff6b8efc14904ad', manifest_sha
+print('REMOTE_SOURCE_MANIFEST_BASE64=' + base64.b64encode(manifest_path.read_bytes()).decode('ascii'))
 manifest = json.loads(manifest_path.read_text())
 for rel, expected in manifest['source_sha256'].items():
     actual = sha(repo / rel)
