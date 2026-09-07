@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -eo pipefail
-printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=54 purpose=readonly-original-runtime-recovery-terminal'
+printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=55 purpose=readonly-original-runtime-recovery-terminal'
 export PYTHONDONTWRITEBYTECODE=1 PYTHONOPTIMIZE=0
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B -u - <<'PY_COLLECT'
 import hashlib, json, os, pathlib, re, subprocess, sys, time
 root = pathlib.Path('/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901')
 source = root / 'deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source'
-sequence = 54
+sequence = 55
 sha = lambda b: hashlib.sha256(b).hexdigest()
 def require(value, message):
     if not value: raise RuntimeError(message)
@@ -178,12 +178,24 @@ for name,h in sm['member_sha256'].items():
     require(not sf[name].is_symlink() and sha(sf[name].read_bytes())==h,'support file changed '+name)
 support_archive=(audit/'isolated_pytest_support.tar.gz').read_bytes()
 require(len(support_archive)==397630 and sha(support_archive)=='4d96b1169a5ab9aa654125fc339f78baeb6f815089313889f8ffdf5829f8b034','support archive changed')
-synthetic_files=0;synthetic_bytes=0
-for p in audit.rglob('*'):
-    require(not p.is_symlink(),'linked runtime member')
-    if p.is_file() and 'synthetic_tmp' in p.relative_to(audit).parts:
-        synthetic_files+=1;synthetic_bytes+=p.stat().st_size
-print(json.dumps({'support_integrity':'PASS','support_files':len(sf),'synthetic_inventory_metadata_only':{'files':synthetic_files,'bytes':synthetic_bytes},'synthetic_checkpoint_contents_returned':0}),flush=True)
+synthetic_files=0;synthetic_bytes=0;pytest_current_links=[]
+synthetic_root=audit/'synthetic_tmp'
+for directory,dirnames,filenames in os.walk(audit,followlinks=False):
+    for name in dirnames+filenames:
+        p=pathlib.Path(directory)/name
+        if p.is_symlink():
+            raw_target=os.readlink(p)
+            target=pathlib.Path(raw_target)
+            if not target.is_absolute(): target=p.parent/target
+            prefix=p.name.removesuffix('current')
+            require(p.parent==synthetic_root and p.name.startswith('test_v2_history_binding_') and p.name.endswith('current'),'unexpected linked runtime member: '+str(p))
+            require(target.parent==synthetic_root and target.name.startswith(prefix) and target.name[len(prefix):].isdigit(),'pytest current link target escapes numbered fixture directory')
+            require(target.is_dir() and not target.is_symlink() and target.resolve()==target,'pytest current link target invalid')
+            pytest_current_links.append({'path':p.relative_to(audit).as_posix(),'target':raw_target,'target_relative':target.relative_to(audit).as_posix(),'followed_for_contents':False})
+            continue
+        if p.is_file() and 'synthetic_tmp' in p.relative_to(audit).parts:
+            synthetic_files+=1;synthetic_bytes+=p.stat().st_size
+print(json.dumps({'support_integrity':'PASS','support_files':len(sf),'synthetic_inventory_metadata_only':{'files':synthetic_files,'bytes':synthetic_bytes},'pytest_current_links_metadata_only':pytest_current_links,'synthetic_checkpoint_contents_returned':0}),flush=True)
 require(preserved_snapshot()==json.loads((source.parent/'pre_deploy_preserved_snapshot.json').read_text()),'old protected state changed')
 require(not any((audit/'output_parent').iterdir()),'nontraining output parent not empty')
 rows=[line.split('|') for line in queries['runtime_accounting'].stdout.decode().splitlines() if line.strip()]
@@ -197,7 +209,7 @@ for line in stdout.splitlines():
 cases=[]
 if 'history_binding_junit.xml' in texts:
     cases=list(ET.fromstring(texts['history_binding_junit.xml']).iter('testcase'))
-print(json.dumps({'status':'EXACT_RUNTIME_EVIDENCE_COLLECTED_FOR_INDEPENDENT_ACCEPTANCE','request_sequence':54,'submission_sequence':53,'job_id':expected_job,
+print(json.dumps({'status':'EXACT_RUNTIME_EVIDENCE_COLLECTED_FOR_INDEPENDENT_ACCEPTANCE','request_sequence':55,'submission_sequence':53,'job_id':expected_job,
  'accounting_main':main,'runtime_final_marker_present':'HISTORYFIX1_RUNTIME_AND_SYNTHETIC_GATE_FINISHED real_gpu_optimizer_steps=0 cpu_toy_optimizer_updates=405 scientific_training_submissions=0' in stdout,
  'resource_binding':[o for o in objs if o.get('status') in ['OWN_ALLOCATED_RESOURCES_BOUND','ACTUAL_ASSIGNED_GPU_AND_CPU_PASS']],
  'synthetic_acceptance':[o for o in objs if o.get('status')=='HISTORYFIX1_SYNTHETIC_CPU_ENTRYPOINT_PASS'],
