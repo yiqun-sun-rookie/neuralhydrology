@@ -1,0 +1,24 @@
+{
+  "execution_contract_sha256": "d52fea4d1400fa00a78d9842cc1cf38e292bd31dfc98e19ab8529d1c62234de1",
+  "files": {
+    "bundle_manifest.json": {
+      "byte_count": 4019,
+      "sha256": "779c0964542c561ff6cb6fc160d2999cbc3ef0e6fbf99efac71d0cf886819e30"
+    },
+    "cmd.sh": {
+      "byte_count": 1298,
+      "sha256": "e8af4dcaf3bf98e47173d15772cd0ccbaf0951b3cf81d6bebd1c251ff8e0eaa8"
+    },
+    "code.tar.gz": {
+      "byte_count": 80534,
+      "sha256": "daaa9fcadfddf02a124f5ee26048688b1160f385d976a06f641e326a6f371904"
+    },
+    "hpc_deployment.py": {
+      "byte_count": 20659,
+      "sha256": "21cb55180b10a84798e40fdfa5a1b1806129c68ce31cba8923399cbc3d1bc50e"
+    }
+  },
+  "kind": "deployment",
+  "schema_version": 1,
+  "version": "matched_legacy_20260907_release_001"
+}
