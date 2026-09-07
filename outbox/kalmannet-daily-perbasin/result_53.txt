@@ -1,0 +1,101 @@
+### channel=kalmannet-daily-perbasin seq=53
+### host=login4
+### started=2026-09-07T16:17:47+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=53 purpose=historyfix1-fresh-runtime-and-synthetic-entrypoint-no-scientific-training
+2026-09-07T16:17:47+0800
+login4
+DEPLOYED_51_FILE_HASH_CHECK=PASS
+{"status": "HISTORYFIX1_PROTECTED_REMOTE_INTEGRITY_PASS", "new_source_files": 51, "old_run_count": 4, "old_failed_job_id": 223514, "old_failure_preserved": true, "formal_access_count": 0}
+{"status": "OLD_RUNTIME_223532_FAILURE_PRESERVED", "frozen_text_files": 14, "all_files": 149, "original_test_support_files": 135, "synthetic_tests_started_in_old_job": 0, "synthetic_toy_updates_actual_in_old_job": 0}
+{"status": "OLD_RUNTIME_223573_FAILURE_AND_USED_ENGINEERING_LEDGER_PRESERVED", "old_runtime_files": 143, "scientific_updates": 0, "synthetic_updates": 0}
+CURRENT_USER_QUEUE exit_code=0
+202229|N22-agg-eval                                                                                                                                                                                            |PENDING|
+202294|N22-export                                                                                                                                                                                              |PENDING|
+202315|N22-gate                                                                                                                                                                                                |PENDING|
+202507|N22-mask-iso-531                                                                                                                                                                                        |PENDING|
+215429|id30_m01_s100                                                                                                                                                                                           |PENDING|
+202293|N22-manifest                                                                                                                                                                                            |PENDING|
+EXACT_TARGET_NODE exit_code=0
+NodeName=ngu201 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=32 CPUTot=64 CPULoad=5.69
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   GresDrain=N/A
+   GresUsed=gpu:7,dcu:0
+   NodeAddr=ngu201 NodeHostName=ngu201 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=391965 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-04-28T14:14:25 SlurmdStartTime=2026-04-28T14:14:06
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=32
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+{"resource_rule": "one normally allocated GPU and four CPUs; MIXED permitted", "GPUCount": 8, "GPUAllocated": 7, "other_jobs_modified": 0}
+EXACT_PARTITION exit_code=0
+PartitionName=hgpu8
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[201-203]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=192 TotalNodes=3 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+{"PreemptMode": "OFF", "PreemptType": "preempt/none", "PrivateData": "jobs"}
+PREVIOUS_WRAPPER_FAILURE_ACCOUNTING exit_code=0
+223573|FAILED|1:0|ngu201
+223573.batch|FAILED|1:0|ngu201
+223573.extern|COMPLETED|0:0|ngu201
+ORIGINAL_FAILED_RUNTIME_ACCOUNTING exit_code=0
+223532|FAILED|1:0|ngu203
+223532.batch|FAILED|1:0|ngu203
+223532.extern|COMPLETED|0:0|ngu203
+{"status": "ISOLATED_TEST_SUPPORT_INTEGRITY_PASS", "support_files": 136, "support_manifest_sha256": "a3d2a9cdff2a5b2f507afd4426e60297495c3bd417f2129620a082239a44804c"}
+{"resource_binding_sha256": "6d67fe1b965c6af590f2cdc08a49a1d817a2d0e656926c03d76837ff4315c96b", "resource_binding_bytes": 16968}
+{"runtime_recovery_ledger": {"schema_version": "historyfix1_nontraining_engineering_continuation_v2", "new_build_runtime_attempt": 3, "engineering_continuation_number": 2, "request_sequence": 53, "previous_runtime_job_id": 223573, "previous_runtime_request": 51, "previous_runtime_state": "FAILED_1:0", "previous_failure_phase": "CPU_MAPPING_WRAPPER_BEFORE_GPU_QUERY_OR_NUMERICAL_RUNTIME", "previous_runtime_audit": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_recovery1_seq51", "original_used_engineering_ledger_sha256": "d8a743a372fdab2643f2c19a343da0ac9d76599bdafc5ca8b01bbfeae8e3da26", "previous_result52_sha256": "da884f34043392ae8f8a2fe3068ab96fa321a119b7a32e2d34c2a43d26548483", "new_runtime_audit": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_attempt3_seq53", "science_source_root": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source", "science_archive_sha256": "737d7044e6c239d16a13d28ce1d7bd62fe8f58c6bd304ee89b3a681edc230c38", "support_archive_sha256": "4d96b1169a5ab9aa654125fc339f78baeb6f815089313889f8ffdf5829f8b034", "runtime_script_sha256": "8909b749e16cbc7d4a9610f2f1d87b844f2052f663d2cc0579c7b1a2a0a02d08", "binding_script_sha256": "6d67fe1b965c6af590f2cdc08a49a1d817a2d0e656926c03d76837ff4315c96b", "minimal_repair": "actual compiled scheduler branch evidence plus proc/sysfs CPU mapping; no science or support modification", "authorization_basis": "standing explicit all/continue until actual experiment runs, independent engineering-scope audit; original used ledger preserved", "is_scientific_training_checkpoint_resume": false, "scientific_training_submissions": 0, "created_at_utc": "2026-09-07T08:17:50.363699+00:00", "on_failure": "PRESERVE_THIS_ATTEMPT_AND_CLASSIFY_FAILURE_NO_BLIND_RESUBMISSION_NO_SCIENTIFIC_RETRY"}, "recovery_ledger_sha256": "5e54e01e9a249a58593d25bbae89e7ae3f9d3f15e2f79966a575e6ee63f1d2b3", "recovery_ledger_path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_attempt3_seq53.json"}
+{"baseline_sha256": "813d3287e02463851712ae44f66a7981b468a99510fbad4b9e2afcab6b38d48d", "pre_submit_baseline": {"archive_sha256": "737d7044e6c239d16a13d28ce1d7bd62fe8f58c6bd304ee89b3a681edc230c38", "authorized_new_historyfix_execution": true, "before_runs": ["DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN3_SEQ13", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_A800_TRAIN1_SEQ41", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_A800_TRAIN1_SEQ18", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24"], "binding_script_sha256": "6d67fe1b965c6af590f2cdc08a49a1d817a2d0e656926c03d76837ff4315c96b", "deployed_files": 51, "failed_runtime_job_id": 223532, "failed_runtime_request": 44, "global_preemption": "OFF", "gpu_name": "NVIDIA A800-SXM4-80GB", "internal_manifest_sha256": "39b0539bbdc14df2f443c3e6a548952c5ba2fe28bf650cc7be5b12f8bce0ad7f", "minimal_repair": "resource wrapper only: positively identify actual Slurm CPU mapping branch and map proc/sysfs; science and support bytes unchanged", "new_build_runtime_attempt": 3, "node": "ngu201", "old_failed_training_is_not_resumed": true, "old_failed_training_job_id": 223514, "old_failure_preserved": true, "partition": "hgpu8", "request_sequence": 53, "resource_scope": "OWN_ASSIGNED_GPU_AND_CPU_SHARED_NODE", "runtime_recovery_attempt": 2, "runtime_recovery_ledger_sha256": "5e54e01e9a249a58593d25bbae89e7ae3f9d3f15e2f79966a575e6ee63f1d2b3", "runtime_script_bytes": 22339, "runtime_script_path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_attempt3_seq53/runtime_gate.sh", "runtime_script_sha256": "8909b749e16cbc7d4a9610f2f1d87b844f2052f663d2cc0579c7b1a2a0a02d08", "source_root": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source", "test_support_archive_sha256": "4d96b1169a5ab9aa654125fc339f78baeb6f815089313889f8ffdf5829f8b034", "test_support_files": 136, "test_support_manifest_sha256": "a3d2a9cdff2a5b2f507afd4426e60297495c3bd417f2129620a082239a44804c", "training_submissions": 0}}
+SBATCH_HISTORYFIX1_REAL_GPU_AND_CPU_SYNTHETIC_GATE exit_code=0
+Submitted batch job 223590
+SUBMITTED_JOB_CONTROLLER_RECORD exit_code=0
+JobId=223590 JobName=kdpp-v2-historyfix1-runtime-attempt3-53
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=00:15:00 TimeMin=N/A
+   SubmitTime=2026-09-07T16:18:34 EligibleTime=2026-09-07T16:18:34
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=2026-09-07T16:37:50
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-07T16:18:34
+   Partition=hgpu8 AllocNode:Sid=login04:46471
+   ReqNodeList=ngu201 ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_attempt3_seq53/runtime_gate.sh
+   WorkDir=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source
+   StdErr=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_attempt3_seq53/slurm-223590.stderr
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_attempt3_seq53/slurm-223590.stdout
+   Power=
+   TresPerNode=gpu:1
+
+DEPLOYED_51_FILE_HASH_CHECK=PASS
+{"audit_directory": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_attempt3_seq53", "baseline_sha256": "813d3287e02463851712ae44f66a7981b468a99510fbad4b9e2afcab6b38d48d", "formal_evaluation_access_count": 0, "job_id": "223590", "node": "ngu201", "request_sequence": 53, "runtime_script_sha256": "8909b749e16cbc7d4a9610f2f1d87b844f2052f663d2cc0579c7b1a2a0a02d08", "runtime_submissions": 1, "source_root": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source", "status": "HISTORYFIX1_RUNTIME_ATTEMPT3_AND_SYNTHETIC_SUBMITTED_NOT_PASSED", "training_submissions": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T16:17:50+0800
