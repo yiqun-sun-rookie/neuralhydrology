@@ -1,29 +1,60 @@
-#!/bin/bash
-# Read-only retrieval for the authorized LOCAL size-16 candidate evaluation.
-set -eo pipefail
-EXP=/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902
-cd "$EXP"
-sha256sum -c <<'CHECKPOINT_HASHES'
-9ecbbfc4605f4bb3e99975f05fd1924f81aa3d85568f460498bf3e372278368d  runs/formal_seed42_gpu/idx0003_lr0p01_hs32_nl1_mult10/results/best_model.pt
-e97a2b7468e8c7adad339beccffb86a1f70b5a0fcccaf73ff39d48e72044aafc  runs/formal_seed42_gpu/idx0009_lr0p01_hs16_nl1_mult10/results/best_model.pt
-b572c8e8278b038cff7d0bc278ca276947dd63cd02e4d77df5a630db893c5516  runs/formal_seed43_gpu/idx0015_lr0p01_hs32_nl1_mult10/results/best_model.pt
-6c8b9c8e132d60f0b423cc81c3d190b1eaf8ea17e12b4901ceeaa20172fcc003  runs/formal_seed44_gpu/idx0016_lr0p01_hs32_nl1_mult10/results/best_model.pt
-62ad6a9f2d73073405a1d155316041af80f2f4819fff3467c318f52a27f655cb  runs/formal_seed43_gpu/idx0018_lr0p01_hs16_nl1_mult10/results/best_model.pt
-9a4e49c0e68374f89acd622e189558ba89df1053bfa0645a881c7c85bf1df2af  runs/formal_seed44_gpu/idx0019_lr0p01_hs16_nl1_mult10/results/best_model.pt
-CHECKPOINT_HASHES
-echo '=== CHECKPOINT_ARCHIVE_B64 ==='
-tar -cf - -- \
- runs/formal_seed42_gpu/idx0003_lr0p01_hs32_nl1_mult10/results/best_model.pt \
- runs/formal_seed42_gpu/idx0003_lr0p01_hs32_nl1_mult10/config_used.yaml \
- runs/formal_seed42_gpu/idx0009_lr0p01_hs16_nl1_mult10/results/best_model.pt \
- runs/formal_seed42_gpu/idx0009_lr0p01_hs16_nl1_mult10/config_used.yaml \
- runs/formal_seed43_gpu/idx0015_lr0p01_hs32_nl1_mult10/results/best_model.pt \
- runs/formal_seed43_gpu/idx0015_lr0p01_hs32_nl1_mult10/config_used.yaml \
- runs/formal_seed44_gpu/idx0016_lr0p01_hs32_nl1_mult10/results/best_model.pt \
- runs/formal_seed44_gpu/idx0016_lr0p01_hs32_nl1_mult10/config_used.yaml \
- runs/formal_seed43_gpu/idx0018_lr0p01_hs16_nl1_mult10/results/best_model.pt \
- runs/formal_seed43_gpu/idx0018_lr0p01_hs16_nl1_mult10/config_used.yaml \
- runs/formal_seed44_gpu/idx0019_lr0p01_hs16_nl1_mult10/results/best_model.pt \
- runs/formal_seed44_gpu/idx0019_lr0p01_hs16_nl1_mult10/config_used.yaml \
- | gzip -n | base64 -w 120
-echo '=== END_CHECKPOINT_ARCHIVE_B64 ==='
+#!/usr/bin/env bash
+# Read-only remote prerequisites for the authorized six validation replicas.
+set -euo pipefail
+OLD_ROOT=/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
+NEW_ROOT=/data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907
+test ! -e "$NEW_ROOT"
+test ! -L "$NEW_ROOT"
+test -x /data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python
+python3 - "$OLD_ROOT" "$NEW_ROOT" <<'PY'
+import glob, hashlib, json, os, pathlib, sys
+old = pathlib.Path(sys.argv[1])
+repo = old / 'repo'
+exp = repo / 'experiments/optimize_hyper_parameters/wrr_hp_extension_20260902'
+def sha(p):
+    h = hashlib.sha256()
+    with open(p, 'rb') as f:
+        for b in iter(lambda: f.read(1 << 20), b''):
+            h.update(b)
+    return h.hexdigest()
+manifest_path = exp / 'source_manifest.json'
+manifest_sha = sha(manifest_path)
+assert manifest_sha == 'f6f04298895e7a95e4a2fb88a160a98ba2b2c0fab1967cfa4ff6b8efc14904ad', manifest_sha
+manifest = json.loads(manifest_path.read_text())
+for rel, expected in manifest['source_sha256'].items():
+    actual = sha(repo / rel)
+    assert actual == expected, (rel, actual, expected)
+references = []
+for idx in [14, 12, 10, 9, 18, 19]:
+    paths = list(exp.glob('runs/formal_seed*_gpu/idx%04d_*/cell_metrics.json' % idx))
+    assert len(paths) == 1, (idx, paths)
+    p = paths[0]
+    cell = json.loads(p.read_text())
+    checkpoint = p.parent / 'results/best_model.pt'
+    ck_sha = sha(checkpoint)
+    assert ck_sha == cell['validation_scoring']['best_checkpoint_sha256']
+    audits = []
+    for ap in exp.glob('audits/*_formal_*.json'):
+        a = json.loads(ap.read_text())
+        if a.get('run_id') == cell['run_id'] and a.get('launcher_status') == 'ok':
+            audits.append({'path': str(ap), 'sha256': sha(ap), 'runtime': a['runtime']})
+    assert len(audits) == 1, (idx, audits)
+    references.append({'index': idx, 'cell_path': str(p), 'cell_sha256': sha(p),
+      'checkpoint_sha256': ck_sha, 'combo': cell['combo'], 'audit': audits[0]})
+data = {}
+for split, name, expected in [
+ ('train', 'train_win800_19990101_01-20070527_03.pt', '3a4f94a2562278f09b67853ac77e060766296007cb8f8a762756ffe792792440'),
+ ('val', 'val_win800_20070527_04-20090314_13.pt', '2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403')]:
+    p = repo / 'data/processed/high_flow_aug' / name
+    actual = sha(p)
+    assert actual == expected, (split, actual)
+    data[split] = {'path': str(p), 'resolved_path': str(p.resolve()), 'bytes': p.stat().st_size, 'sha256': actual}
+print(json.dumps({'probe': 'PASS', 'old_manifest_sha256': manifest_sha, 'old_sources_verified': len(manifest['source_sha256']),
+ 'new_root': sys.argv[2], 'new_root_absent': True, 'references': references, 'data': data}, indent=2))
+PY
+/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B - <<'PY'
+import importlib.metadata, json, platform
+print(json.dumps({'current_environment': {'python': platform.python_version(),
+ 'torch_distribution': importlib.metadata.version('torch'), 'numpy_distribution': importlib.metadata.version('numpy')}}))
+PY
+sinfo -p hgpu2p -N -h -o '%N|%t|%G'
