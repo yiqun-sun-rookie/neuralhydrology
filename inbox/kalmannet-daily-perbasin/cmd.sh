@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 set -eo pipefail
+echo 'channel=kalmannet-daily-perbasin sequence=40 purpose=readonly-job223511-runtime-terminal-verification'
 export PYTHONDONTWRITEBYTECODE=1 PYTHONOPTIMIZE=0
-printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=39 purpose=task6-runtime-recovery1-on-ngu203-no-training'
-date -Is
-hostname
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY_SUBMISSION'
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B -u - <<'PY_COLLECT'
 import hashlib, json, os, pathlib, re, subprocess, sys, time
 root = pathlib.Path('/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901')
 source = root / 'deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_DEPLOY1_SEQ34/source'
-sequence = 39
+sequence = 40
 sha = lambda b: hashlib.sha256(b).hexdigest()
 def require(value, message):
     if not value: raise RuntimeError(message)
@@ -42,71 +40,108 @@ def verify_source():
     print('DEPLOYED_51_FILE_HASH_CHECK=PASS', flush=True)
 verify_source()
 
-os.umask(0o077)
-queue = run(['squeue','-h','-u',str(os.getuid()),'-o','%i|%200j|%T|%N'])
-emit('CURRENT_USER_QUEUE',queue)
-require(queue.returncode==0,'queue query failed')
-related=[line for line in queue.stdout.decode().splitlines() if re.search(r'kdpp|DAILY_CAMELS_KNET_PER_BASIN|daily.camels.*per.basin|kalmannet.daily.perbasin',line,re.I)]
-require(not related,'related active job exists; do not submit')
-node=run(['scontrol','show','node','ngu203'])
-emit('EXACT_TARGET_NODE',node)
-require(node.returncode==0,'node query failed')
-node_fields=dict(item.split('=',1) for item in node.stdout.decode().split() if '=' in item)
-require(node_fields.get('NodeName')=='ngu203' and node_fields.get('State')=='IDLE' and node_fields.get('CPUAlloc')=='0' and node_fields.get('Partitions')=='hgpu8','target must still be idle and in hgpu8 only')
-partition=run(['scontrol','show','partition','hgpu8'])
-emit('EXACT_PARTITION',partition)
-require(partition.returncode==0,'partition query failed')
-pf=dict(item.split('=',1) for item in partition.stdout.decode().split() if '=' in item)
-require(pf.get('State')=='UP' and pf.get('PreemptMode')=='OFF' and pf.get('OverSubscribe')=='NO' and pf.get('QoS')=='N/A','partition isolation differs')
-scheduler=run(['scontrol','show','config'])
-require(scheduler.returncode==0,'scheduler settings unavailable')
-sf={k.strip():v.strip() for line in scheduler.stdout.decode().splitlines() if '=' in line for k,v in [line.split('=',1)]}
-require(sf.get('PreemptType')=='preempt/none' and sf.get('PreemptMode')=='OFF','global preemption must be disabled')
-print(json.dumps({'PreemptType':sf['PreemptType'],'PreemptMode':sf['PreemptMode'],'PrivateData':sf.get('PrivateData')},sort_keys=True),flush=True)
-reservations=run(['scontrol','-o','show','reservation'])
-require(reservations.returncode==0,'reservation inventory unavailable')
-conflicting=[]
-for line in reservations.stdout.decode().splitlines():
-    if 'ReservationName=' not in line: continue
-    fields=dict(item.split('=',1) for item in line.split() if '=' in item)
-    nodes=fields.get('Nodes','')
-    if not nodes or nodes in {'(null)','NONE'}: continue
-    expanded=run(['scontrol','show','hostnames',nodes])
-    require(expanded.returncode==0,'reservation host expansion failed')
-    if 'ngu203' in expanded.stdout.decode().splitlines(): conflicting.append(line)
-require(not conflicting,'target has a reservation; do not request its resources')
+import math
+audit=root/'node_recovery_20260907/task6_runtime_recovery1_seq39'
+expected_job_id='223511'
+expected_baseline_sha256='241848390d615e584ff988060a47082cf49718bb09225480426f26e8fc84b867'
+expected_script_sha256='fba1762805311c2a28efd048dcfc61f47cf003c407671a02606f27dfff217913'
+require(audit.is_dir() and audit.resolve()==audit and not audit.is_symlink(),'audit directory missing or linked')
+def read_registered(name, expected_sha=None):
+    p=audit/name
+    require(p.is_file() and not p.is_symlink() and p.resolve()==p,'registered audit text missing or linked: '+name)
+    b=p.read_bytes()
+    require(len(b)<=4*1024*1024,'audit text exceeds registered collector limit: '+name)
+    if expected_sha: require(sha(b)==expected_sha,'registered audit hash mismatch: '+name)
+    text=b.decode('utf-8')
+    print(json.dumps(dict(audit_file=name,size_bytes=len(b),sha256=sha(b),text=text),sort_keys=True),flush=True)
+    return text
+baseline=json.loads(read_registered('pre_submit_baseline.json',expected_baseline_sha256))
+receipt=json.loads(read_registered('submission_receipt.json'))
+read_registered('runtime_gate.sh',expected_script_sha256)
+require(baseline['request_sequence']==39 and baseline['recovery_attempt']==1 and baseline['node']=='ngu203' and baseline['training_submissions']==0,'baseline identity differs')
+require(baseline['runtime_script_sha256']==expected_script_sha256 and baseline['runtime_script_bytes']==4896,'baseline runtime script differs')
+require(baseline['source_root']==str(source) and baseline['deployed_files']==51,'baseline deployment differs')
+require(receipt['request_sequence']==39 and receipt['job_matches']==[expected_job_id] and receipt['submission_exit_code']==0,'submission job binding differs')
+require(receipt['baseline_sha256']==expected_baseline_sha256 and receipt['runtime_script_sha256']==expected_script_sha256 and receipt['training_submissions']==0 and receipt['runtime_submissions']==1,'submission receipt binding differs')
+queries={}
+for label,args in [
+    ('RUNTIME_JOB_SQUEUE',['squeue','-h','-j',expected_job_id,'-o','%i|%j|%T|%P|%N|%R']),
+    ('RUNTIME_JOB_SACCT',['sacct','-n','-P','-j',expected_job_id,'--format=JobID,JobName%80,State,ExitCode,Elapsed,NodeList,AllocCPUS,ReqCPUS']),
+    ('RUNTIME_JOB_SCONTROL',['scontrol','show','job',expected_job_id]),
+    ('CURRENT_TASK_JOBS',['squeue','-h','-u',os.environ['USER'],'-o','%i|%200j|%T|%P|%N|%R'])]:
+    r=run(args)
+    queries[label]=r
+    emit(label,r)
+texts={}
+for name in ['slurm-'+expected_job_id+'.stdout','slurm-'+expected_job_id+'.stderr']+[f'gate_{b}.{s}' for b in ['04105700','08070200','09035800'] for s in ['stdout','stderr']]:
+    if (audit/name).exists(): texts[name]=read_registered(name)
+    else: print(json.dumps(dict(audit_file=name,exists=False)),flush=True)
+metadata=[]
+for p in sorted(audit.rglob('*')):
+    require(not p.is_symlink(),'linked audit member')
+    require(p.is_file() or p.is_dir(),'special audit member')
+    metadata.append(dict(path=p.relative_to(audit).as_posix(),is_directory=p.is_dir(),size_bytes=p.stat().st_size))
+print(json.dumps(dict(audit_inventory=metadata),sort_keys=True),flush=True)
+current_runs=sorted(p.name for p in (root/'runs').iterdir())
+print(json.dumps(dict(baseline_before_runs=baseline['before_runs'],current_runs=current_runs,run_names_unchanged=current_runs==baseline['before_runs'])),flush=True)
+require(current_runs==baseline['before_runs'],'training run namespace changed during non-training gate')
+require((audit/'output_parent').is_dir() and not any((audit/'output_parent').iterdir()),'non-training output parent is not empty')
 locks=root/'status/locks'
-require(not locks.is_symlink() and (not locks.exists() or not list(locks.iterdir())),'existing execution lock or linked parent')
-runs=root/'runs'
-require(runs.is_dir() and not runs.is_symlink(),'run parent differs')
-before_runs=sorted(p.name for p in runs.iterdir())
-expected_v1=['DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN3_SEQ13','DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_A800_TRAIN1_SEQ18','DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24']
-require(before_runs==expected_v1,'run namespace changed; refuse to collide with existing work')
-recovery_root=root/'node_recovery_20260907'
-require(recovery_root.resolve()==recovery_root and not recovery_root.exists() and not recovery_root.is_symlink(),'recovery root already exists or linked; do not repeat recovery')
-audit=recovery_root/'task6_runtime_recovery1_seq39'
-recovery_root.mkdir()
-audit.mkdir()
-for member in ('output_parent','tmp','cache'): (audit/member).mkdir()
-script = "#!/usr/bin/env bash\n#SBATCH --job-name=kdpp-v2-runtime-recovery1-seq39\n#SBATCH --partition=hgpu8\n#SBATCH --nodelist=ngu203\n#SBATCH --nodes=1\n#SBATCH --ntasks=1\n#SBATCH --cpus-per-task=4\n#SBATCH --gres=gpu:1\n#SBATCH --time=00:15:00\n#SBATCH --deadline=now+20minutes\n#SBATCH --no-requeue\n#SBATCH --chdir=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_DEPLOY1_SEQ34/source\n#SBATCH --output=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/task6_runtime_recovery1_seq39/slurm-%j.stdout\n#SBATCH --error=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/task6_runtime_recovery1_seq39/slurm-%j.stderr\nset -eo pipefail\nset -o noclobber\numask 077\n[[ \"${SLURM_RESTART_COUNT:-0}\" == 0 ]] || exit 82\n[[ -n \"${SLURM_JOB_ID:-}\" && \"$(hostname -s)\" == ngu203 ]] || exit 81\n[[ \"${SLURM_CPUS_PER_TASK:-}\" == 4 && -n \"${CUDA_VISIBLE_DEVICES:-}\" ]] || exit 83\nSOURCE=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_DEPLOY1_SEQ34/source\nAUDIT=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/task6_runtime_recovery1_seq39\nPY=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python\nexport PYTHONDONTWRITEBYTECODE=1 PYTHONOPTIMIZE=0\nexport OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 NUMEXPR_NUM_THREADS=4\nexport MKL_THREADING_LAYER=GNU MKL_SERVICE_FORCE_INTEL=1\nexport TMPDIR=\"$AUDIT/tmp\" XDG_CACHE_HOME=\"$AUDIT/cache\" CUDA_CACHE_DISABLE=1\nexport PYTHONPATH=\"$SOURCE/src:$SOURCE\"\ncd \"$SOURCE\"\nprintf 'slurm_job_id=%s hostname=%s CUDA_VISIBLE_DEVICES=%s\\n' \"$SLURM_JOB_ID\" \"$(hostname -s)\" \"${CUDA_VISIBLE_DEVICES:-}\"\ndate --iso-8601=seconds\n\"$PY\" -B -u - <<'RESOURCE_GATE'\nimport json, os, pathlib, subprocess, sys\nr=subprocess.run(['nvidia-smi','--query-compute-apps=gpu_uuid,pid,process_name,used_gpu_memory','--format=csv,noheader,nounits'],capture_output=True,text=True,timeout=30,check=False)\nprint(json.dumps(dict(stage='whole_node_existing_compute_processes',exit_code=r.returncode,stdout=r.stdout,stderr=r.stderr)),flush=True)\nif r.returncode != 0 or r.stdout.strip():\n    raise RuntimeError('pre-existing GPU compute process or unverifiable query; no process is cancelled')\nmem={}\nfor line in pathlib.Path('/proc/meminfo').read_text().splitlines():\n    key,value=line.split(':',1)\n    if key in ('MemTotal','MemAvailable'): mem[key]=int(value.strip().split()[0])*1024\nprint(json.dumps(dict(stage='host_memory',**mem)),flush=True)\nif mem.get('MemAvailable',0)<32*1024**3:\n    raise RuntimeError('less than 32 GiB available host memory; no training launched')\ng=subprocess.run(['nvidia-smi','--query-gpu=uuid,name,memory.total,memory.used,memory.free,utilization.gpu','--format=csv,noheader,nounits'],capture_output=True,text=True,timeout=30,check=False)\nprint(json.dumps(dict(stage='whole_node_gpu_memory',exit_code=g.returncode,stdout=g.stdout,stderr=g.stderr)),flush=True)\nif g.returncode != 0: raise RuntimeError('GPU memory query failed')\nimport numpy, torch\ninfo=dict(stage='allocated_device_identity',python=sys.version.split()[0],numpy=numpy.__version__,torch=torch.__version__,cuda_available=torch.cuda.is_available(),visible_cuda_devices=torch.cuda.device_count())\nif not info['cuda_available'] or info['visible_cuda_devices'] != 1:\n    print(json.dumps(info),flush=True)\n    raise RuntimeError('exactly one allocated visible CUDA device required')\ninfo['gpu_name']=torch.cuda.get_device_name(0)\ninfo['gpu_free_bytes'],info['gpu_total_bytes']=torch.cuda.mem_get_info()\nprint(json.dumps(info),flush=True)\nif info['python']!='3.11.13' or info['numpy']!='2.3.3' or info['torch'].split('+')[0]!='2.4.0' or info['gpu_name']!='NVIDIA A800-SXM4-80GB':\n    raise RuntimeError('registered device or interpreter mismatch')\nif info['gpu_free_bytes']<64*1024**3:\n    raise RuntimeError('less than 64 GiB free on allocated A800; no experiment launched')\nRESOURCE_GATE\nfor basin in 04105700 08070200 09035800; do\n    echo \"RUNTIME_GATE_BEGIN basin=$basin\"\n    set +e\n    \"$PY\" -B -u scripts/check_daily_camels_knet_per_basin_runtime.py \\\n        --config \"$SOURCE/configs/daily_camels_knet_per_basin_pilot_v2_${basin}.json\" \\\n        --output-parent \"$AUDIT/output_parent\" \\\n        --execution-id \"DAILY_CAMELS_KNET_PER_BASIN_PILOT_${basin}_V2_TASK6_RUNTIME_RECOVERY1_SEQ39\" \\\n        --repository-root \"$SOURCE\" --device cuda > \"$AUDIT/gate_${basin}.stdout\" 2> \"$AUDIT/gate_${basin}.stderr\"\n    gate_exit=$?\n    set -e\n    cat \"$AUDIT/gate_${basin}.stdout\"\n    cat \"$AUDIT/gate_${basin}.stderr\" >&2\n    echo \"RUNTIME_GATE_END basin=$basin exit_code=$gate_exit\"\n    [[ \"$gate_exit\" == 0 ]] || exit \"$gate_exit\"\ndone\necho 'TASK6_THREE_RUNTIME_CHECKS_FINISHED optimizer_steps=0 training_submissions=0'\nscontrol show job \"$SLURM_JOB_ID\"\n"
-job_script=audit/'runtime_gate.sh'
-with job_script.open('xb') as f: f.write(script.encode())
-baseline={'request_sequence':39,'predecessor_runtime_request':35,'predecessor_job_id':'223507','recovery_attempt':1,'before_runs':before_runs,'source_root':str(source),'archive_sha256':'1b78bbae823d55859391a6cdee3b9fbe8a40203e5140b8795105a8617592b7fd','internal_manifest_sha256':'5abaa07cfc00e2795a91a8cd70bb793e5cf362971fd04a2de44cbf3e15fa587f','deployed_files':51,'runtime_script_path':str(job_script),'runtime_script_sha256':sha(script.encode()),'runtime_script_bytes':len(script.encode()),'node':'ngu203','partition':'hgpu8','gpu_name':'NVIDIA A800-SXM4-80GB','training_submissions':0,'global_preemption':'OFF','old_failure_preserved':True}
-baseline_bytes=(json.dumps(baseline,sort_keys=True,allow_nan=False)+'\n').encode()
-with (audit/'pre_submit_baseline.json').open('xb') as f: f.write(baseline_bytes)
-print(json.dumps({'pre_submit_baseline':baseline,'baseline_sha256':sha(baseline_bytes)},sort_keys=True),flush=True)
-submission=run(['sbatch',str(job_script)],timeout=60)
-emit('SBATCH_NO_TRAINING_RUNTIME_RECOVERY1',submission)
-job_matches=re.findall(r'(?m)^Submitted batch job ([0-9]+)\s*$',submission.stdout.decode())
-if not job_matches and re.fullmatch(r'[0-9]+(?:;[A-Za-z0-9_.-]+)?\s*',submission.stdout.decode()):
-    job_matches=[submission.stdout.decode().strip().split(';')[0]]
-receipt={'request_sequence':39,'submission_exit_code':submission.returncode,'stdout':submission.stdout.decode(),'stderr':submission.stderr.decode(),'job_matches':job_matches,'baseline_sha256':sha(baseline_bytes),'runtime_script_sha256':sha(script.encode()),'training_submissions':0,'runtime_submissions':1}
-with (audit/'submission_receipt.json').open('xb') as f: f.write((json.dumps(receipt,sort_keys=True)+'\n').encode())
-require(submission.returncode==0 and len(job_matches)==1,'submission ambiguous or failed; read-only reconciliation only, do not resubmit')
-job_id=job_matches[0]
-account=run(['scontrol','show','job',job_id])
-emit('SUBMITTED_JOB_CONTROLLER_RECORD',account)
+require(locks.is_dir() and not locks.is_symlink() and not any(locks.iterdir()),'execution locks changed')
 verify_source()
-require(sorted(p.name for p in runs.iterdir())==before_runs,'training runs changed after non-training submission')
-print(json.dumps({'status':'TASK6_RUNTIME_RECOVERY_SUBMITTED_NOT_PASSED','request_sequence':39,'job_id':job_id,'node':'ngu203','audit_directory':str(audit),'source_root':str(source),'baseline_sha256':sha(baseline_bytes),'runtime_script_sha256':sha(script.encode()),'training_submissions':0,'runtime_submissions':1,'formal_evaluation_access_count':0},sort_keys=True),flush=True)
-PY_SUBMISSION
+rows=[line.split('|') for line in queries['RUNTIME_JOB_SACCT'].stdout.decode().splitlines() if line.strip()]
+main=[row for row in rows if row[0]==expected_job_id]
+issues=[]
+def check(value,message):
+    if not value: issues.append(message)
+check(queries['RUNTIME_JOB_SACCT'].returncode==0 and len(main)==1,'one complete accounting row required')
+state=main[0][2] if len(main)==1 else 'UNVERIFIABLE'
+if len(main)==1:
+    check(len(main[0])>=8,'accounting row lacks resources')
+    check(main[0][1]=='kdpp-v2-runtime-recovery1-seq39','accounting job name differs')
+    check(main[0][2]=='COMPLETED' and main[0][3]=='0:0','job not COMPLETED 0:0')
+    check(main[0][5]=='ngu203' and main[0][6:8]==['4','4'],'actual node or CPU allocation differs')
+out=texts.get('slurm-'+expected_job_id+'.stdout','')
+check('slurm_job_id='+expected_job_id+' hostname=ngu203 CUDA_VISIBLE_DEVICES=' in out,'allocated job identity absent')
+check('TASK6_THREE_RUNTIME_CHECKS_FINISHED optimizer_steps=0 training_submissions=0' in out,'all-three terminal marker absent')
+for token in ['JobId='+expected_job_id,'Requeue=0','Restarts=0','NodeList=ngu203','NumNodes=1','NumCPUs=4']:
+    check(token in out,'runtime controller resource token absent: '+token)
+objects=[]
+for line in out.splitlines():
+    if line.startswith('{'):
+        try: objects.append(json.loads(line))
+        except json.JSONDecodeError: pass
+resources={obj['stage']:obj for obj in objects if 'stage' in obj}
+pre=resources.get('whole_node_existing_compute_processes',{})
+check(pre.get('exit_code')==0 and isinstance(pre.get('stdout'),str) and pre.get('stdout').strip()=='','pre-existing compute process check not empty success')
+check(resources.get('host_memory',{}).get('MemAvailable',0)>=32*1024**3,'host memory guard absent or insufficient')
+gpu=resources.get('allocated_device_identity',{})
+check(gpu.get('python')=='3.11.13' and gpu.get('numpy')=='2.3.3' and gpu.get('torch','').split('+')[0]=='2.4.0','interpreter identity differs')
+check(gpu.get('cuda_available') is True and gpu.get('visible_cuda_devices')==1 and gpu.get('gpu_name')=='NVIDIA A800-SXM4-80GB','actual allocated GPU identity differs')
+check(gpu.get('gpu_free_bytes',0)>=64*1024**3,'allocated memory guard absent or insufficient')
+gates={}
+for basin,dim in [('04105700',7),('08070200',11),('09035800',18)]:
+    check('RUNTIME_GATE_END basin='+basin+' exit_code=0' in out,'gate exit marker missing: '+basin)
+    raw=texts.get('gate_'+basin+'.stdout','')
+    try: gate=json.loads(raw)
+    except json.JSONDecodeError:
+        issues.append('gate output not exactly one JSON document: '+basin)
+        continue
+    gates[basin]=gate
+    check(gate.get('schema_version')=='daily_camels_knet_per_basin_runtime_gate_v2','gate schema differs: '+basin)
+    check(gate.get('experiment_family')=='DAILY_CAMELS_KNET_PER_BASIN_PILOT_V2_20260902','gate family differs: '+basin)
+    check(gate.get('status')=='PASS' and gate.get('basin_id')==basin and gate.get('state_dimension')==dim,'gate status or geometry differs: '+basin)
+    check(gate.get('device')=='cuda' and gate.get('gpu_name')=='NVIDIA A800-SXM4-80GB','gate device differs: '+basin)
+    for key in ['exact_active_mask_no_padding','causal_future_observation_test','finite_nonzero_gradient_test','checkpoint_restore_test','epoch_zero_joint_resume_test','correction_cap_enabled']:
+        check(gate.get(key) is True,'gate boolean differs: '+basin+':'+key)
+    value=gate.get('segment_objective')
+    check(isinstance(value,(float,int)) and math.isfinite(value),'gate objective not finite: '+basin)
+    check(gate.get('segment_target_count_by_lead')=={'1':102,'2':102,'3':102},'gate target counts differ: '+basin)
+    check(gate.get('optimizer_steps')==0 and gate.get('formal_evaluation_access_count')==0,'gate update or formal access count nonzero: '+basin)
+    check(gate.get('correction_cap_in_state_scale_units')==3.0 and gate.get('divergence_stop_checkpoint_ratio')==100.0 and gate.get('divergence_stop_post_step_ratio')==100.0,'gate numerical policy differs: '+basin)
+    check(bool(re.fullmatch('[a-f0-9]{64}',gate.get('temporary_checkpoint_sha256',''))),'temporary checkpoint fingerprint missing: '+basin)
+active=state in ['PENDING','RUNNING','CONFIGURING','COMPLETING']
+status='TASK6_RUNTIME_GATE_PASS_REQUIRES_INDEPENDENT_ACCEPTANCE' if not issues else ('RUNTIME_GATE_NOT_TERMINAL' if active else 'RUNTIME_GATE_FAILED_OR_UNVERIFIABLE')
+print(json.dumps(dict(status=status,request_sequence=sequence,submission_sequence=39,job_id=expected_job_id,node='ngu203',accounting_state=state,baseline_sha256=expected_baseline_sha256,runtime_script_sha256=expected_script_sha256,deployed_file_count=51,gate_count=len(gates),gate_results=gates,issues=issues,training_submissions=0,runtime_submissions=0,task_file_writes=0,formal_evaluation_access_count=0),sort_keys=True,allow_nan=False),flush=True)
+
+PY_COLLECT
