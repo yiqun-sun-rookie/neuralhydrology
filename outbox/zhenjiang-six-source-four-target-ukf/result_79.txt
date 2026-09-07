@@ -1,0 +1,176 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=79
+### host=login4
+### started=2026-09-07T09:57:09+0800
+### ---------- output ----------
+2026-09-07T09:57:09+0800
+login4
+=== SUBMISSION RECEIPT ===
+{
+  "attempt_number": 1,
+  "automatic_cleanup": false,
+  "automatic_requeue": false,
+  "automatic_retry": false,
+  "bundle_manifest_sha256": "22d2db9b8e03bcaa28b85fd6155545a24dfc4b7261232b200c082094cd4fbbcd",
+  "data_authorization_sha256": "f204be80e3f7ad440e77291c387ab57acb3d2db7732946ca9789c4005e999a27",
+  "data_contract_sha256": "0e2cc530d5158cb9535862b10d6489436b73811c84a3d601579ed79de28155b3",
+  "execution_authorization_sha256": "d61afbdc83a0e9577301b278630a6b1501a75c67750ded760d9fdfcffd7eeaf8",
+  "execution_mode": "single_job_sequential_seed_loop",
+  "job_id": "222821",
+  "sbatch_call_count": 1,
+  "sbatch_output": "Submitted batch job 222821",
+  "schema_version": 2,
+  "seed_order": [
+    17,
+    29,
+    43
+  ],
+  "slurm_no_requeue": true,
+  "stage": "stage_a",
+  "status": "submitted"
+}
+=== CURRENT JOB STATE ===
+slurm_load_jobs error: Invalid job id specified
+JobID|State|ExitCode|Elapsed|NodeList
+222821|COMPLETED|0:0|00:36:03|ngu008
+222821.batch|COMPLETED|0:0|00:36:03|ngu008
+222821.extern|COMPLETED|0:0|00:36:03|ngu008
+
+=== LOG out ===
+        "completed_ledger_snapshot_sha256": "5d2104ae18e2cbac07c7770d90ab0e196a0ca44f7db12ef364a1544c60b2352a",
+        "content_sha256": "922157f3294822f86a58d1f590cd0c54eb3b7529beeb957bc53192126b211891",
+        "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/jiangyin_retrospective_targets.csv",
+        "reservation_id": "7cf725bc-8d09-49ad-ac87-7ecd1779d346",
+        "role": "retrospective_target",
+        "station": "jiangyin"
+      },
+      {
+        "byte_count": 4674734,
+        "byte_offset": 0,
+        "completed_ledger_snapshot_sha256": "a22d168963e6adb71da19bebb4060f542fb7a0f195fabc21f3c3d8d9719e752f",
+        "content_sha256": "9e0d1bdd950326bc1c11e05bfcc26ecf6ac847a2e15d01c7cdc49d79644c14b4",
+        "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/nanjing_retrospective_targets.csv",
+        "reservation_id": "720d85fc-0529-4147-87a0-b0b936351f26",
+        "role": "retrospective_target",
+        "station": "nanjing"
+      },
+      {
+        "byte_count": 4671875,
+        "byte_offset": 0,
+        "completed_ledger_snapshot_sha256": "ac384026754a05b99979fae2b1bbf901d55275a9ad339205eb77e1e21abfc028",
+        "content_sha256": "ecba8ddbb6f1fca085194794c55041f45166975fb467074188c9acabb7056d78",
+        "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/wusongkou_retrospective_targets.csv",
+        "reservation_id": "a5c099c2-d618-483a-a9b9-a1a358e7bf8f",
+        "role": "retrospective_target",
+        "station": "wusongkou"
+      },
+      {
+        "byte_count": 4674687,
+        "byte_offset": 0,
+        "completed_ledger_snapshot_sha256": "08ba070f75c7ee548e1909c8dfcf1c7ba4233acb27710b7ef1b2204cc4afc1bf",
+        "content_sha256": "4344b95978c5308cb22bbd3b39e703e9ac6f8daf7973d2a4089c54ef212eb9f8",
+        "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/xuliujing_retrospective_targets.csv",
+        "reservation_id": "606d7598-0ca3-4cec-83d9-91e4123674bf",
+        "role": "retrospective_target",
+        "station": "xuliujing"
+      },
+      {
+        "byte_count": 4703632,
+        "byte_offset": 0,
+        "completed_ledger_snapshot_sha256": "2db8df8214dfdd3b6117d1b02de9e8ee7238a2cf324cfaebd61b3c1b812faed2",
+        "content_sha256": "17d897dea5b3599717b1ad2bfd9520ae7e1900d1c9247e27b4d542f2701de937",
+        "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/zhenjiang_retrospective_targets.csv",
+        "reservation_id": "8314fd54-c2a5-49cf-8a6c-e09d165d0b71",
+        "role": "retrospective_target",
+        "station": "zhenjiang"
+      },
+      {
+        "byte_count": 6197,
+        "byte_offset": 0,
+        "completed_ledger_snapshot_sha256": "8d3a8d0443316a7d39196f99bdf95ab86bc964205b71611eb803d8d4b0970362",
+        "content_sha256": "ce8512f28e87ab6d62814b064d91ca358b98efd7ee27b4f831322ea93775516d",
+        "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/astronomical_tide/wusongkou_tide_model.json",
+        "reservation_id": "b83f479a-b8ce-4496-a349-be0a1513b7be",
+        "role": "wusongkou_astronomical_tide_model",
+        "station": "wusongkou"
+      }
+    ],
+    "ledger_snapshot_sha256_after_all_reads": "8d3a8d0443316a7d39196f99bdf95ab86bc964205b71611eb803d8d4b0970362",
+    "normalization_sha256": {
+      "explicit_stage": "b79ff31ade01a53484038f51995ecf5b9d04e52c9dbf30282423e0cbca16f406",
+      "future_datong_observed_driver": "82f7a22786a72db66b77ebef9319987bf68be0172c121bd9dca1c5a0e5918595",
+      "future_wusongkou_astronomical_tide": "9525962812d2f5b2540771ad48fcba5c6a4a18cebb856ea51e6352e87e388089",
+      "history_stage": "d71c35d2f34e4d754fb2ca05395ca1fcc5b290bbdf74ce5e99c03351a9039897"
+    },
+    "selection_sample_count": 8032,
+    "training_sample_count": 38073
+  },
+  "output_directory": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/runs/stage_a/seed_43",
+  "schema_version": 2,
+  "seed": 43,
+  "seed_sequence_index": 3,
+  "source_fingerprints": {
+    "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/run/scripts/analysis/zhenjiang_five_source_five_target_single_analysis_contract_v2.py": {
+      "byte_count": 17466,
+      "sha256": "ba953d140784a7b0845dd332c64311e344479dbbf5cac98eb57227b97ffdd79a"
+    },
+    "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/run/scripts/modeling/run_zhenjiang_five_source_five_target_stage_a_v2.py": {
+      "byte_count": 47054,
+      "sha256": "81f4846119447936035fe9b5fcf3169e61df7a0c726db36a1c6f6f878722ffd5"
+    },
+    "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/run/scripts/modeling/train_zhenjiang_five_source_five_target_d32_gru_v2.py": {
+      "byte_count": 26174,
+      "sha256": "d2ff8313469019e2065131811c1ffb4c698c904a87f70956cea7aa9ee2455c27"
+    },
+    "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/run/scripts/modeling/zhenjiang_five_source_five_target_data_v2.py": {
+      "byte_count": 71264,
+      "sha256": "5126737d395a9cda5a4d7def5714f8582542ad3ace48e0b539bd99acd1f99039"
+    }
+  },
+  "stage": "stage_a",
+  "status": "complete",
+  "time_partition": "2017-2022",
+  "training_completion_manifest_sha256": "6618d12c43518c47ce015eddda1a89c1ecb440e4bcfeb2e1c7ec4b17b18bcf69",
+  "usage_ledger_path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/evidence/stage_a_formal_data_usage.sqlite3"
+}
+stage_a_completion_check=passed seed=43
+hpc_execution_receipt=written path=/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/runs/stage_a/seed_43/hpc_execution_receipt.json
+[2026-09-05T22:53:50+08:00] seed=43 sequence_index=3 completed
+[2026-09-05T22:53:50+08:00] stage_a_all_seeds=completed job=222821
+
+=== LOG err ===
+=== ATTEMPT EVIDENCE NAMES ONLY ===
+seed_29/attempt_001/formal_runner_entered.json|668 bytes
+seed_29/attempt_001/first_attempt_started.json|476 bytes
+seed_29/attempt_001/completed.json|622 bytes
+seed_17/attempt_001/first_attempt_started.json|476 bytes
+seed_17/attempt_001/formal_runner_entered.json|668 bytes
+seed_17/attempt_001/completed.json|622 bytes
+seed_43/attempt_001/first_attempt_started.json|476 bytes
+seed_43/attempt_001/formal_runner_entered.json|668 bytes
+seed_43/attempt_001/completed.json|622 bytes
+seed_17/best_checkpoint.pt|88882 bytes
+seed_17/last_checkpoint.pt|88882 bytes
+seed_17/training_history.json|6349 bytes
+seed_17/environment_manifest.json|487 bytes
+seed_17/completion_manifest.json|6825 bytes
+seed_17/formal_run_receipt.json|10937 bytes
+seed_17/hpc_execution_receipt.json|622 bytes
+seed_29/best_checkpoint.pt|88882 bytes
+seed_29/last_checkpoint.pt|88882 bytes
+seed_29/training_history.json|2171 bytes
+seed_29/completion_manifest.json|6816 bytes
+seed_29/formal_run_receipt.json|10935 bytes
+seed_29/hpc_execution_receipt.json|622 bytes
+seed_29/environment_manifest.json|487 bytes
+seed_43/best_checkpoint.pt|88882 bytes
+seed_43/last_checkpoint.pt|88882 bytes
+seed_43/training_history.json|6520 bytes
+seed_43/environment_manifest.json|487 bytes
+seed_43/completion_manifest.json|6812 bytes
+seed_43/formal_run_receipt.json|10937 bytes
+seed_43/hpc_execution_receipt.json|622 bytes
+read_only_status=true data_files_opened=false sbatch_calls=0
+{"baselines": [["ZJ-5S5T-V2-STAGE-A-HPC-DATA-RECOVERY-20260905-01", 0, 36]], "completed_distinct_paths": 12, "events_by_type": [["COMPLETED", 36, 154503999], ["RESERVED", 36, 0]], "partitions": [["2017-2022"]], "raw_formal_data_opened": false}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T09:57:20+0800
