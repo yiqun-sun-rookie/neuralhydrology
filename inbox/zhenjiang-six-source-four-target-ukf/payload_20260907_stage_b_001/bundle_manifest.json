@@ -1,0 +1,112 @@
+{
+  "formal_data_included": false,
+  "git_metadata_included": false,
+  "held_out_2023_or_2024_data_included": false,
+  "login_node_numerical_imports_permitted": false,
+  "remote_root": "/data1/home/sunyiq/zhenjiang_5s5t_stage_b_20260907_001",
+  "results_included": false,
+  "schema_version": "zhenjiang-stage-b-bundle-v2",
+  "source_file_count": 20,
+  "source_files": [
+    {
+      "byte_count": 2547,
+      "relative_path": "contracts/paid_execution_authorization.json",
+      "sha256": "feab3b9e38a9ce2c6f7e9e4d33c07f588c6361d315abcb8ecfd06665fa4a1a2e"
+    },
+    {
+      "byte_count": 3075,
+      "relative_path": "contracts/stage_b_data_authorization.json",
+      "sha256": "39fc0920f7f13e9ec0aebd368e162fe026e08a3961efee35876758559632f9de"
+    },
+    {
+      "byte_count": 3886,
+      "relative_path": "contracts/stage_b_execution_contract.json",
+      "sha256": "688ee2340954542b71955df35dd1f918450e0b01035f16b5bf353ce8ffbb798f"
+    },
+    {
+      "byte_count": 1185,
+      "relative_path": "run/docs/records/zhenjiang_stage_b_20260907_001_task1_final_approval.md",
+      "sha256": "742a11318727daa4e2b8cb6e9b2e414a5cf94bce5c9a3eb46e1ca7ddcd3aa946"
+    },
+    {
+      "byte_count": 17466,
+      "relative_path": "run/scripts/analysis/zhenjiang_five_source_five_target_single_analysis_contract_v2.py",
+      "sha256": "ba953d140784a7b0845dd332c64311e344479dbbf5cac98eb57227b97ffdd79a"
+    },
+    {
+      "byte_count": 14978,
+      "relative_path": "run/scripts/astronomical_tide/wusongkou_astronomical_tide_realtime_v2.py",
+      "sha256": "6a8e45b8988809899ae84febd2e4790a6369acaad88f346bc7f2ddca7f40f5f5"
+    },
+    {
+      "byte_count": 7242,
+      "relative_path": "run/scripts/hpc/zhenjiang_five_source_five_target_stage_b_v2.slurm",
+      "sha256": "c58dcf3d7b07ae3baad5943d540e915b49af563faf29c05f42cb2a182c7c467c"
+    },
+    {
+      "byte_count": 21760,
+      "relative_path": "run/scripts/hpc/zhenjiang_stage_b_hpc_v2.py",
+      "sha256": "4b3fb6d26cff53314055f3193148e8e04758ad10da73969b9b5237e6f52e3c5e"
+    },
+    {
+      "byte_count": 47054,
+      "relative_path": "run/scripts/modeling/run_zhenjiang_five_source_five_target_stage_a_v2.py",
+      "sha256": "81f4846119447936035fe9b5fcf3169e61df7a0c726db36a1c6f6f878722ffd5"
+    },
+    {
+      "byte_count": 34459,
+      "relative_path": "run/scripts/modeling/run_zhenjiang_five_source_five_target_stage_b_v2.py",
+      "sha256": "695d5c40e38598ce8971883a0f419efe2b3a6884dbf56c6945d646439170eb12"
+    },
+    {
+      "byte_count": 26174,
+      "relative_path": "run/scripts/modeling/train_zhenjiang_five_source_five_target_d32_gru_v2.py",
+      "sha256": "d2ff8313469019e2065131811c1ffb4c698c904a87f70956cea7aa9ee2455c27"
+    },
+    {
+      "byte_count": 7549,
+      "relative_path": "run/scripts/modeling/zhenjiang_five_source_five_target_d32_gru_v2.py",
+      "sha256": "3dc45a73dc333156a4d5bd5429028aaaa6e13380904f79ca2d334c25af6d355a"
+    },
+    {
+      "byte_count": 71264,
+      "relative_path": "run/scripts/modeling/zhenjiang_five_source_five_target_data_v2.py",
+      "sha256": "5126737d395a9cda5a4d7def5714f8582542ad3ace48e0b539bd99acd1f99039"
+    },
+    {
+      "byte_count": 13239,
+      "relative_path": "run/scripts/modeling/zhenjiang_five_source_five_target_single_analysis_runner_v2.py",
+      "sha256": "29341667e54da0513d02863a5a83c8f1c7edfe7292ca62ff1d296adf6f1b9c54"
+    },
+    {
+      "byte_count": 14871,
+      "relative_path": "run/scripts/modeling/zhenjiang_five_source_five_target_single_analysis_training_v2.py",
+      "sha256": "143a9f3c5fb3f534f15351ca103bda4138fe7ba9df46a2d348625d5facab8ff2"
+    },
+    {
+      "byte_count": 31230,
+      "relative_path": "run/scripts/modeling/zhenjiang_five_source_five_target_single_analysis_ukf_v2.py",
+      "sha256": "2e2be48e7f4b0605cfc3ec105fc2af47c736e8c9ca5d028b2187f8b7b90d71dc"
+    },
+    {
+      "byte_count": 6036,
+      "relative_path": "run/third_party/pytides/astro.py",
+      "sha256": "d29a2197c24a3e243590f0e7dcf52a2a4266a0951abab08244957711cabaa5bd"
+    },
+    {
+      "byte_count": 6405,
+      "relative_path": "run/third_party/pytides/constituent.py",
+      "sha256": "fed8fa1a14663391f2f706e8ca70eedddd188321221a7fd8120ddcd01b11846a"
+    },
+    {
+      "byte_count": 3708,
+      "relative_path": "run/third_party/pytides/nodal_corrections.py",
+      "sha256": "ae6af6c135fe88f90752fd6cf522d6976e5f8f8a29341d719627124dd254989b"
+    },
+    {
+      "byte_count": 13956,
+      "relative_path": "run/third_party/pytides/tide.py",
+      "sha256": "fbdc9ec80a4bc9741520e73751038ab06db836add2425dbcc420873fde5dcbce"
+    }
+  ]
+}
