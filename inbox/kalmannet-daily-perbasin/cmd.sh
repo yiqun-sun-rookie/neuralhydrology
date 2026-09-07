@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1 PYTHONOPTIMIZE=0
-printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=59 purpose=readonly-first-basin-training-progress'
+printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=60 purpose=readonly-first-basin-training-terminal-check'
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B -u - <<'PY_PROGRESS'
 import datetime, hashlib, json, pathlib, re, subprocess
 
@@ -31,7 +31,7 @@ require(receipt['request_sequence'] == 57 and receipt['execution_id'] == executi
 require(receipt['submission_exit_code'] == 0 and len(receipt['job_matches']) == 1, 'submission is not unambiguous')
 job_id = receipt['job_matches'][0]
 require(isinstance(job_id, str) and re.fullmatch(r'[0-9]+', job_id), 'invalid job identifier')
-emit({'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'request_sequence': 59, 'job_id': job_id, 'execution_id': execution_id, 'submission_receipt_sha256': hashlib.sha256(receipt_bytes).hexdigest(), 'run_directory': str(run_directory)})
+emit({'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'request_sequence': 60, 'job_id': job_id, 'execution_id': execution_id, 'submission_receipt_sha256': hashlib.sha256(receipt_bytes).hexdigest(), 'run_directory': str(run_directory)})
 
 for label, args in [
     ('QUEUE', ['squeue', '-h', '-j', job_id, '-o', '%i|%j|%T|%M|%R']),
@@ -67,7 +67,7 @@ for path in [run_directory / 'completion.marker.json', run_directory / 'result_s
     if path.exists():
         data, text = read_text_file(path)
         parsed = json.loads(text)
-        keys = ['terminal_state', 'technical_success', 'completed_epoch', 'optimizer_steps', 'scientific_capability_status', 'formal_evaluation_access_count', 'failure_state', 'failure_stage', 'exception_type', 'exception_message', 'verification_passed']
+        keys = ['terminal_state', 'technical_success', 'completed_epoch', 'optimizer_steps', 'scientific_capability_status', 'scientific_capability_passed', 'relative_accuracy_status', 'convergence_status', 'formal_evaluation_access_count', 'failure_state', 'failure_stage', 'exception_type', 'exception_message', 'verification_passed']
         emit({'section': 'TERMINAL_OR_FAILURE', 'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(), 'fields': {key: parsed[key] for key in keys if key in parsed}})
 
 for path in [status / (execution_id + '.slurm-' + job_id + '.stdout'), status / (execution_id + '.slurm-' + job_id + '.stderr'), status / (execution_id + '.gpu.csv')]:
@@ -79,7 +79,7 @@ for path in [status / (execution_id + '.slurm-' + job_id + '.stdout'), status / 
     with path.open('rb') as stream:
         stream.seek(max(0, info.st_size - 10000))
         tail = stream.read(10000).decode('utf-8', errors='replace')
-    emit({'section': 'LOG_TAIL', 'path': str(path), 'bytes': info.st_size, 'mtime_ns': info.st_mtime_ns, 'last_lines': tail.splitlines()[-8:]})
+    emit({'section': 'LOG_TAIL', 'path': str(path), 'bytes': info.st_size, 'mtime_ns': info.st_mtime_ns, 'last_lines': tail.splitlines()[-12:]})
 
-emit({'status': 'READONLY_TRAINING_PROGRESS_OBSERVED', 'request_sequence': 59, 'job_id': job_id, 'compute_submissions': 0, 'task_file_writes': 0, 'checkpoint_content_reads': 0, 'formal_evaluation_access_count': 0})
+emit({'status': 'READONLY_TRAINING_PROGRESS_OBSERVED', 'request_sequence': 60, 'job_id': job_id, 'compute_submissions': 0, 'task_file_writes': 0, 'checkpoint_content_reads': 0, 'formal_evaluation_access_count': 0})
 PY_PROGRESS
