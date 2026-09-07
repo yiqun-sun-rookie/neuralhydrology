@@ -1,0 +1,66 @@
+### channel=attrswap-daily seq=10
+### host=login4
+### started=2026-09-07T17:18:03+0800
+### ---------- output ----------
+wallclock 2026-09-07 17:18:03 +0800
+=== A. counts ===
+camels nc files: 671
+531_basin_list.txt: 531 lines; head: 01022500 01031500 
+all_basins.txt: 7129 lines; head: camels_01013500 camels_01022500 
+camels_clean_basins.txt: 497 lines; head: camels_01022500 camels_01031500 
+valid_basins.txt: 5281 lines; head: camels_01013500 camels_01022500 
+=== B. coverage of our 529 ===
+present: 529 / 529
+missing:
+
+=== C. variables + dates of one file (nh_final python, header only) ===
+dims {'date': 26662}
+date 1951-01-01 -> 2023-12-30
+dewpoint_temperature_2m_max  | 2.515986204147339
+dewpoint_temperature_2m_mean  | -0.61207115650177
+dewpoint_temperature_2m_min  | -3.596742630004883
+potential_evaporation_sum_ERA5_LAND  | 12.012677192687988
+potential_evaporation_sum_FAO_PENMAN_MONTEITH  | 1.528534173965454
+snow_depth_water_equivalent_max  | 59.80653381347656
+snow_depth_water_equivalent_mean  | 58.944252014160156
+snow_depth_water_equivalent_min  | 58.03797149658203
+streamflow  | nan
+surface_net_solar_radiation_max  | 389.835205078125
+surface_net_solar_radiation_mean  | 115.35662078857422
+surface_net_solar_radiation_min  | 0.0
+surface_net_thermal_radiation_max  | -26.008583068847656
+surface_net_thermal_radiation_mean  | -54.606422424316406
+surface_net_thermal_radiation_min  | -83.93919372558594
+surface_pressure_max  | 98.51277923583984
+surface_pressure_mean  | 98.13520050048828
+surface_pressure_min  | 97.73406982421875
+temperature_2m_max  | 8.178407669067383
+temperature_2m_mean  | 3.838610887527466
+temperature_2m_min  | -0.38647937774658203
+total_precipitation_sum  | 3.174208402633667
+u_component_of_wind_10m_max  | 2.115750789642334
+u_component_of_wind_10m_mean  | 0.8842356204986572
+u_component_of_wind_10m_min  | -0.3403671383857727
+v_component_of_wind_10m_max  | 1.2588329315185547
+v_component_of_wind_10m_mean  | -0.1044931560754776
+v_component_of_wind_10m_min  | -1.4208794832229614
+volumetric_soil_water_layer_1_max  | 0.29413971304893494
+volumetric_soil_water_layer_1_mean  | 0.28342461585998535
+volumetric_soil_water_layer_1_min  | 0.27485477924346924
+volumetric_soil_water_layer_2_max  | 0.2867451608181
+volumetric_soil_water_layer_2_mean  | 0.2821890413761139
+volumetric_soil_water_layer_2_min  | 0.2780821621417999
+volumetric_soil_water_layer_3_max  | 0.2686411142349243
+volumetric_soil_water_layer_3_mean  | 0.2675780653953552
+volumetric_soil_water_layer_3_min  | 0.26652055978775024
+volumetric_soil_water_layer_4_max  | 0.30519723892211914
+volumetric_soil_water_layer_4_mean  | 0.30494242906570435
+volumetric_soil_water_layer_4_min  | 0.3046821355819702
+=== D. attributes_other head (area/lat) ===
+gauge_id,gauge_name,country,gauge_lat,gauge_lon,area
+camels_01013500,"Fish River near Fort Kent, Maine",United States of America,47.23739,-68.58264,2297.683154625437
+camels_01022500,"Narraguagus River at Cherryfield, Maine",United States of America,44.60797,-67.93524,619.1025954030504
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T17:18:25+0800
