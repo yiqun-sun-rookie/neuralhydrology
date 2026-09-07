@@ -1,8 +1,10 @@
 set -o pipefail
-ROOT=/data1/home/sunyiq/nearing2022_da
-echo "=== find 219423/220487 files ==="
-find "$ROOT" ~/ -maxdepth 5 \( -name '*219423*' -o -name '*220487*' \) 2>/dev/null | head -20 || true
-echo "=== slurm scripts dir ==="
-ls -1 "$ROOT/src/29_nearing2022_da_ar/hpc/" 2>/dev/null | head -40 || true
-echo "=== grep output paths in warmpair slurm ==="
-grep -nE 'SBATCH.*(output|error)|^FINAL=|WORK|logs' "$ROOT/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm" 2>/dev/null | head -20 || echo "script name mismatch"
+L=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs
+for F in N22-warmpair_219423_0.err N22-warmpair_219423_0.out N22-warmpair_219423_1.err; do
+  echo "=== $F ==="; tail -40 "$L/$F" 2>/dev/null || echo missing
+done
+echo "=== replv2 220487 ==="
+ls -1t $L | grep -i replv2 | head -5 || true
+for F in $(ls -1t $L | grep -i replv2 | head -2); do echo "-- $F"; tail -30 "$L/$F" 2>/dev/null || true; done
+echo "=== leftover preparing/completed dirs ==="
+ls -1 /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair/ 2>/dev/null | head -20 || echo "no pair root"
