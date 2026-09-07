@@ -5,19 +5,18 @@ echo "=== N22 JOBS ==="
 squeue -u sunyiq -h -o '%.12i %.16j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22' || echo 'no N22 jobs in queue'
 echo "=== FAILURES/TIMEOUTS 7d ==="
 sacct -X -n -P -S $(date -d '7 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22' | grep -E '\|(TIMEOUT|FAILED|NODE_FAIL|OUT_OF_MEMORY|CANCELLED)' || echo '  none'
-echo "=== 219423 WARMPAIR STATE ==="
+echo "=== WARMPAIR 219423 STATE ==="
 sacct -j 219423 -X -n -P --format=JobID,State,Elapsed 2>/dev/null || echo '  not found'
 echo "=== LOG IDLE SECONDS ==="
 for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-' | awk '{print $1}'); do
   SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
   [ -n "$SO" ] && [ -f "$SO" ] && printf '  %-14s idle=%ss node=%s\n' "$J" "$(( $(date +%s) - $(stat -c %Y "$SO") ))" "$(squeue -h -j "$J" -o '%N' 2>/dev/null)"
 done
-echo "=== WARMUP PAIR DIRS ==="
+echo "=== WARMPAIR ARTIFACTS ==="
 D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
 for X in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do
   [ -e "$D/$X" ] && echo "  PRESENT $X" || echo "  MISSING $X"
 done
-[ -f "$D/paired_analysis/paired_analysis.json" ] && cat "$D/paired_analysis/paired_analysis.json" || true
 echo "=== GATE ARTIFACTS ==="
 for F in aggregation/evaluations/time_split_vs_author.csv aggregation/evaluations/basin_split_vs_author.csv aggregation/hyperparameters/scores.csv aggregation/final_reproduction_gate.json; do
   P="$ROOT/closure_20260810/$F"
