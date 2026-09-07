@@ -1,31 +1,43 @@
 #!/usr/bin/env bash
 set -uo pipefail
-sequence=36
-echo "channel=kalmannet-daily-perbasin sequence=${sequence} purpose=task6-readonly-failed-allocation-and-maintenance"
-date --iso-8601=seconds
+export PYTHONDONTWRITEBYTECODE=1
+printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=37 purpose=readonly-maint-flag-reservation-diagnosis'
+date -Is
 hostname
-echo 'training_submissions=0 runtime_submissions=0 task_file_writes=0 signals_sent=0 formal_evaluation_access=0'
-echo '=== EXACT FAILED RUNTIME JOB ACCOUNTING ==='
-sacct -X -n -P -j 223507 --format=JobIDRaw,JobName%80,State,ExitCode,Submit,Eligible,Start,End,Elapsed,NodeList,AllocTRES%120,Reason%150
-account_exit=$?
-echo "sacct_exit_code=$account_exit"
-echo '=== EXACT JOB CONTROLLER RECORD ==='
-scontrol show job 223507
-echo "scontrol_job_exit_code=$?"
-echo '=== REGISTERED NODE RECORD ==='
-scontrol show node ngu202
-node_exit=$?
-echo "scontrol_node_exit_code=$node_exit"
-echo '=== REGISTERED NODE STATE AND REASON ==='
-sinfo -N -n ngu202 -o '%N|%P|%T|%G|%C|%m|%E'
-sinfo -R -n ngu202
-echo '=== CURRENT RELATED JOBS ==='
-squeue -h -u "$(id -un)" -o '%i|%200j|%T|%N|%R' | awk -F'|' '$2 ~ /(kdpp|DAILY_CAMELS_KNET_PER_BASIN|daily.camels.*per.basin|kalmannet.daily.perbasin)/'
-echo '=== FAILED REQUEST OUTPUT METADATA ONLY ==='
-ROOT=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901
-AUDIT="$ROOT/runtime_gate_audits/V2_TASK6_SEQ35"
-if [[ -d "$AUDIT" && ! -L "$AUDIT" ]]; then
-    find "$AUDIT" -mindepth 1 -maxdepth 2 -printf '%y|%P|%s\n' | sort
-fi
-[[ "$account_exit" == 0 && "$node_exit" == 0 ]] || exit 93
-echo 'READONLY_JOB_AND_MAINTENANCE_QUERY_COMPLETE'
+printf '%s\n' 'training_submissions=0 runtime_submissions=0 task_file_writes=0 signals_sent=0 formal_evaluation_access=0'
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'PY'
+import json
+import subprocess
+
+def query(label, args):
+    result = subprocess.run(args, text=True, capture_output=True, timeout=30, check=False)
+    print(json.dumps({"query": label, "exit_code": result.returncode, "stdout": result.stdout, "stderr": result.stderr}, ensure_ascii=False), flush=True)
+    return result
+
+node = query("exact_node", ["scontrol", "show", "node", "ngu202"])
+query("node_state_reservation_name_reason", ["sinfo", "-h", "-N", "-n", "ngu202", "-o", "%N|%P|%T|%i|%E"])
+records = subprocess.run(["scontrol", "-o", "show", "reservation"], text=True, capture_output=True, timeout=30, check=False)
+print(json.dumps({"query": "reservation_inventory_status_only", "exit_code": records.returncode, "stderr": records.stderr}), flush=True)
+if records.returncode == 0:
+    lines = [line for line in records.stdout.splitlines() if "ReservationName=" in line]
+    if len(lines) > 200:
+        raise RuntimeError("Reservation count exceeds bounded read-only query")
+    matches = 0
+    for record in lines:
+        fields = dict(item.split("=", 1) for item in record.split() if "=" in item)
+        nodes = fields.get("Nodes", "")
+        if not nodes or nodes in {"(null)", "NONE"}:
+            continue
+        expansion = subprocess.run(["scontrol", "show", "hostnames", nodes], text=True, capture_output=True, timeout=10, check=False)
+        if expansion.returncode != 0:
+            print(json.dumps({"query": "reservation_node_expansion_error", "reservation": fields.get("ReservationName"), "exit_code": expansion.returncode, "stderr": expansion.stderr}), flush=True)
+            continue
+        if "ngu202" in expansion.stdout.splitlines():
+            matches += 1
+            print(json.dumps({"query": "reservation_covering_exact_node", "record": record}), flush=True)
+    print(json.dumps({"matching_reservation_count": matches}), flush=True)
+query("own_jobs_on_exact_node", ["squeue", "-h", "-u", "sunyiq", "-w", "ngu202", "-o", "%i|%j|%T|%R"])
+if node.returncode != 0 or records.returncode != 0:
+    raise SystemExit(1)
+print("READONLY_MAINT_RESERVATION_DIAGNOSIS_COMPLETE")
+PY
