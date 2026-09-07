@@ -1,0 +1,315 @@
+### channel=kalmannet-wrr-hp-extension seq=24
+### host=login4
+### started=2026-09-07T22:08:26+0800
+### ---------- output ----------
+2026-09-07T22:08:26+0800
+JOBID|NAME|STATE|PARTITION|TIME|TIME_LIMIT|NODELIST(REASON)
+223697_5|wrr-finalist|RUNNING|hgpu2p|2:09|1-00:00:00|ngu001
+223697_4|wrr-finalist|RUNNING|hgpu2p|2:09|1-00:00:00|ngu001
+223697_3|wrr-finalist|RUNNING|hgpu2p|2:09|1-00:00:00|ngu011
+223697_2|wrr-finalist|RUNNING|hgpu2p|2:09|1-00:00:00|ngu011
+223697_1|wrr-finalist|RUNNING|hgpu2p|2:09|1-00:00:00|ngu010
+223697_0|wrr-finalist|RUNNING|hgpu2p|2:09|1-00:00:00|ngu010
+223697_0|wrr-finalist|hgpu2p|RUNNING|0:0|00:02:53|2026-09-07T22:06:17|Unknown|ngu010
+223697_1|wrr-finalist|hgpu2p|RUNNING|0:0|00:02:53|2026-09-07T22:06:17|Unknown|ngu010
+223697_2|wrr-finalist|hgpu2p|RUNNING|0:0|00:02:53|2026-09-07T22:06:17|Unknown|ngu011
+223697_3|wrr-finalist|hgpu2p|RUNNING|0:0|00:02:53|2026-09-07T22:06:17|Unknown|ngu011
+223697_4|wrr-finalist|hgpu2p|RUNNING|0:0|00:02:53|2026-09-07T22:06:17|Unknown|ngu001
+223697_5|wrr-finalist|hgpu2p|RUNNING|0:0|00:02:53|2026-09-07T22:06:17|Unknown|ngu001
+{
+  "deployment": {
+    "stage": "DEPLOYMENT_PASS",
+    "root": "/data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907",
+    "archive_sha256": "266eab5e5f2b21b992d218aaede11abc6018c11a23c3c5c28a328bd5210a497e",
+    "static_files_verified": 69,
+    "source_files_verified": 62,
+    "old_files_unchanged": 81,
+    "data_splits": [
+      "train",
+      "val"
+    ],
+    "optimizer_steps_during_deployment": 0,
+    "time_utc": "2026-09-07T14:05:33.405888+00:00"
+  },
+  "runs": [
+    {
+      "index": 0,
+      "run_id": "WRR-FINALIST-20260907-I00",
+      "seed": 43,
+      "hidden_size": 64,
+      "in_out_mult": 15,
+      "learning_rate": 0.01,
+      "run_directory_count": 1,
+      "run_dir": "/data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed43_gpu/idx0000_lr0p01_hs64_nl1_mult15",
+      "launcher_audits": [
+        {
+          "started_at": "2026-09-07T22:06:38",
+          "finished_at": null,
+          "launcher_status": null,
+          "runtime": {
+            "seed": 43,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          },
+          "slurm_job_id": "223698",
+          "slurm_array_task_id": "0",
+          "hostname": "ngu010",
+          "held_out_test_loaded": false
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "run_id": "WRR-FINALIST-20260907-I01",
+      "seed": 44,
+      "hidden_size": 64,
+      "in_out_mult": 15,
+      "learning_rate": 0.01,
+      "run_directory_count": 1,
+      "run_dir": "/data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed44_gpu/idx0001_lr0p01_hs64_nl1_mult15",
+      "launcher_audits": [
+        {
+          "started_at": "2026-09-07T22:06:38",
+          "finished_at": null,
+          "launcher_status": null,
+          "runtime": {
+            "seed": 44,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          },
+          "slurm_job_id": "223699",
+          "slurm_array_task_id": "1",
+          "hostname": "ngu010",
+          "held_out_test_loaded": false
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "run_id": "WRR-FINALIST-20260907-I02",
+      "seed": 43,
+      "hidden_size": 64,
+      "in_out_mult": 10,
+      "learning_rate": 0.01,
+      "run_directory_count": 1,
+      "run_dir": "/data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed43_gpu/idx0002_lr0p01_hs64_nl1_mult10",
+      "launcher_audits": [
+        {
+          "started_at": "2026-09-07T22:03:58",
+          "finished_at": null,
+          "launcher_status": null,
+          "runtime": {
+            "seed": 43,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          },
+          "slurm_job_id": "223700",
+          "slurm_array_task_id": "2",
+          "hostname": "ngu011",
+          "held_out_test_loaded": false
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "run_id": "WRR-FINALIST-20260907-I03",
+      "seed": 44,
+      "hidden_size": 64,
+      "in_out_mult": 10,
+      "learning_rate": 0.01,
+      "run_directory_count": 1,
+      "run_dir": "/data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed44_gpu/idx0003_lr0p01_hs64_nl1_mult10",
+      "launcher_audits": [
+        {
+          "started_at": "2026-09-07T22:03:58",
+          "finished_at": null,
+          "launcher_status": null,
+          "runtime": {
+            "seed": 44,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          },
+          "slurm_job_id": "223701",
+          "slurm_array_task_id": "3",
+          "hostname": "ngu011",
+          "held_out_test_loaded": false
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "run_id": "WRR-FINALIST-20260907-I04",
+      "seed": 43,
+      "hidden_size": 16,
+      "in_out_mult": 10,
+      "learning_rate": 0.02,
+      "run_directory_count": 1,
+      "run_dir": "/data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed43_gpu/idx0004_lr0p02_hs16_nl1_mult10",
+      "launcher_audits": [
+        {
+          "started_at": "2026-09-07T22:06:57",
+          "finished_at": null,
+          "launcher_status": null,
+          "runtime": {
+            "seed": 43,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          },
+          "slurm_job_id": "223702",
+          "slurm_array_task_id": "4",
+          "hostname": "ngu001",
+          "held_out_test_loaded": false
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "run_id": "WRR-FINALIST-20260907-I05",
+      "seed": 44,
+      "hidden_size": 16,
+      "in_out_mult": 10,
+      "learning_rate": 0.02,
+      "run_directory_count": 1,
+      "run_dir": "/data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed44_gpu/idx0005_lr0p02_hs16_nl1_mult10",
+      "launcher_audits": [
+        {
+          "started_at": "2026-09-07T22:06:57",
+          "finished_at": null,
+          "launcher_status": null,
+          "runtime": {
+            "seed": 44,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          },
+          "slurm_job_id": "223697",
+          "slurm_array_task_id": "5",
+          "hostname": "ngu001",
+          "held_out_test_loaded": false
+        }
+      ]
+    }
+  ]
+}
+
+LOG /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_0.out
+[Groups] 仅保留用户指定索引: [0] (原 6 -> 1)
+总组合: 6 | 分片 0/1 (ignored) → 本分片 1 组
+  idx=0 params={'lr': 0.01, 'hidden_size': 64, 'num_layers': 1, 'in_out_mult': 15}
+[Run] idx=0 uid=b2d06073 params={'lr': 0.01, 'hidden_size': 64, 'num_layers': 1, 'in_out_mult': 15} resume=False config_hash=ffdb5810757c
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+Walrus Using device: cuda
+[Perf] cudnn.benchmark=True
+[Perf] set_float32_matmul_precision=high
+[EpochStart] 1/200 lr=0.01
+
+LOG /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_1.out
+[Groups] 仅保留用户指定索引: [1] (原 6 -> 1)
+总组合: 6 | 分片 0/1 (ignored) → 本分片 1 组
+  idx=1 params={'lr': 0.01, 'hidden_size': 64, 'num_layers': 1, 'in_out_mult': 15}
+[Run] idx=1 uid=b2d06073 params={'lr': 0.01, 'hidden_size': 64, 'num_layers': 1, 'in_out_mult': 15} resume=False config_hash=ffdb5810757c
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+Walrus Using device: cuda
+[Perf] cudnn.benchmark=True
+[Perf] set_float32_matmul_precision=high
+[EpochStart] 1/200 lr=0.01
+
+LOG /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_2.out
+[Groups] 仅保留用户指定索引: [2] (原 6 -> 1)
+总组合: 6 | 分片 0/1 (ignored) → 本分片 1 组
+  idx=2 params={'lr': 0.01, 'hidden_size': 64, 'num_layers': 1, 'in_out_mult': 10}
+[Run] idx=2 uid=4c668e10 params={'lr': 0.01, 'hidden_size': 64, 'num_layers': 1, 'in_out_mult': 10} resume=False config_hash=d5314328af01
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+Walrus Using device: cuda
+[Perf] cudnn.benchmark=True
+[Perf] set_float32_matmul_precision=high
+[EpochStart] 1/200 lr=0.01
+
+LOG /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_3.out
+[Groups] 仅保留用户指定索引: [3] (原 6 -> 1)
+总组合: 6 | 分片 0/1 (ignored) → 本分片 1 组
+  idx=3 params={'lr': 0.01, 'hidden_size': 64, 'num_layers': 1, 'in_out_mult': 10}
+[Run] idx=3 uid=4c668e10 params={'lr': 0.01, 'hidden_size': 64, 'num_layers': 1, 'in_out_mult': 10} resume=False config_hash=d5314328af01
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+Walrus Using device: cuda
+[Perf] cudnn.benchmark=True
+[Perf] set_float32_matmul_precision=high
+[EpochStart] 1/200 lr=0.01
+
+LOG /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_4.out
+[Groups] 仅保留用户指定索引: [4] (原 6 -> 1)
+总组合: 6 | 分片 0/1 (ignored) → 本分片 1 组
+  idx=4 params={'lr': 0.02, 'hidden_size': 16, 'num_layers': 1, 'in_out_mult': 10}
+[Run] idx=4 uid=a5d5e22f params={'lr': 0.02, 'hidden_size': 16, 'num_layers': 1, 'in_out_mult': 10} resume=False config_hash=1924aed13e4b
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+Walrus Using device: cuda
+[Perf] cudnn.benchmark=True
+[Perf] set_float32_matmul_precision=high
+[EpochStart] 1/200 lr=0.02
+
+LOG /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_5.out
+[Groups] 仅保留用户指定索引: [5] (原 6 -> 1)
+总组合: 6 | 分片 0/1 (ignored) → 本分片 1 组
+  idx=5 params={'lr': 0.02, 'hidden_size': 16, 'num_layers': 1, 'in_out_mult': 10}
+[Run] idx=5 uid=a5d5e22f params={'lr': 0.02, 'hidden_size': 16, 'num_layers': 1, 'in_out_mult': 10} resume=False config_hash=1924aed13e4b
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+dict_keys(['p', 'etpot', 'qobs', 'tm_hours', 'state0'])
+Walrus Using device: cuda
+[Perf] cudnn.benchmark=True
+[Perf] set_float32_matmul_precision=high
+[EpochStart] 1/200 lr=0.02
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T22:08:26+0800
