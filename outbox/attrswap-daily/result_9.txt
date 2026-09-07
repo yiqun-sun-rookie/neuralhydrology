@@ -1,0 +1,44 @@
+### channel=attrswap-daily seq=9
+### host=login4
+### started=2026-09-07T17:15:09+0800
+### ---------- output ----------
+wallclock 2026-09-07 17:15:09 +0800
+=== A. top ===
+lrwxr-xr-x. 1 sunyiq g_sunyiq 47 Jan 29  2026 /data1/home/sunyiq/neuralhydrology/data/Caravan/Caravan -> /data1/home/sunyiq/neuralhydrology/data/Caravan
+=== B. subsets ===
+ls: cannot access /data1/home/sunyiq/neuralhydrology/data/Caravan/Caravan/timeseries/csv: No such file or directory
+camels
+camelsaus
+camelsbr
+camelscl
+camelsgb
+hysets
+lamah
+=== C. camels subset ===
+camels csv files: 0
+=== D. sample header + first/last rows ===
+
+...
+/data1/home/sunyiq/.hpc_mailbox_staging/attrswap-daily/cmd_9.sh: line 9: : No such file or directory
+rows: 
+=== E. attributes files ===
+total 1714
+drwxr-xr-x. 2 sunyiq g_sunyiq    4096 Jan 20  2026 .
+drwxr-xr-x. 9 sunyiq g_sunyiq    4096 Jan 20  2026 ..
+-rw-r--r--. 1 sunyiq g_sunyiq  105636 Jan 20  2026 attributes_caravan_camels.csv
+-rw-r--r--. 1 sunyiq g_sunyiq 1563861 Jan 20  2026 attributes_hydroatlas_camels.csv
+-rw-r--r--. 1 sunyiq g_sunyiq   76040 Jan 20  2026 attributes_other_camels.csv
+gauge_id,gauge_name,country,gauge_lat,gauge_lon,area
+=== F. readme / version ===
+/data1/home/sunyiq/neuralhydrology/data/Caravan/Caravan/531_basin_list.txt
+/data1/home/sunyiq/neuralhydrology/data/Caravan/Caravan/all_basins.txt
+/data1/home/sunyiq/neuralhydrology/data/Caravan/Caravan/camels_clean_basins.txt
+/data1/home/sunyiq/neuralhydrology/data/Caravan/Caravan/valid_basins.txt
+=== G. netcdf present? ===
+netcdf
+camels_01013500.nc
+camels_01022500.nc
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T17:15:09+0800
