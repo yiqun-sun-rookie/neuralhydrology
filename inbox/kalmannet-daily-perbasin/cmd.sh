@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1 PYTHONOPTIMIZE=0
-printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=60 purpose=readonly-first-basin-training-terminal-check'
-/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B -u - <<'PY_PROGRESS'
-import datetime, hashlib, json, pathlib, re, subprocess
+printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=61 purpose=readonly-first-basin-terminal-evidence-and-shared-resource-state'
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B -u - <<'PY_EVIDENCE'
+import datetime, hashlib, json, pathlib, subprocess
 
 root = pathlib.Path('/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901')
 execution_id = 'DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_HISTORYFIX1_A800_TRAIN1_SEQ57'
-launch = root / 'node_recovery_20260907/train_04105700_historyfix1_seq57'
 run_directory = root / 'runs' / execution_id
+launch = root / 'node_recovery_20260907/train_04105700_historyfix1_seq57'
 status = root / 'status'
+job_id = '223629'
 
 def require(condition, message):
     if not condition:
@@ -18,68 +19,49 @@ def require(condition, message):
 def emit(value):
     print(json.dumps(value, sort_keys=True, allow_nan=False), flush=True)
 
-def read_text_file(path, limit=2000000):
-    require(path.is_file() and not path.is_symlink() and path.resolve() == path, 'unexpected file: ' + str(path))
-    require(path.stat().st_size <= limit, 'text exceeds bound: ' + str(path))
+def raw_json_record(path, limit=2000000):
+    require(path.is_file() and not path.is_symlink() and path.resolve() == path, 'unexpected JSON path: ' + str(path))
     data = path.read_bytes()
-    return data, data.decode('utf-8')
+    require(len(data) <= limit, 'JSON exceeds bound: ' + str(path))
+    text = data.decode('utf-8')
+    json.loads(text)
+    emit({'section': 'RAW_JSON_TEXT', 'path': str(path), 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(), 'text': text})
 
 require(root.is_dir() and root.resolve() == root, 'root differs')
-receipt_bytes, receipt_text = read_text_file(launch / 'submission_receipt.json', 100000)
-receipt = json.loads(receipt_text)
-require(receipt['request_sequence'] == 57 and receipt['execution_id'] == execution_id, 'submission identity differs')
-require(receipt['submission_exit_code'] == 0 and len(receipt['job_matches']) == 1, 'submission is not unambiguous')
-job_id = receipt['job_matches'][0]
-require(isinstance(job_id, str) and re.fullmatch(r'[0-9]+', job_id), 'invalid job identifier')
-emit({'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'request_sequence': 60, 'job_id': job_id, 'execution_id': execution_id, 'submission_receipt_sha256': hashlib.sha256(receipt_bytes).hexdigest(), 'run_directory': str(run_directory)})
+emit({'section': 'IDENTITY', 'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'request_sequence': 61, 'execution_id': execution_id, 'job_id': job_id, 'run_directory': str(run_directory)})
+
+for path in [
+    launch / 'pre_submit_baseline.json',
+    launch / 'submission_receipt.json',
+    run_directory / 'preflight.json',
+    run_directory / 'epoch_history.json',
+    run_directory / 'result_summary.json',
+    run_directory / 'completion.marker.json',
+    run_directory / 'manifest.sha256.json',
+    status / (execution_id + '.audit.json'),
+]:
+    raw_json_record(path)
+
+stdout_path = status / (execution_id + '.slurm-' + job_id + '.stdout')
+stderr_path = status / (execution_id + '.slurm-' + job_id + '.stderr')
+for label, path in [('STDOUT', stdout_path), ('STDERR', stderr_path)]:
+    require(path.is_file() and not path.is_symlink() and path.resolve() == path, 'unexpected log path: ' + str(path))
+    data = path.read_bytes()
+    text = data.decode('utf-8', errors='replace')
+    emit({'section': label, 'path': str(path), 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(), 'first_lines': text.splitlines()[:16], 'last_lines': text.splitlines()[-16:]})
+require(stderr_path.stat().st_size == 0, 'training stderr is not empty')
 
 for label, args in [
-    ('QUEUE', ['squeue', '-h', '-j', job_id, '-o', '%i|%j|%T|%M|%R']),
     ('ACCOUNTING', ['sacct', '-n', '-P', '-j', job_id, '--format=JobID,JobName%100,State,ExitCode,Elapsed,NodeList,AllocCPUS,AllocTRES%100']),
-    ('CONTROLLER', ['scontrol', 'show', 'job', job_id]),
+    ('PARTITION', ['scontrol', 'show', 'partition', 'hgpu8']),
+    ('NODE_NGU201', ['scontrol', 'show', 'node', 'ngu201']),
+    ('NODE_NGU202', ['scontrol', 'show', 'node', 'ngu202']),
+    ('NODE_NGU203', ['scontrol', 'show', 'node', 'ngu203']),
+    ('SINFO', ['sinfo', '-N', '-p', 'hgpu8', '-h', '-o', '%N|%T|%c|%C|%G']),
 ]:
     result = subprocess.run(args, capture_output=True, text=True, timeout=30)
-    emit({'section': label, 'exit_code': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr})
-    job_purged = label in {'QUEUE', 'CONTROLLER'} and 'Invalid job id specified' in (result.stdout + result.stderr)
-    require(result.returncode == 0 or job_purged, 'scheduler read failed: ' + label)
+    emit({'section': label, 'args': args, 'exit_code': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr})
+    require(result.returncode == 0, 'read-only scheduler command failed: ' + label)
 
-history_path = run_directory / 'epoch_history.json'
-if history_path.exists():
-    history_bytes, history_text = read_text_file(history_path)
-    history = json.loads(history_text)
-    require(isinstance(history, list), 'history is not a list')
-    selected = ['epoch', 'epoch_status', 'validation_status', 'optimizer_steps', 'training_forecast_error_events', 'training_objective', 'same_segment_post_step_objective', 'checkpoint_objective_728', 'gradient_norm_before_clip', 'parameter_sha256', 'checkpoint_ratio', 'post_step_ratio']
-    emit({'section': 'TRAINING_HISTORY', 'rows': len(history), 'sha256': hashlib.sha256(history_bytes).hexdigest(), 'last_rows': [{key: row.get(key) for key in selected} for row in history[-2:]], 'training_update_recorded': any(type(row.get('optimizer_steps')) is int and row['optimizer_steps'] > 0 for row in history)})
-else:
-    emit({'section': 'TRAINING_HISTORY', 'exists': False, 'training_update_recorded': False})
-
-for label, directory, pattern in [('CHECKPOINT_METADATA_ONLY', run_directory / 'checkpoints', 'epoch_*.pt'), ('ATTEMPT_METADATA', run_directory / 'attempts', 'epoch_*.started.json')]:
-    entries = []
-    if directory.exists():
-        require(directory.is_dir() and not directory.is_symlink() and directory.resolve() == directory, 'unexpected directory')
-        for path in sorted(directory.glob(pattern)):
-            require(path.is_file() and not path.is_symlink(), 'unexpected member')
-            info = path.stat()
-            entries.append({'name': path.name, 'bytes': info.st_size, 'mtime_ns': info.st_mtime_ns})
-    emit({'section': label, 'count': len(entries), 'last_members': entries[-3:]})
-
-for path in [run_directory / 'completion.marker.json', run_directory / 'result_summary.json', run_directory / 'unregistered_numeric_failure_event.json', status / (execution_id + '.audit.json')]:
-    if path.exists():
-        data, text = read_text_file(path)
-        parsed = json.loads(text)
-        keys = ['terminal_state', 'technical_success', 'completed_epoch', 'optimizer_steps', 'scientific_capability_status', 'scientific_capability_passed', 'relative_accuracy_status', 'convergence_status', 'formal_evaluation_access_count', 'failure_state', 'failure_stage', 'exception_type', 'exception_message', 'verification_passed']
-        emit({'section': 'TERMINAL_OR_FAILURE', 'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(), 'fields': {key: parsed[key] for key in keys if key in parsed}})
-
-for path in [status / (execution_id + '.slurm-' + job_id + '.stdout'), status / (execution_id + '.slurm-' + job_id + '.stderr'), status / (execution_id + '.gpu.csv')]:
-    if not path.exists():
-        emit({'section': 'LOG_TAIL', 'path': str(path), 'exists': False})
-        continue
-    require(path.is_file() and not path.is_symlink() and path.resolve() == path, 'log path differs')
-    info = path.stat()
-    with path.open('rb') as stream:
-        stream.seek(max(0, info.st_size - 10000))
-        tail = stream.read(10000).decode('utf-8', errors='replace')
-    emit({'section': 'LOG_TAIL', 'path': str(path), 'bytes': info.st_size, 'mtime_ns': info.st_mtime_ns, 'last_lines': tail.splitlines()[-12:]})
-
-emit({'status': 'READONLY_TRAINING_PROGRESS_OBSERVED', 'request_sequence': 60, 'job_id': job_id, 'compute_submissions': 0, 'task_file_writes': 0, 'checkpoint_content_reads': 0, 'formal_evaluation_access_count': 0})
-PY_PROGRESS
+emit({'status': 'READONLY_TERMINAL_EVIDENCE_AND_RESOURCE_STATE_OBSERVED', 'request_sequence': 61, 'job_id': job_id, 'compute_submissions': 0, 'task_file_writes': 0, 'checkpoint_content_reads': 0, 'prediction_array_reads': 0, 'formal_evaluation_access_count': 0})
+PY_EVIDENCE
