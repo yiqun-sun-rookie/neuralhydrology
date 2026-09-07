@@ -1,0 +1,96 @@
+### channel=kalmannet-daily-perbasin seq=51
+### host=login4
+### started=2026-09-07T15:53:51+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=51 purpose=historyfix1-fresh-runtime-and-synthetic-entrypoint-no-scientific-training
+2026-09-07T15:53:51+0800
+login4
+DEPLOYED_51_FILE_HASH_CHECK=PASS
+{"status": "HISTORYFIX1_PROTECTED_REMOTE_INTEGRITY_PASS", "new_source_files": 51, "old_run_count": 4, "old_failed_job_id": 223514, "old_failure_preserved": true, "formal_access_count": 0}
+{"status": "OLD_RUNTIME_223532_FAILURE_PRESERVED", "frozen_text_files": 14, "all_files": 149, "original_test_support_files": 135, "synthetic_tests_started_in_old_job": 0, "synthetic_toy_updates_actual_in_old_job": 0}
+CURRENT_USER_QUEUE exit_code=0
+202229|N22-agg-eval                                                                                                                                                                                            |PENDING|
+202294|N22-export                                                                                                                                                                                              |PENDING|
+202315|N22-gate                                                                                                                                                                                                |PENDING|
+202507|N22-mask-iso-531                                                                                                                                                                                        |PENDING|
+215429|id30_m01_s100                                                                                                                                                                                           |PENDING|
+202293|N22-manifest                                                                                                                                                                                            |PENDING|
+EXACT_TARGET_NODE exit_code=0
+NodeName=ngu201 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=24 CPUTot=64 CPULoad=5.39
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   GresDrain=N/A
+   GresUsed=gpu:6,dcu:0
+   NodeAddr=ngu201 NodeHostName=ngu201 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=410099 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-04-28T14:14:25 SlurmdStartTime=2026-04-28T14:14:06
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=24
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+{"resource_rule": "one normally allocated GPU and four CPUs; MIXED permitted", "GPUCount": 8, "GPUAllocated": 6, "other_jobs_modified": 0}
+EXACT_PARTITION exit_code=0
+PartitionName=hgpu8
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[201-203]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=192 TotalNodes=3 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+{"PreemptMode": "OFF", "PreemptType": "preempt/none", "PrivateData": "jobs"}
+ORIGINAL_FAILED_RUNTIME_ACCOUNTING exit_code=0
+223532|FAILED|1:0|ngu203
+223532.batch|FAILED|1:0|ngu203
+223532.extern|COMPLETED|0:0|ngu203
+{"status": "ISOLATED_TEST_SUPPORT_INTEGRITY_PASS", "support_files": 136, "support_manifest_sha256": "a3d2a9cdff2a5b2f507afd4426e60297495c3bd417f2129620a082239a44804c"}
+{"resource_binding_sha256": "417103ee5970a152d4c2eb3bdac36fd928817b7a28c099148b481acd4a66070a", "resource_binding_bytes": 10831}
+{"runtime_recovery_ledger": {"schema_version": "historyfix1_pretraining_runtime_recovery_ledger_v1", "recovery_attempt_number": 1, "original_runtime_request_sequence": 44, "failed_job_id": 223532, "failure_state": "INCOMPLETE_INFRASTRUCTURE_FAILURE", "failure_subtype": "TEST_TOOL_DISTRIBUTION_FILE_OMISSION", "request_sequence": 51, "old_runtime_audit": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_seq44", "new_runtime_audit": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_recovery1_seq51", "science_source_root": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source", "science_archive_sha256": "737d7044e6c239d16a13d28ce1d7bd62fe8f58c6bd304ee89b3a681edc230c38", "old_result45_sha256": "d9a345ae0c7522e18ef7bb38c8027ad3dd88bd415961926aae9cfbff5efadb2c", "new_support_archive_sha256": "4d96b1169a5ab9aa654125fc339f78baeb6f815089313889f8ffdf5829f8b034", "added_py_shim_sha256": "b71675b5d9845ba0814e9e88767f88dac3b3cc0d3128da028bd45edbb523e871", "runtime_script_sha256": "329a9de595b1184df2051b36106fe4657f0099b2264618734c8a1906ccf7c580", "minimal_repair": "Add unchanged pytest-distribution py.py in a new test-support directory; rerun nontraining gate once only", "is_scientific_training_checkpoint_resume": false, "scientific_training_submissions": 0, "created_at_utc": "2026-09-07T07:53:57.328992+00:00", "on_failure": "STOP_FOR_USER_DECISION_NO_FURTHER_RECOVERY"}, "recovery_ledger_sha256": "d8a743a372fdab2643f2c19a343da0ac9d76599bdafc5ca8b01bbfeae8e3da26", "recovery_ledger_path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_recovery_once.json"}
+{"baseline_sha256": "236c5f07329411427d0de7f8b7c552567a5bdb890b31b089318c0376d8e4aae3", "pre_submit_baseline": {"archive_sha256": "737d7044e6c239d16a13d28ce1d7bd62fe8f58c6bd304ee89b3a681edc230c38", "authorized_new_historyfix_execution": true, "before_runs": ["DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_A800_TRAIN3_SEQ13", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_04105700_V2_20260902_A43_A800_TRAIN1_SEQ41", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_08070200_A800_TRAIN1_SEQ18", "DAILY_CAMELS_KNET_PER_BASIN_PILOT_09035800_A800_TRAIN1_SEQ24"], "binding_script_sha256": "417103ee5970a152d4c2eb3bdac36fd928817b7a28c099148b481acd4a66070a", "deployed_files": 51, "failed_runtime_job_id": 223532, "failed_runtime_request": 44, "global_preemption": "OFF", "gpu_name": "NVIDIA A800-SXM4-80GB", "internal_manifest_sha256": "39b0539bbdc14df2f443c3e6a548952c5ba2fe28bf650cc7be5b12f8bce0ad7f", "minimal_repair": "add only original pytest distribution py.py; new isolated tool manifest; no scientific or test change", "new_build_runtime_attempt": 2, "node": "ngu201", "old_failed_training_is_not_resumed": true, "old_failed_training_job_id": 223514, "old_failure_preserved": true, "partition": "hgpu8", "request_sequence": 51, "resource_scope": "OWN_ASSIGNED_GPU_AND_CPU_SHARED_NODE", "runtime_recovery_attempt": 1, "runtime_recovery_ledger_sha256": "d8a743a372fdab2643f2c19a343da0ac9d76599bdafc5ca8b01bbfeae8e3da26", "runtime_script_bytes": 19342, "runtime_script_path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_recovery1_seq51/runtime_gate.sh", "runtime_script_sha256": "329a9de595b1184df2051b36106fe4657f0099b2264618734c8a1906ccf7c580", "source_root": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source", "test_support_archive_sha256": "4d96b1169a5ab9aa654125fc339f78baeb6f815089313889f8ffdf5829f8b034", "test_support_files": 136, "test_support_manifest_sha256": "a3d2a9cdff2a5b2f507afd4426e60297495c3bd417f2129620a082239a44804c", "training_submissions": 0}}
+SBATCH_HISTORYFIX1_REAL_GPU_AND_CPU_SYNTHETIC_GATE exit_code=0
+Submitted batch job 223573
+SUBMITTED_JOB_CONTROLLER_RECORD exit_code=0
+JobId=223573 JobName=kdpp-v2-historyfix1-runtime-rec1-51
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=00:15:00 TimeMin=N/A
+   SubmitTime=2026-09-07T15:54:41 EligibleTime=2026-09-07T15:54:41
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=2026-09-07T16:13:57
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-07T15:54:41
+   Partition=hgpu8 AllocNode:Sid=login04:46471
+   ReqNodeList=ngu201 ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_recovery1_seq51/runtime_gate.sh
+   WorkDir=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source
+   StdErr=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_recovery1_seq51/slurm-223573.stderr
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_recovery1_seq51/slurm-223573.stdout
+   Power=
+   TresPerNode=gpu:1
+
+DEPLOYED_51_FILE_HASH_CHECK=PASS
+{"audit_directory": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/node_recovery_20260907/historyfix1_runtime_recovery1_seq51", "baseline_sha256": "236c5f07329411427d0de7f8b7c552567a5bdb890b31b089318c0376d8e4aae3", "formal_evaluation_access_count": 0, "job_id": "223573", "node": "ngu201", "request_sequence": 51, "runtime_script_sha256": "329a9de595b1184df2051b36106fe4657f0099b2264618734c8a1906ccf7c580", "runtime_submissions": 1, "source_root": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_pilots_20260901/deployments/DAILY_CAMELS_KNET_PER_BASIN_V2_BUNDLE_HISTORYFIX1_DEPLOY_SEQ43/source", "status": "HISTORYFIX1_RUNTIME_RECOVERY1_AND_SYNTHETIC_SUBMITTED_NOT_PASSED", "training_submissions": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T15:53:57+0800
