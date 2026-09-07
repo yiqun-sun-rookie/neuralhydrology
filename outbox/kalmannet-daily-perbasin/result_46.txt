@@ -1,0 +1,43 @@
+### channel=kalmannet-daily-perbasin seq=46
+### host=login4
+### started=2026-09-07T13:40:07+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=46 purpose=historyfix1-fresh-runtime-and-synthetic-entrypoint-no-scientific-training
+2026-09-07T13:40:07+0800
+login4
+DEPLOYED_51_FILE_HASH_CHECK=PASS
+{"status": "HISTORYFIX1_PROTECTED_REMOTE_INTEGRITY_PASS", "new_source_files": 51, "old_run_count": 4, "old_failed_job_id": 223514, "old_failure_preserved": true, "formal_access_count": 0}
+{"status": "OLD_RUNTIME_223532_FAILURE_PRESERVED", "frozen_text_files": 14, "all_files": 149, "original_test_support_files": 135, "synthetic_tests_started_in_old_job": 0, "synthetic_toy_updates_actual_in_old_job": 0}
+CURRENT_USER_QUEUE exit_code=0
+202229|N22-agg-eval                                                                                                                                                                                            |PENDING|
+202294|N22-export                                                                                                                                                                                              |PENDING|
+202315|N22-gate                                                                                                                                                                                                |PENDING|
+202507|N22-mask-iso-531                                                                                                                                                                                        |PENDING|
+215429|id30_m01_s100                                                                                                                                                                                           |PENDING|
+202293|N22-manifest                                                                                                                                                                                            |PENDING|
+EXACT_TARGET_NODE exit_code=0
+NodeName=ngu203 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=8 CPUTot=64 CPULoad=11.44
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu203 NodeHostName=ngu203 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=643691 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2025-07-23T15:13:27 SlurmdStartTime=2025-07-23T15:41:12
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=8
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+Traceback (most recent call last):
+  File "<stdin>", line 113, in <module>
+  File "<stdin>", line 43, in require
+RuntimeError: target must still be idle and in hgpu8 only
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-07T13:40:07+0800
