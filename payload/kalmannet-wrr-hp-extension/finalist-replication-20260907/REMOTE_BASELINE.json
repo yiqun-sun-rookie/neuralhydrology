@@ -1,0 +1,221 @@
+{
+  "probe": "PASS",
+  "old_manifest_sha256": "3e62596c1431e2a7878103c4d166815ebc8e46ddd0c5c5d46de3ab1e84078d1e",
+  "old_sources_verified": 62,
+  "new_root": "/data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907",
+  "new_root_absent": true,
+  "references": [
+    {
+      "index": 14,
+      "cell_path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed42_gpu/idx0014_lr0p01_hs64_nl1_mult15/cell_metrics.json",
+      "cell_sha256": "78f3b523c39cfb0b9d4f33dadd5aff68a14e81708be48a9fb1335c294805dd58",
+      "checkpoint_sha256": "504b27123f3fcb51c97bcd18d531c652d7a8f3cb09ded47b252a40e04d94cfc3",
+      "combo": {
+        "index": 14,
+        "run_id": "WRR-HPEXT-20260902-I14",
+        "role": "probe_hidden64_mult15",
+        "lr": 0.01,
+        "hidden_size": 64,
+        "num_layers": 1,
+        "in_out_mult": 15,
+        "seed": 42
+      },
+      "audit": {
+        "path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/audits/WRR-HPEXT-20260902-I14_formal_20260903T032508.json",
+        "sha256": "a3b85e4cf05aee9b121a82001b5b19459ee01f4469fac3426c851136134e8478",
+        "runtime": {
+          "seed": 42,
+          "reproducibility_mode": "seeded_standard_backend",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": true,
+          "torch_version": "2.4.0",
+          "cuda_version": "12.1",
+          "cudnn_version": 90100,
+          "gpu": "NVIDIA GeForce RTX 3090",
+          "forecast_leads_start_at_one": true,
+          "held_out_torch_load_guard": true
+        }
+      }
+    },
+    {
+      "index": 12,
+      "cell_path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed42_gpu/idx0012_lr0p01_hs64_nl1_mult10/cell_metrics.json",
+      "cell_sha256": "ef6e9fb02faa88cfc06a0ade9a38bcd686f7f3862383dccd935ac7e467073539",
+      "checkpoint_sha256": "992ca368c4946a2c4d8b7398db22f9b67fec71cb06ea606c52b00529e69a113b",
+      "combo": {
+        "index": 12,
+        "run_id": "WRR-HPEXT-20260902-I12",
+        "role": "probe_hidden64",
+        "lr": 0.01,
+        "hidden_size": 64,
+        "num_layers": 1,
+        "in_out_mult": 10,
+        "seed": 42
+      },
+      "audit": {
+        "path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/audits/WRR-HPEXT-20260902-I12_formal_20260903T011058.json",
+        "sha256": "a3232009cefd75868a3c3308a0c1365725f1231652741d5146474bde3e87fc5c",
+        "runtime": {
+          "seed": 42,
+          "reproducibility_mode": "seeded_standard_backend",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": true,
+          "torch_version": "2.4.0",
+          "cuda_version": "12.1",
+          "cudnn_version": 90100,
+          "gpu": "NVIDIA GeForce RTX 3090",
+          "forecast_leads_start_at_one": true,
+          "held_out_torch_load_guard": true
+        }
+      }
+    },
+    {
+      "index": 10,
+      "cell_path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed42_gpu/idx0010_lr0p02_hs16_nl1_mult10/cell_metrics.json",
+      "cell_sha256": "e31a1af36a83bd40619c65b0b49b1d8f81cbf0e154362f1c0e90fc9a19d3b98c",
+      "checkpoint_sha256": "d5dcc3a5df3ce9adc2ba508e1af9b91a2ed0088040e9c2f94a8ba3c0eead5712",
+      "combo": {
+        "index": 10,
+        "run_id": "WRR-HPEXT-20260902-I10",
+        "role": "lr_extension",
+        "lr": 0.02,
+        "hidden_size": 16,
+        "num_layers": 1,
+        "in_out_mult": 10,
+        "seed": 42
+      },
+      "audit": {
+        "path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/audits/WRR-HPEXT-20260902-I10_formal_20260902T225349.json",
+        "sha256": "35d8961d115b56b4ecf8954425977d9e2c993483c4c1d5925d9968238018b958",
+        "runtime": {
+          "seed": 42,
+          "reproducibility_mode": "seeded_standard_backend",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": true,
+          "torch_version": "2.4.0",
+          "cuda_version": "12.1",
+          "cudnn_version": 90100,
+          "gpu": "NVIDIA GeForce RTX 3090",
+          "forecast_leads_start_at_one": true,
+          "held_out_torch_load_guard": true
+        }
+      }
+    },
+    {
+      "index": 9,
+      "cell_path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed42_gpu/idx0009_lr0p01_hs16_nl1_mult10/cell_metrics.json",
+      "cell_sha256": "0bdfd4862ad4a22b1a13bb7aa465cd412558b16f92fa905ba85e4664ba59170e",
+      "checkpoint_sha256": "e97a2b7468e8c7adad339beccffb86a1f70b5a0fcccaf73ff39d48e72044aafc",
+      "combo": {
+        "index": 9,
+        "run_id": "WRR-HPEXT-20260902-I09",
+        "role": "anchor",
+        "lr": 0.01,
+        "hidden_size": 16,
+        "num_layers": 1,
+        "in_out_mult": 10,
+        "seed": 42
+      },
+      "audit": {
+        "path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/audits/WRR-HPEXT-20260902-I09_formal_20260902T222738.json",
+        "sha256": "fd31c295460185a20eeec529a6cb4d5b3ad119f220f35e3cb6b1f74393bd5a45",
+        "runtime": {
+          "seed": 42,
+          "reproducibility_mode": "seeded_standard_backend",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": true,
+          "torch_version": "2.4.0",
+          "cuda_version": "12.1",
+          "cudnn_version": 90100,
+          "gpu": "NVIDIA GeForce RTX 3090",
+          "forecast_leads_start_at_one": true,
+          "held_out_torch_load_guard": true
+        }
+      }
+    },
+    {
+      "index": 18,
+      "cell_path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed43_gpu/idx0018_lr0p01_hs16_nl1_mult10/cell_metrics.json",
+      "cell_sha256": "bda33d97b5fa57d9bebec80424c9361783ea55219d2de9b36e101d9a0a344371",
+      "checkpoint_sha256": "62ad6a9f2d73073405a1d155316041af80f2f4819fff3467c318f52a27f655cb",
+      "combo": {
+        "index": 18,
+        "run_id": "WRR-HPEXT-20260902-I18",
+        "role": "small_net_replicate_seed43",
+        "lr": 0.01,
+        "hidden_size": 16,
+        "num_layers": 1,
+        "in_out_mult": 10,
+        "seed": 43
+      },
+      "audit": {
+        "path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/audits/WRR-HPEXT-20260902-I18_formal_20260904T111304.json",
+        "sha256": "5dc0f5645252b0f7a1b391b723b637376360d26d35903e83a1bf19c8527e0633",
+        "runtime": {
+          "seed": 43,
+          "reproducibility_mode": "seeded_standard_backend",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": true,
+          "torch_version": "2.4.0",
+          "cuda_version": "12.1",
+          "cudnn_version": 90100,
+          "gpu": "NVIDIA GeForce RTX 3090",
+          "forecast_leads_start_at_one": true,
+          "held_out_torch_load_guard": true
+        }
+      }
+    },
+    {
+      "index": 19,
+      "cell_path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed44_gpu/idx0019_lr0p01_hs16_nl1_mult10/cell_metrics.json",
+      "cell_sha256": "236c114c483e2e44721258b6cad4864173c5d7c1c3ba05f754ffc4722db0c49b",
+      "checkpoint_sha256": "9a4e49c0e68374f89acd622e189558ba89df1053bfa0645a881c7c85bf1df2af",
+      "combo": {
+        "index": 19,
+        "run_id": "WRR-HPEXT-20260902-I19",
+        "role": "small_net_replicate_seed44",
+        "lr": 0.01,
+        "hidden_size": 16,
+        "num_layers": 1,
+        "in_out_mult": 10,
+        "seed": 44
+      },
+      "audit": {
+        "path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/audits/WRR-HPEXT-20260902-I19_formal_20260904T111302.json",
+        "sha256": "738180dea385e089e11c30da1a3830464a6a99592f3edf81b29d743f8f9511bc",
+        "runtime": {
+          "seed": 44,
+          "reproducibility_mode": "seeded_standard_backend",
+          "deterministic_algorithms": false,
+          "cudnn_deterministic": false,
+          "cudnn_benchmark": true,
+          "torch_version": "2.4.0",
+          "cuda_version": "12.1",
+          "cudnn_version": 90100,
+          "gpu": "NVIDIA GeForce RTX 3090",
+          "forecast_leads_start_at_one": true,
+          "held_out_torch_load_guard": true
+        }
+      }
+    }
+  ],
+  "data": {
+    "train": {
+      "path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/data/processed/high_flow_aug/train_win800_19990101_01-20070527_03.pt",
+      "resolved_path": "/data1/home/sunyiq/knet_project/data/processed/high_flow_aug/train_win800_19990101_01-20070527_03.pt",
+      "bytes": 4381521,
+      "sha256": "3a4f94a2562278f09b67853ac77e060766296007cb8f8a762756ffe792792440"
+    },
+    "val": {
+      "path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/data/processed/high_flow_aug/val_win800_20070527_04-20090314_13.pt",
+      "resolved_path": "/data1/home/sunyiq/knet_project/data/processed/high_flow_aug/val_win800_20070527_04-20090314_13.pt",
+      "bytes": 570687,
+      "sha256": "2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403"
+    }
+  }
+}

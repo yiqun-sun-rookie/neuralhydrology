@@ -1,60 +1,13 @@
 #!/usr/bin/env bash
-# Read-only remote prerequisites for the authorized six validation replicas.
+# Authorized exactly-once deployment of six validation-only replicas.
 set -euo pipefail
-OLD_ROOT=/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902
-NEW_ROOT=/data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907
-test ! -e "$NEW_ROOT"
-test ! -L "$NEW_ROOT"
-test -x /data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python
-python3 - "$OLD_ROOT" "$NEW_ROOT" <<'PY'
-import base64, glob, hashlib, json, os, pathlib, sys
-old = pathlib.Path(sys.argv[1])
-repo = old / 'repo'
-exp = repo / 'experiments/optimize_hyper_parameters/wrr_hp_extension_20260902'
-def sha(p):
-    h = hashlib.sha256()
-    with open(p, 'rb') as f:
-        for b in iter(lambda: f.read(1 << 20), b''):
-            h.update(b)
-    return h.hexdigest()
-manifest_path = exp / 'source_manifest.json'
-manifest_sha = sha(manifest_path)
-print('REMOTE_SOURCE_MANIFEST_BASE64=' + base64.b64encode(manifest_path.read_bytes()).decode('ascii'))
-manifest = json.loads(manifest_path.read_text())
-for rel, expected in manifest['source_sha256'].items():
-    actual = sha(repo / rel)
-    assert actual == expected, (rel, actual, expected)
-references = []
-for idx in [14, 12, 10, 9, 18, 19]:
-    paths = list(exp.glob('runs/formal_seed*_gpu/idx%04d_*/cell_metrics.json' % idx))
-    assert len(paths) == 1, (idx, paths)
-    p = paths[0]
-    cell = json.loads(p.read_text())
-    checkpoint = p.parent / 'results/best_model.pt'
-    ck_sha = sha(checkpoint)
-    assert ck_sha == cell['validation_scoring']['best_checkpoint_sha256']
-    audits = []
-    for ap in exp.glob('audits/*_formal_*.json'):
-        a = json.loads(ap.read_text())
-        if a.get('run_id') == cell['run_id'] and a.get('launcher_status') == 'ok':
-            audits.append({'path': str(ap), 'sha256': sha(ap), 'runtime': a['runtime']})
-    assert len(audits) == 1, (idx, audits)
-    references.append({'index': idx, 'cell_path': str(p), 'cell_sha256': sha(p),
-      'checkpoint_sha256': ck_sha, 'combo': cell['combo'], 'audit': audits[0]})
-data = {}
-for split, name, expected in [
- ('train', 'train_win800_19990101_01-20070527_03.pt', '3a4f94a2562278f09b67853ac77e060766296007cb8f8a762756ffe792792440'),
- ('val', 'val_win800_20070527_04-20090314_13.pt', '2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403')]:
-    p = repo / 'data/processed/high_flow_aug' / name
-    actual = sha(p)
-    assert actual == expected, (split, actual)
-    data[split] = {'path': str(p), 'resolved_path': str(p.resolve()), 'bytes': p.stat().st_size, 'sha256': actual}
-print(json.dumps({'probe': 'PASS', 'old_manifest_sha256': manifest_sha, 'old_sources_verified': len(manifest['source_sha256']),
- 'new_root': sys.argv[2], 'new_root_absent': True, 'references': references, 'data': data}, indent=2))
-PY
-/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B - <<'PY'
-import importlib.metadata, json, platform
-print(json.dumps({'current_environment': {'python': platform.python_version(),
- 'torch_distribution': importlib.metadata.version('torch'), 'numpy_distribution': importlib.metadata.version('numpy')}}))
-PY
-sinfo -p hgpu2p -N -h -o '%N|%t|%G'
+PAYLOAD=/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-hp-extension/finalist-replication-20260907
+cd "$PAYLOAD"
+sha256sum -c <<'TRANSPORT_HASHES'
+266eab5e5f2b21b992d218aaede11abc6018c11a23c3c5c28a328bd5210a497e  payload/replication.tar.gz
+8e9aa0c3769c050c070c6f48f1faa41aab94994f1a0791e89e35b92a44a8181e  PACKAGE_MANIFEST.json
+da9dd01a449421ad96e76203afb373d88fd427d64e316a4e872767f80e48c6fe  REMOTE_BASELINE.json
+3e62596c1431e2a7878103c4d166815ebc8e46ddd0c5c5d46de3ab1e84078d1e  REMOTE_SOURCE_MANIFEST.json
+1d5cf545f0cdfdfbcdf33cca2adbba80309eef9470b0bd7a72b87230f2880a17  deploy_remote.py
+TRANSPORT_HASHES
+/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -B "$PAYLOAD/deploy_remote.py" --payload "$PAYLOAD" --submit
