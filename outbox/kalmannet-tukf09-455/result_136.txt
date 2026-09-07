@@ -1,0 +1,160 @@
+### channel=kalmannet-tukf09-455 seq=136
+### host=login4
+### started=2026-09-07T17:09:58+0800
+### ---------- output ----------
+TIME=2026-09-07T17:09:58+0800  TRAINING_JOB_ID=220663
+=== 1. SLURM FINAL STATE ===
+     JobID        State ExitCode    Elapsed                Start                  End  NodeList 
+---------- ------------ -------- ---------- -------------------- -------------------- --------- 
+    220663       FAILED      1:0   15:04:31  2026-09-04T16:23:55  2026-09-05T07:28:26    ngu203 
+           JobID        JobName        State ExitCode     MaxRSS     AveCPU 
+---------------- -------------- ------------ -------- ---------- ---------- 
+          220663 tukf09-455-v2+       FAILED      1:0                       
+    220663.batch          batch       FAILED      1:0   1701232K   15:00:56 
+   220663.extern         extern    COMPLETED      0:0      1356K   00:00:00 
+=== 2. MODELS AND CHECKPOINTS ===
+COMPLETE_UNITS=1 / 9
+PENDING_UNITS=0
+CHECKPOINTS=30 / 270
+total 16
+drwxr-xr-x. 4 sunyiq g_sunyiq 4096 Sep  5 07:27 .
+drwxr-xr-x. 6 sunyiq g_sunyiq 4096 Sep  4 16:26 ..
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Sep  5 07:27 lead_1_seed_0
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  4 16:26 shared
+--- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0
+total 272
+drwxr-xr-x. 3 sunyiq g_sunyiq   4096 Sep  5 07:27 .
+drwxr-xr-x. 4 sunyiq g_sunyiq   4096 Sep  5 07:27 ..
+-rw-r--r--. 1 sunyiq g_sunyiq    602 Sep  5 07:27 access_ledger.json
+drwxr-xr-x. 2 sunyiq g_sunyiq   4096 Sep  5 07:27 checkpoints
+-rw-r--r--. 1 sunyiq g_sunyiq 131913 Sep  4 16:26 identity.json
+-rw-r--r--. 1 sunyiq g_sunyiq   4465 Sep  5 07:27 manifest.sha256.json
+-rw-r--r--. 1 sunyiq g_sunyiq    563 Sep  5 07:27 model_selection.json
+-rw-r--r--. 1 sunyiq g_sunyiq 127104 Sep  5 07:27 validation_history.npz
+=== 3. THE THIRTIETH CHECKPOINT (mtime pins the start of the final minute; %h = link count) ===
+2026-09-05 07:27:44.000000000 +0800  links=1  bytes=3271691  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0/checkpoints/epoch_030.pt
+2026-09-05 06:27:43.0000000000 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0/checkpoints/epoch_028.pt
+2026-09-05 06:57:42.0000000000 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0/checkpoints/epoch_029.pt
+2026-09-05 07:27:44.0000000000 /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0/checkpoints/epoch_030.pt
+MANIFEST_IN_FINAL_UNIT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0/manifest.sha256.json
+MODEL_SELECTION_IN_FINAL_UNIT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0/model_selection.json
+=== 4. CONTROLLER EVENT LOG: LAST THREE EVENTS ===
+{"controller_process_id":48403,"detail":{"filter_installation_final_sha256":"d49ecb71fefa9ef320fa8c4ad7358c7e98a17b4c3ee221bf8633886f99b68ff0","sequence_execution_id":"6fe7f5d762404ee589359a39120be179","source_sha256":{"controller":"b50af402b7631234fe32adea2e3cabd431394e396dafcdbac471fcb7e2f67c4e","frozen_model":"15698ac13a9b0c14296585adc9272a6c75569c3a7a882ea36d3101e7847b8e8a","training_common":"892875226c1aca6cd5550e245ae7c69a32151974e660cf6b45d9b2fc470b00c2","unit_runner":"6b00686fdc2c7f4104cc792b94cd8f8ef05388c552d2a259fe028b2b2f372d32"},"training_admission_record_sha256":"d81cde63b9936ede157bcc6e3020f9a0deb67ea88f89ae701810fa8bbf2e6fb3"},"evaluation_access_count":0,"event_type":"CONTROLLER_STARTED","exit_status":"RUNNING","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_neural_controller_event_v1","sequence_number":1,"timestamp_utc":"2026-09-04T08:25:45.756390+00:00","unit_id":null,"unit_manifest_sha256":null}
+{"controller_process_id":48403,"detail":{"started_at_utc":"2026-09-04T08:25:46.075835+00:00"},"evaluation_access_count":0,"event_type":"UNIT_STARTED","exit_status":"RUNNING","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_neural_controller_event_v1","sequence_number":2,"timestamp_utc":"2026-09-04T08:25:46.075864+00:00","unit_id":"lead_1_seed_0","unit_manifest_sha256":null}
+{"controller_process_id":48403,"detail":{"ended_at_utc":"2026-09-04T23:27:46.055744+00:00","error_message":"neural unit subprocess failed with exit code 1: Traceback (most recent call last):\n  File \"/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training.py\", line 2045, in <module>\n    main()\n  File \"/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training.py\", line 1997, in main\n    result = train_one_model(\n             ^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training.py\", line 1940, in train_one_model\n    return _train_one_model_impl(\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training.py\", line 1896, in _train_one_model_impl\n    trusted_manifest = validate_reusable_complete_unit(\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training.py\", line 1131, in validate_reusable_complete_unit\n    raise RuntimeError(\"training admission basin population differs from the neural unit\")\nRuntimeError: training admission basin population differs from the neural unit\n","error_type":"RuntimeError","started_at_utc":"2026-09-04T08:25:46.075835+00:00"},"evaluation_access_count":0,"event_type":"UNIT_FAILED","exit_status":"FAILED_STOP","experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_neural_controller_event_v1","sequence_number":3,"timestamp_utc":"2026-09-04T23:27:46.056014+00:00","unit_id":"lead_1_seed_0","unit_manifest_sha256":null}
+EVENT_COUNT=3
+=== 5. THE DECIDING STRING ===
+--- events.jsonl:
+1
+--- training-220663.err:
+--- training-220663.out:
+--- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/neural_controller.stderr.log:
+22:    raise RuntimeError("training admission basin population differs from the neural unit")
+23:RuntimeError: training admission basin population differs from the neural unit
+=== 6. UNIT-RUNNER STDERR TAIL (the traceback) ===
+--- /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/neural_controller.stderr.log (2417 bytes)
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py", line 1236, in <module>
+    main()
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py", line 1196, in main
+    result = run_controller(
+             ^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py", line 1069, in run_controller
+    raise RuntimeError(
+RuntimeError: neural unit subprocess failed with exit code 1: Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training.py", line 2045, in <module>
+    main()
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training.py", line 1997, in main
+    result = train_one_model(
+             ^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training.py", line 1940, in train_one_model
+    return _train_one_model_impl(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training.py", line 1896, in _train_one_model_impl
+    trusted_manifest = validate_reusable_complete_unit(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_neural_training.py", line 1131, in validate_reusable_complete_unit
+    raise RuntimeError("training admission basin population differs from the neural unit")
+RuntimeError: training admission basin population differs from the neural unit
+
+--- SLURM stderr tail:
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 791, in <module>
+    main()
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 771, in main
+    result = run_sequence(execute_formal_training=arguments.execute_formal_training)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 710, in run_sequence
+    _run_stage(
+  File "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet/scripts/run_tukf09_455_formal_training_sequence.py", line 575, in _run_stage
+    raise RuntimeError(f"formal training {stage} controller failed with exit code {exit_code}")
+RuntimeError: formal training neural controller failed with exit code 1
+--- SLURM stdout tail:
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "mutable_directory_count": 501,
+  "mutable_file_count": 3649,
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R10_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+=== 7. STATUS MARKERS ===
+total 206
+drwxr-xr-x. 4 sunyiq g_sunyiq   4096 Sep  4 16:23 .
+drwxr-xr-x. 7 sunyiq g_sunyiq   4096 Sep  4 16:10 ..
+-rw-r--r--. 1 sunyiq g_sunyiq   5208 Sep  4 16:21 hpc_technical_admission.json
+-rw-r--r--. 1 sunyiq g_sunyiq    751 Sep  4 16:05 initial_bundle_verification.json
+-rw-r--r--. 1 sunyiq g_sunyiq     43 Sep  4 15:58 offline_inputs_download.launched
+-rw-r--r--. 1 sunyiq g_sunyiq      0 Sep  4 15:58 offline_inputs_download.lock
+-rw-r--r--. 1 sunyiq g_sunyiq      6 Sep  4 16:05 preparation_job_id.txt
+-rw-r--r--. 1 sunyiq g_sunyiq      0 Sep  4 16:05 preparation.lock
+-rw-r--r--. 1 sunyiq g_sunyiq   4200 Sep  4 16:13 preparation_probe.json
+drwxr-xr-x. 2 sunyiq g_sunyiq   4096 Sep  4 16:05 preparation_submission.lock
+-rw-r--r--. 1 sunyiq g_sunyiq 180987 Sep  4 16:12 staged_training_sources.json
+-r--r--r--. 1 sunyiq g_sunyiq      6 Sep  4 16:23 training_job_id.txt
+drwxr-xr-x. 2 sunyiq g_sunyiq   4096 Sep  4 16:23 training_submission.lock
+SELECTION=ABSENT  EVALUATION=ABSENT
+=== 8. NODE, QUEUE, LIMITS (for the next version) ===
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)    TIMELIMIT
+     hgpu8     up      1    maint                   ngu202            0/64/0/64     infinite
+     hgpu8     up      2      mix             ngu[201,203]          40/88/0/128     infinite
+Name|MaxWall|MaxTRESPU
+normal||
+qos_pengxh||
+qos_qiancheng||
+qos_zhouhao||
+qos_maojing||
+qos_chenlin||
+qos_tangcm||
+Partition|QOS|MaxWall
+|qos_sunyiq|
+     JOBID    PARTITION                 NAME      STATE        TIME  TIME_LIMIT  NODELIST
+    202229 hgpu4,hgpu8,         N22-agg-eval    PENDING        0:00  1-00:00:00          
+    202294 hgpu4,hgpu8,           N22-export    PENDING        0:00     4:00:00          
+    202315 hgpu4,hgpu8,             N22-gate    PENDING        0:00     2:00:00          
+    202507 hgpu4,hgpu8,     N22-mask-iso-531    PENDING        0:00     2:00:00          
+    215429        hgpu2        id30_m01_s100    PENDING        0:00  7-00:00:00          
+    202293 hgpu4,hgpu8,         N22-manifest    PENDING        0:00  1-00:00:00          
+=== 9. PRESERVED EVIDENCE UNTOUCHED ===
+ROOT_v2r4=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r4_20260901
+ROOT_v2r5=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r5_20260901
+ROOT_v2r6=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r6_20260902
+ROOT_v2r7=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r7_20260904
+ROOT_v2r8=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r8_20260904
+ROOT_v2r9=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r9_20260904
+ROOT_v2r10=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904
+CAPSULE_v2=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901 mode=555
+CAPSULE_v3=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v3_20260904 mode=555
+CAPSULE_v4=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v4_20260904 mode=555
+CAPSULE_v5=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904 mode=555
+TUKF09_455_V2R10_FAILURE_EVIDENCE_READ_ONLY_NOTHING_CHANGED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-07T17:09:59+0800
