@@ -1,0 +1,44 @@
+### channel=attrswap-daily seq=14
+### host=login4
+### started=2026-09-08T13:40:20+0800
+### ---------- output ----------
+wallclock 2026-09-08 13:40:20 +0800
+=== A. INSTALL ===
+installed: 2ac038e48228b7cc  8 lines
+"""Print '<public-422 median NSE> <n>' for one run dir (argv[1])."""
+import sys, pandas as pd
+rd = sys.argv[1]
+d = pd.read_csv(rd + '/test/model_epoch030/test_metrics.csv', dtype={'basin': str})
+d['basin'] = d['basin'].str.zfill(8)
+hold = set(l.strip() for l in open('basin_lists/holdout_107.txt') if l.strip())
+pub = d[~d['basin'].isin(hold)]
+print(f"{pub['NSE'].median():.6f} {len(pub)}")
+=== B. WHERE THE ATTR-SWAP COPY ACTUALLY LIVES (for the record) ===
+=== C. SANITY: it imports and finds the holdout list from the landing dir ===
+compiles OK; holdout list present: True
+=== D. QUEUE ===
+      JOBID                   NAME     STATE       TIME  NODELIST             DEPENDENCY
+     223869      fswap_armE27_s100   PENDING       0:00                   afterok:223868
+     223870      fswap_armE27_s200   PENDING       0:00                   afterok:223868
+     223871      fswap_armE27_s300   PENDING       0:00                   afterok:223868
+     223872      fswap_armE23_s100   PENDING       0:00                   afterok:223868
+     223873      fswap_armE23_s200   PENDING       0:00                   afterok:223868
+     223874      fswap_armE23_s300   PENDING       0:00                   afterok:223868
+     223875       fswap_armEP_s100   PENDING       0:00                   afterok:223868
+     223876       fswap_armEP_s200   PENDING       0:00                   afterok:223868
+     223877       fswap_armEP_s300   PENDING       0:00                   afterok:223868
+     223868             fswap_gate   RUNNING       0:53    ngu203                       
+    JobID        JobName        State ExitCode    Elapsed  NodeList 
+--------- -------------- ------------ -------- ---------- --------- 
+   223868     fswap_gate      RUNNING      0:0   00:01:38    ngu203 
+=== E. GATE LOG SO FAR ===
+--- slurm_fswap_gate_223868.out (213 bytes) ---
+=== node ngu203 job 223868 2026-09-08 13:38:44 ===
+archived code OK: /data1/home/sunyiq/forcing_swap_daily_2026_09/code_1f9804e/neuralhydrology/__init__.py
+torch 2.4.0 cuda True
+=== BUILD + VERIFY ===
+basins: 529
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T13:40:21+0800
