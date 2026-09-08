@@ -1,0 +1,217 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=88
+### host=login4
+### started=2026-09-08T14:35:33+0800
+### ---------- output ----------
+READ_ONLY_MATCHED_EVIDENCE
+{
+  "checkpoint_reads_by_query": 0,
+  "execution_contract_sha256": "8c3ef366a8dbbf8b9e18704d1dca8a7bd887ca3afd745a0a9c495ed1a1d709cb",
+  "filesystem_writes_by_query": 0,
+  "finished_at_utc": "2026-09-08T06:35:34.007957Z",
+  "job_id": "223903",
+  "kind": "read_only_matched_legacy_evidence",
+  "logs": {
+    "logs/slurm-223903.err": {
+      "bytes_read": 0,
+      "file_size_at_open": 0,
+      "last_30_lines_of_read_prefix": [],
+      "optimizer_update_lines": [],
+      "prefix_truncated": false,
+      "status": "read"
+    },
+    "logs/slurm-223903.out": {
+      "bytes_read": 834,
+      "file_size_at_open": 834,
+      "last_30_lines_of_read_prefix": [
+        "{\"schema_version\": 1, \"experiment_family\": \"ZHENJIANG_MATCHED_LEGACY_PROCESS_MODEL_20260907\", \"status\": \"started\", \"job_id\": \"223903\", \"execution_contract_sha256\": \"8c3ef366a8dbbf8b9e18704d1dca8a7bd887ca3afd745a0a9c495ed1a1d709cb\", \"attempt_number\": 1, \"started_at_utc\": \"2026-09-08T06:33:25.701338Z\"}",
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.897322973",
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0807952722",
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0672920386",
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0603476922",
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.066197904",
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0534371336"
+      ],
+      "optimizer_update_lines": [
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.897322973",
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0807952722",
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0672920386",
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0603476922",
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.066197904",
+        "[TRAINING_PROGRESS] first_batch_optimizer_step_completed device=cuda loss_m=0.0534371336"
+      ],
+      "prefix_truncated": false,
+      "status": "read"
+    }
+  },
+  "metadata": {
+    "app/artifacts/seed_17/completion_manifest.json": {
+      "status": "absent"
+    },
+    "app/artifacts/seed_17/environment_manifest.json": {
+      "status": "absent"
+    },
+    "app/artifacts/seed_29/completion_manifest.json": {
+      "status": "absent"
+    },
+    "app/artifacts/seed_29/environment_manifest.json": {
+      "status": "absent"
+    },
+    "app/artifacts/seed_43/completion_manifest.json": {
+      "status": "absent"
+    },
+    "app/artifacts/seed_43/environment_manifest.json": {
+      "status": "absent"
+    },
+    "evidence/deployment_verified.json": {
+      "byte_count": 429,
+      "sha256": "5add15ff5d798786fd924ffeb0250d7ebe60c166655e51a78eba3edf40917fd3",
+      "status": "read",
+      "value": {
+        "archive": {
+          "byte_count": 80581,
+          "sha256": "94d98c98728b2eab3845624c5c5a8a6ff8b600bbb9c81510f73d0f5d11d5a788"
+        },
+        "execution_contract_sha256": "8c3ef366a8dbbf8b9e18704d1dca8a7bd887ca3afd745a0a9c495ed1a1d709cb",
+        "manifest": {
+          "byte_count": 4019,
+          "sha256": "145013e4ad0bcb98934a2c36cc07e8ecc4a3c9267c1522a56f262aa30febe6ff"
+        },
+        "schema_version": 1,
+        "verified_at_utc": "2026-09-08T06:32:36.612162Z"
+      }
+    },
+    "evidence/job_attempt_001/completion_receipt.json": {
+      "status": "absent"
+    },
+    "evidence/job_attempt_001/started.json": {
+      "byte_count": 318,
+      "sha256": "92e82920938b458cd121c44f8746ae26bd88a8d0fb195b5b78fc709582515a6d",
+      "status": "read",
+      "value": {
+        "attempt_number": 1,
+        "execution_contract_sha256": "8c3ef366a8dbbf8b9e18704d1dca8a7bd887ca3afd745a0a9c495ed1a1d709cb",
+        "experiment_family": "ZHENJIANG_MATCHED_LEGACY_PROCESS_MODEL_20260907",
+        "job_id": "223903",
+        "schema_version": 1,
+        "started_at_utc": "2026-09-08T06:33:25.701338Z",
+        "status": "started"
+      }
+    },
+    "evidence/seed_attempts/seed_17/attempt_started.json": {
+      "byte_count": 380,
+      "sha256": "f5015eb83cd9deb505c92a00f2e7ed6cb36b5d831042e87860fd9b59e12444ff",
+      "status": "read",
+      "value": {
+        "attempt_number": 1,
+        "created_at_utc": "2026-09-08T06:33:48.161609Z",
+        "execution_contract_sha256": "8c3ef366a8dbbf8b9e18704d1dca8a7bd887ca3afd745a0a9c495ed1a1d709cb",
+        "experiment_family": "ZHENJIANG_MATCHED_LEGACY_PROCESS_MODEL_20260907",
+        "job_id": "223903",
+        "schema_version": 1,
+        "seed": 17,
+        "seed_sequence_index": 1,
+        "status": "formal_seed_attempt_started"
+      }
+    },
+    "evidence/seed_attempts/seed_17/completion_receipt.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_17/failure.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_29/attempt_started.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_29/completion_receipt.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_29/failure.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_43/attempt_started.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_43/completion_receipt.json": {
+      "status": "absent"
+    },
+    "evidence/seed_attempts/seed_43/failure.json": {
+      "status": "absent"
+    },
+    "evidence/submission_attempt_001.json": {
+      "byte_count": 396,
+      "sha256": "d252582e002dc66f70a79b62655f9c8b7f130020054d71b199caf2c9d9981b6f",
+      "status": "read",
+      "value": {
+        "attempt_number": 1,
+        "execution_contract_sha256": "8c3ef366a8dbbf8b9e18704d1dca8a7bd887ca3afd745a0a9c495ed1a1d709cb",
+        "reserved_at_utc": "2026-09-08T06:32:36.614920Z",
+        "schema_version": 1,
+        "script": "/data1/home/sunyiq/zhenjiang_matched_legacy_process_20260908_001/hpc/matched_legacy.slurm",
+        "status": "reserved",
+        "wrapper": "/usr/local/globle/softs/slurm/19.05.4.1/bin/xbatch"
+      }
+    },
+    "evidence/submission_outcome.json": {
+      "status": "absent"
+    },
+    "evidence/submission_receipt.json": {
+      "byte_count": 368,
+      "sha256": "7622701f715b81909aa35a4cb10cff0c6f6c103c63c8951decf8fd7fac3ce5fd",
+      "status": "read",
+      "value": {
+        "execution_contract_sha256": "8c3ef366a8dbbf8b9e18704d1dca8a7bd887ca3afd745a0a9c495ed1a1d709cb",
+        "experiment_family": "ZHENJIANG_MATCHED_LEGACY_PROCESS_MODEL_20260907",
+        "job_id": "223903",
+        "maximum_sbatch_submissions": 1,
+        "schema_version": 1,
+        "status": "submitted",
+        "submission_attempt_number": 1,
+        "submitted_at_utc": "2026-09-08T06:32:36.669418Z"
+      }
+    }
+  },
+  "new_formal_data_reads_by_query": 0,
+  "observed_at_utc": "2026-09-08T06:35:33.729987Z",
+  "root": "/data1/home/sunyiq/zhenjiang_matched_legacy_process_20260908_001",
+  "scheduler": {
+    "sacct": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "223903|RUNNING|0:0|00:02:55|2026-09-08T14:33:24|Unknown|billing=4,cpu=4,node=1\n223903.batch|RUNNING|0:0|00:02:55|2026-09-08T14:33:24|Unknown|cpu=4,mem=0,node=1\n223903.extern|RUNNING|0:0|00:02:55|2026-09-08T14:33:24|Unknown|billing=4,cpu=4,node=1\n"
+    },
+    "squeue": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "223903|RUNNING|2:09|2:00:00|ngu004\n"
+    }
+  },
+  "schema_version": 1,
+  "usage_ledger": {
+    "event_groups": [
+      {
+        "authorized_byte_count": 51501333,
+        "bytes_read": 51501333,
+        "count": 12,
+        "event_type": "COMPLETED"
+      },
+      {
+        "authorized_byte_count": 51501333,
+        "bytes_read": 0,
+        "count": 12,
+        "event_type": "RESERVED"
+      }
+    ],
+    "observed_at_utc": "2026-09-08T06:35:34.007599Z",
+    "scopes": [
+      {
+        "authorization_id": "ZJ-MATCHED-LEGACY-DATA-20260908-01",
+        "purpose": "matched_legacy_training_2017_2021_and_best_epoch_selection_2022",
+        "time_partition": "2017-2022"
+      }
+    ],
+    "status": "read_only_transaction"
+  }
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T14:35:34+0800
