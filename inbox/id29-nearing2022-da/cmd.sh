@@ -1,9 +1,8 @@
 set -o pipefail
-ROOT=/data1/home/sunyiq/nearing2022_da
-date --iso-8601=seconds
-for J in 219423_0 219423_1 220487; do
-  echo "=== JOB $J ==="
-  for F in $(ls -1 $ROOT/logs/*${J%%_*}* 2>/dev/null | head -20); do echo "-- $F"; done
+L=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs
+for F in N22-warmpair_219423_0.err N22-warmpair_219423_0.out N22-warmpair_219423_1.err; do
+  echo "===== $F ====="
+  tail -n 40 "$L/$F" 2>/dev/null || echo '  unreadable'
 done
-echo "=== SEARCH LOG FILES ==="
-find /data1/home/sunyiq -maxdepth 4 -name '*219423*' -o -maxdepth 4 -name '*220487*' 2>/dev/null | head -30 || true
+echo "===== replv2 220487 ====="
+ls -1 $L | grep 220487 || echo '  no 220487 logs in closure logs dir'
