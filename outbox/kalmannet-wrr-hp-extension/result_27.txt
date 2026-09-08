@@ -1,0 +1,11 @@
+### channel=kalmannet-wrr-hp-extension seq=27
+### host=login4
+### started=2026-09-08T11:42:28+0800
+### ---------- output ----------
+launch.sh: OK
+deploy.sh: OK
+TRANSPORT_MANIFEST.json: OK
+{"stage": "A", "status": "SUBMITTED", "root": "/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908", "stage_root": "/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A", "array": "0-17%6", "archive_sha256": "d114c58b23894bf69755906bbe633d66c93905c2b661f6181a694df78c414248", "authorization_sha256": "2e6b6353f9019c59deb024d2e870154cf07bdcbcf101d30d179150bde83dc78e", "protected_files_verified": 252, "time_utc": "2026-09-08T03:42:32.728291+00:00", "retry_authorized": false, "job_id": "223848", "training_entry_verified": false}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T11:42:32+0800
