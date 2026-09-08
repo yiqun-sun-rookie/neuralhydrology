@@ -1,35 +1,37 @@
 #!/bin/bash
-# seq=32 read-only pre-deploy probe: is anything id33 in flight, is the landing zone intact
+# seq=33 read-only: fix the maxdepth bug, get gpu partitions, confirm torch
 set -o pipefail
 ROOT=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
+R33="$ROOT/results/33_transformer_recipe_repair"
 
-echo "=== STAMP ==="
-date -Iseconds
-hostname
+echo "=== STAMP ==="; date -Iseconds
 
-echo "=== A. ID33 IN FLIGHT (deploy blocker) ==="
-INFLIGHT=$(squeue -u "$USER" -h -t RUNNING,CONFIGURING -o "%j" 2>/dev/null | grep -c '^id33_' || true)
-echo "id33_in_flight_count=${INFLIGHT}"
-if [ "${INFLIGHT}" = "0" ]; then echo "VERDICT: no id33 job in flight; safe to deploy"; else echo "VERDICT: BLOCKED"; fi
+echo "=== A. RAW VALIDATION PREDICTIONS (correct depth) ==="
+find "$R33" -mindepth 1 -maxdepth 6 -name 'validation_results.p' -printf '%10s  %p\n' 2>/dev/null | head -10 || true
+echo "  count=$(find "$R33" -maxdepth 6 -name 'validation_results.p' 2>/dev/null | wc -l)"
 
-echo "=== B. ALL MY JOBS (do not disturb other sessions) ==="
-squeue -u "$USER" -o "%.10i %.20j %.3t %.10M %.9N %R" 2>&1 | head -25 || true
+echo "=== A2. WHAT IS ACTUALLY UNDER ONE ARM ==="
+T2DIR=$(ls -1d "$R33"/T2/*/ 2>/dev/null | head -1)
+echo "T2 run dir: $T2DIR"
+ls -1 "$T2DIR" 2>&1 | head -15
+echo "-- validation subtree --"
+find "$T2DIR" -maxdepth 3 -type f -printf '%10s  %P\n' 2>/dev/null | head -20 || true
 
-echo "=== C. LANDING ZONE INTACT ==="
-ls -d "$ROOT" 2>&1
-ls -1 "$ROOT/results/33_transformer_recipe_repair/" 2>&1 | head -12
-echo "-- arm run dirs --"
-for A in T1 T2 T3 T4 T5 L33; do
-  n=$(ls -1d "$ROOT/results/33_transformer_recipe_repair/$A"/*/ 2>/dev/null | wc -l)
-  echo "  $A run_dirs=$n"
-done
+echo "=== B. GPU PARTITIONS ONLY ==="
+sinfo -o "%.10P %.6a %.6D %.8t %.30N" 2>&1 | grep -E 'PARTITION|gpu' || true
 
-echo "=== D. DO THE RAW VALIDATION PREDICTIONS EXIST (for free re-scoring) ==="
-find "$ROOT/results/33_transformer_recipe_repair" -maxdepth 4 -name 'validation_results.p' -printf '%s  %p\n' 2>/dev/null | head -8 || echo "  none"
+echo "=== C. GPU NODES FREE RIGHT NOW ==="
+sinfo -p hgpu2p,hgpu2 -N -o "%.10N %.10P %.8T %.8G" 2>&1 | head -20 || true
 
-echo "=== E. PARTITION AVAILABILITY ==="
-sinfo -o "%.10P %.6a %.6D %.6t %.28N" 2>&1 | head -12 || true
-
-echo "=== F. TORCH VERSION ONLY (no compute) ==="
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || source $HOME/miniconda3/etc/profile.d/conda.sh
-conda activate nh_final && python -c "import torch;print('torch',torch.__version__)" 2>&1 | tail -2 || echo "  conda/torch check failed"
+echo "=== D. TORCH + DETERMINISM CAPABILITY (import only) ==="
+source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || source "$HOME/miniconda3/etc/profile.d/conda.sh" 2>/dev/null
+conda activate nh_final 2>&1 | tail -1
+python - <<'PY' 2>&1 | tail -8
+import torch
+print("torch", torch.__version__)
+print("has use_deterministic_algorithms", hasattr(torch, "use_deterministic_algorithms"))
+print("cudnn.deterministic default", torch.backends.cudnn.deterministic)
+print("cudnn.benchmark default", torch.backends.cudnn.benchmark)
+print("matmul.allow_tf32 default", torch.backends.cuda.matmul.allow_tf32)
+print("cudnn.allow_tf32 default", torch.backends.cudnn.allow_tf32)
+PY
