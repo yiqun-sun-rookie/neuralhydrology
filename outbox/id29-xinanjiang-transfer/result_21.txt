@@ -1,0 +1,16 @@
+### channel=id29-xinanjiang-transfer seq=21
+### host=login4
+### started=2026-09-08T14:20:53+0800
+### ---------- output ----------
+2026-09-08T14:20:53+0800
+JobID|JobName|State|ExitCode|Start|End|Elapsed|AllocCPUS|MaxRSS|NodeList
+223882|id29-xaj-rec2|RUNNING|0:0|2026-09-08T14:19:40|Unknown|00:01:59|2||ngu010
+223882.batch|batch|RUNNING|0:0|2026-09-08T14:19:40|Unknown|00:01:59|2||ngu010
+223882.extern|extern|RUNNING|0:0|2026-09-08T14:19:40|Unknown|00:01:59|2||ngu010
+  File "<stdin>", line 16
+    print('RECOVERY_DIRECTORY_COUNT',sum(p.is_dir() for p in (recovery/'receiver/evaluation').glob('*'))
+         ^
+SyntaxError: '(' was never closed
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-08T14:20:53+0800
