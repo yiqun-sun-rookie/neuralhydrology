@@ -1,0 +1,643 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=86
+### host=login4
+### started=2026-09-08T11:00:53+0800
+### ---------- output ----------
+READ_ONLY_SUBMISSION_WRAPPER_INSPECTION
+{
+  "checkpoint_reads": 0,
+  "context": {
+    "BASH_ENV": "",
+    "CONDA_PREFIX": "/data1/home/sunyiq/miniconda3",
+    "PATH": "/data1/home/sunyiq/miniconda3/bin:/data1/home/sunyiq/miniconda3/condabin:/usr/local/globle/softs/slurm/19.05.4.1/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/ibutils/bin:/data1/home/sunyiq/.local/bin:/data1/home/sunyiq/bin",
+    "ZJ_WRAPPER_READONLY_ALIAS_EXPANSION": "disabled",
+    "ZJ_WRAPPER_READONLY_BASH_VERSION": "4.2.46(2)-release",
+    "ZJ_WRAPPER_READONLY_SBATCH_ALIAS": "",
+    "ZJ_WRAPPER_READONLY_SBATCH_KIND": "file",
+    "ZJ_WRAPPER_READONLY_SBATCH_PATH": "/usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch",
+    "ZJ_WRAPPER_READONLY_XBATCH_KIND": "file",
+    "ZJ_WRAPPER_READONLY_XBATCH_PATH": "/usr/local/globle/softs/slurm/19.05.4.1/bin/xbatch"
+  },
+  "experiment_filesystem_writes": 0,
+  "failed_submission_script": {
+    "byte_count": 1820,
+    "bytes_read": 1820,
+    "content_format": "text",
+    "executable": false,
+    "lines": [
+      {
+        "line_number": 1,
+        "text": "#!/usr/bin/env bash"
+      },
+      {
+        "line_number": 2,
+        "text": "#SBATCH --job-name=zj_matched_legacy"
+      },
+      {
+        "line_number": 3,
+        "text": "#SBATCH --partition=hgpu2p"
+      },
+      {
+        "line_number": 4,
+        "text": "#SBATCH --exclude=ngu002"
+      },
+      {
+        "line_number": 5,
+        "text": "#SBATCH --nodes=1"
+      },
+      {
+        "line_number": 6,
+        "text": "#SBATCH --ntasks=1"
+      },
+      {
+        "line_number": 7,
+        "text": "#SBATCH --cpus-per-task=4"
+      },
+      {
+        "line_number": 8,
+        "text": "#SBATCH --gres=gpu:1"
+      },
+      {
+        "line_number": 9,
+        "text": "#SBATCH --time=02:00:00"
+      },
+      {
+        "line_number": 10,
+        "text": "#SBATCH --no-requeue"
+      },
+      {
+        "line_number": 11,
+        "text": "#SBATCH --output=/data1/home/sunyiq/zhenjiang_matched_legacy_process_20260907_001/logs/slurm-%j.out"
+      },
+      {
+        "line_number": 12,
+        "text": "#SBATCH --error=/data1/home/sunyiq/zhenjiang_matched_legacy_process_20260907_001/logs/slurm-%j.err"
+      },
+      {
+        "line_number": 13,
+        "text": ""
+      },
+      {
+        "line_number": 14,
+        "text": "set -e -o pipefail"
+      },
+      {
+        "line_number": 15,
+        "text": "umask 077"
+      },
+      {
+        "line_number": 16,
+        "text": "root=/data1/home/sunyiq/zhenjiang_matched_legacy_process_20260907_001"
+      },
+      {
+        "line_number": 17,
+        "text": "[[ \"${SLURM_RESTART_COUNT-0}\" == 0 ]]"
+      },
+      {
+        "line_number": 18,
+        "text": "[[ -z \"${SLURM_ARRAY_TASK_ID+x}\" && -z \"${SLURM_ARRAY_JOB_ID+x}\" ]]"
+      },
+      {
+        "line_number": 19,
+        "text": "[[ \"${SLURM_JOB_ID-}\" =~ ^[0-9]+$ ]]"
+      },
+      {
+        "line_number": 20,
+        "text": "export PYTHONDONTWRITEBYTECODE=1"
+      },
+      {
+        "line_number": 21,
+        "text": "export PYTHONOPTIMIZE=0"
+      },
+      {
+        "line_number": 22,
+        "text": "export PYTHONNOUSERSITE=1"
+      },
+      {
+        "line_number": 23,
+        "text": "export TMPDIR=\"$root/tmp\""
+      },
+      {
+        "line_number": 24,
+        "text": "export XDG_CACHE_HOME=\"$root/cache/xdg\""
+      },
+      {
+        "line_number": 25,
+        "text": "export CUDA_CACHE_PATH=\"$root/cache/cuda\""
+      },
+      {
+        "line_number": 26,
+        "text": "export TORCH_HOME=\"$root/cache/torch\""
+      },
+      {
+        "line_number": 27,
+        "text": "export MKL_THREADING_LAYER=GNU"
+      },
+      {
+        "line_number": 28,
+        "text": "export MKL_SERVICE_FORCE_INTEL=1"
+      },
+      {
+        "line_number": 29,
+        "text": "export OMP_NUM_THREADS=4"
+      },
+      {
+        "line_number": 30,
+        "text": "export MKL_NUM_THREADS=4"
+      },
+      {
+        "line_number": 31,
+        "text": "export OPENBLAS_NUM_THREADS=4"
+      },
+      {
+        "line_number": 32,
+        "text": "export NUMEXPR_NUM_THREADS=4"
+      },
+      {
+        "line_number": 33,
+        "text": "export CUBLAS_WORKSPACE_CONFIG=:4096:8"
+      },
+      {
+        "line_number": 34,
+        "text": "source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh"
+      },
+      {
+        "line_number": 35,
+        "text": "conda activate nh_final"
+      },
+      {
+        "line_number": 36,
+        "text": "cd \"$root/app\""
+      },
+      {
+        "line_number": 37,
+        "text": "python -B \"$root/hpc_deployment.py\" job-start"
+      },
+      {
+        "line_number": 38,
+        "text": "# Each frozen formal entry checks CUDA, the exact registered environment and all"
+      },
+      {
+        "line_number": 39,
+        "text": "# receipts before opening data. The environment above preserves the original"
+      },
+      {
+        "line_number": 40,
+        "text": "# Stage A scheduler's thread limits and CUBLAS workspace configuration."
+      },
+      {
+        "line_number": 41,
+        "text": "for seed in 17 29 43; do"
+      },
+      {
+        "line_number": 42,
+        "text": "    python -B \"$root/app/matched_formal.py\" \\"
+      },
+      {
+        "line_number": 43,
+        "text": "        --execution-contract \"$root/contracts/execution_contract.json\" \\"
+      },
+      {
+        "line_number": 44,
+        "text": "        --execution-contract-sha256 d52fea4d1400fa00a78d9842cc1cf38e292bd31dfc98e19ab8529d1c62234de1 \\"
+      },
+      {
+        "line_number": 45,
+        "text": "        --seed \"$seed\""
+      },
+      {
+        "line_number": 46,
+        "text": "done"
+      },
+      {
+        "line_number": 47,
+        "text": "python -B \"$root/hpc_deployment.py\" job-complete"
+      }
+    ],
+    "magic_prefix_hex": "23212f7573722f62696e2f656e762062",
+    "mode": "0o600",
+    "modified_at_utc": "2026-09-07T15:01:11+00:00",
+    "owner_gid": 2269,
+    "owner_uid": 2272,
+    "path": "/data1/home/sunyiq/zhenjiang_matched_legacy_process_20260907_001/hpc/matched_legacy.slurm",
+    "sha256": "4d25846663ed1c1e2697ea8e99312cc3fe593846e16e72e42da05694cdbb0872",
+    "status": "read",
+    "total_line_count": 47
+  },
+  "finished_at_utc": "2026-09-08T03:00:53.646420Z",
+  "formal_data_reads": 0,
+  "kind": "read_only_submission_wrapper_inspection",
+  "observed_at_utc": "2026-09-08T03:00:53.590918Z",
+  "profile_submission_lines": [
+    {
+      "byte_count": 2004,
+      "bytes_read": 2004,
+      "content_format": "text",
+      "executable": false,
+      "lines": [
+        {
+          "line_number": 77,
+          "text": "export PATH=/usr/local/globle/softs/slurm/19.05.4.1/bin:$PATH"
+        }
+      ],
+      "magic_prefix_hex": "23202f6574632f70726f66696c650a0a",
+      "mode": "0o644",
+      "modified_at_utc": "2024-10-28T00:27:52.516845+00:00",
+      "owner_gid": 0,
+      "owner_uid": 0,
+      "path": "/etc/profile",
+      "sha256": "6f2c71322e2f4ed92b776cadf7d387e4b4ebb06493d2eb5489f32ca359af28c8",
+      "status": "read",
+      "total_line_count": 80
+    },
+    {
+      "byte_count": 3004,
+      "bytes_read": 3004,
+      "content_format": "text",
+      "executable": false,
+      "lines": [
+        {
+          "line_number": 97,
+          "text": "alias sbatch='/usr/local/globle/softs/slurm/19.05.4.1/bin/xbatch'"
+        }
+      ],
+      "magic_prefix_hex": "23202f6574632f6261736872630a0a23",
+      "mode": "0o644",
+      "modified_at_utc": "2025-10-30T09:04:00.738258+00:00",
+      "owner_gid": 0,
+      "owner_uid": 0,
+      "path": "/etc/bashrc",
+      "sha256": "eca70c99f0fa8de8b547c8fbbb44381b55252ab4e3bcbee38291eca2836ab49e",
+      "status": "read",
+      "total_line_count": 97
+    },
+    {
+      "byte_count": 193,
+      "bytes_read": 193,
+      "content_format": "text",
+      "executable": false,
+      "lines": [],
+      "magic_prefix_hex": "23202e626173685f70726f66696c650a",
+      "mode": "0o600",
+      "modified_at_utc": "2025-09-08T01:10:55+00:00",
+      "owner_gid": 2269,
+      "owner_uid": 2272,
+      "path": "/data1/home/sunyiq/.bash_profile",
+      "sha256": "b0a7c216e09938367fcd2f072285f62d53eefb2a48baf8835415b965e029ca20",
+      "status": "read",
+      "total_line_count": 12
+    },
+    {
+      "byte_count": 740,
+      "bytes_read": 740,
+      "content_format": "text",
+      "executable": false,
+      "lines": [],
+      "magic_prefix_hex": "23202e6261736872630a0a2320536f75",
+      "mode": "0o600",
+      "modified_at_utc": "2025-09-13T02:24:52+00:00",
+      "owner_gid": 2269,
+      "owner_uid": 2272,
+      "path": "/data1/home/sunyiq/.bashrc",
+      "sha256": "f39b258979efe701f6ca2733bfac83ef09927c63fdabc664c3f3509c4eb6df2b",
+      "status": "read",
+      "total_line_count": 29
+    }
+  ],
+  "scheduler_mutations": 0,
+  "schema_version": 1,
+  "sibling_submitter": {
+    "byte_count": 370056,
+    "executable": true,
+    "mode": "0o755",
+    "modified_at_utc": "2023-05-01T01:42:38+00:00",
+    "owner_gid": 0,
+    "owner_uid": 0,
+    "path": "/usr/local/globle/softs/slurm/19.05.4.1/bin/sbatch",
+    "status": "metadata_only"
+  },
+  "submission_program_calls": 0,
+  "wrapper": {
+    "byte_count": 2691,
+    "bytes_read": 2691,
+    "content_format": "text",
+    "executable": true,
+    "lines": [
+      {
+        "line_number": 1,
+        "text": "#!/bin/bash"
+      },
+      {
+        "line_number": 2,
+        "text": "function xbatchHelp()"
+      },
+      {
+        "line_number": 3,
+        "text": "{"
+      },
+      {
+        "line_number": 4,
+        "text": "  echo \"\""
+      },
+      {
+        "line_number": 5,
+        "text": "  echo \"########################## EXAMPLE FOR CPU QUEUE ##########################\""
+      },
+      {
+        "line_number": 6,
+        "text": "  echo \"#\t\t\t[xxxx@login $] vim job.slurm\t\t\t  #\""
+      },
+      {
+        "line_number": 7,
+        "text": "  echo \"#\t\t\t#!/bin/bash\t\t\t\t\t  #\""
+      },
+      {
+        "line_number": 8,
+        "text": "  echo \"#\t\t\t#SBATCH -J jobname\t\t\t\t  #\""
+      },
+      {
+        "line_number": 9,
+        "text": "  echo \"#\t\t\t#SBATCH -p hcpu48\t\t\t\t\t  #\""
+      },
+      {
+        "line_number": 10,
+        "text": "  echo \"#\t\t\t#SBATCH -n 20\t\t\t\t\t  #\""
+      },
+      {
+        "line_number": 11,
+        "text": "  echo \"#\t\t\t#SBATCH --error=%J.err\t\t\t\t  #\""
+      },
+      {
+        "line_number": 12,
+        "text": "  echo \"#\t\t\t#SBATCH --output=%J.out\t\t\t\t  #\""
+      },
+      {
+        "line_number": 13,
+        "text": "  echo \"#\t\t\t...\t\t\t\t\t\t  #\""
+      },
+      {
+        "line_number": 14,
+        "text": "  echo \"#\t\t\t[xxxx@login $] sbatch job.slurm\t\t\t  #\""
+      },
+      {
+        "line_number": 15,
+        "text": "  echo \"###########################################################################\""
+      },
+      {
+        "line_number": 16,
+        "text": "  echo \"\""
+      },
+      {
+        "line_number": 17,
+        "text": "  echo \"\""
+      },
+      {
+        "line_number": 18,
+        "text": "  echo \"########################## EXAMPLE FOR GPU QUEUE ##########################\""
+      },
+      {
+        "line_number": 19,
+        "text": "  echo \"#                       [xxxx@login $] vim job.slurm                      #\""
+      },
+      {
+        "line_number": 20,
+        "text": "  echo \"#                       #!/bin/bash                                       #\""
+      },
+      {
+        "line_number": 21,
+        "text": "  echo \"#                       #SBATCH -J jobname                                #\""
+      },
+      {
+        "line_number": 22,
+        "text": "  echo \"#                       #SBATCH -p hgpu8                                   #\""
+      },
+      {
+        "line_number": 23,
+        "text": "  echo \"#                       #SBATCH -n 8                                     #\""
+      },
+      {
+        "line_number": 24,
+        "text": "  echo \"#                       #SBATCH --gres=gpu:1                              #\""
+      },
+      {
+        "line_number": 25,
+        "text": "  echo \"#                       #SBATCH --error=%J.err                            #\""
+      },
+      {
+        "line_number": 26,
+        "text": "  echo \"#                       #SBATCH --output=%J.out                           #\""
+      },
+      {
+        "line_number": 27,
+        "text": "  echo \"#                       ...                                               #\""
+      },
+      {
+        "line_number": 28,
+        "text": "  echo \"#                       [xxxx@login $] sbatch job.slurm                   #\""
+      },
+      {
+        "line_number": 29,
+        "text": "  echo \"###########################################################################\""
+      },
+      {
+        "line_number": 30,
+        "text": "  echo \"\""
+      },
+      {
+        "line_number": 31,
+        "text": "  exit"
+      },
+      {
+        "line_number": 32,
+        "text": "}"
+      },
+      {
+        "line_number": 33,
+        "text": ""
+      },
+      {
+        "line_number": 34,
+        "text": "function queueCheck()"
+      },
+      {
+        "line_number": 35,
+        "text": "{"
+      },
+      {
+        "line_number": 36,
+        "text": "  if [ -e $1 ]; then"
+      },
+      {
+        "line_number": 37,
+        "text": "    grep -E \"^#SBATCH.*cpu.*gpu|^#SBATCH.*gpu.*cpu\" $1 &>/dev/null"
+      },
+      {
+        "line_number": 38,
+        "text": "    if (($? == 0)); then"
+      },
+      {
+        "line_number": 39,
+        "text": "      echo \"Can't use the cpu queue and the gpu queue at the same time!\""
+      },
+      {
+        "line_number": 40,
+        "text": "    elif (($? != 0)); then"
+      },
+      {
+        "line_number": 41,
+        "text": "      grep \"^#SBATCH -p hcpu\" $1 &>/dev/null"
+      },
+      {
+        "line_number": 42,
+        "text": "      if (($? == 0)); then"
+      },
+      {
+        "line_number": 43,
+        "text": "        sbatch $@"
+      },
+      {
+        "line_number": 44,
+        "text": "      elif (($? != 0)); then"
+      },
+      {
+        "line_number": 45,
+        "text": "        grep -E \"^#SBATCH -p hgpu.*\" $1 &>/dev/null"
+      },
+      {
+        "line_number": 46,
+        "text": "        if (($? == 0)); then"
+      },
+      {
+        "line_number": 47,
+        "text": "          grep \"^#SBATCH --gres=gpu\" $1 &>/dev/null"
+      },
+      {
+        "line_number": 48,
+        "text": "          if (($? == 0)); then "
+      },
+      {
+        "line_number": 49,
+        "text": "            sbatch $@"
+      },
+      {
+        "line_number": 50,
+        "text": "          elif (($? != 0)); then "
+      },
+      {
+        "line_number": 51,
+        "text": "            echo \"When using the gpu queue,you must specify the '--gres' options parameter\""
+      },
+      {
+        "line_number": 52,
+        "text": "          fi"
+      },
+      {
+        "line_number": 53,
+        "text": "        fi"
+      },
+      {
+        "line_number": 54,
+        "text": "      fi"
+      },
+      {
+        "line_number": 55,
+        "text": "    fi"
+      },
+      {
+        "line_number": 56,
+        "text": "  else"
+      },
+      {
+        "line_number": 57,
+        "text": "    echo \"$1, No Such File\""
+      },
+      {
+        "line_number": 58,
+        "text": "    exit"
+      },
+      {
+        "line_number": 59,
+        "text": "  fi"
+      },
+      {
+        "line_number": 60,
+        "text": "}"
+      },
+      {
+        "line_number": 61,
+        "text": ""
+      },
+      {
+        "line_number": 62,
+        "text": "if (($# == 0)); then"
+      },
+      {
+        "line_number": 63,
+        "text": "  echo \"Usage:  xbatch jobscript\""
+      },
+      {
+        "line_number": 64,
+        "text": "  echo \"        xbatch -h or xbatch --help for help\""
+      },
+      {
+        "line_number": 65,
+        "text": "  exit"
+      },
+      {
+        "line_number": 66,
+        "text": "elif (($# == 1)); then"
+      },
+      {
+        "line_number": 67,
+        "text": "  if [[ $1 == -h ]]; then "
+      },
+      {
+        "line_number": 68,
+        "text": "    xbatchHelp"
+      },
+      {
+        "line_number": 69,
+        "text": "  elif [[ $1 == --help ]]; then"
+      },
+      {
+        "line_number": 70,
+        "text": "    xbatchHelp"
+      },
+      {
+        "line_number": 71,
+        "text": "  else"
+      },
+      {
+        "line_number": 72,
+        "text": "    queueCheck $1"
+      },
+      {
+        "line_number": 73,
+        "text": "  fi"
+      },
+      {
+        "line_number": 74,
+        "text": "elif (($# > 1)); then"
+      },
+      {
+        "line_number": 75,
+        "text": "  xbatchHelp "
+      },
+      {
+        "line_number": 76,
+        "text": "fi"
+      }
+    ],
+    "magic_prefix_hex": "23212f62696e2f626173680a66756e63",
+    "mode": "0o755",
+    "modified_at_utc": "2025-10-30T09:01:00.420512+00:00",
+    "owner_gid": 0,
+    "owner_uid": 0,
+    "path": "/usr/local/globle/softs/slurm/19.05.4.1/bin/xbatch",
+    "sha256": "a59e2607ab694c2ed53540a7c24d17d0cf41258e727952355d1ee99fd4477de6",
+    "status": "read",
+    "total_line_count": 76
+  }
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T11:00:53+0800
