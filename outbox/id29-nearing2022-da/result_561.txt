@@ -1,0 +1,84 @@
+### channel=id29-nearing2022-da seq=561
+### host=login4
+### started=2026-09-09T03:04:38+0800
+### ---------- output ----------
+=== find logs for 219423 / 220487 ===
+--- 219423_0 ---
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out
+--- 219423_1 ---
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+--- 220487 ---
+
+=== logs dir listing (recent) ===
+total 52668
+-rw-r--r--. 1 sunyiq g_sunyiq     3413 Aug 10 06:14 compare_202159.out
+-rw-r--r--. 1 sunyiq g_sunyiq        0 Aug 10 06:10 compare_202159.err
+-rw-r--r--. 1 sunyiq g_sunyiq 32110755 Aug 10 04:51 ar_201893.out
+-rw-r--r--. 1 sunyiq g_sunyiq     1027 Aug 10 04:18 ar_201893.err
+-rw-r--r--. 1 sunyiq g_sunyiq    44845 Aug  8 22:54 da_201890.out
+-rw-r--r--. 1 sunyiq g_sunyiq     1027 Aug  8 18:08 da_201890.err
+-rw-r--r--. 1 sunyiq g_sunyiq 20793758 Aug  8 18:07 sim_201858.out
+-rw-r--r--. 1 sunyiq g_sunyiq     1027 Aug  8 18:00 sim_201858.err
+-rw-r--r--. 1 sunyiq g_sunyiq       81 Aug  8 16:47 ar_201859.err
+-rw-r--r--. 1 sunyiq g_sunyiq   972379 Aug  8 16:47 ar_201859.out
+=== tails ===
+--- /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2_220487.out ---
+--- /data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/logs/N22-replv2_220487.err ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py", line 629, in <module>
+    main()
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py", line 623, in main
+    result = verify_replacement_chain(args.repo_root)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/verify_warmup_target_replacement_chain.py", line 562, in verify_replacement_chain
+    raise ValueError("Mask audit stdout does not reproduce the published audit JSON")
+ValueError: Mask audit stdout does not reproduce the published audit JSON
+--- /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 374, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 360, in main
+    gates = validate_entry_gates(args.repo_root, args.protocol, args.data_audit_dir, args.mask_audit_dir)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 94, in validate_entry_gates
+    _require_equal(data_receipt, "slurm_job_id", "202506")
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 40, in _require_equal
+    raise ValueError(f"{key}: expected {expected!r}, got {actual!r}")
+ValueError: slurm_job_id: expected '202506', got '202510'
+--- /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out ---
+203492|TIMEOUT|0:0
+203493|TIMEOUT|0:0
+204694|TIMEOUT|0:0
+206480|TIMEOUT|0:0
+207724|TIMEOUT|0:0
+202215|TIMEOUT|0:0
+202214|TIMEOUT|0:0
+registered_missing_total=0
+--- /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out ---
+203492|TIMEOUT|0:0
+203493|TIMEOUT|0:0
+204694|TIMEOUT|0:0
+206480|TIMEOUT|0:0
+207724|TIMEOUT|0:0
+202215|TIMEOUT|0:0
+202214|TIMEOUT|0:0
+registered_missing_total=0
+--- /data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err ---
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 374, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 360, in main
+    gates = validate_entry_gates(args.repo_root, args.protocol, args.data_audit_dir, args.mask_audit_dir)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 94, in validate_entry_gates
+    _require_equal(data_receipt, "slurm_job_id", "202506")
+  File "/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py", line 40, in _require_equal
+    raise ValueError(f"{key}: expected {expected!r}, got {actual!r}")
+ValueError: slurm_job_id: expected '202506', got '202510'
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T03:04:59+0800
