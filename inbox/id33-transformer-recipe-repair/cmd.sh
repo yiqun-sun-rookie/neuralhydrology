@@ -1,37 +1,52 @@
 #!/bin/bash
-# seq=33 read-only: fix the maxdepth bug, get gpu partitions, confirm torch
+# seq=34 deploy the reproducibility probe and submit both conditions.
+# Deploy is gated on the in-flight check that batch 1 was destroyed for lacking.
 set -o pipefail
 ROOT=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
-R33="$ROOT/results/33_transformer_recipe_repair"
+PAYLOAD=~/hpc_mailbox/payload/id33-transformer-recipe-repair/id33_repro_probe_v01.tar.gz
 
 echo "=== STAMP ==="; date -Iseconds
 
-echo "=== A. RAW VALIDATION PREDICTIONS (correct depth) ==="
-find "$R33" -mindepth 1 -maxdepth 6 -name 'validation_results.p' -printf '%10s  %p\n' 2>/dev/null | head -10 || true
-echo "  count=$(find "$R33" -maxdepth 6 -name 'validation_results.p' 2>/dev/null | wc -l)"
+echo "=== A. IN-FLIGHT GATE ==="
+INFLIGHT=$(squeue -u "$USER" -h -t RUNNING,CONFIGURING -o "%j" 2>/dev/null | grep -c '^id33_' || true)
+echo "id33_in_flight_count=${INFLIGHT}"
+if [ "${INFLIGHT}" != "0" ]; then echo "REFUSING TO DEPLOY: id33 job in flight"; exit 1; fi
+echo "no id33 job in flight; safe to deploy"
 
-echo "=== A2. WHAT IS ACTUALLY UNDER ONE ARM ==="
-T2DIR=$(ls -1d "$R33"/T2/*/ 2>/dev/null | head -1)
-echo "T2 run dir: $T2DIR"
-ls -1 "$T2DIR" 2>&1 | head -15
-echo "-- validation subtree --"
-find "$T2DIR" -maxdepth 3 -type f -printf '%10s  %P\n' 2>/dev/null | head -20 || true
+echo "=== B. EXTRACT PAYLOAD ==="
+ls -la "$PAYLOAD" 2>&1 || { echo "PAYLOAD MISSING"; exit 1; }
+cd "$ROOT" || exit 1
+tar -xzf "$PAYLOAD" -C "$ROOT"
+sed -i 's/\r$//' src/transformer_recipe_repair/hpc/submit_repro_probe.slurm
+echo "-- deployed hashes (must match local) --"
+sha256sum src/transformer_recipe_repair/configs/repro_probe.yml \
+          src/transformer_recipe_repair/scripts/deterministic_train.py \
+          src/transformer_recipe_repair/hpc/submit_repro_probe.slurm
 
-echo "=== B. GPU PARTITIONS ONLY ==="
-sinfo -o "%.10P %.6a %.6D %.8t %.30N" 2>&1 | grep -E 'PARTITION|gpu' || true
+echo "=== C. UNTOUCHED: the eight registered configs and the registry ==="
+sha256sum src/transformer_recipe_repair/registry/experiments.csv \
+          src/transformer_recipe_repair/configs/t2.yml \
+          src/transformer_recipe_repair/hpc/submit_packed_arms.slurm
 
-echo "=== C. GPU NODES FREE RIGHT NOW ==="
-sinfo -p hgpu2p,hgpu2 -N -o "%.10N %.10P %.8T %.8G" 2>&1 | head -20 || true
+echo "=== D. EXISTING AUDIT STILL PASSES ==="
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh
+conda activate nh_final
+python -m src.transformer_recipe_repair.scripts.audit_configs 2>&1 | tail -5 || true
 
-echo "=== D. TORCH + DETERMINISM CAPABILITY (import only) ==="
-source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh 2>/dev/null || source "$HOME/miniconda3/etc/profile.d/conda.sh" 2>/dev/null
-conda activate nh_final 2>&1 | tail -1
-python - <<'PY' 2>&1 | tail -8
-import torch
-print("torch", torch.__version__)
-print("has use_deterministic_algorithms", hasattr(torch, "use_deterministic_algorithms"))
-print("cudnn.deterministic default", torch.backends.cudnn.deterministic)
-print("cudnn.benchmark default", torch.backends.cudnn.benchmark)
-print("matmul.allow_tf32 default", torch.backends.cuda.matmul.allow_tf32)
-print("cudnn.allow_tf32 default", torch.backends.cudnn.allow_tf32)
-PY
+echo "=== E. SUBMIT BOTH CONDITIONS ==="
+mkdir -p logs/33_transformer_recipe_repair results/33_transformer_recipe_repair/_repro_probe
+OUT1=$(sbatch --export=ALL,DET=1 --job-name=id33_repro_det src/transformer_recipe_repair/hpc/submit_repro_probe.slurm 2>&1)
+echo "$OUT1"
+J1=$(echo "$OUT1" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
+[ -n "$J1" ] || { echo "SUBMIT_FAILED det"; exit 1; }
+
+OUT2=$(sbatch --export=ALL,DET=0 --job-name=id33_repro_ctl src/transformer_recipe_repair/hpc/submit_repro_probe.slurm 2>&1)
+echo "$OUT2"
+J2=$(echo "$OUT2" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
+[ -n "$J2" ] || { echo "SUBMIT_FAILED control (det job $J1 IS RUNNING)"; exit 1; }
+
+echo "deterministic_job=$J1 control_job=$J2"
+
+echo "=== F. QUEUE STATE ==="
+sleep 20
+squeue -u "$USER" -o "%.10i %.18j %.3t %.10M %.9N %R" 2>&1 | grep -E 'JOBID|id33_repro' || true
