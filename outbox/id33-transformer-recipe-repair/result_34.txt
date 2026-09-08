@@ -1,0 +1,32 @@
+### channel=id33-transformer-recipe-repair seq=34
+### host=login4
+### started=2026-09-08T16:08:45+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-08T16:08:45+0800
+=== A. IN-FLIGHT GATE ===
+id33_in_flight_count=0
+no id33 job in flight; safe to deploy
+=== B. EXTRACT PAYLOAD ===
+-rw-r--r--. 1 sunyiq g_sunyiq 6307 Sep  8 16:08 /data1/home/sunyiq/hpc_mailbox/payload/id33-transformer-recipe-repair/id33_repro_probe_v01.tar.gz
+-- deployed hashes (must match local) --
+9528f7276964a3d5ba54c66dc6592515fe3f1d9d86996e026cfe61c1e3a30bc1  src/transformer_recipe_repair/configs/repro_probe.yml
+2204693d1bb6db4c20aa1355cc05c68494eb323065718dab3214e6759082fb98  src/transformer_recipe_repair/scripts/deterministic_train.py
+a5bc892a9ccc0a4fb6b5e8d44bd555ff324f6ed1191d2be682b4b6bc59f08e5b  src/transformer_recipe_repair/hpc/submit_repro_probe.slurm
+=== C. UNTOUCHED: the eight registered configs and the registry ===
+b202b1d7e664aa84c38f20647c9478d4ee4a49846cacd4a2c75aeb86a5369b9e  src/transformer_recipe_repair/registry/experiments.csv
+29aeeec57d3a8f066e7ea226d7095e9b1b554113ee9221da8c774e3c259a2264  src/transformer_recipe_repair/configs/t2.yml
+99f1bcd4e9e1cc2c1e0ea389cb581fbd700b7927aa7df6ec5aa7f62d68410aaf  src/transformer_recipe_repair/hpc/submit_packed_arms.slurm
+=== D. EXISTING AUDIT STILL PASSES ===
+ID33 CONFIG AUDIT: PASS (8 arms; one factor each; no data read; no training launched)
+=== E. SUBMIT BOTH CONDITIONS ===
+Submitted batch job 223971
+Submitted batch job 223972
+deterministic_job=223971 control_job=223972
+=== F. QUEUE STATE ===
+     JOBID               NAME  ST       TIME  NODELIST NODELIST(REASON)
+    223971     id33_repro_det   R    INVALID    ngu004 ngu004
+    223972     id33_repro_ctl   R    INVALID    ngu004 ngu004
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:09:08+0800
