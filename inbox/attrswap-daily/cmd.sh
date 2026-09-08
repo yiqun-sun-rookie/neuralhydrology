@@ -1,5 +1,6 @@
 #!/bin/bash
-# forcing-swap seq=12 -- deploy the isolated landing dir, generate 9+1 configs, submit gate + 9 arms (afterok).
+# forcing-swap seq=13 -- redeploy after the seq=12 code-count guard fired (206 files = 78 sources + two
+# generations of __pycache__). Copies sources only. A previous landing dir is renamed, never deleted.
 # Login node does only file copies and submission; all reading of the 529 netCDFs happens inside the gate job.
 set -o pipefail
 date "+wallclock %F %T %z"
@@ -8,16 +9,29 @@ A=/data1/home/sunyiq/attr_swap_daily_2026_09
 M=$HOME/hpc_mailbox/inbox/attrswap-daily/payload
 
 echo "=== A. LANDING DIR ==="
-[ -d "$R" ] && { echo "LANDING ALREADY EXISTS -- refusing to redeploy"; ls "$R"; exit 1; }
+if [ -d "$R" ]; then
+  if [ -d "$R/runs" ] && [ -n "$(ls -A $R/runs 2>/dev/null)" ]; then
+    echo "LANDING HAS RUN OUTPUT -- refusing to touch it"; ls "$R/runs"; exit 1
+  fi
+  mv "$R" "${R}.FAILED_$(date +%Y%m%d_%H%M%S)" || { echo RENAME_FAILED; exit 1; }
+  echo "renamed the incomplete landing dir aside (not deleted): $(ls -d ${R}.FAILED_* | tail -1)"
+fi
 mkdir -p "$R"/{logs,runs,runs_smoke,configs,basin_lists,hpc_deploy/jobs,data_shadow/camels_us/basin_mean_forcing}
 echo "created $R"
 
 echo "=== B. CODE (copied from the already-verified attr-swap landing) ==="
 cp -r "$A/code_1f9804e" "$R/" || { echo CODE_COPY_FAILED; exit 1; }
+find "$R/code_1f9804e" -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null
 nfiles=$(find "$R/code_1f9804e" -type f | wc -l)
-csha=$(sha256sum "$R/code_1f9804e/neuralhydrology/datasetzoo/camelsus.py" | cut -c1-16)
-echo "code files: $nfiles (expect 142); camelsus.py sha: $csha (expect 51e2e02b382ec103)"
-[ "$nfiles" = "142" ] && [ "$csha" = "51e2e02b382ec103" ] || { echo CODE_VERIFY_FAILED; exit 1; }
+echo "source files (no __pycache__): $nfiles (expect 78)"
+ok=1
+[ "$nfiles" = "78" ] || { echo "COUNT MISMATCH"; ok=0; }
+for spec in 'neuralhydrology/datasetzoo/camelsus.py:51e2e02b382ec103'             'neuralhydrology/datasetzoo/basedataset.py:42a818bdacdb774e'             'neuralhydrology/modelzoo/cudalstm.py:27f2e17d3f388a9b'             'neuralhydrology/training/basetrainer.py:91d6b7286e748707'; do
+  p=${spec%%:*}; want=${spec##*:}; got=$(sha256sum "$R/code_1f9804e/$p" | cut -c1-16)
+  echo "  $p $got (expect $want)"
+  [ "$got" = "$want" ] || ok=0
+done
+[ "$ok" = "1" ] || { echo CODE_VERIFY_FAILED; exit 1; }
 
 echo "=== C. DATA SHADOW (streamflow / attributes / maurer all reference the verified attr-swap shadow) ==="
 ln -s "$A/data_shadow/camels_us/usgs_streamflow" "$R/data_shadow/camels_us/usgs_streamflow"
