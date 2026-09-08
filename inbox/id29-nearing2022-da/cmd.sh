@@ -1,17 +1,25 @@
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
-echo "=== locate logs for 219423 / 220487 ==="
-find "$ROOT/logs" -maxdepth 3 -name '*219423*' -o -maxdepth 3 -name '*220487*' 2>/dev/null | head -20 || true
-echo "=== 219423_0 err tail ==="
-F=$(find "$ROOT" -maxdepth 4 -name '*219423_0*.err' 2>/dev/null | head -1)
-echo "file=$F"; [ -n "$F" ] && tail -40 "$F" || true
-echo "=== 219423_1 err tail ==="
-G=$(find "$ROOT" -maxdepth 4 -name '*219423_1*.err' 2>/dev/null | head -1)
-echo "file=$G"; [ -n "$G" ] && tail -40 "$G" || true
-echo "=== 220487 err tail ==="
-H=$(find "$ROOT" -maxdepth 4 -name '*220487*.err' 2>/dev/null | head -1)
-echo "file=$H"; [ -n "$H" ] && tail -40 "$H" || true
-echo "=== 219423_0 out tail ==="
-O=$(find "$ROOT" -maxdepth 4 -name '*219423_0*.out' 2>/dev/null | head -1)
-echo "file=$O"; [ -n "$O" ] && tail -30 "$O" || true
+date --iso-8601=seconds
+echo "=== N22 JOBS ==="
+squeue -u sunyiq -h -o '%.12i %.16j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22' || echo 'no N22 jobs in queue'
+echo "=== FAILURES/TIMEOUTS 7d ==="
+sacct -X -n -P -S $(date -d '7 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22' | grep -E '\|(TIMEOUT|FAILED|NODE_FAIL|OUT_OF_MEMORY|CANCELLED)' || echo '  none'
+echo "=== 219423 WARMPAIR STATE ==="
+sacct -j 219423 -X -n -P --format=JobID,State,Elapsed 2>/dev/null || echo '  not found'
+echo "=== LOG IDLE SECONDS ==="
+for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-' | awk '{print $1}'); do
+  SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
+  [ -n "$SO" ] && [ -f "$SO" ] && printf '  %-14s idle=%ss node=%s\n' "$J" "$(( $(date +%s) - $(stat -c %Y "$SO") ))" "$(squeue -h -j "$J" -o '%N' 2>/dev/null)"
+done
+echo "=== WARMPAIR DIRS ==="
+D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
+for X in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do
+  [ -e "$D/$X" ] && echo "  PRESENT $X" || echo "  MISSING $X"
+done
+echo "=== GATE ARTIFACTS ==="
+for F in aggregation/evaluations/time_split_vs_author.csv aggregation/evaluations/basin_split_vs_author.csv aggregation/hyperparameters/scores.csv aggregation/final_reproduction_gate.json; do
+  P="$ROOT/closure_20260810/$F"
+  [ -f "$P" ] && echo "  PRESENT $F ($(stat -c %s "$P") bytes)" || echo "  MISSING $F"
+done
 exit 0
