@@ -1,6 +1,8 @@
 set -o pipefail
-ROOT=/data1/home/sunyiq/nearing2022_da
-echo "=== find 219423 / 220487 logs ==="
-find "$ROOT" -maxdepth 4 -name '*219423*' -o -maxdepth 4 -name '*220487*' 2>/dev/null | head -20 || true
-echo "=== slurm out dirs ==="
-grep -nE 'output=|error=' "$ROOT/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm" 2>/dev/null || ls -1 "$ROOT/src/29_nearing2022_da_ar/hpc/" 2>/dev/null || true
+L=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs
+for F in N22-warmpair_219423_0.err N22-warmpair_219423_0.out N22-warmpair_219423_1.err; do
+  echo "=== $F ==="; tail -50 "$L/$F" 2>/dev/null || true
+done
+echo "=== replv2 220487 ==="
+ls -1t "$L" 2>/dev/null | grep -i 'replv2' | head -5 || true
+for F in $(ls -1t "$L" 2>/dev/null | grep -i 'replv2' | head -2); do echo "-- $F"; tail -30 "$L/$F" 2>/dev/null || true; done
