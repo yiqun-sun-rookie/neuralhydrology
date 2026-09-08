@@ -1,0 +1,73 @@
+### channel=attrswap-daily seq=11
+### host=login4
+### started=2026-09-08T13:26:48+0800
+### ---------- output ----------
+wallclock 2026-09-08 13:26:48 +0800
+=== A. mtimes of the camels netcdf files (are they one batch?) ===
+total 2868869
+drwxr-xr-x. 2 sunyiq g_sunyiq    4096 Jan 20  2026 .
+drwxr-xr-x. 9 sunyiq g_sunyiq    4096 Jan 20  2026 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 4377804 Jan 20  2026 camels_01013500.nc
+--- oldest / newest ---
+-rw-r--r--. 1 sunyiq g_sunyiq 4377804 2026-01-20 21:28 camels_01169000.nc
+-rw-r--r--. 1 sunyiq g_sunyiq 4377804 2026-01-20 21:28 camels_01350080.nc
+total 2868861
+-rw-r--r--. 1 sunyiq g_sunyiq 4377804 2026-01-20 21:28 camels_10172700.nc
+-rw-r--r--. 1 sunyiq g_sunyiq 4377808 2026-01-20 21:28 camels_10263500.nc
+--- distinct mtime days ---
+    671 2026-01-20
+      1 
+--- other subset dirs, file counts ---
+camels: 671
+camelsaus: 561
+camelsbr: 870
+camelscl: 505
+camelsgb: 671
+hysets: 4225
+lamah: 859
+=== B. is the camels set exactly the full CAMELS-US 671? ===
+caravan camels ids: 671   camels_us streamflow ids: 0
+in caravan but not in camels_us: 671
+in camels_us but not in caravan: 0
+=== C. netcdf global attributes (provenance written by the producer) ===
+file: /data1/home/sunyiq/neuralhydrology/data/Caravan/timeseries/netcdf/camels/camels_01013500.nc
+global attrs: {'Units': 'dewpoint_temperature_2m: Dew point temperature [°C]\npotential_evaporation_sum_ERA5_LAND: Potential Evaporation [mm] (original potential_evaporation from ERA5-Land)\npotential_evaporation_sum_FAO_PENMAN_MONTEITH: Potential Evaporation [mm] (FAO Penman-Monteith computed from ERA5-Land inputs)\nsnow_depth_water_equivalent: Snow-Water-Equivalent [mm]\nsurface_net_solar_radiation: Surface net solar radiation [W/m2]\nsurface_net_thermal_radiation: Surface net thermal radiation [W/m2]\nsurface_pressure: Surface pressure [kPa]\ntemperature_2m: 2m air temperature [°C]\nu_component_of_wind_10m: U-component of wind at 10m [m/s]\nv_component_of_wind_10m: V-component of wind at 10m [m/s]\nvolumetric_soil_water_layer_1: Volumetric soil water layer 1 (0-7cm) [m3/m3]\nvolumetric_soil_water_layer_2: Volumetric soil water layer 2 (7-28cm) [m3/m3]\nvolumetric_soil_water_layer_3: Volumetric soil water layer 3 (28-100cm) [m3/m3]\nvolumetric_soil_water_layer_4: Volumetric soil water layer 4 (100-289cm) [m3/m3]\ntotal_precipitation: Total precipitation [mm]', 'Timezone': 'America/New_York', 'Source': 'All forcing and state variables are derived from ERA5-Land hourly by ECMWF. Streamflow data was taken from the CAMELS (US) dataset by Newman et al. (2014).'}
+total_precipitation_sum attrs: {}
+temperature_2m_max attrs: {}
+streamflow attrs: {}
+encoding source: /data1/home/sunyiq/neuralhydrology/data/Caravan/timeseries/netcdf/camels/camels_01013500.nc
+=== D. any generator script / notes on the HPC ===
+total 1808
+drwxr-xr-x. 5 sunyiq g_sunyiq    4096 Mar 12 19:50 .
+drwxr-xr-x. 6 sunyiq g_sunyiq    4096 Feb  3  2026 ..
+-rw-r--r--. 1 sunyiq g_sunyiq    4779 Jan 20  2026 531_basin_list.txt
+-rw-r--r--. 1 sunyiq g_sunyiq  120506 Jan 20  2026 all_basins.txt
+drwxr-xr-x. 9 sunyiq g_sunyiq    4096 Jan 20  2026 attributes
+-rw-r--r--. 1 sunyiq g_sunyiq    8449 Mar  3  2026 camels_clean_basins.txt
+lrwxr-xr-x. 1 sunyiq g_sunyiq      47 Jan 29  2026 Caravan -> /data1/home/sunyiq/neuralhydrology/data/Caravan
+-rw-r--r--. 1 sunyiq g_sunyiq 1606028 Jan 20  2026 caravan-long-logo.png
+drwxr-xr-x. 9 sunyiq g_sunyiq    4096 Jan 20  2026 licenses
+drwxr-xr-x. 3 sunyiq g_sunyiq    4096 Jan 20  2026 timeseries
+-rw-r--r--. 1 sunyiq g_sunyiq   89359 Jan 31  2026 valid_basins.txt
+--- 531_basin_list.txt: 531 lines, mtime 2026-01-20 11:19
+--- all_basins.txt: 7129 lines, mtime 2026-01-20 21:33
+--- camels_clean_basins.txt: 497 lines, mtime 2026-03-03 21:28
+--- valid_basins.txt: 5281 lines, mtime 2026-01-31 23:03
+/data1/home/sunyiq/neuralhydrology/src/caravan_global
+/data1/home/sunyiq/neuralhydrology/src/caravan_global/hpc/submit_caravan.slurm
+/data1/home/sunyiq/neuralhydrology/src/caravan_global/hpc/slurm_caravan_global.sh
+/data1/home/sunyiq/neuralhydrology/src/caravan_global/hpc/submit_caravan.sh
+/data1/home/sunyiq/neuralhydrology/src/caravan_global/configs/caravan_daily_basemodel.yml
+/data1/home/sunyiq/neuralhydrology/src/caravan_global/configs/caravan_daily_basemodel_hpc.yml
+/data1/home/sunyiq/neuralhydrology/src/caravan_global/configs/caravan_daily_smoke_10basins_ep3.yml
+/data1/home/sunyiq/neuralhydrology/src/caravan_global/configs/caravan_daily_smoke_2basins_ep1.yml
+/data1/home/sunyiq/neuralhydrology/src/caravan_global/configs/caravan_hpc.yml
+/data1/home/sunyiq/neuralhydrology/src/caravan_global/scripts/download_caravan.py
+=== E. PRECIP TIME ALIGNMENT PREVIEW (Caravan vs Maurer, 3 basins, lags -2..+2) ===
+01022500: n=6848 corr by lag {-2: -0.0414, -1: 0.2841, 0: 0.8041, 1: 0.2679, 2: -0.0197} -> best lag 0 | mean maurer 3.330 caravan 3.127 ratio 0.939
+06192500 maurer file missing
+11264500: n=6848 corr by lag {-2: 0.2763, -1: 0.5507, 0: 0.8096, 1: 0.6047, 2: 0.3178} -> best lag 0 | mean maurer 3.014 caravan 3.061 ratio 1.016
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T13:27:13+0800
