@@ -1,0 +1,13 @@
+### channel=attrswap-daily seq=12
+### host=login4
+### started=2026-09-08T13:36:16+0800
+### ---------- output ----------
+wallclock 2026-09-08 13:36:16 +0800
+=== A. LANDING DIR ===
+created /data1/home/sunyiq/forcing_swap_daily_2026_09
+=== B. CODE (copied from the already-verified attr-swap landing) ===
+code files: 206 (expect 142); camelsus.py sha: 51e2e02b382ec103 (expect 51e2e02b382ec103)
+CODE_VERIFY_FAILED
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-08T13:36:19+0800
