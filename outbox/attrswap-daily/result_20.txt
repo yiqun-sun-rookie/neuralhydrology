@@ -1,0 +1,87 @@
+### channel=attrswap-daily seq=20
+### host=login4
+### started=2026-09-08T16:15:48+0800
+### ---------- output ----------
+wallclock 2026-09-08 16:15:48 +0800
+=== A. AVAILABILITY ACROSS THE GPU PARTITIONS (for the record, before deciding) ===
+--- hgpu8 ---
+ NODELIST   STATE      CPUS(A/I/O/T)       GRES
+   ngu201     mix         48/16/0/64      gpu:8
+   ngu202   maint          0/64/0/64      gpu:8
+   ngu203     mix          62/2/0/64      gpu:8
+--- hgpu4 ---
+ NODELIST   STATE      CPUS(A/I/O/T)       GRES
+   ngu101    idle          0/96/0/96      gpu:4
+   ngu102    idle          0/96/0/96      gpu:4
+   ngu103   down*          0/0/96/96      gpu:4
+   ngu104     mix         16/80/0/96      gpu:4
+--- hgpu2p ---
+ NODELIST   STATE      CPUS(A/I/O/T)       GRES
+   ngu001     mix          8/88/0/96      gpu:2
+   ngu002   down*          0/0/96/96      gpu:2
+   ngu004     mix         24/72/0/96      gpu:2
+   ngu005   drain          0/0/96/96      gpu:2
+   ngu006     mix         16/80/0/96      gpu:2
+   ngu007    idle          0/96/0/96      gpu:2
+   ngu008     mix         12/84/0/96      gpu:2
+   ngu010     mix          8/24/0/32      gpu:2
+   ngu011     mix          8/24/0/32      gpu:2
+--- hgpu2 ---
+ NODELIST   STATE      CPUS(A/I/O/T)       GRES
+   ngu003    idle          0/96/0/96      gpu:2
+   ngu009    idle          0/96/0/96      gpu:2
+=== B. CANCEL MY TEN PENDING JOBS (explicit ids only, never -u) ===
+  cancelled 223959 (PENDING, never started)
+  cancelled 223960 (PENDING, never started)
+  cancelled 223961 (PENDING, never started)
+  cancelled 223962 (PENDING, never started)
+  cancelled 223963 (PENDING, never started)
+  cancelled 223964 (PENDING, never started)
+  cancelled 223965 (PENDING, never started)
+  cancelled 223966 (PENDING, never started)
+  cancelled 223967 (PENDING, never started)
+  cancelled 223968 (PENDING, never started)
+=== C. EDIT THE TWO SLURM TEMPLATES (resource lines only) ===
+  before: fswap_gate.slurm f30fafac7bb204fc
+  after:  fswap_gate.slurm 549fe7c89f51ce9b
+5:#SBATCH -p hgpu8
+8:#SBATCH --cpus-per-task=4
+9:#SBATCH --gres=gpu:1
+  before: fswap_train.slurm a23297120ddfba58
+  after:  fswap_train.slurm 62c377f7e02ae96f
+5:#SBATCH -p hgpu8
+8:#SBATCH --cpus-per-task=4
+9:#SBATCH --gres=gpu:1
+--- confirm nothing but those two lines moved ---
+/data1/home/sunyiq/forcing_swap_daily_2026_09/hpc_deploy/fswap_gate.slurm:73
+/data1/home/sunyiq/forcing_swap_daily_2026_09/hpc_deploy/fswap_train.slurm:41
+=== D. SUBMIT GATE ===
+Submitted batch job 223974
+=== E. SUBMIT 9 ARMS (afterok:223974) ===
+fswap_armE27_s100 -> 223975
+fswap_armE27_s200 -> 223976
+fswap_armE27_s300 -> 223977
+fswap_armE23_s100 -> 223978
+fswap_armE23_s200 -> 223979
+fswap_armE23_s300 -> 223980
+fswap_armEP_s100 -> 223981
+fswap_armEP_s200 -> 223982
+fswap_armEP_s300 -> 223983
+job ids: 223974 223975 223976 223977 223978 223979 223980 223981 223982 223983 
+=== F. QUEUE + START ESTIMATE ===
+      JOBID                 NAME     STATE       DEPENDENCY         NODELIST(REASON)
+     223974           fswap_gate   PENDING                                (Priority)
+     223975    fswap_armE27_s100   PENDING   afterok:223974             (Dependency)
+     223976    fswap_armE27_s200   PENDING   afterok:223974             (Dependency)
+     223977    fswap_armE27_s300   PENDING   afterok:223974             (Dependency)
+     223978    fswap_armE23_s100   PENDING   afterok:223974             (Dependency)
+     223979    fswap_armE23_s200   PENDING   afterok:223974             (Dependency)
+     223980    fswap_armE23_s300   PENDING   afterok:223974             (Dependency)
+     223981     fswap_armEP_s100   PENDING   afterok:223974             (Dependency)
+     223982     fswap_armEP_s200   PENDING   afterok:223974             (Dependency)
+     223983     fswap_armEP_s300   PENDING   afterok:223974             (Dependency)
+  gate start estimate: N/A
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:15:50+0800
