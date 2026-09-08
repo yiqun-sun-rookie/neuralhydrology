@@ -1,9 +1,6 @@
 set -o pipefail
 ROOT=/data1/home/sunyiq/nearing2022_da
-for J in 219423_0 219423_1 220487; do
-  echo "=== $J ==="
-  SE=$(sacct -j "$J" -X -n -P --format=JobID 2>/dev/null | head -1)
-  for F in $(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^Std\(Err\|Out\)=//p' | head -2); do echo "-- $F"; tail -40 "$F" 2>/dev/null || true; done
-done
-echo "=== SEARCH LOG FILES ==="
-ls -1t "$ROOT"/logs/29_nearing2022_da_ar/ 2>/dev/null | head -30 || true
+echo "=== find 219423 / 220487 logs ==="
+find "$ROOT" -maxdepth 4 -name '*219423*' -o -maxdepth 4 -name '*220487*' 2>/dev/null | head -20 || true
+echo "=== slurm out dirs ==="
+grep -nE 'output=|error=' "$ROOT/src/29_nearing2022_da_ar/hpc/run_warmup_target_pair.slurm" 2>/dev/null || ls -1 "$ROOT/src/29_nearing2022_da_ar/hpc/" 2>/dev/null || true
