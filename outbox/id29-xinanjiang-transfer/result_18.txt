@@ -1,0 +1,12 @@
+### channel=id29-xinanjiang-transfer seq=18
+### host=login4
+### started=2026-09-08T14:06:49+0800
+### ---------- output ----------
+Traceback (most recent call last):
+  File "<stdin>", line 29, in <module>
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['squeue', '-h', '-j', '223833', '-o', '%i|%T']' returned non-zero exit status 1.
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-08T14:06:51+0800
