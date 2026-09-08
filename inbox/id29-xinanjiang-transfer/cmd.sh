@@ -23,7 +23,7 @@ for name,expected in manifest.items():
     if actual!=expected: changed.append({'path':name,'expected':expected,'actual':actual})
 print('ORIGINAL_RECEIVER_FILES',len(manifest))
 print('ORIGINAL_RECEIVER_MISMATCHES',json.dumps(changed,sort_keys=True))
-print('RECOVERY_DIRECTORY_COUNT',sum(p.is_dir() for p in (recovery/'receiver/evaluation').glob('*'))
+print('RECOVERY_DIRECTORY_COUNT',sum(p.is_dir() for p in (recovery/'receiver/evaluation').glob('*')))
 PY
 for suffix in out err; do
   LOGFILE="$RECOVERY/logs/id29-xaj-rec2_${JOB_ID}.${suffix}"
