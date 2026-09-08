@@ -1,0 +1,9 @@
+### channel=kalmannet-wrr-hp-extension seq=31
+### host=login4
+### started=2026-09-08T13:15:09+0800
+### ---------- output ----------
+launch.sh: OK
+{"admission_written": false, "report": {"reason": "Collector did not complete: ValueError: Read-only scheduler query failed", "records": [], "stage": "A", "status": "STOP_INTEGRITY"}}
+### ---------- end ----------
+### exit_code=2
+### finished=2026-09-08T13:15:16+0800
