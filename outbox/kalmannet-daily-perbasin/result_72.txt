@@ -1,0 +1,679 @@
+### channel=kalmannet-daily-perbasin seq=72
+### host=login4
+### started=2026-09-08T22:52:52+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=72 purpose=exclusive-new-root-frozen-deployment-only-no-compute
+FRESH_OWN_JOB_NONOVERLAP
+JobId=223848 ArrayJobId=223848 ArrayTaskId=16 ArrayTaskThrottle=6 JobName=ngf-select-A
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=266417 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=JobArrayTaskLimit Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-08T11:43:17 EligibleTime=Unknown
+   AccrueTime=2026-09-08T11:43:18
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-08T22:31:23
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/hpc_array.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_16.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_16.out
+   Power=
+   TresPerNode=gpu:1
+JobId=223848 ArrayJobId=223848 ArrayTaskId=17 ArrayTaskThrottle=6 JobName=ngf-select-A
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=266417 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=JobArrayTaskLimit Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-08T11:43:17 EligibleTime=Unknown
+   AccrueTime=2026-09-08T11:43:18
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-08T22:31:23
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/hpc_array.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_17.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_17.out
+   Power=
+   TresPerNode=gpu:1
+JobId=223992 JobName=tukf09-455-v2r12-prepare
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=235383 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Priority Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A
+   SubmitTime=2026-09-08T16:56:09 EligibleTime=2026-09-08T16:56:09
+   AccrueTime=2026-09-08T16:56:09
+   StartTime=2026-09-14T13:44:24 EndTime=2026-09-14T17:44:24 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-08T22:53:22
+   Partition=hgpu8 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=32 NumTasks=1 CPUs/Task=32 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=32,node=1,billing=32
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=32 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r12/probe_gpu.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/logs/prepare-223992.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/logs/prepare-223992.out
+   Power=
+   TresPerNode=gpu:8
+JobId=202229 JobName=N22-agg-eval
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=DependencyNeverSatisfied Dependency=afterok:202226_*
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-08-10T12:54:24 EligibleTime=Unknown
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T12:54:24
+   Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_aggregation.slurm
+   WorkDir=/data1/home/sunyiq/nearing2022_da
+   StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-agg-eval_202229.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-agg-eval_202229.out
+   Power=
+JobId=202294 JobName=N22-export
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Dependency Dependency=afterok:202293
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=04:00:00 TimeMin=N/A
+   SubmitTime=2026-08-10T15:15:34 EligibleTime=Unknown
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T15:15:34
+   Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_export.slurm
+   WorkDir=/data1/home/sunyiq/nearing2022_da
+   StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-export_202294.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-export_202294.out
+   Power=
+JobId=202315 JobName=N22-gate
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Dependency Dependency=afterok:202229
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A
+   SubmitTime=2026-08-10T17:05:43 EligibleTime=Unknown
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T17:05:43
+   Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=2 NumTasks=1 CPUs/Task=2 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=2,node=1,billing=2
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=2 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_numerical_gate.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-gate_202315.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-gate_202315.out
+   Power=
+JobId=202507 JobName=N22-mask-iso-531
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=DependencyNeverSatisfied Dependency=afterok:202506
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A
+   SubmitTime=2026-08-11T05:28:02 EligibleTime=Unknown
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-11T05:28:02
+   Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/run_author_v13_warmup_isolation_all531.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-mask-iso-531_202507.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-mask-iso-531_202507.out
+   Power=
+   TresPerNode=gpu:1
+JobId=215429 JobName=id30_m01_s100
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=DependencyNeverSatisfied Dependency=afterok:215428
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=7-00:00:00 TimeMin=N/A
+   SubmitTime=2026-08-27T18:33:13 EligibleTime=Unknown
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-27T18:33:13
+   Partition=hgpu2 AllocNode:Sid=login04:721
+   ReqNodeList=ngu009 ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/src/modern_transformer_moe/hpc/submit_m01_development.slurm
+   WorkDir=/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo
+   StdErr=/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/m01-development-215429.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo/logs/30_modern_transformer_moe/m01-development-215429.out
+   Power=
+   TresPerNode=gpu:1
+JobId=202293 JobName=N22-manifest
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=0 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=JobHeldUser Dependency=afterok:202229
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-08-10T15:15:34 EligibleTime=Unknown
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-08-10T15:15:34
+   Partition=hgpu4,hgpu8,hgpu2 AllocNode:Sid=login04:44128
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/hpc/run_registered_closure_manifest.slurm
+   WorkDir=/data1/home/sunyiq/nearing2022_da
+   StdErr=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-manifest_202293.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-manifest_202293.out
+   Power=
+JobId=224103 ArrayJobId=223848 ArrayTaskId=15 ArrayTaskThrottle=6 JobName=ngf-select-A
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=263937 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:21:29 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-08T11:43:17 EligibleTime=2026-09-08T22:31:23
+   AccrueTime=2026-09-08T11:43:18
+   StartTime=2026-09-08T22:31:23 EndTime=2026-09-09T22:31:23 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-08T22:31:23
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=ngu004
+   BatchHost=ngu004
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+     Nodes=ngu004 CPU_IDs=8-11 Mem=0 GRES=gpu(IDX:1)
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/hpc_array.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_15.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_15.out
+   Power=
+   TresPerNode=gpu:1
+JobId=224066 ArrayJobId=223848 ArrayTaskId=14 ArrayTaskThrottle=6 JobName=ngf-select-A
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=259969 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=01:03:52 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-08T11:43:17 EligibleTime=2026-09-08T21:49:00
+   AccrueTime=2026-09-08T11:43:18
+   StartTime=2026-09-08T21:49:00 EndTime=2026-09-09T21:49:00 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-08T21:49:00
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=ngu010
+   BatchHost=ngu010
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+     Nodes=ngu010 CPU_IDs=0-1,6-7 Mem=0 GRES=gpu(IDX:0)
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/hpc_array.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_14.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_14.out
+   Power=
+   TresPerNode=gpu:1
+JobId=224065 ArrayJobId=223848 ArrayTaskId=13 ArrayTaskThrottle=6 JobName=ngf-select-A
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=258481 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=01:16:24 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-08T11:43:17 EligibleTime=2026-09-08T21:36:28
+   AccrueTime=2026-09-08T11:43:18
+   StartTime=2026-09-08T21:36:28 EndTime=2026-09-09T21:36:28 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-08T21:36:28
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=ngu011
+   BatchHost=ngu011
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+     Nodes=ngu011 CPU_IDs=0-3 Mem=0 GRES=gpu(IDX:0)
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/hpc_array.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_13.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_13.out
+   Power=
+   TresPerNode=gpu:1
+JobId=224049 ArrayJobId=223848 ArrayTaskId=12 ArrayTaskThrottle=6 JobName=ngf-select-A
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=256497 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=01:39:34 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-08T11:43:17 EligibleTime=2026-09-08T21:13:18
+   AccrueTime=2026-09-08T11:43:18
+   StartTime=2026-09-08T21:13:18 EndTime=2026-09-09T21:13:18 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-08T21:13:18
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=ngu011
+   BatchHost=ngu011
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+     Nodes=ngu011 CPU_IDs=4-7 Mem=0 GRES=gpu(IDX:1)
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/hpc_array.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_12.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_12.out
+   Power=
+   TresPerNode=gpu:1
+JobId=224000 ArrayJobId=223848 ArrayTaskId=11 ArrayTaskThrottle=6 JobName=ngf-select-A
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=238639 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=04:39:24 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-08T11:43:17 EligibleTime=2026-09-08T18:13:28
+   AccrueTime=2026-09-08T11:43:18
+   StartTime=2026-09-08T18:13:28 EndTime=2026-09-09T18:13:28 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-08T18:13:28
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=ngu001
+   BatchHost=ngu001
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+     Nodes=ngu001 CPU_IDs=0-3 Mem=0 GRES=gpu(IDX:0)
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/hpc_array.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_11.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_11.out
+   Power=
+   TresPerNode=gpu:1
+JobId=223854 ArrayJobId=223848 ArrayTaskId=2 ArrayTaskThrottle=6 JobName=ngf-select-A
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=203917 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=10:25:30 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-08T11:43:17 EligibleTime=2026-09-08T11:43:18
+   AccrueTime=2026-09-08T11:43:18
+   StartTime=2026-09-08T12:27:22 EndTime=2026-09-09T12:27:22 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-08T12:27:22
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu002
+   NodeList=ngu010
+   BatchHost=ngu010
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+     Nodes=ngu010 CPU_IDs=2-5 Mem=0 GRES=gpu(IDX:1)
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/hpc_array.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_2.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/logs/slurm-223848_2.out
+   Power=
+   TresPerNode=gpu:1
+ROOT_PROOF={"schema_version":"daily_camels_precise_root_nonexistence_v1","remote_root":"/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908","observed_at_seconds":1788879172,"exists":false,"overlaps_existing_paths":false,"checked_roots":["/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908"]}
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/daily_camels_knet_21_development_v2.tar.gz: OK
+tar: baseline_source_copy_inventory.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: basin_registry.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: campaign_index.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: registry-set.complete.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: reuse_registry.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: source_registry.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_01435000.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_01440400.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_01487000.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_02092500.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_02102908.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_02178400.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_03049000.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_03076600.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_04027000.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_05503800.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_06803510.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_08086290.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_08109700.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_08190500.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_09513780.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_12175500.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_12447390.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/daily_camels_knet_per_basin_development_v2_14185900.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/configs/tukf06_full_diagonal_search_head_to_head_v1.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/hpc/daily_camels_knet_21_development/precheck.slurm.template: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/hpc/daily_camels_knet_21_development/recovery.slurm.template: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/hpc/daily_camels_knet_21_development/report.slurm.template: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/hpc/daily_camels_knet_21_development/resource_policy.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/hpc/daily_camels_knet_21_development/train.slurm.template: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/knet/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/knet/dl/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/knet/dl/nn_kalman_clamp_5.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/provenance/development_bundle_plan.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/provenance/development_computational_source_inventory.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/provenance/development_configuration_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/provenance/development_science_reference.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/provenance/development_source_change_record.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_01435000.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_01440400.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_01487000.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_02092500.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_02102908.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_02178400.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_03049000.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_03076600.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_04027000.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_05503800.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_06803510.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_08086290.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_08109700.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_08190500.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09513780.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_12175500.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_12447390.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_14185900.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_01435000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_01440400.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_01487000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_02092500.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_02102908.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_02178400.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_03049000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_03076600.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_04027000.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_05503800.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_06803510.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_08086290.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_08109700.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_08190500.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09513780.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_12175500.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_12447390.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_14185900.npz: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/build_daily_camels_knet_per_basin_hpc_bundle.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/check_daily_camels_knet_per_basin_runtime.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/daily_camels_development_guard.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/differentiable_ukf_hbvlite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/materialize_daily_camels_knet_per_basin_report.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/prepare_daily_camels_development.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/run_aligned_gr4j_da.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/run_aligned_gr4j_differentiable_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/run_daily_camels_knet_per_basin_pilot.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/tukf06_full_diagonal_common.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/verify_daily_camels_knet_per_basin_pilot.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/assimilation/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/assimilation/conventional_ukf.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/experiments/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/experiments/daily_camels_knet_per_basin_checkpoint.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/experiments/daily_camels_knet_per_basin_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/experiments/daily_camels_knet_per_basin_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/experiments/daily_camels_native_knet_io.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/models/__init__.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/models/differentiable_hbv_lite.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/models/hbvlite_system_model.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/models/hbvlite_ukf_adapter.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/src/global_hydrology/models/knet_native_hbvlite_full_state.py: implausibly old time stamp 1970-01-01 08:00:00
+baseline_source_copy_inventory.json: OK
+basin_registry.json: OK
+campaign_index.json: OK
+registry-set.complete.json: OK
+reuse_registry.json: OK
+source_registry.json: OK
+workspace/bundle_manifest.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_01435000.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_01440400.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_01487000.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_02092500.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_02102908.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_02178400.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_03049000.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_03076600.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_04027000.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_05503800.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_06803510.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_08086290.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_08109700.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_08190500.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_09513780.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_12175500.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_12447390.json: OK
+workspace/configs/daily_camels_knet_per_basin_development_v2_14185900.json: OK
+workspace/configs/tukf06_full_diagonal_search_head_to_head_v1.json: OK
+workspace/hpc/daily_camels_knet_21_development/precheck.slurm.template: OK
+workspace/hpc/daily_camels_knet_21_development/recovery.slurm.template: OK
+workspace/hpc/daily_camels_knet_21_development/report.slurm.template: OK
+workspace/hpc/daily_camels_knet_21_development/resource_policy.json: OK
+workspace/hpc/daily_camels_knet_21_development/train.slurm.template: OK
+workspace/knet/__init__.py: OK
+workspace/knet/dl/__init__.py: OK
+workspace/knet/dl/nn_kalman_clamp_5.py: OK
+workspace/provenance/development_bundle_plan.json: OK
+workspace/provenance/development_computational_source_inventory.json: OK
+workspace/provenance/development_configuration_manifest.json: OK
+workspace/provenance/development_science_reference.json: OK
+workspace/provenance/development_source_change_record.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_01435000.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_01440400.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_01487000.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_02092500.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_02102908.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_02178400.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_03049000.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_03076600.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_04027000.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_05503800.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_06803510.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_08086290.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_08109700.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_08190500.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_09513780.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_12175500.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_12447390.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection/basin_14185900.json: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_01435000.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_01440400.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_01487000.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_02092500.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_02102908.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_02178400.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_03049000.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_03076600.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_04027000.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_05503800.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_06803510.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_08086290.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_08109700.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_08190500.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_09513780.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_12175500.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_12447390.npz: OK
+workspace/results/tukf06_full_diagonal_search_head_to_head_v1/selection_inputs/basin_14185900.npz: OK
+workspace/scripts/__init__.py: OK
+workspace/scripts/build_daily_camels_knet_per_basin_hpc_bundle.py: OK
+workspace/scripts/check_daily_camels_knet_per_basin_runtime.py: OK
+workspace/scripts/daily_camels_development_guard.py: OK
+workspace/scripts/differentiable_ukf_hbvlite.py: OK
+workspace/scripts/materialize_daily_camels_knet_per_basin_report.py: OK
+workspace/scripts/prepare_daily_camels_development.py: OK
+workspace/scripts/run_aligned_gr4j_da.py: OK
+workspace/scripts/run_aligned_gr4j_differentiable_ukf.py: OK
+workspace/scripts/run_daily_camels_knet_per_basin_pilot.py: OK
+workspace/scripts/tukf06_full_diagonal_common.py: OK
+workspace/scripts/verify_daily_camels_knet_per_basin_pilot.py: OK
+workspace/src/global_hydrology/__init__.py: OK
+workspace/src/global_hydrology/assimilation/__init__.py: OK
+workspace/src/global_hydrology/assimilation/conventional_ukf.py: OK
+workspace/src/global_hydrology/experiments/__init__.py: OK
+workspace/src/global_hydrology/experiments/daily_camels_knet_per_basin_checkpoint.py: OK
+workspace/src/global_hydrology/experiments/daily_camels_knet_per_basin_contract.py: OK
+workspace/src/global_hydrology/experiments/daily_camels_knet_per_basin_runner.py: OK
+workspace/src/global_hydrology/experiments/daily_camels_native_knet_io.py: OK
+workspace/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_contract.py: OK
+workspace/src/global_hydrology/experiments/daily_camels_ukf_knet_parity_runner.py: OK
+workspace/src/global_hydrology/models/__init__.py: OK
+workspace/src/global_hydrology/models/differentiable_hbv_lite.py: OK
+workspace/src/global_hydrology/models/hbvlite_system_model.py: OK
+workspace/src/global_hydrology/models/hbvlite_ukf_adapter.py: OK
+workspace/src/global_hydrology/models/knet_native_hbvlite_full_state.py: OK
+bundle_manifest.json: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/build_precheck_candidate.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/precheck_worker.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/resource_bind.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/precheck.slurm: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/precheck.sh: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/request.json: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/candidate-files.json: OK
+DEPLOYMENT_VERIFIED accepted_members=103 scientific_updates=0 optimizer_updates=0 compute_submissions=0
+FRESH_PRECHECK_ADMISSION_RESOURCE_METADATA
+PartitionName=hgpu8
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[201-203]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=192 TotalNodes=3 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+ngu201              gpu:8               gpu:6,dcu:0         42/22/0/64          mixed               
+ngu202              gpu:8               gpu:0,dcu:0         0/64/0/64           maint               
+ngu203              gpu:8               gpu:8,dcu:0         40/24/0/64          mixed               
+PrivateData             = jobs
+SchedulerType           = sched/backfill
+SelectType              = select/cons_res
+SelectTypeParameters    = CR_CORE
+TaskPlugin              = task/cgroup
+TaskPluginParam         = (null type)
+hhuhpc_jt|g_sunyiq|sunyiq|||||
+223848_16|ngf-select-A|PENDING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|(JobArrayTaskLimit)
+223848_17|ngf-select-A|PENDING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|(JobArrayTaskLimit)
+223992|tukf09-455-v2r12-prepare|PENDING|hgpu8|1|32|gpu:8|/data1/home/sunyiq/hpc_mailbox|(Priority)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|1|2|N/A|/data1/home/sunyiq/hpc_mailbox|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|1|4|gpu:1|/data1/home/sunyiq/hpc_mailbox|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|1|4|gpu:1|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(JobHeldUser)
+223848_15|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu004
+223848_14|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu010
+223848_13|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu011
+223848_12|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu011
+223848_11|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu001
+223848_2|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu010
+ADMISSION_OBSERVED_AT_SECONDS=1788879173
+DIRECTORY_PROOF={"schema_version":"daily_camels_execution_directory_proof_v1","path":"/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/prechecks/precheck_seq73","exists":false,"observed_at_seconds":1788879173,"no_overwrite":true}
+DEPLOY_ONLY_COMPLETE no_submission_attempted=1
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T22:52:53+0800
