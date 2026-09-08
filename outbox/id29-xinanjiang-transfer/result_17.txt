@@ -1,0 +1,9 @@
+### channel=id29-xinanjiang-transfer seq=17
+### host=login4
+### started=2026-09-08T13:42:45+0800
+### ---------- output ----------
+{"basin_id": "05120500", "body_sha256": "ca58832f4a8be90eccfb7e8db3276cde0b61fc320d617c4db83e49e76baa2d59", "bytes": 625278, "header": ["  48.13", " 470.00", "1509830000", "dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"], "line_count": 10597}
+{"basin_id": "09492400", "body_sha256": "289e4c538758cae79b146212083bf1b1a9b2bce0e0c763b90f4f1d26dfdd4b2e", "bytes": 617704, "header": ["  33.76", "2394.00", " 128970000", "dayl(s) prcp(mm/day) srad(W/m2) swe(mm) tmax(C) tmin(C) vp(Pa)"], "line_count": 10597}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T13:42:45+0800
