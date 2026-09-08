@@ -1,0 +1,56 @@
+### channel=attrswap-daily seq=19
+### host=login4
+### started=2026-09-08T16:12:49+0800
+### ---------- output ----------
+wallclock 2026-09-08 16:12:49 +0800
+=== A. STALE REPORT CLEANUP (attempt 1 copy is already preserved) ===
+  moved the stale attempt-1 report aside; the status command will show 'absent' until gate 223959 writes a new one
+=== B. MY JOBS + REASON ===
+      JOBID                 NAME     STATE       TIME  NODELIST       DEPENDENCY               NODELIST(REASON)
+     223959           fswap_gate   PENDING       0:00                                                (Priority)
+     223960    fswap_armE27_s100   PENDING       0:00             afterok:223959                   (Dependency)
+     223961    fswap_armE27_s200   PENDING       0:00             afterok:223959                   (Dependency)
+     223962    fswap_armE27_s300   PENDING       0:00             afterok:223959                   (Dependency)
+     223963    fswap_armE23_s100   PENDING       0:00             afterok:223959                   (Dependency)
+     223964    fswap_armE23_s200   PENDING       0:00             afterok:223959                   (Dependency)
+     223965    fswap_armE23_s300   PENDING       0:00             afterok:223959                   (Dependency)
+     223966     fswap_armEP_s100   PENDING       0:00             afterok:223959                   (Dependency)
+     223967     fswap_armEP_s200   PENDING       0:00             afterok:223959                   (Dependency)
+     223968     fswap_armEP_s300   PENDING       0:00             afterok:223959                   (Dependency)
+=== C. ESTIMATED START ===
+  job 223959 start estimate: 2027-09-08T15:18:22
+=== D. PARTITION OCCUPANCY (squeue only shows my own jobs on this cluster, so read sinfo) ===
+ PARTITION  AVAIL  NODES  STATE                       NODELIST
+   hcpu48*     up     10 alloc$ icn[202,204-207,210-212,216-21
+   hcpu48*     up      5  maint       icn[214,220-221,246,249]
+   hcpu48*     up     14  down* icn[203,215,218,230,233,235-23
+   hcpu48*     up     26  alloc icn[201,208-209,213,219,222-22
+   hcpu48*     up      9   idle   icn[244,248,251-252,260-264]
+   hcpu48y     up      1  down$                         icn281
+   hcpu48y     up      1  maint                         icn280
+   hcpu48y     up      2  down*                   icn[278-279]
+   hcpu48y     up      2    mix                   icn[274,277]
+   hcpu48y     up      6   idle           icn[270-273,275-276]
+     hgpu8     up      1  maint                         ngu202
+     hgpu8     up      2    mix                   ngu[201,203]
+     hgpu4     up      1  down*                         ngu103
+     hgpu4     up      1    mix                         ngu104
+     hgpu4     up      2   idle                   ngu[101-102]
+     hgpu2     up      2   idle                   ngu[003,009]
+    hgpu2p     up      1  down*                         ngu002
+    hgpu2p     up      1  drain                         ngu005
+    hgpu2p     up      6    mix   ngu[001,004,006,008,010-011]
+--- hgpu8 nodes in detail ---
+ NODELIST  STATE        CPUS(A/I/O/T)                 GRES                         REASON
+   ngu201    mix            56/8/0/64                gpu:8                           none
+   ngu202  maint            0/64/0/64                gpu:8                           none
+   ngu203    mix            62/2/0/64                gpu:8                           none
+=== E. ANY LIMIT ON ME? ===
+  g_sunyiq     sunyiq                                                      qos_sunyiq 
+=== F. WHAT ELSE OF MINE IS RUNNING (other channels' work counts against limits) ===
+     17 PENDING
+      8 RUNNING
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:12:49+0800
