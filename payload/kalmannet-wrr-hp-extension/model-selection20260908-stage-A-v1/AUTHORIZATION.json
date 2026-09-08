@@ -1,0 +1,16 @@
+{
+  "authorized_by": "User go responding to the 54-new-training-run complete model-selection proposal",
+  "recorded_date": "2026-09-08",
+  "protocol_source": "experiments/optimize_hyper_parameters/wrr_finalist_replication_20260907/complete_selection_design_20260908/PROTOCOL.md",
+  "protocol_sha256": "0707cad4661f83d03c71e483184d91f197b7b9ac29015c077e6075aad5dc6b06",
+  "new_training_runs": {"A": 18, "B": 21, "C": 15, "total": 54},
+  "max_concurrent_training_gpus": 6,
+  "per_training_wall_clock_hours": 24,
+  "training_budget_gpu_hours_ceiling": 1296,
+  "remote_family_root": "/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908",
+  "phase_C_requires_audited_top_three_lock": true,
+  "test_evaluation_requires_final_selection_lock": true,
+  "retry_resume_cancel_delete_authorized": false,
+  "manuscript_or_model_replacement_authorized": false,
+  "existing_evidence_policy": "read-only; retain successful, failed and already exposed test records"
+}

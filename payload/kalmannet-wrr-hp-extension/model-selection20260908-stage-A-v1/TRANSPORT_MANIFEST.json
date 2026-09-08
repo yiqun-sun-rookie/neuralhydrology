@@ -1,0 +1,19 @@
+{
+  "dry_run": false,
+  "files": {
+    "AUTHORIZATION.json": "2e6b6353f9019c59deb024d2e870154cf07bdcbcf101d30d179150bde83dc78e",
+    "AUTHORIZED_PROTOCOL.md": "0707cad4661f83d03c71e483184d91f197b7b9ac29015c077e6075aad5dc6b06",
+    "REMOTE_BASELINE.json": "6314f746fce9f31d55687b35858736c4013bd5369e5b6a538bea155bd1b7c5ce",
+    "STAGE_A_MANIFEST.json": "d920b7a629ba97d6a2edd0ec0fd6d876142888d0d504af631a86c8898b8ae291",
+    "deploy.sh": "184cd7778cbb7545f6fd8cfdbf91e28f8c3baba1c0b612c2e61b02d5f9c8c197",
+    "deploy_remote.py": "55352e51432e3d1aeff50054bf70415e297d35092e32fe046cec1960682959fa",
+    "launch_once.py": "071b07b246d87a8099b744d0215bbf68d432d7a9f99627d2239bf29fe47e02d6",
+    "payload/stage_A.tar.gz": "d114c58b23894bf69755906bbe633d66c93905c2b661f6181a694df78c414248",
+    "study_config.py": "485a23ffc410863f029c24c07f6c221fe9af9369692508f26d908b5722f7fcbb"
+  },
+  "remote_family_root": "/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908",
+  "remote_payload": "/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-hp-extension/model-selection20260908-stage-A-v1",
+  "remote_stage_root": "/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A",
+  "schema_version": 1,
+  "stage": "A"
+}
