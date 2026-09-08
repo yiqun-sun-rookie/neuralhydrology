@@ -1,0 +1,19 @@
+{
+  "kind": "READ_ONLY_STAGE_A_AUDIT_TRANSPORT",
+  "schema_version": 1,
+  "remote_payload": "/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-hp-extension/model-selection20260908-audit-observer-v3",
+  "remote_family": "/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908",
+  "stage": "A",
+  "receipt": "/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A/SUBMISSION_RECEIPT.json",
+  "certificate_write": false,
+  "training_submission": false,
+  "files": {
+    ".gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "audit_stage.py": "752d8cc54670cc28f1475af7c9833510406e1a960efdd2093d9c5d70ad5b3bc1",
+    "build_package.py": "119a990b5755298633f15b1375dc6fcda6a635b22fab5e40e20f0b94f7a3e773",
+    "deploy_remote.py": "55352e51432e3d1aeff50054bf70415e297d35092e32fe046cec1960682959fa",
+    "launch_once.py": "071b07b246d87a8099b744d0215bbf68d432d7a9f99627d2239bf29fe47e02d6",
+    "study_config.py": "485a23ffc410863f029c24c07f6c221fe9af9369692508f26d908b5722f7fcbb",
+    "evidence_contract.py": "3c0e9ffddd4be431364cd3ab6a59e26031128e21c86bf63c929320a431a375d2"
+  }
+}

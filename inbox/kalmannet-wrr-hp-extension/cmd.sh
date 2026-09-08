@@ -1,33 +1,8 @@
 #!/usr/bin/env bash
-# Read-only scheduler-interface diagnosis. No training or admission writes.
+# Read-only observation with complete scheduler and post-query failure history.
 set -euo pipefail
-python3 -B - <<'PY'
-import datetime
-import json
-import subprocess
-
-parent = '223848'
-commands = [
-    ['sacct', '--version'],
-    ['sacct', '--helpformat'],
-    ['sacct', '--help'],
-    ['sacct', '-X', '--array', '--noheader', '--parsable2', '--jobs', parent,
-     '--format', 'JobID%64,JobIDRaw%32,State%32,ExitCode,ElapsedRaw'],
-    ['sacct', '-X', '--noheader', '--parsable2', '--jobs', parent,
-     '--format', 'JobID%64,JobIDRaw%32,State%32,ExitCode,ElapsedRaw'],
-    ['squeue', '-r', '-h', '-u', 'sunyiq', '-o', '%i|%T|%Z'],
-]
-results = []
-for command in commands:
-    try:
-        result = subprocess.run(command, capture_output=True, text=True, check=False, timeout=45)
-        results.append({'command': command, 'returncode': result.returncode,
-                        'stdout': result.stdout, 'stderr': result.stderr})
-    except (OSError, subprocess.TimeoutExpired) as error:
-        results.append({'command': command, 'error': type(error).__name__ + ': ' + str(error)})
-print(json.dumps({'kind': 'READ_ONLY_SCHEDULER_DIAGNOSIS_NOT_ADMISSION',
-                  'stage': 'A', 'parent_job': parent,
-                  'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                  'queries': results, 'new_jobs_submitted': 0,
-                  'admission_written': False}, sort_keys=True))
-PY
+PAYLOAD=/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-hp-extension/model-selection20260908-audit-observer-v3
+cd "$PAYLOAD"
+[[ ! -L launch.sh && -f launch.sh ]] || exit 1
+printf '%s  launch.sh\n' 3a495f538a64a45bfcc681a76a9dcee5fea165b054d1238a34d1345991229675 | sha256sum -c -
+exec bash "$PAYLOAD/launch.sh"
