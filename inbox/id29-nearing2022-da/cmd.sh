@@ -1,9 +1,8 @@
 set -o pipefail
-ROOT=/data1/home/sunyiq/nearing2022_da
-for J in 219423_0 219423_1 220487; do
-  echo "===== $J ====="
-  scontrol show job "${J%%_*}" >/dev/null 2>&1
-  for F in $(ls -1 $ROOT/logs/*${J%%_*}* $ROOT/logs/**/*${J%%_*}* 2>/dev/null | head -6); do echo "-- $F"; done
+L=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs
+for F in N22-warmpair_219423_0.err N22-warmpair_219423_0.out N22-warmpair_219423_1.err; do
+  echo "===== $F ====="; tail -40 "$L/$F" 2>/dev/null || echo missing
 done
-echo "=== find recent err/out ==="
-find $ROOT -maxdepth 4 -name '*21942*' -o -maxdepth 4 -name '*22048*' 2>/dev/null | head -20
+echo "===== replv2 220487 ====="
+ls -1t $L | grep -i repl | head -10
+for F in $(ls -1t $L | grep -i repl | head -4); do echo "-- $F"; tail -25 "$L/$F"; done
