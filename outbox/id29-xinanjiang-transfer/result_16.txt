@@ -1,0 +1,15 @@
+### channel=id29-xinanjiang-transfer seq=16
+### host=login4
+### started=2026-09-08T13:39:11+0800
+### ---------- output ----------
+BASIN 05120500 FOUND 3
+{"actual_sha256": "eb6d5aec95af48377011f80fb2ebd17b0a6ceddf099d6e9db3c133431defb376", "bytes": 625278, "expected_sha256": "60d14109d2e24cd0a461798fce6a9214aa0b022b349e13de2fafcbbbf995431b", "match": false, "mtime_ns": 1764421140000000000, "relative_path": "basin_mean_forcing/maurer/09/05120500_lump_maurer_forcing_leap.txt"}
+{"actual_sha256": "fc2b6c2892fc7fdb57ce1fab82839fba1ccc5aa68e274c2208d28f468135c3d8", "bytes": 406086, "expected_sha256": "fc2b6c2892fc7fdb57ce1fab82839fba1ccc5aa68e274c2208d28f468135c3d8", "match": true, "mtime_ns": 1764421088000000000, "relative_path": "usgs_streamflow/09/05120500_streamflow_qc.txt"}
+{"actual_sha256": "b64ca9923bcaccf21dde33137903797919e8d6732edd7849f8534e0ddcbec8e8", "bytes": 38677, "expected_sha256": "b64ca9923bcaccf21dde33137903797919e8d6732edd7849f8534e0ddcbec8e8", "match": true, "mtime_ns": 1757727598000000000, "relative_path": "camels_attributes_v2.0/camels_topo.txt"}
+BASIN 09492400 FOUND 3
+{"actual_sha256": "04abd5f678d2c476e1a2552562cacb79436948ece284f985da240a1af0cd4742", "bytes": 617704, "expected_sha256": "d51780287addd95ad0f874da42fc3a2e2fa47e43437f3b0c85b2375f238116af", "match": false, "mtime_ns": 1764421139000000000, "relative_path": "basin_mean_forcing/maurer/15/09492400_lump_maurer_forcing_leap.txt"}
+{"actual_sha256": "798a217cd61787926a6182782623e512c6b7186a712c3e761bf83323dcef0de6", "bytes": 398018, "expected_sha256": "798a217cd61787926a6182782623e512c6b7186a712c3e761bf83323dcef0de6", "match": true, "mtime_ns": 1764421088000000000, "relative_path": "usgs_streamflow/15/09492400_streamflow_qc.txt"}
+{"actual_sha256": "b64ca9923bcaccf21dde33137903797919e8d6732edd7849f8534e0ddcbec8e8", "bytes": 38677, "expected_sha256": "b64ca9923bcaccf21dde33137903797919e8d6732edd7849f8534e0ddcbec8e8", "match": true, "mtime_ns": 1757727598000000000, "relative_path": "camels_attributes_v2.0/camels_topo.txt"}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T13:39:11+0800
