@@ -1,0 +1,64 @@
+### channel=attrswap-daily seq=17
+### host=login4
+### started=2026-09-08T15:52:40+0800
+### ---------- output ----------
+wallclock 2026-09-08 15:52:40 +0800
+=== A. PRESERVE ATTEMPT 1 EVIDENCE ===
+convert_verify.attempt1.json
+convert_verify.json
+job_ids.attempt1.txt
+slurm_fswap_gate_223868.err
+slurm_fswap_gate_223868.out
+=== B. SCRIPT CHANGE (hashes before and after) ===
+before: build_era5l_forcing.py c7872ba7f4cb5512
+before: fswap_gate.slurm       72309eea37451811
+after:  build_era5l_forcing.py 73a8da835ee12b93
+after:  fswap_gate.slurm       f30fafac7bb204fc
+--- the amended V6 block ---
+148:    off = {b: l for b, l in lags.items() if l != 0}
+149-    lag0_share = float((pd.Series(lags) == 0).mean()) if lags else 0.0
+150-    if lag0_share < V6_MIN_LAG0_SHARE:
+151-        fail(f'V6 only {lag0_share * 100:.2f}% of basins peak at lag 0 (amendment A requires >= '
+152-             f'{V6_MIN_LAG0_SHARE * 100:.0f}%); off-lag basins: {sorted(off.items())}')
+153-    elif off:
+154-        NOTE.append(f'V6 exceptions inside the {V6_MIN_LAG0_SHARE * 100:.0f}% allowance, registered by name and to '
+155-                    f'be reported in the verdict: {sorted(off.items())}')
+156-        print('NOTE ' + NOTE[-1], flush=True)
+48:V6_MIN_LAG0_SHARE = 0.99  # amendment A, approved by the user 2026-09-08 14:20, before any arm had trained
+--- confirm nothing else moved: the other three payload scripts are unchanged on disk ---
+  make_configs.py 9fe4dcf92497fd12
+  fswap_train.slurm a23297120ddfba58
+=== C. CONFIGS UNTOUCHED ===
+10
+10
+  (10 config files expected; they were generated at seq=13 and are not regenerated)
+=== D. SUBMIT GATE ===
+Submitted batch job 223959
+gate job: 223959
+=== E. SUBMIT 9 ARMS (afterok:223959) ===
+fswap_armE27_s100 -> 223960
+fswap_armE27_s200 -> 223961
+fswap_armE27_s300 -> 223962
+fswap_armE23_s100 -> 223963
+fswap_armE23_s200 -> 223964
+fswap_armE23_s300 -> 223965
+fswap_armEP_s100 -> 223966
+fswap_armEP_s200 -> 223967
+fswap_armEP_s300 -> 223968
+job ids: 223959 223960 223961 223962 223963 223964 223965 223966 223967 223968 
+=== F. QUEUE ===
+      JOBID                   NAME     STATE       TIME  NODELIST           DEPENDENCY
+     223959             fswap_gate   PENDING       0:00                               
+     223960      fswap_armE27_s100   PENDING       0:00                 afterok:223959
+     223961      fswap_armE27_s200   PENDING       0:00                 afterok:223959
+     223962      fswap_armE27_s300   PENDING       0:00                 afterok:223959
+     223963      fswap_armE23_s100   PENDING       0:00                 afterok:223959
+     223964      fswap_armE23_s200   PENDING       0:00                 afterok:223959
+     223965      fswap_armE23_s300   PENDING       0:00                 afterok:223959
+     223966       fswap_armEP_s100   PENDING       0:00                 afterok:223959
+     223967       fswap_armEP_s200   PENDING       0:00                 afterok:223959
+     223968       fswap_armEP_s300   PENDING       0:00                 afterok:223959
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T15:52:41+0800
