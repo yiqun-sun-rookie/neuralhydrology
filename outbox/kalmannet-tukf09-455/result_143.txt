@@ -1,0 +1,23 @@
+### channel=kalmannet-tukf09-455 seq=143
+### host=login4
+### started=2026-09-08T16:42:16+0800
+### ---------- output ----------
+TIME=2026-09-08T16:42:16+0800
+DOWNLOADER_NOT_RUNNING
+=== published offline inputs ===
+ls: cannot access /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/offline_inputs_v2r12: No such file or directory
+MANIFEST_ABSENT
+=== download log tail ===
+a safe explicit download attempt identifier is required
+=== status markers ===
+total 9
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  8 16:40 .
+drwxr-xr-x. 5 sunyiq g_sunyiq 4096 Sep  8 16:40 ..
+-rw-r--r--. 1 sunyiq g_sunyiq   28 Sep  8 16:40 offline_inputs_download.launched
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  8 16:40 offline_inputs_download.lock
+=== disk ===
+hhjt_parastor_hhjt_parastor  954T  601T  354T  63% /data1
+TUKF09_455_V2R12_DOWNLOAD_STATE_READ_ONLY
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:42:17+0800
