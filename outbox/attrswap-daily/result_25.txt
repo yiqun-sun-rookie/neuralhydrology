@@ -1,0 +1,25 @@
+### channel=attrswap-daily seq=25
+### host=login4
+### started=2026-09-08T18:23:10+0800
+### ---------- output ----------
+wallclock 2026-09-08 18:23:10 +0800
+10 basins, 1989-01-01..2008-09-30, ERA5-Land column vs the Maurer column of the same name
+column                     mean ratio       sd ratio            correlation
+PRCP(mm/day)      0.986 [ 0.761, 1.109]         1.074    0.666 [ 0.539, 0.801]
+SRAD(W/m2)        0.396 [ 0.337, 0.451]         0.618    0.795 [ 0.754, 0.894]
+Tmax(C)           1.398 [-8.084, 1.739]         1.043    0.934 [ 0.915, 0.959]
+Tmin(C)           0.672 [ 0.434, 4.753]         1.005    0.968 [ 0.957, 0.977]
+Vp(Pa)            1.167 [ 0.862, 1.482]         1.215    0.948 [ 0.795, 0.973]
+
+reference values for the two columns whose semantics differ by construction:
+  SRAD  Maurer/Daymet convention = mean DOWNWARD shortwave over the DAYLIT part of the day;
+        Caravan ERA5-Land        = 24-hour mean of NET shortwave. Both a factor (1-albedo) and a
+        daylight-vs-24h averaging separate them, so a ratio well below 1 is expected, not an error.
+  Vp    Maurer = actual vapour pressure; ours = Magnus applied to the daily mean dewpoint.
+  01022500: summer SRAD maurer   397.4 era5l   196.7 | winter SRAD maurer   250.3 era5l    60.1
+  01545600: summer SRAD maurer   423.7 era5l   191.9 | winter SRAD maurer   247.3 era5l    63.3
+  02077200: summer SRAD maurer   416.0 era5l   202.0 | winter SRAD maurer   279.6 era5l    99.3
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T18:23:27+0800
