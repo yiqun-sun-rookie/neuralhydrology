@@ -1,0 +1,41 @@
+### channel=id29-xinanjiang-transfer seq=13
+### host=login4
+### started=2026-09-08T10:10:40+0800
+### ---------- output ----------
+2026-09-08T10:10:41+0800
+JobID|JobName|State|ExitCode|Start|End|Elapsed|AllocCPUS|MaxRSS|NodeList
+223833|id29-xaj-receive|RUNNING|0:0|2026-09-08T10:08:57|Unknown|00:02:28|24||ngu010
+223833.batch|batch|RUNNING|0:0|2026-09-08T10:08:57|Unknown|00:02:28|24||ngu010
+223833.extern|extern|RUNNING|0:0|2026-09-08T10:08:57|Unknown|00:02:28|24||ngu010
+RECEIVER_PROGRESS {"basin_directories": 48, "failed_arms": 0, "finished_basins": 24, "not_run_arms": 0, "successful_arms": 312, "successful_basins": 24}
+EXECUTION.JSON {
+  "bundle_manifest_sha256": "59a8f8b50776086c5b1263e441cfc9cf80299b80feca24a60919d582d5d21545",
+  "job_id": "223833",
+  "numpy": "2.3.3",
+  "pid": 3253472,
+  "python": "3.11.13",
+  "stage": "receiver",
+  "workers": 24
+}
+
+EXECUTION.JSON_SHA256 89e84ba52c38118ce53dfe9f1b49ce6ddde34e09519536fb100192eb9d166daf
+SUMMARY.JSON NOT_PRESENT
+FROZEN_TRANSFER_SHA256 5f644f707c9b67eacf89562e7484cfc42f859dfcdad597b1eeb58584a99a2d04
+LOG_out
+{"finished": 13, "total": 360, "basin": "01350000", "status": "success"}
+{"finished": 14, "total": 360, "basin": "01137500", "status": "success"}
+{"finished": 15, "total": 360, "basin": "01350140", "status": "success"}
+{"finished": 16, "total": 360, "basin": "01073000", "status": "success"}
+{"finished": 17, "total": 360, "basin": "01057000", "status": "success"}
+{"finished": 18, "total": 360, "basin": "01047000", "status": "success"}
+{"finished": 19, "total": 360, "basin": "01142500", "status": "success"}
+{"finished": 20, "total": 360, "basin": "01031500", "status": "success"}
+{"finished": 21, "total": 360, "basin": "01187300", "status": "success"}
+{"finished": 22, "total": 360, "basin": "01170100", "status": "success"}
+{"finished": 23, "total": 360, "basin": "01333000", "status": "success"}
+{"finished": 24, "total": 360, "basin": "01162500", "status": "success"}
+LOG_err
+RECEIVER_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T10:10:41+0800
