@@ -1,0 +1,74 @@
+### channel=id33-transformer-recipe-repair seq=32
+### host=login4
+### started=2026-09-08T16:01:02+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-08T16:01:02+0800
+login4
+=== A. ID33 IN FLIGHT (deploy blocker) ===
+id33_in_flight_count=0
+VERDICT: no id33 job in flight; safe to deploy
+=== B. ALL MY JOBS (do not disturb other sessions) ===
+     JOBID                 NAME  ST       TIME  NODELIST NODELIST(REASON)
+223848_[8-         ngf-select-A  PD       0:00           (JobArrayTaskLimit)
+    223959           fswap_gate  PD       0:00           (Priority)
+    223960    fswap_armE27_s100  PD       0:00           (Dependency)
+    223961    fswap_armE27_s200  PD       0:00           (Dependency)
+    223962    fswap_armE27_s300  PD       0:00           (Dependency)
+    223963    fswap_armE23_s100  PD       0:00           (Dependency)
+    223964    fswap_armE23_s200  PD       0:00           (Dependency)
+    223965    fswap_armE23_s300  PD       0:00           (Dependency)
+    223966     fswap_armEP_s100  PD       0:00           (Dependency)
+    223967     fswap_armEP_s200  PD       0:00           (Dependency)
+    223968     fswap_armEP_s300  PD       0:00           (Dependency)
+    202229         N22-agg-eval  PD       0:00           (DependencyNeverSatisfied)
+    202294           N22-export  PD       0:00           (Dependency)
+    202315             N22-gate  PD       0:00           (Dependency)
+    202507     N22-mask-iso-531  PD       0:00           (DependencyNeverSatisfied)
+    215429        id30_m01_s100  PD       0:00           (DependencyNeverSatisfied)
+    202293         N22-manifest  PD       0:00           (JobHeldUser)
+  223848_7         ngf-select-A   R       5:44    ngu001 ngu001
+  223848_6         ngf-select-A   R      19:45    ngu001 ngu001
+  223848_3         ngf-select-A   R    3:33:31    ngu010 ngu010
+  223848_2         ngf-select-A   R    3:33:40    ngu010 ngu010
+  223848_0         ngf-select-A   R    3:45:04    ngu011 ngu011
+  223848_1         ngf-select-A   R    3:45:04    ngu011 ngu011
+=== C. LANDING ZONE INTACT ===
+/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
+C1
+C2
+_invocations
+L33
+_reports
+_superseded_20260904
+T1
+T2
+T3
+T4
+T5
+-- arm run dirs --
+  T1 run_dirs=1
+  T2 run_dirs=1
+  T3 run_dirs=1
+  T4 run_dirs=1
+  T5 run_dirs=1
+  L33 run_dirs=1
+=== D. DO THE RAW VALIDATION PREDICTIONS EXIST (for free re-scoring) ===
+=== E. PARTITION AVAILABILITY ===
+ PARTITION  AVAIL  NODES  STATE                     NODELIST
+   hcpu48*     up     10 alloc$ icn[202,204-207,210-212,216-
+   hcpu48*     up      5  maint     icn[214,220-221,246,249]
+   hcpu48*     up     14  down* icn[203,215,218,230,233,235-
+   hcpu48*     up     26  alloc icn[201,208-209,213,219,222-
+   hcpu48*     up      9   idle icn[244,248,251-252,260-264]
+   hcpu48y     up      1  down$                       icn281
+   hcpu48y     up      1  maint                       icn280
+   hcpu48y     up      2  down*                 icn[278-279]
+   hcpu48y     up      2    mix                 icn[274,277]
+   hcpu48y     up      6   idle         icn[270-273,275-276]
+     hgpu8     up      1  maint                       ngu202
+=== F. TORCH VERSION ONLY (no compute) ===
+torch 2.4.0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:01:23+0800
