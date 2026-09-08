@@ -1,0 +1,62 @@
+### channel=attrswap-daily seq=18
+### host=login4
+### started=2026-09-08T16:10:30+0800
+### ---------- output ----------
+wallclock 2026-09-08 16:10:30 +0800
+=== A. QUEUE ===
+      JOBID                   NAME     STATE       TIME  NODELIST           DEPENDENCY
+     223959             fswap_gate   PENDING       0:00                               
+     223960      fswap_armE27_s100   PENDING       0:00                 afterok:223959
+     223961      fswap_armE27_s200   PENDING       0:00                 afterok:223959
+     223962      fswap_armE27_s300   PENDING       0:00                 afterok:223959
+     223963      fswap_armE23_s100   PENDING       0:00                 afterok:223959
+     223964      fswap_armE23_s200   PENDING       0:00                 afterok:223959
+     223965      fswap_armE23_s300   PENDING       0:00                 afterok:223959
+     223966       fswap_armEP_s100   PENDING       0:00                 afterok:223959
+     223967       fswap_armEP_s200   PENDING       0:00                 afterok:223959
+     223968       fswap_armEP_s300   PENDING       0:00                 afterok:223959
+=== B. ACCOUNTING ===
+    JobID              JobName        State ExitCode    Elapsed  NodeList 
+--------- -------------------- ------------ -------- ---------- --------- 
+   223959           fswap_gate      PENDING      0:0   00:00:00 None ass+ 
+   223960    fswap_armE27_s100      PENDING      0:0   00:00:00 None ass+ 
+   223961    fswap_armE27_s200      PENDING      0:0   00:00:00 None ass+ 
+   223962    fswap_armE27_s300      PENDING      0:0   00:00:00 None ass+ 
+   223963    fswap_armE23_s100      PENDING      0:0   00:00:00 None ass+ 
+   223964    fswap_armE23_s200      PENDING      0:0   00:00:00 None ass+ 
+   223965    fswap_armE23_s300      PENDING      0:0   00:00:00 None ass+ 
+   223966     fswap_armEP_s100      PENDING      0:0   00:00:00 None ass+ 
+   223967     fswap_armEP_s200      PENDING      0:0   00:00:00 None ass+ 
+   223968     fswap_armEP_s300      PENDING      0:0   00:00:00 None ass+ 
+=== C. GATE + CONVERSION REPORT ===
+  (gate marker absent)
+{
+ "basins": 529,
+ "written": {
+  "era5l_caravan": 529,
+  "era5l_caravan_pmaurer": 529
+ },
+ "failures": [
+  "V6 precip cross-correlation peaks off lag 0 for 1 basins, e.g. [('01487000', 1)]"
+ ],
+ "lag0_share": 0.998109640831758,
+ "lag_counts": {
+  "0": 528,
+  "1": 1
+ },
+ "precip_ratio_caravan_over_maurer": {
+  "median": 0.9908670350348132,
+  "p10": 0.7958012911507643,
+  "p90": 1.1303876087047278
+ },
+ "nan_basins": 0,
+ "range_bad_basins": 0
+}=== D. MEDIANS ===
+medians present: 0/9
+=== E. LATEST EPOCH PER ARM ===
+=== F. ERRORS ===
+/data1/home/sunyiq/forcing_swap_daily_2026_09/logs/slurm_fswap_gate_223868.out
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:10:30+0800
