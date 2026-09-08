@@ -1,0 +1,78 @@
+### channel=kalmannet-tukf09-455 seq=139
+### host=login4
+### started=2026-09-08T15:51:23+0800
+### ---------- output ----------
+TIME=2026-09-08T15:51:23+0800  SEQ=139  CMD_SHA=90fc232ee11d2583f748efaf18b92bbf7484eda43704aa3de0b27715347b7f54
+=== PRECONDITIONS ===
+OLD_MANIFEST_SHA256=a61b52ad609598d083b87ea869c6674d10f70e88ea15db80da52609bd3d913f6
+OLD_ROOT_MODE=555
+hhjt_parastor_hhjt_parastor  954T  601T  354T  63% /data1
+IDENTITY_SHA256_EXPECTED=19872ac5df2e7ee4e9e20460db206b58657f061b91ad47ecbf1d1767a47e4a19
+IDENTITY_SHA256_ACTUAL=19872ac5df2e7ee4e9e20460db206b58657f061b91ad47ecbf1d1767a47e4a19
+PUBLISHER_SHA256_EXPECTED=a08055c020b6cc842b5e8be903e5e73e1c61d3cad50f594c0afd3e23affd93b0
+PUBLISHER_SHA256_ACTUAL=a08055c020b6cc842b5e8be903e5e73e1c61d3cad50f594c0afd3e23affd93b0
+=== PUBLISH ===
+COPIED_FILES 911 TOTAL_BYTES 464792200
+DATA_IDENTITY_SHA256 dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da
+MODE_SET files 914 dirs 44
+CAPSULE_ROOT /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v6_20260908
+CAPSULE_DATA_ROOT /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v6_20260908/data/camels_us
+MANIFEST_SIZE 541788
+MANIFEST_SHA256 b15936c7a6375fe003692024ff6ea63658db32fe650fb2b2c26c7ed66cb3579b
+MANIFEST_RECORD_SIZE 95
+MANIFEST_RECORD_SHA256 4a53a820efab42cdba0cf9ce06f813b5f7d34636b5b6398f527dd2c4bfe9af65
+READY_SIZE 1217
+READY_SHA256 e63e3343898ed5c16eeff0247cc63728c3ff033d013658d45c4747e53636799a
+DATA_FILE_COUNT 911
+TOTAL_FILE_COUNT 914
+DIRECTORY_COUNT 44
+DATA_TOTAL_BYTES 464792200
+PUBLICATION_OK
+=== PUBLISHED CAPSULE ===
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v6_20260908:
+total 16
+dr-xr-xr-x.   4 sunyiq g_sunyiq 4096 Sep  8 15:51 .
+drwx------. 158 sunyiq g_sunyiq 4096 Sep  8 15:51 ..
+dr-xr-xr-x.   3 sunyiq g_sunyiq 4096 Sep  8 15:51 data
+dr-xr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  8 15:51 evidence
+
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v6_20260908/evidence:
+total 8
+dr-xr-xr-x. 2 sunyiq g_sunyiq   4096 Sep  8 15:51 .
+dr-xr-xr-x. 4 sunyiq g_sunyiq   4096 Sep  8 15:51 ..
+-r--r--r--. 1 sunyiq g_sunyiq   1217 Sep  8 15:51 READY.json
+-r--r--r--. 1 sunyiq g_sunyiq 541788 Sep  8 15:51 source_capsule_manifest.json
+-r--r--r--. 1 sunyiq g_sunyiq     95 Sep  8 15:51 source_capsule_manifest.sha256
+ROOT_MODE=555
+{
+ "capsule_data_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v6_20260908/data/camels_us",
+ "capsule_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v6_20260908",
+ "data_file_count": 911,
+ "data_identity_sha256": "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da",
+ "data_total_bytes": 464792200,
+ "deployment_command_sha256": "90fc232ee11d2583f748efaf18b92bbf7484eda43704aa3de0b27715347b7f54",
+ "deployment_mailbox_sequence": 139,
+ "formal_evaluation_array_reads": 0,
+ "formal_evaluation_metrics": 0,
+ "formal_evaluation_outputs": 0,
+ "formal_evaluation_predictions": 0,
+ "manifest_relative_path": "evidence/source_capsule_manifest.json",
+ "manifest_sha256": "b15936c7a6375fe003692024ff6ea63658db32fe650fb2b2c26c7ed66cb3579b",
+ "manifest_size": 541788,
+ "required_all_directory_mode": "0555",
+ "required_all_file_mode": "0444",
+ "required_capsule_root_mode": "0555",
+ "schema_version": "tukf09_455_training_source_capsule_ready_v2",
+ "status": "READY",
+ "validity_gate": "exact_ready_json_and_manifest_and_911_files_and_all_directories_mode_0555"
+}
+MANIFEST_RECORD=b15936c7a6375fe003692024ff6ea63658db32fe650fb2b2c26c7ed66cb3579b  source_capsule_manifest.json
+=== EVERY OLDER CAPSULE UNCHANGED ===
+CAPSULE_v2=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v2_20260901 mode=555 manifest=d5de91725d0da93f3aa4a234f5c103131fad8ef4b3c86f919236b9e42a318547
+CAPSULE_v3=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v3_20260904 mode=555 manifest=aa4fe521e447766e85f9f079ba13b1c5b98a675044e6292d1c9101b43dc8c8b7
+CAPSULE_v4=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v4_20260904 mode=555 manifest=6e669e61feee8131de8c99b15d603bb7fac582db2d23fcc4405ef0c931b49cff
+CAPSULE_v5=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v5_20260904 mode=555 manifest=a61b52ad609598d083b87ea869c6674d10f70e88ea15db80da52609bd3d913f6
+TUKF09_455_CAPSULE_V6_PUBLISHED_NOTHING_ELSE_TOUCHED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T15:51:49+0800
