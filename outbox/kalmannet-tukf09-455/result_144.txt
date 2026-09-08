@@ -1,0 +1,15 @@
+### channel=kalmannet-tukf09-455 seq=144
+### host=login4
+### started=2026-09-08T16:44:46+0800
+### ---------- output ----------
+TIME=2026-09-08T16:44:46+0800  HOST=login4
+ATTEMPT=v2r12-20260908-a
+DOWNLOAD_LAUNCHED pid=15447 attempt=v2r12-20260908-a
+=== early log ===
+q/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "werkzeug", "version": "3.1.3"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "wheel", "version": "0.45.1"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "xarray", "version": "2025.12.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "zipp", "version": "3.23.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "zstandard", "version": "0.24.0"}], "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1", "formal_evaluation_authorized": false, "hostname": "login4", "identity_sha256": "f61b3135df9d44b2afcecbedb7b152a1fb31bab48118282b708b4ee7b701faaa", "libc": ["glibc", "2.17"], "machine": "x86_64", "pip_version": "25.2", "platform": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17", "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "python_executable_resolved": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11", "python_executable_sha256": "45140eba20e770e6f8b46fb1e1295da8a5e494b3686a22ea9beeff050bb5b48e", "python_executable_size": 25382192, "python_version": "3.11.13", "schema_version": "tukf09_455_hpc_shared_environment_snapshot_a800_exclusive_v2r12", "scientific_contract_changed": false, "status": "SHARED_BOOTSTRAP_ENVIRONMENT_READ_ONLY_SNAPSHOT"}
+15447 bash /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r12/download_runtime_inputs_login.sh v2r12-20260908-a
+31K	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/offline_inputs_v2r12.pending.v2r12-20260908-a
+TUKF09_455_V2R12_DOWNLOAD_STARTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:45:26+0800
