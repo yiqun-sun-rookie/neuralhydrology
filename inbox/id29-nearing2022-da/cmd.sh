@@ -1,17 +1,8 @@
 set -o pipefail
-ROOT=/data1/home/sunyiq/nearing2022_da
-date --iso-8601=seconds
-for J in 219423_0 219423_1 220487; do
-  echo "=== $J ==="
-  for K in StdErr StdOut; do
-    F=$(sacct -j "$J" -X -n -P --format=JobID 2>/dev/null | head -1)
-  done
-  SE=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdErr=//p' | head -1)
-  echo "  scontrol StdErr=$SE"
+L=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs
+for F in N22-warmpair_219423_0.err N22-warmpair_219423_0.out N22-warmpair_219423_1.err; do
+  echo "=== $F (tail 40) ==="
+  tail -40 "$L/$F" 2>/dev/null || echo "  unreadable"
 done
-echo "=== LOG FILES MATCHING (logs dir) ==="
-for D in "$ROOT/logs" "$ROOT/logs/29_nearing2022_da_ar" /data1/home/sunyiq/nearing2022_da/slurm_logs; do
-  [ -d "$D" ] && find "$D" -maxdepth 2 -name '*21942*' -o -maxdepth 2 -name '*22048*' 2>/dev/null | head -20
-done
-echo "=== GLOBAL FIND (bounded) ==="
-find "$ROOT" -maxdepth 4 \( -name '*219423*' -o -name '*220487*' \) 2>/dev/null | head -20
+echo "=== replv2 220487 logs ==="
+find /data1/home/sunyiq/nearing2022_da -maxdepth 4 -name '*220487*' 2>/dev/null | head -5
