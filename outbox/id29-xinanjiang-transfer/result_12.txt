@@ -1,0 +1,12 @@
+### channel=id29-xinanjiang-transfer seq=12
+### host=login4
+### started=2026-09-08T10:07:49+0800
+### ---------- output ----------
+RECEIVER_GATE_APPROVED 9b7266cd32fd1a7278002257d483a8b5cb70be2c744985516f1b343cccd1bfec
+SUBMITTED_RECEIVER_JOB=223833
+             JOBID                 NAME      STATE       TIME  NODES NODELIST(REASON)
+            223833     id29-xaj-receive    PENDING       0:00      1 (Priority)
+
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T10:07:50+0800
