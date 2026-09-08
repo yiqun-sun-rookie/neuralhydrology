@@ -1,0 +1,78 @@
+### channel=attrswap-daily seq=27
+### host=login4
+### started=2026-09-08T19:44:12+0800
+### ---------- output ----------
+wallclock 2026-09-08 19:44:12 +0800
+=== A. QUEUE ===
+      JOBID                   NAME     STATE       TIME  NODELIST           DEPENDENCY
+     223983       fswap_armEP_s300   RUNNING    1:50:08    ngu201                     
+     223982       fswap_armEP_s200   RUNNING    1:58:09    ngu203                     
+     223981       fswap_armEP_s100   RUNNING    1:58:39    ngu203                     
+     223980      fswap_armE23_s300   RUNNING    1:59:09    ngu203                     
+=== B. ACCOUNTING ===
+    JobID              JobName        State ExitCode    Elapsed  NodeList 
+--------- -------------------- ------------ -------- ---------- --------- 
+   223974           fswap_gate    COMPLETED      0:0   00:12:16    ngu201 
+   223975    fswap_armE27_s100    COMPLETED      0:0   01:41:58    ngu201 
+   223976    fswap_armE27_s200    COMPLETED      0:0   01:41:54    ngu201 
+   223977    fswap_armE27_s300    COMPLETED      0:0   01:41:55    ngu201 
+   223978    fswap_armE23_s100    COMPLETED      0:0   01:59:23    ngu201 
+   223979    fswap_armE23_s200    COMPLETED      0:0   01:59:23    ngu201 
+   223980    fswap_armE23_s300      RUNNING      0:0   01:59:55    ngu203 
+   223981     fswap_armEP_s100      RUNNING      0:0   01:59:25    ngu203 
+   223982     fswap_armEP_s200      RUNNING      0:0   01:58:55    ngu203 
+   223983     fswap_armEP_s300      RUNNING      0:0   01:50:54    ngu201 
+=== C. GATE + CONVERSION REPORT ===
+GATE OK 2026-09-08 16:29:15
+{
+ "basins": 529,
+ "written": {
+  "era5l_caravan": 529,
+  "era5l_caravan_pmaurer": 529
+ },
+ "failures": [],
+ "notes": [
+  "V6 exceptions inside the 99% allowance, registered by name and to be reported in the verdict: [('01487000', 1)]"
+ ],
+ "v6_min_lag0_share": 0.99,
+ "v6_exceptions": [
+  [
+   "01487000",
+   1
+  ]
+ ],
+ "lag0_share": 0.998109640831758,
+ "lag_counts": {
+  "0": 528,
+  "1": 1
+ },
+ "precip_ratio_caravan_over_maurer": {
+  "median": 0.9908670350348132,
+  "p10": 0.7958012911507643,
+  "p90": 1.1303876087047278
+ },
+ "nan_basins": 0,
+ "range_bad_basins": 0
+}=== D. MEDIANS ===
+  fswap_armE23_s100: 0.465544 422
+  fswap_armE23_s200: 0.479961 422
+  fswap_armE27_s100: 0.479510 422
+  fswap_armE27_s200: 0.473694 422
+  fswap_armE27_s300: 0.468450 422
+medians present: 5/9
+=== E. LATEST EPOCH PER ARM ===
+  slurm_fswap_armE23_s100_223978.out: Epoch 30 average loss | 19845296 bytes
+  slurm_fswap_armE23_s200_223979.out: Epoch 30 average loss | 19842154 bytes
+  slurm_fswap_armE23_s300_223980.out: Epoch 29 average loss | 19511782 bytes
+  slurm_fswap_armE27_s100_223975.out: Epoch 30 average loss | 19328978 bytes
+  slurm_fswap_armE27_s200_223976.out: Epoch 30 average loss | 19348581 bytes
+  slurm_fswap_armE27_s300_223977.out: Epoch 30 average loss | 19325010 bytes
+  slurm_fswap_armEP_s100_223981.out: Epoch 29 average loss | 19636521 bytes
+  slurm_fswap_armEP_s200_223982.out: Epoch 29 average loss | 19841432 bytes
+  slurm_fswap_armEP_s300_223983.out: Epoch 29 average loss | 19211356 bytes
+=== F. ERRORS ===
+/data1/home/sunyiq/forcing_swap_daily_2026_09/logs/slurm_fswap_gate_223868.out
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T19:44:15+0800
