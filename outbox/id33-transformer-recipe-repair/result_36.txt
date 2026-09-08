@@ -1,0 +1,57 @@
+### channel=id33-transformer-recipe-repair seq=36
+### host=login4
+### started=2026-09-08T16:14:37+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-08T16:14:37+0800
+=== A. JOB STATES ===
+     JobID          JobName          State ExitCode    Elapsed NodeList 
+---------- ---------------- -------------- -------- ---------- -------- 
+    223971   id33_repro_det        RUNNING      0:0   00:05:48   ngu004 
+    223972   id33_repro_ctl        RUNNING      0:0   00:05:48   ngu004 
+    223973     id33_rescore         FAILED      1:0   00:00:24   ngu010 
+=== B. RESCORE OUTPUT ===
+log: /data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/logs/33_transformer_recipe_repair/rescore-223973.out
+=== ID33 COMMON-WINDOW RESCORE ===
+2026-09-08T16:13:33+08:00
+ngu010
+=== STEP 1: describe the stored prediction structure ===
+found 10 arms: ['B01', 'C1', 'C2', 'D01', 'L33', 'T1', 'T2', 'T3', 'T4', 'T5']
+top-level type: <class 'dict'>
+n_top_level_keys=531 first=['01022500', '01031500', '01047000']
+  second level type: <class 'dict'> keys=['1D']
+    third level type: <class 'dict'>
+=== STEP 2: rescore on the common window 2006-10-30..2008-09-30 ===
+found 10 arms: ['B01', 'C1', 'C2', 'D01', 'L33', 'T1', 'T2', 'T3', 'T4', 'T5']
+-- stderr tail --
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/src/transformer_recipe_repair/scripts/rescore_common_window.py", line 187, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/src/transformer_recipe_repair/scripts/rescore_common_window.py", line 148, in main
+    result = _arm_scores(path, args.target, args.common_start, args.common_end)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/src/transformer_recipe_repair/scripts/rescore_common_window.py", line 102, in _arm_scores
+    last = dataset.isel(time_step=-1) if "time_step" in dataset.dims else dataset
+                                                        ^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'dims'
+=== C. REPRO PROGRESS ===
+-- 223971 --
+gpu=NVIDIA GeForce RTX 3090 count=1
+base config sha256: 9528f7276964a3d5ba54c66dc6592515fe3f1d9d86996e026cfe61c1e3a30bc1  src/transformer_recipe_repair/configs/repro_probe.yml
+=== LAUNCHING 3 CONCURRENT REPLICAS ON ONE CARD ===
+  launched r1 pid=3810505
+  launched r2 pid=3810506
+  launched r3 pid=3810507
+-- 223972 --
+gpu=NVIDIA GeForce RTX 3090 count=1
+base config sha256: 9528f7276964a3d5ba54c66dc6592515fe3f1d9d86996e026cfe61c1e3a30bc1  src/transformer_recipe_repair/configs/repro_probe.yml
+=== LAUNCHING 3 CONCURRENT REPLICAS ON ONE CARD ===
+  launched r1 pid=3810495
+  launched r2 pid=3810496
+  launched r3 pid=3810497
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:14:37+0800
