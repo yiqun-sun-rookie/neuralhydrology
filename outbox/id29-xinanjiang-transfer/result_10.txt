@@ -1,0 +1,176 @@
+### channel=id29-xinanjiang-transfer seq=10
+### host=login4
+### started=2026-09-08T09:40:05+0800
+### ---------- output ----------
+2026-09-08T09:40:05+0800
+JobID|JobName|State|ExitCode|Elapsed|AllocCPUS|MaxRSS|NodeList
+223708|id29-xaj-learn|COMPLETED|0:0|01:12:17|24||ngu010
+223708.batch|batch|COMPLETED|0:0|01:12:17|24|6945920K|ngu010
+223708.extern|extern|COMPLETED|0:0|01:12:17|24|2408K|ngu010
+CANDIDATE_COUNTS {"01144000": 768, "01435000": 768, "01510000": 768, "01552500": 768, "01568000": 768, "01667500": 768, "02014000": 768, "02017500": 768, "02027000": 768, "02028500": 768, "02046000": 768, "02096846": 768, "02193340": 768, "02202600": 768, "02221525": 768, "02349900": 768, "02371500": 768, "02430085": 768, "03241500": 768, "03384450": 768, "03473000": 768, "04015330": 768, "04196800": 768, "04197170": 768, "04233000": 768, "05399500": 768, "05488200": 768, "05501000": 768, "06278300": 768, "07145700": 768, "08271000": 768, "09505350": 768, "09510200": 768, "11148900": 768, "11264500": 768, "11266500": 768, "11381500": 768, "11451100": 768, "11476600": 768, "11481200": 768, "11482500": 768, "11522500": 768, "12025700": 768, "13161500": 768, "14137000": 768, "14158790": 768, "14222500": 768, "14306340": 768, "14316700": 768}
+TOTAL_CANDIDATE_RECORDS 37632
+DEVELOPMENT_SUMMARY {
+  "candidate_evaluations": 37632,
+  "failed_candidates": 0,
+  "optimized_vs_fixed_anchor": [
+    {
+      "anchor": 0,
+      "declines_gt_0_01": 6,
+      "declines_gt_0_05": 1,
+      "declines_gt_0_10": 1,
+      "finite_pairs": 49,
+      "losses": 10,
+      "minimum": -0.12103995233977904,
+      "quantiles_10_50_90": [
+        -0.012838897025180101,
+        0.033575160633696366,
+        0.13259708321091945
+      ],
+      "ties": 0,
+      "total": 49,
+      "wins": 39
+    },
+    {
+      "anchor": 1,
+      "declines_gt_0_01": 5,
+      "declines_gt_0_05": 2,
+      "declines_gt_0_10": 1,
+      "finite_pairs": 49,
+      "losses": 9,
+      "minimum": -0.11382484652478209,
+      "quantiles_10_50_90": [
+        -0.007299302226609723,
+        0.018315093442064057,
+        0.0875333714191969
+      ],
+      "ties": 0,
+      "total": 49,
+      "wins": 40
+    },
+    {
+      "anchor": 2,
+      "declines_gt_0_01": 2,
+      "declines_gt_0_05": 1,
+      "declines_gt_0_10": 0,
+      "finite_pairs": 49,
+      "losses": 3,
+      "minimum": -0.06280465483629749,
+      "quantiles_10_50_90": [
+        0.009457651141809542,
+        0.05144491525191541,
+        0.13716891062796677
+      ],
+      "ties": 0,
+      "total": 49,
+      "wins": 46
+    },
+    {
+      "anchor": 3,
+      "declines_gt_0_01": 7,
+      "declines_gt_0_05": 3,
+      "declines_gt_0_10": 0,
+      "finite_pairs": 49,
+      "losses": 13,
+      "minimum": -0.07231514514163284,
+      "quantiles_10_50_90": [
+        -0.01970029608846077,
+        0.04938430301543506,
+        0.3431696015726754
+      ],
+      "ties": 0,
+      "total": 49,
+      "wins": 36
+    },
+    {
+      "anchor": 4,
+      "declines_gt_0_01": 1,
+      "declines_gt_0_05": 0,
+      "declines_gt_0_10": 0,
+      "finite_pairs": 49,
+      "losses": 1,
+      "minimum": -0.01959371234256413,
+      "quantiles_10_50_90": [
+        0.011935157442103451,
+        0.0720183672748933,
+        0.17300450372115092
+      ],
+      "ties": 0,
+      "total": 49,
+      "wins": 48
+    },
+    {
+      "anchor": 5,
+      "declines_gt_0_01": 8,
+      "declines_gt_0_05": 1,
+      "declines_gt_0_10": 0,
+      "finite_pairs": 49,
+      "losses": 15,
+      "minimum": -0.0616221994404057,
+      "quantiles_10_50_90": [
+        -0.015418972903446291,
+        0.015224826665532043,
+        0.09567957885484732
+      ],
+      "ties": 0,
+      "total": 49,
+      "wins": 34
+    },
+    {
+      "anchor": 6,
+      "declines_gt_0_01": 7,
+      "declines_gt_0_05": 1,
+      "declines_gt_0_10": 0,
+      "finite_pairs": 49,
+      "losses": 13,
+      "minimum": -0.06098835574005479,
+      "quantiles_10_50_90": [
+        -0.028148002822639892,
+        0.011377068903542065,
+        0.12475448460848083
+      ],
+      "ties": 0,
+      "total": 49,
+      "wins": 36
+    },
+    {
+      "anchor": 7,
+      "declines_gt_0_01": 7,
+      "declines_gt_0_05": 2,
+      "declines_gt_0_10": 0,
+      "finite_pairs": 49,
+      "losses": 17,
+      "minimum": -0.07189770958190156,
+      "quantiles_10_50_90": [
+        -0.017749579559862404,
+        0.013991880422563163,
+        0.08267778038558783
+      ],
+      "ties": 0,
+      "total": 49,
+      "wins": 32
+    }
+  ],
+  "status": "success",
+  "successful_arm_basins": 1176,
+  "transfer_sha256": "5f644f707c9b67eacf89562e7484cfc42f859dfcdad597b1eeb58584a99a2d04"
+}
+
+RECEIVER_SUBMITTED False
+LOG_out
+{"finished": 39, "total": 49, "basin": "11264500", "status": "success"}
+{"finished": 40, "total": 49, "basin": "11522500", "status": "success"}
+{"finished": 41, "total": 49, "basin": "13161500", "status": "success"}
+{"finished": 42, "total": 49, "basin": "11482500", "status": "success"}
+{"finished": 43, "total": 49, "basin": "11451100", "status": "success"}
+{"finished": 44, "total": 49, "basin": "12025700", "status": "success"}
+{"finished": 45, "total": 49, "basin": "14137000", "status": "success"}
+{"finished": 46, "total": 49, "basin": "14158790", "status": "success"}
+{"finished": 47, "total": 49, "basin": "14222500", "status": "success"}
+{"finished": 48, "total": 49, "basin": "14306340", "status": "success"}
+{"finished": 49, "total": 49, "basin": "14316700", "status": "success"}
+{"status": "success", "candidate_evaluations": 37632, "failed_candidates": 0, "successful_arm_basins": 1176, "optimized_vs_fixed_anchor": [{"anchor": 0, "total": 49, "finite_pairs": 49, "wins": 39, "ties": 0, "losses": 10, "quantiles_10_50_90": [-0.012838897025180101, 0.033575160633696366, 0.13259708321091945], "minimum": -0.12103995233977904, "declines_gt_0_01": 6, "declines_gt_0_05": 1, "declines_gt_0_10": 1}, {"anchor": 1, "total": 49, "finite_pairs": 49, "wins": 40, "ties": 0, "losses": 9, "quantiles_10_50_90": [-0.007299302226609723, 0.018315093442064057, 0.0875333714191969], "minimum": -0.11382484652478209, "declines_gt_0_01": 5, "declines_gt_0_05": 2, "declines_gt_0_10": 1}, {"anchor": 2, "total": 49, "finite_pairs": 49, "wins": 46, "ties": 0, "losses": 3, "quantiles_10_50_90": [0.009457651141809542, 0.05144491525191541, 0.13716891062796677], "minimum": -0.06280465483629749, "declines_gt_0_01": 2, "declines_gt_0_05": 1, "declines_gt_0_10": 0}, {"anchor": 3, "total": 49, "finite_pairs": 49, "wins": 36, "ties": 0, "losses": 13, "quantiles_10_50_90": [-0.01970029608846077, 0.04938430301543506, 0.3431696015726754], "minimum": -0.07231514514163284, "declines_gt_0_01": 7, "declines_gt_0_05": 3, "declines_gt_0_10": 0}, {"anchor": 4, "total": 49, "finite_pairs": 49, "wins": 48, "ties": 0, "losses": 1, "quantiles_10_50_90": [0.011935157442103451, 0.0720183672748933, 0.17300450372115092], "minimum": -0.01959371234256413, "declines_gt_0_01": 1, "declines_gt_0_05": 0, "declines_gt_0_10": 0}, {"anchor": 5, "total": 49, "finite_pairs": 49, "wins": 34, "ties": 0, "losses": 15, "quantiles_10_50_90": [-0.015418972903446291, 0.015224826665532043, 0.09567957885484732], "minimum": -0.0616221994404057, "declines_gt_0_01": 8, "declines_gt_0_05": 1, "declines_gt_0_10": 0}, {"anchor": 6, "total": 49, "finite_pairs": 49, "wins": 36, "ties": 0, "losses": 13, "quantiles_10_50_90": [-0.028148002822639892, 0.011377068903542065, 0.12475448460848083], "minimum": -0.06098835574005479, "declines_gt_0_01": 7, "declines_gt_0_05": 1, "declines_gt_0_10": 0}, {"anchor": 7, "total": 49, "finite_pairs": 49, "wins": 32, "ties": 0, "losses": 17, "quantiles_10_50_90": [-0.017749579559862404, 0.013991880422563163, 0.08267778038558783], "minimum": -0.07189770958190156, "declines_gt_0_01": 7, "declines_gt_0_05": 2, "declines_gt_0_10": 0}], "transfer_sha256": "5f644f707c9b67eacf89562e7484cfc42f859dfcdad597b1eeb58584a99a2d04"}
+LOG_err
+STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T09:40:07+0800
