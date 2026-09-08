@@ -1,0 +1,18 @@
+### channel=kalmannet-tukf09-455 seq=145
+### host=login4
+### started=2026-09-08T16:52:59+0800
+### ---------- output ----------
+TIME=2026-09-08T16:52:59+0800
+DOWNLOADER_NOT_RUNNING
+2.7G	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/offline_inputs_v2r12
+OFFLINE_INPUTS_PUBLISHED
+MANIFEST_SHA256=6cd9b252d84a5b3d2ef185d704b10168deb3a4a7c453be3140dcf266f9552bff
+MANIFEST_SIZE=6800
+FILE_COUNT 24
+TOTAL_BYTES 2817756909
+13", "runtime_binary_lock_path": "hpc/tukf09_455_basin_revision_a800_exclusive_v2r12/runtime-binary.lock", "runtime_binary_lock_sha256": "8bfc922ce4165eb7793f0b4f1afe9a185644858875af6a3bfd21992a23046d9f", "schema_version": "tukf09_455_hpc_offline_runtime_inputs_a800_exclusive_v2r12", "scientific_contract_changed": false, "shared_environment_inventory_sha256": "32f152e07db862c2fc2da08413b893c3055403011ed5621115d96e8b6197e2ef", "shared_nh_final_modified": false, "source_archive_count": 1, "status": "LOGIN4_LOCKED_RUNTIME_INPUTS_FROZEN_FOR_OFFLINE_SLURM_INSTALLATION", "symbolic_links_present": false, "total_bytes": 2817756909, "total_file_count": 24}
+TUKF09_455_OFFLINE_RUNTIME_INPUTS_PUBLISHED
+TUKF09_455_V2R12_DOWNLOAD_PROGRESS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:53:00+0800
