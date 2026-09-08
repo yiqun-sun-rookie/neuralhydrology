@@ -1,0 +1,411 @@
+### channel=kalmannet-wrr-hp-extension seq=25
+### host=login4
+### started=2026-09-08T09:33:48+0800
+### ---------- output ----------
+NOW=2026-09-08T09:33:48+0800
+JOB_ID=223697
+=== SQUEUE ===
+slurm_load_jobs error: Invalid job id specified
+=== SACCT ===
+223697_0|wrr-finalist|hgpu2p|COMPLETED|0:0|07:34:07|2026-09-07T22:06:17|2026-09-08T05:40:24|ngu010
+223697_1|wrr-finalist|hgpu2p|COMPLETED|0:0|05:40:53|2026-09-07T22:06:17|2026-09-08T03:47:10|ngu010
+223697_2|wrr-finalist|hgpu2p|COMPLETED|0:0|06:54:04|2026-09-07T22:06:17|2026-09-08T05:00:21|ngu011
+223697_3|wrr-finalist|hgpu2p|COMPLETED|0:0|10:25:03|2026-09-07T22:06:17|2026-09-08T08:31:20|ngu011
+223697_4|wrr-finalist|hgpu2p|COMPLETED|0:0|08:05:05|2026-09-07T22:06:17|2026-09-08T06:11:22|ngu001
+223697_5|wrr-finalist|hgpu2p|COMPLETED|0:0|04:48:40|2026-09-07T22:06:17|2026-09-08T02:54:57|ngu001
+=== RUN_SUMMARY ===
+{
+  "run_count": 6,
+  "runs": [
+    {
+      "index": 0,
+      "run_id": "WRR-FINALIST-20260907-I00",
+      "lr": 0.01,
+      "hidden_size": 64,
+      "num_layers": 1,
+      "in_out_mult": 15,
+      "seed": 43,
+      "run_directory_count": 1,
+      "completed_epoch_records": 45,
+      "last_epoch_zero_based": 44,
+      "last_epoch_val_screening_nse": 0.9080071241445444,
+      "last_epoch_lr": 0.000625,
+      "rollbacks_so_far": 6,
+      "nonfinite_skips_so_far": 0,
+      "cell_metrics_exists": true,
+      "cell": {
+        "cell_run_id": "WRR-FINALIST-20260907-I00",
+        "cell_seed": 43,
+        "finished_at": "2026-09-08T05:40:15",
+        "train_seconds": 27184.4,
+        "pooled_mean_actual_leads_1_12": 0.984668,
+        "best_checkpoint_sha256": "540cb9702ea8407250f5a74cea8b8c4659657f0b577659c0f1fde09e206d3791",
+        "best_epoch_zero_based": 34,
+        "epochs_run": 45,
+        "stop_epoch_zero_based": 44,
+        "rollbacks_total": 6,
+        "nonfinite_skips_total": 0
+      },
+      "audits": [
+        {
+          "file": "WRR-FINALIST-20260907-I00_formal_20260907T220638.json",
+          "launcher_status": "ok",
+          "started_at": "2026-09-07T22:06:38",
+          "finished_at": "2026-09-08T05:40:15",
+          "slurm_job_id": "223698",
+          "slurm_array_task_id": "0",
+          "hostname": "ngu010",
+          "held_out_test_loaded": false,
+          "runtime": {
+            "seed": 43,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "run_id": "WRR-FINALIST-20260907-I01",
+      "lr": 0.01,
+      "hidden_size": 64,
+      "num_layers": 1,
+      "in_out_mult": 15,
+      "seed": 44,
+      "run_directory_count": 1,
+      "completed_epoch_records": 34,
+      "last_epoch_zero_based": 33,
+      "last_epoch_val_screening_nse": 0.9543353951863098,
+      "last_epoch_lr": 0.000625,
+      "rollbacks_so_far": 4,
+      "nonfinite_skips_so_far": 0,
+      "cell_metrics_exists": true,
+      "cell": {
+        "cell_run_id": "WRR-FINALIST-20260907-I01",
+        "cell_seed": 44,
+        "finished_at": "2026-09-08T03:47:02",
+        "train_seconds": 20391.2,
+        "pooled_mean_actual_leads_1_12": 0.984156,
+        "best_checkpoint_sha256": "f96d3b9ac32aa1cc02ac50016ee681df9aaa3d79858d5529f89250cf0f2278fb",
+        "best_epoch_zero_based": 23,
+        "epochs_run": 34,
+        "stop_epoch_zero_based": 33,
+        "rollbacks_total": 4,
+        "nonfinite_skips_total": 0
+      },
+      "audits": [
+        {
+          "file": "WRR-FINALIST-20260907-I01_formal_20260907T220638.json",
+          "launcher_status": "ok",
+          "started_at": "2026-09-07T22:06:38",
+          "finished_at": "2026-09-08T03:47:02",
+          "slurm_job_id": "223699",
+          "slurm_array_task_id": "1",
+          "hostname": "ngu010",
+          "held_out_test_loaded": false,
+          "runtime": {
+            "seed": 44,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "run_id": "WRR-FINALIST-20260907-I02",
+      "lr": 0.01,
+      "hidden_size": 64,
+      "num_layers": 1,
+      "in_out_mult": 10,
+      "seed": 43,
+      "run_directory_count": 1,
+      "completed_epoch_records": 41,
+      "last_epoch_zero_based": 40,
+      "last_epoch_val_screening_nse": 0.9577347440166971,
+      "last_epoch_lr": 0.0003125,
+      "rollbacks_so_far": 4,
+      "nonfinite_skips_so_far": 0,
+      "cell_metrics_exists": true,
+      "cell": {
+        "cell_run_id": "WRR-FINALIST-20260907-I02",
+        "cell_seed": 43,
+        "finished_at": "2026-09-08T04:57:11",
+        "train_seconds": 24759.4,
+        "pooled_mean_actual_leads_1_12": 0.984358,
+        "best_checkpoint_sha256": "550adf58f9772aff45d5b36aae36d17d5a562e38083a55761cc1e9106f52b69b",
+        "best_epoch_zero_based": 30,
+        "epochs_run": 41,
+        "stop_epoch_zero_based": 40,
+        "rollbacks_total": 4,
+        "nonfinite_skips_total": 0
+      },
+      "audits": [
+        {
+          "file": "WRR-FINALIST-20260907-I02_formal_20260907T220358.json",
+          "launcher_status": "ok",
+          "started_at": "2026-09-07T22:03:58",
+          "finished_at": "2026-09-08T04:57:11",
+          "slurm_job_id": "223700",
+          "slurm_array_task_id": "2",
+          "hostname": "ngu011",
+          "held_out_test_loaded": false,
+          "runtime": {
+            "seed": 43,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          }
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "run_id": "WRR-FINALIST-20260907-I03",
+      "lr": 0.01,
+      "hidden_size": 64,
+      "num_layers": 1,
+      "in_out_mult": 10,
+      "seed": 44,
+      "run_directory_count": 1,
+      "completed_epoch_records": 60,
+      "last_epoch_zero_based": 59,
+      "last_epoch_val_screening_nse": 0.9570476554950444,
+      "last_epoch_lr": 0.000625,
+      "rollbacks_so_far": 1,
+      "nonfinite_skips_so_far": 0,
+      "cell_metrics_exists": true,
+      "cell": {
+        "cell_run_id": "WRR-FINALIST-20260907-I03",
+        "cell_seed": 44,
+        "finished_at": "2026-09-08T08:28:11",
+        "train_seconds": 37419.4,
+        "pooled_mean_actual_leads_1_12": 0.984094,
+        "best_checkpoint_sha256": "981bfd594edec6653890cecc555d10d7bc8658b3bfd857d6d8bac7c37ab844fc",
+        "best_epoch_zero_based": 49,
+        "epochs_run": 60,
+        "stop_epoch_zero_based": 59,
+        "rollbacks_total": 1,
+        "nonfinite_skips_total": 0
+      },
+      "audits": [
+        {
+          "file": "WRR-FINALIST-20260907-I03_formal_20260907T220358.json",
+          "launcher_status": "ok",
+          "started_at": "2026-09-07T22:03:58",
+          "finished_at": "2026-09-08T08:28:11",
+          "slurm_job_id": "223701",
+          "slurm_array_task_id": "3",
+          "hostname": "ngu011",
+          "held_out_test_loaded": false,
+          "runtime": {
+            "seed": 44,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          }
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "run_id": "WRR-FINALIST-20260907-I04",
+      "lr": 0.02,
+      "hidden_size": 16,
+      "num_layers": 1,
+      "in_out_mult": 10,
+      "seed": 43,
+      "run_directory_count": 1,
+      "completed_epoch_records": 39,
+      "last_epoch_zero_based": 38,
+      "last_epoch_val_screening_nse": 0.9572489490670748,
+      "last_epoch_lr": 0.00125,
+      "rollbacks_so_far": 3,
+      "nonfinite_skips_so_far": 0,
+      "cell_metrics_exists": true,
+      "cell": {
+        "cell_run_id": "WRR-FINALIST-20260907-I04",
+        "cell_seed": 43,
+        "finished_at": "2026-09-08T06:11:16",
+        "train_seconds": 29020.7,
+        "pooled_mean_actual_leads_1_12": 0.984156,
+        "best_checkpoint_sha256": "4cd3cc7978d4d8cd07a9c4f339bea837cf8c815821a8fb688fce286ead2e9230",
+        "best_epoch_zero_based": 28,
+        "epochs_run": 39,
+        "stop_epoch_zero_based": 38,
+        "rollbacks_total": 3,
+        "nonfinite_skips_total": 0
+      },
+      "audits": [
+        {
+          "file": "WRR-FINALIST-20260907-I04_formal_20260907T220657.json",
+          "launcher_status": "ok",
+          "started_at": "2026-09-07T22:06:57",
+          "finished_at": "2026-09-08T06:11:16",
+          "slurm_job_id": "223702",
+          "slurm_array_task_id": "4",
+          "hostname": "ngu001",
+          "held_out_test_loaded": false,
+          "runtime": {
+            "seed": 43,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          }
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "run_id": "WRR-FINALIST-20260907-I05",
+      "lr": 0.02,
+      "hidden_size": 16,
+      "num_layers": 1,
+      "in_out_mult": 10,
+      "seed": 44,
+      "run_directory_count": 1,
+      "completed_epoch_records": 23,
+      "last_epoch_zero_based": 22,
+      "last_epoch_val_screening_nse": 0.9243026468008747,
+      "last_epoch_lr": 0.000625,
+      "rollbacks_so_far": 4,
+      "nonfinite_skips_so_far": 0,
+      "cell_metrics_exists": true,
+      "cell": {
+        "cell_run_id": "WRR-FINALIST-20260907-I05",
+        "cell_seed": 44,
+        "finished_at": "2026-09-08T02:54:51",
+        "train_seconds": 17235.2,
+        "pooled_mean_actual_leads_1_12": 0.982869,
+        "best_checkpoint_sha256": "0a713c2ddd94dbd893a08d4013bbb32626162ded00a6affdfd38ae17ce62e3e7",
+        "best_epoch_zero_based": 12,
+        "epochs_run": 23,
+        "stop_epoch_zero_based": 22,
+        "rollbacks_total": 4,
+        "nonfinite_skips_total": 0
+      },
+      "audits": [
+        {
+          "file": "WRR-FINALIST-20260907-I05_formal_20260907T220657.json",
+          "launcher_status": "ok",
+          "started_at": "2026-09-07T22:06:57",
+          "finished_at": "2026-09-08T02:54:51",
+          "slurm_job_id": "223697",
+          "slurm_array_task_id": "5",
+          "hostname": "ngu001",
+          "held_out_test_loaded": false,
+          "runtime": {
+            "seed": 44,
+            "reproducibility_mode": "seeded_standard_backend",
+            "deterministic_algorithms": false,
+            "cudnn_deterministic": false,
+            "cudnn_benchmark": true,
+            "torch_version": "2.4.0",
+            "cuda_version": "12.1",
+            "cudnn_version": 90100,
+            "gpu": "NVIDIA GeForce RTX 3090",
+            "forecast_leads_start_at_one": true,
+            "held_out_torch_load_guard": true
+          }
+        }
+      ]
+    }
+  ]
+}
+=== LOG_MILESTONES ===
+--- /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_0.out
+[EpochSummary] 42/200 train_bp=0.000085 val_bp=0.000028 val_nse=0.908106 lr=0.000625
+[EpochSummary] 43/200 train_bp=0.000085 val_bp=0.000027 val_nse=0.908207 lr=0.000625
+[EpochSummary] 44/200 train_bp=0.000083 val_bp=0.000027 val_nse=0.907846 lr=0.000625
+[EpochSummary] 45/200 train_bp=0.000082 val_bp=0.000027 val_nse=0.908007 lr=0.000625
+[INFO] Early stopping triggered at epoch 44.
+[Launcher] cell_metrics written -> /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed43_gpu/idx0000_lr0p01_hs64_nl1_mult15/cell_metrics.json
+[Launcher] M(leads 1-12)=0.984668 M(slots 0-11)=0.987475 best_epoch=34 lr_at_best=0.005 rollbacks=6
+finished=2026-09-08T05:40:16+08:00
+--- /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_1.out
+[EpochSummary] 31/200 train_bp=0.000057 val_bp=0.000015 val_nse=0.953988 lr=0.000625
+[EpochSummary] 32/200 train_bp=0.000057 val_bp=0.000015 val_nse=0.954121 lr=0.000625
+[EpochSummary] 33/200 train_bp=0.000056 val_bp=0.000015 val_nse=0.954306 lr=0.000625
+[EpochSummary] 34/200 train_bp=0.000056 val_bp=0.000015 val_nse=0.954335 lr=0.000625
+[INFO] Early stopping triggered at epoch 33.
+[Launcher] cell_metrics written -> /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed44_gpu/idx0001_lr0p01_hs64_nl1_mult15/cell_metrics.json
+[Launcher] M(leads 1-12)=0.984156 M(slots 0-11)=0.987189 best_epoch=23 lr_at_best=0.0025 rollbacks=4
+finished=2026-09-08T03:47:03+08:00
+--- /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_2.out
+[EpochSummary] 38/200 train_bp=0.000055 val_bp=0.000014 val_nse=0.957556 lr=0.0003125
+[EpochSummary] 39/200 train_bp=0.000055 val_bp=0.000015 val_nse=0.957513 lr=0.0003125
+[EpochSummary] 40/200 train_bp=0.000055 val_bp=0.000015 val_nse=0.957640 lr=0.0003125
+[EpochSummary] 41/200 train_bp=0.000055 val_bp=0.000014 val_nse=0.957735 lr=0.0003125
+[INFO] Early stopping triggered at epoch 40.
+[Launcher] cell_metrics written -> /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed43_gpu/idx0002_lr0p01_hs64_nl1_mult10/cell_metrics.json
+[Launcher] M(leads 1-12)=0.984358 M(slots 0-11)=0.987377 best_epoch=30 lr_at_best=0.00125 rollbacks=4
+finished=2026-09-08T04:57:13+08:00
+--- /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_3.out
+[EpochSummary] 57/200 train_bp=0.000056 val_bp=0.000015 val_nse=0.956412 lr=0.000625
+[EpochSummary] 58/200 train_bp=0.000056 val_bp=0.000015 val_nse=0.956674 lr=0.000625
+[EpochSummary] 59/200 train_bp=0.000056 val_bp=0.000015 val_nse=0.956842 lr=0.000625
+[EpochSummary] 60/200 train_bp=0.000056 val_bp=0.000015 val_nse=0.957048 lr=0.000625
+[INFO] Early stopping triggered at epoch 59.
+[Launcher] cell_metrics written -> /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed44_gpu/idx0003_lr0p01_hs64_nl1_mult10/cell_metrics.json
+[Launcher] M(leads 1-12)=0.984094 M(slots 0-11)=0.987081 best_epoch=49 lr_at_best=0.00125 rollbacks=1
+finished=2026-09-08T08:28:12+08:00
+--- /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_4.out
+[EpochSummary] 36/200 train_bp=0.000055 val_bp=0.000014 val_nse=0.957220 lr=0.00125
+[EpochSummary] 37/200 train_bp=0.000055 val_bp=0.000015 val_nse=0.957245 lr=0.00125
+[EpochSummary] 38/200 train_bp=0.000055 val_bp=0.000015 val_nse=0.957254 lr=0.00125
+[EpochSummary] 39/200 train_bp=0.000055 val_bp=0.000015 val_nse=0.957249 lr=0.00125
+[INFO] Early stopping triggered at epoch 38.
+[Launcher] cell_metrics written -> /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed43_gpu/idx0004_lr0p02_hs16_nl1_mult10/cell_metrics.json
+[Launcher] M(leads 1-12)=0.984156 M(slots 0-11)=0.987153 best_epoch=28 lr_at_best=0.0025 rollbacks=3
+finished=2026-09-08T06:11:18+08:00
+--- /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/logs/slurm-223697_5.out
+[EpochSummary] 20/200 train_bp=0.000082 val_bp=0.000020 val_nse=0.924421 lr=0.000625
+[EpochSummary] 21/200 train_bp=0.000082 val_bp=0.000020 val_nse=0.923963 lr=0.000625
+[EpochSummary] 22/200 train_bp=0.000082 val_bp=0.000020 val_nse=0.924264 lr=0.000625
+[EpochSummary] 23/200 train_bp=0.000081 val_bp=0.000020 val_nse=0.924303 lr=0.000625
+[INFO] Early stopping triggered at epoch 22.
+[Launcher] cell_metrics written -> /data1/home/sunyiq/kalmannet_wrr_finalist_replication_20260907/repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902/runs/formal_seed44_gpu/idx0005_lr0p02_hs16_nl1_mult10/cell_metrics.json
+[Launcher] M(leads 1-12)=0.982869 M(slots 0-11)=0.985943 best_epoch=12 lr_at_best=0.01 rollbacks=4
+finished=2026-09-08T02:54:52+08:00
+=== STDERR_NONEMPTY ===
+none
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T09:33:49+0800
