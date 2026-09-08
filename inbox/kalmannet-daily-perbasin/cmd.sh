@@ -1,6 +1,6 @@
 #!/bin/bash
 set -uo pipefail
-printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=74 purpose=read-only-precheck-job224110-metadata'
+printf '%s\n' 'channel=kalmannet-daily-perbasin sequence=75 purpose=read-only-precheck-job224110-metadata'
 task_root=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908
 task_request=$task_root/runtime/precheck_seq73
 task_output=$task_root/prechecks/precheck_seq73
@@ -25,7 +25,7 @@ task_emit_metadata() {
   task_size=$(stat -c '%s' -- "$task_file") || return 83
   task_digest=$(sha256sum -- "$task_file") || return 84
   printf 'METADATA_FILE bytes=%s sha256_and_path=%s\n' "$task_size" "$task_digest"
-  if ((task_size>196608 || task_total+task_size>500000)); then printf 'METADATA_CONTENT_OMITTED_SIZE %s\n' "$task_file"; return 0; fi
+  if ((task_size>393216 || task_total+task_size>650000)); then printf 'METADATA_CONTENT_OMITTED_SIZE %s\n' "$task_file"; return 0; fi
   task_total=$((task_total+task_size))
   printf 'METADATA_BASE64_BEGIN %s\n' "$task_file"
   base64 --wrap=0 -- "$task_file" || return 85
