@@ -1,0 +1,67 @@
+### channel=kalmannet-daily-perbasin seq=77
+### host=login4
+### started=2026-09-09T02:28:58+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=77 purpose=one-reviewed-first-training-submission-only
+build_first_training_candidate.py: OK
+build_precheck_candidate.py: OK
+first_training_worker.py: OK
+precheck.sh: OK
+request.json: OK
+resource_bind.py: OK
+train.slurm: OK
+candidate-files.json: OK
+first_training_admission_check.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/precheck_live_submission_check_seq73.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/deployment_6b67c6617c2a/workspace/scripts/daily_camels_development_guard.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/deployment_6b67c6617c2a/workspace/scripts/verify_daily_camels_knet_per_basin_pilot.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/deployment_6b67c6617c2a/workspace/hpc/daily_camels_knet_21_development/resource_policy.json: OK
+SUBMISSION_PREWRITE_PATH_GATE_PASS
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_seq77/admission_seq77.json: OK
+{"observed_at_seconds":1788892138,"phase":"submission","result":{"final_paths":{"request":"/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_seq77","run":"/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runs/DAILY_CAMELS_KNET_PER_BASIN_21_DEVELOPMENT_V2_20260908_BASIN_08190500_A800_TRAIN1_SEQ77","submission_targets_absent":["submission_seq77.attempt","submission_seq77.stdout","submission_seq77.stderr","submission_seq77.exit"]},"initial_paths":{"request":"/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_seq77","run":"/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runs/DAILY_CAMELS_KNET_PER_BASIN_21_DEVELOPMENT_V2_20260908_BASIN_08190500_A800_TRAIN1_SEQ77","submission_targets_absent":["submission_seq77.attempt","submission_seq77.stdout","submission_seq77.stderr","submission_seq77.exit"]},"live":{"allocation_or_billing_proven":false,"available_capacity_nodes":["ngu201"],"jobs":[{"classification":"unrelated","job_id":"223992"},{"classification":"unrelated","job_id":"202229"},{"classification":"unrelated","job_id":"202294"},{"classification":"unrelated","job_id":"202315"},{"classification":"unrelated","job_id":"202507"},{"classification":"unrelated","job_id":"215429"},{"classification":"unrelated","job_id":"202293"},{"classification":"unrelated","job_id":"223848_17"},{"classification":"unrelated","job_id":"223848_16"},{"classification":"unrelated","job_id":"223848_15"},{"classification":"unrelated","job_id":"223848_14"}],"observation_time_seconds":1788892138},"phase":"submission","remote_actions":0,"scaffolding":{"resource_policy_sha256":"969a1b5a2427a9e5e9fe172841674f0dce031059af88eff2263f9958f7393d0d","verifier_sha256":"9505f9943e49b74905e1e806fb850ba40f60593e01191cca4bcc8345f9e752ec"},"scientific_execution":0,"staged":{"candidate_index_sha256":"4e37dd7b7c3a29d94b8f6e935ddb37a2666ae784f52752dbfb9eac4f48797fd3","files":{"build_first_training_candidate.py":{"bytes":9589,"sha256":"0e7887acadf2ec9b41d42954238aad8914ac2a76c4e5caf7febd4bc8c3ed641b"},"build_precheck_candidate.py":{"bytes":11995,"sha256":"e699271adab73b959ec316fb646c1af3ed0223b4638f14aa6a785d40ab34fef1"},"candidate-files.json":{"bytes":1504,"sha256":"4e37dd7b7c3a29d94b8f6e935ddb37a2666ae784f52752dbfb9eac4f48797fd3"},"first_training_worker.py":{"bytes":17653,"sha256":"8f7be166546082111a64e0cd67b6523139a15dbd9ce37a0d6de4f2869fb04ce9"},"precheck.sh":{"bytes":591,"sha256":"70f7df54e05415d95ff7e9f57a440aa2d4bd0048b48484a3648e6f2ba481f66a"},"request.json":{"bytes":3075,"sha256":"ef2853f5f99bcb7fcdc693a91d2ca62615a453df94fb3ff61851f6727c6fd606"},"resource_bind.py":{"bytes":17879,"sha256":"9f7a76d3f3ea19fef9fdd97c2f84f9981865672c644e7d9d775c708a47f371da"},"train.slurm":{"bytes":2446,"sha256":"1c732b3ef5322a005d235a6a231674bbcd65e24611a64fb3f17b10b8608c836f"}}}},"status":"PASS"}
+build_first_training_candidate.py: OK
+build_precheck_candidate.py: OK
+first_training_worker.py: OK
+precheck.sh: OK
+request.json: OK
+resource_bind.py: OK
+train.slurm: OK
+candidate-files.json: OK
+first_training_admission_check.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/deployment_6b67c6617c2a/workspace/scripts/verify_daily_camels_knet_per_basin_pilot.py: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/deployment_6b67c6617c2a/workspace/hpc/daily_camels_knet_21_development/resource_policy.json: OK
+FINAL_LIVE_PATH_HASH_GATE_PASS
+{"receipts":{"attempt":{"base64":"c3VibWlzc2lvbl9hdHRlbXB0X3V0Yz0yMDI2LTA5LTA4VDE4OjI5OjAwWgo=","bytes":44,"sha256":"f5819e92f266abacd78f4949a24e8b18d1dc4ec2a8f0734646f31c1686758849"},"exit":{"base64":"MAo=","bytes":2,"sha256":"9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"},"stderr":{"base64":"","bytes":0,"sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"stdout":{"base64":"U3VibWl0dGVkIGJhdGNoIGpvYiAyMjQxMTcK","bytes":27,"sha256":"9a62dc26fb8a33a8a50bfa6a60e3c75e24e8f2e9676783e97e69e9d90a201036"}},"schema_version":"daily_camels_raw_submission_receipts_v1"}
+CONFIRMED_FIRST_TRAINING_JOB_ID=224117
+JobId=224117 JobName=kdpp-dev-train-08190500-seq77
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Priority Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A
+   SubmitTime=2026-09-09T02:29:47 EligibleTime=2026-09-09T02:29:47
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-09T02:29:47
+   Partition=hgpu8 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_seq77/train.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_seq77
+   StdErr=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_seq77/slurm-224117.stderr
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_seq77/slurm-224117.stdout
+   Power=
+   TresPerNode=gpu:1
+
+SUBMIT77_COMPLETE unique_submission=1 automatic_resubmit=0 allocation_or_billing_proven=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T02:29:01+0800
