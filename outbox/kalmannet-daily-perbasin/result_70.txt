@@ -1,0 +1,104 @@
+### channel=kalmannet-daily-perbasin seq=70
+### host=login4
+### started=2026-09-08T22:01:12+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=70 purpose=21-basin-development-shared-resource-and-exact-root-readonly
+observed_at_utc=2026-09-08T14:01:12Z
+observed_at_seconds=1788876072
+login4
+sunyiq
+EXACT_PROPOSED_ROOT_EXISTS=NO
+PROPOSED_ROOT_ANCESTORS
+drwxr-xr-x.  16 root   root     8192 Aug 11  2025 /data1
+drwxr-xr-x. 159 root   root     4096 Sep  8 12:23 /data1/home
+drwx------. 158 sunyiq g_sunyiq 4096 Sep  8 22:01 /data1/home/sunyiq
+A800_PARTITION
+PartitionName=hgpu8
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[201-203]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=192 TotalNodes=3 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+A800_NODES
+ngu201|mixed|64|58/6/0/64|gpu:8|none
+ngu202|maint|64|0/64/0/64|gpu:8|none
+ngu203|mixed|64|32/32/0/64|gpu:8|none
+NodeName=ngu201 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=58 CPUTot=64 CPULoad=13.02
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu201 NodeHostName=ngu201 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=375053 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-04-28T14:14:26 SlurmdStartTime=2026-04-28T14:14:06
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=58
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+NodeName=ngu202 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=0 CPUTot=64 CPULoad=0.14
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu202 NodeHostName=ngu202 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=680289 Sockets=2 Boards=1
+   State=MAINT ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-01-22T14:56:34 SlurmdStartTime=2026-01-22T15:10:38
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+NodeName=ngu203 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=32 CPUTot=64 CPULoad=12.05
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu203 NodeHostName=ngu203 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=644297 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2025-07-23T15:13:29 SlurmdStartTime=2025-07-23T15:41:12
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=32
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+OWN_ACTIVE_JOB_PATHS
+223848_[15-17%6]|ngf-select-A|PENDING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|(JobArrayTaskLimit)
+223992|tukf09-455-v2r12-prepare|PENDING|hgpu8|1|32|gpu:8|/data1/home/sunyiq/hpc_mailbox|(Priority)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|1|2|N/A|/data1/home/sunyiq/hpc_mailbox|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|1|4|gpu:1|/data1/home/sunyiq/hpc_mailbox|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|1|4|gpu:1|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(JobHeldUser)
+223848_14|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu010
+223848_13|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu011
+223848_12|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu011
+223848_11|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu001
+223848_7|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu001
+223848_2|ngf-select-A|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/A|ngu010
+scontrol_print_job error: Invalid job id specified
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-08T22:01:13+0800
