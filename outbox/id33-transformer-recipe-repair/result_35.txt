@@ -1,0 +1,40 @@
+### channel=id33-transformer-recipe-repair seq=35
+### host=login4
+### started=2026-09-08T16:12:49+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-08T16:12:49+0800
+=== A. NARROWED IN-FLIGHT GATE ===
+223971 id33_repro_det
+223972 id33_repro_ctl
+unsafe_id33_in_flight=0
+only read-only repro probes in flight; safe to add new files
+=== B. REPRO PROBE PROGRESS (do not disturb) ===
+     JobID          JobName        State    Elapsed NodeList 
+---------- ---------------- ------------ ---------- -------- 
+    223971   id33_repro_det      RUNNING   00:04:00   ngu004 
+    223972   id33_repro_ctl      RUNNING   00:04:00   ngu004 
+==> /data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/logs/33_transformer_recipe_repair/repro-223971.out <==
+=== LAUNCHING 3 CONCURRENT REPLICAS ON ONE CARD ===
+  launched r1 pid=3810505
+  launched r2 pid=3810506
+  launched r3 pid=3810507
+
+==> /data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/logs/33_transformer_recipe_repair/repro-223972.out <==
+=== LAUNCHING 3 CONCURRENT REPLICAS ON ONE CARD ===
+  launched r1 pid=3810495
+  launched r2 pid=3810496
+  launched r3 pid=3810497
+=== C. EXTRACT ===
+-rw-r--r--. 1 sunyiq g_sunyiq 4243 Sep  8 16:12 /data1/home/sunyiq/hpc_mailbox/payload/id33-transformer-recipe-repair/id33_rescore_v01.tar.gz
+6d9d11014602899227f48551f6d01e5826ef50c673fdb30a4b1386e9751eea6f  src/transformer_recipe_repair/scripts/rescore_common_window.py
+015279d7ef7690ea6599a966ff43d0356abf743875cc210545ab62e113392702  src/transformer_recipe_repair/hpc/submit_rescore.slurm
+=== D. ID30 BASELINES READABLE? (read-only) ===
+  D01 validation_results.p count=30
+  B01 validation_results.p count=30
+=== E. SUBMIT ===
+Submitted batch job 223973
+rescore_job=223973
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:12:49+0800
