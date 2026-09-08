@@ -1,88 +1,56 @@
 #!/bin/bash
-# forcing-swap -- diagnose the single basin that tripped stop condition V6, and clean up the orphaned arm jobs.
-# READ-ONLY on data. The only state change is scancel of MY OWN nine arm jobs, whose afterok dependency can never
-# be satisfied now that the gate failed; they can never run and would otherwise sit in the queue forever.
+# forcing-swap seq=17 -- amendment A approved: install the updated V6 check + determinism guard, preserve the
+# first attempt's evidence, resubmit the gate and the nine arms. Nothing else changes: code, data shadow,
+# basin lists and all ten configs are untouched from the seq=13 deployment.
 set -o pipefail
 date "+wallclock %F %T %z"
 R=/data1/home/sunyiq/forcing_swap_daily_2026_09
+M=$HOME/hpc_mailbox/inbox/attrswap-daily/payload
 
-echo "=== A. JOB STATES ==="
-ids=$(tr '\n' ',' < "$R/logs/job_ids.txt" | sed 's/,$//')
-sacct -j "$ids" -X --format=JobID%9,JobName%20,State%22,ExitCode%8,Elapsed%9 2>&1
+echo "=== A. PRESERVE ATTEMPT 1 EVIDENCE ==="
+[ -f "$R/logs/convert_verify.json" ] && cp "$R/logs/convert_verify.json" "$R/logs/convert_verify.attempt1.json"
+[ -f "$R/logs/job_ids.txt" ] && mv "$R/logs/job_ids.txt" "$R/logs/job_ids.attempt1.txt"
+ls "$R/logs" | head -20
 
-echo "=== B. WHY THE GATE STOPPED (tail of its log) ==="
-f=$(ls -t "$R"/logs/slurm_fswap_gate_*.out 2>/dev/null | head -1) || true
-[ -n "$f" ] && tail -12 "$f"
+echo "=== B. SCRIPT CHANGE (hashes before and after) ==="
+echo "before: build_era5l_forcing.py $(sha256sum $R/hpc_deploy/build_era5l_forcing.py | cut -c1-16)"
+echo "before: fswap_gate.slurm       $(sha256sum $R/hpc_deploy/fswap_gate.slurm | cut -c1-16)"
+cp "$M/build_era5l_forcing.py" "$M/fswap_gate.slurm" "$R/hpc_deploy/" || { echo COPY_FAILED; exit 1; }
+sed -i 's/\r$//' "$R"/hpc_deploy/build_era5l_forcing.py "$R"/hpc_deploy/fswap_gate.slurm
+echo "after:  build_era5l_forcing.py $(sha256sum $R/hpc_deploy/build_era5l_forcing.py | cut -c1-16)"
+echo "after:  fswap_gate.slurm       $(sha256sum $R/hpc_deploy/fswap_gate.slurm | cut -c1-16)"
+echo "--- the amended V6 block ---"
+grep -n -A 8 "off = {b: l for b, l in lags.items()" "$R/hpc_deploy/build_era5l_forcing.py"
+grep -n "V6_MIN_LAG0_SHARE = " "$R/hpc_deploy/build_era5l_forcing.py"
+echo "--- confirm nothing else moved: the other three payload scripts are unchanged on disk ---"
+for f in make_configs.py fswap_train.slurm; do echo "  $f $(sha256sum $R/hpc_deploy/$f | cut -c1-16)"; done
 
-echo "=== C. THE ONE BASIN: 01487000 -- how big is the margin? ==="
-source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null
-conda activate nh_final 2>/dev/null
-python - <<'PY' 2>&1
-import glob
-import numpy as np, pandas as pd, xarray as xr
-A = '/data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing/maurer'
-C = '/data1/home/sunyiq/neuralhydrology/data/Caravan/timeseries/netcdf/camels'
+echo "=== C. CONFIGS UNTOUCHED ==="
+ls "$R/configs" | wc -l
+sha256sum "$R"/configs/*.yml | cut -c1-16 | sort | uniq -c | wc -l
+echo "  (10 config files expected; they were generated at seq=13 and are not regenerated)"
 
+echo "=== D. SUBMIT GATE ==="
+out=$(sbatch "$R/hpc_deploy/fswap_gate.slurm" 2>&1); echo "$out"
+GATE=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
+[ -n "$GATE" ] || { echo SUBMIT_FAILED_GATE; exit 1; }
+echo "$GATE" > "$R/logs/job_ids.txt"
+echo "gate job: $GATE"
 
-def series(b):
-    mf = glob.glob(f'{A}/**/{b}_*_forcing_leap.txt', recursive=True)[0]
-    m = pd.read_csv(mf, sep=r'\s+', header=0, skiprows=3)
-    m['date'] = pd.to_datetime(dict(year=m.Year, month=m.Mnth, day=m.Day))
-    m = m.set_index('date')['PRCP(mm/day)']
-    c = xr.open_dataset(f'{C}/camels_{b}.nc')['total_precipitation_sum'].to_series()
-    c.index = pd.to_datetime(c.index)
-    return m, c
-
-
-def lagtable(m, c, lo, hi, label):
-    j = pd.concat([m.rename('m'), c.rename('c')], axis=1).loc[lo:hi].dropna()
-    r = {k: float(j.m.corr(j.c.shift(k))) for k in (-2, -1, 0, 1, 2)}
-    best = max(r, key=r.get)
-    margin = r[best] - r[0]
-    print(f'  {label}: n={len(j)} ' + ' '.join(f'{k:+d}:{v:.4f}' for k, v in r.items()) +
-          f' | best {best:+d}, margin over lag0 = {margin:+.4f}')
-    return best, margin
-
-
-b = '01487000'
-m, c = series(b)
-print(f'basin {b} (Nassawango Creek, Maryland)')
-lagtable(m, c, '1989-01-01', '2008-09-30', 'modelled span 1989-2008')
-lagtable(m, c, '1989-10-01', '1999-09-30', 'test period only    ')
-lagtable(m, c, '1999-10-01', '2008-09-30', 'train period only   ')
-lagtable(m, c, '1980-01-01', '1988-12-31', 'outside the span    ')
-j = pd.concat([m.rename('m'), c.rename('c')], axis=1).loc['1989-01-01':'2008-09-30'].dropna()
-print(f'  means: maurer {j.m.mean():.3f} caravan {j.c.mean():.3f} ratio {j.c.mean()/j.m.mean():.3f}; '
-      f'dry days maurer {(j.m == 0).mean()*100:.1f}% caravan {(j.c == 0).mean()*100:.1f}%')
-
-print('=== D. MARGIN CONTEXT: 30 other basins, how close are lag0 and its runner-up? ===')
-basins = [l.strip().zfill(8) for l in open('/data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt')
-          if l.strip()]
-step = max(1, len(basins) // 30)
-margins = []
-for bb in basins[::step][:30]:
-    try:
-        mm, cc = series(bb)
-    except Exception as e:
-        print(f'  {bb}: {e}'); continue
-    jj = pd.concat([mm.rename('m'), cc.rename('c')], axis=1).loc['1989-01-01':'2008-09-30'].dropna()
-    rr = {k: float(jj.m.corr(jj.c.shift(k))) for k in (-1, 0, 1)}
-    runner = max(rr[-1], rr[1])
-    margins.append(rr[0] - runner)
-ms = pd.Series(margins)
-print(f'  lag0 minus best neighbour over {len(ms)} sampled basins: '
-      f'min {ms.min():+.4f} p10 {ms.quantile(.1):+.4f} median {ms.median():+.4f} max {ms.max():+.4f}')
-print(f'  sampled basins whose margin is under 0.01: {int((ms < 0.01).sum())}/{len(ms)}')
-PY
-
-echo "=== E. CANCEL THE NINE ORPHANED ARM JOBS (explicit ids only, never -u) ==="
-for j in $(tail -n +2 "$R/logs/job_ids.txt"); do
-  st=$(sacct -j "$j" -X -n --format=State 2>/dev/null | head -1 | tr -d ' ')
-  case "$st" in
-    PENDING) scancel "$j" && echo "  cancelled $j (was PENDING with an unsatisfiable dependency)";;
-    *) echo "  $j is $st -- left alone";;
-  esac
+echo "=== E. SUBMIT 9 ARMS (afterok:$GATE) ==="
+for a in fswap_armE27_s100 fswap_armE27_s200 fswap_armE27_s300 \
+         fswap_armE23_s100 fswap_armE23_s200 fswap_armE23_s300 \
+         fswap_armEP_s100 fswap_armEP_s200 fswap_armEP_s300; do
+  sed -e "s|^#SBATCH -J fswap_arm|#SBATCH -J ${a}|" \
+      -e "s|^#SBATCH --exclude=ngu201|#SBATCH --exclude=ngu201\n#SBATCH --dependency=afterok:${GATE}|" \
+      -e "s|^set -eo pipefail|set -eo pipefail\nCFG=${a}|" \
+      "$R/hpc_deploy/fswap_train.slurm" > "$R/hpc_deploy/jobs/${a}.slurm"
+  o=$(sbatch "$R/hpc_deploy/jobs/${a}.slurm" 2>&1)
+  j=$(echo "$o" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
+  if [ -z "$j" ]; then echo "SUBMIT_FAILED $a :: $o"; else echo "$a -> $j"; echo "$j" >> "$R/logs/job_ids.txt"; fi
 done
-sleep 3
-squeue -u "$USER" -o '%.11i %.22j %.9T' 2>&1 | grep -Ei 'fswap|JOBID' || echo '  (no fswap jobs left in the queue)'
+echo "job ids: $(tr '\n' ' ' < $R/logs/job_ids.txt)"
+
+echo "=== F. QUEUE ==="
+squeue -u "$USER" -o '%.11i %.22j %.9T %.10M %.9N %.20E' 2>&1 | grep -Ei 'fswap|JOBID' || echo '  (none)'
 echo "=== DONE ==="

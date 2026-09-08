@@ -19,7 +19,9 @@ Verification (every check must pass or the script exits non-zero, which cancels 
   V3 date index identical to Maurer (length and every date)
   V4 no NaN inside 1989-01-01..2008-09-30 (the modelled span incl. 270-day warmup before the test period)
   V5 20 random basins: written values round-trip to the netCDF source within 1e-4
-  V6 precipitation cross-correlation with Maurer peaks at lag 0 for every basin
+  V6 precipitation cross-correlation with Maurer peaks at lag 0 for >= 99% of basins, every exception registered
+     by name (amendment A, approved 2026-09-08: the check targets a SYSTEMATIC offset between the two products;
+     its original per-basin form over-fired on one basin whose Maurer record is shifted only inside 1999-2008)
   V7 physical ranges: PRCP >= 0, SRAD >= 0, Tmax >= Tmin, Vp > 0
   V8 the hybrid product's PRCP column is byte-identical to Maurer's, and its other 4 columns to era5l_caravan's
 """
@@ -43,6 +45,7 @@ P.add_argument('--report', required=True)
 A = P.parse_args()
 
 MODEL_START, MODEL_END = '1989-01-01', '2008-09-30'
+V6_MIN_LAG0_SHARE = 0.99  # amendment A, approved by the user 2026-09-08 14:20, before any arm had trained
 COLS = ['PRCP(mm/day)', 'SRAD(W/m2)', 'Tmax(C)', 'Tmin(C)', 'Vp(Pa)']
 HEADER = 'Year Mnth Day Hr\t' + '\t'.join(COLS)
 SRC = {'PRCP(mm/day)': 'total_precipitation_sum', 'SRAD(W/m2)': 'surface_net_solar_radiation_mean',
@@ -143,8 +146,14 @@ def main():
     if range_bad:
         fail(f'V7 out-of-range values in {len(range_bad)} basins, e.g. {range_bad[:3]}')
     off = {b: l for b, l in lags.items() if l != 0}
-    if off:
-        fail(f'V6 precip cross-correlation peaks off lag 0 for {len(off)} basins, e.g. {list(off.items())[:5]}')
+    lag0_share = float((pd.Series(lags) == 0).mean()) if lags else 0.0
+    if lag0_share < V6_MIN_LAG0_SHARE:
+        fail(f'V6 only {lag0_share * 100:.2f}% of basins peak at lag 0 (amendment A requires >= '
+             f'{V6_MIN_LAG0_SHARE * 100:.0f}%); off-lag basins: {sorted(off.items())}')
+    elif off:
+        NOTE.append(f'V6 exceptions inside the {V6_MIN_LAG0_SHARE * 100:.0f}% allowance, registered by name and to '
+                    f'be reported in the verdict: {sorted(off.items())}')
+        print('NOTE ' + NOTE[-1], flush=True)
 
     rng = random.Random(20260907)
     for b in rng.sample(basins, min(20, len(basins))):
@@ -181,7 +190,8 @@ def main():
     lg = pd.Series(lags)
     rt = pd.Series(ratios)
     summary = {
-        'basins': len(basins), 'written': written, 'failures': FAIL,
+        'basins': len(basins), 'written': written, 'failures': FAIL, 'notes': NOTE,
+        'v6_min_lag0_share': V6_MIN_LAG0_SHARE, 'v6_exceptions': sorted(off.items()),
         'lag0_share': float((lg == 0).mean()), 'lag_counts': {int(k): int(v) for k, v in lg.value_counts().items()},
         'precip_ratio_caravan_over_maurer': {'median': float(rt.median()), 'p10': float(rt.quantile(.1)),
                                              'p90': float(rt.quantile(.9))},

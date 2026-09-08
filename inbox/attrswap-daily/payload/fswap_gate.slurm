@@ -31,11 +31,32 @@ print('archived code OK:', p); print('torch', torch.__version__, 'cuda', torch.c
 " || exit 4
 
 echo "=== BUILD + VERIFY ==="
+# determinism check: if a previous attempt already wrote the products, snapshot them and compare afterwards
+PREV=""
+if [ -d "$ROOT/data_shadow/camels_us/basin_mean_forcing/era5l_caravan" ]; then
+  PREV=$(mktemp)
+  ( cd "$ROOT/data_shadow/camels_us/basin_mean_forcing" && find era5l_caravan era5l_caravan_pmaurer -type f \
+    | LC_ALL=C sort | xargs sha256sum ) > "$PREV"
+  echo "previous products present: $(wc -l < "$PREV") files, snapshot taken for a determinism check"
+fi
 python -u hpc_deploy/build_era5l_forcing.py \
   --maurer "$ROOT/data_shadow/camels_us/basin_mean_forcing/maurer" \
   --dest "$ROOT/data_shadow/camels_us/basin_mean_forcing" \
   --basins "$ROOT/basin_lists/basins_529.txt" \
   --report "$ROOT/logs/convert_verify.json"
+
+if [ -n "$PREV" ]; then
+  NOW=$(mktemp)
+  ( cd "$ROOT/data_shadow/camels_us/basin_mean_forcing" && find era5l_caravan era5l_caravan_pmaurer -type f \
+    | LC_ALL=C sort | xargs sha256sum ) > "$NOW"
+  if diff -q "$PREV" "$NOW" >/dev/null; then
+    echo "DETERMINISM OK: the rebuild reproduced all $(wc -l < "$NOW") product files byte-for-byte"
+  else
+    echo "DETERMINISM DIFFERS: $(diff "$PREV" "$NOW" | grep -c '^<') files changed -- investigate before trusting results"
+    exit 5
+  fi
+  rm -f "$PREV" "$NOW"
+fi
 
 echo "=== SMOKE TRAIN (5 basins, 1 epoch, era5l_caravan) ==="
 python -u -m neuralhydrology.nh_run train --config-file configs/fswap_smoke.yml
