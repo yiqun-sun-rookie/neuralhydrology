@@ -1,0 +1,33 @@
+### channel=kalmannet-tukf09-455 seq=147
+### host=login4
+### started=2026-09-08T17:05:29+0800
+### ---------- output ----------
+TIME=2026-09-08T17:05:29+0800  PREPARATION_JOB_ID=223992
+     JOBID      STATE        TIME  TIME_LIMIT  NODELIST               NODELIST(REASON)
+    223992    PENDING        0:00     4:00:00                               (Priority)
+     JobID        State ExitCode    Elapsed  NodeList                Start 
+---------- ------------ -------- ---------- --------- -------------------- 
+    223992      PENDING      0:0   00:00:00 None ass+              Unknown 
+=== STATUS ARTIFACTS ===
+total 13
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Sep  8 16:55 .
+drwxr-xr-x. 6 sunyiq g_sunyiq 4096 Sep  8 16:48 ..
+-rw-r--r--. 1 sunyiq g_sunyiq   53 Sep  8 16:44 offline_inputs_download.launched
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  8 16:44 offline_inputs_download.lock
+-rw-r--r--. 1 sunyiq g_sunyiq    7 Sep  8 16:55 preparation_job_id.txt
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  8 16:55 preparation_submission.lock
+preparation_probe.json ABSENT
+hpc_technical_admission.json ABSENT
+staged_training_sources.json ABSENT
+initial_bundle_verification.json ABSENT
+=== RUNTIME IDENTITY FROM THE PROBE ===
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/status/preparation_probe.json'
+=== PREPARE LOG TAIL ===
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/logs/prepare-223992.out’ for reading: No such file or directory
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/logs/prepare-223992.err’ for reading: No such file or directory
+TUKF09_455_V2R12_PREPARATION_STATE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T17:05:30+0800
