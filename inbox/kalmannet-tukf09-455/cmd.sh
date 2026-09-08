@@ -1,7 +1,7 @@
 #!/bin/bash
 # TUKF09-455: independently audit training source capsule v6. Read only, writes nothing.
 # Re-hashes all 911 data files against the frozen raw source manifest, re-derives the data
-# identity digest, and re-checks every mode and every binding between READY, manifest and record.
+# identity digest, and re-checks every mode and every binding between READY, manifest, record.
 set -eo pipefail
 CAP=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v6_20260908
 PROJECT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/bundle/kalmannet
@@ -54,10 +54,9 @@ check("record_count", len(records) == len(manifest["files"]) == 911)
 # 910 of the 911 files are forcing and discharge files covered by the frozen raw source
 # manifest. The 911th is the catchment topography file, which the execution config pins
 # separately, so it is checked against that instead.
-staging = json.loads(
-    (PROJECT / "configs/tukf09_455_basin_zero_validation_target_variance_hpc_execution_a800_exclusive_v2r9.json")
-    .read_text("utf-8")
-)["data_staging"]
+# The staging block is supplied inline: the version being prepared is not deployed yet, so
+# there is no configuration of it inside the project tree to read.
+staging = json.loads(Path(sys.argv[3]).read_text("utf-8"))
 topography = staging["topography_relative_path"]
 
 missing_in_raw = sorted(name for name in records if name not in raw_files)
@@ -147,9 +146,32 @@ print("FAILURES", json.dumps(sorted(set(failures))[:10], ensure_ascii=False))
 print("AUDIT_STATUS", "PASS" if not failures else "FAIL")
 sys.exit(0 if not failures else 5)
 AUDIT_EOF
-echo "AUDITOR_SHA256_EXPECTED=b04a4899056adb387e71b9837792fd411ab436d2722988cac2f033febde21dd3"
+cat > "$WORK/staging.json" <<'STAGING_EOF'
+{
+ "copy_mode": "ordinary_byte_copy_only",
+ "eligible_basin_count": 455,
+ "existing_tree_policy": "exact_verify_only_no_overwrite",
+ "failed_pending_policy": "preserve_the_partial_reserved_destination_and_freeze_the_v2r12_remote_root_no_same_root_retry",
+ "new_tree_publication": "exclusive_destination_directory_reservation_then_ordinary_byte_copy_and_exact_verification",
+ "population_registry": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/preflight/population_registry.json",
+ "raw_file_count_per_basin": 2,
+ "raw_manifest_schema_version": "tukf09_455_basin_inherited_raw_source_manifest_v1",
+ "raw_source_manifest": "artifacts/tukf09_455_basin_zero_validation_target_variance_revision_v1/preflight/raw_source_manifest.sha256.json",
+ "source_and_destination_hard_links_forbidden": true,
+ "source_and_destination_links_forbidden": true,
+ "staged_raw_file_count": 910,
+ "topography_relative_path": "camels_attributes_v2.0/camels_topo.txt",
+ "topography_sha256": "b64ca9923bcaccf21dde33137903797919e8d6732edd7849f8534e0ddcbec8e8",
+ "topography_size_bytes": 38677,
+ "total_staged_file_count": 911,
+ "verify_size_and_sha256_for_every_file": true
+}
+STAGING_EOF
+echo "AUDITOR_SHA256_EXPECTED=0d55bba01322441241da4cdc2221d8c689d460134637b38d9ed24a4181db81cb"
 echo "AUDITOR_SHA256_ACTUAL=$(sha256sum "$WORK/audit.py" | cut -d" " -f1)"
+echo "STAGING_SHA256_EXPECTED=1f0e1fda3e4be2e86c9d5fd76b1d0fa1761476985af4f832e53350ee92ac8538"
+echo "STAGING_SHA256_ACTUAL=$(sha256sum "$WORK/staging.json" | cut -d" " -f1)"
 source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh" || source "${HOME}/miniconda3/etc/profile.d/conda.sh"
 conda activate nh_final || { echo CONDA_FAILED; exit 13; }
-python -X utf8 "$WORK/audit.py" "$CAP" "$PROJECT"
+python -X utf8 "$WORK/audit.py" "$CAP" "$PROJECT" "$WORK/staging.json"
 echo TUKF09_455_CAPSULE_V6_AUDIT_DONE
