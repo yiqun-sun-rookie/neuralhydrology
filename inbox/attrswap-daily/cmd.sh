@@ -1,25 +1,38 @@
 #!/bin/bash
-# forcing-swap status -- READ-ONLY. Queue, accounting, conversion report, medians, latest epoch, any error.
+# forcing-swap -- why is the gate still pending? Partition occupancy, estimated start, limits.
+# Also move the stale attempt-1 conversion report aside so the status command stops reporting its failure line.
 set -o pipefail
 date "+wallclock %F %T %z"
 R=/data1/home/sunyiq/forcing_swap_daily_2026_09
-echo "=== A. QUEUE ==="
-squeue -u "$USER" -o '%.11i %.22j %.9T %.10M %.9N %.20E' 2>&1 | grep -Ei 'fswap|JOBID' || echo '  (none queued)'
-echo "=== B. ACCOUNTING ==="
-ids=$(tr '\n' ',' < "$R/logs/job_ids.txt" | sed 's/,$//')
-sacct -j "$ids" -X --format=JobID%9,JobName%20,State%12,ExitCode%8,Elapsed%10,NodeList%9 2>&1
-echo "=== C. GATE + CONVERSION REPORT ==="
-cat "$R/logs/gate.txt" 2>/dev/null || echo "  (gate marker absent)"
-cat "$R/logs/convert_verify.json" 2>/dev/null || echo "  (conversion report absent)"
-echo "=== D. MEDIANS ==="
-for f in "$R"/logs/*.public_median.txt; do [ -f "$f" ] && echo "  $(basename $f .public_median.txt): $(cat $f)"; done
-echo "medians present: $(ls "$R"/logs/*.public_median.txt 2>/dev/null | wc -l)/9"
-echo "=== E. LATEST EPOCH PER ARM ==="
-for f in "$R"/logs/slurm_fswap_arm*.out; do
-  [ -f "$f" ] || continue
-  e=$(grep -oE "Epoch [0-9]+ average loss" "$f" 2>/dev/null | tail -1) || true
-  echo "  $(basename $f): ${e:-no epoch line yet} | $(stat -c%s "$f") bytes"
+
+echo "=== A. STALE REPORT CLEANUP (attempt 1 copy is already preserved) ==="
+if [ -f "$R/logs/convert_verify.json" ] && [ -f "$R/logs/convert_verify.attempt1.json" ]; then
+  if cmp -s "$R/logs/convert_verify.json" "$R/logs/convert_verify.attempt1.json"; then
+    mv "$R/logs/convert_verify.json" "$R/logs/convert_verify.stale_attempt1.json"
+    echo "  moved the stale attempt-1 report aside; the status command will show 'absent' until gate 223959 writes a new one"
+  else
+    echo "  convert_verify.json already differs from attempt 1 -- the new gate has written it, leaving it alone"
+  fi
+else
+  echo "  nothing to clean"
+fi
+
+echo "=== B. MY JOBS + REASON ==="
+squeue -u "$USER" -o '%.11i %.20j %.9T %.10M %.9N %.16E %.30R' 2>&1 | grep -Ei 'fswap|JOBID' || echo '  (none)'
+
+echo "=== C. ESTIMATED START ==="
+for j in 223959; do
+  echo "  job $j start estimate: $(squeue -j $j -h --start -o '%S' 2>&1)"
 done
-echo "=== F. ERRORS ==="
-grep -lE "Traceback|CUDA error|FAILED|out of memory|WRONG CODE|VERIFY FAILED" "$R"/logs/slurm_fswap_*.out "$R"/logs/slurm_fswap_*.err 2>/dev/null || echo "  none"
+
+echo "=== D. PARTITION OCCUPANCY (squeue only shows my own jobs on this cluster, so read sinfo) ==="
+sinfo -o "%.10P %.6a %.6D %.6t %.30N" 2>&1 | head -20
+echo "--- hgpu8 nodes in detail ---"
+sinfo -p hgpu8 -N -o "%.9N %.6t %.20C %.20G %.30E" 2>&1 | head -10
+
+echo "=== E. ANY LIMIT ON ME? ==="
+sacctmgr -n show assoc user="$USER" format=Account,User,Partition,MaxJobs,MaxSubmit,GrpTRES,QOS 2>&1 | head -10
+
+echo "=== F. WHAT ELSE OF MINE IS RUNNING (other channels' work counts against limits) ==="
+squeue -u "$USER" -h -o '%T' 2>&1 | sort | uniq -c
 echo "=== DONE ==="
