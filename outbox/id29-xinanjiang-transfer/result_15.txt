@@ -1,0 +1,52 @@
+### channel=id29-xinanjiang-transfer seq=15
+### host=login4
+### started=2026-09-08T13:36:50+0800
+### ---------- output ----------
+FAILED_BASIN_COUNT 2
+FAILED_BASINS_JSON [{"arms": [{"arm": "uniform_0", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "uniform_1", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "uniform_2", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "uniform_3", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "uniform_4", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "pooled_ratio", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "pooled_absolute", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "open_loop", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}], "basin_id": "05120500", "error": "HPC raw input differs from local frozen source", "files": ["open_loop.json", "pooled_absolute.json", "pooled_ratio.json", "result.json", "uniform_0.json", "uniform_1.json", "uniform_2.json", "uniform_3.json", "uniform_4.json"], "status": "failed", "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/id29_xinanjiang_transfer_20260907_v01/bundle/src/xinanjiang_transfer_noise/runner.py\", line 180, in evaluate_basin\n    task = task_for(basin, role)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/id29_xinanjiang_transfer_20260907_v01/bundle/src/xinanjiang_transfer_noise/runner.py\", line 55, in task_for\n    raise ValueError(\"HPC raw input differs from local frozen source\")\nValueError: HPC raw input differs from local frozen source\n"}, {"arms": [{"arm": "uniform_0", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "uniform_1", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "uniform_2", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "uniform_3", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "uniform_4", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "pooled_ratio", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "pooled_absolute", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}, {"arm": "open_loop", "error": "basin stage failed: HPC raw input differs from local frozen source", "status": "not_run"}], "basin_id": "09492400", "error": "HPC raw input differs from local frozen source", "files": ["open_loop.json", "pooled_absolute.json", "pooled_ratio.json", "result.json", "uniform_0.json", "uniform_1.json", "uniform_2.json", "uniform_3.json", "uniform_4.json"], "status": "failed", "traceback": "Traceback (most recent call last):\n  File \"/data1/home/sunyiq/id29_xinanjiang_transfer_20260907_v01/bundle/src/xinanjiang_transfer_noise/runner.py\", line 180, in evaluate_basin\n    task = task_for(basin, role)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/home/sunyiq/id29_xinanjiang_transfer_20260907_v01/bundle/src/xinanjiang_transfer_noise/runner.py\", line 55, in task_for\n    raise ValueError(\"HPC raw input differs from local frozen source\")\nValueError: HPC raw input differs from local frozen source\n"}]
+SUMMARY_SHA256 0d01d9643f7725432a89dade8a4854b008f6f015baf0edc6c0f847f9d0264da9
+TRANSFER_SHA256 5f644f707c9b67eacf89562e7484cfc42f859dfcdad597b1eeb58584a99a2d04
+BUNDLE_MANIFEST_SHA256 59a8f8b50776086c5b1263e441cfc9cf80299b80feca24a60919d582d5d21545
+RECEIVER_JOB_ID 223833
+RECEIVER_APPROVAL_SHA256 a716eb25a2d678661f377543d25ef16c9734dd370022e1c844aef93e248c8ed7
+RECEIVER_SUBMISSION_RECEIPT {
+  "returncode": 0,
+  "status": "returned",
+  "stderr": "",
+  "stdout": "223833\n"
+}
+
+JobID|State|ExitCode|Elapsed|AllocCPUS|MaxRSS|NodeList
+223833|FAILED|1:0|00:18:28|24||ngu010
+223833.batch|FAILED|1:0|00:18:28|24|5021172K|ngu010
+223833.extern|COMPLETED|0:0|00:18:29|24|1892K|ngu010
+ERR_LOG_BYTES 0
+OUT_LOG_TAIL
+{"finished": 337, "total": 360, "basin": "13018300", "status": "success"}
+{"finished": 338, "total": 360, "basin": "13011900", "status": "success"}
+{"finished": 339, "total": 360, "basin": "13023000", "status": "success"}
+{"finished": 340, "total": 360, "basin": "13313000", "status": "success"}
+{"finished": 341, "total": 360, "basin": "13235000", "status": "success"}
+{"finished": 342, "total": 360, "basin": "13240000", "status": "success"}
+{"finished": 343, "total": 360, "basin": "13331500", "status": "success"}
+{"finished": 344, "total": 360, "basin": "14020000", "status": "success"}
+{"finished": 345, "total": 360, "basin": "14138870", "status": "success"}
+{"finished": 346, "total": 360, "basin": "14138800", "status": "success"}
+{"finished": 347, "total": 360, "basin": "14166500", "status": "success"}
+{"finished": 348, "total": 360, "basin": "14182500", "status": "success"}
+{"finished": 349, "total": 360, "basin": "14139800", "status": "success"}
+{"finished": 350, "total": 360, "basin": "14154500", "status": "success"}
+{"finished": 351, "total": 360, "basin": "14185000", "status": "success"}
+{"finished": 352, "total": 360, "basin": "14141500", "status": "success"}
+{"finished": 353, "total": 360, "basin": "14236200", "status": "success"}
+{"finished": 354, "total": 360, "basin": "14185900", "status": "success"}
+{"finished": 355, "total": 360, "basin": "14301000", "status": "success"}
+{"finished": 356, "total": 360, "basin": "14305500", "status": "success"}
+{"finished": 357, "total": 360, "basin": "14306500", "status": "success"}
+{"finished": 358, "total": 360, "basin": "14309500", "status": "success"}
+{"finished": 359, "total": 360, "basin": "14325000", "status": "success"}
+{"finished": 360, "total": 360, "basin": "14400000", "status": "success"}
+{"status": "failed", "science_pass": false, "main_comparison": {"total": 360, "finite_pairs": 358, "wins": 183, "ties": 0, "losses": 175, "quantiles_10_50_90": [-0.0496050160315732, 0.0006818927273576358, 0.059887779948463234], "minimum": -0.4418633009240318, "declines_gt_0_01": 112, "declines_gt_0_05": 36, "declines_gt_0_10": 18}, "baseline": "uniform_2", "posthoc_uniform_diagnostics_not_primary_selection": [{"arm": "uniform_0", "finite_count": 358, "median": null, "pooled_ratio_comparison": {"total": 360, "finite_pairs": 358, "wins": 297, "ties": 0, "losses": 61, "quantiles_10_50_90": [-0.007781351910015686, 0.031124027133053234, 0.1390951107627567], "minimum": -0.09899278956151858, "declines_gt_0_01": 33, "declines_gt_0_05": 5, "declines_gt_0_10": 0}}, {"arm": "uniform_1", "finite_count": 358, "median": null, "pooled_ratio_comparison": {"total": 360, "finite_pairs": 358, "wins": 281, "ties": 0, "losses": 77, "quantiles_10_50_90": [-0.01580393951280795, 0.013952906713708135, 0.0546264596088413], "minimum": -0.17610677127744223, "declines_gt_0_01": 47, "declines_gt_0_05": 13, "declines_gt_0_10": 7}}, {"arm": "uniform_2", "finite_count": 358, "median": null, "pooled_ratio_comparison": {"total": 360, "finite_pairs": 358, "wins": 183, "ties": 0, "losses": 175, "quantiles_10_50_90": [-0.0496050160315732, 0.0006818927273576358, 0.059887779948463234], "minimum": -0.4418633009240318, "declines_gt_0_01": 112, "declines_gt_0_05": 36, "declines_gt_0_10": 18}}, {"arm": "uniform_3", "finite_count": 358, "median": null, "pooled_ratio_comparison": {"total": 360, "finite_pairs": 358, "wins": 195, "ties": 0, "losses": 163, "quantiles_10_50_90": [-0.06997710187066769, 0.007777913377195633, 0.08666307963360807], "minimum": -0.7439876484531077, "declines_gt_0_01": 122, "declines_gt_0_05": 54, "declines_gt_0_10": 24}}, {"arm": "uniform_4", "finite_count": 358, "median": null, "pooled_ratio_comparison": {"total": 360, "finite_pairs": 358, "wins": 262, "ties": 0, "losses": 96, "quantiles_10_50_90": [-0.06020879328626265, 0.04081694553443088, 0.1460634109166199], "minimum": -0.8625783324764689, "declines_gt_0_01": 79, "declines_gt_0_05": 42, "declines_gt_0_10": 20}}], "normalized_vs_absolute": {"total": 360, "finite_pairs": 358, "wins": 249, "ties": 0, "losses": 109, "quantiles_10_50_90": [-0.025904455164139594, 0.01026932898337013, 0.0571460862097433], "minimum": -0.7808940375734517, "declines_gt_0_01": 63, "declines_gt_0_05": 17, "declines_gt_0_10": 9}, "transfer_sha256": "5f644f707c9b67eacf89562e7484cfc42f859dfcdad597b1eeb58584a99a2d04", "successful_arm_basins": 2864}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T13:36:51+0800
