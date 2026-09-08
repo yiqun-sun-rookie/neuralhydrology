@@ -1,0 +1,61 @@
+### channel=id29-nearing2022-da seq=556
+### host=login4
+### started=2026-09-08T21:08:24+0800
+### ---------- output ----------
+=== SLURM SCRIPT SBATCH HEADER ===
+#!/bin/bash
+#SBATCH --job-name=N22-warm-analysis
+#SBATCH --partition=hgpu4,hgpu8,hgpu2
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --time=02:00:00
+#SBATCH --output=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.out
+#SBATCH --error=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%j.err
+
+set -eo pipefail
+
+ROOT=/data1/home/sunyiq/nearing2022_da
+PAIR_ROOT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
+CONTROL="$PAIR_ROOT/control_seed0_repeat1"
+MASKED="$PAIR_ROOT/masked_seed0_repeat1"
+FINAL="$PAIR_ROOT/paired_analysis"
+WORK="$PAIR_ROOT/.analysis.preparing-${SLURM_JOB_ID}"
+ANALYZER="$ROOT/src/29_nearing2022_da_ar/scripts/analyze_warmup_target_pair.py"
+CONTRACT="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_analysis_contract.json"
+PROTOCOL="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol.json"
+SELF="$ROOT/src/29_nearing2022_da_ar/hpc/analyze_warmup_target_pair.slurm"
+EXPECTED_ANALYZER_SHA256=6ea424e02be947cf0823728c437ea7710fa68dc7cee2ac23304e2999e45135a4
+EXPECTED_CONTRACT_SHA256=5bb3da898bba8b01b290a2a3efe70a943235fd103e9913711d19a6290869a114
+EXPECTED_PROTOCOL_SHA256=16bdf57bcbf3afd335e91107bc908330e86ac7fa20db60cbf54ee30b1ab321c1
+
+test -d "$CONTROL"
+test -d "$MASKED"
+test ! -e "$FINAL"
+test ! -e "$WORK"
+test -f "$ANALYZER"
+test -f "$CONTRACT"
+test -f "$PROTOCOL"
+test -f "$SELF"
+test "$(sha256sum "$ANALYZER" | awk '{print $1}')" = "$EXPECTED_ANALYZER_SHA256"
+test "$(sha256sum "$CONTRACT" | awk '{print $1}')" = "$EXPECTED_CONTRACT_SHA256"
+test "$(sha256sum "$PROTOCOL" | awk '{print $1}')" = "$EXPECTED_PROTOCOL_SHA256"
+
+python - "$CONTROL" "$MASKED" <<'PY'
+import hashlib
+=== FIND 219423 LOGS ANYWHERE ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+=== FIND 220487 ===
+=== sacct detail ===
+219423_0|N22-warmpair|FAILED|1:0|/data1/home/sunyiq/nearing2022_da
+219423_0.batch|batch|FAILED|1:0|
+219423_0.extern|extern|COMPLETED|0:0|
+219423_1|N22-warmpair|FAILED|1:0|/data1/home/sunyiq/nearing2022_da
+219423_1.batch|batch|FAILED|1:0|
+219423_1.extern|extern|COMPLETED|0:0|
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T21:08:28+0800
