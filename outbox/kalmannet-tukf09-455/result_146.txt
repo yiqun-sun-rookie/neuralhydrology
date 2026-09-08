@@ -1,0 +1,26 @@
+### channel=kalmannet-tukf09-455 seq=146
+### host=login4
+### started=2026-09-08T16:55:23+0800
+### ---------- output ----------
+TIME=2026-09-08T16:55:23+0800
+=== PRECONDITIONS ===
+OFFLINE_MANIFEST_SHA256=6cd9b252d84a5b3d2ef185d704b10168deb3a4a7c453be3140dcf266f9552bff
+EXCLUSIVE_DIRECTIVES=0
+#SBATCH -p hgpu8
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --cpus-per-task=32
+#SBATCH --gres=gpu:8
+#SBATCH -t 04:00:00
+=== SUBMIT ===
+PREPARATION_JOB_ID=223992
+     JOBID      STATE        TIME  TIME_LIMIT  NODELIST         NODELIST(REASON)
+    223992    PENDING        0:00     4:00:00                         (Priority)
+     JobID        State    Elapsed  NodeList 
+---------- ------------ ---------- --------- 
+=== NO TRAINING JOB YET ===
+TRAINING_NOT_SUBMITTED
+TUKF09_455_V2R12_PREPARATION_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:55:43+0800
