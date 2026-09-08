@@ -1,0 +1,72 @@
+### channel=attrswap-daily seq=21
+### host=login4
+### started=2026-09-08T16:53:33+0800
+### ---------- output ----------
+wallclock 2026-09-08 16:53:33 +0800
+=== A. QUEUE ===
+      JOBID                   NAME     STATE       TIME  NODELIST           DEPENDENCY
+     223981       fswap_armEP_s100   PENDING       0:00                               
+     223982       fswap_armEP_s200   PENDING       0:00                               
+     223983       fswap_armEP_s300   PENDING       0:00                               
+     223980      fswap_armE23_s300   PENDING       0:00                               
+     223979      fswap_armE23_s200   PENDING       0:00                               
+     223978      fswap_armE23_s100   PENDING       0:00                               
+     223976      fswap_armE27_s200   RUNNING      24:03    ngu201                     
+     223977      fswap_armE27_s300   RUNNING      24:03    ngu201                     
+     223975      fswap_armE27_s100   RUNNING      24:04    ngu201                     
+=== B. ACCOUNTING ===
+    JobID              JobName        State ExitCode    Elapsed  NodeList 
+--------- -------------------- ------------ -------- ---------- --------- 
+   223974           fswap_gate    COMPLETED      0:0   00:12:16    ngu201 
+   223975    fswap_armE27_s100      RUNNING      0:0   00:24:50    ngu201 
+   223976    fswap_armE27_s200      RUNNING      0:0   00:24:49    ngu201 
+   223977    fswap_armE27_s300      RUNNING      0:0   00:24:49    ngu201 
+   223978    fswap_armE23_s100      PENDING      0:0   00:00:00 None ass+ 
+   223979    fswap_armE23_s200      PENDING      0:0   00:00:00 None ass+ 
+   223980    fswap_armE23_s300      PENDING      0:0   00:00:00 None ass+ 
+   223981     fswap_armEP_s100      PENDING      0:0   00:00:00 None ass+ 
+   223982     fswap_armEP_s200      PENDING      0:0   00:00:00 None ass+ 
+   223983     fswap_armEP_s300      PENDING      0:0   00:00:00 None ass+ 
+=== C. GATE + CONVERSION REPORT ===
+GATE OK 2026-09-08 16:29:15
+{
+ "basins": 529,
+ "written": {
+  "era5l_caravan": 529,
+  "era5l_caravan_pmaurer": 529
+ },
+ "failures": [],
+ "notes": [
+  "V6 exceptions inside the 99% allowance, registered by name and to be reported in the verdict: [('01487000', 1)]"
+ ],
+ "v6_min_lag0_share": 0.99,
+ "v6_exceptions": [
+  [
+   "01487000",
+   1
+  ]
+ ],
+ "lag0_share": 0.998109640831758,
+ "lag_counts": {
+  "0": 528,
+  "1": 1
+ },
+ "precip_ratio_caravan_over_maurer": {
+  "median": 0.9908670350348132,
+  "p10": 0.7958012911507643,
+  "p90": 1.1303876087047278
+ },
+ "nan_basins": 0,
+ "range_bad_basins": 0
+}=== D. MEDIANS ===
+medians present: 0/9
+=== E. LATEST EPOCH PER ARM ===
+  slurm_fswap_armE27_s100_223975.out: Epoch 8 average loss | 5004020 bytes
+  slurm_fswap_armE27_s200_223976.out: Epoch 7 average loss | 4992525 bytes
+  slurm_fswap_armE27_s300_223977.out: Epoch 8 average loss | 5005759 bytes
+=== F. ERRORS ===
+/data1/home/sunyiq/forcing_swap_daily_2026_09/logs/slurm_fswap_gate_223868.out
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:53:34+0800
