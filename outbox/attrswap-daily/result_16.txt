@@ -1,0 +1,56 @@
+### channel=attrswap-daily seq=16
+### host=login4
+### started=2026-09-08T14:12:04+0800
+### ---------- output ----------
+wallclock 2026-09-08 14:12:04 +0800
+=== A. JOB STATES ===
+    JobID              JobName                  State ExitCode   Elapsed 
+--------- -------------------- ---------------------- -------- --------- 
+   223868           fswap_gate                 FAILED      1:0  00:07:46 
+   223869    fswap_armE27_s100                PENDING      0:0  00:00:00 
+   223870    fswap_armE27_s200                PENDING      0:0  00:00:00 
+   223871    fswap_armE27_s300                PENDING      0:0  00:00:00 
+   223872    fswap_armE23_s100                PENDING      0:0  00:00:00 
+   223873    fswap_armE23_s200                PENDING      0:0  00:00:00 
+   223874    fswap_armE23_s300                PENDING      0:0  00:00:00 
+   223875     fswap_armEP_s100                PENDING      0:0  00:00:00 
+   223876     fswap_armEP_s200                PENDING      0:0  00:00:00 
+   223877     fswap_armEP_s300                PENDING      0:0  00:00:00 
+=== B. WHY THE GATE STOPPED (tail of its log) ===
+  "0": 528,
+  "1": 1
+ },
+ "precip_ratio_caravan_over_maurer": {
+  "median": 0.9908670350348132,
+  "p10": 0.7958012911507643,
+  "p90": 1.1303876087047278
+ },
+ "nan_basins": 0,
+ "range_bad_basins": 0
+}
+VERIFY FAILED: 1 checks
+=== C. THE ONE BASIN: 01487000 -- how big is the margin? ===
+basin 01487000 (Nassawango Creek, Maryland)
+  modelled span 1989-2008: n=7213 -2:-0.0102 -1:0.0214 +0:0.5518 +1:0.5573 +2:0.1033 | best +1, margin over lag0 = +0.0055
+  test period only    : n=3652 -2:-0.0093 -1:0.0440 +0:0.6627 +1:0.4476 +2:0.0545 | best +0, margin over lag0 = +0.0000
+  train period only   : n=3288 -2:-0.0139 -1:-0.0065 +0:0.4168 +1:0.6938 +2:0.1590 | best +1, margin over lag0 = +0.2770
+  outside the span    : n=3288 -2:-0.0335 -1:0.0572 +0:0.6577 +1:0.4114 +2:0.0286 | best +0, margin over lag0 = +0.0000
+  means: maurer 3.269 caravan 3.055 ratio 0.934; dry days maurer 34.5% caravan 36.6%
+=== D. MARGIN CONTEXT: 30 other basins, how close are lag0 and its runner-up? ===
+  lag0 minus best neighbour over 30 sampled basins: min +0.0356 p10 +0.1774 median +0.2699 max +0.5153
+  sampled basins whose margin is under 0.01: 0/30
+=== E. CANCEL THE NINE ORPHANED ARM JOBS (explicit ids only, never -u) ===
+  cancelled 223869 (was PENDING with an unsatisfiable dependency)
+  cancelled 223870 (was PENDING with an unsatisfiable dependency)
+  cancelled 223871 (was PENDING with an unsatisfiable dependency)
+  cancelled 223872 (was PENDING with an unsatisfiable dependency)
+  cancelled 223873 (was PENDING with an unsatisfiable dependency)
+  cancelled 223874 (was PENDING with an unsatisfiable dependency)
+  cancelled 223875 (was PENDING with an unsatisfiable dependency)
+  cancelled 223876 (was PENDING with an unsatisfiable dependency)
+  cancelled 223877 (was PENDING with an unsatisfiable dependency)
+      JOBID                   NAME     STATE
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T14:12:35+0800
