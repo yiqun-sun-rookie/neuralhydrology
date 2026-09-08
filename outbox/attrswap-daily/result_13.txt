@@ -1,0 +1,128 @@
+### channel=attrswap-daily seq=13
+### host=login4
+### started=2026-09-08T13:38:36+0800
+### ---------- output ----------
+wallclock 2026-09-08 13:38:36 +0800
+=== A. LANDING DIR ===
+renamed the incomplete landing dir aside (not deleted): /data1/home/sunyiq/forcing_swap_daily_2026_09.FAILED_20260908_133836
+created /data1/home/sunyiq/forcing_swap_daily_2026_09
+=== B. CODE (copied from the already-verified attr-swap landing) ===
+source files (no __pycache__): 78 (expect 78)
+  neuralhydrology/datasetzoo/camelsus.py 51e2e02b382ec103 (expect 51e2e02b382ec103)
+  neuralhydrology/datasetzoo/basedataset.py 42a818bdacdb774e (expect 42a818bdacdb774e)
+  neuralhydrology/modelzoo/cudalstm.py 27f2e17d3f388a9b (expect 27f2e17d3f388a9b)
+  neuralhydrology/training/basetrainer.py 91d6b7286e748707 (expect 91d6b7286e748707)
+=== C. DATA SHADOW (streamflow / attributes / maurer all reference the verified attr-swap shadow) ===
+/data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us:
+total 12
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Sep  8 13:38 .
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Sep  8 13:38 ..
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  8 13:38 basin_mean_forcing
+lrwxr-xr-x. 1 sunyiq g_sunyiq   87 Sep  8 13:38 camels_attributes_v2.0 -> /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us/camels_attributes_v2.0
+lrwxr-xr-x. 1 sunyiq g_sunyiq   80 Sep  8 13:38 usgs_streamflow -> /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us/usgs_streamflow
+
+/data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing:
+total 8
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  8 13:38 .
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Sep  8 13:38 ..
+lrwxr-xr-x. 1 sunyiq g_sunyiq   90 Sep  8 13:38 maurer -> /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing/maurer
+maurer files visible: 675 (expect 675)
+attribute files visible: 8 (expect 8)
+=== D. BASIN LISTS + MEDIAN SCRIPT ===
+cp: cannot stat ‘/data1/home/sunyiq/attr_swap_daily_2026_09/scripts_public_median.py’: No such file or directory
+529: 529  107: 107  smoke: 5
+basins_529 sha: 98018c03b0295a56 (expect 98018c03b0295a56)
+=== E. PAYLOAD ===
+  build_era5l_forcing.py c7872ba7f4cb5512 200 lines
+  fswap_gate.slurm 72309eea37451811 53 lines
+  fswap_train.slurm a23297120ddfba58 42 lines
+  make_configs.py 9fe4dcf92497fd12 94 lines
+=== F. CONFIGS ===
+fswap_armE27_s100.yml  base=attrswap_ref27_parity_s900.yml  forcing=era5l_caravan  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+fswap_armE27_s200.yml  base=attrswap_ref27_parity_s900.yml  forcing=era5l_caravan  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+fswap_armE27_s300.yml  base=attrswap_ref27_parity_s900.yml  forcing=era5l_caravan  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+fswap_armE23_s100.yml  base=attrswap_armA_chn23_s100.yml  forcing=era5l_caravan  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+fswap_armE23_s200.yml  base=attrswap_armA_chn23_s100.yml  forcing=era5l_caravan  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+fswap_armE23_s300.yml  base=attrswap_armA_chn23_s100.yml  forcing=era5l_caravan  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+fswap_armEP_s100.yml  base=attrswap_ref27_parity_s900.yml  forcing=era5l_caravan_pmaurer  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+fswap_armEP_s200.yml  base=attrswap_ref27_parity_s900.yml  forcing=era5l_caravan_pmaurer  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+fswap_armEP_s300.yml  base=attrswap_ref27_parity_s900.yml  forcing=era5l_caravan_pmaurer  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+fswap_smoke.yml  changed=['data_dir', 'epochs', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file'] + 5-basin lists
+WROTE 9 arm configs + 1 smoke config into /data1/home/sunyiq/forcing_swap_daily_2026_09/configs
+fswap_armE23_s100.yml
+fswap_armE23_s200.yml
+fswap_armE23_s300.yml
+fswap_armE27_s100.yml
+fswap_armE27_s200.yml
+fswap_armE27_s300.yml
+fswap_armEP_s100.yml
+fswap_armEP_s200.yml
+fswap_armEP_s300.yml
+fswap_smoke.yml
+--- diff of one arm vs its base (should be only the allowed lines) ---
+3c3
+< data_dir: /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us
+---
+> data_dir: /data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us
+13c13
+< experiment_name: attrswap_ref27_parity_s900
+---
+> experiment_name: fswap_armE27_s100
+15c15
+< - maurer
+---
+> - era5l_caravan
+34c34
+< run_dir: /data1/home/sunyiq/attr_swap_daily_2026_09/runs
+---
+> run_dir: /data1/home/sunyiq/forcing_swap_daily_2026_09/runs
+36c36
+< seed: 900
+---
+> seed: 100
+68c68
+< test_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+---
+> test_basin_file: /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt
+71c71
+< train_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+---
+> train_basin_file: /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt
+74c74
+< validation_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+---
+> validation_basin_file: /data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt
+--- armE23 attribute count ---
+armE23 static attrs: 23 | armE27: 27
+armE23 forcings: ['era5l_caravan'] | dynamic_inputs: ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)']
+epochs 30 seq_length 270 hidden 256 train 01/10/1999 30/09/2008 test 01/10/1989 30/09/1999
+=== G. SUBMIT GATE ===
+Submitted batch job 223868
+gate job: 223868
+=== H. SUBMIT 9 ARMS (afterok:223868, dependency baked into each script) ===
+fswap_armE27_s100 -> 223869
+fswap_armE27_s200 -> 223870
+fswap_armE27_s300 -> 223871
+fswap_armE23_s100 -> 223872
+fswap_armE23_s200 -> 223873
+fswap_armE23_s300 -> 223874
+fswap_armEP_s100 -> 223875
+fswap_armEP_s200 -> 223876
+fswap_armEP_s300 -> 223877
+job ids: 223868 223869 223870 223871 223872 223873 223874 223875 223876 223877 
+=== I. QUEUE ===
+      JOBID                   NAME     STATE       TIME  NODELIST PARTITION             DEPENDENCY
+     223868             fswap_gate   PENDING       0:00               hgpu8                       
+     223869      fswap_armE27_s100   PENDING       0:00               hgpu8         afterok:223868
+     223870      fswap_armE27_s200   PENDING       0:00               hgpu8         afterok:223868
+     223871      fswap_armE27_s300   PENDING       0:00               hgpu8         afterok:223868
+     223872      fswap_armE23_s100   PENDING       0:00               hgpu8         afterok:223868
+     223873      fswap_armE23_s200   PENDING       0:00               hgpu8         afterok:223868
+     223874      fswap_armE23_s300   PENDING       0:00               hgpu8         afterok:223868
+     223875       fswap_armEP_s100   PENDING       0:00               hgpu8         afterok:223868
+     223876       fswap_armEP_s200   PENDING       0:00               hgpu8         afterok:223868
+     223877       fswap_armEP_s300   PENDING       0:00               hgpu8         afterok:223868
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T13:38:42+0800
