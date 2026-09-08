@@ -1,0 +1,107 @@
+### channel=attrswap-daily seq=22
+### host=login4
+### started=2026-09-08T16:58:23+0800
+### ---------- output ----------
+wallclock 2026-09-08 16:58:23 +0800
+=== A. GATE LOG (slurm_fswap_gate_223974.out) ===
+=== node ngu201 job 223974 2026-09-08 16:17:01 ===
+archived code OK: /data1/home/sunyiq/forcing_swap_daily_2026_09/code_1f9804e/neuralhydrology/__init__.py
+torch 2.4.0 cuda True
+=== BUILD + VERIFY ===
+previous products present: 1058 files, snapshot taken for a determinism check
+basins: 529
+  100/529
+  200/529
+  300/529
+  400/529
+  500/529
+NOTE V6 exceptions inside the 99% allowance, registered by name and to be reported in the verdict: [('01487000', 1)]
+{
+ "basins": 529,
+ "written": {
+  "era5l_caravan": 529,
+  "era5l_caravan_pmaurer": 529
+ },
+ "failures": [],
+ "notes": [
+  "V6 exceptions inside the 99% allowance, registered by name and to be reported in the verdict: [('01487000', 1)]"
+ ],
+ "v6_min_lag0_share": 0.99,
+ "v6_exceptions": [
+  [
+   "01487000",
+   1
+  ]
+ ],
+ "lag0_share": 0.998109640831758,
+ "lag_counts": {
+  "0": 528,
+  "1": 1
+ },
+ "precip_ratio_caravan_over_maurer": {
+  "median": 0.9908670350348132,
+  "p10": 0.7958012911507643,
+  "p90": 1.1303876087047278
+ },
+ "nan_basins": 0,
+ "range_bad_basins": 0
+}
+VERIFY OK: all checks passed
+DETERMINISM OK: the rebuild reproduced all 1058 product files byte-for-byte
+=== SMOKE TRAIN (5 basins, 1 epoch, era5l_caravan) ===
+2026-09-08 16:29:05,013: Logging to /data1/home/sunyiq/forcing_swap_daily_2026_09/runs_smoke/fswap_smoke_2026_0908_1629_ep1/output.log initialized.
+2026-09-08 16:29:05,016: ### Folder structure created at /data1/home/sunyiq/forcing_swap_daily_2026_09/runs_smoke/fswap_smoke_2026_0908_1629_ep1
+2026-09-08 16:29:05,016: ### Run configurations for fswap_smoke
+2026-09-08 16:29:05,016: batch_size: 256
+2026-09-08 16:29:05,016: clip_gradient_norm: 1.0
+2026-09-08 16:29:05,016: data_dir: /data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us
+2026-09-08 16:29:05,016: dataset: camels_us
+2026-09-08 16:29:05,016: device: cuda:0
+2026-09-08 16:29:05,016: dynamic_inputs: ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)']
+2026-09-08 16:29:05,016: epochs: 1
+2026-09-08 16:29:05,016: experiment_name: fswap_smoke
+2026-09-08 16:29:05,016: forcings: ['era5l_caravan']
+2026-09-08 16:29:05,016: head: regression
+2026-09-08 16:29:05,016: hidden_size: 256
+2026-09-08 16:29:05,016: initial_forget_bias: 5
+=== B. CONVERSION REPORT (new) ===
+{
+ "basins": 529,
+ "written": {
+  "era5l_caravan": 529,
+  "era5l_caravan_pmaurer": 529
+ },
+ "failures": [],
+ "notes": [
+  "V6 exceptions inside the 99% allowance, registered by name and to be reported in the verdict: [('01487000', 1)]"
+ ],
+ "v6_min_lag0_share": 0.99,
+ "v6_exceptions": [
+  [
+   "01487000",
+   1
+  ]
+ ],
+ "lag0_share": 0.998109640831758,
+ "lag_counts": {
+  "0": 528,
+  "1": 1
+ },
+ "precip_ratio_caravan_over_maurer": {
+  "median": 0.9908670350348132,
+  "p10": 0.7958012911507643,
+  "p90": 1.1303876087047278
+ },
+ "nan_basins": 0,
+ "range_bad_basins": 0
+}
+=== C. IS IT BYTE-IDENTICAL TO ATTEMPT 1? (the only expected differences are the V6 fields) ===
+  identical apart from the V6 fields
+=== D. ARM PROGRESS ===
+  slurm_fswap_armE27_s100_223975.out: Epoch 9 average loss
+  slurm_fswap_armE27_s200_223976.out: Epoch 9 average loss
+  slurm_fswap_armE27_s300_223977.out: Epoch 9 average loss
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T16:58:24+0800
