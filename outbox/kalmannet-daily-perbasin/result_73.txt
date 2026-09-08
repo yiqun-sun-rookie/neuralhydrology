@@ -1,0 +1,61 @@
+### channel=kalmannet-daily-perbasin seq=73
+### host=login4
+### started=2026-09-08T23:38:48+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=73 purpose=single-shared-card-eighteen-input-precheck-only
+build_precheck_candidate.py: OK
+precheck_worker.py: OK
+resource_bind.py: OK
+precheck.slurm: OK
+precheck.sh: OK
+request.json: OK
+candidate-files.json: OK
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/admission_seq73_livecheck.json: OK
+{"guard_admission": "PASS", "reserved_gpu_seconds": 1800, "compute_submissions": 0}
+/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/precheck_live_submission_check_seq73.py: OK
+build_precheck_candidate.py: OK
+precheck_worker.py: OK
+resource_bind.py: OK
+precheck.slurm: OK
+precheck.sh: OK
+request.json: OK
+candidate-files.json: OK
+LIVE_GATE_PASS observation_seconds=1788881930 current_seconds=1788881930
+SBATCH_COMMAND_EXIT=0
+Submitted batch job 224110
+472becf40400a16c0726365037cf4de6e16ed94d137676d6d68318f5eec0636c  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/submission_seq73.attempt
+b9c341a5cb6baca7208f8522cd5f20f91612738d8e1ca5fabfed19d8ce84ecd4  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/submission_seq73.stdout
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/submission_seq73.stderr
+CONFIRMED_PRECHECK_JOB_ID=224110
+JobId=224110 JobName=kdpp-dev-precheck-seq73
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Priority Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A
+   SubmitTime=2026-09-08T23:39:36 EligibleTime=2026-09-08T23:39:36
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-08T23:39:36
+   Partition=hgpu8 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/precheck.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73
+   StdErr=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/slurm-224110.stderr
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/precheck_seq73/slurm-224110.stdout
+   Power=
+   TresPerNode=gpu:1
+
+SUBMIT_COMPLETE training_submissions=0 precheck_submissions=1 automatic_resubmit=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-08T23:38:51+0800
