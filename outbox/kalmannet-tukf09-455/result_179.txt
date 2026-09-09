@@ -1,0 +1,38 @@
+### channel=kalmannet-tukf09-455 seq=179
+### host=login4
+### started=2026-09-09T21:35:33+0800
+### ---------- output ----------
+TIME=2026-09-09T21:35:33+0800  JOB=224439
+           JobID        State ExitCode    Elapsed  NodeList     MaxRSS 
+---------------- ------------ -------- ---------- --------- ---------- 
+          224439       FAILED      1:0   00:05:14    ngu104            
+    224439.batch       FAILED      1:0   00:05:14    ngu104    299212K 
+   224439.extern    COMPLETED      0:0   00:05:14    ngu104      1372K 
+=== WHAT NODE WAS IT AND WHAT CARDS ===
+HOSTNAMES   STATE       GRES          GRES_USED           CPUS(A/I/O/T) 
+ngu101      idle        gpu:4         gpu:0,dcu:0         0/96/0/96     
+ngu102      idle        gpu:4         gpu:0,dcu:0         0/96/0/96     
+ngu103      down*       gpu:4         gpu:0,dcu:0         0/0/96/96     
+ngu104      idle        gpu:4         gpu:0,dcu:0         0/96/0/96     
+=== prepare stderr (tail) ===
+Traceback (most recent call last):
+  File "<stdin>", line 18, in <module>
+AssertionError
+=== prepare stdout (tail) ===
+2dbd66bb80c3217158e629d6fceaecc3a3166d3d1faee515b05dd26ca25", "size": 478322}, "sympy-1.13.1-py3-none-any.whl": {"kind": "binary_wheel", "sha256": "db36cdc64bf61b9b24578b6f7bab1ecdd2452cf008f34faa33776680c26d66f8", "size": 6189177}, "torch-2.2.2+cu121-cp311-cp311-linux_x86_64.whl": {"kind": "binary_wheel", "sha256": "4c94e4d1a22d70abbdff716dec99ba5eff94b4340ffa73b4fb629f940dbb8a75", "size": 757308659}, "triton-2.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {"kind": "binary_wheel", "sha256": "da58a152bddb62cafa9a857dd2bc1f886dbf9f9c90a2b5da82157cd2b34392b0", "size": 167928356}, "typing_extensions-4.15.0-py3-none-any.whl": {"kind": "binary_wheel", "sha256": "f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548", "size": 44614}}, "formal_evaluation_authorized": false, "identity_sha256": "83a143715399ec130a9ea3e9f70e80fcfa65cd92c21a2668475cdb2ba79d4b3b", "libc": ["glibc", "2.17"], "locked_binary_wheel_count": 23, "machine": "x86_64", "pip_version": "25.2", "platform": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17", "psutil_source_lock_path": "hpc/tukf09_455_basin_revision_a800_exclusive_v2r13/psutil-source.lock", "psutil_source_lock_sha256": "c021239b1cdeafff41591adec793c79820ad66ec5418dba2570ea8ff2ae60d68", "publication_mode": "pending_directory_then_no_clobber_atomic_rename", "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "python_executable_resolved": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11", "python_executable_sha256": "45140eba20e770e6f8b46fb1e1295da8a5e494b3686a22ea9beeff050bb5b48e", "python_executable_size": 25382192, "python_version": "3.11.13", "runtime_binary_lock_path": "hpc/tukf09_455_basin_revision_a800_exclusive_v2r13/runtime-binary.lock", "runtime_binary_lock_sha256": "8bfc922ce4165eb7793f0b4f1afe9a185644858875af6a3bfd21992a23046d9f", "schema_version": "tukf09_455_hpc_offline_runtime_inputs_a800_exclusive_v2r13", "scientific_contract_changed": false, "shared_environment_inventory_sha256": "84602b36f71ec5465049eabdcb79c182e886b1d3fa6d3222cabb73e026f57dc9", "shared_nh_final_modified": false, "source_archive_count": 1, "status": "LOGIN4_LOCKED_RUNTIME_INPUTS_FROZEN_FOR_OFFLINE_SLURM_INSTALLATION", "symbolic_links_present": false, "total_bytes": 2817756909, "total_file_count": 24}
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/runtime_v2r13.pending.224439/sourcehouse/psutil-5.9.0.tar.gz: OK
+=== status tree ===
+total 15
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Sep  9 21:31 .
+drwxr-xr-x. 7 sunyiq g_sunyiq 4096 Sep  9 21:28 ..
+-rw-r--r--. 1 sunyiq g_sunyiq  751 Sep  9 21:27 initial_bundle_verification.json
+-rw-r--r--. 1 sunyiq g_sunyiq   53 Sep  9 19:30 offline_inputs_download.launched
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  9 19:30 offline_inputs_download.lock
+-r--r--r--. 1 sunyiq g_sunyiq  261 Sep  9 21:31 PREPARATION_FAILED.json
+-rw-r--r--. 1 sunyiq g_sunyiq    7 Sep  9 21:26 preparation_job_id.txt
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  9 21:26 preparation.lock
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  9 21:26 preparation_submission.lock
+TUKF09_455_V2R13_PREPARATION_FAILURE_EVIDENCE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T21:35:34+0800
