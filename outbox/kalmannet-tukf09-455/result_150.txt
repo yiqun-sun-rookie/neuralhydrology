@@ -1,0 +1,37 @@
+### channel=kalmannet-tukf09-455 seq=150
+### host=login4
+### started=2026-09-09T15:41:42+0800
+### ---------- output ----------
+TIME=2026-09-09T15:41:42+0800
+=== GRES TOTAL vs USED PER NODE ===
+HOSTNAMES   STATE         GRES            GRES_USED             CPUS(A/I/O/T)   FREE_MEM    
+ngu201      mixed         gpu:8           gpu:8,dcu:0           46/18/0/64      366937      
+ngu202      maint         gpu:8           gpu:0,dcu:0           0/64/0/64       680207      
+ngu203      mixed         gpu:8           gpu:8,dcu:0           8/56/0/64       642812      
+=== other gpu partitions ===
+HOSTNAMES   STATE       GRES          GRES_USED           CPUS(A/I/O/T) 
+ngu001      mixed       gpu:2         gpu:1,dcu:0         8/88/0/96     
+ngu002      down*       gpu:2         gpu:0,dcu:0         0/0/96/96     
+ngu003      idle        gpu:2         gpu:0,dcu:0         0/96/0/96     
+ngu004      mixed       gpu:2         gpu:2,dcu:0         2/94/0/96     
+ngu005      drained     gpu:2         gpu:0,dcu:0         0/0/96/96     
+ngu006      idle        gpu:2         gpu:0,dcu:0         0/96/0/96     
+ngu007      idle        gpu:2         gpu:0,dcu:0         0/96/0/96     
+ngu008      mixed       gpu:2         gpu:2,dcu:0         8/88/0/96     
+ngu009      mixed       gpu:2         gpu:1,dcu:0         2/94/0/96     
+ngu010      idle        gpu:2         gpu:0,dcu:0         0/32/0/32     
+ngu011      idle        gpu:2         gpu:0,dcu:0         0/32/0/32     
+ngu101      mixed       gpu:4         gpu:1,dcu:0         8/88/0/96     
+ngu102      idle        gpu:4         gpu:0,dcu:0         0/96/0/96     
+=== reservations ===
+RESV_NAME          STATE           START_TIME             END_TIME     DURATION  NODELIST
+root_66           ACTIVE  2025-12-11T10:41:58  2026-12-11T10:41:58  365-00:00:00  icn[280-281]
+wangzhaomin_45    ACTIVE  2026-07-01T14:17:33  2027-07-01T14:17:33  365-00:00:00  icn[202,204-207,210-212,214,216-217,220-221,246,249]
+hhu08_74          ACTIVE  2026-09-06T09:29:57  2027-09-06T09:29:57  365-00:00:00  ngu202
+=== start estimate ===
+             JOBID PARTITION     NAME     USER ST          START_TIME  NODES SCHEDNODES           NODELIST(REASON)
+            223992     hgpu8 tukf09-4   sunyiq PD 2026-09-15T08:33:19      1 (null)               (Resources)
+TUKF09_455_GRES_DIAGNOSTIC
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T15:41:42+0800
