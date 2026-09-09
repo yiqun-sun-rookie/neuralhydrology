@@ -30,7 +30,9 @@ import sys
 
 import pandas as pd
 
-PRCP_FIELD = 2
+PRCP_FIELD = 2          # index of PRCP(mm/day) in a Maurer line; the SOURCE product's index is looked up by name
+RATIO_LO, RATIO_HI = 0.2, 5.0   # V9: sanity band for the median precipitation ratio against Maurer
+LAG0_HARD_MIN = 0.50            # V6-hard: below this the series bears no time correspondence to Maurer's rain
 MODEL_START, MODEL_END, TEST_START, MIN_WARMUP = '1989-01-04', '2008-09-30', '1989-10-01', 270
 FAIL, NOTE = [], []
 
@@ -47,6 +49,20 @@ def read_lines(path):
     return lines[:4], pd.DatetimeIndex(dates), [ln.split('\t') for ln in lines[4:]]
 
 
+def prcp_index(header_line):
+    """Locate PRCP(mm/day) by NAME in the product's own column header.
+
+    2026-09-09: assuming index 2 here was wrong -- Maurer ships eight tab fields (date, Dayl, PRCP, SRAD, SWE,
+    Tmax, Tmin, Vp) but era5l_caravan ships six (date, PRCP, SRAD, Tmax, Tmin, Vp), so index 2 read SRAD and the
+    resulting product carried radiation in the precipitation column (median ratio to Maurer 47.5).
+    """
+    fields = header_line.split('\t')
+    for i, name in enumerate(fields):
+        if name.strip().upper().startswith('PRCP'):
+            return i
+    raise SystemExit('来源产品的表头里找不到 PRCP 列: ' + header_line)
+
+
 def source_series(a, b, maurer_dir):
     if a.from_table:
         return a._tab[b]
@@ -55,8 +71,9 @@ def source_series(a, b, maurer_dir):
         f = glob.glob(f'{maurer_dir}/../{a.from_product}/**/{b}_*_forcing_leap.txt', recursive=True)
     if not f:
         raise SystemExit(f'{b}: 找不到来源产品 {a.from_product}')
-    _, idx, flds = read_lines(f[0])
-    return pd.Series([float(p[PRCP_FIELD]) for p in flds], index=idx)
+    head, idx, flds = read_lines(f[0])
+    k = prcp_index(head[3])
+    return pd.Series([float(p[k]) for p in flds], index=idx)
 
 
 def main():
@@ -153,8 +170,17 @@ def main():
             fail(f'V5 {b}: 降水往返误差 {errp:.2e} >= 1e-3')
 
     lg = pd.Series(lags)
+    rt0 = pd.Series(ratios)
     off = {b: int(v) for b, v in lags.items() if v != 0}
     share = float((lg == 0).mean()) if len(lg) else 0.0
+    # V9 and V6-hard, added 2026-09-09 after a column-index bug produced a product carrying solar radiation in
+    # the precipitation column. Neither touches the scientific thresholds; both catch "this is not precipitation".
+    if not (RATIO_LO <= float(rt0.median()) <= RATIO_HI):
+        fail(f'V9 与 Maurer 的降水量比中位 {rt0.median():.3f} 不在 [{RATIO_LO}, {RATIO_HI}] 内 '
+             f'—— 疑为单位或列错位')
+    if share < LAG0_HARD_MIN:
+        fail(f'V6-hard 最佳滞后为 0 的流域仅 {share*100:.2f}%（硬下限 {LAG0_HARD_MIN*100:.0f}%）'
+             f' —— 该序列与 Maurer 降水几乎无时间对应，疑为错列')
     NOTE.append(f'V6（报告项，非停机条件）: 最佳滞后为 0 的流域 {share*100:.2f}%；'
                 f'其余 {len(off)} 个流域按滞后计数 {dict(pd.Series(list(off.values())).value_counts())}')
     print('NOTE ' + NOTE[-1], flush=True)
