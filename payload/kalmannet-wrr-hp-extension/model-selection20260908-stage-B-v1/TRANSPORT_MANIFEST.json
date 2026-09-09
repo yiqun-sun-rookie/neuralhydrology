@@ -1,0 +1,28 @@
+{
+  "dry_run": false,
+  "files": {
+    "AUTHORIZATION.json": "2e6b6353f9019c59deb024d2e870154cf07bdcbcf101d30d179150bde83dc78e",
+    "AUTHORIZED_PROTOCOL.md": "0707cad4661f83d03c71e483184d91f197b7b9ac29015c077e6075aad5dc6b06",
+    "REMOTE_BASELINE.json": "6314f746fce9f31d55687b35858736c4013bd5369e5b6a538bea155bd1b7c5ce",
+    "STAGE_A_ADMISSION.json": "162a1e365e8fe13f82d5b6b32beff5bf44ab47cb964ca917f8d6970774180251",
+    "STAGE_B_MANIFEST.json": "c5f8d56480510729dd14d44cb00d5e703425ebdeb837b059b674998b425784b1",
+    "audit_stage.py": "3ed91fd78966a8f0a6832aaf9fec58696e4fe9575390ab97b49fb5bb24aa346f",
+    "build_package.py": "119a990b5755298633f15b1375dc6fcda6a635b22fab5e40e20f0b94f7a3e773",
+    "deploy_later.py": "e22352e1fa2191b9cb948b4200e98a6ab3667b8d30ca95b44f1851dee8a010db",
+    "deploy_remote.py": "55352e51432e3d1aeff50054bf70415e297d35092e32fe046cec1960682959fa",
+    "evaluation/__init__.py": "fcfa1280cf217a2bb1c82cacc6935e1eda1408c3274212603734dd270ededf03",
+    "evaluation/source_bootstrap.py": "e22bac2d3db457ef91a5fc107fc018fb9a5a831c45a0c3c7c3764a50a59242e3",
+    "evidence_contract.py": "3c0e9ffddd4be431364cd3ab6a59e26031128e21c86bf63c929320a431a375d2",
+    "launch_c.py": "7e782761694ed87c9809ee38a9c82102107458ae332172ec51c0e3462f03df7e",
+    "launch_once.py": "071b07b246d87a8099b744d0215bbf68d432d7a9f99627d2239bf29fe47e02d6",
+    "payload/stage_B.tar.gz": "e0cd3ce73966879913daa5258d69a714bc1e5520a87777fb278f1548d600c172",
+    "selection.py": "3cd6aaf957f3daac9a245d6e3dd3d235af7b5e56f00edaa999c88a698e515ca8",
+    "stage_A_evidence.json.gz": "beb7d5cf9d23e30e6bb23cd9c865d6a2f1781fd257ece78c65d6a72a22910219",
+    "stage_c.py": "3b8a50e4a0fc3b8920affcb639f6a3b02b40ed9eb235bacdb0940f18fb312aac",
+    "study_config.py": "485a23ffc410863f029c24c07f6c221fe9af9369692508f26d908b5722f7fcbb"
+  },
+  "kind": "LATER_STAGE_TRANSPORT",
+  "remote_payload": "/data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-hp-extension/model-selection20260908-stage-B-v1",
+  "remote_root": "/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908",
+  "stage": "B"
+}
