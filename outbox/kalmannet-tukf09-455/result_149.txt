@@ -1,0 +1,57 @@
+### channel=kalmannet-tukf09-455 seq=149
+### host=login4
+### started=2026-09-09T15:38:07+0800
+### ---------- output ----------
+TIME=2026-09-09T15:38:07+0800
+=== PARTITION ===
+ PARTITION    STATE   NODELIST        CPUS(A/I/O/T)       GRES      TIMELIMIT
+     hgpu8    maint     ngu202            0/64/0/64      gpu:8       infinite
+     hgpu8      mix ngu[201,20          54/74/0/128      gpu:8       infinite
+=== EVERY JOB ON hgpu8 ===
+     JOBID      USER               NAME     STATE        TIME  TIME_LIMIT   NODES TRES_PER_N  NODELIST     NODELIST(REASON)
+    223992    sunyiq tukf09-455-v2r12-p   PENDING        0:00     4:00:00       1      gpu:8                    (Resources)
+    202229    sunyiq       N22-agg-eval   PENDING        0:00  1-00:00:00       1        N/A           (DependencyNeverSati
+    202294    sunyiq         N22-export   PENDING        0:00     4:00:00       1        N/A                   (Dependency)
+    202315    sunyiq           N22-gate   PENDING        0:00     2:00:00       1        N/A                   (Dependency)
+    202507    sunyiq   N22-mask-iso-531   PENDING        0:00     2:00:00       1      gpu:1           (DependencyNeverSati
+    202293    sunyiq       N22-manifest   PENDING        0:00  1-00:00:00       1        N/A                  (JobHeldUser)
+=== GPU HOLDERS PER NODE ===
+--- ngu201
+--- ngu203
+=== OUR JOB POSITION ===
+     JOBID    PARTITION                 NAME     STATE        TIME  TIME_LIMIT TRES_PER_N     NODELIST(REASON)     PRIORITY
+    223992        hgpu8 tukf09-455-v2r12-pre   PENDING        0:00     4:00:00      gpu:8          (Resources)       335086
+    202229 hgpu4,hgpu8,         N22-agg-eval   PENDING        0:00  1-00:00:00        N/A (DependencyNeverSati       200005
+    202294 hgpu4,hgpu8,           N22-export   PENDING        0:00     4:00:00        N/A         (Dependency)       200005
+    202315 hgpu4,hgpu8,             N22-gate   PENDING        0:00     2:00:00        N/A         (Dependency)       200005
+    202507 hgpu4,hgpu8,     N22-mask-iso-531   PENDING        0:00     2:00:00      gpu:1 (DependencyNeverSati       200005
+    215429        hgpu2        id30_m01_s100   PENDING        0:00  7-00:00:00      gpu:1 (DependencyNeverSati       200005
+    202293 hgpu4,hgpu8,         N22-manifest   PENDING        0:00  1-00:00:00        N/A        (JobHeldUser)            0
+=== WHEN COULD IT START (slurm estimate) ===
+             JOBID PARTITION     NAME     USER ST          START_TIME  NODES SCHEDNODES           NODELIST(REASON)
+            202229 hgpu4,hgp N22-agg-   sunyiq PD                 N/A      1 (null)               (DependencyNeverSatisfied)
+            202293 hgpu4,hgp N22-mani   sunyiq PD                 N/A      1 (null)               (JobHeldUser)
+            202294 hgpu4,hgp N22-expo   sunyiq PD                 N/A      1 (null)               (Dependency)
+            202315 hgpu4,hgp N22-gate   sunyiq PD                 N/A      1 (null)               (Dependency)
+            202507 hgpu4,hgp N22-mask   sunyiq PD                 N/A      1 (null)               (DependencyNeverSatisfied)
+            215429     hgpu2 id30_m01   sunyiq PD                 N/A      1 (null)               (DependencyNeverSatisfied)
+            223992     hgpu8 tukf09-4   sunyiq PD 2026-09-15T08:33:19      1 (null)               (Resources)
+=== OTHER PARTITIONS WITH 8 GPUS ===
+   PARTITION  AVAIL  NODES    STATE         NODELIST       GRES
+     hcpu48*     up     10   alloc$ icn[202,204-207,     (null)
+     hcpu48*     up      5    maint icn[214,220-221,     (null)
+     hcpu48*     up     14    down* icn[203,215,218,     (null)
+     hcpu48*     up      4    alloc icn[209,226,231,     (null)
+     hcpu48*     up     31     idle icn[201,208,213,     (null)
+     hcpu48y     up      1    down$           icn281     (null)
+     hcpu48y     up      1    maint           icn280     (null)
+     hcpu48y     up      2    down*     icn[278-279]     (null)
+     hcpu48y     up      2      mix     icn[274,277]     (null)
+     hcpu48y     up      6     idle icn[270-273,275-     (null)
+       hgpu8     up      1    maint           ngu202      gpu:8
+       hgpu8     up      2      mix     ngu[201,203]      gpu:8
+       hgpu4     up      1    down*           ngu103      gpu:4
+TUKF09_455_QUEUE_DIAGNOSTIC
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T15:38:07+0800
