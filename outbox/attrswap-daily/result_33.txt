@@ -1,0 +1,48 @@
+### channel=attrswap-daily seq=33
+### host=login4
+### started=2026-09-09T21:27:48+0800
+### ---------- output ----------
+wallclock 2026-09-09 21:27:48 +0800
+=== A. MY JOBS WITH REASON ===
+      JOBID                     NAME     STATE       TIME  NODELIST       DEPENDENCY             NODELIST(REASON)
+     224421               pswap_gate   PENDING       0:00                                              (Priority)
+     224422   pswap_armP_chirps_s100   PENDING       0:00             afterok:224421                 (Dependency)
+     224423   pswap_armP_chirps_s200   PENDING       0:00             afterok:224421                 (Dependency)
+     224424   pswap_armP_chirps_s300   PENDING       0:00             afterok:224421                 (Dependency)
+     224425    pswap_armP_era5l_s100   PENDING       0:00             afterok:224421                 (Dependency)
+     224426    pswap_armP_era5l_s200   PENDING       0:00             afterok:224421                 (Dependency)
+     224427    pswap_armP_era5l_s300   PENDING       0:00             afterok:224421                 (Dependency)
+=== B. ESTIMATED START ===
+  gate 224421: 2026-09-15T08:33:19
+=== C. hgpu8 CAPACITY ===
+ NODELIST    STATE        CPUS(A/I/O/T)       GRES
+   ngu201      mix           34/30/0/64      gpu:8
+   ngu202    maint            0/64/0/64      gpu:8
+   ngu203      mix            8/56/0/64      gpu:8
+=== D. OTHER GPU PARTITIONS ===
+--- hgpu4 ---
+ NODELIST    STATE        CPUS(A/I/O/T)       GRES
+   ngu101     idle            0/96/0/96      gpu:4
+   ngu102     idle            0/96/0/96      gpu:4
+   ngu103    down*            0/0/96/96      gpu:4
+   ngu104      mix           16/80/0/96      gpu:4
+--- hgpu2p ---
+ NODELIST    STATE        CPUS(A/I/O/T)       GRES
+   ngu001      mix            4/92/0/96      gpu:2
+   ngu002    down*            0/0/96/96      gpu:2
+   ngu004      mix           16/80/0/96      gpu:2
+   ngu005    drain            0/0/96/96      gpu:2
+   ngu006      mix           14/82/0/96      gpu:2
+   ngu007      mix            2/94/0/96      gpu:2
+   ngu008      mix           16/80/0/96      gpu:2
+--- hgpu2 ---
+ NODELIST    STATE        CPUS(A/I/O/T)       GRES
+   ngu003      mix            2/94/0/96      gpu:2
+   ngu009     idle            0/96/0/96      gpu:2
+=== E. MY OVERALL QUEUE FOOTPRINT ===
+     14 PENDING
+      9 RUNNING
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T21:27:48+0800
