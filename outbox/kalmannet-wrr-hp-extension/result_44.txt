@@ -1,0 +1,9 @@
+### channel=kalmannet-wrr-hp-extension seq=44
+### host=login4
+### started=2026-09-09T11:57:08+0800
+### ---------- output ----------
+launch.sh: OK
+/data1/home/sunyiq/miniconda3/envs/knet_clean/etc/conda/activate.d/libblas_mkl_activate.sh: line 1: MKL_INTERFACE_LAYER: unbound variable
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-09T11:57:10+0800
