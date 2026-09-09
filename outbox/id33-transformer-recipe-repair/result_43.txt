@@ -1,0 +1,82 @@
+### channel=id33-transformer-recipe-repair seq=43
+### host=login4
+### started=2026-09-10T03:09:03+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-10T03:09:03+0800
+=== A. SACCT ===
+       JobID            JobName      State ExitCode    Elapsed        NodeList 
+------------ ------------------ ---------- -------- ---------- --------------- 
+      224310      id33_b3_arms1    RUNNING      0:0   08:35:17          ngu004 
+      224311      id33_b3_arms2    RUNNING      0:0   08:35:16          ngu008 
+      224312      id33_b3_calib    RUNNING      0:0   08:35:07          ngu006 
+=== B. LATEST RUN DIRS (batch3 = 0909/0910) ===
+-- T1: results/33_transformer_recipe_repair/T1/transformer_recipe_repair_T1_2026_0909_1839_ep30
+2026-09-10 02:22:05,101: Epoch 16 average validation loss: 0.03374 -- Median validation metrics: avg_loss: 0.03374, NSE: 0.62926
+2026-09-10 02:50:56,256: Epoch 17 average validation loss: 0.03153 -- Median validation metrics: avg_loss: 0.03153, NSE: 0.63844
+-- T2: results/33_transformer_recipe_repair/T2/transformer_recipe_repair_T2_2026_0909_1839_ep30
+2026-09-10 02:22:03,501: Epoch 16 average validation loss: 0.02898 -- Median validation metrics: avg_loss: 0.02898, NSE: 0.67168
+2026-09-10 02:50:58,280: Epoch 17 average validation loss: 0.02817 -- Median validation metrics: avg_loss: 0.02817, NSE: 0.68811
+-- T3: results/33_transformer_recipe_repair/T3/transformer_recipe_repair_T3_2026_0909_1839_ep30
+2026-09-10 02:22:30,661: Epoch 16 average validation loss: 0.03236 -- Median validation metrics: avg_loss: 0.03236, NSE: 0.65392
+2026-09-10 02:51:25,448: Epoch 17 average validation loss: 0.03245 -- Median validation metrics: avg_loss: 0.03245, NSE: 0.67136
+-- T4: results/33_transformer_recipe_repair/T4/transformer_recipe_repair_T4_2026_0909_1836_ep30
+2026-09-10 02:44:05,280: Epoch 22 average validation loss: 0.02741 -- Median validation metrics: avg_loss: 0.02741, NSE: 0.69382
+2026-09-10 03:02:59,519: Epoch 23 average validation loss: 0.02736 -- Median validation metrics: avg_loss: 0.02736, NSE: 0.68980
+-- T5: results/33_transformer_recipe_repair/T5/transformer_recipe_repair_T5_2026_0909_1836_ep30
+2026-09-10 02:28:16,962: Epoch 17 average validation loss: 0.02812 -- Median validation metrics: avg_loss: 0.02812, NSE: 0.67663
+2026-09-10 02:52:20,744: Epoch 18 average validation loss: 0.02662 -- Median validation metrics: avg_loss: 0.02662, NSE: 0.68810
+-- L33: results/33_transformer_recipe_repair/L33/transformer_recipe_repair_L33_2026_0909_1836_ep30
+2026-09-09 23:40:38,630: Epoch 29 average validation loss: 0.02901 -- Median validation metrics: avg_loss: 0.02901, NSE: 0.67756
+2026-09-09 23:51:05,856: Epoch 30 average validation loss: 0.02930 -- Median validation metrics: avg_loss: 0.02930, NSE: 0.67714
+-- C3: results/33_transformer_recipe_repair/C3/transformer_recipe_repair_C3_2026_0909_1839_ep30
+2026-09-10 02:34:13,510: Epoch 18 average validation loss: 0.02744 -- Median validation metrics: avg_loss: 0.02744, NSE: 0.67702
+2026-09-10 02:57:00,411: Epoch 19 average validation loss: 0.02630 -- Median validation metrics: avg_loss: 0.02630, NSE: 0.68059
+-- C4: results/33_transformer_recipe_repair/C4/transformer_recipe_repair_C4_2026_0909_1839_ep30
+2026-09-09 22:19:36,248: Epoch 29 average validation loss: 0.02713 -- Median validation metrics: avg_loss: 0.02713, NSE: 0.70486
+2026-09-09 22:26:14,212: Epoch 30 average validation loss: 0.02684 -- Median validation metrics: avg_loss: 0.02684, NSE: 0.70602
+-- C5: results/33_transformer_recipe_repair/C5/transformer_recipe_repair_C5_2026_0909_1839_ep30
+2026-09-10 02:34:13,383: Epoch 18 average validation loss: 0.03263 -- Median validation metrics: avg_loss: 0.03263, NSE: 0.66123
+2026-09-10 02:57:09,675: Epoch 19 average validation loss: 0.02895 -- Median validation metrics: avg_loss: 0.02895, NSE: 0.66648
+=== C. MANIFESTS ===
+id33_C3_s100_slurm224312
+id33_C4_s100_slurm224312
+id33_C5_s100_slurm224312
+id33_L33_s100_slurm224311
+id33_T1_s100_slurm224310
+id33_T2_s100_slurm224310
+id33_T3_s100_slurm224310
+id33_T4_s100_slurm224311
+id33_T5_s100_slurm224311
+-- results/33_transformer_recipe_repair/_invocations/id33_C3_s100_slurm224312/run_manifest.json
+ status=RUNNING rc=None data_access=None
+-- results/33_transformer_recipe_repair/_invocations/id33_C4_s100_slurm224312/run_manifest.json
+ status=COMPLETE rc=0 data_access=PASS
+-- results/33_transformer_recipe_repair/_invocations/id33_C5_s100_slurm224312/run_manifest.json
+ status=RUNNING rc=None data_access=None
+-- results/33_transformer_recipe_repair/_invocations/id33_L33_s100_slurm224311/run_manifest.json
+ status=COMPLETE rc=0 data_access=PASS
+-- results/33_transformer_recipe_repair/_invocations/id33_T1_s100_slurm224310/run_manifest.json
+ status=RUNNING rc=None data_access=None
+-- results/33_transformer_recipe_repair/_invocations/id33_T2_s100_slurm224310/run_manifest.json
+ status=RUNNING rc=None data_access=None
+-- results/33_transformer_recipe_repair/_invocations/id33_T3_s100_slurm224310/run_manifest.json
+ status=RUNNING rc=None data_access=None
+-- results/33_transformer_recipe_repair/_invocations/id33_T4_s100_slurm224311/run_manifest.json
+ status=RUNNING rc=None data_access=None
+-- results/33_transformer_recipe_repair/_invocations/id33_T5_s100_slurm224311/run_manifest.json
+ status=RUNNING rc=None data_access=None
+=== D. UTILISATION ===
+-- 224310 lines=515
+   mean_util=21.4 mean_mem=21748 peak_mem_field4= 24576 n=514
+-- 224311 lines=516
+   mean_util=61.4 mean_mem=1907 peak_mem_field4= 24576 n=515
+-- 224312 lines=514
+   mean_util=97.2 mean_mem=3856 peak_mem_field4= 24576 n=513
+=== E. ERR TAILS ===
+-- logs/33_transformer_recipe_repair/packed-224310.err
+-- logs/33_transformer_recipe_repair/packed-224311.err
+-- logs/33_transformer_recipe_repair/packed-224312.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-10T03:09:06+0800
