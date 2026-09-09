@@ -1,0 +1,61 @@
+### channel=attrswap-daily seq=41
+### host=login4
+### started=2026-09-09T23:18:11+0800
+### ---------- output ----------
+wallclock 2026-09-09 23:18:11 +0800
+=== A. QUEUE ===
+      JOBID                     NAME     STATE       TIME  NODELIST         DEPENDENCY
+     224507    pswap_armP_era5l_s100   RUNNING      29:19    ngu102                   
+     224508    pswap_armP_era5l_s200   RUNNING      29:19    ngu104                   
+     224509    pswap_armP_era5l_s300   RUNNING      29:19    ngu104                   
+     224460   pswap_armP_chirps_s100   RUNNING      46:22    ngu102                   
+     224461   pswap_armP_chirps_s200   RUNNING      46:22    ngu102                   
+     224462   pswap_armP_chirps_s300   RUNNING      46:22    ngu102                   
+=== B. ACCOUNTING ===
+    JobID                  JobName        State ExitCode    Elapsed  NodeList 
+--------- ------------------------ ------------ -------- ---------- --------- 
+   224459               pswap_gate    COMPLETED      0:0   00:09:49    ngu104 
+   224460   pswap_armP_chirps_s100      RUNNING      0:0   00:47:10    ngu102 
+   224461   pswap_armP_chirps_s200      RUNNING      0:0   00:47:10    ngu102 
+   224462   pswap_armP_chirps_s300      RUNNING      0:0   00:47:10    ngu102 
+   224463    pswap_armP_era5l_s100 CANCELLED b+      0:0   00:08:00    ngu102 
+   224464    pswap_armP_era5l_s200 CANCELLED b+      0:0   00:08:01    ngu104 
+   224465    pswap_armP_era5l_s300 CANCELLED b+      0:0   00:08:01    ngu104 
+   224507    pswap_armP_era5l_s100      RUNNING      0:0   00:30:07    ngu102 
+   224508    pswap_armP_era5l_s200      RUNNING      0:0   00:30:07    ngu104 
+   224509    pswap_armP_era5l_s300      RUNNING      0:0   00:30:07    ngu104 
+=== C. GATE + BUILD REPORTS ===
+GATE OK 2026-09-09 22:31:02
+--- build_chirps.json ---
+ product=chirps written=529 failures=0 lag0_share=0.8885
+ ratio_over_maurer: {'median': 0.9815114592255555, 'p10': 0.7366807385188862, 'p90': 1.0284688528525654}
+ v6_off_lag basins: 59
+ NOTE V6（报告项，非停机条件）: 最佳滞后为 0 的流域 88.85%；其余 59 个流域按滞后计数 {-1: np.int64(59)}
+--- build_era5l_precip.BAD.json ---
+ product=era5l_precip written=529 failures=0 lag0_share=0.0000
+ ratio_over_maurer: {'median': 47.526098320992276, 'p10': 28.959337943840325, 'p90': 92.48014254471384}
+ v6_off_lag basins: 529
+ NOTE V6（报告项，非停机条件）: 最佳滞后为 0 的流域 0.00%；其余 529 个流域按滞后计数 {-2: np.int64(345), 2: np.int64(184)}
+--- build_era5l_precip.json ---
+ product=era5l_precip written=529 failures=0 lag0_share=0.9981
+ ratio_over_maurer: {'median': 0.9910016789434211, 'p10': 0.7958767056225912, 'p90': 1.1303076582869083}
+ v6_off_lag basins: 1
+ NOTE V6（报告项，非停机条件）: 最佳滞后为 0 的流域 99.81%；其余 1 个流域按滞后计数 {1: np.int64(1)}
+=== D. MEDIANS ===
+medians present: 0/6
+=== E. LATEST EPOCH PER ARM ===
+  slurm_pswap_armP_chirps_s100_224460.out: Epoch 11 average loss
+  slurm_pswap_armP_chirps_s200_224461.out: Epoch 11 average loss
+  slurm_pswap_armP_chirps_s300_224462.out: Epoch 11 average loss
+  slurm_pswap_armP_era5l_s100_224463.out: Epoch 1 average loss
+  slurm_pswap_armP_era5l_s100_224507.out: Epoch 6 average loss
+  slurm_pswap_armP_era5l_s200_224464.out: Epoch 1 average loss
+  slurm_pswap_armP_era5l_s200_224508.out: Epoch 7 average loss
+  slurm_pswap_armP_era5l_s300_224465.out: Epoch 1 average loss
+  slurm_pswap_armP_era5l_s300_224509.out: Epoch 7 average loss
+=== F. ERRORS ===
+  none
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T23:18:14+0800
