@@ -1,0 +1,24 @@
+### channel=kalmannet-tukf09-455 seq=157
+### host=login4
+### started=2026-09-09T19:47:13+0800
+### ---------- output ----------
+TIME=2026-09-09T19:47:13+0800
+26700 bash /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r13/download_runtime_inputs_login.sh v2r13-20260909-a
+26743 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -m pip download --timeout 120 --retries 10 --no-cache-dir --no-deps --only-binary=:all: --require-hashes --dest /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/offline_inputs_v2r13.pending.v2r13-20260909-a/wheelhouse --requirement /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r13/runtime-binary.lock
+36K	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/offline_inputs_v2r13.pending.v2r13-20260909-a
+4
+total 20
+drwxr-xr-x. 5 sunyiq g_sunyiq 4096 Sep  9 19:30 .
+drwxr-xr-x. 6 sunyiq g_sunyiq 4096 Sep  9 19:30 ..
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  9 19:30 evidence
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  9 19:30 sourcehouse
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  9 19:30 wheelhouse
+=== DOWNLOAD LOG TAIL ===
+", "version": "2.2.1"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "torch", "version": "2.4.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "torchaudio", "version": "2.4.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "torchvision", "version": "0.19.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "tornado", "version": "6.5.2"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "tqdm", "version": "4.67.1"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "transformers", "version": "4.57.6"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "triton", "version": "3.0.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "typing-extensions", "version": "4.15.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "tzdata", "version": "2025.2"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "unicodedata2", "version": "16.0.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "urllib3", "version": "2.5.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "werkzeug", "version": "3.1.3"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "wheel", "version": "0.45.1"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "xarray", "version": "2025.12.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "zipp", "version": "3.23.0"}, {"location": "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages", "name": "zstandard", "version": "0.24.0"}], "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1", "formal_evaluation_authorized": false, "hostname": "login4", "identity_sha256": "f74eaf26b41c7b400a224454a016da3c5c889a1f19c34f46cc69ea7201eb87d9", "libc": ["glibc", "2.17"], "machine": "x86_64", "pip_version": "25.2", "platform": "Linux-3.10.0-957.el7.x86_64-x86_64-with-glibc2.17", "python_executable": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "python_executable_resolved": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11", "python_executable_sha256": "45140eba20e770e6f8b46fb1e1295da8a5e494b3686a22ea9beeff050bb5b48e", "python_executable_size": 25382192, "python_version": "3.11.13", "schema_version": "tukf09_455_hpc_shared_environment_snapshot_a800_exclusive_v2r13", "scientific_contract_changed": false, "status": "SHARED_BOOTSTRAP_ENVIRONMENT_READ_ONLY_SNAPSHOT"}
+=== NETWORK CHECK ===
+DNS_OK
+pypi=200
+TUKF09_455_V2R13_DOWNLOAD_DIAGNOSTIC
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T19:47:26+0800
