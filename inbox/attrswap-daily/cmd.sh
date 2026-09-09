@@ -1,37 +1,25 @@
 #!/bin/bash
-# precip-swap status -- READ-ONLY. Queue, accounting, build reports, medians, latest epoch, errors.
+# URGENT read-mostly: cancel the three era5l arms, which are training on a wrongly-built forcing product.
+# Root cause: the builder assumed PRCP sits at tab field 2 in the source product too, but the era5l_caravan
+# files have six fields (date, PRCP, SRAD, Tmax, Tmin, Vp) so field 2 is SRAD. The chirps arms are unaffected.
 set -o pipefail
 date "+wallclock %F %T %z"
 R=/data1/home/sunyiq/precip_swap_daily_2026_09
-echo "=== A. QUEUE ==="
-squeue -u "$USER" -o '%.11i %.24j %.9T %.10M %.9N %.18E' 2>&1 | grep -Ei 'pswap|JOBID' || echo '  (none queued)'
-echo "=== B. ACCOUNTING ==="
-ids=$(tr '\n' ',' < "$R/logs/job_ids.txt" | sed 's/,$//')
-sacct -j "$ids" -X --format=JobID%9,JobName%24,State%12,ExitCode%8,Elapsed%10,NodeList%9 2>&1
-echo "=== C. GATE + BUILD REPORTS ==="
-cat "$R/logs/gate.txt" 2>/dev/null || echo "  (gate marker absent)"
-for f in "$R"/logs/build_*.json; do
-  [ -f "$f" ] || continue
-  echo "--- $(basename $f) ---"
-  python -c "
-import json,sys
-d=json.load(open(sys.argv[1]))
-print(' product=%s written=%s failures=%d lag0_share=%.4f' % (d['product'], d['written'], len(d['failures']), d['lag0_share']))
-print(' ratio_over_maurer:', d['ratio_over_maurer'])
-print(' v6_off_lag basins:', len(d.get('v6_off_lag_basins', [])))
-for n in d.get('notes', []): print(' NOTE', n[:160])
-for x in d['failures'][:3]: print(' FAIL', x[:160])
-" "$f" 2>&1 || cat "$f"
+echo "=== A. EVIDENCE: header of each product ==="
+for p in maurer era5l_caravan chirps era5l_precip; do
+  f=$(find -L "$R/data_shadow/camels_us/basin_mean_forcing/$p" -name '01022500_*_forcing_leap.txt' 2>/dev/null | head -1)
+  [ -n "$f" ] && { echo "--- $p ---"; sed -n '4p' "$f"; sed -n '5p' "$f"; }
 done
-echo "=== D. MEDIANS ==="
-for f in "$R"/logs/*.public_median.txt; do [ -f "$f" ] && echo "  $(basename $f .public_median.txt): $(cat $f)"; done
-echo "medians present: $(ls "$R"/logs/*.public_median.txt 2>/dev/null | wc -l)/6"
-echo "=== E. LATEST EPOCH PER ARM ==="
-for g in "$R"/logs/slurm_pswap_armP*.out; do
-  [ -f "$g" ] || continue
-  e=$(grep -oE "Epoch [0-9]+ average loss" "$g" 2>/dev/null | tail -1) || true
-  echo "  $(basename $g): ${e:-starting}"
+echo "=== B. CANCEL THE THREE era5l ARMS (explicit ids) ==="
+for j in 224463 224464 224465; do
+  st=$(sacct -j "$j" -X -n --format=State 2>/dev/null | head -1 | tr -d ' ')
+  scancel "$j" && echo "  已取消 $j（状态曾为 $st）"
 done
-echo "=== F. ERRORS ==="
-grep -lE "Traceback|CUDA error|out of memory|WRONG CODE|核验失败" "$R"/logs/slurm_pswap_*.out "$R"/logs/slurm_pswap_*.err 2>/dev/null || echo "  none"
+echo "=== C. CHIRPS 三臂保持运行（其构建正确：比值 0.98、滞后分布与本地实测一致）==="
+squeue -u "$USER" -o '%.11i %.24j %.9T %.10M %.9N' 2>&1 | grep -Ei 'pswap|JOBID' || echo '  (none)'
+echo "=== D. 隔离错误产物（改名不删）==="
+mv "$R/data_shadow/camels_us/basin_mean_forcing/era5l_precip" \
+   "$R/data_shadow/camels_us/basin_mean_forcing/BAD_era5l_precip_$(date +%Y%m%d_%H%M%S)" \
+  && echo "  错误产物已改名隔离"
+mv "$R/logs/build_era5l_precip.json" "$R/logs/build_era5l_precip.BAD.json" 2>/dev/null
 echo "=== DONE ==="
