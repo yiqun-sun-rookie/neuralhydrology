@@ -1,0 +1,221 @@
+### channel=kalmannet-daily-perbasin seq=81
+### host=login4
+### started=2026-09-09T18:33:41+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=81 purpose=read-only-capacity-and-failed-deployment-proof
+CURRENT_SHARED_A800_CAPACITY_BEGIN
+ngu201              gpu:8               gpu:8,dcu:0         38/26/0/64          mixed               
+ngu202              gpu:8               gpu:0,dcu:0         0/64/0/64           maint               
+ngu203              gpu:8               gpu:8,dcu:0         8/56/0/64           mixed               
+CURRENT_SHARED_A800_CAPACITY_EXIT=0
+CURRENT_PARTITION_BEGIN
+PartitionName=hgpu8
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[201-203]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=192 TotalNodes=3 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+CURRENT_PARTITION_EXIT=0
+NODE_DETAIL_BEGIN ngu201
+NodeName=ngu201 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=38 CPUTot=64 CPULoad=17.35
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu201 NodeHostName=ngu201 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=367349 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-04-28T14:14:28 SlurmdStartTime=2026-04-28T14:14:06
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=38
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+NODE_DETAIL_EXIT=0
+NODE_DETAIL_BEGIN ngu202
+NodeName=ngu202 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=0 CPUTot=64 CPULoad=0.11
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu202 NodeHostName=ngu202 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=680193 Sockets=2 Boards=1
+   State=MAINT ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-01-22T14:56:36 SlurmdStartTime=2026-01-22T15:10:38
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+NODE_DETAIL_EXIT=0
+NODE_DETAIL_BEGIN ngu203
+NodeName=ngu203 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=8 CPUTot=64 CPULoad=7.05
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu203 NodeHostName=ngu203 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=642176 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2025-07-23T15:13:31 SlurmdStartTime=2025-07-23T15:41:12
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=8
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+NODE_DETAIL_EXIT=0
+CURRENT_ALL_GPU_PARTITIONS_BEGIN
+hcpu48*             icn201              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn202              (null)              gpu:0,dcu:0         48/0/0/48           allocated$          
+hcpu48*             icn203              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn204              (null)              gpu:0,dcu:0         48/0/0/48           allocated$          
+hcpu48*             icn205              (null)              gpu:0,dcu:0         48/0/0/48           allocated$          
+hcpu48*             icn206              (null)              gpu:0,dcu:0         48/0/0/48           allocated$          
+hcpu48*             icn207              (null)              gpu:0,dcu:0         48/0/0/48           allocated$          
+hcpu48*             icn208              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn209              (null)              gpu:0,dcu:0         48/0/0/48           allocated           
+hcpu48*             icn210              (null)              gpu:0,dcu:0         48/0/0/48           allocated$          
+hcpu48*             icn211              (null)              gpu:0,dcu:0         48/0/0/48           allocated$          
+hcpu48*             icn212              (null)              gpu:0,dcu:0         48/0/0/48           allocated$          
+hcpu48*             icn213              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn214              (null)              gpu:0,dcu:0         0/48/0/48           maint               
+hcpu48*             icn215              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn216              (null)              gpu:0,dcu:0         48/0/0/48           allocated$          
+hcpu48*             icn217              (null)              gpu:0,dcu:0         48/0/0/48           allocated$          
+hcpu48*             icn218              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn219              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn220              (null)              gpu:0,dcu:0         0/48/0/48           maint               
+hcpu48*             icn221              (null)              gpu:0,dcu:0         0/48/0/48           maint               
+hcpu48*             icn222              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn223              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn224              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn225              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn226              (null)              gpu:0,dcu:0         48/0/0/48           allocated           
+hcpu48*             icn227              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn228              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn229              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn230              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn231              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn232              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn233              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn234              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn235              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn236              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn237              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn238              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn239              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn240              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn241              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn242              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn243              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn244              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn245              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn246              (null)              gpu:0,dcu:0         0/48/0/48           maint               
+hcpu48*             icn247              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn248              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn249              (null)              gpu:0,dcu:0         0/48/0/48           maint               
+hcpu48*             icn250              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn251              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn252              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn253              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn254              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn255              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn256              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48*             icn257              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn258              (null)              gpu:0,dcu:0         48/0/0/48           allocated           
+hcpu48*             icn259              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn260              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn261              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn262              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn263              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48*             icn264              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48y             icn270              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48y             icn271              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48y             icn272              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48y             icn273              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48y             icn274              (null)              gpu:0,dcu:0         25/23/0/48          mixed               
+hcpu48y             icn275              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48y             icn276              (null)              gpu:0,dcu:0         0/48/0/48           idle                
+hcpu48y             icn277              (null)              gpu:0,dcu:0         29/19/0/48          mixed               
+hcpu48y             icn278              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48y             icn279              (null)              gpu:0,dcu:0         0/0/48/48           down*               
+hcpu48y             icn280              (null)              gpu:0,dcu:0         0/48/0/48           maint               
+hcpu48y             icn281              (null)              gpu:0,dcu:0         0/0/48/48           down$               
+hgpu2p              ngu001              gpu:2               gpu:2,dcu:0         8/88/0/96           mixed               
+hgpu2p              ngu002              gpu:2               gpu:0,dcu:0         0/0/96/96           down*               
+hgpu2               ngu003              gpu:2               gpu:1,dcu:0         2/94/0/96           mixed               
+hgpu2p              ngu004              gpu:2               gpu:1,dcu:0         4/92/0/96           mixed               
+hgpu2p              ngu005              gpu:2               gpu:0,dcu:0         0/0/96/96           drained             
+hgpu2p              ngu006              gpu:2               gpu:0,dcu:0         0/96/0/96           idle                
+hgpu2p              ngu007              gpu:2               gpu:0,dcu:0         0/96/0/96           idle                
+hgpu2p              ngu008              gpu:2               gpu:1,dcu:0         4/92/0/96           mixed               
+hgpu2               ngu009              gpu:2               gpu:0,dcu:0         0/96/0/96           idle                
+hgpu2p              ngu010              gpu:2               gpu:2,dcu:0         8/24/0/32           mixed               
+hgpu2p              ngu011              gpu:2               gpu:2,dcu:0         8/24/0/32           mixed               
+hgpu4               ngu101              gpu:4               gpu:1,dcu:0         8/88/0/96           mixed               
+hgpu4               ngu102              gpu:4               gpu:0,dcu:0         0/96/0/96           idle                
+hgpu4               ngu103              gpu:4               gpu:0,dcu:0         0/0/96/96           down*               
+hgpu4               ngu104              gpu:4               gpu:0,dcu:0         0/96/0/96           idle                
+hgpu8               ngu201              gpu:8               gpu:8,dcu:0         38/26/0/64          mixed               
+hgpu8               ngu202              gpu:8               gpu:0,dcu:0         0/64/0/64           maint               
+hgpu8               ngu203              gpu:8               gpu:8,dcu:0         8/56/0/64           mixed               
+CURRENT_ALL_GPU_PARTITIONS_EXIT=0
+CURRENT_OWN_QUEUE_BEGIN
+223992|tukf09-455-v2r12-prepare|PENDING|hgpu8|1|32|gpu:8|/data1/home/sunyiq/hpc_mailbox|(Resources)
+224255_18|ngf-select-B|PENDING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|(JobArrayTaskLimit)
+224255_19|ngf-select-B|PENDING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|(JobArrayTaskLimit)
+224255_20|ngf-select-B|PENDING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|(JobArrayTaskLimit)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|1|2|N/A|/data1/home/sunyiq/hpc_mailbox|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|1|4|gpu:1|/data1/home/sunyiq/hpc_mailbox|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|1|4|gpu:1|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(JobHeldUser)
+224255_17|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu011
+224255_16|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu011
+224255_15|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu004
+224255_14|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu001
+224255_13|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu001
+224255_12|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu010
+CURRENT_OWN_QUEUE_EXIT=0
+FAILED_DEPLOYMENT_FILE={"base64": "eyJidWRnZXRfcmVzZXJ2ZWQiOmZhbHNlLCJkZXBsb3lfc2VxdWVuY2UiOjgwLCJkZXBsb3ltZW50X2RpcmVjdG9yaWVzIjpbInRtcCIsImNhY2hlIiwibnVtYmEiLCJtYXRwbG90bGliIiwidG9yY2giXSwiZmlsZXMiOnsiYnVpbGRfZmlyc3RfdHJhaW5pbmdfY2FuZGlkYXRlLnB5Ijp7ImJ5dGVzIjoxMzQ3NCwic2hhMjU2IjoiNmJlMjQ0NDQ5MzBhYWZjOTBhNzk5ZDcxMTIxMDdjNDAxODc0N2E0NjVhYWJhNDE1MTQwM2Y2MjRhMjFjYjMxNCJ9LCJidWlsZF9wcmVjaGVja19jYW5kaWRhdGUucHkiOnsiYnl0ZXMiOjExOTk1LCJzaGEyNTYiOiI2NjdmMTg1ZmFiZTM1ZjM5NWM1MzNlNzQxOWZhMGMwMTlhODc5NDljYzYxN2RjYjViMTZhMDhjNGIwOTRhYTk3In0sImZpcnN0X3RyYWluaW5nX2FkbWlzc2lvbl9jaGVjay5weSI6eyJieXRlcyI6MTkxNzgsInNoYTI1NiI6IjYwMDc0ZTA2NDFjYmNlODllMjM2NDk1MmU5MTczZGExNzc1OWQwMDE0ZWViYjM4NzY3MTVjOWFhZjQ3ODQ2ZTQifSwiZmlyc3RfdHJhaW5pbmdfd29ya2VyLnB5Ijp7ImJ5dGVzIjoxOTc4MSwic2hhMjU2IjoiYzRmNWQ0NWM0NmQzOWExMDYwNjZhZjBlZDhhODdlODYwZDc0ZGU2NmQyMTRlYzE4NTk2Njc2ZmI1NDBkNmQ1MSJ9LCJwcmVjaGVjay5zaCI6eyJieXRlcyI6NjE1LCJzaGEyNTYiOiJkZWM5MzEwNTA2MjhiOTdjYTIwZjBjOTE2MzU2OWEzMDc4YjBlYTAxYTc2MTJmYjJiM2YzMDAxOWI5NTQ1ZWRhIn0sInByZWNoZWNrX2xpdmVfc3VibWlzc2lvbl9jaGVjay5weSI6eyJieXRlcyI6MTU2OTUsInNoYTI1NiI6IjYzOTI5OTQwMWI2MDE1MTg1ZjdmNDBkMmVhNTA2NTg5MTFhZDQyZjZlMzkwMGY4ZWFmMDM0YjhiZjFlNTQ2MTkifSwicmVxdWVzdC5qc29uIjp7ImJ5dGVzIjo3MzQxLCJzaGEyNTYiOiI2NjZmZGQzZGRhZmNjOWMxYzMzMmJiMGI0ZWE5NTg4NWFkN2FmOGY0NzBiZTI1MGVmZTZkNTkzMDI2ZWM3NDE1In0sInJlc291cmNlX2JpbmQucHkiOnsiYnl0ZXMiOjE3ODc5LCJzaGEyNTYiOiI5ZjdhNzZkM2YzZWExOWZlZjlmZGQ5N2MyZjg0Zjk5ODE4NjU2NzJjNjQ0ZTdkOWQ3NzVjNzA4YTQ3ZjM3MWRhIn0sInN1Y2Nlc3Nvcl9hZG1pc3Npb24ucHkiOnsiYnl0ZXMiOjIwMDAyLCJzaGEyNTYiOiI0ZTdkMGJkZDQ5YzllZWFlMTJiZjE2NzY1ZDlhOTBlOGU5NzE4ZTllNDZiODMyYzk3NjQ3NmQ2OTIzZTU2OWIxIn0sInRyYWluLnNsdXJtIjp7ImJ5dGVzIjoyNzc2LCJzaGEyNTYiOiJhYTUyYWM2NmNhN2Y5M2ZjMTI4ZWUzMmExNmZjZDc0MzMzMmViMjE3ZWQ2YWQ4ZTkxYjkwMmNmNmRiYTExYmZkIn19LCJpbmRlcGVuZGVudF9hY2NlcHRhbmNlIjpmYWxzZSwicHJldmlvdXNfY29tcGxldGVfc2VxdWVuY2UiOjc5LCJzY2hlbWFfdmVyc2lvbiI6ImRhaWx5X2NhbWVsc19zdWNjZXNzb3JfY2FuZGlkYXRlX2ZpbGVzX3YxIiwic3VibWl0X3NlcXVlbmNlIjo4MSwic3VibWl0dGVkIjpmYWxzZX0K", "bytes": 1458, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/candidate-files.json", "sha256": "ce967ae4de9291480c3707969ed24d9297e3015833513b2643035adc38e0a6c0"}
+FAILED_DEPLOYMENT_FILE={"base64": "eyJhZG1pc3Npb25fc3RhdHVzIjoiUkVRVUlSRVNfRVhURVJOQUxfR1VBUkRfUkVQTEFZX0FORF9DT05UUk9MTEVSX0FETUlTU0lPTiIsImF0dGVtcHQiOjEsImF1dG9tYXRpY19yZXRyeSI6ZmFsc2UsImJhc2luX2lkIjoiMDgxOTA1MDAiLCJjbGVhbnVwX2hlYWRyb29tX3NlY29uZHMiOjMwLCJjb25maWd1cmF0aW9uIjoiL2RhdGExL2hvbWUvc3VueWlxL2thbG1hbm5ldF9kYWlseV9jYW1lbHNfcGVyX2Jhc2luXzIxX2RldmVsb3BtZW50XzIwMjYwOTA4L2RlcGxveW1lbnRfZW50cnlfcmVwYWlyXzIwMjYwOTA5L3dvcmtzcGFjZS9jb25maWdzL2RhaWx5X2NhbWVsc19rbmV0X3Blcl9iYXNpbl9kZXZlbG9wbWVudF92Ml8wODE5MDUwMC5qc29uIiwiY29uZmlndXJhdGlvbl9tYW5pZmVzdF9zaGEyNTYiOiJiYzI4NWVkNmFmYzIwODA2OGRlYWQ3YmYzM2VmNmVjNGQ4Nzc5MjUwZDA3MDFiYzljNjJhMWY5ZmJkMGYzM2M5IiwiY29uZmlndXJhdGlvbl9zaGEyNTYiOiJhNTBkMWFjN2EyNzIwNDAwZDA3MWZmNGYxMzUwYjkyZTAwNzk0OGQyYjYyMjQ2OGNmYjlhZTdiMDYyZWMwYjIwIiwiZXhlY3V0aW9uX2lkIjoiREFJTFlfQ0FNRUxTX0tORVRfUEVSX0JBU0lOXzIxX0RFVkVMT1BNRU5UX1YyXzIwMjYwOTA4X0JBU0lOXzA4MTkwNTAwX0E4MDBfVFJBSU4xX1NFUTgxIiwiZXhwZXJpbWVudF9mYW1pbHkiOiJEQUlMWV9DQU1FTFNfS05FVF9QRVJfQkFTSU5fMjFfREVWRUxPUE1FTlRfVjJfMjAyNjA5MDgiLCJnYXRlX2NvbW1hbmQiOlsiL2RhdGExL2hvbWUvc3VueWlxL21pbmljb25kYTMvZW52cy9uaF9maW5hbC9iaW4vcHl0aG9uIiwiLUIiLCItdSIsIi9kYXRhMS9ob21lL3N1bnlpcS9rYWxtYW5uZXRfZGFpbHlfY2FtZWxzX3Blcl9iYXNpbl8yMV9kZXZlbG9wbWVudF8yMDI2MDkwOC9kZXBsb3ltZW50X2VudHJ5X3JlcGFpcl8yMDI2MDkwOS93b3Jrc3BhY2Uvc2NyaXB0cy9jaGVja19kYWlseV9jYW1lbHNfa25ldF9wZXJfYmFzaW5fcnVudGltZS5weSIsIi0tY29uZmlnIiwiL2RhdGExL2hvbWUvc3VueWlxL2thbG1hbm5ldF9kYWlseV9jYW1lbHNfcGVyX2Jhc2luXzIxX2RldmVsb3BtZW50XzIwMjYwOTA4L2RlcGxveW1lbnRfZW50cnlfcmVwYWlyXzIwMjYwOTA5L3dvcmtzcGFjZS9jb25maWdzL2RhaWx5X2NhbWVsc19rbmV0X3Blcl9iYXNpbl9kZXZlbG9wbWVudF92Ml8wODE5MDUwMC5qc29uIiwiLS1vdXRwdXQtcGFyZW50IiwiL2RhdGExL2hvbWUvc3VueWlxL2thbG1hbm5ldF9kYWlseV9jYW1lbHNfcGVyX2Jhc2luXzIxX2RldmVsb3BtZW50XzIwMjYwOTA4L3J1bnRpbWUvdHJhaW5fMDgxOTA1MDBfZW50cnlyZXBhaXJfc2VxODEvcHJlY2hlY2tfZ2F0ZSIsIi0tZXhlY3V0aW9uLWlkIiwiREFJTFlfQ0FNRUxTX0tORVRfUEVSX0JBU0lOXzIxX0RFVkVMT1BNRU5UX1YyXzIwMjYwOTA4X0JBU0lOXzA4MTkwNTAwX0E4MDBfVFJBSU4xX1NFUTgxIiwiLS1yZXBvc2l0b3J5LXJvb3QiLCIvZGF0YTEvaG9tZS9zdW55aXEva2FsbWFubmV0X2RhaWx5X2NhbWVsc19wZXJfYmFzaW5fMjFfZGV2ZWxvcG1lbnRfMjAyNjA5MDgvZGVwbG95bWVudF9lbnRyeV9yZXBhaXJfMjAyNjA5MDkvd29ya3NwYWNlIiwiLS1kZXZpY2UiLCJjdWRhIl0sImdhdGVfaWRlbnRpdHkiOnsiYmFzaW5faWQiOiIwODE5MDUwMCIsImNvbXB1dGF0aW9uYWxfc291cmNlX3NoYTI1NiI6eyJjb25maWdzL3R1a2YwNl9mdWxsX2RpYWdvbmFsX3NlYXJjaF9oZWFkX3RvX2hlYWRfdjEuanNvbiI6IjRiMTllZGE3Y2Y0Y2U3ZGNkOWMwOTQwNjkzNTc3MDc3ZDZhNmZhZjNiMTg5MTJiMDMxNzgxNjQ2MTNjYWM3YTMiLCJrbmV0L2RsL25uX2thbG1hbl9jbGFtcF81LnB5IjoiOTM0NTcwZDNjODQwZTlkNTdiOGZiZGRmM2EwMThkYzI5ZTE5MGNkZDcxMmZjOWRhYWY0NDJlMzgzZjc0ZDg0MyIsInNjcmlwdHMvZGlmZmVyZW50aWFibGVfdWtmX2hidmxpdGUucHkiOiI1ZDRkMGZjZTMwMThhZWY0MmQ2ZWY4MWFjMzJmYTk3NTQxNjU0ZjBhODc4YzA1MDhmNTU5NGZmMmVjNzNjMDJkIiwic2NyaXB0cy9ydW5fYWxpZ25lZF9ncjRqX2RhLnB5IjoiMDI3ODVmMjM3N2EzNjQ1NGNlMjExMjc1NTNlOTNjNThkOGMzNTZiNmY1M2RkYmMxMGVlM2UyZjkzNzBlYzkyNiIsInNjcmlwdHMvcnVuX2FsaWduZWRfZ3I0al9kaWZmZXJlbnRpYWJsZV91a2YucHkiOiJhOGJhZTcxZGMxMDA3YzNiMDUwMmU4MWU1MGU3NjYzMjgyMDI5OTZhYWYzNzA5ODdhMzQ3MDQxZGRkZTBkMjNmIiwic2NyaXB0cy9ydW5fZGFpbHlfY2FtZWxzX2tuZXRfcGVyX2Jhc2luX3BpbG90LnB5IjoiYzVjOGVkYWFmODkwZGFmMWRmZmFlMWFjYjRmYmYwNzYxM2U5YmIyYjkyMzY1ZWE2M2NkMTUzY2MzZDViZTM5NCIsInNjcmlwdHMvdHVrZjA2X2Z1bGxfZGlhZ29uYWxfY29tbW9uLnB5IjoiMmQwZWJkYWU5NDQ3ZWRlODg3M2QxOTAzMmIyYzVkNDk3ZThmOGJmZjc4YWFiN2Q5MmYxYzAzZGFhNTA4Y2YwMiIsInNyYy9nbG9iYWxfaHlkcm9sb2d5L2Fzc2ltaWxhdGlvbi9jb252ZW50aW9uYWxfdWtmLnB5IjoiMmMxYTE3ZjBkNDg5NjJhYjhhYzdjNjhjMGFlOGVkYWYwYWQ2MTZmOTM4YTY0NjZmMDkyNWQyN2VlOTI1OGMzYSIsInNyYy9nbG9iYWxfaHlkcm9sb2d5L2V4cGVyaW1lbnRzL2RhaWx5X2NhbWVsc19rbmV0X3Blcl9iYXNpbl9jaGVja3BvaW50LnB5IjoiOGYzNjM0ZWI5MDdkMTBhYmMyZjlkYWIxNGYzMTBiMGEyNzYwMGVhNzJkZjcxOWU3YzQzM2ExYzBlYjczM2Q5ZiIsInNyYy9nbG9iYWxfaHlkcm9sb2d5L2V4cGVyaW1lbnRzL2RhaWx5X2NhbWVsc19rbmV0X3Blcl9iYXNpbl9jb250cmFjdC5weSI6IjVhZTk0MzU2NGU2ZmQ5NTA2ODA4YTMxMWRhYmMxZmQ4M2JiOGZjYjBlZGVkYjVlYzZmNjRmZjljOGM5ODMxODciLCJzcmMvZ2xvYmFsX2h5ZHJvbG9neS9leHBlcmltZW50cy9kYWlseV9jYW1lbHNfa25ldF9wZXJfYmFzaW5fcnVubmVyLnB5IjoiNzcwZGU0MGQ4ZDQ3MjgwNTUxNWMwMDEzMWMzN2Y0ODUyMDEyYmUxZTBhNDJiN2EzYWViMzY2ODlhMTkyZGFhOCIsInNyYy9nbG9iYWxfaHlkcm9sb2d5L2V4cGVyaW1lbnRzL2RhaWx5X2NhbWVsc19uYXRpdmVfa25ldF9pby5weSI6IjJkYjZjNjEyNzZiNGQyOTAwMzIxZTU4ZDA0ZDYzOWZlY2FmMzk1N2Q1NTdjNGM1YjViNDEyMWZkMDFjM2U5MTgiLCJzcmMvZ2xvYmFsX2h5ZHJvbG9neS9leHBlcmltZW50cy9kYWlseV9jYW1lbHNfdWtmX2tuZXRfcGFyaXR5X2NvbnRyYWN0LnB5IjoiYmQ3MGVhZGY4ZDJiZTMxMWI1ZTYyMzUxN2U3NWY3ZDdiODE1ZGJkZTE4NjAzYTIxOWY2YjFlMzA4NTIyM2Q1MiIsInNyYy9nbG9iYWxfaHlkcm9sb2d5L2V4cGVyaW1lbnRzL2RhaWx5X2NhbWVsc191a2Zfa25ldF9wYXJpdHlfcnVubmVyLnB5IjoiMmZkOTgzYTRhZjUyZWUwMmZkNjc3ZThlZTUxODk0ZDgyMDhiODM2ZDZlOTc1OWIzZmYyYWMzYTgyYzg5ZWE2OSIsInNyYy9nbG9iYWxfaHlkcm9sb2d5L21vZGVscy9kaWZmZXJlbnRpYWJsZV9oYnZfbGl0ZS5weSI6ImQ3YTA0YmU4NmYxOWNkZGQ4Yjk3MDNlNDMyZmFmYjk5OWEzODIxNWNiODVkZTg5ODNmZTM5YTQwYmRhMGQ2ZWEiLCJzcmMvZ2xvYmFsX2h5ZHJvbG9neS9tb2RlbHMvaGJ2bGl0ZV9zeXN0ZW1fbW9kZWwucHkiOiIwZDMyZDBmOGRjNjU2YmRmYmVhODFiYTlmNjFlYmEwNzc1ZWNjNzcwZDQ0NjZmZjA0NDI1OTdkN2M4ZDdhNTk3Iiwic3JjL2dsb2JhbF9oeWRyb2xvZ3kvbW9kZWxzL2hidmxpdGVfdWtmX2FkYXB0ZXIucHkiOiIyYmY4MmQ4ZWUwZGE5MDk5ODI3NjlkZDU4NTY1N2ZlZWQzN2E0YWQ0NjI0OWYzYjFmZTlhNzJlMWNjYmMzNzdhIiwic3JjL2dsb2JhbF9oeWRyb2xvZ3kvbW9kZWxzL2tuZXRfbmF0aXZlX2hidmxpdGVfZnVsbF9zdGF0ZS5weSI6IjNlYjgwZmMxMzQ2YTNlODYxNzBjYWMyOGZlY2FkMjk5NTFmZTkzODE5Mzk2N2U2YThjZjZhZTcwNWVkYzIyZGEifSwiY29uZmlndXJhdGlvbl9zaGEyNTYiOiJhNTBkMWFjN2EyNzIwNDAwZDA3MWZmNGYxMzUwYjkyZTAwNzk0OGQyYjYyMjQ2OGNmYjlhZTdiMDYyZWMwYjIwIiwiZXhlY3V0aW9uX2lkIjoiREFJTFlfQ0FNRUxTX0tORVRfUEVSX0JBU0lOXzIxX0RFVkVMT1BNRU5UX1YyXzIwMjYwOTA4X0JBU0lOXzA4MTkwNTAwX0E4MDBfVFJBSU4xX1NFUTgxIiwiZXhwZXJpbWVudF9mYW1pbHkiOiJEQUlMWV9DQU1FTFNfS05FVF9QRVJfQkFTSU5fMjFfREVWRUxPUE1FTlRfVjJfMjAyNjA5MDgiLCJleHBlcmltZW50X2lkIjoiREFJTFlfQ0FNRUxTX0tORVRfUEVSX0JBU0lOXzIxX0RFVkVMT1BNRU5UX1YyXzIwMjYwOTA4X0JBU0lOXzA4MTkwNTAwIiwiaW5wdXRfaWRlbnRpdHkiOnsiYXJjaGl2ZSI6eyJhcnJheV9jb250ZW50X3NoYTI1NiI6ImQzYTNhZTE5NDFhNmRiYzA4MGE3ZDUyYWU2NzFiNjVjNGE2ODY3NmNlYmZiNWI2NjNjMGYxMTE0NmE3YTU3ZTUiLCJieXRlX3NoYTI1NiI6IjdmNTFkZGVkMjQyZTExMDI1ODY2MjYwODExNTEwYWYyNmRhNDJiMzg0NzI0MTYxM2I1NjNkY2MwYzk0Mzg1YTUiLCJyZWxhdGl2ZV9wYXRoIjoicmVzdWx0cy90dWtmMDZfZnVsbF9kaWFnb25hbF9zZWFyY2hfaGVhZF90b19oZWFkX3YxL3NlbGVjdGlvbl9pbnB1dHMvYmFzaW5fMDgxOTA1MDAubnB6In0sInNlbGVjdGlvbiI6eyJieXRlX3NoYTI1NiI6ImUzN2M4MDk2OGJhOWY4NzQzMjcyNzQ2YzZlMWQ4ZjBmMTVmOGZiNTQ1NTk3YjA3MWNmNjc4NDdlMWNiOWJiN2UiLCJyZWxhdGl2ZV9wYXRoIjoicmVzdWx0cy90dWtmMDZfZnVsbF9kaWFnb25hbF9zZWFyY2hfaGVhZF90b19oZWFkX3YxL3NlbGVjdGlvbi9iYXNpbl8wODE5MDUwMC5qc29uIn19LCJzdGF0ZV9kaW1lbnNpb24iOjd9LCJvdXRwdXRfcGFyZW50IjoiL2RhdGExL2hvbWUvc3VueWlxL2thbG1hbm5ldF9kYWlseV9jYW1lbHNfcGVyX2Jhc2luXzIxX2RldmVsb3BtZW50XzIwMjYwOTA4L3J1bnMiLCJwYXJlbnRfZGVhZGxpbmVfc2Vjb25kcyI6NzIwMCwicHJlY2hlY2tfYWNjZXB0YW5jZSI6IlJFUVVJUkVTX0VYVEVSTkFMX0lOREVQRU5ERU5UX0FDQ0VQVEFOQ0UiLCJwcmVkZWNlc3Nvcl9qb2JfaWQiOjIyNDExNywicmVxdWVzdF9kaXJlY3RvcnkiOiIvZGF0YTEvaG9tZS9zdW55aXEva2FsbWFubmV0X2RhaWx5X2NhbWVsc19wZXJfYmFzaW5fMjFfZGV2ZWxvcG1lbnRfMjAyNjA5MDgvcnVudGltZS90cmFpbl8wODE5MDUwMF9lbnRyeXJlcGFpcl9zZXE4MSIsInJlc291cmNlX3BvbGljeV9zaGEyNTYiOiI5NjlhMWI1YTI0MjdhOWU1ZTlmZTE3Mjg0MTY3NGYwZGNlMDMxMDU5YWY4OGVmZjIyNjNmOTk1OGY3MzkzZDBkIiwicmVzdGFydF9yZWFzb24iOiJFTkdJTkVFUklOR19GQUlMVVJFX0JFRk9SRV9NT0RFTF9DT05TVFJVQ1RJT04iLCJyZXN1bWVfcnVuX2RpcmVjdG9yeSI6bnVsbCwicnVuX2RpcmVjdG9yeSI6Ii9kYXRhMS9ob21lL3N1bnlpcS9rYWxtYW5uZXRfZGFpbHlfY2FtZWxzX3Blcl9iYXNpbl8yMV9kZXZlbG9wbWVudF8yMDI2MDkwOC9ydW5zL0RBSUxZX0NBTUVMU19LTkVUX1BFUl9CQVNJTl8yMV9ERVZFTE9QTUVOVF9WMl8yMDI2MDkwOF9CQVNJTl8wODE5MDUwMF9BODAwX1RSQUlOMV9TRVE4MSIsInNjaGVtYV92ZXJzaW9uIjoiZGFpbHlfY2FtZWxzX2ZpcnN0X3RyYWluaW5nX2NhbmRpZGF0ZV92MSIsInNjaWVudGlmaWNfc3VjY2Vzc19jbGFpbWVkIjpmYWxzZSwic2VxdWVuY2UiOjgxLCJzdGF0ZV9kaW1lbnNpb24iOjcsInRyYWluaW5nX2NvbW1hbmQiOlsiL2RhdGExL2hvbWUvc3VueWlxL21pbmljb25kYTMvZW52cy9uaF9maW5hbC9iaW4vcHl0aG9uIiwiLUIiLCItdSIsIi9kYXRhMS9ob21lL3N1bnlpcS9rYWxtYW5uZXRfZGFpbHlfY2FtZWxzX3Blcl9iYXNpbl8yMV9kZXZlbG9wbWVudF8yMDI2MDkwOC9kZXBsb3ltZW50X2VudHJ5X3JlcGFpcl8yMDI2MDkwOS93b3Jrc3BhY2Uvc2NyaXB0cy9ydW5fZGFpbHlfY2FtZWxzX2tuZXRfcGVyX2Jhc2luX3BpbG90LnB5IiwiLS1jb25maWciLCIvZGF0YTEvaG9tZS9zdW55aXEva2FsbWFubmV0X2RhaWx5X2NhbWVsc19wZXJfYmFzaW5fMjFfZGV2ZWxvcG1lbnRfMjAyNjA5MDgvZGVwbG95bWVudF9lbnRyeV9yZXBhaXJfMjAyNjA5MDkvd29ya3NwYWNlL2NvbmZpZ3MvZGFpbHlfY2FtZWxzX2tuZXRfcGVyX2Jhc2luX2RldmVsb3BtZW50X3YyXzA4MTkwNTAwLmpzb24iLCItLW91dHB1dC1wYXJlbnQiLCIvZGF0YTEvaG9tZS9zdW55aXEva2FsbWFubmV0X2RhaWx5X2NhbWVsc19wZXJfYmFzaW5fMjFfZGV2ZWxvcG1lbnRfMjAyNjA5MDgvcnVucyIsIi0tZXhlY3V0aW9uLWlkIiwiREFJTFlfQ0FNRUxTX0tORVRfUEVSX0JBU0lOXzIxX0RFVkVMT1BNRU5UX1YyXzIwMjYwOTA4X0JBU0lOXzA4MTkwNTAwX0E4MDBfVFJBSU4xX1NFUTgxIiwiLS1kZXZpY2UiLCJjdWRhIl0sInZhbGlkX3VudGlsX3NlY29uZHMiOjE3ODk0ODI4MDUsInZlcmlmaWVyX2NvbW1hbmQiOlsiL2RhdGExL2hvbWUvc3VueWlxL21pbmljb25kYTMvZW52cy9uaF9maW5hbC9iaW4vcHl0aG9uIiwiLUIiLCItdSIsIi9kYXRhMS9ob21lL3N1bnlpcS9rYWxtYW5uZXRfZGFpbHlfY2FtZWxzX3Blcl9iYXNpbl8yMV9kZXZlbG9wbWVudF8yMDI2MDkwOC9kZXBsb3ltZW50X2VudHJ5X3JlcGFpcl8yMDI2MDkwOS93b3Jrc3BhY2Uvc2NyaXB0cy92ZXJpZnlfZGFpbHlfY2FtZWxzX2tuZXRfcGVyX2Jhc2luX3BpbG90LnB5IiwiLS1ydW4tZGlyZWN0b3J5IiwiL2RhdGExL2hvbWUvc3VueWlxL2thbG1hbm5ldF9kYWlseV9jYW1lbHNfcGVyX2Jhc2luXzIxX2RldmVsb3BtZW50XzIwMjYwOTA4L3J1bnMvREFJTFlfQ0FNRUxTX0tORVRfUEVSX0JBU0lOXzIxX0RFVkVMT1BNRU5UX1YyXzIwMjYwOTA4X0JBU0lOXzA4MTkwNTAwX0E4MDBfVFJBSU4xX1NFUTgxIiwiLS1jb25maWciLCIvZGF0YTEvaG9tZS9zdW55aXEva2FsbWFubmV0X2RhaWx5X2NhbWVsc19wZXJfYmFzaW5fMjFfZGV2ZWxvcG1lbnRfMjAyNjA5MDgvZGVwbG95bWVudF9lbnRyeV9yZXBhaXJfMjAyNjA5MDkvd29ya3NwYWNlL2NvbmZpZ3MvZGFpbHlfY2FtZWxzX2tuZXRfcGVyX2Jhc2luX2RldmVsb3BtZW50X3YyXzA4MTkwNTAwLmpzb24iLCItLXJlcG9ydCIsIi9kYXRhMS9ob21lL3N1bnlpcS9rYWxtYW5uZXRfZGFpbHlfY2FtZWxzX3Blcl9iYXNpbl8yMV9kZXZlbG9wbWVudF8yMDI2MDkwOC9ydW50aW1lL3RyYWluXzA4MTkwNTAwX2VudHJ5cmVwYWlyX3NlcTgxL2V2aWRlbmNlL2F1ZGl0L2luZGVwZW5kZW50X3ZlcmlmaWNhdGlvbl9yZXBvcnQuanNvbiJdLCJ3b3Jrc3BhY2UiOiIvZGF0YTEvaG9tZS9zdW55aXEva2FsbWFubmV0X2RhaWx5X2NhbWVsc19wZXJfYmFzaW5fMjFfZGV2ZWxvcG1lbnRfMjAyNjA5MDgvZGVwbG95bWVudF9lbnRyeV9yZXBhaXJfMjAyNjA5MDkvd29ya3NwYWNlIn0K", "bytes": 7341, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/request.json", "sha256": "666fdd3ddafcc9c1c332bb0b4ea95885ad7af8f470be250efe6d593026ec7415"}
+FAILED_DEPLOYMENT_FILE={"base64": "ewogICJjb21tYW5kIjogWwogICAgInNjb250cm9sIiwKICAgICJzaG93IiwKICAgICJwYXJ0aXRpb24iLAogICAgImhncHU4IgogIF0sCiAgIm9ic2VydmVkX2F0X3NlY29uZHMiOiAxNzg4OTQ5NjUxLAogICJ0aW1lb3V0X3NlY29uZHMiOiAyMAp9Cg==", "bytes": 142, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/deployment_livecheck_seq80/query-001.command.json", "sha256": "106c242a9f36867382166fe42ebe993d772174bd23c053c869974930252ad820"}
+FAILED_DEPLOYMENT_FILE={"base64": "ewogICJjb21tYW5kIjogWwogICAgInNjb250cm9sIiwKICAgICJzaG93IiwKICAgICJwYXJ0aXRpb24iLAogICAgImhncHU4IgogIF0sCiAgImV4aXRfY29kZSI6IDAsCiAgImZpbmlzaGVkX2F0X3NlY29uZHMiOiAxNzg4OTQ5NjUxLAogICJvYnNlcnZlZF9hdF9zZWNvbmRzIjogMTc4ODk0OTY1MSwKICAic3RkZXJyX3NoYTI1NiI6ICJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwKICAic3Rkb3V0X3NoYTI1NiI6ICIyODY1MDhmOWY5OWQ2YTQxMzk0NjBhNTZiYzBlYjM2ZjUyM2EzNDU2MzUxNjEwNjM2YTljOTg4YjVmY2Y1NWM1IiwKICAidGltZWRfb3V0IjogZmFsc2UsCiAgInRpbWVvdXRfc2Vjb25kcyI6IDIwCn0K", "bytes": 393, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/deployment_livecheck_seq80/query-001.json", "sha256": "b250c126930ce411f1f69560f8db8cb2f58d1ff9e2fb7ac073211391f8a5de2a"}
+FAILED_DEPLOYMENT_FILE={"base64": "", "bytes": 0, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/deployment_livecheck_seq80/query-001.stderr", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+FAILED_DEPLOYMENT_FILE={"base64": "UGFydGl0aW9uTmFtZT1oZ3B1OAogICBBbGxvd0dyb3Vwcz1BTEwgQWxsb3dBY2NvdW50cz1BTEwgQWxsb3dRb3M9QUxMCiAgIEFsbG9jTm9kZXM9QUxMIERlZmF1bHQ9Tk8gUW9TPU4vQQogICBEZWZhdWx0VGltZT1OT05FIERpc2FibGVSb290Sm9icz1OTyBFeGNsdXNpdmVVc2VyPU5PIEdyYWNlVGltZT0wIEhpZGRlbj1OTwogICBNYXhOb2Rlcz1VTkxJTUlURUQgTWF4VGltZT1VTkxJTUlURUQgTWluTm9kZXM9MCBMTE49Tk8gTWF4Q1BVc1Blck5vZGU9VU5MSU1JVEVECiAgIE5vZGVzPW5ndVsyMDEtMjAzXQogICBQcmlvcml0eUpvYkZhY3Rvcj0xIFByaW9yaXR5VGllcj0xIFJvb3RPbmx5PU5PIFJlcVJlc3Y9Tk8gT3ZlclN1YnNjcmliZT1OTwogICBPdmVyVGltZUxpbWl0PU5PTkUgUHJlZW1wdE1vZGU9T0ZGCiAgIFN0YXRlPVVQIFRvdGFsQ1BVcz0xOTIgVG90YWxOb2Rlcz0zIFNlbGVjdFR5cGVQYXJhbWV0ZXJzPU5PTkUKICAgSm9iRGVmYXVsdHM9KG51bGwpCiAgIERlZk1lbVBlck5vZGU9VU5MSU1JVEVEIE1heE1lbVBlck5vZGU9VU5MSU1JVEVECgo=", "bytes": 545, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/deployment_livecheck_seq80/query-001.stdout", "sha256": "286508f9f99d6a4139460a56bc0eb36f523a3456351610636a9c988b5fcf55c5"}
+FAILED_DEPLOYMENT_FILE={"base64": "ewogICJjb21tYW5kIjogWwogICAgInNpbmZvIiwKICAgICItTiIsCiAgICAiLXAiLAogICAgImhncHU4IiwKICAgICItaCIsCiAgICAiLU8iLAogICAgIk5vZGVIb3N0LEdyZXMsR3Jlc1VzZWQsQ1BVc1N0YXRlLFN0YXRlTG9uZyIKICBdLAogICJvYnNlcnZlZF9hdF9zZWNvbmRzIjogMTc4ODk0OTY1MSwKICAidGltZW91dF9zZWNvbmRzIjogMjAKfQo=", "bytes": 200, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/deployment_livecheck_seq80/query-002.command.json", "sha256": "6fcc6198ab7fdf65698661c83ca235ec108c537952bc0c4c70ead3ae265f8a7f"}
+FAILED_DEPLOYMENT_FILE={"base64": "ewogICJjb21tYW5kIjogWwogICAgInNpbmZvIiwKICAgICItTiIsCiAgICAiLXAiLAogICAgImhncHU4IiwKICAgICItaCIsCiAgICAiLU8iLAogICAgIk5vZGVIb3N0LEdyZXMsR3Jlc1VzZWQsQ1BVc1N0YXRlLFN0YXRlTG9uZyIKICBdLAogICJleGl0X2NvZGUiOiAwLAogICJmaW5pc2hlZF9hdF9zZWNvbmRzIjogMTc4ODk0OTY1MSwKICAib2JzZXJ2ZWRfYXRfc2Vjb25kcyI6IDE3ODg5NDk2NTEsCiAgInN0ZGVycl9zaGEyNTYiOiAiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsCiAgInN0ZG91dF9zaGEyNTYiOiAiMzNkNGI1M2JkNzg0M2EwMGNhYjE4MjFjY2E1NThhNmMwN2RmNTMyYjYxZmE4M2FjNWEyZmY2MGIwZTRiMjc1NCIsCiAgInRpbWVkX291dCI6IGZhbHNlLAogICJ0aW1lb3V0X3NlY29uZHMiOiAyMAp9Cg==", "bytes": 451, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/deployment_livecheck_seq80/query-002.json", "sha256": "3624bba1af2b199341276a3fe25bd3d1dbbb99b8775e3d6db054bc918d91d3aa"}
+FAILED_DEPLOYMENT_FILE={"base64": "", "bytes": 0, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/deployment_livecheck_seq80/query-002.stderr", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+FAILED_DEPLOYMENT_FILE={"base64": "bmd1MjAxICAgICAgICAgICAgICBncHU6OCAgICAgICAgICAgICAgIGdwdTo4LGRjdTowICAgICAgICAgMzgvMjYvMC82NCAgICAgICAgICBtaXhlZCAgICAgICAgICAgICAgIApuZ3UyMDIgICAgICAgICAgICAgIGdwdTo4ICAgICAgICAgICAgICAgZ3B1OjAsZGN1OjAgICAgICAgICAwLzY0LzAvNjQgICAgICAgICAgIG1haW50ICAgICAgICAgICAgICAgCm5ndTIwMyAgICAgICAgICAgICAgZ3B1OjggICAgICAgICAgICAgICBncHU6OCxkY3U6MCAgICAgICAgIDgvNTYvMC82NCAgICAgICAgICAgbWl4ZWQgICAgICAgICAgICAgICAK", "bytes": 303, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/deployment_livecheck_seq80/query-002.stdout", "sha256": "33d4b53bd7843a00cab1821cca558a6c07df532b61fa83ac5a2ff60b0e4b2754"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/admission.json"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/execution_ownership.json"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/submission_seq81.attempt"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/submission_seq81.stdout"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/submission_seq81.stderr"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/submission_seq81.exit"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/submission_seq81.receipt.json"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/evidence"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/precheck_gate"}
+READ_ONLY_RESOURCE_AUDIT_COMPLETE submissions=0 checkpoints_read=0 scientific_arrays_read=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T18:33:43+0800
