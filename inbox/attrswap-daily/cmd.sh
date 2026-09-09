@@ -1,54 +1,37 @@
 #!/bin/bash
-# precip-swap -- move the gate and six arms from hgpu8 to hgpu4.
-# Reason: on hgpu8 the gate sat PENDING with reason (Priority) and an estimated start of 2026-09-15 (six days
-# out) despite 86 idle CPUs, i.e. fair-share priority, not capacity. hgpu4 has two fully idle nodes.
-# Only the partition line changes; the frozen contract, configs, data and code are untouched.
-# All seven jobs go to the same partition so the six arms stay mutually comparable.
+# precip-swap status -- READ-ONLY. Queue, accounting, build reports, medians, latest epoch, errors.
 set -o pipefail
 date "+wallclock %F %T %z"
 R=/data1/home/sunyiq/precip_swap_daily_2026_09
-
-echo "=== A. CANCEL THE SEVEN hgpu8 JOBS (explicit ids only, never -u) ==="
-for j in $(cat "$R/logs/job_ids.txt"); do
-  st=$(sacct -j "$j" -X -n --format=State 2>/dev/null | head -1 | tr -d ' ')
-  case "$st" in
-    PENDING) scancel "$j" && echo "  已取消 $j（PENDING，从未启动）";;
-    RUNNING) echo "  $j 正在运行 —— 不取消，停下报告"; exit 1;;
-    *) echo "  $j 状态 $st —— 不动";;
-  esac
+echo "=== A. QUEUE ==="
+squeue -u "$USER" -o '%.11i %.24j %.9T %.10M %.9N %.18E' 2>&1 | grep -Ei 'pswap|JOBID' || echo '  (none queued)'
+echo "=== B. ACCOUNTING ==="
+ids=$(tr '\n' ',' < "$R/logs/job_ids.txt" | sed 's/,$//')
+sacct -j "$ids" -X --format=JobID%9,JobName%24,State%12,ExitCode%8,Elapsed%10,NodeList%9 2>&1
+echo "=== C. GATE + BUILD REPORTS ==="
+cat "$R/logs/gate.txt" 2>/dev/null || echo "  (gate marker absent)"
+for f in "$R"/logs/build_*.json; do
+  [ -f "$f" ] || continue
+  echo "--- $(basename $f) ---"
+  python -c "
+import json,sys
+d=json.load(open(sys.argv[1]))
+print(' product=%s written=%s failures=%d lag0_share=%.4f' % (d['product'], d['written'], len(d['failures']), d['lag0_share']))
+print(' ratio_over_maurer:', d['ratio_over_maurer'])
+print(' v6_off_lag basins:', len(d.get('v6_off_lag_basins', [])))
+for n in d.get('notes', []): print(' NOTE', n[:160])
+for x in d['failures'][:3]: print(' FAIL', x[:160])
+" "$f" 2>&1 || cat "$f"
 done
-mv "$R/logs/job_ids.txt" "$R/logs/job_ids.hgpu8_attempt.txt"
-
-echo "=== B. SWITCH PARTITION IN THE TWO TEMPLATES ==="
-for f in "$R/hpc_deploy/pswap_gate.slurm" "$R/hpc_deploy/pswap_train.slurm"; do
-  echo "  before $(basename $f) $(sha256sum $f | cut -c1-16)"
-  sed -i 's|^#SBATCH -p hgpu8$|#SBATCH -p hgpu4|' "$f"
-  echo "  after  $(basename $f) $(sha256sum $f | cut -c1-16)"
-  grep -nE '^#SBATCH (-p|--cpus-per-task|--gres)' "$f"
+echo "=== D. MEDIANS ==="
+for f in "$R"/logs/*.public_median.txt; do [ -f "$f" ] && echo "  $(basename $f .public_median.txt): $(cat $f)"; done
+echo "medians present: $(ls "$R"/logs/*.public_median.txt 2>/dev/null | wc -l)/6"
+echo "=== E. LATEST EPOCH PER ARM ==="
+for g in "$R"/logs/slurm_pswap_armP*.out; do
+  [ -f "$g" ] || continue
+  e=$(grep -oE "Epoch [0-9]+ average loss" "$g" 2>/dev/null | tail -1) || true
+  echo "  $(basename $g): ${e:-starting}"
 done
-
-echo "=== C. SUBMIT GATE ==="
-out=$(sbatch "$R/hpc_deploy/pswap_gate.slurm" 2>&1); echo "$out"
-GATE=$(echo "$out" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
-[ -n "$GATE" ] || { echo SUBMIT_FAILED_GATE; exit 1; }
-echo "$GATE" > "$R/logs/job_ids.txt"
-
-echo "=== D. SUBMIT 6 ARMS (afterok:$GATE) ==="
-for a in pswap_armP_chirps_s100 pswap_armP_chirps_s200 pswap_armP_chirps_s300 \
-         pswap_armP_era5l_s100 pswap_armP_era5l_s200 pswap_armP_era5l_s300; do
-  sed -e "s|^#SBATCH -J pswap_arm|#SBATCH -J ${a}|" \
-      -e "s|^#SBATCH --gres=gpu:1|#SBATCH --gres=gpu:1\n#SBATCH --dependency=afterok:${GATE}|" \
-      -e "s|^set -eo pipefail|set -eo pipefail\nCFG=${a}|" \
-      "$R/hpc_deploy/pswap_train.slurm" > "$R/hpc_deploy/jobs/${a}.slurm"
-  o=$(sbatch "$R/hpc_deploy/jobs/${a}.slurm" 2>&1)
-  j=$(echo "$o" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+')
-  if [ -z "$j" ]; then echo "SUBMIT_FAILED $a :: $o"; else echo "$a -> $j"; echo "$j" >> "$R/logs/job_ids.txt"; fi
-done
-echo "job ids: $(tr '\n' ' ' < $R/logs/job_ids.txt)"
-
-echo "=== E. QUEUE + ESTIMATE ==="
-squeue -u "$USER" -o '%.11i %.24j %.9T %.16E %.26R' 2>&1 | grep -Ei 'pswap|JOBID' || echo '  (none)'
-echo "  gate $GATE 预估启动: $(squeue -j $GATE -h --start -o '%S' 2>&1)"
-echo "=== F. hgpu4 卡型（登记用）==="
-sinfo -p hgpu4 -N -o "%.9N %.8t %.20C %.10G" 2>&1
+echo "=== F. ERRORS ==="
+grep -lE "Traceback|CUDA error|out of memory|WRONG CODE|核验失败" "$R"/logs/slurm_pswap_*.out "$R"/logs/slurm_pswap_*.err 2>/dev/null || echo "  none"
 echo "=== DONE ==="
