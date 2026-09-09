@@ -1,0 +1,55 @@
+### channel=kalmannet-daily-perbasin seq=82
+### host=login4
+### started=2026-09-09T18:46:03+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=82 purpose=readonly-resource-refresh-and-run-absence
+CURRENT_SHARED_A800_CAPACITY_BEGIN
+ngu201              gpu:8               gpu:8,dcu:0         34/30/0/64          mixed               
+ngu202              gpu:8               gpu:0,dcu:0         0/64/0/64           maint               
+ngu203              gpu:8               gpu:8,dcu:0         8/56/0/64           mixed               
+CURRENT_SHARED_A800_CAPACITY_EXIT=0
+A800_QUEUE_ESTIMATES_BEGIN
+223992|PENDING|1|32|gpu:8|2026-09-15T08:33:19|2026-09-15T12:33:19|(Resources)
+202229|PENDING|1|4|N/A|N/A|N/A|(DependencyNeverSatisfied)
+202294|PENDING|1|4|N/A|N/A|N/A|(Dependency)
+202315|PENDING|1|2|N/A|N/A|N/A|(Dependency)
+202507|PENDING|1|4|gpu:1|N/A|N/A|(DependencyNeverSatisfied)
+202293|PENDING|1|4|N/A|N/A|N/A|(JobHeldUser)
+A800_QUEUE_ESTIMATES_EXIT=0
+CURRENT_OWN_QUEUE_BEGIN
+223992|tukf09-455-v2r12-prepare|PENDING|hgpu8|1|32|gpu:8|/data1/home/sunyiq/hpc_mailbox|(Resources)
+224255_18|ngf-select-B|PENDING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|(JobArrayTaskLimit)
+224255_19|ngf-select-B|PENDING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|(JobArrayTaskLimit)
+224255_20|ngf-select-B|PENDING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|(JobArrayTaskLimit)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|1|2|N/A|/data1/home/sunyiq/hpc_mailbox|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|1|4|gpu:1|/data1/home/sunyiq/hpc_mailbox|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|1|4|gpu:1|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(JobHeldUser)
+224312|id33_b3_calib|RUNNING|hgpu2p|1|12|gpu:1|/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo|ngu006
+224311|id33_b3_arms2|RUNNING|hgpu2p|1|12|gpu:1|/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo|ngu008
+224310|id33_b3_arms1|RUNNING|hgpu2p|1|12|gpu:1|/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo|ngu004
+224255_17|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu011
+224255_16|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu011
+224255_15|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu004
+224255_14|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu001
+224255_13|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu001
+224255_12|ngf-select-B|RUNNING|hgpu2p|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B|ngu010
+CURRENT_OWN_QUEUE_EXIT=0
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/admission.json"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/execution_ownership.json"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/submission_seq81.attempt"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/submission_seq81.stdout"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/submission_seq81.stderr"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/submission_seq81.exit"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/submission_seq81.receipt.json"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/evidence"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_entryrepair_seq81/precheck_gate"}
+EXECUTION_TARGET_STATE={"exists": false, "is_symlink": false, "path": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runs/DAILY_CAMELS_KNET_PER_BASIN_21_DEVELOPMENT_V2_20260908_BASIN_08190500_A800_TRAIN1_SEQ81"}
+READ_ONLY_TARGETS_COMPLETE count=10
+TARGETS_EXIT=0
+READ_ONLY_REFRESH_COMPLETE exit=0 submissions=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T18:46:04+0800
