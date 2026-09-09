@@ -1,0 +1,40 @@
+### channel=id33-transformer-recipe-repair seq=39
+### host=login4
+### started=2026-09-09T15:36:07+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-09T15:36:07+0800
+=== DIGEST DIRS ===
+/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/results/33_transformer_recipe_repair/_repro_probe/digests_control_223972
+/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/results/33_transformer_recipe_repair/_repro_probe/digests_deterministic_223971
+--- digests_control_223972 ---
+  r1: det_req=False algos=False cudnn_det=False tf32=False cublas='' failed=None
+    model_epoch001.pt 3ac3613feaa5447c2e5a39ef589e10ebb0e351d208efabe4c74accd9fef355da
+    model_epoch002.pt 24c3f7a5d3aa4b4d0870126924a872846c9db19410ee459f46c181fac1134f8e
+  r2: det_req=False algos=False cudnn_det=False tf32=False cublas='' failed=None
+    model_epoch001.pt cc8adb6bf12d94d8b4a4414e1181e74db0c7c60c189b6c44df32727db4006707
+    model_epoch002.pt 1b138a4e9aa82080c390e0230f6022f9d7de976f5f4ceb60c5dd4fd50a18b692
+  r3: det_req=False algos=False cudnn_det=False tf32=False cublas='' failed=None
+    model_epoch001.pt 89708a8aa8d1cdedca2c8de514a0b17b35a2e8ac276eea1f763420922d30b8e0
+    model_epoch002.pt f4052863e5390e9438e32dd675bd9ae17e59b470d2e59143b7a889ae2e2ce9f2
+  model_epoch001.pt: distinct=3 identical=False
+  model_epoch002.pt: distinct=3 identical=False
+  env: NVIDIA GeForce RTX 3090 torch 2.4.0 cuda 12.1 cudnn 90100 node ngu004
+--- digests_deterministic_223971 ---
+  r1: det_req=True algos=True cudnn_det=True tf32=False cublas=':4096:8' failed=None
+    model_epoch001.pt 64e7e6e0142beab66464fb3eddeaed6ec0db0954e5bcd6246ba0f2ad094d09a9
+    model_epoch002.pt 26b2e3897bac8345e65b6e7d5068d7b7bfb779bf893fd80df836afb6dc35bd92
+  r2: det_req=True algos=True cudnn_det=True tf32=False cublas=':4096:8' failed=None
+    model_epoch001.pt 64e7e6e0142beab66464fb3eddeaed6ec0db0954e5bcd6246ba0f2ad094d09a9
+    model_epoch002.pt 26b2e3897bac8345e65b6e7d5068d7b7bfb779bf893fd80df836afb6dc35bd92
+  r3: det_req=True algos=True cudnn_det=True tf32=False cublas=':4096:8' failed=None
+    model_epoch001.pt 64e7e6e0142beab66464fb3eddeaed6ec0db0954e5bcd6246ba0f2ad094d09a9
+    model_epoch002.pt 26b2e3897bac8345e65b6e7d5068d7b7bfb779bf893fd80df836afb6dc35bd92
+  model_epoch001.pt: distinct=1 identical=True
+  model_epoch002.pt: distinct=1 identical=True
+  env: NVIDIA GeForce RTX 3090 torch 2.4.0 cuda 12.1 cudnn 90100 node ngu004
+=== CROSS-CONDITION ===
+(deterministic epoch002 vs control epoch002 are expected to differ; that is not the test)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T15:36:11+0800
