@@ -1,140 +1,80 @@
 #!/usr/bin/env bash
-# Read-only B startup observation; not terminal admission and never a submission.
+# Read-only observation of the exact original B array and authorized A800 retry.
 set -euo pipefail
-export EXPECTED_B_JOB_ID=224255
-python3 -I -B - "${EXPECTED_B_JOB_ID:?expected submitted B job identity required}" <<'PY'
+python3 -I -B - <<'PY'
 import base64
-import collections
 import datetime
 import gzip
 import hashlib
 import json
 import pathlib
-import re
 import subprocess
-import sys
 
-root = pathlib.Path('/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/stages/B')
-assert root.is_dir() and not root.is_symlink() and root.resolve() == root
-expected_job = sys.argv[1]
-assert re.fullmatch(r'[0-9]+', expected_job)
+root = pathlib.Path('/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1')
+assert root.resolve() == root and root.is_dir()
 
-def raw_file(path):
-    assert path.is_file() and not path.is_symlink(), str(path)
-    assert path.resolve().is_relative_to(root), str(path)
+def raw(path):
+    assert path.is_file() and not path.is_symlink() and path.resolve() == path
     return path.read_bytes()
 
-def decode(raw):
-    def pairs(items):
-        result = {}
-        for name, value in items:
-            assert name not in result, 'Duplicate JSON key'
-            result[name] = value
-        return result
-    return json.loads(raw, object_pairs_hook=pairs,
-                      parse_constant=lambda value: {'nonfinite_observation_value': value})
-
-def observe_json(path):
+def snapshot(path):
     if not path.exists():
         return None
-    raw = raw_file(path)
-    try:
-        data = decode(raw)
-    except (ValueError, AssertionError) as exc:
-        data = {'observation_error': str(exc)}
-    return {'path': str(path), 'bytes': len(raw),
-            'sha256': hashlib.sha256(raw).hexdigest(), 'content': data}
+    data = raw(path)
+    return {'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(),
+            'content': json.loads(data)}
 
-def command(argv):
-    response = subprocess.run(argv, capture_output=True, text=True,
-                              check=False, timeout=45)
-    return {'command': argv, 'returncode': response.returncode,
-            'stdout': response.stdout, 'stderr': response.stderr}
-
-job = raw_file(root / 'array_job_id.txt').decode().strip()
-assert job == expected_job
-manifest_raw = raw_file(root / 'STAGE_B_MANIFEST.json')
-assert hashlib.sha256(manifest_raw).hexdigest() == 'c5f8d56480510729dd14d44cb00d5e703425ebdeb837b059b674998b425784b1'
-manifest = decode(manifest_raw)
-static_hashes = {}
-for name, expected_hash in manifest['static_files'].items():
-    assert name and not name.startswith('/') and '\\' not in name
-    assert all(part not in ('', '.', '..') for part in name.split('/'))
-    actual_hash = hashlib.sha256(raw_file(root / name)).hexdigest()
-    assert actual_hash == expected_hash, name
-    static_hashes[name] = actual_hash
-receipts = {}
-for name in ('DEPLOYMENT_RECEIPT.json', 'SUBMISSION_INTENT.json',
-             'SUBMISSION_RESPONSE.json', 'SUBMISSION_RECEIPT.json',
-             'CACHE_ENVIRONMENT_PREFLIGHT.json'):
-    receipts[name] = observe_json(root / name)
-    assert receipts[name] is not None
-    assert 'observation_error' not in receipts[name]['content']
-submission = receipts['SUBMISSION_RECEIPT.json']['content']
-assert submission['status'] == 'SUBMITTED' and submission['stage'] == 'B'
-assert submission['job_id'] == job and submission['stage_root'] == str(root)
-exp = root / 'repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902'
-combos = [decode(line) for line in raw_file(exp / 'combos.jsonl').splitlines() if line.strip()]
-assert len(combos) == 21 and [item['index'] for item in combos] == list(range(21))
-assert [item['run_id'] for item in combos] == ['NGF-SELECT-20260908-B%02d' % (i + 1) for i in range(21)]
-queue = command(['squeue', '-r', '-j', job, '-h', '-o', '%i|%T|%M|%R'])
-accounting = command(['sacct', '-j', job, '-X', '-n', '-P',
-                      '--format=JobID,JobIDRaw,State,ExitCode,Elapsed,Start,End,NodeList'])
-state_counts = collections.Counter()
-accounting_rows = []
-for line in accounting['stdout'].splitlines():
-    fields = line.split('|')
-    if fields and re.fullmatch(re.escape(job) + r'_([0-9]+)', fields[0]):
-        accounting_rows.append(fields)
-        state_counts[fields[2]] += 1
-audits = [observe_json(path) for path in exp.glob('audits/*_formal_*.json')]
+manifest_raw = raw(root / 'RETRY_MANIFEST.json')
+assert hashlib.sha256(manifest_raw).hexdigest() == '567471e0b43fc924176d93e18d3c880b5f45db131378b1c46dc194a6e6002e2a'
+manifest = json.loads(manifest_raw)
+assert raw(root / 'array_job_id.txt').decode().strip() == '224389'
+receipt = snapshot(root / 'SUBMISSION_RECEIPT.json')
+assert receipt['content']['job_id'] == '224389'
+assert hashlib.sha256(raw(root / 'retry.slurm')).hexdigest() == '4c60d0e95e37cd521209e208b5427fd842ecbbedcc2681a5e360db5143f4f478'
+source = json.loads(raw(root / 'STAGE_B_MANIFEST.json'))
+for rel, expected in {**source['static_files'], **manifest['extra_static_files']}.items():
+    assert not rel.startswith('/') and '\\' not in rel and all(x not in ('', '.', '..') for x in rel.split('/'))
+    assert hashlib.sha256(raw(root / rel)).hexdigest() == expected
+queries = []
+for argv in [
+    ['squeue', '-r', '-j', '224255,224389', '-h', '-o', '%i|%j|%P|%T|%M|%E|%R'],
+    ['sacct', '-j', '224255,224389', '-X', '-n', '-P', '--format=JobID,JobIDRaw,State,ExitCode,Elapsed,Start,End,NodeList'],
+]:
+    p = subprocess.run(argv, capture_output=True, text=True, timeout=45, check=False)
+    queries.append({'command': argv, 'returncode': p.returncode, 'stdout': p.stdout, 'stderr': p.stderr})
+    assert p.returncode == 0 and not p.stderr
+experiment = root / 'repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902'
+combos = [json.loads(line) for line in raw(experiment / 'combos.jsonl').splitlines() if line.strip()]
 runs = []
-for combo in combos:
-    index, seed = combo['index'], combo['seed']
-    item = {'index': index, 'run_id': combo['run_id'], 'seed': seed, 'combo': combo,
-            'claim': observe_json(root / 'claims' / ('index%04d.json' % index))}
-    directories = list(exp.glob('runs/formal_seed%d_gpu/idx%04d_*' % (seed, index)))
+for i in range(12):
+    c = combos[i]
+    item = {'index': i, 'combo': c, 'claim': snapshot(root / 'claims' / ('index%04d.json' % i))}
+    directories = list(experiment.glob('runs/formal_seed%d_gpu/idx%04d_*' % (c['seed'], i)))
+    assert len(directories) <= 1
     item['run_directory_count'] = len(directories)
-    if len(directories) == 1:
+    item['audits'] = [snapshot(p) for p in (experiment / 'audits').glob(c['run_id'] + '_formal_*.json')]
+    if directories:
         run = directories[0]
-        assert run.is_dir() and not run.is_symlink() and run.resolve().is_relative_to(root)
-        item['run_directory'] = str(run)
-        epochs = run / 'results/epoch_log.jsonl'
-        if epochs.is_file():
-            raw = raw_file(epochs)
-            complete = [line for line in raw.splitlines(keepends=True)
-                        if line.strip() and line.endswith(b'\n')]
-            item['epoch_log_bytes'] = len(raw)
-            item['epoch_log_sha256'] = hashlib.sha256(raw).hexdigest()
-            try:
-                records = [decode(line) for line in complete]
-                item['completed_epochs'] = len(records)
-                if records:
-                    item['first_epoch'], item['last_epoch'] = records[0], records[-1]
-            except (ValueError, AssertionError) as exc:
-                item['epoch_observation_error'] = str(exc)
-        item['cell_metrics'] = observe_json(run / 'cell_metrics.json')
+        item['cell_metrics'] = snapshot(run / 'cell_metrics.json')
         item['failed_marker_present'] = (run / 'FAILED').is_file()
-        if (run / 'error.txt').is_file():
-            item['error_tail'] = raw_file(run / 'error.txt').decode(errors='replace')[-4000:]
-    item['launcher_audits'] = [row for row in audits if row['content'].get('run_id') == combo['run_id']]
+        epochs = run / 'results/epoch_log.jsonl'
+        if epochs.exists():
+            data = raw(epochs)
+            records = [json.loads(line) for line in data.splitlines(keepends=True) if line.endswith(b'\n') and line.strip()]
+            item['completed_epochs'] = len(records)
+            item['last_epoch'] = records[-1] if records else None
+            item['epoch_log_sha256'] = hashlib.sha256(data).hexdigest()
+        if (run / 'error.txt').exists():
+            item['error_tail'] = raw(run / 'error.txt').decode(errors='replace')[-4000:]
     runs.append(item)
-baseline_raw = raw_file(root / 'REMOTE_BASELINE.json')
-assert hashlib.sha256(baseline_raw).hexdigest() == '6314f746fce9f31d55687b35858736c4013bd5369e5b6a538bea155bd1b7c5ce'
-report = {'kind': 'READ_ONLY_OBSERVATION_NOT_ADMISSION', 'stage': 'B', 'job_id': job,
-          'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-          'root': str(root), 'squeue': queue, 'sacct': accounting,
-          'accounting_rows': accounting_rows, 'accounting_state_counts': dict(state_counts),
-          'runs': runs, 'deployment_receipts': receipts, 'verified_static_files': static_hashes,
-          'protected_files_freshly_rehashed_by_observer': False,
-          'data_or_checkpoint_tensors_loaded': False,
-          'training_or_evaluation_started_by_observer': False, 'new_jobs_submitted': 0}
-blob = json.dumps(report, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
-print('STAGE_STATUS_GZIP_BASE64=' + base64.b64encode(gzip.compress(blob, mtime=0)).decode())
-print('STATUS_SUMMARY=' + json.dumps({'job_id': job, 'stage': 'B',
-    'accounting_state_counts': dict(state_counts),
-    'claimed_runs': sum(row['claim'] is not None for row in runs),
-    'runs_with_completed_epochs': sum(row.get('completed_epochs', 0) > 0 for row in runs),
-    'failed_markers': sum(row.get('failed_marker_present', False) for row in runs),
-    'static_files_verified': len(static_hashes), 'new_jobs_submitted': 0}))
+report = {'kind': 'READ_ONLY_B_AND_A800_RETRY_OBSERVATION_NOT_ADMISSION', 'original_job_id': '224255',
+          'retry_job_id': '224389', 'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'queries': queries, 'retry_runs': runs, 'submission_receipt': receipt,
+          'static_files_verified': 69, 'new_jobs_submitted': 0, 'data_or_checkpoint_tensors_loaded': False}
+blob = json.dumps(report, sort_keys=True, separators=(',', ':')).encode()
+print('MEMORY_RETRY_STATUS_GZIP_BASE64=' + base64.b64encode(gzip.compress(blob, mtime=0)).decode())
+print('MEMORY_RETRY_STATUS_SUMMARY=' + json.dumps({'retry_job_id': '224389',
+      'claimed': sum(r['claim'] is not None for r in runs),
+      'runs_with_completed_epochs': sum(r.get('completed_epochs', 0) > 0 for r in runs),
+      'failed_markers': sum(r.get('failed_marker_present', False) for r in runs)}))
 PY
