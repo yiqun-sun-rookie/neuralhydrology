@@ -1,0 +1,8 @@
+### channel=kalmannet-wrr-hp-extension seq=46
+### host=login4
+### started=2026-09-09T15:50:05+0800
+### ---------- output ----------
+{"MKL_INTERFACE_LAYER": "LP64,GNU", "active_family_jobs": [], "conda_prefix": "/data1/home/sunyiq/miniconda3/envs/knet_clean", "deployment_or_training_executed": false, "dont_write_bytecode": true, "kind": "READ_ONLY_ACTIVATION_RECOVERY_PROBE", "new_jobs_submitted": 0, "observed_at_utc": "2026-09-09T07:50:10.010260+00:00", "python_isolated": true, "scheduler_query": {"command": ["squeue", "-r", "-h", "-u", "sunyiq", "-o", "%i|%T|%Z"], "returncode": 0, "stderr": "", "stdout": "223992|PENDING|/data1/home/sunyiq/hpc_mailbox\n202229|PENDING|/data1/home/sunyiq/nearing2022_da\n202294|PENDING|/data1/home/sunyiq/nearing2022_da\n202315|PENDING|/data1/home/sunyiq/hpc_mailbox\n202507|PENDING|/data1/home/sunyiq/hpc_mailbox\n215429|PENDING|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo\n202293|PENDING|/data1/home/sunyiq/nearing2022_da\n"}, "stage_B_exists": false, "tensors_loaded": false, "versions": {"numpy_version": "2.3.3", "python_version": "3.11.13", "torch_version": "2.4.0"}}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T15:50:10+0800
