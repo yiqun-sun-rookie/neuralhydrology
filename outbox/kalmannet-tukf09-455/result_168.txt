@@ -1,0 +1,21 @@
+### channel=kalmannet-tukf09-455 seq=168
+### host=login4
+### started=2026-09-09T21:26:02+0800
+### ---------- output ----------
+TIME=2026-09-09T21:26:02+0800
+OFFLINE_INPUTS_PUBLISHED
+cut: ": No such file or directory
+MANIFEST_SHA256=
+FILE_COUNT 24
+TOTAL_BYTES 2817756909
+#SBATCH -p hgpu4
+#SBATCH --cpus-per-task=16
+#SBATCH --gres=gpu:4
+#SBATCH -t 04:00:00
+PREPARATION_JOB_ID=224439
+     JOBID      STATE        TIME  NODELIST           NODELIST(REASON)
+    224439    RUNNING     INVALID    ngu104                     ngu104
+TUKF09_455_V2R13_WAIT_AND_SUBMIT
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T21:26:33+0800
