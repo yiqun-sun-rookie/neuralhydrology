@@ -1,0 +1,84 @@
+### channel=attrswap-daily seq=31
+### host=login4
+### started=2026-09-09T21:04:34+0800
+### ---------- output ----------
+wallclock 2026-09-09 21:04:34 +0800
+=== A. LANDING ===
+=== B. CODE ===
+source files: 78 (expect 78)
+  neuralhydrology/datasetzoo/camelsus.py 51e2e02b382ec103 (expect 51e2e02b382ec103)
+  neuralhydrology/modelzoo/cudalstm.py 27f2e17d3f388a9b (expect 27f2e17d3f388a9b)
+=== C. SHADOW ===
+maurer 可见 675 (expect 675)
+era5l_caravan 可见 529 (expect 529)
+=== D. LISTS + PAYLOAD ===
+basins_529 sha 98018c03b0295a56 (expect 98018c03b0295a56)
+  build_precip_swap.py dbd449c73f7a1a54 8528 字节
+  chirps_daily_529.csv.gz 296d3a574e7796a8 3850459 字节
+  make_pswap_configs.py 54d67cf34a3d1af7 3296 字节
+  pswap_gate.slurm 718febfc864fd540 2455 字节
+  pswap_train.slurm 0a0bb9ea768584f0 1482 字节
+=== E. CONFIGS ===
+pswap_armP_chirps_s100.yml  forcing=chirps  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+pswap_armP_chirps_s200.yml  forcing=chirps  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+pswap_armP_chirps_s300.yml  forcing=chirps  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+pswap_armP_era5l_s100.yml  forcing=era5l_precip  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+pswap_armP_era5l_s200.yml  forcing=era5l_precip  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+pswap_armP_era5l_s300.yml  forcing=era5l_precip  changed=['data_dir', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+pswap_smoke.yml  changed=['data_dir', 'epochs', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'train_basin_file', 'validation_basin_file']
+wrote 6 arm configs + 1 smoke config into /data1/home/sunyiq/precip_swap_daily_2026_09/configs
+--- 与基准配置的逐行差异（应只有允许的那几行）---
+3c3
+< data_dir: /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us
+---
+> data_dir: /data1/home/sunyiq/precip_swap_daily_2026_09/data_shadow/camels_us
+13c13
+< experiment_name: attrswap_ref27_parity_s900
+---
+> experiment_name: pswap_armP_chirps_s100
+15c15
+< - maurer
+---
+> - chirps
+34c34
+< run_dir: /data1/home/sunyiq/attr_swap_daily_2026_09/runs
+---
+> run_dir: /data1/home/sunyiq/precip_swap_daily_2026_09/runs
+36c36
+< seed: 900
+---
+> seed: 100
+68c68
+< test_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+---
+> test_basin_file: /data1/home/sunyiq/precip_swap_daily_2026_09/basin_lists/basins_529.txt
+71c71
+< train_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+---
+> train_basin_file: /data1/home/sunyiq/precip_swap_daily_2026_09/basin_lists/basins_529.txt
+74c74
+< validation_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+---
+> validation_basin_file: /data1/home/sunyiq/precip_swap_daily_2026_09/basin_lists/basins_529.txt
+=== F. SUBMIT GATE ===
+Submitted batch job 224421
+=== G. SUBMIT 6 ARMS (afterok:224421) ===
+pswap_armP_chirps_s100 -> 224422
+pswap_armP_chirps_s200 -> 224423
+pswap_armP_chirps_s300 -> 224424
+pswap_armP_era5l_s100 -> 224425
+pswap_armP_era5l_s200 -> 224426
+pswap_armP_era5l_s300 -> 224427
+job ids: 224421 224422 224423 224424 224425 224426 224427 
+      JOBID                     NAME     STATE       DEPENDENCY     NODELIST(REASON)
+     224421               pswap_gate   PENDING                            (Priority)
+     224422   pswap_armP_chirps_s100   PENDING   afterok:224421         (Dependency)
+     224423   pswap_armP_chirps_s200   PENDING   afterok:224421         (Dependency)
+     224424   pswap_armP_chirps_s300   PENDING   afterok:224421         (Dependency)
+     224425    pswap_armP_era5l_s100   PENDING   afterok:224421         (Dependency)
+     224426    pswap_armP_era5l_s200   PENDING   afterok:224421         (Dependency)
+     224427    pswap_armP_era5l_s300   PENDING   afterok:224421         (Dependency)
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T21:04:39+0800
