@@ -1,0 +1,71 @@
+### channel=kalmannet-tukf09-455 seq=184
+### host=login4
+### started=2026-09-09T22:40:54+0800
+### ---------- output ----------
+TIME=2026-09-09T22:40:54+0800
+=== PRECONDITIONS ===
+PREP_JOB=224466
+PRECONDITIONS_OK
+=== ISSUE THE TECHNICAL ADMISSION ===
+bitwise_equivalence_to_rtx3090_claimed=False
+bundle_manifest_sha256=02204ae45a9fcbc54cffb67c0ab816e8e1628d45817031db5a5c2bd3fe4a4822
+evaluation_array_reads=0
+evaluation_metrics=0
+evaluation_outputs=0
+evaluation_predictions=0
+exclusive_node_required=True
+exclusive_node_runtime_evidence_passed=True
+experiment_id=TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1
+formal_evaluation_authorized=False
+identity_sha256=54615f0ce42c10fbd3af82e3b4154e423957b0d5bbeb59b2399e6327d8e15410
+initial_bundle_verification_identity_sha256=cd8daa729aeb2c3070ff3a14bdfc1455722d404abae7de53d95eb8736f3ad9e0
+initial_bundle_verification_sha256=def7f5e58777a3575e888f543049aec8930dc8ca9132e7f022b194e36414b3f7
+local_filter_installation_final_sha256=ec222536b144e256e152cdaa857440d4482abac74c4eaf7ca6ab9dd8340bb79c
+neural_model_parallelism=4
+offline_input_identity_sha256=3baa9eb3b6cf9be52975f2fb44c1fd9f0a1dad96507895c475ae48ffbfdc4b79
+offline_input_manifest_sha256=1ce0d0b8f2db2950e70db5cca1863ba9ab98a7b455296e4285211ac5ab542d83
+ordered_basin_count=455
+original_training_admission_changed=False
+original_training_admission_file_sha256=43aafca6bc7b1d2dd18dcb872c76e831455d847710ca55e2a351f5537d4e776d
+original_training_admission_record_sha256=a44675237a8fd41761ed9ab5a7627f3eeecaa186eed29c91c110d0d32d41313a
+preparation_probe_identity_sha256=9e4666d33ebc64d320ad4f278b144ed981dae0863d80e5a1df822c6701acb6e5
+preparation_probe_sha256=b77f5b88e82ab61eb9135ddbb598bbba9d4876e04da344a8043979ab52876f85
+private_runtime_identity_sha256=b8d32cf54b5db283dbd8ee3467f0c19cec0fb6ef9273c764196a39f5fd3de0a3
+private_runtime_manifest_sha256=38168be5063ce089a18055a30aa0036a56df4899455f6796d61f8dc8b8bfa708
+remote_filter_installation_final_sha256=07790d500305dde7b2d5c43e8b47656ea4a15d0e5187669a7b194287e385c9cf
+schema_version=tukf09_455_hpc_technical_admission_a800_exclusive_v2r14
+scientific_contract_changed=False
+scientific_contract_sha256=7710594dcc5cce7f087cb70492a6f827c3925a98ea7fa051d26c5ef1660304e1
+source_capsule_data_file_count=911
+source_capsule_data_identity_sha256=dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da
+source_capsule_data_root=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v7_20260909/data/camels_us
+source_capsule_data_total_bytes=464792200
+source_capsule_deployment_mailbox_sequence=152
+source_capsule_deployment_result_sha256=32ab6cacbc372f325a08066a764b6db84c399e120b5469ff5bfac746252a800b
+source_capsule_directory_count=44
+source_capsule_evidence_file_count=3
+source_capsule_manifest_sha256=40dbf1a840b195696d99dcde1cc1ba8cdc73ef8137078dfd6844d4b4c07e3c03
+source_capsule_manifest_sha256_record_sha256=56c280947f119cc1bc7da6fb1170cbe84c972c3d61302dd1c336bae51024982f
+source_capsule_post_publication_audit_command_sha256=6749ffafbcd0c9065821ce93382edd3e9af78a3e2fb72ffc6df849594a6cb6dd
+source_capsule_post_publication_audit_mailbox_sequence=153
+source_capsule_post_publication_audit_result_sha256=1d2bfef7f4b6fc363e725a9a754db0b31cb6871995368404e38f5795e2fdde3b
+source_capsule_ready_sha256=4bfbd17c0042d931e8c5d80a4e3e28ebee18de2d384eac0035224ddb95864015
+source_capsule_root=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v7_20260909
+staged_sources_identity_sha256=c015a124c23006a00918da70c3d969eb0069c030a8839ae14a4bbb7b87390976
+staged_sources_manifest_sha256=e07512ce753af7f00b2836b0b05027db0e06c6f048f41ede97dad0234fa401d3
+status=HPC_A800_EXCLUSIVE_V2R14_TECHNICAL_EXECUTION_ADMITTED_FORMAL_EVALUATION_HOLD
+=== THE FOUR-CARD PARTITION RIGHT NOW ===
+HOSTNAMES           STATE               GRES                GRES_USED           CPUS(A/I/O/T)       
+ngu101              idle                gpu:4               gpu:0,dcu:0         0/96/0/96           
+ngu102              mixed               gpu:4               gpu:3,dcu:0         12/84/0/96          
+ngu103              down*               gpu:4               gpu:0,dcu:0         0/0/96/96           
+ngu104              idle                gpu:4               gpu:0,dcu:0         0/96/0/96           
+=== SUBMIT THE TRAINING JOB ===
+TRAINING_JOB=224505
+     JOBID                     NAME PARTITION    STATE       TIME  NODES NODELIST(REASON)
+    224505  tukf09-455-v2r14-neural     hgpu4  RUNNING    INVALID      1 ngu101
+--- training stderr, first moments ---
+TUKF09_455_V2R14_TRAINING_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T22:41:54+0800
