@@ -1,0 +1,14 @@
+### channel=attrswap-daily seq=30
+### host=login4
+### started=2026-09-09T19:50:52+0800
+### ---------- output ----------
+wallclock 2026-09-09 19:50:52 +0800
+=== ERA5-Land(Caravan) vs Maurer, 529 basins, 1989-01-04..2008-09-30 ===
+daily corr : p10 0.599  median 0.694  p90 0.841  min 0.495
+mean ratio : p10 0.796  median 0.991  p90 1.130
+best lag 0 : 528/529 = 99.81%
+lag counts : {0: np.int64(528), 1: np.int64(1)}
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T19:52:42+0800
