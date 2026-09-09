@@ -1,0 +1,114 @@
+### channel=kalmannet-tukf09-455 seq=183
+### host=login4
+### started=2026-09-09T22:36:03+0800
+### ---------- output ----------
+TIME=2026-09-09T22:36:03+0800
+PREPARATION_JOB=224466
+JobID|State|ExitCode|Elapsed|NodeList|MaxRSS
+224466|COMPLETED|0:0|00:12:26|ngu101|
+224466.batch|COMPLETED|0:0|00:12:26|ngu101|500092K
+224466.extern|COMPLETED|0:0|00:12:26|ngu101|1360K
+slurm_load_jobs error: Invalid job id specified
+=== WHAT THE ROOT HOLDS NOW ===
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909:
+total 28
+drwxr-xr-x.   7 sunyiq g_sunyiq 4096 Sep  9 22:30 .
+drwx------. 166 sunyiq g_sunyiq 4096 Sep  9 22:34 ..
+drwxr-xr-x.   3 sunyiq g_sunyiq 4096 Sep  9 22:12 bundle
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  9 22:23 logs
+drwxr-xr-x.   5 sunyiq g_sunyiq 4096 Sep  9 22:22 offline_inputs_v2r14
+drwxr-xr-x.   7 sunyiq g_sunyiq 4096 Sep  9 22:28 runtime_v2r14
+drwxr-xr-x.   2 sunyiq g_sunyiq 4096 Sep  9 22:35 status
+
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/status:
+total 192
+drwxr-xr-x. 2 sunyiq g_sunyiq   4096 Sep  9 22:35 .
+drwxr-xr-x. 7 sunyiq g_sunyiq   4096 Sep  9 22:30 ..
+-rw-r--r--. 1 sunyiq g_sunyiq    751 Sep  9 22:24 initial_bundle_verification.json
+-rw-r--r--. 1 sunyiq g_sunyiq     43 Sep  9 22:17 offline_inputs_download.launched
+-rw-r--r--. 1 sunyiq g_sunyiq      0 Sep  9 22:17 offline_inputs_download.lock
+-rw-r--r--. 1 sunyiq g_sunyiq      7 Sep  9 22:23 preparation_job_id.txt
+-rw-r--r--. 1 sunyiq g_sunyiq      0 Sep  9 22:23 preparation.lock
+-rw-r--r--. 1 sunyiq g_sunyiq   4480 Sep  9 22:35 preparation_probe.json
+-rw-r--r--. 1 sunyiq g_sunyiq 180987 Sep  9 22:33 staged_training_sources.json
+RUNTIME_FINAL=present
+=== PREPARE STDERR TAIL ===
+=== PREPARE STDOUT TAIL ===
+  "mutable_roots": [
+    "kalmannet/G:/github/pycharm/projects/neuralhydrology/data/camels_us",
+    "kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+  ],
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R14_HPC_RUNTIME_BUNDLE_VERIFIED"
+}
+{"data_file_count": 911, "data_identity_sha256": "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da", "data_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v7_20260909/data/camels_us", "data_total_bytes": 464792
+{"acquisition_host": "login4", "acquisition_host_shortname": "login4", "all_link_counts_one": true, "all_regular_files": true, "compute_copy_mode": "python_exclusive_buffered_byte_copy_with_fsync_no_symbolic_links_no_hard_links", "download_evidence": {"download_command": {"path": "evidence/download-
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/runtime_v2r14.pending.224466/sourcehouse/psutil-5.9.0.tar.gz: OK
+{"built_psutil_wheel_filename": "psutil-5.9.0-cp311-cp311-linux_x86_64.whl", "built_psutil_wheel_sha256": "08978297ad41f50ccc048ae9d7b72bd5f7436a65aa149a8911b0e0d1e86ee020", "distribution_versions": {"filelock": "3.13.1", "fsspec": "2026.3.0", "jinja2": "3.1.3", "markupsafe": "2.1.3", "mpmath": "1.3
+{"bundle_manifest_sha256": "02204ae45a9fcbc54cffb67c0ab816e8e1628d45817031db5a5c2bd3fe4a4822", "evaluation_array_reads": 0, "evaluation_metrics": 0, "evaluation_outputs": 0, "evaluation_predictions": 0, "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1", "filter_unit_cou
+TUKF09_455_HPC_PREPARATION_PROBE_COMPLETED
+=== IF PREPARATION FINISHED, WHAT IT WROTE ===
+--- initial_bundle_verification.json (751 bytes) ---
+{
+ "admitted_executable_count": 30,
+ "admitted_test_count": 12,
+ "bundle_manifest_sha256": "02204ae45a9fcbc54cffb67c0ab816e8e1628d45817031db5a5c2bd3fe4a4822",
+ "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+ "formal_evaluation_output_count": 0,
+ "identity_sha256": "cd8daa729aeb2c3070ff3a14bdfc1455722d404abae7de53d95eb8736f3ad9e0",
+ "member_count": 2808,
+ "mutable_directory_count_at_verification": 0,
+ "mutable_file_count_at_verification": 0,
+ "schema_version": "tukf09_455_hpc_initial_bundle_verification_a800_exclusive_v2r14",
+ "scientific_contract_changed": false,
+ "status": "STRICT_PRISTINE_A800_EXCLUSIVE_V2R14_BUNDLE_VERIFIED_BEFORE_RUNTIME_MUTATION",
+ "strict_verifier_sha256": "5dfb28742cc436c4509d43dd98fc3baf5097c1eaf9d22a64b5e3fef15980845e"
+}
+--- preparation_probe.json (4480 bytes) ---
+{
+ "bundle_manifest_sha256": "02204ae45a9fcbc54cffb67c0ab816e8e1628d45817031db5a5c2bd3fe4a4822",
+ "evaluation_array_reads": 0,
+ "evaluation_metrics": 0,
+ "evaluation_outputs": 0,
+ "evaluation_predictions": 0,
+ "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+ "filter_unit_count": 455,
+ "identity_sha256": "9e4666d33ebc64d320ad4f278b144ed981dae0863d80e5a1df822c6701acb6e5",
+ "initial_bundle_verification_identity_sha256": "cd8daa729aeb2c3070ff3a14bdfc1455722d404abae7de53d95eb8736f3ad9e0",
+ "initial_bundle_verification_sha256": "def7f5e58777a3575e888f543049aec8930dc8ca9132e7f022b194e36414b3f7",
+ "neural_model_unit_count": 0,
+ "offline_input_identity_sha256": "3baa9eb3b6cf9be52975f2fb44c1fd9f0a1dad96507895c475ae48ffbfdc4b79",
+ "offline_input_manifest_sha256": "1ce0d0b8f2db2950e70db5cca1863ba9ab98a7b455296e4285211ac5ab542d83",
+ "private_runtime_identity_sha256": "b8d32cf54b5db283dbd8ee3467f0c19cec0fb6ef9273c764196a39f5fd3de0a3",
+ "private_runtime_manifest_sha256": "38168be5063ce089a18055a30aa0036a56df4899455f6796d61f8dc8b8bfa708",
+ "remote_filter_installation_final_sha256": "07790d500305dde7b2d5c43e8b47656ea4a15d0e5187669a7b194287e385c9cf",
+ "schema_version": "tukf09_455_hpc_preparation_probe_a800_exclusive_v2r14",
+ "scientific_contract_changed": false,
+ "source_capsule_data_file_count": 911,
+ "source_capsule_data_identity_sha256": "dd238eebc1696f73f9ee
+--- staged_training_sources.json (180987 bytes) ---
+{
+ "evaluation_array_reads": 0,
+ "evaluation_metrics": 0,
+ "evaluation_outputs": 0,
+ "evaluation_predictions": 0,
+ "existing_tree_policy": "exact_verify_only_no_overwrite",
+ "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+ "file_count": 911,
+ "identity_sha256": "c015a124c23006a00918da70c3d969eb0069c030a8839ae14a4bbb7b87390976",
+ "publication_policy": "exclusive_destination_reservation_no_overwrite_freeze_root_on_failure",
+ "schema_version": "tukf09_455_hpc_staged_training_sources_a800_exclusive_v2r14",
+ "source_capsule_data_file_count": 911,
+ "source_capsule_data_identity_sha256": "dd238eebc1696f73f9eee7adf924913ff5a912c8f795f8998255e87408b760da",
+ "source_capsule_data_root": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_training_source_capsule_v7_20260909/data/camels_us",
+ "source_capsule_data_total_bytes": 464792200,
+ "source_capsule_deployment_mailbox_sequence": 152,
+ "source_capsule_deployment_result_sha256": "32ab6cacbc372f325a08066a764b6db84c399e120b5469ff5bfac746252a800b",
+ "source_capsule_directory_count": 44,
+ "source_capsule_evidence_file_count": 3,
+ "source_capsule_manifest_sha256": "40dbf1a840b195696d99dcde1cc1ba8cdc73ef8137078dfd6844d4b4c07e3c03",
+ "source_capsule_manifest_sha256_record_sha256": "56c280947f119cc1bc7da6fb1170cbe84c972c3d61302dd1c336bae51024982f",
+ "source_capsule_post_publ
+TUKF09_455_V2R14_STATUS_READ_ONLY_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T22:36:05+0800
