@@ -1,0 +1,38 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=93
+### host=login4
+### started=2026-09-09T19:41:24+0800
+### ---------- output ----------
+=== 2022_MATRIX_RESOURCE_PREFLIGHT ===
+2026-09-09T19:41:24+0800
+login4
+ngu001|mix|96|1|gpu:2|none
+ngu002|down*|96|1|gpu:2|Not responding
+ngu004|mix|96|1|gpu:2|none
+ngu005|drain|96|1|gpu:2|Kill task failed
+ngu006|mix|96|1|gpu:2|none
+ngu007|mix|96|1|gpu:2|none
+ngu008|mix|96|1|gpu:2|none
+ngu010|mix|32|1|gpu:2|none
+ngu011|mix|32|1|gpu:2|none
+224255_[18-20%6]|ngf-select-B|PENDING|0:00|1|(JobArrayTaskLimit)
+202229|N22-agg-eval|PENDING|0:00|1|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|0:00|1|(Dependency)
+202315|N22-gate|PENDING|0:00|1|(Dependency)
+202507|N22-mask-iso-531|PENDING|0:00|1|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|0:00|1|(DependencyNeverSatisfied)
+224389_[0-11%6]|ngf-B-memory-r1|PENDING|0:00|1|(Dependency)
+202293|N22-manifest|PENDING|0:00|1|(JobHeldUser)
+224312|id33_b3_calib|RUNNING|1:06:40|1|ngu006
+224311|id33_b3_arms2|RUNNING|1:06:49|1|ngu008
+224310|id33_b3_arms1|RUNNING|1:06:50|1|ngu004
+224255_17|ngf-select-B|RUNNING|3:26:46|1|ngu011
+224255_16|ngf-select-B|RUNNING|3:26:47|1|ngu011
+224255_15|ngf-select-B|RUNNING|3:27:48|1|ngu004
+224255_14|ngf-select-B|RUNNING|3:27:53|1|ngu001
+224255_13|ngf-select-B|RUNNING|3:27:54|1|ngu001
+224255_12|ngf-select-B|RUNNING|3:28:06|1|ngu010
+{"checkpoint_bytes_read": 0, "checkpoint_metadata": [{"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/runs/stage_a/seed_17/best_checkpoint.pt", "size": 88882}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/runs/stage_a/seed_29/best_checkpoint.pt", "size": 88882}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/runs/stage_a/seed_43/best_checkpoint.pt", "size": 88882}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_b_20260907_001/runs/stage_b/seed_17/best_checkpoint.pt", "size": 1326548}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_b_20260907_001/runs/stage_b/seed_29/best_checkpoint.pt", "size": 1137556}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_b_20260907_001/runs/stage_b/seed_43/best_checkpoint.pt", "size": 1137556}], "formal_input_bytes_read": 0, "free_bytes": 387756573122560, "input_metadata": [{"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/datong_realtime_features.csv", "registered_bytes": 4701303, "regular_file": true, "size": 4701303}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/nanjing_realtime_features.csv", "registered_bytes": 4673779, "regular_file": true, "size": 4673779}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/zhenjiang_realtime_features.csv", "registered_bytes": 4703128, "regular_file": true, "size": 4703128}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/jiangyin_realtime_features.csv", "registered_bytes": 4673156, "regular_file": true, "size": 4673156}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/xuliujing_realtime_features.csv", "registered_bytes": 4673755, "regular_file": true, "size": 4673755}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/realtime_features/wusongkou_realtime_features.csv", "registered_bytes": 4671049, "regular_file": true, "size": 4671049}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/nanjing_retrospective_targets.csv", "registered_bytes": 4674734, "regular_file": true, "size": 4674734}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/zhenjiang_retrospective_targets.csv", "registered_bytes": 4703632, "regular_file": true, "size": 4703632}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/jiangyin_retrospective_targets.csv", "registered_bytes": 4674038, "regular_file": true, "size": 4674038}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/xuliujing_retrospective_targets.csv", "registered_bytes": 4674687, "regular_file": true, "size": 4674687}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/retrospective_targets/wusongkou_retrospective_targets.csv", "registered_bytes": 4671875, "regular_file": true, "size": 4671875}, {"is_symlink": false, "path": "/data1/home/sunyiq/zhenjiang_5s5t_stage_a_20260905_recovery_001/inputs/2017_2022/astronomical_tide/wusongkou_tide_model.json", "registered_bytes": 6197, "regular_file": true, "size": 6197}], "new_root_exists": false, "new_root_is_symlink": false, "schema": "zhenjiang-2022-matrix-readonly-preflight-v1", "source_contract_sha256": "0e2cc530d5158cb9535862b10d6489436b73811c84a3d601579ed79de28155b3", "time_beijing": "2026-09-09T19:41:25.729477+08:00"}
+=== 2022_MATRIX_RESOURCE_PREFLIGHT_COMPLETE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T19:41:25+0800
