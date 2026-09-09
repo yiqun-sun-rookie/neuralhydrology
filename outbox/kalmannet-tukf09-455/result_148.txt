@@ -1,0 +1,37 @@
+### channel=kalmannet-tukf09-455 seq=148
+### host=login4
+### started=2026-09-09T15:35:33+0800
+### ---------- output ----------
+TIME=2026-09-09T15:35:33+0800  PREPARATION_JOB_ID=223992
+     JobID        State ExitCode    Elapsed  NodeList                Start                  End 
+---------- ------------ -------- ---------- --------- -------------------- -------------------- 
+    223992      PENDING      0:0   00:00:00 None ass+              Unknown              Unknown 
+     JOBID      STATE               NODELIST(REASON)
+    223992    PENDING                    (Resources)
+=== STATUS ARTIFACTS ===
+preparation_probe.json ABSENT
+hpc_technical_admission.json ABSENT
+staged_training_sources.json ABSENT
+initial_bundle_verification.json ABSENT
+PREPARATION_FAILED.json ABSENT
+total 13
+drwxr-xr-x. 3 sunyiq g_sunyiq 4096 Sep  8 16:55 .
+drwxr-xr-x. 6 sunyiq g_sunyiq 4096 Sep  8 16:48 ..
+-rw-r--r--. 1 sunyiq g_sunyiq   53 Sep  8 16:44 offline_inputs_download.launched
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  8 16:44 offline_inputs_download.lock
+-rw-r--r--. 1 sunyiq g_sunyiq    7 Sep  8 16:55 preparation_job_id.txt
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  8 16:55 preparation_submission.lock
+=== RUNTIME IDENTITY ===
+NO_PROBE
+=== STAGED DATA ===
+=== PREPARE LOG TAIL ===
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/logs/prepare-223992.out’ for reading: No such file or directory
+tail: cannot open ‘/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r12_20260908/logs/prepare-223992.err’ for reading: No such file or directory
+=== PARTITION ===
+ PARTITION  AVAIL  NODES    STATE                 NODELIST        CPUS(A/I/O/T)           GRES
+     hgpu8     up      1    maint                   ngu202            0/64/0/64          gpu:8
+     hgpu8     up      2      mix             ngu[201,203]          54/74/0/128          gpu:8
+TUKF09_455_V2R12_PREPARATION_STATE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T15:35:34+0800
