@@ -1,0 +1,62 @@
+### channel=kalmannet-tukf09-455 seq=159
+### host=login4
+### started=2026-09-09T20:00:11+0800
+### ---------- output ----------
+TIME=2026-09-09T20:00:11+0800
+PIP_PID=26743
+  PID     ELAPSED     TIME STAT   RSS WCHAN
+26743       29:50 00:00:14 Sl   57444 poll_schedule_timeout
+--- io ---
+rchar: 3034132740
+wchar: 1434307796
+syscr: 707039
+syscw: 5589
+read_bytes: 0
+write_bytes: 1434308608
+--- open files (non-lib) ---
+total 0
+l-wx------. 1 sunyiq g_sunyiq 64 Sep  9 20:00 1 -> /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/offline_inputs_v2r13.pending.v2r13-20260909-a/evidence/download-stdout.log
+l-wx------. 1 sunyiq g_sunyiq 64 Sep  9 20:00 2 -> /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/offline_inputs_v2r13.pending.v2r13-20260909-a/evidence/download-stderr.log
+lrwx------. 1 sunyiq g_sunyiq 64 Sep  9 20:00 3 -> socket:[3422117852]
+lrwx------. 1 sunyiq g_sunyiq 64 Sep  9 20:00 4 -> socket:[3422119975]
+lrwx------. 1 sunyiq g_sunyiq 64 Sep  9 20:00 5 -> socket:[3422128157]
+l-wx------. 1 sunyiq g_sunyiq 64 Sep  9 20:00 6 -> /tmp/pip-unpack-4ocemeb6/nvidia_cudnn_cu12-8.9.2.26-py3-none-manylinux1_x86_64.whl
+l-wx------. 1 sunyiq g_sunyiq 64 Sep  9 20:00 8 -> /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/status/offline_inputs_download.lock
+--- tcp ---
+ESTAB      0      0      11.11.6.101:37288              167.82.48.223:443                 users:(("python",pid=26743,fd=5))
+CLOSE-WAIT 25     0      11.11.6.101:47006              18.65.14.98:443                 users:(("python",pid=26743,fd=3))
+CLOSE-WAIT 25     0      11.11.6.101:59022              151.101.128.223:443                 users:(("python",pid=26743,fd=4))
+--- cwd/tmp ---
+/data1/home/sunyiq/hpc_mailbox
+TMPDIR=unset
+--- pip temp dirs ---
+0	/tmp/pip-unpack-y7s5ns3a
+0	/tmp/pip-unpack-y8rq9c25
+44K	/tmp/pip-unpack-yrc1n6c3
+808K	/tmp/pip-unpack-zhq9vy_p
+200K	/tmp/pip-unpack-zt_xplqz
+no /tmp/pip-*
+0	/tmp/pip-unpack-y7s5ns3a
+0	/tmp/pip-unpack-y8rq9c25
+44K	/tmp/pip-unpack-yrc1n6c3
+808K	/tmp/pip-unpack-zhq9vy_p
+200K	/tmp/pip-unpack-zt_xplqz
+--- wheelhouse ---
+total 8
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  9 19:30 .
+drwxr-xr-x. 5 sunyiq g_sunyiq 4096 Sep  9 19:30 ..
+--- what is it downloading (first lines of the lock) ---
+torch @ https://download.pytorch.org/whl/cu121/torch-2.2.2%2Bcu121-cp311-cp311-linux_x86_64.whl \
+    --hash=sha256:4c94e4d1a22d70abbdff716dec99ba5eff94b4340ffa73b4fb629f940dbb8a75
+numpy==1.26.4 \
+    --hash=sha256:666dbfb6ec68962c033a450943ded891bed2d54e6755e35e5835d63f4f6931d5
+filelock==3.13.1 \
+    --hash=sha256:57dbda9b35157b05fb3e58ee91448612eb674172fab98ee235ccb0b5bee19a1c
+typing-extensions==4.15.0 \
+    --hash=sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548
+--- throughput probe: fetch a 10 MB wheel head ---
+code=302 size=0 speed=0.000B/s time=6.039s
+TUKF09_455_V2R13_PIP_DIAGNOSTIC
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T20:00:20+0800
