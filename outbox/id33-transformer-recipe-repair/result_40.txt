@@ -1,0 +1,41 @@
+### channel=id33-transformer-recipe-repair seq=40
+### host=login4
+### started=2026-09-09T18:33:41+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-09T18:33:41+0800
+=== A. IN-FLIGHT GATE ===
+id33_in_flight_count=0
+no id33 job in flight; safe to deploy
+=== B. EXTRACT ===
+-rw-r--r--. 1 sunyiq g_sunyiq 12767 Sep  9 18:33 /data1/home/sunyiq/hpc_mailbox/payload/id33-transformer-recipe-repair/id33_batch3_v01.tar.gz
+-- deployed hashes (must match local) --
+7c5de73a2a24c851090ec0149fb181c039140e47a8e61f5ae9af965c2ea32d57  src/transformer_recipe_repair/configs/c3.yml
+1a399b005626fa972b87c442f5549267018213705d1af0020533d1c3f5b87b1d  src/transformer_recipe_repair/configs/c4.yml
+45893bef84898651d02b74a7843a36e681c98171fdb839abe9bf35f97e8ef8bf  src/transformer_recipe_repair/configs/c5.yml
+88d669dca9df3ec5efc208eda89f0b47947c201144f29e85f7f39485d40e766a  src/transformer_recipe_repair/scripts/audit_configs.py
+1da287fecf3d74e6aa735b57c48c0103d2b28cf74a90828314083439c57b9f91  src/transformer_recipe_repair/scripts/run_development.py
+e55a0b1918519ee588a5b1c0b6b76616bf06380b1602310a0700c68cac330582  src/transformer_recipe_repair/registry/experiments.csv
+7982df53a018d3fbb6506f86210f869af38728c24e3402630e436393951aaf9e  src/transformer_recipe_repair/hpc/submit_packed_arms.slurm
+=== C. AUDIT (must PASS with 11 arms) ===
+ID33 CONFIG AUDIT: PASS (11 arms; one factor each; no data read; no training launched)
+=== D. DETERMINISM IS ACTUALLY WIRED IN ===
+56:    Path("src/transformer_recipe_repair/scripts/deterministic_train.py"),
+140:        # Batch 3 onwards trains through deterministic_train.py rather than calling nh_run
+147:        "command": [sys.executable, "-u", "-m", "src.transformer_recipe_repair.scripts.deterministic_train",
+=== E. SUBMIT THREE PACKED JOBS ===
+Submitted batch job 224310
+  arms1 (T1 T2 T3) -> 224310
+Submitted batch job 224311
+  arms2 (T4 T5 L33) -> 224311
+Submitted batch job 224312
+  calib (C3 C4 C5) -> 224312
+batch3_jobs= 224310 224311 224312
+=== F. QUEUE ===
+     JOBID           NAME  ST       TIME  NODELIST NODELIST(REASON)
+    224312  id33_b3_calib   R    INVALID    ngu006 ngu006
+    224311  id33_b3_arms2   R    INVALID    ngu008 ngu008
+    224310  id33_b3_arms1   R    INVALID    ngu004 ngu004
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T18:34:07+0800
