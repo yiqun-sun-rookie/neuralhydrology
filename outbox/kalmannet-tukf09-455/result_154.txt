@@ -1,0 +1,56 @@
+### channel=kalmannet-tukf09-455 seq=154
+### host=login4
+### started=2026-09-09T19:27:43+0800
+### ---------- output ----------
+TIME=2026-09-09T19:27:43+0800
+=== SCOPE GUARD: SUPERSEDED EVIDENCE UNTOUCHED ===
+V2R10_TRAINING_JOB=220663
+bb558ba999f33ebf61b000aadc4090ff87a97c66da36af9b25f813612955f584  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r10_20260904/logs/training-220663.err
+CAPSULE_v2_MODE=555
+CAPSULE_v3_MODE=555
+CAPSULE_v4_MODE=555
+CAPSULE_v5_MODE=555
+CAPSULE_v6_MODE=555
+=== PAYLOAD EXACT GATE ===
+ARCHIVE_SHA256=ea009bfa79bb13969dc9578866c77b72f3cf145695c8be48119a416dee670684 ARCHIVE_SIZE=9923501
+PAYLOAD_EXACT_GATE_PASS
+=== EXCLUSIVE NEW ROOT RESERVATION ===
+NEW_ROOT_RESERVED
+=== EXTRACT AND STRICTLY VERIFY ===
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "destination": "/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/bundle",
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "reused": false,
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R13_HPC_BUNDLE_VERIFIED"
+}
+{
+  "admitted_executable_count": 30,
+  "admitted_test_count": 12,
+  "artifact_file_count": 2751,
+  "experiment_id": "TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1",
+  "formal_evaluation_output_count": 0,
+  "member_count": 2808,
+  "status": "TUKF09_455_A800_EXCLUSIVE_V2R13_HPC_BUNDLE_VERIFIED"
+}
+=== BINDINGS THIS REVISION MUST HAVE ===
+CAPSULE_BINDING=1
+EXCLUSIVE_DIRECTIVES=0
+GRES_LINE=#SBATCH --gres=gpu:4
+CPUS_LINE=#SBATCH --cpus-per-task=16
+WALLTIME_LINE=#SBATCH -t 72:00:00
+EXCLUDE_DIRECTIVES=0
+POPULATION_FIX_PRESENT=2
+b02ab2aad9cf11258c68a72e1eecd2f1b54a014a2d243f28d4bd1a0a0073bcba  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/bundle/kalmannet/scripts/run_tukf09_455_neural_training.py
+fd56614feb399080656041c527f0d94497c169993305181ecfbe7df63b679ad5  /data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/bundle/kalmannet/scripts/run_tukf09_455_neural_training_controller.py
+MIGRATION_PIN=13bd4e78d56c62ce48942c003462844ab73a6f472533aeb7bbf4f4ad12f0329a
+=== START THE RUNTIME INPUT DOWNLOAD, DETACHED ===
+DOWNLOAD_LAUNCHED pid=24810
+TUKF09_455_V2R12_DEPLOYED_NO_JOB_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T19:28:08+0800
