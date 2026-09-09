@@ -1,0 +1,43 @@
+### channel=attrswap-daily seq=40
+### host=login4
+### started=2026-09-09T22:43:47+0800
+### ---------- output ----------
+wallclock 2026-09-09 22:43:47 +0800
+=== A. INSTALL CORRECTED BUILDER ===
+  before build_precip_swap.py dbd449c73f7a1a54
+  after  build_precip_swap.py 3b3610cc7e55958a
+--- 新增的两道硬检查与按名查列 ---
+34:RATIO_LO, RATIO_HI = 0.2, 5.0   # V9: sanity band for the median precipitation ratio against Maurer
+35:LAG0_HARD_MIN = 0.50            # V6-hard: below this the series bears no time correspondence to Maurer's rain
+52:def prcp_index(header_line):
+176:    # V9 and V6-hard, added 2026-09-09 after a column-index bug produced a product carrying solar radiation in
+178:    if not (RATIO_LO <= float(rt0.median()) <= RATIO_HI):
+179:        fail(f'V9 与 Maurer 的降水量比中位 {rt0.median():.3f} 不在 [{RATIO_LO}, {RATIO_HI}] 内 '
+181:    if share < LAG0_HARD_MIN:
+182:        fail(f'V6-hard 最佳滞后为 0 的流域仅 {share*100:.2f}%（硬下限 {LAG0_HARD_MIN*100:.0f}%）'
+  rebuild slurm 语法通过
+=== B. SUBMIT REBUILD JOB ===
+Submitted batch job 224506
+=== C. RESUBMIT THE THREE era5l ARMS (afterok:224506) ===
+pswap_armP_era5l_s100 -> 224507
+pswap_armP_era5l_s200 -> 224508
+pswap_armP_era5l_s300 -> 224509
+rebuild job: 224506
+job ids now: 224459 224460 224461 224462 224463 224464 224465 224507 224508 224509 
+=== D. QUEUE ===
+      JOBID                     NAME     STATE       TIME  NODELIST       DEPENDENCY
+     224506            pswap_rebuild   PENDING       0:00                           
+     224507    pswap_armP_era5l_s100   PENDING       0:00             afterok:224506
+     224508    pswap_armP_era5l_s200   PENDING       0:00             afterok:224506
+     224509    pswap_armP_era5l_s300   PENDING       0:00             afterok:224506
+     224460   pswap_armP_chirps_s100   RUNNING      11:59    ngu102                 
+     224461   pswap_armP_chirps_s200   RUNNING      11:59    ngu102                 
+     224462   pswap_armP_chirps_s300   RUNNING      11:59    ngu102                 
+=== E. CHIRPS 三臂进度（不受影响）===
+  slurm_pswap_armP_chirps_s100_224460.out: Epoch 2 average loss
+  slurm_pswap_armP_chirps_s200_224461.out: Epoch 2 average loss
+  slurm_pswap_armP_chirps_s300_224462.out: Epoch 2 average loss
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T22:43:48+0800
