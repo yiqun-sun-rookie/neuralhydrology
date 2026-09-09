@@ -1,22 +1,25 @@
 #!/bin/bash
-# TUKF09-455 v2r13: submit the preparation job when the offline inputs are published.
-set -eo pipefail
+# TUKF09-455 v2r13: is pip actually transferring bytes. Read only.
+set -o pipefail
 ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909
-S="$ROOT/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r13/probe_gpu.slurm"
-M="$ROOT/offline_inputs_v2r13/manifest.json"
 echo "TIME=$(date -Is)"
-if pgrep -f "download_runtime_inputs_login.sh" >/dev/null 2>&1; then echo DOWNLOAD_STILL_RUNNING; du -sh "$ROOT"/offline_inputs_v2r13* 2>/dev/null; find "$ROOT"/offline_inputs_v2r13.pending.*/wheelhouse -type f 2>/dev/null | wc -l; exit 0; fi
-test -f "$M" || { echo OFFLINE_INPUTS_MISSING; tail -c 800 "$ROOT/logs/offline-inputs-download.out" 2>&1; exit 11; }
-echo OFFLINE_INPUTS_PUBLISHED
-echo "MANIFEST_SHA256=$(sha256sum "$M"|cut -d\" \" -f1)"
-python -X utf8 -c "import json;d=json.load(open(\"$M\"));f=d.get(\"files\",{});print(\"FILE_COUNT\",len(f));print(\"TOTAL_BYTES\",sum(int(r[\"size\"]) for r in f.values()))" 2>&1
-grep -E "^#SBATCH (-p|--cpus-per-task|--gres|-t)" "$S"
-if [ -d "$ROOT/status/preparation_submission.lock" ]; then echo ALREADY_SUBMITTED; cat "$ROOT/status/preparation_job_id.txt"; exit 0; fi
-mkdir "$ROOT/status/preparation_submission.lock"
-JID=$(sbatch --parsable "$S"); JID=${JID%%;*}
-echo "$JID" > "$ROOT/status/preparation_job_id.txt"
-echo "PREPARATION_JOB_ID=$JID"
-sleep 40
-squeue -j "$JID" -o "%.10i %.10T %.11M %.9N %.26R" 2>&1
-sacct -j "$JID" -X --format=JobID%10,State%12,Elapsed%10,NodeList%9 2>&1
-echo TUKF09_455_V2R13_PREPARATION_SUBMITTED
+PID=$(pgrep -f "pip download" | head -1)
+echo "PIP_PID=${PID:-<none>}"
+if [ -n "$PID" ]; then
+  ps -o pid,etime,time,stat,rss,wchan:20 -p "$PID" 2>&1
+  echo "--- io ---"; cat /proc/$PID/io 2>/dev/null | head -6
+  echo "--- open files (non-lib) ---"; ls -l /proc/$PID/fd 2>/dev/null | grep -vE "\.so|/dev/|pipe:|anon_inode" | head -10
+  echo "--- tcp ---"; ss -tnp 2>/dev/null | grep -w "$PID" | head -5 || cat /proc/$PID/net/tcp 2>/dev/null | head -3
+  echo "--- cwd/tmp ---"; readlink /proc/$PID/cwd 2>/dev/null; echo "TMPDIR=$(tr \"\0\" \"\n\" < /proc/$PID/environ 2>/dev/null | grep ^TMPDIR= || echo unset)"
+fi
+echo "--- pip temp dirs ---"
+du -sh /tmp/pip-* 2>/dev/null | tail -5 || echo "no /tmp/pip-*"
+du -sh ${TMPDIR:-/tmp}/pip-* 2>/dev/null | tail -5
+find /data1/home/sunyiq -maxdepth 2 -name "pip-*" -newermt "-1 hour" 2>/dev/null | head -5
+echo "--- wheelhouse ---"
+ls -la "$ROOT"/offline_inputs_v2r13.pending.*/wheelhouse/ 2>&1 | head -8
+echo "--- what is it downloading (first lines of the lock) ---"
+head -8 "$ROOT/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r13/runtime-binary.lock"
+echo "--- throughput probe: fetch a 10 MB wheel head ---"
+timeout 40 curl -sS -o /dev/null -m 35 -w "code=%{http_code} size=%{size_download} speed=%{speed_download}B/s time=%{time_total}s\n" https://files.pythonhosted.org/packages/source/n/numpy/numpy-1.26.4.tar.gz 2>&1
+echo TUKF09_455_V2R13_PIP_DIAGNOSTIC
