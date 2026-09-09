@@ -1,0 +1,14 @@
+### channel=kalmannet-tukf09-455 seq=155
+### host=login4
+### started=2026-09-09T19:30:14+0800
+### ---------- output ----------
+TIME=2026-09-09T19:30:14+0800  HOST=login4
+DOWNLOAD_LAUNCHED pid=26700 attempt=v2r13-20260909-a
+STILL_RUNNING
+NOT_PUBLISHED_YET
+36K	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/offline_inputs_v2r13.pending.v2r13-20260909-a
+le": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python", "python_executable_resolved": "/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python3.11", "python_executable_sha256": "45140eba20e770e6f8b46fb1e1295da8a5e494b3686a22ea9beeff050bb5b48e", "python_executable_size": 25382192, "python_version": "3.11.13", "schema_version": "tukf09_455_hpc_shared_environment_snapshot_a800_exclusive_v2r13", "scientific_contract_changed": false, "status": "SHARED_BOOTSTRAP_ENVIRONMENT_READ_ONLY_SNAPSHOT"}
+TUKF09_455_V2R13_DOWNLOAD_STATE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T19:34:15+0800
