@@ -1,0 +1,20 @@
+### channel=kalmannet-tukf09-455 seq=170
+### host=login4
+### started=2026-09-09T21:29:32+0800
+### ---------- output ----------
+TIME=2026-09-09T21:29:32+0800  PREPARATION_JOB_ID=224439
+     JobID        State ExitCode    Elapsed  NodeList 
+---------- ------------ -------- ---------- --------- 
+    224439      RUNNING      0:0   00:03:30    ngu104 
+ADMISSION_NOT_YET
+-rw-r--r--. 1 sunyiq g_sunyiq  751 Sep  9 21:27 initial_bundle_verification.json
+-rw-r--r--. 1 sunyiq g_sunyiq   53 Sep  9 19:30 offline_inputs_download.launched
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  9 19:30 offline_inputs_download.lock
+-rw-r--r--. 1 sunyiq g_sunyiq    7 Sep  9 21:26 preparation_job_id.txt
+-rw-r--r--. 1 sunyiq g_sunyiq    0 Sep  9 21:26 preparation.lock
+drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep  9 21:26 preparation_submission.lock
+c922ce4165eb7793f0b4f1afe9a185644858875af6a3bfd21992a23046d9f", "schema_version": "tukf09_455_hpc_offline_runtime_inputs_a800_exclusive_v2r13", "scientific_contract_changed": false, "shared_environment_inventory_sha256": "84602b36f71ec5465049eabdcb79c182e886b1d3fa6d3222cabb73e026f57dc9", "shared_nh_final_modified": false, "source_archive_count": 1, "status": "LOGIN4_LOCKED_RUNTIME_INPUTS_FROZEN_FOR_OFFLINE_SLURM_INSTALLATION", "symbolic_links_present": false, "total_bytes": 2817756909, "total_file_count": 24}
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r13_20260909/runtime_v2r13.pending.224439/sourcehouse/psutil-5.9.0.tar.gz: OK
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T21:29:32+0800
