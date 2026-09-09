@@ -1,0 +1,105 @@
+### channel=id33-transformer-recipe-repair seq=41
+### host=login4
+### started=2026-09-09T21:08:36+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-09T21:08:36+0800
+=== A. SACCT ===
+       JobID            JobName      State ExitCode    Elapsed        NodeList 
+------------ ------------------ ---------- -------- ---------- --------------- 
+224310            id33_b3_arms1    RUNNING      0:0   02:34:50          ngu004 
+224311            id33_b3_arms2    RUNNING      0:0   02:34:49          ngu008 
+224312            id33_b3_calib    RUNNING      0:0   02:34:40          ngu006 
+=== B. QUEUE ===
+     JOBID               NAME ST       TIME NODELIST(REASON)
+    224421         pswap_gate PD       0:00 (Priorit
+    202229       N22-agg-eval PD       0:00 (Depende
+    202294         N22-export PD       0:00 (Depende
+    202315           N22-gate PD       0:00 (Depende
+    202507   N22-mask-iso-531 PD       0:00 (Depende
+    215429      id30_m01_s100 PD       0:00 (Depende
+224389_[0-    ngf-B-memory-r1 PD       0:00 (Depende
+    224422 pswap_armP_chirps_ PD       0:00 (Depende
+    224423 pswap_armP_chirps_ PD       0:00 (Depende
+    224424 pswap_armP_chirps_ PD       0:00 (Depende
+    224425 pswap_armP_era5l_s PD       0:00 (Depende
+    224426 pswap_armP_era5l_s PD       0:00 (Depende
+    224427 pswap_armP_era5l_s PD       0:00 (Depende
+    202293       N22-manifest PD       0:00 (JobHeld
+ 224255_20       ngf-select-B  R      42:56   ngu011
+ 224255_19       ngf-select-B  R    1:05:19   ngu010
+ 224255_18       ngf-select-B  R    1:06:00   ngu004
+    224312      id33_b3_calib  R    2:33:53   ngu006
+    224311      id33_b3_arms2  R    2:34:02   ngu008
+=== C. PER-ARM EPOCH PROGRESS ===
+-- results/33_transformer_recipe_repair/L33/transformer_recipe_repair_L33_2026_0905_2132_ep30/output.log
+60
+2026-09-06 01:06:49,583: Epoch 29 average validation loss: 0.02840 -- Median validation metrics: avg_loss: 0.02840, NSE: 0.68609
+2026-09-06 01:14:26,036: Epoch 30 average validation loss: 0.02859 -- Median validation metrics: avg_loss: 0.02859, NSE: 0.68452
+-- results/33_transformer_recipe_repair/L33/transformer_recipe_repair_L33_2026_0909_1836_ep30/output.log
+28
+2026-09-09 20:53:58,245: Epoch 13 average validation loss: 0.02771 -- Median validation metrics: avg_loss: 0.02771, NSE: 0.68855
+2026-09-09 21:04:20,362: Epoch 14 average validation loss: 0.02808 -- Median validation metrics: avg_loss: 0.02808, NSE: 0.68725
+-- results/33_transformer_recipe_repair/T1/transformer_recipe_repair_T1_2026_0905_2127_ep30/output.log
+60
+2026-09-06 11:18:10,074: Epoch 29 average validation loss: 0.02997 -- Median validation metrics: avg_loss: 0.02997, NSE: 0.66732
+2026-09-06 11:46:18,585: Epoch 30 average validation loss: 0.03084 -- Median validation metrics: avg_loss: 0.03084, NSE: 0.67648
+-- results/33_transformer_recipe_repair/T1/transformer_recipe_repair_T1_2026_0909_1839_ep30/output.log
+10
+2026-09-09 20:35:35,491: Epoch 4 average validation loss: 0.04235 -- Median validation metrics: avg_loss: 0.04235, NSE: 0.54383
+2026-09-09 21:04:25,784: Epoch 5 average validation loss: 0.04276 -- Median validation metrics: avg_loss: 0.04276, NSE: 0.57148
+-- results/33_transformer_recipe_repair/T2/transformer_recipe_repair_T2_2026_0905_2127_ep30/output.log
+60
+2026-09-06 11:17:17,161: Epoch 29 average validation loss: 0.02841 -- Median validation metrics: avg_loss: 0.02841, NSE: 0.68929
+2026-09-06 11:45:41,761: Epoch 30 average validation loss: 0.02727 -- Median validation metrics: avg_loss: 0.02727, NSE: 0.69282
+-- results/33_transformer_recipe_repair/T2/transformer_recipe_repair_T2_2026_0909_1839_ep30/output.log
+10
+2026-09-09 20:35:33,437: Epoch 4 average validation loss: 0.04212 -- Median validation metrics: avg_loss: 0.04212, NSE: 0.56873
+2026-09-09 21:04:27,567: Epoch 5 average validation loss: 0.04305 -- Median validation metrics: avg_loss: 0.04305, NSE: 0.57852
+-- results/33_transformer_recipe_repair/T3/transformer_recipe_repair_T3_2026_0905_2127_ep30/output.log
+60
+2026-09-06 11:18:11,921: Epoch 29 average validation loss: 0.03305 -- Median validation metrics: avg_loss: 0.03305, NSE: 0.68008
+2026-09-06 11:46:19,194: Epoch 30 average validation loss: 0.03472 -- Median validation metrics: avg_loss: 0.03472, NSE: 0.68000
+-- results/33_transformer_recipe_repair/T3/transformer_recipe_repair_T3_2026_0909_1839_ep30/output.log
+10
+2026-09-09 20:35:41,396: Epoch 4 average validation loss: 0.04101 -- Median validation metrics: avg_loss: 0.04101, NSE: 0.56358
+2026-09-09 21:04:31,209: Epoch 5 average validation loss: 0.04403 -- Median validation metrics: avg_loss: 0.04403, NSE: 0.58361
+-- results/33_transformer_recipe_repair/T4/transformer_recipe_repair_T4_2026_0905_2132_ep30/output.log
+60
+2026-09-06 07:12:44,155: Epoch 29 average validation loss: 0.02830 -- Median validation metrics: avg_loss: 0.02830, NSE: 0.69542
+2026-09-06 07:30:56,942: Epoch 30 average validation loss: 0.02757 -- Median validation metrics: avg_loss: 0.02757, NSE: 0.69885
+-- results/33_transformer_recipe_repair/T4/transformer_recipe_repair_T4_2026_0909_1836_ep30/output.log
+12
+2026-09-09 20:38:27,626: Epoch 5 average validation loss: 0.02839 -- Median validation metrics: avg_loss: 0.02839, NSE: 0.68274
+2026-09-09 21:03:04,461: Epoch 6 average validation loss: 0.02840 -- Median validation metrics: avg_loss: 0.02840, NSE: 0.69276
+-- results/33_transformer_recipe_repair/T5/transformer_recipe_repair_T5_2026_0905_2132_ep30/output.log
+60
+2026-09-06 08:34:03,602: Epoch 29 average validation loss: 0.02624 -- Median validation metrics: avg_loss: 0.02624, NSE: 0.70470
+2026-09-06 08:45:51,448: Epoch 30 average validation loss: 0.02604 -- Median validation metrics: avg_loss: 0.02604, NSE: 0.70324
+-- results/33_transformer_recipe_repair/T5/transformer_recipe_repair_T5_2026_0909_1836_ep30/output.log
+10
+2026-09-09 20:38:02,154: Epoch 4 average validation loss: 0.03995 -- Median validation metrics: avg_loss: 0.03995, NSE: 0.58501
+2026-09-09 21:08:07,931: Epoch 5 average validation loss: 0.03434 -- Median validation metrics: avg_loss: 0.03434, NSE: 0.60593
+=== D. UTILISATION FILES ===
+-rw-r--r--. 1 sunyiq g_sunyiq 6478 Sep  9 21:07 logs/33_transformer_recipe_repair/utilisation-224310.csv
+-rw-r--r--. 1 sunyiq g_sunyiq 6254 Sep  9 21:08 logs/33_transformer_recipe_repair/utilisation-224311.csv
+-rw-r--r--. 1 sunyiq g_sunyiq 6317 Sep  9 21:08 logs/33_transformer_recipe_repair/utilisation-224312.csv
+-- logs/33_transformer_recipe_repair/utilisation-224310.csv lines=154
+2026/09/09 21:06:28.712, 22, 22223, 24576
+2026/09/09 21:07:28.764, 22, 21853, 24576
+2026/09/09 21:08:28.816, 22, 21853, 24576
+-- logs/33_transformer_recipe_repair/utilisation-224311.csv lines=156
+2026/09/09 21:06:17.655, 56, 999, 24576
+2026/09/09 21:07:17.700, 58, 999, 24576
+2026/09/09 21:08:17.742, 57, 999, 24576
+-- logs/33_transformer_recipe_repair/utilisation-224312.csv lines=154
+2026/09/09 21:06:49.698, 99, 4721, 24576
+2026/09/09 21:07:49.747, 99, 4721, 24576
+2026/09/09 21:08:49.793, 99, 4721, 24576
+=== E. ERR TAILS ===
+-- logs/33_transformer_recipe_repair/packed-224312.err
+-- logs/33_transformer_recipe_repair/packed-224310.err
+-- logs/33_transformer_recipe_repair/packed-224311.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T21:08:37+0800
