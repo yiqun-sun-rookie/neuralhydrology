@@ -1,0 +1,55 @@
+### channel=attrswap-daily seq=36
+### host=login4
+### started=2026-09-09T22:15:33+0800
+### ---------- output ----------
+wallclock 2026-09-09 22:15:33 +0800
+=== A. GATE STDOUT ===
+--- slurm_pswap_gate_224441.out ---
+=== node ngu101 job 224441 2026-09-09 21:31:20 ===
+=== B. GATE STDERR ===
+--- slurm_pswap_gate_224441.err ---
+  File "<string>", line 3
+    p = neuralhydrology.__file__.replace('\','/')
+                                               ^
+SyntaxError: unterminated string literal (detected at line 3)
+=== C. WHAT OS / GLIBC / DRIVER DO THE PARTITIONS RUN? ===
+  (login node for reference)
+CentOS Linux release 7.6.1810 (Core) 
+ldd (GNU libc) 2.17
+=== D. NODE FEATURES ===
+ NODELIST    STATE  CPUS(A/I/O/T)     GRES                 AVAIL_FEATURES
+   ngu101     idle      0/96/0/96    gpu:4                         (null)
+   ngu102     idle      0/96/0/96    gpu:4                         (null)
+   ngu103    down*      0/0/96/96    gpu:4                         (null)
+   ngu104     idle      0/96/0/96    gpu:4                         (null)
+ NODELIST    STATE  CPUS(A/I/O/T)     GRES                 AVAIL_FEATURES
+   ngu201      mix     34/30/0/64    gpu:8                         (null)
+   ngu202    maint      0/64/0/64    gpu:8                         (null)
+   ngu203      mix      8/56/0/64    gpu:8                         (null)
+ NODELIST    STATE  CPUS(A/I/O/T)     GRES                 AVAIL_FEATURES
+   ngu001      mix     12/84/0/96    gpu:2                         (null)
+   ngu002    down*      0/0/96/96    gpu:2                         (null)
+   ngu004      mix     16/80/0/96    gpu:2                         (null)
+   ngu005    drain      0/0/96/96    gpu:2                         (null)
+   ngu006      mix     12/84/0/96    gpu:2                         (null)
+   ngu007      mix     16/80/0/96    gpu:2                         (null)
+   ngu008      mix     16/80/0/96    gpu:2                         (null)
+   ngu010      mix      8/24/0/32    gpu:2                         (null)
+   ngu011      mix      6/26/0/32    gpu:2                         (null)
+=== E. PAST SUCCESSFUL JOBS: WHICH NODES ===
+   223983       fswap_armEP_s300   COMPLETED    ngu201    hgpu8 
+   223984           id33_rescore   COMPLETED    ngu010   hgpu2p 
+   224110 kdpp-dev-precheck-seq+   COMPLETED    ngu201    hgpu8 
+224255_12           ngf-select-B   COMPLETED    ngu010   hgpu2p 
+224255_14           ngf-select-B   COMPLETED    ngu001   hgpu2p 
+224255_15           ngf-select-B   COMPLETED    ngu004   hgpu2p 
+224255_17           ngf-select-B   COMPLETED    ngu011   hgpu2p 
+   224326 tukf09-455-hgpu4-probe   COMPLETED    ngu102    hgpu4 
+   224370    ngf-memory-hardware   COMPLETED    ngu104    hgpu4 
+   224371    ngf-memory-hardware   COMPLETED    ngu201    hgpu8 
+   224372    ngf-memory-hardware   COMPLETED    ngu003    hgpu2 
+   224419          z5-matrix2022   COMPLETED    ngu007   hgpu2p 
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T22:15:33+0800
