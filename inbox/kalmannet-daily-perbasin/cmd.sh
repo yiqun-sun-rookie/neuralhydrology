@@ -1,6 +1,6 @@
 #!/bin/bash
 set -uo pipefail
-task_sequence=83
+task_sequence=84
 task_failure=0
 printf 'channel=kalmannet-daily-perbasin sequence=%s purpose=readonly-three-hour-resource-wait-refresh\n' "$task_sequence"
 printf '%s\n' 'CURRENT_PARTITION_BEGIN'
@@ -23,8 +23,8 @@ import json,pathlib
 root=pathlib.Path('/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908')
 old_request=root/'runtime/train_08190500_entryrepair_seq81'
 old_run=root/'runs/DAILY_CAMELS_KNET_PER_BASIN_21_DEVELOPMENT_V2_20260908_BASIN_08190500_A800_TRAIN1_SEQ81'
-next_request=root/'runtime/train_08190500_entryrepair_seq85'
-next_run=root/'runs/DAILY_CAMELS_KNET_PER_BASIN_21_DEVELOPMENT_V2_20260908_BASIN_08190500_A800_TRAIN1_SEQ85'
+next_request=root/'runtime/train_08190500_entryrepair_seq86'
+next_run=root/'runs/DAILY_CAMELS_KNET_PER_BASIN_21_DEVELOPMENT_V2_20260908_BASIN_08190500_A800_TRAIN1_SEQ86'
 for p in (root,old_request,old_run.parent):
     if p.resolve(strict=True)!=p or any(x.is_symlink() for x in (p,*p.parents)):
         raise ValueError('noncanonical metadata parent')
