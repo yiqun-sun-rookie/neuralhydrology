@@ -1,0 +1,17 @@
+### channel=kalmannet-tukf09-455 seq=160
+### host=login4
+### started=2026-09-09T20:13:30+0800
+### ---------- output ----------
+TIME=2026-09-09T20:13:30+0800
+PIP_PID=26743
+26743       43:09 00:00:18 Sl
+read_bytes: 0
+write_bytes: 1550176256
+pending 35352 -> 35865  delta 513 bytes / 60 s
+piptmp  1550151147 -> 1557573219  delta 7422072 bytes / 60 s
+=== download.pytorch.org, 20 MB range ===
+code=206 got=20000001B speed=1557647.000B/s time=12.840s
+TUKF09_455_V2R13_RATE_PROBE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T20:14:43+0800
