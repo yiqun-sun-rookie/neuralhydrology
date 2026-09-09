@@ -1,0 +1,36 @@
+### channel=attrswap-daily seq=39
+### host=login4
+### started=2026-09-09T22:38:57+0800
+### ---------- output ----------
+wallclock 2026-09-09 22:38:57 +0800
+=== A. EVIDENCE: header of each product ===
+--- maurer ---
+Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SRAD(W/m2)	SWE(mm)	Tmax(C)	Tmin(C)	Vp(Pa)
+1980 01 01 12	31185.94	0.00	229.98	0.00	-6.02	-6.02	250.13
+--- era5l_caravan ---
+Year Mnth Day Hr	PRCP(mm/day)	SRAD(W/m2)	Tmax(C)	Tmin(C)	Vp(Pa)
+1980 01 01 12	0.0000	73.2400	-0.8500	-8.7700	227.27
+--- chirps ---
+Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SRAD(W/m2)	SWE(mm)	Tmax(C)	Tmin(C)	Vp(Pa)
+1988 01 01 12	31185.94	0.0000	240.19	0.00	-5.70	-5.70	246.27
+--- era5l_precip ---
+Year Mnth Day Hr	Dayl(s)	PRCP(mm/day)	SRAD(W/m2)	SWE(mm)	Tmax(C)	Tmin(C)	Vp(Pa)
+1980 01 01 12	31185.94	73.2400	229.98	0.00	-6.02	-6.02	250.13
+=== B. CANCEL THE THREE era5l ARMS (explicit ids) ===
+  已取消 224463（状态曾为 RUNNING）
+  已取消 224464（状态曾为 RUNNING）
+  已取消 224465（状态曾为 RUNNING）
+=== C. CHIRPS 三臂保持运行（其构建正确：比值 0.98、滞后分布与本地实测一致）===
+      JOBID                     NAME     STATE       TIME  NODELIST
+     224463    pswap_armP_era5l_s100 COMPLETIN       8:00    ngu102
+     224464    pswap_armP_era5l_s200 COMPLETIN       8:01    ngu104
+     224465    pswap_armP_era5l_s300 COMPLETIN       8:01    ngu104
+     224460   pswap_armP_chirps_s100   RUNNING       7:13    ngu102
+     224461   pswap_armP_chirps_s200   RUNNING       7:13    ngu102
+     224462   pswap_armP_chirps_s300   RUNNING       7:13    ngu102
+=== D. 隔离错误产物（改名不删）===
+  错误产物已改名隔离
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T22:39:02+0800
