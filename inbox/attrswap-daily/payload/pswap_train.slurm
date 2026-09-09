@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
+# One precipitation-swap arm: train 30 epochs, evaluate the test period, write the public-422 median.
+# Submitted with CFG baked in and a dependency on the gate. No backslash literals anywhere in this file.
 #SBATCH -J pswap_arm
-#SBATCH -p hgpu8
+#SBATCH -p hgpu4
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH --cpus-per-task=4
@@ -13,17 +15,22 @@ set -eo pipefail
 ROOT=/data1/home/sunyiq/precip_swap_daily_2026_09
 source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh || source $HOME/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final || { echo CONDA_FAILED; exit 1; }
-export MKL_THREADING_LAYER=GNU MKL_SERVICE_FORCE_INTEL=1 CUDA_DEVICE_ORDER=PCI_BUS_ID
+export MKL_THREADING_LAYER=GNU
+export MKL_SERVICE_FORCE_INTEL=1
+export CUDA_DEVICE_ORDER=PCI_BUS_ID
 cd "$ROOT"
 export PYTHONPATH="$ROOT/code_1f9804e"
+
 [ -f "$ROOT/logs/gate.txt" ] || { echo "GATE MARKER MISSING"; exit 3; }
 python -u -c "
-import neuralhydrology
-p = neuralhydrology.__file__.replace('\\','/')
-assert '/precip_swap_daily_2026_09/code_1f9804e/' in p, 'WRONG CODE: '+p
+import pathlib, neuralhydrology
+p = pathlib.Path(neuralhydrology.__file__).as_posix()
+assert '/precip_swap_daily_2026_09/code_1f9804e/' in p, 'WRONG CODE: ' + p
 print('archived code OK:', p)
 " || exit 4
+
 echo "=== $CFG on $(hostname) job $SLURM_JOB_ID $(date '+%F %T') ==="
+nvidia-smi --query-gpu=name,driver_version --format=csv,noheader --id=0 || true
 python -u -m neuralhydrology.nh_run train --config-file "configs/${CFG}.yml"
 rd=$(ls -dt runs/${CFG}_* 2>/dev/null | head -1) || true
 [ -n "$rd" ] || { echo "RUN DIR NOT FOUND for $CFG"; exit 1; }

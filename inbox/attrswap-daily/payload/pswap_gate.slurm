@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Gate: build the two precipitation-swap products, verify them, then a 5-basin 1-epoch smoke train.
 # Any failure exits non-zero and the six dependent arms are cancelled by afterok.
+# The environment guard uses pathlib.as_posix() so the script contains no backslash literals.
 #SBATCH -J pswap_gate
-#SBATCH -p hgpu8
+#SBATCH -p hgpu4
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH --cpus-per-task=4
@@ -15,17 +16,25 @@ set -eo pipefail
 ROOT=/data1/home/sunyiq/precip_swap_daily_2026_09
 source /data1/home/${USER}/miniconda3/etc/profile.d/conda.sh || source $HOME/miniconda3/etc/profile.d/conda.sh
 conda activate nh_final || { echo CONDA_FAILED; exit 1; }
-export MKL_THREADING_LAYER=GNU MKL_SERVICE_FORCE_INTEL=1 CUDA_DEVICE_ORDER=PCI_BUS_ID
+export MKL_THREADING_LAYER=GNU
+export MKL_SERVICE_FORCE_INTEL=1
+export CUDA_DEVICE_ORDER=PCI_BUS_ID
 cd "$ROOT"
 export PYTHONPATH="$ROOT/code_1f9804e"
 SH="$ROOT/data_shadow/camels_us/basin_mean_forcing"
 
 echo "=== node $(hostname) job $SLURM_JOB_ID $(date '+%F %T') ==="
+echo "--- OS / glibc on this compute node ---"
+cat /etc/redhat-release 2>/dev/null || true
+ldd --version 2>/dev/null | head -1 || true
+nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv,noheader --id=0 || true
+
 python -u -c "
-import torch, neuralhydrology
-p = neuralhydrology.__file__.replace('\\','/')
-assert '/precip_swap_daily_2026_09/code_1f9804e/' in p, 'WRONG CODE: '+p
-print('archived code OK:', p); print('torch', torch.__version__, 'cuda', torch.cuda.is_available())
+import pathlib, torch, neuralhydrology
+p = pathlib.Path(neuralhydrology.__file__).as_posix()
+assert '/precip_swap_daily_2026_09/code_1f9804e/' in p, 'WRONG CODE: ' + p
+print('archived code OK:', p)
+print('torch', torch.__version__, 'cuda', torch.cuda.is_available(), torch.cuda.get_device_name(0))
 " || exit 4
 
 echo "=== BUILD chirps (from the shipped Earth Engine table) ==="
@@ -42,7 +51,8 @@ sd=$(ls -dt runs_smoke/pswap_smoke_* 2>/dev/null | head -1) || true
 [ -n "$sd" ] || { echo "SMOKE RUN DIR NOT FOUND"; exit 1; }
 grep -E "number_of_basins|forcings:" "$sd/output.log" || true
 python -u -c "
-import yaml; c = yaml.safe_load(open('$sd/config.yml'))
+import yaml
+c = yaml.safe_load(open('$sd/config.yml'))
 assert c['forcings'] == ['chirps'], c['forcings']
 print('smoke forcings OK:', c['forcings'], '| dynamic_inputs:', c['dynamic_inputs'])
 "
