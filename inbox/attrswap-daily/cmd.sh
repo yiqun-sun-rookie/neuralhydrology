@@ -1,37 +1,37 @@
 #!/bin/bash
-# forcing-swap RETRIEVE -- pack the 9 per-basin metric tables + medians + gate + run configs + slurm logs
-# into a tar.gz and print it base64 inside the receipt (decode locally: base64 -d > fswap_hpc_results.tar.gz).
+# READ-ONLY: ERA5-Land (Caravan pipeline) daily precipitation correlation against Maurer over all 529 basins,
+# so it can be compared like-for-like with the CHIRPS number measured locally on the same 529 basins.
 set -o pipefail
-ROOT=/data1/home/sunyiq/forcing_swap_daily_2026_09
 date "+wallclock %F %T %z"
-cd "$ROOT" || { echo "ROOT MISSING"; exit 1; }
-echo "=== A. COMPLETENESS ==="
-n=0; for a in fswap_armE27_s100 fswap_armE27_s200 fswap_armE27_s300 fswap_armE23_s100 fswap_armE23_s200 fswap_armE23_s300 fswap_armEP_s100 fswap_armEP_s200 fswap_armEP_s300; do
-  f="logs/$a.public_median.txt"; if [ -f "$f" ]; then echo "  $a: $(cat "$f")"; n=$((n+1)); else echo "  $a: MISSING"; fi
-done
-echo "arms with medians: $n/9"
-echo "=== B. PACK ==="
-TMP=$(mktemp -d)
-mkdir -p "$TMP/fswap_hpc_results"
-for d in runs/fswap_*; do
-  [ -d "$d" ] || continue
-  a=$(basename "$d")
-  mkdir -p "$TMP/fswap_hpc_results/$a/test/model_epoch030"
-  cp "$d/config.yml" "$TMP/fswap_hpc_results/$a/" 2>/dev/null
-  cp "$d/test/model_epoch030/test_metrics.csv" "$TMP/fswap_hpc_results/$a/test/model_epoch030/" 2>/dev/null
-  cp "$d/output.log" "$TMP/fswap_hpc_results/$a/" 2>/dev/null
-done
-cp logs/*.public_median.txt logs/gate.txt logs/convert_verify.json logs/job_ids.txt "$TMP/fswap_hpc_results/" 2>/dev/null
-mkdir -p "$TMP/fswap_hpc_results/slurm_logs"
-for f in logs/slurm_fswap_*.out logs/slurm_fswap_*.err; do  # drop tqdm progress-bar lines (2+ MB per job), keep everything else
-  [ -f "$f" ] && grep -v -E '%\|' "$f" > "$TMP/fswap_hpc_results/slurm_logs/$(basename "$f")"
-done
-( cd "$TMP/fswap_hpc_results" && find . -type f | LC_ALL=C sort | xargs sha256sum ) > "$TMP/fswap_hpc_results/MANIFEST.sha256"
-( cd "$TMP" && tar --mtime='2026-01-01 00:00:00' --owner=0 --group=0 --numeric-owner -czf fswap_hpc_results.tar.gz fswap_hpc_results )
-echo "tar bytes=$(stat -c%s "$TMP/fswap_hpc_results.tar.gz") sha256=$(sha256sum "$TMP/fswap_hpc_results.tar.gz" | cut -c1-16) files=$(wc -l < "$TMP/fswap_hpc_results/MANIFEST.sha256")"
-echo "=== C. BASE64 (between the markers) ==="
-echo "-----BEGIN TARGZ B64-----"
-base64 -w 0 "$TMP/fswap_hpc_results.tar.gz"; echo
-echo "-----END TARGZ B64-----"
-rm -rf "$TMP"
+R=/data1/home/sunyiq/forcing_swap_daily_2026_09
+source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null
+conda activate nh_final 2>/dev/null
+python - <<'PY' 2>&1
+import glob
+import numpy as np, pandas as pd
+R = '/data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing'
+MS, ME = '1989-01-04', '2008-09-30'
+b529 = [l.strip().zfill(8) for l in open('/data1/home/sunyiq/forcing_swap_daily_2026_09/basin_lists/basins_529.txt') if l.strip()]
+
+def read(prod, b):
+    f = glob.glob(f'{R}/{prod}/**/{b}_*_forcing_leap.txt', recursive=True)[0]
+    d = pd.read_csv(f, sep=r'\s+', header=0, skiprows=3)
+    d['date'] = pd.to_datetime(dict(year=d.Year, month=d.Mnth, day=d.Day))
+    return d.set_index('date')['PRCP(mm/day)']
+
+rs, ratios, lags = [], [], []
+for b in b529:
+    m, e = read('maurer', b).loc[MS:ME], read('era5l_caravan', b).loc[MS:ME]
+    j = pd.concat([m.rename('m'), e.rename('e')], axis=1).dropna()
+    rs.append(float(j.m.corr(j.e)))
+    ratios.append(float(j.e.mean() / j.m.mean()))
+    r = {k: float(j.m.corr(j.e.shift(k))) for k in (-2, -1, 0, 1, 2)}
+    lags.append(max(r, key=r.get))
+rs, ratios, lags = pd.Series(rs), pd.Series(ratios), pd.Series(lags)
+print('=== ERA5-Land(Caravan) vs Maurer, 529 basins, 1989-01-04..2008-09-30 ===')
+print(f'daily corr : p10 {rs.quantile(.1):.3f}  median {rs.median():.3f}  p90 {rs.quantile(.9):.3f}  min {rs.min():.3f}')
+print(f'mean ratio : p10 {ratios.quantile(.1):.3f}  median {ratios.median():.3f}  p90 {ratios.quantile(.9):.3f}')
+print(f'best lag 0 : {(lags==0).sum()}/529 = {(lags==0).mean()*100:.2f}%')
+print('lag counts :', dict(lags.value_counts()))
+PY
 echo "=== DONE ==="
