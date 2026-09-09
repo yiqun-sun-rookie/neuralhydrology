@@ -1,0 +1,16 @@
+### channel=kalmannet-tukf09-455 seq=171
+### host=login4
+### started=2026-09-09T21:32:58+0800
+### ---------- output ----------
+TIME=2026-09-09T21:32:58+0800  PREPARATION_JOB_ID=224439
+     JobID        State ExitCode    Elapsed  NodeList 
+---------- ------------ -------- ---------- --------- 
+    224439       FAILED      1:0   00:05:14    ngu104 
+PREPARATION_FAILED
+{"exit_code":1,"experiment_id":"TUKF09_455_BASIN_ZERO_VALIDATION_TARGET_VARIANCE_REVISION_V1","schema_version":"tukf09_455_hpc_preparation_failure_a800_exclusive_v2r13","slurm_job_id":"224439","status":"HPC_A800_EXCLUSIVE_V2R13_PREPARATION_FAILED_ROOT_FROZEN"}
+Traceback (most recent call last):
+  File "<stdin>", line 18, in <module>
+AssertionError
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T21:32:58+0800
