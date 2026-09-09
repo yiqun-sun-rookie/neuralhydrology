@@ -1,0 +1,52 @@
+### channel=id29-nearing2022-da seq=575
+### host=login4
+### started=2026-09-09T18:10:13+0800
+### ---------- output ----------
+=== search 219423/220487 log files anywhere under ROOT and ~/logs ===
+/data1/home/sunyiq/nearing2022_da/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair_v2_20260904/.replacement_verification.preparing-220487
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+=== slurm script StdOut spec ===
+2:#SBATCH --job-name=N22-warm-pair
+3:#SBATCH --partition=hgpu4,hgpu8,hgpu2
+4:#SBATCH --nodes=1
+5:#SBATCH --ntasks=1
+6:#SBATCH --cpus-per-task=4
+7:#SBATCH --gres=gpu:1
+8:#SBATCH --exclude=ngu002,ngu101
+9:#SBATCH --array=0-1%1
+10:#SBATCH --time=3-12:00:00
+11:#SBATCH --output=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%A_%a.out
+12:#SBATCH --error=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/%x_%A_%a.err
+123:TRAIN_PARENT="$WORK/training_outputs"
+156:test -f "$TRAIN_RUN/output.log"
+306:    'training_log_sha256': digest(run / 'output.log'),
+analyze_warmup_target_pair.slurm
+run_author_v13_training_data_port_all531_v2.slurm
+run_author_v13_warmup_isolation_all531_v2.slurm
+run_partial_registered_results_audit_attempt2.slurm
+run_partial_registered_results_audit_seq205.slurm
+run_partial_registered_results_audit_seq223.slurm
+run_partial_registered_results_audit_seq227.slurm
+run_partial_registered_results_audit_seq231.slurm
+run_partial_registered_results_audit_seq234.slurm
+run_partial_registered_results_audit_seq245.slurm
+run_partial_registered_results_audit_seq249.slurm
+run_partial_registered_results_audit_seq271.slurm
+run_partial_registered_results_audit_seq275.slurm
+run_partial_registered_results_audit.slurm
+run_preclosure_validation.slurm
+run_registered_aggregation.slurm
+run_registered_closure_export.slurm
+run_registered_closure_manifest.slurm
+run_registered_evaluation_array.slurm
+run_registered_numerical_gate.slurm
+run_registered_training_array.slurm
+run_registered_training.slurm
+run_warmup_target_pair.slurm
+run_warmup_target_replacement_verifier.slurm
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T18:10:23+0800
