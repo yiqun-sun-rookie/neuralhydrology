@@ -1,0 +1,53 @@
+### channel=attrswap-daily seq=37
+### host=login4
+### started=2026-09-09T22:21:06+0800
+### ---------- output ----------
+wallclock 2026-09-09 22:21:06 +0800
+=== A. CANCEL THE SIX ORPHANED ARMS (explicit ids only, never -u) ===
+  已取消 224442（依赖永不可满足）
+  已取消 224443（依赖永不可满足）
+  已取消 224444（依赖永不可满足）
+  已取消 224445（依赖永不可满足）
+  已取消 224446（依赖永不可满足）
+  已取消 224447（依赖永不可满足）
+=== B. INSTALL CORRECTED TEMPLATES ===
+  before pswap_gate.slurm f749eed25ac2f0c9
+  after  pswap_gate.slurm 260dc2d2b85bd6e8
+  before pswap_train.slurm 05875a828bb1ba0a
+  after  pswap_train.slurm 1f20bbae3c93c16c
+--- 确认新模板里没有反斜杠字面量，且分区为 hgpu4 ---
+  pswap_gate.slurm: 反斜杠出现 2 次（续行符除外应为 0-2）; #SBATCH -p hgpu4
+  pswap_train.slurm: 反斜杠出现 0 次（续行符除外应为 0-2）; #SBATCH -p hgpu4
+--- 语法检查 ---
+  gate 语法通过
+  train 语法通过
+--- 单独预演环境守卫（不提交作业，在登录节点上只验语法能否解析）---
+  环境守卫代码块可编译
+=== C. SUBMIT GATE ===
+Submitted batch job 224459
+=== D. SUBMIT 6 ARMS (afterok:224459) ===
+pswap_armP_chirps_s100 -> 224460
+pswap_armP_chirps_s200 -> 224461
+pswap_armP_chirps_s300 -> 224462
+pswap_armP_era5l_s100 -> 224463
+pswap_armP_era5l_s200 -> 224464
+pswap_armP_era5l_s300 -> 224465
+job ids: 224459 224460 224461 224462 224463 224464 224465 
+=== E. QUEUE ===
+      JOBID                     NAME     STATE       DEPENDENCY         NODELIST(REASON)
+     224459               pswap_gate   PENDING                                    (None)
+     224460   pswap_armP_chirps_s100   PENDING   afterok:224459             (Dependency)
+     224461   pswap_armP_chirps_s200   PENDING   afterok:224459             (Dependency)
+     224462   pswap_armP_chirps_s300   PENDING   afterok:224459             (Dependency)
+     224463    pswap_armP_era5l_s100   PENDING   afterok:224459             (Dependency)
+     224464    pswap_armP_era5l_s200   PENDING   afterok:224459             (Dependency)
+     224465    pswap_armP_era5l_s300   PENDING   afterok:224459             (Dependency)
+ NODELIST    STATE  CPUS(A/I/O/T)     GRES
+   ngu101     idle      0/96/0/96    gpu:4
+   ngu102     idle      0/96/0/96    gpu:4
+   ngu103    down*      0/0/96/96    gpu:4
+   ngu104     idle      0/96/0/96    gpu:4
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T22:21:12+0800
