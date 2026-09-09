@@ -1,0 +1,89 @@
+### channel=kalmannet-tukf09-455 seq=151
+### host=login4
+### started=2026-09-09T18:54:39+0800
+### ---------- output ----------
+TIME=2026-09-09T18:54:39+0800
+=== RETIRE THE hgpu8 PREPARATION JOB ===
+STATE_BEFORE=PENDING
+SCANCEL_ISSUED
+     JobID          State    Elapsed 
+---------- -------------- ---------- 
+    223992 CANCELLED by +   00:00:00 
+=== SUBMIT THE hgpu4 PROBE ===
+cut: ": No such file or directory
+PROBE_SHA256=
+PROBE_JOB_ID=224326
+     JobID        State    Elapsed  NodeList 
+---------- ------------ ---------- --------- 
+    224326    COMPLETED   00:00:15    ngu102 
+HOST=ngu102  JOB=224326  START=2026-09-09T18:54:49+0800
+SLURM_JOB_GPUS=0,1,2,3 SLURM_STEP_GPUS= CUDA_VISIBLE_DEVICES=0,1,2,3
+SLURM_CPUS_ON_NODE=16 SLURM_CPUS_PER_TASK=16 SLURM_JOB_CPUS_PER_NODE=16
+nproc=96
+GPU 0: NVIDIA A40 (UUID: GPU-9fa5400d-5cc6-2d5e-563a-9ecb812c74b1)
+GPU 1: NVIDIA A40 (UUID: GPU-07a83f6a-23ff-1205-c012-7b3450f2688d)
+GPU 2: NVIDIA A40 (UUID: GPU-ae798f38-2a38-edab-f8de-04575c4371bf)
+GPU 3: NVIDIA A40 (UUID: GPU-290b91eb-1ced-de1f-6632-e4dba03bb7d1)
+index, name, uuid, driver_version, memory.total [MiB], compute_cap
+0, NVIDIA A40, GPU-9fa5400d-5cc6-2d5e-563a-9ecb812c74b1, 535.104.05, 46068 MiB, 8.6
+1, NVIDIA A40, GPU-07a83f6a-23ff-1205-c012-7b3450f2688d, 535.104.05, 46068 MiB, 8.6
+2, NVIDIA A40, GPU-ae798f38-2a38-edab-f8de-04575c4371bf, 535.104.05, 46068 MiB, 8.6
+3, NVIDIA A40, GPU-290b91eb-1ced-de1f-6632-e4dba03bb7d1, 535.104.05, 46068 MiB, 8.6
+=== pmon (what the whole-node gate would read here) ===
+# gpu         pid  type    sm    mem    enc    dec    command
+# Idx           #   C/G     %      %      %      %    name
+    0          -     -      -      -      -      -    -              
+    1          -     -      -      -      -      -    -              
+    2          -     -      -      -      -      -    -              
+    3          -     -      -      -      -      -    -              
+FOREIGN_COMPUTE=0
+=== other jobs on this node ===
+     JOBID      USER    STATE TRES_PER_N
+    224326    sunyiq  RUNNING      gpu:4
+{
+ "python": "3.11.13",
+ "numpy": "2.3.3",
+ "psutil": "7.0.0",
+ "torch": "2.4.0",
+ "torch_cuda": "12.1",
+ "cudnn": 90100,
+ "count": 4,
+ "names": [
+  "NVIDIA A40",
+  "NVIDIA A40",
+  "NVIDIA A40",
+  "NVIDIA A40"
+ ],
+ "caps": [
+  [
+   8,
+   6
+  ],
+  [
+   8,
+   6
+  ],
+  [
+   8,
+   6
+  ],
+  [
+   8,
+   6
+  ]
+ ],
+ "total_bytes": [
+  47622258688,
+  47622258688,
+  47622258688,
+  47622258688
+ ]
+}
+              total        used        free      shared  buff/cache   available
+Mem:            503          20          46           4         436         477
+END=2026-09-09T18:55:04+0800
+TUKF09_455_HGPU4_PROBE_DONE
+TUKF09_455_HGPU4_PROBE_SUBMITTED
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-09T18:55:38+0800
