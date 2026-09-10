@@ -1,0 +1,19 @@
+### channel=id29-nearing2022-da seq=608
+### host=login4
+### started=2026-09-11T06:07:39+0800
+### ---------- output ----------
+=== find logs for 219423 / 220487 ===
+--- 219423_0 ---
+219423_0|N22-warmpair|FAILED|1:0|2026-09-03T18:19:46|2026-09-03T18:20:31|/data1/home/sunyiq/nearing2022_da
+--- 219423_1 ---
+219423_1|N22-warmpair|FAILED|1:0|2026-09-03T18:20:31|2026-09-03T18:21:19|/data1/home/sunyiq/nearing2022_da
+--- 220487 ---
+220487|N22-replv2|FAILED|1:0|2026-09-04T14:18:59|2026-09-04T14:19:04|/data1/home/sunyiq/nearing2022_da
+=== log files ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T06:07:40+0800
