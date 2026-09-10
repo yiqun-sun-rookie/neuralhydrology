@@ -1,0 +1,87 @@
+### channel=kalmannet-daily-perbasin seq=93
+### host=login4
+### started=2026-09-10T17:19:42+0800
+### ---------- output ----------
+ALL_GPU_NODES_BEGIN
+ngu001|hgpu2p|gpu:2|(null)|4/92/0/96|mixed
+ngu002|hgpu2p|gpu:2|(null)|0/0/96/96|down*
+ngu003|hgpu2|gpu:2|(null)|4/92/0/96|mixed
+ngu004|hgpu2p|gpu:2|(null)|4/92/0/96|mixed
+ngu005|hgpu2p|gpu:2|(null)|0/0/96/96|drained
+ngu006|hgpu2p|gpu:2|(null)|4/92/0/96|mixed
+ngu007|hgpu2p|gpu:2|(null)|16/80/0/96|mixed
+ngu008|hgpu2p|gpu:2|(null)|6/90/0/96|mixed
+ngu009|hgpu2|gpu:2|(null)|4/92/0/96|mixed
+ngu010|hgpu2p|gpu:2|(null)|4/28/0/32|mixed
+ngu011|hgpu2p|gpu:2|(null)|4/28/0/32|mixed
+ngu101|hgpu4|gpu:4|(null)|16/80/0/96|mixed
+ngu102|hgpu4|gpu:4|(null)|8/88/0/96|mixed
+ngu103|hgpu4|gpu:4|(null)|0/0/96/96|down*
+ngu104|hgpu4|gpu:4|(null)|8/88/0/96|mixed
+ngu201|hgpu8|gpu:8|(null)|34/30/0/64|mixed
+ngu202|hgpu8|gpu:8|(null)|0/64/0/64|maint
+ngu203|hgpu8|gpu:8|(null)|8/56/0/64|mixed
+ALL_GPU_NODES_EXIT=0
+RUNNING_GPU_JOBS_BEGIN
+224505|sunyiq|tukf09-455-v2r14-neural|hgpu4|18:37:30|3-00:00:00|gpu:4|ngu101|2026-09-12T22:42:12
+RUNNING_GPU_JOBS_EXIT=0
+TARGET_JOB_BEGIN
+JobId=224875 JobName=kdpp-dev-train-08190500-seq91
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200394 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Priority Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A
+   SubmitTime=2026-09-10T17:13:49 EligibleTime=2026-09-10T17:13:49
+   AccrueTime=2026-09-10T17:13:49
+   StartTime=2026-09-12T22:42:12 EndTime=2026-09-13T00:42:12 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-10T17:20:31
+   Partition=hgpu4 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_A40_entryrepair_seq91/train.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_A40_entryrepair_seq91
+   StdErr=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_A40_entryrepair_seq91/slurm-224875.stderr
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_A40_entryrepair_seq91/slurm-224875.stdout
+   Power=
+   TresPerNode=gpu:1
+
+TARGET_JOB_EXIT=0
+TARGET_START_ESTIMATE_BEGIN
+JOBID|NAME|STATE|PARTITION|START_TIME|SCHEDNODES|NODELIST(REASON)
+224875|kdpp-dev-train-08190500-seq91|PENDING|hgpu4|2026-09-12T22:42:12|(null)|(Priority)
+TARGET_START_ESTIMATE_EXIT=0
+OWN_GPU_QUEUE_BEGIN
+224389_0|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224389_1|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224389_2|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224389_3|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224389_4|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224389_5|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224389_6|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224389_7|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224389_8|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224389_9|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224389_10|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224389_11|ngf-B-memory-r1|PENDING|hgpu8|1|4|gpu:1|/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1|(Priority)
+224875|kdpp-dev-train-08190500-seq91|PENDING|hgpu4|1|4|gpu:1|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08190500_A40_entryrepair_seq91|(Priority)
+202229|N22-agg-eval|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(DependencyNeverSatisfied)
+202294|N22-export|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(Dependency)
+202315|N22-gate|PENDING|hgpu4,hgpu8,hgpu2|1|2|N/A|/data1/home/sunyiq/hpc_mailbox|(Dependency)
+202507|N22-mask-iso-531|PENDING|hgpu4,hgpu8,hgpu2|1|4|gpu:1|/data1/home/sunyiq/hpc_mailbox|(DependencyNeverSatisfied)
+215429|id30_m01_s100|PENDING|hgpu2|1|4|gpu:1|/data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo|(DependencyNeverSatisfied)
+202293|N22-manifest|PENDING|hgpu4,hgpu8,hgpu2|1|4|N/A|/data1/home/sunyiq/nearing2022_da|(JobHeldUser)
+224505|tukf09-455-v2r14-neural|RUNNING|hgpu4|1|16|gpu:4|/data1/home/sunyiq/hpc_mailbox|ngu101
+OWN_GPU_QUEUE_EXIT=0
+READ_ONLY_GPU_START_QUERY_COMPLETE submissions=0 cancellations=0 updates=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-10T17:19:42+0800
