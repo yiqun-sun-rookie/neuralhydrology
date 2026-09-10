@@ -1,9 +1,8 @@
 set -o pipefail
-ROOT=/data1/home/sunyiq/nearing2022_da
-for J in 219423_0 219423_1 220487; do
-  echo "=== $J ==="
-  SO=$(sacct -j "$J" -X -n -P --format=WorkDir 2>/dev/null | head -1)
-  echo "workdir=$SO"
+L=/data1/home/sunyiq/nearing2022_da/closure_20260810/logs
+for F in N22-warmpair_219423_0.err N22-warmpair_219423_0.out N22-warmpair_219423_1.err; do
+  echo "=== $F (last 40) ==="
+  tail -40 "$L/$F" 2>/dev/null || echo "  unreadable"
 done
-echo "=== FIND LOGS ==="
-find "$ROOT/logs" "$ROOT" -maxdepth 3 -name '*21942*' -o -maxdepth 3 -name '*22048*' 2>/dev/null | head -20 || true
+echo "=== replv2 220487 logs ==="
+ls -1 "$L" 2>/dev/null | grep -E '220487|replv2' || echo '  none'
