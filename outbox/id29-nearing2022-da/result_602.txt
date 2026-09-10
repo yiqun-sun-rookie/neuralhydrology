@@ -1,0 +1,38 @@
+### channel=id29-nearing2022-da seq=602
+### host=login4
+### started=2026-09-11T00:07:14+0800
+### ---------- output ----------
+=== 219423 sacct detail ===
+219423_0|N22-warmpair|FAILED|1:0|2026-09-03T18:19:46|2026-09-03T18:20:31|ngu104
+219423_0.batch|batch|FAILED|1:0|2026-09-03T18:19:46|2026-09-03T18:20:31|ngu104
+219423_0.extern|extern|COMPLETED|0:0|2026-09-03T18:19:46|2026-09-03T18:20:31|ngu104
+219423_1|N22-warmpair|FAILED|1:0|2026-09-03T18:20:31|2026-09-03T18:21:19|ngu104
+219423_1.batch|batch|FAILED|1:0|2026-09-03T18:20:31|2026-09-03T18:21:19|ngu104
+219423_1.extern|extern|COMPLETED|0:0|2026-09-03T18:20:31|2026-09-03T18:21:19|ngu104
+=== 220487 replv2 detail ===
+220487|N22-replv2|FAILED|1:0|2026-09-04T14:18:59|2026-09-04T14:19:04|ngu104
+220487.batch|batch|FAILED|1:0|2026-09-04T14:18:59|2026-09-04T14:19:04|ngu104
+220487.extern|extern|COMPLETED|0:0|2026-09-04T14:18:59|2026-09-04T14:19:05|ngu104
+=== LOGS for 219423_0 ===
+=== LOGS for 219423_1 ===
+=== LOGS for 220487 ===
+=== recent log files in logs dir ===
+total 52668
+-rw-r--r--. 1 sunyiq g_sunyiq     3413 Aug 10 06:14 compare_202159.out
+-rw-r--r--. 1 sunyiq g_sunyiq        0 Aug 10 06:10 compare_202159.err
+-rw-r--r--. 1 sunyiq g_sunyiq 32110755 Aug 10 04:51 ar_201893.out
+-rw-r--r--. 1 sunyiq g_sunyiq     1027 Aug 10 04:18 ar_201893.err
+-rw-r--r--. 1 sunyiq g_sunyiq    44845 Aug  8 22:54 da_201890.out
+-rw-r--r--. 1 sunyiq g_sunyiq     1027 Aug  8 18:08 da_201890.err
+-rw-r--r--. 1 sunyiq g_sunyiq 20793758 Aug  8 18:07 sim_201858.out
+-rw-r--r--. 1 sunyiq g_sunyiq     1027 Aug  8 18:00 sim_201858.err
+-rw-r--r--. 1 sunyiq g_sunyiq       81 Aug  8 16:47 ar_201859.err
+-rw-r--r--. 1 sunyiq g_sunyiq   972379 Aug  8 16:47 ar_201859.out
+=== slurm out/err by pattern ===
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.err
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_0.out
+/data1/home/sunyiq/nearing2022_da/closure_20260810/logs/N22-warmpair_219423_1.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T00:07:15+0800
