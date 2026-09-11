@@ -1,0 +1,155 @@
+### channel=id33-transformer-recipe-repair seq=51
+### host=login4
+### started=2026-09-12T03:07:36+0800
+### ---------- output ----------
+2026-09-12T03:07:36+0800
+=== SACCT ===
+JobID|JobName|State|ExitCode|Elapsed|NodeList
+225187|id33_sd_200|COMPLETED|0:0|06:16:06|ngu010
+225190|id33_sd_500|RUNNING|0:0|06:48:26|ngu001
+225191|id33_sd_600|RUNNING|0:0|06:48:26|ngu004
+225192|id33_sd_700|RUNNING|0:0|06:48:26|ngu004
+225199|id33_sd_300|RUNNING|0:0|05:55:33|ngu010
+225200|id33_sd_400|RUNNING|0:0|05:55:33|ngu005
+225201|id33_sd_800|RUNNING|0:0|05:55:33|ngu005
+=== QUEUE ===
+     JOBID           NAME  ST       TIME NODELIST NODELIST(REASON)
+    225199    id33_sd_300   R    5:54:42   ngu010 ngu010
+    225200    id33_sd_400   R    5:54:42   ngu005 ngu005
+    225201    id33_sd_800   R    5:54:42   ngu005 ngu005
+    225190    id33_sd_500   R    6:47:35   ngu001 ngu001
+    225191    id33_sd_600   R    6:47:35   ngu004 ngu004
+    225192    id33_sd_700   R    6:47:35   ngu004 ngu004
+=== EPOCH PROGRESS ===
+results/33_transformer_recipe_repair/C3_s300/transformer_recipe_repair_C3_s300_2026_0911_2115_ep30/ epochs_validated=9
+results/33_transformer_recipe_repair/C3_s400/transformer_recipe_repair_C3_s400_2026_0911_2117_ep30/ epochs_validated=9
+results/33_transformer_recipe_repair/C3_s500/transformer_recipe_repair_C3_s500_2026_0911_2024_ep30/ epochs_validated=10
+results/33_transformer_recipe_repair/C3_s600/transformer_recipe_repair_C3_s600_2026_0911_2024_ep30/ epochs_validated=11
+results/33_transformer_recipe_repair/C3_s700/transformer_recipe_repair_C3_s700_2026_0911_2024_ep30/ epochs_validated=11
+results/33_transformer_recipe_repair/C3_s800/transformer_recipe_repair_C3_s800_2026_0911_2117_ep30/ epochs_validated=9
+results/33_transformer_recipe_repair/C4_s200/transformer_recipe_repair_C4_s200_2026_0911_2023_ep30/ epochs_validated=30
+results/33_transformer_recipe_repair/C4_s300/transformer_recipe_repair_C4_s300_2026_0911_2115_ep30/ epochs_validated=30
+results/33_transformer_recipe_repair/C4_s400/transformer_recipe_repair_C4_s400_2026_0911_2117_ep30/ epochs_validated=30
+results/33_transformer_recipe_repair/C4_s500/transformer_recipe_repair_C4_s500_2026_0911_2024_ep30/ epochs_validated=30
+results/33_transformer_recipe_repair/C4_s600/transformer_recipe_repair_C4_s600_2026_0911_2024_ep30/ epochs_validated=30
+results/33_transformer_recipe_repair/C4_s700/transformer_recipe_repair_C4_s700_2026_0911_2024_ep30/ epochs_validated=30
+results/33_transformer_recipe_repair/C4_s800/transformer_recipe_repair_C4_s800_2026_0911_2117_ep30/ epochs_validated=30
+results/33_transformer_recipe_repair/T2_s200/transformer_recipe_repair_T2_s200_2026_0911_2023_ep30/ epochs_validated=30
+results/33_transformer_recipe_repair/T2_s300/transformer_recipe_repair_T2_s300_2026_0911_2115_ep30/ epochs_validated=18
+results/33_transformer_recipe_repair/T2_s400/transformer_recipe_repair_T2_s400_2026_0911_2117_ep30/ epochs_validated=17
+results/33_transformer_recipe_repair/T2_s500/transformer_recipe_repair_T2_s500_2026_0911_2024_ep30/ epochs_validated=20
+results/33_transformer_recipe_repair/T2_s600/transformer_recipe_repair_T2_s600_2026_0911_2024_ep30/ epochs_validated=22
+results/33_transformer_recipe_repair/T2_s700/transformer_recipe_repair_T2_s700_2026_0911_2024_ep30/ epochs_validated=21
+results/33_transformer_recipe_repair/T2_s800/transformer_recipe_repair_T2_s800_2026_0911_2117_ep30/ epochs_validated=18
+=== MANIFESTS ===
+-- results/33_transformer_recipe_repair/_invocations/id33_C3_s300_slurm225199/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_C3_s400_slurm225200/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_C3_s500_slurm225190/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_C3_s600_slurm225191/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_C3_s700_slurm225192/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_C3_s800_slurm225201/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_C4_s200_slurm225187/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+-- results/33_transformer_recipe_repair/_invocations/id33_C4_s300_slurm225199/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+-- results/33_transformer_recipe_repair/_invocations/id33_C4_s400_slurm225200/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+-- results/33_transformer_recipe_repair/_invocations/id33_C4_s500_slurm225190/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+-- results/33_transformer_recipe_repair/_invocations/id33_C4_s600_slurm225191/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+-- results/33_transformer_recipe_repair/_invocations/id33_C4_s700_slurm225192/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+-- results/33_transformer_recipe_repair/_invocations/id33_C4_s800_slurm225201/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+-- results/33_transformer_recipe_repair/_invocations/id33_T2_s200_slurm225187/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "PASS"
+-- results/33_transformer_recipe_repair/_invocations/id33_T2_s300_slurm225199/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_T2_s400_slurm225200/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_T2_s500_slurm225190/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_T2_s600_slurm225191/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_T2_s700_slurm225192/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+-- results/33_transformer_recipe_repair/_invocations/id33_T2_s800_slurm225201/run_manifest.json
+"status": "PASS"
+"status": "PASS"
+"status": "RUNNING"
+=== EPOCH30 MEDIANS (if any) ===
+-- results/33_transformer_recipe_repair/C4_s200/transformer_recipe_repair_C4_s200_2026_0911_2023_ep30/validation/model_epoch030/validation_metrics.csv
+531 0.7090225219726562
+-- results/33_transformer_recipe_repair/C4_s300/transformer_recipe_repair_C4_s300_2026_0911_2115_ep30/validation/model_epoch030/validation_metrics.csv
+531 0.7191840410232544
+-- results/33_transformer_recipe_repair/C4_s400/transformer_recipe_repair_C4_s400_2026_0911_2117_ep30/validation/model_epoch030/validation_metrics.csv
+531 0.7141010761260986
+-- results/33_transformer_recipe_repair/C4_s500/transformer_recipe_repair_C4_s500_2026_0911_2024_ep30/validation/model_epoch030/validation_metrics.csv
+531 0.7148528099060059
+-- results/33_transformer_recipe_repair/C4_s600/transformer_recipe_repair_C4_s600_2026_0911_2024_ep30/validation/model_epoch030/validation_metrics.csv
+531 0.7120330333709717
+-- results/33_transformer_recipe_repair/C4_s700/transformer_recipe_repair_C4_s700_2026_0911_2024_ep30/validation/model_epoch030/validation_metrics.csv
+531 0.7138328552246094
+-- results/33_transformer_recipe_repair/C4_s800/transformer_recipe_repair_C4_s800_2026_0911_2117_ep30/validation/model_epoch030/validation_metrics.csv
+531 0.7082488536834717
+-- results/33_transformer_recipe_repair/T2_s200/transformer_recipe_repair_T2_s200_2026_0911_2023_ep30/validation/model_epoch030/validation_metrics.csv
+531 0.685594916343689
+=== ERR TAILS ===
+-- logs/33_transformer_recipe_repair/packed-225199.err
+-- logs/33_transformer_recipe_repair/packed-225193.err
+-- logs/33_transformer_recipe_repair/packed-225190.err
+-- logs/33_transformer_recipe_repair/packed-225191.err
+-- logs/33_transformer_recipe_repair/packed-225192.err
+-- logs/33_transformer_recipe_repair/packed-225189.err
+/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/cuda/__init__.py:128: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /opt/conda/conda-bld/pytorch_1720538456841/work/c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+[FATAL] no usable GPU
+-- logs/33_transformer_recipe_repair/packed-225187.err
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-12T03:07:39+0800
