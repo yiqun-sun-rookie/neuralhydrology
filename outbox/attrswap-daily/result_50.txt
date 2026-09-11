@@ -1,0 +1,42 @@
+### channel=attrswap-daily seq=50
+### host=login4
+### started=2026-09-11T17:18:22+0800
+### ---------- output ----------
+wallclock 2026-09-11 17:18:22 +0800
+=== A. MY QUEUE (must be empty of this campaign; header must be visible) ===
+      JOBID                       NAME     STATE       TIME  NODELIST
+  squeue rc=0
+=== B. BEFORE ===
+  2026-09-10_00:39:37  pswap_armP_chirps_s100_2026_0909_2231_ep30
+  2026-09-10_00:39:25  pswap_armP_chirps_s200_2026_0909_2231_ep30
+  2026-09-10_00:39:16  pswap_armP_chirps_s300_2026_0909_2231_ep30
+  2026-09-09_22:33:56  pswap_armP_era5l_s100_2026_0909_2231_ep30
+  2026-09-10_00:56:29  pswap_armP_era5l_s100_2026_0909_2248_ep30
+  2026-09-09_22:33:46  pswap_armP_era5l_s200_2026_0909_2232_ep30
+  2026-09-10_00:48:44  pswap_armP_era5l_s200_2026_0909_2249_ep30
+  2026-09-09_22:33:46  pswap_armP_era5l_s300_2026_0909_2232_ep30
+  2026-09-10_00:48:44  pswap_armP_era5l_s300_2026_0909_2249_ep30
+=== C. RENAME (guarded: source must exist, destination must not) ===
+  RENAMED: pswap_armP_era5l_s100_2026_0909_2231_ep30 -> INCOMPLETE_ABORTED_pswap_armP_era5l_s100_2026_0909_2231_ep30
+  RENAMED: pswap_armP_era5l_s200_2026_0909_2232_ep30 -> INCOMPLETE_ABORTED_pswap_armP_era5l_s200_2026_0909_2232_ep30
+  RENAMED: pswap_armP_era5l_s300_2026_0909_2232_ep30 -> INCOMPLETE_ABORTED_pswap_armP_era5l_s300_2026_0909_2232_ep30
+  renamed_count=3 (expect 3)
+=== D. AFTER (expect 9 entries: 6 valid + 3 INCOMPLETE_ABORTED_*) ===
+  2026-09-09_22:33:56  INCOMPLETE_ABORTED_pswap_armP_era5l_s100_2026_0909_2231_ep30
+  2026-09-09_22:33:46  INCOMPLETE_ABORTED_pswap_armP_era5l_s200_2026_0909_2232_ep30
+  2026-09-09_22:33:46  INCOMPLETE_ABORTED_pswap_armP_era5l_s300_2026_0909_2232_ep30
+  2026-09-10_00:39:37  pswap_armP_chirps_s100_2026_0909_2231_ep30
+  2026-09-10_00:39:25  pswap_armP_chirps_s200_2026_0909_2231_ep30
+  2026-09-10_00:39:16  pswap_armP_chirps_s300_2026_0909_2231_ep30
+  2026-09-10_00:56:29  pswap_armP_era5l_s100_2026_0909_2248_ep30
+  2026-09-10_00:48:44  pswap_armP_era5l_s200_2026_0909_2249_ep30
+  2026-09-10_00:48:44  pswap_armP_era5l_s300_2026_0909_2249_ep30
+  valid=6 isolated=3
+=== E. LANDING DIR NUMBERS (unchanged expected: runs=9 medians=6 size=1.4G) ===
+  /data1/home/sunyiq/precip_swap_daily_2026_09 : runs=9 medians=6 size=1.4G
+=== F. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 50
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T17:18:24+0800
