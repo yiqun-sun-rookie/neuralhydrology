@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# READ-ONLY queue/priority diagnostic for the A800 retry array 224389 (hgpu8 / ngu201).
-# Why is it PENDING (Priority) for >29 h with zero startups? Only scheduler *query* commands are used:
-# sinfo / squeue / sprio / sshare / sacct / scontrol show. No sbatch, scancel, scontrol update/hold/release.
-set -uo pipefail
+# Read-only observation of the exact original B array and authorized A800 retry.
+set -euo pipefail
 python3 -I -B - <<'PY'
 import base64
 import datetime
@@ -12,80 +10,71 @@ import json
 import pathlib
 import subprocess
 
-ROOT = pathlib.Path('/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1')
-LIMIT = 200_000  # bytes of stdout kept per query
+root = pathlib.Path('/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1')
+assert root.resolve() == root and root.is_dir()
 
-def run(argv, timeout=60):
-    try:
-        p = subprocess.run(argv, capture_output=True, text=True, timeout=timeout, check=False)
-        out, err, rc = p.stdout, p.stderr, p.returncode
-    except Exception as exc:  # timeout / missing binary: record, never abort the diagnostic
-        out, err, rc = '', f'{type(exc).__name__}: {exc}', -1
-    return {'command': argv, 'returncode': rc,
-            'stdout': out[:LIMIT], 'stdout_truncated': len(out) > LIMIT, 'stderr': err[:4000]}
+def raw(path):
+    assert path.is_file() and not path.is_symlink() and path.resolve() == path
+    return path.read_bytes()
 
-queries = {}
-# 1. the retry array itself
-queries['squeue_retry'] = run(['squeue', '-r', '-j', '224389', '-h', '-o', '%i|%T|%r|%Q|%p|%R|%S|%l|%b|%D|%C|%m'])
-queries['squeue_retry_start_estimate'] = run(['squeue', '--start', '-r', '-j', '224389'])
-queries['scontrol_show_job_retry'] = run(['scontrol', 'show', 'job', '224389'])
-queries['sprio_retry'] = run(['sprio', '-j', '224389', '-o', '%i|%u|%Y|%A|%F|%J|%P|%Q|%T|%N'])
-# 2. the target node and partition
-queries['sinfo_node_ngu201'] = run(['sinfo', '-N', '-n', 'ngu201', '-o', '%N|%P|%T|%C|%G|%m|%e|%E'])
-queries['scontrol_show_node_ngu201'] = run(['scontrol', 'show', 'node', 'ngu201'])
-queries['squeue_jobs_on_ngu201'] = run(['squeue', '-w', 'ngu201', '-o', '%i|%u|%j|%P|%T|%M|%l|%b|%N|%Q'])
-queries['sinfo_partition_hgpu8'] = run(['sinfo', '-p', 'hgpu8', '-N', '-o', '%N|%T|%C|%G|%m|%e|%E'])
-queries['sinfo_partition_hgpu8_summary'] = run(['sinfo', '-p', 'hgpu8', '-s', '-o', '%P|%a|%l|%F|%G'])
-queries['scontrol_show_partition_hgpu8'] = run(['scontrol', 'show', 'partition', 'hgpu8'])
-queries['squeue_partition_hgpu8'] = run(['squeue', '-p', 'hgpu8', '-r', '-o', '%i|%u|%j|%T|%M|%l|%D|%b|%Q|%r|%N|%S'])
-queries['sprio_partition_hgpu8'] = run(['sprio', '-p', 'hgpu8', '-o', '%i|%u|%Y|%A|%F|%J|%P|%Q|%T|%N'])
-queries['scontrol_show_reservation'] = run(['scontrol', 'show', 'reservation'])
-# 3. fairshare / account context
-queries['sshare_self'] = run(['sshare', '-u', 'sunyiq', '-o', 'Account,User,RawShares,NormShares,RawUsage,EffectvUsage,FairShare'])
-queries['sacct_ngu201_recent'] = run(['sacct', '-a', '-N', 'ngu201', '-S', '2026-09-09T00:00:00', '-X', '-n', '-P',
-                                     '--format=JobID,User,Partition,State,Start,End,Elapsed,AllocTRES,ReqNodes'])
-queries['squeue_self_all'] = run(['squeue', '-u', 'sunyiq', '-r', '-o', '%i|%j|%P|%T|%M|%b|%N|%r'])
+def snapshot(path):
+    if not path.exists():
+        return None
+    data = raw(path)
+    return {'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(),
+            'content': json.loads(data)}
 
-# 4. what exactly the retry requested (read-only look at the pinned batch script header)
-sbatch_lines = None
-try:
-    data = (ROOT / 'retry.slurm').read_bytes()
-    sbatch_lines = {'sha256': hashlib.sha256(data).hexdigest(),
-                    'sbatch_directives': [l for l in data.decode(errors='replace').splitlines() if l.startswith('#SBATCH')]}
-except Exception as exc:
-    sbatch_lines = {'error': f'{type(exc).__name__}: {exc}'}
-
-report = {'kind': 'READ_ONLY_RETRY_QUEUE_DIAGNOSTIC_NOT_ADMISSION',
-          'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-          'retry_job_id': '224389', 'partition': 'hgpu8', 'required_node': 'ngu201',
-          'queries': queries, 'retry_slurm_header': sbatch_lines,
-          'new_jobs_submitted': 0, 'jobs_modified_or_cancelled': 0, 'data_or_checkpoint_tensors_loaded': False}
+manifest_raw = raw(root / 'RETRY_MANIFEST.json')
+assert hashlib.sha256(manifest_raw).hexdigest() == '567471e0b43fc924176d93e18d3c880b5f45db131378b1c46dc194a6e6002e2a'
+manifest = json.loads(manifest_raw)
+assert raw(root / 'array_job_id.txt').decode().strip() == '224389'
+receipt = snapshot(root / 'SUBMISSION_RECEIPT.json')
+assert receipt['content']['job_id'] == '224389'
+assert hashlib.sha256(raw(root / 'retry.slurm')).hexdigest() == '4c60d0e95e37cd521209e208b5427fd842ecbbedcc2681a5e360db5143f4f478'
+source = json.loads(raw(root / 'STAGE_B_MANIFEST.json'))
+for rel, expected in {**source['static_files'], **manifest['extra_static_files']}.items():
+    assert not rel.startswith('/') and '\\' not in rel and all(x not in ('', '.', '..') for x in rel.split('/'))
+    assert hashlib.sha256(raw(root / rel)).hexdigest() == expected
+queries = []
+for argv in [
+    ['squeue', '-r', '-j', '224255,224389', '-h', '-o', '%i|%j|%P|%T|%M|%E|%R'],
+    ['sacct', '-j', '224255,224389', '-X', '-n', '-P', '--format=JobID,JobIDRaw,State,ExitCode,Elapsed,Start,End,NodeList'],
+]:
+    p = subprocess.run(argv, capture_output=True, text=True, timeout=45, check=False)
+    queries.append({'command': argv, 'returncode': p.returncode, 'stdout': p.stdout, 'stderr': p.stderr})
+    assert p.returncode == 0 and not p.stderr
+experiment = root / 'repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902'
+combos = [json.loads(line) for line in raw(experiment / 'combos.jsonl').splitlines() if line.strip()]
+runs = []
+for i in range(12):
+    c = combos[i]
+    item = {'index': i, 'combo': c, 'claim': snapshot(root / 'claims' / ('index%04d.json' % i))}
+    directories = list(experiment.glob('runs/formal_seed%d_gpu/idx%04d_*' % (c['seed'], i)))
+    assert len(directories) <= 1
+    item['run_directory_count'] = len(directories)
+    item['audits'] = [snapshot(p) for p in (experiment / 'audits').glob(c['run_id'] + '_formal_*.json')]
+    if directories:
+        run = directories[0]
+        item['cell_metrics'] = snapshot(run / 'cell_metrics.json')
+        item['failed_marker_present'] = (run / 'FAILED').is_file()
+        epochs = run / 'results/epoch_log.jsonl'
+        if epochs.exists():
+            data = raw(epochs)
+            records = [json.loads(line) for line in data.splitlines(keepends=True) if line.endswith(b'\n') and line.strip()]
+            item['completed_epochs'] = len(records)
+            item['last_epoch'] = records[-1] if records else None
+            item['epoch_log_sha256'] = hashlib.sha256(data).hexdigest()
+        if (run / 'error.txt').exists():
+            item['error_tail'] = raw(run / 'error.txt').decode(errors='replace')[-4000:]
+    runs.append(item)
+report = {'kind': 'READ_ONLY_B_AND_A800_RETRY_OBSERVATION_NOT_ADMISSION', 'original_job_id': '224255',
+          'retry_job_id': '224389', 'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'queries': queries, 'retry_runs': runs, 'submission_receipt': receipt,
+          'static_files_verified': 69, 'new_jobs_submitted': 0, 'data_or_checkpoint_tensors_loaded': False}
 blob = json.dumps(report, sort_keys=True, separators=(',', ':')).encode()
-print('QUEUE_DIAGNOSTIC_GZIP_BASE64=' + base64.b64encode(gzip.compress(blob, mtime=0)).decode())
-
-# human-readable summary (plain text, so the receipt is legible without decoding)
-def section(name):
-    q = queries[name]
-    print(f'--- {name} rc={q["returncode"]}' + (' (truncated)' if q['stdout_truncated'] else ''))
-    print(q['stdout'].rstrip() if q['stdout'].strip() else '(empty)')
-    if q['stderr'].strip():
-        print('stderr: ' + q['stderr'].strip()[:1000])
-print('=== RETRY SLURM HEADER ===')
-print(json.dumps(sbatch_lines, ensure_ascii=False))
-for name in ['squeue_retry', 'squeue_retry_start_estimate', 'sprio_retry', 'sinfo_node_ngu201', 'scontrol_show_node_ngu201',
-             'squeue_jobs_on_ngu201', 'sinfo_partition_hgpu8', 'sinfo_partition_hgpu8_summary', 'scontrol_show_partition_hgpu8',
-             'scontrol_show_reservation', 'sshare_self', 'squeue_self_all']:
-    section(name)
-q = queries['squeue_partition_hgpu8']
-print(f'--- squeue_partition_hgpu8 rc={q["returncode"]} lines={len(q["stdout"].splitlines())} (full text in gzip payload)')
-print('\n'.join(q['stdout'].splitlines()[:60]))
-q = queries['sprio_partition_hgpu8']
-print(f'--- sprio_partition_hgpu8 rc={q["returncode"]} lines={len(q["stdout"].splitlines())} (full text in gzip payload)')
-print('\n'.join(q['stdout'].splitlines()[:60]))
-q = queries['sacct_ngu201_recent']
-print(f'--- sacct_ngu201_recent rc={q["returncode"]} lines={len(q["stdout"].splitlines())} (full text in gzip payload)')
-print('\n'.join(q['stdout'].splitlines()[:40]))
-q = queries['scontrol_show_job_retry']
-print(f'--- scontrol_show_job_retry rc={q["returncode"]}')
-print(q['stdout'].rstrip()[:6000])
+print('MEMORY_RETRY_STATUS_GZIP_BASE64=' + base64.b64encode(gzip.compress(blob, mtime=0)).decode())
+print('MEMORY_RETRY_STATUS_SUMMARY=' + json.dumps({'retry_job_id': '224389',
+      'claimed': sum(r['claim'] is not None for r in runs),
+      'runs_with_completed_epochs': sum(r.get('completed_epochs', 0) > 0 for r in runs),
+      'failed_markers': sum(r.get('failed_marker_present', False) for r in runs)}))
 PY
