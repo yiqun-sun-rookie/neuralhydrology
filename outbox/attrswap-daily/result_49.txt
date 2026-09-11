@@ -1,0 +1,66 @@
+### channel=attrswap-daily seq=49
+### host=login4
+### started=2026-09-11T14:30:06+0800
+### ---------- output ----------
+wallclock 2026-09-11 14:30:06 +0800
+=== A. MY QUEUE (header must be visible) ===
+      JOBID                       NAME     STATE       TIME  NODELIST
+  squeue rc=0
+=== A2. sacct jobs in any state after 2026-09-11 (header + rc=0 required for a valid 'none') ===
+    JobID                    JobName        State               Submit Partiti 
+  sacct rc=0
+=== B. LANDING DIRS (same command as receipts 47/48; du does not follow symlinks) ===
+  /data1/home/sunyiq/attr_swap_daily_2026_09 : runs=7 medians=7 size=522M
+  /data1/home/sunyiq/forcing_swap_daily_2026_09 : runs=9 medians=9 size=1.2G
+  /data1/home/sunyiq/precip_swap_daily_2026_09 : runs=9 medians=6 size=1.4G
+=== C. BAD_era5l_precip_* at depth 4 (renamed by seq 39 on 2026-09-09 22:39) ===
+  drwxr-xr-x. 20 sunyiq g_sunyiq 4096 2026-09-09_22:29:17 /data1/home/sunyiq/precip_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing/BAD_era5l_precip_20260909_223902
+  files in BAD_era5l_precip_20260909_223902: 529
+  rebuilt era5l_precip (real dir expected):
+    drwxr-xr-x. 20 sunyiq g_sunyiq 4096 2026-09-09_22:47:42 /data1/home/sunyiq/precip_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing/era5l_precip
+  build logs (both expected):
+    -rw-r--r--. 1 sunyiq g_sunyiq 16256 2026-09-09_22:29:38 /data1/home/sunyiq/precip_swap_daily_2026_09/logs/build_era5l_precip.BAD.json
+    -rw-r--r--. 1 sunyiq g_sunyiq   589 2026-09-09_22:48:04 /data1/home/sunyiq/precip_swap_daily_2026_09/logs/build_era5l_precip.json
+=== D. SYMLINK CHAIN precip_swap -> forcing_swap -> attr_swap (targets shown) ===
+  --- /data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us ---
+    drwxr-xr-x. 4 sunyiq g_sunyiq 4096 2026-09-08_13:39:09 basin_mean_forcing
+    lrwxr-xr-x. 1 sunyiq g_sunyiq   87 2026-09-08_13:38:37 camels_attributes_v2.0 -> /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us/camels_attributes_v2.0
+    lrwxr-xr-x. 1 sunyiq g_sunyiq   80 2026-09-08_13:38:37 usgs_streamflow -> /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us/usgs_streamflow
+  --- /data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing ---
+    drwxr-xr-x. 20 sunyiq g_sunyiq 4096 2026-09-08_13:45:58 era5l_caravan
+    drwxr-xr-x. 20 sunyiq g_sunyiq 4096 2026-09-08_13:45:58 era5l_caravan_pmaurer
+    lrwxr-xr-x.  1 sunyiq g_sunyiq   90 2026-09-08_13:38:37 maurer -> /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing/maurer
+  --- /data1/home/sunyiq/precip_swap_daily_2026_09/data_shadow/camels_us ---
+    drwxr-xr-x. 5 sunyiq g_sunyiq 4096 2026-09-09_22:44:02 basin_mean_forcing
+    lrwxr-xr-x. 1 sunyiq g_sunyiq   90 2026-09-09_21:04:37 camels_attributes_v2.0 -> /data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us/camels_attributes_v2.0
+    lrwxr-xr-x. 1 sunyiq g_sunyiq   83 2026-09-09_21:04:37 usgs_streamflow -> /data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us/usgs_streamflow
+  --- /data1/home/sunyiq/precip_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing ---
+    drwxr-xr-x. 20 sunyiq g_sunyiq 4096 2026-09-09_22:29:17 BAD_era5l_precip_20260909_223902
+    drwxr-xr-x. 20 sunyiq g_sunyiq 4096 2026-09-09_22:24:57 chirps
+    lrwxr-xr-x.  1 sunyiq g_sunyiq  100 2026-09-09_21:04:37 era5l_caravan -> /data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing/era5l_caravan
+    drwxr-xr-x. 20 sunyiq g_sunyiq 4096 2026-09-09_22:47:42 era5l_precip
+    lrwxr-xr-x.  1 sunyiq g_sunyiq   93 2026-09-09_21:04:37 maurer -> /data1/home/sunyiq/forcing_swap_daily_2026_09/data_shadow/camels_us/basin_mean_forcing/maurer
+  --- /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us (chain root) ---
+    drwxr-xr-x. 3 sunyiq g_sunyiq 4096 2026-09-05_22:36:32 basin_mean_forcing
+    drwxr-xr-x. 2 sunyiq g_sunyiq 4096 2026-09-05_22:36:43 camels_attributes_v2.0
+    lrwxr-xr-x. 1 sunyiq g_sunyiq   65 2026-09-05_22:36:32 usgs_streamflow -> /data1/home/sunyiq/neuralhydrology/data/camels_us/usgs_streamflow
+  --- dangling symlinks under the three data_shadow trees (find -L -type l; expect none) ---
+    (none)
+=== E. FILE COUNTS THROUGH THE CHAIN (find -L; expect maurer 675, era5l_caravan 529, chirps 529, era5l_precip 529) ===
+  maurer 675
+  era5l_caravan 529
+  chirps 529
+  era5l_precip 529
+  forcing_swap era5l_caravan 529
+=== F. ARCHIVED CODE (expect camelsus.py sha256[:16] = 51e2e02b382ec103) ===
+  /data1/home/sunyiq/attr_swap_daily_2026_09/code_1f9804e/neuralhydrology/datasetzoo/camelsus.py  51e2e02b382ec103
+=== G. THE 3 CANCELLED ARM DIRS (still original names? no rename performed) ===
+  ORIGINAL NAME PRESENT: pswap_armP_era5l_s100_2026_0909_2231_ep30
+  ORIGINAL NAME PRESENT: pswap_armP_era5l_s200_2026_0909_2232_ep30
+  ORIGINAL NAME PRESENT: pswap_armP_era5l_s300_2026_0909_2232_ep30
+=== H. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 49
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T14:30:15+0800
