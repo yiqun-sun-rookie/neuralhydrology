@@ -1,0 +1,58 @@
+### channel=attrswap-daily seq=70
+### host=login4
+### started=2026-09-12T07:19:41+0800
+### ---------- output ----------
+wallclock 2026-09-12 07:19:41 +0800
+=== A. queue (ours) ===
+     JOBID                               NAME     STATE       TIME PARTITION NODELIST(REASON)
+    225226           pswap2_gate_gsmap_refday   PENDING       0:00     hgpu4 (Priority)
+    225230           pswap2_gate_era5l_refday   PENDING       0:00     hgpu4 (Priority)
+    225234                 pswap2_gate_chirps   PENDING       0:00     hgpu4 (Priority)
+    225222              pswap2_gate_imerg_utc   PENDING       0:00     hgpu4 (Priority)
+    225218     pswap2_gate_imerg_uncal_refday   PENDING       0:00     hgpu4 (Priority)
+    225214           pswap2_gate_imerg_refday   PENDING       0:00     hgpu4 (Priority)
+    225205                    pswap2_gate_ref   PENDING       0:00     hgpu4 (Priority)
+    225206                    ref_daymet_s100   PENDING       0:00     hgpu4 (Dependency)
+    225207                    ref_daymet_s200   PENDING       0:00     hgpu4 (Dependency)
+    225208                    ref_daymet_s300   PENDING       0:00     hgpu4 (Dependency)
+    225209                    ref_daymet_s400   PENDING       0:00     hgpu4 (Dependency)
+    225210                    ref_daymet_s500   PENDING       0:00     hgpu4 (Dependency)
+    225211                    ref_daymet_s600   PENDING       0:00     hgpu4 (Dependency)
+    225212                    ref_daymet_s700   PENDING       0:00     hgpu4 (Dependency)
+    225213                    ref_daymet_s800   PENDING       0:00     hgpu4 (Dependency)
+    225215      pswap2_armP_imerg_refday_s100   PENDING       0:00     hgpu4 (Dependency)
+    225216      pswap2_armP_imerg_refday_s200   PENDING       0:00     hgpu4 (Dependency)
+    225217      pswap2_armP_imerg_refday_s300   PENDING       0:00     hgpu4 (Dependency)
+    225219 pswap2_armP_imerg_uncal_refday_s10   PENDING       0:00     hgpu4 (Dependency)
+    225220 pswap2_armP_imerg_uncal_refday_s20   PENDING       0:00     hgpu4 (Dependency)
+    225221 pswap2_armP_imerg_uncal_refday_s30   PENDING       0:00     hgpu4 (Dependency)
+    225223         pswap2_armP_imerg_utc_s100   PENDING       0:00     hgpu4 (Dependency)
+    225224         pswap2_armP_imerg_utc_s200   PENDING       0:00     hgpu4 (Dependency)
+    225225         pswap2_armP_imerg_utc_s300   PENDING       0:00     hgpu4 (Dependency)
+    225227      pswap2_armP_gsmap_refday_s100   PENDING       0:00     hgpu4 (Dependency)
+    225228      pswap2_armP_gsmap_refday_s200   PENDING       0:00     hgpu4 (Dependency)
+    225229      pswap2_armP_gsmap_refday_s300   PENDING       0:00     hgpu4 (Dependency)
+    225231      pswap2_armP_era5l_refday_s100   PENDING       0:00     hgpu4 (Dependency)
+    225232      pswap2_armP_era5l_refday_s200   PENDING       0:00     hgpu4 (Dependency)
+    225233      pswap2_armP_era5l_refday_s300   PENDING       0:00     hgpu4 (Dependency)
+    225235            pswap2_armP_chirps_s100   PENDING       0:00     hgpu4 (Dependency)
+    225236            pswap2_armP_chirps_s200   PENDING       0:00     hgpu4 (Dependency)
+    225237            pswap2_armP_chirps_s300   PENDING       0:00     hgpu4 (Dependency)
+  squeue rc=0
+=== B. accounting of registered jobs ===
+    JobID                            JobName        State    Elapsed ExitCode   NodeList 
+--------- ---------------------------------- ------------ ---------- -------- ---------- 
+  sacct rc=0
+  pending: 33  running: 0  completed: 0  failed/cancelled/timeout: 0
+=== C. gate markers ===
+  (none yet)
+=== D. build reports (V4 max NaN, lag stats) ===
+=== E. finished arms (test_metrics.csv present) ===
+  0 arm(s) evaluated
+=== F. recent failures in slurm logs ===
+=== G. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 70
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-12T07:19:42+0800
