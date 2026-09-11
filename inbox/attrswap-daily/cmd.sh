@@ -1,12 +1,12 @@
 #!/bin/bash
-# Stage-2 tables batch 1 of 2: install the shipped Earth Engine tables into the own landing dir and verify hashes.
+# Stage-2 tables batch 2 of 2: install the shipped Earth Engine tables into the own landing dir and verify hashes.
 # No sbatch. No backslash literals anywhere in this file.
 set -o pipefail
 date "+wallclock %F %T %z"
 R=/data1/home/sunyiq/precip_swap2_daily_2026_09
 PL=$HOME/hpc_mailbox/inbox/attrswap-daily/payload/pswap2/tables
-echo "=== A. install tables (batch 1) ==="
-for p in imerg_refday imerg_uncal_refday imerg_utc; do
+echo "=== A. install tables (batch 2) ==="
+for p in gsmap_refday era5l_refday chirps; do
   f=$PL/${p}_daily_529.csv.gz
   [ -f "$f" ] || { echo "MISSING $f"; exit 1; }
   cp "$f" $R/hpc_deploy/
