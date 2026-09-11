@@ -1,66 +1,45 @@
 #!/bin/bash
-# READ-ONLY: Stage-2 (precip_swap2) pre-checks b and c from PLAN_20260911 v1 section 13. No writes outside /tmp.
+# Stage-2 DEPLOY (PREREG_20260911 sections 5/6, user-authorized 'approve 4 all'): create the NEW landing dir
+# precip_swap2_daily_2026_09, link the shadow data (daymet directly, streamflow/attributes via attr_swap), copy the
+# archived code, install the deploy scripts, generate the 41 configs. NO sbatch in this command. The three sealed
+# landing dirs are only read. No backslash literals anywhere in this file.
 set -o pipefail
 date "+wallclock %F %T %z"
-D=/data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/daymet
-C=/data1/home/sunyiq/neuralhydrology/data/Caravan/timeseries/netcdf/camels
-L=/data1/home/sunyiq/precip_swap_daily_2026_09/basin_lists/basins_529.txt
-echo "=== B1. daymet dir on HPC ==="
-if [ -d "$D" ]; then
-  echo "  exists; subdirs=$(ls -d $D/*/ 2>/dev/null | wc -l) files=$(find $D -name '*_forcing_leap.txt' | wc -l) size=$(du -sh $D 2>/dev/null | cut -f1)"
-  ls $D | xargs echo | sed 's/^/  /'
-else
-  echo "  MISSING: $D"
-fi
-echo "=== B2. per-HUC merged sha256 (files concatenated in sorted name order) ==="
-for h in $(ls $D 2>/dev/null); do
-  n=$(ls $D/$h/*_forcing_leap.txt 2>/dev/null | wc -l)
-  s=$(ls $D/$h/*_forcing_leap.txt 2>/dev/null | sort | xargs cat | sha256sum | cut -c1-16)
-  echo "  $h n=$n sha=$s"
-done
-echo "=== B3. sample daymet file: first 5 lines + last line + CR count (01013500) ==="
-f=$(find $D -name '01013500_*_forcing_leap.txt' | head -1); echo "  $f"
-head -5 "$f" | sed 's/^/    /'; tail -1 "$f" | sed 's/^/    /'
-echo "  CR-terminated lines: $(cat -v "$f" | grep -c 'M$')  lines: $(wc -l < "$f")"
-echo "=== B4. sha256 of the 529-subset files (sorted by basin id) ==="
-sub=$(for b in $(cat $L); do find $D -name "${b}_*_forcing_leap.txt"; done | sort)
-echo "  n=$(echo "$sub" | grep -c .)  sha=$(echo "$sub" | xargs cat | sha256sum | cut -c1-16)"
-echo "=== B5. raw archive dir (fallback D13) ==="
-ls -la /data1/home/sunyiq/neuralhydrology/data/camels_us/raw 2>&1 | head -12 | sed 's/^/  /'
-echo "=== C. Caravan copy: Timezone attribute + date range + precip var for the 529 basins ==="
+R=/data1/home/sunyiq/precip_swap2_daily_2026_09
+A=/data1/home/sunyiq/attr_swap_daily_2026_09
+PL=$HOME/hpc_mailbox/inbox/attrswap-daily/payload/pswap2
+echo "=== A. guard: landing dir must not exist yet ==="
+if [ -e "$R" ]; then echo "ABORT: $R already exists"; ls -la "$R" | head; exit 1; fi
+[ -d "$PL" ] || { echo "ABORT: payload dir missing: $PL"; exit 1; }
+echo "=== B. create landing dir + shadow links ==="
+mkdir -p $R/logs $R/runs $R/runs_smoke $R/configs $R/hpc_deploy $R/basin_lists $R/data_shadow/camels_us/basin_mean_forcing
+ln -s /data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/daymet $R/data_shadow/camels_us/basin_mean_forcing/daymet
+ln -s $A/data_shadow/camels_us/usgs_streamflow $R/data_shadow/camels_us/usgs_streamflow
+ln -s $A/data_shadow/camels_us/camels_attributes_v2.0 $R/data_shadow/camels_us/camels_attributes_v2.0
+ls -l $R/data_shadow/camels_us $R/data_shadow/camels_us/basin_mean_forcing | sed 's/^/  /'
+dang=$(find -L $R/data_shadow -type l 2>/dev/null)
+if [ -n "$dang" ]; then echo "DANGLING: $dang"; exit 1; else echo "  dangling links: none"; fi
+echo "  daymet files through link: $(find -L $R/data_shadow/camels_us/basin_mean_forcing/daymet -name '*_forcing_leap.txt' | wc -l)"
+echo "  streamflow files through chain: $(find -L $R/data_shadow/camels_us/usgs_streamflow -name '*_streamflow_qc.txt' | wc -l)"
+echo "  attribute files: $(ls $R/data_shadow/camels_us/camels_attributes_v2.0/ | wc -l)"
+echo "=== C. archived code (copied from attr_swap, hash-checked) ==="
+cp -r $A/code_1f9804e $R/code_1f9804e
+echo "  files: $(find $R/code_1f9804e -type f | wc -l)"
+echo "  camelsus.py sha: $(sha256sum $R/code_1f9804e/neuralhydrology/datasetzoo/camelsus.py | cut -c1-16) (expect 51e2e02b382ec103)"
+echo "=== D. install scripts + basin lists ==="
+cp $PL/build_precip_swap2.py $PL/make_pswap2_configs.py $PL/pswap2_gate_ref.slurm $PL/pswap2_gate_product.slurm $PL/pswap2_train.slurm $PL/v9_streamflow.py $PL/scripts_public_median.py $R/hpc_deploy/
+cp $PL/basin_lists/basins_529.txt $PL/basin_lists/holdout_107.txt $PL/basin_lists/basins_5.txt $PL/basin_lists/caravan_timezone_529.csv $R/basin_lists/
+for f in $R/hpc_deploy/* $R/basin_lists/*; do echo "  $(sha256sum $f | cut -c1-16) $(basename $f)"; done
+echo "=== E. generate configs (nh_final python) ==="
 source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh 2>/dev/null
 conda activate nh_final 2>/dev/null
-python - <<'PY' 2>&1
-import xarray as xr, os, collections
-C='/data1/home/sunyiq/neuralhydrology/data/Caravan/timeseries/netcdf/camels'
-L='/data1/home/sunyiq/precip_swap_daily_2026_09/basin_lists/basins_529.txt'
-basins=[l.strip() for l in open(L) if l.strip()]
-missing=[]; tzc=collections.Counter(); d0=set(); d1=set(); nov=[]
-first=True
-rows=[]
-for b in basins:
-    f=f'{C}/camels_{b}.nc'
-    if not os.path.exists(f):
-        missing.append(b); continue
-    ds=xr.open_dataset(f)
-    if first:
-        print('  global attr keys:', list(ds.attrs.keys()))
-        print('  n data_vars:', len(ds.data_vars), ' has total_precipitation_sum:', 'total_precipitation_sum' in ds)
-        first=False
-    tz=ds.attrs.get('Timezone', ds.attrs.get('timezone','?'))
-    tzc[tz]+=1
-    dd=ds['date'].values
-    d0.add(str(dd[0])[:10]); d1.add(str(dd[-1])[:10])
-    if 'total_precipitation_sum' not in ds: nov.append(b)
-    rows.append(f'{b},{tz}')
-    ds.close()
-print('  missing files:', len(missing), missing[:5])
-print('  no total_precipitation_sum:', len(nov), nov[:5])
-print('  date start set:', sorted(d0), ' date end set:', sorted(d1))
-print('  timezone counts:', dict(tzc))
-print('  --- per-basin timezone (529 lines) ---')
-for r in rows: print('  '+r)
-PY
-echo "=== D. MAILBOX CHANNEL SEQ ==="
+cd $R && python hpc_deploy/make_pswap2_configs.py 2>&1 | tail -4
+echo "  configs: $(ls $R/configs/*.yml | wc -l)"
+echo "  --- diff base vs ref_daymet_s100 (allowed keys only) ---"
+diff $A/configs/attrswap_ref27_parity_s900.yml $R/configs/ref_daymet_s100.yml | sed 's/^/  /'
+echo "=== F. partitions right now (D6: pick one for all 32 arms) ==="
+sinfo -p hgpu4,hgpu8 -o '%P %.6D %.10T %.20G %.30N' 2>&1 | sed 's/^/  /'
+squeue -p hgpu4,hgpu8 -o '%.10P %.9T %.6D %.20b' 2>&1 | awk 'NR>1{c[$1" "$2]+=1} END{for(k in c) print "  queued/running jobs", k, c[k]}'
+echo "=== G. MAILBOX CHANNEL SEQ ==="
 echo "  attrswap-daily seq now: $(cat ~/hpc_mailbox/inbox/attrswap-daily/seq 2>/dev/null)"
 echo "=== DONE ==="
