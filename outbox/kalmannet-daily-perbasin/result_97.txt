@@ -1,0 +1,58 @@
+### channel=kalmannet-daily-perbasin seq=97
+### host=login4
+### started=2026-09-11T20:11:30+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=97 purpose=verifier-repair-deploy-and-cpu-verify-job224875
+tar: expected_members.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: remote_program.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: verify.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: verify_job.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/bundle_manifest.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: workspace/scripts/verify_daily_camels_knet_per_basin_pilot.py: implausibly old time stamp 1970-01-01 08:00:00
+PAYLOAD_OK sha256=139b7d64cc0aad865a502cc4ba7316d234bab89ec6c9a83e9530a84ba388c5ef bytes=40242
+channel=kalmannet-daily-perbasin sequence=97 purpose=verifier-repair-deploy-and-cpu-verify-job224875 started=2026-09-11T12:11:31.165804Z
+STEP1_PRECONDITIONS_OK
+STEP2_RUN_IDENTITY_OK files=5
+STEP3_SOURCE_IDENTITY_OK members=103 extra_regular_files=0
+STEP4_SUCCESSOR_DEPLOYMENT_OK path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/deployment_A40_verifier_repair_20260911_SEQ97 members=103 replaced=2
+STEP5_IDENTITY_RECORD_OK
+STEP6_JOB_SCRIPT_OK
+NATIVE_SUBMISSION exit=0 stdout_sha256=4db581f81c0744b4160923dd53717be5b11ffbca231e4c0bd3738f8925506d5c stderr_bytes=0
+NATIVE_STDOUT_BEGIN
+Submitted batch job 225184
+NATIVE_STDOUT_END
+SUBMITTED_JOB_ID=225184
+PROBE squeue -j 225184 -h -o %i|%T|%P|%R|%S|%C exit=0
+225184|PENDING|hgpu2p|(None)|N/A|4
+PROBE scontrol show job 225184 exit=0
+JobId=225184 JobName=kdpp-verify-224875-seq97
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A
+   SubmitTime=2026-09-11T20:12:24 EligibleTime=2026-09-11T20:12:24
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-11T20:12:24
+   Partition=hgpu2p AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/verify_224875_verifier_repair_seq97/verify.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/verify_224875_verifier_repair_seq97
+   StdErr=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/verify_224875_verifier_repair_seq97/slurm-225184.stderr
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/verify_224875_verifier_repair_seq97/slurm-225184.stdout
+   Power=
+
+DEPLOY_AND_SUBMIT_COMPLETE sequence=97 job_id=225184 finished=2026-09-11T12:11:33.426952Z
+REMOTE_PROGRAM_EXIT=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T20:11:33+0800
