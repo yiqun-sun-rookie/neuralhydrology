@@ -1,56 +1,80 @@
 #!/usr/bin/env bash
-# USER-AUTHORIZED JOB MODIFICATION (2026-09-11 “没有别的机器你换一下”): relax the node pin of the queued A800 retry
-# array 224389 from ReqNodeList=ngu201 to any hgpu8 node except ngu203 (reserved/maint). Nothing else changes:
-# same job id, same partition hgpu8, same gres/cpus/time/array throttle, same frozen batch script and manifest,
-# accumulated queue age is kept. The retry launcher's own gate (partition hgpu8 AND GPU >= 75 GiB) still protects
-# every task before any data/training step, so an unexpected GPU on ngu202 fails fast without producing results.
-# Refuses to act unless all 12 tasks are still PENDING and the job still carries the expected pin.
-set -uo pipefail
+# Read-only observation of the exact original B array and authorized A800 retry.
+set -euo pipefail
 python3 -I -B - <<'PY'
-import base64, datetime, gzip, json, re, subprocess
-def run(argv, timeout=60):
-    p = subprocess.run(argv, capture_output=True, text=True, timeout=timeout, check=False)
-    return {'command': argv, 'returncode': p.returncode, 'stdout': p.stdout[:200000], 'stderr': p.stderr[:4000]}
-def show():
-    return run(['scontrol', 'show', 'job', '224389'])
-def field(text, name):
-    m = re.search(r'(?<![A-Za-z])' + re.escape(name) + r'=(\S*)', text)
-    return m.group(1) if m else None
-q = {}
-q['before_show'] = show()
-q['before_squeue'] = run(['squeue', '-r', '-j', '224389', '-h', '-o', '%i|%T|%r|%Q|%N'])
-before = q['before_show']['stdout']
-states = [l.split('|')[1] for l in q['before_squeue']['stdout'].splitlines() if l.strip()]
-ok = (q['before_show']['returncode'] == 0 and field(before, 'JobState') == 'PENDING'
-      and field(before, 'ReqNodeList') == 'ngu201' and field(before, 'Partition') == 'hgpu8'
-      and field(before, 'ArrayTaskId') == '0-11%6' and len(states) == 12 and all(s == 'PENDING' for s in states))
-q['preconditions'] = {'all_12_pending': len(states) == 12 and all(s == 'PENDING' for s in states),
-                      'req_node_list_is_ngu201': field(before, 'ReqNodeList') == 'ngu201',
-                      'partition_hgpu8': field(before, 'Partition') == 'hgpu8',
-                      'array_intact': field(before, 'ArrayTaskId') == '0-11%6', 'proceed': ok}
-if ok:
-    q['update'] = run(['scontrol', 'update', 'JobId=224389', 'ReqNodeList=', 'ExcNodeList=ngu203'])
-    q['after_show'] = show()
-    q['after_squeue'] = run(['squeue', '-r', '-j', '224389', '-h', '-o', '%i|%T|%r|%Q|%N'])
-    after = q['after_show']['stdout']
-    q['result'] = {'update_returncode': q['update']['returncode'],
-                   'req_node_list_after': field(after, 'ReqNodeList'), 'exc_node_list_after': field(after, 'ExcNodeList'),
-                   'partition_after': field(after, 'Partition'), 'priority_after': field(after, 'Priority'),
-                   'eligible_time_after': field(after, 'EligibleTime'), 'job_state_after': field(after, 'JobState'),
-                   'tres_per_node_after': field(after, 'TresPerNode'), 'array_after': field(after, 'ArrayTaskId')}
-else:
-    q['update'] = None
-    q['result'] = {'skipped': 'preconditions not met; no scontrol update executed'}
-report = {'kind': 'USER_AUTHORIZED_NODE_PIN_RELAXATION_224389', 'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-          'queries': q, 'new_jobs_submitted': 0, 'jobs_cancelled': 0, 'data_or_checkpoint_tensors_loaded': False}
+import base64
+import datetime
+import gzip
+import hashlib
+import json
+import pathlib
+import subprocess
+
+root = pathlib.Path('/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1')
+assert root.resolve() == root and root.is_dir()
+
+def raw(path):
+    assert path.is_file() and not path.is_symlink() and path.resolve() == path
+    return path.read_bytes()
+
+def snapshot(path):
+    if not path.exists():
+        return None
+    data = raw(path)
+    return {'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(),
+            'content': json.loads(data)}
+
+manifest_raw = raw(root / 'RETRY_MANIFEST.json')
+assert hashlib.sha256(manifest_raw).hexdigest() == '567471e0b43fc924176d93e18d3c880b5f45db131378b1c46dc194a6e6002e2a'
+manifest = json.loads(manifest_raw)
+assert raw(root / 'array_job_id.txt').decode().strip() == '224389'
+receipt = snapshot(root / 'SUBMISSION_RECEIPT.json')
+assert receipt['content']['job_id'] == '224389'
+assert hashlib.sha256(raw(root / 'retry.slurm')).hexdigest() == '4c60d0e95e37cd521209e208b5427fd842ecbbedcc2681a5e360db5143f4f478'
+source = json.loads(raw(root / 'STAGE_B_MANIFEST.json'))
+for rel, expected in {**source['static_files'], **manifest['extra_static_files']}.items():
+    assert not rel.startswith('/') and '\\' not in rel and all(x not in ('', '.', '..') for x in rel.split('/'))
+    assert hashlib.sha256(raw(root / rel)).hexdigest() == expected
+queries = []
+for argv in [
+    ['squeue', '-r', '-j', '224255,224389', '-h', '-o', '%i|%j|%P|%T|%M|%E|%R'],
+    ['sacct', '-j', '224255,224389', '-X', '-n', '-P', '--format=JobID,JobIDRaw,State,ExitCode,Elapsed,Start,End,NodeList'],
+]:
+    p = subprocess.run(argv, capture_output=True, text=True, timeout=45, check=False)
+    queries.append({'command': argv, 'returncode': p.returncode, 'stdout': p.stdout, 'stderr': p.stderr})
+    assert p.returncode == 0 and not p.stderr
+experiment = root / 'repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902'
+combos = [json.loads(line) for line in raw(experiment / 'combos.jsonl').splitlines() if line.strip()]
+runs = []
+for i in range(12):
+    c = combos[i]
+    item = {'index': i, 'combo': c, 'claim': snapshot(root / 'claims' / ('index%04d.json' % i))}
+    directories = list(experiment.glob('runs/formal_seed%d_gpu/idx%04d_*' % (c['seed'], i)))
+    assert len(directories) <= 1
+    item['run_directory_count'] = len(directories)
+    item['audits'] = [snapshot(p) for p in (experiment / 'audits').glob(c['run_id'] + '_formal_*.json')]
+    if directories:
+        run = directories[0]
+        item['cell_metrics'] = snapshot(run / 'cell_metrics.json')
+        item['failed_marker_present'] = (run / 'FAILED').is_file()
+        epochs = run / 'results/epoch_log.jsonl'
+        if epochs.exists():
+            data = raw(epochs)
+            records = [json.loads(line) for line in data.splitlines(keepends=True) if line.endswith(b'\n') and line.strip()]
+            item['completed_epochs'] = len(records)
+            item['last_epoch'] = records[-1] if records else None
+            item['epoch_log_sha256'] = hashlib.sha256(data).hexdigest()
+        if (run / 'error.txt').exists():
+            item['error_tail'] = raw(run / 'error.txt').decode(errors='replace')[-4000:]
+    runs.append(item)
+report = {'kind': 'READ_ONLY_B_AND_A800_RETRY_OBSERVATION_NOT_ADMISSION', 'original_job_id': '224255',
+          'retry_job_id': '224389', 'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'queries': queries, 'retry_runs': runs, 'submission_receipt': receipt,
+          'static_files_verified': 69, 'new_jobs_submitted': 0, 'data_or_checkpoint_tensors_loaded': False}
 blob = json.dumps(report, sort_keys=True, separators=(',', ':')).encode()
-print('NODE_PIN_RELAX_GZIP_BASE64=' + base64.b64encode(gzip.compress(blob, mtime=0)).decode())
-print('PRECONDITIONS=' + json.dumps(q['preconditions']))
-print('RESULT=' + json.dumps(q['result']))
-if q['update']:
-    print('UPDATE_RC=%d stdout=%r stderr=%r' % (q['update']['returncode'], q['update']['stdout'].strip(), q['update']['stderr'].strip()))
-    print('--- after_show'); print(q['after_show']['stdout'].rstrip())
-    print('--- after_squeue'); print(q['after_squeue']['stdout'].rstrip())
-else:
-    print('--- before_show'); print(before.rstrip())
+print('MEMORY_RETRY_STATUS_GZIP_BASE64=' + base64.b64encode(gzip.compress(blob, mtime=0)).decode())
+print('MEMORY_RETRY_STATUS_SUMMARY=' + json.dumps({'retry_job_id': '224389',
+      'claimed': sum(r['claim'] is not None for r in runs),
+      'runs_with_completed_epochs': sum(r.get('completed_epochs', 0) > 0 for r in runs),
+      'failed_markers': sum(r.get('failed_marker_present', False) for r in runs)}))
 PY
