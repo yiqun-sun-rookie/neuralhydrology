@@ -1,0 +1,24 @@
+### channel=kalmannet-daily-perbasin seq=101
+### host=login4
+### started=2026-09-11T21:41:20+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=101 purpose=read-only-observe-train-02102908-job225203
+QUERY_ACCOUNTING_BEGIN
+225203|kdpp-dev-train-02102908-seq100|PENDING|0:0|0|4|billing=4,cpu=4,node=1||None assigned|2026-09-11T21:28:31|Unknown|Unknown
+QUERY_ACCOUNTING_EXIT=0
+QUERY_QUEUE_BEGIN
+225203|PENDING|hgpu4|(Priority)|2026-09-12T19:37:42|4|gpu:1|0:00
+QUERY_QUEUE_EXIT=0
+STATE=PENDING
+PROGRESS_BEGIN
+run_directory_present=0
+stage=environment_probe not_started
+stage=zero_update_gate not_started
+stage=training_process not_started
+stage=verifier_process not_started
+PROGRESS_END
+TERMINAL=0
+READ_ONLY_OBSERVE_COMPLETE submissions=0 cancellations=0 modifications=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T21:41:21+0800
