@@ -5,14 +5,14 @@ echo "=== N22 JOBS ==="
 squeue -u sunyiq -h -o '%.12i %.16j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22' || echo 'no N22 jobs in queue'
 echo "=== N22 FAILURES 7d ==="
 sacct -X -n -P -S $(date -d '7 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22' | grep -E '\|(TIMEOUT|FAILED|NODE_FAIL|OUT_OF_MEMORY|CANCELLED)' || echo '  none'
-echo "=== WARMPAIR JOBS EVER (any name) ==="
+echo "=== WARM JOBS SINCE 09-01 ==="
 sacct -X -n -P -S 2026-09-01 --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -Ei 'warm' || echo '  none'
 echo "=== WARMPAIR DIRS ==="
 D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
 for S in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$S" ] && echo "  PRESENT $S" || echo "  MISSING $S"; done
-echo "=== ENTRY GATE EXPECTATION vs RECEIPT ==="
-grep -n '202506\|202510' "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" 2>/dev/null || true
-grep -rn 'slurm_job_id' "$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_target_paired_retraining_protocol_amendment_01.json" 2>/dev/null | head -5 || true
+echo "=== SCRIPT MTIME / GATE LINE ==="
+stat -c '%y %n' "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" 2>/dev/null || true
+grep -n '_require_equal(data_receipt, "slurm_job_id"' "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" 2>/dev/null || true
 echo "=== GATE ARTIFACTS ==="
 for F in aggregation/evaluations/time_split_vs_author.csv aggregation/evaluations/basin_split_vs_author.csv aggregation/hyperparameters/scores.csv aggregation/final_reproduction_gate.json; do
   P="$ROOT/closure_20260810/$F"; [ -f "$P" ] && echo "  PRESENT $F" || echo "  MISSING $F"; done
