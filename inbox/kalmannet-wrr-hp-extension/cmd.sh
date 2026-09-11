@@ -1,80 +1,47 @@
 #!/usr/bin/env bash
-# Read-only observation of the exact original B array and authorized A800 retry.
-set -euo pipefail
+# READ-ONLY: which other nodes could host the 12 A800 retries? Current GPU-node occupancy, GPU types from
+# cluster config files (if readable), and our own competing jobs. Query commands only: sinfo/squeue/scontrol show/
+# sacct/cat/grep. No sbatch/srun/scancel/scontrol update.
+set -uo pipefail
 python3 -I -B - <<'PY'
-import base64
-import datetime
-import gzip
-import hashlib
-import json
-import pathlib
-import subprocess
+import base64, datetime, gzip, json, os, subprocess
 
-root = pathlib.Path('/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1')
-assert root.resolve() == root and root.is_dir()
+LIMIT = 200_000
+def run(argv, timeout=60):
+    try:
+        p = subprocess.run(argv, capture_output=True, text=True, timeout=timeout, check=False)
+        out, err, rc = p.stdout, p.stderr, p.returncode
+    except Exception as exc:
+        out, err, rc = '', f'{type(exc).__name__}: {exc}', -1
+    return {'command': argv, 'returncode': rc, 'stdout': out[:LIMIT], 'stdout_truncated': len(out) > LIMIT, 'stderr': err[:4000]}
 
-def raw(path):
-    assert path.is_file() and not path.is_symlink() and path.resolve() == path
-    return path.read_bytes()
+q = {}
+q['sinfo_gpu_nodes'] = run(['sinfo', '-a', '-N', '-p', 'hgpu8,hgpu4,hgpu2,hgpu2p', '-o', '%N|%P|%T|%C|%G|%e|%E'])
+q['sinfo_gpu_partitions'] = run(['sinfo', '-a', '-s', '-p', 'hgpu8,hgpu4,hgpu2,hgpu2p', '-o', '%P|%a|%l|%F|%G|%N'])
+for n in ['ngu202', 'ngu203', 'ngu101', 'ngu102', 'ngu103', 'ngu104']:
+    q[f'scontrol_show_node_{n}'] = run(['scontrol', 'show', 'node', n])
+q['scontrol_config_gres'] = run(['bash', '-c', "scontrol show config | grep -iE 'GresTypes|SelectType|SLURM_CONF|PriorityWeight|PriorityMaxAge|PriorityDecay|AccountingStorageTRES|PreemptType'"])
+# config files, if readable (most sites allow reading gres.conf / slurm.conf on login nodes)
+conf = q['scontrol_config_gres']['stdout']
+q['gres_conf'] = run(['bash', '-c', 'for f in /etc/slurm/gres.conf /etc/slurm-llnl/gres.conf /opt/slurm/etc/gres.conf /usr/local/etc/slurm/gres.conf $(dirname "$(scontrol show config 2>/dev/null | awk -F= \'/SLURM_CONF/{gsub(/ /,"",$2);print $2}\')")/gres.conf; do [ -r "$f" ] && { echo "== $f"; cat "$f"; }; done; true'])
+q['slurm_conf_gpu_nodes'] = run(['bash', '-c', 'for f in /etc/slurm/slurm.conf /etc/slurm-llnl/slurm.conf /opt/slurm/etc/slurm.conf $(scontrol show config 2>/dev/null | awk -F= \'/SLURM_CONF/{gsub(/ /,"",$2);print $2}\'); do [ -r "$f" ] && { echo "== $f"; grep -iE "NodeName=.*ngu|PartitionName=.*hgpu|Gres|Priority|Preempt" "$f"; }; done; true'])
+# occupancy on hgpu4 now: who is running there (sacct -a shows other users' running jobs even if squeue hides them)
+q['sacct_running_hgpu4'] = run(['sacct', '-a', '-r', 'hgpu4', '-s', 'RUNNING,PENDING', '-X', '-n', '-P', '--format=JobID,User,State,Start,End,Elapsed,Timelimit,AllocTRES,NodeList,ReqNodes'])
+q['sacct_running_hgpu8'] = run(['sacct', '-a', '-r', 'hgpu8', '-s', 'RUNNING,PENDING', '-X', '-n', '-P', '--format=JobID,User,State,Start,End,Elapsed,Timelimit,AllocTRES,NodeList,ReqNodes,Priority'])
+q['squeue_self'] = run(['squeue', '-u', 'sunyiq', '-r', '-o', '%i|%j|%P|%T|%M|%l|%b|%N|%r|%Q'])
+q['scontrol_show_job_224505'] = run(['scontrol', 'show', 'job', '224505'])
+q['sacct_hgpu4_recent'] = run(['sacct', '-a', '-r', 'hgpu4', '-S', '2026-09-09T00:00:00', '-X', '-n', '-P', '--format=JobID,User,State,Start,End,Elapsed,AllocTRES,NodeList'])
 
-def snapshot(path):
-    if not path.exists():
-        return None
-    data = raw(path)
-    return {'path': str(path), 'sha256': hashlib.sha256(data).hexdigest(),
-            'content': json.loads(data)}
-
-manifest_raw = raw(root / 'RETRY_MANIFEST.json')
-assert hashlib.sha256(manifest_raw).hexdigest() == '567471e0b43fc924176d93e18d3c880b5f45db131378b1c46dc194a6e6002e2a'
-manifest = json.loads(manifest_raw)
-assert raw(root / 'array_job_id.txt').decode().strip() == '224389'
-receipt = snapshot(root / 'SUBMISSION_RECEIPT.json')
-assert receipt['content']['job_id'] == '224389'
-assert hashlib.sha256(raw(root / 'retry.slurm')).hexdigest() == '4c60d0e95e37cd521209e208b5427fd842ecbbedcc2681a5e360db5143f4f478'
-source = json.loads(raw(root / 'STAGE_B_MANIFEST.json'))
-for rel, expected in {**source['static_files'], **manifest['extra_static_files']}.items():
-    assert not rel.startswith('/') and '\\' not in rel and all(x not in ('', '.', '..') for x in rel.split('/'))
-    assert hashlib.sha256(raw(root / rel)).hexdigest() == expected
-queries = []
-for argv in [
-    ['squeue', '-r', '-j', '224255,224389', '-h', '-o', '%i|%j|%P|%T|%M|%E|%R'],
-    ['sacct', '-j', '224255,224389', '-X', '-n', '-P', '--format=JobID,JobIDRaw,State,ExitCode,Elapsed,Start,End,NodeList'],
-]:
-    p = subprocess.run(argv, capture_output=True, text=True, timeout=45, check=False)
-    queries.append({'command': argv, 'returncode': p.returncode, 'stdout': p.stdout, 'stderr': p.stderr})
-    assert p.returncode == 0 and not p.stderr
-experiment = root / 'repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902'
-combos = [json.loads(line) for line in raw(experiment / 'combos.jsonl').splitlines() if line.strip()]
-runs = []
-for i in range(12):
-    c = combos[i]
-    item = {'index': i, 'combo': c, 'claim': snapshot(root / 'claims' / ('index%04d.json' % i))}
-    directories = list(experiment.glob('runs/formal_seed%d_gpu/idx%04d_*' % (c['seed'], i)))
-    assert len(directories) <= 1
-    item['run_directory_count'] = len(directories)
-    item['audits'] = [snapshot(p) for p in (experiment / 'audits').glob(c['run_id'] + '_formal_*.json')]
-    if directories:
-        run = directories[0]
-        item['cell_metrics'] = snapshot(run / 'cell_metrics.json')
-        item['failed_marker_present'] = (run / 'FAILED').is_file()
-        epochs = run / 'results/epoch_log.jsonl'
-        if epochs.exists():
-            data = raw(epochs)
-            records = [json.loads(line) for line in data.splitlines(keepends=True) if line.endswith(b'\n') and line.strip()]
-            item['completed_epochs'] = len(records)
-            item['last_epoch'] = records[-1] if records else None
-            item['epoch_log_sha256'] = hashlib.sha256(data).hexdigest()
-        if (run / 'error.txt').exists():
-            item['error_tail'] = raw(run / 'error.txt').decode(errors='replace')[-4000:]
-    runs.append(item)
-report = {'kind': 'READ_ONLY_B_AND_A800_RETRY_OBSERVATION_NOT_ADMISSION', 'original_job_id': '224255',
-          'retry_job_id': '224389', 'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-          'queries': queries, 'retry_runs': runs, 'submission_receipt': receipt,
-          'static_files_verified': 69, 'new_jobs_submitted': 0, 'data_or_checkpoint_tensors_loaded': False}
+report = {'kind': 'READ_ONLY_ALTERNATIVE_NODE_PROBE_NOT_ADMISSION',
+          'observed_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'queries': q, 'new_jobs_submitted': 0, 'jobs_modified_or_cancelled': 0, 'data_or_checkpoint_tensors_loaded': False}
 blob = json.dumps(report, sort_keys=True, separators=(',', ':')).encode()
-print('MEMORY_RETRY_STATUS_GZIP_BASE64=' + base64.b64encode(gzip.compress(blob, mtime=0)).decode())
-print('MEMORY_RETRY_STATUS_SUMMARY=' + json.dumps({'retry_job_id': '224389',
-      'claimed': sum(r['claim'] is not None for r in runs),
-      'runs_with_completed_epochs': sum(r.get('completed_epochs', 0) > 0 for r in runs),
-      'failed_markers': sum(r.get('failed_marker_present', False) for r in runs)}))
+print('ALT_NODE_PROBE_GZIP_BASE64=' + base64.b64encode(gzip.compress(blob, mtime=0)).decode())
+for name, item in q.items():
+    body = item['stdout'].rstrip()
+    lines = body.splitlines()
+    print(f'--- {name} rc={item["returncode"]} lines={len(lines)}')
+    print('\n'.join(lines[:80]) if lines else '(empty)')
+    if item['stderr'].strip():
+        print('stderr: ' + item['stderr'].strip()[:600])
 PY
