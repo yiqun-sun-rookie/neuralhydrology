@@ -1,5 +1,5 @@
 #!/bin/bash
-# seq=51 scheduled watch: seed-wave status only (read-only)
+# seq=52 scheduled watch: seed-wave status only (read-only)
 set -o pipefail
 ROOT=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
 cd "$ROOT" || exit 1
