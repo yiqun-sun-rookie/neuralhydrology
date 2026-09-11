@@ -1,0 +1,42 @@
+### channel=id33-transformer-recipe-repair seq=47
+### host=login4
+### started=2026-09-11T20:19:07+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-11T20:19:07+0800
+=== A. IN-FLIGHT GATE ===
+id33_in_flight_count=0
+no id33 job in flight; safe to deploy
+=== B. EXTRACT ===
+-rw-r--r--. 1 sunyiq g_sunyiq 14264 Sep 11 20:19 /data1/home/sunyiq/hpc_mailbox/payload/id33-transformer-recipe-repair/id33_seeds_v01.tar.gz
+e825e8e0ec19cf308b167f6c4d6b31a2aaf759d3db175ca13e3b5df79fc75611  src/transformer_recipe_repair/scripts/audit_configs.py
+3d8627a51b082705af3d7cdc1e1a9f74e5d9f85969d15fa77fc27c7b8a373e1f  src/transformer_recipe_repair/registry/experiments.csv
+0b271ef30f13a884d8d5df00d4c4e59b2ca23e5bacd2c3c74881a56c9d75fc3b  src/transformer_recipe_repair/hpc/submit_packed_arms.slurm
+replica configs deployed: 20
+=== C. AUDIT (must PASS with 31 arms) ===
+ID33 CONFIG AUDIT: PASS (31 arms; one factor each; no data read; no training launched)
+=== D. GPU AVAILABILITY ===
+idle gpu nodes: 5
+=== E. SUBMIT: batch-3 common-window rescore (CPU, seconds) ===
+Submitted batch job 225186
+=== F. SUBMIT: 7 packed seed jobs ===
+  s200 (T2_s200 C4_s200) -> 225187
+  s300 (T2_s300 C3_s300 C4_s300) -> 225188
+  s400 (T2_s400 C3_s400 C4_s400) -> 225189
+  s500 (T2_s500 C3_s500 C4_s500) -> 225190
+  s600 (T2_s600 C3_s600 C4_s600) -> 225191
+  s700 (T2_s700 C3_s700 C4_s700) -> 225192
+  s800 (T2_s800 C3_s800 C4_s800) -> 225193
+seed_jobs= 225187 225188 225189 225190 225191 225192 225193
+=== G. QUEUE ===
+     JOBID           NAME  ST     TIME NODELIST NODELIST(REASON)
+    225187    id33_sd_200   R  INVALID   ngu010 ngu010
+    225189    id33_sd_400   R  INVALID   ngu011 ngu011
+    225190    id33_sd_500   R  INVALID   ngu001 ngu001
+    225191    id33_sd_600   R  INVALID   ngu004 ngu004
+    225192    id33_sd_700   R  INVALID   ngu004 ngu004
+    225193    id33_sd_800   R  INVALID   ngu005 ngu005
+    225186   id33_rescore   R  INVALID   ngu011 ngu011
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T20:19:24+0800
