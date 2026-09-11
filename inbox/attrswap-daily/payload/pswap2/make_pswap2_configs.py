@@ -17,8 +17,9 @@ DATES = {'train_start_date': '01/10/2004', 'train_end_date': '30/09/2013',
          'test_start_date': '01/10/1999', 'test_end_date': '30/09/2004'}
 DYN_OLD = ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)']
 DYN_NEW = ['prcp(mm/day)', 'tmin(C)', 'tmax(C)', 'srad(W/m2)', 'vp(Pa)']
-PRODUCTS = ['imerg_local', 'imerg_uncal', 'imerg_utc', 'gsmap_local', 'gsmap_uncal', 'persiann', 'chirps', 'era5l_precip2']
-ARM_STEM = {p: 'pswap2_armP_' + (p if p != 'era5l_precip2' else 'era5l') for p in PRODUCTS}
+PRODUCTS = ['imerg_refday', 'imerg_uncal_refday', 'imerg_utc', 'gsmap_refday', 'gsmap_uncal_refday', 'persiann', 'chirps',
+            'era5l_refday']  # Amendment B names (reference-matched 12Z day); era5l from GEE hourly, not Caravan
+ARM_STEM = {p: 'pswap2_armP_' + p for p in PRODUCTS}
 ALLOWED = {'experiment_name', 'seed', 'forcings', 'run_dir', 'data_dir', 'train_basin_file', 'test_basin_file',
            'validation_basin_file', 'dynamic_inputs', 'train_start_date', 'train_end_date', 'test_start_date',
            'test_end_date', 'epochs'}

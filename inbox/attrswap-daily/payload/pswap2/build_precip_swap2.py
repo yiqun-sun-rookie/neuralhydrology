@@ -7,7 +7,8 @@ Adapted from hpc_deploy/stage1_originals/build_precip_swap.py (sha256[:16] 3b361
   * V4 is graded: NaN days inside the modelled span are tolerated up to V4_TOL of the span (per basin, max over
     basins), counted and reported; V7 keeps '>= 0' as a hard item and reports > 500 mm/day basin-days;
   * V5 tolerance 1e-4 and at least 5 small basins (< 124 km2, area from the Daymet header) among the 20;
-  * the two hard checks are numbered V10 (ratio band [0.2, 5.0]) and V11 (lag-0 share > 50%); --self-aggregated
+  * the two hard checks are numbered V10 (ratio band [0.2, 5.0]) and V11 (Amendment B form: share of best lag within
+    +-1 day >= 95% and median best-lag correlation >= 0.3; lag-0 share is report-only under Daymet); --self-aggregated
     adds the V7 scale guard (ratio band [0.5, 2.0]);
   * --from-caravan reads total_precipitation_sum by NAME from the Caravan netCDF copy (ERA5-Land arm);
   * P4 descriptive statistics (daily correlation, annual ratio, best lag) are written to the report.
@@ -32,7 +33,7 @@ V4_TOL = 0.001            # fraction of modelled-span days tolerated as NaN (max
 V5_TOL = 1e-4
 RATIO_LO, RATIO_HI = 0.2, 5.0        # V10
 SELF_LO, SELF_HI = 0.5, 2.0          # V7 scale guard for self-aggregated products
-LAG0_MIN = 0.50                      # V11
+LAG_WITHIN1_MIN, BESTCORR_MIN = 0.95, 0.30   # V11 as amended (Amendment B)
 EXTREME = 500.0                      # V7 report item
 SMALL_KM2 = 124.0
 FAIL, NOTE = [], []
@@ -102,7 +103,7 @@ def main():
     span_days = (pd.Timestamp(MODEL_END) - pd.Timestamp(MODEL_START)).days + 1
     tol_days = int(np.floor(V4_TOL * span_days))
 
-    lags, ratios, corrs, spans, nan_days, extreme, areas, written = {}, {}, {}, {}, {}, {}, {}, 0
+    lags, ratios, corrs, best_corrs, spans, nan_days, extreme, areas, written = {}, {}, {}, {}, {}, {}, {}, {}, 0
     for i, b in enumerate(basins):
         rf = glob.glob(f'{a.ref}/**/{b}_*_forcing_leap.txt', recursive=True)
         if len(rf) != 1:
@@ -145,6 +146,7 @@ def main():
         r = {k: float(both['r'].corr(both['c'].shift(k))) for k in (-2, -1, 0, 1, 2)}
         lags[b] = max(r, key=lambda k: (r[k] if not np.isnan(r[k]) else -9))
         corrs[b] = r[0]
+        best_corrs[b] = r[lags[b]]
         ratios[b] = float(both['c'].mean() / both['r'].mean()) if both['r'].mean() > 0 else float('nan')
         if (i + 1) % 100 == 0:
             print(f'  {i + 1}/{len(basins)}', flush=True)
@@ -207,9 +209,17 @@ def main():
         fail(f'V10 median annual ratio to Daymet {rt.median():.3f} outside [{RATIO_LO}, {RATIO_HI}]')
     if a.self_aggregated and not (SELF_LO <= float(rt.median()) <= SELF_HI):
         fail(f'V7-scale-guard median ratio {rt.median():.3f} outside [{SELF_LO}, {SELF_HI}] (slot-hours factor?)')
-    if share < LAG0_MIN:
-        fail(f'V11 lag-0 share {share*100:.2f}% < {LAG0_MIN*100:.0f}%')
-    NOTE.append(f'V6 (report): lag-0 share {share*100:.2f}%; other lags {dict(pd.Series(list(off.values())).value_counts()) if off else {}}')
+    # V11 as amended (Amendment B, PREREG 14.4): the reference Daymet uses station observation days, so as-delivered
+    # UTC-day products legitimately split their best lag between 0 and +1. The 'this is not precipitation' guard is
+    # kept as: share of best lag within {-1, 0, +1} >= 95% AND median best-lag correlation >= 0.3.
+    within = float((lg.abs() <= 1).mean()) if len(lg) else 0.0
+    best_corr = pd.Series(best_corrs)
+    if within < LAG_WITHIN1_MIN:
+        fail(f'V11 share of best lag within +-1 day = {within*100:.2f}% < 95%')
+    if not (float(best_corr.median()) >= BESTCORR_MIN):
+        fail(f'V11 median best-lag correlation {best_corr.median():.3f} < 0.3 -- no time correspondence with Daymet')
+    NOTE.append(f'V6 (report): lag-0 share {share*100:.2f}% (informative only under Daymet); best-lag counts '
+                f'{dict((int(k), int(v)) for k, v in lg.value_counts().items())}; median best-lag corr {best_corr.median():.3f}')
     NOTE.append(f'V7 (report): basin-days > {EXTREME} mm: {sum(len(v) for v in extreme.values())} in {len(extreme)} basins')
     for m in NOTE:
         print('NOTE ' + m, flush=True)
@@ -219,6 +229,7 @@ def main():
                    lag_counts={int(k): int(v) for k, v in lg.value_counts().items()},
                    ratio_over_daymet=dict(median=float(rt.median()), p10=float(rt.quantile(.1)), p90=float(rt.quantile(.9))),
                    corr_daily=dict(median=float(cr.median()), p10=float(cr.quantile(.1)), p90=float(cr.quantile(.9))),
+                   best_lag_corr_median=float(best_corr.median()), lag_within1_share=within,
                    nan_days_max=worst, nan_days_by_basin={b: v for b, v in nan_days.items() if v},
                    extreme_basin_days=extreme, v5_sample=sample, small_basins_in_sample=len([b for b in sample if b in small]),
                    span_example=spans.get(basins[0]))
