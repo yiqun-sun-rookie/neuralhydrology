@@ -1,0 +1,33 @@
+### channel=id29-nearing2022-da seq=612
+### host=login4
+### started=2026-09-11T18:03:56+0800
+### ---------- output ----------
+2026-09-11T18:03:56+0800
+=== N22 JOBS ===
+      202229     N22-agg-eval   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202294       N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315         N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-531   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+      202293     N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+=== N22 FAILURES 7d ===
+220487|N22-replv2|FAILED|1:0|00:00:05|2026-09-04T14:19:04
+=== WARM JOBS SINCE 09-01 ===
+219423_0|N22-warmpair|FAILED|1:0|00:00:45|2026-09-03T18:20:31
+219423_1|N22-warmpair|FAILED|1:0|00:00:48|2026-09-03T18:21:19
+=== WARMPAIR DIRS ===
+  MISSING control_seed0_repeat1
+  MISSING masked_seed0_repeat1
+  MISSING paired_analysis
+=== SCRIPT MTIME / GATE LINE ===
+2026-09-03 18:19:09.000000000 +0800 /data1/home/sunyiq/nearing2022_da/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py
+94:    _require_equal(data_receipt, "slurm_job_id", "202506")
+=== GATE ARTIFACTS ===
+  PRESENT aggregation/evaluations/time_split_vs_author.csv
+  PRESENT aggregation/evaluations/basin_split_vs_author.csv
+  PRESENT aggregation/hyperparameters/scores.csv
+  PRESENT aggregation/final_reproduction_gate.json
+=== ROLE COUNTS ===
+{"missing_by_type": {}, "missing_total": 0}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T18:04:45+0800
