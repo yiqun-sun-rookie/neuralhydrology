@@ -1,0 +1,22 @@
+### channel=attrswap-daily seq=55
+### host=login4
+### started=2026-09-11T21:35:12+0800
+### ---------- output ----------
+wallclock 2026-09-11 21:35:12 +0800
+=== A. install tables (batch 2) ===
+  687ac62bdfc83438 2503243 gsmap_refday_daily_529.csv.gz
+  5e60c4cb0fc589eb 3646828 era5l_refday_daily_529.csv.gz
+  2b9d84973aaa56cd 2171183 chirps_daily_529.csv.gz
+=== B. tables now in landing dir ===
+  -rw-r--r--. 1 sunyiq g_sunyiq 2171183 Sep 11 21:35 /data1/home/sunyiq/precip_swap2_daily_2026_09/hpc_deploy/chirps_daily_529.csv.gz
+  -rw-r--r--. 1 sunyiq g_sunyiq 3646828 Sep 11 21:35 /data1/home/sunyiq/precip_swap2_daily_2026_09/hpc_deploy/era5l_refday_daily_529.csv.gz
+  -rw-r--r--. 1 sunyiq g_sunyiq 2503243 Sep 11 21:35 /data1/home/sunyiq/precip_swap2_daily_2026_09/hpc_deploy/gsmap_refday_daily_529.csv.gz
+  -rw-r--r--. 1 sunyiq g_sunyiq 3530124 Sep 11 21:28 /data1/home/sunyiq/precip_swap2_daily_2026_09/hpc_deploy/imerg_refday_daily_529.csv.gz
+  -rw-r--r--. 1 sunyiq g_sunyiq 3286965 Sep 11 21:28 /data1/home/sunyiq/precip_swap2_daily_2026_09/hpc_deploy/imerg_uncal_refday_daily_529.csv.gz
+  -rw-r--r--. 1 sunyiq g_sunyiq 3541826 Sep 11 21:28 /data1/home/sunyiq/precip_swap2_daily_2026_09/hpc_deploy/imerg_utc_daily_529.csv.gz
+=== C. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 55
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T21:35:14+0800
