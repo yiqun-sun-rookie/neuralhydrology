@@ -1,0 +1,19 @@
+### channel=attrswap-daily seq=54
+### host=login4
+### started=2026-09-11T21:28:10+0800
+### ---------- output ----------
+wallclock 2026-09-11 21:28:10 +0800
+=== A. install tables (batch 1) ===
+  a83d95b35ae9507c 3530124 imerg_refday_daily_529.csv.gz
+  50ad728186630076 3286965 imerg_uncal_refday_daily_529.csv.gz
+  ad107f7bdf2d8b3d 3541826 imerg_utc_daily_529.csv.gz
+=== B. tables now in landing dir ===
+  -rw-r--r--. 1 sunyiq g_sunyiq 3530124 Sep 11 21:28 /data1/home/sunyiq/precip_swap2_daily_2026_09/hpc_deploy/imerg_refday_daily_529.csv.gz
+  -rw-r--r--. 1 sunyiq g_sunyiq 3286965 Sep 11 21:28 /data1/home/sunyiq/precip_swap2_daily_2026_09/hpc_deploy/imerg_uncal_refday_daily_529.csv.gz
+  -rw-r--r--. 1 sunyiq g_sunyiq 3541826 Sep 11 21:28 /data1/home/sunyiq/precip_swap2_daily_2026_09/hpc_deploy/imerg_utc_daily_529.csv.gz
+=== C. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 54
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T21:28:11+0800
