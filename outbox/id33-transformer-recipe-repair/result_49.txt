@@ -1,0 +1,86 @@
+### channel=id33-transformer-recipe-repair seq=49
+### host=login4
+### started=2026-09-11T21:09:42+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-11T21:09:42+0800
+=== OUT 225188 (head 40) ===
+=== ID33 PACKED PRE-FLIGHT (arms: T2_s300 C3_s300 C4_s300) ===
+2026-09-11T20:16:53+08:00
+ngu011
+No devices were found
+=== OUT 225188 (tail 30) ===
+=== ID33 PACKED PRE-FLIGHT (arms: T2_s300 C3_s300 C4_s300) ===
+2026-09-11T20:16:53+08:00
+ngu011
+No devices were found
+=== ERR 225188 (tail 30) ===
+=== OUT 225189 (head 40) ===
+=== ID33 PACKED PRE-FLIGHT (arms: T2_s400 C3_s400 C4_s400) ===
+2026-09-11T20:16:53+08:00
+ngu011
+NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+=== OUT 225189 (tail 30) ===
+=== ID33 PACKED PRE-FLIGHT (arms: T2_s400 C3_s400 C4_s400) ===
+2026-09-11T20:16:53+08:00
+ngu011
+NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+=== ERR 225189 (tail 30) ===
+/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/torch/cuda/__init__.py:128: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set up environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /opt/conda/conda-bld/pytorch_1720538456841/work/c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+[FATAL] no usable GPU
+=== OUT 225193 (head 40) ===
+=== ID33 PACKED PRE-FLIGHT (arms: T2_s800 C3_s800 C4_s800) ===
+2026-09-11T20:22:02+08:00
+ngu005
+NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+gpu=NVIDIA GeForce RTX 3090 count=1
+ID33 CONFIG AUDIT: FAIL
+  - registry missing: /data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/src/transformer_recipe_repair/registry/experiments.csv
+=== OUT 225193 (tail 30) ===
+=== ID33 PACKED PRE-FLIGHT (arms: T2_s800 C3_s800 C4_s800) ===
+2026-09-11T20:22:02+08:00
+ngu005
+NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+gpu=NVIDIA GeForce RTX 3090 count=1
+ID33 CONFIG AUDIT: FAIL
+  - registry missing: /data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/src/transformer_recipe_repair/registry/experiments.csv
+=== ERR 225193 (tail 30) ===
+=== RUN DIRS FOR FAILED SEEDS ===
+ls: cannot access results/33_transformer_recipe_repair/*_s300/*: No such file or directory
+ls: cannot access results/33_transformer_recipe_repair/*_s400/*: No such file or directory
+ls: cannot access results/33_transformer_recipe_repair/*_s800/*: No such file or directory
+=== INVOCATIONS ===
+=== NODE STATE ===
+  NODELIST    STATE               REASON
+    ngu001    mixed                 none
+    ngu002    down*       Not responding
+    ngu003    mixed                 none
+    ngu004    mixed                 none
+    ngu005     idle                 none
+    ngu006     idle                 none
+    ngu007     idle                 none
+    ngu008    mixed                 none
+    ngu009    mixed                 none
+    ngu010    mixed                 none
+    ngu011     idle                 none
+=== 225187 GPU CHECK (ngu010) ===
+timestamp,gpu_util_percent,mem_used_mib,mem_total_mib
+2026/09/11 20:20:10.789, 74, 575, 24576
+2026/09/11 20:21:13.192, 0, 0, 24576
+2026/09/11 20:22:16.131, 2, 0, 24576
+2026/09/11 20:23:16.693, 0, 0, 24576
+gpu=NVIDIA GeForce RTX 3090 count=1
+2026-09-11 20:23:15,352: device: cuda:0
+2026-09-11 20:23:15,469: ### Device cuda:0 will be used for training
+=== SLURM SCRIPT GPU GUARD ===
+21:#SBATCH --partition=hgpu2p
+25:#SBATCH --gres=gpu:1
+26:#SBATCH --exclude=ngu002
+51:nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader --id=0
+57:    print("[FATAL] no usable GPU", file=sys.stderr); sys.exit(1)
+61:    print(f"[FATAL] expected an RTX 3090 for comparability with ID30, found {name}", file=sys.stderr)
+71:    nvidia-smi --id=0 --query-gpu=timestamp,utilization.gpu,memory.used,memory.total \
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T21:09:43+0800
