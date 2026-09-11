@@ -1,0 +1,384 @@
+### channel=kalmannet-wrr-hp-extension seq=75
+### host=login4
+### started=2026-09-11T17:20:07+0800
+### ---------- output ----------
+ALT_NODE_PROBE_GZIP_BASE64=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
+--- sinfo_gpu_nodes rc=1 lines=0
+(empty)
+stderr: sinfo: error: Conflicting options, -a and -p, specified. Please choose one or the other.
+--- sinfo_gpu_partitions rc=1 lines=0
+(empty)
+stderr: sinfo: error: Conflicting options, -a and -p, specified. Please choose one or the other.
+--- scontrol_show_node_ngu202 rc=0 lines=16
+NodeName=ngu202 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=64 CPUTot=64 CPULoad=27.92
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu202 NodeHostName=ngu202 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=648892 Sockets=2 Boards=1
+   State=ALLOCATED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-01-22T14:56:40 SlurmdStartTime=2026-01-22T15:10:38
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=64
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+--- scontrol_show_node_ngu203 rc=0 lines=16
+NodeName=ngu203 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=0 CPUTot=64 CPULoad=1.62
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu203 NodeHostName=ngu203 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=669203 Sockets=2 Boards=1
+   State=MAINT ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2025-07-23T15:13:34 SlurmdStartTime=2025-07-23T15:41:12
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+--- scontrol_show_node_ngu101 rc=0 lines=16
+NodeName=ngu101 Arch=x86_64 CoresPerSocket=24 
+   CPUAlloc=16 CPUTot=96 CPULoad=3.11
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:4
+   NodeAddr=ngu101 NodeHostName=ngu101 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=8870 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu4 
+   BootTime=2024-03-12T17:17:27 SlurmdStartTime=2024-10-31T20:39:21
+   CfgTRES=cpu=96,mem=1M,billing=96
+   AllocTRES=cpu=16
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+--- scontrol_show_node_ngu102 rc=0 lines=16
+NodeName=ngu102 Arch=x86_64 CoresPerSocket=24 
+   CPUAlloc=16 CPUTot=96 CPULoad=4.02
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:4
+   NodeAddr=ngu102 NodeHostName=ngu102 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=2872 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu4 
+   BootTime=2024-03-12T17:23:00 SlurmdStartTime=2026-05-20T17:19:48
+   CfgTRES=cpu=96,mem=1M,billing=96
+   AllocTRES=cpu=16
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+--- scontrol_show_node_ngu103 rc=0 lines=17
+NodeName=ngu103 Arch=x86_64 CoresPerSocket=24 
+   CPUAlloc=0 CPUTot=96 CPULoad=0.03
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:4
+   NodeAddr=ngu103 NodeHostName=ngu103 
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=N/A Sockets=2 Boards=1
+   State=DOWN* ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu4 
+   BootTime=2024-03-12T17:14:44 SlurmdStartTime=2025-08-26T16:31:22
+   CfgTRES=cpu=96,mem=1M,billing=96
+   AllocTRES=
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   Reason=Not responding [root@2026-01-13T10:39:13]
+--- scontrol_show_node_ngu104 rc=0 lines=16
+NodeName=ngu104 Arch=x86_64 CoresPerSocket=24 
+   CPUAlloc=10 CPUTot=96 CPULoad=2.39
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:4
+   NodeAddr=ngu104 NodeHostName=ngu104 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=54656 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu4 
+   BootTime=2026-03-16T17:57:26 SlurmdStartTime=2026-03-17T11:02:03
+   CfgTRES=cpu=96,mem=1M,billing=96
+   AllocTRES=cpu=10
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+--- scontrol_config_gres rc=0 lines=15
+AccountingStorageTRES   = cpu,mem,energy,node,billing,fs/disk,vmem,pages
+GresTypes               = gpu,dcu
+PreemptType             = preempt/none
+PriorityDecayHalfLife   = 7-00:00:00
+PriorityMaxAge          = 7-00:00:00
+PriorityWeightAge       = 1000000
+PriorityWeightAssoc     = 0
+PriorityWeightFairShare = 0
+PriorityWeightJobSize   = 1000
+PriorityWeightPartition = 0
+PriorityWeightQOS       = 2000000
+PriorityWeightTRES      = (null)
+SelectType              = select/cons_res
+SelectTypeParameters    = CR_CORE
+SLURM_CONF              = /usr/local/globle/softs/slurm/19.05.4.1/etc/slurm.conf
+--- gres_conf rc=0 lines=71
+== /usr/local/globle/softs/slurm/19.05.4.1/etc/gres.conf
+NodeName=ngu201 Name=gpu  File=/dev/nvidia0
+NodeName=ngu201 Name=gpu  File=/dev/nvidia1
+NodeName=ngu201 Name=gpu  File=/dev/nvidia2
+NodeName=ngu201 Name=gpu  File=/dev/nvidia3
+NodeName=ngu201 Name=gpu  File=/dev/nvidia4
+NodeName=ngu201 Name=gpu  File=/dev/nvidia5
+NodeName=ngu201 Name=gpu  File=/dev/nvidia6
+NodeName=ngu201 Name=gpu  File=/dev/nvidia7
+NodeName=ngu202 Name=gpu  File=/dev/nvidia0
+NodeName=ngu202 Name=gpu  File=/dev/nvidia1
+NodeName=ngu202 Name=gpu  File=/dev/nvidia2
+NodeName=ngu202 Name=gpu  File=/dev/nvidia3
+NodeName=ngu202 Name=gpu  File=/dev/nvidia4
+NodeName=ngu202 Name=gpu  File=/dev/nvidia5
+NodeName=ngu202 Name=gpu  File=/dev/nvidia6
+NodeName=ngu202 Name=gpu  File=/dev/nvidia7
+NodeName=ngu203 Name=gpu  File=/dev/nvidia0
+NodeName=ngu203 Name=gpu  File=/dev/nvidia1
+NodeName=ngu203 Name=gpu  File=/dev/nvidia2
+NodeName=ngu203 Name=gpu  File=/dev/nvidia3
+NodeName=ngu203 Name=gpu  File=/dev/nvidia4
+NodeName=ngu203 Name=gpu  File=/dev/nvidia5
+NodeName=ngu203 Name=gpu  File=/dev/nvidia6
+NodeName=ngu203 Name=gpu  File=/dev/nvidia7
+NodeName=ngu101 Name=gpu  File=/dev/nvidia0
+NodeName=ngu101 Name=gpu  File=/dev/nvidia1
+NodeName=ngu101 Name=gpu  File=/dev/nvidia2
+NodeName=ngu101 Name=gpu  File=/dev/nvidia3
+NodeName=ngu102 Name=gpu  File=/dev/nvidia0
+NodeName=ngu102 Name=gpu  File=/dev/nvidia1
+NodeName=ngu102 Name=gpu  File=/dev/nvidia2
+NodeName=ngu102 Name=gpu  File=/dev/nvidia3
+NodeName=ngu103 Name=gpu  File=/dev/nvidia0
+NodeName=ngu103 Name=gpu  File=/dev/nvidia1
+NodeName=ngu103 Name=gpu  File=/dev/nvidia2
+NodeName=ngu103 Name=gpu  File=/dev/nvidia3
+NodeName=ngu104 Name=gpu  File=/dev/nvidia0
+NodeName=ngu104 Name=gpu  File=/dev/nvidia1
+NodeName=ngu104 Name=gpu  File=/dev/nvidia2
+NodeName=ngu104 Name=gpu  File=/dev/nvidia3
+NodeName=ngu001 Name=gpu  File=/dev/nvidia0
+NodeName=ngu001 Name=gpu  File=/dev/nvidia1
+NodeName=ngu002 Name=gpu  File=/dev/nvidia0
+NodeName=ngu002 Name=gpu  File=/dev/nvidia1
+NodeName=ngu003 Name=gpu  File=/dev/nvidia0
+NodeName=ngu003 Name=gpu  File=/dev/nvidia1
+NodeName=ngu004 Name=gpu  File=/dev/nvidia0
+NodeName=ngu004 Name=gpu  File=/dev/nvidia1
+NodeName=ngu005 Name=gpu  File=/dev/nvidia0
+NodeName=ngu005 Name=gpu  File=/dev/nvidia1
+NodeName=ngu006 Name=gpu  File=/dev/nvidia0
+NodeName=ngu006 Name=gpu  File=/dev/nvidia1
+NodeName=ngu007 Name=gpu  File=/dev/nvidia0
+NodeName=ngu007 Name=gpu  File=/dev/nvidia1
+NodeName=ngu008 Name=gpu  File=/dev/nvidia0
+NodeName=ngu008 Name=gpu  File=/dev/nvidia1
+NodeName=ngu009 Name=gpu  File=/dev/nvidia0
+NodeName=ngu009 Name=gpu  File=/dev/nvidia1
+NodeName=ngu010 Name=gpu  File=/dev/nvidia0
+NodeName=ngu010 Name=gpu  File=/dev/nvidia1
+NodeName=ngu011 Name=gpu  File=/dev/nvidia0
+NodeName=ngu011 Name=gpu  File=/dev/nvidia1
+NodeName=dcu[001-002] Name=dcu Type=Hygon File=/dev/dri/renderD128
+NodeName=dcu[001-002] Name=dcu Type=Hygon File=/dev/dri/renderD129
+NodeName=dcu[001-002] Name=dcu Type=Hygon File=/dev/dri/renderD130
+NodeName=dcu[001-002] Name=dcu Type=Hygon File=/dev/dri/renderD131
+NodeName=dcu[001-002] Name=dcu Type=Hygon File=/dev/dri/renderD132
+NodeName=dcu[001-002] Name=dcu Type=Hygon File=/dev/dri/renderD133
+NodeName=dcu[001-002] Name=dcu Type=Hygon File=/dev/dri/renderD134
+NodeName=dcu[001-002] Name=dcu Type=Hygon File=/dev/dri/renderD135
+--- slurm_conf_gpu_nodes rc=0 lines=7
+== /usr/local/globle/softs/slurm/19.05.4.1/etc/slurm.conf
+PriorityType=priority/multifactor
+PriorityWeightAge=1000000
+PriorityWeightQOS=2000000
+PriorityWeightJobSize=1000
+#AccountingStorageTRES=gres/gpu
+GresTypes=gpu,dcu
+--- sacct_running_hgpu4 rc=0 lines=6
+224505|sunyiq|RUNNING|2026-09-09T22:42:12|Unknown|1-18:38:47|3-00:00:00|billing=16,cpu=16,node=1|ngu101|1
+224785|luohao|RUNNING|2026-09-10T14:55:19|Unknown|1-02:25:40|4-00:10:00|billing=2,cpu=2,node=1|ngu104|1
+225082|luohao|RUNNING|2026-09-11T08:59:02|Unknown|08:21:57|4-00:10:00|billing=8,cpu=8,node=1|ngu104|1
+225137|hhu43|RUNNING|2026-09-11T12:48:45|Unknown|04:32:14|UNLIMITED|billing=16,cpu=16,node=1|ngu102|1
+225138|hhu43|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1
+225139|hhu43|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1
+--- sacct_running_hgpu8 rc=0 lines=33
+224389_[0-11%6]|sunyiq|PENDING|Unknown|Unknown|00:00:00|1-00:00:00||None assigned|1|200005
+224395_0|dengc|RUNNING|2026-09-11T07:03:41|Unknown|10:17:18|1-00:00:00|billing=8,cpu=8,node=1|ngu201|1|408564
+224395_1|dengc|RUNNING|2026-09-11T08:19:40|Unknown|09:01:19|1-00:00:00|billing=8,cpu=8,node=1|ngu201|1|416004
+224395_2|dengc|RUNNING|2026-09-11T08:19:40|Unknown|09:01:19|1-00:00:00|billing=8,cpu=8,node=1|ngu201|1|416004
+224395_3|dengc|RUNNING|2026-09-11T08:19:40|Unknown|09:01:19|1-00:00:00|billing=8,cpu=8,node=1|ngu201|1|416004
+224395_4|dengc|RUNNING|2026-09-11T08:19:40|Unknown|09:01:19|1-00:00:00|billing=8,cpu=8,node=1|ngu201|1|416004
+224395_5|dengc|RUNNING|2026-09-11T08:35:47|Unknown|08:45:12|1-00:00:00|billing=8,cpu=8,node=1|ngu201|1|417492
+224395_6|dengc|RUNNING|2026-09-11T08:41:35|Unknown|08:39:24|1-00:00:00|billing=8,cpu=8,node=1|ngu202|1|417988
+224395_7|dengc|RUNNING|2026-09-11T08:44:52|Unknown|08:36:07|1-00:00:00|billing=8,cpu=8,node=1|ngu202|1|200006
+224396_0|dengc|RUNNING|2026-09-11T09:05:53|Unknown|08:15:06|1-00:00:00|billing=8,cpu=8,node=1|ngu202|1|420469
+224396_1|dengc|RUNNING|2026-09-11T09:25:09|Unknown|07:55:50|1-00:00:00|billing=8,cpu=8,node=1|ngu202|1|422453
+224396_2|dengc|RUNNING|2026-09-11T09:49:48|Unknown|07:31:11|1-00:00:00|billing=8,cpu=8,node=1|ngu202|1|424933
+224396_3|dengc|RUNNING|2026-09-11T10:01:08|Unknown|07:19:51|1-00:00:00|billing=8,cpu=8,node=1|ngu202|1|425925
+224396_4|dengc|RUNNING|2026-09-11T11:08:42|Unknown|06:12:17|1-00:00:00|billing=8,cpu=8,node=1|ngu202|1|432869
+224396_5|dengc|RUNNING|2026-09-11T11:22:46|Unknown|05:58:13|1-00:00:00|billing=8,cpu=8,node=1|ngu202|1|434357
+224396_6|dengc|RUNNING|2026-09-11T15:21:14|Unknown|01:59:45|1-00:00:00|billing=8,cpu=8,node=1|ngu201|1|457671
+224396_7|dengc|RUNNING|2026-09-11T15:55:56|Unknown|01:25:03|1-00:00:00|billing=8,cpu=8,node=1|ngu201|1|200006
+224397_[0-7]|dengc|PENDING|Unknown|Unknown|00:00:00|1-00:00:00||None assigned|1|200006
+224398_[0-7]|dengc|PENDING|Unknown|Unknown|00:00:00|1-00:00:00||None assigned|1|200006
+224415|hhu01|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200005
+224878|hzxy03|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200006
+224879|hzxy03|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200006
+224880|hzxy03|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200006
+224881|hzxy03|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200006
+224882|hzxy03|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200006
+224883|hzxy03|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200006
+224884|hzxy03|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200006
+224885|hzxy03|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200006
+224886|hzxy03|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200006
+224887|hzxy03|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200006
+225118|hhu17|PENDING|Unknown|Unknown|00:00:00|5-20:00:00||None assigned|1|200006
+225119|hhu17|PENDING|Unknown|Unknown|00:00:00|5-20:00:00||None assigned|1|200006
+225160|hhu23|PENDING|Unknown|Unknown|00:00:00|Partition_Limit||None assigned|1|200005
+--- squeue_self rc=0 lines=20
+JOBID|NAME|PARTITION|STATE|TIME|TIME_LIMIT|TRES_PER_NODE|NODELIST|REASON|PRIORITY
+224389_0|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+224389_1|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+224389_2|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+224389_3|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+224389_4|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+224389_5|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+224389_6|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+224389_7|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+224389_8|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+224389_9|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+224389_10|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+224389_11|ngf-B-memory-r1|hgpu8|PENDING|0:00|1-00:00:00|gpu:1||Priority|414053
+202229|N22-agg-eval|hgpu4,hgpu8,hgpu2|PENDING|0:00|1-00:00:00|N/A||DependencyNeverSatisfied|200005
+202294|N22-export|hgpu4,hgpu8,hgpu2|PENDING|0:00|4:00:00|N/A||Dependency|200005
+202315|N22-gate|hgpu4,hgpu8,hgpu2|PENDING|0:00|2:00:00|N/A||Dependency|200005
+202507|N22-mask-iso-531|hgpu4,hgpu8,hgpu2|PENDING|0:00|2:00:00|gpu:1||DependencyNeverSatisfied|200005
+215429|id30_m01_s100|hgpu2|PENDING|0:00|7-00:00:00|gpu:1||DependencyNeverSatisfied|200005
+202293|N22-manifest|hgpu4,hgpu8,hgpu2|PENDING|0:00|1-00:00:00|N/A||JobHeldUser|0
+224505|tukf09-455-v2r14-neural|hgpu4|RUNNING|1-18:37:57|3-00:00:00|gpu:4|ngu101|None|200006
+--- scontrol_show_job_224505 rc=0 lines=27
+JobId=224505 JobName=tukf09-455-v2r14-neural
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200006 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=1-18:37:57 TimeLimit=3-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-09T22:42:12 EligibleTime=2026-09-09T22:42:12
+   AccrueTime=2026-09-09T22:42:12
+   StartTime=2026-09-09T22:42:12 EndTime=2026-09-12T22:42:12 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-09T22:42:12
+   Partition=hgpu4 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=ngu101
+   BatchHost=ngu101
+   NumNodes=1 NumCPUs=16 NumTasks=1 CPUs/Task=16 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=16,node=1,billing=16
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=16 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/hpc/tukf09_455_basin_revision_a800_exclusive_v2r14/submit_training_gpu.slurm
+   WorkDir=/data1/home/sunyiq/hpc_mailbox
+   StdErr=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/logs/training-224505.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/logs/training-224505.out
+   Power=
+   TresPerNode=gpu:4
+--- sacct_hgpu4_recent rc=0 lines=165
+223396|hhu43|COMPLETED|2026-09-08T22:35:36|2026-09-09T02:12:00|03:36:24|billing=16,cpu=16,node=1|ngu104
+223397|hhu43|COMPLETED|2026-09-09T02:12:00|2026-09-09T05:24:03|03:12:03|billing=16,cpu=16,node=1|ngu104
+223398|hhu43|COMPLETED|2026-09-09T05:24:05|2026-09-09T09:25:48|04:01:43|billing=16,cpu=16,node=1|ngu104
+223399|hhu43|COMPLETED|2026-09-09T09:25:48|2026-09-09T12:50:12|03:24:24|billing=16,cpu=16,node=1|ngu104
+223400|hhu43|COMPLETED|2026-09-09T12:50:13|2026-09-09T16:35:02|03:44:49|billing=16,cpu=16,node=1|ngu104
+224157|houshx|COMPLETED|2026-09-09T11:40:00|2026-09-09T11:42:10|00:02:10|billing=8,cpu=8,node=1|ngu101
+224158|houshx|COMPLETED|2026-09-09T11:47:05|2026-09-09T11:49:24|00:02:19|billing=8,cpu=8,node=1|ngu101
+224162|houshx|FAILED|2026-09-09T12:36:42|2026-09-09T12:41:34|00:04:52|billing=8,cpu=8,node=1|ngu101
+224165|luohao|COMPLETED|2026-09-09T13:16:09|2026-09-09T13:17:10|00:01:01|billing=32,cpu=32,node=1|ngu101
+224166|luohao|COMPLETED|2026-09-09T13:21:29|2026-09-09T13:22:20|00:00:51|billing=32,cpu=32,node=1|ngu101
+224168|luohao|COMPLETED|2026-09-09T13:31:59|2026-09-09T13:32:48|00:00:49|billing=32,cpu=32,node=1|ngu101
+224209|luohao|COMPLETED|2026-09-09T13:47:44|2026-09-09T13:48:34|00:00:50|billing=32,cpu=32,node=1|ngu101
+224219|luohao|COMPLETED|2026-09-09T13:49:51|2026-09-09T13:50:41|00:00:50|billing=8,cpu=8,node=1|ngu101
+224225|houshx|COMPLETED|2026-09-09T14:09:59|2026-09-09T14:12:27|00:02:28|billing=8,cpu=8,node=1|ngu101
+224227|zhangjw|COMPLETED|2026-09-09T14:20:40|2026-09-09T19:49:26|05:28:46|billing=8,cpu=8,node=1|ngu101
+224251|luohao|COMPLETED|2026-09-09T15:55:51|2026-09-09T15:56:37|00:00:46|billing=32,cpu=32,node=1|ngu101
+224288|caojsh|COMPLETED|2026-09-09T17:03:54|2026-09-09T17:04:05|00:00:11|billing=2,cpu=2,node=1|ngu104
+224289|caojsh|COMPLETED|2026-09-09T17:14:48|2026-09-09T17:15:20|00:00:32|billing=2,cpu=2,node=1|ngu104
+224290|caojsh|COMPLETED|2026-09-09T17:17:48|2026-09-09T17:17:48|00:00:00|billing=2,cpu=2,node=1|ngu104
+224307|houshx|COMPLETED|2026-09-09T18:00:01|2026-09-09T18:02:01|00:02:00|billing=8,cpu=8,node=1|ngu104
+224326|sunyiq|COMPLETED|2026-09-09T18:55:36|2026-09-09T18:55:51|00:00:15|billing=16,cpu=16,node=1|ngu102
+224370|sunyiq|COMPLETED|2026-09-09T19:19:59|2026-09-09T19:20:29|00:00:30|billing=2,cpu=2,node=1|ngu104
+224405|hhu17|COMPLETED|2026-09-09T20:13:23|2026-09-09T20:38:25|00:25:02|billing=2,cpu=2,node=1|ngu104
+224406|hhu17|COMPLETED|2026-09-09T20:14:12|2026-09-09T20:40:25|00:26:13|billing=2,cpu=2,node=1|ngu104
+224407|hhu17|COMPLETED|2026-09-09T20:15:23|2026-09-09T20:43:13|00:27:50|billing=2,cpu=2,node=1|ngu104
+224408|hhu17|COMPLETED|2026-09-09T20:16:12|2026-09-09T20:43:52|00:27:40|billing=2,cpu=2,node=1|ngu104
+224409|hhu17|COMPLETED|2026-09-09T20:17:11|2026-09-09T20:42:27|00:25:16|billing=2,cpu=2,node=1|ngu101
+224410|hhu17|COMPLETED|2026-09-09T20:22:22|2026-09-09T20:23:02|00:00:40|billing=2,cpu=2,node=1|ngu101
+224412|hhu17|COMPLETED|2026-09-09T20:23:13|2026-09-09T20:23:51|00:00:38|billing=2,cpu=2,node=1|ngu101
+224414|hhu17|COMPLETED|2026-09-09T20:23:57|2026-09-09T20:24:35|00:00:38|billing=2,cpu=2,node=1|ngu101
+224416|hhu17|COMPLETED|2026-09-09T20:34:29|2026-09-09T21:00:00|00:25:31|billing=2,cpu=2,node=1|ngu101
+224417|hhu17|COMPLETED|2026-09-09T20:38:11|2026-09-09T21:05:16|00:27:05|billing=2,cpu=2,node=1|ngu101
+224418|hhu17|COMPLETED|2026-09-09T20:39:00|2026-09-09T21:10:23|00:31:23|billing=2,cpu=2,node=1|ngu104
+224439|sunyiq|FAILED|2026-09-09T21:26:50|2026-09-09T21:32:04|00:05:14|billing=16,cpu=16,node=1|ngu104
+224441|sunyiq|FAILED|2026-09-09T21:32:04|2026-09-09T21:32:07|00:00:03|billing=4,cpu=4,node=1|ngu101
+224459|sunyiq|COMPLETED|2026-09-09T22:22:00|2026-09-09T22:31:49|00:09:49|billing=4,cpu=4,node=1|ngu104
+224460|sunyiq|COMPLETED|2026-09-09T22:31:49|2026-09-10T00:40:31|02:08:42|billing=4,cpu=4,node=1|ngu102
+224461|sunyiq|COMPLETED|2026-09-09T22:31:49|2026-09-10T00:40:19|02:08:30|billing=4,cpu=4,node=1|ngu102
+224462|sunyiq|COMPLETED|2026-09-09T22:31:49|2026-09-10T00:40:12|02:08:23|billing=4,cpu=4,node=1|ngu102
+224463|sunyiq|CANCELLED by 2272|2026-09-09T22:31:49|2026-09-09T22:39:49|00:08:00|billing=4,cpu=4,node=1|ngu102
+224464|sunyiq|CANCELLED by 2272|2026-09-09T22:31:49|2026-09-09T22:39:50|00:08:01|billing=4,cpu=4,node=1|ngu104
+224465|sunyiq|CANCELLED by 2272|2026-09-09T22:31:49|2026-09-09T22:39:50|00:08:01|billing=4,cpu=4,node=1|ngu104
+224466|sunyiq|COMPLETED|2026-09-09T22:24:05|2026-09-09T22:36:31|00:12:26|billing=16,cpu=16,node=1|ngu101
+224505|sunyiq|RUNNING|2026-09-09T22:42:12|Unknown|1-18:38:48|billing=16,cpu=16,node=1|ngu101
+224506|sunyiq|COMPLETED|2026-09-09T22:44:35|2026-09-09T22:48:52|00:04:17|billing=4,cpu=4,node=1|ngu104
+224507|sunyiq|COMPLETED|2026-09-09T22:48:52|2026-09-10T00:57:25|02:08:33|billing=4,cpu=4,node=1|ngu102
+224508|sunyiq|COMPLETED|2026-09-09T22:48:52|2026-09-10T00:49:40|02:00:48|billing=4,cpu=4,node=1|ngu104
+224509|sunyiq|COMPLETED|2026-09-09T22:48:52|2026-09-10T00:49:40|02:00:48|billing=4,cpu=4,node=1|ngu104
+224511|zhangjw|FAILED|2026-09-09T23:13:38|2026-09-09T23:13:38|00:00:00|billing=8,cpu=8,node=1|ngu104
+224529|hhu43|COMPLETED|2026-09-10T00:49:40|2026-09-10T01:17:22|00:27:42|billing=16,cpu=16,node=1|ngu104
+224530|hhu43|COMPLETED|2026-09-10T01:17:22|2026-09-10T03:03:11|01:45:49|billing=16,cpu=16,node=1|ngu102
+224531|hhu43|COMPLETED|2026-09-10T03:03:11|2026-09-10T04:38:31|01:35:20|billing=16,cpu=16,node=1|ngu102
+224532|hhu43|COMPLETED|2026-09-10T04:38:31|2026-09-10T06:25:15|01:46:44|billing=16,cpu=16,node=1|ngu102
+224533|hhu43|COMPLETED|2026-09-10T06:25:15|2026-09-10T08:00:57|01:35:42|billing=16,cpu=16,node=1|ngu102
+224534|hhu43|COMPLETED|2026-09-10T08:00:57|2026-09-10T09:34:24|01:33:27|billing=16,cpu=16,node=1|ngu102
+224535|hhu43|COMPLETED|2026-09-10T09:34:24|2026-09-10T11:13:09|01:38:45|billing=16,cpu=16,node=1|ngu102
+224536|hhu43|COMPLETED|2026-09-10T11:13:09|2026-09-10T13:06:08|01:52:59|billing=16,cpu=16,node=1|ngu102
+224537|zhangjw|FAILED|2026-09-09T23:52:25|2026-09-09T23:52:28|00:00:03|billing=8,cpu=8,node=1|ngu104
+224548|zhangjw|COMPLETED|2026-09-10T00:10:02|2026-09-10T00:16:39|00:06:37|billing=8,cpu=8,node=1|ngu104
+224559|houshx|FAILED|2026-09-10T00:32:04|2026-09-10T00:33:20|00:01:16|billing=8,cpu=8,node=1|ngu104
+224565|hzxy05|FAILED|2026-09-10T00:38:08|2026-09-10T00:38:13|00:00:05|billing=2,cpu=2,node=1|ngu104
+224750|hhu17|COMPLETED|2026-09-10T12:06:11|2026-09-10T12:07:33|00:01:22|billing=2,cpu=2,node=1|ngu104
+224751|hhu17|COMPLETED|2026-09-10T12:06:27|2026-09-10T12:07:35|00:01:08|billing=2,cpu=2,node=1|ngu104
+224752|hhu17|COMPLETED|2026-09-10T12:07:07|2026-09-10T12:08:14|00:01:07|billing=2,cpu=2,node=1|ngu104
+224753|hhu17|COMPLETED|2026-09-10T12:07:27|2026-09-10T12:08:28|00:01:01|billing=2,cpu=2,node=1|ngu104
+224754|hhu17|COMPLETED|2026-09-10T12:07:46|2026-09-10T12:08:46|00:01:00|billing=2,cpu=2,node=1|ngu104
+224755|hhu17|COMPLETED|2026-09-10T12:08:44|2026-09-10T12:10:01|00:01:17|billing=2,cpu=2,node=1|ngu104
+224756|hhu17|COMPLETED|2026-09-10T12:09:03|2026-09-10T12:10:10|00:01:07|billing=2,cpu=2,node=1|ngu104
+224763|zhangjw|COMPLETED|2026-09-10T13:52:01|2026-09-10T14:35:45|00:43:44|billing=8,cpu=8,node=1|ngu102
+224766|caojsh|COMPLETED|2026-09-10T15:51:54|2026-09-10T16:46:08|00:54:14|billing=8,cpu=8,node=1|ngu102
+224768|luohao|FAILED|2026-09-10T14:17:44|2026-09-10T14:18:24|00:00:40|billing=2,cpu=2,node=1|ngu102
+224769|tangym|COMPLETED|2026-09-10T14:21:16|2026-09-10T14:21:17|00:00:01|billing=8,cpu=8,node=1|ngu102
+224770|luohao|FAILED|2026-09-10T14:27:57|2026-09-10T14:28:32|00:00:35|billing=2,cpu=2,node=1|ngu102
+224771|tangym|COMPLETED|2026-09-10T14:30:47|2026-09-10T14:32:09|00:01:22|billing=8,cpu=8,node=1|ngu102
+224772|luohao|COMPLETED|2026-09-10T14:43:00|2026-09-10T14:44:21|00:01:21|billing=2,cpu=2,node=1|ngu102
+224773|luohao|FAILED|2026-09-10T14:50:29|2026-09-10T14:51:01|00:00:32|billing=2,cpu=2,node=1|ngu102
+224774|hhu43|COMPLETED|2026-09-10T14:51:33|2026-09-10T15:51:54|01:00:21|billing=16,cpu=16,node=1|ngu102
+224777|hhu43|CANCELLED by 2246|2026-09-10T17:50:32|2026-09-10T17:50:32|00:00:00||None assigned
+224778|hhu43|CANCELLED by 2246|2026-09-10T17:50:32|2026-09-10T17:50:32|00:00:00||None assigned
+224779|hhu43|CANCELLED by 2246|2026-09-10T17:50:32|2026-09-10T17:50:32|00:00:00||None assigned
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T17:20:11+0800
