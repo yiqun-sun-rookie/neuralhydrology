@@ -1,0 +1,51 @@
+### channel=kalmannet-wrr-hp-extension seq=77
+### host=login4
+### started=2026-09-11T17:29:24+0800
+### ---------- output ----------
+NODE_PIN_RELAX_GZIP_BASE64=H4sIAAAAAAACA+1YUW/bNhD+K4KAAG1nx5IsO5YAPTix22VLZNd2sGHrQMgSY7OmSYekkhp1/vuOlOTY7VblpduABTAU8e7j8fjxeHfRZztLVIK4QOkSp6sNJ0whhZnkQiLKkwxndnibUIkb9kc+lyhNWIop1WKnYa8Igxf7ZjqcoP7N7MfR5PK34QDFo8EQjS9jNBle9X/tzy5HMfI8v90L7IbN8AMypmQ+XxOlSlMgweIeZyhRKFcpWPUcr9t0gqbrzpwg9ODXOfUc1/V7PzhO6Dhg6y7HgmBph5/t5FZhgeSSP+hRytfrRPv2uy1TzpTgFOBGazYCz9KhPxq2wCoXLOUZNp5IlWEhwAHbvPNcwftPfH6ZRcUcqy9Esv1aMkvkCkQOeHzSfRLNloIrRXHUtWBOnKxxxBa3zfPmGq+52DaF+4FZlnUD+4fZMmdbcvfK886819Y7wfMNCBdoL+4Gr63riymiyRzTKG71zeSxIFwQtY18t+MFHSsmKY4cq5+mPGdqP996P5pGd1yWQzMVfJqqROFoPIwHl/E7a4ITyVlUmbQGeINZhlm6jV6xnNLXZtoEA/m5XmSCpUqEkvB6nqh0+ZYmi8gF8ZxzBcLhJ6IugNwIDq2YmrMZARbMKcLP0qMrAsEQuc0j4TVh+y1OTbiYiVVkOMHMDcJ2J/Tb1pCSBZlTfARwnZnTCT2w1zM2gA+Rfxsy1XsxiBu2YvyBWUOWHY0HOMkoYfjAM6kZMqCYM2xNcSrHApdyoOAqkWoKNywb3ic0Oghs9yxsO6Fb8DKGlYkiwP1yscl7Vp9SnsbAXDglWUT5gjDHD/2uf+ZWR6C1V0Sq8mSA63QvYovcc9oG+QWskOVrLZbAuasHF+MbGfn6TQctiC0taekBiGGt83AaXoQzfYzhm/CNMTKbDKdRuskjv8H0EbuNOaFAziLyC2p4upItvU70xoqVNjzGIg6NrcqSdcGBrA1Oo8IonLpe2szy9ejaXBQzdvR4tt4MiFwVAjPlLU7gDsNmSh4GmCbbcxN/ZTwZ2OgeC4gjmQoyx9HoZ1iZKbLIea6j9wouDZNPRmKsHrhYHZJ2UeSVqKXTptta8jVuFXeptUooqBhW6EEItAbfKJKY4lSfKNJn7gROrwVO8lykGAmccnBnW6mC1jnIlNi6LfPnVNJcrM2qv4AXAyK+76pl9GdD8Z0XakEky5bZXbNIn8j3Aj/onsHzFFJv5cklA0fwfUvTX8lGufo3vYNiUFxV/oBFVFwBMKpjWgcjXNsQiPzA7MdGVZFMmvyyJhXCht0U+vHxqRzBaKkfHB4nZHcy252I3cn73Un83EpVOu3syny+qxL5rqgNuw+shLj1EK8e0q6H+PWQTj2kWw85q4f06iHBM6h7Dr3f4lcHyBzfQuJ76VmAFMd/6Vn+dz2LaVDco57lsD956VleepaXnuWf7VmqkvSfalqgONQ1LUcQrx7Srof49ZBOPaRbDzmrh/TqIcEzqHsOvd/iV0fIRochy0zOLz68UIpcD+mqATnUDhVUK2h+dSeBCFNJqirZpqoVyNSKvVjwFOuvQMVQ4Duk8zKikPwRkagoE4X6UetlTpVZ2axh2mwIoaKFgaDCZVVFCorbXv0XtVNjP6UHi1XY4j/noutCUjcae1VJjn24m0pX7EpvqCBuryi6PvvLvVXqIleDWsHegEhRYCq1uaCgzTeZ9uToOj1W4r9vIEt946gdhOFhJYbh118Onnt37cfHxz8BnU+ctkgUAAA=
+PRECONDITIONS={"all_12_pending": true, "req_node_list_is_ngu201": true, "partition_hgpu8": true, "array_intact": true, "proceed": true}
+RESULT={"update_returncode": 0, "req_node_list_after": "(null)", "exc_node_list_after": "ngu203", "partition_after": "hgpu8", "priority_after": "415295", "eligible_time_after": "2026-09-10T05:20:08", "job_state_after": "PENDING", "tres_per_node_after": "gpu:1", "array_after": "0-11%6"}
+UPDATE_RC=0 stdout='' stderr=''
+--- after_show
+JobId=224389 ArrayJobId=224389 ArrayTaskId=0-11%6 ArrayTaskThrottle=6 JobName=ngf-B-memory-r1
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=415295 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Priority Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-09T19:35:43 EligibleTime=2026-09-10T05:20:08
+   AccrueTime=2026-09-10T05:20:08
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-11T17:30:10
+   Partition=hgpu8 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=ngu203
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1/retry.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1/logs/slurm-224389_4294967294.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_model_selection_20260908/resource_recovery_20260909/B_retry1/logs/slurm-224389_4294967294.out
+   Power=
+   TresPerNode=gpu:1
+--- after_squeue
+224389_0|PENDING|Priority|415295|
+224389_1|PENDING|Priority|415295|
+224389_2|PENDING|Priority|415295|
+224389_3|PENDING|Priority|415295|
+224389_4|PENDING|Priority|415295|
+224389_5|PENDING|Priority|415295|
+224389_6|PENDING|Priority|415295|
+224389_7|PENDING|Priority|415295|
+224389_8|PENDING|Priority|415295|
+224389_9|PENDING|Priority|415295|
+224389_10|PENDING|Priority|415295|
+224389_11|PENDING|Priority|415295|
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T17:29:25+0800
