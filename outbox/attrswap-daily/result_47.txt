@@ -1,0 +1,51 @@
+### channel=attrswap-daily seq=47
+### host=login4
+### started=2026-09-11T13:28:28+0800
+### ---------- output ----------
+wallclock 2026-09-11 13:28:28 +0800
+=== A. MY QUEUE (any attrswap/fswap/pswap job still alive?) ===
+      JOBID                       NAME     STATE       TIME  NODELIST
+=== B. LANDING DIRS ===
+  /data1/home/sunyiq/attr_swap_daily_2026_09 : runs=7 medians=7 size=522M
+  /data1/home/sunyiq/forcing_swap_daily_2026_09 : runs=9 medians=9 size=1.2G
+  /data1/home/sunyiq/precip_swap_daily_2026_09 : runs=9 medians=6 size=1.4G
+  旧副本: /data1/home/sunyiq/forcing_swap_daily_2026_09.FAILED_20260908_133836
+=== C. FINAL ACCOUNTING OF THE THREE CAMPAIGNS ===
+     222824 attrswap_ref27_parity_s900    COMPLETED   02:04:30   hgpu8 
+     222825   attrswap_armA_chn23_s100    COMPLETED   02:01:29   hgpu8 
+     222826   attrswap_armA_chn23_s200    COMPLETED   02:01:56   hgpu8 
+     222827   attrswap_armA_chn23_s300    COMPLETED   02:03:24   hgpu8 
+     222828  attrswap_armB_drop23_s100    COMPLETED   02:01:16   hgpu8 
+     222829  attrswap_armB_drop23_s200    COMPLETED   02:03:33   hgpu8 
+     222830  attrswap_armB_drop23_s300    COMPLETED   02:01:38   hgpu8 
+     223868                 fswap_gate       FAILED   00:07:46   hgpu8 
+     223959                 fswap_gate CANCELLED b+   00:00:00   hgpu8 
+     223974                 fswap_gate    COMPLETED   00:12:16   hgpu8 
+     223975          fswap_armE27_s100    COMPLETED   01:41:58   hgpu8 
+     223976          fswap_armE27_s200    COMPLETED   01:41:54   hgpu8 
+     223977          fswap_armE27_s300    COMPLETED   01:41:55   hgpu8 
+     223978          fswap_armE23_s100    COMPLETED   01:59:23   hgpu8 
+     223979          fswap_armE23_s200    COMPLETED   01:59:23   hgpu8 
+     223980          fswap_armE23_s300    COMPLETED   02:05:58   hgpu8 
+     223981           fswap_armEP_s100    COMPLETED   02:04:40   hgpu8 
+     223982           fswap_armEP_s200    COMPLETED   02:03:28   hgpu8 
+     223983           fswap_armEP_s300    COMPLETED   01:58:10   hgpu8 
+     224421                 pswap_gate CANCELLED b+   00:00:00   hgpu8 
+     224441                 pswap_gate       FAILED   00:00:03   hgpu4 
+     224459                 pswap_gate    COMPLETED   00:09:49   hgpu4 
+     224460     pswap_armP_chirps_s100    COMPLETED   02:08:42   hgpu4 
+     224461     pswap_armP_chirps_s200    COMPLETED   02:08:30   hgpu4 
+     224462     pswap_armP_chirps_s300    COMPLETED   02:08:23   hgpu4 
+     224463      pswap_armP_era5l_s100 CANCELLED b+   00:08:00   hgpu4 
+     224464      pswap_armP_era5l_s200 CANCELLED b+   00:08:01   hgpu4 
+     224465      pswap_armP_era5l_s300 CANCELLED b+   00:08:01   hgpu4 
+     224506              pswap_rebuild    COMPLETED   00:04:17   hgpu4 
+     224507      pswap_armP_era5l_s100    COMPLETED   02:08:33   hgpu4 
+     224508      pswap_armP_era5l_s200    COMPLETED   02:00:48   hgpu4 
+     224509      pswap_armP_era5l_s300    COMPLETED   02:00:48   hgpu4 
+=== D. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 47
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T13:28:35+0800
