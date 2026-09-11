@@ -1,0 +1,56 @@
+### channel=id33-transformer-recipe-repair seq=50
+### host=login4
+### started=2026-09-11T21:12:03+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-11T21:12:03+0800
+=== A. PRECONDITIONS ===
+-rw-r--r--. 1 sunyiq g_sunyiq 31600 Sep 11 20:17 src/transformer_recipe_repair/registry/experiments.csv
+3d8627a51b082705af3d7cdc1e1a9f74e5d9f85969d15fa77fc27c7b8a373e1f  src/transformer_recipe_repair/registry/experiments.csv
+s300 configs: 3
+s400 configs: 3
+s800 configs: 3
+clean
+=== B. RESUBMIT (exclude ngu002,ngu011) ===
+  s300 (T2_s300 C3_s300 C4_s300) -> 225199
+  s400 (T2_s400 C3_s400 C4_s400) -> 225200
+  s800 (T2_s800 C3_s800 C4_s800) -> 225201
+=== C. QUEUE ===
+     JOBID           NAME  ST       TIME NODELIST NODELIST(REASON)
+    225199    id33_sd_300   R    INVALID   ngu010 ngu010
+    225200    id33_sd_400   R    INVALID   ngu005 ngu005
+    225201    id33_sd_800   R    INVALID   ngu005 ngu005
+    225187    id33_sd_200   R      52:22   ngu010 ngu010
+    225190    id33_sd_500   R      52:22   ngu001 ngu001
+    225191    id33_sd_600   R      52:22   ngu004 ngu004
+    225192    id33_sd_700   R      52:22   ngu004 ngu004
+=== D. NEW PRE-FLIGHT HEADS ===
+-- logs/33_transformer_recipe_repair/packed-225199.out
+=== ID33 PACKED PRE-FLIGHT (arms: T2_s300 C3_s300 C4_s300) ===
+2026-09-11T21:12:50+08:00
+ngu010
+NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+gpu=NVIDIA GeForce RTX 3090 count=1
+ID33 CONFIG AUDIT: PASS (31 arms; one factor each; no data read; no training launched)
+=== ID33 PACKED TRAINING: T2_s300 C3_s300 C4_s300 SHARE ONE CARD ===
+  launched T2_s300 as pid 3358102
+-- logs/33_transformer_recipe_repair/packed-225193.out
+=== ID33 PACKED PRE-FLIGHT (arms: T2_s800 C3_s800 C4_s800) ===
+2026-09-11T20:22:02+08:00
+ngu005
+NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+gpu=NVIDIA GeForce RTX 3090 count=1
+ID33 CONFIG AUDIT: FAIL
+  - registry missing: /data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/src/transformer_recipe_repair/registry/experiments.csv
+-- logs/33_transformer_recipe_repair/packed-225192.out
+=== ID33 PACKED PRE-FLIGHT (arms: T2_s700 C3_s700 C4_s700) ===
+2026-09-11T20:21:32+08:00
+ngu004
+NVIDIA GeForce RTX 3090, 24576 MiB, 580.76.05
+gpu=NVIDIA GeForce RTX 3090 count=1
+ID33 CONFIG AUDIT: PASS (31 arms; one factor each; no data read; no training launched)
+=== ID33 PACKED TRAINING: T2_s700 C3_s700 C4_s700 SHARE ONE CARD ===
+  launched T2_s700 as pid 3904632
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-11T21:13:23+0800
