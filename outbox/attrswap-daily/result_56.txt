@@ -1,0 +1,23 @@
+### channel=attrswap-daily seq=56
+### host=login4
+### started=2026-09-11T21:38:00+0800
+### ---------- output ----------
+wallclock 2026-09-11 21:38:00 +0800
+=== A. guards ===
+  table imerg_refday a83d95b35ae9507c
+  table imerg_uncal_refday 50ad728186630076
+  table imerg_utc ad107f7bdf2d8b3d
+  table gsmap_refday 687ac62bdfc83438
+  table era5l_refday 5e60c4cb0fc589eb
+  table chirps 2b9d84973aaa56cd
+=== B. set partition in the three templates ===
+  hpc_deploy/pswap2_gate_product.slurm:#SBATCH -p __PART__
+  hpc_deploy/pswap2_gate_ref.slurm:#SBATCH -p __PART__
+  hpc_deploy/pswap2_train.slurm:#SBATCH -p __PART__
+=== C. reference gate + 8 arms ===
+sbatch: error: invalid partition specified: __PART__
+sbatch: error: Batch job submission failed: Invalid partition name specified
+SBATCH FAILED gate_ref
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-11T21:38:00+0800
