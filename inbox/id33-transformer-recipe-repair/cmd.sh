@@ -1,31 +1,28 @@
 #!/bin/bash
-# seq=50 single resubmit of the three pre-flight failures (s300/s400: ngu011 saw no GPU; s800: stale registry on ngu005).
+# seq=51 scheduled watch: seed-wave status only (read-only)
 set -o pipefail
 ROOT=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
 cd "$ROOT" || exit 1
-echo "=== STAMP ==="; date -Iseconds
-echo "=== A. PRECONDITIONS ==="
-ls -la src/transformer_recipe_repair/registry/experiments.csv 2>&1 || { echo "REGISTRY MISSING; abort"; exit 1; }
-sha256sum src/transformer_recipe_repair/registry/experiments.csv
-for s in 300 400 800; do ls src/transformer_recipe_repair/configs/*_s${s}.yml 2>&1 | wc -l | xargs -I{} echo "s$s configs: {}"; done
-squeue -u "$USER" -h -o "%j" | grep -E 'id33_sd_(300|400|800)' && { echo "already queued; abort"; exit 1; }
-ls -d results/33_transformer_recipe_repair/*_s300 results/33_transformer_recipe_repair/*_s400 results/33_transformer_recipe_repair/*_s800 2>/dev/null && { echo "run dirs exist; abort"; exit 1; }
-echo "clean"
-echo "=== B. RESUBMIT (exclude ngu002,ngu011) ==="
-submit () {
-  local ARMS_LIST="$1" TAG="$2" OUT J
-  OUT=$(sbatch --export=ALL,ARMS="$ARMS_LIST" --job-name="id33_sd_${TAG}" --exclude=ngu002,ngu011 \
-        src/transformer_recipe_repair/hpc/submit_packed_arms.slurm 2>&1)
-  J=$(echo "$OUT" | grep -oE 'Submitted batch job [0-9]+' | grep -oE '[0-9]+' || true)
-  [ -n "$J" ] || { echo "SUBMIT_FAILED for $ARMS_LIST: $OUT"; return 1; }
-  echo "  s${TAG} ($ARMS_LIST) -> $J"
-}
-submit "T2_s300 C3_s300 C4_s300" "300" || exit 1
-submit "T2_s400 C3_s400 C4_s400" "400" || exit 1
-submit "T2_s800 C3_s800 C4_s800" "800" || exit 1
-echo "=== C. QUEUE ==="
-sleep 20
+date -Iseconds
+echo "=== SACCT ==="
+sacct -j 225187,225190,225191,225192,225199,225200,225201 -X -o JobID,JobName%14,State,ExitCode,Elapsed,NodeList -P 2>&1 || true
+echo "=== QUEUE ==="
 squeue -u "$USER" -o "%.10i %.14j %.3t %.10M %.8N %R" 2>&1 | grep -E 'JOBID|id33_' || true
-echo "=== D. NEW PRE-FLIGHT HEADS ==="
-sleep 60
-for f in $(ls -t logs/33_transformer_recipe_repair/packed-*.out | head -3); do echo "-- $f"; head -8 "$f" || true; done
+echo "=== EPOCH PROGRESS ==="
+for d in results/33_transformer_recipe_repair/*_s[2-8]00/*/; do
+  n=$(ls -d "$d"validation/model_epoch0* 2>/dev/null | wc -l)
+  echo "$d epochs_validated=$n"
+done 2>/dev/null || true
+echo "=== MANIFESTS ==="
+for m in results/33_transformer_recipe_repair/_invocations/*_s[2-8]00_slurm*/run_manifest.json; do
+  echo "-- $m"; grep -oE '"status": *"[A-Z_]+"|"training_return_code": *[0-9-]+' "$m" | head -3 || true
+done 2>/dev/null || true
+echo "=== EPOCH30 MEDIANS (if any) ==="
+for f in results/33_transformer_recipe_repair/*_s[2-8]00/*/validation/model_epoch030/validation_metrics.csv; do
+  echo "-- $f"; python3 -c "
+import csv,statistics,sys
+r=list(csv.DictReader(open('$f')));k=[c for c in r[0] if c.lower()=='nse'][0]
+v=[float(x[k]) for x in r if x[k] not in ('','nan')];print(len(v),statistics.median(v))" 2>&1 || true
+done 2>/dev/null || true
+echo "=== ERR TAILS ==="
+for f in $(ls -t logs/33_transformer_recipe_repair/packed-2251*.err 2>/dev/null | head -7); do echo "-- $f"; tail -3 "$f" || true; done
