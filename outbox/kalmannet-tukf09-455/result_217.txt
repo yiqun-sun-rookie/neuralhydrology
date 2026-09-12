@@ -1,0 +1,33 @@
+### channel=kalmannet-tukf09-455 seq=217
+### host=login4
+### started=2026-09-12T09:05:54+0800
+### ---------- output ----------
+TIME=2026-09-12T09:05:54+0800
+=== PRECONDITIONS ===
+FILES_BEFORE=3060  BYTES_BEFORE=898985416
+=== PER-FILE HASH MANIFEST OF THE RESULT ROOT (read only) ===
+MANIFEST_LINES=3060
+=== TAR THE RESULT ROOT (no compression; checkpoints do not compress) ===
+total 831301
+drwxr-xr-x. 2 sunyiq g_sunyiq      4096 Sep 12 09:06 .
+drwxr-xr-x. 8 sunyiq g_sunyiq      4096 Sep 12 09:05 ..
+-rw-r--r--. 1 sunyiq g_sunyiq    331777 Sep 12 09:06 result_root.sha256
+-rw-r--r--. 1 sunyiq g_sunyiq 901242880 Sep 12 09:06 tukf09_455_v2r14_result_root_20260912.tar
+-rw-r--r--. 1 sunyiq g_sunyiq       108 Sep 12 09:06 tukf09_455_v2r14_result_root_20260912.tar.sha256
+6e2f6a121c084383b3508e120fca02393836fb73a0d5a39786a4176d38862eac  tukf09_455_v2r14_result_root_20260912.tar
+TAR_MEMBERS=3060
+=== THE RESULT ROOT IS UNCHANGED ===
+FILES_AFTER=3060  BYTES_AFTER=898985416
+authorization.snapshot.json
+control
+execution_config.snapshot.json
+filter
+logs
+neural
+scientific_contract.snapshot.json
+training_admission.snapshot.json
+training_context.json
+TUKF09_455_V2R14_RESULT_ROOT_PACKAGED_FOR_RETRIEVAL
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-12T09:06:34+0800
