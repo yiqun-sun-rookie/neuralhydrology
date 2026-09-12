@@ -1,0 +1,23 @@
+### channel=id29-nearing2022-da seq=618
+### host=login4
+### started=2026-09-12T09:04:10+0800
+### ---------- output ----------
+2026-09-12T09:04:10+0800
+=== N22 JOBS ===
+      202229     N22-agg-eval   PENDING        0:00  1-00:00:00 (DependencyNeverSatisfied)
+      202294       N22-export   PENDING        0:00     4:00:00 (Dependency)
+      202315         N22-gate   PENDING        0:00     2:00:00 (Dependency)
+      202507 N22-mask-iso-531   PENDING        0:00     2:00:00 (DependencyNeverSatisfied)
+      202293     N22-manifest   PENDING        0:00  1-00:00:00 (JobHeldUser)
+=== warmpair-family sacct (7d) ===
+  none
+=== pair dirs ===
+  MISSING control_seed0_repeat1
+  MISSING masked_seed0_repeat1
+  MISSING paired_analysis
+=== line 94 still hardcoded? ===
+94:    _require_equal(data_receipt, "slurm_job_id", "202506")
+120:    _require_equal(mask_receipt, "slurm_job_id", "202507")
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-12T09:04:11+0800
