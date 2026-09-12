@@ -1,0 +1,23 @@
+### channel=kalmannet-wrr-hp-extension seq=93
+### host=login4
+### started=2026-09-12T13:25:14+0800
+### ---------- output ----------
+CANCEL_SUPERSEDED_GZIP_BASE64=H4sIAAAAAAACA9VV247aMBD9F0s8NVQeJ7DBUh8QRC29UMRFaktXlknMNgs428TpbkX49465BBZ2t12hqurLKD4+Mz5zMnGWRIYmTnRG+HhJQqlDNZ+riPCpnGfKIWGio3hLWJJUmfQniBuFoL4qSWuYiXAu44XNNWm+R9Vc3mQWJT4H4FAn5dZUxniWWMh0ptLjammu9foQW23lkFhH6o7wxsr52zovOK1zzztPJ9AjoZvDntZ5T9DvZAJ3fc7OtBPAIdlGpRUUJouF1Fh9XKIOYcxz/YYAIJfrcnmqwyRShFPMNZFK8TBC1s9JbuzzaoVMzI/iSBplZ6vhAHUAEJ7Ftj4ZDYK+aI6Gbz72O1+Ctmg1u63gvRiMekF/ELQR6QfD/mcQw+bg3QCra3UrrpNJJrJ8soiNsR6gAERU+gPblkbkJsTKjLJ6lTaqwIa0xlmNg/fS9Xzf9V5QyindGQbie65yJeTUWLvuN7/eQmY1teG6dMGuvtmQYKjERWVYVD4Ule6fWrP1sl70gm67031dWEXFV73FLx7B/UdwVvRH3a7FGac+96DQVzmjUBLggAAer3kbAisJtCS4nFHOvLICWR0ZNVHTJFX/qVMA/9bCTIaheXjW7M6pd59s0Db0bKii9wtpXr1NJp22MzD4XTnBXWxaaKJdpsYJsN7zzN0rR0+Kgw8HcI2t0mKkZzq51Q+YcZyBVzv2fprBnsqoc9c9yRjXqz7eFRX38vCV7Wh7eukue/aA1uDCP39AbRU7WLsGtzeyff1APdvPhrG3eftrOWY0SsL2H1kS8Cr9BaF8MWOjBwAA
+INDEX 9: cancelled=False conditions={"retry2_running": true, "retry2_elapsed": "8:11:16", "retry2_claimed": true, "retry2_failed_marker": false, "retry1_pending": false}
+INDEX 10: cancelled=False conditions={"retry2_running": true, "retry2_elapsed": "7:06:44", "retry2_claimed": true, "retry2_failed_marker": false, "retry1_pending": false}
+INDEX 11: cancelled=True conditions={"retry2_running": true, "retry2_elapsed": "1:38:26", "retry2_claimed": true, "retry2_failed_marker": false, "retry1_pending": true}
+--- retry1 queue after
+224389_6|PENDING|0:00|
+224389_7|PENDING|0:00|
+224389_8|PENDING|0:00|
+224389_2|RUNNING|2:08:41|ngu201
+224389_1|RUNNING|2:14:54|ngu202
+224389_0|RUNNING|3:20:24|ngu201
+--- retry1 sacct after
+224389_0|RUNNING|0:0|2026-09-12T10:04:50|Unknown
+224389_1|RUNNING|0:0|2026-09-12T11:10:20|Unknown
+224389_2|RUNNING|0:0|2026-09-12T11:16:33|Unknown
+224389_[6-8,11%3]|PENDING|0:0|Unknown|Unknown
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-12T13:25:14+0800
