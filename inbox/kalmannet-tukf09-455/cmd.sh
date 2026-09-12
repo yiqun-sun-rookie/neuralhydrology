@@ -1,30 +1,29 @@
 #!/bin/bash
-# TUKF09-455: read-only progress of the v2r14 training job. Changes nothing.
+# TUKF09-455: read-only. Size the finished result tree and confirm the provenance path style.
 set -eo pipefail
 ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909
-N="$ROOT/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural"
-JOB=$(cat "$ROOT/status/training_job_id.txt")
-echo "TIME=$(date -Is)  TRAINING_JOB=$JOB"
-sacct -j "$JOB" -o JobID,State,ExitCode,Elapsed,NodeList -P 2>&1 | head -5
+R="$ROOT/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
+echo "TIME=$(date -Is)"
+echo "=== SIZE OF EACH TOP-LEVEL MEMBER ==="
+du -sb "$R"/* 2>/dev/null | sort -n
+echo "TOTAL_BYTES=$(du -sb "$R" | cut -f1)"
+echo "FILE_COUNT=$(find "$R" -type f | wc -l)"
+echo "SYMLINKS=$(find "$R" -type l | wc -l)"
+echo "HARDLINKED=$(find "$R" -type f -links +1 | wc -l)"
 
-echo "=== WHAT THE CARDS ARE DOING ==="
-srun --jobid="$JOB" --overlap -N1 -n1 bash -c "nvidia-smi --query-gpu=index,utilization.gpu,memory.used --format=csv,noheader" 2>&1 | head -6 || echo "(could not attach)"
+echo "=== CONTROL AND LOGS ==="
+find "$R/control" "$R/logs" -maxdepth 2 2>/dev/null | head -40
+echo "PHASE_LOCK=$(test -e "$R/control/.training_phase.lock" && echo present || echo absent)"
 
-echo "=== NEURAL UNITS SO FAR ==="
-if [ -d "$N" ]; then
-  echo "SHARED_SCALER=$(test -f "$N/shared/training_scaler.json" && echo present || echo absent)"
-  for d in "$N"/lead_*; do
-    test -d "$d" || continue
-    echo "$(basename "$d") checkpoints=$(ls "$d"/checkpoints/epoch_*.pt 2>/dev/null | wc -l) latest=$(ls -t "$d"/checkpoints/epoch_*.pt 2>/dev/null | head -1 | xargs -r basename)"
-  done
-  echo "TOTAL_CHECKPOINTS=$(find "$N" -name "epoch_*.pt" 2>/dev/null | wc -l)"
-else
-  echo "(the neural tree does not exist yet)"
-fi
+echo "=== ONE NEURAL UNIT, ONE FILTER UNIT ==="
+ls -la "$R/neural/lead_1_seed_0" "$R/neural/shared" | head -30
+ls -la "$R/neural/lead_1_seed_0/checkpoints" | head -5
+ls -la "$R/filter/basin_01022500"
 
-echo "=== TRAINING STDOUT TAIL ==="
-tail -n 20 "$ROOT/logs/training-$JOB.out" 2>/dev/null | cut -c1-260 || echo "(nothing yet)"
-echo "=== TRAINING STDERR TAIL ==="
-tail -n 20 "$ROOT/logs/training-$JOB.err" 2>/dev/null | cut -c1-260 || echo "(nothing yet)"
+echo "=== THE PROVENANCE PATH AS STORED ON THE CLUSTER ==="
+python -X utf8 -c "import json,pathlib;p=json.load(open('$R/filter/basin_01022500/migration_provenance.json'));s=p['source_unit_path'];print(repr(s));print('posix_is_absolute=',pathlib.PurePosixPath(s).is_absolute())"
 
-echo TUKF09_455_V2R14_TRAINING_STATUS_READ_ONLY_DONE
+echo "=== CHECKSUMS OF THE FIVE ROOT SNAPSHOTS ==="
+(cd "$R" && sha256sum authorization.snapshot.json scientific_contract.snapshot.json execution_config.snapshot.json training_admission.snapshot.json training_context.json)
+
+echo TUKF09_455_V2R14_SIZE_READ_ONLY_DONE
