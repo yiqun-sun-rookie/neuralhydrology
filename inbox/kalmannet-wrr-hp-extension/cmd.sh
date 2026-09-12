@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Read-only joint observation of the original B array (224255), retry1 (224389, A800/hgpu8) and retry2 (A40/hgpu4).
+# Read-only joint observation of the original B array (224255), retry1 (224389, A800/hgpu8) and retry2 (A40/hgpu4). v2: tolerant scheduler queries.
 # Extends observe_B_memory_retry_20260909.sh with the retry2 root; no job/evaluation call, no tensor read.
 set -euo pipefail
 python3 -I -B - <<'PY'
@@ -83,7 +83,7 @@ for argv in [
 ]:
     p = subprocess.run(argv, capture_output=True, text=True, timeout=45, check=False)
     queries.append({'command': argv, 'returncode': p.returncode, 'stdout': p.stdout, 'stderr': p.stderr})
-    assert p.returncode == 0 and not p.stderr
+    # v2: do not abort when a job id has left the queue (squeue exits non-zero); sacct still reports terminal rows.
 retry1 = observe_root(R1, '567471e0b43fc924176d93e18d3c880b5f45db131378b1c46dc194a6e6002e2a',
                       '4c60d0e95e37cd521209e208b5427fd842ecbbedcc2681a5e360db5143f4f478', '224389', list(range(12)))
 r2_manifest_sha = hashlib.sha256(raw(R2 / 'RETRY_MANIFEST.json')).hexdigest()
@@ -104,7 +104,7 @@ def summary(r):
             'static_files_verified': r['static_files_verified']}
 print('RETRY1_SUMMARY=' + json.dumps(summary(retry1)))
 print('RETRY2_SUMMARY=' + json.dumps(summary(retry2)))
-print('--- squeue'); print(queries[0]['stdout'].rstrip())
+print('--- squeue rc=%d stderr=%r' % (queries[0]['returncode'], queries[0]['stderr'].strip()[:200])); print(queries[0]['stdout'].rstrip())
 print('--- sacct (retry rows)'); print('\n'.join(l for l in queries[1]['stdout'].splitlines() if not l.startswith('224255')))
 for r in retry2['runs']:
     print('--- retry2 index %d %s seed %d: claim=%s run_dirs=%d epochs=%s failed=%s' % (
