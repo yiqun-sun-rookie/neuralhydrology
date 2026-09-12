@@ -1,0 +1,79 @@
+### channel=kalmannet-tukf09-455 seq=216
+### host=login4
+### started=2026-09-12T09:01:50+0800
+### ---------- output ----------
+TIME=2026-09-12T09:01:50+0800
+=== SIZE OF EACH TOP-LEVEL MEMBER ===
+1612	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/training_context.json
+2405	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/authorization.snapshot.json
+10388	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/execution_config.snapshot.json
+10684	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs
+12662	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/training_admission.snapshot.json
+31694	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/scientific_contract.snapshot.json
+454198	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control
+12595612	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/filter
+885862065	/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural
+TOTAL_BYTES=898985416
+FILE_COUNT=3060
+SYMLINKS=0
+HARDLINKED=0
+=== CONTROL AND LOGS ===
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/filter_rebinding
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/filter_rebinding/independent
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/filter_rebinding/filter_rebinding.sealed.json
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/formal_training_sequence
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/formal_training_sequence/events.jsonl
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/neural
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/control/neural/events.jsonl
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/verify_filter_rebinding_controller.stderr.log
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/neural_controller.stdout.log
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/verify_filter_rebinding_controller.stdout.log
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/logs/formal_training_sequence/neural_controller.stderr.log
+PHASE_LOCK=absent
+=== ONE NEURAL UNIT, ONE FILTER UNIT ===
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/lead_1_seed_0:
+total 272
+drwxr-xr-x.  3 sunyiq g_sunyiq   4096 Sep 10 16:39 .
+drwxr-xr-x. 12 sunyiq g_sunyiq   4096 Sep 12 07:21 ..
+-rw-r--r--.  1 sunyiq g_sunyiq    602 Sep 10 16:39 access_ledger.json
+drwxr-xr-x.  2 sunyiq g_sunyiq   4096 Sep 10 16:39 checkpoints
+-rw-r--r--.  1 sunyiq g_sunyiq 131913 Sep  9 22:47 identity.json
+-rw-r--r--.  1 sunyiq g_sunyiq   4465 Sep 10 16:39 manifest.sha256.json
+-rw-r--r--.  1 sunyiq g_sunyiq    564 Sep 10 16:39 model_selection.json
+-rw-r--r--.  1 sunyiq g_sunyiq 127104 Sep 10 16:39 validation_history.npz
+
+/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1/neural/shared:
+total 27
+drwxr-xr-x.  2 sunyiq g_sunyiq  4096 Sep  9 22:47 .
+drwxr-xr-x. 12 sunyiq g_sunyiq  4096 Sep 12 07:21 ..
+-rw-r--r--.  1 sunyiq g_sunyiq 19152 Sep  9 22:47 training_scaler.json
+total 95873
+drwxr-xr-x. 2 sunyiq g_sunyiq    4096 Sep 10 16:39 .
+drwxr-xr-x. 3 sunyiq g_sunyiq    4096 Sep 10 16:39 ..
+-rw-r--r--. 1 sunyiq g_sunyiq 3271755 Sep  9 23:24 epoch_001.pt
+-rw-r--r--. 1 sunyiq g_sunyiq 3271755 Sep 10 00:01 epoch_002.pt
+total 35
+drwxr-xr-x.   2 sunyiq g_sunyiq  4096 Sep  9 22:33 .
+drwxr-xr-x. 457 sunyiq g_sunyiq  4096 Sep  9 22:34 ..
+-rw-r--r--.   1 sunyiq g_sunyiq   455 Sep  9 22:33 access_ledger.json
+-rw-r--r--.   1 sunyiq g_sunyiq 20215 Sep  9 22:33 history.npz
+-rw-r--r--.   1 sunyiq g_sunyiq  1386 Sep  9 22:33 identity.json
+-rw-r--r--.   1 sunyiq g_sunyiq   792 Sep  9 22:33 manifest.sha256.json
+-rw-r--r--.   1 sunyiq g_sunyiq  2109 Sep  9 22:33 migration_provenance.json
+-rw-r--r--.   1 sunyiq g_sunyiq  1125 Sep  9 22:33 selection.json
+=== THE PROVENANCE PATH AS STORED ON THE CLUSTER ===
+'G:\\github\\pycharm\\projects\\kalmannet\\results\\tukf09_backpropagation_vs_neural_backward_time_confirmation_v1\\filter\\basin_01022500'
+posix_is_absolute= False
+=== CHECKSUMS OF THE FIVE ROOT SNAPSHOTS ===
+7f94c1b75d55f72b399b50c528873c9dc8da2c39a6cfd78f8a1ce80a4c71bc80  authorization.snapshot.json
+7710594dcc5cce7f087cb70492a6f827c3925a98ea7fa051d26c5ef1660304e1  scientific_contract.snapshot.json
+01a32fa6fc82fe134d54237ca0368614afbca8f4361b95326860685c0a29308c  execution_config.snapshot.json
+43aafca6bc7b1d2dd18dcb872c76e831455d847710ca55e2a351f5537d4e776d  training_admission.snapshot.json
+0c164b3ef46e409e3c636a9ba1aa64dded38d6a706a58094fbbb66c2d4157f85  training_context.json
+TUKF09_455_V2R14_SIZE_READ_ONLY_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-12T09:01:55+0800
