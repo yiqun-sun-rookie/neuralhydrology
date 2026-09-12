@@ -1,0 +1,22 @@
+### channel=id29-nearing2022-da seq=622
+### host=login4
+### started=2026-09-12T21:05:03+0800
+### ---------- output ----------
+2026-09-12T21:05:03+0800
+=== N22 RUNNING/PENDING (non-legacy) ===
+  none
+=== warmpair-family sacct (14d) ===
+219423_0|N22-warmpair|FAILED|1:0|00:00:45|2026-09-03T18:20:31
+219423_1|N22-warmpair|FAILED|1:0|00:00:48|2026-09-03T18:21:19
+=== pair dirs ===
+  MISSING control_seed0_repeat1
+  MISSING masked_seed0_repeat1
+  MISSING paired_analysis
+=== prepare script slurm_job_id lines + last commit touching it ===
+94:    _require_equal(data_receipt, "slurm_job_id", "202506")
+120:    _require_equal(mask_receipt, "slurm_job_id", "202507")
+=== gate artifact ===
+  PRESENT final_reproduction_gate.json
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-12T21:05:05+0800
