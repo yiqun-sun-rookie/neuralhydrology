@@ -1,30 +1,39 @@
 #!/bin/bash
-# READ-ONLY Stage-2 status probe (2026-09-13): queue with reasons, accounting, partition state, priority diagnosis.
-# No backslash literals anywhere in this file.
+# Stage-2 RETRIEVE part 1 of 2 (PREREG_20260911 stop condition 5): ONLY the 8 ref_daymet arms + gate/build/V9 logs.
+# Candidate arms are NOT touched here; they are retrieved in a later receipt after the noise floor is registered.
+# Read-only on the landing dir (tar built in a temp dir). No backslash literals anywhere in this file.
 set -o pipefail
+ROOT=/data1/home/sunyiq/precip_swap2_daily_2026_09
 date "+wallclock %F %T %z"
-R=/data1/home/sunyiq/precip_swap2_daily_2026_09
-echo "=== A. our queue (all states) ==="
-squeue -u "$USER" -o '%.10i %.34j %.9T %.10M %.9P %.12S %R' 2>&1 | head -45
-echo "  squeue rc=${PIPESTATUS[0]}"
-echo "=== B. accounting of the 33 registered jobs ==="
-ids=$(awk '{print $2}' $R/logs/jobs.txt | paste -sd, -)
-sacct -X -j "$ids" --format=JobID%9,JobName%30,State%12,Submit%20,Start%20,Elapsed%10,ExitCode%8,NodeList%10 2>&1 | head -40
-echo "  sacct rc=${PIPESTATUS[0]}"
-echo "  states: $(sacct -X -n -j "$ids" --format=State 2>/dev/null | awk '{print $1}' | sort | uniq -c | tr -s ' ' | paste -sd, -)"
-echo "=== C. partitions and nodes ==="
-sinfo -p hgpu4,hgpu8 -o '%P %.6D %.10T %.20G %.30N %.8c %.10m' 2>&1
-sinfo -p hgpu4 -N -o '%N %.10T %.20G %.30E' 2>&1 | head -8
-echo "=== D. who is running on hgpu4 right now ==="
-squeue -p hgpu4 -o '%.10i %.9u %.9T %.10M %.6D %.12b %R' 2>&1 | head -20
-echo "=== E. priority diagnosis for the reference gate ==="
-sprio -j 225205 2>&1 | head -3
-scontrol show job 225205 2>&1 | grep -E 'JobState|Reason|Priority|SubmitTime|EligibleTime|StartTime|Partition|QOS|TRES' | head -10
-sshare -u "$USER" 2>&1 | head -5
-echo "=== F. gate markers / runs ==="
-ls $R/logs/gate_*.txt 2>/dev/null | sed 's/^/  /' || echo "  (none)"
-echo "  runs: $(ls $R/runs 2>/dev/null | wc -l)  evaluated: $(ls $R/runs/*/test/model_epoch030/test_metrics.csv 2>/dev/null | wc -l)"
-ls -t $R/logs/slurm_*.out 2>/dev/null | head -3 | sed 's/^/  /'
-echo "=== G. MAILBOX CHANNEL SEQ ==="
-echo "  attrswap-daily seq now: $(cat ~/hpc_mailbox/inbox/attrswap-daily/seq 2>/dev/null)"
+cd "$ROOT" || { echo "ROOT MISSING"; exit 1; }
+echo "=== A. COMPLETENESS (reference arms) ==="
+n=0; for s in 100 200 300 400 500 600 700 800; do
+  f="logs/ref_daymet_s$s.public_median.txt"; if [ -f "$f" ]; then echo "  ref_daymet_s$s: $(cat "$f")"; n=$((n+1)); else echo "  ref_daymet_s$s: MISSING"; fi
+done
+echo "reference arms with medians: $n/8"
+echo "=== B. PACK (reference only) ==="
+TMP=$(mktemp -d)
+P="$TMP/pswap2_ref_results"
+mkdir -p "$P/slurm_logs"
+for d in runs/ref_daymet_s*; do
+  [ -d "$d" ] || continue
+  a=$(basename "$d")
+  mkdir -p "$P/$a/test/model_epoch030"
+  cp "$d/config.yml" "$P/$a/" 2>/dev/null
+  cp "$d/test/model_epoch030/test_metrics.csv" "$P/$a/test/model_epoch030/" 2>/dev/null
+  cp "$d/output.log" "$P/$a/" 2>/dev/null
+done
+cp logs/ref_daymet_s*.public_median.txt logs/gate_*.txt logs/build_*.json logs/v9_streamflow.json logs/jobs.txt "$P/" 2>/dev/null
+for f in logs/slurm_pswap2_gate_*.out logs/slurm_pswap2_gate_*.err logs/slurm_ref_daymet_*.out logs/slurm_ref_daymet_*.err; do
+  [ -f "$f" ] && grep -v -E '%[|]' "$f" > "$P/slurm_logs/$(basename "$f")"
+done
+echo "  candidate arm files included: $(find "$P" -path '*pswap2_armP*' | wc -l) (must be 0)"
+( cd "$P" && find . -type f | LC_ALL=C sort | xargs sha256sum ) > "$P/MANIFEST.sha256"
+( cd "$TMP" && tar --mtime='2026-01-01 00:00:00' --owner=0 --group=0 --numeric-owner -czf pswap2_ref_results.tar.gz pswap2_ref_results )
+echo "tar bytes=$(stat -c%s "$TMP/pswap2_ref_results.tar.gz") sha256=$(sha256sum "$TMP/pswap2_ref_results.tar.gz" | cut -c1-16) files=$(wc -l < "$P/MANIFEST.sha256")"
+echo "=== C. BASE64 (between the markers) ==="
+echo "-----BEGIN TARGZ B64-----"
+base64 -w 0 "$TMP/pswap2_ref_results.tar.gz"; echo
+echo "-----END TARGZ B64-----"
+rm -rf "$TMP"
 echo "=== DONE ==="
