@@ -1,7 +1,7 @@
 #!/bin/bash
-# kalmannet-daily-perbasin sequence=101: READ-ONLY observation of training job 225203 (basin 02102908, launch seq 100).
+# kalmannet-daily-perbasin sequence=102: READ-ONLY observation of training job 225203 (basin 02102908, launch seq 100).
 set -o pipefail
-echo "channel=kalmannet-daily-perbasin sequence=101 purpose=read-only-observe-train-02102908-job225203"
+echo "channel=kalmannet-daily-perbasin sequence=102 purpose=read-only-observe-train-02102908-job225203"
 ROOT=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908
 REQ=$ROOT/runtime/train_02102908_A40_launcher_seq100
 RUN=$ROOT/runs/DAILY_CAMELS_KNET_PER_BASIN_21_DEVELOPMENT_V2_20260908_BASIN_02102908_A40_TRAIN1_SEQ100
