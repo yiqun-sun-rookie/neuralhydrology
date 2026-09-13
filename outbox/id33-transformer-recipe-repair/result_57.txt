@@ -1,0 +1,36 @@
+### channel=id33-transformer-recipe-repair seq=57
+### host=login4
+### started=2026-09-13T20:27:04+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-13T20:27:04+0800
+=== A. IN-FLIGHT GATE (id33 arm jobs only) ===
+id33_in_flight_count=0
+=== B. ID34 STAGE-1 STATUS ===
+     JobID        JobName        State ExitCode    Elapsed NodeList 
+---------- -------------- ------------ -------- ---------- -------- 
+    225539    id34_stage1      PENDING      0:0   00:00:00 None as+ 
+  (no log yet)
+=== C. EXTRACT ===
+952d146fdd2fe2a6a93c1758d75564fb43b43d97abe1992dd7aa9f56bf53db16  neuralhydrology/utils/config.py
+8b943364ca80e6e8f5b3eb00b917a40e92cd4522df8922ac1c5cc2dbae91e966  neuralhydrology/modelzoo/recipe_fixed_transformer.py
+fa9d8a32e8f42f84e3650bc6e1e4174c6d916448905f67e99e557cfdcc2d84b6  src/transformer_recipe_repair/registry/experiments.csv
+0287b1fa091a2d82d4936fdf5b80b77cbd411a38e5b9a9e145d7cb9ab0728c84  src/transformer_recipe_repair/scripts/audit_configs.py
+k1 configs: 8
+=== D. AUDIT ===
+ID33 CONFIG AUDIT: PASS (39 arms; one factor each; no data read; no training launched)
+=== E. UNIT TESTS FOR THE NEW MODULE (cpu, seconds) ===
+/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python: No module named pytest
+=== F. SUBMIT 3 PACKED JOBS ===
+  a (K1 K1_s200 K1_s300) -> 225548
+  b (K1_s400 K1_s500 K1_s600) -> 225549
+  c (K1_s700 K1_s800) -> 225550
+k1_jobs= 225548 225549 225550
+     JOBID           NAME  ST     TIME NODELIST NODELIST(REASON)
+    225539    id34_stage1  PD     0:00          (Priority)
+    225548      id33_k1_a  PD     0:00          (Priority)
+    225549      id33_k1_b  PD     0:00          (Priority)
+    225550      id33_k1_c  PD     0:00          (Priority)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-13T20:27:26+0800
