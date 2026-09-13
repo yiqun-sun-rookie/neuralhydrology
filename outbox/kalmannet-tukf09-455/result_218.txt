@@ -1,0 +1,83 @@
+### channel=kalmannet-tukf09-455 seq=218
+### host=login4
+### started=2026-09-13T21:08:07+0800
+### ---------- output ----------
+TIME=2026-09-13T21:08:07+0800
+units=9
+
+[lead_1_seed_0] selected_epoch=29/30  median_nse_at_selection=0.8283  rule=largest_455_basin_median_nse_earliest_epoch_tie_break
+  per-epoch median NSE (epochs 1..30):
+  0.680 0.757 0.785 0.789 0.776 0.821 0.813 0.807 0.818 0.813 0.824 0.827 0.821 0.824 0.820
+  0.823 0.815 0.824 0.825 0.825 0.828 0.817 0.817 0.819 0.825 0.824 0.825 0.823 0.828 0.827
+  at selected epoch across 455 basins: p10=0.350 p25=0.678 p50=0.828 p75=0.912 p90=0.976  min=-339.299 max=0.996
+  basins with NSE>0.5: 393/455   >0.7: 328/455   <0: 22/455   non-finite: 0
+  epoch-1 median=0.680  best=0.828@29  last(30)=0.827
+
+[lead_1_seed_1] selected_epoch=25/30  median_nse_at_selection=0.8363  rule=largest_455_basin_median_nse_earliest_epoch_tie_break
+  per-epoch median NSE (epochs 1..30):
+  0.536 0.720 0.746 0.744 0.788 0.787 0.802 0.811 0.818 0.823 0.826 0.820 0.820 0.823 0.830
+  0.825 0.830 0.817 0.826 0.830 0.823 0.830 0.823 0.823 0.836 0.835 0.835 0.835 0.835 0.833
+  at selected epoch across 455 basins: p10=0.381 p25=0.676 p50=0.836 p75=0.917 p90=0.975  min=-278.896 max=0.996
+  basins with NSE>0.5: 393/455   >0.7: 333/455   <0: 16/455   non-finite: 0
+  epoch-1 median=0.536  best=0.836@25  last(30)=0.833
+
+[lead_1_seed_2] selected_epoch=15/30  median_nse_at_selection=0.8332  rule=largest_455_basin_median_nse_earliest_epoch_tie_break
+  per-epoch median NSE (epochs 1..30):
+  0.711 0.744 0.782 0.794 0.805 0.810 0.820 0.817 0.825 0.833 0.831 0.827 0.826 0.832 0.833
+  0.828 0.827 0.832 0.817 0.832 0.823 0.828 0.823 0.816 0.825 0.830 0.824 0.827 0.826 0.824
+  at selected epoch across 455 basins: p10=0.387 p25=0.677 p50=0.833 p75=0.917 p90=0.977  min=-254.048 max=0.995
+  basins with NSE>0.5: 391/455   >0.7: 334/455   <0: 14/455   non-finite: 0
+  epoch-1 median=0.711  best=0.833@15  last(30)=0.824
+
+[lead_2_seed_0] selected_epoch=30/30  median_nse_at_selection=0.7813  rule=largest_455_basin_median_nse_earliest_epoch_tie_break
+  per-epoch median NSE (epochs 1..30):
+  0.626 0.689 0.712 0.742 0.748 0.762 0.760 0.765 0.768 0.773 0.776 0.775 0.768 0.769 0.769
+  0.771 0.775 0.775 0.770 0.775 0.771 0.777 0.770 0.769 0.779 0.781 0.779 0.781 0.776 0.781
+  at selected epoch across 455 basins: p10=0.317 p25=0.604 p50=0.781 p75=0.872 p90=0.946  min=-469.154 max=0.990
+  basins with NSE>0.5: 377/455   >0.7: 292/455   <0: 20/455   non-finite: 0
+  epoch-1 median=0.626  best=0.781@30  last(30)=0.781
+
+[lead_2_seed_1] selected_epoch=10/30  median_nse_at_selection=0.7842  rule=largest_455_basin_median_nse_earliest_epoch_tie_break
+  per-epoch median NSE (epochs 1..30):
+  0.636 0.679 0.724 0.692 0.754 0.755 0.764 0.762 0.773 0.784 0.778 0.774 0.783 0.771 0.780
+  0.776 0.773 0.771 0.779 0.776 0.775 0.778 0.782 0.770 0.783 0.780 0.779 0.780 0.779 0.775
+  at selected epoch across 455 basins: p10=0.287 p25=0.604 p50=0.784 p75=0.866 p90=0.943  min=-421.339 max=0.989
+  basins with NSE>0.5: 380/455   >0.7: 290/455   <0: 25/455   non-finite: 0
+  epoch-1 median=0.636  best=0.784@10  last(30)=0.775
+
+[lead_2_seed_2] selected_epoch=26/30  median_nse_at_selection=0.7850  rule=largest_455_basin_median_nse_earliest_epoch_tie_break
+  per-epoch median NSE (epochs 1..30):
+  0.648 0.674 0.728 0.744 0.759 0.734 0.744 0.753 0.758 0.776 0.773 0.768 0.775 0.771 0.768
+  0.778 0.776 0.770 0.769 0.779 0.769 0.776 0.769 0.773 0.782 0.785 0.779 0.782 0.779 0.781
+  at selected epoch across 455 basins: p10=0.345 p25=0.623 p50=0.785 p75=0.874 p90=0.953  min=-429.324 max=0.990
+  basins with NSE>0.5: 384/455   >0.7: 293/455   <0: 24/455   non-finite: 0
+  epoch-1 median=0.648  best=0.785@26  last(30)=0.781
+
+[lead_3_seed_0] selected_epoch=25/30  median_nse_at_selection=0.7613  rule=largest_455_basin_median_nse_earliest_epoch_tie_break
+  per-epoch median NSE (epochs 1..30):
+  0.563 0.644 0.693 0.699 0.706 0.731 0.723 0.741 0.746 0.747 0.747 0.757 0.751 0.746 0.755
+  0.748 0.753 0.748 0.742 0.745 0.757 0.750 0.732 0.756 0.761 0.754 0.759 0.751 0.753 0.756
+  at selected epoch across 455 basins: p10=0.290 p25=0.564 p50=0.761 p75=0.848 p90=0.930  min=-402.463 max=0.976
+  basins with NSE>0.5: 366/455   >0.7: 274/455   <0: 22/455   non-finite: 0
+  epoch-1 median=0.563  best=0.761@25  last(30)=0.756
+
+[lead_3_seed_1] selected_epoch=10/30  median_nse_at_selection=0.7674  rule=largest_455_basin_median_nse_earliest_epoch_tie_break
+  per-epoch median NSE (epochs 1..30):
+  0.593 0.667 0.704 0.631 0.726 0.747 0.739 0.751 0.739 0.767 0.762 0.763 0.765 0.763 0.759
+  0.755 0.750 0.730 0.760 0.762 0.749 0.746 0.754 0.738 0.749 0.750 0.751 0.747 0.749 0.743
+  at selected epoch across 455 basins: p10=0.271 p25=0.589 p50=0.767 p75=0.858 p90=0.927  min=-704.942 max=0.982
+  basins with NSE>0.5: 373/455   >0.7: 282/455   <0: 24/455   non-finite: 0
+  epoch-1 median=0.593  best=0.767@10  last(30)=0.743
+
+[lead_3_seed_2] selected_epoch=11/30  median_nse_at_selection=0.7622  rule=largest_455_basin_median_nse_earliest_epoch_tie_break
+  per-epoch median NSE (epochs 1..30):
+  0.578 0.670 0.706 0.702 0.703 0.719 0.712 0.729 0.739 0.742 0.762 0.755 0.739 0.746 0.754
+  0.747 0.752 0.744 0.744 0.746 0.746 0.741 0.746 0.744 0.747 0.753 0.747 0.746 0.748 0.744
+  at selected epoch across 455 basins: p10=0.290 p25=0.598 p50=0.762 p75=0.859 p90=0.934  min=-677.390 max=0.984
+  basins with NSE>0.5: 373/455   >0.7: 276/455   <0: 23/455   non-finite: 0
+  epoch-1 median=0.578  best=0.762@11  last(30)=0.744
+EVALUATION_SURFACE=0
+TUKF09_455_V2R14_VALIDATION_SUMMARY_READ_ONLY_DONE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-13T21:08:09+0800
