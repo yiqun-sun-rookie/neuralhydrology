@@ -1,0 +1,24 @@
+### channel=id33-transformer-recipe-repair seq=56
+### host=login4
+### started=2026-09-13T20:19:31+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-13T20:19:31+0800
+=== A. IN-FLIGHT ===
+  none
+=== B. EXTRACT ===
+-rw-r--r--. 1 sunyiq g_sunyiq 21253 Sep 13 20:19 /data1/home/sunyiq/hpc_mailbox/payload/id33-transformer-recipe-repair/id34_stage1_v01.tar.gz
+fdbebf95d03b47af92b133c00c47d34965e528b0e1f4f147ee5846fc0d49ef48  src/path_signature_runoff/scripts/signature_features.py
+c7042d278e6d87a849ec168e7c57407e06e893df681bf2833fe23439a8d402ca  src/path_signature_runoff/scripts/stage1_residual_diagnostic.py
+b1745d6c43d464ccb62f3b93210cb8ac3b1d1f9a45635af410ecae1ebb376ec0  src/path_signature_runoff/hpc/submit_stage1.slurm
+=== C. LOCATE C4 RUN ===
+C4_RUN=results/33_transformer_recipe_repair/C4/transformer_recipe_repair_C4_2026_0909_1839_ep30
+train_data_scaler.yml
+=== D. SUBMIT ===
+Submitted batch job 225539
+stage1_job=225539
+     JOBID           NAME  ST     TIME NODELIST NODELIST(REASON)
+    225539    id34_stage1  PD     0:00          (Priority)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-13T20:19:47+0800
