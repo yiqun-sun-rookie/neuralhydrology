@@ -3,14 +3,16 @@ ROOT=/data1/home/sunyiq/nearing2022_da
 date --iso-8601=seconds
 echo "=== N22 JOBS ==="
 squeue -u sunyiq -h -o '%.12i %.16j %.9T %.11M %.11L %R' 2>/dev/null | grep -E 'N22' || echo 'no N22 jobs in queue'
-echo "=== FAILURES AND TIMEOUTS (never truncate, never tail) ==="
+echo "=== FAILURES AND TIMEOUTS (never truncate) ==="
 sacct -X -n -P -S $(date -d '7 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22' | grep -E '\|(TIMEOUT|FAILED|NODE_FAIL|OUT_OF_MEMORY|CANCELLED)' || echo '  none'
 echo "=== WARMPAIR 219423 STATE ==="
-sacct -j 219423 -X -n -P --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null || echo '  not found'
-echo "=== WARMPAIR ARTIFACT DIRS ==="
+sacct -j 219423 -X -n -P --format=JobID,State,ExitCode,Elapsed,End 2>/dev/null || echo '  not found'
+echo "=== ANY WARMPAIR* JOBS LAST 14 DAYS ==="
+sacct -X -n -P -S $(date -d '14 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'warmpair|warmana' || echo '  none'
+echo "=== WARMPAIR ARM DIRS ==="
 D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
-for S in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$S" ] && echo "  PRESENT $S" || echo "  MISSING $S"; done
-echo "=== LOG IDLE SECONDS PER RUNNING JOB (stall detector) ==="
+for A in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$A" ] && echo "  PRESENT $A" || echo "  MISSING $A"; done
+echo "=== LOG IDLE SECONDS PER RUNNING JOB ==="
 for J in $(squeue -u sunyiq -h -o '%i %j' 2>/dev/null | grep -E 'N22-' | awk '{print $1}'); do
   SO=$(scontrol show job "$J" 2>/dev/null | tr ' ' '\n' | sed -n 's/^StdOut=//p' | head -1)
   [ -n "$SO" ] && [ -f "$SO" ] && printf '  %-14s idle=%ss node=%s\n' "$J" "$(( $(date +%s) - $(stat -c %Y "$SO") ))" "$(squeue -h -j "$J" -o '%N' 2>/dev/null)"
