@@ -1,0 +1,97 @@
+### channel=attrswap-daily seq=76
+### host=login4
+### started=2026-09-13T15:55:56+0800
+### ---------- output ----------
+wallclock 2026-09-13 15:55:56 +0800
+=== A. our queue (all states) ===
+     JOBID                               NAME     STATE       TIME PARTITION   START_TIME NODELIST(REASON)
+    202229                       N22-agg-eval   PENDING       0:00 hgpu4,hgp          N/A (DependencyNeverSatisfied)
+    202294                         N22-export   PENDING       0:00 hgpu4,hgp          N/A (Dependency)
+    202315                           N22-gate   PENDING       0:00 hgpu4,hgp          N/A (Dependency)
+    202507                   N22-mask-iso-531   PENDING       0:00 hgpu4,hgp          N/A (DependencyNeverSatisfied)
+    215429                      id30_m01_s100   PENDING       0:00     hgpu2          N/A (DependencyNeverSatisfied)
+    202293                       N22-manifest   PENDING       0:00 hgpu4,hgp          N/A (JobHeldUser)
+  squeue rc=0
+=== B. accounting of the 33 registered jobs ===
+    JobID                        JobName        State               Submit                Start    Elapsed ExitCode   NodeList 
+--------- ------------------------------ ------------ -------------------- -------------------- ---------- -------- ---------- 
+   225205                pswap2_gate_ref    COMPLETED  2026-09-11T21:41:37  2026-09-12T12:46:34   00:02:51      0:0     ngu102 
+   225206                ref_daymet_s100    COMPLETED  2026-09-11T21:41:37  2026-09-12T12:53:17   02:00:32      0:0     ngu102 
+   225207                ref_daymet_s200    COMPLETED  2026-09-11T21:41:37  2026-09-12T12:53:17   02:03:17      0:0     ngu102 
+   225208                ref_daymet_s300    COMPLETED  2026-09-11T21:41:37  2026-09-12T12:55:25   02:01:09      0:0     ngu102 
+   225209                ref_daymet_s400    COMPLETED  2026-09-11T21:41:37  2026-09-12T13:55:56   02:00:31      0:0     ngu102 
+   225210                ref_daymet_s500    COMPLETED  2026-09-11T21:41:37  2026-09-12T14:35:44   01:56:13      0:0     ngu104 
+   225211                ref_daymet_s600    COMPLETED  2026-09-11T21:41:37  2026-09-12T14:53:49   02:00:00      0:0     ngu102 
+   225212                ref_daymet_s700    COMPLETED  2026-09-11T21:41:37  2026-09-12T14:56:34   02:01:45      0:0     ngu102 
+   225213                ref_daymet_s800    COMPLETED  2026-09-11T21:41:37  2026-09-12T14:56:34   02:02:09      0:0     ngu102 
+   225214       pswap2_gate_imerg_refday    COMPLETED  2026-09-11T21:41:37  2026-09-12T12:46:34   00:03:39      0:0     ngu102 
+   225215  pswap2_armP_imerg_refday_s100    COMPLETED  2026-09-11T21:41:37  2026-09-12T15:56:28   02:01:37      0:0     ngu102 
+   225216  pswap2_armP_imerg_refday_s200    COMPLETED  2026-09-11T21:41:37  2026-09-12T16:31:57   01:55:11      0:0     ngu104 
+   225217  pswap2_armP_imerg_refday_s300    COMPLETED  2026-09-11T21:41:37  2026-09-12T16:53:50   02:00:01      0:0     ngu102 
+   225218 pswap2_gate_imerg_uncal_refday    COMPLETED  2026-09-11T21:41:37  2026-09-12T12:46:34   00:03:39      0:0     ngu102 
+   225219 pswap2_armP_imerg_uncal_refda+    COMPLETED  2026-09-11T21:41:37  2026-09-12T16:58:19   01:59:53      0:0     ngu102 
+   225220 pswap2_armP_imerg_uncal_refda+    COMPLETED  2026-09-11T21:41:37  2026-09-12T16:58:43   02:01:25      0:0     ngu102 
+   225221 pswap2_armP_imerg_uncal_refda+    COMPLETED  2026-09-11T21:41:37  2026-09-12T17:14:53   02:02:30      0:0     ngu101 
+   225222          pswap2_gate_imerg_utc    COMPLETED  2026-09-11T21:41:37  2026-09-12T12:49:25   00:02:59      0:0     ngu102 
+   225223     pswap2_armP_imerg_utc_s100    COMPLETED  2026-09-11T21:41:37  2026-09-12T17:14:53   02:02:30      0:0     ngu101 
+   225224     pswap2_armP_imerg_utc_s200    COMPLETED  2026-09-11T21:41:37  2026-09-12T17:14:53   02:02:29      0:0     ngu101 
+   225225     pswap2_armP_imerg_utc_s300    COMPLETED  2026-09-11T21:41:37  2026-09-12T17:14:53   02:02:30      0:0     ngu101 
+   225226       pswap2_gate_gsmap_refday    COMPLETED  2026-09-11T21:41:37  2026-09-12T12:50:13   00:03:04      0:0     ngu102 
+   225227  pswap2_armP_gsmap_refday_s100    COMPLETED  2026-09-11T21:41:37  2026-09-12T17:54:55   01:56:03      0:0     ngu104 
+   225228  pswap2_armP_gsmap_refday_s200    COMPLETED  2026-09-11T21:41:37  2026-09-12T17:58:05   02:00:02      0:0     ngu102 
+   225229  pswap2_armP_gsmap_refday_s300    COMPLETED  2026-09-11T21:41:37  2026-09-12T18:27:09   01:55:10      0:0     ngu104 
+   225230       pswap2_gate_era5l_refday    COMPLETED  2026-09-11T21:41:37  2026-09-12T12:50:13   00:03:04      0:0     ngu102 
+   225231  pswap2_armP_era5l_refday_s100    COMPLETED  2026-09-11T21:41:37  2026-09-12T18:53:51   02:03:41      0:0     ngu102 
+   225232  pswap2_armP_era5l_refday_s200    COMPLETED  2026-09-11T21:41:37  2026-09-12T18:58:13   02:02:05      0:0     ngu102 
+   225233  pswap2_armP_era5l_refday_s300    COMPLETED  2026-09-11T21:41:37  2026-09-12T19:00:08   02:00:49      0:0     ngu102 
+   225234             pswap2_gate_chirps    COMPLETED  2026-09-11T21:41:37  2026-09-12T12:52:24   00:03:01      0:0     ngu102 
+   225235        pswap2_armP_chirps_s100    COMPLETED  2026-09-11T21:41:37  2026-09-12T19:17:22   02:03:18      0:0     ngu101 
+   225236        pswap2_armP_chirps_s200    COMPLETED  2026-09-11T21:41:37  2026-09-12T19:17:23   02:00:29      0:0     ngu101 
+   225237        pswap2_armP_chirps_s300    COMPLETED  2026-09-11T21:41:37  2026-09-12T19:17:23   02:02:13      0:0     ngu101 
+  sacct rc=0
+  states:  33 COMPLETED
+=== C. partitions and nodes ===
+PARTITION  NODES      STATE                 GRES                       NODELIST     CPUS     MEMORY
+hgpu8      1      maint                gpu:8                         ngu203       64          1
+hgpu8      1      mixed                gpu:8                         ngu201       64          1
+hgpu8      1       idle                gpu:8                         ngu202       64          1
+hgpu4      1      down*                gpu:4                         ngu103       96          1
+hgpu4      1      mixed                gpu:4                         ngu104       96          1
+hgpu4      2       idle                gpu:4                   ngu[101-102]       96          1
+NODELIST      STATE                 GRES                         REASON
+ngu101       idle                gpu:4                           none
+ngu102       idle                gpu:4                           none
+ngu103      down*                gpu:4                 Not responding
+ngu104      mixed                gpu:4                           none
+=== D. who is running on hgpu4 right now ===
+     JOBID      USER     STATE       TIME  NODES TRES_PER_NOD NODELIST(REASON)
+    202229    sunyiq   PENDING       0:00      1          N/A (DependencyNeverSatisfied)
+    202294    sunyiq   PENDING       0:00      1          N/A (Dependency)
+    202315    sunyiq   PENDING       0:00      1          N/A (Dependency)
+    202507    sunyiq   PENDING       0:00      1        gpu:1 (DependencyNeverSatisfied)
+    202293    sunyiq   PENDING       0:00      1          N/A (JobHeldUser)
+=== E. priority diagnosis for the reference gate ===
+Unable to find jobs matching user/id(s) specified
+             Account       User  RawShares  NormShares    RawUsage  EffectvUsage  FairShare 
+-------------------- ---------- ---------- ----------- ----------- ------------- ---------- 
+root                                          0.000000  1260377357      1.000000            
+ g_caojsh                                1    0.010101    20752227      0.016465            
+ g_caowd                                 1    0.010101           0      0.000000            
+=== F. gate markers / runs ===
+  /data1/home/sunyiq/precip_swap2_daily_2026_09/logs/gate_chirps.txt
+  /data1/home/sunyiq/precip_swap2_daily_2026_09/logs/gate_era5l_refday.txt
+  /data1/home/sunyiq/precip_swap2_daily_2026_09/logs/gate_gsmap_refday.txt
+  /data1/home/sunyiq/precip_swap2_daily_2026_09/logs/gate_imerg_refday.txt
+  /data1/home/sunyiq/precip_swap2_daily_2026_09/logs/gate_imerg_uncal_refday.txt
+  /data1/home/sunyiq/precip_swap2_daily_2026_09/logs/gate_imerg_utc.txt
+  /data1/home/sunyiq/precip_swap2_daily_2026_09/logs/gate_ref.txt
+  runs: 26  evaluated: 26
+  /data1/home/sunyiq/precip_swap2_daily_2026_09/logs/slurm_pswap2_armP_chirps_s100_225235.out
+  /data1/home/sunyiq/precip_swap2_daily_2026_09/logs/slurm_pswap2_armP_chirps_s300_225237.out
+  /data1/home/sunyiq/precip_swap2_daily_2026_09/logs/slurm_pswap2_armP_chirps_s200_225236.out
+=== G. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 76
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-13T15:55:57+0800
