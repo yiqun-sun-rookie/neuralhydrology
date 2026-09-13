@@ -1,35 +1,38 @@
 #!/bin/bash
-# TUKF09-455: package the finished v2r14 result root for retrieval to the Windows workstation.
-# The result root itself is read only here. The archive lands in $ROOT/export, outside the
-# result root, so the root's own top-level surface stays exactly as the seal expects.
+# TUKF09-455: read-only summary of the nine neural units' training-side validation records.
+# Reads only model_selection.json and validation_history.npz. Opens no evaluation array.
 set -eo pipefail
 ROOT=/data1/home/sunyiq/kalmannet_tukf09_455_basin_zero_validation_target_variance_revision_v1_a800_exclusive_v2r14_20260909
 R="$ROOT/bundle/kalmannet/results/tukf09_455_basin_zero_validation_target_variance_revision_v1"
-E="$ROOT/export"
 echo "TIME=$(date -Is)"
+source "/data1/home/${USER}/miniconda3/etc/profile.d/conda.sh" || source "${HOME}/miniconda3/etc/profile.d/conda.sh"
+conda activate nh_final || { echo CONDA_FAILED; exit 12; }
+python -X utf8 - "$R" <<'PYEOF'
+import json, sys
+import numpy as np
+from pathlib import Path
+root = Path(sys.argv[1])
+units = sorted(p for p in (root / "neural").iterdir() if p.name.startswith("lead_"))
+print(f"units={len(units)}")
+for u in units:
+    sel = json.loads((u / "model_selection.json").read_text())
+    h = np.load(u / "validation_history.npz", allow_pickle=False)
+    med = h["validation_median_nse"]
+    byb = h["validation_nse_by_basin"]
+    e = int(sel["selected_epoch"])
+    at = byb[e - 1]
+    q = np.percentile(at, [10, 25, 50, 75, 90])
+    print(f"\n[{u.name}] selected_epoch={e}/30  median_nse_at_selection={sel['validation_median_nse']:.4f}"
+          f"  rule={sel['selection_rule']}")
+    print("  per-epoch median NSE (epochs 1..30):")
+    print("  " + " ".join(f"{v:.3f}" for v in med[:15]))
+    print("  " + " ".join(f"{v:.3f}" for v in med[15:]))
+    print(f"  at selected epoch across 455 basins: p10={q[0]:.3f} p25={q[1]:.3f} p50={q[2]:.3f} p75={q[3]:.3f} p90={q[4]:.3f}"
+          f"  min={at.min():.3f} max={at.max():.3f}")
+    print(f"  basins with NSE>0.5: {(at>0.5).sum()}/455   >0.7: {(at>0.7).sum()}/455   <0: {(at<0).sum()}/455"
+          f"   non-finite: {(~np.isfinite(at)).sum()}")
+    print(f"  epoch-1 median={med[0]:.3f}  best={med.max():.3f}@{int(np.argmax(med))+1}  last(30)={med[-1]:.3f}")
+PYEOF
 
-echo "=== PRECONDITIONS ==="
-test -d "$R" || { echo RESULT_ROOT_MISSING; exit 20; }
-test ! -e "$E/tukf09_455_v2r14_result_root_20260912.tar" || { echo ARCHIVE_ALREADY_EXISTS; exit 21; }
-test ! -e "$R/selection" -a ! -e "$R/independent" || { echo ALREADY_SEALED_HERE; exit 22; }
-test ! -e "$R/control/.training_phase.lock" || { echo PHASE_LOCK_PRESENT; exit 23; }
-echo "FILES_BEFORE=$(find "$R" -type f | wc -l)  BYTES_BEFORE=$(du -sb "$R" | cut -f1)"
-
-echo "=== PER-FILE HASH MANIFEST OF THE RESULT ROOT (read only) ==="
-mkdir -p "$E"
-(cd "$R" && find . -type f | LC_ALL=C sort | xargs -d "
-" sha256sum) > "$E/result_root.sha256"
-echo "MANIFEST_LINES=$(wc -l < "$E/result_root.sha256")"
-
-echo "=== TAR THE RESULT ROOT (no compression; checkpoints do not compress) ==="
-tar --format=gnu --no-xattrs --numeric-owner -C "$(dirname "$R")" -cf "$E/tukf09_455_v2r14_result_root_20260912.tar" "tukf09_455_basin_zero_validation_target_variance_revision_v1"
-(cd "$E" && sha256sum "tukf09_455_v2r14_result_root_20260912.tar" > "tukf09_455_v2r14_result_root_20260912.tar.sha256")
-ls -la "$E"
-cat "$E/tukf09_455_v2r14_result_root_20260912.tar.sha256"
-echo "TAR_MEMBERS=$(tar -tf "$E/tukf09_455_v2r14_result_root_20260912.tar" | grep -vc "/$")"
-
-echo "=== THE RESULT ROOT IS UNCHANGED ==="
-echo "FILES_AFTER=$(find "$R" -type f | wc -l)  BYTES_AFTER=$(du -sb "$R" | cut -f1)"
-ls "$R"
-
-echo TUKF09_455_V2R14_RESULT_ROOT_PACKAGED_FOR_RETRIEVAL
+echo "EVALUATION_SURFACE=$(ls -d "$R"/evaluation* 2>/dev/null | wc -l)"
+echo TUKF09_455_V2R14_VALIDATION_SUMMARY_READ_ONLY_DONE
