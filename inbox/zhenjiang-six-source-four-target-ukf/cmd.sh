@@ -18,6 +18,11 @@ def read(path):
         return stream.read()
 def digest(data): return hashlib.sha256(data).hexdigest()
 def file_record(relative, include=False, tail_bytes=None):
+    try:
+        return _file_record(relative, include, tail_bytes)
+    except Exception as error:
+        return {'path': relative, 'error': repr(error)}
+def _file_record(relative, include=False, tail_bytes=None):
     path = safe(root / relative)
     if not path.exists(): return {'path': relative, 'exists': False}
     before = path.stat()
@@ -31,7 +36,7 @@ def file_record(relative, include=False, tail_bytes=None):
               'stable_during_hash': (before.st_size, before.st_mtime_ns)==(after.st_size, after.st_mtime_ns)}
     if include:
         content = read(path)
-        if len(content) > 2000000: raise ValueError('metadata inclusion exceeds fixed limit')
+        if len(content) > 12000000: raise ValueError('metadata inclusion exceeds fixed limit')
         result['raw_utf8'] = content.decode('utf-8')
         result['included_content_sha256'] = digest(content)
     elif tail_bytes is not None:
@@ -43,7 +48,7 @@ manifest = read(root / 'bundle_manifest.json')
 if digest(manifest) != expected_manifest: raise ValueError('release manifest mismatch')
 receipt = json.loads(read(root / 'evidence/submission/attempt_001/submission_receipt.json'))
 if str(receipt['job_id']) != job_id: raise ValueError('submission receipt job mismatch')
-report = {'schema_version': 'zhenjiang-cukf-readonly-status-v3', 'job_id': job_id,
+report = {'schema_version': 'zhenjiang-cukf-readonly-status-v3.1', 'job_id': job_id,
     'remote_root': str(root), 'observed_at_beijing': datetime.now(timezone(timedelta(hours=8))).isoformat(),
     'manifest_sha256': digest(manifest), 'formal_input_or_checkpoint_reads': 0, 'remote_writes_by_query': 0}
 report['scheduler'] = []
