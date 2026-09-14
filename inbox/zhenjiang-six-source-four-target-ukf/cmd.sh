@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# seq 106: final read-only status of continuous-UKF job 225485 (root _003); attempt2
 set -eo pipefail
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'ZJ_CUKF_STATUS_PY'
 import base64, hashlib, json, os, stat, subprocess
