@@ -26,6 +26,7 @@ outbox/<channel>/result_<seq>.txt   结果
 
 | channel | 用途 | 登记时间 | 备注 |
 |---|---|---|---|
+| `kalmannet-wrr-lr-stability` | 论文神经增益网络学习率0.01与0.02的五新种子配对确认，共10次训练 | 2026-09-14 | 独立落点 `/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914`；原数值算法不变、只新增观测；仅训练/验证，禁止测试集、原第三阶段、自动重试、修改论文/其他作业/通道/旧实验；原 `kalmannet-wrr-hp-extension` 通道只读 |
 | `default` | v1 遗留的 `inbox/cmd.sh` + `inbox/seq` | 2026-08-06 | **当前被 ID05 对抗攻击任务占用**（`~/adv531`，已跑到 seq=15）。该任务建议迁到 `inbox/adv531/`，迁移前别人不要碰 |
 | `a02` | nature_1st 论文实验 A02（目标时刻流量 × 6 种子配对） | 2026-08-06 | 由 Claude 会话占用，包落点 `~/nature_1st_a02`；结果 tar 走 `outbox/a02/` |
 | `probe` | 临时探测、环境体检 | 2026-08-06 | 谁都可以用，但结果可能被别人覆盖 |
