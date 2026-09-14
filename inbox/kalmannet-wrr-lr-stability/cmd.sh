@@ -59,7 +59,7 @@ def main():
             raise RuntimeError('invalid recorded job id')
         report['squeue'] = run_command(['squeue', '-j', job_id, '-o', '%i|%j|%T|%P|%M|%R'])
         report['sacct'] = run_command(['sacct', '-X', '-j', job_id, '-n', '-P',
-                                      '--format=JobIDRaw,State,ExitCode,Start,End,Elapsed,AllocTRES'])
+                                      '--format=JobID%40,JobIDRaw,State%40,ExitCode,Start,End,Elapsed,AllocTRES'])
     spec = importlib.util.spec_from_file_location('frozen_lr_metadata_analysis', ROOT / 'analyze.py')
     analysis = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(analysis)
