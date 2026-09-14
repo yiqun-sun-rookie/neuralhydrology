@@ -1,0 +1,11 @@
+### channel=kalmannet-wrr-lr-stability seq=2
+### host=login4
+### started=2026-09-14T16:39:55+0800
+### ---------- output ----------
+LR_STUDY_TRANSPORT_IDENTITY_PASS
+{"stage": "SUBMITTED", "job_id": "225684", "array": "0-9%6", "root": "/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914", "time_utc": "2026-09-14T08:39:56.147729+00:00"}
+JOBID|NAME|STATE|PARTITION|TIME|NODELIST(REASON)
+225684_[0-9%6]|wrr-lr-confirm|PENDING|hgpu2p|0:00|(None)
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-14T16:39:56+0800
