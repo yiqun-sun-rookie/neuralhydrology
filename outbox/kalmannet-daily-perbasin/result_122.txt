@@ -1,0 +1,59 @@
+### channel=kalmannet-daily-perbasin seq=122
+### host=login4
+### started=2026-09-14T21:51:01+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=122 purpose=next-basin-launch-08086290
+tar: expected_members.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: launcher_program.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: precheck.sh: implausibly old time stamp 1970-01-01 08:00:00
+tar: request.json: implausibly old time stamp 1970-01-01 08:00:00
+tar: resource_bind.py: implausibly old time stamp 1970-01-01 08:00:00
+tar: train.slurm: implausibly old time stamp 1970-01-01 08:00:00
+tar: training_worker.py: implausibly old time stamp 1970-01-01 08:00:00
+PAYLOAD_OK sha256=80ebcc288c33cf4a38899012a10d7ee4006b12a5a107ffca486d96ff8af34373 bytes=30751
+channel=kalmannet-daily-perbasin sequence=122 purpose=next-basin-launch basin=08086290 started=2026-09-14T13:51:02.311602Z
+STEP1_REQUEST_IDENTITY_OK
+STEP2_DEPLOYMENT_IDENTITY_OK members=103
+STEP3_ORDER_AND_POLICY_OK position=12/18 predecessor=08109700
+STEP4_LIVE_ADMISSION_OK used_gpu_seconds=44141 reserved=7200 cap=86400 inflight=0
+STEP5_REQUEST_STAGED request.json=d7c9754a5652 resource_bind.py=5cfecbb23b49 training_worker.py=9487c0213206 train.slurm=2783d900921c precheck.sh=201d992aec7f
+NATIVE_SUBMISSION exit=0 stdout_sha256=3cecfabb3b3836660386684a404cf8aab3fec37e2e5931842a5fd5c3aab3035b stderr_bytes=0
+NATIVE_STDOUT_BEGIN
+Submitted batch job 225740
+NATIVE_STDOUT_END
+SUBMITTED_JOB_ID=225740
+PROBE squeue -j 225740 -h -o %i|%T|%P|%R|%S|%C|%b exit=0
+225740|PENDING|hgpu4|(Priority)|N/A|4|gpu:1
+PROBE scontrol show job 225740 exit=0
+JobId=225740 JobName=kdpp-dev-train-08086290-seq122
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Priority Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A
+   SubmitTime=2026-09-14T21:52:03 EligibleTime=2026-09-14T21:52:03
+   AccrueTime=Unknown
+   StartTime=Unknown EndTime=Unknown Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-14T21:52:03
+   Partition=hgpu4 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08086290_A40_launcher_seq122/train.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08086290_A40_launcher_seq122
+   StdErr=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08086290_A40_launcher_seq122/slurm-225740.stderr
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08086290_A40_launcher_seq122/slurm-225740.stdout
+   Power=
+   TresPerNode=gpu:1
+
+LAUNCH_COMPLETE basin=08086290 sequence=122 job_id=225740 execution_id=DAILY_CAMELS_KNET_PER_BASIN_21_DEVELOPMENT_V2_20260908_BASIN_08086290_A40_TRAIN1_SEQ122 finished=2026-09-14T13:51:07.193603Z
+LAUNCHER_EXIT=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-14T21:51:07+0800
