@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# current-observation evaluation read-only query sequence 108
+# current-observation evaluation read-only query sequence 109
 set -eo pipefail
 export PYTHONDONTWRITEBYTECODE=1
 /data1/home/sunyiq/miniconda3/envs/nh_final/bin/python -B - <<'ZJ_ALIGNED_STATUS_PY'
