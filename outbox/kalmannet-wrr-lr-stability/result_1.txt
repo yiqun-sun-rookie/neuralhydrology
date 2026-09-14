@@ -1,0 +1,19 @@
+### channel=kalmannet-wrr-lr-stability seq=1
+### host=login4
+### started=2026-09-14T16:35:15+0800
+### ---------- output ----------
+{"data_metadata": {"train": {"bytes": 4381521, "exists": true, "path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/data/processed/high_flow_aug/train_win800_19990101_01-20070527_03.pt"}, "val": {"bytes": 570687, "exists": true, "path": "/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/data/processed/high_flow_aug/val_win800_20070527_04-20090314_13.pt"}}, "data_tensors_loaded": false, "environment_interpreter_exists": true, "free_bytes": 383803521462272, "new_root_absent": true, "original_training_sha256": "8aef76e4462754337f2d0b1bb35f1dde7141293175dfbb78c756f3356ec009ff", "source_matches_frozen": true, "time_utc": "2026-09-14T08:35:16.850688+00:00", "training_started": false}
+NODELIST|GRES|STATE
+ngu001|gpu:2|mix
+ngu002|gpu:2|down*
+ngu004|gpu:2|mix
+ngu005|gpu:2|mix
+ngu006|gpu:2|mix
+ngu007|gpu:2|mix
+ngu008|gpu:2|mix
+ngu010|gpu:2|mix
+ngu011|gpu:2|mix
+LR_STUDY_PREFLIGHT_PASS
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-14T16:35:16+0800
