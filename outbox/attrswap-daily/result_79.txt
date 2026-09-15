@@ -1,0 +1,33 @@
+### channel=attrswap-daily seq=79
+### host=login4
+### started=2026-09-15T15:49:22+0800
+### ---------- output ----------
+wallclock 2026-09-15 15:49:22 +0800
+=== A. QUEUE: this campaign (header must be visible; expect header only) ===
+     JOBID                               NAME     STATE       TIME PARTITION NODELIST(REASON)
+  squeue rc=0
+  whole-account queue count (all channels, context only): 7
+=== B. ACCOUNTING of registered stage-2 jobs (expect 33 COMPLETED, 0 other) ===
+  registered ids: 33 (first 225205 last 225237)
+  sacct rc=0
+  completed: 33  running: 0  pending: 0  failed/cancelled/timeout: 0
+=== C. FOUR LANDING DIRS (expect all 4 present) ===
+  OK  2026-09-11 19:58:17  /data1/home/sunyiq/precip_swap2_daily_2026_09
+  OK  2026-09-05 22:36:44  /data1/home/sunyiq/attr_swap_daily_2026_09
+  OK  2026-09-08 13:40:20  /data1/home/sunyiq/forcing_swap_daily_2026_09
+  OK  2026-09-09 21:04:38  /data1/home/sunyiq/precip_swap_daily_2026_09
+=== D. precip_swap2 counts (expect runs=26 runs_smoke=9 metrics=26 gate=7 build=6) ===
+  runs=26 runs_smoke=7 metrics=26 gate=7 build=6
+  files under runs/ newer than 2026-09-13 16:06 (expect 0): 0
+  daymet shadow link: /data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/daymet
+  dangling links under shadow (expect none): 0
+=== E. sealed roots (expect precip_swap runs=9 with 3 INCOMPLETE_ABORTED_*) ===
+  precip_swap runs=9 aborted=3
+  attr_swap runs=7  forcing_swap runs=9
+  files newer than 2026-09-13 18:20 in the three sealed roots (expect 0): 0
+=== F. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 79
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-15T15:49:31+0800
