@@ -1,0 +1,101 @@
+### channel=id33-transformer-recipe-repair seq=59
+### host=login4
+### started=2026-09-15T15:49:22+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-15T15:49:22+0800
+a87817707ab0efbaf18909bc802a70183ca898bb995627547a1a0d12a3e5a62d  src/path_signature_runoff/scripts/stage1_residual_diagnostic.py
+-rw-r--r--. 1 sunyiq g_sunyiq 33013047 Sep 14 08:13 results/33_transformer_recipe_repair/C4/transformer_recipe_repair_C4_2026_0909_1839_ep30/train/model_epoch030/train_results.p
+Submitted batch job 225847
+stage1_job=225847
+=== WAIT (max 25 min) ===
+state=COMPLETED after 1210s
+     JobID        State ExitCode    Elapsed 
+---------- ------------ -------- ---------- 
+    225847    COMPLETED      0:0   00:20:19 
+=== REPORT ===
+{
+ "design": {
+  "dyadic_depth": 2,
+  "fit_end": "2005-09-30",
+  "fit_start": "2004-10-01",
+  "kill_threshold": 0.02,
+  "stride": 1,
+  "test_end": "2006-09-30",
+  "test_start": "2005-10-01",
+  "window": 270
+ },
+ "feature_dims": {
+  "S0": 126,
+  "S0+SIG2": 252,
+  "S0+SIG3": 900,
+  "SIG2": 126,
+  "SIG3": 774
+ },
+ "gate": {
+  "added_over_control_sig3": -0.011168399619413849,
+  "best_signature_oos_r2": 0.0055837644104781425,
+  "control_oos_r2": -0.002298489589217967,
+  "sig2_minus_control": 0.00788225399969611,
+  "sig3_minus_control": -0.0033178365123940345,
+  "verdict": "KILL"
+ },
+ "n_basins": 531,
+ "residual": {
+  "S0": {
+   "alpha": 0.01,
+   "oos_r2_basin_median": -0.13101086550528684,
+   "oos_r2_pooled": -0.002298489589217967
+  },
+  "S0+SIG2": {
+   "alpha": 0.01,
+   "oos_r2_basin_median": -0.1426815060445541,
+   "oos_r2_pooled": -0.0015731926761295423
+  },
+  "S0+SIG3": {
+   "alpha": 0.01,
+   "oos_r2_basin_median": -0.19220440533019856,
+   "oos_r2_pooled": -0.013466889208631816
+  },
+  "SIG2": {
+   "alpha": 0.01,
+   "oos_r2_basin_median": -0.08629325504249041,
+   "oos_r2_pooled": 0.0055837644104781425
+  },
+  "SIG3": {
+   "alpha": 0.01,
+   "oos_r2_basin_median": -0.1639840907523915,
+   "oos_r2_pooled": -0.005616326101612001
+  }
+ },
+ "run_dir": "results/33_transformer_recipe_repair/C4/transformer_recipe_repair_C4_2026_0909_1839_ep30",
+ "target_reference": {
+  "S0": {
+   "alpha": 0.01,
+   "oos_r2_basin_median": NaN,
+   "oos_r2_pooled": 0.07507173698913494
+  },
+  "S0+SIG2": {
+   "alpha": 0.01,
+   "oos_r2_basin_median": NaN,
+   "oos_r2_pooled": 0.0865331279598116
+  },
+  "S0+SIG3": {
+   "alpha": 0.01,
+   "oos_r2_basin_median": NaN,
+   "oos_r2_pooled": 0.08294004420472778
+  },
+  "SIG2": {
+   "alpha": 0.01,
+   "oos_r2_basin_median": NaN,
+   "oos_r2_pooled": 0.11263741201429822
+  },
+  "SIG3": {
+   "alpha": 0.01,
+   "oos_r2_basin_median": NaN,
+   "oos_r2_pooled": 0.09889778951342221
+  }
+ }
+}### ---------- end ----------
+### exit_code=0
+### finished=2026-09-15T16:09:52+0800
