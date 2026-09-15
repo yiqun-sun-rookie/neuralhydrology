@@ -1,33 +1,34 @@
 #!/bin/bash
-# seq=60 read-only: does the LSTM (C4) even fit its own TRAINING period? per-basin train NSE vs validation NSE.
+# seq=61 read-only: how much of the LSTM's validation gap is model variance? NSE of the 8-seed ENSEMBLE MEAN prediction vs single seeds.
 set -o pipefail
 ROOT=/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
 cd "$ROOT" || exit 1
 echo "=== STAMP ==="; date -Iseconds
 source /data1/home/sunyiq/miniconda3/etc/profile.d/conda.sh; conda activate nh_final
-C4=$(ls -d results/33_transformer_recipe_repair/C4/*_2026_0909_* | tail -1)
-python - "$C4" <<'PY' 2>&1 | grep -vE 'FutureWarning|weights_only'
-import pickle, sys, numpy as np, csv
+python - <<'PY' 2>&1 | grep -vE 'FutureWarning|weights_only'
+import pickle, glob, numpy as np
 from pathlib import Path
-run = Path(sys.argv[1])
 def nse(o, s):
     m = np.isfinite(o) & np.isfinite(s); o, s = o[m], s[m]
     d = np.sum((o - o.mean())**2); return 1 - np.sum((s - o)**2)/d if d > 0 else np.nan
-train = {}
-with (run/"train/model_epoch030/train_results.p").open("rb") as f: p = pickle.load(f)
-for b, fr in p.items():
-    ds = fr[list(fr)[0]]["xr"]; last = ds.isel(time_step=-1)
-    train[str(b)] = nse(np.asarray(last["QObs(mm/d)_obs"]).squeeze(), np.asarray(last["QObs(mm/d)_sim"]).squeeze())
-val = {r["basin"]: float(r["NSE"]) for r in csv.DictReader((run/"validation/model_epoch030/validation_metrics.csv").open())}
-keys = sorted(set(train) & set(val)); tr = np.array([train[k] for k in keys]); va = np.array([val[k] for k in keys])
-q = lambda a: np.round(np.percentile(a, [10,25,50,75,90]), 3)
-print(f"n={len(keys)}")
-print("TRAIN NSE p10/25/50/75/90:", q(tr), " share>=0.8:", f"{np.mean(tr>=0.8)*100:.1f}%", " share>=0.9:", f"{np.mean(tr>=0.9)*100:.1f}%")
-print("VAL   NSE p10/25/50/75/90:", q(va), " share>=0.8:", f"{np.mean(va>=0.8)*100:.1f}%")
-gap = tr - va
-print("TRAIN-VAL gap p10/25/50/75/90:", q(gap), " corr(train,val)=", f"{np.corrcoef(tr,va)[0,1]:.3f}")
-lo = va < 0.5
-print(f"basins with val<0.5: {lo.sum()}  their TRAIN NSE median={np.median(tr[lo]):.3f}  their train-val gap median={np.median(gap[lo]):.3f}")
-print("###PERBASIN basin,train_nse,val_nse")
-for k, t, v in zip(keys, tr, va): print(f"{k},{t:.4f},{v:.4f}")
+arms = ["C4"] + [f"C4_s{s}" for s in (200,300,400,500,600,700,800)]
+sims, obs = {}, {}
+for a in arms:
+    run = sorted(glob.glob(f"results/33_transformer_recipe_repair/{a}/*_2026_09*"))[-1]
+    with open(f"{run}/validation/model_epoch030/validation_results.p", "rb") as f: p = pickle.load(f)
+    for b, fr in p.items():
+        ds = fr[list(fr)[0]]["xr"].isel(time_step=-1)
+        sims.setdefault(str(b), []).append(np.asarray(ds["QObs(mm/d)_sim"]).squeeze())
+        obs[str(b)] = np.asarray(ds["QObs(mm/d)_obs"]).squeeze()
+single = {a: [] for a in arms}; ens = []
+for b in sorted(obs):
+    S = np.stack(sims[b]); o = obs[b]
+    for i, a in enumerate(arms): single[a].append(nse(o, S[i]))
+    ens.append(nse(o, S.mean(axis=0)))
+med = {a: float(np.nanmedian(v)) for a, v in single.items()}
+print("single-seed medians:", {k: round(v, 4) for k, v in med.items()})
+print(f"mean of single-seed medians = {np.mean(list(med.values())):.4f}")
+ens = np.array(ens)
+print(f"8-SEED ENSEMBLE-MEAN prediction: median NSE = {np.nanmedian(ens):.4f}  share>=0.8 = {np.mean(ens>=0.8)*100:.1f}%  p10/25/75/90 = {np.round(np.nanpercentile(ens,[10,25,75,90]),3)}")
+print(f"ensemble gain over mean single seed = {np.nanmedian(ens) - np.mean(list(med.values())):+.4f}")
 PY
