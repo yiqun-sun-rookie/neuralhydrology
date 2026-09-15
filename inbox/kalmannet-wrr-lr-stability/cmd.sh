@@ -7,6 +7,7 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import math
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
@@ -22,6 +23,19 @@ def read_json(path):
 def run_command(arguments):
     result = subprocess.run(arguments, capture_output=True, text=True, timeout=30, check=False)
     return {'returncode': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr}
+
+
+def json_safe(value):
+    """Preserve non-finite diagnostic values explicitly without emitting invalid JSON."""
+    if isinstance(value, float) and not math.isfinite(value):
+        if math.isnan(value):
+            return 'NaN'
+        return 'Infinity' if value > 0 else '-Infinity'
+    if isinstance(value, dict):
+        return {key: json_safe(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [json_safe(item) for item in value]
+    return value
 
 
 def main():
@@ -109,7 +123,7 @@ def main():
                 best = record['cell_metrics']['validation_scoring']['best_epoch_zero_based']
                 record['stability_through_best_epoch'] = analysis.summarize_events(events, best)
         report['runs'].append(record)
-    print(json.dumps(report, sort_keys=True, allow_nan=False), flush=True)
+    print(json.dumps(json_safe(report), sort_keys=True, allow_nan=False), flush=True)
 
 
 if __name__ == '__main__':
