@@ -1,107 +1,129 @@
 #!/usr/bin/env bash
 set -euo pipefail
 /data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -I -B - <<'PY'
-"""Read-only diagnosis for the single failed learning-rate run: index 2."""
+"""Read-only, metadata-only observation of this ten-run deployment."""
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import math
 import subprocess
-from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path('/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914')
 EXP = ROOT / 'repo/experiments/optimize_hyper_parameters/wrr_hp_extension_20260902'
-RUN = EXP / 'runs/formal_seed46_gpu/idx0002_lr0p01_hs32_nl1_mult10'
-EXPECTED_MANIFEST = '4f03bd675bd53c5137a37c9cc0af0110052abdc1fa2819a2a5a8226ead0ec4fd'
 
 
-def sha(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+def read_json(path):
+    return json.loads(path.read_text(encoding='utf-8')) if path.is_file() else None
 
 
-def text_evidence(path, tail=80):
-    if not path.is_file():
-        return {'exists': False}
-    lines = path.read_text(encoding='utf-8', errors='replace').splitlines()
-    needles = ('Traceback', '[Fail]', 'RuntimeError', 'Error', 'exception', 'Exceeded',
-               'Grad explosion', 'NaN', 'Inf', 'SafeTrain')
-    selected = [{'line': index + 1, 'text': line[:2000]} for index, line in enumerate(lines)
-                if any(needle.lower() in line.lower() for needle in needles)]
-    return {'exists': True, 'bytes': path.stat().st_size, 'sha256': sha(path),
-            'line_count': len(lines), 'selected_last_120': selected[-120:],
-            'tail': lines[-tail:]}
+def run_command(arguments):
+    result = subprocess.run(arguments, capture_output=True, text=True, timeout=30, check=False)
+    return {'returncode': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr}
 
 
-def safe(value):
+def json_safe(value):
+    """Preserve non-finite diagnostic values explicitly without emitting invalid JSON."""
     if isinstance(value, float) and not math.isfinite(value):
-        return 'NaN' if math.isnan(value) else ('Infinity' if value > 0 else '-Infinity')
+        if math.isnan(value):
+            return 'NaN'
+        return 'Infinity' if value > 0 else '-Infinity'
     if isinstance(value, dict):
-        return {key: safe(item) for key, item in value.items()}
+        return {key: json_safe(item) for key, item in value.items()}
     if isinstance(value, list):
-        return [safe(item) for item in value]
+        return [json_safe(item) for item in value]
     return value
 
 
 def main():
-    manifest_path = ROOT / 'PACKAGE_MANIFEST.json'
-    if sha(manifest_path) != EXPECTED_MANIFEST:
-        raise RuntimeError('manifest identity mismatch')
-    manifest = json.loads(manifest_path.read_text())
-    combo = manifest['combinations'][2]
-    if combo != {'index': 2, 'seed': 46, 'effective_seed': 46, 'hidden_size': 32,
-                 'num_layers': 1, 'in_out_mult': 10, 'lr': 0.01,
-                 'role': 'learning_rate_confirmation', 'run_id': 'WRR-LR-20260914-I02'}:
-        raise RuntimeError('failed-run identity mismatch')
-
-    report = {'time_utc': datetime.now(timezone.utc).isoformat(), 'read_only': True,
-              'data_tensors_loaded': False, 'checkpoints_loaded': False, 'combo': combo,
-              'run_directory_exists': RUN.is_dir()}
-    report['scheduler'] = subprocess.run(
-        ['sacct', '-X', '-j', '225684_2', '-n', '-P',
-         '--format=JobID%40,JobIDRaw,State%40,ExitCode,Start,End,Elapsed,NodeList'],
-        capture_output=True, text=True, timeout=30, check=False).__dict__ | {'args': None}
-    # Retain only serializable subprocess fields.
-    report['scheduler'] = {key: report['scheduler'][key] for key in ('returncode', 'stdout', 'stderr')}
-
-    report['markers'] = {name: (RUN / name).is_file() for name in ('SUCCESS', 'FAILED', 'metrics.json', 'cell_metrics.json', 'error.txt')}
-    report['directory_entries'] = []
-    if RUN.is_dir():
-        for path in sorted(RUN.rglob('*')):
-            if path.is_file():
-                report['directory_entries'].append({'relative_path': path.relative_to(RUN).as_posix(),
-                                                    'bytes': path.stat().st_size})
-
-    report['error'] = text_evidence(RUN / 'error.txt', tail=120)
-    report['launcher_log'] = text_evidence(EXP / 'logs/WRR-LR-20260914-I02_formal.stdout.log', tail=100)
-    report['slurm_stdout'] = text_evidence(ROOT / 'logs/slurm-225684_2.out', tail=80)
-    report['slurm_stderr'] = text_evidence(ROOT / 'logs/slurm-225684_2.err', tail=80)
-
-    epoch_path = RUN / 'results/epoch_log.jsonl'
-    epochs = ([json.loads(line) for line in epoch_path.read_text().splitlines() if line.strip()]
-              if epoch_path.is_file() else [])
-    report['epochs'] = {'count': len(epochs), 'first': epochs[0] if epochs else None,
-                        'last': epochs[-1] if epochs else None,
-                        'with_recoveries': [record for record in epochs
-                                            if record.get('grad_explosion_rollbacks', 0)
-                                            or record.get('nan_inf_skips', 0)],
-                        'grad_recoveries_total': sum(record.get('grad_explosion_rollbacks', 0) for record in epochs),
-                        'loss_recoveries_total': sum(record.get('nan_inf_skips', 0) for record in epochs)}
-
-    observer_path = ROOT / 'diagnostics/index0002.jsonl'
-    events = ([json.loads(line) for line in observer_path.read_text().splitlines() if line.strip()]
-              if observer_path.is_file() else [])
-    recovery_events = [event for event in events if event.get('event') == 'recovery']
-    report['observer'] = {'exists': observer_path.is_file(), 'bytes': observer_path.stat().st_size if observer_path.is_file() else None,
-                          'sha256': sha(observer_path) if observer_path.is_file() else None,
-                          'events': len(events), 'recoveries': len(recovery_events),
-                          'recoveries_by_epoch': dict(sorted(Counter(str(event.get('epoch_zero_based')) for event in recovery_events).items())),
-                          'first_recovery': recovery_events[0] if recovery_events else None,
-                          'last_recovery': recovery_events[-1] if recovery_events else None,
-                          'last_events': events[-12:]}
-    print(json.dumps(safe(report), sort_keys=True, allow_nan=False), flush=True)
+    report = {'time_utc': datetime.now(timezone.utc).isoformat(), 'root': str(ROOT),
+              'root_exists': ROOT.is_dir(), 'read_only': True, 'data_tensors_loaded': False}
+    if not ROOT.is_dir():
+        print(json.dumps(report, sort_keys=True))
+        return
+    manifest_raw = (ROOT / 'PACKAGE_MANIFEST.json').read_bytes()
+    if hashlib.sha256(manifest_raw).hexdigest() != '4f03bd675bd53c5137a37c9cc0af0110052abdc1fa2819a2a5a8226ead0ec4fd':
+        raise RuntimeError('frozen package manifest mismatch')
+    manifest = json.loads(manifest_raw)
+    if manifest['remote_root'] != str(ROOT) or manifest['allowed_indices'] != list(range(10)):
+        raise RuntimeError('observer deployment identity mismatch')
+    # Code and metadata hashes only. Never read any dataset/checkpoint tensor file.
+    mismatch = []
+    for name, digest in manifest['static_files'].items():
+        path = ROOT / name
+        if (not path.is_file() or path.is_symlink()
+                or not path.resolve().is_relative_to(ROOT.resolve())
+                or hashlib.sha256(path.read_bytes()).hexdigest() != digest):
+            mismatch.append(name)
+    report['static_mismatches'] = mismatch
+    report['static_files_checked'] = len(manifest['static_files'])
+    if mismatch:
+        print(json.dumps(report, sort_keys=True))
+        raise RuntimeError('frozen static file mismatch')
+    job_file = ROOT / 'array_job_id.txt'
+    job_id = job_file.read_text().strip() if job_file.is_file() else None
+    report['job_id'] = job_id
+    report['deployment_receipt'] = read_json(ROOT / 'DEPLOYMENT_RECEIPT.json')
+    report['submission_response'] = read_json(ROOT / 'SUBMISSION_RESPONSE.json')
+    if job_id:
+        if not job_id.isdigit():
+            raise RuntimeError('invalid recorded job id')
+        report['squeue'] = run_command(['squeue', '-j', job_id, '-o', '%i|%j|%T|%P|%M|%R'])
+        report['sacct'] = run_command(['sacct', '-X', '-j', job_id, '-n', '-P',
+                                      '--format=JobID%40,JobIDRaw,State%40,ExitCode,Start,End,Elapsed,AllocTRES'])
+    spec = importlib.util.spec_from_file_location('frozen_lr_metadata_analysis', ROOT / 'analyze.py')
+    analysis = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(analysis)
+    report['runs'] = []
+    for combo in manifest['combinations']:
+        index, seed, lr = combo['index'], combo['seed'], combo['lr']
+        run_dir = EXP / f'runs/formal_seed{seed}_gpu/idx{index:04d}_lr{str(lr).replace(".", "p")}_hs32_nl1_mult10'
+        record = {'index': index, 'seed': seed, 'lr': lr, 'run_id': combo['run_id'],
+                  'claim': read_json(ROOT / f'claims/index{index:04d}.json'),
+                  'run_directory_exists': run_dir.is_dir()}
+        audits = sorted((EXP / 'audits').glob(f'{combo["run_id"]}_formal_*.json'))
+        if len(audits) > 1:
+            raise RuntimeError(f'multiple launch audits for index {index}')
+        audit = read_json(audits[0]) if audits else None
+        if audit:
+            inner = read_json(EXP / 'source_manifest.json')
+            record['audit'] = {key: audit.get(key) for key in (
+                'run_id', 'mode', 'started_at', 'finished_at', 'combo', 'runtime',
+                'launcher_status', 'slurm_job_id', 'slurm_array_task_id', 'hostname',
+                'verified_data', 'held_out_test_loaded')}
+            record['audit']['source_manifest_matches'] = audit['verified_source'] == inner['source_sha256']
+            record['audit']['combo_matches'] = audit['combo'] == combo
+        else:
+            record['audit'] = None
+        epoch_path = run_dir / 'results/epoch_log.jsonl'
+        epochs = []
+        if epoch_path.is_file():
+            epochs = [json.loads(line) for line in epoch_path.read_text().splitlines() if line.strip()]
+        record['completed_epoch_records'] = len(epochs)
+        record['last_epoch'] = epochs[-1] if epochs else None
+        record['cell_metrics'] = read_json(run_dir / 'cell_metrics.json')
+        events_path = ROOT / f'diagnostics/index{index:04d}.jsonl'
+        if events_path.is_file():
+            raw = events_path.read_bytes()
+            lines = raw.splitlines(keepends=True)
+            incomplete = bool(lines and not lines[-1].endswith(b'\n'))
+            if incomplete:
+                lines = lines[:-1]
+            events = [json.loads(line) for line in lines]
+            record['observer_partial_last_line'] = incomplete
+            record['stability'] = analysis.summarize_events(events)
+            # Full trajectories stay on disk; compact progress does not duplicate them.
+            changes = record['stability'].pop('learning_rate_changes_at_batch_start')
+            record['learning_rate_change_count'] = len(changes)
+            record['last_batch_learning_rates'] = changes[-1] if changes else None
+            if record['cell_metrics']:
+                best = record['cell_metrics']['validation_scoring']['best_epoch_zero_based']
+                record['stability_through_best_epoch'] = analysis.summarize_events(events, best)
+        report['runs'].append(record)
+    print(json.dumps(json_safe(report), sort_keys=True, allow_nan=False), flush=True)
 
 
 if __name__ == '__main__':
