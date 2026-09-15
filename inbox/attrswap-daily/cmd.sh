@@ -1,35 +1,48 @@
 #!/bin/bash
-# Stage-2 RETRIEVE part 2 of 2: the 18 candidate arms (noise floor registered locally 2026-09-13 16:03, sha 00b16c3dbfd9401e).
-# Read-only on the landing dir (tar built in a temp dir). No backslash literals anywhere in this file.
+# seq=79 READ-ONLY first-check after HANDOFF_20260913: (a) no job of this campaign in queue,
+# (b) accounting of the 33 stage-2 jobs 225205-225237 still all COMPLETED,
+# (c) the four landing dirs still exist with expected counts. Nothing is written or modified.
+# No backslash literals anywhere in this file.
 set -o pipefail
-ROOT=/data1/home/sunyiq/precip_swap2_daily_2026_09
 date "+wallclock %F %T %z"
-cd "$ROOT" || { echo "ROOT MISSING"; exit 1; }
-echo "=== A. COMPLETENESS (candidate arms: test_metrics.csv present) ==="
-n=0; for d in runs/pswap2_armP_*; do f="$d/test/model_epoch030/test_metrics.csv"; if [ -f "$f" ]; then n=$((n+1)); echo "  $(basename $d): $(wc -l < $f) rows"; else echo "  $(basename $d): MISSING"; fi; done
-echo "candidate arms evaluated: $n/18"
-echo "=== B. PACK (candidates only) ==="
-TMP=$(mktemp -d)
-P="$TMP/pswap2_cand_results"
-mkdir -p "$P/slurm_logs"
-for d in runs/pswap2_armP_*; do
-  [ -d "$d" ] || continue
-  a=$(basename "$d")
-  mkdir -p "$P/$a/test/model_epoch030"
-  cp "$d/config.yml" "$P/$a/" 2>/dev/null
-  cp "$d/test/model_epoch030/test_metrics.csv" "$P/$a/test/model_epoch030/" 2>/dev/null
-  cp "$d/output.log" "$P/$a/" 2>/dev/null
+R2=/data1/home/sunyiq/precip_swap2_daily_2026_09
+RA=/data1/home/sunyiq/attr_swap_daily_2026_09
+RF=/data1/home/sunyiq/forcing_swap_daily_2026_09
+RP=/data1/home/sunyiq/precip_swap_daily_2026_09
+SH="$R2/data_shadow/camels_us"
+
+echo "=== A. QUEUE: this campaign (header must be visible; expect header only) ==="
+squeue -u "$USER" -o '%.10i %.34j %.9T %.10M %.9P %R' 2>&1 | grep -Ei 'pswap|ref_daymet|attrswap|fswap|JOBID'
+echo "  squeue rc=${PIPESTATUS[0]}"
+echo "  whole-account queue count (all channels, context only): $(squeue -u "$USER" -h 2>/dev/null | wc -l)"
+
+echo "=== B. ACCOUNTING of registered stage-2 jobs (expect 33 COMPLETED, 0 other) ==="
+if [ -f "$R2/logs/jobs.txt" ]; then
+  ids=$(awk '{print $2}' "$R2/logs/jobs.txt" | paste -sd, -)
+  echo "  registered ids: $(awk '{print $2}' "$R2/logs/jobs.txt" | wc -l) (first $(awk 'NR==1{print $2}' "$R2/logs/jobs.txt") last $(awk 'END{print $2}' "$R2/logs/jobs.txt"))"
+  st=$(sacct -X -n -j "$ids" --format=State 2>&1)
+  echo "  sacct rc=$?"
+  echo "  completed: $(echo "$st" | grep -c COMPLETED)  running: $(echo "$st" | grep -c RUNNING)  pending: $(echo "$st" | grep -c PENDING)  failed/cancelled/timeout: $(echo "$st" | grep -cE 'FAILED|CANCEL|TIMEOUT|NODE_FAIL')"
+else
+  echo "  MISSING $R2/logs/jobs.txt"
+fi
+
+echo "=== C. FOUR LANDING DIRS (expect all 4 present) ==="
+for d in "$R2" "$RA" "$RF" "$RP"; do
+  if [ -d "$d" ]; then echo "  OK  $(stat -c '%y' "$d" | cut -c1-19)  $d"; else echo "  MISSING $d"; fi
 done
-for f in logs/slurm_pswap2_armP_*.out logs/slurm_pswap2_armP_*.err; do
-  [ -f "$f" ] && grep -v -E '%[|]' "$f" > "$P/slurm_logs/$(basename "$f")"
-done
-echo "  public_median files for candidates: $(ls logs/pswap2_armP_*.public_median.txt 2>/dev/null | wc -l) (must be 0, stop condition 5)"
-( cd "$P" && find . -type f | LC_ALL=C sort | xargs sha256sum ) > "$P/MANIFEST.sha256"
-( cd "$TMP" && tar --mtime='2026-01-01 00:00:00' --owner=0 --group=0 --numeric-owner -czf pswap2_cand_results.tar.gz pswap2_cand_results )
-echo "tar bytes=$(stat -c%s "$TMP/pswap2_cand_results.tar.gz") sha256=$(sha256sum "$TMP/pswap2_cand_results.tar.gz" | cut -c1-16) files=$(wc -l < "$P/MANIFEST.sha256")"
-echo "=== C. BASE64 (between the markers) ==="
-echo "-----BEGIN TARGZ B64-----"
-base64 -w 0 "$TMP/pswap2_cand_results.tar.gz"; echo
-echo "-----END TARGZ B64-----"
-rm -rf "$TMP"
+
+echo "=== D. precip_swap2 counts (expect runs=26 runs_smoke=9 metrics=26 gate=7 build=6) ==="
+echo "  runs=$(ls "$R2/runs" 2>/dev/null | wc -l) runs_smoke=$(ls "$R2/runs_smoke" 2>/dev/null | wc -l) metrics=$(ls "$R2"/runs/*/test/model_epoch030/test_metrics.csv 2>/dev/null | wc -l) gate=$(ls "$R2"/logs/gate_*.txt 2>/dev/null | wc -l) build=$(ls "$R2"/logs/build_*.json 2>/dev/null | wc -l)"
+echo "  files under runs/ newer than 2026-09-13 16:06 (expect 0): $(find "$R2/runs" -type f -newermt '2026-09-13 16:06' 2>/dev/null | wc -l)"
+echo "  daymet shadow link: $(readlink "$SH/basin_mean_forcing/daymet" 2>/dev/null || echo 'not a symlink or absent')"
+echo "  dangling links under shadow (expect none): $(find -L "$SH" -type l 2>/dev/null | head -3 | wc -l)"
+
+echo "=== E. sealed roots (expect precip_swap runs=9 with 3 INCOMPLETE_ABORTED_*) ==="
+echo "  precip_swap runs=$(ls "$RP/runs" 2>/dev/null | wc -l) aborted=$(ls -d "$RP"/runs/INCOMPLETE_ABORTED_* 2>/dev/null | wc -l)"
+echo "  attr_swap runs=$(ls "$RA/runs" 2>/dev/null | wc -l)  forcing_swap runs=$(ls "$RF/runs" 2>/dev/null | wc -l)"
+echo "  files newer than 2026-09-13 18:20 in the three sealed roots (expect 0): $(find "$RA" "$RF" "$RP" -type f -newermt '2026-09-13 18:20' 2>/dev/null | wc -l)"
+
+echo "=== F. MAILBOX CHANNEL SEQ ==="
+echo "  attrswap-daily seq now: $(cat ~/hpc_mailbox/inbox/attrswap-daily/seq 2>/dev/null)"
 echo "=== DONE ==="
