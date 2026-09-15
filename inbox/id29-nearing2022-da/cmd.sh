@@ -11,8 +11,8 @@ echo "=== WARMPAIR DIRS ==="
 D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
 for S in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$S" ] && echo "  PRESENT $S" || echo "  MISSING $S"; done
 echo "=== GATE ARTIFACT ==="
-P="$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
-[ -f "$P" ] && echo "  PRESENT ($(stat -c %s "$P") bytes)" || echo "  MISSING"
+G="$ROOT/closure_20260810/aggregation/final_reproduction_gate.json"
+[ -f "$G" ] && echo "  PRESENT ($(stat -c %s "$G") bytes)" || echo "  MISSING"
 echo "=== ROLE COUNTS ==="
 source ~/miniconda3/etc/profile.d/conda.sh && conda activate nh_final 2>/dev/null
 cd "$ROOT"
