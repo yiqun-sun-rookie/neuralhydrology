@@ -1,0 +1,13 @@
+### channel=id33-transformer-recipe-repair seq=61
+### host=login4
+### started=2026-09-15T16:50:30+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-15T16:50:30+0800
+single-seed medians: {'C4': 0.706, 'C4_s200': 0.709, 'C4_s300': 0.7192, 'C4_s400': 0.7141, 'C4_s500': 0.7149, 'C4_s600': 0.712, 'C4_s700': 0.7138, 'C4_s800': 0.7082}
+mean of single-seed medians = 0.7122
+8-SEED ENSEMBLE-MEAN prediction: median NSE = 0.7430  share>=0.8 = 35.2%  p10/25/75/90 = [0.394 0.608 0.83  0.891]
+ensemble gain over mean single seed = +0.0308
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-15T16:50:33+0800
