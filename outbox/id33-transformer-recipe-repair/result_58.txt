@@ -1,0 +1,4354 @@
+### channel=id33-transformer-recipe-repair seq=58
+### host=login4
+### started=2026-09-15T15:47:01+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-15T15:47:01+0800
+=== A. JOB STATES ===
+     JobID        JobName        State ExitCode    Elapsed NodeList 
+---------- -------------- ------------ -------- ---------- -------- 
+    225539    id34_stage1       FAILED      1:0   00:04:18   ngu010 
+    225548      id33_k1_a    COMPLETED      0:0   16:02:51   ngu010 
+    225549      id33_k1_b    COMPLETED      0:0   15:57:18   ngu004 
+    225550      id33_k1_c    COMPLETED      0:0   10:45:45   ngu011 
+=== B. ID34 STAGE-1 REPORT ===
+NO REPORT
+-- out tail --
+=== ID34 STAGE 1 ===
+2026-09-14T08:10:54+08:00
+ngu010
+NVIDIA GeForce RTX 3090
+=== A. evaluate C4 on the training period (epoch 30) ===
+2026-09-14 08:12:03,979: Logging to results/33_transformer_recipe_repair/C4/transformer_recipe_repair_C4_2026_0909_1839_ep30/output.log initialized.
+2026-09-14 08:12:04,308: Using the model weights from results/33_transformer_recipe_repair/C4/transformer_recipe_repair_C4_2026_0909_1839_ep30/model_epoch030.pt
+  0%|          | 0/531 [00:00<?, ?it/s]# Evaluation:   0%|          | 0/531 [00:00<?, ?it/s]# Evaluation:   0%|          | 1/531 [00:02<19:04,  2.16s/it]# Evaluation:   0%|          | 2/531 [00:02<09:58,  1.13s/it]# Evaluation:   1%|          | 3/531 [00:02<06:13,  1.41it/s]# Evaluation:   1%|          | 4/531 [00:02<04:28,  1.97it/s]# Evaluation:   1%|          | 5/531 [00:03<03:29,  2.52it/s]# Evaluation:   1%|          | 6/531 [00:03<02:55,  2.99it/s]# Evaluation:   1%|▏         | 7/531 [00:03<02:33,  3.42it/s]# Evaluation:   2%|▏         | 8/531 [00:03<02:18,  3.79it/s]# Evaluation:   2%|▏         | 9/531 [00:04<02:09,  4.04it/s]# Evaluation:   2%|▏         | 10/531 [00:04<02:06,  4.13it/s]# Evaluation:   2%|▏         | 11/531 [00:04<01:59,  4.36it/s]# Evaluation:   2%|▏         | 12/531 [00:04<01:54,  4.52it/s]# Evaluation:   2%|▏         | 13/531 [00:04<01:51,  4.65it/s]# Evaluation:   3%|▎         | 14/531 [00:05<01:51,  4.64it/s]# Evaluation:   3%|▎         | 15/531 [00:05<02:18,  3.72it/s]# Evaluation:   3%|▎         | 16/531 [00:05<02:10,  3.95it/s]# Evaluation:   3%|▎         | 17/531 [00:05<02:03,  4.17it/s]# Evaluation:   3%|▎         | 18/531 [00:06<01:57,  4.35it/s]# Evaluation:   4%|▎         | 19/531 [00:06<01:54,  4.49it/s]# Evaluation:   4%|▍         | 20/531 [00:06<01:50,  4.62it/s]# Evaluation:   4%|▍         | 21/531 [00:06<01:48,  4.71it/s]# Evaluation:   4%|▍         | 22/531 [00:06<01:48,  4.71it/s]# Evaluation:   4%|▍         | 23/531 [00:07<01:47,  4.72it/s]# Evaluation:   5%|▍         | 24/531 [00:07<01:47,  4.71it/s]# Evaluation:   5%|▍         | 25/531 [00:07<01:45,  4.79it/s]# Evaluation:   5%|▍         | 26/531 [00:07<01:44,  4.85it/s]# Evaluation:   5%|▌         | 27/531 [00:07<01:43,  4.85it/s]# Evaluation:   5%|▌         | 28/531 [00:08<02:09,  3.88it/s]# Evaluation:   5%|▌         | 29/531 [00:08<02:01,  4.12it/s]# Evaluation:   6%|▌         | 30/531 [00:08<01:56,  4.32it/s]# Evaluation:   6%|▌         | 31/531 [00:08<01:51,  4.50it/s]# Evaluation:   6%|▌         | 32/531 [00:09<01:47,  4.64it/s]# Evaluation:   6%|▌         | 33/531 [00:09<01:46,  4.67it/s]# Evaluation:   6%|▋         | 34/531 [00:09<01:44,  4.78it/s]# Evaluation:   7%|▋         | 35/531 [00:09<01:42,  4.82it/s]# Evaluation:   7%|▋         | 36/531 [00:09<01:41,  4.86it/s]# Evaluation:   7%|▋         | 37/531 [00:10<01:41,  4.85it/s]# Evaluation:   7%|▋         | 38/531 [00:10<01:43,  4.77it/s]# Evaluation:   7%|▋         | 39/531 [00:10<01:43,  4.78it/s]# Evaluation:   8%|▊         | 40/531 [00:10<01:42,  4.81it/s]# Evaluation:   8%|▊         | 41/531 [00:11<02:03,  3.95it/s]# Evaluation:   8%|▊         | 42/531 [00:11<01:56,  4.20it/s]# Evaluation:   8%|▊         | 43/531 [00:11<01:51,  4.37it/s]# Evaluation:   8%|▊         | 44/531 [00:11<01:47,  4.53it/s]# Evaluation:   8%|▊         | 45/531 [00:11<01:44,  4.65it/s]# Evaluation:   9%|▊         | 46/531 [00:12<01:43,  4.70it/s]# Evaluation:   9%|▉         | 47/531 [00:12<01:43,  4.67it/s]# Evaluation:   9%|▉         | 48/531 [00:12<01:43,  4.66it/s]# Evaluation:   9%|▉         | 49/531 [00:12<01:41,  4.73it/s]# Evaluation:   9%|▉         | 50/531 [00:13<01:41,  4.74it/s]# Evaluation:  10%|▉         | 51/531 [00:13<01:39,  4.80it/s]# Evaluation:  10%|▉         | 52/531 [00:13<01:39,  4.83it/s]# Evaluation:  10%|▉         | 53/531 [00:13<02:03,  3.86it/s]# Evaluation:  10%|█         | 54/531 [00:14<01:56,  4.10it/s]# Evaluation:  10%|█         | 55/531 [00:14<01:50,  4.29it/s]# Evaluation:  11%|█         | 56/531 [00:14<01:47,  4.41it/s]# Evaluation:  11%|█         | 57/531 [00:14<01:47,  4.40it/s]# Evaluation:  11%|█         | 58/531 [00:14<01:45,  4.49it/s]# Evaluation:  11%|█         | 59/531 [00:15<01:42,  4.61it/s]# Evaluation:  11%|█▏        | 60/531 [00:15<01:40,  4.70it/s]# Evaluation:  11%|█▏        | 61/531 [00:15<01:38,  4.77it/s]# Evaluation:  12%|█▏        | 62/531 [00:15<01:39,  4.73it/s]# Evaluation:  12%|█▏        | 63/531 [00:15<01:38,  4.75it/s]# Evaluation:  12%|█▏        | 64/531 [00:16<01:37,  4.79it/s]# Evaluation:  12%|█▏        | 65/531 [00:16<02:02,  3.79it/s]# Evaluation:  12%|█▏        | 66/531 [00:16<01:56,  3.98it/s]# Evaluation:  13%|█▎        | 67/531 [00:16<01:50,  4.18it/s]# Evaluation:  13%|█▎        | 68/531 [00:17<01:47,  4.30it/s]# Evaluation:  13%|█▎        | 69/531 [00:17<01:43,  4.48it/s]# Evaluation:  13%|█▎        | 70/531 [00:17<01:42,  4.48it/s]# Evaluation:  13%|█▎        | 71/531 [00:17<01:42,  4.49it/s]# Evaluation:  14%|█▎        | 72/531 [00:17<01:40,  4.58it/s]# Evaluation:  14%|█▎        | 73/531 [00:18<01:40,  4.57it/s]# Evaluation:  14%|█▍        | 74/531 [00:18<01:38,  4.62it/s]# Evaluation:  14%|█▍        | 75/531 [00:18<01:37,  4.66it/s]# Evaluation:  14%|█▍        | 76/531 [00:18<01:37,  4.64it/s]# Evaluation:  15%|█▍        | 77/531 [00:19<01:37,  4.64it/s]# Evaluation:  15%|█▍        | 78/531 [00:19<02:01,  3.72it/s]# Evaluation:  15%|█▍        | 79/531 [00:19<01:54,  3.95it/s]# Evaluation:  15%|█▌        | 80/531 [00:19<01:47,  4.20it/s]# Evaluation:  15%|█▌        | 81/531 [00:20<01:43,  4.37it/s]# Evaluation:  15%|█▌        | 82/531 [00:20<01:40,  4.48it/s]# Evaluation:  16%|█▌        | 83/531 [00:20<01:39,  4.51it/s]# Evaluation:  16%|█▌        | 84/531 [00:20<01:36,  4.62it/s]# Evaluation:  16%|█▌        | 85/531 [00:20<01:35,  4.67it/s]# Evaluation:  16%|█▌        | 86/531 [00:21<01:34,  4.69it/s]# Evaluation:  16%|█▋        | 87/531 [00:21<01:34,  4.72it/s]# Evaluation:  17%|█▋        | 88/531 [00:21<01:32,  4.79it/s]# Evaluation:  17%|█▋        | 89/531 [00:21<01:31,  4.81it/s]# Evaluation:  17%|█▋        | 90/531 [00:21<01:32,  4.78it/s]# Evaluation:  17%|█▋        | 91/531 [00:22<01:59,  3.70it/s]# Evaluation:  17%|█▋        | 92/531 [00:22<01:52,  3.91it/s]# Evaluation:  18%|█▊        | 93/531 [00:22<01:47,  4.09it/s]# Evaluation:  18%|█▊        | 94/531 [00:23<01:41,  4.29it/s]# Evaluation:  18%|█▊        | 95/531 [00:23<01:37,  4.46it/s]# Evaluation:  18%|█▊        | 96/531 [00:23<01:35,  4.55it/s]# Evaluation:  18%|█▊        | 97/531 [00:23<01:33,  4.62it/s]# Evaluation:  18%|█▊        | 98/531 [00:23<01:33,  4.65it/s]# Evaluation:  19%|█▊        | 99/531 [00:24<01:32,  4.68it/s]# Evaluation:  19%|█▉        | 100/531 [00:24<01:32,  4.67it/s]# Evaluation:  19%|█▉        | 101/531 [00:24<01:31,  4.70it/s]# Evaluation:  19%|█▉        | 102/531 [00:24<01:32,  4.66it/s]# Evaluation:  19%|█▉        | 103/531 [00:24<01:31,  4.69it/s]# Evaluation:  20%|█▉        | 104/531 [00:25<01:51,  3.83it/s]# Evaluation:  20%|█▉        | 105/531 [00:25<01:46,  4.01it/s]# Evaluation:  20%|█▉        | 106/531 [00:25<01:43,  4.12it/s]# Evaluation:  20%|██        | 107/531 [00:25<01:38,  4.32it/s]# Evaluation:  20%|██        | 108/531 [00:26<01:36,  4.37it/s]# Evaluation:  21%|██        | 109/531 [00:26<01:34,  4.48it/s]# Evaluation:  21%|██        | 110/531 [00:26<01:33,  4.49it/s]# Evaluation:  21%|██        | 111/531 [00:26<01:31,  4.60it/s]# Evaluation:  21%|██        | 112/531 [00:27<01:29,  4.69it/s]# Evaluation:  21%|██▏       | 113/531 [00:27<01:28,  4.72it/s]# Evaluation:  21%|██▏       | 114/531 [00:27<01:28,  4.73it/s]# Evaluation:  22%|██▏       | 115/531 [00:27<01:28,  4.72it/s]# Evaluation:  22%|██▏       | 116/531 [00:27<01:26,  4.78it/s]# Evaluation:  22%|██▏       | 117/531 [00:28<01:48,  3.80it/s]# Evaluation:  22%|██▏       | 118/531 [00:28<01:41,  4.06it/s]# Evaluation:  22%|██▏       | 119/531 [00:28<01:36,  4.27it/s]# Evaluation:  23%|██▎       | 120/531 [00:28<01:35,  4.32it/s]# Evaluation:  23%|██▎       | 121/531 [00:29<01:32,  4.44it/s]# Evaluation:  23%|██▎       | 122/531 [00:29<01:32,  4.41it/s]# Evaluation:  23%|██▎       | 123/531 [00:29<01:31,  4.48it/s]# Evaluation:  23%|██▎       | 124/531 [00:29<01:28,  4.59it/s]# Evaluation:  24%|██▎       | 125/531 [00:29<01:27,  4.67it/s]# Evaluation:  24%|██▎       | 126/531 [00:30<01:29,  4.55it/s]# Evaluation:  24%|██▍       | 127/531 [00:30<01:26,  4.65it/s]# Evaluation:  24%|██▍       | 128/531 [00:30<01:25,  4.69it/s]# Evaluation:  24%|██▍       | 129/531 [00:30<01:24,  4.76it/s]# Evaluation:  24%|██▍       | 130/531 [00:31<01:46,  3.78it/s]# Evaluation:  25%|██▍       | 131/531 [00:31<01:39,  4.04it/s]# Evaluation:  25%|██▍       | 132/531 [00:31<01:34,  4.24it/s]# Evaluation:  25%|██▌       | 133/531 [00:31<01:31,  4.36it/s]# Evaluation:  25%|██▌       | 134/531 [00:32<01:31,  4.35it/s]# Evaluation:  25%|██▌       | 135/531 [00:32<01:28,  4.50it/s]# Evaluation:  26%|██▌       | 136/531 [00:32<01:26,  4.59it/s]# Evaluation:  26%|██▌       | 137/531 [00:32<01:24,  4.66it/s]# Evaluation:  26%|██▌       | 138/531 [00:32<01:25,  4.59it/s]# Evaluation:  26%|██▌       | 139/531 [00:33<01:24,  4.66it/s]# Evaluation:  26%|██▋       | 140/531 [00:33<01:22,  4.71it/s]# Evaluation:  27%|██▋       | 141/531 [00:33<01:22,  4.73it/s]# Evaluation:  27%|██▋       | 142/531 [00:33<01:21,  4.79it/s]# Evaluation:  27%|██▋       | 143/531 [00:34<01:43,  3.75it/s]# Evaluation:  27%|██▋       | 144/531 [00:34<01:37,  3.99it/s]# Evaluation:  27%|██▋       | 145/531 [00:34<01:31,  4.20it/s]# Evaluation:  27%|██▋       | 146/531 [00:34<01:27,  4.41it/s]# Evaluation:  28%|██▊       | 147/531 [00:34<01:26,  4.44it/s]# Evaluation:  28%|██▊       | 148/531 [00:35<01:25,  4.47it/s]# Evaluation:  28%|██▊       | 149/531 [00:35<01:24,  4.52it/s]# Evaluation:  28%|██▊       | 150/531 [00:35<01:22,  4.62it/s]# Evaluation:  28%|██▊       | 151/531 [00:35<01:21,  4.68it/s]# Evaluation:  29%|██▊       | 152/531 [00:36<01:21,  4.67it/s]# Evaluation:  29%|██▉       | 153/531 [00:36<01:20,  4.72it/s]# Evaluation:  29%|██▉       | 154/531 [00:36<01:19,  4.74it/s]# Evaluation:  29%|██▉       | 155/531 [00:36<01:18,  4.78it/s]# Evaluation:  29%|██▉       | 156/531 [00:37<01:39,  3.77it/s]# Evaluation:  30%|██▉       | 157/531 [00:37<01:34,  3.98it/s]# Evaluation:  30%|██▉       | 158/531 [00:37<01:29,  4.19it/s]# Evaluation:  30%|██▉       | 159/531 [00:37<01:25,  4.35it/s]# Evaluation:  30%|███       | 160/531 [00:37<01:23,  4.44it/s]# Evaluation:  30%|███       | 161/531 [00:38<01:21,  4.51it/s]# Evaluation:  31%|███       | 162/531 [00:38<01:20,  4.59it/s]# Evaluation:  31%|███       | 163/531 [00:38<01:19,  4.63it/s]# Evaluation:  31%|███       | 164/531 [00:38<01:18,  4.65it/s]# Evaluation:  31%|███       | 165/531 [00:38<01:17,  4.71it/s]# Evaluation:  31%|███▏      | 166/531 [00:39<01:17,  4.73it/s]# Evaluation:  31%|███▏      | 167/531 [00:39<01:16,  4.77it/s]# Evaluation:  32%|███▏      | 168/531 [00:39<01:15,  4.81it/s]# Evaluation:  32%|███▏      | 169/531 [00:39<01:35,  3.78it/s]# Evaluation:  32%|███▏      | 170/531 [00:40<01:28,  4.06it/s]# Evaluation:  32%|███▏      | 171/531 [00:40<01:24,  4.26it/s]# Evaluation:  32%|███▏      | 172/531 [00:40<01:22,  4.33it/s]# Evaluation:  33%|███▎      | 173/531 [00:40<01:19,  4.48it/s]# Evaluation:  33%|███▎      | 174/531 [00:41<01:19,  4.50it/s]# Evaluation:  33%|███▎      | 175/531 [00:41<01:18,  4.55it/s]# Evaluation:  33%|███▎      | 176/531 [00:41<01:16,  4.62it/s]# Evaluation:  33%|███▎      | 177/531 [00:41<01:16,  4.65it/s]# Evaluation:  34%|███▎      | 178/531 [00:41<01:15,  4.67it/s]# Evaluation:  34%|███▎      | 179/531 [00:42<01:14,  4.70it/s]# Evaluation:  34%|███▍      | 180/531 [00:42<01:14,  4.70it/s]# Evaluation:  34%|███▍      | 181/531 [00:42<01:13,  4.74it/s]# Evaluation:  34%|███▍      | 182/531 [00:42<01:31,  3.80it/s]# Evaluation:  34%|███▍      | 183/531 [00:43<01:27,  3.97it/s]# Evaluation:  35%|███▍      | 184/531 [00:43<01:24,  4.13it/s]# Evaluation:  35%|███▍      | 185/531 [00:43<01:21,  4.23it/s]# Evaluation:  35%|███▌      | 186/531 [00:43<01:18,  4.41it/s]# Evaluation:  35%|███▌      | 187/531 [00:43<01:16,  4.52it/s]# Evaluation:  35%|███▌      | 188/531 [00:44<01:14,  4.62it/s]# Evaluation:  36%|███▌      | 189/531 [00:44<01:13,  4.68it/s]# Evaluation:  36%|███▌      | 190/531 [00:44<01:12,  4.72it/s]# Evaluation:  36%|███▌      | 191/531 [00:44<01:12,  4.69it/s]# Evaluation:  36%|███▌      | 192/531 [00:45<01:11,  4.72it/s]# Evaluation:  36%|███▋      | 193/531 [00:45<01:11,  4.73it/s]# Evaluation:  37%|███▋      | 194/531 [00:45<01:10,  4.76it/s]# Evaluation:  37%|███▋      | 195/531 [00:45<01:33,  3.59it/s]# Evaluation:  37%|███▋      | 196/531 [00:46<01:26,  3.89it/s]# Evaluation:  37%|███▋      | 197/531 [00:46<01:20,  4.13it/s]# Evaluation:  37%|███▋      | 198/531 [00:46<01:17,  4.30it/s]# Evaluation:  37%|███▋      | 199/531 [00:46<01:15,  4.40it/s]# Evaluation:  38%|███▊      | 200/531 [00:46<01:13,  4.52it/s]# Evaluation:  38%|███▊      | 201/531 [00:47<01:12,  4.57it/s]# Evaluation:  38%|███▊      | 202/531 [00:47<01:12,  4.56it/s]# Evaluation:  38%|███▊      | 203/531 [00:47<01:10,  4.64it/s]# Evaluation:  38%|███▊      | 204/531 [00:47<01:09,  4.68it/s]# Evaluation:  39%|███▊      | 205/531 [00:47<01:09,  4.71it/s]# Evaluation:  39%|███▉      | 206/531 [00:48<01:08,  4.76it/s]# Evaluation:  39%|███▉      | 207/531 [00:48<01:07,  4.80it/s]# Evaluation:  39%|███▉      | 208/531 [00:48<01:25,  3.77it/s]# Evaluation:  39%|███▉      | 209/531 [00:48<01:19,  4.04it/s]# Evaluation:  40%|███▉      | 210/531 [00:49<01:15,  4.25it/s]# Evaluation:  40%|███▉      | 211/531 [00:49<01:12,  4.41it/s]# Evaluation:  40%|███▉      | 212/531 [00:49<01:10,  4.50it/s]# Evaluation:  40%|████      | 213/531 [00:49<01:08,  4.62it/s]# Evaluation:  40%|████      | 214/531 [00:50<01:07,  4.67it/s]# Evaluation:  40%|████      | 215/531 [00:50<01:06,  4.73it/s]# Evaluation:  41%|████      | 216/531 [00:50<01:06,  4.73it/s]# Evaluation:  41%|████      | 217/531 [00:50<01:06,  4.72it/s]# Evaluation:  41%|████      | 218/531 [00:50<01:06,  4.73it/s]# Evaluation:  41%|████      | 219/531 [00:51<01:07,  4.61it/s]# Evaluation:  41%|████▏     | 220/531 [00:51<01:06,  4.67it/s]# Evaluation:  42%|████▏     | 221/531 [00:51<01:23,  3.69it/s]# Evaluation:  42%|████▏     | 222/531 [00:51<01:18,  3.94it/s]# Evaluation:  42%|████▏     | 223/531 [00:52<01:14,  4.13it/s]# Evaluation:  42%|████▏     | 224/531 [00:52<01:11,  4.30it/s]# Evaluation:  42%|████▏     | 225/531 [00:52<01:09,  4.42it/s]# Evaluation:  43%|████▎     | 226/531 [00:52<01:07,  4.54it/s]# Evaluation:  43%|████▎     | 227/531 [00:52<01:05,  4.62it/s]# Evaluation:  43%|████▎     | 228/531 [00:53<01:05,  4.66it/s]# Evaluation:  43%|████▎     | 229/531 [00:53<01:03,  4.73it/s]# Evaluation:  43%|████▎     | 230/531 [00:53<01:04,  4.69it/s]# Evaluation:  44%|████▎     | 231/531 [00:53<01:03,  4.71it/s]# Evaluation:  44%|████▎     | 232/531 [00:54<01:02,  4.76it/s]# Evaluation:  44%|████▍     | 233/531 [00:54<01:01,  4.82it/s]# Evaluation:  44%|████▍     | 234/531 [00:54<01:18,  3.76it/s]# Evaluation:  44%|████▍     | 235/531 [00:54<01:13,  4.03it/s]# Evaluation:  44%|████▍     | 236/531 [00:55<01:09,  4.23it/s]# Evaluation:  45%|████▍     | 237/531 [00:55<01:06,  4.41it/s]# Evaluation:  45%|████▍     | 238/531 [00:55<01:05,  4.46it/s]# Evaluation:  45%|████▌     | 239/531 [00:55<01:04,  4.55it/s]# Evaluation:  45%|████▌     | 240/531 [00:55<01:02,  4.66it/s]# Evaluation:  45%|████▌     | 241/531 [00:56<01:01,  4.68it/s]# Evaluation:  46%|████▌     | 242/531 [00:56<01:01,  4.72it/s]# Evaluation:  46%|████▌     | 243/531 [00:56<01:00,  4.73it/s]# Evaluation:  46%|████▌     | 244/531 [00:56<01:00,  4.72it/s]# Evaluation:  46%|████▌     | 245/531 [00:56<01:00,  4.72it/s]# Evaluation:  46%|████▋     | 246/531 [00:57<01:00,  4.73it/s]# Evaluation:  47%|████▋     | 247/531 [00:57<01:17,  3.65it/s]# Evaluation:  47%|████▋     | 248/531 [00:57<01:12,  3.93it/s]# Evaluation:  47%|████▋     | 249/531 [00:57<01:08,  4.14it/s]# Evaluation:  47%|████▋     | 250/531 [00:58<01:05,  4.27it/s]# Evaluation:  47%|████▋     | 251/531 [00:58<01:03,  4.42it/s]# Evaluation:  47%|████▋     | 252/531 [00:58<01:01,  4.53it/s]# Evaluation:  48%|████▊     | 253/531 [00:58<00:59,  4.65it/s]# Evaluation:  48%|████▊     | 254/531 [00:59<00:59,  4.66it/s]# Evaluation:  48%|████▊     | 255/531 [00:59<00:59,  4.61it/s]# Evaluation:  48%|████▊     | 256/531 [00:59<00:59,  4.64it/s]# Evaluation:  48%|████▊     | 257/531 [00:59<00:58,  4.72it/s]# Evaluation:  49%|████▊     | 258/531 [00:59<00:57,  4.73it/s]# Evaluation:  49%|████▉     | 259/531 [01:00<00:57,  4.74it/s]# Evaluation:  49%|████▉     | 260/531 [01:00<01:13,  3.71it/s]# Evaluation:  49%|████▉     | 261/531 [01:00<01:09,  3.87it/s]# Evaluation:  49%|████▉     | 262/531 [01:00<01:05,  4.10it/s]# Evaluation:  50%|████▉     | 263/531 [01:01<01:04,  4.18it/s]# Evaluation:  50%|████▉     | 264/531 [01:01<01:01,  4.35it/s]# Evaluation:  50%|████▉     | 265/531 [01:01<00:59,  4.50it/s]# Evaluation:  50%|█████     | 266/531 [01:01<00:58,  4.55it/s]# Evaluation:  50%|█████     | 267/531 [01:01<00:56,  4.66it/s]# Evaluation:  50%|█████     | 268/531 [01:02<00:55,  4.72it/s]# Evaluation:  51%|█████     | 269/531 [01:02<00:55,  4.74it/s]# Evaluation:  51%|█████     | 270/531 [01:02<00:55,  4.73it/s]# Evaluation:  51%|█████     | 271/531 [01:02<00:54,  4.78it/s]# Evaluation:  51%|█████     | 272/531 [01:03<00:54,  4.73it/s]# Evaluation:  51%|█████▏    | 273/531 [01:03<01:09,  3.70it/s]# Evaluation:  52%|█████▏    | 274/531 [01:03<01:04,  3.97it/s]# Evaluation:  52%|█████▏    | 275/531 [01:03<01:01,  4.13it/s]# Evaluation:  52%|█████▏    | 276/531 [01:04<01:01,  4.17it/s]# Evaluation:  52%|█████▏    | 277/531 [01:04<00:58,  4.35it/s]# Evaluation:  52%|█████▏    | 278/531 [01:04<00:56,  4.45it/s]# Evaluation:  53%|█████▎    | 279/531 [01:04<00:56,  4.50it/s]# Evaluation:  53%|█████▎    | 280/531 [01:04<00:55,  4.48it/s]# Evaluation:  53%|█████▎    | 281/531 [01:05<00:54,  4.59it/s]# Evaluation:  53%|█████▎    | 282/531 [01:05<00:53,  4.63it/s]# Evaluation:  53%|█████▎    | 283/531 [01:05<00:53,  4.68it/s]# Evaluation:  53%|█████▎    | 284/531 [01:05<00:52,  4.71it/s]# Evaluation:  54%|█████▎    | 285/531 [01:06<00:51,  4.74it/s]# Evaluation:  54%|█████▍    | 286/531 [01:06<01:03,  3.84it/s]# Evaluation:  54%|█████▍    | 287/531 [01:06<01:00,  4.03it/s]# Evaluation:  54%|█████▍    | 288/531 [01:06<00:58,  4.14it/s]# Evaluation:  54%|█████▍    | 289/531 [01:07<00:56,  4.25it/s]# Evaluation:  55%|█████▍    | 290/531 [01:07<00:55,  4.34it/s]# Evaluation:  55%|█████▍    | 291/531 [01:07<00:55,  4.35it/s]# Evaluation:  55%|█████▍    | 292/531 [01:07<00:54,  4.42it/s]# Evaluation:  55%|█████▌    | 293/531 [01:07<00:52,  4.49it/s]# Evaluation:  55%|█████▌    | 294/531 [01:08<00:51,  4.57it/s]# Evaluation:  56%|█████▌    | 295/531 [01:08<00:52,  4.54it/s]# Evaluation:  56%|█████▌    | 296/531 [01:08<00:51,  4.58it/s]# Evaluation:  56%|█████▌    | 297/531 [01:08<00:51,  4.55it/s]# Evaluation:  56%|█████▌    | 298/531 [01:09<00:51,  4.52it/s]# Evaluation:  56%|█████▋    | 299/531 [01:09<01:06,  3.51it/s]# Evaluation:  56%|█████▋    | 300/531 [01:09<01:04,  3.61it/s]# Evaluation:  57%|█████▋    | 301/531 [01:09<00:59,  3.83it/s]# Evaluation:  57%|█████▋    | 302/531 [01:10<00:56,  4.07it/s]# Evaluation:  57%|█████▋    | 303/531 [01:10<00:54,  4.21it/s]# Evaluation:  57%|█████▋    | 304/531 [01:10<00:52,  4.32it/s]# Evaluation:  57%|█████▋    | 305/531 [01:10<00:51,  4.38it/s]# Evaluation:  58%|█████▊    | 306/531 [01:11<00:50,  4.45it/s]# Evaluation:  58%|█████▊    | 307/531 [01:11<00:49,  4.52it/s]# Evaluation:  58%|█████▊    | 308/531 [01:11<00:48,  4.59it/s]# Evaluation:  58%|█████▊    | 309/531 [01:11<00:47,  4.63it/s]# Evaluation:  58%|█████▊    | 310/531 [01:11<00:47,  4.61it/s]# Evaluation:  59%|█████▊    | 311/531 [01:12<00:48,  4.57it/s]# Evaluation:  59%|█████▉    | 312/531 [01:12<00:59,  3.71it/s]# Evaluation:  59%|█████▉    | 313/531 [01:12<00:55,  3.92it/s]# Evaluation:  59%|█████▉    | 314/531 [01:12<00:52,  4.10it/s]# Evaluation:  59%|█████▉    | 315/531 [01:13<00:51,  4.18it/s]# Evaluation:  60%|█████▉    | 316/531 [01:13<00:50,  4.28it/s]# Evaluation:  60%|█████▉    | 317/531 [01:13<00:49,  4.33it/s]# Evaluation:  60%|█████▉    | 318/531 [01:13<00:48,  4.41it/s]# Evaluation:  60%|██████    | 319/531 [01:14<00:48,  4.41it/s]# Evaluation:  60%|██████    | 320/531 [01:14<00:46,  4.51it/s]# Evaluation:  60%|██████    | 321/531 [01:14<00:46,  4.53it/s]# Evaluation:  61%|██████    | 322/531 [01:14<00:46,  4.49it/s]# Evaluation:  61%|██████    | 323/531 [01:14<00:46,  4.52it/s]# Evaluation:  61%|██████    | 324/531 [01:15<00:45,  4.53it/s]# Evaluation:  61%|██████    | 325/531 [01:15<00:56,  3.66it/s]# Evaluation:  61%|██████▏   | 326/531 [01:15<00:53,  3.85it/s]# Evaluation:  62%|██████▏   | 327/531 [01:15<00:51,  4.00it/s]# Evaluation:  62%|██████▏   | 328/531 [01:16<00:49,  4.12it/s]# Evaluation:  62%|██████▏   | 329/531 [01:16<00:47,  4.21it/s]# Evaluation:  62%|██████▏   | 330/531 [01:16<00:47,  4.21it/s]# Evaluation:  62%|██████▏   | 331/531 [01:16<00:46,  4.28it/s]# Evaluation:  63%|██████▎   | 332/531 [01:17<00:45,  4.36it/s]# Evaluation:  63%|██████▎   | 333/531 [01:17<00:44,  4.45it/s]# Evaluation:  63%|██████▎   | 334/531 [01:17<00:43,  4.52it/s]# Evaluation:  63%|██████▎   | 335/531 [01:17<00:43,  4.53it/s]# Evaluation:  63%|██████▎   | 336/531 [01:17<00:42,  4.58it/s]# Evaluation:  63%|██████▎   | 337/531 [01:18<00:42,  4.58it/s]# Evaluation:  64%|██████▎   | 338/531 [01:18<00:52,  3.65it/s]# Evaluation:  64%|██████▍   | 339/531 [01:18<00:49,  3.90it/s]# Evaluation:  64%|██████▍   | 340/531 [01:19<00:46,  4.08it/s]# Evaluation:  64%|██████▍   | 341/531 [01:19<00:45,  4.21it/s]# Evaluation:  64%|██████▍   | 342/531 [01:19<00:45,  4.11it/s]# Evaluation:  65%|██████▍   | 343/531 [01:19<00:44,  4.21it/s]# Evaluation:  65%|██████▍   | 344/531 [01:19<00:42,  4.35it/s]# Evaluation:  65%|██████▍   | 345/531 [01:20<00:42,  4.41it/s]# Evaluation:  65%|██████▌   | 346/531 [01:20<00:41,  4.49it/s]# Evaluation:  65%|██████▌   | 347/531 [01:20<00:40,  4.54it/s]# Evaluation:  66%|██████▌   | 348/531 [01:20<00:40,  4.57it/s]# Evaluation:  66%|██████▌   | 349/531 [01:21<00:39,  4.58it/s]# Evaluation:  66%|██████▌   | 350/531 [01:21<00:40,  4.47it/s]# Evaluation:  66%|██████▌   | 351/531 [01:21<00:51,  3.52it/s]# Evaluation:  66%|██████▋   | 352/531 [01:21<00:48,  3.72it/s]# Evaluation:  66%|██████▋   | 353/531 [01:22<00:45,  3.93it/s]# Evaluation:  67%|██████▋   | 354/531 [01:22<00:43,  4.10it/s]# Evaluation:  67%|██████▋   | 355/531 [01:22<00:41,  4.25it/s]# Evaluation:  67%|██████▋   | 356/531 [01:22<00:39,  4.39it/s]# Evaluation:  67%|██████▋   | 357/531 [01:23<00:38,  4.47it/s]# Evaluation:  67%|██████▋   | 358/531 [01:23<00:38,  4.51it/s]# Evaluation:  68%|██████▊   | 359/531 [01:23<00:39,  4.40it/s]# Evaluation:  68%|██████▊   | 360/531 [01:23<00:38,  4.44it/s]# Evaluation:  68%|██████▊   | 361/531 [01:23<00:37,  4.55it/s]# Evaluation:  68%|██████▊   | 362/531 [01:24<00:36,  4.61it/s]# Evaluation:  68%|██████▊   | 363/531 [01:24<00:35,  4.70it/s]# Evaluation:  69%|██████▊   | 364/531 [01:24<00:45,  3.70it/s]# Evaluation:  69%|██████▊   | 365/531 [01:24<00:42,  3.93it/s]# Evaluation:  69%|██████▉   | 366/531 [01:25<00:39,  4.16it/s]# Evaluation:  69%|██████▉   | 367/531 [01:25<00:37,  4.32it/s]# Evaluation:  69%|██████▉   | 368/531 [01:25<00:36,  4.43it/s]# Evaluation:  69%|██████▉   | 369/531 [01:25<00:35,  4.58it/s]# Evaluation:  70%|██████▉   | 370/531 [01:25<00:34,  4.60it/s]# Evaluation:  70%|██████▉   | 371/531 [01:26<00:34,  4.68it/s]# Evaluation:  70%|███████   | 372/531 [01:26<00:33,  4.69it/s]# Evaluation:  70%|███████   | 373/531 [01:26<00:33,  4.75it/s]# Evaluation:  70%|███████   | 374/531 [01:26<00:32,  4.80it/s]# Evaluation:  71%|███████   | 375/531 [01:27<00:32,  4.79it/s]# Evaluation:  71%|███████   | 376/531 [01:27<00:32,  4.84it/s]# Evaluation:  71%|███████   | 377/531 [01:27<00:39,  3.91it/s]# Evaluation:  71%|███████   | 378/531 [01:27<00:37,  4.13it/s]# Evaluation:  71%|███████▏  | 379/531 [01:27<00:35,  4.32it/s]# Evaluation:  72%|███████▏  | 380/531 [01:28<00:33,  4.47it/s]# Evaluation:  72%|███████▏  | 381/531 [01:28<00:32,  4.62it/s]# Evaluation:  72%|███████▏  | 382/531 [01:28<00:31,  4.70it/s]# Evaluation:  72%|███████▏  | 383/531 [01:28<00:31,  4.73it/s]# Evaluation:  72%|███████▏  | 384/531 [01:29<00:30,  4.82it/s]# Evaluation:  73%|███████▎  | 385/531 [01:29<00:30,  4.80it/s]# Evaluation:  73%|███████▎  | 386/531 [01:29<00:29,  4.85it/s]# Evaluation:  73%|███████▎  | 387/531 [01:29<00:29,  4.86it/s]# Evaluation:  73%|███████▎  | 388/531 [01:29<00:29,  4.91it/s]# Evaluation:  73%|███████▎  | 389/531 [01:30<00:29,  4.82it/s]# Evaluation:  73%|███████▎  | 390/531 [01:30<00:36,  3.88it/s]# Evaluation:  74%|███████▎  | 391/531 [01:30<00:34,  4.12it/s]# Evaluation:  74%|███████▍  | 392/531 [01:30<00:32,  4.32it/s]# Evaluation:  74%|███████▍  | 393/531 [01:31<00:30,  4.50it/s]# Evaluation:  74%|███████▍  | 394/531 [01:31<00:29,  4.61it/s]# Evaluation:  74%|███████▍  | 395/531 [01:31<00:28,  4.69it/s]# Evaluation:  75%|███████▍  | 396/531 [01:31<00:28,  4.75it/s]# Evaluation:  75%|███████▍  | 397/531 [01:31<00:28,  4.74it/s]# Evaluation:  75%|███████▍  | 398/531 [01:32<00:27,  4.82it/s]# Evaluation:  75%|███████▌  | 399/531 [01:32<00:27,  4.86it/s]# Evaluation:  75%|███████▌  | 400/531 [01:32<00:26,  4.87it/s]# Evaluation:  76%|███████▌  | 401/531 [01:32<00:26,  4.91it/s]# Evaluation:  76%|███████▌  | 402/531 [01:32<00:26,  4.91it/s]# Evaluation:  76%|███████▌  | 403/531 [01:33<00:32,  3.95it/s]# Evaluation:  76%|███████▌  | 404/531 [01:33<00:30,  4.21it/s]# Evaluation:  76%|███████▋  | 405/531 [01:33<00:28,  4.42it/s]# Evaluation:  76%|███████▋  | 406/531 [01:33<00:27,  4.58it/s]# Evaluation:  77%|███████▋  | 407/531 [01:34<00:26,  4.65it/s]# Evaluation:  77%|███████▋  | 408/531 [01:34<00:25,  4.77it/s]# Evaluation:  77%|███████▋  | 409/531 [01:34<00:25,  4.79it/s]# Evaluation:  77%|███████▋  | 410/531 [01:34<00:25,  4.84it/s]# Evaluation:  77%|███████▋  | 411/531 [01:34<00:24,  4.85it/s]# Evaluation:  78%|███████▊  | 412/531 [01:35<00:24,  4.90it/s]# Evaluation:  78%|███████▊  | 413/531 [01:35<00:24,  4.86it/s]# Evaluation:  78%|███████▊  | 414/531 [01:35<00:24,  4.85it/s]# Evaluation:  78%|███████▊  | 415/531 [01:35<00:24,  4.82it/s]# Evaluation:  78%|███████▊  | 416/531 [01:36<00:29,  3.90it/s]# Evaluation:  79%|███████▊  | 417/531 [01:36<00:27,  4.13it/s]# Evaluation:  79%|███████▊  | 418/531 [01:36<00:26,  4.26it/s]# Evaluation:  79%|███████▉  | 419/531 [01:36<00:25,  4.45it/s]# Evaluation:  79%|███████▉  | 420/531 [01:36<00:24,  4.55it/s]# Evaluation:  79%|███████▉  | 421/531 [01:37<00:23,  4.65it/s]# Evaluation:  79%|███████▉  | 422/531 [01:37<00:23,  4.69it/s]# Evaluation:  80%|███████▉  | 423/531 [01:37<00:22,  4.71it/s]# Evaluation:  80%|███████▉  | 424/531 [01:37<00:22,  4.67it/s]# Evaluation:  80%|████████  | 425/531 [01:37<00:22,  4.66it/s]# Evaluation:  80%|████████  | 426/531 [01:38<00:22,  4.65it/s]# Evaluation:  80%|████████  | 427/531 [01:38<00:22,  4.69it/s]# Evaluation:  81%|████████  | 428/531 [01:38<00:21,  4.77it/s]# Evaluation:  81%|████████  | 429/531 [01:38<00:26,  3.85it/s]# Evaluation:  81%|████████  | 430/531 [01:39<00:24,  4.12it/s]# Evaluation:  81%|████████  | 431/531 [01:39<00:23,  4.31it/s]# Evaluation:  81%|████████▏ | 432/531 [01:39<00:22,  4.48it/s]# Evaluation:  82%|████████▏ | 433/531 [01:39<00:21,  4.58it/s]# Evaluation:  82%|████████▏ | 434/531 [01:39<00:20,  4.66it/s]# Evaluation:  82%|████████▏ | 435/531 [01:40<00:20,  4.66it/s]# Evaluation:  82%|████████▏ | 436/531 [01:40<00:20,  4.75it/s]# Evaluation:  82%|████████▏ | 437/531 [01:40<00:19,  4.81it/s]# Evaluation:  82%|████████▏ | 438/531 [01:40<00:19,  4.84it/s]# Evaluation:  83%|████████▎ | 439/531 [01:40<00:18,  4.89it/s]# Evaluation:  83%|████████▎ | 440/531 [01:41<00:18,  4.94it/s]# Evaluation:  83%|████████▎ | 441/531 [01:41<00:18,  4.93it/s]# Evaluation:  83%|████████▎ | 442/531 [01:41<00:22,  3.93it/s]# Evaluation:  83%|████████▎ | 443/531 [01:41<00:21,  4.09it/s]# Evaluation:  84%|████████▎ | 444/531 [01:42<00:20,  4.28it/s]# Evaluation:  84%|████████▍ | 445/531 [01:42<00:19,  4.43it/s]# Evaluation:  84%|████████▍ | 446/531 [01:42<00:19,  4.42it/s]# Evaluation:  84%|████████▍ | 447/531 [01:42<00:18,  4.47it/s]# Evaluation:  84%|████████▍ | 448/531 [01:43<00:18,  4.55it/s]# Evaluation:  85%|████████▍ | 449/531 [01:43<00:17,  4.62it/s]# Evaluation:  85%|████████▍ | 450/531 [01:43<00:17,  4.60it/s]# Evaluation:  85%|████████▍ | 451/531 [01:43<00:17,  4.58it/s]# Evaluation:  85%|████████▌ | 452/531 [01:43<00:16,  4.68it/s]# Evaluation:  85%|████████▌ | 453/531 [01:44<00:17,  4.57it/s]# Evaluation:  85%|████████▌ | 454/531 [01:44<00:16,  4.65it/s]# Evaluation:  86%|████████▌ | 455/531 [01:44<00:21,  3.46it/s]# Evaluation:  86%|████████▌ | 456/531 [01:45<00:20,  3.74it/s]# Evaluation:  86%|████████▌ | 457/531 [01:45<00:18,  3.97it/s]# Evaluation:  86%|████████▋ | 458/531 [01:45<00:17,  4.20it/s]# Evaluation:  86%|████████▋ | 459/531 [01:45<00:16,  4.35it/s]# Evaluation:  87%|████████▋ | 460/531 [01:45<00:15,  4.48it/s]# Evaluation:  87%|████████▋ | 461/531 [01:46<00:15,  4.57it/s]# Evaluation:  87%|████████▋ | 462/531 [01:46<00:14,  4.64it/s]# Evaluation:  87%|████████▋ | 463/531 [01:46<00:14,  4.72it/s]# Evaluation:  87%|████████▋ | 464/531 [01:46<00:14,  4.74it/s]# Evaluation:  88%|████████▊ | 465/531 [01:46<00:13,  4.76it/s]# Evaluation:  88%|████████▊ | 466/531 [01:47<00:13,  4.77it/s]# Evaluation:  88%|████████▊ | 467/531 [01:47<00:13,  4.75it/s]# Evaluation:  88%|████████▊ | 468/531 [01:47<00:18,  3.47it/s]# Evaluation:  88%|████████▊ | 469/531 [01:48<00:16,  3.78it/s]# Evaluation:  89%|████████▊ | 470/531 [01:48<00:15,  4.03it/s]# Evaluation:  89%|████████▊ | 471/531 [01:48<00:13,  4.29it/s]# Evaluation:  89%|████████▉ | 472/531 [01:48<00:13,  4.47it/s]# Evaluation:  89%|████████▉ | 473/531 [01:48<00:12,  4.57it/s]# Evaluation:  89%|████████▉ | 474/531 [01:49<00:12,  4.69it/s]# Evaluation:  89%|████████▉ | 475/531 [01:49<00:12,  4.65it/s]# Evaluation:  90%|████████▉ | 476/531 [01:49<00:11,  4.76it/s]# Evaluation:  90%|████████▉ | 477/531 [01:49<00:11,  4.83it/s]# Evaluation:  90%|█████████ | 478/531 [01:49<00:10,  4.88it/s]# Evaluation:  90%|█████████ | 479/531 [01:50<00:10,  4.92it/s]# Evaluation:  90%|█████████ | 480/531 [01:50<00:10,  4.93it/s]# Evaluation:  91%|█████████ | 481/531 [01:50<00:14,  3.56it/s]# Evaluation:  91%|█████████ | 482/531 [01:50<00:12,  3.86it/s]# Evaluation:  91%|█████████ | 483/531 [01:51<00:11,  4.05it/s]# Evaluation:  91%|█████████ | 484/531 [01:51<00:10,  4.28it/s]# Evaluation:  91%|█████████▏| 485/531 [01:51<00:10,  4.41it/s]# Evaluation:  92%|█████████▏| 486/531 [01:51<00:09,  4.57it/s]# Evaluation:  92%|█████████▏| 487/531 [01:51<00:09,  4.64it/s]# Evaluation:  92%|█████████▏| 488/531 [01:52<00:09,  4.75it/s]# Evaluation:  92%|█████████▏| 489/531 [01:52<00:08,  4.79it/s]# Evaluation:  92%|█████████▏| 490/531 [01:52<00:08,  4.78it/s]# Evaluation:  92%|█████████▏| 491/531 [01:52<00:08,  4.82it/s]# Evaluation:  93%|█████████▎| 492/531 [01:52<00:08,  4.83it/s]# Evaluation:  93%|█████████▎| 493/531 [01:53<00:07,  4.77it/s]# Evaluation:  93%|█████████▎| 494/531 [01:53<00:11,  3.26it/s]# Evaluation:  93%|█████████▎| 495/531 [01:53<00:10,  3.50it/s]# Evaluation:  93%|█████████▎| 496/531 [01:54<00:09,  3.74it/s]# Evaluation:  94%|█████████▎| 497/531 [01:54<00:08,  3.90it/s]# Evaluation:  94%|█████████▍| 498/531 [01:54<00:08,  4.12it/s]# Evaluation:  94%|█████████▍| 499/531 [01:54<00:07,  4.19it/s]# Evaluation:  94%|█████████▍| 500/531 [01:55<00:07,  4.17it/s]# Evaluation:  94%|█████████▍| 501/531 [01:55<00:06,  4.33it/s]# Evaluation:  95%|█████████▍| 502/531 [01:55<00:06,  4.50it/s]# Evaluation:  95%|█████████▍| 503/531 [01:55<00:06,  4.59it/s]# Evaluation:  95%|█████████▍| 504/531 [01:55<00:05,  4.66it/s]# Evaluation:  95%|█████████▌| 505/531 [01:56<00:05,  4.70it/s]# Evaluation:  95%|█████████▌| 506/531 [01:56<00:05,  4.79it/s]# Evaluation:  95%|█████████▌| 507/531 [01:56<00:06,  3.72it/s]# Evaluation:  96%|█████████▌| 508/531 [01:56<00:05,  4.04it/s]# Evaluation:  96%|█████████▌| 509/531 [01:57<00:05,  4.24it/s]# Evaluation:  96%|█████████▌| 510/531 [01:57<00:04,  4.45it/s]# Evaluation:  96%|█████████▌| 511/531 [01:57<00:04,  4.63it/s]# Evaluation:  96%|█████████▋| 512/531 [01:57<00:04,  4.69it/s]# Evaluation:  97%|█████████▋| 513/531 [01:57<00:03,  4.72it/s]# Evaluation:  97%|█████████▋| 514/531 [01:58<00:03,  4.75it/s]# Evaluation:  97%|█████████▋| 515/531 [01:58<00:03,  4.77it/s]# Evaluation:  97%|█████████▋| 516/531 [01:58<00:03,  4.74it/s]# Evaluation:  97%|█████████▋| 517/531 [01:58<00:02,  4.70it/s]# Evaluation:  98%|█████████▊| 518/531 [01:59<00:02,  4.79it/s]# Evaluation:  98%|█████████▊| 519/531 [01:59<00:02,  4.79it/s]# Evaluation:  98%|█████████▊| 520/531 [01:59<00:02,  3.86it/s]# Evaluation:  98%|█████████▊| 521/531 [01:59<00:02,  4.09it/s]# Evaluation:  98%|█████████▊| 522/531 [02:00<00:02,  4.27it/s]# Evaluation:  98%|█████████▊| 523/531 [02:00<00:01,  4.38it/s]# Evaluation:  99%|█████████▊| 524/531 [02:00<00:01,  4.35it/s]# Evaluation:  99%|█████████▉| 525/531 [02:00<00:01,  4.40it/s]# Evaluation:  99%|█████████▉| 526/531 [02:00<00:01,  4.44it/s]# Evaluation:  99%|█████████▉| 527/531 [02:01<00:00,  4.60it/s]# Evaluation:  99%|█████████▉| 528/531 [02:01<00:00,  4.72it/s]# Evaluation: 100%|█████████▉| 529/531 [02:01<00:00,  4.78it/s]# Evaluation: 100%|█████████▉| 530/531 [02:01<00:00,  4.83it/s]# Evaluation: 100%|██████████| 531/531 [02:01<00:00,  4.87it/s]# Evaluation: 100%|██████████| 531/531 [02:01<00:00,  4.36it/s]
+2026-09-14 08:14:06,319: Stored metrics at results/33_transformer_recipe_repair/C4/transformer_recipe_repair_C4_2026_0909_1839_ep30/train/model_epoch030/train_metrics.csv
+2026-09-14 08:14:06,457: Stored results at results/33_transformer_recipe_repair/C4/transformer_recipe_repair_C4_2026_0909_1839_ep30/train/model_epoch030/train_results.p
+total 32261
+drwxr-xr-x 2 sunyiq g_sunyiq     4096 Sep 14 08:13 .
+drwxr-xr-x 3 sunyiq g_sunyiq     4096 Sep 14 08:13 ..
+-rw-r--r-- 1 sunyiq g_sunyiq    14825 Sep 14 08:13 train_metrics.csv
+-rw-r--r-- 1 sunyiq g_sunyiq 33013047 Sep 14 08:13 train_results.p
+=== B. signature self-check ===
+signature_features self-check OK: 126 774 126
+=== C. residual diagnostic ===
+-- err tail --
+/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/neuralhydrology/evaluation/tester.py:145: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  self.model.load_state_dict(torch.load(weight_file, map_location=self.device))
+Traceback (most recent call last):
+  File "/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/src/path_signature_runoff/scripts/stage1_residual_diagnostic.py", line 237, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/src/path_signature_runoff/scripts/stage1_residual_diagnostic.py", line 136, in main
+    forcings, inputs, cfg = _load_forcings(args.run_dir)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo/src/path_signature_runoff/scripts/stage1_residual_diagnostic.py", line 98, in _load_forcings
+    forcings[basin] = pd.DataFrame(matrix, index=pd.to_datetime(np.asarray(dataset._dates[basin][freq])), columns=inputs)  # noqa: SLF001
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/core/frame.py", line 827, in __init__
+    mgr = ndarray_to_mgr(
+          ^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/core/internals/construction.py", line 314, in ndarray_to_mgr
+    values = _ensure_2d(values)
+             ^^^^^^^^^^^^^^^^^^
+  File "/data1/home/sunyiq/miniconda3/envs/nh_final/lib/python3.11/site-packages/pandas/core/internals/construction.py", line 592, in _ensure_2d
+    raise ValueError(f"Must pass 2-d input. shape={values.shape}")
+ValueError: Must pass 2-d input. shape=(2826, 5, 1)
+=== C. K1 MANIFESTS ===
+id33_K1_s100_slurm225548 COMPLETE 0 PASS
+id33_K1_s200_slurm225548 COMPLETE 0 PASS
+id33_K1_s300_slurm225548 COMPLETE 0 PASS
+id33_K1_s400_slurm225549 COMPLETE 0 PASS
+id33_K1_s500_slurm225549 COMPLETE 0 PASS
+id33_K1_s600_slurm225549 COMPLETE 0 PASS
+id33_K1_s700_slurm225550 COMPLETE 0 PASS
+id33_K1_s800_slurm225550 COMPLETE 0 PASS
+=== D. K1 EPOCH-30 MEDIANS ===
+2026-09-15 00:14:16,546: Epoch 30 average loss: avg_loss: 0.00838, avg_total_loss: 0.00838
+K1 epoch30_median=0.68853
+2026-09-15 00:14:10,127: Epoch 30 average loss: avg_loss: 0.00829, avg_total_loss: 0.00829
+K1_s200 epoch30_median=0.69491
+2026-09-15 00:14:20,943: Epoch 30 average loss: avg_loss: 0.00893, avg_total_loss: 0.00893
+K1_s300 epoch30_median=0.70163
+2026-09-15 02:07:47,407: Epoch 30 average loss: avg_loss: 0.01031, avg_total_loss: 0.01031
+K1_s400 epoch30_median=0.68250
+2026-09-15 02:07:38,511: Epoch 30 average loss: avg_loss: 0.00831, avg_total_loss: 0.00831
+K1_s500 epoch30_median=0.68950
+2026-09-15 02:07:47,277: Epoch 30 average loss: avg_loss: 0.00870, avg_total_loss: 0.00870
+K1_s600 epoch30_median=0.70078
+2026-09-14 22:06:40,212: Epoch 30 average loss: avg_loss: 0.00832, avg_total_loss: 0.00832
+K1_s700 epoch30_median=0.70274
+2026-09-14 22:06:40,298: Epoch 30 average loss: avg_loss: 0.00952, avg_total_loss: 0.00952
+K1_s800 epoch30_median=0.68290
+=== E. K1 PER-BASIN EPOCH-30 TABLES ===
+###ARM K1 rows=532
+basin,NSE
+01022500,0.7692776322364807
+01031500,0.824000358581543
+01047000,0.7835965156555176
+01052500,0.8034031987190247
+01054200,0.4103020429611206
+01055000,0.3755277991294861
+01057000,0.7533033490180969
+01073000,0.7525893449783325
+01078000,0.7820847034454346
+01123000,0.7835432887077332
+01134500,0.7323662042617798
+01137500,0.6519720554351807
+01139000,0.7623370885848999
+01139800,0.8112084865570068
+01142500,0.7011699676513672
+01144000,0.7953473329544067
+01162500,0.6373333930969238
+01169000,0.6885269284248352
+01170100,0.6729528307914734
+01181000,0.6009529829025269
+01187300,0.758713960647583
+01195100,0.7216740846633911
+01333000,0.5561310052871704
+01350000,0.7110958695411682
+01350080,0.6505786180496216
+01350140,0.6754239797592163
+01365000,0.7377681732177734
+01411300,0.5468966960906982
+01413500,0.6797482967376709
+01414500,0.4978233575820923
+01415000,0.6184567809104919
+01423000,0.7658711671829224
+01434025,0.5941463708877563
+01435000,0.6879249811172485
+01439500,0.6900216341018677
+01440000,0.704221785068512
+01440400,0.6588692665100098
+01451800,0.7014199495315552
+01466500,0.7539768815040588
+01484100,0.6966840028762817
+01487000,0.7462441921234131
+01491000,0.6687372922897339
+01510000,0.7305120229721069
+01516500,0.5064845085144043
+01518862,0.6323139667510986
+01532000,0.7256667017936707
+01539000,0.8346415758132935
+01542810,0.7170202732086182
+01543000,0.8441436290740967
+01543500,0.8896602392196655
+01544500,0.8169870972633362
+01545600,0.8070513606071472
+01547700,0.636227011680603
+01548500,0.8863605856895447
+01549500,0.6951872110366821
+01550000,0.7398718595504761
+01552000,0.819104790687561
+01552500,0.6988259553909302
+01557500,0.7558749318122864
+01567500,0.6884745359420776
+01568000,0.8675127625465393
+01580000,0.578160285949707
+01583500,0.6553570032119751
+01586610,0.5472673177719116
+01591400,0.23439395427703857
+01594950,0.7291082143783569
+01596500,0.7394028902053833
+01605500,0.6312204599380493
+01606500,0.7014287114143372
+01632000,0.5025787949562073
+01632900,0.6145139932632446
+01634500,0.6074805855751038
+01638480,0.5447035431861877
+01639500,0.591164231300354
+01644000,0.7644689083099365
+01664000,0.8216100931167603
+01666500,0.7041046023368835
+01667500,0.8344663977622986
+01669000,0.6247528195381165
+01669520,0.7879185080528259
+02011400,0.8665734529495239
+02013000,0.7975976467132568
+02014000,0.8515053987503052
+02015700,0.6423887014389038
+02016000,0.8473220467567444
+02017500,0.7707966566085815
+02018000,0.8209229707717896
+02027000,0.5341895818710327
+02027500,0.5292763710021973
+02028500,0.48667407035827637
+02038850,0.5760883688926697
+02046000,0.7173824906349182
+02051500,0.7300745248794556
+02053200,0.7766076922416687
+02053800,0.7810360789299011
+02055100,0.7433247566223145
+02056900,0.7475976943969727
+02059500,0.7086381912231445
+02064000,0.7947344779968262
+02065500,0.12162524461746216
+02069700,0.4926952123641968
+02070000,0.6030731797218323
+02074500,0.5407863855361938
+02077200,0.748069167137146
+02081500,0.5732598900794983
+02082950,0.7308239936828613
+02092500,0.8982428312301636
+02096846,0.5484859943389893
+02102908,0.5017878413200378
+02108000,0.8687127828598022
+02111180,0.5572707653045654
+02111500,0.5212063789367676
+02112120,0.4802404046058655
+02112360,0.6472510695457458
+02118500,0.501623272895813
+02125000,0.7687298655509949
+02128000,0.6798570156097412
+02137727,0.7156271934509277
+02140991,0.7335498332977295
+02143000,0.6301862001419067
+02143040,0.4510052800178528
+02149000,0.6847164034843445
+02152100,0.5431218147277832
+02177000,0.7619415521621704
+02178400,0.6492922902107239
+02193340,0.8612595796585083
+02196000,0.8411492705345154
+02198100,0.3264849781990051
+02202600,0.84128737449646
+02212600,0.6438366174697876
+02215100,0.7853015661239624
+02216180,0.6071565747261047
+02221525,0.7059999704360962
+02231000,0.8191568851470947
+02245500,0.6254764795303345
+02246000,0.876431405544281
+02296500,0.5649906396865845
+02297155,-9.449851989746094
+02297310,-1.815546989440918
+02298123,0.6111313700675964
+02298608,0.05596953630447388
+02299950,0.5028913021087646
+02300700,-0.09942269325256348
+02342933,0.4587775468826294
+02349900,0.44467246532440186
+02350900,0.8679760694503784
+02361000,0.6719866991043091
+02363000,0.7986236214637756
+02369800,0.6965370178222656
+02371500,0.47731542587280273
+02372250,-0.10176372528076172
+02374500,0.38032829761505127
+02381600,0.33348530530929565
+02384540,0.5692994594573975
+02395120,-0.7045345306396484
+02415000,0.5313940048217773
+02427250,0.6942262053489685
+02430085,0.7375143766403198
+02450250,0.7145220041275024
+02464000,0.7783527374267578
+02464360,0.6803575158119202
+02465493,-2.921215295791626
+02469800,0.782923698425293
+02472000,0.8150465488433838
+02472500,0.48256051540374756
+02479155,0.706009030342102
+02479300,0.6992090940475464
+02479560,0.6772425174713135
+02481000,0.5386909246444702
+02481510,0.6491560935974121
+03010655,0.7987069487571716
+03011800,0.7275749444961548
+03015500,0.7468003034591675
+03021350,0.5672835111618042
+03026500,0.7708551287651062
+03028000,0.7850692272186279
+03049000,0.7646684050559998
+03049800,0.5859931707382202
+03050000,0.7543554902076721
+03069500,0.8322608470916748
+03070500,0.7929359674453735
+03076600,0.6900385618209839
+03078000,0.7614527344703674
+03140000,0.7543153166770935
+03144000,0.7377931475639343
+03170000,0.7844077944755554
+03173000,0.8113584518432617
+03180500,0.7733902335166931
+03182500,0.8496865034103394
+03186500,0.8492164611816406
+03237280,0.5124744772911072
+03237500,0.49447453022003174
+03238500,0.5269595980644226
+03241500,0.8066760897636414
+03280700,0.6987135410308838
+03281500,0.8362812995910645
+03285000,0.6552843451499939
+03291780,0.5019047260284424
+03338780,0.4003704786300659
+03340800,0.7494230270385742
+03346000,0.7737678289413452
+03364500,0.6305115818977356
+03366500,0.6120368242263794
+03368000,0.658043622970581
+03384450,0.6311937570571899
+03439000,0.6625356674194336
+03455500,0.25562334060668945
+03456500,0.263127863407135
+03460000,0.7086067199707031
+03463300,0.6209556460380554
+03471500,0.7540991306304932
+03473000,0.8140589594841003
+03479000,0.316131055355072
+03488000,0.7529421448707581
+03498500,0.8163419365882874
+03500000,0.7396280765533447
+03500240,0.37240320444107056
+03504000,0.4887198805809021
+03574500,0.6308778524398804
+03592718,0.2808351516723633
+03604000,0.7614675760269165
+04015330,0.6010478734970093
+04024430,0.4896824359893799
+04027000,0.7223109006881714
+04040500,0.8422992825508118
+04043050,0.8481758832931519
+04045500,0.8640222549438477
+04057510,0.7910977005958557
+04057800,0.4617891311645508
+04059500,0.8011409044265747
+04063700,0.6241805553436279
+04074950,0.7721664905548096
+04105700,0.7172911167144775
+04115265,0.6730321645736694
+04122200,0.7709928750991821
+04122500,0.7342775464057922
+04127918,0.43475157022476196
+04127997,0.7855969071388245
+04161580,0.5915646553039551
+04185000,0.6128146052360535
+04196800,0.6204603910446167
+04197100,0.4457273483276367
+04197170,0.5667216777801514
+04213000,0.5144588947296143
+04213075,0.3968636989593506
+04216418,0.6606708765029907
+04221000,0.7816570997238159
+04224775,0.7523107528686523
+04233000,0.7119415402412415
+04256000,0.793759286403656
+04296000,0.7232422828674316
+05057200,0.3743399381637573
+05120500,-30.091520309448242
+05291000,0.31882619857788086
+05362000,0.8403902053833008
+05393500,0.8000836372375488
+05399500,0.7112236618995667
+05408000,0.628049373626709
+05413500,0.8141000270843506
+05414000,0.5798789858818054
+05444000,-0.07572531700134277
+05454000,0.3582308292388916
+05458000,0.6853268146514893
+05466500,0.12337207794189453
+05487980,0.7447148561477661
+05488200,0.5788120627403259
+05489000,0.6784442663192749
+05495000,0.7515857219696045
+05495500,0.4084385633468628
+05501000,0.6999275088310242
+05503800,0.7352887988090515
+05507600,0.7974004745483398
+05508805,0.7403785586357117
+05525500,0.7027024030685425
+05556500,0.7169045209884644
+05584500,-0.08214449882507324
+05591550,0.5596195459365845
+05592050,0.20418351888656616
+05592575,0.6756167411804199
+05593575,0.7854092121124268
+05593900,0.7380161285400391
+05595730,0.8215712308883667
+06221400,0.8898195028305054
+06224000,0.8661403656005859
+06278300,0.7687343955039978
+06280300,0.7037100791931152
+06289000,0.4542856216430664
+06291500,0.5284028053283691
+06311000,0.6489757299423218
+06332515,0.3639296293258667
+06339100,0.7257639169692993
+06344600,-1.0099575519561768
+06350000,-0.45756518840789795
+06352000,-0.04696178436279297
+06404000,0.7679351568222046
+06406000,0.0926811695098877
+06409000,-2.969784736633301
+06431500,0.4349609613418579
+06440200,0.7963042259216309
+06447500,0.40805596113204956
+06470800,0.7941973209381104
+06477500,-0.708488941192627
+06479215,0.06467360258102417
+06601000,0.24821680784225464
+06614800,0.7620818018913269
+06622700,0.7498407363891602
+06623800,0.8035611510276794
+06632400,0.7477949857711792
+06746095,0.5169129371643066
+06803510,0.7568580508232117
+06803530,0.697392463684082
+06814000,0.6904332041740417
+06847900,0.076943039894104
+06853800,0.31327277421951294
+06876700,0.5212177038192749
+06878000,0.8487936854362488
+06879650,0.4184589982032776
+06885500,0.7909161448478699
+06888500,0.6440322995185852
+06889200,0.7911062240600586
+06889500,0.8033077716827393
+06892000,0.7930951714515686
+06903400,0.63271164894104
+06906800,0.6860851645469666
+06910800,0.8508481979370117
+06911900,0.8361483216285706
+06917000,0.628791332244873
+06918460,0.2554546594619751
+06919500,0.730707049369812
+06921070,0.5988823771476746
+06921200,0.6335936784744263
+07057500,0.862922728061676
+07060710,0.43564003705978394
+07066000,0.7838077545166016
+07083000,0.8233843445777893
+07142300,-6.240764141082764
+07145700,0.6463508605957031
+07167500,0.767609715461731
+07180500,0.7163557410240173
+07184000,0.6016292572021484
+07195800,0.2356879711151123
+07196900,0.6837635040283203
+07197000,0.5911682844161987
+07208500,-0.2026669979095459
+07261000,0.8755396604537964
+07263295,0.59206622838974
+07291000,0.28164100646972656
+07299670,0.058147966861724854
+07301410,-0.06628084182739258
+07315200,0.49022215604782104
+07315700,0.7247633337974548
+07335700,0.6419416666030884
+07340300,0.7635147571563721
+07346045,0.6573100090026855
+07359610,0.7567870020866394
+07362100,0.47296369075775146
+07362587,0.41292911767959595
+07375000,0.5381817817687988
+08013000,0.7468085289001465
+08014500,0.2497277855873108
+08023080,0.29568785429000854
+08050800,0.4154800772666931
+08066200,0.728801965713501
+08066300,0.5571908950805664
+08070000,0.7162638306617737
+08070200,0.6651420593261719
+08082700,0.1531580090522766
+08086212,0.32154303789138794
+08086290,0.7209851741790771
+08101000,0.5361272096633911
+08103900,0.4934983253479004
+08104900,0.23556870222091675
+08109700,0.44809138774871826
+08150800,0.042075276374816895
+08158700,-0.5940937995910645
+08158810,0.12837731838226318
+08164300,0.47650986909866333
+08164600,0.3274049758911133
+08165300,-23.43982696533203
+08171300,0.5260998010635376
+08175000,0.46569132804870605
+08176900,0.2894672155380249
+08178880,0.16819071769714355
+08189500,0.31355875730514526
+08190000,-0.11688828468322754
+08190500,-0.5860596895217896
+08194200,-1.6862008571624756
+08195000,0.19207561016082764
+08196000,0.03393590450286865
+08198500,0.2381364107131958
+08200000,0.5283862948417664
+08202700,0.3712790012359619
+08267500,0.5917472839355469
+08269000,0.5650898218154907
+08271000,0.7231215238571167
+08324000,0.46606743335723877
+08377900,0.8642449378967285
+08378500,0.8547731637954712
+08380500,0.2579548954963684
+09035800,0.7032886147499084
+09035900,0.8500549793243408
+09047700,0.8060917854309082
+09065500,0.9139630198478699
+09066000,0.8422906398773193
+09066200,0.8842694759368896
+09066300,0.8344802856445312
+09081600,0.8705441355705261
+09107000,0.8136752843856812
+09210500,0.5870398283004761
+09223000,0.7816393375396729
+09306242,-0.47272443771362305
+09312600,0.7515729665756226
+09352900,0.7759419083595276
+09378170,-2.423945188522339
+09386900,0.00475919246673584
+09404450,0.3063664436340332
+09430600,0.048410892486572266
+09447800,-2.1910135746002197
+09484600,0.060624659061431885
+09492400,0.4552456736564636
+09494000,0.25282102823257446
+09497980,0.24964141845703125
+09505350,-0.24159324169158936
+09505800,0.11577671766281128
+09508300,0.3747785687446594
+09510200,0.31859278678894043
+09512280,0.20321440696716309
+09513780,-0.20448780059814453
+10234500,0.6743507385253906
+10244950,-8.11510944366455
+10259000,0.36326849460601807
+10336645,0.5338202714920044
+10336660,0.8514285087585449
+10343500,-0.5226336717605591
+11124500,0.6599352359771729
+11141280,-0.4866294860839844
+11143000,0.546306312084198
+11148900,0.5214723348617554
+11151300,0.3373803496360779
+11176400,0.5459345579147339
+11230500,0.36289143562316895
+11237500,0.9224092364311218
+11264500,0.6762884855270386
+11266500,0.7120012044906616
+11284400,0.4738190770149231
+11381500,0.5407648682594299
+11451100,0.5710195302963257
+11468500,0.8431727290153503
+11473900,0.8304988145828247
+11475560,0.6217886209487915
+11476600,0.7704347372055054
+11478500,0.6472210884094238
+11480390,0.5376802682876587
+11481200,0.7988430857658386
+11482500,0.804648220539093
+11522500,0.6738549470901489
+11523200,0.7573655247688293
+11528700,0.7239652872085571
+11532500,0.8229997754096985
+12010000,0.8562222719192505
+12013500,0.8232937455177307
+12020000,0.3038596510887146
+12025700,0.8122721314430237
+12035000,0.898891806602478
+12040500,0.8221622705459595
+12041200,0.8288968801498413
+12048000,0.6853829622268677
+12054000,0.7585565447807312
+12056500,0.5816506147384644
+12073500,0.7308544516563416
+12082500,0.7895427942276001
+12092000,0.6854092478752136
+12114500,0.5726673007011414
+12115000,0.7056112885475159
+12117000,0.7133591175079346
+12143600,0.7821637988090515
+12144000,0.7694447040557861
+12145500,0.8855879306793213
+12147500,0.8048218488693237
+12167000,0.5761786699295044
+12175500,0.8561093807220459
+12178100,0.8459506630897522
+12186000,0.7693776488304138
+12189500,0.683014988899231
+12375900,0.8345378041267395
+12377150,0.9125281572341919
+12381400,0.8924224972724915
+12383500,0.8200364112854004
+12390700,0.9166570901870728
+12411000,0.7031497359275818
+12447390,0.6687685251235962
+12451000,0.8758661150932312
+12488500,0.5105530619621277
+13011500,0.8117347955703735
+13011900,0.7169381380081177
+13018300,0.5536661148071289
+13023000,0.8388245701789856
+13161500,0.8457962274551392
+13235000,0.8562102913856506
+13240000,0.8304926753044128
+13313000,0.9344559907913208
+13331500,0.8287463784217834
+14020000,0.501744270324707
+14096850,-0.6527489423751831
+14137000,0.5346080660820007
+14138800,0.7134180665016174
+14138870,0.7718294262886047
+14138900,0.7121732234954834
+14139800,0.772465705871582
+14141500,0.7349094152450562
+14154500,0.7731411457061768
+14158790,0.5531336069107056
+14166500,0.87052983045578
+14182500,0.6713640093803406
+14185000,0.7982902526855469
+14185900,0.7660742402076721
+14187000,0.8536134362220764
+14216500,0.48894405364990234
+14222500,0.7806215882301331
+14236200,0.8201044797897339
+14301000,0.7926048040390015
+14303200,0.8219993114471436
+14305500,0.7841867208480835
+14306340,0.7607721090316772
+14306500,0.8535317182540894
+14308990,0.8082486391067505
+14309500,0.7134256362915039
+14316700,0.6973645687103271
+14325000,0.7404718995094299
+14362250,0.5248451828956604
+14400000,0.8696106672286987
+###ARM K1_s200 rows=532
+basin,NSE
+01022500,0.8025190830230713
+01031500,0.7064787149429321
+01047000,0.7536163330078125
+01052500,0.8150264024734497
+01054200,0.4372064471244812
+01055000,0.44267958402633667
+01057000,0.7980427742004395
+01073000,0.7543538808822632
+01078000,0.8408134579658508
+01123000,0.7981590032577515
+01134500,0.7812595963478088
+01137500,0.696771502494812
+01139000,0.754036545753479
+01139800,0.6821286678314209
+01142500,0.6269904375076294
+01144000,0.7827230095863342
+01162500,0.602547824382782
+01169000,0.5029091835021973
+01170100,0.4548019766807556
+01181000,0.6158556938171387
+01187300,0.7871177792549133
+01195100,0.7706476449966431
+01333000,0.5013958215713501
+01350000,0.7194613218307495
+01350080,0.7066439390182495
+01350140,0.6592494249343872
+01365000,0.751143217086792
+01411300,0.6021822690963745
+01413500,0.7094624638557434
+01414500,0.5657515525817871
+01415000,0.6250336766242981
+01423000,0.7328650951385498
+01434025,0.6296950578689575
+01435000,0.716317355632782
+01439500,0.564085841178894
+01440000,0.8010187745094299
+01440400,0.6618329882621765
+01451800,0.7414344549179077
+01466500,0.6804645657539368
+01484100,0.694854736328125
+01487000,0.9002182483673096
+01491000,0.8420182466506958
+01510000,0.7087893486022949
+01516500,0.5974504351615906
+01518862,0.7454372644424438
+01532000,0.8139423727989197
+01539000,0.8681119680404663
+01542810,0.8025016188621521
+01543000,0.8935480117797852
+01543500,0.9150638580322266
+01544500,0.8484340906143188
+01545600,0.8188232779502869
+01547700,0.6388989090919495
+01548500,0.9303008913993835
+01549500,0.8547568321228027
+01550000,0.846494734287262
+01552000,0.8458337783813477
+01552500,0.7482848167419434
+01557500,0.8249666690826416
+01567500,0.7094008326530457
+01568000,0.9065831899642944
+01580000,0.6317144632339478
+01583500,0.47903794050216675
+01586610,0.5465737581253052
+01591400,0.45339179039001465
+01594950,0.7711416482925415
+01596500,0.7521176338195801
+01605500,0.6915983557701111
+01606500,0.7796160578727722
+01632000,0.535977840423584
+01632900,0.7150365114212036
+01634500,0.5361317992210388
+01638480,0.526706337928772
+01639500,0.56846022605896
+01644000,0.7463051080703735
+01664000,0.8284900188446045
+01666500,0.6209826469421387
+01667500,0.7495819330215454
+01669000,0.7585893869400024
+01669520,0.7750116586685181
+02011400,0.8794631958007812
+02013000,0.7769746780395508
+02014000,0.8374045491218567
+02015700,0.7015762329101562
+02016000,0.823036253452301
+02017500,0.6689459085464478
+02018000,0.7839573621749878
+02027000,0.6058076620101929
+02027500,0.5545699596405029
+02028500,0.6784743070602417
+02038850,0.652337908744812
+02046000,0.7321535348892212
+02051500,0.7839237451553345
+02053200,0.6980189085006714
+02053800,0.7444326877593994
+02055100,0.6938191652297974
+02056900,0.7122681140899658
+02059500,0.6782211065292358
+02064000,0.8833633661270142
+02065500,0.07431262731552124
+02069700,0.5253280401229858
+02070000,0.6544700860977173
+02074500,0.5860676765441895
+02077200,0.6167268753051758
+02081500,0.615409255027771
+02082950,0.6994777917861938
+02092500,0.8856644630432129
+02096846,0.5806481838226318
+02102908,0.6297297477722168
+02108000,0.8515461087226868
+02111180,0.5926775336265564
+02111500,0.601421594619751
+02112120,0.5137418508529663
+02112360,0.6012468338012695
+02118500,0.5130477547645569
+02125000,0.750511109828949
+02128000,0.7145349979400635
+02137727,0.697594940662384
+02140991,0.6963622570037842
+02143000,0.7068703174591064
+02143040,0.517235517501831
+02149000,0.7361794710159302
+02152100,0.6182151436805725
+02177000,0.6021554470062256
+02178400,0.7200778722763062
+02193340,0.8277619481086731
+02196000,0.8332949876785278
+02198100,0.6014482975006104
+02202600,0.7410554885864258
+02212600,0.7750878930091858
+02215100,0.8464116454124451
+02216180,0.605426549911499
+02221525,0.5018005967140198
+02231000,0.8819913864135742
+02245500,0.6128184795379639
+02246000,0.8043688535690308
+02296500,0.5473907589912415
+02297155,-7.059487342834473
+02297310,-2.8536603450775146
+02298123,0.7977361679077148
+02298608,-0.12918531894683838
+02299950,0.307120144367218
+02300700,0.0010394454002380371
+02342933,0.40205127000808716
+02349900,0.4858275055885315
+02350900,0.8391884565353394
+02361000,0.5400400161743164
+02363000,0.7467403411865234
+02369800,0.6589128375053406
+02371500,0.23154324293136597
+02372250,-0.010061979293823242
+02374500,0.37358665466308594
+02381600,0.409210205078125
+02384540,0.5492609739303589
+02395120,0.03894174098968506
+02415000,0.729394793510437
+02427250,0.7698878049850464
+02430085,0.7239013910293579
+02450250,0.7240716814994812
+02464000,0.7585157752037048
+02464360,0.7954302430152893
+02465493,-0.10925698280334473
+02469800,0.778550386428833
+02472000,0.8335510492324829
+02472500,0.4895319938659668
+02479155,0.8403137922286987
+02479300,0.771388053894043
+02479560,0.6784337759017944
+02481000,0.5477659702301025
+02481510,0.6085638999938965
+03010655,0.8394612073898315
+03011800,0.8295434713363647
+03015500,0.8353607058525085
+03021350,0.7701802253723145
+03026500,0.8516445755958557
+03028000,0.8649685382843018
+03049000,0.8459790945053101
+03049800,0.5977438688278198
+03050000,0.8658422231674194
+03069500,0.8955614566802979
+03070500,0.8283389806747437
+03076600,0.718173623085022
+03078000,0.7936220169067383
+03140000,0.7152509689331055
+03144000,0.804233729839325
+03170000,0.7725860476493835
+03173000,0.8573108911514282
+03180500,0.8081071376800537
+03182500,0.8916154503822327
+03186500,0.8250819444656372
+03237280,0.6547979116439819
+03237500,0.5997553467750549
+03238500,0.6534965634346008
+03241500,0.8406980633735657
+03280700,0.7218209505081177
+03281500,0.8348699808120728
+03285000,0.7561302781105042
+03291780,0.6241391897201538
+03338780,0.5042295455932617
+03340800,0.8118864893913269
+03346000,0.7660107612609863
+03364500,0.6168272495269775
+03366500,0.6084804534912109
+03368000,0.7784607410430908
+03384450,0.6232895851135254
+03439000,0.6774499416351318
+03455500,0.2413429617881775
+03456500,0.4774346947669983
+03460000,0.7032760381698608
+03463300,0.6346869468688965
+03471500,0.712080717086792
+03473000,0.7184231281280518
+03479000,0.4866025447845459
+03488000,0.772358775138855
+03498500,0.8214766979217529
+03500000,0.8148161172866821
+03500240,0.49512577056884766
+03504000,0.6849398612976074
+03574500,0.667473554611206
+03592718,0.5461816191673279
+03604000,0.7857017517089844
+04015330,0.7184074521064758
+04024430,0.4155457615852356
+04027000,0.6778184175491333
+04040500,0.7997447848320007
+04043050,0.7873575687408447
+04045500,0.8362597823143005
+04057510,0.7769182324409485
+04057800,0.48415279388427734
+04059500,0.8588566780090332
+04063700,0.6755871772766113
+04074950,0.833489716053009
+04105700,0.46078211069107056
+04115265,0.7092591524124146
+04122200,0.8564398288726807
+04122500,0.7697130441665649
+04127918,0.5860721468925476
+04127997,0.8133609294891357
+04161580,0.6046936511993408
+04185000,0.7479581832885742
+04196800,0.625891923904419
+04197100,0.47420555353164673
+04197170,0.784852147102356
+04213000,0.5975237488746643
+04213075,0.35124725103378296
+04216418,0.7535802125930786
+04221000,0.8582029342651367
+04224775,0.8260993957519531
+04233000,0.7940597534179688
+04256000,0.7273826599121094
+04296000,0.7134349346160889
+05057200,0.2510303258895874
+05120500,-31.984539031982422
+05291000,0.2812403440475464
+05362000,0.8747158050537109
+05393500,0.8795667886734009
+05399500,0.6925053596496582
+05408000,0.6689748764038086
+05413500,0.7243674993515015
+05414000,0.3780057430267334
+05444000,0.4154600501060486
+05454000,0.49100422859191895
+05458000,0.5487110614776611
+05466500,0.385248601436615
+05487980,0.6851422786712646
+05488200,0.6405036449432373
+05489000,0.6103524565696716
+05495000,0.6825262308120728
+05495500,0.645732045173645
+05501000,0.7531174421310425
+05503800,0.8347821235656738
+05507600,0.807152509689331
+05508805,0.8380547761917114
+05525500,0.6417773962020874
+05556500,0.7368507385253906
+05584500,0.14309757947921753
+05591550,0.7038108110427856
+05592050,0.547735333442688
+05592575,0.6625760197639465
+05593575,0.8016163110733032
+05593900,0.7696312069892883
+05595730,0.7993879318237305
+06221400,0.900715708732605
+06224000,0.9065185189247131
+06278300,0.7675996422767639
+06280300,0.8604725003242493
+06289000,0.5403249263763428
+06291500,0.6949130296707153
+06311000,0.6806202530860901
+06332515,-0.4504859447479248
+06339100,0.40183085203170776
+06344600,-1.2755725383758545
+06350000,-0.4554860591888428
+06352000,0.01676011085510254
+06404000,0.6344486474990845
+06406000,0.07247132062911987
+06409000,-1.520120620727539
+06431500,0.426588237285614
+06440200,0.6667318940162659
+06447500,0.3479693531990051
+06470800,0.6421247720718384
+06477500,-1.015634298324585
+06479215,0.18270200490951538
+06601000,-0.047127366065979004
+06614800,0.8110349178314209
+06622700,0.7906352281570435
+06623800,0.9207503795623779
+06632400,0.8044255971908569
+06746095,0.7856798768043518
+06803510,0.7229940891265869
+06803530,0.6264498233795166
+06814000,0.61784827709198
+06847900,-0.029921770095825195
+06853800,0.4562898278236389
+06876700,0.5632674694061279
+06878000,0.8398190140724182
+06879650,0.3886854648590088
+06885500,0.6869380474090576
+06888500,0.7335303425788879
+06889200,0.6138095259666443
+06889500,0.7372409105300903
+06892000,0.8844088315963745
+06903400,0.5527861714363098
+06906800,0.7183740139007568
+06910800,0.8425736427307129
+06911900,0.8611551523208618
+06917000,0.5698586106300354
+06918460,0.17812752723693848
+06919500,0.7500850558280945
+06921070,0.58299720287323
+06921200,0.5697211623191833
+07057500,0.7676307559013367
+07060710,0.5449910163879395
+07066000,0.7969536781311035
+07083000,0.9008739590644836
+07142300,-2.464745283126831
+07145700,0.6796231269836426
+07167500,0.7513260841369629
+07180500,0.8056641221046448
+07184000,0.5965602397918701
+07195800,-0.05389094352722168
+07196900,0.7144002914428711
+07197000,0.7596575617790222
+07208500,0.31870341300964355
+07261000,0.7677265405654907
+07263295,0.5951895713806152
+07291000,0.2754754424095154
+07299670,0.4015271067619324
+07301410,-0.09295594692230225
+07315200,0.4485102891921997
+07315700,0.747780978679657
+07335700,0.7441205978393555
+07340300,0.6735740900039673
+07346045,0.587960958480835
+07359610,0.6999356746673584
+07362100,0.5051084756851196
+07362587,0.36286282539367676
+07375000,0.5008347630500793
+08013000,0.83188396692276
+08014500,0.30258095264434814
+08023080,0.422671377658844
+08050800,0.5994893908500671
+08066200,0.6102514266967773
+08066300,0.6719772815704346
+08070000,0.5623389482498169
+08070200,0.6252310276031494
+08082700,0.18612980842590332
+08086212,0.5381461381912231
+08086290,0.6650340557098389
+08101000,0.7072583436965942
+08103900,0.2609441876411438
+08104900,0.5728514194488525
+08109700,0.46812623739242554
+08150800,0.16247421503067017
+08158700,0.4705936312675476
+08158810,0.4027872681617737
+08164300,0.4666230082511902
+08164600,0.35874974727630615
+08165300,-11.20354175567627
+08171300,0.690933108329773
+08175000,0.548633337020874
+08176900,0.3872714042663574
+08178880,0.001935422420501709
+08189500,0.4662821292877197
+08190000,-0.21297681331634521
+08190500,-0.4456658363342285
+08194200,-0.4968630075454712
+08195000,0.6673617362976074
+08196000,0.2102683186531067
+08198500,0.3665706515312195
+08200000,0.5423000454902649
+08202700,0.32580703496932983
+08267500,0.4223281741142273
+08269000,0.531145453453064
+08271000,0.6596518754959106
+08324000,0.21215945482254028
+08377900,0.816206157207489
+08378500,0.8415579795837402
+08380500,0.18272823095321655
+09035800,0.7840831279754639
+09035900,0.9118898510932922
+09047700,0.8482066988945007
+09065500,0.9057062864303589
+09066000,0.9016202688217163
+09066200,0.8793719410896301
+09066300,0.8935396075248718
+09081600,0.9481710195541382
+09107000,0.8426340222358704
+09210500,0.5461273193359375
+09223000,0.7976763248443604
+09306242,-0.17915606498718262
+09312600,0.7270674109458923
+09352900,0.7253699898719788
+09378170,-1.8974602222442627
+09386900,0.0007217526435852051
+09404450,-0.2436842918395996
+09430600,0.023251831531524658
+09447800,-3.2954626083374023
+09484600,-0.05459105968475342
+09492400,0.526181697845459
+09494000,0.39664173126220703
+09497980,0.30545490980148315
+09505350,-0.10710489749908447
+09505800,-0.7859443426132202
+09508300,0.28541499376296997
+09510200,0.38507741689682007
+09512280,0.3468829393386841
+09513780,-0.33370161056518555
+10234500,0.6741452217102051
+10244950,-0.9806369543075562
+10259000,0.4651150703430176
+10336645,0.7491788864135742
+10336660,0.9007113575935364
+10343500,-1.3036763668060303
+11124500,0.675084114074707
+11141280,0.2556735873222351
+11143000,0.41597598791122437
+11148900,0.33767521381378174
+11151300,0.06315124034881592
+11176400,0.5580681562423706
+11230500,0.22566962242126465
+11237500,0.8048363924026489
+11264500,0.6343551278114319
+11266500,0.6006364822387695
+11284400,0.40829741954803467
+11381500,0.6072298288345337
+11451100,0.6358871459960938
+11468500,0.8682509660720825
+11473900,0.7816330790519714
+11475560,0.6918080449104309
+11476600,0.8141326904296875
+11478500,0.5696386694908142
+11480390,0.4675067067146301
+11481200,0.8021948337554932
+11482500,0.8377138376235962
+11522500,0.7296018004417419
+11523200,0.8199896812438965
+11528700,0.65297532081604
+11532500,0.8777233362197876
+12010000,0.8669780492782593
+12013500,0.8613494634628296
+12020000,0.327880322933197
+12025700,0.813282310962677
+12035000,0.8502817153930664
+12040500,0.864852786064148
+12041200,0.7964720726013184
+12048000,0.6053212881088257
+12054000,0.6992106437683105
+12056500,0.7000251412391663
+12073500,0.6663217544555664
+12082500,0.8023038506507874
+12092000,0.7170045971870422
+12114500,0.5674107074737549
+12115000,0.6638806462287903
+12117000,0.7626438140869141
+12143600,0.7957893013954163
+12144000,0.7907947301864624
+12145500,0.8721801042556763
+12147500,0.7997986078262329
+12167000,0.6604994535446167
+12175500,0.8498834371566772
+12178100,0.8105571269989014
+12186000,0.7624197006225586
+12189500,0.7033576965332031
+12375900,0.6528857946395874
+12377150,0.8247654438018799
+12381400,0.9145273566246033
+12383500,0.8977105617523193
+12390700,0.8529046773910522
+12411000,0.7690082788467407
+12447390,0.6717444658279419
+12451000,0.9052485227584839
+12488500,0.693384051322937
+13011500,0.8170031905174255
+13011900,0.8828321695327759
+13018300,0.6154401302337646
+13023000,0.9053916335105896
+13161500,0.834438681602478
+13235000,0.8206489086151123
+13240000,0.9089245796203613
+13313000,0.9301879405975342
+13331500,0.8326079249382019
+14020000,0.4956807494163513
+14096850,-0.37931132316589355
+14137000,0.6773204803466797
+14138800,0.6793371438980103
+14138870,0.6927754878997803
+14138900,0.7070538997650146
+14139800,0.7698462009429932
+14141500,0.7521705627441406
+14154500,0.8290203809738159
+14158790,0.68169766664505
+14166500,0.901968240737915
+14182500,0.707870364189148
+14185000,0.8209291696548462
+14185900,0.7982945442199707
+14187000,0.8724570274353027
+14216500,0.6008526086807251
+14222500,0.8791958689689636
+14236200,0.7646644115447998
+14301000,0.9007256031036377
+14303200,0.7179836630821228
+14305500,0.8502796292304993
+14306340,0.7491936683654785
+14306500,0.8433903455734253
+14308990,0.7526116371154785
+14309500,0.7041984796524048
+14316700,0.6635995507240295
+14325000,0.74752277135849
+14362250,-0.008039593696594238
+14400000,0.8621009588241577
+###ARM K1_s300 rows=532
+basin,NSE
+01022500,0.7838442325592041
+01031500,0.7472354173660278
+01047000,0.8333081007003784
+01052500,0.8168490529060364
+01054200,0.5519065856933594
+01055000,0.6582483053207397
+01057000,0.7823836803436279
+01073000,0.8172128200531006
+01078000,0.8181313276290894
+01123000,0.8080061674118042
+01134500,0.7075035572052002
+01137500,0.6772961616516113
+01139000,0.8002227544784546
+01139800,0.6295582056045532
+01142500,0.6490837335586548
+01144000,0.8073827028274536
+01162500,0.6520652174949646
+01169000,0.6363405585289001
+01170100,0.6154828667640686
+01181000,0.6448214054107666
+01187300,0.7236760854721069
+01195100,0.6408613324165344
+01333000,0.5812928676605225
+01350000,0.7551730275154114
+01350080,0.5261095762252808
+01350140,0.7302324175834656
+01365000,0.7240191102027893
+01411300,0.6522105932235718
+01413500,0.49746137857437134
+01414500,0.6320616602897644
+01415000,0.7016578316688538
+01423000,0.7227532863616943
+01434025,0.5548948049545288
+01435000,0.6684284210205078
+01439500,0.7320261597633362
+01440000,0.7711107730865479
+01440400,0.720232367515564
+01451800,0.7809025049209595
+01466500,0.6811057329177856
+01484100,0.7489604949951172
+01487000,0.8516823649406433
+01491000,0.7395844459533691
+01510000,0.8150521516799927
+01516500,0.6919455528259277
+01518862,0.7303016185760498
+01532000,0.7791088819503784
+01539000,0.8701437711715698
+01542810,0.8044926524162292
+01543000,0.8809431791305542
+01543500,0.9005135297775269
+01544500,0.8681321144104004
+01545600,0.829548180103302
+01547700,0.6892071962356567
+01548500,0.860240638256073
+01549500,0.854390025138855
+01550000,0.8367244601249695
+01552000,0.8240779638290405
+01552500,0.716320276260376
+01557500,0.8376955389976501
+01567500,0.5835723280906677
+01568000,0.8585337400436401
+01580000,0.6095880270004272
+01583500,0.4356277585029602
+01586610,0.5588690638542175
+01591400,0.29833388328552246
+01594950,0.7633575201034546
+01596500,0.7531121969223022
+01605500,0.717681348323822
+01606500,0.817797839641571
+01632000,0.5286163091659546
+01632900,0.7139385342597961
+01634500,0.6984142065048218
+01638480,0.5475721955299377
+01639500,0.6640013456344604
+01644000,0.8507274389266968
+01664000,0.7510466575622559
+01666500,0.575160562992096
+01667500,0.8131488561630249
+01669000,0.7236634492874146
+01669520,0.7530196309089661
+02011400,0.9040507078170776
+02013000,0.7673070430755615
+02014000,0.8333754539489746
+02015700,0.6727613806724548
+02016000,0.83371502161026
+02017500,0.6596928834915161
+02018000,0.7875528335571289
+02027000,0.618270754814148
+02027500,0.3383561372756958
+02028500,0.8310256004333496
+02038850,0.6349951028823853
+02046000,0.7475143074989319
+02051500,0.7599895000457764
+02053200,0.7521962523460388
+02053800,0.8134466409683228
+02055100,0.6724926233291626
+02056900,0.771912693977356
+02059500,0.687595546245575
+02064000,0.7920585870742798
+02065500,0.30228859186172485
+02069700,0.501103937625885
+02070000,0.6147233247756958
+02074500,0.5659240484237671
+02077200,0.5256001949310303
+02081500,0.6226181983947754
+02082950,0.7665961384773254
+02092500,0.8598178029060364
+02096846,0.5305023193359375
+02102908,0.7539768218994141
+02108000,0.8046591281890869
+02111180,0.7028071880340576
+02111500,0.6145055890083313
+02112120,0.555331289768219
+02112360,0.7249735593795776
+02118500,0.5435574054718018
+02125000,0.7844383716583252
+02128000,0.5072494745254517
+02137727,0.7369484901428223
+02140991,0.7414705753326416
+02143000,0.6457829475402832
+02143040,0.48394227027893066
+02149000,0.7003008127212524
+02152100,0.5797785520553589
+02177000,0.6314545273780823
+02178400,0.7304672002792358
+02193340,0.8764246702194214
+02196000,0.87416011095047
+02198100,0.6081439256668091
+02202600,0.8280507326126099
+02212600,0.7039511799812317
+02215100,0.8199353814125061
+02216180,0.6960128545761108
+02221525,0.6254473924636841
+02231000,0.8230948448181152
+02245500,0.7952394485473633
+02246000,0.7380731701850891
+02296500,0.3033081889152527
+02297155,-9.790179252624512
+02297310,-2.2312135696411133
+02298123,0.6683102250099182
+02298608,0.08043843507766724
+02299950,0.4456658959388733
+02300700,0.09564018249511719
+02342933,0.5682392120361328
+02349900,0.4770665764808655
+02350900,0.8690015077590942
+02361000,0.7072539329528809
+02363000,0.7053806781768799
+02369800,0.6870892643928528
+02371500,0.4152860641479492
+02372250,-0.9585450887680054
+02374500,0.5886532664299011
+02381600,0.33875876665115356
+02384540,0.7223257422447205
+02395120,0.2720506191253662
+02415000,0.7391800284385681
+02427250,0.7736001014709473
+02430085,0.7407583594322205
+02450250,0.5832564830780029
+02464000,0.6763259172439575
+02464360,0.7066927552223206
+02465493,-0.10753846168518066
+02469800,0.6669979691505432
+02472000,0.841717004776001
+02472500,0.6252464056015015
+02479155,0.7191942930221558
+02479300,0.7351951599121094
+02479560,0.682611346244812
+02481000,0.497829794883728
+02481510,0.6752508282661438
+03010655,0.8487404584884644
+03011800,0.7285488843917847
+03015500,0.804965615272522
+03021350,0.674498438835144
+03026500,0.8185543417930603
+03028000,0.798029899597168
+03049000,0.8459005355834961
+03049800,0.5958248972892761
+03050000,0.8301424980163574
+03069500,0.8733569383621216
+03070500,0.8110782504081726
+03076600,0.7270861864089966
+03078000,0.7922686338424683
+03140000,0.7925328612327576
+03144000,0.8310801386833191
+03170000,0.8081920146942139
+03173000,0.8541527986526489
+03180500,0.8273851275444031
+03182500,0.8947252035140991
+03186500,0.8557930588722229
+03237280,0.6093363761901855
+03237500,0.6316101551055908
+03238500,0.6597713232040405
+03241500,0.8264856934547424
+03280700,0.7863048315048218
+03281500,0.8191182613372803
+03285000,0.733502984046936
+03291780,0.6150991916656494
+03338780,0.3293575644493103
+03340800,0.7890716195106506
+03346000,0.7520714402198792
+03364500,0.6279080510139465
+03366500,0.5865793228149414
+03368000,0.778730034828186
+03384450,0.6207021474838257
+03439000,0.6809277534484863
+03455500,0.30795592069625854
+03456500,0.4833258390426636
+03460000,0.7971765398979187
+03463300,0.575751006603241
+03471500,0.8176509737968445
+03473000,0.81952965259552
+03479000,0.5301119089126587
+03488000,0.8333309888839722
+03498500,0.8309439420700073
+03500000,0.8121976256370544
+03500240,0.5058332681655884
+03504000,0.7072042226791382
+03574500,0.7368203401565552
+03592718,0.534132719039917
+03604000,0.7739195823669434
+04015330,0.6278550624847412
+04024430,0.523078203201294
+04027000,0.6430787444114685
+04040500,0.8067403435707092
+04043050,0.8285343647003174
+04045500,0.8969362378120422
+04057510,0.7853361964225769
+04057800,0.3828333020210266
+04059500,0.8700331449508667
+04063700,0.7703273296356201
+04074950,0.8441327810287476
+04105700,-0.3798619508743286
+04115265,0.6985577344894409
+04122200,0.7738746404647827
+04122500,0.6665499210357666
+04127918,0.593395471572876
+04127997,0.8192979097366333
+04161580,0.7890132069587708
+04185000,0.763374924659729
+04196800,0.5675206184387207
+04197100,0.3797874450683594
+04197170,0.7417824268341064
+04213000,0.6431264877319336
+04213075,0.4496837258338928
+04216418,0.7124581933021545
+04221000,0.8402032852172852
+04224775,0.80415940284729
+04233000,0.7835198640823364
+04256000,0.6767499446868896
+04296000,0.7469133138656616
+05057200,0.369570791721344
+05120500,-73.62718200683594
+05291000,0.23224210739135742
+05362000,0.860028862953186
+05393500,0.8832639455795288
+05399500,0.8151997923851013
+05408000,0.6231386661529541
+05413500,0.7845299243927002
+05414000,0.4687091112136841
+05444000,0.35188812017440796
+05454000,0.45152878761291504
+05458000,0.49153387546539307
+05466500,0.36481863260269165
+05487980,0.7059339284896851
+05488200,0.5829230546951294
+05489000,0.6471613645553589
+05495000,0.7676087021827698
+05495500,0.5094482898712158
+05501000,0.7034060955047607
+05503800,0.7844017744064331
+05507600,0.829544723033905
+05508805,0.748957633972168
+05525500,0.7899806499481201
+05556500,0.6590010523796082
+05584500,0.18929028511047363
+05591550,0.6216774582862854
+05592050,0.5265843868255615
+05592575,0.6755748391151428
+05593575,0.7436769008636475
+05593900,0.6719242334365845
+05595730,0.7455927133560181
+06221400,0.9244565963745117
+06224000,0.92058926820755
+06278300,0.7906455993652344
+06280300,0.8501322269439697
+06289000,0.38176143169403076
+06291500,0.5044430494308472
+06311000,0.7942831516265869
+06332515,-0.012104034423828125
+06339100,0.672270655632019
+06344600,0.22327584028244019
+06350000,-0.41769087314605713
+06352000,0.04042923450469971
+06404000,0.8135259747505188
+06406000,0.12003439664840698
+06409000,-1.815962553024292
+06431500,0.40757912397384644
+06440200,0.6070851683616638
+06447500,0.47491443157196045
+06470800,0.5515258312225342
+06477500,-0.9338357448577881
+06479215,-0.168351411819458
+06601000,-0.07595479488372803
+06614800,0.7999338507652283
+06622700,0.7174829244613647
+06623800,0.8536906242370605
+06632400,0.7691553831100464
+06746095,0.6391780376434326
+06803510,0.6349886655807495
+06803530,0.5755472183227539
+06814000,0.6065098643302917
+06847900,0.04621022939682007
+06853800,0.31993645429611206
+06876700,0.30626267194747925
+06878000,0.8861892223358154
+06879650,0.24775391817092896
+06885500,0.6888179779052734
+06888500,0.801426112651825
+06889200,0.7534394860267639
+06889500,0.8600635528564453
+06892000,0.8116845488548279
+06903400,0.5330907106399536
+06906800,0.7016254663467407
+06910800,0.9164282083511353
+06911900,0.8911968469619751
+06917000,0.7007246017456055
+06918460,0.2681841254234314
+06919500,0.777160108089447
+06921070,0.561799943447113
+06921200,0.557861864566803
+07057500,0.8276658654212952
+07060710,0.6574792861938477
+07066000,0.8628575801849365
+07083000,0.8711435198783875
+07142300,0.5037674903869629
+07145700,0.7421438694000244
+07167500,0.7871413826942444
+07180500,0.5408929586410522
+07184000,0.4379677176475525
+07195800,0.224434494972229
+07196900,0.6799463629722595
+07197000,0.7344120144844055
+07208500,0.4404466152191162
+07261000,0.8725696802139282
+07263295,0.7297375202178955
+07291000,0.4476671814918518
+07299670,0.39576196670532227
+07301410,0.06594467163085938
+07315200,0.41247832775115967
+07315700,0.68281090259552
+07335700,0.6409060955047607
+07340300,0.6892946362495422
+07346045,0.7047641277313232
+07359610,0.6765537261962891
+07362100,0.6413317918777466
+07362587,0.47853851318359375
+07375000,0.5614193081855774
+08013000,0.8064010143280029
+08014500,0.6704634428024292
+08023080,0.43204087018966675
+08050800,0.43000268936157227
+08066200,0.5790162086486816
+08066300,0.6401268243789673
+08070000,0.5132781267166138
+08070200,0.6524055004119873
+08082700,0.3534431457519531
+08086212,0.6071970462799072
+08086290,0.7092612981796265
+08101000,0.6362529993057251
+08103900,0.24229180812835693
+08104900,0.43555134534835815
+08109700,0.4966374635696411
+08150800,0.20159107446670532
+08158700,0.6040614247322083
+08158810,0.4943338632583618
+08164300,0.45970451831817627
+08164600,0.3431019186973572
+08165300,-13.335906982421875
+08171300,0.6423310041427612
+08175000,0.567241370677948
+08176900,0.1288345456123352
+08178880,0.23436307907104492
+08189500,0.6960998177528381
+08190000,-0.4616694450378418
+08190500,-0.3063167333602905
+08194200,-0.3454664945602417
+08195000,-0.21616804599761963
+08196000,0.15568971633911133
+08198500,0.12011116743087769
+08200000,0.3794342279434204
+08202700,0.5075592398643494
+08267500,0.34764087200164795
+08269000,0.7615056037902832
+08271000,0.6822808980941772
+08324000,0.1075708270072937
+08377900,0.8004404902458191
+08378500,0.7164852619171143
+08380500,0.016916215419769287
+09035800,0.9060581922531128
+09035900,0.9408978223800659
+09047700,0.8938758373260498
+09065500,0.9199472665786743
+09066000,0.9399012327194214
+09066200,0.9008747339248657
+09066300,0.876732587814331
+09081600,0.8883945941925049
+09107000,0.8662706017494202
+09210500,0.9186197519302368
+09223000,0.8937721252441406
+09306242,-0.013061881065368652
+09312600,0.6563922166824341
+09352900,0.6621485948562622
+09378170,-1.9752686023712158
+09386900,0.03710508346557617
+09404450,-5.566125392913818
+09430600,0.05308312177658081
+09447800,-0.7556130886077881
+09484600,0.18577396869659424
+09492400,0.3973129391670227
+09494000,0.44757580757141113
+09497980,0.43649452924728394
+09505350,0.08300018310546875
+09505800,0.22622108459472656
+09508300,0.2199939489364624
+09510200,0.40609025955200195
+09512280,0.20715653896331787
+09513780,-0.048580050468444824
+10234500,0.605029821395874
+10244950,-0.762874960899353
+10259000,0.4285663366317749
+10336645,0.7029551267623901
+10336660,0.9256824254989624
+10343500,-0.9228302240371704
+11124500,0.8178780674934387
+11141280,0.21003079414367676
+11143000,0.4375985264778137
+11148900,0.3241575360298157
+11151300,0.6378204226493835
+11176400,0.4293445348739624
+11230500,0.43244558572769165
+11237500,0.8446500301361084
+11264500,0.7509222030639648
+11266500,0.7897979021072388
+11284400,0.39605849981307983
+11381500,0.5752033591270447
+11451100,0.575869083404541
+11468500,0.8396261930465698
+11473900,0.8101263642311096
+11475560,0.6893247365951538
+11476600,0.8547565340995789
+11478500,0.7111274600028992
+11480390,0.70767742395401
+11481200,0.8016045093536377
+11482500,0.873235285282135
+11522500,0.7369362115859985
+11523200,0.7349264621734619
+11528700,0.7096201181411743
+11532500,0.7990200519561768
+12010000,0.8656150102615356
+12013500,0.8150284290313721
+12020000,0.29064255952835083
+12025700,0.8239870071411133
+12035000,0.8399688005447388
+12040500,0.8119366765022278
+12041200,0.7933148145675659
+12048000,0.6445551514625549
+12054000,0.706384539604187
+12056500,0.6414947509765625
+12073500,0.7262847423553467
+12082500,0.7931426167488098
+12092000,0.6771300435066223
+12114500,0.5337759256362915
+12115000,0.6381117701530457
+12117000,0.8126987218856812
+12143600,0.6625968217849731
+12144000,0.7083839774131775
+12145500,0.8099813461303711
+12147500,0.7057139873504639
+12167000,0.570049524307251
+12175500,0.8773142099380493
+12178100,0.8110920190811157
+12186000,0.7381079196929932
+12189500,0.7021656632423401
+12375900,0.6927783489227295
+12377150,0.8018743991851807
+12381400,0.8660496473312378
+12383500,0.9103780388832092
+12390700,0.8723180294036865
+12411000,0.7463816404342651
+12447390,0.6944634914398193
+12451000,0.8733437657356262
+12488500,0.7112199068069458
+13011500,0.8169490098953247
+13011900,0.7373659610748291
+13018300,0.5924018621444702
+13023000,0.8909661769866943
+13161500,0.7382196187973022
+13235000,0.8337357640266418
+13240000,0.9100316762924194
+13313000,0.8989439010620117
+13331500,0.7924259901046753
+14020000,0.5466841459274292
+14096850,0.25581711530685425
+14137000,0.6687605381011963
+14138800,0.6277614831924438
+14138870,0.6581400632858276
+14138900,0.6925850510597229
+14139800,0.7564250230789185
+14141500,0.7091787457466125
+14154500,0.7883991599082947
+14158790,0.5300597548484802
+14166500,0.8983533382415771
+14182500,0.679092526435852
+14185000,0.8076010346412659
+14185900,0.7728402018547058
+14187000,0.8450027704238892
+14216500,0.6054662466049194
+14222500,0.8573790192604065
+14236200,0.8299896121025085
+14301000,0.8388836979866028
+14303200,0.7706778049468994
+14305500,0.8141064643859863
+14306340,0.758010745048523
+14306500,0.8607363700866699
+14308990,0.892570972442627
+14309500,0.7418617010116577
+14316700,0.7729318141937256
+14325000,0.6636940240859985
+14362250,0.5320766568183899
+14400000,0.8287975788116455
+###ARM K1_s400 rows=532
+basin,NSE
+01022500,0.8220968246459961
+01031500,0.784363865852356
+01047000,0.7926541566848755
+01052500,0.8448877930641174
+01054200,0.4459483027458191
+01055000,0.6187025308609009
+01057000,0.7321767210960388
+01073000,0.8084428906440735
+01078000,0.8200162649154663
+01123000,0.7771401405334473
+01134500,0.8017292022705078
+01137500,0.7591428756713867
+01139000,0.815851092338562
+01139800,0.7560878992080688
+01142500,0.6776543855667114
+01144000,0.7873781323432922
+01162500,0.6893554925918579
+01169000,0.4275131821632385
+01170100,0.37994635105133057
+01181000,0.5157591104507446
+01187300,0.7975786924362183
+01195100,0.6947834491729736
+01333000,0.439517617225647
+01350000,0.5408452749252319
+01350080,0.5571287870407104
+01350140,0.6151435375213623
+01365000,0.7204298973083496
+01411300,0.525403618812561
+01413500,0.5807541608810425
+01414500,0.5683536529541016
+01415000,0.6140897870063782
+01423000,0.7103276252746582
+01434025,0.5195651650428772
+01435000,0.6828491687774658
+01439500,0.7040629982948303
+01440000,0.7515226006507874
+01440400,0.6599370241165161
+01451800,0.7180156707763672
+01466500,0.7653974890708923
+01484100,0.6977880001068115
+01487000,0.7666455507278442
+01491000,0.7884740233421326
+01510000,0.6467584371566772
+01516500,0.5084575414657593
+01518862,0.7679229974746704
+01532000,0.7422118186950684
+01539000,0.8543025255203247
+01542810,0.8330933451652527
+01543000,0.8686587810516357
+01543500,0.9082364439964294
+01544500,0.8599892854690552
+01545600,0.8163315057754517
+01547700,0.663738489151001
+01548500,0.9105294346809387
+01549500,0.6972288489341736
+01550000,0.7424570322036743
+01552000,0.8063687086105347
+01552500,0.670393705368042
+01557500,0.806415855884552
+01567500,0.6724918484687805
+01568000,0.8131684064865112
+01580000,0.6170179843902588
+01583500,0.640586256980896
+01586610,0.5303767323493958
+01591400,0.46139949560165405
+01594950,0.7850532531738281
+01596500,0.7872306108474731
+01605500,0.5820881724357605
+01606500,0.7413219213485718
+01632000,0.516369104385376
+01632900,0.7031106948852539
+01634500,0.6510583162307739
+01638480,0.405333936214447
+01639500,0.6517229080200195
+01644000,0.8278155326843262
+01664000,0.8486967086791992
+01666500,0.625949501991272
+01667500,0.5493106842041016
+01669000,0.7542933821678162
+01669520,0.7248191833496094
+02011400,0.8834086060523987
+02013000,0.7837712168693542
+02014000,0.8308412432670593
+02015700,0.7345262765884399
+02016000,0.8000472187995911
+02017500,0.6170070767402649
+02018000,0.7961653470993042
+02027000,0.6659672260284424
+02027500,0.37520676851272583
+02028500,0.7743680477142334
+02038850,0.6091440916061401
+02046000,0.7716288566589355
+02051500,0.7176707983016968
+02053200,0.6188786029815674
+02053800,0.7564908266067505
+02055100,0.7122690677642822
+02056900,0.7633630037307739
+02059500,0.6377890110015869
+02064000,0.8268966674804688
+02065500,0.3064196705818176
+02069700,0.5745570659637451
+02070000,0.6054322719573975
+02074500,0.5054781436920166
+02077200,0.6749254465103149
+02081500,0.7000727653503418
+02082950,0.7658344507217407
+02092500,0.8332011699676514
+02096846,0.5264560580253601
+02102908,0.4717130661010742
+02108000,0.7984820008277893
+02111180,0.6318897008895874
+02111500,0.5944255590438843
+02112120,0.5706884860992432
+02112360,0.6899045705795288
+02118500,0.5727866291999817
+02125000,0.8941737413406372
+02128000,0.7317652702331543
+02137727,0.6461859941482544
+02140991,0.6992359757423401
+02143000,0.6629005074501038
+02143040,0.4610862731933594
+02149000,0.6688493490219116
+02152100,0.5891966819763184
+02177000,0.5018324851989746
+02178400,0.6505383849143982
+02193340,0.8117718696594238
+02196000,0.9282192587852478
+02198100,0.4674103856086731
+02202600,0.922623872756958
+02212600,0.5925760269165039
+02215100,0.7724280953407288
+02216180,0.7680889964103699
+02221525,0.5632091164588928
+02231000,0.9263070821762085
+02245500,0.456487238407135
+02246000,0.547165036201477
+02296500,-0.07341253757476807
+02297155,-6.186750888824463
+02297310,-1.8410966396331787
+02298123,0.43184006214141846
+02298608,-0.1800159215927124
+02299950,0.6051908731460571
+02300700,0.14299583435058594
+02342933,0.4171162247657776
+02349900,0.20175623893737793
+02350900,0.8263769149780273
+02361000,0.6618788242340088
+02363000,0.7554246783256531
+02369800,0.7525299191474915
+02371500,0.34556305408477783
+02372250,-0.6475149393081665
+02374500,0.4559602737426758
+02381600,0.35636985301971436
+02384540,0.695521354675293
+02395120,-0.27723073959350586
+02415000,0.6192830801010132
+02427250,0.697019636631012
+02430085,0.7118849158287048
+02450250,0.7273386120796204
+02464000,0.6615546941757202
+02464360,0.7687581777572632
+02465493,-0.5797265768051147
+02469800,0.7318960428237915
+02472000,0.8215442299842834
+02472500,0.4747326374053955
+02479155,0.6772036552429199
+02479300,0.7766100764274597
+02479560,0.6578883528709412
+02481000,0.5574488639831543
+02481510,0.6363463401794434
+03010655,0.8336113691329956
+03011800,0.8216263651847839
+03015500,0.8600407242774963
+03021350,0.7625536322593689
+03026500,0.8809076547622681
+03028000,0.8705512881278992
+03049000,0.8218123912811279
+03049800,0.6001269817352295
+03050000,0.8180159330368042
+03069500,0.8826708793640137
+03070500,0.8151114583015442
+03076600,0.6871004700660706
+03078000,0.7525961995124817
+03140000,0.7231336832046509
+03144000,0.841785192489624
+03170000,0.7763546109199524
+03173000,0.8343377113342285
+03180500,0.8198977112770081
+03182500,0.8626177310943604
+03186500,0.8602228164672852
+03237280,0.6121950149536133
+03237500,0.5934242010116577
+03238500,0.6707842946052551
+03241500,0.8113868236541748
+03280700,0.7235715389251709
+03281500,0.8368866443634033
+03285000,0.6856037378311157
+03291780,0.4851129651069641
+03338780,0.5954170823097229
+03340800,0.7828736305236816
+03346000,0.8796437978744507
+03364500,0.6386489272117615
+03366500,0.5999842286109924
+03368000,0.7323074340820312
+03384450,0.6088550090789795
+03439000,0.6589674353599548
+03455500,0.3598403334617615
+03456500,0.5072916150093079
+03460000,0.7408952713012695
+03463300,0.7105916142463684
+03471500,0.6992367506027222
+03473000,0.7959482669830322
+03479000,0.540132462978363
+03488000,0.819680392742157
+03498500,0.8307830095291138
+03500000,0.7086590528488159
+03500240,0.4301239848136902
+03504000,0.6397024989128113
+03574500,0.6403512954711914
+03592718,0.42982351779937744
+03604000,0.7333053946495056
+04015330,0.5961446762084961
+04024430,0.5074350833892822
+04027000,0.6444720029830933
+04040500,0.8273252248764038
+04043050,0.8600524663925171
+04045500,0.8631479740142822
+04057510,0.8136534690856934
+04057800,0.21245598793029785
+04059500,0.8111480474472046
+04063700,0.6996598243713379
+04074950,0.7916473150253296
+04105700,0.46578502655029297
+04115265,0.6710336208343506
+04122200,0.7930107116699219
+04122500,0.690414309501648
+04127918,0.4427213668823242
+04127997,0.7076034545898438
+04161580,0.6923998594284058
+04185000,0.6986147165298462
+04196800,0.0029001235961914062
+04197100,0.24744802713394165
+04197170,0.613132119178772
+04213000,0.6825034618377686
+04213075,0.32527512311935425
+04216418,0.7067304849624634
+04221000,0.8840874433517456
+04224775,0.8257767558097839
+04233000,0.8015906810760498
+04256000,0.733466625213623
+04296000,0.6740614175796509
+05057200,0.32236528396606445
+05120500,-48.48496627807617
+05291000,0.320804238319397
+05362000,0.8438540697097778
+05393500,0.8813848495483398
+05399500,0.7484573125839233
+05408000,0.6139056086540222
+05413500,0.653886079788208
+05414000,0.3132331371307373
+05444000,-0.8043739795684814
+05454000,0.19917315244674683
+05458000,0.7222481966018677
+05466500,-1.6346654891967773
+05487980,0.6364558339118958
+05488200,0.4751250743865967
+05489000,0.46957218647003174
+05495000,0.7060710191726685
+05495500,0.638405442237854
+05501000,0.7927733063697815
+05503800,0.8524864912033081
+05507600,0.8285529613494873
+05508805,0.803621768951416
+05525500,0.6859580278396606
+05556500,0.39310699701309204
+05584500,0.2371501326560974
+05591550,0.6547675728797913
+05592050,0.5355517864227295
+05592575,0.5506368279457092
+05593575,0.8190571665763855
+05593900,0.7280651926994324
+05595730,0.8483388423919678
+06221400,0.9343318939208984
+06224000,0.9416782259941101
+06278300,0.9051166772842407
+06280300,0.8006193041801453
+06289000,0.40268468856811523
+06291500,0.4068225026130676
+06311000,0.7243608236312866
+06332515,0.16944873332977295
+06339100,0.6821892261505127
+06344600,-0.8474022150039673
+06350000,-0.09336447715759277
+06352000,0.058051884174346924
+06404000,0.791659951210022
+06406000,0.1603298783302307
+06409000,-1.8688573837280273
+06431500,0.3041013479232788
+06440200,0.4408838152885437
+06447500,0.49586164951324463
+06470800,0.6534984111785889
+06477500,-0.02799510955810547
+06479215,-0.11084091663360596
+06601000,-0.4778604507446289
+06614800,0.8712307810783386
+06622700,0.8376922607421875
+06623800,0.8522553443908691
+06632400,0.7894802093505859
+06746095,0.7468564510345459
+06803510,0.6578533053398132
+06803530,0.7485333681106567
+06814000,0.6701884269714355
+06847900,-0.08695542812347412
+06853800,0.19484829902648926
+06876700,0.3485444188117981
+06878000,0.7171531915664673
+06879650,0.35674822330474854
+06885500,0.7766786813735962
+06888500,0.6940802335739136
+06889200,0.7294126749038696
+06889500,0.6820150017738342
+06892000,0.8473289012908936
+06903400,0.41591811180114746
+06906800,0.7144733667373657
+06910800,0.8713424205780029
+06911900,0.7899593114852905
+06917000,0.6304114460945129
+06918460,0.07745629549026489
+06919500,0.8134390115737915
+06921070,0.6222846508026123
+06921200,0.6535580158233643
+07057500,0.8941448330879211
+07060710,0.6102516651153564
+07066000,0.87615966796875
+07083000,0.8665664792060852
+07142300,0.012180507183074951
+07145700,0.7222967147827148
+07167500,0.5782492160797119
+07180500,0.6788082718849182
+07184000,0.6505591869354248
+07195800,-0.13703429698944092
+07196900,0.756914496421814
+07197000,0.7320200204849243
+07208500,0.4034518003463745
+07261000,0.811290979385376
+07263295,0.7333370447158813
+07291000,0.16453605890274048
+07299670,0.384427547454834
+07301410,-0.032804250717163086
+07315200,0.47285938262939453
+07315700,0.6254845857620239
+07335700,0.6933324337005615
+07340300,0.6648550033569336
+07346045,0.7792683839797974
+07359610,0.7866452932357788
+07362100,0.4883214235305786
+07362587,0.5975936651229858
+07375000,0.329232394695282
+08013000,0.7533975839614868
+08014500,0.40819984674453735
+08023080,0.381195604801178
+08050800,0.38048291206359863
+08066200,0.7648485898971558
+08066300,0.6232955455780029
+08070000,0.5330366492271423
+08070200,0.4310206174850464
+08082700,0.0999036431312561
+08086212,0.5811018943786621
+08086290,0.6464855670928955
+08101000,0.6809518337249756
+08103900,0.46801286935806274
+08104900,0.40027326345443726
+08109700,0.48570770025253296
+08150800,0.451063871383667
+08158700,0.3413548469543457
+08158810,0.4012320637702942
+08164300,0.5256137847900391
+08164600,0.38228684663772583
+08165300,-22.227712631225586
+08171300,0.5726274847984314
+08175000,0.5331019163131714
+08176900,-0.0176393985748291
+08178880,-0.244667649269104
+08189500,0.5464106202125549
+08190000,0.11268460750579834
+08190500,-0.003359556198120117
+08194200,-1.181455135345459
+08195000,0.35180193185806274
+08196000,0.29245930910110474
+08198500,0.2997363805770874
+08200000,0.41589879989624023
+08202700,0.2869427800178528
+08267500,0.5671392679214478
+08269000,0.6528724431991577
+08271000,0.7289795279502869
+08324000,0.629362165927887
+08377900,0.7450411319732666
+08378500,0.7538161277770996
+08380500,0.3350623846054077
+09035800,0.8581165671348572
+09035900,0.9427570104598999
+09047700,0.726954460144043
+09065500,0.9425665140151978
+09066000,0.9418622851371765
+09066200,0.8884454369544983
+09066300,0.9373999238014221
+09081600,0.9386878609657288
+09107000,0.9209535121917725
+09210500,0.5083508491516113
+09223000,0.7609483599662781
+09306242,0.12995362281799316
+09312600,0.6955245137214661
+09352900,0.6479535102844238
+09378170,-3.235396385192871
+09386900,0.0019235610961914062
+09404450,-0.35749030113220215
+09430600,0.07810211181640625
+09447800,-2.463630437850952
+09484600,0.01571279764175415
+09492400,0.48671960830688477
+09494000,0.2733250856399536
+09497980,0.04861915111541748
+09505350,-0.6596615314483643
+09505800,-0.6715308427810669
+09508300,0.2964935898780823
+09510200,0.28832656145095825
+09512280,0.2541835904121399
+09513780,-0.13415193557739258
+10234500,0.7471806406974792
+10244950,-2.7103230953216553
+10259000,0.504055380821228
+10336645,0.5134588479995728
+10336660,0.8460872173309326
+10343500,-2.0109424591064453
+11124500,0.7409231662750244
+11141280,0.10117363929748535
+11143000,0.35115349292755127
+11148900,0.45779722929000854
+11151300,0.5024141073226929
+11176400,0.46869611740112305
+11230500,-0.23437321186065674
+11237500,0.8873058557510376
+11264500,0.42270416021347046
+11266500,0.4992932677268982
+11284400,-0.6796138286590576
+11381500,0.5919612646102905
+11451100,0.6229307651519775
+11468500,0.8632524013519287
+11473900,0.818825900554657
+11475560,0.7183896899223328
+11476600,0.82444167137146
+11478500,0.6532723903656006
+11480390,0.641926646232605
+11481200,0.7706502079963684
+11482500,0.8022094964981079
+11522500,0.7780293226242065
+11523200,0.6915944814682007
+11528700,0.6019009351730347
+11532500,0.8990487456321716
+12010000,0.8601687550544739
+12013500,0.840542197227478
+12020000,0.32347410917282104
+12025700,0.8522667288780212
+12035000,0.8465685844421387
+12040500,0.819755494594574
+12041200,0.7931829690933228
+12048000,0.7505882978439331
+12054000,0.5615338087081909
+12056500,0.5689047574996948
+12073500,0.6305140852928162
+12082500,0.7946919202804565
+12092000,0.6969967484474182
+12114500,0.44428813457489014
+12115000,0.5702100992202759
+12117000,0.5257735252380371
+12143600,0.7790414094924927
+12144000,0.748756468296051
+12145500,0.8504970669746399
+12147500,0.8090894222259521
+12167000,0.6122299432754517
+12175500,0.8430305123329163
+12178100,0.8440250158309937
+12186000,0.7653419971466064
+12189500,0.7501147985458374
+12375900,0.7288944721221924
+12377150,0.8135526180267334
+12381400,0.90303635597229
+12383500,0.915800929069519
+12390700,0.8904264569282532
+12411000,0.6922531127929688
+12447390,0.8638061881065369
+12451000,0.90015709400177
+12488500,0.7116717100143433
+13011500,0.8624744415283203
+13011900,0.7978516221046448
+13018300,0.6383318901062012
+13023000,0.825577974319458
+13161500,0.7017319202423096
+13235000,0.8488333821296692
+13240000,0.8018713593482971
+13313000,0.9151118993759155
+13331500,0.8673366904258728
+14020000,0.6392725706100464
+14096850,-0.027628779411315918
+14137000,0.7349733114242554
+14138800,0.7255098819732666
+14138870,0.6950392127037048
+14138900,0.6785560846328735
+14139800,0.7506149411201477
+14141500,0.6676737666130066
+14154500,0.7969505786895752
+14158790,0.5986794233322144
+14166500,0.8976894021034241
+14182500,0.7215782403945923
+14185000,0.8085639476776123
+14185900,0.8045872449874878
+14187000,0.8366855978965759
+14216500,0.4666927456855774
+14222500,0.641629159450531
+14236200,0.8097895383834839
+14301000,0.8800211548805237
+14303200,0.7748064398765564
+14305500,0.8470815420150757
+14306340,0.7552030086517334
+14306500,0.8743919730186462
+14308990,0.7679991722106934
+14309500,0.7210743427276611
+14316700,0.7093158960342407
+14325000,0.6817197203636169
+14362250,0.37087225914001465
+14400000,0.8528621196746826
+###ARM K1_s500 rows=532
+basin,NSE
+01022500,0.824893057346344
+01031500,0.8309361338615417
+01047000,0.844870924949646
+01052500,0.8054986000061035
+01054200,0.36180174350738525
+01055000,0.5024999976158142
+01057000,0.7927443385124207
+01073000,0.8333884477615356
+01078000,0.7770867943763733
+01123000,0.7719026803970337
+01134500,0.7646083831787109
+01137500,0.7126967906951904
+01139000,0.7459646463394165
+01139800,0.6834285259246826
+01142500,0.5439331531524658
+01144000,0.763718843460083
+01162500,0.6620383262634277
+01169000,0.6146671772003174
+01170100,0.6694424152374268
+01181000,0.6009124517440796
+01187300,0.7380623817443848
+01195100,0.6961377859115601
+01333000,0.512885570526123
+01350000,0.6974632740020752
+01350080,0.6386277675628662
+01350140,0.5912402272224426
+01365000,0.766719400882721
+01411300,0.767711877822876
+01413500,0.6145037412643433
+01414500,0.5806356072425842
+01415000,0.6261536478996277
+01423000,0.7318568229675293
+01434025,0.6327782869338989
+01435000,0.7035310864448547
+01439500,0.7158923745155334
+01440000,0.7195146679878235
+01440400,0.7022613286972046
+01451800,0.7407934069633484
+01466500,0.7680036425590515
+01484100,0.7314611673355103
+01487000,0.8169015645980835
+01491000,0.8232843279838562
+01510000,0.7019534111022949
+01516500,0.5095984935760498
+01518862,0.7112741470336914
+01532000,0.6911081075668335
+01539000,0.8182377219200134
+01542810,0.7980239391326904
+01543000,0.8514117002487183
+01543500,0.8775269389152527
+01544500,0.824105441570282
+01545600,0.8054154515266418
+01547700,0.641053318977356
+01548500,0.8673179149627686
+01549500,0.6880174875259399
+01550000,0.7907731533050537
+01552000,0.8013325929641724
+01552500,0.6472275257110596
+01557500,0.808574914932251
+01567500,0.6307021379470825
+01568000,0.8592448830604553
+01580000,0.5367058515548706
+01583500,0.38232308626174927
+01586610,0.5765379071235657
+01591400,0.23952829837799072
+01594950,0.7866094708442688
+01596500,0.7000141739845276
+01605500,0.6287230253219604
+01606500,0.6982020139694214
+01632000,0.49926626682281494
+01632900,0.631914496421814
+01634500,0.6449999213218689
+01638480,0.561794102191925
+01639500,0.6175404787063599
+01644000,0.7372687458992004
+01664000,0.8161194324493408
+01666500,0.7396367788314819
+01667500,0.7639789581298828
+01669000,0.7866872549057007
+01669520,0.7530169486999512
+02011400,0.8586099147796631
+02013000,0.7709619998931885
+02014000,0.8410563468933105
+02015700,0.6788377165794373
+02016000,0.768031656742096
+02017500,0.6852083206176758
+02018000,0.7893851399421692
+02027000,0.5834442973136902
+02027500,0.6677338480949402
+02028500,0.6274246573448181
+02038850,0.49764347076416016
+02046000,0.7791019082069397
+02051500,0.7726849913597107
+02053200,0.7710864543914795
+02053800,0.7070462107658386
+02055100,0.6830577850341797
+02056900,0.7411943078041077
+02059500,0.721436619758606
+02064000,0.7856608033180237
+02065500,0.22761672735214233
+02069700,0.4958531856536865
+02070000,0.657404899597168
+02074500,0.5324710607528687
+02077200,0.7549417614936829
+02081500,0.5821512937545776
+02082950,0.7287325859069824
+02092500,0.8506035804748535
+02096846,0.4664957523345947
+02102908,0.709116518497467
+02108000,0.8239036202430725
+02111180,0.5866867303848267
+02111500,0.597256064414978
+02112120,0.45011985301971436
+02112360,0.692346453666687
+02118500,0.5810747146606445
+02125000,0.8153403997421265
+02128000,0.6279480457305908
+02137727,0.6592707633972168
+02140991,0.8084641098976135
+02143000,0.6959694623947144
+02143040,0.48250317573547363
+02149000,0.7178888320922852
+02152100,0.6146879196166992
+02177000,0.6782945394515991
+02178400,0.5940839648246765
+02193340,0.7345428466796875
+02196000,0.7282049655914307
+02198100,0.46849167346954346
+02202600,0.7987798452377319
+02212600,0.5889472961425781
+02215100,0.8148542642593384
+02216180,0.42656582593917847
+02221525,0.36640244722366333
+02231000,0.8820562958717346
+02245500,0.5790132880210876
+02246000,0.904576301574707
+02296500,0.5316039323806763
+02297155,-13.074359893798828
+02297310,-3.8342947959899902
+02298123,0.5891097784042358
+02298608,-0.28147411346435547
+02299950,0.3398634195327759
+02300700,-0.09048986434936523
+02342933,0.4772827625274658
+02349900,0.404990017414093
+02350900,0.809810221195221
+02361000,0.6245253086090088
+02363000,0.7271857857704163
+02369800,0.41383761167526245
+02371500,0.16217339038848877
+02372250,-0.5847444534301758
+02374500,0.41089582443237305
+02381600,-0.44968295097351074
+02384540,0.6671446561813354
+02395120,-1.1938714981079102
+02415000,0.649375855922699
+02427250,0.6820428371429443
+02430085,0.7508928775787354
+02450250,0.5971246361732483
+02464000,0.745608925819397
+02464360,0.6291217803955078
+02465493,-1.4422855377197266
+02469800,0.6579827070236206
+02472000,0.7779198288917542
+02472500,0.6224920749664307
+02479155,0.7176294326782227
+02479300,0.8008647561073303
+02479560,0.7138867974281311
+02481000,0.6403920650482178
+02481510,0.6992524862289429
+03010655,0.833705723285675
+03011800,0.826433539390564
+03015500,0.7887728810310364
+03021350,0.7190266847610474
+03026500,0.8472636938095093
+03028000,0.8500730395317078
+03049000,0.8045505285263062
+03049800,0.566962480545044
+03050000,0.7832181453704834
+03069500,0.8287689685821533
+03070500,0.793811559677124
+03076600,0.721440315246582
+03078000,0.7833954095840454
+03140000,0.7387620210647583
+03144000,0.7650237083435059
+03170000,0.7663057446479797
+03173000,0.8163623213768005
+03180500,0.7876372337341309
+03182500,0.8169459700584412
+03186500,0.7987460494041443
+03237280,0.5702271461486816
+03237500,0.5502544045448303
+03238500,0.6555453538894653
+03241500,0.8333334922790527
+03280700,0.7194195985794067
+03281500,0.8223296403884888
+03285000,0.5458476543426514
+03291780,0.5078399181365967
+03338780,0.608101487159729
+03340800,0.724343478679657
+03346000,0.8389588594436646
+03364500,0.5986407995223999
+03366500,0.6266254186630249
+03368000,0.7783489227294922
+03384450,0.49428731203079224
+03439000,0.6351511478424072
+03455500,0.1996404528617859
+03456500,0.43917012214660645
+03460000,0.6336864829063416
+03463300,0.5333184599876404
+03471500,0.8294891715049744
+03473000,0.8110225200653076
+03479000,0.48705166578292847
+03488000,0.7950286865234375
+03498500,0.8018170595169067
+03500000,0.7240147590637207
+03500240,0.44614118337631226
+03504000,0.5067638754844666
+03574500,0.6401607394218445
+03592718,0.1705014705657959
+03604000,0.742939293384552
+04015330,0.6624667644500732
+04024430,0.48953545093536377
+04027000,0.5861060619354248
+04040500,0.735986590385437
+04043050,0.8989958167076111
+04045500,0.9012353420257568
+04057510,0.7546818852424622
+04057800,0.34811627864837646
+04059500,0.9061226844787598
+04063700,0.6525578498840332
+04074950,0.8421090245246887
+04105700,0.43586307764053345
+04115265,0.7436974048614502
+04122200,0.8463033437728882
+04122500,0.7432764768600464
+04127918,0.5722755193710327
+04127997,0.819438099861145
+04161580,0.7047564387321472
+04185000,0.6537899374961853
+04196800,0.4881969094276428
+04197100,0.5931341648101807
+04197170,0.7242797613143921
+04213000,0.6240652799606323
+04213075,0.46036314964294434
+04216418,0.7128095626831055
+04221000,0.7949991226196289
+04224775,0.7752467393875122
+04233000,0.7712575197219849
+04256000,0.7426387071609497
+04296000,0.7589954733848572
+05057200,0.2747899889945984
+05120500,-51.39842224121094
+05291000,0.05840510129928589
+05362000,0.877644419670105
+05393500,0.8565917015075684
+05399500,0.8331922292709351
+05408000,0.7438246011734009
+05413500,0.722379207611084
+05414000,0.3855910897254944
+05444000,0.24735558032989502
+05454000,0.5136221051216125
+05458000,0.5385932326316833
+05466500,0.45825064182281494
+05487980,0.7175906896591187
+05488200,0.5521137714385986
+05489000,0.6039663553237915
+05495000,0.5806809663772583
+05495500,0.5796185731887817
+05501000,0.6981931924819946
+05503800,0.7967426180839539
+05507600,0.8051689863204956
+05508805,0.8080031871795654
+05525500,0.7688876986503601
+05556500,0.6796187162399292
+05584500,0.24183320999145508
+05591550,0.6318643689155579
+05592050,0.5116488933563232
+05592575,0.7030772566795349
+05593575,0.7234170436859131
+05593900,0.7789584398269653
+05595730,0.7991408109664917
+06221400,0.8927005529403687
+06224000,0.8896674513816833
+06278300,0.780807614326477
+06280300,0.6378378868103027
+06289000,0.4995824098587036
+06291500,0.6160237789154053
+06311000,0.6625537276268005
+06332515,0.05847132205963135
+06339100,0.8371859788894653
+06344600,-0.9740222692489624
+06350000,-0.4303572177886963
+06352000,0.06455320119857788
+06404000,0.4434239864349365
+06406000,0.05766105651855469
+06409000,-1.4304869174957275
+06431500,0.4044068455696106
+06440200,0.7471498847007751
+06447500,0.29421496391296387
+06470800,0.7030832767486572
+06477500,-0.5955089330673218
+06479215,-0.6995323896408081
+06601000,-0.10329592227935791
+06614800,0.7647998332977295
+06622700,0.661974310874939
+06623800,0.7445987462997437
+06632400,0.7779297828674316
+06746095,0.6677762269973755
+06803510,0.7773231863975525
+06803530,0.8069895505905151
+06814000,0.6152342557907104
+06847900,-0.21997857093811035
+06853800,0.15045320987701416
+06876700,0.4226764440536499
+06878000,0.8792803287506104
+06879650,-0.2426067590713501
+06885500,0.7741847038269043
+06888500,-0.2382497787475586
+06889200,0.7321432828903198
+06889500,0.7234938740730286
+06892000,0.8644311428070068
+06903400,0.38153451681137085
+06906800,0.7733995914459229
+06910800,0.36762571334838867
+06911900,0.6036050319671631
+06917000,0.7020325660705566
+06918460,-0.326357364654541
+06919500,0.7893702983856201
+06921070,0.47057658433914185
+06921200,0.60915207862854
+07057500,0.7225815057754517
+07060710,0.5733592510223389
+07066000,0.8818639516830444
+07083000,0.8392249345779419
+07142300,0.34198838472366333
+07145700,0.7157315015792847
+07167500,0.5482825040817261
+07180500,0.49375277757644653
+07184000,0.6419594287872314
+07195800,0.15454483032226562
+07196900,0.7040270566940308
+07197000,0.3429575562477112
+07208500,0.29772305488586426
+07261000,0.892026960849762
+07263295,0.5856403112411499
+07291000,0.3417181372642517
+07299670,0.4420679211616516
+07301410,-0.03381621837615967
+07315200,0.5535296201705933
+07315700,0.7742087841033936
+07335700,0.6218389868736267
+07340300,0.6472898721694946
+07346045,0.6619988679885864
+07359610,0.7219874858856201
+07362100,0.5739166736602783
+07362587,0.41902029514312744
+07375000,0.5745890140533447
+08013000,0.8135942816734314
+08014500,0.34998905658721924
+08023080,0.4589461088180542
+08050800,0.5398794412612915
+08066200,0.5934450626373291
+08066300,0.4025770425796509
+08070000,0.48113131523132324
+08070200,0.4812721610069275
+08082700,0.1041601300239563
+08086212,0.5785049200057983
+08086290,0.26592254638671875
+08101000,0.737730860710144
+08103900,0.543014645576477
+08104900,0.3673030734062195
+08109700,0.606612503528595
+08150800,-0.5641006231307983
+08158700,0.15280479192733765
+08158810,0.5759454965591431
+08164300,0.5809437036514282
+08164600,0.19740408658981323
+08165300,-21.582094192504883
+08171300,0.5003060102462769
+08175000,0.5229549407958984
+08176900,0.1585540771484375
+08178880,-0.13091611862182617
+08189500,-0.003622293472290039
+08190000,0.22856134176254272
+08190500,-0.40028464794158936
+08194200,0.6016733646392822
+08195000,0.012136518955230713
+08196000,0.039154767990112305
+08198500,0.11622989177703857
+08200000,0.5879030227661133
+08202700,0.123268723487854
+08267500,0.491698682308197
+08269000,0.4792059063911438
+08271000,0.5878766179084778
+08324000,0.5999699234962463
+08377900,0.8260573148727417
+08378500,0.7470289468765259
+08380500,0.2417994737625122
+09035800,0.7638070583343506
+09035900,0.8737369775772095
+09047700,0.6962720155715942
+09065500,0.9388317465782166
+09066000,0.9085771441459656
+09066200,0.900094211101532
+09066300,0.8648821711540222
+09081600,0.9157302975654602
+09107000,0.8364981412887573
+09210500,0.7925546169281006
+09223000,0.8003025650978088
+09306242,-0.2436460256576538
+09312600,0.7448446750640869
+09352900,0.7071296572685242
+09378170,0.5931686162948608
+09386900,-0.010411739349365234
+09404450,-1.4324383735656738
+09430600,0.04599034786224365
+09447800,-4.08557653427124
+09484600,0.11664354801177979
+09492400,0.5735267400741577
+09494000,0.4381573796272278
+09497980,0.1888384222984314
+09505350,0.08837389945983887
+09505800,0.45703959465026855
+09508300,0.3165718913078308
+09510200,0.38697874546051025
+09512280,0.25678426027297974
+09513780,0.15663349628448486
+10234500,0.696884274482727
+10244950,-8.072087287902832
+10259000,0.2416425347328186
+10336645,0.6011605262756348
+10336660,0.8991173505783081
+10343500,-0.5578032732009888
+11124500,0.7941603660583496
+11141280,0.2591843008995056
+11143000,0.6296744346618652
+11148900,0.48837077617645264
+11151300,0.3212670683860779
+11176400,0.6436398029327393
+11230500,0.5325742363929749
+11237500,0.7676544189453125
+11264500,0.7978391051292419
+11266500,0.8044859170913696
+11284400,0.4299710988998413
+11381500,0.5619550347328186
+11451100,0.5300353765487671
+11468500,0.9008363485336304
+11473900,0.7802700996398926
+11475560,0.7201591730117798
+11476600,0.7994653582572937
+11478500,0.6217622756958008
+11480390,0.42300862073898315
+11481200,0.7890077233314514
+11482500,0.8862342238426208
+11522500,0.7596129179000854
+11523200,0.4643859267234802
+11528700,0.618342936038971
+11532500,0.8685055375099182
+12010000,0.8534287214279175
+12013500,0.833744466304779
+12020000,0.32354360818862915
+12025700,0.8529558181762695
+12035000,0.8547770977020264
+12040500,0.7961044907569885
+12041200,0.8468040227890015
+12048000,0.6895027160644531
+12054000,0.7593551874160767
+12056500,0.7103701829910278
+12073500,0.8060215711593628
+12082500,0.8031817078590393
+12092000,0.6760358810424805
+12114500,0.47426390647888184
+12115000,0.5784501433372498
+12117000,0.8023486733436584
+12143600,0.7442730665206909
+12144000,0.7466226816177368
+12145500,0.8911539316177368
+12147500,0.7683119773864746
+12167000,0.6470747590065002
+12175500,0.8555135130882263
+12178100,0.764985978603363
+12186000,0.7565217018127441
+12189500,0.6373571157455444
+12375900,0.7610719799995422
+12377150,0.8397033214569092
+12381400,0.8950120806694031
+12383500,0.8671971559524536
+12390700,0.8855452537536621
+12411000,0.8048110008239746
+12447390,0.8388866186141968
+12451000,0.8445180058479309
+12488500,0.6599949598312378
+13011500,0.8180742859840393
+13011900,0.7618469595909119
+13018300,0.6962877511978149
+13023000,0.8689845204353333
+13161500,0.8547552227973938
+13235000,0.72539222240448
+13240000,0.9102839827537537
+13313000,0.8666866421699524
+13331500,0.7744471430778503
+14020000,0.47427690029144287
+14096850,-1.0868966579437256
+14137000,0.7189573049545288
+14138800,0.6496483087539673
+14138870,0.659870982170105
+14138900,0.6579701900482178
+14139800,0.7198690176010132
+14141500,0.7024354338645935
+14154500,0.8117650747299194
+14158790,0.649815022945404
+14166500,0.875910758972168
+14182500,0.6951022148132324
+14185000,0.8456937074661255
+14185900,0.7880136966705322
+14187000,0.844883918762207
+14216500,0.6187827587127686
+14222500,0.8074246048927307
+14236200,0.7517810463905334
+14301000,0.8851258754730225
+14303200,0.786195695400238
+14305500,0.8177672624588013
+14306340,0.780897319316864
+14306500,0.8601745367050171
+14308990,0.8922939300537109
+14309500,0.7692044973373413
+14316700,0.8194491267204285
+14325000,0.7435241341590881
+14362250,0.34229564666748047
+14400000,0.862360954284668
+###ARM K1_s600 rows=532
+basin,NSE
+01022500,0.7957472801208496
+01031500,0.8649395108222961
+01047000,0.8218442797660828
+01052500,0.7392950057983398
+01054200,0.5448493361473083
+01055000,0.5626274347305298
+01057000,0.7643712162971497
+01073000,0.7116681337356567
+01078000,0.8525941371917725
+01123000,0.7910629510879517
+01134500,0.7555095553398132
+01137500,0.7909861207008362
+01139000,0.7679713368415833
+01139800,0.6805473566055298
+01142500,0.6766085624694824
+01144000,0.8343181610107422
+01162500,0.7292134761810303
+01169000,0.7163490056991577
+01170100,0.7335181832313538
+01181000,0.6717958450317383
+01187300,0.81687992811203
+01195100,0.7043070793151855
+01333000,0.5536190271377563
+01350000,0.7578068375587463
+01350080,0.6537964344024658
+01350140,0.6486371755599976
+01365000,0.7986695766448975
+01411300,0.8048379421234131
+01413500,0.581433892250061
+01414500,0.6513153314590454
+01415000,0.6226701736450195
+01423000,0.6508996486663818
+01434025,0.6332694292068481
+01435000,0.7322298884391785
+01439500,0.7602565288543701
+01440000,0.7884637117385864
+01440400,0.7189284563064575
+01451800,0.7252382040023804
+01466500,0.732812762260437
+01484100,0.6265855431556702
+01487000,0.8404433727264404
+01491000,0.8157103061676025
+01510000,0.6369613409042358
+01516500,0.6202095150947571
+01518862,0.7274152040481567
+01532000,0.7706612944602966
+01539000,0.8443869352340698
+01542810,0.8247215151786804
+01543000,0.8933914303779602
+01543500,0.9109041690826416
+01544500,0.8342883586883545
+01545600,0.796281635761261
+01547700,0.7460654973983765
+01548500,0.8863000273704529
+01549500,0.762929379940033
+01550000,0.8350667953491211
+01552000,0.8340200185775757
+01552500,0.7312043905258179
+01557500,0.8690149188041687
+01567500,0.6689040064811707
+01568000,0.845209002494812
+01580000,0.6886934041976929
+01583500,0.4785405397415161
+01586610,0.6099498271942139
+01591400,0.5657470226287842
+01594950,0.7895716428756714
+01596500,0.8056285977363586
+01605500,0.652704119682312
+01606500,0.7245792150497437
+01632000,0.5306731462478638
+01632900,0.6610287427902222
+01634500,0.6681814193725586
+01638480,0.5886104106903076
+01639500,0.664757490158081
+01644000,0.7881918549537659
+01664000,0.8596687912940979
+01666500,0.7463076114654541
+01667500,0.7525339126586914
+01669000,0.8135403990745544
+01669520,0.7517008781433105
+02011400,0.8681597709655762
+02013000,0.7282631397247314
+02014000,0.805693507194519
+02015700,0.6147080659866333
+02016000,0.8148635029792786
+02017500,0.6440682411193848
+02018000,0.7789560556411743
+02027000,0.6832633018493652
+02027500,0.7598097324371338
+02028500,0.7457471489906311
+02038850,0.2695096731185913
+02046000,0.7693178653717041
+02051500,0.7468807697296143
+02053200,0.6981534957885742
+02053800,0.7319513559341431
+02055100,0.7131005525588989
+02056900,0.7144883275032043
+02059500,0.670121431350708
+02064000,0.7596089839935303
+02065500,0.29802584648132324
+02069700,0.5920455455780029
+02070000,0.5524832010269165
+02074500,0.5442487001419067
+02077200,0.5732253193855286
+02081500,0.5991387963294983
+02082950,0.7601778507232666
+02092500,0.7982789278030396
+02096846,0.6581559777259827
+02102908,0.5424591302871704
+02108000,0.8466160297393799
+02111180,0.6158170104026794
+02111500,0.5888237357139587
+02112120,0.5505080223083496
+02112360,0.6798892021179199
+02118500,0.47805023193359375
+02125000,0.8178418874740601
+02128000,0.7541673183441162
+02137727,0.6757811903953552
+02140991,0.6731771230697632
+02143000,0.5968428254127502
+02143040,0.4325352907180786
+02149000,0.6317393779754639
+02152100,0.5236958265304565
+02177000,0.4723052382469177
+02178400,0.7473385334014893
+02193340,0.7392749786376953
+02196000,0.8484352827072144
+02198100,0.6673747301101685
+02202600,0.3278846740722656
+02212600,0.6034148931503296
+02215100,0.7570315599441528
+02216180,0.6658182740211487
+02221525,0.5688235759735107
+02231000,0.8513336777687073
+02245500,0.7247869968414307
+02246000,0.6379016637802124
+02296500,0.432542622089386
+02297155,-7.527917861938477
+02297310,-1.6935997009277344
+02298123,0.4713820815086365
+02298608,0.18445616960525513
+02299950,0.4420129656791687
+02300700,0.15007364749908447
+02342933,0.3305181860923767
+02349900,0.6392873525619507
+02350900,0.8460516333580017
+02361000,0.6808525919914246
+02363000,0.7931246757507324
+02369800,0.6917661428451538
+02371500,0.2439882755279541
+02372250,0.02624112367630005
+02374500,0.40721625089645386
+02381600,0.28592216968536377
+02384540,0.6210445165634155
+02395120,0.45949453115463257
+02415000,0.5760486125946045
+02427250,0.7436913251876831
+02430085,0.7769165635108948
+02450250,0.715966522693634
+02464000,0.7548465728759766
+02464360,0.6566458940505981
+02465493,-0.6732393503189087
+02469800,0.6708950996398926
+02472000,0.8186180591583252
+02472500,0.5121792554855347
+02479155,0.7669356465339661
+02479300,0.7692310214042664
+02479560,0.7036277055740356
+02481000,0.5673346519470215
+02481510,0.6744493246078491
+03010655,0.8231074810028076
+03011800,0.7953989505767822
+03015500,0.8178026080131531
+03021350,0.6702529191970825
+03026500,0.8336277008056641
+03028000,0.8419817686080933
+03049000,0.8293870091438293
+03049800,0.588800311088562
+03050000,0.7852412462234497
+03069500,0.836003839969635
+03070500,0.7823693752288818
+03076600,0.7367750406265259
+03078000,0.8009013533592224
+03140000,0.7762192487716675
+03144000,0.8123779892921448
+03170000,0.7417488694190979
+03173000,0.8105728626251221
+03180500,0.8208246827125549
+03182500,0.8125750422477722
+03186500,0.8290122747421265
+03237280,0.47132641077041626
+03237500,0.6652039289474487
+03238500,0.6481918692588806
+03241500,0.8443430662155151
+03280700,0.6532332897186279
+03281500,0.8383597731590271
+03285000,0.5907750725746155
+03291780,0.6446851491928101
+03338780,0.5485039949417114
+03340800,0.7847514152526855
+03346000,0.7780400514602661
+03364500,0.7107495069503784
+03366500,0.5722576379776001
+03368000,0.7549395561218262
+03384450,0.756308913230896
+03439000,0.6672582626342773
+03455500,0.28297537565231323
+03456500,0.4108123779296875
+03460000,0.717750072479248
+03463300,0.6494202613830566
+03471500,0.750971794128418
+03473000,0.7899150848388672
+03479000,0.3293030261993408
+03488000,0.726296067237854
+03498500,0.7919975519180298
+03500000,0.7618569731712341
+03500240,0.2854524254798889
+03504000,0.6235889792442322
+03574500,0.6927219033241272
+03592718,0.5807737112045288
+03604000,0.7345852851867676
+04015330,0.6885718703269958
+04024430,0.26015913486480713
+04027000,0.7980912923812866
+04040500,0.8486913442611694
+04043050,0.7828936576843262
+04045500,0.8974054455757141
+04057510,0.7685940265655518
+04057800,0.47977614402770996
+04059500,0.7029308080673218
+04063700,0.642382025718689
+04074950,0.7813229560852051
+04105700,0.01539522409439087
+04115265,0.7306445837020874
+04122200,0.830012857913971
+04122500,0.7567116022109985
+04127918,0.5460996627807617
+04127997,0.7913693785667419
+04161580,0.6422002911567688
+04185000,0.7900377511978149
+04196800,0.44595855474472046
+04197100,0.49079233407974243
+04197170,0.7647123336791992
+04213000,0.649560272693634
+04213075,0.464114248752594
+04216418,0.7177146077156067
+04221000,0.8226400017738342
+04224775,0.769115149974823
+04233000,0.8047885298728943
+04256000,0.8126929998397827
+04296000,0.753510057926178
+05057200,0.43027055263519287
+05120500,-33.7647819519043
+05291000,0.2581019401550293
+05362000,0.8891180157661438
+05393500,0.7991719841957092
+05399500,0.7968198657035828
+05408000,0.8192908763885498
+05413500,0.7808817028999329
+05414000,0.46402114629745483
+05444000,0.46219509840011597
+05454000,0.5587204694747925
+05458000,0.6446799635887146
+05466500,0.38921576738357544
+05487980,0.7257155179977417
+05488200,0.635577917098999
+05489000,0.6626650094985962
+05495000,0.6983360052108765
+05495500,0.5563480854034424
+05501000,0.7249990105628967
+05503800,0.800381064414978
+05507600,0.8298791646957397
+05508805,0.8197058439254761
+05525500,0.8081191778182983
+05556500,0.7310084104537964
+05584500,-0.1111898422241211
+05591550,0.6375747919082642
+05592050,0.5898151397705078
+05592575,0.6807038187980652
+05593575,0.7917023301124573
+05593900,0.7389155626296997
+05595730,0.8019392490386963
+06221400,0.9229953289031982
+06224000,0.8982102274894714
+06278300,0.703760027885437
+06280300,0.7414761781692505
+06289000,0.43695658445358276
+06291500,0.5938805341720581
+06311000,0.6496255993843079
+06332515,-1.2415361404418945
+06339100,0.7121953964233398
+06344600,-0.42432260513305664
+06350000,-0.44130396842956543
+06352000,0.05632829666137695
+06404000,0.6483895778656006
+06406000,0.04041832685470581
+06409000,-0.7261408567428589
+06431500,0.5035627484321594
+06440200,0.7619293332099915
+06447500,0.3282895088195801
+06470800,0.6466403007507324
+06477500,-0.034986019134521484
+06479215,0.07817947864532471
+06601000,0.31779050827026367
+06614800,0.76063072681427
+06622700,0.7796003222465515
+06623800,0.8469192981719971
+06632400,0.8415248394012451
+06746095,0.5711008310317993
+06803510,0.653078556060791
+06803530,0.6445111036300659
+06814000,0.6501928567886353
+06847900,-0.13549351692199707
+06853800,0.2131495475769043
+06876700,0.6020107269287109
+06878000,0.7980549931526184
+06879650,0.3266674280166626
+06885500,0.7719855904579163
+06888500,0.7975708842277527
+06889200,0.807120680809021
+06889500,0.7937441468238831
+06892000,0.9114710092544556
+06903400,0.599901556968689
+06906800,0.7109503746032715
+06910800,0.9158011078834534
+06911900,0.8910807967185974
+06917000,0.6909734010696411
+06918460,0.042301714420318604
+06919500,0.7725780010223389
+06921070,0.5410480499267578
+06921200,0.6396007537841797
+07057500,0.8515994548797607
+07060710,0.7209652662277222
+07066000,0.875265896320343
+07083000,0.7642459869384766
+07142300,-0.09308779239654541
+07145700,0.7822432518005371
+07167500,0.657828688621521
+07180500,0.7497325539588928
+07184000,0.6293981075286865
+07195800,-0.34341561794281006
+07196900,0.7453961372375488
+07197000,0.8207955360412598
+07208500,0.32752174139022827
+07261000,0.3518980145454407
+07263295,0.6288543939590454
+07291000,0.2662489414215088
+07299670,0.23717963695526123
+07301410,-0.0642627477645874
+07315200,0.42464888095855713
+07315700,0.5775969624519348
+07335700,0.6768598556518555
+07340300,0.6476690769195557
+07346045,0.7007787227630615
+07359610,0.640682578086853
+07362100,0.014866411685943604
+07362587,0.4144640564918518
+07375000,0.5625041723251343
+08013000,0.7632789611816406
+08014500,0.5601940751075745
+08023080,0.17405998706817627
+08050800,0.38230639696121216
+08066200,0.2039521336555481
+08066300,0.45147860050201416
+08070000,0.49970370531082153
+08070200,0.5427355766296387
+08082700,0.22469711303710938
+08086212,0.5794568061828613
+08086290,0.6216006278991699
+08101000,0.5932484865188599
+08103900,0.37203001976013184
+08104900,0.46629923582077026
+08109700,0.5086768865585327
+08150800,-0.15266203880310059
+08158700,0.4043140411376953
+08158810,0.463548481464386
+08164300,0.5147162675857544
+08164600,0.45096856355667114
+08165300,-8.08903694152832
+08171300,0.5783644914627075
+08175000,0.37211185693740845
+08176900,0.15368086099624634
+08178880,0.43460917472839355
+08189500,0.6870161294937134
+08190000,-0.2071535587310791
+08190500,-0.40946638584136963
+08194200,-0.26788806915283203
+08195000,0.5499993562698364
+08196000,0.11081963777542114
+08198500,0.12624752521514893
+08200000,0.5528875589370728
+08202700,0.048982083797454834
+08267500,0.5708244442939758
+08269000,0.6066718101501465
+08271000,0.7343301773071289
+08324000,0.43274855613708496
+08377900,0.814560055732727
+08378500,0.8515089750289917
+08380500,0.18207520246505737
+09035800,0.8379914164543152
+09035900,0.9362084269523621
+09047700,0.7784739136695862
+09065500,0.8973732590675354
+09066000,0.9216099977493286
+09066200,0.9031369090080261
+09066300,0.8300437927246094
+09081600,0.8680146336555481
+09107000,0.9230637550354004
+09210500,0.47798311710357666
+09223000,0.6085420846939087
+09306242,-0.5319031476974487
+09312600,0.652539849281311
+09352900,0.7103285789489746
+09378170,-0.18852388858795166
+09386900,0.03693068027496338
+09404450,0.1595812439918518
+09430600,0.025980710983276367
+09447800,-3.624164581298828
+09484600,0.118197500705719
+09492400,0.5466994047164917
+09494000,0.35070276260375977
+09497980,0.7217757701873779
+09505350,0.16945773363113403
+09505800,0.5452689528465271
+09508300,0.28479641675949097
+09510200,0.32429611682891846
+09512280,0.30154865980148315
+09513780,0.1284436583518982
+10234500,0.5730996131896973
+10244950,-0.666445255279541
+10259000,0.5051620006561279
+10336645,0.6975393295288086
+10336660,0.857029139995575
+10343500,0.3335026502609253
+11124500,0.7823541760444641
+11141280,-0.33735477924346924
+11143000,0.6412466764450073
+11148900,0.5615831613540649
+11151300,0.5819172859191895
+11176400,0.578309178352356
+11230500,0.39385712146759033
+11237500,0.7818347811698914
+11264500,0.8102197647094727
+11266500,0.8520770072937012
+11284400,0.3443942070007324
+11381500,0.7308921813964844
+11451100,0.5744870901107788
+11468500,0.8747356534004211
+11473900,0.6518815755844116
+11475560,0.7062621116638184
+11476600,0.7496627569198608
+11478500,0.6428377628326416
+11480390,0.6732715964317322
+11481200,0.8031600117683411
+11482500,0.8039526343345642
+11522500,0.7566474676132202
+11523200,0.5461826324462891
+11528700,0.54786616563797
+11532500,0.8388044238090515
+12010000,0.7961608171463013
+12013500,0.8464816212654114
+12020000,0.2855271100997925
+12025700,0.8186967372894287
+12035000,0.8469226360321045
+12040500,0.8013203740119934
+12041200,0.7790076732635498
+12048000,0.7037407159805298
+12054000,0.704394519329071
+12056500,0.7023180723190308
+12073500,0.754379391670227
+12082500,0.8051486015319824
+12092000,0.7023522257804871
+12114500,0.531180739402771
+12115000,0.6128606796264648
+12117000,0.7826157212257385
+12143600,0.7423604726791382
+12144000,0.7545992136001587
+12145500,0.836972177028656
+12147500,0.7357927560806274
+12167000,0.5779836177825928
+12175500,0.8338032960891724
+12178100,0.7482699155807495
+12186000,0.7061046361923218
+12189500,0.6973816156387329
+12375900,0.8514399528503418
+12377150,0.8118628263473511
+12381400,0.9014731049537659
+12383500,0.909161388874054
+12390700,0.8609585165977478
+12411000,0.6653455495834351
+12447390,0.6554726362228394
+12451000,0.8719167709350586
+12488500,0.686754047870636
+13011500,0.8188939094543457
+13011900,0.8460008502006531
+13018300,0.49993038177490234
+13023000,0.8999674320220947
+13161500,0.7824338674545288
+13235000,0.806472897529602
+13240000,0.8791236877441406
+13313000,0.9238018989562988
+13331500,0.8502631783485413
+14020000,0.4626910090446472
+14096850,-0.35322606563568115
+14137000,0.6531267166137695
+14138800,0.7114163637161255
+14138870,0.7045438289642334
+14138900,0.7310739755630493
+14139800,0.7543776631355286
+14141500,0.7300010323524475
+14154500,0.7895790338516235
+14158790,0.6684557199478149
+14166500,0.9050097465515137
+14182500,0.6952413320541382
+14185000,0.821417510509491
+14185900,0.8077904582023621
+14187000,0.8582398891448975
+14216500,0.6644067168235779
+14222500,0.8472827076911926
+14236200,0.7345175743103027
+14301000,0.9104412198066711
+14303200,0.7360144853591919
+14305500,0.7866533398628235
+14306340,0.7748196125030518
+14306500,0.8966917991638184
+14308990,0.7767115831375122
+14309500,0.7861366868019104
+14316700,0.7510634064674377
+14325000,0.7065036296844482
+14362250,0.28636813163757324
+14400000,0.8146609663963318
+###ARM K1_s700 rows=532
+basin,NSE
+01022500,0.7601916790008545
+01031500,0.798207700252533
+01047000,0.8359413146972656
+01052500,0.7870711088180542
+01054200,0.5777179002761841
+01055000,0.5861872434616089
+01057000,0.7064366936683655
+01073000,0.7414690852165222
+01078000,0.8448747396469116
+01123000,0.7491717338562012
+01134500,0.757346510887146
+01137500,0.7176129817962646
+01139000,0.758892834186554
+01139800,0.6847213506698608
+01142500,0.6676552295684814
+01144000,0.7769684791564941
+01162500,0.6742173433303833
+01169000,0.6536226272583008
+01170100,0.6151036620140076
+01181000,0.7001981139183044
+01187300,0.6795269250869751
+01195100,0.7455276250839233
+01333000,0.5915688872337341
+01350000,0.7309702634811401
+01350080,0.4400034546852112
+01350140,0.6245614886283875
+01365000,0.7511955499649048
+01411300,0.7759965062141418
+01413500,0.5637077689170837
+01414500,0.5683879852294922
+01415000,0.596504807472229
+01423000,0.728460431098938
+01434025,0.48214423656463623
+01435000,0.7256069183349609
+01439500,0.6688066720962524
+01440000,0.7683137059211731
+01440400,0.6620815992355347
+01451800,0.7411074042320251
+01466500,0.7119950652122498
+01484100,0.6632087230682373
+01487000,0.6995092034339905
+01491000,0.7409067749977112
+01510000,0.6601244211196899
+01516500,0.5852375030517578
+01518862,0.7683314085006714
+01532000,0.7342409491539001
+01539000,0.8235714435577393
+01542810,0.8215600848197937
+01543000,0.8779267072677612
+01543500,0.8883692026138306
+01544500,0.8869394063949585
+01545600,0.8251543641090393
+01547700,0.6750362515449524
+01548500,0.9182937145233154
+01549500,0.7903599143028259
+01550000,0.8230486512184143
+01552000,0.8181558847427368
+01552500,0.6846517324447632
+01557500,0.8074427247047424
+01567500,0.7408691048622131
+01568000,0.8902724981307983
+01580000,0.6393643617630005
+01583500,0.46200627088546753
+01586610,0.5449029207229614
+01591400,0.4842638373374939
+01594950,0.8141796588897705
+01596500,0.738662600517273
+01605500,0.729716420173645
+01606500,0.7497346997261047
+01632000,0.5370306968688965
+01632900,0.6863899827003479
+01634500,0.6917024850845337
+01638480,0.6378145813941956
+01639500,0.6556520462036133
+01644000,0.8384367227554321
+01664000,0.8583585619926453
+01666500,0.6873553991317749
+01667500,0.8207991123199463
+01669000,0.7307828664779663
+01669520,0.8248752355575562
+02011400,0.828078031539917
+02013000,0.8383763432502747
+02014000,0.863924503326416
+02015700,0.6812361478805542
+02016000,0.7703341245651245
+02017500,0.7198284864425659
+02018000,0.8232759237289429
+02027000,0.6873288154602051
+02027500,0.5672557353973389
+02028500,0.6964248418807983
+02038850,0.5042556524276733
+02046000,0.7647386789321899
+02051500,0.7880226373672485
+02053200,0.7368952631950378
+02053800,0.7977662682533264
+02055100,0.5528112649917603
+02056900,0.7343182563781738
+02059500,0.7044200301170349
+02064000,0.840435266494751
+02065500,0.2072240114212036
+02069700,0.5613246560096741
+02070000,0.603732705116272
+02074500,0.5825177431106567
+02077200,0.7353547215461731
+02081500,0.3127719759941101
+02082950,0.7782752513885498
+02092500,0.8907190561294556
+02096846,0.5143892765045166
+02102908,0.7203860878944397
+02108000,0.8477620482444763
+02111180,0.5456670522689819
+02111500,0.6021024584770203
+02112120,0.5777504444122314
+02112360,0.6622351408004761
+02118500,0.4298655390739441
+02125000,0.861659824848175
+02128000,0.7571179866790771
+02137727,0.6771358251571655
+02140991,0.7732326984405518
+02143000,0.6807888746261597
+02143040,0.5292280912399292
+02149000,0.7339823246002197
+02152100,0.641257643699646
+02177000,0.640773594379425
+02178400,0.764531672000885
+02193340,0.8293492794036865
+02196000,0.6956459283828735
+02198100,0.5734256505966187
+02202600,0.7210504412651062
+02212600,0.6013829708099365
+02215100,0.813306987285614
+02216180,0.6718495488166809
+02221525,0.511478066444397
+02231000,0.8816186189651489
+02245500,0.564765214920044
+02246000,0.8663220405578613
+02296500,0.5957435369491577
+02297155,-5.231624126434326
+02297310,-2.600923538208008
+02298123,0.7327138781547546
+02298608,-0.27712321281433105
+02299950,0.41017961502075195
+02300700,-0.0480118989944458
+02342933,0.300726056098938
+02349900,0.7567214369773865
+02350900,0.8768853545188904
+02361000,0.5764880776405334
+02363000,0.7586084604263306
+02369800,0.7160743474960327
+02371500,0.19364511966705322
+02372250,-0.5492678880691528
+02374500,0.43941253423690796
+02381600,0.34577786922454834
+02384540,0.6850632429122925
+02395120,-0.38014471530914307
+02415000,0.6192500591278076
+02427250,0.6768368482589722
+02430085,0.6437387466430664
+02450250,0.6306230425834656
+02464000,0.6724729537963867
+02464360,0.7266194820404053
+02465493,-0.12175309658050537
+02469800,0.79213547706604
+02472000,0.846925675868988
+02472500,0.5538262128829956
+02479155,0.6955589056015015
+02479300,0.8225892782211304
+02479560,0.6595189571380615
+02481000,0.5902247428894043
+02481510,0.6064968705177307
+03010655,0.8409103155136108
+03011800,0.7803465127944946
+03015500,0.7802413702011108
+03021350,0.6966614723205566
+03026500,0.8318278193473816
+03028000,0.8344906568527222
+03049000,0.804637610912323
+03049800,0.6158156394958496
+03050000,0.7976759076118469
+03069500,0.8816763758659363
+03070500,0.8296310901641846
+03076600,0.7290258407592773
+03078000,0.8054211735725403
+03140000,0.7580149173736572
+03144000,0.8255469799041748
+03170000,0.7718683481216431
+03173000,0.8092079162597656
+03180500,0.8072879314422607
+03182500,0.852279782295227
+03186500,0.8519855737686157
+03237280,0.5928508043289185
+03237500,0.5988301038742065
+03238500,0.44869667291641235
+03241500,0.7966834306716919
+03280700,0.7753573060035706
+03281500,0.8605921268463135
+03285000,0.5375122427940369
+03291780,0.5610576272010803
+03338780,0.46916651725769043
+03340800,0.8324812650680542
+03346000,0.6764118075370789
+03364500,0.572388768196106
+03366500,0.5090944766998291
+03368000,0.7560035586357117
+03384450,0.6184873580932617
+03439000,0.6888474225997925
+03455500,0.4357913136482239
+03456500,0.5089579820632935
+03460000,0.7780443429946899
+03463300,0.6274508833885193
+03471500,0.7124514579772949
+03473000,0.8034387826919556
+03479000,0.5435670614242554
+03488000,0.7789179086685181
+03498500,0.818487286567688
+03500000,0.8057551383972168
+03500240,0.5057874321937561
+03504000,0.5322624444961548
+03574500,0.581592321395874
+03592718,0.4645196795463562
+03604000,0.784329891204834
+04015330,0.7024619579315186
+04024430,0.4139787554740906
+04027000,0.5684340000152588
+04040500,0.8484146595001221
+04043050,0.8485124111175537
+04045500,0.8538107872009277
+04057510,0.8204220533370972
+04057800,0.5988692045211792
+04059500,0.6739504933357239
+04063700,0.7066181898117065
+04074950,0.8132904767990112
+04105700,0.8033201694488525
+04115265,0.7028019428253174
+04122200,0.8888326287269592
+04122500,0.7525240182876587
+04127918,0.5077688694000244
+04127997,0.8227464556694031
+04161580,0.6957615613937378
+04185000,0.7520784139633179
+04196800,0.6687611937522888
+04197100,0.4261850118637085
+04197170,0.7023599743843079
+04213000,0.47505122423171997
+04213075,0.4325505495071411
+04216418,0.7269065380096436
+04221000,0.8481336832046509
+04224775,0.8125648498535156
+04233000,0.821182906627655
+04256000,0.7682999968528748
+04296000,0.7316176891326904
+05057200,0.28543752431869507
+05120500,-46.120243072509766
+05291000,0.2811763882637024
+05362000,0.8975951075553894
+05393500,0.9011170864105225
+05399500,0.795332670211792
+05408000,0.7192707061767578
+05413500,0.7793323993682861
+05414000,0.4933658838272095
+05444000,0.5357866287231445
+05454000,0.5090422630310059
+05458000,0.6809943914413452
+05466500,0.10106933116912842
+05487980,0.715481162071228
+05488200,0.6480638980865479
+05489000,0.6364840269088745
+05495000,0.7093589901924133
+05495500,0.5452616214752197
+05501000,0.6661503314971924
+05503800,0.7415860295295715
+05507600,0.8054983019828796
+05508805,0.7643539905548096
+05525500,0.6899027228355408
+05556500,0.7579503059387207
+05584500,0.0012516975402832031
+05591550,0.7049646377563477
+05592050,0.4839509129524231
+05592575,0.6222773790359497
+05593575,0.7826259136199951
+05593900,0.6024528741836548
+05595730,0.8191052079200745
+06221400,0.9478568434715271
+06224000,0.9289697408676147
+06278300,0.7924609780311584
+06280300,0.8136074542999268
+06289000,0.5194097757339478
+06291500,0.6460403203964233
+06311000,0.8327433466911316
+06332515,-1.2263972759246826
+06339100,0.5035591125488281
+06344600,-0.46661376953125
+06350000,-0.08708202838897705
+06352000,0.24595242738723755
+06404000,0.6572584509849548
+06406000,0.09255629777908325
+06409000,-1.213268518447876
+06431500,0.46434032917022705
+06440200,0.7074058651924133
+06447500,0.31017011404037476
+06470800,0.8229074478149414
+06477500,-1.1283142566680908
+06479215,-0.22777998447418213
+06601000,0.17044776678085327
+06614800,0.8469109535217285
+06622700,0.8682745099067688
+06623800,0.8873530626296997
+06632400,0.8559910655021667
+06746095,0.773700475692749
+06803510,0.7500021457672119
+06803530,0.5674576759338379
+06814000,0.626410961151123
+06847900,-0.15770375728607178
+06853800,0.2975403666496277
+06876700,0.43546247482299805
+06878000,0.8572664260864258
+06879650,-0.1895148754119873
+06885500,0.7726423740386963
+06888500,0.7827357649803162
+06889200,0.7775716781616211
+06889500,0.8746950626373291
+06892000,0.8709709644317627
+06903400,0.5330328941345215
+06906800,0.7444657683372498
+06910800,0.7805307507514954
+06911900,0.8090746402740479
+06917000,0.6210117340087891
+06918460,-0.18032324314117432
+06919500,0.7240484356880188
+06921070,0.5725163221359253
+06921200,0.5998300909996033
+07057500,0.7835254669189453
+07060710,0.6149518489837646
+07066000,0.7812225222587585
+07083000,0.863215982913971
+07142300,-2.693173408508301
+07145700,0.6506292819976807
+07167500,0.7620135545730591
+07180500,0.7209141850471497
+07184000,0.5375192165374756
+07195800,0.3882778286933899
+07196900,0.7270970344543457
+07197000,0.6288895606994629
+07208500,0.3609929084777832
+07261000,0.8070685863494873
+07263295,0.6048629283905029
+07291000,0.2516084313392639
+07299670,0.3430555462837219
+07301410,-0.08999180793762207
+07315200,0.42182809114456177
+07315700,0.7000761032104492
+07335700,0.6597002744674683
+07340300,0.6058105230331421
+07346045,0.5145434141159058
+07359610,0.7357611656188965
+07362100,0.4608301520347595
+07362587,0.4692733883857727
+07375000,0.5606522560119629
+08013000,0.7746462821960449
+08014500,0.46434909105300903
+08023080,0.48756468296051025
+08050800,0.30163097381591797
+08066200,0.7637737393379211
+08066300,0.48839396238327026
+08070000,0.33647817373275757
+08070200,0.45846104621887207
+08082700,0.3198007345199585
+08086212,0.6409213542938232
+08086290,0.7313673496246338
+08101000,0.4481913447380066
+08103900,0.31337398290634155
+08104900,0.4227331876754761
+08109700,0.5812721252441406
+08150800,0.3764042854309082
+08158700,0.4117516875267029
+08158810,0.33207327127456665
+08164300,0.5681767463684082
+08164600,0.42243266105651855
+08165300,-9.190813064575195
+08171300,0.5953165292739868
+08175000,0.4463549852371216
+08176900,0.21309399604797363
+08178880,-0.30878114700317383
+08189500,0.7056106328964233
+08190000,0.18302911520004272
+08190500,-0.13454484939575195
+08194200,-0.4729018211364746
+08195000,0.2240464687347412
+08196000,0.007325232028961182
+08198500,0.1884436011314392
+08200000,0.4938579797744751
+08202700,0.33990758657455444
+08267500,0.36055874824523926
+08269000,0.6038215756416321
+08271000,0.6290792226791382
+08324000,0.6528748273849487
+08377900,0.8452271223068237
+08378500,0.7430621981620789
+08380500,0.2517552375793457
+09035800,0.7014502882957458
+09035900,0.8770005702972412
+09047700,0.890212893486023
+09065500,0.9085118770599365
+09066000,0.9364287853240967
+09066200,0.907550036907196
+09066300,0.8618818521499634
+09081600,0.9441822171211243
+09107000,0.9251917600631714
+09210500,0.7534812688827515
+09223000,0.8738418817520142
+09306242,-0.35454893112182617
+09312600,0.8409759998321533
+09352900,0.7027431726455688
+09378170,-1.4687695503234863
+09386900,-0.005433440208435059
+09404450,0.38545161485671997
+09430600,0.033741116523742676
+09447800,-2.8138201236724854
+09484600,-0.018300533294677734
+09492400,0.5758078098297119
+09494000,0.5218936204910278
+09497980,0.1143869161605835
+09505350,-0.11895012855529785
+09505800,-0.26630091667175293
+09508300,0.3159651756286621
+09510200,0.4139823913574219
+09512280,0.2049151062965393
+09513780,0.0059296488761901855
+10234500,0.8256377577781677
+10244950,-6.581610679626465
+10259000,0.5162726640701294
+10336645,0.5253071784973145
+10336660,0.8349733352661133
+10343500,0.3608245253562927
+11124500,0.778435468673706
+11141280,-0.29651153087615967
+11143000,0.2954617738723755
+11148900,0.2424302101135254
+11151300,-1.4843602180480957
+11176400,0.4264359474182129
+11230500,0.5421262979507446
+11237500,0.8915427327156067
+11264500,0.8332307934761047
+11266500,0.8420984148979187
+11284400,0.4600095748901367
+11381500,0.4538300633430481
+11451100,0.657281756401062
+11468500,0.8638741374015808
+11473900,0.8290466666221619
+11475560,0.7199563980102539
+11476600,0.856704592704773
+11478500,0.716072678565979
+11480390,0.6328234672546387
+11481200,0.8031690716743469
+11482500,0.8433297872543335
+11522500,0.779886782169342
+11523200,0.8060110807418823
+11528700,0.6323167085647583
+11532500,0.8934653997421265
+12010000,0.8853471875190735
+12013500,0.835832417011261
+12020000,0.33375072479248047
+12025700,0.8470388650894165
+12035000,0.8395701050758362
+12040500,0.8396626710891724
+12041200,0.7760684490203857
+12048000,0.7277771234512329
+12054000,0.767457902431488
+12056500,0.7135694026947021
+12073500,0.7972326278686523
+12082500,0.8210263848304749
+12092000,0.7239276170730591
+12114500,0.5429010391235352
+12115000,0.674624502658844
+12117000,0.77640700340271
+12143600,0.7846206426620483
+12144000,0.8079070448875427
+12145500,0.8608472347259521
+12147500,0.724871039390564
+12167000,0.574891209602356
+12175500,0.810577392578125
+12178100,0.825343906879425
+12186000,0.7317609786987305
+12189500,0.7227059006690979
+12375900,0.6682676672935486
+12377150,0.7990767955780029
+12381400,0.8735876679420471
+12383500,0.8725267052650452
+12390700,0.9148721098899841
+12411000,0.6274043321609497
+12447390,0.7543475031852722
+12451000,0.9016819000244141
+12488500,0.77625572681427
+13011500,0.8644498586654663
+13011900,0.8185974359512329
+13018300,0.7006412744522095
+13023000,0.877618670463562
+13161500,0.7826920747756958
+13235000,0.8643999695777893
+13240000,0.8595144152641296
+13313000,0.9245184063911438
+13331500,0.8846489787101746
+14020000,0.60447096824646
+14096850,-0.6966691017150879
+14137000,0.7169720530509949
+14138800,0.6954758167266846
+14138870,0.7188271284103394
+14138900,0.7251920700073242
+14139800,0.7798115015029907
+14141500,0.6660027503967285
+14154500,0.774166464805603
+14158790,0.6425755023956299
+14166500,0.8888329267501831
+14182500,0.7032796144485474
+14185000,0.77928626537323
+14185900,0.7742010951042175
+14187000,0.8584455251693726
+14216500,0.637919545173645
+14222500,0.8063144087791443
+14236200,0.7984522581100464
+14301000,0.890413224697113
+14303200,0.7714276909828186
+14305500,0.8613466024398804
+14306340,0.7986953854560852
+14306500,0.8776929378509521
+14308990,0.7737736701965332
+14309500,0.7778681516647339
+14316700,0.5774499177932739
+14325000,0.6884198188781738
+14362250,0.3036748170852661
+14400000,0.8365733027458191
+###ARM K1_s800 rows=532
+basin,NSE
+01022500,0.8042477369308472
+01031500,0.8690394759178162
+01047000,0.8354287147521973
+01052500,0.8310737609863281
+01054200,0.5039448738098145
+01055000,0.5746973752975464
+01057000,0.7765965461730957
+01073000,0.7893083691596985
+01078000,0.7973038554191589
+01123000,0.8054988980293274
+01134500,0.7513408064842224
+01137500,0.7145439386367798
+01139000,0.7892364263534546
+01139800,0.7853614091873169
+01142500,0.764297366142273
+01144000,0.8282076120376587
+01162500,0.5754983425140381
+01169000,0.6388955116271973
+01170100,0.6413822174072266
+01181000,0.6510015726089478
+01187300,0.7303999662399292
+01195100,0.6787436008453369
+01333000,0.5557182431221008
+01350000,-0.10264945030212402
+01350080,0.24858897924423218
+01350140,0.5297753810882568
+01365000,0.6679157018661499
+01411300,0.46558892726898193
+01413500,0.035382866859436035
+01414500,0.3919626474380493
+01415000,0.4579024314880371
+01423000,0.476046085357666
+01434025,0.30627739429473877
+01435000,0.6151056289672852
+01439500,0.6708537936210632
+01440000,0.7718908786773682
+01440400,0.6935821771621704
+01451800,0.7717485427856445
+01466500,0.7378796339035034
+01484100,0.7193339467048645
+01487000,0.8088145852088928
+01491000,0.7829365730285645
+01510000,0.5381535291671753
+01516500,0.4363020658493042
+01518862,0.712119996547699
+01532000,0.6989778876304626
+01539000,0.7965194582939148
+01542810,0.8109503388404846
+01543000,0.8847254514694214
+01543500,0.8692724704742432
+01544500,0.8246297240257263
+01545600,0.8319087028503418
+01547700,0.5479189157485962
+01548500,0.7977122068405151
+01549500,0.695971667766571
+01550000,0.775776207447052
+01552000,0.759940505027771
+01552500,0.6514605283737183
+01557500,0.8171659111976624
+01567500,0.682898998260498
+01568000,0.8783851861953735
+01580000,0.5904883146286011
+01583500,0.5094666481018066
+01586610,0.5662519335746765
+01591400,0.3425689935684204
+01594950,0.6401289701461792
+01596500,0.7172552347183228
+01605500,0.6702349185943604
+01606500,0.7133008241653442
+01632000,0.5320723056793213
+01632900,0.7179453372955322
+01634500,0.6292010545730591
+01638480,0.5672174692153931
+01639500,0.6455898284912109
+01644000,0.7236613035202026
+01664000,0.8424210548400879
+01666500,0.7333242893218994
+01667500,0.8411853909492493
+01669000,0.8112939596176147
+01669520,0.7755981087684631
+02011400,0.8749657273292542
+02013000,0.7648853063583374
+02014000,0.8433653116226196
+02015700,0.657518744468689
+02016000,0.7956894636154175
+02017500,0.6480571031570435
+02018000,0.7972824573516846
+02027000,0.6728310585021973
+02027500,0.6759597063064575
+02028500,0.655051589012146
+02038850,0.4723040461540222
+02046000,0.815739095211029
+02051500,0.796742856502533
+02053200,0.7423139810562134
+02053800,0.7325093746185303
+02055100,0.6574983596801758
+02056900,0.7179131507873535
+02059500,0.6747482419013977
+02064000,0.794243574142456
+02065500,0.3605484962463379
+02069700,0.5652955770492554
+02070000,0.5732714533805847
+02074500,0.4070902466773987
+02077200,0.664932370185852
+02081500,0.5991334319114685
+02082950,0.7419093251228333
+02092500,0.9075526595115662
+02096846,0.5152755975723267
+02102908,0.750412106513977
+02108000,0.8827157020568848
+02111180,0.5285874605178833
+02111500,0.5393956899642944
+02112120,0.5514044761657715
+02112360,0.6753079891204834
+02118500,0.5041592121124268
+02125000,0.6164464950561523
+02128000,0.522564172744751
+02137727,0.6879220604896545
+02140991,0.690718412399292
+02143000,0.6364505887031555
+02143040,0.5286761522293091
+02149000,0.6489687561988831
+02152100,0.5505599975585938
+02177000,0.5552570223808289
+02178400,0.681153416633606
+02193340,0.8294522762298584
+02196000,0.7883623838424683
+02198100,0.4179714322090149
+02202600,0.8436995148658752
+02212600,0.5852640271186829
+02215100,0.8304224014282227
+02216180,0.7105690836906433
+02221525,0.6684606075286865
+02231000,0.8451812863349915
+02245500,0.5292555093765259
+02246000,0.8951802253723145
+02296500,0.3206521272659302
+02297155,-7.219267845153809
+02297310,-2.3492140769958496
+02298123,0.37618738412857056
+02298608,0.02678912878036499
+02299950,0.3706042766571045
+02300700,-0.03695046901702881
+02342933,0.43698185682296753
+02349900,0.5730487108230591
+02350900,0.8223216533660889
+02361000,0.6135647892951965
+02363000,0.7258963584899902
+02369800,0.7168480157852173
+02371500,0.2813001871109009
+02372250,-0.1368621587753296
+02374500,0.3308795690536499
+02381600,0.06428414583206177
+02384540,0.6541454792022705
+02395120,0.2355312705039978
+02415000,0.7044534683227539
+02427250,0.7482731342315674
+02430085,0.6886465549468994
+02450250,0.5361208915710449
+02464000,0.6860641241073608
+02464360,0.6829403638839722
+02465493,-0.1462101936340332
+02469800,0.7393290996551514
+02472000,0.7974557876586914
+02472500,0.47795480489730835
+02479155,0.7234690189361572
+02479300,0.7654767036437988
+02479560,0.67542564868927
+02481000,0.3703508973121643
+02481510,0.6157132387161255
+03010655,0.7893490195274353
+03011800,0.7800625562667847
+03015500,0.8262947201728821
+03021350,0.6740572452545166
+03026500,0.7939978241920471
+03028000,0.8324680328369141
+03049000,0.84666907787323
+03049800,0.5866050720214844
+03050000,0.7590624690055847
+03069500,0.8588165044784546
+03070500,0.8005658984184265
+03076600,0.6632341146469116
+03078000,0.774645984172821
+03140000,0.673062264919281
+03144000,0.7827313542366028
+03170000,0.7507708072662354
+03173000,0.8364768624305725
+03180500,0.7328698635101318
+03182500,0.8352252244949341
+03186500,0.7760804891586304
+03237280,0.5941277742385864
+03237500,0.6498726606369019
+03238500,0.6831384301185608
+03241500,0.7704195976257324
+03280700,0.7155519723892212
+03281500,0.8477055430412292
+03285000,0.7491945028305054
+03291780,0.4960654377937317
+03338780,0.48948776721954346
+03340800,0.8245450258255005
+03346000,0.7918199300765991
+03364500,0.5797482132911682
+03366500,0.6382296085357666
+03368000,0.7108458280563354
+03384450,0.5290060639381409
+03439000,0.6331979036331177
+03455500,0.2072013020515442
+03456500,0.452877402305603
+03460000,0.6831580400466919
+03463300,0.6119458079338074
+03471500,0.7641471028327942
+03473000,0.6689003705978394
+03479000,0.30085134506225586
+03488000,0.7793451547622681
+03498500,0.8118054866790771
+03500000,0.7660389542579651
+03500240,0.32411324977874756
+03504000,0.6929140090942383
+03574500,0.6858797669410706
+03592718,0.41548091173171997
+03604000,0.7379963994026184
+04015330,0.6393319964408875
+04024430,0.5241944193840027
+04027000,0.668724536895752
+04040500,0.8041945695877075
+04043050,0.8545311689376831
+04045500,0.8483765721321106
+04057510,0.8061875700950623
+04057800,0.44607144594192505
+04059500,0.7370805740356445
+04063700,0.6070501804351807
+04074950,0.7081178426742554
+04105700,0.16976630687713623
+04115265,0.7134700417518616
+04122200,0.8760135769844055
+04122500,0.7631696462631226
+04127918,0.5395678281784058
+04127997,0.7193875312805176
+04161580,0.7045503258705139
+04185000,0.7824209928512573
+04196800,0.7562306523323059
+04197100,0.7086181044578552
+04197170,0.7547351717948914
+04213000,0.5693787932395935
+04213075,0.41705507040023804
+04216418,0.7151013612747192
+04221000,0.8342069387435913
+04224775,0.8116934299468994
+04233000,0.8023768663406372
+04256000,0.7293205261230469
+04296000,0.7093535661697388
+05057200,0.16858530044555664
+05120500,-64.39031219482422
+05291000,0.12440705299377441
+05362000,0.8918920159339905
+05393500,0.8203998804092407
+05399500,0.854759931564331
+05408000,0.6845070123672485
+05413500,0.6232761144638062
+05414000,0.3856467008590698
+05444000,0.44164854288101196
+05454000,0.4092264175415039
+05458000,0.7037317752838135
+05466500,0.3883463144302368
+05487980,0.6845906972885132
+05488200,0.6283893585205078
+05489000,0.6178659200668335
+05495000,0.7138605713844299
+05495500,0.6133633852005005
+05501000,0.7792576551437378
+05503800,0.8185901641845703
+05507600,0.8603638410568237
+05508805,0.872508704662323
+05525500,0.8484910130500793
+05556500,0.7184969782829285
+05584500,0.12411558628082275
+05591550,0.5950567722320557
+05592050,0.6197403073310852
+05592575,0.6477438807487488
+05593575,0.4724457859992981
+05593900,0.7014241218566895
+05595730,0.663110613822937
+06221400,0.9372504949569702
+06224000,0.9236683249473572
+06278300,0.7497269511222839
+06280300,0.6819272637367249
+06289000,0.4229969382286072
+06291500,0.679826557636261
+06311000,0.670257568359375
+06332515,-0.25976014137268066
+06339100,0.3343775272369385
+06344600,-0.2312711477279663
+06350000,-0.8798971176147461
+06352000,-0.06424498558044434
+06404000,0.39613497257232666
+06406000,0.09370511770248413
+06409000,-0.7659187316894531
+06431500,0.48708581924438477
+06440200,0.26924508810043335
+06447500,-0.43562161922454834
+06470800,0.7466335296630859
+06477500,-0.15650856494903564
+06479215,-0.3194267749786377
+06601000,0.31956350803375244
+06614800,0.8027859926223755
+06622700,0.8598554134368896
+06623800,0.8977044820785522
+06632400,0.8627347350120544
+06746095,0.673263430595398
+06803510,0.7718901038169861
+06803530,0.7275680303573608
+06814000,0.5937904119491577
+06847900,-0.26030147075653076
+06853800,0.12043124437332153
+06876700,0.3756304979324341
+06878000,0.8423953056335449
+06879650,0.40801864862442017
+06885500,0.7223109602928162
+06888500,0.7917349338531494
+06889200,0.6015344858169556
+06889500,0.8076333999633789
+06892000,0.8007012605667114
+06903400,0.576674222946167
+06906800,0.6624687910079956
+06910800,0.8384012579917908
+06911900,0.8237704038619995
+06917000,0.6555556058883667
+06918460,0.07955014705657959
+06919500,0.7802053093910217
+06921070,0.598828136920929
+06921200,0.573725163936615
+07057500,0.5292374491691589
+07060710,0.6832103133201599
+07066000,0.07169198989868164
+07083000,0.8877952098846436
+07142300,-0.6110644340515137
+07145700,0.7440249919891357
+07167500,0.7100059986114502
+07180500,0.7655168771743774
+07184000,0.6189413070678711
+07195800,-0.2830139398574829
+07196900,0.6457986235618591
+07197000,0.7142737507820129
+07208500,0.12783360481262207
+07261000,0.9376519918441772
+07263295,0.5680992603302002
+07291000,0.2450343370437622
+07299670,0.22372746467590332
+07301410,-0.21065247058868408
+07315200,0.5235488414764404
+07315700,0.6712039113044739
+07335700,0.6791419386863708
+07340300,0.5263835191726685
+07346045,0.5357303023338318
+07359610,0.7213414311408997
+07362100,0.536198616027832
+07362587,0.5739997625350952
+07375000,0.5249423980712891
+08013000,0.7533369660377502
+08014500,0.26672738790512085
+08023080,0.5760940909385681
+08050800,0.6639312505722046
+08066200,0.4921320080757141
+08066300,0.33943384885787964
+08070000,0.5099086165428162
+08070200,0.49384838342666626
+08082700,0.24085766077041626
+08086212,0.6795424818992615
+08086290,0.7482823133468628
+08101000,0.7070176005363464
+08103900,0.5409049391746521
+08104900,0.3467763662338257
+08109700,0.5766311883926392
+08150800,0.5790322422981262
+08158700,0.2982151508331299
+08158810,0.19890815019607544
+08164300,0.62708979845047
+08164600,0.2692679762840271
+08165300,-4.958226203918457
+08171300,0.6363299489021301
+08175000,0.5035465359687805
+08176900,0.27173978090286255
+08178880,0.635260820388794
+08189500,0.4633503556251526
+08190000,0.30063873529434204
+08190500,0.1690196990966797
+08194200,0.021563410758972168
+08195000,0.49396055936813354
+08196000,0.21332252025604248
+08198500,0.533152163028717
+08200000,0.5915522575378418
+08202700,0.2795632481575012
+08267500,0.36128103733062744
+08269000,0.7284098267555237
+08271000,0.507527232170105
+08324000,0.37686121463775635
+08377900,0.706222653388977
+08378500,0.49874311685562134
+08380500,0.15472328662872314
+09035800,0.7802942991256714
+09035900,0.9125890135765076
+09047700,0.8856073021888733
+09065500,0.8930843472480774
+09066000,0.9124133586883545
+09066200,0.9094715118408203
+09066300,0.9174359440803528
+09081600,0.8752822875976562
+09107000,0.8585577607154846
+09210500,0.5336264967918396
+09223000,0.7396675944328308
+09306242,-1.6551239490509033
+09312600,0.8581497073173523
+09352900,0.7093791961669922
+09378170,0.2820645570755005
+09386900,-0.09330666065216064
+09404450,-0.2398674488067627
+09430600,0.056247711181640625
+09447800,-7.108366966247559
+09484600,-0.09239351749420166
+09492400,0.6153547763824463
+09494000,0.3348381519317627
+09497980,0.586836576461792
+09505350,0.49381375312805176
+09505800,0.5762310028076172
+09508300,0.23163765668869019
+09510200,0.3108537793159485
+09512280,0.20687657594680786
+09513780,0.08751910924911499
+10234500,0.5795354843139648
+10244950,-2.9759395122528076
+10259000,0.4760522246360779
+10336645,0.48173660039901733
+10336660,0.9009169340133667
+10343500,-3.212984085083008
+11124500,0.8045151233673096
+11141280,0.3564743995666504
+11143000,0.6391727924346924
+11148900,0.5169537663459778
+11151300,0.2669461965560913
+11176400,0.44217419624328613
+11230500,0.48735910654067993
+11237500,0.8864213228225708
+11264500,0.5262812972068787
+11266500,0.5655168294906616
+11284400,0.4001222848892212
+11381500,0.34088367223739624
+11451100,0.7388350963592529
+11468500,0.889855146408081
+11473900,0.8022189736366272
+11475560,0.664229154586792
+11476600,0.8193156719207764
+11478500,0.6063284873962402
+11480390,0.6410931348800659
+11481200,0.8176771402359009
+11482500,0.8137790560722351
+11522500,0.7519168257713318
+11523200,0.7535487413406372
+11528700,0.6901262402534485
+11532500,0.8526695966720581
+12010000,0.8167734146118164
+12013500,0.8525410890579224
+12020000,0.296050488948822
+12025700,0.8440846800804138
+12035000,0.8277456164360046
+12040500,0.768080472946167
+12041200,0.767179012298584
+12048000,0.6925172805786133
+12054000,0.706944465637207
+12056500,0.645958662033081
+12073500,0.7200156450271606
+12082500,0.8120275139808655
+12092000,0.7020100355148315
+12114500,0.6346243619918823
+12115000,0.7116683721542358
+12117000,0.7858084440231323
+12143600,0.788281261920929
+12144000,0.7652490735054016
+12145500,0.8713885545730591
+12147500,0.7485203146934509
+12167000,0.631431519985199
+12175500,0.8086434006690979
+12178100,0.8077318668365479
+12186000,0.8305413722991943
+12189500,0.7422645092010498
+12375900,0.8375087976455688
+12377150,0.8629685044288635
+12381400,0.907875120639801
+12383500,0.8846864700317383
+12390700,0.8595701456069946
+12411000,0.7428833246231079
+12447390,0.8529254198074341
+12451000,0.8807416558265686
+12488500,0.6999592185020447
+13011500,0.8451032638549805
+13011900,0.7956411242485046
+13018300,0.6040905714035034
+13023000,0.8746036887168884
+13161500,0.8154491782188416
+13235000,0.818869411945343
+13240000,0.8903710842132568
+13313000,0.9296298027038574
+13331500,0.8524898886680603
+14020000,0.44562846422195435
+14096850,-0.5681982040405273
+14137000,0.6828343868255615
+14138800,0.7036439180374146
+14138870,0.7525331377983093
+14138900,0.6897066831588745
+14139800,0.7791757583618164
+14141500,0.7111445665359497
+14154500,0.7909653186798096
+14158790,0.5807148814201355
+14166500,0.8710206747055054
+14182500,0.7229316234588623
+14185000,0.7612732648849487
+14185900,0.7523565292358398
+14187000,0.8435662388801575
+14216500,0.6191378831863403
+14222500,0.8370912075042725
+14236200,0.804276168346405
+14301000,0.9117777943611145
+14303200,0.7617582082748413
+14305500,0.8184184432029724
+14306340,0.7829136848449707
+14306500,0.858282744884491
+14308990,0.8404337763786316
+14309500,0.7178466320037842
+14316700,0.7843979001045227
+14325000,0.7751897573471069
+14362250,0.35256707668304443
+14400000,0.8366055488586426
+=== F. ERR TAILS ===
+-- 225548 --
+-- 225549 --
+-- 225550 --
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-15T15:47:03+0800
