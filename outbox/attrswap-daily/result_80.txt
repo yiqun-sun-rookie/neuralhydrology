@@ -1,0 +1,97 @@
+### channel=attrswap-daily seq=80
+### host=login4
+### started=2026-09-15T20:58:54+0800
+### ---------- output ----------
+wallclock 2026-09-15 20:58:54 +0800
+epoch 1789477134
+=== A. QUEUE expanded (-r splits arrays) with WorkDir; expect no WorkDir under the four roots ===
+     JOBID                                     NAME     STATE PARTITION WORK_DIR
+    202229                             N22-agg-eval   PENDING hgpu4,hgp /data1/home/sunyiq/nearing2022_da
+    202294                               N22-export   PENDING hgpu4,hgp /data1/home/sunyiq/nearing2022_da
+    202315                                 N22-gate   PENDING hgpu4,hgp /data1/home/sunyiq/hpc_mailbox
+    202507                         N22-mask-iso-531   PENDING hgpu4,hgp /data1/home/sunyiq/hpc_mailbox
+    215429                            id30_m01_s100   PENDING     hgpu2 /data1/home/sunyiq/id30_modern_transformer_moe_20260827/repo
+    202293                             N22-manifest   PENDING hgpu4,hgp /data1/home/sunyiq/nearing2022_da
+  squeue rc=0
+  rows(excl header)=6  rows_under_four_roots=0
+=== B. sacct: every job of this account started since 2026-09-13T18:20 (expect 0 with WorkDir under the four roots) ===
+225485|z5-cukf2022|COMPLETED|2026-09-13T16:12:37|/data1/home/sunyiq/hpc_mailbox
+225494|kdpp-dev-train-01487000-seq105|COMPLETED|2026-09-13T18:51:55|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_01487000_A40_launcher_seq105
+225539|id34_stage1|FAILED|2026-09-14T08:10:58|/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
+225548|id33_k1_a|COMPLETED|2026-09-14T08:15:16|/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
+225549|id33_k1_b|COMPLETED|2026-09-14T10:14:39|/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
+225550|id33_k1_c|COMPLETED|2026-09-14T11:27:02|/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
+225559|kdpp-dev-train-02178400-seq107|COMPLETED|2026-09-13T21:50:12|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_02178400_A40_launcher_seq107
+225566|kdpp-dev-train-09513780-seq109|COMPLETED|2026-09-14T00:50:58|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_09513780_A40_launcher_seq109
+225568|kdpp-dev-train-06803510-seq111|COMPLETED|2026-09-14T03:50:56|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_06803510_A40_launcher_seq111
+225569|kdpp-dev-train-03076600-seq113|COMPLETED|2026-09-14T06:51:21|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_03076600_A40_launcher_seq113
+225584|kdpp-dev-train-12175500-seq115|COMPLETED|2026-09-14T09:52:21|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_12175500_A40_launcher_seq115
+225667|kdpp-dev-train-04027000-seq117|COMPLETED|2026-09-14T15:06:08|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_04027000_A40_launcher_seq117
+225684_0|wrr-lr-confirm|COMPLETED|2026-09-14T16:41:17|/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914
+225684_1|wrr-lr-confirm|COMPLETED|2026-09-14T17:55:51|/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914
+225684_2|wrr-lr-confirm|FAILED|2026-09-14T19:41:49|/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914
+225684_3|wrr-lr-confirm|COMPLETED|2026-09-14T19:44:02|/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914
+225684_4|wrr-lr-confirm|COMPLETED|2026-09-14T19:49:11|/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914
+225684_5|wrr-lr-confirm|COMPLETED|2026-09-14T19:55:06|/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914
+225684_6|wrr-lr-confirm|COMPLETED|2026-09-14T20:58:17|/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914
+225684_7|wrr-lr-confirm|COMPLETED|2026-09-14T21:36:44|/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914
+225684_8|wrr-lr-confirm|COMPLETED|2026-09-15T00:20:10|/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914
+225684_9|wrr-lr-confirm|COMPLETED|2026-09-15T02:52:02|/data1/home/sunyiq/kalmannet_wrr_lr_stability_20260914
+225714|kdpp-dev-train-08109700-seq120|COMPLETED|2026-09-14T18:52:05|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08109700_A40_launcher_seq120
+225727|z5-reenc-current|COMPLETED|2026-09-14T20:01:03|/data1/home/sunyiq/zhenjiang_latest_observation_reencoding_20260914_001
+225740|kdpp-dev-train-08086290-seq122|COMPLETED|2026-09-14T21:52:23|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_08086290_A40_launcher_seq122
+225766|kdpp-dev-train-01440400-seq124|COMPLETED|2026-09-15T00:50:54|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_01440400_A40_launcher_seq124
+225767|kdpp-dev-train-05503800-seq126|COMPLETED|2026-09-15T03:49:56|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_05503800_A40_launcher_seq126
+225768|kdpp-dev-train-03049000-seq128|COMPLETED|2026-09-15T06:50:27|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_03049000_A40_launcher_seq128
+225826|kdpp-dev-train-01435000-seq130|COMPLETED|2026-09-15T14:20:56|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_01435000_A40_launcher_seq130
+225847|id34_stage1|COMPLETED|2026-09-15T15:50:21|/data1/home/sunyiq/id33_transformer_recipe_repair_20260904/repo
+225855|kdpp-dev-train-02092500-seq132|COMPLETED|2026-09-15T16:11:48|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_02092500_A40_launcher_seq132
+225865|kdpp-dev-train-14185900-seq134|COMPLETED|2026-09-15T18:51:42|/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908/runtime/train_14185900_A40_launcher_seq134
+  sacct rc=0
+  total_since=32  under_four_roots=0
+  -- gate jobs requeue check (sacct -D shows duplicates if any; expect 7 rows) --
+225205|pswap2_gate_ref|COMPLETED|2026-09-12T12:46:34|2026-09-12T12:49:25
+225214|pswap2_gate_imerg_refday|COMPLETED|2026-09-12T12:46:34|2026-09-12T12:50:13
+225218|pswap2_gate_imerg_uncal_refday|COMPLETED|2026-09-12T12:46:34|2026-09-12T12:50:13
+225222|pswap2_gate_imerg_utc|COMPLETED|2026-09-12T12:49:25|2026-09-12T12:52:24
+225226|pswap2_gate_gsmap_refday|COMPLETED|2026-09-12T12:50:13|2026-09-12T12:53:17
+225230|pswap2_gate_era5l_refday|COMPLETED|2026-09-12T12:50:13|2026-09-12T12:53:17
+225234|pswap2_gate_chirps|COMPLETED|2026-09-12T12:52:24|2026-09-12T12:55:25
+  sacct -D rc=0
+=== C. runs_smoke listing (expect 7 dirs: daymet_1248 imerg_refday_1249 imerg_uncal_refday_1249 imerg_utc_1251 gsmap_refday_1252 era5l_refday_1252 chirps_1254) ===
+total 36
+drwxr-xr-x.  9 sunyiq g_sunyiq 4096 2026-09-12 12:54:23.000000000 +0800 .
+drwxr-xr-x. 10 sunyiq g_sunyiq 4096 2026-09-11 19:58:17.000000000 +0800 ..
+drwxr-xr-x.  4 sunyiq g_sunyiq 4096 2026-09-12 12:54:27.000000000 +0800 pswap2_smoke_chirps_2026_0912_1254_ep1
+drwxr-xr-x.  4 sunyiq g_sunyiq 4096 2026-09-12 12:48:26.000000000 +0800 pswap2_smoke_daymet_2026_0912_1248_ep1
+drwxr-xr-x.  4 sunyiq g_sunyiq 4096 2026-09-12 12:52:19.000000000 +0800 pswap2_smoke_era5l_refday_2026_0912_1252_ep1
+drwxr-xr-x.  4 sunyiq g_sunyiq 4096 2026-09-12 12:52:19.000000000 +0800 pswap2_smoke_gsmap_refday_2026_0912_1252_ep1
+drwxr-xr-x.  4 sunyiq g_sunyiq 4096 2026-09-12 12:49:15.000000000 +0800 pswap2_smoke_imerg_refday_2026_0912_1249_ep1
+drwxr-xr-x.  4 sunyiq g_sunyiq 4096 2026-09-12 12:49:15.000000000 +0800 pswap2_smoke_imerg_uncal_refday_2026_0912_1249_ep1
+drwxr-xr-x.  4 sunyiq g_sunyiq 4096 2026-09-12 12:51:26.000000000 +0800 pswap2_smoke_imerg_utc_2026_0912_1251_ep1
+  dir mtime/ctime: 2026-09-12 12:54:23.000000000 +0800 | 2026-09-12 12:54:23.000000000 +0800
+  runs/ dir      : 2026-09-12 19:17:26.000000000 +0800 | 2026-09-12 19:17:26.000000000 +0800
+  logs/ dir      : 2026-09-12 19:16:34.000000000 +0800 | 2026-09-12 19:16:34.000000000 +0800
+=== D. ctime scan, no type filter, per-root anchors; prints paths (expect 0 lines for each root) ===
+  /data1/home/sunyiq/attr_swap_daily_2026_09  anchor=2026-09-06 12:00  entries_newer_ctime=0
+  /data1/home/sunyiq/forcing_swap_daily_2026_09  anchor=2026-09-10 02:00  entries_newer_ctime=0
+  /data1/home/sunyiq/precip_swap_daily_2026_09  anchor=2026-09-11 17:20  entries_newer_ctime=0
+  /data1/home/sunyiq/precip_swap2_daily_2026_09  anchor=2026-09-13 16:06  entries_newer_ctime=0
+  -- positive control: files in /data1/home/sunyiq/precip_swap2_daily_2026_09/logs with mtime after 2026-09-12 12:00 (expect >= 14) --
+88
+  find rc=0
+=== E. shadow links (three) and runs/ name digest (expect c5761df101fefe2a) ===
+  basin_mean_forcing/daymet -> /data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/daymet
+  usgs_streamflow -> /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us/usgs_streamflow
+  camels_attributes_v2.0 -> /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us/camels_attributes_v2.0
+  dangling under shadow (xtype l): 0
+  runs/ names digest: c5761df101fefe2a
+  runs/ dirs=26 runs_smoke dirs=7
+=== F. nh_final versions by package metadata (no import) ===
+  torch 2.4.0 numpy 2.3.3 pandas 2.3.2
+=== G. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 80
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-15T20:59:05+0800
