@@ -7,8 +7,10 @@ scontrol show partition hgpu4
 sinfo -p hgpu4,hgpu8 -N -o '%N %P %t %G %C'
 for node in ngu101 ngu102 ngu103 ngu104 ngu201 ngu202 ngu203; do
   printf '\nNODE_DETAILS %s\n' "$node"
-  scontrol show node "$node"
+  scontrol -d show node "$node"
 done
+printf '\nRESOURCE_RESERVATIONS_READ_ONLY\n'
+scontrol show reservation || true
 printf '\nUSER_JOBS_READ_ONLY\n'
 squeue -u sunyiq -o '%.18i %.16P %.42j %.10T %.12M %.12l %.6D %R'
 root=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916
