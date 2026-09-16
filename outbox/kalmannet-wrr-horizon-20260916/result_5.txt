@@ -1,0 +1,258 @@
+### channel=kalmannet-wrr-horizon-20260916 seq=5
+### host=login4
+### started=2026-09-16T18:22:15+0800
+### ---------- output ----------
+READ_ONLY_48GB_RESOURCE_CHECK_AND_JOB_226070_STATUS
+2026-09-16T18:22:15+0800
+
+48GB_PARTITION_DETAILS
+PartitionName=hgpu4
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[101-104]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=384 TotalNodes=4 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+NODELIST PARTITION STATE GRES CPUS(A/I/O/T)
+ngu101 hgpu4 mix gpu:4 6/90/0/96
+ngu102 hgpu4 mix gpu:4 16/80/0/96
+ngu103 hgpu4 down* gpu:4 0/0/96/96
+ngu104 hgpu4 mix gpu:4 16/80/0/96
+ngu201 hgpu8 mix gpu:8 8/56/0/64
+ngu202 hgpu8 mix gpu:8 8/56/0/64
+ngu203 hgpu8 mix$ gpu:8 32/32/0/64
+
+NODE_DETAILS ngu101
+NodeName=ngu101 Arch=x86_64 CoresPerSocket=24 
+   CPUAlloc=6 CPUTot=96 CPULoad=4.55
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:4
+   NodeAddr=ngu101 NodeHostName=ngu101 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=10545 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu4 
+   BootTime=2024-03-12T17:17:36 SlurmdStartTime=2024-10-31T20:39:21
+   CfgTRES=cpu=96,mem=1M,billing=96
+   AllocTRES=cpu=6
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+
+NODE_DETAILS ngu102
+NodeName=ngu102 Arch=x86_64 CoresPerSocket=24 
+   CPUAlloc=16 CPUTot=96 CPULoad=2.75
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:4
+   NodeAddr=ngu102 NodeHostName=ngu102 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=17280 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu4 
+   BootTime=2024-03-12T17:23:09 SlurmdStartTime=2026-05-20T17:19:48
+   CfgTRES=cpu=96,mem=1M,billing=96
+   AllocTRES=cpu=16
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+
+NODE_DETAILS ngu103
+NodeName=ngu103 Arch=x86_64 CoresPerSocket=24 
+   CPUAlloc=0 CPUTot=96 CPULoad=0.03
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:4
+   NodeAddr=ngu103 NodeHostName=ngu103 
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=N/A Sockets=2 Boards=1
+   State=DOWN* ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu4 
+   BootTime=2024-03-12T17:14:44 SlurmdStartTime=2025-08-26T16:31:22
+   CfgTRES=cpu=96,mem=1M,billing=96
+   AllocTRES=
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   Reason=Not responding [root@2026-01-13T10:39:13]
+
+
+NODE_DETAILS ngu104
+NodeName=ngu104 Arch=x86_64 CoresPerSocket=24 
+   CPUAlloc=16 CPUTot=96 CPULoad=8.44
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:4
+   NodeAddr=ngu104 NodeHostName=ngu104 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=22240 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu4 
+   BootTime=2026-03-16T17:57:27 SlurmdStartTime=2026-03-17T11:02:03
+   CfgTRES=cpu=96,mem=1M,billing=96
+   AllocTRES=cpu=16
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+
+NODE_DETAILS ngu201
+NodeName=ngu201 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=8 CPUTot=64 CPULoad=7.88
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu201 NodeHostName=ngu201 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=19056 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-04-28T14:14:38 SlurmdStartTime=2026-04-28T14:14:06
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=8
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+
+NODE_DETAILS ngu202
+NodeName=ngu202 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=8 CPUTot=64 CPULoad=7.80
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu202 NodeHostName=ngu202 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=656113 Sockets=2 Boards=1
+   State=MIXED ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2026-01-22T14:56:49 SlurmdStartTime=2026-01-22T15:10:38
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=8
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+
+NODE_DETAILS ngu203
+NodeName=ngu203 Arch=x86_64 CoresPerSocket=16 
+   CPUAlloc=32 CPUTot=64 CPULoad=2.69
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:8
+   NodeAddr=ngu203 NodeHostName=ngu203 Version=19.05.4
+   OS=Linux 3.10.0-1160.el7.x86_64 #1 SMP Mon Oct 19 16:18:59 UTC 2020 
+   RealMemory=1 AllocMem=0 FreeMem=548239 Sockets=2 Boards=1
+   State=MIXED$ ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=hgpu8 
+   BootTime=2025-07-23T15:13:43 SlurmdStartTime=2025-07-23T15:41:12
+   CfgTRES=cpu=64,mem=1M,billing=64
+   AllocTRES=cpu=32
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+   
+
+
+USER_JOBS_READ_ONLY
+             JOBID        PARTITION                                       NAME      STATE         TIME   TIME_LIMIT  NODES NODELIST(REASON)
+            226070            hgpu8                           knet-horizon-s42    PENDING         0:00   4-00:00:00      1 (Resources)
+            202229 hgpu4,hgpu8,hgpu                               N22-agg-eval    PENDING         0:00   1-00:00:00      1 (DependencyNeverSatisfied)
+            202294 hgpu4,hgpu8,hgpu                                 N22-export    PENDING         0:00      4:00:00      1 (Dependency)
+            202315 hgpu4,hgpu8,hgpu                                   N22-gate    PENDING         0:00      2:00:00      1 (Dependency)
+            202507 hgpu4,hgpu8,hgpu                           N22-mask-iso-531    PENDING         0:00      2:00:00      1 (DependencyNeverSatisfied)
+            215429            hgpu2                              id30_m01_s100    PENDING         0:00   7-00:00:00      1 (DependencyNeverSatisfied)
+            202293 hgpu4,hgpu8,hgpu                               N22-manifest    PENDING         0:00   1-00:00:00      1 (JobHeldUser)
+             JOBID        PARTITION                                       NAME      STATE         TIME   TIME_LIMIT  NODES NODELIST(REASON)
+            226070            hgpu8                           knet-horizon-s42    PENDING         0:00   4-00:00:00      1 (Resources)
+JobID|JobName|State|ExitCode|Elapsed|NodeList|AllocTRES|MaxRSS
+226070|knet-horizon-s42|PENDING|0:0|00:00:00|None assigned||
+
+SCHEDULER_START_ESTIMATE
+             JOBID PARTITION     NAME     USER ST          START_TIME  NODES SCHEDNODES           NODELIST(REASON)
+            226070     hgpu8 knet-hor   sunyiq PD 2026-09-22T08:50:58      1 (null)               (Resources)
+JobId=226070 JobName=knet-horizon-s42
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=206690 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Resources Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=4-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-16T17:15:21 EligibleTime=2026-09-16T17:15:21
+   AccrueTime=2026-09-16T17:15:21
+   StartTime=2026-09-22T08:50:58 EndTime=2026-09-26T08:50:58 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-16T18:23:00
+   Partition=hgpu8 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/scripts/hpc_training_horizon/job.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.out
+   Power=
+   TresPerNode=gpu:1
+
+
+REQUESTED_PARTITION_STATUS
+NODELIST STATE GRES CPUS(A/I/O/T)
+ngu201 mix gpu:8 8/56/0/64
+ngu202 mix gpu:8 8/56/0/64
+ngu203 mix$ gpu:8 32/32/0/64
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/environment_metadata_before_submission.json
+{
+  "torch": "2.4.0",
+  "numpy": "2.3.3",
+  "psutil": "7.0.0"
+}
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/hpc_execution/status.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/monitor_result.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker_result.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/status.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/output12/status.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/output25/status.json
+NOT_PRESENT
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.out
+NOT_PRESENT
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.err
+NOT_PRESENT
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker.stderr.log
+NOT_PRESENT
+
+READ_ONLY_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T18:22:16+0800
