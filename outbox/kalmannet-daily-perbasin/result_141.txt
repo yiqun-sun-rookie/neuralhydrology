@@ -1,0 +1,17 @@
+### channel=kalmannet-daily-perbasin seq=141
+### host=login4
+### started=2026-09-16T21:25:54+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=141 purpose=redeploy-contract-a-workspace
+ACTIVE_KDPP3_JOBS=0
+PAYLOAD_OK sha256=09531df83d63b532e2cd8864540bf0e212e1050677ceecd48346937d84a42144 bytes=2621343
+DEPLOY_MANIFEST members=119 mismatched=0
+VERIFY_EXIT=0
+WORKSPACE_FROZEN_MANIFEST_SHA256=6ee7761935660419a740018345d719ac59a6ad28b550050e1299a76c552b9045
+MATRIX_SHA256=453c8bb3b5584bbb9dc4afdf8b8fab1ac992f52753023c2c564d804854e106fb
+RESOURCE_BIND_SHA256=300668e08b500cde4fefb9c94cf15e4a7d3d7f9e0879c2c29b955e4b8a68974d
+ROOT_TOP: deploy_manifest.sha256.json deploy_manifest_superseded_seq137.sha256.json launcher launcher_superseded_seq137 logs resource_policy_v3.json resource_policy_v3_superseded_seq137.json runs runtime workspace workspace_superseded_seq137 
+REDEPLOY_COMPLETE submissions=0 deletions=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T21:25:56+0800
