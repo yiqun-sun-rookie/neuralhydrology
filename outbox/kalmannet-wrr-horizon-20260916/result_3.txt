@@ -1,0 +1,49 @@
+### channel=kalmannet-wrr-horizon-20260916 seq=3
+### host=login4
+### started=2026-09-16T17:16:42+0800
+### ---------- output ----------
+READ_ONLY_JOB_226070_STATUS
+2026-09-16T17:16:42+0800
+             JOBID        PARTITION                                       NAME      STATE         TIME   TIME_LIMIT  NODES NODELIST(REASON)
+            226070            hgpu8                           knet-horizon-s42    PENDING         0:00   4-00:00:00      1 (Resources)
+JobID|JobName|State|ExitCode|Elapsed|NodeList|AllocTRES|MaxRSS
+226070|knet-horizon-s42|PENDING|0:0|00:00:00|None assigned||
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/environment_metadata_before_submission.json
+{
+  "torch": "2.4.0",
+  "numpy": "2.3.3",
+  "psutil": "7.0.0"
+}
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/hpc_execution/status.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/monitor_result.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker_result.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/status.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/output12/status.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/output25/status.json
+NOT_PRESENT
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.out
+NOT_PRESENT
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.err
+NOT_PRESENT
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker.stderr.log
+NOT_PRESENT
+
+READ_ONLY_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T17:16:42+0800
