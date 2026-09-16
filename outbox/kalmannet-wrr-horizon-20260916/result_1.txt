@@ -1,0 +1,83 @@
+### channel=kalmannet-wrr-horizon-20260916 seq=1
+### host=login4
+### started=2026-09-16T17:06:47+0800
+### ---------- output ----------
+READ_ONLY_PREFLIGHT horizon seed42
+2026-09-16T17:06:47+0800
+login4
+
+OWN_JOBS
+             JOBID        PARTITION                                       NAME      STATE         TIME   TIME_LIMIT  NODES NODELIST(REASON)
+            202229 hgpu4,hgpu8,hgpu                               N22-agg-eval    PENDING         0:00   1-00:00:00      1 (DependencyNeverSatisfied)
+            202294 hgpu4,hgpu8,hgpu                                 N22-export    PENDING         0:00      4:00:00      1 (Dependency)
+            202315 hgpu4,hgpu8,hgpu                                   N22-gate    PENDING         0:00      2:00:00      1 (Dependency)
+            202507 hgpu4,hgpu8,hgpu                           N22-mask-iso-531    PENDING         0:00      2:00:00      1 (DependencyNeverSatisfied)
+            215429            hgpu2                              id30_m01_s100    PENDING         0:00   7-00:00:00      1 (DependencyNeverSatisfied)
+            202293 hgpu4,hgpu8,hgpu                               N22-manifest    PENDING         0:00   1-00:00:00      1 (JobHeldUser)
+
+GPU_PARTITIONS
+NODELIST PARTITION STATE GRES MEMORY CPUS
+ngu001 hgpu2p idle gpu:2 1 96
+ngu002 hgpu2p down* gpu:2 1 96
+ngu003 hgpu2 mix gpu:2 1 96
+ngu004 hgpu2p mix gpu:2 1 96
+ngu005 hgpu2p mix gpu:2 1 96
+ngu006 hgpu2p mix gpu:2 1 96
+ngu007 hgpu2p idle gpu:2 1 96
+ngu008 hgpu2p idle gpu:2 1 96
+ngu009 hgpu2 mix gpu:2 1 96
+ngu010 hgpu2p mix gpu:2 1 32
+ngu011 hgpu2p alloc gpu:2 1 32
+ngu101 hgpu4 mix gpu:4 1 96
+ngu102 hgpu4 mix gpu:4 1 96
+ngu103 hgpu4 down* gpu:4 1 96
+ngu104 hgpu4 mix gpu:4 1 96
+ngu201 hgpu8 mix gpu:8 1 64
+ngu202 hgpu8 mix gpu:8 1 64
+ngu203 hgpu8 mix$ gpu:8 1 64
+
+PARTITION_LIMITS
+PartitionName=hgpu4
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[101-104]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=384 TotalNodes=4 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+PartitionName=hgpu8
+   AllowGroups=ALL AllowAccounts=ALL AllowQos=ALL
+   AllocNodes=ALL Default=NO QoS=N/A
+   DefaultTime=NONE DisableRootJobs=NO ExclusiveUser=NO GraceTime=0 Hidden=NO
+   MaxNodes=UNLIMITED MaxTime=UNLIMITED MinNodes=0 LLN=NO MaxCPUsPerNode=UNLIMITED
+   Nodes=ngu[201-203]
+   PriorityJobFactor=1 PriorityTier=1 RootOnly=NO ReqResv=NO OverSubscribe=NO
+   OverTimeLimit=NONE PreemptMode=OFF
+   State=UP TotalCPUs=192 TotalNodes=3 SelectTypeParameters=NONE
+   JobDefaults=(null)
+   DefMemPerNode=UNLIMITED MaxMemPerNode=UNLIMITED
+
+
+NEW_ROOT_MUST_BE_ABSENT
+ROOT_ABSENT /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916
+Filesystem                   Size  Used Avail Use% Mounted on
+hhjt_parastor_hhjt_parastor  954T  606T  349T  64% /data1
+
+EXISTING_ENV_READONLY
+drwxr-xr-x. 22 sunyiq g_sunyiq 4096 Jan 29  2026 /data1/home/sunyiq/miniconda3/envs/knet_clean
+Python 3.11.13
+
+TRAIN_VALIDATION_ONLY
+/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/data/processed/high_flow_aug/train_win800_19990101_01-20070527_03.pt 100 bytes
+/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/data/processed/high_flow_aug/val_win800_20070527_04-20090314_13.pt 98 bytes
+3a4f94a2562278f09b67853ac77e060766296007cb8f8a762756ffe792792440  /data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/data/processed/high_flow_aug/train_win800_19990101_01-20070527_03.pt
+2e195fc974b5cc8cdb35df3cb7fd72a202af033ecc415acc03a87020b00bd403  /data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/data/processed/high_flow_aug/val_win800_20070527_04-20090314_13.pt
+
+READ_ONLY_PREFLIGHT_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T17:06:47+0800
