@@ -1,0 +1,20 @@
+### channel=id33-transformer-recipe-repair seq=65
+### host=login4
+### started=2026-09-16T19:47:32+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-16T19:47:32+0800
+id33_in_flight_count=0
+ID33 CONFIG AUDIT: PASS (47 arms; one factor each; no data read; no training launched)
+  a (G1 G1_s200 G1_s300) -> 226118
+  b (G1_s400 G1_s500 G1_s600) -> 226119
+  c (G1_s700 G1_s800) -> 226120
+g1_jobs= 226118 226119 226120
+     JOBID             NAME  ST     TIME NODELIST NODELIST(REASON)
+    226120        id33_g1_c  PD     0:00          (Resources)
+    226118        id33_g1_a   R  INVALID   ngu005 ngu005
+    226119        id33_g1_b   R  INVALID   ngu006 ngu006
+    226070 knet-horizon-s42   R  1:15:25   ngu101 ngu101
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T19:47:49+0800
