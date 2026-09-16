@@ -1,0 +1,33 @@
+### channel=id33-transformer-recipe-repair seq=62
+### host=login4
+### started=2026-09-16T19:36:24+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-16T19:36:24+0800
+=== A. IN-FLIGHT GATE (id33 arm jobs) + WHOSE JOBS ARE RUNNING ===
+id33_in_flight_count=0
+     JOBID               NAME  ST       TIME  NODELIST NODELIST(REASON)
+    202229       N22-agg-eval  PD       0:00           (DependencyNeverSatisfied)
+    202294         N22-export  PD       0:00           (Dependency)
+    202315           N22-gate  PD       0:00           (Dependency)
+    202507   N22-mask-iso-531  PD       0:00           (DependencyNeverSatisfied)
+    215429      id30_m01_s100  PD       0:00           (DependencyNeverSatisfied)
+    202293       N22-manifest  PD       0:00           (JobHeldUser)
+    226070   knet-horizon-s42   R    1:04:00    ngu101 ngu101
+idle gpu nodes:
+1
+=== B. EXTRACT + HASHES ===
+68f47e97d75b3783b20199463333a667fb278d394ba1f54540d23d207a803f6d  src/grace_input_runoff/features/grace_twsa_daily_v01.p
+ad2175b14fded353dec0694de13f256122da1563458bb9ff6d2cd4bb06ad5d4d  src/transformer_recipe_repair/configs/g1.yml
+49eb12ecfc461051eac7e9cb36dc05fb628089a05ee93a632f58cdb24c0946ee  src/transformer_recipe_repair/scripts/audit_configs.py
+faba41ff73648916041de63a2a34757cc9dab91d2b54aab0a3176d1e836f97b0  src/transformer_recipe_repair/registry/experiments.csv
+g1 configs: 8
+=== C. AUDIT ===
+ID33 CONFIG AUDIT: PASS (47 arms; one factor each; no data read; no training launched)
+=== D. SMOKE JOB (5 basins, 1 epoch, GPU) ===
+/data1/home/sunyiq/.hpc_mailbox_staging/id33-transformer-recipe-repair/cmd_62.sh: line 23: src/grace_input_runoff/hpc/smoke.slurm: No such file or directory
+sbatch: error: Unable to open file src/grace_input_runoff/hpc/smoke.slurm
+SUBMIT_FAILED
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-16T19:36:32+0800
