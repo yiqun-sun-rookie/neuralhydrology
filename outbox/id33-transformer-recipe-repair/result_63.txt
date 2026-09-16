@@ -1,0 +1,47 @@
+### channel=id33-transformer-recipe-repair seq=63
+### host=login4
+### started=2026-09-16T19:38:45+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-16T19:38:45+0800
+Submitted batch job 226116
+smoke_job=226116
+=== WAIT (max 20 min) ===
+state=FAILED after 90s
+     JobID        State ExitCode    Elapsed NodeList 
+---------- ------------ -------- ---------- -------- 
+    226116       FAILED      1:0   00:01:14   ngu006 
+=== SMOKE OUTPUT ===
+2026-09-16 19:40:58,300: predict_last_n: 1
+2026-09-16 19:40:58,300: clip_gradient_norm: 1.0
+2026-09-16 19:40:58,300: seed: 100
+2026-09-16 19:40:58,300: forcings: ['maurer']
+2026-09-16 19:40:58,300: dynamic_inputs: ['PRCP(mm/day)', 'Tmin(C)', 'Tmax(C)', 'SRAD(W/m2)', 'Vp(Pa)', 'grace_twsa_mm']
+2026-09-16 19:40:58,300: target_variables: ['QObs(mm/d)']
+2026-09-16 19:40:58,300: static_attributes: ['p_mean', 'pet_mean', 'aridity', 'p_seasonality', 'frac_snow', 'high_prec_freq', 'high_prec_dur', 'low_prec_freq', 'low_prec_dur', 'elev_mean', 'slope_mean', 'area_gages2', 'frac_forest', 'lai_max', 'lai_diff', 'gvf_max', 'gvf_diff', 'soil_depth_pelletier', 'soil_depth_statsgo', 'soil_porosity', 'soil_conductivity', 'max_water_content', 'sand_frac', 'silt_frac', 'clay_frac', 'carbonate_rocks_frac', 'geol_permeability']
+2026-09-16 19:40:58,300: validate_every: 1
+2026-09-16 19:40:58,300: validate_n_random_basins: 5
+2026-09-16 19:40:58,300: cache_validation_data: True
+2026-09-16 19:40:58,300: metrics: ['NSE']
+2026-09-16 19:40:58,300: num_workers: 4
+2026-09-16 19:40:58,300: log_interval: 5
+2026-09-16 19:40:58,301: log_tensorboard: False
+2026-09-16 19:40:58,301: log_n_figures: 0
+2026-09-16 19:40:58,301: save_weights_every: 1
+2026-09-16 19:40:58,301: save_validation_results: True
+2026-09-16 19:40:58,301: save_all_output: False
+2026-09-16 19:40:58,301: save_train_data: False
+2026-09-16 19:40:58,301: train_dir: results/35_grace_input_runoff/_smoke/grace_input_runoff_G1_SMOKE_2026_0916_1940_ep1/train_data
+2026-09-16 19:40:58,301: img_log_dir: results/35_grace_input_runoff/_smoke/grace_input_runoff_G1_SMOKE_2026_0916_1940_ep1/img_log
+2026-09-16 19:40:58,333: ### Device cuda:0 will be used for training
+2026-09-16 19:40:58,694: Loading basin data into xarray data set.
+[smoke] deterministic=True failed=KeyError: 'date'
+[smoke] NO WEIGHTS WRITTEN
+-- err tail --
+-- run dir --
+run_dir=results/35_grace_input_runoff/_smoke/grace_input_runoff_G1_SMOKE_2026_0916_1940_ep1
+failed= KeyError: 'date'
+weights= {}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T19:40:08+0800
