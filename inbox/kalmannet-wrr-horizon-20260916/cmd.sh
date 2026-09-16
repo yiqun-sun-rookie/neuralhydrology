@@ -1,7 +1,29 @@
 #!/bin/bash
 set -eo pipefail
-printf 'ISOLATED_DEPLOYMENT_AND_SINGLE_SUBMISSION\n'
+printf 'READ_ONLY_JOB_226070_STATUS\n'
 date -Is
-cd /data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-horizon-20260916/deployment-001
-printf '%s\n' 'c36f271d233d9d6ae6e455f41b2c8fecf15839884adb6a07367c291178060ebc  study.tar.gz' '91e5eafe82debc081f036e5de51b5de9e4cf58c6193a98a6c4cb81f4b6dff995  deploy.py' '58f602a0b049950ed7e60000159bbc1ba39f71f3f2ec6e7562c342dce96fc9b8  PACKAGE_MANIFEST.json' | sha256sum -c -
-/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -I -B deploy.py "$PWD"
+root=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916
+repo="$root/repo"
+squeue -j 226070 -o '%.18i %.16P %.42j %.10T %.12M %.12l %.6D %R' || true
+sacct -j 226070 --format=JobID,JobName,State,ExitCode,Elapsed,NodeList,AllocTRES,MaxRSS -P
+show_file() {
+  printf '\nFILE %s\n' "$1"
+  if [ -f "$1" ]; then cat "$1"; else printf 'NOT_PRESENT\n'; fi
+}
+show_file "$root/environment_metadata_before_submission.json"
+show_file "$repo/artifacts/hpc_execution/status.json"
+show_file "$repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/monitor_result.json"
+show_file "$repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker_result.json"
+show_file "$repo/artifacts/training_horizon_common_origins_v2/seed42/status.json"
+show_file "$repo/artifacts/training_horizon_common_origins_v2/seed42/output12/status.json"
+show_file "$repo/artifacts/training_horizon_common_origins_v2/seed42/output25/status.json"
+if [ -f "$repo/artifacts/hpc_execution/optimizer_steps.jsonl" ]; then
+  printf '\nOPTIMIZER_RECEIPTS_FIRST_AND_LAST\n'
+  head -n 1 "$repo/artifacts/hpc_execution/optimizer_steps.jsonl"
+  tail -n 2 "$repo/artifacts/hpc_execution/optimizer_steps.jsonl"
+fi
+for file in "$root/logs/job_226070.out" "$root/logs/job_226070.err" "$repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker.stderr.log"; do
+  printf '\nTAIL %s\n' "$file"
+  if [ -f "$file" ]; then tail -n 55 "$file"; else printf 'NOT_PRESENT\n'; fi
+done
+printf '\nREAD_ONLY_STATUS_COMPLETE\n'
