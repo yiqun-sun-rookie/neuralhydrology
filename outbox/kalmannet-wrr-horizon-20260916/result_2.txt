@@ -1,0 +1,58 @@
+### channel=kalmannet-wrr-horizon-20260916 seq=2
+### host=login4
+### started=2026-09-16T17:14:18+0800
+### ---------- output ----------
+ISOLATED_DEPLOYMENT_AND_SINGLE_SUBMISSION
+2026-09-16T17:14:18+0800
+study.tar.gz: OK
+deploy.py: OK
+PACKAGE_MANIFEST.json: OK
+Initialized empty Git repository in /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/.git/
+[master (root-commit) 9069e89] Isolated hash-pinned training horizon deployment
+ 37 files changed, 5278 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 deployment/original_common.json
+ create mode 100644 deployment/original_source_manifest.json
+ create mode 100644 deployment/path_relocation.json
+ create mode 100644 experiments/__init__.py
+ create mode 100644 experiments/optimize_hyper_parameters/kalman_hybrid_config_v2.yaml
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/README.md
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/__init__.py
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/__main__.py
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/configs/common.json
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/configs/registry.json
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output12_seed42.json
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output12_seed43.json
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output12_seed44.json
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output25_seed42.json
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output25_seed43.json
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output25_seed44.json
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/configs/source_manifest.json
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/metrics.py
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/numerics.py
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/protocol.py
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/runner.py
+ create mode 100644 experiments/optimize_hyper_parameters/training_horizon_20260916/runtime.py
+ create mode 100644 hydrologic/params.py
+ create mode 100644 knet/__init__.py
+ create mode 100644 knet/dl/nn_kalman_clamp_5.py
+ create mode 100644 knet/modules/data_preprocessor/windowed_time_series.py
+ create mode 100644 knet/modules/pipeline/core_fun.py
+ create mode 100644 knet/modules/pipeline/system_model.py
+ create mode 100644 knet/modules/pipeline/walrus_batch_speedup.py
+ create mode 100644 knet/modules/utils/metrics.py
+ create mode 100644 knet/pipelines/train_clean_based_on_11.py
+ create mode 100644 knet/utils/model_initialization_use_script_mdl_1.py
+ create mode 100644 scripts/hpc_training_horizon/job.slurm
+ create mode 100644 scripts/hpc_training_horizon/launch.py
+ create mode 100644 scripts/probe_training_horizon_resources.py
+ create mode 100644 tests/test_training_horizon_preparation.py
+{
+  "returncode": 0,
+  "stdout": "Submitted batch job 226070\n",
+  "stderr": "",
+  "job_id": 226070
+}
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T17:14:22+0800
