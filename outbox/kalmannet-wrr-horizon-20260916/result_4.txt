@@ -1,0 +1,86 @@
+### channel=kalmannet-wrr-horizon-20260916 seq=4
+### host=login4
+### started=2026-09-16T17:22:16+0800
+### ---------- output ----------
+READ_ONLY_JOB_226070_STATUS
+2026-09-16T17:22:16+0800
+             JOBID        PARTITION                                       NAME      STATE         TIME   TIME_LIMIT  NODES NODELIST(REASON)
+            226070            hgpu8                           knet-horizon-s42    PENDING         0:00   4-00:00:00      1 (Resources)
+JobID|JobName|State|ExitCode|Elapsed|NodeList|AllocTRES|MaxRSS
+226070|knet-horizon-s42|PENDING|0:0|00:00:00|None assigned||
+
+SCHEDULER_START_ESTIMATE
+             JOBID PARTITION     NAME     USER ST          START_TIME  NODES SCHEDNODES           NODELIST(REASON)
+            226070     hgpu8 knet-hor   sunyiq PD 2026-09-22T08:50:58      1 (null)               (Resources)
+JobId=226070 JobName=knet-horizon-s42
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200738 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=PENDING Reason=Resources Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:00 TimeLimit=4-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-16T17:15:21 EligibleTime=2026-09-16T17:15:21
+   AccrueTime=2026-09-16T17:15:21
+   StartTime=2026-09-22T08:50:58 EndTime=2026-09-26T08:50:58 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-16T17:23:00
+   Partition=hgpu8 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=(null)
+   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/scripts/hpc_training_horizon/job.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.out
+   Power=
+   TresPerNode=gpu:1
+
+
+REQUESTED_PARTITION_STATUS
+NODELIST STATE GRES CPUS(A/I/O/T)
+ngu201 mix gpu:8 8/56/0/64
+ngu202 mix gpu:8 8/56/0/64
+ngu203 mix$ gpu:8 32/32/0/64
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/environment_metadata_before_submission.json
+{
+  "torch": "2.4.0",
+  "numpy": "2.3.3",
+  "psutil": "7.0.0"
+}
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/hpc_execution/status.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/monitor_result.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker_result.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/status.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/output12/status.json
+NOT_PRESENT
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/output25/status.json
+NOT_PRESENT
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.out
+NOT_PRESENT
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.err
+NOT_PRESENT
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker.stderr.log
+NOT_PRESENT
+
+READ_ONLY_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T17:22:17+0800
