@@ -1,0 +1,43 @@
+### channel=kalmannet-daily-perbasin seq=139
+### host=login4
+### started=2026-09-16T21:06:18+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=139 purpose=e1_probe_cpu_seq139
+PAYLOAD_OK sha256=63a3ae409fab5e807f2dc70081f98245643fb7d12f0e91b426988b5a4d9b101f bytes=1364
+=== QOS_LIMITS (read-only) ===
+qos_sunyiq||||||10|
+=== HCPU48_IDLE (read-only) ===
+31 idle nodes
+ADMISSION_OK {"gpu_jobs_seen": 3, "gpu_seconds_consumed": 0, "inflight_family_jobs": ["226130_[2-3%4]|PENDING|kdpp3-e1probe-knet|hgpu4", "226130_1|RUNNING|kdpp3-e1probe-knet|hgpu4"], "kind": "ukf_node", "now_utc": "2026-09-16T13:06:19.363882+00:00", "partition": "hcpu48", "reservation_gpu_seconds": 0, "time_limit_seconds": 5400}
+Submitted batch job 226139
+
+
+SUBMITTED job_id=226139
+LAUNCHER_EXIT=0
+RECEIPT_BEGIN /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e1_probe_cpu_seq139/submission_job226139.receipt.json
+{
+ "evidence": {
+  "gpu_jobs_seen": 3,
+  "gpu_seconds_consumed": 0,
+  "inflight_family_jobs": [
+   "226130_[2-3%4]|PENDING|kdpp3-e1probe-knet|hgpu4",
+   "226130_1|RUNNING|kdpp3-e1probe-knet|hgpu4"
+  ],
+  "kind": "ukf_node",
+  "now_utc": "2026-09-16T13:06:19.363882+00:00",
+  "partition": "hcpu48",
+  "reservation_gpu_seconds": 0,
+  "time_limit_seconds": 5400
+ },
+ "job_id": "226139",
+ "kind": "ukf_node",
+ "schema_version": "kdpp3_submission_receipt_v1",
+ "script": "ukf_probe.slurm",
+ "script_sha256": "2dfac56c56ac906bea913d9f2c8fc56564ba858fa220822ad38d2fa0d0b6e900",
+ "stdout": "Submitted batch job 226139\n",
+ "submitted_at_utc": "2026-09-16T13:06:19.580612+00:00"
+}
+RECEIPT_END
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T21:06:19+0800
