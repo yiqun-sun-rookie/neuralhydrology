@@ -1,0 +1,44 @@
+### channel=kalmannet-daily-perbasin seq=138
+### host=login4
+### started=2026-09-16T21:01:09+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=138 purpose=e1_probe_gpu_seq138
+PAYLOAD_OK sha256=9ea1eb4aae7a9e419e7507f2a2d9550113af264c43c83018151e0d32893047ea bytes=1471
+=== HGPU4_GRES_USED (read-only) ===
+NODELIST            GRES          GRES_USED               CPUS(A/I/O/T)       
+ngu101              gpu:4         gpu:3,dcu:0             22/74/0/96          
+ngu102              gpu:4         gpu:4,dcu:0             16/80/0/96          
+ngu103              gpu:4         gpu:0,dcu:0             0/0/96/96           
+ngu104              gpu:4         gpu:4,dcu:0             16/80/0/96          
+=== QOS_LIMITS (read-only) ===
+Unknown field 'maxsubmitpu'
+ADMISSION_OK {"gpu_jobs_seen": 0, "gpu_seconds_consumed": 0, "inflight_family_jobs": [], "kind": "probe", "now_utc": "2026-09-16T13:01:10.978212+00:00", "partition": "hgpu4", "reservation_gpu_seconds": 9600, "time_limit_seconds": 2400}
+Submitted batch job 226130
+
+
+SUBMITTED job_id=226130
+LAUNCHER_EXIT=0
+RECEIPT_BEGIN /data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/e1_probe_gpu_seq138/submission_job226130.receipt.json
+{
+ "evidence": {
+  "gpu_jobs_seen": 0,
+  "gpu_seconds_consumed": 0,
+  "inflight_family_jobs": [],
+  "kind": "probe",
+  "now_utc": "2026-09-16T13:01:10.978212+00:00",
+  "partition": "hgpu4",
+  "reservation_gpu_seconds": 9600,
+  "time_limit_seconds": 2400
+ },
+ "job_id": "226130",
+ "kind": "probe",
+ "schema_version": "kdpp3_submission_receipt_v1",
+ "script": "knet_probe.slurm",
+ "script_sha256": "10ab1b3ab834943627a8b7eebdcc8f86419c4487557998fb077faef6741c22bd",
+ "stdout": "Submitted batch job 226130\n",
+ "submitted_at_utc": "2026-09-16T13:01:11.211972+00:00"
+}
+RECEIPT_END
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T21:01:11+0800
