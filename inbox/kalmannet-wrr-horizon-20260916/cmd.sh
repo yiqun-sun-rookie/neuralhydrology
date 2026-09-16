@@ -1,14 +1,23 @@
 #!/bin/bash
 set -eo pipefail
-printf 'READ_ONLY_JOB_226070_STATUS\n'
+printf 'READ_ONLY_48GB_RESOURCE_CHECK_AND_JOB_226070_STATUS\n'
 date -Is
+printf '\n48GB_PARTITION_DETAILS\n'
+scontrol show partition hgpu4
+sinfo -p hgpu4,hgpu8 -N -o '%N %P %t %G %C'
+for node in ngu101 ngu102 ngu103 ngu104 ngu201 ngu202 ngu203; do
+  printf '\nNODE_DETAILS %s\n' "$node"
+  scontrol show node "$node"
+done
+printf '\nUSER_JOBS_READ_ONLY\n'
+squeue -u sunyiq -o '%.18i %.16P %.42j %.10T %.12M %.12l %.6D %R'
 root=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916
 repo="$root/repo"
 squeue -j 226070 -o '%.18i %.16P %.42j %.10T %.12M %.12l %.6D %R' || true
 sacct -j 226070 --format=JobID,JobName,State,ExitCode,Elapsed,NodeList,AllocTRES,MaxRSS -P
 printf '\nSCHEDULER_START_ESTIMATE\n'
 squeue --start -j 226070 || true
-scontrol show job 226070
+scontrol show job 226070 || true
 printf '\nREQUESTED_PARTITION_STATUS\n'
 sinfo -p hgpu8 -N -o '%N %t %G %C'
 show_file() {
