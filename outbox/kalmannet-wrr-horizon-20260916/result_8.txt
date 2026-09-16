@@ -1,0 +1,363 @@
+### channel=kalmannet-wrr-horizon-20260916 seq=8
+### host=login4
+### started=2026-09-16T18:33:17+0800
+### ---------- output ----------
+READ_ONLY_AFTER_PARTITION_EXPANSION_JOB_226070
+2026-09-16T18:33:18+0800
+
+PRIORITY_DIAGNOSTICS_READ_ONLY
+Unable to find jobs matching user/id(s) specified
+*** Error in `sshare': free(): invalid next size (fast): 0x00000000025b7030 ***
+======= Backtrace: =========
+/usr/lib64/libc.so.6(+0x81329)[0x2ba46f746329]
+/usr/local/globle/softs/slurm/19.05.4.1/lib/slurm/libslurmfull.so(slurm_xfree+0x1d)[0x2ba46e489120]
+/usr/local/globle/softs/slurm/19.05.4.1/lib/slurm/libslurmfull.so(print_fields_double+0x27e)[0x2ba46e3d692f]
+sshare(process+0x50d)[0x40240a]
+sshare[0x402816]
+sshare(main+0x9f3)[0x40321b]
+/usr/lib64/libc.so.6(__libc_start_main+0xf5)[0x2ba46f6e7555]
+sshare[0x401d29]
+======= Memory map: ========
+00400000-00405000 r-xp 00000000 00:2c 32010                              /usr/local/globle/softs/slurm/19.05.4.1/bin/sshare
+00604000-00605000 r--p 00004000 00:2c 32010                              /usr/local/globle/softs/slurm/19.05.4.1/bin/sshare
+00605000-00606000 rw-p 00005000 00:2c 32010                              /usr/local/globle/softs/slurm/19.05.4.1/bin/sshare
+0259f000-025e1000 rw-p 00000000 00:00 0                                  [heap]
+2ba46e0ee000-2ba46e110000 r-xp 00000000 fd:00 269677135                  /usr/lib64/ld-2.17.so
+2ba46e110000-2ba46e114000 rw-p 00000000 00:00 0 
+2ba46e13e000-2ba46e144000 rw-p 00000000 00:00 0 
+2ba46e30f000-2ba46e310000 r--p 00021000 fd:00 269677135                  /usr/lib64/ld-2.17.so
+2ba46e310000-2ba46e311000 rw-p 00022000 fd:00 269677135                  /usr/lib64/ld-2.17.so
+2ba46e311000-2ba46e312000 rw-p 00000000 00:00 0 
+2ba46e312000-2ba46e4f0000 r-xp 00000000 00:2c 172829                     /usr/local/globle/softs/slurm/19.05.4.1/lib/slurm/libslurmfull.so
+2ba46e4f0000-2ba46e6f0000 ---p 001de000 00:2c 172829                     /usr/local/globle/softs/slurm/19.05.4.1/lib/slurm/libslurmfull.so
+2ba46e6f0000-2ba46e6f2000 r--p 001de000 00:2c 172829                     /usr/local/globle/softs/slurm/19.05.4.1/lib/slurm/libslurmfull.so
+2ba46e6f2000-2ba46e6fd000 rw-p 001e0000 00:2c 172829                     /usr/local/globle/softs/slurm/19.05.4.1/lib/slurm/libslurmfull.so
+2ba46e6fd000-2ba46e703000 rw-p 00000000 00:00 0 
+2ba46e703000-2ba46e705000 r-xp 00000000 fd:00 268666932                  /usr/lib64/libdl-2.17.so
+2ba46e705000-2ba46e905000 ---p 00002000 fd:00 268666932                  /usr/lib64/libdl-2.17.so
+2ba46e905000-2ba46e906000 r--p 00002000 fd:00 268666932                  /usr/lib64/libdl-2.17.so
+2ba46e906000-2ba46e907000 rw-p 00003000 fd:00 268666932                  /usr/lib64/libdl-2.17.so
+2ba46e907000-2ba46ea08000 r-xp 00000000 fd:00 268666934                  /usr/lib64/libm-2.17.so
+2ba46ea08000-2ba46ec07000 ---p 00101000 fd:00 268666934                  /usr/lib64/libm-2.17.so
+2ba46ec07000-2ba46ec08000 r--p 00100000 fd:00 268666934                  /usr/lib64/libm-2.17.so
+2ba46ec08000-2ba46ec09000 rw-p 00101000 fd:00 268666934                  /usr/lib64/libm-2.17.so
+2ba46ec09000-2ba46ec45000 r-xp 00000000 fd:00 268439619                  /usr/lib64/libreadline.so.6.2
+2ba46ec45000-2ba46ee45000 ---p 0003c000 fd:00 268439619                  /usr/lib64/libreadline.so.6.2
+2ba46ee45000-2ba46ee47000 r--p 0003c000 fd:00 268439619                  /usr/lib64/libreadline.so.6.2
+2ba46ee47000-2ba46ee4d000 rw-p 0003e000 fd:00 268439619                  /usr/lib64/libreadline.so.6.2
+2ba46ee4d000-2ba46ee4f000 rw-p 00000000 00:00 0 
+2ba46ee4f000-2ba46ee57000 r-xp 00000000 fd:00 268439621                  /usr/lib64/libhistory.so.6.2
+2ba46ee57000-2ba46f056000 ---p 00008000 fd:00 268439621                  /usr/lib64/libhistory.so.6.2
+2ba46f056000-2ba46f057000 r--p 00007000 fd:00 268439621                  /usr/lib64/libhistory.so.6.2
+2ba46f057000-2ba46f058000 rw-p 00008000 fd:00 268439621                  /usr/lib64/libhistory.so.6.2
+2ba46f058000-2ba46f07e000 r-xp 00000000 fd:00 268439463                  /usr/lib64/libncurses.so.5.9
+2ba46f07e000-2ba46f27d000 ---p 00026000 fd:00 268439463                  /usr/lib64/libncurses.so.5.9
+2ba46f27d000-2ba46f27e000 r--p 00025000 fd:00 268439463                  /usr/lib64/libncurses.so.5.9
+2ba46f27e000-2ba46f27f000 rw-p 00026000 fd:00 268439463                  /usr/lib64/libncurses.so.5.9
+2ba46f27f000-2ba46f2a4000 r-xp 00000000 fd:00 268439473                  /usr/lib64/libtinfo.so.5.9
+2ba46f2a4000-2ba46f4a4000 ---p 00025000 fd:00 268439473                  /usr/lib64/libtinfo.so.5.9
+2ba46f4a4000-2ba46f4a8000 r--p 00025000 fd:00 268439473                  /usr/lib64/libtinfo.so.5.9
+2ba46f4a8000-2ba46f4a9000 rw-p 00029000 fd:00 268439473                  /usr/lib64/libtinfo.so.5.9
+2ba46f4a9000-2ba46f4c0000 r-xp 00000000 fd:00 269677155                  /usr/lib64/libpthread-2.17.so
+2ba46f4c0000-2ba46f6bf000 ---p 00017000 fd:00 269677155                  /usr/lib64/libpthread-2.17.so
+2ba46f6bf000-2ba46f6c0000 r--p 00016000 fd:00 269677155                  /usr/lib64/libpthread-2.17.so
+2ba46f6c0000-2ba46f6c1000 rw-p 00017000 fd:00 269677155                  /usr/lib64/libpthread-2.17.so
+2ba46f6c1000-2ba46f6c5000 rw-p 00000000 00:00 0 
+2ba46f6c5000-2ba46f889000 r-xp 00000000 fd:00 268439397                  /usr/lib64/libc-2.17.so
+2ba46f889000-2ba46fa88000 ---p 001c4000 fd:00 268439397                  /usr/lib64/libc-2.17.so
+2ba46fa88000-2ba46fa8c000 r--p 001c3000 fd:00 268439397                  /usr/lib64/libc-2.17.so
+2ba46fa8c000-2ba46fa8e000 rw-p 001c7000 fd:00 268439397                  /usr/lib64/libc-2.17.so
+2ba46fa8e000-2ba46fa93000 rw-p 00000000 00:00 0 
+2ba46fa93000-2ba46fa9f000 r-xp 00000000 fd:00 269677147                  /usr/lib64/libnss_files-2.17.so
+2ba46fa9f000-2ba46fc9e000 ---p 0000c000 fd:00 269677147                  /usr/lib64/libnss_files-2.17.so
+2ba46fc9e000-2ba46fc9f000 r--p 0000b000 fd:00 269677147                  /usr/lib64/libnss_files-2.17.so
+2ba46fc9f000-2ba46fca0000 rw-p 0000c000 fd:00 269677147                  /usr/lib64/libnss_files-2.17.so
+2ba46fca0000-2ba46fca6000 rw-p 00000000 00:00 0 
+2ba46fca6000-2ba46fca9000 r-xp 00000000 00:2c 38646                      /usr/local/globle/softs/slurm/19.05.4.1/lib/slurm/auth_munge.so
+2ba46fca9000-2ba46fea8000 ---p 00003000 00:2c 38646                      /usr/local/globle/softs/slurm/19.05.4.1/lib/slurm/auth_munge.so
+2ba46fea8000-2ba46fea9000 r--p 00002000 00:2c 38646                      /usr/local/globle/softs/slurm/19.05.4.1/lib/slurm/auth_munge.so
+2ba46fea9000-2ba46feaa000 rw-p 00003000 00:2c 38646                      /usr/local/globle/softs/slurm/19.05.4.1/lib/slurm/auth_munge.so
+2ba46feaa000-2ba46feb3000 r-xp 00000000 fd:00 268666921                  /usr/lib64/libmunge.so.2.0.0
+2ba46feb3000-2ba4700b2000 ---p 00009000 fd:00 268666921                  /usr/lib64/libmunge.so.2.0.0
+2ba4700b2000-2ba4700b3000 r--p 00008000 fd:00 268666921                  /usr/lib64/libmunge.so.2.0.0
+2ba4700b3000-2ba4700b4000 rw-p 00009000 fd:00 268666921                  /usr/lib64/libmunge.so.2.0.0
+2ba4700b4000-2ba4700c9000 r-xp 00000000 fd:00 269862967                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1
+2ba4700c9000-2ba4702c8000 ---p 00015000 fd:00 269862967                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1
+2ba4702c8000-2ba4702c9000 r--p 00014000 fd:00 269862967                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1
+2ba4702c9000-2ba4702ca000 rw-p 00015000 fd:00 269862967                  /usr/lib64/libgcc_s-4.8.5-20150702.so.1
+2ba474000000-2ba474021000 rw-p 00000000 00:00 0 
+2ba474021000-2ba478000000 ---p 00000000 00:00 0 
+7ffef0f62000-7ffef0f83000 rw-p 00000000 00:00 0                          [stack]
+7ffef0fb4000-7ffef0fb6000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+             Account       User  RawShares  NormShares    RawUsage   NormUsage  EffectvUsage  FairShare    LevelFS                    GrpTRESMins                    TRESRunMins 
+-------------------- ---------- ---------- ----------- ----------- ----------- ------------- ---------- ---------- ------------------------------ ------------------------------ 
+root                                          0.000000  1153819422                  1.000000                                                      cpu=3848285318685,mem=0,energ+ 
+ g_caojsh                                1    0.010101    15416627    0.013361      0.013361              0.755985                                cpu=0,mem=0,energy=0,node=0,b+ 
+ g_caowd                                 1    0.010101           0    0.000000      0.000000                   inf                                cpu=0,mem=0,energy=0,node=0,b+ 
+ g_chenh                                 1    0.010101           0    0.000000      0.000000                   inf                                cpu=0,mem=0,energy=0,node=0,b+ 
+ g_chenjun                               1    0.010101           0    0.000000      0.000000                   inf                                cpu=0,mem=0,energy=0,node=0,b+ 
+ g_chenlf                                1    0.010101           0    0.000000      0.000000                   inf                                cpu=0,mem=0,energy=0,node=0,b+ 
+ g_chensh                                1    0.010101           0    0.000000      0.000000            2.2294e+19 /data1/home/sunyiq/.hpc_mailbox_staging/kalmannet-wrr-horizon-20260916/cmd_8.sh: line 9: 33843 Aborted                 (core dumped) sshare -l -u sunyiq
+
+USER_JOBS_READ_ONLY
+             JOBID        PARTITION                                       NAME      STATE         TIME   TIME_LIMIT  NODES NODELIST(REASON)
+            202229 hgpu4,hgpu8,hgpu                               N22-agg-eval    PENDING         0:00   1-00:00:00      1 (DependencyNeverSatisfied)
+            202294 hgpu4,hgpu8,hgpu                                 N22-export    PENDING         0:00      4:00:00      1 (Dependency)
+            202315 hgpu4,hgpu8,hgpu                                   N22-gate    PENDING         0:00      2:00:00      1 (Dependency)
+            202507 hgpu4,hgpu8,hgpu                           N22-mask-iso-531    PENDING         0:00      2:00:00      1 (DependencyNeverSatisfied)
+            215429            hgpu2                              id30_m01_s100    PENDING         0:00   7-00:00:00      1 (DependencyNeverSatisfied)
+            202293 hgpu4,hgpu8,hgpu                               N22-manifest    PENDING         0:00   1-00:00:00      1 (JobHeldUser)
+            226070            hgpu4                           knet-horizon-s42    RUNNING         0:54   4-00:00:00      1 ngu101
+             JOBID        PARTITION                                       NAME      STATE         TIME   TIME_LIMIT  NODES NODELIST(REASON)
+            226070            hgpu4                           knet-horizon-s42    RUNNING         0:54   4-00:00:00      1 ngu101
+JobID|JobName|State|ExitCode|Elapsed|NodeList|AllocTRES|MaxRSS
+226070|knet-horizon-s42|RUNNING|0:0|00:01:53|ngu101|billing=4,cpu=4,node=1|
+226070.batch|batch|RUNNING|0:0|00:01:53|ngu101|cpu=4,mem=0,node=1|
+226070.extern|extern|RUNNING|0:0|00:01:53|ngu101|billing=4,cpu=4,node=1|
+
+SCHEDULER_START_ESTIMATE
+             JOBID PARTITION     NAME     USER ST          START_TIME  NODES SCHEDNODES           NODELIST(REASON)
+JobId=226070 JobName=knet-horizon-s42
+   UserId=sunyiq(2272) GroupId=g_sunyiq(2269) MCS_label=N/A
+   Priority=200005 Nice=0 Account=g_sunyiq QOS=qos_sunyiq
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:54 TimeLimit=4-00:00:00 TimeMin=N/A
+   SubmitTime=2026-09-16T17:15:21 EligibleTime=2026-09-16T17:15:21
+   AccrueTime=2026-09-16T17:15:21
+   StartTime=2026-09-16T18:32:24 EndTime=2026-09-20T18:32:24 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-16T18:32:24
+   Partition=hgpu4 AllocNode:Sid=login04:46471
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=ngu101
+   BatchHost=ngu101
+   NumNodes=1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=4,node=1,billing=4
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=4 MinMemoryNode=0 MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/scripts/hpc_training_horizon/job.slurm
+   WorkDir=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo
+   StdErr=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.err
+   StdIn=/dev/null
+   StdOut=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.out
+   Power=
+   TresPerNode=gpu:1
+
+
+REQUESTED_PARTITION_STATUS
+NODELIST STATE GRES CPUS(A/I/O/T)
+ngu101 mix gpu:4 6/90/0/96
+ngu102 mix gpu:4 16/80/0/96
+ngu103 down* gpu:4 0/0/96/96
+ngu104 mix gpu:4 16/80/0/96
+ngu201 mix gpu:8 8/56/0/64
+ngu202 mix gpu:8 8/56/0/64
+ngu203 mix$ gpu:8 32/32/0/64
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/environment_metadata_before_submission.json
+{
+  "torch": "2.4.0",
+  "numpy": "2.3.3",
+  "psutil": "7.0.0"
+}
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/hpc_execution/status.json
+{
+  "job_id": "226070",
+  "node": "ngu101",
+  "status": "PREFLIGHT_PASSED_PAIR_STARTING",
+  "authorized_seed": 42,
+  "test_data_accessed": false
+}
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/monitor_result.json
+{
+  "status": "PASSED_SINGLE_BATCH_NO_UPDATE",
+  "authorization_note": "User 2026-09-16 authorized HPC experiments in a new isolated directory, preserving existing experiments; seed42 pair only, no retry or test evaluation.",
+  "system_memory_before": {
+    "total": 540499062784,
+    "available": 511266320384,
+    "percent": 5.4,
+    "used": 23250153472,
+    "free": 42832916480,
+    "active": 227594817536,
+    "inactive": 245089198080,
+    "buffers": 20480,
+    "cached": 474415972352,
+    "shared": 4540227584,
+    "slab": 3339882496
+  },
+  "optimizer_steps": 0,
+  "test_data_accessed": false,
+  "sample_interval_seconds": 0.25,
+  "max_worker_rss_bytes": 1235976192,
+  "min_system_available_bytes": 510143533056,
+  "probe_sha256": "c3bc043b67213efc0afeba9c24a8b0643608afbd19c4f6c3efabea46490560f2",
+  "worker_pid": 39686,
+  "returncode": 0,
+  "elapsed_seconds": 34.354103460907936,
+  "system_memory_after": {
+    "total": 540499062784,
+    "available": 511267913728,
+    "percent": 5.4,
+    "used": 23248654336,
+    "free": 42587979776,
+    "active": 227630268416,
+    "inactive": 245299875840,
+    "buffers": 20480,
+    "cached": 474662408192,
+    "shared": 4540088320,
+    "slab": 3340972032
+  }
+}
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker_result.json
+{
+  "status": "PASSED_SINGLE_BATCH_NO_UPDATE",
+  "stage": "backward_completed_parameters_unchanged",
+  "optimizer_steps": 0,
+  "test_data_accessed": false,
+  "backward_completed": true,
+  "full_training_memory_proven": false,
+  "cuda_budget": {
+    "total_bytes": 47622258688,
+    "free_before_bytes": 47336259584,
+    "allocator_limit_bytes": 38097806950,
+    "reserved_headroom_bytes": 1073741824
+  },
+  "last_snapshot": {
+    "stage": "backward_completed_parameters_unchanged",
+    "elapsed_seconds": 23.472934663295746,
+    "worker_rss_bytes": 1243185152,
+    "system_available_bytes": 510110175232,
+    "cuda_allocated_bytes": 235540992,
+    "cuda_reserved_bytes": 16064184320,
+    "cuda_peak_allocated_bytes": 15771158016,
+    "cuda_peak_reserved_bytes": 16064184320
+  },
+  "batch_shapes": {
+    "p": [
+      2048,
+      1,
+      800
+    ],
+    "etpot": [
+      2048,
+      1,
+      800
+    ],
+    "qobs": [
+      2048,
+      1,
+      800
+    ],
+    "tm_hours": [
+      2048,
+      1,
+      800
+    ],
+    "state0": [
+      2048,
+      5,
+      800
+    ]
+  },
+  "epoch_order_sha256": "7283eec18035e000548564dfe11e31e0dedb8ee8e17cc0b863098f7522341944",
+  "initial_parameters_sha256": "aab1d03cb44f4a1d0fe682bd9f7b3cf01dea22f74c87015ae0ddb455364b1e81",
+  "optimizer_moment_storage_not_measured_bytes": 391496,
+  "prediction_shape": [
+    2048,
+    776,
+    25
+  ],
+  "gradients_finite": true,
+  "final_parameters_sha256": "aab1d03cb44f4a1d0fe682bd9f7b3cf01dea22f74c87015ae0ddb455364b1e81",
+  "worker_elapsed_seconds": 23.49930666387081
+}
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/status.json
+{
+  "status": "RUNNING",
+  "seed": 42,
+  "authorization_note": "User 2026-09-16 authorized HPC experiments in a new isolated directory, preserving existing experiments; seed42 pair only, no retry or test evaluation.",
+  "arms": {
+    "COMMON-ORIGINS-V2-OUTPUT12-SEED42": {
+      "status": "RUNNING"
+    },
+    "COMMON-ORIGINS-V2-OUTPUT25-SEED42": "NOT_STARTED"
+  }
+}
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/output12/status.json
+{
+  "experiment_id": "COMMON-ORIGINS-V2-OUTPUT12-SEED42",
+  "status": "RUNNING",
+  "completed_epochs": 0
+}
+
+FILE /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/training_horizon_common_origins_v2/seed42/output25/status.json
+NOT_PRESENT
+
+OPTIMIZER_RECEIPTS_FIRST_AND_LAST
+{"event": "optimizer_step_completed", "pair_optimizer_steps": 1, "elapsed_seconds": 38.606877878308296, "maximum_cuda_allocated_bytes": 12120776192, "resident_memory_bytes": 1389588480, "system_available_bytes": 510030872576, "raw_gradient_norm": 0.0014505626168102026}
+{"event": "optimizer_step_completed", "pair_optimizer_steps": 1, "elapsed_seconds": 38.606877878308296, "maximum_cuda_allocated_bytes": 12120776192, "resident_memory_bytes": 1389588480, "system_available_bytes": 510030872576, "raw_gradient_norm": 0.0014505626168102026}
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.out
+2026-09-16T18:31:25+0800
+ngu101
+name, memory.total [MiB], memory.free [MiB], uuid
+NVIDIA A40, 46068 MiB, 45411 MiB, GPU-c11997b3-4cb1-7713-fe3c-31c00f2507c2
+NVIDIA A40, 46068 MiB, 33645 MiB, GPU-e39be87e-7f68-211a-32af-d0671d13fb08
+NVIDIA A40, 46068 MiB, 45411 MiB, GPU-a41716d0-64bf-f7d5-6c7a-2fdfe17d45bc
+NVIDIA A40, 46068 MiB, 45411 MiB, GPU-115f590d-5dae-3445-b730-5dc15f5e8c58
+{
+  "status": "PASSED_SINGLE_BATCH_NO_UPDATE",
+  "authorization_note": "User 2026-09-16 authorized HPC experiments in a new isolated directory, preserving existing experiments; seed42 pair only, no retry or test evaluation.",
+  "system_memory_before": {
+    "total": 540499062784,
+    "available": 511266320384,
+    "percent": 5.4,
+    "used": 23250153472,
+    "free": 42832916480,
+    "active": 227594817536,
+    "inactive": 245089198080,
+    "buffers": 20480,
+    "cached": 474415972352,
+    "shared": 4540227584,
+    "slab": 3339882496
+  },
+  "optimizer_steps": 0,
+  "test_data_accessed": false,
+  "sample_interval_seconds": 0.25,
+  "max_worker_rss_bytes": 1235976192,
+  "min_system_available_bytes": 510143533056,
+  "probe_sha256": "c3bc043b67213efc0afeba9c24a8b0643608afbd19c4f6c3efabea46490560f2",
+  "worker_pid": 39686,
+  "returncode": 0,
+  "elapsed_seconds": 34.354103460907936,
+  "system_memory_after": {
+    "total": 540499062784,
+    "available": 511267913728,
+    "percent": 5.4,
+    "used": 23248654336,
+    "free": 42587979776,
+    "active": 227630268416,
+    "inactive": 245299875840,
+    "buffers": 20480,
+    "cached": 474662408192,
+    "shared": 4540088320,
+    "slab": 3340972032
+  }
+}
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/logs/job_226070.err
+
+TAIL /data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916/repo/artifacts/resource_probes/20260916_horizon25_seed42_attempt001/worker.stderr.log
+
+READ_ONLY_STATUS_COMPLETE
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T18:33:18+0800
