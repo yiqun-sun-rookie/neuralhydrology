@@ -1,0 +1,53 @@
+### channel=attrswap-daily seq=81
+### host=login4
+### started=2026-09-16T17:03:18+0800
+### ---------- output ----------
+wallclock 2026-09-16 17:03:18 +0800
+epoch 1789549398
+=== A. PARTITIONS hgpu4/hgpu8 and scheduler priority config ===
+PARTITIO  AVAIL    TIMELIMIT NODES      STATE NODELIST
+   hgpu8     up     infinite     1     mixed$ ngu203
+   hgpu8     up     infinite     2      mixed ngu[201-202]
+   hgpu4     up     infinite     1      down* ngu103
+   hgpu4     up     infinite     3      mixed ngu[101-102,104]
+  sinfo rc=0
+  hgpu4 queue: pending=5 running=0; hgpu8 queue: pending=5 running=0
+MaxArraySize            = 1001
+MaxJobCount             = 100000
+PriorityDecayHalfLife   = 7-00:00:00
+PriorityFlags           = 
+PriorityMaxAge          = 7-00:00:00
+PriorityType            = priority/multifactor
+PriorityWeightAge       = 1000000
+PriorityWeightFairShare = 0
+PriorityWeightJobSize   = 1000
+  scontrol rc=0
+Unknown field 'maxsubmitpu'
+  sacctmgr rc=1
+  hgpu4 max wall: infinite
+=== B. STAGE-2 RUN INVENTORY (26 dirs; expect ep010=26 ep020=26 ep030=26 scaler=26) ===
+  run dirs=26
+  model_epoch010.pt=26  model_epoch020.pt=26  model_epoch030.pt=26
+  train_data/train_data_scaler.yml=26  other files in train_data: 
+  test_results.p count=26 total_bytes=614119818
+  one weight file size: 1191301 bytes
+  runs/ total: 853M
+=== C. V25 BASELINE: combined sha256 of stage-2 forcing product dirs (sorted per-file sha256 list hashed) ===
+  daymet files=677 combined=986de3a2387f2798
+  era5l_refday files=529 combined=617233668e726892
+  imerg_refday files=529 combined=4473581dee6e89fd
+  imerg_utc files=529 combined=33edfca58e14d525
+  gsmap_refday files=529 combined=0ea7b6dff6d27cd4
+  chirps files=529 combined=ce7cbadd4770514a
+  imerg_uncal_refday files=529 combined=ad754b7b266e6d21
+=== D. NEW ROOT ABSENT? / CHANNELS line ===
+ls: cannot access /data1/home/sunyiq/precip_swap3_daily_2026_09: No such file or directory
+  ls rc=2 (expect non-zero = absent)
+115:| `attrswap-daily` | 日尺度线中国线三个实验共用通道：①中国可供属性替换（PREREG_20
+  df /data1: 349T free of 954T
+=== E. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 81
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T17:04:28+0800
