@@ -1,0 +1,157 @@
+{
+  "schema": 1,
+  "remote_root": "/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916",
+  "authorized_seed": 42,
+  "archive_sha256": "c36f271d233d9d6ae6e455f41b2c8fecf15839884adb6a07367c291178060ebc",
+  "deploy_sha256": "91e5eafe82debc081f036e5de51b5de9e4cf58c6193a98a6c4cb81f4b6dff995",
+  "files": {
+    ".gitignore": {
+      "sha256": "c8c45fa5f2f2e75da267247cc566e3376e75ee26e6a95a377e52b4f4ffda5958",
+      "bytes": 38
+    },
+    "deployment/original_common.json": {
+      "sha256": "5b5d77a99ad47b16e98d4fb9e9ee35e8720e1c74c2e113878c2cb33f00bdf939",
+      "bytes": 2978
+    },
+    "deployment/original_source_manifest.json": {
+      "sha256": "45fda35a350abfecc04f9a6283bafea0b7e0cc146c576d442d5e385c0ab31b89",
+      "bytes": 4165
+    },
+    "deployment/path_relocation.json": {
+      "sha256": "6da9aa9c0c7fc8bce7aa96fb67825755d09bcb0ca7f49ad79d2398c4411ac057",
+      "bytes": 1519
+    },
+    "experiments/__init__.py": {
+      "sha256": "15c7e09ef6b56ee07d057720f80cafbb2584062f73995bffe85a1673bc766024",
+      "bytes": 23
+    },
+    "experiments/optimize_hyper_parameters/kalman_hybrid_config_v2.yaml": {
+      "sha256": "db459b3b5d5ee99f79e318f462efee85911e995162edab3083b1a5f103dfc9b8",
+      "bytes": 3136
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/README.md": {
+      "sha256": "a6952e919a040ddcb8b441e4567c8220660d3497f6e865fe3725f2dda29cf9fb",
+      "bytes": 5365
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/__init__.py": {
+      "sha256": "f9b3ca04ec30bc819a38b1c68d1163c67c8053d3577a507b23e469a42244fde6",
+      "bytes": 79
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/__main__.py": {
+      "sha256": "3fd0ad35e6d33df82655fcc65c408750320f4614aae6341fc1cd75ca7f89fd0b",
+      "bytes": 1444
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/configs/common.json": {
+      "sha256": "61cf2c3761c23edfcb8302d7e677ed1858e6e9b1d6ec1bb53b40cc6fda26a9c8",
+      "bytes": 2983
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/configs/registry.json": {
+      "sha256": "9150e54652874f2568156131a4a4277da3bb9d542fe89510940295d25b572099",
+      "bytes": 2774
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output12_seed42.json": {
+      "sha256": "e8c71257f485ad8ad5721a6704dcb809d86ab107267538797e792844c3b5e91c",
+      "bytes": 339
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output12_seed43.json": {
+      "sha256": "3f2daae9657ea5e9852989ce329cd98ec261e9d1e29b992f27c68df37825155c",
+      "bytes": 338
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output12_seed44.json": {
+      "sha256": "4198fd2eed737ef858e09cc2d649cc331ce796901c1001b3810456be15dfa4bc",
+      "bytes": 338
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output25_seed42.json": {
+      "sha256": "f8d771044e9c8b58f328dd1bd3c72cf5cc8f6efe609684e1dbb8552b21b5c6ef",
+      "bytes": 339
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output25_seed43.json": {
+      "sha256": "897d7b92c5c4aa980bb3e36543356c1d356c6b43e3428f24702843f2d819c3a4",
+      "bytes": 338
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/configs/run_output25_seed44.json": {
+      "sha256": "1c1f54412431b969c953db9ee18fdcea324cceff316014c7656145ffb1f9a9ae",
+      "bytes": 338
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/configs/source_manifest.json": {
+      "sha256": "2ffed2ccd7a49b136ede48bd28807351def82ff554eb5803f0cb0aa9390352ce",
+      "bytes": 4165
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/metrics.py": {
+      "sha256": "c3fa225585dd51c4675dd28aea71450b09bae735d2ecdd9d0dc2dbd9dd4ddc05",
+      "bytes": 3031
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/numerics.py": {
+      "sha256": "3e1f558426b66498260d091742189bab78be1ea13b60aedbfe5932291bf96eac",
+      "bytes": 6290
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/protocol.py": {
+      "sha256": "b1cdc193650dac43265120eea7f78292f77958335a1229a433831f60f9ecfaca",
+      "bytes": 6938
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/runner.py": {
+      "sha256": "e032e0ef55b1bde0109280b35a2ffe69288a15eca1ad4276554c73720ea03ef4",
+      "bytes": 13017
+    },
+    "experiments/optimize_hyper_parameters/training_horizon_20260916/runtime.py": {
+      "sha256": "2e6194c23cee8cbd5ba919aa8b8983c60bc20566488e518e71754ccf8c2f80a5",
+      "bytes": 5808
+    },
+    "hydrologic/params.py": {
+      "sha256": "bd64b468504491cacee12c060b8f3f2ff8bb1a7a3e04cf01b826547a6bc52cab",
+      "bytes": 219
+    },
+    "knet/__init__.py": {
+      "sha256": "1be1c69ba9ec7a5ac206da5aaacb68e0c0e126092aed8f8a0d7703856d251926",
+      "bytes": 113
+    },
+    "knet/dl/nn_kalman_clamp_5.py": {
+      "sha256": "934570d3c840e9d57b8fbddf3a018dc29e190cdd712fc9daaf442e383f74d843",
+      "bytes": 32576
+    },
+    "knet/modules/data_preprocessor/windowed_time_series.py": {
+      "sha256": "8389e6d1fc24ca46fc395ebe102ab685436409be03dd787ba2b46eca56e79cb4",
+      "bytes": 2572
+    },
+    "knet/modules/pipeline/core_fun.py": {
+      "sha256": "e45c1ddeec0105bdb62f0255fe50d0ecb23006415a89ceb7ede7886e41a3741e",
+      "bytes": 15959
+    },
+    "knet/modules/pipeline/system_model.py": {
+      "sha256": "17cdb1bfb5b3ee38a34d6bb660f161c179d6d1ea52affd4514619eee5a64e465",
+      "bytes": 1834
+    },
+    "knet/modules/pipeline/walrus_batch_speedup.py": {
+      "sha256": "703adbb37c7bd3804f7f218664c9636f4a3c5a303687fdbb33fc6172b0daffd2",
+      "bytes": 15783
+    },
+    "knet/modules/utils/metrics.py": {
+      "sha256": "77ab10316846a8cb35a0bf71dd3d161c0fc81a7389677d72832a7cb0b4971def",
+      "bytes": 14758
+    },
+    "knet/pipelines/train_clean_based_on_11.py": {
+      "sha256": "579d0eba2f5fdfcd22d0c0281f792179ed18aa10c1fa9d48581a82f83b96b946",
+      "bytes": 51171
+    },
+    "knet/utils/model_initialization_use_script_mdl_1.py": {
+      "sha256": "da6ad85293c34fca3aee9c4bffbe0c80a3f77143f1f617a3a42eba8e3c3fbbfa",
+      "bytes": 1821
+    },
+    "scripts/hpc_training_horizon/job.slurm": {
+      "sha256": "b5b81224a39b08c494b941b96df4fe2f3336cf46e12421f0166f2df0804dc305",
+      "bytes": 863
+    },
+    "scripts/hpc_training_horizon/launch.py": {
+      "sha256": "26350f5079dcf988b0e5a1ebf68bca32564849a5cd7578faf702df045ac49623",
+      "bytes": 4186
+    },
+    "scripts/probe_training_horizon_resources.py": {
+      "sha256": "c3bc043b67213efc0afeba9c24a8b0643608afbd19c4f6c3efabea46490560f2",
+      "bytes": 12720
+    },
+    "tests/test_training_horizon_preparation.py": {
+      "sha256": "3305019c1f8b87563a015a6ba604d944dd85c0997866c690b005e76a854a1386",
+      "bytes": 16000
+    }
+  }
+}

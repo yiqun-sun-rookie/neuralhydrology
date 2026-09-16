@@ -1,28 +1,7 @@
 #!/bin/bash
 set -eo pipefail
-printf 'READ_ONLY_PREFLIGHT horizon seed42\n'
+printf 'ISOLATED_DEPLOYMENT_AND_SINGLE_SUBMISSION\n'
 date -Is
-hostname
-printf '\nOWN_JOBS\n'
-squeue -u sunyiq -o '%.18i %.16P %.42j %.10T %.12M %.12l %.6D %R'
-printf '\nGPU_PARTITIONS\n'
-sinfo -p hgpu2p,hgpu2,hgpu4,hgpu8 -N -o '%N %P %t %G %m %c'
-printf '\nPARTITION_LIMITS\n'
-scontrol show partition hgpu4
-scontrol show partition hgpu8
-printf '\nNEW_ROOT_MUST_BE_ABSENT\n'
-target=/data1/home/sunyiq/kalmannet_wrr_training_horizon_20260916
-if [ -e "$target" ] || [ -L "$target" ]; then
-  printf 'ROOT_ALREADY_EXISTS %s\n' "$target"
-  exit 31
-fi
-printf 'ROOT_ABSENT %s\n' "$target"
-df -h /data1/home/sunyiq
-printf '\nEXISTING_ENV_READONLY\n'
-ls -ld /data1/home/sunyiq/miniconda3/envs/knet_clean
-/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python --version
-printf '\nTRAIN_VALIDATION_ONLY\n'
-data=/data1/home/sunyiq/kalmannet_wrr_hp_extension_20260902/repo/data/processed/high_flow_aug
-stat -c '%n %s bytes' "$data/train_win800_19990101_01-20070527_03.pt" "$data/val_win800_20070527_04-20090314_13.pt"
-sha256sum "$data/train_win800_19990101_01-20070527_03.pt" "$data/val_win800_20070527_04-20090314_13.pt"
-printf '\nREAD_ONLY_PREFLIGHT_COMPLETE\n'
+cd /data1/home/sunyiq/hpc_mailbox/payload/kalmannet-wrr-horizon-20260916/deployment-001
+printf '%s\n' 'c36f271d233d9d6ae6e455f41b2c8fecf15839884adb6a07367c291178060ebc  study.tar.gz' '91e5eafe82debc081f036e5de51b5de9e4cf58c6193a98a6c4cb81f4b6dff995  deploy.py' '58f602a0b049950ed7e60000159bbc1ba39f71f3f2ec6e7562c342dce96fc9b8  PACKAGE_MANIFEST.json' | sha256sum -c -
+/data1/home/sunyiq/miniconda3/envs/knet_clean/bin/python -I -B deploy.py "$PWD"
