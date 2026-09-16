@@ -1,0 +1,40 @@
+### channel=id33-transformer-recipe-repair seq=64
+### host=login4
+### started=2026-09-16T19:44:00+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-16T19:44:00+0800
+84b82587425f4e6fe0cfe993c4c629ead81f75e57d3aac045169a9d0189b63b2  src/grace_input_runoff/features/grace_twsa_daily_v01.p
+04d7f2cf5bc6f96b812f3943985eae94a018c305fdf07f2d94cba41f401aaa1b  src/transformer_recipe_repair/registry/experiments.csv
+ID33 CONFIG AUDIT: PASS (47 arms; one factor each; no data read; no training launched)
+Submitted batch job 226117
+smoke_job=226117
+state=COMPLETED after 90s
+     JobID        State ExitCode    Elapsed NodeList 
+---------- ------------ -------- ---------- -------- 
+    226117    COMPLETED      0:0   00:01:11   ngu006 
+=== SMOKE OUTPUT ===
+2026-09-16 19:46:06,256: Logging to results/35_grace_input_runoff/_smoke/grace_input_runoff_G1_SMOKE_2026_0916_1946_ep1/output.log initialized.
+2026-09-16 19:46:06,259: ### Folder structure created at results/35_grace_input_runoff/_smoke/grace_input_runoff_G1_SMOKE_2026_0916_1946_ep1
+2026-09-16 19:46:06,259: ### Run configurations for grace_input_runoff_G1_SMOKE
+2026-09-16 19:46:06,260: track0_supervision_dir: data/camels_us_track0_supervision_v01
+2026-09-16 19:46:06,290: ### Device cuda:0 will be used for training
+2026-09-16 19:46:06,649: Loading basin data into xarray data set.
+2026-09-16 19:46:07,212: Calculating target variable stds per basin
+2026-09-16 19:46:07,234: Create lookup table and convert to pytorch tensor
+2026-09-16 19:46:12,373: Epoch 1 average loss: avg_loss: 0.07173, avg_total_loss: 0.07173
+2026-09-16 19:46:13,585: Stored metrics at results/35_grace_input_runoff/_smoke/grace_input_runoff_G1_SMOKE_2026_0916_1946_ep1/validation/model_epoch001/validation_metrics.csv
+2026-09-16 19:46:13,589: Stored results at results/35_grace_input_runoff/_smoke/grace_input_runoff_G1_SMOKE_2026_0916_1946_ep1/validation/model_epoch001/validation_results.p
+2026-09-16 19:46:13,589: Epoch 1 average validation loss: 0.07052 -- Median validation metrics: avg_loss: 0.07052, NSE: -0.00310
+[smoke] deterministic=True failed=None
+[smoke] model_epoch001.pt 6a79c6516a1ce534d3afff168b84c808d3cc181f63be9173fdc29250ed9b3f9a
+=== SMOKE DONE ===
+-- err tail --
+run_dir=results/35_grace_input_runoff/_smoke/grace_input_runoff_G1_SMOKE_2026_0916_1946_ep1
+2026-09-16 19:46:12,373: Epoch 1 average loss: avg_loss: 0.07173, avg_total_loss: 0.07173
+2026-09-16 19:46:13,589: Epoch 1 average validation loss: 0.07052 -- Median validation metrics: avg_loss: 0.07052, NSE: -0.00310
+failed= None | weights= ['model_epoch001.pt']
+scaler feature keys: ['PRCP(mm/day)', 'QObs(mm/d)', 'SRAD(W/m2)', 'Tmax(C)', 'Tmin(C)', 'Vp(Pa)', 'grace_twsa_mm']
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T19:45:24+0800
