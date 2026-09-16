@@ -1,0 +1,16 @@
+### channel=zhenjiang-six-source-four-target-ukf seq=111
+### host=login4
+### started=2026-09-16T10:05:43+0800
+### ---------- output ----------
+TEMPORAL_CRYPTO_DEPENDENCY_JSON_BEGIN
+{"auth_sha256":"204e6478092a54d78a853803fa44d768d5c1a774a7ae20ee8932c4eff8fafcf4","dependency_root":"/data1/home/sunyiq/zhenjiang_crypto_transport_20260916_001","inventory_sha256":"8e9211848eb821979b47063f4ffc180c40e942e79cf5c7091e37fb8d7cb0e990","owner_uid":2272,"platform":{"implementation":"CPython","libc":"glibc","libc_version":"2.17","machine":"x86_64","python":"3.11.13","system":"Linux"},"pysite":"/data1/home/sunyiq/zhenjiang_crypto_transport_20260916_001/pysite","schema":"zhenjiang-crypto-dependency-receipt-v1","total_bytes":15784306,"total_files":172,"versions":{"cffi":"2.0.0","cryptography":"50.0.1","pycparser":"3.0"},"wheel_manifest_sha256":"0f844af609334c8508aa15b582ef35dc7b2a48006b6af3397293a6a379ad8bd6"}
+TEMPORAL_CRYPTO_DEPENDENCY_JSON_END
+TEMPORAL_PARTITION_JSON_BEGIN
+{"returncode":0,"stdout":"hgpu2p|up|1|down*\nhgpu2p|up|3|mix\nhgpu2p|up|5|idle\n"}
+TEMPORAL_PARTITION_JSON_END
+TEMPORAL_KEY_JSON_BEGIN
+{"cryptography_version":"50.0.1","execution_contract_sha256":"bf3696871e2b05bde03f5cb942e007e6e69f4a78e00228eed3afaac9cf124628","experiment_id":"zhenjiang_temporal_validation_2024_20260915_001","key_preparation_sha256":"4d52e6fb0fb602596683c721d538f462cb3ad2a3bdae4b10e59302dbfe7062d8","owner_uid":2272,"public_key_sha256":"a659e69fedef3ac0cd70d395c7df4911c26d9be6ee1b3afbb5c130a6255d5fcc","public_pem":"-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2Lfxq5Vam4j4ADxzR2Vb\nDa3fL0Kfohx3P+SP7Tf11MLR8VrJnNKtWft58+PMVdRCbHErHl2T+AuJEJB9dn+1\nLnscr95IT1dfRJCXQYQ+Ro9utDGkpontk7X8OoT4r93OuQABDL1hd3qXlGvN54zm\nbaTKac4F7cL8udpHR7z22bxNPznYXspUM/p2SWgsVyPvceePOJogFgUSZsLVsc2v\ngsgrGzGqT9rPs/Xwv0ASfFqLwSTbPyWIICDsLJqIeBr/eUUGPjzqD3aMNlbvUVZo\nMwJzFCEMSipYp8nZ/U8SpDoNd1knLZrannB7KkgcpL2cM08IB2GhDRgujmp02sIL\n7v/CVzSPsvnqxFUbnx+YN3qmzLJNXdYYtDI7CdiO82gp75iu5xxTX6cD3pqSnfPg\noA/vNkWY/jLTGOUpJkLQGYxJG4mgGL/Sn33GDE/jHD1xQQOPk2REA4hTPQleE1xP\npPPZQk1q/DuP/BlVgbDJPThs86gLlF2L9fW6QNIUXDfFP0pzFcE4FUppKJoUPaQD\n8UXnLX39dUspUjhnSDah0/Y1iXH+hWtgHCIADVFENc84IJf38E5pXib25HZ+Stz7\nWjF/zZfSc1QM2znrHGBbnySnOse6I1+2d4FP7a43kH7lwwt4k45syIBRNxYGdogj\nUcQb3no0OC09uOFUAe6i+GUCAwEAAQ==\n-----END PUBLIC KEY-----\n","remote_root":"/data1/home/sunyiq/zhenjiang_temporal_validation_2024_20260915_001"}
+TEMPORAL_KEY_JSON_END
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-16T10:05:57+0800
