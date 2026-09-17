@@ -1,0 +1,1085 @@
+### channel=id33-transformer-recipe-repair seq=71
+### host=login4
+### started=2026-09-17T12:32:06+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-17T12:32:06+0800
+=== LOG DIRS ===
+C3-224312.log
+C3_s300-225199.log
+C3_s400-225200.log
+C3_s500-225190.log
+C3_s600-225191.log
+C3_s700-225192.log
+C3_s800-225201.log
+C4-224312.log
+C4_s200-225187.log
+C4_s300-225199.log
+C4_s400-225200.log
+C4_s500-225190.log
+C4_s600-225191.log
+C4_s700-225192.log
+C4_s800-225201.log
+C5-224312.log
+calib-220658.err
+calib-220658.out
+calib-220659.err
+calib-220659.out
+G1-226118.log
+G1_s200-226118.log
+G1_s300-226118.log
+G1_s400-226119.log
+G1_s500-226119.log
+G1_s600-226119.log
+G1_s700-226120.log
+G1_s800-226120.log
+K1-225548.log
+K1_s200-225548.log
+K1_s300-225548.log
+K1_s400-225549.log
+K1_s500-225549.log
+K1_s600-225549.log
+K1_s700-225550.log
+K1_s800-225550.log
+L33-222801.log
+L33-224311.log
+packed-222800.err
+packed-222800.out
+config.yml
+epoch030_metrics.json
+img_log
+model_epoch010.pt
+model_epoch020.pt
+model_epoch030.pt
+optimizer_state_epoch010.pt
+optimizer_state_epoch020.pt
+optimizer_state_epoch030.pt
+output.log
+train_data
+validation
+=== SAMPLE output.log (G1) first 25 lines + lines with 'average' (first 4) ===
+2026-09-16 19:53:39,169: Logging to results/33_transformer_recipe_repair/G1/transformer_recipe_repair_G1_2026_0916_1953_ep30/output.log initialized.
+2026-09-16 19:53:39,169: ### Folder structure created at results/33_transformer_recipe_repair/G1/transformer_recipe_repair_G1_2026_0916_1953_ep30
+2026-09-16 19:53:39,170: ### Run configurations for transformer_recipe_repair_G1
+2026-09-16 19:53:39,170: experiment_name: transformer_recipe_repair_G1
+2026-09-16 19:53:39,170: run_dir: results/33_transformer_recipe_repair/G1/transformer_recipe_repair_G1_2026_0916_1953_ep30
+2026-09-16 19:53:39,170: dataset: camels_us_track0_bundle
+2026-09-16 19:53:39,170: data_dir: data/camels_us_track0_development_forcing_v01
+2026-09-16 19:53:39,170: track0_supervision_dir: data/camels_us_track0_supervision_v01
+2026-09-16 19:53:39,170: additional_feature_files: [PosixPath('src/grace_input_runoff/features/grace_twsa_daily_v01.p')]
+2026-09-16 19:53:39,170: number_of_basins: 531
+2026-09-16 19:53:39,170: train_basin_file: src/fair_benchmark/frozen/track0_forcing_only_basins.txt
+2026-09-16 19:53:39,170: validation_basin_file: src/fair_benchmark/frozen/track0_forcing_only_basins.txt
+2026-09-16 19:53:39,170: train_start_date: 1999-10-01 00:00:00
+2026-09-16 19:53:39,170: train_end_date: 2006-09-30 00:00:00
+2026-09-16 19:53:39,170: validation_start_date: 2006-10-01 00:00:00
+2026-09-16 19:53:39,170: validation_end_date: 2008-09-30 00:00:00
+2026-09-16 19:53:39,170: device: cuda:0
+2026-09-16 19:53:39,170: model: cudalstm
+2026-09-16 19:53:39,170: head: regression
+2026-09-16 19:53:39,170: hidden_size: 256
+2026-09-16 19:53:39,170: initial_forget_bias: 5
+2026-09-16 19:53:39,170: output_dropout: 0.4
+2026-09-16 19:53:39,170: output_activation: linear
+2026-09-16 19:53:39,170: optimizer: Adam
+2026-09-16 19:53:39,170: loss: NSE
+55:2026-09-16 20:00:40,666: Epoch 1 average loss: avg_loss: 0.04235, avg_total_loss: 0.04235
+58:2026-09-16 20:02:14,622: Epoch 1 average validation loss: 0.03798 -- Median validation metrics: avg_loss: 0.03798, NSE: 0.58508
+59:2026-09-16 20:08:12,669: Epoch 2 average loss: avg_loss: 0.02743, avg_total_loss: 0.02743
+62:2026-09-16 20:09:00,278: Epoch 2 average validation loss: 0.03348 -- Median validation metrics: avg_loss: 0.03348, NSE: 0.63268
+##ARM G1
+Epoch 1 average loss: avg_loss: 0.04235, avg_total_loss: 0.04235
+Epoch 1 average validation loss: 0.03798 -- Median validation metrics: avg_loss: 0.03798, NSE: 0.58508
+Epoch 2 average loss: avg_loss: 0.02743, avg_total_loss: 0.02743
+Epoch 2 average validation loss: 0.03348 -- Median validation metrics: avg_loss: 0.03348, NSE: 0.63268
+Epoch 3 average loss: avg_loss: 0.02457, avg_total_loss: 0.02457
+Epoch 3 average validation loss: 0.02903 -- Median validation metrics: avg_loss: 0.02903, NSE: 0.65695
+Epoch 4 average loss: avg_loss: 0.02295, avg_total_loss: 0.02295
+Epoch 4 average validation loss: 0.02890 -- Median validation metrics: avg_loss: 0.02890, NSE: 0.67443
+Epoch 5 average loss: avg_loss: 0.02173, avg_total_loss: 0.02173
+Epoch 5 average validation loss: 0.02766 -- Median validation metrics: avg_loss: 0.02766, NSE: 0.66845
+Epoch 6 average loss: avg_loss: 0.02069, avg_total_loss: 0.02069
+Epoch 6 average validation loss: 0.02589 -- Median validation metrics: avg_loss: 0.02589, NSE: 0.67993
+Epoch 7 average loss: avg_loss: 0.01989, avg_total_loss: 0.01989
+Epoch 7 average validation loss: 0.02560 -- Median validation metrics: avg_loss: 0.02560, NSE: 0.69577
+Epoch 8 average loss: avg_loss: 0.01914, avg_total_loss: 0.01914
+Epoch 8 average validation loss: 0.02599 -- Median validation metrics: avg_loss: 0.02599, NSE: 0.69251
+Epoch 9 average loss: avg_loss: 0.01894, avg_total_loss: 0.01894
+Epoch 9 average validation loss: 0.02595 -- Median validation metrics: avg_loss: 0.02595, NSE: 0.70238
+Epoch 10 average loss: avg_loss: 0.01788, avg_total_loss: 0.01788
+Epoch 10 average validation loss: 0.02796 -- Median validation metrics: avg_loss: 0.02796, NSE: 0.67748
+Epoch 11 average loss: avg_loss: 0.01590, avg_total_loss: 0.01590
+Epoch 11 average validation loss: 0.02554 -- Median validation metrics: avg_loss: 0.02554, NSE: 0.70273
+Epoch 12 average loss: avg_loss: 0.01501, avg_total_loss: 0.01501
+Epoch 12 average validation loss: 0.02734 -- Median validation metrics: avg_loss: 0.02734, NSE: 0.70241
+Epoch 13 average loss: avg_loss: 0.01471, avg_total_loss: 0.01471
+Epoch 13 average validation loss: 0.02639 -- Median validation metrics: avg_loss: 0.02639, NSE: 0.70960
+Epoch 14 average loss: avg_loss: 0.01420, avg_total_loss: 0.01420
+Epoch 14 average validation loss: 0.02755 -- Median validation metrics: avg_loss: 0.02755, NSE: 0.70970
+Epoch 15 average loss: avg_loss: 0.01397, avg_total_loss: 0.01397
+Epoch 15 average validation loss: 0.02587 -- Median validation metrics: avg_loss: 0.02587, NSE: 0.70769
+Epoch 16 average loss: avg_loss: 0.01363, avg_total_loss: 0.01363
+Epoch 16 average validation loss: 0.02551 -- Median validation metrics: avg_loss: 0.02551, NSE: 0.71288
+Epoch 17 average loss: avg_loss: 0.01318, avg_total_loss: 0.01318
+Epoch 17 average validation loss: 0.02822 -- Median validation metrics: avg_loss: 0.02822, NSE: 0.71402
+Epoch 18 average loss: avg_loss: 0.01344, avg_total_loss: 0.01344
+Epoch 18 average validation loss: 0.02588 -- Median validation metrics: avg_loss: 0.02588, NSE: 0.71596
+Epoch 19 average loss: avg_loss: 0.01271, avg_total_loss: 0.01271
+Epoch 19 average validation loss: 0.02745 -- Median validation metrics: avg_loss: 0.02745, NSE: 0.70442
+Epoch 20 average loss: avg_loss: 0.01241, avg_total_loss: 0.01241
+Epoch 20 average validation loss: 0.02681 -- Median validation metrics: avg_loss: 0.02681, NSE: 0.70858
+Epoch 21 average loss: avg_loss: 0.01113, avg_total_loss: 0.01113
+Epoch 21 average validation loss: 0.02599 -- Median validation metrics: avg_loss: 0.02599, NSE: 0.71451
+Epoch 22 average loss: avg_loss: 0.01053, avg_total_loss: 0.01053
+Epoch 22 average validation loss: 0.02687 -- Median validation metrics: avg_loss: 0.02687, NSE: 0.71037
+Epoch 23 average loss: avg_loss: 0.01030, avg_total_loss: 0.01030
+Epoch 23 average validation loss: 0.02694 -- Median validation metrics: avg_loss: 0.02694, NSE: 0.71328
+Epoch 24 average loss: avg_loss: 0.01014, avg_total_loss: 0.01014
+Epoch 24 average validation loss: 0.02746 -- Median validation metrics: avg_loss: 0.02746, NSE: 0.71664
+Epoch 25 average loss: avg_loss: 0.00998, avg_total_loss: 0.00998
+Epoch 25 average validation loss: 0.02720 -- Median validation metrics: avg_loss: 0.02720, NSE: 0.71325
+Epoch 26 average loss: avg_loss: 0.00980, avg_total_loss: 0.00980
+Epoch 26 average validation loss: 0.02770 -- Median validation metrics: avg_loss: 0.02770, NSE: 0.71224
+Epoch 27 average loss: avg_loss: 0.00975, avg_total_loss: 0.00975
+Epoch 27 average validation loss: 0.02755 -- Median validation metrics: avg_loss: 0.02755, NSE: 0.71111
+Epoch 28 average loss: avg_loss: 0.00957, avg_total_loss: 0.00957
+Epoch 28 average validation loss: 0.02726 -- Median validation metrics: avg_loss: 0.02726, NSE: 0.71188
+Epoch 29 average loss: avg_loss: 0.00947, avg_total_loss: 0.00947
+Epoch 29 average validation loss: 0.02805 -- Median validation metrics: avg_loss: 0.02805, NSE: 0.70982
+Epoch 30 average loss: avg_loss: 0.00941, avg_total_loss: 0.00941
+Epoch 30 average validation loss: 0.02810 -- Median validation metrics: avg_loss: 0.02810, NSE: 0.70908
+  tqdm@logs/33_transformer_recipe_repair/G1-226118.log: 5279/5304
+##ARM G1_s200
+Epoch 1 average loss: avg_loss: 0.04278, avg_total_loss: 0.04278
+Epoch 1 average validation loss: 0.03862 -- Median validation metrics: avg_loss: 0.03862, NSE: 0.59747
+Epoch 2 average loss: avg_loss: 0.02771, avg_total_loss: 0.02771
+Epoch 2 average validation loss: 0.03236 -- Median validation metrics: avg_loss: 0.03236, NSE: 0.63178
+Epoch 3 average loss: avg_loss: 0.02468, avg_total_loss: 0.02468
+Epoch 3 average validation loss: 0.02991 -- Median validation metrics: avg_loss: 0.02991, NSE: 0.61679
+Epoch 4 average loss: avg_loss: 0.02515, avg_total_loss: 0.02515
+Epoch 4 average validation loss: 0.02815 -- Median validation metrics: avg_loss: 0.02815, NSE: 0.66982
+Epoch 5 average loss: avg_loss: 0.02167, avg_total_loss: 0.02167
+Epoch 5 average validation loss: 0.02736 -- Median validation metrics: avg_loss: 0.02736, NSE: 0.66591
+Epoch 6 average loss: avg_loss: 0.02074, avg_total_loss: 0.02074
+Epoch 6 average validation loss: 0.02628 -- Median validation metrics: avg_loss: 0.02628, NSE: 0.66699
+Epoch 7 average loss: avg_loss: 0.01997, avg_total_loss: 0.01997
+Epoch 7 average validation loss: 0.02707 -- Median validation metrics: avg_loss: 0.02707, NSE: 0.67653
+Epoch 8 average loss: avg_loss: 0.01918, avg_total_loss: 0.01918
+Epoch 8 average validation loss: 0.02591 -- Median validation metrics: avg_loss: 0.02591, NSE: 0.67408
+Epoch 9 average loss: avg_loss: 0.01845, avg_total_loss: 0.01845
+Epoch 9 average validation loss: 0.02748 -- Median validation metrics: avg_loss: 0.02748, NSE: 0.68743
+Epoch 10 average loss: avg_loss: 0.01806, avg_total_loss: 0.01806
+Epoch 10 average validation loss: 0.02520 -- Median validation metrics: avg_loss: 0.02520, NSE: 0.69726
+Epoch 11 average loss: avg_loss: 0.01572, avg_total_loss: 0.01572
+Epoch 11 average validation loss: 0.02657 -- Median validation metrics: avg_loss: 0.02657, NSE: 0.70802
+Epoch 12 average loss: avg_loss: 0.01492, avg_total_loss: 0.01492
+Epoch 12 average validation loss: 0.02509 -- Median validation metrics: avg_loss: 0.02509, NSE: 0.70926
+Epoch 13 average loss: avg_loss: 0.01441, avg_total_loss: 0.01441
+Epoch 13 average validation loss: 0.02511 -- Median validation metrics: avg_loss: 0.02511, NSE: 0.70235
+Epoch 14 average loss: avg_loss: 0.01395, avg_total_loss: 0.01395
+Epoch 14 average validation loss: 0.02527 -- Median validation metrics: avg_loss: 0.02527, NSE: 0.70290
+Epoch 15 average loss: avg_loss: 0.01367, avg_total_loss: 0.01367
+Epoch 15 average validation loss: 0.02467 -- Median validation metrics: avg_loss: 0.02467, NSE: 0.70359
+Epoch 16 average loss: avg_loss: 0.01330, avg_total_loss: 0.01330
+Epoch 16 average validation loss: 0.02520 -- Median validation metrics: avg_loss: 0.02520, NSE: 0.70228
+Epoch 17 average loss: avg_loss: 0.01288, avg_total_loss: 0.01288
+Epoch 17 average validation loss: 0.02533 -- Median validation metrics: avg_loss: 0.02533, NSE: 0.69970
+Epoch 18 average loss: avg_loss: 0.01268, avg_total_loss: 0.01268
+Epoch 18 average validation loss: 0.02646 -- Median validation metrics: avg_loss: 0.02646, NSE: 0.71325
+Epoch 19 average loss: avg_loss: 0.01230, avg_total_loss: 0.01230
+Epoch 19 average validation loss: 0.02552 -- Median validation metrics: avg_loss: 0.02552, NSE: 0.70193
+Epoch 20 average loss: avg_loss: 0.01204, avg_total_loss: 0.01204
+Epoch 20 average validation loss: 0.02518 -- Median validation metrics: avg_loss: 0.02518, NSE: 0.69910
+Epoch 21 average loss: avg_loss: 0.01078, avg_total_loss: 0.01078
+Epoch 21 average validation loss: 0.02515 -- Median validation metrics: avg_loss: 0.02515, NSE: 0.70744
+Epoch 22 average loss: avg_loss: 0.01018, avg_total_loss: 0.01018
+Epoch 22 average validation loss: 0.02545 -- Median validation metrics: avg_loss: 0.02545, NSE: 0.70440
+Epoch 23 average loss: avg_loss: 0.01000, avg_total_loss: 0.01000
+Epoch 23 average validation loss: 0.02611 -- Median validation metrics: avg_loss: 0.02611, NSE: 0.70068
+Epoch 24 average loss: avg_loss: 0.00978, avg_total_loss: 0.00978
+Epoch 24 average validation loss: 0.02595 -- Median validation metrics: avg_loss: 0.02595, NSE: 0.70548
+Epoch 25 average loss: avg_loss: 0.00964, avg_total_loss: 0.00964
+Epoch 25 average validation loss: 0.02625 -- Median validation metrics: avg_loss: 0.02625, NSE: 0.70365
+Epoch 26 average loss: avg_loss: 0.00949, avg_total_loss: 0.00949
+Epoch 26 average validation loss: 0.02686 -- Median validation metrics: avg_loss: 0.02686, NSE: 0.70171
+Epoch 27 average loss: avg_loss: 0.00940, avg_total_loss: 0.00940
+Epoch 27 average validation loss: 0.02620 -- Median validation metrics: avg_loss: 0.02620, NSE: 0.69756
+Epoch 28 average loss: avg_loss: 0.00922, avg_total_loss: 0.00922
+Epoch 28 average validation loss: 0.02685 -- Median validation metrics: avg_loss: 0.02685, NSE: 0.69412
+Epoch 29 average loss: avg_loss: 0.00914, avg_total_loss: 0.00914
+Epoch 29 average validation loss: 0.02695 -- Median validation metrics: avg_loss: 0.02695, NSE: 0.70123
+Epoch 30 average loss: avg_loss: 0.00913, avg_total_loss: 0.00913
+Epoch 30 average validation loss: 0.02624 -- Median validation metrics: avg_loss: 0.02624, NSE: 0.70110
+  tqdm@logs/33_transformer_recipe_repair/G1_s200-226118.log: 5279/5304
+##ARM G1_s300
+Epoch 1 average loss: avg_loss: 0.04321, avg_total_loss: 0.04321
+Epoch 1 average validation loss: 0.03481 -- Median validation metrics: avg_loss: 0.03481, NSE: 0.59323
+Epoch 2 average loss: avg_loss: 0.02798, avg_total_loss: 0.02798
+Epoch 2 average validation loss: 0.02944 -- Median validation metrics: avg_loss: 0.02944, NSE: 0.63843
+Epoch 3 average loss: avg_loss: 0.02491, avg_total_loss: 0.02491
+Epoch 3 average validation loss: 0.02911 -- Median validation metrics: avg_loss: 0.02911, NSE: 0.63742
+Epoch 4 average loss: avg_loss: 0.02328, avg_total_loss: 0.02328
+Epoch 4 average validation loss: 0.02628 -- Median validation metrics: avg_loss: 0.02628, NSE: 0.66537
+Epoch 5 average loss: avg_loss: 0.02203, avg_total_loss: 0.02203
+Epoch 5 average validation loss: 0.02546 -- Median validation metrics: avg_loss: 0.02546, NSE: 0.67873
+Epoch 6 average loss: avg_loss: 0.02081, avg_total_loss: 0.02081
+Epoch 6 average validation loss: 0.02707 -- Median validation metrics: avg_loss: 0.02707, NSE: 0.68929
+Epoch 7 average loss: avg_loss: 0.02011, avg_total_loss: 0.02011
+Epoch 7 average validation loss: 0.02504 -- Median validation metrics: avg_loss: 0.02504, NSE: 0.67549
+Epoch 8 average loss: avg_loss: 0.01938, avg_total_loss: 0.01938
+Epoch 8 average validation loss: 0.02810 -- Median validation metrics: avg_loss: 0.02810, NSE: 0.68117
+Epoch 9 average loss: avg_loss: 0.01861, avg_total_loss: 0.01861
+Epoch 9 average validation loss: 0.02550 -- Median validation metrics: avg_loss: 0.02550, NSE: 0.69069
+Epoch 10 average loss: avg_loss: 0.01818, avg_total_loss: 0.01818
+Epoch 10 average validation loss: 0.02610 -- Median validation metrics: avg_loss: 0.02610, NSE: 0.68078
+Epoch 11 average loss: avg_loss: 0.01596, avg_total_loss: 0.01596
+Epoch 11 average validation loss: 0.02656 -- Median validation metrics: avg_loss: 0.02656, NSE: 0.70020
+Epoch 12 average loss: avg_loss: 0.01521, avg_total_loss: 0.01521
+Epoch 12 average validation loss: 0.02524 -- Median validation metrics: avg_loss: 0.02524, NSE: 0.70646
+Epoch 13 average loss: avg_loss: 0.01482, avg_total_loss: 0.01482
+Epoch 13 average validation loss: 0.02444 -- Median validation metrics: avg_loss: 0.02444, NSE: 0.70476
+Epoch 14 average loss: avg_loss: 0.01435, avg_total_loss: 0.01435
+Epoch 14 average validation loss: 0.02542 -- Median validation metrics: avg_loss: 0.02542, NSE: 0.70074
+Epoch 15 average loss: avg_loss: 0.01399, avg_total_loss: 0.01399
+Epoch 15 average validation loss: 0.02566 -- Median validation metrics: avg_loss: 0.02566, NSE: 0.71368
+Epoch 16 average loss: avg_loss: 0.01366, avg_total_loss: 0.01366
+Epoch 16 average validation loss: 0.02450 -- Median validation metrics: avg_loss: 0.02450, NSE: 0.70501
+Epoch 17 average loss: avg_loss: 0.01328, avg_total_loss: 0.01328
+Epoch 17 average validation loss: 0.02735 -- Median validation metrics: avg_loss: 0.02735, NSE: 0.71447
+Epoch 18 average loss: avg_loss: 0.01300, avg_total_loss: 0.01300
+Epoch 18 average validation loss: 0.02532 -- Median validation metrics: avg_loss: 0.02532, NSE: 0.70760
+Epoch 19 average loss: avg_loss: 0.01277, avg_total_loss: 0.01277
+Epoch 19 average validation loss: 0.02448 -- Median validation metrics: avg_loss: 0.02448, NSE: 0.71318
+Epoch 20 average loss: avg_loss: 0.01261, avg_total_loss: 0.01261
+Epoch 20 average validation loss: 0.02515 -- Median validation metrics: avg_loss: 0.02515, NSE: 0.71153
+Epoch 21 average loss: avg_loss: 0.01080, avg_total_loss: 0.01080
+Epoch 21 average validation loss: 0.02448 -- Median validation metrics: avg_loss: 0.02448, NSE: 0.71668
+Epoch 22 average loss: avg_loss: 0.01042, avg_total_loss: 0.01042
+Epoch 22 average validation loss: 0.02467 -- Median validation metrics: avg_loss: 0.02467, NSE: 0.71408
+Epoch 23 average loss: avg_loss: 0.01021, avg_total_loss: 0.01021
+Epoch 23 average validation loss: 0.02456 -- Median validation metrics: avg_loss: 0.02456, NSE: 0.71951
+Epoch 24 average loss: avg_loss: 0.01010, avg_total_loss: 0.01010
+Epoch 24 average validation loss: 0.02413 -- Median validation metrics: avg_loss: 0.02413, NSE: 0.70987
+Epoch 25 average loss: avg_loss: 0.00994, avg_total_loss: 0.00994
+Epoch 25 average validation loss: 0.02476 -- Median validation metrics: avg_loss: 0.02476, NSE: 0.71956
+Epoch 26 average loss: avg_loss: 0.00982, avg_total_loss: 0.00982
+Epoch 26 average validation loss: 0.02431 -- Median validation metrics: avg_loss: 0.02431, NSE: 0.71573
+Epoch 27 average loss: avg_loss: 0.00971, avg_total_loss: 0.00971
+Epoch 27 average validation loss: 0.02471 -- Median validation metrics: avg_loss: 0.02471, NSE: 0.71535
+Epoch 28 average loss: avg_loss: 0.00960, avg_total_loss: 0.00960
+Epoch 28 average validation loss: 0.02464 -- Median validation metrics: avg_loss: 0.02464, NSE: 0.70782
+Epoch 29 average loss: avg_loss: 0.00946, avg_total_loss: 0.00946
+Epoch 29 average validation loss: 0.02651 -- Median validation metrics: avg_loss: 0.02651, NSE: 0.71146
+Epoch 30 average loss: avg_loss: 0.00942, avg_total_loss: 0.00942
+Epoch 30 average validation loss: 0.02497 -- Median validation metrics: avg_loss: 0.02497, NSE: 0.70878
+  tqdm@logs/33_transformer_recipe_repair/G1_s300-226118.log: 5278/5304
+##ARM G1_s400
+Epoch 1 average loss: avg_loss: 0.04111, avg_total_loss: 0.04111
+Epoch 1 average validation loss: 0.03225 -- Median validation metrics: avg_loss: 0.03225, NSE: 0.59471
+Epoch 2 average loss: avg_loss: 0.02726, avg_total_loss: 0.02726
+Epoch 2 average validation loss: 0.02960 -- Median validation metrics: avg_loss: 0.02960, NSE: 0.65062
+Epoch 3 average loss: avg_loss: 0.02575, avg_total_loss: 0.02575
+Epoch 3 average validation loss: 0.02785 -- Median validation metrics: avg_loss: 0.02785, NSE: 0.65098
+Epoch 4 average loss: avg_loss: 0.02307, avg_total_loss: 0.02307
+Epoch 4 average validation loss: 0.02751 -- Median validation metrics: avg_loss: 0.02751, NSE: 0.66204
+Epoch 5 average loss: avg_loss: 0.02213, avg_total_loss: 0.02213
+Epoch 5 average validation loss: 0.02761 -- Median validation metrics: avg_loss: 0.02761, NSE: 0.66024
+Epoch 6 average loss: avg_loss: 0.02101, avg_total_loss: 0.02101
+Epoch 6 average validation loss: 0.02616 -- Median validation metrics: avg_loss: 0.02616, NSE: 0.68308
+Epoch 7 average loss: avg_loss: 0.02017, avg_total_loss: 0.02017
+Epoch 7 average validation loss: 0.02755 -- Median validation metrics: avg_loss: 0.02755, NSE: 0.66658
+Epoch 8 average loss: avg_loss: 0.01952, avg_total_loss: 0.01952
+Epoch 8 average validation loss: 0.02624 -- Median validation metrics: avg_loss: 0.02624, NSE: 0.67112
+Epoch 9 average loss: avg_loss: 0.01900, avg_total_loss: 0.01900
+Epoch 9 average validation loss: 0.02494 -- Median validation metrics: avg_loss: 0.02494, NSE: 0.68214
+Epoch 10 average loss: avg_loss: 0.01813, avg_total_loss: 0.01813
+Epoch 10 average validation loss: 0.02506 -- Median validation metrics: avg_loss: 0.02506, NSE: 0.68179
+Epoch 11 average loss: avg_loss: 0.01606, avg_total_loss: 0.01606
+Epoch 11 average validation loss: 0.02534 -- Median validation metrics: avg_loss: 0.02534, NSE: 0.69371
+Epoch 12 average loss: avg_loss: 0.01522, avg_total_loss: 0.01522
+Epoch 12 average validation loss: 0.02526 -- Median validation metrics: avg_loss: 0.02526, NSE: 0.69823
+Epoch 13 average loss: avg_loss: 0.01473, avg_total_loss: 0.01473
+Epoch 13 average validation loss: 0.02469 -- Median validation metrics: avg_loss: 0.02469, NSE: 0.70830
+Epoch 14 average loss: avg_loss: 0.01427, avg_total_loss: 0.01427
+Epoch 14 average validation loss: 0.02481 -- Median validation metrics: avg_loss: 0.02481, NSE: 0.70238
+Epoch 15 average loss: avg_loss: 0.01393, avg_total_loss: 0.01393
+Epoch 15 average validation loss: 0.02497 -- Median validation metrics: avg_loss: 0.02497, NSE: 0.70654
+Epoch 16 average loss: avg_loss: 0.01357, avg_total_loss: 0.01357
+Epoch 16 average validation loss: 0.02660 -- Median validation metrics: avg_loss: 0.02660, NSE: 0.69901
+Epoch 17 average loss: avg_loss: 0.01318, avg_total_loss: 0.01318
+Epoch 17 average validation loss: 0.02726 -- Median validation metrics: avg_loss: 0.02726, NSE: 0.70109
+Epoch 18 average loss: avg_loss: 0.01292, avg_total_loss: 0.01292
+Epoch 18 average validation loss: 0.02688 -- Median validation metrics: avg_loss: 0.02688, NSE: 0.69916
+Epoch 19 average loss: avg_loss: 0.01270, avg_total_loss: 0.01270
+Epoch 19 average validation loss: 0.02437 -- Median validation metrics: avg_loss: 0.02437, NSE: 0.70608
+Epoch 20 average loss: avg_loss: 0.01241, avg_total_loss: 0.01241
+Epoch 20 average validation loss: 0.02603 -- Median validation metrics: avg_loss: 0.02603, NSE: 0.70024
+Epoch 21 average loss: avg_loss: 0.01104, avg_total_loss: 0.01104
+Epoch 21 average validation loss: 0.02620 -- Median validation metrics: avg_loss: 0.02620, NSE: 0.70374
+Epoch 22 average loss: avg_loss: 0.01052, avg_total_loss: 0.01052
+Epoch 22 average validation loss: 0.02620 -- Median validation metrics: avg_loss: 0.02620, NSE: 0.70363
+Epoch 23 average loss: avg_loss: 0.01024, avg_total_loss: 0.01024
+Epoch 23 average validation loss: 0.02625 -- Median validation metrics: avg_loss: 0.02625, NSE: 0.70122
+Epoch 24 average loss: avg_loss: 0.01011, avg_total_loss: 0.01011
+Epoch 24 average validation loss: 0.02672 -- Median validation metrics: avg_loss: 0.02672, NSE: 0.70069
+Epoch 25 average loss: avg_loss: 0.00995, avg_total_loss: 0.00995
+Epoch 25 average validation loss: 0.02758 -- Median validation metrics: avg_loss: 0.02758, NSE: 0.70670
+Epoch 26 average loss: avg_loss: 0.00975, avg_total_loss: 0.00975
+Epoch 26 average validation loss: 0.02673 -- Median validation metrics: avg_loss: 0.02673, NSE: 0.70472
+Epoch 27 average loss: avg_loss: 0.00964, avg_total_loss: 0.00964
+Epoch 27 average validation loss: 0.02636 -- Median validation metrics: avg_loss: 0.02636, NSE: 0.70105
+Epoch 28 average loss: avg_loss: 0.00951, avg_total_loss: 0.00951
+Epoch 28 average validation loss: 0.02728 -- Median validation metrics: avg_loss: 0.02728, NSE: 0.69932
+Epoch 29 average loss: avg_loss: 0.00941, avg_total_loss: 0.00941
+Epoch 29 average validation loss: 0.02604 -- Median validation metrics: avg_loss: 0.02604, NSE: 0.70614
+Epoch 30 average loss: avg_loss: 0.00941, avg_total_loss: 0.00941
+Epoch 30 average validation loss: 0.02710 -- Median validation metrics: avg_loss: 0.02710, NSE: 0.70176
+  tqdm@logs/33_transformer_recipe_repair/G1_s400-226119.log: 5279/5304
+##ARM G1_s500
+Epoch 1 average loss: avg_loss: 0.04425, avg_total_loss: 0.04425
+Epoch 1 average validation loss: 0.03265 -- Median validation metrics: avg_loss: 0.03265, NSE: 0.60552
+Epoch 2 average loss: avg_loss: 0.02762, avg_total_loss: 0.02762
+Epoch 2 average validation loss: 0.03012 -- Median validation metrics: avg_loss: 0.03012, NSE: 0.62562
+Epoch 3 average loss: avg_loss: 0.02458, avg_total_loss: 0.02458
+Epoch 3 average validation loss: 0.02925 -- Median validation metrics: avg_loss: 0.02925, NSE: 0.63804
+Epoch 4 average loss: avg_loss: 0.02292, avg_total_loss: 0.02292
+Epoch 4 average validation loss: 0.02662 -- Median validation metrics: avg_loss: 0.02662, NSE: 0.64972
+Epoch 5 average loss: avg_loss: 0.02167, avg_total_loss: 0.02167
+Epoch 5 average validation loss: 0.02751 -- Median validation metrics: avg_loss: 0.02751, NSE: 0.67951
+Epoch 6 average loss: avg_loss: 0.02143, avg_total_loss: 0.02143
+Epoch 6 average validation loss: 0.02757 -- Median validation metrics: avg_loss: 0.02757, NSE: 0.67355
+Epoch 7 average loss: avg_loss: 0.02018, avg_total_loss: 0.02018
+Epoch 7 average validation loss: 0.02497 -- Median validation metrics: avg_loss: 0.02497, NSE: 0.68770
+Epoch 8 average loss: avg_loss: 0.01947, avg_total_loss: 0.01947
+Epoch 8 average validation loss: 0.02500 -- Median validation metrics: avg_loss: 0.02500, NSE: 0.69170
+Epoch 9 average loss: avg_loss: 0.01892, avg_total_loss: 0.01892
+Epoch 9 average validation loss: 0.02477 -- Median validation metrics: avg_loss: 0.02477, NSE: 0.69085
+Epoch 10 average loss: avg_loss: 0.01842, avg_total_loss: 0.01842
+Epoch 10 average validation loss: 0.02522 -- Median validation metrics: avg_loss: 0.02522, NSE: 0.68193
+Epoch 11 average loss: avg_loss: 0.01611, avg_total_loss: 0.01611
+Epoch 11 average validation loss: 0.02458 -- Median validation metrics: avg_loss: 0.02458, NSE: 0.69654
+Epoch 12 average loss: avg_loss: 0.01531, avg_total_loss: 0.01531
+Epoch 12 average validation loss: 0.02563 -- Median validation metrics: avg_loss: 0.02563, NSE: 0.69639
+Epoch 13 average loss: avg_loss: 0.01491, avg_total_loss: 0.01491
+Epoch 13 average validation loss: 0.02453 -- Median validation metrics: avg_loss: 0.02453, NSE: 0.70160
+Epoch 14 average loss: avg_loss: 0.01437, avg_total_loss: 0.01437
+Epoch 14 average validation loss: 0.02475 -- Median validation metrics: avg_loss: 0.02475, NSE: 0.70355
+Epoch 15 average loss: avg_loss: 0.01388, avg_total_loss: 0.01388
+Epoch 15 average validation loss: 0.02479 -- Median validation metrics: avg_loss: 0.02479, NSE: 0.70351
+Epoch 16 average loss: avg_loss: 0.01351, avg_total_loss: 0.01351
+Epoch 16 average validation loss: 0.02543 -- Median validation metrics: avg_loss: 0.02543, NSE: 0.70346
+Epoch 17 average loss: avg_loss: 0.01323, avg_total_loss: 0.01323
+Epoch 17 average validation loss: 0.02558 -- Median validation metrics: avg_loss: 0.02558, NSE: 0.70803
+Epoch 18 average loss: avg_loss: 0.01291, avg_total_loss: 0.01291
+Epoch 18 average validation loss: 0.02500 -- Median validation metrics: avg_loss: 0.02500, NSE: 0.69689
+Epoch 19 average loss: avg_loss: 0.01260, avg_total_loss: 0.01260
+Epoch 19 average validation loss: 0.02560 -- Median validation metrics: avg_loss: 0.02560, NSE: 0.69974
+Epoch 20 average loss: avg_loss: 0.01239, avg_total_loss: 0.01239
+Epoch 20 average validation loss: 0.02565 -- Median validation metrics: avg_loss: 0.02565, NSE: 0.70222
+Epoch 21 average loss: avg_loss: 0.01089, avg_total_loss: 0.01089
+Epoch 21 average validation loss: 0.02562 -- Median validation metrics: avg_loss: 0.02562, NSE: 0.70293
+Epoch 22 average loss: avg_loss: 0.01027, avg_total_loss: 0.01027
+Epoch 22 average validation loss: 0.02568 -- Median validation metrics: avg_loss: 0.02568, NSE: 0.70575
+Epoch 23 average loss: avg_loss: 0.01006, avg_total_loss: 0.01006
+Epoch 23 average validation loss: 0.02531 -- Median validation metrics: avg_loss: 0.02531, NSE: 0.69893
+Epoch 24 average loss: avg_loss: 0.00993, avg_total_loss: 0.00993
+Epoch 24 average validation loss: 0.02595 -- Median validation metrics: avg_loss: 0.02595, NSE: 0.70709
+Epoch 25 average loss: avg_loss: 0.00971, avg_total_loss: 0.00971
+Epoch 25 average validation loss: 0.02605 -- Median validation metrics: avg_loss: 0.02605, NSE: 0.70080
+Epoch 26 average loss: avg_loss: 0.00963, avg_total_loss: 0.00963
+Epoch 26 average validation loss: 0.02634 -- Median validation metrics: avg_loss: 0.02634, NSE: 0.70237
+Epoch 27 average loss: avg_loss: 0.00956, avg_total_loss: 0.00956
+Epoch 27 average validation loss: 0.02585 -- Median validation metrics: avg_loss: 0.02585, NSE: 0.70437
+Epoch 28 average loss: avg_loss: 0.00926, avg_total_loss: 0.00926
+Epoch 28 average validation loss: 0.02704 -- Median validation metrics: avg_loss: 0.02704, NSE: 0.70166
+Epoch 29 average loss: avg_loss: 0.00923, avg_total_loss: 0.00923
+Epoch 29 average validation loss: 0.02639 -- Median validation metrics: avg_loss: 0.02639, NSE: 0.69897
+Epoch 30 average loss: avg_loss: 0.00922, avg_total_loss: 0.00922
+Epoch 30 average validation loss: 0.02625 -- Median validation metrics: avg_loss: 0.02625, NSE: 0.70210
+  tqdm@logs/33_transformer_recipe_repair/G1_s500-226119.log: 5279/5304
+##ARM G1_s600
+Epoch 1 average loss: avg_loss: 0.04269, avg_total_loss: 0.04269
+Epoch 1 average validation loss: 0.03546 -- Median validation metrics: avg_loss: 0.03546, NSE: 0.57788
+Epoch 2 average loss: avg_loss: 0.02753, avg_total_loss: 0.02753
+Epoch 2 average validation loss: 0.03402 -- Median validation metrics: avg_loss: 0.03402, NSE: 0.62814
+Epoch 3 average loss: avg_loss: 0.02525, avg_total_loss: 0.02525
+Epoch 3 average validation loss: 0.03026 -- Median validation metrics: avg_loss: 0.03026, NSE: 0.64430
+Epoch 4 average loss: avg_loss: 0.02416, avg_total_loss: 0.02416
+Epoch 4 average validation loss: 0.02872 -- Median validation metrics: avg_loss: 0.02872, NSE: 0.66077
+Epoch 5 average loss: avg_loss: 0.02269, avg_total_loss: 0.02269
+Epoch 5 average validation loss: 0.02759 -- Median validation metrics: avg_loss: 0.02759, NSE: 0.67265
+Epoch 6 average loss: avg_loss: 0.02164, avg_total_loss: 0.02164
+Epoch 6 average validation loss: 0.03049 -- Median validation metrics: avg_loss: 0.03049, NSE: 0.67870
+Epoch 7 average loss: avg_loss: 0.02074, avg_total_loss: 0.02074
+Epoch 7 average validation loss: 0.02599 -- Median validation metrics: avg_loss: 0.02599, NSE: 0.67928
+Epoch 8 average loss: avg_loss: 0.01985, avg_total_loss: 0.01985
+Epoch 8 average validation loss: 0.02610 -- Median validation metrics: avg_loss: 0.02610, NSE: 0.67856
+Epoch 9 average loss: avg_loss: 0.01924, avg_total_loss: 0.01924
+Epoch 9 average validation loss: 0.02798 -- Median validation metrics: avg_loss: 0.02798, NSE: 0.67874
+Epoch 10 average loss: avg_loss: 0.01895, avg_total_loss: 0.01895
+Epoch 10 average validation loss: 0.02588 -- Median validation metrics: avg_loss: 0.02588, NSE: 0.69331
+Epoch 11 average loss: avg_loss: 0.01661, avg_total_loss: 0.01661
+Epoch 11 average validation loss: 0.02508 -- Median validation metrics: avg_loss: 0.02508, NSE: 0.70968
+Epoch 12 average loss: avg_loss: 0.01580, avg_total_loss: 0.01580
+Epoch 12 average validation loss: 0.02542 -- Median validation metrics: avg_loss: 0.02542, NSE: 0.70835
+Epoch 13 average loss: avg_loss: 0.01523, avg_total_loss: 0.01523
+Epoch 13 average validation loss: 0.02605 -- Median validation metrics: avg_loss: 0.02605, NSE: 0.70037
+Epoch 14 average loss: avg_loss: 0.01498, avg_total_loss: 0.01498
+Epoch 14 average validation loss: 0.02483 -- Median validation metrics: avg_loss: 0.02483, NSE: 0.70379
+Epoch 15 average loss: avg_loss: 0.01458, avg_total_loss: 0.01458
+Epoch 15 average validation loss: 0.02554 -- Median validation metrics: avg_loss: 0.02554, NSE: 0.70051
+Epoch 16 average loss: avg_loss: 0.01422, avg_total_loss: 0.01422
+Epoch 16 average validation loss: 0.02805 -- Median validation metrics: avg_loss: 0.02805, NSE: 0.70582
+Epoch 17 average loss: avg_loss: 0.01378, avg_total_loss: 0.01378
+Epoch 17 average validation loss: 0.02566 -- Median validation metrics: avg_loss: 0.02566, NSE: 0.70416
+Epoch 18 average loss: avg_loss: 0.01359, avg_total_loss: 0.01359
+Epoch 18 average validation loss: 0.02544 -- Median validation metrics: avg_loss: 0.02544, NSE: 0.69168
+Epoch 19 average loss: avg_loss: 0.01331, avg_total_loss: 0.01331
+Epoch 19 average validation loss: 0.02588 -- Median validation metrics: avg_loss: 0.02588, NSE: 0.70316
+Epoch 20 average loss: avg_loss: 0.01294, avg_total_loss: 0.01294
+Epoch 20 average validation loss: 0.02470 -- Median validation metrics: avg_loss: 0.02470, NSE: 0.70341
+Epoch 21 average loss: avg_loss: 0.01141, avg_total_loss: 0.01141
+Epoch 21 average validation loss: 0.02526 -- Median validation metrics: avg_loss: 0.02526, NSE: 0.71039
+Epoch 22 average loss: avg_loss: 0.01090, avg_total_loss: 0.01090
+Epoch 22 average validation loss: 0.02585 -- Median validation metrics: avg_loss: 0.02585, NSE: 0.70403
+Epoch 23 average loss: avg_loss: 0.01071, avg_total_loss: 0.01071
+Epoch 23 average validation loss: 0.02620 -- Median validation metrics: avg_loss: 0.02620, NSE: 0.70498
+Epoch 24 average loss: avg_loss: 0.01056, avg_total_loss: 0.01056
+Epoch 24 average validation loss: 0.02550 -- Median validation metrics: avg_loss: 0.02550, NSE: 0.70728
+Epoch 25 average loss: avg_loss: 0.01035, avg_total_loss: 0.01035
+Epoch 25 average validation loss: 0.02607 -- Median validation metrics: avg_loss: 0.02607, NSE: 0.70102
+Epoch 26 average loss: avg_loss: 0.01026, avg_total_loss: 0.01026
+Epoch 26 average validation loss: 0.02570 -- Median validation metrics: avg_loss: 0.02570, NSE: 0.71015
+Epoch 27 average loss: avg_loss: 0.01017, avg_total_loss: 0.01017
+Epoch 27 average validation loss: 0.02534 -- Median validation metrics: avg_loss: 0.02534, NSE: 0.70297
+Epoch 28 average loss: avg_loss: 0.00991, avg_total_loss: 0.00991
+Epoch 28 average validation loss: 0.02607 -- Median validation metrics: avg_loss: 0.02607, NSE: 0.70695
+Epoch 29 average loss: avg_loss: 0.00979, avg_total_loss: 0.00979
+Epoch 29 average validation loss: 0.02561 -- Median validation metrics: avg_loss: 0.02561, NSE: 0.70096
+Epoch 30 average loss: avg_loss: 0.00974, avg_total_loss: 0.00974
+Epoch 30 average validation loss: 0.02614 -- Median validation metrics: avg_loss: 0.02614, NSE: 0.70813
+  tqdm@logs/33_transformer_recipe_repair/G1_s600-226119.log: 5278/5304
+##ARM G1_s700
+Epoch 1 average loss: avg_loss: 0.04214, avg_total_loss: 0.04214
+Epoch 1 average validation loss: 0.03605 -- Median validation metrics: avg_loss: 0.03605, NSE: 0.60538
+Epoch 2 average loss: avg_loss: 0.02756, avg_total_loss: 0.02756
+Epoch 2 average validation loss: 0.03087 -- Median validation metrics: avg_loss: 0.03087, NSE: 0.63959
+Epoch 3 average loss: avg_loss: 0.02484, avg_total_loss: 0.02484
+Epoch 3 average validation loss: 0.03112 -- Median validation metrics: avg_loss: 0.03112, NSE: 0.63571
+Epoch 4 average loss: avg_loss: 0.02316, avg_total_loss: 0.02316
+Epoch 4 average validation loss: 0.02751 -- Median validation metrics: avg_loss: 0.02751, NSE: 0.65410
+Epoch 5 average loss: avg_loss: 0.02205, avg_total_loss: 0.02205
+Epoch 5 average validation loss: 0.03064 -- Median validation metrics: avg_loss: 0.03064, NSE: 0.66024
+Epoch 6 average loss: avg_loss: 0.02094, avg_total_loss: 0.02094
+Epoch 6 average validation loss: 0.02788 -- Median validation metrics: avg_loss: 0.02788, NSE: 0.66865
+Epoch 7 average loss: avg_loss: 0.02033, avg_total_loss: 0.02033
+Epoch 7 average validation loss: 0.02606 -- Median validation metrics: avg_loss: 0.02606, NSE: 0.67296
+Epoch 8 average loss: avg_loss: 0.01963, avg_total_loss: 0.01963
+Epoch 8 average validation loss: 0.02667 -- Median validation metrics: avg_loss: 0.02667, NSE: 0.67412
+Epoch 9 average loss: avg_loss: 0.01888, avg_total_loss: 0.01888
+Epoch 9 average validation loss: 0.02767 -- Median validation metrics: avg_loss: 0.02767, NSE: 0.67471
+Epoch 10 average loss: avg_loss: 0.01837, avg_total_loss: 0.01837
+Epoch 10 average validation loss: 0.02766 -- Median validation metrics: avg_loss: 0.02766, NSE: 0.68855
+Epoch 11 average loss: avg_loss: 0.01607, avg_total_loss: 0.01607
+Epoch 11 average validation loss: 0.02629 -- Median validation metrics: avg_loss: 0.02629, NSE: 0.69142
+Epoch 12 average loss: avg_loss: 0.01528, avg_total_loss: 0.01528
+Epoch 12 average validation loss: 0.02420 -- Median validation metrics: avg_loss: 0.02420, NSE: 0.70078
+Epoch 13 average loss: avg_loss: 0.01485, avg_total_loss: 0.01485
+Epoch 13 average validation loss: 0.02451 -- Median validation metrics: avg_loss: 0.02451, NSE: 0.70276
+Epoch 14 average loss: avg_loss: 0.01430, avg_total_loss: 0.01430
+Epoch 14 average validation loss: 0.02499 -- Median validation metrics: avg_loss: 0.02499, NSE: 0.70503
+Epoch 15 average loss: avg_loss: 0.01392, avg_total_loss: 0.01392
+Epoch 15 average validation loss: 0.02613 -- Median validation metrics: avg_loss: 0.02613, NSE: 0.70189
+Epoch 16 average loss: avg_loss: 0.01341, avg_total_loss: 0.01341
+Epoch 16 average validation loss: 0.02496 -- Median validation metrics: avg_loss: 0.02496, NSE: 0.69173
+Epoch 17 average loss: avg_loss: 0.01315, avg_total_loss: 0.01315
+Epoch 17 average validation loss: 0.02571 -- Median validation metrics: avg_loss: 0.02571, NSE: 0.69679
+Epoch 18 average loss: avg_loss: 0.01288, avg_total_loss: 0.01288
+Epoch 18 average validation loss: 0.02727 -- Median validation metrics: avg_loss: 0.02727, NSE: 0.68971
+Epoch 19 average loss: avg_loss: 0.01265, avg_total_loss: 0.01265
+Epoch 19 average validation loss: 0.02607 -- Median validation metrics: avg_loss: 0.02607, NSE: 0.69209
+Epoch 20 average loss: avg_loss: 0.01232, avg_total_loss: 0.01232
+Epoch 20 average validation loss: 0.02683 -- Median validation metrics: avg_loss: 0.02683, NSE: 0.68953
+Epoch 21 average loss: avg_loss: 0.01081, avg_total_loss: 0.01081
+Epoch 21 average validation loss: 0.02597 -- Median validation metrics: avg_loss: 0.02597, NSE: 0.70327
+Epoch 22 average loss: avg_loss: 0.01031, avg_total_loss: 0.01031
+Epoch 22 average validation loss: 0.02649 -- Median validation metrics: avg_loss: 0.02649, NSE: 0.70156
+Epoch 23 average loss: avg_loss: 0.01012, avg_total_loss: 0.01012
+Epoch 23 average validation loss: 0.02701 -- Median validation metrics: avg_loss: 0.02701, NSE: 0.69859
+Epoch 24 average loss: avg_loss: 0.00987, avg_total_loss: 0.00987
+Epoch 24 average validation loss: 0.02674 -- Median validation metrics: avg_loss: 0.02674, NSE: 0.70085
+Epoch 25 average loss: avg_loss: 0.00974, avg_total_loss: 0.00974
+Epoch 25 average validation loss: 0.02663 -- Median validation metrics: avg_loss: 0.02663, NSE: 0.69771
+Epoch 26 average loss: avg_loss: 0.00969, avg_total_loss: 0.00969
+Epoch 26 average validation loss: 0.02670 -- Median validation metrics: avg_loss: 0.02670, NSE: 0.69831
+Epoch 27 average loss: avg_loss: 0.00957, avg_total_loss: 0.00957
+Epoch 27 average validation loss: 0.02674 -- Median validation metrics: avg_loss: 0.02674, NSE: 0.69746
+Epoch 28 average loss: avg_loss: 0.00933, avg_total_loss: 0.00933
+Epoch 28 average validation loss: 0.02634 -- Median validation metrics: avg_loss: 0.02634, NSE: 0.69651
+Epoch 29 average loss: avg_loss: 0.00930, avg_total_loss: 0.00930
+Epoch 29 average validation loss: 0.02712 -- Median validation metrics: avg_loss: 0.02712, NSE: 0.69686
+Epoch 30 average loss: avg_loss: 0.00915, avg_total_loss: 0.00915
+Epoch 30 average validation loss: 0.02659 -- Median validation metrics: avg_loss: 0.02659, NSE: 0.69586
+  tqdm@logs/33_transformer_recipe_repair/G1_s700-226120.log: 5278/5304
+##ARM G1_s800
+Epoch 1 average loss: avg_loss: 0.04234, avg_total_loss: 0.04234
+Epoch 1 average validation loss: 0.03635 -- Median validation metrics: avg_loss: 0.03635, NSE: 0.52920
+Epoch 2 average loss: avg_loss: 0.02760, avg_total_loss: 0.02760
+Epoch 2 average validation loss: 0.02998 -- Median validation metrics: avg_loss: 0.02998, NSE: 0.63305
+Epoch 3 average loss: avg_loss: 0.02606, avg_total_loss: 0.02606
+Epoch 3 average validation loss: 0.03198 -- Median validation metrics: avg_loss: 0.03198, NSE: 0.65313
+Epoch 4 average loss: avg_loss: 0.02318, avg_total_loss: 0.02318
+Epoch 4 average validation loss: 0.02864 -- Median validation metrics: avg_loss: 0.02864, NSE: 0.64902
+Epoch 5 average loss: avg_loss: 0.02215, avg_total_loss: 0.02215
+Epoch 5 average validation loss: 0.02779 -- Median validation metrics: avg_loss: 0.02779, NSE: 0.66688
+Epoch 6 average loss: avg_loss: 0.02104, avg_total_loss: 0.02104
+Epoch 6 average validation loss: 0.02726 -- Median validation metrics: avg_loss: 0.02726, NSE: 0.67031
+Epoch 7 average loss: avg_loss: 0.02011, avg_total_loss: 0.02011
+Epoch 7 average validation loss: 0.02860 -- Median validation metrics: avg_loss: 0.02860, NSE: 0.66939
+Epoch 8 average loss: avg_loss: 0.01954, avg_total_loss: 0.01954
+Epoch 8 average validation loss: 0.02605 -- Median validation metrics: avg_loss: 0.02605, NSE: 0.67783
+Epoch 9 average loss: avg_loss: 0.01895, avg_total_loss: 0.01895
+Epoch 9 average validation loss: 0.02644 -- Median validation metrics: avg_loss: 0.02644, NSE: 0.68290
+Epoch 10 average loss: avg_loss: 0.01866, avg_total_loss: 0.01866
+Epoch 10 average validation loss: 0.02856 -- Median validation metrics: avg_loss: 0.02856, NSE: 0.67928
+Epoch 11 average loss: avg_loss: 0.01621, avg_total_loss: 0.01621
+Epoch 11 average validation loss: 0.02588 -- Median validation metrics: avg_loss: 0.02588, NSE: 0.70444
+Epoch 12 average loss: avg_loss: 0.01542, avg_total_loss: 0.01542
+Epoch 12 average validation loss: 0.02480 -- Median validation metrics: avg_loss: 0.02480, NSE: 0.69872
+Epoch 13 average loss: avg_loss: 0.01495, avg_total_loss: 0.01495
+Epoch 13 average validation loss: 0.02559 -- Median validation metrics: avg_loss: 0.02559, NSE: 0.70478
+Epoch 14 average loss: avg_loss: 0.01433, avg_total_loss: 0.01433
+Epoch 14 average validation loss: 0.02669 -- Median validation metrics: avg_loss: 0.02669, NSE: 0.69978
+Epoch 15 average loss: avg_loss: 0.01394, avg_total_loss: 0.01394
+Epoch 15 average validation loss: 0.02548 -- Median validation metrics: avg_loss: 0.02548, NSE: 0.69748
+Epoch 16 average loss: avg_loss: 0.01352, avg_total_loss: 0.01352
+Epoch 16 average validation loss: 0.02464 -- Median validation metrics: avg_loss: 0.02464, NSE: 0.70599
+Epoch 17 average loss: avg_loss: 0.01338, avg_total_loss: 0.01338
+Epoch 17 average validation loss: 0.02650 -- Median validation metrics: avg_loss: 0.02650, NSE: 0.70611
+Epoch 18 average loss: avg_loss: 0.01303, avg_total_loss: 0.01303
+Epoch 18 average validation loss: 0.02490 -- Median validation metrics: avg_loss: 0.02490, NSE: 0.70296
+Epoch 19 average loss: avg_loss: 0.01281, avg_total_loss: 0.01281
+Epoch 19 average validation loss: 0.02683 -- Median validation metrics: avg_loss: 0.02683, NSE: 0.69671
+Epoch 20 average loss: avg_loss: 0.01251, avg_total_loss: 0.01251
+Epoch 20 average validation loss: 0.02500 -- Median validation metrics: avg_loss: 0.02500, NSE: 0.70536
+Epoch 21 average loss: avg_loss: 0.01105, avg_total_loss: 0.01105
+Epoch 21 average validation loss: 0.02511 -- Median validation metrics: avg_loss: 0.02511, NSE: 0.70732
+Epoch 22 average loss: avg_loss: 0.01060, avg_total_loss: 0.01060
+Epoch 22 average validation loss: 0.02583 -- Median validation metrics: avg_loss: 0.02583, NSE: 0.70563
+Epoch 23 average loss: avg_loss: 0.01031, avg_total_loss: 0.01031
+Epoch 23 average validation loss: 0.02588 -- Median validation metrics: avg_loss: 0.02588, NSE: 0.69605
+Epoch 24 average loss: avg_loss: 0.01018, avg_total_loss: 0.01018
+Epoch 24 average validation loss: 0.02666 -- Median validation metrics: avg_loss: 0.02666, NSE: 0.70040
+Epoch 25 average loss: avg_loss: 0.00995, avg_total_loss: 0.00995
+Epoch 25 average validation loss: 0.02538 -- Median validation metrics: avg_loss: 0.02538, NSE: 0.70274
+Epoch 26 average loss: avg_loss: 0.00985, avg_total_loss: 0.00985
+Epoch 26 average validation loss: 0.02592 -- Median validation metrics: avg_loss: 0.02592, NSE: 0.69982
+Epoch 27 average loss: avg_loss: 0.00966, avg_total_loss: 0.00966
+Epoch 27 average validation loss: 0.02659 -- Median validation metrics: avg_loss: 0.02659, NSE: 0.70114
+Epoch 28 average loss: avg_loss: 0.00969, avg_total_loss: 0.00969
+Epoch 28 average validation loss: 0.02609 -- Median validation metrics: avg_loss: 0.02609, NSE: 0.69973
+Epoch 29 average loss: avg_loss: 0.00954, avg_total_loss: 0.00954
+Epoch 29 average validation loss: 0.02676 -- Median validation metrics: avg_loss: 0.02676, NSE: 0.69448
+Epoch 30 average loss: avg_loss: 0.00951, avg_total_loss: 0.00951
+Epoch 30 average validation loss: 0.02716 -- Median validation metrics: avg_loss: 0.02716, NSE: 0.69785
+  tqdm@logs/33_transformer_recipe_repair/G1_s800-226120.log: 5278/5304
+##ARM C4
+Epoch 1 average loss: avg_loss: 0.04336, avg_total_loss: 0.04336
+Epoch 1 average validation loss: 0.04050 -- Median validation metrics: avg_loss: 0.04050, NSE: 0.57602
+Epoch 2 average loss: avg_loss: 0.02841, avg_total_loss: 0.02841
+Epoch 2 average validation loss: 0.03522 -- Median validation metrics: avg_loss: 0.03522, NSE: 0.61346
+Epoch 3 average loss: avg_loss: 0.02499, avg_total_loss: 0.02499
+Epoch 3 average validation loss: 0.02936 -- Median validation metrics: avg_loss: 0.02936, NSE: 0.65457
+Epoch 4 average loss: avg_loss: 0.02347, avg_total_loss: 0.02347
+Epoch 4 average validation loss: 0.03077 -- Median validation metrics: avg_loss: 0.03077, NSE: 0.66442
+Epoch 5 average loss: avg_loss: 0.02191, avg_total_loss: 0.02191
+Epoch 5 average validation loss: 0.03036 -- Median validation metrics: avg_loss: 0.03036, NSE: 0.65689
+Epoch 6 average loss: avg_loss: 0.02099, avg_total_loss: 0.02099
+Epoch 6 average validation loss: 0.02580 -- Median validation metrics: avg_loss: 0.02580, NSE: 0.66378
+Epoch 7 average loss: avg_loss: 0.02006, avg_total_loss: 0.02006
+Epoch 7 average validation loss: 0.02720 -- Median validation metrics: avg_loss: 0.02720, NSE: 0.68435
+Epoch 8 average loss: avg_loss: 0.01961, avg_total_loss: 0.01961
+Epoch 8 average validation loss: 0.02540 -- Median validation metrics: avg_loss: 0.02540, NSE: 0.68476
+Epoch 9 average loss: avg_loss: 0.01894, avg_total_loss: 0.01894
+Epoch 9 average validation loss: 0.02680 -- Median validation metrics: avg_loss: 0.02680, NSE: 0.68139
+Epoch 10 average loss: avg_loss: 0.01847, avg_total_loss: 0.01847
+Epoch 10 average validation loss: 0.02845 -- Median validation metrics: avg_loss: 0.02845, NSE: 0.67293
+Epoch 11 average loss: avg_loss: 0.01608, avg_total_loss: 0.01608
+Epoch 11 average validation loss: 0.02525 -- Median validation metrics: avg_loss: 0.02525, NSE: 0.69434
+Epoch 12 average loss: avg_loss: 0.01532, avg_total_loss: 0.01532
+Epoch 12 average validation loss: 0.02630 -- Median validation metrics: avg_loss: 0.02630, NSE: 0.69759
+Epoch 13 average loss: avg_loss: 0.01501, avg_total_loss: 0.01501
+Epoch 13 average validation loss: 0.02558 -- Median validation metrics: avg_loss: 0.02558, NSE: 0.70358
+Epoch 14 average loss: avg_loss: 0.01427, avg_total_loss: 0.01427
+Epoch 14 average validation loss: 0.02675 -- Median validation metrics: avg_loss: 0.02675, NSE: 0.70085
+Epoch 15 average loss: avg_loss: 0.01408, avg_total_loss: 0.01408
+Epoch 15 average validation loss: 0.02494 -- Median validation metrics: avg_loss: 0.02494, NSE: 0.70538
+Epoch 16 average loss: avg_loss: 0.01369, avg_total_loss: 0.01369
+Epoch 16 average validation loss: 0.02576 -- Median validation metrics: avg_loss: 0.02576, NSE: 0.70239
+Epoch 17 average loss: avg_loss: 0.01339, avg_total_loss: 0.01339
+Epoch 17 average validation loss: 0.02707 -- Median validation metrics: avg_loss: 0.02707, NSE: 0.70001
+Epoch 18 average loss: avg_loss: 0.01307, avg_total_loss: 0.01307
+Epoch 18 average validation loss: 0.02656 -- Median validation metrics: avg_loss: 0.02656, NSE: 0.69909
+Epoch 19 average loss: avg_loss: 0.01286, avg_total_loss: 0.01286
+Epoch 19 average validation loss: 0.02822 -- Median validation metrics: avg_loss: 0.02822, NSE: 0.69565
+Epoch 20 average loss: avg_loss: 0.01260, avg_total_loss: 0.01260
+Epoch 20 average validation loss: 0.02721 -- Median validation metrics: avg_loss: 0.02721, NSE: 0.70436
+Epoch 21 average loss: avg_loss: 0.01103, avg_total_loss: 0.01103
+Epoch 21 average validation loss: 0.02585 -- Median validation metrics: avg_loss: 0.02585, NSE: 0.70936
+Epoch 22 average loss: avg_loss: 0.01065, avg_total_loss: 0.01065
+Epoch 22 average validation loss: 0.02583 -- Median validation metrics: avg_loss: 0.02583, NSE: 0.70354
+Epoch 23 average loss: avg_loss: 0.01047, avg_total_loss: 0.01047
+Epoch 23 average validation loss: 0.02646 -- Median validation metrics: avg_loss: 0.02646, NSE: 0.70882
+Epoch 24 average loss: avg_loss: 0.01027, avg_total_loss: 0.01027
+Epoch 24 average validation loss: 0.02652 -- Median validation metrics: avg_loss: 0.02652, NSE: 0.70898
+Epoch 25 average loss: avg_loss: 0.01010, avg_total_loss: 0.01010
+Epoch 25 average validation loss: 0.02697 -- Median validation metrics: avg_loss: 0.02697, NSE: 0.70386
+Epoch 26 average loss: avg_loss: 0.00999, avg_total_loss: 0.00999
+Epoch 26 average validation loss: 0.02690 -- Median validation metrics: avg_loss: 0.02690, NSE: 0.70650
+Epoch 27 average loss: avg_loss: 0.00989, avg_total_loss: 0.00989
+Epoch 27 average validation loss: 0.02698 -- Median validation metrics: avg_loss: 0.02698, NSE: 0.70697
+Epoch 28 average loss: avg_loss: 0.00977, avg_total_loss: 0.00977
+Epoch 28 average validation loss: 0.02666 -- Median validation metrics: avg_loss: 0.02666, NSE: 0.70484
+Epoch 29 average loss: avg_loss: 0.00970, avg_total_loss: 0.00970
+Epoch 29 average validation loss: 0.02713 -- Median validation metrics: avg_loss: 0.02713, NSE: 0.70486
+Epoch 30 average loss: avg_loss: 0.00964, avg_total_loss: 0.00964
+Epoch 30 average validation loss: 0.02684 -- Median validation metrics: avg_loss: 0.02684, NSE: 0.70602
+  tqdm@logs/33_transformer_recipe_repair/C4-224312.log: 5279/5304
+##ARM C4_s200
+Epoch 1 average loss: avg_loss: 0.04171, avg_total_loss: 0.04171
+Epoch 1 average validation loss: 0.03665 -- Median validation metrics: avg_loss: 0.03665, NSE: 0.59273
+Epoch 2 average loss: avg_loss: 0.02752, avg_total_loss: 0.02752
+Epoch 2 average validation loss: 0.03104 -- Median validation metrics: avg_loss: 0.03104, NSE: 0.62231
+Epoch 3 average loss: avg_loss: 0.02452, avg_total_loss: 0.02452
+Epoch 3 average validation loss: 0.03046 -- Median validation metrics: avg_loss: 0.03046, NSE: 0.62281
+Epoch 4 average loss: avg_loss: 0.02336, avg_total_loss: 0.02336
+Epoch 4 average validation loss: 0.02824 -- Median validation metrics: avg_loss: 0.02824, NSE: 0.66962
+Epoch 5 average loss: avg_loss: 0.02220, avg_total_loss: 0.02220
+Epoch 5 average validation loss: 0.02947 -- Median validation metrics: avg_loss: 0.02947, NSE: 0.65693
+Epoch 6 average loss: avg_loss: 0.02094, avg_total_loss: 0.02094
+Epoch 6 average validation loss: 0.02699 -- Median validation metrics: avg_loss: 0.02699, NSE: 0.66495
+Epoch 7 average loss: avg_loss: 0.02663, avg_total_loss: 0.02663
+Epoch 7 average validation loss: 0.02856 -- Median validation metrics: avg_loss: 0.02856, NSE: 0.67518
+Epoch 8 average loss: avg_loss: 0.01932, avg_total_loss: 0.01932
+Epoch 8 average validation loss: 0.02895 -- Median validation metrics: avg_loss: 0.02895, NSE: 0.67233
+Epoch 9 average loss: avg_loss: 0.01893, avg_total_loss: 0.01893
+Epoch 9 average validation loss: 0.02904 -- Median validation metrics: avg_loss: 0.02904, NSE: 0.68712
+Epoch 10 average loss: avg_loss: 0.01838, avg_total_loss: 0.01838
+Epoch 10 average validation loss: 0.02565 -- Median validation metrics: avg_loss: 0.02565, NSE: 0.68023
+Epoch 11 average loss: avg_loss: 0.01628, avg_total_loss: 0.01628
+Epoch 11 average validation loss: 0.02775 -- Median validation metrics: avg_loss: 0.02775, NSE: 0.69162
+Epoch 12 average loss: avg_loss: 0.01537, avg_total_loss: 0.01537
+Epoch 12 average validation loss: 0.02691 -- Median validation metrics: avg_loss: 0.02691, NSE: 0.70765
+Epoch 13 average loss: avg_loss: 0.01502, avg_total_loss: 0.01502
+Epoch 13 average validation loss: 0.02614 -- Median validation metrics: avg_loss: 0.02614, NSE: 0.70095
+Epoch 14 average loss: avg_loss: 0.01455, avg_total_loss: 0.01455
+Epoch 14 average validation loss: 0.02545 -- Median validation metrics: avg_loss: 0.02545, NSE: 0.70068
+Epoch 15 average loss: avg_loss: 0.01403, avg_total_loss: 0.01403
+Epoch 15 average validation loss: 0.02520 -- Median validation metrics: avg_loss: 0.02520, NSE: 0.70021
+Epoch 16 average loss: avg_loss: 0.01387, avg_total_loss: 0.01387
+Epoch 16 average validation loss: 0.02581 -- Median validation metrics: avg_loss: 0.02581, NSE: 0.70600
+Epoch 17 average loss: avg_loss: 0.01437, avg_total_loss: 0.01437
+Epoch 17 average validation loss: 0.02731 -- Median validation metrics: avg_loss: 0.02731, NSE: 0.70886
+Epoch 18 average loss: avg_loss: 0.01311, avg_total_loss: 0.01311
+Epoch 18 average validation loss: 0.02551 -- Median validation metrics: avg_loss: 0.02551, NSE: 0.70659
+Epoch 19 average loss: avg_loss: 0.01287, avg_total_loss: 0.01287
+Epoch 19 average validation loss: 0.02473 -- Median validation metrics: avg_loss: 0.02473, NSE: 0.70498
+Epoch 20 average loss: avg_loss: 0.01266, avg_total_loss: 0.01266
+Epoch 20 average validation loss: 0.02658 -- Median validation metrics: avg_loss: 0.02658, NSE: 0.70509
+Epoch 21 average loss: avg_loss: 0.01115, avg_total_loss: 0.01115
+Epoch 21 average validation loss: 0.02613 -- Median validation metrics: avg_loss: 0.02613, NSE: 0.71385
+Epoch 22 average loss: avg_loss: 0.01078, avg_total_loss: 0.01078
+Epoch 22 average validation loss: 0.02536 -- Median validation metrics: avg_loss: 0.02536, NSE: 0.71421
+Epoch 23 average loss: avg_loss: 0.01042, avg_total_loss: 0.01042
+Epoch 23 average validation loss: 0.02621 -- Median validation metrics: avg_loss: 0.02621, NSE: 0.71201
+Epoch 24 average loss: avg_loss: 0.01030, avg_total_loss: 0.01030
+Epoch 24 average validation loss: 0.02620 -- Median validation metrics: avg_loss: 0.02620, NSE: 0.70939
+Epoch 25 average loss: avg_loss: 0.01018, avg_total_loss: 0.01018
+Epoch 25 average validation loss: 0.02654 -- Median validation metrics: avg_loss: 0.02654, NSE: 0.71545
+Epoch 26 average loss: avg_loss: 0.01004, avg_total_loss: 0.01004
+Epoch 26 average validation loss: 0.02778 -- Median validation metrics: avg_loss: 0.02778, NSE: 0.71250
+Epoch 27 average loss: avg_loss: 0.00991, avg_total_loss: 0.00991
+Epoch 27 average validation loss: 0.02696 -- Median validation metrics: avg_loss: 0.02696, NSE: 0.71419
+Epoch 28 average loss: avg_loss: 0.00990, avg_total_loss: 0.00990
+Epoch 28 average validation loss: 0.02668 -- Median validation metrics: avg_loss: 0.02668, NSE: 0.71085
+Epoch 29 average loss: avg_loss: 0.00971, avg_total_loss: 0.00971
+Epoch 29 average validation loss: 0.02716 -- Median validation metrics: avg_loss: 0.02716, NSE: 0.71076
+Epoch 30 average loss: avg_loss: 0.00964, avg_total_loss: 0.00964
+Epoch 30 average validation loss: 0.02695 -- Median validation metrics: avg_loss: 0.02695, NSE: 0.70902
+  tqdm@logs/33_transformer_recipe_repair/C4_s200-225187.log: 5278/5304
+##ARM C4_s300
+Epoch 1 average loss: avg_loss: 0.04313, avg_total_loss: 0.04313
+Epoch 1 average validation loss: 0.03883 -- Median validation metrics: avg_loss: 0.03883, NSE: 0.57173
+Epoch 2 average loss: avg_loss: 0.02783, avg_total_loss: 0.02783
+Epoch 2 average validation loss: 0.02992 -- Median validation metrics: avg_loss: 0.02992, NSE: 0.64702
+Epoch 3 average loss: avg_loss: 0.02490, avg_total_loss: 0.02490
+Epoch 3 average validation loss: 0.02825 -- Median validation metrics: avg_loss: 0.02825, NSE: 0.65168
+Epoch 4 average loss: avg_loss: 0.02348, avg_total_loss: 0.02348
+Epoch 4 average validation loss: 0.02685 -- Median validation metrics: avg_loss: 0.02685, NSE: 0.65415
+Epoch 5 average loss: avg_loss: 0.02265, avg_total_loss: 0.02265
+Epoch 5 average validation loss: 0.02639 -- Median validation metrics: avg_loss: 0.02639, NSE: 0.66687
+Epoch 6 average loss: avg_loss: 0.02152, avg_total_loss: 0.02152
+Epoch 6 average validation loss: 0.02834 -- Median validation metrics: avg_loss: 0.02834, NSE: 0.66462
+Epoch 7 average loss: avg_loss: 0.02082, avg_total_loss: 0.02082
+Epoch 7 average validation loss: 0.02549 -- Median validation metrics: avg_loss: 0.02549, NSE: 0.66828
+Epoch 8 average loss: avg_loss: 0.02011, avg_total_loss: 0.02011
+Epoch 8 average validation loss: 0.02831 -- Median validation metrics: avg_loss: 0.02831, NSE: 0.67533
+Epoch 9 average loss: avg_loss: 0.01926, avg_total_loss: 0.01926
+Epoch 9 average validation loss: 0.02632 -- Median validation metrics: avg_loss: 0.02632, NSE: 0.68471
+Epoch 10 average loss: avg_loss: 0.01882, avg_total_loss: 0.01882
+Epoch 10 average validation loss: 0.02663 -- Median validation metrics: avg_loss: 0.02663, NSE: 0.67869
+Epoch 11 average loss: avg_loss: 0.01674, avg_total_loss: 0.01674
+Epoch 11 average validation loss: 0.02643 -- Median validation metrics: avg_loss: 0.02643, NSE: 0.69696
+Epoch 12 average loss: avg_loss: 0.01590, avg_total_loss: 0.01590
+Epoch 12 average validation loss: 0.02586 -- Median validation metrics: avg_loss: 0.02586, NSE: 0.69273
+Epoch 13 average loss: avg_loss: 0.01549, avg_total_loss: 0.01549
+Epoch 13 average validation loss: 0.02491 -- Median validation metrics: avg_loss: 0.02491, NSE: 0.70603
+Epoch 14 average loss: avg_loss: 0.01502, avg_total_loss: 0.01502
+Epoch 14 average validation loss: 0.02551 -- Median validation metrics: avg_loss: 0.02551, NSE: 0.71453
+Epoch 15 average loss: avg_loss: 0.01463, avg_total_loss: 0.01463
+Epoch 15 average validation loss: 0.02525 -- Median validation metrics: avg_loss: 0.02525, NSE: 0.70961
+Epoch 16 average loss: avg_loss: 0.01415, avg_total_loss: 0.01415
+Epoch 16 average validation loss: 0.02421 -- Median validation metrics: avg_loss: 0.02421, NSE: 0.71173
+Epoch 17 average loss: avg_loss: 0.01405, avg_total_loss: 0.01405
+Epoch 17 average validation loss: 0.02622 -- Median validation metrics: avg_loss: 0.02622, NSE: 0.71282
+Epoch 18 average loss: avg_loss: 0.01366, avg_total_loss: 0.01366
+Epoch 18 average validation loss: 0.02373 -- Median validation metrics: avg_loss: 0.02373, NSE: 0.71003
+Epoch 19 average loss: avg_loss: 0.01337, avg_total_loss: 0.01337
+Epoch 19 average validation loss: 0.02400 -- Median validation metrics: avg_loss: 0.02400, NSE: 0.70898
+Epoch 20 average loss: avg_loss: 0.01295, avg_total_loss: 0.01295
+Epoch 20 average validation loss: 0.02427 -- Median validation metrics: avg_loss: 0.02427, NSE: 0.70823
+Epoch 21 average loss: avg_loss: 0.01161, avg_total_loss: 0.01161
+Epoch 21 average validation loss: 0.02451 -- Median validation metrics: avg_loss: 0.02451, NSE: 0.72175
+Epoch 22 average loss: avg_loss: 0.01102, avg_total_loss: 0.01102
+Epoch 22 average validation loss: 0.02416 -- Median validation metrics: avg_loss: 0.02416, NSE: 0.72260
+Epoch 23 average loss: avg_loss: 0.01085, avg_total_loss: 0.01085
+Epoch 23 average validation loss: 0.02420 -- Median validation metrics: avg_loss: 0.02420, NSE: 0.71934
+Epoch 24 average loss: avg_loss: 0.01065, avg_total_loss: 0.01065
+Epoch 24 average validation loss: 0.02395 -- Median validation metrics: avg_loss: 0.02395, NSE: 0.72467
+Epoch 25 average loss: avg_loss: 0.01052, avg_total_loss: 0.01052
+Epoch 25 average validation loss: 0.02438 -- Median validation metrics: avg_loss: 0.02438, NSE: 0.72057
+Epoch 26 average loss: avg_loss: 0.01041, avg_total_loss: 0.01041
+Epoch 26 average validation loss: 0.02458 -- Median validation metrics: avg_loss: 0.02458, NSE: 0.71996
+Epoch 27 average loss: avg_loss: 0.01018, avg_total_loss: 0.01018
+Epoch 27 average validation loss: 0.02483 -- Median validation metrics: avg_loss: 0.02483, NSE: 0.72717
+Epoch 28 average loss: avg_loss: 0.01010, avg_total_loss: 0.01010
+Epoch 28 average validation loss: 0.02416 -- Median validation metrics: avg_loss: 0.02416, NSE: 0.72205
+Epoch 29 average loss: avg_loss: 0.01001, avg_total_loss: 0.01001
+Epoch 29 average validation loss: 0.02516 -- Median validation metrics: avg_loss: 0.02516, NSE: 0.71983
+Epoch 30 average loss: avg_loss: 0.00984, avg_total_loss: 0.00984
+Epoch 30 average validation loss: 0.02435 -- Median validation metrics: avg_loss: 0.02435, NSE: 0.71918
+  tqdm@logs/33_transformer_recipe_repair/C4_s300-225199.log: 5279/5304
+##ARM C4_s400
+Epoch 1 average loss: avg_loss: 0.04208, avg_total_loss: 0.04208
+Epoch 1 average validation loss: 0.03326 -- Median validation metrics: avg_loss: 0.03326, NSE: 0.60560
+Epoch 2 average loss: avg_loss: 0.02864, avg_total_loss: 0.02864
+Epoch 2 average validation loss: 0.03103 -- Median validation metrics: avg_loss: 0.03103, NSE: 0.63139
+Epoch 3 average loss: avg_loss: 0.02505, avg_total_loss: 0.02505
+Epoch 3 average validation loss: 0.02734 -- Median validation metrics: avg_loss: 0.02734, NSE: 0.64459
+Epoch 4 average loss: avg_loss: 0.02340, avg_total_loss: 0.02340
+Epoch 4 average validation loss: 0.02740 -- Median validation metrics: avg_loss: 0.02740, NSE: 0.65853
+Epoch 5 average loss: avg_loss: 0.02197, avg_total_loss: 0.02197
+Epoch 5 average validation loss: 0.02717 -- Median validation metrics: avg_loss: 0.02717, NSE: 0.67988
+Epoch 6 average loss: avg_loss: 0.02113, avg_total_loss: 0.02113
+Epoch 6 average validation loss: 0.02660 -- Median validation metrics: avg_loss: 0.02660, NSE: 0.68936
+Epoch 7 average loss: avg_loss: 0.02045, avg_total_loss: 0.02045
+Epoch 7 average validation loss: 0.02723 -- Median validation metrics: avg_loss: 0.02723, NSE: 0.68576
+Epoch 8 average loss: avg_loss: 0.01967, avg_total_loss: 0.01967
+Epoch 8 average validation loss: 0.02488 -- Median validation metrics: avg_loss: 0.02488, NSE: 0.69597
+Epoch 9 average loss: avg_loss: 0.01907, avg_total_loss: 0.01907
+Epoch 9 average validation loss: 0.02577 -- Median validation metrics: avg_loss: 0.02577, NSE: 0.68880
+Epoch 10 average loss: avg_loss: 0.01853, avg_total_loss: 0.01853
+Epoch 10 average validation loss: 0.02537 -- Median validation metrics: avg_loss: 0.02537, NSE: 0.68960
+Epoch 11 average loss: avg_loss: 0.01629, avg_total_loss: 0.01629
+Epoch 11 average validation loss: 0.02454 -- Median validation metrics: avg_loss: 0.02454, NSE: 0.71575
+Epoch 12 average loss: avg_loss: 0.01558, avg_total_loss: 0.01558
+Epoch 12 average validation loss: 0.02527 -- Median validation metrics: avg_loss: 0.02527, NSE: 0.71290
+Epoch 13 average loss: avg_loss: 0.01512, avg_total_loss: 0.01512
+Epoch 13 average validation loss: 0.02520 -- Median validation metrics: avg_loss: 0.02520, NSE: 0.71192
+Epoch 14 average loss: avg_loss: 0.01460, avg_total_loss: 0.01460
+Epoch 14 average validation loss: 0.02585 -- Median validation metrics: avg_loss: 0.02585, NSE: 0.70418
+Epoch 15 average loss: avg_loss: 0.01424, avg_total_loss: 0.01424
+Epoch 15 average validation loss: 0.02505 -- Median validation metrics: avg_loss: 0.02505, NSE: 0.71696
+Epoch 16 average loss: avg_loss: 0.01396, avg_total_loss: 0.01396
+Epoch 16 average validation loss: 0.02759 -- Median validation metrics: avg_loss: 0.02759, NSE: 0.71617
+Epoch 17 average loss: avg_loss: 0.01369, avg_total_loss: 0.01369
+Epoch 17 average validation loss: 0.02394 -- Median validation metrics: avg_loss: 0.02394, NSE: 0.71815
+Epoch 18 average loss: avg_loss: 0.01318, avg_total_loss: 0.01318
+Epoch 18 average validation loss: 0.02748 -- Median validation metrics: avg_loss: 0.02748, NSE: 0.70932
+Epoch 19 average loss: avg_loss: 0.01300, avg_total_loss: 0.01300
+Epoch 19 average validation loss: 0.02535 -- Median validation metrics: avg_loss: 0.02535, NSE: 0.70646
+Epoch 20 average loss: avg_loss: 0.01262, avg_total_loss: 0.01262
+Epoch 20 average validation loss: 0.02648 -- Median validation metrics: avg_loss: 0.02648, NSE: 0.71386
+Epoch 21 average loss: avg_loss: 0.01128, avg_total_loss: 0.01128
+Epoch 21 average validation loss: 0.02545 -- Median validation metrics: avg_loss: 0.02545, NSE: 0.72064
+Epoch 22 average loss: avg_loss: 0.01074, avg_total_loss: 0.01074
+Epoch 22 average validation loss: 0.02525 -- Median validation metrics: avg_loss: 0.02525, NSE: 0.71620
+Epoch 23 average loss: avg_loss: 0.01057, avg_total_loss: 0.01057
+Epoch 23 average validation loss: 0.02608 -- Median validation metrics: avg_loss: 0.02608, NSE: 0.72001
+Epoch 24 average loss: avg_loss: 0.01032, avg_total_loss: 0.01032
+Epoch 24 average validation loss: 0.02569 -- Median validation metrics: avg_loss: 0.02569, NSE: 0.71601
+Epoch 25 average loss: avg_loss: 0.01030, avg_total_loss: 0.01030
+Epoch 25 average validation loss: 0.02667 -- Median validation metrics: avg_loss: 0.02667, NSE: 0.71688
+Epoch 26 average loss: avg_loss: 0.01008, avg_total_loss: 0.01008
+Epoch 26 average validation loss: 0.02667 -- Median validation metrics: avg_loss: 0.02667, NSE: 0.71670
+Epoch 27 average loss: avg_loss: 0.01003, avg_total_loss: 0.01003
+Epoch 27 average validation loss: 0.02555 -- Median validation metrics: avg_loss: 0.02555, NSE: 0.72005
+Epoch 28 average loss: avg_loss: 0.00984, avg_total_loss: 0.00984
+Epoch 28 average validation loss: 0.02576 -- Median validation metrics: avg_loss: 0.02576, NSE: 0.71728
+Epoch 29 average loss: avg_loss: 0.00980, avg_total_loss: 0.00980
+Epoch 29 average validation loss: 0.02467 -- Median validation metrics: avg_loss: 0.02467, NSE: 0.71591
+Epoch 30 average loss: avg_loss: 0.00973, avg_total_loss: 0.00973
+Epoch 30 average validation loss: 0.02512 -- Median validation metrics: avg_loss: 0.02512, NSE: 0.71410
+  tqdm@logs/33_transformer_recipe_repair/C4_s400-225200.log: 5278/5304
+##ARM C4_s500
+Epoch 1 average loss: avg_loss: 0.04296, avg_total_loss: 0.04296
+Epoch 1 average validation loss: 0.03583 -- Median validation metrics: avg_loss: 0.03583, NSE: 0.58834
+Epoch 2 average loss: avg_loss: 0.02812, avg_total_loss: 0.02812
+Epoch 2 average validation loss: 0.03286 -- Median validation metrics: avg_loss: 0.03286, NSE: 0.60968
+Epoch 3 average loss: avg_loss: 0.02547, avg_total_loss: 0.02547
+Epoch 3 average validation loss: 0.02980 -- Median validation metrics: avg_loss: 0.02980, NSE: 0.63712
+Epoch 4 average loss: avg_loss: 0.02348, avg_total_loss: 0.02348
+Epoch 4 average validation loss: 0.02813 -- Median validation metrics: avg_loss: 0.02813, NSE: 0.64374
+Epoch 5 average loss: avg_loss: 0.02222, avg_total_loss: 0.02222
+Epoch 5 average validation loss: 0.02925 -- Median validation metrics: avg_loss: 0.02925, NSE: 0.66907
+Epoch 6 average loss: avg_loss: 0.02119, avg_total_loss: 0.02119
+Epoch 6 average validation loss: 0.02787 -- Median validation metrics: avg_loss: 0.02787, NSE: 0.67574
+Epoch 7 average loss: avg_loss: 0.02044, avg_total_loss: 0.02044
+Epoch 7 average validation loss: 0.02684 -- Median validation metrics: avg_loss: 0.02684, NSE: 0.66178
+Epoch 8 average loss: avg_loss: 0.02028, avg_total_loss: 0.02028
+Epoch 8 average validation loss: 0.02484 -- Median validation metrics: avg_loss: 0.02484, NSE: 0.69124
+Epoch 9 average loss: avg_loss: 0.01924, avg_total_loss: 0.01924
+Epoch 9 average validation loss: 0.02602 -- Median validation metrics: avg_loss: 0.02602, NSE: 0.69199
+Epoch 10 average loss: avg_loss: 0.01866, avg_total_loss: 0.01866
+Epoch 10 average validation loss: 0.02560 -- Median validation metrics: avg_loss: 0.02560, NSE: 0.68815
+Epoch 11 average loss: avg_loss: 0.01633, avg_total_loss: 0.01633
+Epoch 11 average validation loss: 0.02481 -- Median validation metrics: avg_loss: 0.02481, NSE: 0.70376
+Epoch 12 average loss: avg_loss: 0.01571, avg_total_loss: 0.01571
+Epoch 12 average validation loss: 0.02617 -- Median validation metrics: avg_loss: 0.02617, NSE: 0.69962
+Epoch 13 average loss: avg_loss: 0.01524, avg_total_loss: 0.01524
+Epoch 13 average validation loss: 0.02520 -- Median validation metrics: avg_loss: 0.02520, NSE: 0.71155
+Epoch 14 average loss: avg_loss: 0.01467, avg_total_loss: 0.01467
+Epoch 14 average validation loss: 0.02688 -- Median validation metrics: avg_loss: 0.02688, NSE: 0.69497
+Epoch 15 average loss: avg_loss: 0.01441, avg_total_loss: 0.01441
+Epoch 15 average validation loss: 0.02323 -- Median validation metrics: avg_loss: 0.02323, NSE: 0.71174
+Epoch 16 average loss: avg_loss: 0.01399, avg_total_loss: 0.01399
+Epoch 16 average validation loss: 0.02582 -- Median validation metrics: avg_loss: 0.02582, NSE: 0.70639
+Epoch 17 average loss: avg_loss: 0.01374, avg_total_loss: 0.01374
+Epoch 17 average validation loss: 0.02643 -- Median validation metrics: avg_loss: 0.02643, NSE: 0.70533
+Epoch 18 average loss: avg_loss: 0.01333, avg_total_loss: 0.01333
+Epoch 18 average validation loss: 0.02562 -- Median validation metrics: avg_loss: 0.02562, NSE: 0.71170
+Epoch 19 average loss: avg_loss: 0.01320, avg_total_loss: 0.01320
+Epoch 19 average validation loss: 0.02472 -- Median validation metrics: avg_loss: 0.02472, NSE: 0.70646
+Epoch 20 average loss: avg_loss: 0.01296, avg_total_loss: 0.01296
+Epoch 20 average validation loss: 0.02546 -- Median validation metrics: avg_loss: 0.02546, NSE: 0.70679
+Epoch 21 average loss: avg_loss: 0.01148, avg_total_loss: 0.01148
+Epoch 21 average validation loss: 0.02556 -- Median validation metrics: avg_loss: 0.02556, NSE: 0.71320
+Epoch 22 average loss: avg_loss: 0.01089, avg_total_loss: 0.01089
+Epoch 22 average validation loss: 0.02597 -- Median validation metrics: avg_loss: 0.02597, NSE: 0.71154
+Epoch 23 average loss: avg_loss: 0.01066, avg_total_loss: 0.01066
+Epoch 23 average validation loss: 0.02567 -- Median validation metrics: avg_loss: 0.02567, NSE: 0.71190
+Epoch 24 average loss: avg_loss: 0.01046, avg_total_loss: 0.01046
+Epoch 24 average validation loss: 0.02525 -- Median validation metrics: avg_loss: 0.02525, NSE: 0.71611
+Epoch 25 average loss: avg_loss: 0.01044, avg_total_loss: 0.01044
+Epoch 25 average validation loss: 0.02599 -- Median validation metrics: avg_loss: 0.02599, NSE: 0.70892
+Epoch 26 average loss: avg_loss: 0.01021, avg_total_loss: 0.01021
+Epoch 26 average validation loss: 0.02663 -- Median validation metrics: avg_loss: 0.02663, NSE: 0.71333
+Epoch 27 average loss: avg_loss: 0.01008, avg_total_loss: 0.01008
+Epoch 27 average validation loss: 0.02579 -- Median validation metrics: avg_loss: 0.02579, NSE: 0.71265
+Epoch 28 average loss: avg_loss: 0.01001, avg_total_loss: 0.01001
+Epoch 28 average validation loss: 0.02605 -- Median validation metrics: avg_loss: 0.02605, NSE: 0.71363
+Epoch 29 average loss: avg_loss: 0.00988, avg_total_loss: 0.00988
+Epoch 29 average validation loss: 0.02597 -- Median validation metrics: avg_loss: 0.02597, NSE: 0.71113
+Epoch 30 average loss: avg_loss: 0.00976, avg_total_loss: 0.00976
+Epoch 30 average validation loss: 0.02580 -- Median validation metrics: avg_loss: 0.02580, NSE: 0.71485
+  tqdm@logs/33_transformer_recipe_repair/C4_s500-225190.log: 5278/5304
+##ARM C4_s600
+Epoch 1 average loss: avg_loss: 0.04139, avg_total_loss: 0.04139
+Epoch 1 average validation loss: 0.03672 -- Median validation metrics: avg_loss: 0.03672, NSE: 0.56536
+Epoch 2 average loss: avg_loss: 0.02748, avg_total_loss: 0.02748
+Epoch 2 average validation loss: 0.03175 -- Median validation metrics: avg_loss: 0.03175, NSE: 0.63082
+Epoch 3 average loss: avg_loss: 0.02485, avg_total_loss: 0.02485
+Epoch 3 average validation loss: 0.03112 -- Median validation metrics: avg_loss: 0.03112, NSE: 0.64510
+Epoch 4 average loss: avg_loss: 0.02320, avg_total_loss: 0.02320
+Epoch 4 average validation loss: 0.02774 -- Median validation metrics: avg_loss: 0.02774, NSE: 0.67102
+Epoch 5 average loss: avg_loss: 0.02208, avg_total_loss: 0.02208
+Epoch 5 average validation loss: 0.02739 -- Median validation metrics: avg_loss: 0.02739, NSE: 0.67433
+Epoch 6 average loss: avg_loss: 0.02113, avg_total_loss: 0.02113
+Epoch 6 average validation loss: 0.03041 -- Median validation metrics: avg_loss: 0.03041, NSE: 0.66892
+Epoch 7 average loss: avg_loss: 0.02023, avg_total_loss: 0.02023
+Epoch 7 average validation loss: 0.02652 -- Median validation metrics: avg_loss: 0.02652, NSE: 0.68533
+Epoch 8 average loss: avg_loss: 0.01952, avg_total_loss: 0.01952
+Epoch 8 average validation loss: 0.02867 -- Median validation metrics: avg_loss: 0.02867, NSE: 0.67442
+Epoch 9 average loss: avg_loss: 0.01903, avg_total_loss: 0.01903
+Epoch 9 average validation loss: 0.02618 -- Median validation metrics: avg_loss: 0.02618, NSE: 0.69157
+Epoch 10 average loss: avg_loss: 0.01843, avg_total_loss: 0.01843
+Epoch 10 average validation loss: 0.02519 -- Median validation metrics: avg_loss: 0.02519, NSE: 0.70253
+Epoch 11 average loss: avg_loss: 0.01613, avg_total_loss: 0.01613
+Epoch 11 average validation loss: 0.02570 -- Median validation metrics: avg_loss: 0.02570, NSE: 0.70557
+Epoch 12 average loss: avg_loss: 0.01539, avg_total_loss: 0.01539
+Epoch 12 average validation loss: 0.02527 -- Median validation metrics: avg_loss: 0.02527, NSE: 0.71219
+Epoch 13 average loss: avg_loss: 0.01498, avg_total_loss: 0.01498
+Epoch 13 average validation loss: 0.02518 -- Median validation metrics: avg_loss: 0.02518, NSE: 0.70698
+Epoch 14 average loss: avg_loss: 0.01455, avg_total_loss: 0.01455
+Epoch 14 average validation loss: 0.02494 -- Median validation metrics: avg_loss: 0.02494, NSE: 0.70614
+Epoch 15 average loss: avg_loss: 0.01421, avg_total_loss: 0.01421
+Epoch 15 average validation loss: 0.02449 -- Median validation metrics: avg_loss: 0.02449, NSE: 0.71214
+Epoch 16 average loss: avg_loss: 0.01371, avg_total_loss: 0.01371
+Epoch 16 average validation loss: 0.02959 -- Median validation metrics: avg_loss: 0.02959, NSE: 0.71239
+Epoch 17 average loss: avg_loss: 0.01359, avg_total_loss: 0.01359
+Epoch 17 average validation loss: 0.02544 -- Median validation metrics: avg_loss: 0.02544, NSE: 0.70773
+Epoch 18 average loss: avg_loss: 0.01330, avg_total_loss: 0.01330
+Epoch 18 average validation loss: 0.02513 -- Median validation metrics: avg_loss: 0.02513, NSE: 0.70524
+Epoch 19 average loss: avg_loss: 0.01315, avg_total_loss: 0.01315
+Epoch 19 average validation loss: 0.02622 -- Median validation metrics: avg_loss: 0.02622, NSE: 0.71142
+Epoch 20 average loss: avg_loss: 0.01268, avg_total_loss: 0.01268
+Epoch 20 average validation loss: 0.02844 -- Median validation metrics: avg_loss: 0.02844, NSE: 0.71091
+Epoch 21 average loss: avg_loss: 0.01119, avg_total_loss: 0.01119
+Epoch 21 average validation loss: 0.02591 -- Median validation metrics: avg_loss: 0.02591, NSE: 0.71741
+Epoch 22 average loss: avg_loss: 0.01074, avg_total_loss: 0.01074
+Epoch 22 average validation loss: 0.02495 -- Median validation metrics: avg_loss: 0.02495, NSE: 0.71569
+Epoch 23 average loss: avg_loss: 0.01053, avg_total_loss: 0.01053
+Epoch 23 average validation loss: 0.02635 -- Median validation metrics: avg_loss: 0.02635, NSE: 0.71613
+Epoch 24 average loss: avg_loss: 0.01038, avg_total_loss: 0.01038
+Epoch 24 average validation loss: 0.02593 -- Median validation metrics: avg_loss: 0.02593, NSE: 0.71736
+Epoch 25 average loss: avg_loss: 0.01020, avg_total_loss: 0.01020
+Epoch 25 average validation loss: 0.02590 -- Median validation metrics: avg_loss: 0.02590, NSE: 0.71556
+Epoch 26 average loss: avg_loss: 0.01002, avg_total_loss: 0.01002
+Epoch 26 average validation loss: 0.02601 -- Median validation metrics: avg_loss: 0.02601, NSE: 0.71257
+Epoch 27 average loss: avg_loss: 0.00992, avg_total_loss: 0.00992
+Epoch 27 average validation loss: 0.02531 -- Median validation metrics: avg_loss: 0.02531, NSE: 0.71875
+Epoch 28 average loss: avg_loss: 0.00989, avg_total_loss: 0.00989
+Epoch 28 average validation loss: 0.02568 -- Median validation metrics: avg_loss: 0.02568, NSE: 0.71223
+Epoch 29 average loss: avg_loss: 0.00972, avg_total_loss: 0.00972
+Epoch 29 average validation loss: 0.02636 -- Median validation metrics: avg_loss: 0.02636, NSE: 0.71139
+Epoch 30 average loss: avg_loss: 0.00954, avg_total_loss: 0.00954
+Epoch 30 average validation loss: 0.02617 -- Median validation metrics: avg_loss: 0.02617, NSE: 0.71203
+  tqdm@logs/33_transformer_recipe_repair/C4_s600-225191.log: 5279/5304
+##ARM C4_s700
+Epoch 1 average loss: avg_loss: 0.04442, avg_total_loss: 0.04442
+Epoch 1 average validation loss: 0.03824 -- Median validation metrics: avg_loss: 0.03824, NSE: 0.56024
+Epoch 2 average loss: avg_loss: 0.02805, avg_total_loss: 0.02805
+Epoch 2 average validation loss: 0.03046 -- Median validation metrics: avg_loss: 0.03046, NSE: 0.63823
+Epoch 3 average loss: avg_loss: 0.02509, avg_total_loss: 0.02509
+Epoch 3 average validation loss: 0.02996 -- Median validation metrics: avg_loss: 0.02996, NSE: 0.63574
+Epoch 4 average loss: avg_loss: 0.02321, avg_total_loss: 0.02321
+Epoch 4 average validation loss: 0.02682 -- Median validation metrics: avg_loss: 0.02682, NSE: 0.66881
+Epoch 5 average loss: avg_loss: 0.02226, avg_total_loss: 0.02226
+Epoch 5 average validation loss: 0.02869 -- Median validation metrics: avg_loss: 0.02869, NSE: 0.67710
+Epoch 6 average loss: avg_loss: 0.02099, avg_total_loss: 0.02099
+Epoch 6 average validation loss: 0.02960 -- Median validation metrics: avg_loss: 0.02960, NSE: 0.68126
+Epoch 7 average loss: avg_loss: 0.02019, avg_total_loss: 0.02019
+Epoch 7 average validation loss: 0.02693 -- Median validation metrics: avg_loss: 0.02693, NSE: 0.67270
+Epoch 8 average loss: avg_loss: 0.01965, avg_total_loss: 0.01965
+Epoch 8 average validation loss: 0.02732 -- Median validation metrics: avg_loss: 0.02732, NSE: 0.67946
+Epoch 9 average loss: avg_loss: 0.01885, avg_total_loss: 0.01885
+Epoch 9 average validation loss: 0.02812 -- Median validation metrics: avg_loss: 0.02812, NSE: 0.68307
+Epoch 10 average loss: avg_loss: 0.01872, avg_total_loss: 0.01872
+Epoch 10 average validation loss: 0.02950 -- Median validation metrics: avg_loss: 0.02950, NSE: 0.68490
+Epoch 11 average loss: avg_loss: 0.01628, avg_total_loss: 0.01628
+Epoch 11 average validation loss: 0.02604 -- Median validation metrics: avg_loss: 0.02604, NSE: 0.70920
+Epoch 12 average loss: avg_loss: 0.01538, avg_total_loss: 0.01538
+Epoch 12 average validation loss: 0.02456 -- Median validation metrics: avg_loss: 0.02456, NSE: 0.71023
+Epoch 13 average loss: avg_loss: 0.01501, avg_total_loss: 0.01501
+Epoch 13 average validation loss: 0.02461 -- Median validation metrics: avg_loss: 0.02461, NSE: 0.71170
+Epoch 14 average loss: avg_loss: 0.01461, avg_total_loss: 0.01461
+Epoch 14 average validation loss: 0.02672 -- Median validation metrics: avg_loss: 0.02672, NSE: 0.70934
+Epoch 15 average loss: avg_loss: 0.01419, avg_total_loss: 0.01419
+Epoch 15 average validation loss: 0.02676 -- Median validation metrics: avg_loss: 0.02676, NSE: 0.71558
+Epoch 16 average loss: avg_loss: 0.01652, avg_total_loss: 0.01652
+Epoch 16 average validation loss: 0.02651 -- Median validation metrics: avg_loss: 0.02651, NSE: 0.70357
+Epoch 17 average loss: avg_loss: 0.01448, avg_total_loss: 0.01448
+Epoch 17 average validation loss: 0.02662 -- Median validation metrics: avg_loss: 0.02662, NSE: 0.71084
+Epoch 18 average loss: avg_loss: 0.01398, avg_total_loss: 0.01398
+Epoch 18 average validation loss: 0.02513 -- Median validation metrics: avg_loss: 0.02513, NSE: 0.71370
+Epoch 19 average loss: avg_loss: 0.01347, avg_total_loss: 0.01347
+Epoch 19 average validation loss: 0.02735 -- Median validation metrics: avg_loss: 0.02735, NSE: 0.70843
+Epoch 20 average loss: avg_loss: 0.01326, avg_total_loss: 0.01326
+Epoch 20 average validation loss: 0.02846 -- Median validation metrics: avg_loss: 0.02846, NSE: 0.71554
+Epoch 21 average loss: avg_loss: 0.01166, avg_total_loss: 0.01166
+Epoch 21 average validation loss: 0.02786 -- Median validation metrics: avg_loss: 0.02786, NSE: 0.71772
+Epoch 22 average loss: avg_loss: 0.01118, avg_total_loss: 0.01118
+Epoch 22 average validation loss: 0.02723 -- Median validation metrics: avg_loss: 0.02723, NSE: 0.71833
+Epoch 23 average loss: avg_loss: 0.01089, avg_total_loss: 0.01089
+Epoch 23 average validation loss: 0.02782 -- Median validation metrics: avg_loss: 0.02782, NSE: 0.71986
+Epoch 24 average loss: avg_loss: 0.01074, avg_total_loss: 0.01074
+Epoch 24 average validation loss: 0.02720 -- Median validation metrics: avg_loss: 0.02720, NSE: 0.71822
+Epoch 25 average loss: avg_loss: 0.01062, avg_total_loss: 0.01062
+Epoch 25 average validation loss: 0.02656 -- Median validation metrics: avg_loss: 0.02656, NSE: 0.70933
+Epoch 26 average loss: avg_loss: 0.01046, avg_total_loss: 0.01046
+Epoch 26 average validation loss: 0.02802 -- Median validation metrics: avg_loss: 0.02802, NSE: 0.71467
+Epoch 27 average loss: avg_loss: 0.01044, avg_total_loss: 0.01044
+Epoch 27 average validation loss: 0.02776 -- Median validation metrics: avg_loss: 0.02776, NSE: 0.71371
+Epoch 28 average loss: avg_loss: 0.01032, avg_total_loss: 0.01032
+Epoch 28 average validation loss: 0.02721 -- Median validation metrics: avg_loss: 0.02721, NSE: 0.71784
+Epoch 29 average loss: avg_loss: 0.01012, avg_total_loss: 0.01012
+Epoch 29 average validation loss: 0.02765 -- Median validation metrics: avg_loss: 0.02765, NSE: 0.71487
+Epoch 30 average loss: avg_loss: 0.00998, avg_total_loss: 0.00998
+Epoch 30 average validation loss: 0.02798 -- Median validation metrics: avg_loss: 0.02798, NSE: 0.71383
+  tqdm@logs/33_transformer_recipe_repair/C4_s700-225192.log: 5278/5304
+##ARM C4_s800
+Epoch 1 average loss: avg_loss: 0.04290, avg_total_loss: 0.04290
+Epoch 1 average validation loss: 0.03408 -- Median validation metrics: avg_loss: 0.03408, NSE: 0.56782
+Epoch 2 average loss: avg_loss: 0.03029, avg_total_loss: 0.03029
+Epoch 2 average validation loss: 0.03283 -- Median validation metrics: avg_loss: 0.03283, NSE: 0.62166
+Epoch 3 average loss: avg_loss: 0.02530, avg_total_loss: 0.02530
+Epoch 3 average validation loss: 0.03230 -- Median validation metrics: avg_loss: 0.03230, NSE: 0.64147
+Epoch 4 average loss: avg_loss: 0.02367, avg_total_loss: 0.02367
+Epoch 4 average validation loss: 0.02858 -- Median validation metrics: avg_loss: 0.02858, NSE: 0.65138
+Epoch 5 average loss: avg_loss: 0.02226, avg_total_loss: 0.02226
+Epoch 5 average validation loss: 0.02822 -- Median validation metrics: avg_loss: 0.02822, NSE: 0.66366
+Epoch 6 average loss: avg_loss: 0.02120, avg_total_loss: 0.02120
+Epoch 6 average validation loss: 0.02715 -- Median validation metrics: avg_loss: 0.02715, NSE: 0.66359
+Epoch 7 average loss: avg_loss: 0.02037, avg_total_loss: 0.02037
+Epoch 7 average validation loss: 0.02909 -- Median validation metrics: avg_loss: 0.02909, NSE: 0.67044
+Epoch 8 average loss: avg_loss: 0.01961, avg_total_loss: 0.01961
+Epoch 8 average validation loss: 0.02654 -- Median validation metrics: avg_loss: 0.02654, NSE: 0.68024
+Epoch 9 average loss: avg_loss: 0.01887, avg_total_loss: 0.01887
+Epoch 9 average validation loss: 0.02843 -- Median validation metrics: avg_loss: 0.02843, NSE: 0.69444
+Epoch 10 average loss: avg_loss: 0.01833, avg_total_loss: 0.01833
+Epoch 10 average validation loss: 0.02771 -- Median validation metrics: avg_loss: 0.02771, NSE: 0.68895
+Epoch 11 average loss: avg_loss: 0.01613, avg_total_loss: 0.01613
+Epoch 11 average validation loss: 0.02463 -- Median validation metrics: avg_loss: 0.02463, NSE: 0.70105
+Epoch 12 average loss: avg_loss: 0.01541, avg_total_loss: 0.01541
+Epoch 12 average validation loss: 0.02441 -- Median validation metrics: avg_loss: 0.02441, NSE: 0.69865
+Epoch 13 average loss: avg_loss: 0.01491, avg_total_loss: 0.01491
+Epoch 13 average validation loss: 0.02589 -- Median validation metrics: avg_loss: 0.02589, NSE: 0.70276
+Epoch 14 average loss: avg_loss: 0.01567, avg_total_loss: 0.01567
+Epoch 14 average validation loss: 0.02561 -- Median validation metrics: avg_loss: 0.02561, NSE: 0.70501
+Epoch 15 average loss: avg_loss: 0.01414, avg_total_loss: 0.01414
+Epoch 15 average validation loss: 0.02491 -- Median validation metrics: avg_loss: 0.02491, NSE: 0.70633
+Epoch 16 average loss: avg_loss: 0.01391, avg_total_loss: 0.01391
+Epoch 16 average validation loss: 0.02391 -- Median validation metrics: avg_loss: 0.02391, NSE: 0.70730
+Epoch 17 average loss: avg_loss: 0.01355, avg_total_loss: 0.01355
+Epoch 17 average validation loss: 0.02538 -- Median validation metrics: avg_loss: 0.02538, NSE: 0.70615
+Epoch 18 average loss: avg_loss: 0.01311, avg_total_loss: 0.01311
+Epoch 18 average validation loss: 0.02435 -- Median validation metrics: avg_loss: 0.02435, NSE: 0.71085
+Epoch 19 average loss: avg_loss: 0.01304, avg_total_loss: 0.01304
+Epoch 19 average validation loss: 0.02627 -- Median validation metrics: avg_loss: 0.02627, NSE: 0.70031
+Epoch 20 average loss: avg_loss: 0.01266, avg_total_loss: 0.01266
+Epoch 20 average validation loss: 0.02389 -- Median validation metrics: avg_loss: 0.02389, NSE: 0.70170
+Epoch 21 average loss: avg_loss: 0.01125, avg_total_loss: 0.01125
+Epoch 21 average validation loss: 0.02398 -- Median validation metrics: avg_loss: 0.02398, NSE: 0.71175
+Epoch 22 average loss: avg_loss: 0.01083, avg_total_loss: 0.01083
+Epoch 22 average validation loss: 0.02465 -- Median validation metrics: avg_loss: 0.02465, NSE: 0.70908
+Epoch 23 average loss: avg_loss: 0.01055, avg_total_loss: 0.01055
+Epoch 23 average validation loss: 0.02488 -- Median validation metrics: avg_loss: 0.02488, NSE: 0.71273
+Epoch 24 average loss: avg_loss: 0.01039, avg_total_loss: 0.01039
+Epoch 24 average validation loss: 0.02505 -- Median validation metrics: avg_loss: 0.02505, NSE: 0.71092
+Epoch 25 average loss: avg_loss: 0.01032, avg_total_loss: 0.01032
+Epoch 25 average validation loss: 0.02442 -- Median validation metrics: avg_loss: 0.02442, NSE: 0.71042
+Epoch 26 average loss: avg_loss: 0.01009, avg_total_loss: 0.01009
+Epoch 26 average validation loss: 0.02456 -- Median validation metrics: avg_loss: 0.02456, NSE: 0.71005
+Epoch 27 average loss: avg_loss: 0.00999, avg_total_loss: 0.00999
+Epoch 27 average validation loss: 0.02471 -- Median validation metrics: avg_loss: 0.02471, NSE: 0.71092
+Epoch 28 average loss: avg_loss: 0.00982, avg_total_loss: 0.00982
+Epoch 28 average validation loss: 0.02452 -- Median validation metrics: avg_loss: 0.02452, NSE: 0.71065
+Epoch 29 average loss: avg_loss: 0.00974, avg_total_loss: 0.00974
+Epoch 29 average validation loss: 0.02522 -- Median validation metrics: avg_loss: 0.02522, NSE: 0.70193
+Epoch 30 average loss: avg_loss: 0.00964, avg_total_loss: 0.00964
+Epoch 30 average validation loss: 0.02464 -- Median validation metrics: avg_loss: 0.02464, NSE: 0.70825
+  tqdm@logs/33_transformer_recipe_repair/C4_s800-225201.log: 5279/5304
+=== DONE ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-17T12:32:40+0800
