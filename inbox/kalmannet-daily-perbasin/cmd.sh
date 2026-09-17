@@ -1,94 +1,20 @@
 #!/bin/bash
-# kalmannet-daily-perbasin sequence=156: diagnostic: exact zero-gain gate on hcpu48 CPU under several numerics environments (development mode)
-# Login node: extract request payload, then launcher_v3.py (admission + exactly one sbatch).
+# kalmannet-daily-perbasin sequence=157: READ-ONLY observation (zero_gain). No sbatch, no scancel, no writes.
 set -o pipefail
-umask 022
-echo "channel=kalmannet-daily-perbasin sequence=156 purpose=zero_gain_probe3_seq156"
+echo "channel=kalmannet-daily-perbasin sequence=157 purpose=observe-zero_gain"
 ROOT=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916
-REQ=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe3_seq156
-PY=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
-[ -d "$ROOT/workspace" ] || { echo "FAIL_MISSING_ROOT $ROOT"; exit 81; }
-[ -e "$REQ" ] && { echo "FAIL_REQUEST_DIR_EXISTS $REQ"; exit 82; }
-PAYLOAD_SHA256=72f4c92d8caedb4febbaab1fd62758fd1ca7cf45b5ec602ba7d3de8fc24716ae
-mkdir -p "$REQ" || { echo FAIL_MKDIR; exit 84; }
-base64 -d > "$REQ/payload.tar.gz" <<'KDPP3_PAYLOAD_BASE64'
-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
-KDPP3_PAYLOAD_BASE64
-echo "$PAYLOAD_SHA256  $REQ/payload.tar.gz" | sha256sum -c - >/dev/null || { echo FAIL_PAYLOAD_SHA256; exit 85; }
-tar --warning=no-timestamp -xzf "$REQ/payload.tar.gz" -C "$REQ" || { echo FAIL_EXTRACT; exit 86; }
-echo "PAYLOAD_OK sha256=$PAYLOAD_SHA256 bytes=$(stat -c %s "$REQ/payload.tar.gz")"
-cp "$ROOT/launcher/resource_bind.py" "$ROOT/launcher/precheck.sh" "$REQ/" || exit 89
-sed -i 's/\r$//' "$REQ"/*.slurm "$REQ"/precheck.sh 2>/dev/null; true
-"$PY" -I -B "$ROOT/launcher/launcher_v3.py" --request "$REQ" --policy "$ROOT/resource_policy_v3.json"
-rc=$?; echo "LAUNCHER_EXIT=$rc"
-for f in "$REQ"/submission_job*.receipt.json; do [ -f "$f" ] && { echo "RECEIPT_BEGIN $f"; cat "$f"; echo "RECEIPT_END"; }; done
-exit $rc
+emit_json() { f="$1"; if [ -f "$f" ]; then echo "JSON_BEGIN path=$f bytes=$(stat -c %s "$f") sha256=$(sha256sum "$f" | cut -c1-64)"; cat "$f"; echo; echo "JSON_END path=$f"; else echo "FILE_ABSENT path=$f"; fi; }
+tail_file() { f="$1"; n="$2"; if [ -f "$f" ]; then echo "TAIL_BEGIN path=$f bytes=$(stat -c %s "$f")"; tail -n "$n" "$f"; echo "TAIL_END path=$f"; else echo "FILE_ABSENT path=$f"; fi; }
+echo "=== ACCOUNTING ==="
+timeout 30s sacct -n -P -j 226295 --format=JobIDRaw,JobName%32,State,ExitCode,ElapsedRaw,AllocCPUS,AllocTRES%40,NodeList,Submit,Start,End 2>&1
+echo "=== QUEUE ==="
+timeout 25s squeue -u "$USER" -h -o '%i|%T|%P|%R|%S|%C|%b|%M|%j' 2>&1 | grep kdpp3 ; true
+echo "=== HGPU4_GRES_USED ==="
+timeout 25s sinfo -p hgpu4 -N -O nodelist,gresused:24 2>&1
+echo "=== REQUEST zero_gain_probe3_seq156 ==="
+for f in $ROOT/runtime/zero_gain_probe3_seq156/slurm-*.stdout; do [ -f "$f" ] && tail_file "$f" 40; done; true
+for f in $ROOT/runtime/zero_gain_probe3_seq156/slurm-*.stderr; do [ -f "$f" ] && tail_file "$f" 20; done; true
+emit_json $ROOT/runtime/zero_gain_probe3_seq156/logs/pool_result.json
+for f in $ROOT/runtime/zero_gain_probe3_seq156/logs/*.stderr; do [ -f "$f" ] && [ -s "$f" ] && tail_file "$f" 15; done; true
+echo "=== FULL_STDOUT zero_gain_probe3_seq156 ==="; for f in $ROOT/runtime/zero_gain_probe3_seq156/slurm-*.stdout; do [ -f "$f" ] && { echo "FULL_BEGIN path=$f bytes=$(stat -c %s "$f")"; cat "$f"; echo "FULL_END path=$f"; }; done; true
+echo "READ_ONLY_OBSERVE_COMPLETE submissions=0 cancellations=0 modifications=0"
