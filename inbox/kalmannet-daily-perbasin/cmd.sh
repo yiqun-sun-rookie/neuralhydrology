@@ -1,32 +1,89 @@
 #!/bin/bash
-# kalmannet-daily-perbasin sequence=151: READ-ONLY observation (phase_a). No sbatch, no scancel, no writes.
+# kalmannet-daily-perbasin sequence=152: diagnostic: exact zero-gain gate on hcpu48 CPU under several numerics environments (development mode)
+# Login node: extract request payload, then launcher_v3.py (admission + exactly one sbatch).
 set -o pipefail
-echo "channel=kalmannet-daily-perbasin sequence=151 purpose=observe-phase_a"
+umask 022
+echo "channel=kalmannet-daily-perbasin sequence=152 purpose=zero_gain_probe_seq152"
 ROOT=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916
-emit_json() { f="$1"; if [ -f "$f" ]; then echo "JSON_BEGIN path=$f bytes=$(stat -c %s "$f") sha256=$(sha256sum "$f" | cut -c1-64)"; cat "$f"; echo; echo "JSON_END path=$f"; else echo "FILE_ABSENT path=$f"; fi; }
-tail_file() { f="$1"; n="$2"; if [ -f "$f" ]; then echo "TAIL_BEGIN path=$f bytes=$(stat -c %s "$f")"; tail -n "$n" "$f"; echo "TAIL_END path=$f"; else echo "FILE_ABSENT path=$f"; fi; }
-echo "=== ACCOUNTING ==="
-timeout 30s sacct -n -P -j 226233 --format=JobIDRaw,JobName%32,State,ExitCode,ElapsedRaw,AllocCPUS,AllocTRES%40,NodeList,Submit,Start,End 2>&1
-timeout 30s sacct -n -P -j 226234 --format=JobIDRaw,JobName%32,State,ExitCode,ElapsedRaw,AllocCPUS,AllocTRES%40,NodeList,Submit,Start,End 2>&1
-timeout 30s sacct -n -P -j 226235 --format=JobIDRaw,JobName%32,State,ExitCode,ElapsedRaw,AllocCPUS,AllocTRES%40,NodeList,Submit,Start,End 2>&1
-echo "=== QUEUE ==="
-timeout 25s squeue -u "$USER" -h -o '%i|%T|%P|%R|%S|%C|%b|%M|%j' 2>&1 | grep kdpp3 ; true
-echo "=== HGPU4_GRES_USED ==="
-timeout 25s sinfo -p hgpu4 -N -O nodelist,gresused:24 2>&1
-echo "=== REQUEST phase_a_node0_seq146 ==="
-for f in $ROOT/runtime/phase_a_node0_seq146/slurm-*.stdout; do [ -f "$f" ] && tail_file "$f" 40; done; true
-for f in $ROOT/runtime/phase_a_node0_seq146/slurm-*.stderr; do [ -f "$f" ] && tail_file "$f" 20; done; true
-emit_json $ROOT/runtime/phase_a_node0_seq146/logs/pool_result.json
-for f in $ROOT/runtime/phase_a_node0_seq146/logs/*.stderr; do [ -f "$f" ] && [ -s "$f" ] && tail_file "$f" 15; done; true
-echo "=== REQUEST phase_a_node1_seq147 ==="
-for f in $ROOT/runtime/phase_a_node1_seq147/slurm-*.stdout; do [ -f "$f" ] && tail_file "$f" 40; done; true
-for f in $ROOT/runtime/phase_a_node1_seq147/slurm-*.stderr; do [ -f "$f" ] && tail_file "$f" 20; done; true
-emit_json $ROOT/runtime/phase_a_node1_seq147/logs/pool_result.json
-for f in $ROOT/runtime/phase_a_node1_seq147/logs/*.stderr; do [ -f "$f" ] && [ -s "$f" ] && tail_file "$f" 15; done; true
-echo "=== REQUEST phase_a_node2_seq148 ==="
-for f in $ROOT/runtime/phase_a_node2_seq148/slurm-*.stdout; do [ -f "$f" ] && tail_file "$f" 40; done; true
-for f in $ROOT/runtime/phase_a_node2_seq148/slurm-*.stderr; do [ -f "$f" ] && tail_file "$f" 20; done; true
-emit_json $ROOT/runtime/phase_a_node2_seq148/logs/pool_result.json
-for f in $ROOT/runtime/phase_a_node2_seq148/logs/*.stderr; do [ -f "$f" ] && [ -s "$f" ] && tail_file "$f" 15; done; true
-for d in $ROOT/runs/*; do [ -d "$d" ] || continue; if [ -f "$d/completion.marker.json" ]; then echo "=== RUN $d ==="; emit_json "$d/completion.marker.json"; else rows=$( [ -f "$d/epoch_history.json" ] && grep -c '"epoch_status"' "$d/epoch_history.json" || echo 0 ); lock=$( [ -f "$d/running.lock.json" ] && echo yes || echo no ); age=$( [ -f "$d/checkpoints/last.pt" ] && echo $(( $(date +%s) - $(stat -c %Y "$d/checkpoints/last.pt") )) || echo none ); echo "RUN_PROGRESS path=$d rows=$rows lock=$lock last_pt_age_s=$age"; fi; done; true
-echo "READ_ONLY_OBSERVE_COMPLETE submissions=0 cancellations=0 modifications=0"
+REQ=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe_seq152
+PY=/data1/home/sunyiq/miniconda3/envs/nh_final/bin/python
+[ -d "$ROOT/workspace" ] || { echo "FAIL_MISSING_ROOT $ROOT"; exit 81; }
+[ -e "$REQ" ] && { echo "FAIL_REQUEST_DIR_EXISTS $REQ"; exit 82; }
+PAYLOAD_SHA256=8abe15002620b277d8606694cea63eee32b1ba1ba72ed949690a83ac63c4ae22
+mkdir -p "$REQ" || { echo FAIL_MKDIR; exit 84; }
+base64 -d > "$REQ/payload.tar.gz" <<'KDPP3_PAYLOAD_BASE64'
+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
+7Mu+7Mu+/DXlvyx1eBIAUAAA
+KDPP3_PAYLOAD_BASE64
+echo "$PAYLOAD_SHA256  $REQ/payload.tar.gz" | sha256sum -c - >/dev/null || { echo FAIL_PAYLOAD_SHA256; exit 85; }
+tar --warning=no-timestamp -xzf "$REQ/payload.tar.gz" -C "$REQ" || { echo FAIL_EXTRACT; exit 86; }
+echo "PAYLOAD_OK sha256=$PAYLOAD_SHA256 bytes=$(stat -c %s "$REQ/payload.tar.gz")"
+cp "$ROOT/launcher/resource_bind.py" "$ROOT/launcher/precheck.sh" "$REQ/" || exit 89
+sed -i 's/\r$//' "$REQ"/*.slurm "$REQ"/precheck.sh 2>/dev/null; true
+"$PY" -I -B "$ROOT/launcher/launcher_v3.py" --request "$REQ" --policy "$ROOT/resource_policy_v3.json"
+rc=$?; echo "LAUNCHER_EXIT=$rc"
+for f in "$REQ"/submission_job*.receipt.json; do [ -f "$f" ] && { echo "RECEIPT_BEGIN $f"; cat "$f"; echo "RECEIPT_END"; }; done
+exit $rc
