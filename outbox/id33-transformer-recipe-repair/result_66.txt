@@ -1,0 +1,37 @@
+### channel=id33-transformer-recipe-repair seq=66
+### host=login4
+### started=2026-09-17T11:47:28+0800
+### ---------- output ----------
+=== STAMP ===
+2026-09-17T11:47:28+0800
+=== A. JOBS ===
+     JobID      JobName        State ExitCode    Elapsed NodeList 
+---------- ------------ ------------ -------- ---------- -------- 
+    226118    id33_g1_a    COMPLETED      0:0   03:29:39   ngu005 
+    226119    id33_g1_b    COMPLETED      0:0   03:29:56   ngu006 
+    226120    id33_g1_c    COMPLETED      0:0   02:23:16   ngu008 
+=== B. PER-ARM PROGRESS (last epoch line) ===
+G1: ep30 NSE=0.70908
+G1_s200: ep30 NSE=0.70110
+G1_s300: ep30 NSE=0.70878
+G1_s400: ep30 NSE=0.70176
+G1_s500: ep30 NSE=0.70210
+G1_s600: ep30 NSE=0.70813
+G1_s700: ep30 NSE=0.69586
+G1_s800: ep30 NSE=0.69785
+=== C. MANIFESTS SO FAR ===
+id33_G1_s100_slurm226118 COMPLETE 0 PASS
+id33_G1_s200_slurm226118 COMPLETE 0 PASS
+id33_G1_s300_slurm226118 COMPLETE 0 PASS
+id33_G1_s400_slurm226119 COMPLETE 0 PASS
+id33_G1_s500_slurm226119 COMPLETE 0 PASS
+id33_G1_s600_slurm226119 COMPLETE 0 PASS
+id33_G1_s700_slurm226120 COMPLETE 0 PASS
+id33_G1_s800_slurm226120 COMPLETE 0 PASS
+=== D. ERR TAILS ===
+-- 226118 --
+-- 226119 --
+-- 226120 --
+### ---------- end ----------
+### exit_code=1
+### finished=2026-09-17T11:47:31+0800
