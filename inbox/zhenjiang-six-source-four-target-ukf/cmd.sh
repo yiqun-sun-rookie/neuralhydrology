@@ -275,13 +275,99 @@ def control(root, action, stage, release_sha, expected, core_rel):
     finally:
         guard.close()
 
-fixed_guard=Root('/data1/home/sunyiq/zhenjiang_shared_base_20260917_002',{'deployment_token': '4fc65ea378644eb7afe1efcf093b60fa', 'metadata_sha256': '9c5ec44126fd2766b5e0260f1f15fc785b7fe4fb57bfcd41a5bd608390e89388', 'root_binding': {'inode': 7560066049, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'})
-try:
-    authenticate(fixed_guard,'32cc34edefc4a125ecac92021454c68f832cc6471a5e9ead056b1987fda4657d',{'deployment_token': '4fc65ea378644eb7afe1efcf093b60fa', 'metadata_sha256': '9c5ec44126fd2766b5e0260f1f15fc785b7fe4fb57bfcd41a5bd608390e89388', 'root_binding': {'inode': 7560066049, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'})
-    fixed_guard.read('submission/preflight/submitted.json',expected={'bytes': 894, 'sha256': '27f874c7c11ceda60c8670905eab0bbecba53293a71f43be94cf8dcc694f6aac'})
-    fixed_guard.check()
-finally:
-    fixed_guard.close()
-control('/data1/home/sunyiq/zhenjiang_shared_base_20260917_002','status',None,'32cc34edefc4a125ecac92021454c68f832cc6471a5e9ead056b1987fda4657d',{'deployment_token': '4fc65ea378644eb7afe1efcf093b60fa', 'metadata_sha256': '9c5ec44126fd2766b5e0260f1f15fc785b7fe4fb57bfcd41a5bd608390e89388', 'root_binding': {'inode': 7560066049, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'},'runtime/inbox/zhenjiang-six-source-four-target-ukf/shared_base_20260916_001')
+"""Read existing cost metadata only; bootstrap definitions supplied separately."""
+import math
+
+def strict_document(raw):
+    def unique(pairs):
+        value = {}
+        for key, item in pairs:
+            if key in value:
+                raise ValueError("duplicate cost metadata key")
+            value[key] = item
+        return value
+    return json.loads(raw, object_pairs_hook=unique,
+                      parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite cost metadata")))
+
+def finite_number(value, *, zero=False):
+    if (type(value) not in (int, float) or not math.isfinite(value)
+            or value < 0 or not zero and value == 0):
+        raise ValueError("invalid measured cost")
+    return value
+
+def read_cost(root, release, identity, submitted_spec, failure_spec):
+    guard = Root(root, identity)
+    try:
+        authenticate(guard, release, identity)
+        sub_raw = guard.read("submission/preflight/submitted.json", expected=submitted_spec)
+        fail_raw = guard.read("preflight/failure.json", expected=failure_spec)
+        submitted, failure = strict_document(sub_raw), strict_document(fail_raw)
+        if (submitted.get("stage") != "preflight" or submitted.get("status") != "submitted"
+                or submitted.get("job_id") != "226232" or submitted.get("release_sha256") != release
+                or submitted.get("deployment_identity") != identity
+                or failure.get("stage") != "preflight" or failure.get("status") != "stopped_no_retry"
+                or failure.get("job_id") != submitted["job_id"] or failure.get("nonce") != submitted["nonce"]
+                or failure.get("deployment_identity") != identity or failure.get("release_sha256") != release):
+            raise ValueError("existing failure does not match fixed original preflight")
+        raw = guard.read("preflight/measurement.json", maximum=400000)
+        value = strict_document(raw)
+        stages = ("common_process", "rolling_encoder", "differentiable_filter")
+        if (type(value) is not dict or value.get("status") != "failed" or value.get("seed") != 17
+                or value.get("failure") != "measured_cost_exceeds_locked_stage_cap"
+                or value.get("safety_factor") != 1.5 or set(value.get("stages", {})) != set(stages)
+                or type(value.get("train_windows")) is not int or value["train_windows"] < 64
+                or type(value.get("validate_windows")) is not int or value["validate_windows"] < 1):
+            raise ValueError("fixed failed-preflight cost measurement required")
+        clean = {name: value[name] for name in ("status", "failure", "seed", "train_windows",
+                 "validate_windows", "safety_factor", "estimated_training_seconds", "elapsed_seconds",
+                 "preparation_seconds")}
+        finite_number(clean["estimated_training_seconds"])
+        finite_number(clean["elapsed_seconds"])
+        finite_number(clean["preparation_seconds"], zero=True)
+        clean["stages"], contributions = {}, {}
+        batches = math.ceil(value["train_windows"] / 32)
+        total = clean["preparation_seconds"]
+        epochs = {"common_process": 30, "rolling_encoder": 20, "differentiable_filter": 20}
+        for name in stages:
+            stage = value["stages"][name]
+            keys = ("batch_seconds", "slowest_batch_seconds", "validation_seconds", "save_verify_seconds",
+                    "selected_reload_seconds", "complete_training_batches", "batch_windows", "validation_windows")
+            part = {key: stage[key] for key in keys}
+            if (part["complete_training_batches"] != 2 or part["batch_windows"] != 32
+                    or part["validation_windows"] != value["validate_windows"]
+                    or type(part["batch_seconds"]) is not list or len(part["batch_seconds"]) != 2):
+                raise ValueError("cost measurement batch/validation coverage differs")
+            for duration in part["batch_seconds"]:
+                finite_number(duration)
+            for key in ("slowest_batch_seconds", "validation_seconds", "save_verify_seconds"):
+                finite_number(part[key])
+            finite_number(part["selected_reload_seconds"], zero=True)
+            if max(part["batch_seconds"]) != part["slowest_batch_seconds"]:
+                raise ValueError("cost measurement slowest batch differs")
+            clean["stages"][name] = part
+            contribution = 3 * (part["slowest_batch_seconds"] * batches * epochs[name]
+                + (part["validation_seconds"] + part["save_verify_seconds"]) * (epochs[name] + 1))
+            if name == "common_process":
+                finite_number(part["selected_reload_seconds"])
+                contribution += 3 * part["selected_reload_seconds"]
+            contributions[name] = contribution
+            total += contribution
+        recomputed = total * 1.5
+        if not math.isclose(recomputed, clean["estimated_training_seconds"], rel_tol=1e-12, abs_tol=1e-9):
+            raise ValueError("existing cost arithmetic differs from frozen formula")
+        guard.check()
+        return {"status": "read_only_existing_cost_measurement", "root": root, "release_sha256": release,
+                "deployment_identity": identity, "job_id": submitted["job_id"], "nonce": submitted["nonce"],
+                "submitted_spec": submitted_spec, "failure_spec": failure_spec,
+                "measurement_spec": {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()},
+                "measurement": clean, "training_budget_seconds": 43200, "preflight_budget_seconds": 1800,
+                "cost_before_safety_factor": contributions, "batches_per_epoch": batches,
+                "recomputed_training_seconds": recomputed,
+                "over_training_budget": clean["estimated_training_seconds"] > 43200,
+                "over_preflight_budget": clean["elapsed_seconds"] > 1800}
+    finally:
+        guard.close()
+
+print(json.dumps(read_cost('/data1/home/sunyiq/zhenjiang_shared_base_20260917_002','32cc34edefc4a125ecac92021454c68f832cc6471a5e9ead056b1987fda4657d',{'deployment_token': '4fc65ea378644eb7afe1efcf093b60fa', 'metadata_sha256': '9c5ec44126fd2766b5e0260f1f15fc785b7fe4fb57bfcd41a5bd608390e89388', 'root_binding': {'inode': 7560066049, 'mode': 448, 'uid': 2272}, 'schema': 'cross-node-deployment-v1'},{'bytes': 894, 'sha256': '27f874c7c11ceda60c8670905eab0bbecba53293a71f43be94cf8dcc694f6aac'},{'bytes': 567, 'sha256': 'f3a9320cee3130837c3cd660b6903ac475edfbced61c09e725292353261c5f2a'}),sort_keys=True,separators=(',',':'),allow_nan=False))
 
 REVIEWED_DIAGNOSTIC_PY
