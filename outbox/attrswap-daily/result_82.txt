@@ -1,0 +1,144 @@
+### channel=attrswap-daily seq=82
+### host=login4
+### started=2026-09-17T17:45:57+0800
+### ---------- output ----------
+wallclock 2026-09-17 17:45:57 +0800
+=== 0. flags ===
+  PART=hgpu4 WITH_TAU32=1 E4=1 R2=''
+=== A. guard: landing dir must not exist yet; payload present ===
+=== B. create landing dir + shadow links (same chain as Stage 2) ===
+  /data1/home/sunyiq/precip_swap3_daily_2026_09/data_shadow/camels_us:
+  total 4
+  drwxr-xr-x. 2 sunyiq g_sunyiq 4096 Sep 17 17:45 basin_mean_forcing
+  lrwxr-xr-x. 1 sunyiq g_sunyiq   87 Sep 17 17:45 camels_attributes_v2.0 -> /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us/camels_attributes_v2.0
+  lrwxr-xr-x. 1 sunyiq g_sunyiq   80 Sep 17 17:45 usgs_streamflow -> /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us/usgs_streamflow
+  
+  /data1/home/sunyiq/precip_swap3_daily_2026_09/data_shadow/camels_us/basin_mean_forcing:
+  total 0
+  lrwxr-xr-x. 1 sunyiq g_sunyiq 75 Sep 17 17:45 daymet -> /data1/home/sunyiq/neuralhydrology/data/camels_us/basin_mean_forcing/daymet
+  dangling links: none
+  daymet files through link: 677
+  streamflow files through chain: 674
+  attribute files: 8
+=== C. archived code (copied from the Stage-2 landing dir, hash-checked) ===
+  files: 78
+  camelsus.py sha: 51e2e02b382ec103 (expect 51e2e02b382ec103)
+=== D. install scripts, tables, basin lists ===
+  175f6290b939613a build_precip_swap3.py
+  6289c45e8ccc24c4 daymet_shift1_daily_529.csv.gz
+  2b1bd68eb47ad0ca e4_copy_runs.py
+  5e60c4cb0fc589eb era5l_refday_daily_529.csv.gz
+  64a54500421f8046 gsmap_utc_daily_529.csv.gz
+  3e21d1618d869196 guard_T16.py
+  9f22f39e114a13df imerg_e18_daily_529.csv.gz
+  532c63699337c67d imerg_local_daily_529.csv.gz
+  3ac15cc87ef4515e imerg_tau32_daily_529.csv.gz
+  c714a738f4343234 make_pswap3_configs.py
+  f2edd46a4586efcf p7_hydro_year.py
+  70bfedd8e0165e38 pswap3_eval_ckpt.slurm
+  7449cafd8a036b6f pswap3_gate_product.slurm
+  32dd18e2756b4302 pswap3_gate_ref.slurm
+  1ca952fe15c24da7 pswap3_guard_T16.slurm
+  056813e3907758bf pswap3_p7.slurm
+  97b35cef383b37bc pswap3_train_ep60.slurm
+  9bc45e3746c506a1 pswap3_train.slurm
+  2ac038e48228b7cc scripts_public_median.py
+  b8d45a2baa7e240c syn_ln035_daily_529.csv.gz
+  f47c84ee416c063e syn_ln070_daily_529.csv.gz
+  5876c51097ab60c5 syn_ln140_daily_529.csv.gz
+  35f52606567f24c0 v9_streamflow.py
+  98018c03b0295a56 basins_529.txt
+  59477ff48f18b868 basins_5.txt
+  14627cb98071192e caravan_timezone_529.csv
+  40ed13356a8a54c5 fixed_std_offset_529.csv
+  44a99ee0a8b42309 holdout_107.txt
+  fixed_std_offset_529.csv CR bytes: 0 (expect 0)
+=== E. substitute placeholders in the seven templates (python, not sed) ===
+  substituted pswap3_gate_ref.slurm
+  substituted pswap3_gate_product.slurm
+  substituted pswap3_train.slurm
+  substituted pswap3_train_ep60.slurm
+  substituted pswap3_guard_T16.slurm
+  substituted pswap3_eval_ckpt.slurm
+  substituted pswap3_p7.slurm
+  substituted cmd_submit3.sh
+  hpc_deploy/pswap3_eval_ckpt.slurm:#SBATCH -p hgpu4
+  hpc_deploy/pswap3_gate_product.slurm:#SBATCH -p hgpu4
+  hpc_deploy/pswap3_gate_ref.slurm:#SBATCH -p hgpu4
+  hpc_deploy/pswap3_guard_T16.slurm:#SBATCH -p hgpu4
+  hpc_deploy/pswap3_p7.slurm:#SBATCH -p hgpu4
+  hpc_deploy/pswap3_train_ep60.slurm:#SBATCH -p hgpu4
+  hpc_deploy/pswap3_train.slurm:#SBATCH -p hgpu4
+  hpc_deploy/cmd_submit3.sh:13:PART=hgpu4
+  hpc_deploy/cmd_submit3.sh:14:WITH_TAU32=1
+  hpc_deploy/cmd_submit3.sh:15:E4=1
+  hpc_deploy/cmd_submit3.sh:16:R2=""
+=== F. generate configs on the login node (POSIX paths) ===
+pswap3_smoke_syn_ln070.yml changed=['data_dir', 'dynamic_inputs', 'epochs', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'test_end_date', 'test_start_date', 'train_basin_file', 'train_end_date', 'train_start_date', 'validation_basin_file']
+pswap3_smoke_syn_ln140.yml changed=['data_dir', 'dynamic_inputs', 'epochs', 'experiment_name', 'forcings', 'run_dir', 'seed', 'test_basin_file', 'test_end_date', 'test_start_date', 'train_basin_file', 'train_end_date', 'train_start_date', 'validation_basin_file']
+wrote 30 arm configs + 10 smoke configs into /data1/home/sunyiq/precip_swap3_daily_2026_09/configs
+  configs: 40
+  manifest base_sha16: 33bfcc279b213848
+617a37f4abb8f3fb
+  --- diff base vs pswap3_ep60_ref_daymet_s100 (allowed keys only) ---
+  3c3
+  < data_dir: /data1/home/sunyiq/attr_swap_daily_2026_09/data_shadow/camels_us
+  ---
+  > data_dir: /data1/home/sunyiq/precip_swap3_daily_2026_09/data_shadow/camels_us
+  7,13c7,13
+  < - PRCP(mm/day)
+  < - Tmin(C)
+  < - Tmax(C)
+  < - SRAD(W/m2)
+  < - Vp(Pa)
+  < epochs: 30
+  < experiment_name: attrswap_ref27_parity_s900
+  ---
+  > - prcp(mm/day)
+  > - tmin(C)
+  > - tmax(C)
+  > - srad(W/m2)
+  > - vp(Pa)
+  > epochs: 60
+  > experiment_name: pswap3_ep60_ref_daymet_s100
+  15c15
+  < - maurer
+  ---
+  > - daymet
+  34c34
+  < run_dir: /data1/home/sunyiq/attr_swap_daily_2026_09/runs
+  ---
+  > run_dir: /data1/home/sunyiq/precip_swap3_daily_2026_09/runs
+  36c36
+  < seed: 900
+  ---
+  > seed: 100
+  68,74c68,74
+  < test_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+  < test_end_date: 30/09/1999
+  < test_start_date: 01/10/1989
+  < train_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+  < train_end_date: 30/09/2008
+  < train_start_date: 01/10/1999
+  < validation_basin_file: /data1/home/sunyiq/attr_swap_daily_2026_09/basin_lists/basins_529.txt
+  ---
+  > test_basin_file: /data1/home/sunyiq/precip_swap3_daily_2026_09/basin_lists/basins_529.txt
+  > test_end_date: 30/09/2004
+  > test_start_date: 01/10/1999
+  > train_basin_file: /data1/home/sunyiq/precip_swap3_daily_2026_09/basin_lists/basins_529.txt
+  > train_end_date: 30/09/2013
+  > train_start_date: 01/10/2004
+  > validation_basin_file: /data1/home/sunyiq/precip_swap3_daily_2026_09/basin_lists/basins_529.txt
+=== G. partitions right now ===
+  PARTITION  NODES      STATE                 GRES                       NODELIST
+  hgpu8      1     mixed$                gpu:8                         ngu203
+  hgpu8      2      mixed                gpu:8                   ngu[201-202]
+  hgpu4      1      down*                gpu:4                         ngu103
+  hgpu4      1      mixed                gpu:4                         ngu101
+  hgpu4      2       idle                gpu:4                   ngu[102,104]
+=== H. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 82
+=== DONE (no sbatch) ===
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-17T17:46:07+0800
