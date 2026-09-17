@@ -1,0 +1,178 @@
+### channel=attrswap-daily seq=83
+### host=login4
+### started=2026-09-17T19:04:22+0800
+### ---------- output ----------
+wallclock 2026-09-17 19:04:22 +0800
+epoch 1789643062
+cmd_submit3.sh sha256[:16] = cc227f85eb673450 (expect cc227f85eb673450 = local substitution of cmd_submit_template3.sh 7ae81373580ca1a1)
+=== pre: partitions and my queue ===
+PARTITIO  AVAIL    TIMELIMIT NODES      STATE NODELIST
+   hgpu4     up     infinite     1      down* ngu103
+   hgpu4     up     infinite     3      mixed ngu[101-102,104]
+  my jobs in queue before: 9
+=== run cmd_submit3.sh ===
+wallclock 2026-09-17 19:04:22 +0800
+=== 0. flags (whitelist, no silent defaults) ===
+  PART=hgpu4 WITH_TAU32=1 E4=1 R2=''
+=== A. guards (single submission: runs/ must be empty, no jobs.txt, tables and partitions in place) ===
+  table imerg_e18 9f22f39e114a13df
+  table imerg_local 532c63699337c67d
+  table gsmap_utc 64a54500421f8046
+  table imerg_tau32 3ac15cc87ef4515e
+  table syn_ln035 b8d45a2baa7e240c
+  table syn_ln070 f47c84ee416c063e
+  table syn_ln140 5876c51097ab60c5
+  table daymet_shift1 6289c45e8ccc24c4
+  table era5l_refday 5e60c4cb0fc589eb
+=== B. budget ledger (V23; planned = this submission, nothing submitted before, R2 reserve = the R2 arms below) ===
+  30-epoch arms=24 (R2 arms 0)  ep60 arms=6  E4=1  gates=10  planned GPU hours=75.2 (limit 100.0)
+  guard T16 and P7 request 1 GPU each for <= 20 min (<= 0.67 h total), registered outside the ledger (PREREG 18.1)
+=== C. reference gate ===
+gate_ref 226245
+=== D. era5l_refday rebuild gate (V25) + 6 ep60 arms ===
+gate_era5l_refday 226246 dep=226245
+pswap3_ep60_ref_daymet_s100 226247 dep=226245
+pswap3_ep60_era5l_refday_s100 226248 dep=226246
+pswap3_ep60_ref_daymet_s200 226249 dep=226245
+pswap3_ep60_era5l_refday_s200 226250 dep=226246
+pswap3_ep60_ref_daymet_s300 226251 dep=226245
+pswap3_ep60_era5l_refday_s300 226252 dep=226246
+=== E. guard T16 (afterok the 6 ep60 arms) ===
+guard_T16 226253 dep=:226247:226248:226249:226250:226251:226252
+=== F. product gates + 3 arms each (arms afterok guard AND own gate) ===
+gate_imerg_e18 226254 kind=window
+pswap3_win_imerg_e18_s100 226255 dep=226253:226254
+pswap3_win_imerg_e18_s200 226256 dep=226253:226254
+pswap3_win_imerg_e18_s300 226257 dep=226253:226254
+gate_imerg_local 226258 kind=window
+pswap3_win_imerg_local_s100 226259 dep=226253:226258
+pswap3_win_imerg_local_s200 226260 dep=226253:226258
+pswap3_win_imerg_local_s300 226261 dep=226253:226258
+gate_gsmap_utc 226262 kind=window
+pswap3_win_gsmap_utc_s100 226263 dep=226253:226262
+pswap3_win_gsmap_utc_s200 226264 dep=226253:226262
+pswap3_win_gsmap_utc_s300 226265 dep=226253:226262
+gate_imerg_tau32 226266 kind=window
+pswap3_win_imerg_tau32_s100 226267 dep=226253:226266
+pswap3_win_imerg_tau32_s200 226268 dep=226253:226266
+pswap3_win_imerg_tau32_s300 226269 dep=226253:226266
+gate_daymet_shift1 226270 kind=shift1
+pswap3_shift1_daymet_s100 226271 dep=226253:226270
+pswap3_shift1_daymet_s200 226272 dep=226253:226270
+pswap3_shift1_daymet_s300 226273 dep=226253:226270
+gate_syn_ln035 226274 kind=noise
+pswap3_syn_ln035_s100 226275 dep=226253:226274
+pswap3_syn_ln035_s200 226276 dep=226253:226274
+pswap3_syn_ln035_s300 226277 dep=226253:226274
+gate_syn_ln070 226278 kind=noise
+pswap3_syn_ln070_s100 226279 dep=226253:226278
+pswap3_syn_ln070_s200 226280 dep=226253:226278
+pswap3_syn_ln070_s300 226281 dep=226253:226278
+gate_syn_ln140 226282 kind=noise
+pswap3_syn_ln140_s100 226283 dep=226253:226282
+pswap3_syn_ln140_s200 226284 dep=226253:226282
+pswap3_syn_ln140_s300 226285 dep=226253:226282
+=== G. E4 checkpoint re-evaluation (afterok ref gate) ===
+e4_eval_ckpt 226286 dep=226245
+=== H. P7 per-hydro-year + baselines on the Stage-2 runs (afterok ref gate; D18) ===
+p7_hydro_year 226287 dep=226245
+=== I. ledger + queue snapshot ===
+planned_gpu_hours 75.2 submitted_before 0.0 triggered_reserve_R2_arms 0 jobs_registered 43 expected 43 2026-09-17 19:04:25
+     JOBID                                 NAME     STATE       TIME  NODES PARTITION NODELIST(REASON)
+    226245                      pswap3_gate_ref   PENDING       0:00      1     hgpu4 (Priority)
+    226246             pswap3_gate_era5l_refday   PENDING       0:00      1     hgpu4 (Dependency)
+    226247          pswap3_ep60_ref_daymet_s100   PENDING       0:00      1     hgpu4 (Dependency)
+    226248        pswap3_ep60_era5l_refday_s100   PENDING       0:00      1     hgpu4 (Dependency)
+    226249          pswap3_ep60_ref_daymet_s200   PENDING       0:00      1     hgpu4 (Dependency)
+    226250        pswap3_ep60_era5l_refday_s200   PENDING       0:00      1     hgpu4 (Dependency)
+    226251          pswap3_ep60_ref_daymet_s300   PENDING       0:00      1     hgpu4 (Dependency)
+    226252        pswap3_ep60_era5l_refday_s300   PENDING       0:00      1     hgpu4 (Dependency)
+    226253                     pswap3_guard_T16   PENDING       0:00      1     hgpu4 (Dependency)
+    226254                pswap3_gate_imerg_e18   PENDING       0:00      1     hgpu4 (Dependency)
+    226255            pswap3_win_imerg_e18_s100   PENDING       0:00      1     hgpu4 (Dependency)
+    226256            pswap3_win_imerg_e18_s200   PENDING       0:00      1     hgpu4 (Dependency)
+    226257            pswap3_win_imerg_e18_s300   PENDING       0:00      1     hgpu4 (Dependency)
+    226258              pswap3_gate_imerg_local   PENDING       0:00      1     hgpu4 (Dependency)
+    226259          pswap3_win_imerg_local_s100   PENDING       0:00      1     hgpu4 (Dependency)
+    226260          pswap3_win_imerg_local_s200   PENDING       0:00      1     hgpu4 (Dependency)
+    226261          pswap3_win_imerg_local_s300   PENDING       0:00      1     hgpu4 (Dependency)
+    226262                pswap3_gate_gsmap_utc   PENDING       0:00      1     hgpu4 (Dependency)
+    226263            pswap3_win_gsmap_utc_s100   PENDING       0:00      1     hgpu4 (Dependency)
+    226264            pswap3_win_gsmap_utc_s200   PENDING       0:00      1     hgpu4 (Dependency)
+    226265            pswap3_win_gsmap_utc_s300   PENDING       0:00      1     hgpu4 (Dependency)
+    226266              pswap3_gate_imerg_tau32   PENDING       0:00      1     hgpu4 (Dependency)
+    226267          pswap3_win_imerg_tau32_s100   PENDING       0:00      1     hgpu4 (Dependency)
+    226268          pswap3_win_imerg_tau32_s200   PENDING       0:00      1     hgpu4 (Dependency)
+    226269          pswap3_win_imerg_tau32_s300   PENDING       0:00      1     hgpu4 (Dependency)
+    226270            pswap3_gate_daymet_shift1   PENDING       0:00      1     hgpu4 (Dependency)
+    226271            pswap3_shift1_daymet_s100   PENDING       0:00      1     hgpu4 (Dependency)
+    226272            pswap3_shift1_daymet_s200   PENDING       0:00      1     hgpu4 (Dependency)
+    226273            pswap3_shift1_daymet_s300   PENDING       0:00      1     hgpu4 (Dependency)
+    226274                pswap3_gate_syn_ln035   PENDING       0:00      1     hgpu4 (Dependency)
+    226275                pswap3_syn_ln035_s100   PENDING       0:00      1     hgpu4 (Dependency)
+    226276                pswap3_syn_ln035_s200   PENDING       0:00      1     hgpu4 (Dependency)
+    226277                pswap3_syn_ln035_s300   PENDING       0:00      1     hgpu4 (Dependency)
+    226278                pswap3_gate_syn_ln070   PENDING       0:00      1     hgpu4 (Dependency)
+    226279                pswap3_syn_ln070_s100   PENDING       0:00      1     hgpu4 (Dependency)
+    226280                pswap3_syn_ln070_s200   PENDING       0:00      1     hgpu4 (Dependency)
+    226281                pswap3_syn_ln070_s300   PENDING       0:00      1     hgpu4 (Dependency)
+    226282                pswap3_gate_syn_ln140   PENDING       0:00      1     hgpu4 (Dependency)
+    226283                pswap3_syn_ln140_s100   PENDING       0:00      1     hgpu4 (Dependency)
+    226284                pswap3_syn_ln140_s200   PENDING       0:00      1     hgpu4 (Dependency)
+    226285                pswap3_syn_ln140_s300   PENDING       0:00      1     hgpu4 (Dependency)
+    226286                     pswap3_eval_ckpt   PENDING       0:00      1     hgpu4 (Dependency)
+    226287                            pswap3_p7   PENDING       0:00      1     hgpu4 (Dependency)
+=== J. MAILBOX CHANNEL SEQ ===
+  attrswap-daily seq now: 83
+=== DONE ===
+=== cmd_submit3.sh exit code 0 ===
+=== post: jobs.txt (43 lines) and ledger ===
+gate_ref 226245
+gate_era5l_refday 226246 dep=226245
+pswap3_ep60_ref_daymet_s100 226247 dep=226245
+pswap3_ep60_era5l_refday_s100 226248 dep=226246
+pswap3_ep60_ref_daymet_s200 226249 dep=226245
+pswap3_ep60_era5l_refday_s200 226250 dep=226246
+pswap3_ep60_ref_daymet_s300 226251 dep=226245
+pswap3_ep60_era5l_refday_s300 226252 dep=226246
+guard_T16 226253 dep=:226247:226248:226249:226250:226251:226252
+gate_imerg_e18 226254 kind=window
+pswap3_win_imerg_e18_s100 226255 dep=226253:226254
+pswap3_win_imerg_e18_s200 226256 dep=226253:226254
+pswap3_win_imerg_e18_s300 226257 dep=226253:226254
+gate_imerg_local 226258 kind=window
+pswap3_win_imerg_local_s100 226259 dep=226253:226258
+pswap3_win_imerg_local_s200 226260 dep=226253:226258
+pswap3_win_imerg_local_s300 226261 dep=226253:226258
+gate_gsmap_utc 226262 kind=window
+pswap3_win_gsmap_utc_s100 226263 dep=226253:226262
+pswap3_win_gsmap_utc_s200 226264 dep=226253:226262
+pswap3_win_gsmap_utc_s300 226265 dep=226253:226262
+gate_imerg_tau32 226266 kind=window
+pswap3_win_imerg_tau32_s100 226267 dep=226253:226266
+pswap3_win_imerg_tau32_s200 226268 dep=226253:226266
+pswap3_win_imerg_tau32_s300 226269 dep=226253:226266
+gate_daymet_shift1 226270 kind=shift1
+pswap3_shift1_daymet_s100 226271 dep=226253:226270
+pswap3_shift1_daymet_s200 226272 dep=226253:226270
+pswap3_shift1_daymet_s300 226273 dep=226253:226270
+gate_syn_ln035 226274 kind=noise
+pswap3_syn_ln035_s100 226275 dep=226253:226274
+pswap3_syn_ln035_s200 226276 dep=226253:226274
+pswap3_syn_ln035_s300 226277 dep=226253:226274
+gate_syn_ln070 226278 kind=noise
+pswap3_syn_ln070_s100 226279 dep=226253:226278
+pswap3_syn_ln070_s200 226280 dep=226253:226278
+pswap3_syn_ln070_s300 226281 dep=226253:226278
+gate_syn_ln140 226282 kind=noise
+pswap3_syn_ln140_s100 226283 dep=226253:226282
+pswap3_syn_ln140_s200 226284 dep=226253:226282
+pswap3_syn_ln140_s300 226285 dep=226253:226282
+e4_eval_ckpt 226286 dep=226245
+p7_hydro_year 226287 dep=226245
+planned_gpu_hours 75.2 submitted_before 0.0 triggered_reserve_R2_arms 0 jobs_registered 43 expected 43 2026-09-17 19:04:25
+  my jobs in queue after: 52
+epoch_end 1789643065
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-17T19:04:25+0800
