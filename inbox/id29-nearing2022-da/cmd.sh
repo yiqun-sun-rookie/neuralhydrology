@@ -7,11 +7,9 @@ echo "=== RECENT N22 sacct (3 days, non-pending) ==="
 sacct -X -n -P -S $(date -d '3 days ago' +%Y-%m-%d) --format=JobID,JobName,State,ExitCode,Elapsed,End 2>/dev/null | grep -E 'N22' | grep -vE '\|PENDING\|' || echo '  none'
 echo "=== WARMPAIR DIRS ==="
 D="$ROOT/results/29_nearing2022_da_ar/formal_closure/diagnostics/warmup_pair"
-for X in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$X" ] && echo "  PRESENT $X" || echo "  MISSING $X"; done
+for S in control_seed0_repeat1 masked_seed0_repeat1 paired_analysis; do [ -e "$D/$S" ] && echo "  PRESENT $S" || echo "  MISSING $S"; done
 echo "=== GATE ==="
 grep -o '"released_code_numerical_status": "[A-Z_]*"' "$ROOT/closure_20260810/aggregation/final_reproduction_gate.json" 2>/dev/null || echo '  gate missing'
 echo "=== prepare_warmup_target_pair.py hardcoded job ids ==="
-grep -n '_require_equal(.*slurm_job_id' "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" 2>/dev/null || echo '  n/a'
-echo "=== git head on HPC ==="
-cd "$ROOT" && git log -1 --format='%h %ci %s' 2>/dev/null || echo '  n/a'
+grep -n 'slurm_job_id' "$ROOT/src/29_nearing2022_da_ar/scripts/prepare_warmup_target_pair.py" 2>/dev/null || true
 exit 0
