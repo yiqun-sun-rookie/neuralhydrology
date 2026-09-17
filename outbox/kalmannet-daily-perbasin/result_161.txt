@@ -1,0 +1,383 @@
+### channel=kalmannet-daily-perbasin seq=161
+### host=login4
+### started=2026-09-17T21:20:51+0800
+### ---------- output ----------
+channel=kalmannet-daily-perbasin sequence=161 purpose=observe-zero_gain
+=== ACCOUNTING ===
+226298|kdpp3-zgprobe5|COMPLETED|0:0|51|48|billing=48,cpu=48,node=1|icn238|2026-09-17T21:13:44|2026-09-17T21:13:44|2026-09-17T21:14:35
+226298.batch|batch|COMPLETED|0:0|51|48|cpu=48,mem=0,node=1|icn238|2026-09-17T21:13:44|2026-09-17T21:13:44|2026-09-17T21:14:35
+226298.extern|extern|COMPLETED|0:0|51|48|billing=48,cpu=48,node=1|icn238|2026-09-17T21:13:44|2026-09-17T21:13:44|2026-09-17T21:14:35
+=== QUEUE ===
+=== HGPU4_GRES_USED ===
+NODELIST            GRES_USED               
+ngu101              gpu:4,dcu:0             
+ngu102              gpu:4,dcu:0             
+ngu103              gpu:0,dcu:0             
+ngu104              gpu:4,dcu:0             
+=== REQUEST zero_gain_probe5_seq160 ===
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/slurm-226298.stdout bytes=19103
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 44.007711201906204, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.08434183895588, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.080466747283936, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.07235562801361, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.05618281662464, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.05222488939762, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.04736477136612, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.043688490986824, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.039284378290176, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.03522124886513, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.03068548440933, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.026476219296455, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.01808452606201, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.014245361089706, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 50.061827927827835, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t.stderr"}
+{"stage": "pool_end", "tasks": 21, "workers": 21, "failed": 0, "wall_seconds": 50.10060615837574, "slurm_job_id": "226298"}
+P5_RC=0
+STAGE_RESULT P5 gate_failures=0 of 21: 
+EPOCH_WALL basin=01435000 epoch1_wall_seconds=32.58516874909401
+EPOCH_WALL basin=01440400 epoch1_wall_seconds=32.65839421749115
+EPOCH_WALL basin=01487000 epoch1_wall_seconds=32.87874263525009
+EPOCH_WALL basin=02092500 epoch1_wall_seconds=32.93704245984554
+EPOCH_WALL basin=02102908 epoch1_wall_seconds=32.71248696744442
+EPOCH_WALL basin=02178400 epoch1_wall_seconds=32.708453848958015
+EPOCH_WALL basin=03049000 epoch1_wall_seconds=32.484722048044205
+EPOCH_WALL basin=03076600 epoch1_wall_seconds=32.668498650193214
+EPOCH_WALL basin=04027000 epoch1_wall_seconds=37.43219557404518
+EPOCH_WALL basin=04105700 epoch1_wall_seconds=32.79579900205135
+EPOCH_WALL basin=05503800 epoch1_wall_seconds=32.72455379366875
+EPOCH_WALL basin=06803510 epoch1_wall_seconds=32.67457304894924
+EPOCH_WALL basin=08070200 epoch1_wall_seconds=33.25079019367695
+EPOCH_WALL basin=08086290 epoch1_wall_seconds=33.086564779281616
+EPOCH_WALL basin=08109700 epoch1_wall_seconds=33.52398118376732
+EPOCH_WALL basin=08190500 epoch1_wall_seconds=32.61320133507252
+EPOCH_WALL basin=09035800 epoch1_wall_seconds=33.202540412545204
+EPOCH_WALL basin=09513780 epoch1_wall_seconds=32.465409740805626
+EPOCH_WALL basin=12175500 epoch1_wall_seconds=33.115453347563744
+EPOCH_WALL basin=12447390 epoch1_wall_seconds=33.08393880724907
+EPOCH_WALL basin=14185900 epoch1_wall_seconds=32.61046503484249
+NODE_END exit=0 finished=1789650814
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/slurm-226298.stdout
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/slurm-226298.stderr bytes=0
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/slurm-226298.stderr
+JSON_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/pool_result.json bytes=14457 sha256=9c0442c7f126f5694b76555d8936c662fbc6ec66560cdb7646d75c5e2d4b5b55
+{
+ "failed": 0,
+ "results": [
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01435000_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01435000_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01435000_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 44.09085465967655
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01440400_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01440400_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01440400_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 44.08693911135197
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02102908_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02102908_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02102908_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 44.07485489547253
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03049000_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03049000_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03049000_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 44.06618845462799
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 44.06228546798229
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09513780_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09513780_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09513780_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 44.02023497223854
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 44.007711201906204
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.08434183895588
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.080466747283936
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.07235562801361
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.05618281662464
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.05222488939762
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.04736477136612
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.043688490986824
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.039284378290176
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.03522124886513
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.03068548440933
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.026476219296455
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.01808452606201
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 46.014245361089706
+  },
+  {
+   "exit_code": 0,
+   "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t",
+   "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t.stderr",
+   "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t.stdout",
+   "wall_seconds": 50.061827927827835
+  }
+ ],
+ "slurm_job_id": "226298",
+ "stage": "pool_end",
+ "tasks": 21,
+ "wall_seconds": 50.10060615837574,
+ "workers": 21
+}
+
+JSON_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/pool_result.json
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01435000_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:43Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01435000_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01440400_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:43Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01440400_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:43Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:43Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02102908_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:43Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02102908_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:43Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03049000_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:43Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03049000_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:43Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:43Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09513780_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09513780_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t.stderr
+TAIL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t.stderr bytes=60
+
+=== launch 2026-09-17T13:12:44Z job=226298 host=icn238 ===
+TAIL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t.stderr
+=== FULL_STDOUT zero_gain_probe5_seq160 ===
+FULL_BEGIN path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/slurm-226298.stdout bytes=19103
+NODE_START job=226298 host=icn238 started=1789650763
+NUMERICS_ENV ATEN_CPU_CAPABILITY=default
+=== P5 pool 21 workers, ATEN default ===
+{"stage": "pool_start", "tasks": 21, "workers": 21, "mem_available_gib": 72.21715927124023, "slurm_job_id": "226298", "hostname": "icn238"}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01435000_SEED_20260824_cpu_1t", "pid": 128451}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01440400_SEED_20260824_cpu_1t", "pid": 128452}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t", "pid": 128453}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t", "pid": 128454}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02102908_SEED_20260824_cpu_1t", "pid": 128455}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t", "pid": 128456}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03049000_SEED_20260824_cpu_1t", "pid": 128457}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260824_cpu_1t", "pid": 128458}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t", "pid": 128459}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t", "pid": 128460}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t", "pid": 128461}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t", "pid": 128462}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t", "pid": 128463}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t", "pid": 128464}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t", "pid": 128465}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t", "pid": 128466}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t", "pid": 128467}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09513780_SEED_20260824_cpu_1t", "pid": 128468}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t", "pid": 128469}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t", "pid": 128470}
+{"stage": "task_start", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t", "pid": 128471}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01435000_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 44.09085465967655, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01435000_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01435000_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01440400_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 44.08693911135197, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01440400_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01440400_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02102908_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 44.07485489547253, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02102908_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02102908_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03049000_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 44.06618845462799, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03049000_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03049000_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 44.06228546798229, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_03076600_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09513780_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 44.02023497223854, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09513780_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09513780_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 44.007711201906204, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_14185900_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.08434183895588, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_01487000_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.080466747283936, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02092500_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.07235562801361, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_02178400_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.05618281662464, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04105700_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.05222488939762, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_05503800_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.04736477136612, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_06803510_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.043688490986824, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08070200_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.039284378290176, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08086290_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.03522124886513, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08109700_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.03068548440933, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_08190500_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.026476219296455, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_09035800_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.01808452606201, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12175500_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 46.014245361089706, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_12447390_SEED_20260824_cpu_1t.stderr"}
+{"stage": "task_end", "label": "DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t", "exit_code": 0, "wall_seconds": 50.061827927827835, "stdout": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t.stdout", "stderr": "/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/logs/DEV_DAILY_CAMELS_KNET_ALIGNED_REMATCH_V3_20260916_KNET_BASIN_04027000_SEED_20260824_cpu_1t.stderr"}
+{"stage": "pool_end", "tasks": 21, "workers": 21, "failed": 0, "wall_seconds": 50.10060615837574, "slurm_job_id": "226298"}
+P5_RC=0
+STAGE_RESULT P5 gate_failures=0 of 21: 
+EPOCH_WALL basin=01435000 epoch1_wall_seconds=32.58516874909401
+EPOCH_WALL basin=01440400 epoch1_wall_seconds=32.65839421749115
+EPOCH_WALL basin=01487000 epoch1_wall_seconds=32.87874263525009
+EPOCH_WALL basin=02092500 epoch1_wall_seconds=32.93704245984554
+EPOCH_WALL basin=02102908 epoch1_wall_seconds=32.71248696744442
+EPOCH_WALL basin=02178400 epoch1_wall_seconds=32.708453848958015
+EPOCH_WALL basin=03049000 epoch1_wall_seconds=32.484722048044205
+EPOCH_WALL basin=03076600 epoch1_wall_seconds=32.668498650193214
+EPOCH_WALL basin=04027000 epoch1_wall_seconds=37.43219557404518
+EPOCH_WALL basin=04105700 epoch1_wall_seconds=32.79579900205135
+EPOCH_WALL basin=05503800 epoch1_wall_seconds=32.72455379366875
+EPOCH_WALL basin=06803510 epoch1_wall_seconds=32.67457304894924
+EPOCH_WALL basin=08070200 epoch1_wall_seconds=33.25079019367695
+EPOCH_WALL basin=08086290 epoch1_wall_seconds=33.086564779281616
+EPOCH_WALL basin=08109700 epoch1_wall_seconds=33.52398118376732
+EPOCH_WALL basin=08190500 epoch1_wall_seconds=32.61320133507252
+EPOCH_WALL basin=09035800 epoch1_wall_seconds=33.202540412545204
+EPOCH_WALL basin=09513780 epoch1_wall_seconds=32.465409740805626
+EPOCH_WALL basin=12175500 epoch1_wall_seconds=33.115453347563744
+EPOCH_WALL basin=12447390 epoch1_wall_seconds=33.08393880724907
+EPOCH_WALL basin=14185900 epoch1_wall_seconds=32.61046503484249
+NODE_END exit=0 finished=1789650814
+FULL_END path=/data1/home/sunyiq/kalmannet_daily_camels_per_basin_21_development_20260908_v3_aligned_rematch_20260916/runtime/zero_gain_probe5_seq160/slurm-226298.stdout
+READ_ONLY_OBSERVE_COMPLETE submissions=0 cancellations=0 modifications=0
+### ---------- end ----------
+### exit_code=0
+### finished=2026-09-17T21:20:52+0800
